@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.99.0"
-#define VERSION_WIN "0,99,0,0"
+#define VERSION "0.99.6"
+#define VERSION_WIN "0,99,6,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -149,7 +149,7 @@
 
 #  define HAVE_PTHREAD 1
 #  define HAVE_SYS_IOCTL_H 1
-/* #  undef HAVE_MYSQL_MYSQL_H */
+#  define HAVE_MYSQL_MYSQL_H 1
 #else
 //#  define HAVE_MYSQL_MYSQL_H 1
 #endif
