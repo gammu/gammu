@@ -1,0 +1,460 @@
+<!DOCTYPE doctype PUBLIC "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+  <title>Gammu internals</title>
+</head>
+<body>
+<h2>&nbsp;Gammu internals</h2>
+<h3> gammurc Configuration file</h3>
+When started, Gammu looks for the file “gammurc”, which contains
+startup definitions in a Windows INI manner. For a 6210 on COM1, the
+file may looks like this:
+<p><tt>[gammu]</tt> <br>
+<tt>model = 6210</tt> <br>
+<tt>port=com1:</tt> <br>
+<tt>connection=dlr3</tt> </p>
+<p>Though Gammu has support for automatically identifying the connected
+ device, still port number and connection type need to be specified.
+Including the model definition speeds up things since the identifying
+process is skipped. </p>
+<p>These are the currently possible values for connection: <br>
+&nbsp;
+<table border="1">
+  <tbody>
+    <tr>
+      <td><b>Connection</b></td>
+      <td><b>Details</b></td>
+    </tr>
+    <tr>
+      <td><tt>at19200</tt> <br>
+      <tt>at115200</tt></td>
+      <td>AT commands over serial ports</td>
+    </tr>
+    <tr>
+      <td><tt>fbus</tt> <br>
+      <tt>mbus</tt></td>
+      <td>Nokia’s proprietary wiring and protocols</td>
+    </tr>
+    <tr>
+      <td><tt>dlr3</tt></td>
+      <td>Nokia fbus protocol over DLR3 cable</td>
+    </tr>
+    <tr>
+      <td><tt>Irda</tt> <br>
+      <tt>infrared</tt></td>
+      <td>Infrared with irDA standard or Nokia fbus</td>
+    </tr>
+    <tr>
+      <td><tt>atblue</tt></td>
+      <td>AT over Bluetooth</td>
+    </tr>
+    <tr>
+      <td><tt>dlr3blue</tt></td>
+      <td>Nokia fbus over Bluetooth (init using method from DLR3 cable)</td>
+    </tr>
+  </tbody>
+</table>
+</p>
+<h3> Architecture</h3>
+Marcin Wiacek, author of Gammu, did a very good job at abstracting the
+various levels he uses, enabling developers to add new features very
+quickly. We could, for example, add definitions for a new phone and
+for the most part it wouldn’t matter whether it’s connected locally,
+via infrared, or (evolving) via Bluetooth.
+<p>These are the different abstraction levels: <br>
+&nbsp;
+<table border="1">
+  <tbody>
+    <tr>
+      <td><b>Title</b></td>
+      <td><b>Description</b></td>
+      <td><b>Defined in…</b></td>
+    </tr>
+    <tr>
+      <td>Configuration parser</td>
+      <td>Parses gammurc file</td>
+      <td>cfg</td>
+    </tr>
+    <tr>
+      <td>Connections</td>
+      <td>Provides interfaces for serial, infrared and Bluetooth
+communications</td>
+      <td>common\device</td>
+    </tr>
+    <tr>
+      <td>Protocols</td>
+      <td>Defines protocols for Nokia, AT and Alcatel phones</td>
+      <td>common\protocol</td>
+    </tr>
+    <tr>
+      <td>Phones</td>
+      <td>Specific and general implementations for the supported phone
+series</td>
+      <td>common\phone</td>
+    </tr>
+    <tr>
+      <td>Service</td>
+      <td>Provides access to the phone functions – main point of
+interest for application development</td>
+      <td>common\service</td>
+    </tr>
+  </tbody>
+</table>
+</p>
+<h3> Phone function reference</h3>
+The following phone functions are possible, support varies by phone: <br>
+&nbsp;
+<table border="1">
+  <tbody>
+    <tr>
+      <td><b>Name</b></td>
+      <td><b>Description</b></td>
+    </tr>
+    <tr>
+      <td>AnswerCall</td>
+      <td>Accept currently incoming call</td>
+    </tr>
+    <tr>
+      <td>CancelCall</td>
+      <td>Deny currently incoming call</td>
+    </tr>
+    <tr>
+      <td>DialVoice</td>
+      <td>Call number and establish voice call</td>
+    </tr>
+    <tr>
+      <td>EnterSecurityCode</td>
+      <td>Allow to "enter" pin/puk/pin2/puk2, when phone prompts for it
+on screen</td>
+    </tr>
+    <tr>
+      <td>Get/Set/DeleteWAPBookmark</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>Get/Set/SendSMSMessage GetNextSMSMessage DeleteSMS</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>Get/SetAlarm</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>Get/SetBitmap</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>Get/SetCalendarNote DeleteCalendarNote</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>Get/SetDateTime</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>Get/SetMemory</td>
+      <td>Retrieve and set various telephone numbers, like phonebook
+entries in the internal memory and on the SIM card,
+dialed/missed/received logs as well as the phone’s own number</td>
+    </tr>
+    <tr>
+      <td>Get/SetProfile</td>
+      <td>Profile data such as ringtone volume, key sound etc.</td>
+    </tr>
+    <tr>
+      <td>Get/SetRingtone</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>Get/SetSMSC</td>
+      <td>Get/Set the number of the SMS Service Center</td>
+    </tr>
+    <tr>
+      <td>Get/SetSpeedDial</td>
+      <td>a.k.a. dialing shortcuts</td>
+    </tr>
+    <tr>
+      <td>Get/SetTodo DeleteAllTodo</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>Get/SetWAPSettings</td>
+      <td>Dial-up settings</td>
+    </tr>
+    <tr>
+      <td>GetBatteryLevel</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>GetDisplayStatus</td>
+      <td>See on-screen notification icons (new SMS etc.)</td>
+    </tr>
+    <tr>
+      <td>GetHardware</td>
+      <td>Get hardware info</td>
+    </tr>
+    <tr>
+      <td>GetIMEI</td>
+      <td>Retrieve the International Mobile Equipment Identity number</td>
+    </tr>
+    <tr>
+      <td>GetManufactureMonth</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>GetManufacturer</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>GetMemoryStatus</td>
+      <td>Retrieve information about capacity and usage of specific
+memory</td>
+    </tr>
+    <tr>
+      <td>GetNetworkInfo</td>
+      <td>Retrieve network name, code, current cell, location area
+code, net status (home/roaming/searching network/no network)</td>
+    </tr>
+    <tr>
+      <td>GetNetworkLevel</td>
+      <td>Network signal strength</td>
+    </tr>
+    <tr>
+      <td>GetOriginalIMEI</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>GetPPM</td>
+      <td>Get name of phone’s language package (Nokia)</td>
+    </tr>
+    <tr>
+      <td>GetProductCode</td>
+      <td>Manufacturer-specific</td>
+    </tr>
+    <tr>
+      <td>GetRingtonesInfo</td>
+      <td>Get ringtone names</td>
+    </tr>
+    <tr>
+      <td>GetSecurityStatus</td>
+      <td>Figure out what code (PIN, Security Code, PIN2, PUK, PUK2),
+is being prompted by the phone, if any</td>
+    </tr>
+    <tr>
+      <td>GetSIMIMSI</td>
+      <td>International Mobile Subscriber Identity number assigned to
+SIM card</td>
+    </tr>
+    <tr>
+      <td>GetSMSFolders</td>
+      <td>Retrieve names of SMS folders</td>
+    </tr>
+    <tr>
+      <td>GetSMSStatus</td>
+      <td>Statistics about SMS memory usage</td>
+    </tr>
+    <tr>
+      <td>PlayTone</td>
+      <td>Play tone on phone…</td>
+    </tr>
+    <tr>
+      <td>PressKey</td>
+      <td>Simulate any key push to phone!</td>
+    </tr>
+    <tr>
+      <td>Reset</td>
+      <td>Soft/hard phone reset</td>
+    </tr>
+    <tr>
+      <td>ResetPhoneSettings</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>SendDTMF</td>
+      <td>Numeric key tones</td>
+    </tr>
+    <tr>
+      <td>SetAutoNetworkLogin</td>
+      <td>Obvious</td>
+    </tr>
+    <tr>
+      <td>SetIncomingCall</td>
+      <td>Trigger notification for incoming calls</td>
+    </tr>
+    <tr>
+      <td>SetIncomingCB</td>
+      <td>Trigger notification for incoming CB messages</td>
+    </tr>
+    <tr>
+      <td>SetIncomingSMS</td>
+      <td>Trigger notification for incoming SMS messages</td>
+    </tr>
+  </tbody>
+</table>
+<h3> Services</h3>
+Furthermore, Gammu offers the following “services” (see first table): <br>
+&nbsp;
+<table border="1">
+  <tbody>
+    <tr>
+      <td><b>Title</b></td>
+      <td><b>Description</b></td>
+      <td><b>Defined in…</b></td>
+    </tr>
+    <tr>
+      <td>Backup</td>
+      <td>Complete backup/restore of phone data</td>
+      <td>gsmbackup.c</td>
+    </tr>
+    <tr>
+      <td>Logo</td>
+      <td>Functions to read, write, resize and convert bitmaps and
+operator logos and animations</td>
+      <td>gsmlogo.c</td>
+    </tr>
+    <tr>
+      <td>Networks</td>
+      <td>Pretty extensive table to link GSM operator network codes to
+the actual operator names</td>
+      <td>gsmnet.c</td>
+    </tr>
+    <tr>
+      <td>Phonebook</td>
+      <td>VCard support (currently minimal)</td>
+      <td>gsmpbk.c</td>
+    </tr>
+    <tr>
+      <td>Calendar</td>
+      <td>VCalendar support</td>
+      <td>gsmcal.c</td>
+    </tr>
+    <tr>
+      <td>Ringtones</td>
+      <td>Functions to read, write and convert ringtone data in various
+formats</td>
+      <td>gsmring.c</td>
+    </tr>
+    <tr>
+      <td>SMS</td>
+      <td>Encode and decode various SMS formats, including multi-part
+messages</td>
+      <td>gsmsms.c</td>
+    </tr>
+    <tr>
+      <td>WAP bookmarks</td>
+      <td>Encoding support for Nokia WAP bookmarks</td>
+      <td>gsmwap.c</td>
+    </tr>
+  </tbody>
+</table>
+<p>Be sure to also take a look at gammu.c, which offers additional
+functionality such as data message composition/sending (wap settings –
+no gprs/syncml; vcards, calendar items, ringtones, logos, sms center
+settings, bookmarks). Check out the Readme in the docs/ directory. </p>
+<h2> Writing code based on Gammu</h2>
+Though Gammu is meant to be a single application, one can simply import
+ all its classes and headers and make use of them. The easiest way to do
+ this is to copy all the includes and global variables (s, *Phone, etc.,
+ see below for details) from the main class gammu.c. into one’s own main
+ class. When using Gammu in a C++ project, it is mandatory to use extern
+ “C” when including its files:
+<p><tt>extern "C" {</tt> </p>
+<p><tt>#include "gammu/gammu/gammu.h"</tt> </p>
+<p><tt>..............</tt> </p>
+<p><tt>}</tt> </p>
+<h3> Global variables</h3>
+gammu.c uses the following global variables, I recommend their
+adoption:
+<table border="1">
+  <tbody>
+    <tr>
+      <td><b>Variable</b></td>
+      <td><b>Details</b></td>
+    </tr>
+    <tr>
+      <td>GSM_StateMachine s</td>
+      <td>Basic layer to the phone connection</td>
+    </tr>
+    <tr>
+      <td>GSM_Phone_Functions *Phone</td>
+      <td>Interface to the phone (see phone functions above)</td>
+    </tr>
+    <tr>
+      <td>static CFG_Header *cfg</td>
+      <td>Configuration settings retrieved from gammurc</td>
+    </tr>
+    <tr>
+      <td>GSM_Error error</td>
+      <td>Current errorlevel. Important values are GE_NONE=1 and
+GE_NOTIMPLEMENTED=19</td>
+    </tr>
+  </tbody>
+</table>
+<h3> Basic procedure</h3>
+In order to work with Gammu, follow the following procedure observed in
+ gammu.c: <br>
+&nbsp;
+<table border="1">
+  <tbody>
+    <tr>
+      <td><b>Step</b></td>
+      <td><b>Description</b></td>
+      <td><b>Command</b></td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>(optional): Find and parse out the “gammurc” configuration
+file</td>
+      <td>cfg=CFG_FindGammuRC();</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>Load configuration settings</td>
+      <td>CFG_ReadConfig(cfg, &amp;s.Config);</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>Connect to phone</td>
+      <td>GSM_Init(false);</td>
+    </tr>
+    <tr>
+      <td colspan="3">
+      <center>....</center>
+      </td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>Interface phone</td>
+      <td>For example: error=Phone-&gt;GetRingtone(&amp;s,
+&amp;ringtonebin,0);</td>
+    </tr>
+    <tr>
+      <td colspan="3">
+      <center>....</center>
+      </td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>Terminate connection</td>
+      <td>GSM_Terminate();</td>
+    </tr>
+  </tbody>
+</table>
+<p>Note: The functions GSM_Init and GSM_Terminate are located in
+gammu.c. </p>
+<h3> Working without a gammurc</h3>
+When Gammu can’t find the gammurc, it will fall back to its defaults
+which are entered in the function CFG_ReadConfig in common/gsmring.c.
+<h3> DLL or not?</h3>
+Starting with release 0.64, there is a DLL version of Gammu included in
+ the distribution. As of now, it mostly acts as a demonstration on how
+to use Gammu routines in other environments (Delphi) and encapsulates
+only a few of its functions, none of the ones I needed (which were
+functions for ringtone, contact, calendar, wap data access).
+<p>Thus, the DLL would have to be adjusted with every new release of
+Gammu in the same manner as with the current implementation, defying
+the independent nature of a DLL, so I decided not to use this DLL as a
+base for now. Still, I assume that the DLL will soon encapsulate all
+Gammu functions, making it an interesting option for the future. </p>
+</body>
+</html>

@@ -1,0 +1,170 @@
+# This is a sample smsdrc file. It's required for --smsd option in Gammu
+
+# This section is like section "gammu" in "gammurc" file. See info there
+# for more details. If it's not used here, values are read from gammurc
+#[gammu]
+#port = /dev/ttyS1
+#model = 6110
+#connection = dlr3
+#synchronizetime = yes
+#logfile = gammulog
+#logformat = textall
+#use_locking = yes
+#gammuloc = gammu.us
+#startinfo = yes
+
+# When uncomment this section and insert numbers here, smsd will process
+# incoming sms only from numbers written here (incoming sms from all other
+# numbers will be deleted)
+#[include_numbers]
+#number1 = 1234
+
+# When uncomment this section and insert numbers here, smsd will process
+# incoming sms from all numbers not written here (incoming sms from numbers
+# written here will be deleted). This is "black" list.
+# Note: after using "include_numbers" section this one will be ignored
+#[exclude_numbers]
+#number1 = 1234
+
+# This section contains general settings
+# PIN         - PIN for SIM card
+# logfile     - logfile for info about smsd actions
+# CommTimeout - (time in seconds) after each read/write loop smsd waits so
+#               many seconds to make it again. Default: 1
+# SendTimeout - shows how many seconds smsd should wait for network answer
+#               during sending sms. If nothing happen during this time,
+#               sms will be resent. Default: 10
+# receivefrequency - the number of seconds between testing for received SMSes, when the phone
+#                    is busy sending SMSes. Normally a test for received SMSes is done every commtimeout
+#                    seconds and after each sent SMS. Default: 0 (not used)
+# resetfrequency - the number of seconds between performing a preventive soft reset in order
+#                  to minimize the cases of hanging phones e.g. Nokia 5110 will sometimes
+#                  freeze to a state when only after unmounting the battery the phone will be functional again.
+#                  Default: 0 (not used)
+# deliveryreport   - should delivery reports be used no/log/sms. 
+#                    log: one line log entry, 
+#                    sms: store in inbox as a received SMS
+#                    Default: no
+# phoneid - string with info about phone used for sending/receiving
+[smsd]
+PIN = 1234
+logfile = smsdlog
+commtimeout = 1
+sendtimeout = 10
+#receivefrequency = 0
+#resetfrequency = 0
+#deliveryreport = no
+#phoneid = MyPhone1
+
+# ------------------------- SETTINGS FOR --smsd MYSQL ---------------------------
+user = root
+password =
+pc = localhost
+database = sms
+# -------------------------------------------------------------------------------
+
+# ------------------------- SETTINGS FOR --smsd FILES ---------------------------
+# The following paths must be written with trailing '/' or '\' depending on OS.
+# inboxpath    - where the received SMSes are stored, default current directory
+# outboxpath   - where SMSes to be sent should be placed, default current
+#                directory
+# sentsmspath  - where the transmitted SMSes are placed, default outboxpath
+#                (= deleted)
+# errorsmspath - where SMSes with error in transmission is placed, default
+#                sentsmspath
+# inboxformat  - the format in which the SMS will be stored: 'detail', 'unicode', 'standard'.
+#                The 'detail' format is the format used for backup. See below.
+#                'standard' is in the standard character set.
+#                Default: unicode.
+# transmitformat - the format for transmitting the SMS: 'auto', 'unicode', '7bit'. Default: auto
+#inboxpath = /var/spool/sms/inbox/
+#outboxpath = /var/spool/sms/outbox/
+#sentsmspath = /var/spool/sms/sent/
+#errorsmspath = /var/spool/sms/error/
+#inboxformat = unicode
+#transmitformat = auto
+# -------------------------------------------------------------------------------
+
+# ------------------------- INFO ABOUT --smsd FILES ---------------------------
+#
+# Receiving
+# -----------------------------------------------------------------------------
+# The filename will be
+#
+# IN<date>_<time>_<serialno>_<phone number>_<sequence>.txt
+#
+# eg. IN20021130_021531_00_+45409000931640979_00.txt
+# where
+# <date> is yyyymmdd
+# <time> is hhmmss
+# <serialno> is nn (in case of more SMSes sent at the same time to the phone)
+# <sequence> is nn (for multi-SMSes)
+#
+# In case of 8 bit SMS coding the SMS is stored as binary data with the file
+# extension .bin
+#
+# Transmitting
+# -----------------------------------------------------------------------------
+# The filename should be one of the following formats
+#
+# OUT<phone number>.txt<options>
+# OUT<priority>_<phone number>_<serialno>.txt<options>
+# OUT<priority><date>_<time>_<serialno>_<phone number>_<anything>.txt<options>
+# where
+# <priority> is an alphabetic character (A-Z) A = highest priority
+# File extension convention:
+# OUTxxxxx.txt : normal text SMS
+# Options appended to the extension applying to this SMS only:
+# d: delivery report requested
+# f: flash SMS
+# b: WAP bookmark as name,URL
+# e.g. OUTG20040620_193810_123_+4512345678_xpq.txtdf
+# is a flash text SMS requesting delivery reports
+
+# Other fields as above.
+
+# SMSes will be transmitted sequentially based on the file name
+#
+# The contents of the file is the SMS to be transmitted (in Unicode or standard
+# character set)
+#
+# Example of the 'detail' inbox format
+# -----------------------------------------------------------------------------
+# [SMSBackup000]
+# #ABCDEFGHIJKLMNOPQRSTUVWXYZ
+# #
+# SMSC = "+4540590000"
+# SMSCUnicode = 002B0034003500340030003500390030003000300030
+# Sent = 20021201T025023
+# State = UnRead
+# Number = "+4522706947"
+# NumberUnicode = 002B0034003500320032003700300036003900340037
+# Name = ""
+# NameUnicode =
+# Text00 = 004100420043004400450046004700480049004A004B004C004D004E004F0050005100520053005400550056005700580059005A000A
+# Coding = Default
+# Folder = 1
+# Length = 27
+# Class = -1
+# ReplySMSC = False
+# RejectDuplicates = True
+# ReplaceMessage = 0
+# MessageReference = 0
+#
+# Locale
+# -----------------------------------------------------------------------------
+# In Linux there can be a problem about getting the proper locale defined
+# when gammu --smsd is run as a daemon from the /etc/inittab script. National characters
+# may appear as question marks in received SMSes. A solution is provided
+# along the following lines (replace 'da_DK' by your own locale):
+#
+# Define /usr/local/bin/gammu.sh as
+#
+#  #!/bin/sh
+#  export LANG=da_DK
+#  /usr/local/bin/gammu --smsd FILES /etc/smsdrc
+#
+# and call it from /etc/inittab by
+#
+# GA:345:respawn:/usr/local/bin/gammu.sh
+

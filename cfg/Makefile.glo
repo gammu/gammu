@@ -1,0 +1,340 @@
+
+# --------------- Makefile options, which doesn't depend on OS ----------------
+
+# Version used for soname, should change on each API change
+SONAME_MAJOR = 0
+SONAME_MINOR = 0
+
+# these subdirectories from /docs are copied to docs dir
+# ("\" CHAR IS AFTER NAME WITHOUT SPACE)
+DOCS      = docs\
+            examples
+
+# common files
+COMMON    = $(TOPDIR)/common/gsmcomon.o \
+            $(TOPDIR)/common/gsmstate.o \
+            $(TOPDIR)/common/misc/misc.o \
+            $(TOPDIR)/common/misc/cfg.o \
+            $(TOPDIR)/common/misc/coding/coding.o \
+            $(TOPDIR)/common/misc/coding/md5.o \
+            $(TOPDIR)/common/service/sms/gsmsms.o \
+            $(TOPDIR)/common/service/sms/gsmems.o \
+            $(TOPDIR)/common/service/sms/gsmmulti.o \
+            $(TOPDIR)/common/service/gsmcal.o \
+            $(TOPDIR)/common/service/gsmdata.o \
+            $(TOPDIR)/common/service/gsmpbk.o \
+            $(TOPDIR)/common/service/gsmring.o \
+            $(TOPDIR)/common/service/gsmlogo.o \
+            $(TOPDIR)/common/service/gsmmisc.o \
+            $(TOPDIR)/common/service/gsmnet.o \
+            $(TOPDIR)/common/service/backup/gsmback.o \
+            $(TOPDIR)/common/service/backup/backldif.o \
+            $(TOPDIR)/common/service/backup/backlmb.o \
+            $(TOPDIR)/common/service/backup/backtext.o \
+            $(TOPDIR)/common/service/backup/backvcs.o \
+            $(TOPDIR)/common/service/backup/backvcf.o \
+            $(TOPDIR)/common/service/backup/backics.o \
+            $(TOPDIR)/common/device/bluetoth/affix.o \
+            $(TOPDIR)/common/device/bluetoth/bluez.o \
+            $(TOPDIR)/common/device/bluetoth/blue_w32.o \
+            $(TOPDIR)/common/device/bluetoth/bluetoth.o \
+            $(TOPDIR)/common/device/serial/ser_unx.o \
+            $(TOPDIR)/common/device/serial/ser_djg.o \
+            $(TOPDIR)/common/device/irda/irda.o \
+            $(TOPDIR)/common/device/devfunc.o \
+            $(TOPDIR)/common/protocol/at/at.o \
+            $(TOPDIR)/common/protocol/alcatel/alcabus.o \
+            $(TOPDIR)/common/protocol/nokia/mbus2.o \
+            $(TOPDIR)/common/protocol/nokia/fbus2.o \
+            $(TOPDIR)/common/protocol/nokia/phonet.o \
+            $(TOPDIR)/common/protocol/obex/obex.o \
+            $(TOPDIR)/common/protocol/symbian/mrouter.o \
+            $(TOPDIR)/common/phone/pfunc.o \
+            $(TOPDIR)/common/phone/at/atgen.o \
+            $(TOPDIR)/common/phone/at/siemens.o \
+            $(TOPDIR)/common/phone/at/samsung.o \
+            $(TOPDIR)/common/phone/at/sonyeric.o \
+            $(TOPDIR)/common/phone/alcatel/alcatel.o \
+            $(TOPDIR)/common/phone/nokia/dct3/n6110.o \
+            $(TOPDIR)/common/phone/nokia/dct3/n7110.o \
+            $(TOPDIR)/common/phone/nokia/dct3/n9210.o \
+            $(TOPDIR)/common/phone/nokia/dct3/dct3func.o \
+            $(TOPDIR)/common/phone/nokia/dct4/n3320.o \
+            $(TOPDIR)/common/phone/nokia/dct4/n3650.o \
+            $(TOPDIR)/common/phone/nokia/dct4/n6510.o \
+            $(TOPDIR)/common/phone/nokia/dct4/dct4func.o \
+            $(TOPDIR)/common/phone/nokia/nauto.o \
+            $(TOPDIR)/common/phone/nokia/nfunc.o \
+            $(TOPDIR)/common/phone/nokia/nfuncold.o \
+            $(TOPDIR)/common/phone/obex/obexgen.o \
+            $(TOPDIR)/common/phone/symbian/mroutgen.o
+
+# files for command line gammu
+GAMMU     = $(TOPDIR)/gammu/depend/nokia/dct3.o \
+            $(TOPDIR)/gammu/depend/nokia/dct3trac/wmx.o \
+            $(TOPDIR)/gammu/depend/nokia/dct3trac/wmx-gsm.o \
+            $(TOPDIR)/gammu/depend/nokia/dct3trac/wmx-list.o \
+            $(TOPDIR)/gammu/depend/nokia/dct3trac/wmx-sim.o \
+            $(TOPDIR)/gammu/depend/nokia/dct3trac/wmx-util.o \
+            $(TOPDIR)/gammu/depend/nokia/dct4.o \
+            $(TOPDIR)/gammu/depend/siemens/dsiemens.o \
+            $(TOPDIR)/gammu/depend/siemens/chiffre.o \
+            $(TOPDIR)/gammu/smsd/smsdcore.o \
+            $(TOPDIR)/gammu/smsd/s_files.o \
+            $(TOPDIR)/gammu/smsd/s_mysql.o \
+            $(TOPDIR)/gammu/sniff.o \
+            $(TOPDIR)/gammu/gammu.o
+
+LOCALE    = $(TOPDIR)/common/misc/misc.o \
+            $(TOPDIR)/common/misc/cfg.o \
+            $(TOPDIR)/common/misc/coding/coding.o \
+            $(TOPDIR)/cfg/locale/locale.o
+     
+LOCALE2   = $(TOPDIR)/cfg/locale
+
+include $(TOPDIR)/cfg/Makefile.cfg
+
+DESTDIR = 
+
+# --------------------------- internal source ---------------------------------
+
+%.o: %.c
+	@echo Making $<
+	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $(<) -o $(@)
+    
+all: gammu
+
+$(TOPDIR)/gammu/gammu: $(COMMON) $(GAMMU)
+	@echo Linking gammu
+	@$(CC) $(COMMON) $(GAMMU) -lm $(LDLIBS) -o $(TOPDIR)/gammu/gammu
+  
+gammu: $(TOPDIR)/gammu/gammu
+	
+$(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR): $(COMMON)
+	@echo Linking libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
+	@$(CC) $(LDLIBS) -shared -Wl,-soname -Wl,libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) -o $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(COMMON)
+	@$(LN) -s libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR)
+	@$(LN) -s libGammu.so.$(SONAME_MAJOR) $(TOPDIR)/common/libGammu.so
+
+$(TOPDIR)/common/libGammu.a: $(COMMON)
+	@echo Linking libGammu.a
+	@$(RM) $(TOPDIR)/common/libGammu.a
+	@$(AR) cru $(TOPDIR)/common/libGammu.a $(COMMON)
+	@$(RANLIB) $(TOPDIR)/common/libGammu.a
+ 
+$(TOPDIR)/gammu/gammu-shared: $(COMMON) $(GAMMU) $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
+	@echo Linking gammu-shared
+	@$(CC) $(LDFLAGS) $(LDLIBS) $(GAMMU) -lm -L$(TOPDIR)/common -lGammu -o $(TOPDIR)/gammu/gammu-shared
+ 
+shared: $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(TOPDIR)/common/libGammu.a $(TOPDIR)/gammu/gammu-shared
+ 
+# Backward compatibility
+makelib: shared
+
+clean:
+	@echo Cleaning binaries and object files
+	@$(RM) $(COMMON) $(GAMMU) core $(TOPDIR)/common/libGammu*
+	@$(RM) $(TOPDIR)/gammu/gammu $(TOPDIR)/gammu/gammu-shared tags
+	@$(RM) $(TOPDIR)/cfg/locale/locale.o $(TOPDIR)/cfg/locale/locale
+	@echo Cleaning autoconf stuff
+	@$(RM) -r $(TOPDIR)/cfg/autoconf/*.cache \
+            $(TOPDIR)/cfg/autoconf/config.log \
+            $(TOPDIR)/cfg/autoconf/config.status \
+            $(TOPDIR)/cfg/autoconf/VERSION \
+            $(TOPDIR)/cfg/autoconf/configure
+	@echo Cleaning API documentation
+	@$(RM) -r gammu-doc
+
+makelocale: $(LOCALE)
+	@echo Linking locale application
+	@$(CC) $(LOCALE) -lm -o $(TOPDIR)/cfg/locale/locale
+	@for xxx in $(LOCALE2); do \
+            ( cd $$xxx; \
+                ./locale \
+            ) \
+	done
+	@$(RM) $(TOPDIR)/cfg/locale/locale.o $(TOPDIR)/cfg/locale/locale
+
+distclean: makelocale clean
+	@echo Setting default config
+	@chmod a+x $(TOPDIR)/docs/examples/ppp/*
+	@chmod a+x $(TOPDIR)/docs/examples/fax/*
+	@chmod a+x $(TOPDIR)/other/config/*
+	@chmod a+x $(TOPDIR)/other/smsdutil/*
+	@chmod a+x $(TOPDIR)/other/perms/perms
+	@chmod a+x $(TOPDIR)/configure
+	@$(TOPDIR)/configure
+	@echo Cleaning autoconf stuff
+	@$(RM) -r $(TOPDIR)/cfg/autoconf/*.cache \
+	$(TOPDIR)/cfg/autoconf/config.log \
+	$(TOPDIR)/cfg/autoconf/config.status \
+	$(TOPDIR)/cfg/autoconf/VERSION \
+	$(TOPDIR)/cfg/autoconf/configure
+   
+uninstall:
+	@echo Uninstalling Gammu
+	@$(RM) $(DESTDIR)$(INSTALL_BIN_DIR)/gammu $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so*
+	@$(RM) $(DESTDIR)$(INSTALL_MAN_DIR)/gammu.1 $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.a
+	@$(RM) -r $(DESTDIR)$(INSTALL_DOC_DIR)/
+	@$(RM) -r $(DESTDIR)$(INSTALL_LOC_DIR)/
+
+installlocales:
+	@echo Installing locales to $(DESTDIR)$(INSTALL_LOC_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LOC_DIR)
+	@$(FIND) docs/docs/locale -type f -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_LOC_DIR) \;
+
+installdocs:
+	@echo Installing docs to $(DESTDIR)$(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_DOC_DIR)
+	@for xxx in $(DOCS); do \
+            ( cd $(TOPDIR)/docs/$$xxx; \
+                $(FIND) . -type d \! -path "*CVS*" \
+                    -exec $(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_DOC_DIR)/$$xxx/{} \; ; \
+                $(FIND) . -type f \! -path "*CVS*" \
+                    -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_DOC_DIR)/$$xxx/{} \; \
+            ) \
+	done
+	@$(RM) -rf $(DESTDIR)$(INSTALL_DOC_DIR)/docs/locale
+	@$(INSTALL) -m 0644 $(TOPDIR)/changelog $(DESTDIR)$(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/readme.txt $(DESTDIR)$(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/copying $(DESTDIR)$(INSTALL_DOC_DIR)
+	@echo Installing man to $(DESTDIR)$(INSTALL_MAN_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_MAN_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/docs/docs/english/gammu.1 $(DESTDIR)$(INSTALL_MAN_DIR)
+	@$(RM) $(DESTDIR)$(INSTALL_DOC_DIR)/docs/english/gammu.1
+ 
+install: uninstall all installdocs installlocales installonly
+
+installonly: all
+	@echo Installing binaries to $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) -m 0755 $(TOPDIR)/gammu/gammu $(DESTDIR)$(INSTALL_BIN_DIR)
+
+installshared: installlib
+installlib: uninstall makelib installdocs installlocales installlibonly
+
+installlibonly: shared
+	@echo Installing binaries to $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) -m 0755 $(TOPDIR)/gammu/gammu-shared $(DESTDIR)$(INSTALL_BIN_DIR)/gammu
+
+	@echo Installing shared library to $(DESTDIR)$(INSTALL_LIB_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LIB_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(DESTDIR)$(INSTALL_LIB_DIR)
+	@$(LN) -s libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so.$(SONAME_MAJOR)
+	@$(LN) -s libGammu.so.$(SONAME_MAJOR) $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so
+ 
+	@echo Installing static library to $(DESTDIR)$(INSTALL_LIB_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/common/libGammu.a $(DESTDIR)$(INSTALL_LIB_DIR)
+
+	@echo Installing include files to $(DESTDIR)$(INSTALL_H_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_H_DIR)
+	@for xxx in '$(TOPDIR)/common'; do \
+            ( cd $(TOPDIR)/$$xxx; \
+                $(FIND) . -type d \! -path "*CVS*" \
+                    -exec $(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_H_DIR)/{} \; ; \
+                $(FIND) . -type f \! -path "*CVS*" -name '*.h' \
+                    -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_H_DIR)/{} \; \
+            ) \
+	done
+	@$(INSTALL) -m 0644 cfg/config.h $(DESTDIR)$(INSTALL_H_DIR)/config.h
+
+	@echo Installing pkgconfig file
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LIB_DIR)/pkgconfig
+	@$(INSTALL) -m 0644 cfg/pkgconfig/gammu.pc $(DESTDIR)$(INSTALL_LIB_DIR)/pkgconfig
+
+apidoc:
+	@if test -z "$(DOXYGEN)" ; then \
+            echo "You need doxygen to generate API documentation."; \
+            echo "Install doxygen and rerun configure." ; \
+            exit 1 ;\
+        fi
+	@echo "Generating API documentation in gammu-doc directory"
+	@$(DOXYGEN) cfg/doxygen/Doxyfile
+
+tags: $(shell find . -name '*.[ch]' -o -name '*.cpp')
+	@echo Generating tags file
+	@ctags $(shell find . -name '*.[ch]' -o -name '*.cpp')
+
+# This will convert all *.[ch] files to CRLF (DOS/Windoze), it expects all
+# files are LF only or CRLF only
+todos:
+	@echo "Converting to CRLF:"
+	@find . -name '*.[ch]' -o -name '*.cpp' | \
+	while read fname ; do \
+            echo "$${fname}"; \
+            todos "$${fname}"; \
+	done
+
+# This will convert all *.[ch] files to LF (Unix/Linux), it expects all
+# files are LF only or CRLF only
+fromdos:
+	@echo "Converting to LF:"
+	@find . -name '*.[ch]' -o -name '*.cpp' | \
+	while read fname ; do \
+            echo "$${fname}"; \
+            fromdos "$${fname}"; \
+	done
+
+# This will convert all *.[ch] files to LF (Unix/Linux), it will convert any
+# possible single remaining CR to LF
+fixcrlf:
+	@echo "Converting to LF with fixup:"
+	@tmpfile=`mktemp /tmp/gammu-fixcrlf.XXXXXX` export tmpfile ; \
+	find . -name '*.[ch]' -o -name '*.cpp' | \
+	while read fname ; do \
+            echo -n "$${fname}" ; \
+            fromdos "$${fname}" ; \
+            if ( file "$${fname}" | grep -q 'CR' ) ; then \
+                cat "$${fname}" > "$${tmpfile}" ; \
+                tr '\r' '\n' < "$${tmpfile}" > "$${fname}" ; \
+                echo " fixed" ; \
+            else \
+                echo " OK" ; \
+            fi \
+	done ; \
+	rm -f "$${fname}" ; \
+	unset tempfile
+
+cleantree:
+	@echo Making Gammu tree snapshot
+	@$(INSTALL) -d $(TEMP_DIR)/gammu-$(VERSION)/
+	@for xxx in '.'; do \
+            ( cd $(TOPDIR)/$$xxx; \
+                $(FIND) . -type d \! -path "*CVS*" \
+                    -exec $(INSTALL) -m 0755 -d $(TEMP_DIR)/gammu-$(VERSION)/{} \; ; \
+                $(FIND) . -type f \! -path "*CVS*" \
+                    -exec $(INSTALL) -m 0644 {} $(TEMP_DIR)/gammu-$(VERSION)/{} \; \
+            ) \
+	done
+	@$(RM) -rf gammu-$(VERSION)/
+	@$(INSTALL) -d gammu-$(VERSION)
+	@cp $(TEMP_DIR)/gammu-$(VERSION)/* --target-directory=gammu-$(VERSION) -r
+	@$(RM) $(TEMP_DIR)/gammu-$(VERSION) -r 
+	@chmod a+rwx gammu-$(VERSION)/configure
+	make -C gammu-$(VERSION) clean
+
+rpm: cleantree
+	@find gammu-$(VERSION)/ -exec chmod u+w {} \;
+	@echo Creating $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz file
+	@tar cvfz $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz gammu-$(VERSION) > /dev/null
+	@echo Removing Gammu tree snapshot
+	@$(RM) -r gammu-$(VERSION)/
+	@echo Installing $(RPM_DIR)/SPECS/gammu.spec
+	@$(INSTALL) -m 0444 $(TOPDIR)/gammu.spec $(RPM_DIR)/SPECS/gammu.spec
+	@echo Making packages
+	@$(RPMBUILD) -ba -v $(RPM_DIR)/SPECS/gammu.spec
+	@$(RM) $(RPM_DIR)/SPECS/gammu.spec
+	@$(RM) $(RPM_DIR)/SOURCES/gammu-$(VERSION).tar.gz
+	@$(RM) -r $(RPM_DIR)/BUILD/gammu-$(VERSION)
+	@$(MV) $(RPM_DIR)/SRPMS/gammu-$(VERSION)*.rpm ..
+	@$(MV) $(RPM_DIR)/RPMS/*/gammu-*$(VERSION)*.rpm ..
+	@ls -l ../gammu-*$(VERSION)*.rpm
+
+deb: 
+	@echo Building Debian package
+	@fakeroot make -f debian/rules binary
+
+tgz:
+	@echo Building Slackware \(\>8.1\) package
+	@checkinstall -S -pkgarch=`/bin/arch` --default --newslack

@@ -1,0 +1,97 @@
+#!/bin/sh
+#version 0.2
+FILENAME="/tmp/chatscripttemp"
+if [ -z "$6" ]
+then
+    echo Script for making ppp connections using GSM device
+    echo Part of Gammu package \(www.mwiacek.com\)
+    echo
+    echo startppp data device number user pass 9600/14400/19200/28800/43200
+    echo Example: startppp data /dev/ttyS1 123 \"plusgsm\" \"plusgsm\" 14400
+    echo 9600 and 14400 use one channel
+    echo 19200 and 28800 two channels \(HSCSD\)
+    echo 43200 three channels \(HSCSD\)
+    echo
+    echo startppp gprs device number user pass apn
+    echo Example: startppp gprs /dev/ttyS1 *99***1# \"\" \"\" www.plusgsm.pl
+    exit 0
+fi
+if [ "$1" = "data" ]
+then
+    PHONE_DATA_OUTSPEED="-1"
+    if [ "$6" = "9600" ]
+    then
+        PHONE_DATA_OUTSPEED=1
+    fi
+    if [ "$6" = "14400" ]
+    then
+        PHONE_DATA_OUTSPEED=2
+    fi
+    if [ "$6" = "19200" ]
+    then
+        PHONE_DATA_OUTSPEED=3
+    fi
+    if [ "$6" = "28800" ]
+    then
+        PHONE_DATA_OUTSPEED=4
+    fi
+    if [ "$6" = "43200" ]
+    then
+        PHONE_DATA_OUTSPEED=6
+    fi
+    if [ "$PHONE_DATA_OUTSPEED" = "-1" ]
+    then
+        echo Unknown speed
+        exit 0
+    fi
+#	echo ECHO ON > $FILENAME
+    echo TIMEOUT 10 > $FILENAME
+    echo ABORT \'\\nBUSY\\r\' >> $FILENAME
+    echo ABORT \'\\nNO ANSWER\\r\' >> $FILENAME
+    echo ABORT \'\\nRINGING\\r\\n\\r\\nRINGING\\r\' >> $FILENAME
+    echo ABORT \'\\nNO CARRIER\\r\' >> $FILENAME
+    echo \'\' "\\r\\dATZ" >> $FILENAME
+    echo \'\' "AT+CBST=51,0,1" >> $FILENAME
+    echo \'\' "AT+CHSN=$PHONE_DATA_OUTSPEED,0,0,0" >> $FILENAME
+    echo TIMEOUT 10 >> $FILENAME
+    echo OK ATD$3 >> $FILENAME
+    echo CONNECT \'\' >> $FILENAME
+else
+    if [ "$1" = "gprs" ]
+    then
+#	echo ECHO ON > $FILENAME
+	echo TIMEOUT 10 > $FILENAME
+    	echo ABORT \'\\nBUSY\\r\' >> $FILENAME
+	echo ABORT \'\\nNO ANSWER\\r\' >> $FILENAME
+	echo ABORT \'\\nRINGING\\r\\n\\r\\nRINGING\\r\' >> $FILENAME
+	echo ABORT \'\\nNO CARRIER\\r\' >> $FILENAME
+	echo \'\' "\\r\\dATZ" >> $FILENAME
+	echo OK	"AT+CGDCONT=1,\"IP\",\"$6\"" >> $FILENAME
+	echo TIMEOUT 10 >> $FILENAME
+	echo OK ATD$3 >> $FILENAME
+	echo CONNECT \'\' >> $FILENAME
+    else
+	echo Unknown bearer
+	exit 0
+    fi
+fi
+echo Device on $2 calling to $3
+if [ -z "$4" ]
+then
+    USER=""
+else
+    USER="user $4"
+    echo $USER
+fi
+if [ -z "$5" ]
+then
+    PASS=""
+else
+    PASS="password $5"
+    echo $PASS
+fi
+/usr/sbin/pppd $2 115200 connect "/usr/sbin/chat -v -f $FILENAME" $USER $PASS 	\
+	modem crtscts defaultroute 		      				\
+	-detach noccp ipcp-accept-local noipdefault   				\
+	mtu 1500 mru 1500
+rm $FILENAME

@@ -1,0 +1,2 @@
+#!/bin/sh
+/usr/sbin/pppstats -w 1 -a

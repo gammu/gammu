@@ -1,0 +1,38 @@
+Od: owner-gnokii@net.lut.ac.uk w imieniu Gabriele Zappi
+[gzappi@inwind.it]
+Wys³ano: 7 lutego 2001 01:04
+Do: gnokii-mailinglist
+Temat: Untarring mygnokii.tar.gz, some files w/ uncorrect permission are
+created...
+
+
+Hi there,
+
+I'm here to notice everybody that making the tar xvzf of mygnokii.tar.gz
+(also version 0.3.3_pre8-gold_2001_01_02) the dir "Doc/" and some
+sub-directories and files under this tree, are created without read
+permissions (and executing for directories)...
+
+Should be a nice thing to correct permissions before generating the
+tarball in next releases.
+In the while I suggest to run this little shell that I wrote in order to
+rearrange permission (enclose in attachment) in all the created tree,
+starting from ./mygnokii. It must be run using the directory created by
+'tar x' (generally "mygnokii") as parameter.
+
+Best,
+
+-- 
+Saluti (Good bye)
+Gabriele Zappi
+
+Terrorist, bomb, Allah, iran, saddam, golpe, gun, patriot, rocket, 
+hijack, sky-jack, politic, cruisade, mafia, nervine-gas, attack, 
+war, sniper, ...  ...and so on. 
+This words are just for messing up E_c_H_e_L_o_N's memory ;-))
+
++--------- Using S.u.S.E. Linux 7.0 - Kernel 2.2.16  ! ------------+
+| E-mail address ..........: gzappi@inwind.it                      |
+| G. Zappi's personal page : http://www.infinito.it/utenti/gzappi/ |
+| ICQ Uin # 36664317                                               |
++------------------------------------------------------------------+

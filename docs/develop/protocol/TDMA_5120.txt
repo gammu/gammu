@@ -1,0 +1,89 @@
+TDMA 5120TDMA 5120 
+Eduardo Spremolla gnokii-users@mail.freesoftware.fsf.org 
+10 Jul 2002 10:10:11 -0300 
+  Previous message: Getting started (6210) 
+  Next message: usb gnokii 
+  Messages sorted by: [ date ] [ thread ] [ subject ] [ author ] 
+
+
+
+After playing a while with my 5120i y find some use full frames:
+
+1) got from sneefing in Logomanger the get startup logo :
+
+ 40 {0x07, 0x07, 0x08, section} section goes from 1 to 6
+answer
+ dd {+0x01, 0x00, 0x07, 0x08, (84 bytes => 84 cols x 8 bits bit0 first 
+row )
+
+Cant figure out how to modify 6110 code to get & put the logo, not in a
+hi value to me now.
+ 
+2) got key press working as stated in
+
+ http://www.flosys.com/tdma/n5160.html
+
+with frame: key-press:   D1 {+00 01 50 00 01 KY}
+this seems to press the key for a while. No release needed
+	    key-release: D1 {+00 01 50 00 00 KY}
+and D1 {+00 01 50 00 02 00 KY} keep the key press => got speedee dial.
+
+3) the getmemory  40 {+00 00 07 11 00 10 00 mem} get phonebook with the
+phone in bcd, but it seems to be a way to read chunks of memory with
+diferent numbers in the 6 place. in particular:
+
+ 40 {+0x00, 0x00, 0x07, 0x11, 0x00, 0x0f, 0x00, 0x00 } get configuration
+pins.
+
+ 40 {+0x00, 0x00, 0x07, 0x11, 0x00, 0x09, 0x00, 0x00 } get security code
+ 40 {+0x00, 0x00, 0x07, 0x11, 0x00, 0x08, 0x00, nam# } get NAM data 
+that last answers with :
+ dd {+01 00 11 00 08 00 00,
+
+03 04 : home sys id
+01 4d : primary paggin channel
+02 c4 : seconda paggin channel
+88 88 88 88 88 : own #
+09 63 c2 09 03 00 0b : unknow
+0a : group id
+01 : Access method
+01 : local option
+0f : overload class
+20 41 43 41 45 00 00 00 00 00 00 00 00 00 00 00  : alpha tag
+b3 4d : unknow
+01 : NAM status
+11 11 11 11 11 00 00 00 00 00 00 00 00 : unknow
+00 00 00 00 00 00 01 00 00 00 01 36 : unknow
+01 4d : dedicate ch
+01 4e : dedicate B ch
+14 : dedicate ch #
+14 : dedicate B ch #
+00 : msg center # len
+00 : msg center in flag
+00 00 00 00 00 00 00 00 00 00 00 00 00 00 : msg center #
+08 01 80 70 8f dd 00 ef 00 00 00 00 00 00 00 00 : unknow
+00 00 00 00 00 : gate way #
+00 00 00 : unknow
+
+More interesting ( and dangerous ) is than the 07 10 sequence  in place
+of 07 11 in the request change the command from read to write.be care
+full!!! I almost ruin my 5125 with a 40 {+0x00, 0x00, 0x07, 0x10, 0x00,
+0x08, 0x00, 0x01 } frame , since the frame is ok, but the phone the
+write info from an area of the buffer that I did not send!!!!
+
+ 
+OK so far. Still looking for how to handle SMS......
+
+LALO
+
+
+
+
+
+
+
+
+  Previous message: Getting started (6210) 
+  Next message: usb gnokii 
+  Messages sorted by: [ date ] [ thread ] [ subject ] [ author ] 
+

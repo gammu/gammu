@@ -1,0 +1,7 @@
+This is an example, which show some possible methods of using Gammu
+functions.
+
+1. compile DLL
+2. copy it to this directory
+3. install component from component directory (click on *.dpk)
+4. run project

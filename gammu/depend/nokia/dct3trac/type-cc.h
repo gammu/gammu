@@ -1,0 +1,43 @@
+{0x00, "", "Escape to nationally specific message types"},
+/* Call establishment messages: */
+{0x01, "9.3.1", "ALERTING"},
+{0x08, "9.3.2", "CALL CONFIRMED"},
+{0x02, "9.3.3", "CALL PROCEEDING"},
+{0x07, "9.3.5", "CONNECT"},
+{0x0F, "9.3.6", "CONNECT ACKNOWLEDGE"},
+{0x0E, "9.3.8", "EMERGENCY SETUP"},
+{0x03, "9.3.17", "PROGRESS"},
+{0x04, "9.3.17a", "CC-ESTABLISHMENT"},
+{0x06, "9.3.17b", "CC-ESTABLISHMENT CONFIRMED"},
+{0x0B, "9.3.18a", "RECALL"},
+{0x09, "9.3.23a", "START CC"},
+{0x05, "9.3.23", "SETUP"},
+/* Call information phase messages: */
+{0x17, "9.3.13", "MODIFY"},
+{0x1F, "9.3.14", "MODIFY COMPLETE"},
+{0x13, "9.3.15", "MODIFY REJECT"},
+{0x10, "9.3.31", "USER INFORMATION"},
+{0x18, "9.3.10", "HOLD"},
+{0x19, "9.3.11", "HOLD ACKNOWLEDGE"},
+{0x1A, "9.3.12", "HOLD REJECT"},
+{0x1C, "9.3.20", "RETRIEVE"},
+{0x1D, "9.3.21", "RETRIEVE ACKNOWLEDGE"},
+{0x1E, "9.3.22", "RETRIEVE REJECT"},
+/* Call clearing messages: */
+{0x25, "9.3.7", "DISCONNECT"},
+{0x2D, "9.3.18", "RELEASE"},
+{0x2A, "9.3.19", "RELEASE COMPLETE"},
+/* Miscellaneous messages: */
+{0x39, "9.3.4", "CONGESTION CONTROL"},
+{0x3E, "9.3.16", "NOTIFY"},
+{0x3D, "9.3.27", "STATUS"},
+{0x34, "9.3.28", "STATUS ENQUIRY"},
+{0x35, "9.3.24", "START DTMF"},
+{0x31, "9.3.29", "STOP DTMF"},
+{0x32, "9.3.30", "STOP DTMF ACKNOWLEDGE"},
+{0x36, "9.3.25", "START DTMF ACKNOWLEDGE"},
+{0x37, "9.3.26", "START DTMF REJECT"},
+{0x3A, "9.3.9", "FACILITY"},
+{-1, NULL, NULL}
+/* Unused sections
+*/

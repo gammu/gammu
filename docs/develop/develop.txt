@@ -1,0 +1,228 @@
+Gammu developers README version 25.04.2002
+------------------------------------------
+Q. What is structure for it ?
+
+A. /                       general files - readme, makefiles, license
+   /common                 all files shared for different Gammu tools
+   /common/device          drivers for devices such serial ports or irda
+   /common/device/serial   drivers for serial ports
+   /common/device/irda     drivers for infrared over sockets
+   /common/protocol        protocol drivers
+   /common/protocol/nokia  Nokia specific protocols
+   /common/phone           phone modules
+   /common/phone/nokia     modules for different Nokia phones
+   /common/misc            different services. They can be used for any project
+   /common/service         different gsm services for logos, ringtones, etc.
+   /gammu                  files for command line tool
+   /misc                   some misc files - scripts, todo, etc.
+-------------------------------------------------------------------------------
+Q. What are rules for it ?
+
+A. 1. use indetation
+
+   2. all enums start from 1, not from 0
+
+   3. when prepare frame for phone with bitmap (and width/height info):
+      Please notice, that bitmap before coding according to phone needs
+      can have any dimensions. Use PHONE_GetBitmapWidthHeight to get dimensions
+      of target image format, don't use width/height from bitmap structure.
+-------------------------------------------------------------------------------
+Q. Why Gammu, not Gnokii ?
+
+A. There are many differences between them. Here are some:
+
+   01. Unicode used almost everywhere. In MyGnokii and Gnokii with modern
+       phones (they return everything in Unicode) things are converted from
+       Unicode and again to Unicode in other places. No more unnecessary
+       conversions.
+
+   02. Almost everything is structural. In Gnokii some things are declared
+       in files, not in "main" phone structure. It can make some problems, when
+       will try to support two phones on two serial ports in one application.
+
+   03. in Gammu you can make support for some things without adding source
+       to "main" phone modules. Very good idea for things, which are available
+       only for few models and for all other will be UNIMPLEMENTED. It includes
+       also some obsolete functions - why should we compile RLP source, when
+       all new better phones have modems built in ?
+
+   04. Gnokii/MyGnokii has to have some compatibility with previously written
+       source. In Gammu some solutions are reimplemented and done easier.
+
+   05. no more reimplementing C libraries in source - see snprintf in gnokii.
+
+   06. more OS supported.
+
+   07. better sharing source. Less source = smaller application easier to debug.
+
+   08. better user friendly interface
+
+   09. no more 2 years rewriting source...
+
+   10. it's easier to see, what frames are implemented, what not (in phone
+       modules they're put line after line).
+
+   11. better compatiblity with ANSI C = no warnings in MS VC 6
+
+   12. all locations for user start from 0 (in Gnokii some from 0, some from 1)
+
+   14. some things like SMS can be accessed few ways
+
+   15. when possible, there are used "constant" locations. I will explain
+       on the example:
+
+       1. save two calendar notes in any Nokia 61xx phone. Call them "reminder"
+          and "call" notes. Reminder will be returned by phone of 1'st
+          location, Call on 2'nd.
+       2. Now Reminder will be deleted (for example, from phone keypad).
+          Call will be moved from 2'nd to 1'st.
+       3. When will read calendar notes again, have to read all notes again
+          because of changed locations (let's say, we won't read Call note
+          again. It will have location 2 in PC. Now you will write new note
+          into phone (for keypad) and it will save in under location 2. When
+          will try to save Call not with location 2, it will overwrite new 
+          saved note !).
+
+       This is not good. When for example delete one entry from phonebook,
+       other locations "stays" on their places. These are "constant" locations.
+
+       With "constans" locations, when delete one location from PC, don't have
+       to read full memory from phone.
+
+   etc. etc.
+
+   Of course, some of these things can be in the future in gnokii too...
+-------------------------------------------------------------------------------
+Q. How to discover phone protocol ?
+
+A. You have to have communication dump.
+
+   Let's start from cable connection:
+
+   Download http://www.sysinternals.com/ntw2k/freeware/portmon.shtml
+   It allows to capture bytes sent and received by ready binary software.
+
+   If you have log saved by PortMon and protocol is the same to "old" Nokia
+   protocols, can use Gammu to decode it. It's simple:
+
+   gammu --decodesniff MBUS2 file 6210 > log
+
+   saves in log decoded MBUS2 dump session. There is used phone module for
+   6210 and have you have debug info about 6210 specific frames (you don't have
+   to add model). Dump file for --decodesniff and MBUS should be specific:
+
+   1. without bytes sent to phone (in Portmon you set it here:
+      "Edit", "Filter/Highlight")
+
+   2. in Hex format ("Options", "Show Hex")
+
+   3. without Date & Time ("Options", "Show Time" & "Clock Time")
+
+   Now something about sniffing infrared:
+
+   First of all you need two computers with IrDA. One running linux, that will
+   sniff and one running windows, which will communicate with the phone and
+   whatever software you want (Nokia, Logomanager, Oxygen Phone Manager).
+   Then you have to get the software from
+   http://www.dev-thomynet.de/nokworld/noktrace/
+
+   You have to disable IrDA services on the linux machine and eventually you
+   have to change the default port the 'irda_intercept' program is sniffing
+   from (default ttyS1). On the windows machine you should decrease the
+   maximum transmission speed to 9600bps if possible, because the intercept
+   program doesn't seem to handle speed changes. (9600 is for searching
+   devices in range and then the highest possible speed is chosen) If it isn't
+   possible you have to change the default bitrate in intercept source code,
+   too. Then you won't see anything until the windows machine and the phone
+   start transmitting data, which isn't too bad. At least here in my setup I
+   could sniff the data coming from phone and sent to it in one go, like that:
+
+       win    ------------------>   Nokia
+     machine  <-----------------    phone
+                     ^^
+                     ||
+                   sniffing
+                    device
+
+   You get a raw data file (.trc) from the intercept program, which you can
+   then decode to hex with the second program from the above mentioned page.
+   You should possibly be able to use Marcin's magnokii for decoding the trc
+   files, too, but it didn't work for me so I just figured things out from the
+   hex files. In the hex files you should look for primary frames with
+   00 01 00 in it, because this is the FBUS header which is in every valuable
+   frame sent to phone. It's not really joy to do that, but if it brings
+   support for a new phone it's worth it :-)
+-------------------------------------------------------------------------------
+Q. How to create patch files ?
+
+A. I will describe, how to make patch using diff. If you can't make it,
+   simply send me info about changes in plain text email or attached ASCII
+   file.
+
+   1. copy source with Gammu, you start from, into "gammu" dir
+   2. copy source with Gammu, you want to modify, into "work" dir
+   3. make changes in "work"
+   4. go into subdirectory with "gammu" and "work"
+   5. make "diff -urx CVS gammu work > patchfile"
+   6. send "patchfile" to me ;-)
+-------------------------------------------------------------------------------
+Q. How works functions in phone drivers and what is GSM_Reply_Function for ?
+
+A. When phone gives answers, we check if we requested received info and we
+   redirect it to concrete reply function, which will decode it. Different
+   phone answers can go to one reply function let's say responsible for
+   getting sms status. There are 2 types of answer:
+
+   1.binary. Example:
+
+   {N6110_ReplySaveSMSMessage,"\x14",0x03,0x05,ID_SaveSMSMessage},
+
+   ID_SaveSMSMessage request function reply. Frame is type "\x14",
+   0x03 char of frame must be 0x05. If yes, we go to N6110_ReplySaveSMSMessage.
+   Of course, things like frame type are found in protocol (here FBUS, MBUS,
+   etc.) funcitons. If don't need anything more than frame type, 0x03,0x05
+   should be 0x00, 0x00 - it means then, that we check only frame type.
+
+   2.text.Example:
+
+   {ATGEN_ReplyIncomingCallInfo,"+CLIP",0x00,0x00,ID_IncomingFrame},
+
+   All incoming (not requested in the moment, sent by phone, who
+   likes us - ID_IncomingFrame) responses starting from "+CLIP" will go
+   to the ATGEN_ReplyIncomingCallInfo.
+
+   This is how GSM_Reply_Function is filled. Now how to make phone requests ?
+
+   Example:
+
+   static GSM_Error N6110_GetMemory (GSM_StateMachine   *s,
+                                     GSM_PhonebookEntry *entry)
+   {
+      unsigned char req[] = {
+           N6110_FRAME_HEADER, 0x01,
+           0x00,            /* memory type */
+           0x00,            /* location */
+           0x00};
+
+      req[4] = NOKIA_GetMemoryType(entry->MemoryType,N6110_MEMORY_TYPES);
+      if (req[4]==0xff) return GE_NOTSUPPORTED;
+
+      req[5] = entry->Location;
+
+      s->Phone.Data.Memory=entry;
+      dprintf("Getting phonebook entry\n");
+      return GSM_WaitFor (s, req, 7, 0x03, 4, ID_GetMemory);
+   }
+
+   First we fill req according to values in *entry. Later set pointer
+   in s->Phone.Data (it's available for reply functions and they set
+   responses exactly to it) and use GSM_WaitFor. It uses s statemachine,
+   sends req frame with length 7, msg type is 0x03, we wait for answer
+   during 4 seconds, request id is ID_GetMemory. GSM_WaitFor internally
+   checks incoming bytes from phone and redirect them to protocol functions.
+   If they found full frame, there is checked GSM_Reply_Function, where is
+   called ReplyFunction or showed debug info, that frame is unknown. If
+   there is ReplyFunction, it has access to s->Phone.Data and decodes answer.
+   Returns error or not (and this is value for GSM_WaitFor). If there is
+   no requested answer during time, GSM_WaitFor returns GE_TIMEOUT.
+

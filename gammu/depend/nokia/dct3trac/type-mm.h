@@ -1,0 +1,30 @@
+/* Registration messages: */
+{0x01, "9.2.12", "IMSI DETACH INDICATION"},
+{0x02, "9.2.13", "LOCATION UPDATING ACCEPT"},
+{0x04, "9.2.14", "LOCATION UPDATING REJECT"},
+{0x08, "9.2.15", "LOCATION UPDATING REQUEST"},
+/* Security messages: */
+{0x11, "9.2.1", "AUTHENTICATION REJECT"},
+{0x12, "9.2.2", "AUTHENTICATION REQUEST"},
+{0x14, "9.2.3", "AUTHENTICATION RESPONSE"},
+{0x1C, "9.2.3a", "CS AUTHENTICATION FAILURE"},
+{0x18, "9.2.10", "IDENTITY REQUEST"},
+{0x19, "9.2.11", "IDENTITY RESPONSE"},
+{0x1A, "9.2.17", "TMSI REALLOCATION COMMAND"},
+{0x1B, "9.2.18", "TMSI REALLOCATION COMPLETE"},
+/* Connection management messages: */
+{0x21, "9.2.5", "CM SERVICE ACCEPT"},
+{0x22, "9.2.6", "CM SERVICE REJECT"},
+{0x23, "9.2.7", "CM SERVICE ABORT"},
+{0x24, "9.2.9", "CM SERVICE REQUEST"},
+{0x25, "9.2.5a", "CM SERVICE PROMPT"},
+{0x26, "9.2.20", "NOTIFICATION RESPONSE"},
+{0x28, "9.2.4", "CM RE-ESTABLISHMENT REQUEST"},
+{0x29, "9.2.8", "ABORT"},
+/* Miscellaneous messages: */
+{0x30, "9.2.19", "MM NULL"},
+{0x31, "9.2.16", "MM STATUS"},
+{0x32, "9.2.15a", "MM INFORMATION"},
+{-1, NULL, NULL}
+/* Unused sections
+*/

@@ -1,0 +1,107 @@
+# This is a sample ~/.gammurc file.
+# In Unix/Linux  copy it into your home directory and name it .gammurc
+#                or into /etc and name it gammurc
+# In Win32       copy it into directory with Gammu.exe and name gammurc
+# More about parameters later
+# -----------------------------------------------------------------------------
+
+[gammu]
+
+port = com8:
+#model = 6110
+connection = fbusblue
+#synchronizetime = yes
+#logfile = gammulog
+#logformat = textall
+#use_locking = yes
+#gammuloc = locfile
+#startinfo = yes
+#gammucoding = utf8
+
+[gammu1]
+
+port = com8:
+#model = 6110
+connection = fbusblue
+#synchronizetime = yes
+#logfile = gammulog
+#logformat = textall
+#use_locking = yes
+#gammuloc = locfile
+#startinfo = yes
+#gammucoding = utf8
+
+# -----------------------------------------------------------------------------
+# Now info about "Connection" parameter and connected with it port type
+# (more about port types later)
+# -----------------------------------------------------------------------------
+# "Connection" parameter | Port type | More details
+# -----------------------|-----------|-----------------------------------------
+# "fbus"                 | serial    | Nokia FBUS2
+# "fbusirda"/"infrared"  | serial    | Nokia FBUS2 over direct infrared device
+# "fbusdlr3"/"dlr3"      | serial    | Nokia FBUS2 with DLR3 cable
+# "fbusdku5"             | dku5      | Nokia FBUS2 with DKU5 cable. WIN32 ONLY
+# "fbuspl2303"           | usb       | Nokia FBUS2 with USB cable based on
+#                        |           | PL2303 chip.
+# "fbusblue"             | serial    | Nokia FBUS2 over Bluetooth serial device
+# "phonetblue"           | serial    | Nokia PHONET FBUS over Bluetooth serial
+#                        |           | device
+# "mrouterblue"          | serial    |
+# "mbus"                 | serial    | Nokia MBUS2
+# "at19200"/"at115200"/..| serial    | AT commands.8 bits, None parity, 1 stop
+#                        |           | bit, no flow control
+# -----------------------|-----------|-----------------------------------------
+# "irdaphonet"/"irda"    | irda      | Nokia PHONET FBUS over socket infrared
+# "irdaat"               | irda      | AT commands with socket infrared
+# "irdaobex"             | irda      | OBEX over socket infrared. MODEL "obex"
+# -----------------------|-----------|-----------------------------------------
+# "bluephonet"           | BT        | Nokia PHONET FBUS with Bluetooth stack
+# "bluefbus"/"dlr3blue"  | BT        | Nokia FBUS2 with Bluetooth stack
+# "blueat"/"atblue"      | BT        | AT commands with Bluetooth stack
+# "blueobex"             | BT        | OBEX with Bluetooth. MODEL "obex"
+#
+# Now more about port types and connected with it "Port" parameter
+# -----------------------------------------------------------------------------
+# Port type | "Port" parameter in Windows/DOS | "Port" parameter in Linux/Unix
+# ----------|---------------------------------|--------------------------------
+# serial    | "com*:"                         | "/dev/ttyS*"
+#           | (example "com1:")               | (example "/dev/ttyS1")
+#           |                                 | or "/dev/tts/**" (with DevFS)
+# ----------|---------------------------------|--------------------------------
+# irda      | ignored (can be empty)          | "/dev/ircomm*"
+# ----------|---------------------------------|--------------------------------
+# BT        |                 Bluetooth device address
+#           |                 (example "")
+# ----------|---------------------------------|--------------------------------
+# dku5      | ignored (can be empty)          | connection with it not possible
+# ----------|---------------------------------|--------------------------------
+# usb       | connection with it not possible | "/dev/ttyUSB*"
+#
+# Other config parameters
+# -----------------------------------------------------------------------------
+# Parameter name  | Description
+# ----------------|------------------------------------------------------------
+# Model           | use only, when Gammu doesn't recognize your phone model.
+#                 | Put it here. Example values: "6110", "6150", "6210", "8210"
+# SynchronizeTime | if you want to set time from computer to phone during
+#                 | starting connection. Do not rather use this option when
+#                 | when to reset phone during connection (in some phones need
+#                 | to set time again after restart)
+# GammuLoc        | name of localisation file
+# StartInfo       | this option allow to set, that you want (setting "yes")
+#                 | to see message on the phone screen or phone should enable
+#                 | light for a moment during starting connection. Phone
+#                 | WON'T beep during starting connection with this option.
+# GammuCoding     | forces using specified codepage (in win32 - for example
+#                 | "1250" will force CP1250) or UTF8 (in Linux - "utf8")
+# ----------------|------------------------------------------------------------
+# Logfile         | Use, when want to have logfile from communication.
+# Logformat       | What debug info and format should be used:
+#                 |   "nothing" - no debug level (default)
+#                 |   "text"    - transmission dump in text format
+#                 |   "textall" - all possible info in text format
+#                 |   "errors"  - errors in text format
+#                 |   "binary"  - transmission dump in binary format
+# ----------------|------------------------------------------------------------
+# Use_Locking     | under Unix/Linux use "yes", if want to lock used device
+#                 | to prevent using it by other applications. In win32 ignored
