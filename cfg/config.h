@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.98.9"
-#define VERSION_WIN "0,98,9,0"
+#define VERSION "0.99.0"
+#define VERSION_WIN "0,99,0,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -154,8 +154,10 @@
 //#  define HAVE_MYSQL_MYSQL_H 1
 #endif
 
-#define HAVE_ISWSPACE 1
-#define HAVE_TOWLOWER 1
+#ifndef DJGPP
+#  define HAVE_ISWSPACE 1
+#  define HAVE_TOWLOWER 1
+#endif
 
 #if !defined(WIN32) && !defined(DJGPP)
 /* Will be used Bluez BT stack ? */

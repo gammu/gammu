@@ -4,6 +4,15 @@
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
  * GNU GPL version 2 or later
  */
+/* Due to a problem in the source code management, the names of some of
+ * the authors have unfortunately been lost. We do not mean to belittle
+ * their efforts and hope they will contact us to see their names
+ * properly added to the Copyright notice above.
+ * Having published their contributions under the terms of the GNU
+ * General Public License (GPL) [version 2], the Copyright of these
+ * authors will remain respected by adhering to the license they chose
+ * to publish their code under.
+ */
 
 #include "../../gsmstate.h"
 
@@ -60,8 +69,8 @@ static GSM_Error serial_close(GSM_StateMachine *s)
 static GSM_Error serial_open (GSM_StateMachine *s)
 {
 	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
-	struct termios	  t;
-	int			    i;
+	struct termios	  	t;
+	int			i;
 
 	/* O_NONBLOCK MUST is required to avoid waiting for DCD */
 	d->hPhone = open(s->CurrentConfig->Device, O_RDWR | O_NOCTTY | O_NONBLOCK);
@@ -124,7 +133,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
-    	struct termios	  t;
+    	struct termios	  	t;
 
     	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setparity");
@@ -150,8 +159,8 @@ static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
 static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
-    	struct termios	  t;
-    	unsigned int	    flags;
+    	struct termios	  	t;
+    	unsigned int	    	flags;
 
     	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setdtrrts");
@@ -264,8 +273,8 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
     	GSM_Device_SerialData 		*d = &s->Device.Data.Serial;
     	struct timeval  		timeout2;
-    	fd_set	  		readfds;
-    	int	     		actual = 0;
+    	fd_set	  			readfds;
+    	int	     			actual = 0;
 
     	FD_ZERO(&readfds);
     	FD_SET(d->hPhone, &readfds);
@@ -283,8 +292,8 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 static int serial_write(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
-    	int		     ret;
-    	size_t		  actual = 0;
+    	int		     	ret;
+    	size_t		  	actual = 0;
 
     	do {
 		ret = write(d->hPhone, (unsigned char *)buf, nbytes - actual);

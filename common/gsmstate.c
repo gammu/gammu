@@ -554,7 +554,7 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 	bool				execute;
 	bool				available = false;
 	int				i	  = 0;
-//	int j;
+//	int 				j;
 
 	while (Reply[i].requestID!=ID_None) {
 		execute=false;
@@ -870,6 +870,7 @@ static OnePhoneModel allmodels[] = {
 #ifdef GSM_ENABLE_NOKIA6510
 	{"3100" ,"RH-19" ,"",           {F_PBKTONEGAL,F_PBKSMSLIST,0}},//fixme
 	{"3100b","RH-50" ,"",           {F_PBKTONEGAL,F_PBKSMSLIST,0}},//fixme
+ 	{"3105" ,"RH-48" ,"Nokia 3105",	{F_PBKTONEGAL,F_PBKSMSLIST,F_VOICETAGS,0}},//fixme
 	{"3108", "RH-6",  "Nokia 3108",	{0}}, //does it have irda ?
 	{"3200", "RH-30" ,"Nokia 3200",	{F_PBKTONEGAL,0}},//fixme
 	{"3200a","RH-31" ,"Nokia 3200",	{F_PBKTONEGAL,0}},//fixme
@@ -954,8 +955,8 @@ static OnePhoneModel allmodels[] = {
 	{"6610i","RM-37" ,"Nokia 6610i",{F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 	{"6800" ,"NSB-9" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},
 	{"6800" ,"NHL-6" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},
-	{"6810" ,"RM-2"  ,"Nokia 6810", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},//quess
-	{"6820" ,"NHL-9" ,"Nokia 6820", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},//quess
+	{"6810" ,"RM-2"  ,"Nokia 6810", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_NOTES,0}},//quess
+	{"6820" ,"NHL-9" ,"Nokia 6820", {F_PBKTONEGAL,F_TODO66,F_PBKSMSLIST,F_NOTES,0}},//quess
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"7110" ,"NSE-5" ,"Nokia 7110", {F_CAL62,0}},

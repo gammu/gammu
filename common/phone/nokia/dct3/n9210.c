@@ -374,7 +374,13 @@ GSM_Phone_Functions N9210Phone = {
 	NOTSUPPORTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
+	NOTSUPPORTED,			/*	GetNoteStatus		*/
+	NOTSUPPORTED,			/*	GetNote			*/
 	NOTSUPPORTED,			/*	GetNextNote		*/
+	NOTSUPPORTED,			/*	SetNote			*/
+	NOTSUPPORTED,			/*	AddNote			*/
+	NOTSUPPORTED,			/* 	DeleteNote		*/
+	NOTSUPPORTED,			/*	DeleteAllNotes		*/
 	NOTIMPLEMENTED, 		/*	GetProfile		*/
 	NOTSUPPORTED, 			/*	SetProfile		*/
     	NOTSUPPORTED,			/*  	GetFMStation        	*/

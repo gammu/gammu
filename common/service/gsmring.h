@@ -171,7 +171,7 @@ typedef struct {
 
 typedef struct {
 	int					Number;
-	GSM_RingtoneInfo			Ringtone[100];
+ 	GSM_RingtoneInfo			*Ringtone;
 } GSM_AllRingtonesInfo;
 
 GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone);
