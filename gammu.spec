@@ -2,23 +2,27 @@
 %define name        gammu
 %define bluetooth   1
 %define relnum      1
- 
+
 %if %_vendor == "suse"
 %define rel         %{relnum}suse
 %else
 %if %_vendor == "redhat"
 %define rel         %{relnum}rh
 %else
+%if %_vendor == "MandrakeSoft"
+%define rel         %{relnum}mdk
+%else
 %define rel         %{relnum}
 %endif
 %endif
- 
+%endif
+
 %if %bluetooth
 %define configureparams ""
 %else
-%define configureparams "--disable-bluefbus --disable-blueobex --disable-bluephonet --disable-blueat"
+%define configureparams "--disable-bluetooth"
 %endif
-  
+
 Summary:            Mobile phones tools for Unix (Linux) and Win32
 Name:               %name
 Version:            %ver
@@ -33,7 +37,11 @@ Group:              Applications/Communications
 %if %_vendor == "suse"
 BuildRequires:      bluez-libs >= 2.0
 %else
+%if %_vendor == "MandrakeSoft"
+BuildRequires:      libbluez1 >= 2.0 libbluez1-devel >= 2.0
+%else
 BuildRequires:      bluez-libs >= 2.0 bluez-libs-devel >= 2.0
+%endif
 %endif
 %endif
 Vendor:             Marcin Wiacek <marcin@mwiacek.com>
@@ -87,12 +95,12 @@ install -m 644 other/basic/* %buildroot%_docdir/gammu/other/basic
 install -m 644 other/smsdutil/* %buildroot%_docdir/gammu/other/smsdutil
 
 %post
-if test -f /etc/ld.so.conf ; then 
+if test -f /etc/ld.so.conf ; then
     /sbin/ldconfig
 fi
 
 %postun
-if test -f /etc/ld.so.conf ; then 
+if test -f /etc/ld.so.conf ; then
     /sbin/ldconfig
 fi
 
@@ -119,6 +127,10 @@ fi
 rm -rf %buildroot
 
 %changelog
+* Thu Jan  6 2005  Michal Cihar <michal@cihar.com>
+- add support for Mandrake, thanks to Olivier BERTEN <Olivier.Berten@advalvas.be> for testing
+- use new disable-bluetooth
+
 * Wed Nov 12 2003 Michal Cihar <michal@cihar.com>
 - distiguish between packaging on SUSE and Redhat
 - build depends on bluez if wanted
