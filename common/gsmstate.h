@@ -443,6 +443,7 @@ typedef enum {
 	ID_GetSMSMemories,
 	ID_GetManufacturer,
 	ID_SetMemoryType,
+	ID_GetMemoryCharset,
 	ID_SetMemoryCharset,
 	ID_SetSMSParameters,
 	ID_GetFMStation,

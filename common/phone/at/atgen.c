@@ -25,6 +25,23 @@ GSM_Error ALCATEL_ProtocolVersionReply (GSM_Protocol_Message, GSM_StateMachine *
 
 
 typedef struct {
+	GSM_AT_Charset	charset;
+	char		*text;
+} GSM_AT_Charset_Info;
+
+/**
+ * List of charsets and text identifying them in phone responses, order
+ * defines their preferences, so if first is found it is used.
+ */
+static GSM_AT_Charset_Info AT_Charsets[] = {
+	{AT_CHARSET_HEX,	"HEX"},
+	{AT_CHARSET_GSM,	"GSM"},
+	{AT_CHARSET_PCCP437,	"PCCP437"},
+	{AT_CHARSET_UCS2,	"UCS2"},
+	{0,			NULL}
+};
+
+typedef struct {
 	int     Number;
 	char    Text[60];
 } ATErrorCode;
@@ -664,8 +681,8 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->PBKMemory			= 0;
 	Priv->PBKSBNR			= 0;
 	Priv->Charset			= 0;
- 	Priv->UCS2CharsetFailed		= false;
- 	Priv->NonUCS2CharsetFailed	= false;
+	Priv->NormalCharset		= 0;
+	Priv->UnicodeCharset		= 0;
 	Priv->PBKMemories[0]		= 0;
 	Priv->FirstCalendarPos		= 0;
 	Priv->NextMemoryEntry		= 0;
@@ -729,70 +746,141 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	return error;
 }
 
+GSM_Error ATGEN_ReplyGetCharset(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	/* Reply we get here:
+		AT+CSCS?
+		+CSCS: "GSM"
+
+		OK
+	 */
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	char			*line;
+	int			i = 0;
+
+	switch (Priv->ReplyState) {
+		case AT_Reply_OK:
+			line = GetLineString(msg.Buffer, Priv->Lines, 2);
+			/* First current charset: */
+			while (AT_Charsets[i].charset != 0) {
+				if (strstr(line, AT_Charsets[i].text) != NULL) {
+					Priv->Charset = AT_Charsets[i].charset;
+					break;
+				}
+				i++;
+			}
+			if (Priv->Charset == 0) {
+				smprintf(s, "Could not determine charset returned by phone, probably not supported!\n");
+				return ERR_NOTSUPPORTED;
+			}
+			return ERR_NONE;
+		case AT_Reply_Error:
+			return ERR_NOTSUPPORTED;
+		case AT_Reply_CMSError:
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+			return ERR_UNKNOWNRESPONSE;
+	}
+}
+
+GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	/* Reply we get here:
+		AT+CSCS=?
+		+CSCS: ("GSM","UCS2")
+
+		OK
+	 */
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	char			*line;
+	int			i = 0;
+
+	switch (Priv->ReplyState) {
+		case AT_Reply_OK:
+			line = GetLineString(msg.Buffer, Priv->Lines, 2);
+			/* First find good charset for non-unicode: */
+			while (AT_Charsets[i].charset != 0) {
+				if (strstr(line, AT_Charsets[i].text) != NULL) {
+					Priv->NormalCharset = AT_Charsets[i].charset;
+					break;
+				}
+				i++;
+			}
+			if (Priv->NormalCharset == 0) {
+				smprintf(s, "Could not find supported charset in list returned by phone!\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			/* Then find good charset for unicode: */
+			if (strstr(line, "UCS2") != NULL) {
+				Priv->UnicodeCharset = AT_CHARSET_UCS2;
+			} else {
+				Priv->UnicodeCharset = Priv->NormalCharset;
+			}
+			return ERR_NONE;
+		case AT_Reply_Error:
+			return ERR_NOTSUPPORTED;
+		case AT_Reply_CMSError:
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+			return ERR_UNKNOWNRESPONSE;
+	}
+}
+
+
 GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, bool PreferUnicode)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
+	char			buffer[100];
+	int			i = 0;
+	GSM_AT_Charset		cset;
 
-	/* Have we already selected something? */
-	if (Priv->Charset!=0) {
-		/* If we want unicode charset and we have it already or setting of it
-		 * failed, we have nothing to do. */
-		if (PreferUnicode  && (Priv->Charset==AT_CHARSET_UCS2 || Priv->UCS2CharsetFailed)) return ERR_NONE;
-
-		/* If we don't need unicode charset and we have some (or have unicode
-		 * charset when other failed), we have nothing to do. */
-		if (!PreferUnicode && (Priv->Charset!=AT_CHARSET_UCS2 || Priv->NonUCS2CharsetFailed)) return ERR_NONE;
+	/* Do we know available charsets? */
+	if (Priv->NormalCharset == 0) {
+		/* Get available charsets */
+		error = GSM_WaitFor (s, "AT+CSCS=?\r", 10, 0x00, 3, ID_GetMemoryCharset);
+		if (error != ERR_NONE) return error;
 	}
 
-	error=ATGEN_GetManufacturer(s);
-	if (error != ERR_NONE) return error;
-
-	/* Samsung (and Sagem?) phones use only PCCP437? */
-	if (Priv->Manufacturer == AT_Samsung) {
-		Priv->Charset = AT_CHARSET_PCCP437;
-		return ERR_NONE;
+	/* Do we know current charset? */
+	if (Priv->Charset == 0) {
+		/* Get current charset */
+		error = GSM_WaitFor (s, "AT+CSCS?\r", 9, 0x00, 3, ID_GetMemoryCharset);
+		/* ERR_NOTSUPPORTED means that we do not know charset phone returned */
+		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) return error;
 	}
 
-	if (PreferUnicode && !Priv->UCS2CharsetFailed) {
-		smprintf(s, "Setting charset to UCS2\n");
-		error=GSM_WaitFor (s, "AT+CSCS=\"UCS2\"\r", 15, 0x00, 3, ID_SetMemoryCharset);
-		if (error == ERR_NONE) {
-			Priv->Charset = AT_CHARSET_UCS2;
-			return ERR_NONE;
-		} else {
-			Priv->UCS2CharsetFailed = true;
+	/* Find charset we want */
+	if (PreferUnicode) {
+		cset = Priv->UnicodeCharset;
+	} else {
+		cset = Priv->NormalCharset;
+	}
+	/* If we already have set our preffered charset there is nothing to do*/
+	if (Priv->Charset == cset) return ERR_NONE;
+
+	/* Find text representation */
+	while (AT_Charsets[i].charset != 0) {
+		if (AT_Charsets[i].charset == cset) {
+			break;
 		}
+		i++;
 	}
 
-	smprintf(s, "Setting charset to HEX\n");
-	error=GSM_WaitFor (s, "AT+CSCS=\"HEX\"\r", 14, 0x00, 3, ID_SetMemoryCharset);
-	/* Falcom replies OK for HEX mode and send everything
-	 * in normal format */
-	if (error == ERR_NONE && Priv->Manufacturer != AT_Falcom) {
-		Priv->Charset = AT_CHARSET_HEX;
-		return ERR_NONE;
+	/* Should not happen! */
+	if (AT_Charsets[i].charset == 0) {
+		smprintf(s, "Could not find string representation for charset!\n");
+		return ERR_BUG;
 	}
 
-	smprintf(s, "Setting charset to GSM\n");
-	error=GSM_WaitFor (s, "AT+CSCS=\"GSM\"\r", 14, 0x00, 3, ID_SetMemoryCharset);
-	if (error == ERR_NONE) {
-		Priv->Charset = AT_CHARSET_GSM;
-		return ERR_NONE;
-	}
-
-	if (!Priv->UCS2CharsetFailed) {
-		Priv->NonUCS2CharsetFailed = true;
-		smprintf(s, "Setting charset to UCS2\n");
-		error=GSM_WaitFor (s, "AT+CSCS=\"UCS2\"\r", 15, 0x00, 3, ID_SetMemoryCharset);
-		if (error == ERR_NONE) {
-			Priv->Charset = AT_CHARSET_UCS2;
-			return ERR_NONE;
-		} else {
-			Priv->UCS2CharsetFailed = true;
-		}
-	}
-
+	/* And finally set the charset */
+	sprintf(buffer, "AT+CSCS=\"%s\"\r", AT_Charsets[i].text);
+	error = GSM_WaitFor (s, buffer, strlen(buffer), 0x00, 3, ID_SetMemoryCharset);
+	if (error == ERR_NONE) Priv->Charset = cset;
 	return error;
 }
 
@@ -3970,6 +4058,8 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetCPBRMemoryInfo,	"AT+CPBR=?"		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_ReplyGetCPBRMemoryInfo,	"+CPBR:"		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_ReplyGetCPBRMemoryStatus,"AT+CPBR="		,0x00,0x00,ID_GetMemoryStatus	 },
+{ATGEN_ReplyGetCharsets,	"AT+CSCS=?"		,0x00,0x00,ID_GetMemoryCharset	 },
+{ATGEN_ReplyGetCharset,		"AT+CSCS?"		,0x00,0x00,ID_GetMemoryCharset	 },
 {ATGEN_GenericReply,		"AT+CSCS="		,0x00,0x00,ID_SetMemoryCharset	 },
 {ATGEN_ReplyGetMemory,		"AT+CPBR="		,0x00,0x00,ID_GetMemory		 },
 {SIEMENS_ReplyGetMemoryInfo,	"AT^SBNR=?"		,0x00,0x00,ID_GetMemory		 },
