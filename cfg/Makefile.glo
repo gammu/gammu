@@ -118,7 +118,7 @@ DESTDIR =
 	@echo Making $*.c
 	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $*.c -o $*.o
 
-%.o: %.c
+%.o: %.c $(TOPDIR)/cfg/config.h
 	@echo Making $<
 	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $*.c -o $*.o
 
