@@ -101,6 +101,25 @@ typedef struct {
 	GSM_MemoryType		SMSMemory;	  	/* Last read SMS memory 					*/
 	GSM_AT_SMS_Modes	SMSMode;	  	/* PDU or TEXT mode for SMS ? 					*/
 
+	/**
+	 * Mode used for incoming message notification.
+	 */
+	int			CNMIMode;
+	/**
+	 * Procedure used for incoming message notification.
+	 */
+	int			CNMIProcedure;
+	/**
+	 * Procedure used for incoming delivery report message notification.
+	 */
+	int			CNMIDeliverProcedure;
+#ifdef GSM_ENABLE_CELLBROADCAST
+	/**
+	 * Mode used for incoming broadcast message notification.
+	 */
+	int			CNMIBroadcastProcedure;
+#endif
+
 	bool			OBEX;
 	GSM_File		file;
 } GSM_Phone_ATGENData;

@@ -55,6 +55,8 @@ GSM_Error			error 			= ERR_NONE;
 static int			i;
 
 volatile bool 			gshutdown 		= false;
+volatile bool 			wasincomingsms 		= false;
+GSM_MultiSMSMessage		IncomingSMSData;
 
 void interrupt(int sign)
 {
@@ -1130,12 +1132,46 @@ static void NetworkInfo(int argc, char *argv[])
 
 static void IncomingSMS(char *Device, GSM_SMSMessage sms)
 {
-	GSM_MultiSMSMessage SMS;
 
 	printmsg("SMS message received\n");
-	SMS.Number = 1;
-	memcpy(&SMS.SMS[0],&sms,sizeof(GSM_SMSMessage));
-	displaymultismsinfo(SMS,false,false);
+	if (wasincomingsms) {
+		printmsg("We already have one pending, ignoring!\n");
+		return;
+	}
+	wasincomingsms = true;
+	memcpy(&IncomingSMSData.SMS[0],&sms,sizeof(GSM_SMSMessage));
+	IncomingSMSData.Number = 1;
+}
+
+static void DisplayIncomingSMS()
+{
+	GSM_SMSFolders		folders;
+	if (IncomingSMSData.SMS[0].State == 0) {
+
+		error=Phone->GetSMSFolders(&s, &folders);
+		Print_Error(error);
+
+		error=Phone->GetSMS(&s, &IncomingSMSData);
+		switch (error) {
+		case ERR_EMPTY:
+			printmsg("Location %i\n",IncomingSMSData.SMS[0].Location);
+			printmsg("Empty\n");
+			break;
+		default:
+			Print_Error(error);
+			printmsg("Location %i, folder \"%s\"",IncomingSMSData.SMS[0].Location,DecodeUnicodeConsole(folders.Folder[IncomingSMSData.SMS[0].Folder-1].Name));
+			switch(IncomingSMSData.SMS[0].Memory) {
+				case MEM_SM: printmsg(", SIM memory"); 		break;
+				case MEM_ME: printmsg(", phone memory"); 	break;
+				case MEM_MT: printmsg(", phone or SIM memory"); break;
+				default    : break;
+			}
+			if (IncomingSMSData.SMS[0].InboxFolder) printmsg(", Inbox folder");
+			printf("\n");
+		}
+	}
+	displaymultismsinfo(IncomingSMSData,false,false);
+	wasincomingsms = false;
 }
 
 static void IncomingCB(char *Device, GSM_CBMessage CB)
@@ -1300,6 +1336,7 @@ static void Monitor(int argc, char *argv[])
 				}
 			}
 		}
+		if (wasincomingsms) DisplayIncomingSMS();
 		printf("\n");
 	}
 
