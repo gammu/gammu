@@ -278,37 +278,34 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return SetSiemensFrame (s,req,"vcs",Note->Location,ID_SetCalendarNote,size);
 }
 
-/* (c) by Timo Teras */
 GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-#ifndef ENABLE_LGPL
- 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+ 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
  	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
-	unsigned char		buffer[500],buffer2[500];
+	unsigned char		buffer[4096];
+	int			length;
+	GSM_Error		error;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
  		smprintf(s, "Phonebook entry received\n");
-		CopyLineString(buffer, msg.Buffer, Priv->Lines, 3);
-		DecodeHexBin(buffer2,buffer,strlen(buffer));
+		error = GetSiemensFrame(msg,s,"vcf", buffer, &length);
+		if (error != ERR_NONE) return error;
  		Memory->EntriesNum = 0;
-                DecodeVCARD21Text(buffer2, Memory);
+		DecodeVCARD21Text(buffer, Memory);
 		if (Memory->EntriesNum == 0) return ERR_EMPTY;
 		return ERR_NONE;
 	case AT_Reply_Error:
-                smprintf(s, "Error - too high location ?\n");
-                return ERR_INVALIDLOCATION;
+		smprintf(s, "Error - too high location ?\n");
+		return ERR_INVALIDLOCATION;
 	case AT_Reply_CMSError:
- 	        return ATGEN_HandleCMSError(s);
+ 		return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
-	        return ATGEN_HandleCMEError(s);
+		return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
 	return ERR_UNKNOWNRESPONSE;
-#else
-	return ERR_NOTIMPLEMENTED;
-#endif
 }
 
 #endif
