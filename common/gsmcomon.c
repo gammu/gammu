@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek & Michal Cihar */
 
 #include <ctype.h>
 #include <string.h>
@@ -20,17 +21,17 @@
 
 GSM_Error NoneFunction(void)
 {
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error NotImplementedFunction(void)
 {
-	return GE_NOTIMPLEMENTED;
+	return ERR_NOTIMPLEMENTED;
 }
 
 GSM_Error NotSupportedFunction(void)
 {
-	return GE_NOTSUPPORTED;
+	return ERR_NOTSUPPORTED;
 }
 
 unsigned char *GetMsg (INI_Section *cfg, unsigned char *default_string)
@@ -111,48 +112,48 @@ typedef struct {
 } PrintErrorEntry;
 
 static PrintErrorEntry PrintErrorEntries[] = {
-	{GE_NONE,			"No error."},
-	{GE_DEVICEOPENERROR,		"Error opening device. Unknown/busy or no permissions."},
-	{GE_DEVICELOCKED,		"Error opening device. Device locked."},
-	{GE_DEVICENOTEXIST,		"Error opening device. Not exist."},
-	{GE_DEVICEBUSY,			"Error opening device. Already opened by other application."},
-	{GE_DEVICENOPERMISSION,		"Error opening device. No permissions."},
-	{GE_DEVICENODRIVER,		"Error opening device. No required driver in operating system."},
-	{GE_DEVICENOTWORK,		"Error opening device. Some hardware not connected/wrong configured."},
-	{GE_DEVICEDTRRTSERROR,		"Error setting device DTR or RTS."},
-	{GE_DEVICECHANGESPEEDERROR,	"Error setting device speed. Maybe speed not supported."},
-	{GE_DEVICEWRITEERROR,		"Error writing device."},
-	{GE_DEVICEREADERROR,		"Error during reading device"},
-	{GE_DEVICEPARITYERROR,		"Can't set parity on device"},
-	{GE_TIMEOUT,			"No response in specified timeout. Probably phone not connected."},
+	{ERR_NONE,			"No error."},
+	{ERR_DEVICEOPENERROR,		"Error opening device. Unknown/busy or no permissions."},
+	{ERR_DEVICELOCKED,		"Error opening device. Device locked."},
+	{ERR_DEVICENOTEXIST,		"Error opening device. Not exist."},
+	{ERR_DEVICEBUSY,		"Error opening device. Already opened by other application."},
+	{ERR_DEVICENOPERMISSION,	"Error opening device. No permissions."},
+	{ERR_DEVICENODRIVER,		"Error opening device. No required driver in operating system."},
+	{ERR_DEVICENOTWORK,		"Error opening device. Some hardware not connected/wrong configured."},
+	{ERR_DEVICEDTRRTSERROR,		"Error setting device DTR or RTS."},
+	{ERR_DEVICECHANGESPEEDERROR,	"Error setting device speed. Maybe speed not supported."},
+	{ERR_DEVICEWRITEERROR,		"Error writing device."},
+	{ERR_DEVICEREADERROR,		"Error during reading device"},
+	{ERR_DEVICEPARITYERROR,		"Can't set parity on device"},
+	{ERR_TIMEOUT,			"No response in specified timeout. Probably phone not connected."},
 	/* Some missed */
-	{GE_UNKNOWNRESPONSE,		"Unknown response from phone. See readme.txt, how to report it."},
+	{ERR_UNKNOWNRESPONSE,		"Unknown response from phone. See readme.txt, how to report it."},
 	/* Some missed */
-	{GE_UNKNOWNCONNECTIONTYPESTRING,"Unknown connection type string. Check config file."},
-	{GE_UNKNOWNMODELSTRING,		"Unknown model type string. Check config file."},
-	{GE_SOURCENOTAVAILABLE,		"Some required functions not compiled for your OS. Please contact."},
-	{GE_NOTSUPPORTED,		"Function not supported by phone."},
-	{GE_EMPTY,			"Entry is empty"},
-	{GE_SECURITYERROR,		"Security error. Maybe no PIN ?"},
-	{GE_INVALIDLOCATION,		"Invalid location. Maybe too high ?"},
-	{GE_NOTIMPLEMENTED,		"Function not implemented. Help required."},
-	{GE_FULL,			"Memory full."},
-	{GE_UNKNOWN,			"Unknown error."},
+	{ERR_UNKNOWNCONNECTIONTYPESTRING,"Unknown connection type string. Check config file."},
+	{ERR_UNKNOWNMODELSTRING,	"Unknown model type string. Check config file."},
+	{ERR_SOURCENOTAVAILABLE,	"Some required functions not compiled for your OS. Please contact."},
+	{ERR_NOTSUPPORTED,		"Function not supported by phone."},
+	{ERR_EMPTY,			"Entry is empty"},
+	{ERR_SECURITYERROR,		"Security error. Maybe no PIN ?"},
+	{ERR_INVALIDLOCATION,		"Invalid location. Maybe too high ?"},
+	{ERR_NOTIMPLEMENTED,		"Function not implemented. Help required."},
+	{ERR_FULL,			"Memory full."},
+	{ERR_UNKNOWN,			"Unknown error."},
 	/* Some missed */
-	{GE_CANTOPENFILE,		"Can't open specified file. Read only ?"},
-	{GE_MOREMEMORY,			"More memory required..."},
-	{GE_PERMISSION,			"Permission to file/device required..."},
-	{GE_EMPTYSMSC,			"Empty SMSC number. Set in phone or use -smscnumber"},
-	{GE_INSIDEPHONEMENU,		"You're inside phone menu (during editing ?). Leave it and try again."},
-	{GE_WORKINPROGRESS,		"Function is during writing. If want help, please contact with authors."},
-	{GE_PHONEOFF,			"Phone is disabled and connected to charger"},
-	{GE_FILENOTSUPPORTED,		"File format not supported by Gammu"},
-	{GE_BUG,			"Nobody is perfect, some bug appeared in protocol implementation. Please contact authors."},
-	{GE_CANCELED,			"Transfer was canceled by phone (you pressed cancel on phone?)."},
+	{ERR_CANTOPENFILE,		"Can't open specified file. Read only ?"},
+	{ERR_MOREMEMORY,		"More memory required..."},
+	{ERR_PERMISSION,		"Permission to file/device required..."},
+	{ERR_EMPTYSMSC,			"Empty SMSC number. Set in phone or use -smscnumber"},
+	{ERR_INSIDEPHONEMENU,		"You're inside phone menu (during editing ?). Leave it and try again."},
+	{ERR_WORKINPROGRESS,		"Function is during writing. If want help, please contact with authors."},
+	{ERR_PHONEOFF,			"Phone is disabled and connected to charger"},
+	{ERR_FILENOTSUPPORTED,		"File format not supported by Gammu"},
+	{ERR_BUG,			"Nobody is perfect, some bug appeared in protocol implementation. Please contact authors."},
+	{ERR_CANCELED,			"Transfer was canceled by phone (you pressed cancel on phone?)."},
 	/* Some missed */
-	{GE_OTHERCONNECTIONREQUIRED,	"Current connection type doesn't support called function."},
+	{ERR_OTHERCONNECTIONREQUIRED,	"Current connection type doesn't support called function."},
 	/* Some missed */
-	{GE_INVALIDDATETIME,		"Invalid date or time specified."},
+	{ERR_INVALIDDATETIME,		"Invalid date or time specified."},
 
 	{0,				""}
 };
@@ -192,7 +193,7 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 		/* Aren't we the changing the global di? */
 		if (privdi != &di) {
 			if (privdi->df == stdout) privdi->df = di.df;
-			return GE_NONE;
+			return ERR_NONE;
         	}
     	} else {
         	/* If we should not use global file descriptor, don't even try use it */
@@ -209,7 +210,7 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 			testfile = fopen(info,"ac");
 			if (!testfile) {
 				dbgprintf("Can't open debug file\n");
-				return GE_CANTOPENFILE;
+				return ERR_CANTOPENFILE;
 			}
 			fseek(testfile, 0, SEEK_END);
 			if (ftell(testfile) > 5000000) {
@@ -222,7 +223,7 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 		}
 		if (!testfile) {
 			dbgprintf("Can't open debug file\n");
-			return GE_CANTOPENFILE;
+			return ERR_CANTOPENFILE;
 		} else {
 			if (privdi->df && privdi->df != stdout) {
 				fclose(privdi->df);
@@ -230,7 +231,7 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 			privdi->df = testfile;
 		}
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

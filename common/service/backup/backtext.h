@@ -1,5 +1,7 @@
-#ifndef __backuptext_h
-#define __backuptext_h
+/* (c) 2003 by Marcin Wiacek */
+
+#ifndef __gsm_backtext_h
+#define __gsm_backtext_h
 
 #include "backgen.h"
 

@@ -1,3 +1,4 @@
+/* (c) 2003 by Marcin Wiacek */
 
 #include "../../../gsmstate.h"
 
@@ -23,8 +24,8 @@ static GSM_Error N3650_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachi
 	old = s->Phone.Data.File->Used;
 
 	if (msg.Length < 10) {
-		if (old == 0) return GE_UNKNOWN;
-		return GE_EMPTY;
+		if (old == 0) return ERR_UNKNOWN;
+		return ERR_EMPTY;
 	}
 
 	s->Phone.Data.File->Used += msg.Buffer[10]*256*256*256+
@@ -38,8 +39,8 @@ static GSM_Error N3650_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachi
 			msg.Buffer[13]);
 	s->Phone.Data.File->Buffer = (unsigned char *)realloc(s->Phone.Data.File->Buffer,s->Phone.Data.File->Used);
 	memcpy(s->Phone.Data.File->Buffer+old,msg.Buffer+18,s->Phone.Data.File->Used-old);
-	if (s->Phone.Data.File->Used-old < 0x03 * 256 + 0xD4) return GE_EMPTY;
-	return GE_NONE;
+	if (s->Phone.Data.File->Used-old < 0x03 * 256 + 0xD4) return ERR_EMPTY;
+	return ERR_NONE;
 }
 
 static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File)
@@ -76,7 +77,7 @@ static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File)
 		File->Folder = false;
 
 		error = DCT4_SetPhoneMode(s, DCT4_MODE_TEST);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 
 		s->Phone.Data.File = File;
 		return GSM_WaitFor (s, StartReq, len, 0x58, 4, ID_GetFile);
@@ -87,7 +88,7 @@ static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File)
 
 //	if (error == GE_EMPTY) {
 //		error = DCT4_SetPhoneMode(s, DCT4_MODE_NORMAL);
-//		if (error != GE_NONE) return error;
+//		if (error != ERR_NONE) return error;
 //		return GE_EMPTY;
 //	}
 
@@ -124,7 +125,7 @@ static GSM_Error N3650_ReplyGetFolderInfo(GSM_Protocol_Message msg, GSM_StateMac
 		pos+=msg.Buffer[pos+1];
 	}
 	dbgprintf("\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error N3650_GetFolderInfo(GSM_StateMachine *s, GSM_File *File)
@@ -155,7 +156,7 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bo
 
 	if (start) {
 		error = DCT4_SetPhoneMode(s, DCT4_MODE_LOCAL);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 
 		Priv->Files[0]->Folder		= true;
 		Priv->Files[0]->Level		= 1;
@@ -188,9 +189,9 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bo
 
 	if (Priv->FilesLocationsCurrent == Priv->FilesLocationsUsed) {
 //		error = DCT4_SetPhoneMode(s, DCT4_MODE_NORMAL);
-//		if (error != GE_NONE) return error;
+//		if (error != ERR_NONE) return error;
 
-		return GE_EMPTY;
+		return ERR_EMPTY;
 	}
 
 	strcpy(File->ID_FullName,Priv->Files[Priv->FilesLocationsCurrent]->ID_FullName);
@@ -199,7 +200,7 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bo
 	CopyUnicodeString(File->Name,Priv->Files[Priv->FilesLocationsCurrent]->Name);
 	Priv->FilesLocationsCurrent++;
 	
-	if (!File->Folder) return GE_NONE;
+	if (!File->Folder) return ERR_NONE;
 
 	if (Priv->FilesLocationsCurrent > 1) {
 		if (File->ID_FullName[0]!=Priv->Files[Priv->FilesLocationsCurrent-2]->ID_FullName[0]) {
@@ -211,7 +212,7 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bo
 				error = DCT4_SetPhoneMode(s, DCT4_MODE_LOCAL);
 				error = DCT4_SetPhoneMode(s, DCT4_MODE_LOCAL);
 			}
-//		if (error != GE_NONE) return error;
+//		if (error != ERR_NONE) return error;
 		}
 	}
 
@@ -230,9 +231,9 @@ static GSM_Error N3650_Initialise (GSM_StateMachine *s)
 
 	for (i=0;i<10000;i++) {
 		Priv->Files[i] = malloc(sizeof(GSM_File));
-	        if (Priv->Files[i] == NULL) return GE_MOREMEMORY;
+	        if (Priv->Files[i] == NULL) return ERR_MOREMEMORY;
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error N3650_Terminate(GSM_StateMachine *s)
@@ -241,7 +242,7 @@ static GSM_Error N3650_Terminate(GSM_StateMachine *s)
 	int			i;
 
 	for (i=0;i<10000;i++) free(Priv->Files[i]);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Reply_Function N3650ReplyFunctions[] = {

@@ -1,6 +1,7 @@
+/* (c) 2001-2003 by Marcin Wiacek */
+
 #ifndef __gsm_wap_h
 #define __gsm_wap_h
-
 
 #include "gsmmisc.h"
 #include "../misc/misc.h"
@@ -64,9 +65,9 @@ void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, int *Length, GSM_W
 /* -------------------------------- WAP Bookmark --------------------------- */
 
 typedef struct {
-	char	Address		[(255+1)*2];
-	char	Title		[(50+1)*2];
-	int	Location;
+	char			Address		[(255+1)*2];
+	char			Title		[(50+1)*2];
+	int			Location;
 } GSM_WAPBookmark;
 
 void 		NOKIA_EncodeWAPBookmarkSMSText	(unsigned char *Buffer, int *Length, GSM_WAPBookmark *bookmark);
@@ -75,9 +76,9 @@ GSM_Error 	GSM_EncodeURLFile		(unsigned char *Buffer, int *Length, GSM_WAPBookma
 /* ------------------------------ MMS Indicator ---------------------------- */
 
 typedef struct {
-	unsigned char	Address[500];
-	unsigned char	Title[200];
-	unsigned char	Sender[200];
+	unsigned char		Address[500];
+	unsigned char		Title[200];
+	unsigned char		Sender[200];
 } GSM_MMSIndicator;
 
 void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, int *Length, GSM_MMSIndicator Indicator);

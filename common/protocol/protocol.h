@@ -1,3 +1,5 @@
+/* (c) 2002-2003 by Marcin Wiacek */
+
 #ifndef protocol_common_h
 #define protocol_common_h
 

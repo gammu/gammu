@@ -1,3 +1,5 @@
+/* (c) 2002-2003 by Marcin Wiacek, Michal Cihar and others */
+/* based on some work from MyGnokii and Gnokii */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -155,12 +157,10 @@ void EncodeBCD (unsigned char *dest, const unsigned char *src, int len, bool fil
 		}
 	}
 
-        /* When fill is set: we fill in the most significant bits of the
-           last byte with 0x0f (1111 binary) if the number is represented
-           with odd number of digits. */
-	if (fill && (len & 0x01)) {
-		dest[current]=dest[current] | 0xf0;
-        }
+        /* When fill is set: if number consist of odd number of digits,
+	   we fill last bits in last byte with 0x0f
+	 */
+	if (fill && (len & 0x01)) dest[current]=dest[current] | 0xf0;
 }
 
 int DecodeWithHexBinAlphabet (unsigned char mychar)
@@ -387,11 +387,9 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len, bool
 			ret 		= '?';
 			FoundNormal 	= false;
 			j 		= 0;
-			while (GSM_DefaultAlphabetUnicode[j][1]!=0x00)
-			{
+			while (GSM_DefaultAlphabetUnicode[j][1]!=0x00) {
 				if (src[i*2]	== GSM_DefaultAlphabetUnicode[j][0] &&
-				    src[i*2+1]	== GSM_DefaultAlphabetUnicode[j][1])
-				{
+				    src[i*2+1]	== GSM_DefaultAlphabetUnicode[j][1]) {
 					ret 		= j;
 					FoundNormal 	= true;
 					break;
@@ -402,8 +400,7 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len, bool
 				j = 0;
 				while (ExtraAlphabet[j] != 0x00 || ExtraAlphabet[j+1] != 0x00 || ExtraAlphabet[j+2] != 0x00) {
 					if (ExtraAlphabet[j+1] == src[i*2] &&
-					    ExtraAlphabet[j+2] == src[i*2 + 1])
-					{
+					    ExtraAlphabet[j+2] == src[i*2 + 1]) {
 						ret		= ExtraAlphabet[j];
 						FoundSpecial	= true;
 						break;
@@ -419,11 +416,9 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len, bool
 					if (src[i*2]   == ConvertTable[j*4] &&
 					    src[i*2+1] == ConvertTable[j*4+1]) {
 						z = 0;
-						while (GSM_DefaultAlphabetUnicode[z][1]!=0x00)
-						{
+						while (GSM_DefaultAlphabetUnicode[z][1]!=0x00) {
 							if (ConvertTable[j*4+2]	== GSM_DefaultAlphabetUnicode[z][0] &&
-							    ConvertTable[j*4+3]	== GSM_DefaultAlphabetUnicode[z][1])
-							{
+							    ConvertTable[j*4+3]	== GSM_DefaultAlphabetUnicode[z][1]) {
 								ret 		= z;
 								FoundNormal 	= true;
 								break;
@@ -453,8 +448,7 @@ void FindDefaultAlphabetLen(const unsigned char *src, int *srclen, int *smslen, 
 	bool	FoundSpecial;
 
 	i = 0;
-	while (src[i*2] != 0x00 || src[i*2+1] != 0x00)
-	{
+	while (src[i*2] != 0x00 || src[i*2+1] != 0x00) {
 		FoundSpecial = false;
 		j = 0;
 		while (GSM_DefaultAlphabetCharsExtension[j][0]!=0x00) {
@@ -485,12 +479,16 @@ void FindDefaultAlphabetLen(const unsigned char *src, int *srclen, int *smslen, 
 	*smslen = current;
 }
 
-#define ByteMask ((1 << Bits) - 1)
+#ifndef ENABLE_LGPL
+#  define ByteMask ((1 << Bits) - 1)
+#endif
 
 int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
                            unsigned char *input, unsigned char *output)
 {
 #ifndef ENABLE_LGPL
+	/* (c) by Pavel Janik and Pawel Kot */
+
         unsigned char *OUTPUT 	= output; /* Current pointer to the output buffer */
         unsigned char *INPUT  	= input;  /* Current pointer to the input buffer */
         unsigned char Rest 	= 0x00;
@@ -532,6 +530,8 @@ int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
 int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *output, int length)
 {
 #ifndef ENABLE_LGPL
+	/* (c) by Pavel Janik and Pawel Kot */
+
         unsigned char 	*OUTPUT = output; /* Current pointer to the output buffer */
         unsigned char 	*INPUT  = input;  /* Current pointer to the input buffer */
         int		Bits;             /* Number of bits directly copied to
@@ -581,13 +581,13 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 	length--;
 
 	switch (Number[1]) {
-	case GNT_ALPHANUMERIC:
+	case NUMBER_ALPHANUMERIC:
 		if (length > 6) length++;
 		dbgprintf("Alphanumeric number, length %i\n",length);
 		GSM_UnpackEightBitsToSeven(0, length, length, Number+2, Buffer);
 		Buffer[length]=0;
 		break;
-	case GNT_INTERNATIONAL:
+	case NUMBER_INTERNATIONAL:
 		dbgprintf("International number\n");
 		Buffer[0]='+';
 		DecodeBCD(Buffer+1,Number+2, length);
@@ -601,60 +601,64 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 	EncodeUnicode(retval,Buffer,strlen(Buffer));
 }
 
-/* Packing of numbers (SMS Center number and destination number) for SMS
- * sending function.
+/**
+ * Packing some phone numbers (SMSC, SMS destination and others)
+ *
+ * See GSM 03.40 9.1.1:
+ * 1 byte  - length of number given in semioctets or bytes (when given in
+ *           bytes, includes one byte for byte with number format).
+ *           Returned by function (set semioctet to true, if want result
+ *           in semioctets).
+ * 1 byte  - format of number (see GSM_NumberType in coding.h). Returned
+ *           in unsigned char *Output.
+ * n bytes - 2n or 2n-1 semioctets with number. Returned in unsigned char
+ *           *Output.
+ *
+ * 1 semioctet = 4 bits = half of byte
  */
-/* See GSM 03.40 9.1.1:
-   1 byte  - length of number given in semioctets or bytes (when given in bytes,
-             includes one byte for byte with number format.
-             Returned by function (set semioctet to true, if want result
-             in semioctets).
-   1 byte  - format of number. See GSM_NumberType; in gsm-common.h. Returned
-             in unsigned char *Output.
-   n bytes - 2n or 2n-1 semioctets with number. For some types of numbers
-             in the most significant bits of the last byte with 0x0f
-             (1111 binary) are filled if the number is represented
-             with odd number of digits. Returned in unsigned char *Output. */
-/* 1 semioctet = 4 bits = half of byte */
 int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool semioctet)
 {
-	unsigned char	buffer[50];
-	unsigned char	*OUTPUT=Output;		/* Pointer to the output */
-	int		length=0,j;
-	unsigned char	format=GNT_UNKNOWN;	/* format of number used by us */
+	unsigned char	format, buffer[50];
+	int		length, i;
 
 	length=UnicodeLength(Number);
 	memcpy(buffer,DecodeUnicodeString(Number),length+1);
 
 	/* Checking for format number */
-	for (j=0;j<length;j++) {
-		/* first byte is '+'. It can be international */
-		if (j==0 && buffer[j]=='+') format=GNT_INTERNATIONAL;  
-		else {
+	format = NUMBER_UNKNOWN;
+	for (i=0;i<length;i++) {
+		/* first byte is '+'. Number can be international */
+		if (i==0 && buffer[i]=='+') {
+			format=NUMBER_INTERNATIONAL;  
+		} else {
 			/*char is not number. It must be alphanumeric*/
-			if (!isdigit(buffer[j])) format=GNT_ALPHANUMERIC;
+			if (!isdigit(buffer[i])) format=NUMBER_ALPHANUMERIC;
 		}
 	}
 
-	/* The first byte in the Semi-octet representation of the address field is
-	 * the Type-of-Address. GSM 03.40 section 9.1.2.5 */
-	*OUTPUT++=format;
+	/**
+	 * First byte is used for saving type of number. See GSM 03.40
+	 * section 9.1.2.5
+	 */
+	Output[0]=format;
 
-	/* Now we will have number. GSM 03.40 section 9.1.2 */
+	/* After number type we will have number. GSM 03.40 section 9.1.2 */
 	switch (format) {
-		case GNT_ALPHANUMERIC:
-			length=GSM_PackSevenBitsToEight(0, buffer, OUTPUT, strlen(buffer))*2;
-			if (strlen(buffer)==7) length--;
-			break;
-		case GNT_INTERNATIONAL:
-			length--;
-			EncodeBCD (OUTPUT, buffer+1, length, true);
-			break;
-		default:
-			EncodeBCD (OUTPUT, buffer, length, true);
-			break;
+	case NUMBER_ALPHANUMERIC:
+		length=GSM_PackSevenBitsToEight(0, buffer, Output+1, strlen(buffer))*2;
+		if (strlen(buffer)==7) length--;
+		break;
+	case NUMBER_INTERNATIONAL:
+		length--;
+		EncodeBCD (Output+1, buffer+1, length, true);
+		break;
+	default:
+		EncodeBCD (Output+1, buffer, length, true);
+		break;
 	}
+
 	if (semioctet) return length;
+
 	/* Convert number of semioctets to number of chars */
 	if (length % 2) length++;
 	return length / 2 + 1;
@@ -713,86 +717,124 @@ void ReadUnicodeFile(unsigned char *Dest, unsigned char *Source)
 	Dest[current++]	= 0;
 }
 
-int OctetAlign(unsigned char *Dest, int CurrentBit)
+int GetBit(unsigned char *Buffer, int BitNum)
+{
+	return Buffer[(BitNum)/8] & 1<<(7-(BitNum%8));
+}
+
+int SetBit(unsigned char *Buffer, int BitNum)
+{
+	return Buffer[(BitNum)/8] |= 1<<(7-(BitNum%8));
+}
+
+int ClearBit(unsigned char *Buffer, int BitNum)
+{
+	return Buffer[(BitNum)/8] &= 255 - (1 << (7-(BitNum%8)));
+}
+
+void BufferAlign(unsigned char *Destination, int *CurrentBit)
 {
 	int i=0;
-	while((CurrentBit+i)%8) {
-		ClearBit(Dest, CurrentBit+i);
+
+	while(1) {
+		if (!(((*CurrentBit)+i)%8)) break;
+		ClearBit(Destination, (*CurrentBit)+i);
 		i++;
 	}
-	return CurrentBit+i;
+	(*CurrentBit) = (*CurrentBit) + i;
 }
 
-int OctetAlignNumber(int CurrentBit)
+void BufferAlignNumber(int *CurrentBit)
 {
 	int i=0;
-	while((CurrentBit+i)%8) { i++; }
-	return CurrentBit+i;
+
+	while(1) {
+		if (!(((*CurrentBit)+i)%8)) break;
+		i++;
+	}
+	(*CurrentBit) = (*CurrentBit) + i;
 }
 
-int BitPack(unsigned char *Dest, int CurrentBit, unsigned char *Source, int Bits)
+void AddBuffer(unsigned char 	*Destination,
+	       int 		*CurrentBit,
+	       unsigned char 	*Source,
+	       int 		BitsToProcess)
 {
-	int i;
-	for (i=0; i<Bits; i++)
-		if (GetBit(Source, i))
-			SetBit(Dest, CurrentBit+i);
-		else
-			ClearBit(Dest, CurrentBit+i);
-	return CurrentBit+Bits;
-}
+	int i=0;
 
-int BitPackByte(unsigned char *Dest, int CurrentBit, unsigned char Command, int Bits)
-{
-	unsigned char Byte[] = {0x00};
-
-	Byte[0] = Command;
-	return BitPack(Dest, CurrentBit, Byte, Bits);
-}
-
-int BitUnPack(unsigned char *Dest, int CurrentBit, unsigned char *Source, int Bits)
-{
-	int i;
-
-	for (i=0; i<Bits; i++)
-		if (GetBit(Dest, CurrentBit+i)) {
-			SetBit(Source, i);
+	while (i!=BitsToProcess) {
+		if (GetBit(Source, i)) {
+			SetBit(Destination, (*CurrentBit)+i);
 		} else {
-			ClearBit(Source, i);
+			ClearBit(Destination, (*CurrentBit)+i);
 		}
-	return CurrentBit+Bits;
+		i++;
+	}
+	(*CurrentBit) = (*CurrentBit) + BitsToProcess;
 }
 
-int BitUnPackInt(unsigned char *Src, int CurrentBit, int *integer, int Bits)
+void AddBufferByte(unsigned char *Destination,
+		   int 		 *CurrentBit,
+		   unsigned char Source,
+		   int 		 BitsToProcess)
 {
-	int l=0,z=128,i;
+	unsigned char Byte;
 
-	for (i=0; i<Bits; i++) {
-		if (GetBit(Src, CurrentBit+i)) l=l+z;
+	Byte = Source;
+
+	AddBuffer(Destination, CurrentBit, &Byte, BitsToProcess);
+}
+
+void GetBuffer(unsigned char *Source,
+	       int 	     *CurrentBit,
+	       unsigned char *Destination,
+	       int 	     BitsToProcess)
+{
+	int i=0;
+
+	while (i!=BitsToProcess) {
+		if (GetBit(Source, (*CurrentBit)+i)) {
+			SetBit(Destination, i);
+		} else {
+			ClearBit(Destination, i);
+		}
+		i++;
+	}
+	(*CurrentBit) = (*CurrentBit) + BitsToProcess;
+}
+
+void GetBufferInt(unsigned char *Source,
+		  int 		*CurrentBit,
+		  int 		*integer,
+		  int 		BitsToProcess)
+{
+	int l=0,z=128,i=0;
+
+	while (i!=BitsToProcess) {
+		if (GetBit(Source, (*CurrentBit)+i)) l=l+z;
 		z=z/2;
+		i++;
 	}
 	*integer=l;  
-	return CurrentBit+i;
+	(*CurrentBit) = (*CurrentBit) + i;
 }
 
-int BitUnPackI (unsigned char *Src, int CurrentBit, int *result, int Bits)
+void GetBufferI(unsigned char 	*Source,
+		int 		*CurrentBit,
+		int 		*result,
+		int 		BitsToProcess)
 {
-	int l=0,z,i;
+	int l=0,z,i=0;
 	
-	z = 1<<(Bits-1);
-	for (i=0; i<Bits; i++) {
-		if (GetBit(Src, CurrentBit+i)) l=l+z;
+	z = 1<<(BitsToProcess-1);
+
+	while (i!=BitsToProcess) {
+		if (GetBit(Source, (*CurrentBit)+i)) l=l+z;
 		z=z>>1;
+		i++;
 	}
 	*result=l;  
-	return CurrentBit+i;
-}
-
-int OctetUnAlign(int CurrentBit)
-{
-	int i=0;
-
-	while((CurrentBit+i)%8) i++;
-	return CurrentBit+i;
+	(*CurrentBit) = (*CurrentBit) + i;
 }
 
 /* Unicode char 0x00 0x01 makes blinking in some Nokia phones.
@@ -839,26 +881,26 @@ void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 
 	for (i=0;i<len;i++) {
 		switch (src[2*i]) {
-			case 0x00:
-				switch (src[2*i+1]) {
-					case 0x01:
-						dest[current++] = 0x00;
-						dest[current++] = '~';
-						break;
-					case '~':
-						dest[current++] = 0x00;
-						dest[current++] = '~';
-						dest[current++] = 0x00;
-						dest[current++] = '~';
-						break;
-					default:
-						dest[current++] = src[i*2];
-						dest[current++] = src[i*2+1];
-				}
+		case 0x00:
+			switch (src[2*i+1]) {
+			case 0x01:
+				dest[current++] = 0x00;
+				dest[current++] = '~';
+				break;
+			case '~':
+				dest[current++] = 0x00;
+				dest[current++] = '~';
+				dest[current++] = 0x00;
+				dest[current++] = '~';
 				break;
 			default:
 				dest[current++] = src[i*2];
 				dest[current++] = src[i*2+1];
+			}
+			break;
+		default:
+			dest[current++] = src[i*2];
+			dest[current++] = src[i*2+1];
 		}
 	}
 	dest[current++] = 0x00;
@@ -1119,13 +1161,13 @@ bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 	bool		retval = false;
 	
 	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
-	    if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
+		if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
 			sprintf(dest+j, "=%02X=%02X",mychar1,mychar2);
 			j	= j+6;
 			retval  = true;
-	    } else {
+		} else {
 			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
-	    }
+	    	}
 	}
 	dest[j++]=0;
 	return retval;
@@ -1138,13 +1180,13 @@ bool EncodeUTF8(unsigned char *dest, const unsigned char *src)
 	bool		retval = false;
 	
 	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
-	    if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
+		if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
 			sprintf(dest+j, "%c%c",mychar1,mychar2);
 			j	= j+2;
 			retval  = true;
-	    } else {
+	    	} else {
 			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
-	    }
+	    	}
 	}
 	dest[j++]=0;
 	return retval;
@@ -1178,24 +1220,24 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, in
 	wchar_t		ret;
 	
 	while (i<=len) {
-	    if (len-6>=i) {
-		/* Need to have correct chars */
-		if (src[i]  =='=' && DecodeWithHexBinAlphabet(src[i+1])!=-1
-                                  && DecodeWithHexBinAlphabet(src[i+2])!=-1 &&
-		    src[i+3]=='=' && DecodeWithHexBinAlphabet(src[i+4])!=-1 &&
-                                     DecodeWithHexBinAlphabet(src[i+5])!=-1) {
-		    mychar1	= 16*DecodeWithHexBinAlphabet(src[i+1])+DecodeWithHexBinAlphabet(src[i+2]);
-		    mychar2	= 16*DecodeWithHexBinAlphabet(src[i+4])+DecodeWithHexBinAlphabet(src[i+5]);
-		    ret 	= DecodeWithUTF8Alphabet(mychar1,mychar2);
-		    i 		= i+6;
+		if (len-6>=i) {
+			/* Need to have correct chars */
+			if (src[i]  =='=' && DecodeWithHexBinAlphabet(src[i+1])!=-1
+	                                  && DecodeWithHexBinAlphabet(src[i+2])!=-1 &&
+			    src[i+3]=='=' && DecodeWithHexBinAlphabet(src[i+4])!=-1 &&
+	                                     DecodeWithHexBinAlphabet(src[i+5])!=-1) {
+				mychar1	= 16*DecodeWithHexBinAlphabet(src[i+1])+DecodeWithHexBinAlphabet(src[i+2]);
+				mychar2	= 16*DecodeWithHexBinAlphabet(src[i+4])+DecodeWithHexBinAlphabet(src[i+5]);
+				ret 	= DecodeWithUTF8Alphabet(mychar1,mychar2);
+				i 	= i+6;
+			} else {
+				i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+			}   
 		} else {
-		    i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
-		}   
-	    } else {
-		i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
-	    }
-	    dest[j++] = (ret >> 8) & 0xff;
-	    dest[j++] = ret & 0xff;
+			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+		}
+		dest[j++] = (ret >> 8) & 0xff;
+		dest[j++] = ret & 0xff;
 	}
 	dest[j++] = 0;
 	dest[j++] = 0;
@@ -1207,18 +1249,18 @@ void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len)
 	wchar_t		ret;
 	
 	while (i<=len) {
-	    if (len-2>=i) {
-		if (src[i] >= 0xC2) {
-		    ret 	= DecodeWithUTF8Alphabet(src[i],src[i+1]);
-		    i 		= i+2;
+		if (len-2>=i) {
+			if (src[i] >= 0xC2) {
+				ret 	= DecodeWithUTF8Alphabet(src[i],src[i+1]);
+				i 	= i+2;
+			} else {
+				i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+			}
 		} else {
-		    i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
-		}   
-	    } else {
-		i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
-	    }
-	    dest[j++] = (ret >> 8) & 0xff;
-	    dest[j++] = ret & 0xff;
+			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+		}
+		dest[j++] = (ret >> 8) & 0xff;
+		dest[j++] = ret & 0xff;
 	}
 	dest[j++] = 0;
 	dest[j++] = 0;

@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #ifndef phone_nokia_dct3common_h
 #define phone_nokia_dct3common_h

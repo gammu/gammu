@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #include <string.h>
 
@@ -31,7 +32,7 @@ bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 		if (!Past) break;
 	}
 	switch (note->Type) {
-		case GCN_BIRTHDAY:
+		case GSM_CAL_BIRTHDAY:
 			Past = false;
 			break;
 		default:
@@ -97,24 +98,24 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	if (Version == Nokia_VCalendar) {
 		*Length+=sprintf(Buffer+(*Length), "CATEGORIES:");
 		switch (note->Type) {
-		case GCN_REMINDER:
+		case GSM_CAL_REMINDER:
 			*Length+=sprintf(Buffer+(*Length), "REMINDER%c%c",13,10);
 			break;
-		case GCN_MEMO:
+		case GSM_CAL_MEMO:
 			*Length+=sprintf(Buffer+(*Length), "MISCELLANEOUS%c%c",13,10);
 			break;
-		case GCN_CALL:
+		case GSM_CAL_CALL:
 			*Length+=sprintf(Buffer+(*Length), "PHONE CALL%c%c",13,10);
 			break;
-		case GCN_BIRTHDAY:
+		case GSM_CAL_BIRTHDAY:
 			*Length+=sprintf(Buffer+(*Length), "SPECIAL OCCASION%c%c",13,10);
 			break;
-		case GCN_MEETING:
+		case GSM_CAL_MEETING:
 		default:
 			*Length+=sprintf(Buffer+(*Length), "MEETING%c%c",13,10);
 			break;
 		}
-		if (note->Type == GCN_CALL) {
+		if (note->Type == GSM_CAL_CALL) {
 			buffer[0] = 0;
 			buffer[1] = 0;
 		 	if (Phone != -1) CopyUnicodeString(buffer,note->Entries[Phone].Text);
@@ -126,11 +127,11 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 		} else {
 			SaveVCALText(Buffer, Length, note->Entries[Text].Text, "SUMMARY");
 		}
-		if (note->Type == GCN_MEETING && Location != -1) {
+		if (note->Type == GSM_CAL_MEETING && Location != -1) {
 			SaveVCALText(Buffer, Length, note->Entries[Location].Text, "LOCATION");
 		}
 	
-		if (Time == -1) return GE_UNKNOWN;
+		if (Time == -1) return ERR_UNKNOWN;
 		SaveVCALDateTime(Buffer, Length, &note->Entries[Time].Date, "DTSTART");
 
 		if (EndTime != -1) {
@@ -146,7 +147,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 		}
 
 		/* Birthday is known to be recurranced */
-		if (Recurrance != -1 && note->Type != GCN_BIRTHDAY) {
+		if (Recurrance != -1 && note->Type != GSM_CAL_BIRTHDAY) {
 			switch(note->Entries[Recurrance].Number/24) {
 				case 1	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D1 #0%c%c",13,10);	 break;
 				case 7	 : *Length+=sprintf(Buffer+(*Length), "RRULE:W1 #0%c%c",13,10);	 break;
@@ -157,22 +158,22 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	} else if (Version == Siemens_VCalendar) {
 		*Length+=sprintf(Buffer+(*Length), "CATEGORIES:");
 		switch (note->Type) {
-		case GCN_MEETING:
+		case GSM_CAL_MEETING:
 			*Length+=sprintf(Buffer+(*Length), "MEETING%c%c",13,10);
 			break;
-		case GCN_CALL:
+		case GSM_CAL_CALL:
 			*Length+=sprintf(Buffer+(*Length), "PHONE CALL%c%c",13,10);
 			break;
-		case GCN_BIRTHDAY:
+		case GSM_CAL_BIRTHDAY:
 			*Length+=sprintf(Buffer+(*Length), "ANNIVERSARY%c%c",13,10);
 			break;
-		case GCN_MEMO:
+		case GSM_CAL_MEMO:
 		default:
 			*Length+=sprintf(Buffer+(*Length), "MISCELLANEOUS%c%c",13,10);
 			break;
 		}
 		
-		if (Time == -1) return GE_UNKNOWN;
+		if (Time == -1) return ERR_UNKNOWN;
 		SaveVCALDateTime(Buffer, Length, &note->Entries[Time].Date, "DTSTART");
 
 		if (Alarm != -1) {
@@ -188,7 +189,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 			}
 		}
 	
-		if (note->Type == GCN_CALL) {
+		if (note->Type == GSM_CAL_CALL) {
 			buffer[0] = 0;
 			buffer[1] = 0;
 		 	if (Phone != -1) CopyUnicodeString(buffer,note->Entries[Phone].Text);
@@ -203,28 +204,28 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	} else if (Version == SonyEricsson_VCalendar) {
 		*Length+=sprintf(Buffer+(*Length), "CATEGORIES:");
 		switch (note->Type) {
-		case GCN_MEETING:
+		case GSM_CAL_MEETING:
 			*Length+=sprintf(Buffer+(*Length), "MEETING%c%c",13,10);
 			break;
-		case GCN_REMINDER:
+		case GSM_CAL_REMINDER:
 			*Length+=sprintf(Buffer+(*Length), "DATE%c%c",13,10);
 			break;
-		case GCN_TRAVEL:
+		case GSM_CAL_TRAVEL:
 			*Length+=sprintf(Buffer+(*Length), "TRAVEL%c%c",13,10);
 			break;
-		case GCN_VACATION:
+		case GSM_CAL_VACATION:
 			*Length+=sprintf(Buffer+(*Length), "VACATION%c%c",13,10);
 			break;
-		case GCN_BIRTHDAY:
+		case GSM_CAL_BIRTHDAY:
 			*Length+=sprintf(Buffer+(*Length), "ANNIVERSARY%c%c",13,10);
 			break;
-		case GCN_MEMO:
+		case GSM_CAL_MEMO:
 		default:
 			*Length+=sprintf(Buffer+(*Length), "MISCELLANEOUS%c%c",13,10);
 			break;
 		}
 		
-		if (Time == -1) return GE_UNKNOWN;
+		if (Time == -1) return ERR_UNKNOWN;
 		SaveVCALDateTime(Buffer, Length, &note->Entries[Time].Date, "DTSTART");
 
 		if (EndTime != -1) {
@@ -245,7 +246,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	*Length+=sprintf(Buffer+(*Length), "END:VEVENT%c%c",13,10);
 	if (header) *Length+=sprintf(Buffer+(*Length), "END:VCALENDAR%c%c",13,10);
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, int *Alarm, int *Completed, int *EndTime, int *Phone)
@@ -295,7 +296,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VTODO%c%c",13,10);
 
 	if (Version == Nokia_VToDo) {
-		if (Text == -1) return GE_UNKNOWN;
+		if (Text == -1) return ERR_UNKNOWN;
 		SaveVCALText(Buffer, Length, note->Entries[Text].Text, "SUMMARY");
 
 		if (Completed == -1) {
@@ -322,7 +323,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 			}
 		}
 	} else if (Version == SonyEricsson_VToDo) {
-		if (Text == -1) return GE_UNKNOWN;
+		if (Text == -1) return ERR_UNKNOWN;
 		SaveVCALText(Buffer, Length, note->Entries[Text].Text, "SUMMARY");
 
 		if (Completed == -1) {
@@ -347,7 +348,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 	if (header) {
 		*Length+=sprintf(Buffer+(*Length), "END:VCALENDAR%c%c",13,10);
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer)
@@ -364,7 +365,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 		switch (Level) {
 		case 0:
 			if (strstr(Line,"BEGIN:VEVENT")) {
-				Calendar->Type 	= GCN_MEMO;
+				Calendar->Type 	= GSM_CAL_MEMO;
 				Level 		= 1;
 			}
 			if (strstr(Line,"BEGIN:VTODO")) {
@@ -374,19 +375,19 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			break;
 		case 1: /* Calendar note */
 			if (strstr(Line,"END:VEVENT")) {
-				if (Calendar->EntriesNum == 0) return GE_EMPTY;
-				return GE_NONE;
+				if (Calendar->EntriesNum == 0) return ERR_EMPTY;
+				return ERR_NONE;
 			}
-			if (strstr(Line,"CATEGORIES:REMINDER")) 	Calendar->Type = GCN_REMINDER;
-			if (strstr(Line,"CATEGORIES:DATE"))	 	Calendar->Type = GCN_REMINDER;//SE
-			if (strstr(Line,"CATEGORIES:TRAVEL"))	 	Calendar->Type = GCN_TRAVEL;  //SE
-			if (strstr(Line,"CATEGORIES:VACATION"))	 	Calendar->Type = GCN_VACATION;//SE
-			if (strstr(Line,"CATEGORIES:MISCELLANEOUS")) 	Calendar->Type = GCN_MEMO;
-			if (strstr(Line,"CATEGORIES:PHONE CALL")) 	Calendar->Type = GCN_CALL;
-			if (strstr(Line,"CATEGORIES:SPECIAL OCCASION")) Calendar->Type = GCN_BIRTHDAY;
-			if (strstr(Line,"CATEGORIES:ANNIVERSARY")) 	Calendar->Type = GCN_BIRTHDAY;
-			if (strstr(Line,"CATEGORIES:MEETING")) 		Calendar->Type = GCN_MEETING;
-			if (strstr(Line,"CATEGORIES:APPOINTMENT")) 	Calendar->Type = GCN_MEETING;
+			if (strstr(Line,"CATEGORIES:REMINDER")) 	Calendar->Type = GSM_CAL_REMINDER;
+			if (strstr(Line,"CATEGORIES:DATE"))	 	Calendar->Type = GSM_CAL_REMINDER;//SE
+			if (strstr(Line,"CATEGORIES:TRAVEL"))	 	Calendar->Type = GSM_CAL_TRAVEL;  //SE
+			if (strstr(Line,"CATEGORIES:VACATION"))	 	Calendar->Type = GSM_CAL_VACATION;//SE
+			if (strstr(Line,"CATEGORIES:MISCELLANEOUS")) 	Calendar->Type = GSM_CAL_MEMO;
+			if (strstr(Line,"CATEGORIES:PHONE CALL")) 	Calendar->Type = GSM_CAL_CALL;
+			if (strstr(Line,"CATEGORIES:SPECIAL OCCASION")) Calendar->Type = GSM_CAL_BIRTHDAY;
+			if (strstr(Line,"CATEGORIES:ANNIVERSARY")) 	Calendar->Type = GSM_CAL_BIRTHDAY;
+			if (strstr(Line,"CATEGORIES:MEETING")) 		Calendar->Type = GSM_CAL_MEETING;
+			if (strstr(Line,"CATEGORIES:APPOINTMENT")) 	Calendar->Type = GSM_CAL_MEETING;
 			if (strstr(Line,"RRULE:D1")) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_RECURRANCE;
 				Calendar->Entries[Calendar->EntriesNum].Number    = 1*24;
@@ -445,8 +446,8 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			break;
 		case 2: /* ToDo note */
 			if (strstr(Line,"END:VTODO")) {
-				if (ToDo->EntriesNum == 0) return GE_EMPTY;
-				return GE_NONE;
+				if (ToDo->EntriesNum == 0) return ERR_EMPTY;
+				return ERR_NONE;
 			}
 			if (ReadVCALText(Line, "DUE", Buff)) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_END_DATETIME;
@@ -489,8 +490,8 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 		}
 	}
 
-	if (Calendar->EntriesNum == 0 && ToDo->EntriesNum == 0) return GE_EMPTY;
-	return GE_NONE;
+	if (Calendar->EntriesNum == 0 && ToDo->EntriesNum == 0) return ERR_EMPTY;
+	return ERR_NONE;
 }
 
 GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *Note)
@@ -500,7 +501,7 @@ GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *N
 	SaveVCALText(Buffer, Length, Note->Text, "BODY");
 	*Length+=sprintf(Buffer+(*Length), "END:VNOTE%c%c",13,10);
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

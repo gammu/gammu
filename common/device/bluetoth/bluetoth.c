@@ -1,3 +1,5 @@
+/* (c) 2003 by Marcin Wiacek */
+/* Linux part based on work by Marcel Holtmann */
 
 #include "../../gsmstate.h"
 
@@ -39,7 +41,7 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 	if (d->hPhone == INVALID_SOCKET) {
 		i = GetLastError();
 		GSM_OSErrorInfo(s, "Socket in bluetooth_open");
-		if (i == 10041) return GE_DEVICENODRIVER;//unknown socket type
+		if (i == 10041) return ERR_DEVICENODRIVER;//unknown socket type
 		return GE_UNKNOWN;
 	}
 
@@ -68,13 +70,13 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 		i = GetLastError();
 		GSM_OSErrorInfo(s, "Connect in bluetooth_open");
 		if (i == 10060) return GE_TIMEOUT;	 //remote device failed to respond
-		if (i == 10050) return GE_DEVICENOTWORK; //socket operation connected with dead network
+		if (i == 10050) return ERR_DEVICENOTWORK; //socket operation connected with dead network
 		//noauth
 		close(d->hPhone);
 		return GE_UNKNOWN;
 	}
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 #else
 static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
@@ -84,9 +86,10 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 	bdaddr_t			bdaddr;
 	int 				fd;
 
-	if ((fd = socket(PF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM)) < 0) {
+	fd = socket(PF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
+	if (fd < 0) {
 		dbgprintf("Can't create socket\n");
-		return GE_DEVICENODRIVER;
+		return ERR_DEVICENODRIVER;
 	}
 
 	bacpy(&laddr.rc_bdaddr, BDADDR_ANY);
@@ -96,7 +99,7 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 	if (bind(fd, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
 		dbgprintf("Can't bind socket\n");
 		close(fd);
-		return GE_DEVICEOPENERROR;
+		return ERR_DEVICEOPENERROR;
 	}
 
 	str2ba(s->CurrentConfig->Device, &bdaddr);
@@ -107,11 +110,11 @@ static GSM_Error bluetooth_connect(GSM_StateMachine *s, int port)
 	if (connect(fd, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
 		dbgprintf("Can't connect\n");
 		close(fd);
-		return GE_DEVICEOPENERROR;
+		return ERR_DEVICEOPENERROR;
 	}
 
 	d->hPhone = fd;
-    	return GE_NONE;
+    	return ERR_NONE;
 }
 #endif
 

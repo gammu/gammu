@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
 
 #include <string.h>
 #include <ctype.h>
@@ -54,8 +55,7 @@ void Fill_GSM_DateTime(GSM_DateTime *Date, time_t timet)
 void GSM_GetCurrentDateTime (GSM_DateTime *Date)
 {
 	Fill_GSM_DateTime(Date, time(NULL));
-	if (Date->Year<1900)
-	{
+	if (Date->Year<1900) {
 		if (Date->Year>90) Date->Year = Date->Year+1900;
 			      else Date->Year = Date->Year+2000;
 	}
@@ -245,17 +245,18 @@ bool CheckTime(GSM_DateTime *date)
 
 int GetLine(FILE *File, char *Line, int count)
 {
-	char *ptr;
+	int num;
 
-	if (fgets(Line, count, File)) {
-		ptr=Line+strlen(Line)-1;
-
-		while ( (*ptr == '\n' || *ptr == '\r') && ptr>=Line) *ptr--='\0';
-
+	if (fgets(Line, count, File) != NULL) {
+		num = strlen(Line) - 1;
+		while(1) {
+			if (Line[num] != '\n' && Line[num] != '\r') break;
+			if (num == 0) break;
+			Line[num--] = 0;
+		}
 		return strlen(Line);
-	} else {
-		return -1;
 	}
+	return -1;
 }
 
 void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsigned char *whitespaces, int spaceslen, bool eot)

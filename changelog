@@ -22,6 +22,36 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20031214 - 0.90.9
+* new functionality:
+  * config matrix added for 3100, 3200 (3200 both European
+    and American), 6220
+  * * support for picture ID in pbk in 7250/7250i               (Egor Kobylkin)
+    * new --getfilefolder can get all files from
+      specified file folders (and single files like --getfiles).
+      It can be slower than --getfiles, because need to search all
+      filesystem sometimes
+  * new --networkinfo                                            (Michal Cihar)
+
+* fixes and improvements:
+  * removed few small bugs in some places
+  * reformatted source in many places
+  * it's possible to play ringtones again with --geteachsms
+  * fix some file ID in DCT4 filesystem                         (Egor Kobylkin)
+  * AT:                                                          (Michal Cihar)
+    * improves error situation detection, when sending/writing SMS
+    * check for available SMS memories before actually using them
+    * do not segfault when AT+CMGW replies something unexpected
+
+NOTE: many things are rewritten to meet some license doubts.
+
+      This version is rather good tested and shouldn't rather make any
+      problems, however it's always possible, that during rewriting something
+      was done wrong and I didn't notified it. Please report such buggy things.
+
+      If all license things will be explained, please expect 0.91 with LGPL
+      for Christmas. It will have few other nice things too ;-)
+
 20031207 - 0.90.7
 * new functionality:
   * reading security code from all DCT4

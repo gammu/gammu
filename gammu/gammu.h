@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
 
 #include "../common/config.h"
 #include "../common/misc/misc.h"
@@ -60,9 +61,9 @@ extern	GSM_StateMachine	s;
 extern	GSM_Phone_Functions	*Phone;
 extern	GSM_Error		error;
 
-extern volatile bool 		bshutdown;
+extern volatile bool 		gshutdown;
 
-void interrupted(int sig);
+void interrupt(int sign);
 
 #ifdef GSM_ENABLE_BEEP
 void	GSM_PhoneBeep		(void);

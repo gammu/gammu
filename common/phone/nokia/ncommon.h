@@ -1,3 +1,4 @@
+/* (c) 2001-2003 by Marcin Wiacek */
 
 #ifndef phone_nokia_common_h
 #define phone_nokia_common_h
@@ -8,34 +9,38 @@
 #define N7110_FRAME_HEADER 0x00, 0x01, 0x01
 
 typedef enum {
-	GMT7110_CG=0xf0,	/* Caller groups memory */
-	GMT7110_SP=0xf1		/* Speed dial memory */
+	MEM7110_CG		 = 0xf0, /* Caller groups memory 		*/
+	MEM7110_SP		 = 0xf1	 /* Speed dial memory 			*/
 } GSM_71_65MemoryType;
 
 typedef enum {
-	N7110_ENTRYTYPE_SIM_SPEEDDIAL	= 0x04,	/* Speed Dial on SIM			*/
-	N7110_ENTRYTYPE_NAME		= 0x07, /* Name (always the only one) 		*/
-	N7110_ENTRYTYPE_EMAIL		= 0x08, /* Email Adress   (TEXT) 		*/
-	N7110_ENTRYTYPE_POSTAL		= 0x09, /* Postal Address (TEXT) 		*/
-	N7110_ENTRYTYPE_NOTE		= 0x0a, /* Note           (TEXT) 		*/
-	N7110_ENTRYTYPE_NUMBER 		= 0x0b, /* Phonenumber 				*/
-	N7110_ENTRYTYPE_RINGTONE	= 0x0c, /* Ringtone number 			*/
-	N7110_ENTRYTYPE_DATE    	= 0x13, /* Date for a Called List 		*/
-	N7110_ENTRYTYPE_UNKNOWN1	= 0x19, /* With Missed Calls			*/
-	N7110_ENTRYTYPE_SPEEDDIAL	= 0x1a,	/* Speed Dial 				*/
-	N7110_ENTRYTYPE_GROUPLOGO	= 0x1b,	/* Caller group logo 			*/
-	N7110_ENTRYTYPE_LOGOON		= 0x1c,	/* Logo On? 				*/
-	N7110_ENTRYTYPE_GROUP		= 0x1e, /* Group number for phonebook entry 	*/
-	N6510_ENTRYTYPE_URL		= 0x2c,	/* URL address - DCT4 only (TEXT) 	*/
-	N6510_ENTRYTYPE_VOICETAG	= 0x2f	/* Voice tag assigments - DCT4 only	*/
+	/* DCT3 and DCT4 */
+	N7110_PBK_SIM_SPEEDDIAL	 = 0x04, /* Speed dial on SIM			*/
+	N7110_PBK_NAME		 = 0x07, /* Text: name (always the only one) 	*/
+	N7110_PBK_EMAIL		 = 0x08, /* Text: email adress			*/
+	N7110_PBK_POSTAL	 = 0x09, /* Text: postal address 		*/
+	N7110_PBK_NOTE		 = 0x0a, /* Text: note		 		*/
+	N7110_PBK_NUMBER 	 = 0x0b, /* Phone number 			*/
+	N7110_PBK_RINGTONE_ID	 = 0x0c, /* Ringtone ID 			*/
+	N7110_PBK_DATETIME    	 = 0x13, /* Call register: date and time	*/
+	N7110_PBK_UNKNOWN1	 = 0x19, /* Call register: with missed calls	*/
+	N7110_PBK_SPEEDDIAL	 = 0x1a, /* Speed dial 				*/
+	N7110_PBK_GROUPLOGO	 = 0x1b, /* Caller group: logo 			*/
+	N7110_PBK_LOGOON	 = 0x1c, /* Caller group: is logo on ?		*/
+	N7110_PBK_GROUP		 = 0x1e, /* Caller group number in pbk entry	*/
+
+	/* DCT4 only */
+	N6510_PBK_URL		 = 0x2c, /* Text: URL address 			*/
+	N6510_PBK_VOICETAG_ID	 = 0x2f, /* Voice tag assigment			*/
+	N6510_PBK_PICTURE_ID	 = 0x33  /* Picture ID assigment		*/
 } GSM_71_65_Phonebook_Entries_Types;
 
 typedef enum {
-	N7110_NUMBER_HOME	= 0x02,
-	N7110_NUMBER_MOBILE	= 0x03,
-	N7110_NUMBER_FAX	= 0x04,
-	N7110_NUMBER_WORK	= 0x06,
-	N7110_NUMBER_GENERAL	= 0x0a,
+	N7110_PBK_NUMBER_HOME	 = 0x02,
+	N7110_PBK_NUMBER_MOBILE	 = 0x03,
+	N7110_PBK_NUMBER_FAX	 = 0x04,
+	N7110_PBK_NUMBER_WORK	 = 0x06,
+	N7110_PBK_NUMBER_GENERAL = 0x0a
 } GSM_71_65_Phonebook_Number_Types;
 
 typedef struct {

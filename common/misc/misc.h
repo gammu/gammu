@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #ifndef __misc_h
 #define __misc_h
@@ -11,27 +12,27 @@
 #include "../config.h"
 
 #ifndef false
-#  define false (0)
+#  define false 0
 #endif
 
 #ifndef true
-#  define true (!false)
+#  define true 	!0
 #endif
 
 #ifndef bool    
-#  define bool int
+#  define bool	char
 #endif
 
 #ifdef WIN32
-#  define my_sleep(x) Sleep(((x) < 1000) ? 1 : ((x) / 1000))
+#  define my_sleep(x) ((x)<1000 ? Sleep(1) : Sleep((x)/1000))
 #else
 #  define my_sleep(x) usleep(x)
 #endif
 
 #undef MAX
-#define MAX(a,b) ((a)>(b)?(a):(b))
+#define MAX(a,b) ((a)>(b) ? (a) : (b))
 #undef MIN
-#define MIN(a,b) ((a)<(b)?(a):(b))
+#define MIN(a,b) ((a)<(b) ? (a) : (b))
 
 /* ------------------------------------------------------------------------- */
 
@@ -90,16 +91,24 @@ bool GSM_SetDebugLevel(char *info, Debug_Info *di);
  * Structure used for saving date and time 
  */
 typedef struct {
-	/* Complete year number */
-	unsigned int	Year;
-	/* January = 1 */
-	unsigned int 	Month;
-	unsigned int 	Day;
-	unsigned int	Hour;
-	unsigned int 	Minute;
-	unsigned int	Second;
-	/* The difference between local time and GMT */
-	int		Timezone;
+	/**
+	 * The difference between local time and GMT in hours
+	 */
+	int			Timezone;
+
+	unsigned int		Second;
+	unsigned int 		Minute;
+	unsigned int		Hour;
+
+	unsigned int 		Day;
+	/**
+	 * January = 1, February = 2, etc.
+	 */
+	unsigned int 		Month;
+	/**
+	 * Complete year number. Not 03, but 2003
+	 */
+	unsigned int		Year;
 } GSM_DateTime;
 
 void GSM_GetCurrentDateTime 	(GSM_DateTime *Date);

@@ -1,6 +1,7 @@
+/* (c) 2002-2003 by Marcin Wiacek & Michal Cihar */
 
-#ifndef gsm_statemachine_h
-#define gsm_statemachine_h
+#ifndef __gsm_state_h
+#define __gsm_state_h
 
 #include <time.h>
 
@@ -132,18 +133,38 @@
 
 #ifdef DJGPP
 #  undef GSM_ENABLE_IRDADEVICE
-#  undef GSM_ENABLE_FBUS2IRDA
 #  undef GSM_ENABLE_IRDAPHONET
-#  undef GSM_ENABLE_BLUETOOTHDEVICE
-#  undef GSM_ENABLE_BLUEFBUS2
-#  undef GSM_ENABLE_BLUEPHONET
-#  undef GSM_ENABLE_BLUEAT
+#  undef GSM_ENABLE_IRDAOBEX
 #  undef GSM_ENABLE_IRDAAT
+#  undef GSM_ENABLE_FBUS2IRDA
+
+#  undef GSM_ENABLE_BLUETOOTHDEVICE
+#  undef GSM_ENABLE_BLUEPHONET
+#  undef GSM_ENABLE_BLUEOBEX
+#  undef GSM_ENABLE_BLUEAT
+#  undef GSM_ENABLE_BLUEFBUS2
 #  undef GSM_ENABLE_PHONETBLUE
 #  undef GSM_ENABLE_FBUS2BLUE
-#  undef GSM_ENABLE_IRDAOBEX
-#  undef GSM_ENABLE_BLUEOBEX
 #  undef GSM_ENABLE_MROUTERBLUE
+#endif
+
+#ifndef WIN32
+#  ifdef ENABLE_LGPL
+#    undef GSM_ENABLE_IRDADEVICE
+#    undef GSM_ENABLE_IRDAPHONET
+#    undef GSM_ENABLE_IRDAOBEX
+#    undef GSM_ENABLE_IRDAAT
+#    undef GSM_ENABLE_FBUS2IRDA
+
+#    undef GSM_ENABLE_BLUETOOTHDEVICE
+#    undef GSM_ENABLE_BLUEPHONET
+#    undef GSM_ENABLE_BLUEOBEX
+#    undef GSM_ENABLE_BLUEAT
+#    undef GSM_ENABLE_BLUEFBUS2
+#    undef GSM_ENABLE_PHONETBLUE
+#    undef GSM_ENABLE_FBUS2BLUE
+#    undef GSM_ENABLE_MROUTERBLUE
+#  endif
 #endif
 
 #ifdef GSM_ENABLE_SERIALDEVICE
@@ -256,7 +277,7 @@ typedef struct {
 	/**
 	 * This one is called when character is received from device.
 	 */
-	GSM_Error (*StateMachine) (GSM_StateMachine *s, unsigned char rx_byte);
+	GSM_Error (*StateMachine) (GSM_StateMachine *s, unsigned char rx_char);
 	/**
 	 * Protocol initialisation.
 	 */
@@ -1431,6 +1452,7 @@ typedef enum {
 
 	/* n6510.c */
 	F_PBK35,	/* Phonebook in 3510 style with ringtones ID			*/
+	F_PBKIMG,	/* Phonebook in 7250 style with picture ID			*/
 	F_RADIO,	/* Phone with FM radio						*/
 	F_TODO63,	/* ToDo in 6310 style - 0x55 msg type				*/
 	F_TODO66,	/* ToDo in 6610 style - like calendar, with date and other	*/

@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Michal Cihar */
 /*
  * Low level functions for communication with Alcatel One Touch phones.
  *

@@ -1,8 +1,8 @@
 
 /* MS Platform SDK */
 
-#ifndef __AFBLUE__
-#define __AFBLUE__
+#ifndef __blue_w32_h
+#define __blue_w32_h
 
 #include <pshpack1.h>		// Without it compiled code hangs up BT stack
 
@@ -21,12 +21,11 @@ typedef ULONGLONG 		BTH_ADDR, *PBTH_ADDR;
 #define AF_BTH  		32
 #endif
 
-typedef struct _SOCKADDR_BTH
-{
-    USHORT      		addressFamily;  // Always AF_BTH
-    BTH_ADDR    		btAddr;         // Bluetooth device address
-    GUID        		serviceClassId; // [OPTIONAL] system will query SDP for port
-    ULONG       		port;           // RFCOMM channel or L2CAP PSM
+typedef struct _SOCKADDR_BTH {
+	USHORT      		addressFamily;  // Always AF_BTH
+	BTH_ADDR    		btAddr;         // Bluetooth device address
+	GUID        		serviceClassId; // [OPTIONAL] system will query SDP for port
+	ULONG       		port;           // RFCOMM channel or L2CAP PSM
 } SOCKADDR_BTH, *PSOCKADDR_BTH;
 
 #define BTHPROTO_RFCOMM  	0x0003

@@ -1,3 +1,4 @@
+/* (c) 2003 by Marcin Wiacek */
                                            
 #include "../../gsmstate.h"
 
@@ -27,19 +28,19 @@ static GSM_Error SONYERIC_SetOBEXMode(GSM_StateMachine *s)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 
-	if (Priv->OBEX) return GE_NONE;
+	if (Priv->OBEX) return ERR_NONE;
 
 	dbgprintf ("Changing to OBEX\n");
 
 	error=GSM_WaitFor (s, "AT*EOBEX\r", 9, 0x00, 4, ID_SetOBEX);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	error = s->Protocol.Functions->Terminate(s);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	s->Protocol.Functions = &OBEXProtocol;
 	error = s->Protocol.Functions->Initialise(s);
-	if (error != GE_NONE) {
+	if (error != ERR_NONE) {
 		s->Protocol.Functions = &ATProtocol;
 		return error;
 	}
@@ -48,7 +49,7 @@ static GSM_Error SONYERIC_SetOBEXMode(GSM_StateMachine *s)
 	s->Phone.Functions->DispatchMessage	= GSM_DispatchMessage;
 	s->Phone.Functions->ReplyFunctions	= OBEXGENReplyFunctions;
 	Priv->OBEX				= true;
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error SONYERIC_SetATMode(GSM_StateMachine *s)
@@ -56,19 +57,19 @@ static GSM_Error SONYERIC_SetATMode(GSM_StateMachine *s)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 
-	if (!Priv->OBEX) return GE_NONE;
+	if (!Priv->OBEX) return ERR_NONE;
 
 	dbgprintf ("Changing to AT\n");
 
 	error = OBEXGEN_Disconnect(s);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	error = s->Protocol.Functions->Terminate(s);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	s->Protocol.Functions = &ATProtocol;
 	error = s->Protocol.Functions->Initialise(s);
-	if (error != GE_NONE) {
+	if (error != ERR_NONE) {
 		s->Protocol.Functions = &OBEXProtocol;
 		return error;
 	}
@@ -76,7 +77,7 @@ static GSM_Error SONYERIC_SetATMode(GSM_StateMachine *s)
 	s->Phone.Functions->DispatchMessage	= ATGEN_DispatchMessage;
 	s->Phone.Functions->ReplyFunctions	= ATGENReplyFunctions;
 	Priv->OBEX				= false;
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error SONYERIC_GetFile(GSM_StateMachine *s, GSM_File *File, unsigned char *FileName)
@@ -89,11 +90,11 @@ static GSM_Error SONYERIC_GetFile(GSM_StateMachine *s, GSM_File *File, unsigned 
 	File->Buffer 	= NULL;
 
 	error = SONYERIC_SetOBEXMode(s);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
-	error = GE_NONE;
-	while (error == GE_NONE) error = OBEXGEN_GetFilePart(s,File);
-	if (error != GE_EMPTY) return error;
+	error = ERR_NONE;
+	while (error == ERR_NONE) error = OBEXGEN_GetFilePart(s,File);
+	if (error != ERR_EMPTY) return error;
 
 	return SONYERIC_SetATMode(s);
 }
@@ -105,7 +106,7 @@ static GSM_Error SONYERIC_SetFile(GSM_StateMachine *s, unsigned char *FileName, 
 	int		Pos = 0;
 
 	error = SONYERIC_SetOBEXMode(s);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	strcpy(File.ID_FullName,FileName);
 	EncodeUnicode(File.Name,FileName,strlen(FileName));
@@ -113,10 +114,10 @@ static GSM_Error SONYERIC_SetFile(GSM_StateMachine *s, unsigned char *FileName, 
 	File.Buffer 	= malloc(Length);
 	memcpy(File.Buffer,Buffer,Length);
 
-	error = GE_NONE;
-	while (error == GE_NONE) error = OBEXGEN_AddFilePart(s,&File,&Pos);
+	error = ERR_NONE;
+	while (error == ERR_NONE) error = OBEXGEN_AddFilePart(s,&File,&Pos);
 	free(File.Buffer);
-	if (error != GE_EMPTY) return error;
+	if (error != ERR_EMPTY) return error;
 
 	return SONYERIC_SetATMode(s);
 }
@@ -133,7 +134,7 @@ GSM_Error SONYERIC_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note,
 
 	if (start) {
 		error = SONYERIC_GetFile(s, &Priv->file, "telecom/cal.vcs");
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 
 		Note->Location = 1;
 	} else {
@@ -146,16 +147,16 @@ GSM_Error SONYERIC_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note,
 	num = 0;
 	while (1) {
 		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, Note, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
-		if (error == GE_EMPTY) break;
-		if (error != GE_NONE) return error;
+		if (error == ERR_EMPTY) break;
+		if (error != ERR_NONE) return error;
 		if (Note->EntriesNum != 0) {			
 			num++;
-			if (num == Loc) return GE_NONE;
+			if (num == Loc) return ERR_NONE;
 		}
 	}
-	return GE_EMPTY;
+	return ERR_EMPTY;
 #else
-	return GE_SOURCENOTAVAILABLE;
+	return ERR_SOURCENOTAVAILABLE;
 #endif
 }
 
@@ -167,11 +168,11 @@ GSM_Error SONYERIC_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool st
 	int			Pos, num, Loc;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer!=AT_Ericsson) return GE_NOTSUPPORTED;
+	if (Priv->Manufacturer!=AT_Ericsson) return ERR_NOTSUPPORTED;
 
 	if (start) {
 		error = SONYERIC_GetFile(s, &Priv->file, "telecom/cal.vcs");
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 
 		ToDo->Location = 1;
 	} else {
@@ -184,17 +185,17 @@ GSM_Error SONYERIC_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool st
 	num = 0;
 	while (1) {
 		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, &Calendar, ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
-		if (error == GE_EMPTY) break;
-		if (error != GE_NONE) return error;
+		if (error == ERR_EMPTY) break;
+		if (error != ERR_NONE) return error;
 		if (ToDo->EntriesNum != 0) {			
 			num++;
-			if (num == Loc) return GE_NONE;
+			if (num == Loc) return ERR_NONE;
 		}
 	}
 
-	return GE_EMPTY;
+	return ERR_EMPTY;
 #else
-	return GE_SOURCENOTAVAILABLE;
+	return ERR_SOURCENOTAVAILABLE;
 #endif
 }
 
@@ -207,25 +208,25 @@ GSM_Error SONYERIC_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 	int			Pos;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer!=AT_Ericsson) return GE_NOTSUPPORTED;
+	if (Priv->Manufacturer!=AT_Ericsson) return ERR_NOTSUPPORTED;
 
 	smprintf(s,"Getting ToDo status\n");
 
 	error = SONYERIC_GetFile(s, &Priv->file, "telecom/cal.vcs");
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	status->Used 	= 0;
 	Pos 		= 0;
 	while (1) {
 		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, &Calendar, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
-		if (error == GE_EMPTY) break;
-		if (error != GE_NONE) return error;
+		if (error == ERR_EMPTY) break;
+		if (error != ERR_NONE) return error;
 		if (ToDo.EntriesNum != 0) status->Used++;
 	}
 	
-	return GE_NONE;
+	return ERR_NONE;
 #else
-	return GE_SOURCENOTAVAILABLE;
+	return ERR_SOURCENOTAVAILABLE;
 #endif
 }
 
@@ -241,7 +242,7 @@ GSM_Error SONYERIC_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	return SONYERIC_SetFile(s, "telecom/cal/luid/.vcs", req, size);
 #else
-	return GE_SOURCENOTAVAILABLE;
+	return ERR_SOURCENOTAVAILABLE;
 #endif
 }
 
@@ -252,7 +253,7 @@ GSM_Error SONYERIC_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	unsigned char 		req[5000];
 	int			size=0;
 
-	if (Priv->Manufacturer!=AT_Ericsson) return GE_NOTSUPPORTED;
+	if (Priv->Manufacturer!=AT_Ericsson) return ERR_NOTSUPPORTED;
 
 	smprintf(s,"Adding ToDo\n");
 
@@ -260,7 +261,7 @@ GSM_Error SONYERIC_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 
 	return SONYERIC_SetFile(s, "telecom/cal/luid/.vcs", req, size);
 #else
-	return GE_SOURCENOTAVAILABLE;
+	return ERR_SOURCENOTAVAILABLE;
 #endif
 }
 
@@ -273,12 +274,12 @@ GSM_Error SONYERIC_DeleteAllToDo(GSM_StateMachine *s)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char 		Line[2000];
 
-	if (Priv->Manufacturer!=AT_Ericsson) return GE_NOTSUPPORTED;
+	if (Priv->Manufacturer!=AT_Ericsson) return ERR_NOTSUPPORTED;
 
 	smprintf(s,"Deleting all ToDo\n");
 
 	error = SONYERIC_GetFile(s, &Priv->file, "telecom/cal.vcs");
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	Pos  = 0;
 	Buf  = NULL;
@@ -312,7 +313,7 @@ GSM_Error SONYERIC_DeleteAllToDo(GSM_StateMachine *s)
 //	if (Buf != NULL) free(Buf);
 	return error;
 #else
-	return GE_SOURCENOTAVAILABLE;
+	return ERR_SOURCENOTAVAILABLE;
 #endif
 }
 
@@ -328,7 +329,7 @@ GSM_Error SONYERIC_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	smprintf(s, "Deleting calendar note %i\n",Note->Location);
 
 	error = SONYERIC_GetFile(s, &Priv->file, "telecom/cal.vcs");
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	Pos  = 0;
 	Buf  = NULL;
@@ -368,7 +369,7 @@ GSM_Error SONYERIC_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	if (Buf != NULL) free(Buf);
 	return error;
 #else
-	return GE_SOURCENOTAVAILABLE;
+	return ERR_SOURCENOTAVAILABLE;
 #endif
 }
 
@@ -381,25 +382,25 @@ GSM_Error SONYERIC_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *St
 	int			Pos;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer!=AT_Ericsson) return GE_NOTSUPPORTED;
+	if (Priv->Manufacturer!=AT_Ericsson) return ERR_NOTSUPPORTED;
 
 	smprintf(s, "Getting calendar status\n");
 
 	error = SONYERIC_GetFile(s, &Priv->file, "telecom/cal.vcs");
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	Status->Used 	= 0;
 	Pos  		= 0;
 	while (1) {
 		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, &Calendar, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
-		if (error == GE_EMPTY) break;
-		if (error != GE_NONE) return error;
+		if (error == ERR_EMPTY) break;
+		if (error != ERR_NONE) return error;
 		if (Calendar.EntriesNum != 0) Status->Used++;
 	}
 	
-	return GE_NONE;
+	return ERR_NONE;
 #else
-	return GE_SOURCENOTAVAILABLE;
+	return ERR_SOURCENOTAVAILABLE;
 #endif
 }
 

@@ -1,5 +1,7 @@
-#ifndef __gsm_backupics_h
-#define __gsm_backupics_h
+/* (c) 2003 by Marcin Wiacek */
+
+#ifndef __gsm_backics_h
+#define __gsm_backics_h
 
 #include "backgen.h"
 

@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #include <string.h>
 #include <stdlib.h>
@@ -50,11 +51,11 @@ GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, int *Length)
 		}
 		if (KeyCode[i] == GSM_KEY_NONE) {
 			*Length = i;
-			return GE_NOTSUPPORTED;
+			return ERR_NOTSUPPORTED;
 		}
 	}
 	*Length = i;
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
@@ -63,9 +64,9 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 	FILE		*file;
 	struct stat	fileinfo;
 
-	if (FileName[0] == 0x00) return GE_UNKNOWN;
+	if (FileName[0] == 0x00) return ERR_UNKNOWN;
 	file = fopen(FileName,"rb");
-	if (file == NULL) return(GE_CANTOPENFILE);
+	if (file == NULL) return ERR_CANTOPENFILE;
 
 	free(File->Buffer);
 	File->Buffer 	= NULL;
@@ -90,7 +91,7 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 			File->Modified.Hour,File->Modified.Minute,File->Modified.Second);
 	}
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static void GSM_JADFindLine(GSM_File File, char *Name, char *Value)
@@ -117,27 +118,27 @@ GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR, ch
 	char Size2[200];
 
 	GSM_JADFindLine(File, "MIDlet-Vendor:", Vendor);
-	if (Vendor[0] == 0x00) return GE_FILENOTSUPPORTED;
+	if (Vendor[0] == 0x00) return ERR_FILENOTSUPPORTED;
 	dbgprintf("Vendor: \"%s\"\n",Vendor);
 
 	GSM_JADFindLine(File, "MIDlet-Name:", Name);
-	if (Name[0] == 0x00) return GE_FILENOTSUPPORTED;
+	if (Name[0] == 0x00) return ERR_FILENOTSUPPORTED;
 	dbgprintf("Name: \"%s\"\n",Name);
 
 	GSM_JADFindLine(File, "MIDlet-Jar-URL:", JAR);
-	if (JAR[0] == 0x00) return GE_FILENOTSUPPORTED;
+	if (JAR[0] == 0x00) return ERR_FILENOTSUPPORTED;
 	dbgprintf("JAR file URL: \"%s\"\n",JAR);
 
 	GSM_JADFindLine(File, "MIDlet-Jar-Size:", Size2);
 	*Size = -1;
-	if (Size2[0] == 0x00) return GE_FILENOTSUPPORTED;
+	if (Size2[0] == 0x00) return ERR_FILENOTSUPPORTED;
 	dbgprintf("JAR size: \"%s\"\n",Size2);
 	(*Size) = atoi(Size2);
 
 	GSM_JADFindLine(File, "MIDlet-Version:", Version);
 	dbgprintf("Version: \"%s\"\n",Version);
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 void GSM_IdentifyFileFormat(GSM_File *File)

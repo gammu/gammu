@@ -10,7 +10,7 @@
 
 typedef struct {
 	int 		hPhone;
-	struct termios 	backup_termios; /* Structure to backup the setting of the terminal. */
+	struct termios 	old_settings;
 } GSM_Device_SerialData;
 
 #endif

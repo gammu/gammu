@@ -1,3 +1,4 @@
+/* (c) 2003 by Marcin Wiacek */
 
 #include <string.h>
 #include <ctype.h>
@@ -16,10 +17,10 @@ GSM_Error SaveICS(char *FileName, GSM_Backup *backup)
 	FILE 		*file;
  
 	file = fopen(FileName, "wb");      
-	if (file == NULL) return GE_CANTOPENFILE;
+	if (file == NULL) return ERR_CANTOPENFILE;
 
 	fclose(file);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error LoadICS(char *FileName, GSM_Backup *backup)
@@ -29,9 +30,9 @@ GSM_Error LoadICS(char *FileName, GSM_Backup *backup)
 	
 	File.Buffer = NULL;
 	error = GSM_ReadFile(FileName, &File);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 #endif

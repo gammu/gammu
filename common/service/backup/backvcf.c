@@ -1,3 +1,4 @@
+/* (c) 2003 by Marcin Wiacek */
 
 #include <string.h>
 #include <ctype.h>
@@ -18,7 +19,7 @@ GSM_Error SaveVCard(char *FileName, GSM_Backup *backup)
 	FILE 		*file;
  
 	file = fopen(FileName, "wb");      
-	if (file == NULL) return GE_CANTOPENFILE;
+	if (file == NULL) return ERR_CANTOPENFILE;
 
 	i=0;
 	while (backup->PhonePhonebook[i]!=NULL) {
@@ -31,7 +32,7 @@ GSM_Error SaveVCard(char *FileName, GSM_Backup *backup)
 	}
 
 	fclose(file);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
@@ -43,28 +44,28 @@ GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
 
 	File.Buffer = NULL;
 	error = GSM_ReadFile(FileName, &File);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	Pos = 0;
 	while (1) {
 		error = GSM_DecodeVCARD(File.Buffer, &Pos, &Pbk, Nokia_VCard21);
-		if (error == GE_EMPTY) break;
-		if (error != GE_NONE) return error;
+		if (error == ERR_EMPTY) break;
+		if (error != ERR_NONE) return error;
 		if (numPbk < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
 			backup->PhonePhonebook[numPbk] = malloc(sizeof(GSM_MemoryEntry));
-		        if (backup->PhonePhonebook[numPbk] == NULL) return GE_MOREMEMORY;
+		        if (backup->PhonePhonebook[numPbk] == NULL) return ERR_MOREMEMORY;
 			backup->PhonePhonebook[numPbk + 1] = NULL;
 		} else {
 			dbgprintf("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
-			return GE_MOREMEMORY;
+			return ERR_MOREMEMORY;
 		}
 		memcpy(backup->PhonePhonebook[numPbk],&Pbk,sizeof(GSM_MemoryEntry));
 		backup->PhonePhonebook[numPbk]->Location 	= numPbk + 1;
-		backup->PhonePhonebook[numPbk]->MemoryType 	= GMT_ME;
+		backup->PhonePhonebook[numPbk]->MemoryType 	= MEM_ME;
 		numPbk++;
 	}
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 #endif

@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
 
 #include "../../gsmstate.h"
 
@@ -19,13 +20,13 @@ static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 	if (s->Protocol.Data.AT.FastWrite) {
 		while (sent != length) {
 			if ((i = s->Device.Functions->WriteDevice(s,buffer + sent, length - sent)) == 0) {
-				return GE_DEVICEWRITEERROR;
+				return ERR_DEVICEWRITEERROR;
 			}
 			sent += i;
 		}
 	} else {
 		for (i=0;i<length;i++) {
-			if (s->Device.Functions->WriteDevice(s,buffer+i,1)!=1) return GE_DEVICEWRITEERROR;
+			if (s->Device.Functions->WriteDevice(s,buffer+i,1)!=1) return ERR_DEVICEWRITEERROR;
 			/* For some phones like Siemens M20 we need to wait a little
 			 * after writing each char. Possible reason: these phones
 			 * can't receive so fast chars or there is bug here in Gammu */
@@ -34,7 +35,7 @@ static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 		my_sleep(400);
 	}
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 typedef struct {
@@ -42,7 +43,7 @@ typedef struct {
 	int	lines;
 } SpecialAnswersStruct;
 
-static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
+static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 {
 	GSM_Protocol_Message 	Msg2;
 	GSM_Protocol_ATData 	*d = &s->Protocol.Data.AT;
@@ -65,6 +66,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 		{"^SCN:"	,1},	{"+CGREG:"	,1},
 		{"+CBM:"	,1},	{"+CMT:"	,2},
 		{"+CMTI:"	,1},	{"+CDS:"	,2},
+		{"+CREG:"	,1},
 		
 		{"RING"		,1},	{"NO CARRIER"	,1},
 		{"NO ANSWER"	,1},	{"+COLP"	,1},
@@ -74,7 +76,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 
     	/* Ignore leading CR, LF and ESC */
     	if (d->Msg.Length == 0) {
-		if (rx_byte == 10 || rx_byte == 13 || rx_byte == 27) return GE_NONE;
+		if (rx_char == 10 || rx_char == 13 || rx_char == 27) return ERR_NONE;
 		d->LineStart = d->Msg.Length;
 	}
 
@@ -82,17 +84,17 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 		d->Msg.BufferUsed	= d->Msg.Length + 2;
 		d->Msg.Buffer 		= (unsigned char *)realloc(d->Msg.Buffer,d->Msg.BufferUsed);
 	}
-	d->Msg.Buffer[d->Msg.Length++] = rx_byte;
+	d->Msg.Buffer[d->Msg.Length++] = rx_char;
 	d->Msg.Buffer[d->Msg.Length  ] = 0;
 
-	switch (rx_byte) {
+	switch (rx_char) {
 	case 0:
 		break;
 	case 10:
 	case 13:
 		if (!d->wascrlf) d->LineEnd = d->Msg.Length-1;
 		d->wascrlf = true;
-		if (d->Msg.Length > 0 && rx_byte == 10 && d->Msg.Buffer[d->Msg.Length-2]==13) {
+		if (d->Msg.Length > 0 && rx_char == 10 && d->Msg.Buffer[d->Msg.Length-2]==13) {
 			i = 0;
 			while (StartStrings[i] != NULL) {
 				if (strlen(StartStrings[i])==0) break;
@@ -109,12 +111,18 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 			i = 0;
 			while (SpecialAnswers[i].text != NULL) {
 				if (strlen(SpecialAnswers[i].text)==0) break;
-				if (strncmp(SpecialAnswers[i].text,d->Msg.Buffer+d->LineStart,strlen(SpecialAnswers[i].text)) == 0) {
+				if (strncmp(SpecialAnswers[i].text,d->Msg.Buffer+d->LineStart,strlen(SpecialAnswers[i].text)) == 0) {					
+					/* We need something better here */
+				  	if (s->Phone.Data.RequestID == ID_GetNetworkInfo && strncmp(SpecialAnswers[i].text,"+CREG:",6) == 0) {
+						i++;
+						continue;
+					}
 					d->SpecialAnswerStart 	= d->LineStart;
 					d->SpecialAnswerLines	= SpecialAnswers[i].lines;
 				}
 				i++;
 			}
+
 
 			if (d->SpecialAnswerLines == 1) {
 				/* This is end of special answer. We copy it and send to phone module */
@@ -179,7 +187,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_byte)
 			}
 		}
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error AT_Initialise(GSM_StateMachine *s)
@@ -206,7 +214,7 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 static GSM_Error AT_Terminate(GSM_StateMachine *s)
 {
 	free(s->Protocol.Data.AT.Msg.Buffer);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Protocol_Functions ATProtocol = {

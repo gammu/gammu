@@ -1,5 +1,7 @@
-#ifndef __gsm_backupvcs_h
-#define __gsm_backupvcs_h
+/* (c) 2003 by Marcin Wiacek */
+
+#ifndef __gsm_backvcs_h
+#define __gsm_backvcs_h
 
 #include "backgen.h"
 

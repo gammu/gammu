@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #include <string.h>
 
@@ -357,7 +358,7 @@ GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, int *Length, GSM_WAPBookmark 
 	*Length+=sprintf(Buffer+(*Length), "END:ENV%c%c",13,10);
 	*Length+=sprintf(Buffer+(*Length), "END:VBKM%c%c",13,10);
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

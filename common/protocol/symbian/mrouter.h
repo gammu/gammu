@@ -1,3 +1,4 @@
+/* (c) 2003 by Marcin Wiacek */
 
 #ifndef mrouter_h
 #define mrouter_h

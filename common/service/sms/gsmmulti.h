@@ -1,6 +1,7 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
-#ifndef __gsm_multisms_h
-#define __gsm_multisms_h
+#ifndef __gsm_multi_h
+#define __gsm_multi_h
 
 #include "../../gsmcomon.h"
 #include "../gsmlogo.h"

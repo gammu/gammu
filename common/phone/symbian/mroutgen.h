@@ -1,3 +1,4 @@
+/* (c) 2003 by Marcin Wiacek */
 
 #ifndef mroutgen_h
 #define mroutgen_h

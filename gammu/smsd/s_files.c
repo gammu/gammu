@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Joergen Thomsen */
 
 #include "../../cfg/config.h"
 
@@ -19,7 +20,7 @@
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
 static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config)
 {
-	GSM_Error	error = GE_NONE;
+	GSM_Error	error = ERR_NONE;
 	int 		i,j;
 	unsigned char 	FileName[100], FullName[400], ext[4], buffer[64],buffer2[400];
 	bool		done;
@@ -32,7 +33,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 	done 	= false;
 	for (i=0;i<sms.Number && !done;i++) {
 		strcpy(ext, "txt");
-		if (sms.SMS[i].Coding == GSM_Coding_8bit) strcpy(ext, "bin");
+		if (sms.SMS[i].Coding == SMS_Coding_8bit) strcpy(ext, "bin");
 		DecodeUnicode(sms.SMS[i].Number,buffer2);
 		/* we loop on yy for the first SMS assuming that if xxxx_yy_00.ext is absent,
 		   any xxxx_yy_01,02, must be garbage, that can be overwritten */
@@ -52,7 +53,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 			fclose(file);
 			if (i == 0) {
 				WriteSMSDLog("Cannot save %s. No available file names", FileName);
-				return GE_CANTOPENFILE;
+				return ERR_CANTOPENFILE;
 			}
 		}
 		errno = 0;
@@ -73,8 +74,8 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 				file = fopen(FullName, "wb");
 				if (file) {
 					switch (sms.SMS[i].Coding) {
-					case GSM_Coding_Unicode:
-	    				case GSM_Coding_Default:
+					case SMS_Coding_Unicode:
+	    				case SMS_Coding_Default:
 
 					    DecodeUnicode(sms.SMS[i].Text,buffer2);
 					    if (mystrncasecmp(Config->inboxformat, "unicode", 0)) {
@@ -86,29 +87,29 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 						fwrite(buffer2,1,strlen(buffer2),file);
 					    }
 					    break;
-					case GSM_Coding_8bit:
+					case SMS_Coding_8bit:
 					    fwrite(sms.SMS[i].Text,1,sms.SMS[i].Length,file);
 					}
 					fclose(file);
-				} else error = GE_CANTOPENFILE;
+				} else error = ERR_CANTOPENFILE;
 			}
-			if (error == GE_NONE) {
+			if (error == ERR_NONE) {
 				WriteSMSDLog("%s %s", (sms.SMS[i].PDU == SMS_Status_Report?"Delivery report":"Received"), FileName);
 			} else {
 				WriteSMSDLog("Cannot save %s (%i)", FileName, errno);
-				return GE_CANTOPENFILE;
+				return ERR_CANTOPENFILE;
 			}
 		}
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
-/* Find one multi SMS to sending and return it (or return GE_EMPTY)
+/* Find one multi SMS to sending and return it (or return ERR_EMPTY)
  * There is also set ID for SMS
  */
 static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID)
 {
-  	GSM_Error			error = GE_NOTSUPPORTED;
+  	GSM_Error			error = ERR_NOTSUPPORTED;
   	GSM_EncodeMultiPartSMSInfo	SMSInfo;
  	unsigned char 			FileName[100],FullName[400];
 	unsigned char			Buffer[(GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS+1)*2];
@@ -135,8 +136,8 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	for (l=0; l < n; l++) free(namelist[l]);
   	free(namelist);
   	namelist = NULL;
- 	if (m >= n) return GE_EMPTY;
-	error = GE_NONE;
+ 	if (m >= n) return ERR_EMPTY;
+	error = ERR_NONE;
 #else
 #ifdef WIN32
   	struct _finddata_t 		c_file;
@@ -145,15 +146,15 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	strcpy(FullName, Config->outboxpath);
   	strcat(FullName, "OUT*.txt");
   	if((hFile = _findfirst( FullName, &c_file )) == -1L ) {
-  		return GE_EMPTY;
+  		return ERR_EMPTY;
   	} else {
   		strcpy(FileName,c_file.name);
   	}
   	_findclose( hFile );
-	error = GE_NONE;
+	error = ERR_NONE;
 #endif
 #endif
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
   	strcpy(FullName, Config->outboxpath);
   	strcat(FullName, FileName);
@@ -161,7 +162,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	File = fopen(FullName, "rb");
  	len  = fread(Buffer, 1, sizeof(Buffer)-2, File);
   	fclose(File);
-  	if (len<2) return GE_EMPTY;
+  	if (len<2) return ERR_EMPTY;
 
  	if ((Buffer[0] != 0xFF || Buffer[1] != 0xFE) &&
 	    (Buffer[0] != 0xFE || Buffer[1] != 0xFF))
@@ -202,7 +203,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  			phlen = strlen(pos1) - strlen(pos2);
  		} else {
 			/* something wrong */
- 			return GE_UNKNOWN;
+ 			return ERR_UNKNOWN;
 		}
  	} else if (i == 2) {
 		/* OUTxxxxxxx.txt or OUTxxxxxxx */
@@ -220,7 +221,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  		phlen = strlen(pos1) - strlen(pos2);
  	} else {
 		/* something wrong */
-		return GE_UNKNOWN;
+		return ERR_UNKNOWN;
 	}
 
  	for (len=0;len<sms->Number;len++) {
@@ -241,7 +242,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	} else dbgprintf("error\n");
 #endif
 
-  	return GE_NONE;
+  	return ERR_NONE;
 }
 
 /* After sending SMS is moved to Sent Items or Error Items. */
@@ -271,16 +272,16 @@ static GSM_Error SMSDFiles_MoveSMS(unsigned char *sourcepath, unsigned char *des
 	if (ilen == olen) {
 		if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0)) {
 			WriteSMSDLog("Could not delete %s (%i)", ifilename, errno);
-			return GE_UNKNOWN;
+			return ERR_UNKNOWN;
 		}
-		return GE_NONE;
+		return ERR_NONE;
 	} else {
 		WriteSMSDLog("Error copying SMS %s -> %s", ifilename, ofilename);
 		if (alwaysDelete) {
 			if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0))
 				WriteSMSDLog("Could not delete %s (%i)", ifilename, errno);
 		}
-		return GE_UNKNOWN;
+		return ERR_UNKNOWN;
 	}
 }
 

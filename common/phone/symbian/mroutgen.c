@@ -1,4 +1,4 @@
-
+/* (c) 2003 by Marcin Wiacek */
 /* EXPERIMENTAL. NOT FUNCTIONAL */
 
 #include <string.h>
@@ -13,7 +13,7 @@
 
 GSM_Error MROUTERGEN_StartModem(GSM_StateMachine *s)
 {
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error MROUTERGEN_Initialise(GSM_StateMachine *s)
@@ -82,7 +82,7 @@ smprintf(s,"writing\n");
 	}
 
 
-return GE_UNKNOWN;
+return ERR_UNKNOWN;
 }
 
 static GSM_Reply_Function MROUTERGENReplyFunctions[] = {

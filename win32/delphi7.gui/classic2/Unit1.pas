@@ -48,27 +48,27 @@ begin
 	if status then
 	begin
 		error:=GSM_GetDCT4SimlockNetwork(Form1.PhoneID,@buffer);
-    if (error <> GE_NONE) then application.MessageBox(pchar('Get simlock: error '+inttostr(integer(error))),'',0);
-    if (error = GE_NONE) then
+    if (error <> ERR_NONE) then application.MessageBox(pchar('Get simlock: error '+inttostr(integer(error))),'',0);
+    if (error = ERR_NONE) then
     begin
       buffer[6]:=chr(0);
       Form1.Edit3.Text:=buffer;
     end;
 
     error:=GSM_GetModelName(Form1.PhoneID,@buffer);
-    if (error = GE_NONE) then Form1.Edit5.Text:=buffer;
-    if (error <> GE_NONE) then application.MessageBox(pchar('Get model: error '+inttostr(integer(error))),'',0);
+    if (error = ERR_NONE) then Form1.Edit5.Text:=buffer;
+    if (error <> ERR_NONE) then application.MessageBox(pchar('Get model: error '+inttostr(integer(error))),'',0);
 
 		error:=GSM_GetIMEI(Form1.PhoneID,@buffer);
-    if (error <> GE_NONE) then application.MessageBox(pchar('Get IMEI: error '+inttostr(integer(error))),'',0);
-    if (error = GE_NONE) then Form1.Edit2.Text:=buffer;
+    if (error <> ERR_NONE) then application.MessageBox(pchar('Get IMEI: error '+inttostr(integer(error))),'',0);
+    if (error = ERR_NONE) then Form1.Edit2.Text:=buffer;
 
 		error:=GSM_GetDCT4SecurityCode(Form1.PhoneID,@buffer);
-    if (error <> GE_NONE) then application.MessageBox(pchar('Get security code: error '+inttostr(integer(error))),'',0);
-    if (error = GE_NONE) then Form1.Edit6.Text:=buffer;
+    if (error <> ERR_NONE) then application.MessageBox(pchar('Get security code: error '+inttostr(integer(error))),'',0);
+    if (error = ERR_NONE) then Form1.Edit6.Text:=buffer;
 
     error:=GSM_EndConnection(Form1.PhoneID);
-    if (error <> GE_NONE) then application.MessageBox(pchar('End connection: error '+inttostr(integer(error))),'',0);
+    if (error <> ERR_NONE) then application.MessageBox(pchar('End connection: error '+inttostr(integer(error))),'',0);
 	end;
 end;
 
@@ -90,7 +90,7 @@ begin
    SMSCallBackPointer      := nil;
 
    error:=GSM_StartConnection(@PhoneID,Device,Connection,'','','',@PhoneCallBackPointer,@SecurityCallBackPointer,@SMSCallBackPointer);
-   if (error<>GE_NONE) then application.MessageBox(pchar('Start: error '+inttostr(integer(error))),'',0);
+   if (error<>ERR_NONE) then application.MessageBox(pchar('Start: error '+inttostr(integer(error))),'',0);
 
    FreeMem(Device);
    FreeMem(Connection);

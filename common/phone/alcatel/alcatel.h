@@ -1,3 +1,5 @@
+/* (c) 2002-2003 by Michal Cihar */
+
 /*
  * High level functions for communication with Alcatel One Touch 501 and
  * compatible mobile phone.

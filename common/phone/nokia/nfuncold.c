@@ -1,3 +1,4 @@
+/* (c) 2003 by Marcin Wiacek */
 
 #include <string.h> /* memcpy only */
 #include <stdio.h>
@@ -15,8 +16,7 @@ static void N71_65_GetCalendarAlarm(GSM_StateMachine *s, unsigned char *buffer, 
 {
 	unsigned long diff;
 
-	if (buffer[0] == 0x00 && buffer[1] == 0x00 && buffer[2] == 0xff && buffer[3] == 0xff)
-	{
+	if (buffer[0] == 0x00 && buffer[1] == 0x00 && buffer[2] == 0xff && buffer[3] == 0xff) {
 		smprintf(s, "No alarm\n");
 	} else {
 		memcpy(&entry->Entries[entry->EntriesNum].Date,&entry->Entries[DT].Date,sizeof(GSM_DateTime));
@@ -28,15 +28,15 @@ static void N71_65_GetCalendarAlarm(GSM_StateMachine *s, unsigned char *buffer, 
 		smprintf(s, "  Difference : %i seconds\n", diff);
 
 		switch (entry->Type) {
-		case GCN_MEETING:
+		case GSM_CAL_MEETING:
 			GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
 			break;
-		case GCN_MEMO:
+		case GSM_CAL_MEMO:
 			if (!IsPhoneFeatureAvailable(Data->ModelInfo, F_CAL35)) {
 				GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
 				break;
 			}
-		case GCN_CALL:
+		case GSM_CAL_CALL:
 			if (!IsPhoneFeatureAvailable(Data->ModelInfo, F_CAL35)) {
 				GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
 				break;
@@ -50,7 +50,7 @@ static void N71_65_GetCalendarAlarm(GSM_StateMachine *s, unsigned char *buffer, 
 			entry->Entries[entry->EntriesNum].Date.Minute,entry->Entries[entry->EntriesNum].Date.Second);
 
 		entry->Entries[entry->EntriesNum].EntryType = CAL_ALARM_DATETIME;
-		if (entry->Type == GCN_BIRTHDAY) {
+		if (entry->Type == GSM_CAL_BIRTHDAY) {
 			if (buffer[14]!=0x00) entry->Entries[entry->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
 			smprintf(s, "Alarm type   : Silent\n");
 		}
@@ -70,7 +70,7 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 
 	smprintf(s, "Calendar note received method 2\n");
 
-	if (msg.Length < 10) return GE_EMPTY;
+	if (msg.Length < 10) return ERR_EMPTY;
 
 	entry->Location = msg.Buffer[4]*256 + msg.Buffer[5];
 	smprintf(s, "Location: %i\n",entry->Location);
@@ -98,10 +98,10 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 	case 0x08:
 		if (msg.Buffer[21] == 0x01) {
 			smprintf(s, "Meeting or Reminder\n");
-			entry->Type = GCN_MEETING;
+			entry->Type = GSM_CAL_MEETING;
 		} else {
 			smprintf(s, "Memo\n");
-			Data->Cal->Type = GCN_MEMO;
+			Data->Cal->Type = GSM_CAL_MEMO;
 		}
 
 		memcpy(&entry->Entries[0].Date,&Date,sizeof(GSM_DateTime));
@@ -117,7 +117,7 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 		break;
 	case 0x02:
 		smprintf(s, "Call\n");
-		entry->Type = GCN_CALL;
+		entry->Type = GSM_CAL_CALL;
 
 		memcpy(&entry->Entries[0].Date,&Date,sizeof(GSM_DateTime));
 		entry->EntriesNum++;
@@ -142,7 +142,7 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 		break;
 	case 0x04:
 		smprintf(s, "Birthday\n");
-		Data->Cal->Type = GCN_BIRTHDAY;
+		Data->Cal->Type = GSM_CAL_BIRTHDAY;
 
 		/* Year was set earlier */
 		entry->Entries[0].Date.Month	= Date.Month;
@@ -169,11 +169,11 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 		break;
 	default:
 		smprintf(s, "ERROR: unknown %i\n",msg.Buffer[6]);
-		return GE_UNKNOWNRESPONSE;
+		return ERR_UNKNOWNRESPONSE;
 	}
 	smprintf(s, "Text         : \"%s\"\n", DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 	entry->EntriesNum++;
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 /* method 2 */
@@ -182,9 +182,8 @@ GSM_Error N71_65_GetNextCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 {
 	GSM_Error		error;
 	GSM_DateTime		date_time;
-	unsigned char 		req[] = {
-		N6110_FRAME_HEADER, 0x3e, 
-		0xFF, 0xFE};		/* Location */
+	unsigned char 		req[] = {N6110_FRAME_HEADER, 0x3e, 
+					 0xFF, 0xFE};		/* Location */
 
 	if (start) {
 		/* We have to get current year. It's NOT written in frame for
@@ -192,11 +191,11 @@ GSM_Error N71_65_GetNextCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 		 */
 		error=s->Phone.Functions->GetDateTime(s,&date_time);
 		switch (error) {
-			case GE_EMPTY:
-			case GE_NOTIMPLEMENTED:
+			case ERR_EMPTY:
+			case ERR_NOTIMPLEMENTED:
 				GSM_GetCurrentDateTime(&date_time);
 				break;
-			case GE_NONE:
+			case ERR_NONE:
 				break;
 			default:
 				return error;
@@ -207,8 +206,8 @@ GSM_Error N71_65_GetNextCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 		req[4] = 0xFF;
 		req[5] = 0xFE;
 	} else {
-		req[4] = *LastCalendarPos >> 8;
-		req[5] = *LastCalendarPos & 0xff;
+		req[4] = *LastCalendarPos / 256;
+		req[5] = *LastCalendarPos % 256;
 	}
 	Note->EntriesNum		= 0;
 	Note->Entries[0].Date.Year 	= *LastCalendarYear;

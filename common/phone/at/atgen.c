@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
                                            
 #include "../../gsmstate.h"
 
@@ -145,19 +146,19 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 	switch (Priv->ErrorCode) {
 	case 304:
         case 305:
-            	return GE_BUG; 
+            	return ERR_BUG; 
         case 311:
         case 312:
         case 316:
         case 317:
         case 318:
-            	return GE_SECURITYERROR;
+            	return ERR_SECURITYERROR;
         case 322:
-            	return GE_FULL;
+            	return ERR_FULL;
         case 321:
-            	return GE_INVALIDLOCATION;
+            	return ERR_INVALIDLOCATION;
         default:
-		return GE_UNKNOWN;
+		return ERR_UNKNOWN;
 	}
 }
 
@@ -277,17 +278,17 @@ GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 		case AT_Reply_OK:
 		case AT_Reply_Connect:
-			return GE_NONE;
+			return ERR_NONE;
 		case AT_Reply_Error:
-			return GE_UNKNOWN;
+			return ERR_UNKNOWN;
 		case AT_Reply_CMSError:
 			return ATGEN_HandleCMSError(s);
 		case AT_Reply_CMEError:
-	        	return GE_UNKNOWN;
+	        	return ERR_UNKNOWN;
 		default:
 			break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -295,7 +296,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
-	if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_OK) return GE_NOTSUPPORTED;
+	if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_OK) return ERR_NOTSUPPORTED;
 
 	if (strlen(GetLineString(msg.Buffer, Priv->Lines, 2)) <= MAX_MODEL_LENGTH) {
 		CopyLineString(Data->Model, msg.Buffer, Priv->Lines, 2);
@@ -318,18 +319,18 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		smprintf(s, "WARNING: Model name too long, increase MAX_MODEL_LENGTH to at least %d\n", GetLineString(msg.Buffer, Priv->Lines, 2));
 	}
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_GetModel(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	if (s->Phone.Data.Model[0] != 0) return GE_NONE;
+	if (s->Phone.Data.Model[0] != 0) return ERR_NONE;
 
 	smprintf(s, "Getting model\n");
 	error=GSM_WaitFor (s, "AT+CGMM\r", 8, 0x00, 3, ID_GetModel);
-	if (error==GE_NONE) {
+	if (error==ERR_NONE) {
 		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
 		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 			smprintf(s, "[Connected model  - \"%s\"]\n",s->Phone.Data.Model);
@@ -387,18 +388,18 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			strcpy(s->Phone.Data.Manufacturer,"Alcatel");
 			Priv->Manufacturer = AT_Alcatel;
 		}
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_GetManufacturer(GSM_StateMachine *s)
 {
-	if (s->Phone.Data.Manufacturer[0] != 0) return GE_NONE;
+	if (s->Phone.Data.Manufacturer[0] != 0) return ERR_NONE;
 
 	return GSM_WaitFor (s, "AT+CGMI\r", 8, 0x00, 4, ID_GetManufacturer);
 }
@@ -425,7 +426,7 @@ GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine 
 	}
 	smprintf(s, "Received firmware version: \"%s\"\n",s->Phone.Data.Version);
 	GSM_CreateFirmwareNumber(s);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_ReplyGetFirmwareATI(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -441,33 +442,33 @@ GSM_Error ATGEN_ReplyGetFirmwareATI(GSM_Protocol_Message msg, GSM_StateMachine *
 //		}
 //		smprintf(s, "Received firmware version: \"%s\"\n",Data->Version);
 //		GSM_CreateFirmwareNumber(Data);
-//		return GE_NONE;
+//		return ERR_NONE;
 	case AT_Reply_Error:
-		return GE_NOTSUPPORTED;
+		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	if (s->Phone.Data.Version[0] != 0) return GE_NONE;
+	if (s->Phone.Data.Version[0] != 0) return ERR_NONE;
 
 	error=ATGEN_GetManufacturer(s);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 //	smprintf(s, "Getting firmware - method 1\n");
 //	error=GSM_WaitFor (s, "ATI\r", 4, 0x00, 3, ID_GetFirmware);
-//	if (error != GE_NONE) {
+//	if (error != ERR_NONE) {
 		smprintf(s, "Getting firmware - method 2\n");
 		error=GSM_WaitFor (s, "AT+CGMR\r", 8, 0x00, 3, ID_GetFirmware);
 //	}
-	if (error==GE_NONE) {
+	if (error==ERR_NONE) {
 		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
 		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 			smprintf(s, "[Firmware version - \"%s\"]\n",s->Phone.Data.Version);
@@ -506,7 +507,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		 */
 		smprintf(s, "Escaping SMS mode\n");
 		error = s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
-		if (error!=GE_NONE) return error;
+		if (error!=ERR_NONE) return error;
 
 	    	/* Grab any possible garbage */
 	    	while (s->Device.Functions->ReadDevice(s, buff, 2) > 0) my_sleep(10);
@@ -522,10 +523,10 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	smprintf(s, "Enabling echo\n");
 	error = GSM_WaitFor (s, "ATE1\r", 5, 0x00, 3, ID_EnableEcho);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	error = ATGEN_GetModel(s);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = true;
@@ -538,7 +539,7 @@ GSM_Error ATGEN_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
 	unsigned char req[50];
 
-	if (smsc->Location!=1) return GE_NOTSUPPORTED;
+	if (smsc->Location!=1) return ERR_NOTSUPPORTED;
 
 	sprintf(req, "AT+CSCA=\"%s\"\r",DecodeUnicodeString(smsc->Number));
 
@@ -552,12 +553,12 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 	case AT_Reply_OK:
 		dbgprintf("Memory status received\n");
 		if (strncmp(msg.Buffer, "ME", 2) == 0) s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_PHONE_SMS_AVAILABLE;
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_Error:
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
 	default:
-		return GE_UNKNOWNRESPONSE;
+		return ERR_UNKNOWNRESPONSE;
 	}
 }
 
@@ -574,35 +575,35 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, bool SIM)
 	GSM_Error		error;
 
 	if (SIM) {
-		if (Priv->SMSMemory == GMT_SM) return GE_NONE;
+		if (Priv->SMSMemory == MEM_SM) return ERR_NONE;
 		req[9]  = 'S'; req[10] = 'M';
 		req[14] = 'S'; req[15] = 'M';
 		smprintf(s, "Setting SMS memory type to SM\n");
 		error=GSM_WaitFor (s, req, 18, 0x00, 3, ID_SetMemoryType);
-		if (error == GE_NOTSUPPORTED) {
+		if (error == ERR_NOTSUPPORTED) {
 			smprintf(s, "Can't access SIM card?\n");
-			return GE_SECURITYERROR;
+			return ERR_SECURITYERROR;
 		}
-		if (error != GE_NONE) return error;
-		Priv->SMSMemory = GMT_SM;
+		if (error != ERR_NONE) return error;
+		Priv->SMSMemory = MEM_SM;
 	} else {
 		if (Priv->PhoneSMSMemory == AT_PHONE_SMS_NOTAVAILABLE) {
-			return GE_NOTSUPPORTED;
+			return ERR_NOTSUPPORTED;
 		}
 		req[9]  = 'M'; req[10] = 'E';
 		req[14] = 'M'; req[15] = 'E';
 		smprintf(s, "Setting SMS memory type to ME\n");
 		error=GSM_WaitFor (s, req, 18, 0x00, 3, ID_SetMemoryType);
 		if (Priv->PhoneSMSMemory == 0) {
-			if (error != GE_NONE) {
+			if (error != ERR_NONE) {
 				Priv->PhoneSMSMemory = AT_PHONE_SMS_NOTAVAILABLE;
 				error = ATGEN_GetSMSMemories(s);
-				if (error != GE_NONE) return GE_NOTSUPPORTED;
+				if (error != ERR_NONE) return ERR_NOTSUPPORTED;
 			} else {
 				Priv->PhoneSMSMemory = AT_PHONE_SMS_AVAILABLE;
 			}
 		}
-		if (error == GE_NONE) Priv->SMSMemory = GMT_ME;
+		if (error == ERR_NONE) Priv->SMSMemory = MEM_ME;
 	}
 	return error;
 }
@@ -612,21 +613,21 @@ GSM_Error ATGEN_GetSMSMode(GSM_StateMachine *s)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
   	GSM_Error 		error;
 
-	if (Priv->SMSMode != 0) return GE_NONE;
+	if (Priv->SMSMode != 0) return ERR_NONE;
 
 	smprintf(s, "Trying SMS PDU mode\n");
 	error=GSM_WaitFor (s, "AT+CMGF=0\r", 10, 0x00, 3, ID_GetSMSMode);
-	if (error==GE_NONE) {
+	if (error==ERR_NONE) {
 		Priv->SMSMode = SMS_AT_PDU;
-		return GE_NONE;
+		return ERR_NONE;
 	}
 
 	smprintf(s, "Trying SMS text mode\n");
 	error=GSM_WaitFor (s, "AT+CMGF=1\r", 10, 0x00, 3, ID_GetSMSMode);
-	if (error==GE_NONE) {
+	if (error==ERR_NONE) {
 		smprintf(s, "Enabling displaying all parameters in text mode\n");
 		error=GSM_WaitFor (s, "AT+CSDH=1\r", 10, 0x00, 3, ID_GetSMSMode);
-		if (error == GE_NONE) Priv->SMSMode = SMS_AT_TXT;
+		if (error == ERR_NONE) Priv->SMSMode = SMS_AT_TXT;
 	}
 
 	return error;
@@ -638,9 +639,9 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 	int			ifolderid;
 
 	if (Priv->PhoneSMSMemory == AT_PHONE_SMS_NOTAVAILABLE) {
-		if (sms->Folder>0x01) return GE_NOTSUPPORTED;
+		if (sms->Folder>0x01) return ERR_NOTSUPPORTED;
 	} else {
-		if (sms->Folder>0x02) return GE_NOTSUPPORTED;
+		if (sms->Folder>0x02) return ERR_NOTSUPPORTED;
 	}
 
 	/* simulate flat SMS memory */
@@ -681,7 +682,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
-		if (Priv->Lines.numbers[4] == 0x00) return GE_EMPTY;
+		if (Priv->Lines.numbers[4] == 0x00) return ERR_EMPTY;
 		s->Phone.Data.GetSMSMessage->Number 	 	= 1;
 		s->Phone.Data.GetSMSMessage->SMS[0].Name[0] 	= 0;
 		s->Phone.Data.GetSMSMessage->SMS[0].Name[1]	= 0;
@@ -689,18 +690,18 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 		case SMS_AT_PDU:
 			CopyLineString(buffer, msg.Buffer, Priv->Lines, 2);
 			switch (buffer[7]) {
-				case '0': sms->State = GSM_UnRead; 	break;
-				case '1': sms->State = GSM_Read;	break;
-				case '2': sms->State = GSM_UnSent;	break;
-				default : sms->State = GSM_Sent;	break;//case '3'
+				case '0': sms->State = SMS_UnRead; 	break;
+				case '1': sms->State = SMS_Read;	break;
+				case '2': sms->State = SMS_UnSent;	break;
+				default : sms->State = SMS_Sent;	break;//case '3'
 			}
 			DecodeHexBin (buffer, GetLineString(msg.Buffer,Priv->Lines,3), strlen(GetLineString(msg.Buffer,Priv->Lines,3)));
 			/* Siemens MC35 (only ?) */
-			if (strstr(msg.Buffer,"+CMGR: 0,,0")!=NULL) return GE_EMPTY;
+			if (strstr(msg.Buffer,"+CMGR: 0,,0")!=NULL) return ERR_EMPTY;
 			/* Siemens M20 */
 			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
-				if (buffer[1]!=GNT_UNKNOWN && buffer[1]!=GNT_INTERNATIONAL &&
-				    buffer[1]!=GNT_ALPHANUMERIC) {
+				if (buffer[1]!=NUMBER_UNKNOWN && buffer[1]!=NUMBER_INTERNATIONAL &&
+				    buffer[1]!=NUMBER_ALPHANUMERIC) {
 					/* Seems to be Delivery Report */
 					smprintf(s, "SMS type - status report (M20 style)\n");
 					sms->PDU 	 = SMS_Status_Report;
@@ -716,7 +717,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					for(i=0;i<7;i++) smsframe[PHONE_SMSStatusReport.SMSCTime+i]=buffer[current++];
 					smsframe[PHONE_SMSStatusReport.TPStatus]=buffer[current];
 					GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSStatusReport);
-					return GE_NONE;					
+					return ERR_NONE;					
 				}
 			}
 			/* We use locations from SMS layouts like in ../phone2.c(h) */
@@ -727,7 +728,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 			case 0x00:
 				smprintf(s, "SMS type - deliver\n");
 				sms->PDU 	 = SMS_Deliver;
-				if (Priv->SMSMemory == GMT_SM) {
+				if (Priv->SMSMemory == MEM_SM) {
 					sms->Folder = 1; /*INBOX SIM*/ 
 				} else {
 					sms->Folder = 3; /*INBOX ME*/ 
@@ -735,7 +736,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				sms->InboxFolder = true;
 				current2=((buffer[current])+1)/2+1;
 				if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
-					if (buffer[current+1]==GNT_ALPHANUMERIC) {
+					if (buffer[current+1]==NUMBER_ALPHANUMERIC) {
 						smprintf(s, "Trying to read alphanumeric number\n");
 						for(i=0;i<4;i++) smsframe[PHONE_SMSDeliver.Number+i]=buffer[current++];
 						current+=6;
@@ -752,11 +753,11 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				smsframe[PHONE_SMSDeliver.TPUDL] = buffer[current++];
 				for(i=0;i<smsframe[PHONE_SMSDeliver.TPUDL];i++) smsframe[i+PHONE_SMSDeliver.Text]=buffer[current++];
 				GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSDeliver);
-				return GE_NONE;
+				return ERR_NONE;
 			case 0x01:
 				smprintf(s, "SMS type - submit\n");
 				sms->PDU 	 = SMS_Submit;
-				if (Priv->SMSMemory == GMT_SM) {
+				if (Priv->SMSMemory == MEM_SM) {
 					sms->Folder = 2; /*OUTBOX SIM*/ 
 				} else {
 					sms->Folder = 4; /*OUTBOX ME*/ 
@@ -765,7 +766,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				smsframe[PHONE_SMSSubmit.TPMR] = buffer[current++];
 				current2=((buffer[current])+1)/2+1;
 				if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
-					if (buffer[current+1]==GNT_ALPHANUMERIC) {
+					if (buffer[current+1]==NUMBER_ALPHANUMERIC) {
 						smprintf(s, "Trying to read alphanumeric number\n");
 						for(i=0;i<4;i++) smsframe[PHONE_SMSSubmit.Number+i]=buffer[current++];
 						current+=6;
@@ -783,7 +784,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				smsframe[PHONE_SMSSubmit.TPUDL] = buffer[current++];
 				for(i=0;i<smsframe[PHONE_SMSSubmit.TPUDL];i++) smsframe[i+PHONE_SMSSubmit.Text]=buffer[current++];
 				GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSSubmit);
-				return GE_NONE;
+				return ERR_NONE;
 			case 0x02:
 				smprintf(s, "SMS type - status report\n");
 				sms->PDU 	 = SMS_Status_Report;
@@ -796,7 +797,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				for(i=0;i<7;i++) smsframe[PHONE_SMSStatusReport.SMSCTime+i]=buffer[current++];
 				smsframe[PHONE_SMSStatusReport.TPStatus]=buffer[current];
 				GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSStatusReport);
-				return GE_NONE;
+				return ERR_NONE;
 			}
 			break;
 		case SMS_AT_TXT:
@@ -805,9 +806,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 			current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
 			if (!strcmp(buffer,"\"0\"") || !strcmp(buffer,"\"REC UNREAD\"")) {
 				smprintf(s, "SMS type - deliver\n");
-				sms->State 	 = GSM_UnRead;
+				sms->State 	 = SMS_UnRead;
 				sms->PDU 	 = SMS_Deliver;
-				if (Priv->SMSMemory == GMT_SM) {
+				if (Priv->SMSMemory == MEM_SM) {
 					sms->Folder = 1; /*INBOX SIM*/ 
 				} else {
 					sms->Folder = 3; /*INBOX ME*/ 
@@ -815,9 +816,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				sms->InboxFolder = true;
 			} else if (!strcmp(buffer,"\"1\"") || !strcmp(buffer,"\"REC READ\"")) {
 				smprintf(s, "SMS type - deliver\n");
-				sms->State 	 = GSM_Read;
+				sms->State 	 = SMS_Read;
 				sms->PDU 	 = SMS_Deliver;
-				if (Priv->SMSMemory == GMT_SM) {
+				if (Priv->SMSMemory == MEM_SM) {
 					sms->Folder = 1; /*INBOX SIM*/ 
 				} else {
 					sms->Folder = 3; /*INBOX ME*/ 
@@ -825,9 +826,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				sms->InboxFolder = true;
 			} else if (!strcmp(buffer,"\"2\"") || !strcmp(buffer,"\"STO UNSENT\"")) {
 				smprintf(s, "SMS type - submit\n");
-				sms->State 	 = GSM_UnSent;
+				sms->State 	 = SMS_UnSent;
 				sms->PDU 	 = SMS_Submit;
-				if (Priv->SMSMemory == GMT_SM) {
+				if (Priv->SMSMemory == MEM_SM) {
 					sms->Folder = 2; /*OUTBOX SIM*/ 
 				} else {
 					sms->Folder = 4; /*OUTBOX ME*/ 
@@ -835,9 +836,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				sms->InboxFolder = false;
 			} else if (!strcmp(buffer,"\"3\"") || !strcmp(buffer,"\"STO SENT\"")) {
 				smprintf(s, "SMS type - submit\n");
-				sms->State 	 = GSM_Sent;
+				sms->State 	 = SMS_Sent;
 				sms->PDU 	 = SMS_Submit;
-				if (Priv->SMSMemory == GMT_SM) {
+				if (Priv->SMSMemory == MEM_SM) {
 					sms->Folder = 2; /*OUTBOX SIM*/ 
 				} else {
 					sms->Folder = 4; /*OUTBOX ME*/ 
@@ -878,7 +879,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				TPStatus=atoi(buffer);
 				buffer[PHONE_SMSStatusReport.TPStatus] = TPStatus;
 				error=GSM_DecodeSMSFrameStatusReportData(sms, buffer, PHONE_SMSStatusReport);
-				if (error!=GE_NONE) return error;
+				if (error!=ERR_NONE) return error;
 				/* NO SMSC number */
 				sms->SMSC.Number[0]=0;
 				sms->SMSC.Number[1]=0;
@@ -946,12 +947,12 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
 				TPUDL=atoi(buffer);
 				current++;
-				sms->Coding = GSM_Coding_Default;
+				sms->Coding = SMS_Coding_Default;
 				/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme)
 				 * and GSM 03.38 section 4
 				 */
-				if ((TPDCS & 0xf4) == 0xf4) sms->Coding=GSM_Coding_8bit;
-				if ((TPDCS & 0x08) == 0x08) sms->Coding=GSM_Coding_Unicode;
+				if ((TPDCS & 0xf4) == 0xf4) sms->Coding=SMS_Coding_8bit;
+				if ((TPDCS & 0x08) == 0x08) sms->Coding=SMS_Coding_Unicode;
 				sms->Class = -1;
 				if ((TPDCS & 0xF3)==0xF0) sms->Class = 0;
 				if ((TPDCS & 0xF3)==0xF1) sms->Class = 1;
@@ -959,7 +960,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				if ((TPDCS & 0xF3)==0xF3) sms->Class = 3;
 				smprintf(s, "SMS class: %i\n",sms->Class);
 				switch (sms->Coding) {          
-				case GSM_Coding_Default:
+				case SMS_Coding_Default:
 					/* GSM 03.40 section 9.2.3.23 (TP-User-Data-Header-Indicator) */
 					/* If not SMS with UDH, it's coded normal */
 					/* If UDH available, treat it as Unicode or 8 bit */
@@ -969,8 +970,8 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 						EncodeUnicode(sms->Text,msg.Buffer+Priv->Lines.numbers[2*2],TPUDL);
 						break;
 					}
-				case GSM_Coding_Unicode:
-				case GSM_Coding_8bit:
+				case SMS_Coding_Unicode:
+				case SMS_Coding_8bit:
 					DecodeHexBin(buffer+PHONE_SMSDeliver.Text, msg.Buffer+current, TPUDL*2);
 					buffer[PHONE_SMSDeliver.firstbyte] 	= firstbyte;
 					buffer[PHONE_SMSDeliver.TPDCS] 		= TPDCS;
@@ -978,25 +979,25 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					return GSM_DecodeSMSFrameText(sms, buffer, PHONE_SMSDeliver);
 				}
 			}
-			return GE_NONE;
+			return ERR_NONE;
 		default:
 			break;
 		}
 		break;
 	case AT_Reply_CMSError:
 		if (Priv->ErrorCode == 320 || Priv->ErrorCode == 500) {
-			return GE_EMPTY;
+			return ERR_EMPTY;
 		} else {
 			return ATGEN_HandleCMSError(s);
 		}
 	case AT_Reply_CMEError:
 	case AT_Reply_Error:
 		/* A2D returns Error with empty location */
-		return GE_EMPTY;
+		return ERR_EMPTY;
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
@@ -1006,27 +1007,27 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	int		location,smsfolder;
 
 	error=ATGEN_GetModel(s);
-	if (error!=GE_NONE) return error;
+	if (error!=ERR_NONE) return error;
 
 	error=ATGEN_GetSMSLocation(s,&sms->SMS[0], &folderid, &location);
-	if (error!=GE_NONE) return error;
+	if (error!=ERR_NONE) return error;
 	sprintf(req, "AT+CMGR=%i\r",location);
 
 	error=ATGEN_GetSMSMode(s);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	error=ATGEN_GetManufacturer(s);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	s->Phone.Data.GetSMSMessage=sms;
 	smprintf(s, "Getting SMS\n");
 	error=GSM_WaitFor (s, req, strlen(req), 0x00, 5, ID_GetSMSMessage);
-	if (error==GE_NONE) {
+	if (error==ERR_NONE) {
 		smsfolder = sms->SMS[0].Folder;
 		ATGEN_SetSMSLocation(s, &sms->SMS[0], folderid, location);
 		sms->SMS[0].Folder = smsfolder;
-		sms->SMS[0].Memory = GMT_SM;
-		if (smsfolder > 2) sms->SMS[0].Memory = GMT_ME;
+		sms->SMS[0].Memory = MEM_SM;
+		if (smsfolder > 2) sms->SMS[0].Memory = MEM_ME;
 	}
 	return error;
 }
@@ -1038,7 +1039,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 
 	if (start) {
 		error=s->Phone.Functions->GetSMSStatus(s,&Priv->LastSMSStatus);
-		if (error!=GE_NONE) return error;
+		if (error!=ERR_NONE) return error;
 		Priv->LastSMSRead		= 0;
 		sms->SMS[0].Location 		= 0;
 	}
@@ -1047,19 +1048,19 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 		sms->SMS[0].Location++;
 		if (sms->SMS[0].Location<PHONE_MAXSMSINFOLDER) {
 			if (Priv->LastSMSRead>=Priv->LastSMSStatus.SIMUsed) {
-				if (Priv->LastSMSStatus.PhoneUsed==0) return GE_EMPTY;
+				if (Priv->LastSMSStatus.PhoneUsed==0) return ERR_EMPTY;
 				Priv->LastSMSRead	= 0;
 				sms->SMS[0].Location 	= PHONE_MAXSMSINFOLDER + 1;
 			}
 		} else {
-			if (Priv->LastSMSRead>=Priv->LastSMSStatus.PhoneUsed) return GE_EMPTY;
+			if (Priv->LastSMSRead>=Priv->LastSMSStatus.PhoneUsed) return ERR_EMPTY;
 		}
 		error=s->Phone.Functions->GetSMS(s, sms);
-		if (error==GE_NONE) {
+		if (error==ERR_NONE) {
 			Priv->LastSMSRead++;
 			break;
 		}
-		if (error != GE_EMPTY && error != GE_INVALIDLOCATION) return error;
+		if (error != ERR_EMPTY && error != ERR_INVALIDLOCATION) return error;
 	}
 	return error;
 }
@@ -1092,22 +1093,22 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			smprintf(s, "Size : %i\n",SMSStatus->SIMSize);
 			if (SMSStatus->SIMSize == 0) {
 				smprintf(s, "Can't access SIM card\n");
-				return GE_SECURITYERROR;
+				return ERR_SECURITYERROR;
 			}
 		}
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_Error:
 		if (strstr(msg.Buffer,"SM")!=NULL) {
 			smprintf(s, "Can't access SIM card\n");
-			return GE_SECURITYERROR;
+			return ERR_SECURITYERROR;
 		}
-		return GE_NOTSUPPORTED;
+		return ERR_NOTSUPPORTED;
  	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
@@ -1120,8 +1121,8 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 	s->Phone.Data.SMSStatus=status;
 	smprintf(s, "Getting SIM SMS status\n");
 	error=GSM_WaitFor (s, "AT+CPMS=\"SM\",\"SM\"\r", 18, 0x00, 4, ID_GetSMSStatus);
-	if (error!=GE_NONE) return error;
-	Priv->SMSMemory = GMT_SM;
+	if (error!=ERR_NONE) return error;
+	Priv->SMSMemory = MEM_SM;
 
 	status->PhoneUsed	= 0;
 	status->PhoneUnRead 	= 0;
@@ -1130,13 +1131,13 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 	
 	if (Priv->PhoneSMSMemory == 0) {
 		error2 = ATGEN_SetSMSMemory(s,false);
-		if (error2 != GE_NONE) return error2;
+		if (error2 != ERR_NONE) return error2;
 	}
 	if (Priv->PhoneSMSMemory == AT_PHONE_SMS_AVAILABLE) {
 		smprintf(s, "Getting phone SMS status\n");
 		error2=GSM_WaitFor (s, "AT+CPMS=\"ME\",\"ME\"\r", 18, 0x00, 4, ID_GetSMSStatus);
-		if (error2 == GE_NONE) Priv->SMSMemory = GMT_ME;
-		if (error2 != GE_NOTSUPPORTED) error=error2;
+		if (error2 == ERR_NONE) Priv->SMSMemory = MEM_ME;
+		if (error2 != ERR_NOTSUPPORTED) error=error2;
 	}
 
 	return error;
@@ -1146,12 +1147,12 @@ GSM_Error ATGEN_ReplyGetIMEI(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	CopyLineString(s->Phone.Data.IMEI, msg.Buffer, s->Phone.Data.Priv.ATGEN.Lines, 2);
 	smprintf(s, "Received IMEI %s\n",s->Phone.Data.IMEI);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_GetIMEI (GSM_StateMachine *s)
 {
-	if (s->Phone.Data.IMEI[0] != 0) return GE_NONE;
+	if (s->Phone.Data.IMEI[0] != 0) return ERR_NONE;
 	smprintf(s, "Getting IMEI\n");
 	return GSM_WaitFor (s, "AT+CGSN\r", 8, 0x00, 2, ID_GetIMEI);
 }
@@ -1163,7 +1164,7 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 	if (s->Protocol.Data.AT.EditMode) {
 		s->Protocol.Data.AT.EditMode = false;
-		return GE_NONE;
+		return ERR_NONE;
 	}
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
@@ -1175,17 +1176,17 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 		start = strstr(msg.Buffer, "+CMGW: ");
 		s->Phone.Data.SaveSMSMessage->Location = atoi(start+7);
 		smprintf(s, "Saved at location %i\n",s->Phone.Data.SaveSMSMessage->Location);
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_Error:
 		smprintf(s, "Error\n");
-		return GE_NOTSUPPORTED;
+		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
 		/* This error occurs in case that phone couldn't save SMS */
 		return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsigned char *hexreq, int *current, int *length2)
@@ -1197,7 +1198,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 	GSM_SMSC	 	SMSC;
 
 	error=ATGEN_GetSMSMode(s);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	length 	 = 0;
 	*current = 0;
@@ -1206,7 +1207,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 		if (message->PDU == SMS_Deliver) {
  			smprintf(s, "SMS Deliver\n");
 			error=PHONE_EncodeSMSFrame(s,message,buffer,PHONE_SMSDeliver,&length,true);
-			if (error != GE_NONE) return error;
+			if (error != ERR_NONE) return error;
 			length = length - PHONE_SMSDeliver.Text;
 			for (i=0;i<buffer[PHONE_SMSDeliver.SMSCNumber]+1;i++) {
 				req[(*current)++]=buffer[PHONE_SMSDeliver.SMSCNumber+i];
@@ -1226,7 +1227,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 		} else {
 			smprintf(s, "SMS Submit\n");
 			error=PHONE_EncodeSMSFrame(s,message,buffer,PHONE_SMSSubmit,&length,true);
-			if (error != GE_NONE) return error;
+			if (error != ERR_NONE) return error;
 			length = length - PHONE_SMSSubmit.Text;
 			for (i=0;i<buffer[PHONE_SMSSubmit.SMSCNumber]+1;i++) {
 				req[(*current)++]=buffer[PHONE_SMSSubmit.SMSCNumber+i];
@@ -1249,51 +1250,51 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 	case SMS_AT_TXT:
 		if (Priv->Manufacturer == 0) {
 			error=ATGEN_GetManufacturer(s);
-			if (error != GE_NONE) return error;
+			if (error != ERR_NONE) return error;
 		}
 		if (Priv->Manufacturer != AT_Nokia) {
-			if (message->Coding != GSM_Coding_Default) return GE_NOTSUPPORTED;
+			if (message->Coding != SMS_Coding_Default) return ERR_NOTSUPPORTED;
 		}
 		error=PHONE_EncodeSMSFrame(s,message,req,PHONE_SMSDeliver,&i,true);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 		CopyUnicodeString(SMSC.Number,message->SMSC.Number);
 		SMSC.Location=1;
 		error=ATGEN_SetSMSC(s,&SMSC);
-		if (error!=GE_NONE) return error;
+		if (error!=ERR_NONE) return error;
 		sprintf(buffer, "AT+CSMP=%i,%i,%i,%i\r",
 			req[PHONE_SMSDeliver.firstbyte],
 			req[PHONE_SMSDeliver.TPVP],
 			req[PHONE_SMSDeliver.TPPID],
 			req[PHONE_SMSDeliver.TPDCS]);
 		error=GSM_WaitFor (s, buffer, strlen(buffer), 0x00, 4, ID_SetSMSParameters);
-		if (error==GE_NOTSUPPORTED) {
-			/* At least Nokia Communicator 9000i doesn't support <vp> parameter */
+		if (error==ERR_NOTSUPPORTED) {
+			/* Nokia Communicator 9000i doesn't support <vp> parameter */
 			sprintf(buffer, "AT+CSMP=%i,,%i,%i\r",
 				req[PHONE_SMSDeliver.firstbyte],
 				req[PHONE_SMSDeliver.TPPID],
 				req[PHONE_SMSDeliver.TPDCS]);
 			error=GSM_WaitFor (s, buffer, strlen(buffer), 0x00, 4, ID_SetSMSParameters);
 		}
-		if (error!=GE_NONE) return error;
+		if (error!=ERR_NONE) return error;
 		switch (message->Coding) {
-		case GSM_Coding_Default:
+		case SMS_Coding_Default:
 			/* If not SMS with UDH, it's as normal text */
 			if (message->UDH.Type==UDH_NoUDH) {
 				strcpy(hexreq,DecodeUnicodeString(message->Text));
 				*length2 = UnicodeLength(message->Text);
 				break;
 			}
-	        case GSM_Coding_Unicode:        
-	        case GSM_Coding_8bit:
+	        case SMS_Coding_Unicode:        
+	        case SMS_Coding_8bit:
 			error=PHONE_EncodeSMSFrame(s,message,buffer,PHONE_SMSDeliver,current,true);
-			if (error != GE_NONE) return error;
+			if (error != ERR_NONE) return error;
 			EncodeHexBin (hexreq, buffer+PHONE_SMSDeliver.Text, buffer[PHONE_SMSDeliver.TPUDL]);
 			*length2 = buffer[PHONE_SMSDeliver.TPUDL] * 2;
 			break;
 		}
 		break;
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
@@ -1308,7 +1309,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSONLYSENT)) {
 		if (sms->Folder != 2) {
 			smprintf(s, "This phone supports only folder = 2!\n");
-			return GE_NOTSUPPORTED;
+			return ERR_NOTSUPPORTED;
 		}
 	}
 	
@@ -1324,24 +1325,24 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		 break;
 	case 4:  error=ATGEN_SetSMSMemory(s, false);	/* Outbox phone */
 		 break;
-	default: return GE_NOTSUPPORTED;
+	default: return ERR_NOTSUPPORTED;
 	}
-	if (error!=GE_NONE) return error;
+	if (error!=ERR_NONE) return error;
 
 	error=ATGEN_GetModel(s);
-	if (error!=GE_NONE) return error;
+	if (error!=ERR_NONE) return error;
 
 	error = ATGEN_MakeSMSFrame(s, sms, hexreq, &current, &current2);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	switch (Phone->Priv.ATGEN.SMSMode) {
 	case SMS_AT_PDU:
 		if (sms->PDU == SMS_Deliver) {
 			state = 0;
-			if (sms->State == GSM_Read || sms->State == GSM_Sent) state = 1;
+			if (sms->State == SMS_Read || sms->State == SMS_Sent) state = 1;
 		} else {
 			state = 2;
-			if (sms->State == GSM_Read || sms->State == GSM_Sent) state = 3;
+			if (sms->State == SMS_Read || sms->State == SMS_Sent) state = 3;
 		}
 		/* Siemens M20 */
 		if (IsPhoneFeatureAvailable(Phone->ModelInfo, F_M20SMS)) {
@@ -1349,7 +1350,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 			if (sms->Number[1]!='+' && (sms->Number[1]<'0' || sms->Number[1]>'9')) {
 				EncodeUnicode(sms->Number,"123",3);
 				error = ATGEN_MakeSMSFrame(s, sms, hexreq, &current, &current2);
-				if (error != GE_NONE) return error;
+				if (error != ERR_NONE) return error;
 			}
 		}
 		sprintf(buffer, "AT+CMGW=%i,%i\r",current,state);
@@ -1357,10 +1358,10 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	case SMS_AT_TXT:
 		if (sms->PDU == SMS_Deliver) {
 			statetxt = "REC UNREAD";
-			if (sms->State == GSM_Read || sms->State == GSM_Sent) statetxt = "REC READ";
+			if (sms->State == SMS_Read || sms->State == SMS_Sent) statetxt = "REC READ";
 		} else {
 			statetxt = "STO UNSENT";
-			if (sms->State == GSM_Read || sms->State == GSM_Sent) statetxt = "STO SENT";
+			if (sms->State == SMS_Read || sms->State == SMS_Sent) statetxt = "STO SENT";
 		}
 		/* Siemens M20 */
 		if (IsPhoneFeatureAvailable(Phone->ModelInfo, F_M20SMS)) {
@@ -1395,22 +1396,22 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		smprintf(s,"Waiting for modem prompt\n");
 		error=GSM_WaitFor (s, buffer, strlen(buffer), 0x00, 3, ID_SaveSMSMessage);
 		s->ReplyNum			 = Replies;
-		if (error == GE_NONE) {
-			Phone->DispatchError 	= GE_TIMEOUT;
+		if (error == ERR_NONE) {
+			Phone->DispatchError 	= ERR_TIMEOUT;
 			Phone->RequestID 	= ID_SaveSMSMessage;
 			smprintf(s, "Saving SMS\n");
 			error = s->Protocol.Functions->WriteMessage(s, hexreq, current2, 0x00);
-			if (error!=GE_NONE) return error;
+			if (error!=ERR_NONE) return error;
 			my_sleep(500);
 			/* CTRL+Z ends entering */
 			error = s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
-			if (error!=GE_NONE) return error;
+			if (error!=ERR_NONE) return error;
 			error = GSM_WaitForOnce(s, NULL, 0x00, 0x00, 4);
-			if (error != GE_TIMEOUT) return error;
+			if (error != ERR_TIMEOUT) return error;
 		} else {
 			smprintf(s, "Escaping SMS mode\n");
 			error = s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
-			if (error!=GE_NONE) return error;
+			if (error!=ERR_NONE) return error;
 		}
         }
 
@@ -1423,14 +1424,14 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	if (s->Protocol.Data.AT.EditMode) {
 		s->Protocol.Data.AT.EditMode = false;
-		return GE_NONE;
+		return ERR_NONE;
 	}
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
  		smprintf(s, "SMS sent OK\n");
  		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,0);
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_CMSError:
  		smprintf(s, "Error %i\n",Priv->ErrorCode);
  		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,Priv->ErrorCode);
@@ -1438,7 +1439,7 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
@@ -1451,7 +1452,7 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	if (sms->PDU == SMS_Deliver) sms->PDU = SMS_Submit;
 
 	error = ATGEN_MakeSMSFrame(s, sms, hexreq, &current, &current2);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	switch (Phone->Priv.ATGEN.SMSMode) {
 	case SMS_AT_PDU:
@@ -1467,10 +1468,10 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	smprintf(s,"Waiting for modem prompt\n");
 	error=GSM_WaitFor (s, buffer, strlen(buffer), 0x00, 3, ID_IncomingFrame);
 	s->ReplyNum			 = Replies;
-	if (error == GE_NONE) {
+	if (error == ERR_NONE) {
 		smprintf(s, "Sending SMS\n");
 		error = s->Protocol.Functions->WriteMessage(s, hexreq, current2, 0x00);
-		if (error!=GE_NONE) return error;
+		if (error!=ERR_NONE) return error;
 		my_sleep(500);
 		/* CTRL+Z ends entering */
 		error=s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
@@ -1479,7 +1480,7 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	} else {
 		smprintf(s, "Escaping SMS mode\n");
 		error2=s->Protocol.Functions->WriteMessage(s, "\x1B\r", 2, 0x00);
-		if (error2 != GE_NONE) return error2;
+		if (error2 != ERR_NONE) return error2;
 	}
 	return error;
 }
@@ -1493,23 +1494,23 @@ GSM_Error ATGEN_ReplyGetDateTime_Alarm(GSM_Protocol_Message msg, GSM_StateMachin
 	case AT_Reply_OK:
 		if (msg.Buffer[current]==0x0d || msg.Buffer[current-1]==0x0d) {
 			smprintf(s, "Not set in phone\n");
-			return GE_EMPTY;
+			return ERR_EMPTY;
 		} else {
 			if (Data->RequestID == ID_GetDateTime) {
 				ATGEN_DecodeDateTime(Data->DateTime, msg.Buffer+current);
 			} else {
 				ATGEN_DecodeDateTime(&(Data->Alarm->DateTime), msg.Buffer+current);
 			}
-			return GE_NONE;
+			return ERR_NONE;
 		}
 	case AT_Reply_Error:
-		return GE_NOTSUPPORTED;
+		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
@@ -1533,7 +1534,7 @@ GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
-	if (alarm->Location != 1) return GE_NOTSUPPORTED;
+	if (alarm->Location != 1) return ERR_NOTSUPPORTED;
 
 	alarm->Repeating = true;
 	alarm->Text[0] = 0; alarm->Text[1] = 0;
@@ -1588,25 +1589,25 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			}
 		}
 		
-		SMSC->Format 		= GSMF_Text;
-		SMSC->Validity.VPF	= GSM_RelativeFormat;
-		SMSC->Validity.Relative	= GSMV_Max_Time;
+		SMSC->Format 		= SMS_FORMAT_Text;
+		SMSC->Validity.Format = SMS_Validity_RelativeFormat;
+		SMSC->Validity.Relative	= SMS_VALID_Max_Time;
 		SMSC->Name[0]		= 0;
 		SMSC->Name[1]		= 0;
 		SMSC->DefaultNumber[0]	= 0;
 		SMSC->DefaultNumber[1]	= 0;
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
-	if (smsc->Location==0x00 || smsc->Location!=0x01) return GE_INVALIDLOCATION;
+	if (smsc->Location==0x00 || smsc->Location!=0x01) return ERR_INVALIDLOCATION;
 	
 	s->Phone.Data.SMSC=smsc;
 	smprintf(s, "Getting SMSC\n");
@@ -1623,7 +1624,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 
   	if (s->Phone.Data.RequestID == ID_IncomingFrame) {
 		smprintf(s, "Incoming LAC & CID info\n");
-		return GE_NONE;
+		return ERR_NONE;
 	}
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
@@ -1632,7 +1633,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
 	default:
-		return GE_UNKNOWNRESPONSE;
+		return ERR_UNKNOWNRESPONSE;
 	}
 
 	SplitLines(GetLineString(msg.Buffer,Priv->Lines,2),
@@ -1649,6 +1650,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 
 	smprintf(s, "Network LAC & CID & state received\n");
 	answer = GetLineString(GetLineString(msg.Buffer,Priv->Lines,2),Lines,2);
+	while (*answer == 0x20) answer++;
 #ifdef DEBUG
 	switch (answer[0]) {
 		case '0': smprintf(s, "Not registered into any network. Not searching for network\n"); 	  break;
@@ -1671,21 +1673,23 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	}
 	if (NetworkInfo->State == GSM_HomeNetwork ||
 	    NetworkInfo->State == GSM_RoamingNetwork) {
-		memset(NetworkInfo->CellID,0,4);
+		memset(NetworkInfo->CID,0,4);
 		memset(NetworkInfo->LAC,0,4);
 
-		if (Lines.numbers[3*2+1]==0) return GE_NONE;
+		if (Lines.numbers[3*2+1]==0) return ERR_NONE;
 
 		answer = GetLineString(GetLineString(msg.Buffer,Priv->Lines,2),Lines,3);
-		sprintf(NetworkInfo->CellID,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
+		while (*answer == 0x20) answer++;
+		sprintf(NetworkInfo->CID,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
 
 		answer = GetLineString(GetLineString(msg.Buffer,Priv->Lines,2),Lines,4);
+		while (*answer == 0x20) answer++;
 		sprintf(NetworkInfo->LAC,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
 
-		smprintf(s, "CellID: %s\n",NetworkInfo->CellID);
+		smprintf(s, "CID   : %s\n",NetworkInfo->CID);
 		smprintf(s, "LAC   : %s\n",NetworkInfo->LAC);
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_ReplyGetNetworkCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1716,13 +1720,13 @@ GSM_Error ATGEN_ReplyGetNetworkCode(GSM_Protocol_Message msg, GSM_StateMachine *
 		smprintf(s, "   Network name for Gammu    : %s ",
 			DecodeUnicodeString(GSM_GetNetworkName(NetworkInfo->NetworkCode)));
 		smprintf(s, "(%s)\n",DecodeUnicodeString(GSM_GetCountryName(NetworkInfo->NetworkCode)));
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
@@ -1737,20 +1741,20 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 
 	smprintf(s, "Enable full network info\n");
 	error=GSM_WaitFor(s, "AT+CREG=2\r", 10, 0x00, 4, ID_GetNetworkInfo);
-	if ((error != GE_NONE) &&
+	if ((error != ERR_NONE) &&
 	    (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Siemens) &&
 	    (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Ericsson)) return error;
 
 	smprintf(s, "Getting network LAC and CID and state\n");
 	error=GSM_WaitFor(s, "AT+CREG?\r", 9, 0x00, 4, ID_GetNetworkInfo);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	if (netinfo->State == GSM_HomeNetwork || netinfo->State == GSM_RoamingNetwork) {
 		smprintf(s, "Setting short network name format\n");
 		error=GSM_WaitFor(s, "AT+COPS=3,2\r", 12, 0x00, 4, ID_GetNetworkInfo);
 
 		error=ATGEN_GetManufacturer(s);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 
 		smprintf(s, "Getting network code\n");
 		error=GSM_WaitFor(s, "AT+COPS?\r", 9, 0x00, 4, ID_GetNetworkInfo);
@@ -1763,10 +1767,10 @@ GSM_Error ATGEN_ReplyGetPBKMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 	smprintf(s, "PBK memories received\n");
 	if (strlen(msg.Buffer) > AT_PBK_MAX_MEMORIES) {
 		smprintf(s, "ERROR: Too long phonebook memories information received! (Recevided %d, AT_PBK_MAX_MEMORIES is %d\n", strlen(msg.Buffer), AT_PBK_MAX_MEMORIES);
-		return GE_MOREMEMORY;
+		return ERR_MOREMEMORY;
 	}
 	memcpy(s->Phone.Data.Priv.ATGEN.PBKMemories,msg.Buffer,strlen(msg.Buffer));
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
@@ -1775,38 +1779,38 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 	char 			req[] = "AT+CPBS=\"XX\"\r";
 	GSM_Error		error;
 
-	if (Priv->PBKMemory == MemType) return GE_NONE;
+	if (Priv->PBKMemory == MemType) return ERR_NONE;
 
 	if (Priv->PBKMemories[0] == 0) {
 		error=GSM_WaitFor (s, "AT+CPBS=?\r", 10, 0x00, 3, ID_SetMemoryType);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 	}
 
 	switch (MemType) {
-		case GMT_SM:
+		case MEM_SM:
 			req[9] = 'S'; req[10] = 'M';
 			break;
-		case GMT_ME: 
-		        if (strstr(Priv->PBKMemories,"ME")==NULL) return GE_NOTSUPPORTED;
+		case MEM_ME: 
+		        if (strstr(Priv->PBKMemories,"ME")==NULL) return ERR_NOTSUPPORTED;
 			req[9] = 'M'; req[10] = 'E';
 			break;
-		case GMT_RC:
-		        if (strstr(Priv->PBKMemories,"RC")==NULL) return GE_NOTSUPPORTED;
+		case MEM_RC:
+		        if (strstr(Priv->PBKMemories,"RC")==NULL) return ERR_NOTSUPPORTED;
 			req[9] = 'R'; req[10] = 'C';
 			break;
-		case GMT_MC:
-		        if (strstr(Priv->PBKMemories,"MC")==NULL) return GE_NOTSUPPORTED;
+		case MEM_MC:
+		        if (strstr(Priv->PBKMemories,"MC")==NULL) return ERR_NOTSUPPORTED;
 			req[9] = 'M'; req[10] = 'C';
 			break;
-		case GMT_ON:
-		        if (strstr(Priv->PBKMemories,"ON")==NULL) return GE_NOTSUPPORTED;
+		case MEM_ON:
+		        if (strstr(Priv->PBKMemories,"ON")==NULL) return ERR_NOTSUPPORTED;
 			req[9] = 'O'; req[10] = 'N';
 			break;
-		case GMT_FD:
-		        if (strstr(Priv->PBKMemories,"FD")==NULL) return GE_NOTSUPPORTED;
+		case MEM_FD:
+		        if (strstr(Priv->PBKMemories,"FD")==NULL) return ERR_NOTSUPPORTED;
 			req[9] = 'F'; req[10] = 'D';
 			break;
-		case GMT_DC:
+		case MEM_DC:
 			if (strstr(Priv->PBKMemories,"DC")!=NULL) {
 				req[9] = 'D'; req[10] = 'C';
 				break;
@@ -1815,15 +1819,15 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 				req[9] = 'L'; req[10] = 'D';
 				break;
 			}
-			return GE_NOTSUPPORTED;
+			return ERR_NOTSUPPORTED;
 			break;
 		default:
-			return GE_NOTSUPPORTED;
+			return ERR_NOTSUPPORTED;
 	}
 
 	smprintf(s, "Setting memory type\n");
 	error=GSM_WaitFor (s, req, 13, 0x00, 3, ID_SetMemoryType);
-	if (error == GE_NONE) Priv->PBKMemory = MemType;
+	if (error == ERR_NONE) Priv->PBKMemory = MemType;
 	return error;
 }
 
@@ -1835,25 +1839,25 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Memory status received\n");
-  		MemoryStatus->Used = 0;
-		MemoryStatus->Free = 0;
+  		MemoryStatus->MemoryUsed = 0;
+		MemoryStatus->MemoryFree = 0;
 		start = strchr(msg.Buffer, ',');
 		if (start) {
 			start++;
-			MemoryStatus->Used = atoi(start);
+			MemoryStatus->MemoryUsed = atoi(start);
 			start = strchr(start, ',');
 			if (start) {
 				start++;
-				MemoryStatus->Free = atoi(start) - MemoryStatus->Used;
-				return GE_NONE;
-			} else return GE_UNKNOWN;
-		} else return GE_UNKNOWN;
+				MemoryStatus->MemoryFree = atoi(start) - MemoryStatus->MemoryUsed;
+				return ERR_NONE;
+			} else return ERR_UNKNOWN;
+		} else return ERR_UNKNOWN;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1866,8 +1870,8 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
  	switch (Priv->ReplyState) {
  	case AT_Reply_OK:
 		smprintf(s, "Memory info received\n");
-   		MemoryStatus->Used = 0;
- 		MemoryStatus->Free = 0;
+   		MemoryStatus->MemoryUsed = 0;
+ 		MemoryStatus->MemoryFree = 0;
 		/* Parse +CPBR: (first-last),max_number_len,max_name_len */ 
 		pos = strchr(msg.Buffer, '(');
 		if (pos) {
@@ -1878,16 +1882,16 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 			if (pos) {
 				pos++;
 				/* We assign Size to Used, because MemoryStatus don't have Size member */
-				MemoryStatus->Used = atoi(pos);
-				if (first != 1) return GE_UNKNOWN; else return GE_NONE;
-			} else return GE_UNKNOWN;
-		} else return GE_UNKNOWN;
+				MemoryStatus->MemoryUsed = atoi(pos);
+				if (first != 1) return ERR_UNKNOWN; else return ERR_NONE;
+			} else return ERR_UNKNOWN;
+		} else return ERR_UNKNOWN;
 	case AT_Reply_Error:
-		return GE_UNKNOWN;
+		return ERR_UNKNOWN;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
  	default:
-		return GE_UNKNOWNRESPONSE;
+		return ERR_UNKNOWNRESPONSE;
 	}
 }
 
@@ -1906,7 +1910,7 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 		while (Priv->Lines.numbers[line*2+1]!=0) {
 			str = GetLineString(msg.Buffer,Priv->Lines,line+1);
 			if (strncmp(str, "+CPBR: ", 7) == 0) {
-				MemoryStatus->Used++;
+				MemoryStatus->MemoryUsed++;
 				if (sscanf(str, "+CPBR: %d,", &cur) == 1) {
 					if (cur == Priv->NextMemoryEntry || Priv->NextMemoryEntry == 0)
 						Priv->NextMemoryEntry = cur + 1;
@@ -1914,13 +1918,13 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 			}
 			line++;
 		}
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_Error:
-		return GE_UNKNOWN;
+		return ERR_UNKNOWN;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
 	default:
-		return GE_UNKNOWNRESPONSE;
+		return ERR_UNKNOWNRESPONSE;
 	}
 }
 
@@ -1935,10 +1939,10 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 	s->Phone.Data.MemoryStatus=Status;
 
 	error = GSM_WaitFor (s, "AT+CPBR=?\r", 10, 0x00, 4, ID_GetMemoryStatus);
-	if (error != GE_NONE) return GE_NONE;
+	if (error != ERR_NONE) return ERR_NONE;
 
-	Size		= Status->Used;
-	Status->Used 	= 0;
+	Size		= Status->MemoryUsed;
+	Status->MemoryUsed 	= 0;
 	start 		= 1;
 	s->Phone.Data.Priv.ATGEN.NextMemoryEntry = 0;
 	while (1) {
@@ -1946,10 +1950,10 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 		if (end > Size) end = Size;
 		sprintf(req, "AT+CPBR=%i,%i\r", start, end);
 		error	= GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemoryStatus);
-		if (error != GE_NONE) return GE_NONE;
+		if (error != ERR_NONE) return ERR_NONE;
 		if (end == Size) {
-			Status->Free = Size - Status->Used;
-			return GE_NONE;
+			Status->MemoryFree = Size - Status->MemoryUsed;
+			return ERR_NONE;
 		}
 		start = end + 1;
 	}
@@ -1960,7 +1964,7 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 	GSM_Error error;
 
 	error = ATGEN_SetPBKMemory(s, Status->MemoryType);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	s->Phone.Data.MemoryStatus=Status;
 
@@ -1968,10 +1972,10 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 	/* Some workaround for buggy mobile, that hangs after "AT+CPBS?" for other
 	 * memory than SM.
 	 */
-	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKENCPBS) || (Status->MemoryType == GMT_SM)) {
+	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKENCPBS) || (Status->MemoryType == MEM_SM)) {
 		smprintf(s, "Getting memory status\n");
 		error=GSM_WaitFor (s, "AT+CPBS?\r", 9, 0x00, 4, ID_GetMemoryStatus);
-		if (error == GE_NONE) return error;
+		if (error == ERR_NONE) return error;
 	}
 
 	return ATGEN_GetMemoryInfo(s, Status);
@@ -1986,22 +1990,22 @@ GSM_Error ATGEN_SetPBKCharset(GSM_StateMachine *s, bool PreferUnicode)
 	if (Priv->PBKCharset!=0) {
 		/* If we want unicode charset and we have it already or setting of it
 		 * failed, we have nothing to do. */
-		if (PreferUnicode  && (Priv->PBKCharset==AT_PBK_UCS2 || Priv->UCS2CharsetFailed)) return GE_NONE;
+		if (PreferUnicode  && (Priv->PBKCharset==AT_PBK_UCS2 || Priv->UCS2CharsetFailed)) return ERR_NONE;
 
 		/* If we don't need unicode charset and we have some (or have unicode
 		 * charset when other failed), we have nothing to do. */
-		if (!PreferUnicode && (Priv->PBKCharset!=AT_PBK_UCS2 || Priv->NonUCS2CharsetFailed)) return GE_NONE;
+		if (!PreferUnicode && (Priv->PBKCharset!=AT_PBK_UCS2 || Priv->NonUCS2CharsetFailed)) return ERR_NONE;
 	}
 
 	error=ATGEN_GetManufacturer(s);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	if (PreferUnicode && !Priv->UCS2CharsetFailed) {
 		smprintf(s, "Setting charset to UCS2\n");
 		error=GSM_WaitFor (s, "AT+CSCS=\"UCS2\"\r", 15, 0x00, 3, ID_SetMemoryCharset);
-		if (error == GE_NONE) {
+		if (error == ERR_NONE) {
 			Priv->PBKCharset = AT_PBK_UCS2;
-			return GE_NONE;
+			return ERR_NONE;
 		} else {
 			Priv->UCS2CharsetFailed = true;
 		}
@@ -2011,25 +2015,25 @@ GSM_Error ATGEN_SetPBKCharset(GSM_StateMachine *s, bool PreferUnicode)
 	error=GSM_WaitFor (s, "AT+CSCS=\"HEX\"\r", 14, 0x00, 3, ID_SetMemoryCharset);
 	/* Falcom replies OK for HEX mode and send everything
 	 * in normal format */
-	if (error == GE_NONE && Priv->Manufacturer != AT_Falcom) {
+	if (error == ERR_NONE && Priv->Manufacturer != AT_Falcom) {
 		Priv->PBKCharset = AT_PBK_HEX;
-		return GE_NONE;
+		return ERR_NONE;
 	}
 
 	smprintf(s, "Setting charset to GSM\n");
 	error=GSM_WaitFor (s, "AT+CSCS=\"GSM\"\r", 14, 0x00, 3, ID_SetMemoryCharset);
-	if (error == GE_NONE) {
+	if (error == ERR_NONE) {
 		Priv->PBKCharset = AT_PBK_GSM;
-		return GE_NONE;
+		return ERR_NONE;
 	}
 
 	if (!Priv->UCS2CharsetFailed) {
 		Priv->NonUCS2CharsetFailed = true;
 		smprintf(s, "Setting charset to UCS2\n");
 		error=GSM_WaitFor (s, "AT+CSCS=\"UCS2\"\r", 15, 0x00, 3, ID_SetMemoryCharset);
-		if (error == GE_NONE) {
+		if (error == ERR_NONE) {
 			Priv->PBKCharset = AT_PBK_UCS2;
-			return GE_NONE;
+			return ERR_NONE;
 		} else {
 			Priv->UCS2CharsetFailed = true;
 		}
@@ -2049,7 +2053,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case AT_Reply_OK:
  		smprintf(s, "Phonebook entry received\n");
  		Memory->EntriesNum = 0;
-		if (Priv->Lines.numbers[4]==0) return GE_EMPTY;
+		if (Priv->Lines.numbers[4]==0) return ERR_EMPTY;
 		current = 0;
 		while (msg.Buffer[current]!='"') current++;
 
@@ -2097,17 +2101,17 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			Memory->PreferUnicode = (strlen(buffer+1) - 1 < (4 * (14 /* here should be real max entry size*/ / 2)));
 			break;			
 		}
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_Error:
 	case AT_Reply_CMEError:
  		smprintf(s, "Error - too high location ?\n");
-		return GE_INVALIDLOCATION;
+		return ERR_INVALIDLOCATION;
 	case AT_Reply_CMSError:
  	        return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
@@ -2116,19 +2120,19 @@ GSM_Error ATGEN_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	unsigned char		req[20];
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (entry->Location==0x00) return GE_INVALIDLOCATION;
+	if (entry->Location==0x00) return ERR_INVALIDLOCATION;
 
-	if (entry->MemoryType == GMT_ME) {
+	if (entry->MemoryType == MEM_ME) {
 		if (Priv->PBKSBNR == 0) {
 			sprintf(req, "AT^SBNR=?\r");
 			smprintf(s, "Checking availablity of SBNR\n");
 			error=GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
 			switch (error) {
-			case GE_NONE:
+			case ERR_NONE:
 				Priv->PBKSBNR = AT_SBNR_AVAILABLE;
 				break;
-			case GE_UNKNOWN:
-			case GE_NOTSUPPORTED:
+			case ERR_UNKNOWN:
+			case ERR_NOTSUPPORTED:
 				Priv->PBKSBNR = AT_SBNR_NOTAVAILABLE;
 				break;
 			default:
@@ -2144,13 +2148,13 @@ GSM_Error ATGEN_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	}
 
 	error=ATGEN_GetManufacturer(s);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	error=ATGEN_SetPBKMemory(s, entry->MemoryType);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	error=ATGEN_SetPBKCharset(s, true); /* For reading we prefer unicode */
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	sprintf(req, "AT+CPBR=%i\r",entry->Location);
 
@@ -2168,8 +2172,8 @@ GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, bool
 	} else {
 		entry->Location++;
 	}
-	while ((error = ATGEN_GetMemory(s, entry)) == GE_EMPTY) entry->Location++;
-	if (error == GE_INVALIDLOCATION) return GE_EMPTY;
+	while ((error = ATGEN_GetMemory(s, entry)) == ERR_EMPTY) entry->Location++;
+	if (error == ERR_INVALIDLOCATION) return ERR_EMPTY;
 	return error;
 }
 
@@ -2181,20 +2185,20 @@ GSM_Error ATGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 	int			i,entries;
 
 	error = ATGEN_SetPBKMemory(s, type);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	error = ATGEN_GetMemoryInfo(s, &Status);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
-	entries = Status.Used + Status.Free;
+	entries = Status.MemoryUsed + Status.MemoryFree;
 
 	smprintf(s, "Deleting all phonebook entries\n");
 	for (i = 1; i < entries; i++) {
 		sprintf(req, "AT+CPBW=%d\r",i);
 		error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetMemory);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_ReplyDialVoice(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2202,24 +2206,24 @@ GSM_Error ATGEN_ReplyDialVoice(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Dial voice OK\n");
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_Error:
 		smprintf(s, "Dial voice error\n");
-		return GE_UNKNOWN;
+		return ERR_UNKNOWN;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber)
 {
 	char req[39] = "ATDT";  
 
-	if (ShowNumber != GN_CALL_Default) return GE_NOTSUPPORTED;
-	if (strlen(number) > 32) return (GE_UNKNOWN);
+	if (ShowNumber != GSM_CALL_DefaultNumberPresence) return ERR_NOTSUPPORTED;
+	if (strlen(number) > 32) return (ERR_UNKNOWN);
 
 	strcat(req, number);
 	strcat(req, ";\r");
@@ -2233,16 +2237,16 @@ GSM_Error ATGEN_ReplyEnterSecurityCode(GSM_Protocol_Message msg, GSM_StateMachin
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Security code was OK\n");
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_Error:
 		smprintf(s, "Incorrect security code\n");
-		return GE_SECURITYERROR;
+		return ERR_SECURITYERROR;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
@@ -2250,17 +2254,17 @@ GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 	unsigned char req[50];
 
 	switch (Code.Type) {
-	case GSCT_Pin :
+	case SEC_Pin :
 		sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
 		break;
-	case GSCT_Pin2 : 
+	case SEC_Pin2 : 
 		if (s->Phone.Data.Priv.ATGEN.Manufacturer == AT_Siemens) {
 			sprintf(req, "AT+CPIN2=\"%s\"\r", Code.Code);
 		} else {
 			sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
 		}
 		break;
-	default : return GE_NOTIMPLEMENTED;
+	default : return ERR_NOTIMPLEMENTED;
 	}
 
 	smprintf(s, "Entering security code\n");
@@ -2273,36 +2277,36 @@ GSM_Error ATGEN_ReplyGetSecurityStatus(GSM_Protocol_Message msg, GSM_StateMachin
 
 	smprintf(s, "Security status received - ");
 	if (strstr(msg.Buffer,"READY")) {
-		*Status = GSCT_None;
+		*Status = SEC_None;
 		smprintf(s, "nothing to enter\n");
-		return GE_NONE;
+		return ERR_NONE;
 	}
 	if (strstr(msg.Buffer,"PH_SIM PIN")) {
 		smprintf(s, "no SIM inside or other error\n");
-		return GE_UNKNOWN;
+		return ERR_UNKNOWN;
 	}
 	if (strstr(msg.Buffer,"SIM PIN")) {
-		*Status = GSCT_Pin;
+		*Status = SEC_Pin;
 		smprintf(s, "waiting for PIN\n");
-		return GE_NONE;
+		return ERR_NONE;
 	}
 	if (strstr(msg.Buffer,"SIM PUK")) {
-		*Status = GSCT_Puk;
+		*Status = SEC_Puk;
 		smprintf(s, "waiting for PUK\n");
-		return GE_NONE;
+		return ERR_NONE;
 	}
 	if (strstr(msg.Buffer,"SIM PIN2")) {
-		*Status = GSCT_Pin2;
+		*Status = SEC_Pin2;
 		smprintf(s, "waiting for PIN2\n");
-		return GE_NONE;
+		return ERR_NONE;
 	}
 	if (strstr(msg.Buffer,"SIM PUK2")) {
-		*Status = GSCT_Puk2;
+		*Status = SEC_Puk2;
 		smprintf(s, "waiting for PUK2\n");
-		return GE_NONE;
+		return ERR_NONE;
 	}
 	smprintf(s, "unknown\n");
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Status)
@@ -2323,7 +2327,7 @@ GSM_Error ATGEN_AnswerCall(GSM_StateMachine *s, int ID, bool all)
 		smprintf(s, "Answering all calls\n");
 		return GSM_WaitFor (s, "ATA\r", 4, 0x00, 4, ID_AnswerCall);
 	}
-	return GE_NOTSUPPORTED;
+	return ERR_NOTSUPPORTED;
 }
 
 GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2334,14 +2338,14 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg, GSM_StateMachine *s)
         case AT_Reply_OK:
      	    smprintf(s, "Calls canceled\n");
             call.CallIDAvailable = false;
-            call.Status 	 = GN_CALL_CallLocalEnd;
+            call.Status 	 = GSM_CALL_CallLocalEnd;
             if (s->User.IncomingCall) s->User.IncomingCall(s->CurrentConfig->Device, call);
  
-            return GE_NONE;
+            return ERR_NONE;
     	case AT_Reply_CMSError:
             return ATGEN_HandleCMSError(s);
         default:
-    	    return GE_UNKNOWN;
+    	    return ERR_UNKNOWN;
 	}
 }
 
@@ -2352,30 +2356,30 @@ GSM_Error ATGEN_CancelCall(GSM_StateMachine *s, int ID, bool all)
 	if (all) {
 		smprintf(s, "Dropping all calls\n");
 		error = GSM_WaitFor (s, "ATH\r", 4, 0x00, 4, ID_CancelCall);
-		if (error == GE_UNKNOWN) {
+		if (error == ERR_UNKNOWN) {
 		    return GSM_WaitFor (s, "AT+CHUP\r", 8, 0x00, 4, ID_CancelCall);
 		}
 		return error;
 	}
-	return GE_NOTSUPPORTED;
+	return ERR_NOTSUPPORTED;
 }
 
 GSM_Error ATGEN_ReplyReset(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Reset done\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_Reset(GSM_StateMachine *s, bool hard)
 {
 	GSM_Error error;
 
-	if (!hard) return GE_NOTSUPPORTED;
+	if (!hard) return ERR_NOTSUPPORTED;
 
 	smprintf(s, "Resetting device\n");
 	/* Siemens 35 */
 	error=GSM_WaitFor (s, "AT+CFUN=1,1\r", 12, 0x00, 8, ID_Reset);
-	if (error != GE_NONE) {
+	if (error != ERR_NONE) {
 		/* Siemens M20 */
 		error=GSM_WaitFor (s, "AT^SRESET\r", 10, 0x00, 8, ID_Reset);
 	}
@@ -2385,7 +2389,7 @@ GSM_Error ATGEN_Reset(GSM_StateMachine *s, bool hard)
 GSM_Error ATGEN_ReplyResetPhoneSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Reset done\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type)
@@ -2422,16 +2426,16 @@ GSM_Error ATGEN_ReplyDeleteSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "SMS deleted OK\n");
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_Error:
 		smprintf(s, "Invalid location\n");
-		return GE_INVALIDLOCATION;
+		return ERR_INVALIDLOCATION;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
@@ -2441,7 +2445,7 @@ GSM_Error ATGEN_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	int		location;
 
 	error=ATGEN_GetSMSLocation(s,sms, &folderid, &location);
-	if (error!=GE_NONE) return error;
+	if (error!=ERR_NONE) return error;
 	sprintf(req, "AT+CMGD=%i\r",location);
 
 	smprintf(s, "Deleting SMS\n");
@@ -2456,12 +2460,12 @@ GSM_Error ATGEN_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 	PHONE_GetSMSFolders(s,folders);
 	switch (Priv->PhoneSMSMemory) {
 		case AT_PHONE_SMS_NOTAVAILABLE:
-			return GE_NONE;
+			return ERR_NONE;
 		case 0:
 			error=ATGEN_SetSMSMemory(s, false);
 			/* Not supported */
-			if (error == GE_NOTSUPPORTED) return GE_NONE;
-			if (error != GE_NONE) return error;
+			if (error == ERR_NOTSUPPORTED) return ERR_NONE;
+			if (error != ERR_NONE) return error;
 		default:
 			break;
 	}
@@ -2469,12 +2473,12 @@ GSM_Error ATGEN_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 		folders->Number=4;
 		CopyUnicodeString(folders->Folder[2].Name,folders->Folder[0].Name);
 		CopyUnicodeString(folders->Folder[3].Name,folders->Folder[1].Name);
-		folders->Folder[2].Memory 	= GMT_ME;
-		folders->Folder[3].Memory 	= GMT_ME;
+		folders->Folder[2].Memory 	= MEM_ME;
+		folders->Folder[3].Memory 	= MEM_ME;
 		folders->Folder[2].InboxFolder 	= true;
 		folders->Folder[3].InboxFolder 	= false;
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_ReplySetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2482,13 +2486,13 @@ GSM_Error ATGEN_ReplySetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Phonebook entry written OK\n");
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
@@ -2496,10 +2500,10 @@ GSM_Error ATGEN_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error 		error;
 	unsigned char		req[100];
 
-	if (entry->Location < 1) return GE_INVALIDLOCATION;
+	if (entry->Location < 1) return ERR_INVALIDLOCATION;
 
 	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	sprintf(req, "AT+CPBW=%d\r",entry->Location);
 
@@ -2516,13 +2520,13 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	unsigned char		req[REQUEST_SIZE + 1],name[200],number[200];
 	int			length;
 
-	if (entry->Location == 0) return GE_INVALIDLOCATION;
+	if (entry->Location == 0) return ERR_INVALIDLOCATION;
 
 	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	error = ATGEN_SetPBKCharset(s, entry->PreferUnicode);
-	if (error != GE_NONE) return error;
+	if (error != ERR_NONE) return error;
 
 	GSM_PhonebookFindDefaultNameNumberGroup(entry, &Name, &Number, &Group);
 
@@ -2580,7 +2584,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 GSM_Error ATGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-	if (entry->Location == 0) return GE_INVALIDLOCATION;
+	if (entry->Location == 0) return ERR_INVALIDLOCATION;
 	return ATGEN_PrivSetMemory(s, entry);
 }
 
@@ -2592,8 +2596,8 @@ GSM_Error ATGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 	/* Find out empty location */
 	error = ATGEN_GetMemoryInfo(s, &Status);
-	if (error != GE_NONE) return error;
-	if (Priv->NextMemoryEntry == 0) return GE_FULL;
+	if (error != ERR_NONE) return error;
+	if (Priv->NextMemoryEntry == 0) return ERR_FULL;
 	entry->Location = Priv->NextMemoryEntry;
 
 	return ATGEN_PrivSetMemory(s, entry);
@@ -2628,30 +2632,30 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 		call.CallIDAvailable 	= false;
 		num[0] 			= 0;
 		if (strstr(msg.Buffer, "RING")) {
-			call.Status = GN_CALL_IncomingCall;
+			call.Status = GSM_CALL_IncomingCall;
 			Extract_CLIP_number(num, msg.Buffer);
 		} else if (strstr(msg.Buffer, "NO CARRIER")) {
-			call.Status = GN_CALL_CallEnd;
+			call.Status = GSM_CALL_CallEnd;
 		} else if (strstr(msg.Buffer, "COLP:")) {
-			call.Status = GN_CALL_CallStart;
+			call.Status = GSM_CALL_CallStart;
 			Extract_CLIP_number(num, msg.Buffer);
 		} else {
 			smprintf(s, "CLIP: error\n");
-			return GE_NONE;
+			return ERR_NONE;
 		}
 		EncodeUnicode(call.PhoneNumber, num, strlen(num));
 
 		s->User.IncomingCall(s->CurrentConfig->Device, call);
 	}
 
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_IncomingGPRS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	/* "+CGREG: 1,1" */
 	smprintf(s, "GPRS change\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_IncomingBattery(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2663,7 +2667,7 @@ GSM_Error ATGEN_IncomingBattery(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	p = strstr(msg.Buffer, "_OBS:");
 	if (p) level = atoi(p + 5);
 	smprintf(s, "Battery level changed to %d\n", level);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_IncomingNetworkLevel(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2675,7 +2679,7 @@ GSM_Error ATGEN_IncomingNetworkLevel(GSM_Protocol_Message msg, GSM_StateMachine 
 	p = strstr(msg.Buffer, "_OSIGQ: ");
 	if (p) level = atoi(p + 7);
 	smprintf(s, "Network level changed to %d\n", level);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_ReplyGetSIMIMSI(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2696,17 +2700,17 @@ GSM_Error ATGEN_ReplyGetSIMIMSI(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		}
 
 		smprintf(s, "Received IMSI %s\n",Data->PhoneString);
-		return GE_NONE;
+		return ERR_NONE;
 	case AT_Reply_Error:
 	case AT_Reply_CMEError:
 		smprintf(s, "No access to SIM card or not supported by device\n");
-		return GE_SECURITYERROR;
+		return ERR_SECURITYERROR;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
 	default:
 		break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
@@ -2718,7 +2722,7 @@ GSM_Error ATGEN_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 
 GSM_Error ATGEN_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *features)
 {
-	return GE_NOTSUPPORTED;
+	return ERR_NOTSUPPORTED;
 
 	s->Phone.Data.DisplayFeatures = features;
 	smprintf(s, "Getting display status\n");
@@ -2727,7 +2731,7 @@ GSM_Error ATGEN_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *featu
 
 GSM_Error ATGEN_IncomingSMSCInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2746,17 +2750,17 @@ GSM_Error ATGEN_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine
             if (i >= 0 && i <= 3) { 
                 Data->BatteryCharge->ChargeState = i + 1;
             }
-            return GE_NONE;
+            return ERR_NONE;
         case AT_Reply_Error:
             smprintf(s, "Can't get battery level\n");
-            return GE_UNKNOWN;
+            return ERR_UNKNOWN;
         case AT_Reply_CMSError:
             smprintf(s, "Can't get battery level\n");
             return ATGEN_HandleCMSError(s);
         default:
             break;
     }
-    return GE_UNKNOWNRESPONSE;
+    return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
@@ -2803,13 +2807,13 @@ GSM_Error ATGEN_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine
                     case 7: Signal->BitErrorRate = 18; break; /* 18.10 */
                 }
             }
-            return GE_NONE;
+            return ERR_NONE;
         case AT_Reply_CMSError:
             return ATGEN_HandleCMSError(s);
         default:
             break;
 	}
-	return GE_UNKNOWNRESPONSE;
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error ATGEN_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
@@ -2826,7 +2830,7 @@ GSM_Error ATGEN_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
  */
 GSM_Error ATGEN_ReplyOK(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
@@ -2835,7 +2839,7 @@ static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *N
 	
 	if (Priv->Manufacturer==AT_Siemens ) return SIEMENS_GetNextCalendar(s,Note,start);
 	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_GetNextCalendar(s,Note,start);
-	return GE_NOTSUPPORTED;
+	return ERR_NOTSUPPORTED;
 }
 
 GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
@@ -2843,7 +2847,7 @@ GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	free(Priv->file.Buffer);
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
@@ -2852,7 +2856,7 @@ GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_AddCalendarNote(s, Note);
 	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_AddCalendarNote(s, Note);
-	return GE_NOTSUPPORTED;
+	return ERR_NOTSUPPORTED;
 }
 
 GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
@@ -2861,7 +2865,7 @@ GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_DelCalendarNote(s, Note);
 	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_DelCalendarNote(s, Note);
-	return GE_NOTSUPPORTED;
+	return ERR_NOTSUPPORTED;
 }
 
 GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
@@ -2883,7 +2887,7 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 			case GSM_KEY_0			: Frame[9] = '0'; break;
 			case GSM_KEY_HASH		: Frame[9] = '#'; break;
 			case GSM_KEY_ASTERISK		: Frame[9] = '*'; break;
-			case GSM_KEY_POWER		: return GE_NOTSUPPORTED;
+			case GSM_KEY_POWER		: return ERR_NOTSUPPORTED;
 			case GSM_KEY_GREEN		: Frame[9] = 'S'; break;
 			case GSM_KEY_RED		: Frame[9] = 'E'; break;
 			case GSM_KEY_INCREASEVOLUME	: Frame[9] = 'U'; break;
@@ -2892,16 +2896,16 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 			case GSM_KEY_DOWN		: Frame[9] = 'V'; break;
 			case GSM_KEY_MENU		: Frame[9] = 'F'; break;
 			case GSM_KEY_NAMES		: Frame[9] = 'C'; break;
-			default				: return GE_NOTSUPPORTED;
+			default				: return ERR_NOTSUPPORTED;
 		}
 		smprintf(s, "Pressing key\n");
 		error = GSM_WaitFor (s, Frame, 12, 0x00, 4, ID_PressKey);
-		if (error != GE_NONE) return error;
+		if (error != ERR_NONE) return error;
 
 		/* Strange. My T310 needs it */
 		return GSM_WaitFor (s, "ATE1\r", 5, 0x00, 4, ID_EnableEcho);
 	} else {
-		return GE_NONE;
+		return ERR_NONE;
 	}
 }
 
@@ -2914,7 +2918,7 @@ GSM_Error ATGEN_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	char		Buffer[300],Buffer2[300];
 
 	smprintf(s, "CB received\n");
-	return GE_NONE;
+	return ERR_NONE;
 
 	DecodeHexBin (Buffer,msg.Buffer+6,msg.Length-6);
 	DumpMessage(stdout,Buffer,msg.Length-6);
@@ -2934,7 +2938,7 @@ GSM_Error ATGEN_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (s->Phone.Data.EnableIncomingCB && s->User.IncomingCB!=NULL) {
 		s->User.IncomingCB(s->CurrentConfig->Device,CB);
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 #endif
@@ -2952,16 +2956,16 @@ GSM_Error ATGEN_SetIncomingCB(GSM_StateMachine *s, bool enable)
 			return GSM_WaitFor(s, "AT+CNMI=3,,0\r", 13, 0x00, 4, ID_SetIncomingCB);
 		}
 	}
-	return GE_NONE;
+	return ERR_NONE;
 #else
-	return GE_SOURCENOTAVAILABLE;
+	return ERR_SOURCENOTAVAILABLE;
 #endif
 }
 
 GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Incoming SMS\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_IncomingSMSDeliver(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2973,8 +2977,8 @@ GSM_Error ATGEN_IncomingSMSDeliver(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 	smprintf(s, "Incoming SMS received (Deliver)\n");
 	if (Data->EnableIncomingSMS && s->User.IncomingSMS!=NULL) {
-		sms.State 	= GSM_UnRead;
-		sms.InboxFolder = true;
+		sms.State 	 = SMS_UnRead;
+		sms.InboxFolder  = true;
 		sms.PDU 	 = SMS_Deliver;
 
 		/* T310 with larger SMS goes crazy and mix this incoming
@@ -3004,20 +3008,20 @@ GSM_Error ATGEN_IncomingSMSDeliver(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 		s->User.IncomingSMS(s->CurrentConfig->Device,sms);
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 /* I don't have phone able to do it and can't fill it */
 GSM_Error ATGEN_IncomingSMSReport(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Incoming SMS received (Report)\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 {
 	/* Nokia returns OK, but doesn't return anything */
-	if (s->Phone.Data.Priv.ATGEN.Manufacturer == AT_Nokia) return GE_NOTSUPPORTED;
+	if (s->Phone.Data.Priv.ATGEN.Manufacturer == AT_Nokia) return ERR_NOTSUPPORTED;
 
 	if (s->Phone.Data.EnableIncomingSMS!=enable) {
 		s->Phone.Data.EnableIncomingSMS = enable;
@@ -3034,7 +3038,7 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 			return GSM_WaitFor(s, "AT+CNMI=3,0\r", 12, 0x00, 4, ID_SetIncomingSMS);
 		}
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 GSM_Reply_Function ATGENReplyFunctions[] = {

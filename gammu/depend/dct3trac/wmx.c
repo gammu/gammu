@@ -44,7 +44,7 @@ static GSM_Error DCT3_ReplySwitchDebug(GSM_Protocol_Message msg, GSM_StateMachin
 		printf("Debug Trace Disabled\n");
 		break;
 	}
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 /**
@@ -61,7 +61,7 @@ static GSM_Error DCT3_ReplyRPC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		dumpraw("RPC Reply data", &msg.Buffer[4], msg.Length-4);
 	}
 	printf("\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 /* disassemble mdisnd (0x18xx) packet */
@@ -284,7 +284,7 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 		break;
 	}
 	printf("\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 
@@ -297,7 +297,7 @@ static GSM_Error DCT3_ReplyMyPacket(GSM_Protocol_Message msg, GSM_StateMachine *
 		printf("%02x ",msg.Buffer[x]&0xFF);
 	}
 	printf("\n");
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 #define ID_DebugTrace   0x666
@@ -413,7 +413,7 @@ void DCT3SetDebug(int argc, char *argv[])
 	GSM_Init(true);
 
 	/* We Need DCT3 */
-	if (CheckDCT3Only()!=GE_NONE) return;
+	if (CheckDCT3Only()!=ERR_NONE) return;
 
 	error=DCT3_EnableSecurity (&s, 0x01);
 	Print_Error(error);
@@ -428,8 +428,8 @@ void DCT3SetDebug(int argc, char *argv[])
 	error=GSM_WaitFor (&s, reqEnable, sizeof(reqEnable), 0x40, 4, ID_DebugSwitch);
 	
 	Print_Error(error);
-	signal(SIGINT, interrupted);
-	printf("If you want break, press Ctrl+C...\n");
+	signal(SIGINT, interrupt);
+	printf("Press Ctrl+C to interrupt...\n");
 	x=0;
 	
 	/*
@@ -450,7 +450,7 @@ void DCT3SetDebug(int argc, char *argv[])
 	;
 
 	/* todo: wait and dump for some time */
-	while (!bshutdown) {
+	while (!gshutdown) {
 		GSM_ReadDevice(&s,true);
 		my_sleep(10);
 	}

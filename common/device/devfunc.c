@@ -53,7 +53,7 @@ GSM_Error socket_close(GSM_StateMachine *s, int hPhone)
 #else
 	close(hPhone); /*FIXME: error checking */
 #endif
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 #endif
@@ -63,7 +63,7 @@ GSM_Error socket_close(GSM_StateMachine *s, int hPhone)
 GSM_Error lock_device(const char* port, char **lock_device)
 {
 	*lock_device = 0;
-	return GE_NONE;
+	return ERR_NONE;
 }
 
 bool unlock_device(char **lock_file)
@@ -86,7 +86,7 @@ GSM_Error lock_device(const char* port, char **lock_device)
 	char 		buffer[max_buf_len];
 	const char 	*aux;
 	int 		fd, len;
-	GSM_Error	error = GE_NONE;
+	GSM_Error	error = ERR_NONE;
 
 	dbgprintf("Locking device\n");
 
@@ -104,7 +104,7 @@ GSM_Error lock_device(const char* port, char **lock_device)
 	lock_file = calloc(len + 1, 1);
 	if (!lock_file) {
 		dbgprintf("Out of memory error while locking device\n");
-		return GE_MOREMEMORY;
+		return ERR_MOREMEMORY;
 	}
 	/* I think we don't need to use strncpy, as we should have enough
 	 * buffer due to strlen results
@@ -136,12 +136,12 @@ GSM_Error lock_device(const char* port, char **lock_device)
 				if (unlink(lock_file) == -1) {
 					dbgprintf("Overriding failed, please check the permissions\n");
 					dbgprintf("Cannot lock device\n");
-					error = GE_PERMISSION;
+					error = ERR_PERMISSION;
 					goto failed;
 				}
 			} else {
 				dbgprintf("Device already locked by PID %d.\n", pid);
-				error = GE_DEVICELOCKED;
+				error = ERR_DEVICELOCKED;
 				goto failed;
 			}
 		}
@@ -153,7 +153,7 @@ GSM_Error lock_device(const char* port, char **lock_device)
 			dbgprintf("Unable to read lockfile %s.\n", lock_file);
 			dbgprintf("Please check for reason and remove the lockfile by hand.\n");
 			dbgprintf("Cannot lock device\n");
-			error = GE_UNKNOWN;
+			error = ERR_UNKNOWN;
 			goto failed;
 		}
 	}
@@ -163,16 +163,16 @@ GSM_Error lock_device(const char* port, char **lock_device)
 	if (fd == -1) {
 		if (errno == EEXIST) {
 			dbgprintf("Device seems to be locked by unknown process\n");
-			error = GE_DEVICEOPENERROR;		
+			error = ERR_DEVICEOPENERROR;		
 		} else if (errno == EACCES) {
 			dbgprintf("Please check permission on lock directory\n");
-			error = GE_PERMISSION;
+			error = ERR_PERMISSION;
 		} else if (errno == ENOENT) {
 			dbgprintf("Cannot create lockfile %s. Please check for existence of path\n", lock_file);
-			error = GE_UNKNOWN;
+			error = ERR_UNKNOWN;
 		} else {
 			dbgprintf("Unknown error with creating lockfile %s\n", lock_file);
-			error = GE_UNKNOWN;
+			error = ERR_UNKNOWN;
 		}
 		goto failed;
 	}
@@ -180,14 +180,14 @@ GSM_Error lock_device(const char* port, char **lock_device)
 	write(fd, buffer, strlen(buffer));
 	close(fd);
 	*lock_device = lock_file;
-	return GE_NONE;
+	return ERR_NONE;
 failed:
 	free(lock_file);
 	*lock_device = 0;
 	return error;
 #else
 	*lock_device = 0;
-	return GE_NONE;
+	return ERR_NONE;
 #endif
 }
 

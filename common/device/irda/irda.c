@@ -1,5 +1,8 @@
+/* (c) 2001-2003 by Marcin Wiacek */
+/* based on some work from Ralf Thelen and MyGnokii */
+/* based on some work from Gnokii and MSDN */
 
-/* Have to include wsock32.lib library to MS VC6 project to compile it */
+/* You have to include wsock32.lib library to MS VC project to compile it */
 
 #include "../../gsmstate.h"
 
@@ -32,21 +35,16 @@ static bool irda_discover_device(GSM_StateMachine *state)
 	struct irda_device_list	*list;
     	unsigned char		*buf;
     	unsigned int		sec;
-
     	int			s, z, len, fd, i;
     	GSM_DateTime		Date;
     	bool			founddevice = false;
-
 #ifdef WIN32
-    	WSADATA			wsaData;
-    	int 			index;
-    
-    	WSAStartup(MAKEWORD(1,1), &wsaData);
+	int			index;
 #endif
 
    	fd = socket(AF_IRDA, SOCK_STREAM, 0);
 
-    	/* maximally 10 devices in discover */
+    	/* can handle maximally 10 devices during discovering */
     	len  = sizeof(struct irda_device_list) + sizeof(struct irda_device_info) * 10;
     	buf  = malloc(len);
     	list = (struct irda_device_list *)buf;
@@ -95,25 +93,26 @@ static bool irda_discover_device(GSM_StateMachine *state)
 
 static GSM_Error irda_open (GSM_StateMachine *s)
 {
-#ifdef WIN32
-    	int 			Enable9WireMode = 1;
-#endif
     	GSM_Device_IrdaData 	*d = &s->Device.Data.Irda;
     	int			fd = -1;
-
-#ifndef WIN32
-    	if (s->ConnectionType == GCT_IRDAAT) return GE_SOURCENOTAVAILABLE;
+#ifdef WIN32
+    	int 			Enable9WireMode = 1;
+    	WSADATA			wsaData;
+    
+    	WSAStartup(MAKEWORD(1,1), &wsaData);
+#else
+    	if (s->ConnectionType == GCT_IRDAAT) return ERR_SOURCENOTAVAILABLE;
 #endif
 
-    	/* discover the devices */
-    	if (irda_discover_device(s)==false) return GE_TIMEOUT;
+    	/* discovering devices */
+    	if (irda_discover_device(s)==false) return ERR_TIMEOUT;
 
-    	/* Create socket */
+    	/* Creating socket */
     	fd = socket(AF_IRDA, SOCK_STREAM, 0);
 
     	d->peer.irdaAddressFamily 	= AF_IRDA;
 #ifndef WIN32
-    	d->peer.sir_lsap_sel 	= LSAP_ANY;
+    	d->peer.sir_lsap_sel 		= LSAP_ANY;
 #endif
     	switch (s->ConnectionType) {
     	case GCT_IRDAAT:
@@ -121,7 +120,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 
 #ifdef WIN32
 		if (setsockopt(fd, SOL_IRLMP, IRLMP_9WIRE_MODE, (const char *) &Enable9WireMode,
-               		sizeof(int))==SOCKET_ERROR) return GE_UNKNOWN;
+               		sizeof(int))==SOCKET_ERROR) return ERR_UNKNOWN;
 #endif
 		break;
     	case GCT_IRDAPHONET:
@@ -129,26 +128,26 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 		break;
     	case GCT_IRDAOBEX:
 		/* IrDA:OBEX not supported by N3650 */
-//    	strcpy(d->peer.irdaServiceName, "IrDA:OBEX");
+//    		strcpy(d->peer.irdaServiceName, "IrDA:OBEX");
 
     		strcpy(d->peer.irdaServiceName, "OBEX");
 
 		/* Alternative server is "OBEX:IrXfer" */
 		break;
     	default:
-		return GE_UNKNOWN;
+		return ERR_UNKNOWN;
     	}
 
-    	/* Connect to service */
+    	/* Connecting to service */
     	if (connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
 		dbgprintf("Can't connect to service %s\n",d->peer.irdaServiceName);
 		close(fd);
-		return GE_NOTSUPPORTED;
+		return ERR_NOTSUPPORTED;
     	}
 
     	d->hPhone=fd;
 
-    	return GE_NONE;
+    	return ERR_NONE;
 }
 
 static int irda_read(GSM_StateMachine *s, void *buf, size_t nbytes)

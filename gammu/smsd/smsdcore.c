@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek and Joergen Thomsen */
 
 #include <string.h>
 #include <signal.h>
@@ -16,20 +17,20 @@ static void SMSSendingSMSStatus (char *Device, int status)
 {
 	dbgprintf("Incoming SMS device: \"%s\" status=%d\n",Device, status);
 	if (status==0) {
-		SendingSMSStatus = GE_NONE;
+		SendingSMSStatus = ERR_NONE;
 	} else {
-		SendingSMSStatus = GE_UNKNOWN;
+		SendingSMSStatus = ERR_UNKNOWN;
 	}
 }
 
 void GSM_Terminate_SMSD(char *msg, int error, bool exitprogram, int rc)
 {
-	int ret = GE_NONE;
+	int ret = ERR_NONE;
 
 	if (s.opened) {
 		WriteSMSDLog("Terminating communication");
 		ret=GSM_TerminateConnection(&s);
-		if (ret!=GE_NONE) {
+		if (ret!=ERR_NONE) {
 			printf("%s\n",print_error(error,s.di.df,s.msg));
 			if (s.opened) GSM_TerminateConnection(&s);
 		}
@@ -171,32 +172,32 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	/* Need PIN ? */
 	error=Phone->GetSecurityStatus(&s,&SecurityCode.Type);
 	/* Unknown error */
-	if (error != GE_NOTSUPPORTED && error != GE_NONE) {
+	if (error != ERR_NOTSUPPORTED && error != ERR_NONE) {
 		WriteSMSDLog("Error getting security status (%i)", error);
 		return false;
 	}
 	/* No supported - do not check more */
-	if (error == GE_NOTSUPPORTED) return true;
+	if (error == ERR_NOTSUPPORTED) return true;
 	/* If PIN, try to enter */
 	switch (SecurityCode.Type) {
-	case GSCT_Pin:
+	case SEC_Pin:
 		WriteSMSDLog("Trying to enter PIN");
 		strcpy(SecurityCode.Code,Config->PINCode);
 		error=Phone->EnterSecurityCode(&s,SecurityCode);
-		if (error == GE_SECURITYERROR) {
+		if (error == ERR_SECURITYERROR) {
 			GSM_Terminate_SMSD("ERROR: incorrect PIN", error, true, -1);
 		}
-		if (error != GE_NONE) {
+		if (error != ERR_NONE) {
 			WriteSMSDLog("Error entering PIN (%i)", error);
 			return false;
 	  	}
 		break;
-	case GSCT_SecurityCode:
-	case GSCT_Pin2:
-	case GSCT_Puk:
-	case GSCT_Puk2:
+	case SEC_SecurityCode:
+	case SEC_Pin2:
+	case SEC_Puk:
+	case SEC_Puk2:
 		GSM_Terminate_SMSD("ERROR: phone requires not supported code type", 0, true, -1);
-	case GSCT_None:
+	case SEC_None:
 		break;
 	}
 	return true;
@@ -207,18 +208,18 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	bool			start,process;
 	GSM_MultiSMSMessage 	sms;
 	unsigned char 		buffer[100];
-	GSM_Error		error=GE_NONE;
+	GSM_Error		error=ERR_NONE;
 	INI_Entry		*e;
 	int			i;
 
 	start=true;
-	while (error == GE_NONE && !bshutdown) {
+	while (error == ERR_NONE && !gshutdown) {
 		sms.SMS[0].Folder=0x00;
 		error=Phone->GetNextSMS(&s, &sms, start);
 		switch (error) {
-		case GE_EMPTY:
+		case ERR_EMPTY:
 			break;
-		case GE_NONE:
+		case ERR_NONE:
 			/* Not Inbox SMS - exit */
 			if (!sms.SMS[0].InboxFolder) break;
 			process=true;
@@ -256,13 +257,13 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	 		WriteSMSDLog("Error getting SMS (%i)", error);
 			return false;
 		}
-		if (error == GE_NONE && sms.SMS[0].InboxFolder) {
+		if (error == ERR_NONE && sms.SMS[0].InboxFolder) {
 			for (i=0;i<sms.Number;i++) {
 				sms.SMS[i].Folder=0;
 				error=Phone->DeleteSMS(&s,&sms.SMS[i]);
 				switch (error) {
-				case GE_NONE:
-				case GE_EMPTY:
+				case ERR_NONE:
+				case ERR_EMPTY:
 					break;
 				default:
 					WriteSMSDLog("Error deleting SMS (%i)", error);
@@ -282,7 +283,7 @@ bool SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 
 	/* Do we have any SMS in phone ? */
 	error=Phone->GetSMSStatus(&s,&SMSStatus);
-	if (error != GE_NONE) {
+	if (error != ERR_NONE) {
 		WriteSMSDLog("Error getting SMS status (%i)", error);
 		return false;
 	}
@@ -302,25 +303,25 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 
 	error = Service->FindOutboxSMS(&sms, Config, Config->SMSID);
 
-	if (error == GE_EMPTY) {
+	if (error == ERR_EMPTY) {
 		/* No outbox sms - wait few seconds and escape */
-		for (j=0;j<Config->commtimeout && !bshutdown;j++) {
+		for (j=0;j<Config->commtimeout && !gshutdown;j++) {
 			GSM_GetCurrentDateTime (&Date);
 			i=Date.Second;
-	 		while (i==Date.Second && !bshutdown) {
+	 		while (i==Date.Second && !gshutdown) {
 				my_sleep(10);
 				GSM_GetCurrentDateTime(&Date);
 			}
 		}
 		return true;
 	}
-	if (error != GE_NONE) {
+	if (error != ERR_NONE) {
 		/* Unknown error - escape */
 		WriteSMSDLog("Error in outbox on %s", Config->SMSID);
 		Service->MoveSMS(Config->outboxpath, Config->errorsmspath, Config->SMSID, true);
 		return false;
 	}
-	if (!bshutdown) {
+	if (!gshutdown) {
 		if (strcmp(Config->prevSMSID, Config->SMSID) == 0) {
 			Config->retries++;
 			if (Config->retries > MAX_RETRIES) {
@@ -337,33 +338,33 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		for (i=0;i<sms.Number;i++) {
 			if (strcmp(Config->deliveryreport, "no") != 0) sms.SMS[i].PDU = SMS_Status_Report;
 			error=Phone->SendSMS(&s, &sms.SMS[i]);
-			if (error!=GE_NONE) {
+			if (error!=ERR_NONE) {
 				WriteSMSDLog("Error sending SMS %s (%i): %s", Config->SMSID, error,print_error(error,s.di.df,s.msg));
 				return false;
 			}
 			j=0;
-			SendingSMSStatus = GE_TIMEOUT;
-			while (!bshutdown) {
+			SendingSMSStatus = ERR_TIMEOUT;
+			while (!gshutdown) {
 				GSM_GetCurrentDateTime (&Date);
 				z=Date.Second;
 				while (z==Date.Second) {
 					my_sleep(10);
 					GSM_GetCurrentDateTime(&Date);
 					GSM_ReadDevice(&s,true);
-					if (SendingSMSStatus != GE_TIMEOUT) break;
+					if (SendingSMSStatus != ERR_TIMEOUT) break;
 				}
-				if (SendingSMSStatus != GE_TIMEOUT) break;
+				if (SendingSMSStatus != ERR_TIMEOUT) break;
 				j++;
 				if (j>Config->sendtimeout) break;
 			}
-			if (SendingSMSStatus != GE_NONE) {
+			if (SendingSMSStatus != ERR_NONE) {
 				WriteSMSDLog("Error getting send status of %s (%i): %s", Config->SMSID, SendingSMSStatus,print_error(SendingSMSStatus,s.di.df,s.msg));
 				return false;
 			}
 			WriteSMSDLog("Transmitted %s (%s: %i) to %s", Config->SMSID, (i+1 == sms.Number?"total":"part"),i+1,DecodeUnicodeString(sms.SMS[0].Number));
 		}
 		strcpy(Config->prevSMSID, "");
-		if (Service->MoveSMS(Config->outboxpath, Config->sentsmspath, Config->SMSID, false) != GE_NONE)
+		if (Service->MoveSMS(Config->outboxpath, Config->sentsmspath, Config->SMSID, false) != ERR_NONE)
 			Service->MoveSMS(Config->outboxpath, Config->errorsmspath, Config->SMSID, true);
 	}
 	return true;
@@ -387,26 +388,18 @@ void SMSDaemon(int argc, char *argv[])
 	SMSD_ReadConfig(argc, argv, &Config);
 
 	error = Service->Init();
-	if (error!=GE_NONE) {
+	if (error!=ERR_NONE) {
 		GSM_Terminate_SMSD("Stop GAMMU smsd (%i)", error, true, -1);
 	}
 
-	/* We do not want to monitor serial line forever -
-	 * press Ctrl+C to stop the monitoring mode.
-	 */
-	signal(SIGINT, interrupted);
-	signal(SIGTERM, interrupted);
+	signal(SIGINT, interrupt);
+	signal(SIGTERM, interrupt);
 	fprintf(stderr,"Press Ctrl+C to stop the program ...\n");
 
 	time1 			= time(NULL);
-	SendingSMSStatus 	= GE_UNKNOWN;
+	SendingSMSStatus 	= ERR_UNKNOWN;
 
-	/* Loop here indefinitely -
-	 * allows you to see messages from GSM code in
-	 * response to unknown messages etc.
-	 * The loops ends after pressing the Ctrl+C.
-	 */
-	while (!bshutdown) {
+	while (!gshutdown) {
 		/* There were errors in communication - try to recover */
 		if (errors > 2) {
 			if (errors != 255) {
@@ -417,14 +410,14 @@ void SMSDaemon(int argc, char *argv[])
 			WriteSMSDLog("Starting communication");
 			error=GSM_InitConnection(&s,2);
 			switch (error) {
-			case GE_NONE:
+			case ERR_NONE:
 				s.User.SendSMSStatus 	= SMSSendingSMSStatus;
 				Phone			= s.Phone.Functions;
 				errors 			= 0;
 				/* Marcin Wiacek: FIXME. To check */
 //				di 			= s.di;
 				break;
-			case GE_DEVICEOPENERROR:
+			case ERR_DEVICEOPENERROR:
 				GSM_Terminate_SMSD("Can't open device (%i)", error, true, -1);
 			default:
 				WriteSMSDLog("Error at init connection (%i)", error);
@@ -432,7 +425,7 @@ void SMSDaemon(int argc, char *argv[])
 			}
 			continue;
 		}
-		if ((difftime(time(NULL), time1) >= Config.receivefrequency) || (SendingSMSStatus != GE_NONE)) {
+		if ((difftime(time(NULL), time1) >= Config.receivefrequency) || (SendingSMSStatus != ERR_NONE)) {
 	 		time1 = time(NULL);
 
 			if (!SMSD_CheckSecurity(&Config))

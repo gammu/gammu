@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 void DCT3SelfTests	 (int argc, char *argv[]);
 void DCT3netmonitor	 (int argc, char *argv[]);

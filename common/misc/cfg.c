@@ -1,3 +1,4 @@
+/* (c) 2002-2003 by Marcin Wiacek */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -21,15 +22,17 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
 {
 	FILE		*f;
 	bool		FFEEUnicode=false;
-	int		level = -1, buffer1used, buffer2used, bufferused, i, buffused=1000,buffread=1000;
-	unsigned char	ch[3], *buffer = NULL, *buffer1 = NULL, *buffer2 = NULL;
-	unsigned char	buff[1000];
+	int		level = -1, buffer1used, buffer2used;
+	int		bufferused, i, buffused=1000,buffread=1000, num;
+	unsigned char	ch[3], *buffer = NULL;
+	unsigned char	*buffer2 = NULL, *buffer1 = NULL, buff[1000];
         INI_Section 	*INI_info = NULL, *INI_head = NULL, *heading;
         INI_Entry 	*entry;
 
 	f = fopen(FileName,"rb");
 	if (f == NULL) return NULL;
 	
+	num = 0;
 	while(1) {
 		/* We read one line from file */
 		bufferused = 0;
@@ -44,10 +47,16 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
 				}
 			}
 			if (Unicode) {
-				ch[0] = buff[buffread++];
-				if (buffused == buffread) continue;
-				ch[1] = buff[buffread++];
-				if (buffused == buffread) continue;
+				if (num == 0) {
+					if (buffused == buffread) continue;
+					ch[0] = buff[buffread++];
+					num = 1;
+				}
+				if (num == 1) {
+					if (buffused == buffread) continue;
+					ch[1] = buff[buffread++];
+					num = 0;				
+				}
 				if (level == -1) {
 					if (ch[0] == 0xFF && ch[1] == 0xFE) FFEEUnicode = true;
 					level = 0;
@@ -57,9 +66,9 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
 					ch[2] = ch[0]; ch[0] = ch[1]; ch[1] = ch[2];
 				}
 			} else {
+				if (buffused == buffread) continue;
 				ch[0] = 0;
 				ch[1] = buff[buffread++];
-				if (buffused == buffread) continue;
 				if (level == -1) level = 0;
 			}
 			if ((ch[0] == 0 && ch[1] == 13) ||
@@ -248,37 +257,43 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
  */
 unsigned char *INI_GetValue(INI_Section *cfg, unsigned char *section, unsigned char *key, bool Unicode)
 {
-        INI_Section 	*h;
-        INI_Entry  	*e;
+        INI_Section 	*sec;
+        INI_Entry  	*ent;
 
         if (cfg == NULL || section == NULL || key == NULL) return NULL;
 
 	if (Unicode) {
 	        /* Search for section */
-	        for (h = cfg; h != NULL; h = h->Next) {
-	                if (mywstrncasecmp(section, h->SectionName, 0)) {
+		sec = cfg;
+		while (sec != NULL) {
+	                if (mywstrncasecmp(section, sec->SectionName, 0)) {
 	                        /* Search for key inside section */
-	                        for (e = h->SubEntries; e != NULL; e = e->Next) {
-	                                if (mywstrncasecmp(key,e->EntryName,0)) {
-	                                        return e->EntryValue;
+				ent = sec->SubEntries;
+				while (ent != NULL) {
+	                                if (mywstrncasecmp(key,ent->EntryName,0)) {
+	                                        return ent->EntryValue;
 	                                }
+					ent = ent->Next;
 	                        }
 	                }
-	        }
+			sec = sec->Next;
+		}
 	} else {
 	        /* Search for section */
-	        for (h = cfg; h != NULL; h = h->Next) {
-//			printf("[%s]\n",h->SectionName);
-	                if (mystrncasecmp(section, h->SectionName, 0)) {
+		sec = cfg;
+		while (sec != NULL) {
+	                if (mystrncasecmp(section, sec->SectionName, 0)) {
 	                        /* Search for key inside section */
-	                        for (e = h->SubEntries; e != NULL; e = e->Next) {
-//					printf("\"%s\"=\"%s\"\n",e->EntryName,e->EntryValue);
-	                                if (mystrncasecmp(key, e->EntryName, 0)) {
-	                                        return e->EntryValue;
+				ent = sec->SubEntries;
+				while (ent != NULL) {
+	                                if (mystrncasecmp(key,ent->EntryName,0)) {
+	                                        return ent->EntryValue;
 	                                }
+					ent = ent->Next;
 	                        }
 	                }
-	        }
+			sec = sec->Next;
+		}
 	}
         return NULL;
 }
@@ -309,7 +324,9 @@ INI_Entry *INI_FindLastSectionEntry(INI_Section *file_info, unsigned char *secti
 		if (e == NULL) break;
 		if (e->Next != NULL) {
 			e = e->Next;
-		} else break;
+		} else {
+			break;
+		}
 	}
 	return e;
 }

@@ -1,8 +1,10 @@
-#ifndef __gsm_profile_h
-#define __gsm_profile_h
+/* (c) 2002-2003 by Marcin Wiacek */
+
+#ifndef __gsm_prof_h
+#define __gsm_prof_h
 
 typedef enum {
-	PROFILE_KEYPAD_LEVEL1		= 1,
+	PROFILE_KEYPAD_LEVEL1 = 1,
 	PROFILE_KEYPAD_LEVEL2,
 	PROFILE_KEYPAD_LEVEL3,
 	PROFILE_KEYPAD_OFF,
