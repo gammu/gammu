@@ -2556,18 +2556,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 		if (Priv->PBKSBNR == 0) {
 			sprintf(req, "AT^SBNR=?\r");
 			smprintf(s, "Checking availablity of SBNR\n");
-			error=GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
-			switch (error) {
-			case ERR_NONE:
-				Priv->PBKSBNR = AT_SBNR_AVAILABLE;
-				break;
-			case ERR_UNKNOWN:
-			case ERR_NOTSUPPORTED:
-				Priv->PBKSBNR = AT_SBNR_NOTAVAILABLE;
-				break;
-			default:
-				return error;
-			}
+			GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
 		}
 		if (Priv->PBKSBNR == AT_SBNR_AVAILABLE) {
 			sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location + Priv->FirstMemoryEntry - 1);
