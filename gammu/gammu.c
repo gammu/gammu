@@ -8243,7 +8243,11 @@ int main(int argc, char *argv[])
 		if (only_config >= 0) start++; else only_config = -1;
 	}
 
-	cfg=GSM_FindGammuRC();
+	cfg = GSM_FindGammuRC();
+	if (cfg == NULL) {
+		printmsg("Warning: No configuration file found!\n");	
+	}
+	
 	for (i = 0; i <= MAX_CONFIG_NUM; i++) {
 		if (cfg!=NULL) {
 		        cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
