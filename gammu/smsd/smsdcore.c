@@ -110,9 +110,8 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 
 	Config->PINCode=INI_GetValue(smsdcfgfile, "smsd", "PIN", false);
 	if (Config->PINCode == NULL) {
-		if (log) WriteSMSDLog("No PIN code in %s file",filename);
-		fprintf(stderr,"No PIN code in %s file\n",filename);
-		exit(-1);
+		if (log) WriteSMSDLog("Warning: No PIN code in %s file",filename);
+		fprintf(stderr,"Warning: No PIN code in %s file\n",filename);
 	}
 	if (log) WriteSMSDLog("PIN code is \"%s\"",Config->PINCode);
 
@@ -361,7 +360,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		Service->MoveSMS(&sms,Config, Config->SMSID, true,false);
 		return false;
 	}
-	
+
 	if (!gshutdown) {
 		if (strcmp(Config->prevSMSID, Config->SMSID) == 0) {
 			Config->retries++;
@@ -379,7 +378,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			Config->retries = 0;
 			strcpy(Config->prevSMSID, Config->SMSID);
 		}
-		for (i=0;i<sms.Number;i++) {		
+		for (i=0;i<sms.Number;i++) {
 			if (sms.SMS[i].SMSC.Location == 1) {
 			    	if (Config->SMSC.Location == 0) {
 					Config->SMSC.Location = 1;
@@ -397,13 +396,13 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 					sms.SMS[i].SMSC.Validity.Relative = Config->relativevalidity;
 				}
 			}
-		
+
 			if (Config->currdeliveryreport == 1) {
 				sms.SMS[i].PDU = SMS_Status_Report;
 			} else {
 				if ((strcmp(Config->deliveryreport, "no") != 0 && (Config->currdeliveryreport == -1))) sms.SMS[i].PDU = SMS_Status_Report;
 			}
-			
+
 			error=Phone->SendSMS(&s, &sms.SMS[i]);
 			if (error!=ERR_NONE) {
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, -1);
@@ -574,7 +573,7 @@ GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *s
 
 	error = Service->Init(&Config);
 	if (error!=ERR_NONE) return ERR_UNKNOWN;
-	
+
 	return Service->CreateOutboxSMS(sms,&Config);
 }
 
