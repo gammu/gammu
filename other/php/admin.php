@@ -1,4 +1,7 @@
 <?
+
+//script for managing MySQL SMSD DB
+
 # CONFIGURATION
 //they can be defined or not. if not, interface will give login form
 //$db_serv="127.0.0.1";

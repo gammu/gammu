@@ -502,10 +502,6 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 			sprintf(buffer, "ContactID = %d%c%c",Note->Entries[i].Number,13,10);
 			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
-		case CAL_RECURRANCE:
-			sprintf(buffer, "Recurrance = %d%c%c",Note->Entries[i].Number/24,13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
-			break;
 		case CAL_TEXT:
 			SaveBackupText(file, "Text", Note->Entries[i].Text, UseUnicode);
 			break;
@@ -1103,7 +1099,7 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 		SaveBackupText(file, "", "DateTime", UseUnicode);
 		SaveVCalDateTime(file, &backup->DateTime, UseUnicode);
 	}
-	sprintf(buffer,"Format = 1.03%c%c",13,10);
+	sprintf(buffer,"Format = 1.04%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
 	sprintf(buffer,"%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
@@ -1400,8 +1396,9 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 
 static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_CalendarEntry *note, bool UseUnicode)
 {
-	unsigned char		buffer[10000];
+	unsigned char		buffer[10000],buf[20];
 	char			*readvalue;
+	int			rec,rec2;
 
 	sprintf(buffer,"Location");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -1498,19 +1495,42 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		note->Entries[note->EntriesNum].EntryType = CAL_CONTACTID;
 		note->EntriesNum++;
 	}
-	sprintf(buffer,"Recurrance");
-	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL) {
-		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue) * 24;
-		note->Entries[note->EntriesNum].EntryType = CAL_RECURRANCE;
-		note->EntriesNum++;
-	}
+	// StartTime must be before Recurrance
 	sprintf(buffer,"StartTime");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date);
 		note->Entries[note->EntriesNum].EntryType = CAL_START_DATETIME;
 		note->EntriesNum++;
+	}
+	sprintf(buffer,"Recurrance");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue!=NULL) {
+		rec2 	= -1;
+		rec 	= atoi(readvalue);
+		switch (rec) {
+		case 1:
+			rec2 = 1*24;
+			break;
+		case 7:
+			rec2 = 7*24;
+			break;
+		case 14:
+			rec2 = 14*24;
+			break;
+		case 30:	
+		case ((0xffff-1)/24):
+			rec2 = 0xffff-1;
+			break;
+		case 365:
+			rec2 = 0xffff;
+		}
+		if (rec2 != -1) {
+			buf[0] = rec2 / 256;
+			buf[1] = rec2 % 256;
+			dbgprintf("Setting recurrance %i\n",rec2);
+			GSM_GetCalendarRecurrance(buf, NULL, note);
+		}
 	}
 	sprintf(buffer,"StopTime");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2299,7 +2319,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	if (readvalue == NULL) return ERR_FILENOTSUPPORTED;
 	/* Is this format version supported ? */
 	if (strcmp(readvalue,"1.01")!=0 && strcmp(readvalue,"1.02")!=0 &&
-            strcmp(readvalue,"1.03")!=0) return ERR_FILENOTSUPPORTED;
+            strcmp(readvalue,"1.03")!=0 && strcmp(readvalue,"1.04")!=0) return ERR_FILENOTSUPPORTED;
 
 	readvalue = ReadCFGText(file_info, buffer, "IMEI", UseUnicode);
 	if (readvalue!=NULL) strcpy(backup->IMEI,readvalue);
