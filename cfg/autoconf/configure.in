@@ -59,7 +59,7 @@ AC_CHECK_HEADERS(dirent.h)
 AC_CHECK_HEADERS(sys/ioctl.h)
 AC_CHECK_HEADERS(mysql/mysql.h,
         [mysql="yes"
-         LDLIBS="$LDLIBS -Wl,--whole-archive /usr/lib/mysql/libmysqlclient.a -Wl,--no-whole-archive -lz"],
+         LDLIBS="$LDLIBS $(mysql_config --libs)"],
         [mysql="no"])
 AC_CHECK_HEADER(linux/irda.h,
         [AC_DEFINE(HAVE_IRDA)

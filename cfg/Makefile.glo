@@ -102,7 +102,7 @@ all: gammu
 
 $(TOPDIR)/gammu/gammu: $(COMMON) $(GAMMU)
 	@echo Linking gammu
-	@$(CC) $(LDLIBS) $(COMMON) $(GAMMU) -lm -o $(TOPDIR)/gammu/gammu
+	@$(CC) $(COMMON) $(GAMMU) -lm $(LDLIBS) -o $(TOPDIR)/gammu/gammu
   
 gammu: $(TOPDIR)/gammu/gammu
 	
