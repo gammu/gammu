@@ -1,6 +1,6 @@
 /* (c) 2002-2004 by Marcin Wiacek and Michal Cihar */
 /* Checking used compiler (c) 2002 by Michal Cihar */
- 
+
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
@@ -53,7 +53,7 @@ void Fill_GSM_DateTime(GSM_DateTime *Date, time_t timet)
 	Date->Day	= now->tm_mday;
 	Date->Hour	= now->tm_hour;
 	Date->Minute	= now->tm_min;
-	Date->Second	= now->tm_sec;	
+	Date->Second	= now->tm_sec;
 }
 
 void GSM_GetCurrentDateTime (GSM_DateTime *Date)
@@ -92,7 +92,7 @@ time_t Fill_Time_T(GSM_DateTime DT, int TZ)
 	tm_starttime.tm_min  	= DT.Minute;
 	tm_starttime.tm_sec  	= DT.Second;
 	tm_starttime.tm_isdst	= 0;
-	
+
 	return mktime(&tm_starttime);
 }
 
@@ -233,12 +233,12 @@ char *OSDate (GSM_DateTime dt)
 }
 
 bool CheckDate(GSM_DateTime *date)
-{	
+{
 	const unsigned int days[]={31,29,31,30,31,30,31,31,30,31,30,31};
 
-	/* FIXME: This could also check for leap years */
 	return date->Year != 0 &&
 	       date->Month >= 1 && date->Month <= 12 &&
+	       (date->Month != 2 || date->Day <= 28 || (date->Year % 4 == 0 && date->Year % 100 != 0)) &&
 	       date->Day >= 1 && date->Day <= days[date->Month];
 }
 
@@ -280,7 +280,7 @@ void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsig
 				break;
 			}
 		}
-		if (whitespace) {			
+		if (whitespace) {
 			if (!nowwhite) {
 				lines->numbers[number]=i;
 				number++;
@@ -462,7 +462,7 @@ char *GetOS(void)
 	static char 	Buffer[100] = {0x00};
 
 #ifdef WIN32
-	memset(&Ver,sizeof(OSVERSIONINFOEX),0);	
+	memset(&Ver,sizeof(OSVERSIONINFOEX),0);
 	Ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 
    	if (!GetVersionEx((OSVERSIONINFO *)&Ver)) {
