@@ -85,7 +85,7 @@ typedef enum {
 	 */
 	PBK_Date,
 	/**
-	 * Caller group. (Text)
+	 * Caller group. (Number)
 	 */
 	PBK_Caller_Group,
 	/**
@@ -109,7 +109,7 @@ typedef enum {
 	 */
 	PBK_Text_JobTitle,
 	/**
-	 * Category. (Number)
+	 * Category. (Number, if -1 then text)
 	 */
 	PBK_Category,
 	/**
