@@ -2533,7 +2533,8 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 
 GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 {
-	GSM_Error error;
+	GSM_Error		error;
+ 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	error = ATGEN_SetPBKMemory(s, Status->MemoryType);
 	if (error != ERR_NONE) return error;
@@ -2549,6 +2550,11 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 		error=GSM_WaitFor (s, "AT+CPBS?\r", 9, 0x00, 4, ID_GetMemoryStatus);
 		if (error == ERR_NONE) return ERR_NONE;
 	}
+
+	/* Catch errorneous 0 returned by some Siemens phones for ME. There is
+	 * probably no way to get status there. */
+	if (Priv->PBKSBNR == AT_SBNR_AVAILABLE && Status->MemoryType == MEM_ME && Status->MemoryFree == 0)
+		return ERR_NOTSUPPORTED;
 
 	return ATGEN_GetMemoryInfo(s, Status, AT_Status);
 }
