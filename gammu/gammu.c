@@ -6918,6 +6918,9 @@ static void ListNetworks(int argc, char *argv[])
 
 static void Version(int argc, char *argv[])
 {
+#ifdef DEBUG
+	GSM_DateTime	dt;
+#endif
 //	unsigned char 	buff[10];
 //	int		len;
 
@@ -6934,6 +6937,14 @@ static void Version(int argc, char *argv[])
 	printf("GSM_DateTime    - %i\n",sizeof(GSM_DateTime));
 	printf("int             - %i\n",sizeof(int));
 	printf("GSM_NetworkInfo - %i\n",sizeof(GSM_NetworkInfo));
+	dt.Year = 2005;
+	dt.Month = 2;
+	dt.Day=29;
+	if (CheckDate(&dt)) printf("ok1");
+	dt.Year = 2008;
+	dt.Month = 2;
+	dt.Day=29;
+	if (CheckDate(&dt)) printf("ok2");
 #endif
 
 //	len=DecodeBASE64("AXw", buff, 3);
@@ -6988,15 +6999,33 @@ static void GetFileSystem(int argc, char *argv[])
 	bool 			Start = true;
 	GSM_File	 	Files;
 	int			j;
+	long			usedphone=0,usedcard=0;
 	GSM_FileSystemStatus	Status;
 	char 			FolderName[256];
 
 	GSM_Init(true);
 
+	if (!strcmp(s.Phone.Data.ModelInfo->model,"6230") &&
+	    s.ConnectionType == GCT_IRDAPHONET) {
+		printmsg("WARNING: firmware in your phone has bug in infrared support and only part of files will be listed. Use BT (or cable) or upgrade firmware (if there is something higher than 5.24 available)\n\n");
+	}
+
 	while (1) {
 		error = Phone->GetNextFileFolder(&s,&Files,Start);
 		if (error == ERR_EMPTY) break;
 	    	Print_Error(error);
+
+		if (!Files.Folder) {
+			if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_FILES2)) {
+				if (Files.ID_FullName[0] == 'b') {
+					usedcard+=Files.Used;
+				} else {
+					usedphone+=Files.Used;
+				}
+			} else {
+				usedphone+=Files.Used;
+			}
+		}
 
 		if (argc <= 2 || !mystrncasecmp(argv[2],"-flatall",0)) {
 			if (strlen(Files.ID_FullName) < 5 && strlen(Files.ID_FullName) != 0 && Files.ID_FullName[0]>='0' && Files.ID_FullName[0]<='9') {
@@ -7065,6 +7094,8 @@ static void GetFileSystem(int argc, char *argv[])
 		}
 	}
 
+	printmsg("\nUsed in phone: %li, used in card: %li\n",usedphone,usedcard);
+
 	error = Phone->GetFileSystemStatus(&s,&Status);
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
 	    	Print_Error(error);
@@ -7080,7 +7111,10 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 	bool			start;
 	unsigned char		buffer[5000];
 	struct utimbuf		filedate;
-	int			Handle,Size,j;
+	int			Handle,Size,p,q,j,old1;
+	time_t     		t_time1,t_time2;
+	GSM_DateTime		dt;
+	long			diff;
 
 	if (File->Buffer != NULL) {
 		free(File->Buffer);
@@ -7089,12 +7123,16 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 	File->Used 	= 0;
 	start		= true;
 
+	GSM_GetCurrentDateTime(&dt);
+	t_time1 	= Fill_Time_T(dt,0);
+	old1 		= 65536;
+
 	error = ERR_NONE;
 	while (error == ERR_NONE) {
 		error = Phone->GetFilePart(&s,File,&Handle,&Size);
 		if (error == ERR_NONE || error == ERR_EMPTY || error == ERR_WRONGCRC) {
 			if (start) {
-				printmsg("Getting \"%s\": ", DecodeUnicodeConsole(File->Name));
+				printmsg("Getting \"%s\"\n", DecodeUnicodeConsole(File->Name));
 				start = false;
 			}
 			if (File->Folder) {
@@ -7106,7 +7144,20 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 			if (Size==0) {
 				printmsg("*");
 			} else {
-				printmsg("%cGetting \"%s\": %i percent", 13, DecodeUnicodeConsole(File->Name),File->Used*100/Size);
+				printmsg("%c  %i percent", 13, File->Used*100/Size);
+				if (File->Used*100/Size >= 2) {
+					GSM_GetCurrentDateTime(&dt);
+					t_time2 = Fill_Time_T(dt,0);
+					diff 	= t_time2-t_time1;
+					p 	= diff*(Size-File->Used)/File->Used;
+					if (p != 0) {
+						if (p<old1) old1 = p;
+						q = old1/60;
+						printmsgerr(" (%02i:%02i minutes left)",q,old1-q*60);
+					} else {
+						printmsgerr("%30c",0x20);
+					}
+				}
 			}
 			if (error == ERR_EMPTY) break;
 			if (error == ERR_WRONGCRC) {
@@ -7243,10 +7294,50 @@ static void GetFileFolder(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void AddOneFile(GSM_File *File, char *text)
+{
+	int 		Pos,Handle,i,j,old1;
+	time_t     	t_time1,t_time2;
+	GSM_DateTime	dt;
+	long		diff;
+
+	GSM_GetCurrentDateTime(&dt);
+	t_time1 = Fill_Time_T(dt,0);
+	old1 = 65536;
+
+	dbgprintf("Adding file to filesystem now\n");
+	error 	= ERR_NONE;
+	Pos	= 0;
+	while (error == ERR_NONE) {
+		error = Phone->AddFilePart(&s,File,&Pos,&Handle);
+	    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
+		if (File->Used != 0) {
+			printmsgerr("%c%s%03i percent",13,text,Pos*100/File->Used);
+			if (Pos*100/File->Used >= 2) {
+				GSM_GetCurrentDateTime(&dt);
+				t_time2 = Fill_Time_T(dt,0);
+				diff = t_time2-t_time1;
+				i = diff*(File->Used-Pos)/Pos;
+				if (i != 0) {
+					if (i<old1) old1 = i;
+					j = old1/60;
+					printmsgerr(" (%02i:%02i minutes left)",j,old1-j*60);
+				} else {
+					printmsgerr("%30c",0x20);
+				}
+			}
+		}
+	}
+	printmsgerr("\n");
+	if (error == ERR_WRONGCRC) {
+		printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
+	}
+}
+
 static void AddFile(int argc, char *argv[])
 {
 	GSM_File		File;
-	int			Pos = 0,i,nextlong, Handle;
+	int			i,nextlong;
 
 	File.Buffer = NULL;
 	strcpy(File.ID_FullName,argv[2]);
@@ -7335,16 +7426,7 @@ static void AddFile(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error = ERR_NONE;
-	while (error == ERR_NONE) {
-		error = Phone->AddFilePart(&s,&File,&Pos,&Handle);
-	    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
-		printmsgerr("%cWriting: %i percent",13,Pos*100/File.Used);
-	}
-	printmsgerr("\n");
-	if (error == ERR_WRONGCRC) {
-		printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
-	}
+	AddOneFile(&File, "Writing: ");
 
 	free(File.Buffer);
 	GSM_Terminate();
@@ -7390,6 +7472,7 @@ static struct NokiaFolderInfo Folder[] = {
 	{"", 	 "Tones2",	   "a:/predefgallery/predefmusic",			""},
 	{"", 	 "Records",	   "a:/predefgallery/predefrecordings",			""},
 	{"", 	 "Video",	   "a:/predefgallery/predefvideos",			""},
+	{"", 	 "MemoryCard",	   "b:",						""},
 	/* Language depedent in DCT4 filesystem 1 */
 	{"",	 "Gallery",	   "Clip-arts",					"3"},
 	{"",	 "Gallery",	   "004F006200720061007A006B0069",		"3"},//obrazki PL 6220
@@ -7428,7 +7511,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	unsigned char 		buffer[10000],JAR[500],Vendor[500],Name[500],Version[500],FileID[400];
 	bool 			Start = true, Found = false, wasclr;
 	bool			ModEmpty = false;
-	int			i = 0, Pos, Size, Size2, nextlong, Handle;
+	int			i = 0, Pos, Size, Size2, nextlong;
 
 	while (Folder[i].parameter[0] != 0) {
 		if (mystrncasecmp(argv[2],Folder[i].parameter,0)) {
@@ -7442,11 +7525,26 @@ static void NokiaAddFile(int argc, char *argv[])
 		exit(-1);
 	}
 
+	if (mystrncasecmp(argv[2],"Application",0) || mystrncasecmp(argv[2],"Game",0)) {
+		sprintf(buffer,"%s.jad",argv[3]);
+		file = fopen(buffer,"rb");
+		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
+		fclose(file);
+		sprintf(buffer,"%s.jar",argv[3]);
+		file = fopen(buffer,"rb");
+		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
+		fclose(file);
+	} else {
+		file = fopen(argv[3],"rb");
+		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
+		fclose(file);
+	}
+
 	GSM_Init(true);
 
+	Found = false;
     	if (s.ConnectionType == GCT_IRDAOBEX || s.ConnectionType == GCT_BLUEOBEX) {
-		Found 	= false;
-		i 	= 0;
+		i = 0;
 		while (Folder[i].parameter[0] != 0) {
 			if (!strcmp("obex",Folder[i].model) &&
 			     mystrncasecmp(argv[2],Folder[i].parameter,0)) {
@@ -7456,7 +7554,27 @@ static void NokiaAddFile(int argc, char *argv[])
 			}
 			i++;
 		}
+		if (!Found) {
+			printmsg("Folder not found. Probably function not supported !\n");
+			GSM_Terminate();
+			exit(-1);
+		}
 	} else {
+		if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_FILES2)) {
+			i = 0;
+			while (Folder[i].parameter[0] != 0) {
+				if ((Folder[i].folder[0] == 'a' || Folder[i].folder[0] == 'b') &&
+				    Folder[i].level[0] == 0x00 &&
+				    mystrncasecmp(argv[2],Folder[i].parameter,0)) {
+					strcpy(Files.ID_FullName,Folder[i].folder);
+					Found = true;
+					break;
+				}
+				i++;
+			}
+		}
+	}
+	if (!Found) {
 		printmsgerr("Searching for phone folder: ");
 		while (1) {
 			error = Phone->GetNextFileFolder(&s,&Files,Start);
@@ -7518,15 +7636,6 @@ static void NokiaAddFile(int argc, char *argv[])
 	File.System	= false;
 
 	if (mystrncasecmp(argv[2],"Application",0) || mystrncasecmp(argv[2],"Game",0)) {
-		sprintf(buffer,"%s.jad",argv[3]);
-		file = fopen(buffer,"rb");
-		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
-		fclose(file);
-		sprintf(buffer,"%s.jar",argv[3]);
-		file = fopen(buffer,"rb");
-		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
-		fclose(file);
-
 		/* reading jar file */
 		sprintf(buffer,"%s.jar",argv[3]);
 		error = GSM_ReadFile(buffer, &File);
@@ -7617,18 +7726,8 @@ static void NokiaAddFile(int argc, char *argv[])
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		File.Type 	   = GSM_File_Other;
 		File.ModifiedEmpty = true;
-		error 		   = ERR_NONE;
-		Pos		   = 0;
 		dbgprintf("file id is \"%s\"\n",File.ID_FullName);
-		while (error == ERR_NONE) {
-			error = Phone->AddFilePart(&s,&File,&Pos,&Handle);
-		    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
-			printmsgerr("%cWriting JAD file: %i percent",13,Pos*100/File.Used);
-		}
-		printmsgerr("\n");
-		if (error == ERR_WRONGCRC) {
-			printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
-		}
+		AddOneFile(&File, "Writing JAD file: ");
 
 		if (argc > 4) {
 			if (mystrncasecmp(argv[4],"-readonly",0)) File.ReadOnly = true;
@@ -7645,30 +7744,20 @@ static void NokiaAddFile(int argc, char *argv[])
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		File.Type 	   = GSM_File_Java_JAR;
 		File.ModifiedEmpty = true;
-		error 		   = ERR_NONE;
-		Pos		   = 0;
-		while (error == ERR_NONE) {
-			error = Phone->AddFilePart(&s,&File,&Pos,&Handle);
-		    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
-			printmsgerr("%cWriting JAR file: %i percent",13,Pos*100/File.Used);
-		}
-		printmsgerr("\n");
-		if (error == ERR_WRONGCRC) {
-			printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
-		}
-
+		AddOneFile(&File, "Writing JAR file: ");
 		free(File.Buffer);
 		GSM_Terminate();
 		return;
 	}
 
-	if (mystrncasecmp(argv[2],"Gallery" ,0) ||
-	    mystrncasecmp(argv[2],"Gallery2",0) ||
-	    mystrncasecmp(argv[2],"Camera"  ,0) ||
-	    mystrncasecmp(argv[2],"Tones"   ,0) ||
-	    mystrncasecmp(argv[2],"Tones2"  ,0) ||
-	    mystrncasecmp(argv[2],"Records" ,0) ||
-	    mystrncasecmp(argv[2],"Video"   ,0)) {
+	if (mystrncasecmp(argv[2],"Gallery" 	 ,0) ||
+	    mystrncasecmp(argv[2],"Gallery2"	 ,0) ||
+	    mystrncasecmp(argv[2],"Camera"  	 ,0) ||
+	    mystrncasecmp(argv[2],"Tones"   	 ,0) ||
+	    mystrncasecmp(argv[2],"Tones2"  	 ,0) ||
+	    mystrncasecmp(argv[2],"Records" 	 ,0) ||
+	    mystrncasecmp(argv[2],"Video"   	 ,0) ||
+	    mystrncasecmp(argv[2],"MemoryCard"   ,0)) {
 		strcpy(buffer,argv[3]);
 		if (argc > 4) {
 			nextlong = 0;
@@ -7770,19 +7859,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	}
 #endif
 
-	dbgprintf("Adding file to filesystem now\n");
-	error 	= ERR_NONE;
-	Pos	= 0;
-	while (error == ERR_NONE) {
-		error = Phone->AddFilePart(&s,&File,&Pos,&Handle);
-	    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
-		if (File.Used != 0) printmsgerr("%cWriting file: %i percent",13,Pos*100/File.Used);
-	}
-	printmsgerr("\n");
-	if (error == ERR_WRONGCRC) {
-		printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
-	}
-
+	AddOneFile(&File, "Writing file: ");
 	free(File.Buffer);
 	GSM_Terminate();
 }
@@ -8197,7 +8274,7 @@ static GSM_Parameters Parameters[] = {
 	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent file sender title"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly]"},
-	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
+	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
 	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 	{"--playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
 	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			"number"},

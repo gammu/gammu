@@ -111,7 +111,7 @@ static void print_service_desc(void *value, void *user)
 	} 
 }
 
-void print_access_protos(value, user)
+void print_access_protos(void *value, void *user)
 {
 	sdp_list_t 	*protDescSeq = (sdp_list_t *)value;
 	int		*channel = (int *)user;

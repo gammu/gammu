@@ -72,6 +72,9 @@ void N6510_DecodeFMFrequency(double *freq, unsigned char *buff);
 #ifndef GSM_USED_FBUS2DLR3
 #  define GSM_USED_FBUS2DLR3
 #endif
+#ifndef GSM_USED_FBUS2DKU2
+#  define GSM_USED_FBUS2DKU2
+#endif
 #ifndef GSM_USED_FBUS2DKU5
 #  define GSM_USED_FBUS2DKU5
 #endif

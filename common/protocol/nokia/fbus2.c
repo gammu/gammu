@@ -16,7 +16,7 @@
 
 #include "../../gsmstate.h"
 
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2PL2303)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2DKU2) || defined(GSM_ENABLE_FBUS2PL2303)
 
 #include <stdio.h>
 #include <string.h>
@@ -35,6 +35,7 @@ static GSM_Error FBUS2_WriteFrame(GSM_StateMachine 	*s,
 
 	buffer2[0] 	= FBUS2_FRAME_ID;
 	if (s->ConnectionType==GCT_FBUS2IRDA) buffer2[0] = FBUS2_IRDA_FRAME_ID;
+	if (s->ConnectionType==GCT_FBUS2DKU2) buffer2[0] = FBUS2_DKU2_FRAME_ID;
 
 	buffer2[1] 	= FBUS2_DEVICE_PHONE;		//destination
 	buffer2[2]	= FBUS2_DEVICE_PC;		//source
@@ -281,6 +282,9 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			case GCT_BLUEFBUS2:
 				if (rx_char == FBUS2_FRAME_ID) correct = true;
 				break;
+			case GCT_FBUS2DKU2:
+				if (rx_char == FBUS2_DKU2_FRAME_ID) correct = true;
+				break;
 			case GCT_FBUS2IRDA:
 				if (rx_char == FBUS2_IRDA_FRAME_ID) correct = true;
 				break;
@@ -309,7 +313,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	return ERR_NONE;
 }
 
-#if defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2PL2303) 
+#if defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2DKU2) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2PL2303) 
 static void FBUS2_WriteDLR3(GSM_StateMachine *s, char *command, int length, int timeout)
 {
 	unsigned char		buff[300];
@@ -355,8 +359,9 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	if (error!=ERR_NONE) return error;
 
 	switch (s->ConnectionType) {
-#if defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2BLUE)
+#if defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_FBUSDKU2)
 	case GCT_FBUS2BLUE:
+	case GCT_FBUS2DKU2:
 	case GCT_BLUEFBUS2:
 		FBUS2_WriteDLR3(s,"AT\r\n",		 4,10);
 		FBUS2_WriteDLR3(s,"AT&F\r\n",		 6,10);

@@ -2300,7 +2300,7 @@ GSM_Error ATGEN_ReplyGetPBKMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 {
 	smprintf(s, "PBK memories received\n");
 	if (strlen(msg.Buffer) > AT_PBK_MAX_MEMORIES) {
-		smprintf(s, "ERROR: Too long phonebook memories information received! (Recevided %d, AT_PBK_MAX_MEMORIES is %d\n", strlen(msg.Buffer), AT_PBK_MAX_MEMORIES);
+		smprintf(s, "ERROR: Too long phonebook memories information received! (Recevided %zd, AT_PBK_MAX_MEMORIES is %d\n", strlen(msg.Buffer), AT_PBK_MAX_MEMORIES);
 		return ERR_MOREMEMORY;
 	}
 	memcpy(s->Phone.Data.Priv.ATGEN.PBKMemories,msg.Buffer,strlen(msg.Buffer));
@@ -2409,37 +2409,39 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
  	switch (Priv->ReplyState) {
  	case AT_Reply_OK:
 		smprintf(s, "Memory info received\n");
-		/* Parse +CPBR: (first-last),max_number_len,max_name_len */
-		/* Some phones (eg. Motorola C350) reply is different: +CPBR: first-last,max_number_len,max_name_len */
+ 		/* Parse +CPBR: (first-last),max_number_len,max_name_len */
+ 		/* Some phones (eg. Motorola C350) reply is different:
+		   +CPBR: first-last,max_number_len,max_name_len */
 
 		/* Parse first location */
 		pos = strchr(msg.Buffer, '(');
-		if (!pos) {
-			pos = strchr(msg.Buffer, ':');
-			if (!pos) return ERR_UNKNOWNRESPONSE;
-			pos++;
-			if (*pos ==  ' ') pos++;
-			if (!isdigit(*pos)) return ERR_UNKNOWNRESPONSE;
-		} else {
-			pos++;
-		}
+
+ 		if (!pos) {
+ 			pos = strchr(msg.Buffer, ':');
+ 			if (!pos) return ERR_UNKNOWNRESPONSE;
+ 			pos++;
+ 			if (*pos ==  ' ') pos++;
+ 			if (!isdigit(*pos)) return ERR_UNKNOWNRESPONSE;
+ 		} else {
+ 			pos++;
+ 		}
 		Priv->FirstMemoryEntry = atoi(pos);
 
 		/* Parse last location*/
 		pos = strchr(pos, '-');
-		if (!pos) return ERR_UNKNOWNRESPONSE;
+ 		if (!pos) return ERR_UNKNOWNRESPONSE;
 		pos++;
 		Priv->MemorySize = atoi(pos) + 1 - Priv->FirstMemoryEntry;
 
 		/* Parse number length*/
 		pos = strchr(pos, ',');
-		if (!pos) return ERR_UNKNOWNRESPONSE;
+ 		if (!pos) return ERR_UNKNOWNRESPONSE;
 		pos++;
 		Priv->NumberLength = atoi(pos);
 
 		/* Parse text length*/
 		pos = strchr(pos, ',');
-		if (!pos) return ERR_UNKNOWNRESPONSE;
+ 		if (!pos) return ERR_UNKNOWNRESPONSE;
 		pos++;
 		Priv->TextLength = atoi(pos);
 
@@ -2615,9 +2617,10 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		pos += ATGEN_ExtractOneParameter(pos, buffer);
  		smprintf(s, "Name text: %s\n",buffer);
 
-		/* Some phones (Motorola) don't put name iniside quotes */
-		if (buffer[0] == '"') offset = 1;
-		else offset = 0;
+
+ 		/* Some phones (Motorola) don't put name iniside quotes */
+ 		if (buffer[0] == '"') offset = 1;
+ 		else offset = 0;
 
  		Memory->EntriesNum++;
  		Memory->Entries[1].EntryType=PBK_Text_Name;

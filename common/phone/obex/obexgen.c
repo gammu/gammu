@@ -202,7 +202,7 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int
 				Pos2 = 0;
 				do {
 					OBEXGEN_FindNextDir(File->ID_FullName, &Pos2, req2);
-					smprintf(s,"%s %i %i\n",DecodeUnicodeString(req2),Pos2,strlen(File->ID_FullName));
+					smprintf(s,"%s %i %zi\n",DecodeUnicodeString(req2),Pos2,strlen(File->ID_FullName));
 					smprintf(s,"Changing path down\n");
 					error=OBEXGEN_ChangePath(s, req2, 2);
 					if (error != ERR_NONE) return error;
@@ -389,7 +389,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 					Pos = 0;
 					do {
 						OBEXGEN_FindNextDir(File->ID_FullName, &Pos, req2);
-						smprintf(s,"%s %i %i\n",DecodeUnicodeString(req2),Pos,strlen(File->ID_FullName));
+						smprintf(s,"%s %i %zi\n",DecodeUnicodeString(req2),Pos,strlen(File->ID_FullName));
 						if (Pos == strlen(File->ID_FullName)) break;
 						smprintf(s,"Changing path down\n");
 						error=OBEXGEN_ChangePath(s, req2, 2);
@@ -644,7 +644,7 @@ static GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 	Pos = 0;
 	do {
 		OBEXGEN_FindNextDir(ID, &Pos, req2);
-		smprintf(s,"%s %i %i\n",DecodeUnicodeString(req2),Pos,strlen(ID));
+		smprintf(s,"%s %i %zi\n",DecodeUnicodeString(req2),Pos,strlen(ID));
 		if (Pos == strlen(ID)) break;
 		smprintf(s,"Changing path down\n");
 		error=OBEXGEN_ChangePath(s, req2, 2);
@@ -680,7 +680,7 @@ static GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	Pos = 0;
 	do {
 		OBEXGEN_FindNextDir(File->ID_FullName, &Pos, req2);
-		smprintf(s,"%s %i %i\n",DecodeUnicodeString(req2),Pos,strlen(File->ID_FullName));
+		smprintf(s,"%s %i %zi\n",DecodeUnicodeString(req2),Pos,strlen(File->ID_FullName));
 		smprintf(s,"Changing path down\n");
 		error=OBEXGEN_ChangePath(s, req2, 2);
 		if (error != ERR_NONE) return error;

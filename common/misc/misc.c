@@ -236,9 +236,11 @@ bool CheckDate(GSM_DateTime *date)
 {
 	const unsigned int days[]={31,28,31,30,31,30,31,31,30,31,30,31};
 
-	if (date->Month == 2 && 
-	    !(date->Year % 4 == 0 && date->Year % 100 != 0) && 
-            date->Day > 29) return false;
+	if (date->Year != 0 && 
+	    ((date->Year % 4 == 0 && date->Year % 100 != 0) || date->Year % 400 == 0) &&
+	    date->Month == 2) {
+		return (date->Day <= 29);
+	}
 	return date->Year != 0 &&
 	       date->Month >= 1 && date->Month <= 12 &&
 	       date->Day >= 1 && date->Day <= days[date->Month-1];
@@ -374,7 +376,7 @@ int smfprintf(FILE *f, Debug_Level dl, const char *format, ...)
 	result = vsprintf(buffer, format, argp);
 	strcat(nextline, buffer);
 	if (strstr(buffer, "\n")) {
-		if (ftell(f) < 5000000) {
+		if (ftell(f) < 40000000) {
 			GSM_GetCurrentDateTime(&date_time);
 			if (linecount > 0) {
 				if (dl == DL_TEXTALLDATE || dl == DL_TEXTERRORDATE || dl == DL_TEXTDATE) {
