@@ -20,5 +20,6 @@ GSM_Error SIEMENS_AddCalendarNote	(GSM_StateMachine *, GSM_CalendarEntry *);
 GSM_Error SIEMENS_DelCalendarNote	(GSM_StateMachine *, GSM_CalendarEntry *);
 
 GSM_Error SIEMENS_ReplyGetMemory	(GSM_Protocol_Message, GSM_StateMachine *);
+GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s);
 
 #endif

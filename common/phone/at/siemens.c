@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Walek */
+/* (c) 2002-2003 by Walek, 2005 Michal Cihar */
 
 #include "../../gsmstate.h"
 
@@ -310,6 +310,43 @@ GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
+
+GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+ 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	char 			*pos;
+	/* Text to parse: ^SBNR: ("vcs",(1-50)) */
+
+ 	switch (Priv->ReplyState) {
+ 	case AT_Reply_OK:
+		smprintf(s, "Memory info received\n");
+
+		/* Parse first location */
+		pos = strchr(msg.Buffer, '(');
+		if (!pos) return ERR_UNKNOWNRESPONSE;
+		pos = strchr(pos + 1, '(');
+		if (!pos) return ERR_UNKNOWNRESPONSE;
+		pos++;
+		if (!isdigit(*pos)) return ERR_UNKNOWNRESPONSE;
+		Priv->FirstMemoryEntry = atoi(pos);
+
+		/* Parse last location*/
+		pos = strchr(pos, '-');
+		if (!pos) return ERR_UNKNOWNRESPONSE;
+		pos++;
+		if (!isdigit(*pos)) return ERR_UNKNOWNRESPONSE;
+		Priv->MemorySize = atoi(pos) + 1 - Priv->FirstMemoryEntry;
+
+		return ERR_NONE;
+	case AT_Reply_Error:
+		return ERR_UNKNOWN;
+	case AT_Reply_CMSError:
+	        return ATGEN_HandleCMSError(s);
+ 	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+}
+
 
 #endif
 
