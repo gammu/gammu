@@ -5,29 +5,71 @@ In brackets names of people, who told about error/problem or helped in fixing
 or inspired me to make it.
 
 This software was sponsored (in time order) by:
-1. Tomasz Motylewski
-2. Ondrej Rybin (http://business.nabit.cz)
-   * SMS service(s) and gateway(s)
-3. Multi-COM (http://gsm-technology.com)
-   * GSM DATA AND SERVICE CABLES
-   * GSM EQUIPMENT & HARDWARE
-   * FREE FLASHES, LOGO'S, RINGTONES
-   * FREE INSTRUCTIONS, SCHEMES
-4. Tom Nelson (www.pocketderelict.com)
-   * software for Pocket Computers
-5. GriffinTeam (www.gsm-ms.com)
-   * DCT3/DCT4 flasher
-6. MatrixTeam (www.matrixflasher.com)
-   * DCT3/DCT4 flasher
-7. KompuNet (www.kompu.net)
-   * SMS services, PC shop and other
-8. Lorenzo Ciani
-9. Adam Lange
+ 1. Tomasz Motylewski
+ 2. Ondrej Rybin (http://business.nabit.cz)
+    * SMS service(s) and gateway(s)
+ 3. Multi-COM (http://gsm-technology.com)
+    * GSM DATA AND SERVICE CABLES
+    * GSM EQUIPMENT & HARDWARE
+    * FREE FLASHES, LOGO'S, RINGTONES
+    * FREE INSTRUCTIONS, SCHEMES
+ 4. Tom Nelson (www.pocketderelict.com)
+    * software for Pocket Computers
+ 5. GriffinTeam (www.gsm-ms.com)
+    * DCT3/DCT4 flasher
+ 6. MatrixTeam (www.matrixflasher.com)
+    * DCT3/DCT4 flasher
+ 7. KompuNet (www.kompu.net)
+    * SMS services, PC shop and other
+ 8. Lorenzo Ciani
+ 9. Adam Lange
+10. Michele Rossetti
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20041107 - 0.99.5
+* new functionality:
+  * support for recurrances includes number of retries (and end day) 
+    available in 6230 (and other Series 40 2.0)
+  * full support for 30 days recurrances in Nokia DCT4
+  * new other/php/linked.php PHP script. It's example,       (Michele Rossetti)
+    how to take SMS from Inbox in MySQL DB created by SMSD, link them, process 
+    and save to new table. There are processed non-linked sms & linked sms 
+    with short and long UDH
+  * Inbox in MySQL DB contains new entry "Processed"         (Michele Rossetti)
+
+* fixes and improvements:
+  * N6110:                                                (Juhapekka Tolvanen)
+    * --getallcalendar doesn't show "invalid location"
+    * there is correctly handled situation, when text note is too long
+  * N6510:
+    * Chat/SyncML settngs available for some models only: 5140, 6220, 6230,
+      6610i, 6810, 6820, 7250, 7250i
+    * finding calendar ID works correctly for 6230
+  * fixed bug in activating wap/mms/chat/... settings
+  * fixed bug in --restore for restoring notes with no todo
+  * all recurrances for Nokia phones are handled using Alcatel style
+    (it's more generic). All old backup files are automatically converted 
+    during restore and "old" recurrance style is recognized. All new created 
+    backup files uses new style. Because recurrance info is lost during
+    restoring these files by older Gammu, version of backup files is changed
+    to higher
+
+NOTE: Recurrance support doesn't resolve all recurrance problems. 
+      Example 1:
+      1. set note to 20-11-2004 and recurrance to each day up to 27-11-2004
+      2. delete note from 23-11-2004
+      3. in phone menu you have notes in 20-11 up to 22-11 and from 24-11 up to
+         27-11. For protocol you have still one note from 20-11 and 27-11
+      Example 2:
+      1. create note 20-11-2004
+      2. set monthly repeat up to 10-10-2005
+      3. Gammu will back up it (end date) as 20-09-2005 although in phone you 
+         have end repeat date 10-10-2005. Note of course will have last repeat
+         20-09-2005, but...
+
 20041024 - 0.99.0
 * new functionality:
   * DJGPP:
@@ -45,7 +87,7 @@ For additionals materials and links to them see readme.txt
   * --backupsms && --restoresms with bigger functionality
   * savesms returns memory full for dct4                         (Adi Goldberg)
   * support for notes is complete in dct4 - Gammu can restore them too
-  * better (c) info
+  * better (c) info                                          (Georg C.F. Greve)
 
 * fixes and improvements:
   * help for --playsavedringtone

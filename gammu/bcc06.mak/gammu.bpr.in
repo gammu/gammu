@@ -16,7 +16,7 @@
       Output\gsmlogo.obj Output\gsmnet.obj Output\gsmpbk.obj Output\gsmring.obj 
       Output\gsmdata.obj Output\gsmmisc.obj Output\gsmsms.obj Output\gsmems.obj 
       Output\gsmmulti.obj Output\gsmcomon.obj Output\gsmstate.obj 
-      Output\n6110.obj Output\n6510.obj Output\n0650.obj Output\n3320.obj Output\n3650.obj 
+      Output\n6110.obj Output\n6510.obj Output\6510cal.obj Output\6510file.obj Output\n0650.obj Output\n3320.obj Output\n3650.obj 
       Output\dct4func.obj Output\n7110.obj Output\n9210.obj Output\dct3func.obj 
       Output\nauto.obj Output\nfunc.obj Output\nfuncold.obj Output\alcatel.obj 
       Output\obexgen.obj Output\mroutgen.obj Output\pfunc.obj Output\atgen.obj 
@@ -128,6 +128,8 @@
       <FILE FILENAME="..\..\common\phone\nokia\dct4\n6510.c" FORMNAME="" UNITNAME="n6510" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct4\n3320.c" FORMNAME="" UNITNAME="n3320" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct4\n3650.c" FORMNAME="" UNITNAME="n3650" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct4\6510cal.c" FORMNAME="" UNITNAME="6510cal" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct4\6510file.c" FORMNAME="" UNITNAME="6510file" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct4\dct4func.c" FORMNAME="" UNITNAME="dct4func" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\n7110.c" FORMNAME="" UNITNAME="n7110" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\n9210.c" FORMNAME="" UNITNAME="n9210" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>

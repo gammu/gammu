@@ -246,6 +246,14 @@ SOURCE=..\..\..\common\phone\nokia\dct4\n6510.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\phone\nokia\dct4\6510cal.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\nokia\dct4\6510file.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\common\phone\nokia\dct3\n0650.c
 # End Source File
 # Begin Source File
@@ -463,6 +471,14 @@ SOURCE=..\..\..\common\phone\nokia\dct3\n6110.h
 # Begin Source File
 
 SOURCE=..\..\..\common\phone\nokia\dct4\n6510.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\nokia\dct4\6510cal.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\nokia\dct4\6510file.h
 # End Source File
 # Begin Source File
 

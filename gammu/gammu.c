@@ -1874,10 +1874,6 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 			printmsg("Silent alarm : %s\n",OSDateTime(Note->Entries[i].Date,false));
 			memcpy(&Alarm,&Note->Entries[i].Date,sizeof(GSM_DateTime));
 			break;
-		case CAL_RECURRANCE:
-			printmsg("Repeat       : %d day%s\n",Note->Entries[i].Number/24,
-				((Note->Entries[i].Number/24)>1) ? "s":"" );
-			break;
 		case CAL_TEXT:
 			printmsg("Text         : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
 			break;
@@ -4927,7 +4923,7 @@ static void Restore(int argc, char *argv[])
  	}
 
 	DoRestore = false;
-	if (Backup.ToDo[0] != NULL) {
+	if (Backup.Note[0] != NULL) {
 		error = Phone->GetNotesStatus(&s,&ToDoStatus);
 		if (error == ERR_NONE) {
 			max = 0;

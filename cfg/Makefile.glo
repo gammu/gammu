@@ -63,6 +63,8 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
             $(TOPDIR)/common/phone/nokia/dct4/n3320.o \
             $(TOPDIR)/common/phone/nokia/dct4/n3650.o \
             $(TOPDIR)/common/phone/nokia/dct4/n6510.o \
+            $(TOPDIR)/common/phone/nokia/dct4/6510cal.o \
+            $(TOPDIR)/common/phone/nokia/dct4/6510file.o \
             $(TOPDIR)/common/phone/nokia/dct4/dct4func.o \
             $(TOPDIR)/common/phone/nokia/nauto.o \
             $(TOPDIR)/common/phone/nokia/nfunc.o \
@@ -93,12 +95,12 @@ LOCALE    = $(TOPDIR)/common/misc/misc.o \
             $(TOPDIR)/common/misc/cfg.o \
             $(TOPDIR)/common/misc/coding/coding.o \
             $(TOPDIR)/cfg/locale/locale.o
-     
+
 LOCALE2   = $(TOPDIR)/cfg/locale
 
 include $(TOPDIR)/cfg/Makefile.cfg
 
-DESTDIR = 
+DESTDIR =
 
 # --------------------------- internal source ---------------------------------
 
@@ -143,13 +145,13 @@ $(TOPDIR)/common/libGammu.a: $(COMMON)
 	@$(RM) $(TOPDIR)/common/libGammu.a
 	@$(AR) cru $(TOPDIR)/common/libGammu.a $(COMMON)
 	@$(RANLIB) $(TOPDIR)/common/libGammu.a
- 
+
 $(TOPDIR)/gammu/gammu-shared: $(COMMON) $(GAMMU) $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
 	@echo Linking gammu-shared
-	@$(CC) $(LDFLAGS) $(LDLIBS) $(GAMMU) -lm -L$(TOPDIR)/common -lGammu -o $(TOPDIR)/gammu/gammu-shared
- 
+	@$(CC) -L$(TOPDIR)/common -lGammu $(LDFLAGS) $(LDLIBS) $(GAMMU) -lm -o $(TOPDIR)/gammu/gammu-shared
+
 shared: $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(TOPDIR)/common/libGammu.a $(TOPDIR)/gammu/gammu-shared
- 
+
 # Backward compatibility
 makelib: shared
 
@@ -192,7 +194,7 @@ distclean: makelocale clean
 	$(TOPDIR)/cfg/autoconf/config.status \
 	$(TOPDIR)/cfg/autoconf/VERSION \
 	$(TOPDIR)/cfg/autoconf/configure
-   
+
 uninstall:
 	@echo Uninstalling Gammu
 	@$(RM) $(DESTDIR)$(INSTALL_BIN_DIR)/gammu $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so*
@@ -224,7 +226,7 @@ installdocs:
 	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_MAN_DIR)
 	@$(INSTALL) -m 0644 $(TOPDIR)/docs/docs/english/gammu.1 $(DESTDIR)$(INSTALL_MAN_DIR)
 	@$(RM) $(DESTDIR)$(INSTALL_DOC_DIR)/docs/english/gammu.1
- 
+
 install: uninstall all installdocs installlocales installonly
 
 installonly: all
@@ -245,7 +247,7 @@ installlibonly: shared
 	@$(INSTALL) -m 0644 $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(DESTDIR)$(INSTALL_LIB_DIR)
 	@$(LN) -s libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so.$(SONAME_MAJOR)
 	@$(LN) -s libGammu.so.$(SONAME_MAJOR) $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so
- 
+
 	@echo Installing static library to $(DESTDIR)$(INSTALL_LIB_DIR)
 	@$(INSTALL) -m 0644 $(TOPDIR)/common/libGammu.a $(DESTDIR)$(INSTALL_LIB_DIR)
 
@@ -332,7 +334,7 @@ cleantree:
 	@$(RM) -rf gammu-$(VERSION)/
 	@$(INSTALL) -d gammu-$(VERSION)
 	@cp $(TEMP_DIR)/gammu-$(VERSION)/* --target-directory=gammu-$(VERSION) -r
-	@$(RM) $(TEMP_DIR)/gammu-$(VERSION) -r 
+	@$(RM) $(TEMP_DIR)/gammu-$(VERSION) -r
 	@chmod a+rwx gammu-$(VERSION)/configure
 	make -C gammu-$(VERSION) clean
 
@@ -353,7 +355,7 @@ rpm: cleantree
 	@$(MV) $(RPM_DIR)/RPMS/*/gammu-*$(VERSION)*.rpm ..
 	@ls -l ../gammu-*$(VERSION)*.rpm
 
-deb: 
+deb:
 	@echo Building Debian package
 	@fakeroot make -f debian/rules binary
 

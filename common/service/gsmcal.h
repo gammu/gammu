@@ -150,10 +150,6 @@ typedef enum {
 	 */
 	CAL_SILENT_ALARM_DATETIME,
 	/**
-	 * Recurrance.
-	 */
-	CAL_RECURRANCE,
-	/**
 	 * Text.
 	 */
 	CAL_TEXT,
@@ -247,7 +243,7 @@ typedef struct {
 	GSM_SubCalendarEntry    Entries[GSM_CALENDAR_ENTRIES];
 } GSM_CalendarEntry;
 
-void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *Recurrance, int *EndTime, int *Location);
+void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *EndTime, int *Location);
 
 typedef enum {
 	Nokia_VCalendar = 1,
@@ -280,6 +276,8 @@ typedef struct {
 	int		     Used;
 } GSM_CalendarStatus;
 
+void GSM_GetCalendarRecurrance(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry);
+void GSM_SetCalendarRecurrance(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry);
 
 /* ------------------------------ to-do ------------------------------------ */
 
