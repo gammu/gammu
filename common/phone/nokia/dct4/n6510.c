@@ -3,7 +3,6 @@
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
  * GNU GPL version 2 or later
  */
-/* function for making CRC for filesystem (c) 2003 by Michael Schroeder */
 /* Due to a problem in the source code management, the names of some of
  * the authors have unfortunately been lost. We do not mean to belittle
  * their efforts and hope they will contact us to see their names
@@ -3914,25 +3913,31 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyDeleteAllToDo1,	  "\x55",0x03,0x12,ID_DeleteAllToDo	  },
 	{N6510_ReplyGetToDoStatus1,	  "\x55",0x03,0x16,ID_GetToDo		  },
 
-	{N6510_ReplyAddFileHeader,	  "\x6D",0x03,0x03,ID_AddFile		  },
-	{N6510_ReplyAddFolder,		  "\x6D",0x03,0x05,ID_AddFolder		  },
-	{N6510_ReplyGetFilePart,	  "\x6D",0x03,0x0F,ID_GetFile		  },
-	{N6510_ReplyAddFileHeader,	  "\x6D",0x03,0x13,ID_AddFile		  },
-	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x15,ID_GetFileInfo	  },
-	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x15,ID_GetFile		  },
-	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x15,ID_AddFile		  },
-	{N6510_ReplyDeleteFile,		  "\x6D",0x03,0x19,ID_DeleteFile	  },
-	{N6510_ReplyDeleteFile,		  "\x6D",0x03,0x1F,ID_DeleteFile	  },
-	{N6510_ReplyGetFileSystemStatus,  "\x6D",0x03,0x23,ID_FileSystemStatus	  },
-	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x2F,ID_GetFileInfo	  },
-	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x2F,ID_GetFile		  },
-	{N6510_ReplyGetFileSystemStatus,  "\x6D",0x03,0x2F,ID_FileSystemStatus	  },
-	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x33,ID_GetFileInfo	  },
-	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x33,ID_GetFile		  },
-	{N6510_ReplyAddFilePart,	  "\x6D",0x03,0x41,ID_AddFile		  },
-	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x43,ID_AddFile		  },
-	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x43,ID_GetFile		  },
-	{N6510_ReplyGetFileFolderInfo,	  "\x6D",0x03,0x43,ID_GetFileInfo	  },
+	{N6510_ReplyAddFileHeader1,	  "\x6D",0x03,0x03,ID_AddFile		  },
+	{N6510_ReplyAddFolder1,		  "\x6D",0x03,0x05,ID_AddFolder		  },
+	{N6510_ReplyGetFilePart12,	  "\x6D",0x03,0x0F,ID_GetFile		  },//filesystem1
+	{N6510_ReplyAddFileHeader1,	  "\x6D",0x03,0x13,ID_AddFile		  },
+	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x15,ID_GetFileInfo	  },
+	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x15,ID_GetFile		  },
+	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x15,ID_AddFile		  },
+	{N6510_ReplyDeleteFile1,	  "\x6D",0x03,0x19,ID_DeleteFile	  },
+	{N6510_ReplyDeleteFile1,	  "\x6D",0x03,0x1F,ID_DeleteFile	  },
+	{N6510_ReplyGetFileSystemStatus1, "\x6D",0x03,0x23,ID_FileSystemStatus	  },
+	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x2F,ID_GetFileInfo	  },
+	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x2F,ID_GetFile		  },
+	{N6510_ReplyGetFileSystemStatus1, "\x6D",0x03,0x2F,ID_FileSystemStatus	  },
+	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x33,ID_GetFileInfo	  },
+	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x33,ID_GetFile		  },
+	{N6510_ReplyAddFilePart1,	  "\x6D",0x03,0x41,ID_AddFile		  },
+	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x43,ID_AddFile		  },
+	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x43,ID_GetFile		  },
+	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x43,ID_GetFileInfo	  },
+	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x69,ID_IncomingFrame	  },
+	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x6D,ID_GetFileInfo	  },
+	{N6510_ReplyOpenFile2,		  "\x6D",0x03,0x73,ID_OpenFile		  },
+	{NoneReply,			  "\x6D",0x03,0x75,ID_CloseFile		  },//filesystem2
+	{NoneReply,			  "\x6D",0x03,0x59,ID_AddFile		  },//filesystem2
+	{N6510_ReplyGetFilePart12,	  "\x6D",0x03,0x5F,ID_GetFile		  },//filesystem2
 
 	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x01,ID_GetBitmap		  },
 	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x01,ID_SetBitmap		  },
@@ -3953,7 +3958,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|3100|3100b|3105|3108|3200|3200a|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6100|6200|6220|6230|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7210|7250|7250i|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|3100|3100b|3105|3108|3200|3200a|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6100|6200|6220|6230|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/

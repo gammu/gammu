@@ -106,6 +106,7 @@ static DCT4_Feature DCT4Features[] = {
 	{DCT4_JAVA_GAMES_MENU,		 "Java games menu in Games",	 {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_SAT_CONFIRM_MENU,		 "Can use confirming SIM service actions", {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_INSTANT_MESS_MENU,	 "Instant Messaging in Messages",{{1,"on"},{0,"off"},{0,""}}},
+	{DCT4_INSTANT_MESS_MENU2,	 "Instant Messaging in Messages",{{0,"on"},{1,"off"},{0,""}}},
 	{DCT4_CONFIRM_ALS,		 "Confirm using ALS",            {{1,"on"},{0,"off"},{0,""}}},
 	{DCT4_BOOKMARK_GOTO_MENU,	 "Bookmarks in GoTo menu",       {{1,"on"},{0,"off"},{0,""}}},
 
@@ -184,7 +185,7 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
 			 {DCT4_WAP_BOOKMARKS_MENU2,24},{DCT4_SERVICES_GAMES_APP_GALLERY,25},
 			 {DCT4_3GINDICATOR,27},{DCT4_DISPLAY_WAP_PROFILE,30},{DCT4_SAT_CONFIRM_MENU,32},
 			 {DCT4_CONFIRM_ALS,33},{DCT4_JAVA_TCK,36},{DCT4_BOOKMARK_GOTO_MENU,37},
-			 {DCT4_TEST,38},//Chat menu
+			 {DCT4_INSTANT_MESS_MENU2,38},
 			 {0,0}}},
 /*6230*/ {"RH-12",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,4},{DCT4_GEA1,9},{DCT4_DISPLAY_PHONE_NAME,17},
 			 {DCT4_WAP_GOTO_MENU,18},{DCT4_WAP_SETTINGS_MENU,19},

@@ -31,8 +31,8 @@ typedef struct {
 	OBEX_Service			Service;
 } GSM_Phone_OBEXGENData;
 
-GSM_Error OBEXGEN_GetFilePart	(GSM_StateMachine *s, GSM_File *File);
-GSM_Error OBEXGEN_AddFilePart	(GSM_StateMachine *s, GSM_File *File, int *Pos);
+GSM_Error OBEXGEN_GetFilePart	(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size);
+GSM_Error OBEXGEN_AddFilePart	(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
 GSM_Error OBEXGEN_Disconnect	(GSM_StateMachine *s);
 
 #endif

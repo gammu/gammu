@@ -1,4 +1,4 @@
-/* (c) 2001-2004 by Marcin Wiacek */
+/* (c) 2001-2005 by Marcin Wiacek */
 
 #ifndef phone_nokia_common_h
 #define phone_nokia_common_h
@@ -35,7 +35,10 @@ typedef enum {
 	N6510_PBK_VOICETAG_ID	 = 0x2F, /* Voice tag assigment			*/
 	N6510_PBK_PICTURE_ID	 = 0x33, /* Picture ID assigment		*/
 	N6510_PBK_RINGTONEFILE_ID= 0x37, /* Ringtone ID from filesystem/internal*/
-	N6510_PBK_USER_ID        = 0x38  /* Text: user ID                       */
+	N6510_PBK_USER_ID        = 0x38, /* Text: user ID                       */
+	N6510_PBK_UNKNOWN2	 = 0x3B, /* conversation list ID ?		*/
+	N6510_PBK_UNKNOWN3	 = 0x3C, /* Instant Messaging service list ID ?	*/
+	N6510_PBK_UNKNOWN4	 = 0x3D  /* presence list ID ? 			*/
 } GSM_71_65_Phonebook_Entries_Types;
 
 typedef enum {

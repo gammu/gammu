@@ -118,7 +118,7 @@ DESTDIR =
 	@echo Making $*.c
 	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $*.c -o $*.o
 
-%.o: %.c
+%.o: %.c $(TOPDIR)/cfg/config.h
 	@echo Making $<
 	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $*.c -o $*.o
 
@@ -148,8 +148,8 @@ $(TOPDIR)/common/libGammu.a: $(COMMON)
  
 $(TOPDIR)/gammu/gammu-shared: $(COMMON) $(GAMMU) $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
 	@echo Linking gammu-shared
-	@$(CC) $(LDFLAGS) $(LDLIBS) $(GAMMU) -lm -L$(TOPDIR)/common -lGammu -o $(TOPDIR)/gammu/gammu-shared
- 
+	@$(CC) -L$(TOPDIR)/common -lGammu $(LDFLAGS) $(LDLIBS) $(GAMMU) -lm -o $(TOPDIR)/gammu/gammu-shared
+
 shared: $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(TOPDIR)/common/libGammu.a $(TOPDIR)/gammu/gammu-shared
  
 # Backward compatibility

@@ -1,4 +1,4 @@
-/* (c) 2002-2004 by Marcin Wiacek */
+/* (c) 2002-2005 by Marcin Wiacek */
 /* based on some work from Ralf Thelen, Gabriele Zappi and MyGnokii */
 
 #include <string.h> /* memcpy only */
@@ -469,6 +469,27 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == N7110_PBK_UNKNOWN1) {
 			smprintf(s,"Unknown entry\n");
+
+			length = length + Block[3];
+			Block  = &Block[(int) Block[3]];
+			continue;			
+		}
+		if (Block[0] == N6510_PBK_UNKNOWN2) {
+			smprintf(s,"Unknown entry - probably ID for conversation list\n");
+
+			length = length + Block[3];
+			Block  = &Block[(int) Block[3]];
+			continue;			
+		}
+		if (Block[0] == N6510_PBK_UNKNOWN3) {
+			smprintf(s,"Unknown entry - probably ID for Instant Messaging service list\n");
+
+			length = length + Block[3];
+			Block  = &Block[(int) Block[3]];
+			continue;			
+		}
+		if (Block[0] == N6510_PBK_UNKNOWN4) {
+			smprintf(s,"Unknown entry - probably ID for presence list\n");
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];

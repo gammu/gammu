@@ -1,4 +1,4 @@
-/* (c) 2001-2004 by Marcin Wiacek and Michal Cihar */
+/* (c) 2001-2005 by Marcin Wiacek and Michal Cihar */
 
 #ifndef __gsm_pbk_h
 #define __gsm_pbk_h
@@ -85,7 +85,7 @@ typedef enum {
 	 */
 	PBK_Date,
 	/**
-	 * Caller group. (Text)
+	 * Caller group. (Number)
 	 */
 	PBK_Caller_Group,
 	/**
@@ -109,7 +109,7 @@ typedef enum {
 	 */
 	PBK_Text_JobTitle,
 	/**
-	 * Category. (Number)
+	 * Category. (Number, if -1 then text)
 	 */
 	PBK_Category,
 	/**
@@ -235,11 +235,6 @@ unsigned char *GSM_PhonebookGetEntryName (GSM_MemoryEntry *entry);
 
 void      GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool header, GSM_VCardVersion Version);
 GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version);
-
-#ifndef ENABLE_LGPL
-/* (c) by Timo Teras */
-void DecodeVCARD21Text(char *VCard, GSM_MemoryEntry *pbk);
-#endif
 
 /**
  * Structure for saving speed dials

@@ -29,7 +29,84 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
-20041107 - 0.99.5
+20050116 - 0.99.22
+* new functionality:
+  * partial support for 6230 filesystem. You can:                       (Intra)
+    1. see files using --getfilesystem (MMC is b:/, phone memory is a:/ 
+       and app memory is c:/)
+    2. get files (warning: checksums not available)
+    3. upload files
+  * new PHP script (other/php3) for asking server with phone about (Hugo Pinto)
+    IP and uptime
+  * new PHP script (other/php4) for displaying sms from smsd     (Michal Holes)
+  * --getfiles displays percents, not only "*"
+  * added quesses for Siemens and Bluetooth services      (Thomas Eitzenberger)
+  * LAC and CID are no more swapped in AT mode                         (George)
+  * * new configure option for disabling all irda and bt         (Michal Cihar)
+      protocols in one
+    * when you change config.h, all sources are recompiled automatically
+    * Gammu displays warning, when autoconf not found
+    * better info for ERR_SOURCENOTAVAILABLE
+    * VCARDS:
+      * recognize much more fields
+      * parse name to first+last
+      * parse address to all fields
+      * date can be parsed without time part from vcard
+      * ReadVCALDateTime returns now boolean value, if it works with success
+        or not
+      * using categories instead of caller groups
+    * AT module:
+      * better error info for enabling USSD
+      * better parsing for dates & times
+      * Siemens:
+        * handling for CMS errors for getting pbk
+        * support for CME error 100
+        * use current VCARD parser to read pbk entries (instead of old Timo 
+	  Teras source). It allows to parse all entries
+
+* fixes and improvements:
+  * --getfilesystem output
+  * buffer overflow error for serial and win32                         (Petr V)
+  * fixed bug with disabling Chat menu for 6220
+  * fixed recognizing folders with Nokia filesystem
+  * * fixed bug with shared compilation if Gammu was previously  (Michal Cihar)
+      installed. Earlier it added -L/usr/lib before -L./common 
+      and older gammu library was found
+    * added -fPIC which is needed on many platform (ppc, ppc64, x86_64,...)
+    * fix for displaying end time in recurrency
+    * fixes for making RPM in MandrakeLinux
+    * fix for leap years checking
+    * AT module:
+      * fix for getting pbk from Motorolas (they put names in brackets)
+  * fixed syntax in Debian/rules                               (Mathias Behrle)
+  * support for more unknown PBK entries for 6230 and compatible (Milan Havlik)
+  * --searchmemory displays correctly userid                (Martin Samuelsson)
+  * MacOS doesn't have 460800 speed                   (Xavier Jurado Cristobal)
+
+NOTE: * it's confirmed, that 6230 RH-12 4.44, 3100 doesn't give caller id info
+        in fbus/phonet frames...at least Gammu can't take it now. Any sniffs ?
+      * I saw, that new Nokias don't have support for pbk in AT mode...
+      * this is last test release before 1.00. I made it test release,
+        because contains many parts written not by me, changes many things
+        in AT module and VCARD support and support for Nokia filesystems. 
+        I think few days will be enough for making tests
+      * waiting in queue:
+        * few patches from Michal Cihar (I will speak with him soon)
+        * fix for --sendsmsdsms parameters checking (Rafal Kolida)
+        * real support for DCT4 resets (Walek)
+        * fix in old Gateway in Delphi
+        * big patch from ACE (but I still don't have Ericsson)
+        * 3589i (Robert Geer)
+        * screen dumps (Intra)
+        * another patch for smsd 04.10.04 (Gary Reuter)
+        * patches 21.10.04 (Gary Reuter)
+        * s_mysql.c Delivery Report time patch 22.10.04 (Gary Reuter)
+        * ............ (something more ? if yes, please remind.
+          It's possible, I lost something)
+      * pls note, that this is first release made by lend PC. if you see
+        some problems with quality, please don't blame me...
+
+20041107 - 0.99.6
 * new functionality:
   * support for recurrances includes number of retries (and end day) 
     available in 6230 (and other Series 40 2.0)
@@ -363,14 +440,14 @@ NOTE: waiting in queue:
       
 NOTE: * sometimes discovering phone services is not done correctly with Bluez
         and 6310i. It's during investigation. It maybe depends on phone
-	firmware. If it happens for you, please report and use configure option
-	--disable-bluerfsearch
+        firmware. If it happens for you, please report and use configure option
+        --disable-bluerfsearch
       * SyncML/chat settings for Series 40, MySQL, Symbian - these are main
         topics for near future. I will process some patches from the past now
       * I plan maximally one test release before 0.97.0
       * I will add soon subpage with ability to making micropayments and
         donates online. I hope, it will help in finding some money for
-	extending Gammu
+        extending Gammu
 
 20040627 - 0.96.6
 * new functionality:
@@ -539,7 +616,7 @@ ToDo: 1.ending support for all features in new Series 40 models
       5.SonyEricsson issues
       6.looking into packaging - there should be again checked, if files
         for deb or tgz must be in root dir in source tarball (there are
-	too many files there now)
+        too many files there now)
 
 20040203 - 0.93.0
 * new functionality:

@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Walek */
+/* (c) 2002-2003 by Walek, 2005 by Michal Cihar */
                                            
 #include "../../gsmstate.h"
 
@@ -108,7 +108,7 @@ GSM_Error SIEMENS_ReplySetFunction (GSM_Protocol_Message msg, GSM_StateMachine *
 
 GSM_Error SIEMENS_ReplySetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-    return SIEMENS_ReplySetFunction (msg, s, "Operator Logo");	
+    return SIEMENS_ReplySetFunction (msg, s, "Operator Logo");
 }
 
 GSM_Error SIEMENS_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
@@ -278,36 +278,79 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return SetSiemensFrame (s,req,"vcs",Note->Location,ID_SetCalendarNote,size);
 }
 
-/* (c) by Timo Teras */
 GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-#ifndef ENABLE_LGPL
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
  	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
-	unsigned char		buffer[500],buffer2[500];
+	unsigned char		buffer[4096];
+	int			length;
+	GSM_Error		error;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
  		smprintf(s, "Phonebook entry received\n");
-		CopyLineString(buffer, msg.Buffer, Priv->Lines, 3);
-		DecodeHexBin(buffer2,buffer,strlen(buffer));
+		error = GetSiemensFrame(msg,s,"vcf", buffer, &length);
+		if (error != ERR_NONE) return error;
  		Memory->EntriesNum = 0;
-                DecodeVCARD21Text(buffer2, Memory);
-		if (Memory->EntriesNum == 0) return ERR_EMPTY;
-		return ERR_NONE;
+ 		length = 0;
+ 		return GSM_DecodeVCARD(buffer, &length, Memory, 0);
 	case AT_Reply_Error:
                 smprintf(s, "Error - too high location ?\n");
                 return ERR_INVALIDLOCATION;
 	case AT_Reply_CMSError:
  	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+ 		/* S55 say this way, that this is empty */
+ 		if (Priv->ErrorCode == 100) {
+ 			return ERR_EMPTY;
+ 		}
+	        return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
 	return ERR_UNKNOWNRESPONSE;
-#else
-	return ERR_NOTIMPLEMENTED;
-#endif
 }
+
+GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+ 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	char 			*pos;
+	/* Text to parse: ^SBNR: ("vcs",(1-50)) */
+
+	Priv->PBKSBNR = AT_SBNR_NOTAVAILABLE;
+
+ 	switch (Priv->ReplyState) {
+ 	case AT_Reply_OK:
+		smprintf(s, "Memory info received\n");
+
+		/* Parse first location */
+		pos = strstr(msg.Buffer, "\"vcf\"");
+		if (!pos) return ERR_NOTSUPPORTED;
+		pos = strchr(pos + 1, '(');
+		if (!pos) return ERR_UNKNOWNRESPONSE;
+		pos++;
+		if (!isdigit(*pos)) return ERR_UNKNOWNRESPONSE;
+		Priv->FirstMemoryEntry = atoi(pos);
+
+		/* Parse last location*/
+		pos = strchr(pos, '-');
+		if (!pos) return ERR_UNKNOWNRESPONSE;
+		pos++;
+		if (!isdigit(*pos)) return ERR_UNKNOWNRESPONSE;
+		Priv->MemorySize = atoi(pos) + 1 - Priv->FirstMemoryEntry;
+
+		Priv->PBKSBNR = AT_SBNR_AVAILABLE;
+
+		return ERR_NONE;
+	case AT_Reply_Error:
+		return ERR_NONE;
+	case AT_Reply_CMSError:
+	        return ATGEN_HandleCMSError(s);
+ 	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+}
+
 
 #endif
 
