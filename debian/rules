@@ -55,7 +55,7 @@ configure-stamp:
 
 build: build-stamp
 
-build-stamp:  changelog-stamp configure-stamp
+build-stamp:  debian/changelog configure-stamp
 	dh_testdir
 
 	$(MAKE) shared
@@ -65,10 +65,9 @@ build-stamp:  changelog-stamp configure-stamp
 clean:
 	dh_testdir
 	dh_testroot
-	rm -f build-stamp 
-	rm -f changelog-stamp 
-	rm -f configure-stamp 
+	rm -f build-stamp
 	rm -f debian/changelog
+	rm -f configure-stamp
 	-$(MAKE) clean
 
 
@@ -110,9 +109,9 @@ binary-arch: build install
 	dh_builddeb
 
 binary: binary-indep binary-arch
-.PHONY: build clean binary-indep binary-arch binary install 
+.PHONY: build clean binary-indep binary-arch binary install
 
-changelog-stamp:
+debian/changelog:
 ifeq (mainstream,$(findstring mainstream,$(DEB_BUILD_OPTIONS)))
 	cp debian/changelog.main debian/changelog
 else
@@ -124,4 +123,3 @@ else
 	echo >> debian/changelog
 	cat debian/changelog.main >> debian/changelog
 endif
-	touch changelog-stamp
