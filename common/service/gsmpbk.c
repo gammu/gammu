@@ -216,7 +216,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LastName;
 					Pbk->EntriesNum++;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff + pos + 2);
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff + pos + 1);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FirstName;
 					Pbk->EntriesNum++;
 				}
