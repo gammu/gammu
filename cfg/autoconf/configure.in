@@ -162,11 +162,20 @@ AC_SUBST(TEMP_DIR)
 
 dnl Bluetooth stacks
 gsm_blue_stack=unknown
-AC_CHECK_HEADERS(bluetooth/bluetooth.h,
-        [gsm_blue_stack=Bluez
-	 AC_DEFINE(GSM_ENABLE_BLUEZ)
-         LDLIBS="$LDLIBS -lbluetooth -lsdp"])
-    
+AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+if test "$PKG_CONFIG" != "no" ; then
+    AC_MSG_CHECKING(for bluez)
+    if $PKG_CONFIG --exists "bluez" ; then
+        AC_MSG_RESULT(yes)
+        LDLIBS="$LDLIBS `$PKG_CONFIG --libs bluez`"
+        CFLAGS="$CFLAGS `$PKG_CONFIG --cflags bluez`"
+        gsm_blue_stack=Bluez
+        AC_DEFINE(GSM_ENABLE_BLUEZ)
+    else
+        AC_MSG_RESULT(no)
+    fi
+fi
+
 dnl Path for Bluez bluetooth library
 gsm_bt_dir=""
 AC_ARG_WITH(bluedir,
