@@ -1933,6 +1933,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	int			i=0;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	char			*answer;
+	char			*tmp;
 
   	if (s->Phone.Data.RequestID == ID_IncomingFrame) {
 		smprintf(s, "Incoming LAC & CID info\n");
@@ -1955,12 +1956,16 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	/* Find number of lines */
 	while (Lines.numbers[i*2+1] != 0) {
 		/* FIXME: handle special chars correctly */
-		smprintf(s, "%i \"%s\"\n",i+1,GetLineString(GetLineString(msg.Buffer,Priv->Lines,2),Lines,i+1));
+		tmp = strdup(GetLineString(msg.Buffer,Priv->Lines,2));
+		smprintf(s, "%i \"%s\"\n",i+1,GetLineString(tmp,Lines,i+1));
+		free(tmp);
 		i++;
 	}
 
 	smprintf(s, "Network LAC & CID & state received\n");
-	answer = GetLineString(GetLineString(msg.Buffer,Priv->Lines,2),Lines,2);
+	tmp = strdup(GetLineString(msg.Buffer,Priv->Lines,2));
+	answer = GetLineString(tmp,Lines,2);
+	free(tmp);
 	while (*answer == 0x20) answer++;
 #ifdef DEBUG
 	switch (answer[0]) {
@@ -1989,11 +1994,15 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 
 		if (Lines.numbers[3*2+1]==0) return ERR_NONE;
 
-		answer = GetLineString(GetLineString(msg.Buffer,Priv->Lines,2),Lines,3);
+		tmp = strdup(GetLineString(msg.Buffer,Priv->Lines,2));
+		answer = GetLineString(tmp,Lines,3);
+		free(tmp);
 		while (*answer == 0x20) answer++;
 		sprintf(NetworkInfo->CID,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
 
-		answer = GetLineString(GetLineString(msg.Buffer,Priv->Lines,2),Lines,4);
+		tmp = strdup(GetLineString(msg.Buffer,Priv->Lines,2));
+		answer = GetLineString(tmp,Lines,4);
+		free(tmp);
 		while (*answer == 0x20) answer++;
 		sprintf(NetworkInfo->LAC,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
 
