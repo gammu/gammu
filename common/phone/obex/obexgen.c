@@ -806,6 +806,10 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTIMPLEMENTED,			/* 	SetWAPSettings 		*/
 	NOTIMPLEMENTED,			/* 	GetMMSSettings		*/
  	NOTIMPLEMENTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetSyncMLSettings	*/
+	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
+	NOTSUPPORTED,			/*	GetChatSettings		*/
+	NOTSUPPORTED,			/*	SetChatSettings		*/
 	NOTIMPLEMENTED,			/*	GetBitmap		*/
 	NOTIMPLEMENTED,			/*	SetBitmap		*/
 	NOTIMPLEMENTED,			/*	GetToDoStatus		*/

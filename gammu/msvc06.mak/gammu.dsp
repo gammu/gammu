@@ -109,6 +109,18 @@ SOURCE=..\..\common\device\bluetoth\bluetoth.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\device\bluetoth\blue_w32.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\device\bluetoth\bluez.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\device\bluetoth\affix_w32.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\misc\cfg.c
 # End Source File
 # Begin Source File
@@ -249,7 +261,7 @@ SOURCE=..\..\common\gsmstate.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmwap.c
+SOURCE=..\..\common\service\gsmdata.c
 # End Source File
 # Begin Source File
 
@@ -373,11 +385,19 @@ SOURCE=..\..\common\phone\at\atgen.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\device\bluetoth\bluetoth.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\device\bluetoth\blue_w32.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\bluetoth\bluetoth.h
+SOURCE=..\..\common\device\bluetoth\bluez.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\device\bluetoth\affix_w32.h
 # End Source File
 # Begin Source File
 
@@ -545,7 +565,7 @@ SOURCE=..\..\common\gsmstate.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\service\gsmwap.h
+SOURCE=..\..\common\service\gsmdata.h
 # End Source File
 # Begin Source File
 

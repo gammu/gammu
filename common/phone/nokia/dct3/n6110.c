@@ -2837,6 +2837,10 @@ GSM_Phone_Functions N6110Phone = {
         DCT3_SetWAPSettings,
         NOTSUPPORTED,                   /*      GetMMSSettings          */
         NOTSUPPORTED,                   /*      SetMMSSettings          */
+	NOTSUPPORTED,			/*	GetSyncMLSettings	*/
+	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
+	NOTSUPPORTED,			/*	GetChatSettings		*/
+	NOTSUPPORTED,			/*	SetChatSettings		*/
         N6110_GetBitmap,
         N6110_SetBitmap,
         NOTSUPPORTED,                   /*      GetToDoStatus           */

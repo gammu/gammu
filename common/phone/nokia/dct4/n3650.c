@@ -347,6 +347,10 @@ GSM_Phone_Functions N3650Phone = {
 	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
 	NOTSUPPORTED,			/* 	GetMMSSettings		*/
  	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetSyncMLSettings	*/
+	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
+	NOTSUPPORTED,			/*	GetChatSettings		*/
+	NOTSUPPORTED,			/*	SetChatSettings		*/
 	NOTSUPPORTED,			/*	GetBitmap		*/
 	NOTSUPPORTED,			/*	SetBitmap		*/
 	NOTSUPPORTED,			/*	GetToDoStatus		*/

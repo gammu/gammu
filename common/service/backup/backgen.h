@@ -9,7 +9,7 @@
 #include "../gsmcal.h"
 #include "../gsmlogo.h"
 #include "../gsmring.h"
-#include "../gsmwap.h"
+#include "../gsmdata.h"
 #include "../gsmprof.h"
 #include "../gsmmisc.h"
 #include "../sms/gsmsms.h"

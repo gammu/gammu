@@ -2,6 +2,16 @@
 #ifndef device_functions_h
 #define device_functions_h
 
+#include "../gsmstate.h"
+
+#ifdef GSM_ENABLE_BLUETOOTHDEVICE
+#ifdef BLUETOOTH_RF_SEARCHING
+
+GSM_Error bluetooth_checkservicename(GSM_StateMachine *s, char *name);
+
+#endif
+#endif
+
 #if defined (GSM_ENABLE_BLUETOOTHDEVICE) || defined (GSM_ENABLE_IRDADEVICE)
 
 int socket_read(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone);

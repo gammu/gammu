@@ -1677,6 +1677,10 @@ GSM_Phone_Functions N7110Phone = {
 	DCT3_SetWAPSettings,
 	NOTSUPPORTED,			/* 	GetMMSSettings		*/
 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetSyncMLSettings	*/
+	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
+	NOTSUPPORTED,			/*	GetChatSettings		*/
+	NOTSUPPORTED,			/*	SetChatSettings		*/
 	N7110_GetBitmap,
 	N7110_SetBitmap,
 	NOTSUPPORTED,			/*	GetToDoStatus		*/

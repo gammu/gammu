@@ -585,6 +585,16 @@ static void SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, boo
 			case WAPSETTINGS_BEARER_GPRS:
 				sprintf(buffer,"Bearer%02i = GPRS%c%c",i,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
+				sprintf(buffer,"IP%02i",i);
+				SaveBackupText(file, buffer, settings->Settings[i].IPAddress, UseUnicode);
+				sprintf(buffer,"Proxy%02i",i);
+				SaveBackupText(file, buffer, settings->Settings[i].Proxy, UseUnicode);
+				sprintf(buffer,"ProxyPort%02i = %i%c%c",i,settings->Settings[i].ProxyPort,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				sprintf(buffer,"Proxy2%02i",i);
+				SaveBackupText(file, buffer, settings->Settings[i].Proxy2, UseUnicode);
+				sprintf(buffer,"Proxy2Port%02i = %i%c%c",i,settings->Settings[i].Proxy2Port,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
 			case WAPSETTINGS_BEARER_DATA:
 				if (settings->Settings[i].Bearer == WAPSETTINGS_BEARER_DATA) {
 					sprintf(buffer,"Bearer%02i = Data%c%c",i,13,10);
@@ -595,11 +605,11 @@ static void SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, boo
 						sprintf(buffer,"CallType%02i = Analogue%c%c",i,13,10);
 					}
 					SaveBackupText(file, "", buffer, UseUnicode);
+					sprintf(buffer,"IP%02i",i);
+					SaveBackupText(file, buffer, settings->Settings[i].IPAddress, UseUnicode);
 				}
 				sprintf(buffer,"Number%02i",i);
 				SaveBackupText(file, buffer, settings->Settings[i].DialUp, UseUnicode);
-				sprintf(buffer,"IP%02i",i);
-				SaveBackupText(file, buffer, settings->Settings[i].IPAddress, UseUnicode);
 				if (settings->Settings[i].ManualLogin) {
 					sprintf(buffer,"Login%02i = Manual%c%c",i,13,10);
 				} else {
@@ -1830,6 +1840,18 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].DialUp,UseUnicode);
 					sprintf(buffer,"IP%02i",num);
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].IPAddress,UseUnicode);
+					sprintf(buffer,"Proxy%02i",num);
+					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Proxy,UseUnicode);
+					sprintf(buffer,"ProxyPort%02i",num);
+					settings->Settings[settings->Number].ProxyPort = 8080;
+					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+					if (readvalue!=NULL) settings->Settings[settings->Number].ProxyPort = atoi(readvalue);
+					sprintf(buffer,"Proxy2%02i",num);
+					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Proxy2,UseUnicode);
+					sprintf(buffer,"Proxy2Port%02i",num);
+					settings->Settings[settings->Number].Proxy2Port = 8080;
+					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+					if (readvalue!=NULL) settings->Settings[settings->Number].Proxy2Port = atoi(readvalue);
 					sprintf(buffer,"User%02i",num);
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].User,UseUnicode);
 					sprintf(buffer,"Password%02i",num);

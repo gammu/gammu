@@ -26,17 +26,40 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
-20040620 - 0.96.1
+20040627 - 0.96.6
 * new functionality:
   * when you give device address with bluetooth connections and bluez,
     Gammu checks for supported by device services and connects to correct.
-    Tested with 6310i 5.52. Unfortunately, source/connection isn't very stable
-    now. Work in progress
+  * when you don't give anything in port in gammurc with bluez and bt
+    connection, there are scanned all devices in range and Gammu connects
+    to first with adequate service. Unfortunately, local device is checked
+    too now.
+  * new configure option. You can force old behaviour with Bluetooth (trying
+    connecting to concrete RF channels without earlier checking, if they're
+    connected with required services). In this old mode Gammu first tries to
+    connect to RF channel 14 & later 15 in bluephonet. It should resolve
+    compatiblity problems with old/new Series 40 phones.
+  * source is prepared to have support for Affix (http://affix.sourceforge.net)
+    It will be added soon
+  * full support for wap/mms settings with proxy blocks (available in latest
+    DCT4 series 40). This should be tested on more phones. Can have bugs
+  * started work on syncml/chat settings for DCT4 series 40. New two command
+    line options, which get part of settings now.
 
 * fixes and improvements:
   * ID for 6230 now really included
   * much better linking mysql libraries           (mlistus, Liviu Daia, others)
   * max. number of WAP/MMS settings in backup files is 30     (Eduardo, others)
+
+NOTE: * www moved to new server. if there are any problems with access,
+        please let me know
+      * I'm searching for some good service for micropayments now (which
+        will allows to send money to bank account in Poland and will not
+        need registering from people, who pay)
+      * Gammu homepage updated - much more info about supported functions
+        and possible connections
+      * I decided to remove BCC X makefile now. If anyone will be interested,
+        I will put it again
 
 20040615 - 0.96.0
 * new functionality:

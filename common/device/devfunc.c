@@ -9,6 +9,20 @@
 
 #include "../gsmstate.h"
 
+#ifdef GSM_ENABLE_BLUETOOTHDEVICE
+#ifdef BLUETOOTH_RF_SEARCHING
+
+GSM_Error bluetooth_checkservicename(GSM_StateMachine *s, char *name)
+{
+        if (s->ConnectionType == GCT_BLUEPHONET && strstr(name,"Nokia PC Suite")!=NULL) return ERR_NONE;
+	if (s->ConnectionType == GCT_BLUEOBEX 	&& strstr(name,"OBEX")		!=NULL) return ERR_NONE;
+        if (s->ConnectionType == GCT_BLUEAT 	&& strstr(name,"COM 1")		!=NULL) return ERR_NONE;
+        return ERR_UNKNOWN;
+}
+
+#endif
+#endif
+
 #if defined (GSM_ENABLE_BLUETOOTHDEVICE) || defined (GSM_ENABLE_IRDADEVICE)
 
 int socket_read(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)

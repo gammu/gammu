@@ -918,7 +918,7 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"6200" ,"NPL-3" ,"Nokia 6200", {F_PBKTONEGAL,0}},
-	{"6220" ,"RH-20" ,"Nokia 6220", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,0}},
+	{"6220" ,"RH-20" ,"Nokia 6220", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"6210" ,"NPE-3" ,"Nokia 6210", {F_VOICETAGS,F_CAL62,0}},

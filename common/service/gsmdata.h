@@ -29,7 +29,6 @@ typedef struct {
 	bool			IsContinuous;
 
   	/* for data bearer */
-	char			IPAddress	[(20+1)*2];
   	bool			IsISDNCall;
 	bool			IsNormalAuthentication;
 
@@ -44,11 +43,18 @@ typedef struct {
 	char			Code		[(10+1)*2];
 
 	/* for data or gprs */
+	char			IPAddress	[(20+1)*2];
 	bool			ManualLogin;
 	char			DialUp		[(20+1)*2];
 	char			User		[(50+1)*2]; /*is length OK ?*/
 	char			Password	[(50+1)*2]; /*is length OK ?*/
 	WAPSettings_Speed	Speed;
+
+	/* for gprs */
+	char			Proxy		[(100+1)*2];
+	int			ProxyPort;
+	char			Proxy2		[(100+1)*2];
+	int			Proxy2Port;
 } GSM_WAPSettings;
 
 typedef struct {
@@ -112,6 +118,22 @@ typedef struct {
 
 void GSM_EncodeMMSFile		(GSM_EncodeMultiPartMMSInfo *Info, unsigned char *Buffer, int *Length);
 void GSM_ClearMultiPartMMSInfo	(GSM_EncodeMultiPartMMSInfo *Info);
+
+/* ------------------------------------------------------------------------ */
+
+typedef struct {
+	char			Name[(20+1)*2];
+	int			Location;
+	GSM_MultiWAPSettings	Connection;
+} GSM_SyncMLSettings;
+
+/* ------------------------------------------------------------------------ */
+
+typedef struct {
+	char			Name[(20+1)*2];
+	int			Location;
+	GSM_MultiWAPSettings	Connection;
+} GSM_ChatSettings;
 
 #endif
 

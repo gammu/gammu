@@ -28,7 +28,7 @@ USEUNIT("..\..\common\service\gsmnet.c");
 USEUNIT("..\..\common\service\gsmpbk.c");
 USEUNIT("..\..\common\service\gsmmisc.c");
 USEUNIT("..\..\common\service\gsmring.c");
-USEUNIT("..\..\common\service\gsmwap.c");
+USEUNIT("..\..\common\service\gsmdata.c");
 USEUNIT("..\..\common\service\sms\gsmsms.c");
 USEUNIT("..\..\common\service\sms\gsmmulti.c");
 USEUNIT("..\..\common\service\sms\gsmems.c");
@@ -61,6 +61,9 @@ USEUNIT("..\..\common\phone\at\sonyeric.c");
 USEUNIT("..\..\common\device\devfunc.c");
 USEUNIT("..\..\common\device\irda\irda.c");
 USEUNIT("..\..\common\device\bluetoth\bluetoth.c");
+USEUNIT("..\..\common\device\bluetoth\bluez.c");
+USEUNIT("..\..\common\device\bluetoth\blue_w32.c");
+USEUNIT("..\..\common\device\bluetoth\affix.c");
 USEUNIT("..\..\common\device\serial\ser_w32.c");
 
 #define WinMain

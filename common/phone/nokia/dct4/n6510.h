@@ -7,6 +7,14 @@
 #include "../../../service/sms/gsmsms.h"
 
 typedef enum {
+	N6510_MMS_SETTINGS = 0x01,
+	N6510_CHAT_SETTINGS,
+
+	N6510_WAP_SETTINGS,
+	N6510_SYNCML_SETTINGS
+} N6510_Connection_Settings;
+
+typedef enum {
 	N6510_LIGHT_DISPLAY = 0x01,
 	N6510_LIGHT_KEYPAD  = 0x03,
 	N6510_LIGHT_TORCH   = 0x10
@@ -40,7 +48,9 @@ typedef struct {
 	int				FMStatusLength;
 
 	unsigned char			GPRSPoints[4000];
-	int				GPRSPointsLength;	
+	int				GPRSPointsLength;
+
+	int				BearerNumber;
 
 	unsigned char			PhoneMode;
 } GSM_Phone_N6510Data;

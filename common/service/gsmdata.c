@@ -2,7 +2,7 @@
 
 #include <string.h>
 
-#include "gsmwap.h"
+#include "gsmdata.h"
 #include "../misc/coding/coding.h"
 
 /* SNIFFS, specs somewhere in http://www.wapforum.org */
