@@ -10,16 +10,16 @@
 #include "wmx-util.h"
 #include "wmx-sim.h"
 
-/* Disassemble SIM Command packet (0x25) 
- * -- GSM 11.11 v6.2.0 (1999) 
+/* Disassemble SIM Command packet (0x25)
+ * -- GSM 11.11 v6.2.0 (1999)
  */
 /* vars:
  * ins    = sim cmd instruction
  * type   = 0x25 debug subtype
- * buffer = sim cmd's parameter 1 (P1) + P2 + P3 + additional data if exist 
+ * buffer = sim cmd's parameter 1 (P1) + P2 + P3 + additional data if exist
  *          (ie select file, additional data is file id)
  */
-void simCommand_data(unsigned char ins, unsigned char type, unsigned char *buffer, size_t length) 
+void simCommand_data(unsigned char ins, unsigned char type, unsigned char *buffer, size_t length)
 {
 	size_t 	x;
 	int 	v=1; 	// v = verbose (to use or not to use ?)
@@ -29,7 +29,7 @@ void simCommand_data(unsigned char ins, unsigned char type, unsigned char *buffe
 	printf("]\nSim ");
 
 	/* This switches type. The below types are known/valid. Since I don't
-	 * know all the types, i've created a switch based on instruction. 
+	 * know all the types, i've created a switch based on instruction.
 	 */
 /*	switch(type) {
 	case 0x06:
@@ -120,10 +120,10 @@ void simCommand_data(unsigned char ins, unsigned char type, unsigned char *buffe
 		printf(" : INS=%02x P1=%02x P2=%02x P3=%02x ", buffer[0], buffer[1], buffer[2], buffer[3]);
 		printf("\nCommand=");
 		for(x=0; x<length; x++) printf("%02x ",buffer[x]&0xFF);
-		printf("\n");    
+		printf("\n");
 		break;
 	}
-	    
+
 	if(v) {
 		printf(" : INS=%02x P1=%02x P2=%02x P3=%02x ", ins, buffer[0], buffer[1], buffer[2]);
 		if (ins==0xa4) {
@@ -134,7 +134,7 @@ void simCommand_data(unsigned char ins, unsigned char type, unsigned char *buffe
 	}
 }
 
-void simResponse_Process(unsigned char type, unsigned char *buffer, size_t length) 
+void simResponse_Process(unsigned char type, unsigned char *buffer, size_t length)
 {
     size_t x;
 // for status process :
@@ -145,7 +145,7 @@ void simResponse_Process(unsigned char type, unsigned char *buffer, size_t lengt
     - select	  (for MF/DF files: fileID,memory space available, CHV (en/)disable
 				    indicator, CHV status, GSM specific data.
 		   for EF files: fileID,fileSize,access conditions, valid/invalid
-				    indicator, structure of EF and length of 
+				    indicator, structure of EF and length of
 				    records if they exist)
     - status	  (fileID,memory space available, CHV en/disable indicator,
 		    CHV status, GSM specific data like select command)
@@ -154,25 +154,25 @@ void simResponse_Process(unsigned char type, unsigned char *buffer, size_t lengt
     - seek	  (only for seek type 2 response = 1 byte, the record number)
     - increase		( etc.. etc.. described in GSM 11.11)
     - run gsm algorithm
-    - get response 
+    - get response
     - envelope
     - fetch
-*/    
+*/
 	switch(type) {
 	case 0x02:
 		printf("(Read Binary) Binary's Data: ");
 		for(x=0; x<length; x++) printf("%02x ",buffer[x]&0xFF);
-		//printf("\n");    
+		//printf("\n");
 		break;
 	case 0x03:
 		printf("(Read Record) Record's Data:\n");
 		for(x=0; x<length; x++) printf("%02x ",buffer[x]&0xFF);
-		//printf("\n");    
+		//printf("\n");
 		break;
 	case 0x05:
 		printf("Get Response Data: ");
 		for(x=0; x<length; x++) printf("%02x ",buffer[x]&0xFF);
-		//printf("\n");    
+		//printf("\n");
 		break;
 	case 0x06:
 		printf("Status Response : ");
@@ -182,8 +182,8 @@ void simResponse_Process(unsigned char type, unsigned char *buffer, size_t lengt
 		fileT  = (buffer[6]&0xFF);
 		//RFU2 = (((buffer[7]&0xFF)<<8)|(buffer[8]&0xFF))<<8|(buffe
 		lofd   = (buffer[12]&0xFF);
-		printf("RFU=%04x, mem=%04x, fileID=%04x,\nfileType=%02x, RFU=%02x%02x%02x%02x%02x, ", 
-			RFU1, mem, fileID, fileT,	    
+		printf("RFU=%04x, mem=%04x, fileID=%04x,\nfileType=%02x, RFU=%02x%02x%02x%02x%02x, ",
+			RFU1, mem, fileID, fileT,
 			buffer[7], buffer[8], buffer[9], buffer[10], buffer[11] // RFU2
 			); // not the proper way ;)
 		printf("%02x bytes of GSM specific data follows: ", lofd);
@@ -199,18 +199,18 @@ void simResponse_Process(unsigned char type, unsigned char *buffer, size_t lengt
 	default:
 	    	printf("Unknown SIM Response : ");
 		for(x=0; x<length; x++) printf("%02x ",buffer[x]&0xFF);
-		//printf("\n");    
-		break;		    
-	}    
+		//printf("\n");
+		break;
+	}
 }
 
 void simAnswer_Process(unsigned char type, unsigned char *buffer, size_t length)
 {
 	size_t x;
-    
+
 	switch(type) {
 	case 0x00:
-		/* in some sim commands (i.e. status or read record) the answer 
+		/* in some sim commands (i.e. status or read record) the answer
 		 * is more than 2 bytes. we could analyse all the bytes but the
 		 * usefull ones are only the last 2 of them.
 		 * Should we make a switch() for the answer or would it be
@@ -223,7 +223,7 @@ void simAnswer_Process(unsigned char type, unsigned char *buffer, size_t length)
 	case 0x01:
 		/* 0x25XX sim command. I don't know why they re-write/send the command :-\
 			for(x=0;x<length;x++) printf("%02x ", buffer[x]&0xFF);
-			printf("\n");	
+			printf("\n");
 		*/
 		break;
 	default:

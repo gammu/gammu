@@ -7,7 +7,7 @@ typedef struct GSMDecoder_struct {
 
 typedef struct GSMDecoder_l1l2data_struct {
 	/* 0 receive
-	   1 send 
+	   1 send
 	*/
 	int 		tx;
 

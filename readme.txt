@@ -77,8 +77,6 @@ A. * Latest versions are on www.mwiacek.com (win32 binaries, gzip sources,
      ChangeLog)
    * Michal Cihar prepared mirror (win32 binaries, gzip sources, bzip2 sources,
      md5 checksums, ChangeLog) under www.cihar.com/gammu/zips/
-   * CVS (thanks to Michal Cihar) is under
-     https://sourceforge.net/cvs/?group_id=78290
    * ready Debian packages (thanks to Michal Cihar): http://cihar.com/debian/
    * ready RPM packages (thanks to Troy Engel):
      ftp://ftp.falsehope.com/home/tengel/gammu/
@@ -94,7 +92,14 @@ A. * Latest versions are on www.mwiacek.com (win32 binaries, gzip sources,
      http://news.gmane.org/thread.php?group=gmane.linux.drivers.gammu
 
    TIP: If you want to have only general info about new versions, you can
-        subscibe http://freshmeat.net/projects/gammu/ annoucements.
+        subscribe http://freshmeat.net/projects/gammu/ annoucements.
+
+   UPDATE: there are now some additional projects based on Gammu:
+   * Wammu: graphic manager using Python
+         http://freshmeat.net/projects/wammu/
+   * Snofs: software to mount phone filesystem under some Linux directory
+            (something like Phone Browser in PC Suite)
+         http://snofs.sourceforge.net/
 -------------------------------------------------------------------------------
 Q. How to compile it ?
 
@@ -792,3 +797,22 @@ A. In first Nokia phones with GPRS (like 8310, 6310, 6310i, 6510, 3510 and
    cellular operators. Probably on their requests Nokia made sessions more
    enpensive (it's not possible to use continuous sessions or they're more
    hidden). Welcome in new connected world :-(
+-------------------------------------------------------------------------------
+Q. How to manage playlists in 6230 ?
+
+A. 1. gammu --addfile a:\predefplaylist filename.m3u
+
+      Will add playlist filename.m3u
+
+   2. gammu --getfilesystem
+
+      Will get list of all files (including names of files with playlists)
+
+   3. gammu --deletefiles a:\predefplaylist\filename.m3u
+
+      Will delete playlist filename.m3u
+
+   Format of m3u files is easy:
+
+   first line is #EXTM3U
+   in next you give names of files (b:\file1.mp3, b:\folder1\file2.mp3, etc.)

@@ -51,7 +51,7 @@ GSM_Phone_Functions NAUTOPhone = {
 	NOTSUPPORTED,			/*	GetNetworkInfo		*/
 	NOTSUPPORTED,     		/*  	GetCategory 		*/
  	NOTSUPPORTED,       		/*  	AddCategory 		*/
-        NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/	
+        NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/
 	NOTSUPPORTED,			/*	GetMemoryStatus		*/
 	NOTSUPPORTED,			/*	GetMemory		*/
 	NOTSUPPORTED,			/*	GetNextMemory		*/
@@ -134,11 +134,14 @@ GSM_Phone_Functions NAUTOPhone = {
     	NOTSUPPORTED,			/*  	SetFMStation        	*/
 	NOTSUPPORTED,			/* 	ClearFMStations		*/
 	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/* 	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFilePart		*/
 	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
 	NOTSUPPORTED,			/* 	DeleteFile		*/
 	NOTSUPPORTED,			/* 	AddFolder		*/
+	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };

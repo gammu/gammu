@@ -1686,7 +1686,7 @@ static void GetRingtonesList(int argc, char *argv[])
 
 	GSM_Terminate();
 
-	for (i=0;i<Info.Number;i++) printmsg("%i. \"%s\"\n",i,DecodeUnicodeConsole(Info.Ringtone[i].Name));
+	for (i=0;i<Info.Number;i++) printmsg("%i. \"%s\"\n",i+1,DecodeUnicodeConsole(Info.Ringtone[i].Name));
 
  	if (Info.Ringtone) free(Info.Ringtone);
 }
@@ -7092,6 +7092,7 @@ static void GetFileSystem(int argc, char *argv[])
 			if (Files.System)  	printf("S");
 			printf("\n");
 		}
+		Start = false;
 	}
 
 	printmsg("\nUsed in phone: %li, used in card: %li\n",usedphone,usedcard);
@@ -7100,6 +7101,84 @@ static void GetFileSystem(int argc, char *argv[])
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
 	    	Print_Error(error);
 		printmsg("\nFree memory: %i, total memory: %i\n",Status.Free,Status.Free+Status.Used);
+	}
+
+	GSM_Terminate();
+}
+
+static void SetFileAttrib(int argc, char *argv[])
+{
+	GSM_File	 	Files;
+	int			i;
+
+	Files.ReadOnly  = false;
+	Files.Protected = false;
+	Files.System    = false;
+	Files.Hidden    = false;
+
+	strcpy(Files.ID_FullName,argv[2]);
+	for (i=3;i<argc;i++) {
+		if (mystrncasecmp(argv[i],"-readonly",0)) {
+			Files.ReadOnly = true;
+		} else if (mystrncasecmp(argv[i],"-protected",0)) {
+			Files.Protected = true;
+		} else if (mystrncasecmp(argv[i],"-system",0)) {
+			Files.System = true;
+		} else if (mystrncasecmp(argv[i],"-hidden",0)) {
+			Files.Hidden = true;
+		} else {
+			printmsgerr("Unknown attribute (%s)\n",argv[i]);
+		}
+	}
+
+	GSM_Init(true);
+
+	error = Phone->SetFileAttributes(&s,&Files);
+    	Print_Error(error);
+
+	GSM_Terminate();
+}
+
+static void GetFolderListing(int argc, char *argv[])
+{
+	bool 			Start = true;
+	GSM_File	 	Files;
+
+	GSM_Init(true);
+
+	strcpy(Files.ID_FullName,argv[2]);
+
+	if (!strcmp(s.Phone.Data.ModelInfo->model,"6230") &&
+	    s.ConnectionType == GCT_IRDAPHONET) {
+		printmsg("WARNING: firmware in your phone has bug in infrared support and only part of files will be listed. Use BT (or cable) or upgrade firmware (if there is something higher than 5.24 available)\n\n");
+	}
+
+	while (1) {
+		error = Phone->GetFolderListing(&s,&Files,Start);
+		if (error == ERR_EMPTY) break;
+	    	Print_Error(error);
+
+		/* format for a folder ID;Folder;[FOLDER_PARAMETERS]
+		 * format for a file   ID;File;FILE_NAME;DATESTAMP;FILE_SIZE;[FILE_PARAMETERS]  */
+		if (!Files.Folder) {
+			printf("%s;File;",Files.ID_FullName);
+			printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
+			if (!Files.ModifiedEmpty) {
+				printf("\"%s\";",OSDateTime(Files.Modified,false));
+			} else  printf("\"%c\";",0x20);
+			printf("%i;",Files.Used);
+		} else {
+			printf("%s;Folder;",Files.ID_FullName);
+			printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
+		}
+
+		if (Files.Protected)  	printf("P");
+		if (Files.ReadOnly)  	printf("R");
+		if (Files.Hidden)  	printf("H");
+		if (Files.System)  	printf("S");
+		printf("\n");
+
+		Start = false;
 	}
 
 	GSM_Terminate();
@@ -7257,7 +7336,9 @@ static void GetFileFolder(int argc, char *argv[])
 				if (mystrncasecmp(argv[i],"-newtime",0)) {
 					continue;
 				}
+				dbgprintf("comparing %s %s\n",File.ID_FullName,argv[i]);
 				if (!strcmp(File.ID_FullName,argv[i])) {
+					dbgprintf("found folder");
 					found = true;
 					if (File.Folder) {
 						level 	  = 1;
@@ -7443,6 +7524,16 @@ static void AddFolder(int argc, char *argv[])
 	GSM_Init(true);
 
 	error = Phone->AddFolder(&s,&File);
+    	Print_Error(error);
+
+	GSM_Terminate();
+}
+
+static void DeleteFolder(int argc, char *argv[])
+{
+	GSM_Init(true);
+
+	error = Phone->DeleteFolder(&s,argv[2]);
     	Print_Error(error);
 
 	GSM_Terminate();
@@ -8266,16 +8357,19 @@ static GSM_Parameters Parameters[] = {
 	{"--setautonetworklogin",	0, 0, SetAutoNetworkLogin,	{H_Network,0},			""},
 	{"--listnetworks",		0, 1, ListNetworks,		{H_Network,0},			"[country]"},
 	{"--getgprspoint",		1, 2, GetGPRSPoint,		{H_Nokia,H_Network,0},		"start [stop]"},
-	{"--addfolder",			2, 2, AddFolder,		{H_Filesystem,0},		"parentfolderID name"},
-	{"--getfilesystem",		0, 1, GetFileSystem,		{H_Filesystem,0},		"[-flatall|-flat]"},
 	{"--getfilesystemstatus",	0, 0, GetFileSystemStatus,	{H_Filesystem,0},		""},
-	{"--getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
+	{"--getfilesystem",		0, 1, GetFileSystem,		{H_Filesystem,0},		"[-flatall|-flat]"},
 	{"--getfilefolder",		1,40, GetFileFolder,		{H_Filesystem,0},		"ID1, ID2, ..."},
+	{"--addfolder",			2, 2, AddFolder,		{H_Filesystem,0},		"parentfolderID name"},
+	{"--deletefolder",		1, 1, DeleteFolder,		{H_Filesystem,0},		"name"},
+	{"--getfolderlisting",		1, 1, GetFolderListing,		{H_Filesystem,0},		"folderID"},
+	{"--setfileattrib",		1, 5, SetFileAttrib,		{H_Filesystem,0},		"folderID [-system] [-readonly] [-hidden] [-protected]"},
+	{"--getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
 	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
+	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent file sender title"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly]"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
-	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 	{"--playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
 	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			"number"},
 	{"--getdatetime",		0, 0, GetDateTime,		{H_DateTime,0},			""},

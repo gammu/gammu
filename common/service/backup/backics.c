@@ -15,8 +15,8 @@
 GSM_Error SaveICS(char *FileName, GSM_Backup *backup)
 {
 	FILE 		*file;
- 
-	file = fopen(FileName, "wb");      
+
+	file = fopen(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	fclose(file);
@@ -27,7 +27,7 @@ GSM_Error LoadICS(char *FileName, GSM_Backup *backup)
 {
 	GSM_File 		File;
 	GSM_Error		error;
-	
+
 	File.Buffer = NULL;
 	error = GSM_ReadFile(FileName, &File);
 	if (error != ERR_NONE) return error;

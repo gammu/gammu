@@ -1,0 +1,74 @@
+From: owner-gammu@fkn.net.pl on behalf of Troy Engel [tengel@fluid.com]
+Sent: 16 lutego 2005 00:56
+To: gammu@fkn.net.pl
+Subject: dku2/6230 patch, howto
+
+Marcin asked I post this tiny tarball -- inside you will find the dku2 
+kernel 2.6 driver code (from Chris Kemp @ the gnokii project), slightly 
+patched to include the Nokia 6230 product ID. You will find a patch from 
+Marcin to gammu-1.00.04 to fix dku2 support. And lastly, a Makefile from 
+me to build this kernel module in kernel 2.6.
+
+1) build and install the kernel module -- this is for 2.6 *only*, it 
+will not work on a 2.4 kernel. The Makefile uses the standard convention 
+of /usr/src/linux-2.6 as the kernel source home; if you already have 
+that, simply type "make; make install" and you're done.
+
+NOTE: if you're on Fedora Core 3 and have no clue how to prepare your 
+kernel source for building external modules, follow step #1 in my HowTo 
+for the rt2x00 project on Sourceforge:
+
+   http://sourceforge.net/forum/message.php?msg_id=2959689
+
+2) [....removed point 2 - it was about Gammu patch, which is already included]
+
+3) Compile gammu as normal (./configure; make)
+
+4) Plug in your 6230, and look in /var/log/messages for the device that 
+was registered as "FBUS". It should look like this:
+
+   kernel: Nokia FBUS Port:
+   kernel: Nokia DKU2 1-2:1.10: Nokia 7600/6230 DKU2 driver converter 
+detected
+   kernel: usb 1-2: Nokia 7600/6230 DKU2 driver converter now attached 
+to ttyUSB0
+
+NOTE: there are two drivers that fight for the AT side of your Nokia -- 
+the stock "cdc_acm" driver and the "nokia_dku2" module. So, if cdc_acm 
+got there first and created ttyACM0, then most likely your 6230 will be 
+ttyUSB0. If the nokia_dku2 got there first, then most likely your AT 
+will be ttyUSB0, and the FBUS port ttyUSB1. I've had it happen both ways.
+
+5) make sure /dev/ttyUSB* is owned by the user running gammu! 
+chown/chmod it as needed. On my FC3 machine I added the proper 
+configurations to /etc/security/console.perms to chown it to the logged 
+in user for me:
+
+   Under this line: <raw1394>=/dev/raw1394
+   Add this line:   <usbdev>=/dev/ttyACM* /dev/ttyUSB*
+
+   Under this line: <console>  0600 <raw1394>    0600 root
+   Add this line:   <console>  0600 <usbdev>     0600 root
+
+Log out and log back in and it will work properly for you forever.
+
+6) Configure your .gammurc:
+
+   [gammu]
+   port = /dev/ttyUSB0
+   connection = dku2
+
+7) run gammu --identify! At this point is should be working.
+
+I tested --identify, --getfilesystem, --nokiaaddfile, and --backup and 
+they all appear to be working normally. The kernel module seems to be 
+rather unstable (locked up my phone once, requiring a battery removal) 
+so your mileage may vary. It's a first release, so you're kind of 
+playing with fire a little bit. It does work enough to do a --backup and 
+get all your data off the phone, which is a good first step. :)
+
+-te
+
+-- 
+Troy Engel | Systems Engineer
+Fluid, Inc | http://www.fluid.com

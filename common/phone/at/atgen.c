@@ -2623,7 +2623,6 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		pos += ATGEN_ExtractOneParameter(pos, buffer);
  		smprintf(s, "Name text: %s\n",buffer);
 
-
  		/* Some phones (Motorola) don't put name iniside quotes */
  		if (buffer[0] == '"') offset = 1;
  		else offset = 0;
@@ -4247,11 +4246,14 @@ GSM_Phone_Functions ATGENPhone = {
     	NOTSUPPORTED,			/* 	SetFMStation        	*/
     	NOTSUPPORTED,			/* 	ClearFMStations       	*/
 	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/* 	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFile			*/
 	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
 	NOTSUPPORTED,			/* 	DeleteFile		*/
 	NOTSUPPORTED,			/* 	AddFolder		*/
+	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };

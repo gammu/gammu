@@ -172,7 +172,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  	len  = fread(Buffer, 1, sizeof(Buffer)-2, File);
   	fclose(File);
 
- 	if ((len <  2) || 
+ 	if ((len <  2) ||
             (len >= 2  && ((Buffer[0] != 0xFF || Buffer[1] != 0xFE) &&
 	                   (Buffer[0] != 0xFE || Buffer[1] != 0xFF)))) {
  		if (len > GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS) len = GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS;
@@ -295,7 +295,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 	int 	ilen = 0, olen = 0;
 	char 	Buffer[(GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS+1)*2],ifilename[400],ofilename[400];
 	char	*sourcepath, *destpath;
-	
+
 	sourcepath = Config->outboxpath;
 	if (sent) {
 	    destpath = Config->sentsmspath;

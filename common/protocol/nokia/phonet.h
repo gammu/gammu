@@ -1,6 +1,6 @@
 /* (c) 2002-2003 by Marcin Wiacek */
 /* Based on some work from Gnokii (www.gnokii.org)
- * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
 /* Due to a problem in the source code management, the names of some of
@@ -20,6 +20,7 @@
 
 #define PHONET_FRAME_ID      	0x14
 #define PHONET_BLUE_FRAME_ID	0x19
+#define PHONET_DKU2_FRAME_ID    0x1b
 #define PHONET_DEVICE_PHONE   	0x00 /* Nokia mobile phone */
 #define PHONET_DEVICE_PC      	0x0c /* Our PC */
 #define PHONET_BLUE_DEVICE_PC   0x10 /* Our PC */

@@ -2,7 +2,7 @@
  * Copyright (C) 2004 Claudio Matsuoka <cmatsuoka@gmail.com>
  * Tested with S300 only!
  */
-                                           
+
 #include "../../gsmstate.h"
 
 #ifdef GSM_ENABLE_ATGEN
@@ -152,7 +152,7 @@ static GSM_Error SetSamsungFrame(GSM_StateMachine *s, unsigned char *buff, int s
 	int			i, count;
 
 	count = size / BLKSZ;
-	
+
 	for (i = 0; i < count; i++) {
 		error = WaitFor(s, ">", 4);
  		if (error!=ERR_NONE) return error;
@@ -208,7 +208,7 @@ static GSM_Error ReplySetSamsungFrame(GSM_Protocol_Message msg, GSM_StateMachine
 
 	return txcrc == rxcrc ? ERR_NONE : ERR_WRONGCRC;
 }
-  
+
 /*
  * Bitmaps
  */
@@ -219,7 +219,7 @@ GSM_Error SAMSUNG_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	unsigned char 		buffer[32];
 	char 			*pos;
 	int			location, count;
- 
+
  	switch (Priv->ReplyState) {
  	case AT_Reply_OK:
 		smprintf(s, "Bitmap info received\n");
@@ -265,7 +265,7 @@ GSM_Error SAMSUNG_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 GSM_Error SAMSUNG_ReplySetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Bitmap sent\n");
-	return ReplySetSamsungFrame(msg, s); 
+	return ReplySetSamsungFrame(msg, s);
 }
 
 GSM_Error SAMSUNG_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
@@ -347,7 +347,7 @@ GSM_Error SAMSUNG_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
 	unsigned char 		buffer[32];
 	char 			*pos;
 	int			location, length, count;
- 
+
  	switch (Priv->ReplyState) {
  	case AT_Reply_OK:
 		smprintf(s, "Ringtone info received\n");
@@ -411,9 +411,9 @@ GSM_Error SAMSUNG_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool 
 GSM_Error SAMSUNG_ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Ringtone sent\n");
-	return ReplySetSamsungFrame(msg, s); 
+	return ReplySetSamsungFrame(msg, s);
 }
-  
+
 GSM_Error SAMSUNG_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
 {
 	unsigned char	req[100];

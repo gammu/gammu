@@ -111,7 +111,7 @@ typedef struct {
 	bool 			FileSystemRingtone;
 	/**
 	 * For mono bitmaps: body of bitmap
-	 */ 
+	 */
 	unsigned char 		BitmapPoints[GSM_BITMAP_SIZE];
 	/**
 	 * For mono bitmaps: height specified in pixels

@@ -22,7 +22,7 @@
 #ifndef true
 #  define true 	!0
 #endif
-#ifndef bool    
+#ifndef bool
 #  define bool	char
 #endif
 #endif /* __cplusplus */
@@ -75,7 +75,7 @@ extern Debug_Info	di;
 
 #ifdef DEBUG
 #ifdef __GNUC__
-__attribute__((format(printf, 1, 2))) 
+__attribute__((format(printf, 1, 2)))
 #endif
 int dbgprintf(const char *format, ...);
 #else
@@ -98,7 +98,7 @@ bool GSM_SetDebugLevel(char *info, Debug_Info *di);
 /* ------------------------------------------------------------------------- */
 
 /**
- * Structure used for saving date and time 
+ * Structure used for saving date and time
  */
 typedef struct {
 	/**

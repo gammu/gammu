@@ -17,8 +17,8 @@ GSM_Error SaveVCard(char *FileName, GSM_Backup *backup)
 	int 		i, Length = 0;
 	unsigned char 	Buffer[1000];
 	FILE 		*file;
- 
-	file = fopen(FileName, "wb");      
+
+	file = fopen(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	i=0;
