@@ -221,7 +221,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
 					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff + pos + 2);
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FirstName;
 					Pbk->EntriesNum++;
 				}
@@ -285,35 +285,35 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_StreetAddress;
 					Pbk->EntriesNum++;
 					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_City;
 					Pbk->EntriesNum++;
 					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_State;
 					Pbk->EntriesNum++;
 					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Zip;
 					Pbk->EntriesNum++;
 					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Country;
 					Pbk->EntriesNum++;
 				}
