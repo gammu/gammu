@@ -15,7 +15,7 @@
 #include "cfg.h"
 #include "misc.h"
 
-/* 
+/*
  * Read information from file in Windows INI format style
  */
 INI_Section *INI_ReadFile(char *FileName, bool Unicode)
@@ -31,7 +31,7 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
 
 	f = fopen(FileName,"rb");
 	if (f == NULL) return NULL;
-	
+
 	num = 0;
 	while(1) {
 		/* We read one line from file */
@@ -55,7 +55,7 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
 				if (num == 1) {
 					if (buffused == buffread) continue;
 					ch[1] = buff[buffread++];
-					num = 0;				
+					num = 0;
 				}
 				if (level == -1) {
 					if (ch[0] == 0xFF && ch[1] == 0xFE) FFEEUnicode = true;
@@ -166,12 +166,12 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
 							buffer1used = buffer1used - 2;
 						} else {
 					                if (!isspace((int)buffer1[buffer1used-1])) break;
-							buffer1used = buffer1used - 1;	
+							buffer1used = buffer1used - 1;
 						}
 					}
 					level = 4;
 					continue;
-				}				
+				}
 				if (Unicode) {
 					buffer1 		= realloc(buffer1,buffer1used+2);
 					buffer1[buffer1used] 	= ch[0];
@@ -251,7 +251,7 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
 	return INI_head;
 }
 
-/* 
+/*
  * Search for key value in file in Windows INI format style
  * Returns found value or NULL
  */
@@ -321,7 +321,7 @@ INI_Entry *INI_FindLastSectionEntry(INI_Section *file_info, unsigned char *secti
 	}
 
 	if (e == NULL) return NULL;
-	
+
 	/* Goes into last value in section */
 	while (e->Next != NULL) e = e->Next;
 	return e;

@@ -5,7 +5,7 @@
 #define __irda_w32_h
 
 #define AF_IRDA 			26
-#define SOL_IRLMP 			0x00FF 
+#define SOL_IRLMP 			0x00FF
 #define IRLMP_ENUMDEVICES 		0x00000010
 #define IRLMP_9WIRE_MODE 		0x00000016
 

@@ -31,7 +31,7 @@ GSM_Error DCT3DCT4_ReplyEnableConnectFunc	(GSM_Protocol_Message msg, GSM_StateMa
 GSM_Error DCT3DCT4_ReplyDisableConnectFunc      (GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3DCT4_ReplyGetModelFirmware	(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N71_65_ReplySendDTMF			(GSM_Protocol_Message msg, GSM_StateMachine *s);
-  
+
 GSM_Error NOKIA_GetManufacturer			(GSM_StateMachine *s);
 GSM_Error NOKIA_GetPhoneString			(GSM_StateMachine *s, unsigned char *msgframe, int msglen, unsigned char msgtype, char *retvalue, GSM_Phone_RequestID request, int startresponse);
 GSM_Error NOKIA_SetIncomingSMS			(GSM_StateMachine *s, bool enable);
@@ -80,7 +80,7 @@ bool NOKIA_FindPhoneFeatureValue(GSM_StateMachine		*s,
   				 GSM_Profile_Feat_Value		FeatureValue,
   			    	 unsigned char 			*PhoneID,
   			    	 unsigned char 			*PhoneValue);
-  
+
 GSM_Error N71_65_DecodePhonebook		(GSM_StateMachine	*s,
 						 GSM_MemoryEntry 	*entry,
   				 		 GSM_Bitmap 		*bitmap,

@@ -1,6 +1,6 @@
 /* (c) 2002-2003 by Marcin Wiacek */
 /* Based on some work from Gnokii (www.gnokii.org)
- * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
 /* Due to a problem in the source code management, the names of some of
@@ -15,7 +15,7 @@
 
 #include "../../gsmstate.h"
 
-#if defined(GSM_ENABLE_IRDA) || defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_BLUEPHONET)
+#if defined(GSM_ENABLE_IRDA) || defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_BLUEPHONET) || defined(GSM_ENABLE_FBUS2DKU2)
 
 #include <stdio.h>
 #include <string.h>
@@ -28,7 +28,7 @@ static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
 				      int 		MsgLength,
 				      unsigned char 	MsgType)
 {
-	unsigned char		*buffer2; 
+	unsigned char		*buffer2;
 	int			sent;
 
 	GSM_DumpMessageLevel3(s, MsgBuffer, MsgLength, MsgType);
@@ -38,11 +38,14 @@ static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
 	buffer2[0] = PHONET_FRAME_ID,
 	buffer2[1] = PHONET_DEVICE_PHONE; 		//destination
 	buffer2[2] = PHONET_DEVICE_PC;    		//source
-	
+
 	if (s->ConnectionType==GCT_PHONETBLUE || s->ConnectionType==GCT_BLUEPHONET) {
 		buffer2[0] = PHONET_BLUE_FRAME_ID;
 		buffer2[1] = PHONET_DEVICE_PHONE;	//destination
 		buffer2[2] = PHONET_BLUE_DEVICE_PC;	//source
+	}
+	if (s->ConnectionType==GCT_FBUS2DKU2) {
+		buffer2[0] = PHONET_DKU2_FRAME_ID;
 	}
 
 	buffer2[3] = MsgType;
@@ -119,6 +122,7 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	}
 	if (d->MsgRXState==RX_GetDestination) {
 		switch (s->ConnectionType) {
+		case GCT_FBUS2DKU2:
 		case GCT_IRDAPHONET:
 			if (rx_char == PHONET_DEVICE_PC) correct = true;
 			break;
@@ -151,6 +155,9 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		case GCT_BLUEPHONET:
 			if (rx_char == PHONET_BLUE_FRAME_ID) correct = true;
 			break;
+		case GCT_FBUS2DKU2:
+			if (rx_char == PHONET_DKU2_FRAME_ID) correct = true;
+			break;
 		default:
 			break;
 		}
@@ -158,12 +165,12 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
 			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
 				smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_char, PHONET_FRAME_ID);
-			}		
+			}
 			return ERR_NONE;
 		}
 		d->Msg.Count  = 0;
 
-		d->MsgRXState = RX_GetDestination;	
+		d->MsgRXState = RX_GetDestination;
 		return ERR_NONE;
 	}
 	return ERR_NONE;

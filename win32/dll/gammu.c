@@ -153,7 +153,7 @@ static void CreatePhoneThread(int *phone,
 	s[*phone].Mutex 		= CreateMutex( NULL, FALSE, NULL );
 	s[*phone].SecurityStatus	= 0;
 	s[*phone].number 		= *phone;
-	
+
 	s[*phone].PhoneCallBack 	= PhoneCallBack;
 	s[*phone].SecurityCallBack 	= SecurityCallBack;
 	s[*phone].SMSCallBack 		= SMSCallBack;
@@ -605,7 +605,7 @@ static GSM_Error DCT4_ReplyGetSecurityCode(GSM_Protocol_Message msg, GSM_StateMa
 
 static GSM_Reply_Function UserReplyFunctions4[] = {
 	{DCT4_ReplyGetSecurityCode,	"\x23",0x03,0x05,ID_User1	},
-	{DCT4_ReplyGetSecurityCode,	"\x23",0x03,0x0D,ID_User1	}, 
+	{DCT4_ReplyGetSecurityCode,	"\x23",0x03,0x0D,ID_User1	},
 
 	{DCT4_ReplyGetSimlock,		"\x53",0x03,0x0D,ID_User6	},
 	{NULL,				"\x00",0x00,0x00,ID_None	}
@@ -631,10 +631,10 @@ GSM_Error WINAPI mygetdct4simlocknetwork(int phone, char *network)
 GSM_Error WINAPI mygetdct4securitycode(int phone, char *code)
 {
 	GSM_Error 	error;
-	unsigned char 	getlen[]={0x00, 0x08, 0x01, 0x0C, 
-				  0x00, 0x23, 		//ID 
+	unsigned char 	getlen[]={0x00, 0x08, 0x01, 0x0C,
+				  0x00, 0x23, 		//ID
 				  0x00, 0x00, 		//Index
-				  0x00, 0x00}; 
+				  0x00, 0x00};
 	unsigned char 	read[]={0x00, 0x08, 0x02, 0x04,
 				0x00, 0x23, 		//ID
 				0x00, 0x00, 		//Index
@@ -819,7 +819,7 @@ GSM_Error WINAPI myrestorecalendar(int phone, int *percent)
 				return error;
 			}
 		}
-		BackupPos  = 0;		
+		BackupPos  = 0;
 		BackupUsed = 0;
 		while (Backup.Calendar[BackupUsed]!=NULL) BackupUsed++;
 	}
@@ -859,7 +859,7 @@ GSM_Error WINAPI myrestoretodo(int phone, int *percent)
 				return error;
 			}
 		}
-		BackupPos  = 0;		
+		BackupPos  = 0;
 		BackupUsed = 0;
 		while (Backup.ToDo[BackupUsed]!=NULL) BackupUsed++;
 	}
@@ -888,7 +888,7 @@ GSM_Error WINAPI myrestorewapbookmark(int phone, int *percent)
 			Bookmark.Location = 1;
 			error = s[phone].s.Phone.Functions->GetWAPBookmark(&s[phone].s,&Bookmark);
 		}
-		BackupPos  = 0;		
+		BackupPos  = 0;
 		BackupUsed = 0;
 		while (Backup.WAPBookmark[BackupUsed]!=NULL) BackupUsed++;
 	}
@@ -911,7 +911,7 @@ GSM_Error WINAPI myrestorewapsettings(int phone, int *percent)
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 
 	if (*percent == 200) {
-		BackupPos  = 0;		
+		BackupPos  = 0;
 		BackupUsed = 0;
 		while (Backup.WAPSettings[BackupUsed]!=NULL) BackupUsed++;
 	}
@@ -933,7 +933,7 @@ GSM_Error WINAPI myrestoremmssettings(int phone, int *percent)
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 
 	if (*percent == 200) {
-		BackupPos  = 0;		
+		BackupPos  = 0;
 		BackupUsed = 0;
 		while (Backup.MMSSettings[BackupUsed]!=NULL) BackupUsed++;
 	}
@@ -955,7 +955,7 @@ GSM_Error WINAPI myrestorefmradio(int phone, int *percent)
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 
 	if (*percent == 200) {
-		BackupPos  = 0;		
+		BackupPos  = 0;
 		BackupUsed = 0;
 		while (Backup.FMStation[BackupUsed]!=NULL) BackupUsed++;
 		error=s[phone].s.Phone.Functions->ClearFMStations(&s[phone].s);
@@ -982,7 +982,7 @@ GSM_Error WINAPI myrestoregprspoint(int phone, int *percent)
         WaitForSingleObject(s[phone].Mutex, INFINITE );
 
 	if (*percent == 200) {
-		BackupPos  = 0;		
+		BackupPos  = 0;
 		BackupUsed = 0;
 		while (Backup.GPRSPoint[BackupUsed]!=NULL) BackupUsed++;
 	}
@@ -1153,7 +1153,7 @@ GSM_Error WINAPI mybackupcalendar(int phone, int *percent)
 			StatusUsed = -1;
 		} else if (error != ERR_NONE) {
 		        ReleaseMutex(s[phone].Mutex);
-			return error;			
+			return error;
 		} else {
 			StatusUsed = Status.Used;
 		}
@@ -1162,7 +1162,7 @@ GSM_Error WINAPI mybackupcalendar(int phone, int *percent)
 	error=s[phone].s.Phone.Functions->GetNextCalendar(&s[phone].s,&Note,((*percent)==0));
 	if (error != ERR_NONE) {
 	        ReleaseMutex(s[phone].Mutex);
-		return error;			
+		return error;
 	}
 	if (BackupUsed < GSM_MAXCALENDARTODONOTES) {
 		Backup.Calendar[BackupUsed] = malloc(sizeof(GSM_CalendarEntry));
@@ -1458,7 +1458,7 @@ GSM_Error WINAPI mybackupfmradio(int phone, int *percent)
 		}
 		BackupUsed++;
 		*percent = BackupUsed;
-		if (error == ERR_NONE) break;		
+		if (error == ERR_NONE) break;
 	}
         ReleaseMutex(s[phone].Mutex);
 	return error;
@@ -1490,8 +1490,8 @@ int WINAPI mygetstructuresize(int i)
 	return 0;
 }
 
-BOOL WINAPI DllMain  ( HANDLE hModule, 
-                       DWORD  ul_reason_for_call, 
+BOOL WINAPI DllMain  ( HANDLE hModule,
+                       DWORD  ul_reason_for_call,
                        LPVOID lpReserved )
 {
 	int i;

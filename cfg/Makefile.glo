@@ -62,10 +62,10 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
             $(TOPDIR)/common/phone/nokia/dct3/dct3func.o \
             $(TOPDIR)/common/phone/nokia/dct4/n3320.o \
             $(TOPDIR)/common/phone/nokia/dct4/n3650.o \
-            $(TOPDIR)/common/phone/nokia/dct4/n6510.o \
-            $(TOPDIR)/common/phone/nokia/dct4/6510cal.o \
-            $(TOPDIR)/common/phone/nokia/dct4/6510file.o \
             $(TOPDIR)/common/phone/nokia/dct4/dct4func.o \
+            $(TOPDIR)/common/phone/nokia/dct4/6510/n6510.o \
+            $(TOPDIR)/common/phone/nokia/dct4/6510/6510cal.o \
+            $(TOPDIR)/common/phone/nokia/dct4/6510/6510file.o \
             $(TOPDIR)/common/phone/nokia/nauto.o \
             $(TOPDIR)/common/phone/nokia/nfunc.o \
             $(TOPDIR)/common/phone/nokia/nfuncold.o \
@@ -183,9 +183,11 @@ distclean: makelocale clean
 	@echo Setting default config
 	@chmod a+x $(TOPDIR)/docs/examples/ppp/*
 	@chmod a+x $(TOPDIR)/docs/examples/fax/*
-	@chmod a+x $(TOPDIR)/other/config/*
-	@chmod a+x $(TOPDIR)/other/smsdutil/*
-	@chmod a+x $(TOPDIR)/other/perms/perms
+	@chmod a+x $(TOPDIR)/other/bash/smsdutil/*
+	@chmod a+x $(TOPDIR)/other/bash/config/*
+	@chmod a+x $(TOPDIR)/other/bash/other/perms
+	@chmod a+x $(TOPDIR)/other/bash/other/endlines
+	@chmod a+x $(TOPDIR)/other/bash/files/PhoneGetRecentFiles.dat
 	@chmod a+x $(TOPDIR)/configure
 	@$(TOPDIR)/configure
 	@echo Cleaning autoconf stuff

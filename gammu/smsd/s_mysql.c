@@ -193,7 +193,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 						found = true;
 						break;
 					}
-				}	
+				}
 			}
 			if (found) {
 				sprintf(buffer,"UPDATE `sentitems` SET `DeliveryDateTime`='%04i%02i%02i%02i%02i%02i', `Status`='",
@@ -263,7 +263,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 			for (j=0;j<(int)strlen(buffer2);j++) {
 				sprintf(buffer3,"'");
 				z = strlen(buffer);
-				if (buffer2[j]==buffer3[0]) {				    
+				if (buffer2[j]==buffer3[0]) {
 				    buffer[z+2]=0;
 				    buffer[z+1]=buffer2[j];
 				    buffer[z]  ='\\';
@@ -378,7 +378,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 				DecodeHexBin(sms->SMS[sms->Number].Text,Row[0],strlen(Row[0]));
 				sms->SMS[sms->Number].Length=strlen(Row[0])/2;
 			}
-		}	    
+		}
 		if (i == 1) {
 			EncodeUnicode(sms->SMS[sms->Number].Number,Row[6],strlen(Row[6]));
 		} else {
@@ -407,7 +407,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 
 		}
 	}
-	mysql_free_result(Res);	
+	mysql_free_result(Res);
   	return ERR_NONE;
 }
 
@@ -450,9 +450,9 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		sprintf(buffer,"%s",Row[0]);
 		ID = atoi(buffer);
 	} else {
-		ID = 0; 
+		ID = 0;
 	}
-	mysql_free_result(Res);	
+	mysql_free_result(Res);
 
 	for (i=0;i<sms->Number;i++) {
 		buffer[0]=0;
@@ -525,7 +525,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			for (j=0;j<(int)strlen(buffer2);j++) {
 				sprintf(buffer3,"'");
 				z = strlen(buffer);
-				if (buffer2[j]==buffer3[0]) {				    
+				if (buffer2[j]==buffer3[0]) {
 				    buffer[z+2]=0;
 				    buffer[z+1]=buffer2[j];
 				    buffer[z]  ='\\';
@@ -566,10 +566,10 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 						WriteSMSDLog("Error writing to database (CreateOutbox): %d %s %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB),buffer4);
 						return ERR_UNKNOWN;
 					}
-					mysql_free_result(Res);	
+					mysql_free_result(Res);
 					break;
 				}
-				mysql_free_result(Res);	
+				mysql_free_result(Res);
 			}
 		} else {
 			strcpy(buffer4,buffer);
@@ -589,7 +589,7 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 {
 	unsigned char	buffer[10000],buffer2[200],buffer3[2],buff[50];
 	int 		j,z;
-	
+
 	if (err == SMSD_SEND_OK) WriteSMSDLog("Transmitted %s (%s: %i) to %s", Config->SMSID, (Part == sms->Number?"total":"part"),Part,DecodeUnicodeString(sms->SMS[0].Number));
 
 	buff[0] = 0;
@@ -640,7 +640,7 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 		for (j=0;j<(int)strlen(buffer2);j++) {
 			sprintf(buffer3,"'");
 			z = strlen(buffer);
-			if (buffer2[j]==buffer3[0]) {				    
+			if (buffer2[j]==buffer3[0]) {
 			    buffer[z+2]=0;
 			    buffer[z+1]=buffer2[j];
 			    buffer[z]  ='\\';

@@ -1,0 +1,30 @@
+From: hugo pinto
+Sent: 14 listopada 2004 08:12
+To: marcin@mwiacek.com
+Subject: intergammu
+
+hello Marcin
+
+I've made a script so that any user can send sms's to ther gammu configured 
+server's mobile phone, and receive a server processed information based on 
+the sent sms.
+
+i.e.: my personal phone is a nokia 6210. I have a 6110 connected with gammu
+in my linux box.
+
+whenever I need to know the internet ip of my server, I send from my 6210 to 
+the 6110 a sms with the text: " admin ip", and in a few seconds I receive 
+the message back to my 6210 from my 6110: " Your ip is .... ".
+
+if I send "admin uptime" it answers the current server's uptime, etc...
+
+feel free to include this script in future free releases of gammu.
+
+Gammu is very useful for me, so I hope this script can be that much useful 
+to you
+
+thats my little contribute to the gammu project
+
+Best regards
+
+Hugo Pinto

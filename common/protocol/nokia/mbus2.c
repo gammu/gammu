@@ -42,14 +42,14 @@ static GSM_Error MBUS2_WriteMessage (GSM_StateMachine 	*s,
 	do {
 		d->MsgSequenceNumber++;
 
-		buffer2[len] = d->MsgSequenceNumber;  
-	
+		buffer2[len] = d->MsgSequenceNumber;
+
 		/* Calculating checksum */
 		checksum = 0;
 		for (i = 0; i < len + 1; i++) checksum ^= buffer2[i];
 	} while (checksum == 0x1f);
 
-	buffer2[len++] = d->MsgSequenceNumber;  
+	buffer2[len++] = d->MsgSequenceNumber;
 	buffer2[len++] = checksum;
 
 	GSM_DumpMessageLevel2(s, buffer2+6, MsgLength, MsgType);
@@ -226,7 +226,7 @@ static GSM_Error MBUS2_Initialise(GSM_StateMachine *s)
 	if (error!=ERR_NONE) return error;
 
 	error=Device->DeviceSetDtrRts(s,false,true); /*DTR low,RTS high*/
-	if (error!=ERR_NONE) return error; 
+	if (error!=ERR_NONE) return error;
         my_sleep(200);
 
 	return ERR_NONE;

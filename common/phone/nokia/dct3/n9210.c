@@ -19,7 +19,7 @@ static GSM_Error N9210_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	unsigned char OpReq[] = {N6110_FRAME_HEADER, 0x70};
 
-	s->Phone.Data.Bitmap=Bitmap;	
+	s->Phone.Data.Bitmap=Bitmap;
 	switch (Bitmap->Type) {
 	case GSM_OperatorLogo:
 		smprintf(s, "Getting operator logo\n");
@@ -67,10 +67,10 @@ static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		if (Bitmap->Location!=1) return ERR_NOTSUPPORTED;
 		Type=GSM_NokiaStartupLogo;
 		PHONE_GetBitmapWidthHeight(Type, &Width, &Height);
-		PHONE_EncodeBitmap(Type, reqStartup + 21, Bitmap);		
+		PHONE_EncodeBitmap(Type, reqStartup + 21, Bitmap);
 		smprintf(s, "Setting startup logo\n");
 		return GSM_WaitFor (s, reqStartup, 21+PHONE_GetBitmapSize(Type,0,0), 0x7A, 4, ID_SetBitmap);
-	case GSM_WelcomeNote_Text:	
+	case GSM_WelcomeNote_Text:
 		/* Nokia bug: Unicode text is moved one char to left */
 		CopyUnicodeString(reqStartupText + 4, Bitmap->Text);
 		reqStartupText[4] = 0x02;
@@ -103,7 +103,7 @@ static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		/* We wanted only clear - now exit */
 		if (!strcmp(Bitmap->NetworkCode,"000 00")) return error;
 
-		/* Now setting logo */	
+		/* Now setting logo */
 		count=3;
 		req[count++] = 0xA3;
 		req[count++] = 0x01;
@@ -120,7 +120,7 @@ static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		req[count++] = 0x00;
 		req[count++] = 0x00;
 		req[count++] = 0x00;
-		PHONE_EncodeBitmap(Type, req+count, Bitmap);		
+		PHONE_EncodeBitmap(Type, req+count, Bitmap);
 		return GSM_WaitFor (s, req, count+PHONE_GetBitmapSize(Type,0,0), 0x0A, 4, ID_SetBitmap);
 	default:
 		break;
@@ -387,11 +387,14 @@ GSM_Phone_Functions N9210Phone = {
     	NOTSUPPORTED,			/*  	SetFMStation        	*/
         NOTSUPPORTED,           	/*      ClearFMStations         */
 	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/*	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFile			*/
 	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
 	NOTSUPPORTED,			/*	DeleteFile		*/
 	NOTSUPPORTED,			/*	AddFolder		*/
+	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };

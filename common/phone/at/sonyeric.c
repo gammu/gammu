@@ -1,5 +1,5 @@
 /* (c) 2003 by Marcin Wiacek */
-                                           
+
 #include "../../gsmstate.h"
 
 #ifdef GSM_ENABLE_ATGEN
@@ -149,7 +149,7 @@ GSM_Error SONYERIC_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note,
 		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, Note, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 		if (error == ERR_EMPTY) break;
 		if (error != ERR_NONE) return error;
-		if (Note->EntriesNum != 0) {			
+		if (Note->EntriesNum != 0) {
 			num++;
 			if (num == Loc) return ERR_NONE;
 		}
@@ -180,14 +180,14 @@ GSM_Error SONYERIC_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool st
 	}
 	smprintf(s,"Getting ToDo %i\n",ToDo->Location);
 
-	Loc = ToDo->Location;	
+	Loc = ToDo->Location;
 	Pos = 0;
 	num = 0;
 	while (1) {
 		error = GSM_DecodeVCALENDAR_VTODO(Priv->file.Buffer, &Pos, &Calendar, ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 		if (error == ERR_EMPTY) break;
 		if (error != ERR_NONE) return error;
-		if (ToDo->EntriesNum != 0) {			
+		if (ToDo->EntriesNum != 0) {
 			num++;
 			if (num == Loc) return ERR_NONE;
 		}
@@ -223,7 +223,7 @@ GSM_Error SONYERIC_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 		if (error != ERR_NONE) return error;
 		if (ToDo.EntriesNum != 0) status->Used++;
 	}
-	
+
 	return ERR_NONE;
 #else
 	return ERR_SOURCENOTAVAILABLE;
@@ -396,7 +396,7 @@ GSM_Error SONYERIC_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *St
 		if (error != ERR_NONE) return error;
 		if (Calendar.EntriesNum != 0) Status->Used++;
 	}
-	
+
 	return ERR_NONE;
 #else
 	return ERR_SOURCENOTAVAILABLE;
@@ -443,7 +443,7 @@ GSM_Error ERICSSON_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMachine
 				break;
 			default:return ERR_UNKNOWNRESPONSE;
 		}
-	default: 
+	default:
 		return ERR_NOTSUPPORTED;
 	}
 }

@@ -9,9 +9,9 @@
  *  - BE5 series (501/701)
  *  - BF5 series (715)
  *  - BH4 series (535/735)
- * For some functions it uses normal AT  mode (not implemented here, look at 
- * ../at/atgen.[ch]) for others it  switches into binary mode and initialises 
- * underlaying protocol (see ../../protocol/alcatel/alcabus.[ch]) and 
+ * For some functions it uses normal AT  mode (not implemented here, look at
+ * ../at/atgen.[ch]) for others it  switches into binary mode and initialises
+ * underlaying protocol (see ../../protocol/alcatel/alcabus.[ch]) and
  * communicates over it. Don't ask me why Alcatel uses such silly thing...
  */
 

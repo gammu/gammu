@@ -3990,11 +3990,14 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/* 	SetFMStation		*/
 	NOTSUPPORTED,			/* 	ClearFMStations		*/
 	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/* 	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFilePart		*/
 	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
 	NOTSUPPORTED,			/* 	DeleteFile		*/
 	NOTSUPPORTED,			/* 	AddFolder		*/
+	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };

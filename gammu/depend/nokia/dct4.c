@@ -358,7 +358,7 @@ static GSM_Error DCT4_ReplyTestsStatus(GSM_Protocol_Message msg, GSM_StateMachin
 					default  : printf("Unknown (%x)",msg.Buffer[pos+3]);
 				}
 				if (DCT4Tests.Tests[j].Startup) printf(" (startup)");
-				printf("\n");				
+				printf("\n");
 				break;
 			}
 		}
@@ -374,7 +374,7 @@ void DCT4SelfTests(int argc, char *argv[])
 	unsigned char GetDoneST[6]    = {0x00, 0x08, 0x01, 0x04, 0x01, 0x00};
 	unsigned char GetDoneST2[6]   = {0x00, 0x08, 0x02, 0x04, 0x02, 0x00};
 	unsigned char GetNames[6]     = {0x00, 0x08, 0x03, 0x06, 0x03, 0x00};
-	unsigned char GetStatus[6]    = {0x00, 0x08, 0x04, 0x02, 0x03, 0x00}; 
+	unsigned char GetStatus[6]    = {0x00, 0x08, 0x04, 0x02, 0x03, 0x00};
 
 	unsigned char RunALL[6]       = {0x00, 0x06, 0x04, 0x00, 0x03, 0x00};
 
@@ -542,10 +542,10 @@ static GSM_Error DCT4_ReplyGetSecurityCode(GSM_Protocol_Message msg, GSM_StateMa
 void DCT4GetSecurityCode(int argc, char *argv[])
 {
 	GSM_Error 	error;
-	unsigned char 	getlen[]={0x00, 0x08, 0x01, 0x0C, 
-				  0x00, 0x23, 		//ID 
+	unsigned char 	getlen[]={0x00, 0x08, 0x01, 0x0C,
+				  0x00, 0x23, 		//ID
 				  0x00, 0x00, 		//Index
-				  0x00, 0x00}; 
+				  0x00, 0x00};
 	unsigned char 	read[]={0x00, 0x08, 0x02, 0x04,
 				0x00, 0x23, 		//ID
 				0x00, 0x00, 		//Index
@@ -680,7 +680,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	dbgprintf("Getting voice record name\n");
 	error=GSM_WaitFor (&s, ReqNames, 14, 0x4A, 4, ID_User4);
 	Print_Error(error);
-	
+
 	s.Phone.Data.PhoneString 	= Buffer;
 	ReqToken[7] 			= Location;
 	dbgprintf("Getting voice record token\n");
@@ -689,7 +689,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	TokenLocation 			= Buffer[0] * 256 + Buffer[1];
 	Token				= Buffer[2];
 
-	WAVFile = fopen(FileName, "wb");      
+	WAVFile = fopen(FileName, "wb");
 
 	fwrite(&WAV_Header,	1, sizeof(WAV_Header),	WAVFile);
 	fwrite(&FMT_Header,	1, sizeof(FMT_Header),	WAVFile);
@@ -795,7 +795,7 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 		for (i=22;i<30;i++) {
 			dbgprintf("%02x",msg.Buffer[i]);
 		}
-		dbgprintf("\n");		
+		dbgprintf("\n");
 		return ERR_NONE;
 	case 0x13:
 		dbgprintf("Simlock info received\n");
@@ -869,7 +869,7 @@ void DCT4GetT9(int argc, char *argv[])
 
 	if (CheckDCT4Only()!=ERR_NONE) return;
 
-	T9File = fopen("T9", "w");      
+	T9File = fopen("T9", "w");
 	if (T9File == NULL) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
@@ -885,7 +885,7 @@ void DCT4GetT9(int argc, char *argv[])
 			}
 			if (T9Dictionary - i == 0) break;
 		}
-		error=GSM_WaitFor (&s, req, 18, 0x23, 4, ID_User3);		
+		error=GSM_WaitFor (&s, req, 18, 0x23, 4, ID_User3);
 		Print_Error(error);
 		if (i==0) {
 			T9Dictionary = T9FullSize;
@@ -989,7 +989,7 @@ struct DCT4ADCInfo {
 static struct DCT4ADCInfo DCT4ADC[] = {
 	{"Battery voltage, divided:",		"mV",  1},
 	{"Battery voltage, scaled:",		"mV",  1},
-	{"Charger voltage:",			"mV",  1},  	
+	{"Charger voltage:",			"mV",  1},
 	{"Charger current:",			"mA",  1},
 	{"Battery size indicator:",		"Ohms",100},
 	{"Battery temperature:",		"K",   1},
@@ -1024,11 +1024,11 @@ void DCT4GetADC(int argc, char *argv[])
 	while (1) {
 		printf(" %30s ",DCT4ADC[i].name);
 		GetRaw[4] = i;
-		error=GSM_WaitFor (&s, GetRaw, 6, 0x17, 4, ID_User3);		
+		error=GSM_WaitFor (&s, GetRaw, 6, 0x17, 4, ID_User3);
 		Print_Error(error);
 		GetUnit[4] 	= i;
 		ADC		= DCT4ADC[i].x;
-		error=GSM_WaitFor (&s, GetUnit, 6, 0x17, 4, ID_User3);		
+		error=GSM_WaitFor (&s, GetUnit, 6, 0x17, 4, ID_User3);
 		Print_Error(error);
 		printf("%s\n",DCT4ADC[i].unit);
 		i++;
@@ -1108,7 +1108,7 @@ void DCT4TuneRadio(int argc, char *argv[])
 	if (error != ERR_NONE && error != ERR_EMPTY) {
 		printf("Phone seems not to support radio\n");
 		GSM_Terminate();
-		exit(-1);		
+		exit(-1);
 	}
 
 	error=GSM_WaitFor (&s, Enable, 6, 0x3E, 4, ID_User3);
@@ -1195,7 +1195,7 @@ void DCT4TuneRadio(int argc, char *argv[])
 
 void DCT4PlaySavedRingtone(int argc, char *argv[])
 {
-	unsigned char req[] =  {N6110_FRAME_HEADER, 
+	unsigned char req[] =  {N6110_FRAME_HEADER,
 			      	0x01,
 				0x00,0x64,	//id
 				0x01,		//group
@@ -1203,6 +1203,7 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 				0x0A,		//volume
 				0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 	GSM_AllRingtonesInfo Info;
+//	int i;
 
 	GSM_Init(true);
 
@@ -1217,9 +1218,9 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 		GSM_Terminate();
 		return;
 	}
-	req[4] = Info.Ringtone[atoi(argv[2])].ID / 256;
-	req[5] = Info.Ringtone[atoi(argv[2])].ID % 256;
-	req[6] = Info.Ringtone[atoi(argv[2])].Group;
+	req[4] = Info.Ringtone[atoi(argv[2])-1].ID / 256;
+	req[5] = Info.Ringtone[atoi(argv[2])-1].ID % 256;
+	req[6] = Info.Ringtone[atoi(argv[2])-1].Group;
 
 	error=GSM_WaitFor (&s, req, 18, 0x1F, 4, ID_User3);
 	Print_Error(error);
@@ -1231,7 +1232,7 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 
 static GSM_Error DCT4_ReplyMakeCameraShoot(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	return ERR_NONE;	
+	return ERR_NONE;
 }
 
 void DCT4MakeCameraShoot(int argc, char *argv[])
@@ -1240,9 +1241,9 @@ void DCT4MakeCameraShoot(int argc, char *argv[])
 	unsigned char CameraON[] = {N6110_FRAME_HEADER, 0x02, 0x01, 0x00, 0x00, 0x00 , 0x00, 0x00};
 	unsigned char CameraON2[] = {N6110_FRAME_HEADER, 0xF0, 0x02, 0x00};
 	unsigned char MakeShot[200] = {N6110_FRAME_HEADER, 0x06, 0x01, 0x06,
-		0x01, 0x00, 0x00, 0x02, 0x00, 0x04, 0x32, 0x00, 0x01, 
+		0x01, 0x00, 0x00, 0x02, 0x00, 0x04, 0x32, 0x00, 0x01,
 		0x1D, 		//length of rest
-		0x00, 0x00, 0x00, 0x01, 
+		0x00, 0x00, 0x00, 0x01,
 		0x00, 0x02,	//master folder id
 		0x00, 0x14}; 	//length
 	unsigned char CameraOFF[] = {N6110_FRAME_HEADER, 0x04, 0x01, 0x00};
@@ -1277,7 +1278,7 @@ int len;
 static GSM_Error DCT4_ReplyGetScreenDump(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	if (msg.Buffer[7] == 0x0C) len = 1;
-	return ERR_NONE;	
+	return ERR_NONE;
 }
 
 void DCT4GetScreenDump(int argc, char *argv[])
@@ -1324,7 +1325,7 @@ static GSM_Reply_Function UserReplyFunctions4[] = {
 	{DCT4_ReplyGetT9,		"\x23",0x03,0x05,ID_User3	},
 	{DCT4_ReplyGetVoiceRecord,	"\x23",0x03,0x05,ID_User4	},
 	{DCT4_ReplyGetVoiceRecord,	"\x23",0x03,0x0D,ID_User4	},
-	{DCT4_ReplyGetSecurityCode,	"\x23",0x03,0x0D,ID_User1	}, 
+	{DCT4_ReplyGetSecurityCode,	"\x23",0x03,0x0D,ID_User1	},
 
 	{DCT4_ReplyTestsStartup,	"\x35",0x02,0x01,ID_User3	},
 	{DCT4_ReplyTestsStartup,	"\x35",0x02,0x02,ID_User3	},

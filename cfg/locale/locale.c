@@ -33,7 +33,7 @@ void ProcessSourceFile(char *filename)
 	FILE		*file;
 	unsigned char 	buffer[10000],buffer2[500];
 	bool		found;
-	
+
 	printf("Processing source file %s\n",filename);
 
 	file = fopen(filename, "rb");
@@ -297,8 +297,10 @@ int main(int argc, char *argv[])
 	WriteOutput("F0058=\"Error opening device. No required driver in operating system.\"");
 	WriteOutput("F0059=\"Error opening device. Some hardware not connected/wrong configured.\"");
 	WriteOutput("F0060=\"File with specified name doesn't exist.\"");
+	WriteOutput("F0061=\"You have to give folder (not file) name.\"");
+	WriteOutput("F0062=\"You have to give file (not folder) name.\"");
 
-	outputnum=60+1;
+	outputnum=62+1;
 #ifdef WIN32
 	ProcessSourceFile("../../../../gammu/gammu.c");
 #else
@@ -324,7 +326,7 @@ int main(int argc, char *argv[])
 	ProcessLangFile("../../docs/docs/locale/gammu_cs.txt");
 #endif
 	printf("\n");
-	
+
 	return (0);
 }
 

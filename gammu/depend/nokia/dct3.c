@@ -99,14 +99,14 @@ void DCT3GetT9(int argc, char *argv[])
 
 	if (CheckDCT3Only()!=ERR_NONE) return;
 
-	DCT3T9File = fopen("T9", "w");      
+	DCT3T9File = fopen("T9", "w");
 	if (DCT3T9File == NULL) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions3;
 
 	for (i=0;i<5;i++) {
 		req[5] = i;
-		error=GSM_WaitFor (&s, req, 6, 0x40, 4, ID_User3);		
+		error=GSM_WaitFor (&s, req, 6, 0x40, 4, ID_User3);
 		Print_Error(error);
 	}
 
@@ -194,7 +194,7 @@ void DCT3SelfTests(int argc, char *argv[])
 		/* make almost all tests */
 		error = s.Protocol.Functions->WriteMessage(&s, buffer3, 8, 0x40);
 		Print_Error(error);
-	
+
 		GSM_Terminate();
 
 		while (!false) {
@@ -209,7 +209,7 @@ void DCT3SelfTests(int argc, char *argv[])
 	s.User.UserReplyFunctions=UserReplyFunctions3;
 
 	for (i=0;i<10;i++) {
-		error=GSM_WaitFor (&s, buffer, 3, 0x40, 4, ID_User1);	
+		error=GSM_WaitFor (&s, buffer, 3, 0x40, 4, ID_User1);
 		if (error == ERR_NONE) break;
 	}
 }
@@ -224,7 +224,7 @@ struct DCT3ADCInfo {
 
 static struct DCT3ADCInfo DCT3ADC[] = {
 	{"Battery voltage:",			"mV",  1,  3,  2},
-//	{"Charger voltage:",			"mV",  1, -1,  7},  	
+//	{"Charger voltage:",			"mV",  1, -1,  7},
 //	{"Charger current:",			"mA",  1, -1,  5},
 	{"Battery type:",			"mAh", 1,  4,  3},
 	{"Battery temperature:",		"mK", 10,  5,  4},
@@ -266,7 +266,7 @@ void DCT3GetADC(int argc, char *argv[])
 	error=DCT3_EnableSecurity (&s, 0x02);
 	Print_Error(error);
 
-	error=GSM_WaitFor (&s, GetRaw, 3, 0x40, 6, ID_User3);		
+	error=GSM_WaitFor (&s, GetRaw, 3, 0x40, 6, ID_User3);
 	Print_Error(error);
 
 	while (1) {
@@ -280,7 +280,7 @@ void DCT3GetADC(int argc, char *argv[])
 		if (DCT3ADC[i].pos2 != -1) {
 			printf("unit result ");
 			GetUnit[3] = DCT3ADC[i].pos2;
-			error=GSM_WaitFor (&s, GetUnit, 6, 0x40, 4, ID_User3);		
+			error=GSM_WaitFor (&s, GetUnit, 6, 0x40, 4, ID_User3);
 			Print_Error(error);
 			printf("%10i ",DCT3ADCInt*DCT3ADC[i].x);
 			printf("%s\n",DCT3ADC[i].unit);
@@ -358,8 +358,8 @@ static GSM_Error DCT3_ReplyGetDSPROM(GSM_Protocol_Message msg, GSM_StateMachine 
 
 static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int	i, j;  
-	char	uni[100], buffer[50];    
+	int	i, j;
+	char	uni[100], buffer[50];
 
 	j=0;
 	for (i=0; i < 12; i++) {
@@ -413,7 +413,7 @@ static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachin
 static GSM_Error DCT3_ReplyGetMCUchkSum(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int i;
-	
+
 	if (msg.Buffer[3] == 0x12) printf("Language Pack: %c\n",msg.Buffer[5]);
 	if (msg.Buffer[3] == 0x02) {
 		printf("MCU checksum  : ");
@@ -565,7 +565,7 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 	/* FIXME */
 	if (!strcmp(s.Phone.Data.ModelInfo->model,"3210") && s.Phone.Data.VerNum>=5.31) {
 		printf("3210: enabling React and Logic game\n");
-		PPS[26] = '1';		
+		PPS[26] = '1';
 	}
 
 #ifdef DEBUG
@@ -581,7 +581,7 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 			j=128;
 			z++;
 		} else j=j/2;
-	} 
+	}
 
 //	reqSet[3]=0xe7;
 //	reqSet[4]=0x25;
@@ -712,7 +712,7 @@ void DCT3SetOperatorName(int argc, char *argv[])
 		strncpy(req+7,argv[3],200);
 		i = strlen(argv[3]);
 	}
-    
+
 	error=GSM_WaitFor (&s, req, 8+i, 0x40, 4, ID_User7);
 	Print_Error(error);
 
@@ -798,7 +798,7 @@ static GSM_Reply_Function UserReplyFunctions3[] = {
 	{DCT3_Reply7191GetSecurityCode,	"\x7a",0x04,0x1C,ID_User6	 	},
 
 	{NULL,				"\x00",0x00,0x00,ID_None	 	}
-};                                                                       	
+};
 
 #endif
 

@@ -1,6 +1,6 @@
 /* (c) 2001-2004 by Marcin Wiacek */
 /* Based on some Pawel Kot and others work from Gnokii (www.gnokii.org)
- * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
 /* Due to a problem in the source code management, the names of some of
@@ -129,7 +129,7 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 
 		tmp=UDHHeaders[i].Length;
 		/* if length is the same */
-		if (tmp==UDH->Text[0]) { 
+		if (tmp==UDH->Text[0]) {
 
 			if (tmp==0x05) tmp=tmp-3;/*three last bytes can be different for such UDH*/
 			if (tmp==0x0b) tmp=tmp-3;/*three last bytes can be different for such UDH*/
@@ -172,7 +172,7 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 	case UDH_NokiaRingtone		   : dbgprintf("Nokia ringtone");		 		break;
 	case UDH_NokiaRingtoneLong	   : dbgprintf("Nokia ringtone");		 		break;
 	case UDH_NokiaOperatorLogo	   : dbgprintf("Nokia GSM operator logo");	 	break;
-	case UDH_NokiaCallerLogo	   : dbgprintf("Nokia caller logo");		 	break;  	
+	case UDH_NokiaCallerLogo	   : dbgprintf("Nokia caller logo");		 	break;
 	case UDH_NokiaProfileLong	   : dbgprintf("Nokia profile");		 		break;
 	case UDH_NokiaCalendarLong	   : dbgprintf("Nokia calendar note");		 	break;
 	case UDH_NokiaPhonebookLong	   : dbgprintf("Nokia phonebook entry");	 		break;
@@ -202,8 +202,8 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 		/* Length of UDH header */
 		off = (buffer[Layout.Text] + 1);
 		SMS->UDH.Length = off;
-		dbgprintf("UDH header available (length %i)\n",off);    
-    
+		dbgprintf("UDH header available (length %i)\n",off);
+
 		/* Copy UDH header into SMS->UDH */
 		for (i = 0; i < off; i++) SMS->UDH.Text[i] = buffer[Layout.Text + i];
 
@@ -252,10 +252,10 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
 {
 	SMS->DeliveryStatus = buffer[Layout.TPStatus];
-    
+
 	if (buffer[Layout.TPStatus] < 0x03) {
 		EncodeUnicode(SMS->Text,"Delivered",9);
-		SMS->Length = 9;      
+		SMS->Length = 9;
 	} else if (buffer[Layout.TPStatus] & 0x40) {
 		EncodeUnicode(SMS->Text,"Failed",6);
 		SMS->Length = 6;
@@ -308,7 +308,7 @@ GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_SMSMessage *SMS, unsigned char 
         case 0x64: dbgprintf("Quality of service not available");			break;
         case 0x65: dbgprintf("Error in SME");						break;
         default  : dbgprintf("Reserved/Specific to SC: %x",buffer[Layout.TPStatus]);	break;
-	}          
+	}
 	dbgprintf("\n");
 #endif
 
@@ -449,7 +449,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			/* the mask for the 8-bit data */
 			/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme)
 			 * and GSM 03.38 section 4 */
-			buffer[Layout.TPDCS] |= 0xf4;    
+			buffer[Layout.TPDCS] |= 0xf4;
 			memcpy(buffer+(Layout.Text+off), SMS->Text, SMS->Length);
 			size2 = size = SMS->Length+off;
 #ifdef DEBUG
@@ -536,7 +536,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 		buffer[Layout.SMSCNumber]=GSM_PackSemiOctetNumber(SMS->SMSC.Number,buffer+(Layout.SMSCNumber+1), false);
 		dbgprintf("SMSC number \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
 	}
-  
+
 	/* Message Class*/
 	/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
 	if (Layout.TPDCS != 255) {
@@ -576,7 +576,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	/* size is the length of the data in octets including UDH */
 	*length=GSM_EncodeSMSFrameText(SMS,buffer,Layout);
 //	if (*length == 0) return GE_UNKNOWN;
-	*length += Layout.Text;	
+	*length += Layout.Text;
 
 	return ERR_NONE;
 }
@@ -607,7 +607,7 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 	SMS->ReplaceMessage		= 0;
 	SMS->Length			= 0;
 
-	/* This part is required to save SMS */    
+	/* This part is required to save SMS */
 	SMS->State			= SMS_UnSent;
 	SMS->Location			= 0;
 	SMS->Folder			= 0x02;	/*Outbox*/

@@ -31,7 +31,7 @@ static GSM_Error N3320_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x07, 0x01, 0x01, 0x00, 0x01,
 			       0xfe, 0x10, 	/* memory type */
-			       0x00, 0x00, 0x00, 0x00, 
+			       0x00, 0x00, 0x00, 0x00,
 			       0x00, 0x01, 	/* location */
 			       0x00, 0x00, 0x01};
 
@@ -174,7 +174,7 @@ GSM_Phone_Functions N3320Phone = {
 	NOTSUPPORTED,			/*	GetNetworkInfo		*/
 	NOTSUPPORTED,     		/*  	GetCategory 		*/
  	NOTSUPPORTED,       		/*  	AddCategory 		*/
-        NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/	
+        NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/
 	N3320_GetMemoryStatus,
 	N3320_GetMemory,
 	NOTSUPPORTED,			/*	GetNextMemory		*/
@@ -262,11 +262,14 @@ GSM_Phone_Functions N3320Phone = {
     	NOTSUPPORTED,			/*  	SetFMStation        	*/
     	NOTSUPPORTED,			/*  	ClearFMStations       	*/
 	NOTSUPPORTED,			/*	GetNextFileFolder	*/
+	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/*	GetFilePart		*/
 	NOTIMPLEMENTED,			/*	AddFilePart		*/
 	NOTSUPPORTED,	 		/* 	GetFileSystemStatus	*/
 	NOTIMPLEMENTED,			/*	DeleteFile		*/
 	NOTIMPLEMENTED,			/*	AddFolder		*/
+	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };

@@ -182,7 +182,7 @@ GSM_Error N71_65_GetNextCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 {
 	GSM_Error		error;
 	GSM_DateTime		date_time;
-	unsigned char 		req[] = {N6110_FRAME_HEADER, 0x3e, 
+	unsigned char 		req[] = {N6110_FRAME_HEADER, 0x3e,
 					 0xFF, 0xFE};		/* Location */
 
 	if (start) {
