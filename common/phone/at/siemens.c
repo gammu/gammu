@@ -189,19 +189,35 @@ GSM_Error SIEMENS_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *
 GSM_Error SIEMENS_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_CalendarEntry	*Calendar = Data->Cal;
 	GSM_ToDoEntry		ToDo;
 	GSM_Error		error;
 	unsigned char 		buffer[354];
 	int			len, pos=0;
 
-	if (Data->Priv.ATGEN.ReplyState != AT_Reply_OK) return ERR_UNKNOWN;
 
-	error = GetSiemensFrame(msg,s,"vcs",buffer,&len);
-	if (error!=ERR_NONE) return error;
-	error=GSM_DecodeVCALENDAR_VTODO(buffer,&pos,Calendar,&ToDo,Siemens_VCalendar,0);
-
- 	return error;
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+ 		smprintf(s, "Calendar entry received\n");
+		error = GetSiemensFrame(msg, s, "vcs", buffer, &len);
+		if (error != ERR_NONE) return error;
+		return GSM_DecodeVCALENDAR_VTODO(buffer,&pos,Calendar,&ToDo,Siemens_VCalendar,0);
+	case AT_Reply_Error:
+		smprintf(s, "Error - too high location ?\n");
+		return ERR_INVALIDLOCATION;
+	case AT_Reply_CMSError:
+ 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+ 		/* S55 say this way, that this is empty */
+ 		if (Priv->ErrorCode == 100) {
+ 			return ERR_EMPTY;
+ 		}
+	        return ATGEN_HandleCMEError(s);
+	default:
+		break;
+	}
+	return ERR_UNKNOWNRESPONSE;
 }
 
 GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
