@@ -317,8 +317,11 @@ GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 	char 			*pos;
 	/* Text to parse: ^SBNR: ("vcs",(1-50)) */
 
+	Priv->PBKSBNR = AT_SBNR_NOTAVAILABLE;
+
  	switch (Priv->ReplyState) {
  	case AT_Reply_OK:
+		Priv->PBKSBNR = AT_SBNR_AVAILABLE;
 		smprintf(s, "Memory info received\n");
 
 		/* Parse first location */
@@ -339,7 +342,7 @@ GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 
 		return ERR_NONE;
 	case AT_Reply_Error:
-		return ERR_UNKNOWN;
+		return ERR_NONE;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
  	default:
