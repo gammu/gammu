@@ -217,8 +217,11 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LastName;
 					Pbk->EntriesNum++;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
 					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
-					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff + pos + 1);
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff + pos + 2);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FirstName;
 					Pbk->EntriesNum++;
 				}

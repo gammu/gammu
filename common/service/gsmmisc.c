@@ -218,7 +218,7 @@ void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)
 unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
 {
 	static unsigned char	tmp[1000];
-	char			*start;
+	unsigned char		*start;
 
 	start = Buff + *pos;
 	while (Buff[*pos] != 0 || Buff[*pos + 1] != 0) {
@@ -231,7 +231,9 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
 		}
 		*pos += 2;
 	}
-	return NULL;
+	if (start == Buff) return NULL;
+	CopyUnicodeString(tmp, start);
+	return tmp;
 }
 
 bool ReadVCALText(char *Buffer, char *Start, char *Value)
