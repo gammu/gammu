@@ -45,28 +45,28 @@ void GSM_SetCalendarRecurrance(unsigned char *rec, unsigned char *endday, GSM_Ca
 	if (!strcmp(Buf,"Sun")) i = 7;
 
 	if (frequency != -1 && dow != -1 && day == -1 && month == -1) {
-		if (entry->Entries[frequency].Number == 1 && 
+		if (entry->Entries[frequency].Number == 1 &&
 		    entry->Entries[dow].Number == i) {
 			//one week
 			Recurrance = 24*7;
 		}
 	}
 	if (frequency != -1 && dow != -1 && day == -1 && month == -1) {
-		if (entry->Entries[frequency].Number == 2 && 
+		if (entry->Entries[frequency].Number == 2 &&
 		    entry->Entries[dow].Number == i) {
 			//two weeks
 			Recurrance = 24*14;
 		}
 	}
 	if (frequency != -1 && dow == -1 && day != -1 && month == -1) {
-		if (entry->Entries[frequency].Number == 1 && 
+		if (entry->Entries[frequency].Number == 1 &&
 		    entry->Entries[day].Number == entry->Entries[start].Date.Day) {
 			//month
 			Recurrance = 0xffff-1;
 		}
 	}
 	if (frequency != -1 && dow == -1 && day != -1 && month != -1) {
-		if (entry->Entries[frequency].Number == 1 && 
+		if (entry->Entries[frequency].Number == 1 &&
 		    entry->Entries[day].Number == entry->Entries[start].Date.Day &&
 		    entry->Entries[month].Number == entry->Entries[start].Date.Month) {
 			//year
@@ -144,7 +144,7 @@ void GSM_GetCalendarRecurrance(unsigned char *rec, unsigned char *endday, GSM_Ca
 
 	dbgprintf("Recurrance   : %i hours\n",Recurrance);
 
-	if (Recurrance == 24    || Recurrance == 24*7 || 
+	if (Recurrance == 24    || Recurrance == 24*7 ||
 	    Recurrance == 24*30 || Recurrance == 24*365) {
 		entry->Entries[entry->EntriesNum].EntryType	= CAL_REPEAT_FREQUENCY;
 		entry->Entries[entry->EntriesNum].Number	= 1;
@@ -214,7 +214,7 @@ void GSM_GetCalendarRecurrance(unsigned char *rec, unsigned char *endday, GSM_Ca
 			entry->EntriesNum++;
 			break;
 	}
-	dbgprintf("End Repeat Time: %04i-%02i-%02i %02i:%02i\n",
+	dbgprintf("End Repeat Time: %04i-%02i-%02i %02i:%02i:%02i\n",
 		entry->Entries[entry->EntriesNum-1].Date.Year,
 		entry->Entries[entry->EntriesNum-1].Date.Month,
 		entry->Entries[entry->EntriesNum-1].Date.Day,
@@ -350,7 +350,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 		if (note->Type == GSM_CAL_MEETING && Location != -1) {
 			SaveVCALText(Buffer, Length, note->Entries[Location].Text, "LOCATION");
 		}
-	
+
 		if (Time == -1) return ERR_UNKNOWN;
 		SaveVCALDateTime(Buffer, Length, &note->Entries[Time].Date, "DTSTART");
 
@@ -397,7 +397,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 			*Length+=sprintf(Buffer+(*Length), "MISCELLANEOUS%c%c",13,10);
 			break;
 		}
-		
+
 		if (Time == -1) return ERR_UNKNOWN;
 		SaveVCALDateTime(Buffer, Length, &note->Entries[Time].Date, "DTSTART");
 
@@ -415,7 +415,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 			}
 		} else {
 		}
-	
+
 		if (note->Type == GSM_CAL_CALL) {
 			buffer[0] = 0;
 			buffer[1] = 0;
@@ -451,7 +451,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 			*Length+=sprintf(Buffer+(*Length), "MISCELLANEOUS%c%c",13,10);
 			break;
 		}
-		
+
 		if (Time == -1) return ERR_UNKNOWN;
 		SaveVCALDateTime(Buffer, Length, &note->Entries[Time].Date, "DTSTART");
 
@@ -462,14 +462,14 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 		if (Alarm != -1) {
 			SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "AALARM");
 		}
-	
+
 		SaveVCALText(Buffer, Length, note->Entries[Text].Text, "SUMMARY");
 
 		if (Location != -1) {
 			SaveVCALText(Buffer, Length, note->Entries[Location].Text, "LOCATION");
 		}
 	}
-	
+
 	*Length+=sprintf(Buffer+(*Length), "END:VEVENT%c%c",13,10);
 	if (header) *Length+=sprintf(Buffer+(*Length), "END:VCALENDAR%c%c",13,10);
 
@@ -531,7 +531,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 		} else {
 			*Length+=sprintf(Buffer+(*Length), "STATUS:COMPLETED%c%c",13,10);
 		}
-	
+
 		switch (note->Priority) {
 			case GSM_Priority_Low	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:1%c%c",13,10); break;
 			case GSM_Priority_Medium: *Length+=sprintf(Buffer+(*Length), "PRIORITY:2%c%c",13,10); break;
@@ -558,7 +558,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 		} else {
 			*Length+=sprintf(Buffer+(*Length), "STATUS:COMPLETED%c%c",13,10);
 		}
-	
+
 		switch (note->Priority) {
 			case GSM_Priority_Low	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:3%c%c",13,10); break;
 			case GSM_Priority_Medium: *Length+=sprintf(Buffer+(*Length), "PRIORITY:2%c%c",13,10); break;
@@ -567,7 +567,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 
 		if (Alarm != -1) {
 			SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "AALARM");
-		}		
+		}
 	}
 
 	*Length+=sprintf(Buffer+(*Length), "END:VTODO%c%c",13,10);
