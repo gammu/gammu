@@ -650,24 +650,20 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
 				Calendar->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "DTSTART", Buff)) {
+			if (ReadVCALText(Line, "DTSTART", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date)) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_START_DATETIME;
-				ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date);
 				Calendar->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "DTEND", Buff)) {
+			if (ReadVCALText(Line, "DTEND", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date)) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_END_DATETIME;
-				ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date);
 				Calendar->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "DALARM", Buff)) {
+			if (ReadVCALText(Line, "DALARM", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date)) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
-				ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date);
 				Calendar->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "AALARM", Buff)) {
+			if (ReadVCALText(Line, "AALARM", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date)) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_ALARM_DATETIME;
-				ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date);
 				Calendar->EntriesNum++;
 			}
 			break;
@@ -676,19 +672,16 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				if (ToDo->EntriesNum == 0) return ERR_EMPTY;
 				return ERR_NONE;
 			}
-			if (ReadVCALText(Line, "DUE", Buff)) {
+			if (ReadVCALText(Line, "DUE", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &ToDo->Entries[ToDo->EntriesNum].Date)) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_END_DATETIME;
-				ReadVCALDateTime(DecodeUnicodeString(Buff), &ToDo->Entries[ToDo->EntriesNum].Date);
 				ToDo->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "DALARM", Buff)) {
+			if (ReadVCALText(Line, "DALARM", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &ToDo->Entries[ToDo->EntriesNum].Date)) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_SILENT_ALARM_DATETIME;
-				ReadVCALDateTime(DecodeUnicodeString(Buff), &ToDo->Entries[ToDo->EntriesNum].Date);
 				ToDo->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "AALARM", Buff)) {
+			if (ReadVCALText(Line, "AALARM", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &ToDo->Entries[ToDo->EntriesNum].Date)) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_ALARM_DATETIME;
-				ReadVCALDateTime(DecodeUnicodeString(Buff), &ToDo->Entries[ToDo->EntriesNum].Date);
 				ToDo->EntriesNum++;
 			}
 			if (ReadVCALText(Line, "SUMMARY", Buff)) {

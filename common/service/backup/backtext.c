@@ -114,7 +114,7 @@ static void SaveLinkedBackupText(FILE *file, char *myname, char *myvalue, bool U
 		}
 		if (current == 0) break;
 		w++;
-	}		
+	}
 }
 
 static void ReadLinkedBackupText(INI_Section *file_info, char *section, char *myname, char *myvalue, bool UseUnicode)
@@ -424,7 +424,7 @@ static void SaveNoteEntry(FILE *file, GSM_NoteEntry *Note, bool UseUnicode)
 	char buffer[1000];
 
 	sprintf(buffer,"Location = %d%c%c", Note->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);	
+	SaveBackupText(file, "", buffer, UseUnicode);
 	SaveBackupText(file, "Text", Note->Text, UseUnicode);
 	sprintf(buffer, "%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
@@ -436,7 +436,7 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 	char	buffer[1000];
 
 	sprintf(buffer,"Location = %d%c%c", Note->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);	
+	SaveBackupText(file, "", buffer, UseUnicode);
 	SaveBackupText(file, "", "Type = ", UseUnicode);
 	switch (Note->Type) {
 		case GSM_CAL_REMINDER 	: sprintf(buffer,"Reminder%c%c", 		13,10); break;
@@ -468,7 +468,7 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
                 case GSM_CAL_T_TRAV   	: sprintf(buffer,"Training/Travels%c%c", 	13,10); break;
                 case GSM_CAL_T_WINT   	: sprintf(buffer,"Training/WinterGames%c%c", 	13,10); break;
 	}
-	SaveBackupText(file, "", buffer, UseUnicode);	
+	SaveBackupText(file, "", buffer, UseUnicode);
 	for (i=0;i<Note->EntriesNum;i++) {
 		switch (Note->Entries[i].EntryType) {
 		case CAL_START_DATETIME:
@@ -507,7 +507,7 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 			break;
 		case CAL_PHONE:
 			SaveBackupText(file, "Phone", Note->Entries[i].Text, UseUnicode);
-			break;               
+			break;
 		case CAL_REPEAT_STOPDATE:
 			SaveBackupText(file, "", "RepeatStopDate", UseUnicode);
 			SaveVCalDate(file, &Note->Entries[i].Date, UseUnicode);
@@ -556,7 +556,7 @@ static void SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, boo
 		case WAPSETTINGS_BEARER_GPRS: sprintf(buffer,"Bearer = GPRS%c%c",13,10); break;
 		case WAPSETTINGS_BEARER_DATA: sprintf(buffer,"Bearer = Data%c%c",13,10); break;
 		case WAPSETTINGS_BEARER_USSD: sprintf(buffer,"Bearer = USSD%c%c",13,10);
-	}	
+	}
 	SaveBackupText(file, "", buffer, UseUnicode);
 	if (settings->ReadOnly) {
 		sprintf(buffer,"ReadOnly = Yes%c%c",13,10);
@@ -856,7 +856,7 @@ static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
 {
 	unsigned char 	buffer[1000];
     	int 		j;
-    	
+
 	sprintf(buffer,"Location = %i%c%c",ToDo->Location,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
 	switch (ToDo->Priority) {
@@ -871,7 +871,7 @@ static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
 		break;
 	}
 	SaveBackupText(file, "", buffer, UseUnicode);
-	
+
 	for (j=0;j<ToDo->EntriesNum;j++) {
         switch (ToDo->Entries[j].EntryType) {
 	    case TODO_END_DATETIME:
@@ -919,7 +919,7 @@ static void SaveProfileEntry(FILE *file, GSM_Profile *Profile, bool UseUnicode)
 	int			j,k;
 	bool			special;
 	unsigned char 		buffer[1000];
-		
+
 	sprintf(buffer,"Location = %i%c%c",Profile->Location,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
 	SaveBackupText(file, "Name",Profile->Name, UseUnicode);
@@ -953,7 +953,7 @@ static void SaveProfileEntry(FILE *file, GSM_Profile *Profile, bool UseUnicode)
 			SaveBackupText(file, "", buffer, UseUnicode);
 			sprintf(buffer,"Value%02i = %i%c%c",j,Profile->FeatureValue[j],13,10);
 			SaveBackupText(file, "", buffer, UseUnicode);
-			break;	
+			break;
 		case Profile_CallerGroups:
 			special = true;
 			sprintf(buffer,"CallerGroups%c%c",13,10);
@@ -1032,7 +1032,7 @@ static void SaveProfileEntry(FILE *file, GSM_Profile *Profile, bool UseUnicode)
 			case PROFILE_SAVER_TIMEOUT_5MIN	 	: sprintf(buffer,"5Minutes%c%c",13,10);		break;
 			case PROFILE_SAVER_TIMEOUT_10MIN 	: sprintf(buffer,"10Minutes%c%c",13,10);	break;
 			default					: sprintf(buffer,"UNKNOWN%c%c",13,10);
-			}	
+			}
 			SaveBackupText(file, "", buffer, UseUnicode);
 		}
 	}
@@ -1074,8 +1074,8 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	int 		i;
 	unsigned char 	buffer[1000],checksum[200];
 	FILE 		*file;
- 
-	file = fopen(FileName, "wb");      
+
+	file = fopen(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	if (UseUnicode) {
@@ -1228,7 +1228,7 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 
 	FindBackupChecksum(FileName, UseUnicode, checksum);
 
-	file = fopen(FileName, "ab");      
+	file = fopen(FileName, "ab");
 	if (file == NULL) return ERR_CANTOPENFILE;
 	sprintf(buffer,"[Checksum]%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
@@ -1248,7 +1248,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 
 	Pbk->EntriesNum = 0;
 	e = INI_FindLastSectionEntry(file_info, section, UseUnicode);
-	
+
 	while (e != NULL) {
 		num = -1;
 		if (UseUnicode) {
@@ -1498,8 +1498,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	// StartTime must be before Recurrance
 	sprintf(buffer,"StartTime");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL) {
-		ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_START_DATETIME;
 		note->EntriesNum++;
 	}
@@ -1518,7 +1517,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		case 14:
 			rec2 = 14*24;
 			break;
-		case 30:	
+		case 30:
 		case ((0xffff-1)/24):
 			rec2 = 0xffff-1;
 			break;
@@ -1534,16 +1533,13 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	}
 	sprintf(buffer,"StopTime");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL) {
-		ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_END_DATETIME;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"Alarm");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL)
-	{
-		ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_ALARM_DATETIME;
 		sprintf(buffer,"AlarmType");
 		readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -1557,15 +1553,13 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	}
 	sprintf(buffer,"RepeatStartDate");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL) {
-		ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STARTDATE;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"RepeatStopDate");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL) {
-		ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
 		note->EntriesNum++;
 	}
@@ -1612,7 +1606,7 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 	char			*readvalue;
 
     	ToDo->EntriesNum = 0;
-	
+
 	sprintf(buffer,"Location");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) ToDo->Location = atoi(readvalue);
@@ -1640,7 +1634,7 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_PHONE;
         	ToDo->EntriesNum++;
     	}
-    
+
 	sprintf(buffer,"Private");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
@@ -1648,7 +1642,7 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
         	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_PRIVATE;
         	ToDo->EntriesNum++;
     	}
-    
+
 	sprintf(buffer,"Completed");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
@@ -1660,7 +1654,7 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
         	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_COMPLETED;
         	ToDo->EntriesNum++;
     	}
-    
+
 	sprintf(buffer,"Category");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
@@ -1679,24 +1673,21 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 
 	sprintf(buffer,"DueTime");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL) {
-		ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date);
+	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_END_DATETIME;
         	ToDo->EntriesNum++;
    	}
-    
+
 	sprintf(buffer,"Alarm");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL) {
-		ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_ALARM_DATETIME;
         	ToDo->EntriesNum++;
     	}
 
 	sprintf(buffer,"SilentAlarm");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL) {
-		ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_SILENT_ALARM_DATETIME;
         	ToDo->EntriesNum++;
     	}
@@ -1928,13 +1919,13 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 			sprintf(buffer,"Security%02i",num);
 			settings->Settings[settings->Number].IsSecurity = true;
 			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-			if (readvalue!=NULL) 
+			if (readvalue!=NULL)
 			{
 				if (mystrncasecmp(readvalue,"Off",0)) settings->Settings[settings->Number].IsSecurity = false;
 			}
 			sprintf(buffer,"Bearer%02i",num);
 			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-			if (readvalue!=NULL) 
+			if (readvalue!=NULL)
 			{
 				if (mystrncasecmp(readvalue,"SMS",0)) {
 					settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_SMS;
@@ -1956,14 +1947,14 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 					sprintf(buffer,"Authentication%02i",num);
 					settings->Settings[settings->Number].IsNormalAuthentication = true;
 					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-					if (readvalue!=NULL) 
+					if (readvalue!=NULL)
 					{
 						if (mystrncasecmp(readvalue,"Secure",0)) settings->Settings[settings->Number].IsNormalAuthentication = false;
 					}
 					sprintf(buffer,"CallSpeed%02i",num);
 					settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_14400;
 					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-					if (readvalue!=NULL) 
+					if (readvalue!=NULL)
 					{
 						if (mystrncasecmp(readvalue,"9600",0)) settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_9600;
 						if (mystrncasecmp(readvalue,"auto",0)) settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_AUTO;
@@ -1971,14 +1962,14 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 					sprintf(buffer,"Login%02i",num);
 					settings->Settings[settings->Number].ManualLogin = false;
 					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-					if (readvalue!=NULL) 
+					if (readvalue!=NULL)
 					{
 						if (mystrncasecmp(readvalue,"Manual",0)) settings->Settings[settings->Number].ManualLogin = true;
-					}	
+					}
 					sprintf(buffer,"CallType%02i",num);
 					settings->Settings[settings->Number].IsISDNCall = true;
 					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-					if (readvalue!=NULL) 
+					if (readvalue!=NULL)
 					{
 						if (mystrncasecmp(readvalue,"Analogue",0)) settings->Settings[settings->Number].IsISDNCall = false;
 					}
@@ -2328,8 +2319,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	readvalue = ReadCFGText(file_info, buffer, "Creator", UseUnicode);
 	if (readvalue!=NULL) strcpy(backup->Creator,readvalue);
 	readvalue = ReadCFGText(file_info, buffer, "DateTime", UseUnicode);
-	if (readvalue!=NULL) {
-		ReadVCALDateTime(readvalue, &backup->DateTime);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &backup->DateTime)) {
 		backup->DateTimeAvailable = true;
 	}
 
@@ -2905,8 +2895,7 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 	if (readvalue!=NULL) SMS->Class = atoi(readvalue);
 	sprintf(buffer,"Sent");
 	readvalue = ReadCFGText(file_info, section, buffer, false);
-	if (readvalue!=NULL) {
-		ReadVCALDateTime(readvalue, &SMS->DateTime);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &SMS->DateTime)) {
 		SMS->PDU = SMS_Deliver;
 	}
 	sprintf(buffer,"RejectDuplicates");
@@ -3058,7 +3047,7 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 							}
 					}
 				}
-				fprintf(file,"\n");	
+				fprintf(file,"\n");
 				break;
 			default:
 				break;
@@ -3115,14 +3104,14 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 GSM_Error GSM_AddSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 {
 	FILE *file;
-  
-	file = fopen(FileName, "ab");      
+
+	file = fopen(FileName, "ab");
 	if (file == NULL) return(ERR_CANTOPENFILE);
 
 	SaveSMSBackupTextFile(file,backup);
 
 	fclose(file);
-   
+
 	return ERR_NONE;
 }
 
