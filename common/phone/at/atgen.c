@@ -4247,6 +4247,7 @@ GSM_Phone_Functions ATGENPhone = {
     	NOTSUPPORTED,			/* 	ClearFMStations       	*/
 	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
 	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	GetNextRootFolder	*/
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/* 	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFile			*/

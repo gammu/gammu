@@ -135,6 +135,7 @@ GSM_Phone_Functions N650Phone = {
 	NOTSUPPORTED,			/* 	ClearFMStations		*/
 	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
 	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	GetNextRootFolder	*/
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/* 	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFilePart		*/

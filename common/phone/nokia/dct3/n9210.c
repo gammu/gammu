@@ -388,6 +388,7 @@ GSM_Phone_Functions N9210Phone = {
         NOTSUPPORTED,           	/*      ClearFMStations         */
 	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
 	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	GetNextRootFolder	*/
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/*	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFile			*/

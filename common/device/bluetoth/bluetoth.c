@@ -41,6 +41,7 @@ GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 		return bluetooth_connect(s,1,s->CurrentConfig->Device);
 	case GCT_BLUEOBEX:
 		return bluetooth_connect(s,9,s->CurrentConfig->Device);
+	case GCT_BLUEFBUS2: //fixme
 	case GCT_BLUEPHONET:
 		error = bluetooth_connect(s,14,s->CurrentConfig->Device); //older Series 40 - 8910, 6310
 		if (error == ERR_NONE) return error;

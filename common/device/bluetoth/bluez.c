@@ -156,26 +156,23 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, st
 	for (; seq; seq = next) {
 		rec 	= (sdp_record_t *) seq->data;
 
-		if (channel2 == -1) {
-			if (!context->tree) {
-				d = sdp_data_get(rec,SDP_ATTR_SVCNAME_PRIMARY);
-
-				if (sdp_get_access_protos(rec,&proto) == 0) {
-					channel = -1;
-					sdp_list_foreach(proto,print_access_protos,&channel);
-					sdp_list_free(proto,(sdp_free_func_t)sdp_data_free);
-				}
-				smprintf(s,"Channel %i",channel);
-				if (d) smprintf(s," - \"%s\"",d->val.str);
-				smprintf(s,"\n");
-				if (channel2 == -1 && bluetooth_checkservicename(s, d->val.str) == ERR_NONE) {
-					channel2 = channel;
-				}
+		if (!context->tree) {
+			d = sdp_data_get(rec,SDP_ATTR_SVCNAME_PRIMARY);
+			if (sdp_get_access_protos(rec,&proto) == 0) {
+				channel = -1;
+				sdp_list_foreach(proto,print_access_protos,&channel);
+				sdp_list_free(proto,(sdp_free_func_t)sdp_data_free);
 			}
-    			if (sdp_get_group_id(rec,&subcontext.group) != -1) {
-				memcpy(&subcontext, context, sizeof(struct search_context));
-				if (subcontext.group.value.uuid16 != context->group.value.uuid16) bluetooth_checkdevice(s,bdaddr,&subcontext);
+			smprintf(s,"Channel %i",channel);
+			if (d) smprintf(s," - \"%s\"",d->val.str);
+			smprintf(s,"\n");
+			if (channel2 == -1 && bluetooth_checkservicename(s, d->val.str) == ERR_NONE) {
+				channel2 = channel;
 			}
+		}
+    		if (sdp_get_group_id(rec,&subcontext.group) != -1) {
+			memcpy(&subcontext, context, sizeof(struct search_context));
+			if (subcontext.group.value.uuid16 != context->group.value.uuid16) bluetooth_checkdevice(s,bdaddr,&subcontext);
 		}
 
 		next = seq->next;
