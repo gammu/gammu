@@ -212,13 +212,13 @@ char *OSDate (GSM_DateTime dt)
 	/* If don't have weekday name, include it */
 	strftime(retval, 200, "%A", &timeptr);
 	if (strstr(retval2,retval)==NULL) {
-            /* Check also for short name */
-	    strftime(retval, 200, "%a", &timeptr);
-	    if (strstr(retval2,retval)==NULL) {
-            	strcat(retval2," (");
-            	strcat(retval2,retval);
-            	strcat(retval2,")");
-            }
+		/* Check also for short name */
+		strftime(retval, 200, "%a", &timeptr);
+		if (strstr(retval2,retval)==NULL) {
+            		strcat(retval2," (");
+            		strcat(retval2,retval);
+            		strcat(retval2,")");
+            	}
 	}
 
 #ifdef WIN32
@@ -228,14 +228,16 @@ char *OSDate (GSM_DateTime dt)
 	return retval2;
 }
 
-bool CheckDate(GSM_DateTime *date) {
+bool CheckDate(GSM_DateTime *date)
+{
 	/* FIXME: This could also check if day is correct for selected month */
 	return date->Year != 0 &&
 		date->Month >= 1 && date->Month <= 12 &&
 		date->Day >= 1 && date->Day <= 31;
 }
 
-bool CheckTime(GSM_DateTime *date) {
+bool CheckTime(GSM_DateTime *date)
+{
 	return date->Hour <= 23 && date->Hour >= 0 &&
 		date->Minute <= 59 && date->Minute >= 0 &&
 		date->Second <= 59 && date->Second >= 0;
@@ -358,8 +360,7 @@ int smfprintf(FILE *f, const char *format, ...)
 	va_start(argp, format);
 	result = vsprintf(buffer, format, argp);
 	strcat(nextline, buffer);
-	if (strstr(buffer, "\n"))
-	{
+	if (strstr(buffer, "\n")) {
 		if (ftell(f) < 5000000) {
 			GSM_GetCurrentDateTime(&date_time);
 			if (linecount > 0) {
@@ -406,35 +407,36 @@ bool GSM_SetDebugLevel(char *info, Debug_Info *di)
 /* Dumps a message */
 void DumpMessage(FILE *df, const unsigned char *message, int messagesize)
 {
-	int 	i;
-	char 	buf[17];
+	int 		i,j=0,len=16;
+	unsigned char	buffer[200];
 
 	if (df==NULL || messagesize == 0) return;
 
-	buf[16] = 0;
+	smfprintf(df, "\n");
+
+	memset(buffer,0x20,sizeof(buffer));
+	buffer[len*5-1]=0;
 
 	for (i = 0; i < messagesize; i++) {
-		if (i % 16 == 0) {
-			if (i != 0) smfprintf(df, " %s", buf);
-			smfprintf(df, "\n");
-			memset(buf, ' ', 16);
-		} else {
-			smfprintf(df, "|");
-		}
-		smfprintf(df, "%02x", message[i]);
+		sprintf(buffer+j*4,"%02x",message[i]);
+		buffer[j*4+2] = 0x20;
 		if (isprint(message[i]) && message[i]!=0x09) {
-			if ((i+1) % 16 != 0) smfprintf(df, "%c", message[i]);
-			buf[i % 16] = message[i];
+			if (j != len-1) buffer[j*4+2] 	= message[i];
+			buffer[(len-1)*4+j+3]		= message[i];
 		} else {
-			if ((i+1) % 16 != 0) smfprintf(df, " ");
-			buf[i % 16] = '.';
+			buffer[(len-1)*4+j+3]		= '.';
+		}
+		if (j != len-1 && i != messagesize-1) buffer[j*4+3] = '|';
+		if (j == len-1) {
+			smfprintf(df,"%s\n",buffer);
+			memset(buffer,0x20,sizeof(buffer));
+			buffer[len*5-1]=0;
+			j = 0;
+		} else {
+			j++;
 		}
 	}
-	if (i % 16 == 0) {
-		smfprintf(df, " %s", buf);
-	} else {
-		smfprintf(df, "%*s %s", 4 * (16 - i % 16) - 1, "", buf);
-	}
+	if (j != 0) smfprintf(df,"%s",buffer);
 	smfprintf(df, "\n");
 }
 

@@ -5,9 +5,10 @@
 
 #include <string.h>
 
+#include "../../../../cfg/config.h"
 #include "../../../misc/coding/coding.h"
+#include "../../../service/sms/gsmsms.h"
 #include "../../../gsmcomon.h"
-#include "../../../service/gsmsms.h"
 #include "../../pfunc.h"
 #include "../nfunc.h"
 #include "n6110.h"
@@ -65,20 +66,25 @@ struct N6110_Lang_Char {
 };
 
 static struct N6110_Lang_Char N6110_Lang_Table[] = {
-//Polish small chars acelnoszz with ogonek
-{N6110_Europe,0x14,0x01,0x05},{N6110_Europe,0x17,0x01,0x07},
-{N6110_Europe,0x1E,0x01,0x19},{N6110_Europe,0x90,0x01,0x42},
-{N6110_Europe,0x93,0x01,0x44},{N6110_Europe,0x9A,0x00,0xF3},
-{N6110_Europe,0xB6,0x01,0x5B},{N6110_Europe,0xF4,0x01,0x7C},
-{N6110_Europe,0xEE,0x01,0x7A},
-//Polish large chars acelnoszz with ogonek
-{N6110_Europe,0x13,0x01,0x04},{N6110_Europe,0x15,0x01,0x06},
-{N6110_Europe,0x1D,0x01,0x18},{N6110_Europe,0x8E,0x01,0x41},
-{N6110_Europe,0x92,0x01,0x43},{N6110_Europe,0x83,0x00,0xD3},
-{N6110_Europe,0xB5,0x01,0x5A},{N6110_Europe,0xF0,0x01,0x7B},
-{N6110_Europe,0xE7,0x01,0x79},
-//euro
-{N6110_Europe,0xB2,0x20,0xAC},
+{N6110_Europe,0x13,0x01,0x04},//Latin capital letter a with ogonek
+{N6110_Europe,0x14,0x01,0x05},//Latin small   letter a with ogonek
+{N6110_Europe,0x15,0x01,0x06},//Latin capital letter c with acute
+{N6110_Europe,0x17,0x01,0x07},//Latin small   letter c with acute
+{N6110_Europe,0x1D,0x01,0x18},//Latin capital letter e with ogonek
+{N6110_Europe,0x1E,0x01,0x19},//Latin small   letter e with ogonek
+{N6110_Europe,0x83,0x00,0xD3},//Latin capital letter o with acute
+{N6110_Europe,0x8E,0x01,0x41},//Latin capital letter l with stroke
+{N6110_Europe,0x90,0x01,0x42},//Latin small   letter l with stroke
+{N6110_Europe,0x92,0x01,0x43},//Latin capital letter n with acute
+{N6110_Europe,0x93,0x01,0x44},//Latin small   letter n with acute
+{N6110_Europe,0x9A,0x00,0xF3},//Latin small   letter o with acute
+{N6110_Europe,0xB2,0x20,0xAC},//euro
+{N6110_Europe,0xB5,0x01,0x5A},//Latin capital letter s with acute
+{N6110_Europe,0xB6,0x01,0x5B},//Latin small   letter s with acute
+{N6110_Europe,0xE7,0x01,0x79},//Latin capital letter z with acute
+{N6110_Europe,0xEE,0x01,0x7A},//Latin small   letter z with acute
+{N6110_Europe,0xF4,0x01,0x7C},//Latin small   letter z with dot above
+{N6110_Europe,0xF0,0x01,0x7B},//Latin capital letter z with dot above
 {0,0,0,0}
 };
 
@@ -116,6 +122,7 @@ static void N6110_EncodeUnicode(GSM_StateMachine *s, unsigned char *dest, const 
 	dest[(o_len*2)+1]	= 0;
 }
 
+#ifndef ENABLE_LGPL
 
 /* This function provides Nokia authentication protocol.
  * Nokia authentication protocol is used in the communication between Nokia
@@ -226,8 +233,13 @@ static GSM_Error N6110_MakeAuthentication(GSM_StateMachine *s)
 	return s->Protocol.Functions->WriteMessage(s, magic_connect, 45, 0x64);
 }
 
+#endif
+
 static GSM_Error N6110_ShowStartInfo(GSM_StateMachine *s, bool enable)
 {
+#ifdef ENABLE_LGPL
+	return GE_NONE;
+#else
 	GSM_Error error=GE_NONE;
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_MAGICBYTES)) {
@@ -237,6 +249,7 @@ static GSM_Error N6110_ShowStartInfo(GSM_StateMachine *s, bool enable)
 		}
 	}
 	return error;
+#endif
 }
 
 static GSM_Error N6110_Initialise (GSM_StateMachine *s)
@@ -1183,9 +1196,8 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		 * 0x02 - View Graphics
 		 * 0x03 - Send Graphics
 		 * 0x04 - Send via IR
-		 * You can even set it higher but Nokia phones (my
-		 * 6110 at least) will not show you the name of this
-		 * item in menu ;-)) Nokia is really joking here.
+                 * When set to higher, some phones (like 6110) will not show
+	         * the name of this item in menu
 		 */
 		if (Bitmap->DefaultBitmap) {
 			Bitmap->Width  = 72;
@@ -2747,7 +2759,9 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 	{N6110_ReplyGetSetPicture,	  "\x47",0x03,0x05,ID_SetBitmap		 },
 	{N6110_ReplyGetSetPicture,	  "\x47",0x03,0x06,ID_GetBitmap		 },
 
+#ifndef ENABLE_LGPL
 	{N6110_ReplyGetMagicBytes,	  "\x64",0x00,0x00,ID_MakeAuthentication },
+#endif
 
 	{DCT3DCT4_ReplyGetModelFirmware,  "\xD2",0x02,0x00,ID_GetModel		 },
 	{DCT3DCT4_ReplyGetModelFirmware,  "\xD2",0x02,0x00,ID_GetFirmware	 },
@@ -2758,7 +2772,7 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6110Phone = {
-	"3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|6130|6150|6190|8210|8250|8290|8850|8855|8890",
+	"2100|3210|3310|3330|3390|3410|3610|5110|5110i|5130|5190|5210|5510|6110|6130|6150|6190|8210|8250|8290|8850|8855|8890",
 	N6110ReplyFunctions,
 	N6110_Initialise,
 	PHONE_Terminate,

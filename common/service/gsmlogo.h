@@ -19,23 +19,58 @@ typedef enum {
 
 #define GSM_BITMAP_SIZE	864
 
-/* Structure to hold incoming/outgoing bitmaps (and welcome-notes). */
+/**
+ * Structure to hold incoming/outgoing bitmaps (and welcome-notes).
+ */
 typedef struct {
-	unsigned char		Location;                	  /* Caller group number */
-	unsigned char		Height;				  /* Bitmap height (pixels) */
-	unsigned char		Width;				  /* Bitmap width (pixels) */
-	GSM_Bitmap_Types	Type;				  /* Bitmap type */
-	char			NetworkCode[7];			  /* Network operator code */
-	char			Text [256];			  /* Text used for (dealer) welcome-note
-								   * or callergroup name or Picture Image text */
-	bool			DefaultName;			  /* When get caller group - is default name ? */
-	unsigned char		Bitmap	[GSM_BITMAP_SIZE];	  /* Actual Bitmap ((65+7)/8*96=864) */ 
-	bool			DefaultBitmap;
-	unsigned char		Ringtone;			  /* Ringtone ID sent with caller group */
-	bool			DefaultRingtone;
-	bool			Enabled;                       	  /* With caller logos = displayed or not */
-	char			Sender	[GSM_MAX_NUMBER_LENGTH+1];/* For Picture Images - number of sender */
-	unsigned char		ID;
+	/**
+	 * Caller group number
+	 */
+	unsigned char Location;
+	/**
+	 * Bitmap height in pixels
+	 */
+	unsigned char Height;
+	/**
+	 * Bitmap width in pixels
+	 */
+	unsigned char Width;
+	/**
+	 * Bitmap type
+	 */
+	GSM_Bitmap_Types Type;
+	/**
+	 * Network operator code
+	 */
+	char NetworkCode[7];
+	/**
+	 * Text used for (dealer) welcome-note
+         * or callergroup name or Picture Image text
+	 */
+	char Text [256];
+	/**
+	 * When get caller group - is default name ?
+	 */
+	bool DefaultName;
+	/**
+	 * Actual Bitmap ((65+7)/8*96=864)
+	 */ 
+	unsigned char Bitmap[GSM_BITMAP_SIZE];
+	bool DefaultBitmap;
+	/**
+	 * Ringtone ID sent with caller group
+	 */
+	unsigned char Ringtone;
+	bool DefaultRingtone;
+	/**
+	 * With caller logos = displayed or not
+	 */
+	bool Enabled;
+	/**
+	 * For Picture Images - number of sender
+	 */
+	char Sender [GSM_MAX_NUMBER_LENGTH+1];
+	unsigned char ID;
 } GSM_Bitmap;
 
 #define MAX_MULTI_BITMAP 6

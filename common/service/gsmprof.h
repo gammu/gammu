@@ -60,13 +60,24 @@ typedef enum {
 	Profile_CallerGroups
 } GSM_Profile_Feat_ID;
 
-/* Structure to hold profile entries. */
+/**
+ * It contains phone profiles
+ */
 typedef struct {
 	bool			Active;
 
-	int 			Location;	 /* The number of the profile. 			*/
-	char 			Name[40*2];	 /* The name of the profile. 			*/
-	bool 			DefaultName;	 /* Default name for profile ?			*/
+	/**
+	 * Profile number
+	 */
+	int 			Location;
+	/**
+ 	 * Profile name
+	 */
+	char 			Name[40*2];
+	/**
+	 * Is it default name for profile ?
+	 */
+	bool 			DefaultName;
 	bool			HeadSetProfile;
 	bool			CarKitProfile;
 

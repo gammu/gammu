@@ -33,12 +33,12 @@ GSM_Error NotSupportedFunction(void)
 	return GE_NOTSUPPORTED;
 }
 
-unsigned char *GetMsg (CFG_Header *cfg, unsigned char *default_string)
+unsigned char *GetMsg (INI_Section *cfg, unsigned char *default_string)
 {
 	unsigned char 		*retval, buffer[40], buff2[40], buff[2000];
 	static unsigned char	def_str[2000];
-	CFG_Entry		*e;
-	CFG_Header 		*h;
+	INI_Entry		*e;
+	INI_Section 		*h;
 	int			num;
 
 	if (cfg==NULL) return default_string;
@@ -56,25 +56,25 @@ unsigned char *GetMsg (CFG_Header *cfg, unsigned char *default_string)
 
 	e = NULL;
 	/* First find our section */
-        for (h = cfg; h != NULL; h = h->next) {
-		if (mywstrncasecmp(buff2, h->section, 0)) {
-			e = h->entries;
+        for (h = cfg; h != NULL; h = h->Next) {
+		if (mywstrncasecmp(buff2, h->SectionName, 0)) {
+			e = h->SubEntries;
 			break;
 		}
 	}
 	while (1) {
 		if (e == NULL) break;
 		num = -1;
-		DecodeUnicode(e->key,buffer);
+		DecodeUnicode(e->EntryName,buffer);
 		if (strlen(buffer) == 5 && (buffer[0] == 'F' || buffer[0] == 'f')) {
 			num = atoi(buffer+2);
 		}
 		if (num!=-1) {
-			DecodeUnicode(e->value+2,buff);
+			DecodeUnicode(e->EntryValue+2,buff);
 			if (strncmp(buff,def_str,strlen(def_str))==0) {
 				sprintf(buff,"T%04i",num);
 				EncodeUnicode (buffer, buff, 5);
-			        retval = CFG_Get(cfg, buff2, buffer, true);
+			        retval = INI_GetValue(cfg, buff2, buffer, true);
 			        if (retval) {
 					sprintf(buff,"%s",DecodeUnicodeConsole(retval+2));
 					buff[strlen(buff)-1] = 0;
@@ -100,7 +100,7 @@ unsigned char *GetMsg (CFG_Header *cfg, unsigned char *default_string)
 				return retval;
 			}
 		}
-		e = e->next;
+		e = e->Next;
 	}
 	return default_string;
 }
@@ -157,7 +157,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{0,				""}
 };
 
-unsigned char *print_error(GSM_Error e, FILE *df, CFG_Header *cfg)
+unsigned char *print_error(GSM_Error e, FILE *df, INI_Section *cfg)
 {
 	unsigned char 	*def 	= NULL;
 	int 		i	= 0;
@@ -224,8 +224,7 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 			dbgprintf("Can't open debug file\n");
 			return GE_CANTOPENFILE;
 		} else {
-			if (privdi->df && privdi->df != stdout)
-			{
+			if (privdi->df && privdi->df != stdout) {
 				fclose(privdi->df);
 			}
 			privdi->df = testfile;

@@ -28,128 +28,127 @@
 
 static bool irda_discover_device(GSM_StateMachine *state)
 {
-    GSM_Device_IrdaData 	*d = &state->Device.Data.Irda;
-    struct irda_device_list	*list;
-    unsigned char		*buf;
-    unsigned int		sec;
+	GSM_Device_IrdaData 	*d = &state->Device.Data.Irda;
+	struct irda_device_list	*list;
+    	unsigned char		*buf;
+    	unsigned int		sec;
 
-    int				s, z, len, fd, i;
-    GSM_DateTime		Date;
-    bool			founddevice = false;
+    	int			s, z, len, fd, i;
+    	GSM_DateTime		Date;
+    	bool			founddevice = false;
 
 #ifdef WIN32
-    WSADATA			wsaData;
-    int 			index;
+    	WSADATA			wsaData;
+    	int 			index;
     
-    WSAStartup(MAKEWORD(1,1), &wsaData);
+    	WSAStartup(MAKEWORD(1,1), &wsaData);
 #endif
 
-    fd = socket(AF_IRDA, SOCK_STREAM, 0);
+   	fd = socket(AF_IRDA, SOCK_STREAM, 0);
 
-    /* 10 = max devices in discover */
-    len  = sizeof(struct irda_device_list) + sizeof(struct irda_device_info) * 10;
-    buf  = malloc(len);
-    list = (struct irda_device_list *)buf;
+    	/* maximally 10 devices in discover */
+    	len  = sizeof(struct irda_device_list) + sizeof(struct irda_device_info) * 10;
+    	buf  = malloc(len);
+    	list = (struct irda_device_list *)buf;
 
-    /* Trying to find device during 2 seconds */
-    for (z=0;z<2;z++) {
-	    GSM_GetCurrentDateTime (&Date);
-	    sec = Date.Second;
-	    while (sec==Date.Second)
-	    {
-		s = len;
-		memset(buf, 0, s);
+    	/* Trying to find device during 2 seconds */
+    	for (z=0;z<2;z++) {
+		GSM_GetCurrentDateTime (&Date);
+	    	sec = Date.Second;
+	    	while (sec==Date.Second) {
+			s = len;
+			memset(buf, 0, s);
 
-		if (getsockopt(fd, SOL_IRLMP, IRLMP_ENUMDEVICES, buf, &s) == 0) {
-		    for (i = 0; i < (int)list->numDevice; i++) {
-			dbgprintf("Irda: found device \"%s\" (address %x) - ",list->Device[i].irdaDeviceName,list->Device[i].irdaDeviceID);
-			if (strcmp(GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number,"") != 0) {
-				founddevice = true;
-				/* Model AUTO */
-				if (state->CurrentConfig->Model[0]==0) strcpy(state->Phone.Data.Model,GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number);
-				state->Phone.Data.ModelInfo = GetModelData(NULL,state->Phone.Data.Model,NULL);
-			}
-			if (founddevice) {				
-			    dbgprintf("correct\n");
+			if (getsockopt(fd, SOL_IRLMP, IRLMP_ENUMDEVICES, buf, &s) == 0) {
+		    		for (i = 0; i < (int)list->numDevice; i++) {
+					dbgprintf("Irda: found device \"%s\" (address %x) - ",list->Device[i].irdaDeviceName,list->Device[i].irdaDeviceID);
+					if (strcmp(GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number,"") != 0) {
+						founddevice = true;
+						/* Model AUTO */
+						if (state->CurrentConfig->Model[0]==0) strcpy(state->Phone.Data.Model,GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number);
+						state->Phone.Data.ModelInfo = GetModelData(NULL,state->Phone.Data.Model,NULL);
+					}
+					if (founddevice) {				
+			    			dbgprintf("correct\n");
 #ifdef WIN32
-			    for(index=0; index <= 3; index++)
-				d->peer.irdaDeviceID[index] = list->Device[i].irdaDeviceID[index];
+			    			for(index=0; index <= 3; index++)
+							d->peer.irdaDeviceID[index] = list->Device[i].irdaDeviceID[index];
 #else
-		    	    d->peer.irdaDeviceID = list->Device[i].irdaDeviceID;
+		    	    			d->peer.irdaDeviceID = list->Device[i].irdaDeviceID;
 #endif
-			    break;
+			   			break;
+					}
+					dbgprintf("\n");
+		    		}
 			}
-			dbgprintf("\n");
-		    }
-		}
+			if (founddevice) break;
+			my_sleep(10);
+			GSM_GetCurrentDateTime(&Date);
+	    	}
 		if (founddevice) break;
-		my_sleep(10);
-		GSM_GetCurrentDateTime(&Date);
-	    }
-            if (founddevice) break;
-    }
-    free(buf);
-    close(fd);
+    	}
+    	free(buf);
+    	close(fd);
 
-    return founddevice;
+    	return founddevice;
 }
 
 static GSM_Error irda_open (GSM_StateMachine *s)
 {
 #ifdef WIN32
-    int 		Enable9WireMode = 1;
+    	int 			Enable9WireMode = 1;
 #endif
-    GSM_Device_IrdaData *d = &s->Device.Data.Irda;
-    int			fd = -1;
+    	GSM_Device_IrdaData 	*d = &s->Device.Data.Irda;
+    	int			fd = -1;
 
 #ifndef WIN32
-    if (s->ConnectionType == GCT_IRDAAT) return GE_SOURCENOTAVAILABLE;
+    	if (s->ConnectionType == GCT_IRDAAT) return GE_SOURCENOTAVAILABLE;
 #endif
 
-    /* discover the devices */
-    if (irda_discover_device(s)==false) return GE_TIMEOUT;
+    	/* discover the devices */
+    	if (irda_discover_device(s)==false) return GE_TIMEOUT;
 
-    /* Create socket */
-    fd = socket(AF_IRDA, SOCK_STREAM, 0);
+    	/* Create socket */
+    	fd = socket(AF_IRDA, SOCK_STREAM, 0);
 
-    d->peer.irdaAddressFamily 	= AF_IRDA;
+    	d->peer.irdaAddressFamily 	= AF_IRDA;
 #ifndef WIN32
-    d->peer.sir_lsap_sel 	= LSAP_ANY;
+    	d->peer.sir_lsap_sel 	= LSAP_ANY;
 #endif
-    switch (s->ConnectionType) {
-    case GCT_IRDAAT:
-    	strcpy(d->peer.irdaServiceName, "IrDA:IrCOMM");
+    	switch (s->ConnectionType) {
+    	case GCT_IRDAAT:
+    		strcpy(d->peer.irdaServiceName, "IrDA:IrCOMM");
 
 #ifdef WIN32
-	if (setsockopt(fd, SOL_IRLMP, IRLMP_9WIRE_MODE, (const char *) &Enable9WireMode,
-               sizeof(int))==SOCKET_ERROR) return GE_UNKNOWN;
+		if (setsockopt(fd, SOL_IRLMP, IRLMP_9WIRE_MODE, (const char *) &Enable9WireMode,
+               		sizeof(int))==SOCKET_ERROR) return GE_UNKNOWN;
 #endif
-	break;
-    case GCT_IRDAPHONET:
-    	strcpy(d->peer.irdaServiceName, "Nokia:PhoNet");
-	break;
-    case GCT_IRDAOBEX:
-	/* IrDA:OBEX not supported by N3650 */
+		break;
+    	case GCT_IRDAPHONET:
+    		strcpy(d->peer.irdaServiceName, "Nokia:PhoNet");
+		break;
+    	case GCT_IRDAOBEX:
+		/* IrDA:OBEX not supported by N3650 */
 //    	strcpy(d->peer.irdaServiceName, "IrDA:OBEX");
 
-    	strcpy(d->peer.irdaServiceName, "OBEX");
+    		strcpy(d->peer.irdaServiceName, "OBEX");
 
-	/* Alternative server is "OBEX:IrXfer" */
-	break;
-    default:
-	return GE_UNKNOWN;
-    }
+		/* Alternative server is "OBEX:IrXfer" */
+		break;
+    	default:
+		return GE_UNKNOWN;
+    	}
 
-    /* Connect to service "Nokia:PhoNet" or other */
-    if (connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
-	dbgprintf("Can't connect to service %s\n",d->peer.irdaServiceName);
-	close(fd);
-	return GE_NOTSUPPORTED;
-    }
+    	/* Connect to service */
+    	if (connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
+		dbgprintf("Can't connect to service %s\n",d->peer.irdaServiceName);
+		close(fd);
+		return GE_NOTSUPPORTED;
+    	}
 
-    d->hPhone=fd;
+    	d->hPhone=fd;
 
-    return GE_NONE;
+    	return GE_NONE;
 }
 
 static int irda_read(GSM_StateMachine *s, void *buf, size_t nbytes)

@@ -2,7 +2,7 @@
 #ifndef phone_common2_h
 #define phone_common2_h
 
-#include "../service/gsmsms.h"
+#include "../service/sms/gsmsms.h"
 
 extern GSM_SMSMessageLayout PHONE_SMSSubmit;
 extern GSM_SMSMessageLayout PHONE_SMSDeliver;

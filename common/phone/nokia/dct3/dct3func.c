@@ -5,7 +5,7 @@
 
 #include "../../../gsmstate.h"
 #include "../../../misc/coding/coding.h"
-#include "../../../service/gsmsms.h"
+#include "../../../service/sms/gsmsms.h"
 #include "../../pfunc.h"
 #include "../nfunc.h"
 #include "dct3func.h"
@@ -314,7 +314,7 @@ GSM_Error DCT3_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, unsigne
 		0x00, 0x00,	/* Year (0x07cf = 1999) */
 		0x00, 0x00,	/* Month & Day */
 		0x00, 0x00,	/* Hours & Minutes */
-		0x00 };		/* Unknown, but not seconds - try 59 and wait 1 sec. */
+		0x00};		/* Can't be seconds. Try 59 and wait 1 sec. */
 
 	NOKIA_EncodeDateTime(s, req+7, date_time);
 	smprintf(s, "Setting date & time\n");
@@ -338,7 +338,7 @@ GSM_Error DCT3_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm, unsigned char msg
 		N6110_FRAME_HEADER, 0x6b, 0x01, 0x20, 0x03,
 		0x02,      	/* should be alarm on/off, but it doesn't work */
 		0x00, 0x00,	/* Hours Minutes */
-		0x00 };		/* Unknown, but not seconds - try 59 and wait 1 sec. */
+		0x00};		/* Can't be seconds. Try 59 and wait 1 sec. */
 
 	if (alarm->Location != 1) return GE_NOTSUPPORTED;
 
@@ -1291,11 +1291,13 @@ GSM_Error DCT3_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 	smprintf(s, "Getting SMS status\n");
 	return GSM_WaitFor (s, req, 5, 0x14, 2, ID_GetSMSStatus);
 
+#ifndef ENABLE_LGPL
 	/* Nokia 6210 and family does not show not "fixed" messages from the
 	 * Templates folder, ie. when you save a message to the Templates folder,
 	 * SMSStatus does not change! Workaround: get Templates folder status, which
 	 * does show these messages.
 	 */
+#endif
 }
 
 GSM_Error DCT3_ReplyDeleteSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)

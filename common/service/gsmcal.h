@@ -257,8 +257,14 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note);
 
 typedef struct {
-	int		     StartDay;   // Monday = 1, Tuesday = 2,...
-	int		     AutoDelete; // 0 = no delete, 1 = after day,...
+	/**
+	 * Monday = 1, Tuesday = 2,...
+	 */
+	int		     StartDay;
+	/**
+	 * 0 = no delete, 1 = after day,...
+	 */
+	int		     AutoDelete; 
 } GSM_CalendarSettings;
 
 /**

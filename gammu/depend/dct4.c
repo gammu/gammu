@@ -428,6 +428,7 @@ void DCT4VibraTest(int argc, char *argv[])
 	Print_Error(error);
 }
 
+#ifdef DEBUG
 static GSM_Error DCT4_ReplyResetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Buffer[3]) {
@@ -467,6 +468,49 @@ void DCT4ResetSecurityCode(int argc, char *argv[])
 			}
 		}
 	} else Print_Error(error);
+}
+#endif
+
+char SecLength;
+
+static GSM_Error DCT4_ReplyGetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	if (msg.Length > 12) {
+		SecLength = msg.Buffer[13];
+		if ((msg.Buffer[17]+18) == msg.Length) {
+			printf("Security code is %s\n",msg.Buffer+18);
+//			DumpMessage(stdout, msg.Buffer, msg.Length);
+		}
+	}
+	return GE_NONE;
+}
+
+void DCT4GetSecurityCode(int argc, char *argv[])
+{
+	GSM_Error 	error;
+	unsigned char 	getlen[]={0x00, 0x08, 0x01, 0x0C, 
+				  0x00, 0x23, 		//ID 
+				  0x00, 0x00, 		//Index
+				  0x00, 0x00}; 
+	unsigned char 	read[]={0x00, 0x08, 0x02, 0x04,
+				0x00, 0x23, 		//ID
+				0x00, 0x00, 		//Index
+				0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00,
+				0x00};                  //Length
+
+	if (CheckDCT4Only()!=GE_NONE) return;
+
+	s.User.UserReplyFunctions=UserReplyFunctions4;
+
+	SecLength = 0;
+	error=GSM_WaitFor (&s, getlen, sizeof(getlen), 0x23, 1, ID_User1);
+	Print_Error(error);
+	if (SecLength != 0) {
+		read[17] = SecLength;
+		error=GSM_WaitFor (&s, read, sizeof(read), 0x23, 5, ID_User1);
+		Print_Error(error);
+	}
 }
 
 static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1091,8 +1135,10 @@ void DCT4TuneRadio(int argc, char *argv[])
 
 static GSM_Reply_Function UserReplyFunctions4[] = {
 
+#ifdef DEBUG
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x05,ID_User2	},
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x06,ID_User2	},
+#endif
 
 	{DCT4_ReplyGetADC,		"\x17",0x03,0x10,ID_User3	},
 	{DCT4_ReplyGetADC,		"\x17",0x03,0x12,ID_User3	},
@@ -1103,9 +1149,11 @@ static GSM_Reply_Function UserReplyFunctions4[] = {
 	{DCT4_ReplyVibra,		"\x1C",0x03,0x0D,ID_User3	},
 	{DCT4_ReplyVibra,		"\x1C",0x03,0x0F,ID_User3	},
 
+	{DCT4_ReplyGetSecurityCode,	"\x23",0x03,0x05,ID_User1	},
 	{DCT4_ReplyGetT9,		"\x23",0x03,0x05,ID_User3	},
 	{DCT4_ReplyGetVoiceRecord,	"\x23",0x03,0x05,ID_User4	},
 	{DCT4_ReplyGetVoiceRecord,	"\x23",0x03,0x0D,ID_User4	},
+	{DCT4_ReplyGetSecurityCode,	"\x23",0x03,0x0D,ID_User1	}, 
 
 	{DCT4_ReplyTestsStartup,	"\x35",0x02,0x01,ID_User3	},
 	{DCT4_ReplyTestsStartup,	"\x35",0x02,0x02,ID_User3	},

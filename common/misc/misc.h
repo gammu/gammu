@@ -86,16 +86,20 @@ bool GSM_SetDebugLevel(char *info, Debug_Info *di);
 
 /* ------------------------------------------------------------------------- */
 
-/* Structure used for passing dates/times to date/time functions such as
-   GSM_GetTime and GSM_GetAlarm etc. */
+/**
+ * Structure used for saving date and time 
+ */
 typedef struct {
-	unsigned int	Year;		/* The complete year specification - e.g.1999.Y2K :-) */
-	unsigned int 	Month;		/* January = 1 */
+	/* Complete year number */
+	unsigned int	Year;
+	/* January = 1 */
+	unsigned int 	Month;
 	unsigned int 	Day;
 	unsigned int	Hour;
 	unsigned int 	Minute;
 	unsigned int	Second;
-	int		Timezone;	/* The difference between local time and GMT */
+	/* The difference between local time and GMT */
+	int		Timezone;
 } GSM_DateTime;
 
 void GSM_GetCurrentDateTime 	(GSM_DateTime *Date);
@@ -105,8 +109,8 @@ char *DayOfWeek 		(int year, int month, int day);
 time_t Fill_Time_T		(GSM_DateTime DT, int TZ);
 void GetTimeDifference		(unsigned long diff, GSM_DateTime *DT, bool Plus, int multi);
 void Fill_GSM_DateTime		(GSM_DateTime *Date, time_t timet);
-bool CheckDate		(GSM_DateTime *date);
-bool CheckTime		(GSM_DateTime *date);
+bool CheckDate			(GSM_DateTime *date);
+bool CheckTime			(GSM_DateTime *date);
 
 #endif
 

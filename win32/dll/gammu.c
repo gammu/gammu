@@ -578,7 +578,23 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 	return GE_UNKNOWNRESPONSE;
 }
 
+char SecLength;
+
+static GSM_Error DCT4_ReplyGetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	if (msg.Length > 12) {
+		SecLength = msg.Buffer[13];
+		if ((msg.Buffer[17]+18) == msg.Length) {
+			sprintf(s->Phone.Data.PhoneString,"%s",msg.Buffer+18);
+		}
+	}
+	return GE_NONE;
+}
+
 static GSM_Reply_Function UserReplyFunctions4[] = {
+	{DCT4_ReplyGetSecurityCode,	"\x23",0x03,0x05,ID_User1	},
+	{DCT4_ReplyGetSecurityCode,	"\x23",0x03,0x0D,ID_User1	}, 
+
 	{DCT4_ReplyGetSimlock,		"\x53",0x03,0x0D,ID_User6	},
 	{NULL,				"\x00",0x00,0x00,ID_None	}
 };
@@ -596,6 +612,39 @@ GSM_Error WINAPI mygetdct4simlocknetwork(int phone, char *network)
 	s[phone].s.Phone.Data.PhoneString  = network;
 	error=GSM_WaitFor (&s[phone].s, GetSimlock, 4, 0x53, 4, ID_User6);
 	SetErrorCounter(phone, error);
+        ReleaseMutex(s[phone].Mutex);
+	return error;
+}
+
+GSM_Error WINAPI mygetdct4securitycode(int phone, char *code)
+{
+	GSM_Error 	error;
+	unsigned char 	getlen[]={0x00, 0x08, 0x01, 0x0C, 
+				  0x00, 0x23, 		//ID 
+				  0x00, 0x00, 		//Index
+				  0x00, 0x00}; 
+	unsigned char 	read[]={0x00, 0x08, 0x02, 0x04,
+				0x00, 0x23, 		//ID
+				0x00, 0x00, 		//Index
+				0x00, 0x00, 0x00, 0x00, 0x00,
+				0x00, 0x00, 0x00, 0x00,
+				0x00};                  //Length
+
+	if (!s[phone].s.opened) return GE_NOTCONNECTED;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+	s[phone].s.User.UserReplyFunctions = UserReplyFunctions4;
+	code[0]			   	   = 0;
+	s[phone].s.Phone.Data.PhoneString  = code;
+
+	SecLength = 0;
+	error=GSM_WaitFor (&s[phone].s, getlen, sizeof(getlen), 0x23, 1, ID_User1);
+	SetErrorCounter(phone, error);
+	if (SecLength != 0) {
+		read[17] = SecLength;
+		error=GSM_WaitFor (&s[phone].s, read, sizeof(read), 0x23, 5, ID_User1);
+		SetErrorCounter(phone, error);
+	}
         ReleaseMutex(s[phone].Mutex);
 	return error;
 }

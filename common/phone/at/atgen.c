@@ -9,7 +9,7 @@
 
 #include "../../gsmcomon.h"
 #include "../../misc/coding/coding.h"
-#include "../../service/gsmsms.h"
+#include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
 #include "atgen.h"
 
@@ -44,106 +44,106 @@ extern GSM_Error SONYERIC_DelCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntr
 extern GSM_Error SONYERIC_GetCalendarStatus	(GSM_StateMachine *s, GSM_CalendarStatus *Status);
 
 typedef struct {
-    int     Number;
-    char    Text[60];
+	int     Number;
+	char    Text[60];
 } ATErrorCode;
 
 static ATErrorCode CMSErrorCodes[] = {
-    /*
-     * Error codes not specified here were either undefined or reserved in my
-     * copy of specifications, if you have newer one, please fill in the gaps.
-     */
-    /* 0...127 from GSM 04.11 Annex E-2 */
-    {1,    "Unassigned (unallocated) number"},
-    {8,    "Operator determined barring"},
-    {10,   "Call barred"},
-    {21,   "Short message transfer rejected"},
-    {27,   "Destination out of service"},
-    {28,   "Unidentified subscriber"},
-    {29,   "Facility rejected"},
-    {30,   "Unknown subscriber"},
-    {38,   "Network out of order"},
-    {41,   "Temporary failure"},
-    {42,   "Congestion"},
-    {47,   "Resources unavailable, unspecified"},
-    {50,   "Requested facility not subscribed"},
-    {69,   "Requested facility not implemented"},
-    {81,   "Invalid short message transfer reference value"},
-    {95,   "Invalid message, unspecified"},
-    {96,   "Invalid mandatory information"},
-    {97,   "Message type non-existent or not implemented"},
-    {98,   "Message not compatible with short message protocol state"},
-    {99,   "Information element non-existent or not implemented"},
-    {111,  "Protocol error, unspecified"},
-    {127,  "Interworking, unspecified"},
-    /* 128...255 from GSM 03.40 subclause 9.2.3.22 */
-    {0x80, "Telematic interworking not supported"},
-    {0x81, "Short message Type 0 not supported"},
-    {0x82, "Cannot replace short message"},
-    {0x8F, "Unspecified TP-PID error"},
-    {0x90, "Data coding scheme (alphabet) not supported"},
-    {0x91, "Message class not supported"},
-    {0x9F, "Unspecified TP-DCS error"},
-    {0xA0, "Command cannot be actioned"},
-    {0xA1, "Command unsupported"},
-    {0xAF, "Unspecified TP-Command error"},
-    {0xB0, "TPDU not supported"},
-    {0xC0, "SC busy"},
-    {0xC1, "No SC subscription"},
-    {0xC2, "SC system failure"},
-    {0xC3, "Invalid SME address"},
-    {0xC4, "Destination SME barred"},
-    {0xC5, "SM Rejected-Duplicate SM"},
-    {0xC6, "TP-VPF not supported"},
-    {0xC7, "TP-VP not supported"},
-    {0xD0, "SIM SMS storage full"},
-    {0xD1, "No SMS storage capability in SIM"},
-    {0xD2, "Error in MS"},
-    {0xD3, "Memory Capacity Exceede"},
-    {0xD4, "SIM Application Toolkit Busy"},
-    {0xFF, "Unspecified error cause"},
-    /* 300...511 from GSM 07.05 subclause 3.2.5 */
-    {300,  "ME failure"},
-    {301,  "SMS service of ME reserved"},
-    {302,  "operation not allowed"},
-    {303,  "operation not supported"},
-    {304,  "invalid PDU mode parameter"},
-    {305,  "invalid text mode parameter"},
-    {310,  "SIM not inserted"},
-    {311,  "SIM PIN required"},
-    {312,  "PH-SIM PIN required"},
-    {313,  "SIM failure"},
-    {314,  "SIM busy"},
-    {315,  "SIM wrong"},
-    {316,  "SIM PUK required"},
-    {317,  "SIM PIN2 required"},
-    {318,  "SIM PUK2 required"},
-    {320,  "memory failure"},
-    {321,  "invalid memory index"},
-    {322,  "memory full"},
-    {330,  "SMSC address unknown"},
-    {331,  "no network service"},
-    {332,  "network timeout"},
-    {340,  "no CNMA acknowledgement expected"},
-    {500,  "unknown error"},
-    /* > 512 are manufacturer specific according to GSM 07.05 subclause 3.2.5 */
-    {-1,   ""}
+	/*
+	 * Error codes not specified here were either undefined or reserved in my
+	 * copy of specifications, if you have newer one, please fill in the gaps.
+	 */
+	/* 0...127 from GSM 04.11 Annex E-2 */
+	{1,    "Unassigned (unallocated) number"},
+	{8,    "Operator determined barring"},
+	{10,   "Call barred"},
+	{21,   "Short message transfer rejected"},
+	{27,   "Destination out of service"},
+	{28,   "Unidentified subscriber"},
+	{29,   "Facility rejected"},
+	{30,   "Unknown subscriber"},
+	{38,   "Network out of order"},
+	{41,   "Temporary failure"},
+	{42,   "Congestion"},
+	{47,   "Resources unavailable, unspecified"},
+	{50,   "Requested facility not subscribed"},
+	{69,   "Requested facility not implemented"},
+	{81,   "Invalid short message transfer reference value"},
+	{95,   "Invalid message, unspecified"},
+	{96,   "Invalid mandatory information"},
+	{97,   "Message type non-existent or not implemented"},
+	{98,   "Message not compatible with short message protocol state"},
+	{99,   "Information element non-existent or not implemented"},
+	{111,  "Protocol error, unspecified"},
+	{127,  "Interworking, unspecified"},
+	/* 128...255 from GSM 03.40 subclause 9.2.3.22 */
+	{0x80, "Telematic interworking not supported"},
+	{0x81, "Short message Type 0 not supported"},
+	{0x82, "Cannot replace short message"},
+	{0x8F, "Unspecified TP-PID error"},
+	{0x90, "Data coding scheme (alphabet) not supported"},
+	{0x91, "Message class not supported"},
+	{0x9F, "Unspecified TP-DCS error"},
+	{0xA0, "Command cannot be actioned"},
+	{0xA1, "Command unsupported"},
+	{0xAF, "Unspecified TP-Command error"},
+	{0xB0, "TPDU not supported"},
+	{0xC0, "SC busy"},
+	{0xC1, "No SC subscription"},
+	{0xC2, "SC system failure"},
+	{0xC3, "Invalid SME address"},
+	{0xC4, "Destination SME barred"},
+	{0xC5, "SM Rejected-Duplicate SM"},
+	{0xC6, "TP-VPF not supported"},
+	{0xC7, "TP-VP not supported"},
+	{0xD0, "SIM SMS storage full"},
+	{0xD1, "No SMS storage capability in SIM"},
+	{0xD2, "Error in MS"},
+	{0xD3, "Memory Capacity Exceede"},
+	{0xD4, "SIM Application Toolkit Busy"},
+	{0xFF, "Unspecified error cause"},
+	/* 300...511 from GSM 07.05 subclause 3.2.5 */
+	{300,  "ME failure"},
+	{301,  "SMS service of ME reserved"},
+	{302,  "operation not allowed"},
+	{303,  "operation not supported"},
+	{304,  "invalid PDU mode parameter"},
+	{305,  "invalid text mode parameter"},
+	{310,  "SIM not inserted"},
+	{311,  "SIM PIN required"},
+	{312,  "PH-SIM PIN required"},
+	{313,  "SIM failure"},
+	{314,  "SIM busy"},
+	{315,  "SIM wrong"},
+	{316,  "SIM PUK required"},
+	{317,  "SIM PIN2 required"},
+	{318,  "SIM PUK2 required"},
+	{320,  "memory failure"},
+	{321,  "invalid memory index"},
+	{322,  "memory full"},
+	{330,  "SMSC address unknown"},
+	{331,  "no network service"},
+	{332,  "network timeout"},
+	{340,  "no CNMA acknowledgement expected"},
+	{500,  "unknown error"},
+	/* > 512 are manufacturer specific according to GSM 07.05 subclause 3.2.5 */
+	{-1,   ""}
 };
 
 GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 {
-    GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-    if (Priv->ErrorCode == 0) {
-        smprintf(s, "CMS Error occured, but it's type not detected\n");
-    } else if (Priv->ErrorText == NULL) {
-        smprintf(s, "CMS Error %i, no description available\n", Priv->ErrorCode);
-    } else {
-        smprintf(s, "CMS Error %i: \"%s\"\n", Priv->ErrorCode, Priv->ErrorText);
-    }
-    /* For error codes descriptions see table a bit above */
-    switch (Priv->ErrorCode) {
-        case 304:
+	if (Priv->ErrorCode == 0) {
+		smprintf(s, "CMS Error occured, but it's type not detected\n");
+	} else if (Priv->ErrorText == NULL) {
+		smprintf(s, "CMS Error %i, no description available\n", Priv->ErrorCode);
+	} else {
+		smprintf(s, "CMS Error %i: \"%s\"\n", Priv->ErrorCode, Priv->ErrorText);
+	}
+	/* For error codes descriptions see table a bit above */
+	switch (Priv->ErrorCode) {
+	case 304:
         case 305:
             	return GE_BUG; 
         case 311:
@@ -158,7 +158,7 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
             	return GE_INVALIDLOCATION;
         default:
 		return GE_UNKNOWN;
-    }
+	}
 }
 
 /* FIXME: Function doesn't respect quoting of parameters and thus +FOO:
@@ -279,6 +279,7 @@ GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		case AT_Reply_Connect:
 			return GE_NONE;
 		case AT_Reply_Error:
+			return GE_UNKNOWN;
 		case AT_Reply_CMSError:
 			return ATGEN_HandleCMSError(s);
 		case AT_Reply_CMEError:
@@ -1157,7 +1158,8 @@ GSM_Error ATGEN_GetIMEI (GSM_StateMachine *s)
 
 GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	char *start;
+	char 	*start;
+	int	i;
 
 	if (s->Protocol.Data.AT.EditMode) {
 		s->Protocol.Data.AT.EditMode = false;
@@ -1167,8 +1169,11 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "SMS saved OK\n");
-		start = strstr(msg.Buffer, "+CMGW: ") + 7;
-		s->Phone.Data.SaveSMSMessage->Location = atoi(start);
+		for(i=0;i<msg.Length;i++) {
+			if (msg.Buffer[i] == 0x00) msg.Buffer[i] = 0x20;
+		}
+		start = strstr(msg.Buffer, "+CMGW: ");
+		s->Phone.Data.SaveSMSMessage->Location = atoi(start+7);
 		smprintf(s, "Saved at location %i\n",s->Phone.Data.SaveSMSMessage->Location);
 		return GE_NONE;
 	case AT_Reply_Error:
@@ -1608,15 +1613,18 @@ GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	return GSM_WaitFor (s, "AT+CSCA?\r", 9, 0x00, 4, ID_GetSMSC);
 }
 
-GSM_Error ATGEN_ReplyIncomingLAC_CID(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{
-	smprintf(s, "Incoming LAC & CID info\n");
-	return GE_NONE;
-}
-
 GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_NetworkInfo	*NetworkInfo = s->Phone.Data.NetworkInfo;
+	GSM_NetworkInfo		*NetworkInfo = s->Phone.Data.NetworkInfo;
+	GSM_Lines		Lines;
+	int			i=0;
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	char			*answer;
+
+  	if (s->Phone.Data.RequestID == ID_IncomingFrame) {
+		smprintf(s, "Incoming LAC & CID info\n");
+		return GE_NONE;
+	}
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
@@ -1627,9 +1635,22 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 		return GE_UNKNOWNRESPONSE;
 	}
 
+	SplitLines(GetLineString(msg.Buffer,Priv->Lines,2),
+		strlen(GetLineString(msg.Buffer,Priv->Lines,2)),
+		&Lines, ",", 1, true);
+
+	/* Find number of lines */
+	while (1) {
+		if (Lines.numbers[i*2+1]==0) break;
+		/* FIXME: handle special chars correctly */
+		smprintf(s, "%i \"%s\"\n",i+1,GetLineString(GetLineString(msg.Buffer,Priv->Lines,2),Lines,i+1));
+		i++;
+	}
+
 	smprintf(s, "Network LAC & CID & state received\n");
+	answer = GetLineString(GetLineString(msg.Buffer,Priv->Lines,2),Lines,2);
 #ifdef DEBUG
-	switch (msg.Buffer[20]) {
+	switch (answer[0]) {
 		case '0': smprintf(s, "Not registered into any network. Not searching for network\n"); 	  break;
 		case '1': smprintf(s, "Home network\n"); 						  break;
 		case '2': smprintf(s, "Not registered into any network. Searching for network\n"); 	  break;
@@ -1639,19 +1660,28 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 		default : smprintf(s, "Unknown\n");
 	}
 #endif
-	switch (msg.Buffer[20]) {
+	switch (answer[0]) {
 		case '0': NetworkInfo->State = GSM_NoNetwork;		break;
 		case '1': NetworkInfo->State = GSM_HomeNetwork; 	break;
 		case '2': NetworkInfo->State = GSM_RequestingNetwork; 	break;
-		case '3': NetworkInfo->State = GSM_NoNetwork; 		break;
-		case '4': NetworkInfo->State = GSM_NoNetwork; 		break;
+		case '3': NetworkInfo->State = GSM_RegistrationDenied;	break;
+		case '4': NetworkInfo->State = GSM_NetworkStatusUnknown;break;
 		case '5': NetworkInfo->State = GSM_RoamingNetwork; 	break;
-		default : NetworkInfo->State = GSM_NoNetwork; 		break;
+		default : NetworkInfo->State = GSM_NetworkStatusUnknown;break;
 	}
 	if (NetworkInfo->State == GSM_HomeNetwork ||
 	    NetworkInfo->State == GSM_RoamingNetwork) {
-		sprintf(NetworkInfo->CellID,	"%c%c%c%c", msg.Buffer[23], msg.Buffer[24], msg.Buffer[25], msg.Buffer[26]);
-		sprintf(NetworkInfo->LAC,	"%c%c%c%c", msg.Buffer[30], msg.Buffer[31], msg.Buffer[32], msg.Buffer[33]);
+		memset(NetworkInfo->CellID,0,4);
+		memset(NetworkInfo->LAC,0,4);
+
+		if (Lines.numbers[3*2+1]==0) return GE_NONE;
+
+		answer = GetLineString(GetLineString(msg.Buffer,Priv->Lines,2),Lines,3);
+		sprintf(NetworkInfo->CellID,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
+
+		answer = GetLineString(GetLineString(msg.Buffer,Priv->Lines,2),Lines,4);
+		sprintf(NetworkInfo->LAC,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
+
 		smprintf(s, "CellID: %s\n",NetworkInfo->CellID);
 		smprintf(s, "LAC   : %s\n",NetworkInfo->LAC);
 	}
@@ -1707,7 +1737,9 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 
 	smprintf(s, "Enable full network info\n");
 	error=GSM_WaitFor(s, "AT+CREG=2\r", 10, 0x00, 4, ID_GetNetworkInfo);
-	if ((error != GE_NONE) && (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Siemens)) return error;
+	if ((error != GE_NONE) &&
+	    (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Siemens) &&
+	    (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Ericsson)) return error;
 
 	smprintf(s, "Getting network LAC and CID and state\n");
 	error=GSM_WaitFor(s, "AT+CREG?\r", 9, 0x00, 4, ID_GetNetworkInfo);
@@ -1869,7 +1901,7 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
-		smprintf(s, "Memory status received\n");
+		smprintf(s, "Memory entries received\n");
 		/* Walk through lines with +CPBR: */
 		while (Priv->Lines.numbers[line*2+1]!=0) {
 			str = GetLineString(msg.Buffer,Priv->Lines,line+1);
@@ -1919,7 +1951,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 			Status->Free = Size - Status->Used;
 			return GE_NONE;
 		}
-		start	= end + 1;
+		start = end + 1;
 	}
 }
 
@@ -2218,9 +2250,17 @@ GSM_Error ATGEN_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 	unsigned char req[50];
 
 	switch (Code.Type) {
-	case GSCT_Pin   : sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code); break;
-	case GSCT_Pin2  : sprintf(req, "AT+CPIN2=\"%s\"\r", Code.Code); break;
-	default		: return GE_NOTIMPLEMENTED;
+	case GSCT_Pin :
+		sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
+		break;
+	case GSCT_Pin2 : 
+		if (s->Phone.Data.Priv.ATGEN.Manufacturer == AT_Siemens) {
+			sprintf(req, "AT+CPIN2=\"%s\"\r", Code.Code);
+		} else {
+			sprintf(req, "AT+CPIN=\"%s\"\r" , Code.Code);
+		}
+		break;
+	default : return GE_NOTIMPLEMENTED;
 	}
 
 	smprintf(s, "Entering security code\n");
@@ -2583,43 +2623,34 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 	char 			num[128];
 	GSM_Call 		call;
 
-	call.CallIDAvailable 	= false;
-	num[0] 			= 0;
 	smprintf(s, "Incoming call info\n");
-	if (strstr(msg.Buffer, "RING")) {
-		call.Status = GN_CALL_IncomingCall;
-		Extract_CLIP_number(num, msg.Buffer);
-	} else if (strstr(msg.Buffer, "NO CARRIER")) {
-		call.Status = GN_CALL_CallEnd;
-	} else if (strstr(msg.Buffer, "COLP:")) {
-		call.Status = GN_CALL_CallStart;
-		Extract_CLIP_number(num, msg.Buffer);
-	} else {
-		smprintf(s, "CLIP: error\n");
-		return GE_NONE;
+	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL) {
+		call.CallIDAvailable 	= false;
+		num[0] 			= 0;
+		if (strstr(msg.Buffer, "RING")) {
+			call.Status = GN_CALL_IncomingCall;
+			Extract_CLIP_number(num, msg.Buffer);
+		} else if (strstr(msg.Buffer, "NO CARRIER")) {
+			call.Status = GN_CALL_CallEnd;
+		} else if (strstr(msg.Buffer, "COLP:")) {
+			call.Status = GN_CALL_CallStart;
+			Extract_CLIP_number(num, msg.Buffer);
+		} else {
+			smprintf(s, "CLIP: error\n");
+			return GE_NONE;
+		}
+		EncodeUnicode(call.PhoneNumber, num, strlen(num));
+
+		s->User.IncomingCall(s->CurrentConfig->Device, call);
 	}
-	EncodeUnicode(call.PhoneNumber, num, strlen(num));
-
-	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL) s->User.IncomingCall(s->CurrentConfig->Device, call);
-
-	return GE_NONE;
-}
-
-GSM_Error ATGEN_IncomingSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{
-/*	GSM_SMSMessage sms; */
-
-	smprintf(s, "Incoming SMS\n");
-/*	if (User->IncomingSMS) User->IncomingSMS(Data->Device, sms); */
 
 	return GE_NONE;
 }
 
 GSM_Error ATGEN_IncomingGPRS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	smprintf(s, "GPRS change\n");
 	/* "+CGREG: 1,1" */
-
+	smprintf(s, "GPRS change\n");
 	return GE_NONE;
 }
 
@@ -2632,9 +2663,6 @@ GSM_Error ATGEN_IncomingBattery(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	p = strstr(msg.Buffer, "_OBS:");
 	if (p) level = atoi(p + 5);
 	smprintf(s, "Battery level changed to %d\n", level);
-
-/*	if (User->BattChange) User->BattChange(level); */
-
 	return GE_NONE;
 }
 
@@ -2647,9 +2675,6 @@ GSM_Error ATGEN_IncomingNetworkLevel(GSM_Protocol_Message msg, GSM_StateMachine 
 	p = strstr(msg.Buffer, "_OSIGQ: ");
 	if (p) level = atoi(p + 7);
 	smprintf(s, "Network level changed to %d\n", level);
-
-/*	if (User->SignalChange) User->SignalChange(level); */
-
 	return GE_NONE;
 }
 
@@ -2841,9 +2866,8 @@ GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 {
-	unsigned char Frame[] = "AT+CKPD=\"?\"\r";
-
-	return GE_NOTIMPLEMENTED;
+	GSM_Error	error;
+	unsigned char 	Frame[] = "AT+CKPD=\"?\"\r";
 
 	if (Press) {
 		switch (Key) {
@@ -2871,76 +2895,242 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 			default				: return GE_NOTSUPPORTED;
 		}
 		smprintf(s, "Pressing key\n");
-		return GSM_WaitFor (s, Frame, 12, 0x00, 4, ID_PressKey);
+		error = GSM_WaitFor (s, Frame, 12, 0x00, 4, ID_PressKey);
+		if (error != GE_NONE) return error;
+
+		/* Strange. My T310 needs it */
+		return GSM_WaitFor (s, "ATE1\r", 5, 0x00, 4, ID_EnableEcho);
 	} else {
 		return GE_NONE;
 	}
 }
 
-GSM_Reply_Function ATGENReplyFunctions[] = {
-{ATGEN_ReplyOK,			"OK"			,0x00,0x00,ID_IncomingFrame	 },
+#ifdef GSM_ENABLE_CELLBROADCAST
 
+GSM_Error ATGEN_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_CBMessage 	CB;
+	int		i,j;
+	char		Buffer[300],Buffer2[300];
+
+	smprintf(s, "CB received\n");
+	return GE_NONE;
+
+	DecodeHexBin (Buffer,msg.Buffer+6,msg.Length-6);
+	DumpMessage(stdout,Buffer,msg.Length-6);
+
+	CB.Channel = Buffer[4];
+
+	for (j=0;j<msg.Length;j++) {
+	dbgprintf("j=%i\n",j);
+	i=GSM_UnpackEightBitsToSeven(0, msg.Buffer[6], msg.Buffer[6], msg.Buffer+j, Buffer2);
+//	i = msg.Buffer[6] - 1;
+//	while (i!=0) {
+//		if (Buffer[i] == 13) i = i - 1; else break;
+//	}
+	DecodeDefault(CB.Text, Buffer2, msg.Buffer[6], false, NULL);
+	smprintf(s, "Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
+	}
+	if (s->Phone.Data.EnableIncomingCB && s->User.IncomingCB!=NULL) {
+		s->User.IncomingCB(s->CurrentConfig->Device,CB);
+	}
+	return GE_NONE;
+}
+
+#endif
+
+GSM_Error ATGEN_SetIncomingCB(GSM_StateMachine *s, bool enable)
+{
+#ifdef GSM_ENABLE_CELLBROADCAST
+	if (s->Phone.Data.EnableIncomingCB!=enable) {
+		s->Phone.Data.EnableIncomingCB 	= enable;
+		if (enable) {
+			smprintf(s, "Enabling incoming CB\n");
+			return GSM_WaitFor(s, "AT+CNMI=3,,2\r", 13, 0x00, 4, ID_SetIncomingCB);
+		} else {
+			smprintf(s, "Disabling incoming CB\n");
+			return GSM_WaitFor(s, "AT+CNMI=3,,0\r", 13, 0x00, 4, ID_SetIncomingCB);
+		}
+	}
+	return GE_NONE;
+#else
+	return GE_SOURCENOTAVAILABLE;
+#endif
+}
+
+GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "Incoming SMS\n");
+	return GE_NONE;
+}
+
+GSM_Error ATGEN_IncomingSMSDeliver(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_SMSMessage 		sms;
+	int 			current = 0, current2, i=0;
+	unsigned char 		buffer[300],smsframe[800];
+
+	smprintf(s, "Incoming SMS received (Deliver)\n");
+	if (Data->EnableIncomingSMS && s->User.IncomingSMS!=NULL) {
+		sms.State 	= GSM_UnRead;
+		sms.InboxFolder = true;
+		sms.PDU 	 = SMS_Deliver;
+
+		/* T310 with larger SMS goes crazy and mix this incoming
+                 * frame with normal answers. PDU is always last frame
+		 * We find its' number and parse it */
+		while (1) {
+			if (Data->Priv.ATGEN.Lines.numbers[i*2+1]==0) break;
+			/* FIXME: handle special chars correctly */
+			i++;
+		}
+		DecodeHexBin (buffer,
+			GetLineString(msg.Buffer,Data->Priv.ATGEN.Lines,i),
+			strlen(GetLineString(msg.Buffer,Data->Priv.ATGEN.Lines,i)));
+
+		/* We use locations from SMS layouts like in ../phone2.c(h) */
+		for(i=0;i<buffer[0]+1;i++) smsframe[i]=buffer[current++];
+		smsframe[12]=buffer[current++];
+
+		current2=((buffer[current])+1)/2+1;
+		for(i=0;i<current2+1;i++) smsframe[PHONE_SMSDeliver.Number+i]=buffer[current++];
+		smsframe[PHONE_SMSDeliver.TPPID] = buffer[current++];
+		smsframe[PHONE_SMSDeliver.TPDCS] = buffer[current++];
+		for(i=0;i<7;i++) smsframe[PHONE_SMSDeliver.DateTime+i]=buffer[current++];
+		smsframe[PHONE_SMSDeliver.TPUDL] = buffer[current++];
+		for(i=0;i<smsframe[PHONE_SMSDeliver.TPUDL];i++) smsframe[i+PHONE_SMSDeliver.Text]=buffer[current++];
+		GSM_DecodeSMSFrame(&sms,smsframe,PHONE_SMSDeliver);
+
+		s->User.IncomingSMS(s->CurrentConfig->Device,sms);
+	}
+	return GE_NONE;
+}
+
+/* I don't have phone able to do it and can't fill it */
+GSM_Error ATGEN_IncomingSMSReport(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "Incoming SMS received (Report)\n");
+	return GE_NONE;
+}
+
+GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, bool enable)
+{
+	/* Nokia returns OK, but doesn't return anything */
+	if (s->Phone.Data.Priv.ATGEN.Manufacturer == AT_Nokia) return GE_NOTSUPPORTED;
+
+	if (s->Phone.Data.EnableIncomingSMS!=enable) {
+		s->Phone.Data.EnableIncomingSMS = enable;
+		if (enable) {
+			smprintf(s, "Enabling incoming SMS\n");
+
+			/* Delivery reports */
+			GSM_WaitFor(s, "AT+CNMI=3,,,1\r", 14, 0x00, 4, ID_SetIncomingSMS);
+
+			/* SMS deliver */
+			return GSM_WaitFor(s, "AT+CNMI=3,3\r", 12, 0x00, 4, ID_SetIncomingSMS);
+		} else {
+			smprintf(s, "Disabling incoming SMS\n");
+			return GSM_WaitFor(s, "AT+CNMI=3,0\r", 12, 0x00, 4, ID_SetIncomingSMS);
+		}
+	}
+	return GE_NONE;
+}
+
+GSM_Reply_Function ATGENReplyFunctions[] = {
+{ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReply,		"ATE1" 	 		,0x00,0x00,ID_EnableEcho	 },
+{ATGEN_GenericReply,		"AT+CKPD="		,0x00,0x00,ID_PressKey		 },
+{ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
+{ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
+
+#ifdef GSM_ENABLE_CELLBROADCAST
+{ATGEN_ReplyIncomingCB,		"+CBM:" 	 	,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReply,		"AT+CNMI"		,0x00,0x00,ID_SetIncomingCB	 },
+#endif
+
+{ATGEN_IncomingBattery,		"_OBS:"		 	,0x00,0x00,ID_IncomingFrame      },
 {ATGEN_ReplyGetBatteryCharge,	"AT+CBC"		,0x00,0x00,ID_GetBatteryCharge	 },
-{ATGEN_ReplyGetSignalQuality,	"AT+CSQ"		,0x00,0x00,ID_GetSignalQuality	 },
+
 {ATGEN_ReplyGetModel,		"AT+CGMM"		,0x00,0x00,ID_GetModel           },
-{ATGEN_GenericReply,		"AT+CMGF"		,0x00,0x00,ID_GetSMSMode	 },
-{ATGEN_GenericReply,		"AT+CSDH"		,0x00,0x00,ID_GetSMSMode	 },
-{ATGEN_ReplyGetSMSMessage,	"AT+CMGR"		,0x00,0x00,ID_GetSMSMessage	 },
-{ATGEN_ReplyGetSMSStatus,	"AT+CPMS"		,0x00,0x00,ID_GetSMSStatus	 },
-{ATGEN_ReplyGetSMSMemories,	"AT+CPMS?"		,0x00,0x00,ID_GetSMSMemories	 },
-{ATGEN_GenericReply,		"AT+CPMS"		,0x00,0x00,ID_SetMemoryType	 },
 {ATGEN_ReplyGetManufacturer,	"AT+CGMI"		,0x00,0x00,ID_GetManufacturer	 },
 {ATGEN_ReplyGetFirmwareCGMR,	"AT+CGMR"		,0x00,0x00,ID_GetFirmware	 },
 {ATGEN_ReplyGetFirmwareATI,	"ATI"			,0x00,0x00,ID_GetFirmware	 },
 {ATGEN_ReplyGetIMEI,		"AT+CGSN"		,0x00,0x00,ID_GetIMEI	 	 },
+
+{ATGEN_ReplySendSMS,		"AT+CMGS"		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_GenericReply,		"AT+CNMI"		,0x00,0x00,ID_SetIncomingSMS	 },
+{ATGEN_GenericReply,		"AT+CMGF"		,0x00,0x00,ID_GetSMSMode	 },
+{ATGEN_GenericReply,		"AT+CSDH"		,0x00,0x00,ID_GetSMSMode	 },
+{ATGEN_ReplyGetSMSMessage,	"AT+CMGR"		,0x00,0x00,ID_GetSMSMessage	 },
+{ATGEN_GenericReply,		"AT+CPMS"		,0x00,0x00,ID_SetMemoryType	 },
+{ATGEN_ReplyGetSMSStatus,	"AT+CPMS"		,0x00,0x00,ID_GetSMSStatus	 },
+{ATGEN_ReplyGetSMSMemories,	"AT+CPMS?"		,0x00,0x00,ID_GetSMSMemories	 },
 {ATGEN_ReplyAddSMSMessage,	"AT+CMGW"		,0x00,0x00,ID_SaveSMSMessage	 },
 {ATGEN_GenericReply,		"AT+CSMP"		,0x00,0x00,ID_SetSMSParameters	 },
-{ATGEN_ReplySendSMS,		"AT+CMGS"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,		"AT+CSCA"		,0x00,0x00,ID_SetSMSC		 },
-{ATGEN_ReplyGetDateTime_Alarm,	"AT+CCLK?"		,0x00,0x00,ID_GetDateTime	 },
-{ATGEN_ReplyGetDateTime_Alarm,	"AT+CALA?"		,0x00,0x00,ID_GetAlarm		 },
-{ATGEN_GenericReply,		"AT+CCLK="		,0x00,0x00,ID_SetDateTime	 },
-{ATGEN_GenericReply,		"AT+CKPD="		,0x00,0x00,ID_PressKey		 },
 {ATGEN_ReplyGetSMSC,		"AT+CSCA?"		,0x00,0x00,ID_GetSMSC		 },
-{ATGEN_GenericReply,		"AT+CREG=2"		,0x00,0x00,ID_GetNetworkInfo	 },
-{ATGEN_ReplyIncomingLAC_CID,	"\x0D\x0A+CREG?"	,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_ReplyDeleteSMSMessage,	"AT+CMGD"		,0x00,0x00,ID_DeleteSMSMessage	 },
+{ATGEN_GenericReply,		"ATE1"			,0x00,0x00,ID_SetSMSParameters	 },
+{ATGEN_GenericReply,		"\x1b\x0D"		,0x00,0x00,ID_SetSMSParameters	 },
+{ATGEN_IncomingSMSInfo,		"+CMTI:" 	 	,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_IncomingSMSDeliver,	"+CMT:" 	 	,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_IncomingSMSReport,	"+CDS:" 	 	,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_IncomingSMSCInfo,	"^SCN:"			,0x00,0x00,ID_IncomingFrame	 },
+
+{ATGEN_ReplyGetDateTime_Alarm,	"AT+CCLK?"		,0x00,0x00,ID_GetDateTime	 },
+{ATGEN_GenericReply,		"AT+CCLK="		,0x00,0x00,ID_SetDateTime	 },
+{ATGEN_ReplyGetDateTime_Alarm,	"AT+CALA?"		,0x00,0x00,ID_GetAlarm		 },
+
 {ATGEN_ReplyGetNetworkLAC_CID,	"AT+CREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
+{ATGEN_GenericReply,		"AT+CREG=2"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_SetAutoNetworkLogin},
 {ATGEN_ReplyGetNetworkCode,	"AT+COPS"		,0x00,0x00,ID_GetNetworkInfo	 },
+{ATGEN_ReplyGetSignalQuality,	"AT+CSQ"		,0x00,0x00,ID_GetSignalQuality	 },
+{ATGEN_IncomingNetworkLevel,	"_OSIGQ:"	 	,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_IncomingGPRS,		"+CGREG:"	 	,0x00,0x00,ID_IncomingFrame      },
+{ATGEN_ReplyGetNetworkLAC_CID,	"+CREG:"		,0x00,0x00,ID_IncomingFrame	 },
+
 {ATGEN_ReplyGetPBKMemories,	"AT+CPBS=?"		,0x00,0x00,ID_SetMemoryType	 },
 {ATGEN_GenericReply,		"AT+CPBS="		,0x00,0x00,ID_SetMemoryType	 },
 {ATGEN_ReplyGetCPBSMemoryStatus,"AT+CPBS?"		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_ReplyGetCPBRMemoryInfo,	"AT+CPBR=?"		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_ReplyGetCPBRMemoryStatus,"AT+CPBR="		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_GenericReply,		"AT+CSCS="		,0x00,0x00,ID_SetMemoryCharset	 },
-{ATGEN_GenericReply,		"ATE1"			,0x00,0x00,ID_SetSMSParameters	 },
-{ATGEN_GenericReply,		"\x1b\x0D"		,0x00,0x00,ID_SetSMSParameters	 },
 {ATGEN_ReplyGetMemory,		"AT+CPBR="		,0x00,0x00,ID_GetMemory		 },
 {ATGEN_GenericReply,		"AT^SBNR=?"		,0x00,0x00,ID_GetMemory		 },
 {ATGEN_SL45ReplyGetMemory,	"AT^SBNR"		,0x00,0x00,ID_GetMemory		 },
+{ATGEN_ReplySetMemory,		"AT+CPBW"		,0x00,0x00,ID_SetMemory		 },
+
 {ATGEN_CMS35ReplyGetBitmap,	"AT^SBNR=\"bmp\""	,0x00,0x00,ID_GetBitmap	 	 },
 {ATGEN_CMS35ReplySetBitmap,	"AT^SBNW=\"bmp\""	,0x00,0x00,ID_SetBitmap	 	 },
+
 {ATGEN_CMS35ReplyGetRingtone,	"AT^SBNR=\"mid\""	,0x00,0x00,ID_GetRingtone	 },
 {ATGEN_CMS35ReplySetRingtone,	"AT^SBNW=\"mid\""	,0x00,0x00,ID_SetRingtone	 },
+
 {ATGEN_CMS35ReplyGetNextCal,	"AT^SBNR=\"vcs\""	,0x00,0x00,ID_GetCalendarNote	 },
 {ATGEN_CMS35ReplySetCalendar,	"AT^SBNW=\"vcs\""	,0x00,0x00,ID_SetCalendarNote	 },
 {ATGEN_CMS35ReplyDeleteCalendar,"AT^SBNW=\"vcs\""	,0x00,0x00,ID_DeleteCalendarNote },
+
 {ATGEN_ReplyEnterSecurityCode,	"AT+CPIN="		,0x00,0x00,ID_EnterSecurityCode	 },
 {ATGEN_ReplyEnterSecurityCode,	"AT+CPIN2="		,0x00,0x00,ID_EnterSecurityCode	 },
 {ATGEN_ReplyGetSecurityStatus,	"AT+CPIN?"		,0x00,0x00,ID_GetSecurityStatus	 },
-{ATGEN_ReplyDialVoice,		"ATDT"			,0x00,0x00,ID_DialVoice		 },
+{ATGEN_ReplyOK,			"OK"			,0x00,0x00,ID_IncomingFrame	 },
+
+{ATGEN_GenericReply, 		"AT+VTS"		,0x00,0x00,ID_SendDTMF		 },
 {ATGEN_ReplyCancelCall,		"AT+CHUP"		,0x00,0x00,ID_CancelCall	 },
+{ATGEN_ReplyDialVoice,		"ATDT"			,0x00,0x00,ID_DialVoice		 },
 {ATGEN_ReplyCancelCall,		"ATH"			,0x00,0x00,ID_CancelCall	 },
+{ATGEN_GenericReply,            "AT+CLIP=1"      	,0x00,0x00,ID_IncomingFrame      },
+{ATGEN_ReplyIncomingCallInfo,	"+CLIP"			,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_ReplyIncomingCallInfo,	"+COLP"    		,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_ReplyIncomingCallInfo,	"RING"			,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_ReplyIncomingCallInfo,	"NO CARRIER"		,0x00,0x00,ID_IncomingFrame	 },
+
 {ATGEN_ReplyReset,		"AT^SRESET"		,0x00,0x00,ID_Reset		 },
 {ATGEN_ReplyReset,		"AT+CFUN=1,1"		,0x00,0x00,ID_Reset		 },
 {ATGEN_ReplyResetPhoneSettings, "AT&F"			,0x00,0x00,ID_ResetPhoneSettings },
-{ATGEN_GenericReply, 		"AT+VTS"		,0x00,0x00,ID_SendDTMF		 },
-{ATGEN_ReplyDeleteSMSMessage,	"AT+CMGD"		,0x00,0x00,ID_DeleteSMSMessage	 },
-{ATGEN_ReplySetMemory,		"AT+CPBW"		,0x00,0x00,ID_SetMemory		 },
-{ATGEN_GenericReply,            "AT+CLIP=1"      	,0x00,0x00,ID_IncomingFrame      },
-{ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
-{ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_IncomingFrame	 },
 
 #ifdef GSM_ENABLE_ALCATEL
 /*  Why do I give Alcatel specific things here? It's simple, Alcatel needs
@@ -2950,34 +3140,10 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
  *  XXX: AT+IFC could later move outside this ifdef, because it is not Alcatel
  *  specific and it's part of ETSI specifications 
  */
-{ATGEN_GenericReply,		"AT+IFC" 	 	,0x00,0x00,   ID_SetFlowControl  },
-{ALCATEL_ProtocolVersionReply,	"AT+CPROT=?" 	 	,0x00,0x00,   ID_AlcatelProtocol },
-{ATGEN_GenericReply,		"AT+CPROT" 	 	,0x00,0x00,   ID_AlcatelConnect	 },
+{ATGEN_GenericReply,		"AT+IFC" 	 	,0x00,0x00,ID_SetFlowControl  	 },
+{ALCATEL_ProtocolVersionReply,	"AT+CPROT=?" 	 	,0x00,0x00,ID_AlcatelProtocol    },
+{ATGEN_GenericReply,		"AT+CPROT" 	 	,0x00,0x00,ID_AlcatelConnect	 },
 #endif
-
-{ATGEN_GenericReply,		"ATE1" 	 		,0x00,0x00,   ID_EnableEcho	 },
-
-{ATGEN_ReplyIncomingCallInfo,	"+CLIP"			,0x00,0x00,ID_IncomingFrame	 },
-{ATGEN_ReplyIncomingCallInfo,	"\x0D\x0ARING"		,0x00,0x00,ID_IncomingFrame	 },
-{ATGEN_ReplyIncomingCallInfo,	"\x0D\x0A+COLP:"    	,0x00,0x00,ID_IncomingFrame	 },
-{ATGEN_ReplyIncomingCallInfo,	"\x0D\x0ANO CARRIER"	,0x00,0x00,ID_IncomingFrame	 },
-
-{ATGEN_IncomingNetworkLevel,	"\x0D\x0A_OSIGQ:"	,0x00,0x00,ID_IncomingFrame	 },
-{ATGEN_IncomingNetworkLevel,	"_OSIGQ:"	 	,0x00,0x00,ID_IncomingFrame	 },
-
-{ATGEN_IncomingGPRS,		"\x0D\x0A+CGREG:"	,0x00,0x00,ID_IncomingFrame      },
-{ATGEN_IncomingGPRS,		"+CGREG:"	 	,0x00,0x00,ID_IncomingFrame      },
-
-{ATGEN_IncomingBattery,		"\x0D\x0A_OBS:"  	,0x00,0x00,ID_IncomingFrame      },
-{ATGEN_IncomingBattery,		"_OBS:"		 	,0x00,0x00,ID_IncomingFrame      },
-
-{ATGEN_IncomingSMS,		"\x0D\x0A+CMTI:" 	,0x00,0x00,ID_IncomingFrame	 },
-{ATGEN_IncomingSMS,		"+CMTI:" 	 	,0x00,0x00,ID_IncomingFrame	 },
-
-{ATGEN_IncomingSMSCInfo,	"\x0D\x0A^SCN:"		,0x00,0x00,ID_IncomingFrame	 },
-{ATGEN_IncomingSMSCInfo,	"^SCN:"			,0x00,0x00,ID_IncomingFrame	 },
-
-{ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
 
 {NULL,				"\x00"			,0x00,0x00,ID_None		 }
 };                                                                                      
@@ -3035,8 +3201,8 @@ GSM_Phone_Functions ATGENPhone = {
 	ATGEN_AddSMS,
 	ATGEN_DeleteSMS,
 	ATGEN_SendSMS,
-	NOTIMPLEMENTED,			/* 	SetIncomingSMS		*/
-	NOTIMPLEMENTED,			/*	SetIncomingCB		*/
+	ATGEN_SetIncomingSMS,
+	ATGEN_SetIncomingCB,
 	ATGEN_GetSMSFolders,
  	NOTSUPPORTED,			/* 	AddSMSFolder		*/
  	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/

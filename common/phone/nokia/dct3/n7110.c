@@ -1176,11 +1176,13 @@ static GSM_Error N7110_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *st
 	error = DCT3_GetSMSStatus(s,status);
 	if (error != GE_NONE) return error;
 
+#ifndef ENABLE_LGPL
 	/* Nokia 6210 and family does not show not "fixed" messages from the
 	 * Templates folder, ie. when you save a message to the Templates folder,
 	 * SMSStatus does not change! Workaround: get Templates folder status, which
 	 * does show these messages.
 	 */
+#endif
 	error = N7110_GetSMSFolderStatus(s, 0x20);
 	if (error != GE_NONE) return error;
 	status->TemplatesUsed = Priv->LastSMSFolder.Number;

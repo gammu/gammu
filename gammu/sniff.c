@@ -92,8 +92,7 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 	d->Msg.Count++;
 
 	if (d->Msg.Count == d->Msg.Length+2) {
-		/* If this is the last byte, it's the checksum. */
-		/* Is the checksum correct? */        
+		/* When we have last byte, it's the checksum. */
 		if (d->Msg.CheckSum[0] == rx_byte) {
 			if (d->Msg.Destination != MBUS2_DEVICE_PHONE) {
 				printf("Received frame");

@@ -3,7 +3,7 @@
 #include <ctype.h>
 
 #include "../gsmstate.h"
-#include "../service/gsmsms.h"
+#include "../service/sms/gsmsms.h"
 #include "../misc/coding/coding.h"
 
 /* These SMS layouts are used exactly as written in Nokia DCT3 phones.

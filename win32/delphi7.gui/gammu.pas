@@ -264,6 +264,7 @@ function GSM_AddSMSMessage	        (Phone : integer; SMS : PGSM_SMSMessage): GSM
 function GSM_EnterSecurityCode	        (Phone : integer; Code : PGSM_SecurityCode): GSM_Error; stdcall	; external 'gammu.dll' name 'myentersecuritycode';
 function GSM_GetIMEI	                (Phone : integer; IMEI:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetimei';
 function GSM_GetDCT4SimlockNetwork	(Phone : integer; Info:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetdct4simlocknetwork';
+function GSM_GetDCT4SecurityCode	(Phone : integer; Code:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetdct4securitycode';
 function GSM_GetManufacturer	        (Phone : integer; IMEI:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmanufacturer';
 function GSM_GetModel	                (Phone : integer; Model:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmodel';
 function GSM_GetModelName	        (Phone : integer; Model:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetmodelname';

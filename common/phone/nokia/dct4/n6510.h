@@ -3,7 +3,7 @@
 #define n6510_h
 
 #include "../ncommon.h"
-#include "../../../service/gsmsms.h"
+#include "../../../service/sms/gsmsms.h"
 
 typedef enum {
 	N6510_LIGHT_DISPLAY = 0x01,

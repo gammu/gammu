@@ -7,10 +7,10 @@
 #include "../gsmcal.h"
 #include "../gsmlogo.h"
 #include "../gsmring.h"
-#include "../gsmsms.h"
 #include "../gsmwap.h"
 #include "../gsmprof.h"
 #include "../gsmmisc.h"
+#include "../sms/gsmsms.h"
 
 #define GSM_BACKUP_MAX_PHONEPHONEBOOK 	501
 #define GSM_BACKUP_MAX_SIMPHONEBOOK 	251

@@ -28,3 +28,4 @@ EXPORTS
 	mymakemultipartsms	@21
 	mygetstructuresize	@22
 	mygetdct4simlocknetwork @23
+	mygetdct4securitycode	@24

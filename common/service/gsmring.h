@@ -172,7 +172,7 @@ int GSM_RingNoteGetFullDuration	(GSM_RingNote Note);
 
 char *GSM_GetRingtoneName(GSM_AllRingtonesInfo *Info, int ID);
 
-#endif	/* __gsm_ringtones_h */
+#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

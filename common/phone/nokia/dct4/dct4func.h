@@ -3,7 +3,7 @@
 #define dct4func_h
 
 #include "../ncommon.h"
-#include "../../../service/gsmsms.h"
+#include "../../../service/sms/gsmsms.h"
 
 typedef enum {
 	DCT4_MODE_NORMAL = 0x01,

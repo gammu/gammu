@@ -22,6 +22,59 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20031207 - 0.90.7
+* new functionality:
+  * reading security code from all DCT4
+  * --geteachsms can link EMS sequences. Currently there is majority      (...)
+    of possible things recognized - linked text, fixed bitmaps,
+    variable bitmaps, animations, default ringtones/animations ID, etc. etc.
+    Improved API is ready now for it everything. In the future I will
+    probably add some default bitmaps/ringtones.
+  * added ID for various 1100,3100,3200 variants
+  * added ID for 2100,3610                                             (Rakesh)
+  * AT devices:
+    * keys pressing
+    * using AT support is more safe because incoming call info is
+      handled only, when enabled
+    * rewriten AT protocol module. Now should handle correctly all incoming
+      frames from phones.
+    * cleaned and rechecked possible answers in AT module. If something
+      was done wrong, please let me know
+    * it's possible to enable sending info about incoming sms to PC.
+      With T310 it's possible to receive info about SMS Deliver, Reports
+      are not supported. T310 sometimes goes crazy and mixes frame for
+      incoming SMS and we need some tricks. Nokia returns OK for enabling
+      commands, but doesn't work - I made, that all Nokia are not supported
+      here now.
+    * it's possible to enable incoming CB. Not decoded yet
+    * * AT+CPIN used instead for AT+CPIN2 for some models        (Michal Cihar)
+        for PIN2
+      * do not attempt to parse CME error when no happen
+        (in ATGEN_GenericReply)
+      * more info for network logging status
+  * * can get FD memory with command line options                (Michal Cihar)
+    * GSM_PhonebookFindDefaultNameNumberGroup also tries to find
+      suitable name if PBK_Text_Name doesn't exist
+    * gammu prints security status when some operation fails with
+      GE_SECURITYERROR
+
+* fixes and improvements:
+  * removed problems with automatically linking sms (--geteachsms) with
+    some EMS sequences
+  * removed error visible in AT mode during saving SMS
+  * fixed makefile for MSVC6 and DLL                             (Michael T.S.)
+  * AT devices:                                                  (Michal Cihar)
+    * rewritten support for AT+CREG much more compatible with
+      various phones
+
+NOTE: written clear in copying files, that 3 party extensions are released
+      under own licenses. Changed some parts of source according to
+      requests from Pavel Janik connected with new license. For details
+      see Gammu mailing list.
+
+NOTE: CFG reader doesn't work 100% correctly for Unicode now. Please use
+      this version with care
+
 20031125 - 0.90.0
 * new functionality:
   * * added lots of API documentation                            (Michal Cihar)

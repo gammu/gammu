@@ -2,52 +2,14 @@
 #define __gsm_networks_h
 
 /**
- * This type is used to hold information about various GSM networks.
- */
-typedef struct {
-	/**
-	 * GSM network code.
-	 */
-	char *Code;
-	/**
-	 * GSM network name.
-	 */
-	char *Name;
-} GSM_Network;
-
-/**
- * This type is used to hold information about various GSM countries.
- */
-typedef struct {
-	/**
-	 * GSM country code.
-	 */
-	char *Code;
-	/**
-	 * GSM country name.
-	 */
-	char *Name;
-} GSM_Country;
-
-/* These functions are used to search the structure defined above.*/
-
-/**
  * Lookup GSM network by code.
  */
 char *GSM_GetNetworkName(char *NetworkCode);
-/**
- * Lookup GSM network by name.
- */
-char *GSM_GetNetworkCode(char *NetworkName);
 
 /**
  * Lookup GSM country by code.
  */
 char *GSM_GetCountryName(char *CountryCode);
-/**
- * Lookup GSM country by name.
- */
-char *GSM_GetCountryCode(char *CountryName);
 
 /**
  * State of network.
@@ -68,7 +30,15 @@ typedef enum {
 	/**
 	 * No network available.
 	 */
-	GSM_NoNetwork
+	GSM_NoNetwork,
+	/**
+	 * Network registration denied.
+	 */
+	GSM_RegistrationDenied,
+	/**
+	 * Uknown network status.
+	 */
+	GSM_NetworkStatusUnknown
 } GSM_NetworkInfo_State;
 
 /**
@@ -118,7 +88,7 @@ typedef struct {
 	int     BitErrorRate;
 } GSM_SignalQuality;
 
-#endif  /* __gsm_networks_h */
+#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

@@ -4,8 +4,8 @@
 
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
-#include "../../service/gsmsms.h"
 #include "../../service/gsmmisc.h"
+#include "../../service/sms/gsmsms.h"
 
 #ifndef GSM_USED_MROUTERBLUE
 #  define GSM_USED_MROUTERBLUE

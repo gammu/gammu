@@ -208,10 +208,16 @@
 				RelativePath="..\..\common\gsmcomon.c">
 			</File>
 			<File
+				RelativePath="..\..\common\service\sms\gsmems.c">
+			</File>
+			<File
 				RelativePath="..\..\common\service\gsmlogo.c">
 			</File>
 			<File
 				RelativePath="..\..\common\service\gsmmisc.c">
+			</File>
+			<File
+				RelativePath="..\..\common\service\sms\gsmmulti.c">
 			</File>
 			<File
 				RelativePath="..\..\common\service\gsmnet.c">
@@ -223,7 +229,7 @@
 				RelativePath="..\..\common\service\gsmring.c">
 			</File>
 			<File
-				RelativePath="..\..\common\service\gsmsms.c">
+				RelativePath="..\..\common\service\sms\gsmsms.c">
 			</File>
 			<File
 				RelativePath="..\..\common\gsmstate.c">
@@ -404,7 +410,13 @@
 				RelativePath="..\..\common\gsmcomon.h">
 			</File>
 			<File
+				RelativePath="..\..\common\service\sms\gsmems.h">
+			</File>
+			<File
 				RelativePath="..\..\common\service\gsmlogo.h">
+			</File>
+			<File
+				RelativePath="..\..\common\service\sms\gsmmulti.h">
 			</File>
 			<File
 				RelativePath="..\..\common\service\gsmnet.h">
@@ -419,7 +431,7 @@
 				RelativePath="..\..\common\service\gsmring.h">
 			</File>
 			<File
-				RelativePath="..\..\common\service\gsmsms.h">
+				RelativePath="..\..\common\service\sms\gsmsms.h">
 			</File>
 			<File
 				RelativePath="..\..\common\gsmstate.h">
