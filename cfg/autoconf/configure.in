@@ -23,9 +23,9 @@ dnl -Wno-format-y2k is against "%c" format warning. The only problem is that
 dnl this doesn't remove warning with gcc 2.95, but for 3.0 and 3.2 it works as
 dnl expected.
 if test x"$CFLAGS" = x ; then
-    CFLAGS="-O2 -Wall -Wno-format-y2k"
+    CFLAGS="-O2 -fPIC -Wall -Wno-format-y2k"
 else
-    CFLAGS="$CFLAGS -Wno-format-y2k"
+    CFLAGS="$CFLAGS -fPIC -Wall -Wno-format-y2k"
 fi
 
 dnl Checks for programs.
