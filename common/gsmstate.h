@@ -366,6 +366,8 @@ typedef enum {
 	ID_GetModel,
 	ID_GetFirmware,
 	ID_EnableSecurity,
+	ID_OpenFile,
+	ID_CloseFile,
 	ID_GetIMEI,
 	ID_GetDateTime,
 	ID_GetAlarm,
@@ -442,7 +444,6 @@ typedef enum {
 	ID_GetManufacturer,
 	ID_SetMemoryType,
 	ID_SetMemoryCharset,
-	ID_GetMMSSettings,
 	ID_SetSMSParameters,
 	ID_GetFMStation,
 	ID_SetFMStation,
@@ -470,7 +471,6 @@ typedef enum {
 	ID_GetDisplayStatus,
 	ID_SetAutoNetworkLogin,
 	ID_SetConnectSet,
-	ID_SetMMSSettings,
 	ID_GetSIMIMSI,
 	ID_GetFileInfo,
 	ID_FileSystemStatus,
@@ -716,6 +716,7 @@ typedef struct {
 	 * Used internally by phone drivers.
 	 */
 	unsigned char		*PhoneString;
+	int			FileHandle;
 	/**
 	 * Used internally by phone drivers.
 	 */
@@ -1347,11 +1348,11 @@ typedef struct {
 	/**
 	 * Gets file part from filesystem.
 	 */
-	GSM_Error (*GetFilePart)	(GSM_StateMachine *s, GSM_File *File);
+	GSM_Error (*GetFilePart)	(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size);
 	/**
 	 * Adds file part to filesystem.
 	 */
-	GSM_Error (*AddFilePart)	(GSM_StateMachine *s, GSM_File *File, int *Pos);
+	GSM_Error (*AddFilePart)	(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
 	/**
 	 * Acquires filesystem status.
 	 */
@@ -1563,6 +1564,7 @@ typedef enum {
 	F_CAL65,	/* Calendar,6510 style - CBMM, method 3				*/
 	F_WAPMMSPROXY,	/* WAP & MMS settings contains first & second proxy		*/
 	F_CHATSYNCML,	/* Phone with Chat/SyncML settings 				*/
+	F_FILES2,	/* filesystem version 2 					*/
 
 	/* n6510.c && n7110.c */
 	F_VOICETAGS,	/* Voice tags available						*/

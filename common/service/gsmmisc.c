@@ -1,4 +1,4 @@
-/* (c) 2002-2004 by Marcin Wiacek */
+/* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 
 #include <string.h>
 #include <stdlib.h>
@@ -198,7 +198,9 @@ bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 	/* FIXME */
 	dt->Timezone	= 0;
 
-	return CheckDate(dt) && CheckTime(dt);
+	if (!CheckTime(dt)) return false;
+	if (dt->Year!=0) return CheckDate(dt);
+	return true;
 }
 
 void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)

@@ -1,4 +1,4 @@
-/* (c) 2002-2004 by Marcin Wiacek and Michal Cihar */
+/* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 /* FM stuff by Walek */
 
 #include <string.h>
@@ -527,6 +527,10 @@ static void PrintMemoryEntry(GSM_MemoryEntry *entry)
 				} else {
 					printmsg("Ringtone ID      : %i\n",entry->Entries[i].Number);
 				}
+				break;
+			case PBK_Text_UserID:
+				unknown = true;
+				printmsg("User ID          : %s\n",DecodeUnicodeString(entry->Entries[i].Text));
 				break;
 			case PBK_PictureID	     :
 				unknown = true;
@@ -2224,7 +2228,7 @@ static void GetBitmap(int argc, char *argv[])
 {
 	GSM_File		File;
 	GSM_MultiBitmap 	MultiBitmap;
-	int			location=0;
+	int			location=0, Handle, Size;
  	GSM_AllRingtonesInfo 	Info = {0, NULL};
 
 	if (mystrncasecmp(argv[2],"STARTUP",0)) {
@@ -2275,7 +2279,7 @@ static void GetBitmap(int argc, char *argv[])
 
 			error = ERR_NONE;
 //			while (error == ERR_NONE) {
-				error = Phone->GetFilePart(&s,&File);
+				error = Phone->GetFilePart(&s,&File,&Handle,&Size);
 //			}
 		    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
 			error = ERR_NONE;
@@ -6939,7 +6943,7 @@ static void GetFileSystem(int argc, char *argv[])
 	    	Print_Error(error);
 
 		if (argc <= 2 || !mystrncasecmp(argv[2],"-flatall",0)) {
-			if (strlen(Files.ID_FullName) < 5 && strlen(Files.ID_FullName) != 0) {
+			if (strlen(Files.ID_FullName) < 5 && strlen(Files.ID_FullName) != 0 && Files.ID_FullName[0]>='0' && Files.ID_FullName[0]<='9') {
 				printf("%5s.",Files.ID_FullName);
 			}
 			if (Files.Protected) {
@@ -6979,7 +6983,7 @@ static void GetFileSystem(int argc, char *argv[])
 				}
 				if (Files.Folder) printf("Folder ");
 			}
-			printf("\"%s\"",DecodeUnicodeConsole(Files.Name));
+			printf("\"%s\"\n",DecodeUnicodeConsole(Files.Name));
 		} else if (argc > 2 && mystrncasecmp(argv[2],"-flatall",0)) {
 			/* format for a folder ID;Folder;FOLDER_NAME;[FOLDER_PARAMETERS]
 			 * format for a file   ID;File;FOLDER_NAME;FILE_NAME;DATESTAMP;FILE_SIZE;[FILE_PARAMETERS]  */
@@ -7001,6 +7005,7 @@ static void GetFileSystem(int argc, char *argv[])
 			if (Files.ReadOnly)  	printf("R");
 			if (Files.Hidden)  	printf("H");
 			if (Files.System)  	printf("S");
+			printf("\n");
 		}
 	}
 
@@ -7019,6 +7024,7 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 	bool			start;
 	unsigned char		buffer[5000];
 	struct utimbuf		filedate;
+	int			Handle,Size;
 
 	if (File->Buffer != NULL) {
 		free(File->Buffer);
@@ -7029,7 +7035,7 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 
 	error = ERR_NONE;
 	while (error == ERR_NONE) {
-		error = Phone->GetFilePart(&s,File);
+		error = Phone->GetFilePart(&s,File,&Handle,&Size);
 		if (error == ERR_NONE || error == ERR_EMPTY || error == ERR_WRONGCRC) {
 			if (start) {
 				printmsg("Getting \"%s\": ", DecodeUnicodeConsole(File->Name));
@@ -7041,7 +7047,11 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 				printmsg("it's folder. Please give only file names\n");
 				exit(-1);
 			}
-			printmsg("*");
+			if (Size==0) {
+				printmsg("*");
+			} else {
+				printmsg("%cGetting \"%s\": %i percent", 13, DecodeUnicodeConsole(File->Name),File->Used*100/Size);
+			}
 			if (error == ERR_EMPTY) break;
 			if (error == ERR_WRONGCRC) {
 				printmsg("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n");
@@ -7172,7 +7182,7 @@ static void GetFileFolder(int argc, char *argv[])
 static void AddFile(int argc, char *argv[])
 {
 	GSM_File		File;
-	int			Pos = 0,i,nextlong;
+	int			Pos = 0,i,nextlong, Handle;
 
 	File.Buffer = NULL;
 	strcpy(File.ID_FullName,argv[2]);
@@ -7256,7 +7266,7 @@ static void AddFile(int argc, char *argv[])
 
 	error = ERR_NONE;
 	while (error == ERR_NONE) {
-		error = Phone->AddFilePart(&s,&File,&Pos);
+		error = Phone->AddFilePart(&s,&File,&Pos,&Handle);
 	    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
 		printmsgerr("%cWriting: %i percent",13,Pos*100/File.Used);
 	}
@@ -7341,7 +7351,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	unsigned char 		buffer[10000],JAR[500],Vendor[500],Name[500],Version[500],FileID[400];
 	bool 			Start = true, Found = false, wasclr;
 	bool			ModEmpty = false;
-	int			i = 0, Pos, Size, Size2, nextlong;
+	int			i = 0, Pos, Size, Size2, nextlong, Handle;
 
 	while (Folder[i].level[0] != 0) {
 		if (mystrncasecmp(argv[2],Folder[i].parameter,0)) {
@@ -7518,8 +7528,9 @@ static void NokiaAddFile(int argc, char *argv[])
 		File.ModifiedEmpty = true;
 		error 		   = ERR_NONE;
 		Pos		   = 0;
+		dbgprintf("file id is \"%s\"\n",File.ID_FullName);
 		while (error == ERR_NONE) {
-			error = Phone->AddFilePart(&s,&File,&Pos);
+			error = Phone->AddFilePart(&s,&File,&Pos,&Handle);
 		    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
 			printmsgerr("%cWriting JAD file: %i percent",13,Pos*100/File.Used);
 		}
@@ -7546,7 +7557,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		error 		   = ERR_NONE;
 		Pos		   = 0;
 		while (error == ERR_NONE) {
-			error = Phone->AddFilePart(&s,&File,&Pos);
+			error = Phone->AddFilePart(&s,&File,&Pos,&Handle);
 		    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
 			printmsgerr("%cWriting JAR file: %i percent",13,Pos*100/File.Used);
 		}
@@ -7659,7 +7670,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	error 	= ERR_NONE;
 	Pos	= 0;
 	while (error == ERR_NONE) {
-		error = Phone->AddFilePart(&s,&File,&Pos);
+		error = Phone->AddFilePart(&s,&File,&Pos,&Handle);
 	    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
 		if (File.Used != 0) printmsgerr("%cWriting file: %i percent",13,Pos*100/File.Used);
 	}

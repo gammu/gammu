@@ -1,4 +1,4 @@
-/* (c) 2001-2004 by Marcin Wiacek and Michal Cihar */
+/* (c) 2001-2005 by Marcin Wiacek and Michal Cihar */
 
 #ifndef __gsm_pbk_h
 #define __gsm_pbk_h

@@ -173,7 +173,7 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos)
+GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
 	GSM_Error		error;
 	int			j;
@@ -437,8 +437,9 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 	return ERR_EMPTY;
 }
 
-GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File)
+GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
 {
+	(*Size) = 0;
 	return OBEXGEN_PrivGetFilePart(s,File,false);
 }
 

@@ -285,6 +285,8 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 	/* Nothing to read */
 	if (Length <= 0) return Length;
 
+	if (Length > nbytes) Length = nbytes;
+
 	/* Read without problems */
 	if (ReadFile(d->hPhone, buf, Length, &Length, &d->osRead)) return Length;
 
