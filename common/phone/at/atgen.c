@@ -243,6 +243,10 @@ GSM_Error ATGEN_DecodeDateTime(GSM_DateTime *dt, unsigned char *input)
 
 	if (*pos == '"') pos++;
 	dt->Year = atoi(pos);
+	if (dt->Year < 100) {
+		/* FIXME: dates in past may be broken with this, but how to check? */
+		dt->Year += 2000;
+	}
 	pos = strchr(pos, '/');
 	if (pos == NULL) return ERR_UNKNOWN;
 	pos++;
