@@ -753,6 +753,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTIMPLEMENTED,			/*	GetSignalQuality	*/
 	NOTIMPLEMENTED,			/*	GetNetworkInfo		*/
 	NOTIMPLEMENTED,     		/*  	GetCategory 		*/
+ 	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTIMPLEMENTED,      		/*  	GetCategoryStatus 	*/	
 	NOTIMPLEMENTED,			/*	GetMemoryStatus		*/
 	NOTIMPLEMENTED,			/*	GetMemory		*/

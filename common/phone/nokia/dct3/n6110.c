@@ -2780,6 +2780,7 @@ GSM_Phone_Functions N6110Phone = {
 	N6110_GetSignalQuality,
 	DCT3_GetNetworkInfo,
 	NOTSUPPORTED,       		/*  	GetCategory 		*/
+ 	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
 	N6110_GetMemoryStatus,
 	N6110_GetMemory,

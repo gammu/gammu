@@ -5255,7 +5255,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|3100|3100b|3200|3200a|3300|3510|3510i|3530|3590|3595|5100|6100|6200|6220|6310|6310i|6385|6510|6610|6800|7210|7250|7250i|8310|8390|8910|8910i",
+	"1100|1100a|1100b|3100|3100b|3108|3200|3200a|3300|3510|3510i|3530|3590|3595|5100|6100|6200|6220|6310|6310i|6385|6510|6610|6800|7210|7250|7250i|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/
@@ -5288,6 +5288,7 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_GetSignalQuality,
 	N6510_GetNetworkInfo,
 	NOTSUPPORTED,       		/*  	GetCategory 		*/
+ 	NOTSUPPORTED,       		/*  	AddCategory 		*/
 	NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
 	N6510_GetMemoryStatus,
 	N6510_GetMemory,

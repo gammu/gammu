@@ -1,5 +1,6 @@
 /* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
-
+/* Checking used compiler (c) 2002 by Michal Cihar */
+ 
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
@@ -423,7 +424,7 @@ void DumpMessage(FILE *df, Debug_Level dl, const unsigned char *message, int mes
 	buffer[len*5-1]=0;
 
 	for (i = 0; i < messagesize; i++) {
-		sprintf(buffer+j*4,"%02x",message[i]);
+		sprintf(buffer+j*4,"%02X",message[i]);
 		buffer[j*4+2] = 0x20;
 		if (isprint(message[i]) && message[i]!=0x09) {
 			if (j != len-1) buffer[j*4+2] 	= message[i];
@@ -442,6 +443,147 @@ void DumpMessage(FILE *df, Debug_Level dl, const unsigned char *message, int mes
 		}
 	}
 	if (j != 0) smfprintf(df, dl, "%s\n", buffer);
+}
+
+char *GetOS(void)
+{
+#ifdef WIN32
+	OSVERSIONINFOEX Ver;
+	bool		Extended = true;
+#endif
+	static char 	Buffer[100] = {0x00};
+
+#ifdef WIN32
+	memset(&Ver,sizeof(OSVERSIONINFOEX),0);	
+	Ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
+
+   	if (!GetVersionEx((OSVERSIONINFO *)&Ver)) {
+		Extended 		= false;
+	      	Ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+	        if (!GetVersionEx((OSVERSIONINFO *)&Ver)) {
+//#ifdef _MSC_VER
+//			Ver.dwMajorVersion = _winmajor;
+//			Ver.dwMinorVersion = _winminor;
+//			Ver.dwBuildNumber  = _osver;
+//#else
+			sprintf(Buffer, "Windows");
+			return Buffer;
+//#endif
+		}
+	}
+
+	/* ----------------- 9x family ------------------ */
+
+	/* no info about Win95 SP1, Win95 OSR2.1, Win95 OSR2.5.... */
+	if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 0 && Ver.dwBuildNumber == 950) {
+		sprintf(Buffer,"Win 95");
+	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 0 && Ver.dwBuildNumber == 1111) {
+		sprintf(Buffer,"Win 95 OSR2.x");
+
+	/* no info about Win98 SP1.... */
+	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 10 && Ver.dwBuildNumber == 1998) {
+		sprintf(Buffer,"Win 98");
+	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 10 && Ver.dwBuildNumber == 2222) {
+		sprintf(Buffer,"Win 98 SE");
+
+	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 90 && Ver.dwBuildNumber == 3000) {
+		sprintf(Buffer,"Win ME");
+
+	/* ---------------- NT family ------------------- */
+
+	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 0 && Ver.dwBuildNumber == 1381) {
+		sprintf(Buffer,"Win NT 4.0");
+
+	} else if (Ver.dwMajorVersion == 5 && Ver.dwMinorVersion == 0 && Ver.dwBuildNumber == 2195) {
+		sprintf(Buffer,"Win 2000");
+
+	} else if (Ver.dwMajorVersion == 5 && Ver.dwMinorVersion == 1 && Ver.dwBuildNumber == 2600) {
+		sprintf(Buffer,"Win XP");
+#if _MSC_VER > 1200 //6.0 has it undeclared
+		if (Extended) {
+			if (Ver.wSuiteMask & VER_SUITE_PERSONAL) {
+				sprintf(Buffer+strlen(Buffer)," Home");
+			} else {
+				sprintf(Buffer+strlen(Buffer)," Pro");
+			}
+		}
+#endif
+
+	} else if (Ver.dwMajorVersion == 5 && Ver.dwMinorVersion == 2) {
+		sprintf(Buffer,"Win 2003");
+
+	} else {
+		sprintf(Buffer, "Windows %i.%i.%i",Ver.dwMajorVersion,Ver.dwMinorVersion,Ver.dwBuildNumber);
+	}
+
+	if (Extended && Ver.wServicePackMajor != 0) {
+		sprintf(Buffer+strlen(Buffer)," SP%i",Ver.wServicePackMajor);
+	}
+#elif defined(linux) || defined(__linux) || defined(__linux__)
+	sprintf(Buffer, "Linux");
+#elif defined(__FreeBSD__)
+	sprintf(Buffer, "FreeBSD");
+#elif defined(__NetBSD__)
+	sprintf(Buffer, "NetBSD");
+#elif defined(__OpenBSD__)
+	sprintf(Buffer, "OpenBSD");
+#elif defined(__GNU__)
+	sprintf(Buffer, "GNU/Hurd");
+#elif defined(sun) || defined(__sun) || defined(__sun__)
+#  ifdef __SVR4
+	sprintf(Buffer, "Sun Solaris");
+#  else
+	sprintf(Buffer, "SunOS");
+#  endif
+#elif defined(hpux) || defined(__hpux) || defined(__hpux__)
+	sprintf(Buffer, "HP-UX");
+#elif defined(ultrix) || defined(__ultrix) || defined(__ultrix__)
+	sprintf(Buffer, "DEC Ultrix");
+#elif defined(sgi) || defined(__sgi)
+	sprintf(Buffer, "SGI Irix");
+#elif defined(__osf__)
+	sprintf(Buffer, "OSF Unix");
+#elif defined(bsdi) || defined(__bsdi__)
+	sprintf(Buffer, "BSDI Unix");
+#elif defined(_AIX)
+	sprintf(Buffer, "AIX Unix");
+#elif defined(_UNIXWARE)
+	sprintf(Buffer, "SCO Unixware");
+#elif defined(DGUX)
+	sprintf(Buffer, "DG Unix");
+#elif defined(__QNX__)
+	sprintf(Buffer, "QNX");
+#endif
+	return Buffer;
+}
+
+char *GetCompiler(void)
+{
+	static char Buffer[100] = {0x00};
+
+#ifdef WIN32
+#  ifdef _MSC_VER
+	if (_MSC_VER == 1200) { //?
+		sprintf(Buffer, "MS VC 6.0");
+	} else if (_MSC_VER == 1300) {
+		sprintf(Buffer, "MS VC .NET 2002");
+	} else if (_MSC_VER == 1310) {
+		sprintf(Buffer, "MS VC .NET 2003");
+	} else {
+		sprintf(Buffer, "MS VC %i",_MSC_VER);
+	}
+#  elif defined(__BORLANDC__)
+	sprintf(Buffer, "Borland C++ %i",__BORLANDC__);
+#  endif
+#elif defined(DJGPP)
+	sprintf(Buffer, "djgpp");
+#elif defined(__GNUC__)
+	sprintf(Buffer, "gcc %i.%i", __GNUC__, __GNUC_MINOR__);
+#elif defined(__SUNPRO_CC)
+	sprintf(Buffer, "Sun C++ %x", __SUNPRO_CC);
+#endif
+
+	return Buffer;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

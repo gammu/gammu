@@ -1,0 +1,1 @@
+shlibs:Depends=libbluetooth1 (>= 2.3), libc6 (>= 2.3.2.ds1-4)

@@ -30,6 +30,7 @@
 typedef struct {
 	char			IMEI		[MAX_IMEI_LENGTH];
 	char			Model		[MAX_MODEL_LENGTH+MAX_VERSION_LENGTH];
+	char			Creator		[80];
 	GSM_DateTime		DateTime;
 	bool			DateTimeAvailable;
 	char			MD5Original	[100];

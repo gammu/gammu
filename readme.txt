@@ -69,7 +69,7 @@ A. * these things can be done without anything (it will be done everything
          some types of files and MMC (3300, 6230, etc.), probably some other
          things connected with OMA, camera settings and probably making photos
          from PC side, probably support for new FM radio (I saw somewhere,
-         that new phones probably have new features in FM radio), notes
+         that new phones probably have new features in FM radio)
      * Other:
        * more EMS features: polyphonic ringtones, more text features, etc.
        * all Siemens features
@@ -107,21 +107,18 @@ A. Method 1:
      * under Unix (Linux)
          first do "./configure" and later use "make" or "make makelib"
 
-         After it can use "make install" or "make installlib" to install it
+         After it can use "make install" or "make installshared" to install it
          in your OS.
    Method 2:
      * under Linux based on RPM
          first do "./configure" and then "make makerpm"
          resulting rpm package could be installed via rpm --install <package>
+	     or
+         run rpmbuild -ta gammu-x.y.z.tar.gz
    Method 3:
      * under Linux based on Debian packages
-         There are currently two ways how to build Debian package.
-
-         If you want to use standard Debian way, copy directory cfg/debian
-         into main source directory and build it as any other Debian package
-         (dpkg-buildpackage, or fakeroot make -f debian/rules binary).
-
-         The other way is to simple run make makedeb (after running ./configure).
+         Just running make deb should do the job. Note you will need at least
+         fakeroot, debhelper, libc6-dev and autoconf installed.
    Method 4:
      * change parameters in /cfg/config.h
      * compile it:

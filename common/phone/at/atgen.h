@@ -41,6 +41,7 @@ typedef enum {
 	AT_HP,
 	AT_Falcom,
 	AT_Ericsson,
+	AT_Sagem,
 	AT_Unknown
 } GSM_AT_Manufacturer;
 
@@ -51,9 +52,9 @@ typedef enum {
 } GSM_AT_PBK_Charset;
 
 typedef enum {
-	AT_PHONE_SMS_AVAILABLE = 1,
-	AT_PHONE_SMS_NOTAVAILABLE
-} GSM_AT_PHONE_SMSMemory;
+	AT_AVAILABLE = 1,
+	AT_NOTAVAILABLE
+} GSM_AT_SMSMemory;
 
 typedef enum {
 	AT_SBNR_AVAILABLE = 1,
@@ -64,6 +65,7 @@ typedef enum {
 	AT_Status,
 	AT_NextEmpty,
 	AT_Total,
+	AT_First,
 	AT_Sizes
 } GSM_AT_NeededMemoryInfo;
 
@@ -79,6 +81,7 @@ typedef struct {
 	GSM_MemoryType		PBKMemory;	  	/* Last read PBK memory				 		*/
 	char			PBKMemories[AT_PBK_MAX_MEMORIES + 1]; /* Supported by phone PBK memories 		*/
 	int			NextMemoryEntry;  	/* Next empty memory entry					*/
+	int			FirstMemoryEntry;	/* First memory entry to be read				*/
 	GSM_AT_PBK_Charset	PBKCharset;	  	/* Last read PBK charset					*/
 	bool			UCS2CharsetFailed;	/* Whether setting of UCS2 charset has already failed 		*/
 	bool			NonUCS2CharsetFailed;	/* Whether setting of non-UCS2 charset has already failed 	*/
@@ -90,7 +93,9 @@ typedef struct {
 	GSM_SMSMemoryStatus	LastSMSStatus;
 	int			LastSMSRead;
 	int			FirstCalendarPos;
-	GSM_AT_PHONE_SMSMemory	PhoneSMSMemory;	  	/* Is phone SMS memory available ? 				*/
+	bool			CanSaveSMS;
+	GSM_AT_SMSMemory	PhoneSMSMemory;	  	/* Is phone SMS memory available ? 				*/
+	GSM_AT_SMSMemory	SIMSMSMemory;	  	/* Is SIM SMS memory available ? 				*/
 	GSM_MemoryType		SMSMemory;	  	/* Last read SMS memory 					*/
 	GSM_AT_SMS_Modes	SMSMode;	  	/* PDU or TEXT mode for SMS ? 					*/
 

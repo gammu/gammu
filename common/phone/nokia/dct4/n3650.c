@@ -294,6 +294,7 @@ GSM_Phone_Functions N3650Phone = {
 	NOTSUPPORTED,			/*	GetSignalQuality	*/
 	NOTSUPPORTED,			/*	GetNetworkInfo		*/
 	NOTSUPPORTED,     		/*  	GetCategory 		*/
+ 	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/	
 	NOTSUPPORTED,			/*	GetMemoryStatus		*/
 	NOTSUPPORTED,			/*	GetMemory		*/

@@ -12,6 +12,7 @@
 #include "../../common/gsmstate.h"
 #include "../../common/gsmcomon.h"
 #include "../../common/misc/coding/coding.h"
+#include "../../common/service/backup/gsmback.h"
 
 typedef struct {
 	GSM_StateMachine 	s;
@@ -232,7 +233,7 @@ GSM_Error WINAPI mystartconnection(int *phone,
 	strcpy(s[*phone].s.CurrentConfig->DebugFile,logfile);
 	strcpy(s[*phone].s.CurrentConfig->DebugLevel,logfiletype);
 	s[*phone].s.CurrentConfig->LockDevice	= "";
-	s[*phone].s.CurrentConfig->StartInfo	= "yes";
+	s[*phone].s.CurrentConfig->StartInfo	= "no";
 	s[*phone].s.CurrentConfig->Device 	= malloc( strlen(device)+1 );
 	if (s[*phone].s.CurrentConfig->Device == NULL) return ERR_MOREMEMORY;
 	strcpy(s[*phone].s.CurrentConfig->Device,device);
@@ -357,7 +358,7 @@ GSM_Error WINAPI mydeletesmsmessage (int phone, GSM_SMSMessage *sms)
 	return error;
 }
 
-void SendSMSStatus (char *Device, int status)
+void SendSMSStatus (char *Device, int status, int MessageReference)
 {
 	int i;
 
@@ -649,7 +650,375 @@ GSM_Error WINAPI mygetdct4securitycode(int phone, char *code)
 	return error;
 }
 
+/* ------------------------ for backup/restore ----------------------------- */
+
+GSM_Backup Backup;
+int	   StatusUsed,BackupUsed,BackupPos;
+
+GSM_Error WINAPI mygetbackupformatfeatures(char *filename, GSM_Backup_Info *BackupFeat)
+{
+	GSM_GetBackupFormatFeatures(filename, BackupFeat);
+
+	return ERR_NONE;
+}
+
+GSM_Error WINAPI mygetbackupfeaturesforbackup(int phone, char *filename, GSM_Backup_Info *BackupFeat)
+{
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+	GSM_GetPhoneFeaturesForBackup(&s[phone].s, BackupFeat);
+        ReleaseMutex(s[phone].Mutex);
+
+        return ERR_NONE;
+}
+
+/* ----------------------------- restore ----------------------------------- */
+
+GSM_Error WINAPI myreadbackupfile(char *filename, GSM_Backup_Info *BackupFeat)
+{
+	GSM_Error error;
+
+	error = GSM_ReadBackupFile(filename,&Backup);
+	if (error != ERR_NONE) return error;
+
+	GSM_GetBackupFileFeatures(filename, BackupFeat, &Backup);
+
+	return ERR_NONE;
+}
+
+GSM_Error WINAPI mygetbackupfileimei(char *imei)
+{
+	strcpy(imei,Backup.IMEI+1);
+	if (imei[0] != 0) imei[strlen(imei)-1]=0;
+        return ERR_NONE;
+}
+
+GSM_Error WINAPI mygetbackupfilecreator(char *creator)
+{
+	strcpy(creator,Backup.Creator+1);
+	if (creator[0] != 0) creator[strlen(creator)-1]=0;
+        return ERR_NONE;
+}
+
+GSM_Error WINAPI mygetbackupfilemodel(char *model)
+{
+	strcpy(model,Backup.Model+1);
+	if (model[0] != 0) model[strlen(model)-1]=0;
+        return ERR_NONE;
+}
+
+GSM_Error WINAPI mygetbackupdatetime(GSM_DateTime *DT)
+{
+	if (Backup.DateTimeAvailable) {
+		memcpy(DT,&Backup.DateTime,sizeof(GSM_DateTime));
+		return ERR_NONE;
+	} else {
+		return ERR_EMPTY;
+	}
+}
+
+static GSM_Error myrestorepbkmemory(int phone, int *percent, GSM_MemoryType mem)
+{
+	GSM_MemoryStatus MemStatus;
+	GSM_MemoryEntry	 Pbk;
+	GSM_Error	 error;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+	if (*percent == 100) return ERR_EMPTY;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
+	if (*percent == 200) {
+		MemStatus.MemoryType = mem;
+		error=s[phone].s.Phone.Functions->GetMemoryStatus(&s[phone].s, &MemStatus);
+		if (error != ERR_NONE) {
+		        ReleaseMutex(s[phone].Mutex);
+			return error;
+		}
+		StatusUsed 	= MemStatus.MemoryUsed+MemStatus.MemoryFree;
+		BackupUsed	= 0;
+		BackupPos	= 1;
+	}
+
+	Pbk.MemoryType 	= mem;
+	Pbk.Location	= BackupPos;
+	Pbk.EntriesNum	= 0;
+	if (mem == MEM_ME) {
+		if (Backup.PhonePhonebook[BackupUsed] != NULL &&
+		    Backup.PhonePhonebook[BackupUsed]->Location == Pbk.Location) {
+			Pbk = *Backup.PhonePhonebook[BackupUsed];
+			BackupUsed++;
+		}
+	} else {
+		if (Backup.SIMPhonebook[BackupUsed] != NULL &&
+ 		    Backup.SIMPhonebook[BackupUsed]->Location == Pbk.Location) {
+			Pbk = *Backup.SIMPhonebook[BackupUsed];
+			BackupUsed++;
+		}
+	}
+	if (Pbk.EntriesNum != 0) {
+		error=s[phone].s.Phone.Functions->SetMemory(&s[phone].s, &Pbk);
+	} else {
+		error=s[phone].s.Phone.Functions->DeleteMemory(&s[phone].s, &Pbk);
+	}
+	*percent = BackupPos*100/StatusUsed;
+	BackupPos++;
+        ReleaseMutex(s[phone].Mutex);
+	return error;
+}
+
+GSM_Error WINAPI myrestorephonepbk(int phone, int *percent)
+{
+	return myrestorepbkmemory(phone, percent, MEM_ME);
+}
+
+GSM_Error WINAPI myrestoresimpbk(int phone, int *percent)
+{
+	return myrestorepbkmemory(phone, percent, MEM_SM);
+}
+
+/* ------------------------------ backup ----------------------------------- */
+
+GSM_Error WINAPI mystartbackup(int phone, GSM_Backup_Info *BackupFeat)
+{
+        GSM_Error error;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
+	GSM_ClearBackup(&Backup);
+
+	sprintf(Backup.Creator,"Gammu DLL %s",VERSION);
+	if (strlen(GetOS()) != 0) {
+		strcat(Backup.Creator+strlen(Backup.Creator),", ");
+		strcat(Backup.Creator+strlen(Backup.Creator),GetOS());
+	}
+	if (strlen(GetCompiler()) != 0) {
+		strcat(Backup.Creator+strlen(Backup.Creator),", ");
+		strcat(Backup.Creator+strlen(Backup.Creator),GetCompiler());
+	}
+
+	if (BackupFeat->DateTime) {
+		GSM_GetCurrentDateTime(&Backup.DateTime);
+		Backup.DateTimeAvailable=true;
+	}
+	if (BackupFeat->Model) {
+		error=s[phone].s.Phone.Functions->GetManufacturer(&s[phone].s);
+		if (error != ERR_NONE) {
+		        ReleaseMutex(s[phone].Mutex);
+			return error;
+		}
+		sprintf(Backup.Model,"%s ",s[phone].s.Phone.Data.Manufacturer);
+		if (s[phone].s.Phone.Data.ModelInfo->model[0]!=0) {
+			strcat(Backup.Model,s[phone].s.Phone.Data.ModelInfo->model);
+		} else {
+			strcat(Backup.Model,s[phone].s.Phone.Data.Model);
+		}
+		strcat(Backup.Model," ");
+		strcat(Backup.Model,s[phone].s.Phone.Data.Version);
+	}
+	if (BackupFeat->IMEI) {
+                error=s[phone].s.Phone.Functions->GetIMEI(&s[phone].s);
+		if (error != ERR_NONE) {
+		        ReleaseMutex(s[phone].Mutex);
+			return error;
+		}
+		strcpy(Backup.IMEI, s[phone].s.Phone.Data.IMEI);
+	}
+
+        ReleaseMutex(s[phone].Mutex);
+
+        return ERR_NONE;
+}
+
+static GSM_Error mybackuppbkmemory(int phone, int *percent, GSM_MemoryType mem)
+{
+	GSM_MemoryStatus MemStatus;
+	GSM_MemoryEntry	 Pbk;
+	GSM_Error	 error;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+	if (*percent == 100) return ERR_EMPTY;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
+	if (*percent == 200) {
+		MemStatus.MemoryType = mem;
+		error=s[phone].s.Phone.Functions->GetMemoryStatus(&s[phone].s, &MemStatus);
+		if (error != ERR_NONE) {
+		        ReleaseMutex(s[phone].Mutex);
+			return error;
+		}
+		StatusUsed 	= MemStatus.MemoryUsed;
+		BackupUsed	= 0;
+		BackupPos	= 1;
+	}
+
+	Pbk.MemoryType  = mem;
+	Pbk.Location 	= BackupPos;
+	while (1) {
+		error=s[phone].s.Phone.Functions->GetMemory(&s[phone].s, &Pbk);
+		if (error != ERR_EMPTY && error != ERR_NONE) {
+		        ReleaseMutex(s[phone].Mutex);
+			return error;
+		}
+		if (error == ERR_NONE) {
+			if (mem == MEM_ME) {
+				if (BackupUsed < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
+					Backup.PhonePhonebook[BackupUsed] = malloc(sizeof(GSM_MemoryEntry));
+					if (Backup.PhonePhonebook[BackupUsed] == NULL) {
+					        ReleaseMutex(s[phone].Mutex);
+						return ERR_MOREMEMORY;
+					}
+					Backup.PhonePhonebook[BackupUsed+1] = NULL;
+				} else {
+				        ReleaseMutex(s[phone].Mutex);
+					return ERR_MOREMEMORY;
+				}
+				*Backup.PhonePhonebook[BackupUsed]=Pbk;
+			} else {
+				if (BackupUsed < GSM_BACKUP_MAX_SIMPHONEBOOK) {
+					Backup.SIMPhonebook[BackupUsed] = malloc(sizeof(GSM_MemoryEntry));
+					if (Backup.SIMPhonebook[BackupUsed] == NULL) {
+					        ReleaseMutex(s[phone].Mutex);
+						return ERR_MOREMEMORY;
+					}
+					Backup.SIMPhonebook[BackupUsed+1] = NULL;
+				} else {
+				        ReleaseMutex(s[phone].Mutex);
+					return ERR_MOREMEMORY;
+				}
+				*Backup.SIMPhonebook[BackupUsed]=Pbk;
+			}
+			BackupUsed++;
+			*percent = BackupUsed*100/StatusUsed;
+		}
+		BackupPos++;
+		if (error == ERR_NONE) {
+		        ReleaseMutex(s[phone].Mutex);
+			return error;
+		}
+	}
+}
+
+GSM_Error WINAPI mybackupphonepbk(int phone, int *percent)
+{
+	return mybackuppbkmemory(phone, percent, MEM_ME);
+}
+
+GSM_Error WINAPI mybackupsimpbk(int phone, int *percent)
+{
+	return mybackuppbkmemory(phone, percent, MEM_SM);
+}
+
+GSM_Error WINAPI mybackupcalendar(int phone, int *percent)
+{
+	GSM_CalendarEntry 	Note;
+	GSM_Error	 	error;
+	GSM_CalendarStatus 	Status;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+	if (*percent == 100) return ERR_EMPTY;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
+	if (*percent == 200) {
+		error=s[phone].s.Phone.Functions->GetNextCalendar(&s[phone].s,&Note,true);
+		if (error != ERR_NONE) {
+		        ReleaseMutex(s[phone].Mutex);
+			return error;
+		}
+		BackupUsed = 0;
+		error = s[phone].s.Phone.Functions->GetCalendarStatus(&s[phone].s, &Status);
+		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
+			StatusUsed = -1;
+		} else if (error != ERR_NONE) {
+		        ReleaseMutex(s[phone].Mutex);
+			return error;			
+		} else {
+			StatusUsed = Status.Used;
+		}
+	}
+
+	if (BackupUsed < GSM_MAXCALENDARTODONOTES) {
+		Backup.Calendar[BackupUsed] = malloc(sizeof(GSM_CalendarEntry));
+	        if (Backup.Calendar[BackupUsed] == NULL) {
+		        ReleaseMutex(s[phone].Mutex);
+			return ERR_MOREMEMORY;
+		}
+		Backup.Calendar[BackupUsed+1] = NULL;
+	} else {
+	        ReleaseMutex(s[phone].Mutex);
+		return ERR_MOREMEMORY;
+	}
+	*Backup.Calendar[BackupUsed]=Note;
+	BackupUsed++;
+	error=s[phone].s.Phone.Functions->GetNextCalendar(&s[phone].s,&Note,((*percent)==0));
+	if (StatusUsed == -1) {
+		*percent = 0;
+		if (error == ERR_EMPTY) *percent = 100;
+	} else {
+		*percent = BackupUsed*100/StatusUsed;
+	}
+        ReleaseMutex(s[phone].Mutex);
+	return error;
+}
+
+GSM_Error WINAPI mybackuptodo(int phone, int *percent)
+{
+	GSM_ToDoEntry 		ToDo;
+	GSM_ToDoStatus		ToDoStatus;
+	GSM_Error		error;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+	if (*percent == 100) return ERR_EMPTY;
+
+        WaitForSingleObject(s[phone].Mutex, INFINITE );
+
+	if (*percent == 200) {
+		error=s[phone].s.Phone.Functions->GetToDoStatus(&s[phone].s,&ToDoStatus);
+		if (error != ERR_NONE) {
+		        ReleaseMutex(s[phone].Mutex);
+			return error;
+		}
+		StatusUsed 	= ToDoStatus.Used;
+		BackupUsed	= 0;
+	}
+
+	if (BackupUsed < GSM_MAXCALENDARTODONOTES) {
+		Backup.ToDo[BackupUsed] = malloc(sizeof(GSM_ToDoEntry));
+	        if (Backup.ToDo[BackupUsed] == NULL) {
+		        ReleaseMutex(s[phone].Mutex);
+			return ERR_MOREMEMORY;
+		}
+		Backup.ToDo[BackupUsed+1] = NULL;
+	} else {
+	        ReleaseMutex(s[phone].Mutex);
+		return ERR_MOREMEMORY;
+	}
+	error=s[phone].s.Phone.Functions->GetNextToDo(&s[phone].s,&ToDo,((*percent)==0));
+	*Backup.ToDo[BackupUsed]=ToDo;
+	BackupUsed++;
+	*percent = BackupUsed*100/StatusUsed;
+        ReleaseMutex(s[phone].Mutex);
+	return error;
+}
+
+GSM_Error WINAPI myendbackup(char *filename, bool UseUnicode)
+{
+	GSM_SaveBackupFile(filename,&Backup, UseUnicode);
+    	GSM_FreeBackup(&Backup);
+	return ERR_NONE;
+}
+
 /* ------------------------------------------------------------------------- */
+
 
 int WINAPI mygetstructuresize(int i)
 {

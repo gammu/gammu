@@ -1,5 +1,4 @@
 /* (c) 2002-2003 by Marcin Wiacek */
-/* Checking used compiler (c) 2002 by Michal Cihar */
 /* Phones ID (c) partially by Walek */
 
 #include <stdarg.h>
@@ -141,8 +140,18 @@ static void GSM_RegisterModule(GSM_StateMachine *s,GSM_Phone_Functions *phone)
 
 GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 {
+	OnePhoneModel *model;
+	
 	/* Auto model */
 	if (s->CurrentConfig->Model[0] == 0) {
+		model = GetModelData(NULL,s->Phone.Data.Model,NULL);
+#ifdef GSM_ENABLE_ALCATEL
+		if (model->model[0] != 0 && IsPhoneFeatureAvailable(model, F_ALCATEL)) {
+			smprintf(s,"[Module           - \"%s\"]\n",ALCATELPhone.models);
+			s->Phone.Functions = &ALCATELPhone;
+			return ERR_NONE;
+		}
+#endif
 #ifdef GSM_ENABLE_ATGEN
 		/* With ATgen and auto model we can work with unknown models too */
 		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT) {
@@ -151,7 +160,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 			return ERR_NONE;
 		}
 #endif
-		if (GetModelData(NULL,s->Phone.Data.Model,NULL)->model[0] == 0) return ERR_UNKNOWNMODELSTRING;
+		if (model->model[0] == 0) return ERR_UNKNOWNMODELSTRING;
 	}
 	s->Phone.Functions=NULL;
 #ifdef GSM_ENABLE_ATGEN
@@ -194,6 +203,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	GSM_Error	error;
 	GSM_DateTime	time;
 	int		i;
+	char		Buffer[80];
 
 	for (i=0;i<s->ConfigNum;i++) {
 		s->CurrentConfig		  = &s->Config[i];
@@ -232,84 +242,19 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		if (error != ERR_NONE) return error;
 
 		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTERROR ||
-	    	    s->di.dl == DL_TEXTALLDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTERRORDATE)
-		{
+	    	    s->di.dl == DL_TEXTALLDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTERRORDATE) {
 			smprintf(s,"[Gammu            - version %s built %s %s]\n",VERSION,__TIME__,__DATE__);
 			smprintf(s,"[Connection       - \"%s\"]\n",s->CurrentConfig->Connection);
 			smprintf(s,"[Model type       - \"%s\"]\n",s->CurrentConfig->Model);
 			smprintf(s,"[Device           - \"%s\"]\n",s->CurrentConfig->Device);
-#ifdef WIN32
-#  ifdef _MSC_VER
-			smprintf(s,"[OS/compiler      - Windows %i.%i.%i",_winmajor,_winminor,_osver);
-			if (_winmajor == 4 && _winminor == 0 && _osver == 950) smprintf(s," (95)");
-			if (_winmajor == 4 && _winminor == 0 && _osver == 1111) smprintf(s," (95 OSR2.0)");
-			if (_winmajor == 4 && _winminor == 0 && _osver == 1212) smprintf(s," (95 OSR2.1)");
-			if (_winmajor == 4 && _winminor == 10 && _osver == 1998) smprintf(s," (98)");
-			if (_winmajor == 4 && _winminor == 10 && _osver == 2222) smprintf(s," (98 SE)");
-			if (_winmajor == 4 && _winminor == 90 && _osver == 3000) smprintf(s," (ME)");
-			if (_winmajor == 4 && _winminor == 0 && _osver == 1381) smprintf(s," (NT 4.0)");
-			if (_winmajor == 5 && _winminor == 0 && _osver == 2195) smprintf(s," (2000)");
-			if (_winmajor == 5 && _winminor == 1 && _osver == 2600) smprintf(s," (XP)");
-			smprintf(s,", Visual C++ %i",_MSC_VER);
-			if (_MSC_VER == 1300) smprintf(s," (.NET)");
-			smprintf(s,"]\n");
-#  elif defined(__BORLANDC__)
-			smprintf(s,"[OS/compiler      - win32/Borland C++ %i]\n",__BORLANDC__);
-#  else
-			smprintf(s,"[OS/compiler      - win32]\n");
-#  endif
-#elif defined(DJGPP)
-			smprintf(s,"[OS/compiler      - djgpp]\n");
-#else
-			smprintf(s,"[OS/compiler      - "
-// Detect some Unix-like OSes:
-#  if defined(linux) || defined(__linux) || defined(__linux__)
-			"Linux"
-#  elif defined(__FreeBSD__)
-			"FreeBSD"
-#  elif defined(__NetBSD__)
-			"NetBSD"
-#  elif defined(__OpenBSD__)
-			"OpenBSD"
-#  elif defined(__GNU__)
-			"GNU/Hurd"
-#  elif defined(sun) || defined(__sun) || defined(__sun__)
-#    if defined(__SVR4)
-			"Sun Solaris"
-#    else
-			"SunOS"
-#    endif
-#  elif defined(hpux) || defined(__hpux) || defined(__hpux__)
-			"HP-UX"
-#  elif defined(ultrix) || defined(__ultrix) || defined(__ultrix__)
-			"DEC Ultrix"
-#  elif defined(sgi) || defined(__sgi)
-			"SGI Irix"
-#  elif defined(__osf__)
-			"OSF Unix"
-#  elif defined(bsdi) || defined(__bsdi__)
-			"BSDI Unix"
-#  elif defined(_AIX)
-			"AIX Unix"
-#  elif defined(_UNIXWARE)
-			"SCO Unixware"
-#  elif defined(DGUX)
-			"DG Unix"
-#  elif defined(__QNX__)
-			"QNX"
-#  else
-			"Unknown"
-#endif
-// Show info for some compilers:
-#  if defined(__GNUC__)
-			", gcc %i.%i]\n", __GNUC__, __GNUC_MINOR__
-#  elif defined(__SUNPRO_CC)
-			", Sun C++ %x]\n", __SUNPRO_CC
-#  else
-			"]\n"
-#  endif
-            		);
-#endif
+
+			Buffer[0] = 0;
+			if (strlen(GetOS()) != 0) sprintf(Buffer,"%s",GetOS());
+			if (strlen(GetCompiler()) != 0) {
+				if (Buffer[0] != 0) strcat(Buffer+strlen(Buffer),", ");
+				strcat(Buffer+strlen(Buffer),GetCompiler());
+			}
+			if (Buffer[0] != 0) smprintf(s,"[OS/compiler      - %s]\n",Buffer);
 		}
 		if (s->di.dl==DL_BINARY) {
 			smprintf(s,"%c",((unsigned char)strlen(VERSION)));
@@ -338,7 +283,10 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 				if (error == ERR_DEVICENODRIVER) 	continue;
 				if (error == ERR_DEVICENOTWORK) 	continue;
 			}
-			if (error!=ERR_NONE) return error;
+ 			if (error!=ERR_NONE) {
+ 				if (s->LockFile!=NULL) unlock_device(&(s->LockFile));
+ 				return error;
+ 			}
 
 			s->opened = true;
 
@@ -421,7 +369,10 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 				if (error == ERR_DEVICENODRIVER) 	continue;
 				if (error == ERR_DEVICENOTWORK) 	continue;
 			}
-			if (error!=ERR_NONE) return error;
+			if (error!=ERR_NONE) {
+				if (s->LockFile!=NULL) unlock_device(&(s->LockFile));
+				return error;
+			}
 
 			s->opened = true;
 
@@ -617,8 +568,8 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 
 		if (execute) {
 			*reply=i;
-			if ((unsigned int)Reply[i].requestID == ID_IncomingFrame ||
-			    (unsigned int)Reply[i].requestID == Data->RequestID ||
+			if (Reply[i].requestID == ID_IncomingFrame ||
+			    Reply[i].requestID == Data->RequestID ||
 			    Data->RequestID	== ID_EachFrame) {
 				return ERR_NONE;
 			}
@@ -671,7 +622,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 
 	if (error==ERR_NONE) {
 		error=Reply[reply].Function(*msg, s);
-		if ((unsigned int)Reply[reply].requestID==Phone->RequestID) {
+		if (Reply[reply].requestID==Phone->RequestID) {
 			if (error == ERR_NEEDANOTHERANSWER) {
 				error = ERR_NONE;
 			} else {
@@ -898,6 +849,7 @@ static OnePhoneModel allmodels[] = {
 #ifdef GSM_ENABLE_NOKIA6510
 	{"3100" ,"RH-19" ,"",           {0}},
 	{"3100b","RH-50" ,"",           {0}},
+	{"3108", "RH-6",  "Nokia 3108",	{0}}, //does it have irda ?
 	{"3200", "RH-30" ,"Nokia 3200",	{0}},
 	{"3200a","RH-31" ,"Nokia 3200",	{0}},
 #endif
@@ -977,6 +929,7 @@ static OnePhoneModel allmodels[] = {
 	{"7210" ,"NHL-4" ,"Nokia 7210", {F_TODO66,F_RADIO,0}},
 	{"7250" ,"NHL-4J","Nokia 7250", {F_TODO66,F_RADIO,F_PBKIMG,0}},
 	{"7250i","NHL-4JX","Nokia 7250i",{F_TODO66,F_RADIO,F_PBKIMG,0}},
+	{"7600", "NMM-3", "Nokia 7600", {F_TODO66,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN)
 	{"7650" ,"NHL-2" ,"Nokia 7650", {0}},
@@ -1037,11 +990,12 @@ static OnePhoneModel allmodels[] = {
 	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},
 	{"A2D"  ,	  "A2D"  ,	  "" ,				   {0}},
 	{"9210" ,	  "RAE-3",	  "Nokia Communicator GSM900/1800",{0}},
+	{"myV-65",	"myV-65 GPRS",	  "",				   {F_SMSME900,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)
-	{"BE5", 	  "ONE TOUCH 500","",				   {F_SMSONLYSENT,F_BROKENCPBS,0}},
-	{"BH4",		  "ONE TOUCH 535","ALCATEL OT535",		   {0}},
-	{"BF5", 	  "ONE TOUCH 715","ALCATEL OT715",		   {0}},
+	{"BE5", 	  "ONE TOUCH 500","",				   {F_ALCATEL,F_SMSONLYSENT,F_BROKENCPBS,0}},
+	{"BH4",		  "ONE TOUCH 535","ALCATEL OT535",		   {F_ALCATEL,F_SMSONLYSENT,0}},
+	{"BF5", 	  "ONE TOUCH 715","ALCATEL OT715",		   {F_ALCATEL,F_SMSONLYSENT,0}},
 #endif
 	{"unknown",	  ""      ,"",           {0}}
 };
@@ -1071,7 +1025,7 @@ OnePhoneModel *GetModelData(char *model, char *number, char *irdamodel)
 	return (&allmodels[i]);
 }
 
-bool IsPhoneFeatureAvailable(OnePhoneModel *model, int feature)
+bool IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature)
 {
 	int	i	= 0;
 	bool	retval  = false;
@@ -1184,6 +1138,46 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 		}
 	}
 }
+
+#ifdef GSM_ENABLE_BACKUP
+
+void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
+{
+	GSM_Error 		error;
+	GSM_MemoryStatus	MemStatus;
+	GSM_ToDoStatus		ToDoStatus;
+	GSM_CalendarEntry       Note;
+
+	if (info->PhonePhonebook) {
+		MemStatus.MemoryType = MEM_ME;
+                error=s->Phone.Functions->GetMemoryStatus(s, &MemStatus);
+		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
+		} else {
+			info->PhonePhonebook = false;
+		}
+	}
+	if (info->SIMPhonebook) {
+		MemStatus.MemoryType = MEM_SM;
+                error=s->Phone.Functions->GetMemoryStatus(s, &MemStatus);
+		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
+		} else {
+			info->SIMPhonebook = false;
+		}
+	}
+	if (info->Calendar) {
+		error=s->Phone.Functions->GetNextCalendar(s,&Note,true);
+		if (error!=ERR_NONE) info->Calendar = false;
+	}
+	if (info->ToDo) {
+		error=s->Phone.Functions->GetToDoStatus(s,&ToDoStatus);
+		if (error == ERR_NONE && ToDoStatus.Used != 0) {
+		} else {
+			info->ToDo = false;
+		}
+	}
+}
+
+#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

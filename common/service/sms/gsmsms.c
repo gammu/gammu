@@ -322,14 +322,19 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	SMS->UDH.Type 			= UDH_NoUDH;
 	SMS->Coding 			= SMS_Coding_Default;
 	SMS->Length			= 0;
-	SMS->SMSC.Number[0] 		= 0;
-	SMS->SMSC.Number[1] 		= 0;
+	SMS->SMSC.Location		= 0;
+	SMS->SMSC.DefaultNumber[0]	= 0;
+	SMS->SMSC.DefaultNumber[1]	= 0;
+	SMS->SMSC.Number[0]		= 0;
+	SMS->SMSC.Number[1]		= 0;
+	SMS->SMSC.Name[0]		= 0;
+	SMS->SMSC.Name[1]		= 0;
 	SMS->SMSC.Validity.Format	= SMS_Validity_NotAvailable;
 	SMS->SMSC.Format		= SMS_FORMAT_Text;
-	SMS->Number[0] 			= 0;
-	SMS->Number[1] 			= 0;
-	SMS->Name[0] 			= 0;
-	SMS->Name[1] 			= 0;
+	SMS->Number[0]			= 0;
+	SMS->Number[1]			= 0;
+	SMS->Name[0]			= 0;
+	SMS->Name[1]			= 0;
 	SMS->ReplyViaSameSMSC		= false;
 	if (Layout.SMSCNumber!=255) {
 		GSM_UnpackSemiOctetNumber(SMS->SMSC.Number,buffer+Layout.SMSCNumber,false);

@@ -1624,6 +1624,7 @@ GSM_Phone_Functions N7110Phone = {
 	N71_92_GetSignalQuality,
 	DCT3_GetNetworkInfo,
 	NOTSUPPORTED,       		/*  	GetCategory 		*/
+ 	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
 	N7110_GetMemoryStatus,
 	N7110_GetMemory,

@@ -185,7 +185,13 @@ void DecodeHexUnicode (unsigned char *dest, const unsigned char *src, int len)
 	int 	i,current=0;
 	bool 	first = false;
 
-	if (len != 0 && src[0] == '0' && src[1] == '0') first = true;
+	if (len != 0 && src[0] == '0' && src[1] == '0') {
+		first = true;
+	} else if (len != 0 && src[2] == '0' && src[3] == '0') {
+		first = false;
+	} else {
+		first = (10 * (src[0] - '0') + (src[1] - '0')) < (10 * (src[2] - '0')+ (src[3] - '0'));
+	}
 	for (i = 0; i < len/4 ; i++) {
 		if (first) {
 			dest[current++] = DecodeWithHexBinAlphabet(src[i*4+0])*16+

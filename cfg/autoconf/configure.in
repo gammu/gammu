@@ -382,7 +382,7 @@ AC_OUTPUT(Makefile.cfg
 	  ../rpm/gammu.spec
 	  ../../gammu/msvc6.mak/gammu.rc
 	  ../../gammu/msvc7.mak/gammu.rc
-          ../../gammu/bcc6.mak/gammu.bpr
+          ../../gammu/bcc06.mak/gammu.bpr
 	  ../../win32/dll/msvc6.mak/gammu.rc
 	  ../../win32/dll/msvc7.mak/gammu.rc)
 

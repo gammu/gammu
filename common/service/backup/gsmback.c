@@ -9,6 +9,7 @@
 #include "../../misc/cfg.h"
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
+#include "../gsmcal.h"
 #include "gsmback.h"
 #include "backtext.h"
 #include "backldif.h"
@@ -117,68 +118,6 @@ void GSM_FreeBackup(GSM_Backup *backup)
 	}
 }
 
-void GSM_GetBackupFeatures(char *FileName, GSM_Backup_Info *backup)
-{
-	backup->UseUnicode	= false;
-	backup->IMEI 		= false;
-	backup->Model 		= false;
-	backup->DateTime 	= false;
-	backup->PhonePhonebook 	= false;
-	backup->SIMPhonebook 	= false;
-	backup->ToDo		= false;
-	backup->Calendar 	= false;
-	backup->CallerLogos 	= false;
-	backup->SMSC 		= false;
-	backup->WAPBookmark 	= false;
-	backup->WAPSettings 	= false;
-	backup->MMSSettings 	= false;
-	backup->Ringtone 	= false;
-	backup->StartupLogo 	= false;
-	backup->OperatorLogo 	= false;
-	backup->Profiles 	= false;
-	backup->FMStation 	= false;
-	backup->GPRSPoint	= false;
-	backup->Note		= false;
-
-	if (strstr(FileName,".lmb")) {
-		backup->PhonePhonebook 	= true;
-		backup->SIMPhonebook 	= true;
-		backup->CallerLogos 	= true;
-		backup->StartupLogo 	= true;
-	} else if (strstr(FileName,".vcs")) {
-		backup->ToDo		= true;
-		backup->Calendar 	= true;
-	} else if (strstr(FileName,".vcf")) {
-		backup->PhonePhonebook	= true;
-	} else if (strstr(FileName,".ics")) {
-		backup->ToDo		= true;
-		backup->Calendar 	= true;
-	} else if (strstr(FileName,".ldif")) {
-		backup->PhonePhonebook	= true;
-	} else {
-		backup->UseUnicode	= true;
-		backup->IMEI 		= true;
-		backup->Model 		= true;
-		backup->DateTime 	= true;
-		backup->PhonePhonebook 	= true;
-		backup->SIMPhonebook 	= true;
-		backup->ToDo		= true;
-		backup->Calendar 	= true;
-		backup->CallerLogos 	= true;
-		backup->SMSC 		= true;
-		backup->WAPBookmark 	= true;
-		backup->WAPSettings 	= true;
-		backup->MMSSettings 	= true;
-		backup->Ringtone 	= true;
-		backup->StartupLogo 	= true;
-		backup->OperatorLogo 	= true;
-		backup->Profiles 	= true;
- 		backup->FMStation 	= true;
-		backup->GPRSPoint	= true;
-		backup->Note		= true;
-	}
-}
-
 GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode)
 {
 	if (strstr(FileName,".lmb")) {
@@ -247,11 +186,85 @@ void GSM_ClearBackup(GSM_Backup *backup)
 	backup->StartupLogo	    = NULL;
 	backup->OperatorLogo	    = NULL;
 
+	backup->Creator		[0] = 0;
 	backup->IMEI		[0] = 0;
 	backup->Model		[0] = 0;
 	backup->DateTimeAvailable   = false;
 	backup->MD5Original	[0] = 0;
 	backup->MD5Calculated	[0] = 0;
+}
+
+void GSM_GetBackupFormatFeatures(char *FileName, GSM_Backup_Info *info)
+{
+	info->UseUnicode	= false;
+	info->IMEI 		= false;
+	info->Model 		= false;
+	info->DateTime 		= false;
+	info->PhonePhonebook 	= false;
+	info->SIMPhonebook 	= false;
+	info->ToDo		= false;
+	info->Calendar 		= false;
+	info->CallerLogos 	= false;
+	info->SMSC 		= false;
+	info->WAPBookmark 	= false;
+	info->WAPSettings 	= false;
+	info->MMSSettings 	= false;
+	info->Ringtone 		= false;
+	info->StartupLogo 	= false;
+	info->OperatorLogo 	= false;
+	info->Profiles 		= false;
+	info->FMStation 	= false;
+	info->GPRSPoint		= false;
+	info->Note		= false;
+
+	if (strstr(FileName,".lmb")) {
+		info->PhonePhonebook 	= true;
+		info->SIMPhonebook 	= true;
+		info->CallerLogos 	= true;
+		info->StartupLogo 	= true;
+	} else if (strstr(FileName,".vcs")) {
+		info->ToDo		= true;
+		info->Calendar 		= true;
+	} else if (strstr(FileName,".vcf")) {
+		info->PhonePhonebook	= true;
+	} else if (strstr(FileName,".ics")) {
+		info->ToDo		= true;
+		info->Calendar 		= true;
+	} else if (strstr(FileName,".ldif")) {
+		info->PhonePhonebook	= true;
+	} else {
+		info->UseUnicode	= true;
+		info->IMEI 		= true;
+		info->Model 		= true;
+		info->DateTime 		= true;
+		info->PhonePhonebook 	= true;
+		info->SIMPhonebook 	= true;
+		info->ToDo		= true;
+		info->Calendar 		= true;
+		info->CallerLogos 	= true;
+		info->SMSC 		= true;
+		info->WAPBookmark 	= true;
+		info->WAPSettings 	= true;
+		info->MMSSettings 	= true;
+		info->Ringtone 		= true;
+		info->StartupLogo 	= true;
+		info->OperatorLogo 	= true;
+		info->Profiles 		= true;
+ 		info->FMStation 	= true;
+		info->GPRSPoint		= true;
+		info->Note		= true;
+	}
+}
+
+void GSM_GetBackupFileFeatures(char *FileName, GSM_Backup_Info *info, GSM_Backup *backup)
+{
+	GSM_GetBackupFormatFeatures(FileName, info);
+
+	if (info->PhonePhonebook && backup->PhonePhonebook[0] == NULL) info->PhonePhonebook = false;
+	if (info->SIMPhonebook   && backup->SIMPhonebook[0]   == NULL) info->SIMPhonebook   = false;
+	if (info->Calendar	 && backup->Calendar[0]       == NULL) info->Calendar       = false;
+	if (info->ToDo		 && backup->ToDo[0]  	      == NULL) info->ToDo	    = false;
+	/* .... */
 }
 
 #endif

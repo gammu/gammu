@@ -233,6 +233,30 @@ type	GSM_Error = (
 	end;
 	PGSM_SecurityCode = ^GSM_SecurityCode;
 
+	GSM_Backup_Info = record
+		UseUnicode 	: ByteBool;
+		IMEI 		: ByteBool;
+		Model		: ByteBool;
+		DateTime	: ByteBool;
+		ToDo		: ByteBool;
+		PhonePhonebook	: ByteBool;
+		SIMPhonebook	: ByteBool;
+		Calendar	: ByteBool;
+		CallerLogos	: ByteBool;
+		SMSC		: ByteBool;
+		WAPBookmark	: ByteBool;
+		Profiles	: ByteBool;
+		WAPSettings	: ByteBool;
+		MMSSettings	: ByteBool;
+		Ringtone	: ByteBool;
+		StartupLogo	: ByteBool;
+		OperatorLogo	: ByteBool;
+	 	FMStation	: ByteBool;
+		GPRSPoint	: ByteBool;
+		Note		: ByteBool;
+	end;
+	PGSM_Backup_Info = ^GSM_Backup_Info;
+
 type
         //callback, which is called, when phone is connected or disconnected
         PhoneCallBackProc          = procedure(x:integer;ID:integer;connected:ByteBool);stdcall;
@@ -278,6 +302,21 @@ function GSM_MakeMultiPartSMS           (MessageBuffer:PAnsiString;MessageLength
 function GSM_GetStructureSize		(i: integer): integer; stdcall; external 'gammu.dll' name 'mygetstructuresize';
 procedure GSM_GetNetworkName	        (NetworkCode: PAnsiString; NetworkName: PAnsiString); stdcall; external 'gammu.dll' name 'mygetnetworkname';
 procedure GSM_GetGammuVersion		(Version: PAnsiString); stdcall; external 'gammu.dll' name 'mygetgammuversion';
+function GSM_ReadBackupFile		(FileName:PAnsiString; Info:PGSM_Backup_Info): GSM_Error; stdcall; external 'gammu.dll' name 'myreadbackupfile';
+function GSM_GetBackupFileCreator	(Creator:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetbackupfilecreator';
+function GSM_GetBackupFileIMEI		(IMEI:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetbackupfileimei';
+function GSM_GetBackupFileModel		(Model:PAnsiString): GSM_Error; stdcall; external 'gammu.dll' name 'mygetbackupfilemodel';
+function GSM_GetBackupFileDateTime	(DT:PGSM_DateTime): GSM_Error; stdcall; external 'gammu.dll' name 'mygetbackupdatetime';
+function GSM_GetBackupFeaturesForBackup (Phone:integer;FileName:PChar;Features:PGSM_Backup_Info):GSM_Error; stdcall; external 'gammu.dll' name 'mygetbackupfeaturesforbackup';
+function GSM_GetBackupFormatFeatures	(FileName:PAnsiString;Features:PGSM_Backup_Info):GSM_Error; stdcall; external 'gammu.dll' name 'mygetbackupformatfeatures';
+function GSM_StartBackup		(Phone: Integer; Info:PGSM_Backup_Info):GSM_Error; stdcall; external 'gammu.dll' name 'mystartbackup';
+function GSM_BackupPhonePBK		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackupphonepbk';
+function GSM_BackupSIMPBK		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackupsimpbk';
+function GSM_BackupCalendar		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackupcalendar';
+function GSM_BackupToDo			(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'mybackuptodo';
+function GSM_EndBackup			(FileName:PChar; UseUnicode: Boolean):GSM_Error; stdcall; external 'gammu.dll' name 'myendbackup';
+function GSM_RestorePhonePBK		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'myrestorephonepbk';
+function GSM_RestoreSIMPBK		(Phone: Integer; Percent: PInteger):GSM_Error; stdcall; external 'gammu.dll' name 'myrestoresimpbk';
 
 function GetGammuUnicodeString		(Source : AnsiString):string;
 

@@ -1026,6 +1026,50 @@ static GSM_Error ALCATEL_IsCategoryIdAvailable(GSM_StateMachine *s, int id) {
 	return ERR_EMPTY;
 }
 
+static GSM_Error ALCATEL_ReplyAddCategoryText(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
+
+	Priv->ReturnInt = msg.Buffer[12];
+
+	return ERR_NONE;
+}
+
+static GSM_Error ALCATEL_AddCategoryText(GSM_StateMachine *s, const unsigned char *str) {
+	unsigned char		buffer[200] = {0x00, 0x04, 0x00 /*type*/, 0x0d, 0x00 /*list*/, 0x0b };
+	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
+	GSM_Error		error;
+	int			len;
+
+	smprintf(s,"Creating category\n");
+	len = UnicodeLength(str);
+	EncodeDefault(buffer + 8, str, &len, true, GSM_AlcatelAlphabet);
+	buffer[6] = len + 1;
+	buffer[7] = len;
+
+	switch (Priv->BinaryType) {
+		case TypeContacts:
+			buffer[2] = ALCATEL_SYNC_TYPE_CONTACTS;
+			buffer[4] = ALCATEL_LIST_CONTACTS_CAT;
+			break;
+		case TypeToDo:
+			buffer[2] = ALCATEL_SYNC_TYPE_TODO;
+			buffer[4] = ALCATEL_LIST_TODO_CAT;
+			break;
+		default:
+			return ERR_NOTSUPPORTED;
+	}
+
+	error=GSM_WaitFor (s, buffer, 8 + len, 0x02, ALCATEL_TIMEOUT, ID_AlcatelAddCategoryText1);
+	if (error != ERR_NONE) return error;
+	error=GSM_WaitFor (s, 0, 0, 0x00, ALCATEL_TIMEOUT, ID_AlcatelAddCategoryText2);
+	if (error != ERR_NONE) return error;
+
+	/* Refresh list */
+	Priv->CurrentCategoriesType = 0;
+	return ALCATEL_GetAvailableCategoryIds(s);
+}
+
 static GSM_Error ALCATEL_ReplyGetCategoryText(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
@@ -1057,6 +1101,8 @@ static GSM_Error ALCATEL_GetCategoryText(GSM_StateMachine *s, int id) {
 		CopyUnicodeString(Priv->ReturnString, Priv->CurrentCategoriesCache[id]);
 		return ERR_NONE;
 	}
+	
+	smprintf(s,"Reading category %d\n", id);
 
 	switch (Priv->BinaryType) {
 		case TypeContacts:
@@ -1203,7 +1249,7 @@ static GSM_Error ALCATEL_BuildWriteBuffer(unsigned char * buffer, GSM_Alcatel_Fi
 			buffer[4] = 0x3c;
 
 			len = MIN(UnicodeLength((char *)data),62);
-			EncodeDefault(buffer + 6, (char *)data, &len, false, GSM_AlcatelAlphabet);
+			EncodeDefault(buffer + 6, (char *)data, &len, true, GSM_AlcatelAlphabet);
 			buffer[5] = len;
 			buffer[0] = 5 + len;
 			buffer[6 + len] = 0x00;
@@ -1213,7 +1259,7 @@ static GSM_Error ALCATEL_BuildWriteBuffer(unsigned char * buffer, GSM_Alcatel_Fi
 			buffer[4] = 0x3c;
 
 			len = MIN(UnicodeLength((char *)data),50);
-			EncodeDefault(buffer + 6, (char *)data, &len, false, GSM_AlcatelAlphabet);
+			EncodeDefault(buffer + 6, (char *)data, &len, true, GSM_AlcatelAlphabet);
 			buffer[5] = len;
 			buffer[0] = 5 + len;
 			buffer[6 + len] = 0x00;
@@ -3675,6 +3721,25 @@ static GSM_Error ALCATEL_GetCategory(GSM_StateMachine *s, GSM_Category *Category
 	return ERR_NONE;
 }
 
+static GSM_Error ALCATEL_AddCategory(GSM_StateMachine *s, GSM_Category *Category)
+{
+	GSM_Alcatel_BinaryType	type;
+	GSM_Error		error;
+	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
+
+	switch (Category->Type) {
+		case Category_ToDo: type = TypeToDo; break;
+		case Category_Phonebook: type = TypeContacts; break;
+		default: return ERR_NOTSUPPORTED;
+	}
+	if ((error = ALCATEL_GoToBinaryState(s, StateSession, type, 0))!= ERR_NONE) return error;
+	if ((error = ALCATEL_AddCategoryText(s, Category->Name))!= ERR_NONE) return error;
+
+	Category->Location = Priv->ReturnInt;
+
+	return ERR_NONE;
+}
+
 static GSM_Error ALCATEL_GetProductCode(GSM_StateMachine *s, char *value)
 {
        strcpy(value, s->Phone.Data.ModelInfo->model);
@@ -3769,6 +3834,8 @@ static GSM_Reply_Function ALCATELReplyFunctions[] = {
 {ALCATEL_ReplyGetCategories,	"\x02",0x00,0x00, ID_AlcatelGetCategories2	},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelGetCategoryText1	},
 {ALCATEL_ReplyGetCategoryText,	"\x02",0x00,0x00, ID_AlcatelGetCategoryText2	},
+{ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelAddCategoryText1	},
+{ALCATEL_ReplyAddCategoryText,	"\x02",0x00,0x00, ID_AlcatelAddCategoryText2	},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelGetFields1		},
 {ALCATEL_ReplyGetFields,	"\x02",0x00,0x00, ID_AlcatelGetFields2		},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelGetFieldValue1	},
@@ -3818,6 +3885,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	ALCATEL_GetSignalStrength,
 	ALCATEL_GetNetworkInfo,
 	ALCATEL_GetCategory,
+	ALCATEL_AddCategory,
 	ALCATEL_GetCategoryStatus,
 	ALCATEL_GetMemoryStatus,
 	ALCATEL_GetMemory,

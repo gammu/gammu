@@ -194,6 +194,7 @@
 #include "service/sms/gsmsms.h"
 #include "service/sms/gsmems.h"
 #include "service/sms/gsmmulti.h"
+#include "service/backup/gsmback.h"
 
 typedef struct _GSM_StateMachine GSM_StateMachine;
 typedef struct _GSM_User	 GSM_User;
@@ -485,6 +486,8 @@ typedef enum {
         ID_AlcatelGetCategories2,
         ID_AlcatelGetCategoryText1,
         ID_AlcatelGetCategoryText2,
+        ID_AlcatelAddCategoryText1,
+        ID_AlcatelAddCategoryText2,
     	ID_AlcatelGetFields1,
     	ID_AlcatelGetFields2,
     	ID_AlcatelGetFieldValue1,
@@ -955,6 +958,10 @@ typedef struct {
 	 * Reads category from phone.
 	 */
 	GSM_Error (*GetCategory)	(GSM_StateMachine *s, GSM_Category *Category);
+	/**
+	 * Adds category to phone.
+	 */
+	GSM_Error (*AddCategory)	(GSM_StateMachine *s, GSM_Category *Category);
 	/**
 	 * Reads category status (number of used entries) from phone.
 	 */
@@ -1483,7 +1490,9 @@ typedef enum {
 	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/
 	F_BROKENCPBS, 	/* CPBS on some memories can hang phone				*/
 	F_M20SMS,	/* Siemens M20 like SMS handling				*/
-	F_SLOWWRITE	/* Use slower writing which some phone need			*/
+	F_SLOWWRITE,	/* Use slower writing which some phone need			*/
+	F_SMSME900,	/* SMS in ME start from location 900 - case of Sagem		*/
+	F_ALCATEL,	/* Phone supports Alcatel protocol				*/
 } Feature;
 
 /* For models table */
@@ -1494,7 +1503,7 @@ struct _OnePhoneModel {
 	Feature		features[12];
 };
 
-bool 		IsPhoneFeatureAvailable	(OnePhoneModel *model, int feature);
+bool 		IsPhoneFeatureAvailable	(OnePhoneModel *model, Feature feature);
 OnePhoneModel 	*GetModelData		(char *model, char *number, char *irdamodel);
 
 #ifdef __GNUC__
@@ -1503,6 +1512,10 @@ __attribute__((format(printf, 2, 3)))
 int smprintf(GSM_StateMachine *s, const char *format, ...);
 
 void GSM_OSErrorInfo(GSM_StateMachine *s, char *description);
+
+#ifdef GSM_ENABLE_BACKUP
+void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info);
+#endif
 
 #endif
 

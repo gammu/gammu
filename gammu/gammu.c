@@ -3683,8 +3683,6 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 				printmsg("Sending sms from folder \"%s\", location %i\n",
 					DecodeUnicodeString(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
 				SMSStatus = ERR_TIMEOUT;
-				/* FIXME: if I give folder = sms.SMS[i].Folder, it doesn't work for ATGEN, which is ugly,
-				 *        as currently only ATGEN supports this, 0 as folder might be safe... */
 				error=Phone->SendSavedSMS(&s, 0, sms.SMS[i].Location);
 				Print_Error(error);
 				printmsg("....waiting for network answer");
@@ -3890,7 +3888,17 @@ static void Backup(int argc, char *argv[])
 	bool			DoBackup;
 
 	GSM_ClearBackup(&Backup);
-	GSM_GetBackupFeatures(argv[2],&Info);
+	GSM_GetBackupFormatFeatures(argv[2],&Info);
+
+	sprintf(Backup.Creator,"Gammu %s",VERSION);
+	if (strlen(GetOS()) != 0) {
+		strcat(Backup.Creator+strlen(Backup.Creator),", ");
+		strcat(Backup.Creator+strlen(Backup.Creator),GetOS());
+	}
+	if (strlen(GetCompiler()) != 0) {
+		strcat(Backup.Creator+strlen(Backup.Creator),", ");
+		strcat(Backup.Creator+strlen(Backup.Creator),GetCompiler());
+	}
 
 	signal(SIGINT, interrupt);
 	printmsgerr("Press Ctrl+C to break...\n");
@@ -5395,6 +5403,36 @@ static void BackupSMS(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void AddSMS(int argc, char *argv[])
+{
+	GSM_MultiSMSMessage 	SMS;
+	GSM_SMS_Backup		Backup;
+	int			smsnum = 0;
+	int			folder;
+
+	folder = atoi(argv[2]);
+	
+	error = GSM_ReadSMSBackupFile(argv[3], &Backup);
+	Print_Error(error);
+
+	GSM_Init(true);
+
+	while (Backup.SMS[smsnum] != NULL) {
+		Backup.SMS[smsnum]->Folder = folder;
+		Backup.SMS[smsnum]->SMSC.Location = 1;
+		SMS.Number = 1;
+		SMS.SMS[0] = *Backup.SMS[smsnum];
+		displaymultismsinfo(SMS,false,false);
+		if (answer_yes("Restore sms")) {
+			error=Phone->AddSMS(&s, Backup.SMS[smsnum]);
+			Print_Error(error);
+		}
+		smsnum++;
+	}
+
+	GSM_Terminate();
+}
+
 static void RestoreSMS(int argc, char *argv[])
 {
 	GSM_MultiSMSMessage 	SMS;
@@ -5846,7 +5884,7 @@ static void ListToDoCategoryEntries(int Category)
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
 		for (j=0;j<Entry.EntriesNum;j++) {
-			if (Entry.Entries[j].EntryType == TODO_CATEGORY && Entry.Entries[j].Number == Category) 
+			if (Entry.Entries[j].EntryType == TODO_CATEGORY && Entry.Entries[j].Number == (unsigned int)Category) 
 				PrintToDo(&Entry);
 		}
  		start = false;
@@ -6929,8 +6967,8 @@ static void NokiaAddFile(int argc, char *argv[])
 		/* Bostjan Muller 3200 RH-30 3.08 */
 		http = strstr(File.Buffer,"MIDlet-Jar-URL: http://");
 		if (http != NULL) {
-			i = 0;
-			while (http[i] != 0x00) {
+			i = 16;
+			while (http[i] != '\n') {
 				if (http[i] == ':') http[i] = '_';
 				if (http[i] == '/') http[i] = '_';
 				i++;
@@ -7715,6 +7753,7 @@ static GSM_Parameters Parameters[] = {
 	{"--restore",			1, 1, Restore,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file"},
 	{"--addnew",			1, 1, AddNew,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file"},
 	{"--restoresms",		1, 1, RestoreSMS,		{H_Backup,H_SMS,0},		"file"},
+	{"--addsms",			2, 2, AddSMS,			{H_Backup,H_SMS,0},		"folder file"},
 #endif
 	{"--clearall",			0, 0, ClearAll,			{H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},	""},
 	{"--networkinfo",		0, 0, NetworkInfo,		{H_Network,0},			""},
