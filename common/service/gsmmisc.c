@@ -182,16 +182,18 @@ bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 	strncpy(year, 	Buffer, 	4);
 	strncpy(month, 	Buffer+4, 	2);
 	strncpy(day, 	Buffer+6, 	2);
-	strncpy(hour, 	Buffer+9,	2);
-	strncpy(minute, Buffer+11,	2);
-	strncpy(second, Buffer+13,	2);
-
 	dt->Year	= atoi(year);
 	dt->Month	= atoi(month);
 	dt->Day		= atoi(day);
-	dt->Hour	= atoi(hour);
-	dt->Minute	= atoi(minute);
-	dt->Second	= atoi(second);
+
+	if (Buffer[8] == 'T') {
+		strncpy(hour, 	Buffer+9,	2);
+		strncpy(minute, Buffer+11,	2);
+		strncpy(second, Buffer+13,	2);
+		dt->Hour	= atoi(hour);
+		dt->Minute	= atoi(minute);
+		dt->Second	= atoi(second);
+	}
 
 	/* FIXME */
 	dt->Timezone	= 0;
@@ -211,6 +213,22 @@ void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)
 			*Length+=sprintf(Buffer+(*Length), "%s;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s%c%c",Start,buffer,13,10);
 		}
 	}
+}
+
+unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
+{
+	static unsigned char	tmp[1000];
+
+	while (Buff[*pos] != 0 || Buff[*pos + 1] != 0) {
+		if (Buff[*pos] == 0 || Buff[*pos + 1] == ';') {
+			Buff[*pos + 1] = 0;
+			CopyUnicodeString(tmp, Buff);
+			Buff[*pos + 1] = ';';
+			return tmp;
+		}
+		*pos++;
+	}
+	return NULL;
 }
 
 bool ReadVCALText(char *Buffer, char *Start, char *Value)

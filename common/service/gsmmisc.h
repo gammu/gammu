@@ -314,6 +314,8 @@ void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start
 void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start);
 bool ReadVCALText(char *Buffer, char *Start, char *Value);
 
+unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos);
+
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
