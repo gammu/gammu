@@ -1,3 +1,9 @@
+gammu (0.97.7-0) unstable; urgency=low
+
+  * New version.
+
+ -- Michal Čihař <michal@cihar.com>  Mon,  6 Sep 2004 11:00:03 +0200
+
 gammu (0.92.9-1) unstable; urgency=low
 
   * New upstream version.

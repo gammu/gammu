@@ -1,5 +1,5 @@
 #!/usr/bin/make -f
-# Gammu rules file by Michal Cihar <michal@cihar.com>
+# Gammu rules file by Michal Čihař <michal@cihar.com>
 #
 # Based on
 # Sample debian/rules that uses debhelper.
