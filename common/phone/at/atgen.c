@@ -3654,7 +3654,7 @@ GSM_Error ATGEN_SetIncomingCB(GSM_StateMachine *s, bool enable)
 #ifdef GSM_ENABLE_CELLBROADCAST
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error 		error;
-	char
+	char			buffer[100];
 
 	if (Priv->CNMIMode == -1) {
 		error = ATGEN_GetCNMIMode(s);
