@@ -236,46 +236,47 @@ int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
 	return position;
 }
 
-void ATGEN_DecodeDateTime(GSM_DateTime *dt, unsigned char *input)
+GSM_Error ATGEN_DecodeDateTime(GSM_DateTime *dt, unsigned char *input)
 {
-	/* Samsung phones report year as %d instead of %02d */
-	if (input[2] == '/') {
-		dt->Year=(*input-'0')*10;
-		input++;
+	/* We receive somthing like: "05/01/06,12:51:41" */
+	unsigned char	*pos = input, *pos2;
+
+	if (*pos == '"') pos++;
+	dt->Year = atoi(pos);
+	pos = strchr(pos, '/');
+	if (pos == NULL) return ERR_UNKNOWN;
+	pos++;
+	dt->Month = atoi(pos);
+	pos = strchr(pos, '/');
+	if (pos == NULL) return ERR_UNKNOWN;
+	pos++;
+	dt->Day = atoi(pos);
+	pos = strchr(pos, ',');
+	if (pos == NULL) return ERR_UNKNOWN;
+	pos++;
+	dt->Hour = atoi(pos);
+	pos = strchr(pos, ':');
+	if (pos == NULL) return ERR_UNKNOWN;
+	pos++;
+	dt->Minute = atoi(pos);
+	pos = strchr(pos, ':');
+	if (pos == NULL) return ERR_UNKNOWN;
+	pos++;
+	dt->Second = atoi(pos);
+	pos2 = strchr(pos, '+');
+	if (pos2 != NULL) {
+		pos = pos2 + 1;
+		dt->Timezone = atoi(pos);
 	} else {
-		dt->Year=0;
+		pos2 = strchr(pos, '-');
+		if (pos2 != NULL) {
+			pos = pos2 + 1;
+			dt->Timezone = -atoi(pos);
+		} else {
+			dt->Timezone = 0;
+		}
 	}
-
-	dt->Year=dt->Year+(*input-'0');    input++;
-	dt->Year+=2000;
-
-	input++;
-	dt->Month=(*input-'0')*10;         input++;
-	dt->Month=dt->Month+(*input-'0');  input++;
-
-	input++;
-	dt->Day=(*input-'0')*10;           input++;
-	dt->Day=dt->Day+(*input-'0');      input++;
-
-	input++;
-	dt->Hour=(*input-'0')*10;          input++;
-	dt->Hour=dt->Hour+(*input-'0');    input++;
-
-	input++;
-	dt->Minute=(*input-'0')*10;        input++;
-	dt->Minute=dt->Minute+(*input-'0');input++;
-
-	input++;
-	dt->Second=(*input-'0')*10;        input++;
-	dt->Second=dt->Second+(*input-'0');input++;
-
-	if (input!=NULL) {
-		input++;
-		dt->Timezone=(*input-'0')*10;          input++;
-		dt->Timezone=dt->Timezone+(*input-'0');input++;
-		input=input-2;
-		if (*input=='-') dt->Timezone=-dt->Timezone;
-	}
+	return ERR_NONE;
 }
 
 GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
@@ -1089,7 +1090,8 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				i++;
 				current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer+i);
 				smprintf(s, "\"%s\"\n",buffer);
-				ATGEN_DecodeDateTime(&sms->DateTime, buffer+1);
+				error = ATGEN_DecodeDateTime(&sms->DateTime, buffer);
+				if (error!=ERR_NONE) return error;
 				/* Date of SMSC response */
 				current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
 				i = strlen(buffer);
@@ -1097,7 +1099,8 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				i++;
 				current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer+i);
 				smprintf(s, "\"%s\"\n",buffer);
-				ATGEN_DecodeDateTime(&sms->SMSCTime, buffer+1);
+				error = ATGEN_DecodeDateTime(&sms->SMSCTime, buffer);
+				if (error!=ERR_NONE) return error;
 				/* TPStatus */
 				current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
 				TPStatus=atoi(buffer);
@@ -1132,12 +1135,14 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					}
 					smprintf(s, "\"%s\"\n",buffer);
 					if (*buffer)
-						ATGEN_DecodeDateTime(&sms->DateTime, buffer+1);
+						error = ATGEN_DecodeDateTime(&sms->DateTime, buffer);
+						if (error!=ERR_NONE) return error;
 					else {
 						/* FIXME: What is the proper undefined GSM_DateTime ? */
 						memset(&sms->DateTime, 0, sizeof(sms->DateTime));
 					}
-					ATGEN_DecodeDateTime(&sms->DateTime, buffer+1);
+					error = ATGEN_DecodeDateTime(&sms->DateTime, buffer);
+					if (error!=ERR_NONE) return error;
 				}
 				/* Sender number format */
 				current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
@@ -1794,22 +1799,19 @@ GSM_Error ATGEN_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 
 GSM_Error ATGEN_ReplyGetDateTime_Alarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int 			current	= 19;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
+	unsigned char		*pos;
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
-		if (msg.Buffer[current]==0x0d || msg.Buffer[current-1]==0x0d) {
+		pos = strchr(msg.Buffer, ':');
+		if (pos == NULL) {
 			smprintf(s, "Not set in phone\n");
 			return ERR_EMPTY;
-		} else {
-			if (Data->RequestID == ID_GetDateTime) {
-				ATGEN_DecodeDateTime(Data->DateTime, msg.Buffer+current);
-			} else {
-				ATGEN_DecodeDateTime(&(Data->Alarm->DateTime), msg.Buffer+current);
-			}
-			return ERR_NONE;
 		}
+		pos++;
+		while (isspace(*pos)) pos++;
+		return ATGEN_DecodeDateTime((Data->RequestID == ID_GetDateTime) ? Data->DateTime : &(Data->Alarm->DateTime), pos);
 	case AT_Reply_Error:
 		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
