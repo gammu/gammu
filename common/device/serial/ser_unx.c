@@ -1,4 +1,4 @@
-/* (c) 2002-2004 by Marcin Wiacek */
+/* (c) 2002-2005 by Marcin Wiacek */
 /* locking device and settings all speeds by Michal Cihar */
 /* based on some work from Gnokii (www.gnokii.org)
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot

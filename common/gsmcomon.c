@@ -1,4 +1,4 @@
-/* (c) 2002-2004 by Marcin Wiacek & Michal Cihar */
+/* (c) 2002-2005 by Marcin Wiacek & Michal Cihar */
 
 #include <ctype.h>
 #include <string.h>
@@ -137,7 +137,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	/* Some missed */
 	{ERR_UNKNOWNCONNECTIONTYPESTRING,"Unknown connection type string. Check config file."},
 	{ERR_UNKNOWNMODELSTRING,	"Unknown model type string. Check config file."},
-	{ERR_SOURCENOTAVAILABLE,	"Some required functions disabled at compile time."},
+	{ERR_SOURCENOTAVAILABLE,	"Some functions not available for your OS (disabled in config or not written)."},
 	{ERR_NOTSUPPORTED,		"Function not supported by phone."},
 	{ERR_EMPTY,			"Entry is empty"},
 	{ERR_SECURITYERROR,		"Security error. Maybe no PIN ?"},

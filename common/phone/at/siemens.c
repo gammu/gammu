@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Walek, 2005 Michal Cihar */
+/* (c) 2002-2003 by Walek, 2005 by Michal Cihar */
 
 #include "../../gsmstate.h"
 
@@ -280,7 +280,7 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
- 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+ 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
  	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
 	unsigned char		buffer[4096];
 	int			length;
@@ -292,19 +292,19 @@ GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		error = GetSiemensFrame(msg,s,"vcf", buffer, &length);
 		if (error != ERR_NONE) return error;
  		Memory->EntriesNum = 0;
-		length = 0;
-		return GSM_DecodeVCARD(buffer, &length, Memory, 0);
+ 		length = 0;
+ 		return GSM_DecodeVCARD(buffer, &length, Memory, 0);
 	case AT_Reply_Error:
 		smprintf(s, "Error - too high location ?\n");
 		return ERR_INVALIDLOCATION;
 	case AT_Reply_CMSError:
- 		return ATGEN_HandleCMSError(s);
+ 	        return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
-		/* S55 say this way, that this is empty */
-		if (Priv->ErrorCode == 100) {
-			return ERR_EMPTY;
-		}
-		return ATGEN_HandleCMEError(s);
+ 		/* S55 say this way, that this is empty */
+ 		if (Priv->ErrorCode == 100) {
+ 			return ERR_EMPTY;
+ 		}
+	        return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}

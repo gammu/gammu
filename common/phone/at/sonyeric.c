@@ -82,6 +82,7 @@ static GSM_Error SONYERIC_SetATMode(GSM_StateMachine *s)
 static GSM_Error SONYERIC_GetFile(GSM_StateMachine *s, GSM_File *File, unsigned char *FileName)
 {
 	GSM_Error error;
+	int Handle, Size;
 
 	strcpy(File->ID_FullName,FileName);
 	File->Used 	= 0;
@@ -92,7 +93,7 @@ static GSM_Error SONYERIC_GetFile(GSM_StateMachine *s, GSM_File *File, unsigned 
 	if (error != ERR_NONE) return error;
 
 	error = ERR_NONE;
-	while (error == ERR_NONE) error = OBEXGEN_GetFilePart(s,File);
+	while (error == ERR_NONE) error = OBEXGEN_GetFilePart(s,File,&Handle,&Size);
 	if (error != ERR_EMPTY) return error;
 
 	return SONYERIC_SetATMode(s);
@@ -102,7 +103,7 @@ static GSM_Error SONYERIC_SetFile(GSM_StateMachine *s, unsigned char *FileName, 
 {
 	GSM_Error	error;
 	GSM_File 	File;
-	int		Pos = 0;
+	int		Pos = 0, Handle;
 
 	error = SONYERIC_SetOBEXMode(s);
 	if (error != ERR_NONE) return error;
@@ -114,7 +115,7 @@ static GSM_Error SONYERIC_SetFile(GSM_StateMachine *s, unsigned char *FileName, 
 	memcpy(File.Buffer,Buffer,Length);
 
 	error = ERR_NONE;
-	while (error == ERR_NONE) error = OBEXGEN_AddFilePart(s,&File,&Pos);
+	while (error == ERR_NONE) error = OBEXGEN_AddFilePart(s,&File,&Pos,&Handle);
 	free(File.Buffer);
 	if (error != ERR_EMPTY) return error;
 

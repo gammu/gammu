@@ -484,7 +484,11 @@ static GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note
 
 	GSM_CalendarFindDefaultTextTimeAlarmPhone(Note, &Text, &Time, &Alarm, &Phone, &EndTime, &Location);
 
-	if (Time == -1) return ERR_UNKNOWN;
+	if (Time == -1) {
+		smprintf(s,"No time!\n");
+		return ERR_UNKNOWN;
+	}
+	smprintf(s, "Time OK\n");
 	memcpy(&DT,&Note->Entries[Time].Date,sizeof(GSM_DateTime));
 	req[28]	= DT.Year / 256;
 	req[29]	= DT.Year % 256;

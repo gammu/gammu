@@ -38,6 +38,7 @@ typedef struct {
 
 	unsigned char			RingtoneID;	/* When set with preview */
 
+	GSM_File			Files[500];
 	int				FilesLocations[1000];
 	int				FilesLevels[1000];
 	int				FilesLocationsUsed;
@@ -45,6 +46,8 @@ typedef struct {
 	int				FileToken;
 	int				ParentID;
 	int				FileCheckSum;
+	bool				FilesEnd;
+	bool				Use2;
 
 	unsigned char			FMStatus[4000];
 	int				FMStatusLength;

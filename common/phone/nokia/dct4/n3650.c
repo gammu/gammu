@@ -43,7 +43,7 @@ static GSM_Error N3650_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachi
 	return ERR_NONE;
 }
 
-static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File)
+static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
 {
 	unsigned int 		len=10,i;
 	GSM_Error		error;
@@ -58,6 +58,8 @@ static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File)
 		0x08, 0x20, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 	if (File->Used == 0) {
+		(*Size) = 0;
+
 		sprintf(StartReq+10,"%s",File->ID_FullName);
 		len+=strlen(File->ID_FullName)-1;
 		StartReq[7] = strlen(File->ID_FullName) + 3;

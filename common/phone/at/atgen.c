@@ -1,4 +1,4 @@
-/* (c) 2002-2004 by Marcin Wiacek and Michal Cihar */
+/* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 
 #include "../../gsmstate.h"
 
@@ -995,7 +995,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 	int 			current = 0, current2, i;
 	unsigned char 		buffer[300],smsframe[800];
 	unsigned char		firstbyte, TPDCS, TPUDL, TPStatus;
-	GSM_Error		error;
+	GSM_Error		error=ERR_UNKNOWN;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -2124,16 +2124,16 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 		answer = GetLineString(tmp,Lines,3);
 		free(tmp);
 		while (*answer == 0x20) answer++;
-		sprintf(NetworkInfo->CID,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
+		sprintf(NetworkInfo->LAC,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
 
 		tmp = strdup(GetLineString(msg.Buffer,Priv->Lines,2));
 		answer = GetLineString(tmp,Lines,4);
 		free(tmp);
 		while (*answer == 0x20) answer++;
-		sprintf(NetworkInfo->LAC,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
+		sprintf(NetworkInfo->CID,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
 
-		smprintf(s, "CID   : %s\n",NetworkInfo->CID);
 		smprintf(s, "LAC   : %s\n",NetworkInfo->LAC);
+		smprintf(s, "CID   : %s\n",NetworkInfo->CID);
 	}
 	return ERR_NONE;
 }
@@ -2533,20 +2533,21 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
  		Memory->EntriesNum++;
  		Memory->Entries[1].EntryType=PBK_Text_Name;
+
 		switch (Priv->Charset) {
 		case AT_CHARSET_HEX:
-			DecodeHexBin(buffer2, buffer + offset, strlen(buffer) - (offset * 2));
- 			DecodeDefault(Memory->Entries[1].Text,buffer2,strlen(buffer2),false,NULL);
-			break;
-		case AT_CHARSET_GSM:
- 			DecodeDefault(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
-			break;
-		case AT_CHARSET_UCS2:
-			DecodeHexUnicode(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2));
-			break;
-		case AT_CHARSET_PCCP437:
-			/* FIXME: correctly decode PCCP437 */
- 			DecodeDefault(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
+ 			DecodeHexBin(buffer2, buffer + offset, strlen(buffer) - (offset * 2));
+   			DecodeDefault(Memory->Entries[1].Text,buffer2,strlen(buffer2),false,NULL);
+  			break;
+  		case AT_CHARSET_GSM:
+  			DecodeDefault(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
+  			break;
+  		case AT_CHARSET_UCS2:
+ 			DecodeHexUnicode(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2));
+  			break;
+  		case AT_CHARSET_PCCP437:
+  			/* FIXME: correctly decode PCCP437 */
+  			DecodeDefault(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
 			break;
 		}
 

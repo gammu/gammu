@@ -1,4 +1,4 @@
-/* (c) 2001-2003 by Marcin Wiacek,... */
+/* (c) 2001-2005 by Marcin Wiacek, Michal Cihar... */
 
 #include <string.h>
 

@@ -168,44 +168,44 @@ AC_SUBST(TEMP_DIR)
 dnl Bluetooth stacks
 gsm_blue_stack=unknown
 AC_ARG_ENABLE(bluetooth,
-        [  --disable-bluetooth     Disable all Bluetooth protocols],
-        [gsm_blue_stack=none],
-        [ AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
-    if test "$PKG_CONFIG" != "no" ; then
-        AC_MSG_CHECKING(for bluez)
-        if $PKG_CONFIG --exists "bluez" ; then
-            AC_MSG_RESULT(yes)
-            LDLIBS="$LDLIBS `$PKG_CONFIG --libs bluez`"
-            CFLAGS="$CFLAGS `$PKG_CONFIG --cflags bluez`"
-            gsm_blue_stack=Bluez
-            AC_DEFINE(GSM_ENABLE_BLUEZ)
-        else
-            AC_MSG_RESULT(no)
-        fi
-    fi
-    if test "$gsm_blue_stack" = unknown ; then
-        AC_CHECK_HEADERS(bluetooth/bluetooth.h,
-                [gsm_blue_stack=Bluez
-                LDLIBS="$LDLIBS -lbluetooth"
-                AC_CHECK_LIB(sdp, sdp_list_append, LDLIBS="$LDLIBS -lsdp")
-                AC_DEFINE(GSM_ENABLE_BLUEZ)
-                ])
-    fi
+         [  --disable-bluetooth     Disable all Bluetooth protocols],
+         [gsm_blue_stack=none],
+         [ AC_PATH_PROG(PKG_CONFIG, pkg-config, no)
+     if test "$PKG_CONFIG" != "no" ; then
+         AC_MSG_CHECKING(for bluez)
+         if $PKG_CONFIG --exists "bluez" ; then
+             AC_MSG_RESULT(yes)
+             LDLIBS="$LDLIBS `$PKG_CONFIG --libs bluez`"
+             CFLAGS="$CFLAGS `$PKG_CONFIG --cflags bluez`"
+             gsm_blue_stack=Bluez
+             AC_DEFINE(GSM_ENABLE_BLUEZ)
+         else
+             AC_MSG_RESULT(no)
+         fi
+     fi
+     if test "$gsm_blue_stack" = unknown ; then
+         AC_CHECK_HEADERS(bluetooth/bluetooth.h,
+                 [gsm_blue_stack=Bluez
+                 LDLIBS="$LDLIBS -lbluetooth"
+                 AC_CHECK_LIB(sdp, sdp_list_append, LDLIBS="$LDLIBS -lsdp")
+                 AC_DEFINE(GSM_ENABLE_BLUEZ)
+                 ])
+     fi
 
-    dnl Path for Bluez bluetooth library
-    gsm_bt_dir=""
-    AC_ARG_WITH(bluedir,
-            [  --with-bluedir=DIR      Specifies the base libbluetooth from Bluez],
-            [ if test x$withval = xyes; then
-                    AC_MSG_WARN(Usage is: --with-bluedir=DIR)
-              else
-                    LDLIBS="$LDLIBS -L$withval/lib/"
-                    CFLAGS="$CFLAGS -I$withval/include/"
-                    gsm_bt_dir="$withval"
-              fi
-            ]
-    )
-    ])
+     dnl Path for Bluez bluetooth library
+     gsm_bt_dir=""
+     AC_ARG_WITH(bluedir,
+             [  --with-bluedir=DIR      Specifies the base libbluetooth from Bluez],
+             [ if test x$withval = xyes; then
+                     AC_MSG_WARN(Usage is: --with-bluedir=DIR)
+               else
+                     LDLIBS="$LDLIBS -L$withval/lib/"
+                     CFLAGS="$CFLAGS -I$withval/include/"
+                     gsm_bt_dir="$withval"
+               fi
+             ]
+     )
+])
 
 dnl Enabling or not protocols
 AC_ARG_ENABLE(mbus,
@@ -422,7 +422,7 @@ mv ../rpm/gammu.spec ../../
 dnl Writing info
 cat <<EOT
   G A M M U (GNU All Mobiles Management Utilities)
-  (c) 2002 - 2004 by Marcin Wiacek (www.mwiacek.com)
+  (c) 2002 - 2005 by Marcin Wiacek (www.mwiacek.com)
   Version $VERSION
 
   Directories
