@@ -1,5 +1,5 @@
 /* (c) 2002-2003 by Walek */
-                                           
+
 #include "../../gsmstate.h"
 
 #ifdef GSM_ENABLE_ATGEN
@@ -29,18 +29,18 @@ static GSM_Error GetSiemensFrame(GSM_Protocol_Message msg, GSM_StateMachine *s, 
 
 	while (1) {
 		if (Priv->Lines.numbers[i*2+1]==0) break;
-		if ((!strstr(GetLineString(msg.Buffer,Priv->Lines,i+1),templ)) && 
+		if ((!strstr(GetLineString(msg.Buffer,Priv->Lines,i+1),templ)) &&
 	            (strstr(GetLineString(msg.Buffer,Priv->Lines,i),templ))){
 			length = strlen(GetLineString(msg.Buffer,Priv->Lines,i+1));
 			DecodeHexBin(buf, GetLineString(msg.Buffer,Priv->Lines,i+1),length);
 			length = length/2;
 			memcpy (buffer+pos,buf,length);
 			pos+=length;
-		} 
+		}
 		i++;
 	}
 	*len = pos;
-       return ERR_NONE;	
+       return ERR_NONE;
 }
 
 static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, char *templ,
@@ -81,7 +81,7 @@ GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	unsigned char 		buffer[4096];
 	int			length;
 	GSM_Error		error;
-	
+
 	error = GetSiemensFrame(msg,s,"bmp",buffer,&length);
 	if (error!=ERR_NONE) return error;
 	dbgprintf ("Operator logo received lenght=%i\n",length);
@@ -108,7 +108,7 @@ GSM_Error SIEMENS_ReplySetFunction (GSM_Protocol_Message msg, GSM_StateMachine *
 
 GSM_Error SIEMENS_ReplySetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-    return SIEMENS_ReplySetFunction (msg, s, "Operator Logo");	
+    return SIEMENS_ReplySetFunction (msg, s, "Operator Logo");
 }
 
 GSM_Error SIEMENS_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
@@ -128,7 +128,7 @@ GSM_Error SIEMENS_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	unsigned char 	buffer[4096];
 	int 		length;
 	GSM_Error	error;
-	
+
 	if (Bitmap->Type!=GSM_OperatorLogo) return ERR_NOTSUPPORTED;
 
 	error = Bitmap2BMP (buffer,NULL,Bitmap);
@@ -150,7 +150,7 @@ GSM_Error SIEMENS_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
         error = GetSiemensFrame(msg,s,"mid",s->Phone.Data.Ringtone->NokiaBinary.Frame,&length);
 	if (error!=ERR_NONE) return error;
 	dbgprintf ("Midi ringtone received\n");
-	
+
 	s->Phone.Data.Ringtone->Format			= RING_MIDI;
 	s->Phone.Data.Ringtone->NokiaBinary.Length	= length;
 	sprintf(buffer,"Individual");
@@ -172,12 +172,12 @@ GSM_Error SIEMENS_ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
 {
 	return SIEMENS_ReplySetFunction (msg, s, "Ringtone");
 }
-  
+
 GSM_Error SIEMENS_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
 {
 	GSM_Phone_Data *Phone = &s->Phone.Data;
-	 
-	if (Ringtone->Location==255) Ringtone->Location=1; 
+
+	if (Ringtone->Location==255) Ringtone->Location=1;
 	if (Ringtone->Location-1 > 1) return ERR_INVALIDLOCATION;
 
 	s->Phone.Data.Ringtone	= Ringtone;
@@ -200,7 +200,7 @@ GSM_Error SIEMENS_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 	error = GetSiemensFrame(msg,s,"vcs",buffer,&len);
 	if (error!=ERR_NONE) return error;
 	error=GSM_DecodeVCALENDAR_VTODO(buffer,&pos,Calendar,&ToDo,Siemens_VCalendar,0);
-	
+
  	return error;
 }
 
@@ -212,7 +212,7 @@ GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 	int			Location;
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
-	
+
 	if (start) Note->Location=Priv->FirstCalendarPos;
 	s->Phone.Data.Cal 	= Note;
 	Note->EntriesNum 	= 0;
@@ -220,7 +220,7 @@ GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 	Location = Note->Location;
 	while (1){
 		Location++;
-		sprintf(req, "AT^SBNR=\"vcs\",%i\r",Location);  
+		sprintf(req, "AT^SBNR=\"vcs\",%i\r",Location);
 		error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetCalendarNote);
 		if ((error!=ERR_NONE) && (error!=ERR_EMPTY)) return ERR_INVALIDLOCATION;
 		Note->Location 		= Location;
@@ -239,9 +239,9 @@ GSM_Error SIEMENS_ReplyAddCalendarNote(GSM_Protocol_Message msg, GSM_StateMachin
 GSM_Error SIEMENS_ReplyDelCalendarNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
-	
+
 	if (Data->Cal->Location > MAX_VCALENDAR_LOCATION) return ERR_UNKNOWN;
-	
+
 	if (Data->Priv.ATGEN.ReplyState== AT_Reply_OK) {
 		smprintf(s, "Calendar note deleted\n");
 		return ERR_NONE;
@@ -270,11 +270,11 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	int			size=0;
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
-//	if (Note->Location==0x00) return ERR_INVALIDLOCATION;	
+//	if (Note->Location==0x00) return ERR_INVALIDLOCATION;
 
 	s->Phone.Data.Cal = Note;
 	error=GSM_EncodeVCALENDAR(req,&size,Note,true,Siemens_VCalendar);
-		
+
 	return SetSiemensFrame (s,req,"vcs",Note->Location,ID_SetCalendarNote,size);
 }
 
@@ -300,6 +300,8 @@ GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
                 return ERR_INVALIDLOCATION;
 	case AT_Reply_CMSError:
  	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
