@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.98.0"
-#define VERSION_WIN "0,98,0,0"
+#define VERSION "0.98.9"
+#define VERSION_WIN "0,98,9,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -71,6 +71,8 @@
 
 /* --------------------------- Phone modules (specific) ----------------- */
 
+/* n0650.c models */
+#define GSM_ENABLE_NOKIA650 1
 /* n3320.c models */
 #define GSM_ENABLE_NOKIA3320 1
 /* n6110.c models */
@@ -139,7 +141,7 @@
 
 /* ---------------------- C language specific --------------------------- */
 
-#ifndef WIN32
+#if !defined(WIN32) && !defined(DJGPP)
 /* are the scandir functions available */
 #  define HAVE_DIRENT_H 1
 #  define HAVE_SCANDIR 1
@@ -155,7 +157,7 @@
 #define HAVE_ISWSPACE 1
 #define HAVE_TOWLOWER 1
 
-#ifndef WIN32
+#if !defined(WIN32) && !defined(DJGPP)
 /* Will be used Bluez BT stack ? */
 #  define GSM_ENABLE_BLUEZ 1
 /* Will be used Affix BT stack ? */
@@ -165,10 +167,10 @@
 /* Uncomment, if you want searching RF channel during each BT connection */
 /* It can make connecting longer or connection less stable */
 /* With MS VC and MS BT stack required irprops.lib from MS Platform SDK to compile */
-#ifndef WIN32
-#  define BLUETOOTH_RF_SEARCHING 1
-#else
+#ifdef WIN32
 //#  define BLUETOOTH_RF_SEARCHING 1
+#else
+#  define BLUETOOTH_RF_SEARCHING 1
 #endif
 
 #endif

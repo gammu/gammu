@@ -1,6 +1,6 @@
 /* (c) 2002-2003 by Marcin Wiacek */
-/* based on some work from MyGnokii */
-/* Based on some work from Gnokii
+/* based on some work from MyGnokii (www.mwiacek.com) */
+/* Based on some work from Gnokii (www.gnokii.org)
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
  * GNU GPL version 2 or later
  */

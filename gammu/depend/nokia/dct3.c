@@ -610,10 +610,14 @@ static GSM_Error DCT3_Reply7191GetSecurityCode(GSM_Protocol_Message msg, GSM_Sta
 
 void DCT3GetSecurityCode(int argc, char *argv[])
 {
+#ifdef GSM_ENABLE_NOKIA6110
 	unsigned char req6110[] = {0x00, 0x01, 0x6e,
 				   0x01};	/* Code type */
+#endif
+#if defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9210)
 	unsigned char req71_91[] = {N7110_FRAME_HEADER, 0xee,
 				    0x1c};	/* Setting */
+#endif
 
 	if (CheckDCT3Only()!=ERR_NONE) return;
 
@@ -767,8 +771,10 @@ void DCT3DisplayOutput(int argc, char *argv[])
 #endif
 
 static GSM_Reply_Function UserReplyFunctions3[] = {
+#ifdef GSM_ENABLE_NOKIA6110
 	{DCT3_ReplyDisplayOutput,	"\x0D",0x03,0x50,ID_IncomingFrame	},
 	{DCT3_ReplyDisplayOutput,	"\x0D",0x03,0x54,ID_User7	 	},
+#endif
 
 	{DCT3_ReplyEnableSecurity2,	"\x40",0x02,0x64,ID_EnableSecurity	},
 	{DCT3_ReplyResetTest36,		"\x40",0x02,0x65,ID_User2 	 	},

@@ -66,7 +66,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"^SCN:"	,1},	{"+CGREG:"	,1},
 		{"+CBM:"	,1},	{"+CMT:"	,2},
 		{"+CMTI:"	,1},	{"+CDS:"	,2},
-		{"+CREG:"	,1},
+		{"+CREG:"	,1},	{"+CUSD"	,1},
 		
 		{"RING"		,1},	{"NO CARRIER"	,1},
 		{"NO ANSWER"	,1},	{"+COLP"	,1},
@@ -75,6 +75,8 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"SDNDCRC ="	,1},	/* Samsung binary transfer end */
 
 		{NULL		,1}};
+
+//printf("%c",rx_char);
 
     	/* Ignore leading CR, LF and ESC */
     	if (d->Msg.Length == 0) {

@@ -84,13 +84,13 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 		WriteSMSDLog("No version info in Gammu table: %s\n", mysql_error(&Config->DB));
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) > 3) {
+	if (atoi(Row[0]) > 4) {
 		mysql_free_result(Res);
 		WriteSMSDLog("DataBase structures are from higher Gammu version");
 		WriteSMSDLog("Please update this client application");
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) < 3) {
+	if (atoi(Row[0]) < 4) {
 		mysql_free_result(Res);
 		WriteSMSDLog("DataBase structures are from older Gammu version");
 		WriteSMSDLog("Please update DataBase, if you want to use this client application");
@@ -103,7 +103,7 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 
 static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 {
-	unsigned char buf[400];
+	unsigned char buf[400],buf2[200];
 
 	sprintf(buf,"DELETE FROM `phones` WHERE `IMEI` = '%s'",s.Phone.Data.IMEI);
 #ifdef DEBUG
@@ -114,7 +114,17 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 		return ERR_UNKNOWN;
 	}
 
-	sprintf(buf,"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0)",s.Phone.Data.IMEI,Config->PhoneID);
+	sprintf(buf2,"Gammu %s",VERSION);
+	if (strlen(GetOS()) != 0) {
+		strcat(buf2+strlen(buf2),", ");
+		strcat(buf2+strlen(buf2),GetOS());
+	}
+	if (strlen(GetCompiler()) != 0) {
+		strcat(buf2+strlen(buf2),", ");
+		strcat(buf2+strlen(buf2),GetCompiler());
+	}
+
+	sprintf(buf,"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0,'%s')",s.Phone.Data.IMEI,Config->PhoneID,buf2);
 #ifdef DEBUG
 	fprintf(stdout,"%s\n",buf);
 #endif
@@ -145,11 +155,10 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 				WriteSMSDLog("Delivery report: %s to %s", DecodeUnicodeString(sms.SMS[i].Text), buffer2);
 			}
 
-			sprintf(buffer, "SELECT ID,Status,SendingDateTime,DeliveryDateTime FROM `sentitems` WHERE \
+			sprintf(buffer, "SELECT ID,Status,SendingDateTime,DeliveryDateTime,SMSCNumber FROM `sentitems` WHERE \
 					DeliveryDateTime='00000000000000' AND \
-					SenderID='%s' AND TPMR='%i' AND SMSCNumber='%s' AND DestinationNumber='%s'",
-					Config->PhoneID, sms.SMS[i].MessageReference,
-					DecodeUnicodeString(sms.SMS[i].SMSC.Number), buffer2);
+					SenderID='%s' AND TPMR='%i' AND DestinationNumber='%s'",
+					Config->PhoneID, sms.SMS[i].MessageReference, buffer2);
 #ifdef DEBUG
 			fprintf(stdout,"%s\n",buffer);
 #endif
@@ -163,6 +172,10 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 			}
 			found = false;
 			while ((Row = mysql_fetch_row(Res))) {
+				if (strcmp(Row[4],DecodeUnicodeString(sms.SMS[i].SMSC.Number))) {
+					if (Config->skipsmscnumber[0] == 0) continue;
+					if (strcmp(Config->skipsmscnumber,Row[4])) continue;
+				}
 				if (!strcmp(Row[1],"SendingOK") || !strcmp(Row[1],"DeliveryPending")) {
 					sprintf(buffer,"%c%c%c%c",Row[2][0],Row[2][1],Row[2][2],Row[2][3]);
 					DT.Year = atoi(buffer);

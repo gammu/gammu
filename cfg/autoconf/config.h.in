@@ -70,6 +70,8 @@
 
 /* --------------------------- Phone modules (specific) ----------------- */
 
+/* n0650.c models */
+#undef GSM_ENABLE_NOKIA650
 /* n3320.c models */
 #undef GSM_ENABLE_NOKIA3320
 /* n6110.c models */
@@ -138,7 +140,7 @@
 
 /* ---------------------- C language specific --------------------------- */
 
-#ifndef WIN32
+#if !defined(WIN32) && !defined(DJGPP)
 /* are the scandir functions available */
 #  undef HAVE_DIRENT_H
 #  undef HAVE_SCANDIR
@@ -154,7 +156,7 @@
 #undef HAVE_ISWSPACE
 #undef HAVE_TOWLOWER
 
-#ifndef WIN32
+#if !defined(WIN32) && !defined(DJGPP)
 /* Will be used Bluez BT stack ? */
 #  undef GSM_ENABLE_BLUEZ
 /* Will be used Affix BT stack ? */
@@ -164,10 +166,10 @@
 /* Uncomment, if you want searching RF channel during each BT connection */
 /* It can make connecting longer or connection less stable */
 /* With MS VC and MS BT stack required irprops.lib from MS Platform SDK to compile */
-#ifndef WIN32
-#  undef BLUETOOTH_RF_SEARCHING
-#else
+#ifdef WIN32
 //#  define BLUETOOTH_RF_SEARCHING 1
+#else
+#  undef BLUETOOTH_RF_SEARCHING
 #endif
 
 #endif

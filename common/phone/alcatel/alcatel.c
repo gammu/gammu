@@ -3979,7 +3979,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	ALCATEL_DeleteAllCalendar,
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED,			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNextNote		*/
 	NOTSUPPORTED,			/* 	GetProfile		*/
 	NOTSUPPORTED,			/* 	SetProfile		*/
 	NOTSUPPORTED,			/* 	GetFMStation		*/

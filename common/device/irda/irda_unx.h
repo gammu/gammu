@@ -1,4 +1,4 @@
-/* part of irda.h available in Linux kernel source */
+/* part of irda.h available in Linux kernel source (www.kernel.org) */
 
 /*********************************************************************
  *                

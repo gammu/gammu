@@ -18,8 +18,6 @@
 
 #include "../obex/obexgen.h"
 
-#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
-
 extern GSM_Reply_Function	OBEXGENReplyFunctions[];
 extern GSM_Reply_Function	ATGENReplyFunctions[];
 
@@ -126,7 +124,7 @@ static GSM_Error SONYERIC_SetFile(GSM_StateMachine *s, unsigned char *FileName, 
 
 GSM_Error SONYERIC_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
-#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
+#ifdef GSM_ENABLE_OBEXGEN
 	GSM_Error		error;
 	GSM_ToDoEntry		ToDo;
 	int			Pos, num, Loc;
@@ -162,7 +160,7 @@ GSM_Error SONYERIC_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note,
 
 GSM_Error SONYERIC_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
 {
-#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
+#ifdef GSM_ENABLE_OBEXGEN
 	GSM_Error		error;
 	GSM_CalendarEntry	Calendar;
 	int			Pos, num, Loc;
@@ -201,7 +199,7 @@ GSM_Error SONYERIC_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool st
 
 GSM_Error SONYERIC_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
-#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
+#ifdef GSM_ENABLE_OBEXGEN
 	GSM_Error		error;
 	GSM_ToDoEntry		ToDo;
 	GSM_CalendarEntry 	Calendar;
@@ -232,7 +230,7 @@ GSM_Error SONYERIC_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 
 GSM_Error SONYERIC_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
+#ifdef GSM_ENABLE_OBEXGEN
 	unsigned char 		req[5000];
 	int			size=0;
 
@@ -248,7 +246,7 @@ GSM_Error SONYERIC_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 GSM_Error SONYERIC_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
-#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
+#ifdef GSM_ENABLE_OBEXGEN
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char 		req[5000];
 	int			size=0;
@@ -267,7 +265,7 @@ GSM_Error SONYERIC_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 
 GSM_Error SONYERIC_DeleteAllToDo(GSM_StateMachine *s)
 {
-#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
+#ifdef GSM_ENABLE_OBEXGEN
 	GSM_Error		error;
 	int			Pos,Level = 0,Used;
 	unsigned char		*Buf;
@@ -319,7 +317,7 @@ GSM_Error SONYERIC_DeleteAllToDo(GSM_StateMachine *s)
 
 GSM_Error SONYERIC_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
+#ifdef GSM_ENABLE_OBEXGEN
 	GSM_Error		error;
 	int			Pos,Level = 0,Loc=0,Used;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -374,7 +372,7 @@ GSM_Error SONYERIC_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 GSM_Error SONYERIC_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
 {
-#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
+#ifdef GSM_ENABLE_OBEXGEN
 	GSM_Error		error;
 	GSM_ToDoEntry		ToDo;
 	GSM_CalendarEntry 	Calendar;
@@ -403,7 +401,118 @@ GSM_Error SONYERIC_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *St
 #endif
 }
 
-#endif
+GSM_Error ERICSSON_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{ /*	Author: Peter Ondraska, based on code by Marcin Wiacek and Michal Cihar
+	License: Whatever the current maintainer of gammulib chooses, as long as there
+	is an easy way to obtain the source under GPL, otherwise the author's parts
+	of this function are GPL 2.0.
+  */
+	GSM_Locale	*locale = s->Phone.Data.Locale;
+	char		format;
+
+	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+	case AT_Reply_OK:
+		smprintf(s, "Date settings received\n");
+		format=atoi(msg.Buffer);
+		switch (format) {
+			case 0: locale->DateFormat 	= GSM_Date_OFF;
+				locale->DateSeparator 	= 0;
+				break;
+			case 1: locale->DateFormat 	= GSM_Date_DDMMMYY;
+				locale->DateSeparator 	= '-';
+				break;
+			case 2: locale->DateFormat 	= GSM_Date_DDMMYY;
+				locale->DateSeparator 	= '-';
+				break;
+			case 3: locale->DateFormat 	= GSM_Date_MMDDYY;
+				locale->DateSeparator 	= '/';
+				break;
+			case 4: locale->DateFormat 	= GSM_Date_DDMMYY;
+				locale->DateSeparator 	= '/';
+				break;
+			case 5: locale->DateFormat 	= GSM_Date_DDMMYY;
+				locale->DateSeparator 	= '.';
+				break;
+			case 6: locale->DateFormat 	= GSM_Date_YYMMDD;
+				locale->DateSeparator 	= 0;
+				break;
+			case 7: locale->DateFormat 	= GSM_Date_YYMMDD;
+				locale->DateSeparator 	= '-';
+				break;
+			default:return ERR_UNKNOWNRESPONSE;
+		}
+	default: 
+		return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error ERICSSON_ReplyGetTimeLocale(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{ /*	Author: Peter Ondraska
+	License: Whatever the current maintainer of gammulib chooses, as long as there
+	is an easy way to obtain the source under GPL, otherwise the author's parts
+	of this function are GPL 2.0.
+  */
+	char format;
+
+	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+	case AT_Reply_OK:
+		smprintf(s, "Time settings received\n");
+		format=atoi(msg.Buffer);
+		switch (format) {
+		case 1:
+		case 2: s->Phone.Data.Locale->AMPMTime=(format==2);
+			return ERR_NONE;
+		default:return ERR_UNKNOWNRESPONSE;
+		}
+	default: return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error ERICSSON_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
+{
+        GSM_Error error;
+
+	s->Phone.Data.Locale = locale;
+
+	smprintf(s, "Getting date format\n");
+	error=GSM_WaitFor (s, "AT+ESDF?\r", 9, 0x00, 3, ID_GetLocale);
+	if (error!=ERR_NONE) return error;
+
+	smprintf(s, "Getting time format\n");
+	return GSM_WaitFor (s, "AT+ESTF?\r", 9, 0x00, 3, ID_GetLocale);
+}
+
+
+GSM_Error ERICSSON_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
+{ /*	Author: Peter Ondraska
+	License: Whatever the current maintainer of gammulib chooses, as long as there
+	is an easy way to obtain the source under GPL, otherwise the author's parts
+	of this function are GPL 2.0.
+  */
+	/* this is not yet supported by gammu.c */
+	int	format=0;
+	char	req[12];
+
+	if (locale->DateFormat==GSM_Date_OFF) { format=0; } else
+	if ((locale->DateFormat==GSM_Date_DDMMMYY)&&(locale->DateSeparator=='-')) { format=1; } else
+	if ((locale->DateFormat==GSM_Date_DDMMYY)&&(locale->DateSeparator=='-')) { format=2; } else
+	if ((locale->DateFormat==GSM_Date_MMDDYY)&&(locale->DateSeparator=='/')) { format=3; } else
+	if ((locale->DateFormat==GSM_Date_DDMMYY)&&(locale->DateSeparator=='/')) { format=4; } else
+	if ((locale->DateFormat==GSM_Date_DDMMYY)&&(locale->DateSeparator=='.')) { format=5; } else
+	if ((locale->DateFormat==GSM_Date_YYMMDD)&&(locale->DateSeparator==0)) { format=6; } else
+	if ((locale->DateFormat==GSM_Date_YYMMDD)&&(locale->DateSeparator=='-')) { format=7; }
+	else { return ERR_NOTSUPPORTED; } /* ERR_WRONGINPUT */
+
+	sprintf(req,"AT+ESDF=%i\r",format);
+	smprintf(s, "Setting date format\n");
+	return GSM_WaitFor (s, req, strlen(req), 0x00, 3, ID_SetLocale);
+
+	if (locale->AMPMTime) { format=2; } else { format=1; }
+	sprintf(req,"AT+ESTF=%i\r",format);
+	smprintf(s, "Setting time format\n");
+	return GSM_WaitFor (s, req, strlen(req), 0x00, 3, ID_SetLocale);
+}
+
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

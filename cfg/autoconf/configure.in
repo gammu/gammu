@@ -175,7 +175,6 @@ if test "$PKG_CONFIG" != "no" ; then
         AC_MSG_RESULT(no)
     fi
 fi
-
 if test "$gsm_blue_stack" = unknown ; then
     AC_CHECK_HEADERS(bluetooth/bluetooth.h,
             [gsm_blue_stack=Bluez
@@ -357,6 +356,10 @@ AC_ARG_ENABLE(3320,
         [  --disable-3320          Disable Nokia 3320 and compatible support],
         [gsm_enable_nokia3320="no"],
         [AC_DEFINE(GSM_ENABLE_NOKIA3320) gsm_enable_nokia3320="yes"])
+AC_ARG_ENABLE(650,
+        [  --disable-650           Disable Nokia 650 and compatible support],
+        [gsm_enable_nokia650="no"],
+        [AC_DEFINE(GSM_ENABLE_NOKIA650) gsm_enable_nokia650="yes"])
 AC_ARG_ENABLE(6110,
         [  --disable-6110          Disable Nokia 61xx and compatible support],
         [gsm_enable_nokia6110="no"],
@@ -471,6 +474,7 @@ dnl SYMBIAN with m-router for Bluetooth legacy    - $gsm_enable_mrouterblue
   Alcatel (OT 501, 701, 715, 535, 735, other)   - $gsm_enable_alcatel
   AT (Siemens, Alcatel, Nokia, WaveCom, other)  - $gsm_enable_atgen
   Nokia 3320                                    - $gsm_enable_nokia3320
+  Nokia 650                                     - $gsm_enable_nokia650
   Nokia 3210/33xx/3410/51xx/5210/5510/61xx/82xx - $gsm_enable_nokia6110
   Nokia 35xx/5100/6100/63xx/65xx/6610/72x0/83xx - $gsm_enable_nokia6510
            Use always 6210 frames for calendar  - $gsm_force_dct4_calendar_6210

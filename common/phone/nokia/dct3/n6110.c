@@ -1,6 +1,6 @@
 /* (c) 2001-2004 by Marcin Wiacek */
 /* 5210 calendar IDs by Frederick Ros */
-/* based on some Markus Plail, Pavel Janik & others work from Gnokii
+/* based on some Markus Plail, Pavel Janik & others work from Gnokii (www.gnokii.org)
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
  * GNU GPL version 2 or later
  */
@@ -2449,8 +2449,8 @@ GSM_Error N6110_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
         unsigned char   buffer[2000],buffer2[4000];
         int             tmp;
 
-        tmp=GSM_UnpackEightBitsToSeven(0, 82, 82, msg.Buffer+8, buffer);
-        msg.Buffer[tmp] = 0;
+        tmp=GSM_UnpackEightBitsToSeven(0, msg.Buffer[7], 82, msg.Buffer+8, buffer);
+	buffer[tmp] = 0;
 
         smprintf(s, "USSD reply: \"%s\"\n",buffer);
 
@@ -2868,7 +2868,7 @@ GSM_Phone_Functions N6110Phone = {
         NOTIMPLEMENTED,                 /*      DeleteAllCalendar       */
         NOTSUPPORTED,                   /*      GetCalendarSettings     */
         NOTSUPPORTED,                   /*      SetCalendarSettings     */
-        NOTSUPPORTED,                   /*      GetNote                 */
+        NOTSUPPORTED,                   /*      GetNextNote             */
         N6110_GetProfile,
         N6110_SetProfile,
         NOTSUPPORTED,                   /*      GetFMStation            */
