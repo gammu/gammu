@@ -28,11 +28,33 @@ This software was sponsored (in time order) by:
 12. Johan Helsingius
 14. A Leg
 15. Troy Engel
+16. Mattias Sjosvard
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+200503xx - 1.00.xx
+* new functionality:
+  * dku2phonet (earlier named fbusdku2) supported in win32        (Intra Darma)
+  * new --getrootfolders                                     (Mattias Sjosvard)
+  * --nokiaaddfile playlist                                       (Tim Ruddick)
+
+* fixes and improvements:
+  * updated .spec file - fixed for proper handling of     (Vladimir Kondratiev)
+    documentation directory
+  * added searching for dku5 in win9x                    (Martina Laplam Fares)
+  * no 100% cpu usage with win32 dll with non existing device
+  * fbusdku2 renamed to dku2phonet and fbusdku5 renamed to dku5fbus
+  * removed bluefbus
+  * filesystem 1,2 fixes                                     (Mattias Sjosvard)
+  * bluetooth stacks displays always all device services
+    (Bluez only services with non empty names for now)
+  * 6610i doesn't have Chat                                   (Philip Frampton)
+  * * n6110.c phones don't use too high memory locations         (Michal Cihar)
+    * Debian packing
+    * fix for making memory status for Siemens
+
 20050228 - 1.00.10
 * new functionality:
   * n6510:
@@ -125,7 +147,7 @@ NOTE2: I had to change detecting folders for filesystem1 again. Please compare
 
 20050116 - 0.99.22
 * new functionality:
-  * partial support for 6230 filesystem. You can:                       (Intra)
+  * partial support for 6230 filesystem. You can:                 (Intra Darma)
     1. see files using --getfilesystem (MMC is b:/, phone memory is a:/ 
        and app memory is c:/)
     2. get files (warning: checksums not available)
@@ -191,7 +213,7 @@ NOTE: * it's confirmed, that 6230 RH-12 4.44, 3100 doesn't give caller id info
         * fix in old Gateway in Delphi
         * big patch from ACE (but I still don't have Ericsson)
         * 3589i (Robert Geer)
-        * screen dumps (Intra)
+        * screen dumps (Intra Darma)
         * another patch for smsd 04.10.04 (Gary Reuter)
         * patches 21.10.04 (Gary Reuter)
         * s_mysql.c Delivery Report time patch 22.10.04 (Gary Reuter)
@@ -314,7 +336,7 @@ Note2: waiting in queue for such things:
   * new --send/savesms WAPINDICATOR for WAP service inbox messages
     (WAP push)
   * --nokiaaddfile language independent for 6610/7210                 (jackpot)
-  * 6810/6820 ID                                                        (Intra)
+  * 6810/6820 ID                                                  (Intra Darma)
   * Siemens TC35 ID                                                      (Remi)
   * * --listnetworks [country]                                 (Peter Ondraska)
     * setting alarm, getting & setting locales for Eric R320 (for testing !)
@@ -358,7 +380,7 @@ NOTES: * I plan to have 0.99 somewhere near 10-10-2004
 * new functionality:
   * DCT3 phones know TPMR during sending SMS too. You can use them
     to full handling Delivery Reports for MySQL SMSD too.
-  * 7200 ID                                                             (Intra)
+  * 7200 ID                                                       (Intra Darma)
   * 5140 ID, 6610i ID
   * SMSD:
     * MYSQL:
@@ -591,7 +613,7 @@ NOTE: * www moved to new server. if there are any problems with access,
   * new --playsavedringtones (sets dct4 to play many tones saved in phone -
     it includes ringtones and some phones sounds)
   * --getringtoneslist get much more from dct4 than only names of ringtones
-  * with MS Platform SDK (available for free                            (Intra)
+  * with MS Platform SDK (available for free                      (Intra Darma)
     http://www.microsoft.com/msdownload/platformsdk/sdkupdate/psdk-full.htm)
     and MS Visual Studio compiler available commercialy (or for free
     http://msdn.microsoft.com/visualc/vctoolkit2003/) it's possible to
@@ -731,7 +753,7 @@ ToDo: 1.ending support for all features in new Series 40 models
       * adding categories
   * backup file contains full info about creator
   * first version of backup/restore application for win32
-  * ID for 7600                                                         (Intra)
+  * ID for 7600                                                   (Intra Darma)
   * ID for 3108                                                         (Peter)
   * MAKEFILE FOR BORLAND C++ X
 
@@ -1297,7 +1319,7 @@ NOTES: Adding new functionality to Nokia Series 40 phone modules will be
   * full support for rng files
 
 * fixes and improvements:
-  * 6220 ID, OBEX SetPath command is used with better flag              (Intra)
+  * 6220 ID, OBEX SetPath command is used with better flag        (Intra Darma)
   * compilation fixes                                          (Joeri Golsteyn)
   * removed unnecessary source in support for filesystems
   * getting voice records again fixed. Added info how to reinstall      (Vadim)
@@ -1342,7 +1364,7 @@ NEWS: CVS available, Michal Cihar added md5 checksums and bzip2 files
 
 20030908 - 0,83,0,0
 * new functionality:
-  * 6220, 8910i ID                                                      (Intra)
+  * 6220, 8910i ID                                                (Intra Darma)
   * can read phone tests results from DCT4                        (GriffinTeam)
   * config matrix added for 3300/6800/7250/7250i
   * when use "make installlib", there is created directory with
@@ -1525,7 +1547,8 @@ NEWS: CVS available, Michal Cihar added md5 checksums and bzip2 files
   * readme.txt updated in many places
   * OBEX module:
     * uploading files to phone inbox check, if file type is supported
-    * splitting files is done according to target device possibilities  (Intra)
+    * splitting files is done according to target device          (Intra Darma)
+      possibilities
   * fixes with DCT4 and FM radio
   * SMS:
     * rewritten EMS coding (works better with some concrete data, easier
@@ -1581,7 +1604,7 @@ NOTE: during about two weeks I tried to force company, where I bought
     * when use vcs extension during backup, there is created VCALENDAR file
       with Calendar and ToDo. It's first step for making exchanging data
       with various PIM managers
-    * started work on OBEX ("irdaobex"/"blueobex" connection            (Intra)
+    * started work on OBEX ("irdaobex"/"blueobex" connection      (Intra Darma)
       with "obex" model). Tested with Nokia 5100, 6310i and SonyEricsson T300:
       * can upload files to phone default inbox with --addfile (folderID = 0)
       * can get file with phone features info with --getfiles (folderID = 0)

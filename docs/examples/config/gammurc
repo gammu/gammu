@@ -31,37 +31,68 @@ connection = fbusblue
 #startinfo = yes
 #gammucoding = utf8
 
+# Step 1. Please find required Connection parameter and look into assigned 
+# with it port type. With some Connection you must set concrete model
+
+# ================================================================ cables =====
+# New Nokia protocol for FBUS/DAU9P
+#    Connection "fbus", port type serial
+# New Nokia protocol for DLR3/DLR3P
+#    Connection "fbusdlr3"/"dlr3", port type serial 
+# New Nokia protocol for DKU2 (and phone without USB chip like 6230)
+#    Connection "dku2phonet"/"dku2", port type dku2
+# New Nokia protocol for DKU5 (and phone with USB chip like 5100)
+#    Connection "dku5fbus"/"dku5", port type dku5
+# New Nokia protocol for PL2303 USB cable (and phone with USB chip like 5100)
+#    Connection "fbuspl2303", port type usb
+# Old Nokia protocol for MBUS/DAU9P
+#    Connection "mbus", port type serial
 # -----------------------------------------------------------------------------
-# Now info about "Connection" parameter and connected with it port type
-# (more about port types later)
+# AT commands for DLR3, DKU2, DKU5 or other AT compatible cable (8 bits, None
+# parity, no flow control, 1 stop bit). Used with Nokia, Alcatel, Siemens, etc.
+#    Connection "at19200"/"at115200"/.., port type serial
+# ============================================================== infrared =====
+# Nokia protocol for infrared with Nokia 6110/6130/6150
+#    Connection "fbusirda"/"infrared", port type serial
+# Nokia protocol for infrared with other Nokia models
+#    Connection "irdaphonet"/"irda", port type irda
 # -----------------------------------------------------------------------------
-# "Connection" parameter | Port type | More details
-# -----------------------|-----------|-----------------------------------------
-# "fbus"                 | serial    | Nokia FBUS2
-# "fbusirda"/"infrared"  | serial    | Nokia FBUS2 over direct infrared device
-# "fbusdlr3"/"dlr3"      | serial    | Nokia FBUS2 with DLR3 cable
-# "fbusdku2"             | dku2      | Nokia FBUS2 with DKU2 cable. LINUX ONLY
-# "fbusdku5"             | dku5      | Nokia FBUS2 with DKU5 cable. WIN32 ONLY
-# "fbuspl2303"           | usb       | Nokia FBUS2 with USB cable based on
-#                        |           | PL2303 chip.
-# "fbusblue"             | serial    | Nokia FBUS2 over Bluetooth serial device
-# "phonetblue"           | serial    | Nokia PHONET FBUS over Bluetooth serial
-#                        |           | device
-# "mrouterblue"          | serial    |
-# "mbus"                 | serial    | Nokia MBUS2
-# "at19200"/"at115200"/..| serial    | AT commands.8 bits, None parity, 1 stop
-#                        |           | bit, no flow control
-# -----------------------|-----------|-----------------------------------------
-# "irdaphonet"/"irda"    | irda      | Nokia PHONET FBUS over socket infrared
-# "irdaat"               | irda      | AT commands with socket infrared
-# "irdaobex"             | irda      | OBEX over socket infrared. MODEL "obex"
-# -----------------------|-----------|-----------------------------------------
-# "bluephonet"           | BT        | Nokia PHONET FBUS with Bluetooth stack
-# "bluefbus"/"dlr3blue"  | BT        | Nokia FBUS2 with Bluetooth stack
-# "blueat"/"atblue"      | BT        | AT commands with Bluetooth stack
-# "blueobex"             | BT        | OBEX with Bluetooth. MODEL "obex"
-#
-# Now more about port types and connected with it "Port" parameter
+# AT commands for infrared. Used with Nokia, Alcatel, Siemens, etc.
+#    Connection "irdaat", port type irda
+# -----------------------------------------------------------------------------
+# OBEX for infrared
+#    Connection "irdaobex", port type irda. Must be used with model "obex"
+# ============================================================= Bluetooth =====
+# Nokia protocol with serial port set in BT stack (WidComm, other) from
+# adequate service and Nokia 6210
+#    Connection "fbusblue", port type serial
+# Nokia protocol with serial port set in BT stack (WidComm, other) from
+# adequate service and other Nokia models
+#    Connection "phonetblue", port type serial
+# -----------------------------------------------------------------------------
+# Nokia protocol for Bluetooth stack with Nokia 6210
+#    Connection "bluerffbus", port type BT
+# Nokia protocol for Bluetooth stack with DCT4 Nokia models, which don't inform
+# about services correctly (6310, 6310i with firmware lower than 5.50, 8910,..)
+#    Connection "bluerfphonet", port type BT
+# Nokia protocol for Bluetooth stack with other DCT4 Nokia models
+#    Connection "bluephonet", port type BT
+# -----------------------------------------------------------------------------
+# AT commands for Bluetooth stack and 6210 / DCT4 Nokia models, which don't
+# inform about BT services correctly (6310, 6310i with firmware lower 
+# than 5.50, 8910,..)
+#    Connection "bluerfat", port type BT
+# AT commands for Bluetooth stack with other phones (Siemens, other Nokia,etc.)
+#    Connection "blueat", port type BT
+# -----------------------------------------------------------------------------
+# OBEX for Bluetooth stack with DCT4 Nokia models, which don't inform about
+# BT services correctly (6310, 6310i with firmware lower than 5.50, 8910,...)
+#    Connection "bluerfobex", port type BT
+# OBEX for Bluetooth stack with other phones (Siemens, other Nokia, etc.)
+#    Connection "blueobex", port type BT. Must be used with model "obex"
+
+# Step2. According to port type from Step1 and used OS set Port parameter
+
 # -----------------------------------------------------------------------------
 # Port type | "Port" parameter in Windows/DOS | "Port" parameter in Linux/Unix
 # ----------|---------------------------------|--------------------------------
@@ -74,13 +105,14 @@ connection = fbusblue
 # BT        |                 Bluetooth device address
 #           |                 (example "")
 # ----------|---------------------------------|--------------------------------
-# dku2      | connection with it not possible | /dev/ttyUSB* or /dev/ttyACM*
+# dku2      | ignored (can be empty)          | /dev/ttyUSB* or /dev/ttyACM*
 # ----------|---------------------------------|--------------------------------
 # dku5      | ignored (can be empty)          | connection with it not possible
 # ----------|---------------------------------|--------------------------------
 # usb       | connection with it not possible | "/dev/ttyUSB*"
-#
-# Other config parameters
+
+# Step3. Set other config parameters
+
 # -----------------------------------------------------------------------------
 # Parameter name  | Description
 # ----------------|------------------------------------------------------------

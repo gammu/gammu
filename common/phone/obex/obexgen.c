@@ -844,6 +844,7 @@ GSM_Phone_Functions OBEXGENPhone = {
     	NOTIMPLEMENTED,			/*  	ClearFMStations       	*/
 	OBEXGEN_GetNextFileFolder,
 	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	GetNextRootFolder	*/
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	OBEXGEN_GetFilePart,
 	OBEXGEN_AddFilePart,

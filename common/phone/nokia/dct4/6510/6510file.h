@@ -8,6 +8,7 @@ GSM_Error N6510_GetFilePart			(GSM_StateMachine *s, GSM_File *File, int *Handle,
 GSM_Error N6510_AddFilePart			(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
 GSM_Error N6510_DeleteFile			(GSM_StateMachine *s, unsigned char *ID);
 GSM_Error N6510_SetFileAttributes		(GSM_StateMachine *s, GSM_File *File);
+GSM_Error N6510_GetNextRootFolder		(GSM_StateMachine *s, GSM_File *File);
 
 GSM_Error N6510_ReplyGetFileCRC12		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N6510_ReplySetAttrib2			(GSM_Protocol_Message msg, GSM_StateMachine *s);
