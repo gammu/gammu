@@ -47,11 +47,11 @@ typedef enum {
 } GSM_AT_Manufacturer;
 
 typedef enum {
-	AT_PBK_HEX = 1,
-	AT_PBK_GSM,
-	AT_PBK_UCS2,
-	AT_PBK_PCCP437
-} GSM_AT_PBK_Charset;
+	AT_CHARSET_HEX = 1,
+	AT_CHARSET_GSM,
+	AT_CHARSET_UCS2,
+	AT_CHARSET_PCCP437
+} GSM_AT_Charset;
 
 typedef enum {
 	AT_AVAILABLE = 1,
@@ -84,7 +84,7 @@ typedef struct {
 	char			PBKMemories[AT_PBK_MAX_MEMORIES + 1]; /* Supported by phone PBK memories 		*/
 	int			NextMemoryEntry;  	/* Next empty memory entry					*/
 	int			FirstMemoryEntry;	/* First memory entry to be read				*/
-	GSM_AT_PBK_Charset	PBKCharset;	  	/* Last read PBK charset					*/
+	GSM_AT_Charset		Charset;	  	/* Last read PBK charset					*/
 	bool			UCS2CharsetFailed;	/* Whether setting of UCS2 charset has already failed 		*/
 	bool			NonUCS2CharsetFailed;	/* Whether setting of non-UCS2 charset has already failed 	*/
 	GSM_AT_SBNR		PBKSBNR;
