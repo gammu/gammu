@@ -1,3 +1,9 @@
+gammu (0.98.0-0) unstable; urgency=low
+
+  * New version.
+
+ -- Michal Čihař <michal@cihar.com>  Thu,  9 Sep 2004 12:10:06 +0200
+
 gammu (0.97.7-0) unstable; urgency=low
 
   * New version.
@@ -48,7 +54,7 @@ gammu (0.85-1) unstable; urgency=low
   * Bug reports are sent to me now.
 
  -- Michal Čihař <michal@cihar.com>  Sun,  5 Oct 2003 12:26:42 +0200
- 
+
 gammu (0.65-1) unstable; urgency=low
 
   * Initial Release.
