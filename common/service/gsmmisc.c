@@ -231,7 +231,7 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
 		}
 		*pos += 2;
 	}
-	if (start == Buff) return NULL;
+	if (start == Buff || (start[0] == 0 && start[1] == 0)) return NULL;
 	CopyUnicodeString(tmp, start);
 	return tmp;
 }

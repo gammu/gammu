@@ -274,13 +274,12 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                         if (ReadVCALText(Line, "ADR", Buff) ||
                             ReadVCALText(Line, "ADR;HOME", Buff)) {
 				pos = 0;
-				s = VCALGetTextPart(Buff, &pos);
+				s = VCALGetTextPart(Buff, &pos); /* PO box, ignore for now */
 				if (s == NULL) {
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
 					Pbk->EntriesNum++;
 				} else {
-					s = VCALGetTextPart(Buff, &pos); /* PO box, ignore for now */
 					s = VCALGetTextPart(Buff, &pos); /* Don't know ... */
 
 					s = VCALGetTextPart(Buff, &pos);
