@@ -220,7 +220,7 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
 	static unsigned char	tmp[1000];
 
 	while (Buff[*pos] != 0 || Buff[*pos + 1] != 0) {
-		if (Buff[*pos] == 0 || Buff[*pos + 1] == ';') {
+		if (Buff[*pos] == 0 && Buff[*pos + 1] == ';') {
 			Buff[*pos + 1] = 0;
 			CopyUnicodeString(tmp, Buff);
 			Buff[*pos + 1] = ';';
