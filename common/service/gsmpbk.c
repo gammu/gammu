@@ -187,6 +187,8 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 {
         unsigned char   Line[2000],Buff[2000];
         int             Level = 0;
+        unsigned char   *s;
+	int		pos;
 
         Buff[0]         = 0;
         Pbk->EntriesNum = 0;
@@ -204,9 +206,20 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                                 return ERR_NONE;
                         }
                         if (ReadVCALText(Line, "N", Buff)) {
-                                CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Name;
-                                Pbk->EntriesNum++;
+				pos = 0;
+				s = VCALGetTextPart(Buff, &pos);
+				if (s == NULL) {
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Name;
+					Pbk->EntriesNum++;
+				} else {
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LastName;
+					Pbk->EntriesNum++;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff + pos + 2);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FirstName;
+					Pbk->EntriesNum++;
+				}
                         }
                         if (ReadVCALText(Line, "TEL",                   Buff) ||
                             ReadVCALText(Line, "TEL;VOICE",             Buff) ||
@@ -253,12 +266,51 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Note;
                                 Pbk->EntriesNum++;
                         }
-                        if (ReadVCALText(Line, "ADR", Buff)) {
-                                CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
-                                Pbk->EntriesNum++;
+                        if (ReadVCALText(Line, "ADR", Buff) ||
+                            ReadVCALText(Line, "ADR;HOME", Buff)) {
+				pos = 0;
+				s = VCALGetTextPart(Buff, &pos);
+				if (s == NULL) {
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
+					Pbk->EntriesNum++;
+				} else {
+					s = VCALGetTextPart(Buff, &pos); /* PO box, ignore for now */
+					s = VCALGetTextPart(Buff, &pos); /* Don't know ... */
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_StreetAddress;
+					Pbk->EntriesNum++;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_City;
+					Pbk->EntriesNum++;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_State;
+					Pbk->EntriesNum++;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Zip;
+					Pbk->EntriesNum++;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Country;
+					Pbk->EntriesNum++;
+				}
                         }
-                        if (ReadVCALText(Line, "EMAIL", Buff)) {
+                        if (ReadVCALText(Line, "EMAIL", Buff) ||
+			    ReadVCALText(Line, "EMAIL;INTERNET", Buff)) {
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
                                 Pbk->EntriesNum++;
@@ -266,6 +318,20 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                         if (ReadVCALText(Line, "URL", Buff)) {
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_URL;
+                                Pbk->EntriesNum++;
+                        }
+                        if (ReadVCALText(Line, "ORG", Buff)) {
+                                CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Company;
+                                Pbk->EntriesNum++;
+                        }
+                        if (ReadVCALText(Line, "CATEGORIES", Buff)) {
+                                CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Caller_Group;
+                                Pbk->EntriesNum++;
+                        }
+                        if (ReadVCALText(Line, "BDAY", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Pbk->Entries[Pbk->EntriesNum].Date)) {
+                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Date;
                                 Pbk->EntriesNum++;
                         }
                         break;
