@@ -292,9 +292,8 @@ GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		error = GetSiemensFrame(msg,s,"vcf", buffer, &length);
 		if (error != ERR_NONE) return error;
  		Memory->EntriesNum = 0;
-		DecodeVCARD21Text(buffer, Memory);
-		if (Memory->EntriesNum == 0) return ERR_EMPTY;
-		return ERR_NONE;
+		length = 0;
+		return GSM_DecodeVCARD(buffer, &length, Memory, 0);
 	case AT_Reply_Error:
 		smprintf(s, "Error - too high location ?\n");
 		return ERR_INVALIDLOCATION;
