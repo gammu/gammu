@@ -405,6 +405,7 @@ GSM_Error ATGEN_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
 		error=GSM_WaitFor (s, "AT+CUSD=0\r", 10, 0x00, 3, ID_SetUSSD);
 	}
 	if (error==ERR_NONE) s->Phone.Data.EnableIncomingUSSD = enable;
+	if (error==ERR_UNKNOWN) return ERR_NOTSUPPORTED;
 	return error;
 }
 
