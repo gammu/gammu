@@ -3,6 +3,10 @@
 #ifndef __gsm_multi_h
 #define __gsm_multi_h
 
+#if defined(_MSC_VER) && defined(__cplusplus)
+    extern "C" {
+#endif
+
 #include "../../gsmcomon.h"
 #include "../gsmlogo.h"
 #include "../gsmcal.h"
@@ -190,6 +194,7 @@ typedef enum {
 	SMS_EMSVariableBitmap,
 	SMS_EMSVariableBitmapLong,
 	SMS_MMSIndicatorLong,
+	SMS_WAPIndicatorLong,
 	/**
 	 * Variable bitmap with black and white colors
 	 */
@@ -263,6 +268,10 @@ void GSM_FreeMultiPartSMSInfo (GSM_MultiPartSMSInfo *Info);
  * Links SMS messages according to IDs.
  */
 GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT, bool ems);
+
+#if defined(_MSC_VER) && defined(__cplusplus)
+    }
+#endif
 
 #endif
 

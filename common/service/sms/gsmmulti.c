@@ -487,6 +487,11 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 		UDH	= UDH_MMSIndicatorLong;
 		GSM_EncodeMMSIndicatorSMSText(Buffer,&Length,*Info->Entries[0].MMSIndicator);
 		break;
+	case SMS_WAPIndicatorLong:
+		Class	= 1;
+		UDH	= UDH_MMSIndicatorLong;
+		GSM_EncodeWAPIndicatorSMSText(Buffer,&Length,Info->Entries[0].MMSIndicator->Title,Info->Entries[0].MMSIndicator->Address);
+		break;
 	case SMS_NokiaRingtoneLong:
 	case SMS_NokiaRingtone:
 		UDH	= UDH_NokiaRingtone;

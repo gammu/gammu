@@ -43,6 +43,7 @@ USEUNIT("..\..\common\service\backup\backics.c");
 USEUNIT("..\..\common\gsmcomon.c");
 USEUNIT("..\..\common\gsmstate.c");
 USEUNIT("..\..\common\phone\nokia\dct3\n6110.c");
+USEUNIT("..\..\common\phone\nokia\dct3\n0650.c");
 USEUNIT("..\..\common\phone\nokia\dct4\n6510.c");
 USEUNIT("..\..\common\phone\nokia\dct4\n3320.c");
 USEUNIT("..\..\common\phone\nokia\dct4\n3650.c");

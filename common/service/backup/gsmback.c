@@ -73,6 +73,18 @@ void GSM_FreeBackup(GSM_Backup *backup)
 		i++;
 	}
 	i=0;
+	while (backup->SyncMLSettings[i]!=NULL) {
+		free(backup->SyncMLSettings[i]);
+		backup->SyncMLSettings[i] = NULL;
+		i++;
+	}
+	i=0;
+	while (backup->ChatSettings[i]!=NULL) {
+		free(backup->ChatSettings[i]);
+		backup->ChatSettings[i] = NULL;
+		i++;
+	}
+	i=0;
 	while (backup->Ringtone[i]!=NULL) {
 		free(backup->Ringtone[i]);
 		backup->Ringtone[i] = NULL;
@@ -177,6 +189,8 @@ void GSM_ClearBackup(GSM_Backup *backup)
 	backup->WAPBookmark	[0] = NULL;
 	backup->WAPSettings	[0] = NULL;
 	backup->MMSSettings	[0] = NULL;
+	backup->SyncMLSettings	[0] = NULL;
+	backup->ChatSettings	[0] = NULL;
 	backup->Ringtone	[0] = NULL;
 	backup->Profiles	[0] = NULL;
 	backup->ToDo		[0] = NULL;
@@ -209,6 +223,8 @@ void GSM_GetBackupFormatFeatures(char *FileName, GSM_Backup_Info *info)
 	info->WAPBookmark 	= false;
 	info->WAPSettings 	= false;
 	info->MMSSettings 	= false;
+	info->SyncMLSettings 	= false;
+	info->ChatSettings 	= false;
 	info->Ringtone 		= false;
 	info->StartupLogo 	= false;
 	info->OperatorLogo 	= false;
@@ -246,6 +262,8 @@ void GSM_GetBackupFormatFeatures(char *FileName, GSM_Backup_Info *info)
 		info->WAPBookmark 	= true;
 		info->WAPSettings 	= true;
 		info->MMSSettings 	= true;
+		info->SyncMLSettings 	= true;
+		info->ChatSettings 	= true;
 		info->Ringtone 		= true;
 		info->StartupLogo 	= true;
 		info->OperatorLogo 	= true;

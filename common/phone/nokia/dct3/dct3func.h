@@ -3,6 +3,8 @@
 #ifndef phone_nokia_dct3_h
 #define phone_nokia_dct3_h
 
+#include "../ncommon.h"
+
 GSM_Error DCT3_ReplyPressKey		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3_ReplyPlayTone		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3_ReplyEnableSecurity	(GSM_Protocol_Message msg, GSM_StateMachine *s);

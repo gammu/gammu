@@ -34,6 +34,8 @@ typedef struct {
 
 	GSM_NOKIACalToDoLocations	LastToDo;
 
+	GSM_NOKIACalToDoLocations	LastNote;
+
 	unsigned char			RingtoneID;	/* When set with preview */
 
 	int				FilesLocations[1000];

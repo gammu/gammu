@@ -6,20 +6,23 @@ void DCT4SetPhoneMenus	   (int argc, char *argv[]);
 void DCT4SelfTests	   (int argc, char *argv[]);
 void DCT4SetVibraLevel	   (int argc, char *argv[]);
 void DCT4GetSecurityCode   (int argc, char *argv[]);
-#ifdef DEBUG
-void DCT4ResetSecurityCode (int argc, char *argv[]);
-#endif
 void DCT4GetVoiceRecord	   (int argc, char *argv[]);
 void DCT4Info		   (int argc, char *argv[]);
 void DCT4GetT9		   (int argc, char *argv[]);
-void DCT4SetLight	   (int argc, char *argv[]);
 void DCT4DisplayTest	   (int argc, char *argv[]);
 void DCT4GetADC		   (int argc, char *argv[]);
 void DCT4VibraTest	   (int argc, char *argv[]);
-void DCT4TuneRadio	   (int argc, char *argv[]);
 void DCT4PlaySavedRingtone (int argc, char *argv[]);
 void DCT4MakeCameraShoot   (int argc, char *argv[]);
 void DCT4GetScreenDump	   (int argc, char *argv[]);
+
+#ifdef DEBUG
+	void DCT4ResetSecurityCode (int argc, char *argv[]);
+#endif
+#ifdef GSM_ENABLE_NOKIA6510
+	void DCT4SetLight	   (int argc, char *argv[]);
+	void DCT4TuneRadio	   (int argc, char *argv[]);
+#endif
 
 /* ------------------- features matrix ------------------------------------- */
 

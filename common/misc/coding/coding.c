@@ -1,6 +1,6 @@
 /* (c) 2002-2004 by Marcin Wiacek, Michal Cihar and others */
-/* based on some work from MyGnokii */
-/* based on some work from Gnokii
+/* based on some work from MyGnokii (www.mwiacek.com) */
+/* based on some work from Gnokii (www.gnokii.org)
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
  * GNU GPL version 2 or later
  */
@@ -19,6 +19,142 @@
 
 #include "../misc.h"
 #include "coding.h"
+
+/* function changes #10 #13 chars to \n \r */
+char *EncodeUnicodeSpecialChars(unsigned char *buffer)
+{
+	int 			Pos=0, Pos2=0;
+	static unsigned char	Buf[20000];
+
+	while (buffer[Pos*2]!=0x00 || buffer[Pos*2+1]!=0x00) {
+		if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == 10) {
+			Buf[Pos2*2]   = 0x00;
+			Buf[Pos2*2+1] = '\\';
+			Pos2++;
+			Buf[Pos2*2]   = 0x00;
+			Buf[Pos2*2+1] = 'n';
+			Pos2++;
+		} else if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == 13) {
+			Buf[Pos2*2]   = 0x00;
+			Buf[Pos2*2+1] = '\\';
+			Pos2++;
+			Buf[Pos2*2]   = 0x00;
+			Buf[Pos2*2+1] = 'r';
+			Pos2++;
+		} else if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == '\\') {
+			Buf[Pos2*2]   = 0x00;
+			Buf[Pos2*2+1] = '\\';
+			Pos2++;
+			Buf[Pos2*2]   = 0x00;
+			Buf[Pos2*2+1] = '\\';
+			Pos2++;
+		} else {
+			Buf[Pos2*2]   = buffer[Pos*2];
+			Buf[Pos2*2+1] = buffer[Pos*2+1];
+			Pos2++;
+		}
+		Pos++;
+	}
+	Buf[Pos2*2]   = 0;
+	Buf[Pos2*2+1] = 0;
+	return Buf;
+}
+
+/* function changes #10 #13 chars to \n \r */
+char *EncodeSpecialChars(unsigned char *buffer)
+{
+	int 			Pos=0, Pos2=0;
+	static unsigned char	Buf[10000];
+
+	while (buffer[Pos]!=0x00) {
+		switch (buffer[Pos]) {
+		case 10:
+			Buf[Pos2++] = '\\';
+			Buf[Pos2++] = 'n';
+			break;
+		case 13: 
+			Buf[Pos2++] = '\\';
+			Buf[Pos2++] = 'r';
+			break;
+		case '\\':
+			Buf[Pos2++] = '\\';
+			Buf[Pos2++] = '\\';
+			break;
+		default:
+			Buf[Pos2++] = buffer[Pos];
+		}
+		Pos++;
+	}
+	Buf[Pos2] = 0;
+	return Buf;
+}
+
+char *DecodeUnicodeSpecialChars(unsigned char *buffer)
+{
+	int 			Pos=0, Pos2=0, level=0;
+	static unsigned char	Buf[10000];
+
+	while (buffer[Pos*2]!=0x00 || buffer[Pos*2+1]!=0x00) {
+		Buf[Pos2*2]   = buffer[Pos*2];
+		Buf[Pos2*2+1] = buffer[Pos*2+1];
+		switch (level) {
+		case 0:
+			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == '\\') {
+				level = 1;
+			} else {
+				Pos2++;
+			}
+			break;
+		case 1:
+			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == 'n') {
+				Buf[Pos2*2]   = 0;
+				Buf[Pos2*2+1] = 10;
+			}
+			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == 'r') {
+				Buf[Pos2*2]   = 0;
+				Buf[Pos2*2+1] = 13;
+			}
+			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == '\\') {
+				Buf[Pos2*2]   = 0;
+				Buf[Pos2*2+1] = '\\';
+			}
+			Pos2++;
+			level = 0;
+		}
+		Pos++;
+	}
+	Buf[Pos2*2]   = 0;
+	Buf[Pos2*2+1] = 0;
+	return Buf;
+}
+
+char *DecodeSpecialChars(unsigned char *buffer)
+{
+	int 			Pos=0, Pos2=0, level=0;
+	static unsigned char	Buf[10000];
+
+	while (buffer[Pos]!=0x00) {
+		Buf[Pos2] = buffer[Pos];
+		switch (level) {
+		case 0:
+			if (buffer[Pos] == '\\') {
+				level = 1;
+			} else {
+				Pos2++;
+			}
+			break;
+		case 1:
+			if (buffer[Pos] == 'n') Buf[Pos2] = 10;
+			if (buffer[Pos] == 'r') Buf[Pos2] = 13;
+			if (buffer[Pos] == '\\') Buf[Pos2] = '\\';
+			Pos2++;
+			level = 0;
+		}
+		Pos++;
+	}
+	Buf[Pos2] = 0;
+	return Buf;
+}
 
 char *mystrcasestr(unsigned const char *a, unsigned const char *b)
 {

@@ -88,6 +88,8 @@ typedef struct {
 
 void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, int *Length, GSM_MMSIndicator Indicator);
 
+void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, int *Length, char *Text, char *URL);
+
 /* ------------------------------ MMS file --------------------------------- */
 
 #define MAX_MULTI_MMS 20

@@ -151,13 +151,13 @@ static void SaveBackupText(FILE *file, char *myname, char *myvalue, bool UseUnic
 			EncodeUnicode(buffer2,buffer,strlen(buffer));
 			fwrite(buffer2,1,strlen(buffer)*2,file);
 
-			fwrite(myvalue,1,UnicodeLength(myvalue)*2,file);
+			fwrite(EncodeUnicodeSpecialChars(myvalue),1,UnicodeLength(EncodeUnicodeSpecialChars(myvalue))*2,file);
 
 			sprintf(buffer,"\"%c%c",13,10);
 			EncodeUnicode(buffer2,buffer,strlen(buffer));
 			fwrite(buffer2,1,strlen(buffer)*2,file);
 		} else {
-			sprintf(buffer,"%s = \"%s\"%c%c",myname,DecodeUnicodeString(myvalue),13,10);
+			sprintf(buffer,"%s = \"%s\"%c%c",myname,EncodeSpecialChars(DecodeUnicodeString(myvalue)),13,10);
 			fprintf(file,"%s",buffer);
 
 			EncodeHexBin(buffer,myvalue,UnicodeLength(myvalue)*2);
@@ -168,15 +168,16 @@ static void SaveBackupText(FILE *file, char *myname, char *myvalue, bool UseUnic
 
 static bool ReadBackupText(INI_Section *file_info, char *section, char *myname, char *myvalue, bool UseUnicode)
 {
-	unsigned char 	paramname[10000],*readvalue;
+	unsigned char paramname[10000],*readvalue;
 
 	if (UseUnicode) {
 		EncodeUnicode(paramname,myname,strlen(myname));
 		readvalue = INI_GetValue(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
-			CopyUnicodeString(myvalue,readvalue+2);
-			myvalue[UnicodeLength(readvalue)*2-4]=0;
-			myvalue[UnicodeLength(readvalue)*2-3]=0;
+			CopyUnicodeString(myvalue,DecodeUnicodeSpecialChars(readvalue+2));
+			myvalue[UnicodeLength(myvalue)*2-2]=0;
+			myvalue[UnicodeLength(myvalue)*2-1]=0;
+
 			dbgprintf("%s\n",DecodeUnicodeString(readvalue));
 		} else {
 			myvalue[0]=0;
@@ -197,7 +198,7 @@ static bool ReadBackupText(INI_Section *file_info, char *section, char *myname, 
 			strcpy(paramname,myname);
 			readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
 			if (readvalue!=NULL) {
-				EncodeUnicode(myvalue,readvalue+1,strlen(readvalue)-2);
+				EncodeUnicode(myvalue,DecodeSpecialChars(readvalue+1),strlen(DecodeSpecialChars(readvalue+1))-1);
 			} else {
 				myvalue[0]=0;
 				myvalue[1]=0;
@@ -418,6 +419,17 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
+static void SaveNoteEntry(FILE *file, GSM_NoteEntry *Note, bool UseUnicode)
+{
+	char buffer[1000];
+
+	sprintf(buffer,"Location = %d%c%c", Note->Location,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);	
+	SaveBackupText(file, "Text", Note->Text, UseUnicode);
+	sprintf(buffer, "%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+}
+
 static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnicode)
 {
 	int 	i;
@@ -433,9 +445,9 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 		case GSM_CAL_BIRTHDAY 	: sprintf(buffer,"Birthday%c%c", 		13,10); break;
 		case GSM_CAL_TRAVEL  	: sprintf(buffer,"Travel%c%c", 			13,10); break;
 		case GSM_CAL_VACATION 	: sprintf(buffer,"Vacation%c%c", 		13,10); break;
-		case GSM_CAL_MEMO	 	: sprintf(buffer,"Memo%c%c", 			13,10); break;
+		case GSM_CAL_MEMO	: sprintf(buffer,"Memo%c%c", 			13,10); break;
 		case GSM_CAL_ALARM    	: sprintf(buffer,"Alarm%c%c", 			13,10); break;
-		case GSM_CAL_DAILY_ALARM 	: sprintf(buffer,"DailyAlarm%c%c", 		13,10); break;
+		case GSM_CAL_DAILY_ALARM: sprintf(buffer,"DailyAlarm%c%c", 		13,10); break;
 		case GSM_CAL_T_ATHL   	: sprintf(buffer,"Training/Athletism%c%c", 	13,10); break;
        		case GSM_CAL_T_BALL   	: sprintf(buffer,"Training/BallGames%c%c", 	13,10); break;
                 case GSM_CAL_T_CYCL   	: sprintf(buffer,"Training/Cycling%c%c", 	13,10); break;
@@ -655,6 +667,48 @@ static void SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, boo
 		sprintf(buffer,"%c%c",13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 	}
+}
+
+static void SaveChatSettingsEntry(FILE *file, GSM_ChatSettings *settings, bool UseUnicode)
+{
+	char buffer[10000];
+
+	sprintf(buffer,"HomePage");
+	SaveBackupText(file, buffer, settings->HomePage, UseUnicode);
+	sprintf(buffer,"User");
+	SaveBackupText(file, buffer, settings->User, UseUnicode);
+	sprintf(buffer,"Password");
+	SaveBackupText(file, buffer, settings->Password, UseUnicode);
+	SaveWAPSettingsEntry(file, &settings->Connection, UseUnicode);
+}
+
+static void SaveSyncMLSettingsEntry(FILE *file, GSM_SyncMLSettings *settings, bool UseUnicode)
+{
+	char buffer[10000];
+
+	sprintf(buffer,"User");
+	SaveBackupText(file, buffer, settings->User, UseUnicode);
+	sprintf(buffer,"Password");
+	SaveBackupText(file, buffer, settings->Password, UseUnicode);
+	sprintf(buffer,"PhonebookDB");
+	SaveBackupText(file, buffer, settings->PhonebookDataBase, UseUnicode);
+	sprintf(buffer,"CalendarDB");
+	SaveBackupText(file, buffer, settings->CalendarDataBase, UseUnicode);
+	sprintf(buffer,"Server");
+	SaveBackupText(file, buffer, settings->Server, UseUnicode);
+	if (settings->SyncPhonebook) {
+		sprintf(buffer,"SyncPhonebook = True%c%c",13,10);
+	} else {
+		sprintf(buffer,"SyncPhonebook = False%c%c",13,10);
+	}
+	SaveBackupText(file, "", buffer, UseUnicode);
+	if (settings->SyncCalendar) {
+		sprintf(buffer,"SyncCalendar = True%c%c",13,10);
+	} else {
+		sprintf(buffer,"SyncCalendar = False%c%c",13,10);
+	}
+	SaveBackupText(file, "", buffer, UseUnicode);
+	SaveWAPSettingsEntry(file, &settings->Connection, UseUnicode);
 }
 
 static void SaveBitmapEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
@@ -1076,6 +1130,13 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 		i++;
 	}
 	i=0;
+	while (backup->Note[i]!=NULL) {
+		sprintf(buffer,"[Note%03i]%c%c",i+1,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
+		SaveNoteEntry(file, backup->Note[i], UseUnicode);
+		i++;
+	}
+	i=0;
 	while (backup->CallerLogos[i]!=NULL) {
 		sprintf(buffer,"[Caller%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
@@ -1108,6 +1169,20 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 		sprintf(buffer,"[MMSSettings%03i]%c%c",i+1,13,10);
 		SaveBackupText(file, "", buffer, UseUnicode);
 		SaveWAPSettingsEntry(file, backup->MMSSettings[i], UseUnicode);
+		i++;
+	}
+	i=0;
+	while (backup->SyncMLSettings[i]!=NULL) {
+		sprintf(buffer,"[SyncMLSettings%03i]%c%c",i+1,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
+		SaveSyncMLSettingsEntry(file, backup->SyncMLSettings[i], UseUnicode);
+		i++;
+	}
+	i=0;
+	while (backup->ChatSettings[i]!=NULL) {
+		sprintf(buffer,"[ChatSettings%03i]%c%c",i+1,13,10);
+		SaveBackupText(file, "", buffer, UseUnicode);
+		SaveChatSettingsEntry(file, backup->ChatSettings[i], UseUnicode);
 		i++;
 	}
 	i=0;
@@ -2657,7 +2732,132 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	if (backup->MD5Original[0]!=0) {
 		FindBackupChecksum(FileName, UseUnicode, backup->MD5Calculated);
 	}
-
+        for (h = file_info; h != NULL; h = h->Next) {
+		found = false;
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Backup",4);
+			if (mywstrncasecmp(buffer, h->SectionName, 6)) found = true;
+		} else {
+	                if (mystrncasecmp("Backup", h->SectionName, 6)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Checksum",4);
+			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
+		} else {
+	                if (mystrncasecmp("Checksum", h->SectionName, 8)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Profile",7);
+			if (mywstrncasecmp(buffer, h->SectionName, 7)) found = true;
+		} else {
+	                if (mystrncasecmp("Profile", h->SectionName, 7)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"PhonePBK",8);
+			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
+		} else {
+	                if (mystrncasecmp("PhonePBK", h->SectionName, 8)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"SIMPBK",6);
+			if (mywstrncasecmp(buffer, h->SectionName, 6)) found = true;
+		} else {
+	                if (mystrncasecmp("SIMPBK", h->SectionName, 6)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Calendar",8);
+			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
+		} else {
+	                if (mystrncasecmp("Calendar", h->SectionName, 8)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Caller",6);
+			if (mywstrncasecmp(buffer, h->SectionName, 6)) found = true;
+		} else {
+	                if (mystrncasecmp("Caller", h->SectionName, 6)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"SMSC",4);
+			if (mywstrncasecmp(buffer, h->SectionName, 4)) found = true;
+		} else {
+	                if (mystrncasecmp("SMSC", h->SectionName, 4)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"WAPBookmark",11);
+			if (mywstrncasecmp(buffer, h->SectionName, 11)) found = true;
+			if (!found) {
+				EncodeUnicode(buffer,"Bookmark",8);
+				if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
+			}
+		} else {
+	                if (mystrncasecmp("WAPBookmark", h->SectionName, 11)) found = true;
+			if (!found) {
+				if (mystrncasecmp("Bookmark", h->SectionName, 8)) found = true;
+			}
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"WAPSettings",11);
+			if (mywstrncasecmp(buffer, h->SectionName, 11)) found = true;
+			if (!found) {
+				EncodeUnicode(buffer,"Settings",8);
+				if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
+			}
+		} else {
+	                if (mystrncasecmp("WAPSettings", h->SectionName, 11)) found = true;
+			if (!found) {
+		                if (mystrncasecmp("Settings", h->SectionName, 8)) found = true;
+			}
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"MMSSettings",8);
+			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
+		} else {
+	                if (mystrncasecmp("MMSSettings", h->SectionName, 8)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Ringtone",8);
+			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
+		} else {
+	                if (mystrncasecmp("Ringtone", h->SectionName, 8)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"TODO",4);
+			if (mywstrncasecmp(buffer, h->SectionName, 4)) found = true;
+		} else {
+	                if (mystrncasecmp("TODO", h->SectionName, 4)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Startup",7);
+			if (mywstrncasecmp(buffer, h->SectionName, 7)) found = true;
+		} else {
+	                if (mystrncasecmp("Startup", h->SectionName, 7)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Operator",7);
+			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
+		} else {
+	                if (mystrncasecmp("Operator", h->SectionName, 8)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"FMStation",9);
+			if (mywstrncasecmp(buffer, h->SectionName, 9)) found = true;
+		} else {
+	                if (mystrncasecmp("FMStation", h->SectionName, 9)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"GPRSPoint",9);
+			if (mywstrncasecmp(buffer, h->SectionName, 9)) found = true;
+		} else {
+	                if (mystrncasecmp("GPRSPoint", h->SectionName, 9)) found = true;
+		}
+		if (UseUnicode) {
+			EncodeUnicode(buffer,"Note",4);
+			if (mywstrncasecmp(buffer, h->SectionName, 4)) found = true;
+		} else {
+	                if (mystrncasecmp("Note", h->SectionName, 4)) found = true;
+		}
+		if (!found) return ERR_NOTIMPLEMENTED;
+        }
 	return ERR_NONE;
 }
 

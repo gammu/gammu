@@ -405,7 +405,7 @@ typedef struct {
 
 typedef struct {
 	int	     Location;
-	char	     Text[100];
+	char	     Text[3000*2];
 } GSM_NoteEntry;
 
 GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *Note);

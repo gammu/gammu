@@ -3,6 +3,10 @@
 #ifndef __misc_h
 #define __misc_h
 
+#if defined(_MSC_VER) && defined(__cplusplus)
+    extern "C" {
+#endif
+
 #include <stdio.h>
 #include <time.h>
 #ifdef WIN32
@@ -129,6 +133,10 @@ bool CheckTime			(GSM_DateTime *date);
 
 char 				*GetCompiler(void);
 char 				*GetOS(void);
+
+#if defined(_MSC_VER) && defined(__cplusplus)
+    }
+#endif
 
 #endif
 

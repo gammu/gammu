@@ -34,7 +34,7 @@ typedef struct {
 
 	/* options for MYSQL */
 	unsigned char	*database,	 *user,		*password;
-	unsigned char	*PC;
+	unsigned char	*PC,		 *skipsmscnumber;
 
 	/* private variables required for work */
 	int		relativevalidity;
