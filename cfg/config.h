@@ -121,7 +121,7 @@
  * too.
  */
 /* Enables cell broadcast */
-/* #undef GSM_ENABLE_CELLBROADCAST */
+#define GSM_ENABLE_CELLBROADCAST 1
 
 /* If you want backup/restore stuff. Some people wanted it - they required
  * smalled library made from Gammu and didn't require it. Please note,
