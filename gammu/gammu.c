@@ -454,13 +454,17 @@ static void PrintMemoryEntry(GSM_MemoryEntry *entry)
 				printmsg("Date and time    : %s\n",OSDateTime(entry->Entries[i].Date,false));
 				continue;
 			case PBK_Category:
-				Category.Location = entry->Entries[i].Number;
-				Category.Type = Category_Phonebook;
-				error=Phone->GetCategory(&s, &Category);
-				if (error == ERR_NONE) {
-					printmsg("Category         : \"%s\" (%i)\n", DecodeUnicodeConsole(Category.Name), entry->Entries[i].Number);
+				if (entry->Entries[i].Number == -1) {
+					printmsg("Category         : \"%s\"\n", DecodeUnicodeConsole(entry->Entries[i].Text));
 				} else {
-					printmsg("Category         : %i\n", entry->Entries[i].Number);
+					Category.Location = entry->Entries[i].Number;
+					Category.Type = Category_Phonebook;
+					error=Phone->GetCategory(&s, &Category);
+					if (error == ERR_NONE) {
+						printmsg("Category         : \"%s\" (%i)\n", DecodeUnicodeConsole(Category.Name), entry->Entries[i].Number);
+					} else {
+						printmsg("Category         : %i\n", entry->Entries[i].Number);
+					}
 				}
 				continue;
 			case PBK_Private:

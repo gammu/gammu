@@ -327,7 +327,8 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                         }
                         if (ReadVCALText(Line, "CATEGORIES", Buff)) {
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
-                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Caller_Group;
+                                Pbk->Entries[Pbk->EntriesNum].Number = -1;
+                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Category;
                                 Pbk->EntriesNum++;
                         }
                         if (ReadVCALText(Line, "BDAY", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Pbk->Entries[Pbk->EntriesNum].Date)) {
