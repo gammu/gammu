@@ -219,14 +219,15 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
 {
 	static unsigned char	tmp[1000];
 
+	if (*pos != 0) *pos += 2;
 	while (Buff[*pos] != 0 || Buff[*pos + 1] != 0) {
 		if (Buff[*pos] == 0 && Buff[*pos + 1] == ';') {
 			Buff[*pos + 1] = 0;
-			CopyUnicodeString(tmp, Buff);
+			CopyUnicodeString(tmp, Buff + *pos);
 			Buff[*pos + 1] = ';';
 			return tmp;
 		}
-		*pos++;
+		*pos += 2;
 	}
 	return NULL;
 }
