@@ -201,6 +201,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                         if (strstr(Line,"BEGIN:VCARD")) Level = 1;
                         break;
                 case 1:
+			if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
                         if (strstr(Line,"END:VCARD")) {
                                 if (Pbk->EntriesNum == 0) return ERR_EMPTY;
                                 return ERR_NONE;
@@ -216,6 +217,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LastName;
 					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff + pos + 1);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FirstName;
 					Pbk->EntriesNum++;
@@ -283,24 +285,28 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_StreetAddress;
 					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_City;
 					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_State;
 					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, Buff);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Zip;
 					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
