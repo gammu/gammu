@@ -645,7 +645,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->PBKMemories[0]		= 0;
 	Priv->FirstCalendarPos		= 0;
 	Priv->NextMemoryEntry		= 0;
-	Priv->FirstMemoryEntry		= 0;
+	Priv->FirstMemoryEntry		= -1;
 	Priv->file.Used 		= 0;
 	Priv->file.Buffer 		= NULL;
 	Priv->OBEX			= false;
@@ -2117,7 +2117,7 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 
 	/* Zero values that are for actual memory */
 	Priv->MemorySize		= 0;
-	Priv->FirstMemoryEntry		= 0;
+	Priv->FirstMemoryEntry		= -1;
 	Priv->NextMemoryEntry		= 0;
 	Priv->TextLength		= 0;
 	Priv->NumberLength		= 0;
@@ -2570,7 +2570,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 			}
 		}
 		if (Priv->PBKSBNR == AT_SBNR_AVAILABLE) {
-			sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location-1);
+			sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location + Priv->FirstMemoryEntry - 1);
 			s->Phone.Data.Memory=entry;
 			smprintf(s, "Getting phonebook entry\n");
 			return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
@@ -2583,7 +2583,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 	error=ATGEN_SetPBKMemory(s, entry->MemoryType);
 	if (error != ERR_NONE) return error;
 
-	if (Priv->FirstMemoryEntry == 0) {
+	if (Priv->FirstMemoryEntry == -1) {
 		error = ATGEN_GetMemoryInfo(s, NULL, AT_First);
 		if (error != ERR_NONE) return error;
 	}
@@ -2649,7 +2649,7 @@ GSM_Error ATGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 		if (error != ERR_NONE) return error;
 	}
 
-	if (Priv->FirstMemoryEntry == 0) {
+	if (Priv->FirstMemoryEntry == -1) {
 		error = ATGEN_GetMemoryInfo(s, NULL, AT_First);
 		if (error != ERR_NONE) return error;
 	}
@@ -2996,7 +2996,7 @@ GSM_Error ATGEN_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
 	if (error != ERR_NONE) return error;
 
-	if (Priv->FirstMemoryEntry == 0) {
+	if (Priv->FirstMemoryEntry == -1) {
 		error = ATGEN_GetMemoryInfo(s, NULL, AT_First);
 		if (error != ERR_NONE) return error;
 	}
@@ -3091,7 +3091,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		number[0] = 0;
 	}
 
-	if (Priv->FirstMemoryEntry == 0) {
+	if (Priv->FirstMemoryEntry == -1) {
 		error = ATGEN_GetMemoryInfo(s, NULL, AT_First);
 		if (error != ERR_NONE) return error;
 	}
@@ -3937,7 +3937,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetCPBRMemoryStatus,"AT+CPBR="		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_GenericReply,		"AT+CSCS="		,0x00,0x00,ID_SetMemoryCharset	 },
 {ATGEN_ReplyGetMemory,		"AT+CPBR="		,0x00,0x00,ID_GetMemory		 },
-{ATGEN_GenericReply,		"AT^SBNR=?"		,0x00,0x00,ID_GetMemory		 },
+{SIEMENS_ReplyGetMemoryInfo,	"AT^SBNR=?"		,0x00,0x00,ID_GetMemory		 },
 {SIEMENS_ReplyGetMemory,	"AT^SBNR"		,0x00,0x00,ID_GetMemory		 },
 {ATGEN_ReplySetMemory,		"AT+CPBW"		,0x00,0x00,ID_SetMemory		 },
 
