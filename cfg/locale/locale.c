@@ -296,8 +296,9 @@ int main(int argc, char *argv[])
 	WriteOutput("F0057=\"Error opening device. No permissions.\"");
 	WriteOutput("F0058=\"Error opening device. No required driver in operating system.\"");
 	WriteOutput("F0059=\"Error opening device. Some hardware not connected/wrong configured.\"");
+	WriteOutput("F0060=\"File with specified name doesn't exist.\"");
 
-	outputnum=59+1;
+	outputnum=60+1;
 #ifdef WIN32
 	ProcessSourceFile("../../../../gammu/gammu.c");
 #else

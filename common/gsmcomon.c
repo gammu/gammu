@@ -163,6 +163,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_MEMORY,			"Phone memory error, maybe it is read only."},
 	{ERR_INVALIDDATA,		"Invalid data."},
 	{ERR_FILEALREADYEXIST,		"File with specified name already exist."},
+	{ERR_FILENOTEXIST,		"File with specified name doesn't exist."},
 
 	{0,				""}
 };

@@ -111,8 +111,10 @@ void GSM_SetCalendarRecurrance(unsigned char *rec, unsigned char *endday, GSM_Ca
 			break;
 	}
 
-	endday[0] = Repeat/256;
-	endday[1] = Repeat%256;
+	if (endday != NULL) {
+		endday[0] = Repeat/256;
+		endday[1] = Repeat%256;
+	}
 
 	dbgprintf("Repeat number: %i\n",Repeat);
 }

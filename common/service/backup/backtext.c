@@ -1407,8 +1407,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	sprintf(buffer,"Type");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	note->Type = GSM_CAL_REMINDER;
-	if (readvalue!=NULL)
-	{
+	if (readvalue!=NULL) {
 		if (mystrncasecmp(readvalue,"Call",0)) {
 			note->Type = GSM_CAL_CALL;
 		} else if (mystrncasecmp(readvalue,"Meeting",0)) {

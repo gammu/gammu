@@ -1564,7 +1564,8 @@ typedef enum {
 	F_CAL35,	/* Calendar,3510 style - Reminder,Call,Birthday			*/
 	F_CAL65,	/* Calendar,6510 style - CBMM, method 3				*/
 	F_WAPMMSPROXY,	/* WAP & MMS settings contains first & second proxy		*/
-	F_CHATSYNCML,	/* Phone with Chat/SyncML settings 				*/
+	F_CHAT,		/* Phone with Chat settings 					*/
+	F_SYNCML,	/* Phone with SyncML settings 					*/
 	F_FILES2,	/* filesystem version 2 					*/
 
 	/* n6510.c && n7110.c */

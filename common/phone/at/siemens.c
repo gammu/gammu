@@ -188,14 +188,13 @@ GSM_Error SIEMENS_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *
 
 GSM_Error SIEMENS_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_Data		*Data = &s->Phone.Data;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Phone_Data		*Data = &s->Phone.Data;
 	GSM_CalendarEntry	*Calendar = Data->Cal;
 	GSM_ToDoEntry		ToDo;
 	GSM_Error		error;
 	unsigned char 		buffer[354];
 	int			len, pos=0;
-
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
