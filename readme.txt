@@ -134,12 +134,8 @@ A. Method 1:
        * under Borland C++ 3.1 for MS-DOS
            I tried, but I can't do it :-(. Help required.
        * under DJGPP for MS-DOS
-           simply use "make" :-)
-           (I compiled it without problems in plain MS-DOS from Windows 98 SE.
-            when tried from DOS Box in Windows XP, had memory problems).
-
-           NOTE: in this early version you can't use Gammu compiled using
-                 DJGPP - serial driver is not ready !
+           * set CFLAGS and LDLIBS in cfg/Makefile.glo
+           * simply use "make djgpp" :-)
        * under CygWin for Windows
            I didn't try. Probably should work
        * under Borland C++ Builder 5 Trial
@@ -208,7 +204,8 @@ A. compilers
    * MS Platform SDK
          www.microsoft.com/msdownload/platformsdk/sdkupdate/psdk-full.htm
 	 Please note, that will need probably MS Internet Explorer with enabled
-	 ActiveX to download it. Platform SDK is added to MSDN subscriptions too
+	 ActiveX to download it. Platform SDK is added to MSDN subscriptions 
+         too
    * BlueZ
          www.bluez.org
 -------------------------------------------------------------------------------

@@ -435,7 +435,7 @@ static void SetAlarm(int argc, char *argv[])
 }
 
 GSM_Bitmap		caller[5];
-GSM_AllRingtonesInfo 	Info;
+GSM_AllRingtonesInfo 	Info = {0, NULL};
 bool			callerinit[5] = {false, false, false, false, false};
 bool			ringinit = false;
 
@@ -564,11 +564,14 @@ static void GetAllMemory(int argc, char *argv[])
 	while (!gshutdown) {
 		error = Phone->GetNextMemory(&s, &Entry, start);
 		if (error == ERR_EMPTY) break;
+		if (error != ERR_NONE && Info.Ringtone) free(Info.Ringtone);
 		Print_Error(error);
 		printmsg("Memory %s, Location %i\n",argv[2],Entry.Location);
 		PrintMemoryEntry(&Entry);
  		start = false;
 	}
+
+ 	if (Info.Ringtone) free(Info.Ringtone);
 
 	GSM_Terminate();
 }
@@ -617,7 +620,10 @@ static void GetMemory(int argc, char *argv[])
 		entry.Location=j;
 
 		error=Phone->GetMemory(&s, &entry);
-		if (error != ERR_EMPTY) Print_Error(error);
+		if (error != ERR_EMPTY) {
+			if (Info.Ringtone) free(Info.Ringtone);
+			Print_Error(error);
+		}
 
 		if (error == ERR_EMPTY) {
 			emptynum++;
@@ -633,6 +639,8 @@ static void GetMemory(int argc, char *argv[])
 	}
 
 	printmsg("%i entries empty, %i entries filled\n",emptynum,fillednum);
+
+ 	if (Info.Ringtone) free(Info.Ringtone);
 
 	GSM_Terminate();
 }
@@ -1623,17 +1631,20 @@ static void GetRingtone(int argc, char *argv[])
 
 static void GetRingtonesList(int argc, char *argv[])
 {
-	GSM_AllRingtonesInfo 	Info;
+ 	GSM_AllRingtonesInfo 	Info = {0, NULL};
 	int			i;
 
 	GSM_Init(true);
 
 	error=Phone->GetRingtonesInfo(&s,&Info);
+ 	if (error != ERR_NONE && Info.Ringtone) free(Info.Ringtone);
 	Print_Error(error);
 
 	GSM_Terminate();
 
 	for (i=0;i<Info.Number;i++) printmsg("%i. \"%s\"\n",i,DecodeUnicodeConsole(Info.Ringtone[i].Name));
+
+ 	if (Info.Ringtone) free(Info.Ringtone);
 }
 
 static void DialVoice(int argc, char *argv[])
@@ -2177,7 +2188,7 @@ static void GetBitmap(int argc, char *argv[])
 	GSM_File		File;
 	GSM_MultiBitmap 	MultiBitmap;
 	int			location=0;
-	GSM_AllRingtonesInfo 	Info;
+ 	GSM_AllRingtonesInfo 	Info = {0, NULL};
 
 	if (mystrncasecmp(argv[2],"STARTUP",0)) {
 		MultiBitmap.Bitmap[0].Type=GSM_StartupLogo;
@@ -2248,6 +2259,8 @@ static void GetBitmap(int argc, char *argv[])
 			} else {
 				printmsg("ID %i\n",MultiBitmap.Bitmap[0].RingtoneID);
 			}
+
+			if (Info.Ringtone) free(Info.Ringtone);
 		}
 		if (MultiBitmap.Bitmap[0].BitmapEnabled) {
 			printmsg("Bitmap      : enabled\n");
@@ -4645,6 +4658,7 @@ static void Restore(int argc, char *argv[])
 	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoEntry		ToDo;
 	GSM_ToDoStatus		ToDoStatus;
+	GSM_NoteEntry		Note;
 	GSM_Profile		Profile;
 	GSM_MultiWAPSettings	Settings;
 	GSM_GPRSAccessPoint	GPRSPoint;
@@ -4911,6 +4925,42 @@ static void Restore(int argc, char *argv[])
 		}
 		printmsgerr("\n");
  	}
+
+	DoRestore = false;
+	if (Backup.ToDo[0] != NULL) {
+		error = Phone->GetNotesStatus(&s,&ToDoStatus);
+		if (error == ERR_NONE) {
+			max = 0;
+			while (Backup.Note[max]!=NULL) max++;
+			printmsgerr("%i entries in backup file\n",max);
+
+			if (answer_yes("Restore Notes")) DoRestore = true;
+		}
+	}
+	if (DoRestore) {
+		printmsgerr("Deleting old Notes: ");
+		while (1) {
+			error = Phone->GetNextNote(&s,&Note,true);
+			if (error != ERR_NONE) break;
+			error = Phone->DeleteNote(&s,&Note);
+ 			Print_Error(error);
+			printmsgerr("*");
+		}
+		printmsgerr("\n");
+
+		for (i=0;i<max;i++) {
+			Note 		= *Backup.Note[i];
+			Note.Location 	= 0;
+			error=Phone->AddNote(&s,&Note);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (gshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
 
 	if (Backup.SMSC[0] != NULL && answer_yes("Restore SMSC profiles")) {
 		max = 0;
@@ -5285,6 +5335,7 @@ static void ClearAll(int argc, char *argv[])
 	GSM_ToDoStatus		ToDoStatus;
 	GSM_CalendarEntry	Calendar;
 	GSM_ToDoEntry		ToDo;
+	GSM_NoteEntry		Note;
 	GSM_WAPBookmark		Bookmark;
 	GSM_FMStation 		Station;
 	GSM_MemoryEntry		Pbk;
@@ -5392,6 +5443,23 @@ static void ClearAll(int argc, char *argv[])
 			printmsgerr("Done\n");
 			Print_Error(error);
 		}
+	}
+
+	DoClear = false;
+	error = Phone->GetNotesStatus(&s,&ToDoStatus);
+	if (error == ERR_NONE && ToDoStatus.Used != 0) {
+		if (answer_yes("Delete Notes")) DoClear = true;
+	}
+	if (DoClear) {
+		printmsgerr("Deleting: ");
+		while (1) {
+			error = Phone->GetNextNote(&s,&Note,true);
+			if (error != ERR_NONE) break;
+			error = Phone->DeleteNote(&s,&Note);
+			Print_Error(error);
+			printmsgerr("*");
+		}
+		printmsgerr("\n");
 	}
 
 	Bookmark.Location = 1;
@@ -5640,17 +5708,10 @@ static void BackupSMS(int argc, char *argv[])
 	GSM_MultiSMSMessage 	sms;
 	GSM_SMSFolders		folders;
 	bool			BackupFromFolder[GSM_MAX_SMS_FOLDERS];
-	bool			start 		= true;
+	bool			start = true;
 	bool			DeleteAfter;
-	int			j, smsnum;
+	int			j, smsnum = 0;
 	char			buffer[200];
-
-	/* We ignore return code, because (when file doesn't exist) we
-	 * will create new later
-	 */
-	GSM_ReadSMSBackupFile(argv[2], &Backup);
-	smsnum = 0;
-	while (Backup.SMS[smsnum]!=NULL) smsnum++;
 
 	GSM_Init(true);
 
@@ -5662,6 +5723,7 @@ static void BackupSMS(int argc, char *argv[])
 	for (j=0;j<folders.Number;j++) {
 		BackupFromFolder[j] = false;
 		sprintf(buffer,"Backup sms from folder \"%s\"",DecodeUnicodeConsole(folders.Folder[j].Name));
+		if (folders.Folder[j].Memory == MEM_SM) strcat(buffer," (SIM)");
 		if (answer_yes(buffer)) BackupFromFolder[j] = true;
 	}
 
@@ -5700,7 +5762,7 @@ static void BackupSMS(int argc, char *argv[])
 		start=false;
 	}
 
-	error = GSM_SaveSMSBackupFile(argv[2],&Backup);
+	error = GSM_AddSMSBackupFile(argv[2],&Backup);
 	Print_Error(error);
 
 	if (DeleteAfter) {
@@ -5752,9 +5814,13 @@ static void RestoreSMS(int argc, char *argv[])
 	GSM_SMSFolders		folders;
 	int			smsnum = 0;
 	char			buffer[200];
+	bool			restore8bit,doit;
 
 	error=GSM_ReadSMSBackupFile(argv[2], &Backup);
 	Print_Error(error);
+
+	sprintf(buffer,"Do you want to restore binary SMS");
+	restore8bit = answer_yes(buffer);
 
 	GSM_Init(true);
 
@@ -5762,13 +5828,19 @@ static void RestoreSMS(int argc, char *argv[])
 	Print_Error(error);
 
 	while (Backup.SMS[smsnum] != NULL) {
-		SMS.Number = 1;
-		memcpy(&SMS.SMS[0],Backup.SMS[smsnum],sizeof(GSM_SMSMessage));
-		displaymultismsinfo(SMS,false,false);
-		sprintf(buffer,"Restore sms to folder \"%s\"",DecodeUnicodeConsole(folders.Folder[Backup.SMS[smsnum]->Folder-1].Name));
-		if (answer_yes(buffer)) {
-			error=Phone->AddSMS(&s, Backup.SMS[smsnum]);
-			Print_Error(error);
+		doit = true;
+		if (!restore8bit && Backup.SMS[smsnum]->Coding == SMS_Coding_8bit) doit = false;
+		if (doit) {
+			SMS.Number = 1;
+			memcpy(&SMS.SMS[0],Backup.SMS[smsnum],sizeof(GSM_SMSMessage));
+			displaymultismsinfo(SMS,false,false);
+			sprintf(buffer,"Restore %03i sms to folder \"%s\"",smsnum+1,DecodeUnicodeConsole(folders.Folder[Backup.SMS[smsnum]->Folder-1].Name));
+			if (folders.Folder[Backup.SMS[smsnum]->Folder-1].Memory == MEM_SM) strcat(buffer," (SIM)");
+			if (answer_yes(buffer)) {
+				smprintf(&s,"saving %i SMS\n",smsnum);
+				error=Phone->AddSMS(&s, Backup.SMS[smsnum]);
+				Print_Error(error);
+			}
 		}
 		smsnum++;
 	}
@@ -6358,7 +6430,7 @@ static void GetProfile(int argc, char *argv[])
 	int			start,stop,j,k;
 	GSM_Bitmap		caller[5];
 	bool			callerinit[5],special;
-	GSM_AllRingtonesInfo 	Info;
+ 	GSM_AllRingtonesInfo 	Info = {0, NULL};
 
 	GetStartStop(&start, &stop, 2, argc, argv);
 
@@ -6372,6 +6444,7 @@ static void GetProfile(int argc, char *argv[])
 	for (i=start;i<=stop;i++) {
 		Profile.Location=i;
 		error=Phone->GetProfile(&s,&Profile);
+		if (error != ERR_NONE && Info.Ringtone) free(Info.Ringtone);
 		Print_Error(error);
 
 		printmsg("%i. \"%s\"",i,DecodeUnicodeConsole(Profile.Name));
@@ -6485,6 +6558,8 @@ static void GetProfile(int argc, char *argv[])
 	}
 
 	GSM_Terminate();
+
+	if (Info.Ringtone) free(Info.Ringtone);
 }
 
 static void GetSpeedDial(int argc, char *argv[])
@@ -7973,7 +8048,7 @@ static GSM_Parameters Parameters[] = {
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Tones file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
 	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 	{"--playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
-	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			""},
+	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			"number"},
 	{"--getdatetime",		0, 0, GetDateTime,		{H_DateTime,0},			""},
 	{"--setdatetime",		0, 0, SetDateTime,		{H_DateTime,0},			""},
 	{"--getalarm",			0, 0, GetAlarm,			{H_DateTime,0},			""},

@@ -64,7 +64,7 @@ typedef struct {
 } GSM_SMS_Backup;
 
 extern GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup);
-extern GSM_Error GSM_SaveSMSBackupFile(char *FileName, GSM_SMS_Backup *backup);
+extern GSM_Error GSM_AddSMSBackupFile (char *FileName, GSM_SMS_Backup *backup);
 
 #endif
 

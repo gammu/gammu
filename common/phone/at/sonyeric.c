@@ -14,10 +14,11 @@
 #include "atgen.h"
 #include "sonyeric.h"
 
-#ifdef GSM_ENABLE_OBEXGEN
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 
 #include "../obex/obexgen.h"
 
+extern GSM_Protocol_Functions 	OBEXProtocol;
 extern GSM_Reply_Function	OBEXGENReplyFunctions[];
 extern GSM_Reply_Function	ATGENReplyFunctions[];
 
@@ -124,7 +125,7 @@ static GSM_Error SONYERIC_SetFile(GSM_StateMachine *s, unsigned char *FileName, 
 
 GSM_Error SONYERIC_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
-#ifdef GSM_ENABLE_OBEXGEN
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Error		error;
 	GSM_ToDoEntry		ToDo;
 	int			Pos, num, Loc;
@@ -160,7 +161,7 @@ GSM_Error SONYERIC_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note,
 
 GSM_Error SONYERIC_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
 {
-#ifdef GSM_ENABLE_OBEXGEN
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Error		error;
 	GSM_CalendarEntry	Calendar;
 	int			Pos, num, Loc;
@@ -199,7 +200,7 @@ GSM_Error SONYERIC_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool st
 
 GSM_Error SONYERIC_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
-#ifdef GSM_ENABLE_OBEXGEN
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Error		error;
 	GSM_ToDoEntry		ToDo;
 	GSM_CalendarEntry 	Calendar;
@@ -230,7 +231,7 @@ GSM_Error SONYERIC_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 
 GSM_Error SONYERIC_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-#ifdef GSM_ENABLE_OBEXGEN
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	unsigned char 		req[5000];
 	int			size=0;
 
@@ -246,7 +247,7 @@ GSM_Error SONYERIC_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 GSM_Error SONYERIC_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
-#ifdef GSM_ENABLE_OBEXGEN
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char 		req[5000];
 	int			size=0;
@@ -265,7 +266,7 @@ GSM_Error SONYERIC_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 
 GSM_Error SONYERIC_DeleteAllToDo(GSM_StateMachine *s)
 {
-#ifdef GSM_ENABLE_OBEXGEN
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Error		error;
 	int			Pos,Level = 0,Used;
 	unsigned char		*Buf;
@@ -317,7 +318,7 @@ GSM_Error SONYERIC_DeleteAllToDo(GSM_StateMachine *s)
 
 GSM_Error SONYERIC_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-#ifdef GSM_ENABLE_OBEXGEN
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Error		error;
 	int			Pos,Level = 0,Loc=0,Used;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -372,7 +373,7 @@ GSM_Error SONYERIC_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 GSM_Error SONYERIC_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
 {
-#ifdef GSM_ENABLE_OBEXGEN
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 	GSM_Error		error;
 	GSM_ToDoEntry		ToDo;
 	GSM_CalendarEntry 	Calendar;

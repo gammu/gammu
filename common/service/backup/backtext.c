@@ -2996,7 +2996,7 @@ GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 	return GSM_ReadSMSBackupTextFile(FileName, backup);
 }
 
-GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
+static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 {
 	int 		i,w,current;
 	unsigned char 	buffer[10000];
@@ -3004,7 +3004,11 @@ GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 
 	fprintf(file,"\n# File created by Gammu (www.mwiacek.com) version %s\n",VERSION);
 	GSM_GetCurrentDateTime (&DT);
-	fprintf(file,"# Saved %s\n\n",OSDateTime(DT,false));
+	fprintf(file,"# Saved ");
+	fprintf(file, "%04d%02d%02dT%02d%02d%02d",
+			DT.Year, DT.Month, DT.Day,
+			DT.Hour, DT.Minute, DT.Second);
+	fprintf(file," (%s)\n\n",OSDateTime(DT,false));
 
 	i=0;
 	while (backup->SMS[i]!=NULL) {
@@ -3088,11 +3092,11 @@ GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 	return ERR_NONE;
 }
 
-GSM_Error GSM_SaveSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
+GSM_Error GSM_AddSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 {
 	FILE *file;
   
-	file = fopen(FileName, "wb");      
+	file = fopen(FileName, "ab");      
 	if (file == NULL) return(ERR_CANTOPENFILE);
 
 	SaveSMSBackupTextFile(file,backup);
