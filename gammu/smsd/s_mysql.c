@@ -15,6 +15,7 @@
 
 #include "../../common/misc/coding/coding.h"
 #include "../../common/service/backup/gsmback.h"
+#include "../gammu.h"
 #include "smsdcore.h"
 
 /* Connects to database */
@@ -83,19 +84,45 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 		WriteSMSDLog("No version info in Gammu table: %s\n", mysql_error(&Config->DB));
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) > 2) {
+	if (atoi(Row[0]) > 3) {
 		mysql_free_result(Res);
 		WriteSMSDLog("DataBase structures are from higher Gammu version");
 		WriteSMSDLog("Please update this client application");
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) < 2) {
+	if (atoi(Row[0]) < 3) {
 		mysql_free_result(Res);
 		WriteSMSDLog("DataBase structures are from older Gammu version");
 		WriteSMSDLog("Please update DataBase, if you want to use this client application");
 		return ERR_UNKNOWN;
 	}
 	mysql_free_result(Res);
+
+	return ERR_NONE;
+}
+
+static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
+{
+	unsigned char buf[400];
+
+	sprintf(buf,"DELETE FROM `phones` WHERE `IMEI` = '%s'",s.Phone.Data.IMEI);
+#ifdef DEBUG
+	fprintf(stdout,"%s\n",buf);
+#endif
+	if (mysql_real_query(&Config->DB,buf,strlen(buf))) {
+		WriteSMSDLog("Error deleting from database (Init): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+		return ERR_UNKNOWN;
+	}
+
+	sprintf(buf,"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0)",s.Phone.Data.IMEI,Config->PhoneID);
+#ifdef DEBUG
+	fprintf(stdout,"%s\n",buf);
+#endif
+	if (mysql_real_query(&Config->DB,buf,strlen(buf))) {
+		WriteSMSDLog("Error deleting from database (Init): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+		return ERR_UNKNOWN;
+	}
+
 	return ERR_NONE;
 }
 
@@ -112,9 +139,11 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 	long 			diff;
 
 	for (i=0;i<sms.Number;i++) {
-		if ((sms.SMS[i].PDU == SMS_Status_Report) && mystrncasecmp(Config->deliveryreport, "log", 3)) {
+		if (sms.SMS[i].PDU == SMS_Status_Report) {
 			strcpy(buffer2, DecodeUnicodeString(sms.SMS[i].Number));
-			WriteSMSDLog("Delivery report: %s to %s", DecodeUnicodeString(sms.SMS[i].Text), buffer2);
+			if (mystrncasecmp(Config->deliveryreport, "log", 3)) {
+				WriteSMSDLog("Delivery report: %s to %s", DecodeUnicodeString(sms.SMS[i].Text), buffer2);
+			}
 
 			sprintf(buffer, "SELECT ID,Status,SendingDateTime,DeliveryDateTime FROM `sentitems` WHERE \
 					DeliveryDateTime='00000000000000' AND \
@@ -189,7 +218,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 		if (sms.SMS[i].PDU != SMS_Deliver) continue;
 		buffer[0]=0;
 		sprintf(buffer+strlen(buffer),"INSERT INTO `inbox` \
-			(`DateTime`,`Text`,`SenderNumber`,`Coding`,`SMSCNumber`,`UDH`, \
+			(`ReceivingDateTime`,`Text`,`SenderNumber`,`Coding`,`SMSCNumber`,`UDH`, \
 			`Class`,`TextDecoded`,`RecipientID`) VALUES ('%04d%02d%02d%02d%02d%02d','",
 			sms.SMS[i].DateTime.Year,sms.SMS[i].DateTime.Month,sms.SMS[i].DateTime.Day,
 			sms.SMS[i].DateTime.Hour,sms.SMS[i].DateTime.Minute,sms.SMS[i].DateTime.Second);
@@ -255,6 +284,22 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 	return ERR_NONE;
 }
 
+static GSM_Error SMSDMySQL_RefreshSendStatus(GSM_SMSDConfig *Config, unsigned char *ID)
+{
+	unsigned char buffer[10000];
+
+	sprintf(buffer,"UPDATE `outbox` SET `SendingTimeOut`=(now() + INTERVAL 15 SECOND)+0 WHERE `ID` = '%s' AND `SendingTimeOut` < now()",ID);
+	if (mysql_real_query(&Config->DB,buffer,strlen(buffer))) {
+		WriteSMSDLog("Error writing to database (RefreshSendStatus): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+		return ERR_UNKNOWN;
+	}
+#ifdef DEBUG
+	fprintf(stdout,"%s\n",buffer);
+#endif	
+	if (mysql_affected_rows(&Config->DB) == 0) return ERR_UNKNOWN;
+  	return ERR_NONE;
+}
+
 /* Find one multi SMS to sending and return it (or return ERR_EMPTY)
  * There is also set ID for SMS
  */
@@ -264,12 +309,9 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	MYSQL_RES 		*Res;
 	MYSQL_ROW 		Row;
 	int 			i;
-	GSM_DateTime		DT;
-	time_t     		t_time1,t_time2;
 	bool			found = false;
-	long 			diff;
 
-	sprintf(buf, "SELECT ID,DateTime,SendingDateTime FROM `outbox` WHERE 1");
+	sprintf(buf, "SELECT ID,InsertIntoDB,SendingDateTime,SenderID FROM `outbox` WHERE SendingDateTime < NOW() AND SendingTimeOut < NOW()");
 	if (mysql_real_query(&Config->DB,buf,strlen(buf))) {
 		WriteSMSDLog("Error reading from database (FindOutbox): %s\n", mysql_error(&Config->DB));
 		return ERR_UNKNOWN;
@@ -279,33 +321,19 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		return ERR_UNKNOWN;
 	}
 	while ((Row = mysql_fetch_row(Res))) {
-		sprintf(buf,"%c%c%c%c",Row[2][0],Row[2][1],Row[2][2],Row[2][3]);
-		DT.Year = atoi(buf);
-		sprintf(buf,"%c%c",Row[2][4],Row[2][5]);
-		DT.Month = atoi(buf);
-		sprintf(buf,"%c%c",Row[2][6],Row[2][7]);
-		DT.Day = atoi(buf);
-		sprintf(buf,"%c%c",Row[2][8],Row[2][9]);
-		DT.Hour = atoi(buf);
-		sprintf(buf,"%c%c",Row[2][10],Row[2][11]);
-		DT.Minute = atoi(buf);
-		sprintf(buf,"%c%c",Row[2][12],Row[2][13]);
-		DT.Second = atoi(buf);
-		t_time1 = Fill_Time_T(DT,0);
-		GSM_GetCurrentDateTime(&DT);
-		t_time2 = Fill_Time_T(DT,0);
-		diff = t_time2 - t_time1;
-		if (diff > 0) {
-			found = true;
-			break;
+		sprintf(ID,"%s",Row[0]);
+		sprintf(Config->DT,"%s",Row[1]);
+		if (strlen(Row[3]) == 0 || !strcmp(Row[3],Config->PhoneID)) {
+			if (SMSDMySQL_RefreshSendStatus(Config, ID)==ERR_NONE) {
+				found = true;
+				break;
+			}
 		}
 	}
 	if (!found) {
 		mysql_free_result(Res);
 		return ERR_EMPTY;
 	}
-	sprintf(ID,"%s",Row[0]);
-	sprintf(Config->DT,"%s",Row[1]);
 	mysql_free_result(Res);
 	sms->Number = 0;
 	for (i=0;i<MAX_MULTI_SMS;i++) {
@@ -315,7 +343,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	}
 	for (i=1;i<MAX_MULTI_SMS+1;i++) {
 		if (i==1) {
-			sprintf(buf, "SELECT Text,Coding,UDH,Class,TextDecoded,ID,DestinationNumber,MultiPart,RelativeValidity FROM `outbox` WHERE ID='%s'",ID);
+			sprintf(buf, "SELECT Text,Coding,UDH,Class,TextDecoded,ID,DestinationNumber,MultiPart,RelativeValidity,DeliveryReport FROM `outbox` WHERE ID='%s'",ID);
 		} else {
 			sprintf(buf, "SELECT Text,Coding,UDH,Class,TextDecoded,ID,SequencePosition FROM `outbox_multipart` WHERE ID='%s' AND SequencePosition='%i'",ID,i);
 		}
@@ -367,8 +395,17 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		sms->SMS[sms->Number].PDU  		= SMS_Submit;
 		sms->Number++;
 		if (i==1) {
-			Config->relativevalidity 		= atoi(Row[8]);
+			Config->relativevalidity = atoi(Row[8]);
+
+			Config->currdeliveryreport = -1;
+			if (!strcmp(Row[9],"yes")) {
+				Config->currdeliveryreport = 1;
+			} else if (!strcmp(Row[9],"no")) {
+				Config->currdeliveryreport = 0;
+			}
+
 			if (!strcmp(Row[7],"false")) break;
+
 		}
 	}
 	mysql_free_result(Res);	
@@ -421,7 +458,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 	for (i=0;i<sms->Number;i++) {
 		buffer[0]=0;
 		if (i==0) {
-			sprintf(buffer+strlen(buffer),"INSERT INTO `outbox` (`MultiPart`,`DateTime");
+			sprintf(buffer+strlen(buffer),"INSERT INTO `outbox` (`DeliveryReport`,`MultiPart`,`InsertIntoDB");
 		} else {
 			sprintf(buffer+strlen(buffer),"INSERT INTO `outbox_multipart` (`SequencePosition");
 		}
@@ -432,6 +469,11 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		sprintf(buffer+strlen(buffer),"`Coding`,`UDH`, \
 			`Class`,`TextDecoded`,`ID`) VALUES ('");
 		if (i==0) {
+			if (sms->SMS[i].PDU == SMS_Status_Report) {
+				sprintf(buffer+strlen(buffer),"yes','");
+			} else {
+				sprintf(buffer+strlen(buffer),"default','");
+			}
 			if (sms->Number == 1) {
 				sprintf(buffer+strlen(buffer),"false");
 			} else {
@@ -549,6 +591,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
   	return ERR_NONE;
 }
 
+
 static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, int Part, GSM_SMSDSendingError err, int TPMR)
 {
 	unsigned char	buffer[10000],buffer2[200],buffer3[2],buff[50];
@@ -557,14 +600,20 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 	if (err == SMSD_SEND_OK) WriteSMSDLog("Transmitted %s (%s: %i) to %s", Config->SMSID, (Part == sms->Number?"total":"part"),Part,DecodeUnicodeString(sms->SMS[0].Number));
 
 	buff[0] = 0;
-	if (err == SMSD_SEND_OK) 		sprintf(buff,"SendingOK");
+	if (err == SMSD_SEND_OK) {
+		if (sms->SMS[Part-1].PDU == SMS_Status_Report) {
+			sprintf(buff,"SendingOK");
+		} else {
+			sprintf(buff,"SendingOKNoReport");
+		}
+	}
 	if (err == SMSD_SEND_SENDING_ERROR) 	sprintf(buff,"SendingError");
 	if (err == SMSD_SEND_ERROR) 		sprintf(buff,"Error");
 
 	buffer[0] = 0;
 	sprintf(buffer+strlen(buffer),"INSERT INTO `sentitems` \
 		(`ID`,`SequencePosition`,`Status`,`SendingDateTime`, `SMSCNumber`, `TPMR`, \
-		`SenderID`,`Text`,`DestinationNumber`,`Coding`,`UDH`,`Class`,`TextDecoded`,`DateTime`,`RelativeValidity`) VALUES (");
+		`SenderID`,`Text`,`DestinationNumber`,`Coding`,`UDH`,`Class`,`TextDecoded`,`InsertIntoDB`,`RelativeValidity`) VALUES (");
 	sprintf(buffer+strlen(buffer),"'%s','%i','%s',NOW(),'%s','%i','%s','",ID,Part,buff,DecodeUnicodeString(sms->SMS[Part-1].SMSC.Number),TPMR,Config->PhoneID);
 	switch (sms->SMS[Part-1].Coding) {
 	case SMS_Coding_Unicode:
@@ -627,13 +676,32 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
   	return ERR_NONE;
 }
 
+static GSM_Error SMSDMySQL_RefreshPhoneStatus(GSM_SMSDConfig *Config)
+{
+	unsigned char buffer[500];
+
+	sprintf(buffer,"UPDATE `phones` SET `TimeOut`= (NOW() + INTERVAL 10 SECOND)+0");
+	sprintf(buffer+strlen(buffer)," WHERE `IMEI` = '%s'",s.Phone.Data.IMEI);
+#ifdef DEBUG
+	fprintf(stdout,"%s\n",buffer);
+#endif
+	if (mysql_real_query(&Config->DB,buffer,strlen(buffer))) {
+		WriteSMSDLog("Error writing to database (SaveInboxSMS): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+		return ERR_UNKNOWN;
+	}
+	return ERR_NONE;
+}
+
 GSM_SMSDService SMSDMySQL = {
 	SMSDMySQL_Init,
+	SMSDMySQL_InitAfterConnect,
 	SMSDMySQL_SaveInboxSMS,
 	SMSDMySQL_FindOutboxSMS,
 	SMSDMySQL_MoveSMS,
 	SMSDMySQL_CreateOutboxSMS,
-	SMSDMySQL_AddSentSMSInfo
+	SMSDMySQL_AddSentSMSInfo,
+	SMSDMySQL_RefreshSendStatus,
+	SMSDMySQL_RefreshPhoneStatus
 };
 
 #endif

@@ -2813,6 +2813,7 @@ GSM_Phone_Functions N6110Phone = {
         N6110_DeleteSMSMessage,
         DCT3_SendSMSMessage,
         NOTSUPPORTED,                   /*      SendSavedSMS            */
+	NOTSUPPORTED,			/*	SetFastSMSSending	*/
         NOKIA_SetIncomingSMS,
         DCT3_SetIncomingCB,
         PHONE_GetSMSFolders,

@@ -42,38 +42,38 @@ void ProcessSourceFile(char *filename)
 		num=fread(buffer, 1, 10000, file);
 		for (i=0;i<num;i++) {
 			switch (buffer[i]) {
-				case 10:
-					pdest = strstr( line, "printmsgerr" );
-					if (pdest != NULL) {
-						start = strlen(line) - strlen(pdest) + 1 + 11;
-					} else {
-						pdest = strstr( line, "printmsg" );
-						if (pdest != NULL) start = strlen(line) - strlen(pdest) + 1 + 8;
-					}
-					if (pdest != NULL) {
-						found = false;
-						stop  = start + 2;
-						while (stop < ((int)strlen(line))) {
-							stop++;
-							if (line[stop-1] != '\\' && line[stop] == '"') {
-								found = true;
-								break;
-							}
-						}
-						if (found) {
-							sprintf(buffer2,"F%04i=%s",outputnum,line+start);
-							buffer2[stop-start+6+1] = 0;
-							WriteOutput(buffer2);
-							outputnum++;
+			case 10:
+				pdest = strstr( line, "printmsgerr" );
+				if (pdest != NULL) {
+					start = strlen(line) - strlen(pdest) + 1 + 11;
+				} else {
+					pdest = strstr( line, "printmsg" );
+					if (pdest != NULL) start = strlen(line) - strlen(pdest) + 1 + 8;
+				}
+				if (pdest != NULL) {
+					found = false;
+					stop  = start + 2;
+					while (stop < ((int)strlen(line))) {
+						stop++;
+						if (line[stop-1] != '\\' && line[stop] == '"') {
+							found = true;
+							break;
 						}
 					}
-					line[0]=0;
-					break;
-				case 13:
-					break;
-				default:
-					line[strlen(line)+1]	= 0;
-					line[strlen(line)]	= buffer[i];
+					if (found) {
+						sprintf(buffer2,"F%04i=%s",outputnum,line+start);
+						buffer2[stop-start+6+1] = 0;
+						WriteOutput(buffer2);
+						outputnum++;
+					}
+				}
+				line[0]=0;
+				break;
+			case 13:
+				break;
+			default:
+				line[strlen(line)+1]	= 0;
+				line[strlen(line)]	= buffer[i];
 			}
 		}
 	} while (num==10000);
@@ -250,40 +250,48 @@ int main(int argc, char *argv[])
 	WriteOutput("F0011=\"Function not supported by phone.\"");
 	WriteOutput("F0012=\"Entry is empty.\"");
 	WriteOutput("F0013=\"Unknown error.\"");
-	WriteOutput("F0014=\"Unknown error.\"");
-	WriteOutput("F0015=\"Security error. Maybe no PIN ?\"");
-	WriteOutput("F0016=\"Invalid location. Maybe too high ?\"");
-	WriteOutput("F0017=\"Function not implemented. Help required.\"");
-	WriteOutput("F0018=\"Can't open specified file. Read only ?\"");
-	WriteOutput("F0019=\"Memory full.\"");
-	WriteOutput("F0020=\"More memory required...\"");
-	WriteOutput("F0021=\"Permission to file/device required...\"");
-	WriteOutput("F0022=\"Family\"");
-	WriteOutput("F0023=\"VIP\"");
-	WriteOutput("F0024=\"Friends\"");
-	WriteOutput("F0025=\"Colleagues\"");
-	WriteOutput("F0026=\"Other\"");
-	WriteOutput("F0027=\"Inbox\"");
-	WriteOutput("F0028=\"Outbox\"");
-	WriteOutput("F0029=\"Empty SMSC number. Set in phone or use -smscnumber\"");
-	WriteOutput("F0030=\"You're inside phone menu (during editing ?). Leave it and try again.\"");
-	WriteOutput("F0031=\"Personal\"");
-	WriteOutput("F0032=\"Car\"");
-	WriteOutput("F0033=\"Headset\"");
-	WriteOutput("F0034=\"General\"");
-	WriteOutput("F0035=\"Silent\"");
-	WriteOutput("F0036=\"Meeting\"");
-	WriteOutput("F0037=\"Outdoor\"");
-	WriteOutput("F0038=\"Pager\"");
-	WriteOutput("F0039=\"Discreet\"");
-	WriteOutput("F0040=\"Loud\"");
-	WriteOutput("F0041=\"My style\"");
-	WriteOutput("F0042=\"Function is during writing. If want help, please contact with authors.\"");
-	WriteOutput("F0043=\"Error during reading device\"");
-	WriteOutput("F0044=\"Can't set parity on device\"");
-	WriteOutput("F0045=\"Phone is disabled and connected to charger\"");
-	WriteOutput("F0046=\"File format not supported by Gammu\"");
-	outputnum=47;
+	WriteOutput("F0014=\"Security error. Maybe no PIN ?\"");
+	WriteOutput("F0015=\"Invalid location. Maybe too high ?\"");
+	WriteOutput("F0016=\"Function not implemented. Help required.\"");
+	WriteOutput("F0017=\"Can't open specified file. Read only ?\"");
+	WriteOutput("F0018=\"Memory full.\"");
+	WriteOutput("F0019=\"More memory required...\"");
+	WriteOutput("F0020=\"Permission to file/device required...\"");
+	WriteOutput("F0021=\"Family\"");
+	WriteOutput("F0022=\"VIP\"");
+	WriteOutput("F0023=\"Friends\"");
+	WriteOutput("F0024=\"Colleagues\"");
+	WriteOutput("F0025=\"Other\"");
+	WriteOutput("F0026=\"Inbox\"");
+	WriteOutput("F0027=\"Outbox\"");
+	WriteOutput("F0028=\"Empty SMSC number. Set in phone or use -smscnumber\"");
+	WriteOutput("F0029=\"You're inside phone menu (during editing ?). Leave it and try again.\"");
+	WriteOutput("F0030=\"Personal\"");
+	WriteOutput("F0031=\"Car\"");
+	WriteOutput("F0032=\"Headset\"");
+	WriteOutput("F0033=\"General\"");
+	WriteOutput("F0034=\"Silent\"");
+	WriteOutput("F0035=\"Meeting\"");
+	WriteOutput("F0036=\"Outdoor\"");
+	WriteOutput("F0037=\"Pager\"");
+	WriteOutput("F0038=\"Discreet\"");
+	WriteOutput("F0039=\"Loud\"");
+	WriteOutput("F0040=\"My style\"");
+	WriteOutput("F0041=\"Function is during writing. If want help, please contact with authors.\"");
+	WriteOutput("F0042=\"Error during reading device\"");
+	WriteOutput("F0043=\"Can't set parity on device\"");
+	WriteOutput("F0044=\"Phone is disabled and connected to charger\"");
+	WriteOutput("F0045=\"File format not supported by Gammu\"");
+	WriteOutput("F0046=\"Nobody is perfect, some bug appeared in protocol implementation. Please contact authors.\"");
+	WriteOutput("F0047=\"Transfer was canceled by phone (you pressed cancel on phone?).\"");
+	WriteOutput("F0048=\"Current connection type doesn't support called function.\"");
+	WriteOutput("F0049=\"CRC error.\"");
+	WriteOutput("F0050=\"Invalid date or time specified.\"");
+	WriteOutput("F0051=\"Phone memory error, maybe it is read only\"");
+	WriteOutput("F0052=\"Invalid data\"");
+	WriteOutput("F0053=\"File with specified name already exist\"");
+
+	outputnum=53+1;
 #ifdef WIN32
 	ProcessSourceFile("../../../../gammu/gammu.c");
 #else

@@ -13,7 +13,7 @@ typedef		int wint_t;
 
 /* ---------------------------- Unicode ------------------------------------ */
 bool 		mywstrncasecmp			(unsigned const char *a, unsigned const char *b, int num);
-unsigned char	*mystrstr			(unsigned const char *haystack, unsigned const char *needle);
+unsigned char	*mywstrstr			(unsigned const char *haystack, unsigned const char *needle);
 bool 		mywstrncmp			(unsigned const char *a, unsigned const char *b, int num);
 bool 		myiswspace	  		(unsigned const char *src);
 int 		mytowlower			(wchar_t c);
@@ -123,6 +123,7 @@ int ClearBit (unsigned char *Buffer, int BitNum);
 void StringToDouble	(char *text, double *d);
 
 bool mystrncasecmp (unsigned const char *a, unsigned const char *b, int num);
+char *mystrcasestr (unsigned const char *a, unsigned const char *b);
 
 void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen);
 

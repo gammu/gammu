@@ -774,6 +774,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTIMPLEMENTED,			/* 	DeleteSMS 		*/
 	NOTIMPLEMENTED,			/*	SendSMSMessage		*/
 	NOTSUPPORTED,			/*	SendSavedSMS		*/
+	NOTSUPPORTED,			/*	SetFastSMSSending	*/
 	NOTIMPLEMENTED,			/*	SetIncomingSMS		*/
 	NOTIMPLEMENTED,			/* 	SetIncomingCB		*/
 	NOTIMPLEMENTED,			/*	GetSMSFolders		*/

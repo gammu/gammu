@@ -2992,6 +2992,9 @@ static GSM_Error N6510_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230")) {
 		return ERR_NOTSUPPORTED;
 	}
+	if (!strcmp(s->Phone.Data.ModelInfo->model,"5140")) {
+		return ERR_NOTSUPPORTED;
+	}
 
 	if (Profile->Location>5) return ERR_INVALIDLOCATION;
 
@@ -4404,7 +4407,7 @@ static GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos
 
 	if (*Pos == 0) {
 		error = N6510_SearchForFileName(s,File);
-		if (error == ERR_NONE) return ERR_INVALIDLOCATION;
+		if (error == ERR_NONE) return ERR_FILEALREADYEXIST;
 		if (error != ERR_EMPTY) return error;
 
 		Header[8] = atoi(File->ID_FullName) / 256;
@@ -5657,7 +5660,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|3100|3100b|3108|3200|3200a|3300|3510|3510i|3530|3589i|3590|3595|5100|6100|6200|6220|6230|6310|6310i|6385|6510|6610|6800|7210|7250|7250i|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|3100|3100b|3108|3200|3200a|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6100|6200|6220|6230|6310|6310i|6385|6510|6610|6610i|6800|7210|7250|7250i|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/
@@ -5711,6 +5714,7 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_DeleteSMSMessage,
 	N6510_SendSMSMessage,
 	NOTSUPPORTED,			/*	SendSavedSMS		*/
+	NOTSUPPORTED,			/*	SetFastSMSSending	*/
 	NOKIA_SetIncomingSMS,
 	NOTIMPLEMENTED,			/* 	SetIncomingCB		*/
 	N6510_GetSMSFolders,

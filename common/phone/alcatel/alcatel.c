@@ -101,6 +101,7 @@ extern GSM_Error ATGEN_SetAutoNetworkLogin	(GSM_StateMachine *s);
 extern GSM_Error ATGEN_DeleteAllMemory		(GSM_StateMachine *s, GSM_MemoryType type);
 
 extern GSM_Error ATGEN_DispatchMessage		(GSM_StateMachine *s);
+extern GSM_Error ATGEN_SetFastSMSSending	(GSM_StateMachine *s, bool enable);
 extern GSM_Error ATGEN_SetIncomingCB		(GSM_StateMachine *s, bool enable);
 extern GSM_Error ATGEN_SetIncomingSMS		(GSM_StateMachine *s, bool enable);
 
@@ -3822,6 +3823,14 @@ static GSM_Error ALCATEL_SetIncomingSMS (GSM_StateMachine *s, bool enable)
 	return ATGEN_SetIncomingSMS(s, enable);
 }
 
+static GSM_Error ALCATEL_SetFastSMSSending(GSM_StateMachine *s, bool enable)
+{
+	GSM_Error error;
+
+	if ((error = ALCATEL_SetATMode(s))!= ERR_NONE) return error;
+	return ATGEN_SetFastSMSSending(s, enable);
+}
+
 static GSM_Reply_Function ALCATELReplyFunctions[] = {
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelAttach		},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelDetach		},
@@ -3913,6 +3922,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	ALCATEL_DeleteSMS,
 	ALCATEL_SendSMS,
 	ALCATEL_SendSavedSMS,
+	ALCATEL_SetFastSMSSending,
 	ALCATEL_SetIncomingSMS,
 	ALCATEL_SetIncomingCB,
 	ALCATEL_GetSMSFolders,

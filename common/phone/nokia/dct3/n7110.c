@@ -1651,6 +1651,7 @@ GSM_Phone_Functions N7110Phone = {
 	N7110_DeleteSMS,
 	DCT3_SendSMSMessage,
 	NOTSUPPORTED,			/*	SendSavedSMS		*/
+	NOTSUPPORTED,			/*	SetFastSMSSending	*/
 	N7110_SetIncomingSMS,
 	DCT3_SetIncomingCB,
 	N7110_GetSMSFolders,

@@ -18,6 +18,7 @@
 # by quotes) that should identify the project.
 
 PROJECT_NAME           = Gammu
+<<<<<<< TREE
 
 # The PROJECT_NUMBER tag can be used to enter a project or revision number. 
 # This could be handy for archiving the generated documentation or 
@@ -30,6 +31,20 @@ PROJECT_NUMBER         = 0.97.7
 # If a relative path is entered, it will be relative to the location 
 # where doxygen was started. If left blank the current directory will be used.
 
+=======
+
+# The PROJECT_NUMBER tag can be used to enter a project or revision number. 
+# This could be handy for archiving the generated documentation or 
+# if some version control system is used.
+
+PROJECT_NUMBER         = 0.98.0
+
+# The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) 
+# base path where the generated documentation will be put. 
+# If a relative path is entered, it will be relative to the location 
+# where doxygen was started. If left blank the current directory will be used.
+
+>>>>>>> MERGE-SOURCE
 OUTPUT_DIRECTORY       = gammu-doc
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 

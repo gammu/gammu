@@ -162,6 +162,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_INVALIDDATETIME,		"Invalid date or time specified."},
 	{ERR_MEMORY,			"Phone memory error, maybe it is read only"},
 	{ERR_INVALIDDATA,		"Invalid data"},
+	{ERR_FILEALREADYEXIST,		"File with specified name already exist"},
 
 	{0,				""}
 };

@@ -13,9 +13,7 @@ if ./configure "$@" ; then
         echo "Use --regenerate as first parameter regenerate configure script"
     else
         cp Makefile.cfg ../Makefile.cfg
-        chmod a+rw ../Makefile.cfg
         rm Makefile.cfg
         mv -f config.h ../config.h
-        chmod a+rw ../config.h
     fi
 fi

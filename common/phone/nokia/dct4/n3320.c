@@ -194,6 +194,7 @@ GSM_Phone_Functions N3320Phone = {
 	NOTSUPPORTED,			/* 	DeleteSMS 		*/
 	NOTSUPPORTED,			/*	SendSMS			*/
 	NOTSUPPORTED,			/*	SendSavedSMS		*/
+	NOTSUPPORTED,			/*	SetFastSMSSending	*/
 	NOTSUPPORTED,			/*	SetIncomingSMS		*/
 	NOTSUPPORTED,			/* 	SetIncomingCB		*/
 	NOTSUPPORTED,			/*	GetSMSFolders		*/

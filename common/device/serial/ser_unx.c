@@ -201,7 +201,7 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 {
     	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
     	struct termios  	t;
-    	int	     	speed2 = B19200;
+    	int	     		speed2 = B19200;
 
     	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setspeed");

@@ -143,6 +143,7 @@ GSM_Phone_Functions MROUTERGENPhone = {
 	NOTSUPPORTED,			/* 	DeleteSMS 		*/
 	NOTSUPPORTED,			/*	SendSMSMessage		*/
 	NOTSUPPORTED,			/*	SendSavedSMS		*/
+	NOTSUPPORTED,			/*	SetFastSMSSending	*/
 	NOTSUPPORTED,			/*	SetIncomingSMS		*/
 	NOTSUPPORTED,			/* 	SetIncomingCB		*/
 	NOTSUPPORTED,			/*	GetSMSFolders		*/
