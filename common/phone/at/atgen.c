@@ -2621,7 +2621,7 @@ GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, bool
 	while ((error = ATGEN_PrivGetMemory(s, entry, step == 0 ? 0 : MIN(Priv->MemorySize, entry->Location + step))) == ERR_EMPTY) {
 		entry->Location += step + 1;
 		if (entry->Location > Priv->MemorySize) break;
-		/* SNBR works only for one location */
+		/* SBNR works only for one location */
 		if (entry->MemoryType != MEM_ME || Priv->PBKSBNR != AT_SBNR_AVAILABLE) step = MIN(step + 2, 20);
 	}
 	if (error == ERR_INVALIDLOCATION) return ERR_EMPTY;
