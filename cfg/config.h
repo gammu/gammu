@@ -11,7 +11,7 @@
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
-/* #undef DEBUG */
+#define DEBUG 1
 #endif
 
 /* #undef ENABLE_LGPL */
