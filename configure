@@ -3,6 +3,10 @@ cp -f version cfg/autoconf/VERSION
 cd cfg/autoconf
 if [ ! -f ./configure -o "x$1" = "x--regenerate" -o ./configure.in -nt ./configure ] ; then
     echo "Running autoconf..."
+    if ! type autoconf > /dev/null 2>&1 ; then
+        echo "Please install autoconf"
+        exit 1
+    fi
     autoconf
     test "x$1" = "x--regenerate" && shift
 fi
