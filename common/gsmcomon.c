@@ -137,7 +137,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	/* Some missed */
 	{ERR_UNKNOWNCONNECTIONTYPESTRING,"Unknown connection type string. Check config file."},
 	{ERR_UNKNOWNMODELSTRING,	"Unknown model type string. Check config file."},
-	{ERR_SOURCENOTAVAILABLE,	"Some required functions not compiled for your OS. Please contact."},
+	{ERR_SOURCENOTAVAILABLE,	"Some required functions disabled at compile time."},
 	{ERR_NOTSUPPORTED,		"Function not supported by phone."},
 	{ERR_EMPTY,			"Entry is empty"},
 	{ERR_SECURITYERROR,		"Security error. Maybe no PIN ?"},
@@ -209,9 +209,9 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 	if (privdi->use_global) {
 		/* Aren't we the changing the global di? */
 		if (privdi != &di) {
-			if (privdi->df != di.df && 
-					privdi->dl!=0 && 
-					fileno(privdi->df) != 1 && 
+			if (privdi->df != di.df &&
+					privdi->dl!=0 &&
+					fileno(privdi->df) != 1 &&
 					fileno(privdi->df) != 2)
 				fclose(privdi->df);
 			privdi->df = di.df;
