@@ -13,6 +13,19 @@
 #gammuloc = gammu.us
 #startinfo = yes
 
+# When uncomment this section and insert numbers here, smsd will process
+# incoming sms only from numbers written here (incoming sms from all other
+# numbers will be deleted)
+#[include_numbers]
+#number1 = 1234
+
+# When uncomment this section and insert numbers here, smsd will process
+# incoming sms from all numbers not written here (incoming sms from numbers
+# written here will be deleted). This is "black" list.
+# Note: after using "include_numbers" section this one will be ignored
+#[exclude_numbers]
+#number1 = 1234
+
 # This section contains general settings
 # PIN         - PIN for SIM card
 # logfile     - logfile for info about smsd actions
@@ -28,6 +41,7 @@
 #                    log: one line log entry, 
 #                    sms: store in inbox as a received SMS
 #                    Default: no
+# phoneid - string with info about phone used for sending/receiving
 [smsd]
 PIN = 1234
 logfile = smsdlog
@@ -35,19 +49,7 @@ commtimeout = 1
 sendtimeout = 10
 #receivefrequency = 0
 #deliveryreport = no
-
-# When uncomment this section and insert numbers here, smsd will process
-# incoming sms only from numbers written here (incoming sms from all other
-# numbers will be deleted)
-#[include_numbers]
-#number1 = 1234
-
-# When uncomment this section and insert numbers here, smsd will process
-# incoming sms from all numbers not written here (incoming sms from numbers
-# written here will be deleted). This is "black" list.
-# Note: after using "include_numbers" section this one will be ignored
-#[exclude_numbers]
-#number1 = 1234
+#phoneid = MyPhone1
 
 # ------------------------- SETTINGS FOR --smsd MYSQL ---------------------------
 user = root

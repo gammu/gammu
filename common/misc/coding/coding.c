@@ -586,14 +586,14 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 	/*without leading byte with format of number*/  
 	length--;
 
-	switch (Number[1]) {
-	case NUMBER_ALPHANUMERIC:
+	switch ((Number[1] & 112)) {
+	case (NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN & 112):
 		if (length > 6) length++;
 		dbgprintf("Alphanumeric number, length %i\n",length);
 		GSM_UnpackEightBitsToSeven(0, length, length, Number+2, Buffer);
 		Buffer[length]=0;
 		break;
-	case NUMBER_INTERNATIONAL:
+	case (NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN & 112):
 		dbgprintf("International number\n");
 		Buffer[0]='+';
 		DecodeBCD(Buffer+1,Number+2, length);
@@ -631,14 +631,14 @@ int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool s
 	memcpy(buffer,DecodeUnicodeString(Number),length+1);
 
 	/* Checking for format number */
-	format = NUMBER_UNKNOWN;
+	format = NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN;
 	for (i=0;i<length;i++) {
 		/* first byte is '+'. Number can be international */
 		if (i==0 && buffer[i]=='+') {
-			format=NUMBER_INTERNATIONAL;  
+			format=NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN;  
 		} else {
 			/*char is not number. It must be alphanumeric*/
-			if (!isdigit(buffer[i])) format=NUMBER_ALPHANUMERIC;
+			if (!isdigit(buffer[i])) format=NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN;
 		}
 	}
 
@@ -650,11 +650,11 @@ int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool s
 
 	/* After number type we will have number. GSM 03.40 section 9.1.2 */
 	switch (format) {
-	case NUMBER_ALPHANUMERIC:
+	case NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN:
 		length=GSM_PackSevenBitsToEight(0, buffer, Output+1, strlen(buffer))*2;
 		if (strlen(buffer)==7) length--;
 		break;
-	case NUMBER_INTERNATIONAL:
+	case NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN:
 		length--;
 		EncodeBCD (Output+1, buffer+1, length, true);
 		break;

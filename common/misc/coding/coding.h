@@ -86,15 +86,15 @@ typedef enum {
 	/**
 	 * Unknown number type
 	 */
-	NUMBER_UNKNOWN		= 0x81,
+	NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN		= 0x81,
 	/**
 	 * International number (full number with code of country)
 	 */
-	NUMBER_INTERNATIONAL	= 0x91,
+	NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN	= 0x91,
 	/**
 	 * Alphanumeric number (with chars too)
 	 */
-	NUMBER_ALPHANUMERIC	= 0xD0
+	NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN	= 0xD0
 
 	/* specification give also other values */
 } GSM_NumberType;

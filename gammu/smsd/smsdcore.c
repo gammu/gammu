@@ -14,11 +14,13 @@
 #endif
 
 FILE 		 *smsd_log_file = NULL;
+static int	 TPMR;
 static GSM_Error SendingSMSStatus;
 
 static void SMSSendingSMSStatus (char *Device, int status, int mr)
 {
-	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%d\n",Device, status, mr);
+	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%02x\n",Device, status, mr);
+	TPMR = mr;
 	if (status==0) {
 		SendingSMSStatus = ERR_NONE;
 	} else {
@@ -74,7 +76,7 @@ void WriteSMSDLog(char *format, ...)
 	}
 }
 
-void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log)
+void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *service)
 {
 	INI_Section 		*smsdcfgfile = NULL;
 	GSM_Config 		smsdcfg;
@@ -113,15 +115,6 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log)
 	}
 	if (log) WriteSMSDLog("PIN code is \"%s\"",Config->PINCode);
 
-	Config->user = INI_GetValue(smsdcfgfile, "smsd", "user", false);
-	if (Config->user == NULL) Config->user="root";
-	Config->password = INI_GetValue(smsdcfgfile, "smsd", "password", false);
-	if (Config->password == NULL) Config->password="";
-	Config->PC = INI_GetValue(smsdcfgfile, "smsd", "pc", false);
-	if (Config->PC == NULL) Config->PC="localhost";
-	Config->database = INI_GetValue(smsdcfgfile, "smsd", "database", false);
-	if (Config->database == NULL) Config->database="sms";
-
 	str = INI_GetValue(smsdcfgfile, "smsd", "commtimeout", false);
 	if (str) Config->commtimeout=atoi(str); else Config->commtimeout = 1;
 	str = INI_GetValue(smsdcfgfile, "smsd", "sendtimeout", false);
@@ -136,31 +129,50 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log)
 	}
 	if (log) WriteSMSDLog("deliveryreport = %s", Config->deliveryreport);
 
-	Config->inboxpath=INI_GetValue(smsdcfgfile, "smsd", "inboxpath", false);
-	if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
+	Config->PhoneID = INI_GetValue(smsdcfgfile, "smsd", "phoneid", false);
+	if (Config->PhoneID == NULL) Config->PhoneID = "";
+	if (log) WriteSMSDLog("phoneid = %s", Config->PhoneID);
 
-	Config->inboxformat=INI_GetValue(smsdcfgfile, "smsd", "inboxformat", false);
-	if (Config->inboxformat == NULL || (!mystrncasecmp(Config->inboxformat, "detail", 6) && !mystrncasecmp(Config->inboxformat, "unicode", 7))) {
-		Config->inboxformat = "standard";
+	if (!strcmp(service,"FILES")) {
+		Config->inboxpath=INI_GetValue(smsdcfgfile, "smsd", "inboxpath", false);
+		if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
+
+		Config->inboxformat=INI_GetValue(smsdcfgfile, "smsd", "inboxformat", false);
+		if (Config->inboxformat == NULL || (!mystrncasecmp(Config->inboxformat, "detail", 6) && !mystrncasecmp(Config->inboxformat, "unicode", 7))) {
+			Config->inboxformat = "standard";
+		}
+		if (log) WriteSMSDLog("Inbox is \"%s\" with format \"%s\"", Config->inboxpath, Config->inboxformat);
+
+		Config->outboxpath=INI_GetValue(smsdcfgfile, "smsd", "outboxpath", false);
+		if (Config->outboxpath == NULL) Config->outboxpath = emptyPath;
+
+		Config->transmitformat=INI_GetValue(smsdcfgfile, "smsd", "transmitformat", false);
+		if (Config->transmitformat == NULL || (!mystrncasecmp(Config->transmitformat, "auto", 4) && !mystrncasecmp(Config->transmitformat, "unicode", 7))) {
+			Config->transmitformat = "7bit";
+		}
+		if (log) WriteSMSDLog("Outbox is \"%s\" with transmission format \"%s\"", Config->outboxpath, Config->transmitformat);
+
+		Config->sentsmspath=INI_GetValue(smsdcfgfile, "smsd", "sentsmspath", false);
+		if (Config->sentsmspath == NULL) Config->sentsmspath = Config->outboxpath;
+		if (log) WriteSMSDLog("Sent SMS moved to \"%s\"",Config->sentsmspath);
+
+		Config->errorsmspath=INI_GetValue(smsdcfgfile, "smsd", "errorsmspath", false);
+		if (Config->errorsmspath == NULL) Config->errorsmspath = Config->sentsmspath;
+		if (log) WriteSMSDLog("SMS with errors moved to \"%s\"",Config->errorsmspath);
 	}
-	if (log) WriteSMSDLog("Inbox is \"%s\" with format \"%s\"", Config->inboxpath, Config->inboxformat);
 
-	Config->outboxpath=INI_GetValue(smsdcfgfile, "smsd", "outboxpath", false);
-	if (Config->outboxpath == NULL) Config->outboxpath = emptyPath;
-
-	Config->transmitformat=INI_GetValue(smsdcfgfile, "smsd", "transmitformat", false);
-	if (Config->transmitformat == NULL || (!mystrncasecmp(Config->transmitformat, "auto", 4) && !mystrncasecmp(Config->transmitformat, "unicode", 7))) {
-		Config->transmitformat = "7bit";
+#ifdef HAVE_MYSQL_MYSQL_H
+	if (!strcmp(service,"MYSQL")) {
+		Config->user = INI_GetValue(smsdcfgfile, "smsd", "user", false);
+		if (Config->user == NULL) Config->user="root";
+		Config->password = INI_GetValue(smsdcfgfile, "smsd", "password", false);
+		if (Config->password == NULL) Config->password="";
+		Config->PC = INI_GetValue(smsdcfgfile, "smsd", "pc", false);
+		if (Config->PC == NULL) Config->PC="localhost";
+		Config->database = INI_GetValue(smsdcfgfile, "smsd", "database", false);
+		if (Config->database == NULL) Config->database="sms";
 	}
-	if (log) WriteSMSDLog("Outbox is \"%s\" with transmission format \"%s\"", Config->outboxpath, Config->transmitformat);
-
-	Config->sentsmspath=INI_GetValue(smsdcfgfile, "smsd", "sentsmspath", false);
-	if (Config->sentsmspath == NULL) Config->sentsmspath = Config->outboxpath;
-	if (log) WriteSMSDLog("Sent SMS moved to \"%s\"",Config->sentsmspath);
-
-	Config->errorsmspath=INI_GetValue(smsdcfgfile, "smsd", "errorsmspath", false);
-	if (Config->errorsmspath == NULL) Config->errorsmspath = Config->sentsmspath;
-	if (log) WriteSMSDLog("SMS with errors moved to \"%s\"",Config->errorsmspath);
+#endif
 
 	Config->IncludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "include_numbers", false);
 	Config->ExcludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "exclude_numbers", false);
@@ -175,8 +187,10 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log)
 		}
 	}
 
-	Config->retries = 0;
-	Config->prevSMSID[0] = 0;
+	Config->retries 	 = 0;
+	Config->prevSMSID[0] 	 = 0;
+	Config->SMSC.Location    = 0;
+	Config->relativevalidity = -1;
 }
 
 bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
@@ -334,11 +348,12 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		/* Unknown error - escape */
 		WriteSMSDLog("Error in outbox on %s", Config->SMSID);
 		for (i=0;i<sms.Number;i++) {
-			Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, false);
+			Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
 		}
 		Service->MoveSMS(&sms,Config, Config->SMSID, true,false);
 		return false;
 	}
+	
 	if (!gshutdown) {
 		if (strcmp(Config->prevSMSID, Config->SMSID) == 0) {
 			Config->retries++;
@@ -347,7 +362,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				strcpy(Config->prevSMSID, "");
 				WriteSMSDLog("Moved to errorbox: %s", Config->SMSID);
 				for (i=0;i<sms.Number;i++) {
-					Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, false);
+					Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
 				}
 				Service->MoveSMS(&sms,Config, Config->SMSID, true,false);
 				return false;
@@ -357,13 +372,34 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			strcpy(Config->prevSMSID, Config->SMSID);
 		}
 		for (i=0;i<sms.Number;i++) {
+		
+			if (sms.SMS[i].SMSC.Location == 1) {
+			    	if (Config->SMSC.Location == 0) {
+					Config->SMSC.Location = 1;
+					error = Phone->GetSMSC(&s,&Config->SMSC);
+					if (error!=ERR_NONE) {
+						WriteSMSDLog("Error getting SMSC from phone");
+						return false;
+					}
+
+			    	}
+			    	memcpy(&sms.SMS[i].SMSC,&Config->SMSC,sizeof(GSM_SMSC));
+			    	sms.SMS[i].SMSC.Location = 0;
+				if (Config->relativevalidity != -1) {
+					sms.SMS[i].SMSC.Validity.Format	  = SMS_Validity_RelativeFormat;
+					sms.SMS[i].SMSC.Validity.Relative = Config->relativevalidity;
+				}
+			}
+		
 			if (strcmp(Config->deliveryreport, "no") != 0) sms.SMS[i].PDU = SMS_Status_Report;
 			error=Phone->SendSMS(&s, &sms.SMS[i]);
 			if (error!=ERR_NONE) {
+				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, -1);
 				WriteSMSDLog("Error sending SMS %s (%i): %s", Config->SMSID, error,print_error(error,s.di.df,s.msg));
 				return false;
 			}
-			j=0;
+			j    = 0;
+			TPMR = -1;
 			SendingSMSStatus = ERR_TIMEOUT;
 			while (!gshutdown) {
 				GSM_GetCurrentDateTime (&Date);
@@ -379,17 +415,14 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				if (j>Config->sendtimeout) break;
 			}
 			if (SendingSMSStatus != ERR_NONE) {
+				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, TPMR);
 				WriteSMSDLog("Error getting send status of %s (%i): %s", Config->SMSID, SendingSMSStatus,print_error(SendingSMSStatus,s.di.df,s.msg));
 				return false;
 			}
-			error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, true);
+			error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, TPMR);
 			if (error!=ERR_NONE) {
 				return false;
 			}
-		}
-		while ((int)i<sms.Number-1) {
-			Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, false);
-			i++;
 		}
 		strcpy(Config->prevSMSID, "");
 		if (Service->MoveSMS(&sms,Config, Config->SMSID, false, true) != ERR_NONE) {
@@ -418,7 +451,7 @@ void SMSDaemon(int argc, char *argv[])
 		exit(-1);
 	}
 
-	SMSD_ReadConfig(argv[3], &Config, true);
+	SMSD_ReadConfig(argv[3], &Config, true, argv[2]);
 
 	error = Service->Init(&Config);
 	if (error!=ERR_NONE) {
@@ -495,7 +528,7 @@ GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *s
 		exit(-1);
 	}
 
-	SMSD_ReadConfig(filename, &Config, false);
+	SMSD_ReadConfig(filename, &Config, false, service);
 
 	error = Service->Init(&Config);
 	if (error!=ERR_NONE) return ERR_UNKNOWN;

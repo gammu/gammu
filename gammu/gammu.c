@@ -1332,7 +1332,16 @@ static void GetSMSC(int argc, char *argv[])
 			case SMS_VALID_3_Days	: printmsg("72 hours");	    break;
 			case SMS_VALID_1_Week  	: printmsg("1 week"); 	    break;
 			case SMS_VALID_Max_Time	: printmsg("Maximum time"); break;
-			default           	: printmsg("Unknown");
+			default           	:
+				if (smsc.Validity.Relative >= 0 && smsc.Validity.Relative <= 143) {
+					printmsg("%i minutes",(smsc.Validity.Relative+1)*5);
+				} else if (smsc.Validity.Relative >= 144 && smsc.Validity.Relative <= 167) {
+					printmsg("%i minutes",12*60 + (smsc.Validity.Relative-143)*30);
+				} else if (smsc.Validity.Relative >= 168 && smsc.Validity.Relative <= 196) {
+					printmsg("%i days",smsc.Validity.Relative-166);
+				} else if (smsc.Validity.Relative >= 197 && smsc.Validity.Relative <= 255) {
+					printmsg("%i weeks",smsc.Validity.Relative-192);
+				}
 		}
 		printf("\n");
 	}
@@ -2561,7 +2570,11 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		startarg 	= 1;
 		Validity.Format = 0;
 	}
-	if (mystrncasecmp(argv[1],"--sendsmsdsms",0)) startarg=startarg+2;
+	if (mystrncasecmp(argv[1],"--sendsmsdsms",0)) {
+		startarg=startarg+2;
+		EncodeUnicode(SMSC,"1234",4);
+		SMSCSet	= 0;
+	}
 
 	if (mystrncasecmp(argv[2],"TEXT",0)) {
 		chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
