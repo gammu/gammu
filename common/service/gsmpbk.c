@@ -5,7 +5,7 @@
 #include "gsmpbk.h"
 #include "gsmmisc.h"
 
-unsigned char *GSM_PhonebookGetEntryName (GSM_PhonebookEntry *entry)
+unsigned char *GSM_PhonebookGetEntryName (GSM_MemoryEntry *entry)
 {
 	/* We possibly store here "LastName, FirstName" so allocate enough memory */
  	static char 	dest[(GSM_PHONEBOOK_TEXT_LENGTH*2+2+1)*2];
@@ -51,7 +51,7 @@ unsigned char *GSM_PhonebookGetEntryName (GSM_PhonebookEntry *entry)
 	return dest;
 }
 
-void GSM_PhonebookFindDefaultNameNumberGroup(GSM_PhonebookEntry *entry, int *Name, int *Number, int *Group)
+void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, int *Number, int *Group)
 {
 	int i;
 
@@ -107,7 +107,7 @@ static void ParseVCardLine(char **pos, char *Name, char *Parameters, char *Value
 	//dprintf("ParseVCardLine: value tag = '%s'\n", Value);
 }
 
-void DecodeVCARD21Text(char *VCard, GSM_PhonebookEntry *pbk)
+void DecodeVCARD21Text(char *VCard, GSM_MemoryEntry *pbk)
 {
 	char *pos = VCard;
 	char Name[32], Parameters[256], Value[1024];
@@ -122,7 +122,7 @@ void DecodeVCARD21Text(char *VCard, GSM_PhonebookEntry *pbk)
 	}
 
 	while (1) {
-                GSM_SubPhonebookEntry *pbe = &pbk->Entries[pbk->EntriesNum];
+                GSM_SubMemoryEntry *pbe = &pbk->Entries[pbk->EntriesNum];
 
 		ParseVCardLine(&pos, Name, Parameters, Value);
 		if (Name[0] == 0x00 ||
@@ -153,7 +153,7 @@ void DecodeVCARD21Text(char *VCard, GSM_PhonebookEntry *pbk)
 	}
 }
 
-void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_PhonebookEntry *pbk, bool header, GSM_VCardVersion Version)
+void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool header, GSM_VCardVersion Version)
 {
 	int 	Name, Number, Group, i;
 	bool	ignore;
@@ -231,7 +231,7 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_PhonebookEntry *pbk, bool he
 	}
 }
 
-GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_PhonebookEntry *Pbk, GSM_VCardVersion Version)
+GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version)
 {
 	unsigned char 	Line[2000],Buff[2000];
 	int		Level = 0;

@@ -265,87 +265,61 @@ GSM_Phone_Functions N3650Phone = {
 	N3650_Initialise,
 	N3650_Terminate,
 	GSM_DispatchMessage,
+	NOTSUPPORTED,			/* 	ShowStartInfo		*/
+	NOKIA_GetManufacturer,
 	DCT3DCT4_GetModel,
 	DCT3DCT4_GetFirmware,
 	DCT4_GetIMEI,
+	NOTSUPPORTED,			/*	GetOriginalIMEI		*/
+	NOTSUPPORTED,			/*	GetManufactureMonth	*/
+	DCT4_GetProductCode,
+	DCT4_GetHardware,
+	NOTSUPPORTED,			/*	GetPPM			*/
+	NOTSUPPORTED,			/*	GetSIMIMSI		*/
 	NOTSUPPORTED,			/*	GetDateTime		*/
+	NOTSUPPORTED,			/*	SetDateTime		*/
 	NOTSUPPORTED,			/*	GetAlarm		*/
-	NOTSUPPORTED,			/*	GetMemory		*/
-	NOTSUPPORTED,			/*	GetMemoryStatus		*/
-	NOTSUPPORTED,			/*	GetSMSC			*/
-	NOTSUPPORTED,			/*	GetSMSMessage		*/
-	NOTSUPPORTED,			/*	GetSMSFolders		*/
-	NOKIA_GetManufacturer,
-	NOTSUPPORTED,			/*	GetNextSMSMessage	*/
-	NOTSUPPORTED,			/*	GetSMSStatus		*/
-	NOTSUPPORTED,			/*	SetIncomingSMS		*/
-	NOTSUPPORTED,			/*	GetNetworkInfo		*/
+	NOTSUPPORTED,			/*	SetAlarm		*/
+	NOTSUPPORTED,			/* 	GetLocale		*/
+	NOTSUPPORTED,			/* 	SetLocale		*/
+	NOTSUPPORTED,			/*	PressKey		*/
 	DCT4_Reset,
+	NOTSUPPORTED,			/*	ResetPhoneSettings	*/
+	NOTSUPPORTED,			/*	EnterSecurityCode	*/
+	NOTSUPPORTED,			/*	GetSecurityStatus	*/
+	NOTSUPPORTED,			/*	GetDisplayStatus	*/
+	NOTSUPPORTED,			/*	SetAutoNetworkLogin	*/
+	NOTSUPPORTED,			/*	GetBatteryCharge	*/
+	NOTSUPPORTED,			/*	GetSignalQuality	*/
+	NOTSUPPORTED,			/*	GetNetworkInfo		*/
+	NOTSUPPORTED,     		/*  	GetCategory 		*/
+        NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/	
+	NOTSUPPORTED,			/*	GetMemoryStatus		*/
+	NOTSUPPORTED,			/*	GetMemory		*/
+	NOTSUPPORTED,			/*	GetNextMemory		*/
+	NOTSUPPORTED,			/*	SetMemory		*/
+	NOTSUPPORTED,			/*	AddMemory		*/
+	NOTSUPPORTED,			/*	DeleteMemory		*/
+	NOTIMPLEMENTED,			/*	DeleteAllMemory		*/
+	NOTSUPPORTED,			/*	GetSpeedDial		*/
+	NOTSUPPORTED,			/*	SetSpeedDial		*/
+	NOTSUPPORTED,			/*	GetSMSC			*/
+	NOTSUPPORTED,			/*	SetSMSC			*/
+	NOTSUPPORTED,			/*	GetSMSStatus		*/
+	NOTSUPPORTED,			/*	GetSMS			*/
+	NOTSUPPORTED,			/*	GetNextSMS		*/
+	NOTSUPPORTED,			/*	SetSMS			*/
+	NOTSUPPORTED,			/*	AddSMS			*/
+	NOTSUPPORTED,			/* 	DeleteSMS 		*/
+	NOTSUPPORTED,			/*	SendSMS			*/
+	NOTSUPPORTED,			/*	SetIncomingSMS		*/
+	NOTSUPPORTED,			/* 	SetIncomingCB		*/
+	NOTSUPPORTED,			/*	GetSMSFolders		*/
+ 	NOTSUPPORTED,			/* 	AddSMSFolder		*/
+ 	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
 	NOTIMPLEMENTED,			/*	DialVoice		*/
 	NOTIMPLEMENTED,			/*	AnswerCall		*/
 	NOTIMPLEMENTED,			/*	CancelCall		*/
-	NOTSUPPORTED,			/*	GetRingtone		*/
-	NOTSUPPORTED,			/*	GetWAPBookmark		*/
-	NOTSUPPORTED,			/*	GetBitmap		*/
-	NOTSUPPORTED,			/*	SetRingtone		*/
-	NOTSUPPORTED,			/*	SaveSMSMessage		*/
-	NOTSUPPORTED,			/*	SendSMSMessage		*/
-	NOTSUPPORTED,			/*	SetDateTime		*/
-	NOTSUPPORTED,			/*	SetAlarm		*/
-	NOTSUPPORTED,			/*	SetBitmap		*/
-	NOTSUPPORTED,			/* 	SetMemory 		*/
-	NOTSUPPORTED,			/* 	DeleteSMS 		*/
-	NOTSUPPORTED,			/* 	SetWAPBookmark 		*/
-	NOTSUPPORTED, 			/* 	DeleteWAPBookmark 	*/
-	NOTSUPPORTED,			/* 	GetWAPSettings 		*/
-	NOTSUPPORTED,			/* 	SetIncomingCB		*/
-	NOTSUPPORTED,			/*	SetSMSC			*/
-	NOTSUPPORTED,			/*	GetManufactureMonth	*/
-	DCT4_GetProductCode,
-	NOTSUPPORTED,			/*	GetOriginalIMEI		*/
-	DCT4_GetHardware,
-	NOTSUPPORTED,			/*	GetPPM			*/
-	NOTSUPPORTED,			/*	PressKey		*/
-	NOTSUPPORTED,			/*	GetToDo			*/
-	NOTSUPPORTED,			/*	DeleteAllToDo		*/
-	NOTSUPPORTED,			/*	SetToDo			*/
-	NOTSUPPORTED,			/*	GetToDoStatus		*/
-	NOTSUPPORTED,			/*	PlayTone		*/
-	NOTSUPPORTED,			/*	EnterSecurityCode	*/
-	NOTSUPPORTED,			/*	GetSecurityStatus	*/
-	NOTSUPPORTED, 			/*	GetProfile		*/
-	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
-	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
-	NOTSUPPORTED,			/*	GetSpeedDial		*/
-	NOTSUPPORTED,			/*	SetSpeedDial		*/
-	NOTSUPPORTED,			/*	ResetPhoneSettings	*/
-	NOTSUPPORTED,			/*	SendDTMF		*/
-	NOTSUPPORTED,			/*	GetDisplayStatus	*/
-	NOTSUPPORTED,			/*	SetAutoNetworkLogin	*/
-	NOTSUPPORTED, 			/*	SetProfile		*/
-	NOTSUPPORTED,			/*	GetSIMIMSI		*/
-	NOTIMPLEMENTED,			/*	SetIncomingCall		*/
-    	NOTSUPPORTED,			/*	GetNextCalendar		*/
-	NOTSUPPORTED,   		/*	DelCalendar		*/
-	NOTSUPPORTED,       		/*	AddCalendar		*/
-	NOTSUPPORTED,			/*	GetBatteryCharge	*/
-	NOTSUPPORTED,			/*	GetSignalQuality	*/
-	NOTSUPPORTED,     		/*  	GetCategory 		*/
-        NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/	
-    	NOTSUPPORTED,			/*  	GetFMStation        	*/
-    	NOTSUPPORTED,			/*  	SetFMStation        	*/
-    	NOTSUPPORTED,			/*  	ClearFMStations       	*/
-	NOTIMPLEMENTED,			/*  	SetIncomingUSSD		*/
-	NOTIMPLEMENTED,			/* 	DeleteUserRingtones	*/
-	NOTSUPPORTED,			/* 	ShowStartInfo		*/
-	N3650_GetNextFileFolder,
-	N3650_GetFilePart,
-	NOTIMPLEMENTED,			/*	AddFilePart		*/
-	NOTSUPPORTED,	 		/* 	GetFileSystemStatus	*/
-	NOTIMPLEMENTED,			/*	DeleteFile		*/
-	NOTIMPLEMENTED,			/*	AddFolder		*/
-	NOTSUPPORTED,			/* 	GetMMSSettings		*/
- 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
  	NOTIMPLEMENTED,			/* 	HoldCall 		*/
  	NOTIMPLEMENTED,			/* 	UnholdCall 		*/
  	NOTIMPLEMENTED,			/* 	ConferenceCall 		*/
@@ -355,15 +329,53 @@ GSM_Phone_Functions N3650Phone = {
  	NOTSUPPORTED,			/* 	GetCallDivert		*/
  	NOTSUPPORTED,			/* 	SetCallDivert		*/
  	NOTSUPPORTED,			/* 	CancelAllDiverts	*/
- 	NOTSUPPORTED,			/* 	AddSMSFolder		*/
- 	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
-	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	NOTSUPPORTED,			/* 	GetLocale		*/
-	NOTSUPPORTED,			/* 	SetLocale		*/
+	NOTIMPLEMENTED,			/*	SetIncomingCall		*/
+	NOTIMPLEMENTED,			/*  	SetIncomingUSSD		*/
+	NOTSUPPORTED,			/*	SendDTMF		*/
+	NOTSUPPORTED,			/*	GetRingtone		*/
+	NOTSUPPORTED,			/*	SetRingtone		*/
+	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
+	NOTIMPLEMENTED,			/* 	DeleteUserRingtones	*/
+	NOTSUPPORTED,			/*	PlayTone		*/
+	NOTSUPPORTED,			/*	GetWAPBookmark		*/
+	NOTSUPPORTED,			/* 	SetWAPBookmark 		*/
+	NOTSUPPORTED, 			/* 	DeleteWAPBookmark 	*/
+	NOTSUPPORTED,			/* 	GetWAPSettings 		*/
+	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+ 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetBitmap		*/
+	NOTSUPPORTED,			/*	SetBitmap		*/
+	NOTSUPPORTED,			/*	GetToDoStatus		*/
+	NOTSUPPORTED,			/*	GetToDo			*/
+	NOTSUPPORTED,			/*	GetNextToDo		*/
+	NOTSUPPORTED,			/*	SetToDo			*/
+	NOTSUPPORTED,			/*	AddToDo			*/
+	NOTSUPPORTED,			/*	DeleteToDo		*/
+	NOTSUPPORTED,			/*	DeleteAllToDo		*/
+	NOTIMPLEMENTED,			/*	GetCalendarStatus	*/
+	NOTIMPLEMENTED,			/*	GetCalendar		*/
+    	NOTSUPPORTED,			/*  	GetNextCalendar		*/
+	NOTIMPLEMENTED,			/*	SetCalendar		*/
+	NOTSUPPORTED,			/*	AddCalendar		*/
+	NOTSUPPORTED,			/*	DeleteCalendar		*/
+	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNote			*/
+	NOTSUPPORTED, 			/*	GetProfile		*/
+	NOTSUPPORTED, 			/*	SetProfile		*/
+    	NOTSUPPORTED,			/*  	GetFMStation        	*/
+    	NOTSUPPORTED,			/*  	SetFMStation        	*/
+    	NOTSUPPORTED,			/*  	ClearFMStations       	*/
+	N3650_GetNextFileFolder,
+	N3650_GetFilePart,
+	NOTIMPLEMENTED,			/*	AddFilePart		*/
+	NOTSUPPORTED,	 		/* 	GetFileSystemStatus	*/
+	NOTIMPLEMENTED,			/*	DeleteFile		*/
+	NOTIMPLEMENTED,			/*	AddFolder		*/
+	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };
 
 #endif

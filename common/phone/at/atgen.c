@@ -31,16 +31,17 @@ extern GSM_Error ATGEN_SetRingtone		(GSM_StateMachine *s, GSM_Ringtone *Ringtone
 extern GSM_Error ATGEN_GetBitmap		(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
 extern GSM_Error ATGEN_SetBitmap		(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
 extern GSM_Error SIEMENS_GetNextCalendar	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start);
-extern GSM_Error SIEMENS_AddCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past);
+extern GSM_Error SIEMENS_AddCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 extern GSM_Error SIEMENS_DelCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 
 extern GSM_Error SONYERIC_GetNextCalendar	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start);
-extern GSM_Error SONYERIC_GetToDo		(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refresh);
+extern GSM_Error SONYERIC_GetNextToDo		(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start);
 extern GSM_Error SONYERIC_GetToDoStatus		(GSM_StateMachine *s, GSM_ToDoStatus *status);
-extern GSM_Error SONYERIC_AddCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past);
-extern GSM_Error SONYERIC_SetToDo		(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
+extern GSM_Error SONYERIC_AddCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+extern GSM_Error SONYERIC_AddToDo		(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
 extern GSM_Error SONYERIC_DeleteAllToDo		(GSM_StateMachine *s);
 extern GSM_Error SONYERIC_DelCalendarNote	(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+extern GSM_Error SONYERIC_GetCalendarStatus	(GSM_StateMachine *s, GSM_CalendarStatus *Status);
 
 typedef struct {
     int     Number;
@@ -987,7 +988,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 	return GE_UNKNOWNRESPONSE;
 }
 
-GSM_Error ATGEN_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
+GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 {
 	unsigned char	req[20], folderid;
 	GSM_Error	error;
@@ -1017,7 +1018,7 @@ GSM_Error ATGEN_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	return error;
 }
 
-GSM_Error ATGEN_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
+GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error 		error;
@@ -1142,7 +1143,7 @@ GSM_Error ATGEN_GetIMEI (GSM_StateMachine *s)
 	return GSM_WaitFor (s, "AT+CGSN\r", 8, 0x00, 2, ID_GetIMEI);
 }
 
-GSM_Error ATGEN_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	char *start;
 
@@ -1278,7 +1279,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 	return GE_NONE;
 }
 
-GSM_Error ATGEN_SaveSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
+GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	GSM_Error 		error;
 	int			state,Replies,reply, current, current2;
@@ -1287,7 +1288,7 @@ GSM_Error ATGEN_SaveSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	unsigned char		*statetxt;
 
 	/* This phone supports only sent/unsent messages on SIM */
-	if (strcmp(s->Phone.Data.Model,"ONE TOUCH 500")==0) {
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSONLYSENT)) {
 		if (sms->Folder != 2) {
 			smprintf(s, "This phone supports only folder = 2!\n");
 			return GE_NOTSUPPORTED;
@@ -1423,7 +1424,7 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return GE_UNKNOWNRESPONSE;
 }
 
-GSM_Error ATGEN_SendSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
+GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	GSM_Error 		error,error2;
 	int			current, current2, Replies;
@@ -1480,7 +1481,7 @@ GSM_Error ATGEN_ReplyGetDateTime_Alarm(GSM_Protocol_Message msg, GSM_StateMachin
 			if (Data->RequestID == ID_GetDateTime) {
 				ATGEN_DecodeDateTime(Data->DateTime, msg.Buffer+current);
 			} else {
-				ATGEN_DecodeDateTime(Data->Alarm, msg.Buffer+current);
+				ATGEN_DecodeDateTime(&(Data->Alarm->DateTime), msg.Buffer+current);
 			}
 			return GE_NONE;
 		}
@@ -1513,11 +1514,14 @@ GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetDateTime);
 }
 
-GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int alarm_number)
+GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
-	if (alarm_number!=1) return GE_NOTSUPPORTED;
+	if (alarm->Location != 1) return GE_NOTSUPPORTED;
 
-	s->Phone.Data.Alarm=alarm;
+	alarm->Repeating = true;
+	alarm->Text[0] = 0; alarm->Text[1] = 0;
+
+	s->Phone.Data.Alarm = alarm;
 	smprintf(s, "Getting alarm\n");
 	return GSM_WaitFor (s, "AT+CALA?\r", 9, 0x00, 4, ID_GetAlarm);
 }
@@ -1993,7 +1997,7 @@ GSM_Error ATGEN_SetPBKCharset(GSM_StateMachine *s, bool PreferUnicode)
 GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
- 	GSM_PhonebookEntry	*Memory = s->Phone.Data.Memory;
+ 	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
 	int			current;
 	unsigned char		buffer[500],buffer2[500];
 
@@ -2010,6 +2014,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		smprintf(s, "Number: %s\n",buffer);
  		Memory->EntriesNum++;
  		Memory->Entries[0].EntryType=PBK_Number_General;
+ 		Memory->Entries[0].VoiceTag =0;
  		EncodeUnicode(Memory->Entries[0].Text,buffer+1,strlen(buffer)-2);
 		/* Number format */
 		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
@@ -2060,7 +2065,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return GE_UNKNOWNRESPONSE;
 }
 
-GSM_Error ATGEN_GetMemory (GSM_StateMachine *s, GSM_PhonebookEntry *entry)
+GSM_Error ATGEN_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error 		error;
 	unsigned char		req[20];
@@ -2107,6 +2112,30 @@ GSM_Error ATGEN_GetMemory (GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetMemory);
+}
+
+GSM_Error ATGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
+{
+	GSM_Error 		error;
+	unsigned char		req[100];
+	GSM_MemoryStatus	Status;
+	int			i,entries;
+
+	error = ATGEN_SetPBKMemory(s, type);
+	if (error != GE_NONE) return error;
+
+	error = ATGEN_GetMemoryInfo(s, &Status);
+	if (error != GE_NONE) return error;
+
+	entries = Status.Used + Status.Free;
+
+	smprintf(s, "Deleting all phonebook entries\n");
+	for (i = 1; i < entries; i++) {
+		sprintf(req, "AT+CPBW=%d\r",i);
+		error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetMemory);
+		if (error != GE_NONE) return error;
+	}
+	return GE_NONE;
 }
 
 GSM_Error ATGEN_ReplyDialVoice(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2338,7 +2367,7 @@ GSM_Error ATGEN_ReplyDeleteSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine
 	return GE_UNKNOWNRESPONSE;
 }
 
-GSM_Error ATGEN_DeleteSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
+GSM_Error ATGEN_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	unsigned char	req[20], folderid;
 	GSM_Error	error;
@@ -2391,7 +2420,23 @@ GSM_Error ATGEN_ReplySetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return GE_UNKNOWNRESPONSE;
 }
 
-GSM_Error ATGEN_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
+GSM_Error ATGEN_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	GSM_Error 		error;
+	unsigned char		req[100];
+
+	if (entry->Location < 1) return GE_INVALIDLOCATION;
+
+	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
+	if (error != GE_NONE) return error;
+
+	sprintf(req, "AT+CPBW=%d\r",entry->Location);
+
+	smprintf(s, "Deleting phonebook entry\n");
+	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetMemory);
+}
+
+GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 #define REQUEST_SIZE	200
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -2399,21 +2444,14 @@ GSM_Error ATGEN_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 	GSM_Error 		error;
 	unsigned char		req[REQUEST_SIZE + 1],name[200],number[200];
 	int			length;
-	GSM_MemoryStatus	Status;
 
-	error=ATGEN_SetPBKMemory(s, entry->MemoryType);
+	if (entry->Location == 0) return GE_INVALIDLOCATION;
+
+	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
 	if (error != GE_NONE) return error;
 
-	error=ATGEN_SetPBKCharset(s, entry->PreferUnicode);
+	error = ATGEN_SetPBKCharset(s, entry->PreferUnicode);
 	if (error != GE_NONE) return error;
-
-	if (entry->Location == 0) {
-		error = ATGEN_GetMemoryInfo(s, &Status);
-		if (error != GE_NONE) return error;
-		if (Priv->NextMemoryEntry == 0) return GE_FULL;
-		entry->Location = Priv->NextMemoryEntry;
-	}
-
 
 	GSM_PhonebookFindDefaultNameNumberGroup(entry, &Name, &Number, &Group);
 
@@ -2467,6 +2505,27 @@ GSM_Error ATGEN_SetMemory(GSM_StateMachine *s, GSM_PhonebookEntry *entry)
 	smprintf(s, "Writing phonebook entry\n");
 	return GSM_WaitFor (s, req, length, 0x00, 4, ID_SetMemory);
 #undef REQUEST_SIZE
+}
+
+GSM_Error ATGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	if (entry->Location == 0) return GE_INVALIDLOCATION;
+	return ATGEN_PrivSetMemory(s, entry);
+}
+
+GSM_Error ATGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	GSM_Error 		error;
+	GSM_MemoryStatus	Status;
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+
+	/* Find out empty location */
+	error = ATGEN_GetMemoryInfo(s, &Status);
+	if (error != GE_NONE) return error;
+	if (Priv->NextMemoryEntry == 0) return GE_FULL;
+	entry->Location = Priv->NextMemoryEntry;
+
+	return ATGEN_PrivSetMemory(s, entry);
 }
 
 /* Use ATGEN_ExtractOneParameter ?? */
@@ -2616,6 +2675,7 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 
 	s->Phone.Data.PressKey = true;
 	smprintf(s, "Pressing key\n");
+	/* FIXME: Is this okay? */
 	return GSM_WaitFor (s, "AT+CKPD=\"1\"\r", 12, 0x00, 4, ID_PressKey);
 }
 
@@ -2740,12 +2800,12 @@ static GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
 	return GE_NONE;
 }
 
-GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
+GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_AddCalendarNote(s, Note, Past);
-	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_AddCalendarNote(s, Note, Past);
+	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_AddCalendarNote(s, Note);
+	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_AddCalendarNote(s, Note);
 	return GE_NOTSUPPORTED;
 }
 
@@ -2774,7 +2834,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetFirmwareCGMR,	"AT+CGMR"		,0x00,0x00,ID_GetFirmware	 },
 {ATGEN_ReplyGetFirmwareATI,	"ATI"			,0x00,0x00,ID_GetFirmware	 },
 {ATGEN_ReplyGetIMEI,		"AT+CGSN"		,0x00,0x00,ID_GetIMEI	 	 },
-{ATGEN_ReplySaveSMSMessage,	"AT+CMGW"		,0x00,0x00,ID_SaveSMSMessage	 },
+{ATGEN_ReplyAddSMSMessage,	"AT+CMGW"		,0x00,0x00,ID_SaveSMSMessage	 },
 {ATGEN_GenericReply,		"AT+CSMP"		,0x00,0x00,ID_SetSMSParameters	 },
 {ATGEN_ReplySendSMS,		"AT+CMGS"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,		"AT+CSCA"		,0x00,0x00,ID_SetSMSC		 },
@@ -2868,87 +2928,61 @@ GSM_Phone_Functions ATGENPhone = {
 	ATGEN_Initialise,
 	ATGEN_Terminate,
 	ATGEN_DispatchMessage,
+	NOTSUPPORTED,			/* 	ShowStartInfo		*/
+	ATGEN_GetManufacturer,
 	ATGEN_GetModel,
 	ATGEN_GetFirmware,
 	ATGEN_GetIMEI,
+	NOTSUPPORTED,			/*	GetOriginalIMEI		*/
+	NOTSUPPORTED,			/*	GetManufactureMonth	*/
+	NOTSUPPORTED,			/*	GetProductCode		*/
+	NOTSUPPORTED,			/*	GetHardware		*/
+	NOTSUPPORTED,			/*	GetPPM			*/
+	ATGEN_GetSIMIMSI,
 	ATGEN_GetDateTime,
+	ATGEN_SetDateTime,
 	ATGEN_GetAlarm,
-	ATGEN_GetMemory,
-	ATGEN_GetMemoryStatus,
-	ATGEN_GetSMSC,
-	ATGEN_GetSMSMessage,
-	ATGEN_GetSMSFolders,
-	ATGEN_GetManufacturer,
-	ATGEN_GetNextSMSMessage,
-	ATGEN_GetSMSStatus,
-	NOTIMPLEMENTED,			/* 	SetIncomingSMS		*/
-	ATGEN_GetNetworkInfo,
+	NOTIMPLEMENTED,			/*	SetAlarm		*/
+	NOTSUPPORTED,			/* 	GetLocale		*/
+	NOTSUPPORTED,			/* 	SetLocale		*/
+	ATGEN_PressKey,
 	ATGEN_Reset,
+	ATGEN_ResetPhoneSettings,
+	ATGEN_EnterSecurityCode,
+	ATGEN_GetSecurityStatus,
+	ATGEN_GetDisplayStatus,
+	ATGEN_SetAutoNetworkLogin,
+	ATGEN_GetBatteryCharge,
+	ATGEN_GetSignalQuality,
+	ATGEN_GetNetworkInfo,
+ 	NOTSUPPORTED,       		/*  	GetCategory 		*/
+ 	NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
+	ATGEN_GetMemoryStatus,
+	ATGEN_GetMemory,
+	NOTSUPPORTED,			/*	GetNextMemory		*/
+	ATGEN_SetMemory,
+	ATGEN_AddMemory,
+	ATGEN_DeleteMemory,
+	ATGEN_DeleteAllMemory,
+	NOTSUPPORTED,			/*	GetSpeedDial		*/
+	NOTSUPPORTED,			/*	SetSpeedDial		*/
+	ATGEN_GetSMSC,
+	ATGEN_SetSMSC,
+	ATGEN_GetSMSStatus,
+	ATGEN_GetSMS,
+	ATGEN_GetNextSMS,
+	NOTSUPPORTED,			/*	SetSMS			*/
+	ATGEN_AddSMS,
+	ATGEN_DeleteSMS,
+	ATGEN_SendSMS,
+	NOTIMPLEMENTED,			/* 	SetIncomingSMS		*/
+	NOTIMPLEMENTED,			/*	SetIncomingCB		*/
+	ATGEN_GetSMSFolders,
+ 	NOTSUPPORTED,			/* 	AddSMSFolder		*/
+ 	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
 	ATGEN_DialVoice,
 	ATGEN_AnswerCall,
 	ATGEN_CancelCall,
-	ATGEN_GetRingtone,
-	NOTSUPPORTED,			/* 	GetWAPBookmark		*/
-	ATGEN_GetBitmap,		/* 	GetBitmap		*/
-	ATGEN_SetRingtone,
-	ATGEN_SaveSMSMessage,
-	ATGEN_SendSMSMessage,
-	ATGEN_SetDateTime,
-	NOTIMPLEMENTED,			/*	SetAlarm		*/
-	ATGEN_SetBitmap,		/*	SetBitmap		*/
-	ATGEN_SetMemory,
-	ATGEN_DeleteSMSMessage,
-	NOTSUPPORTED,			/* 	SetWAPBookmark 		*/
-	NOTSUPPORTED,	 		/* 	DeleteWAPBookmark 	*/
-	NOTSUPPORTED,			/* 	GetWAPSettings 		*/
-	NOTIMPLEMENTED,			/*	SetIncomingCB		*/
-	ATGEN_SetSMSC,
-	NOTSUPPORTED,			/*	GetManufactureMonth	*/
-	NOTSUPPORTED,			/*	GetProductCode		*/
-	NOTSUPPORTED,			/*	GetOriginalIMEI		*/
-	NOTSUPPORTED,			/*	GetHardware		*/
-	NOTSUPPORTED,			/*	GetPPM			*/
-	ATGEN_PressKey,
-	SONYERIC_GetToDo,
-	SONYERIC_DeleteAllToDo,
-	SONYERIC_SetToDo,
-	SONYERIC_GetToDoStatus,
-	NOTSUPPORTED,			/*	PlayTone		*/
-	ATGEN_EnterSecurityCode,
-	ATGEN_GetSecurityStatus,
-	NOTSUPPORTED, 			/*	GetProfile		*/
-	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
-	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
-	NOTSUPPORTED,			/*	GetSpeedDial		*/
-	NOTSUPPORTED,			/*	SetSpeedDial		*/
-	ATGEN_ResetPhoneSettings,
-	ATGEN_SendDTMF,
-	ATGEN_GetDisplayStatus,
-	ATGEN_SetAutoNetworkLogin,
-	NOTSUPPORTED, 			/*	SetProfile		*/
-	ATGEN_GetSIMIMSI,
-	NONEFUNCTION,			/*	SetIncomingCall		*/
-    	ATGEN_GetNextCalendar,
-	ATGEN_DelCalendarNote,
-	ATGEN_AddCalendarNote,
-	ATGEN_GetBatteryCharge,
-	ATGEN_GetSignalQuality,
- 	NOTSUPPORTED,       		/*  	GetCategory 		*/
- 	NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
-    	NOTSUPPORTED,			/*  	GetFMStation        	*/
-    	NOTSUPPORTED,			/* 	SetFMStation        	*/
-    	NOTSUPPORTED,			/* 	ClearFMStations       	*/
-	NOTSUPPORTED,			/* 	SetIncomingUSSD		*/
-	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
-	NOTSUPPORTED,			/* 	ShowStartInfo		*/
-	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
-	NOTSUPPORTED,			/* 	GetFilePart		*/
-	NOTSUPPORTED,			/* 	AddFile			*/
-	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
-	NOTSUPPORTED,			/* 	DeleteFile		*/
-	NOTSUPPORTED,			/* 	AddFolder		*/
-	NOTSUPPORTED,			/* 	GetMMSSettings		*/
-	NOTSUPPORTED,			/* 	SetMMSSettings		*/
  	NOTSUPPORTED,			/* 	HoldCall 		*/
  	NOTSUPPORTED,			/* 	UnholdCall 		*/
  	NOTSUPPORTED,			/* 	ConferenceCall 		*/
@@ -2958,15 +2992,53 @@ GSM_Phone_Functions ATGENPhone = {
  	NOTSUPPORTED,			/* 	GetCallDivert		*/
  	NOTSUPPORTED,			/* 	SetCallDivert		*/
  	NOTSUPPORTED,			/* 	CancelAllDiverts	*/
- 	NOTSUPPORTED,			/* 	AddSMSFolder		*/
- 	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
-	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	NOTSUPPORTED,			/* 	GetLocale		*/
-	NOTSUPPORTED,			/* 	SetLocale		*/
+	NONEFUNCTION,			/*	SetIncomingCall		*/
+	NOTSUPPORTED,			/* 	SetIncomingUSSD		*/
+	ATGEN_SendDTMF,
+	ATGEN_GetRingtone,
+	ATGEN_SetRingtone,
+	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
+	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
+	NOTSUPPORTED,			/*	PlayTone		*/
+	NOTSUPPORTED,			/* 	GetWAPBookmark		*/
+	NOTSUPPORTED,			/* 	SetWAPBookmark 		*/
+	NOTSUPPORTED,	 		/* 	DeleteWAPBookmark 	*/
+	NOTSUPPORTED,			/* 	GetWAPSettings 		*/
+	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	ATGEN_GetBitmap,		/* 	GetBitmap		*/
+	ATGEN_SetBitmap,		/*	SetBitmap		*/
+	SONYERIC_GetToDoStatus,
+	NOTSUPPORTED,			/*	GetToDo			*/
+	SONYERIC_GetNextToDo,
+	NOTSUPPORTED,			/*	SetToDo			*/
+	SONYERIC_AddToDo,
+	NOTSUPPORTED,			/*	DeleteToDo		*/
+	SONYERIC_DeleteAllToDo,
+	SONYERIC_GetCalendarStatus,
+	NOTIMPLEMENTED,			/*	GetCalendar		*/
+    	ATGEN_GetNextCalendar,
+	NOTIMPLEMENTED,			/*	SetCalendar		*/
+	ATGEN_AddCalendarNote,
+	ATGEN_DelCalendarNote,
+	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNote			*/
+	NOTSUPPORTED, 			/*	GetProfile		*/
+	NOTSUPPORTED, 			/*	SetProfile		*/
+    	NOTSUPPORTED,			/*  	GetFMStation        	*/
+    	NOTSUPPORTED,			/* 	SetFMStation        	*/
+    	NOTSUPPORTED,			/* 	ClearFMStations       	*/
+	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/* 	GetFilePart		*/
+	NOTSUPPORTED,			/* 	AddFile			*/
+	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
+	NOTSUPPORTED,			/* 	DeleteFile		*/
+	NOTSUPPORTED,			/* 	AddFolder		*/
+	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };
 
 #endif

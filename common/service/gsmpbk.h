@@ -69,7 +69,7 @@ typedef enum {
 	PBK_PictureID
 } GSM_EntryType;
 
-/* Limits for sizing of array in GSM_PhonebookEntry.
+/* Limits for sizing of array in GSM_MemoryEntry.
  * Individual handsets may not support these lengths
  * so they have their own limits set.
  */
@@ -82,7 +82,7 @@ typedef struct {
 	GSM_DateTime		Date;
 	int			Number;
 	int			VoiceTag;
-} GSM_SubPhonebookEntry;
+} GSM_SubMemoryEntry;
 
 /* Define datatype for phonebook entry,
  * used for getting/writing phonebook entries.
@@ -92,21 +92,21 @@ typedef struct {
 	int			Location;			/* Location */
 	int			EntriesNum;			/* Number of entries */
 	bool			PreferUnicode;			/* Whether to prefer unicode for storing this entry */
-	GSM_SubPhonebookEntry	Entries[GSM_PHONEBOOK_ENTRIES];
-} GSM_PhonebookEntry;
+	GSM_SubMemoryEntry	Entries[GSM_PHONEBOOK_ENTRIES];
+} GSM_MemoryEntry;
 
 typedef enum {
 	Nokia_VCard10 = 1,
 	Nokia_VCard21
 } GSM_VCardVersion;
 
-void GSM_PhonebookFindDefaultNameNumberGroup(GSM_PhonebookEntry *entry, int *Name, int *Number, int *Group);
-unsigned char *GSM_PhonebookGetEntryName (GSM_PhonebookEntry *entry);
+void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, int *Number, int *Group);
+unsigned char *GSM_PhonebookGetEntryName (GSM_MemoryEntry *entry);
 
-void 	  GSM_EncodeVCARD(char *Buffer, int *Length, GSM_PhonebookEntry *pbk, bool header, GSM_VCardVersion Version);
-GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_PhonebookEntry *Pbk, GSM_VCardVersion Version);
+void 	  GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool header, GSM_VCardVersion Version);
+GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version);
 
-void DecodeVCARD21Text(char *VCard, GSM_PhonebookEntry *pbk);
+void DecodeVCARD21Text(char *VCard, GSM_MemoryEntry *pbk);
 
 /* This define speed dialing entries. */
 typedef struct {

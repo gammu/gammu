@@ -980,7 +980,8 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)
 	{"BE5", 	  "ONE TOUCH 500","",				   {F_SMSONLYSENT,F_BROKENCPBS,0}},
-	{"BF5", 	  "ONE TOUCH 715","",				   {F_SMSONLYSENT,F_BROKENCPBS,0}},
+	{"BF4",		  "ONE TOUCH 535","ALCATEL OT535",		   {0}},
+	{"BF5", 	  "ONE TOUCH 715","ALCATEL OT715",		   {0}},
 #endif
 	{"unknown",	  ""      ,"",           {0}}
 };

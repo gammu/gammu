@@ -16,8 +16,7 @@ extern GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s);
 
 GSM_Error ATGEN_CMS35ReplySetFunction (GSM_Protocol_Message msg, GSM_StateMachine *s,char *function)
 {
-	if (s->Protocol.Data.AT.EditMode)
-	{
+	if (s->Protocol.Data.AT.EditMode) {
 	    s->Protocol.Data.AT.EditMode = false;
 	    return GE_NONE;
 	}
@@ -127,7 +126,7 @@ GSM_Error ATGEN_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	unsigned char 	buffer[4096];
 	int 		length;
-	GSM_Error		error;
+	GSM_Error	error;
 	
 	if (s->Phone.Data.Priv.ATGEN.Manufacturer!=AT_Siemens) return GE_NOTSUPPORTED;
 	if (Bitmap->Type!=GSM_OperatorLogo) return GE_NOTSUPPORTED;
@@ -268,7 +267,7 @@ GSM_Error SIEMENS_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_DeleteCalendarNote);
 }
 
-GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool Past)
+GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
@@ -277,8 +276,6 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 
 	if (Priv->Manufacturer!=AT_Siemens) return GE_NOTSUPPORTED;
 //	if (Note->Location==0x00) return GE_INVALIDLOCATION;	
-
-	if (!Past && IsCalendarNoteFromThePast(Note)) return GE_NONE;
 
 	s->Phone.Data.Cal = Note;
 	error=GSM_EncodeVCALENDAR(req,&size,Note,true,Siemens_VCalendar);
@@ -289,7 +286,7 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 GSM_Error ATGEN_SL45ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
- 	GSM_PhonebookEntry	*Memory = s->Phone.Data.Memory;
+ 	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
 	unsigned char		buffer[500],buffer2[500];
 
 	switch (Priv->ReplyState) {
@@ -300,6 +297,7 @@ GSM_Error ATGEN_SL45ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s
  		Memory->EntriesNum = 0;
 		Memory->PreferUnicode = false;
                 DecodeVCARD21Text(buffer2, Memory);
+		if (Memory->EntriesNum == 0) return GE_EMPTY;
 		return GE_NONE;
 	case AT_Reply_Error:
                 smprintf(s, "Error - too high location ?\n");

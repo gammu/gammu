@@ -220,7 +220,7 @@ static void SaveVCalDate(FILE *file, GSM_DateTime *dt, bool UseUnicode)
 
 /* ---------------------- backup files ------------------------------------- */
 
-static void SavePbkEntry(FILE *file, GSM_PhonebookEntry *Pbk, bool UseUnicode)
+static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 {
 	bool	text;
 	char	buffer[1000];
@@ -466,7 +466,7 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
 		case CAL_LOCATION:
-			SaveBackupText(file, "Location", Note->Entries[i].Text, UseUnicode);
+			SaveBackupText(file, "EventLocation", Note->Entries[i].Text, UseUnicode);
 			break;
 		case CAL_CONTACTID:
 			sprintf(buffer, "ContactID = %d%c%c",Note->Entries[i].Number,13,10);
@@ -1127,7 +1127,7 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	return GE_NONE;
 }
 
-static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_PhonebookEntry *Pbk, bool UseUnicode)
+static void ReadPbkEntry(CFG_Header *file_info, char *section, GSM_MemoryEntry *Pbk, bool UseUnicode)
 {
 	unsigned char		buffer[10000];
 	char			*readvalue;
@@ -1367,7 +1367,7 @@ static void ReadCalendarEntry(CFG_Header *file_info, char *section, GSM_Calendar
 		note->Entries[note->EntriesNum].EntryType = CAL_PRIVATE;
 		note->EntriesNum++;
 	}
-	sprintf(buffer,"Location");
+	sprintf(buffer,"EventLocation");
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_LOCATION;
 		note->EntriesNum++;
@@ -2141,7 +2141,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	CFG_Header		*file_info, *h;
 	char			buffer[100], *readvalue;
 	int			num;
-	GSM_PhonebookEntry 	PBK;
+	GSM_MemoryEntry 	PBK;
 	bool			found;
 
 	file_info = CFG_ReadFile(FileName, UseUnicode);
@@ -2208,7 +2208,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			readvalue = ReadCFGText(file_info, h->section, "Location", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
-				backup->PhonePhonebook[num] = malloc(sizeof(GSM_PhonebookEntry));
+				backup->PhonePhonebook[num] = malloc(sizeof(GSM_MemoryEntry));
 			        if (backup->PhonePhonebook[num] == NULL) return GE_MOREMEMORY;
 				backup->PhonePhonebook[num + 1] = NULL;
 			} else {
@@ -2227,9 +2227,9 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 		if (backup->PhonePhonebook[num] == NULL) break;
 		if (backup->PhonePhonebook[num+1] != NULL) {
 			if (backup->PhonePhonebook[num+1]->Location < backup->PhonePhonebook[num]->Location) {
-				memcpy(&PBK,backup->PhonePhonebook[num+1],sizeof(GSM_PhonebookEntry));
-				memcpy(backup->PhonePhonebook[num+1],backup->PhonePhonebook[num],sizeof(GSM_PhonebookEntry));
-				memcpy(backup->PhonePhonebook[num],&PBK,sizeof(GSM_PhonebookEntry));
+				memcpy(&PBK,backup->PhonePhonebook[num+1],sizeof(GSM_MemoryEntry));
+				memcpy(backup->PhonePhonebook[num+1],backup->PhonePhonebook[num],sizeof(GSM_MemoryEntry));
+				memcpy(backup->PhonePhonebook[num],&PBK,sizeof(GSM_MemoryEntry));
 				num = 0;
 				continue;
 			}
@@ -2249,7 +2249,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			readvalue = ReadCFGText(file_info, h->section, "Location", UseUnicode);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SIMPHONEBOOK) {
-				backup->SIMPhonebook[num] = malloc(sizeof(GSM_PhonebookEntry));
+				backup->SIMPhonebook[num] = malloc(sizeof(GSM_MemoryEntry));
 			        if (backup->SIMPhonebook[num] == NULL) return GE_MOREMEMORY;
 				backup->SIMPhonebook[num + 1] = NULL;
 			} else {
@@ -2267,9 +2267,9 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 		if (backup->SIMPhonebook[num] == NULL) break;
 		if (backup->SIMPhonebook[num+1] != NULL) {
 			if (backup->SIMPhonebook[num+1]->Location < backup->SIMPhonebook[num]->Location) {
-				memcpy(&PBK,backup->SIMPhonebook[num+1],sizeof(GSM_PhonebookEntry));
-				memcpy(backup->SIMPhonebook[num+1],backup->SIMPhonebook[num],sizeof(GSM_PhonebookEntry));
-				memcpy(backup->SIMPhonebook[num],&PBK,sizeof(GSM_PhonebookEntry));
+				memcpy(&PBK,backup->SIMPhonebook[num+1],sizeof(GSM_MemoryEntry));
+				memcpy(backup->SIMPhonebook[num+1],backup->SIMPhonebook[num],sizeof(GSM_MemoryEntry));
+				memcpy(backup->SIMPhonebook[num],&PBK,sizeof(GSM_MemoryEntry));
 				num = 0;
 				continue;
 			}

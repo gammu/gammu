@@ -269,87 +269,61 @@ GSM_Phone_Functions N9210Phone = {
 	N9210_Initialise,
 	PHONE_Terminate,
 	GSM_DispatchMessage,
+	NOTSUPPORTED,			/* 	ShowStartInfo		*/
+	NOKIA_GetManufacturer,
 	DCT3DCT4_GetModel,
 	DCT3DCT4_GetFirmware,
 	DCT3_GetIMEI,
+	DCT3_GetOriginalIMEI,
+	DCT3_GetManufactureMonth,
+	DCT3_GetProductCode,
+	DCT3_GetHardware,
+	DCT3_GetPPM,
+	NOTSUPPORTED,			/*	GetSIMIMSI		*/
 	N71_92_GetDateTime,
+	N71_92_SetDateTime,
 	NOTIMPLEMENTED,			/*	GetAlarm		*/
-	NOTIMPLEMENTED,			/*	GetMemory		*/
-	NOTIMPLEMENTED,			/*	GetMemoryStatus		*/
-	DCT3_GetSMSC,
-	NOTIMPLEMENTED,			/*	GetSMSMessage		*/
-	NOTIMPLEMENTED,			/*	GetSMSFolders		*/
-	NOKIA_GetManufacturer,
-	NOTIMPLEMENTED,			/*	GetNextSMSMessage	*/
-	NOTIMPLEMENTED,			/*	GetSMSStatus		*/
-	N9210_SetIncomingSMS,
-	DCT3_GetNetworkInfo,
+	NOTIMPLEMENTED,			/*	SetAlarm		*/
+	NOTSUPPORTED,			/* 	GetLocale		*/
+	NOTSUPPORTED,			/* 	SetLocale		*/
+	NOTIMPLEMENTED,			/*	PressKey		*/
 	NOTIMPLEMENTED,			/*	Reset			*/
+	NOTIMPLEMENTED,			/*	ResetPhoneSettings	*/
+	NOTSUPPORTED,			/*	EnterSecurityCode	*/
+	NOTSUPPORTED,			/*	GetSecurityStatus	*/
+	NOTSUPPORTED,			/*	GetDisplayStatus	*/
+	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
+	N71_92_GetBatteryCharge,
+	N71_92_GetSignalQuality,
+	DCT3_GetNetworkInfo,
+	NOTSUPPORTED,       		/*  	GetCategory 		*/
+        NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
+	NOTIMPLEMENTED,			/*	GetMemoryStatus		*/
+	NOTIMPLEMENTED,			/*	GetMemory		*/
+	NOTIMPLEMENTED,			/*	GetNextMemory		*/
+	NOTIMPLEMENTED,			/*	SetMemory		*/
+	NOTIMPLEMENTED,			/*	AddMemory		*/
+	NOTIMPLEMENTED,			/*	DeleteMemory		*/
+	NOTIMPLEMENTED,			/*	DeleteAllMemory		*/
+	NOTIMPLEMENTED,			/*	GetSpeedDial		*/
+	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
+	DCT3_GetSMSC,
+	DCT3_SetSMSC,			/* 	FIXME: test it		*/
+	NOTIMPLEMENTED,			/*	GetSMSStatus		*/
+	NOTIMPLEMENTED,			/*	GetSMS			*/
+	NOTIMPLEMENTED,			/*	GetNextSMS		*/
+	NOTIMPLEMENTED,			/*	SetSMS			*/
+	NOTIMPLEMENTED,			/*	AddSMS			*/
+	NOTIMPLEMENTED,			/* 	DeleteSMS 		*/
+	DCT3_SendSMSMessage,
+	N9210_SetIncomingSMS,
+	DCT3_SetIncomingCB,
+	NOTIMPLEMENTED,			/*	GetSMSFolders		*/
+ 	NOTSUPPORTED,			/* 	AddSMSFolder		*/
+ 	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
 	DCT3_DialVoice,
 	N9210_AnswerCall,
 	DCT3_CancelCall,
-	NOTIMPLEMENTED,			/*	GetRingtone		*/
-	NOTIMPLEMENTED,			/*	GetWAPBookmark		*/
-	N9210_GetBitmap,
-	NOTIMPLEMENTED,			/*	SetRingtone		*/
-	NOTIMPLEMENTED,			/*	SaveSMSMessage		*/
-	DCT3_SendSMSMessage,
-	N71_92_SetDateTime,
-	NOTIMPLEMENTED,			/*	SetAlarm		*/
-	N9210_SetBitmap,
-	NOTIMPLEMENTED,			/* 	SetMemory 		*/
-	NOTIMPLEMENTED,			/* 	DeleteSMS 		*/
-	NOTIMPLEMENTED,			/* 	SetWAPBookmark 		*/
-	NOTIMPLEMENTED, 		/* 	DeleteWAPBookmark 	*/
-	NOTIMPLEMENTED,			/* 	GetWAPSettings 		*/
-	DCT3_SetIncomingCB,
-	DCT3_SetSMSC,			/* 	FIXME: test it		*/
-	DCT3_GetManufactureMonth,
-	DCT3_GetProductCode,
-	DCT3_GetOriginalIMEI,
-	DCT3_GetHardware,
-	DCT3_GetPPM,
-	NOTIMPLEMENTED,			/*	PressKey		*/
-	NOTSUPPORTED,			/*	GetToDo			*/
-	NOTSUPPORTED,			/*	DeleteAllToDo		*/
-	NOTSUPPORTED,			/*	SetToDo			*/
-	NOTSUPPORTED,			/*	GetToDoStatus		*/
-	NOTSUPPORTED,			/*	PlayTone		*/
-	NOTSUPPORTED,			/*	EnterSecurityCode	*/
-	NOTSUPPORTED,			/*	GetSecurityStatus	*/
-	NOTIMPLEMENTED, 		/*	GetProfile		*/
-	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
-	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
-	NOTIMPLEMENTED,			/*	GetSpeedDial		*/
-	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
-	NOTIMPLEMENTED,			/*	ResetPhoneSettings	*/
-	NOTSUPPORTED,			/*	SendDTMF		*/
-	NOTSUPPORTED,			/*	GetDisplayStatus	*/
-	NOTIMPLEMENTED,			/*	SetAutoNetworkLogin	*/
-	NOTSUPPORTED, 			/*	SetProfile		*/
-	NOTSUPPORTED,			/*	GetSIMIMSI		*/
-	NOTSUPPORTED,			/*	SetIncomingCall		*/
-    	NOTSUPPORTED,			/*  	GetNextCalendar		*/
-	NOTSUPPORTED,			/*	DelCalendar		*/
-	NOTSUPPORTED,			/*	AddCalendar		*/
-	N71_92_GetBatteryCharge,
-	N71_92_GetSignalQuality,
-	NOTSUPPORTED,       		/*  	GetCategory 		*/
-        NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
-    	NOTSUPPORTED,			/*  	GetFMStation        	*/
-    	NOTSUPPORTED,			/*  	SetFMStation        	*/
-        NOTSUPPORTED,           	/*      ClearFMStations         */
-        NOTIMPLEMENTED,         	/*      SetIncomingUSSD         */
-	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
-	NOTSUPPORTED,			/* 	ShowStartInfo		*/
-	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
-	NOTSUPPORTED,			/*	GetFilePart		*/
-	NOTSUPPORTED,			/* 	AddFile			*/
-	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
-	NOTSUPPORTED,			/*	DeleteFile		*/
-	NOTSUPPORTED,			/*	AddFolder		*/
-	NOTSUPPORTED,			/* 	GetMMSSettings		*/
-	NOTSUPPORTED,			/* 	SetMMSSettings		*/
  	NOTSUPPORTED,			/* 	HoldCall 		*/
  	NOTSUPPORTED,			/* 	UnholdCall 		*/
  	NOTSUPPORTED,			/* 	ConferenceCall 		*/
@@ -359,15 +333,53 @@ GSM_Phone_Functions N9210Phone = {
  	NOTSUPPORTED,			/* 	GetCallDivert		*/
  	NOTSUPPORTED,			/* 	SetCallDivert		*/
  	NOTSUPPORTED,			/* 	CancelAllDiverts	*/
- 	NOTSUPPORTED,			/* 	AddSMSFolder		*/
- 	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
-	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
-	NOTSUPPORTED,			/* 	SetGPRSAccessPoint	*/
-	NOTSUPPORTED,			/* 	GetLocale		*/
-	NOTSUPPORTED,			/* 	SetLocale		*/
+	NOTSUPPORTED,			/*	SetIncomingCall		*/
+        NOTIMPLEMENTED,         	/*      SetIncomingUSSD         */
+	NOTSUPPORTED,			/*	SendDTMF		*/
+	NOTIMPLEMENTED,			/*	GetRingtone		*/
+	NOTIMPLEMENTED,			/*	SetRingtone		*/
+	NOTSUPPORTED,			/*	GetRingtonesInfo	*/
+	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
+	NOTSUPPORTED,			/*	PlayTone		*/
+	NOTIMPLEMENTED,			/*	GetWAPBookmark		*/
+	NOTIMPLEMENTED,			/* 	SetWAPBookmark 		*/
+	NOTIMPLEMENTED, 		/* 	DeleteWAPBookmark 	*/
+	NOTIMPLEMENTED,			/* 	GetWAPSettings 		*/
+	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	N9210_GetBitmap,
+	N9210_SetBitmap,
+	NOTSUPPORTED,			/*	GetToDoStatus		*/
+	NOTSUPPORTED,			/*	GetToDo			*/
+	NOTSUPPORTED,			/*	GetNextToDo		*/
+	NOTSUPPORTED,			/*	SetToDo			*/
+	NOTSUPPORTED,			/*	AddToDo			*/
+	NOTSUPPORTED,			/*	DeleteToDo		*/
+	NOTSUPPORTED,			/*	DeleteAllToDo		*/
+	NOTSUPPORTED,			/*	GetCalendarStatus	*/
+	NOTSUPPORTED,			/*	GetCalendar		*/
+    	NOTSUPPORTED,			/*  	GetNextCalendar		*/
+	NOTSUPPORTED,			/*	SetCalendar		*/
+	NOTSUPPORTED,			/*	AddCalendar		*/
+	NOTSUPPORTED,			/*	DeleteCalendar		*/
+	NOTSUPPORTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNote			*/
+	NOTIMPLEMENTED, 		/*	GetProfile		*/
+	NOTSUPPORTED, 			/*	SetProfile		*/
+    	NOTSUPPORTED,			/*  	GetFMStation        	*/
+    	NOTSUPPORTED,			/*  	SetFMStation        	*/
+        NOTSUPPORTED,           	/*      ClearFMStations         */
+	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/*	GetFilePart		*/
+	NOTSUPPORTED,			/* 	AddFile			*/
+	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
+	NOTSUPPORTED,			/*	DeleteFile		*/
+	NOTSUPPORTED,			/*	AddFolder		*/
+	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };
 
 #endif

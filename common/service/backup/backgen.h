@@ -32,8 +32,8 @@ typedef struct {
 	bool			DateTimeAvailable;
 	char			MD5Original	[100];
 	char			MD5Calculated	[100];
-	GSM_PhonebookEntry	*PhonePhonebook	[GSM_BACKUP_MAX_PHONEPHONEBOOK + 1];
-	GSM_PhonebookEntry	*SIMPhonebook	[GSM_BACKUP_MAX_SIMPHONEBOOK + 1];
+	GSM_MemoryEntry		*PhonePhonebook	[GSM_BACKUP_MAX_PHONEPHONEBOOK + 1];
+	GSM_MemoryEntry		*SIMPhonebook	[GSM_BACKUP_MAX_SIMPHONEBOOK + 1];
 	GSM_CalendarEntry	*Calendar	[GSM_MAXCALENDARTODONOTES + 1];
 	GSM_Bitmap		*CallerLogos	[GSM_BACKUP_MAX_CALLER + 1];
 	GSM_SMSC		*SMSC		[GSM_BACKUP_MAX_SMSC + 1];

@@ -308,10 +308,11 @@ A. First of all, here are described all possible parameters for this software.
        -unread            - makes message unread. In some phones (like 6210)
                             you won't see unread sms envelope after saving such
                             sms. In some phones with internal SMS memory (like
-                            6210) after using it SIM SMS memory will be used
+                            6210) after using it with folder 1 SIM SMS memory
+                            will be used
        -read              - makes message read. In some phones with internal
-                            SMS memory (like 6210) after using it SIM SMS
-                            memory will be used
+                            SMS memory (like 6210) after using it with folder 1
+                            SIM SMS memory will be used
        -unsent            - makes message unsent
        -reply             - reply SMSC is set
        -sender number     - set sender number (default: "Gammu")
@@ -372,10 +373,11 @@ A. First of all, here are described all possible parameters for this software.
        -unread            - makes message unread. In some phones (like 6210)
                             you won't see unread sms envelope after saving such
                             sms. In some phones with internal SMS memory (like
-                            6210) after using it SIM SMS memory will be used
-       -read              - makes message read. In some phones with internal
-                            SMS memory (like 6210) after using it SIM SMS memory
+                            6210) after using it with folder 1 SIM SMS memory
                             will be used
+       -read              - makes message read. In some phones with internal
+                            SMS memory (like 6210) after using it with folder 1
+                            SIM SMS memory will be used
        -unsent            - makes message unsent
        -reply             - reply SMSC is set
        -sender number     - set sender number

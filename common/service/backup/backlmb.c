@@ -93,7 +93,7 @@ static void SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
 	fwrite(req, 1, count, file);
 }		     
 
-void SaveLMBPBKEntry(FILE *file, GSM_PhonebookEntry *entry)
+void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 {
 	int count = 16, blocks;
 	char req[500] = {
@@ -284,7 +284,7 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer, unsigned char *buffe
 
 static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, GSM_Backup *backup)
 {
-	GSM_PhonebookEntry 	pbk;
+	GSM_MemoryEntry 	pbk;
 	int			num;
 
 #ifdef DEBUG
@@ -308,7 +308,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	if (buffer[10]==2) {
 		while (backup->PhonePhonebook[num] != NULL) num++;
 		if (num < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
-			backup->PhonePhonebook[num] = malloc(sizeof(GSM_PhonebookEntry));
+			backup->PhonePhonebook[num] = malloc(sizeof(GSM_MemoryEntry));
 		        if (backup->PhonePhonebook[num] == NULL) return GE_MOREMEMORY;
 			backup->PhonePhonebook[num + 1] = NULL;
 		} else {
@@ -319,7 +319,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	} else {
 		while (backup->SIMPhonebook[num] != NULL) num++;
 		if (num < GSM_BACKUP_MAX_SIMPHONEBOOK) {
-			backup->SIMPhonebook[num] = malloc(sizeof(GSM_PhonebookEntry));
+			backup->SIMPhonebook[num] = malloc(sizeof(GSM_MemoryEntry));
 		        if (backup->SIMPhonebook[num] == NULL) return GE_MOREMEMORY;
 			backup->SIMPhonebook[num + 1] = NULL;
 		} else {

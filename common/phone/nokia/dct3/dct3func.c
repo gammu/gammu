@@ -269,23 +269,27 @@ GSM_Error DCT3_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, unsigne
 GSM_Error DCT3_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data	*Data = &s->Phone.Data;
+
 	smprintf(s, "Alarm received\n");
 	if (msg.Buffer[8]==0x02) {
 		smprintf(s, "   Alarm: %02d:%02d\n", msg.Buffer[9], msg.Buffer[10]);
-		Data->Alarm->Hour	= msg.Buffer[9];
-		Data->Alarm->Minute	= msg.Buffer[10];
-		Data->Alarm->Second	= 0;
+		Data->Alarm->Repeating 		= true;
+		Data->Alarm->Text[0] 		= 0;
+		Data->Alarm->Text[1] 		= 0;
+		Data->Alarm->DateTime.Hour	= msg.Buffer[9];
+		Data->Alarm->DateTime.Minute	= msg.Buffer[10];
+		Data->Alarm->DateTime.Second	= 0;
 		return GE_NONE;
 	}
 	smprintf(s, "   Not set in phone\n");
 	return GE_EMPTY;
 }
 
-GSM_Error DCT3_GetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int alarm_number, unsigned char msgtype)
+GSM_Error DCT3_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm, unsigned char msgtype)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x6d};
 
-	if (alarm_number!=1) return GE_NOTSUPPORTED;
+	if (alarm->Location!=1) return GE_NOTSUPPORTED;
 
 	s->Phone.Data.Alarm=alarm;
 	smprintf(s, "Getting alarm\n");
@@ -328,7 +332,7 @@ GSM_Error DCT3_ReplySetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return GE_UNKNOWN;
 }
 
-GSM_Error DCT3_SetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int alarm_number, unsigned char msgtype)
+GSM_Error DCT3_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm, unsigned char msgtype)
 {
 	unsigned char req[] = {
 		N6110_FRAME_HEADER, 0x6b, 0x01, 0x20, 0x03,
@@ -336,10 +340,10 @@ GSM_Error DCT3_SetAlarm(GSM_StateMachine *s, GSM_DateTime *alarm, int alarm_numb
 		0x00, 0x00,	/* Hours Minutes */
 		0x00 };		/* Unknown, but not seconds - try 59 and wait 1 sec. */
 
-	if (alarm_number!=1) return GE_NOTSUPPORTED;
+	if (alarm->Location != 1) return GE_NOTSUPPORTED;
 
-	req[8] = alarm->Hour;
-	req[9] = alarm->Minute;
+	req[8] = alarm->DateTime.Hour;
+	req[9] = alarm->DateTime.Minute;
 
 	smprintf(s, "Setting alarm\n");
 	return GSM_WaitFor (s, req, 11, msgtype, 4, ID_SetAlarm);

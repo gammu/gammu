@@ -12,8 +12,7 @@ bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 	GSM_DateTime	DT;
 
 	GSM_GetCurrentDateTime (&DT);
-	for (i = 0; i < note->EntriesNum; i++)
-	{
+	for (i = 0; i < note->EntriesNum; i++) {
 		switch (note->Entries[i].EntryType) {
 		case CAL_RECURRANCE:
 			Past = false;
@@ -52,8 +51,7 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhoneRecurrance(GSM_CalendarEntry *entr
 	*Recurrance	= -1;
 	*EndTime	= -1;
 	*Location	= -1;
-	for (i = 0; i < entry->EntriesNum; i++)
-	{
+	for (i = 0; i < entry->EntriesNum; i++) {
 		switch (entry->Entries[i].EntryType) {
 		case CAL_START_DATETIME :
 			if (*Time == -1) *Time = i;
@@ -259,8 +257,7 @@ void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, 
 	*Alarm		= -1;
 	*Completed	= -1;
 	*Phone		= -1;
-	for (i = 0; i < entry->EntriesNum; i++)
-	{
+	for (i = 0; i < entry->EntriesNum; i++) {
 		switch (entry->Entries[i].EntryType) {
 		case TODO_END_DATETIME :
 			if (*EndTime == -1) *EndTime = i;

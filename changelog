@@ -22,6 +22,47 @@ and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
+20031026 - 0.88.4.0
+* new functionality:
+  * * Changes in internal API for phone modules:                 (Michal Cihar)
+      * GSM_CalendarStatus
+      * addes some API docs (only for touched functions)
+    * Alcatel:                                                   
+      * support for writing calendar
+      * added some Alcatel phone ids
+      * added support for some new functions supported by AT
+      * support for texts in phone alarms and alarms at all
+  * DCT4: GetNetworkInfo handles situation, when SIM is rejected
+
+* fixes and improvements:
+  * * Changes in internal API for phone modules:                 (Michal Cihar)
+      * they're sorted in groups
+      * support for each type of entries can have generally such API:
+        GetXXXXStatus, GetXXXX, GetNextXXXX, SetXXXX, AddXXXX, DeleteXXXX,
+        DeleteAllXXXX
+      * changed GSM_PhonebookEntry to GSM_MemoryEntry
+      * removed Past parameter from Add/SetCalendar. Past checking is done
+        in application logic
+      * GetToDo without refresh parameter
+    * Alcatel:
+      * much improved error checking when creating/updating items
+      * do not explicitely fail if speed is other than 19200
+      * GetNextXXXX functions now return entries as ordered in phone and
+        not as ordered by locations
+    * backup files had "Location" name for location of calendar note and 
+      location of meeting inside calendar note. FIXED
+    * better flags in pkgconfig
+  * SMS:
+    * can save SMS to SIM Outbox with DCT4
+    * with 6210 family, when use --savesms XXXX -read, --savesms XXXX -unread,
+      --savesms XXXX -folder 2, --savesms XXXX -folder 2 -unsent, there is
+      SIM SMS memory used
+  * many memory allocation fixes for SE
+  * REMOVED SERIOUS BUG CONNECTED WITH PBK RESTORE. IN SOME SITUATIONS SOME
+    ENTRIES WERE NOT RESTORED (phone modules didn't report always GE_EMPTY
+    for empty pbk entries)
+  * FreeBSD fix                                                (Vic Sithasanan)
+
 20031019 - 0.87.0.0
 * new functionality:
   * simple decoder for UTF7 (used in SE files)

@@ -166,7 +166,7 @@ static bool ReadLDIFText(char *Buffer, char *Start, char *Value)
 	return false;
 }
 
-static GSM_Error GSM_DecodeLDIFEntry(unsigned char *Buffer, int *Pos, GSM_PhonebookEntry *Pbk)
+static GSM_Error GSM_DecodeLDIFEntry(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk)
 {
 	unsigned char 	Line[2000],Buff[2000],Buff2[2000];
 	int		Level = 0;
@@ -257,7 +257,7 @@ GSM_Error LoadLDIF(char *FileName, GSM_Backup *backup)
 {
 	GSM_File 		File;
 	GSM_Error		error;
-	GSM_PhonebookEntry	Pbk;
+	GSM_MemoryEntry	Pbk;
 	int			numPbk = 0, Pos;
 
 	File.Buffer = NULL;
@@ -270,14 +270,14 @@ GSM_Error LoadLDIF(char *FileName, GSM_Backup *backup)
 		if (error == GE_EMPTY) break;
 		if (error != GE_NONE) return error;
 		if (numPbk < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
-			backup->PhonePhonebook[numPbk] = malloc(sizeof(GSM_PhonebookEntry));
+			backup->PhonePhonebook[numPbk] = malloc(sizeof(GSM_MemoryEntry));
 		        if (backup->PhonePhonebook[numPbk] == NULL) return GE_MOREMEMORY;
 			backup->PhonePhonebook[numPbk + 1] = NULL;
 		} else {
 			dprintf("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
 			return GE_MOREMEMORY;
 		}
-		memcpy(backup->PhonePhonebook[numPbk],&Pbk,sizeof(GSM_PhonebookEntry));
+		memcpy(backup->PhonePhonebook[numPbk],&Pbk,sizeof(GSM_MemoryEntry));
 		backup->PhonePhonebook[numPbk]->Location 	= numPbk + 1;
 		backup->PhonePhonebook[numPbk]->MemoryType 	= GMT_ME;
 		numPbk++;
