@@ -2560,6 +2560,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		startarg 	= 1;
 		Validity.Format = 0;
 	}
+	if (mystrncasecmp(argv[1],"--sendsmsdsms",0)) startarg=startarg+2;
 
 	if (mystrncasecmp(argv[2],"TEXT",0)) {
 		chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
@@ -3578,7 +3579,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 	}
 
-	if (mystrncasecmp(argv[1],"--displaysms",0)) {
+	if (mystrncasecmp(argv[1],"--displaysms",0) || mystrncasecmp(argv[1],"--sendsmsdsms",0)) {
 		if (mystrncasecmp(argv[2],"OPERATOR",0)) {
 			if (bitmap[0].Bitmap[0].Type==GSM_OperatorLogo && strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0) {
 				printmsg("No network code\n");
@@ -3633,7 +3634,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	}
 	if (MaxSMS != -1 && sms.Number > MaxSMS) {
 		printmsg("There is %i SMS packed and %i limit. Exiting\n",sms.Number,MaxSMS);
-		if (!mystrncasecmp(argv[1],"--displaysms",0)) GSM_Terminate();
+		if (!mystrncasecmp(argv[1],"--displaysms",0) && !mystrncasecmp(argv[1],"--sendsmsdsms",0)) GSM_Terminate();
 		exit(-1);
 	}
 
@@ -3657,6 +3658,25 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 
 		printmsg("\nNumber of SMS: %i\n",sms.Number);
 		exit(sms.Number);
+	}
+	if (mystrncasecmp(argv[1],"--sendsmsdsms",0)) {
+		if (SMSCSet != 0) {
+			printmsg("Use -smscnumber option to give SMSC number\n");
+			exit(-1);
+		}
+
+		for (i=0;i<sms.Number;i++) {
+			sms.SMS[i].Location			= 0;
+			sms.SMS[i].ReplyViaSameSMSC		= ReplyViaSameSMSC;
+			sms.SMS[i].SMSC.Location		= 0;
+			sms.SMS[i].PDU				= SMS_Submit;
+			if (DeliveryReport) sms.SMS[i].PDU	= SMS_Status_Report;
+			CopyUnicodeString(sms.SMS[i].Number, Sender);
+			CopyUnicodeString(sms.SMS[i].SMSC.Number, SMSC);
+			if (Validity.Format != 0) memcpy(&sms.SMS[i].SMSC.Validity,&Validity,sizeof(GSM_SMSValidity));
+		}
+		SMSDaemonSendSMS(argv[4],argv[5],&sms);
+		exit(0);
 	}
 	if (mystrncasecmp(argv[1],"--savesms",0) || SendSaved) {
 		error=Phone->GetSMSFolders(&s, &folders);
@@ -7702,10 +7722,11 @@ static GSM_Parameters Parameters[] = {
 	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,0},			"EMS destination " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_EMS_OPTIONS},
 	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,0},			"SMSTEMPLATE destination " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_SMSTEMPLATE_OPTIONS},
 
-	{"--displaysms",		2,30, SendSaveDisplaySMS,	{H_SMS,0},			""},
+	{"--displaysms",		2,30, SendSaveDisplaySMS,	{H_SMS,0},			"... (options like in sendsms)"},
 
 	{"--addsmsfolder",		1, 1, AddSMSFolder,		{H_SMS,0},			"name"},
-	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"FILES configfile"},
+	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"FILES|MYSQL configfile"},
+	{"--sendsmsdsms",		2,30, SendSaveDisplaySMS,	{H_SMS,H_Other,0},		"TEXT|WAPSETTINGS|... destination FILES|MYSQL configfile ... (options like in sendsms)"},
 	{"--getringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
 	{"--getphoneringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
 	{"--getringtoneslist",		0, 0, GetRingtonesList,		{H_Ringtone,0},			""},

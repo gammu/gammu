@@ -245,11 +245,19 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 }
 
 /* After sending SMS is moved to Sent Items or Error Items. */
-static GSM_Error SMSDFiles_MoveSMS(unsigned char *sourcepath, unsigned char *destpath, unsigned char *ID, bool alwaysDelete)
+static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, bool alwaysDelete, bool sent)
 {
 	FILE 	*oFile,*iFile;
 	int 	ilen = 0, olen = 0;
 	char 	Buffer[(GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS+1)*2],ifilename[400],ofilename[400];
+	char	*sourcepath, *destpath;
+	
+	sourcepath = Config->outboxpath;
+	if (sent) {
+	    destpath = Config->sentsmspath;
+	} else {
+	    destpath = Config->errorsmspath;
+	}
 
 	strcpy(ifilename, sourcepath);
 	strcat(ifilename, ID);
@@ -288,7 +296,8 @@ GSM_SMSDService SMSDFiles = {
 	NONEFUNCTION,			/* Init */
 	SMSDFiles_SaveInboxSMS,
 	SMSDFiles_FindOutboxSMS,
-	SMSDFiles_MoveSMS
+	SMSDFiles_MoveSMS,
+	NOTSUPPORTED
 };
 
 /* How should editor hadle tabs in this file? Add editor commands here.

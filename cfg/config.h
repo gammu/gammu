@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0.94.4"
-#define VERSION_WIN "0,94,4,0"
+#define VERSION "0.94.10"
+#define VERSION_WIN "0,94,10,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -64,6 +64,8 @@
 
 /* --------------------------- Phone modules (specific) ----------------- */
 
+/* n3320.c models */
+#define GSM_ENABLE_NOKIA3320 1
 /* n6110.c models */
 #define GSM_ENABLE_NOKIA6110 1
 

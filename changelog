@@ -19,18 +19,45 @@ This software was sponsored (in time order) by:
    * DCT3/DCT4 flasher
 6. MatrixTeam (www.matrixflasher.com)
    * DCT3/DCT4 flasher
+7. KompuNet (www.kompu.net)
+   * SMS services, PC shop and other
 
 and others...
 
 For additionals materials and links to them see readme.txt
 --------------------
-20040304 - 0.95.0
+200405xx - 0.95.0
 * new functionality:
   * enabling new menu features for 6220
   * NGAGE ID
-  * smsd deamon has support for receiving SMS and saving to MySQL database
+  * smsd daemon has support for saving received SMS to MySQL database
+    and SENDING SMS saved in MySQL database (this feature supports all Gammu
+    formats like logos, ringtones and other). New --sendsmsdsms
+  * full support for phonebook features: user ID & sms list ID (both reading
+    and saving to phone)
+  * more speeds supported in Linux by serial driver              (Michal Cihar)
+  * started work on TDMA phones (3320)
 
 * fixes and improvements:
+  * writing device in Linux didn't repeat sometimes writing      (Michal Cihar)
+  
+NOTES: well, good developing need some funds for research. Because of it I have
+       to work on other projects too and have less time for Gammu. Happily some
+       of them need somehow Gammu and this development will be continued. In this
+       moment I will concentrate especially on some TDMA phones (like 3320) and
+       more win9x support. 
+       
+       What will be next ? I quess, that it will depend mainly on people, who 
+       donate project. This is not excellent solution, but after quarrels with 
+       people, who had rights/though, that have rights to some things in source 
+       only possible.
+       
+       Generally it's not bad, but it's not very good too. If you like Gammu and 
+       want to help in development, please contact - project needs help a lot 
+       (testing, coding, donating, sponsoring, hosting, etc.). I quess, that Michal 
+       Cihar will return soon, but even with his effort without other help it will 
+       be difficult to make many required things. There are lacks with SonyEricsson,
+       Siemens and other...
 
 20040304 - 0.94.0
 * new functionality:

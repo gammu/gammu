@@ -36,14 +36,14 @@ static GSM_Error serial_close(GSM_StateMachine *s)
 static GSM_Error serial_open (GSM_StateMachine *s)
 {
 	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
-	struct termios          t;
+	struct termios	  t;
 	int			    i;
 
 	/* O_NONBLOCK MUST is required to avoid waiting for DCD */
 	d->hPhone = open(s->CurrentConfig->Device, O_RDWR | O_NOCTTY | O_NONBLOCK);
 	if (d->hPhone < 0) {
 		i = errno;
-	        GSM_OSErrorInfo(s,"open in serial_open");
+		GSM_OSErrorInfo(s,"open in serial_open");
 		if (i ==  2) return ERR_DEVICENOTEXIST;		//no such file or directory
 		if (i == 13) return ERR_DEVICENOPERMISSION;	//permission denied
 		return ERR_DEVICEOPENERROR;
@@ -57,13 +57,13 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	if (tcgetattr(d->hPhone, &d->old_settings) == -1) {
 		close(d->hPhone);
 		GSM_OSErrorInfo(s,"tcgetattr in serial_open");
-	        return ERR_DEVICEREADERROR;
+		return ERR_DEVICEREADERROR;
     	}
 
     	if (tcflush(d->hPhone, TCIOFLUSH) == -1) {
-        	serial_close(s);
-        	GSM_OSErrorInfo(s,"tcflush in serial_open");
-        	return ERR_DEVICEOPENERROR;
+		serial_close(s);
+		GSM_OSErrorInfo(s,"tcflush in serial_open");
+		return ERR_DEVICEOPENERROR;
     	}
 
     	memcpy(&t, &d->old_settings, sizeof(struct termios));
@@ -82,16 +82,16 @@ static GSM_Error serial_open (GSM_StateMachine *s)
     	t.c_cc[VTIME]   = 0;
 
     	if (tcsetattr(d->hPhone, TCSANOW, &t) == -1) {
-        	serial_close(s);
-        	GSM_OSErrorInfo(s,"tcsetattr in serial_open");
-        	return ERR_DEVICEOPENERROR;
+		serial_close(s);
+		GSM_OSErrorInfo(s,"tcsetattr in serial_open");
+		return ERR_DEVICEOPENERROR;
     	}
 
     	/* Making file descriptor asynchronous. */
     	if (fcntl(d->hPhone, F_SETFL, FASYNC | FNONBLOCK) == -1) {
-        	serial_close(s);
-        	GSM_OSErrorInfo(s,"fcntl in serial_open");
-        	return ERR_DEVICEOPENERROR;
+		serial_close(s);
+		GSM_OSErrorInfo(s,"fcntl in serial_open");
+		return ERR_DEVICEOPENERROR;
     	}
 
     	return ERR_NONE;
@@ -100,24 +100,24 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
-    	struct termios          t;
+    	struct termios	  t;
 
     	if (tcgetattr(d->hPhone, &t)) {
-        	GSM_OSErrorInfo(s,"tcgetattr in serial_setparity");
-        	return ERR_DEVICEREADERROR;
+		GSM_OSErrorInfo(s,"tcgetattr in serial_setparity");
+		return ERR_DEVICEREADERROR;
     	}
 
     	if (parity) {
-        	t.c_cflag |= (PARENB | PARODD);
-        	t.c_iflag = 0;
+		t.c_cflag |= (PARENB | PARODD);
+		t.c_iflag = 0;
     	} else {
-        	t.c_iflag = IGNPAR;
+		t.c_iflag = IGNPAR;
     	}
 
     	if (tcsetattr(d->hPhone, TCSANOW, &t) == -1){
-        	serial_close(s);
-        	GSM_OSErrorInfo(s,"tcsetattr in serial_setparity");
-        	return ERR_DEVICEPARITYERROR;
+		serial_close(s);
+		GSM_OSErrorInfo(s,"tcsetattr in serial_setparity");
+		return ERR_DEVICEPARITYERROR;
     	}
 
     	return ERR_NONE;
@@ -126,12 +126,12 @@ static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
 static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
-    	struct termios          t;
-    	unsigned int            flags;
+    	struct termios	  t;
+    	unsigned int	    flags;
 
     	if (tcgetattr(d->hPhone, &t)) {
-        	GSM_OSErrorInfo(s,"tcgetattr in serial_setdtrrts");
-        	return ERR_DEVICEREADERROR;
+		GSM_OSErrorInfo(s,"tcgetattr in serial_setdtrrts");
+		return ERR_DEVICEREADERROR;
     	}
 
 #ifdef CRTSCTS
@@ -140,9 +140,9 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
 #endif
 
     	if (tcsetattr(d->hPhone, TCSANOW, &t) == -1) {
-        	serial_close(s);
-        	GSM_OSErrorInfo(s,"tcsetattr in serial_setdtrrts");
-        	return ERR_DEVICEDTRRTSERROR;
+		serial_close(s);
+		GSM_OSErrorInfo(s,"tcsetattr in serial_setdtrrts");
+		return ERR_DEVICEDTRRTSERROR;
     	}
 
     	flags = TIOCM_DTR;
@@ -177,44 +177,56 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 {
     	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
     	struct termios  	t;
-    	int             	speed2=B19200;
+    	int	     	speed2 = B19200;
 
     	if (tcgetattr(d->hPhone, &t)) {
-        	GSM_OSErrorInfo(s,"tcgetattr in serial_setspeed");
-        	return ERR_DEVICEREADERROR;
+		GSM_OSErrorInfo(s,"tcgetattr in serial_setspeed");
+		return ERR_DEVICEREADERROR;
     	}
 
     	smprintf(s, "Setting speed to %d\n", speed);
 
     	switch (speed) {
-        	case 50:     speed2 = B50;     break;
-        	case 75:     speed2 = B75;     break;
-        	case 110:    speed2 = B110;    break;
-        	case 134:    speed2 = B134;    break;
-        	case 150:    speed2 = B150;    break;
-        	case 200:    speed2 = B200;    break;
-        	case 300:    speed2 = B300;    break;
-        	case 600:    speed2 = B600;    break;
-        	case 1200:   speed2 = B1200;   break;
-        	case 1800:   speed2 = B1800;   break;
-        	case 2400:   speed2 = B2400;   break;
-        	case 4800:   speed2 = B4800;   break;
-        	case 9600:   speed2 = B9600;   break;
-        	case 19200:  speed2 = B19200;  break;
-        	case 38400:  speed2 = B38400;  break;
-        	case 57600:  speed2 = B57600;  break;
-        	case 115200: speed2 = B115200; break;
-        	case 230400: speed2 = B230400; break;
-    	}
+		case 50:	speed2 = B50;		break;
+		case 75:	speed2 = B75;		break;
+		case 110:	speed2 = B110;		break;
+		case 134:	speed2 = B134;		break;
+		case 150:	speed2 = B150;		break;
+		case 200:	speed2 = B200;		break;
+		case 300:	speed2 = B300;		break;
+		case 600:	speed2 = B600;		break;
+		case 1200:	speed2 = B1200;		break;
+		case 1800:	speed2 = B1800;		break;
+		case 2400:	speed2 = B2400;		break;
+		case 4800:	speed2 = B4800;		break;
+		case 9600:	speed2 = B9600;		break;
+		case 19200:	speed2 = B19200;	break;
+		case 38400:	speed2 = B38400;	break;
+		case 57600:	speed2 = B57600;	break;
+		case 115200:	speed2 = B115200;	break;
+		case 230400:	speed2 = B230400;	break;
+		case 460800:	speed2 = B460800;	break;
+		case 500000:	speed2 = B500000;	break;
+		case 576000:	speed2 = B576000;	break;
+		case 921600:	speed2 = B921600;	break;
+		case 1000000:	speed2 = B1000000;	break;
+		case 1152000:	speed2 = B1152000;	break;
+		case 1500000:	speed2 = B1500000;	break;
+		case 2000000:	speed2 = B2000000;	break;
+		case 2500000:	speed2 = B2500000;	break;
+		case 3000000:	speed2 = B3000000;	break;
+		case 3500000:	speed2 = B3500000;	break;
+		case 4000000:	speed2 = B4000000;	break;	
+	}
 
     	/* This should work on all systems because it is done according to POSIX */
     	cfsetispeed(&t, speed2);
     	cfsetospeed(&t, speed2);
 
     	if (tcsetattr(d->hPhone, TCSADRAIN, &t) == -1) {
-        	serial_close(s);
-        	GSM_OSErrorInfo(s,"tcsetattr in serial_setspeed");
-        	return ERR_DEVICECHANGESPEEDERROR;
+		serial_close(s);
+		GSM_OSErrorInfo(s,"tcsetattr in serial_setspeed");
+		return ERR_DEVICECHANGESPEEDERROR;
     	}
 
     	return ERR_NONE;
@@ -224,8 +236,8 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
     	GSM_Device_SerialData 		*d = &s->Device.Data.Serial;
     	struct timeval  		timeout2;
-    	fd_set          		readfds;
-    	int             		actual = 0;
+    	fd_set	  		readfds;
+    	int	     		actual = 0;
 
     	FD_ZERO(&readfds);
     	FD_SET(d->hPhone, &readfds);
@@ -234,8 +246,8 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
     	timeout2.tv_usec    = 1;
 
     	if (select(d->hPhone+1, &readfds, NULL, NULL, &timeout2)) {
-        	actual = read(d->hPhone, buf, nbytes);
-        	if (actual == -1) GSM_OSErrorInfo(s,"serial_read");
+		actual = read(d->hPhone, buf, nbytes);
+		if (actual == -1) GSM_OSErrorInfo(s,"serial_read");
     	}
     	return actual;
 }
@@ -243,17 +255,18 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 static int serial_write(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
-    	int                     ret;
-    	size_t                  actual = 0;
+    	int		     ret;
+    	size_t		  actual = 0;
 
     	do {
 		ret = write(d->hPhone, (unsigned char *)buf, nbytes - actual);
-        	if (ret < 0) {
-            		if (actual != nbytes) GSM_OSErrorInfo(s,"serial_write");
-            		return actual;
-        	}
-        	actual  += ret;
-        	buf     += ret;
+		if (ret < 0 && errno == EAGAIN) continue;
+		if (ret < 0) {
+	    		if (actual != nbytes) GSM_OSErrorInfo(s,"serial_write");
+	    		return actual;
+		}
+		actual  += ret;
+		buf     += ret;
     		if (s->ConnectionType == GCT_FBUS2PL2303) my_sleep(1);
     	} while (actual < nbytes);
     	return actual;

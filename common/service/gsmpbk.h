@@ -164,7 +164,11 @@ typedef enum {
 	 * Picture ID. (Number)
 	 */
 	PBK_PictureID,
-	PBK_SMSListID
+	PBK_SMSListID,
+	/**
+	 * User ID. (Text)
+	 */
+	PBK_Text_UserID
 } GSM_EntryType;
 
 #define GSM_PHONEBOOK_TEXT_LENGTH       200

@@ -34,7 +34,8 @@ typedef enum {
 	N6510_PBK_SMSLIST_ID	 = 0x2E, /* SMS list assigment			*/
 	N6510_PBK_VOICETAG_ID	 = 0x2F, /* Voice tag assigment			*/
 	N6510_PBK_PICTURE_ID	 = 0x33, /* Picture ID assigment		*/
-	N6510_PBK_RINGTONEFILE_ID= 0x37  /* Ringtone ID from filesystem/internal*/
+	N6510_PBK_RINGTONEFILE_ID= 0x37, /* Ringtone ID from filesystem/internal*/
+	N6510_PBK_USER_ID        = 0x38  /* Text: user ID                       */
 } GSM_71_65_Phonebook_Entries_Types;
 
 typedef enum {
