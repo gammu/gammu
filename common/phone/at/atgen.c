@@ -2208,15 +2208,15 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 
 		if (Lines.numbers[3*2+1]==0) return ERR_NONE;
 
-		tmp = strdup(GetLineString(msg.Buffer,Priv->Lines,2));
-		answer = GetLineString(tmp,Lines,3);
-		free(tmp);
+ 		tmp = strdup(GetLineString(msg.Buffer,Priv->Lines,2));
+ 		answer = GetLineString(tmp,Lines,3);
+ 		free(tmp);
 		while (*answer == 0x20) answer++;
 		sprintf(NetworkInfo->LAC,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
 
-		tmp = strdup(GetLineString(msg.Buffer,Priv->Lines,2));
-		answer = GetLineString(tmp,Lines,4);
-		free(tmp);
+ 		tmp = strdup(GetLineString(msg.Buffer,Priv->Lines,2));
+ 		answer = GetLineString(tmp,Lines,4);
+ 		free(tmp);
 		while (*answer == 0x20) answer++;
 		sprintf(NetworkInfo->CID,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
 
@@ -3730,7 +3730,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
 	range = GetRange(buffer);
 	if (range == NULL) return  ERR_UNKNOWNRESPONSE;
-	if (InRange(range, 2)) Priv->CNMIMode = 2; /* 2 = buffer messages and send them when link is free */
+	if (InRange(range, 2)) Priv->CNMIMode = 2; 	/* 2 = buffer messages and send them when link is free */
 	else if (InRange(range, 3)) Priv->CNMIMode = 3; /* 3 = send messages directly */
 	else return ERR_NONE; /* we don't want: 1 = ignore new messages, 0 = store messages and no indication */
 	free(range);
@@ -3740,9 +3740,9 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
 	range = GetRange(buffer);
 	if (range == NULL) return  ERR_UNKNOWNRESPONSE;
-	if (InRange(range, 2)) Priv->CNMIProcedure = 2; /* 2 = route message to TE */
-	else if (InRange(range, 1)) Priv->CNMIProcedure = 1; /* 1 = store message and send where it is stored */
-	else if (InRange(range, 3)) Priv->CNMIProcedure = 3; /* 3 = 1 + route class 3 to TE */
+	if (InRange(range, 1)) Priv->CNMIProcedure = 1; 	/* 1 = store message and send where it is stored */
+	else if (InRange(range, 2)) Priv->CNMIProcedure = 2; 	/* 2 = route message to TE */
+	else if (InRange(range, 3)) Priv->CNMIProcedure = 3; 	/* 3 = 1 + route class 3 to TE */
 	/* we don't want: 0 = just store to memory */
 	free(range);
 
@@ -3797,11 +3797,11 @@ GSM_Error ATGEN_SetIncomingCB(GSM_StateMachine *s, bool enable)
 		s->Phone.Data.EnableIncomingCB 	= enable;
 		if (enable) {
 			smprintf(s, "Enabling incoming CB\n");
-			snprintf(buffer, 99, "AT+CNMI=%d,,%d\r", Priv->CNMIMode, Priv->CNMIBroadcastProcedure);
+			sprintf(buffer, "AT+CNMI=%d,,%d\r", Priv->CNMIMode, Priv->CNMIBroadcastProcedure);
 			return GSM_WaitFor(s, buffer, strlen(buffer), 0x00, 4, ID_SetIncomingCB);
 		} else {
 			smprintf(s, "Disabling incoming CB\n");
-			snprintf(buffer, 99, "AT+CNMI=%d,,%d\r", Priv->CNMIMode, 0);
+			sprintf(buffer, "AT+CNMI=%d,,%d\r", Priv->CNMIMode, 0);
 			return GSM_WaitFor(s, buffer, strlen(buffer), 0x00, 4, ID_SetIncomingCB);
 		}
 	}
@@ -3832,7 +3832,6 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	smprintf(s, "Incoming SMS\n");
 	if (Data->EnableIncomingSMS && s->User.IncomingSMS!=NULL) {
-
 		sms.State 	 = 0;
 		sms.InboxFolder  = true;
 		sms.PDU 	 = 0;
@@ -3842,10 +3841,10 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		buffer++;
 		while (isspace(*buffer)) buffer++;
 
-		if (strncmp(buffer, "ME", 2) == 0) {
+		if (strncmp(buffer, "ME", 2) == 0 || strncmp(buffer, "\"ME\"", 4) == 0) {
 			if (Priv->PhoneSMSMemory == AT_AVAILABLE) sms.Folder = 1;
 			else sms.Folder = 3;
-		} else if (strncmp(buffer, "SM", 2) == 0) {
+		} else if (strncmp(buffer, "SM", 2) == 0 || strncmp(buffer, "\"SM\"", 4) == 0) {
 			sms.Folder = 1;
 		} else {
 			return ERR_UNKNOWNRESPONSE;
@@ -3936,9 +3935,6 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 	if (Priv->CNMIMode == 0) return ERR_NOTSUPPORTED;
 	if (Priv->CNMIProcedure == 0 && Priv->CNMIDeliverProcedure == 0) return ERR_NOTSUPPORTED;
 
-	/* Nokia returns OK, but doesn't return anything */
-	if (s->Phone.Data.Priv.ATGEN.Manufacturer == AT_Nokia) return ERR_NOTSUPPORTED;
-
 	if (s->Phone.Data.EnableIncomingSMS!=enable) {
 		s->Phone.Data.EnableIncomingSMS = enable;
 		if (enable) {
@@ -3946,14 +3942,14 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 
 			/* Delivery reports */
 			if (Priv->CNMIDeliverProcedure != 0) {
-				snprintf(buffer, 99, "AT+CNMI=%d,,,%d\r", Priv->CNMIMode, Priv->CNMIDeliverProcedure);
+				sprintf(buffer, "AT+CNMI=%d,,,%d\r", Priv->CNMIMode, Priv->CNMIDeliverProcedure);
 				error = GSM_WaitFor(s, buffer, strlen(buffer), 0x00, 4, ID_SetIncomingSMS);
 				if (error != ERR_NONE) return error;
 			}
 
 			/* Normal messages */
 			if (Priv->CNMIProcedure != 0) {
-				snprintf(buffer, 99, "AT+CNMI=%d,%d\r", Priv->CNMIMode, Priv->CNMIProcedure);
+				sprintf(buffer, "AT+CNMI=%d,%d\r", Priv->CNMIMode, Priv->CNMIProcedure);
 				error = GSM_WaitFor(s, buffer, strlen(buffer), 0x00, 4, ID_SetIncomingSMS);
 				if (error != ERR_NONE) return error;
 			}
@@ -3961,12 +3957,12 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 			smprintf(s, "Disabling incoming SMS\n");
 
 			/* Delivery reports */
-			snprintf(buffer, 99, "AT+CNMI=%d,,,%d\r", Priv->CNMIMode, 0);
+			sprintf(buffer,"AT+CNMI=%d,,,%d\r", Priv->CNMIMode, 0);
 			error = GSM_WaitFor(s, buffer, strlen(buffer), 0x00, 4, ID_SetIncomingSMS);
 			if (error != ERR_NONE) return error;
 
 			/* Normal messages */
-			snprintf(buffer, 99, "AT+CNMI=%d,%d\r", Priv->CNMIMode, 0);
+			sprintf(buffer, "AT+CNMI=%d,%d\r", Priv->CNMIMode, 0);
 			error = GSM_WaitFor(s, buffer, strlen(buffer), 0x00, 4, ID_SetIncomingSMS);
 			if (error != ERR_NONE) return error;
 		}

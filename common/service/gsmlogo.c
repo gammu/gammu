@@ -948,7 +948,7 @@ static GSM_Error loadwbmp(FILE *file, GSM_MultiBitmap *bitmap)
 	fread(buffer,1,4,file);
 	bitmap->Bitmap[0].BitmapWidth  = buffer[2];
 	bitmap->Bitmap[0].BitmapHeight = buffer[3];
-	bitmap->Number 		 = 1;
+	bitmap->Number 		       = 1;
 
 	fread(buffer,1,10000,file);
 	PHONE_DecodeBitmap(GSM_Nokia7110OperatorLogo, buffer, &bitmap->Bitmap[0]);
@@ -959,10 +959,10 @@ static GSM_Error loadwbmp(FILE *file, GSM_MultiBitmap *bitmap)
 
 static GSM_Error loadgif(FILE *file, GSM_MultiBitmap *bitmap)
 {
-	GSM_Bitmap *bmap = &bitmap->Bitmap[0];
-	char *buffer;
-	struct stat st;
-	int length;
+	GSM_Bitmap 	*bmap = &bitmap->Bitmap[0];
+	char 		*buffer;
+	struct stat 	st;
+	int 		length;
 
 	dbgprintf("loading gif file\n");
 	fstat(fileno(file), &st);
