@@ -321,12 +321,11 @@ GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 
  	switch (Priv->ReplyState) {
  	case AT_Reply_OK:
-		Priv->PBKSBNR = AT_SBNR_AVAILABLE;
 		smprintf(s, "Memory info received\n");
 
 		/* Parse first location */
-		pos = strchr(msg.Buffer, '(');
-		if (!pos) return ERR_UNKNOWNRESPONSE;
+		pos = strstr(msg.Buffer, "\"vcf\"");
+		if (!pos) return ERR_NOTSUPPORTED;
 		pos = strchr(pos + 1, '(');
 		if (!pos) return ERR_UNKNOWNRESPONSE;
 		pos++;
@@ -339,6 +338,8 @@ GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 		pos++;
 		if (!isdigit(*pos)) return ERR_UNKNOWNRESPONSE;
 		Priv->MemorySize = atoi(pos) + 1 - Priv->FirstMemoryEntry;
+
+		Priv->PBKSBNR = AT_SBNR_AVAILABLE;
 
 		return ERR_NONE;
 	case AT_Reply_Error:
