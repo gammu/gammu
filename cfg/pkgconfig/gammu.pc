@@ -1,0 +1,10 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include
+
+Name: gammu
+Description: Gammu library
+Version: 0.85.5.0
+Libs: -L${libdir} -lGammu   -pthread -lbluetooth
+Cflags: -I${includedir} -O2 -Wall -Wno-format-y2k -pthread

@@ -1,4 +1,4 @@
-%define ver      0,85,0,0
+%define ver      0.85.5.0
 %define rel      1
 
 Summary: 	 Mobile phones tools for Unix (Linux) and Win32
@@ -41,7 +41,7 @@ make clean
 rm -rf $RPM_BUILD_ROOT
 
 %changelog
-* Thu Jan 02 2003 Michal Cihar <cihar@liten.cz>
+* Thu Jan 02 2003 Michal Cihar <michal@cihar.com>
 - made it install in directories that are defined in rpm
 
 * Sun Nov 10 2002 Marcin Wiacek <marcin@mwiacek.com>

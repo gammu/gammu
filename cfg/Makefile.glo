@@ -101,8 +101,14 @@ clean:
 	@$(RM) $(COMMON) $(GAMMU) core $(TOPDIR)/common/libGammu.so
 	@$(RM) $(TOPDIR)/gammu/gammu $(TOPDIR)/gammu/gammulib tags
 	@$(RM) $(TOPDIR)/cfg/locale/locale.o $(TOPDIR)/cfg/locale/locale
-	@echo Cleaning autoconf cache
-	@$(RM) -r $(TOPDIR)/cfg/autoconf/*.cache
+	@echo Cleaning autoconf stuff
+	@$(RM) -r $(TOPDIR)/cfg/autoconf/*.cache \
+		$(TOPDIR)/cfg/autoconf/config.log \
+		$(TOPDIR)/cfg/autoconf/config.status \
+		$(TOPDIR)/cfg/autoconf/VERSION \
+		$(TOPDIR)/cfg/autoconf/configure
+	@echo Cleaning API documentation
+	@$(RM) -r gammu-doc
 
 makelocale: $(LOCALE)
 	@echo Linking locale application
@@ -123,8 +129,13 @@ distclean: makelocale clean
 	@chmod a+x $(TOPDIR)/other/perms/perms
 	@chmod a+x $(TOPDIR)/configure
 	@$(TOPDIR)/configure
-	@$(RM) $(TOPDIR)/cfg/autoconf/config.cache
-	
+	@echo Cleaning autoconf stuff
+	@$(RM) -r $(TOPDIR)/cfg/autoconf/*.cache \
+		$(TOPDIR)/cfg/autoconf/config.log \
+		$(TOPDIR)/cfg/autoconf/config.status \
+		$(TOPDIR)/cfg/autoconf/VERSION \
+		$(TOPDIR)/cfg/autoconf/configure
+			
 uninstall:
 	@echo Uninstalling Gammu
 	@$(RM) $(DESTDIR)$(INSTALL_BIN_DIR)/gammu $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so
@@ -166,7 +177,7 @@ installonly: all
 
 installlib: uninstall makelib installdocs installlocales installlibonly
 
-installlibonly: all
+installlibonly: makelib
 	@echo Installing binaries to $(DESTDIR)$(INSTALL_BIN_DIR)
 	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_BIN_DIR)
 	@$(INSTALL) -m 0755 $(TOPDIR)/gammu/gammulib $(DESTDIR)$(INSTALL_BIN_DIR)/gammu
@@ -185,6 +196,20 @@ installlibonly: all
 		       -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_H_DIR)/{} \; \
 		) \
 	done
+
+	@echo Installing pkgconfig file
+	$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LIB_DIR)/pkgconfig
+	$(INSTALL) -m 0644 cfg/pkgconfig/gammu.pc $(DESTDIR)$(INSTALL_LIB_DIR)/pkgconfig
+
+apidoc:
+	@if test -z "$(DOXYGEN)" ; then \
+		echo "You need doxygen to generate API documentation."; \
+		echo "Install doxygen and rerun configure." ; \
+		exit 1 ;\
+	fi
+	@echo "Generating API documentation in gammu-doc directory"
+	@$(DOXYGEN) cfg/doxygen/Doxyfile
+
 
 tags: $(shell find . -name '*.[ch]' -o -name '*.cpp')
 	@echo Generating tags file

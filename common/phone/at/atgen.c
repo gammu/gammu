@@ -330,6 +330,8 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
+	if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_OK) return GE_NOTSUPPORTED;
+
 	if (strlen(GetLineString(msg.Buffer, Priv->Lines, 2)) <= MAX_MODEL_LENGTH) {
 		CopyLineString(Data->Model, msg.Buffer, Priv->Lines, 2);
 

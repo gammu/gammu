@@ -1,12 +1,12 @@
 #!/usr/bin/make -f
+# Gammu rules file by Michal Cihar <michal@cihar.com>
+#
+# Based on
 # Sample debian/rules that uses debhelper.
 # GNU copyright 1997 to 1999 by Joey Hess.
 
 # Uncomment this to turn on verbose mode.
 #export DH_VERBOSE=1
-
-# This is the debhelper compatibility version to use.
-export DH_COMPAT=3
 
 # These are used for cross-compiling and for saving the configure script
 # from having to guess our platform (since we know it already)
@@ -16,6 +16,11 @@ DEB_BUILD_GNU_TYPE  ?= $(shell dpkg-architecture -qDEB_BUILD_GNU_TYPE)
 
 ifneq (,$(findstring debug,$(DEB_BUILD_OPTIONS)))
 	CFLAGS += -g
+endif
+ifneq (,$(findstring noopt,$(DEB_BUILD_OPTIONS)))
+	CFLAGS += -O0
+else
+	CFLAGS += -O2
 endif
 ifeq (,$(findstring nostrip,$(DEB_BUILD_OPTIONS)))
 	INSTALL_PROGRAM += -s
@@ -33,8 +38,13 @@ endif
 
 config.status: configure
 	dh_testdir
-	# Add here commands to configure the package.
-	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) --prefix=/usr --mandir=\$${prefix}/share/man --infodir=\$${prefix}/share/info --with-docdir=\$${prefix}/share/doc/gammu --with-localedir=\$${prefix}/share/gammu
+	./configure --host=$(DEB_HOST_GNU_TYPE) --build=$(DEB_BUILD_GNU_TYPE) \
+		--prefix=/usr \
+		--includedir=\$${prefix}/include \
+		--mandir=\$${prefix}/share/man \
+		--infodir=\$${prefix}/share/info \
+		--with-docdir=\$${prefix}/share/doc/gammu \
+		--with-localedir=\$${prefix}/share/gammu
 
 
 build: build-stamp
@@ -42,9 +52,7 @@ build: build-stamp
 build-stamp:  changelog-stamp config.status
 	dh_testdir
 
-	# Add here commands to compile the package.
-	$(MAKE)
-	#/usr/bin/docbook-to-man debian/gammu.sgml > gammu.1
+	$(MAKE) makelib
 
 	touch build-stamp
 
@@ -71,8 +79,8 @@ install: build
 	dh_clean -k
 	dh_installdirs
 
-	# Add here commands to install the package into debian/gammu.
-	$(MAKE) install DESTDIR=$(CURDIR)/debian/gammu/
+	# Add here commands to install the package into debian/tmp.
+	$(MAKE) installlib DESTDIR=$(CURDIR)/debian/tmp
 
 
 # Build architecture-independent files here.
@@ -92,7 +100,7 @@ binary-arch: build install
 #	dh_installpam
 #	dh_installmime
 #	dh_installinit
-	dh_installcron
+#	dh_installcron
 	dh_installman
 	dh_installinfo
 #	dh_undocumented
@@ -101,6 +109,8 @@ binary-arch: build install
 	dh_strip
 	dh_compress
 	dh_fixperms
+	dh_movefiles
+	for name in gammu libgammu libgammu-dev ; do install -m644 debian/bug.control debian/$$name/usr/share/bug/$$name/control ; done
 #	dh_makeshlibs
 	dh_installdeb
 #	dh_perl

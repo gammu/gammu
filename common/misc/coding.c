@@ -1152,9 +1152,9 @@ void EncodeBASE64(unsigned char *Input, unsigned char *Output, int Length)
 
 static void DecodeBASE64Block(unsigned char in[4], unsigned char out[3])
 {   
-	out[ 0 ] = (unsigned char) (in[0] << 2 | in[1] >> 4);
-	out[ 1 ] = (unsigned char) (in[1] << 4 | in[2] >> 2);
-	out[ 2 ] = (unsigned char) (((in[2] << 6) & 0xc0) | in[3]);
+	out[0] = (unsigned char) (in[0] << 2 | in[1] >> 4);
+	out[1] = (unsigned char) (in[1] << 4 | in[2] >> 2);
+	out[2] = (unsigned char) (((in[2] << 6) & 0xc0) | in[3]);
 }
 
 int DecodeBASE64(unsigned char *Input, unsigned char *Output, int Length)
@@ -1164,6 +1164,7 @@ int DecodeBASE64(unsigned char *Input, unsigned char *Output, int Length)
 	int 		i, len, pos = 0, outpos = 0;
 
 	while(1) {
+		if (pos == Length) break;
 		len = 0;
 	        for(i = 0; i < 4; i++) {
         		v = 0;
@@ -1173,19 +1174,16 @@ int DecodeBASE64(unsigned char *Input, unsigned char *Output, int Length)
                 		v = (unsigned char) ((v < 43 || v > 122) ? 0 : cd64[ v - 43 ]);
 				if (v) v = (unsigned char) ((v == '$') ? 0 : v - 61);
 			}
-			if(pos<Length) {
+			in[i] = 0;
+			if(pos<=Length) {
 				len++;
-				if(v) in[i] = (unsigned char) (v - 1);
-			} else {
-				in[i] = 0;
-				break;
+				if (v) in[i] = (unsigned char) (v - 1);
 			}
 		}
 		if (len) {
 			DecodeBASE64Block(in, out);
 			for(i = 0; i < len - 1; i++) Output[outpos++] = out[i];
 		}
-		if (pos == Length) break;
 	}
 	Output[outpos] = 0;
 	return outpos;

@@ -6,7 +6,7 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "0,85,0,0"
+#define VERSION "0.85.5.0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -131,7 +131,8 @@
 #define HAVE_SCANDIR 1
 #define HAVE_ALPHASORT 1
 
-#define HAVE_MYSQL_MYSQL_H 1
+#define HAVE_PTHREAD 1
+/* #undef HAVE_MYSQL_MYSQL_H */
 #endif
 
 #define HAVE_ISWSPACE 1

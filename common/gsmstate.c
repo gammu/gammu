@@ -704,7 +704,7 @@ CFG_Header *CFG_FindGammuRC()
 {
 	CFG_Header	*cfg_info;
         char		*homedir;
-        char		rcfile[200];
+        char		rcfile[201];
 
 #if defined(WIN32) || defined(DJGPP)
         homedir = getenv("HOMEDRIVE");

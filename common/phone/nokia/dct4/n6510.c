@@ -5075,6 +5075,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	{DCT4_ReplySetPhoneMode,	  "\x15",0x03,0x64,ID_Reset		  },
 	{DCT4_ReplyGetPhoneMode,	  "\x15",0x03,0x65,ID_Reset		  },
+	{NoneReply,		  	  "\x15",0x03,0x68,ID_Reset		  },
 
 	{N6510_ReplyGetBatteryCharge,	  "\x17",0x03,0x0B,ID_GetBatteryCharge	  },
 

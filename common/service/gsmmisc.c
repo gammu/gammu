@@ -145,18 +145,20 @@ GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR, ch
 void GSM_IdentifyFileFormat(GSM_File *File)
 {
 	File->Type = GSM_File_Other;
-	if (memcmp(File->Buffer, "BM",2)==0) {
-		File->Type = GSM_File_Image_BMP;
-	} else if (memcmp(File->Buffer, "GIF",3)==0) {
-		File->Type = GSM_File_Image_GIF;
-	} else if (File->Buffer[0] == 0x00 && File->Buffer[1] == 0x00) {
-		File->Type = GSM_File_Image_WBMP;
-	} else if (memcmp(File->Buffer+1, "PNG",3)==0) {
-		File->Type = GSM_File_Image_PNG;
-	} else if (File->Buffer[0] == 0xFF && File->Buffer[1] == 0xD8) {
-		File->Type = GSM_File_Image_JPG;
-	} else if (memcmp(File->Buffer, "MThd",4)==0) {
-		File->Type = GSM_File_Ringtone_MIDI;
+	if (File->Used > 2) {
+		if (memcmp(File->Buffer, "BM",2)==0) {
+			File->Type = GSM_File_Image_BMP;
+		} else if (memcmp(File->Buffer, "GIF",3)==0) {
+			File->Type = GSM_File_Image_GIF;
+		} else if (File->Buffer[0] == 0x00 && File->Buffer[1] == 0x00) {
+			File->Type = GSM_File_Image_WBMP;
+		} else if (memcmp(File->Buffer+1, "PNG",3)==0) {
+			File->Type = GSM_File_Image_PNG;
+		} else if (File->Buffer[0] == 0xFF && File->Buffer[1] == 0xD8) {
+			File->Type = GSM_File_Image_JPG;
+		} else if (memcmp(File->Buffer, "MThd",4)==0) {
+			File->Type = GSM_File_Ringtone_MIDI;
+		}
 	}
 }
 

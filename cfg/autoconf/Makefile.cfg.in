@@ -12,6 +12,7 @@ LDLIBS           = @LDLIBS@
 INSTALL          = @INSTALL@
 FIND             = @FIND@
 RPMBUILD         = @RPMBUILD@
+DOXYGEN          = @DOXYGEN@
 
 # where to install binary, documentation, man and shared library files
 # where is temporary directory and directory for making RPM

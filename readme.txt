@@ -61,13 +61,17 @@ A. * these things can be done without anything (it will be done everything
      * Symbian support
      * SyncML
      * .... (other)
-   * after getting some hardware help:
+   * this things can be done after getting some hardware help:
      * N3410 Java support
      * N5510 radio/MP3 support
      * N3300 MP3 support
      * for Series 40 SyncML & camera settings, OMA provisioning, full media
        rights support, SMS distribution lists, assigning pictures to pbk
      * .... (other)
+   * these things will be probably never done:
+     * CRC16 for filesystem in DCT4 phones (although it's called CRC16 by
+       Nokia, none of possible CRC16 polynoms give correct results. Alghoritm
+       used by Nokia uses initial value 0xffff)
 -------------------------------------------------------------------------------
 Q. Where to get latest versions and support ?
 
@@ -97,7 +101,7 @@ A. Method 1:
          in your OS.
    Method 2:
      * under Linux based on RPM
-         first do "./configure" and then ""make makerpm"
+         first do "./configure" and then "make makerpm"
          resulting rpm package could be installed via rpm --install <package>
    Method 3:
      * under Linux based on Debian packages
@@ -107,7 +111,7 @@ A. Method 1:
          into main source directory and build it as any other Debian package
          (dpkg-buildpackage, or fakeroot make -f debian/rules binary).
 
-         The other way is to simple run make makedeb.  
+         The other way is to simple run make makedeb (after running ./configure).
    Method 4:
      * change parameters in /cfg/config.h
      * compile it:

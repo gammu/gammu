@@ -305,6 +305,9 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 	                		Data->GetSMSMessage->SMS[i].Number[1]=0;
 				}
 				return GE_NONE;
+			default:
+				smprintf(s, "Unknown SMS type: %i\n",msg.Buffer[8]);
+				return GE_UNKNOWNRESPONSE;
 			}
 		default:
 			smprintf(s, "Unknown SMS type: %i\n",msg.Buffer[8]);
