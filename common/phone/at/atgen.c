@@ -218,14 +218,13 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 	}
 }
 
-/* FIXME: Function doesn't respect quoting of parameters and thus +FOO:
- *        "ab","cd,ef" will consider as three arguments: "ab" >> "cd >> ef"
- */
 int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
 {
-	int position=0;
+	int	position=0;
+	bool	inside_quotes = false;
 
-	while (*input!=',' && *input!=0x0d && *input!=0x00) {
+	while ((*input!=',' || inside_quotes) && *input!=0x0d && *input!=0x00) {
+		if (*input == '"') inside_quotes = ! inside_quotes;
 		*output=*input;
 		input	++;
 		output	++;
@@ -236,10 +235,35 @@ int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
 	return position;
 }
 
-GSM_Error ATGEN_DecodeDateTime(GSM_DateTime *dt, unsigned char *input)
+GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned char *input)
 {
-	/* We receive somthing like: "05/01/06,12:51:41" */
-	unsigned char	*pos = input, *pos2;
+	/* We receive something like: 05/01/06,12:51:41 (or the same hex/unicode encoded) */
+	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
+	unsigned char		buffer[100];
+	unsigned char		*pos, *pos2;
+	unsigned char		buffer2[100];
+	int			len;
+
+	pos = input;
+
+	/* Strip possible quotes */
+	if (*pos == '"') pos++;
+	if (buffer[strlen(pos) - 1] == '"') buffer[strlen(pos) - 1] = 0;
+
+	len = strlen(pos);
+
+	if (Priv->Charset == AT_CHARSET_HEX && (len > 10) && (len % 2 == 0) && (strchr(pos, '/') == NULL)) {
+		/* This is probably hex encoded number */
+		DecodeHexBin(buffer, input, len);
+	} else if (Priv->Charset == AT_CHARSET_UCS2 && (len > 20) && (len % 4 == 0) && (strchr(pos, '/') == NULL)) {
+		/* This is probably unicode encoded number */
+		DecodeHexUnicode(buffer2, pos, len);
+		DecodeUnicode(buffer2, buffer);
+	} else  {
+		strcpy(buffer, pos);
+	}
+
+	pos = buffer;
 
 	if (*pos == '"') pos++;
 	dt->Year = atoi(pos);
@@ -639,7 +663,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->SMSMemory			= 0;
 	Priv->PBKMemory			= 0;
 	Priv->PBKSBNR			= 0;
-	Priv->PBKCharset		= 0;
+	Priv->Charset			= 0;
  	Priv->UCS2CharsetFailed		= false;
  	Priv->NonUCS2CharsetFailed	= false;
 	Priv->PBKMemories[0]		= 0;
@@ -700,6 +724,73 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = true;
+	}
+
+	return error;
+}
+
+GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, bool PreferUnicode)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error		error;
+
+	/* Have we already selected something? */
+	if (Priv->Charset!=0) {
+		/* If we want unicode charset and we have it already or setting of it
+		 * failed, we have nothing to do. */
+		if (PreferUnicode  && (Priv->Charset==AT_CHARSET_UCS2 || Priv->UCS2CharsetFailed)) return ERR_NONE;
+
+		/* If we don't need unicode charset and we have some (or have unicode
+		 * charset when other failed), we have nothing to do. */
+		if (!PreferUnicode && (Priv->Charset!=AT_CHARSET_UCS2 || Priv->NonUCS2CharsetFailed)) return ERR_NONE;
+	}
+
+	error=ATGEN_GetManufacturer(s);
+	if (error != ERR_NONE) return error;
+
+	/* Samsung (and Sagem?) phones use only PCCP437? */
+	if (Priv->Manufacturer == AT_Samsung) {
+		Priv->Charset = AT_CHARSET_PCCP437;
+		return ERR_NONE;
+	}
+
+	if (PreferUnicode && !Priv->UCS2CharsetFailed) {
+		smprintf(s, "Setting charset to UCS2\n");
+		error=GSM_WaitFor (s, "AT+CSCS=\"UCS2\"\r", 15, 0x00, 3, ID_SetMemoryCharset);
+		if (error == ERR_NONE) {
+			Priv->Charset = AT_CHARSET_UCS2;
+			return ERR_NONE;
+		} else {
+			Priv->UCS2CharsetFailed = true;
+		}
+	}
+
+	smprintf(s, "Setting charset to HEX\n");
+	error=GSM_WaitFor (s, "AT+CSCS=\"HEX\"\r", 14, 0x00, 3, ID_SetMemoryCharset);
+	/* Falcom replies OK for HEX mode and send everything
+	 * in normal format */
+	if (error == ERR_NONE && Priv->Manufacturer != AT_Falcom) {
+		Priv->Charset = AT_CHARSET_HEX;
+		return ERR_NONE;
+	}
+
+	smprintf(s, "Setting charset to GSM\n");
+	error=GSM_WaitFor (s, "AT+CSCS=\"GSM\"\r", 14, 0x00, 3, ID_SetMemoryCharset);
+	if (error == ERR_NONE) {
+		Priv->Charset = AT_CHARSET_GSM;
+		return ERR_NONE;
+	}
+
+	if (!Priv->UCS2CharsetFailed) {
+		Priv->NonUCS2CharsetFailed = true;
+		smprintf(s, "Setting charset to UCS2\n");
+		error=GSM_WaitFor (s, "AT+CSCS=\"UCS2\"\r", 15, 0x00, 3, ID_SetMemoryCharset);
+		if (error == ERR_NONE) {
+			Priv->Charset = AT_CHARSET_UCS2;
+			return ERR_NONE;
+		} else {
+			Priv->UCS2CharsetFailed = true;
+		}
 	}
 
 	return error;
@@ -1094,7 +1185,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				i++;
 				current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer+i);
 				smprintf(s, "\"%s\"\n",buffer);
-				error = ATGEN_DecodeDateTime(&sms->DateTime, buffer);
+				error = ATGEN_DecodeDateTime(s, &sms->DateTime, buffer);
 				if (error!=ERR_NONE) return error;
 				/* Date of SMSC response */
 				current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
@@ -1103,7 +1194,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				i++;
 				current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer+i);
 				smprintf(s, "\"%s\"\n",buffer);
-				error = ATGEN_DecodeDateTime(&sms->SMSCTime, buffer);
+				error = ATGEN_DecodeDateTime(s, &sms->SMSCTime, buffer);
 				if (error!=ERR_NONE) return error;
 				/* TPStatus */
 				current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
@@ -1139,13 +1230,13 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					}
 					smprintf(s, "\"%s\"\n",buffer);
 					if (*buffer)
-						error = ATGEN_DecodeDateTime(&sms->DateTime, buffer);
+						error = ATGEN_DecodeDateTime(s, &sms->DateTime, buffer);
 						if (error!=ERR_NONE) return error;
 					else {
 						/* FIXME: What is the proper undefined GSM_DateTime ? */
 						memset(&sms->DateTime, 0, sizeof(sms->DateTime));
 					}
-					error = ATGEN_DecodeDateTime(&sms->DateTime, buffer);
+					error = ATGEN_DecodeDateTime(s, &sms->DateTime, buffer);
 					if (error!=ERR_NONE) return error;
 				}
 				/* Sender number format */
@@ -1236,17 +1327,24 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 {
-	unsigned char	req[20], folderid;
-	GSM_Error	error;
-	int		location, getfolder, add = 0;
+	unsigned char		req[20], folderid;
+	GSM_Error		error;
+	int			location, getfolder, add = 0;
+	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 
 	error=ATGEN_GetSMSLocation(s,&sms->SMS[0], &folderid, &location);
 	if (error!=ERR_NONE) return error;
-	if (s->Phone.Data.Priv.ATGEN.SMSMemory == MEM_ME && IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSME900)) add = 899;
+	if (Priv->SMSMemory == MEM_ME && IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSME900)) add = 899;
 	sprintf(req, "AT+CMGR=%i\r", location + add);
 
 	error=ATGEN_GetSMSMode(s);
 	if (error != ERR_NONE) return error;
+
+	/* There is possibility that date will be encoded in text mode */
+	if (Priv->SMSMode == SMS_AT_TXT) {
+		error = ATGEN_SetCharset(s, false);
+		if (error != ERR_NONE) return error;
+	}
 
 	error=ATGEN_GetManufacturer(s);
 	if (error != ERR_NONE) return error;
@@ -1805,6 +1903,7 @@ GSM_Error ATGEN_ReplyGetDateTime_Alarm(GSM_Protocol_Message msg, GSM_StateMachin
 {
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 	unsigned char		*pos;
+	unsigned char		buffer[100];
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
@@ -1815,7 +1914,8 @@ GSM_Error ATGEN_ReplyGetDateTime_Alarm(GSM_Protocol_Message msg, GSM_StateMachin
 		}
 		pos++;
 		while (isspace(*pos)) pos++;
-		return ATGEN_DecodeDateTime((Data->RequestID == ID_GetDateTime) ? Data->DateTime : &(Data->Alarm->DateTime), pos);
+		ATGEN_ExtractOneParameter(pos, buffer);
+		return ATGEN_DecodeDateTime(s, (Data->RequestID == ID_GetDateTime) ? Data->DateTime : &(Data->Alarm->DateTime), buffer);
 	case AT_Reply_Error:
 		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
@@ -1828,6 +1928,12 @@ GSM_Error ATGEN_ReplyGetDateTime_Alarm(GSM_Protocol_Message msg, GSM_StateMachin
 
 GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
+	GSM_Error 	error;
+
+	/* There is possibility that date will be encoded */
+	error = ATGEN_SetCharset(s, false);
+	if (error != ERR_NONE) return error;
+
 	s->Phone.Data.DateTime=date_time;
 	smprintf(s, "Getting date & time\n");
 	return GSM_WaitFor (s, "AT+CCLK?\r", 9, 0x00, 4, ID_GetDateTime);
@@ -1847,7 +1953,13 @@ GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
+	GSM_Error 	error;
+
 	if (alarm->Location != 1) return ERR_NOTSUPPORTED;
+
+	/* There is possibility that date will be encoded */
+	error = ATGEN_SetCharset(s, false);
+	if (error != ERR_NONE) return error;
 
 	alarm->Repeating = true;
 	alarm->Text[0] = 0; alarm->Text[1] = 0;
@@ -2351,73 +2463,6 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 	return ATGEN_GetMemoryInfo(s, Status, AT_Status);
 }
 
-GSM_Error ATGEN_SetPBKCharset(GSM_StateMachine *s, bool PreferUnicode)
-{
-	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
-	GSM_Error		error;
-
-	/* Have we already selected something? */
-	if (Priv->PBKCharset!=0) {
-		/* If we want unicode charset and we have it already or setting of it
-		 * failed, we have nothing to do. */
-		if (PreferUnicode  && (Priv->PBKCharset==AT_PBK_UCS2 || Priv->UCS2CharsetFailed)) return ERR_NONE;
-
-		/* If we don't need unicode charset and we have some (or have unicode
-		 * charset when other failed), we have nothing to do. */
-		if (!PreferUnicode && (Priv->PBKCharset!=AT_PBK_UCS2 || Priv->NonUCS2CharsetFailed)) return ERR_NONE;
-	}
-
-	error=ATGEN_GetManufacturer(s);
-	if (error != ERR_NONE) return error;
-
-	/* Samsung (and Sagem?) phones use only PCCP437? */
-	if (Priv->Manufacturer == AT_Samsung) {
-		Priv->PBKCharset = AT_PBK_PCCP437;
-		return ERR_NONE;
-	}
-
-	if (PreferUnicode && !Priv->UCS2CharsetFailed) {
-		smprintf(s, "Setting charset to UCS2\n");
-		error=GSM_WaitFor (s, "AT+CSCS=\"UCS2\"\r", 15, 0x00, 3, ID_SetMemoryCharset);
-		if (error == ERR_NONE) {
-			Priv->PBKCharset = AT_PBK_UCS2;
-			return ERR_NONE;
-		} else {
-			Priv->UCS2CharsetFailed = true;
-		}
-	}
-
-	smprintf(s, "Setting charset to HEX\n");
-	error=GSM_WaitFor (s, "AT+CSCS=\"HEX\"\r", 14, 0x00, 3, ID_SetMemoryCharset);
-	/* Falcom replies OK for HEX mode and send everything
-	 * in normal format */
-	if (error == ERR_NONE && Priv->Manufacturer != AT_Falcom) {
-		Priv->PBKCharset = AT_PBK_HEX;
-		return ERR_NONE;
-	}
-
-	smprintf(s, "Setting charset to GSM\n");
-	error=GSM_WaitFor (s, "AT+CSCS=\"GSM\"\r", 14, 0x00, 3, ID_SetMemoryCharset);
-	if (error == ERR_NONE) {
-		Priv->PBKCharset = AT_PBK_GSM;
-		return ERR_NONE;
-	}
-
-	if (!Priv->UCS2CharsetFailed) {
-		Priv->NonUCS2CharsetFailed = true;
-		smprintf(s, "Setting charset to UCS2\n");
-		error=GSM_WaitFor (s, "AT+CSCS=\"UCS2\"\r", 15, 0x00, 3, ID_SetMemoryCharset);
-		if (error == ERR_NONE) {
-			Priv->PBKCharset = AT_PBK_UCS2;
-			return ERR_NONE;
-		} else {
-			Priv->UCS2CharsetFailed = true;
-		}
-	}
-
-	return error;
-}
-
 GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -2452,11 +2497,11 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		Memory->Entries[0].SMSList[0] = 0;
 
 		len = strlen(buffer + 1) - 1;
-		if (Priv->PBKCharset == AT_PBK_HEX && (len > 10) && (len % 2 == 0) && (strchr(buffer + 1, '+') == NULL)) {
+		if (Priv->Charset == AT_CHARSET_HEX && (len > 10) && (len % 2 == 0) && (strchr(buffer + 1, '+') == NULL)) {
 			/* This is probably hex encoded number */
 			DecodeHexBin(buffer2, buffer+1, len);
 			DecodeDefault(Memory->Entries[0].Text ,buffer2, strlen(buffer2), false, NULL);
-		} else if (Priv->PBKCharset == AT_PBK_UCS2 && (len > 20) && (len % 4 == 0) && (strchr(buffer + 1, '+') == NULL)) {
+		} else if (Priv->Charset == AT_CHARSET_UCS2 && (len > 20) && (len % 4 == 0) && (strchr(buffer + 1, '+') == NULL)) {
 			/* This is probably unicode encoded number */
 			DecodeHexUnicode(Memory->Entries[0].Text, buffer + 1,len);
 		} else  {
@@ -2488,18 +2533,18 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
  		Memory->EntriesNum++;
  		Memory->Entries[1].EntryType=PBK_Text_Name;
-		switch (Priv->PBKCharset) {
-		case AT_PBK_HEX:
+		switch (Priv->Charset) {
+		case AT_CHARSET_HEX:
 			DecodeHexBin(buffer2, buffer + offset, strlen(buffer) - (offset * 2));
  			DecodeDefault(Memory->Entries[1].Text,buffer2,strlen(buffer2),false,NULL);
 			break;
-		case AT_PBK_GSM:
+		case AT_CHARSET_GSM:
  			DecodeDefault(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
 			break;
-		case AT_PBK_UCS2:
+		case AT_CHARSET_UCS2:
 			DecodeHexUnicode(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2));
 			break;
-		case AT_PBK_PCCP437:
+		case AT_CHARSET_PCCP437:
 			/* FIXME: correctly decode PCCP437 */
  			DecodeDefault(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
 			break;
@@ -2578,7 +2623,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 	}
 
 
-	error=ATGEN_SetPBKCharset(s, true); /* For reading we prefer unicode */
+	error=ATGEN_SetCharset(s, true); /* For reading we prefer unicode */
 	if (error != ERR_NONE) return error;
 
 	if (endlocation == 0) {
@@ -3042,24 +3087,24 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			}
 		}
 
-		error = ATGEN_SetPBKCharset(s, PreferUnicode);
+		error = ATGEN_SetCharset(s, PreferUnicode);
 		if (error != ERR_NONE) return error;
 
-		switch (Priv->PBKCharset) {
-		case AT_PBK_HEX:
+		switch (Priv->Charset) {
+		case AT_CHARSET_HEX:
 			EncodeHexBin(name, DecodeUnicodeString(entry->Entries[Name].Text), UnicodeLength(entry->Entries[Name].Text));
 			len = strlen(name);
 			break;
-		case AT_PBK_GSM:
+		case AT_CHARSET_GSM:
 			smprintf(s, "str: %s\n", DecodeUnicodeString(entry->Entries[Name].Text));
 			len = UnicodeLength(entry->Entries[Name].Text);
 			EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
 			break;
-		case AT_PBK_UCS2:
+		case AT_CHARSET_UCS2:
 			EncodeHexUnicode(name, entry->Entries[Name].Text, UnicodeLength(entry->Entries[Name].Text));
 			len = strlen(name);
 			break;
-		case AT_PBK_PCCP437:
+		case AT_CHARSET_PCCP437:
 			/* FIXME: correctly decode PCCP437 */
 			smprintf(s, "str: %s\n", DecodeUnicodeString(entry->Entries[Name].Text));
 			len = UnicodeLength(entry->Entries[Name].Text);
