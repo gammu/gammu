@@ -1,6 +1,7 @@
 gammu (0.98.0-0) unstable; urgency=low
 
   * New version.
+  * Don't need changelog-stamp for build.
 
  -- Michal Čihař <michal@cihar.com>  Thu,  9 Sep 2004 12:10:06 +0200
 

@@ -1,2 +1,2 @@
-precious ^gammu-doc$
+precious ^(gammu-doc|configure-stamp|build-stamp)$
 
