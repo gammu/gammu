@@ -2402,6 +2402,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	char			*pos;
 	unsigned char		buffer[500],buffer2[500];
 	int			len;
+	int			offset;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -2457,22 +2458,27 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Name */
 		pos += ATGEN_ExtractOneParameter(pos, buffer);
  		smprintf(s, "Name text: %s\n",buffer);
+
+		/* Some phones (Motorola) don't put name iniside quotes */
+		if (buffer[0] == '"') offset = 1;
+		else offset = 0;
+
  		Memory->EntriesNum++;
  		Memory->Entries[1].EntryType=PBK_Text_Name;
 		switch (Priv->PBKCharset) {
 		case AT_PBK_HEX:
-			DecodeHexBin(buffer2,buffer+1,strlen(buffer)-2);
+			DecodeHexBin(buffer2, buffer + offset, strlen(buffer) - (offset * 2));
  			DecodeDefault(Memory->Entries[1].Text,buffer2,strlen(buffer2),false,NULL);
 			break;
 		case AT_PBK_GSM:
- 			DecodeDefault(Memory->Entries[1].Text,buffer+1,strlen(buffer)-2,false,NULL);
+ 			DecodeDefault(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
 			break;
 		case AT_PBK_UCS2:
-			DecodeHexUnicode(Memory->Entries[1].Text,buffer+1,strlen(buffer+1) - 1);
+			DecodeHexUnicode(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2));
 			break;
 		case AT_PBK_PCCP437:
 			/* FIXME: correctly decode PCCP437 */
- 			DecodeDefault(Memory->Entries[1].Text,buffer+1,strlen(buffer)-2,false,NULL);
+ 			DecodeDefault(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
 			break;
 		}
 
