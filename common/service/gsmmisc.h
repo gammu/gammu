@@ -89,7 +89,7 @@ typedef enum {
 	/**
 	 * Code not needed.
 	 */
-	SEC_None 
+	SEC_None
 } GSM_SecurityCodeType;
 
 #define GSM_SECURITY_CODE_LEN	15
@@ -308,7 +308,7 @@ typedef struct {
 
 /* ------------------------------------------------------------------------ */
 
-void ReadVCALDateTime(char *Buffer, GSM_DateTime *dt);
+bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt);
 void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start);
 
 void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start);

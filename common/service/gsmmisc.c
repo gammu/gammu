@@ -109,7 +109,7 @@ static void GSM_JADFindLine(GSM_File File, char *Name, char *Value)
 			while (Line[Pos] == 0x20) Pos++;
 			strcpy(Value,Line+Pos);
 			return;
-		}		
+		}
 	}
 }
 
@@ -173,7 +173,7 @@ void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start
 			Date->Hour, Date->Minute, Date->Second,13,10);
 }
 
-void ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
+bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 {
 	char year[5]="", month[3]="", day[3]="", hour[3]="", minute[3]="", second[3]="";
 
@@ -186,15 +186,17 @@ void ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 	strncpy(minute, Buffer+11,	2);
 	strncpy(second, Buffer+13,	2);
 
-	/* FIXME: Should check ranges... */
 	dt->Year	= atoi(year);
 	dt->Month	= atoi(month);
 	dt->Day		= atoi(day);
 	dt->Hour	= atoi(hour);
 	dt->Minute	= atoi(minute);
 	dt->Second	= atoi(second);
+
 	/* FIXME */
 	dt->Timezone	= 0;
+
+	return CheckDate(dt) && CheckTime(dt);
 }
 
 void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)
@@ -208,7 +210,7 @@ void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)
 		} else {
 			*Length+=sprintf(Buffer+(*Length), "%s;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s%c%c",Start,buffer,13,10);
 		}
-	}	    
+	}
 }
 
 bool ReadVCALText(char *Buffer, char *Start, char *Value)
