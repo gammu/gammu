@@ -411,6 +411,8 @@ static GSM_Error N6110_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
                                0x00,            /* location */
                                0x00};
 
+	if (entry->Location > 255) return ERR_INVALIDLOCATION;
+
         req[4] = NOKIA_GetMemoryType(s, entry->MemoryType,N6110_MEMORY_TYPES);
         if (req[4]==0xff) return ERR_NOTSUPPORTED;
 
@@ -1431,6 +1433,7 @@ static GSM_Error N6110_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
                                     0x00};              /* location     */
 
         if (entry->Location == 0) return ERR_NOTSUPPORTED;
+	if (entry->Location > 255) return ERR_INVALIDLOCATION;
 
         GSM_PhonebookFindDefaultNameNumberGroup(entry, &Name, &Number, &Group);
 
@@ -2895,6 +2898,7 @@ GSM_Phone_Functions N6110Phone = {
         NOTSUPPORTED,                   /*      ClearFMStations         */
         NOTSUPPORTED,                   /*      GetNextFileFolder       */
 	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	GetNextRootFolder	*/
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
         NOTSUPPORTED,                   /*      GetFilePart             */
         NOTSUPPORTED,                   /*      AddFile                 */

@@ -75,7 +75,11 @@ BOOL LoopProc(int *i)
 			error=GSM_InitConnection(&s[*i].s,2);
 		        ReleaseMutex(s[*i].Mutex);
 			if (s[*i].ThreadTerminate) break;
-//			if (error == ERR_DEVICEOPENERROR) break;
+			if (error == ERR_DEVICEOPENERROR ||
+			    error == ERR_DEVICENOTWORK) {
+				my_sleep(500);
+//				break;
+			}
 			if (error == ERR_NONE) {
 				s[*i].errors = 0;
 				if (*s[*i].PhoneCallBack != NULL) {

@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "1.00.10"
-#define VERSION_WIN "1,00,10,0"
+#define VERSION "1.00.23"
+#define VERSION_WIN "1,00,23,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -25,16 +25,17 @@
 #define GSM_ENABLE_FBUS2 1
 /* FBUS2 to use with DLR3 cable (init done using AT commands) */
 #define GSM_ENABLE_FBUS2DLR3 1
-/* FBUS2 to use with DKU2 cable (init done using AT commands) */
-#define GSM_ENABLE_FBUS2DKU2 1
-/* FBUS2 to use with DKU5 cable (init done using AT commands) */
-#define GSM_ENABLE_FBUS2DKU5 1
 /* FBUS2 to use with cable with PL2303 chip (init done using AT commands) */
 #define GSM_ENABLE_FBUS2PL2303 1
 /* FBUS2 to use with bluetooth legacy device (init done using AT commands) */
 #define GSM_ENABLE_FBUS2BLUE 1
 /* FBUS2 to use with direct infrared device */
 #define GSM_ENABLE_FBUS2IRDA 1
+
+/* PHONET to use with DKU2 cable */
+#define GSM_ENABLE_DKU2PHONET 1
+/* FBUS2 to use with DKU5 cable (init done using AT commands) */
+#define GSM_ENABLE_DKU5FBUS2 1
 
 /* PHONET FBUS to use with bluetooth legacy device */
 #define GSM_ENABLE_PHONETBLUE 1

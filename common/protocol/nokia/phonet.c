@@ -15,7 +15,7 @@
 
 #include "../../gsmstate.h"
 
-#if defined(GSM_ENABLE_IRDA) || defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_BLUEPHONET) || defined(GSM_ENABLE_FBUS2DKU2)
+#if defined(GSM_ENABLE_IRDA) || defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_BLUEPHONET) || defined(GSM_ENABLE_DKU2PHONET)
 
 #include <stdio.h>
 #include <string.h>
@@ -44,7 +44,7 @@ static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
 		buffer2[1] = PHONET_DEVICE_PHONE;	//destination
 		buffer2[2] = PHONET_BLUE_DEVICE_PC;	//source
 	}
-	if (s->ConnectionType==GCT_FBUS2DKU2) {
+	if (s->ConnectionType==GCT_DKU2PHONET) {
 		buffer2[0] = PHONET_DKU2_FRAME_ID;
 	}
 
@@ -122,7 +122,7 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	}
 	if (d->MsgRXState==RX_GetDestination) {
 		switch (s->ConnectionType) {
-		case GCT_FBUS2DKU2:
+		case GCT_DKU2PHONET:
 		case GCT_IRDAPHONET:
 			if (rx_char == PHONET_DEVICE_PC) correct = true;
 			break;
@@ -155,7 +155,7 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		case GCT_BLUEPHONET:
 			if (rx_char == PHONET_BLUE_FRAME_ID) correct = true;
 			break;
-		case GCT_FBUS2DKU2:
+		case GCT_DKU2PHONET:
 			if (rx_char == PHONET_DKU2_FRAME_ID) correct = true;
 			break;
 		default:

@@ -24,16 +24,17 @@
 #undef GSM_ENABLE_FBUS2
 /* FBUS2 to use with DLR3 cable (init done using AT commands) */
 #undef GSM_ENABLE_FBUS2DLR3
-/* FBUS2 to use with DKU2 cable (init done using AT commands) */
-#undef GSM_ENABLE_FBUS2DKU2
-/* FBUS2 to use with DKU5 cable (init done using AT commands) */
-#undef GSM_ENABLE_FBUS2DKU5
 /* FBUS2 to use with cable with PL2303 chip (init done using AT commands) */
 #undef GSM_ENABLE_FBUS2PL2303
 /* FBUS2 to use with bluetooth legacy device (init done using AT commands) */
 #undef GSM_ENABLE_FBUS2BLUE
 /* FBUS2 to use with direct infrared device */
 #undef GSM_ENABLE_FBUS2IRDA
+
+/* PHONET to use with DKU2 cable */
+#undef GSM_ENABLE_DKU2PHONET
+/* FBUS2 to use with DKU5 cable (init done using AT commands) */
+#undef GSM_ENABLE_DKU5FBUS2
 
 /* PHONET FBUS to use with bluetooth legacy device */
 #undef GSM_ENABLE_PHONETBLUE

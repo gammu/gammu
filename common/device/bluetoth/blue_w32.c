@@ -79,6 +79,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 
 static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, char *address, WSAPROTOCOL_INFO *protocolInfo)
 {
+	bool				found = -1;
 	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
 	WSAQUERYSET 			querySet;
 	DWORD				flags;
@@ -89,7 +90,6 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, char *address, WSAPR
 	DWORD 				bufferLength, addressSize;
 	WSAQUERYSET 			*pResults = (WSAQUERYSET*)&buffer;
 	HANDLE				handle;
-	GSM_Error			error;
 
 	memset(&querySet, 0, sizeof(querySet));
 	querySet.dwSize 	  = sizeof(querySet);
@@ -121,14 +121,17 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, char *address, WSAPR
 			for (i=strlen(addressAsString)-1;i>0;i--) {
 				if (addressAsString[i] == ':') break;
 			}
-			if (bluetooth_checkservicename(s, pResults->lpszServiceInstanceName) == ERR_NONE) {
-				error = bluetooth_connect(s,atoi(addressAsString+i+1),address+1);
-				result = WSALookupServiceEnd(handle);
-				return error;
+			if (found == -1) {
+				if (bluetooth_checkservicename(s, pResults->lpszServiceInstanceName) == ERR_NONE) {
+					found = atoi(addressAsString+i+1);
+				}
 			}
 		}
 	}
 	result = WSALookupServiceEnd(handle);
+	if (found != -1) {
+		return bluetooth_connect(s,found,address+1);
+	}
 	return ERR_NOTSUPPORTED;
 }
 
