@@ -162,16 +162,11 @@ AC_SUBST(TEMP_DIR)
 
 dnl Bluetooth stacks
 gsm_blue_stack=unknown
-AC_CACHE_CHECK([for the Bluez Bluetooth stack (www.bluez.org)], ac_cv_have_sockaddr_rc,
-     [AC_TRY_COMPILE([#include <sys/socket.h>
-          #include <bluetooth/bluetooth.h>
-          #include <bluetooth/rfcomm.h>],
-          [struct sockaddr_rc rc;],
-		ac_cv_have_sockaddr_rc=yes,ac_cv_have_sockaddr_rc=no)])
-if test $ac_cv_have_sockaddr_rc = yes; then
-    AC_DEFINE(GSM_ENABLE_BLUEZ)
-    gsm_blue_stack=Bluez 
-fi
+AC_CHECK_HEADERS(bluetooth/bluetooth.h,
+        [gsm_blue_stack=Bluez
+	 AC_DEFINE(GSM_ENABLE_BLUEZ)
+         LDLIBS="$LDLIBS -lbluetooth -lsdp"])
+    
 dnl Path for Bluez bluetooth library
 gsm_bt_dir=""
 AC_ARG_WITH(bluedir,
@@ -179,7 +174,7 @@ AC_ARG_WITH(bluedir,
         [ if test x$withval = xyes; then
                 AC_MSG_WARN(Usage is: --with-bluedir=DIR)
           else
-                LDLIBS="$LDLIBS -L$withval/lib/ -lbluetooth"
+                LDLIBS="$LDLIBS -L$withval/lib/"
                 CFLAGS="$CFLAGS -I$withval/include/"
                 gsm_bt_dir="$withval"
           fi
@@ -269,9 +264,6 @@ AC_ARG_ENABLE(bluefbus,
         [if test $gsm_blue_stack = Bluez; then
                 AC_DEFINE(GSM_ENABLE_BLUEFBUS2)
                 gsm_enable_bluefbus2="yes"
-                if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
-                        LDLIBS="$LDLIBS -lbluetooth"
-                fi
           else
                 gsm_enable_bluefbus2="no"
           fi])
@@ -282,9 +274,6 @@ AC_ARG_ENABLE(bluephonet,
         [if test $gsm_blue_stack = Bluez; then
                 AC_DEFINE(GSM_ENABLE_BLUEPHONET)
                 gsm_enable_bluephonet="yes"
-                if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
-                        LDLIBS="$LDLIBS -lbluetooth"
-                fi
           else
                 gsm_enable_bluephonet="no"
           fi])
@@ -294,9 +283,6 @@ AC_ARG_ENABLE(blueat,
         [if test $gsm_blue_stack = Bluez; then
                 AC_DEFINE(GSM_ENABLE_BLUEAT)
                 gsm_enable_blueat="yes"
-                if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
-                        LDLIBS="$LDLIBS -lbluetooth"
-                fi
           else
                 gsm_enable_blueat="no"
           fi])  
@@ -306,9 +292,6 @@ AC_ARG_ENABLE(blueobex,
         [if test $gsm_blue_stack = Bluez; then
                 AC_DEFINE(GSM_ENABLE_BLUEOBEX)
                 gsm_enable_blueobex="yes"
-                if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
-                        LDLIBS="$LDLIBS -lbluetooth"
-                fi
           else
                 gsm_enable_blueobex="no"
           fi])  
@@ -344,9 +327,6 @@ AC_ARG_ENABLE(bluerfsearch,
         [if test $gsm_blue_stack = Bluez; then
                 AC_DEFINE(BLUETOOTH_RF_SEARCHING)
                 gsm_enable_bluerfsearch="yes"
-                if ( echo $LDLIBS | grep -v -q -e -lbluetooth ) ; then
-                        LDLIBS="$LDLIBS -lbluetooth"
-                fi
           fi])  
 
 dnl Phone modules
@@ -412,7 +392,7 @@ mv ../rpm/gammu.spec ../../
 dnl Writing info
 cat <<EOT
   G A M M U (GNU All Mobiles Management Utilities)
-  (c) 2002 - 2003 by Marcin Wiacek (www.mwiacek.com)
+  (c) 2002 - 2004 by Marcin Wiacek (www.mwiacek.com)
   Version $VERSION
 
   Directories

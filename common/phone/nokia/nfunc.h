@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek */
+/* (c) 2002-2004 by Marcin Wiacek */
 
 #ifndef phone_nokia_h
 #define phone_nokia_h
@@ -22,12 +22,13 @@ GSM_Error N71_65_ReplyDelCalendar		(GSM_Protocol_Message msg, GSM_StateMachine *
 GSM_Error N71_65_ReplyCallInfo			(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N71_65_ReplyUSSDInfo			(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3DCT4_ReplyCallDivert		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3DCT4_ReplyGetActiveWAPMMSSet	(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3DCT4_ReplySetActiveWAPMMSSet	(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error DCT3DCT4_ReplyGetActiveConnectSet	(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error DCT3DCT4_ReplySetActiveConnectSet	(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3DCT4_ReplyGetWAPBookmark		(GSM_Protocol_Message msg, GSM_StateMachine *s, bool FullLength);
 GSM_Error DCT3DCT4_ReplySetWAPBookmark		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3DCT4_ReplyDelWAPBookmark		(GSM_Protocol_Message msg, GSM_StateMachine *s);
-GSM_Error DCT3DCT4_ReplyEnableWAP		(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error DCT3DCT4_ReplyEnableConnectFunc	(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error DCT3DCT4_ReplyDisableConnectFunc      (GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3DCT4_ReplyGetModelFirmware	(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N71_65_ReplySendDTMF			(GSM_Protocol_Message msg, GSM_StateMachine *s);
   
@@ -42,16 +43,17 @@ GSM_Error N71_65_AddCalendar2			(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 GSM_Error N71_65_AddCalendar1			(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *FirstCalendarPos);
 GSM_Error N71_65_DelCalendar			(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 GSM_Error N71_65_GetCalendarInfo1		(GSM_StateMachine *s, GSM_NOKIACalToDoLocations *LastCalendar);
+GSM_Error DCT3DCT4_EnableWAPFunctions		(GSM_StateMachine *s);
 GSM_Error DCT3DCT4_SendDTMF			(GSM_StateMachine *s, char *sequence);
-GSM_Error DCT3DCT4_DeleteWAPBookmark		(GSM_StateMachine *s, GSM_WAPBookmark 	  *bookmark);
-GSM_Error DCT3DCT4_EnableWAP			(GSM_StateMachine *s);
+GSM_Error DCT3DCT4_DeleteWAPBookmarkPart	(GSM_StateMachine *s, GSM_WAPBookmark *bookmark);
+GSM_Error DCT3DCT4_GetWAPBookmarkPart		(GSM_StateMachine *s, GSM_WAPBookmark *bookmark);
+GSM_Error DCT3DCT4_DisableConnectionFunctions	(GSM_StateMachine *s);
 GSM_Error DCT3DCT4_GetModel			(GSM_StateMachine *s);
 GSM_Error DCT3DCT4_GetFirmware			(GSM_StateMachine *s);
-GSM_Error DCT3DCT4_GetWAPBookmark		(GSM_StateMachine *s, GSM_WAPBookmark	  *bookmark	);
 GSM_Error DCT3DCT4_AnswerCall			(GSM_StateMachine *s, int ID);
 GSM_Error DCT3DCT4_CancelCall			(GSM_StateMachine *s, int ID);
-GSM_Error DCT3DCT4_GetActiveWAPMMSSet		(GSM_StateMachine *s);
-GSM_Error DCT3DCT4_SetActiveWAPMMSSet		(GSM_StateMachine *s, GSM_MultiWAPSettings *settings, bool MMS);
+GSM_Error DCT3DCT4_GetActiveConnectSet		(GSM_StateMachine *s);
+GSM_Error DCT3DCT4_SetActiveConnectSet		(GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
 GSM_Error DCT3DCT4_CancelAllDiverts		(GSM_StateMachine *s);
 GSM_Error DCT3DCT4_SetCallDivert		(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
 GSM_Error DCT3DCT4_GetCallDivert		(GSM_StateMachine *s, GSM_MultiCallDivert *divert);

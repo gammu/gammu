@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek and others */
+/* (c) 2002-2004 by Marcin Wiacek and others */
 
 #ifndef __coding_h
 #define __coding_h

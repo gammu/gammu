@@ -1,3 +1,5 @@
+/* (c) 2004 by Marcin Wiacek */
+
 #include "../../gsmstate.h"
 
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE

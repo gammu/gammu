@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek */
+/* (c) 2002-2004 by Marcin Wiacek */
 
 #include "../../../common/gsmstate.h"
 
@@ -1195,7 +1195,10 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 	error=Phone->GetRingtonesInfo(&s,&Info);
 	Print_Error(error);
 
-//	if (atoi(argv[0]) > Info.Number) exit;
+	if (atoi(argv[2]) > Info.Number-1) {
+		GSM_Terminate();
+		return;
+	}
 	req[4] = Info.Ringtone[atoi(argv[2])].ID / 256;
 	req[5] = Info.Ringtone[atoi(argv[2])].ID % 256;
 	req[6] = Info.Ringtone[atoi(argv[2])].Group;
@@ -1208,12 +1211,85 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static GSM_Error DCT4_ReplyMakeCameraShoot(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	return ERR_NONE;	
+}
+
+void DCT4MakeCameraShoot(int argc, char *argv[])
+{
+	unsigned char SetCamera[] = {N6110_FRAME_HEADER, 0x09, 0x01, 0x02};
+	unsigned char CameraON[] = {N6110_FRAME_HEADER, 0x02, 0x01, 0x00, 0x00, 0x00 , 0x00, 0x00};
+	unsigned char CameraON2[] = {N6110_FRAME_HEADER, 0xF0, 0x02, 0x00};
+	unsigned char MakeShot[200] = {N6110_FRAME_HEADER, 0x06, 0x01, 0x06,
+		0x01, 0x00, 0x00, 0x02, 0x00, 0x04, 0x32, 0x00, 0x01, 
+		0x1D, 		//length of rest
+		0x00, 0x00, 0x00, 0x01, 
+		0x00, 0x02,	//master folder id
+		0x00, 0x14}; 	//length
+	unsigned char CameraOFF[] = {N6110_FRAME_HEADER, 0x04, 0x01, 0x00};
+
+	GSM_Init(true);
+
+        CheckDCT4();
+
+	s.User.UserReplyFunctions=UserReplyFunctions4;
+
+	error=GSM_WaitFor (&s, SetCamera, 6, 0x61, 4, ID_User3);
+	Print_Error(error);
+	error=GSM_WaitFor (&s, CameraON, 10, 0x61, 4, ID_User3);
+	Print_Error(error);
+	error=GSM_WaitFor (&s, CameraON2, 6, 0x61, 4, ID_User3);
+	Print_Error(error);
+	EncodeUnicode(MakeShot+24,"GammuShot",9);
+	MakeShot[15] = 9+9*2;
+	MakeShot[23] = 9*2;
+	error=GSM_WaitFor (&s, MakeShot, 24+MakeShot[23], 0x61, 4, ID_User3);
+	Print_Error(error);
+	error=GSM_WaitFor (&s, SetCamera, 6, 0x61, 4, ID_User3);
+	Print_Error(error);
+	error=GSM_WaitFor (&s, CameraOFF, 6, 0x61, 4, ID_User3);
+	Print_Error(error);
+
+	GSM_Terminate();
+}
+
+int len;
+
+static GSM_Error DCT4_ReplyGetScreenDump(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	if (msg.Buffer[7] == 0x0C) len = 1;
+	return ERR_NONE;	
+}
+
+void DCT4GetScreenDump(int argc, char *argv[])
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x07, 0x01, 0x00};
+	//n6110_frameheader 06//screen info
+
+	GSM_Init(true);
+
+        CheckDCT4();
+
+	s.User.UserReplyFunctions=UserReplyFunctions4;
+
+	error=GSM_WaitFor (&s, req, 6, 0x0E, 4, ID_User3);
+	Print_Error(error);
+	len = 2000;
+	while (len >= 200) GSM_ReadDevice(&s,true);
+
+	GSM_Terminate();
+}
+
 static GSM_Reply_Function UserReplyFunctions4[] = {
 
 #ifdef DEBUG
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x05,ID_User2	},
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x06,ID_User2	},
 #endif
+
+	{DCT4_ReplyGetScreenDump,	"\x0E",0x00,0x00,ID_User3	},
+	{DCT4_ReplyGetScreenDump,	"\x0E",0x00,0x00,ID_IncomingFrame},
 
 	{DCT4_ReplyGetADC,		"\x17",0x03,0x10,ID_User3	},
 	{DCT4_ReplyGetADC,		"\x17",0x03,0x12,ID_User3	},
@@ -1246,6 +1322,12 @@ static GSM_Reply_Function UserReplyFunctions4[] = {
 
 	{DCT4_ReplyGetSimlock,		"\x53",0x03,0x0D,ID_User6	},
 	{DCT4_ReplyGetSimlock,		"\x53",0x03,0x13,ID_User6	},
+
+	{DCT4_ReplyMakeCameraShoot,	"\x61",0x03,0x03,ID_User3	},
+	{DCT4_ReplyMakeCameraShoot,	"\x61",0x03,0x07,ID_User3	},
+	{DCT4_ReplyMakeCameraShoot,	"\x61",0x03,0x08,ID_User3	},
+	{DCT4_ReplyMakeCameraShoot,	"\x61",0x03,0x0A,ID_User3	},
+	{DCT4_ReplyMakeCameraShoot,	"\x61",0x03,0xF0,ID_User3	},
 
 	{DCT4_ReplyGetBTInfo,		"\xD7",0x03,0x0A,ID_User6	},
 

@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek */
+/* (c) 2002-2004 by Marcin Wiacek */
 /* locking device and settings all speeds by Michal Cihar */
 
 #include "../../gsmstate.h"

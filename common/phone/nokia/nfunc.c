@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Marcin Wiacek */
+/* (c) 2002-2004 by Marcin Wiacek */
 /* based on some work from Ralf Thelen, Gabriele Zappi and MyGnokii */
 
 #include <string.h> /* memcpy only */
@@ -805,7 +805,7 @@ GSM_Error DCT3DCT4_CancelAllDiverts(GSM_StateMachine *s)
 	return GSM_WaitFor (s, req, 0x09, 0x06, 10, ID_Divert);
 }
 
-GSM_Error DCT3DCT4_ReplyGetActiveWAPMMSSet(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplyGetActiveConnectSet(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
@@ -816,34 +816,29 @@ GSM_Error DCT3DCT4_ReplyGetActiveWAPMMSSet(GSM_Protocol_Message msg, GSM_StateMa
 	return ERR_NONE;
 }
 
-GSM_Error DCT3DCT4_GetActiveWAPMMSSet(GSM_StateMachine *s)
+GSM_Error DCT3DCT4_GetActiveConnectSet(GSM_StateMachine *s)
 {
 	unsigned char GetSetreq[] = {N6110_FRAME_HEADER, 0x0F};
 
-	smprintf(s, "Checking, if WAP/MMS settings are active\n");
-	return GSM_WaitFor (s, GetSetreq, 4, 0x3f, 4, ID_GetWAPSettings);
+	smprintf(s, "Checking, if connection settings are active\n");
+	return GSM_WaitFor (s, GetSetreq, 4, 0x3f, 4, ID_GetConnectSet);
 }
 
-GSM_Error DCT3DCT4_ReplySetActiveWAPMMSSet(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplySetActiveConnectSet(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	smprintf(s, "WAP settings activated\n");
+	smprintf(s, "Connection settings activated\n");
 	return ERR_NONE;		
 }
 
-GSM_Error DCT3DCT4_SetActiveWAPMMSSet(GSM_StateMachine *s, GSM_MultiWAPSettings *settings, bool MMS)
+GSM_Error DCT3DCT4_SetActiveConnectSet(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
 	unsigned char	reqActivate[] = {N6110_FRAME_HEADER, 0x12,
 					 0x00};		/* Location */
 
 	if (settings->Active) {
 		reqActivate[4] = settings->Location-1;
-		if (MMS) {
-			smprintf(s, "Activating MMS settings\n");
-			return GSM_WaitFor (s, reqActivate, 5, 0x3f, 4, ID_SetMMSSettings);
-		} else {
-			smprintf(s, "Activating WAP settings\n");
-			return GSM_WaitFor (s, reqActivate, 5, 0x3f, 4, ID_SetWAPSettings);
-		}
+		smprintf(s, "Activating connection settings number %i\n",settings->Location);
+		return GSM_WaitFor (s, reqActivate, 5, 0x3f, 4, ID_SetMMSSettings);
 	}
 	return ERR_NONE;
 }
@@ -929,20 +924,36 @@ GSM_Error DCT3DCT4_ReplySetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachin
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error DCT3DCT4_ReplyEnableWAP(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplyEnableConnectFunc(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	smprintf(s, "WAP functions enabled\n");
+	smprintf(s, "Connection functions enabled\n");
 	return ERR_NONE;
 }
 
-GSM_Error DCT3DCT4_EnableWAP(GSM_StateMachine *s)
+GSM_Error DCT3DCT4_EnableWAPFunctions(GSM_StateMachine *s)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x00};
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_NOWAP)) return ERR_NOTSUPPORTED;
 
 	smprintf(s, "Enabling WAP\n");
-	return GSM_WaitFor (s, req, 4, 0x3f, 4, ID_EnableWAP);
+	return GSM_WaitFor (s, req, 4, 0x3f, 4, ID_EnableConnectFunc);
+}
+
+GSM_Error DCT3DCT4_ReplyDisableConnectFunc(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "Connection functions disabled\n");
+	return ERR_NONE;
+}
+
+GSM_Error DCT3DCT4_DisableConnectionFunctions(GSM_StateMachine *s)
+{
+	unsigned char req[] = {N6110_FRAME_HEADER, 0x03};
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_NOWAP)) return ERR_NOTSUPPORTED;
+
+	smprintf(s, "Disabling connection settings\n");
+	return GSM_WaitFor (s, req, 4, 0x3f, 4, ID_DisableConnectFunc);
 }
 
 GSM_Error DCT3DCT4_ReplyDelWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -968,37 +979,45 @@ GSM_Error DCT3DCT4_ReplyDelWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachin
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error DCT3DCT4_DeleteWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
+GSM_Error DCT3DCT4_DeleteWAPBookmarkPart(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
-	GSM_Error 	error;
+	GSM_Error	error;
 	unsigned char 	req[] = {N6110_FRAME_HEADER, 0x0C,
 			         0x00, 0x00};		/* Location */
-
-	/* We have to enable WAP frames in phone */
-	error=DCT3DCT4_EnableWAP(s);
-	if (error!=ERR_NONE) return error;
 
 	req[5] = bookmark->Location;
 
 	smprintf(s, "Deleting WAP bookmark\n");
-	return GSM_WaitFor (s, req, 6, 0x3f, 4, ID_DeleteWAPBookmark);
+	error = GSM_WaitFor (s, req, 6, 0x3f, 4, ID_DeleteWAPBookmark);
+	if (error != ERR_NONE) {
+		if (error == ERR_INVALIDLOCATION || error == ERR_INSIDEPHONEMENU) {
+			DCT3DCT4_DisableConnectionFunctions(s);
+		}
+		return error;
+	}
+
+	return DCT3DCT4_DisableConnectionFunctions(s);
 }
 
-GSM_Error DCT3DCT4_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
+GSM_Error DCT3DCT4_GetWAPBookmarkPart(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
-	GSM_Error error;
-	unsigned char req[] = {N6110_FRAME_HEADER, 0x06,
-			       0x00, 0x00};		/* Location */
-
-	/* We have to enable WAP frames in phone */
-	error=DCT3DCT4_EnableWAP(s);
-	if (error!=ERR_NONE) return error;
+	GSM_Error	error;
+	unsigned char 	req[] = {N6110_FRAME_HEADER, 0x06,
+			         0x00, 0x00};		/* Location */
 
 	req[5]=bookmark->Location-1;
 
 	s->Phone.Data.WAPBookmark=bookmark;
 	smprintf(s, "Getting WAP bookmark\n");
-	return GSM_WaitFor (s, req, 6, 0x3f, 4, ID_GetWAPBookmark);
+	error = GSM_WaitFor (s, req, 6, 0x3f, 4, ID_GetWAPBookmark);
+	if (error != ERR_NONE) {
+		if (error == ERR_INVALIDLOCATION || error == ERR_INSIDEPHONEMENU) {
+			DCT3DCT4_DisableConnectionFunctions(s);
+		}
+		return error;
+	}
+
+	return DCT3DCT4_DisableConnectionFunctions(s);
 }
 
 GSM_Error DCT3DCT4_CancelCall(GSM_StateMachine *s, int ID)

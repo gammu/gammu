@@ -1,4 +1,4 @@
-/* (c) 2003 by Marcin Wiacek */
+/* (c) 2003-2004 by Marcin Wiacek */
 
 #ifndef __gsm_back_h
 #define __gsm_back_h

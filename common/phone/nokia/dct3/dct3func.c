@@ -1,6 +1,6 @@
-/* (c) 2001-2003 by Marcin Wiacek */
+/* (c) 2001-2004 by Marcin Wiacek */
 /* based on some work from Markus Plail, Pavel Janik, others and Gnokii */
-/* resetting phone settings (c) by Walek */
+/* resetting DCT4 phones settings (c) by Walek */
 
 #include <string.h> /* memcpy only */
 #include <stdio.h>
@@ -14,6 +14,28 @@
 #include "dct3func.h"
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
+
+GSM_Error DCT3_DeleteWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
+{
+	GSM_Error error;
+
+	/* We have to enable WAP frames in phone */
+	error=DCT3DCT4_EnableWAPFunctions(s);
+	if (error!=ERR_NONE) return error;
+
+	return DCT3DCT4_DeleteWAPBookmarkPart(s,bookmark);
+}
+
+GSM_Error DCT3_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
+{
+	GSM_Error error;
+
+	/* We have to enable WAP frames in phone */
+	error=DCT3DCT4_EnableWAPFunctions(s);
+	if (error!=ERR_NONE) return error;
+
+	return DCT3DCT4_GetWAPBookmarkPart(s,bookmark);
+}
 
 GSM_Error DCT3_ReplyPressKey(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -606,7 +628,7 @@ GSM_Error DCT3_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 	unsigned char 	req[600] = {N6110_FRAME_HEADER, 0x09};
 
 	/* We have to enable WAP frames in phone */
-	error=DCT3DCT4_EnableWAP(s);
+	error=DCT3DCT4_EnableWAPFunctions(s);
 	if (error!=ERR_NONE) return error;
 
 	location = bookmark->Location - 1;
@@ -623,7 +645,15 @@ GSM_Error DCT3_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 	req[count++] = 0x00; req[count++] = 0x00; req[count++] = 0x00;
 
 	smprintf(s, "Setting WAP bookmark\n");
-	return GSM_WaitFor (s, req, count, 0x3f, 4, ID_SetWAPBookmark);
+	error = GSM_WaitFor (s, req, count, 0x3f, 4, ID_SetWAPBookmark);
+	if (error != ERR_NONE) {
+		if (error == ERR_INSIDEPHONEMENU || error == ERR_EMPTY || error == ERR_FULL) {
+			DCT3DCT4_DisableConnectionFunctions(s);
+		}
+		return error;
+	}
+
+	return DCT3DCT4_DisableConnectionFunctions(s);
 }
 
 GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -824,7 +854,7 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 					  0x00};		/* Location */
 
 	/* We have to enable WAP frames in phone */
-	error=DCT3DCT4_EnableWAP(s);
+	error=DCT3DCT4_EnableWAPFunctions(s);
 	if (error!=ERR_NONE) return error;
 
 	s->Phone.Data.WAPSettings = settings;
@@ -833,7 +863,7 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 
 	req[4] = settings->Location-1;
 	smprintf(s, "Getting WAP settings part 1\n");
-	error = GSM_WaitFor (s, req, 5, 0x3f, 4, ID_GetWAPSettings);
+	error = GSM_WaitFor (s, req, 5, 0x3f, 4, ID_GetConnectSet);
 	if (error != ERR_NONE) return error;
 
 #ifdef GSM_ENABLE_NOKIA7110
@@ -841,7 +871,7 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		for (i=0;i<4;i++) {
 			req2[4] = Priv7110->WAPLocations.Locations[i];
 			smprintf(s, "Getting WAP settings part 2\n");
-			error=GSM_WaitFor (s, req2, 5, 0x3f, 4, ID_GetWAPSettings);
+			error=GSM_WaitFor (s, req2, 5, 0x3f, 4, ID_GetConnectSet);
 			if (error != ERR_NONE) return error;
 			if (Priv7110->WAPLocations.Locations[i] == Priv7110->WAPLocations.CurrentLocation) {
 				settings->ActiveBearer = settings->Settings[settings->Number-1].Bearer;
@@ -854,7 +884,7 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		for (i=0;i<4;i++) {
 			req2[4] = Priv6110->WAPLocations.Locations[i];
 			smprintf(s, "Getting WAP settings part 2\n");
-			error=GSM_WaitFor (s, req2, 5, 0x3f, 4, ID_GetWAPSettings);
+			error=GSM_WaitFor (s, req2, 5, 0x3f, 4, ID_GetConnectSet);
 			if (error != ERR_NONE) return error;
 			if (Priv6110->WAPLocations.Locations[i] == Priv6110->WAPLocations.CurrentLocation) {
 				settings->ActiveBearer = settings->Settings[settings->Number-1].Bearer;
@@ -868,10 +898,23 @@ GSM_Error DCT3_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 			CopyUnicodeString(settings->Settings[i].HomePage,settings->Settings[0].HomePage);
 			settings->Settings[i].IsContinuous = settings->Settings[0].IsContinuous;
 			settings->Settings[i].IsSecurity   = settings->Settings[0].IsSecurity;
+
+			settings->Settings[i].IsContinuous = settings->Settings[0].IsContinuous;
+			settings->Settings[i].IsSecurity   = settings->Settings[0].IsSecurity;
 		}
-		error = DCT3DCT4_GetActiveWAPMMSSet(s);
+		error = DCT3DCT4_GetActiveConnectSet(s);
 	}
-	return error;
+	if (error != ERR_NONE) return error;
+
+	settings->Proxy[0]   = 0x00;
+	settings->Proxy[1]   = 0x00;
+	settings->ProxyPort  = 8080;
+
+	settings->Proxy2[0]  = 0x00;
+	settings->Proxy2[1]  = 0x00;
+	settings->Proxy2Port = 8080;
+
+	return DCT3DCT4_DisableConnectionFunctions(s);
 }
 
 GSM_Error DCT3_ReplySetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -922,7 +965,7 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 				      0x00}; 		/* Location */
 
 	/* We have to enable WAP frames in phone */
-	error=DCT3DCT4_EnableWAP(s);
+	error=DCT3DCT4_EnableWAPFunctions(s);
 	if (error!=ERR_NONE) return error;
 
 	s->Phone.Data.WAPSettings = &settings2;
@@ -930,7 +973,7 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 
 	req[4] = settings->Location-1;
 	smprintf(s, "Getting WAP settings part 1\n");
-	error = GSM_WaitFor (s, req, 6, 0x3f, 4, ID_GetWAPSettings);
+	error = GSM_WaitFor (s, req, 6, 0x3f, 4, ID_GetConnectSet);
 	if (error != ERR_NONE) return error;
 
 #ifdef GSM_ENABLE_NOKIA6110
@@ -952,7 +995,7 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		settings2.Settings[0].Bearer = 0;
 		req2[4] = locations[i];
 		smprintf(s, "Getting WAP settings part 2\n");
-		error=GSM_WaitFor (s, req2, 6, 0x3f, 4, ID_GetWAPSettings);
+		error=GSM_WaitFor (s, req2, 6, 0x3f, 4, ID_GetConnectSet);
 		if (error != ERR_NONE) return error;
 		switch (settings2.Settings[0].Bearer) {
 			case WAPSETTINGS_BEARER_DATA: phone1 = locations[i]; break;
@@ -1066,7 +1109,7 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 	pos += 9;
 
 	smprintf(s, "Writing WAP settings part 1\n");
-	error=GSM_WaitFor (s, SetReq, pos, 0x3f, 4, ID_SetWAPSettings);
+	error=GSM_WaitFor (s, SetReq, pos, 0x3f, 4, ID_SetConnectSet);
 	if (error != ERR_NONE) return error;
 
 	/* Data */
@@ -1109,7 +1152,7 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		memcpy(SetReq2 + pos, "\x80\x00\x00\x00\x00\x00\x00\x00", 8);
 		pos += 8;
 		smprintf(s, "Writing WAP settings part 2 (Data bearer)\n");
-		error=GSM_WaitFor (s, SetReq2, pos, 0x3f, 4, ID_SetWAPSettings);
+		error=GSM_WaitFor (s, SetReq2, pos, 0x3f, 4, ID_SetConnectSet);
 		if (error != ERR_NONE) return error;
 	}
 	/* SMS */
@@ -1128,7 +1171,7 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		memcpy(SetReq2 + pos, "\x80\x00\x00\x00\x00\x00\x00\x00", 8);
 		pos += 8;
 		smprintf(s, "Writing WAP settings part 2 (SMS bearer)\n");
-		error=GSM_WaitFor (s, SetReq2, pos, 0x3f, 4, ID_SetWAPSettings);
+		error=GSM_WaitFor (s, SetReq2, pos, 0x3f, 4, ID_SetConnectSet);
 		if (error != ERR_NONE) return error;
 	}
 	/* USSD */
@@ -1151,10 +1194,13 @@ GSM_Error DCT3_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *setting
 		memcpy(SetReq2 + pos, "\x80\x00\x00\x00\x00\x00\x00\x00", 8);
 		pos += 8;
 		smprintf(s, "Writing WAP settings part 2 (USSD bearer)\n");
-		error=GSM_WaitFor (s, SetReq2, pos, 0x3f, 4, ID_SetWAPSettings);
+		error=GSM_WaitFor (s, SetReq2, pos, 0x3f, 4, ID_SetConnectSet);
 		if (error != ERR_NONE) return error;
 	}
-	return DCT3DCT4_SetActiveWAPMMSSet(s, settings, false);
+	error = DCT3DCT4_SetActiveConnectSet(s, settings);
+	if (error != ERR_NONE) return error;
+
+	return DCT3DCT4_DisableConnectionFunctions(s);
 }
 
 GSM_Error DCT3_ReplySendSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)

@@ -62,14 +62,9 @@ A. * these things can be done without anything (it will be done everything
      * Nokia:
        * N3410 Java support
        * N5510 radio/MP3 support
-       * for Series 40 getting/setting/sending syncml settings,
-         local/remote syncml synchronisation, oma provisioning, sms
-         distribution lists, assigning pictures (and probably some other in new
-         models) to phonebook entries, edge settings (?), notes, support for
-         some types of files and MMC (3300, 6230, etc.), probably some other
-         things connected with OMA, camera settings and probably making photos
-         from PC side, probably support for new FM radio (I saw somewhere,
-         that new phones probably have new features in FM radio)
+       * for Series 40 getting/setting/sending PustToTalk settings,
+         support for some types of files and MMC (3300, 6230, etc.), 
+	 probably some other things connected with OMA, shutdown bitmap
      * Other:
        * more EMS features: polyphonic ringtones, more text features, etc.
        * all Siemens features
@@ -126,6 +121,10 @@ A. Method 1:
            enter into /gammu/msvc6.mak directory and run gammu.dsw
        * under MS Visual C++ 7.0 (.NET) for MS Windows
            enter into /gammu/msvc7.mak directory and run gammu.vcproj
+       * under MS Visual C++ Toolkit 2003
+           not tested yet. It should be similiar to MS VC .NET
+       * under MS Visual C++ Express
+           not tested yet. It should be similiar to MS VC .NET        
        * under Unix (Linux)
            change compiler in /cfg/makefile.cfg (if required) and use "make" or
            "make makelib"
@@ -157,12 +156,19 @@ A. Method 1:
 	   
            TIP: gammu.mak was created in Borland C++ Builder using
                 "Project/Export makefiles" from main menu.
+       * under Borland C++ X - you need to create new makefile.
+         It was added to some older versions too.
 -------------------------------------------------------------------------------
-Q. Where to get compilers to make Gammu ?
+Q. Where to get compilers and libraries to make Gammu ?
 
-A. * MS Visual C++ 6.0
+A. compilers
+   * MS Visual C++ 6.0
    * MS Visual C++ 7.0 (.NET)
          go to the shop ;-). It's commercional software.
+   * MS Visual C++ Toolkit 2003
+         http://msdn.microsoft.com/visualc/vctoolkit2003/
+   * MS Visual C++ Express
+         search on microsoft.com
    * compilers for Unix (Linux) like gcc or kgcc (for free)
          available in Net and in Linux distributions included into CD
          for many newspapers. Installation depends on distribution.
@@ -193,6 +199,18 @@ A. * MS Visual C++ 6.0
          magazines or use Trial versions also put into many magazines CD.
    * Borland C++ compiler (for free)
          See www.borland.com. It was added to many computer magazines with CD.
+   * Borland C++ X
+         www.borland.com
+	 
+   libraries
+   * MySQL
+         www.mysql.com
+   * MS Platform SDK
+         www.microsoft.com/msdownload/platformsdk/sdkupdate/psdk-full.htm
+	 Please note, that will need probably MS Internet Explorer with enabled
+	 ActiveX to download it. Platform SDK is added to MSDN subscriptions too
+   * BlueZ
+         www.bluez.org
 -------------------------------------------------------------------------------
 Q. What are known problems and weak things of current version ?
 
