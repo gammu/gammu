@@ -1,5 +1,5 @@
 /* Some source from Gnokii (www.gnokii.org)
- * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
 /* Some source from Minicom (http://alioth.debian.org/projects/minicom)
@@ -34,6 +34,9 @@ GSM_Error bluetooth_checkservicename(GSM_StateMachine *s, char *name)
         if (s->ConnectionType == GCT_BLUEPHONET && strstr(name,"Nokia PC Suite")     !=NULL) return ERR_NONE;
 	if (s->ConnectionType == GCT_BLUEOBEX 	&& strstr(name,"OBEX")		     !=NULL) return ERR_NONE;
         if (s->ConnectionType == GCT_BLUEAT 	&& strstr(name,"COM 1")		     !=NULL) return ERR_NONE;
+
+	/* Sony-Ericsson */
+        if (s->ConnectionType == GCT_BLUEAT 	&& strstr(name,"Serial Port 1")	     !=NULL) return ERR_NONE;
 
 	/* Quesses for Siemens. Thomas Eitzenberger */
 	if (s->ConnectionType == GCT_BLUEOBEX 	&& strstr(name,"OBEX File Transfer") !=NULL) return ERR_NONE;
@@ -209,7 +212,7 @@ GSM_Error lock_device(const char* port, char **lock_device)
 	if (fd == -1) {
 		if (errno == EEXIST) {
 			dbgprintf("Device seems to be locked by unknown process\n");
-			error = ERR_DEVICEOPENERROR;		
+			error = ERR_DEVICEOPENERROR;
 		} else if (errno == EACCES) {
 			dbgprintf("Please check permission on lock directory\n");
 			error = ERR_PERMISSION;
@@ -279,7 +282,7 @@ int FindSerialSpeed(char *buffer)
 		case 57600	: return 57600;
 		case 115200	: return 115200;
 		case 230400	: return 230400;
-		default		: return 0;	
+		default		: return 0;
 	}
 }
 
