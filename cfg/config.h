@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "1.00.00"
-#define VERSION_WIN "1,00,00,0"
+#define VERSION "1.00.04"
+#define VERSION_WIN "1,00,04,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -25,6 +25,8 @@
 #define GSM_ENABLE_FBUS2 1
 /* FBUS2 to use with DLR3 cable (init done using AT commands) */
 #define GSM_ENABLE_FBUS2DLR3 1
+/* FBUS2 to use with DKU2 cable (init done using AT commands) */
+#define GSM_ENABLE_FBUS2DKU2 1
 /* FBUS2 to use with DKU5 cable (init done using AT commands) */
 #define GSM_ENABLE_FBUS2DKU5 1
 /* FBUS2 to use with cable with PL2303 chip (init done using AT commands) */

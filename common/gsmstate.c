@@ -30,6 +30,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("fbus"	,connection,0)) s->ConnectionType = GCT_FBUS2;
 	if (mystrncasecmp("fbusdlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
 	if (mystrncasecmp("fbusdku5"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU5;
+	if (mystrncasecmp("fbusdku2"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU2;
 	if (mystrncasecmp("fbuspl2303"	,connection,0)) s->ConnectionType = GCT_FBUS2PL2303;
 	if (mystrncasecmp("fbusblue"	,connection,0)) s->ConnectionType = GCT_FBUS2BLUE;
 	if (mystrncasecmp("fbusirda"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
@@ -52,6 +53,8 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("dlr3blue"	,connection,0)) s->ConnectionType = GCT_BLUEFBUS2;
 	if (mystrncasecmp("irda"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
 	if (mystrncasecmp("dlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
+	if (mystrncasecmp("dku2"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU2;
+	if (mystrncasecmp("dku5"	,connection,0)) s->ConnectionType = GCT_FBUS2DKU5;
 	if (mystrncasecmp("infrared"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
 
 	if (mystrncasecmp("at"		,connection,2)) {
@@ -82,8 +85,11 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #ifdef GSM_ENABLE_FBUS2DKU5
 	GSM_RegisterConnection(s, GCT_FBUS2DKU5, &SerialDevice,   &FBUS2Protocol);
 #endif
+#ifdef GSM_ENABLE_FBUS2DKU2
+	GSM_RegisterConnection(s, GCT_FBUS2DKU2, &SerialDevice,   &FBUS2Protocol);
+#endif
 #ifdef GSM_ENABLE_FBUS2PL2303
-	GSM_RegisterConnection(s, GCT_FBUS2PL2303,&SerialDevice,   &FBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_FBUS2PL2303,&SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2BLUE
 	GSM_RegisterConnection(s, GCT_FBUS2BLUE, &SerialDevice,   &FBUS2Protocol);
@@ -327,6 +333,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 					case GCT_FBUS2:
 					case GCT_FBUS2DLR3:
 					case GCT_FBUS2DKU5:
+					case GCT_FBUS2DKU2:
 					case GCT_FBUS2PL2303:
 					case GCT_FBUS2BLUE:
 					case GCT_FBUS2IRDA:

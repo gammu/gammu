@@ -26,11 +26,30 @@ This software was sponsored (in time order) by:
 10. Michele Rossetti
 11. Alain Bitam
 12. Johan Helsingius
+14. A Leg
+15. Troy Engel
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20050214 - 1.00.04
+* new functionality:
+  * filesystem2 support is complete (setting attributes, setting dates & 
+    times, using checksums, deleting files)
+  * added new dku2 connection. It should handle correctly dku2 with linux
+    kernel modules, but...it's for testing, if I'm right or not
+  * when file is uploaded to/downloaded from phone, you have visible left time
+  * new memorycard option for --nokiaaddfile
+
+* fixes and improvements:
+  * at least 6230 over infrared doesn't report all files in folders
+    (over BT it's OK, I don't know how with cable). MobiMB & OPM2 have
+    the same problem... Warning is displayed.
+  * improved speed for --getfilesystem and --nokiaaddfile
+  * fix for checking February days
+  * some AMD64 fixes                                             (Michal Cihar)
+
 20050208 - 1.00.00
 * new functionality:
   * dct4: 

@@ -24,6 +24,8 @@
 #undef GSM_ENABLE_FBUS2
 /* FBUS2 to use with DLR3 cable (init done using AT commands) */
 #undef GSM_ENABLE_FBUS2DLR3
+/* FBUS2 to use with DKU2 cable (init done using AT commands) */
+#undef GSM_ENABLE_FBUS2DKU2
 /* FBUS2 to use with DKU5 cable (init done using AT commands) */
 #undef GSM_ENABLE_FBUS2DKU5
 /* FBUS2 to use with cable with PL2303 chip (init done using AT commands) */
