@@ -1,6 +1,6 @@
 /* (c) 2001-2004 by Marcin Wiacek */
 /* Based on some work from Ralf Thelen (7110 ringtones) and others */
-/* Based on some work (RTTL and SM) from Gnokii
+/* Based on some work (RTTL and SM) from Gnokii (www.gnokii.org)
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
  * GNU GPL version 2 or later
  */

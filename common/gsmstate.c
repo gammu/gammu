@@ -186,6 +186,9 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #ifdef GSM_ENABLE_NOKIA3650
 	GSM_RegisterModule(s,&N3650Phone);
 #endif
+#ifdef GSM_ENABLE_NOKIA650
+	GSM_RegisterModule(s,&N650Phone);
+#endif
 #ifdef GSM_ENABLE_NOKIA6110
 	GSM_RegisterModule(s,&N6110Phone);
 #endif
@@ -210,7 +213,6 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	GSM_Error	error;
 	GSM_DateTime	time;
 	int		i;
-	char		Buffer[80];
 
 	for (i=0;i<s->ConfigNum;i++) {
 		s->CurrentConfig		  = &s->Config[i];
@@ -250,18 +252,16 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 
 		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTERROR ||
 	    	    s->di.dl == DL_TEXTALLDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTERRORDATE) {
-			smprintf(s,"[Gammu            - version %s built %s %s]\n",VERSION,__TIME__,__DATE__);
-			smprintf(s,"[Connection       - \"%s\"]\n",s->CurrentConfig->Connection);
+			smprintf(s,"[Gammu            - %s built %s %s",VERSION,__TIME__,__DATE__);
+			if (strlen(GetCompiler()) != 0) {
+				smprintf(s," in %s",GetCompiler());
+			}
+			smprintf(s,"]\n[Connection       - \"%s\"]\n",s->CurrentConfig->Connection);
 			smprintf(s,"[Model type       - \"%s\"]\n",s->CurrentConfig->Model);
 			smprintf(s,"[Device           - \"%s\"]\n",s->CurrentConfig->Device);
-
-			Buffer[0] = 0;
-			if (strlen(GetOS()) != 0) sprintf(Buffer,"%s",GetOS());
-			if (strlen(GetCompiler()) != 0) {
-				if (Buffer[0] != 0) strcat(Buffer+strlen(Buffer),", ");
-				strcat(Buffer+strlen(Buffer),GetCompiler());
+			if (strlen(GetOS()) != 0) {
+				smprintf(s,"[Run on           - %s]\n",GetOS());
 			}
-			if (Buffer[0] != 0) smprintf(s,"[OS/compiler      - %s]\n",Buffer);
 		}
 		if (s->di.dl==DL_BINARY) {
 			smprintf(s,"%c",((unsigned char)strlen(VERSION)));
@@ -554,6 +554,7 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 	bool				execute;
 	bool				available = false;
 	int				i	  = 0;
+//	int j;
 
 	while (Reply[i].requestID!=ID_None) {
 		execute=false;
@@ -568,8 +569,18 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 				} else execute=true;
 			}
 		} else {
-			if (strncmp(Reply[i].msgtype,msg->Buffer,strlen(Reply[i].msgtype))==0) {
-				execute=true;
+//			printf("msg length %i %i\n",strlen(Reply[i].msgtype),msg->Length);
+			if ((int)strlen(Reply[i].msgtype)<msg->Length) {
+//				printf("Comparing \"%s\" and \"",Reply[i].msgtype);
+//				for (j=0;j<strlen(Reply[i].msgtype);j++) {
+//					if (msg->Buffer[j]!=13 && msg->Buffer[j]!=10) {
+//						printf("%c",msg->Buffer[j]);
+//					}
+//				}
+//				printf("\"\n");
+				if (strncmp(Reply[i].msgtype,msg->Buffer,strlen(Reply[i].msgtype))==0) {
+					execute=true;
+				}
 			}
 		}
 
@@ -845,8 +856,11 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 }
 
 static OnePhoneModel allmodels[] = {
+#ifdef GSM_ENABLE_NOKIA650
+	{"0650" ,"THF-12","",           {0}},
+#endif
 #ifdef GSM_ENABLE_NOKIA6510
-	{"1100", "RH-18" ,"",		{0}},
+	{"1100" ,"RH-18" ,"",		{0}},
 	{"1100a","RH-38" ,"",		{0}},
 	{"1100b","RH-36" ,"",		{0}},
 #endif
@@ -924,14 +938,14 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"6200" ,"NPL-3" ,"Nokia 6200", {F_PBKTONEGAL,0}},
-	{"6220" ,"RH-20" ,"Nokia 6220", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,0}},
+	{"6220" ,"RH-20" ,"Nokia 6220", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,F_NOTES,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"6210" ,"NPE-3" ,"Nokia 6210", {F_VOICETAGS,F_CAL62,0}},
 	{"6250" ,"NHM-3" ,"Nokia 6250", {F_VOICETAGS,F_CAL62,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
-	{"6230" ,"RH-12" ,"Nokia 6230", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,0}},
+	{"6230" ,"RH-12" ,"Nokia 6230", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,F_NOTES,0}},
 	{"6310" ,"NPE-4" ,"Nokia 6310", {F_TODO63,F_CAL65,F_NOMIDI,F_NOMMS,F_VOICETAGS,0}},
 	{"6310i","NPL-1" ,"Nokia 6310i",{F_TODO63,F_CAL65,F_NOMIDI,F_BLUETOOTH,F_NOMMS,F_VOICETAGS,0}},
 	{"6385" ,"NHP-2AX","Nokia 6385",{F_TODO63,F_CAL65,F_NOMIDI,F_NOMMS,F_VOICETAGS,0}},
@@ -940,6 +954,8 @@ static OnePhoneModel allmodels[] = {
 	{"6610i","RM-37" ,"Nokia 6610i",{F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 	{"6800" ,"NSB-9" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},
 	{"6800" ,"NHL-6" ,"Nokia 6800", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},
+	{"6810" ,"RM-2"  ,"Nokia 6810", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},//quess
+	{"6820" ,"NHL-9" ,"Nokia 6820", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,0}},//quess
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA7110)
 	{"7110" ,"NSE-5" ,"Nokia 7110", {F_CAL62,0}},
@@ -982,6 +998,7 @@ static OnePhoneModel allmodels[] = {
 	/* Siemens */
 	{"M20"  ,	  "M20",	  "",				   {F_M20SMS,F_SLOWWRITE,0}},
 	{"MC35" ,	  "MC35",	  "",				   {0}},
+	{"TC35" ,	  "TC35",	  "",				   {0}},
 	{"S25",		  "S25",  	  "SIEMENS S25",		   {0}},
 	{"C35i" ,	  "C35i",	  "",				   {0}},
 	{"S35i" ,	  "S35i",	  "",				   {0}},

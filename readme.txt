@@ -371,8 +371,10 @@ A. 1.Nokia DCT3 (3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|
      There is supported MBUS, FBUS, DLR3, Infrared, Bluetooth, at19200.
      For all (excluding 9110) there is supported almost everything.
 
-   2.Nokia DCT4 (3510|3510i|3530|5100|6100|6310|6310i|6510|6610|7210|8310|8910)
-     and compatible
+   2.Nokia DCT4 (1100|1100a|1100b|3100|3100b|3108|3200|3200a|3300|3510|3510i|
+     3530|3589i|3590|3595|5100|5140|6100|6200|6220|6230|6310|6310i|6385|6510|
+     6610|6610i|6800|6810|6820|7210|7250|7250i|7600|8310|8390|8910|8910i
+     3320) and compatible
 
      There is supported MBUS, FBUS, DLR3, Infrared, at19200, BlueTooth.
      No full support for DKU-5. No support for locking WAP settings, locking
@@ -391,17 +393,20 @@ A. 1.Nokia DCT3 (3210|3310|3330|3390|3410|5110|5110i|5130|5190|5210|5510|6110|
    7.AT compatible devices
 
      If device is compatible with ETSI specs, SMS (both in text and PDU),
-     phonebook and some other will work with AT module
+     phonebook and some other will work with AT module.
 
    8.OBEX devices
 
      Tested with Nokia Series40/Series60 and SonyEricsson. Works according to
      device capabilities (can be folder browsing/getting/uploading files/
-     uploading files to Inbox)
+     uploading files to Inbox).
 
    9.Sony Ericsson
 
-     Tested with T310 (or rather T300 with R3B firmware from T310)
+     Tested with T310 (or rather T300 with R3B firmware from T310),
+     and R320s. Connections can be at* (serial), irda* and blue*.
+     Supported as AT or OBEX device above. New supported features are in 
+     development now.
 
   10.Samsung
 
@@ -483,7 +488,7 @@ A. for logos              : xpm (only saving), bmp, nlm, nsl, ngg, nol, wbmp,
                             ldif (Mozilla/Netscape Address Book)
    for sms backup/restore : text format created for Gammu
 -------------------------------------------------------------------------------
-Q. How to connect Nokia phone to PC ?
+Q. How to connect Nokia phone to PC and gammu?
 
 A. Using cable. Each phone has connector on bottom (like in 5110) or under
                 battery (like in 3310) or under back cover (like in 3210).
@@ -561,6 +566,24 @@ A. Using cable. Each phone has connector on bottom (like in 5110) or under
    memory). When use some software (called flashers) and such cable, you can
    even replace internal phone software to higher. Gammu as user software
    doesn't support flashing.
+-------------------------------------------------------------------------------
+Q. How to connect Ericsson/Siemens/Samsung/Alcatel phone to PC and gammu?
+
+A. Using cable: Get serial cable for the appropriate model, plug it into the
+                phone and in a free serial port of the PC. In gammu, set 
+                the correct port ("COM1:" .. "COM9:" in Windows, 
+                "/dev/ttyS*" in Linux). Set "connection=at115200" (or 
+                lower) and "model=at". You can also try "model=obex".
+   Using infrared: You can map your infrared connection to a virtual 
+                   COM port in Win9x and XP. Then give "port=COM4:" (or 
+                   check the correct port in Control Panels/Infrared 
+                   transfer) and the connection will look like normal serial 
+                   connection. Continue as above.
+                
+                   If you wish to use true infrared connection, follow the 
+                   steps in the Nokia answer above.
+
+   Using bluetooth: see Nokia answer above.
 -------------------------------------------------------------------------------
 Q. What is "FIRMWARE"?
 

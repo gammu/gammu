@@ -270,6 +270,9 @@
 				RelativePath="..\..\common\phone\symbian\mroutgen.c">
 			</File>
 			<File
+				RelativePath="..\..\common\phone\nokia\dct3\n0650.c">
+			</File>
+			<File
 				RelativePath="..\..\common\phone\nokia\dct4\n3320.c">
 			</File>
 			<File
@@ -491,6 +494,9 @@
 			</File>
 			<File
 				RelativePath="..\..\common\phone\symbian\mroutgen.h">
+			</File>
+			<File
+				RelativePath="..\..\common\phone\nokia\dct3\n0650.h">
 			</File>
 			<File
 				RelativePath="..\..\common\phone\nokia\dct4\n3320.h">

@@ -19,7 +19,7 @@ static GSM_Error SendingSMSStatus;
 
 static void SMSSendingSMSStatus (char *Device, int status, int mr)
 {
-	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%02x\n",Device, status, mr);
+	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%d\n",Device, status, mr);
 	TPMR = mr;
 	if (status==0) {
 		SendingSMSStatus = ERR_NONE;
@@ -167,6 +167,8 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 
 #ifdef HAVE_MYSQL_MYSQL_H
 	if (!strcmp(service,"MYSQL")) {
+		Config->skipsmscnumber = INI_GetValue(smsdcfgfile, "smsd", "skipsmscnumber", false);
+		if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
 		Config->user = INI_GetValue(smsdcfgfile, "smsd", "user", false);
 		if (Config->user == NULL) Config->user="root";
 		Config->password = INI_GetValue(smsdcfgfile, "smsd", "password", false);
@@ -503,6 +505,7 @@ void SMSDaemon(int argc, char *argv[])
 						if (error!=ERR_NONE) {
 							GSM_Terminate_SMSD("Stop GAMMU smsd (%i)", error, true, -1);
 						}
+						Phone->SetFastSMSSending(&s,true);
 					}
 				} else {
 					errors = 0;
@@ -547,6 +550,7 @@ void SMSDaemon(int argc, char *argv[])
 		}
 		if (!SMSD_SendSMS(&Config,Service)) continue;
 	}
+	Phone->SetFastSMSSending(&s,false);
 	GSM_Terminate_SMSD("Stop GAMMU smsd", 0, false, 0);
 }
 

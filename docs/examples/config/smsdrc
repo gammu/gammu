@@ -61,6 +61,11 @@ user = root
 password =
 pc = localhost
 database = sms
+# when you send sms from some SMSC, you can have Delivery/Failed Delivery
+# Reports from other SMSC number. You can set here number of this "buggy"
+# SMSC used by you and Gammu will not check it's number during assigning
+# reports to sent sms
+#skipsmscnumber = +48602123456
 # -------------------------------------------------------------------------------
 
 # ------------------------- SETTINGS FOR --smsd FILES ---------------------------

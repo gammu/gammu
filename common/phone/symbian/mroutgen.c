@@ -198,7 +198,7 @@ GSM_Phone_Functions MROUTERGENPhone = {
 	NOTSUPPORTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED,			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNextNote		*/
 	NOTSUPPORTED, 			/*	GetProfile		*/
 	NOTSUPPORTED, 			/*	SetProfile		*/
     	NOTSUPPORTED,			/*  	GetFMStation        	*/

@@ -370,7 +370,7 @@ GSM_Phone_Functions N3650Phone = {
 	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED,			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNextNote		*/
 	NOTSUPPORTED, 			/*	GetProfile		*/
 	NOTSUPPORTED, 			/*	SetProfile		*/
     	NOTSUPPORTED,			/*  	GetFMStation        	*/

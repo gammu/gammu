@@ -1,24 +1,24 @@
-/* (c) 2002-2003 by Marcin Wiacek */
+/* (c) 2004 by Marcin Wiacek */
 
 #include <string.h>
 #include <time.h>
 
-#include "../../gsmcomon.h"
-#include "../../gsmstate.h"
-#include "nfunc.h"
+#include "../../../gsmcomon.h"
+#include "../../../gsmstate.h"
+#include "../nfunc.h"
 
-#if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
+#ifdef GSM_ENABLE_NOKIA650
 
-static GSM_Reply_Function NAUTOReplyFunctions[] = {
+static GSM_Reply_Function N650ReplyFunctions[] = {
 	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetModel		},
 	{DCT3DCT4_ReplyGetModelFirmware,"\xD2",0x02,0x00,ID_GetFirmware		},
 
 	{NULL,				"\x00",0x00,0x00,ID_None			}
 };
 
-GSM_Phone_Functions NAUTOPhone = {
-	"NAUTO",
-	NAUTOReplyFunctions,
+GSM_Phone_Functions N650Phone = {
+	"0650",
+	N650ReplyFunctions,
 	NONEFUNCTION,			/*	Initialise		*/
 	NONEFUNCTION,			/*	Terminate 		*/
 	GSM_DispatchMessage,

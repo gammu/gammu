@@ -21,11 +21,82 @@ This software was sponsored (in time order) by:
    * DCT3/DCT4 flasher
 7. KompuNet (www.kompu.net)
    * SMS services, PC shop and other
+8. Lorenzo Ciani
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20041003 - 0.98.9
+* new functionality:
+  * support for USSD codes in AT module. You can get USSD codes now using 
+    --getussd:
+    * in AT mode (tested with success with Siemens MC35, fails with Nokia)
+    * with latest DCT3 (6210) and Nokia protocols after enabling Incoming Info
+      in config
+    * with earlier DCT3 (6150) and Nokia protocols
+    --getussd doesn't work with DCT4 and probably some DCT3 (3210) with Nokia
+    protocols
+  * new frame for making voice calls for new dct4. it's for investigation
+  * SMSD & MYSQL:
+    * DB contains pbk & info about daemons
+    * MFC application can display DB info & delete SMS
+  * SMSD:
+    * new config option for ignoring checking some                (Gary Reuter)
+      smsc numbers for incoming sms
+    * support for AT+CMMS                                      (Jorgen Thomsen)
+  * started work on n650 support
+  * -nonempty & displaying stats for --getmemory 
+  * --searchdevice can find irdaat on win32
+  * backup for chat/syncml settings
+  * --getallnotes
+  * backup for text notes
+  * Gammu checks during opening text backup files, if all sections are known
+    or not. If not, it means that file is damaged or restoring some things
+    not implemented or you should update your Gammu copy to higher version
+  * new --send/savesms WAPINDICATOR for WAP service inbox messages
+    (WAP push)
+  * --nokiaaddfile language independent for 6610/7210                 (jackpot)
+  * 6810/6820 ID                                                        (Intra)
+  * Siemens TC35 ID                                                      (Remi)
+  * * --listnetworks [country]                                 (Peter Ondraska)
+    * setting alarm, getting & setting locales for Eric R320 (for testing !)
+
+* fixes and improvements:
+  * * new solution for detecting Bluez                           (Michal Cihar)
+    * Debian building improvements
+    * Alcatel phones don't forget some settings now
+  * MFC application for win32 is compiled without shared MFC DLL's
+  * more MS VC++ compatibility during mixing C/C++ files
+  * fixes in gammu.pas and gsmstate.c
+  * better debug output
+  * sending SMS with AT module returns correctly TPMR
+  * network info in debug with dct3
+  * fix for USSD replies for 6150
+  * 6510 module fixes
+    * getting op logo
+    * getting syncml settings
+  * --getallcalendar
+  * Gammu definitely doesn't need 45 MB of RAM   (Peter Ondraska, Michal Cihar)
+  * * many DJGPP compilation fixes                             (Peter Ondraska)
+    * localization fixes
+    * many small fixes in various functions
+    * x is not case sensitive for gammu --help x
+  * text backup files handles correctly entries with texts with new line
+    chars
+  * --get....sms doesn't display useless datas
+  * WAP bookmarks are sent in UTF8. It should make them       (Joergen Thomsen)
+    shorter
+  * better TPMR debug output                                      (Gary Reuter)
+
+NOTES: * I plan to have 0.99 somewhere near 10-10-2004
+       * from old things: does anyone have original DAU-4F cable for N3110,
+         NCDS for N3110 or MBUS for N2110 ?
+       * Please check Bluez deeply on your OS. For me works 100% OK now
+       * there is RSS channel now - www.mwiacek.com/gsm/soft/gammu.rss
+         It will be another way for informing people about new test/stable 
+         releases. I wait for comments about it on Gammu mailing list
+
 20040909 - 0.98.0
 * new functionality:
   * DCT3 phones know TPMR during sending SMS too. You can use them

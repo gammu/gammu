@@ -1,5 +1,5 @@
 /* (c) 2001-2004 by Marcin Wiacek */
-/* based on some Markus Plail work from Gnokii
+/* based on some Markus Plail work from Gnokii (www.gnokii.org)
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
  * GNU GPL version 2 or later
  */
@@ -1706,7 +1706,7 @@ GSM_Phone_Functions N7110Phone = {
 	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED,			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNextNote		*/
 	N7110_GetProfile,
 	N7110_SetProfile,
     	NOTSUPPORTED,			/*  	GetFMStation        	*/

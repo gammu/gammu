@@ -372,6 +372,42 @@ GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_UNKNOWNRESPONSE;
 }
 
+GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	unsigned char 	buffer[2000],buffer2[4000];
+	int 		i = 10;
+
+	/* Ugly hack */	
+	while (msg.Buffer[i]!=13) i++;
+	i = i - 6;
+	memcpy(buffer,msg.Buffer+10,i-11);
+	buffer[i-11] = 0x00;
+
+	smprintf(s, "USSD reply: \"%s\"\n",buffer);
+
+	if (s->Phone.Data.EnableIncomingUSSD && s->User.IncomingUSSD!=NULL) {
+		EncodeUnicode(buffer2,buffer,strlen(buffer));
+		s->User.IncomingUSSD(s->CurrentConfig->Device, buffer2);
+	}
+
+	return ERR_NONE;
+}
+
+GSM_Error ATGEN_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
+{
+	GSM_Error error;
+
+	if (enable) {
+		smprintf(s, "Enabling incoming USSD\n");
+		error=GSM_WaitFor (s, "AT+CUSD=1\r", 10, 0x00, 3, ID_SetUSSD);
+	} else {
+		smprintf(s, "Disabling incoming USSD\n");
+		error=GSM_WaitFor (s, "AT+CUSD=0\r", 10, 0x00, 3, ID_SetUSSD);
+	}
+	if (error==ERR_NONE) s->Phone.Data.EnableIncomingUSSD = enable;
+	return error;
+}
+
 GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -396,10 +432,12 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		if (strstr(msg.Buffer,"Nokia")) 	Priv->Manufacturer = AT_Nokia;
 		else if (strstr(msg.Buffer,"M20")) 	Priv->Manufacturer = AT_Siemens;
 		else if (strstr(msg.Buffer,"MC35")) 	Priv->Manufacturer = AT_Siemens;
+		else if (strstr(msg.Buffer,"TC35")) 	Priv->Manufacturer = AT_Siemens;
 		else if (strstr(msg.Buffer, "iPAQ")) 	Priv->Manufacturer = AT_HP;
 
 		if (strstr(msg.Buffer,"M20")) 		strcpy(Data->Model,"M20");
 		else if (strstr(msg.Buffer,"MC35")) 	strcpy(Data->Model,"MC35");
+		else if (strstr(msg.Buffer,"TC35")) 	strcpy(Data->Model,"TC35");
 		else if (strstr(msg.Buffer, "iPAQ")) 	strcpy(Data->Model,"iPAQ");
 	} else {
 		smprintf(s, "WARNING: Model name too long, increase MAX_MODEL_LENGTH to at least %zd\n", strlen(GetLineString(msg.Buffer, Priv->Lines, 2)));
@@ -699,6 +737,8 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 	case AT_Reply_Error:
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
 	default:
 		return ERR_UNKNOWNRESPONSE;
 	}
@@ -965,7 +1005,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				sms->PDU 	 = SMS_Status_Report;
 				sms->Folder 	 = 1;	/*INBOX SIM*/
 				sms->InboxFolder = true;
-				smprintf(s, "TPMR is %02x\n",buffer[current]);
+				smprintf(s, "TPMR is %d\n",buffer[current]);
 				smsframe[PHONE_SMSStatusReport.TPMR] = buffer[current++];
 				current2=((buffer[current])+1)/2+1;
 				for(i=0;i<current2+1;i++) smsframe[PHONE_SMSStatusReport.Number+i]=buffer[current++];
@@ -1656,7 +1696,7 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case AT_Reply_OK:
  		smprintf(s, "SMS sent OK\n");
  		if (s->User.SendSMSStatus!=NULL) {
-			start = strstr(msg.Buffer, "+CMGW: ");
+			start = strstr(msg.Buffer, "+CMGS: ");
 			if (start != NULL) {
 				s->User.SendSMSStatus(s->CurrentConfig->Device,0,atoi(start+7));
 			} else {
@@ -1801,6 +1841,19 @@ GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 	s->Phone.Data.Alarm = alarm;
 	smprintf(s, "Getting alarm\n");
 	return GSM_WaitFor (s, "AT+CALA?\r", 9, 0x00, 4, ID_GetAlarm);
+}
+
+/* R320 only takes HH:MM. Do other phones understand full date? */
+GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+{
+	char req[20];
+
+	if (alarm->Location != 1) return ERR_INVALIDLOCATION;
+
+	sprintf(req, "AT+CALA=\"%02i:%02i\"\r",alarm->DateTime.Hour,alarm->DateTime.Minute);
+
+	smprintf(s, "Setting Alarm\n");
+	return GSM_WaitFor (s, req, strlen(req), 0x00, 3, ID_SetAlarm);
 }
 
 GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2616,6 +2669,8 @@ GSM_Error ATGEN_ReplyEnterSecurityCode(GSM_Protocol_Message msg, GSM_StateMachin
 		return ERR_SECURITYERROR;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
@@ -3450,7 +3505,7 @@ GSM_Error ATGEN_SetFastSMSSending(GSM_StateMachine *s, bool enable)
 		return GSM_WaitFor(s, "AT+CMMS=2\r", 10, 0x00, 4, ID_SetFastSMSSending);
 	} else {
 		smprintf(s, "Disabling fast SMS sending\n");
-		return GSM_WaitFor(s, "AT+CNMI=0\r", 10, 0x00, 4, ID_SetFastSMSSending);
+		return GSM_WaitFor(s, "AT+CMMS=0\r", 10, 0x00, 4, ID_SetFastSMSSending);
 	}
 }
 
@@ -3532,6 +3587,18 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 	return ERR_NONE;
 }
 
+GSM_Error ATGEN_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
+{
+	if (s->Phone.Data.Priv.ATGEN.Manufacturer==AT_Ericsson) return ERICSSON_GetLocale(s,locale);
+	return ERR_NOTSUPPORTED;
+}
+
+GSM_Error ATGEN_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
+{
+	if (s->Phone.Data.Priv.ATGEN.Manufacturer==AT_Ericsson) return ERICSSON_SetLocale(s,locale);
+	return ERR_NOTSUPPORTED;
+}
+
 GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,		"ATE1" 	 		,0x00,0x00,ID_EnableEcho	 },
@@ -3539,6 +3606,11 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CKPD="		,0x00,0x00,ID_PressKey		 },
 {ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
 {ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
+
+{ERICSSON_ReplyGetDateLocale,	"*ESDF:"		,0x00,0x00,ID_GetLocale		 },
+{ERICSSON_ReplyGetTimeLocale,	"*ESTF:"		,0x00,0x00,ID_GetLocale	 	 },
+{ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
+{ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },
 
 #ifdef GSM_ENABLE_CELLBROADCAST
 {ATGEN_ReplyIncomingCB,		"+CBM:" 	 	,0x00,0x00,ID_IncomingFrame	 },
@@ -3570,6 +3642,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyDeleteSMSMessage,	"AT+CMGD"		,0x00,0x00,ID_DeleteSMSMessage	 },
 {ATGEN_GenericReply,		"ATE1"			,0x00,0x00,ID_SetSMSParameters	 },
 {ATGEN_GenericReply,		"\x1b\x0D"		,0x00,0x00,ID_SetSMSParameters	 },
+{ATGEN_GenericReply,		"AT+CMMS"		,0x00,0x00,ID_SetFastSMSSending  },
 {ATGEN_IncomingSMSInfo,		"+CMTI:" 	 	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_IncomingSMSDeliver,	"+CMT:" 	 	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_IncomingSMSReport,	"+CDS:" 	 	,0x00,0x00,ID_IncomingFrame	 },
@@ -3577,6 +3650,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 
 {ATGEN_ReplyGetDateTime_Alarm,	"AT+CCLK?"		,0x00,0x00,ID_GetDateTime	 },
 {ATGEN_GenericReply,		"AT+CCLK="		,0x00,0x00,ID_SetDateTime	 },
+{ATGEN_GenericReply,		"AT+CALA="		,0x00,0x00,ID_SetAlarm		 },
 {ATGEN_ReplyGetDateTime_Alarm,	"AT+CALA?"		,0x00,0x00,ID_GetAlarm		 },
 
 {ATGEN_ReplyGetNetworkLAC_CID,	"AT+CREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
@@ -3621,6 +3695,8 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyCancelCall,		"AT+CHUP"		,0x00,0x00,ID_CancelCall	 },
 {ATGEN_ReplyDialVoice,		"ATDT"			,0x00,0x00,ID_DialVoice		 },
 {ATGEN_ReplyCancelCall,		"ATH"			,0x00,0x00,ID_CancelCall	 },
+{ATGEN_GenericReply, 		"AT+CUSD"		,0x00,0x00,ID_SetUSSD		 },
+{ATGEN_ReplyGetUSSD, 		"+CUSD"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,            "AT+CLIP=1"      	,0x00,0x00,ID_IncomingFrame      },
 {ATGEN_ReplyIncomingCallInfo,	"+CLIP"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_ReplyIncomingCallInfo,	"+COLP"    		,0x00,0x00,ID_IncomingFrame	 },
@@ -3654,7 +3730,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 };                                                                                      
 
 GSM_Phone_Functions ATGENPhone = {
-	"A2D|iPAQ|at|M20|S25|MC35|C35i|S300|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8390|8850|8855|8890|8910|9110|9210",
+	"A2D|iPAQ|at|M20|S25|MC35|TC35|C35i|S300|5110|5130|5190|5210|6110|6130|6150|6190|6210|6250|6310|6310i|6510|7110|8210|8250|8290|8310|8390|8850|8855|8890|8910|9110|9210",
 	ATGENReplyFunctions,
 	ATGEN_Initialise,
 	ATGEN_Terminate,
@@ -3673,9 +3749,9 @@ GSM_Phone_Functions ATGENPhone = {
 	ATGEN_GetDateTime,
 	ATGEN_SetDateTime,
 	ATGEN_GetAlarm,
-	NOTIMPLEMENTED,			/*	SetAlarm		*/
-	NOTSUPPORTED,			/* 	GetLocale		*/
-	NOTSUPPORTED,			/* 	SetLocale		*/
+	ATGEN_SetAlarm,
+	ATGEN_GetLocale,
+	ATGEN_SetLocale,
 	ATGEN_PressKey,
 	ATGEN_Reset,
 	ATGEN_ResetPhoneSettings,
@@ -3727,7 +3803,7 @@ GSM_Phone_Functions ATGENPhone = {
  	NOTSUPPORTED,			/* 	SetCallDivert		*/
  	NOTSUPPORTED,			/* 	CancelAllDiverts	*/
 	NONEFUNCTION,			/*	SetIncomingCall		*/
-	NOTSUPPORTED,			/* 	SetIncomingUSSD		*/
+	ATGEN_SetIncomingUSSD,
 	ATGEN_SendDTMF,
 	ATGEN_GetRingtone,
 	ATGEN_SetRingtone,
@@ -3763,7 +3839,7 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED,			/*	GetNote			*/
+	NOTSUPPORTED,			/*	GetNextNote		*/
 	NOTSUPPORTED, 			/*	GetProfile		*/
 	NOTSUPPORTED, 			/*	SetProfile		*/
     	NOTSUPPORTED,			/*  	GetFMStation        	*/

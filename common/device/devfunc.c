@@ -1,8 +1,8 @@
-/* Some source from Gnokii
+/* Some source from Gnokii (www.gnokii.org)
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
  * GNU GPL version 2 or later
  */
-/* Some source from Minicom 
+/* Some source from Minicom (http://alioth.debian.org/projects/minicom)
  * (C) 1991,1992,1993,1994,1995,1996 by Miquel van Smoorenburg
  * GNU GPL version 2
  */
@@ -113,7 +113,7 @@ bool unlock_device(char **lock_file)
  */
 GSM_Error lock_device(const char* port, char **lock_device)
 {
-#ifndef WIN32
+#if !defined(WIN32) && !defined(DJGPP)
 	char 		*lock_file = NULL;
 	char 		buffer[max_buf_len];
 	const char 	*aux;
@@ -226,7 +226,7 @@ failed:
 /* Removes lock and frees memory */
 bool unlock_device(char **lock_file)
 {
-#ifndef WIN32
+#if !defined(WIN32) && !defined(DJGPP)
 	int err;
 
 	if (!lock_file) {

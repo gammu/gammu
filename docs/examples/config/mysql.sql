@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 -- 
 -- Host: localhost
--- Generation Time: Sep 08, 2004 at 12:08 AM
+-- Generation Time: Oct 03, 2004 at 04:40 PM
 -- Server version: 4.0.18
 -- PHP Version: 4.3.8
 -- 
@@ -24,7 +24,7 @@ CREATE TABLE `gammu` (
 -- Dumping data for table `gammu`
 -- 
 
-INSERT INTO `gammu` VALUES (3);
+INSERT INTO `gammu` VALUES (4);
 
 -- --------------------------------------------------------
 
@@ -45,7 +45,11 @@ CREATE TABLE `inbox` (
   `ID` int(11) unsigned NOT NULL auto_increment,
   `RecipientID` text NOT NULL,
   UNIQUE KEY `ID` (`ID`)
-) TYPE=MyISAM AUTO_INCREMENT=18 ;
+) TYPE=MyISAM AUTO_INCREMENT=19 ;
+
+-- 
+-- Dumping data for table `inbox`
+-- 
 
 -- --------------------------------------------------------
 
@@ -70,7 +74,12 @@ CREATE TABLE `outbox` (
   `SendingTimeOut` timestamp(14) NOT NULL default '00000000000000',
   `DeliveryReport` enum('default','yes','no') NOT NULL default 'default',
   UNIQUE KEY `ID` (`ID`)
-) TYPE=MyISAM AUTO_INCREMENT=58 ;
+) TYPE=MyISAM AUTO_INCREMENT=61 ;
+
+-- 
+-- Dumping data for table `outbox`
+-- 
+
 
 -- --------------------------------------------------------
 
@@ -88,6 +97,45 @@ CREATE TABLE `outbox_multipart` (
   `SequencePosition` int(11) NOT NULL default '1'
 ) TYPE=MyISAM;
 
+-- 
+-- Dumping data for table `outbox_multipart`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `pbk`
+-- 
+
+CREATE TABLE `pbk` (
+  `GroupID` int(11) NOT NULL default '-1',
+  `Name` text NOT NULL,
+  `Number` text NOT NULL
+) TYPE=MyISAM;
+
+-- 
+-- Dumping data for table `pbk`
+-- 
+
+
+-- --------------------------------------------------------
+
+-- 
+-- Table structure for table `pbk_groups`
+-- 
+
+CREATE TABLE `pbk_groups` (
+  `Name` text NOT NULL,
+  `ID` int(11) NOT NULL auto_increment,
+  UNIQUE KEY `ID` (`ID`)
+) TYPE=MyISAM AUTO_INCREMENT=1 ;
+
+-- 
+-- Dumping data for table `pbk_groups`
+-- 
+
+
 -- --------------------------------------------------------
 
 -- 
@@ -101,8 +149,13 @@ CREATE TABLE `phones` (
   `TimeOut` timestamp(14) NOT NULL default '00000000000000',
   `Send` enum('yes','no') NOT NULL default 'no',
   `Receive` enum('yes','no') NOT NULL default 'no',
-  `IMEI` text NOT NULL
+  `IMEI` text NOT NULL,
+  `Client` text NOT NULL
 ) TYPE=MyISAM;
+
+-- 
+-- Dumping data for table `phones`
+-- 
 
 -- --------------------------------------------------------
 
@@ -130,3 +183,7 @@ CREATE TABLE `sentitems` (
   `TPMR` int(11) NOT NULL default '-1',
   `RelativeValidity` int(11) NOT NULL default '-1'
 ) TYPE=MyISAM;
+
+-- 
+-- Dumping data for table `sentitems`
+-- 

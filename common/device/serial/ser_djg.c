@@ -11,35 +11,35 @@ static GSM_Error serial_close(GSM_StateMachine *s)
 {
     	GSM_Device_SerialData *d = &s->Device.Data.Serial;
 
-	return ERR_NONE;
+	return ERR_NOTIMPLEMENTED;
 }
 
 static GSM_Error serial_open (GSM_StateMachine *s)
 {
     	GSM_Device_SerialData *d = &s->Device.Data.Serial;
     
-    	return ERR_NONE;
+	return ERR_NOTIMPLEMENTED;
 }
 
 static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
 {
     	GSM_Device_SerialData *d = &s->Device.Data.Serial;
 
-    	return ERR_NONE;
+	return ERR_NOTIMPLEMENTED;
 }
 
 static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
 {
     	GSM_Device_SerialData *d = &s->Device.Data.Serial;
 
-    	return ERR_NONE;
+	return ERR_NOTIMPLEMENTED;
 }
 
 static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 {
     	GSM_Device_SerialData *d = &s->Device.Data.Serial;
 
-    	return ERR_NONE;
+	return ERR_NOTIMPLEMENTED;
 }
 
 static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)

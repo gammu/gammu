@@ -16,7 +16,8 @@
 			OutputDirectory="Debug"
 			IntermediateDirectory="Debug"
 			ConfigurationType="1"
-			UseOfMFC="2"
+			UseOfMFC="1"
+			UseOfATL="0"
 			CharacterSet="2">
 			<Tool
 				Name="VCCLCompilerTool"
@@ -24,7 +25,7 @@
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS"
 				MinimalRebuild="TRUE"
 				BasicRuntimeChecks="3"
-				RuntimeLibrary="3"
+				RuntimeLibrary="1"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -33,6 +34,7 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalOptions="/FORCE:MULTIPLE"
 				OutputFile="$(OutDir)/mgui.exe"
 				LinkIncremental="2"
 				GenerateDebugInformation="TRUE"
@@ -65,12 +67,14 @@
 			OutputDirectory="Release"
 			IntermediateDirectory="Release"
 			ConfigurationType="1"
-			UseOfMFC="2"
-			CharacterSet="2">
+			UseOfMFC="1"
+			UseOfATL="0"
+			CharacterSet="2"
+			WholeProgramOptimization="TRUE">
 			<Tool
 				Name="VCCLCompilerTool"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				Detect64BitPortabilityProblems="TRUE"
@@ -80,8 +84,13 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalOptions="/FORCE:MULTIPLE
+"
+				ShowProgress="0"
 				OutputFile="$(OutDir)/mgui.exe"
 				LinkIncremental="1"
+				IgnoreAllDefaultLibraries="FALSE"
+				IgnoreDefaultLibraryNames=""
 				GenerateDebugInformation="TRUE"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -116,6 +125,9 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}">
+			<File
+				RelativePath=".\about.cpp">
+			</File>
 			<File
 				RelativePath="..\..\common\device\bluetoth\affix.c">
 			</File>
@@ -165,6 +177,9 @@
 				RelativePath="..\..\common\misc\coding\coding.c">
 			</File>
 			<File
+				RelativePath=".\config.cpp">
+			</File>
+			<File
 				RelativePath="..\..\common\phone\nokia\dct3\dct3func.c">
 			</File>
 			<File
@@ -172,6 +187,9 @@
 			</File>
 			<File
 				RelativePath="..\..\common\device\devfunc.c">
+			</File>
+			<File
+				RelativePath=".\editpbk.cpp">
 			</File>
 			<File
 				RelativePath="..\..\common\protocol\nokia\fbus2.c">
@@ -240,6 +258,9 @@
 				RelativePath="..\..\common\phone\symbian\mroutgen.c">
 			</File>
 			<File
+				RelativePath="..\..\common\phone\nokia\dct3\n0650.c">
+			</File>
+			<File
 				RelativePath="..\..\common\phone\nokia\dct4\n3320.c">
 			</File>
 			<File
@@ -299,6 +320,9 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}">
 			<File
+				RelativePath=".\about.h">
+			</File>
+			<File
 				RelativePath="..\..\common\device\bluetoth\affix.h">
 			</File>
 			<File
@@ -353,6 +377,9 @@
 				RelativePath=".\common.h">
 			</File>
 			<File
+				RelativePath=".\config.h">
+			</File>
+			<File
 				RelativePath="..\..\common\phone\nokia\dct3\dct3func.h">
 			</File>
 			<File
@@ -360,6 +387,9 @@
 			</File>
 			<File
 				RelativePath="..\..\common\device\devfunc.h">
+			</File>
+			<File
+				RelativePath=".\editpbk.h">
 			</File>
 			<File
 				RelativePath="..\..\common\protocol\nokia\fbus2.h">
@@ -426,6 +456,9 @@
 			</File>
 			<File
 				RelativePath="..\..\common\phone\symbian\mroutgen.h">
+			</File>
+			<File
+				RelativePath="..\..\common\phone\nokia\dct3\n0650.h">
 			</File>
 			<File
 				RelativePath="..\..\common\phone\nokia\dct4\n3320.h">

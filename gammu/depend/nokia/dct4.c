@@ -886,6 +886,8 @@ void DCT4GetT9(int argc, char *argv[])
 	fclose(T9File);
 }
 
+#ifdef GSM_ENABLE_NOKIA6510
+
 extern GSM_Error N6510_SetLight(GSM_StateMachine *s, N6510_PHONE_LIGHTS light, bool enable);
 
 void DCT4SetLight(int argc, char *argv[])
@@ -922,6 +924,7 @@ void DCT4SetLight(int argc, char *argv[])
 
 	GSM_Terminate();
 }
+#endif
 
 void DCT4DisplayTest(int argc, char *argv[])
 {
@@ -1021,6 +1024,8 @@ void DCT4GetADC(int argc, char *argv[])
 		if (DCT4ADC[i].name[0] == 0x00) break;
 	}
 }
+
+#ifdef GSM_ENABLE_NOKIA6510
 
 static double 		RadioFreq;
 static unsigned char 	RadioName[100];
@@ -1175,6 +1180,7 @@ void DCT4TuneRadio(int argc, char *argv[])
 
 	GSM_Terminate();
 }
+#endif
 
 void DCT4PlaySavedRingtone(int argc, char *argv[])
 {
@@ -1314,10 +1320,12 @@ static GSM_Reply_Function UserReplyFunctions4[] = {
 	{DCT4_ReplyTestsNames,		"\x35",0x02,0x03,ID_User1	},
 	{DCT4_ReplyTestsStatus,		"\x35",0x02,0x04,ID_User2	},
 
+#ifdef GSM_ENABLE_NOKIA6510
 	{DCT4_ReplyTuneRadio,		"\x3E",0x03,0x09,ID_User3	},
 	{DCT4_ReplyTuneRadio,		"\x3E",0x03,0x15,ID_User3	},
 	{DCT4_ReplyTuneRadio,		"\x3E",0x03,0x15,ID_SetFMStation},
 	{DCT4_ReplyTuneRadio,		"\x3E",0x03,0x16,ID_User3	},
+#endif
 
 	{DCT4_ReplyGetVoiceRecord,	"\x4A",0x03,0x31,ID_User4	},
 

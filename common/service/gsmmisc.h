@@ -292,7 +292,12 @@ typedef struct {
 typedef enum {
 	GSM_Date_DDMMYYYY = 1,
 	GSM_Date_MMDDYYYY,
-	GSM_Date_YYYYMMDD
+	GSM_Date_YYYYMMDD,
+	GSM_Date_DDMMMYY,
+	GSM_Date_MMDDYY,
+	GSM_Date_DDMMYY,
+	GSM_Date_YYMMDD,
+	GSM_Date_OFF
 } GSM_DateFormat;
 
 typedef struct {
