@@ -37,6 +37,10 @@
 # receivefrequency - the number of seconds between testing for received SMSes, when the phone
 #                    is busy sending SMSes. Normally a test for received SMSes is done every commtimeout
 #                    seconds and after each sent SMS. Default: 0 (not used)
+# resetfrequency - the number of seconds between performing a preventive soft reset in order
+#                  to minimize the cases of hanging phones e.g. Nokia 5110 will sometimes
+#                  freeze to a state when only after unmounting the battery the phone will be functional again.
+#                  Default: 0 (not used)
 # deliveryreport   - should delivery reports be used no/log/sms. 
 #                    log: one line log entry, 
 #                    sms: store in inbox as a received SMS
@@ -48,6 +52,7 @@ logfile = smsdlog
 commtimeout = 1
 sendtimeout = 10
 #receivefrequency = 0
+#resetfrequency = 0
 #deliveryreport = no
 #phoneid = MyPhone1
 
@@ -102,12 +107,22 @@ database = sms
 # -----------------------------------------------------------------------------
 # The filename should be one of the following formats
 #
-# OUT<phone number>.txt
-# OUT<priority>_<phone number>_<serialno>.txt
-# OUT<priority><date>_<time>_<serialno>_<phone number>_<anything>.txt
+# OUT<phone number>.txt<options>
+# OUT<priority>_<phone number>_<serialno>.txt<options>
+# OUT<priority><date>_<time>_<serialno>_<phone number>_<anything>.txt<options>
 # where
 # <priority> is an alphabetic character (A-Z) A = highest priority
+# File extension convention:
+# OUTxxxxx.txt : normal text SMS
+# Options appended to the extension applying to this SMS only:
+# d: delivery report requested
+# f: flash SMS
+# b: WAP bookmark as name,URL
+# e.g. OUTG20040620_193810_123_+4512345678_xpq.txtdf
+# is a flash text SMS requesting delivery reports
+
 # Other fields as above.
+
 # SMSes will be transmitted sequentially based on the file name
 #
 # The contents of the file is the SMS to be transmitted (in Unicode or standard

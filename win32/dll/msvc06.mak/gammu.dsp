@@ -74,6 +74,10 @@ SOURCE=..\..\..\common\phone\at\atgen.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\..\common\phone\at\samsung.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\..\common\misc\cfg.c
 # End Source File
 # Begin Source File
@@ -307,6 +311,18 @@ SOURCE=..\..\..\common\protocol\at\at.h
 # Begin Source File
 
 SOURCE=..\..\..\common\phone\at\atgen.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\at\samsung.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\at\siemens.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\at\sonyeric.h
 # End Source File
 # Begin Source File
 

@@ -1,7 +1,9 @@
 /* (c) 2001-2004 by Marcin Wiacek */
-/* based on some work from Markus Plail and Gnokii */
-/* Authentication function (c) 1999 or earlier by Pavel Janik */
 /* 5210 calendar IDs by Frederick Ros */
+/* based on some Markus Plail, Pavel Janik & others work from Gnokii
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * GNU GPL version 2 or later
+ */
 
 #include "../../../gsmstate.h"
 
@@ -127,6 +129,7 @@ static void N6110_EncodeUnicode(GSM_StateMachine *s, unsigned char *dest, const 
 
 #ifndef ENABLE_LGPL
 
+/* Pavel Janik */
 /* This function provides Nokia authentication protocol.
  * Nokia authentication protocol is used in the communication between Nokia
  * mobile phones (e.g. Nokia 6110) and Nokia Cellular Data Suite software,
@@ -824,6 +827,7 @@ static GSM_Error N6110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
                 smprintf(s, "Setting binary ringtone\n");
                 return GSM_WaitFor (s, reqBin, current, 0x40, 4, ID_SetRingtone);
         case RING_MIDI: 
+	case RING_MMF:
                 return ERR_NOTSUPPORTED;
         }
         return ERR_NOTSUPPORTED;
@@ -1524,6 +1528,7 @@ static GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachi
 #endif
                         return ERR_NONE;
                 case RING_MIDI: 
+                case RING_MMF: 
                         return ERR_NOTSUPPORTED;
                 }
                 smprintf(s, "Ringtone format is %i\n",Data->Ringtone->Format);          
@@ -1561,6 +1566,7 @@ static GSM_Error N6110_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
                 if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_RING_SM)) return ERR_NOTSUPPORTED;
                 break;
         case RING_MIDI: 
+	case RING_MMF:
                 return ERR_NOTSUPPORTED;
         }
 

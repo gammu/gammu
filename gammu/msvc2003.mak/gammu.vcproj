@@ -315,6 +315,9 @@
 				RelativePath="..\smsd\s_mysql.c">
 			</File>
 			<File
+				RelativePath="..\..\common\phone\at\samsung.c">
+			</File>
+			<File
 				RelativePath="..\..\common\device\serial\ser_w32.c">
 			</File>
 			<File
@@ -538,13 +541,22 @@
 				RelativePath="..\smsd\s_mysql.h">
 			</File>
 			<File
+				RelativePath="..\..\common\phone\at\samsung.h">
+			</File>
+			<File
 				RelativePath="..\..\common\device\serial\ser_w32.h">
+			</File>
+			<File
+				RelativePath="..\..\common\phone\at\siemens.h">
 			</File>
 			<File
 				RelativePath="..\smsd\smsdcore.h">
 			</File>
 			<File
 				RelativePath="..\sniff.h">
+			</File>
+			<File
+				RelativePath="..\..\common\phone\at\sonyeric.h">
 			</File>
 			<File
 				RelativePath="..\depend\nokia\dct3trac\type-cc.h">

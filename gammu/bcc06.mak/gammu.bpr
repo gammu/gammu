@@ -5,22 +5,24 @@
     <VERSION value="BCB.06.00"/>
     <PROJECT value="Output\gammu.exe"/>
     <OBJFILES value="Output\gammu.obj Output\sniff.obj Output\dct3.obj Output\wmx.obj 
-      Output\wmx-sim.obj Output\wmx-util.obj Output\wmx-list.obj Output\chiffre.obj
-      Output\wmx-gsm.obj Output\dct4.obj Output\dsiemens.obj Output\s_files.obj 
-      Output\smsdcore.obj Output\cfg.obj Output\coding.obj Output\md5.obj 
-      Output\misc.obj Output\at.obj Output\obex.obj Output\mrouter.obj 
-      Output\fbus2.obj Output\alcabus.obj Output\phonet.obj Output\mbus2.obj 
-      Output\gsmback.obj Output\gsmcal.obj Output\backldif.obj 
+      Output\wmx-sim.obj Output\wmx-util.obj Output\wmx-list.obj 
+      Output\wmx-gsm.obj Output\dct4.obj Output\dsiemens.obj Output\chiffre.obj 
+      Output\s_files.obj Output\s_mysql.obj Output\smsdcore.obj Output\cfg.obj 
+      Output\coding.obj Output\md5.obj Output\misc.obj Output\at.obj 
+      Output\obex.obj Output\mrouter.obj Output\fbus2.obj Output\alcabus.obj 
+      Output\phonet.obj Output\mbus2.obj Output\gsmback.obj Output\backldif.obj 
       Output\backlmb.obj Output\backvcs.obj Output\backvcf.obj 
-      Output\backtext.obj Output\backics.obj Output\gsmlogo.obj Output\gsmnet.obj 
-      Output\gsmpbk.obj Output\gsmring.obj Output\gsmsms.obj Output\gsmems.obj 
-      Output\gsmmulti.obj Output\sonyeric.obj Output\gsmdata.obj Obj\affix.obj
-      Output\gsmmisc.obj Output\gsmcomon.obj Output\gsmstate.obj Obj\blue_w32.obj Obj\bluez.obj
-      Output\n6110.obj Output\n6510.obj Output\n3650.obj Output\dct4func.obj Output\n3320.obj
-      Output\n7110.obj Output\n9210.obj Output\dct3func.obj Output\nauto.obj 
-      Output\nfunc.obj Output\nfuncold.obj Output\alcatel.obj Output\obexgen.obj 
-      Output\mroutgen.obj Output\pfunc.obj Output\atgen.obj Output\siemens.obj 
-      Output\irda.obj Output\bluetoth.obj Output\ser_w32.obj Output\devfunc.obj"/>
+      Output\backtext.obj Output\backics.obj Output\gsmcal.obj 
+      Output\gsmlogo.obj Output\gsmnet.obj Output\gsmpbk.obj Output\gsmring.obj 
+      Output\gsmdata.obj Output\gsmmisc.obj Output\gsmsms.obj Output\gsmems.obj 
+      Output\gsmmulti.obj Output\gsmcomon.obj Output\gsmstate.obj 
+      Output\n6110.obj Output\n6510.obj Output\n3320.obj Output\n3650.obj 
+      Output\dct4func.obj Output\n7110.obj Output\n9210.obj Output\dct3func.obj 
+      Output\nauto.obj Output\nfunc.obj Output\nfuncold.obj Output\alcatel.obj 
+      Output\obexgen.obj Output\mroutgen.obj Output\pfunc.obj Output\atgen.obj 
+      Output\siemens.obj Output\samsung.obj Output\sonyeric.obj Output\irda.obj 
+      Output\bluetoth.obj Output\bluez.obj Output\blue_w32.obj Output\affix.obj 
+      Output\ser_w32.obj Output\devfunc.obj"/>
     <RESFILES value="gammu.res"/>
     <IDLFILES value=""/>
     <IDLGENFILES value=""/>
@@ -33,7 +35,7 @@
       ibsmp.bpi bdertl.bpi vcldbx.bpi qrpt.bpi teeui.bpi teedb.bpi tee.bpi 
       dss.bpi teeqr.bpi ibxpress.bpi dsnap.bpi vclie.bpi inetdb.bpi inet.bpi 
       nmfast.bpi webdsnap.bpi bcbie.bpi dclocx.bpi bcb2kaxserver.bpi"/>
-    <PATHCPP value=".;..;..;..\depend;..\depend\nokia;..\depend\siemens;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend;..\depend;..\smsd;..\smsd;..\..\common\misc;..\..\common\misc\coding;..\..\common\misc\coding;..\..\common\misc;..\..\common\protocol\at;..\..\common\protocol\obex;..\..\common\protocol\symbian;..\..\common\protocol\nokia;..\..\common\protocol\alcatel;..\..\common\protocol\nokia;..\..\common\protocol\nokia;..\..\common\service\backup;..\..\common\service;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service\sms;..\..\common\service\sms;..\..\common\service\sms;..\..\common\phone\at;..\..\common\service;..\..\common\service;..\..\common;..\..\common;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone\obex;..\..\common\phone\symbian;..\..\common\phone;..\..\common\phone\at;..\..\common\phone\at;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common\device\serial;..\..\common\device"/>
+    <PATHCPP value=".;..;..;..\depend\nokia;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia;..\depend\siemens;..\depend\siemens;..\smsd;..\smsd;..\smsd;..\..\common\misc;..\..\common\misc\coding;..\..\common\misc\coding;..\..\common\misc;..\..\common\protocol\at;..\..\common\protocol\obex;..\..\common\protocol\symbian;..\..\common\protocol\nokia;..\..\common\protocol\alcatel;..\..\common\protocol\nokia;..\..\common\protocol\nokia;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service\sms;..\..\common\service\sms;..\..\common\service\sms;..\..\common;..\..\common;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone\obex;..\..\common\phone\symbian;..\..\common\phone;..\..\common\phone\at;..\..\common\phone\at;..\..\common\phone\at;..\..\common\phone\at;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common\device\bluetoth;..\..\common\device\bluetoth;..\..\common\device\bluetoth;..\..\common\device\serial;..\..\common\device"/>
     <PATHPAS value=".;"/>
     <PATHRC value=".;"/>
     <PATHASM value=".;"/>
@@ -53,15 +55,15 @@
       -I..\..\common\protocol\obex -I..\..\common\phone\obex 
       -I..\..\common\service\sms -I..\..\common\misc\coding 
       -I..\..\common\phone\symbian -I..\..\common\device\serial -I..\smsd 
-      -I..\..\common\phone -I..\depend -I..\depend\siemens -I..\depend\nokia -I..\..\common\protocol\alcatel 
-      -I..\..\common\device\bluetoth -I..\..\common\phone\nokia 
-      -I..\..\common\service\backup -I..\depend\nokia\dct3trac 
-      -I..\..\common\phone\alcatel -I..\..\common\protocol\symbian 
-      -I..\..\common\phone\nokia\dct4 -I..\..\common\phone\nokia\dct3 
-      -I..\..\common\device\irda -I..\..\common -I..\..\common\service 
-      -I..\..\common\protocol\nokia -I..\..\common\misc -I..\..\common\phone\at 
-      -I..\..\common\protocol\at -I$(BCB)\include -I$(BCB)\include\mfc 
-      -I$(BCB)\include\atl"/>
+      -I..\..\common\phone -I..\depend -I..\depend\siemens -I..\depend\nokia 
+      -I..\..\common\protocol\alcatel -I..\..\common\device\bluetoth 
+      -I..\..\common\phone\nokia -I..\..\common\service\backup 
+      -I..\depend\nokia\dct3trac -I..\..\common\phone\alcatel 
+      -I..\..\common\protocol\symbian -I..\..\common\phone\nokia\dct4 
+      -I..\..\common\phone\nokia\dct3 -I..\..\common\device\irda -I..\..\common 
+      -I..\..\common\service -I..\..\common\protocol\nokia -I..\..\common\misc 
+      -I..\..\common\phone\at -I..\..\common\protocol\at -I$(BCB)\include 
+      -I$(BCB)\include\mfc -I$(BCB)\include\atl"/>
     <CFLAG1 value="-O2 -w- -VF -fp -X- -a8 -5 -b -k -vi -q -c"/>
     <PFLAGS value="-N2Output -N0Output -$YD -$A8"/>
     <RFLAGS value="/l 0x415 /d &quot;NDEBUG&quot; /i$(BCB)\include;$(BCB)\include\mfc"/>
@@ -89,6 +91,7 @@
       <FILE FILENAME="..\depend\siemens\dsiemens.c" FORMNAME="" UNITNAME="dsiemens" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\depend\siemens\chiffre.c" FORMNAME="" UNITNAME="chiffre" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\smsd\s_files.c" FORMNAME="" UNITNAME="s_files" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\smsd\s_mysql.c" FORMNAME="" UNITNAME="s_mysql" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\smsd\smsdcore.c" FORMNAME="" UNITNAME="smsdcore" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\misc\cfg.c" FORMNAME="" UNITNAME="cfg" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\misc\coding\coding.c" FORMNAME="" UNITNAME="coding" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
@@ -102,23 +105,22 @@
       <FILE FILENAME="..\..\common\protocol\nokia\phonet.c" FORMNAME="" UNITNAME="phonet" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\protocol\nokia\mbus2.c" FORMNAME="" UNITNAME="mbus2" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\backup\gsmback.c" FORMNAME="" UNITNAME="gsmback" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\service\gsmcal.c" FORMNAME="" UNITNAME="gsmcal" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\backup\backldif.c" FORMNAME="" UNITNAME="backldif" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\backup\backlmb.c" FORMNAME="" UNITNAME="backlmb" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\backup\backvcs.c" FORMNAME="" UNITNAME="backvcs" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\backup\backvcf.c" FORMNAME="" UNITNAME="backvcf" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\backup\backtext.c" FORMNAME="" UNITNAME="backtext" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\backup\backics.c" FORMNAME="" UNITNAME="backics" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\service\gsmcal.c" FORMNAME="" UNITNAME="gsmcal" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\gsmlogo.c" FORMNAME="" UNITNAME="gsmlogo" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\gsmnet.c" FORMNAME="" UNITNAME="gsmnet" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\gsmpbk.c" FORMNAME="" UNITNAME="gsmpbk" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\gsmring.c" FORMNAME="" UNITNAME="gsmring" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\service\gsmdata.c" FORMNAME="" UNITNAME="gsmdata" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\service\gsmmisc.c" FORMNAME="" UNITNAME="gsmmisc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\sms\gsmsms.c" FORMNAME="" UNITNAME="gsmsms" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\sms\gsmems.c" FORMNAME="" UNITNAME="gsmems" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\service\sms\gsmmulti.c" FORMNAME="" UNITNAME="gsmmulti" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\phone\at\sonyeric.c" FORMNAME="" UNITNAME="sonyeric" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\service\gsmdata.c" FORMNAME="" UNITNAME="gsmdata" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\service\gsmmisc.c" FORMNAME="" UNITNAME="gsmmisc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\gsmcomon.c" FORMNAME="" UNITNAME="gsmcomon" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\gsmstate.c" FORMNAME="" UNITNAME="gsmstate" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\n6110.c" FORMNAME="" UNITNAME="n6110" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
@@ -138,6 +140,8 @@
       <FILE FILENAME="..\..\common\phone\pfunc.c" FORMNAME="" UNITNAME="pfunc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\at\atgen.c" FORMNAME="" UNITNAME="atgen" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\at\siemens.c" FORMNAME="" UNITNAME="siemens" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\at\samsung.c" FORMNAME="" UNITNAME="samsung" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\at\sonyeric.c" FORMNAME="" UNITNAME="sonyeric" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\device\irda\irda.c" FORMNAME="" UNITNAME="irda" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\device\bluetoth\bluetoth.c" FORMNAME="" UNITNAME="bluetoth" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\device\bluetoth\bluez.c" FORMNAME="" UNITNAME="bluez" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
@@ -169,13 +173,13 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=http://www.mwiacek.com
 FileDescription=Gammu - manager for cellular modems and phones
-FileVersion=0,97,1,0
+FileVersion=0,97,7,0
 InternalName=Gammu
 LegalCopyright=Copyright © 2002-2003 Marcin Wiacek
 LegalTrademarks=
 OriginalFilename=gammu.exe
 ProductName=Gammu (GNU All Mobile Management Utilities)
-ProductVersion=0,97,1,0
+ProductVersion=0,97,7,0
 Comments=
 
 [HistoryLists\hlIncludePath]

@@ -158,7 +158,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_CANCELED,			"Transfer was canceled by phone (you pressed cancel on phone?)."},
 	/* Some missed */
 	{ERR_OTHERCONNECTIONREQUIRED,	"Current connection type doesn't support called function."},
-	/* Some missed */
+	{ERR_WRONGCRC,			"CRC error."},
 	{ERR_INVALIDDATETIME,		"Invalid date or time specified."},
 	{ERR_MEMORY,			"Phone memory error, maybe it is read only"},
 	{ERR_INVALIDDATA,		"Invalid data"},

@@ -5,6 +5,20 @@
 
 #include "../gsmcomon.h"
 
+typedef enum {
+	PICTURE_BMP = 1,
+	PICTURE_GIF,
+	PICTURE_JPG,
+	PICTURE_ICN,
+	PICTURE_PNG
+} GSM_BinaryPicture_Types;
+
+typedef struct {
+	GSM_BinaryPicture_Types Type;
+	unsigned char 		*Buffer;
+	int 			Length;
+} GSM_BinaryPicture;
+
 /**
  * Enum to handle all possible bitmaps, which are not saved in various filesystems.
  */
@@ -45,7 +59,11 @@ typedef enum {
 	/**
 	 * Image defined in Smart Messaging specification
 	 */
-	GSM_PictureImage
+	GSM_PictureImage,
+	/**
+	 * Binary picture (BMP, GIF, etc.)
+	 */
+	GSM_PictureBinary
 } GSM_Bitmap_Types;
 
 #define GSM_BITMAP_SIZE	(65+7)/8*96
@@ -115,6 +133,14 @@ typedef struct {
 	 * For colour bitmaps: ID
 	 */
 	unsigned char 		ID;
+	/**
+	 * For binary pictures (GIF, BMP, etc.): frame and length
+	 */
+	GSM_BinaryPicture 	BinaryPic;
+	/**
+	 * Bitmap name
+	 */
+	char			*Name;
 } GSM_Bitmap;
 
 #define MAX_MULTI_BITMAP 6

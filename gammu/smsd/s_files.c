@@ -1,4 +1,4 @@
-/* (c) 2002-2003 by Joergen Thomsen */
+/* (c) 2002-2004 by Joergen Thomsen */
 
 #include "../../cfg/config.h"
 
@@ -106,17 +106,26 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 
 /* Find one multi SMS to sending and return it (or return ERR_EMPTY)
  * There is also set ID for SMS
+ * File extension convention:
+ * OUTxxxxx.txt : normal text SMS
+ * Options appended to the extension applying to this SMS only:
+ * d: delivery report requested
+ * f: flash SMS
+ * b: WAP bookmark as name,URL
+ * e.g. OUTG20040620_193810_123_+4512345678_xpq.txtdf
+ * is a flash text SMS requesting delivery reports
  */
 static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID)
 {
   	GSM_Error			error = ERR_NOTSUPPORTED;
   	GSM_MultiPartSMSInfo		SMSInfo;
+	GSM_WAPBookmark			Bookmark;
  	unsigned char 			FileName[100],FullName[400];
 	unsigned char			Buffer[(GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS+1)*2];
  	unsigned char			Buffer2[(GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS+1)*2];
   	FILE				*File;
  	int				i, len, phlen;
- 	char				*pos1, *pos2;
+ 	char				*pos1, *pos2, *options;
 #if defined HAVE_DIRENT_H && defined HAVE_SCANDIR & defined HAVE_ALPHASORT
   	struct 				dirent **namelist = NULL;
   	int 				l, m ,n;
@@ -125,10 +134,10 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	FullName[strlen(Config->outboxpath)-1] = '\0';
   	n = scandir(FullName, &namelist, 0, alphasort);
   	m = 0;
- 	while ((m < n) && ((*(namelist[m]->d_name) == '.') ||
- 	                   !mystrncasecmp(namelist[m]->d_name,"out", 3) ||
+ 	while ((m < n) && ((*(namelist[m]->d_name) == '.') || // directory and UNIX hidden file
+ 	                   !mystrncasecmp(namelist[m]->d_name,"out", 3) || // must start with 'out'
  	                   ((strlen(namelist[m]->d_name) >= 4) &&
- 	                     !mystrncasecmp(&namelist[m]->d_name[strlen(namelist[m]->d_name)-4],".txt",4)
+ 	                    !mystrncasecmp(strrchr(namelist[m]->d_name, '.'),".txt",4)
  	                   )
  	                  )
  	      ) m++;
@@ -144,7 +153,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	long 				hFile;
 
   	strcpy(FullName, Config->outboxpath);
-  	strcat(FullName, "OUT*.txt");
+  	strcat(FullName, "OUT*.txt*");
   	if((hFile = _findfirst( FullName, &c_file )) == -1L ) {
   		return ERR_EMPTY;
   	} else {
@@ -155,7 +164,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 #endif
 #endif
 	if (error != ERR_NONE) return error;
-
+	options = strrchr(FileName, '.') + 4;
   	strcpy(FullName, Config->outboxpath);
   	strcat(FullName, FileName);
 
@@ -176,10 +185,17 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	Buffer[len+1] 	= 0;
   	ReadUnicodeFile(Buffer2,Buffer);
 
+    GSM_ClearMultiPartSMSInfo(&SMSInfo);
+    sms->Number = 0;
+
   	SMSInfo.ReplaceMessage  	= 0;
   	SMSInfo.Entries[0].Buffer	= Buffer2;
   	SMSInfo.Class			= -1;
 	SMSInfo.EntriesNum		= 1;
+	Config->currdeliveryreport	= 0;
+	if (strchr(options, 'd')) Config->currdeliveryreport	= 1;
+	if (strchr(options, 'f')) SMSInfo.Class 			= 0; /* flash SMS */
+
  	if (mystrncasecmp(Config->transmitformat, "unicode", 0)) {
  		SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
  		SMSInfo.UnicodeCoding = true;
@@ -190,6 +206,32 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		/* auto */
  		SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
 	}
+
+	if (strchr(options, 'b')) { // WAP bookmark as title,URL
+		SMSInfo.Entries[0].Buffer		= NULL;
+		SMSInfo.Entries[0].Bookmark		= &Bookmark;
+		SMSInfo.Entries[0].ID			= SMS_NokiaWAPBookmarkLong;
+		SMSInfo.Entries[0].Bookmark->Location	= 0;
+		pos2 = mystrstr(Buffer2, "\0,");
+		if (pos2 == NULL) {
+			pos2 = Buffer2;
+		} else {
+			*pos2 = '\0'; pos2++; *pos2 = '\0'; pos2++; // replace comma by zero
+		}
+
+		len = UnicodeLength(Buffer2);
+		if (len > 50) len = 50;
+		memmove(&SMSInfo.Entries[0].Bookmark->Title, Buffer2, len * 2);
+		pos1 = &SMSInfo.Entries[0].Bookmark->Title[0] + len * 2;
+		*pos1 = '\0'; pos1++; *pos1 = '\0';
+
+		len = UnicodeLength(pos2);
+		if (len > 255) len = 255;
+		memmove(&SMSInfo.Entries[0].Bookmark->Address, pos2, len * 2);
+		pos1 = &SMSInfo.Entries[0].Bookmark->Address[0] + len * 2;
+		*pos1 = '\0'; pos1++; *pos1 = '\0';
+	}
+
   	GSM_EncodeMultiPartSMS(&SMSInfo,sms);
 
  	pos1 = FileName;
@@ -230,15 +272,17 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 #ifdef DEBUG
 	if (sms->Number != 0) {
 		DecodeUnicode(sms->SMS[0].Number,Buffer);
-	 	dbgprintf("Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i\n",
+	 	dbgprintf("Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
 			sms->Number,
 			Buffer,
 	 		DecodeUnicodeString(sms->SMS[0].Text),
 			sms->SMS[0].Coding,
 			sms->SMS[0].Length,
 			sms->SMS[0].UDH.Type,
-			sms->SMS[0].UDH.Length);
-	} else dbgprintf("error\n");
+			sms->SMS[0].UDH.Length,
+			Config->currdeliveryreport,
+			SMSInfo.Class);
+	} else dbgprintf("error: SMS-count = 0");
 #endif
 
   	return ERR_NONE;
@@ -308,6 +352,6 @@ GSM_SMSDService SMSDFiles = {
 	SMSDFiles_AddSentSMSInfo
 };
 
-/* How should editor hadle tabs in this file? Add editor commands here.
+/* How should editor handle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

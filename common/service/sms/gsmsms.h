@@ -1,5 +1,8 @@
 /* (c) 2001-2004 by Marcin Wiacek */
-/* based on some work from Pawel Kot, others and Gnokii */
+/* Based on some Pawel Kot and others work from Gnokii
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * GNU GPL version 2 or later
+ */
 
 #ifndef __gsm_sms_h
 #define __gsm_sms_h

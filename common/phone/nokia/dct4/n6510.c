@@ -1,5 +1,8 @@
 /* (c) 2002-2004 by Marcin Wiacek */
-/* based on some work from Markus Plail, Pawel Kot and Gnokii */
+/* based on some Markus Plail, Pawel Kot work from Gnokii
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * GNU GPL version 2 or later
+ */
 /* function for making CRC for filesystem (c) 2003 by Michael Schroeder */
 
 #include "../../../gsmstate.h"
@@ -2772,6 +2775,7 @@ static GSM_Error N6510_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		smprintf(s, "Getting binary ringtone\n");
 		return GSM_WaitFor (s, req2, 6, 0x1f, 4, ID_GetRingtone);
 	case RING_MIDI:
+	case RING_MMF:
 		return ERR_NOTSUPPORTED;
 	}
 	return ERR_NOTSUPPORTED;

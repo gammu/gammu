@@ -16,21 +16,23 @@ VERSION = BCB.06.00
 PROJECT = Output\gammu.exe
 OBJFILES = Output\gammu.obj Output\sniff.obj Output\dct3.obj Output\wmx.obj \
     Output\wmx-sim.obj Output\wmx-util.obj Output\wmx-list.obj \
-    Output\wmx-gsm.obj Output\dct4.obj Output\dsiemens.obj Output\s_files.obj \
-    Output\smsdcore.obj Output\cfg.obj Output\coding.obj Output\md5.obj \
-    Output\misc.obj Output\at.obj Output\obex.obj Output\mrouter.obj \
-    Output\fbus2.obj Output\alcabus.obj Output\phonet.obj Output\mbus2.obj \
-    Output\gsmback.obj Output\gsmcal.obj Output\backldif.obj \
+    Output\wmx-gsm.obj Output\dct4.obj Output\dsiemens.obj Output\chiffre.obj \
+    Output\s_files.obj Output\s_mysql.obj Output\smsdcore.obj Output\cfg.obj \
+    Output\coding.obj Output\md5.obj Output\misc.obj Output\at.obj \
+    Output\obex.obj Output\mrouter.obj Output\fbus2.obj Output\alcabus.obj \
+    Output\phonet.obj Output\mbus2.obj Output\gsmback.obj Output\backldif.obj \
     Output\backlmb.obj Output\backvcs.obj Output\backvcf.obj \
-    Output\backtext.obj Output\backics.obj Output\gsmlogo.obj Output\gsmnet.obj \
-    Output\gsmpbk.obj Output\gsmring.obj Output\gsmsms.obj Output\gsmems.obj \
-    Output\gsmmulti.obj Output\sonyeric.obj Output\gsmwap.obj \
-    Output\gsmmisc.obj Output\gsmcomon.obj Output\gsmstate.obj \
-    Output\n6110.obj Output\n6510.obj Output\n3650.obj Output\dct4func.obj Output\n3320.obj \
-    Output\n7110.obj Output\n9210.obj Output\dct3func.obj Output\nauto.obj \
-    Output\nfunc.obj Output\nfuncold.obj Output\alcatel.obj Output\obexgen.obj \
-    Output\mroutgen.obj Output\pfunc.obj Output\atgen.obj Output\siemens.obj \
-    Output\irda.obj Output\bluetoth.obj Output\ser_w32.obj Output\devfunc.obj Output\chiffre.obj
+    Output\backtext.obj Output\backics.obj Output\gsmcal.obj \
+    Output\gsmlogo.obj Output\gsmnet.obj Output\gsmpbk.obj Output\gsmring.obj \
+    Output\gsmdata.obj Output\gsmmisc.obj Output\gsmsms.obj Output\gsmems.obj \
+    Output\gsmmulti.obj Output\gsmcomon.obj Output\gsmstate.obj \
+    Output\n6110.obj Output\n6510.obj Output\n3320.obj Output\n3650.obj \
+    Output\dct4func.obj Output\n7110.obj Output\n9210.obj Output\dct3func.obj \
+    Output\nauto.obj Output\nfunc.obj Output\nfuncold.obj Output\alcatel.obj \
+    Output\obexgen.obj Output\mroutgen.obj Output\pfunc.obj Output\atgen.obj \
+    Output\siemens.obj Output\samsung.obj Output\sonyeric.obj Output\irda.obj \
+    Output\bluetoth.obj Output\bluez.obj Output\blue_w32.obj Output\affix.obj \
+    Output\ser_w32.obj Output\devfunc.obj
 RESFILES = gammu.res
 MAINSOURCE = gammu.bpf
 RESDEPEN = $(RESFILES)
@@ -53,7 +55,7 @@ SYSDEFINES = _NO_VCL;_ASSERTE;NO_STRICT
 INCLUDEPATH = ..\..\common\service\sms;..\depend\nokia;..\depend\siemens;..\depend\nokia\dct3trac;..\..\common\misc\coding;..\..\common\service\backup;..\;..;..\..\common\phone\symbian;..\..\common\protocol\symbian;..\..\common\protocol\obex;..\..\common\phone\obex;..\..\common\device;..\smsd;..\depend;..\..\common\device\serial;..\..\common\protocol\alcatel;..\..\common\phone\alcatel;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl
 LIBPATH = ..\..\common\service\sms;..\depend\nokia;..\depend\siemens;..\depend\nokia\dct3trac;..\..\common\misc\coding;..\..\common\service\backup;..\;..;..\..\common\phone\symbian;..\..\common\protocol\symbian;..\..\common\device;..\..\common\protocol\obex;..\..\common\phone\obex;..\smsd;..\depend;..\..\common\phone\alcatel;..\..\common\protocol\alcatel;..\..\common\device\serial;..\..\common\device\bluetoth;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\lib;$(RELEASELIBPATH);$(BCB)\lib\psdk
 WARNINGS= -w-par -w-8027 -w-8026 -w-csu
-PATHCPP = .;..;..;..\depend;..\depend\nokia;..\depend\siemens;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend;..\depend;..\smsd;..\smsd;..\..\common\misc;..\..\common\misc\coding;..\..\common\misc\coding;..\..\common\misc;..\..\common\protocol\at;..\..\common\protocol\obex;..\..\common\protocol\symbian;..\..\common\protocol\nokia;..\..\common\protocol\alcatel;..\..\common\protocol\nokia;..\..\common\protocol\nokia;..\..\common\service\backup;..\..\common\service;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service\sms;..\..\common\service\sms;..\..\common\service\sms;..\..\common\phone\at;..\..\common\service;..\..\common\service;..\..\common;..\..\common;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone\obex;..\..\common\phone\symbian;..\..\common\phone;..\..\common\phone\at;..\..\common\phone\at;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common\device\serial;..\..\common\device
+PATHCPP = .;..;..;..\depend\nokia;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia;..\depend\siemens;..\depend\siemens;..\smsd;..\smsd;..\smsd;..\..\common\misc;..\..\common\misc\coding;..\..\common\misc\coding;..\..\common\misc;..\..\common\protocol\at;..\..\common\protocol\obex;..\..\common\protocol\symbian;..\..\common\protocol\nokia;..\..\common\protocol\alcatel;..\..\common\protocol\nokia;..\..\common\protocol\nokia;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service\sms;..\..\common\service\sms;..\..\common\service\sms;..\..\common;..\..\common;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone\obex;..\..\common\phone\symbian;..\..\common\phone;..\..\common\phone\at;..\..\common\phone\at;..\..\common\phone\at;..\..\common\phone\at;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common\device\bluetoth;..\..\common\device\bluetoth;..\..\common\device\bluetoth;..\..\common\device\serial;..\..\common\device
 PATHASM = .;
 PATHPAS = .;
 PATHRC = .;
@@ -64,15 +66,15 @@ IDLCFLAGS = -src_suffix cpp -DWIN32 -DNDEBUG -D_CONSOLE -I..\. -I.. \
     -I..\..\common\protocol\obex -I..\..\common\phone\obex \
     -I..\..\common\service\sms -I..\..\common\misc\coding \
     -I..\..\common\phone\symbian -I..\..\common\device\serial -I..\smsd \
-    -I..\..\common\phone -I..\depend -I..\..\common\protocol\alcatel \
-    -I..\..\common\device\bluetoth -I..\..\common\phone\nokia -I..\depend\siemens \
-    -I..\..\common\service\backup -I..\depend\nokia\dct3trac -I..\depend\nokia \
-    -I..\..\common\phone\alcatel -I..\..\common\protocol\symbian \
-    -I..\..\common\phone\nokia\dct4 -I..\..\common\phone\nokia\dct3 \
-    -I..\..\common\device\irda -I..\..\common -I..\..\common\service \
-    -I..\..\common\protocol\nokia -I..\..\common\misc -I..\..\common\phone\at \
-    -I..\..\common\protocol\at -I$(BCB)\include -I$(BCB)\include\mfc \
-    -I$(BCB)\include\atl
+    -I..\..\common\phone -I..\depend -I..\depend\siemens -I..\depend\nokia \
+    -I..\..\common\protocol\alcatel -I..\..\common\device\bluetoth \
+    -I..\..\common\phone\nokia -I..\..\common\service\backup \
+    -I..\depend\nokia\dct3trac -I..\..\common\phone\alcatel \
+    -I..\..\common\protocol\symbian -I..\..\common\phone\nokia\dct4 \
+    -I..\..\common\phone\nokia\dct3 -I..\..\common\device\irda -I..\..\common \
+    -I..\..\common\service -I..\..\common\protocol\nokia -I..\..\common\misc \
+    -I..\..\common\phone\at -I..\..\common\protocol\at -I$(BCB)\include \
+    -I$(BCB)\include\mfc -I$(BCB)\include\atl
 PFLAGS = -N2Output -N0Output -$YD -$A8
 RFLAGS = /l 0x415 /d "NDEBUG" /i$(BCB)\include;$(BCB)\include\mfc
 AFLAGS = /mx /w2 /zd

@@ -1,3 +1,11 @@
+/* Some source from Gnokii
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * GNU GPL version 2 or later
+ */
+/* Some source from Minicom 
+ * (C) 1991,1992,1993,1994,1995,1996 by Miquel van Smoorenburg
+ * GNU GPL version 2
+ */
 
 #include <string.h>
 #ifdef WIN32

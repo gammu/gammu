@@ -1,5 +1,9 @@
 /* (c) 2002-2004 by Marcin Wiacek */
 /* locking device and settings all speeds by Michal Cihar */
+/* based on some work from Gnokii
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * GNU GPL version 2 or later
+ */
 
 #include "../../gsmstate.h"
 
@@ -16,6 +20,30 @@
 #include "../../gsmcomon.h"
 #include "ser_unx.h"
 
+#ifndef O_NONBLOCK
+#  define O_NONBLOCK  0
+#endif
+
+#ifdef __NetBSD__
+#  define FNONBLOCK O_NONBLOCK
+
+#  define  B57600   0010001
+#  define  B115200  0010002
+#  define  B230400  0010003
+#  define  B460800  0010004
+#  define  B500000  0010005
+#  define  B576000  0010006
+#  define  B921600  0010007
+#  define  B1000000 0010010
+#  define  B1152000 0010011
+#  define  B1500000 0010012
+#  define  B2000000 0010013
+#  define  B2500000 0010014
+#  define  B3000000 0010015
+#  define  B3500000 0010016
+#  define  B4000000 0010017
+#endif
+
 static GSM_Error serial_close(GSM_StateMachine *s)
 {
 	GSM_Device_SerialData *d = &s->Device.Data.Serial;
@@ -28,10 +56,6 @@ static GSM_Error serial_close(GSM_StateMachine *s)
 
 	return ERR_NONE;
 }
-
-#ifndef O_NONBLOCK
-#  define O_NONBLOCK  0
-#endif
 
 static GSM_Error serial_open (GSM_StateMachine *s)
 {
@@ -202,10 +226,12 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 		case 9600:	speed2 = B9600;		break;
 		case 19200:	speed2 = B19200;	break;
 		case 38400:	speed2 = B38400;	break;
+#ifdef B57600
 		case 57600:	speed2 = B57600;	break;
 		case 115200:	speed2 = B115200;	break;
 		case 230400:	speed2 = B230400;	break;
 		case 460800:	speed2 = B460800;	break;
+#ifdef B500000
 		case 500000:	speed2 = B500000;	break;
 		case 576000:	speed2 = B576000;	break;
 		case 921600:	speed2 = B921600;	break;
@@ -217,6 +243,8 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 		case 3000000:	speed2 = B3000000;	break;
 		case 3500000:	speed2 = B3500000;	break;
 		case 4000000:	speed2 = B4000000;	break;	
+#endif
+#endif
 	}
 
     	/* This should work on all systems because it is done according to POSIX */

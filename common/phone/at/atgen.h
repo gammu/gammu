@@ -42,13 +42,15 @@ typedef enum {
 	AT_Falcom,
 	AT_Ericsson,
 	AT_Sagem,
+	AT_Samsung,
 	AT_Unknown
 } GSM_AT_Manufacturer;
 
 typedef enum {
 	AT_PBK_HEX = 1,
 	AT_PBK_GSM,
-	AT_PBK_UCS2
+	AT_PBK_UCS2,
+	AT_PBK_PCCP437
 } GSM_AT_PBK_Charset;
 
 typedef enum {
@@ -102,6 +104,10 @@ typedef struct {
 	bool			OBEX;
 	GSM_File		file;
 } GSM_Phone_ATGENData;
+
+GSM_Error ATGEN_HandleCMSError	(GSM_StateMachine *);
+GSM_Error ATGEN_HandleCMEError	(GSM_StateMachine *);
+GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
 
 #endif
 

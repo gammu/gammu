@@ -1,4 +1,13 @@
-/* Based on work by Marcel Holtmann and other authors of Bluez */
+/* Based on some work from Bluez
+ * (C) 2000-2001 Qualcomm Incorporated
+ * (C) 2002-2003 Maxim Krasnyansky <maxk@qualcomm.com>
+ * (C) 2002-2004 Marcel Holtmann <marcel@holtmann.org>
+ * GNU GPL version 2
+ */
+/* based on some Marcel Holtmann work from Gnokii
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * GNU GPL version 2 or later
+ */
 
 #include "../../gsmstate.h"
 

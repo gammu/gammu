@@ -120,21 +120,23 @@ typedef struct {
 	bool					AllNotesScale;
 } GSM_NoteRingtone;
 
+/* FIXME: should use BinaryTone instead? */
 /* Structure to hold Nokia binary ringtones. */
 typedef struct {
-	unsigned char				Frame[30000];
+	unsigned char				Frame[50000];
 	int					Length;
 } GSM_NokiaBinaryRingtone;
 
 typedef struct {
-	unsigned char				*Frame;
+	unsigned char				*Buffer;
 	int					Length;
 } GSM_BinaryTone;
 
 typedef enum {
 	RING_NOTETONE = 1,
 	RING_NOKIABINARY,
-	RING_MIDI
+	RING_MIDI,
+	RING_MMF
 } GSM_RingtoneFormat;
 
 /**

@@ -764,22 +764,23 @@ static void SaveSMSCEntry(FILE *file, GSM_SMSC *SMSC, bool UseUnicode)
 
 static void SaveRingtoneEntry(FILE *file, GSM_Ringtone *ringtone, bool UseUnicode)
 {
-	unsigned char 	buffer[45000];
-	int		i,j;
+	unsigned char buffer[45000];
 
 	sprintf(buffer,"Location = %i%c%c",ringtone->Location,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
 	SaveBackupText(file, "Name", ringtone->Name, UseUnicode);
 	switch (ringtone->Format) {
 	case RING_NOKIABINARY:
-		j = 0; i = 0;
 		EncodeHexBin(buffer,ringtone->NokiaBinary.Frame,ringtone->NokiaBinary.Length);
 		SaveLinkedBackupText(file, "NokiaBinary", buffer, UseUnicode);
 		break;
 	case RING_MIDI:
-		j = 0; i = 0;
 		EncodeHexBin(buffer,ringtone->NokiaBinary.Frame,ringtone->NokiaBinary.Length);
 		SaveLinkedBackupText(file, "Pure Midi", buffer, UseUnicode);
+		break;
+	case RING_MMF:
+		EncodeHexBin(buffer,ringtone->NokiaBinary.Frame,ringtone->NokiaBinary.Length);
+		SaveLinkedBackupText(file, "SMAF", buffer, UseUnicode);
 		break;
 	case RING_NOTETONE:
 		break;

@@ -1,5 +1,8 @@
 /* (c) 2001-2004 by Marcin Wiacek */
-/* based on some work from Markus Plail and Gnokii */
+/* based on some Markus Plail work from Gnokii
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * GNU GPL version 2 or later
+ */
 
 #include "../../../gsmstate.h"
 
@@ -526,6 +529,7 @@ static GSM_Error N7110_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		smprintf(s, "Getting binary ringtone\n");
 		return GSM_WaitFor (s, req, 6, 0x1f, 4, ID_GetRingtone);
 	case RING_MIDI:
+	case RING_MMF:
 		return ERR_NOTSUPPORTED;
 	}
 	return ERR_NOTSUPPORTED;

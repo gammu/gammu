@@ -1,6 +1,9 @@
 /* (c) 2001-2004 by Marcin Wiacek */
-/* based on some work from Markus Plail, Pavel Janik, others and Gnokii */
 /* resetting DCT4 phones settings (c) by Walek */
+/* based on some Markus Plail, Pavel Janik & others work from Gnokii
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * GNU GPL version 2 or later
+ */
 
 #include <string.h> /* memcpy only */
 #include <stdio.h>

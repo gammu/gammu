@@ -117,7 +117,7 @@ SOURCE=..\..\common\device\bluetoth\bluez.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\bluetoth\affix_w32.c
+SOURCE=..\..\common\device\bluetoth\affix.c
 # End Source File
 # Begin Source File
 
@@ -345,11 +345,19 @@ SOURCE=..\smsd\s_files.c
 # End Source File
 # Begin Source File
 
+SOURCE=..\smsd\s_mysql.c
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\device\serial\ser_w32.c
 # End Source File
 # Begin Source File
 
 SOURCE=..\..\common\phone\at\siemens.c
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\phone\at\samsung.c
 # End Source File
 # Begin Source File
 
@@ -385,6 +393,18 @@ SOURCE=..\..\common\phone\at\atgen.h
 # End Source File
 # Begin Source File
 
+SOURCE=..\..\common\phone\at\siemens.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\phone\at\samsung.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\common\phone\at\sonyeric.h
+# End Source File
+# Begin Source File
+
 SOURCE=..\..\common\device\bluetoth\bluetoth.h
 # End Source File
 # Begin Source File
@@ -397,7 +417,7 @@ SOURCE=..\..\common\device\bluetoth\bluez.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\common\device\bluetoth\affix_w32.h
+SOURCE=..\..\common\device\bluetoth\affix.h
 # End Source File
 # Begin Source File
 
@@ -654,6 +674,10 @@ SOURCE=..\..\common\protocol\protocol.h
 # Begin Source File
 
 SOURCE=..\smsd\s_files.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\smsd\s_mysql.h
 # End Source File
 # Begin Source File
 
