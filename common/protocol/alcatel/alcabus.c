@@ -164,7 +164,7 @@ static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char
 			/* We can only warn, as we don't know what should happend now... */
 			smprintf(s,"WARNING: Ignoring incorrect packet checksum!\n");
 		}
-	
+
 		/* Was it data? */
 		if (d->Msg.Type == ALCATEL_DATA) {
 			/* Dispatch message */
@@ -176,13 +176,13 @@ static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char
 			d->Msg.Length = 0;
 		/* Was it ack? */
 		} else if ((d->Msg.Type == ALCATEL_ACK) ||
-				(d->Msg.Type == ALCATEL_CONTROL) || 
-				(d->Msg.Type == ALCATEL_CONNECT_ACK) || 
+				(d->Msg.Type == ALCATEL_CONTROL) ||
+				(d->Msg.Type == ALCATEL_CONNECT_ACK) ||
 				(d->Msg.Type == ALCATEL_DISCONNECT_ACK)) {
 			/* TODO: check counter of ack? */
 			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
 				s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
-				smprintf(s, "Received %s ack ", 
+				smprintf(s, "Received %s ack ",
 						(d->Msg.Type == ALCATEL_ACK) ? "normal" :
 						(d->Msg.Type == ALCATEL_CONTROL) ? "control" :
 						(d->Msg.Type == ALCATEL_CONNECT_ACK) ? "connect" :

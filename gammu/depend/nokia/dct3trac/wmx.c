@@ -117,12 +117,12 @@ static void mdircv_data(unsigned char type, unsigned char *buffer, size_t length
 		dat.seq  	= (buffer[3]<<16)|(buffer[4]<<8)|(buffer[5]);
 		dat.arfcn 	= (buffer[6]<<8)|buffer[7];
 		dat.timeshift 	= (buffer[8]<<8)|buffer[9];
-		
+
 		printf("ch=%02X bsic=%i err=%i t=%06X arfcn=%i shift=%i",
 			ch, buffer[1], buffer[2],
 			dat.seq, dat.arfcn, dat.timeshift
 		);
-		
+
 		//dumpraw("MDI recv 80 header", &buffer[6], 4);
 		printf(" ");
 		if(buffer[2] == 0) { /* unencrypted */
@@ -137,7 +137,7 @@ static void mdircv_data(unsigned char type, unsigned char *buffer, size_t length
 				GSMDecoder_L2packet(gsmdec, &dat, &buffer[10], length-10);
 			} else if (ch == 0x50 || ch == 0x60) {
 				/* Short header */
-				
+
 				printf("\n");
 				GSMDecoder_L2short_packet(gsmdec, &dat, &buffer[10], length-10);
 			} else {
@@ -163,7 +163,7 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 	char 			*desc;
 
 	//printf("Debug Trace Received\n");
-	/* parse frame 
+	/* parse frame
 	   Debug trace packet:
 	   packet type 0x00
 	   source subsystem 0x01 (LOCAL)
@@ -182,7 +182,7 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 	//if((id&0xFF00)==0x1900 && id != 0x1980)
 	//	return GE_NONE;
 	//printf("%02x\n",msg.Buffer[10]);
-	//if(msg.Buffer[10]!=0x40) 
+	//if(msg.Buffer[10]!=0x40)
 	//	return GE_NONE;
 	/* Query trace type name */
 	desc = "Unknown";
@@ -221,7 +221,7 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 		break;
 		*/
 	case 0x18: /* MDISND */
-		
+
 		/* skip these:
 		  +00 length
 		  +01 type (also xx in 0x18xx)
@@ -245,13 +245,13 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 		break;
  	case 0x20: /* 0x25 SIM commands */
  		/*
-		for(x=8;x<msg.Length;x++) 
+		for(x=8;x<msg.Length;x++)
  		    printf("%02x ", msg.Buffer[x]&0xFF);
  		*/
  		printf("SIM command ");
- 		if(msg.Buffer[8]==0xa0) { // check if valid (class=a0) 
+ 		if(msg.Buffer[8]==0xa0) { // check if valid (class=a0)
 			simCommand_data(msg.Buffer[9], (unsigned char)(id&0xFF), (unsigned char*)&msg.Buffer[10], msg.Length-10);
- 			// TODO: pass the msg.Buffer[9] and skip 1rst arg 	
+ 			// TODO: pass the msg.Buffer[9] and skip 1rst arg
  		} else {
 			printf("Unknown 0x25 packet (NOT SIM cmd): ");
 			for(x=8;x<msg.Length;x++) printf("%02x ", msg.Buffer[x]&0xFF);
@@ -266,8 +266,8 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
  		} else {
  		    	simAnswer_Process((unsigned char)(id&0xFF), (unsigned char*)&msg.Buffer[8], length);
  		}
- 		break;			
- 	case 0x23:  /* 0x28 SIM response data to commands */		
+ 		break;
+ 	case 0x23:  /* 0x28 SIM response data to commands */
  		if(msg.Length<10) {
  		    	// Unknown response
  		    	for(x=0;x<msg.Length-10;x++) printf("%02x ", msg.Buffer[x]&0xFF);
@@ -277,10 +277,10 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
  		}
  		break;
 	default:
-		/* hex */		
+		/* hex */
 		for(x=8; x<msg.Length; x++) {
 			printf("%02x ",msg.Buffer[x]&0xFF);
-		}		
+		}
 		break;
 	}
 	printf("\n");
@@ -305,7 +305,7 @@ static GSM_Error DCT3_ReplyMyPacket(GSM_Protocol_Message msg, GSM_StateMachine *
 #define ID_RPC		0x668
 
 void DCT3SetDebug(int argc, char *argv[])
-{	
+{
 	int		x,count;
 	unsigned int y;
 	unsigned char 	reqDisable[] = {0x01, 0x01, 0x71};
@@ -314,7 +314,7 @@ void DCT3SetDebug(int argc, char *argv[])
 	/* RPC testing packets: */
 
 	/* RPC: Get version */
-	//unsigned char 	reqTest2[] = {0x01, 0x01, 0x00, 0x03, 0x00}; 
+	//unsigned char 	reqTest2[] = {0x01, 0x01, 0x00, 0x03, 0x00};
 	/* RPC: read I/O 0x6D mask 0xFF */
 	//unsigned char 	reqTest2[] = {0x01, 0x01, 0x02, 0x01, 0x02, 0x6D, 0xFF}; /*  */
 	/* RPC: write I/O 0x03 mask 0xFF value 0x31 */
@@ -329,7 +329,7 @@ void DCT3SetDebug(int argc, char *argv[])
 //	0x66, 0x55, 0x44, 0x33,
 //	0x0d, 0x01, 0x01, 0x01,
 //	0x1b, 0x58, 0x01, 0x44};
-//	1805 t=cb37 nr=e2 :D 05: 
+//	1805 t=cb37 nr=e2 :D 05:
 
 	/* debug enable packet */
 	unsigned char reqEnable[] = {
@@ -341,24 +341,24 @@ void DCT3SetDebug(int argc, char *argv[])
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x40 */
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0x80 */
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, /* 0xC0 */
-		/* Debug verbose bits 
+		/* Debug verbose bits
 		   byte[bit>>3]&(1<<(7-(bit&7)))
 		*/
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 
-		}; 
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		};
 
 	#define ENABLE_BIT(bit,verbose) reqEnable[3 + (bit>>3)] |= 1<<(7-(bit&7)); if(verbose){reqEnable[3 + 32 + (bit>>3)] |= 1<<(7-(bit&7));}
 
 	/* Enable some bit
 	   TODO command line or GUI interface
-	*/   
+	*/
 	//ENABLE_BIT(0x18, 1);	/* Enable MDISND debugging */
 	//ENABLE_BIT(0x19, 1);	/* Enable MDIRCV debugging */
-	//ENABLE_BIT(0x31, 1); 
-	
+	//ENABLE_BIT(0x31, 1);
+
 	gsmdec = GSMDecoder_new();
 	/* Open XML file .. needs to be argument */
 	{
@@ -421,17 +421,17 @@ void DCT3SetDebug(int argc, char *argv[])
 	s.User.UserReplyFunctions=UserReplyFunctionsX;
 
 	//error=GSM_WaitFor (&s, reqTest, sizeof(reqTest), 0x40, 1, ID_DebugSwitch);
-	
+
 	//error=GSM_WaitFor (&s, reqTest2, sizeof(reqTest2), 0xD1, 4, ID_RPC);
 
 	/* Enable Debug Mode */
 	error=GSM_WaitFor (&s, reqEnable, sizeof(reqEnable), 0x40, 4, ID_DebugSwitch);
-	
+
 	Print_Error(error);
 	signal(SIGINT, interrupt);
 	printf("Press Ctrl+C to interrupt...\n");
 	x=0;
-	
+
 	/*
 	while(x<100) {
 		//printf(": %02x\n",x);
@@ -458,7 +458,7 @@ void DCT3SetDebug(int argc, char *argv[])
 	printf("Disabling\n");
 	error=GSM_WaitFor (&s, reqDisable, sizeof(reqDisable), 0x40, 10, ID_DebugSwitch);
 	Print_Error(error);
-	
+
 	GSMDecoder_free(gsmdec);
 }
 
@@ -471,7 +471,7 @@ static GSM_Reply_Function UserReplyFunctionsX[] = {
 	{DCT3_ReplyRPC,			"\xD2",0x00,0x00,ID_RPC			},
 
 	{NULL,				"\x00",0x00,0x00,ID_None 		}
-};                                                                       	
+};
 
 #endif
 

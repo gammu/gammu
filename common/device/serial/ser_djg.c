@@ -62,7 +62,7 @@ unsigned volatile char 	RecBuffer[BufSize] = { 0 };
 unsigned volatile int 	RecHead, RecTail;
 
 /* This uninstalls the ISR and resets the serial port. */
-static void SVAsyncStop(void) 
+static void SVAsyncStop(void)
 {
 	if(!SVAsyncStatus) return;
 	SVAsyncStatus = 0;
@@ -82,7 +82,7 @@ static void SVAsyncStop(void)
 }
 
 /* This will empty the receive buffer */
-static void SVAsyncClear(void) 
+static void SVAsyncClear(void)
 {
 	disable();
 	RecHead = 0;
@@ -95,17 +95,17 @@ static void SVAsyncClear(void)
  * Baud = 150, 300, 600, 1200, 2400, 4800, 9600, 19200, 28800, 38400, 57600
  * Control = The value to place in the LCR
  */
-void SVAsyncSet(unsigned int Baud, unsigned int Control) 
+void SVAsyncSet(unsigned int Baud, unsigned int Control)
 {
 	int 		divisor;
 	unsigned char 	divlow, divhigh;
 
 	if (!Baud) return;
-	
+
 	divisor = 115200 / Baud;
 
 	disable();
-	
+
 	outportb(LCR, Control | 0x80); 		/* Set Port Toggle to BRDL/BRDH registers */
 	divlow = divisor & 0x000000ff;
 	divhigh = (divisor >> 8) & 0x000000ff;
@@ -118,17 +118,17 @@ void SVAsyncSet(unsigned int Baud, unsigned int Control)
 }
 
 /* Sets various handshaking lines */
-void SVAsyncHand(unsigned int Hand) 
+void SVAsyncHand(unsigned int Hand)
 {
 	outportb(MCR, Hand | 0x08);  /* Keep interrupt enable ON */
 }
 
-static void lock_interrupt_memory(void) 
+static void lock_interrupt_memory(void)
 {
 	int 		errval;
 	__dpmi_meminfo 	info;
 	unsigned long 	address;
-	
+
 	__dpmi_get_segment_base_address(_my_ds(), &address);
 
 	info.address = (int) address + (int) &RDR;
@@ -155,20 +155,20 @@ static void lock_interrupt_memory(void)
 	info.size = BufSize;
 	errval = __dpmi_lock_linear_region(&info);
 	if(errval == -1) printf("Error in locking memory\n!");
-	
+
 	__dpmi_get_segment_base_address(_my_cs(), &address);
-	
+
 	info.address = (int) address + (int) SVAsyncProtISR;
 	info.size = 4096; /* 4096 bytes is probably overkill. */
 	errval = __dpmi_lock_linear_region(&info);
 	if(errval == -1) printf("Error in locking memory\n!");
 }
 
-static void unlock_interrupt_memory(void) 
+static void unlock_interrupt_memory(void)
 {
 	__dpmi_meminfo 	info;
 	unsigned long 	address;
-	
+
 	__dpmi_get_segment_base_address(_my_ds(), &address);
 	info.address = (int) address + (int) &RDR;
 	info.size = sizeof(RDR);
@@ -185,9 +185,9 @@ static void unlock_interrupt_memory(void)
 	info.address = (int) address + (int) RecBuffer;
 	info.size = BufSize;
 	__dpmi_unlock_linear_region(&info);
-	
+
 	__dpmi_get_segment_base_address(_my_cs(), &address);
-	
+
 	info.address = (int) address + (int) SVAsyncProtISR;
 	info.size = 4096; /* probably overkill */
 	__dpmi_unlock_linear_region(&info);
@@ -229,7 +229,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		DisableIRQ 	= 0x08;
 	} else return ERR_NOTSUPPORTED;
 
-	/**** Compute Register locations */	
+	/**** Compute Register locations */
 	THR 	= Port;
 	RDR 	= Port;
 	BRDL 	= Port;
@@ -245,20 +245,20 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 
 	/***** Initalize Buffer */
 	SVAsyncClear();
-	
+
 	lock_interrupt_memory();
 	atexit(unlock_interrupt_memory);
 	/***** Set bit 3 in MCR to 0 */
 	outportb(MCR, (inportb(MCR) & 0xF7));
 
 	/*** Save and reassign interrupt vectors */
-	
+
 	_go32_dpmi_get_protected_mode_interrupt_vector(VectorNum, &ProtVector);
-	
+
 	info.pm_offset = (int) SVAsyncProtISR;
 	info.pm_selector = _my_cs();
 	_go32_dpmi_set_protected_mode_interrupt_vector(VectorNum, &info);
-	
+
 	atexit(SVAsyncStop);
 
 	/***** Enable 8259 interrupt (IRQ) line for this async adapter */
@@ -266,7 +266,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 
 	/***** Enable 8250 Interrupt-on-data-ready */
 	outportb(LCR, (inportb(LCR) & 0x7F));
-	
+
 	outportb(IER, 0);
 	if (inportb(IER)) {
 		SVAsyncStatus = 0;
@@ -303,7 +303,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	 		/* The chip is better than an 8250 - it has a scratch pad */
 	 		outportb(SCR, i); /* Set SCR back to what it was before */
 	 		inportb(SCR);     /* Give slow motherboards a chance    */
-      
+
 	 		/* Is there a FIFO ? - go through twice for slow motherboards */
 	 		outportb(FCR, 0x01);
 	 		i = inportb(FCR);
@@ -329,7 +329,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		    		inportb(FCR); /* Give slow motherboards a chance */
 		    		outportb(FCR, 0x87);
 		    		inportb(FCR); /* Give slow motherboards a chance */
-	
+
 		    		/* Check that the FIFO initialised */
 		    		if ((inportb(IIR) & 0xc0) != 0xc0) {
 			       		/*

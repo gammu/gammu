@@ -1,7 +1,7 @@
 /* (c) 2002-2004 by Marcin Wiacek */
 /* based on some work from MSDN and others */
 /* based on some work from Gnokii (www.gnokii.org)
- * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
 /* Due to a problem in the source code management, the names of some of
@@ -147,13 +147,13 @@ static GSM_Error serial_open (GSM_StateMachine *s)
  	memcpy(&dcb, &d->old_settings, sizeof(DCB));
 
 	dcb.ByteSize 	 = 8;
-	dcb.Parity 	 = NOPARITY; 
+	dcb.Parity 	 = NOPARITY;
 	dcb.StopBits 	 = ONESTOPBIT;
 
 	/* No Xon/Xof flow control */
-//	dcb.fOutX 	 = false;		
+//	dcb.fOutX 	 = false;
 //	dcb.fInX 	 = false;
-	
+
 	/* Hardware flow control */
 //	dcb.fOutxDsrFlow = true;
 //	dcb.fOutxCtsFlow = true;
@@ -164,7 +164,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	if (SetCommState(d->hPhone, &dcb)==0) {
 		GSM_OSErrorInfo(s, "WriteDevice in serial_open");
 		return ERR_DEVICEOPENERROR;
-	}       	
+	}
 
 	return ERR_NONE;
 }
@@ -183,7 +183,7 @@ static GSM_Error serial_setparity (GSM_StateMachine *s, bool parity)
 	if (parity) {
 		dcb.Parity = ODDPARITY;
 	} else {
-		dcb.Parity = NOPARITY; 
+		dcb.Parity = NOPARITY;
 	}
 
 	if (SetCommState(d->hPhone, &dcb)==0) {
@@ -267,7 +267,7 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 		return ERR_DEVICECHANGESPEEDERROR;
 	}
 
-	return ERR_NONE;	
+	return ERR_NONE;
 }
 
 static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
@@ -296,7 +296,7 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 		ClearCommError(d->hPhone, &ErrorFlags, &ComStat);
 		return Length;
 	}
-			
+
 	while(1) {
 		if (GetOverlappedResult(d->hPhone,&d->osRead, &Length, TRUE)) break;
 		if (GetLastError() != ERROR_IO_INCOMPLETE) {

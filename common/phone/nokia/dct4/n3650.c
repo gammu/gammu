@@ -63,7 +63,7 @@ static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Han
 		sprintf(StartReq+10,"%s",File->ID_FullName);
 		len+=strlen(File->ID_FullName)-1;
 		StartReq[7] = strlen(File->ID_FullName) + 3;
-	
+
 		StartReq[8] = strlen(File->ID_FullName);
 		StartReq[9] = 0;
 		while (File->ID_FullName[StartReq[8]] != '\\') {
@@ -139,14 +139,14 @@ static GSM_Error N3650_GetFolderInfo(GSM_StateMachine *s, GSM_File *File)
 		0x12,		/* folder name length 		*/
 		0x00,
 		0x00};		/* folder name 			*/
-		
+
 	sprintf(req+10,File->ID_FullName);
 	len		+=strlen(File->ID_FullName);
 	req[7] 		= strlen(File->ID_FullName) + 6;
 	req[8] 		= strlen(File->ID_FullName);
 	req[len++] 	= 0x00;
 	req[len++] 	= 0x00;
-	
+
 	s->Phone.Data.FileInfo = File;
 	return GSM_WaitFor (s, req, len, 0x58, 4, ID_GetFile);
 }
@@ -201,7 +201,7 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bo
 	File->Folder	= Priv->Files[Priv->FilesLocationsCurrent]->Folder;
 	CopyUnicodeString(File->Name,Priv->Files[Priv->FilesLocationsCurrent]->Name);
 	Priv->FilesLocationsCurrent++;
-	
+
 	if (!File->Folder) return ERR_NONE;
 
 	if (Priv->FilesLocationsCurrent > 1) {
@@ -297,7 +297,7 @@ GSM_Phone_Functions N3650Phone = {
 	NOTSUPPORTED,			/*	GetNetworkInfo		*/
 	NOTSUPPORTED,     		/*  	GetCategory 		*/
  	NOTSUPPORTED,       		/*  	AddCategory 		*/
-        NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/	
+        NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/
 	NOTSUPPORTED,			/*	GetMemoryStatus		*/
 	NOTSUPPORTED,			/*	GetMemory		*/
 	NOTSUPPORTED,			/*	GetNextMemory		*/
@@ -385,11 +385,14 @@ GSM_Phone_Functions N3650Phone = {
     	NOTSUPPORTED,			/*  	SetFMStation        	*/
     	NOTSUPPORTED,			/*  	ClearFMStations       	*/
 	N3650_GetNextFileFolder,
+	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	N3650_GetFilePart,
 	NOTIMPLEMENTED,			/*	AddFilePart		*/
 	NOTSUPPORTED,	 		/* 	GetFileSystemStatus	*/
 	NOTIMPLEMENTED,			/*	DeleteFile		*/
 	NOTIMPLEMENTED,			/*	AddFolder		*/
+	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };

@@ -123,7 +123,7 @@ GSM_Phone_Functions MROUTERGENPhone = {
 	NOTSUPPORTED,			/*	GetSignalQuality	*/
 	NOTSUPPORTED,			/*	GetNetworkInfo		*/
 	NOTSUPPORTED,     		/*  	GetCategory 		*/
-        NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/	
+        NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/
 	NOTSUPPORTED,			/*	GetMemoryStatus		*/
 	NOTSUPPORTED,			/*	GetMemory		*/
 	NOTSUPPORTED,			/*	GetNextMemory		*/
@@ -211,11 +211,14 @@ GSM_Phone_Functions MROUTERGENPhone = {
     	NOTSUPPORTED,			/*  	SetFMStation        	*/
 	NOTSUPPORTED,			/* 	ClearFMStations		*/
 	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/* 	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFilePart		*/
 	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
 	NOTSUPPORTED,			/* 	DeleteFile		*/
 	NOTSUPPORTED,			/* 	AddFolder		*/
+	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };

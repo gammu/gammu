@@ -13,7 +13,7 @@
 #ifdef GSM_ENABLE_BACKUP
 
 static void SaveLMBStartupEntry(FILE *file, GSM_Bitmap bitmap)
-{  
+{
 	int 			count=13;
 	GSM_Phone_Bitmap_Types 	Type;
 	/* Welcome note and logo header block */
@@ -50,15 +50,15 @@ static void SaveLMBStartupEntry(FILE *file, GSM_Bitmap bitmap)
 	req[5]=(count-12)/256;
 
 	fwrite(req, 1, count, file);
-}		     
+}
 
 static void SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
-{  
+{
 	int count=12, textlen;
 	char req[500] = {
 		'C','G','R',' ',    /*block identifier*/
 		00,00,              /*block data size*/
-		02,00,              
+		02,00,
 		00,                 /*group number=0,1,etc.*/
 		00,00,00};
 
@@ -92,7 +92,7 @@ static void SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
 	req[8]=bitmap.Location;
 
 	fwrite(req, 1, count, file);
-}		     
+}
 
 void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 {
@@ -100,11 +100,11 @@ void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 	char req[500] = {
 		'P','B','E','2', /*block identifier*/
 		00,00,           /*block data size*/
-		00,00,           
-		00,00,           /*position of phonebook entry*/		                 
+		00,00,
+		00,00,           /*position of phonebook entry*/
 		03,              /*memory type. ME=02;SM=03*/
 		00,
-		00,00,           /*position of phonebook entry*/                   
+		00,00,           /*position of phonebook entry*/
 		03,              /*memory type. ME=02;SM=03*/
 		00};
 
@@ -115,30 +115,30 @@ void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 	req[8]=req[12] = entry->Location & 0xff;
 	req[9]=req[13] = (entry->Location >> 8);
 	if (entry->MemoryType==MEM_ME) req[10]=req[14]=2;
-            
-	fwrite(req, 1, count, file);	    
+
+	fwrite(req, 1, count, file);
 }
 
 GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
 {
 	FILE 	*file;
 	int 	i;
-	char 	LMBHeader[] = {'L','M','B',' '}; /*file identifier*/    
+	char 	LMBHeader[] = {'L','M','B',' '}; /*file identifier*/
 	char 	PBKHeader[] = {		      	 /*Phonebook header block */
 			'P','B','K',' ', 	 /*block identifier*/
 			0x08,00,         	 /*block data size*/
-			0x02,00,         
+			0x02,00,
 			03,              	 /*memory type. ME=02;SM=03*/
 			00,00,00,
 			00,00,           	 /*size of phonebook*/
 			14,              	 /*max length of each position*/
 			00,00,00,00,00};
 
- 
-	file = fopen(FileName, "wb");      
+
+	file = fopen(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
-	/* Write the header of the file. */		    		      
+	/* Write the header of the file. */
 	fwrite(LMBHeader, 1, sizeof(LMBHeader), file);
 
 	if (backup->PhonePhonebook[0]!=NULL) {
@@ -178,7 +178,7 @@ GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
 }
 
 static GSM_Error LoadLMBCallerEntry(unsigned char *buffer, unsigned char *buffer2, GSM_Backup *backup)
-{ 
+{
 	GSM_Bitmap 	bitmap;
 	int 		num;
 
@@ -198,14 +198,14 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer, unsigned char *buffer
 	bitmap.Type		= GSM_CallerGroupLogo;
 	bitmap.DefaultRingtone 	= false;
 	bitmap.RingtoneID		= buffer2[buffer2[1]+2];
-	
+
 	EncodeUnicode(bitmap.Text,buffer2+2,buffer2[1]);
 	if (bitmap.Text[0] == 0x00 && bitmap.Text[1] == 0x00) {
 		bitmap.DefaultName = true;
 	} else {
 		bitmap.DefaultName = false;
 	}
-	
+
 	bitmap.BitmapEnabled = false;
 	if (buffer2[buffer2[1]+3]==1) bitmap.BitmapEnabled=true;
 
@@ -230,7 +230,7 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer, unsigned char *buffer
 	*backup->CallerLogos[num] = bitmap;
 
 	return ERR_NONE;
-}		     
+}
 
 static GSM_Error LoadLMBStartupEntry(unsigned char *buffer, unsigned char *buffer2, GSM_Backup *backup)
 {
@@ -260,7 +260,7 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer, unsigned char *buffe
 				if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,backup->StartupLogo);
 #endif
 				j = j + PHONE_GetBitmapSize(Type,0,0);
-				break;            
+				break;
 			case 2:
 #ifdef DEBUG
 				dbgprintf("Block 2 - welcome note \"");
@@ -377,7 +377,7 @@ GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
 			}
 			dbgprintf(", length of each position - %i\n",buffer2[2]);
 		}
-#endif        
+#endif
 		if (memcmp(buffer, "PBE2",4)==0) {
 			error = LoadLMBPbkEntry(buffer,buffer2,backup);
 			if (error != ERR_NONE) {

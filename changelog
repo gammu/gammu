@@ -33,6 +33,36 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20050228 - 1.00.10
+* new functionality:
+  * n6510:
+    * * dku2 support is complete for Linux. All patches included   (Troy Engel)
+        in Gammu, kernel driver with howto in other/dku2 directory
+      * support for error 6 during getting folders in filesystem2
+    * info about 6230 mp3 playlists in readme.txt                 (Samuel _idm)
+    * new --getfolderlisting and --setfileattrib             (Mattias Sjosvard)
+      and --deletefolder
+    * --addfolder works for filesystem2
+
+* fixes and improvements:
+  * n6510:
+    * fix for indexing dct4 ringtones                              (Soos Peter)
+    * fix for birthdays for 6230
+    * fixes for filesystem1                                  (Mattias Sjosvard)
+  * when you don't have some BT source compiled, correct error
+    is displayed
+  * cleanups in other
+  * removed spaces on end of lines in source files, added script (Michal Cihar)
+    for making this into other
+
+NOTE: we have Snofs to mount phone filesystem under some Linux directory
+      (something like Phone Browser in PC Suite). See
+      http://snofs.sourceforge.net/
+
+NOTE2: I had to change detecting folders for filesystem1 again. Please compare
+       --getfilesystem from old and this version. If something is different,
+       please let me know
+
 20050214 - 1.00.04
 * new functionality:
   * filesystem2 support is complete (setting attributes, setting dates & 

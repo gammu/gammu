@@ -1,6 +1,6 @@
 /* (c) 2001-2004 by Marcin Wiacek */
 /* Based on some Pawel Kot and others work from Gnokii (www.gnokii.org)
- * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
 /* Due to a problem in the source code management, the names of some of
@@ -262,7 +262,7 @@ typedef struct {
 /**
  * TP-Message-Type-Indicator. See GSM 03.40 section 9.2.3.1.
  */
-typedef enum {		 
+typedef enum {
 	/**
 	 * SMS in Inbox.
 	 */
@@ -327,7 +327,7 @@ typedef struct {
 	 * Length of the SMS message.
 	 */
 	int		     	Length;
-	/**                 	
+	/**
 	 * Status (read/unread/...) of SMS message.
 	 */
 	GSM_SMS_State	   	State;
@@ -378,7 +378,7 @@ typedef struct {
  */
 typedef struct {
 	/**
-	 * TP-User-Data. GSM 03.40 section 9.2.3.24. 
+	 * TP-User-Data. GSM 03.40 section 9.2.3.24.
 	 */
 	unsigned char Text;
 	/**

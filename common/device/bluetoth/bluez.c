@@ -5,7 +5,7 @@
  * GNU GPL version 2
  */
 /* based on some Marcel Holtmann work from Gnokii (www.gnokii.org)
- * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot 
+ * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
 /* Due to a problem in the source code management, the names of some of
@@ -89,33 +89,33 @@ struct search_context {
 	uint32_t			handle;
 };
 
-static void print_service_desc(void *value, void *user) 
-{ 
-	sdp_data_t 	*p = (sdp_data_t *)value; 
-	int 		i = 0, proto = 0, *channel = (int *)user; 
+static void print_service_desc(void *value, void *user)
+{
+	sdp_data_t 	*p = (sdp_data_t *)value;
+	int 		i = 0, proto = 0, *channel = (int *)user;
 
-	for (; p; p = p->next, i++) { 
-		switch (p->dtd) { 
+	for (; p; p = p->next, i++) {
+		switch (p->dtd) {
 		case SDP_UUID16:
 		case SDP_UUID32:
 		case SDP_UUID128:
 			proto = sdp_uuid_to_proto(&p->val.uuid);
 			break;
-		case SDP_UINT8: 
+		case SDP_UINT8:
 			if (proto == RFCOMM_UUID) {
 				(*channel) = p->val.uint8;
 				return;
 			}
-			break; 
-		} 
-	} 
+			break;
+		}
+	}
 }
 
 void print_access_protos(void *value, void *user)
 {
 	sdp_list_t 	*protDescSeq = (sdp_list_t *)value;
 	int		*channel = (int *)user;
-	
+
 	sdp_list_foreach(protDescSeq,print_service_desc,channel);
 }
 
@@ -155,11 +155,11 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, st
 	channel2 = -1;
 	for (; seq; seq = next) {
 		rec 	= (sdp_record_t *) seq->data;
-		
-		if (channel2 == -1) {		
+
+		if (channel2 == -1) {
 			if (!context->tree) {
 				d = sdp_data_get(rec,SDP_ATTR_SVCNAME_PRIMARY);
-			
+
 				if (sdp_get_access_protos(rec,&proto) == 0) {
 					channel = -1;
 					sdp_list_foreach(proto,print_access_protos,&channel);
@@ -169,8 +169,8 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, st
 				if (d) smprintf(s," - \"%s\"",d->val.str);
 				smprintf(s,"\n");
 				if (channel2 == -1 && bluetooth_checkservicename(s, d->val.str) == ERR_NONE) {
-					channel2 = channel;			
-				}			
+					channel2 = channel;
+				}
 			}
     			if (sdp_get_group_id(rec,&subcontext.group) != -1) {
 				memcpy(&subcontext, context, sizeof(struct search_context));
@@ -183,9 +183,9 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, st
 		sdp_record_free(rec);
 	}
 	sdp_close(sess);
-	
+
 	if (channel2 != -1) return bluetooth_connect(s, channel2, str);
-	
+
 	return ERR_NOTSUPPORTED;
 }
 

@@ -89,7 +89,7 @@ GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool fir
 	GSM_Error 	error;
 
 	Hz=GSM_RingNoteGetFrequency(note);
-  	
+
 	error=s->Phone.Functions->PlayTone(s,Hz,5,first);
 	if (error!=ERR_NONE) return error;
 
@@ -99,7 +99,7 @@ GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool fir
 	switch (note.Style) {
 		case StaccatoStyle:
 			my_sleep (7500);
-			error=s->Phone.Functions->PlayTone(s,0,0,false);	
+			error=s->Phone.Functions->PlayTone(s,0,0,false);
 			if (error != ERR_NONE) return error;
 			my_sleep ((1400000/note.Tempo*duration)-(7500));
 			break;
@@ -108,10 +108,10 @@ GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool fir
 			break;
 		case NaturalStyle:
 			my_sleep  (1400000/note.Tempo*duration-50);
-			error=s->Phone.Functions->PlayTone(s,0,0,false);	
+			error=s->Phone.Functions->PlayTone(s,0,0,false);
 			if (error != ERR_NONE) return error;
 			my_sleep (50);
-			break;	
+			break;
 	}
 	return ERR_NONE;
 }

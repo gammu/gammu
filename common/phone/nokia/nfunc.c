@@ -45,7 +45,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 	int		count=0, len, i, block=0, j;
 	char		string[500];
 	unsigned char	type;
- 		
+
 	for (i = 0; i < entry.EntriesNum; i++) {
 		type = 0;
 		if (entry.Entries[i].EntryType == PBK_Number_General) type = N7110_PBK_NUMBER_GENERAL;
@@ -125,7 +125,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 		}
 		if (entry.Entries[i].EntryType == PBK_RingtoneID) {
 			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) {
-				string[0] = 0x00; 
+				string[0] = 0x00;
 				string[1] = 0x00;
 				string[2] = entry.Entries[i].Number;
 				count += N71_65_PackPBKBlock(s, N7110_PBK_RINGTONE_ID, 3, block++, string, req + count);
@@ -136,7 +136,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 		}
 		if (entry.Entries[i].EntryType == PBK_PictureID) {
 			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKIMG)) {
-				string[0] = 0x00; 
+				string[0] = 0x00;
 				string[1] = 0x00;
 				string[2] = 0x00;
 				string[3] = 0x00;
@@ -177,7 +177,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 {
 	unsigned char 				*Block;
 	int					length = 0, i;
-	GSM_71_65_Phonebook_Entries_Types	Type;           
+	GSM_71_65_Phonebook_Entries_Types	Type;
 
 	entry->EntriesNum 	= 0;
 
@@ -257,7 +257,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 
 		if (Block[0] == N7110_PBK_NUMBER) {
@@ -313,7 +313,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 		if (Block[0] == N7110_PBK_RINGTONE_ID) {
 			if (entry->MemoryType==MEM7110_CG) {
@@ -331,7 +331,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 		if (Block[0] == N7110_PBK_LOGOON) {
 			if (entry->MemoryType==MEM7110_CG) {
@@ -343,7 +343,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 		if (Block[0] == N7110_PBK_GROUPLOGO) {
 			if (entry->MemoryType==MEM7110_CG) {
@@ -356,7 +356,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 		if (Block[0] == N7110_PBK_GROUP) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Caller_Group;
@@ -366,7 +366,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 		if (Block[0] == N6510_PBK_VOICETAG_ID) {
 			smprintf(s, "Entry %i has voice tag %i\n",Block[5]-1,Block[7]);
@@ -374,7 +374,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 
 		/* 6210 5.56, SIM speed dials or ME with 1 number */
@@ -382,7 +382,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (entry->MemoryType==MEM7110_SP) {
 #ifdef DEBUG
 				smprintf(s, "location %i\n",(Block[6]*256+Block[7]));
-#endif			
+#endif
 				speed->MemoryType = MEM_ME;
 				if (Block[8] == 0x06) speed->MemoryType = MEM_SM;
 				speed->MemoryLocation 	= (Block[6]*256+Block[7]);
@@ -393,7 +393,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 
 		if (Block[0] == N7110_PBK_SPEEDDIAL) {
@@ -406,7 +406,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				}
 				smprintf(s, "location %i, number %i in location\n",
 					(Block[6]*256+Block[7])-1,Block[14]);
-#endif			
+#endif
 				switch (Block[12]) {
 					case 0x05: speed->MemoryType = MEM_ME; break;
 					case 0x06: speed->MemoryType = MEM_SM; break;
@@ -419,7 +419,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 		if (Block[0] == N6510_PBK_RINGTONEFILE_ID) {
 			smprintf(s, "Ringtone ID with possibility of using filesystem\n");
@@ -436,10 +436,10 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			} else {
 				return ERR_UNKNOWNRESPONSE;
 			}
-			
+
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;						
+			continue;
 		}
 		if (Block[0] == N6510_PBK_SMSLIST_ID) {
 			smprintf(s, "Entry %i is assigned to SMS list %i\n",Block[5]-1,Block[9]);
@@ -465,35 +465,35 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 		if (Block[0] == N7110_PBK_UNKNOWN1) {
 			smprintf(s,"Unknown entry\n");
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 		if (Block[0] == N6510_PBK_UNKNOWN2) {
 			smprintf(s,"Unknown entry - probably ID for conversation list\n");
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 		if (Block[0] == N6510_PBK_UNKNOWN3) {
 			smprintf(s,"Unknown entry - probably ID for Instant Messaging service list\n");
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 		if (Block[0] == N6510_PBK_UNKNOWN4) {
 			smprintf(s,"Unknown entry - probably ID for presence list\n");
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
-			continue;			
+			continue;
 		}
 
 		smprintf(s, "ERROR: unknown pbk entry 0x%02x\n",Block[0]);
@@ -609,13 +609,13 @@ void NOKIA_GetUnicodeString(GSM_StateMachine *s, int *current, unsigned char *in
 int NOKIA_SetUnicodeString(GSM_StateMachine *s, unsigned char *dest, unsigned char *string, bool FullLength)
 {
 	int length;
-	
+
 	length = UnicodeLength(string);
 	if (FullLength) {
 		dest[0] = length / 256;
 		dest[1] = length % 256;
 		CopyUnicodeString(dest + 2, string);
-		return 2+length*2;		
+		return 2+length*2;
 	} else {
 		dest[0] = length % 256;
 		CopyUnicodeString(dest + 1, string);
@@ -848,7 +848,7 @@ GSM_Error DCT3DCT4_GetActiveConnectSet(GSM_StateMachine *s)
 GSM_Error DCT3DCT4_ReplySetActiveConnectSet(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Connection settings activated\n");
-	return ERR_NONE;		
+	return ERR_NONE;
 }
 
 GSM_Error DCT3DCT4_SetActiveConnectSet(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
@@ -874,7 +874,7 @@ GSM_Error DCT3DCT4_SendDTMF(GSM_StateMachine *s, char *DTMFSequence)
 	if (strlen(DTMFSequence) > 100 - 5) return ERR_NOTSUPPORTED;
 
   	req[4] = strlen(DTMFSequence);
-  
+
 	memcpy(req+5,DTMFSequence,strlen(DTMFSequence));
 
 	smprintf(s, "Sending DTMF\n");
@@ -1044,13 +1044,13 @@ GSM_Error DCT3DCT4_GetWAPBookmarkPart(GSM_StateMachine *s, GSM_WAPBookmark *book
 GSM_Error DCT3DCT4_CancelCall(GSM_StateMachine *s, int ID)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x08, 0x00, 0x85};
-	                                             
+
 	req[4] 			= (unsigned char)ID;
 	s->Phone.Data.CallID 	= ID;
 
 	smprintf(s, "Canceling single call\n");
 	return GSM_WaitFor (s, req, 6, 0x01, 4, ID_CancelCall);
-}            
+}
 
 GSM_Error DCT3DCT4_AnswerCall(GSM_StateMachine *s, int ID)
 {
@@ -1106,11 +1106,11 @@ GSM_Error DCT3DCT4_GetModel (GSM_StateMachine *s)
 
 GSM_Error DCT3DCT4_GetFirmware (GSM_StateMachine *s)
 {
-	unsigned char req[5] = {N6110_FRAME_HEADER, 0x03, 0x00};  
+	unsigned char req[5] = {N6110_FRAME_HEADER, 0x03, 0x00};
 	GSM_Error error;
 
 	if (strlen(s->Phone.Data.Version)>0) return ERR_NONE;
-	
+
 	smprintf(s, "Getting firmware version\n");
 	error=GSM_WaitFor (s, req, 5, 0xd1, 3, ID_GetFirmware);
 	if (error==ERR_NONE) {
@@ -1162,7 +1162,7 @@ GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine 
 			return ERR_NOTSUPPORTED;
 		case 0x3c:
 			smprintf(s, "Can not add entry with 0 subentries\n");
-			return ERR_NOTSUPPORTED;			
+			return ERR_NOTSUPPORTED;
 		case 0x3d:
 			smprintf(s, "Wrong entry type\n");
 			return ERR_NOTSUPPORTED;
@@ -1184,7 +1184,7 @@ bool NOKIA_FindPhoneFeatureValue(GSM_StateMachine *s,
 				 GSM_Profile_Feat_ID		FeatureID,
 				 GSM_Profile_Feat_Value		FeatureValue,
 			    	 unsigned char 			*PhoneID,
-			    	 unsigned char 			*PhoneValue) 
+			    	 unsigned char 			*PhoneValue)
 {
 	int i=0;
 
@@ -1212,7 +1212,7 @@ void NOKIA_FindFeatureValue(GSM_StateMachine		*s,
 			    unsigned char 		ID,
 			    unsigned char 		Value,
 			    GSM_Phone_Data 		*Data,
-			    bool			CallerGroups) 
+			    bool			CallerGroups)
 {
 	int i;
 
@@ -1373,7 +1373,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* FIXME: read name from frame */
 
 		call.Status = GSM_CALL_CallStart;
-		break;			
+		break;
 	case 0x04:
 		smprintf(s, "Remote end hang up\n");
 		smprintf(s, "Cause Type : %i\n",msg.Buffer[5]);//such interpretation is in gnokii
@@ -1541,7 +1541,14 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	if (NoteType != GSM_CAL_BIRTHDAY) {
 		Date.Year -= 20;
 	} else {
-		Date.Year = 1980;
+		/* 6230 and probably other new models handle it differently
+                   we don't make difference from 1980 year
+                 */
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL35) ||
+		    IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL65) ||
+		    IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
+			Date.Year = 1980;
+		}
 		Date.Hour = 22; Date.Minute = 58; Date.Second = 58;
 	}
 	t_time2 = Fill_Time_T(Date,8);
@@ -1564,7 +1571,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 		CopyUnicodeString(req+length,Note->Entries[Phone].Text);
 		length += UnicodeLength(Note->Entries[Phone].Text)*2;
 	}
- 
+
 	if (Alarm != -1) {
 		if (NoteType == GSM_CAL_BIRTHDAY) {
 			if (Note->Entries[Alarm].EntryType == CAL_SILENT_ALARM_DATETIME) req[27] = 0x01;
@@ -1677,7 +1684,7 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		0x00, 0x00,		/* Year 	*/
 		0x00,			/* Month 	*/
 		0x00,			/* Day 		*/
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00};                          
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
 	error=N71_65_GetCalendarNotePos1(s);
 	if (error!=ERR_NONE) return error;
@@ -2032,7 +2039,7 @@ GSM_Error N71_65_GetNextCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 {
 	GSM_Error		error;
 	GSM_DateTime		date_time;
-	unsigned char 		req[] = {N6110_FRAME_HEADER, 0x19, 
+	unsigned char 		req[] = {N6110_FRAME_HEADER, 0x19,
 					 0x00, 0x00};		/* Location */
 
 	if (start) {

@@ -15,7 +15,7 @@ static void GSM_RegisterConnection(GSM_StateMachine *s, unsigned int connection,
 		GSM_Device_Functions *device, GSM_Protocol_Functions *protocol)
 {
 	if ((unsigned int)s->ConnectionType == connection) {
-		s->Device.Functions	= device;	
+		s->Device.Functions	= device;
 		s->Protocol.Functions	= protocol;
 	}
 }
@@ -71,7 +71,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	/* We check now if user gave connection type compiled & available
 	 * for used OS (if not, we return, that source not available)
 	 */
-	s->Device.Functions	= NULL;	
+	s->Device.Functions	= NULL;
 	s->Protocol.Functions	= NULL;
 #ifdef GSM_ENABLE_MBUS2
 	GSM_RegisterConnection(s, GCT_MBUS2, 	 &SerialDevice,   &MBUS2Protocol);
@@ -85,9 +85,6 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #ifdef GSM_ENABLE_FBUS2DKU5
 	GSM_RegisterConnection(s, GCT_FBUS2DKU5, &SerialDevice,   &FBUS2Protocol);
 #endif
-#ifdef GSM_ENABLE_FBUS2DKU2
-	GSM_RegisterConnection(s, GCT_FBUS2DKU2, &SerialDevice,   &FBUS2Protocol);
-#endif
 #ifdef GSM_ENABLE_FBUS2PL2303
 	GSM_RegisterConnection(s, GCT_FBUS2PL2303,&SerialDevice,  &FBUS2Protocol);
 #endif
@@ -96,6 +93,9 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #endif
 #ifdef GSM_ENABLE_FBUS2IRDA
 	GSM_RegisterConnection(s, GCT_FBUS2IRDA, &SerialDevice,   &FBUS2Protocol);
+#endif
+#ifdef GSM_ENABLE_FBUS2DKU2
+	GSM_RegisterConnection(s, GCT_FBUS2DKU2, &SerialDevice,   &PHONETProtocol);
 #endif
 #ifdef GSM_ENABLE_PHONETBLUE
 	GSM_RegisterConnection(s, GCT_PHONETBLUE,&SerialDevice,	  &PHONETProtocol);
@@ -151,7 +151,7 @@ static void GSM_RegisterModule(GSM_StateMachine *s,GSM_Phone_Functions *phone)
 GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 {
 	OnePhoneModel *model;
-	
+
 	/* Auto model */
 	if (s->CurrentConfig->Model[0] == 0) {
 		model = GetModelData(NULL,s->Phone.Data.Model,NULL);
@@ -307,7 +307,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 			if (error!=ERR_NONE) return error;
 
 			/* If still auto model, try to get model by asking phone for it */
-			if (s->Phone.Data.Model[0]==0) {      
+			if (s->Phone.Data.Model[0]==0) {
 				smprintf(s,"[Module           - \"auto\"]\n");
 				switch (s->ConnectionType) {
 #ifdef GSM_ENABLE_ATGEN
@@ -355,7 +355,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 				error=s->Phone.Functions->Initialise(s);
 				if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
 				if (error != ERR_NONE) return error;
-			
+
 				error=s->Phone.Functions->GetModel(s);
 				if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
 				if (error != ERR_NONE) return error;
@@ -448,7 +448,7 @@ int GSM_ReadDevice (GSM_StateMachine *s, bool wait)
 GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 {
 	GSM_Error error;
-	
+
 	if (!s->opened) return ERR_UNKNOWN;
 
 	smprintf(s,"[Closing]\n");
@@ -462,7 +462,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 		if (error!=ERR_NONE) return error;
 	}
 
-	error=s->Protocol.Functions->Terminate(s);	
+	error=s->Protocol.Functions->Terminate(s);
 	if (error!=ERR_NONE) return error;
 
 	error = s->Device.Functions->CloseDevice(s);
@@ -572,7 +572,7 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 					if (Reply[i].subtypechar<=msg->Length) {
 						if (msg->Buffer[Reply[i].subtypechar]==Reply[i].subtype)
 							execute=true;
-					}			
+					}
 				} else execute=true;
 			}
 		} else {
@@ -1015,7 +1015,7 @@ static OnePhoneModel allmodels[] = {
 	{"C35i" ,	  "C35i",	  "",				   {0}},
 	{"S35i" ,	  "S35i",	  "",				   {0}},
 	{"M35i" ,	  "M35i",	  "",				   {0}},
-	{"S40" ,	  "Siemens S40",  "",			   	   {0}},	
+	{"S40" ,	  "Siemens S40",  "",			   	   {0}},
 	{"C45" ,	  "C45",	  "",				   {0}},
 	{"S45" ,	  "S45",	  "",				   {0}},
 	{"ME45" ,	  "ME45",	  "",				   {0}},
@@ -1045,7 +1045,7 @@ static OnePhoneModel allmodels[] = {
 	{"R600",	"102001-BVR600" , "",				   {0}},
 	{"T200",	"1130501-BVT200" ,"",				   {0}},
 	{"T300",	"1130601-BVT300" ,"T300",			   {0}},
-	{"T310",	"1130602-BVT310" ,"",			   	   {0}},	
+	{"T310",	"1130602-BVT310" ,"",			   	   {0}},
 	{"P800",	"7130501-BVP800" ,"",				   {0}},
 	/* Other */
 	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},
@@ -1169,16 +1169,16 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 	if (GetLastError()!=-1) {
 		if (s->di.dl == DL_TEXTERROR || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTALL ||
 		    s->di.dl == DL_TEXTERRORDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTALLDATE) {
-			FormatMessage( 
-				FORMAT_MESSAGE_ALLOCATE_BUFFER | 
-				FORMAT_MESSAGE_FROM_SYSTEM | 
+			FormatMessage(
+				FORMAT_MESSAGE_ALLOCATE_BUFFER |
+				FORMAT_MESSAGE_FROM_SYSTEM |
 				FORMAT_MESSAGE_IGNORE_INSERTS,
 				NULL,
 				GetLastError(),
 				MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
 				(LPTSTR) &lpMsgBuf,
 				0,
-				NULL 
+				NULL
 			);
 			for (i=0;i<(int)strlen(lpMsgBuf);i++) {
 				if (lpMsgBuf[i] == 13 || lpMsgBuf[i] == 10) {

@@ -57,7 +57,7 @@ typedef enum {
 	Note_Gis   				= 0x09<<4,
 	Note_A     				= 0x0a<<4,
 	Note_Ais   				= 0x0b<<4,
-	Note_H     				= 0x0c<<4 
+	Note_H     				= 0x0c<<4
 } GSM_RingNoteNote;
 
 typedef enum {

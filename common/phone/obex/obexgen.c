@@ -37,7 +37,7 @@ static void OBEXGEN_FindNextDir(unsigned char *Path, int *Pos, unsigned char *Re
 }
 
 static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{                
+{
 	switch (msg.Type) {
 	case 0xA0:
 		smprintf(s,"Connected/disconnected OK\n");
@@ -55,7 +55,7 @@ GSM_Error OBEXGEN_Disconnect(GSM_StateMachine *s)
 	smprintf(s, "Disconnecting\n");
 	return GSM_WaitFor (s, NULL, 0, 0x81, 2, ID_Initialise);
 }
-                                    	
+
 GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 {
 	int		Current=4;
@@ -118,7 +118,7 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 }
 
 static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMachine *s)
-{                
+{
 	switch (msg.Type) {
 	case 0xA0:
 		smprintf(s,"Path set OK\n");
@@ -271,7 +271,7 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				old = s->Phone.Data.File->Used;
 				s->Phone.Data.File->Used += msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2]-3;
 				smprintf(s,"Length of file part: %i\n",
-						msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2]-3);	
+						msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2]-3);
 				s->Phone.Data.File->Buffer = (unsigned char *)realloc(s->Phone.Data.File->Buffer,s->Phone.Data.File->Used);
 				memcpy(s->Phone.Data.File->Buffer+old,msg.Buffer+Pos+3,s->Phone.Data.File->Used-old);
 				return ERR_NONE;
@@ -312,7 +312,7 @@ static GSM_Error OBEXGEN_ReplyGetFileInfo(GSM_Protocol_Message msg, GSM_StateMac
 				old = s->Phone.Data.File->Used;
 				s->Phone.Data.File->Used += msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2]-3;
 				smprintf(s,"Length of file part: %i\n",
-						msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2]-3);	
+						msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2]-3);
 				s->Phone.Data.File->Buffer = (unsigned char *)realloc(s->Phone.Data.File->Buffer,s->Phone.Data.File->Used);
 				memcpy(s->Phone.Data.File->Buffer+old,msg.Buffer+Pos+3,s->Phone.Data.File->Used-old);
 				return ERR_EMPTY;
@@ -343,7 +343,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 			/* Type block */
 			strcpy(req2,"x-obex/folder-listing");
 			OBEXAddBlock(req, &Current, 0x42, req2, strlen(req2)+1);
-	
+
 			/* Name block */
 			if (UnicodeLength(File->Name) == 0x00) {
 				OBEXAddBlock(req, &Current, 0x01, NULL, 0);
@@ -364,7 +364,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 
 				EncodeUnicode(File->Name,"one",3);
 
-				if (strcmp(s->CurrentConfig->Model,"seobex")) {	
+				if (strcmp(s->CurrentConfig->Model,"seobex")) {
 					strcpy(req2,"x-obex/capability");
 //					strcpy(req2,"x-obex/object-profile");
 
@@ -401,7 +401,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 				CopyUnicodeString(File->Name,req2);
 
 				s->Phone.Data.File = File;
-	
+
 				Current = 0;
 				/* Name block */
 				OBEXAddBlock(req, &Current, 0x01, req2, UnicodeLength(req2)*2+2);
@@ -463,7 +463,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 		Priv->FilesLocationsUsed 	= 1;
 		Priv->FilesLocationsCurrent 	= 0;
 		Priv->FileLev			= 1;
-		
+
 		error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
 		if (error != ERR_NONE) return error;
 
@@ -494,10 +494,10 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 					if (error != ERR_NONE) return error;
 				}
 			}
-	
+
 			smprintf(s,"Level %i %i\n",File->Level,Priv->FileLev);
-	
-			File->Buffer 	= NULL;		
+
+			File->Buffer 	= NULL;
 			File->Used 	= 0;
 			OBEXGEN_PrivGetFilePart(s, File,true);
 
@@ -515,7 +515,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 						j++;
 					}
 					name[j] = 0;
-	
+
 					if (strcmp(name,".")) num++;
 				}
 				name = strstr(Line,"file name=\"");
@@ -603,7 +603,7 @@ static GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, 
 							if (error != ERR_NONE) return error;
 						}
 						break;
-					} 
+					}
 					z++;
 				}
 			}
@@ -755,7 +755,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTIMPLEMENTED,			/*	GetNetworkInfo		*/
 	NOTIMPLEMENTED,     		/*  	GetCategory 		*/
  	NOTSUPPORTED,       		/*  	AddCategory 		*/
-        NOTIMPLEMENTED,      		/*  	GetCategoryStatus 	*/	
+        NOTIMPLEMENTED,      		/*  	GetCategoryStatus 	*/
 	NOTIMPLEMENTED,			/*	GetMemoryStatus		*/
 	NOTIMPLEMENTED,			/*	GetMemory		*/
 	NOTIMPLEMENTED,			/*	GetNextMemory		*/
@@ -843,11 +843,14 @@ GSM_Phone_Functions OBEXGENPhone = {
     	NOTIMPLEMENTED,			/*  	SetFMStation        	*/
     	NOTIMPLEMENTED,			/*  	ClearFMStations       	*/
 	OBEXGEN_GetNextFileFolder,
+	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	OBEXGEN_GetFilePart,
 	OBEXGEN_AddFilePart,
 	NOTIMPLEMENTED, 		/* 	GetFileSystemStatus	*/
 	OBEXGEN_DeleteFile,
 	OBEXGEN_AddFolder,
+	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTIMPLEMENTED,			/* 	GetGPRSAccessPoint	*/
 	NOTIMPLEMENTED			/* 	SetGPRSAccessPoint	*/
 };

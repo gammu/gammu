@@ -121,7 +121,7 @@ static void PHONE_SetPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int 
 		pixel = height / 8;
 		if ((height % 8) != 0) pixel++;
 		buffer[pixel*x + y/8] |= 1 << (7 - (y%8));
-		break;		
+		break;
 	}
 }
 
@@ -305,36 +305,36 @@ GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 	unsigned char	buff[1];
 	div_t		division;
 	bool		isfile=false;
-  
+
 	unsigned char header[]={
 /*1'st header*/   'B','M',             /* BMP file ID */
                   0x00,0x00,0x00,0x00, /* Size of file */
 		  0x00,0x00,           /* Reserved for future use */
 		  0x00,0x00,           /* Reserved for future use */
 	            62,0x00,0x00,0x00, /* Offset for image data */
-		 
+
 /*2'nd header*/     40,0x00,0x00,0x00, /* Length of this part of header */
 		  0x00,0x00,0x00,0x00, /* Width of image */
-		  0x00,0x00,0x00,0x00, /* Height of image */		 
+		  0x00,0x00,0x00,0x00, /* Height of image */
 		     1,0x00,           /* How many planes in target device */
 		     1,0x00,           /* How many colors in image. 1 means 2^1=2 colors */
 		  0x00,0x00,0x00,0x00, /* Type of compression. 0 means no compression */
 /*Sometimes */    0x00,0x00,0x00,0x00, /* Size of part with image data */
 /*ttttttt...*/    0xE8,0x03,0x00,0x00, /* XPelsPerMeter */
-/*hhiiiiissss*/   0xE8,0x03,0x00,0x00, /* YPelsPerMeter */		  
+/*hhiiiiissss*/   0xE8,0x03,0x00,0x00, /* YPelsPerMeter */
 /*part of header*/0x02,0x00,0x00,0x00, /* How many colors from palette is used */
 /*doesn't exist*/ 0x00,0x00,0x00,0x00, /* How many colors from palette is required to display image. 0 means all */
-		 
+
 /*Color palette*/ 0x00,0x00,0x00,      /* First color in palette in Blue, Green, Red. Here white */
 		  0x00,                /* Each color in palette is end by 4'th byte */
                    102, 204, 102,      /* Second color in palette in Blue, Green, Red. Here green */
 		  0x00};               /* Each color in palette is end by 4'th byte */
 
 	if (file!=NULL) isfile=true;
-	
+
 	header[22]=bitmap->BitmapHeight;
 	header[18]=bitmap->BitmapWidth;
-     
+
 	pos	  = 7;
 	sizeimage = 0;
 	/*lines are written from the last to the first*/
@@ -406,7 +406,7 @@ GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 			if (pos<0) pos=7;
 		}
 		/*going to new byte*/
-		pos=7; 
+		pos=7;
 		if (isfile) {
 			fwrite(buff, 1, sizeof(buff), file);
 		} else {
@@ -456,11 +456,11 @@ static void PrivSaveNLMWBMP(FILE *file, GSM_Bitmap *Bitmap)
 		/* for startup logos - new line with new byte */
 		if (pos2!=7) {pos2=7;pos++;}
 	}
-	  
+
 	division=div(Bitmap->BitmapWidth,8);
 	/* For startup logos */
 	if (division.rem!=0) division.quot++;
-	  
+
 	fwrite(buffer,1,(division.quot*Bitmap->BitmapHeight),file);
 }
 
@@ -475,7 +475,7 @@ static GSM_Error savenlm(FILE *file, GSM_MultiBitmap *bitmap)
 		0x00,		 /* Width. */
 		0x00,		 /* Height. */
 		0x01};
-		 
+
 	switch (bitmap->Bitmap[0].Type) {
 		case GSM_OperatorLogo    : header[5]=0x00; break;
 		case GSM_CallerGroupLogo : header[5]=0x01; break;
@@ -483,11 +483,11 @@ static GSM_Error savenlm(FILE *file, GSM_MultiBitmap *bitmap)
 		case GSM_PictureImage    : header[5]=0x03; break;
 		default			 : return ERR_UNKNOWN;
 	}
-	header[6] = bitmap->Number - 1;  
+	header[6] = bitmap->Number - 1;
 	header[7] = bitmap->Bitmap[0].BitmapWidth;
 	header[8] = bitmap->Bitmap[0].BitmapHeight;
 	fwrite(header,1,sizeof(header),file);
-  
+
 	for (i=0;i<bitmap->Number;i++) {
 		PrivSaveNLMWBMP(file, &bitmap->Bitmap[i]);
 	}
@@ -521,7 +521,7 @@ static GSM_Error savengg(FILE *file, GSM_MultiBitmap *bitmap)
 		0x01,0x00,0x01,0x00,
 		0x00,		/* Unknown.Can't be checksum - for */
 				/* the same logo files can be different */
-		0x00};  
+		0x00};
 
 	header[6] = bitmap->Bitmap[0].BitmapWidth;
 	header[8] = bitmap->Bitmap[0].BitmapHeight;
@@ -545,7 +545,7 @@ static GSM_Error savenol(FILE *file, GSM_MultiBitmap *bitmap)
 			0x00,			/* Unknown.Can't be checksum - for */
 						/* the same logo files can be different */
 			0x00};
-  
+
 	if (bitmap->Bitmap[0].Type == GSM_OperatorLogo) sscanf(bitmap->Bitmap[0].NetworkCode, "%d %d", &country, &net);
 
 	header[6]	= country%256;
@@ -556,7 +556,7 @@ static GSM_Error savenol(FILE *file, GSM_MultiBitmap *bitmap)
 	header[12]	= bitmap->Bitmap[0].BitmapHeight;
 	fwrite(header,1,sizeof(header),file);
 
-	PrivSaveNGGNOL(file,bitmap);  
+	PrivSaveNGGNOL(file,bitmap);
 
 	return ERR_NONE;
 }
@@ -623,8 +623,8 @@ GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 {
 	FILE		*file;
 	GSM_Error 	error=ERR_NONE;
-  
-	file = fopen(FileName, "wb");      
+
+	file = fopen(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	/* Attempt to identify filetype */
@@ -644,7 +644,7 @@ GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 		error=savebmp(file,bitmap);
 	}
 	fclose(file);
-   
+
 	return error;
 }
 
@@ -666,7 +666,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 	}
 
 	/* height and width of image in the file */
-	h=buff[22]+256*buff[21]; 
+	h=buff[22]+256*buff[21];
 	w=buff[18]+256*buff[17];
 	dbgprintf("Image Size in BMP file: %dx%d\n",w,h);
 
@@ -675,7 +675,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 	if (w<bitmap->BitmapWidth)	bitmap->BitmapWidth=w;
 	dbgprintf("Height %i %i, width %i %i\n",h,bitmap->BitmapHeight,w,bitmap->BitmapWidth);
 
-	GSM_ClearBitmap(bitmap);  
+	GSM_ClearBitmap(bitmap);
 
 #ifdef DEBUG
 	dbgprintf("Number of colors in BMP file: ");
@@ -700,7 +700,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 		case 2	:dbgprintf("RLE4 (NOT SUPPORTED)\n");	  	break;
 		default	:dbgprintf("unknown\n");			break;
 	}
-#endif  
+#endif
 	if (buff[30]!=0) {
 		dbgprintf("Compression type not supported\n");
 		return ERR_FILENOTSUPPORTED;
@@ -712,11 +712,11 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 		fread(buff, 1, pos, file);
 	} else {
 		pos=buff[10]-34;
-		buffpos=buff[10];	
-		memcpy (buff,buffer+34,pos);	    
+		buffpos=buff[10];
+		memcpy (buff,buffer+34,pos);
 	}
 
-#ifdef DEBUG  
+#ifdef DEBUG
 	dbgprintf("First color in BMP file: %i %i %i ",buff[pos-8], buff[pos-7], buff[pos-6]);
 	if (buff[pos-8]==0    && buff[pos-7]==0    && buff[pos-6]==0)    dbgprintf("(white)");
 	if (buff[pos-8]==0xFF && buff[pos-7]==0xFF && buff[pos-6]==0xFF) dbgprintf("(black)");
@@ -725,11 +725,11 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 	dbgprintf("Second color in BMP file: %i %i %i ",buff[pos-38], buff[pos-37], buff[pos-36]);
 	if (buff[pos-4]==0    && buff[pos-3]==0    && buff[pos-2]==0)    dbgprintf("(white)");
 	if (buff[pos-4]==0xFF && buff[pos-3]==0xFF && buff[pos-2]==0xFF) dbgprintf("(black)");
-	dbgprintf("\n");  
+	dbgprintf("\n");
 #endif
 	first_white=true;
 	if (buff[pos-8]!=0 || buff[pos-7]!=0 || buff[pos-6]!=0) first_white=false;
- 
+
 	pos=7;
 	/* lines are written from the last to the first */
 	for (y=h-1;y>=0;y--) {		i=1;
@@ -738,7 +738,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 					fread(buff, 1, 1, file);
 				} else {
 					memcpy (buff,buffer+buffpos,1);
-					buffpos++;					    
+					buffpos++;
 				}
 #ifdef DEBUG
 				sizeimage++;
@@ -766,7 +766,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 				if (isfile) {
 					fread(buff, 1, 1, file);
 				} else {
-					memcpy (buff,buffer+buffpos,1);				    
+					memcpy (buff,buffer+buffpos,1);
 					buffpos++;
 				}
 #ifdef DEBUG
@@ -834,9 +834,9 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 		/* For startup logos */
 		if (division.rem!=0) division.quot++;
 	  	if (fread(buffer,1,(division.quot*h),file)!=(unsigned int)(division.quot*h)) return ERR_UNKNOWN;
-    
+
 		GSM_ClearBitmap(&bitmap->Bitmap[i]);
-  
+
 		pos=0;pos2=7;
 		for (y=0;y<h;y++) {
 			for (x=0;x<w;x++) {
@@ -860,7 +860,7 @@ static GSM_Error loadnolngg(FILE *file, GSM_MultiBitmap *bitmap, bool nolformat)
 {
 	unsigned char 	buffer[2000];
 	int		i,h,w,x,y;
-  
+
 	fread(buffer, 1, 6, file);
 
 	if (bitmap->Bitmap[0].Type == GSM_None) bitmap->Bitmap[0].Type = GSM_CallerGroupLogo;
@@ -896,7 +896,7 @@ static GSM_Error loadnolngg(FILE *file, GSM_MultiBitmap *bitmap, bool nolformat)
 		dbgprintf("Fileinfo: %c",buffer[0]);
 		while (fread(buffer, 1, 1, file)==1) {
 			if (buffer[0]!=0x0A) dbgprintf("%c",buffer[0]);
-		} 
+		}
 		dbgprintf("\n");
 	}
 #endif
@@ -926,7 +926,7 @@ static GSM_Error loadnsl(FILE *file, GSM_MultiBitmap *bitmap)
 				if (!strncmp(block, "MODL", 4)) dbgprintf("Logo saved from: %s\n",buffer);
 				if (!strncmp(block, "COMM", 4)) dbgprintf("Phone was connected to COM port: %s\n",buffer);
 #endif
-				if (!strncmp(block, "NSLD", 4)) {          
+				if (!strncmp(block, "NSLD", 4)) {
 					bitmap->Bitmap[0].BitmapHeight = 48;
 					bitmap->Bitmap[0].BitmapWidth	 = 84;
 					OldType = bitmap->Bitmap[0].Type;
@@ -936,7 +936,7 @@ static GSM_Error loadnsl(FILE *file, GSM_MultiBitmap *bitmap)
 				}
 			}
 		}
-	}  
+	}
 	bitmap->Number = 1;
 	return(ERR_NONE);
 }
@@ -980,7 +980,7 @@ static GSM_Error loadgif(FILE *file, GSM_MultiBitmap *bitmap)
 	bmap->BitmapWidth = 256 * buffer[7] + buffer[6];
 	bmap->BitmapHeight = 256 * buffer[9] + buffer[8];
 	bitmap->Number = 1;
-	
+
 	return ERR_NONE;
 }
 
@@ -1002,9 +1002,9 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	bitmap->Bitmap[0].DefaultBitmap = false;
 
 	/* Attempt to identify filetype */
-	if (memcmp(buffer, "BM",2)==0) { 
+	if (memcmp(buffer, "BM",2)==0) {
 		return loadbmp(file,bitmap);
-	} else if (buffer[0] == 0x00 && buffer[1] == 0x00) { 
+	} else if (buffer[0] == 0x00 && buffer[1] == 0x00) {
 		return loadwbmp(file,bitmap);
 	} else if (memcmp(buffer, "NLM",3)==0) {
 		return loadnlm(file,bitmap);

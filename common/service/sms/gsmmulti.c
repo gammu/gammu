@@ -173,7 +173,7 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 	SMS->Number++;
 
 	UDHID = GSM_MakeSMSIDFromTime();
-	GSM_GetCurrentDateTime (&Date);	
+	GSM_GetCurrentDateTime (&Date);
 	for (j=0;j<SMS->Number;j++) {
 		SMS->SMS[j].UDH.Type 		= UDHType;
 		SMS->SMS[j].UDH.ID8bit 		= UDHID;
@@ -211,7 +211,7 @@ static void GSM_EncodeSMS30MultiPartSMS(GSM_MultiPartSMSInfo *Info,
 	/*SM version. Here 3.0*/
 	Buffer[(*Length)++] = 0x30;
 
-	if (Info->Entries[0].ID == SMS_NokiaProfileLong) {	
+	if (Info->Entries[0].ID == SMS_NokiaProfileLong) {
 		if (Info->Entries[0].Buffer != NULL) {
 			if (Info->Entries[0].Buffer[0]!=0x00 || Info->Entries[0].Buffer[1]!=0x00) {
 				Buffer[(*Length)++] = SM30_PROFILENAME;
@@ -311,7 +311,7 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 		p += i;
 		SMS->SMS[SMS->Number].Length = i;
 		SMS->Number++;
-		
+
 	}
 
 	/* Linked sms UDH */
@@ -323,7 +323,7 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 			SMS->SMS[i].UDH.Text[SMS->SMS[i].UDH.Length-1] = i+1;
 		}
 	}
-        
+
         return ERR_NONE;
 }
 
@@ -408,7 +408,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 			break;
 		case SMS_ConcatenatedTextLong:
 		case SMS_ConcatenatedTextLong16bit:
-		
+
 			/* This covers situation, when somebody will call function
 			 * with two or more SMS_Concatenated.... entries only.
 			 * It will be still only linked sms, but functions below
@@ -419,7 +419,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 			 */
 			textnum ++;
 			if (textnum > 1) EMS = true;
-			
+
 			if (Info->Entries[i].Left   || Info->Entries[i].Right      ||
 			    Info->Entries[i].Center || Info->Entries[i].Large      ||
 			    Info->Entries[i].Small  || Info->Entries[i].Bold       ||
@@ -603,7 +603,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 		if (error != ERR_NONE) return error;
 		/* Is 1 SMS ? 8 = length of ..SCKE4 */
 		if (Length<=GSM_MAX_SMS_LENGTH-8) {
-			sprintf(Buffer,"//SCKE4 ");  
+			sprintf(Buffer,"//SCKE4 ");
 			Length = 8;
 			GSM_EncodeVCALENDAR(Buffer,&Length,Info->Entries[0].Calendar,true,Nokia_VCalendar);
 		} else {
@@ -734,7 +734,7 @@ void GSM_ClearMultiPartSMSInfo(GSM_MultiPartSMSInfo *Info)
 		Info->Entries[i].Italic		= false;
 		Info->Entries[i].Underlined	= false;
 		Info->Entries[i].Strikethrough	= false;
-		
+
 		Info->Entries[i].RingtoneNotes	= 0;
 	}
 	Info->Unknown		= false;
@@ -790,7 +790,7 @@ bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo	*Info,
 				emsexist = false;
 				break;
 			}
-		}	
+		}
 	}
 
 	/* EMS decoding */
@@ -907,7 +907,7 @@ bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo	*Info,
 			case SMS_Coding_8bit:
 				Info->Entries[0].Buffer = realloc(Info->Entries[0].Buffer, Length + SMS->SMS[i].Length + 2);
 				if (Info->Entries[0].Buffer == NULL) return false;
-				
+
 				memcpy(Info->Entries[0].Buffer + Length, SMS->SMS[i].Text, SMS->SMS[i].Length);
 				Length=Length+SMS->SMS[i].Length;
 				break;

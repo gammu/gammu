@@ -17,8 +17,8 @@ GSM_Error SaveVCalendar(char *FileName, GSM_Backup *backup)
 	int 		i, Length = 0;
 	unsigned char 	Buffer[1000];
 	FILE 		*file;
- 
-	file = fopen(FileName, "wb");      
+
+	file = fopen(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	Length=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
@@ -68,7 +68,7 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 		error = GSM_DecodeVCALENDAR_VTODO(File.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
 		if (error == ERR_EMPTY) break;
 		if (error != ERR_NONE) return error;
-		if (Calendar.EntriesNum != 0) {			
+		if (Calendar.EntriesNum != 0) {
 			if (numCal < GSM_MAXCALENDARTODONOTES) {
 				backup->Calendar[numCal] = malloc(sizeof(GSM_CalendarEntry));
 			        if (backup->Calendar[numCal] == NULL) return ERR_MOREMEMORY;

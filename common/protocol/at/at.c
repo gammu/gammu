@@ -31,7 +31,7 @@ static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 			 * after writing each char. Possible reason: these phones
 			 * can't receive so fast chars or there is bug here in Gammu */
 			my_sleep(1);
-		} 
+		}
 		my_sleep(400);
 	}
 
@@ -67,7 +67,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"+CBM:"	,1},	{"+CMT:"	,2},
 		{"+CMTI:"	,1},	{"+CDS:"	,2},
 		{"+CREG:"	,1},	{"+CUSD"	,1},
-		
+
 		{"RING"		,1},	{"NO CARRIER"	,1},
 		{"NO ANSWER"	,1},	{"+COLP"	,1},
 		{"+CLIP"	,1},
@@ -113,7 +113,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 			i = 0;
 			while (SpecialAnswers[i].text != NULL) {
-				if (strncmp(SpecialAnswers[i].text,d->Msg.Buffer+d->LineStart,strlen(SpecialAnswers[i].text)) == 0) {					
+				if (strncmp(SpecialAnswers[i].text,d->Msg.Buffer+d->LineStart,strlen(SpecialAnswers[i].text)) == 0) {
 					/* We need something better here */
 				  	if (s->Phone.Data.RequestID == ID_GetNetworkInfo && strncmp(SpecialAnswers[i].text,"+CREG:",6) == 0) {
 						i++;

@@ -9,7 +9,7 @@
 
 typedef struct _INI_Entry INI_Entry;
 
-/* 
+/*
  * Structure used to save value for single key in INI style file
  */
 struct _INI_Entry {
@@ -20,7 +20,7 @@ struct _INI_Entry {
 
 typedef struct _INI_Section INI_Section;
 
-/* 
+/*
  * Structure used to save section in INI style file
  */
 struct _INI_Section {

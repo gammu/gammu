@@ -14,9 +14,9 @@
 static GSM_Error OBEX_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
 				    int length, unsigned char type)
 {
-	unsigned char	*out_buffer; 
+	unsigned char	*out_buffer;
 	int 		current=0,sent;
-	
+
 	out_buffer = (unsigned char *)malloc(length + 3);
 
 	OBEXAddBlock(out_buffer, &current, type, buffer, length);
@@ -46,7 +46,7 @@ static GSM_Error OBEX_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	case RX_GetLength1:
 		d->Msg.Length = rx_char * 256;
 		d->MsgRXState = RX_GetLength2;
-		break;    
+		break;
 	case RX_GetLength2:
 		d->Msg.Length = d->Msg.Length + rx_char - 3;
 		d->Msg.Count  = 0;

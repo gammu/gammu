@@ -427,7 +427,7 @@ mv ../rpm/gammu.spec ../../
 dnl Writing info
 cat <<EOT
   G A M M U (GNU All Mobiles Management Utilities)
-  (c) 2002 - 2005 by Marcin Wiacek (www.mwiacek.com)
+  (c) 2002 - 2005 by Marcin Wiacek (www.mwiacek.com) and others
   Version $VERSION
 
   Directories

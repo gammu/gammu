@@ -8,7 +8,7 @@
 
 typedef enum {
 	DCT4_MODE_NORMAL = 0x01,
-	DCT4_MODE_TEST   = 0x04,	
+	DCT4_MODE_TEST   = 0x04,
 	DCT4_MODE_LOCAL  = 0x05
 } DCT4_PHONE_MODE;
 

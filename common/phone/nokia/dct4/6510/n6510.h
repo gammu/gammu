@@ -1,10 +1,10 @@
-/* (c) 2002-2004 by Marcin Wiacek */
+/* (c) 2002-2005 by Marcin Wiacek */
 
 #ifndef n6510_h
 #define n6510_h
 
-#include "../ncommon.h"
-#include "../../../service/sms/gsmsms.h"
+#include "../../ncommon.h"
+#include "../../../../service/sms/gsmsms.h"
 
 typedef enum {
 	N6510_MMS_SETTINGS = 0x01,
@@ -39,15 +39,13 @@ typedef struct {
 	unsigned char			RingtoneID;	/* When set with preview */
 
 	GSM_File			Files[500];
-	int				FilesLocations[1000];
-	int				FilesLevels[1000];
 	int				FilesLocationsUsed;
-	int				FilesLocationsCurrent;
 	int				FileToken;
 	int				ParentID;
 	int				FileCheckSum;
 	bool				FilesEnd;
 	bool				Use2;
+	GSM_Error			filesystem2error;
 
 	unsigned char			FMStatus[4000];
 	int				FMStatusLength;
