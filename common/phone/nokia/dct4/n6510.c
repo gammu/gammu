@@ -3918,7 +3918,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	{N6510_ReplyAddFileHeader1,	  "\x6D",0x03,0x03,ID_AddFile		  },
 	{N6510_ReplyAddFolder1,		  "\x6D",0x03,0x05,ID_AddFolder		  },
-	{N6510_ReplyGetFilePart12,	  "\x6D",0x03,0x0F,ID_GetFile		  },//filesystem1
+	{N6510_ReplyGetFilePart12,	  "\x6D",0x03,0x0F,ID_GetFile		  },//filesystem1&2
 	{N6510_ReplyAddFileHeader1,	  "\x6D",0x03,0x13,ID_AddFile		  },
 	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x15,ID_GetFileInfo	  },
 	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x15,ID_GetFile		  },
@@ -3932,15 +3932,17 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x33,ID_GetFileInfo	  },
 	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x33,ID_GetFile		  },
 	{N6510_ReplyAddFilePart1,	  "\x6D",0x03,0x41,ID_AddFile		  },
-	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x43,ID_AddFile		  },
-	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x43,ID_GetFile		  },
-	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x43,ID_GetFileInfo	  },
-	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x69,ID_IncomingFrame	  },
-	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x6D,ID_GetFileInfo	  },
-	{N6510_ReplyOpenFile2,		  "\x6D",0x03,0x73,ID_OpenFile		  },
-	{NoneReply,			  "\x6D",0x03,0x75,ID_CloseFile		  },//filesystem2
+	{N6510_ReplyGetFileCRC12,	  "\x6D",0x03,0x43,ID_GetCRC		  },
 	{NoneReply,			  "\x6D",0x03,0x59,ID_AddFile		  },//filesystem2
 	{N6510_ReplyGetFilePart12,	  "\x6D",0x03,0x5F,ID_GetFile		  },//filesystem2
+	{N6510_ReplyDeleteFile2,	  "\x6D",0x03,0x63,ID_DeleteFile	  },//filesystem2
+	{N6510_ReplyGetFileCRC12,   	  "\x6D",0x03,0x67,ID_GetCRC		  },//filesystem2
+	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x69,ID_IncomingFrame	  },//filesystem2
+	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x6D,ID_GetFileInfo	  },//filesystem2
+	{N6510_ReplySetAttrib2,		  "\x6D",0x03,0x6F,ID_AddFile		  },//filesystem2
+	{N6510_ReplyOpenFile2,		  "\x6D",0x03,0x73,ID_OpenFile		  },//filesystem2
+	{NoneReply,			  "\x6D",0x03,0x75,ID_CloseFile		  },//filesystem2
+	{N6510_ReplySetFileDate2,	  "\x6D",0x03,0x87,ID_AddFile		  },//filesystem2
 
 	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x01,ID_GetBitmap		  },
 	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x01,ID_SetBitmap		  },

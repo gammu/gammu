@@ -56,6 +56,9 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifndef GSM_USED_FBUS2DLR3
 #  undef GSM_ENABLE_FBUS2DLR3
 #endif
+#ifndef GSM_USED_FBUS2DKU2
+#  undef GSM_ENABLE_FBUS2DKU2
+#endif
 #ifndef GSM_USED_FBUS2DKU5
 #  undef GSM_ENABLE_FBUS2DKU5
 #endif
@@ -110,7 +113,7 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #endif
 
 #include "protocol/protocol.h"
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2PL2303)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2DKU2) || defined(GSM_ENABLE_FBUS2PL2303)
 #  include "protocol/nokia/fbus2.h"
 #endif
 #ifdef GSM_ENABLE_MBUS2
@@ -303,7 +306,7 @@ typedef struct {
 #ifdef GSM_ENABLE_MBUS2
 	extern GSM_Protocol_Functions MBUS2Protocol;
 #endif
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2PL2303)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2DKU2) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2PL2303)
 	extern GSM_Protocol_Functions FBUS2Protocol;
 #endif
 #if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
@@ -333,7 +336,7 @@ typedef struct {
 #ifdef GSM_ENABLE_MBUS2
 		GSM_Protocol_MBUS2Data		MBUS2;
 #endif
-#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2PL2303) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
+#if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2DKU5) || defined(GSM_ENABLE_FBUS2DKU2) || defined(GSM_ENABLE_FBUS2PL2303) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2)
 		GSM_Protocol_FBUS2Data		FBUS2;
 #endif
 #if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET)
@@ -395,6 +398,7 @@ typedef enum {
 	ID_GetSecurityCode,
 	ID_GetWAPBookmark,
 	ID_GetBitmap,
+	ID_GetCRC,
 	ID_SaveSMSMessage,
 	ID_CancelCall,
 	ID_SetDateTime,
@@ -1434,6 +1438,7 @@ typedef enum {
 	GCT_MBUS2=1,
 	GCT_FBUS2,
 	GCT_FBUS2DLR3,
+	GCT_FBUS2DKU2,
 	GCT_FBUS2DKU5,
 	GCT_FBUS2PL2303,
 	GCT_FBUS2BLUE,
