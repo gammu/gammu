@@ -27,6 +27,14 @@ logfile = smsdlog
 commtimeout = 1
 sendtimeout = 10
 
+# ------------------------- SETTINGS FOR --smsd MYSQL ---------------------------
+user = root
+password =
+pc = localhost
+database = sms
+# -------------------------------------------------------------------------------
+
+# ------------------------- SETTINGS FOR --smsd FILES ---------------------------
 # The following paths must be written with trailing '/' or '\' depending on OS.
 # inboxpath    - where the received SMSes are stored, default current directory
 # outboxpath   - where SMSes to be sent should be placed, default current
@@ -47,7 +55,6 @@ sendtimeout = 10
 #                    log: one line log entry, 
 #                    sms: store in inbox as a received SMS
 #                    Default: no
-
 #inboxpath = /var/spool/sms/inbox/
 #outboxpath = /var/spool/sms/outbox/
 #sentsmspath = /var/spool/sms/sent/
@@ -56,6 +63,7 @@ sendtimeout = 10
 #transmitformat = auto
 #receivefrequency = 0
 #deliveryreport = no
+# -------------------------------------------------------------------------------
 
 # When uncomment this section and insert numbers here, smsd will process
 # incoming sms only from numbers written here (incoming sms from all other

@@ -57,6 +57,10 @@ dnl Checks for header files.
 AC_HEADER_STDC
 AC_CHECK_HEADERS(dirent.h)
 AC_CHECK_HEADERS(sys/ioctl.h)
+AC_CHECK_HEADERS(mysql/mysql.h,
+        [mysql="yes"
+         LDLIBS="$LDLIBS -Wl,--whole-archive /usr/lib/mysql/libmysqlclient.a -Wl,--no-whole-archive -lz"],
+        [mysql="no"])
 AC_CHECK_HEADER(linux/irda.h,
         [AC_DEFINE(HAVE_IRDA)
         irda="yes"],
@@ -65,10 +69,8 @@ AC_CHECK_HEADER(linux/irda.h,
 #include <linux/types.h>
 #include <sys/ioctl.h>])
 dnl This checking is not used now
-dnl AC_CHECK_HEADERS(mysql/mysql.h)
 dnl AC_CHECK_HEADERS(fcntl.h sys/file.h sys/ioctl.h sys/time.h unistd.h)
 dnl AC_SUBST(HAVE_DIRENT_H)
-
 
 dnl Checks for typedefs, structures, and compiler characteristics.
 AC_C_CONST
@@ -411,11 +413,12 @@ cat <<EOT
   
   General options
   ---------------
-  LGPL license                                  - $lgpl
+dnl  LGPL license                                  - $lgpl
   Debug                                         - $debug
   CB messages                                   - $gsm_enable_cellbroadcast
   Backup functions                              - $gsm_enable_backup
   Searching phones (requires pthread)           - $pthread
+  MySQL SMS plugin (requires mysql)             - $mysql
 
   Phone protocols
   ---------------

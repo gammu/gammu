@@ -1,0 +1,27 @@
+# phpMyAdmin SQL Dump
+# version 2.5.6
+# http://www.phpmyadmin.net
+#
+# Host: localhost
+# Generation Time: Apr 06, 2004 at 09:56 PM
+# Server version: 4.0.18
+# PHP Version: 4.3.4
+# 
+# Database : `sms`
+# 
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `Inbox`
+#
+
+CREATE TABLE `Inbox` (
+  `Date_Time` datetime NOT NULL default '0000-00-00 00:00:00',
+  `Text` text NOT NULL,
+  `Sender_Number` text NOT NULL,
+  `Coding` enum('Default','Unicode','8bit') NOT NULL default 'Default',
+  `UDH` text,
+  `SMSC_Number` text,
+  `Class` int(11) NOT NULL default '-1'
+) TYPE=MyISAM;
