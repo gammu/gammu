@@ -301,6 +301,10 @@ GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case AT_Reply_CMSError:
  		return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
+		/* S55 say this way, that this is empty */
+		if (Priv->ErrorCode == 100) {
+			return ERR_EMPTY;
+		}
 		return ATGEN_HandleCMEError(s);
 	default:
 		break;
