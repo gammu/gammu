@@ -2354,8 +2354,12 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 {
 	GSM_Error		error;
 	GSM_DateTime		*dt = NULL;
-	GSM_DateTime		evdate;
-	bool			evdateused = true;
+	GSM_DateTime		EventDate = {0,0,0,0,0,0,0};
+	GSM_DateTime		EventStart = {0,0,0,0,0,0,0};
+	GSM_DateTime		EventEnd = {0,0,0,0,0,0,0};
+	bool			EventDateSet = false;
+	bool			EventStartSet = false;
+	bool			EventEndSet = false;
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int			i;
 	int			j=0;
@@ -2386,10 +2390,11 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 					j++;
 					break;
 				}
+				/* Date and time is composed at the end, when we have all needed data */
 				j++;
 				Note->EntriesNum--;
-				evdate = Priv->ReturnDateTime;
-				evdateused = false;
+				EventDate = Priv->ReturnDateTime;
+				EventDateSet = true;
 				break;
 			case 1:
 				if (Priv->ReturnType != Alcatel_time) {
@@ -2404,13 +2409,11 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 					j++;
 					break;
 				}
-				Note->Entries[i-j].EntryType = CAL_START_DATETIME;
-				Note->Entries[i-j].Date = Priv->ReturnDateTime;
-				Note->Entries[i-j].Date.Day = evdate.Day;
-				Note->Entries[i-j].Date.Month = evdate.Month;
-				Note->Entries[i-j].Date.Year = evdate.Year;
-				Note->Entries[i-j].Date.Timezone = evdate.Timezone;
-				evdateused = true;
+				/* Date and time is composed at the end, when we have all needed data */
+				j++;
+				Note->EntriesNum--;
+				EventStart = Priv->ReturnDateTime;
+				EventStartSet = true;
 				break;
 			case 2:
 				if (Priv->ReturnType != Alcatel_time) {
@@ -2425,13 +2428,11 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 					j++;
 					break;
 				}
-				Note->Entries[i-j].EntryType = CAL_END_DATETIME;
-				Note->Entries[i-j].Date = Priv->ReturnDateTime;
-				Note->Entries[i-j].Date.Day = evdate.Day;
-				Note->Entries[i-j].Date.Month = evdate.Month;
-				Note->Entries[i-j].Date.Year = evdate.Year;
-				Note->Entries[i-j].Date.Timezone = evdate.Timezone;
-				evdateused = true;
+				/* Date and time is composed at the end, when we have all needed data */
+				j++;
+				Note->EntriesNum--;
+				EventEnd = Priv->ReturnDateTime;
+				EventEndSet = true;
 				break;
 			case 3:
 				if (Priv->ReturnType != Alcatel_date) {
@@ -2713,11 +2714,34 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				smprintf(s,"\n");
 		}
 	}
-	/* The event didn't have start/stop time -> we need only date */
-	if (!evdateused) {
-		Note->EntriesNum++;
-		Note->Entries[i-j].EntryType = CAL_START_DATETIME;
-		Note->Entries[i-j].Date = evdate;
+	/* Fill start/stop datetime */
+	if (EventDateSet) {
+		if (EventStartSet) {
+			Note->Entries[i-j].EntryType = CAL_START_DATETIME;
+			Note->Entries[i-j].Date = EventDate;
+			Note->Entries[i-j].Date.Timezone = EventStart.Timezone;
+			Note->Entries[i-j].Date.Hour = EventStart.Hour;
+			Note->Entries[i-j].Date.Minute = EventStart.Minute;
+			Note->Entries[i-j].Date.Second = EventStart.Second;
+			Note->EntriesNum++;
+			i++;
+		}
+		if (EventEndSet) {
+			Note->Entries[i-j].EntryType = CAL_END_DATETIME;
+			Note->Entries[i-j].Date = EventDate;
+			Note->Entries[i-j].Date.Timezone = EventEnd.Timezone;
+			Note->Entries[i-j].Date.Hour = EventEnd.Hour;
+			Note->Entries[i-j].Date.Minute = EventEnd.Minute;
+			Note->Entries[i-j].Date.Second = EventEnd.Second;
+			Note->EntriesNum++;
+			i++;
+		}
+		if (!EventStartSet && !EventEndSet) {
+			Note->Entries[i-j].EntryType = CAL_START_DATETIME;
+			Note->Entries[i-j].Date = EventDate;
+			Note->EntriesNum++;
+			i++;
+		}
 	}
 	return ERR_NONE;
 }
@@ -3831,7 +3855,7 @@ static GSM_Error ALCATEL_SetFastSMSSending(GSM_StateMachine *s, bool enable)
 	return ATGEN_SetFastSMSSending(s, enable);
 }
 
-static GSM_Reply_Function ALCATELReplyFunctions[] = {
+GSM_Reply_Function ALCATELReplyFunctions[] = {
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelAttach		},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelDetach		},
 {ALCATEL_ReplyGeneric,		"\x02",0x00,0x00, ID_AlcatelCommit		},

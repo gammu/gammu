@@ -1338,7 +1338,7 @@ GSM_Error DCT3_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 
 	s->Phone.Data.SMSStatus=status;
 	smprintf(s, "Getting SMS status\n");
-	return GSM_WaitFor (s, req, 5, 0x14, 2, ID_GetSMSStatus);
+	return GSM_WaitFor (s, req, 5, 0x14, 4, ID_GetSMSStatus);
 
 	/* 6210 family doesn't show in frame with SMS status info
          * about Templates. We get separately info about this SMS folder.

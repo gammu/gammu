@@ -1300,7 +1300,7 @@ void DCT4GetScreenDump(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Reply_Function UserReplyFunctions4[] = {
+GSM_Reply_Function UserReplyFunctions4[] = {
 
 #ifdef DEBUG
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x05,ID_User2	},
