@@ -597,7 +597,7 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 			*reply=i;
 			if (Reply[i].requestID == ID_IncomingFrame ||
 			    Reply[i].requestID == Data->RequestID ||
-			    Data->RequestID	== ID_EachFrame) {
+			    Data->RequestID    == ID_EachFrame) {
 				return ERR_NONE;
 			}
 			available=true;

@@ -1144,6 +1144,10 @@ GSM_Error N71_65_ReplyGetMemoryError(unsigned char error, GSM_StateMachine *s)
 	case 0x34:
 		smprintf(s, "Too high location ?\n");
 		return ERR_INVALIDLOCATION;
+	case 0x3B: //Tim Dreessen, 6230
+		smprintf(s, "Empty location\n");
+		s->Phone.Data.Memory->EntriesNum = 0;
+		return ERR_EMPTY;
 	default:
 		smprintf(s, "ERROR: unknown %i\n",error);
 		return ERR_UNKNOWNRESPONSE;

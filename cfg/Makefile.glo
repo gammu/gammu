@@ -186,6 +186,7 @@ distclean: makelocale clean
 	@chmod a+x $(TOPDIR)/other/bash/smsdutil/*
 	@chmod a+x $(TOPDIR)/other/bash/config/*
 	@chmod a+x $(TOPDIR)/other/bash/other/perms
+	@chmod a+x $(TOPDIR)/other/bash/other/kaddressbook
 	@chmod a+x $(TOPDIR)/other/bash/other/endlines
 	@chmod a+x $(TOPDIR)/other/bash/files/PhoneGetRecentFiles.dat
 	@chmod a+x $(TOPDIR)/configure
