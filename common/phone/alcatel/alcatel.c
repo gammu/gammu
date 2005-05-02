@@ -113,7 +113,7 @@ extern GSM_Error ATGEN_SetIncomingSMS		(GSM_StateMachine *s, bool enable);
 unsigned char GSM_AlcatelAlphabet[] =
 {
 /*	in phone	unicode		description	*/
-	0x80,		0x00,0x20,	/* empty	 */
+	0x80,		0x00,0x20,	/* empty	- probably control char */
 	0x81,		0x00,0x20,	/* empty	*/
 	0x82,		0x00,0x20,	/* empty	*/
 	0x83,		0x00,0x20,	/* empty	*/
@@ -827,11 +827,35 @@ static GSM_Error ALCATEL_GetFields(GSM_StateMachine *s, int id) {
 	return ERR_NONE;
 }
 
+static void ALCATEL_DecodeString(GSM_StateMachine *s, unsigned char *buffer, unsigned char *target, int maxlen)
+{
+	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
+	int			len;
+
+	len = buffer[0];
+	if(Priv->ProtocolVersion == V_1_1 && (buffer[1] == 0x80)) {
+		/* UCS-2-BE string */
+		if (GSM_PHONEBOOK_TEXT_LENGTH < len/2) {
+			smprintf(s, "WARNING: Text truncated, to %d from %d\n", maxlen, len/2 + 1);
+			len = GSM_PHONEBOOK_TEXT_LENGTH * 2;
+		}
+		memcpy(target, buffer + 2, len);
+		Priv->ReturnString[len + 1] = 0;
+		Priv->ReturnString[len + 2] = 0;
+	} else {
+		/* Alcatel alphabet string */
+		if (GSM_PHONEBOOK_TEXT_LENGTH < len) {
+			smprintf(s, "WARNING: Text truncated, to %d from %d\n", maxlen, len + 1);
+			len = GSM_PHONEBOOK_TEXT_LENGTH;
+		}
+		DecodeDefault(target, buffer + 1, len, false, GSM_AlcatelAlphabet);
+	}
+}
+
 static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	unsigned char 		*buffer = &(msg.Buffer[16]);
-	int			len;
 
 	if (buffer[1] == 0x05 && buffer[2] == 0x67) {
 		/* date */
@@ -858,39 +882,11 @@ static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_StateM
 	} else if (buffer[1] == 0x08 && buffer[2] == 0x3C) {
 		/* string */
 		Priv->ReturnType = Alcatel_string;
-		len = buffer[3];
-		if(Priv->ProtocolVersion == V_1_1 && (buffer[4] & 0x80)) {
-			/* UCS-2-BE string */
-			if (GSM_PHONEBOOK_TEXT_LENGTH < len/2) {
-				smprintf(s, "WARNING: Text truncated, you should increase GSM_PHONEBOOK_TEXT_LENGTH to at least %d\n", buffer[3]/2 + 1);
-				len = GSM_PHONEBOOK_TEXT_LENGTH * 2;
-			}
-			memcpy(Priv->ReturnString, buffer + 5, len);
-			Priv->ReturnString[buffer[3] + 1] = 0;
-			Priv->ReturnString[buffer[3] + 2] = 0;
-		} else {
-			/* Alcatel alphabet string */
-			if (GSM_PHONEBOOK_TEXT_LENGTH < len) {
-				smprintf(s, "WARNING: Text truncated, you should increase GSM_PHONEBOOK_TEXT_LENGTH to at least %d\n", buffer[3] + 1);
-				len = GSM_PHONEBOOK_TEXT_LENGTH;
-			}
-			DecodeDefault( Priv->ReturnString, buffer + 4, len, false, GSM_AlcatelAlphabet);
-		}
+		ALCATEL_DecodeString(s, buffer + 3, Priv->ReturnString, GSM_PHONEBOOK_TEXT_LENGTH);
 	} else if (buffer[1] == 0x07 && buffer[2] == 0x3C) {
 		/* phone */
 		Priv->ReturnType = Alcatel_phone;
-		if (GSM_PHONEBOOK_TEXT_LENGTH < buffer[3])
-			smprintf(s, "WARNING: Text truncated, you should increase GSM_PHONEBOOK_TEXT_LENGTH to at least %d\n", buffer[3] + 1);
-		if (Priv->ProtocolVersion == V_1_0) {
-			DecodeDefault( Priv->ReturnString, buffer + 4, MIN(GSM_PHONEBOOK_TEXT_LENGTH, buffer[3]), false, GSM_AlcatelAlphabet);
-		} else if(Priv->ProtocolVersion == V_1_1 && (buffer[4] & 0x80)) {
-			memcpy(Priv->ReturnString, buffer + 5, buffer[3]);
-			Priv->ReturnString[buffer[3] + 1] = 0;
-			Priv->ReturnString[buffer[3] + 2] = 0;
-			ReverseUnicodeString(Priv->ReturnString);
-		} else {
-			DecodeDefault( Priv->ReturnString, buffer + 4, MIN(GSM_PHONEBOOK_TEXT_LENGTH, buffer[3]), false, GSM_AlcatelAlphabet);
-		}
+		ALCATEL_DecodeString(s, buffer + 3, Priv->ReturnString, GSM_PHONEBOOK_TEXT_LENGTH);
 	} else if (buffer[1] == 0x03 && buffer[2] == 0x3B) {
 		/* boolean */
 		Priv->ReturnType = Alcatel_bool;
@@ -1083,22 +1079,9 @@ static GSM_Error ALCATEL_AddCategoryText(GSM_StateMachine *s, const unsigned cha
 static GSM_Error ALCATEL_ReplyGetCategoryText(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
-	int len;
 
-	len = msg.Buffer[14];
-	if (len > GSM_MAX_CATEGORY_NAME_LENGTH) {
-		smprintf(s, "WARNING: Category name truncated, you should increase GSM_MAX_CATEGORY_NAME_LENGTH to at least %d\n", len);
-	}
-	if (Priv->ProtocolVersion == V_1_0) {
-		DecodeDefault( Priv->ReturnString, msg.Buffer + 15, MIN(GSM_MAX_CATEGORY_NAME_LENGTH, len), false, GSM_AlcatelAlphabet);
-	} else if(Priv->ProtocolVersion == V_1_1 && (msg.Buffer[15] & 0x80)) {
-		memcpy(Priv->ReturnString, msg.Buffer + 16, len);
-		Priv->ReturnString[len + 1] = 0;
-		Priv->ReturnString[len + 2] = 0;
-		ReverseUnicodeString(Priv->ReturnString);
-	} else {
-		DecodeDefault( Priv->ReturnString, msg.Buffer + 15, MIN(GSM_MAX_CATEGORY_NAME_LENGTH, len), false, GSM_AlcatelAlphabet);
-	}
+	ALCATEL_DecodeString(s,msg.Buffer + 14, Priv->ReturnString, GSM_MAX_CATEGORY_NAME_LENGTH);
+
 	return ERR_NONE;
 }
 
