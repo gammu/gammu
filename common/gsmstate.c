@@ -553,7 +553,8 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned char *buffer,
 		if (error != ERR_TIMEOUT) return error;
         }
 
-	return Phone->DispatchError;
+//	return Phone->DispatchError;
+	return ERR_TIMEOUT;
 }
 
 static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Reply, int *reply)

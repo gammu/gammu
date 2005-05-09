@@ -215,6 +215,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		if (Block[0] == N6510_PBK_URL) {
 			Type = PBK_Text_URL;    smprintf(s,"URL ");
 		}
+		if (Block[0] == N6510_PBK_USER_ID) {
+			Type = PBK_Text_UserID; smprintf(s,"User ID:");
+		}
 		if (Type != 0) {
 			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
 				smprintf(s, "Too long text\n");
@@ -447,21 +450,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			while(entry->Entries[Block[5]-1].SMSList[i] != 0) i++;
 			entry->Entries[Block[5]-1].SMSList[i+1] = 0;
 			entry->Entries[Block[5]-1].SMSList[i]   = Block[9];
-
-			length = length + Block[3];
-			Block  = &Block[(int) Block[3]];
-			continue;
-		}
-		if (Block[0] == N6510_PBK_USER_ID) {
-			smprintf(s, "User ID:");
-			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_UserID;
-			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
-				smprintf(s, "Too long text\n");
-				return ERR_UNKNOWNRESPONSE;
-			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
-			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
-			entry->EntriesNum ++;
 
 			length = length + Block[3];
 			Block  = &Block[(int) Block[3]];
