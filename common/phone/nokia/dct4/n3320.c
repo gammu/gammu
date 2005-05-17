@@ -225,12 +225,13 @@ GSM_Phone_Functions N3320Phone = {
 	NOTSUPPORTED, 			/* 	DeleteWAPBookmark 	*/
 	NOTSUPPORTED,			/* 	GetWAPSettings 		*/
 	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
-	NOTSUPPORTED,			/* 	GetMMSSettings		*/
- 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetSyncMLSettings	*/
 	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
 	NOTSUPPORTED,			/*	GetChatSettings		*/
 	NOTSUPPORTED,			/*	SetChatSettings		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetMMSFolders		*/
 	NOTSUPPORTED,			/*	GetBitmap		*/
 	NOTSUPPORTED,			/*	SetBitmap		*/
 	NOTSUPPORTED,			/*	GetToDoStatus		*/

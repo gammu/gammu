@@ -123,6 +123,7 @@ GSM_Phone_Functions MROUTERGENPhone = {
 	NOTSUPPORTED,			/*	GetSignalQuality	*/
 	NOTSUPPORTED,			/*	GetNetworkInfo		*/
 	NOTSUPPORTED,     		/*  	GetCategory 		*/
+ 	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTSUPPORTED,      		/*  	GetCategoryStatus 	*/
 	NOTSUPPORTED,			/*	GetMemoryStatus		*/
 	NOTSUPPORTED,			/*	GetMemory		*/
@@ -174,12 +175,13 @@ GSM_Phone_Functions MROUTERGENPhone = {
 	NOTSUPPORTED, 			/* 	DeleteWAPBookmark 	*/
 	NOTSUPPORTED,			/* 	GetWAPSettings 		*/
 	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
-	NOTSUPPORTED,			/* 	GetMMSSettings		*/
- 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetSyncMLSettings	*/
 	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
 	NOTSUPPORTED,			/*	GetChatSettings		*/
 	NOTSUPPORTED,			/*	SetChatSettings		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetMMSFolders		*/
 	NOTSUPPORTED,			/*	GetBitmap		*/
 	NOTSUPPORTED,			/*	SetBitmap		*/
 	NOTSUPPORTED,			/*	GetToDoStatus		*/

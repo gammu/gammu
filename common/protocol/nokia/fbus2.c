@@ -155,6 +155,8 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 				smprintf(s, "[Received Ack of type %02x, seq %02x]\n",d->Msg.Buffer[0],seq_num);
 			}
 			free(d->Msg.Buffer);
+			d->Msg.Buffer 	= NULL;
+			d->Msg.Length 	= 0;
 
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
@@ -439,6 +441,8 @@ static GSM_Error FBUS2_Terminate(GSM_StateMachine *s)
 {
 	free(s->Protocol.Data.FBUS2.Msg.Buffer);
 	free(s->Protocol.Data.FBUS2.MultiMsg.Buffer);
+	s->Protocol.Data.FBUS2.Msg.Buffer 	= NULL;
+        s->Protocol.Data.FBUS2.MultiMsg.Buffer 	= NULL;
 
 	my_sleep(200);
 	return ERR_NONE;

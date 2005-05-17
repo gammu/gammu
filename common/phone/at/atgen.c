@@ -4209,12 +4209,13 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,	 		/* 	DeleteWAPBookmark 	*/
 	NOTSUPPORTED,			/* 	GetWAPSettings 		*/
 	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
-	NOTSUPPORTED,			/* 	GetMMSSettings		*/
-	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetSyncMLSettings	*/
 	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
 	NOTSUPPORTED,			/*	GetChatSettings		*/
 	NOTSUPPORTED,			/*	SetChatSettings		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetMMSFolders		*/
 	ATGEN_GetBitmap,		/* 	GetBitmap		*/
 	ATGEN_SetBitmap,		/*	SetBitmap		*/
 	SONYERIC_GetToDoStatus,

@@ -36,6 +36,17 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20050510 - 1.01.11
+* fixes and improvements:
+  * FBUS2 driver allocation problems                          (Joergen Thomsen)
+  * uploading files to filesystem2 done a little             (Lucas van Staden)
+    differently and without CRC checking
+  * Alcatel:                                                     (Michal Cihar)
+    * unicode text was treated like little endian, but it is big endian
+    * while decoding unicode text, buffer could overflow
+    * fixed possible wrong reading of calendar entries
+  * cleanups in modules
+
 20050412 - 1.01.00
 * new functionality:
   * new script helping with importing KAddressBook entries   (Frederick Emmott)
