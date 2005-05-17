@@ -821,7 +821,7 @@ static GSM_Error N6510_CloseFile2(GSM_StateMachine *s, int *Handle)
 
 static GSM_Error N6510_GetFileCRC2(GSM_StateMachine *s, int *Handle)
 {
-	unsigned char	   	req2[15000] = {
+	unsigned char req2[15000] = {
 		N7110_FRAME_HEADER, 0x66, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00}; 	// handle
 
@@ -1100,13 +1100,13 @@ static GSM_Error N6510_GetFilePart2(GSM_StateMachine *s, GSM_File *File, int *Ha
 		error = N6510_GetFileCRC2(s, Handle);
 		if (error != ERR_NONE) return error;
 
+		error = N6510_CloseFile2(s, Handle);
+		if (error != ERR_NONE) return error;
+
 		if (N6510_FindFileCheckSum12(File->Buffer, File->Used) != Priv->FileCheckSum) {
 			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum12(File->Buffer, File->Used),Priv->FileCheckSum);
 			return ERR_WRONGCRC;
 		}
-
-		error = N6510_CloseFile2(s, Handle);
-		if (error != ERR_NONE) return error;
 
 		return ERR_EMPTY;
 	}
@@ -1180,7 +1180,7 @@ static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, int *Po
 {
 	GSM_Error	       	error;
 	int		     	j,P;
-	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
+//	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	unsigned char		buffer[500];
 	unsigned char	   	req[15000] = {
 		N7110_FRAME_HEADER, 0x58, 0x00, 0x00,
@@ -1215,8 +1215,8 @@ static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, int *Po
 	req[8]		 = (*Handle) / 256;
 	req[9]		 = (*Handle) % 256;
 
-	j = 1000;
-	if (File->Used - *Pos < 1000) j = File->Used - *Pos;
+	j = 2000;
+	if (File->Used - *Pos < 2000) j = File->Used - *Pos;
 	req[10]		 = j / (256*256*256);
 	req[11]		 = j / (256*256);
 	req[12]		 = j / 256;
@@ -1228,7 +1228,7 @@ static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, int *Po
 	if (error != ERR_NONE) return error;
 	*Pos = *Pos + j;
 
-	if (j < 1000) {
+	if (j < 2000) {
 		error = N6510_CloseFile2(s, Handle);
 		if (error != ERR_NONE) return error;
 
@@ -1247,25 +1247,27 @@ static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, int *Po
 		P+=strlen(File->ID_FullName)*2;
 		req[P++] = 0;
 		req[P++] = 0;
+		smprintf(s,"Setting file date\n");
 		error = GSM_WaitFor (s, Header, P, 0x6D, 4, ID_AddFile);
 		if (error != ERR_NONE) return error;
 
 		error = N6510_SetFileAttributes2(s,File);
 		if (error != ERR_NONE) return error;
 
-		error = N6510_OpenFile2(s, File->ID_FullName, Handle, false);
-		if (error != ERR_NONE) return error;
-
-		error = N6510_GetFileCRC2(s, Handle);
-		if (error != ERR_NONE) return error;
-
-		if (N6510_FindFileCheckSum12(File->Buffer, File->Used) != Priv->FileCheckSum) {
-			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum12(File->Buffer, File->Used),Priv->FileCheckSum);
-			return ERR_WRONGCRC;
-		}
-
-		error = N6510_CloseFile2(s, Handle);
-		if (error != ERR_NONE) return error;
+//		error = N6510_OpenFile2(s, File->ID_FullName, Handle, false);
+//		if (error != ERR_NONE) return error;
+//		if ((*Handle) == 0) {
+//			error = N6510_OpenFile2(s, File->ID_FullName, Handle, false);
+//			if (error != ERR_NONE) return error;
+//		}
+//		error = N6510_GetFileCRC2(s, Handle);
+//		if (error != ERR_NONE) return error;
+//		error = N6510_CloseFile2(s, Handle);
+//		if (error != ERR_NONE) return error;
+//		if (N6510_FindFileCheckSum12(File->Buffer, File->Used) != Priv->FileCheckSum) {
+//			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum12(File->Buffer, File->Used),Priv->FileCheckSum);
+//			return ERR_WRONGCRC;
+//		}
 
 		return ERR_EMPTY;
 	}

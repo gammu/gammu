@@ -4046,12 +4046,13 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_DeleteWAPBookmark,
 	N6510_GetWAPSettings,
 	N6510_SetWAPSettings,
-	N6510_GetMMSSettings,
-	N6510_SetMMSSettings,
 	N6510_GetSyncMLSettings,
 	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
 	N6510_GetChatSettings,
 	NOTSUPPORTED,			/*	SetChatSettings		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetMMSFolders		*/
 	N6510_GetBitmap,
 	N6510_SetBitmap,
 	N6510_GetToDoStatus,

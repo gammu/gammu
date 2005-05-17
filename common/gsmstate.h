@@ -1203,14 +1203,6 @@ typedef struct {
 	 */
 	GSM_Error (*SetWAPSettings)     (GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
 	/**
-	 * Acquires MMS settings.
-	 */
-	GSM_Error (*GetMMSSettings)     (GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
-	/**
-	 * Changes MMS settings.
-	 */
-	GSM_Error (*SetMMSSettings)     (GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
-	/**
 	 * Acquires SyncML settings.
 	 */
 	GSM_Error (*GetSyncMLSettings)  (GSM_StateMachine *s, GSM_SyncMLSettings *settings);
@@ -1226,6 +1218,15 @@ typedef struct {
 	 * Changes chat/presence settings.
 	 */
 	GSM_Error (*SetChatSettings)    (GSM_StateMachine *s, GSM_ChatSettings *settings);
+	/**
+	 * Acquires MMS settings.
+	 */
+	GSM_Error (*GetMMSSettings)     (GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
+	/**
+	 * Changes MMS settings.
+	 */
+	GSM_Error (*SetMMSSettings)     (GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
+	GSM_Error (*GetMMSFolders)      (GSM_StateMachine *s, GSM_MMSFolders *folders);
 	/**
 	 * Gets bitmap.
 	 */

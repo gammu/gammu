@@ -350,12 +350,13 @@ GSM_Phone_Functions N9210Phone = {
 	NOTIMPLEMENTED, 		/* 	DeleteWAPBookmark 	*/
 	NOTIMPLEMENTED,			/* 	GetWAPSettings 		*/
 	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
-	NOTSUPPORTED,			/* 	GetMMSSettings		*/
-	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetSyncMLSettings	*/
 	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
 	NOTSUPPORTED,			/*	GetChatSettings		*/
 	NOTSUPPORTED,			/*	SetChatSettings		*/
+	NOTSUPPORTED,			/* 	GetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetMMSFolders		*/
 	N9210_GetBitmap,
 	N9210_SetBitmap,
 	NOTSUPPORTED,			/*	GetToDoStatus		*/

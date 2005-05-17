@@ -71,6 +71,7 @@ GSM_Phone_Functions N650Phone = {
 	NOTSUPPORTED,			/* 	DeleteSMS 		*/
 	NOTSUPPORTED,			/*	SendSMSMessage		*/
 	NOTSUPPORTED,			/*	SendSavedSMS		*/
+	NOTSUPPORTED,			/*	SetFastSMSSending	*/
 	NOTSUPPORTED,			/*	SetIncomingSMS		*/
 	NOTSUPPORTED,			/* 	SetIncomingCB		*/
 	NOTSUPPORTED,			/*	GetSMSFolders		*/
@@ -101,8 +102,13 @@ GSM_Phone_Functions N650Phone = {
 	NOTSUPPORTED, 			/* 	DeleteWAPBookmark 	*/
 	NOTSUPPORTED,			/* 	GetWAPSettings 		*/
 	NOTSUPPORTED,			/* 	SetWAPSettings 		*/
+	NOTSUPPORTED,			/*	GetSyncMLSettings	*/
+	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
+	NOTSUPPORTED,			/*	GetChatSettings		*/
+	NOTSUPPORTED,			/*	SetChatSettings		*/
 	NOTSUPPORTED,			/* 	GetMMSSettings		*/
- 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/* 	SetMMSSettings		*/
+	NOTSUPPORTED,			/*	GetMMSFolders		*/
 	NOTSUPPORTED,			/*	GetBitmap		*/
 	NOTSUPPORTED,			/*	SetBitmap		*/
 	NOTSUPPORTED,			/*	GetToDoStatus		*/
