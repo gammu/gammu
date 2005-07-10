@@ -483,7 +483,20 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			Block  = &Block[(int) Block[3]];
 			continue;
 		}
+		if (Block[0] == N6510_PBK_PUSHTOTALKID) {
+			smprintf(s,"SIP Address (Push to Talk address) - ignored\n");
 
+			length = length + Block[3];
+			Block  = &Block[(int) Block[3]];
+			continue;
+		}
+		if (Block[0] == N6510_PBK_GROUPID) {
+			smprintf(s,"Group ID (6230i or later) - ignored\n");
+
+			length = length + Block[3];
+			Block  = &Block[(int) Block[3]];
+			continue;
+		}
 		smprintf(s, "ERROR: unknown pbk entry 0x%02x\n",Block[0]);
 		return ERR_UNKNOWNRESPONSE;
 	}

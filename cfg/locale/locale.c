@@ -26,6 +26,19 @@ void WriteOutput(char *mystring)
 	fwrite(buffer,1,4,output);
 }
 
+void WriteOutputNon(char *mystring)
+{
+	unsigned char buffer[400];
+
+	EncodeUnicode(buffer,mystring,strlen(mystring));
+	fwrite(buffer,1,strlen(mystring)*2,output);
+}
+
+void WriteOutputUnicodeNon(char *mystring)
+{
+	fwrite(mystring,1,UnicodeLength(mystring)*2,output);
+}
+
 void ProcessSourceFile(char *filename)
 {
 	int 		start,stop,num,i;
@@ -99,8 +112,17 @@ void RemoveDuplicatedStrings(char *filename)
 	buffer[0] = 0xfe;
 	buffer[1] = 0xff;
 	fwrite(buffer,1,2,output);
-	sprintf(buffer,"# Localization file for Gammu (www.mwiacek.com) version %s",VERSION);
+	sprintf(buffer,"# Localization file for Gammu version %s",VERSION);
 	WriteOutput(buffer);
+	sprintf(buffer,"# More on Gammu on www.mwiacek.com, www.cihar.com, www.gammu.net");
+	WriteOutput(buffer);
+	WriteOutput("");
+	WriteOutput("[locale]");
+	sprintf(buffer,"Original=\"%s\"",VERSION);
+	WriteOutput(buffer);
+	WriteOutput("Author=\"\"");
+	WriteOutput("AuthorContact=\"\"");
+	WriteOutput("Language=\"English\"");
 	WriteOutput("");
 	WriteOutput("[common]");
 
@@ -155,7 +177,7 @@ void ProcessLangFile(char *filename)
 	INI_Section	*cfg_lang;
 	INI_Entry	*e,*e_lang,*e2;
 	int		num,num_lang;
-	char		*retval_lang;
+	char		*retval_lang,*retval;
 	unsigned char 	buffer[10000],buffer2[10000],buff2[50];
 
 	printf("Processing file %s\n",filename);
@@ -166,13 +188,42 @@ void ProcessLangFile(char *filename)
 	buffer[0] = 0xfe;
 	buffer[1] = 0xff;
 	fwrite(buffer,1,2,output);
-	sprintf(buffer,"# Localization file for Gammu (www.mwiacek.com) version %s",VERSION);
+	sprintf(buffer,"# Localization file for Gammu version %s",VERSION);
+	WriteOutput(buffer);
+	sprintf(buffer,"# More on Gammu on www.mwiacek.com, www.cihar.com, www.gammu.net");
 	WriteOutput(buffer);
 	WriteOutput("");
+
+	WriteOutput("[locale]");
+	EncodeUnicode(buff2,"locale",6);
+	/* --- */
+	EncodeUnicode(buffer2,"original",8);
+	retval = INI_GetValue(cfg_lang,buff2,buffer2,true);
+	WriteOutputNon("Original=");
+	if (retval != NULL) WriteOutputUnicodeNon(retval);
+	WriteOutput("");
+	/* --- */
+	EncodeUnicode(buffer2,"author",6);
+	retval = INI_GetValue(cfg_lang,buff2,buffer2,true);
+	WriteOutputNon("Author=");
+	if (retval != NULL) WriteOutputUnicodeNon(retval);
+	WriteOutput("");
+	/* --- */
+	EncodeUnicode(buffer2,"authorcontact",13);
+	retval = INI_GetValue(cfg_lang,buff2,buffer2,true);
+	WriteOutputNon("AuthorContact=");
+	if (retval != NULL) WriteOutputUnicodeNon(retval);
+	WriteOutput("");
+	/* --- */
+	EncodeUnicode(buffer2,"language",8);
+	retval = INI_GetValue(cfg_lang,buff2,buffer2,true);
+	WriteOutputNon("Language=");
+	if (retval != NULL) WriteOutputUnicodeNon(retval);
+	WriteOutput("");
+
+	WriteOutput("");
 	WriteOutput("[common]");
-
 	EncodeUnicode (buff2, "common", 6);
-
 	e2	= INI_FindLastSectionEntry(cfg_lang, buff2, true);
 	e	= INI_FindLastSectionEntry(cfg_info, buff2, true);
 	while (1) {
@@ -233,9 +284,6 @@ int main(int argc, char *argv[])
 	buffer[0] = 0xfe;
 	buffer[1] = 0xff;
 	fwrite(buffer,1,2,output);
-	sprintf(buffer,"# Localization file for Gammu (www.mwiacek.com) version %s",VERSION);
-	WriteOutput(buffer);
-	WriteOutput("");
 	WriteOutput("[common]");
 	WriteOutput("F0001=\"No error.\"");
 	WriteOutput("F0002=\"Error opening device. Unknown/busy or no permissions.\"");
@@ -316,6 +364,8 @@ int main(int argc, char *argv[])
 	ProcessLangFile("../../../../docs/docs/locale/gammu_de.txt");
 	ProcessLangFile("../../../../docs/docs/locale/gammu_it.txt");
 	ProcessLangFile("../../../../docs/docs/locale/gammu_cs.txt");
+	ProcessLangFile("../../../../docs/docs/locale/gammu_es.txt");
+	ProcessLangFile("../../../../docs/docs/locale/gammu_ru.txt");
 #else
 	RemoveDuplicatedStrings("../../docs/docs/locale/gammu_us.txt");
 	cfg_info = INI_ReadFile("../../docs/docs/locale/gammu_us.txt",true);
@@ -324,6 +374,8 @@ int main(int argc, char *argv[])
 	ProcessLangFile("../../docs/docs/locale/gammu_de.txt");
 	ProcessLangFile("../../docs/docs/locale/gammu_it.txt");
 	ProcessLangFile("../../docs/docs/locale/gammu_cs.txt");
+	ProcessLangFile("../../docs/docs/locale/gammu_es.txt");
+	ProcessLangFile("../../docs/docs/locale/gammu_ru.txt");
 #endif
 	printf("\n");
 

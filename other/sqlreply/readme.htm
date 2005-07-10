@@ -1,0 +1,53 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-2"
+ http-equiv="content-type">
+  <title></title>
+</head>
+<body>
+<small><font face="Tahoma">System constist of three parts:<br>
+</font></small>
+<ol>
+  <small> </small><li><small><font face="Tahoma">MySQL database</font></small></li>
+  <small> </small><li><small><font face="Tahoma">PHP interface for
+managing MySQL database</font></small></li>
+  <small> </small><li><small><font face="Tahoma">C languagae daemon</font></small></li>
+  <small></small>
+</ol>
+<small><font face="Tahoma">The main target for it is making some
+sequences of actions, when some
+values in MySQL databases are found.<br>
+<br>
+You can give many rules in one sequence. Daemon logs into specified DB
+and executes given SQL. If SQL from all rules give some results,
+actions are executed.<br>
+<br>
+SQL text in each action consist of two or more parts:<br>
+</font></small>
+<ol>
+  <li><small><font face="Tahoma">SQL query</font></small></li>
+  <li><small><font face="Tahoma">"{" char and SQL action</font></small></li>
+</ol>
+<small><font face="Tahoma">System logs into specified DB and makes SQL
+query. Later logs again into DB (it can be different) and executes SQL
+action for each result returned from SQL query (if you want to enter
+value of 1'st column from SQL query, use "<i>daemon_column1</i>", for
+second use "<i>daemon_column2</i>", etc.). Point 2 can repeat. Example:<br>
+<br>
+<i>select txt from a where txt='wartosc'<br>
+{<br>
+insert into b (bzzz) values ('daemon_column1')<br>
+{<br>
+insert into b (bzzz) values ('2')</i><br>
+<br>
+System makes "<i>select txt from a where txt='wartosc'</i>" and for
+each result makes "<i>insert into b (bzzz) values ('daemon_column1')</i>"
+(instead of <i>daemon_column1</i> there is entered <i>txt</i> column
+values) and "<i>insert into b (bzzz) values ('2')</i>"<br>
+<br>
+You can use it for sending SMS in Gammu style.<br>
+<br>
+</font></small><br>
+</body>
+</html>

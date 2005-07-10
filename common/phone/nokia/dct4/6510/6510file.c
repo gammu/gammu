@@ -1666,8 +1666,8 @@ GSM_Error N6510_SetFileAttributes(GSM_StateMachine *s, GSM_File *File)
 
 GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 {
-	GSM_Error error;
-	GSM_File  File2;
+	GSM_Error 		error;
+	GSM_File  		File2;
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
@@ -1706,6 +1706,91 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 		return ERR_EMPTY;
 	}
 	return ERR_NONE;	
+}
+
+GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
+{
+	GSM_Error 		error;
+	GSM_File  		Files;
+	bool			Start = true;
+	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
+	int			i;
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FILES2)) {
+		strcpy(Files.ID_FullName,"c:/1");
+	} else {
+	}
+
+	for (i=0;i<20;i++) {
+		Priv->MMSFoldersID[i] = -1;
+	}
+
+	while (1) {
+		error = N6510_GetFolderListing(s,&Files,Start);
+		if (error == ERR_EMPTY) break;
+		if (error != ERR_NONE) return error;
+		Start = false;
+		if (!Files.Folder || strcmp(DecodeUnicodeConsole(Files.Name),"Messages")) {
+			continue;
+		}
+		Start 		= true;
+		folders->Number = 0;
+		while (1) {
+			error = N6510_GetFolderListing(s,&Files,Start);
+			if (error == ERR_EMPTY) return ERR_NONE;
+			if (error != ERR_NONE) return error;
+			Start = false;
+			if (!Files.Folder) continue;
+			CopyUnicodeString(folders->Folder[folders->Number].Name,Files.Name);
+			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FILES2)) {
+				Priv->MMSFoldersID[folders->Number] = atoi(Files.ID_FullName+3);
+			} else {
+			}
+			folders->Number++;
+		}
+	}
+	return ERR_NOTSUPPORTED;
+}
+
+GSM_Error N6510_GetNextMMSFile(GSM_StateMachine *s, GSM_MMSFile *file, bool start)
+{
+	GSM_MMSFolders 		folders;
+	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
+	GSM_Error		error;
+
+	if (start) {
+		error = N6510_GetMMSFolders(s, &folders);
+		if (error != ERR_NONE) return error;
+
+		Priv->MMSFolderNum 	= 0;
+		Priv->MMSFolderError 	= ERR_EMPTY;
+	}
+
+	if (Priv->MMSFolderError == ERR_NONE) {
+		Priv->MMSFolderError = N6510_GetFolderListing(s,&Priv->MMSFile,false);
+		if (Priv->MMSFolderError != ERR_EMPTY && Priv->MMSFolderError != ERR_NONE) return Priv->MMSFolderError;
+	}
+
+	if (Priv->MMSFolderError == ERR_EMPTY) {
+		while (1) {
+			if (Priv->MMSFoldersID[Priv->MMSFolderNum]==-1) return ERR_EMPTY;
+	
+			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FILES2)) {
+				sprintf(Priv->MMSFile.ID_FullName,"c:/%i",Priv->MMSFoldersID[Priv->MMSFolderNum]);
+			} else {
+			}		
+			Priv->MMSFolderNum++;
+	
+			Priv->MMSFolderError = N6510_GetFolderListing(s,&Priv->MMSFile,true);
+			if (Priv->MMSFolderError == ERR_EMPTY) continue;
+			if (Priv->MMSFolderError != ERR_NONE) return Priv->MMSFolderError;
+			break;
+		}
+	}
+	file->Folder = Priv->MMSFolderNum;
+	return ERR_NONE;
 }
 
 #endif

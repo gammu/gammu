@@ -366,9 +366,9 @@ int smfprintf(FILE *f, Debug_Level dl, const char *format, ...)
 {
         va_list 		argp;
 	int 			result=0;
-	static unsigned char 	prevline[2000] = "", nextline[2000]="";
+	static unsigned char 	prevline[3000] = "", nextline[3000]="";
 	static unsigned int 	linecount=0;
-	unsigned char		buffer[2000];
+	unsigned char		buffer[3000];
 	GSM_DateTime 		date_time;
 
 	if (f == NULL) return 0;
