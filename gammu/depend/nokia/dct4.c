@@ -196,6 +196,18 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
 			 //{DCT4_5100_IDENTIFY,30},//number grouping
 			 //{DCT4_TEST,48},//Chat menu in main menu
 			 {0,0}}},
+
+/* QUESS ???? */
+/*6230i*/ {"RM-72",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,4},{DCT4_GEA1,9},{DCT4_DISPLAY_PHONE_NAME,17},
+			 {DCT4_WAP_GOTO_MENU,18},{DCT4_WAP_SETTINGS_MENU,19},
+			 {DCT4_SERVICES_GAMES_APP_GALLERY,21},{DCT4_DISPLAY_WAP_PROFILE,25},
+			 {DCT4_SAT_CONFIRM_MENU,26},{DCT4_CONFIRM_ALS,39},{DCT4_WAP_BOOKMARKS_MENU2,40},
+			 {DCT4_BLUETOOTH_MENU,35},{DCT4_JAVA_TCK,57},{DCT4_BOOKMARK_GOTO_MENU,61},
+			 //{DCT4_TEST2,13},//number grouping
+			 //{DCT4_5100_IDENTIFY,30},//number grouping
+			 //{DCT4_TEST,48},//Chat menu in main menu
+			 {0,0}}},
+
 /*6310*/ {"NPE-4",	{{DCT4_ALS,1},{DCT4_A52,3},{DCT4_CSP,6},{DCT4_GAMES_WAP_DOWNLOAD,7},
 			 {DCT4_GAMES_SCORE_SEND,8},{DCT4_GAMES_URL_CHECK,9},{DCT4_BLUETOOTH_MENU,10},
 			 {DCT4_GPRS_PCCH,13},{DCT4_GEA1,15},{DCT4_ALWAYS_ONLINE,18},{0,0}}},
@@ -1300,7 +1312,106 @@ void DCT4GetScreenDump(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	int i,pos=6;
+
+	printf("%i entries types\n",msg.Buffer[5]-1);
+
+	for (i=0;i<msg.Buffer[5]-1;i++) {
+		printf("  entry ID %02X",msg.Buffer[pos+4]);
+		switch (msg.Buffer[pos+4]) {
+		case N7110_PBK_SIM_SPEEDDIAL	: printf(" (Speed dial on SIM)"); 			break;
+		case N7110_PBK_NAME	    	: printf(" (Text: name (always the only one)");		break;
+		case N7110_PBK_EMAIL	    	: printf(" (Text: email adress)");			break;
+		case N7110_PBK_POSTAL	    	: printf(" (Text: postal address)");			break;
+		case N7110_PBK_NOTE	    	: printf(" (Text: note)");				break;
+		case N7110_PBK_NUMBER 	    	: printf(" (Phone number)");				break;
+		case N7110_PBK_RINGTONE_ID  	: printf(" (Ringtone ID)");				break;
+		case N7110_PBK_DATETIME    	: printf(" (Call register: date and time)");		break;
+		case N7110_PBK_UNKNOWN1	    	: printf(" (Call register: with missed calls)");	break;
+		case N7110_PBK_SPEEDDIAL    	: printf(" (Speed dial)");				break;
+		case N7110_PBK_GROUPLOGO    	: printf(" (Caller group: logo)");			break;
+		case N7110_PBK_LOGOON	    	: printf(" (Caller group: is logo on ?)");		break;
+		case N7110_PBK_GROUP	    	: printf(" (Caller group number in pbk entry)");	break;
+	
+		/* DCT4 only */
+		case N6510_PBK_URL		: printf(" (Text: URL address)");			break;
+		case N6510_PBK_SMSLIST_ID	: printf(" (SMS list assigment)");			break;
+		case N6510_PBK_VOICETAG_ID	: printf(" (Voice tag assigment)");			break;
+		case N6510_PBK_PICTURE_ID	: printf(" (Picture ID assigment)");			break;
+		case N6510_PBK_RINGTONEFILE_ID  : printf(" (Ringtone ID from filesystem/internal)");	break;
+		case N6510_PBK_USER_ID          : printf(" (Text: user ID)");				break;
+		case N6510_PBK_UNKNOWN2	        : printf(" (conversation list ID)");			break;
+		case N6510_PBK_UNKNOWN3	 	: printf(" (Instant Messaging service list ID ?)");	break;
+		case N6510_PBK_UNKNOWN4	 	: printf(" (presence list ID ?)");			break;
+		case N6510_PBK_PUSHTOTALK_ID	: printf(" (SIP Address (Push to Talk address))");	break;
+		case N6510_PBK_GROUP2_ID	: printf(" (Group ID (6230i or later))");		break;
+		}
+		printf(", type ");
+		switch (msg.Buffer[pos+5]) {
+		case 0x05: printf("string"); 	break;
+		case 0x02: printf("byte"); 	break;
+		case 0x03: printf("2 bytes"); 	break;
+		case 0x06: printf("4 bytes"); 	break;
+		default  : printf("%02X",msg.Buffer[pos+5]);
+		}
+		printf("\n");
+		pos+=msg.Buffer[pos+3];
+	}
+
+	printf("%i phone number types\n",msg.Buffer[pos+4]);
+	for (i=0;i<msg.Buffer[pos+4];i++) {
+		switch (msg.Buffer[pos+5+i]) {
+		case 0x02: printf("  Home Number\n"); 		break;
+		case 0x03: printf("  Mobile Number\n"); 	break;
+		case 0x04: printf("  Fax Number\n"); 		break;
+		case 0x06: printf("  Office Number\n"); 	break;
+		case 0x0A: printf("  Standard Number\n"); 	break;
+		default:   printf("  unknown\n");
+		}
+	}
+
+	return ERR_NONE;
+}
+
+void DCT4GetPBKFeatures(int argc, char *argv[])
+{
+	GSM_MemoryType	MemoryType=0;
+	unsigned char 	req[] = {N6110_FRAME_HEADER, 0x25, 
+				 0x05, 	// memory type
+				 0x00};
+
+	if (mystrncasecmp(argv[2],"DC",0)) MemoryType=MEM_DC;
+	if (mystrncasecmp(argv[2],"ON",0)) MemoryType=MEM_ON;
+	if (mystrncasecmp(argv[2],"RC",0)) MemoryType=MEM_RC;
+	if (mystrncasecmp(argv[2],"MC",0)) MemoryType=MEM_MC;
+	if (mystrncasecmp(argv[2],"ME",0)) MemoryType=MEM_ME;
+	if (mystrncasecmp(argv[2],"SM",0)) MemoryType=MEM_SM;
+	if (mystrncasecmp(argv[2],"VM",0)) MemoryType=MEM_VM;
+	if (mystrncasecmp(argv[2],"FD",0)) MemoryType=MEM_FD;
+	if (MemoryType==0) {
+		printf("ERROR: unknown memory type (\"%s\")\n",argv[2]);
+		exit (-1);
+	}
+
+	req[4] = NOKIA_GetMemoryType(&s, MemoryType,N71_65_MEMORY_TYPES);
+	if (req[4]==0xff) exit(-1);
+
+	GSM_Init(true);
+
+        CheckDCT4();
+
+	s.User.UserReplyFunctions=UserReplyFunctions4;
+
+	error=GSM_WaitFor (&s, req, 6, 0x03, 4, ID_User3);
+	Print_Error(error);
+
+	GSM_Terminate();
+}
+
 GSM_Reply_Function UserReplyFunctions4[] = {
+	{DCT4_ReplyGetPBKFeatures,	"\x03",0x03,0x26,ID_User3	},	
 
 #ifdef DEBUG
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x05,ID_User2	},

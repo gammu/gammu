@@ -117,9 +117,16 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 		}
 		if (entry.Entries[i].EntryType == PBK_Caller_Group) {
 			if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) {
-				string[0] = entry.Entries[i].Number;
-				string[1] = 0;
-				count += N71_65_PackPBKBlock(s, N7110_PBK_GROUP, 2, block++, string, req + count);
+				if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
+//					string[0] = 0;
+//					string[1] = 0;
+//					count += N71_65_PackPBKBlock(s, N6510_PBK_GROUP2_ID, 2, block++, string, req + count);
+//					req[count-1] = entry.Entries[i].Number;
+				} else {
+					string[0] = entry.Entries[i].Number;
+					string[1] = 0;
+					count += N71_65_PackPBKBlock(s, N7110_PBK_GROUP, 2, block++, string, req + count);
+				}
 			}
 			continue;
 		}
@@ -483,7 +490,24 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			Block  = &Block[(int) Block[3]];
 			continue;
 		}
+		if (Block[0] == N6510_PBK_PUSHTOTALK_ID) {
+			smprintf(s,"SIP Address (Push to Talk address) - ignored\n");
 
+			length = length + Block[3];
+			Block  = &Block[(int) Block[3]];
+			continue;
+		}
+		if (Block[0] == N6510_PBK_GROUP2_ID) {
+			smprintf(s,"Group ID (6230i or later)\n");
+
+			entry->Entries[entry->EntriesNum].EntryType=PBK_Caller_Group;
+			smprintf(s, "Caller group \"%i\"\n",Block[7]);
+			entry->Entries[entry->EntriesNum].Number=Block[7];
+
+			length = length + Block[3];
+			Block  = &Block[(int) Block[3]];
+			continue;
+		}
 		smprintf(s, "ERROR: unknown pbk entry 0x%02x\n",Block[0]);
 		return ERR_UNKNOWNRESPONSE;
 	}

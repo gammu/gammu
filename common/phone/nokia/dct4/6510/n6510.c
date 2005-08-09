@@ -33,7 +33,7 @@
 
 static GSM_Error N6510_Initialise (GSM_StateMachine *s)
 {
-	s->Phone.Data.Priv.N6510.CalendarIconsNum = 0;
+	s->Phone.Data.Priv.N6510.CalendarIconsNum  = 0;
 
 	/* Enables various things like incoming SMS, call info, etc. */
 	return N71_65_EnableFunctions (s, "\x01\x02\x06\x0A\x14\x17\x39", 7);
@@ -296,7 +296,7 @@ static GSM_Error N6510_ReplyGetNetworkInfo(GSM_Protocol_Message msg, GSM_StateMa
 			DecodeUnicodeString(GSM_GetNetworkName(NetInfo.NetworkCode)));
 		smprintf(s, "(%s)\n",DecodeUnicodeString(GSM_GetCountryName(NetInfo.NetworkCode)));
 
-		sprintf(NetInfo.LAC,	"%02X%02X", msg.Buffer[current+1], msg.Buffer[current+2]);
+		sprintf(NetInfo.LAC, "%02X%02X", msg.Buffer[current+1], msg.Buffer[current+2]);
 		smprintf(s, "LAC                       : %s\n", NetInfo.LAC);
 
 		sprintf(NetInfo.CID, "%02X%02X", msg.Buffer[current+5], msg.Buffer[current+6]);
@@ -1038,10 +1038,11 @@ static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	int 		count = 22, blocks;
 	unsigned char 	req[500] = {
-		N7110_FRAME_HEADER, 0x0b, 0x00, 0x01, 0x01, 0x00, 0x00, 0x10,
-		0x02, 0x00,  		/* memory type */
+		N7110_FRAME_HEADER, 0x0b, 0x00, 0x01, 0x01, 0x00, 0x00, 0x10, 0x02,
+		0x00,  			/* memory type */
 		0x00, 0x00,  		/* location */
-		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+		0x00};			/* Number of blocks */
 
 	if (entry->Location == 0) return ERR_NOTSUPPORTED;
 
@@ -1405,6 +1406,8 @@ static GSM_Error N6510_EnableConnectionFunctions(GSM_StateMachine *s, N6510_Conn
 	unsigned char 	req2[] = {N6110_FRAME_HEADER, 0x00, 0x01};
 	unsigned char 	req3[] = {N6110_FRAME_HEADER, 0x00, 0x03};
 	unsigned char 	req4[] = {N6110_FRAME_HEADER, 0x00, 0x04};
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iWAP)) return ERR_NOTSUPPORTED;
 
 	if (Type == N6510_MMS_SETTINGS    && IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOMMS)) return ERR_NOTSUPPORTED;
 	if (Type == N6510_CHAT_SETTINGS   && !IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CHAT)) return ERR_NOTSUPPORTED;
@@ -3012,6 +3015,9 @@ static GSM_Error N6510_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 	if (!strcmp(s->Phone.Data.ModelInfo->model,"5140")) {
 		return ERR_NOTSUPPORTED;
 	}
+	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230i")) {
+		return ERR_NOTSUPPORTED;
+	}
 
 	if (Profile->Location>5) return ERR_INVALIDLOCATION;
 
@@ -3667,7 +3673,6 @@ GSM_Error N6510_AddSMSFolder(GSM_StateMachine *s, unsigned char *name)
 			          0x00,     		/* Length */
 				  0x00, 0x00};
 
-
 	CopyUnicodeString(req+10,name);
 	req[7] = UnicodeLength(name)*2 + 6;
 
@@ -3766,9 +3771,9 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	{N6510_ReplyGetMemoryStatus,	  "\x03",0x03,0x04,ID_GetMemoryStatus	  },
 	{N6510_ReplyGetMemory,		  "\x03",0x03,0x08,ID_GetMemory		  },
-	{N6510_ReplyDeleteMemory,	  "\x03",0x03,0x10,ID_SetMemory		  },
 	{N71_65_ReplyWritePhonebook,	  "\x03",0x03,0x0C,ID_SetBitmap		  },
 	{N71_65_ReplyWritePhonebook,	  "\x03",0x03,0x0C,ID_SetMemory		  },
+	{N6510_ReplyDeleteMemory,	  "\x03",0x03,0x10,ID_SetMemory		  },
 
 	{DCT3DCT4_ReplyCallDivert,	  "\x06",0x03,0x02,ID_Divert		  },
 	{N71_65_ReplyUSSDInfo,		  "\x06",0x03,0x03,ID_IncomingFrame	  },
@@ -3961,7 +3966,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6100|6200|6220|6230|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6100|6200|6220|6230|6230i|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/
@@ -4050,9 +4055,10 @@ GSM_Phone_Functions N6510Phone = {
 	NOTSUPPORTED,			/*	SetSyncMLSettings	*/
 	N6510_GetChatSettings,
 	NOTSUPPORTED,			/*	SetChatSettings		*/
-	NOTSUPPORTED,			/* 	GetMMSSettings		*/
-	NOTSUPPORTED,			/* 	SetMMSSettings		*/
-	NOTSUPPORTED,			/*	GetMMSFolders		*/
+	N6510_GetMMSSettings,
+	N6510_SetMMSSettings,
+	N6510_GetMMSFolders,
+	N6510_GetNextMMSFile,
 	N6510_GetBitmap,
 	N6510_SetBitmap,
 	N6510_GetToDoStatus,

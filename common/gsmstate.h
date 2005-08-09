@@ -1227,6 +1227,7 @@ typedef struct {
 	 */
 	GSM_Error (*SetMMSSettings)     (GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
 	GSM_Error (*GetMMSFolders)      (GSM_StateMachine *s, GSM_MMSFolders *folders);
+	GSM_Error (*GetNextMMSFile)	(GSM_StateMachine *s, GSM_MMSFile *file, bool start);
 	/**
 	 * Gets bitmap.
 	 */
@@ -1579,6 +1580,8 @@ typedef enum {
 	F_CHAT,		/* Phone with Chat settings 					*/
 	F_SYNCML,	/* Phone with SyncML settings 					*/
 	F_FILES2,	/* filesystem version 2 					*/
+	F_6230iWAP,	/* WAP, MMS, etc. settings like in 6230i - unknown now		*/
+	F_6230iCALLER,	/* Caller groups like in 6230i					*/
 
 	/* n6510.c && n7110.c */
 	F_VOICETAGS,	/* Voice tags available						*/
@@ -1599,7 +1602,7 @@ struct _OnePhoneModel {
 	char		*model;
 	char		*number;
 	char		*irdamodel;
-	Feature		features[12];
+	Feature		features[14];
 };
 
 bool 		IsPhoneFeatureAvailable	(OnePhoneModel *model, Feature feature);

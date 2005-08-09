@@ -15,6 +15,7 @@ void DCT4VibraTest	   (int argc, char *argv[]);
 void DCT4PlaySavedRingtone (int argc, char *argv[]);
 void DCT4MakeCameraShoot   (int argc, char *argv[]);
 void DCT4GetScreenDump	   (int argc, char *argv[]);
+void DCT4GetPBKFeatures	   (int argc, char *argv[]);
 
 #ifdef DEBUG
 	void DCT4ResetSecurityCode (int argc, char *argv[]);
