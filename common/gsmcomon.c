@@ -83,7 +83,7 @@ unsigned char *GetMsg (INI_Section *cfg, unsigned char *default_string)
 				EncodeUnicode (buffer, buff, 5);
 			        retval = INI_GetValue(cfg, buff2, buffer, true);
 			        if (retval) {
-					sprintf(buff,"%s",DecodeUnicodeConsole(retval+2));
+					DecodeUnicode(retval+2,buff);
 					buff[strlen(buff)-1] = 0;
 					/* Set all \n to 0x0a */
 					memset(def_str,0,sizeof(def_str));

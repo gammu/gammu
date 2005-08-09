@@ -83,6 +83,7 @@
 				PreprocessorDefinitions="WIN32,_DEBUG,_CONSOLE,DEBUG"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="5"
+				BufferSecurityCheck="TRUE"
 				UsePrecompiledHeader="2"
 				PrecompiledHeaderFile=".\Debug/gammu.pch"
 				AssemblerListingLocation=".\Debug/"

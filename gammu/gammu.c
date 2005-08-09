@@ -498,17 +498,22 @@ static void PrintMemoryEntry(GSM_MemoryEntry *entry)
 			case PBK_Text_Custom4       : printmsg("Custom text 4   "); break;
 			case PBK_Caller_Group       :
 				unknown = true;
-				if (!callerinit[entry->Entries[i].Number]) {
-					caller[entry->Entries[i].Number].Type	  = GSM_CallerGroupLogo;
-					caller[entry->Entries[i].Number].Location = entry->Entries[i].Number;
-					error=Phone->GetBitmap(&s,&caller[entry->Entries[i].Number]);
-					Print_Error(error);
-					if (caller[entry->Entries[i].Number].DefaultName) {
-						NOKIA_GetDefaultCallerGroupName(&s,&caller[entry->Entries[i].Number]);
-					}
-					callerinit[entry->Entries[i].Number]=true;
+				if (entry->Entries[i].Number > 5) {
+					printmsg("Caller group     : \"%d\"\n",entry->Entries[i].Number);
+					printmsgerr("Caller group number too high, please increase buffer in sources!\n");
+					break;
 				}
-				printmsg("Caller group     : \"%s\"\n",DecodeUnicodeConsole(caller[entry->Entries[i].Number].Text));
+				if (!callerinit[entry->Entries[i].Number-1]) {
+					caller[entry->Entries[i].Number-1].Type	    = GSM_CallerGroupLogo;
+					caller[entry->Entries[i].Number-1].Location = entry->Entries[i].Number;
+					error=Phone->GetBitmap(&s,&caller[entry->Entries[i].Number-1]);
+					Print_Error(error);
+					if (caller[entry->Entries[i].Number-1].DefaultName) {
+						NOKIA_GetDefaultCallerGroupName(&s,&caller[entry->Entries[i].Number-1]);
+					}
+					callerinit[entry->Entries[i].Number-1]=true;
+				}
+				printmsg("Caller group     : \"%s\"\n",DecodeUnicodeConsole(caller[entry->Entries[i].Number-1].Text));
 				break;
 			case PBK_RingtoneID	     :
 				unknown = true;
@@ -1659,6 +1664,28 @@ static void GetMMSFolders(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void GetEachMMS(int argc, char *argv[])
+{
+	GSM_MMSFile		MMSFile;
+	bool			start = true;
+	GSM_MMSFolders 		folders;
+
+	GSM_Init(true);
+
+	error=Phone->GetMMSFolders(&s,&folders);
+	Print_Error(error);
+
+	while (1) {
+		error=Phone->GetNextMMSFile(&s,&MMSFile,start);		
+		if (error==ERR_EMPTY) break;
+		Print_Error(error);
+		start = false;
+		printf("Folder %s\n",DecodeUnicodeConsole(folders.Folder[MMSFile.Folder-1].Name));
+	}
+
+	GSM_Terminate();
+}
+
 static void GetRingtone(int argc, char *argv[])
 {
 	GSM_Ringtone 	ringtone;
@@ -1729,6 +1756,58 @@ static void DialVoice(int argc, char *argv[])
 
 	GSM_Terminate();
 }
+
+int TerminateID = -1;
+
+static void IncomingCall0(char *Device, GSM_Call call)
+{
+	if (call.CallIDAvailable) TerminateID = call.CallID;
+}
+
+static void MakeTerminatedCall(int argc, char *argv[])
+{
+	GSM_CallShowNumber 	ShowNumber = GSM_CALL_DefaultNumberPresence;
+//	GSM_DateTime		DT;
+//	time_t			one,two;
+
+	if (argc > 4) {
+		if (mystrncasecmp(argv[4],"show",0)) {		ShowNumber = GSM_CALL_ShowNumber;
+		} else if (mystrncasecmp(argv[4],"hide",0)) {	ShowNumber = GSM_CALL_HideNumber;
+		} else {
+			printmsg("Unknown parameter (\"%s\")\n",argv[4]);
+			exit(-1);
+		}
+	}
+
+	GSM_Init(true);
+
+	s.User.IncomingCall = IncomingCall0;
+
+	error=Phone->SetIncomingCall(&s,true);
+	Print_Error(error);
+
+	error=Phone->DialVoice(&s, argv[2], ShowNumber);
+	Print_Error(error);
+
+//	GSM_GetCurrentDateTime (&DT);
+//	one = Fill_Time_T(DT, 0);
+
+//	while (true) {
+		my_sleep(atoi(argv[3]));
+//		GSM_GetCurrentDateTime (&DT);
+//		two = Fill_Time_T(DT, 0);
+//		if (two - one > atoi(argv[3])) break;
+		GSM_ReadDevice(&s,true);
+//	}
+
+	if (TerminateID != -1) {
+		error=Phone->CancelCall(&s,TerminateID,false);
+		Print_Error(error);
+	}
+
+	GSM_Terminate();
+}
+
 
 static void CancelCall(int argc, char *argv[])
 {
@@ -8487,6 +8566,8 @@ static GSM_Parameters Parameters[] = {
 	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"FILES configfile"},
 	{"--sendsmsdsms",		2,30, SendSaveDisplaySMS,	{H_SMS,H_Other,0},		"TEXT|WAPSETTINGS|... destination FILES|MYSQL configfile ... (options like in sendsms)"},
 	{"--getmmsfolders",		0, 0, GetMMSFolders,		{H_MMS,0},			""},
+	{"--getallmms",			0, 0, GetEachMMS,		{H_MMS,0},			""},
+	{"--geteachmms",		0, 0, GetEachMMS,		{H_MMS,0},			""},
 	{"--getringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
 	{"--getphoneringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
 	{"--getringtoneslist",		0, 0, GetRingtonesList,		{H_Ringtone,0},			""},
@@ -8495,6 +8576,7 @@ static GSM_Parameters Parameters[] = {
 	{"--copyringtone",		2, 3, CopyRingtone,		{H_Ringtone,0},			"source destination [RTTL|BINARY]"},
 	{"--getussd",			1, 1, GetUSSD,			{H_Call,0},			"code"},
 	{"--dialvoice",			1, 2, DialVoice,		{H_Call,0},			"number [show|hide]"},
+	{"--maketerminatedcall",	2, 3, MakeTerminatedCall,	{H_Call,0},			"number length [show|hide]"},
 	{"--getspeeddial",		1, 2, GetSpeedDial,		{H_Call,H_Memory,0},		"start [stop]"},
 	{"--cancelcall",		0, 1, CancelCall,		{H_Call,0},			"[ID]"},
 	{"--answercall",		0, 1, AnswerCall,		{H_Call,0},			"[ID]"},
@@ -8579,6 +8661,7 @@ static GSM_Parameters Parameters[] = {
 	{"--nokiadebug",		1, 2, DCT3SetDebug,		{H_Nokia,H_Network,0},		"filename [[v11-22][,v33-44]...]"},
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
+	{"--nokiagetpbkfeatures",	1, 1, DCT4GetPBKFeatures,	{H_Nokia,H_Memory,0},		"memorytype"},
 	{"--nokiasetvibralevel",	1, 1, DCT4SetVibraLevel,	{H_Nokia,H_Other,0},		"level"},
 	{"--nokiagetvoicerecord",	1, 1, DCT4GetVoiceRecord,	{H_Nokia,H_Other,0},		"location"},
 #ifdef GSM_ENABLE_NOKIA6510

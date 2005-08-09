@@ -30,12 +30,53 @@ This software was sponsored (in time order) by:
 15. Troy Engel
 16. Mattias Sjosvard
 17. Jackpot
+18. Thomas Vill
+19. Michael Hansen
+20. Saul Kato
 
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20050727 - 1.02.00
+* new functionality:
+  * some support for 6230i caller groups in pbk
+  * some things disabled for 6230i for now
+
+* fixes and improvements:
+  * startup fix for SE based AT modems                            (Michal Cihar)
+
+20050711 - 1.01.25
+* new functionality:
+  * simple daemon (other/sqlreply) for making SQL actions and running programs 
+    on server side, when some SQL rules will happen. Can be used for
+    autoreplies, sending mails, etc., when you send SMS to MYSQL daemon
+  * translations:
+    * Spanish                                                  (Ernesto Serrano)
+    * Russian                                                           (Zontik)
+    * translation files contains now creator info and Gammu version
+      (which was the first one translated)
+  * new --getmmsfolders, partialy done --getallmms / --geteachmms
+  * new --maketerminatedcall                                      (Tony Turner)
+  * 6230i ID                                                    (Oliver Seufer)
+  * * info about new Series 40 PBK subentries types               (Intra Darma)
+    * new --nokiagetpbkfeatures
+
+* fixes and improvements:
+  * localisation system                                          (Niels Ganser)
+  * GetMMSSettings and SetMMSSettings were disabled by accident
+    at least in previous test version for 6510 module
+  * fixed --getmemory and caller groups info                     (Michal Cihar)
+
+NOTES: This release is available too long after previous. Big shame, but I will
+       try not to repeat this situation.
+
+       For now I need some help from 6230i users (with WAP settings and others)
+
+       When these issues will be resolved, I will release new stable version
+       (maybe even with complete MMS getting<->decoding).
+
 20050510 - 1.01.11
 * fixes and improvements:
   * FBUS2 driver allocation problems                          (Joergen Thomsen)
