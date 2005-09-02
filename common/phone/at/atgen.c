@@ -2469,7 +2469,7 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 	GSM_MemoryStatus	*MemoryStatus = s->Phone.Data.MemoryStatus;
 	int			line=0;
 	char			*str;
-	int			cur;
+	int			cur, last = -1;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -2478,11 +2478,18 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 		while (Priv->Lines.numbers[line*2+1]!=0) {
 			str = GetLineString(msg.Buffer,Priv->Lines,line+1);
 			if (strncmp(str, "+CPBR: ", 7) == 0) {
-				MemoryStatus->MemoryUsed++;
 				if (sscanf(str, "+CPBR: %d,", &cur) == 1) {
+					/* Some phones wrongly return several lines with same location,
+					 * we need to catch it here to get correct count. */
+					if (cur != last) {
+						MemoryStatus->MemoryUsed++;
+					}
+					last = cur;
 					cur -= Priv->FirstMemoryEntry - 1;
 					if (cur == Priv->NextMemoryEntry || Priv->NextMemoryEntry == 0)
 						Priv->NextMemoryEntry = cur + 1;
+				} else {
+					MemoryStatus->MemoryUsed++;
 				}
 			}
 			line++;
