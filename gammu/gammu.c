@@ -6089,6 +6089,7 @@ static void CopyBitmap(int argc, char *argv[])
 	}
 }
 
+#if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 static void NokiaComposer(int argc, char *argv[])
 {
 	GSM_Ringtone 		ringtone;
@@ -6229,6 +6230,7 @@ static void NokiaComposer(int argc, char *argv[])
 
 	printf("\n");
 }
+#endif
 
 static void CopyRingtone(int argc, char *argv[])
 {
@@ -7661,6 +7663,7 @@ struct NokiaFolderInfo {
 	char 	*level;
 };
 
+#if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 static struct NokiaFolderInfo Folder[] = {
 	/* Language indepedent in DCT4 in filesystem 1 */
 	{"",	 "MMSUnreadInbox", "INBOX",		"3"},
@@ -8071,6 +8074,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	free(File.Buffer);
 	GSM_Terminate();
 }
+#endif
 
 static void DeleteFiles(int argc, char *argv[])
 {
@@ -8410,6 +8414,7 @@ static void SearchPhone(int argc, char *argv[])
 }
 #endif /*Support for threads */
 
+#if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 static void NokiaGetADC(int argc, char *argv[])
 {
 	GSM_Init(true);
@@ -8465,6 +8470,7 @@ static void NokiaVibraTest(int argc, char *argv[])
 
 	GSM_Terminate();
 }
+#endif
 
 static GSM_Parameters Parameters[] = {
 	{"--identify",			0, 0, Identify,			{H_Info,0},			""},
@@ -8473,7 +8479,7 @@ static GSM_Parameters Parameters[] = {
 	{"--monitor",			0, 1, Monitor,			{H_Info,H_Network,H_Call,0},	"[times]"},
 	{"--setautonetworklogin",	0, 0, SetAutoNetworkLogin,	{H_Network,0},			""},
 	{"--listnetworks",		0, 1, ListNetworks,		{H_Network,0},			"[country]"},
-	{"--getgprspoint",		1, 2, GetGPRSPoint,		{H_Nokia,H_Network,0},		"start [stop]"},
+	{"--getgprspoint",		1, 2, GetGPRSPoint,		{H_Network,0},			"start [stop]"},
 	{"--getfilesystemstatus",	0, 0, GetFileSystemStatus,	{H_Filesystem,0},		""},
 	{"--getfilesystem",		0, 1, GetFileSystem,		{H_Filesystem,0},		"[-flatall|-flat]"},
 	{"--getfilefolder",		1,40, GetFileFolder,		{H_Filesystem,0},		"ID1, ID2, ..."},
@@ -8485,11 +8491,13 @@ static GSM_Parameters Parameters[] = {
 	{"--getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
 	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
 	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
+#if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent file sender title"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly]"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
-	{"--playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
 	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			"number"},
+#endif
+	{"--playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
 	{"--getdatetime",		0, 0, GetDateTime,		{H_DateTime,0},			""},
 	{"--setdatetime",		0, 0, SetDateTime,		{H_DateTime,0},			""},
 	{"--getalarm",			0, 0, GetAlarm,			{H_DateTime,0},			""},
@@ -8574,7 +8582,9 @@ static GSM_Parameters Parameters[] = {
 	{"--getphoneringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
 	{"--getringtoneslist",		0, 0, GetRingtonesList,		{H_Ringtone,0},			""},
 	{"--setringtone",		1, 6, SetRingtone,		{H_Ringtone,0},			"file [-location location][-scale][-name name]"},
+#if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 	{"--nokiacomposer",		1, 1, NokiaComposer,		{H_Ringtone,H_Nokia,0},		"file"},
+#endif
 	{"--copyringtone",		2, 3, CopyRingtone,		{H_Ringtone,0},			"source destination [RTTL|BINARY]"},
 	{"--getussd",			1, 1, GetUSSD,			{H_Call,0},			"code"},
 	{"--dialvoice",			1, 2, DialVoice,		{H_Call,0},			"number [show|hide]"},
