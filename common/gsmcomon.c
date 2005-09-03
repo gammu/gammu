@@ -16,6 +16,14 @@
 #  include <signal.h>
 #endif
 
+/* Commit flag for opening files is MS extension, some other
+ * implementations (like BCC 5.5) don't like this flag at all */
+#ifdef _MSC_VER
+#  define COMMIT_FLAG "c"
+#else
+#  define COMMIT_FLAG ""
+#endif
+
 #include "gsmcomon.h"
 #include "misc/coding/coding.h"
 
@@ -228,11 +236,11 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 	if (info[0]!=0 && privdi->dl != 0) {
 		switch (privdi->dl) {
 		case DL_BINARY:
-			testfile = fopen(info,"wcb");
+			testfile = fopen(info,"wb" COMMIT_FLAG);
 			break;
 		case DL_TEXTERROR:
 		case DL_TEXTERRORDATE:
-			testfile = fopen(info,"ac");
+			testfile = fopen(info,"a" COMMIT_FLAG);
 			if (!testfile) {
 				dbgprintf("Can't open debug file\n");
 				return ERR_CANTOPENFILE;
@@ -240,11 +248,11 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 			fseek(testfile, 0, SEEK_END);
 			if (ftell(testfile) > 5000000) {
 				fclose(testfile);
-				testfile = fopen(info,"wc");
+				testfile = fopen(info,"w" COMMIT_FLAG);
 			}
 			break;
 		default:
-			testfile = fopen(info,"wc");
+			testfile = fopen(info,"w" COMMIT_FLAG);
 		}
 		if (!testfile) {
 			dbgprintf("Can't open debug file\n");
