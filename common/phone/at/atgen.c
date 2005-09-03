@@ -4013,8 +4013,8 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
 {ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
 
-{ERICSSON_ReplyGetDateLocale,	"*ESDF:"		,0x00,0x00,ID_GetLocale		 },
-{ERICSSON_ReplyGetTimeLocale,	"*ESTF:"		,0x00,0x00,ID_GetLocale	 	 },
+{ERICSSON_ReplyGetDateLocale,	"AT*ESDF?"		,0x00,0x00,ID_GetLocale		 },
+{ERICSSON_ReplyGetTimeLocale,	"AT*ESTF?"		,0x00,0x00,ID_GetLocale	 	 },
 {ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
 {ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },
 

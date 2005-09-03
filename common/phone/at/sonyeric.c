@@ -410,12 +410,15 @@ GSM_Error ERICSSON_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMachine
 	of this function are GPL 2.0.
   */
 	GSM_Locale	*locale = s->Phone.Data.Locale;
-	char		format;
+	int		format;
+	char		*pos;
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Date settings received\n");
-		format=atoi(msg.Buffer);
+		pos = strstr(msg.Buffer, "*ESDF:");
+		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		format = atoi(pos + 7);
 		switch (format) {
 			case 0: locale->DateFormat 	= GSM_Date_OFF;
 				locale->DateSeparator 	= 0;
@@ -443,8 +446,8 @@ GSM_Error ERICSSON_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMachine
 				break;
 			default:return ERR_UNKNOWNRESPONSE;
 		}
-	default:
-		return ERR_NOTSUPPORTED;
+		return ERR_NONE;
+	default:return ERR_NOTSUPPORTED;
 	}
 }
 
@@ -454,12 +457,15 @@ GSM_Error ERICSSON_ReplyGetTimeLocale(GSM_Protocol_Message msg, GSM_StateMachine
 	is an easy way to obtain the source under GPL, otherwise the author's parts
 	of this function are GPL 2.0.
   */
-	char format;
+	int		format;
+	char		*pos;
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Time settings received\n");
-		format=atoi(msg.Buffer);
+		pos = strstr(msg.Buffer, "*ESTF:");
+		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		format = atoi(pos + 7);
 		switch (format) {
 		case 1:
 		case 2: s->Phone.Data.Locale->AMPMTime=(format==2);
@@ -477,11 +483,11 @@ GSM_Error ERICSSON_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 	s->Phone.Data.Locale = locale;
 
 	smprintf(s, "Getting date format\n");
-	error=GSM_WaitFor (s, "AT+ESDF?\r", 9, 0x00, 3, ID_GetLocale);
+	error=GSM_WaitFor (s, "AT*ESDF?\r", 9, 0x00, 3, ID_GetLocale);
 	if (error!=ERR_NONE) return error;
 
 	smprintf(s, "Getting time format\n");
-	return GSM_WaitFor (s, "AT+ESTF?\r", 9, 0x00, 3, ID_GetLocale);
+	return GSM_WaitFor (s, "AT*ESTF?\r", 9, 0x00, 3, ID_GetLocale);
 }
 
 
@@ -505,12 +511,12 @@ GSM_Error ERICSSON_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 	if ((locale->DateFormat==GSM_Date_YYMMDD)&&(locale->DateSeparator=='-')) { format=7; }
 	else { return ERR_NOTSUPPORTED; } /* ERR_WRONGINPUT */
 
-	sprintf(req,"AT+ESDF=%i\r",format);
+	sprintf(req,"AT*ESDF=%i\r",format);
 	smprintf(s, "Setting date format\n");
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 3, ID_SetLocale);
 
 	if (locale->AMPMTime) { format=2; } else { format=1; }
-	sprintf(req,"AT+ESTF=%i\r",format);
+	sprintf(req,"AT*ESTF=%i\r",format);
 	smprintf(s, "Setting time format\n");
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 3, ID_SetLocale);
 }
