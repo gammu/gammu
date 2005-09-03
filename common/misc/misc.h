@@ -28,9 +28,13 @@
 #endif /* __cplusplus */
 
 #ifdef WIN32
-#  define my_sleep(x) ((x)<1000 ? Sleep(1) : Sleep((x)/1000))
+#  ifdef __BORLANDC__
+/* BCC has a proper Sleep(), which takes milliseconds */
+#    define my_sleep(x) Sleep(x)
+#  else
+#    define my_sleep(x) ((x)<1000 ? Sleep(1) : Sleep((x)/1000))
+#  endif
 #else
-//#  define my_sleep(x) usleep(x)
 #  define my_sleep(x) usleep(x*1000)
 #endif
 
