@@ -361,10 +361,12 @@ static void GetDateTime(int argc, char *argv[])
 		if (locale.AMPMTime) printmsg("12 hours\n"); else printmsg("24 hours\n");
 		printmsg("Date format is ");
 		switch (locale.DateFormat) {
-			case GSM_Date_DDMMYYYY:printmsg("DD MM YYYY");break;
-			case GSM_Date_MMDDYYYY:printmsg("MM DD YYYY");break;
-			case GSM_Date_YYYYMMDD:printmsg("YYYY MM DD");
-			default               :break;
+			case GSM_Date_DDMMMYY	:printmsg("DD MMM YY");break;
+			case GSM_Date_MMDDYY	:printmsg("MM DD YY");break;
+			case GSM_Date_DDMMYY	:printmsg("DD MM YY");break;
+			case GSM_Date_YYMMDD	:printmsg("YY MM DD");break;
+			case GSM_Date_OFF	:printmsg("OFF");break;
+			default			:break;
 		}
 		printmsg(", date separator is %c\n",locale.DateSeparator);
 	}
@@ -1676,7 +1678,7 @@ static void GetEachMMS(int argc, char *argv[])
 	Print_Error(error);
 
 	while (1) {
-		error=Phone->GetNextMMSFile(&s,&MMSFile,start);		
+		error=Phone->GetNextMMSFile(&s,&MMSFile,start);
 		if (error==ERR_EMPTY) break;
 		Print_Error(error);
 		start = false;
