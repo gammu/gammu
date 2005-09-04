@@ -53,6 +53,99 @@
 #  define  B4000000 0010017
 #endif
 
+typedef struct {
+	speed_t code;
+	int	value;
+} baud_record;
+
+
+static baud_record baud_table[] = {
+	{ B50,		50 },
+	{ B75,		75 },
+	{ B110,		110 },
+	{ B134,		134 },
+	{ B150,		150 },
+	{ B200,		200 },
+	{ B300,		300 },
+	{ B600,		600 },
+	{ B1200,	1200 },
+	{ B1800,	1800 },
+	{ B2400,	2400 },
+	{ B4800,	4800 },
+	{ B9600,	9600 },
+#ifdef B19200
+	{ B19200,	19200 },
+#else /* ! defined (B19200) */
+#ifdef EXTA
+	{ EXTA,		19200 },
+#endif /* EXTA */
+#endif /* ! defined (B19200) */
+#ifdef B38400
+	{ B38400,	38400 },
+#else /* ! defined (B38400) */
+#ifdef EXTB
+	{ EXTB,		38400 },
+#endif /* EXTB */
+#endif /* ! defined (B38400) */
+#ifdef B57600
+	{ B57600,	57600 },
+#endif
+#ifdef B76800
+	{ B76800,	76800 },
+#endif
+#ifdef B115200
+	{ B115200,	115200 },
+#endif
+#ifdef B230400
+	{ B230400,	230400 },
+#else
+#ifdef _B230400
+	{ _B230400,	230400 },
+#endif /* _B230400 */
+#endif /* ! defined (B230400) */
+#ifdef B460800
+	{ B460800,	460800 },
+#else
+#ifdef _B460800
+	{ _B460800,	460800 },
+#endif /* _B460800 */
+#endif /* ! defined (B460800) */
+#ifdef B500000
+	{ B500000,	500000 },
+#endif
+#ifdef B576000
+	{ B576000,	576000 },
+#endif
+#ifdef B921600
+	{ B921600,	921600 },
+#endif
+#ifdef B1000000
+	{ B1000000,	1000000 },
+#endif
+#ifdef B1152000
+	{ B1152000,	1152000 },
+#endif
+#ifdef B1500000
+	{ B1500000,	1500000 },
+#endif
+#ifdef B2000000
+	{ B2000000,	2000000 },
+#endif
+#ifdef B2500000
+	{ B2500000,	2500000 },
+#endif
+#ifdef B3000000
+	{ B3000000,	3000000 },
+#endif
+#ifdef B3500000
+	{ B3500000,	3500000 },
+#endif
+#ifdef B4000000
+	{ B4000000,	4000000 },
+#endif
+	{ B0,		0 },
+};
+
 static GSM_Error serial_close(GSM_StateMachine *s)
 {
 	GSM_Device_SerialData *d = &s->Device.Data.Serial;
@@ -210,57 +303,24 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 {
     	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
     	struct termios  	t;
-    	int	     		speed2 = B19200;
+	baud_record		*curr = baud_table;
+
 
     	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setspeed");
 		return ERR_DEVICEREADERROR;
     	}
 
-    	smprintf(s, "Setting speed to %d\n", speed);
-
-    	switch (speed) {
-		case 50:	speed2 = B50;		break;
-		case 75:	speed2 = B75;		break;
-		case 110:	speed2 = B110;		break;
-		case 134:	speed2 = B134;		break;
-		case 150:	speed2 = B150;		break;
-		case 200:	speed2 = B200;		break;
-		case 300:	speed2 = B300;		break;
-		case 600:	speed2 = B600;		break;
-		case 1200:	speed2 = B1200;		break;
-		case 1800:	speed2 = B1800;		break;
-		case 2400:	speed2 = B2400;		break;
-		case 4800:	speed2 = B4800;		break;
-		case 9600:	speed2 = B9600;		break;
-		case 19200:	speed2 = B19200;	break;
-		case 38400:	speed2 = B38400;	break;
-#ifdef B57600
-		case 57600:	speed2 = B57600;	break;
-		case 115200:	speed2 = B115200;	break;
-		case 230400:	speed2 = B230400;	break;
-#ifdef B460800
-		case 460800:	speed2 = B460800;	break;
-#ifdef B500000
-		case 500000:	speed2 = B500000;	break;
-		case 576000:	speed2 = B576000;	break;
-		case 921600:	speed2 = B921600;	break;
-		case 1000000:	speed2 = B1000000;	break;
-		case 1152000:	speed2 = B1152000;	break;
-		case 1500000:	speed2 = B1500000;	break;
-		case 2000000:	speed2 = B2000000;	break;
-		case 2500000:	speed2 = B2500000;	break;
-		case 3000000:	speed2 = B3000000;	break;
-		case 3500000:	speed2 = B3500000;	break;
-		case 4000000:	speed2 = B4000000;	break;
-#endif
-#endif
-#endif
+	while (curr->value != speed) {
+		curr++;
+		/* This is how we make default fallback */
+		if (curr->value == 0) speed = 19200;
 	}
 
-    	/* This should work on all systems because it is done according to POSIX */
-    	cfsetispeed(&t, speed2);
-    	cfsetospeed(&t, speed2);
+    	smprintf(s, "Setting speed to %d\n", curr->value);
+
+    	cfsetispeed(&t, curr->code);
+    	cfsetospeed(&t, curr->code);
 
     	if (tcsetattr(d->hPhone, TCSADRAIN, &t) == -1) {
 		serial_close(s);
