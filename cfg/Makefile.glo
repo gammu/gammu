@@ -359,9 +359,22 @@ rpm: cleantree
 	@ls -l ../gammu-*$(VERSION)*.rpm
 
 deb:
+	@if test -z "$(FAKEROOT)" -a "`id -u`" != 0 ; then \
+            echo "You need to have fakeroot or build package as root."; \
+            echo "It is suggested to install fakeroot." ; \
+            exit 1 ;\
+        fi
+	@echo Copying debian directory...
+	@$(CP) -r packaging/debian .
 	@echo Building Debian package
-	@fakeroot make -f debian/rules binary
+	@$(FAKEROOT) $(MAKE) -f debian/rules binary
+	@echo Removing debian directory..
+	@$(RM) -rf debian
 
 tgz:
+	@if test -z "$(CHECKINSTALL)" ; then \
+            echo "You need to have checkinstall to build package."; \
+            exit 1 ;\
+        fi
 	@echo Building Slackware \(\>8.1\) package
-	@checkinstall -S -pkgarch=`/bin/arch` --default --newslack
+	@$(CHECKINSTALL) -S -pkgarch=`/bin/arch` --default --newslack
