@@ -85,6 +85,7 @@ typedef struct {
 	int			NextMemoryEntry;  	/* Next empty memory entry					*/
 	int			FirstMemoryEntry;	/* First memory entry to be read				*/
 	GSM_AT_Charset		Charset;	  	/* Charset set in phone						*/
+	bool			EncodedCommands;	/* True if phone encodes also commands and not only values	*/
 	GSM_AT_Charset		UnicodeCharset;	  	/* Charset to use for unicode mode				*/
 	GSM_AT_Charset		NormalCharset;	  	/* Charset to use for non unicode mode				*/
 	GSM_AT_SBNR		PBKSBNR;
