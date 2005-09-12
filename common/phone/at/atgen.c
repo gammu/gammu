@@ -898,7 +898,7 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, bool PreferUnicode)
 	if (Priv->EncodedCommands && Priv->Charset == AT_CHARSET_UCS2) {
 		EncodeUnicode(buffer2, AT_Charsets[i].text, strlen(AT_Charsets[i].text));
 		EncodeHexUnicode(buffer3, buffer2, strlen(AT_Charsets[i].text));
-		sprintf(buffer, "AT+CSCS=\"%s\"\r", buffer2);
+		sprintf(buffer, "AT+CSCS=\"%s\"\r", buffer3);
 	} else {
 		sprintf(buffer, "AT+CSCS=\"%s\"\r", AT_Charsets[i].text);
 	}
