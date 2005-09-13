@@ -15,6 +15,32 @@
 #include "cfg.h"
 #include "misc.h"
 
+void INI_Free_Entries(INI_Entry *entry)
+{
+	INI_Entry *cur = entry, *next;
+	if (cur == NULL) return;
+	while (cur != NULL) {
+		next = cur->Next;
+		free(cur->EntryName);
+		free(cur->EntryValue);
+		free(cur);
+		cur = next;
+	}
+}
+
+void INI_Free(INI_Section *head)
+{
+	INI_Section *cur = head, *next;
+	if (cur == NULL) return;
+	while (cur != NULL) {
+		next = cur->Next;
+		free(cur->SectionName);
+		INI_Free_Entries(cur->SubEntries);
+		free(cur);
+		cur = next;
+	}
+}
+
 /*
  * Read information from file in Windows INI format style
  */

@@ -31,6 +31,7 @@ struct _INI_Section {
 
 /* ------------------------- function prototypes --------------------------- */
 
+void		INI_Free		  (INI_Section *head);
 INI_Section 	*INI_ReadFile	 	  (char *FileName, bool Unicode);
 INI_Entry 	*INI_FindLastSectionEntry (INI_Section *file_info, unsigned char *section, bool Unicode);
 unsigned char   *INI_GetValue		  (INI_Section *cfg, unsigned char *section, unsigned char *key, bool Unicode);
