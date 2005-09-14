@@ -70,6 +70,8 @@ GSM_Error FindBackupChecksum(char *FileName, bool UseUnicode, char *checksum)
 	CalculateMD5(buffer, len, checksum);
 	free(buffer);
 
+	INI_Free(file_info);
+
 	return ERR_NONE;
 }
 
@@ -1527,7 +1529,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 			buf[0] = rec2 / 256;
 			buf[1] = rec2 % 256;
 			dbgprintf("Setting recurrance %i\n",rec2);
-			GSM_GetCalendarRecurrance(buf, NULL, note);
+			GSM_GetCalendarRecurranceRepeat(buf, NULL, note);
 		}
 	}
 	sprintf(buffer,"StopTime");
@@ -2867,6 +2869,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 		}
 		if (!found) return ERR_NOTIMPLEMENTED;
         }
+	INI_Free(file_info);
 	return ERR_NONE;
 }
 
@@ -2987,6 +2990,7 @@ static GSM_Error GSM_ReadSMSBackupTextFile(char *FileName, GSM_SMS_Backup *backu
 			num++;
 		}
         }
+	INI_Free(file_info);
 	return ERR_NONE;
 }
 

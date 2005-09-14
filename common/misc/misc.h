@@ -28,9 +28,13 @@
 #endif /* __cplusplus */
 
 #ifdef WIN32
-#  define my_sleep(x) ((x)<1000 ? Sleep(1) : Sleep((x)/1000))
+#  ifdef __BORLANDC__
+/* BCC has a proper Sleep(), which takes milliseconds */
+#    define my_sleep(x) Sleep(x)
+#  else
+#    define my_sleep(x) ((x)<1000 ? Sleep(1) : Sleep((x)/1000))
+#  endif
 #else
-//#  define my_sleep(x) usleep(x)
 #  define my_sleep(x) usleep(x*1000)
 #endif
 
@@ -126,7 +130,7 @@ void GSM_GetCurrentDateTime 	(GSM_DateTime *Date);
 char *OSDateTime 		(GSM_DateTime dt, bool TimeZone);
 char *OSDate 			(GSM_DateTime dt);
 char *DayOfWeek 		(int year, int month, int day);
-time_t Fill_Time_T		(GSM_DateTime DT, int TZ);
+time_t Fill_Time_T		(GSM_DateTime DT);
 void GetTimeDifference		(unsigned long diff, GSM_DateTime *DT, bool Plus, int multi);
 void Fill_GSM_DateTime		(GSM_DateTime *Date, time_t timet);
 bool CheckDate			(GSM_DateTime *date);

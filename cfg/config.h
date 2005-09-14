@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "1.02.00"
-#define VERSION_WIN "1,02,00,0"
+#define VERSION "1.02.12"
+#define VERSION_WIN "1,02,12,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -63,13 +63,13 @@
 #  define GSM_ENABLE_BLUEOBEX 1
 #else
 /* Bluetooth stack (like Bluez). FBUS2 (init done using AT commands) */
-/* #  undef GSM_ENABLE_BLUEFBUS2 */
+#  define GSM_ENABLE_BLUEFBUS2 1
 /* Bluetooth stack (like Bluez). PHONET FBUS */
-/* #  undef GSM_ENABLE_BLUEPHONET */
+#  define GSM_ENABLE_BLUEPHONET 1
 /* Blueooth stack (like Bluez). AT commands */
-/* #  undef GSM_ENABLE_BLUEAT */
+#  define GSM_ENABLE_BLUEAT 1
 /* Blueooth stack (like Bluez). OBEX */
-/* #  undef GSM_ENABLE_BLUEOBEX */
+#  define GSM_ENABLE_BLUEOBEX 1
 #endif
 
 /* --------------------------- Phone modules (specific) ----------------- */
@@ -164,7 +164,7 @@
 
 #if !defined(WIN32) && !defined(DJGPP)
 /* Will be used Bluez BT stack ? */
-/* #  undef GSM_ENABLE_BLUEZ */
+#  define GSM_ENABLE_BLUEZ 1
 /* Will be used Affix BT stack ? */
 /* #  undef GSM_ENABLE_AFFIX */
 #endif
@@ -175,7 +175,7 @@
 #ifdef WIN32
 //#  define BLUETOOTH_RF_SEARCHING 1
 #else
-/* #  undef BLUETOOTH_RF_SEARCHING */
+#  define BLUETOOTH_RF_SEARCHING 1
 #endif
 
 #endif

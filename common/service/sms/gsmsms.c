@@ -587,6 +587,12 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 {
 	SMS->Class			= -1;
 	SMS->SMSC.Location		= 1;
+	SMS->SMSC.Name[0]		= 0;
+	SMS->SMSC.Name[1]		= 0;
+	SMS->SMSC.Number[0]		= 0;
+	SMS->SMSC.Number[1]		= 0;
+	SMS->SMSC.DefaultNumber[0]	= 0;
+	SMS->SMSC.DefaultNumber[1]	= 0;
 	SMS->SMSC.Format		= SMS_FORMAT_Text;
 	SMS->SMSC.Validity.Format	= SMS_Validity_RelativeFormat;
 	SMS->SMSC.Validity.Relative	= SMS_VALID_Max_Time;
@@ -606,12 +612,21 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 	SMS->MessageReference		= 0;
 	SMS->ReplaceMessage		= 0;
 	SMS->Length			= 0;
+	SMS->DeliveryStatus		= 0;
+	SMS->ReplyViaSameSMSC		= 0;
+	SMS->Class			= 0;
+	SMS->MessageReference		= 0;
+	SMS->ReplaceMessage		= 0;
+	SMS->RejectDuplicates		= 0;
 
 	/* This part is required to save SMS */
 	SMS->State			= SMS_UnSent;
 	SMS->Location			= 0;
+	SMS->Memory			= 0;
 	SMS->Folder			= 0x02;	/*Outbox*/
+	SMS->InboxFolder		= false;
 	GSM_GetCurrentDateTime (&SMS->DateTime);
+	GSM_GetCurrentDateTime (&SMS->SMSCTime);
 	SMS->Name[0]			= 0;
 	SMS->Name[1]			= 0;
 }
