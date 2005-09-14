@@ -87,7 +87,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 	GSM_File		*File = s->Phone.Data.FileInfo;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	int		     	i;
-	unsigned		char buffer[500];
+//	unsigned		char buffer[500];
 
 	switch (msg.Buffer[3]) {
 	case 0x15:
@@ -100,8 +100,8 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 		if (!strncmp(DecodeUnicodeString(File->Name),"GMSTemp",7)) return ERR_EMPTY;
 		if (File->Name[0] == 0x00 && File->Name[1] == 0x00) return ERR_UNKNOWN;
 
-		EncodeHexUnicode (buffer, File->Name, UnicodeLength(File->Name));
-		smprintf(s,"Name encoded: %s\n",buffer);
+//		EncodeHexUnicode (buffer, File->Name, UnicodeLength(File->Name));
+//		smprintf(s,"Name encoded: %s\n",buffer);
 
 		i = msg.Buffer[8]*256+msg.Buffer[9];
 		dbgprintf("%02x %02x %02x %02x %02x %02x %02x %02x %02x\n",
@@ -1463,9 +1463,9 @@ GSM_Error N6510_GetFolderListing(GSM_StateMachine *s, GSM_File *File, bool start
 			strcpy(buf,File2.ID_FullName+3);
 			sprintf(File2.ID_FullName,"%s",buf);
 			error = N6510_GetFolderListing1(s,&File2,start);
-			memcpy(File,&File2,sizeof(GSM_File));
 			strcpy(buf,File->ID_FullName);
-			sprintf(File->ID_FullName,"c:\\%s",buf);
+			memcpy(File,&File2,sizeof(GSM_File));
+			sprintf(File->ID_FullName,"%s",buf);
 			return error;
 		} else {
 			return N6510_GetFolderListing2(s,File,start);
@@ -1526,10 +1526,9 @@ GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, in
 			strcpy(buf,File2.ID_FullName+3);
 			sprintf(File2.ID_FullName,"%s",buf);
 			error = N6510_GetFilePart1(s,&File2, Handle, Size);
-			if (error!=ERR_NONE) return error;
-			memcpy(File,&File2,sizeof(GSM_File));
 			strcpy(buf,File->ID_FullName);
-			sprintf(File->ID_FullName,"c:\\%s",buf);
+			memcpy(File,&File2,sizeof(GSM_File));
+			sprintf(File->ID_FullName,"%s",buf);
 			return error;
 		} else {
 			return N6510_GetFilePart2(s,File, Handle, Size);
@@ -1553,9 +1552,9 @@ GSM_Error N6510_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *
 			strcpy(buf,File2.ID_FullName+3);
 			sprintf(File2.ID_FullName,"%s",buf);
 			error = N6510_AddFilePart1(s,&File2,Pos,Handle);
-			memcpy(File,&File2,sizeof(GSM_File));
 			strcpy(buf,File->ID_FullName);
-			sprintf(File->ID_FullName,"c:/%s",buf);
+			memcpy(File,&File2,sizeof(GSM_File));
+			sprintf(File->ID_FullName,"%s",buf);
 			return error;
 		} else {
 			return N6510_AddFilePart2(s,File,Pos,Handle);
@@ -1597,9 +1596,9 @@ GSM_Error N6510_AddFolder(GSM_StateMachine *s, GSM_File *File)
 			strcpy(buf,File2.ID_FullName+3);
 			sprintf(File2.ID_FullName,"%s",buf);
 			error = N6510_AddFolder1(s,&File2);
-			memcpy(File,&File2,sizeof(GSM_File));
 			strcpy(buf,File->ID_FullName);
-			sprintf(File->ID_FullName,"c:\\%s",buf);
+			memcpy(File,&File2,sizeof(GSM_File));
+			sprintf(File->ID_FullName,"%s",buf);
 			return error;
 		} else {
 			return N6510_AddFolder2(s,File);
@@ -1652,9 +1651,9 @@ GSM_Error N6510_SetFileAttributes(GSM_StateMachine *s, GSM_File *File)
 			strcpy(buf,File2.ID_FullName+3);
 			sprintf(File2.ID_FullName,"%s",buf);
 			error = N6510_SetFileAttributes1(s,&File2);
-			memcpy(File,&File2,sizeof(GSM_File));
 			strcpy(buf,File->ID_FullName);
-			sprintf(File->ID_FullName,"c:\\%s",buf);
+			memcpy(File,&File2,sizeof(GSM_File));
+			sprintf(File->ID_FullName,"%s",buf);
 			return error;
 		} else {
 			return N6510_SetFileAttributes2(s,File);

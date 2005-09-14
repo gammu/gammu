@@ -35,6 +35,7 @@
 #include <bluetooth/rfcomm.h>
 #include <bluetooth/sdp.h>
 #include <bluetooth/sdp_lib.h>
+#include <bluetooth/hci_lib.h>
 
 #include "../../gsmcomon.h"
 #include "../devfunc.h"
@@ -129,19 +130,27 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, st
 	uint32_t			range = 0x0000ffff;
 	struct search_context 		subcontext;
 	char				str[20];
-	int				channel,channel2;
+	int				channel,channel2,dd;
+	char 				name[1000];
 
 	bacpy(&interface,BDADDR_ANY);
 
 	ba2str(bdaddr, str);
-	smprintf(s,"%s\n", str);
+	smprintf(s,"Device %s", str);
+	dd = hci_open_dev(0);
+	if (dd<0) return ERR_UNKNOWN;
+	memset(name,0,sizeof(name));
+	if (hci_read_remote_name(dd,bdaddr,sizeof(name),name,100000)>=0) {
+	    smprintf(s," (\"%s\")",name);
+	}
+	close(dd);
+	smprintf(s,"\n");
 
 	sess = sdp_connect(&interface, bdaddr, SDP_RETRY_IF_BUSY);
 	if (!sess) {
 		dbgprintf("Failed to connect to SDP server on %s: %s\n", str, strerror(errno));
-		return ERR_UNKNOWN;
+		return ERR_TIMEOUT;
 	}
-
 	attrid = sdp_list_append(0, &range);
 	search = sdp_list_append(0, &context->group);
 	if (sdp_service_search_attr_req(sess, search, SDP_ATTR_REQ_RANGE, attrid, &seq)) {
@@ -163,11 +172,14 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, st
 				sdp_list_foreach(proto,print_access_protos,&channel);
 				sdp_list_free(proto,(sdp_free_func_t)sdp_data_free);
 			}
-			smprintf(s,"Channel %i",channel);
-			if (d) smprintf(s," - \"%s\"",d->val.str);
-			smprintf(s,"\n");
-			if (channel2 == -1 && bluetooth_checkservicename(s, d->val.str) == ERR_NONE) {
-				channel2 = channel;
+			smprintf(s,"   Channel %i",channel);
+			if (d) {
+				smprintf(s," - \"%s\"\n",d->val.str);
+    				if (channel2 == -1 && bluetooth_checkservicename(s, d->val.str) == ERR_NONE) {
+					channel2 = channel;
+				}
+			} else {
+				smprintf(s,"\n");
 			}
 		}
     		if (sdp_get_group_id(rec,&subcontext.group) != -1) {
@@ -192,11 +204,15 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 	uint8_t				count = 0;
 	int				i;
 	struct search_context 		context;
-	GSM_Error			error = ERR_NOTSUPPORTED;
+	GSM_Error			error = ERR_TIMEOUT;
+	struct hci_dev_info		di;
 
 	memset(&context, '\0', sizeof(struct search_context));
-	sdp_uuid16_create(&(context.group),PUBLIC_BROWSE_GROUP);
+//	sdp_uuid16_create(&(context.group),PUBLIC_BROWSE_GROUP);
+	sdp_uuid16_create(&(context.group),RFCOMM_UUID);
 
+	if (hci_devinfo(0,&di) < 0) return ERR_DEVICENOTWORK;
+	
 	if (!strcmp(s->CurrentConfig->Device,"/dev/ttyS1")) {
 		dbgprintf("Searching for devices\n");
 		if (sdp_general_inquiry(ii, 20, 8, &count) < 0) {

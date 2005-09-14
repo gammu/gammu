@@ -33,19 +33,62 @@ This software was sponsored (in time order) by:
 18. Thomas Vill
 19. Michael Hansen
 20. Saul Kato
+21. Reinhard Weiss
 
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20050914 - 1.02.12
+* new functionality:
+  * setting caller group id for 6230i pbk
+  * 6020 ID                                                     (Bryan Meredit)
+  * 6021 ID                                                       (Maxx Fomkin)
+  * * possible to disable mysql, even when it is found           (Michal Cihar)
+
+* fixes and improvements:
+  * better handling start and stop command line parameters
+  * calendar:
+    * better info about birthday alarm with --getallcalendar
+    * better recurrance info for DCT4 method 1
+    * Fill_Time_T doesn't need TZ (FOR CHECKING)
+  * getting short files from filesystem1 in phones with filesystem1&2 doesn't 
+    mix some structure values
+  * better screen output with --getfiles
+  * Gammu is much more intelligent with Bluez
+    * displays really ALL RF channel services (FOR CHECKING !)
+    * displays device names
+    * better errors values
+  * new 6230 have more Chat and SyncML settings
+  * --backup doesn't stop, when where is no place in structures    (Troy Engel)
+  * --backup, --restore, etc. show clear, when is used phone
+    and when SIM memory
+  * * "c" flag for fopen is MS only extension                    (Michal Cihar)
+    * proper sleeping for Borland compiler
+    * fixed compilation when Nokia stuff is disabled
+    * improved speed support for some non Linux systems
+    * man page had some wrongly formatted strings, improved one regexp 
+      shown there
+    * backup functions didn't free earlier INI structures
+    * SMS backup reads returned earlier some fields undefined
+
+NOTES: * I can't confirm in this moment some issues connected with wrong
+         downloading files & getting calendar notes over BT in Linux 
+	 (it both works OK for me)
+       * BT should be checked with SE, Siemens (phones other than Nokia),
+         because Gammu searches differently for RF channels and services now
+       * calendar getting and setting should be checked now, because Gammu
+         handles it differently now
+       * BCC should be checked
+
 20050727 - 1.02.00
 * new functionality:
   * some support for 6230i caller groups in pbk
   * some things disabled for 6230i for now
 
 * fixes and improvements:
-  * startup fix for SE based AT modems                            (Michal Cihar)
+  * startup fix for SE based AT modems                           (Michal Cihar)
 
 20050711 - 1.01.25
 * new functionality:
@@ -53,8 +96,8 @@ For additionals materials and links to them see readme.txt
     on server side, when some SQL rules will happen. Can be used for
     autoreplies, sending mails, etc., when you send SMS to MYSQL daemon
   * translations:
-    * Spanish                                                  (Ernesto Serrano)
-    * Russian                                                           (Zontik)
+    * Spanish                                                 (Ernesto Serrano)
+    * Russian                                                          (Zontik)
     * translation files contains now creator info and Gammu version
       (which was the first one translated)
   * new --getmmsfolders, partialy done --getallmms / --geteachmms

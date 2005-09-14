@@ -1529,7 +1529,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 			buf[0] = rec2 / 256;
 			buf[1] = rec2 % 256;
 			dbgprintf("Setting recurrance %i\n",rec2);
-			GSM_GetCalendarRecurrance(buf, NULL, note);
+			GSM_GetCalendarRecurranceRepeat(buf, NULL, note);
 		}
 	}
 	sprintf(buffer,"StopTime");
