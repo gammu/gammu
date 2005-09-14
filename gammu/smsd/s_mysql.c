@@ -183,8 +183,8 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 					DT.Minute = atoi(buffer);
 					sprintf(buffer,"%c%c",Row[2][12],Row[2][13]);
 					DT.Second = atoi(buffer);
-					t_time1 = Fill_Time_T(DT,0);
-					t_time2 = Fill_Time_T(sms.SMS[i].DateTime,0);
+					t_time1 = Fill_Time_T(DT);
+					t_time2 = Fill_Time_T(sms.SMS[i].DateTime);
 					diff = t_time2 - t_time1;
 	//				fprintf(stderr,"diff is %i, %i-%i-%i-%i-%i and %i-%i-%i-%i-%i-%i\n",diff,
 	//					DT.Year,DT.Month,DT.Day,DT.Hour,DT.Minute,DT.Second,
