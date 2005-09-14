@@ -358,14 +358,14 @@ rpm: cleantree
 	@$(MV) $(RPM_DIR)/RPMS/*/gammu-*$(VERSION)*.rpm ..
 	@ls -l ../gammu-*$(VERSION)*.rpm
 
-deb:
+deb: 
 	@if test -z "$(FAKEROOT)" -a "`id -u`" != 0 ; then \
             echo "You need to have fakeroot or build package as root."; \
             echo "It is suggested to install fakeroot." ; \
             exit 1 ;\
         fi
 	@echo Copying debian directory...
-	@$(CP) -r packaging/debian .
+	@$(CP) -r cfg/debian .
 	@echo Building Debian package
 	@$(FAKEROOT) $(MAKE) -f debian/rules binary
 	@echo Removing debian directory..

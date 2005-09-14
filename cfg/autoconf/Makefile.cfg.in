@@ -4,23 +4,23 @@
 VERSION		= @VERSION@
 
 # what is used to delete files, compile, install and find
-RM               = @RM@ -f
-MV               = @MV@ -f
-CP               = @CP@
-LN               = @LN@ -f
-ECHO             = @ECHO@
-CC               = @CC@
-CFLAGS           = @CFLAGS@
-LDLIBS           = @LDLIBS@
-SMSD_LIBS        = @SMSD_LIBS@
-INSTALL          = @INSTALL@
-FIND             = @FIND@
-RPMBUILD         = @RPMBUILD@
-DOXYGEN          = @DOXYGEN@
-AR               = @AR@
-RANLIB           = @RANLIB@
-FAKEROOT         = @FAKEROOT@
-CHECKINSTALL     = @CHECKINSTALL@
+RM              = @RM@ -f
+MV              = @MV@ -f
+CP              = @CP@
+LN              = @LN@ -f
+ECHO            = @ECHO@
+CC              = @CC@
+CFLAGS          = @CFLAGS@
+LDLIBS          = @LDLIBS@
+SMSD_LIBS       = @SMSD_LIBS@
+INSTALL         = @INSTALL@
+FIND            = @FIND@
+RPMBUILD        = @RPMBUILD@
+DOXYGEN         = @DOXYGEN@
+AR              = @AR@
+RANLIB          = @RANLIB@
+FAKEROOT        = @FAKEROOT@
+CHECKINSTALL    = @CHECKINSTALL@
 
 # where to install binary, documentation, man and shared library files
 # where is temporary directory and directory for making RPM
@@ -35,8 +35,8 @@ INSTALL_H_DIR	= @includedir@/gammu
 RPM_DIR         = @RPM_DIR@
 TEMP_DIR        = @TEMP_DIR@
 
-CFLAGS          += -DLOCALE_PATH="\"${INSTALL_LOC_DIR}\""
+CFLAGS         += -DLOCALE_PATH="\"${INSTALL_LOC_DIR}\""
 
 # use these 2 in DJGPP:
-# CFLAGS           = -Wall -Wno-format-y2k
-# LDLIBS           = 
+# CFLAGS        = -Wall -Wno-format-y2k
+# LDLIBS        = 

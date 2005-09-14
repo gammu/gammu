@@ -276,8 +276,8 @@ typedef struct {
 	int		     Used;
 } GSM_CalendarStatus;
 
-void GSM_GetCalendarRecurrance(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry);
-void GSM_SetCalendarRecurrance(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry);
+void GSM_GetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry);
+void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry);
 
 /* ------------------------------ to-do ------------------------------------ */
 

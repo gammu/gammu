@@ -2381,6 +2381,18 @@ static GSM_Error N6110_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateM
                         smprintf(s, "No alarm\n");
                 }
 
+		if (Entry->Type == GSM_CAL_BIRTHDAY) {
+			Entry->Entries[Entry->EntriesNum].EntryType	= CAL_REPEAT_FREQUENCY;
+			Entry->Entries[Entry->EntriesNum].Number	= 1;
+			Entry->EntriesNum++;
+			Entry->Entries[Entry->EntriesNum].EntryType	= CAL_REPEAT_DAY;
+			Entry->Entries[Entry->EntriesNum].Number	= Entry->Entries[0].Date.Day;
+			Entry->EntriesNum++;
+			Entry->Entries[Entry->EntriesNum].EntryType	= CAL_REPEAT_MONTH;
+			Entry->Entries[Entry->EntriesNum].Number	= Entry->Entries[0].Date.Month;
+			Entry->EntriesNum++;
+		}
+
                 if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_CAL52) ||
                     IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_CAL82)) {
                         memcpy(Entry->Entries[Entry->EntriesNum].Text,msg.Buffer+24,msg.Buffer[23]);
