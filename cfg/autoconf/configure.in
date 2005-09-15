@@ -38,6 +38,7 @@ AC_PATH_PROG(INSTALL, install, no)
 AC_PATH_PROG(FIND, find, no)
 AC_PATH_PROG(RPMBUILD, rpmbuild)
 AC_PATH_PROG(RPMBUILD, rpm, no)
+AC_PATH_PROG(RPM, rpm)
 AC_PATH_PROG(DOXYGEN, doxygen)
 AC_PATH_PROG(AR, ar)
 AC_PATH_PROG(RANLIB, ranlib)
@@ -131,7 +132,8 @@ AC_ARG_WITH(localedir,
 AC_SUBST(LOCALE_DIR)
 
 dnl Path for making RPM
-RPM_DIR="/usr/src/RPM"
+AC_MSG_CHECKING(for RPM build dir)
+RPM_DIR=
 AC_ARG_WITH(rpmdir,
         [  --with-rpmdir=DIR       Specifies the directory for making RPM],
         [ if test x$withval = xyes; then
@@ -140,28 +142,17 @@ AC_ARG_WITH(rpmdir,
                 RPM_DIR="$withval"
           fi
         ],[
-                if test -r /usr/lib/rpm/macros  ; then
-                        get_rpm_var() {
-                        VALUE=$(grep -s "^%$1[[[:space:]]]" ~/.rpmmacros /usr/lib/rpm/macros | head -n 1 | awk '{print $2}')
-                        if test -z "$VALUE"  ; then
-                                exit 1
-                        fi
-
-                        while echo "$VALUE" | grep -q '%' ; do
-                        VAR=$(echo "$VALUE" | sed 's/^[[^%]]*%{\([[^}]]*\)}.*$/\1/')
-                        REPL=$(get_rpm_var "$VAR")
-                        VALUE=$(echo "$VALUE" | sed "s@%{$VAR}@$REPL@")
-                done
-                echo $VALUE
-                }
-
-                VALUE=$(get_rpm_var _topdir)
+                VALUE=$(eval $RPM --eval '%{_topdir}')
                 if test ! -z "$VALUE"  ; then
                         RPM_DIR="$VALUE"
                 fi
-                fi
         ]
 )
+if test -z "$RPM_DIR" ; then
+AC_MSG_RESULT(not found)
+else
+AC_MSG_RESULT($RPM_DIR)
+fi
 AC_SUBST(RPM_DIR)
 
 dnl temp directory
