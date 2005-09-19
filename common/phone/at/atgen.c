@@ -27,6 +27,7 @@ GSM_Error ALCATEL_ProtocolVersionReply (GSM_Protocol_Message, GSM_StateMachine *
 typedef struct {
 	GSM_AT_Charset	charset;
 	char		*text;
+	bool		unicode;
 } GSM_AT_Charset_Info;
 
 /**
@@ -34,10 +35,11 @@ typedef struct {
  * defines their preferences, so if first is found it is used.
  */
 static GSM_AT_Charset_Info AT_Charsets[] = {
-	{AT_CHARSET_HEX,	"HEX"},
-	{AT_CHARSET_GSM,	"GSM"},
-	{AT_CHARSET_PCCP437,	"PCCP437"},
-	{AT_CHARSET_UCS2,	"UCS2"},
+	{AT_CHARSET_HEX,	"HEX",		false},
+	{AT_CHARSET_GSM,	"GSM",		false},
+	{AT_CHARSET_PCCP437,	"PCCP437",	false},
+	{AT_CHARSET_UTF8,	"UTF-8",	true},
+	{AT_CHARSET_UCS2,	"UCS2",		true},
 	{0,			NULL}
 };
 
@@ -828,9 +830,15 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				return ERR_UNKNOWNRESPONSE;
 			}
 			/* Then find good charset for unicode: */
-			if (strstr(line, "UCS2") != NULL) {
-				Priv->UnicodeCharset = AT_CHARSET_UCS2;
-			} else {
+			Priv->UnicodeCharset = 0;
+			while (AT_Charsets[i].charset != 0) {
+				if (AT_Charsets[i].unicode && (strstr(line, AT_Charsets[i].text) != NULL)) {
+					Priv->UnicodeCharset = AT_Charsets[i].charset;
+					break;
+				}
+				i++;
+			}
+			if (Priv->UnicodeCharset == 0) {
 				Priv->UnicodeCharset = Priv->NormalCharset;
 			}
 			return ERR_NONE;
@@ -2719,6 +2727,9 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
   		case AT_CHARSET_UCS2:
  			DecodeHexUnicode(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2));
   			break;
+  		case AT_CHARSET_UTF8:
+ 			DecodeUTF8(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2));
+  			break;
   		case AT_CHARSET_PCCP437:
   			/* FIXME: correctly decode PCCP437 */
   			DecodeDefault(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
@@ -3279,6 +3290,10 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			EncodeHexUnicode(name, entry->Entries[Name].Text, UnicodeLength(entry->Entries[Name].Text));
 			len = strlen(name);
 			break;
+  		case AT_CHARSET_UTF8:
+			EncodeUTF8(name, entry->Entries[Name].Text);
+			len = strlen(name);
+  			break;
 		case AT_CHARSET_PCCP437:
 			/* FIXME: correctly decode PCCP437 */
 			smprintf(s, "str: %s\n", DecodeUnicodeString(entry->Entries[Name].Text));
