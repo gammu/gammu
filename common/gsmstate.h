@@ -59,6 +59,9 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifndef GSM_USED_DKU2PHONET
 #  undef GSM_ENABLE_DKU2PHONET
 #endif
+#ifndef GSM_USED_DKU2AT
+#  undef GSM_ENABLE_DKU2AT
+#endif
 #ifndef GSM_USED_DKU5FBUS2
 #  undef GSM_ENABLE_DKU5FBUS2
 #endif
@@ -122,7 +125,7 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET) || defined(GSM_ENABLE_DKU2PHONET)
 #  include "protocol/nokia/phonet.h"
 #endif
-#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT)
+#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT) || defined(GSM_ENABLE_DKU2AT)
 #  include "protocol/at/at.h"
 #endif
 #ifdef GSM_ENABLE_ALCABUS
@@ -153,6 +156,7 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #  undef GSM_ENABLE_IRDAPHONET
 #  undef GSM_ENABLE_IRDAOBEX
 #  undef GSM_ENABLE_IRDAAT
+#  undef GSM_ENABLE_DKU2AT
 #  undef GSM_ENABLE_FBUS2IRDA
 
 #  undef GSM_ENABLE_BLUETOOTHDEVICE
@@ -171,6 +175,7 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #    undef GSM_ENABLE_IRDAPHONET
 #    undef GSM_ENABLE_IRDAOBEX
 #    undef GSM_ENABLE_IRDAAT
+#    undef GSM_ENABLE_DKU2AT
 #    undef GSM_ENABLE_FBUS2IRDA
 
 #    undef GSM_ENABLE_BLUETOOTHDEVICE
@@ -312,7 +317,7 @@ typedef struct {
 #if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET) || defined(GSM_ENABLE_DKU2PHONET)
 	extern GSM_Protocol_Functions PHONETProtocol;
 #endif
-#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT)
+#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT) || defined(GSM_ENABLE_DKU2AT)
 	extern GSM_Protocol_Functions ATProtocol;
 #endif
 #ifdef GSM_ENABLE_ALCABUS
@@ -342,7 +347,7 @@ typedef struct {
 #if defined(GSM_ENABLE_PHONETBLUE) || defined(GSM_ENABLE_IRDAPHONET) || defined(GSM_ENABLE_BLUEPHONET) || defined(GSM_ENABLE_DKU2PHONET)
 		GSM_Protocol_PHONETData		PHONET;
 #endif
-#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT)
+#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT) || defined(GSM_ENABLE_DKU2AT)
 		GSM_Protocol_ATData		AT;
 #endif
 #ifdef GSM_ENABLE_ALCABUS
@@ -1227,7 +1232,7 @@ typedef struct {
 	 */
 	GSM_Error (*SetMMSSettings)     (GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
 	GSM_Error (*GetMMSFolders)      (GSM_StateMachine *s, GSM_MMSFolders *folders);
-	GSM_Error (*GetNextMMSFile)	(GSM_StateMachine *s, GSM_MMSFile *file, bool start);
+	GSM_Error (*GetNextMMSFileInfo)	(GSM_StateMachine *s, GSM_MMSFile *file, bool start);
 	/**
 	 * Gets bitmap.
 	 */
@@ -1446,6 +1451,7 @@ typedef enum {
 	GCT_MBUS2=1,
 	GCT_FBUS2,
 	GCT_FBUS2DLR3,
+	GCT_DKU2AT,
 	GCT_DKU2PHONET,
 	GCT_DKU5FBUS2,
 	GCT_FBUS2PL2303,
@@ -1453,7 +1459,6 @@ typedef enum {
 	GCT_FBUS2IRDA,
 	GCT_PHONETBLUE,
 	GCT_AT,
-	GCT_ATDKU2,
 	GCT_MROUTERBLUE,
 	GCT_IRDAOBEX,
 	GCT_IRDAAT,

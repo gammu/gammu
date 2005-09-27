@@ -49,7 +49,8 @@ configure-stamp:
 		--mandir=\$${prefix}/share/man \
 		--infodir=\$${prefix}/share/info \
 		--with-docdir=\$${prefix}/share/doc/gammu \
-		--with-localedir=\$${prefix}/share/gammu
+		--with-localedir=\$${prefix}/share/gammu \
+		--enable-cb
 	touch configure-stamp
 
 

@@ -33,6 +33,8 @@
 
 /* PHONET to use with DKU2 cable */
 #undef GSM_ENABLE_DKU2PHONET
+/* AT commands to use with DKU2 cable */
+#undef GSM_ENABLE_DKU2AT
 /* FBUS2 to use with DKU5 cable (init done using AT commands) */
 #undef GSM_ENABLE_DKU5FBUS2
 

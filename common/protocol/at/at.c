@@ -2,7 +2,7 @@
 
 #include "../../gsmstate.h"
 
-#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT)
+#if defined(GSM_ENABLE_AT) || defined(GSM_ENABLE_BLUEAT) || defined(GSM_ENABLE_IRDAAT) || defined(GSM_ENABLE_DKU2AT)
 
 #include <stdio.h>
 #include <string.h>

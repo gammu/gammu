@@ -813,7 +813,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTSUPPORTED,			/* 	GetMMSSettings		*/
 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetMMSFolders		*/
-	NOTSUPPORTED,			/*	GetNextMMSFile		*/
+	NOTSUPPORTED,			/*	GetNextMMSFileInfo	*/
 	NOTIMPLEMENTED,			/*	GetBitmap		*/
 	NOTIMPLEMENTED,			/*	SetBitmap		*/
 	NOTIMPLEMENTED,			/*	GetToDoStatus		*/

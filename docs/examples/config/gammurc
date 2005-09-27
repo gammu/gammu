@@ -48,9 +48,11 @@ connection = fbusblue
 # Old Nokia protocol for MBUS/DAU9P
 #    Connection "mbus", port type serial
 # -----------------------------------------------------------------------------
-# AT commands for DLR3, DKU2, DKU5 or other AT compatible cable (8 bits, None
+# AT commands for DLR3, DKU5 or other AT compatible cable (8 bits, None
 # parity, no flow control, 1 stop bit). Used with Nokia, Alcatel, Siemens, etc.
 #    Connection "at19200"/"at115200"/.., port type serial
+# AT commands for DKU2 cable
+#    Connection "dku2at", port type dku2
 # ============================================================== infrared =====
 # Nokia protocol for infrared with Nokia 6110/6130/6150
 #    Connection "fbusirda"/"infrared", port type serial
