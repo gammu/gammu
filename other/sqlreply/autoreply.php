@@ -1,6 +1,6 @@
 <?
 
-$dbpass = @mysql_connect("localhost","root","");
+$dbpass = @mysql_connect("localhost","root","root");
 if ($dbpass) $dbconnect = mysql_select_db("autoreply");
 
 echo "<html><head>\n";
@@ -49,8 +49,10 @@ if (isset($_POST['op']) && $_POST['op']=="addaction") {
 	echo "<meta http-equiv=\"refresh\" content=\"0;url=autoreply.php?azz=z\">\n";
 }
 
+echo "<STYLE TYPE=\"text/css\">Body {background-color: gainsboro;} table.Body2 {font-weight: normal; font-size: 10pt; color: black;font-family: 'Tahoma' ;}</style>";
+
 echo "<title>Admin page</title>\n";
-echo "</head><body leftmargin=0 bottommargin=0 rightmargin=0>";
+echo "</head><body leftmargin=0 bottommargin=0 rightmargin=0 class=body2>";
 
 if (!isset($_POST['op'])) {
 
@@ -62,110 +64,90 @@ if (!isset($_POST['op'])) {
 
 	$result = mysql_db_query("autoreply","select ID from rules group by ID ");
 	while($rekord = mysql_fetch_row($result)) {
-		echo "<hr><table width=100% border=0><tr><td >";
+		echo "<hr>";
 
-		echo "<a name=$rekord[0]><font size=+2>Sequence $rekord[0]</font></td>\n<td></td><td>";
-		echo "<form method=\"POST\" action=autoreply.php>\n";
+		echo "<form method=\"POST\" action=autoreply.php  onSubmit=\"return confirm('Do you want to DELETE this sequence ?');\">\n";
+		echo "<a name=$rekord[0]><font size=+1>Sequence $rekord[0]</font>";
 		echo "<input type=hidden name=op value=delsequence>\n";
 		echo "<input type=hidden name=id value=$rekord[0]>\n";
 		echo "<input type=submit value='DEL'>";
-		echo "</form></td></tr>\n";
+		echo "</form>\n";
 	
-		echo "<tr><td colspan=3>&nbsp;<br><b>Rules</b></td></tr>";
-
 		$count = 0;
 		$result2 = mysql_db_query("autoreply","select ID,RuleID,DB,SQL,User,Pass,PC from rules where ID=$rekord[0]");
 		while($rekord2 = mysql_fetch_row($result2)) {
-			echo "<tr><td >";
-			echo "<form method=\"POST\" action=autoreply.php>\n";
+			echo "<table width=100% class=body2><tr><td colspan=2><b>Existing rule</b></td></tr><tr><td valign=top>";
+			echo "<form method=\"POST\" action=autoreply.php  onSubmit=\"return confirm('Do you want to set this rule ?');\">\n";
 			echo "<input type=hidden name=op value=editrule>\n";
 			echo "<input type=hidden name=ruleid value=$rekord2[1]>\n";
 
-			echo "<nobr>";
-			echo "PC<input name=pc value='$rekord2[6]'>";
-			echo "User<input name=user value='$rekord2[4]'>";
-			echo "Pass<input name=pass value='$rekord2[5]'>";
-			echo "DB<input name=db value='$rekord2[2]'></nobr>";
-			echo "<br>SQL text<textarea name=sql rows=2 cols=55>$rekord2[3]</textarea></td>";
+			echo "MySQL PC address<br><input name=pc value='$rekord2[6]'><br>";
+			echo "MySQL user name<br><input name=user value='$rekord2[4]'><br>";
+			echo "MySQL user password<br><input name=pass value='$rekord2[5]'><br>";
+			echo "MySQL DB<br><input name=db value='$rekord2[2]'></td><td>";
+			echo "MySQL SQL text<br><textarea name=sql rows=7 cols=96>$rekord2[3]</textarea></td>";
+			echo "<td valign=top>Actions<br><input type=submit value=SET></form>";
 
-			echo "<td valign=top><input type=submit value=SET></td></form><td valign=top>\n";
 			if ($count != 0) {
-				echo "<form method=\"POST\" action=autoreply.php>\n";
+				echo "<br><form method=\"POST\" action=autoreply.php onSubmit=\"return confirm('Do you want to delete this rule ?');\">\n";
 				echo "<input type=hidden name=op value=delrule>\n";
 				echo "<input type=hidden name=ruleid value=$rekord2[1]>\n";
 				echo "<input type=hidden name=id value=$rekord2[0]>\n";
-				echo "<input type=submit value=DEL>";
+				echo "<input type=submit value=DEL >";
 				echo "</form>";
 			}
-			echo "</td></tr>\n";
+
+			echo "</td></tr></table>\n";
 			$count++;
 		}
 	
-		echo "<tr><td>";
-		echo "<form method=\"POST\" action=autoreply.php>\n";
+		echo "<table width=100% class=body2><tr><td colspan=2><b>New rule</b></td></tr><tr><td valign=top>";
+		echo "<form method=\"POST\" action=autoreply.php  onSubmit=\"return confirm('Do you want to add this rule ?');\">\n";
 		echo "<input type=hidden name=op value=addrule>\n";
 		echo "<input type=hidden name=id value=$rekord[0]>\n";
-		echo "<nobr>";
-		echo "pc<input name=pc>";
-		echo "user<input name=user >";
-		echo "pass<input name=pass >";
-		echo "db<input name=db></nobr>";
-		echo "<br>SQL text<textarea name=sql rows=2 cols=55></textarea></td>";
-		echo "<td></td><td valign=top>\n";
-		echo "<input type=submit value=ADD>";
-		echo "</form></td></tr>\n";
+		echo "MySQL PC address<br><input name=pc><br>";
+		echo "MySQL user name<br><input name=user ><br>";
+		echo "MySQL user password<br><input name=pass ><br>";
+		echo "MySQL DB name<br><input name=db></td><td>";
+		echo "MySQL SQL text<br><textarea name=sql rows=7 cols=96></textarea></td>";
+		echo "<td valign=top>Actions<br><input type=submit value=ADD></form></td></tr></table>";
 	
-		echo "<tr><td colspan=3>&nbsp;<br><b>Actions</b></td></tr>";
-
 		$count = 0;
 		$result2 = mysql_db_query("autoreply","select ActionID, User,User2,Pass,Pass2,DB,DB2,PC,PC2,SQL,User3,Pass3,DB3,PC3 from actions where ID=$rekord[0]");
 		while($rekord2 = mysql_fetch_row($result2)) {
-			echo "<tr><td><table cellspacing=0 cellpadding=0 border=0><tr><td colspan=3>";
-			echo "<form method=\"POST\" action=autoreply.php name='current_$rekord2[0]'>\n";
+			echo "<table width=100% class=body2><tr><td colspan=2><b>Existing action</b><td></tr><tr><td>";
+			echo "<form method=\"POST\" action=autoreply.php name='current_$rekord2[0]'  onSubmit=\"return confirm('Do you want to set this action ?');\">\n";
 			echo "<input type=hidden name=op value=editaction>\n";
 			echo "<input type=hidden name=actionid value=$rekord2[0]>\n";
-			echo "<nobr>PC<input name=pc value='$rekord2[7]'>";
-			echo "User<input name=user  value='$rekord2[1]'>Pass<input name=pass  value='$rekord2[3]'>DB<input name=db value='$rekord2[5]'></nobr><br>";
-			echo "<nobr>PC<input name=pc2 value='$rekord2[8]'>";
-			echo "User<input name=user2 value='$rekord2[2]'>Pass<input name=pass2 value='$rekord2[4]'>DB<input name=db2 value='$rekord2[6]'></nobr><br>";
-			echo "<nobr>SQL PC<input name=pc3 value='$rekord2[13]'>";
-			echo "SQL user<input name=user3  value='$rekord2[10]'>SQL pass<input name=pass3  value='$rekord2[11]'>SQL DB<input name=db3 value='$rekord2[12]'></nobr></td>";
-			echo "</tr>\n";
-			echo "<tr><td></td><td valign=top>SQL text</td>";
-			echo "<td colspan=2><textarea name=sql rows=2 cols=55>$rekord2[9]</textarea></td></tr></table>";
-			echo "</td><td valign=top><input type=submit value=SET></td><td valign=top>";
-			echo "</form>";
+			echo "MySQL PC address<br><input name=pc value='$rekord2[7]'><br><input name=pc2 value='$rekord2[8]'><br><input name=pc3 value='$rekord2[13]'><br>";
+			echo "MySQL User name<br><input name=user  value='$rekord2[1]'><br><input name=user2 value='$rekord2[2]'><br><input name=user3  value='$rekord2[10]'><br>";
+			echo "MySQL User password<br><input name=pass  value='$rekord2[3]'><br><input name=pass2 value='$rekord2[4]'><br><input name=pass3  value='$rekord2[11]'><br>";
+			echo "MySQL DB name<br><input name=db value='$rekord2[5]'><br><input name=db2 value='$rekord2[6]'><br><input name=db3 value='$rekord2[12]'></td><td>MySQL SQL text<br>";
+			echo "<textarea name=sql rows=18 cols=96>$rekord2[9]</textarea></td><td valign=top>";
+			echo "Actions<br><input type=submit value=SET></form><br>";
 			if ($count != 0) {
-				echo "<form method=\"POST\" action=autoreply.php>\n";
+				echo "<form method=\"POST\" action=autoreply.php onSubmit=\"return confirm('Do you want to delete this action ?');\">\n";
 				echo "<input type=hidden name=op value=delaction>\n";
 				echo "<input type=hidden name=actionid value=$rekord2[0]>\n";
 				echo "<input type=submit value=DEL>";
 				echo "</form>";
 			}
-			echo "</td></tr>";
+			echo "</td></tr></table>";
 			$count++;
 		}
 
-		echo "<tr><td><table border=0 cellspacing=0 cellpadding=0><tr><td colspan=3>";
-		echo "<form method=\"POST\" action=autoreply.php name='new_$rekord[0]'>\n";
+		echo "<table width=100% class=body2><tr><td colspan=2><b>New action</b></td></tr><tr><td valign=top>";
+		echo "<form method=\"POST\" action=autoreply.php name='new_$rekord[0]' onSubmit=\"return confirm('Do you want to add new action ?');\">\n";
 		echo "<input type=hidden name=op value=addaction>\n";
 		echo "<input type=hidden name=id value=$rekord[0]>\n";
-		echo "<nobr>PC<input name=pc>";
-		echo "User<input name=user>Pass<input name=pass>DB<input name=db></nobr><br>";
-		echo "<nobr>PC<input name=pc2>";
-		echo "User<input name=user2>Pass<input name=pass2>DB<input name=db2></nobr><br>";
-		echo "<nobr>SQL PC<input name=pc3>";
-		echo "SQL user<input name=user3>SQL pass<input name=pass3>SQL DB<input name=db3></nobr></td>";
-		echo "</tr>\n";
-		echo "<tr><td></td><td valign=top>";
-		echo "SQL text</td><td><textarea name=sql rows=2 cols=55></textarea></td></tr></table>";
-		echo "</td><td></td><td valign=top>";
-		echo "<input type=submit value=ADD></td></tr>";
-		echo "</form>";
-		
-		echo "</table>\n";
+		echo "MySQL PC address<br><input name=pc><br><input name=pc2><br><input name=pc3><br>";
+		echo "MySQL User name<br><input name=user><br><input name=user2><br><input name=user3><br>";
+		echo "MySQL User password<br><input name=pass><br><input name=pass2><br><input name=pass3><br>";
+		echo "MySQL DB name<br><input name=db><br><input name=db2><br><input name=db3></td>";
+		echo "<td>MySQL SQL text<br><textarea name=sql rows=18 cols=96></textarea></td>";
+		echo "<td valign=top>Actions<br><input type=submit value=ADD></form></td></tr></table>";
 	}
-	echo "<hr>(c) 2005 by <a href=http://www.mwiacek.com>Marcin Wiacek</a>, written for Michal Kruger";
+	echo "<hr>Version from 19.09.2005, created by <a href=http://www.mwiacek.com>Marcin Wiacek</a>, written for Michal Kruger";
 }
 
 echo "</body></html>";

@@ -109,7 +109,7 @@ GSM_Phone_Functions NAUTOPhone = {
 	NOTSUPPORTED,			/* 	GetMMSSettings		*/
 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetMMSFolders		*/
-	NOTSUPPORTED,			/*	GetNextMMSFile		*/
+	NOTSUPPORTED,			/*	GetNextMMSFileInfo	*/
 	NOTSUPPORTED,			/*	GetBitmap		*/
 	NOTSUPPORTED,			/*	SetBitmap		*/
 	NOTSUPPORTED,			/*	GetToDoStatus		*/

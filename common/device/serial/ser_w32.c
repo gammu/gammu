@@ -25,7 +25,7 @@
 #include <io.h>
 #include <memory.h>
 
-#ifdef GSM_ENABLE_DKU2PHONET
+#if defined(GSM_ENABLE_DKU2PHONET) || defined(GSM_ENABLE_DKU2AT)
 #  define INITGUID
 #  include <initguid.h>
 #  include <Setupapi.h>
@@ -66,7 +66,7 @@ static GSM_Error serial_close(GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-#ifdef GSM_ENABLE_DKU2PHONET
+#if defined(GSM_ENABLE_DKU2PHONET) || defined(GSM_ENABLE_DKU2AT)
   DEFINE_GUID(DKU2AT,    0x4F919104, 0x4adf, 0x11d5, 0x88, 0x2d, 0x0, 0xb0, 0xd0, 0x2f, 0xe3, 0x81); //"4F919104-4ADF-11D5-882D-00B0D02FE381"
   DEFINE_GUID(DKU2FBUS2, 0x4F919102, 0x4adf, 0x11d5, 0x88, 0x2d, 0x0, 0xb0, 0xd0, 0x2f, 0xe3, 0x81); //"4F919102-4ADF-11D5-882D-00B0D02FE381"
   DEFINE_GUID(DKU2OBEX,  0x4F919100, 0x4adf, 0x11d5, 0x88, 0x2d, 0x0, 0xb0, 0xd0, 0x2f, 0xe3, 0x81); //"4F919100-4ADF-11D5-882D-00B0D02FE381"
@@ -78,7 +78,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	DCB 				 dcb;
 	unsigned char 			 DeviceName[256],DeviceName2[256];
 	int				 i;
-#ifdef GSM_ENABLE_DKU2PHONET
+#if defined(GSM_ENABLE_DKU2PHONET) || defined(GSM_ENABLE_DKU2AT)
 	UCHAR				 bu[sizeof(SP_DEVICE_INTERFACE_DETAIL_DATA) +(sizeof(TCHAR)*1000)];
 	DWORD				 reqsize;
 	SP_DEVINFO_DATA		 	 DeviceInfoData;
@@ -107,6 +107,27 @@ static GSM_Error serial_open (GSM_StateMachine *s)
             	if (SetupDiEnumDeviceInfo(ListHandle, 0, &DeviceInfoData)) {
 	                SetupDiGetDeviceRegistryProperty(ListHandle, &DeviceInfoData, SPDRP_DEVICEDESC, NULL, KeyName2, 200, &reqsize);
                 	if (SetupDiEnumDeviceInterfaces(ListHandle, &DeviceInfoData, &DKU2FBUS2, 0, &DeviceInterfaceData)) {
+				DeviceInterfaceDetailData->cbSize = 5;
+                    		if (SetupDiGetDeviceInterfaceDetail(ListHandle, &DeviceInterfaceData, DeviceInterfaceDetailData, 200, &reqsize, &DeviceInfoData)) {
+					strcpy(DeviceName2,DeviceInterfaceDetailData->DevicePath);
+				}
+			}
+		}
+	        SetupDiDestroyDeviceInfoList(ListHandle);
+	}
+#endif
+#ifdef GSM_ENABLE_DKU2AT
+	if (s->ConnectionType == GCT_DKU2AT) {
+	        ListHandle = SetupDiGetClassDevs(&DKU2AT, NULL, NULL,  DIGCF_PRESENT | DIGCF_DEVICEINTERFACE);
+		if (ListHandle == INVALID_HANDLE_VALUE) {
+		        SetupDiDestroyDeviceInfoList(ListHandle);
+			return ERR_UNKNOWN;
+		}
+		DeviceInfoData.cbSize = sizeof(DeviceInfoData);
+		DeviceInterfaceData.cbSize = sizeof(DeviceInterfaceData);
+            	if (SetupDiEnumDeviceInfo(ListHandle, 0, &DeviceInfoData)) {
+	                SetupDiGetDeviceRegistryProperty(ListHandle, &DeviceInfoData, SPDRP_DEVICEDESC, NULL, KeyName2, 200, &reqsize);
+                	if (SetupDiEnumDeviceInterfaces(ListHandle, &DeviceInfoData, &DKU2AT, 0, &DeviceInterfaceData)) {
 				DeviceInterfaceDetailData->cbSize = 5;
                     		if (SetupDiGetDeviceInterfaceDetail(ListHandle, &DeviceInterfaceData, DeviceInterfaceDetailData, 200, &reqsize, &DeviceInfoData)) {
 					strcpy(DeviceName2,DeviceInterfaceDetailData->DevicePath);
@@ -185,7 +206,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		return ERR_DEVICEOPENERROR;
 	}
 
-	if (s->ConnectionType != GCT_DKU2PHONET) {
+	if (s->ConnectionType != GCT_DKU2PHONET && s->ConnectionType != GCT_DKU2AT) {
 		d->old_settings.DCBlength = sizeof(DCB);
 		if (GetCommState(d->hPhone, &d->old_settings)==0) {
 			GSM_OSErrorInfo(s, "ReadDevice in serial_open");
@@ -337,7 +358,7 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 	DWORD			ErrorFlags, Length;
 	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
 
-	if (s->ConnectionType != GCT_DKU2PHONET) {
+	if (s->ConnectionType != GCT_DKU2PHONET && s->ConnectionType != GCT_DKU2AT) {
 		/* Gets information about a communications error and
 		 * current status of device
 		 */

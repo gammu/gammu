@@ -357,7 +357,7 @@ GSM_Phone_Functions N9210Phone = {
 	NOTSUPPORTED,			/* 	GetMMSSettings		*/
 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetMMSFolders		*/
-	NOTSUPPORTED,			/*	GetNextMMSFile		*/
+	NOTSUPPORTED,			/*	GetNextMMSFileInfo	*/
 	N9210_GetBitmap,
 	N9210_SetBitmap,
 	NOTSUPPORTED,			/*	GetToDoStatus		*/

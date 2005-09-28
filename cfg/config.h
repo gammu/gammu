@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "1.02.12"
-#define VERSION_WIN "1,02,12,0"
+#define VERSION "1.02.16"
+#define VERSION_WIN "1,02,16,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -34,6 +34,8 @@
 
 /* PHONET to use with DKU2 cable */
 #define GSM_ENABLE_DKU2PHONET 1
+/* AT commands to use with DKU2 cable */
+#define GSM_ENABLE_DKU2AT 1
 /* FBUS2 to use with DKU5 cable (init done using AT commands) */
 #define GSM_ENABLE_DKU5FBUS2 1
 
@@ -152,7 +154,7 @@
 
 #  define HAVE_PTHREAD 1
 #  define HAVE_SYS_IOCTL_H 1
-#  define HAVE_MYSQL_MYSQL_H 1
+/* #  undef HAVE_MYSQL_MYSQL_H */
 #else
 //#  define HAVE_MYSQL_MYSQL_H 1
 #endif

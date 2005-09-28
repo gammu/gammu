@@ -36,6 +36,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("dku5fbus"	,connection,0)) s->ConnectionType = GCT_DKU5FBUS2;
 	if (mystrncasecmp("dku2"	,connection,0)) s->ConnectionType = GCT_DKU2PHONET;
 	if (mystrncasecmp("dku2phonet"	,connection,0)) s->ConnectionType = GCT_DKU2PHONET;
+	if (mystrncasecmp("dku2at"	,connection,0)) s->ConnectionType = GCT_DKU2AT;
 
         // for serial ports assigned by bt stack
 	if (mystrncasecmp("fbusblue"	,connection,0)) s->ConnectionType = GCT_FBUS2BLUE;
@@ -76,37 +77,40 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	s->Device.Functions	= NULL;
 	s->Protocol.Functions	= NULL;
 #ifdef GSM_ENABLE_MBUS2
-	GSM_RegisterConnection(s, GCT_MBUS2, 	 &SerialDevice,   &MBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_MBUS2, 	  &SerialDevice,  &MBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2
-	GSM_RegisterConnection(s, GCT_FBUS2,	 &SerialDevice,   &FBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_FBUS2,	  &SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2DLR3
-	GSM_RegisterConnection(s, GCT_FBUS2DLR3, &SerialDevice,   &FBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_FBUS2DLR3,  &SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_DKU5FBUS2
-	GSM_RegisterConnection(s, GCT_DKU5FBUS2, &SerialDevice,   &FBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_DKU5FBUS2,  &SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2PL2303
 	GSM_RegisterConnection(s, GCT_FBUS2PL2303,&SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2BLUE
-	GSM_RegisterConnection(s, GCT_FBUS2BLUE, &SerialDevice,   &FBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_FBUS2BLUE,  &SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2IRDA
-	GSM_RegisterConnection(s, GCT_FBUS2IRDA, &SerialDevice,   &FBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_FBUS2IRDA,  &SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_DKU2PHONET
-	GSM_RegisterConnection(s, GCT_DKU2PHONET, &SerialDevice,   &PHONETProtocol);
+	GSM_RegisterConnection(s, GCT_DKU2PHONET, &SerialDevice,  &PHONETProtocol);
+#endif
+#ifdef GSM_ENABLE_DKU2AT
+	GSM_RegisterConnection(s, GCT_DKU2AT,     &SerialDevice,  &ATProtocol);
 #endif
 #ifdef GSM_ENABLE_PHONETBLUE
-	GSM_RegisterConnection(s, GCT_PHONETBLUE,&SerialDevice,	  &PHONETProtocol);
+	GSM_RegisterConnection(s, GCT_PHONETBLUE, &SerialDevice,  &PHONETProtocol);
 #endif
 #ifdef GSM_ENABLE_MROUTERBLUE
 	GSM_RegisterConnection(s, GCT_MROUTERBLUE,&SerialDevice,  &MROUTERProtocol);
 #endif
 #ifdef GSM_ENABLE_IRDAPHONET
-	GSM_RegisterConnection(s, GCT_IRDAPHONET,&IrdaDevice, 	  &PHONETProtocol);
+	GSM_RegisterConnection(s, GCT_IRDAPHONET, &IrdaDevice, 	  &PHONETProtocol);
 #endif
 #ifdef GSM_ENABLE_BLUEFBUS2
 	GSM_RegisterConnection(s, GCT_BLUEFBUS2, &BlueToothDevice,&FBUS2Protocol);
@@ -118,13 +122,13 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	GSM_RegisterConnection(s, GCT_BLUEAT, 	 &BlueToothDevice,&ATProtocol);
 #endif
 #ifdef GSM_ENABLE_AT
-	GSM_RegisterConnection(s, GCT_AT, 	 &SerialDevice,   &ATProtocol);
+	GSM_RegisterConnection(s, GCT_AT, 	  &SerialDevice,  &ATProtocol);
 #endif
 #ifdef GSM_ENABLE_IRDAAT
-	GSM_RegisterConnection(s, GCT_IRDAAT, 	 &IrdaDevice,     &ATProtocol);
+	GSM_RegisterConnection(s, GCT_IRDAAT, 	  &IrdaDevice,    &ATProtocol);
 #endif
 #ifdef GSM_ENABLE_IRDAOBEX
-	GSM_RegisterConnection(s, GCT_IRDAOBEX,  &IrdaDevice,     &OBEXProtocol);
+	GSM_RegisterConnection(s, GCT_IRDAOBEX,   &IrdaDevice,    &OBEXProtocol);
 #endif
 #ifdef GSM_ENABLE_BLUEOBEX
 	GSM_RegisterConnection(s, GCT_BLUEOBEX,  &BlueToothDevice,&OBEXProtocol);
@@ -166,7 +170,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #endif
 #ifdef GSM_ENABLE_ATGEN
 		/* With ATgen and auto model we can work with unknown models too */
-		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT) {
+		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
 			smprintf(s,"[Module           - \"%s\"]\n",ATGENPhone.models);
 			s->Phone.Functions = &ATGENPhone;
 			return ERR_NONE;
@@ -177,7 +181,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 	s->Phone.Functions=NULL;
 #ifdef GSM_ENABLE_ATGEN
 	/* AT module can have the same models ID to "normal" Nokia modules */
-	if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT) {
+	if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
 		GSM_RegisterModule(s,&ATGENPhone);
 		if (s->Phone.Functions!=NULL) return ERR_NONE;
 	}
@@ -316,6 +320,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 					case GCT_AT:
 					case GCT_BLUEAT:
 					case GCT_IRDAAT:
+					case GCT_DKU2AT:
 						s->Phone.Functions = &ATGENPhone;
 						break;
 #endif
