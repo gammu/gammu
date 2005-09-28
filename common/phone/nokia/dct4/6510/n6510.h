@@ -38,7 +38,7 @@ typedef struct {
 
 	unsigned char			RingtoneID;	/* When set with preview */
 
-	GSM_File			Files[500];
+	GSM_File			Files[400];
 	int				FilesLocationsUsed;
 	int				FileToken;
 	int				ParentID;
@@ -57,7 +57,7 @@ typedef struct {
 
 	unsigned char			PhoneMode;
 
-	int				MMSFoldersID[20];
+	char				MMSFoldersID2[10][80];
 	GSM_File			MMSFile;
 	int				MMSFolderNum;
 	GSM_Error			MMSFolderError;	
@@ -77,6 +77,9 @@ void N6510_DecodeFMFrequency(double *freq, unsigned char *buff);
 #endif
 #ifndef GSM_USED_DKU2PHONET
 #  define GSM_USED_DKU2PHONET
+#endif
+#ifndef GSM_USED_DKU2AT
+#  define GSM_USED_DKU2AT
 #endif
 #ifndef GSM_USED_DKU5FBUS2
 #  define GSM_USED_DKU5FBUS2

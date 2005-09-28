@@ -1679,17 +1679,32 @@ static void GetEachMMS(int argc, char *argv[])
 	GSM_MMSFile		MMSFile;
 	bool			start = true;
 	GSM_MMSFolders 		folders;
+	int			Handle,Size;
 
 	GSM_Init(true);
 
 	error=Phone->GetMMSFolders(&s,&folders);
 	Print_Error(error);
 
+	MMSFile.File.Buffer = NULL;
+
 	while (1) {
-		error=Phone->GetNextMMSFile(&s,&MMSFile,start);
+		error=Phone->GetNextMMSFileInfo(&s,&MMSFile,start);
 		if (error==ERR_EMPTY) break;
 		Print_Error(error);
 		start = false;
+
+		if (MMSFile.File.Buffer != NULL) {
+			free(MMSFile.File.Buffer);
+			MMSFile.File.Buffer = NULL;
+		}
+		MMSFile.File.Used = 0;
+		while (true) {
+			error = Phone->GetFilePart(&s,&MMSFile.File,&Handle,&Size);
+			if (error == ERR_EMPTY) break;
+			Print_Error(error);
+		}
+
 		printf("Folder %s\n",DecodeUnicodeConsole(folders.Folder[MMSFile.Folder-1].Name));
 	}
 
@@ -1800,12 +1815,12 @@ static void MakeTerminatedCall(int argc, char *argv[])
 	Print_Error(error);
 
 //	GSM_GetCurrentDateTime (&DT);
-//	one = Fill_Time_T(DT, 0);
+//	one = Fill_Time_T(DT);
 
 //	while (true) {
 		my_sleep(atoi(argv[3]));
 //		GSM_GetCurrentDateTime (&DT);
-//		two = Fill_Time_T(DT, 0);
+//		two = Fill_Time_T(DT);
 //		if (two - one > atoi(argv[3])) break;
 		GSM_ReadDevice(&s,true);
 //	}
@@ -2381,6 +2396,7 @@ static void GetBitmap(int argc, char *argv[])
 	GSM_MultiBitmap 	MultiBitmap;
 	int			location=0, Handle, Size;
  	GSM_AllRingtonesInfo 	Info = {0, NULL};
+	unsigned char		buffer[10];
 
 	if (mystrncasecmp(argv[2],"STARTUP",0)) {
 		MultiBitmap.Bitmap[0].Type=GSM_StartupLogo;
@@ -2423,7 +2439,8 @@ static void GetBitmap(int argc, char *argv[])
 		if (MultiBitmap.Bitmap[0].DefaultRingtone) {
 			printmsg("Ringtone    : default\n");
 		} else if (MultiBitmap.Bitmap[0].FileSystemRingtone) {
-			sprintf(File.ID_FullName,"%i",MultiBitmap.Bitmap[0].RingtoneID);
+			sprintf(buffer,"%i",MultiBitmap.Bitmap[0].RingtoneID);
+			EncodeUnicode(File.ID_FullName,buffer,strlen(buffer));
 
 			File.Buffer 	= NULL;
 			File.Used 	= 0;
@@ -7156,7 +7173,7 @@ static void GetFileSystem(int argc, char *argv[])
 
 		if (!Files.Folder) {
 			if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_FILES2)) {
-				if (Files.ID_FullName[0] == 'b') {
+				if (DecodeUnicodeString(Files.ID_FullName)[0] == 'b') {
 					MemoryCard = true;
 					usedcard+=Files.Used;
 				} else {
@@ -7168,8 +7185,11 @@ static void GetFileSystem(int argc, char *argv[])
 		}
 
 		if (argc <= 2 || !mystrncasecmp(argv[2],"-flatall",0)) {
-			if (strlen(Files.ID_FullName) < 5 && strlen(Files.ID_FullName) != 0 && Files.ID_FullName[0]>='0' && Files.ID_FullName[0]<='9') {
-				printf("%5s.",Files.ID_FullName);
+			if (UnicodeLength(Files.ID_FullName) < 5 &&
+			    UnicodeLength(Files.ID_FullName) != 0 &&
+			    DecodeUnicodeString(Files.ID_FullName)[0]>='0' &&
+			    DecodeUnicodeString(Files.ID_FullName)[0]<='9') {
+				printf("%5s.",DecodeUnicodeString(Files.ID_FullName));
 			}
 			if (Files.Protected) {
 				printf("P");
@@ -7213,7 +7233,7 @@ static void GetFileSystem(int argc, char *argv[])
 			/* format for a folder ID;Folder;FOLDER_NAME;[FOLDER_PARAMETERS]
 			 * format for a file   ID;File;FOLDER_NAME;FILE_NAME;DATESTAMP;FILE_SIZE;[FILE_PARAMETERS]  */
 			if (!Files.Folder) {
-				printf("%s;File;",Files.ID_FullName);
+				printf("%s;File;",DecodeUnicodeString(Files.ID_FullName));
 				printf("\"%s\";",FolderName);
 				printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
 				if (!Files.ModifiedEmpty) {
@@ -7221,7 +7241,7 @@ static void GetFileSystem(int argc, char *argv[])
 				} else  printf("\"%c\";",0x20);
 				printf("%i;",Files.Used);
 			} else {
-				printf("%s;Folder;",Files.ID_FullName);
+				printf("%s;Folder;",DecodeUnicodeString(Files.ID_FullName));
 				printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
 				strcpy(FolderName,DecodeUnicodeConsole(Files.Name));
 			}
@@ -7258,7 +7278,7 @@ static void SetFileAttrib(int argc, char *argv[])
 	Files.System    = false;
 	Files.Hidden    = false;
 
-	strcpy(Files.ID_FullName,argv[2]);
+	EncodeUnicode(Files.ID_FullName,argv[2],strlen(argv[2]));
 	for (i=3;i<argc;i++) {
 		if (mystrncasecmp(argv[i],"-readonly",0)) {
 			Files.ReadOnly = true;
@@ -7288,10 +7308,12 @@ static void GetRootFolders(int argc, char *argv[])
 	GSM_Init(true);
 
 	File.ID_FullName[0] = 0;
+	File.ID_FullName[1] = 0;
 
 	while (1) {
 		if (Phone->GetNextRootFolder(&s,&File)!=ERR_NONE) break;
-		printf("%s - %s\n",File.ID_FullName,DecodeUnicodeString(File.Name));
+		printf("%s ",DecodeUnicodeString(File.ID_FullName));
+		printf("- %s\n",DecodeUnicodeString(File.Name));
 	}
 
 	GSM_Terminate();
@@ -7304,7 +7326,7 @@ static void GetFolderListing(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	strcpy(Files.ID_FullName,argv[2]);
+	EncodeUnicode(Files.ID_FullName,argv[2],strlen(argv[2]));
 
 	if (!strcmp(s.Phone.Data.ModelInfo->model,"6230") &&
 	    s.ConnectionType == GCT_IRDAPHONET) {
@@ -7319,14 +7341,14 @@ static void GetFolderListing(int argc, char *argv[])
 		/* format for a folder ID;Folder;[FOLDER_PARAMETERS]
 		 * format for a file   ID;File;FILE_NAME;DATESTAMP;FILE_SIZE;[FILE_PARAMETERS]  */
 		if (!Files.Folder) {
-			printf("%s;File;",Files.ID_FullName);
+			printf("%s;File;",DecodeUnicodeString(Files.ID_FullName));
 			printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
 			if (!Files.ModifiedEmpty) {
 				printf("\"%s\";",OSDateTime(Files.Modified,false));
 			} else  printf("\"%c\";",0x20);
 			printf("%i;",Files.Used);
 		} else {
-			printf("%s;Folder;",Files.ID_FullName);
+			printf("%s;Folder;",DecodeUnicodeString(Files.ID_FullName));
 			printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
 		}
 
@@ -7416,7 +7438,7 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 			}
 			file = fopen(buffer,"wb");
 			if (file == NULL) {
-				sprintf(buffer,"file%s",File->ID_FullName);
+				sprintf(buffer,"file%s",DecodeUnicodeString(File->ID_FullName));
 				file = fopen(buffer,"wb");
 			}
 			if (file == NULL) {
@@ -7455,7 +7477,7 @@ static void GetFiles(int argc, char *argv[])
 			continue;
 		}
 
-		strcpy(File.ID_FullName,argv[i]);
+		EncodeUnicode(File.ID_FullName,argv[i],strlen(argv[i]));
 		GetOneFile(&File, newtime, i);
 	}
 
@@ -7494,8 +7516,8 @@ static void GetFileFolder(int argc, char *argv[])
 				if (mystrncasecmp(argv[i],"-newtime",0)) {
 					continue;
 				}
-				dbgprintf("comparing %s %s\n",File.ID_FullName,argv[i]);
-				if (!strcmp(File.ID_FullName,argv[i])) {
+				dbgprintf("comparing %s %s\n",DecodeUnicodeString(File.ID_FullName),argv[i]);
+				if (!strcmp(DecodeUnicodeString(File.ID_FullName),argv[i])) {
 					dbgprintf("found folder");
 					found = true;
 					if (File.Folder) {
@@ -7579,7 +7601,7 @@ static void AddFile(int argc, char *argv[])
 	int			i,nextlong;
 
 	File.Buffer = NULL;
-	strcpy(File.ID_FullName,argv[2]);
+	EncodeUnicode(File.ID_FullName,argv[2],strlen(argv[2]));
 	error = GSM_ReadFile(argv[3], &File);
 	Print_Error(error);
 	EncodeUnicode(File.Name,argv[3],strlen(argv[3]));
@@ -7675,7 +7697,7 @@ static void AddFolder(int argc, char *argv[])
 {
 	GSM_File File;
 
-	strcpy(File.ID_FullName,argv[2]);
+	EncodeUnicode(File.ID_FullName,argv[2],strlen(argv[2]));
 	EncodeUnicode(File.Name,argv[3],strlen(argv[3]));
 	File.ReadOnly = false;
 
@@ -7799,7 +7821,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		while (Folder[i].parameter[0] != 0) {
 			if (!strcmp("obex",Folder[i].model) &&
 			     mystrncasecmp(argv[2],Folder[i].parameter,0)) {
-				strcpy(Files.ID_FullName,Folder[i].folder);
+				EncodeUnicode(Files.ID_FullName,Folder[i].folder,strlen(Folder[i].folder));
 				Found = true;
 				break;
 			}
@@ -7817,7 +7839,7 @@ static void NokiaAddFile(int argc, char *argv[])
 				if ((Folder[i].folder[0] == 'a' || Folder[i].folder[0] == 'b') &&
 				    Folder[i].level[0] == 0x00 &&
 				    mystrncasecmp(argv[2],Folder[i].parameter,0)) {
-					strcpy(Files.ID_FullName,Folder[i].folder);
+					EncodeUnicode(Files.ID_FullName,Folder[i].folder,strlen(Folder[i].folder));
 					Found = true;
 					break;
 				}
@@ -7838,7 +7860,7 @@ static void NokiaAddFile(int argc, char *argv[])
 				i 	= 0;
 				while (Folder[i].parameter[0] != 0) {
 					EncodeUnicode(buffer,Folder[i].folder,strlen(Folder[i].folder));
-					dbgprintf("comparing \"%s\" \"%s\" \"%s\"\n",s.Phone.Data.ModelInfo->model,Files.ID_FullName,Folder[i].level);
+					dbgprintf("comparing \"%s\" \"%s\" \"%s\"\n",s.Phone.Data.ModelInfo->model,DecodeUnicodeString(Files.ID_FullName),Folder[i].level);
 					if (mystrncasecmp(argv[2],Folder[i].parameter,0)  &&
 					    mywstrncasecmp(Files.Name,buffer,0) &&
 					    Files.Level == atoi(Folder[i].level)) {
@@ -7847,7 +7869,7 @@ static void NokiaAddFile(int argc, char *argv[])
 						break;
 					}
 					if (mystrncasecmp(argv[2],Folder[i].parameter,0) &&
-					    !strcmp(Files.ID_FullName,Folder[i].folder) &&
+					    !strcmp(DecodeUnicodeString(Files.ID_FullName),Folder[i].folder) &&
 					    Folder[i].level[0] == 0x00) {
 						Found = true;
 						dbgprintf("found 2\n");
@@ -7966,10 +7988,10 @@ static void NokiaAddFile(int argc, char *argv[])
 		strcpy(buffer,Vendor);
 		strcat(buffer,Name);
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
-		strcpy(File.ID_FullName,Files.ID_FullName);
+		CopyUnicodeString(File.ID_FullName,Files.ID_FullName);
 		error = Phone->AddFolder(&s,&File);
 	    	Print_Error(error);
-		strcpy(FileID,File.ID_FullName);
+		CopyUnicodeString(FileID,File.ID_FullName);
 
 		/* adding jad file */
 		strcpy(buffer,JAR);
@@ -7977,7 +7999,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		File.Type 	   = GSM_File_Other;
 		File.ModifiedEmpty = true;
-		dbgprintf("file id is \"%s\"\n",File.ID_FullName);
+		dbgprintf("file id is \"%s\"\n",DecodeUnicodeString(File.ID_FullName));
 		AddOneFile(&File, "Writing JAD file: ");
 
 		if (argc > 4) {
@@ -7990,7 +8012,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		Print_Error(error);
 
 		/* adding jar file */
-		strcpy(File.ID_FullName,FileID);
+		CopyUnicodeString(File.ID_FullName,FileID);
 		strcpy(buffer,JAR);
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		File.Type 	   = GSM_File_Java_JAR;
@@ -8094,7 +8116,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	Print_Error(error);
 	if (ModEmpty) File.ModifiedEmpty = true;
 
-	strcpy(File.ID_FullName,Files.ID_FullName);
+	CopyUnicodeString(File.ID_FullName,Files.ID_FullName);
 	EncodeUnicode(File.Name,buffer,strlen(buffer));
 	for (i=strlen(buffer)-1;i>0;i--) {
 		if (buffer[i] == '\\' || buffer[i] == '/') break;

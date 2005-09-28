@@ -229,6 +229,11 @@ AC_ARG_ENABLE(dku2phonet,
                           cable (Nokia with Pop-Port and USB chip)],
         [gsm_enable_dku2phonet="no"],
         [AC_DEFINE(GSM_ENABLE_DKU2PHONET) gsm_enable_dku2phonet="yes"])
+AC_ARG_ENABLE(dku2at,
+        [  --disable-dku2at        Disable AT commans with DKU2
+                          cable (Nokia with Pop-Port and USB chip)],
+        [gsm_enable_dku2at="no"],
+        [AC_DEFINE(GSM_ENABLE_DKU2AT) gsm_enable_dku2at="yes"])
 AC_ARG_ENABLE(dku5fbus,
         [  --disable-dku5fbus      Disable Nokia FBUS2 protocol with DKU5
                           cable (Nokia with Pop-Port without USB chip)],
@@ -462,6 +467,7 @@ dnl  LGPL license                                  - $lgpl
   Phone protocols
   ---------------
   AT                                            - $gsm_enable_at
+  AT for DKU2 cable                             - $gsm_enable_dku2at
   Alcatel                                       - $gsm_enable_alcatel
   Nokia MBUS2                                   - $gsm_enable_mbus2
   Nokia FBUS2                                   - $gsm_enable_fbus2

@@ -3974,7 +3974,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/* 	GetMMSSettings		*/
 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetMMSFolders		*/
-	NOTSUPPORTED,			/*	GetNextMMSFile		*/
+	NOTSUPPORTED,			/*	GetNextMMSFileInfo	*/
 	NOTSUPPORTED,			/* 	GetBitmap		*/
 	NOTSUPPORTED,			/* 	SetBitmap		*/
 	ALCATEL_GetToDoStatus,

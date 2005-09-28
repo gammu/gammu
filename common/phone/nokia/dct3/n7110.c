@@ -1697,7 +1697,7 @@ GSM_Phone_Functions N7110Phone = {
 	NOTSUPPORTED,			/* 	GetMMSSettings		*/
 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetMMSFolders		*/
-	NOTSUPPORTED,			/*	GetNextMMSFile		*/
+	NOTSUPPORTED,			/*	GetNextMMSFileInfo	*/
 	N7110_GetBitmap,
 	N7110_SetBitmap,
 	NOTSUPPORTED,			/*	GetToDoStatus		*/
