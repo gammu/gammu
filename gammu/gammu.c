@@ -1666,7 +1666,7 @@ static void GetMMSFolders(int argc, char *argv[])
 	Print_Error(error);
 
 	for (i=0;i<folders.Number;i++) {
-		printmsg("%i. \"%30s\"",i+1,DecodeUnicodeConsole(folders.Folder[i].Name));
+		printmsg("%i. \"%s\"",i+1,DecodeUnicodeConsole(folders.Folder[i].Name));
 		if (folders.Folder[i].InboxFolder) printmsg(", Inbox folder");
 		printf("\n");
 	}
@@ -1674,12 +1674,421 @@ static void GetMMSFolders(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+void PrintMIMEType(int type) 
+{
+	switch (type) {
+	case  3:printf("text/plain");					break;
+	case  7:printf("text/x-vCard");					break;
+	case 30:printf("image/jpeg");					break;
+	case 35:printf("application/vnd.wap.multipart.mixed");		break;
+	case 51:printf("application/vnd.wap.multipart.related"); 	break;
+	default:printf("MIME %i",type);					break;
+	}
+}
+
+void DecodeMMSFile(unsigned char *Buffer, int len, int num)
+{
+	int 		pos=0,type=0,parts,j;
+	int		i,len2,len3,len4,value2;
+	long 		value;
+	time_t 		timet;
+	GSM_DateTime 	Date;
+	char		buff[200];
+	FILE		*file;
+
+	if (num != -1 && answer_yes("Do you want to save all this file")) {
+		sprintf(buff,"%i_0",num);
+		file = fopen(buff,"wb");
+		fwrite(Buffer, 1, len, file);
+		fclose(file);
+	}
+
+	//header
+	while(1) {
+		if (pos > len) break;
+		if (!(Buffer[pos] & 0x80)) break;
+		switch (Buffer[pos++] & 0x7F) {
+		case 0x01:
+			printf("  BCC               : not done yet\n");
+			return;
+		case 0x02:
+			printf("  CC                : not done yet\n");
+			return;
+		case 0x03:
+			printf("  Content location  : not done yet\n");
+			return;
+		case 0x04:
+			printf("  Content type      : ");
+			if (Buffer[pos] <= 0x1E) {
+				len2 = Buffer[pos++];
+				type = Buffer[pos++] & 0x7f;
+				PrintMIMEType(type);
+				i=0;
+				while (i<len2) {
+					switch (Buffer[pos+i]) {
+					case 0x89:
+						printf("; type=");
+						i++;
+						while (Buffer[pos+i]!=0x00) {
+							printf("%c",Buffer[pos+i]);
+							i++;
+						}
+						i++;
+						break;
+					case 0x8A:
+						printf("; start=");
+						i++;
+						while (Buffer[pos+i]!=0x00) {
+							printf("%c",Buffer[pos+i]);
+							i++;
+						}
+						i++;
+						break;
+					default:
+						i++;
+						break;
+					}
+				}
+				pos+=len2-1;
+			} else if (Buffer[pos] == 0x1F) {
+				printf("not done yet\n");
+			} else if (Buffer[pos] >= 0x20 && Buffer[pos] <= 0x7F) {
+				printf("not done yet\n");
+			} else if (Buffer[pos] >= 0x80 && Buffer[pos] < 0xFF) {
+				type = Buffer[pos++] & 0x7f;
+				PrintMIMEType(type);
+			}
+			printf("\n");
+			break;
+		case 0x05:
+			printf("  Date              : ");
+			value=0;
+			len2 = Buffer[pos++];
+			for (i=0;i<len2;i++) {
+				value=value<<8;
+				value |= Buffer[pos++];
+			}
+			timet = value;
+			Fill_GSM_DateTime(&Date, timet);
+			Date.Year = Date.Year + 1900;
+			printf("%s\n",OSDateTime(Date,0));
+			break;
+		case 0x06:
+			printf("  Delivery report   : ");
+			switch(Buffer[pos++]) {
+			case 0x80:
+				printf("yes\n");
+				break;
+			case 0x81:
+				printf("no\n");
+				break;
+			default  :
+				printf("unknown\n");
+			}
+			break;
+		case 0x08:
+			printf("  Expiry            : not done yet\n");
+			return;
+		case 0x09:
+			pos++;
+			pos++;
+			if (Buffer[pos-1] == 128) {
+				printf("  From              : ");
+				len2=Buffer[pos-2]-1;
+				for (i=0;i<len2;i++) {
+					buff[i] = Buffer[pos++];
+				}
+				buff[i] = 0;
+				if (strstr(buff,"/TYPE=PLMN")!=NULL) {
+					buff[strlen(buff)-10] = 0;
+					printf("phone %s\n",buff);					
+				} else {
+					printf("%s\n",buff);
+				}
+			}
+			break;
+		case 0x0A:
+			printf("  Message class     : ");
+			switch (Buffer[pos++]) {
+				case 0x80: printf("personal\n");	break;
+				case 0x81: printf("advertisment\n");	break;
+				case 0x82: printf("informational\n");	break;
+				case 0x83: printf("auto\n");		break;
+				default  : printf("unknown\n");		break;
+			}
+			break;
+		case 0x0B:
+			printf("  Message ID        : ");
+			while (Buffer[pos]!=0x00) {
+				printf("%c",Buffer[pos]);
+				pos++;
+			}
+			printf("\n");
+			pos++;
+			break;
+		case 0x0C:
+			printf("  Message type      : ");
+			switch (Buffer[pos++]) {
+				case 0x80: printf("m-send-req\n");  	   break;
+				case 0x81: printf("m-send-conf\n"); 	   break;
+				case 0x82: printf("m-notification-ind\n"); break;
+				case 0x83: printf("m-notifyresp-ind\n");   break;
+				case 0x84: printf("m-retrieve-conf\n");	   break;
+				case 0x85: printf("m-acknowledge-ind\n");  break;
+				case 0x86: printf("m-delivery-ind\n");	   break;
+				default  : printf("unknown\n"); 	   return;
+			}			
+			break;
+		case 0x0D:
+			value2 = Buffer[pos] & 0x7F;
+			printf("  MMS version       : %i.%i\n", (value2  & 0x70) >> 4, value2 & 0x0f);
+			pos++;
+			break;
+		case 0x0E:
+			printf("  Message size      : not done yet\n");
+			return;
+		case 0x0F:
+			printf("  Priority          : ");
+			switch (Buffer[pos++]) {
+				case 0x80: printf("low\n");	break;
+				case 0x81: printf("normal\n");	break;
+				case 0x82: printf("high\n");	break;
+				default  : printf("unknown\n");	break;
+			}
+			break;
+		case 0x10:
+			printf("  Read reply        : ");
+			switch(Buffer[pos++]) {
+			case 0x80:
+				printf("yes\n");
+				break;
+			case 0x81:
+				printf("no\n");
+				break;
+			default  :
+				printf("unknown\n");
+			}
+			break;
+		case 0x11:
+			printf("  Report allowed    : not done yet\n");
+			return;
+		case 0x12:
+			printf("  Response status   : not done yet\n");
+			return;
+		case 0x13:
+			printf("  Response text     : not done yet\n");
+			return;
+		case 0x14:
+			printf("  Sender visibility : not done yet\n");
+			return;
+		case 0x15:
+			printf("  Status            : ");
+			switch (Buffer[pos++]) {
+				case 0x80: printf("expired\n");		break;
+				case 0x81: printf("retrieved\n");	break;
+				case 0x82: printf("rejected\n");	break;
+				case 0x83: printf("deferred\n");	break;
+				case 0x84: printf("unrecognized\n");	break;
+				default  : printf("unknown\n");
+			}
+			pos++;
+			pos++;
+			break;
+		case 0x16:
+			printf("  Subject           : not done yet\n");
+			return;
+		case 0x17:
+			printf("  To                : ");
+			i = 0;
+			while (Buffer[pos]!=0x00) {
+				buff[i++] = Buffer[pos++];
+			}
+			buff[i] = 0;
+			if (strstr(buff,"/TYPE=PLMN")!=NULL) {
+				buff[strlen(buff)-10] = 0;
+				printf("phone %s\n",buff);					
+			} else {
+				printf("%s\n",buff);
+			}
+			pos++;
+			break;
+		case 0x18:
+			printf("  Transaction ID    : ");
+			while (Buffer[pos]!=0x00) {
+				printf("%c",Buffer[pos]);
+				pos++;
+			}
+			printf("\n");
+			pos++;
+			break;
+		default:
+			printf("  unknown\n");
+			break;
+		}
+	}
+
+	//body
+	if (type != 35 && type != 51) return;
+
+	value = 0;
+	while (true) {
+		value = value << 7;
+		value |= Buffer[pos] & 0x7F;
+		pos++;
+		if (!(Buffer[pos-1] & 0x80)) break;
+	}
+	value2 = value;
+	printf("  Parts             : %i\n",value2);
+	parts = value;
+
+	for (j=0;j<parts;j++) {
+		value = 0;
+		while (true) {
+			value = value << 7;
+			value |= Buffer[pos] & 0x7F;
+			pos++;
+			if (!(Buffer[pos-1] & 0x80)) break;
+		}
+//		printf("    Header len: %i",value);
+		len2 = value;
+
+		value = 0;
+		while (true) {
+			value = value << 7;
+			value |= Buffer[pos] & 0x7F;
+			pos++;
+			if (!(Buffer[pos-1] & 0x80)) break;
+		}
+//		printf(", data len: %i\n",value);
+		len3 = value;
+
+		i = 0;
+		//content type
+		printf("    Content type    : ");
+		if (Buffer[pos] <= 0x1E) {
+			len4 = Buffer[pos+i];
+			i++;
+			type = Buffer[pos+i] & 0x7f;
+			i++;
+			PrintMIMEType(type);
+			while (i<len4) {
+				switch (Buffer[pos+i]) {
+				case 0x89:
+					printf("; type=");
+					i++;
+					while (Buffer[pos+i]!=0x00) {
+						printf("%c",Buffer[pos+i]);
+						i++;
+					}
+					i++;
+					break;
+				case 0x8A:
+					printf("; start=");
+					i++;
+					while (Buffer[pos+i]!=0x00) {
+						printf("%c",Buffer[pos+i]);
+						i++;
+					}
+					i++;
+					break;
+				default:
+					i++;
+					break;
+				}
+			}
+			i++;
+		} else if (Buffer[pos] == 0x1F) {
+			i++;
+			len4 = Buffer[pos+i];
+			i++;
+			if (!(Buffer[pos+i] & 0x80)) {
+				while (Buffer[pos+i]!=0x00) {
+					printf("%c",Buffer[pos+i]);
+					i++;
+				}
+				i++;
+			} else {
+				value = Buffer[pos+i] & 0x7F;
+				PrintMIMEType(value);
+				i++;
+			}
+		} else if (Buffer[pos] >= 0x20 && Buffer[pos] <= 0x7F) {
+			printf("not done yet\n");
+		} else if (Buffer[pos] >= 0x80 && Buffer[pos] < 0xFF) {
+			type = Buffer[pos] & 0x7f;
+			PrintMIMEType(type);
+		}
+		printf("\n");
+
+		pos+=i;
+		len2-=i;
+
+		i=0;
+		while (i<len2) {
+			switch (Buffer[pos+i]) {
+			case 0x81:
+				i++;
+				break;
+			case 0x85:
+				while (Buffer[pos+i]!=0x00) {
+					i++;
+				}
+				break;
+			case 0x86:
+				while (Buffer[pos+i]!=0x00) {
+					i++;
+				}
+				break;
+			case 0x8E:
+				i++;
+				printf("      Name          : ");
+				while (Buffer[pos+i]!=0x00) {
+					printf("%c",Buffer[pos+i]);
+					i++;
+				}
+				printf("\n");
+				break;					
+			case 0xAE:
+				while (Buffer[pos+i]!=0x00) {
+					i++;
+				}
+				break;					
+			case 0xC0:
+				i++;
+				i++;
+				printf("      SMIL CID      : ");
+				while (Buffer[pos+i]!=0x00) {
+					printf("%c",Buffer[pos+i]);
+					i++;
+				}
+				printf("\n");
+				break;					
+			default:
+				printf("unknown %02x ",Buffer[pos+i]);
+			}
+			i++;
+		}
+		pos+=i;
+
+		//data
+		if (num != -1 && answer_yes("Do you want to save this attachment")) {
+			sprintf(buff,"%i_%i",num,j+1);
+			file = fopen(buff,"wb");
+			fwrite(Buffer+pos, 1, len3, file);
+			fclose(file);
+		}
+		pos+=len3;
+	}
+}
+
 static void GetEachMMS(int argc, char *argv[])
 {
 	GSM_MMSFile		MMSFile;
 	bool			start = true;
 	GSM_MMSFolders 		folders;
-	int			Handle,Size;
+	int			Handle,Size,num=-1;
+
+	if (argc>2 && mystrncasecmp(argv[2],"-save",0)) num=0;
 
 	GSM_Init(true);
 
@@ -1694,6 +2103,9 @@ static void GetEachMMS(int argc, char *argv[])
 		Print_Error(error);
 		start = false;
 
+		printf("Folder %s\n",DecodeUnicodeConsole(folders.Folder[MMSFile.Folder-1].Name));
+		printf("  Filesystem ID     : \"%s\"\n",DecodeUnicodeConsole(MMSFile.File.ID_FullName));
+
 		if (MMSFile.File.Buffer != NULL) {
 			free(MMSFile.File.Buffer);
 			MMSFile.File.Buffer = NULL;
@@ -1703,10 +2115,15 @@ static void GetEachMMS(int argc, char *argv[])
 			error = Phone->GetFilePart(&s,&MMSFile.File,&Handle,&Size);
 			if (error == ERR_EMPTY) break;
 			Print_Error(error);
+			printmsgerr("%c  Reading: %i percent",13,MMSFile.File.Used*100/Size);
 		}
+		printmsgerr("%c",13);
 
-		printf("Folder %s\n",DecodeUnicodeConsole(folders.Folder[MMSFile.Folder-1].Name));
+		DecodeMMSFile(MMSFile.File.Buffer, MMSFile.File.Used,num);
+		if (num!=-1) num++;
 	}
+
+	if (MMSFile.File.Buffer != NULL) free(MMSFile.File.Buffer);
 
 	GSM_Terminate();
 }
@@ -7729,11 +8146,6 @@ struct NokiaFolderInfo {
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 static struct NokiaFolderInfo Folder[] = {
 	/* Language indepedent in DCT4 in filesystem 1 */
-	{"",	 "MMSUnreadInbox", "INBOX",		"3"},
-	{"",	 "MMSReadInbox",   "INBOX",		"3"},
-	{"",	 "MMSOutbox",	   "OUTBOX",		"3"},
-	{"",	 "MMSSent",	   "SENT",		"3"},
-	{"",	 "MMSDrafts",	   "DRAFTS",		"3"},
 	{"",	 "Application",	   "applications",	"3"},
 	{"",	 "Game",	   "games",		"3"},
 	/* Language indepedent in DCT4 in filesystem 2 */
@@ -7779,8 +8191,6 @@ static void NokiaAddFile(int argc, char *argv[])
 {
 	GSM_File		File, Files;
 	FILE			*file;
-	GSM_DateTime		DT,DT2;
-	time_t     		t_time1,t_time2;
 	unsigned char 		buffer[10000],JAR[500],Vendor[500],Name[500],Version[500],FileID[400];
 	bool 			Start = true, Found = false, wasclr;
 	bool			ModEmpty = false;
@@ -8075,41 +8485,6 @@ static void NokiaAddFile(int argc, char *argv[])
 				exit(-1);
 			}
 		}
-	} else { /* MMS things */
-		DT2.Year   = 2001;
-		DT2.Month  = 12;
-		DT2.Day    = 31;
-		DT2.Hour   = 14;
-		DT2.Minute = 00;
-		DT2.Second = 00;
-		t_time2    = Fill_Time_T(DT2);
-
-		GSM_GetCurrentDateTime(&DT);
-		t_time1    = Fill_Time_T(DT);
-
-		sprintf(buffer,"%07X %07X ",(int)(t_time1-t_time2-40),(int)(t_time1-t_time2-40));
-#ifdef DEVELOP
-		sprintf(buffer,"2A947BD 2A947DB ");
-#endif
-		/* 40 = inbox "multimedia message received" message */
-		/* 30 = outbox sending failed */
-		if (mystrncasecmp(argv[2],"MMSUnreadInbox",0)) 	  strcat(buffer,"43 ");
-		else if (mystrncasecmp(argv[2],"MMSReadInbox",0)) strcat(buffer,"50 ");
-		else if (mystrncasecmp(argv[2],"MMSOutbox",0))    strcat(buffer,"10 ");
-		else if (mystrncasecmp(argv[2],"MMSSent",0))      strcat(buffer,"20 ");
-                else if (mystrncasecmp(argv[2],"MMSDrafts",0))    strcat(buffer,"61 ");
-		if (argc > 4) {
-			if (!mystrncasecmp(argv[2],"MMSOutbox",0) &&
-			    !mystrncasecmp(argv[2],"MMSSent",0)) {
-				sprintf(Name,"%s",argv[4]);
-				strcat(buffer,Name);
-			}
-			if (argc > 5) {
-				sprintf(Name,"%zd%s/TYPE=PLMN",strlen(argv[5])+10,argv[5]);
-				strcat(buffer,Name);
-			}
-		}
-		ModEmpty = true;
 	}
 
 	error = GSM_ReadFile(argv[3], &File);
@@ -8126,12 +8501,6 @@ static void NokiaAddFile(int argc, char *argv[])
 	}
 
 	GSM_IdentifyFileFormat(&File);
-#ifdef DEVELOP
-	if (mystrncasecmp(argv[2],"Gallery",0) || mystrncasecmp(argv[2],"Tones",0)) {
-	} else { /* MMS things */
-		File.Type = GSM_File_MMS;
-	}
-#endif
 
 	AddOneFile(&File, "Writing file: ");
 	free(File.Buffer);
@@ -8216,6 +8585,19 @@ static void SaveMMSFile(int argc, char *argv[])
 	if (file == NULL) Print_Error(ERR_CANTOPENFILE);
 	fwrite(Buffer,1,len,file);
 	fclose(file);
+}
+
+static void ReadMMSFile(int argc, char *argv[])
+{
+	GSM_File		File;
+
+	File.Buffer = NULL;
+	error = GSM_ReadFile(argv[2], &File);
+	Print_Error(error);
+
+	DecodeMMSFile(File.Buffer,File.Used,-1);
+
+	free(File.Buffer);
 }
 
 static void CallDivert(int argc, char *argv[])
@@ -8555,7 +8937,6 @@ static GSM_Parameters Parameters[] = {
 	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
 	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
-	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"MMSUnreadInbox|MMSReadInbox|MMSOutbox|MMSDrafts|MMSSent file sender title"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly]"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
 	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			"number"},
@@ -8639,8 +9020,8 @@ static GSM_Parameters Parameters[] = {
 	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"FILES configfile"},
 	{"--sendsmsdsms",		2,30, SendSaveDisplaySMS,	{H_SMS,H_Other,0},		"TEXT|WAPSETTINGS|... destination FILES|MYSQL configfile ... (options like in sendsms)"},
 	{"--getmmsfolders",		0, 0, GetMMSFolders,		{H_MMS,0},			""},
-	{"--getallmms",			0, 0, GetEachMMS,		{H_MMS,0},			""},
-	{"--geteachmms",		0, 0, GetEachMMS,		{H_MMS,0},			""},
+	{"--getallmms",			0, 1, GetEachMMS,		{H_MMS,0},			"[-save]"},
+	{"--geteachmms",		0, 1, GetEachMMS,		{H_MMS,0},			"[-save]"},
 	{"--getringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
 	{"--getphoneringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
 	{"--getringtoneslist",		0, 0, GetRingtonesList,		{H_Ringtone,0},			""},
@@ -8686,6 +9067,7 @@ static GSM_Parameters Parameters[] = {
 	{"--getsyncmlsettings",		1, 2, GetSyncMLSettings,	{H_WAP,0},			"start [stop]"},
 	{"--getchatsettings",		1, 2, GetChatSettings,		{H_WAP,0},			"start [stop]"},
 	{"--savemmsfile",		3, 15,SaveMMSFile,		{H_MMS,0},			"file [-subject text][-text text]"},
+	{"--readmmsfile",		1, 1, ReadMMSFile,		{H_MMS,0},			"file"},
 	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"STARTUP [file]"},
 	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"CALLER location [file]"},
 	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"OPERATOR [file]"},
