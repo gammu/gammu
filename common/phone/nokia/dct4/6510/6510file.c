@@ -1762,6 +1762,10 @@ GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 			if (!Files.Folder) continue;
 			CopyUnicodeString(folders->Folder[folders->Number].Name,Files.Name);
 			CopyUnicodeString(Priv->MMSFoldersID2[folders->Number],Files.ID_FullName);
+			folders->Folder[folders->Number].InboxFolder = false;
+			if (!strcmp(DecodeUnicodeString(Files.Name),"Inbox")) {
+				folders->Folder[folders->Number].InboxFolder = true;
+			}
 			folders->Number++;
 		}
 	}
@@ -1777,7 +1781,19 @@ GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 			if (error != ERR_NONE) return error;
 			Start = false;
 			if (!Files.Folder) continue;
-			CopyUnicodeString(folders->Folder[folders->Number].Name,Files.Name);
+			folders->Folder[folders->Number].InboxFolder = false;
+			if (!strcmp(DecodeUnicodeString(Files.Name),"predefinbox")) {
+				EncodeUnicode(folders->Folder[folders->Number].Name,"Inbox",5);
+				folders->Folder[folders->Number].InboxFolder = true;
+			} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefoutbox")) {
+				EncodeUnicode(folders->Folder[folders->Number].Name,"Outbox",6);
+			} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefsent")) {
+				EncodeUnicode(folders->Folder[folders->Number].Name,"Sent items",10);
+			} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefdrafts")) {
+				EncodeUnicode(folders->Folder[folders->Number].Name,"Drafts",6);
+			} else {
+				CopyUnicodeString(folders->Folder[folders->Number].Name,Files.Name);
+			}
 			CopyUnicodeString(Priv->MMSFoldersID2[folders->Number],Files.ID_FullName);
 			folders->Number++;
 		}

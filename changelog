@@ -40,6 +40,23 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20051002 - 1.02.20
+* new functionality:
+  * --geteachmms/--getallmms/--getmmsfolders should work fine for majority
+    of Nokia phones/MMS files combinations. It will be improved, but if you 
+    want to have support for some feature(s) faster, please use for example 
+    -save with --geteachmms, send me MMS file (which makes problems now) and 
+    I will change MMS decoder.
+  * started removing old & obsolete MMS code parts (some in --nokiaaddfile
+    and other)
+
+* fixes and improvements:
+  * SE T610, SE T700 and other SE fixes. FOR TESTING             (Michal Cihar)
+
+NOTES: there should be checked pbk for AT models, there is still OBEX
+       module for fixing (to be compatible with changes from 1.02.16).
+       After it and some others you should expect 1.03.00
+
 20050927 - 1.02.16
 * new functionality:
   * geteachmms and getmmsfolders work for 6230i and phones with filesystem1 
