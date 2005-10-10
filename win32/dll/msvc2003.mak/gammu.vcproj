@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="7.10"
-	Name="gammu"
+	Name="gammudll"
 	SccProjectName=""
 	SccLocalPath="">
 	<Platforms>

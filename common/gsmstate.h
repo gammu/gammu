@@ -1232,7 +1232,7 @@ typedef struct {
 	 */
 	GSM_Error (*SetMMSSettings)     (GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
 	GSM_Error (*GetMMSFolders)      (GSM_StateMachine *s, GSM_MMSFolders *folders);
-	GSM_Error (*GetNextMMSFileInfo)	(GSM_StateMachine *s, GSM_MMSFile *file, bool start);
+	GSM_Error (*GetNextMMSFileInfo)	(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start);
 	/**
 	 * Gets bitmap.
 	 */
