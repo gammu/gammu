@@ -405,7 +405,7 @@ GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo2 *info)
 	return ERR_NONE;
 }
 
-void GSM_AddWAPMIMEType(int type, unsigned char *buffer) 
+void GSM_AddWAPMIMEType(int type, unsigned char *buffer)
 {
 	switch (type) {
 	case  3:sprintf(buffer,"%stext/plain",buffer);					break;
@@ -523,9 +523,9 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			break;
 		case 0x06:
 			dbgprintf("  Delivery report   : ");
-			info->MMSReportAvailable = true;			
+			info->MMSReportAvailable = true;
 			switch(file->Buffer[pos++]) {
-				case 0x80: 
+				case 0x80:
 					dbgprintf("yes\n");
 					info->MMSReport = true;
 					break;
@@ -669,7 +669,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			if (strstr(buff,"/TYPE=PLMN")!=NULL) {
 				buff[strlen(buff)-10] = 0;
 				info->DestinationType = MMSADDRESS_PHONE;
-				dbgprintf("phone %s\n",buff);					
+				dbgprintf("phone %s\n",buff);
 			} else {
 				info->DestinationType = MMSADDRESS_UNKNOWN;
 				dbgprintf("%s\n",buff);
@@ -714,7 +714,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			pos++;
 			if (!(file->Buffer[pos-1] & 0x80)) break;
 		}
-		dbgprintf("    Header len: %i",value);
+		dbgprintf("    Header len: %li",value);
 		len2 = value;
 
 		value = 0;
@@ -724,7 +724,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			pos++;
 			if (!(file->Buffer[pos-1] & 0x80)) break;
 		}
-		dbgprintf(", data len: %i\n",value);
+		dbgprintf(", data len: %li\n",value);
 		len3 = value;
 
 		//content type
@@ -835,10 +835,10 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				}
 				dbgprintf("%s\n",buff);
 				EncodeUnicode(info->Entries[info->EntriesNum].File.Name,buff,strlen(buff));
-				break;					
+				break;
 			case 0xAE:
 				while (file->Buffer[pos+i]!=0x00) i++;
-				break;					
+				break;
 			case 0xC0:
 				i++;
 				i++;
@@ -851,7 +851,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				}
 				dbgprintf("%s\n",buff);
 				EncodeUnicode(info->Entries[info->EntriesNum].SMIL,buff,strlen(buff));
-				break;					
+				break;
 			default:
 				dbgprintf("unknown3 %02x\n",file->Buffer[pos+i]);
 			}

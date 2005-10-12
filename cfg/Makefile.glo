@@ -126,13 +126,13 @@ all: gammu
 
 $(TOPDIR)/gammu/gammu: $(COMMON) $(GAMMU)
 	@echo Linking gammu
-	@$(CC) $(COMMON) $(GAMMU) -lm $(LDLIBS) $(SMSD_LIBS) -o $(TOPDIR)/gammu/gammu
+	@$(CC) $(COMMON) $(GAMMU) $(LDLIBS) $(SMSD_LIBS) -o $(TOPDIR)/gammu/gammu
 
 gammu: $(TOPDIR)/gammu/gammu
 
 djgpp: $(COMMON) $(DJGPP) $(GAMMU)
 	@echo Linking gammu
-	@$(CC) $(COMMON) $(DJGPP) $(GAMMU) -lm $(LDLIBS) $(SMSD_LIBS) -o $(TOPDIR)/gammu/gammu
+	@$(CC) $(COMMON) $(DJGPP) $(GAMMU) $(LDLIBS) $(SMSD_LIBS) -o $(TOPDIR)/gammu/gammu
 
 $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR): $(COMMON)
 	@echo Linking libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
@@ -148,7 +148,7 @@ $(TOPDIR)/common/libGammu.a: $(COMMON)
 
 $(TOPDIR)/gammu/gammu-shared: $(COMMON) $(GAMMU) $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
 	@echo Linking gammu-shared
-	@$(CC) -L$(TOPDIR)/common -lGammu $(LDFLAGS) $(SMSD_LIBS) $(LDLIBS) $(GAMMU) -lm -o $(TOPDIR)/gammu/gammu-shared
+	@$(CC) -L$(TOPDIR)/common -lGammu $(LDFLAGS) $(SMSD_LIBS) $(LDLIBS) $(GAMMU) -o $(TOPDIR)/gammu/gammu-shared
 
 shared: $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(TOPDIR)/common/libGammu.a $(TOPDIR)/gammu/gammu-shared
 

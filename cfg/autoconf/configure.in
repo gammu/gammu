@@ -55,6 +55,8 @@ dnl Now this is checking is not used
 dnl AC_CHECK_FUNCS(mktime select socket strdup strerror strstr)
 dnl AC_SUBST(HAVE_SCANDIR)
 dnl AC_SUBST(HAVE_ALPHASORT)
+AC_CHECK_LIB(m, sin)
+LDLIBS="$LDLIBS $LIBS"
 
 dnl Checks for header files.
 AC_HEADER_STDC
