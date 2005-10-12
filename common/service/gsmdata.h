@@ -95,35 +95,41 @@ void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, int *Length, char *Tex
 #define MAX_MULTI_MMS 20
 
 typedef enum {
-	MMS_Text = 1,
-	MMS_Bitmap_JPG
-} EncodeMultiPartMMSID;
-
-typedef struct {
-	EncodeMultiPartMMSID    ID;
-
-	GSM_File		File;
-	unsigned char		*Buffer;
-} EncodeMultiPartMMSEntry;
-
-typedef struct {
-	/* Input values */
-	EncodeMultiPartMMSEntry Entries[MAX_MULTI_MMS];
-	int			EntriesNum;
-
-	unsigned char		Source[200];
-	unsigned char		Destination[200];
-	unsigned char		Subject[200];
-} GSM_EncodeMultiPartMMSInfo;
-
-void GSM_EncodeMMSFile		(GSM_EncodeMultiPartMMSInfo *Info, unsigned char *Buffer, int *Length);
-void GSM_ClearMultiPartMMSInfo	(GSM_EncodeMultiPartMMSInfo *Info);
+	MMSADDRESS_PHONE,
+	MMSADDRESS_UNKNOWN
+} MMSAddressType;
 
 typedef struct {
 	GSM_File		File;
-	int			Status;
-	int			Folder;
-} GSM_MMSFile;
+	unsigned char		ContentType[400];	// CT in Unicode
+	unsigned char		SMIL[400];		// Smil ID in Unicode
+} EncodedMultiPartMMSEntry2;
+
+typedef struct {
+	/* Subparts */
+	EncodedMultiPartMMSEntry2 Entries[MAX_MULTI_MMS];
+	int			  EntriesNum;
+
+	unsigned char		  Source[200];		// in Unicode
+	MMSAddressType		  SourceType;
+	unsigned char		  Destination[200];	// in Unicode
+	MMSAddressType		  DestinationType;
+	unsigned char	  	  CC[200];		// in Unicode
+	MMSAddressType		  CCType;
+
+	unsigned char		  Subject[200];		// in Unicode
+	unsigned char		  ContentType[400];	// CT in Unicode
+	unsigned char		  MSGType[50];		// no Unicode
+	
+	bool			  DateTimeAvailable;
+	GSM_DateTime		  DateTime;
+
+	bool			  MMSReportAvailable;
+	bool			  MMSReport;
+} GSM_EncodedMultiPartMMSInfo2;
+
+GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSInfo2 *info);
+GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo2 *info);
 
 /* ---------------------- MMS folders ------------------------------------- */
 

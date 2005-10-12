@@ -77,19 +77,21 @@ void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 	rec[0] = Recurrance / 256;
 	rec[1] = Recurrance % 256;
 
-	if (endday != NULL) {
-		endday[0] = 0;
-		endday[1] = 0;
-	}
+	if (endday == NULL) return;
+
+	endday[0] = 0;
+	endday[1] = 0;
+
 	if (end == -1) return;
+
+	t_time1 = Fill_Time_T(entry->Entries[start].Date);
+	t_time2 = Fill_Time_T(entry->Entries[end].Date);
+	if (t_time2 - t_time1 <= 0) return;
 
 	switch (Recurrance) {
 		case 24:
 		case 24*7:
 		case 24*14:
-			t_time1 = Fill_Time_T(entry->Entries[start].Date);
-			t_time2 = Fill_Time_T(entry->Entries[end].Date);
-			if (t_time2 - t_time1 <= 0) return;
 			Repeat = (t_time2 - t_time1) / (60*60*Recurrance) + 1;
 			break;
 		case 0xffff-1:
@@ -111,10 +113,8 @@ void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 			break;
 	}
 
-	if (endday != NULL) {
-		endday[0] = Repeat/256;
-		endday[1] = Repeat%256;
-	}
+	endday[0] = Repeat/256;
+	endday[1] = Repeat%256;
 
 	dbgprintf("Repeat number: %i\n",Repeat);
 }

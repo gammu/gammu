@@ -212,6 +212,280 @@ static bool answer_yes(char *text)
 	}
 }
 
+static void PrintCalendar(GSM_CalendarEntry *Note)
+{
+	int			i_age = 0,i;
+	GSM_DateTime		Alarm,DateTime;
+	GSM_MemoryEntry		entry;
+	unsigned char		*name;
+
+    	bool 			repeating 		= false;
+    	int 			repeat_dayofweek 	= -1;
+    	int 			repeat_day 		= -1;
+    	int 			repeat_weekofmonth 	= -1;
+    	int 			repeat_month 		= -1;
+    	int 			repeat_frequency 	= -1;
+    	GSM_DateTime 		repeat_startdate 	= {0,0,0,0,0,0,0};
+    	GSM_DateTime 		repeat_stopdate 	= {0,0,0,0,0,0,0};
+
+	printmsg("Note type    : ");
+	switch (Note->Type) {
+		case GSM_CAL_REMINDER 	: printmsg("Reminder (Date)\n");		break;
+		case GSM_CAL_CALL     	: printmsg("Call\n");			   	break;
+		case GSM_CAL_MEETING  	: printmsg("Meeting\n");		   	break;
+		case GSM_CAL_BIRTHDAY 	: printmsg("Birthday (Anniversary)\n");		break;
+		case GSM_CAL_MEMO	: printmsg("Memo (Miscellaneous)\n");		break;
+		case GSM_CAL_TRAVEL	: printmsg("Travel\n");			   	break;
+		case GSM_CAL_VACATION	: printmsg("Vacation\n");			break;
+		case GSM_CAL_ALARM    	: printmsg("Alarm\n");		   		break;
+		case GSM_CAL_DAILY_ALARM: printmsg("Daily alarm\n");		   	break;
+		case GSM_CAL_T_ATHL   	: printmsg("Training/Athletism\n"); 	   	break;
+		case GSM_CAL_T_BALL   	: printmsg("Training/Ball Games\n"); 	   	break;
+		case GSM_CAL_T_CYCL   	: printmsg("Training/Cycling\n"); 	   	break;
+		case GSM_CAL_T_BUDO   	: printmsg("Training/Budo\n"); 	   		break;
+		case GSM_CAL_T_DANC   	: printmsg("Training/Dance\n"); 	   	break;
+		case GSM_CAL_T_EXTR   	: printmsg("Training/Extreme Sports\n"); 	break;
+		case GSM_CAL_T_FOOT   	: printmsg("Training/Football\n"); 	   	break;
+		case GSM_CAL_T_GOLF   	: printmsg("Training/Golf\n"); 	   		break;
+		case GSM_CAL_T_GYM    	: printmsg("Training/Gym\n"); 	   		break;
+		case GSM_CAL_T_HORS   	: printmsg("Training/Horse Races\n");    	break;
+		case GSM_CAL_T_HOCK   	: printmsg("Training/Hockey\n"); 	  	break;
+		case GSM_CAL_T_RACE   	: printmsg("Training/Races\n"); 	   	break;
+		case GSM_CAL_T_RUGB   	: printmsg("Training/Rugby\n"); 	   	break;
+		case GSM_CAL_T_SAIL   	: printmsg("Training/Sailing\n"); 	   	break;
+		case GSM_CAL_T_STRE   	: printmsg("Training/Street Games\n");   	break;
+		case GSM_CAL_T_SWIM   	: printmsg("Training/Swimming\n"); 	   	break;
+		case GSM_CAL_T_TENN   	: printmsg("Training/Tennis\n"); 	   	break;
+		case GSM_CAL_T_TRAV   	: printmsg("Training/Travels\n");        	break;
+		case GSM_CAL_T_WINT   	: printmsg("Training/Winter Games\n");   	break;
+		default           	: printmsg("UNKNOWN\n");
+	}
+	Alarm.Year = 0;
+
+	repeating 		= false;
+	repeat_dayofweek 	= -1;
+	repeat_day 		= -1;
+	repeat_weekofmonth 	= -1;
+	repeat_month 		= -1;
+	repeat_frequency 	= -1;
+	repeat_startdate.Day	= 0;
+	repeat_stopdate.Day 	= 0;
+
+	for (i=0;i<Note->EntriesNum;i++) {
+		switch (Note->Entries[i].EntryType) {
+		case CAL_START_DATETIME:
+			printmsg("Start        : %s\n",OSDateTime(Note->Entries[i].Date,false));
+			memcpy(&DateTime,&Note->Entries[i].Date,sizeof(GSM_DateTime));
+			break;
+		case CAL_END_DATETIME:
+			printmsg("Stop         : %s\n",OSDateTime(Note->Entries[i].Date,false));
+			memcpy(&DateTime,&Note->Entries[i].Date,sizeof(GSM_DateTime));
+			break;
+		case CAL_ALARM_DATETIME:
+			if (Note->Type==GSM_CAL_BIRTHDAY) {
+				printmsg("Tone alarm   : forever on each %i. day of ",Note->Entries[i].Date.Day);
+				switch(Note->Entries[i].Date.Month) {
+					case 1 : printmsg("January"); 	 break;
+					case 2 : printmsg("February"); 	 break;
+					case 3 : printmsg("March"); 	 break;
+					case 4 : printmsg("April"); 	 break;
+					case 5 : printmsg("May"); 	 break;
+					case 6 : printmsg("June"); 	 break;
+					case 7 : printmsg("July"); 	 break;
+					case 8 : printmsg("August"); 	 break;
+					case 9 : printmsg("September");  break;
+					case 10: printmsg("October"); 	 break;
+					case 11: printmsg("November"); 	 break;
+					case 12: printmsg("December"); 	 break;
+					default: printmsg("Bad month!"); break;
+				}
+				printmsg(" %02i:%02i:%02i\n",
+					Note->Entries[i].Date.Hour,
+					Note->Entries[i].Date.Minute,
+					Note->Entries[i].Date.Second);
+			} else {
+				printmsg("Tone alarm   : %s\n",OSDateTime(Note->Entries[i].Date,false));
+			}
+			memcpy(&Alarm,&Note->Entries[i].Date,sizeof(GSM_DateTime));
+			break;
+		case CAL_SILENT_ALARM_DATETIME:
+			if (Note->Type==GSM_CAL_BIRTHDAY) {
+				printmsg("Silent alarm : forever on each %i. day of ",Note->Entries[i].Date.Day);
+				switch(Note->Entries[i].Date.Month) {
+					case 1 : printmsg("January"); 	 break;
+					case 2 : printmsg("February"); 	 break;
+					case 3 : printmsg("March"); 	 break;
+					case 4 : printmsg("April"); 	 break;
+					case 5 : printmsg("May"); 	 break;
+					case 6 : printmsg("June"); 	 break;
+					case 7 : printmsg("July"); 	 break;
+					case 8 : printmsg("August"); 	 break;
+					case 9 : printmsg("September");  break;
+					case 10: printmsg("October"); 	 break;
+					case 11: printmsg("November"); 	 break;
+					case 12: printmsg("December"); 	 break;
+					default: printmsg("Bad month!"); break;
+				}
+				printmsg(" %02i:%02i:%02i\n",
+					Note->Entries[i].Date.Hour,
+					Note->Entries[i].Date.Minute,
+					Note->Entries[i].Date.Second);
+			} else {
+				printmsg("Silent alarm : %s\n",OSDateTime(Note->Entries[i].Date,false));
+			}
+			memcpy(&Alarm,&Note->Entries[i].Date,sizeof(GSM_DateTime));
+			break;
+		case CAL_TEXT:
+			printmsg("Text         : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
+			break;
+		case CAL_LOCATION:
+			printmsg("Location     : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
+			break;
+		case CAL_PHONE:
+			printmsg("Phone        : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
+			break;
+		case CAL_PRIVATE:
+			printmsg("Private      : %s\n",Note->Entries[i].Number == 1 ? "Yes" : "No");
+			break;
+		case CAL_CONTACTID:
+			entry.Location = Note->Entries[i].Number;
+			entry.MemoryType = MEM_ME;
+			error=Phone->GetMemory(&s, &entry);
+			if (error == ERR_NONE) {
+				name = GSM_PhonebookGetEntryName(&entry);
+				if (name != NULL) {
+					printmsg("Contact ID   : \"%s\" (%d)\n", DecodeUnicodeConsole(name), Note->Entries[i].Number);
+				} else {
+					printmsg("Contact ID   : %d\n",Note->Entries[i].Number);
+				}
+			} else {
+				printmsg("Contact ID   : %d\n",Note->Entries[i].Number);
+			}
+			break;
+		case CAL_REPEAT_DAYOFWEEK:
+			repeat_dayofweek 	= Note->Entries[i].Number;
+			repeating 		= true;
+			break;
+		case CAL_REPEAT_DAY:
+			repeat_day 		= Note->Entries[i].Number;
+			repeating 		= true;
+			break;
+		case CAL_REPEAT_WEEKOFMONTH:
+			repeat_weekofmonth 	= Note->Entries[i].Number;
+			repeating 		= true;
+			break;
+		case CAL_REPEAT_MONTH:
+			repeat_month 		= Note->Entries[i].Number;
+			repeating 		= true;
+			break;
+		case CAL_REPEAT_FREQUENCY:
+			repeat_frequency 	= Note->Entries[i].Number;
+			repeating 		= true;
+			break;
+		case CAL_REPEAT_STARTDATE:
+			repeat_startdate 	= Note->Entries[i].Date;
+			repeating 		= true;
+			break;
+		case CAL_REPEAT_STOPDATE:
+			repeat_stopdate 	= Note->Entries[i].Date;
+			repeating 		= true;
+			break;
+		}
+	}
+	if (repeating) {
+		printmsg("Repeating    : ");
+		if ((repeat_startdate.Day == 0) && (repeat_stopdate.Day == 0)) {
+			printmsg("forever");
+		} else if (repeat_startdate.Day == 0) {
+			printmsg("till %s", OSDate(repeat_stopdate));
+		} else if (repeat_stopdate.Day == 0) {
+			printmsg("since %s", OSDate(repeat_startdate));
+		} else {
+			printmsg("since %s till %s", OSDate(repeat_startdate), OSDate(repeat_stopdate));
+		}
+		if (repeat_frequency != -1) {
+			if (repeat_frequency == 1) {
+				printmsg (" on each ");
+			} else {
+				printmsg(" on each %d. ", repeat_frequency);
+			}
+			if (repeat_dayofweek > 0) {
+				switch (repeat_dayofweek) {
+					case 1 : printmsg("Monday"); 	break;
+					case 2 : printmsg("Tuesday"); 	break;
+					case 3 : printmsg("Wednesday"); break;
+					case 4 : printmsg("Thursday"); 	break;
+					case 5 : printmsg("Friday"); 	break;
+					case 6 : printmsg("Saturday"); 	break;
+					case 7 : printmsg("Sunday"); 	break;
+					default: printmsg("Bad day!"); 	break;
+				}
+				if (repeat_weekofmonth > 0) {
+					printmsg(" in %d. week of ", repeat_weekofmonth);
+				} else {
+					printmsg(" in ");
+				}
+				if (repeat_month > 0) {
+					switch(repeat_month) {
+						case 1 : printmsg("January"); 	 break;
+						case 2 : printmsg("February"); 	 break;
+						case 3 : printmsg("March"); 	 break;
+						case 4 : printmsg("April"); 	 break;
+						case 5 : printmsg("May"); 	 break;
+						case 6 : printmsg("June"); 	 break;
+						case 7 : printmsg("July"); 	 break;
+						case 8 : printmsg("August"); 	 break;
+						case 9 : printmsg("September");  break;
+						case 10: printmsg("October"); 	 break;
+						case 11: printmsg("November"); 	 break;
+						case 12: printmsg("December"); 	 break;
+						default: printmsg("Bad month!"); break;
+					}
+				} else {
+					printmsg("each month");
+				}
+			} else if (repeat_day > 0) {
+				printmsg("%d. day of ", repeat_day);
+				if (repeat_month > 0) {
+					switch(repeat_month) {
+						case 1 : printmsg("January"); 	break;
+						case 2 : printmsg("February"); 	break;
+						case 3 : printmsg("March");	break;
+						case 4 : printmsg("April"); 	break;
+						case 5 : printmsg("May"); 	break;
+						case 6 : printmsg("June"); 	break;
+						case 7 : printmsg("July"); 	break;
+						case 8 : printmsg("August"); 	break;
+						case 9 : printmsg("September"); break;
+						case 10: printmsg("October"); 	break;
+						case 11: printmsg("November"); 	break;
+						case 12: printmsg("December"); 	break;
+						default: printmsg("Bad month!");break;
+					}
+				} else {
+					printmsg("each month");
+				}
+			} else {
+				printmsg("day");
+			}
+		}
+		printf("\n");
+	}
+	if (Note->Type == GSM_CAL_BIRTHDAY) {
+		if (Alarm.Year == 0x00) GSM_GetCurrentDateTime (&Alarm);
+		if (DateTime.Year != 0) {
+			i_age = Alarm.Year - DateTime.Year;
+			if (DateTime.Month < Alarm.Month) i_age++;
+			if (DateTime.Month == Alarm.Month &&
+			    DateTime.Day < Alarm.Day) {
+				i_age++;
+			}
+			printmsg("Age          : %d %s\n",i_age, (i_age==1)?"year":"years");
+		}
+	}
+	printf("\n");
+}
+
 #ifdef GSM_ENABLE_BEEP
 void GSM_PhoneBeep(void)
 {
@@ -1674,416 +1948,110 @@ static void GetMMSFolders(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-void PrintMIMEType(int type) 
+void DecodeMMSFile(GSM_File *file, int num)
 {
-	switch (type) {
-	case  3:printf("text/plain");					break;
-	case  7:printf("text/x-vCard");					break;
-	case 30:printf("image/jpeg");					break;
-	case 35:printf("application/vnd.wap.multipart.mixed");		break;
-	case 51:printf("application/vnd.wap.multipart.related"); 	break;
-	default:printf("MIME %i",type);					break;
-	}
-}
+	int				i,Pos;
+	char				buff[200];
+	GSM_EncodedMultiPartMMSInfo2 	info;
+	GSM_Error			error;
+	FILE				*file2;
+	GSM_MemoryEntry			pbk;
+	GSM_CalendarEntry 		Calendar;
+	GSM_ToDoEntry 			ToDo;
 
-void DecodeMMSFile(unsigned char *Buffer, int len, int num)
-{
-	int 		pos=0,type=0,parts,j;
-	int		i,len2,len3,len4,value2;
-	long 		value;
-	time_t 		timet;
-	GSM_DateTime 	Date;
-	char		buff[200];
-	FILE		*file;
-
-	if (num != -1 && answer_yes("Do you want to save all this file")) {
+	if (num != -1 && answer_yes("Do you want to save this MMS file")) {
 		sprintf(buff,"%i_0",num);
-		file = fopen(buff,"wb");
-		fwrite(Buffer, 1, len, file);
-		fclose(file);
+		file2 = fopen(buff,"wb");
+		fwrite(file->Buffer, 1, file->Used, file2);
+		fclose(file2);
 	}
 
-	//header
-	while(1) {
-		if (pos > len) break;
-		if (!(Buffer[pos] & 0x80)) break;
-		switch (Buffer[pos++] & 0x7F) {
-		case 0x01:
-			printf("  BCC               : not done yet\n");
-			return;
-		case 0x02:
-			printf("  CC                : not done yet\n");
-			return;
-		case 0x03:
-			printf("  Content location  : not done yet\n");
-			return;
-		case 0x04:
-			printf("  Content type      : ");
-			if (Buffer[pos] <= 0x1E) {
-				len2 = Buffer[pos++];
-				type = Buffer[pos++] & 0x7f;
-				PrintMIMEType(type);
-				i=0;
-				while (i<len2) {
-					switch (Buffer[pos+i]) {
-					case 0x89:
-						printf("; type=");
-						i++;
-						while (Buffer[pos+i]!=0x00) {
-							printf("%c",Buffer[pos+i]);
-							i++;
-						}
-						i++;
-						break;
-					case 0x8A:
-						printf("; start=");
-						i++;
-						while (Buffer[pos+i]!=0x00) {
-							printf("%c",Buffer[pos+i]);
-							i++;
-						}
-						i++;
-						break;
-					default:
-						i++;
-						break;
-					}
-				}
-				pos+=len2-1;
-			} else if (Buffer[pos] == 0x1F) {
-				printf("not done yet\n");
-			} else if (Buffer[pos] >= 0x20 && Buffer[pos] <= 0x7F) {
-				printf("not done yet\n");
-			} else if (Buffer[pos] >= 0x80 && Buffer[pos] < 0xFF) {
-				type = Buffer[pos++] & 0x7f;
-				PrintMIMEType(type);
-			}
-			printf("\n");
-			break;
-		case 0x05:
-			printf("  Date              : ");
-			value=0;
-			len2 = Buffer[pos++];
-			for (i=0;i<len2;i++) {
-				value=value<<8;
-				value |= Buffer[pos++];
-			}
-			timet = value;
-			Fill_GSM_DateTime(&Date, timet);
-			Date.Year = Date.Year + 1900;
-			printf("%s\n",OSDateTime(Date,0));
-			break;
-		case 0x06:
-			printf("  Delivery report   : ");
-			switch(Buffer[pos++]) {
-			case 0x80:
-				printf("yes\n");
-				break;
-			case 0x81:
-				printf("no\n");
-				break;
-			default  :
-				printf("unknown\n");
-			}
-			break;
-		case 0x08:
-			printf("  Expiry            : not done yet\n");
-			return;
-		case 0x09:
-			pos++;
-			pos++;
-			if (Buffer[pos-1] == 128) {
-				printf("  From              : ");
-				len2=Buffer[pos-2]-1;
-				for (i=0;i<len2;i++) {
-					buff[i] = Buffer[pos++];
-				}
-				buff[i] = 0;
-				if (strstr(buff,"/TYPE=PLMN")!=NULL) {
-					buff[strlen(buff)-10] = 0;
-					printf("phone %s\n",buff);					
-				} else {
-					printf("%s\n",buff);
-				}
-			}
-			break;
-		case 0x0A:
-			printf("  Message class     : ");
-			switch (Buffer[pos++]) {
-				case 0x80: printf("personal\n");	break;
-				case 0x81: printf("advertisment\n");	break;
-				case 0x82: printf("informational\n");	break;
-				case 0x83: printf("auto\n");		break;
-				default  : printf("unknown\n");		break;
-			}
-			break;
-		case 0x0B:
-			printf("  Message ID        : ");
-			while (Buffer[pos]!=0x00) {
-				printf("%c",Buffer[pos]);
-				pos++;
-			}
-			printf("\n");
-			pos++;
-			break;
-		case 0x0C:
-			printf("  Message type      : ");
-			switch (Buffer[pos++]) {
-				case 0x80: printf("m-send-req\n");  	   break;
-				case 0x81: printf("m-send-conf\n"); 	   break;
-				case 0x82: printf("m-notification-ind\n"); break;
-				case 0x83: printf("m-notifyresp-ind\n");   break;
-				case 0x84: printf("m-retrieve-conf\n");	   break;
-				case 0x85: printf("m-acknowledge-ind\n");  break;
-				case 0x86: printf("m-delivery-ind\n");	   break;
-				default  : printf("unknown\n"); 	   return;
-			}			
-			break;
-		case 0x0D:
-			value2 = Buffer[pos] & 0x7F;
-			printf("  MMS version       : %i.%i\n", (value2  & 0x70) >> 4, value2 & 0x0f);
-			pos++;
-			break;
-		case 0x0E:
-			printf("  Message size      : not done yet\n");
-			return;
-		case 0x0F:
-			printf("  Priority          : ");
-			switch (Buffer[pos++]) {
-				case 0x80: printf("low\n");	break;
-				case 0x81: printf("normal\n");	break;
-				case 0x82: printf("high\n");	break;
-				default  : printf("unknown\n");	break;
-			}
-			break;
-		case 0x10:
-			printf("  Read reply        : ");
-			switch(Buffer[pos++]) {
-			case 0x80:
-				printf("yes\n");
-				break;
-			case 0x81:
-				printf("no\n");
-				break;
-			default  :
-				printf("unknown\n");
-			}
-			break;
-		case 0x11:
-			printf("  Report allowed    : not done yet\n");
-			return;
-		case 0x12:
-			printf("  Response status   : not done yet\n");
-			return;
-		case 0x13:
-			printf("  Response text     : not done yet\n");
-			return;
-		case 0x14:
-			printf("  Sender visibility : not done yet\n");
-			return;
-		case 0x15:
-			printf("  Status            : ");
-			switch (Buffer[pos++]) {
-				case 0x80: printf("expired\n");		break;
-				case 0x81: printf("retrieved\n");	break;
-				case 0x82: printf("rejected\n");	break;
-				case 0x83: printf("deferred\n");	break;
-				case 0x84: printf("unrecognized\n");	break;
-				default  : printf("unknown\n");
-			}
-			pos++;
-			pos++;
-			break;
-		case 0x16:
-			printf("  Subject           : not done yet\n");
-			return;
-		case 0x17:
-			printf("  To                : ");
-			i = 0;
-			while (Buffer[pos]!=0x00) {
-				buff[i++] = Buffer[pos++];
-			}
-			buff[i] = 0;
-			if (strstr(buff,"/TYPE=PLMN")!=NULL) {
-				buff[strlen(buff)-10] = 0;
-				printf("phone %s\n",buff);					
-			} else {
-				printf("%s\n",buff);
-			}
-			pos++;
-			break;
-		case 0x18:
-			printf("  Transaction ID    : ");
-			while (Buffer[pos]!=0x00) {
-				printf("%c",Buffer[pos]);
-				pos++;
-			}
-			printf("\n");
-			pos++;
-			break;
-		default:
-			printf("  unknown\n");
-			break;
+	for (i=0;i<MAX_MULTI_MMS;i++) info.Entries[i].File.Buffer = NULL;
+	GSM_ClearMMSMultiPart(&info);
+
+	error = GSM_DecodeMMSFileToMultiPart(file, &info);
+	if (error == ERR_FILENOTSUPPORTED) {
+		printf("  Warning: some MMS file features unknown for Gammu decoder\n");
+		return;
+	}
+	Print_Error(error);
+
+	if (UnicodeLength(info.Source) != 0) {
+		printf("  Sender             : ");
+		switch (info.SourceType) {
+			case MMSADDRESS_PHONE: printf("phone "); break;
+			default: 				 break;
+		}
+		printf("%s\n",DecodeUnicodeString(info.Source));
+	}
+	if (UnicodeLength(info.Destination) != 0) {
+		printf("  Recipient          : ");
+		switch (info.DestinationType) {
+			case MMSADDRESS_PHONE: printf("phone "); break;
+			default: 				 break;
+		}
+		printf("%s\n",DecodeUnicodeString(info.Destination));
+	}
+	if (UnicodeLength(info.CC) != 0) {
+		printf("  CC                 : ");
+		switch (info.CCType) {
+			case MMSADDRESS_PHONE: printf("phone "); break;
+			default: 				 break;
+		}
+		printf("%s\n",DecodeUnicodeString(info.CC));
+	}
+	printf("  Message type       : %s\n",info.MSGType);
+	if (info.DateTimeAvailable) printf("  Date               : %s\n",OSDateTime(info.DateTime,0));
+	if (UnicodeLength(info.Subject) != 0) {
+		printf("  Subject            : %s\n",DecodeUnicodeString(info.Subject));
+	}
+	if (info.MMSReportAvailable) {
+		printf("  Delivery report    : ");
+		if (info.MMSReport) {
+			printf("yes\n");
+		} else {
+			printf("no\n");
 		}
 	}
+	printf("  Content type       : %s\n",DecodeUnicodeString(info.ContentType));
 
-	//body
-	if (type != 35 && type != 51) return;
-
-	value = 0;
-	while (true) {
-		value = value << 7;
-		value |= Buffer[pos] & 0x7F;
-		pos++;
-		if (!(Buffer[pos-1] & 0x80)) break;
-	}
-	value2 = value;
-	printf("  Parts             : %i\n",value2);
-	parts = value;
-
-	for (j=0;j<parts;j++) {
-		value = 0;
-		while (true) {
-			value = value << 7;
-			value |= Buffer[pos] & 0x7F;
-			pos++;
-			if (!(Buffer[pos-1] & 0x80)) break;
-		}
-//		printf("    Header len: %i",value);
-		len2 = value;
-
-		value = 0;
-		while (true) {
-			value = value << 7;
-			value |= Buffer[pos] & 0x7F;
-			pos++;
-			if (!(Buffer[pos-1] & 0x80)) break;
-		}
-//		printf(", data len: %i\n",value);
-		len3 = value;
-
-		i = 0;
-		//content type
-		printf("    Content type    : ");
-		if (Buffer[pos] <= 0x1E) {
-			len4 = Buffer[pos+i];
-			i++;
-			type = Buffer[pos+i] & 0x7f;
-			i++;
-			PrintMIMEType(type);
-			while (i<len4) {
-				switch (Buffer[pos+i]) {
-				case 0x89:
-					printf("; type=");
-					i++;
-					while (Buffer[pos+i]!=0x00) {
-						printf("%c",Buffer[pos+i]);
-						i++;
-					}
-					i++;
-					break;
-				case 0x8A:
-					printf("; start=");
-					i++;
-					while (Buffer[pos+i]!=0x00) {
-						printf("%c",Buffer[pos+i]);
-						i++;
-					}
-					i++;
-					break;
-				default:
-					i++;
-					break;
-				}
+	for (i=0;i<info.EntriesNum;i++) {
+		printf("    Content type     : %s\n",DecodeUnicodeString(info.Entries[i].ContentType));
+		if (UnicodeLength(info.Entries[i].File.Name) != 0) {
+			printf("      Name           : %s",DecodeUnicodeString(info.Entries[i].File.Name));
+			if (UnicodeLength(info.Entries[i].SMIL) != 0) {
+				printf(" (%s in SMIL)",DecodeUnicodeString(info.Entries[i].SMIL));
 			}
-			i++;
-		} else if (Buffer[pos] == 0x1F) {
-			i++;
-			len4 = Buffer[pos+i];
-			i++;
-			if (!(Buffer[pos+i] & 0x80)) {
-				while (Buffer[pos+i]!=0x00) {
-					printf("%c",Buffer[pos+i]);
-					i++;
-				}
-				i++;
-			} else {
-				value = Buffer[pos+i] & 0x7F;
-				PrintMIMEType(value);
-				i++;
-			}
-		} else if (Buffer[pos] >= 0x20 && Buffer[pos] <= 0x7F) {
-			printf("not done yet\n");
-		} else if (Buffer[pos] >= 0x80 && Buffer[pos] < 0xFF) {
-			type = Buffer[pos] & 0x7f;
-			PrintMIMEType(type);
+			printf("\n");
 		}
-		printf("\n");
-
-		pos+=i;
-		len2-=i;
-
-		i=0;
-		while (i<len2) {
-			switch (Buffer[pos+i]) {
-			case 0x81:
-				i++;
-				break;
-			case 0x85:
-				while (Buffer[pos+i]!=0x00) {
-					i++;
-				}
-				break;
-			case 0x86:
-				while (Buffer[pos+i]!=0x00) {
-					i++;
-				}
-				break;
-			case 0x8E:
-				i++;
-				printf("      Name          : ");
-				while (Buffer[pos+i]!=0x00) {
-					printf("%c",Buffer[pos+i]);
-					i++;
-				}
-				printf("\n");
-				break;					
-			case 0xAE:
-				while (Buffer[pos+i]!=0x00) {
-					i++;
-				}
-				break;					
-			case 0xC0:
-				i++;
-				i++;
-				printf("      SMIL CID      : ");
-				while (Buffer[pos+i]!=0x00) {
-					printf("%c",Buffer[pos+i]);
-					i++;
-				}
-				printf("\n");
-				break;					
-			default:
-				printf("unknown %02x ",Buffer[pos+i]);
-			}
-			i++;
+		if (!strcmp(DecodeUnicodeString(info.Entries[i].ContentType),"text/x-vCard")) {
+			Pos = 0;
+			printf("\n");
+			error = GSM_DecodeVCARD(info.Entries[i].File.Buffer, &Pos, &pbk, Nokia_VCard21);
+			if (error == ERR_NONE) PrintMemoryEntry(&pbk);
 		}
-		pos+=i;
-
-		//data
+		if (!strcmp(DecodeUnicodeString(info.Entries[i].ContentType),"text/x-vCalendar")) {
+			Pos = 0;
+			printf("\n");
+			error = GSM_DecodeVCALENDAR_VTODO(info.Entries[i].File.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
+			if (error == ERR_NONE) PrintCalendar(&Calendar);
+		}
 		if (num != -1 && answer_yes("Do you want to save this attachment")) {
-			sprintf(buff,"%i_%i",num,j+1);
-			file = fopen(buff,"wb");
-			fwrite(Buffer+pos, 1, len3, file);
-			fclose(file);
+			sprintf(buff,"%i_%i",num,i+1);
+			file2 = fopen(buff,"wb");
+			fwrite(info.Entries[i].File.Buffer, 1, info.Entries[i].File.Used, file2);
+			fclose(file2);
 		}
-		pos+=len3;
+
 	}
+
+	GSM_ClearMMSMultiPart(&info);
 }
 
 static void GetEachMMS(int argc, char *argv[])
 {
-	GSM_MMSFile		MMSFile;
+	int FileFolder;
+	GSM_File		File;
 	bool			start = true;
 	GSM_MMSFolders 		folders;
 	int			Handle,Size,num=-1;
@@ -2095,35 +2063,37 @@ static void GetEachMMS(int argc, char *argv[])
 	error=Phone->GetMMSFolders(&s,&folders);
 	Print_Error(error);
 
-	MMSFile.File.Buffer = NULL;
+	File.Buffer = NULL;
 
 	while (1) {
-		error=Phone->GetNextMMSFileInfo(&s,&MMSFile,start);
+		error=Phone->GetNextMMSFileInfo(&s,File.ID_FullName,&FileFolder,start);
 		if (error==ERR_EMPTY) break;
 		Print_Error(error);
 		start = false;
 
-		printf("Folder %s\n",DecodeUnicodeConsole(folders.Folder[MMSFile.Folder-1].Name));
-		printf("  Filesystem ID     : \"%s\"\n",DecodeUnicodeConsole(MMSFile.File.ID_FullName));
-
-		if (MMSFile.File.Buffer != NULL) {
-			free(MMSFile.File.Buffer);
-			MMSFile.File.Buffer = NULL;
+		printf("Folder %s\n",DecodeUnicodeConsole(folders.Folder[FileFolder-1].Name));
+		printf("  File filesystem ID : \"%s\"\n",DecodeUnicodeConsole(File.ID_FullName));
+		if (!File.ModifiedEmpty) {
+			printf("  File last changed  : %s\n",OSDateTime(File.Modified,0));
 		}
-		MMSFile.File.Used = 0;
+		if (File.Buffer != NULL) {
+			free(File.Buffer);
+			File.Buffer = NULL;
+		}
+		File.Used = 0;
 		while (true) {
-			error = Phone->GetFilePart(&s,&MMSFile.File,&Handle,&Size);
+			error = Phone->GetFilePart(&s,&File,&Handle,&Size);
 			if (error == ERR_EMPTY) break;
 			Print_Error(error);
-			printmsgerr("%c  Reading: %i percent",13,MMSFile.File.Used*100/Size);
+			printmsgerr("%c  Reading: %i percent",13,File.Used*100/Size);
 		}
 		printmsgerr("%c",13);
 
-		DecodeMMSFile(MMSFile.File.Buffer, MMSFile.File.Used,num);
+		DecodeMMSFile(&File,num);
 		if (num!=-1) num++;
 	}
 
-	if (MMSFile.File.Buffer != NULL) free(MMSFile.File.Buffer);
+	if (File.Buffer != NULL) free(File.Buffer);
 
 	GSM_Terminate();
 }
@@ -2379,281 +2349,6 @@ static void Reset(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void PrintCalendar(GSM_CalendarEntry *Note)
-{
-	int			i_age = 0,i;
-	GSM_DateTime		Alarm,DateTime;
-	GSM_MemoryEntry		entry;
-	unsigned char		*name;
-
-    	bool 			repeating 		= false;
-    	int 			repeat_dayofweek 	= -1;
-    	int 			repeat_day 		= -1;
-    	int 			repeat_weekofmonth 	= -1;
-    	int 			repeat_month 		= -1;
-    	int 			repeat_frequency 	= -1;
-    	GSM_DateTime 		repeat_startdate 	= {0,0,0,0,0,0,0};
-    	GSM_DateTime 		repeat_stopdate 	= {0,0,0,0,0,0,0};
-
-	printmsg("Location     : %d\n", Note->Location);
-	printmsg("Note type    : ");
-	switch (Note->Type) {
-		case GSM_CAL_REMINDER 	: printmsg("Reminder (Date)\n");		break;
-		case GSM_CAL_CALL     	: printmsg("Call\n");			   	break;
-		case GSM_CAL_MEETING  	: printmsg("Meeting\n");		   	break;
-		case GSM_CAL_BIRTHDAY 	: printmsg("Birthday (Anniversary)\n");		break;
-		case GSM_CAL_MEMO	: printmsg("Memo (Miscellaneous)\n");		break;
-		case GSM_CAL_TRAVEL	: printmsg("Travel\n");			   	break;
-		case GSM_CAL_VACATION	: printmsg("Vacation\n");			break;
-		case GSM_CAL_ALARM    	: printmsg("Alarm\n");		   		break;
-		case GSM_CAL_DAILY_ALARM: printmsg("Daily alarm\n");		   	break;
-		case GSM_CAL_T_ATHL   	: printmsg("Training/Athletism\n"); 	   	break;
-		case GSM_CAL_T_BALL   	: printmsg("Training/Ball Games\n"); 	   	break;
-		case GSM_CAL_T_CYCL   	: printmsg("Training/Cycling\n"); 	   	break;
-		case GSM_CAL_T_BUDO   	: printmsg("Training/Budo\n"); 	   		break;
-		case GSM_CAL_T_DANC   	: printmsg("Training/Dance\n"); 	   	break;
-		case GSM_CAL_T_EXTR   	: printmsg("Training/Extreme Sports\n"); 	break;
-		case GSM_CAL_T_FOOT   	: printmsg("Training/Football\n"); 	   	break;
-		case GSM_CAL_T_GOLF   	: printmsg("Training/Golf\n"); 	   		break;
-		case GSM_CAL_T_GYM    	: printmsg("Training/Gym\n"); 	   		break;
-		case GSM_CAL_T_HORS   	: printmsg("Training/Horse Races\n");    	break;
-		case GSM_CAL_T_HOCK   	: printmsg("Training/Hockey\n"); 	  	break;
-		case GSM_CAL_T_RACE   	: printmsg("Training/Races\n"); 	   	break;
-		case GSM_CAL_T_RUGB   	: printmsg("Training/Rugby\n"); 	   	break;
-		case GSM_CAL_T_SAIL   	: printmsg("Training/Sailing\n"); 	   	break;
-		case GSM_CAL_T_STRE   	: printmsg("Training/Street Games\n");   	break;
-		case GSM_CAL_T_SWIM   	: printmsg("Training/Swimming\n"); 	   	break;
-		case GSM_CAL_T_TENN   	: printmsg("Training/Tennis\n"); 	   	break;
-		case GSM_CAL_T_TRAV   	: printmsg("Training/Travels\n");        	break;
-		case GSM_CAL_T_WINT   	: printmsg("Training/Winter Games\n");   	break;
-		default           	: printmsg("UNKNOWN\n");
-	}
-	Alarm.Year = 0;
-
-	repeating 		= false;
-	repeat_dayofweek 	= -1;
-	repeat_day 		= -1;
-	repeat_weekofmonth 	= -1;
-	repeat_month 		= -1;
-	repeat_frequency 	= -1;
-	repeat_startdate.Day	= 0;
-	repeat_stopdate.Day 	= 0;
-
-	for (i=0;i<Note->EntriesNum;i++) {
-		switch (Note->Entries[i].EntryType) {
-		case CAL_START_DATETIME:
-			printmsg("Start        : %s\n",OSDateTime(Note->Entries[i].Date,false));
-			memcpy(&DateTime,&Note->Entries[i].Date,sizeof(GSM_DateTime));
-			break;
-		case CAL_END_DATETIME:
-			printmsg("Stop         : %s\n",OSDateTime(Note->Entries[i].Date,false));
-			memcpy(&DateTime,&Note->Entries[i].Date,sizeof(GSM_DateTime));
-			break;
-		case CAL_ALARM_DATETIME:
-			if (Note->Type==GSM_CAL_BIRTHDAY) {
-				printmsg("Tone alarm   : forever on each %i. day of ",Note->Entries[i].Date.Day);
-				switch(Note->Entries[i].Date.Month) {
-					case 1 : printmsg("January"); 	 break;
-					case 2 : printmsg("February"); 	 break;
-					case 3 : printmsg("March"); 	 break;
-					case 4 : printmsg("April"); 	 break;
-					case 5 : printmsg("May"); 	 break;
-					case 6 : printmsg("June"); 	 break;
-					case 7 : printmsg("July"); 	 break;
-					case 8 : printmsg("August"); 	 break;
-					case 9 : printmsg("September");  break;
-					case 10: printmsg("October"); 	 break;
-					case 11: printmsg("November"); 	 break;
-					case 12: printmsg("December"); 	 break;
-					default: printmsg("Bad month!"); break;
-				}
-				printmsg(" %02i:%02i:%02i\n",
-					Note->Entries[i].Date.Hour,
-					Note->Entries[i].Date.Minute,
-					Note->Entries[i].Date.Second);
-			} else {
-				printmsg("Tone alarm   : %s\n",OSDateTime(Note->Entries[i].Date,false));
-			}
-			memcpy(&Alarm,&Note->Entries[i].Date,sizeof(GSM_DateTime));
-			break;
-		case CAL_SILENT_ALARM_DATETIME:
-			if (Note->Type==GSM_CAL_BIRTHDAY) {
-				printmsg("Silent alarm : forever on each %i. day of ",Note->Entries[i].Date.Day);
-				switch(Note->Entries[i].Date.Month) {
-					case 1 : printmsg("January"); 	 break;
-					case 2 : printmsg("February"); 	 break;
-					case 3 : printmsg("March"); 	 break;
-					case 4 : printmsg("April"); 	 break;
-					case 5 : printmsg("May"); 	 break;
-					case 6 : printmsg("June"); 	 break;
-					case 7 : printmsg("July"); 	 break;
-					case 8 : printmsg("August"); 	 break;
-					case 9 : printmsg("September");  break;
-					case 10: printmsg("October"); 	 break;
-					case 11: printmsg("November"); 	 break;
-					case 12: printmsg("December"); 	 break;
-					default: printmsg("Bad month!"); break;
-				}
-				printmsg(" %02i:%02i:%02i\n",
-					Note->Entries[i].Date.Hour,
-					Note->Entries[i].Date.Minute,
-					Note->Entries[i].Date.Second);
-			} else {
-				printmsg("Silent alarm : %s\n",OSDateTime(Note->Entries[i].Date,false));
-			}
-			memcpy(&Alarm,&Note->Entries[i].Date,sizeof(GSM_DateTime));
-			break;
-		case CAL_TEXT:
-			printmsg("Text         : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
-			break;
-		case CAL_LOCATION:
-			printmsg("Location     : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
-			break;
-		case CAL_PHONE:
-			printmsg("Phone        : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
-			break;
-		case CAL_PRIVATE:
-			printmsg("Private      : %s\n",Note->Entries[i].Number == 1 ? "Yes" : "No");
-			break;
-		case CAL_CONTACTID:
-			entry.Location = Note->Entries[i].Number;
-			entry.MemoryType = MEM_ME;
-			error=Phone->GetMemory(&s, &entry);
-			if (error == ERR_NONE) {
-				name = GSM_PhonebookGetEntryName(&entry);
-				if (name != NULL) {
-					printmsg("Contact ID   : \"%s\" (%d)\n", DecodeUnicodeConsole(name), Note->Entries[i].Number);
-				} else {
-					printmsg("Contact ID   : %d\n",Note->Entries[i].Number);
-				}
-			} else {
-				printmsg("Contact ID   : %d\n",Note->Entries[i].Number);
-			}
-			break;
-		case CAL_REPEAT_DAYOFWEEK:
-			repeat_dayofweek 	= Note->Entries[i].Number;
-			repeating 		= true;
-			break;
-		case CAL_REPEAT_DAY:
-			repeat_day 		= Note->Entries[i].Number;
-			repeating 		= true;
-			break;
-		case CAL_REPEAT_WEEKOFMONTH:
-			repeat_weekofmonth 	= Note->Entries[i].Number;
-			repeating 		= true;
-			break;
-		case CAL_REPEAT_MONTH:
-			repeat_month 		= Note->Entries[i].Number;
-			repeating 		= true;
-			break;
-		case CAL_REPEAT_FREQUENCY:
-			repeat_frequency 	= Note->Entries[i].Number;
-			repeating 		= true;
-			break;
-		case CAL_REPEAT_STARTDATE:
-			repeat_startdate 	= Note->Entries[i].Date;
-			repeating 		= true;
-			break;
-		case CAL_REPEAT_STOPDATE:
-			repeat_stopdate 	= Note->Entries[i].Date;
-			repeating 		= true;
-			break;
-		}
-	}
-	if (repeating) {
-		printmsg("Repeating    : ");
-		if ((repeat_startdate.Day == 0) && (repeat_stopdate.Day == 0)) {
-			printmsg("forever");
-		} else if (repeat_startdate.Day == 0) {
-			printmsg("till %s", OSDate(repeat_stopdate));
-		} else if (repeat_stopdate.Day == 0) {
-			printmsg("since %s", OSDate(repeat_startdate));
-		} else {
-			printmsg("since %s till %s", OSDate(repeat_startdate), OSDate(repeat_stopdate));
-		}
-		if (repeat_frequency != -1) {
-			if (repeat_frequency == 1) {
-				printmsg (" on each ");
-			} else {
-				printmsg(" on each %d. ", repeat_frequency);
-			}
-			if (repeat_dayofweek > 0) {
-				switch (repeat_dayofweek) {
-					case 1 : printmsg("Monday"); 	break;
-					case 2 : printmsg("Tuesday"); 	break;
-					case 3 : printmsg("Wednesday"); break;
-					case 4 : printmsg("Thursday"); 	break;
-					case 5 : printmsg("Friday"); 	break;
-					case 6 : printmsg("Saturday"); 	break;
-					case 7 : printmsg("Sunday"); 	break;
-					default: printmsg("Bad day!"); 	break;
-				}
-				if (repeat_weekofmonth > 0) {
-					printmsg(" in %d. week of ", repeat_weekofmonth);
-				} else {
-					printmsg(" in ");
-				}
-				if (repeat_month > 0) {
-					switch(repeat_month) {
-						case 1 : printmsg("January"); 	 break;
-						case 2 : printmsg("February"); 	 break;
-						case 3 : printmsg("March"); 	 break;
-						case 4 : printmsg("April"); 	 break;
-						case 5 : printmsg("May"); 	 break;
-						case 6 : printmsg("June"); 	 break;
-						case 7 : printmsg("July"); 	 break;
-						case 8 : printmsg("August"); 	 break;
-						case 9 : printmsg("September");  break;
-						case 10: printmsg("October"); 	 break;
-						case 11: printmsg("November"); 	 break;
-						case 12: printmsg("December"); 	 break;
-						default: printmsg("Bad month!"); break;
-					}
-				} else {
-					printmsg("each month");
-				}
-			} else if (repeat_day > 0) {
-				printmsg("%d. day of ", repeat_day);
-				if (repeat_month > 0) {
-					switch(repeat_month) {
-						case 1 : printmsg("January"); 	break;
-						case 2 : printmsg("February"); 	break;
-						case 3 : printmsg("March");	break;
-						case 4 : printmsg("April"); 	break;
-						case 5 : printmsg("May"); 	break;
-						case 6 : printmsg("June"); 	break;
-						case 7 : printmsg("July"); 	break;
-						case 8 : printmsg("August"); 	break;
-						case 9 : printmsg("September"); break;
-						case 10: printmsg("October"); 	break;
-						case 11: printmsg("November"); 	break;
-						case 12: printmsg("December"); 	break;
-						default: printmsg("Bad month!");break;
-					}
-				} else {
-					printmsg("each month");
-				}
-			} else {
-				printmsg("day");
-			}
-		}
-		printf("\n");
-	}
-	if (Note->Type == GSM_CAL_BIRTHDAY) {
-		if (Alarm.Year == 0x00) GSM_GetCurrentDateTime (&Alarm);
-		if (DateTime.Year != 0) {
-			i_age = Alarm.Year - DateTime.Year;
-			if (DateTime.Month < Alarm.Month) i_age++;
-			if (DateTime.Month == Alarm.Month &&
-			    DateTime.Day < Alarm.Day) {
-				i_age++;
-			}
-			printmsg("Age          : %d %s\n",i_age, (i_age==1)?"year":"years");
-		}
-	}
-	printf("\n");
-}
-
 static void GetCalendar(int argc, char *argv[])
 {
 	GSM_CalendarEntry	Note;
@@ -2668,6 +2363,7 @@ static void GetCalendar(int argc, char *argv[])
 		error = Phone->GetCalendar(&s, &Note);
 		if (error == ERR_EMPTY) continue;
 		Print_Error(error);
+		printmsg("Location     : %d\n", Note.Location);
 		PrintCalendar(&Note);
 	}
 
@@ -2708,6 +2404,7 @@ static void GetAllCalendar(int argc, char *argv[])
 		error=Phone->GetNextCalendar(&s,&Note,refresh);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
+		printmsg("Location     : %d\n", Note.Location);
 		PrintCalendar(&Note);
 		refresh=false;
 	}
@@ -8522,71 +8219,6 @@ static void DeleteFiles(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void SaveMMSFile(int argc, char *argv[])
-{
-	FILE 				*file;
-	unsigned char	 		Buffer[50000],Buffer2[20][2010];
-	int 				i,nextlong = 0,len = 0;
-	GSM_EncodeMultiPartMMSInfo      Info;
-
-	GSM_ClearMultiPartMMSInfo(&Info);
-
-	for (i=3;i<argc;i++) {
-		switch (nextlong) {
-		case 0:
-			if (mystrncasecmp(argv[i],"-subject",0)) {
-				nextlong=1;
-				continue;
-			}
-			if (mystrncasecmp(argv[i],"-text",0)) {
-				nextlong=2;
-				continue;
-			}
-			if (mystrncasecmp(argv[i],"-from",0)) {
-				nextlong=3;
-				continue;
-			}
-			if (mystrncasecmp(argv[i],"-to",0)) {
-				nextlong=4;
-				continue;
-			}
-			printmsg("Unknown parameter (\"%s\")\n",argv[i]);
-			exit(-1);
-			break;
-		case 1: /* Subject */
-			EncodeUnicode(Info.Subject,argv[i],strlen(argv[i]));
-			nextlong = 0;
-			break;
-		case 2: /* Text */
-			EncodeUnicode(Buffer2[Info.EntriesNum],argv[i],strlen(argv[i]));
-			Info.Entries[Info.EntriesNum].ID 	= MMS_Text;
-			Info.Entries[Info.EntriesNum].Buffer 	= Buffer2[Info.EntriesNum];
-			Info.EntriesNum++;
-			nextlong = 0;
-			break;
-		case 3: /* From */
-			EncodeUnicode(Info.Source,argv[i],strlen(argv[i]));
-			nextlong = 0;
-			break;
-		case 4: /* To */
-			EncodeUnicode(Info.Destination,argv[i],strlen(argv[i]));
-			nextlong = 0;
-			break;
-		}
-	}
-	if (nextlong!=0) {
-		printmsg("Parameter missed...\n");
-		exit(-1);
-	}
-
-	GSM_EncodeMMSFile(&Info,Buffer,&len);
-
-	file = fopen(argv[2],"wb");
-	if (file == NULL) Print_Error(ERR_CANTOPENFILE);
-	fwrite(Buffer,1,len,file);
-	fclose(file);
-}
-
 static void ReadMMSFile(int argc, char *argv[])
 {
 	GSM_File		File;
@@ -8595,7 +8227,7 @@ static void ReadMMSFile(int argc, char *argv[])
 	error = GSM_ReadFile(argv[2], &File);
 	Print_Error(error);
 
-	DecodeMMSFile(File.Buffer,File.Used,-1);
+	DecodeMMSFile(&File,-1);
 
 	free(File.Buffer);
 }
@@ -9066,7 +8698,6 @@ static GSM_Parameters Parameters[] = {
 	{"--getmmssettings",		1, 2, GetWAPMMSSettings,	{H_MMS,0},			"start [stop]"},
 	{"--getsyncmlsettings",		1, 2, GetSyncMLSettings,	{H_WAP,0},			"start [stop]"},
 	{"--getchatsettings",		1, 2, GetChatSettings,		{H_WAP,0},			"start [stop]"},
-	{"--savemmsfile",		3, 15,SaveMMSFile,		{H_MMS,0},			"file [-subject text][-text text]"},
 	{"--readmmsfile",		1, 1, ReadMMSFile,		{H_MMS,0},			"file"},
 	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"STARTUP [file]"},
 	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"CALLER location [file]"},

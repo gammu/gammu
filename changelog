@@ -40,6 +40,23 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20051010 - 1.02.25
+* new functionality:
+  * MMS:
+    * new features in MMS decoder
+    * MMS decoder moved into common (can be used in future MMSD too)
+    * --geteachmms doesn't display all possible things about message,
+      but rather only these usefull for user (all things are displayed of
+      course in debug)
+    * --geteachmms displays content of various file formats
+
+* fixes and improvements:
+  * calendar for 6020                                             (Ragnar Rova)
+  * removed obsolete --savemmsfile
+  * OBEX:
+    * fix for getting files (Nokia phones return folder listings and files now)
+    * ID_FullName in Unicode now
+
 20051002 - 1.02.20
 * new functionality:
   * --geteachmms/--getallmms/--getmmsfolders should work fine for majority
