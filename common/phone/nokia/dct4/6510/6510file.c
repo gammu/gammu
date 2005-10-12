@@ -1804,7 +1804,7 @@ GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 	return ERR_NOTSUPPORTED;
 }
 
-GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, GSM_MMSFile *file, bool start)
+GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start)
 {
 	GSM_MMSFolders 		folders;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
@@ -1836,8 +1836,8 @@ GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, GSM_MMSFile *file, bool 
 			break;
 		}
 	}
-	file->Folder = Priv->MMSFolderNum;
-	CopyUnicodeString(file->File.ID_FullName,Priv->MMSFile.ID_FullName);
+	(*MMSFolder) = Priv->MMSFolderNum;
+	CopyUnicodeString(FileID,Priv->MMSFile.ID_FullName);
 
 	return ERR_NONE;
 }
