@@ -211,11 +211,47 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 	}
 
 	/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
-	if ((buffer[Layout.TPDCS] & 0xf4) == 0xf4) SMS->Coding=SMS_Coding_8bit;
-	if ((buffer[Layout.TPDCS] & 0x08) == 0x08) SMS->Coding=SMS_Coding_Unicode;
+	if ((buffer[Layout.TPDCS] & 0xC0) == 0) {
+		/* bits 7..4 set to 00xx */
+		if ((buffer[Layout.TPDCS] & 0xC) == 0xC) {
+			dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
+		} else {
+			if (buffer[Layout.TPDCS] == 0) 			SMS->Coding=SMS_Coding_Default_No_Compression;
+			if ((buffer[Layout.TPDCS] & 0x2C) == 0x00) 	SMS->Coding=SMS_Coding_Default_No_Compression;
+			if ((buffer[Layout.TPDCS] & 0x2C) == 0x20) 	SMS->Coding=SMS_Coding_Default_Compression;
+			if ((buffer[Layout.TPDCS] & 0x2C) == 0x08) 	SMS->Coding=SMS_Coding_Unicode_No_Compression;
+			if ((buffer[Layout.TPDCS] & 0x2C) == 0x28) 	SMS->Coding=SMS_Coding_Unicode_Compression;
+		}
+	} else if ((buffer[Layout.TPDCS] & 0xF0) >= 0x40 &&
+		   (buffer[Layout.TPDCS] & 0xF0) <= 0xB0) {
+		/* bits 7..4 set to 0100 ... 1011 */
+		dbgprintf("WARNING: reserved coding group in TPDCS\n");
+	} else if (((buffer[Layout.TPDCS] & 0xF0) == 0xC0) ||
+	      	   ((buffer[Layout.TPDCS] & 0xF0) == 0xD0)) {
+		/* bits 7..4 set to 1100 or 1101 */
+		if ((buffer[Layout.TPDCS] & 4) == 4) {
+			dbgprintf("WARNING: set reserved bit 2 in TPDCS\n");
+		} else {
+			SMS->Coding=SMS_Coding_Default_No_Compression;
+		}
+	} else if ((buffer[Layout.TPDCS] & 0xF0) == 0xE0) {
+		/* bits 7..4 set to 1110 */
+		if ((buffer[Layout.TPDCS] & 4) == 4) {
+			dbgprintf("WARNING: set reserved bit 2 in TPDCS\n");
+		} else {
+			SMS->Coding=SMS_Coding_Unicode_No_Compression;
+		}
+	} else if ((buffer[Layout.TPDCS] & 0xF0) == 0xF0) {
+		/* bits 7..4 set to 1111 */
+		if ((buffer[Layout.TPDCS] & 8) == 8) {
+			dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
+		} else {
+			if ((buffer[Layout.TPDCS] & 4) == 0) SMS->Coding=SMS_Coding_Default_No_Compression;
+		}
+	}	
 
 	switch (SMS->Coding) {
-		case SMS_Coding_Default:
+		case SMS_Coding_Default_No_Compression:
 			i = 0;
 			do {
 				i+=7;
@@ -235,7 +271,7 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, SMS->Text, SMS->Length);
 #endif
 			break;
-		case SMS_Coding_Unicode:
+		case SMS_Coding_Unicode_No_Compression:
 			SMS->Length=(buffer[Layout.TPUDL] - off) / 2;
 			DecodeUnicodeSpecialNOKIAChars(SMS->Text,buffer+(Layout.Text+off), SMS->Length);
 #ifdef DEBUG
@@ -243,6 +279,9 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, buffer+(Layout.Text+off), SMS->Length*2);
 			dbgprintf("%s\n",DecodeUnicodeString(SMS->Text));
 #endif
+			break;
+		default:
+			SMS->Length=0;
 			break;
 	}
 
@@ -332,7 +371,7 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 #endif
 
 	SMS->UDH.Type 			= UDH_NoUDH;
-	SMS->Coding 			= SMS_Coding_Default;
+	SMS->Coding 			= SMS_Coding_8bit;
 	SMS->Length			= 0;
 	SMS->SMSC.Location		= 0;
 	SMS->SMSC.DefaultNumber[0]	= 0;
@@ -378,10 +417,22 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	}
 	SMS->Class = -1;
 	if (Layout.TPDCS != 255) {
-		if ((buffer[Layout.TPDCS] & 0xF3)==0xF0) SMS->Class = 0;
-		if ((buffer[Layout.TPDCS] & 0xF3)==0xF1) SMS->Class = 1;
-		if ((buffer[Layout.TPDCS] & 0xF3)==0xF2) SMS->Class = 2;
-		if ((buffer[Layout.TPDCS] & 0xF3)==0xF3) SMS->Class = 3;
+		/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
+		if ((buffer[Layout.TPDCS] & 0xD0) == 0x10) {
+			/* bits 7..4 set to 00x1 */
+			if ((buffer[Layout.TPDCS] & 0xC) == 0xC) {
+				dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
+			} else {
+				SMS->Class = (buffer[Layout.TPDCS] & 3);
+			}
+		} else if ((buffer[Layout.TPDCS] & 0xF0) == 0xF0) {
+			/* bits 7..4 set to 1111 */
+			if ((buffer[Layout.TPDCS] & 8) == 8) {
+				dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
+			} else {
+				SMS->Class = (buffer[Layout.TPDCS] & 3);
+			}
+		}
 	}
 	dbgprintf("SMS class: %i\n",SMS->Class);
 
@@ -457,7 +508,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, SMS->Text, SMS->Length);
 #endif
 			break;
-		case SMS_Coding_Default:
+		case SMS_Coding_Default_No_Compression:
 			p = 0;
 			do {
 				p+=7;
@@ -474,7 +525,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 				size = 0; size2 = 0;
 			}
 			break;
-		case SMS_Coding_Unicode:
+		case SMS_Coding_Unicode_No_Compression:
 			/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme)
 			 * and GSM 03.38 section 4 */
 			buffer[Layout.TPDCS] |= 0x08;
@@ -485,6 +536,8 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, buffer+(Layout.Text+off), size2-off);
 			dbgprintf("%s\n",DecodeUnicodeString(buffer+(Layout.Text+off)));
 #endif
+			break;
+		default:
 			break;
 	}
 
@@ -604,7 +657,7 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 	SMS->UDH.ID16bit		= 0;
 	SMS->UDH.PartNumber		= 0;
 	SMS->UDH.AllParts		= 0;
-	SMS->Coding			= SMS_Coding_Default;
+	SMS->Coding			= SMS_Coding_8bit;
 	SMS->Text[0] 			= 0;
 	SMS->Text[1] 			= 0;
 	SMS->PDU			= SMS_Submit;

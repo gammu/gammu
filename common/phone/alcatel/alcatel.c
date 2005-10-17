@@ -2438,7 +2438,7 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 					break;
 				}
 				if (dt == NULL) {
-					Note->Entries[i-j].EntryType = CAL_ALARM_DATETIME;
+					Note->Entries[i-j].EntryType = CAL_TONE_ALARM_DATETIME;
 					Note->Entries[i-j].Date = Priv->ReturnDateTime;
 					dt = &(Note->Entries[i-j].Date);
 				} else {
@@ -2465,7 +2465,7 @@ static GSM_Error ALCATEL_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 					break;
 				}
 				if (dt == NULL) {
-					Note->Entries[i-j].EntryType = CAL_ALARM_DATETIME;
+					Note->Entries[i-j].EntryType = CAL_TONE_ALARM_DATETIME;
 					Note->Entries[i-j].Date = Priv->ReturnDateTime;
 					dt = &(Note->Entries[i-j].Date);
 				} else {
@@ -2802,7 +2802,7 @@ static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				}
 				if ((error = ALCATEL_CreateField(s, Alcatel_time, 2, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				break;
-			case CAL_ALARM_DATETIME:
+			case CAL_TONE_ALARM_DATETIME:
 				if ((error = ALCATEL_CreateField(s, Alcatel_date, 3, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				if ((error = ALCATEL_CreateField(s, Alcatel_time, 4, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				if (Note->Type == GSM_CAL_ALARM || Note->Type == GSM_CAL_DAILY_ALARM) {
@@ -2940,7 +2940,7 @@ static GSM_Error ALCATEL_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				}
 				UpdatedFields[2] = true; if ((error = ALCATEL_UpdateField(s, Alcatel_time, Note->Location, 2, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				break;
-			case CAL_ALARM_DATETIME:
+			case CAL_TONE_ALARM_DATETIME:
 				UpdatedFields[3] = true;
 				if ((error = ALCATEL_UpdateField(s, Alcatel_date, Note->Location, 3, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				UpdatedFields[4] = true;
@@ -3121,7 +3121,7 @@ static GSM_Error ALCATEL_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 	for (i = 0; i < Note.EntriesNum; i++) {
 		if (Note.Entries[i].EntryType == CAL_TEXT) {
 			CopyUnicodeString(alarm->Text, Note.Entries[i].Text);
-		} else if (Note.Entries[i].EntryType == CAL_ALARM_DATETIME) {
+		} else if (Note.Entries[i].EntryType == CAL_TONE_ALARM_DATETIME) {
 			alarm->DateTime = Note.Entries[i].Date;
 			DateSet = false;
 		}
@@ -3168,7 +3168,7 @@ static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_Alarm *alarm)
 
 	Note.EntriesNum = 1;
 
-	Note.Entries[0].EntryType = CAL_ALARM_DATETIME;
+	Note.Entries[0].EntryType = CAL_TONE_ALARM_DATETIME;
 	Note.Entries[0].Date = alarm->DateTime;
 
 	if (alarm->Repeating) {

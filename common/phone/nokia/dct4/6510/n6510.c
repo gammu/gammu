@@ -3002,22 +3002,15 @@ static GSM_Error N6510_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 	int 		i, length = 7;
 	GSM_Error	error;
 
-	/* For now !!! */
-	if (!strcmp(s->Phone.Data.ModelInfo->model,"3510")) {
-		if (s->Phone.Data.VerNum>3.37) return ERR_NOTSUPPORTED;
-	}
-	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230")) {
-		return ERR_NOTSUPPORTED;
-	}
-	if (!strcmp(s->Phone.Data.ModelInfo->model,"6220")) {
-		return ERR_NOTSUPPORTED;
-	}
-	if (!strcmp(s->Phone.Data.ModelInfo->model,"5140")) {
-		return ERR_NOTSUPPORTED;
-	}
-	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230i")) {
-		return ERR_NOTSUPPORTED;
-	}
+	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES)) return ERR_NOTSUPPORTED;
+
+//	if (!strcmp(s->Phone.Data.ModelInfo->model,"3510")) {
+//		if (s->Phone.Data.VerNum>3.37) return ERR_NOTSUPPORTED;
+//	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230")) {
+//	if (!strcmp(s->Phone.Data.ModelInfo->model,"6220")) {
+//	if (!strcmp(s->Phone.Data.ModelInfo->model,"5140")) {
+//	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230i")) {
+//	if (!strcmp(s->Phone.Data.ModelInfo->model,"6020")) {
 
 	if (Profile->Location>5) return ERR_INVALIDLOCATION;
 
@@ -3091,6 +3084,8 @@ static GSM_Error N6510_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 	unsigned char 	req[150] = {N6110_FRAME_HEADER, 0x03, 0x01,
 				    0x06,		/* Number of blocks */
 				    0x03};
+
+	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES)) return ERR_NOTSUPPORTED;
 
 	if (Profile->Location>5) return ERR_INVALIDLOCATION;
 

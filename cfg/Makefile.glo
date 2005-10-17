@@ -171,7 +171,7 @@ clean:
 
 makelocale: $(LOCALE)
 	@echo Linking locale application
-	@$(CC) $(LOCALE) -lm -o $(TOPDIR)/cfg/locale/locale
+	@$(CC) $(LOCALE) $(LDLIBS) -o $(TOPDIR)/cfg/locale/locale
 	@for xxx in $(LOCALE2); do \
             ( cd $$xxx; \
                 ./locale \

@@ -2375,7 +2375,7 @@ static GSM_Error N6110_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateM
                         smprintf(s, "Alarm       : %02i-%02i-%04i %02i:%02i:%02i\n",
                                 Entry->Entries[1].Date.Day,Entry->Entries[1].Date.Month,Entry->Entries[1].Date.Year,
                                 Entry->Entries[1].Date.Hour,Entry->Entries[1].Date.Minute,Entry->Entries[1].Date.Second);
-                        Entry->Entries[1].EntryType = CAL_ALARM_DATETIME;
+                        Entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
                         Entry->EntriesNum++;
                 } else {
                         smprintf(s, "No alarm\n");

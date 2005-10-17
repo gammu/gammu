@@ -282,7 +282,7 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry *entry, int *Te
 		case CAL_END_DATETIME :
 			if (*EndTime == -1) *EndTime = i;
 			break;
-		case CAL_ALARM_DATETIME :
+		case CAL_TONE_ALARM_DATETIME :
 		case CAL_SILENT_ALARM_DATETIME:
 			if (*Alarm == -1) *Alarm = i;
 			break;
@@ -662,7 +662,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				Calendar->EntriesNum++;
 			}
 			if (ReadVCALText(Line, "AALARM", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date)) {
-				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_ALARM_DATETIME;
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TONE_ALARM_DATETIME;
 				Calendar->EntriesNum++;
 			}
 			break;

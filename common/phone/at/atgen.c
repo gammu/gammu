@@ -1401,20 +1401,67 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
 				TPUDL=atoi(buffer);
 				current++;
-				sms->Coding = SMS_Coding_Default;
+				sms->Coding = SMS_Coding_8bit;
 				/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme)
 				 * and GSM 03.38 section 4
 				 */
-				if ((TPDCS & 0xf4) == 0xf4) sms->Coding=SMS_Coding_8bit;
-				if ((TPDCS & 0x08) == 0x08) sms->Coding=SMS_Coding_Unicode;
+				if ((TPDCS & 0xC0) == 0) {
+					/* bits 7..4 set to 00xx */
+					if ((TPDCS & 0xC) == 0xC) {
+						dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
+					} else {
+						if (TPDCS == 0) 		sms->Coding=SMS_Coding_Default_No_Compression;
+						if ((TPDCS & 0x2C) == 0x00) 	sms->Coding=SMS_Coding_Default_No_Compression;
+						if ((TPDCS & 0x2C) == 0x20) 	sms->Coding=SMS_Coding_Default_Compression;
+						if ((TPDCS & 0x2C) == 0x08) 	sms->Coding=SMS_Coding_Unicode_No_Compression;
+						if ((TPDCS & 0x2C) == 0x28) 	sms->Coding=SMS_Coding_Unicode_Compression;
+					}
+				} else if ((TPDCS & 0xF0) >= 0x40 &&
+					   (TPDCS & 0xF0) <= 0xB0) {
+					/* bits 7..4 set to 0100 ... 1011 */
+					dbgprintf("WARNING: reserved coding group in TPDCS\n");
+				} else if (((TPDCS & 0xF0) == 0xC0) ||
+				      	   ((TPDCS & 0xF0) == 0xD0)) {
+					/* bits 7..4 set to 1100 or 1101 */
+					if ((TPDCS & 4) == 4) {
+						dbgprintf("WARNING: set reserved bit 2 in TPDCS\n");
+					} else {
+						sms->Coding=SMS_Coding_Default_No_Compression;
+					}
+				} else if ((TPDCS & 0xF0) == 0xE0) {
+					/* bits 7..4 set to 1110 */
+					if ((TPDCS & 4) == 4) {
+						dbgprintf("WARNING: set reserved bit 2 in TPDCS\n");
+					} else {
+						sms->Coding=SMS_Coding_Unicode_No_Compression;
+					}
+				} else if ((TPDCS & 0xF0) == 0xF0) {
+					/* bits 7..4 set to 1111 */
+					if ((TPDCS & 8) == 8) {
+						dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
+					} else {
+						if ((TPDCS & 4) == 0) sms->Coding=SMS_Coding_Default_No_Compression;
+					}
+				}	
 				sms->Class = -1;
-				if ((TPDCS & 0xF3)==0xF0) sms->Class = 0;
-				if ((TPDCS & 0xF3)==0xF1) sms->Class = 1;
-				if ((TPDCS & 0xF3)==0xF2) sms->Class = 2;
-				if ((TPDCS & 0xF3)==0xF3) sms->Class = 3;
+				if ((TPDCS & 0xD0) == 0x10) {
+					/* bits 7..4 set to 00x1 */
+					if ((TPDCS & 0xC) == 0xC) {
+						dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
+					} else {
+						sms->Class = (TPDCS & 3);
+					}
+				} else if ((TPDCS & 0xF0) == 0xF0) {
+					/* bits 7..4 set to 1111 */
+					if ((TPDCS & 8) == 8) {
+						dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
+					} else {
+						sms->Class = (TPDCS & 3);
+					}
+				}
 				smprintf(s, "SMS class: %i\n",sms->Class);
 				switch (sms->Coding) {
-				case SMS_Coding_Default:
+				case SMS_Coding_Default_No_Compression:
 					/* GSM 03.40 section 9.2.3.23 (TP-User-Data-Header-Indicator) */
 					/* If not SMS with UDH, it's coded normal */
 					/* If UDH available, treat it as Unicode or 8 bit */
@@ -1424,13 +1471,15 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 						EncodeUnicode(sms->Text,msg.Buffer+Priv->Lines.numbers[2*2],TPUDL);
 						break;
 					}
-				case SMS_Coding_Unicode:
+				case SMS_Coding_Unicode_No_Compression:
 				case SMS_Coding_8bit:
 					DecodeHexBin(buffer+PHONE_SMSDeliver.Text, msg.Buffer+current, TPUDL*2);
 					buffer[PHONE_SMSDeliver.firstbyte] 	= firstbyte;
 					buffer[PHONE_SMSDeliver.TPDCS] 		= TPDCS;
 					buffer[PHONE_SMSDeliver.TPUDL] 		= TPUDL;
 					return GSM_DecodeSMSFrameText(sms, buffer, PHONE_SMSDeliver);
+				default:
+					break;
 				}
 			}
 			return ERR_NONE;
@@ -1761,7 +1810,7 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 			if (error != ERR_NONE) return error;
 		}
 		if (Priv->Manufacturer != AT_Nokia) {
-			if (message->Coding != SMS_Coding_Default) return ERR_NOTSUPPORTED;
+			if (message->Coding != SMS_Coding_Default_No_Compression) return ERR_NOTSUPPORTED;
 		}
 		error=PHONE_EncodeSMSFrame(s,message,req,PHONE_SMSDeliver,&i,true);
 		if (error != ERR_NONE) return error;
@@ -1785,19 +1834,21 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 		}
 		if (error!=ERR_NONE) return error;
 		switch (message->Coding) {
-		case SMS_Coding_Default:
+		case SMS_Coding_Default_No_Compression:
 			/* If not SMS with UDH, it's as normal text */
 			if (message->UDH.Type==UDH_NoUDH) {
 				strcpy(hexreq,DecodeUnicodeString(message->Text));
 				*length2 = UnicodeLength(message->Text);
 				break;
 			}
-	        case SMS_Coding_Unicode:
+	        case SMS_Coding_Unicode_No_Compression:
 	        case SMS_Coding_8bit:
 			error=PHONE_EncodeSMSFrame(s,message,buffer,PHONE_SMSDeliver,current,true);
 			if (error != ERR_NONE) return error;
 			EncodeHexBin (hexreq, buffer+PHONE_SMSDeliver.Text, buffer[PHONE_SMSDeliver.TPUDL]);
 			*length2 = buffer[PHONE_SMSDeliver.TPUDL] * 2;
+			break;
+		default:
 			break;
 		}
 		break;

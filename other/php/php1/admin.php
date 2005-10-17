@@ -23,11 +23,11 @@ $daemons="Start,Info";
 
 function dispdatetime($dt)
 {
-	return "$dt[0]$dt[1]$dt[2]$dt[3]-$dt[4]$dt[5]-$dt[6]$dt[7] $dt[8]$dt[9]:$dt[10]$dt[11]:$dt[12]$dt[13]";
+	return "$dt[0]$dt[1]$dt[2]$dt[3]-$dt[5]$dt[6]-$dt[8]$dt[9] $dt[11]$dt[12]:$dt[14]$dt[15]:$dt[17]$dt[18]";
 }
 function dispdate($dt)
 {
-	return "$dt[0]$dt[1]$dt[2]$dt[3]-$dt[4]$dt[5]-$dt[6]$dt[7]";
+	return "$dt[0]$dt[1]$dt[2]$dt[3]-$dt[5]$dt[6]-$dt[8]$dt[9]";
 }
 function dispsmsinfo($class,$udh,$text,$textdecoded,$coding)
 {
@@ -41,7 +41,7 @@ function dispsmsinfo($class,$udh,$text,$textdecoded,$coding)
 		echo "BINARY<br>\n";
 	} else {
 		if (!$text == "") echo "<b>";
-		if ($coding == "Unicode") {
+		if ($coding == "Unicode_No_Compression" || $coding == "Unicode_Compression") {
 			echo "Unicode t";
 		} else {
 			echo "T";
@@ -136,13 +136,13 @@ if (isset($dbpass) && isset($dbconnect) && isset($_GET['op']) &&
 //			$text = "";
 		} else {
 			if ($report == "yes") {
-				mysql_query ("insert into outbox(Class,DestinationNumber,TextDecoded,SendingDateTime,RelativeValidity,SenderID,DeliveryReport) VALUES('$class','$number','$tresc','$datoom','$validity','$phone','yes')");
+				mysql_query ("insert into outbox(Class,DestinationNumber,TextDecoded,SendingDateTime,RelativeValidity,SenderID,DeliveryReport,Coding) VALUES('$class','$number','$tresc','$datoom','$validity','$phone','yes','Default_No_Compression')");
 			}
 			if ($report == "no") {
-				mysql_query ("insert into outbox(Class,DestinationNumber,TextDecoded,SendingDateTime,RelativeValidity,SenderID,DeliveryReport) VALUES('$class','$number','$tresc','$datoom','$validity','$phone','no')");
+				mysql_query ("insert into outbox(Class,DestinationNumber,TextDecoded,SendingDateTime,RelativeValidity,SenderID,DeliveryReport,Coding) VALUES('$class','$number','$tresc','$datoom','$validity','$phone','no','Default_No_Compression')");
 			}
 			if ($report == "default") {
-				mysql_query ("insert into outbox(Class,DestinationNumber,TextDecoded,SendingDateTime,RelativeValidity,SenderID) VALUES('$class','$number','$tresc','$datoom','$validity','$phone')");
+				mysql_query ("insert into outbox(Class,DestinationNumber,TextDecoded,SendingDateTime,RelativeValidity,SenderID,Coding) VALUES('$class','$number','$tresc','$datoom','$validity','$phone','Default_No_Compression')");
 			}
 		}
 	}
@@ -262,7 +262,7 @@ echo "</td>\n</tr>\n<tr>\n<td bgcolor=whitesmoke valign=top>";
 #MENU
 
 if (isset($dbservorig) || isset($dbuserorig) || isset($dbpassorig)) {
-	echo "<a href=$dokument>OTHER USER</a><br>\n";
+	echo "<nobr><a href=$dokument>OTHER USER</a></nobr><br>\n";
 }
 
 $result0 = mysql_list_dbs($dbpass);
@@ -271,7 +271,7 @@ while ($row0 = mysql_fetch_object($result0)) {
 	$rekord = @mysql_fetch_row($result);
 	if (!$rekord) continue;
 	mysql_free_result($result);
-	if ($rekord[0]!='4') continue;
+	if ($rekord[0]!='5') continue;
 
 	$result2 = @mysql_list_tables($row0->Database);
 	if (!$result2) continue;
@@ -293,11 +293,11 @@ while ($row0 = mysql_fetch_object($result0)) {
 	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=daemons>DAEMONS</a><br>\n";
 	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=phones>PHONES</a><p>\n";
 
-	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=newsms>NEW OUTBOX SMS</a><br><br>\n";
+	echo "<nobr>&nbsp <a href=$dokument$arg"."db=$row0->Database&op=newsms>NEW OUTBOX SMS</a></nobr><br><br>\n";
 
 	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=inbox>INBOX</a><br>\n";
 	if (isset($_GET['op']) && $_GET['op']=="inbox") {
-		$result = mysql_db_query("$db_name","select substring(ReceivingDateTime,1,8) from inbox group by substring(ReceivingDateTime,1,8) order by substring(ReceivingDateTime,1,8) desc");
+		$result = mysql_db_query("$db_name","select substring(ReceivingDateTime,1,10) from inbox group by substring(ReceivingDateTime,1,10) order by substring(ReceivingDateTime,1,10) desc");
 		while($rekord = mysql_fetch_row($result)) {
 			$d = dispdate($rekord[0]);
 			echo " &nbsp &nbsp &middot <a href=$dokument$arg"."db=$row0->Database&op=inbox&date=$rekord[0]>$d</a><br>";
@@ -307,7 +307,7 @@ while ($row0 = mysql_fetch_object($result0)) {
 	
 	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=outbox>OUTBOX</a><br>\n";
 	if (isset($_GET['op']) && $_GET['op']=="outbox") {
-		$result = mysql_db_query("$db_name","select substring(SendingDateTime,1,8) from outbox group by substring(SendingDateTime,1,8) order by substring(SendingDateTime,1,8) desc");
+		$result = mysql_db_query("$db_name","select substring(SendingDateTime,1,10) from outbox group by substring(SendingDateTime,1,10) order by substring(SendingDateTime,1,10) desc");
 		while($rekord = mysql_fetch_row($result)) {
 			$d = dispdate($rekord[0]);
 			echo " &nbsp &nbsp &middot <a href=$dokument$arg"."db=$row0->Database&op=outbox&date=$rekord[0]>$d</a><br>";
@@ -317,7 +317,7 @@ while ($row0 = mysql_fetch_object($result0)) {
 
 	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=sentitems>SENT ITEMS</a><br>\n";
 	if (isset($_GET['op']) && $_GET['op']=="sentitems") {
-		$result = mysql_db_query("$db_name","select $sentitems,substring(SendingDateTime,1,8) from sentitems group by substring(SendingDateTime,1,8) order by substring(SendingDateTime,1,8) desc");
+		$result = mysql_db_query("$db_name","select $sentitems,substring(SendingDateTime,1,10) from sentitems group by substring(SendingDateTime,1,10) order by substring(SendingDateTime,1,10) desc");
 		while($rekord = mysql_fetch_row($result)) {
 			$d = dispdate($rekord[18]);
 			echo " &nbsp &nbsp &middot <a href=$dokument$arg"."db=$row0->Database&op=sentitems&date=$rekord[18]>$d</a><br>";
@@ -676,7 +676,7 @@ if (isset($_GET['op'])) {
 
 		echo "<td colspan=2><input type=checkbox name=class value=0>Send class 0 SMS</input><br>\n";
 
-		echo "<textarea name=tresc cols=80 rows=5 onChange=\"update();\" onFocus=\"update();\" onKeyUp=\"update();\" onKeyDown=\"update();\" onclick=\"update();\"></textarea></td></tr>\n";
+		echo "<textarea name=tresc cols=70 rows=5 onChange=\"update();\" onFocus=\"update();\" onKeyUp=\"update();\" onKeyDown=\"update();\" onclick=\"update();\"></textarea></td></tr>\n";
 
 		echo "<tr><td colspan=2><input type=submit value=SEND OnClick=\"if (newsms.number.value=='') {alert('Sender number not filled'); return false;} else return true;\"></td></tr>\n";
 
