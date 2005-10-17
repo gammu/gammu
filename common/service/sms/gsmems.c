@@ -29,7 +29,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 	unsigned char		UDHID;
 	GSM_Bitmap		Bitmap,Bitmap2;
 	GSM_Ringtone		Ring;
-	GSM_Coding_Type 	Coding 	= SMS_Coding_Default;
+	GSM_Coding_Type 	Coding 	= SMS_Coding_Default_No_Compression;
 	GSM_Phone_Bitmap_Types	BitmapType;
 	MultiPartSMSEntry 	*Entry;
 	bool			start;
@@ -39,7 +39,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 	if (UDHType != UDH_NoUDH) dbgprintf("linked EMS\n");
 #endif
 
-	if (Info->UnicodeCoding) Coding = SMS_Coding_Unicode;
+	if (Info->UnicodeCoding) Coding = SMS_Coding_Unicode_No_Compression;
 
 	/* Cleaning on the start */
 	for (i=0;i<MAX_MULTI_SMS;i++) {
@@ -554,12 +554,14 @@ static bool AddEMSText(GSM_SMSMessage *SMS, GSM_MultiPartSMSInfo *Info, int *Pos
 //		BufferLen+=Len;
 //		(*Pos)+=Len;
 		break;
-	case SMS_Coding_Unicode:
-	case SMS_Coding_Default:
+	case SMS_Coding_Unicode_No_Compression:
+	case SMS_Coding_Default_No_Compression:
 		Info->Entries[Info->EntriesNum].Buffer = realloc(Info->Entries[Info->EntriesNum].Buffer, BufferLen + (Len * 2) + 2);
 		if (Info->Entries[Info->EntriesNum].Buffer == NULL) return false;
 		memcpy(Info->Entries[Info->EntriesNum].Buffer + BufferLen, SMS->Text + (*Pos) *2, Len * 2);
 		BufferLen += Len * 2;
+		break;
+	default:
 		break;
 	}
 	(*Pos)+=Len;

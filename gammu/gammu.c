@@ -281,7 +281,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 			printmsg("Stop         : %s\n",OSDateTime(Note->Entries[i].Date,false));
 			memcpy(&DateTime,&Note->Entries[i].Date,sizeof(GSM_DateTime));
 			break;
-		case CAL_ALARM_DATETIME:
+		case CAL_TONE_ALARM_DATETIME:
 			if (Note->Type==GSM_CAL_BIRTHDAY) {
 				printmsg("Tone alarm   : forever on each %i. day of ",Note->Entries[i].Date.Day);
 				switch(Note->Entries[i].Date.Month) {
@@ -1235,9 +1235,11 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool disp
 		}
 		printmsg("Coding           : ");
 		switch (sms.Coding) {
-			case SMS_Coding_Unicode : printmsg("Unicode\n");		break;
-			case SMS_Coding_Default : printmsg("Default GSM alphabet\n");	break;
-			case SMS_Coding_8bit	: printmsg("8 bit\n");			break;
+			case SMS_Coding_Unicode_No_Compression 	: printmsg("Unicode (no compression)\n");		break;
+			case SMS_Coding_Unicode_Compression 	: printmsg("Unicode (compression)\n");			break;
+			case SMS_Coding_Default_No_Compression 	: printmsg("Default GSM alphabet (no compression)\n");	break;
+			case SMS_Coding_Default_Compression 	: printmsg("Default GSM alphabet (compression)\n");	break;
+			case SMS_Coding_8bit			: printmsg("8 bit\n");					break;
 		}
 		if (sms.State==SMS_UnSent && sms.Memory==MEM_ME) {
 		} else {
@@ -2382,9 +2384,7 @@ static void DeleteCalendar(int argc, char *argv[])
 	for (i=start;i<=stop;i++) {
 		Note.Location=i;
 		error = Phone->DeleteCalendar(&s, &Note);
-		if (error == ERR_EMPTY) continue;
 		Print_Error(error);
-		PrintCalendar(&Note);
 	}
 
 	GSM_Terminate();

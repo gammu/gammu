@@ -39,14 +39,14 @@ void GSM_Find_Free_Used_SMS2(GSM_Coding_Type Coding,GSM_SMSMessage SMS, int *Use
 	int UsedBytes;
 
 	switch (Coding) {
-	case SMS_Coding_Default:
+	case SMS_Coding_Default_No_Compression:
 		FindDefaultAlphabetLen(SMS.Text,&UsedBytes,UsedText,500);
 		UsedBytes = *UsedText * 7 / 8;
 		if (UsedBytes * 8 / 7 != *UsedText) UsedBytes++;
 		*FreeBytes = GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length - UsedBytes;
 		*FreeText = (GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length) * 8 / 7 - *UsedText;
 		break;
-	case SMS_Coding_Unicode:
+	case SMS_Coding_Unicode_No_Compression:
 		*UsedText = UnicodeLength(SMS.Text);
 		UsedBytes = *UsedText * 2;
 		*FreeBytes = GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length - UsedBytes;
@@ -56,6 +56,8 @@ void GSM_Find_Free_Used_SMS2(GSM_Coding_Type Coding,GSM_SMSMessage SMS, int *Use
 		*UsedText = UsedBytes = SMS.Length;
 		*FreeBytes = GSM_MAX_8BIT_SMS_LENGTH - SMS.UDH.Length - UsedBytes;
 		*FreeText = *FreeBytes;
+		break;
+	default:
 		break;
 	}
 	dbgprintf("UDH len %i, UsedBytes %i, FreeText %i, UsedText %i, FreeBytes %i\n",SMS.UDH.Length,UsedBytes,*FreeText,*UsedText,*FreeBytes);
@@ -105,7 +107,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
 		dbgprintf("copy %i\n",Copy);
 
 		switch (Coding) {
-		case SMS_Coding_Default:
+		case SMS_Coding_Default_No_Compression:
 			FindDefaultAlphabetLen(Buffer,&i,&j,FreeText);
 			dbgprintf("def length %i %i\n",i,j);
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+i*2]   = 0;
@@ -115,7 +117,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
 			*CopiedSMSText 	= j;
 			SMS->SMS[SMS->Number].Length += i;
 			break;
-		case SMS_Coding_Unicode:
+		case SMS_Coding_Unicode_No_Compression:
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2]   = 0;
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+Copy*2+1] = 0;
 			memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer,Copy*2);
@@ -126,6 +128,8 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
 			memcpy(SMS->SMS[SMS->Number].Text+SMS->SMS[SMS->Number].Length,Buffer,Copy);
 			SMS->SMS[SMS->Number].Length += Copy;
 			*CopiedText = *CopiedSMSText = Copy;
+			break;
+		default:
 			break;
 		}
 		dbgprintf("Text added\n");
@@ -565,7 +569,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 			/* FIXME: It wasn't checked */
 			UDH = UDH_NokiaPhonebookLong;
 		}
-		Coding = SMS_Coding_Default;
+		Coding = SMS_Coding_Default_No_Compression;
 		memcpy(Buffer2,Buffer,Length);
 		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
@@ -580,21 +584,21 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 			UDH = UDH_NokiaPhonebookLong;
 			/* Here can be also 8 bit coding */
 		}
-		Coding = SMS_Coding_Default;
+		Coding = SMS_Coding_Default_No_Compression;
 		memcpy(Buffer2,Buffer,Length);
 		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
 	case SMS_VCARD10Long:
 		GSM_EncodeVCARD(Buffer,&Length,Info->Entries[0].Phonebook,true,Nokia_VCard10);
 		if (Length>GSM_MAX_SMS_LENGTH) UDH = UDH_ConcatenatedMessages;
-		Coding = SMS_Coding_Default;
+		Coding = SMS_Coding_Default_No_Compression;
 		memcpy(Buffer2,Buffer,Length);
 		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
 	case SMS_VCARD21Long:
 		GSM_EncodeVCARD(Buffer,&Length,Info->Entries[0].Phonebook,true,Nokia_VCard21);
 		if (Length>GSM_MAX_SMS_LENGTH) UDH = UDH_ConcatenatedMessages;
-		Coding = SMS_Coding_Default;
+		Coding = SMS_Coding_Default_No_Compression;
 		memcpy(Buffer2,Buffer,Length);
 		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
@@ -610,7 +614,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 			UDH = UDH_NokiaCalendarLong;
 			/* can be here 8 bit coding ? */
 		}
-		Coding = SMS_Coding_Default;
+		Coding = SMS_Coding_Default_No_Compression;
 		memcpy(Buffer2,Buffer,Length);
 		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
@@ -618,7 +622,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 		error=GSM_EncodeVTODO(Buffer,&Length,Info->Entries[0].ToDo,true,Nokia_VToDo);
 		if (error != ERR_NONE) return error;
 		UDH = UDH_NokiaCalendarLong;
-		Coding = SMS_Coding_Default;
+		Coding = SMS_Coding_Default_No_Compression;
 		memcpy(Buffer2,Buffer,Length);
 		EncodeUnicode(Buffer,Buffer2,Length);
 		break;
@@ -646,11 +650,11 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 		GSM_EncodeUDHHeader(&UDHHeader);
 		memcpy(Buffer,Info->Entries[0].Buffer,UnicodeLength(Info->Entries[0].Buffer)*2+2);
 		if (Info->UnicodeCoding) {
-			Coding = SMS_Coding_Unicode;
+			Coding = SMS_Coding_Unicode_No_Compression;
 			Length = UnicodeLength(Info->Entries[0].Buffer);
 			if (Length>(140-UDHHeader.Length)/2) Length = (140-UDHHeader.Length)/2;
 		} else {
-			Coding = SMS_Coding_Default;
+			Coding = SMS_Coding_Default_No_Compression;
 			FindDefaultAlphabetLen(Info->Entries[0].Buffer,&Length,&smslen,(GSM_MAX_8BIT_SMS_LENGTH-UDHHeader.Length)*8/7);
 		}
 		break;
@@ -683,7 +687,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 		memcpy(Buffer,Info->Entries[0].Buffer,UnicodeLength(Info->Entries[0].Buffer)*2+2);
 		UDH = UDH_NoUDH;
 		if (Info->UnicodeCoding) {
-			Coding = SMS_Coding_Unicode;
+			Coding = SMS_Coding_Unicode_No_Compression;
 			Length = UnicodeLength(Info->Entries[0].Buffer);
 			if (Info->Entries[0].ID == SMS_ConcatenatedTextLong16bit ||
 			    Info->Entries[0].ID == SMS_ConcatenatedAutoTextLong16bit) {
@@ -692,7 +696,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 				if (Length>70) UDH=UDH_ConcatenatedMessages;
 			}
 		} else {
-			Coding = SMS_Coding_Default;
+			Coding = SMS_Coding_Default_No_Compression;
 			FindDefaultAlphabetLen(Info->Entries[0].Buffer,&Length,&smslen,5000);
 			if (Info->Entries[0].ID == SMS_ConcatenatedTextLong16bit ||
 			    Info->Entries[0].ID == SMS_ConcatenatedAutoTextLong16bit) {
@@ -911,19 +915,21 @@ bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo	*Info,
 				memcpy(Info->Entries[0].Buffer + Length, SMS->SMS[i].Text, SMS->SMS[i].Length);
 				Length=Length+SMS->SMS[i].Length;
 				break;
-			case SMS_Coding_Unicode:
+			case SMS_Coding_Unicode_No_Compression:
 				if (Info->Entries[0].ID == SMS_ConcatenatedTextLong) {
 					Info->Entries[0].ID = SMS_ConcatenatedAutoTextLong;
 				}
 				if (Info->Entries[0].ID == SMS_ConcatenatedTextLong16bit) {
 					Info->Entries[0].ID = SMS_ConcatenatedAutoTextLong16bit;
 				}
-			case SMS_Coding_Default:
+			case SMS_Coding_Default_No_Compression:
 				Info->Entries[0].Buffer = realloc(Info->Entries[0].Buffer, Length + UnicodeLength(SMS->SMS[i].Text)*2 + 2);
 				if (Info->Entries[0].Buffer == NULL) return false;
 
 				memcpy(Info->Entries[0].Buffer+Length,SMS->SMS[i].Text,UnicodeLength(SMS->SMS[i].Text)*2);
 				Length=Length+UnicodeLength(SMS->SMS[i].Text)*2;
+				break;
+			default:
 				break;
 			}
 		}

@@ -1950,7 +1950,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 			smprintf(s, "  Difference : %i seconds\n", alarm);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
 			GetTimeDifference(alarm, &entry->Entries[1].Date, false, 60);
-			entry->Entries[1].EntryType = CAL_ALARM_DATETIME;
+			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			entry->EntriesNum++;
 		}
 		GSM_GetCalendarRecurranceRepeat(msg.Buffer + 16, NULL, entry);
@@ -1971,7 +1971,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 			smprintf(s, "  Difference : %i seconds\n", alarm);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
 			GetTimeDifference(alarm, &entry->Entries[1].Date, false, 60);
-			entry->Entries[1].EntryType = CAL_ALARM_DATETIME;
+			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			entry->EntriesNum++;
 		}
 		GSM_GetCalendarRecurranceRepeat(msg.Buffer + 16, NULL, entry);
@@ -2009,7 +2009,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 			smprintf(s, "  Difference : %i seconds\n", alarm);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
 			GetTimeDifference(alarm, &entry->Entries[1].Date, false, 1);
-			entry->Entries[1].EntryType = CAL_ALARM_DATETIME;
+			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			if (msg.Buffer[20]!=0x00) {
 				entry->Entries[1].EntryType = CAL_SILENT_ALARM_DATETIME;
 				smprintf(s, "Alarm type   : Silent\n");
