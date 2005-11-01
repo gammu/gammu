@@ -267,7 +267,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 
 	/* Strip possible quotes */
 	if (*pos == '"') pos++;
-	if (buffer[strlen(pos) - 1] == '"') buffer[strlen(pos) - 1] = 0;
+//	if (buffer[strlen(pos) - 1] == '"') buffer[strlen(pos) - 1] = 0;
 
 	len = strlen(pos);
 

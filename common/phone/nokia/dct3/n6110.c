@@ -924,6 +924,7 @@ static GSM_Error N6110_ReplyGetCallerLogo(GSM_Protocol_Message msg, GSM_StateMac
                 count                            = msg.Buffer[5] + 6;
                 Data->Bitmap->RingtoneID         = msg.Buffer[count++];
                 Data->Bitmap->DefaultRingtone    = false;
+		Data->Bitmap->FileSystemPicture  = false;
                 Data->Bitmap->FileSystemRingtone = false;
                 if (Data->Bitmap->RingtoneID == 16) Data->Bitmap->DefaultRingtone = true;
                 smprintf(s, "Ringtone ID: %02x\n",Data->Bitmap->RingtoneID);

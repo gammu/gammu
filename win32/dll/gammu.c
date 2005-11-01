@@ -339,7 +339,7 @@ GSM_Error WINAPI mygetnextsmsmessage (int phone, GSM_MultiSMSMessage *sms, bool 
 			if (sms->SMS[i].PDU != SMS_Status_Report) {
 				ReverseUnicodeString(sms->SMS[i].Name);
 			}
-			if (sms->SMS[i].Coding == SMS_Coding_Unicode || sms->SMS[i].Coding == SMS_Coding_Default) {
+			if (sms->SMS[i].Coding == SMS_Coding_Unicode_No_Compression || sms->SMS[i].Coding == SMS_Coding_Default_No_Compression) {
 				ReverseUnicodeString(sms->SMS[i].Text);
 			}
 		}
@@ -404,7 +404,7 @@ GSM_Error WINAPI mysendsmsmessage (int phone, GSM_SMSMessage *sms, unsigned int 
 	if (sms2.SMSC.Location == 0) ReverseUnicodeString(sms2.SMSC.Number);
 	ReverseUnicodeString(sms2.Number);
 //	ReverseUnicodeString(sms2.Name);
-	if (sms2.Coding == SMS_Coding_Unicode || sms2.Coding == SMS_Coding_Default) {
+	if (sms2.Coding == SMS_Coding_Unicode_No_Compression || sms2.Coding == SMS_Coding_Default_No_Compression) {
 		ReverseUnicodeString(sms2.Text);
 	}
 
@@ -460,7 +460,7 @@ GSM_Error WINAPI myaddsmsmessage (int phone, GSM_SMSMessage *sms)
 	if (sms2.SMSC.Location == 0) ReverseUnicodeString(sms2.SMSC.Number);
 	ReverseUnicodeString(sms2.Number);
 	ReverseUnicodeString(sms2.Name);
-	if (sms2.Coding == SMS_Coding_Unicode || sms2.Coding == SMS_Coding_Default) {
+	if (sms2.Coding == SMS_Coding_Unicode_No_Compression || sms2.Coding == SMS_Coding_Default_No_Compression) {
 		ReverseUnicodeString(sms2.Text);
 	}
 
@@ -570,7 +570,7 @@ GSM_Error WINAPI mymakemultipartsms(unsigned char		*MessageBuffer,
 	/* FIXME. Reverse MessageBuffer */
 	GSM_MakeMultiPartSMS(SMS,MessageBuffer,MessageLength,UDHType,Coding,Class,ReplaceMessage);
 	for (i=0;i<SMS->Number;i++) {
-		if (SMS->SMS[i].Coding == SMS_Coding_Unicode || SMS->SMS[i].Coding == SMS_Coding_Default) {
+		if (SMS->SMS[i].Coding == SMS_Coding_Unicode_No_Compression || SMS->SMS[i].Coding == SMS_Coding_Default_No_Compression) {
 			ReverseUnicodeString(SMS->SMS[i].Text);
 		}
 	}

@@ -1571,6 +1571,7 @@ typedef enum {
 	F_PBKTONEGAL,	/* Phonebook with selecting ringtones from gallery              */
 	F_PBKSMSLIST,	/* Phonebook with SMS list					*/
 	F_PBKUSER,	/* Phonebook with user ID					*/
+	F_6230iCALLER,	/* Caller groups like in 6230i					*/
 	F_RADIO,	/* Phone with FM radio						*/
 	F_TODO63,	/* ToDo in 6310 style - 0x55 msg type				*/
 	F_TODO66,	/* ToDo in 6610 style - like calendar, with date and other	*/
@@ -1586,7 +1587,6 @@ typedef enum {
 	F_SYNCML,	/* Phone with SyncML settings 					*/
 	F_FILES2,	/* filesystem version 2 					*/
 	F_6230iWAP,	/* WAP, MMS, etc. settings like in 6230i - unknown now		*/
-	F_6230iCALLER,	/* Caller groups like in 6230i					*/
 	F_PROFILES,	/* Profiles support available					*/
 
 	/* n6510.c && n7110.c */

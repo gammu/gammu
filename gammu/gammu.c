@@ -153,6 +153,11 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 {
 	int tmp;
 
+	if (argc <= num) {
+			printmsg("ERROR: more parameters required\n");
+			exit (-1);
+	}
+
 	*start=atoi(argv[num]);
 	if (*start==0) {
 		printmsg("ERROR: enumerate locations from 1\n");
@@ -166,12 +171,12 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 			printmsg("ERROR: enumerate locations from 1\n");
 			exit (-1);
 		}
-	}
-	if (*stop < *start) {
-		printmsg("WARNING: swapping start and end location\n");
-		tmp    = *stop;
-		*stop  = *start;
-		*start = tmp;
+		if (*stop < *start) {
+			printmsg("WARNING: swapping start and end location\n");
+			tmp    = *stop;
+			*stop  = *start;
+			*start = tmp;
+		}
 	}
 }
 
@@ -2552,6 +2557,8 @@ static void GetBitmap(int argc, char *argv[])
 		printf("\n");
 		if (MultiBitmap.Bitmap[0].DefaultRingtone) {
 			printmsg("Ringtone    : default\n");
+		} else if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_6230iCALLER)) {
+			printmsg("Ringtone    : %i\n",MultiBitmap.Bitmap[0].RingtoneID);
 		} else if (MultiBitmap.Bitmap[0].FileSystemRingtone) {
 			sprintf(buffer,"%i",MultiBitmap.Bitmap[0].RingtoneID);
 			EncodeUnicode(File.ID_FullName,buffer,strlen(buffer));
@@ -2589,6 +2596,9 @@ static void GetBitmap(int argc, char *argv[])
 			printmsg("Bitmap      : enabled\n");
 		} else {
 			printmsg("Bitmap      : disabled\n");
+		}
+		if (MultiBitmap.Bitmap[0].FileSystemPicture) {
+			printmsg("Bitmap ID   : %i\n",MultiBitmap.Bitmap[0].PictureID);
 		}
 		if (argc>4 && !MultiBitmap.Bitmap[0].DefaultBitmap) error=GSM_SaveBitmapFile(argv[4],&MultiBitmap);
 		break;
@@ -5001,6 +5011,30 @@ static void Restore(int argc, char *argv[])
 	GSM_Init(true);
 
 	DoRestore = false;
+	if (Backup.CallerLogos[0] != NULL) {
+		Bitmap.Type 	= GSM_CallerGroupLogo;
+		Bitmap.Location = 1;
+		error=Phone->GetBitmap(&s,&Bitmap);
+		if (error == ERR_NONE) {
+			if (answer_yes("Restore phone caller groups and logos")) DoRestore = true;
+		}
+	}
+	if (DoRestore) {
+		max = 0;
+		while (Backup.CallerLogos[max]!=NULL) max++;
+		for (i=0;i<max;i++) {
+			error=Phone->SetBitmap(&s,Backup.CallerLogos[i]);
+			Print_Error(error);
+			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
+			if (gshutdown) {
+				GSM_Terminate();
+				exit(0);
+			}
+		}
+		printmsgerr("\n");
+	}
+
+	DoRestore = false;
 	if (Backup.PhonePhonebook[0] != NULL) {
 		MemStatus.MemoryType = MEM_ME;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
@@ -5023,6 +5057,16 @@ static void Restore(int argc, char *argv[])
 					used++;
 					dbgprintf("Location %i\n",Pbk.Location);
 					if (Pbk.EntriesNum != 0) error=Phone->SetMemory(&s, &Pbk);
+					if (error == ERR_PERMISSION && IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_6230iCALLER)) {
+						error=Phone->DeleteMemory(&s, &Pbk);
+						Print_Error(error);
+						error=Phone->SetMemory(&s, &Pbk);
+					}
+					if (error == ERR_MEMORY && IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_6230iCALLER)) {
+						printf("\n  Error - try to (1) add enough number of/restore caller groups and (2) use --restore again\n");
+						GSM_TerminateConnection(&s);
+				 		exit (-1);
+					}
 				}
 			}
 			if (Pbk.EntriesNum == 0) error=Phone->DeleteMemory(&s, &Pbk);
@@ -5064,30 +5108,6 @@ static void Restore(int argc, char *argv[])
 			if (Pbk.EntriesNum == 0) error=Phone->DeleteMemory(&s, &Pbk);
 			Print_Error(error);
 			printmsgerr("%cWriting: %i percent",13,(i+1)*100/(MemStatus.MemoryUsed+MemStatus.MemoryFree));
-			if (gshutdown) {
-				GSM_Terminate();
-				exit(0);
-			}
-		}
-		printmsgerr("\n");
-	}
-
-	DoRestore = false;
-	if (Backup.CallerLogos[0] != NULL) {
-		Bitmap.Type 	= GSM_CallerGroupLogo;
-		Bitmap.Location = 1;
-		error=Phone->GetBitmap(&s,&Bitmap);
-		if (error == ERR_NONE) {
-			if (answer_yes("Restore phone caller groups and logos")) DoRestore = true;
-		}
-	}
-	if (DoRestore) {
-		max = 0;
-		while (Backup.CallerLogos[max]!=NULL) max++;
-		for (i=0;i<max;i++) {
-			error=Phone->SetBitmap(&s,Backup.CallerLogos[i]);
-			Print_Error(error);
-			printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -5539,6 +5559,11 @@ static void AddNew(int argc, char *argv[])
 						Pbk.MemoryType 	= MEM_ME;
 						Pbk.Location 	= j;
 						error=Phone->SetMemory(&s, &Pbk);
+						if (error == ERR_PERMISSION && IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_6230iCALLER)) {
+							error=Phone->DeleteMemory(&s, &Pbk);
+							Print_Error(error);
+							error=Phone->SetMemory(&s, &Pbk);
+						}
 						Print_Error(error);
 						printmsgerr("%cWriting: %i percent",13,(i+1)*100/max);
 						if (gshutdown) {
@@ -7603,7 +7628,7 @@ static void GetFileFolder(int argc, char *argv[])
 {
 	bool 			Start = true;
 	GSM_File	 	File;
-	int			level=0,allnum=0,num=0,filelevel=0;
+	int			level=0,allnum=0,num=0,filelevel=0,i=0;
 	bool			newtime = false, found;
 
 	File.Buffer = NULL;
@@ -7655,7 +7680,10 @@ static void GetFileFolder(int argc, char *argv[])
 			}
 		}
 
-		if (level != 0 && !File.Folder) GetOneFile(&File, newtime,num);
+		if (level != 0 && !File.Folder) {
+			GetOneFile(&File, newtime,i);
+			i++;
+		}
 
 		if (level == 2) {
 			level = 0;
@@ -7825,9 +7853,13 @@ static void AddFolder(int argc, char *argv[])
 
 static void DeleteFolder(int argc, char *argv[])
 {
+	unsigned char buffer[500];
+
 	GSM_Init(true);
 
-	error = Phone->DeleteFolder(&s,argv[2]);
+	EncodeUnicode(buffer,argv[2],strlen(argv[2]));
+
+	error = Phone->DeleteFolder(&s,buffer);
     	Print_Error(error);
 
 	GSM_Terminate();
@@ -7858,6 +7890,7 @@ static struct NokiaFolderInfo Folder[] = {
 	/* Language depedent in DCT4 filesystem 1 */
 	{"",	 "Gallery",	   "Clip-arts",					"3"},
 	{"",	 "Gallery",	   "004F006200720061007A006B0069",		"3"},//obrazki PL 6220
+	{"",	 "Gallery",	   "Pictures",					"2"},//3510
 	{"",	 "Gallery2",	   "Graphics",					"3"},
 	{"",	 "Gallery2",	   "00470072006100660069006B0061",		"3"},//grafika PL 6220
 	{"",	 "Camera",	   "Images",					"3"},
@@ -8207,12 +8240,14 @@ static void NokiaAddFile(int argc, char *argv[])
 
 static void DeleteFiles(int argc, char *argv[])
 {
-	int i;
+	int		i;
+	unsigned char	buffer[500];
 
 	GSM_Init(true);
 
 	for (i=2;i<argc;i++) {
-		error = Phone->DeleteFile(&s,argv[i]);
+		EncodeUnicode(buffer,argv[i],strlen(argv[i]));
+		error = Phone->DeleteFile(&s,buffer);
 	    	Print_Error(error);
 	}
 
@@ -8330,7 +8365,7 @@ typedef struct {
 
 typedef struct {
 	unsigned char 		Device[50];
-	OneConnectionInfo 	Connections[4];
+	OneConnectionInfo 	Connections[5];
 } OneDeviceInfo;
 
 int				num;

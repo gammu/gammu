@@ -1763,6 +1763,8 @@ static void ReadCallerEntry(INI_Section *file_info, char *section, GSM_Bitmap *b
 	if (readvalue!=NULL) {
 		if (mystrncasecmp(readvalue,"False",0)) bitmap->BitmapEnabled = false;
 	}
+	bitmap->FileSystemPicture = false;
+	/* FIXME */
 }
 
 static void ReadStartupEntry(INI_Section *file_info, char *section, GSM_Bitmap *bitmap, bool UseUnicode)

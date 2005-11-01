@@ -34,12 +34,41 @@ This software was sponsored (in time order) by:
 19. Michael Hansen
 20. Saul Kato
 21. Reinhard Weiss
+22. Andreas Leitgeb
 
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20051101 - 1.03.07
+* new functionality:
+  * ldflags                                                (Marcin Juszkiewicz)
+  * id for 2650                                             (Alexey V. Novikov)
+  * partial support for 6230i caller groups:                  (Intra Darma,...)
+    * --getbitmap (it reads correctly group name + some ringtone/bitmap
+      ID unknown for now)
+    * saved info about them in pbk entries in --backup
+    * restored info about them in pbk entries with --restore
+      * when you make restoring pbk entries with caller groups into phone 
+        without any caller groups created, there is returned correct error 
+        info
+      * when you try to overwrite pbk entry with caller group assigment, 
+        phone returns error. Now it's handled and (when it happens) Gammu 
+        first remove entry and try to save it again. It should be done this
+        way in Wammu too !!!
+
+* fixes and improvements:
+  * * --deletefiles, --deletefolder                           (Andreas Leitgeb)
+    * Gallery and --getfolderlisting for 3510
+  * --getfilefolder                                               (Gijs Epping)
+  * better getting modification datetime for filesystem          (Michal Cihar)
+  * rpm spec file without #13#10 sequences                (Vladimir Kondratiev)
+  * GetStartStop
+  * 6021 features                                                 (MaXx Fomkin)
+  * gammu.c, atgen.c fixes                                        (d binderman)
+  * dll changed according to 1.03.00 constants changes                 (Muffin)
+
 20051017 - 1.03.00
 * new functionality:
   * changed names of some constants to make them more clear
