@@ -339,6 +339,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 	File->Protected 	= false;
 	File->Hidden		= false;
 	File->System		= false;
+	File->ModifiedEmpty	= true;
 
 	if (File->Used == 0x00) {
 		if (FolderList) {

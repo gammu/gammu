@@ -925,6 +925,12 @@ static GSM_Error N6510_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		return GSM_WaitFor (s, reqNote, 6, 0x7A, 4, ID_GetBitmap);
 	case GSM_CallerGroupLogo:
 		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) return ERR_NOTSUPPORTED;
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
+			pbk.MemoryType	= MEM6510_CG2;
+			pbk.Location	= Bitmap->Location;
+			smprintf(s, "Getting caller group logo method 2\n");
+			return N6510_GetMemory(s,&pbk);
+		}
 		Bitmap->BitmapWidth  	 = 72;
 		Bitmap->BitmapHeight 	 = 14;
 		GSM_ClearBitmap(Bitmap);
@@ -1075,6 +1081,10 @@ static GSM_Error N6510_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 		0xfe, 0x10,		/* memory type */
 		0x00, 0x00,		/* location */
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
+		return ERR_NOTSUPPORTED;
+	}
 
 	req[13] = bitmap->Location;
 
@@ -3961,7 +3971,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6020|6100|6200|6220|6230|6230i|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6020|6021|6100|6200|6220|6230|6230i|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/

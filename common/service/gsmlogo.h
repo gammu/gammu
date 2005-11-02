@@ -110,6 +110,11 @@ typedef struct {
 	unsigned char 		RingtoneID;
 	bool 			FileSystemRingtone;
 	/**
+	 * For caller group logo: picture ID. Phone model specific
+	 */
+	int	 		PictureID;
+	bool 			FileSystemPicture;
+	/**
 	 * For mono bitmaps: body of bitmap
 	 */
 	unsigned char 		BitmapPoints[GSM_BITMAP_SIZE];
