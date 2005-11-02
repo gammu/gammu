@@ -1689,6 +1689,8 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 	GSM_File  		File2;
 	unsigned char		buffer[5];
 
+	memset(&File2, 0, sizeof(File2));
+
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
 	if (UnicodeLength(File->ID_FullName) == 0) {
