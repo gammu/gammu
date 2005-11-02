@@ -883,6 +883,7 @@ static OnePhoneModel allmodels[] = {
 	{"2100" ,"NAM-2" ,"",           {F_NOWAP,F_NOCALLER,F_RING_SM,F_CAL33,F_POWER_BATT,F_PROFILES33,F_NOCALLINFO,F_NODTMF,0}},//quess
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
+	{"2650", "RH-53" ,"",           {F_PBKTONEGAL,F_PBKSMSLIST,0}},//fixme
 	{"3100" ,"RH-19" ,"",           {F_PBKTONEGAL,F_PBKSMSLIST,0}},//fixme
 	{"3100b","RH-50" ,"",           {F_PBKTONEGAL,F_PBKSMSLIST,0}},//fixme
  	{"3105" ,"RH-48" ,"Nokia 3105",	{F_PBKTONEGAL,F_PBKSMSLIST,F_VOICETAGS,0}},//fixme
@@ -948,7 +949,7 @@ static OnePhoneModel allmodels[] = {
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
 	{"6020" ,"RM-30" ,"Nokia 6020", {F_VOICETAGS, F_FILES2, F_CHAT, F_WAPMMSPROXY, F_TODO66, F_PBKTONEGAL, F_NOTES,0}},//quess
-	{"6021" ,"RM-94" ,"Nokia 6021", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,F_NOTES,F_CHAT,F_SYNCML,F_FILES2,F_6230iWAP,F_6230iCALLER,0}},//quess
+	{"6021" ,"RM-94" ,"Nokia 6021", {F_PBKTONEGAL,F_TODO66,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,F_NOTES,F_CHAT,F_SYNCML,F_FILES2,F_6230iWAP,F_6230iCALLER,0}},//quess
 	{"6100" ,"NPL-2" ,"Nokia 6100", {F_PBKTONEGAL,F_TODO66,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
@@ -1029,7 +1030,7 @@ static OnePhoneModel allmodels[] = {
 	{"S40" ,	  "Siemens S40",  "",			   	   {0}},
 	{"C45" ,	  "C45",	  "",				   {0}},
 	{"S45" ,	  "S45",	  "",				   {0}},
-	{"ME45" ,	  "ME45",	  "",				   {0}},
+	{"ME45" ,	  "ME45", 	  "SIEMENS ME45",		   {0}},
 	{"SL45" ,	  "SL45",	  "",				   {0}},
 	{"SL45i" ,	  "SL45i",	  "",				   {0}},
 	{"M50" ,	  "M50",	  "",				   {0}},

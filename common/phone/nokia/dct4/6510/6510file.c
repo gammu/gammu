@@ -121,9 +121,10 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 		if (msg.Buffer[i+5] == 0x01) File->Hidden       = true;
 		if (msg.Buffer[i+6] == 0x01) File->System       = true;//fixme
 
+		File->ModifiedEmpty = false;
 		NOKIA_DecodeDateTime(s, msg.Buffer+i-22, &File->Modified);
-		File->ModifiedEmpty = (File->Modified.Year == 65535 || File->Modified.Year == 0x00);
-
+		if (File->Modified.Year == 0x00) File->ModifiedEmpty = true;
+		if (File->Modified.Year == 0xffff) File->ModifiedEmpty = true;
 		dbgprintf("%02x %02x %02x %02x\n",msg.Buffer[i-22],msg.Buffer[i-21],msg.Buffer[i-20],msg.Buffer[i-19]);
 
 		Priv->FileToken = msg.Buffer[i-10]*256+msg.Buffer[i-9];
@@ -674,8 +675,9 @@ static GSM_Error N6510_PrivDeleteFileFolder1(GSM_StateMachine *s, unsigned char 
 	error = N6510_SetReadOnly1(s, ID, false);
 	if (error != ERR_NONE) return error;
 
-	Delete[8] = atoi(ID) / 256;
-	Delete[9] = atoi(ID) % 256;
+	Delete[8] = atoi(DecodeUnicodeString(ID)) / 256;
+	Delete[9] = atoi(DecodeUnicodeString(ID)) % 256;
+
 	return GSM_WaitFor (s, Delete, 10, 0x6D, 4, ID_DeleteFile);
 }
 
@@ -752,16 +754,22 @@ static GSM_Error N6510_GetFolderListing1(GSM_StateMachine *s, GSM_File *File, bo
 		if (!File->Folder) return ERR_SHOULDBEFOLDER;
 	}
 
-	if (Priv->FilesLocationsUsed == 0) return ERR_EMPTY;
+	while (true) {
+		if (Priv->FilesLocationsUsed == 0) return ERR_EMPTY;
 
-	memcpy(File,&Priv->Files[0],sizeof(GSM_File));
-	error = N6510_GetFileFolderInfo1(s, File, false);
+		memcpy(File,&Priv->Files[0],sizeof(GSM_File));
+		error = N6510_GetFileFolderInfo1(s, File, false);
 
-	for(i=1;i<Priv->FilesLocationsUsed;i++) {
-		memcpy(&Priv->Files[i-1],&Priv->Files[i],sizeof(GSM_File));
+		for(i=1;i<Priv->FilesLocationsUsed;i++) {
+			memcpy(&Priv->Files[i-1],&Priv->Files[i],sizeof(GSM_File));
+		}
+		Priv->FilesLocationsUsed--;
+
+		//3510 for example
+		if (error == ERR_EMPTY) continue;
+
+		break;
 	}
-	Priv->FilesLocationsUsed--;
-
 	return error;
 }
 
@@ -935,8 +943,10 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 				smprintf(s,"Protected\n");
 			}
 
+			File->ModifiedEmpty = false;
 			NOKIA_DecodeDateTime(s, msg.Buffer+14, &File->Modified);
-			File->ModifiedEmpty = (File->Modified.Year == 65535 || File->Modified.Year == 0x00);
+			if (File->Modified.Year == 0x00) File->ModifiedEmpty = true;
+			if (File->Modified.Year == 0xffff) File->ModifiedEmpty = true;
 
 			if (msg.Buffer[3] == 0x69 && msg.Buffer[4] == 0) Priv->FilesEnd = true;
 
