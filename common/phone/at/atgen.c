@@ -254,6 +254,57 @@ int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
 	return position;
 }
 
+void ATGEN_TweakInternationalNumber(unsigned char *Number, unsigned char *numType)
+{/*	Author: Peter Ondraska
+	License: Whatever the current maintainer of gammulib chooses, as long as there
+	is an easy way to obtain the source under GPL, otherwise the author's parts
+	of this function are GPL 2.0. */
+
+	/* Checks if International number needs to be corrected */
+	char* pos; /* current position in the buffer */
+	char buf[500]; /* Taken from DecodeUnicodeString(). How to get length of the encoded string? There may be embedded 0s. */
+
+	if (atoi(numType)==NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN) {
+		sprintf(buf+1,"%s",DecodeUnicodeString(Number)); /* leave 1 free char before the number, we'll need it */
+		/* International number may be without + (e.g. (Sony)Ericsson)
+			we can add it, but must handle numbers in the form:
+			         NNNNNN         N - any digit (char)
+			   *code#NNNNNN         any number of Ns
+			*[*]code*NNNNNN[...]
+			other combinations (like *code1*code2*number#)
+			will have to be added if found in real life
+			Or does somebody know the exact allowed syntax
+			from some standard?
+		*/
+		pos=buf+1;
+		if (*pos=='*') { /* Code? Skip it. */
+			/* probably with code */
+			while (*pos=='*') { /* skip leading asterisks */
+				*(pos-1)=*pos; /* shift the chars by one */
+				pos++;
+			}
+			while ((*pos!='*')&&(*pos!='#')) { /* skip code - anything except * or # */
+				*(pos-1)=*pos;
+				pos++;
+			}
+			*(pos-1)=*pos; /* shift the last delimiter */
+			pos++;
+	        }
+		/* check the guessed location, if + is correctly there */
+		if (*pos=='+') {
+			/* yes, just shift the rest of the string */
+			while (pos) {
+				*(pos-1)=*pos; pos++;
+			}
+			*(pos-1)=0; /* kill the last char, which now got doubled */
+		} else {
+			/* no, insert + and exit, no more shifting */
+			*(pos-1)='+';
+		}
+		EncodeUnicode(Number,buf,strlen(buf));
+	}
+}
+
 GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned char *input)
 {
 	/* We receive something like: 05/01/06,12:51:41 (or the same hex/unicode encoded) */
@@ -2219,16 +2270,9 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Format of SMSC number */
 		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
 		smprintf(s, "Format %s\n",buffer);
+
 		/* International number */
-		if (!strcmp(buffer,"145")) {
-			sprintf(buffer+1,"%s",DecodeUnicodeString(SMSC->Number));
-			if (strlen(buffer+1)!=0 && buffer[1] != '+') {
-				/* Sony Ericsson issue */
-				/* International number is without + */
-				buffer[0] = '+';
-				EncodeUnicode(SMSC->Number,buffer,strlen(buffer));
-			}
-		}
+		ATGEN_TweakInternationalNumber(SMSC->Number,buffer);
 
 		SMSC->Format 		= SMS_FORMAT_Text;
 		SMSC->Validity.Format = SMS_Validity_RelativeFormat;
@@ -2746,15 +2790,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		smprintf(s, "Number format: %s\n",buffer);
 
 		/* International number */
-		if (!strcmp(buffer,"145")) {
-			sprintf(buffer+1,"%s",DecodeUnicodeString(Memory->Entries[0].Text));
-			if (strlen(buffer+1)!=0 && buffer[1] != '+') {
-				/* Sony Ericsson issue */
-				/* International number is without + */
-				buffer[0] = '+';
-				EncodeUnicode(Memory->Entries[0].Text,buffer,strlen(buffer));
-			}
-		}
+		ATGEN_TweakInternationalNumber(Memory->Entries[0].Text,buffer);
 
 		/* Name */
 		pos += ATGEN_ExtractOneParameter(pos, buffer);
