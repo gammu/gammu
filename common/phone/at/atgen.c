@@ -307,10 +307,12 @@ void ATGEN_TweakInternationalNumber(unsigned char *Number, unsigned char *numTyp
 
 GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned char *input)
 {
-	/* We receive something like: 05/01/06,12:51:41 (or the same hex/unicode encoded) */
+       	/* This function parses datetime strings in the format:
+	[YY[YY]/MM/DD,]hh:mm[:ss[+TZ]] , [] enclosed parts are optional */
+	/* (or the same hex/unicode encoded) */
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 	unsigned char		buffer[100];
-	unsigned char		*pos, *pos2;
+	unsigned char		*pos;
 	unsigned char		buffer2[100];
 	int			len;
 
@@ -318,7 +320,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 
 	/* Strip possible quotes */
 	if (*pos == '"') pos++;
-//	if (buffer[strlen(pos) - 1] == '"') buffer[strlen(pos) - 1] = 0;
+	if (buffer[strlen(pos) - 1] == '"') buffer[strlen(pos) - 1] = 0;
 
 	len = strlen(pos);
 
@@ -335,44 +337,58 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 
 	pos = buffer;
 
+	/* Strip possible quotes again */
 	if (*pos == '"') pos++;
-	dt->Year = atoi(pos);
-	if (dt->Year < 100) {
-		/* FIXME: dates in past may be broken with this, but how to check? */
-		dt->Year += 2000;
+	if (buffer[strlen(pos) - 1] == '"') buffer[strlen(pos) - 1] = 0;
+	/* some phones report only time (HH:MM) in the alarm */
+	if (strchr(pos, '/')) {
+		/* date present */
+		/* Samsung phones report year as %d instead of %02d */
+		dt->Year=atoi(pos);
+		if(dt->Year>80 && dt->Year<1000) {
+			dt->Year+=1900;
+		} else {
+			dt->Year+=2000;
+		}
+		pos = strchr(pos, '/');
+		pos++;
+		dt->Month = atoi(pos);
+		pos = strchr(pos, '/');
+		if (pos == NULL) return ERR_UNKNOWN;
+		pos++;
+		dt->Day = atoi(pos);
+		pos = strchr(pos, ',');
+		if (pos == NULL) return ERR_UNKNOWN;
+		pos++;
+	} else {
+		/* if date was not found, it is still necessary to initialize
+		   the variables, maybe Today() would be better in some replies */
+		dt->Year=0;
+		dt->Month=0;
+		dt->Day=0;
 	}
-	pos = strchr(pos, '/');
-	if (pos == NULL) return ERR_UNKNOWN;
-	pos++;
-	dt->Month = atoi(pos);
-	pos = strchr(pos, '/');
-	if (pos == NULL) return ERR_UNKNOWN;
-	pos++;
-	dt->Day = atoi(pos);
-	pos = strchr(pos, ',');
-	if (pos == NULL) return ERR_UNKNOWN;
-	pos++;
+
+	/* time present */
 	dt->Hour = atoi(pos);
 	pos = strchr(pos, ':');
 	if (pos == NULL) return ERR_UNKNOWN;
 	pos++;
 	dt->Minute = atoi(pos);
 	pos = strchr(pos, ':');
-	if (pos == NULL) return ERR_UNKNOWN;
-	pos++;
-	dt->Second = atoi(pos);
-	pos2 = strchr(pos, '+');
-	if (pos2 != NULL) {
-		pos = pos2 + 1;
-		dt->Timezone = atoi(pos);
+	if (pos!=NULL) {
+	        /* seconds present */
+		pos++;
+		dt->Second = atoi(pos);
 	} else {
-		pos2 = strchr(pos, '-');
-		if (pos2 != NULL) {
-			pos = pos2 + 1;
-			dt->Timezone = -atoi(pos);
-		} else {
-			dt->Timezone = 0;
-		}
+		dt->Second=0;
+	}
+
+	if ((pos!=NULL) && (*pos=='+'||*pos=="-")) {
+		/* timezone present */
+		dt->Timezone = (*pos=="+"?1:-1);
+		dt->Timezone = dt->Timezone*atoi(pos);
+	} else {
+		dt->Timezone = 0;
 	}
 	return ERR_NONE;
 }
@@ -2174,9 +2190,42 @@ GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 	return GSM_WaitFor (s, "AT+CCLK?\r", 9, 0x00, 4, ID_GetDateTime);
 }
 
+GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, bool set_timezone)
+{
+	char			tz[4] = "";
+	char			req[128];
+	GSM_Error		error;
+
+	if (set_timezone) {
+		sprintf(tz, "+%02i", date_time->Timezone);
+	}
+
+	sprintf(req, "AT+CCLK=\"%02i/%02i/%02i,%02i:%02i:%02i%s\"\r",
+		     (date_time->Year > 2000 ? date_time->Year-2000 : date_time->Year-1900),
+		     date_time->Month ,
+		     date_time->Day,
+		     date_time->Hour,
+		     date_time->Minute,
+		     date_time->Second,
+		     tz);
+
+	smprintf(s, "Setting date & time\n");
+
+	error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetDateTime);
+
+	if (error == ERR_INVALIDDATA && set_timezone
+		&& (s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_CMEError)
+		&& (s->Phone.Data.Priv.ATGEN.ErrorCode == 24)) {
+		/* Some firmwares of Ericsson R320s don't like the timezone part,
+		even though it is in its command reference. */
+		smprintf(s, "Retrying without timezone suffix\n");
+		error = ATGEN_PrivSetDateTime(s, date_time, false);
+	}
+	return error;
+}
+
 GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
-	char			req[128];
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 
@@ -2185,13 +2234,7 @@ GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 		error = ATGEN_SetCharset(s, false);
 		if (error != ERR_NONE) return error;
 	}
-
-	sprintf(req, "AT+CCLK=\"%02i/%02i/%02i,%02i:%02i:%02i+00\"\r",
-		     date_time->Year-2000,date_time->Month,date_time->Day,
-		     date_time->Hour,date_time->Minute,date_time->Second);
-
-	smprintf(s, "Setting date & time\n");
-	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetDateTime);
+	return ATGEN_PrivSetDateTime(s, date_time, true);
 }
 
 GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
