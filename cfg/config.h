@@ -135,11 +135,11 @@
 #define GSM_ENABLE_BACKUP 1
 
 /* Bu default commented: some parts of source are not ready or not tested
- * at all (or aren't good tested). Uncomment, if want them
+ * at all (or aren't good tested). Uncomment, if you want them
  */
 //#define DEVELOP
 
-/* By default disabled. It allows to making short beep after such things
+/* By default disabled. It allows to make short beep after such things
  * like changing logo in phone (like in Logo Manager)
  */
 //#define GSM_ENABLE_BEEP
@@ -154,7 +154,7 @@
 
 #  define HAVE_PTHREAD 1
 #  define HAVE_SYS_IOCTL_H 1
-/* #  undef HAVE_MYSQL_MYSQL_H */
+#  define HAVE_MYSQL_MYSQL_H 1
 #else
 //#  define HAVE_MYSQL_MYSQL_H 1
 #endif
