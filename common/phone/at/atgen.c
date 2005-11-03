@@ -1442,7 +1442,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					} else {
 						if ((TPDCS & 4) == 0) sms->Coding=SMS_Coding_Default_No_Compression;
 					}
-				}	
+				}
 				sms->Class = -1;
 				if ((TPDCS & 0xD0) == 0x10) {
 					/* bits 7..4 set to 00x1 */

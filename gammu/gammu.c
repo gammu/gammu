@@ -666,13 +666,53 @@ static void GetDateTime(int argc, char *argv[])
 
 static void SetDateTime(int argc, char *argv[])
 {
-	GSM_DateTime date_time;
-
-	GSM_GetCurrentDateTime(&date_time);
+	GSM_DateTime	date_time;
+	char		shift,*parse;
 
 	GSM_Init(true);
+	error=ERR_NONE;
+	if (argc<3) {
+		/* set datetime to the current datetime in the PC */
+		printmsg("Setting time in phone to the time on PC.\n");
+		GSM_GetCurrentDateTime(&date_time);
+	} else {
+		/* update only parts the user specified,
+		leave the rest in the phone as is */
+		error=Phone->GetDateTime(&s, &date_time);
+		Print_Error(error);
 
-	error=Phone->SetDateTime(&s, &date_time);
+		if (error==ERR_NONE) {
+			printmsg("Updating specified parts of date and time in phone.\n");
+			shift=0;
+			parse=strchr(argv[2],':');
+			if (parse!=NULL) {
+				date_time.Hour=atoi(argv[2]);
+                        	date_time.Minute=atoi(parse+1);
+                        	parse=strchr(parse+1,':');
+                        	if (parse!=NULL) {
+                        		date_time.Second=atoi(parse+1);
+                        	}
+				shift=1;
+			}
+			if (argc-1>=2+shift) {
+				parse=strchr(argv[2+shift],'/');
+				if(parse!=NULL) {
+					date_time.Year=atoi(argv[2+shift]);
+                		        date_time.Month=atoi(parse+1);
+                        	       	parse=strchr(parse+1,'/');
+                               		if (parse!=NULL) {
+                                  		date_time.Day=atoi(parse+1);
+	                                }
+				}
+			}
+			if (!CheckDate(&date_time) || !CheckTime(&date_time))
+				error=ERR_INVALIDDATETIME;
+			/* we got the timezone from the phone */
+		}
+	}
+	if (error==ERR_NONE) {
+		error=Phone->SetDateTime(&s, &date_time);
+	}
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -8613,7 +8653,7 @@ static GSM_Parameters Parameters[] = {
 #endif
 	{"--playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
 	{"--getdatetime",		0, 0, GetDateTime,		{H_DateTime,0},			""},
-	{"--setdatetime",		0, 0, SetDateTime,		{H_DateTime,0},			""},
+	{"--setdatetime",		0, 2, SetDateTime,		{H_DateTime,0},			"[HH:MM[:SS]] [YYYY/MM/DD]"},
 	{"--getalarm",			0, 0, GetAlarm,			{H_DateTime,0},			""},
 	{"--setalarm",			2, 2, SetAlarm,			{H_DateTime,0},			"hour minute"},
 	{"--resetphonesettings",	1, 1, ResetPhoneSettings,	{H_Settings,0},			"PHONE|DEV|UIF|ALL|FACTORY"},
