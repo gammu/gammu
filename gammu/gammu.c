@@ -648,6 +648,9 @@ static void GetDateTime(int argc, char *argv[])
 		if (locale.AMPMTime) printmsg("12 hours\n"); else printmsg("24 hours\n");
 		printmsg("Date format is ");
 		switch (locale.DateFormat) {
+			case GSM_Date_DDMMYYYY  :printmsg("DD MM YYYY");break;
+			case GSM_Date_MMDDYYYY  :printmsg("MM DD YYYY");break;
+			case GSM_Date_YYYYMMDD  :printmsg("YYYY MM DD");break;
 			case GSM_Date_DDMMMYY	:printmsg("DD MMM YY");break;
 			case GSM_Date_MMDDYY	:printmsg("MM DD YY");break;
 			case GSM_Date_DDMMYY	:printmsg("DD MM YY");break;
