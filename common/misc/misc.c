@@ -54,6 +54,7 @@ void Fill_GSM_DateTime(GSM_DateTime *Date, time_t timet)
 	Date->Hour	= now->tm_hour;
 	Date->Minute	= now->tm_min;
 	Date->Second	= now->tm_sec;
+	Date->Timezone	= 0; /* FIXME: can we get it from the OS? */
 }
 
 void GSM_GetCurrentDateTime (GSM_DateTime *Date)
