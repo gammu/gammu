@@ -174,6 +174,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_FILENOTEXIST,		"File with specified name doesn't exist."},
 	{ERR_SHOULDBEFOLDER,		"You have to give folder (not file) name."},
 	{ERR_SHOULDBEFILE,		"You have to give file (not folder) name."},
+	{ERR_NOSIM,			"Can not access SIM card."},
 
 	{0,				""}
 };

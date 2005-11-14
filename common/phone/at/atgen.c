@@ -187,6 +187,11 @@ GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 		case 17:
 		case 18:
 			return ERR_SECURITYERROR;
+		case 10:
+		case 13:
+		case 14:
+		case 15:
+			return ERR_NOSIM;
 		case 20:
 			return ERR_FULL;
 		case 21:
@@ -228,6 +233,10 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
         case 317:
         case 318:
             	return ERR_SECURITYERROR;
+	case 313:
+	case 314:
+	case 315:
+		return ERR_NOSIM;
         case 322:
             	return ERR_FULL;
         case 321:
