@@ -2194,7 +2194,7 @@ static GSM_Error N6510_ReplyGetOriginalIMEI(GSM_Protocol_Message msg, GSM_StateM
 {
 	if (msg.Buffer[7] == 0x00) {
 		smprintf(s, "No SIM card\n");
-		return ERR_SECURITYERROR;
+		return ERR_NOSIM;
 	} else {
 		return NOKIA_ReplyGetPhoneString(msg, s);
 	}
@@ -2347,7 +2347,7 @@ static GSM_Error N6510_ReplyGetSecurityStatus(GSM_Protocol_Message msg, GSM_Stat
 	case 0x03 : smprintf(s, "waiting for PUK.\n");		 *Data->SecurityStatus = SEC_Puk;		break;
 	case 0x05 : smprintf(s, "PIN ok, SIM ok\n");		 *Data->SecurityStatus = SEC_None;		break;
 	case 0x06 : smprintf(s, "No input status\n"); 		 *Data->SecurityStatus = SEC_None;		break;
-	case 0x16 : smprintf(s, "No SIM card\n");		 *Data->SecurityStatus = SEC_None;		break;
+	case 0x16 : smprintf(s, "No SIM card\n");		 return ERR_NOSIM;
 	case 0x1A : smprintf(s, "SIM card rejected!\n");	 *Data->SecurityStatus = SEC_None;		break;
 	default   : smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 		    return ERR_UNKNOWNRESPONSE;
@@ -2605,7 +2605,7 @@ static GSM_Error N6510_ReplyGetManufactureMonth(GSM_Protocol_Message msg, GSM_St
 {
 	if (msg.Buffer[7] == 0x00) {
 		smprintf(s, "No SIM card\n");
-		return ERR_SECURITYERROR;
+		return ERR_NOSIM;
 	} else {
 		sprintf(s->Phone.Data.PhoneString,"%02i/%04i",msg.Buffer[13],msg.Buffer[14]*256+msg.Buffer[15]);
 	        return ERR_NONE;
