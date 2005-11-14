@@ -392,9 +392,9 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 		dt->Second=0;
 	}
 
-	if ((pos!=NULL) && (*pos=='+'||*pos=="-")) {
+	if ((pos != NULL) && (*pos == '+' || *pos == '-')) {
 		/* timezone present */
-		dt->Timezone = (*pos=="+"?1:-1);
+		dt->Timezone = (*pos == '+' ? 1 : -1);
 		dt->Timezone = dt->Timezone*atoi(pos);
 	} else {
 		dt->Timezone = 0;
