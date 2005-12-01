@@ -8,6 +8,7 @@
 #include <string.h>
 #include <signal.h>
 
+#include "../../../../cfg/config.h" //include added bacause of MS VC 2005
 #include "wmx-util.h"
 #include "wmx-list.h"
 

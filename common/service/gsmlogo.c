@@ -884,7 +884,7 @@ static GSM_Error loadnolngg(FILE *file, GSM_MultiBitmap *bitmap, bool nolformat)
 
 	x=0; y=0;
 	for (i=0; i<w*h; i++) {
-		if (fread(buffer, 1, 1, file)!=1) return ERR_UNKNOWN;
+		if (fread(buffer, 1, 1, file)!=1) return ERR_FILENOTSUPPORTED;
 		if (buffer[0]=='1') GSM_SetPointBitmap(&bitmap->Bitmap[0],x,y);
 		x++;
 		if (x==w) {x=0; y++;}
@@ -916,7 +916,7 @@ static GSM_Error loadnsl(FILE *file, GSM_MultiBitmap *bitmap)
 		if (!strncmp(block, "FORM", 4)) {
 			dbgprintf("File ID\n");
 		} else {
-			if (block_size>504) return ERR_UNKNOWN;
+			if (block_size>504) return ERR_FILENOTSUPPORTED;
 			if (block_size!=0) {
 				fread(buffer,1,block_size,file);
 				/* if it's string, we end it with 0 */
@@ -1017,7 +1017,7 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	} else if (memcmp(buffer, "GIF",3)==0) {
 		return loadgif(file,bitmap);
 	}
-	return ERR_UNKNOWN;
+	return ERR_FILENOTSUPPORTED;
 }
 
 void NOKIA_CopyBitmap(GSM_Phone_Bitmap_Types Type, GSM_Bitmap *Bitmap, char *Buffer, int *Length)

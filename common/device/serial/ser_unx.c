@@ -360,7 +360,10 @@ static int serial_write(GSM_StateMachine *s, void *buf, size_t nbytes)
 
     	do {
 		ret = write(d->hPhone, (unsigned char *)buf, nbytes - actual);
-		if (ret < 0 && errno == EAGAIN) continue;
+		if (ret < 0 && errno == EAGAIN) {
+			my_sleep(1);
+			continue;
+                }
 		if (ret < 0) {
 	    		if (actual != nbytes) GSM_OSErrorInfo(s,"serial_write");
 	    		return actual;

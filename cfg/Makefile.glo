@@ -179,7 +179,7 @@ makelocale: $(LOCALE)
 	done
 	@$(RM) $(TOPDIR)/cfg/locale/locale.o $(TOPDIR)/cfg/locale/locale
 
-distclean: makelocale clean
+distclean0:
 	@echo Setting default config
 	@chmod a+x $(TOPDIR)/docs/examples/ppp/*
 	@chmod a+x $(TOPDIR)/docs/examples/fax/*
@@ -197,6 +197,8 @@ distclean: makelocale clean
 	$(TOPDIR)/cfg/autoconf/config.status \
 	$(TOPDIR)/cfg/autoconf/VERSION \
 	$(TOPDIR)/cfg/autoconf/configure
+
+distclean: distclean0 makelocale clean
    
 uninstall:
 	@echo Uninstalling Gammu

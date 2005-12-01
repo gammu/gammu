@@ -187,6 +187,11 @@ GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 		case 17:
 		case 18:
 			return ERR_SECURITYERROR;
+		case 10:
+		case 13:
+		case 14:
+		case 15:
+			return ERR_NOSIM;
 		case 20:
 			return ERR_FULL;
 		case 21:
@@ -228,6 +233,10 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
         case 317:
         case 318:
             	return ERR_SECURITYERROR;
+	case 313:
+	case 314:
+	case 315:
+		return ERR_NOSIM;
         case 322:
             	return ERR_FULL;
         case 321:
@@ -254,12 +263,65 @@ int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
 	return position;
 }
 
+void ATGEN_TweakInternationalNumber(unsigned char *Number, unsigned char *numType)
+{/*	Author: Peter Ondraska
+	License: Whatever the current maintainer of gammulib chooses, as long as there
+	is an easy way to obtain the source under GPL, otherwise the author's parts
+	of this function are GPL 2.0. */
+
+	/* Checks if International number needs to be corrected */
+	char* pos; /* current position in the buffer */
+	char buf[500]; /* Taken from DecodeUnicodeString(). How to get length of the encoded string? There may be embedded 0s. */
+
+	if (atoi(numType)==NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN) {
+		sprintf(buf+1,"%s",DecodeUnicodeString(Number)); /* leave 1 free char before the number, we'll need it */
+		/* International number may be without + (e.g. (Sony)Ericsson)
+			we can add it, but must handle numbers in the form:
+			         NNNNNN         N - any digit (char)
+			   *code#NNNNNN         any number of Ns
+			*[*]code*NNNNNN[...]
+			other combinations (like *code1*code2*number#)
+			will have to be added if found in real life
+			Or does somebody know the exact allowed syntax
+			from some standard?
+		*/
+		pos=buf+1;
+		if (*pos=='*') { /* Code? Skip it. */
+			/* probably with code */
+			while (*pos=='*') { /* skip leading asterisks */
+				*(pos-1)=*pos; /* shift the chars by one */
+				pos++;
+			}
+			while ((*pos!='*')&&(*pos!='#')) { /* skip code - anything except * or # */
+				*(pos-1)=*pos;
+				pos++;
+			}
+			*(pos-1)=*pos; /* shift the last delimiter */
+			pos++;
+	        }
+		/* check the guessed location, if + is correctly there */
+		if (*pos=='+') {
+			/* yes, just shift the rest of the string */
+			while (pos) {
+				*(pos-1)=*pos; pos++;
+			}
+			*(pos-1)=0; /* kill the last char, which now got doubled */
+		} else {
+			/* no, insert + and exit, no more shifting */
+			*(pos-1)='+';
+		}
+		EncodeUnicode(Number,buf,strlen(buf));
+	}
+}
+
 GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned char *input)
 {
-	/* We receive something like: 05/01/06,12:51:41 (or the same hex/unicode encoded) */
+       	/* This function parses datetime strings in the format:
+	[YY[YY]/MM/DD,]hh:mm[:ss[+TZ]] , [] enclosed parts are optional */
+	/* (or the same hex/unicode encoded) */
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 	unsigned char		buffer[100];
-	unsigned char		*pos, *pos2;
+	unsigned char		*pos;
 	unsigned char		buffer2[100];
 	int			len;
 
@@ -267,7 +329,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 
 	/* Strip possible quotes */
 	if (*pos == '"') pos++;
-//	if (buffer[strlen(pos) - 1] == '"') buffer[strlen(pos) - 1] = 0;
+	if (buffer[strlen(pos) - 1] == '"') buffer[strlen(pos) - 1] = 0;
 
 	len = strlen(pos);
 
@@ -284,44 +346,58 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 
 	pos = buffer;
 
+	/* Strip possible quotes again */
 	if (*pos == '"') pos++;
-	dt->Year = atoi(pos);
-	if (dt->Year < 100) {
-		/* FIXME: dates in past may be broken with this, but how to check? */
-		dt->Year += 2000;
+	if (buffer[strlen(pos) - 1] == '"') buffer[strlen(pos) - 1] = 0;
+	/* some phones report only time (HH:MM) in the alarm */
+	if (strchr(pos, '/')) {
+		/* date present */
+		/* Samsung phones report year as %d instead of %02d */
+		dt->Year=atoi(pos);
+		if(dt->Year>80 && dt->Year<1000) {
+			dt->Year+=1900;
+		} else {
+			dt->Year+=2000;
+		}
+		pos = strchr(pos, '/');
+		pos++;
+		dt->Month = atoi(pos);
+		pos = strchr(pos, '/');
+		if (pos == NULL) return ERR_UNKNOWN;
+		pos++;
+		dt->Day = atoi(pos);
+		pos = strchr(pos, ',');
+		if (pos == NULL) return ERR_UNKNOWN;
+		pos++;
+	} else {
+		/* if date was not found, it is still necessary to initialize
+		   the variables, maybe Today() would be better in some replies */
+		dt->Year=0;
+		dt->Month=0;
+		dt->Day=0;
 	}
-	pos = strchr(pos, '/');
-	if (pos == NULL) return ERR_UNKNOWN;
-	pos++;
-	dt->Month = atoi(pos);
-	pos = strchr(pos, '/');
-	if (pos == NULL) return ERR_UNKNOWN;
-	pos++;
-	dt->Day = atoi(pos);
-	pos = strchr(pos, ',');
-	if (pos == NULL) return ERR_UNKNOWN;
-	pos++;
+
+	/* time present */
 	dt->Hour = atoi(pos);
 	pos = strchr(pos, ':');
 	if (pos == NULL) return ERR_UNKNOWN;
 	pos++;
 	dt->Minute = atoi(pos);
 	pos = strchr(pos, ':');
-	if (pos == NULL) return ERR_UNKNOWN;
-	pos++;
-	dt->Second = atoi(pos);
-	pos2 = strchr(pos, '+');
-	if (pos2 != NULL) {
-		pos = pos2 + 1;
-		dt->Timezone = atoi(pos);
+	if (pos!=NULL) {
+	        /* seconds present */
+		pos++;
+		dt->Second = atoi(pos);
 	} else {
-		pos2 = strchr(pos, '-');
-		if (pos2 != NULL) {
-			pos = pos2 + 1;
-			dt->Timezone = -atoi(pos);
-		} else {
-			dt->Timezone = 0;
-		}
+		dt->Second=0;
+	}
+
+	if ((pos != NULL) && (*pos == '+' || *pos == '-')) {
+		/* timezone present */
+		dt->Timezone = (*pos == '+' ? 1 : -1);
+		dt->Timezone = dt->Timezone*atoi(pos);
+	} else {
+		dt->Timezone = 0;
 	}
 	return ERR_NONE;
 }
@@ -1442,7 +1518,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					} else {
 						if ((TPDCS & 4) == 0) sms->Coding=SMS_Coding_Default_No_Compression;
 					}
-				}	
+				}
 				sms->Class = -1;
 				if ((TPDCS & 0xD0) == 0x10) {
 					/* bits 7..4 set to 00x1 */
@@ -2123,9 +2199,42 @@ GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 	return GSM_WaitFor (s, "AT+CCLK?\r", 9, 0x00, 4, ID_GetDateTime);
 }
 
+GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, bool set_timezone)
+{
+	char			tz[4] = "";
+	char			req[128];
+	GSM_Error		error;
+
+	if (set_timezone) {
+		sprintf(tz, "+%02i", date_time->Timezone);
+	}
+
+	sprintf(req, "AT+CCLK=\"%02i/%02i/%02i,%02i:%02i:%02i%s\"\r",
+		     (date_time->Year > 2000 ? date_time->Year-2000 : date_time->Year-1900),
+		     date_time->Month ,
+		     date_time->Day,
+		     date_time->Hour,
+		     date_time->Minute,
+		     date_time->Second,
+		     tz);
+
+	smprintf(s, "Setting date & time\n");
+
+	error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetDateTime);
+
+	if (error == ERR_INVALIDDATA && set_timezone
+		&& (s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_CMEError)
+		&& (s->Phone.Data.Priv.ATGEN.ErrorCode == 24)) {
+		/* Some firmwares of Ericsson R320s don't like the timezone part,
+		even though it is in its command reference. */
+		smprintf(s, "Retrying without timezone suffix\n");
+		error = ATGEN_PrivSetDateTime(s, date_time, false);
+	}
+	return error;
+}
+
 GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
-	char			req[128];
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 
@@ -2134,13 +2243,7 @@ GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 		error = ATGEN_SetCharset(s, false);
 		if (error != ERR_NONE) return error;
 	}
-
-	sprintf(req, "AT+CCLK=\"%02i/%02i/%02i,%02i:%02i:%02i+00\"\r",
-		     date_time->Year-2000,date_time->Month,date_time->Day,
-		     date_time->Hour,date_time->Minute,date_time->Second);
-
-	smprintf(s, "Setting date & time\n");
-	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetDateTime);
+	return ATGEN_PrivSetDateTime(s, date_time, true);
 }
 
 GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
@@ -2219,16 +2322,9 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Format of SMSC number */
 		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
 		smprintf(s, "Format %s\n",buffer);
+
 		/* International number */
-		if (!strcmp(buffer,"145")) {
-			sprintf(buffer+1,"%s",DecodeUnicodeString(SMSC->Number));
-			if (strlen(buffer+1)!=0 && buffer[1] != '+') {
-				/* Sony Ericsson issue */
-				/* International number is without + */
-				buffer[0] = '+';
-				EncodeUnicode(SMSC->Number,buffer,strlen(buffer));
-			}
-		}
+		ATGEN_TweakInternationalNumber(SMSC->Number,buffer);
 
 		SMSC->Format 		= SMS_FORMAT_Text;
 		SMSC->Validity.Format = SMS_Validity_RelativeFormat;
@@ -2745,15 +2841,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		smprintf(s, "Number format: %s\n",buffer);
 
 		/* International number */
-		if (!strcmp(buffer,"145")) {
-			sprintf(buffer+1,"%s",DecodeUnicodeString(Memory->Entries[0].Text));
-			if (strlen(buffer+1)!=0 && buffer[1] != '+') {
-				/* Sony Ericsson issue */
-				/* International number is without + */
-				buffer[0] = '+';
-				EncodeUnicode(Memory->Entries[0].Text,buffer,strlen(buffer));
-			}
-		}
+		ATGEN_TweakInternationalNumber(Memory->Entries[0].Text,buffer);
 
 		/* Name */
 		pos += ATGEN_ExtractOneParameter(pos, buffer);

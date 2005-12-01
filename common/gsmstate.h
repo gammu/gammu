@@ -1502,7 +1502,7 @@ struct _GSM_StateMachine {
 	GSM_Config		Config[MAX_CONFIG_NUM + 1];
 	GSM_Config		*CurrentConfig;				/* Config file (or Registry or...) variables 	*/
 	int			ConfigNum;
-	INI_Section 		*msg;			/* Localisation strings structure    		*/
+	INI_Section 		*msg;					/* Localisation strings structure    		*/
 	int			ReplyNum;				/* How many times make sth. 			*/
 	int			Speed;					/* For some protocols used speed		*/
 

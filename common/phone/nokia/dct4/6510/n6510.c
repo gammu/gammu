@@ -2194,7 +2194,7 @@ static GSM_Error N6510_ReplyGetOriginalIMEI(GSM_Protocol_Message msg, GSM_StateM
 {
 	if (msg.Buffer[7] == 0x00) {
 		smprintf(s, "No SIM card\n");
-		return ERR_SECURITYERROR;
+		return ERR_NOSIM;
 	} else {
 		return NOKIA_ReplyGetPhoneString(msg, s);
 	}
@@ -2605,7 +2605,7 @@ static GSM_Error N6510_ReplyGetManufactureMonth(GSM_Protocol_Message msg, GSM_St
 {
 	if (msg.Buffer[7] == 0x00) {
 		smprintf(s, "No SIM card\n");
-		return ERR_SECURITYERROR;
+		return ERR_NOSIM;
 	} else {
 		sprintf(s->Phone.Data.PhoneString,"%02i/%04i",msg.Buffer[13],msg.Buffer[14]*256+msg.Buffer[15]);
 	        return ERR_NONE;
