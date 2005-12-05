@@ -302,8 +302,9 @@ void ATGEN_TweakInternationalNumber(unsigned char *Number, unsigned char *numTyp
 		/* check the guessed location, if + is correctly there */
 		if (*pos=='+') {
 			/* yes, just shift the rest of the string */
-			while (pos) {
-				*(pos-1)=*pos; pos++;
+			while (*pos) {
+				*(pos-1) = *pos;
+				pos++;
 			}
 			*(pos-1)=0; /* kill the last char, which now got doubled */
 		} else {

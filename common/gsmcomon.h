@@ -66,12 +66,12 @@ typedef enum {
 	ERR_WRONGCRC,
 	ERR_INVALIDDATETIME,		/* Invalid date/time */
 	ERR_MEMORY,			/* Phone memory error, maybe it is read only */
-	ERR_INVALIDDATA,		/* Invalid data */
+	ERR_INVALIDDATA,		/* Invalid data given to phone */
 	ERR_FILEALREADYEXIST,		/* File with specified name already exist */
 	ERR_FILENOTEXIST,		/* File with specified name doesn't exist */
 	ERR_SHOULDBEFOLDER,		/* You have to give folder (not file) name */
 	ERR_SHOULDBEFILE,		/* You have to give file (not folder) name */
-	ERR_NOSIM,			/* Can not access SIM card */
+	ERR_NOSIM			/* Can not access SIM card */
 } GSM_Error;
 
 extern GSM_Error NoneFunction		(void);

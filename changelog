@@ -41,6 +41,33 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20051202 - 1.03.20
+* new functionality:
+  * * --setdatetime allows to set date/time part only       (Ace, Michal Cihar)
+    * timezone support for atgen.c
+  * if there was simlock in DCT4 and somebody used keypad code to remove it, 
+    Gammu will display info about it in --identify
+  * MS Visual C++ (Express) 2005 makefiles. You can use FREE (until 11.2006)
+    MS compiler to make Gammu now. Limits:
+    * no resources
+    * some compiler warnings disabled in config file (there are used some
+      things in source, which could be replaced with more safe MS extensions
+      and compiler say it)
+  * new error code for device without sim card                   (Michal Cihar)
+  * Gammu can take RSS file now and inform user, if there is never
+    version available (see gammurc and rssinfo parameter). for good testing
+    in Linux
+  * -save in --readmmsfile
+
+* fixes and improvements:
+  * * addfolder2 should return ID of new folder              (Matthias Blasing)
+    * --getrootfolders return info about empty MMC too
+  * make distclean first cleans config
+  * * some typos and structures init                        (Ace, Michal Cihar)
+    * added missed time formats in gammu.c
+    * checking number format in one place in atgen.c
+  * fix for CA-42 for Linux                                  (Mattias Sjosvard)
+
 20051101 - 1.03.07
 * new functionality:
   * ldflags                                                (Marcin Juszkiewicz)

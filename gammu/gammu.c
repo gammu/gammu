@@ -2014,6 +2014,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 		file2 = fopen(buff,"wb");
 		fwrite(file->Buffer, 1, file->Used, file2);
 		fclose(file2);
+		printf("Saved to file %s\n",buff);
 	}
 
 	for (i=0;i<MAX_MULTI_MMS;i++) info.Entries[i].File.Buffer = NULL;
@@ -2087,10 +2088,11 @@ void DecodeMMSFile(GSM_File *file, int num)
 			if (error == ERR_NONE) PrintCalendar(&Calendar);
 		}
 		if (num != -1 && answer_yes("Do you want to save this attachment")) {
-			sprintf(buff,"%i_%i",num,i+1);
+			sprintf(buff,"%i_%i_%s",num,i+1,DecodeUnicodeString(info.Entries[i].File.Name));
 			file2 = fopen(buff,"wb");
 			fwrite(info.Entries[i].File.Buffer, 1, info.Entries[i].File.Used, file2);
 			fclose(file2);
+			printf("Saved to file %s\n",buff);
 		}
 
 	}
@@ -7873,6 +7875,7 @@ static void AddFile(int argc, char *argv[])
 	GSM_Init(true);
 
 	AddOneFile(&File, "Writing: ");
+	printf("ID of new file is \"%s\"\n",DecodeUnicodeString(File.ID_FullName));
 
 	free(File.Buffer);
 	GSM_Terminate();
@@ -7890,6 +7893,7 @@ static void AddFolder(int argc, char *argv[])
 
 	error = Phone->AddFolder(&s,&File);
     	Print_Error(error);
+	printf("ID of new folder is \"%s\"\n",DecodeUnicodeString(File.ID_FullName));
 
 	GSM_Terminate();
 }
@@ -8300,12 +8304,15 @@ static void DeleteFiles(int argc, char *argv[])
 static void ReadMMSFile(int argc, char *argv[])
 {
 	GSM_File		File;
+	int			num = -1;
 
 	File.Buffer = NULL;
 	error = GSM_ReadFile(argv[2], &File);
 	Print_Error(error);
 
-	DecodeMMSFile(&File,-1);
+	if (argc>3 && mystrncasecmp(argv[3],"-save",0)) num=0;
+
+	DecodeMMSFile(&File,num);
 
 	free(File.Buffer);
 }
@@ -8776,7 +8783,7 @@ static GSM_Parameters Parameters[] = {
 	{"--getmmssettings",		1, 2, GetWAPMMSSettings,	{H_MMS,0},			"start [stop]"},
 	{"--getsyncmlsettings",		1, 2, GetSyncMLSettings,	{H_WAP,0},			"start [stop]"},
 	{"--getchatsettings",		1, 2, GetChatSettings,		{H_WAP,0},			"start [stop]"},
-	{"--readmmsfile",		1, 1, ReadMMSFile,		{H_MMS,0},			"file"},
+	{"--readmmsfile",		1, 2, ReadMMSFile,		{H_MMS,0},			"file [-save]"},
 	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"STARTUP [file]"},
 	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"CALLER location [file]"},
 	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"OPERATOR [file]"},
@@ -9063,15 +9070,37 @@ static void Help(int argc, char *argv[])
 	}
 }
 
+int FoundVersion(unsigned char *Buffer) 
+{
+	int retval = 0, pos = 0;
+
+	retval = atoi(Buffer) * 10000;
+	while (Buffer[pos] != '.') {
+		pos++;
+		if (pos == strlen(Buffer)) return retval;
+	}
+	pos++;
+	retval += atoi(Buffer+pos) * 100;
+	while (Buffer[pos] != '.') {
+		pos++;
+		if (pos == strlen(Buffer)) return retval;
+	}
+	pos++;
+	return retval + atoi(Buffer+pos);
+}
+
 int main(int argc, char *argv[])
 {
-	int 	z = 0,start=0,i;
-	int	only_config = -1;
+	GSM_File	RSS;
+	int		rsslevel = 0,pos = 0,oldpos = 0;
+	int 		z = 0,start=0;
+	unsigned int	i;
+	int		only_config = -1;
 #if !defined(WIN32) && !defined(DJGPP) && defined(LOCALE_PATH)
-	char	*locale, locale_file[201];
+	char		*locale, locale_file[201];
 #endif
-	char	*cp;
- 	bool	count_failed = false;
+	char		*cp,*rss,buff[200];
+ 	bool		count_failed = false;
 
 	s.opened 	= false;
 	s.msg	 	= NULL;
@@ -9159,6 +9188,17 @@ int main(int argc, char *argv[])
 			error=GSM_SetDebugFile(s.Config[i].DebugFile, &di);
 			Print_Error(error);
  		}
+		
+		if (i==0) {
+		        rss = INI_GetValue(cfg, "gammu", "rsslevel", false);
+        		if (rss) {
+				if (mystrncasecmp(rss,"teststable",0)) {
+					rsslevel = 2;
+				} else if (mystrncasecmp(rss,"stable",0)) {
+					rsslevel = 1;
+				}
+			}
+		}
 
  		/* We wanted to read just user specified configuration. */
  		if (only_config != -1) {break;}
@@ -9170,12 +9210,61 @@ int main(int argc, char *argv[])
  		printmsg("Too few parameters!\n");
 		exit(-2);
 	}
-
+	
 	/* Check used version vs. compiled */
 	if (!mystrncasecmp(GetGammuVersion(),VERSION,0)) {
 		printmsg("ERROR: version of installed libGammu.so (%s) is different to version of Gammu (%s)\n",
 					GetGammuVersion(),VERSION);
 		exit(-1);
+	}
+
+	if (rsslevel > 0) {
+		RSS.Buffer = NULL;
+		if (GSM_ReadHTTPFile("www.mwiacek.com","gsm/soft/gammu.rss",&RSS)) {
+//		if (GSM_ReadHTTPFile("localhost","gammu.rss",&RSS)) {
+			while (pos < RSS.Used) {
+				if (RSS.Buffer[pos] != 10) {
+					pos++;
+					continue;
+				}
+				RSS.Buffer[pos] = 0;
+				if (strstr(RSS.Buffer+oldpos,"<title>") ==NULL ||
+				    strstr(RSS.Buffer+oldpos,"</title>")==NULL ||
+				    strstr(RSS.Buffer+oldpos,"win32")   != NULL) {
+					oldpos = pos;
+					pos++;
+				}
+				if (rsslevel > 0 && strstr(RSS.Buffer+oldpos,"stable version")!=NULL) {
+					sprintf(buff,strstr(RSS.Buffer+oldpos,"stable version")+15);
+					for (i=0;i<strlen(buff);i++) {
+						if (buff[i] == '<') {
+							buff[i] = 0;
+							break;
+						}
+					}
+					if (FoundVersion(buff) > FoundVersion(VERSION)) {
+						printmsg("INFO: there is available later Gammu stable version %s. See www.gammu.net\n",buff);
+						break;
+					}
+				}
+				if (rsslevel == 2 && strstr(RSS.Buffer+oldpos,"test version")!=NULL) {
+					sprintf(buff,strstr(RSS.Buffer+oldpos,"test version")+13);
+					for (i=0;i<strlen(buff);i++) {
+						if (buff[i] == '<') {
+							buff[i] = 0;
+							break;
+						}
+					}
+					if (FoundVersion(buff) > FoundVersion(VERSION)) {
+						printmsg("INFO: there is available later Gammu test version %s. See www.gammu.net\n",buff);
+						break;
+					}
+				}					
+				oldpos = pos;
+				pos++;
+			}
+			free(RSS.Buffer);
+		}
 	}
 
 	/* Check parameters */
