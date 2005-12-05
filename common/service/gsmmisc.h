@@ -278,6 +278,8 @@ typedef struct {
 	int		Used;
 } GSM_FileSystemStatus;
 
+bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *file);
+
 /* ----------------------------- GPRS access points ----------------------- */
 
 typedef struct {

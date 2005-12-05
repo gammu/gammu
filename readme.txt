@@ -1,5 +1,5 @@
-Gammu README version 10.10.2003
--------------------------------
+Gammu README version 10.10.2003, updates 11.11.2005
+---------------------------------------------------
 Q. What is this ?
 
 A. This is package with different tools and drivers for Nokia and other mobile
@@ -124,12 +124,12 @@ A. Method 1:
      * compile it:
        * under MS Visual C++ 6.0 for MS Windows
            enter into /gammu/msvc6.mak directory and run gammu.dsw
-       * under MS Visual C++ 7.0 (.NET) for MS Windows
-           enter into /gammu/msvc7.mak directory and run gammu.vcproj
+       * under MS Visual C++ 7.1 (.NET) for MS Windows
+           enter into /gammu/msvc2003.mak directory and run gammu.vcproj
        * under MS Visual C++ Toolkit 2003
            not tested yet. It should be similiar to MS VC .NET
-       * under MS Visual C++ Express
-           not tested yet. It should be similiar to MS VC .NET        
+       * under MS Visual C++ Express 2005
+           enter into /gammu/msvc2005.mak directory and run gammu.vcproj           
        * under Unix (Linux)
            change compiler in /cfg/makefile.cfg (if required) and use "make" or
            "make makelib"
@@ -168,8 +168,11 @@ A. compilers
          go to the shop ;-). It's commercional software.
    * MS Visual C++ Toolkit 2003
          http://msdn.microsoft.com/visualc/vctoolkit2003/
-   * MS Visual C++ Express
-         search on microsoft.com
+   * MS Visual C++ Express 2005
+         http://msdn.microsoft.com/vstudio/express/visualc/
+         you will need additionaly Platform SDK to compile Gammu (see below)
+         info how to set compiler to work with Platform SDK is on
+         http://msdn.microsoft.com/vstudio/express/visualc/usingpsdk/
    * compilers for Unix (Linux) like gcc or kgcc (for free)
          available in Net and in Linux distributions included into CD
          for many newspapers. Installation depends on distribution.
@@ -207,10 +210,13 @@ A. compilers
    * MySQL
          www.mysql.com
    * MS Platform SDK
-         www.microsoft.com/msdownload/platformsdk/sdkupdate/psdk-full.htm
-	 Please note, that will need probably MS Internet Explorer with enabled
-	 ActiveX to download it. Platform SDK is added to MSDN subscriptions 
-         too
+         (old link for 2003 version)
+            www.microsoft.com/msdownload/platformsdk/sdkupdate/psdk-full.htm
+            Please note, that will need probably MS Internet Explorer with 
+            enabled ActiveX to download it. Platform SDK is added to MSDN 
+            subscriptions too
+         (new link)
+            http://msdn.microsoft.com/platformsdk
    * BlueZ
          www.bluez.org
 -------------------------------------------------------------------------------

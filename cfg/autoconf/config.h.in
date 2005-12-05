@@ -179,4 +179,12 @@
 #  undef BLUETOOTH_RF_SEARCHING
 #endif
 
+//MS Visual C++ Express 2005 warnings
+#if _MSC_VER == 1400
+#  pragma warning( disable : 4996 4244 4333)
+#  ifndef _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES
+#    define _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES  1
+#  endif
+#endif
+
 #endif

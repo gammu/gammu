@@ -571,6 +571,8 @@ char *GetCompiler(void)
 		sprintf(Buffer, "MS VC .NET 2002");
 	} else if (_MSC_VER == 1310) {
 		sprintf(Buffer, "MS VC .NET 2003");
+	} else if (_MSC_VER == 1400) {
+		sprintf(Buffer, "MS VC .NET 2005");
 	} else {
 		sprintf(Buffer, "MS VC %i",_MSC_VER);
 	}

@@ -1409,6 +1409,7 @@ GSM_Error N6510_ReplyAddFolder2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 static GSM_Error N6510_AddFolder2(GSM_StateMachine *s, GSM_File *File)
 {
+	GSM_Error	error;
 	unsigned char   req[1000] = {N7110_FRAME_HEADER, 0x64};
 	int		Pos = 6;
 	int		Len = 0;
@@ -1431,7 +1432,9 @@ static GSM_Error N6510_AddFolder2(GSM_StateMachine *s, GSM_File *File)
 	req[4] = Len / 256 ;
 	req[5] = Len % 256 ;
 	smprintf(s,"Adding folder\n");
-	return GSM_WaitFor (s, req, Pos, 0x6D, 4, ID_AddFolder);
+	error=GSM_WaitFor (s, req, Pos, 0x6D, 4, ID_AddFolder);
+	if (error == ERR_NONE) memcpy(File->ID_FullName,req+6,Pos);
+	return error;
 }
 
 GSM_Error N6510_ReplyDeleteFolder2(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1456,7 +1459,7 @@ static GSM_Error N6510_DeleteFolder2(GSM_StateMachine *s, unsigned char *ID)
 	int		Pos = 6;
 
 	//we don't want to allow deleting non empty folders
-	CopyUnicodeString(ID,File2.ID_FullName);
+	CopyUnicodeString(File2.ID_FullName,ID);
 	error = N6510_GetFolderListing2(s, &File2, true);
 	switch (error) {
 		case ERR_EMPTY:
@@ -1697,9 +1700,9 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 	GSM_File  		File2;
 	unsigned char		buffer[5];
 
-	memset(&File2, 0, sizeof(File2));
-
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
+
+	memset(&File2, 0, sizeof(File2));
 
 	if (UnicodeLength(File->ID_FullName) == 0) {
 		sprintf(buffer,"%i",0x01);
@@ -1724,7 +1727,7 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 		} else if (!strcmp(DecodeUnicodeString(File->ID_FullName),"a:")) {
 			EncodeUnicode(File->ID_FullName,"b:",2);
 			error = N6510_GetFolderListing2(s, File, true);
-			if (error != ERR_NONE) return ERR_EMPTY;
+			if (error != ERR_NONE && error != ERR_EMPTY) return ERR_EMPTY;
 			EncodeUnicode(File->Name,"B (Memory card)",15);
 			EncodeUnicode(File->ID_FullName,"b:",2);
 		} else {

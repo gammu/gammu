@@ -17,6 +17,7 @@ connection = fbusblue
 #gammuloc = locfile
 #startinfo = yes
 #gammucoding = utf8
+#rsslevel = teststable
 
 [gammu1]
 
@@ -142,3 +143,13 @@ connection = fbusblue
 # ----------------|------------------------------------------------------------
 # Use_Locking     | under Unix/Linux use "yes", if want to lock used device
 #                 | to prevent using it by other applications. In win32 ignored
+# ----------------|------------------------------------------------------------
+# RSSLevel        | Should Gammu connect to www.mwiacek.com and check for new
+#                 | versions ? if yes, there will be taken 
+#                 | www.mwiacek.com/gsm/soft/gammu.rss file, read latest version
+#                 | numbers and (if any exist) displayed info to user on each
+#                 | application startup
+#                 |   "teststable" - check for latest stable and test versions
+#                 |   "stable"     - check for latest stable versions
+#                 | No private data are sent to server, Internet connection required
+#                 | By default option not active

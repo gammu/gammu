@@ -30,6 +30,7 @@
 #  include <initguid.h>
 #  include <Setupapi.h>
 #  pragma comment(lib, "setupapi.lib")
+#  pragma comment(lib, "advapi32.lib")
 #endif
 
 #include "../../gsmcomon.h"
