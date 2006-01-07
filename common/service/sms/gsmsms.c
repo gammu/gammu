@@ -290,7 +290,8 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 
 GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
 {
-	SMS->DeliveryStatus = buffer[Layout.TPStatus];
+	SMS->DeliveryStatus 	= buffer[Layout.TPStatus];
+	SMS->Coding 		= SMS_Coding_Unicode_No_Compression;
 
 	if (buffer[Layout.TPStatus] < 0x03) {
 		EncodeUnicode(SMS->Text,"Delivered",9);

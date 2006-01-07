@@ -5,42 +5,59 @@ In brackets names of people, who told about error/problem or helped in fixing
 or inspired me to make it.
 
 This software was sponsored (in time order) by:
- 1. Tomasz Motylewski
- 2. Ondrej Rybin (http://business.nabit.cz)
-    * SMS service(s) and gateway(s)
- 3. Multi-COM (http://gsm-technology.com)
-    * GSM DATA AND SERVICE CABLES
-    * GSM EQUIPMENT & HARDWARE
-    * FREE FLASHES, LOGO'S, RINGTONES
-    * FREE INSTRUCTIONS, SCHEMES
- 4. Tom Nelson (www.pocketderelict.com)
-    * software for Pocket Computers
- 5. GriffinTeam (www.gsm-ms.com)
-    * DCT3/DCT4 flasher
- 6. MatrixTeam (www.matrixflasher.com)
-    * DCT3/DCT4 flasher
- 7. KompuNet (www.biuro24.pl)
-    * SMS services, PC shop and other
- 8. Lorenzo Ciani
- 9. Adam Lange
-10. Michele Rossetti
-11. Alain Bitam
-12. Johan Helsingius
-14. A Leg
-15. Troy Engel
-16. Mattias Sjosvard
-17. Jackpot
-18. Thomas Vill
-19. Michael Hansen
-20. Saul Kato
-21. Reinhard Weiss
-22. Andreas Leitgeb
+ 1. 2002-2005 Tomasz Motylewski
+ 2. 2002-2005 Ondrej Rybin (http://business.nabit.cz)
+              * SMS service(s) and gateway(s)
+ 3. 2003-2004 Multi-COM
+ 4. 2003-2004 Tom Nelson (www.pocketderelict.com)
+              * software for Pocket Computers
+ 5. 2003      GriffinTeam
+ 6. 2004      MatrixTeam
+ 7. 2004-2005 KompuNet (www.biuro24.pl)
+              * SMS services, PC shop and other
+ 8. 2004      Lorenzo Ciani
+ 9. 2004      Adam Lange
+10. 2004      Michele Rossetti
+11. 2005      Alain Bitam
+12. 2005      Johan Helsingius
+14. 2005      A Leg
+15. 2005      Troy Engel
+16. 2005      Mattias Sjosvard
+17. 2005      Jackpot
+18. 2005      Thomas Vill
+19. 2005      Michael Hansen
+20. 2005      Saul Kato
+21. 2005      Reinhard Weiss
+22. 2005      Andreas Leitgeb
 
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20051229 - 1.04.00
+* new functionality:
+  * support for specyfing port for MySQL server port            (Ehsan Akhgari)
+  * Gammu can take firmware versions from gammu.net phone database
+    and inform user, if there is any update available
+  * Gammu can fix/add JAR file size in JAD file during        (Andreas Leitgeb)
+    uploading it with --nokiaaddfile
+  * new -overwrite option for --nokiaaddfile                (Vlad Skarzhevskyy)
+    application|game. it deletes existing aplet with the same name
+    before uploading new. for testing.
+
+* fixes and improvements:
+  * network names updates                 (Nelson Murilo, Michal Cihar, others)
+  * increased buffers                                          (Roland Wundrig)
+  * we can set coding for sms status report texts in gsmsms.c  (Jorgen Thomsen)
+  * fixed bug in msvc2005 for getting online files
+
+NOTES: it was annouced on mailing list, but I will remind:
+       1. http://www.gammu.net/support/texts/road06.php contains a lot of info
+       about Nokia & Gammu history, Gammu possible future and many others
+       2. http://www.gammu.net/support/phones/phonedb.php will be "our"
+       phone database. It's in beta state, but even now give a lot of info
+
 20051202 - 1.03.20
 * new functionality:
   * * --setdatetime allows to set date/time part only       (Ace, Michal Cihar)

@@ -424,7 +424,13 @@ void DumpMessage(FILE *df, Debug_Level dl, const unsigned char *message, int mes
 	for (i = 0; i < messagesize; i++) {
 		sprintf(buffer+j*4,"%02X",message[i]);
 		buffer[j*4+2] = 0x20;
-		if (isprint(message[i]) && message[i]!=0x09) {
+		// 9 = tab
+		if (isprint(message[i]) && message[i]!=0x09
+			// 0x01 = beep in windows xp
+			&& message[i]!=0x01
+			// these are empty in windows xp
+			&& message[i]!=0x85 && message[i]!=0x95
+  			&& message[i]!=0xA6 && message[i]!=0xB7) {
 			if (j != len-1) buffer[j*4+2] 	= message[i];
 			buffer[(len-1)*4+j+3]		= message[i];
 		} else {

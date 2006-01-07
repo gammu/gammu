@@ -53,6 +53,9 @@
 #define ALCATEL_LIST_TODO_CAT		0x9B
 #define ALCATEL_LIST_CONTACTS_CAT	0x96
 
+/* Various flags */
+#define ALCATEL_UNICODE_FLAG		0x80
+
 
 /* We need lot of ATGEN functions, because Alcatel is an AT device. */
 
@@ -827,13 +830,13 @@ static GSM_Error ALCATEL_GetFields(GSM_StateMachine *s, int id) {
 	return ERR_NONE;
 }
 
-static void ALCATEL_DecodeString(GSM_StateMachine *s, unsigned char *buffer, unsigned char *target, int maxlen)
+static void ALCATEL_DecodeString(GSM_StateMachine *s, unsigned const char *buffer, unsigned char *target, int maxlen)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int			len;
 
 	len = buffer[0];
-	if(Priv->ProtocolVersion == V_1_1 && (buffer[1] == 0x80)) {
+	if (Priv->ProtocolVersion == V_1_1 && (buffer[1] == ALCATEL_UNICODE_FLAG)) {
 		/* UCS-2-BE string */
 		if (GSM_PHONEBOOK_TEXT_LENGTH < len/2) {
 			smprintf(s, "WARNING: Text truncated, to %d from %d\n", maxlen, len/2 + 1);
@@ -850,6 +853,61 @@ static void ALCATEL_DecodeString(GSM_StateMachine *s, unsigned char *buffer, uns
 		}
 		DecodeDefault(target, buffer + 1, len, false, GSM_AlcatelAlphabet);
 	}
+}
+
+static GSM_Error ALCATEL_EncodeString(GSM_StateMachine *s, unsigned const char *buffer, unsigned char *target, GSM_Alcatel_FieldType type)
+{
+	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
+	int			len;
+	int			maxlen = 0;
+	bool			unicode = false;
+	unsigned char		text[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
+	unsigned char		utext[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
+
+	len = UnicodeLength(buffer);
+	/* Maximal length is item and phone dependant, we use it only for guessing as phone will report too big entry correctly. */
+	if (type == Alcatel_string) {
+		if (Priv->ProtocolVersion == V_1_1) {
+			maxlen = 151;
+		} else {
+			maxlen = 62;
+		}
+	} else if (type == Alcatel_phone) {
+		if (Priv->ProtocolVersion == V_1_1) {
+			maxlen = 61;
+		} else {
+			maxlen = 50;
+		}
+	} else if (type == 0) {
+		/* We're creating category */
+		maxlen = 60;
+	}
+
+	if (Priv->ProtocolVersion == V_1_1) {
+
+		/* Compare if we would loose some information when not using
+		 * unicode */
+		EncodeDefault(text, buffer, &len, true, GSM_AlcatelAlphabet);
+		DecodeDefault(utext, text, len, true, GSM_AlcatelAlphabet);
+		if (!mywstrncmp(utext, buffer, len)) {
+			/* Use unicode only when we have enough space */
+			unicode = ((len * 2) < maxlen);
+		}
+	}
+
+	if (unicode) {
+		/* UCS-2-BE string */
+		target[0] = len * 2 + 3;
+		target[1] = ALCATEL_UNICODE_FLAG;
+		memcpy(target + 2, buffer, len * 2 + 2);
+	} else {
+		/* Alcatel alphabet string */
+		EncodeDefault(target + 1, buffer, &len, true, GSM_AlcatelAlphabet);
+		target[0] = len;
+		target[len + 1] = 0;
+	}
+
+	return ERR_NONE;
 }
 
 static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -1045,13 +1103,11 @@ static GSM_Error ALCATEL_AddCategoryText(GSM_StateMachine *s, const unsigned cha
 	unsigned char		buffer[200] = {0x00, 0x04, 0x00 /*type*/, 0x0d, 0x00 /*list*/, 0x0b };
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	GSM_Error		error;
-	int			len;
+
 
 	smprintf(s,"Creating category\n");
-	len = UnicodeLength(str);
-	EncodeDefault(buffer + 8, str, &len, true, GSM_AlcatelAlphabet);
-	buffer[6] = len + 1;
-	buffer[7] = len;
+	ALCATEL_EncodeString(s, str, buffer + 7, 0);
+	buffer[6] = buffer[7] + 1;
 
 	switch (Priv->BinaryType) {
 		case TypeContacts:
@@ -1066,7 +1122,7 @@ static GSM_Error ALCATEL_AddCategoryText(GSM_StateMachine *s, const unsigned cha
 			return ERR_NOTSUPPORTED;
 	}
 
-	error=GSM_WaitFor (s, buffer, 8 + len, 0x02, ALCATEL_TIMEOUT, ID_AlcatelAddCategoryText1);
+	error=GSM_WaitFor (s, buffer, 8 + buffer[7], 0x02, ALCATEL_TIMEOUT, ID_AlcatelAddCategoryText1);
 	if (error != ERR_NONE) return error;
 	error=GSM_WaitFor (s, 0, 0, 0x00, ALCATEL_TIMEOUT, ID_AlcatelAddCategoryText2);
 	if (error != ERR_NONE) return error;
@@ -1204,8 +1260,8 @@ static GSM_Error ALCATEL_ReplyDeleteItem(GSM_Protocol_Message msg, GSM_StateMach
 	return ERR_NONE;
 }
 
-static GSM_Error ALCATEL_BuildWriteBuffer(unsigned char * buffer, GSM_Alcatel_FieldType type, int field, void *data) {
-	int			len;
+static GSM_Error ALCATEL_BuildWriteBuffer(GSM_StateMachine *s, unsigned char * buffer, GSM_Alcatel_FieldType type, int field, void *data) {
+	GSM_Error		error;
 
 	buffer[1] = field & 0xff;
 
@@ -1241,21 +1297,17 @@ static GSM_Error ALCATEL_BuildWriteBuffer(unsigned char * buffer, GSM_Alcatel_Fi
 			buffer[3] = 0x08;
 			buffer[4] = 0x3c;
 
-			len = MIN(UnicodeLength((char *)data),62);
-			EncodeDefault(buffer + 6, (char *)data, &len, true, GSM_AlcatelAlphabet);
-			buffer[5] = len;
-			buffer[0] = 5 + len;
-			buffer[6 + len] = 0x00;
+			error = ALCATEL_EncodeString(s, (char *)data, buffer + 5, Alcatel_string);
+			if (error != ERR_NONE) return error;
+			buffer[0] = 5 + buffer[5];
 			break;
 		case Alcatel_phone:
 			buffer[3] = 0x07;
 			buffer[4] = 0x3c;
 
-			len = MIN(UnicodeLength((char *)data),50);
-			EncodeDefault(buffer + 6, (char *)data, &len, true, GSM_AlcatelAlphabet);
-			buffer[5] = len;
-			buffer[0] = 5 + len;
-			buffer[6 + len] = 0x00;
+			error = ALCATEL_EncodeString(s, (char *)data, buffer + 5, Alcatel_phone);
+			if (error != ERR_NONE) return error;
+			buffer[0] = 5 + buffer[5];
 			break;
 		case Alcatel_enum:
 			buffer[3] = 0x04;
@@ -1320,7 +1372,7 @@ static GSM_Error ALCATEL_CreateField(GSM_StateMachine *s, GSM_Alcatel_FieldType 
 			buffer[2] = ALCATEL_SYNC_TYPE_TODO;
 			break;
 	}
-	error = ALCATEL_BuildWriteBuffer(buffer + 6, type, field, data);
+	error = ALCATEL_BuildWriteBuffer(s, buffer + 6, type, field, data);
 	if (error != ERR_NONE) return error;
 
 	error = GSM_WaitFor (s, buffer, 8 + buffer[6], 0x02, ALCATEL_TIMEOUT, ID_AlcatelCreateField);
@@ -1332,7 +1384,7 @@ static GSM_Error ALCATEL_CreateField(GSM_StateMachine *s, GSM_Alcatel_FieldType 
 static GSM_Error ALCATEL_UpdateField(GSM_StateMachine *s, GSM_Alcatel_FieldType type, int id, int field, void *data) {
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	GSM_Error		error;
-	unsigned char 		buffer[200] =
+	unsigned char 		buffer[50 + GSM_PHONEBOOK_TEXT_LENGTH] =
 					{0x00, 0x04,
 					 0x00, 				/* type */
 					 0x26, 0x01,
@@ -1360,7 +1412,7 @@ static GSM_Error ALCATEL_UpdateField(GSM_StateMachine *s, GSM_Alcatel_FieldType 
 			buffer[2] = ALCATEL_SYNC_TYPE_TODO;
 			break;
 	}
-	error = ALCATEL_BuildWriteBuffer(buffer + 10, type, field, data);
+	error = ALCATEL_BuildWriteBuffer(s, buffer + 10, type, field, data);
 	if (error != ERR_NONE) return error;
 
 	error = GSM_WaitFor (s, buffer, 12 + buffer[10], 0x02, ALCATEL_TIMEOUT, ID_AlcatelUpdateField);
@@ -3785,7 +3837,8 @@ static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_StateMachine
 	switch (msg.Buffer[8]) {
 		case 0x00: /* no error */
 			return ERR_NONE;
-		case 0x10: /* same thing opened in phone menus */
+		case 0x0e: /* Opening session when not closed (might be also opened somewhere else) */
+		case 0x10: /* Some thing opened in phone menus */
 			return ERR_INSIDEPHONEMENU;
 		case 0x13:
 			/* This appears in more cases:
@@ -3795,14 +3848,16 @@ static GSM_Error ALCATEL_ReplyGeneric(GSM_Protocol_Message msg, GSM_StateMachine
 			 */
 			return ERR_SECURITYERROR;
 		case 0x14: /* Bad data */
+			return ERR_INVALIDDATA;
 		case 0x2f: /* Closing session when not opened */
 		case 0x1f: /* Bad in/out counter in packet/ack */
-		case 0x0e: /* Openning session when not closed */
 		case 0x0C: /* Bad id (item/database) */
 		case 0x11: /* Bad list id */
 		case 0x2A: /* Nonexistant field/item id */
-		case 0x35: /* Too long text */
+			smprintf(s, "WARNING: Bug reply %02X\n", msg.Buffer[8]);
 			return ERR_BUG;
+		case 0x35: /* Too long text */
+			return ERR_INVALIDDATA;
 		case 0x23: /* Session opened */
 		case 0x80: /* Transfer started */
 			return ERR_NONE;

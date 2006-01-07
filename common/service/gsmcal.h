@@ -282,7 +282,7 @@ void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 /* ------------------------------ to-do ------------------------------------ */
 
 #define GSM_TODO_ENTRIES		7
-#define MAX_TODO_TEXT_LENGTH	    	50 /* Alcatel BE5 50 chars */
+#define MAX_TODO_TEXT_LENGTH	    	160 /* N6230i */
 
 /**
  * Types of to do values. In parenthesis is member of @ref GSM_SubToDoEntry,
