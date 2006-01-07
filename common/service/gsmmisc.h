@@ -200,7 +200,7 @@ typedef struct {
 
 /* ------------------------------ categories ------------------------------- */
 
-#define GSM_MAX_CATEGORY_NAME_LENGTH 50
+#define GSM_MAX_CATEGORY_NAME_LENGTH 60
 
 typedef enum {
 	Category_ToDo = 1,
