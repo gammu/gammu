@@ -14,7 +14,7 @@ CConfigDlg::CConfigDlg() : CDialog(CConfigDlg::IDD)
 
 void CConfigDlg::OnShowWindow(BOOL bShow, UINT nStatus)
 {
-	HTREEITEM hChapter;
+//	HTREEITEM hChapter;
 
 	CDialog::OnShowWindow(bShow, nStatus);
 
