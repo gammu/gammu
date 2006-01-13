@@ -355,40 +355,24 @@ int smfprintf(FILE *f, Debug_Level dl, const char *format, ...)
 {
         va_list 		argp;
 	int 			result=0;
-	static unsigned char 	prevline[3000] = "", nextline[3000]="";
-	static unsigned int 	linecount=0;
 	unsigned char		buffer[3000];
 	GSM_DateTime 		date_time;
 
 	if (f == NULL) return 0;
 	va_start(argp, format);
 	result = vsprintf(buffer, format, argp);
-	strcat(nextline, buffer);
 	if (strstr(buffer, "\n")) {
 		if (ftell(f) < 40000000) {
 			GSM_GetCurrentDateTime(&date_time);
-			if (linecount > 0) {
-				if (dl == DL_TEXTALLDATE || dl == DL_TEXTERRORDATE || dl == DL_TEXTDATE) {
-			                fprintf(f,"%s %4d/%02d/%02d %02d:%02d:%02d: <%i> %s",
-			                        DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
-			                        date_time.Year, date_time.Month, date_time.Day,
-			                        date_time.Hour, date_time.Minute, date_time.Second,linecount,prevline);
-				} else {
-			                fprintf(f,"%s",prevline);
-				}
-			}
-			linecount=0;
 			if (dl == DL_TEXTALLDATE || dl == DL_TEXTERRORDATE || dl == DL_TEXTDATE) {
 		                fprintf(f,"%s %4d/%02d/%02d %02d:%02d:%02d: %s",
 		                        DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
 		                        date_time.Year, date_time.Month, date_time.Day,
-		                        date_time.Hour, date_time.Minute, date_time.Second,nextline);
+		                        date_time.Hour, date_time.Minute, date_time.Second, buffer);
 			} else {
-		                fprintf(f,"%s",nextline);
+		                fprintf(f, "%s", buffer);
 			}
-			strcpy(prevline, nextline);
 		}
-		strcpy(nextline, "");
 		fflush(f);
 	}
 	va_end(argp);
