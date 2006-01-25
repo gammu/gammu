@@ -2079,11 +2079,19 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		return ERR_NONE;
 	case AT_Reply_CMSError:
  		smprintf(s, "Error %i\n",Priv->ErrorCode);
- 		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,Priv->ErrorCode,-1);
+ 		if (s->User.SendSMSStatus != NULL) {
+			s->User.SendSMSStatus(s->CurrentConfig->Device, Priv->ErrorCode, -1);
+		}
  		return ATGEN_HandleCMSError(s);
 	case AT_Reply_Error:
+ 		if (s->User.SendSMSStatus != NULL) {
+			s->User.SendSMSStatus(s->CurrentConfig->Device, -1, -1);
+		}
 		return ERR_UNKNOWN;
 	default:
+ 		if (s->User.SendSMSStatus != NULL) {
+			s->User.SendSMSStatus(s->CurrentConfig->Device, -1, -1);
+		}
 		return ERR_UNKNOWNRESPONSE;
 	}
 }
