@@ -253,7 +253,7 @@ unsigned char *GSM_Networks[] = {
 	"228 03", "ORANGE",
 	"230 01", "T-Mobile CZ",
 	"230 02", "EuroTel",
-	"230 03", "Oskar",
+	"230 03", "Vodafone CZ",
 	"231 01", "Orange",
 	"231 02", "EuroTel GSM",
 	"232 01", "A1",
