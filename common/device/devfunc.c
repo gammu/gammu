@@ -22,6 +22,7 @@
 #else
 #  include <errno.h>
 #  include <signal.h>
+#  include <sys/socket.h>
 #endif
 
 #include "../gsmstate.h"

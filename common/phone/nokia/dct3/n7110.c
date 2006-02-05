@@ -1094,7 +1094,7 @@ static GSM_Error N7110_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 static GSM_Error N7110_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	int 		count = 18, blocks;
-	unsigned char 	req[500] = {N7110_FRAME_HEADER, 0x0b, 0x00,
+	unsigned char 	req[5000] = {N7110_FRAME_HEADER, 0x0b, 0x00,
 				    0x01, 0x01, 0x00, 0x00, 0x0c,
 				    0x00, 0x00,		/* memory type	*/
 				    0x00, 0x00, 	/* location	*/

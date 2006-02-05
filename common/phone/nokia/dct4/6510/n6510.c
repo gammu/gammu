@@ -1043,7 +1043,7 @@ GSM_Error N6510_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	int 		count = 22, blocks;
-	unsigned char 	req[500] = {
+	unsigned char 	req[5000] = {
 		N7110_FRAME_HEADER, 0x0b, 0x00, 0x01, 0x01, 0x00, 0x00, 0x10, 0x02,
 		0x00,  			/* memory type */
 		0x00, 0x00,  		/* location */
@@ -3971,7 +3971,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6020|6021|6100|6200|6220|6230|6230i|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6020|6021|6100|6111|6200|6220|6230|6230i|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/

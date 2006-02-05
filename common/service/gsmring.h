@@ -156,7 +156,7 @@ typedef struct {
 	/**
 	 * Ringtone name
 	 */
-	char					Name[20*2];
+	unsigned char				Name[20*2];
 	/**
 	 * Ringtone location
 	 */

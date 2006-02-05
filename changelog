@@ -35,6 +35,34 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20060205 - 1.04.07
+* new functionality:
+  * * alcatel                                                    (Michal Cihar)
+      * created generic function for string encoding
+      * support writing unicode strings
+      * new command line parameter for adding category
+    * support for ISO texts with Smart Messaging images
+  * started work on Series 40 3.0 phonebook. Somebody with Nokia 6111
+    (or other compatible) required. Getting entries should work, but
+    for testing
+
+* fixes and improvements:
+  * * update for Czech operator name                             (Michal Cihar)
+    * removed some leaks in config file parser
+    * better informing about error after SMS sending in AT module
+    * few signed/unsigned issues less
+    * removed unused code with logging code
+    * fix for parsing phone numbers in at code
+    * alcatel:
+      * improved error codes for some situations
+      * fixed handling large texts
+      * added correct limits for text fields
+      * current alcatel phones support longer categories texts
+  * entries in Nokia pbk can be longer than 256 chars             (Igor Timkin)
+  * updated 216-30 network name                                 (Gabor Z. Papp)
+  * Gentoo updates                                                (Alin Nastac)
+  * corrected help for --send/savesms RINGTONE
+
 20051229 - 1.04.00
 * new functionality:
   * support for specyfing port for MySQL server port            (Ehsan Akhgari)

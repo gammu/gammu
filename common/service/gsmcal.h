@@ -429,7 +429,7 @@ typedef struct {
 	/**
 	 * Text that is shown on display.
 	 */
-	char	    	Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
+	unsigned char	Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
 } GSM_Alarm;
 
 /* --------------------------- calendar & todo ----------------------------- */
