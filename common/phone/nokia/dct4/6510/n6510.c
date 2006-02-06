@@ -2888,7 +2888,7 @@ static GSM_Error N6510_ReplyGetPPM(GSM_Protocol_Message msg, GSM_StateMachine *s
 		len = len-pos;
 		smprintf(s, "Block with ID %02x",msg.Buffer[pos]);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, msg.Buffer+pos, len);
+		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, msg.Buffer+pos, len);
 #endif
 		switch (msg.Buffer[pos]) {
 		case 0x49:
@@ -2958,7 +2958,7 @@ static GSM_Error N6510_ReplyGetProfile(GSM_Protocol_Message msg, GSM_StateMachin
 	for (i = 0; i < 11; i++) {
 		smprintf(s, "Profile feature %02x ",blockstart[1]);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, blockstart, blockstart[0]);
+		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, blockstart, blockstart[0]);
 #endif
 
 		switch (blockstart[1]) {

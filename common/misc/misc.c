@@ -345,36 +345,80 @@ int dbgprintf(const char *format, ...)
 }
 #endif
 
-/* assumption: if \n is present it is always the last char,
- * string never of the form "......\n..."
- */
 #ifdef __GNUC__
-__attribute__((format(printf, 3, 4)))
+__attribute__((format(printf, 2, 3)))
 #endif
-int smfprintf(FILE *f, Debug_Level dl, const char *format, ...)
+int smfprintf(Debug_Info *d, const char *format, ...)
 {
         va_list 		argp;
 	int 			result=0;
-	unsigned char		buffer[3000];
+	char			buffer[3000];
+	char			*pos, *end;
+	char			save;
 	GSM_DateTime 		date_time;
+	FILE			*f;
+	Debug_Level		l;
+
+	if (d->use_global) {
+		f = di.df;
+		l = di.dl;
+	} else {
+		f = d->df;
+		l = d->dl;
+	}
 
 	if (f == NULL) return 0;
+
 	va_start(argp, format);
 	result = vsprintf(buffer, format, argp);
-	if (strstr(buffer, "\n")) {
-		if (ftell(f) < 40000000) {
-			GSM_GetCurrentDateTime(&date_time);
-			if (dl == DL_TEXTALLDATE || dl == DL_TEXTERRORDATE || dl == DL_TEXTDATE) {
-		                fprintf(f,"%s %4d/%02d/%02d %02d:%02d:%02d: %s",
+	pos = buffer;
+
+	while (*pos != 0) {
+
+		/* Find new line in string */
+		end = strstr(pos, "\n");
+
+		/* Are we at start of line? */
+		if (d->was_lf) {
+			/* Show date? */
+			if (l == DL_TEXTALLDATE || l == DL_TEXTERRORDATE || l == DL_TEXTDATE) {
+				GSM_GetCurrentDateTime(&date_time);
+		                fprintf(f,"%s %4d/%02d/%02d %02d:%02d:%02d: ",
 		                        DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
 		                        date_time.Year, date_time.Month, date_time.Day,
-		                        date_time.Hour, date_time.Minute, date_time.Second, buffer);
-			} else {
-		                fprintf(f, "%s", buffer);
+		                        date_time.Hour, date_time.Minute, date_time.Second);
 			}
+			d->was_lf = false;
 		}
-		fflush(f);
+
+		/* Remember end char */
+		if (end != NULL) {
+			save = *end;
+			*end = 0;
+		}
+
+		/* Output */
+		fprintf(f, "%s", pos);
+
+		if (end != NULL) {
+			/* We had new line */
+			fprintf(f, "\n");
+			d->was_lf = true;
+
+			/* Restore saved char */
+			*end = save;
+
+			/* Advance to next line */
+			pos = end + strlen("\n");
+		} else {
+			/* We hit end of string */
+			break;
+		}
 	}
+
+	/* Flush buffers, this might be configurable, but it could cause drop of last log messages */
+	fflush(d->df);
+
 	va_end(argp);
 	return result;
 }
@@ -393,14 +437,14 @@ bool GSM_SetDebugLevel(char *info, Debug_Info *di)
 }
 
 /* Dumps a message */
-void DumpMessage(FILE *df, Debug_Level dl, const unsigned char *message, int messagesize)
+void DumpMessage(Debug_Info *d, const unsigned char *message, int messagesize)
 {
 	int 		i,j=0,len=16;
 	unsigned char	buffer[200];
 
-	if (df==NULL || messagesize == 0) return;
+	if (d->df == NULL || messagesize == 0) return;
 
-	smfprintf(df, dl, "\n");
+	smfprintf(d, "\n");
 
 	memset(buffer,0x20,sizeof(buffer));
 	buffer[len*5-1]=0;
@@ -422,7 +466,7 @@ void DumpMessage(FILE *df, Debug_Level dl, const unsigned char *message, int mes
 		}
 		if (j != len-1 && i != messagesize-1) buffer[j*4+3] = '|';
 		if (j == len-1) {
-			smfprintf(df, dl, "%s\n", buffer);
+			smfprintf(d, "%s\n", buffer);
 			memset(buffer,0x20,sizeof(buffer));
 			buffer[len*5-1]=0;
 			j = 0;
@@ -430,7 +474,7 @@ void DumpMessage(FILE *df, Debug_Level dl, const unsigned char *message, int mes
 			j++;
 		}
 	}
-	if (j != 0) smfprintf(df, dl, "%s\n", buffer);
+	if (j != 0) smfprintf(d, "%s\n", buffer);
 }
 
 char *GetOS(void)
