@@ -3866,7 +3866,7 @@ GSM_Error ATGEN_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_NONE;
 
 	DecodeHexBin (Buffer,msg.Buffer+6,msg.Length-6);
-	DumpMessage(stdout, di.dl ,Buffer,msg.Length-6);
+	DumpMessage(&di ,Buffer,msg.Length-6);
 
 	CB.Channel = Buffer[4];
 

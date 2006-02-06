@@ -213,7 +213,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		bs = 256*Block[2]+Block[3];
 #ifdef DEBUG
 		smprintf(s, "Phonebook entry block - length %i", bs-6);
-		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, Block+5, bs-6);
+		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Block+5, bs-6);
 #endif
 		if (entry->EntriesNum==GSM_PHONEBOOK_ENTRIES) {
 			smprintf(s, "Too many entries\n");

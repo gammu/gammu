@@ -235,6 +235,7 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
     	}
 
 	if (info[0]!=0 && privdi->dl != 0) {
+		privdi->was_lf = true;
 		switch (privdi->dl) {
 		case DL_BINARY:
 			testfile = fopen(info,"wb" COMMIT_FLAG);

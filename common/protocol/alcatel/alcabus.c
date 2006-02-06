@@ -189,7 +189,7 @@ static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char
 						(d->Msg.Type == ALCATEL_DISCONNECT_ACK) ? "disconnect" :
 						"BUG");
 				smprintf(s, "0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
-				DumpMessage(s->di.df, s->di.dl, d->Msg.Buffer, d->Msg.Length);
+				DumpMessage(&s->di, d->Msg.Buffer, d->Msg.Length);
 				fflush(s->di.df);
 			}
 			if (s->di.dl==DL_BINARY) {

@@ -632,7 +632,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 		smprintf(s, "RECEIVED frame ");
 		smprintf(s, "type 0x%02X/length 0x%02X/%i", msg->Type, msg->Length, msg->Length);
-		DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, msg->Buffer, msg->Length);
+		DumpMessage(&s->di, msg->Buffer, msg->Length);
 		if (msg->Length == 0) smprintf(s, "\n");
 		fflush(s->di.df);
 	}
@@ -694,11 +694,11 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 		if (Phone->SentMsg != NULL) {
 			smprintf(s,"LAST SENT frame ");
 			smprintf(s, "type 0x%02X/length %i", Phone->SentMsg->Type, Phone->SentMsg->Length);
-			DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, Phone->SentMsg->Buffer, Phone->SentMsg->Length);
+			DumpMessage(&s->di, Phone->SentMsg->Buffer, Phone->SentMsg->Length);
 		}
 		smprintf(s, "RECEIVED frame ");
 		smprintf(s, "type 0x%02X/length 0x%02X/%i", msg->Type, msg->Length, msg->Length);
-		DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, msg->Buffer, msg->Length);
+		DumpMessage(&s->di, msg->Buffer, msg->Length);
 		smprintf(s, "\n");
 	}
 
@@ -1127,7 +1127,7 @@ void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned char *message, int mess
 	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 		smprintf(s,"SENDING frame ");
 		smprintf(s,"type 0x%02X/length 0x%02X/%i", type, messagesize, messagesize);
-		DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, message, messagesize);
+		DumpMessage(&s->di, message, messagesize);
 		if (messagesize == 0) smprintf(s,"\n");
 		if (s->di.df) fflush(s->di.df);
 	}
@@ -1153,26 +1153,13 @@ int smprintf(GSM_StateMachine *s, const char *format, ...)
 {
 	va_list		argp;
 	int 		result=0;
-	unsigned char	buffer[2000];
-	Debug_Level	dl;
-	FILE		*df;
+	char		buffer[2000];
 
 	va_start(argp, format);
-	if (s == NULL) {
-		dl = di.dl;
-		df = di.df;
-	} else {
-		dl = s->di.dl;
-		if (s->di.use_global) {
-			df = di.df;
-		} else {
-			df = s->di.df;
-		}
-	}
 
-	if (dl != 0) {
+	if ((s == NULL && s->di.df != 0) || (s != NULL && di.df != 0)) {
 		result = vsprintf(buffer, format, argp);
-		result = smfprintf(df, dl, "%s", buffer);
+		result = smfprintf((s == NULL) ? &di : &(s->di), "%s", buffer);
 	}
 
 	va_end(argp);
