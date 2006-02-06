@@ -161,16 +161,17 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 	/* Auto model */
 	if (s->CurrentConfig->Model[0] == 0) {
 		model = GetModelData(NULL,s->Phone.Data.Model,NULL);
-#ifdef GSM_ENABLE_ALCATEL
-		if (model->model[0] != 0 && IsPhoneFeatureAvailable(model, F_ALCATEL)) {
-			smprintf(s,"[Module           - \"%s\"]\n",ALCATELPhone.models);
-			s->Phone.Functions = &ALCATELPhone;
-			return ERR_NONE;
-		}
-#endif
 #ifdef GSM_ENABLE_ATGEN
 		/* With ATgen and auto model we can work with unknown models too */
 		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
+#ifdef GSM_ENABLE_ALCATEL
+			/* If phone provides Alcatel specific functions, enable them */
+			if (model->model[0] != 0 && IsPhoneFeatureAvailable(model, F_ALCATEL)) {
+				smprintf(s,"[Module           - \"%s\"]\n",ALCATELPhone.models);
+				s->Phone.Functions = &ALCATELPhone;
+				return ERR_NONE;
+			}
+#endif
 			smprintf(s,"[Module           - \"%s\"]\n",ATGENPhone.models);
 			s->Phone.Functions = &ATGENPhone;
 			return ERR_NONE;
@@ -958,6 +959,11 @@ static OnePhoneModel allmodels[] = {
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"6110" ,"NSE-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
+#endif
+#ifdef GSM_ENABLE_NOKIA6510
+	{"6111" ,"RM-82" ,"Nokia 6111", {F_SERIES40_30,0}},
+#endif
+#ifdef GSM_ENABLE_NOKIA6110
 	{"6130" ,"NSK-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
 	{"6150" ,"NSM-1" ,"",           {F_NOWAP,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,F_NOPICTUREUNI,0}},
 	{"6190" ,"NSB-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
