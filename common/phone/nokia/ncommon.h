@@ -42,7 +42,12 @@ typedef enum {
 	N6510_PBK_UNKNOWN3	 = 0x3C, /* Instant Messaging service list ID ?	*/
 	N6510_PBK_UNKNOWN4	 = 0x3D, /* presence list ID ? 			*/
 	N6510_PBK_PUSHTOTALK_ID	 = 0x3F, /* SIP Address (Push to Talk address)	*/
-	N6510_PBK_GROUP2_ID	 = 0x43  /* Caller group type 2 ID (6230i,later)*/
+	N6510_PBK_GROUP2_ID	 = 0x43, /* Caller group type 2 ID (6230i,later)*/
+
+	/* Series 40 3.0 */
+	S4030_PBK_FIRSTNAME	 = 0x46,
+	S4030_PBK_LASTNAME	 = 0x47,
+	S4030_PBK_POSTAL	 = 0x4A
 } GSM_71_65_Phonebook_Entries_Types;
 
 typedef enum {
@@ -52,6 +57,15 @@ typedef enum {
 	N7110_PBK_NUMBER_WORK	 = 0x06,
 	N7110_PBK_NUMBER_GENERAL = 0x0A
 } GSM_71_65_Phonebook_Number_Types;
+
+typedef enum {
+	S4030_PBK_POSTAL_EXTADDRESS 	= 0x4B,
+	S4030_PBK_POSTAL_STREET 	= 0x4C,
+	S4030_PBK_POSTAL_CITY 		= 0x4D,
+	S4030_PBK_POSTAL_STATE 		= 0x4E,
+	S4030_PBK_POSTAL_POSTAL 	= 0x4F,
+	S4030_PBK_POSTAL_COUNTRY 	= 0x50
+} GSM_Series40_30_Phonebook_Postal_Types;
 
 typedef struct {
 	unsigned char	Location[PHONE_MAXSMSINFOLDER]; /* locations of SMS messages in that folder */

@@ -857,14 +857,9 @@ bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo	*Info,
 			switch (Buffer[i]) {
 			case SM30_ISOTEXT:
 				dbgprintf("ISO 8859-2 text\n");
-				Info->Unknown = true;
 				break;
 			case SM30_UNICODETEXT:
 				dbgprintf("Unicode text\n");
-				memcpy(Info->Entries[0].Bitmap->Bitmap[0].Text,Buffer+i+3,Buffer[i+1]*256+Buffer[i+2]);
-				Info->Entries[0].Bitmap->Bitmap[0].Text[Buffer[i+1]*256 + Buffer[i+2]] 	= 0;
-				Info->Entries[0].Bitmap->Bitmap[0].Text[Buffer[i+1]*256 + Buffer[i+2]+ 1] 	= 0;
-				dbgprintf("Unicode Text \"%s\"\n",DecodeUnicodeString(Info->Entries[0].Bitmap->Bitmap[0].Text));
 				break;
 			case SM30_OTA:
 				dbgprintf("OTA bitmap as Picture Image\n");
@@ -889,6 +884,37 @@ bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo	*Info,
 				if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Info->Entries[0].Bitmap->Bitmap[0]);
 #endif
 				Info->Entries[0].ID = SMS_NokiaScreenSaverLong;
+				break;
+			}
+			i = i + Buffer[i+1]*256 + Buffer[i+2] + 3;
+			dbgprintf("%i %i\n",i,Length);
+		}
+		i=1;
+		while (i!=Length) {
+			switch (Buffer[i]) {
+			case SM30_ISOTEXT:
+				dbgprintf("ISO 8859-2 text\n");
+				EncodeUnicode (Info->Entries[0].Bitmap->Bitmap[0].Text, Buffer+i+3, Buffer[i+2]);
+				dbgprintf("ISO Text \"%s\"\n",DecodeUnicodeString(Info->Entries[0].Bitmap->Bitmap[0].Text));
+				break;
+			case SM30_UNICODETEXT:
+				dbgprintf("Unicode text\n");
+				memcpy(Info->Entries[0].Bitmap->Bitmap[0].Text,Buffer+i+3,Buffer[i+1]*256+Buffer[i+2]);
+				Info->Entries[0].Bitmap->Bitmap[0].Text[Buffer[i+1]*256 + Buffer[i+2]] 	= 0;
+				Info->Entries[0].Bitmap->Bitmap[0].Text[Buffer[i+1]*256 + Buffer[i+2]+ 1] 	= 0;
+				dbgprintf("Unicode Text \"%s\"\n",DecodeUnicodeString(Info->Entries[0].Bitmap->Bitmap[0].Text));
+				break;
+			case SM30_OTA:
+				dbgprintf("OTA bitmap as Picture Image\n");
+				break;
+			case SM30_RINGTONE:
+				dbgprintf("RTTL ringtone\n");
+				break;
+			case SM30_PROFILENAME:
+				dbgprintf("Profile Name\n");
+				break;
+			case SM30_SCREENSAVER:
+				dbgprintf("OTA bitmap as Screen Saver\n");
 				break;
 			}
 			i = i + Buffer[i+1]*256 + Buffer[i+2] + 3;

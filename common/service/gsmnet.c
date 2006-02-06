@@ -230,7 +230,7 @@ unsigned char *GSM_Networks[] = {
 	"214 04", "Xfera",
 	"214 07", "MOVISTAR",
 	"216 01", "Pannon GSM",
-	"216 30", "Westel 900",
+	"216 30", "T-Mobile H",
 	"216 70", "Vodafone",
 	"218 03", "ERONET",
 	"218 05", "Mobilna Srpske",
