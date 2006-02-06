@@ -1111,16 +1111,14 @@ OnePhoneModel *GetModelData(char *model, char *number, char *irdamodel)
 bool IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature)
 {
 	int	i	= 0;
-	bool	retval  = false;
 
 	while (model->features[i] != 0) {
 		if (model->features[i] == feature) {
-			retval = true;
-			break;
+			return true;
 		}
 		i++;
 	}
-	return retval;
+	return false;
 }
 
 void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned char *message, int messagesize, int type)
