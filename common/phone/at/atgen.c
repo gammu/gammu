@@ -3347,6 +3347,10 @@ GSM_Error ATGEN_ReplySetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
+		if (s->Phone.Data.Priv.ATGEN.ErrorCode == 255 && s->Phone.Data.Priv.ATGEN.Manufacturer == AT_Ericsson) {
+			smprintf(s, "CME Error %i, probably means empty entry\n", s->Phone.Data.Priv.ATGEN.ErrorCode);
+			return ERR_EMPTY;
+		}
 	        return ATGEN_HandleCMEError(s);
 	case AT_Reply_Error:
 		return ERR_INVALIDDATA;
@@ -3374,7 +3378,9 @@ GSM_Error ATGEN_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	sprintf(req, "AT+CPBW=%d\r",entry->Location + Priv->FirstMemoryEntry - 1);
 
 	smprintf(s, "Deleting phonebook entry\n");
-	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetMemory);
+	error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetMemory);
+	if (error == ERR_EMPTY) return ERR_NONE;
+	return error;
 }
 
 GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
