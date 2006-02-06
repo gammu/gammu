@@ -160,6 +160,8 @@ static ATErrorCode CMEErrorCodes[] = {
 	{100, "unknown"},
 };
 
+static char samsung_location_error[] = "[Samsung] Empty location";
+
 
 GSM_Error ATGEN_HandleCMEError(GSM_StateMachine *s)
 {
@@ -444,7 +446,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 		Priv->ErrorCode = atoi(err);
 
 		if (Priv->ErrorCode == -1) {
-			Priv->ErrorText = "[Samsung] Empty location";
+			Priv->ErrorText = samsung_location_error;
 			return GSM_DispatchMessage(s);
 		}
 	}
@@ -459,7 +461,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 			k = 0;
 			while (ErrorCodes[k].Number != -1) {
 				if (ErrorCodes[k].Number == Priv->ErrorCode) {
-					Priv->ErrorText = (char *)&(ErrorCodes[k].Text);
+					Priv->ErrorText = ErrorCodes[k].Text;
 					break;
 				}
 				k++;
@@ -469,7 +471,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 			while (ErrorCodes[k].Number != -1) {
 				if (!strncmp(err + j, ErrorCodes[k].Text, strlen(ErrorCodes[k].Text))) {
 					Priv->ErrorCode = ErrorCodes[k].Number;
-					Priv->ErrorText = (char *)&(ErrorCodes[k].Text);
+					Priv->ErrorText = ErrorCodes[k].Text;
 					break;
 				}
 				k++;
