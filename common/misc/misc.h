@@ -60,6 +60,7 @@ void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, in
 /* ------------------------------------------------------------------------- */
 
 typedef enum {
+	DL_NONE = 0,		/* No debug messages		*/
 	DL_BINARY = 1,		/* Binary transmission dump 	*/
 	DL_TEXT,		/* Text transmission dump	*/
 	DL_TEXTALL,		/* Everything			*/
@@ -75,7 +76,6 @@ typedef struct {
 	bool        	use_global;
 	char		*coding;
 	bool		was_lf;
-	bool		do_flush;
 } Debug_Info;
 
 extern Debug_Info	di;

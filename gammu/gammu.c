@@ -9259,8 +9259,9 @@ int main(int argc, char *argv[])
 
 	setlocale(LC_ALL, "");
 #ifdef DEBUG
-	di.dl		= DL_TEXTALL;
+	di.dl		= DL_NONE;
 	di.df	 	= stdout;
+	di.was_lf	= true;
 #endif
 
  	/* Any parameters? */
