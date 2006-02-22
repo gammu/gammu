@@ -242,15 +242,15 @@ SOURCE=..\..\..\common\phone\nokia\dct3\n6110.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\nokia\dct4\6510\n6510.c
+SOURCE=..\..\..\common\phone\nokia\dct4tiku\6510\n6510.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\nokia\dct4\6510\6510cal.c
+SOURCE=..\..\..\common\phone\nokia\dct4tiku\6510\6510cal.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\nokia\dct4\6510\6510file.c
+SOURCE=..\..\..\common\phone\nokia\dct4tiku\6510\6510file.c
 # End Source File
 # Begin Source File
 
@@ -258,15 +258,15 @@ SOURCE=..\..\..\common\phone\nokia\dct3\n0650.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\nokia\dct4\n3320.c
+SOURCE=..\..\..\common\phone\nokia\dct4tiku\n3320.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\nokia\dct4\n3650.c
+SOURCE=..\..\..\common\phone\nokia\wd2\n3650.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\nokia\dct4\dct4func.c
+SOURCE=..\..\..\common\phone\nokia\dct4tiku\dct4func.c
 # End Source File
 # Begin Source File
 
@@ -470,15 +470,15 @@ SOURCE=..\..\..\common\phone\nokia\dct3\n6110.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\nokia\dct4\6510\n6510.h
+SOURCE=..\..\..\common\phone\nokia\dct4tiku\6510\n6510.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\nokia\dct4\6510\6510cal.h
+SOURCE=..\..\..\common\phone\nokia\dct4tiku\6510\6510cal.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\nokia\dct4\6510\6510file.h
+SOURCE=..\..\..\common\phone\nokia\dct4tiku\6510\6510file.h
 # End Source File
 # Begin Source File
 
@@ -486,15 +486,15 @@ SOURCE=..\..\..\common\phone\nokia\dct3\n0650.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\nokia\dct4\n3320.h
+SOURCE=..\..\..\common\phone\nokia\dct4tiku\n3320.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\nokia\dct4\n3650.h
+SOURCE=..\..\..\common\phone\nokia\wd2\n3650.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\nokia\dct4\dct4func.h
+SOURCE=..\..\..\common\phone\nokia\dct4tiku\dct4func.h
 # End Source File
 # Begin Source File
 

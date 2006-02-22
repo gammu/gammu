@@ -354,7 +354,7 @@ int smfprintf(Debug_Info *d, const char *format, ...)
 	int 			result=0;
 	char			buffer[3000];
 	char			*pos, *end;
-	char			save;
+	char			save = 0;
 	GSM_DateTime 		date_time;
 	FILE			*f;
 	Debug_Level		l;

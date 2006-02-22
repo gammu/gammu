@@ -79,10 +79,10 @@
 			Name="Source Files"
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat">
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\6510\6510cal.c">
+				RelativePath="..\..\..\common\phone\nokia\dct4tiku\6510\6510cal.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\6510\6510file.c">
+				RelativePath="..\..\..\common\phone\nokia\dct4tiku\6510\6510file.c">
 			</File>
 			<File
 				RelativePath="..\..\..\common\device\bluetoth\affix.c">
@@ -136,7 +136,7 @@
 				RelativePath="..\..\..\common\phone\nokia\dct3\dct3func.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\dct4func.c">
+				RelativePath="..\..\..\common\phone\nokia\dct4tiku\dct4func.c">
 			</File>
 			<File
 				RelativePath="..\..\..\common\device\devfunc.c">
@@ -214,16 +214,16 @@
 				RelativePath="..\..\..\common\phone\nokia\dct3\n0650.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\n3320.c">
+				RelativePath="..\..\..\common\phone\nokia\dct4tiku\n3320.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\n3650.c">
+				RelativePath="..\..\..\common\phone\nokia\wd2\n3650.c">
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct3\n6110.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\6510\n6510.c">
+				RelativePath="..\..\..\common\phone\nokia\dct4tiku\6510\n6510.c">
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct3\n7110.c">
@@ -269,10 +269,10 @@
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl">
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\6510\6510cal.h">
+				RelativePath="..\..\..\common\phone\nokia\dct4tiku\6510\6510cal.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\6510\6510file.h">
+				RelativePath="..\..\..\common\phone\nokia\dct4tiku\6510\6510file.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\device\bluetoth\affix.h">
@@ -329,7 +329,7 @@
 				RelativePath="..\..\..\common\phone\nokia\dct3\dct3func.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\dct4func.h">
+				RelativePath="..\..\..\common\phone\nokia\dct4tiku\dct4func.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\device\devfunc.h">
@@ -401,16 +401,16 @@
 				RelativePath="..\..\..\common\phone\nokia\dct3\n0650.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\n3320.h">
+				RelativePath="..\..\..\common\phone\nokia\dct4tiku\n3320.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\n3650.h">
+				RelativePath="..\..\..\common\phone\nokia\wd2\n3650.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct3\n6110.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\nokia\dct4\6510\n6510.h">
+				RelativePath="..\..\..\common\phone\nokia\dct4tiku\6510\n6510.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct3\n7110.h">
