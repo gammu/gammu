@@ -35,6 +35,21 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+20060222 - 1.04.11
+* new functionality:
+  * 5140i ID
+
+* fixes and improvements:
+  * some changes in location of Nokia files
+  * * do not even try to use alcatel connection for others       (Michal Cihar)
+    * drop some not needed local variables
+    * pass whole debug info to output functions
+    * correctly handle messages with new lines inside
+    * wrong pointers have been passed in some functions, so pointer value
+      was shown instead of text
+    * SE phones return error while deleting empty entry, so treat this as okay
+  * SMS for 6150 driver
+
 20060205 - 1.04.07
 * new functionality:
   * * alcatel                                                    (Michal Cihar)

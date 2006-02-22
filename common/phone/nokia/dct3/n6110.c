@@ -1537,7 +1537,7 @@ static GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachi
                         memcpy(Data->Ringtone->NokiaBinary.Frame,msg.Buffer+start,end-start);
                         Data->Ringtone->NokiaBinary.Length=end-start;
 #ifdef DEBUG
-                        if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, Data->Ringtone->NokiaBinary.Frame, Data->Ringtone->NokiaBinary.Length);
+                        if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Data->Ringtone->NokiaBinary.Frame, Data->Ringtone->NokiaBinary.Length);
 #endif
                         return ERR_NONE;
                 case RING_MIDI:

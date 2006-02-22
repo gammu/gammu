@@ -60,6 +60,7 @@ void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, in
 /* ------------------------------------------------------------------------- */
 
 typedef enum {
+	DL_NONE = 0,		/* No debug messages		*/
 	DL_BINARY = 1,		/* Binary transmission dump 	*/
 	DL_TEXT,		/* Text transmission dump	*/
 	DL_TEXTALL,		/* Everything			*/
@@ -74,6 +75,7 @@ typedef struct {
 	FILE		*df;
 	bool        	use_global;
 	char		*coding;
+	bool		was_lf;
 } Debug_Info;
 
 extern Debug_Info	di;
@@ -92,11 +94,11 @@ int dbgprintf(const char *format, ...);
 #endif
 
 #ifdef __GNUC__
-__attribute__((format(printf, 3, 4)))
+__attribute__((format(printf, 2, 3)))
 #endif
-int smfprintf(FILE *f, Debug_Level dl, const char *format, ...);
+int smfprintf(Debug_Info *d, const char *format, ...);
 
-void DumpMessage(FILE *df, Debug_Level dl, const unsigned char *message, int messagesize);
+void DumpMessage(Debug_Info *d, const unsigned char *message, int messagesize);
 
 bool GSM_SetDebugLevel(char *info, Debug_Info *di);
 

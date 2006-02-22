@@ -161,16 +161,17 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 	/* Auto model */
 	if (s->CurrentConfig->Model[0] == 0) {
 		model = GetModelData(NULL,s->Phone.Data.Model,NULL);
-#ifdef GSM_ENABLE_ALCATEL
-		if (model->model[0] != 0 && IsPhoneFeatureAvailable(model, F_ALCATEL)) {
-			smprintf(s,"[Module           - \"%s\"]\n",ALCATELPhone.models);
-			s->Phone.Functions = &ALCATELPhone;
-			return ERR_NONE;
-		}
-#endif
 #ifdef GSM_ENABLE_ATGEN
 		/* With ATgen and auto model we can work with unknown models too */
 		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
+#ifdef GSM_ENABLE_ALCATEL
+			/* If phone provides Alcatel specific functions, enable them */
+			if (model->model[0] != 0 && IsPhoneFeatureAvailable(model, F_ALCATEL)) {
+				smprintf(s,"[Module           - \"%s\"]\n",ALCATELPhone.models);
+				s->Phone.Functions = &ALCATELPhone;
+				return ERR_NONE;
+			}
+#endif
 			smprintf(s,"[Module           - \"%s\"]\n",ATGENPhone.models);
 			s->Phone.Functions = &ATGENPhone;
 			return ERR_NONE;
@@ -631,7 +632,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 		smprintf(s, "RECEIVED frame ");
 		smprintf(s, "type 0x%02X/length 0x%02X/%i", msg->Type, msg->Length, msg->Length);
-		DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, msg->Buffer, msg->Length);
+		DumpMessage(&s->di, msg->Buffer, msg->Length);
 		if (msg->Length == 0) smprintf(s, "\n");
 		fflush(s->di.df);
 	}
@@ -693,11 +694,11 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 		if (Phone->SentMsg != NULL) {
 			smprintf(s,"LAST SENT frame ");
 			smprintf(s, "type 0x%02X/length %i", Phone->SentMsg->Type, Phone->SentMsg->Length);
-			DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, Phone->SentMsg->Buffer, Phone->SentMsg->Length);
+			DumpMessage(&s->di, Phone->SentMsg->Buffer, Phone->SentMsg->Length);
 		}
 		smprintf(s, "RECEIVED frame ");
 		smprintf(s, "type 0x%02X/length 0x%02X/%i", msg->Type, msg->Length, msg->Length);
-		DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, msg->Buffer, msg->Length);
+		DumpMessage(&s->di, msg->Buffer, msg->Length);
 		smprintf(s, "\n");
 	}
 
@@ -938,6 +939,7 @@ static OnePhoneModel allmodels[] = {
 	{"5100" ,"NPM-6X","Nokia 5100", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 	{"5140" ,"NPL-4" ,"Nokia 5140", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKUSER,F_WAPMMSPROXY,F_CHAT, F_SYNCML,0}},
 	{"5140" ,"NPL-5" ,"Nokia 5140", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKUSER,F_WAPMMSPROXY,F_CHAT, F_SYNCML,0}},
+	{"5140i","RM-104","Nokia 5140i",{F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKUSER,F_WAPMMSPROXY,F_CHAT, F_SYNCML,0}},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
 	{"5110" ,"NSE-1" ,"",           {F_NOWAP,F_NOCALLER,F_NORING,F_NOPICTURE,F_NOSTARTUP,F_NOCALENDAR,F_NOPBKUNICODE,F_PROFILES51,F_MAGICBYTES,F_DISPSTATUS,0}},
@@ -1110,16 +1112,14 @@ OnePhoneModel *GetModelData(char *model, char *number, char *irdamodel)
 bool IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature)
 {
 	int	i	= 0;
-	bool	retval  = false;
 
 	while (model->features[i] != 0) {
 		if (model->features[i] == feature) {
-			retval = true;
-			break;
+			return true;
 		}
 		i++;
 	}
-	return retval;
+	return false;
 }
 
 void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned char *message, int messagesize, int type)
@@ -1128,7 +1128,7 @@ void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned char *message, int mess
 	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 		smprintf(s,"SENDING frame ");
 		smprintf(s,"type 0x%02X/length 0x%02X/%i", type, messagesize, messagesize);
-		DumpMessage(s->di.use_global ? di.df : s->di.df, s->di.dl, message, messagesize);
+		DumpMessage(&s->di, message, messagesize);
 		if (messagesize == 0) smprintf(s,"\n");
 		if (s->di.df) fflush(s->di.df);
 	}
@@ -1154,26 +1154,13 @@ int smprintf(GSM_StateMachine *s, const char *format, ...)
 {
 	va_list		argp;
 	int 		result=0;
-	unsigned char	buffer[2000];
-	Debug_Level	dl;
-	FILE		*df;
+	char		buffer[2000];
 
 	va_start(argp, format);
-	if (s == NULL) {
-		dl = di.dl;
-		df = di.df;
-	} else {
-		dl = s->di.dl;
-		if (s->di.use_global) {
-			df = di.df;
-		} else {
-			df = s->di.df;
-		}
-	}
 
-	if (dl != 0) {
+	if ((s == NULL && s->di.df != 0) || (s != NULL && di.df != 0)) {
 		result = vsprintf(buffer, format, argp);
-		result = smfprintf(df, dl, "%s", buffer);
+		result = smfprintf((s == NULL) ? &di : &(s->di), "%s", buffer);
 	}
 
 	va_end(argp);

@@ -739,7 +739,7 @@ static GSM_Error N6510_PrivGetSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 		default	 : req[5] = folderid - 1; req[4] = 0x02; break; /* ME folders	*/
 	}
 	req[6]=location / 256;
-	req[7]=location;
+	req[7]=location % 256;
 
 	s->Phone.Data.GetSMSMessage 	= sms;
 	s->Phone.Data.Bitmap 		= bitmap;
@@ -819,7 +819,7 @@ static GSM_Error N6510_GetNextSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 		while (Priv->LastSMSFolder.Number==0) {
 			folderid++;
 			/* Too high folder number */
-			if ((folderid-1)>Priv->LastSMSFolders.Number) return ERR_EMPTY;
+			if ((folderid-1)>=Priv->LastSMSFolders.Number) return ERR_EMPTY;
 			/* Get next folder status */
 			error=N6510_GetSMSFolderStatus(s, folderid);
 			if (error!=ERR_NONE) return error;
@@ -2888,7 +2888,7 @@ static GSM_Error N6510_ReplyGetPPM(GSM_Protocol_Message msg, GSM_StateMachine *s
 		len = len-pos;
 		smprintf(s, "Block with ID %02x",msg.Buffer[pos]);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, msg.Buffer+pos, len);
+		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, msg.Buffer+pos, len);
 #endif
 		switch (msg.Buffer[pos]) {
 		case 0x49:
@@ -2958,7 +2958,7 @@ static GSM_Error N6510_ReplyGetProfile(GSM_Protocol_Message msg, GSM_StateMachin
 	for (i = 0; i < 11; i++) {
 		smprintf(s, "Profile feature %02x ",blockstart[1]);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, blockstart, blockstart[0]);
+		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, blockstart, blockstart[0]);
 #endif
 
 		switch (blockstart[1]) {
@@ -3971,7 +3971,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|6020|6021|6100|6111|6200|6220|6230|6230i|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|5140i|6020|6021|6100|6111|6200|6220|6230|6230i|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/

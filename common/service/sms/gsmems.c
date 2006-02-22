@@ -529,9 +529,9 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 	dbgprintf("SMS number is %i\n",SMS->Number);
 	for (i=0;i<SMS->Number;i++) {
 		dbgprintf("UDH length %i\n",SMS->SMS[i].UDH.Length);
-		DumpMessage(di.df, di.dl, SMS->SMS[i].UDH.Text, SMS->SMS[i].UDH.Length);
+		DumpMessage(&di, SMS->SMS[i].UDH.Text, SMS->SMS[i].UDH.Length);
 		dbgprintf("SMS length %i\n",UnicodeLength(SMS->SMS[i].Text)*2);
-		DumpMessage(di.df, di.dl, SMS->SMS[i].Text, UnicodeLength(SMS->SMS[i].Text)*2);
+		DumpMessage(&di, SMS->SMS[i].Text, UnicodeLength(SMS->SMS[i].Text)*2);
 	}
 #endif
 	return ERR_NONE;

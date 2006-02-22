@@ -23,6 +23,7 @@ static GSM_Protocol_PHONETData	PHONETData;
 static void DecodeInputMBUS2(unsigned char rx_byte)
 {
 	GSM_Protocol_MBUS2Data *d = &MBUS2Data;
+	Debug_Info	ldi = {DL_TEXTALL, stdout, false, NULL, true};
 
 	d->Msg.CheckSum[0] = d->Msg.CheckSum[1];
 	d->Msg.CheckSum[1] ^= rx_byte;
@@ -36,7 +37,7 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 		if (d->Msg.CheckSum[0] != rx_byte) {
 			printf("[ERROR: checksum]\n");
 			printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
-			DumpMessage(stdout, DL_TEXTALL, d->Msg.Buffer, d->Msg.Length);
+			DumpMessage(&ldi, d->Msg.Buffer, d->Msg.Length);
 			d->MsgRXState = RX_Sync;
 			return;
 		}
@@ -47,7 +48,7 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 			printf("Sending frame");
 		}
 		printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
-		DumpMessage(stdout, DL_TEXTALL, d->Msg.Buffer, d->Msg.Length);
+		DumpMessage(&ldi, d->Msg.Buffer, d->Msg.Length);
 		if (d->Msg.Destination != MBUS2_DEVICE_PHONE) {
 			if (s.Phone.Functions != NULL) {
 				s.Phone.Data.RequestMsg = &d->Msg;
@@ -114,6 +115,7 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 static void DecodeInputIRDA(unsigned char rx_byte)
 {
 	GSM_Protocol_PHONETData *d = &PHONETData;
+	Debug_Info		ldi = {DL_TEXTALL, stdout, false, NULL, true};
 
 	if (d->MsgRXState == RX_GetMessage) {
 		d->Msg.Buffer[d->Msg.Count] = rx_byte;
@@ -127,7 +129,7 @@ static void DecodeInputIRDA(unsigned char rx_byte)
 			printf("Sending frame");
 		}
 		printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
-		DumpMessage(stdout, DL_TEXTALL, d->Msg.Buffer, d->Msg.Length);
+		DumpMessage(&ldi, d->Msg.Buffer, d->Msg.Length);
 		if (d->Msg.Destination != PHONET_DEVICE_PHONE) {
 			if (s.Phone.Functions != NULL) {
 				s.Phone.Data.RequestMsg = &d->Msg;
@@ -348,6 +350,7 @@ void decodebinarydump(int argc, char *argv[])
 	unsigned char		type;
 	bool			sent;
 	GSM_Protocol_Message	msg;
+	Debug_Info		ldi = {DL_TEXTALL, stdout, false, NULL, true};
 
 	prepareStateMachine();
 	if (argc > 3) {
@@ -382,7 +385,7 @@ void decodebinarydump(int argc, char *argv[])
 			len 	= Buffer[i++] * 256;
 			len 	= len + Buffer[i++];
 			dbgprintf("0x%02x / 0x%04x", type, len);
-			DumpMessage(stdout, DL_TEXTALL, Buffer+i, len);
+			DumpMessage(&ldi, Buffer+i, len);
 			fflush(stdout);
 			if (s.Phone.Functions != NULL && !sent) {
 				msg.Buffer = (unsigned char *)realloc(msg.Buffer,len);

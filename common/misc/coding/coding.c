@@ -470,7 +470,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, int len, bool
 	bool	FoundSpecial = false;
 
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, src, len);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, src, len);
 #endif
 
 	for (i = 0; i < len; i++) {
@@ -509,7 +509,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, int len, bool
 	dest[current++]=0;
 	dest[current++]=0;
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, dest, UnicodeLength(dest)*2);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, dest, UnicodeLength(dest)*2);
 #endif
 }
 
@@ -535,7 +535,7 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len, bool
 	bool	FoundSpecial,FoundNormal;
 
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, src, (*len)*2);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, src, (*len)*2);
 #endif
 
 	for (i = 0; i < *len; i++) {
@@ -603,7 +603,7 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len, bool
 	}
 	dest[current]=0;
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(di.df, di.dl, dest, current);
+	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, dest, current);
 #endif
 
 	*len = current;

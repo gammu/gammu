@@ -9261,6 +9261,7 @@ int main(int argc, char *argv[])
 #ifdef DEBUG
 	di.dl		= DL_TEXTALL;
 	di.df	 	= stdout;
+	di.was_lf	= true;
 #endif
 
  	/* Any parameters? */

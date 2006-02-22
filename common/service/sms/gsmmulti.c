@@ -667,9 +667,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 #ifdef DEBUG
 		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) {
 			dbgprintf("Info->Entries[0].Buffer:\n");
-			DumpMessage(di.df, di.dl, Info->Entries[0].Buffer, UnicodeLength(Info->Entries[0].Buffer)*2);
+			DumpMessage(&di, Info->Entries[0].Buffer, UnicodeLength(Info->Entries[0].Buffer)*2);
 			dbgprintf("Buffer:\n");
-			DumpMessage(di.df, di.dl, Buffer, UnicodeLength(Buffer)*2);
+			DumpMessage(&di, Buffer, UnicodeLength(Buffer)*2);
 		}
 #endif
 		Info->UnicodeCoding = false;
