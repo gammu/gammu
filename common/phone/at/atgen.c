@@ -4087,6 +4087,7 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 	GSM_SMSMessage		sms;
 
+	memset(&sms, 0, sizeof(sms));
 	smprintf(s, "Incoming SMS\n");
 	if (Data->EnableIncomingSMS && s->User.IncomingSMS!=NULL) {
 		sms.State 	 = 0;
