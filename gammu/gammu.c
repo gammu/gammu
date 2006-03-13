@@ -1248,6 +1248,8 @@ static void ListMemoryCategory(int argc, char *argv[])
 
 static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool displayudh)
 {
+	GSM_SiemensOTASMSInfo SiemensOTA;
+
 	switch (sms.PDU) {
 	case SMS_Status_Report:
 		printmsg("SMS status report\n");
@@ -1396,6 +1398,10 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool disp
 			if (sms.Coding!=SMS_Coding_8bit) {
 				printmsg("%s\n",DecodeUnicodeConsole(sms.Text));
 			} else {
+				if (GSM_DecodeSiemensOTASMS(&SiemensOTA,&sms)) {
+					printmsg("Siemens file\n");
+					break;
+				}
 				printmsg("8 bit SMS, cannot be displayed here\n");
 			}
 		}
@@ -1405,14 +1411,17 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool disp
 
 static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems)
 {
+	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	GSM_MultiPartSMSInfo	SMSInfo;
-	bool				RetVal,udhinfo=true;
-	int				j;
+	bool			RetVal,udhinfo=true;
+	int			j,Pos;
+	GSM_MemoryEntry		pbk;
 
 	/* GSM_DecodeMultiPartSMS returns if decoded SMS contenst correctly */
 	RetVal = GSM_DecodeMultiPartSMS(&SMSInfo,&sms,ems);
 
 	if (eachsms) {
+		if (GSM_DecodeSiemensOTASMS(&SiemensOTA,&sms.SMS[0])) udhinfo = false;
 		if (sms.SMS[0].UDH.Type != UDH_NoUDH && sms.SMS[0].UDH.AllParts == sms.Number) udhinfo = false;
 		if (RetVal && !udhinfo) {
 			displaysinglesmsinfo(sms.SMS[0],false,false);
@@ -1438,6 +1447,20 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems
 
 	for (i=0;i<SMSInfo.EntriesNum;i++) {
 		switch (SMSInfo.Entries[i].ID) {
+		case SMS_SiemensFile:
+			printmsg("Siemens OTA file");
+			if (strstr(DecodeUnicodeString(SMSInfo.Entries[i].File->Name),".vcf")) {
+				printmsg(" - VCARD\n");
+				SMSInfo.Entries[i].File->Buffer = realloc(SMSInfo.Entries[i].File->Buffer,1+SMSInfo.Entries[i].File->Used);
+				SMSInfo.Entries[i].File->Buffer[SMSInfo.Entries[i].File->Used] = 0;
+				SMSInfo.Entries[i].File->Used += 1;
+				Pos = 0;
+				error = GSM_DecodeVCARD(SMSInfo.Entries[i].File->Buffer, &Pos, &pbk, Nokia_VCard21);
+				if (error == ERR_NONE) PrintMemoryEntry(&pbk);
+			} else {
+				printmsg("\n");
+			}
+			break;
 		case SMS_NokiaRingtone:
 			printmsg("Ringtone \"%s\"\n",DecodeUnicodeConsole(SMSInfo.Entries[i].Ringtone->Name));
 			saverttl(stdout,SMSInfo.Entries[i].Ringtone);

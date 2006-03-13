@@ -368,7 +368,7 @@ static GSM_Error N7110_PrivGetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 
 	req[4]=folderid;
 	req[5]=location / 256;
-	req[6]=location;
+	req[6]=location % 256;
 
 	s->Phone.Data.GetSMSMessage=sms;
 	smprintf(s, "Getting sms\n");
