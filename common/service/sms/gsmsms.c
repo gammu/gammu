@@ -1,4 +1,4 @@
-/* (c) 2001-2004 by Marcin Wiacek */
+/* (c) 2001-2006 by Marcin Wiacek */
 /* Based on some Pawel Kot and others work from Gnokii (www.gnokii.org)
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
@@ -737,6 +737,46 @@ void GSM_EncodeUDHHeader(GSM_UDHHeader *UDH)
 		}
 		break;
 	}
+}
+
+bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo	*Info,
+			     GSM_SMSMessage 		*SMS)
+{
+	int current;
+
+	if (SMS->PDU != SMS_Deliver) 		return false;
+	if (SMS->Coding != SMS_Coding_8bit) 	return false;
+	if (SMS->Class != 1) 			return false;
+	if (SMS->UDH.Type != UDH_NoUDH) 	return false;
+	if (SMS->Length < 22) 			return false;
+
+	if (strncmp(SMS->Text,"//SEO",5)!=0) return false; //Siemens Exchange Object
+	if (SMS->Text[5]!=1) return false; //version 1
+	Info->DataLen = SMS->Text[6] + SMS->Text[7]*256;
+	Info->SequenceID = SMS->Text[8] + SMS->Text[9]*256 +
+			 SMS->Text[10]*256*256 + SMS->Text[11]*256*256*256;
+	Info->PacketNum = SMS->Text[12] + SMS->Text[13]*256;
+	Info->PacketsNum = SMS->Text[14] + SMS->Text[15]*256;
+	dbgprintf("Packet %i/%i\n",Info->PacketNum,Info->PacketsNum);
+	Info->AllDataLen = SMS->Text[16] + SMS->Text[17]*256 +
+			 SMS->Text[18]*256*256 + SMS->Text[19]*256*256*256;
+	dbgprintf("DataLen %i/%lu\n",Info->DataLen,Info->AllDataLen);
+
+	if (SMS->Text[20] > 9) return false;
+	memcpy(Info->DataType,SMS->Text+21,SMS->Text[20]);
+	Info->DataType[SMS->Text[20]] = 0;
+	dbgprintf("DataType '%s'\n",Info->DataType);	
+
+	current = 21+SMS->Text[20];
+	if (SMS->Text[current] > 39) return false;
+	memcpy(Info->DataName,SMS->Text+current+1,SMS->Text[current]);
+	Info->DataName[SMS->Text[current]] = 0;
+	dbgprintf("DataName '%s'\n",Info->DataName);
+
+	current += SMS->Text[current]+1;
+	memcpy(Info->Data,SMS->Text+current,Info->DataLen);
+
+	return true;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.
