@@ -144,10 +144,12 @@ AC_ARG_WITH(rpmdir,
                 RPM_DIR="$withval"
           fi
         ],[
+            if test ! -z "$RPM"  ; then
                 VALUE=$(eval $RPM --eval '%{_topdir}')
                 if test ! -z "$VALUE"  ; then
                         RPM_DIR="$VALUE"
                 fi
+            fi
         ]
 )
 if test -z "$RPM_DIR" ; then
