@@ -178,9 +178,9 @@ char *mystrcasestr(unsigned const char *a, unsigned const char *b)
 	return strstr(A,B);
 }
 
-unsigned int UnicodeLength(const unsigned char *str)
+size_t UnicodeLength(const unsigned char *str)
 {
-	unsigned int len = 0;
+	size_t len = 0;
 
 	if (str == NULL) return 0;
 
