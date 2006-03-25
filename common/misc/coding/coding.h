@@ -25,7 +25,7 @@ int 		mytowlower			(wchar_t c);
 unsigned int 	EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
 unsigned int 	DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);
 
-unsigned int	UnicodeLength			(const unsigned char *str);
+size_t		UnicodeLength			(const unsigned char *str);
 unsigned char	*DecodeUnicodeString		(const unsigned char *src);
 unsigned char   *DecodeUnicodeConsole		(const unsigned char *src);
 void		DecodeUnicode			(const unsigned char *src, unsigned char *dest);
