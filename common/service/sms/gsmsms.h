@@ -368,7 +368,7 @@ typedef struct {
 	/**
 	 * SMS class.
 	 */
-	char		    	Class;
+	signed char		Class;
 	/**
 	 * Message reference.
 	 */
@@ -506,7 +506,7 @@ typedef struct {
 	unsigned int	PacketNum;
 	unsigned long	AllDataLen;
 
-	unsigned char	DataType[10];	
+	unsigned char	DataType[10];
 	unsigned char	DataName[40];
 	unsigned int 	DataLen;
 	unsigned char	Data[140];
