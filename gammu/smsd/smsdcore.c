@@ -83,6 +83,8 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	unsigned char		*str;
 	static unsigned char	emptyPath[1] = "\0";
 
+	memset(&smsdcfg, 0, sizeof(smsdcfg));
+
 	smsdcfgfile=INI_ReadFile(filename, false);
 	if (smsdcfgfile==NULL) {
 		fprintf(stderr,"Can't find file \"%s\"\n",filename);
