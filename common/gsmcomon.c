@@ -234,7 +234,7 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
         	if (privdi->df == di.df) privdi->df = stdout;
     	}
 
-	if (info[0]!=0 && privdi->dl != 0) {
+	if (info != NULL && info[0]!=0 && privdi->dl != 0) {
 		privdi->was_lf = true;
 		switch (privdi->dl) {
 		case DL_BINARY:
