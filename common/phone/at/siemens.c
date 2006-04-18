@@ -310,8 +310,8 @@ GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		length = 0;
  		return GSM_DecodeVCARD(buffer, &length, Memory, 0);
 	case AT_Reply_Error:
-		smprintf(s, "Error - too high location ?\n");
-		return ERR_INVALIDLOCATION;
+                smprintf(s, "Error - too high location ?\n");
+                return ERR_INVALIDLOCATION;
 	case AT_Reply_CMSError:
  	        return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:

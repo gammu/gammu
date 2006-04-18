@@ -2652,7 +2652,6 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 
 		/* Parse first location */
 		pos = strchr(msg.Buffer, '(');
-
  		if (!pos) {
  			pos = strchr(msg.Buffer, ':');
  			if (!pos) return ERR_UNKNOWNRESPONSE;
