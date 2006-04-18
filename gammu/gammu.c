@@ -2108,7 +2108,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 			case MMSADDRESS_PHONE: printf("phone "); break;
 			default: 				 break;
 		}
-		printf("%s\n",DecodeUnicodeString(info.Source));
+		printf("%s\n",DecodeUnicodeString(info.Source));		
 	}
 	if (UnicodeLength(info.Destination) != 0) {
 		printf("  Recipient          : ");
@@ -2116,7 +2116,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 			case MMSADDRESS_PHONE: printf("phone "); break;
 			default: 				 break;
 		}
-		printf("%s\n",DecodeUnicodeString(info.Destination));
+		printf("%s\n",DecodeUnicodeString(info.Destination));		
 	}
 	if (UnicodeLength(info.CC) != 0) {
 		printf("  CC                 : ");
@@ -2152,13 +2152,13 @@ void DecodeMMSFile(GSM_File *file, int num)
 		}
 		if (!strcmp(DecodeUnicodeString(info.Entries[i].ContentType),"text/x-vCard")) {
 			Pos = 0;
-			printf("\n");
+			printf("\n");			
 			error = GSM_DecodeVCARD(info.Entries[i].File.Buffer, &Pos, &pbk, Nokia_VCard21);
 			if (error == ERR_NONE) PrintMemoryEntry(&pbk);
 		}
 		if (!strcmp(DecodeUnicodeString(info.Entries[i].ContentType),"text/x-vCalendar")) {
 			Pos = 0;
-			printf("\n");
+			printf("\n");			
 			error = GSM_DecodeVCALENDAR_VTODO(info.Entries[i].File.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
 			if (error == ERR_NONE) PrintCalendar(&Calendar);
 		}
@@ -2193,7 +2193,7 @@ static void GetEachMMS(int argc, char *argv[])
 	File.Buffer = NULL;
 
 	while (1) {
-		error=Phone->GetNextMMSFileInfo(&s,File.ID_FullName,&FileFolder,start);
+		error=Phone->GetNextMMSFileInfo(&s,File.ID_FullName,&FileFolder,start);		
 		if (error==ERR_EMPTY) break;
 		Print_Error(error);
 		start = false;
@@ -7485,9 +7485,9 @@ static void GetFileSystem(int argc, char *argv[])
 		}
 
 		if (argc <= 2 || !mystrncasecmp(argv[2],"-flatall",0)) {
-			if (UnicodeLength(Files.ID_FullName) < 5 &&
-			    UnicodeLength(Files.ID_FullName) != 0 &&
-			    DecodeUnicodeString(Files.ID_FullName)[0]>='0' &&
+			if (UnicodeLength(Files.ID_FullName) < 5 && 
+			    UnicodeLength(Files.ID_FullName) != 0 && 
+			    DecodeUnicodeString(Files.ID_FullName)[0]>='0' && 
 			    DecodeUnicodeString(Files.ID_FullName)[0]<='9') {
 				printf("%5s.",DecodeUnicodeString(Files.ID_FullName));
 			}
