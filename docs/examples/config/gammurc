@@ -41,11 +41,14 @@ connection = fbusblue
 #    Connection "fbus", port type serial
 # New Nokia protocol for DLR3/DLR3P
 #    Connection "fbusdlr3"/"dlr3", port type serial 
-# New Nokia protocol for DKU2 (and phone without USB chip like 6230)
+# New Nokia protocol for DKU2 (and phone with USB converter on phone mainboard
+#                              like 6230)
 #    Connection "dku2phonet"/"dku2", port type dku2
-# New Nokia protocol for DKU5 (and phone with USB chip like 5100)
+# New Nokia protocol for DKU5 (and phone without USB converter on phone
+#                              mainboard like 5100)
 #    Connection "dku5fbus"/"dku5", port type dku5
-# New Nokia protocol for PL2303 USB cable (and phone with USB chip like 5100)
+# New Nokia protocol for PL2303 USB cable (and phone without USB converter
+#                                          on phone mainboard like 5100)
 #    Connection "fbuspl2303", port type usb
 # Old Nokia protocol for MBUS/DAU9P
 #    Connection "mbus", port type serial
@@ -157,13 +160,13 @@ connection = fbusblue
 #                 | to www.mwiacek.com on port 80 required
 #                 | By default option not active
 # ----------------|------------------------------------------------------------
-# UsePhoneDB      | Should Gammu connect to www.gammu.net and check for latest
+# UsePhoneDB      | Should Gammu connect to www.gammu.org and check for latest
 #                 | firmware versions for device ?
 #                 | if yes (value "yes"), there will be taken 
-#                 |www.gammu.net/gammunet/support/phones/phonedbxml.php?model=x
+#                 |www.gammu.org/gammunet/support/phones/phonedbxml.php?model=x
 #                 | file, read all phone details from it and (if any
 #                 | higher firmware exist) displayed info to user on each
 #                 | application startup
 #                 | No private data are sent to server, Internet connection
-#                 | to www.gammu.net on port 80 required
+#                 | to www.gammu.org on port 80 required
 #                 | By default option not active

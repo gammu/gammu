@@ -13,12 +13,11 @@ This software was sponsored (in time order) by:
               * software for Pocket Computers
  5. 2003      GriffinTeam
  6. 2004      MatrixTeam
- 7. 2004-2005 KompuNet (www.biuro24.pl)
-              * SMS services, PC shop and other
+ 7. 2004-2005 KompuNet
  8. 2004      Lorenzo Ciani
  9. 2004      Adam Lange
 10. 2004      Michele Rossetti
-11. 2005      Alain Bitam
+11. 2005-2006 Alain Bitam
 12. 2005      Johan Helsingius
 14. 2005      A Leg
 15. 2005      Troy Engel
@@ -35,6 +34,36 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
+[!] Important
+[+] New functionality
+[*] Changes in existing functionality
+[-] Fixed error
+
+20060418 - 1.06.00
+[!] No more gammu.net. There is gammu.org instead. We release
+    this version as 1.06.00, because we want force people to upgrade
+    link
+[+] Some new texts in Polish localisation                         (Tomek Fizyk)
+[*] SMSD DB updated to version 6. There should be "real" UTF8 used now
+    and less problems with MySQL 5 (of course, PHP and SMSD updated too)
+[*] New method of informing about changes in ChangeLog:
+    [!] Important
+    [+] New functionality
+    [*] Changes in existing functionality
+    [-] Fixed error
+[*] gammu.txt -> gammu.htm (from Wiki, currently temporary version)
+[*] readme.txt redirects to wiki
+[*] new functions for utf8
+[-] * Fix, when config file not available                        (Michal Cihar)
+[-] * Fix for SMSD
+[-] * as there are architectures where char is unsigned by
+      default, for SMS->Class we need to explicitly use signed one
+      (it is set/compared for -1)
+[-] * avoid error in configure when rpm is not installed
+[-] * second changes type used for length to size_t, which is big enough
+      to hold possible pointer size
+[-] improved vcf restoring
+
 20060312 - 1.05.00
 * new functionality:
   * getting Siemens OTA sequences in SMS + decoding VCARDS

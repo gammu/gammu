@@ -2114,8 +2114,7 @@ static GSM_Error N6110_ReplyAddCalendar(GSM_Protocol_Message msg, GSM_StateMachi
 static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
         bool            Reminder3310 = false;
-        int             Text, Time, Alarm, Phone, EndTime, Location, i, current;
-        unsigned char   mychar1,mychar2;
+        int             Text, Time, Alarm, Phone, EndTime, Location, i, current, j;
         unsigned char   req[200] = {N6110_FRAME_HEADER, 0x64, 0x01, 0x10,
                                     0x00,       /* Length of the rest of the frame */
                                     0x00,       /* Calendar note type */
@@ -2194,21 +2193,14 @@ static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *N
                                         req[22]++;              /* one additional char */
                                         req[current++] = 0x01;  /* we use now subset 1 */
                                         for (i=0;i<((int)UnicodeLength(Note->Entries[Text].Text));i++) {
-                                                /* Euro char */
-                                                if (Note->Entries[Text].Text[i*2]==0x20 && Note->Entries[Text].Text[i*2+1]==0xAC) {
-                                                        req[current++]  = 0xe2;
-                                                        req[current++]  = 0x82;
-                                                        req[current++]  = 0xac;
-                                                        req[23]         = 0x03; /* use subset 3         */
-                                                        req[22]+=2;             /* two additional chars */
-                                                } else if (EncodeWithUTF8Alphabet(Note->Entries[Text].Text[i*2],Note->Entries[Text].Text[i*2+1],&mychar1,&mychar2)) {
-                                                        req[current++]  = mychar1;
-                                                        req[current++]  = mychar2;
-                                                        req[23]         = 0x03; /* use subset 3         */
-                                                        req[22]++;              /* one additional char  */
-                                                } else {
+						j = EncodeWithUTF8Alphabet2(Note->Entries[Text].Text[i*2],Note->Entries[Text].Text[i*2+1],req+current);
+						if (j > 1) {
+                                                        req[23]= 0x03; /* use subset 3         */
+                                                        req[22]+=j-1;  /* few additional chars */
+							current+=j;
+						} else {
                                                         current+=DecodeWithUnicodeAlphabet(((wchar_t)(Note->Entries[Text].Text[i*2]*256+Note->Entries[Text].Text[i*2+1])),req+current);
-                                                }
+						}
                                         }
                                 }
                         }
@@ -2269,29 +2261,17 @@ static GSM_Error N6110_DeleteCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry
 static void Decode3310Subset3(int j, GSM_Protocol_Message msg, GSM_Phone_Data *Data)
 {
         wchar_t                 wc;
-        int                     len = 0;
-        int                     i;
-        bool                    charfound;
+        int                     len = 0,i,w;
         GSM_CalendarEntry       *Entry = Data->Cal;
 
         i = j;
         while (i!=msg.Buffer[23]) {
-                EncodeWithUnicodeAlphabet(msg.Buffer+24+i,&wc);
-                charfound = false;
-                if (i!=msg.Buffer[23]-2) {
-                        if (msg.Buffer[24+i]  ==0xe2 && msg.Buffer[24+i+1]==0x82 &&
-                            msg.Buffer[24+i+2]==0xac) {
-                                wc = 0x20 * 256 + 0xac;
-                                i+=2;
-                                charfound = true;
-                        }
-                }
-                if (i!=msg.Buffer[23]-1 && !charfound) {
-                        if (msg.Buffer[24+i]>=0xc2) {
-                                wc = DecodeWithUTF8Alphabet(msg.Buffer[24+i],msg.Buffer[24+i+1]);
-                                i++;
-                        }
-                }
+		w = DecodeWithUTF8Alphabet2(msg.Buffer+24+i,&wc,msg.Buffer[23]-i);
+		if (w>1) {
+			i+=w;
+		} else {
+	                EncodeWithUnicodeAlphabet(msg.Buffer+24+i,&wc);
+		}
                 Entry->Entries[Entry->EntriesNum].Text[len++] = (wc >> 8) & 0xff;
                 Entry->Entries[Entry->EntriesNum].Text[len++] = wc & 0xff;
                 i++;
