@@ -154,7 +154,7 @@ void GSM_Init(bool checkerror)
 
 	sprintf(buff,"support/phones/phonedbxml.php?model=%s",s.Phone.Data.Model);
 	PhoneDB.Buffer = NULL;
-	if (!GSM_ReadHTTPFile("www.gammu.net",buff,&PhoneDB)) return;
+	if (!GSM_ReadHTTPFile("www.gammu.org",buff,&PhoneDB)) return;
 
 	while (pos < PhoneDB.Used) {
 		if (PhoneDB.Buffer[pos] != 10) {
@@ -7367,6 +7367,8 @@ static void Version(int argc, char *argv[])
 {
 #ifdef DEBUG
 	GSM_DateTime	dt;
+	unsigned char	bzz[4];
+	int		j,z,w;
 #endif
 //	unsigned char 	buff[10];
 //	int		len;
@@ -7376,6 +7378,13 @@ static void Version(int argc, char *argv[])
 	printmsg("]\n\n");
 
 #ifdef DEBUG
+	for (w=1;w<65535;w++) {
+		j = EncodeWithUTF8Alphabet2(w/256,w%256,bzz);
+		for (z=0;z<j;z++) {
+			if (bzz[z] == 0x00) printf("%i\n",w);
+		}
+	}
+
 	printf("GSM_SMSMessage  - %i\n",sizeof(GSM_SMSMessage));
 	printf("GSM_SMSC        - %i\n",sizeof(GSM_SMSC));
 	printf("GSM_SMS_State   - %i\n",sizeof(GSM_SMS_State));
@@ -9282,7 +9291,7 @@ int main(int argc, char *argv[])
 
 	setlocale(LC_ALL, "");
 #ifdef DEBUG
-	di.dl		= DL_NONE;
+	di.dl		= DL_TEXTALL;
 	di.df	 	= stdout;
 	di.was_lf	= true;
 #endif

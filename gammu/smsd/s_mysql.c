@@ -29,8 +29,7 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 	char * pport;
 
 	pport = strstr( Config->PC, ":" );
-	if (pport)
-	{
+	if (pport) {
 		*pport ++ = '\0';
 		port = atoi( pport );
 	}
@@ -94,20 +93,20 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 		WriteSMSDLog("No version info in Gammu table: %s\n", mysql_error(&Config->DB));
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) > 5) {
+	if (atoi(Row[0]) > 6) {
 		mysql_free_result(Res);
 		WriteSMSDLog("DataBase structures are from higher Gammu version");
 		WriteSMSDLog("Please update this client application");
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) < 5) {
+	if (atoi(Row[0]) < 6) {
 		mysql_free_result(Res);
 		WriteSMSDLog("DataBase structures are from older Gammu version");
 		WriteSMSDLog("Please update DataBase, if you want to use this client application");
 		return ERR_UNKNOWN;
 	}
 	mysql_free_result(Res);
-
+	mysql_query(&Config->DB,"SET NAMES utf8;");
 	return ERR_NONE;
 }
 
@@ -147,8 +146,8 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 {
 	MYSQL_RES 		*Res;
 	MYSQL_ROW 		Row;
-	unsigned char		buffer[10000],buffer2[200],buffer3[50];
-	int 			i,j,z;
+	unsigned char		buffer[10000],buffer2[400],buffer3[50];
+	int 			i;
 	GSM_DateTime		DT;
 	time_t     		t_time1,t_time2;
 	bool			found;
@@ -277,19 +276,8 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 		switch (sms.SMS[i].Coding) {
 		case SMS_Coding_Unicode_No_Compression:
 	    	case SMS_Coding_Default_No_Compression:
-			sprintf(buffer2,"%s",DecodeUnicodeString(sms.SMS[i].Text));
-			for (j=0;j<(int)strlen(buffer2);j++) {
-				sprintf(buffer3,"'");
-				z = strlen(buffer);
-				if (buffer2[j]==buffer3[0]) {
-				    buffer[z+2]=0;
-				    buffer[z+1]=buffer2[j];
-				    buffer[z]  ='\\';
-				} else {
-				    buffer[z+1]=0;
-				    buffer[z]  =buffer2[j];
-				}
-			}
+			EncodeUTF8(buffer2, sms.SMS[i].Text);
+			memcpy(buffer+strlen(buffer),buffer2,strlen(buffer2)+1);
 			break;
 		case SMS_Coding_8bit:
 			break;
@@ -344,7 +332,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	while ((Row = mysql_fetch_row(Res))) {
 		sprintf(ID,"%s",Row[0]);
 		sprintf(Config->DT,"%s",Row[1]);
-		if (strlen(Row[3]) == 0 || !strcmp(Row[3],Config->PhoneID)) {
+		if (Row[3] == NULL || strlen(Row[3]) == 0 || !strcmp(Row[3],Config->PhoneID)) {
 			if (SMSDMySQL_RefreshSendStatus(Config, ID)==ERR_NONE) {
 				found = true;
 				break;
@@ -386,8 +374,9 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		if (!strcmp(Row[1],"Unicode_No_Compression")) sms->SMS[sms->Number].Coding=SMS_Coding_Unicode_No_Compression;
 		if (!strcmp(Row[1],"Default_No_Compression")) sms->SMS[sms->Number].Coding=SMS_Coding_Default_No_Compression;
 
-		if (strlen(Row[0])==0) {
-			EncodeUnicode(sms->SMS[sms->Number].Text,Row[4],strlen(Row[4]));
+		if (Row[0] == NULL || strlen(Row[0])==0) {
+			dbgprintf("%s\n",Row[4]);
+			DecodeUTF8(sms->SMS[sms->Number].Text,Row[4],strlen(Row[4]));
 		} else {
 			switch (sms->SMS[sms->Number].Coding) {
 			case SMS_Coding_Unicode_No_Compression:
@@ -407,7 +396,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 			CopyUnicodeString(sms->SMS[sms->Number].Number,sms->SMS[0].Number);
 		}
 		sms->SMS[sms->Number].UDH.Type = UDH_NoUDH;
-		if (strlen(Row[2])!=0) {
+		if (Row[2]!=NULL && strlen(Row[2])!=0) {
 			sms->SMS[sms->Number].UDH.Type 		= UDH_UserUDH;
 			sms->SMS[sms->Number].UDH.Length 	= strlen(Row[2])/2;
 			DecodeHexBin(sms->SMS[sms->Number].UDH.Text,Row[2],strlen(Row[2]));
@@ -454,8 +443,8 @@ static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 /* Adds SMS to Outbox */
 static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config)
 {
-	unsigned char		buffer[10000],buffer2[200],buffer3[2],buffer4[10000];
-	int 			i,j,z,ID;
+	unsigned char		buffer[10000],buffer2[200],buffer4[10000];
+	int 			i,ID;
 	MYSQL_RES 		*Res;
 	MYSQL_ROW 		Row;
 
@@ -479,16 +468,16 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 	for (i=0;i<sms->Number;i++) {
 		buffer[0]=0;
 		if (i==0) {
-			sprintf(buffer+strlen(buffer),"INSERT INTO `outbox` (`DeliveryReport`,`MultiPart`,`InsertIntoDB");
+			sprintf(buffer+strlen(buffer),"INSERT INTO `outbox` (`SenderID`,`DeliveryReport`,`MultiPart`,`InsertIntoDB");
 		} else {
-			sprintf(buffer+strlen(buffer),"INSERT INTO `outbox_multipart` (`SequencePosition");
+			sprintf(buffer+strlen(buffer),"INSERT INTO `outbox_multipart` (`SenderID`,`SequencePosition");
 		}
 		sprintf(buffer+strlen(buffer),"`,`Text`,");
 		if (i==0) {
 			sprintf(buffer+strlen(buffer),"`DestinationNumber`,`RelativeValidity`,");
 		}
 		sprintf(buffer+strlen(buffer),"`Coding`,`UDH`, \
-			`Class`,`TextDecoded`,`ID`) VALUES ('");
+			`Class`,`TextDecoded`,`ID`) VALUES ('','");
 		if (i==0) {
 			if (sms->SMS[i].PDU == SMS_Status_Report) {
 				sprintf(buffer+strlen(buffer),"yes','");
@@ -551,19 +540,8 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		switch (sms->SMS[i].Coding) {
 		case SMS_Coding_Unicode_No_Compression:
 	    	case SMS_Coding_Default_No_Compression:
-			sprintf(buffer2,"%s",DecodeUnicodeString(sms->SMS[i].Text));
-			for (j=0;j<(int)strlen(buffer2);j++) {
-				sprintf(buffer3,"'");
-				z = strlen(buffer);
-				if (buffer2[j]==buffer3[0]) {
-				    buffer[z+2]=0;
-				    buffer[z+1]=buffer2[j];
-				    buffer[z]  ='\\';
-				} else {
-				    buffer[z+1]=0;
-				    buffer[z]  =buffer2[j];
-				}
-			}
+			EncodeUTF8(buffer2, sms->SMS[i].Text);
+			memcpy(buffer+strlen(buffer),buffer2,strlen(buffer2)+1);
 			break;
 		default:
 			break;
@@ -616,8 +594,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 
 static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, int Part, GSM_SMSDSendingError err, int TPMR)
 {
-	unsigned char	buffer[10000],buffer2[200],buffer3[2],buff[50];
-	int 		j,z;
+	unsigned char	buffer[10000],buffer2[200],buff[50];
 
 	if (err == SMSD_SEND_OK) WriteSMSDLog("Transmitted %s (%s: %i) to %s", Config->SMSID, (Part == sms->Number?"total":"part"),Part,DecodeUnicodeString(sms->SMS[0].Number));
 
@@ -673,19 +650,8 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 	switch (sms->SMS[Part-1].Coding) {
 	case SMS_Coding_Unicode_No_Compression:
 	case SMS_Coding_Default_No_Compression:
-		sprintf(buffer2,"%s",DecodeUnicodeString(sms->SMS[Part-1].Text));
-		for (j=0;j<(int)strlen(buffer2);j++) {
-			sprintf(buffer3,"'");
-			z = strlen(buffer);
-			if (buffer2[j]==buffer3[0]) {
-			    buffer[z+2]=0;
-			    buffer[z+1]=buffer2[j];
-			    buffer[z]  ='\\';
-			} else {
-			    buffer[z+1]=0;
-			    buffer[z]  =buffer2[j];
-			}
-		}
+		EncodeUTF8(buffer2, sms->SMS[Part-1].Text);
+		memcpy(buffer+strlen(buffer),buffer2,strlen(buffer2)+1);
 		break;
 	default:
 		break;

@@ -170,9 +170,11 @@ type	GSM_Error = (
 		GSM_UnRead);  //for inbox sms - unread
 
 	GSM_Coding_Type = (
-		GSM_Coding_Unicode = 1, // 70 Unicode chars
-		GSM_Coding_Default,     // 160 chars from Default GSM alphabet
-		GSM_Coding_8bit);       // 140 8 bit chars
+		SMS_Coding_Unicode_No_Compression = 1,
+		SMS_Coding_Unicode_Compression,
+		SMS_Coding_Default_No_Compression,
+		SMS_Coding_Default_Compression,
+		SMS_Coding_8bit);
 
 	GSM_SMSMessageType = (
 		SMS_Deliver = 1, 	// when we save SMS in Inbox

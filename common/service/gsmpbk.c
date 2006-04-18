@@ -189,6 +189,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
         int             Level = 0;
         unsigned char   *s;
 	int		pos;
+	bool		address = false;
 
         Buff[0]         = 0;
         Pbk->EntriesNum = 0;
@@ -232,6 +233,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                             ReadVCALText(Line, "TEL;PREF;VOICE",        Buff)) {
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
+				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
                                 Pbk->EntriesNum++;
                         }
                         if (ReadVCALText(Line, "TEL;CELL",              Buff) ||
@@ -240,6 +242,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                             ReadVCALText(Line, "TEL;PREF;CELL;VOICE",   Buff)) {
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile;
+				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
                                 Pbk->EntriesNum++;
                         }
                         if (ReadVCALText(Line, "TEL;WORK",              Buff) ||
@@ -248,6 +251,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                             ReadVCALText(Line, "TEL;PREF;WORK;VOICE",   Buff)) {
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Work;
+				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
                                 Pbk->EntriesNum++;
                         }
                         if (ReadVCALText(Line, "TEL;FAX",               Buff) ||
@@ -256,6 +260,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                             ReadVCALText(Line, "TEL;PREF;FAX;VOICE",    Buff)) {
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Fax;
+				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
                                 Pbk->EntriesNum++;
                         }
                         if (ReadVCALText(Line, "TEL;HOME",              Buff) ||
@@ -264,6 +269,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                             ReadVCALText(Line, "TEL;PREF;HOME;VOICE",   Buff)) {
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Home;
+				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
                                 Pbk->EntriesNum++;
                         }
                         if (ReadVCALText(Line, "NOTE", Buff)) {
@@ -271,8 +277,11 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Note;
                                 Pbk->EntriesNum++;
                         }
-                        if (ReadVCALText(Line, "ADR", Buff) ||
+                        if (ReadVCALText(Line, "LABEL", Buff) ||
+			    ReadVCALText(Line, "ADR", Buff) ||
                             ReadVCALText(Line, "ADR;HOME", Buff)) {
+				if (address) continue;
+				address = true;
 				pos = 0;
 				s = VCALGetTextPart(Buff, &pos); /* PO box, ignore for now */
 				if (s == NULL) {

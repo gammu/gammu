@@ -766,6 +766,7 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 		break;
 	}
 
+	dbgprintf("Len %i\n",length);
 	EncodeUnicode(retval,Buffer,strlen(Buffer));
 }
 
@@ -1294,45 +1295,43 @@ void StringToDouble(char *text, double *d)
 }
 
 /* When char can be converted, convert it from Unicode to UTF8 */
-bool EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsigned char *ret1, unsigned char *ret2)
+int EncodeWithUTF8Alphabet2(unsigned char mychar1, unsigned char mychar2, unsigned char *ret)
 {
-	unsigned char	mychar3,mychar4;
-	int		j=0;
+	int src = mychar1*256+mychar2;
 
-	if (mychar1>0x00 || mychar2>128) {
-		mychar3=0x00;
-		mychar4=128;
-		while (true) {
-			if (mychar3==mychar1) {
-				if (mychar4+64>=mychar2) {
-					*ret1=j+0xc2;
-					*ret2=0x80+(mychar2-mychar4);
-					return true;
-				}
-			}
-			if (mychar4==192) {
-				mychar3++;
-				mychar4=0;
-			} else {
-				mychar4=mychar4+64;
-			}
-			j++;
-		}
+	//Unicode 0080-07FF -> UTF8 110xxxxx 10xxxxxx
+	if (src >=128 && src <=2047) {
+		ret[0] = 192 + (src / 64);
+		ret[1] = 128 + (src % 64);
+		return 2;
 	}
-	return false;
+	//Unicode 0800-FFFF -> UTF8 1110xxxx 10xxxxxx 10xxxxxx
+	if (src >2047) {
+		ret[0] = 224 + (src / 4096);
+		ret[1] = 128 + ((src / 64) % 64);
+		ret[2] = 128 + (src % 64);
+		return 3;
+	}
+
+	//Unicode 0000-007F -> UTF8 0xxxxxxx
+	ret[0] = mychar2;
+	return 1;
 }
 
 /* Make UTF8 string from Unicode input string */
 bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 {
-	int		i,j=0;
-	unsigned char	mychar1, mychar2;
+	int		i,j=0,z,w;
+	unsigned char	mychar[3];
 	bool		retval = false;
 
 	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
-		if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
-			sprintf(dest+j, "=%02X=%02X",mychar1,mychar2);
-			j	= j+6;
+		z = EncodeWithUTF8Alphabet2(src[i*2],src[i*2+1],mychar);
+		if (z>1) {
+			for (w=0;w<z;w++) {
+				sprintf(dest+j, "=%02X",mychar[w]);
+				j = j+3;				
+			}
 			retval  = true;
 		} else {
 			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
@@ -1344,17 +1343,18 @@ bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 
 bool EncodeUTF8(unsigned char *dest, const unsigned char *src)
 {
-	int		i,j=0;
-	unsigned char	mychar1, mychar2;
+	int		i,j=0,z;
+	unsigned char	mychar[3];
 	bool		retval = false;
 
 	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
-		if (EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],&mychar1,&mychar2)) {
-			sprintf(dest+j, "%c%c",mychar1,mychar2);
-			j	= j+2;
-			retval  = true;
-	    	} else {
-			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
+		z = EncodeWithUTF8Alphabet2(src[i*2],src[i*2+1],mychar);
+		if (z>1) {
+			memcpy(dest+j,mychar,z);
+			j+=z;
+			retval = true;
+		} else {
+			j+= DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
 	    	}
 	}
 	dest[j++]=0;
@@ -1362,46 +1362,50 @@ bool EncodeUTF8(unsigned char *dest, const unsigned char *src)
 }
 
 /* Decode UTF8 char to Unicode char */
-wchar_t DecodeWithUTF8Alphabet(unsigned char mychar3, unsigned char mychar4)
+int DecodeWithUTF8Alphabet2(unsigned char *src, wchar_t *dest, int len)
 {
-	unsigned char	mychar1, mychar2;
-	int		j;
-
-	mychar1=0x00;
-	mychar2=128;
-	for(j=0;j<mychar3-0xc2;j++) {
-		if (mychar2==192) {
-			mychar1++;
-			mychar2 = 0;
-		} else {
-			mychar2 = mychar2+64;
-		}
+	if (len < 1) return 0;
+	if (src[0] < 128) {
+		(*dest) = src[0];
+		return 1;
 	}
-	mychar2 = mychar2+(mychar4-0x80);
-	return mychar2 | (mychar1 << 8);
+	if (src[0] < 194) return 0;
+	if (src[0] < 224) {
+		if (len < 2) return 0;
+		(*dest) = (src[0]-192)*64 + (src[1]-128);
+		return 2;
+	}
+	if (src[0] < 240) {
+		if (len < 3) return 0;
+		(*dest) = (src[0]-224)*4096 + (src[1]-128)*64 + (src[2]-128);
+		return 3;
+	}
+	return 0;
 }
 
 /* Make Unicode string from UTF8 string */
 void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, int len)
 {
-	int 		i=0,j=0;
-	unsigned char	mychar1, mychar2;
+	int 		i=0,j=0,z;
+	unsigned char	mychar[10];
 	wchar_t		ret;
 
 	while (i<=len) {
-		if (len-6>=i) {
-			/* Need to have correct chars */
-			if (src[i]  =='=' && DecodeWithHexBinAlphabet(src[i+1])!=-1
-	                                  && DecodeWithHexBinAlphabet(src[i+2])!=-1 &&
-			    src[i+3]=='=' && DecodeWithHexBinAlphabet(src[i+4])!=-1 &&
-	                                     DecodeWithHexBinAlphabet(src[i+5])!=-1) {
-				mychar1	= 16*DecodeWithHexBinAlphabet(src[i+1])+DecodeWithHexBinAlphabet(src[i+2]);
-				mychar2	= 16*DecodeWithHexBinAlphabet(src[i+4])+DecodeWithHexBinAlphabet(src[i+5]);
-				ret 	= DecodeWithUTF8Alphabet(mychar1,mychar2);
-				i 	= i+6;
-			} else {
-				i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+		z=0;
+		while (true) {
+			if (src[z*3+i] != '=' || z*3+i+3>len ||
+			    DecodeWithHexBinAlphabet(src[z*3+i+1])==-1 ||
+			    DecodeWithHexBinAlphabet(src[z*3+i+2])==-1) {
+				break;
 			}
+			mychar[z] = 16*DecodeWithHexBinAlphabet(src[z*3+i+1])+DecodeWithHexBinAlphabet(src[z*3+i+2]);
+			if (z==0 && mychar[0]<194) break;
+			z++;
+		}
+		if (z>0) {
+			i+=z*3;
+			// we ignore wrong sequence
+			if (DecodeWithUTF8Alphabet2(mychar,&ret,z)==0) continue;
 		} else {
 			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
 		}
@@ -1414,19 +1418,15 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, in
 
 void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len)
 {
-	int 		i=0,j=0;
+	int 		i=0,j=0,z;
 	wchar_t		ret;
 
 	while (i<=len) {
-		if (len-2>=i) {
-			if (src[i] >= 0xC2) {
-				ret 	= DecodeWithUTF8Alphabet(src[i],src[i+1]);
-				i 	= i+2;
-			} else {
-				i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
-			}
-		} else {
+		z = DecodeWithUTF8Alphabet2((unsigned char *)src+i,&ret,len-i);
+		if (z<2) {
 			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
+		} else {
+			i+=z;
 		}
 		dest[j++] = (ret >> 8) & 0xff;
 		dest[j++] = ret & 0xff;

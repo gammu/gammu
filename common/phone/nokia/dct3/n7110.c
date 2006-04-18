@@ -762,7 +762,7 @@ static GSM_Error N7110_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 	N7110_GetSMSLocation(s, sms, &folderid, &location);
 	req[5] = folderid;
 	req[6] = location / 256;
-	req[7] = location;
+	req[7] = location % 256;
 
 	/* Outbox */
 	if (folderid == 0x10 && (sms->State == SMS_Sent || sms->State == SMS_UnSent)) {
@@ -799,7 +799,7 @@ static GSM_Error N7110_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 		length = 4;
 		NameReq[length++] = folderid;
 		NameReq[length++] = location / 256;
-		NameReq[length++] = location;
+		NameReq[length++] = location % 256;
 		CopyUnicodeString(NameReq+length, sms->Name);
 		length = length+UnicodeLength(sms->Name)*2;
 		NameReq[length++] = 0;

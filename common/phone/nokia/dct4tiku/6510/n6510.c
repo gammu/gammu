@@ -2480,7 +2480,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 		default	 : req[5] = folderid - 1; req[4] = 0x02; break; /* ME folders	*/
 	}
 	req[6]=location / 256;
-	req[7]=location;
+	req[7]=location % 256;
 
 	switch (sms->PDU) {
 	case SMS_Submit:
@@ -2527,7 +2527,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 			default	 : NameReq[5] = folderid - 1; NameReq[4] = 0x02; break; /* ME folders	*/
 		}
 		NameReq[6]=location / 256;
-		NameReq[7]=location;
+		NameReq[7]=location % 256;
 		length = 8;
 		CopyUnicodeString(NameReq+length, sms->Name);
 		length = length+UnicodeLength(sms->Name)*2;
