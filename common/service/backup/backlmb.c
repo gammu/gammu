@@ -107,8 +107,12 @@ void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 		00,00,           /*position of phonebook entry*/
 		03,              /*memory type. ME=02;SM=03*/
 		00};
+	GSM_StateMachine fake_sm;
 
-	count=count+N71_65_EncodePhonebookFrame(NULL, req+16, *entry, &blocks, true, true);
+	fake_sm.di = di;
+	fake_sm.di.use_global = true;
+
+	count = count + N71_65_EncodePhonebookFrame(&fake_sm, req+16, *entry, &blocks, true, true);
 
 	req[4]=(count-12)%256;
 	req[5]=(count-12)/256;
@@ -287,6 +291,10 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 {
 	GSM_MemoryEntry 	pbk;
 	int			num;
+	GSM_StateMachine fake_sm;
+
+	fake_sm.di = di;
+	fake_sm.di.use_global = true;
 
 #ifdef DEBUG
 	dbgprintf("Memory : ");
@@ -298,7 +306,8 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	dbgprintf("Location : %i\n",buffer2[0]+buffer2[1]*256);
 #endif
 
-	N71_65_DecodePhonebook(NULL, &pbk, NULL,NULL,buffer2+4,(buffer[4]+buffer[5]*256)-4,false);
+	pbk.MemoryType = 0; /* FIXME: I have no idea what should be set here, but needs to be set, see next function */
+	N71_65_DecodePhonebook(&fake_sm, &pbk, NULL,NULL,buffer2+4,(buffer[4]+buffer[5]*256)-4,false);
 
 	pbk.MemoryType=MEM_SM;
 	if (buffer[10]==2) pbk.MemoryType=MEM_ME;
