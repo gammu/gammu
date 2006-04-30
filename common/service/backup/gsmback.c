@@ -150,7 +150,7 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode
 GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 {
 	FILE		*file;
-	char		buffer[300];
+	unsigned char	buffer[300];
 
 	file = fopen(FileName, "rb");
 	if (file == NULL) return ERR_CANTOPENFILE;
