@@ -58,6 +58,11 @@ typedef struct {
 	int	value;
 } baud_record;
 
+#ifdef B19200
+#  define SERIAL_DEFAULT_SPEED 19200
+#else
+#  define SERIAL_DEFAULT_SPEED 9600
+#endif
 
 static baud_record baud_table[] = {
 	{ B50,		50 },
@@ -314,7 +319,13 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 	while (curr->value != speed) {
 		curr++;
 		/* This is how we make default fallback */
-		if (curr->value == 0) speed = 19200;
+		if (curr->value == 0) {
+			if (speed == SERIAL_DEFAULT_SPEED) {
+				return ERR_NOTSUPPORTED;
+			}
+			curr = baud_table;
+			speed = SERIAL_DEFAULT_SPEED;
+		}
 	}
 
     	smprintf(s, "Setting speed to %d\n", curr->value);
