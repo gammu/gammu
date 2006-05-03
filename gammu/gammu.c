@@ -9182,7 +9182,7 @@ static void Help(int argc, char *argv[])
 		HelpHeader();
 	} else {
 		while (HelpDescriptions[i].category != 0) {
-			if (mystrncasecmp(argv[2], HelpDescriptions[i].option,strlen(argv[2]))) break;
+			if (mystrncasecmp(argv[2], HelpDescriptions[i].option,0)) break;
 			i++;
 		}
 		if (HelpDescriptions[i].category == 0) {
