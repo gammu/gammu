@@ -387,6 +387,8 @@ static GSM_Error N6510_SetFileAttributes1(GSM_StateMachine *s, GSM_File *File)
 	GSM_Error error;
 	GSM_File  file2;
 
+	memset(&file2, 0, sizeof(file2));
+
 	CopyUnicodeString(file2.ID_FullName,File->ID_FullName);
 	error = N6510_GetFileFolderInfo1(s, &file2, false);
 	if (error != ERR_NONE) return error;
@@ -494,6 +496,8 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 		N7110_FRAME_HEADER, 0x40, 0x00, 0x00, 0x00, 0x01,
 		0x00, 0x04,	     /* file ID */
 		0x00, 0x00, 0x00, 0x00};
+
+	memset(&File2, 0, sizeof(File2));
 
 	s->Phone.Data.File = File;
 
@@ -660,6 +664,8 @@ static GSM_Error N6510_PrivDeleteFileFolder1(GSM_StateMachine *s, unsigned char 
 		N7110_FRAME_HEADER, 0x1E, 0x00, 0x00, 0x00, 0x01,
 		0x00, 0x35};	    /* File ID */
 
+	memset(&File, 0, sizeof(File));
+
 	Priv->FilesLocationsUsed = 0;
 	CopyUnicodeString(File.ID_FullName,ID);
 	error = N6510_GetFileFolderInfo1(s, &File, true);
@@ -708,6 +714,8 @@ static GSM_Error N6510_AddFolder1(GSM_StateMachine *s, GSM_File *File)
 		N7110_FRAME_HEADER, 0x04, 0x00, 0x00, 0x00, 0x01,
 		0x00, 0x0C,	     /* parent folder ID */
 		0x00, 0x00, 0x00, 0xE8};
+
+	memset(&File2, 0, sizeof(File2));
 
 	CopyUnicodeString(File2.ID_FullName,File->ID_FullName);
 	error = N6510_GetFileFolderInfo1(s, &File2, false);
@@ -1744,6 +1752,8 @@ GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 	int			i;
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
+
+	memset(&Files, 0, sizeof(Files));
 
 	for (i=0;i<10;i++) {
 		Priv->MMSFoldersID2[i][0] = 0;

@@ -721,6 +721,7 @@ void GSM_ClearMultiPartSMSInfo(GSM_MultiPartSMSInfo *Info)
 		Info->Entries[i].Ringtone	= NULL;
 		Info->Entries[i].Bitmap		= NULL;
 		Info->Entries[i].Bookmark	= NULL;
+		Info->Entries[i].File		= NULL;
 		Info->Entries[i].Settings	= NULL;
 		Info->Entries[i].MMSIndicator	= NULL;
 		Info->Entries[i].Phonebook	= NULL;

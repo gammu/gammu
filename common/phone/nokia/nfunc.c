@@ -281,6 +281,10 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		if (Block[0] == N7110_PBK_DATETIME) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
 			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date);
+			//some phones reverse it
+			if (entry->Entries[entry->EntriesNum].Date.Year > 3000) {
+				entry->Entries[entry->EntriesNum].Date.Year = Block[7]*256+Block[6];
+			}
 			if (DayMonthReverse) {
 				i = entry->Entries[entry->EntriesNum].Date.Month;
 				entry->Entries[entry->EntriesNum].Date.Month = entry->Entries[entry->EntriesNum].Date.Day;

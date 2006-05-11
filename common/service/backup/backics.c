@@ -14,10 +14,38 @@
 
 GSM_Error SaveICS(char *FileName, GSM_Backup *backup)
 {
+	int 		i, Length = 0;
+	unsigned char 	Buffer[1000];
 	FILE 		*file;
 
 	file = fopen(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
+
+	Length=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
+	Length+=sprintf(Buffer+Length, "VERSION:1.0%c%c",13,10);
+	fwrite(Buffer,1,Length,file);
+
+	i=0;
+	while (backup->Calendar[i]!=NULL) {
+		sprintf(Buffer, "%c%c",13,10);
+		fwrite(Buffer,1,2,file);
+		Length = 0;
+		GSM_EncodeVCALENDAR(Buffer,&Length,backup->Calendar[i],false,Mozilla_VCalendar);
+		fwrite(Buffer,1,Length,file);
+		i++;
+	}
+	i=0;
+	while (backup->ToDo[i]!=NULL) {
+		sprintf(Buffer, "%c%c",13,10);
+		fwrite(Buffer,1,2,file);
+		Length = 0;
+		GSM_EncodeVTODO(Buffer,&Length,backup->ToDo[i],false,Mozilla_VToDo);
+		fwrite(Buffer,1,Length,file);
+		i++;
+	}
+
+	Length=sprintf(Buffer, "%c%cEND:VCALENDAR%c%c",13,10,13,10);
+	fwrite(Buffer,1,Length,file);
 
 	fclose(file);
 	return ERR_NONE;

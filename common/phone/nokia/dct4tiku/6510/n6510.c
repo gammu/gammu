@@ -2347,7 +2347,7 @@ static GSM_Error N6510_ReplyGetSecurityStatus(GSM_Protocol_Message msg, GSM_Stat
 	case 0x03 : smprintf(s, "waiting for PUK.\n");		 *Data->SecurityStatus = SEC_Puk;		break;
 	case 0x05 : smprintf(s, "PIN ok, SIM ok\n");		 *Data->SecurityStatus = SEC_None;		break;
 	case 0x06 : smprintf(s, "No input status\n"); 		 *Data->SecurityStatus = SEC_None;		break;
-	case 0x16 : smprintf(s, "No SIM card\n");		 *Data->SecurityStatus = SEC_None;		break;
+	case 0x16 : smprintf(s, "No SIM card\n");		 return ERR_NOSIM;
 	case 0x1A : smprintf(s, "SIM card rejected!\n");	 *Data->SecurityStatus = SEC_None;		break;
 	default   : smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 		    return ERR_UNKNOWNRESPONSE;
@@ -2483,6 +2483,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 	req[7]=location % 256;
 
 	switch (sms->PDU) {
+	case SMS_Status_Report: //this is SMS submit with delivery report request
 	case SMS_Submit:
 		/* Inbox */
 		if (folderid == 0x01 || folderid == 0x03) sms->PDU = SMS_Deliver;
