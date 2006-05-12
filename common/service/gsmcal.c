@@ -314,7 +314,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	}
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VEVENT%c%c",13,10);
 
-	if (Version == Nokia_VCalendar) {
+	if (Version == Nokia_VCalendar || Version == Mozilla_VCalendar) {
 		*Length+=sprintf(Buffer+(*Length), "CATEGORIES:");
 		switch (note->Type) {
 		case GSM_CAL_REMINDER:

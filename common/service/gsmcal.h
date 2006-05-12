@@ -248,7 +248,8 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry *entry, int *Te
 typedef enum {
 	Nokia_VCalendar = 1,
 	Siemens_VCalendar,
-	SonyEricsson_VCalendar
+	SonyEricsson_VCalendar,
+	Mozilla_VCalendar
 } GSM_VCalendarVersion;
 
 GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version);
@@ -384,7 +385,8 @@ void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, 
 
 typedef enum {
 	Nokia_VToDo = 1,
-	SonyEricsson_VToDo
+	SonyEricsson_VToDo,
+	Mozilla_VToDo
 } GSM_VToDoVersion;
 
 GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version);

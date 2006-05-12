@@ -28,6 +28,7 @@ This software was sponsored (in time order) by:
 20. 2005      Saul Kato
 21. 2005      Reinhard Weiss
 22. 2005      Andreas Leitgeb
+23. 2006      Assemblix Technology Pte Ltd
 
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
@@ -38,6 +39,14 @@ For additionals materials and links to them see readme.txt
 [+] New functionality
 [*] Changes in existing functionality
 [-] Fixed error
+
+20060511 - 1.06.05
+[+] 6510 - saving sms_submit with report possible                (Michal Cihar)
+[+] Started work on ICS support                                        (Markus)
+[-] DKU2 and 6820 serial device fix                             (Tony McGregor)
+[-] * "gammu --help c" showed help                               (Michal Cihar)
+    * some structures better initialized
+    * fixed wrong year for call logs with some 6510 phones
 
 20060418 - 1.06.00
 [!] No more gammu.net. There is gammu.org instead. We release
