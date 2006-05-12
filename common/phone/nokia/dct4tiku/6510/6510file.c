@@ -497,9 +497,9 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 		0x00, 0x04,	     /* file ID */
 		0x00, 0x00, 0x00, 0x00};
 
-	s->Phone.Data.File = File;
-
 	memset(&File2, 0, sizeof(File2));
+
+	s->Phone.Data.File = File;
 
 	if (*Pos == 0) {
 		error = N6510_SearchForFileName1(s,File);

@@ -2483,8 +2483,8 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 	req[7]=location % 256;
 
 	switch (sms->PDU) {
+	case SMS_Status_Report: //this is SMS submit with delivery report request
 	case SMS_Submit:
-	case SMS_Status_Report:
 		/* Inbox */
 		if (folderid == 0x01 || folderid == 0x03) sms->PDU = SMS_Deliver;
 		break;
