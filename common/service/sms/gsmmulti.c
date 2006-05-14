@@ -727,7 +727,6 @@ void GSM_ClearMultiPartSMSInfo(GSM_MultiPartSMSInfo *Info)
 		Info->Entries[i].Phonebook	= NULL;
 		Info->Entries[i].Calendar	= NULL;
 		Info->Entries[i].ToDo		= NULL;
-		Info->Entries[i].File		= NULL;
 		Info->Entries[i].Protected	= false;
 
 		Info->Entries[i].Buffer		= NULL;
