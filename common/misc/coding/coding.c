@@ -1146,7 +1146,10 @@ bool myiswspace(unsigned const char *src)
 	}
 	return false;
 #else
-	return iswspace(wc);
+	if (iswspace(wc))
+		return true;
+	else
+		return false;
 #endif
 }
 
