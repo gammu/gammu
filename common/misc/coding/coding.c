@@ -190,9 +190,9 @@ size_t UnicodeLength(const unsigned char *str)
 }
 
 /* Convert Unicode char saved in src to dest */
-unsigned int EncodeWithUnicodeAlphabet(const unsigned char *src, wchar_t *dest)
+int EncodeWithUnicodeAlphabet(const unsigned char *src, wchar_t *dest)
 {
-	char retval;
+	int retval;
 
         switch (retval = mbtowc(dest, src, MB_CUR_MAX)) {
                 case -1 :
@@ -202,7 +202,7 @@ unsigned int EncodeWithUnicodeAlphabet(const unsigned char *src, wchar_t *dest)
 }
 
 /* Convert Unicode char saved in src to dest */
-unsigned int DecodeWithUnicodeAlphabet(wchar_t src, unsigned char *dest)
+int DecodeWithUnicodeAlphabet(wchar_t src, unsigned char *dest)
 {
         int retval;
 

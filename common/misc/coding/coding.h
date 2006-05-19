@@ -22,8 +22,8 @@ bool 		mywstrncmp			(unsigned const char *a, unsigned const char *b, int num);
 bool 		myiswspace	  		(unsigned const char *src);
 int 		mytowlower			(wchar_t c);
 
-unsigned int 	EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
-unsigned int 	DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);
+int		EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
+int		DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);
 
 size_t		UnicodeLength			(const unsigned char *str);
 unsigned char	*DecodeUnicodeString		(const unsigned char *src);
