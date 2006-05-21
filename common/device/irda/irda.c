@@ -130,9 +130,9 @@ static GSM_Error irda_open (GSM_StateMachine *s)
     	d->peer.sir_lsap_sel 		= LSAP_ANY;
 #endif
     	switch (s->ConnectionType) {
+    	case GCT_IRDAGNAPBUS:
     	case GCT_IRDAAT:
     		strcpy(d->peer.irdaServiceName, "IrDA:IrCOMM");
-
 #ifdef WIN32
 		if (setsockopt(fd, SOL_IRLMP, IRLMP_9WIRE_MODE, (const char *) &Enable9WireMode,
                		sizeof(int))==SOCKET_ERROR) return ERR_UNKNOWN;

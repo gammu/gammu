@@ -1953,15 +1953,19 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 	sms->PDU = SMS_Submit;
 	switch (sms->Folder) {
-	case 1:  sms->PDU = SMS_Deliver;		/* Inbox SIM */
+	case 1:  sms->PDU 	= SMS_Deliver;		/* Inbox SIM */
+		 sms->Memory 	= MEM_SM;
 		 error=ATGEN_SetSMSMemory(s, true);
 		 break;
 	case 2:  error=ATGEN_SetSMSMemory(s, true);	/* Outbox SIM */
+		 sms->Memory 	= MEM_SM;
 	 	 break;
 	case 3:  sms->PDU = SMS_Deliver;
+		 sms->Memory 	= MEM_ME;
 		 error=ATGEN_SetSMSMemory(s, false);	/* Inbox phone */
 		 break;
 	case 4:  error=ATGEN_SetSMSMemory(s, false);	/* Outbox phone */
+		 sms->Memory 	= MEM_ME;
 		 break;
 	default: return ERR_NOTSUPPORTED;
 	}

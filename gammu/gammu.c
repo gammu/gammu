@@ -3036,7 +3036,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	char				InputBuffer	[SEND_SAVE_SMS_BUFFER_SIZE/2+1];
 	char				Buffer		[MAX_MULTI_SMS][SEND_SAVE_SMS_BUFFER_SIZE];
 	char				Sender		[(GSM_MAX_NUMBER_LENGTH+1)*2];
-	char				Name		[(GSM_MAX_NUMBER_LENGTH+1)*2];
+	char				Name		[(GSM_MAX_SMS_NAME_LENGTH+1)*2];
 	char				SMSC		[(GSM_MAX_NUMBER_LENGTH+1)*2];
 	int				startarg		= 0;
 	int				chars_read		= 0;
@@ -3447,6 +3447,10 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 				}
 				if (mystrncasecmp(argv[i],"-sender",0)) {
 					nextlong=2;
+					continue;
+				}
+				if (mystrncasecmp(argv[i],"-smsname",0)) {
+					nextlong=25;
 					continue;
 				}
 			} else {
@@ -4078,6 +4082,14 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			SMSInfo.Entries[0].Bitmap   = &bitmap[0];
 			nextlong 		    = 0;
 			break;
+		case 25:/* sms name */
+			if (strlen(argv[i])>GSM_MAX_SMS_NAME_LENGTH) {
+				printmsg("Too long SMS name (\"%s\"), ignored\n",argv[i]);
+			} else {
+				EncodeUnicode(Name, argv[i],strlen(argv[i]));
+			}
+			nextlong = 0;
+			break;
 		}
 	}
 	if (nextlong!=0) {
@@ -4247,8 +4259,16 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			if (SMSCSet==0) CopyUnicodeString(sms.SMS[i].SMSC.Number, SMSC);
 			error=Phone->AddSMS(&s, &sms.SMS[i]);
 			Print_Error(error);
-			printmsg("Saved in folder \"%s\", location %i\n",
+			printmsg("Saved in folder \"%s\", location %i",
 				DecodeUnicodeConsole(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
+			if (sms.SMS[i].Memory == MEM_SM) {
+				printmsg(", SIM\n");
+				if (UnicodeLength(Name) != 0) {
+					printmsg("SMS name ignored\n");
+				}
+			} else {
+				printmsg(", phone\n");
+			}
 
 			if (SendSaved) {
 				printmsg("Sending sms from folder \"%s\", location %i\n",
@@ -8866,7 +8886,7 @@ static GSM_Parameters Parameters[] = {
 #define SMS_ANIMATION_OPTIONS	""
 #define SMS_OPERATOR_OPTIONS	"[-netcode netcode][-biglogo]"
 #define SMS_RINGTONE_OPTIONS	"[-long][-scale]"
-#define SMS_SAVE_OPTIONS	"[-folder id][-unread][-read][-unsent][-sent][-sender number]"
+#define SMS_SAVE_OPTIONS	"[-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name]"
 #define SMS_SEND_OPTIONS	"[-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]]"
 #define SMS_COMMON_OPTIONS	"[-smscset number][-smscnumber number][-reply][-maxsms num]"
 

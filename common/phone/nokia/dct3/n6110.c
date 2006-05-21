@@ -733,6 +733,8 @@ static GSM_Error N6110_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
         /* SMS State - GSM_Read -> GSM_Unread and GSM_Sent -> GSM_UnSent */
         if (sms->State == SMS_UnSent || sms->State == SMS_UnRead) req[4] |= 0x02;
 
+	sms->Memory = MEM_SM;
+
         s->Phone.Data.SaveSMSMessage=sms;
         smprintf(s, "Saving sms\n");
         return GSM_WaitFor (s, req, 8+length, 0x14, 4, ID_SaveSMSMessage);

@@ -41,9 +41,6 @@
 /* PHONET FBUS to use with bluetooth legacy device */
 #undef GSM_ENABLE_PHONETBLUE
 
-/* Symbian with m-router (TCPIP based) to use with bluetooth legacy device */
-#undef GSM_ENABLE_MROUTERBLUE
-
 /* AT protocol */
 #undef GSM_ENABLE_AT
 
@@ -56,13 +53,17 @@
 #undef GSM_ENABLE_IRDAAT
 /* Infrared. OBEX */
 #undef GSM_ENABLE_IRDAOBEX
+/* Infrared */
+#undef GSM_ENABLE_IRDAGNAPBUS
 
 #ifdef WIN32
 #  define GSM_ENABLE_BLUEFBUS2 1
 #  define GSM_ENABLE_BLUEPHONET 1
 #  define GSM_ENABLE_BLUEAT 1
 #  define GSM_ENABLE_BLUEOBEX 1
+#  define GSM_ENABLE_BLUEGNAPBUS 1
 #else
+#  undef GSM_ENABLE_BLUEGNAPBUS
 /* Bluetooth stack (like Bluez). FBUS2 (init done using AT commands) */
 #  undef GSM_ENABLE_BLUEFBUS2
 /* Bluetooth stack (like Bluez). PHONET FBUS */
@@ -112,8 +113,8 @@
 /* OBEX generic models */
 #undef GSM_ENABLE_OBEXGEN
 
-/* Symbian with m-router generic models */
-#undef GSM_ENABLE_MROUTERGEN
+/* Symbian with gnapplet models */
+#undef GSM_ENABLE_GNAPGEN
 
 /* ---------------------- General settings -------------------------------- */
 
