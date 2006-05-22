@@ -1,0 +1,14 @@
+NAME gnap
+
+#include <eikon.rh>
+#include <eikon.rsg>
+#include <avkon.rh>
+#include <avkon.rsg>
+
+RESOURCE RSS_SIGNATURE { }
+
+RESOURCE TBUF { buf = ""; }
+
+RESOURCE TBUF r_default_document_name { buf=""; }
+
+RESOURCE EIK_APP_INFO { }
