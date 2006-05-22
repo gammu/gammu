@@ -1,0 +1,36 @@
+0.6.2
+=====
+ * protocol handling:
+    o sms folder support (list, status, create, delete)        (BORBELY Zoltan)
+    o initial version of the getsms support                    (BORBELY Zoltan)
+    o contact name construction and parsing (Antti P Miettinen, BORBELY Zoltan)
+    o minor code cleanup in the phonebook handling code        (BORBELY Zoltan)
+    o sms status support added                                 (BORBELY Zoltan)
+    o minor cleanup                                            (BORBELY Zoltan)
+    o getsms has been completly rewritten                      (BORBELY Zoltan)
+    o getsmscenter support added                               (BORBELY Zoltan)
+    o sendsms support added                                    (BORBELY Zoltan)
+
+0.6.1
+=====
+ * device layer updates:
+    o initial IrCOMM (IrDA) support                            (BORBELY Zoltan)
+    o initial RfCOMM (Bluetooth) support                       (BORBELY Zoltan)
+ * protocol handling:
+    o phone info reports the IMEI                              (BORBELY Zoltan)
+    o phonebook reading support                                (BORBELY Zoltan)
+    o phonebook writing support                                (BORBELY Zoltan)
+    o phonebook deleting support                               (BORBELY Zoltan)
+    o memory status support added                              (BORBELY Zoltan)
+    o call log (DC/MC/RC memory) support added                 (BORBELY Zoltan)
+    o identify works properly                                  (BORBELY Zoltan)
+    o gnapplet won't quit until the client disconnects         (BORBELY Zoltan)
+    o network info and rf level can be readed                  (BORBELY Zoltan)
+    o power source and battery level can be readed             (BORBELY Zoltan)
+    o phone can send debug messages to the PC                  (BORBELY Zoltan)
+    o phone info returns correct model on non nokia phones     (BORBELY Zoltan)
+    o memory status limited decreased                          (BORBELY Zoltan)
+ * general updates:
+    o code cleanup, better resource management                 (BORBELY Zoltan)
+ * frontend application:
+    o initial version                                          (BORBELY Zoltan)
