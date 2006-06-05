@@ -176,11 +176,20 @@ void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start
 			Date->Hour, Date->Minute, Date->Second,13,10);
 }
 
+void SaveVCALDate(char *Buffer, int *Length, GSM_DateTime *Date, char *Start)
+{
+	if (Start != NULL) {
+		*Length+=sprintf(Buffer+(*Length), "%s:",Start);
+	}
+	*Length+=sprintf(Buffer+(*Length), "%04d%02d%02d%C%C",
+			Date->Year, Date->Month, Date->Day,13,10);
+}
+
 bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 {
 	char year[5]="", month[3]="", day[3]="", hour[3]="", minute[3]="", second[3]="";
 
-	memset(dt,0,sizeof(dt));
+	memset(dt,0,sizeof(GSM_DateTime));
 
 	strncpy(year, 	Buffer, 	4);
 	strncpy(month, 	Buffer+4, 	2);
@@ -212,6 +221,55 @@ bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 		}
 	}
 	return true;
+}
+
+bool ReadVCALInt(char *Buffer, char *Start, int *Value)
+{
+	unsigned char buff[200];
+
+	*Value = 0;
+
+	strcpy(buff,Start);
+	strcat(buff,":");
+	if (!strncmp(Buffer,buff,strlen(buff))) {
+		int lstart = strlen(Start);
+		int lvalue = strlen(Buffer)-(lstart+1);
+		strncpy(buff,Buffer+lstart+1,lvalue);
+		strncpy(buff+lvalue,"\0",1);
+		if (sscanf(buff,"%i",Value)) {
+			dbgprintf("ReadVCalInt is \"%i\"\n",Value);
+			return true;
+		}
+	}
+	return false;
+}
+
+
+bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date)
+{
+	unsigned char buff[200];
+	int lstart, lvalue;
+
+	strcpy(buff,Start);
+	strcat(buff,":");
+	if (strncmp(Buffer,buff,strlen(buff))) {
+		strcpy(buff,Start);
+		strcat(buff,";VALUE=DATE:");
+		if (strncmp(Buffer,buff,strlen(buff))) 
+			return false; 
+	}
+	
+	lstart = strlen(buff);
+	lvalue = strlen(Buffer)-lstart;
+	strncpy(buff,Buffer+lstart,lvalue);
+	strncpy(buff+lvalue,"\0",1);
+	if (ReadVCALDateTime(buff,Date)) {
+		dbgprintf("ReadVCALDateTime is \"%04d.%02d.%02d %02d:%02d:%02d\"\n",
+			Date->Year, Date->Month, Date->Day,
+			Date->Hour, Date->Minute, Date->Second);
+		return true;
+	}
+	return false; 
 }
 
 void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)
@@ -290,6 +348,23 @@ bool ReadVCALText(char *Buffer, char *Start, char *Value)
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		DecodeUTF7(Value,Buffer+strlen(Start)+15,strlen(Buffer)-(strlen(Start)+15));
 		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
+		return true;
+	}
+	return false;
+}
+
+bool ReadVCALTextUTF8(char *Buffer, char *Start, char *Value)
+{
+	unsigned char buff[200];
+
+	Value[0] = 0x00;
+	Value[1] = 0x00;
+
+	strcpy(buff,Start);
+	strcat(buff,":");
+	if (!strncmp(Buffer,buff,strlen(buff))) {
+		DecodeUTF8(Value,Buffer+strlen(Start)+1,strlen(Buffer)-(strlen(Start)+1));
+		dbgprintf("ReadVCalTextUTF8 is \"%s\"\n",DecodeUnicodeConsole(Value));
 		return true;
 	}
 	return false;

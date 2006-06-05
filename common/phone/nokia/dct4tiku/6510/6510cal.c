@@ -1083,6 +1083,7 @@ static GSM_Error N6510_AddToDo1(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 		case GSM_Priority_Low	: reqSet[4] = 3; break;
 		case GSM_Priority_Medium: reqSet[4] = 2; break;
 		case GSM_Priority_High	: reqSet[4] = 1; break;
+		default: break;
 	}
 
 	GSM_ToDoFindDefaultTextTimeAlarmCompleted(ToDo, &Text, &Alarm, &Completed, &EndTime, &Phone);
@@ -1169,6 +1170,7 @@ static GSM_Error N6510_AddToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 		case GSM_Priority_Low	: req[44] = 0x10; break;
 		case GSM_Priority_Medium: req[44] = 0x20; break;
 		case GSM_Priority_High	: req[44] = 0x30; break;
+		default: break;
 	}
 
 	GSM_ToDoFindDefaultTextTimeAlarmCompleted(ToDo, &Text, &Alarm, &Completed, &EndTime, &Phone);

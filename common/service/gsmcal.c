@@ -1,6 +1,7 @@
 /* (c) 2002-2004 by Marcin Wiacek, 2005 by Michal Cihar */
 
 #include <string.h>
+#include <time.h>
 
 #include "gsmcal.h"
 #include "gsmmisc.h"
@@ -301,10 +302,104 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry *entry, int *Te
 	}
 }
 
+
+/*  Function to compute time difference between alarm and event time */
+GSM_DateTime	VCALTimeDiff ( GSM_DateTime *Alarm,  GSM_DateTime *Time)
+{
+	int dt;
+	struct tm talarm, ttime;
+	GSM_DateTime delta;
+
+	talarm.tm_mday = Alarm->Day;
+	talarm.tm_mon  = Alarm->Month-1;
+	talarm.tm_year = Alarm->Year -1900;
+	talarm.tm_hour = Alarm->Hour;
+	talarm.tm_min  = Alarm->Minute;
+	talarm.tm_sec  = Alarm->Second;
+	talarm.tm_isdst = 0;
+
+	ttime.tm_mday = Time->Day;
+	ttime.tm_mon  = Time->Month-1;
+	ttime.tm_year = Time->Year -1900;
+	ttime.tm_hour = Time->Hour;
+	ttime.tm_min  = Time->Minute;
+	ttime.tm_sec  = Time->Second;
+	ttime.tm_isdst = 0;
+
+	dt = mktime(&ttime) - mktime(&talarm);
+
+	if (dt <= 0) dt = 0;	
+
+	/* Mozilla Calendar only accepts relative times for alarm. 
+	   Maximum representation of time differences is in days.*/ 
+	delta.Year	= 0;
+	delta.Month  	= 0;
+	delta.Day	= dt / 86400	  ; dt = dt - delta.Day * 86400;
+	delta.Hour	= dt / 3600	  ; dt = dt - delta.Hour * 3600;
+	delta.Minute 	= dt / 60	  ; dt = dt - delta.Minute * 60;
+	delta.Second 	= dt;
+
+	/* Use only one representation. If delta has minutes convert all to minutes etc.*/
+	if (delta.Minute !=0) {
+		delta.Minute = delta.Day * 24*60 + delta.Hour * 60 + delta.Minute;
+		delta.Day=0; delta.Hour=0;
+	} else if (delta.Hour !=0) {
+		delta.Hour = delta.Day * 24 + delta.Hour;
+		delta.Day=0; 
+	}
+
+	delta.Timezone = 0;
+
+	return delta;
+}
+
+
+GSM_Error GSM_Translate_Category (GSM_CatTranslation direction, unsigned char *string, GSM_CalendarNoteType *Type)
+{
+	/* Mozilla has user defined categories. These must be converted to GSM_CAL_xxx types.
+	   TODO: For now we use hardcoded conversions. Should be user configurable. */
+	switch (direction) {
+	case TRANSL_TO_GSM:
+		if (strstr(string,"MEETING")) 			*Type = GSM_CAL_MEETING;
+		else if (strstr(string,"REMINDER")) 		*Type = GSM_CAL_REMINDER;
+		else if (strstr(string,"DATE"))	 		*Type = GSM_CAL_REMINDER; //SE
+		else if (strstr(string,"TRAVEL"))	 	*Type = GSM_CAL_TRAVEL;   //SE
+		else if (strstr(string,"VACATION"))	 	*Type = GSM_CAL_VACATION; //SE
+		else if (strstr(string,"MISCELLANEOUS"))	*Type = GSM_CAL_MEMO;
+		else if (strstr(string,"PHONE CALL")) 		*Type = GSM_CAL_CALL;
+		else if (strstr(string,"SPECIAL OCCASION")) 	*Type = GSM_CAL_BIRTHDAY;
+		else if (strstr(string,"ANNIVERSARY")) 		*Type = GSM_CAL_BIRTHDAY;
+		else if (strstr(string,"APPOINTMENT")) 		*Type = GSM_CAL_MEETING;
+		/* These are the Nokia 6230i categories in german. */
+		else if (strstr(string,"Erinnerung"))	 	*Type = GSM_CAL_REMINDER; 
+		else if (strstr(string,"Besprechung"))	 	*Type = GSM_CAL_MEETING; 
+		else if (strstr(string,"Anrufen"))	 	*Type = GSM_CAL_CALL; 
+		else if (strstr(string,"Geburtstag"))	 	*Type = GSM_CAL_BIRTHDAY; 
+		else if (strstr(string,"Notiz"))	 	*Type = GSM_CAL_MEMO; 
+		/* default */
+		else *Type = GSM_CAL_MEETING; 
+		break;
+		
+	case TRANSL_TO_VCAL:
+		switch (*Type) {
+			case GSM_CAL_REMINDER:	{strcpy(string, "Erinnerung") ;		break; }
+			case GSM_CAL_MEETING:	{strcpy(string, "Besprechung") ;	break; }
+			case GSM_CAL_CALL:	{strcpy(string, "Anrufen") ;		break; }
+			case GSM_CAL_BIRTHDAY:	{strcpy(string, "Geburtstag") ;		break; }
+			case GSM_CAL_MEMO:	{strcpy(string, "Notiz") ;		break; }
+			default: break;
+		}
+		break;
+	}
+	return 0;
+}
+
 GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version)
 {
- 	int 	Text, Time, Alarm, Phone, EndTime, Location;
-	char 	buffer[2000],rec[20],endday[20];
+ 	int 		Text, Time, Alarm, Phone, EndTime, Location;
+	char 		buffer[2000],rec[20],endday[20];
+	GSM_DateTime 	deltatime;
+	char 		dtstr[20];
 
 	GSM_CalendarFindDefaultTextTimeAlarmPhone(note, &Text, &Time, &Alarm, &Phone, &EndTime, &Location);
 
@@ -314,26 +409,17 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	}
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VEVENT%c%c",13,10);
 
+	/* Mozilla Calendar needs UIDs. http://www.innerjoin.org/iCalendar/events-and-uids.html */
+	if (Version == Mozilla_VCalendar) {
+		*Length+=sprintf(Buffer+(*Length), "UID:calendar-%i%c%c",note->Location,13,10);
+	}
+
 	if (Version == Nokia_VCalendar || Version == Mozilla_VCalendar) {
-		*Length+=sprintf(Buffer+(*Length), "CATEGORIES:");
-		switch (note->Type) {
-		case GSM_CAL_REMINDER:
-			*Length+=sprintf(Buffer+(*Length), "REMINDER%c%c",13,10);
-			break;
-		case GSM_CAL_MEMO:
-			*Length+=sprintf(Buffer+(*Length), "MISCELLANEOUS%c%c",13,10);
-			break;
-		case GSM_CAL_CALL:
-			*Length+=sprintf(Buffer+(*Length), "PHONE CALL%c%c",13,10);
-			break;
-		case GSM_CAL_BIRTHDAY:
-			*Length+=sprintf(Buffer+(*Length), "SPECIAL OCCASION%c%c",13,10);
-			break;
-		case GSM_CAL_MEETING:
-		default:
-			*Length+=sprintf(Buffer+(*Length), "MEETING%c%c",13,10);
-			break;
-		}
+		unsigned char buf[50];
+		
+		GSM_Translate_Category (TRANSL_TO_VCAL, buf, &note->Type);
+		*Length+=sprintf(Buffer+(*Length), "CATEGORIES:%s%c%c",buf,13,10);
+	
 		if (note->Type == GSM_CAL_CALL) {
 			buffer[0] = 0;
 			buffer[1] = 0;
@@ -350,23 +436,104 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 			SaveVCALText(Buffer, Length, note->Entries[Location].Text, "LOCATION");
 		}
 
-		if (Time == -1) return ERR_UNKNOWN;
-		SaveVCALDateTime(Buffer, Length, &note->Entries[Time].Date, "DTSTART");
-
-		if (EndTime != -1) {
-			SaveVCALDateTime(Buffer, Length, &note->Entries[EndTime].Date, "DTEND");
+		if (Version == Mozilla_VCalendar) {
+			*Length+=sprintf(Buffer+(*Length), "STATUS:CONFIRMED%c%c",13,10);
 		}
 
+		/* Start Time */
+		if (Time == -1) return ERR_UNKNOWN;
+		switch (Version) {
+		case Nokia_VCalendar:
+			SaveVCALDateTime(Buffer, Length, &note->Entries[Time].Date, "DTSTART");
+			break;
+		case Mozilla_VCalendar:
+			switch (note->Type) {
+			case GSM_CAL_MEMO:
+			case GSM_CAL_BIRTHDAY:
+				SaveVCALDate(Buffer, Length, &note->Entries[Time].Date, "DTSTART;VALUE=DATE");
+				/* whole-day entry: set start time to midnight so difference to alarm time will be correct*/
+				note->Entries[Time].Date.Hour=0 ; note->Entries[Time].Date.Minute=0 ; note->Entries[Time].Date.Second=0;
+				break;
+			default:
+				SaveVCALDateTime(Buffer, Length, &note->Entries[Time].Date, "DTSTART");
+				break;
+			}
+			break;
+		default:
+			break;
+		}
+		
+		/* End time */
+		switch (Version) {
+		case Nokia_VCalendar:
+			if (EndTime != -1) SaveVCALDateTime(Buffer, Length, &note->Entries[EndTime].Date, "DTEND");
+			break;
+		case Mozilla_VCalendar:
+			switch (note->Type) {
+			case GSM_CAL_MEMO:
+				SaveVCALDate(Buffer, Length, &note->Entries[EndTime].Date, "DTEND;VALUE=DATE");
+				break;
+			case GSM_CAL_BIRTHDAY: {
+				SaveVCALDate(Buffer, Length, &note->Entries[Time].Date, "DTEND;VALUE=DATE");
+				break; }
+			default:
+				if (EndTime != -1) SaveVCALDateTime(Buffer, Length, &note->Entries[EndTime].Date, "DTEND");
+				break;
+			}
+		default:
+			break;
+		}
+
+		/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
+		if (Version == Mozilla_VCalendar && note->Type == GSM_CAL_BIRTHDAY)	Alarm=-1;
 		if (Alarm != -1) {
-			if (note->Entries[Alarm].EntryType == CAL_SILENT_ALARM_DATETIME) {
-				SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "DALARM");
-			} else {
-				SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "AALARM");
+			switch (Version) {
+			case Nokia_VCalendar:
+				if (note->Entries[Alarm].EntryType == CAL_SILENT_ALARM_DATETIME) {
+					SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "DALARM");
+				} else {
+					SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "AALARM");
+				}
+				break;
+			case Mozilla_VCalendar:
+				deltatime = VCALTimeDiff(&note->Entries[Alarm].Date, &note->Entries[Time].Date);
+
+				dtstr[0]='\0';
+				if (deltatime.Minute !=0) {
+					*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:minutes%c%c",13,10);
+					*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
+						deltatime.Minute,13,10);
+					sprintf(dtstr,"-PT%iM",deltatime.Minute);
+				} else if (deltatime.Hour !=0) {
+					*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:hours%c%c",13,10);
+					*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
+						deltatime.Hour,13,10);
+					sprintf(dtstr,"-PT%iH",deltatime.Hour);
+				} else if (deltatime.Day !=0) {
+					*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:days%c%c",13,10);
+					*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
+						deltatime.Day,13,10);
+					sprintf(dtstr,"-P%iD",deltatime.Day);
+				}
+				if (dtstr[0] != '\0') {
+					*Length+=sprintf(Buffer+(*Length), "BEGIN:VALARM%c%c",13,10);
+					*Length+=sprintf(Buffer+(*Length), "TRIGGER;VALUE=DURATION%c%c",13,10);
+					*Length+=sprintf(Buffer+(*Length), " :%s%c%c",dtstr,13,10);
+					*Length+=sprintf(Buffer+(*Length), "END:VALARM%c%c",13,10);
+				}
+				break;
+			default:
+				break;
 			}
 		}
 
 		/* Birthday is known to be recurranced */
-		if (note->Type != GSM_CAL_BIRTHDAY) {
+		if (note->Type == GSM_CAL_BIRTHDAY) {
+			if (Version == Mozilla_VCalendar) {
+				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-RECUR-DEFAULT-UNITS:years%c%c",13,10);
+				*Length+=sprintf(Buffer+(*Length), "RRULE:FREQ=YEARLY;INTERVAL=1;BYMONTH=6%c%c",13,10);
+			}
+		} else {
 			GSM_SetCalendarRecurranceRepeat(rec, endday, note);
 			if (endday[0]*256+endday[1] == 0) {
 				switch(rec[0]*256+rec[1]) {
@@ -376,7 +543,6 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 					case 0xffff-1    : break;
 					case 0xffff 	 : *Length+=sprintf(Buffer+(*Length), "RRULE:YD1 #0%c%c",13,10); break;
 				}
-			} else {
 			}
 		}
 	} else if (Version == Siemens_VCalendar) {
@@ -511,6 +677,7 @@ void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, 
 GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version)
 {
  	int Text, Alarm, Completed, EndTime, Phone;
+	int code;
 
 	GSM_ToDoFindDefaultTextTimeAlarmCompleted(note, &Text, &Alarm, &Completed, &EndTime, &Phone);
 
@@ -535,6 +702,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 			case GSM_Priority_Low	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:1%c%c",13,10); break;
 			case GSM_Priority_Medium: *Length+=sprintf(Buffer+(*Length), "PRIORITY:2%c%c",13,10); break;
 			case GSM_Priority_High	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:3%c%c",13,10); break;
+			default: break;
 		}
 
 		if (EndTime != -1) {
@@ -547,7 +715,41 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 			} else {
 				SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "AALARM");
 			}
+		}	
+	} else if (Version == Mozilla_VToDo) {
+		/* Mozilla Calendar needs UIDs. http://www.innerjoin.org/iCalendar/events-and-uids.html */
+		*Length+=sprintf(Buffer+(*Length), "UID:todo-%i%c%c",note->Location,13,10);
+
+		if (Text == -1) return ERR_UNKNOWN;
+		SaveVCALText(Buffer, Length, note->Entries[Text].Text, "SUMMARY");
+
+		if (Completed == -1) {
+			*Length+=sprintf(Buffer+(*Length), "STATUS:NEEDS ACTION%c%c",13,10);
+		} else {
+			*Length+=sprintf(Buffer+(*Length), "STATUS:COMPLETED%c%c",13,10);
 		}
+
+		code = 0;
+		switch (note->Priority) {
+			case GSM_Priority_None	: code = 0 ; break;
+			case GSM_Priority_Low	: code = 1 ; break;
+			case GSM_Priority_Medium: code = 5 ; break;
+			case GSM_Priority_High	: code = 9 ; break;
+		}
+		if (code !=0) *Length+=sprintf(Buffer+(*Length), "PRIORITY:%i%c%c",code,13,10);
+
+		if (EndTime != -1) {
+			SaveVCALDateTime(Buffer, Length, &note->Entries[EndTime].Date, "DUE");
+		}
+
+		if (Alarm != -1) {
+			if (note->Entries[Alarm].EntryType == CAL_SILENT_ALARM_DATETIME) {
+				SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "DALARM");
+			} else {
+				SaveVCALDateTime(Buffer, Length, &note->Entries[Alarm].Date, "AALARM");
+			}
+		}
+	
 	} else if (Version == SonyEricsson_VToDo) {
 		if (Text == -1) return ERR_UNKNOWN;
 		SaveVCALText(Buffer, Length, note->Entries[Text].Text, "SUMMARY");
@@ -562,6 +764,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 			case GSM_Priority_Low	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:3%c%c",13,10); break;
 			case GSM_Priority_Medium: *Length+=sprintf(Buffer+(*Length), "PRIORITY:2%c%c",13,10); break;
 			case GSM_Priority_High	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:1%c%c",13,10); break;
+			default: break;
 		}
 
 		if (Alarm != -1) {
@@ -577,43 +780,155 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 	return ERR_NONE;
 }
 
-GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer)
+GSM_TimeUnit ReadVCALTimeUnits (unsigned char *Buffer)
+{
+	if (mystrcasestr(Buffer,"days"))	return GSM_TimeUnit_Days;
+	if (mystrcasestr(Buffer,"hours"))	return GSM_TimeUnit_Hours;
+	if (mystrcasestr(Buffer,"minutes")) return GSM_TimeUnit_Minutes;
+	if (mystrcasestr(Buffer,"seconds")) return GSM_TimeUnit_Seconds;
+	return GSM_TimeUnit_Unknown;
+}
+
+GSM_DeltaTime ReadVCALTriggerTime (unsigned char *Buffer)
+{
+	GSM_DeltaTime 	dt;
+	int 		sign = 1;
+	int 		pos = 0;
+	int 		val;
+	char 		unit;
+
+	dt.Timezone = 0;
+	dt.Year = 0 ; dt.Day = 0; dt.Month = 0; dt.Hour = 0; dt.Minute = 0; dt.Second = 0; 
+
+	if (Buffer[pos] == '+') {
+		sign = 1; pos++;
+	} else if (Buffer[pos] == '-') {
+		sign = -1; pos++;
+	}
+	if (Buffer[pos] == 'P') pos++;
+	if (Buffer[pos] == 'T') pos++;
+
+	if ( !sscanf(Buffer+pos,"%i%c",&val,&unit) ) return dt;
+
+	switch (unit) {
+		case 'D': dt.Day    = sign * val ; break;
+		case 'H': dt.Hour   = sign * val ; break;
+		case 'M': dt.Minute = sign * val ; break;
+		case 'S': dt.Second = sign * val ; break;
+	}
+
+	return dt;
+}
+
+/* Prepare input buffer (notably line continuations) */
+int GSM_Make_VCAL_Lines (unsigned char *Buffer, int *lBuffer)
+{
+	int src=0;
+	int dst=0;
+
+	for (src=0; src <= *lBuffer; src++) {
+		if (Buffer[src] == '\r') src++;
+		if (Buffer[src] == '\n') {
+			if (Buffer[src+1] == ' ' && Buffer[src+2] == ':' ) src = src + 2;
+			if (Buffer[src+1] == ' ' && Buffer[src+2] == ';' ) src = src + 2;
+		}
+		if (dst > src) return ERR_UNKNOWN;
+		Buffer[dst] = Buffer[src];
+		dst++;
+	}
+	*lBuffer = dst-1;
+	return ERR_NONE;
+}
+
+GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, 
+					GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer)
 {
 	unsigned char 	Line[2000],Buff[2000],bu[20];
 	int		Level = 0;
+	GSM_DateTime	Date;
+	GSM_TimeUnit	unit = GSM_TimeUnit_Unknown;
+	GSM_DeltaTime	trigger;
+	int		deltatime = 0;
+	int		lBuffer;
+ 	int 		Text=-1, Time=-1, Alarm, EndTime, Location;
 
 	Calendar->EntriesNum 	= 0;
 	ToDo->EntriesNum 	= 0;
+	lBuffer = strlen(Buffer);
+	trigger.Timezone = -999;
+
+	if (CalVer == Mozilla_VCalendar && *Pos ==0) {
+		int error;
+		error = GSM_Make_VCAL_Lines (Buffer, &lBuffer);
+		if (error != ERR_NONE) return error;
+	}
 
 	while (1) {
-		MyGetLine(Buffer, Pos, Line, strlen(Buffer));
+		MyGetLine(Buffer, Pos, Line, lBuffer);
 		if (strlen(Line) == 0) break;
+
 		switch (Level) {
 		case 0:
 			if (strstr(Line,"BEGIN:VEVENT")) {
 				Calendar->Type 	= GSM_CAL_MEMO;
+				Text=-1; Time=-1; Alarm=-1; EndTime=-1; Location=-1;
 				Level 		= 1;
 			}
 			if (strstr(Line,"BEGIN:VTODO")) {
-				ToDo->Priority 	= GSM_Priority_Low;
+				ToDo->Priority 	= GSM_Priority_None;
+				Text=-1; Time=-1; Alarm=-1; EndTime=-1; Location=-1;
 				Level 		= 2;
 			}
 			break;
 		case 1: /* Calendar note */
 			if (strstr(Line,"END:VEVENT")) {
+				if (Time == -1) return ERR_UNKNOWN;
 				if (Calendar->EntriesNum == 0) return ERR_EMPTY;
+
+				if (trigger.Timezone != -999) {
+					Alarm = Calendar->EntriesNum;
+					Calendar->Entries[Alarm].Date = GSM_AddTime (Calendar->Entries[Time].Date, trigger);
+					Calendar->Entries[Alarm].EntryType = CAL_TONE_ALARM_DATETIME;
+					Calendar->EntriesNum++;
+				}
+
 				return ERR_NONE;
 			}
-			if (strstr(Line,"CATEGORIES:REMINDER")) 	Calendar->Type = GSM_CAL_REMINDER;
-			if (strstr(Line,"CATEGORIES:DATE"))	 	Calendar->Type = GSM_CAL_REMINDER;//SE
-			if (strstr(Line,"CATEGORIES:TRAVEL"))	 	Calendar->Type = GSM_CAL_TRAVEL;  //SE
-			if (strstr(Line,"CATEGORIES:VACATION"))	 	Calendar->Type = GSM_CAL_VACATION;//SE
-			if (strstr(Line,"CATEGORIES:MISCELLANEOUS")) 	Calendar->Type = GSM_CAL_MEMO;
-			if (strstr(Line,"CATEGORIES:PHONE CALL")) 	Calendar->Type = GSM_CAL_CALL;
-			if (strstr(Line,"CATEGORIES:SPECIAL OCCASION")) Calendar->Type = GSM_CAL_BIRTHDAY;
-			if (strstr(Line,"CATEGORIES:ANNIVERSARY")) 	Calendar->Type = GSM_CAL_BIRTHDAY;
-			if (strstr(Line,"CATEGORIES:MEETING")) 		Calendar->Type = GSM_CAL_MEETING;
-			if (strstr(Line,"CATEGORIES:APPOINTMENT")) 	Calendar->Type = GSM_CAL_MEETING;
+
+			/* Read Mozilla calendar entries. Some of them will not be used here. Notably alarm time
+			   can defined in several ways. We will use the trigger value only since this is the value 
+			   Mozilla calendar uses when importing ics-files. */
+			if (strstr(Line,"UID:")) {
+				ReadVCALText(Line, "UID", Buff);  // Any use for UIDs?
+				break;
+			}
+			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-UNITS:")) {
+				if (ReadVCALText(Line, "X-MOZILLA-ALARM-DEFAULT-UNITS", Buff)) {
+					unit = ReadVCALTimeUnits(DecodeUnicodeString(Buff));
+					break;
+				}
+			}
+			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-LENGTH:")) {
+				if (ReadVCALInt(Line, "X-MOZILLA-ALARM-DEFAULT-LENGTH", &deltatime)) {
+					break;
+				}
+			}
+			
+			if (strstr(Line,"BEGIN:VALARM")) {
+				MyGetLine(Buffer, Pos, Line, lBuffer);
+				if (strlen(Line) == 0) break;
+				if (ReadVCALText(Line, "TRIGGER;VALUE=DURATION", Buff)) {
+					trigger = ReadVCALTriggerTime(DecodeUnicodeString(Buff));
+					break;
+				}
+			}
+
+			/* Event type. Must be set correctly to let phone calendar work as expected. For example
+			   without GSM_CAL_MEETING the time part of an event date/time will be dropped. */
+			if (strstr(Line,"CATEGORIES:")) {
+				GSM_Translate_Category(TRANSL_TO_GSM, Line+11, &Calendar->Type);
+			}
+
 			if (strstr(Line,"RRULE:D1")) {
 				bu[0] = 0;
 				bu[1] = 24;
@@ -639,54 +954,136 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				bu[1] = (0xffff)/256;
 				GSM_GetCalendarRecurranceRepeat(bu, NULL, Calendar);
 			}
-			if ((ReadVCALText(Line, "SUMMARY", Buff)) || (ReadVCALText(Line, "DESCRIPTION", Buff))) {
+
+			if (CalVer == Mozilla_VCalendar) {
+				/* Mozilla calendar writes UTF8 but does not denote it */
+				if ((ReadVCALTextUTF8(Line, "SUMMARY", Buff))) {
+					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TEXT;
+					CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
+					Text = Calendar->EntriesNum;
+					Calendar->EntriesNum++;
+				}
+				if ((Text == 0 && ReadVCALTextUTF8(Line, "DESCRIPTION", Buff))) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TEXT;
 				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
-				Calendar->EntriesNum++;
+					Text = Calendar->EntriesNum;
+					Calendar->EntriesNum++;
+				}
+				if (ReadVCALTextUTF8(Line, "LOCATION", Buff)) {
+					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_LOCATION;
+					CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
+					Location = Calendar->EntriesNum;
+					Calendar->EntriesNum++;
+				}
+			} else {
+				if ((ReadVCALText(Line, "SUMMARY", Buff))) {
+					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TEXT;
+					CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
+					Text = Calendar->EntriesNum;
+					Calendar->EntriesNum++;
+				}
+				if ((Text == 0 && ReadVCALText(Line, "DESCRIPTION", Buff))) {
+					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TEXT;
+					CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
+					Text = Calendar->EntriesNum;
+					Calendar->EntriesNum++;
+				}
+				if (ReadVCALText(Line, "LOCATION", Buff)) {
+					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_LOCATION;
+					CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
+					Location = Calendar->EntriesNum;
+					Calendar->EntriesNum++;
+				}
 			}
-			if (ReadVCALText(Line, "LOCATION", Buff)) {
-				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_LOCATION;
-				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
-				Calendar->EntriesNum++;
-			}
-			if (ReadVCALText(Line, "DTSTART", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date)) {
+			if (ReadVCALDate(Line, "DTSTART", &Date)) {
+				Calendar->Entries[Calendar->EntriesNum].Date = Date;
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_START_DATETIME;
+				Time = Calendar->EntriesNum;
 				Calendar->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "DTEND", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date)) {
+			if (ReadVCALDate(Line, "DTEND", &Date)) {
+				Calendar->Entries[Calendar->EntriesNum].Date = Date;
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_END_DATETIME;
+				EndTime = Calendar->EntriesNum;
 				Calendar->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "DALARM", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date)) {
+			if (ReadVCALDate(Line, "DALARM", &Date)) {
+				Calendar->Entries[Calendar->EntriesNum].Date = Date;
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
+				Alarm = Calendar->EntriesNum;
 				Calendar->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "AALARM", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Calendar->Entries[Calendar->EntriesNum].Date)) {
+			if (ReadVCALDate(Line, "AALARM", &Date)) {
+				Calendar->Entries[Calendar->EntriesNum].Date = Date;
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TONE_ALARM_DATETIME;
+				Alarm = Calendar->EntriesNum;
 				Calendar->EntriesNum++;
 			}
 			break;
 		case 2: /* ToDo note */
 			if (strstr(Line,"END:VTODO")) {
+				if (ToDoVer == Mozilla_VCalendar) return ERR_EMPTY;  /* Todos not yet */
 				if (ToDo->EntriesNum == 0) return ERR_EMPTY;
 				return ERR_NONE;
 			}
-			if (ReadVCALText(Line, "DUE", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &ToDo->Entries[ToDo->EntriesNum].Date)) {
+
+			if (strstr(Line,"UID:")) {
+				ReadVCALText(Line, "UID", Buff);  // Any use for UIDs?
+				break;
+			}
+			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-UNITS:")) {
+				if (ReadVCALText(Line, "X-MOZILLA-ALARM-DEFAULT-UNITS", Buff)) {
+					unit = ReadVCALTimeUnits(DecodeUnicodeString(Buff));
+					break;
+				}
+			}
+			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-LENGTH:")) {
+				if (ReadVCALInt(Line, "X-MOZILLA-ALARM-DEFAULT-LENGTH", &deltatime)) {
+					break;
+				}
+			}
+			
+			if (ReadVCALDate(Line, "DUE", &Date)) {
+				ToDo->Entries[ToDo->EntriesNum].Date = Date;
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_END_DATETIME;
 				ToDo->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "DALARM", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &ToDo->Entries[ToDo->EntriesNum].Date)) {
+			if (ReadVCALDate(Line, "DALARM", &Date)) {
+				ToDo->Entries[ToDo->EntriesNum].Date = Date;
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_SILENT_ALARM_DATETIME;
 				ToDo->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "AALARM", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &ToDo->Entries[ToDo->EntriesNum].Date)) {
+			if (ReadVCALDate(Line, "AALARM", &Date)) {
+				ToDo->Entries[ToDo->EntriesNum].Date = Date;
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_ALARM_DATETIME;
 				ToDo->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "SUMMARY", Buff)) {
+			if (ToDoVer == Mozilla_VToDo) {
+				/* Mozilla calendar writes UTF8 but does not denote it */
+				if ((ReadVCALTextUTF8(Line, "SUMMARY", Buff))) {
+					ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
+					CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,Buff);
+					Text = ToDo->EntriesNum;
+					ToDo->EntriesNum++;
+				}
+				if ((Text == 0 && ReadVCALTextUTF8(Line, "DESCRIPTION", Buff))) {
+					ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
+					CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,Buff);
+					Text = ToDo->EntriesNum;
+					ToDo->EntriesNum++;
+				}
+			} else {
+				if ((ReadVCALText(Line, "SUMMARY", Buff))) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,Buff);
 				ToDo->EntriesNum++;
+			}
+				if ((Text == 0 && ReadVCALText(Line, "DESCRIPTION", Buff))) {
+					ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
+					CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,Buff);
+					Text = ToDo->EntriesNum;
+					ToDo->EntriesNum++;
+				}
 			}
 			if (ReadVCALText(Line, "PRIORITY", Buff)) {
 				if (ToDoVer == SonyEricsson_VToDo) {

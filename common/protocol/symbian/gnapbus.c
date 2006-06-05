@@ -60,6 +60,7 @@ static GSM_Error GNAPBUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char
 	GSM_Protocol_GNAPBUSData *d = &s->Protocol.Data.GNAPBUS;
 
 //printf("%02x ",rx_char);
+//fflush(stdout);
 	/* XOR the byte with the earlier checksum */
 	d->Msg.CheckSum[d->Msg.Count & 1] ^= rx_char;
 

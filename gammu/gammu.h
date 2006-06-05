@@ -63,6 +63,8 @@ extern	GSM_Error		error;
 
 extern volatile bool 		gshutdown;
 
+int printmsgerr(char *format, ...);
+
 void interrupt(int sign);
 
 #ifdef GSM_ENABLE_BEEP

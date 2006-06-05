@@ -311,10 +311,14 @@ typedef struct {
 /* ------------------------------------------------------------------------ */
 
 bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt);
+bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date);
 void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start);
+void SaveVCALDate(char *Buffer, int *Length, GSM_DateTime *Date, char *Start);
 
 void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start);
 bool ReadVCALText(char *Buffer, char *Start, char *Value);
+bool ReadVCALTextUTF8(char *Buffer, char *Start, char *Value);
+bool ReadVCALInt(char *Buffer, char *Start, int *Value);
 
 unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos);
 

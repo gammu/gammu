@@ -1171,7 +1171,7 @@ int smprintf(GSM_StateMachine *s, const char *format, ...)
 
 	va_start(argp, format);
 
-	if ((s == NULL && s->di.df != 0) || (s != NULL && di.df != 0)) {
+	if ((s != NULL && s->di.df != 0) || (s == NULL && di.df != 0)) {
 		result = vsprintf(buffer, format, argp);
 		result = smfprintf((s == NULL) ? &di : &(s->di), "%s", buffer);
 	}

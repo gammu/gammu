@@ -1903,7 +1903,6 @@ static void DeleteSMS(int argc, char *argv[])
 	GSM_Init(true);
 
 	for (i=start;i<=stop;i++) {
-		sms.Folder	= 0;
 		sms.Location	= i;
 		error=Phone->DeleteSMS(&s, &sms);
 		Print_Error(error);
@@ -2108,7 +2107,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 			case MMSADDRESS_PHONE: printf("phone "); break;
 			default: 				 break;
 		}
-		printf("%s\n",DecodeUnicodeString(info.Source));		
+		printf("%s\n",DecodeUnicodeString(info.Source));
 	}
 	if (UnicodeLength(info.Destination) != 0) {
 		printf("  Recipient          : ");
@@ -2116,7 +2115,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 			case MMSADDRESS_PHONE: printf("phone "); break;
 			default: 				 break;
 		}
-		printf("%s\n",DecodeUnicodeString(info.Destination));		
+		printf("%s\n",DecodeUnicodeString(info.Destination));
 	}
 	if (UnicodeLength(info.CC) != 0) {
 		printf("  CC                 : ");
@@ -2152,13 +2151,13 @@ void DecodeMMSFile(GSM_File *file, int num)
 		}
 		if (!strcmp(DecodeUnicodeString(info.Entries[i].ContentType),"text/x-vCard")) {
 			Pos = 0;
-			printf("\n");			
+			printf("\n");
 			error = GSM_DecodeVCARD(info.Entries[i].File.Buffer, &Pos, &pbk, Nokia_VCard21);
 			if (error == ERR_NONE) PrintMemoryEntry(&pbk);
 		}
 		if (!strcmp(DecodeUnicodeString(info.Entries[i].ContentType),"text/x-vCalendar")) {
 			Pos = 0;
-			printf("\n");			
+			printf("\n");
 			error = GSM_DecodeVCALENDAR_VTODO(info.Entries[i].File.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
 			if (error == ERR_NONE) PrintCalendar(&Calendar);
 		}
@@ -2193,7 +2192,7 @@ static void GetEachMMS(int argc, char *argv[])
 	File.Buffer = NULL;
 
 	while (1) {
-		error=Phone->GetNextMMSFileInfo(&s,File.ID_FullName,&FileFolder,start);		
+		error=Phone->GetNextMMSFileInfo(&s,File.ID_FullName,&FileFolder,start);
 		if (error==ERR_EMPTY) break;
 		Print_Error(error);
 		start = false;
@@ -5140,6 +5139,9 @@ static void Restore(int argc, char *argv[])
 	if (Backup.IMEI[0]!=0) 		printmsgerr("IMEI            : %s\n",Backup.IMEI);
 	if (Backup.Creator[0]!=0) 	printmsgerr("File created by : %s\n",Backup.Creator);
 
+	
+	if (argc == 4 && mystrncasecmp(argv[3],"-yes",0)) always_answer_yes = true;
+
 	if (Backup.MD5Calculated[0]!=0) {
 		dbgprintf("\"%s\"\n",Backup.MD5Original);
 		dbgprintf("\"%s\"\n",Backup.MD5Calculated);
@@ -5273,7 +5275,7 @@ static void Restore(int argc, char *argv[])
 			while (Backup.Calendar[max] != NULL) max++;
 			printmsgerr("%i entries in backup file\n",max);
 			if (answer_yes("Restore phone calendar notes")) {
-				Past    = answer_yes("  Restore notes from the past");
+				Past    = ! answer_yes("  Skip notes from the past");
 				DoRestore = true;
 			}
 		}
@@ -5642,6 +5644,7 @@ static void Restore(int argc, char *argv[])
 		printmsgerr("\n");
 	}
 
+	GSM_FreeBackup(&Backup);
 	GSM_Terminate();
 }
 
@@ -5855,6 +5858,7 @@ static void AddNew(int argc, char *argv[])
 		}
 	}
 
+	GSM_FreeBackup(&Backup);
 	GSM_Terminate();
 }
 #endif
@@ -7505,9 +7509,9 @@ static void GetFileSystem(int argc, char *argv[])
 		}
 
 		if (argc <= 2 || !mystrncasecmp(argv[2],"-flatall",0)) {
-			if (UnicodeLength(Files.ID_FullName) < 5 && 
-			    UnicodeLength(Files.ID_FullName) != 0 && 
-			    DecodeUnicodeString(Files.ID_FullName)[0]>='0' && 
+			if (UnicodeLength(Files.ID_FullName) < 5 &&
+			    UnicodeLength(Files.ID_FullName) != 0 &&
+			    DecodeUnicodeString(Files.ID_FullName)[0]>='0' &&
 			    DecodeUnicodeString(Files.ID_FullName)[0]<='9') {
 				printf("%5s.",DecodeUnicodeString(Files.ID_FullName));
 			}
@@ -9014,7 +9018,7 @@ static GSM_Parameters Parameters[] = {
 	{"--savefile",			4, 5, SaveFile,			{H_Backup,H_WAP,0},		"BOOKMARK target.url file location"},
 	{"--backup",			1, 2, Backup,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
 	{"--backupsms",			1, 1, BackupSMS,		{H_Backup,H_SMS,0},		"file"},
-	{"--restore",			1, 1, Restore,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file"},
+	{"--restore",			1, 2, Restore,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
 	{"--addnew",			1, 1, AddNew,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file"},
 	{"--restoresms",		1, 1, RestoreSMS,		{H_Backup,H_SMS,0},		"file"},
 	{"--addsms",			2, 2, AddSMS,			{H_Backup,H_SMS,0},		"folder file"},

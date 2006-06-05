@@ -307,7 +307,12 @@ AC_ARG_ENABLE(irdagnapbus,
 AC_ARG_ENABLE(bluegnapbus,
         [  --disable-bluegnapbus   Disable gnapplet protocol for Symbian],
         [gsm_enable_bluegnapbus="no"],
-        [AC_DEFINE(GSM_ENABLE_BLUEGNAPBUS) gsm_enable_bluegnapbus="yes"])
+        [if test $gsm_blue_stack = Bluez; then
+                AC_DEFINE(GSM_ENABLE_BLUEGNAPBUS)
+                gsm_enable_bluegnapbus="yes"
+          else
+                gsm_enable_bluegnapbus="no"
+          fi])
 AC_ARG_ENABLE(bluefbus,
         [  --disable-bluefbus      Disable Nokia FBUS2 over Bluetooth stack
                           (Nokia 6210)],

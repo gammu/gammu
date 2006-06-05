@@ -14,6 +14,10 @@ A. This is package with different tools and drivers for Nokia and other mobile
    NOTE: Name Gammu is not connected with Gammu from "Heretics of Dune" written
          by Frank Herbert
 -------------------------------------------------------------------------------
+Q. How to report bugs ?
+
+A. http://www.gammu.org/bugs or use mailing list
+-------------------------------------------------------------------------------
 Q. Where can I find more informations ?
 
-A. www.gammu.org (especially inside Wiki)
+A. www.gammu.org (inside Wiki)

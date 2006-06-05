@@ -1,0 +1,102 @@
+0.6.12
+======
+
+0.6.11
+======
+ * protocol handling:
+    o end time and location support added to the calendar      (BORBELY Zoltan)
+
+0.6.10
+======
+
+0.6.9
+=====
+ * device layer updates:
+    o initial TCP/IP support                                   (BORBELY Zoltan)
+
+0.6.8
+=====
+
+0.6.7
+=====
+
+0.6.6
+=====
+
+0.6.5
+=====
+ * protocol handling:
+    o input/output buffers moved to the heap                   (BORBELY Zoltan)
+    o getprofile support added                                 (BORBELY Zoltan)
+    o getactiveprofile support added                           (BORBELY Zoltan)
+ * general updates:
+    o rfcomm channel modified in the ini file to match default (BORBELY Zoltan)
+    o init_timeout, reinit_timeout parameters added to the ini file,
+      gnapplet can stay open between connections               (BORBELY Zoltan)
+    o absolute path eliminated from the frontend application   (BORBELY Zoltan)
+    o infinite timeout is now possible                         (BORBELY Zoltan)
+
+0.6.4
+=====
+ * protocol handling:
+    o deletesms support added                                  (BORBELY Zoltan)
+    o movesms support added                                    (BORBELY Zoltan)
+    o getsmscenter won't return error when an entry is empty   (BORBELY Zoltan)
+    o experimental and non-working setsmscenter support        (BORBELY Zoltan)
+    o getcalendarnote support added         (Antti P Miettinen, BORBELY Zoltan)
+    o deletecalendarnote support added                         (BORBELY Zoltan)
+    o writecalendarnote support added                          (BORBELY Zoltan)
+    o writecalendarnote and calendar alarm handling fixed      (BORBELY Zoltan)
+    o gettodo support added                                    (BORBELY Zoltan)
+    o writetodo support added                                  (BORBELY Zoltan)
+    o deletetodo support added                                 (BORBELY Zoltan)
+    o todo and calendar entries separated                      (BORBELY Zoltan)
+    o all kind of phone numbers can be written into the pbk    (BORBELY Zoltan)
+    o empty fields will be skipped during phonebook reading    (BORBELY Zoltan)
+    o getdatetime support added                                (BORBELY Zoltan)
+    o setdatetime support added                                (BORBELY Zoltan)
+    o getalarm support added                                   (BORBELY Zoltan)
+    o setalarm support added                                   (BORBELY Zoltan)
+ * general updates:
+    o configuration read from gnapplet.ini at startup          (BORBELY Zoltan)
+    o time conversion functions moved to gnapplet.cpp          (BORBELY Zoltan)
+
+0.6.3
+=====
+
+0.6.2
+=====
+ * protocol handling:
+    o sms folder support (list, status, create, delete)        (BORBELY Zoltan)
+    o initial version of the getsms support                    (BORBELY Zoltan)
+    o contact name construction and parsing (Antti P Miettinen, BORBELY Zoltan)
+    o minor code cleanup in the phonebook handling code        (BORBELY Zoltan)
+    o sms status support added                                 (BORBELY Zoltan)
+    o minor cleanup                                            (BORBELY Zoltan)
+    o getsms has been completly rewritten                      (BORBELY Zoltan)
+    o getsmscenter support added                               (BORBELY Zoltan)
+    o sendsms support added                                    (BORBELY Zoltan)
+
+0.6.1
+=====
+ * device layer updates:
+    o initial IrCOMM (IrDA) support                            (BORBELY Zoltan)
+    o initial RfCOMM (Bluetooth) support                       (BORBELY Zoltan)
+ * protocol handling:
+    o phone info reports the IMEI                              (BORBELY Zoltan)
+    o phonebook reading support                                (BORBELY Zoltan)
+    o phonebook writing support                                (BORBELY Zoltan)
+    o phonebook deleting support                               (BORBELY Zoltan)
+    o memory status support added                              (BORBELY Zoltan)
+    o call log (DC/MC/RC memory) support added                 (BORBELY Zoltan)
+    o identify works properly                                  (BORBELY Zoltan)
+    o gnapplet won't quit until the client disconnects         (BORBELY Zoltan)
+    o network info and rf level can be readed                  (BORBELY Zoltan)
+    o power source and battery level can be readed             (BORBELY Zoltan)
+    o phone can send debug messages to the PC                  (BORBELY Zoltan)
+    o phone info returns correct model on non nokia phones     (BORBELY Zoltan)
+    o memory status limited decreased                          (BORBELY Zoltan)
+ * general updates:
+    o code cleanup, better resource management                 (BORBELY Zoltan)
+ * frontend application:
+    o initial version                                          (BORBELY Zoltan)

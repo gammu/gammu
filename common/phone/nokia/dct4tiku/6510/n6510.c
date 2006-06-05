@@ -340,12 +340,10 @@ static GSM_Error N6510_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *neti
 
 static GSM_Error N6510_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *req, GSM_SMSMessageLayout *Layout, int *length)
 {
-	int			start, count = 0, pos1, pos2, pos3, pos4, pos5;
+	int			count = 0, pos1, pos2, pos3, pos4, pos5;
 	GSM_Error		error;
 
 	memset(Layout,255,sizeof(GSM_SMSMessageLayout));
-
-	start			 = *length;
 
 	req[count++]		 = 0x01;
 	if (sms->PDU != SMS_Deliver) {
@@ -550,9 +548,11 @@ static void N6510_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsig
 		ifolderid = sms->Location / PHONE_MAXSMSINFOLDER;
 		*folderid = ifolderid + 0x01;
 		*location = sms->Location - ifolderid * PHONE_MAXSMSINFOLDER;
+		if (*folderid == 0x1B) (*folderid)=0x99; //0x1A is Outbox in 6230i
 	} else {
 		*folderid = sms->Folder;
 		*location = sms->Location;
+		if (*folderid == 0x1A) (*folderid)=0x99; //0x1A is Outbox in 6230i
 	}
 	smprintf(s, "SMS folder %i & location %i -> 6510 folder %i & location %i\n",
 		sms->Folder,sms->Location,*folderid,*location);
@@ -2470,6 +2470,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 		0x00, 0x01};		/* Location 		*/
 
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
+	if (folderid == 0x99) return ERR_INVALIDLOCATION;
 	switch (folderid) {
 		case 0x01: req[5] = 0x02; 			 break; /* INBOX SIM 	*/
 		case 0x02: req[5] = 0x03; 			 break; /* OUTBOX SIM 	*/
