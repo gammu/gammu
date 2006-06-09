@@ -1903,7 +1903,6 @@ static void DeleteSMS(int argc, char *argv[])
 	GSM_Init(true);
 
 	for (i=start;i<=stop;i++) {
-		sms.Folder	= 0;
 		sms.Location	= i;
 		error=Phone->DeleteSMS(&s, &sms);
 		Print_Error(error);
@@ -3036,7 +3035,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	char				InputBuffer	[SEND_SAVE_SMS_BUFFER_SIZE/2+1];
 	char				Buffer		[MAX_MULTI_SMS][SEND_SAVE_SMS_BUFFER_SIZE];
 	char				Sender		[(GSM_MAX_NUMBER_LENGTH+1)*2];
-	char				Name		[(GSM_MAX_NUMBER_LENGTH+1)*2];
+	char				Name		[(GSM_MAX_SMS_NAME_LENGTH+1)*2];
 	char				SMSC		[(GSM_MAX_NUMBER_LENGTH+1)*2];
 	int				startarg		= 0;
 	int				chars_read		= 0;
@@ -3447,6 +3446,10 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 				}
 				if (mystrncasecmp(argv[i],"-sender",0)) {
 					nextlong=2;
+					continue;
+				}
+				if (mystrncasecmp(argv[i],"-smsname",0)) {
+					nextlong=25;
 					continue;
 				}
 			} else {
@@ -4078,6 +4081,14 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			SMSInfo.Entries[0].Bitmap   = &bitmap[0];
 			nextlong 		    = 0;
 			break;
+		case 25:/* sms name */
+			if (strlen(argv[i])>GSM_MAX_SMS_NAME_LENGTH) {
+				printmsg("Too long SMS name (\"%s\"), ignored\n",argv[i]);
+			} else {
+				EncodeUnicode(Name, argv[i],strlen(argv[i]));
+			}
+			nextlong = 0;
+			break;
 		}
 	}
 	if (nextlong!=0) {
@@ -4247,8 +4258,16 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			if (SMSCSet==0) CopyUnicodeString(sms.SMS[i].SMSC.Number, SMSC);
 			error=Phone->AddSMS(&s, &sms.SMS[i]);
 			Print_Error(error);
-			printmsg("Saved in folder \"%s\", location %i\n",
+			printmsg("Saved in folder \"%s\", location %i",
 				DecodeUnicodeConsole(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
+			if (sms.SMS[i].Memory == MEM_SM) {
+				printmsg(", SIM\n");
+				if (UnicodeLength(Name) != 0) {
+					printmsg("SMS name ignored\n");
+				}
+			} else {
+				printmsg(", phone\n");
+			}
 
 			if (SendSaved) {
 				printmsg("Sending sms from folder \"%s\", location %i\n",
@@ -5120,6 +5139,9 @@ static void Restore(int argc, char *argv[])
 	if (Backup.IMEI[0]!=0) 		printmsgerr("IMEI            : %s\n",Backup.IMEI);
 	if (Backup.Creator[0]!=0) 	printmsgerr("File created by : %s\n",Backup.Creator);
 
+	
+	if (argc == 4 && mystrncasecmp(argv[3],"-yes",0)) always_answer_yes = true;
+
 	if (Backup.MD5Calculated[0]!=0) {
 		dbgprintf("\"%s\"\n",Backup.MD5Original);
 		dbgprintf("\"%s\"\n",Backup.MD5Calculated);
@@ -5253,7 +5275,7 @@ static void Restore(int argc, char *argv[])
 			while (Backup.Calendar[max] != NULL) max++;
 			printmsgerr("%i entries in backup file\n",max);
 			if (answer_yes("Restore phone calendar notes")) {
-				Past    = answer_yes("  Restore notes from the past");
+				Past    = ! answer_yes("  Skip notes from the past");
 				DoRestore = true;
 			}
 		}
@@ -8868,7 +8890,7 @@ static GSM_Parameters Parameters[] = {
 #define SMS_ANIMATION_OPTIONS	""
 #define SMS_OPERATOR_OPTIONS	"[-netcode netcode][-biglogo]"
 #define SMS_RINGTONE_OPTIONS	"[-long][-scale]"
-#define SMS_SAVE_OPTIONS	"[-folder id][-unread][-read][-unsent][-sent][-sender number]"
+#define SMS_SAVE_OPTIONS	"[-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name]"
 #define SMS_SEND_OPTIONS	"[-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]]"
 #define SMS_COMMON_OPTIONS	"[-smscset number][-smscnumber number][-reply][-maxsms num]"
 
@@ -8996,7 +9018,7 @@ static GSM_Parameters Parameters[] = {
 	{"--savefile",			4, 5, SaveFile,			{H_Backup,H_WAP,0},		"BOOKMARK target.url file location"},
 	{"--backup",			1, 2, Backup,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
 	{"--backupsms",			1, 1, BackupSMS,		{H_Backup,H_SMS,0},		"file"},
-	{"--restore",			1, 1, Restore,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file"},
+	{"--restore",			1, 2, Restore,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
 	{"--addnew",			1, 1, AddNew,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file"},
 	{"--restoresms",		1, 1, RestoreSMS,		{H_Backup,H_SMS,0},		"file"},
 	{"--addsms",			2, 2, AddSMS,			{H_Backup,H_SMS,0},		"folder file"},

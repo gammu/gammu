@@ -253,11 +253,11 @@ SOURCE=..\..\..\common\misc\misc.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\protocol\symbian\mrouter.c
+SOURCE=..\..\..\common\protocol\symbian\gnapbus.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\symbian\mroutgen.c
+SOURCE=..\..\..\common\phone\symbian\gnapgen.c
 # End Source File
 # Begin Source File
 
@@ -501,11 +501,11 @@ SOURCE=..\..\..\common\misc\misc.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\protocol\symbian\mrouter.h
+SOURCE=..\..\..\common\protocol\symbian\gnapbus.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\symbian\mroutgen.h
+SOURCE=..\..\..\common\phone\symbian\gnapgen.h
 # End Source File
 # Begin Source File
 

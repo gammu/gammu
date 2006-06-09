@@ -340,12 +340,10 @@ static GSM_Error N6510_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *neti
 
 static GSM_Error N6510_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *req, GSM_SMSMessageLayout *Layout, int *length)
 {
-	int			start, count = 0, pos1, pos2, pos3, pos4, pos5;
+	int			count = 0, pos1, pos2, pos3, pos4, pos5;
 	GSM_Error		error;
 
 	memset(Layout,255,sizeof(GSM_SMSMessageLayout));
-
-	start			 = *length;
 
 	req[count++]		 = 0x01;
 	if (sms->PDU != SMS_Deliver) {
@@ -550,9 +548,11 @@ static void N6510_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsig
 		ifolderid = sms->Location / PHONE_MAXSMSINFOLDER;
 		*folderid = ifolderid + 0x01;
 		*location = sms->Location - ifolderid * PHONE_MAXSMSINFOLDER;
+		if (*folderid == 0x1B) (*folderid)=0x99; //0x1A is Outbox in 6230i
 	} else {
 		*folderid = sms->Folder;
 		*location = sms->Location;
+		if (*folderid == 0x1A) (*folderid)=0x99; //0x1A is Outbox in 6230i
 	}
 	smprintf(s, "SMS folder %i & location %i -> 6510 folder %i & location %i\n",
 		sms->Folder,sms->Location,*folderid,*location);
@@ -2298,7 +2298,7 @@ static GSM_Error N6510_DeleteSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms
 		default	 : req[5] = folderid - 1; req[4] = 0x02; break; /* ME folders	*/
 	}
 	req[6]=location / 256;
-	req[7]=location;
+	req[7]=location % 256;
 
 	smprintf(s, "Deleting sms\n");
 	return GSM_WaitFor (s, req, 10, 0x14, 4, ID_DeleteSMSMessage);
@@ -2415,26 +2415,7 @@ static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 		switch (msg.Buffer[4]) {
 		case 0x00:
 			smprintf(s, "Done OK\n");
-			smprintf(s, "Folder info: %i %i\n",msg.Buffer[5],msg.Buffer[8]);
-			switch (msg.Buffer[8]) {
-			case 0x02 : if (msg.Buffer[5] == 0x02) {
-					 folder = 0x03; /* INBOX ME */
-				    } else {
-					 folder = 0x01; /* INBOX SIM */
-				    }
-				    break;
-			case 0x03 : if (msg.Buffer[5] == 0x02) {
-					 folder = 0x04; /* OUTBOX ME */
-				    } else {
-					 folder = 0x02; /* OUTBOX SIM */
-				    }
-				    break;
-			default	  : folder = msg.Buffer[8] + 1;
-			}
-			N6510_SetSMSLocation(s, Data->SaveSMSMessage,folder,msg.Buffer[6]*256+msg.Buffer[7]);
-			smprintf(s, "Saved in folder %i at location %i\n",folder, msg.Buffer[6]*256+msg.Buffer[7]);
-			Data->SaveSMSMessage->Folder = folder;
-			return ERR_NONE;
+			break;
 		case 0x02:
 			printf("Incorrect location\n");
 			return ERR_INVALIDLOCATION;
@@ -2448,6 +2429,21 @@ static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 			return ERR_UNKNOWNRESPONSE;
 		}
+
+		smprintf(s, "Folder info: %i %i\n",msg.Buffer[5],msg.Buffer[8]);
+		folder = msg.Buffer[8] + 1;
+		Data->SaveSMSMessage->Memory = MEM_ME;
+		//inbox,outbox
+		if (msg.Buffer[8] == 0x02 || msg.Buffer[8] == 0x03) {
+			if (msg.Buffer[5] == 0x01) {
+				folder = msg.Buffer[8] - 1;
+				Data->SaveSMSMessage->Memory = MEM_SM;
+			}
+		}
+		N6510_SetSMSLocation(s, Data->SaveSMSMessage,folder,msg.Buffer[6]*256+msg.Buffer[7]);
+		smprintf(s, "Saved in folder %i at location %i\n",folder, msg.Buffer[6]*256+msg.Buffer[7]);
+		Data->SaveSMSMessage->Folder = folder;
+		return ERR_NONE;
 	case 0x17:
 		smprintf(s, "SMS name changed\n");
 		return ERR_NONE;
@@ -2474,6 +2470,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 		0x00, 0x01};		/* Location 		*/
 
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
+	if (folderid == 0x99) return ERR_INVALIDLOCATION;
 	switch (folderid) {
 		case 0x01: req[5] = 0x02; 			 break; /* INBOX SIM 	*/
 		case 0x02: req[5] = 0x03; 			 break; /* OUTBOX SIM 	*/
@@ -2517,25 +2514,28 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 	s->Phone.Data.SaveSMSMessage=sms;
 	smprintf(s, "Saving sms\n");
 	error=GSM_WaitFor (s, req, length+9, 0x14, 4, ID_SaveSMSMessage);
-	if (error == ERR_NONE && UnicodeLength(sms->Name)!=0) {
-		folder = sms->Folder;
-		sms->Folder = 0;
-		N6510_GetSMSLocation(s, sms, &folderid, &location);
-		switch (folderid) {
-			case 0x01: NameReq[5] = 0x02; 				 break; /* INBOX SIM 	*/
-			case 0x02: NameReq[5] = 0x03; 			 	 break; /* OUTBOX SIM 	*/
-			default	 : NameReq[5] = folderid - 1; NameReq[4] = 0x02; break; /* ME folders	*/
-		}
-		NameReq[6]=location / 256;
-		NameReq[7]=location % 256;
-		length = 8;
-		CopyUnicodeString(NameReq+length, sms->Name);
-		length = length+UnicodeLength(sms->Name)*2;
-		NameReq[length++] = 0;
-		NameReq[length++] = 0;
-		error=GSM_WaitFor (s, NameReq, length, 0x14, 4, ID_SaveSMSMessage);
-		sms->Folder = folder;
+	if (error != ERR_NONE) return error;
+
+	//no adding to SIM SMS
+	if (UnicodeLength(sms->Name)==0 || sms->Folder < 3) return ERR_NONE;
+	
+	folder = sms->Folder;
+	sms->Folder = 0;
+	N6510_GetSMSLocation(s, sms, &folderid, &location);
+	switch (folderid) {
+		case 0x01: NameReq[5] = 0x02; 				 break; /* INBOX SIM 	*/
+		case 0x02: NameReq[5] = 0x03; 			 	 break; /* OUTBOX SIM 	*/
+		default	 : NameReq[5] = folderid - 1; NameReq[4] = 0x02; break; /* ME folders	*/
 	}
+	NameReq[6]=location / 256;
+	NameReq[7]=location % 256;
+	length = 8;
+	CopyUnicodeString(NameReq+length, sms->Name);
+	length = length+UnicodeLength(sms->Name)*2;
+	NameReq[length++] = 0;
+	NameReq[length++] = 0;
+	error=GSM_WaitFor (s, NameReq, length, 0x14, 4, ID_SaveSMSMessage);
+	sms->Folder = folder;
 	return error;
 }
 
@@ -3972,7 +3972,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|5140i|6020|6021|6100|6111|6200|6220|6230|6230i|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|5140i|6020|6021|6100|6111|6170|6200|6220|6230|6230i|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7270|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/

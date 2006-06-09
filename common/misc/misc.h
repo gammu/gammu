@@ -128,7 +128,23 @@ typedef struct {
 	unsigned int		Year;
 } GSM_DateTime;
 
+typedef struct {
+	/* for relative times */
+	int			Timezone;
+
+	int			Second;
+	int 		Minute;
+	int			Hour;
+
+	int 		Day;
+	int 		Month;
+	int			Year;
+
+} GSM_DeltaTime;
+
 void GSM_GetCurrentDateTime 	(GSM_DateTime *Date);
+GSM_DateTime GSM_AddTime (GSM_DateTime DT , GSM_DeltaTime delta);
+bool HeapCheck(char* loc);
 char *OSDateTime 		(GSM_DateTime dt, bool TimeZone);
 char *OSDate 			(GSM_DateTime dt);
 char *DayOfWeek 		(int year, int month, int day);

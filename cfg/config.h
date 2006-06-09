@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "1.06.05"
-#define VERSION_WIN "1,06,05,0"
+#define VERSION "1.06.30"
+#define VERSION_WIN "1,06,30,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -42,9 +42,6 @@
 /* PHONET FBUS to use with bluetooth legacy device */
 #define GSM_ENABLE_PHONETBLUE 1
 
-/* Symbian with m-router (TCPIP based) to use with bluetooth legacy device */
-#define GSM_ENABLE_MROUTERBLUE 1
-
 /* AT protocol */
 #define GSM_ENABLE_AT 1
 
@@ -57,13 +54,17 @@
 #define GSM_ENABLE_IRDAAT 1
 /* Infrared. OBEX */
 #define GSM_ENABLE_IRDAOBEX 1
+/* Infrared */
+#define GSM_ENABLE_IRDAGNAPBUS 1
 
 #ifdef WIN32
 #  define GSM_ENABLE_BLUEFBUS2 1
 #  define GSM_ENABLE_BLUEPHONET 1
 #  define GSM_ENABLE_BLUEAT 1
 #  define GSM_ENABLE_BLUEOBEX 1
+#  define GSM_ENABLE_BLUEGNAPBUS 1
 #else
+#  define GSM_ENABLE_BLUEGNAPBUS 1
 /* Bluetooth stack (like Bluez). FBUS2 (init done using AT commands) */
 #  define GSM_ENABLE_BLUEFBUS2 1
 /* Bluetooth stack (like Bluez). PHONET FBUS */
@@ -113,8 +114,8 @@
 /* OBEX generic models */
 #define GSM_ENABLE_OBEXGEN 1
 
-/* Symbian with m-router generic models */
-#define GSM_ENABLE_MROUTERGEN 1
+/* Symbian with gnapplet models */
+#define GSM_ENABLE_GNAPGEN 1
 
 /* ---------------------- General settings -------------------------------- */
 

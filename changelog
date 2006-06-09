@@ -28,7 +28,8 @@ This software was sponsored (in time order) by:
 20. 2005      Saul Kato
 21. 2005      Reinhard Weiss
 22. 2005      Andreas Leitgeb
-23. 2006      Assemblix Technology Pte Ltd
+23. 2006      Assemblix Technology Pte Ltd (www.assemblix.com.sg)
+24. 2006      Cameron Laird
 
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
@@ -39,6 +40,49 @@ For additionals materials and links to them see readme.txt
 [+] New functionality
 [*] Changes in existing functionality
 [-] Fixed error
+
+20060605 - 1.06.30
+[!] In 6230i 3.70 after saving to "Outbox" (from PC) SMS is not visible in
+    phone menu, PC side and use phone memory place. We added protection
+    against it and saving to 0x1A folder is no more possible. Bug can exist
+    in other new Nokias too.
+[!] SMS with "simple quote" can stop SMSD. For now fix for    (Julien Lirochon)
+    Inbox
+[+] support for ICS files (Mozilla calendar)                           (Markus)
+[+] Series 60 1st and 2nd edition:
+    * calendar (getting) - support for start/end/alarm time, recurrance,
+      texts, no support for synchronisation parameter
+    * todo (getting) - support for text, priority, no support for due date
+      and done/not done
+    * sms - support for getting sms status, getting and sending non working
+      (this is issue reported by gnapplet users working with other than
+      Gammu projects too)
+    * there is checked gnapplet version during Gammu communication startup
+[*] gnapplet source synchronised with sis file (0.6.12)
+[-] fixed configure error with bluegnapbus (1.06.15 bug)        (Gabor Z. Papp)
+[-] fix for --deletesms and folder handling
+[-] changes in debug system                               (Radoslaw Stachowiak)
+
+20060521 - 1.06.15
+[+] new -smsname for --savesms
+[+] partial support for decoding EMS text formatting
+[+] 6170/7270 ID                                                      (unknown)
+[+] Series 60 1 and 2 devices:
+    * added compiled gnapplet 0.6.12 (and source 0.6.2)
+    * new connection "bluerfgnapbus"/model "gnap" (stable) and new
+      connection "irdagnapbus"/model "gnap" (experimental) for communication
+    * implemented:
+      * identification
+      * getting phone time
+      * getting SMSC (partially)
+      * getting SMS folders
+[+] added makefile for MSVC6 for making static library           (Michal Cihar)
+[*] displaying warning, when you use save SMS on SIM with name
+[*] after saving sms you have info about used memory (phone/sim)
+[*] some optimalizations with saving SMS
+[-] * iswspace might return also other values than 0/1,          (Michal Cihar)
+      myiswspace fixed to return true or false in all cases
+[-] * removed useless conversion in Unicode functions
 
 20060511 - 1.06.05
 [+] 6510 - saving sms_submit with report possible                (Michal Cihar)

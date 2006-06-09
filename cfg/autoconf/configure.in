@@ -263,11 +263,6 @@ AC_ARG_ENABLE(phonetblue,
                           legacy device (all new Nokias)],
         [gsm_enable_phonetblue="no"],
         [AC_DEFINE(GSM_ENABLE_PHONETBLUE) gsm_enable_phonetblue="yes"])
-AC_ARG_ENABLE(mrouterblue,
-        [  --disable-mrouterblue   Disable Symbian with m-router (TCPIP based)
-                          over Bluetooth legacy device],
-        [gsm_enable_mrouterblue="no"],
-        [AC_DEFINE(GSM_ENABLE_MROUTERBLUE) gsm_enable_mrouterblue="yes"])
 AC_ARG_ENABLE(at,
         [  --disable-at            Disable AT protocol],
         [gsm_enable_at="no"],
@@ -300,6 +295,24 @@ AC_ARG_ENABLE(irdaobex,
          else
                 gsm_enable_irdaobex="no"
          fi])
+AC_ARG_ENABLE(irdagnapbus,
+        [  --disable-irdagnapbus   Disable gnapplet protocol for Symbian],
+        [gsm_enable_irdagnapbus="no"],
+        [if test $irda = yes ; then
+                AC_DEFINE(GSM_ENABLE_IRDAGNAPBUS)
+                gsm_enable_irdagnapbus="yes"
+         else
+                gsm_enable_irdagnapbus="no"
+         fi])
+AC_ARG_ENABLE(bluegnapbus,
+        [  --disable-bluegnapbus   Disable gnapplet protocol for Symbian],
+        [gsm_enable_bluegnapbus="no"],
+        [if test $gsm_blue_stack = Bluez; then
+                AC_DEFINE(GSM_ENABLE_BLUEGNAPBUS)
+                gsm_enable_bluegnapbus="yes"
+          else
+                gsm_enable_bluegnapbus="no"
+          fi])
 AC_ARG_ENABLE(bluefbus,
         [  --disable-bluefbus      Disable Nokia FBUS2 over Bluetooth stack
                           (Nokia 6210)],
@@ -410,10 +423,10 @@ AC_ARG_ENABLE(obexgen,
         [  --disable-obexgen       Disable generic OBEX phones support],
         [gsm_enable_obexgen="no"],
         [AC_DEFINE(GSM_ENABLE_OBEXGEN) gsm_enable_obexgen="yes"])
-AC_ARG_ENABLE(mroutergen,
-        [  --disable-mroutergen    Disable Symbian m-router phones support],
-        [gsm_enable_mroutergen="no"],
-        [AC_DEFINE(GSM_ENABLE_MROUTERGEN) gsm_enable_mroutergen="yes"])
+AC_ARG_ENABLE(gnapgen,
+        [  --disable-gnapgen       Disable Symbian (+gnapplet) phones support],
+        [gsm_enable_gnapgen="no"],
+        [AC_DEFINE(GSM_ENABLE_GNAPGEN) gsm_enable_gnapgen="yes"])
 AC_ARG_ENABLE(3650,
         [  --disable-3650          Disable Nokia 3650 and compatible support],
         [gsm_enable_nokia3650="no"],
@@ -482,13 +495,13 @@ dnl Add info about DKU5
   Nokia FBUS2 for direct infrared device        - $gsm_enable_fbus2irda
   Nokia PHONET for DKU2 cable                   - $gsm_enable_dku2phonet
   Nokia PHONET FBUS for Bluetooth legacy device - $gsm_enable_phonetblue
-dnl SYMBIAN with m-router for Bluetooth legacy    - $gsm_enable_mrouterblue
 
   Phone protocols with infrared stack
   -----------------------------------
   AT commands                                   - $gsm_enable_irdaat
   Nokia PHONET FBUS                             - $gsm_enable_irdaphonet
   OBEX                                          - $gsm_enable_irdaobex
+  SYMBIAN with gnapplet                         - $gsm_enable_irdagnapbus
 
   Phone protocols with Bluetooth stack
   ------------------------------------------
@@ -496,6 +509,7 @@ dnl SYMBIAN with m-router for Bluetooth legacy    - $gsm_enable_mrouterblue
   Nokia FBUS2                                   - $gsm_enable_bluefbus2
   Nokia PHONET FBUS                             - $gsm_enable_bluephonet
   OBEX                                          - $gsm_enable_blueobex
+  SYMBIAN with gnapplet                         - $gsm_enable_bluegnapbus
 
   Phone modules
   -------------
@@ -512,16 +526,16 @@ dnl SYMBIAN with m-router for Bluetooth legacy    - $gsm_enable_mrouterblue
            Incoming call/SMS info               - $gsm_enable_71_92incominginfo
   Nokia 3650                                    - $gsm_enable_nokia3650
   OBEX (Nokia, SonyEricsson, other)             - $gsm_enable_obexgen
-dnl  Symbian with m-router (3650, other)           - $gsm_enable_mroutergen
+  Symbian with gnapplet (Series 60 1 and 2)     - $gsm_enable_gnapgen
 
   Please use now:
   
-  * "make"                  to make static version of Gammu
-  * "make shared"           to make shared version of Gammu
-  * "make install"          to install Gammu in your system (root)
-  * "make installshared"    to install Gammu with library in your system (root)
-  * "make rpm"              to make RPM package
-  * "make deb"              to make Debian package
-  * "make tgz"              to make Slackware package (needs checkinstall >= 1.5.3)
+  * "make"               to make static version of Gammu
+  * "make shared"        to make shared version of Gammu
+  * "make install"       to install Gammu in system (req. root)
+  * "make installshared" to install Gammu with library in system (req. root)
+  * "make rpm"           to make RPM package
+  * "make deb"           to make Debian package
+  * "make tgz"           to make Slackware package (req. checkinstall>=1.5.3)
 
 EOT

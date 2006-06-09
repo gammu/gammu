@@ -48,7 +48,7 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
             $(TOPDIR)/common/protocol/nokia/fbus2.o \
             $(TOPDIR)/common/protocol/nokia/phonet.o \
             $(TOPDIR)/common/protocol/obex/obex.o \
-            $(TOPDIR)/common/protocol/symbian/mrouter.o \
+            $(TOPDIR)/common/protocol/symbian/gnapbus.o \
             $(TOPDIR)/common/phone/pfunc.o \
             $(TOPDIR)/common/phone/at/atgen.o \
             $(TOPDIR)/common/phone/at/siemens.o \
@@ -70,7 +70,7 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
             $(TOPDIR)/common/phone/nokia/nfunc.o \
             $(TOPDIR)/common/phone/nokia/nfuncold.o \
             $(TOPDIR)/common/phone/obex/obexgen.o \
-            $(TOPDIR)/common/phone/symbian/mroutgen.o
+            $(TOPDIR)/common/phone/symbian/gnapgen.o
 
 # files for DJGPP only
 DJGPP	  = $(TOPDIR)/common/device/serial/ser_djg.s

@@ -43,8 +43,8 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifdef GSM_ENABLE_OBEXGEN
 #  include "phone/obex/obexgen.h"
 #endif
-#ifdef GSM_ENABLE_MROUTERGEN
-#  include "phone/symbian/mroutgen.h"
+#ifdef GSM_ENABLE_GNAPGEN
+#  include "phone/symbian/gnapgen.h"
 #endif
 
 #ifndef GSM_USED_MBUS2
@@ -80,20 +80,23 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifndef GSM_USED_AT
 #  undef GSM_ENABLE_AT
 #endif
-#ifndef GSM_USED_IRDAOBEX
-#  undef GSM_ENABLE_IRDAOBEX
-#endif
-#ifndef GSM_USED_BLUEOBEX
-#  undef GSM_ENABLE_BLUEOBEX
-#endif
 #ifndef GSM_USED_ALCABUS
 #  undef GSM_ENABLE_ALCABUS
 #endif
 #ifndef GSM_USED_IRDAPHONET
 #  undef GSM_ENABLE_IRDAPHONET
 #endif
+#ifndef GSM_USED_IRDAAT
+#  undef GSM_ENABLE_IRDAAT
+#endif
+#ifndef GSM_USED_IRDAOBEX
+#  undef GSM_ENABLE_IRDAOBEX
+#endif
 #ifndef GSM_USED_BLUEFBUS2
 #  undef GSM_ENABLE_BLUEFBUS2
+#endif
+#ifndef GSM_USED_BLUEOBEX
+#  undef GSM_ENABLE_BLUEOBEX
 #endif
 #ifndef GSM_USED_BLUEPHONET
 #  undef GSM_ENABLE_BLUEPHONET
@@ -101,11 +104,8 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifndef GSM_USED_BLUEAT
 #  undef GSM_ENABLE_BLUEAT
 #endif
-#ifndef GSM_USED_IRDAAT
-#  undef GSM_ENABLE_IRDAAT
-#endif
-#ifndef GSM_USED_MROUTERBLUE
-#  undef GSM_ENABLE_MROUTERBLUE
+#ifndef GSM_USED_BLUEGNAPBUS
+#  undef GSM_ENABLE_BLUEGNAPBUS
 #endif
 
 #if defined(GSM_ENABLE_NOKIA3320) || defined(GSM_ENABLE_NOKIA650) || defined(GSM_ENABLE_NOKIA6110) || defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9210)
@@ -134,8 +134,8 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX)
 #  include "protocol/obex/obex.h"
 #endif
-#if defined(GSM_ENABLE_MROUTERBLUE)
-#  include "protocol/symbian/mrouter.h"
+#if defined(GSM_ENABLE_BLUEGNAPBUS) || defined(GSM_ENABLE_IRDAGNAPBUS)
+#  include "protocol/symbian/gnapbus.h"
 #endif
 
 #define GSM_ENABLE_SERIALDEVICE
@@ -156,36 +156,36 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #  undef GSM_ENABLE_IRDAPHONET
 #  undef GSM_ENABLE_IRDAOBEX
 #  undef GSM_ENABLE_IRDAAT
+#  undef GSM_ENABLE_IRDAGNAPBUS
 #  undef GSM_ENABLE_DKU2AT
 #  undef GSM_ENABLE_FBUS2IRDA
-
 #  undef GSM_ENABLE_BLUETOOTHDEVICE
 #  undef GSM_ENABLE_BLUEPHONET
 #  undef GSM_ENABLE_BLUEOBEX
 #  undef GSM_ENABLE_BLUEAT
 #  undef GSM_ENABLE_BLUEFBUS2
+#  undef GSM_ENABLE_BLUEGNAPBUS
 #  undef GSM_ENABLE_PHONETBLUE
 #  undef GSM_ENABLE_FBUS2BLUE
-#  undef GSM_ENABLE_MROUTERBLUE
 #endif
 
 #ifndef WIN32
 #  ifdef ENABLE_LGPL
 #    undef GSM_ENABLE_IRDADEVICE
 #    undef GSM_ENABLE_IRDAPHONET
+#    undef GSM_ENABLE_IRDAGNAPBUS
 #    undef GSM_ENABLE_IRDAOBEX
 #    undef GSM_ENABLE_IRDAAT
 #    undef GSM_ENABLE_DKU2AT
 #    undef GSM_ENABLE_FBUS2IRDA
-
 #    undef GSM_ENABLE_BLUETOOTHDEVICE
 #    undef GSM_ENABLE_BLUEPHONET
 #    undef GSM_ENABLE_BLUEOBEX
 #    undef GSM_ENABLE_BLUEAT
 #    undef GSM_ENABLE_BLUEFBUS2
+#    undef GSM_ENABLE_BLUEGNAPBUS
 #    undef GSM_ENABLE_PHONETBLUE
 #    undef GSM_ENABLE_FBUS2BLUE
-#    undef GSM_ENABLE_MROUTERBLUE
 #  endif
 #endif
 
@@ -326,8 +326,8 @@ typedef struct {
 #if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX)
 	extern GSM_Protocol_Functions OBEXProtocol;
 #endif
-#if defined(GSM_ENABLE_MROUTERBLUE)
-	extern GSM_Protocol_Functions MROUTERProtocol;
+#if defined(GSM_ENABLE_BLUEGNAPBUS) || defined(GSM_ENABLE_IRDAGNAPBUS)
+	extern GSM_Protocol_Functions GNAPBUSProtocol;
 #endif
 
 /**
@@ -356,8 +356,8 @@ typedef struct {
 #if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX)
 		GSM_Protocol_OBEXData		OBEX;
 #endif
-#if defined(GSM_ENABLE_MROUTERBLUE)
-		GSM_Protocol_MROUTERData	MROUTER;
+#if defined(GSM_ENABLE_BLUEGNAPBUS) || defined(GSM_ENABLE_IRDAGNAPBUS)
+		GSM_Protocol_GNAPBUSData	GNAPBUS;
 #endif
 	} Data;
 	GSM_Protocol_Functions *Functions;
@@ -815,8 +815,8 @@ typedef struct {
 #ifdef GSM_ENABLE_OBEXGEN
 		GSM_Phone_OBEXGENData	 OBEXGEN;
 #endif
-#ifdef GSM_ENABLE_MROUTERGEN
-		GSM_Phone_MROUTERGENData MROUTERGEN;
+#ifdef GSM_ENABLE_GNAPGEN
+		GSM_Phone_GNAPGENData 	 GNAPGEN;
 #endif
 	} Priv;
 } GSM_Phone_Data;
@@ -1424,8 +1424,8 @@ typedef struct {
 #ifdef GSM_ENABLE_OBEXGEN
 	extern GSM_Phone_Functions OBEXGENPhone;
 #endif
-#ifdef GSM_ENABLE_MROUTERGEN
-	extern GSM_Phone_Functions MROUTERGENPhone;
+#ifdef GSM_ENABLE_GNAPGEN
+	extern GSM_Phone_Functions GNAPGENPhone;
 #endif
 
 typedef struct {
@@ -1459,8 +1459,9 @@ typedef enum {
 	GCT_FBUS2IRDA,
 	GCT_PHONETBLUE,
 	GCT_AT,
-	GCT_MROUTERBLUE,
+	GCT_BLUEGNAPBUS,
 	GCT_IRDAOBEX,
+	GCT_IRDAGNAPBUS,
 	GCT_IRDAAT,
 	GCT_IRDAPHONET,
 	GCT_BLUEFBUS2,

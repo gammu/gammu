@@ -205,10 +205,10 @@
 				RelativePath="..\..\..\common\misc\misc.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\protocol\symbian\mrouter.c">
+				RelativePath="..\..\..\common\protocol\symbian\gnapbus.c">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\symbian\mroutgen.c">
+				RelativePath="..\..\..\common\phone\symbian\gnapgen.c">
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct3\n0650.c">
@@ -392,10 +392,10 @@
 				RelativePath="..\..\..\common\misc\misc.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\protocol\symbian\mrouter.h">
+				RelativePath="..\..\..\common\protocol\symbian\gnapbus.h">
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\symbian\mroutgen.h">
+				RelativePath="..\..\..\common\phone\symbian\gnapgen.h">
 			</File>
 			<File
 				RelativePath="..\..\..\common\phone\nokia\dct3\n0650.h">

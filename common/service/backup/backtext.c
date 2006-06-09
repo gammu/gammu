@@ -871,6 +871,8 @@ static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
 	case GSM_Priority_Low:
 		sprintf(buffer,"Priority = Low%c%c",13,10);
 		break;
+	default:
+		break;
 	}
 	SaveBackupText(file, "", buffer, UseUnicode);
 

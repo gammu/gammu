@@ -41,7 +41,6 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
         // for serial ports assigned by bt stack
 	if (mystrncasecmp("fbusblue"	,connection,0)) s->ConnectionType = GCT_FBUS2BLUE;
 	if (mystrncasecmp("phonetblue"	,connection,0)) s->ConnectionType = GCT_PHONETBLUE;
-	if (mystrncasecmp("mrouterblue"	,connection,0)) s->ConnectionType = GCT_MROUTERBLUE;
 	// bt
 	if (mystrncasecmp("blueobex"	,connection,0)) s->ConnectionType = GCT_BLUEOBEX;
 	if (mystrncasecmp("bluephonet"	,connection,0)) s->ConnectionType = GCT_BLUEPHONET;
@@ -50,6 +49,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("bluerffbus"	,connection,0)) s->ConnectionType = GCT_BLUEFBUS2;
 	if (mystrncasecmp("bluerfphonet",connection,0)) s->ConnectionType = GCT_BLUEPHONET;
 	if (mystrncasecmp("bluerfat"	,connection,0)) s->ConnectionType = GCT_BLUEAT;
+	if (mystrncasecmp("bluerfgnapbus",connection,0)) s->ConnectionType = GCT_BLUEGNAPBUS;
 
 	// old "serial" irda
 	if (mystrncasecmp("infrared"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
@@ -59,6 +59,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	if (mystrncasecmp("irdaphonet"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
 	if (mystrncasecmp("irdaat"	,connection,0)) s->ConnectionType = GCT_IRDAAT;
 	if (mystrncasecmp("irdaobex"	,connection,0)) s->ConnectionType = GCT_IRDAOBEX;
+	if (mystrncasecmp("irdagnapbus" ,connection,0)) s->ConnectionType = GCT_IRDAGNAPBUS;
 
 	if (mystrncasecmp("at"		,connection,2)) {
 		/* Use some resonable default, when no speed defined */
@@ -103,26 +104,17 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #ifdef GSM_ENABLE_DKU2AT
 	GSM_RegisterConnection(s, GCT_DKU2AT,     &SerialDevice,  &ATProtocol);
 #endif
+#ifdef GSM_ENABLE_AT
+	GSM_RegisterConnection(s, GCT_AT, 	  &SerialDevice,  &ATProtocol);
+#endif
 #ifdef GSM_ENABLE_PHONETBLUE
 	GSM_RegisterConnection(s, GCT_PHONETBLUE, &SerialDevice,  &PHONETProtocol);
 #endif
-#ifdef GSM_ENABLE_MROUTERBLUE
-	GSM_RegisterConnection(s, GCT_MROUTERBLUE,&SerialDevice,  &MROUTERProtocol);
+#ifdef GSM_ENABLE_IRDAGNAPBUS
+	GSM_RegisterConnection(s, GCT_IRDAGNAPBUS,&IrdaDevice,    &GNAPBUSProtocol);
 #endif
 #ifdef GSM_ENABLE_IRDAPHONET
 	GSM_RegisterConnection(s, GCT_IRDAPHONET, &IrdaDevice, 	  &PHONETProtocol);
-#endif
-#ifdef GSM_ENABLE_BLUEFBUS2
-	GSM_RegisterConnection(s, GCT_BLUEFBUS2, &BlueToothDevice,&FBUS2Protocol);
-#endif
-#ifdef GSM_ENABLE_BLUEPHONET
-	GSM_RegisterConnection(s, GCT_BLUEPHONET,&BlueToothDevice,&PHONETProtocol);
-#endif
-#ifdef GSM_ENABLE_BLUEAT
-	GSM_RegisterConnection(s, GCT_BLUEAT, 	 &BlueToothDevice,&ATProtocol);
-#endif
-#ifdef GSM_ENABLE_AT
-	GSM_RegisterConnection(s, GCT_AT, 	  &SerialDevice,  &ATProtocol);
 #endif
 #ifdef GSM_ENABLE_IRDAAT
 	GSM_RegisterConnection(s, GCT_IRDAAT, 	  &IrdaDevice,    &ATProtocol);
@@ -130,8 +122,20 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #ifdef GSM_ENABLE_IRDAOBEX
 	GSM_RegisterConnection(s, GCT_IRDAOBEX,   &IrdaDevice,    &OBEXProtocol);
 #endif
+#ifdef GSM_ENABLE_BLUEGNAPBUS
+	GSM_RegisterConnection(s, GCT_BLUEGNAPBUS,&BlueToothDevice,&GNAPBUSProtocol);
+#endif
+#ifdef GSM_ENABLE_BLUEFBUS2
+	GSM_RegisterConnection(s, GCT_BLUEFBUS2,  &BlueToothDevice,&FBUS2Protocol);
+#endif
+#ifdef GSM_ENABLE_BLUEPHONET
+	GSM_RegisterConnection(s, GCT_BLUEPHONET, &BlueToothDevice,&PHONETProtocol);
+#endif
+#ifdef GSM_ENABLE_BLUEAT
+	GSM_RegisterConnection(s, GCT_BLUEAT, 	  &BlueToothDevice,&ATProtocol);
+#endif
 #ifdef GSM_ENABLE_BLUEOBEX
-	GSM_RegisterConnection(s, GCT_BLUEOBEX,  &BlueToothDevice,&OBEXProtocol);
+	GSM_RegisterConnection(s, GCT_BLUEOBEX,   &BlueToothDevice,&OBEXProtocol);
 #endif
 	if (s->Device.Functions==NULL || s->Protocol.Functions==NULL)
 			return ERR_SOURCENOTAVAILABLE;
@@ -190,8 +194,8 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #ifdef GSM_ENABLE_OBEXGEN
 	GSM_RegisterModule(s,&OBEXGENPhone);
 #endif
-#ifdef GSM_ENABLE_MROUTERGEN
-	GSM_RegisterModule(s,&MROUTERGENPhone);
+#ifdef GSM_ENABLE_GNAPGEN
+	GSM_RegisterModule(s,&GNAPGENPhone);
 #endif
 #ifdef GSM_ENABLE_NOKIA3320
 	GSM_RegisterModule(s,&N3320Phone);
@@ -331,9 +335,10 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 						s->Phone.Functions = &OBEXGENPhone;
 						break;
 #endif
-#ifdef GSM_ENABLE_MROUTERGEN
-					case GCT_MROUTERBLUE:
-						s->Phone.Functions = &MROUTERGENPhone;
+#ifdef GSM_ENABLE_GNAPGEN
+					case GCT_BLUEGNAPBUS:
+					case GCT_IRDAGNAPBUS:
+						s->Phone.Functions = &GNAPGENPhone;
 						break;
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
@@ -968,6 +973,11 @@ static OnePhoneModel allmodels[] = {
 #ifdef GSM_ENABLE_NOKIA6110
 	{"6130" ,"NSK-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
 	{"6150" ,"NSM-1" ,"",           {F_NOWAP,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,F_NOPICTUREUNI,0}},
+#endif
+#if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
+	{"6170" ,"RM-47" ,"Nokia 6170", {F_PBKTONEGAL,F_TODO66,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,F_NOTES,F_CHAT,F_SYNCML,F_FILES2,0}},
+#endif
+#ifdef GSM_ENABLE_NOKIA6110
 	{"6190" ,"NSB-3" ,"",           {F_NOWAP,F_NOPICTURE,F_NOSTARTANI,F_NOPBKUNICODE,F_MAGICBYTES,F_DISPSTATUS,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_NOKIA6510)
@@ -1002,6 +1012,7 @@ static OnePhoneModel allmodels[] = {
 	{"7210" ,"NHL-4" ,"Nokia 7210", {F_PBKTONEGAL,F_TODO66,F_RADIO,0}},
 	{"7250" ,"NHL-4J","Nokia 7250", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKIMG,F_SYNCML,0}},
 	{"7250i","NHL-4JX","Nokia 7250i",{F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKIMG,F_SYNCML,0}},
+	{"7270" ,"RM-8" , "Nokia 7270", {F_PBKTONEGAL,F_TODO66,F_RADIO,F_PBKSMSLIST,F_PBKUSER,F_WAPMMSPROXY,F_NOTES,F_CHAT,F_SYNCML,F_FILES2,0}},
 	{"7600", "NMM-3", "Nokia 7600", {F_TODO66,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN)
@@ -1160,7 +1171,7 @@ int smprintf(GSM_StateMachine *s, const char *format, ...)
 
 	va_start(argp, format);
 
-	if ((s == NULL && s->di.df != 0) || (s != NULL && di.df != 0)) {
+	if ((s != NULL && s->di.df != 0) || (s == NULL && di.df != 0)) {
 		result = vsprintf(buffer, format, argp);
 		result = smfprintf((s == NULL) ? &di : &(s->di), "%s", buffer);
 	}

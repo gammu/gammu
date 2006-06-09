@@ -106,7 +106,7 @@ SOURCE=..\..\..\common\protocol\obex\obex.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\protocol\symbian\mrouter.c
+SOURCE=..\..\..\common\protocol\symbian\gnapbus.c
 # End Source File
 # Begin Source File
 
@@ -198,7 +198,7 @@ SOURCE=..\..\..\common\phone\obex\obexgen.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\symbian\mroutgen.c
+SOURCE=..\..\..\common\phone\symbian\gnapgen.c
 # End Source File
 # Begin Source File
 
@@ -458,7 +458,7 @@ SOURCE=..\..\..\common\protocol\obex\obex.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\protocol\symbian\mrouter.h
+SOURCE=..\..\..\common\protocol\symbian\gnapbus.h
 # End Source File
 # Begin Source File
 
@@ -514,7 +514,7 @@ SOURCE=..\..\..\common\phone\obex\obexgen.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\symbian\mroutgen.h
+SOURCE=..\..\..\common\phone\symbian\gnapgen.h
 # End Source File
 # Begin Source File
 
