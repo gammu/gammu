@@ -252,6 +252,11 @@ typedef enum {
 	Mozilla_VCalendar
 } GSM_VCalendarVersion;
 
+typedef enum {
+	TRANSL_TO_GSM = 1,
+	TRANSL_TO_VCAL,
+} GSM_CatTranslation;
+
 GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version);
 
 bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note);
@@ -332,10 +337,22 @@ typedef enum {
  * Priority of to do.
  */
 typedef enum {
-	GSM_Priority_High = 1,
+	GSM_Priority_None = 0,
+	GSM_Priority_High,
 	GSM_Priority_Medium,
 	GSM_Priority_Low
 } GSM_ToDo_Priority;
+
+/**
+ * Time Units.
+ */
+typedef enum {
+	GSM_TimeUnit_Unknown = 0,
+	GSM_TimeUnit_Days,
+	GSM_TimeUnit_Hours,
+	GSM_TimeUnit_Minutes,
+	GSM_TimeUnit_Seconds
+} GSM_TimeUnit;
 
 /**
  * Value of to do entry.

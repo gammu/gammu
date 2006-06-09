@@ -101,7 +101,7 @@
       <FILE FILENAME="..\..\common\misc\misc.c" FORMNAME="" UNITNAME="misc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\protocol\at\at.c" FORMNAME="" UNITNAME="at" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\protocol\obex\obex.c" FORMNAME="" UNITNAME="obex" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\protocol\symbian\mrouter.c" FORMNAME="" UNITNAME="mrouter" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\protocol\symbian\gnapbus.c" FORMNAME="" UNITNAME="gnapbus" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\protocol\nokia\fbus2.c" FORMNAME="" UNITNAME="fbus2" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\protocol\alcatel\alcabus.c" FORMNAME="" UNITNAME="alcabus" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\protocol\nokia\phonet.c" FORMNAME="" UNITNAME="phonet" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
@@ -141,7 +141,7 @@
       <FILE FILENAME="..\..\common\phone\nokia\nfuncold.c" FORMNAME="" UNITNAME="nfuncold" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\alcatel\alcatel.c" FORMNAME="" UNITNAME="alcatel" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\obex\obexgen.c" FORMNAME="" UNITNAME="obexgen" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\phone\symbian\mroutgen.c" FORMNAME="" UNITNAME="mroutgen" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\symbian\gnapgen.c" FORMNAME="" UNITNAME="gnapgen" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\pfunc.c" FORMNAME="" UNITNAME="pfunc" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\at\atgen.c" FORMNAME="" UNITNAME="atgen" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\at\siemens.c" FORMNAME="" UNITNAME="siemens" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>

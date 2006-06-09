@@ -85,6 +85,31 @@ time_t Fill_Time_T(GSM_DateTime DT)
 	return mktime(&tm_starttime);
 }
 
+GSM_DateTime GSM_AddTime (GSM_DateTime DT , GSM_DeltaTime delta)
+{
+	struct tm tm_time;
+	time_t t_time;
+	GSM_DateTime Date;
+
+	memset(&tm_time, 0, sizeof(tm_time));
+	tm_time.tm_year 	= DT.Year - 1900;
+	tm_time.tm_mon  	= DT.Month - 1;
+	tm_time.tm_mday 	= DT.Day;
+	tm_time.tm_hour 	= DT.Hour;
+	tm_time.tm_min  	= DT.Minute;
+	tm_time.tm_sec  	= DT.Second;
+	tm_time.tm_isdst	= -1;
+
+	/* TODO: This works only for dates after 1970. But birthday dates may be before, so a more general
+	   method than mktime /localtime should be used. */
+	t_time = mktime (&tm_time);		
+	t_time = t_time + delta.Second + 60* (delta.Minute + 60* (delta.Hour + 24*delta.Day));
+
+	Fill_GSM_DateTime ( &Date, t_time);
+	Date.Year += 1900;
+	return Date;
+}
+
 void GetTimeDifference(unsigned long diff, GSM_DateTime *DT, bool Plus, int multi)
 {
 	time_t t_time;
@@ -477,6 +502,39 @@ void DumpMessage(Debug_Info *d, const unsigned char *message, int messagesize)
 	}
 	if (j != 0) smfprintf(d, "%s\n", buffer);
 }
+
+#ifdef WIN32
+#include <malloc.h>
+
+bool HeapCheck(char* loc) {
+   /* Check heap status */
+   int heapstatus = _heapchk();
+   switch( heapstatus )
+   {
+   case _HEAPOK:
+		dbgprintf("%s: OK - heap is fine\n", loc );
+		return false;
+		break;
+   case _HEAPEMPTY:
+	   dbgprintf("%s: OK - heap is empty\n", loc );
+		return false;
+		break;
+   case _HEAPBADBEGIN:
+	   dbgprintf( "%s: ERROR - bad start of heap\n", loc );
+		return true;
+		break;
+   case _HEAPBADNODE:
+	   dbgprintf( "%s: ERROR - bad node in heap\n", loc );
+		return true;
+		break;
+   }
+   return false;
+}
+#else
+bool HeapCheck(char* loc) {
+	return false;
+}
+#endif
 
 char *GetOS(void)
 {

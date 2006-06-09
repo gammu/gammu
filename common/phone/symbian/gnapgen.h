@@ -16,7 +16,22 @@
 #endif
 
 typedef struct {
-	int fake;
+	int				LastCalendarYear;
+	int				LastCalendarPos;
+	GSM_NOKIACalToDoLocations	LastCalendar;
+	int				FirstCalendarPos;
+	unsigned char			CalendarIcons[10];
+	GSM_CalendarNoteType		CalendarIconsTypes[10];
+	int				CalendarIconsNum;
+
+	GSM_NOKIASMSFolder		LastSMSFolder;
+	GSM_SMSFolders			LastSMSFolders;
+
+	GSM_NOKIACalToDoLocations	LastToDo;
+
+	GSM_NOKIACalToDoLocations	LastNote;
+
+	double				GNAPPLETVer;
 } GSM_Phone_GNAPGENData;
 
 #endif

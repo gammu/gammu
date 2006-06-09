@@ -764,15 +764,16 @@ static GSM_Error N7110_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 	req[6] = location / 256;
 	req[7] = location % 256;
 
+	sms->Memory = MEM_ME;
 	/* Outbox */
 	if (folderid == 0x10 && (sms->State == SMS_Sent || sms->State == SMS_UnSent)) {
-		/* We will use SIM Outbox */
-		sms->PDU = SMS_Submit;
+		sms->PDU = SMS_Submit; /* We will use SIM Outbox */
+		sms->Memory = MEM_SM;
 	}
 	/* Inbox */
-	if (folderid == 0x08 && sms->State == SMS_UnRead) {
-		/* We will use SIM Inbox */
-		req[5] = 0xf8;
+	if (folderid == 0x08 && (sms->State == SMS_UnRead || sms->State == SMS_Read)) {
+		if (sms->State == SMS_UnRead) req[5] = 0xf8; /* We will use SIM Inbox */
+		sms->Memory = MEM_SM;
 	}
 
 	switch (sms->PDU) {
@@ -1127,7 +1128,7 @@ static GSM_Error N7110_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	N7110_GetSMSLocation(s, sms, &folderid, &location);
 	req[4] = folderid;
 	req[5] = location / 256;
-	req[6] = location;
+	req[6] = location % 256;
 
 	smprintf(s, "Deleting sms\n");
 	return GSM_WaitFor (s, req, 8, 0x14, 4, ID_DeleteSMSMessage);

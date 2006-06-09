@@ -598,9 +598,17 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			case 0x08:
 				dbgprintf("UDH part - linked SMS with 16 bit ID\n");
 				break;
-//			case 0x0A:
-//				dbgprintf("UDH part - EMS text formatting\n");
-//				break;
+			case 0x0A:
+				dbgprintf("UDH part - EMS text formatting\n");
+				if (SMS->SMS[i].UDH.Text[w+2] > Pos) {
+					z = Pos;
+					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return false;
+				}
+				if (Info->Entries[Info->EntriesNum].ID != 0) (Info->EntriesNum)++;
+				Info->Entries[Info->EntriesNum].Number 	= SMS->SMS[i].UDH.Text[w+3];
+				Info->Entries[Info->EntriesNum].ID 	= SMS_ConcatenatedTextLong;
+				RetVal = true;
+				break;
 			case 0x0B:
 				dbgprintf("UDH part - default EMS sound\n");
 				if (SMS->SMS[i].UDH.Text[w+2] > Pos) {

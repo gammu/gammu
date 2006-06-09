@@ -1,0 +1,10 @@
+&EN
+
+#{"gnap"},(0x107d4df2),1,0,0
+
+(0x101F6F88), 0, 0, 0, {"Series60ProductID"}
+
+"gnapplet.app"-"C:\system\apps\gnapplet\gnapplet.app"
+"gnapplet.exe"-"C:\system\apps\gnapplet\gnapplet.exe"
+"gnapplet.rsc"-"C:\system\apps\gnapplet\gnapplet.rsc"
+"gnapplet.ini"-"C:\system\apps\gnapplet\gnapplet.ini"

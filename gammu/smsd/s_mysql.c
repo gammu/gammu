@@ -146,7 +146,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 {
 	MYSQL_RES 		*Res;
 	MYSQL_ROW 		Row;
-	unsigned char		buffer[10000],buffer2[400],buffer3[50];
+	unsigned char		buffer[10000],buffer2[400],buffer3[50],buffer4[800];
 	int 			i;
 	GSM_DateTime		DT;
 	time_t     		t_time1,t_time2;
@@ -277,7 +277,8 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 		case SMS_Coding_Unicode_No_Compression:
 	    	case SMS_Coding_Default_No_Compression:
 			EncodeUTF8(buffer2, sms.SMS[i].Text);
-			memcpy(buffer+strlen(buffer),buffer2,strlen(buffer2)+1);
+			mysql_real_escape_string(&Config->DB,buffer4,buffer2,strlen(buffer2));
+			memcpy(buffer+strlen(buffer),buffer4,strlen(buffer4)+1);
 			break;
 		case SMS_Coding_8bit:
 			break;
