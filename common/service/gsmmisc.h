@@ -8,7 +8,7 @@
 /**
  * Enum defines ID for various phone and SIM memories.
  * Phone modules can translate them to values specific for concrete models
- * Two letter codes (excluding VM) are from GSM 07.07
+ * Two letter codes (excluding VM and SL) are from GSM 07.07
  */
 typedef enum {
 	/**
@@ -47,7 +47,12 @@ typedef enum {
 	/**
 	 * Voice mailbox
 	 */
-	MEM_VM
+	MEM_VM,
+
+	/**
+	 * Sent SMS logs
+	 */
+	MEM_SL
 } GSM_MemoryType;
 
 /* --------------------------- resetting phone settings  ------------------- */
