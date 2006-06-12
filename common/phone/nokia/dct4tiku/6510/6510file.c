@@ -1070,9 +1070,10 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, b
 	if (error != ERR_NONE) return error;
 
 	if (Priv->filesystem2error == ERR_UNKNOWN) return ERR_UNKNOWN;
-
-	//no mmc
+	//no mmc in phone in this moment
 	if (Priv->filesystem2error == ERR_MEMORY) return ERR_EMPTY;
+	//mmc not supported at all
+	if (Priv->filesystem2error == ERR_FILENOTEXIST) return ERR_EMPTY;
 
 	memcpy(File,&Priv->Files[0],sizeof(GSM_File));
 	for (i=0;i<Priv->FilesLocationsUsed-1;i++) {
@@ -1518,7 +1519,14 @@ GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool star
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FILES2)) {
-		if (start) Priv->Use2 = true;
+		if (start) {
+			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+				//series 40 3.0 don't have filesystem 1
+				Priv->Use2 = false;
+			} else {
+				Priv->Use2 = true;
+			}
+		}
 		if (Priv->Use2) {
 			error = N6510_GetNextFileFolder1(s,File,start);
 			if (error == ERR_EMPTY) {
@@ -1703,6 +1711,22 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
 	memset(&File2, 0, sizeof(File2));
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (UnicodeLength(File->ID_FullName) == 0) {
+			EncodeUnicode(File->ID_FullName,"a:",2);
+			EncodeUnicode(File->Name,"A (Permanent_memory 2)",22);
+		} else if (!strcmp(DecodeUnicodeString(File->ID_FullName),"a:")) {
+			EncodeUnicode(File->ID_FullName,"b:",2);
+			error = N6510_GetFolderListing2(s, File, true);
+			if (error != ERR_NONE && error != ERR_EMPTY) return ERR_EMPTY;
+			EncodeUnicode(File->Name,"B (Memory card)",15);
+			EncodeUnicode(File->ID_FullName,"b:",2);
+		} else {
+			return ERR_EMPTY;
+		}
+		return ERR_NONE;
+	}
 
 	if (UnicodeLength(File->ID_FullName) == 0) {	
 		sprintf(buffer,"%i",0x01);

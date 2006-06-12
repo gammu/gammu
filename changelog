@@ -1,4 +1,4 @@
-ChangeLog for Gammu project (www.mwiacek.com)
+ChangeLog for Gammu project (www.gammu.org, www.mwiacek.com)
 Few last versions (the highest) will be described more detailed, older less.
 
 In brackets names of people, who told about error/problem or helped in fixing
@@ -29,7 +29,7 @@ This software was sponsored (in time order) by:
 21. 2005      Reinhard Weiss
 22. 2005      Andreas Leitgeb
 23. 2006      Assemblix Technology Pte Ltd (www.assemblix.com.sg)
-24. 2006      Cameron Laird
+24. 2006      Cameron Laird (http://phaseit.net/claird/home.html)
 
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
@@ -40,6 +40,20 @@ For additionals materials and links to them see readme.txt
 [+] New functionality
 [*] Changes in existing functionality
 [-] Fixed error
+
+20060611 - 1.07.00
+    SMSD & MYSQL:
+[-] * reports work OK now (they were wrong after updating all 00000000000000
+      to 0000-00-00 00:00:00 in DB)
+[-] * you can use " in outgoing sms too
+[-] * fix for multipart sms
+[+] * added new CreatorID entry in DB for outbox/sentsms
+    Series 40 3.0 (N6111 now)
+[+] * added: filesystem support, getting call lengths from call logs,
+      getting sent SMS log ("Message recipients" from "Log" in phone menu,
+      new memory SL in Gammu)
+[!] * checked: calendar, notes, todo (generally OK)
+[!] * SMS memory (decoding SMS files from filesystem) not supported yet
 
 20060605 - 1.06.30
 [!] In 6230i 3.70 after saving to "Outbox" (from PC) SMS is not visible in

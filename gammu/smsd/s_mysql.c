@@ -93,13 +93,13 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 		WriteSMSDLog("No version info in Gammu table: %s\n", mysql_error(&Config->DB));
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) > 6) {
+	if (atoi(Row[0]) > 7) {
 		mysql_free_result(Res);
 		WriteSMSDLog("DataBase structures are from higher Gammu version");
 		WriteSMSDLog("Please update this client application");
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) < 6) {
+	if (atoi(Row[0]) < 7) {
 		mysql_free_result(Res);
 		WriteSMSDLog("DataBase structures are from older Gammu version");
 		WriteSMSDLog("Please update DataBase, if you want to use this client application");
@@ -161,7 +161,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 			}
 
 			sprintf(buffer, "SELECT ID,Status,SendingDateTime,DeliveryDateTime,SMSCNumber FROM `sentitems` WHERE \
-					DeliveryDateTime='00000000000000' AND \
+					DeliveryDateTime='0000-00-00 00:00:00' AND \
 					SenderID='%s' AND TPMR='%i' AND DestinationNumber='%s'",
 					Config->PhoneID, sms.SMS[i].MessageReference, buffer2);
 			dbgprintf("%s\n",buffer);
@@ -182,15 +182,15 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 				if (!strcmp(Row[1],"SendingOK") || !strcmp(Row[1],"DeliveryPending")) {
 					sprintf(buffer,"%c%c%c%c",Row[2][0],Row[2][1],Row[2][2],Row[2][3]);
 					DT.Year = atoi(buffer);
-					sprintf(buffer,"%c%c",Row[2][4],Row[2][5]);
+					sprintf(buffer,"%c%c",Row[2][5],Row[2][6]);
 					DT.Month = atoi(buffer);
-					sprintf(buffer,"%c%c",Row[2][6],Row[2][7]);
-					DT.Day = atoi(buffer);
 					sprintf(buffer,"%c%c",Row[2][8],Row[2][9]);
+					DT.Day = atoi(buffer);
+					sprintf(buffer,"%c%c",Row[2][11],Row[2][12]);
 					DT.Hour = atoi(buffer);
-					sprintf(buffer,"%c%c",Row[2][10],Row[2][11]);
+					sprintf(buffer,"%c%c",Row[2][14],Row[2][15]);
 					DT.Minute = atoi(buffer);
-					sprintf(buffer,"%c%c",Row[2][12],Row[2][13]);
+					sprintf(buffer,"%c%c",Row[2][17],Row[2][18]);
 					DT.Second = atoi(buffer);
 					t_time1 = Fill_Time_T(DT);
 					t_time2 = Fill_Time_T(sms.SMS[i].DateTime);
@@ -353,7 +353,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	}
 	for (i=1;i<MAX_MULTI_SMS+1;i++) {
 		if (i==1) {
-			sprintf(buf, "SELECT Text,Coding,UDH,Class,TextDecoded,ID,DestinationNumber,MultiPart,RelativeValidity,DeliveryReport FROM `outbox` WHERE ID='%s'",ID);
+			sprintf(buf, "SELECT Text,Coding,UDH,Class,TextDecoded,ID,DestinationNumber,MultiPart,RelativeValidity,DeliveryReport,CreatorID FROM `outbox` WHERE ID='%s'",ID);
 		} else {
 			sprintf(buf, "SELECT Text,Coding,UDH,Class,TextDecoded,ID,SequencePosition FROM `outbox_multipart` WHERE ID='%s' AND SequencePosition='%i'",ID,i);
 		}
@@ -406,6 +406,8 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		sms->SMS[sms->Number].PDU  		= SMS_Submit;
 		sms->Number++;
 		if (i==1) {
+			sprintf(Config->CreatorID,"%s",Row[10]);
+
 			Config->relativevalidity = atoi(Row[8]);
 
 			Config->currdeliveryreport = -1;
@@ -444,7 +446,7 @@ static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 /* Adds SMS to Outbox */
 static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config)
 {
-	unsigned char		buffer[10000],buffer2[200],buffer4[10000];
+	unsigned char		buffer[10000],buffer2[400],buffer4[10000],buffer5[400];
 	int 			i,ID;
 	MYSQL_RES 		*Res;
 	MYSQL_ROW 		Row;
@@ -469,17 +471,19 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 	for (i=0;i<sms->Number;i++) {
 		buffer[0]=0;
 		if (i==0) {
-			sprintf(buffer+strlen(buffer),"INSERT INTO `outbox` (`SenderID`,`DeliveryReport`,`MultiPart`,`InsertIntoDB");
+			sprintf(buffer+strlen(buffer),"INSERT INTO `outbox` (`CreatorID`,`SenderID`,`DeliveryReport`,`MultiPart`,`InsertIntoDB");
 		} else {
-			sprintf(buffer+strlen(buffer),"INSERT INTO `outbox_multipart` (`SenderID`,`SequencePosition");
+			sprintf(buffer+strlen(buffer),"INSERT INTO `outbox_multipart` (`SequencePosition");
 		}
 		sprintf(buffer+strlen(buffer),"`,`Text`,");
 		if (i==0) {
 			sprintf(buffer+strlen(buffer),"`DestinationNumber`,`RelativeValidity`,");
 		}
 		sprintf(buffer+strlen(buffer),"`Coding`,`UDH`, \
-			`Class`,`TextDecoded`,`ID`) VALUES ('','");
+			`Class`,`TextDecoded`,`ID`) VALUES (");
 		if (i==0) {
+			sprintf(buffer+strlen(buffer),"'Gammu %s',",VERSION);			
+			sprintf(buffer+strlen(buffer),"'','");			
 			if (sms->SMS[i].PDU == SMS_Status_Report) {
 				sprintf(buffer+strlen(buffer),"yes','");
 			} else {
@@ -492,7 +496,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			}
 			sprintf(buffer+strlen(buffer),"',NOW()");
 		} else {
-			sprintf(buffer+strlen(buffer),"%i'",i+1);
+			sprintf(buffer+strlen(buffer),"'%i'",i+1);
 		}
 		sprintf(buffer+strlen(buffer),",'");
 
@@ -542,7 +546,8 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		case SMS_Coding_Unicode_No_Compression:
 	    	case SMS_Coding_Default_No_Compression:
 			EncodeUTF8(buffer2, sms->SMS[i].Text);
-			memcpy(buffer+strlen(buffer),buffer2,strlen(buffer2)+1);
+			mysql_real_escape_string(&Config->DB,buffer5,buffer2,strlen(buffer2));
+			memcpy(buffer+strlen(buffer),buffer5,strlen(buffer5)+1);
 			break;
 		default:
 			break;
@@ -595,7 +600,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 
 static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, int Part, GSM_SMSDSendingError err, int TPMR)
 {
-	unsigned char	buffer[10000],buffer2[200],buff[50];
+	unsigned char	buffer[10000],buffer2[400],buff[50],buffer5[400];
 
 	if (err == SMSD_SEND_OK) WriteSMSDLog("Transmitted %s (%s: %i) to %s", Config->SMSID, (Part == sms->Number?"total":"part"),Part,DecodeUnicodeString(sms->SMS[0].Number));
 
@@ -612,9 +617,9 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 
 	buffer[0] = 0;
 	sprintf(buffer+strlen(buffer),"INSERT INTO `sentitems` \
-		(`ID`,`SequencePosition`,`Status`,`SendingDateTime`, `SMSCNumber`, `TPMR`, \
+		(`CreatorID`,`ID`,`SequencePosition`,`Status`,`SendingDateTime`, `SMSCNumber`, `TPMR`, \
 		`SenderID`,`Text`,`DestinationNumber`,`Coding`,`UDH`,`Class`,`TextDecoded`,`InsertIntoDB`,`RelativeValidity`) VALUES (");
-	sprintf(buffer+strlen(buffer),"'%s','%i','%s',NOW(),'%s','%i','%s','",ID,Part,buff,DecodeUnicodeString(sms->SMS[Part-1].SMSC.Number),TPMR,Config->PhoneID);
+	sprintf(buffer+strlen(buffer),"'%s','%s','%i','%s',NOW(),'%s','%i','%s','",Config->CreatorID,ID,Part,buff,DecodeUnicodeString(sms->SMS[Part-1].SMSC.Number),TPMR,Config->PhoneID);
 	switch (sms->SMS[Part-1].Coding) {
 	case SMS_Coding_Unicode_No_Compression:
     	case SMS_Coding_Default_No_Compression:
@@ -652,7 +657,8 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 	case SMS_Coding_Unicode_No_Compression:
 	case SMS_Coding_Default_No_Compression:
 		EncodeUTF8(buffer2, sms->SMS[Part-1].Text);
-		memcpy(buffer+strlen(buffer),buffer2,strlen(buffer2)+1);
+		mysql_real_escape_string(&Config->DB,buffer5,buffer2,strlen(buffer2));
+		memcpy(buffer+strlen(buffer),buffer5,strlen(buffer5)+1);
 		break;
 	default:
 		break;

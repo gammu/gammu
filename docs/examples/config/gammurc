@@ -98,8 +98,8 @@ connection = fbusblue
 # OBEX for Bluetooth stack with other phones (Siemens, other Nokia, etc.)
 #    Connection "blueobex", port type BT. Must be used with model "obex"
 # -----------------------------------------------------------------------------
-#    Connection "bluerfgnapbus", port type BT
-#    Connection "irdagnapbus", port type irda
+#    Connection "bluerfgnapbus", port type BT, model "gnap"
+#    Connection "irdagnapbus", port type irda, model "gnap"
 
 # Step2. According to port type from Step1 and used OS set Port parameter
 
