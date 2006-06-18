@@ -31,6 +31,9 @@ typedef struct {
 
 	GSM_NOKIASMSFolder		LastSMSFolder;
 	GSM_SMSFolders			LastSMSFolders;
+	GSM_File			SMSFile;
+	GSM_Error			SMSFileError;
+	int				SMSFileFolder;
 
 	GSM_NOKIACalToDoLocations	LastToDo;
 

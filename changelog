@@ -41,6 +41,15 @@ For additionals materials and links to them see readme.txt
 [*] Changes in existing functionality
 [-] Fixed error
 
+20060618 - 1.07.07
+    Series 40 3.0:
+[+] * getting sent SMS from phone memory (Text, Coding, Class, but no
+      SMSC in frames and no visible info about Delivery Report)
+[+] * getting received/edited SMS from phone memory (Text, Coding, Class,
+      SMSC, UDH)
+[!] * still some SMS memory things are decoded "magically", no support for
+      read/unread state and still no idea, how to handle SIM SMS
+
 20060611 - 1.07.00
     SMSD & MYSQL:
 [-] * reports work OK now (they were wrong after updating all 00000000000000
