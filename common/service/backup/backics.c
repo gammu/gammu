@@ -73,7 +73,7 @@ GSM_Error LoadICS(char *FileName, GSM_Backup *backup)
 			dbgprintf("numCal=%i\n",numCal);
 			if (numCal < GSM_MAXCALENDARTODONOTES) {
 				backup->Calendar[numCal] = malloc(sizeof(GSM_CalendarEntry));
-				dbgprintf("malloc=%d\n",backup->Calendar[numCal]);
+				dbgprintf("malloc=%p\n",backup->Calendar[numCal]);
 			        if (backup->Calendar[numCal] == NULL) return ERR_MOREMEMORY;
 				backup->Calendar[numCal + 1] = NULL;
 			} else {
