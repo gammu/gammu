@@ -53,6 +53,7 @@ static GSM_Error N6510_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 
 static GSM_Error N6510_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
+	GSM_Error error;
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x07, 0x01, 0x01, 0x00, 0x01,
 			       0xfe, 0x10, 	/* memory type */
 			       0x00, 0x00, 0x00, 0x00,
@@ -69,7 +70,12 @@ static GSM_Error N6510_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
-	return GSM_WaitFor (s, req, 19, 0x03, 4, ID_GetMemory);
+	error = GSM_WaitFor (s, req, 19, 0x03, 4, ID_GetMemory);
+	if (entry->MemoryType == MEM_DC || entry->MemoryType == MEM_RC || entry->MemoryType == MEM_MC) {
+		//6111
+		if (error == ERR_NOTSUPPORTED) return ERR_EMPTY;
+	}
+	return error;
 }
 
 static GSM_Error N6510_ReplyGetMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -495,11 +501,32 @@ static GSM_Error N6510_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMac
 	return ERR_UNKNOWNRESPONSE;
 }
 
+GSM_Error N6510_GetSMSFoldersS40_30(GSM_StateMachine *s, GSM_SMSFolders *folders)
+{
+	folders->Number=4;
+	EncodeUnicode(folders->Folder[0].Name,GetMsg(s->msg,"SIM"),strlen(GetMsg(s->msg,"SIM")));
+	EncodeUnicode(folders->Folder[1].Name,GetMsg(s->msg,"Inbox"),strlen(GetMsg(s->msg,"Inbox")));
+	EncodeUnicode(folders->Folder[2].Name,GetMsg(s->msg,"Sent items"),strlen(GetMsg(s->msg,"Sent items")));
+	EncodeUnicode(folders->Folder[3].Name,GetMsg(s->msg,"Saved items"),strlen(GetMsg(s->msg,"Saved items")));
+	folders->Folder[0].InboxFolder = true;
+	folders->Folder[1].InboxFolder = true;
+	folders->Folder[2].InboxFolder = false;
+	folders->Folder[3].InboxFolder = false;
+	folders->Folder[0].Memory      = MEM_SM;
+	folders->Folder[1].Memory      = MEM_ME;
+	folders->Folder[2].Memory      = MEM_ME;
+	folders->Folder[3].Memory      = MEM_ME;
+	return ERR_NONE;
+}
+
 static GSM_Error N6510_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x12, 0x00, 0x00};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return N6510_GetFilesystemSMSFolders(s,folders);
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return N6510_GetFilesystemSMSFolders(s,folders);
+		return N6510_GetSMSFoldersS40_30(s,folders);
+	}
 
 	s->Phone.Data.SMSFolders=folders;
 	smprintf(s, "Getting SMS folders\n");
@@ -531,10 +558,17 @@ static GSM_Error N6510_GetSMSFolderStatus(GSM_StateMachine *s, int folderid)
 			       0x00,		/* Folder ID		*/
 			       0x0f, 0x55, 0x55, 0x55};
 
-	switch (folderid) {
-		case 0x01: req[5] = 0x02; 			 break; /* INBOX SIM 	*/
-		case 0x02: req[5] = 0x03; 			 break; /* OUTBOX SIM 	*/
-		default	 : req[5] = folderid - 1; req[4] = 0x02; break; /* ME folders	*/
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		switch (folderid) {
+			case 0x01: req[5] = 0x01; 			break; /* SIM 		*/
+			default	 : req[5] = folderid; req[4] = 0x02; 	break; /* ME folders	*/
+		}
+	} else {
+		switch (folderid) {
+			case 0x01: req[5] = 0x02; 			 break; /* INBOX SIM 	*/
+			case 0x02: req[5] = 0x03; 			 break; /* OUTBOX SIM 	*/
+			default	 : req[5] = folderid - 1; req[4] = 0x02; break; /* ME folders	*/
+		}
 	}
 
 	smprintf(s, "Getting SMS folder status\n");
@@ -568,7 +602,7 @@ static void N6510_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsig
 		folderid,location,sms->Folder,sms->Location);
 }
 
-static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *buffer)
+static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *buffer, int *current2)
 {
 	int 			i, current, blocks=0, SMSTemplateDateTime = 0;
 	GSM_SMSMessageLayout 	Layout;
@@ -645,15 +679,17 @@ static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 		NOKIA_DecodeDateTime(s, buffer+SMSTemplateDateTime, &sms->DateTime);
 		sms->DateTime.Timezone = 0;
 	}
+	(*current2) = current;
 	return error;
 }
 
 static GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int			i;
+	int			i,j;
 	int			Width, Height;
 	unsigned char		output[500]; //output2[500];
 	GSM_Phone_Data		*Data = &s->Phone.Data;
+	GSM_Error		error;
 
 	switch(msg.Buffer[3]) {
 	case 0x03:
@@ -664,7 +700,21 @@ static GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 		case 0x00:
 		case 0x01:
 		case 0x02:
-			return N6510_DecodeSMSFrame(s, &Data->GetSMSMessage->SMS[0],msg.Buffer+14);
+			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+				Data->GetSMSMessage->Number=0;
+				i = 14;
+				while (true) {
+					error = N6510_DecodeSMSFrame(s, &Data->GetSMSMessage->SMS[Data->GetSMSMessage->Number],msg.Buffer+i,&j);
+					if (error != ERR_NONE) return error;
+					NOKIA_DecodeSMSState(s, msg.Buffer[5], &Data->GetSMSMessage->SMS[Data->GetSMSMessage->Number]);
+					i+=j;
+					Data->GetSMSMessage->Number++;
+					if (i>=msg.Length) break;
+				}
+				return error;
+			} else {
+				return N6510_DecodeSMSFrame(s, &Data->GetSMSMessage->SMS[0],msg.Buffer+14,&j);
+			}
 		case 0xA0:
 			smprintf(s, "Picture Image\n");
 			Data->GetSMSMessage->Number = 0;
@@ -735,11 +785,19 @@ static GSM_Error N6510_PrivGetSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 
 	N6510_GetSMSLocation(s, &sms->SMS[0], &folderid, &location);
 
-	switch (folderid) {
-		case 0x01: req[5] = 0x02; 			 break; /* INBOX SIM 	*/
-		case 0x02: req[5] = 0x03; 			 break; /* OUTBOX SIM 	*/
-		default	 : req[5] = folderid - 1; req[4] = 0x02; break; /* ME folders	*/
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		switch (folderid) {
+			case 0x01: req[5] = 0x01; 			 break; /* SIM 		*/
+			default	 : req[5] = folderid; req[4] = 0x02; 	 break; /* ME folders	*/
+		}
+	} else {
+		switch (folderid) {
+			case 0x01: req[5] = 0x02; 			 break; /* INBOX SIM 	*/
+			case 0x02: req[5] = 0x03; 			 break; /* OUTBOX SIM 	*/
+			default	 : req[5] = folderid - 1; req[4] = 0x02; break; /* ME folders	*/
+		}
 	}
+
 	req[6]=location / 256;
 	req[7]=location % 256;
 
@@ -758,10 +816,19 @@ static GSM_Error N6510_PrivGetSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 		for (i=0;i<sms->Number;i++) {
 			N6510_SetSMSLocation(s, &sms->SMS[i], folderid, location);
 			sms->SMS[i].Folder 	= folderid;
-			sms->SMS[i].InboxFolder = true;
-			if (folderid != 0x01 && folderid != 0x03) sms->SMS[i].InboxFolder = false;
-			sms->SMS[i].Memory	= MEM_ME;
-			if (folderid == 0x01 || folderid == 0x02) sms->SMS[i].Memory = MEM_SM;
+
+			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+				sms->SMS[i].InboxFolder = true;
+				if (folderid > 2) sms->SMS[i].InboxFolder = false;
+				sms->SMS[i].Memory = MEM_ME;
+				if (folderid == 0x01) sms->SMS[i].Memory = MEM_SM;
+			} else {
+				sms->SMS[i].InboxFolder = true;
+				if (folderid != 0x01 && folderid != 0x03) sms->SMS[i].InboxFolder = false;
+				sms->SMS[i].Memory	= MEM_ME;
+				if (folderid == 0x01 || folderid == 0x02) sms->SMS[i].Memory = MEM_SM;
+			}
+
 			CopyUnicodeString(sms->SMS[i].Name,namebuffer);
 		}
 	}
@@ -776,6 +843,10 @@ static GSM_Error N6510_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	int			i;
 	bool			found = false;
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return ERR_NOTSUPPORTED;
+	}
 
 	N6510_GetSMSLocation(s, &sms->SMS[0], &folderid, &location);
 	error=N6510_GetSMSFolderStatus(s, folderid);
@@ -836,7 +907,9 @@ static GSM_Error N6510_GetNextSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 
 static GSM_Error N6510_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
 {
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return N6510_GetNextFilesystemSMS(s,sms,start);
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return N6510_GetNextFilesystemSMS(s,sms,start);
+	}
 
 	return N6510_GetNextSMSMessageBitmap(s, sms, start, NULL);
 }
@@ -2296,14 +2369,23 @@ static GSM_Error N6510_DeleteSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms
 					 0x00, 0x02, 	/* Location */
 					 0x0F, 0x55};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return ERR_NOTSUPPORTED;
+	}
 
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
 
-	switch (folderid) {
-		case 0x01: req[5] = 0x02; 			 break; /* INBOX SIM 	*/
-		case 0x02: req[5] = 0x03; 			 break; /* OUTBOX SIM 	*/
-		default	 : req[5] = folderid - 1; req[4] = 0x02; break; /* ME folders	*/
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		switch (folderid) {
+			case 0x01: req[5] = 0x01; 			 break; /* SIM 		*/
+			default	 : req[5] = folderid; req[4] = 0x02; 	 break; /* ME folders	*/
+		}
+	} else {
+		switch (folderid) {
+			case 0x01: req[5] = 0x02; 			 break; /* INBOX SIM 	*/
+			case 0x02: req[5] = 0x03; 			 break; /* OUTBOX SIM 	*/
+			default	 : req[5] = folderid - 1; req[4] = 0x02; break; /* ME folders	*/
+		}
 	}
 	req[6]=location / 256;
 	req[7]=location % 256;
@@ -2439,13 +2521,17 @@ static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 		}
 
 		smprintf(s, "Folder info: %i %i\n",msg.Buffer[5],msg.Buffer[8]);
-		folder = msg.Buffer[8] + 1;
 		Data->SaveSMSMessage->Memory = MEM_ME;
-		//inbox,outbox
-		if (msg.Buffer[8] == 0x02 || msg.Buffer[8] == 0x03) {
-			if (msg.Buffer[5] == 0x01) {
-				folder = msg.Buffer[8] - 1;
-				Data->SaveSMSMessage->Memory = MEM_SM;
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+			folder = msg.Buffer[8];
+		} else {
+			folder = msg.Buffer[8] + 1;
+			//inbox,outbox
+			if (msg.Buffer[8] == 0x02 || msg.Buffer[8] == 0x03) {
+				if (msg.Buffer[5] == 0x01) {
+					folder = msg.Buffer[8] - 1;
+					Data->SaveSMSMessage->Memory = MEM_SM;
+				}
 			}
 		}
 		N6510_SetSMSLocation(s, Data->SaveSMSMessage,folder,msg.Buffer[6]*256+msg.Buffer[7]);
@@ -2477,44 +2563,69 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 		0x02,			/* Folder   		*/
 		0x00, 0x01};		/* Location 		*/
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return ERR_NOTSUPPORTED;
+	}
 
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
 	if (folderid == 0x99) return ERR_INVALIDLOCATION;
-	switch (folderid) {
-		case 0x01: req[5] = 0x02; 			 break; /* INBOX SIM 	*/
-		case 0x02: req[5] = 0x03; 			 break; /* OUTBOX SIM 	*/
-		default	 : req[5] = folderid - 1; req[4] = 0x02; break; /* ME folders	*/
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		switch (folderid) {
+			case 0x02: req[4] = 0x02; req[5] = 0x02; break; //inbox
+			//sms saved to sent items make problems later during reading
+			//case 0x03: req[4] = 0x02; req[5] = 0x03; break; //sent items
+			default	 : return ERR_NOTSUPPORTED; //at least 6111 doesn't support saving to other
+		}
+	} else {
+		switch (folderid) {
+			case 0x01: req[5] = 0x02; 			 break; /* INBOX SIM 	*/
+			case 0x02: req[5] = 0x03; 			 break; /* OUTBOX SIM 	*/
+			default	 : req[5] = folderid - 1; req[4] = 0x02; break; /* ME folders	*/
+		}
 	}
 	req[6]=location / 256;
 	req[7]=location % 256;
 
-	switch (sms->PDU) {
-	case SMS_Status_Report: //this is SMS submit with delivery report request
-	case SMS_Submit:
-		/* Inbox */
-		if (folderid == 0x01 || folderid == 0x03) sms->PDU = SMS_Deliver;
-		break;
-	case SMS_Deliver:
-		/* SIM Outbox */
-		if (folderid == 0x02) sms->PDU = SMS_Submit;
-		break;
-	default:
-		return ERR_UNKNOWN;
-	}
-	if (sms->PDU == SMS_Deliver) {
-		switch (sms->State) {
-			case SMS_Sent	: /* We use GSM_Read, because phone return error */
-			case SMS_Read	: req[8] = 0x01; break;
-			case SMS_UnSent	: /* We use GSM_UnRead, because phone return error */
-			case SMS_UnRead	: req[8] = 0x03; break;
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		switch (sms->PDU) {
+		case SMS_Status_Report: //this is SMS submit with delivery report request
+		case SMS_Submit:
+			break;
+		case SMS_Deliver:
+			/* Sent items */
+			if (folderid == 0x03) sms->PDU = SMS_Submit;
+			break;
+		default:
+			return ERR_UNKNOWN;
 		}
 	} else {
-		switch (sms->State) {
-			case SMS_Sent	: /* We use GSM_Sent, because phone change folder */
-			case SMS_Read	: req[8] = 0x05; break;
-			case SMS_UnSent	: /* We use GSM_UnSent, because phone change folder */
-			case SMS_UnRead	: req[8] = 0x07; break;
+		switch (sms->PDU) {
+		case SMS_Status_Report: //this is SMS submit with delivery report request
+		case SMS_Submit:
+			/* Inbox */
+			if (folderid == 0x01 || folderid == 0x03) sms->PDU = SMS_Deliver;
+			break;
+		case SMS_Deliver:
+			/* SIM Outbox */
+			if (folderid == 0x02) sms->PDU = SMS_Submit;
+			break;
+		default:
+			return ERR_UNKNOWN;
+		}
+		if (sms->PDU == SMS_Deliver) {
+			switch (sms->State) {
+				case SMS_Sent	: /* We use GSM_Read, because phone return error */
+				case SMS_Read	: req[8] = 0x01; break;
+				case SMS_UnSent	: /* We use GSM_UnRead, because phone return error */
+				case SMS_UnRead	: req[8] = 0x03; break;
+			}
+		} else {
+			switch (sms->State) {
+				case SMS_Sent	: /* We use GSM_Sent, because phone change folder */
+				case SMS_Read	: req[8] = 0x05; break;
+				case SMS_UnSent	: /* We use GSM_UnSent, because phone change folder */
+				case SMS_UnRead	: req[8] = 0x07; break;
+			}
 		}
 	}
 	memset(req+9,0x00,sizeof(req) - 9);
@@ -2532,10 +2643,19 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 	folder = sms->Folder;
 	sms->Folder = 0;
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
-	switch (folderid) {
-		case 0x01: NameReq[5] = 0x02; 				 break; /* INBOX SIM 	*/
-		case 0x02: NameReq[5] = 0x03; 			 	 break; /* OUTBOX SIM 	*/
-		default	 : NameReq[5] = folderid - 1; NameReq[4] = 0x02; break; /* ME folders	*/
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		switch (folderid) {
+			case 0x03: NameReq[4] = 0x02; NameReq[5] = 0x02; break; //sent items
+			case 0x02: NameReq[4] = 0x02; NameReq[5] = 0x03; break; //inbox
+			default	 : return ERR_NOTSUPPORTED; //at least 6111 doesn't support saving to other
+		}
+	} else {
+		switch (folderid) {
+			case 0x01: NameReq[5] = 0x02; 				 break; /* INBOX SIM 	*/
+			case 0x02: NameReq[5] = 0x03; 			 	 break; /* OUTBOX SIM 	*/
+			default	 : NameReq[5] = folderid - 1; NameReq[4] = 0x02; break; /* ME folders	*/
+		}
 	}
 	NameReq[6]=location / 256;
 	NameReq[7]=location % 256;
@@ -3143,18 +3263,19 @@ static GSM_Error N6510_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 
 static GSM_Error N6510_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_SMSMessage sms;
+	GSM_SMSMessage 	sms;
+	int 		i;
 
 #ifdef DEBUG
 	smprintf(s, "SMS message received\n");
-	N6510_DecodeSMSFrame(s, &sms, msg.Buffer+10);
+	N6510_DecodeSMSFrame(s, &sms, msg.Buffer+10,&i);
 #endif
 
 	if (s->Phone.Data.EnableIncomingSMS && s->User.IncomingSMS!=NULL) {
 		sms.State 	 = SMS_UnRead;
 		sms.InboxFolder  = true;
 
-		N6510_DecodeSMSFrame(s, &sms, msg.Buffer+10);
+		N6510_DecodeSMSFrame(s, &sms, msg.Buffer+10,&i);
 
 		s->User.IncomingSMS(s->CurrentConfig->Device,sms);
 	}
@@ -3982,7 +4103,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|5140i|6020|6021|6100|6111|6170|6200|6220|6230|6230i|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|7200|7210|7250|7250i|7270|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|5140i|6020|6021|6100|6101|6111|6170|6200|6220|6230|6230i|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|6822|7200|7210|7250|7250i|7260|7270|7360|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/

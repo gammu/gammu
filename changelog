@@ -41,6 +41,30 @@ For additionals materials and links to them see readme.txt
 [*] Changes in existing functionality
 [-] Fixed error
 
+20060622 - 1.07.09
+[+] Added ID for new models like 6101
+    Series 40 3.0:
+[+] * getting mms + improved mms decoder
+[+] * there are two ways of getting SMS from phone (both supported by Gammu):
+      * 1st: reading SMS files - don't allow to read SIM, saving, deleting SMS
+             isn't implemented yet (in fact only --getallsms/--geteachsms are
+             working with it now)
+      * 2nd: using a little modified Series 40 2.0 API
+             * it returns error for SIM Outbox SMS (6111 3.58)
+             * returns error for SMS saved to Sent Items (6111 3.58)
+             * doesn't have access to some folders (like Drafts or usr folders)
+             * allow to read SIM Inbox
+             * allow for fast implementing --getsms, --deletesms, --savesms,
+               --addsms (--addsms/--savesms working OK for Inbox only)
+      Both:
+      * don't allow to access Templates
+      * no SMSC in sent SMS
+      * SMS from Delivery Reports folder are unknown too
+      By default there will be 1st used (in fact it's used by OPM2 too),
+      to disable it clear F_SMS_FILES as phone feature.
+[-] * c: drive doesn't exist for S40 3.0
+[-] fixed wrong format of few strings                           (Michal Cihar)
+
 20060618 - 1.07.07
     Series 40 3.0:
 [+] * getting sent SMS from phone memory (Text, Coding, Class, but no

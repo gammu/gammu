@@ -1567,6 +1567,9 @@ GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, in
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FILES2)) {
 		if (DecodeUnicodeString(File->ID_FullName)[0] == 'c' || 
 		    DecodeUnicodeString(File->ID_FullName)[0] == 'C') {
+			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+				return ERR_NOTSUPPORTED;
+			}
 			memcpy(&File2,File,sizeof(GSM_File));
 			CopyUnicodeString(File2.ID_FullName,File->ID_FullName+3*2);
 			error = N6510_GetFilePart1(s,&File2, Handle, Size);
@@ -1768,6 +1771,71 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 	return ERR_NONE;	
 }
 
+//Series 40 3.0
+GSM_Error N6510_PrivGetFilesystemMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
+{
+	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
+	bool 			Start = true;
+	GSM_File	 	Files;
+	GSM_Error		error;
+
+	memset(&Files, 0, sizeof(Files));
+
+	EncodeUnicode(Files.ID_FullName,"a:/predefmessages",17);
+
+	folders->Number = 0;
+
+	smprintf(s, "Getting MMS folders\n");
+	while (1) {
+		error = N6510_GetFolderListing(s,&Files,Start);
+		if (error == ERR_EMPTY) return ERR_NONE;
+		if (error != ERR_NONE) return error;
+
+		Start = false;
+
+		if (!strcmp(DecodeUnicodeString(Files.Name),"exchange")) {
+			continue;
+		} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefdrafts")) {
+			continue;
+		} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefsent")) {
+			continue;
+		} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefoutbox")) {
+			continue;
+		} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefinbox")) {
+			continue;
+		}
+
+		folders->Folder[folders->Number].InboxFolder = false;
+		if (!strcmp(DecodeUnicodeString(Files.Name),"1")) {
+			folders->Folder[folders->Number].InboxFolder = true;
+		}
+
+		CopyUnicodeString(Priv->MMSFoldersID2[folders->Number],Files.ID_FullName);
+
+//			CopyUnicodeString(folders->Folder[folders->Number].Name,Files.Name);
+//		folders->Number++;
+//		continue;
+
+		if (!strcmp(DecodeUnicodeString(Files.Name),"1")) {
+			EncodeUnicode(folders->Folder[folders->Number].Name,"Inbox",5);
+		} else if (!strcmp(DecodeUnicodeString(Files.Name),"3")) {
+			EncodeUnicode(folders->Folder[folders->Number].Name,"Sent items",10);
+		} else if (!strcmp(DecodeUnicodeString(Files.Name),"4")) {
+			EncodeUnicode(folders->Folder[folders->Number].Name,"Saved messages",14);
+		} else if (!strcmp(DecodeUnicodeString(Files.Name),"5")) {
+			EncodeUnicode(folders->Folder[folders->Number].Name,"Drafts",6);
+		} else if (!strcmp(DecodeUnicodeString(Files.Name),"6")) {
+			EncodeUnicode(folders->Folder[folders->Number].Name,"Templates",9);
+		} else {
+			CopyUnicodeString(folders->Folder[folders->Number].Name,Files.Name);
+		}
+
+		folders->Number++;
+//printf("num %i\n",folders->Number);
+
+	}
+}
+
 GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 {
 	GSM_Error 		error;
@@ -1775,6 +1843,7 @@ GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 	bool			Start = true;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	int			i;
+
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
@@ -1784,6 +1853,8 @@ GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 		Priv->MMSFoldersID2[i][0] = 0;
 		Priv->MMSFoldersID2[i][1] = 0;
 	}
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return N6510_PrivGetFilesystemMMSFolders(s,folders);
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_FILES2)) {
 		//6230
@@ -1859,6 +1930,8 @@ GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, i
 	GSM_MMSFolders 		folders;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	GSM_Error		error;
+	GSM_File		file;
+	int			Handle,Size;
 
 	if (start) {
 		error = N6510_GetMMSFolders(s, &folders);
@@ -1868,26 +1941,49 @@ GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, i
 		Priv->MMSFolderError 	= ERR_EMPTY;
 	}
 
-	if (Priv->MMSFolderError == ERR_NONE) {
-		Priv->MMSFolderError = N6510_GetFolderListing(s,&Priv->MMSFile,false);
-		if (Priv->MMSFolderError != ERR_EMPTY && Priv->MMSFolderError != ERR_NONE) return Priv->MMSFolderError;
-	}
-
-	if (Priv->MMSFolderError == ERR_EMPTY) {
-		while (1) {
-			if (UnicodeLength(Priv->MMSFoldersID2[Priv->MMSFolderNum])==0) return ERR_EMPTY;
-	
-			CopyUnicodeString(Priv->MMSFile.ID_FullName,Priv->MMSFoldersID2[Priv->MMSFolderNum]);
-			Priv->MMSFolderNum++;
-	
-			Priv->MMSFolderError = N6510_GetFolderListing(s,&Priv->MMSFile,true);
-			if (Priv->MMSFolderError == ERR_EMPTY) continue;
-			if (Priv->MMSFolderError != ERR_NONE) return Priv->MMSFolderError;
-			break;
+	while(true) {	
+		if (Priv->MMSFolderError == ERR_NONE) {
+			Priv->MMSFolderError = N6510_GetFolderListing(s,&Priv->MMSFile,false);
+			if (Priv->MMSFolderError != ERR_EMPTY && Priv->MMSFolderError != ERR_NONE) return Priv->MMSFolderError;
 		}
+
+		if (Priv->MMSFolderError == ERR_EMPTY) {
+			while (1) {
+				if (UnicodeLength(Priv->MMSFoldersID2[Priv->MMSFolderNum])==0) return ERR_EMPTY;
+	
+				CopyUnicodeString(Priv->MMSFile.ID_FullName,Priv->MMSFoldersID2[Priv->MMSFolderNum]);
+				Priv->MMSFolderNum++;
+	
+				Priv->MMSFolderError = N6510_GetFolderListing(s,&Priv->MMSFile,true);
+				if (Priv->MMSFolderError == ERR_EMPTY) continue;
+				if (Priv->MMSFolderError != ERR_NONE) return Priv->MMSFolderError;
+				break;
+			}
+		}
+		(*MMSFolder) = Priv->MMSFolderNum;
+		CopyUnicodeString(FileID,Priv->MMSFile.ID_FullName);
+
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+			CopyUnicodeString(file.ID_FullName,FileID);
+			file.Used   = 0;
+			file.Buffer = NULL;
+			error = N6510_GetFilePart2(s, &file, &Handle, &Size);
+			if (error == ERR_NONE) {
+				error = N6510_CloseFile2(s, &Handle);
+				if (error != ERR_NONE) return error;
+			} else if (error == ERR_EMPTY) {
+			} else {
+				return error;
+			}
+	
+			//0x00 = SMS, 0x01,0x03 = MMS
+			if (file.Buffer[6] != 0x00) {
+				free(file.Buffer);
+				break;
+			}
+			free(file.Buffer);
+		} else break;
 	}
-	(*MMSFolder) = Priv->MMSFolderNum;
-	CopyUnicodeString(FileID,Priv->MMSFile.ID_FullName);
 
 	return ERR_NONE;
 }
@@ -1908,6 +2004,8 @@ GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders 
 		error = N6510_GetFolderListing(s,&Files,Start);
 		if (error == ERR_EMPTY) return ERR_NONE;
 		if (error != ERR_NONE) return error;
+
+		Start = false;
 
 		if (!strcmp(DecodeUnicodeString(Files.Name),"exchange")) {
 			continue;
@@ -1944,16 +2042,16 @@ GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders 
 		}
 		folders->Folder[folders->Number].Memory      = MEM_ME;
 		folders->Number++;
-
-		Start = false;
 	}
 }
 
+//Series 40 3.0
 GSM_Error N6510_GetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 {
 	return N6510_PrivGetFilesystemSMSFolders(s, folders, false);
 }
 
+//Series 40 3.0
 static void N26510_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *folderid, int *location)
 {
 	int ifolderid;
@@ -1971,6 +2069,7 @@ static void N26510_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsi
 		sms->Folder,sms->Location,*folderid,*location);
 }
 
+//Series 40 3.0
 static void N26510_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char folderid, int location)
 {
 	sms->Folder	= 0;
@@ -1979,6 +2078,7 @@ static void N26510_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsi
 		folderid,location,sms->Folder,sms->Location);
 }
 
+//Series 40 3.0
 GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
 {
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
@@ -2029,7 +2129,7 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		while (error == ERR_NONE) error = N6510_GetFilePart(s,&FFF,&Handle,&Size);
 		DumpMessage(&s->di, FFF.Buffer, FFF.Used);
 
-		//0x00 = SMS, 0x01 = MMS
+		//0x00 = SMS, 0x01,0x03 = MMS
 		if (FFF.Buffer[6] == 0x00) break;
 
 		smprintf(s,"mms file");

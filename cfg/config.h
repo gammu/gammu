@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "1.07.07"
-#define VERSION_WIN "1,07,07,0"
+#define VERSION "1.07.09"
+#define VERSION_WIN "1,07,09,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
