@@ -237,7 +237,7 @@ bool ReadVCALInt(char *Buffer, char *Start, int *Value)
 		strncpy(buff,Buffer+lstart+1,lvalue);
 		strncpy(buff+lvalue,"\0",1);
 		if (sscanf(buff,"%i",Value)) {
-			dbgprintf("ReadVCalInt is \"%i\"\n",Value);
+			dbgprintf("ReadVCalInt is \"%i\"\n",*Value);
 			return true;
 		}
 	}
@@ -255,10 +255,10 @@ bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date)
 	if (strncmp(Buffer,buff,strlen(buff))) {
 		strcpy(buff,Start);
 		strcat(buff,";VALUE=DATE:");
-		if (strncmp(Buffer,buff,strlen(buff))) 
-			return false; 
+		if (strncmp(Buffer,buff,strlen(buff)))
+			return false;
 	}
-	
+
 	lstart = strlen(buff);
 	lvalue = strlen(Buffer)-lstart;
 	strncpy(buff,Buffer+lstart,lvalue);
@@ -269,7 +269,7 @@ bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date)
 			Date->Hour, Date->Minute, Date->Second);
 		return true;
 	}
-	return false; 
+	return false;
 }
 
 void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)
@@ -370,16 +370,16 @@ bool ReadVCALTextUTF8(char *Buffer, char *Start, char *Value)
 	return false;
 }
 
-bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *file) 
+bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *file)
 {
 	int			s, len;
 	struct sockaddr_in 	address;
 	struct hostent 		*address2;
 	unsigned char 		buff[200];
 #ifdef WIN32
-	WSADATA			wsaData; 
+	WSADATA			wsaData;
 
-	if (WSAStartup(MAKEWORD(1, 1), &wsaData) != 0) return false; 
+	if (WSAStartup(MAKEWORD(1, 1), &wsaData) != 0) return false;
 #endif
 
 	s = socket(AF_INET,SOCK_STREAM,0);
@@ -390,11 +390,11 @@ bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *
 #endif
 
 	address2 = gethostbyname(server);
-	if (address2 == NULL) return false;    
-    
+	if (address2 == NULL) return false;
+
 	memset((char *) &address, 0, sizeof(address));
 	address.sin_family 	= AF_INET;
-	address.sin_port 	= htons(80);	
+	address.sin_port 	= htons(80);
 	address.sin_addr.s_addr = *(u_long *) *(address2->h_addr_list);
 
 	if (connect(s,(struct sockaddr *)&address,sizeof(address))<0) return false;
@@ -420,7 +420,7 @@ bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *
 #else
 	close(s);
 #endif
-	
+
 	if (file->Buffer == NULL) return false;
 	if (strstr(file->Buffer,"HTTP/1.1 200 OK")==NULL) {
 		free(file->Buffer);
