@@ -11,6 +11,7 @@
 #include "../../../../misc/coding/coding.h"
 #include "../../../../gsmcomon.h"
 #include "../../../../service/gsmlogo.h"
+#include "../../../../service/sms/gsmsms.h"
 #include "../../nfunc.h"
 #include "../../nfuncold.h"
 #include "../../../pfunc.h"
@@ -1887,6 +1888,363 @@ GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, i
 	}
 	(*MMSFolder) = Priv->MMSFolderNum;
 	CopyUnicodeString(FileID,Priv->MMSFile.ID_FullName);
+
+	return ERR_NONE;
+}
+
+//Series 40 3.0
+GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders, bool real)
+{
+	bool 			Start = true;
+	GSM_File	 	Files;
+	GSM_Error		error;
+
+	EncodeUnicode(Files.ID_FullName,"a:/predefmessages",17);
+
+	folders->Number = 0;
+
+	smprintf(s, "Getting SMS folders\n");
+	while (1) {
+		error = N6510_GetFolderListing(s,&Files,Start);
+		if (error == ERR_EMPTY) return ERR_NONE;
+		if (error != ERR_NONE) return error;
+
+		if (!strcmp(DecodeUnicodeString(Files.Name),"exchange")) {
+			continue;
+		} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefdrafts")) {
+			continue;
+		} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefsent")) {
+			continue;
+		} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefoutbox")) {
+			continue;
+		} else if (!strcmp(DecodeUnicodeString(Files.Name),"predefinbox")) {
+			continue;
+		}
+
+		folders->Folder[folders->Number].InboxFolder = false;
+		if (!strcmp(DecodeUnicodeString(Files.Name),"1")) {
+			folders->Folder[folders->Number].InboxFolder = true;
+		}
+		if (real) {
+			CopyUnicodeString(folders->Folder[folders->Number].Name,Files.Name);
+		} else {
+			if (!strcmp(DecodeUnicodeString(Files.Name),"1")) {
+				EncodeUnicode(folders->Folder[folders->Number].Name,"Inbox",5);
+			} else if (!strcmp(DecodeUnicodeString(Files.Name),"3")) {
+				EncodeUnicode(folders->Folder[folders->Number].Name,"Sent items",10);
+			} else if (!strcmp(DecodeUnicodeString(Files.Name),"4")) {
+				EncodeUnicode(folders->Folder[folders->Number].Name,"Saved messages",14);
+			} else if (!strcmp(DecodeUnicodeString(Files.Name),"5")) {
+				EncodeUnicode(folders->Folder[folders->Number].Name,"Drafts",6);
+			} else if (!strcmp(DecodeUnicodeString(Files.Name),"6")) {
+				EncodeUnicode(folders->Folder[folders->Number].Name,"Templates",9);
+			} else {
+				CopyUnicodeString(folders->Folder[folders->Number].Name,Files.Name);
+			}
+		}
+		folders->Folder[folders->Number].Memory      = MEM_ME;
+		folders->Number++;
+
+		Start = false;
+	}
+}
+
+GSM_Error N6510_GetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
+{
+	return N6510_PrivGetFilesystemSMSFolders(s, folders, false);
+}
+
+static void N26510_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *folderid, int *location)
+{
+	int ifolderid;
+
+	/* simulate flat SMS memory */
+	if (sms->Folder==0x00) {
+		ifolderid = sms->Location / PHONE_MAXSMSINFOLDER;
+		*folderid = ifolderid + 0x01;
+		*location = sms->Location - ifolderid * PHONE_MAXSMSINFOLDER;
+	} else {
+		*folderid = sms->Folder;
+		*location = sms->Location;
+	}
+	smprintf(s, "SMS folder %i & location %i -> 6510 folder %i & location %i\n",
+		sms->Folder,sms->Location,*folderid,*location);
+}
+
+static void N26510_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char folderid, int location)
+{
+	sms->Folder	= 0;
+	sms->Location	= (folderid - 0x01) * PHONE_MAXSMSINFOLDER + location;
+	smprintf(s, "6510 folder %i & location %i -> SMS folder %i & location %i\n",
+		folderid,location,sms->Folder,sms->Location);
+}
+
+GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
+{
+	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
+	unsigned char		folderid;
+	int			location,Size,Handle,i;
+	GSM_Error		error;
+	GSM_File		FFF;
+	bool			start2=start;
+	GSM_SMSMessageLayout 	Layout;
+	double			g;
+
+	while (true) {
+		if (start2) {
+			Priv->SMSFileError = ERR_EMPTY;
+			Priv->SMSFileFolder = 0;
+			location = 1;
+			error=N6510_PrivGetFilesystemSMSFolders(s,&Priv->LastSMSFolders,true);
+			if (error!=ERR_NONE) return error;
+		} else {
+			sms->SMS[0].Folder = 0;
+			N26510_GetSMSLocation(s, &sms->SMS[0], &folderid, &location);
+			location++;
+			if (Priv->SMSFileError != ERR_EMPTY) {
+				Priv->SMSFileError = N6510_GetFolderListing(s,&Priv->SMSFile,false);
+			}
+		}
+		start2 = false;
+		while (Priv->SMSFileError == ERR_EMPTY) {
+			Priv->SMSFileFolder++;
+			/* Too high folder number */
+			if ((Priv->SMSFileFolder-1)>=Priv->LastSMSFolders.Number) return ERR_EMPTY;
+
+			EncodeUnicode(Priv->SMSFile.ID_FullName,"a:/predefmessages/",18);
+			CopyUnicodeString(Priv->SMSFile.ID_FullName+36,Priv->LastSMSFolders.Folder[Priv->SMSFileFolder-1].Name);
+			smprintf(s,"folder name is %s\n",DecodeUnicodeString(Priv->SMSFile.ID_FullName));
+
+			Priv->SMSFileError = N6510_GetFolderListing(s,&Priv->SMSFile,true);
+		}
+
+		//readfile
+		FFF.Buffer= NULL;
+		FFF.Used = 0;
+		FFF.ID_FullName[0] = 0;
+		FFF.ID_FullName[1] = 0;
+		CopyUnicodeString(FFF.ID_FullName,Priv->SMSFile.ID_FullName);
+		smprintf(s,"sms file name is %s\n",DecodeUnicodeString(FFF.ID_FullName));	
+		error = ERR_NONE;
+		while (error == ERR_NONE) error = N6510_GetFilePart(s,&FFF,&Handle,&Size);
+		DumpMessage(&s->di, FFF.Buffer, FFF.Used);
+
+		//0x00 = SMS, 0x01 = MMS
+		if (FFF.Buffer[6] == 0x00) break;
+
+		smprintf(s,"mms file");
+		free(FFF.Buffer);
+	}
+
+	//decode file
+	sms->Number = 0;
+	i = 176;
+	GSM_SetDefaultSMSData(&sms->SMS[0]);
+	Layout.TPDCS = 255;
+	smprintf(s,"file type %02x\n",FFF.Buffer[i]);
+	switch (FFF.Buffer[i]) {
+	case 0x04:
+	case 0x20:
+	case 0x24:
+		smprintf(s,"sms received with number\n");
+
+		Layout.firstbyte = FFF.Buffer[i];
+
+		//semioctets to chars in phone number
+		if (FFF.Buffer[i+1] % 2) FFF.Buffer[i+1]++;
+		FFF.Buffer[i+1]=FFF.Buffer[i+1] / 2 + 1;
+		i+=FFF.Buffer[i+1];
+
+		Layout.TPDCS=i+3;
+		i+=11;
+		Layout.TPUDL = i;
+		Layout.Text = i+1;
+		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
+		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
+			//we need to find, if part of byte was used or not
+			g = ((double)FFF.Buffer[i]*7/8);
+			g -= (unsigned int)((FFF.Buffer[i]*7/8));
+			if (g != 0.0) {
+				i+=(FFF.Buffer[i]*7/8)+1;
+			} else {
+				i+=(FFF.Buffer[i]*7/8);
+			}
+		} else {
+			i+=FFF.Buffer[i];
+		}
+		i+=11;
+		EncodeUnicode(sms->SMS[0].SMSC.Number,FFF.Buffer+i,strlen(FFF.Buffer+i));
+		sms->SMS[0].UDH.Type = UDH_NoUDH;
+		sms->SMS[0].PDU = SMS_Deliver;
+		sms->SMS[0].Class = -1;
+		sms->SMS[0].State = SMS_Read;//fixme
+		sms->Number = 1;
+		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
+		i+=UnicodeLength(sms->SMS[0].SMSC.Number);
+		if(FFF.Buffer[176]!=0x20) i+=4;
+		CopyUnicodeString(sms->SMS[0].Name,FFF.Buffer+i);
+		break;
+	case 0x11:
+		smprintf(s,"sms received and edited ?\n");
+
+		i+=15;
+		Layout.firstbyte = 1; //fixme
+		Layout.TPDCS=i;
+		i+=2;
+		Layout.TPUDL = i;
+		Layout.Text = i+1;
+		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
+		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
+			//we need to find, if part of byte was used or not
+			g = ((double)FFF.Buffer[i]*7/8);
+			g -= (unsigned int)((FFF.Buffer[i]*7/8));
+			if (g != 0.0) {
+				i+=(FFF.Buffer[i]*7/8)+1;
+			} else {
+				i+=(FFF.Buffer[i]*7/8);
+			}
+		} else {
+			i+=FFF.Buffer[i];
+		}
+		i+=11;
+		EncodeUnicode(sms->SMS[0].SMSC.Number,FFF.Buffer+i,strlen(FFF.Buffer+i));
+		sms->SMS[0].UDH.Type = UDH_NoUDH;
+		sms->SMS[0].PDU = SMS_Deliver;
+		sms->SMS[0].Class = -1;
+		sms->SMS[0].State = SMS_Read;//fixme
+		sms->Number = 1;
+		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
+		if (UnicodeLength(sms->SMS[0].SMSC.Number)!=0) {
+			i+=4+UnicodeLength(sms->SMS[0].SMSC.Number);
+		}
+		CopyUnicodeString(sms->SMS[0].Name,FFF.Buffer+i);
+		break;
+	case 0x31:
+		smprintf(s,"sms sent\n");
+		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
+		i+=15;
+		Layout.firstbyte = 1; //fixme
+		smprintf(s,"TPDCS %02x\n",FFF.Buffer[i]);
+		Layout.TPDCS=i;
+		i+=2;
+		smprintf(s,"TPUDL %02x %02x\n",FFF.Buffer[i-1],FFF.Buffer[i]);
+		Layout.TPUDL = i;
+		Layout.Text = i+1;
+		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
+		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
+			//we need to find, if part of byte was used or not
+			g = ((double)FFF.Buffer[i]*7/8);
+			g -= (unsigned int)((FFF.Buffer[i]*7/8));
+			if (g != 0.0) {
+				i+=(FFF.Buffer[i]*7/8)+1;
+			} else {
+				i+=(FFF.Buffer[i]*7/8);
+			}
+		} else {
+			i+=FFF.Buffer[i];
+		}
+		i+=11;
+		sms->SMS[0].UDH.Type = UDH_NoUDH;
+		sms->SMS[0].PDU = SMS_Deliver;
+		sms->SMS[0].Class = -1;//fixme
+		sms->SMS[0].State = SMS_Sent;
+		sms->Number = 1;
+		CopyUnicodeString(sms->SMS[0].Name,FFF.Buffer+i);
+		break;
+	case 0x51:
+	case 0x71:
+		smprintf(s,"sms sent with udh\n");
+		Layout.firstbyte = i;
+		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
+		i+=15;
+		smprintf(s,"TPDCS %02x\n",FFF.Buffer[i]);
+		Layout.TPDCS=i;
+		i+=2;
+		smprintf(s,"TPUDL %02x %02x\n",FFF.Buffer[i-1],FFF.Buffer[i]);
+		Layout.TPUDL = i;
+		Layout.Text = i+1;
+		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
+		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
+			//we need to find, if part of byte was used or not
+			g = ((double)FFF.Buffer[i]*7/8);
+			g -= (unsigned int)((FFF.Buffer[i]*7/8));
+			if (g != 0.0) {
+				i+=(FFF.Buffer[i]*7/8)+1;
+			} else {
+				i+=(FFF.Buffer[i]*7/8);
+			}
+		} else {
+			i+=FFF.Buffer[i];
+		}
+		i+=11;
+		sms->SMS[0].PDU = SMS_Deliver;
+		sms->SMS[0].Class = -1;//fixme
+		sms->SMS[0].State = SMS_Sent;
+		sms->Number = 1;
+		break;
+	case 0x44:
+	case 0x40://40 without name
+	case 0x64://64 without name
+		smprintf(s,"sms with udh and number\n");
+
+		Layout.firstbyte = i;
+
+		//semioctets to chars in phone number
+		if (FFF.Buffer[i+1] % 2) FFF.Buffer[i+1]++;
+		FFF.Buffer[i+1]=FFF.Buffer[i+1] / 2 + 1;
+		i+=FFF.Buffer[i+1];
+
+		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
+		Layout.TPDCS=i+2;
+		smprintf(s,"TPDCS %02x\n",FFF.Buffer[i+2]);
+		i+=10;
+		smprintf(s,"TPUDL %02x %02x\n",FFF.Buffer[i],FFF.Buffer[i+1]);
+		Layout.TPUDL = i+1;
+		Layout.Text = i+2;
+		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
+		sms->SMS[0].PDU = SMS_Deliver;
+		sms->SMS[0].Class = -1;//fixme
+		sms->SMS[0].State = SMS_Sent;
+		sms->Number = 1;
+		break;
+	default:
+		smprintf(s,"unknown sms file %02x\n",FFF.Buffer[i]);
+		break;
+	}
+
+	sms->SMS[0].Memory = MEM_ME;
+
+	//from gsmsms.c - it should be shared
+	sms->SMS[0].Class = -1;
+	if (Layout.TPDCS != 255) {
+		/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
+		if ((FFF.Buffer[Layout.TPDCS] & 0xD0) == 0x10) {
+			/* bits 7..4 set to 00x1 */
+			if ((FFF.Buffer[Layout.TPDCS] & 0xC) == 0xC) {
+				dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
+			} else {
+				sms->SMS[0].Class = (FFF.Buffer[Layout.TPDCS] & 3);
+			}
+		} else if ((FFF.Buffer[Layout.TPDCS] & 0xF0) == 0xF0) {
+			/* bits 7..4 set to 1111 */
+			if ((FFF.Buffer[Layout.TPDCS] & 8) == 8) {
+				dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
+			} else {
+				sms->SMS[0].Class = (FFF.Buffer[Layout.TPDCS] & 3);
+			}
+		}
+	} else {
+		smprintf(s,"unknown TPDCS\n");
+	}
+
+	memcpy(&sms->SMS[0].DateTime,&FFF.Modified,sizeof(GSM_DateTime));
+	sms->SMS[0].DateTime.Timezone = 0;
+	free(FFF.Buffer);
+
+	folderid = 0;
+	N26510_SetSMSLocation(s, &sms->SMS[0], folderid, location);
+	sms->SMS[0].Folder = Priv->SMSFileFolder;
+	sms->SMS[0].Location = 0; //fixme
 
 	return ERR_NONE;
 }
