@@ -283,7 +283,7 @@ typedef enum {
 /**
  * Maximal length of SMS name.
  */
-#define GSM_MAX_SMS_NAME_LENGTH	 40
+#define GSM_MAX_SMS_NAME_LENGTH	 200
 
 /**
  * SMS message data.

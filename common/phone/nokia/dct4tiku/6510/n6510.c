@@ -499,6 +499,8 @@ static GSM_Error N6510_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folder
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x12, 0x00, 0x00};
 
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return N6510_GetFilesystemSMSFolders(s,folders);
+
 	s->Phone.Data.SMSFolders=folders;
 	smprintf(s, "Getting SMS folders\n");
 	return GSM_WaitFor (s, req, 6, 0x14, 4, ID_GetSMSFolders);
@@ -834,6 +836,8 @@ static GSM_Error N6510_GetNextSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 
 static GSM_Error N6510_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
 {
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return N6510_GetNextFilesystemSMS(s,sms,start);
+
 	return N6510_GetNextSMSMessageBitmap(s, sms, start, NULL);
 }
 
@@ -2246,6 +2250,8 @@ static GSM_Error N6510_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *st
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x08, 0x00, 0x00};
 
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
+
 	s->Phone.Data.SMSStatus=status;
 	smprintf(s, "Getting SMS status\n");
 	error = GSM_WaitFor (s, req, 6, 0x14, 2, ID_GetSMSStatus);
@@ -2289,6 +2295,8 @@ static GSM_Error N6510_DeleteSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms
 					 0x00, 		/* FolderID */
 					 0x00, 0x02, 	/* Location */
 					 0x0F, 0x55};
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
 
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
 
@@ -2468,6 +2476,8 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 		0x01,			/* 1 = SIM, 2 = ME 	*/
 		0x02,			/* Folder   		*/
 		0x00, 0x01};		/* Location 		*/
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
 
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
 	if (folderid == 0x99) return ERR_INVALIDLOCATION;
