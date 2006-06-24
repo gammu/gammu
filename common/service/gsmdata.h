@@ -136,7 +136,7 @@ GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo2 *info);
 /**
  * Number of possible MMS folders.
  */
-#define GSM_MAX_MMS_FOLDERS	     	5
+#define GSM_MAX_MMS_FOLDERS	     	10
 /**
  * Maximal length of MMS folder name.
  */

@@ -2222,6 +2222,12 @@ static void GetEachMMS(int argc, char *argv[])
 		}
 		printmsgerr("%c",13);
 
+		if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_SERIES40_30)) {
+			memcpy(File.Buffer,File.Buffer+176,File.Used-176);
+			File.Used-=176;
+			File.Buffer = realloc(File.Buffer,File.Used);
+		}
+
 		DecodeMMSFile(&File,num);
 		if (num!=-1) num++;
 	}
