@@ -541,8 +541,19 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			}
 			break;
 		case 0x08:
-			dbgprintf("  Expiry            : not done yet\n");
-			return ERR_FILENOTSUPPORTED;
+			dbgprintf("  Expiry            : ");
+			pos++; //length?
+			switch (file->Buffer[pos]) {
+				case 0x80: dbgprintf("date - ignored\n");	 	 break;
+				case 0x81: dbgprintf("seconds - ignored\n");	 break;
+				default  : dbgprintf("unknown %02x\n",file->Buffer[pos]);	 break;
+			}
+			pos++;
+			pos++; //expiry
+			pos++; //expiry
+			pos++; //expiry
+			pos++; //expiry
+			break;
 		case 0x09:
 			pos++;
 			pos++;
