@@ -3280,6 +3280,7 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	if ((error = ALCATEL_GetFields(s, ToDo->Location))!= ERR_NONE) return error;
 
 	ToDo->EntriesNum = Priv->CurrentFieldsCount;
+	ToDo->Priority = GSM_Priority_None;
 
 	for (i=0; i < Priv->CurrentFieldsCount; i++) {
 		if ((error = ALCATEL_GetFieldValue(s, ToDo->Location, Priv->CurrentFields[i]))!= ERR_NONE) return error;
@@ -3418,7 +3419,6 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 						ToDo->Priority = GSM_Priority_Low;
 						break;
 					default:
-						ToDo->Priority = 0;
 						smprintf(s,"WARNING: Received unexpected priority %02X, ignoring\n", Priv->ReturnInt);
 				}
 				j++;
@@ -3560,6 +3560,7 @@ static GSM_Error ALCATEL_AddToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= ERR_NONE) return error;
 	if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeToDo, 0))!= ERR_NONE) return error;
 
+	/* Set priority if wanted */
 	switch (ToDo->Priority) {
 		case GSM_Priority_High:
 			val = 0;
@@ -3568,15 +3569,21 @@ static GSM_Error ALCATEL_AddToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 			val = 2;
 			break;
 		case GSM_Priority_Medium:
-		default:
 			val = 1;
 			break;
+		case GSM_Priority_None:
+		default:
+			val = -1;
+			break;
 	}
-	/* This one seems to be byte for BF5 and enum for BE5 */
-	if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
-	       if ((error = ALCATEL_CreateField(s, Alcatel_byte, 7, &val)) != ERR_NONE) return error;
-	} else {
-	       if ((error = ALCATEL_CreateField(s, Alcatel_enum, 7, &val)) != ERR_NONE) return error;
+
+	if (val != -1) {
+		/* This one seems to be byte for BF5 and enum for BE5 */
+		if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
+		       if ((error = ALCATEL_CreateField(s, Alcatel_byte, 7, &val)) != ERR_NONE) return error;
+		} else {
+		       if ((error = ALCATEL_CreateField(s, Alcatel_enum, 7, &val)) != ERR_NONE) return error;
+		}
 	}
 
 	for (i = 0; i < ToDo->EntriesNum; i++) {
@@ -3653,6 +3660,7 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeToDo, ToDo->Location))!= ERR_NONE) return error;
 
+	/* Set priority if wanted */
 	switch (ToDo->Priority) {
 		case GSM_Priority_High:
 			val = 0;
@@ -3661,17 +3669,23 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 			val = 2;
 			break;
 		case GSM_Priority_Medium:
-		default:
 			val = 1;
 			break;
+		case GSM_Priority_None:
+		default:
+			val = -1;
+			break;
 	}
-	/* This one seems to be byte for BF5 and enum for BE5 */
-	if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
-	       if ((error = ALCATEL_UpdateField(s, Alcatel_byte, ToDo->Location, 7, &val)) != ERR_NONE) return error;
-	} else {
-	       if ((error = ALCATEL_UpdateField(s, Alcatel_enum, ToDo->Location, 7, &val)) != ERR_NONE) return error;
+
+	if (val != -1) {
+		/* This one seems to be byte for BF5 and enum for BE5 */
+		if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
+		       if ((error = ALCATEL_UpdateField(s, Alcatel_byte, ToDo->Location, 7, &val)) != ERR_NONE) return error;
+		} else {
+		       if ((error = ALCATEL_UpdateField(s, Alcatel_enum, ToDo->Location, 7, &val)) != ERR_NONE) return error;
+		}
+		UpdatedFields[7] = true;
 	}
-	UpdatedFields[7] = true;
 
 	for (i = 0; i < ToDo->EntriesNum; i++) {
 		switch (ToDo->Entries[i].EntryType) {
