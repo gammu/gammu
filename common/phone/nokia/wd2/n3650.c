@@ -13,7 +13,7 @@
 #include "../nfunc.h"
 #include "../nfuncold.h"
 #include "../../pfunc.h"
-#include "../dct4tiku/dct4func.h"
+#include "../dct4s40/dct4func.h"
 #include "n3650.h"
 
 static GSM_Error N3650_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)

@@ -222,7 +222,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	while (true) {
 		if (bs != 0) {
 			length = length + bs;
-			if (length == MessageLength) break;
+//			if (length == MessageLength) break;
+			//bb5
+			if (length >= MessageLength-1) break;
 			Block = &Block[bs];
 		}
 		bs = 256*Block[2]+Block[3];

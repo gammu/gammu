@@ -60,11 +60,11 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
             $(TOPDIR)/common/phone/nokia/dct3/n7110.o \
             $(TOPDIR)/common/phone/nokia/dct3/n9210.o \
             $(TOPDIR)/common/phone/nokia/dct3/dct3func.o \
-            $(TOPDIR)/common/phone/nokia/dct4tiku/n3320.o \
-            $(TOPDIR)/common/phone/nokia/dct4tiku/dct4func.o \
-            $(TOPDIR)/common/phone/nokia/dct4tiku/6510/n6510.o \
-            $(TOPDIR)/common/phone/nokia/dct4tiku/6510/6510cal.o \
-            $(TOPDIR)/common/phone/nokia/dct4tiku/6510/6510file.o \
+            $(TOPDIR)/common/phone/nokia/dct4s40/n3320.o \
+            $(TOPDIR)/common/phone/nokia/dct4s40/dct4func.o \
+            $(TOPDIR)/common/phone/nokia/dct4s40/6510/n6510.o \
+            $(TOPDIR)/common/phone/nokia/dct4s40/6510/6510cal.o \
+            $(TOPDIR)/common/phone/nokia/dct4s40/6510/6510file.o \
             $(TOPDIR)/common/phone/nokia/wd2/n3650.o \
             $(TOPDIR)/common/phone/nokia/nauto.o \
             $(TOPDIR)/common/phone/nokia/nfunc.o \

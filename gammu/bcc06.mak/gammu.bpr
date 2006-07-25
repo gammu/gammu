@@ -36,7 +36,7 @@
       ibsmp.bpi bdertl.bpi vcldbx.bpi qrpt.bpi teeui.bpi teedb.bpi tee.bpi 
       dss.bpi teeqr.bpi ibxpress.bpi dsnap.bpi vclie.bpi inetdb.bpi inet.bpi 
       nmfast.bpi webdsnap.bpi bcbie.bpi dclocx.bpi bcb2kaxserver.bpi"/>
-    <PATHCPP value=".;..;..;..\depend\nokia;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia;..\depend\siemens;..\depend\siemens;..\smsd;..\smsd;..\smsd;..\..\common\misc;..\..\common\misc\coding;..\..\common\misc\coding;..\..\common\misc;..\..\common\protocol\at;..\..\common\protocol\obex;..\..\common\protocol\symbian;..\..\common\protocol\nokia;..\..\common\protocol\alcatel;..\..\common\protocol\nokia;..\..\common\protocol\nokia;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service\sms;..\..\common\service\sms;..\..\common\service\sms;..\..\common;..\..\common;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct4tiku\6510;..\..\common\phone\nokia\dct4tiku;..\..\common\phone\nokia\wd2;..\..\common\phone\nokia\dct4tiku\6510;..\..\common\phone\nokia\dct4tiku\6510;..\..\common\phone\nokia\dct4tiku;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone\obex;..\..\common\phone\symbian;..\..\common\phone;..\..\common\phone\at;..\..\common\phone\at;..\..\common\phone\at;..\..\common\phone\at;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common\device\bluetoth;..\..\common\device\bluetoth;..\..\common\device\bluetoth;..\..\common\device\serial;..\..\common\device"/>
+    <PATHCPP value=".;..;..;..\depend\nokia;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia\dct3trac;..\depend\nokia;..\depend\siemens;..\depend\siemens;..\smsd;..\smsd;..\smsd;..\..\common\misc;..\..\common\misc\coding;..\..\common\misc\coding;..\..\common\misc;..\..\common\protocol\at;..\..\common\protocol\obex;..\..\common\protocol\symbian;..\..\common\protocol\nokia;..\..\common\protocol\alcatel;..\..\common\protocol\nokia;..\..\common\protocol\nokia;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service\backup;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service;..\..\common\service\sms;..\..\common\service\sms;..\..\common\service\sms;..\..\common;..\..\common;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct4s40\6510;..\..\common\phone\nokia\dct4s40;..\..\common\phone\nokia\wd2;..\..\common\phone\nokia\dct4s40\6510;..\..\common\phone\nokia\dct4s40\6510;..\..\common\phone\nokia\dct4s40;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia\dct3;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\nokia;..\..\common\phone\alcatel;..\..\common\phone\obex;..\..\common\phone\symbian;..\..\common\phone;..\..\common\phone\at;..\..\common\phone\at;..\..\common\phone\at;..\..\common\phone\at;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common\device\bluetoth;..\..\common\device\bluetoth;..\..\common\device\bluetoth;..\..\common\device\serial;..\..\common\device"/>
     <PATHPAS value=".;"/>
     <PATHRC value=".;"/>
     <PATHASM value=".;"/>
@@ -46,8 +46,8 @@
     <USERDEFINES value="WIN32;NDEBUG;_CONSOLE"/>
     <SYSDEFINES value="_NO_VCL;_ASSERTE;NO_STRICT"/>
     <MAINSOURCE value="gammu.bpf"/>
-    <INCLUDEPATH value="..\..\common\phone\nokia\wd2;..\..\common\phone\nokia\dct4tiku;..\..\common\phone\nokia\dct4tiku\6510;..\..\common\service\sms;..\depend\nokia;..\depend\siemens;..\depend\nokia\dct3trac;..\..\common\misc\coding;..\..\common\service\backup;..\;..;..\..\common\phone\symbian;..\..\common\protocol\symbian;..\..\common\protocol\obex;..\..\common\phone\obex;..\..\common\device;..\smsd;..\depend;..\..\common\device\serial;..\..\common\protocol\alcatel;..\..\common\phone\alcatel;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl"/>
-    <LIBPATH value="..\..\common\phone\nokia\wd2;..\..\common\phone\nokia\dct4tiku\6510;..\..\common\service\sms;..\depend\nokia;..\depend\siemens;..\depend\nokia\dct3trac;..\..\common\misc\coding;..\..\common\service\backup;..\;..;..\..\common\phone\symbian;..\..\common\protocol\symbian;..\..\common\device;..\..\common\protocol\obex;..\..\common\phone\obex;..\smsd;..\depend;..\..\common\phone\alcatel;..\..\common\protocol\alcatel;..\..\common\device\serial;..\..\common\device\bluetoth;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4tiku;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\lib;$(RELEASELIBPATH);$(BCB)\lib\psdk"/>
+    <INCLUDEPATH value="..\..\common\phone\nokia\wd2;..\..\common\phone\nokia\dct4s40;..\..\common\phone\nokia\dct4s40\6510;..\..\common\service\sms;..\depend\nokia;..\depend\siemens;..\depend\nokia\dct3trac;..\..\common\misc\coding;..\..\common\service\backup;..\;..;..\..\common\phone\symbian;..\..\common\protocol\symbian;..\..\common\protocol\obex;..\..\common\phone\obex;..\..\common\device;..\smsd;..\depend;..\..\common\device\serial;..\..\common\protocol\alcatel;..\..\common\phone\alcatel;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common\device\bluetoth;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\include;$(BCB)\include\mfc;$(BCB)\include\atl"/>
+    <LIBPATH value="..\..\common\phone\nokia\wd2;..\..\common\phone\nokia\dct4s40\6510;..\..\common\service\sms;..\depend\nokia;..\depend\siemens;..\depend\nokia\dct3trac;..\..\common\misc\coding;..\..\common\service\backup;..\;..;..\..\common\phone\symbian;..\..\common\protocol\symbian;..\..\common\device;..\..\common\protocol\obex;..\..\common\phone\obex;..\smsd;..\depend;..\..\common\phone\alcatel;..\..\common\protocol\alcatel;..\..\common\device\serial;..\..\common\device\bluetoth;..\..\common\phone;..\..\common\phone\nokia;..\..\common\phone\nokia\dct4s40;..\..\common\phone\nokia\dct3;..\..\common\device\irda;..\..\common;..\..\common\service;..\..\common\protocol\nokia;..\..\common\misc;..\..\common\phone\at;..\..\common\protocol\at;$(BCB)\lib;$(RELEASELIBPATH);$(BCB)\lib\psdk"/>
     <WARNINGS value="-w-par -w-8027 -w-8026 -w-csu"/>
     <OTHERFILES value=""/>
   </MACROS>
@@ -60,7 +60,7 @@
       -I..\..\common\protocol\alcatel -I..\..\common\device\bluetoth 
       -I..\..\common\phone\nokia -I..\..\common\service\backup 
       -I..\depend\nokia\dct3trac -I..\..\common\phone\alcatel 
-      -I..\..\common\protocol\symbian -I..\..\common\phone\nokia\dct4tiku 
+      -I..\..\common\protocol\symbian -I..\..\common\phone\nokia\dct4s40 
       -I..\..\common\phone\nokia\wd2 -I..\..\common\phone\nokia\dct3 
       -I..\..\common\device\irda -I..\..\common -I..\..\common\service 
       -I..\..\common\protocol\nokia -I..\..\common\misc -I..\..\common\phone\at 
@@ -127,12 +127,12 @@
       <FILE FILENAME="..\..\common\gsmstate.c" FORMNAME="" UNITNAME="gsmstate" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\n6110.c" FORMNAME="" UNITNAME="n6110" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\n0650.c" FORMNAME="" UNITNAME="n0650" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\phone\nokia\dct4tiku\6510\n6510.c" FORMNAME="" UNITNAME="n6510" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\phone\nokia\dct4tiku\n3320.c" FORMNAME="" UNITNAME="n3320" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct4s40\6510\n6510.c" FORMNAME="" UNITNAME="n6510" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct4s40\n3320.c" FORMNAME="" UNITNAME="n3320" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\wd2\n3650.c" FORMNAME="" UNITNAME="n3650" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\phone\nokia\dct4tiku\6510\6510cal.c" FORMNAME="" UNITNAME="6510cal" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\phone\nokia\dct4tiku\6510\6510file.c" FORMNAME="" UNITNAME="6510file" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\phone\nokia\dct4tiku\dct4func.c" FORMNAME="" UNITNAME="dct4func" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct4s40\6510\6510cal.c" FORMNAME="" UNITNAME="6510cal" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct4s40\6510\6510file.c" FORMNAME="" UNITNAME="6510file" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\nokia\dct4s40\dct4func.c" FORMNAME="" UNITNAME="dct4func" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\n7110.c" FORMNAME="" UNITNAME="n7110" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\n9210.c" FORMNAME="" UNITNAME="n9210" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\nokia\dct3\dct3func.c" FORMNAME="" UNITNAME="dct3func" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
@@ -178,13 +178,13 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=http://www.mwiacek.com
 FileDescription=Gammu - manager for cellular modems and phones
-FileVersion=1,07,09,0
+FileVersion=1,07,15,0
 InternalName=Gammu
 LegalCopyright=Copyright © 2002-2006 Marcin Wiacek
 LegalTrademarks=
 OriginalFilename=gammu.exe
 ProductName=Gammu (GNU All Mobile Management Utilities)
-ProductVersion=1,07,09,0
+ProductVersion=1,07,15,0
 Comments=
 
 [HistoryLists\hlDebugSourcePath]

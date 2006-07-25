@@ -7494,7 +7494,7 @@ static void GetFileSystem(int argc, char *argv[])
 	int			j;
 	long			usedphone=0,usedcard=0;
 	GSM_FileSystemStatus	Status;
-	char 			FolderName[256];
+	char 			FolderName[256],IDUTF[200];
 
 	GSM_Init(true);
 
@@ -7569,8 +7569,10 @@ static void GetFileSystem(int argc, char *argv[])
 		} else if (argc > 2 && mystrncasecmp(argv[2],"-flatall",0)) {
 			/* format for a folder ID;Folder;FOLDER_NAME;[FOLDER_PARAMETERS]
 			 * format for a file   ID;File;FOLDER_NAME;FILE_NAME;DATESTAMP;FILE_SIZE;[FILE_PARAMETERS]  */
+			EncodeUTF8QuotedPrintable(IDUTF,Files.ID_FullName);
+			printf("%s;",IDUTF);
 			if (!Files.Folder) {
-				printf("%s;File;",DecodeUnicodeString(Files.ID_FullName));
+				printf("File;");
 				printf("\"%s\";",FolderName);
 				printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
 				if (!Files.ModifiedEmpty) {
@@ -7578,7 +7580,7 @@ static void GetFileSystem(int argc, char *argv[])
 				} else  printf("\"%c\";",0x20);
 				printf("%i;",Files.Used);
 			} else {
-				printf("%s;Folder;",DecodeUnicodeString(Files.ID_FullName));
+				printf("Folder;");
 				printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
 				strcpy(FolderName,DecodeUnicodeConsole(Files.Name));
 			}
@@ -7814,7 +7816,7 @@ static void GetFiles(int argc, char *argv[])
 			continue;
 		}
 
-		EncodeUnicode(File.ID_FullName,argv[i],strlen(argv[i]));
+		DecodeUTF8QuotedPrintable(File.ID_FullName,argv[i],strlen(argv[i]));
 		GetOneFile(&File, newtime, i);
 	}
 
@@ -7828,6 +7830,7 @@ static void GetFileFolder(int argc, char *argv[])
 	GSM_File	 	File;
 	int			level=0,allnum=0,num=0,filelevel=0,i=0;
 	bool			newtime = false, found;
+	unsigned char		IDUTF[200];
 
 	File.Buffer = NULL;
 
@@ -7854,7 +7857,8 @@ static void GetFileFolder(int argc, char *argv[])
 					continue;
 				}
 				dbgprintf("comparing %s %s\n",DecodeUnicodeString(File.ID_FullName),argv[i]);
-				if (!strcmp(DecodeUnicodeString(File.ID_FullName),argv[i])) {
+				DecodeUTF8QuotedPrintable(IDUTF,argv[i],strlen(argv[i]));
+				if (mywstrncasecmp(File.ID_FullName,IDUTF,0)) {
 					dbgprintf("found folder");
 					found = true;
 					if (File.Folder) {
@@ -7941,7 +7945,7 @@ static void AddFile(int argc, char *argv[])
 	int			i,nextlong;
 
 	File.Buffer = NULL;
-	EncodeUnicode(File.ID_FullName,argv[2],strlen(argv[2]));
+	DecodeUTF8QuotedPrintable(File.ID_FullName,argv[2],strlen(argv[2]));
 	error = GSM_ReadFile(argv[3], &File);
 	Print_Error(error);
 	EncodeUnicode(File.Name,argv[3],strlen(argv[3]));
@@ -8038,7 +8042,7 @@ static void AddFolder(int argc, char *argv[])
 {
 	GSM_File File;
 
-	EncodeUnicode(File.ID_FullName,argv[2],strlen(argv[2]));
+	DecodeUTF8QuotedPrintable(File.ID_FullName,argv[2],strlen(argv[2]));
 	EncodeUnicode(File.Name,argv[3],strlen(argv[3]));
 	File.ReadOnly = false;
 
@@ -8057,7 +8061,7 @@ static void DeleteFolder(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	EncodeUnicode(buffer,argv[2],strlen(argv[2]));
+	DecodeUTF8QuotedPrintable(buffer,argv[2],strlen(argv[2]));
 
 	error = Phone->DeleteFolder(&s,buffer);
     	Print_Error(error);
