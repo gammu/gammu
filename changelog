@@ -41,6 +41,21 @@ For additionals materials and links to them see readme.txt
 [*] Changes in existing functionality
 [-] Fixed error
 
+20060725 - 1.07.15
+[+] Series 60 1st and 2nd: added getting network info, battery and network
+    level, hardware version, alarm, almost done setting calendar
+[+] ID for Nokia 6103, 6125, 6233, 6270, 6280, 7370           (Natasha Prybil)
+[+] * 0x42 and 0x53 frames are not available in BB5 Series     (Cameron Laird)
+      40 3.0 phones or are different - for now are disabled
+[+] * ID for Nokia 6131
+[+] * fixed getting phonebook entries for BB5 Series 40 3.0 phones
+[+] better recognizing categories for Alcatel                   (Michal Cihar)
+[+] command line accept/display ID for files/folder in UTF8        (Test/Mark)
+    quoted printable    
+[*] dct4tiku dir renamed to dct4s40 (there are also s40 in bb5 phones)
+[*] I started to make readme.htm and gammu.htm from wiki. Now it isn't the
+    best, but it will be soon...
+
 20060622 - 1.07.09
 [+] Added ID for new models like 6101
     Series 40 3.0:
@@ -683,7 +698,7 @@ NOTE: * it's confirmed, that 6230 RH-12 4.44, 3100 doesn't give caller id info
     * --getallcalendar doesn't show "invalid location"
     * there is correctly handled situation, when text note is too long
   * N6510:
-    * Chat/SyncML settngs available for some models only: 5140, 6220, 6230,
+    * Chat/SyncML settings available for some models only: 5140, 6220, 6230,
       6610i, 6810, 6820, 7250, 7250i
     * finding calendar ID works correctly for 6230
   * fixed bug in activating wap/mms/chat/... settings

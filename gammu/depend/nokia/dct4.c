@@ -10,7 +10,7 @@
 #include "../../gammu.h"
 #include "../../../common/phone/pfunc.h"
 #include "../../../common/phone/nokia/nfunc.h"
-#include "../../../common/phone/nokia/dct4tiku/dct4func.h"
+#include "../../../common/phone/nokia/dct4s40/dct4func.h"
 #include "../../../common/misc/coding/coding.h"
 
 extern GSM_Reply_Function UserReplyFunctions4[];
@@ -835,6 +835,8 @@ void DCT4Info(int argc, char *argv[])
 	unsigned char value[10];
 
         if (CheckDCT4Only()!=ERR_NONE) return;
+
+	if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_SERIES40_30)) return;
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
