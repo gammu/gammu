@@ -13,9 +13,6 @@ typedef struct _GSM_User	 	GSM_User;
 typedef struct _OnePhoneModel	 	OnePhoneModel;
 typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 
-#ifdef GSM_ENABLE_NOKIA3320
-#  include "phone/nokia/dct4tiku/n3320.h"
-#endif
 #ifdef GSM_ENABLE_NOKIA3650
 #  include "phone/nokia/wd2/n3650.h"
 #endif
@@ -25,8 +22,11 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifdef GSM_ENABLE_NOKIA6110
 #  include "phone/nokia/dct3/n6110.h"
 #endif
+#ifdef GSM_ENABLE_NOKIA3320
+#  include "phone/nokia/dct4s40/n3320.h"
+#endif
 #ifdef GSM_ENABLE_NOKIA6510
-#  include "phone/nokia/dct4tiku/6510/n6510.h"
+#  include "phone/nokia/dct4s40/6510/n6510.h"
 #endif
 #ifdef GSM_ENABLE_NOKIA7110
 #  include "phone/nokia/dct3/n7110.h"

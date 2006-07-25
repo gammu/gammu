@@ -199,11 +199,11 @@
 			Filter="cpp;c;cxx;rc;def;r;odl;idl;hpj;bat"
 			>
 			<File
-				RelativePath="..\..\common\phone\nokia\dct4tiku\6510\6510cal.c"
+				RelativePath="..\..\common\phone\nokia\dct4s40\6510\6510cal.c"
 				>
 			</File>
 			<File
-				RelativePath="..\..\common\phone\nokia\dct4tiku\6510\6510file.c"
+				RelativePath="..\..\common\phone\nokia\dct4s40\6510\6510file.c"
 				>
 			</File>
 			<File
@@ -287,7 +287,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\common\phone\nokia\dct4tiku\dct4func.c"
+				RelativePath="..\..\common\phone\nokia\dct4s40\dct4func.c"
 				>
 			</File>
 			<File
@@ -387,7 +387,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\common\phone\nokia\dct4tiku\n3320.c"
+				RelativePath="..\..\common\phone\nokia\dct4s40\n3320.c"
 				>
 			</File>
 			<File
@@ -399,7 +399,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\common\phone\nokia\dct4tiku\6510\n6510.c"
+				RelativePath="..\..\common\phone\nokia\dct4s40\6510\n6510.c"
 				>
 			</File>
 			<File
@@ -496,11 +496,11 @@
 			Filter="h;hpp;hxx;hm;inl"
 			>
 			<File
-				RelativePath="..\..\common\phone\nokia\dct4tiku\6510\6510cal.h"
+				RelativePath="..\..\common\phone\nokia\dct4s40\6510\6510cal.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\common\phone\nokia\dct4tiku\6510\6510file.h"
+				RelativePath="..\..\common\phone\nokia\dct4s40\6510\6510file.h"
 				>
 			</File>
 			<File
@@ -592,7 +592,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\common\phone\nokia\dct4tiku\dct4func.h"
+				RelativePath="..\..\common\phone\nokia\dct4s40\dct4func.h"
 				>
 			</File>
 			<File
@@ -696,7 +696,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\common\phone\nokia\dct4tiku\n3320.h"
+				RelativePath="..\..\common\phone\nokia\dct4s40\n3320.h"
 				>
 			</File>
 			<File
@@ -708,7 +708,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\common\phone\nokia\dct4tiku\6510\n6510.h"
+				RelativePath="..\..\common\phone\nokia\dct4s40\6510\n6510.h"
 				>
 			</File>
 			<File

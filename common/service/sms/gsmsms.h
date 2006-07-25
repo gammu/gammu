@@ -129,7 +129,7 @@ typedef struct {
 	GSM_ValidityPeriod	      	Relative;
 } GSM_SMSValidity;
 
-#define GSM_MAX_SMSC_NAME_LENGTH	30
+#define GSM_MAX_SMSC_NAME_LENGTH	50
 
 /**
  * Structure for SMSC (SMS Center) information.

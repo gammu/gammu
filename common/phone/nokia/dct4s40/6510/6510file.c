@@ -1,4 +1,4 @@
-/* (c) 2003-2005 by Marcin Wiacek */
+/* (c) 2003-2006 by Marcin Wiacek */
 /* function for making CRC for filesystem (c) 2003 by Michael Schroeder */
 
 #include "../../../../gsmstate.h"
@@ -1863,7 +1863,6 @@ GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 		//6220 and older
 		EncodeUnicode(Files.ID_FullName,"1",1);
 	}
-
 	while (1) {
 		error = N6510_GetFolderListing(s,&Files,Start);
 		if (error == ERR_EMPTY) break;

@@ -20,4 +20,5 @@ A. http://www.gammu.org/bugs or use mailing list
 -------------------------------------------------------------------------------
 Q. Where can I find more informations ?
 
-A. www.gammu.org (inside Wiki)
+A. * docs/docs/english/gammu.htm and readme.htm
+   * www.gammu.org (inside Wiki)
