@@ -41,16 +41,29 @@ For additionals materials and links to them see readme.txt
 [*] Changes in existing functionality
 [-] Fixed error
 
+20060817 - 1.07.25
+[-] 6510: * addfilepart set name (not ID) as name
+[-]       * no problems with setting attributes for files
+[*]       * changed drive enumeration (filesystem 2 in memory card - drive A:
+            like FDD or PenDrive, filesystem 1 in phone memory - drive C:
+            like HDD, filesystem 2 in phone memory - drive D: like HDD).
+            Wasn't tested on filesystem1 only phone.
+[+]       * Gammu return error, when wasn't able to read folder listing
+            (filesystem 2 issue)
+[+]       * added support for 3220 MMS folders                      (Test/Mark)
+[+]       * New --nokiaaddplaylists. Tested on 6230, 6111 and     (Igor Testen)
+            some other
+
 20060725 - 1.07.15
 [+] Series 60 1st and 2nd: added getting network info, battery and network
     level, hardware version, alarm, almost done setting calendar
-[+] ID for Nokia 6103, 6125, 6233, 6270, 6280, 7370           (Natasha Prybil)
-[+] * 0x42 and 0x53 frames are not available in BB5 Series     (Cameron Laird)
+[+] ID for Nokia 6103, 6125, 6233, 6270, 6280, 7370            (Natasha Prybil)
+[+] * 0x42 and 0x53 frames are not available in BB5 Series      (Cameron Laird)
       40 3.0 phones or are different - for now are disabled
 [+] * ID for Nokia 6131
 [+] * fixed getting phonebook entries for BB5 Series 40 3.0 phones
-[+] better recognizing categories for Alcatel                   (Michal Cihar)
-[+] command line accept/display ID for files/folder in UTF8        (Test/Mark)
+[+] better recognizing categories for Alcatel                    (Michal Cihar)
+[+] command line accept/display ID for files/folder in UTF8         (Test/Mark)
     quoted printable    
 [*] dct4tiku dir renamed to dct4s40 (there are also s40 in bb5 phones)
 [*] I started to make readme.htm and gammu.htm from wiki. Now it isn't the
@@ -78,7 +91,7 @@ For additionals materials and links to them see readme.txt
       By default there will be 1st used (in fact it's used by OPM2 too),
       to disable it clear F_SMS_FILES as phone feature.
 [-] * c: drive doesn't exist for S40 3.0
-[-] fixed wrong format of few strings                           (Michal Cihar)
+[-] fixed wrong format of few strings                            (Michal Cihar)
 
 20060618 - 1.07.07
     Series 40 3.0:

@@ -1,4 +1,4 @@
-/* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
+/* (c) 2002-2006 by Marcin Wiacek and Michal Cihar */
 /* FM stuff by Walek */
 
 #include <string.h>
@@ -7498,19 +7498,14 @@ static void GetFileSystem(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (!strcmp(s.Phone.Data.ModelInfo->model,"6230") &&
-	    s.ConnectionType == GCT_IRDAPHONET) {
-		printmsg("WARNING: firmware in your phone has bug in infrared support and only part of files will be listed. Use BT (or cable) or upgrade firmware (if there is something higher than 5.24 available)\n\n");
-	}
-
 	while (1) {
 		error = Phone->GetNextFileFolder(&s,&Files,Start);
 		if (error == ERR_EMPTY) break;
-	    	Print_Error(error);
+	    	if (error != ERR_FOLDERPART) Print_Error(error);
 
 		if (!Files.Folder) {
 			if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_FILES2)) {
-				if (DecodeUnicodeString(Files.ID_FullName)[0] == 'b') {
+				if (DecodeUnicodeString(Files.ID_FullName)[0] == 'a') {
 					MemoryCard = true;
 					usedcard+=Files.Used;
 				} else {
@@ -7557,13 +7552,25 @@ static void GetFileSystem(int argc, char *argv[])
 						printf(" %9i",Files.Used);
 						printf(" ");
 					} else printf("|-- ");
-				} else printf("Folder ");
+				} else {
+					if (error == ERR_FOLDERPART) {
+						printf("Part of folder ");
+					} else {
+						printf("Folder ");
+					}
+				}
 			} else {
 				if (Files.Level != 1) {
 					for (j=0;j<Files.Level-2;j++) printf(" |   ");
 					printf(" |-- ");
 				}
-				if (Files.Folder) printf("Folder ");
+				if (Files.Folder) {
+					if (error == ERR_FOLDERPART) {
+						printf("Part of folder ");
+					} else {
+						printf("Folder ");
+					}
+				}
 			}
 			printf("\"%s\"\n",DecodeUnicodeConsole(Files.Name));
 		} else if (argc > 2 && mystrncasecmp(argv[2],"-flatall",0)) {
@@ -7580,7 +7587,11 @@ static void GetFileSystem(int argc, char *argv[])
 				} else  printf("\"%c\";",0x20);
 				printf("%i;",Files.Used);
 			} else {
-				printf("Folder;");
+				if (error == ERR_FOLDERPART) {
+					printf("Part of folder;");
+				} else {
+					printf("Folder;");
+				}
 				printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
 				strcpy(FolderName,DecodeUnicodeConsole(Files.Name));
 			}
@@ -7617,7 +7628,8 @@ static void SetFileAttrib(int argc, char *argv[])
 	Files.System    = false;
 	Files.Hidden    = false;
 
-	EncodeUnicode(Files.ID_FullName,argv[2],strlen(argv[2]));
+	DecodeUTF8QuotedPrintable(Files.ID_FullName,argv[2],strlen(argv[2]));
+
 	for (i=3;i<argc;i++) {
 		if (mystrncasecmp(argv[i],"-readonly",0)) {
 			Files.ReadOnly = true;
@@ -7642,7 +7654,8 @@ static void SetFileAttrib(int argc, char *argv[])
 
 static void GetRootFolders(int argc, char *argv[])
 {
-	GSM_File File;
+	GSM_File 	File;
+	char 		IDUTF[200];
 
 	GSM_Init(true);
 
@@ -7651,7 +7664,8 @@ static void GetRootFolders(int argc, char *argv[])
 
 	while (1) {
 		if (Phone->GetNextRootFolder(&s,&File)!=ERR_NONE) break;
-		printf("%s ",DecodeUnicodeString(File.ID_FullName));
+		EncodeUTF8QuotedPrintable(IDUTF,File.ID_FullName);
+		printf("%s ",IDUTF);
 		printf("- %s\n",DecodeUnicodeString(File.Name));
 	}
 
@@ -7662,33 +7676,35 @@ static void GetFolderListing(int argc, char *argv[])
 {
 	bool 			Start = true;
 	GSM_File	 	Files;
+	char 			IDUTF[200];
 
 	GSM_Init(true);
 
-	EncodeUnicode(Files.ID_FullName,argv[2],strlen(argv[2]));
-
-	if (!strcmp(s.Phone.Data.ModelInfo->model,"6230") &&
-	    s.ConnectionType == GCT_IRDAPHONET) {
-		printmsg("WARNING: firmware in your phone has bug in infrared support and only part of files will be listed. Use BT (or cable) or upgrade firmware (if there is something higher than 5.24 available)\n\n");
-	}
+	DecodeUTF8QuotedPrintable(Files.ID_FullName,argv[2],strlen(argv[2]));
 
 	while (1) {
 		error = Phone->GetFolderListing(&s,&Files,Start);
 		if (error == ERR_EMPTY) break;
-	    	Print_Error(error);
+		if (error != ERR_FOLDERPART) {
+			Print_Error(error);
+		} else {
+			printf("Part of folder only\n\n");
+		}
 
 		/* format for a folder ID;Folder;[FOLDER_PARAMETERS]
 		 * format for a file   ID;File;FILE_NAME;DATESTAMP;FILE_SIZE;[FILE_PARAMETERS]  */
+		EncodeUTF8QuotedPrintable(IDUTF,Files.ID_FullName);
+		printf("%s;",IDUTF);
 		if (!Files.Folder) {
-			printf("%s;File;",DecodeUnicodeString(Files.ID_FullName));
+			printf("File;");
 			printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
 			if (!Files.ModifiedEmpty) {
 				printf("\"%s\";",OSDateTime(Files.Modified,false));
 			} else  printf("\"%c\";",0x20);
 			printf("%i;",Files.Used);
 		} else {
-			printf("%s;Folder;",DecodeUnicodeString(Files.ID_FullName));
-			printf("\"%s\";",DecodeUnicodeConsole(Files.Name));
+			printf("Folder");
+			printf(";\"%s\";",DecodeUnicodeConsole(Files.Name));
 		}
 
 		if (Files.Protected)  	printf("P");
@@ -7943,6 +7959,7 @@ static void AddFile(int argc, char *argv[])
 {
 	GSM_File		File;
 	int			i,nextlong;
+	char			IDUTF[200];
 
 	File.Buffer = NULL;
 	DecodeUTF8QuotedPrintable(File.ID_FullName,argv[2],strlen(argv[2]));
@@ -8032,7 +8049,8 @@ static void AddFile(int argc, char *argv[])
 	GSM_Init(true);
 
 	AddOneFile(&File, "Writing: ");
-	printf("ID of new file is \"%s\"\n",DecodeUnicodeString(File.ID_FullName));
+	EncodeUTF8QuotedPrintable(IDUTF,File.ID_FullName);
+	printf("ID of new file is \"%s\"\n",IDUTF);
 
 	free(File.Buffer);
 	GSM_Terminate();
@@ -8040,7 +8058,8 @@ static void AddFile(int argc, char *argv[])
 
 static void AddFolder(int argc, char *argv[])
 {
-	GSM_File File;
+	char			IDUTF[200];
+	GSM_File 		File;
 
 	DecodeUTF8QuotedPrintable(File.ID_FullName,argv[2],strlen(argv[2]));
 	EncodeUnicode(File.Name,argv[3],strlen(argv[3]));
@@ -8050,7 +8069,8 @@ static void AddFolder(int argc, char *argv[])
 
 	error = Phone->AddFolder(&s,&File);
     	Print_Error(error);
-	printf("ID of new folder is \"%s\"\n",DecodeUnicodeString(File.ID_FullName));
+	EncodeUTF8QuotedPrintable(IDUTF,File.ID_FullName);
+	printf("ID of new folder is \"%s\"\n",IDUTF);
 
 	GSM_Terminate();
 }
@@ -8069,6 +8089,186 @@ static void DeleteFolder(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDFolder)
+{
+	bool 			Start = true, Available = false;
+	GSM_File	 	Files,Files2,Files3;
+	int 			i,j,NamesPos=0,NamesPos2=0;
+	unsigned char		Buffer[20],Buffer2[500];
+	unsigned char		*Names,*Names2;
+
+	Names = NULL; Names2 = NULL;
+
+	CopyUnicodeString(Files.ID_FullName,ID);
+
+	Files2.Buffer=NULL;
+	Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,10);
+	sprintf(Files2.Buffer,"#EXTM3U%c%c",13,10);
+	Files2.Used = 9;
+
+	printf("Checking %s\n",DecodeUnicodeString(Name));
+	//looking into folder content (searching for mp3 and similiar)
+	while (1) {
+		error = Phone->GetFolderListing(&s,&Files,Start);
+		if (error == ERR_FOLDERPART) {
+			printf("  Only part handled!\n");
+			break;
+		}
+		if (error == ERR_EMPTY) break;
+		if (error == ERR_FILENOTEXIST) return;
+	    	Print_Error(error);
+
+		if (!Files.Folder) {
+			if (mystrcasestr(DecodeUnicodeConsole(Files.Name),".mp3")!=NULL ||
+			    mystrcasestr(DecodeUnicodeConsole(Files.Name),".aac")!=NULL) {
+				Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,Files2.Used+strlen(DecodeUnicodeString(Files.ID_FullName))+2+1);
+				sprintf(Files2.Buffer+Files2.Used,"%s%c%c",DecodeUnicodeString(Files.ID_FullName),13,10);
+				//converting Gammu drives to phone drives
+				if (Files2.Buffer[Files2.Used]=='a' || Files2.Buffer[Files2.Used]=='A') {
+					Files2.Buffer[Files2.Used]='b';
+				} else if (Files2.Buffer[Files2.Used]=='d' || Files2.Buffer[Files2.Used]=='D') {
+					Files2.Buffer[Files2.Used]='a';
+				}
+				Files2.Used+=strlen(DecodeUnicodeString(Files.ID_FullName))+2;
+			}
+		} else {
+			Names = (unsigned char *)realloc(Names,NamesPos+UnicodeLength(Files.ID_FullName)*2+2);
+			CopyUnicodeString(Names+NamesPos,Files.ID_FullName);
+			NamesPos+=UnicodeLength(Files.ID_FullName)*2+2;
+
+			Names2 = (unsigned char *)realloc(Names2,NamesPos2+UnicodeLength(Files.Name)*2+2);
+			CopyUnicodeString(Names2+NamesPos2,Files.Name);
+			NamesPos2+=UnicodeLength(Files.Name)*2+2;
+		}
+
+		Start = false;
+	}
+	if (Files2.Used!=9) {
+		//we checking, if file already exist.if yes, we look for another...
+		i 		= 0;
+		Files3.Buffer 	= NULL;
+		while (1) {
+			CopyUnicodeString(Files3.ID_FullName,IDFolder);
+	        	CopyUnicodeString(Buffer2,Name);
+			if (i!=0) {
+				sprintf(Buffer,"%i",i);
+		        	EncodeUnicode(Buffer2+UnicodeLength(Buffer2)*2,Buffer,strlen(Buffer));
+			}
+	        	EncodeUnicode(Buffer2+UnicodeLength(Buffer2)*2,".m3u",4);
+
+			Start = true;
+			Available = false;
+			while (1) {
+				error = Phone->GetFolderListing(&s,&Files3,Start);
+				if (error == ERR_FOLDERPART) {
+					printf("  Problem with adding playlist\n");
+					break;
+				}
+				if (error == ERR_EMPTY) break;
+			    	Print_Error(error);
+		
+				if (!Files3.Folder) {
+					if (mywstrncasecmp(Buffer2,Files3.Name,-1)) {
+						Available = true;
+						break;
+					}
+				}
+				Start = false;
+			}
+			if (!Available) break;
+			i++;
+		}
+
+		//preparing new playlist file
+		for (i=0;i<Files2.Used;i++) {
+			if (Files2.Buffer[i]=='/') Files2.Buffer[i]='\\';
+		}
+		Files2.System	 = false;
+		Files2.Folder 	 = false;
+		Files2.ReadOnly	 = false;
+		Files2.Hidden	 = false;
+		Files2.Protected = false;
+		Files2.Used	 -= 2;
+		Files2.ModifiedEmpty = false;
+		GSM_GetCurrentDateTime (&Files2.Modified);
+		CopyUnicodeString(Files2.ID_FullName,IDFolder);
+	        CopyUnicodeString(Files2.Name,Buffer2);
+
+		//adding new playlist file
+		sprintf(Buffer2,"  Writing %s: ",DecodeUnicodeString(Files2.Name));
+		AddOneFile(&Files2, Buffer2);
+	}
+	free(Files2.Buffer);
+	Files2.Buffer=NULL;
+
+	//going into subfolders
+	if (NamesPos!=0) {
+		i = 0; j = 0;
+		while (i!=NamesPos) {
+			NokiaAddPlayLists2(Names+i,Names2+j,IDFolder);
+			i+=UnicodeLength(Names+i)*2+2;
+			j+=UnicodeLength(Names2+j)*2+2;
+		}
+	}
+	free(Names);
+	free(Names2);
+}
+
+static void NokiaAddPlayLists(int argc, char *argv[])
+{
+	bool 			Start = true;
+	GSM_File	 	Files;
+	unsigned char		buffer[20],buffer2[20],IDFolder[100];
+
+	GSM_Init(true);
+
+	//delete old playlists
+	EncodeUnicode(IDFolder,"d:\\predefplaylist",17);
+	CopyUnicodeString(Files.ID_FullName,IDFolder);
+	error = Phone->GetFolderListing(&s,&Files,Start);
+	if (error == ERR_FILENOTEXIST) {
+		EncodeUnicode(IDFolder,"d:\\predefgallery\\predefplaylist",17+14);
+		CopyUnicodeString(Files.ID_FullName,IDFolder);
+		error = Phone->GetFolderListing(&s,&Files,Start);
+	} else if (error != ERR_EMPTY) {
+	    	Print_Error(error);
+	}
+	if (error == ERR_FILENOTEXIST) {
+		printf("Your phone model is not supported. Please report\n");
+		GSM_Terminate();
+		exit(-1);	
+	} else if (error != ERR_EMPTY) {
+	    	Print_Error(error);
+	}	
+	while (1) {
+		if (!Files.Folder) {
+			if (strstr(DecodeUnicodeConsole(Files.Name),".m3u")!=NULL) {
+				error = Phone->DeleteFile(&s,Files.ID_FullName);
+			    	Print_Error(error);
+			}
+		}
+		Start = false;
+		error = Phone->GetFolderListing(&s,&Files,Start);
+		if (error == ERR_FOLDERPART) {
+			printf("Problem with deleting playlist\n");
+			break;
+		}
+		if (error == ERR_EMPTY) break;
+	    	Print_Error(error);
+	}
+
+	//go over phone memory and add new one playlists
+	EncodeUnicode(buffer,"d:",2);
+	EncodeUnicode(buffer2,"root",4);
+	NokiaAddPlayLists2(buffer,buffer2,IDFolder);
+	//go over memory card and add new one playlists
+	EncodeUnicode(buffer,"a:",2);
+	EncodeUnicode(buffer2,"root",4);
+	NokiaAddPlayLists2(buffer,buffer2,IDFolder);
+
+	GSM_Terminate();
+}
+
 struct NokiaFolderInfo {
 	char	*model;
 	char 	*parameter;
@@ -8082,18 +8282,18 @@ static struct NokiaFolderInfo Folder[] = {
 	{"",	 "Application",	   "applications",	"3"},
 	{"",	 "Game",	   "games",		"3"},
 	/* Language indepedent in DCT4/TIKU/BB5 in filesystem 2 */
-	{"", 	 "Gallery",	   "a:/predefgallery/predefgraphics",			""},
-	{"", 	 "Gallery2",	   "a:/predefgallery/predefgraphics/predefcliparts",	""},
-	{"", 	 "Camera",	   "a:/predefgallery/predefphotos",			""},
-	{"", 	 "Tones",	   "a:/predefgallery/predeftones",			""},
-	{"", 	 "Tones2",	   "a:/predefgallery/predefmusic",			""},
-	{"", 	 "Records",	   "a:/predefgallery/predefrecordings",			""},
-	{"", 	 "Video",	   "a:/predefgallery/predefvideos",			""},
-	{"", 	 "Playlist",	   "a:/predefplaylist",					""},
-	{"", 	 "MemoryCard",	   "b:",						""},
+	{"", 	 "Gallery",	   "d:/predefgallery/predefgraphics",			""},
+	{"", 	 "Gallery2",	   "d:/predefgallery/predefgraphics/predefcliparts",	""},
+	{"", 	 "Camera",	   "d:/predefgallery/predefphotos",			""},
+	{"", 	 "Tones",	   "d:/predefgallery/predeftones",			""},
+	{"", 	 "Tones2",	   "d:/predefgallery/predefmusic",			""},
+	{"", 	 "Records",	   "d:/predefgallery/predefrecordings",			""},
+	{"", 	 "Video",	   "d:/predefgallery/predefvideos",			""},
+	{"", 	 "Playlist",	   "d:/predefplaylist",					""},
+	{"", 	 "MemoryCard",	   "a:",						""},
 	    //now values first seen in S40 3.0
-	{"",	 "Application",	   "a:/predefjava/predefcollections",			""},
-	{"",	 "Game",	   "a:/predefjava/predefgames",				""},
+	{"",	 "Application",	   "d:/predefjava/predefcollections",			""},
+	{"",	 "Game",	   "d:/predefjava/predefgames",				""},
 
 	/* Language depedent in DCT4 filesystem 1 */
 	{"",	 "Gallery",	   "Clip-arts",					"3"},
@@ -8183,10 +8383,10 @@ static void NokiaAddFile(int argc, char *argv[])
 	} else if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_FILES2)) {
 		i = 0;
 		while (Folder[i].parameter[0] != 0) {
-			if ((Folder[i].folder[0] == 'a' || Folder[i].folder[0] == 'b') &&
+			if ((Folder[i].folder[0] == 'a' || Folder[i].folder[0] == 'd') &&
 			    Folder[i].level[0] == 0x00 &&
 			    mystrncasecmp(argv[2],Folder[i].parameter,0)) {
-				if (strstr(Folder[i].folder,"a:/predefjava/")!= NULL &&
+				if (strstr(Folder[i].folder,"d:/predefjava/")!= NULL &&
 				    !IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_SERIES40_30)) {
 					i++;
 					continue;
@@ -8366,7 +8566,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		}
 
 		/* adding folder */
-		if (strstr(DecodeUnicodeString(Files.ID_FullName),"a:/predefjava/")== NULL) {
+		if (strstr(DecodeUnicodeString(Files.ID_FullName),"d:/predefjava/")== NULL) {
 			strcpy(buffer,Vendor);
 			strcat(buffer,Name);
 			EncodeUnicode(File.Name,buffer,strlen(buffer));
@@ -8527,7 +8727,7 @@ static void DeleteFiles(int argc, char *argv[])
 	GSM_Init(true);
 
 	for (i=2;i<argc;i++) {
-		EncodeUnicode(buffer,argv[i],strlen(argv[i]));
+		DecodeUTF8QuotedPrintable(buffer,argv[i],strlen(argv[i]));
 		error = Phone->DeleteFile(&s,buffer);
 	    	Print_Error(error);
 	}
@@ -8887,6 +9087,7 @@ static GSM_Parameters Parameters[] = {
 	{"--getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
 	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
 	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
+	{"--nokiaaddplaylists",		0, 0, NokiaAddPlayLists,	{H_Filesystem,H_Nokia,0},	""},
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly][-overwrite]"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
