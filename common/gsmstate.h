@@ -1591,6 +1591,7 @@ typedef enum {
 	F_PROFILES,	/* Profiles support available					*/
 	F_SERIES40_30,  /* Series 40 3.0						*/
 	F_SMS_FILES,  	/* SMS are read from filesystem files like in Series 40 3.0	*/
+	F_3220_MMS,
 
 	/* n6510.c && n7110.c */
 	F_VOICETAGS,	/* Voice tags available						*/
