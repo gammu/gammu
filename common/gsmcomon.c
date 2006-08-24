@@ -176,6 +176,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_SHOULDBEFILE,		"You have to give file (not folder) name."},
 	{ERR_NOSIM,			"Can not access SIM card."},
 	{ERR_GNAPPLETWRONG,		"Wrong GNAPPLET version in phone. Use version from currently used Gammu."},
+	{ERR_FOLDERNOTEMPTY,		"Folder must be empty."},
 
 	{0,				""}
 };

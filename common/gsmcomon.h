@@ -72,7 +72,9 @@ typedef enum {
 	ERR_SHOULDBEFOLDER,		/* You have to give folder (not file) name */
 	ERR_SHOULDBEFILE,		/* You have to give file (not folder) name */
 	ERR_NOSIM,			/* Can not access SIM card */
-	ERR_GNAPPLETWRONG
+	ERR_GNAPPLETWRONG,
+	ERR_FOLDERPART,
+	ERR_FOLDERNOTEMPTY
 } GSM_Error;
 
 extern GSM_Error NoneFunction		(void);
