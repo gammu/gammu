@@ -1794,6 +1794,11 @@ GSM_Error N6510_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 	}
 	if (UnicodeLength(File->ID_FullName) == 0) {
 		memcpy(File,&File2,sizeof(GSM_File));
+		EncodeUnicode(File->Name,"C (",3);
+		CopyUnicodeString(File->Name+6,File2.Name);
+		EncodeUnicode(File->Name+UnicodeLength(File->Name)*2,")",1);
+		sprintf(buffer,"c:\\%i",0x01);
+		EncodeUnicode(File->ID_FullName,buffer,strlen(buffer));
 	} else if (!strcmp(DecodeUnicodeString(File->ID_FullName),"c:\\1")) {
 		return ERR_EMPTY;
 	}

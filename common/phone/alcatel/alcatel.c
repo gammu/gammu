@@ -1957,6 +1957,7 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 		if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeContacts, entry->Location))!= ERR_NONE) return error;
 		for (i = 0; i < entry->EntriesNum; i++) {
+			entry->Entries[i].AddError = ERR_NONE;
 			switch (entry->Entries[i].EntryType) {
 				case PBK_Number_General:
 					UpdatedFields[8] = true;
@@ -2056,17 +2057,17 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 					break;
 				case PBK_Text_Custom4:
 					UpdatedFields[24] = true;
-					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 24, entry->Entries[i].Text)) != ERR_NONE) return error
-						; break;
+					if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 24, entry->Entries[i].Text)) != ERR_NONE) return error;
+					break;
 				case PBK_PictureID:
 					if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
 					       UpdatedFields[25] = true;
 					       if ((error = ALCATEL_UpdateField(s, Alcatel_int, entry->Location, 25, &(entry->Entries[i].Number))) != ERR_NONE) return error;
 					} else {
 						smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
+						entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 					}
 					break;
-
 				case PBK_Text_Name: NamePosition = i; break;
 				/* Following fields are not supported: */
 				case PBK_SMSListID:
@@ -2077,15 +2078,18 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_RingtoneID:
 				case PBK_Text_Postal:
 				case PBK_Text_URL:
-				case PBK_CallLength:
+				case PBK_CallLength:                  	
+					entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 					smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
 					break;
 			}
 		}
 		if (NamePosition != -1) {
 			if (NameSet) {
+				entry->Entries[NamePosition].AddError = ERR_NOTSUPPORTED;
 				smprintf(s,"WARNING: Ignoring name, not supported by phone\n");
 			} else {
+				//mw: fixme ?
 				UpdatedFields[1] = true; if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 1, entry->Entries[i].Text)) != ERR_NONE) return error;
 			}
 		}

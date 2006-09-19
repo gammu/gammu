@@ -1135,7 +1135,7 @@ static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	req[12] = entry->Location / 256;
 	req[13] = entry->Location % 256;
 
-	count = count + N71_65_EncodePhonebookFrame(s, req+22, *entry, &blocks, true, IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_VOICETAGS));
+	count = count + N71_65_EncodePhonebookFrame(s, req+22, entry, &blocks, true, IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_VOICETAGS));
 	req[21] = blocks;
 
 	smprintf(s, "Writing phonebook entry\n");
@@ -1765,6 +1765,8 @@ static GSM_Error N6510_GetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 	unsigned char 		req[] = {N6110_FRAME_HEADER, 0x15,
 				 	 0x00};		/* Location */
 
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
+
 	error = N6510_EnableConnectionFunctions(s, Type);
 	if (error!=ERR_NONE) return error;
 
@@ -2279,6 +2281,8 @@ static GSM_Error N6510_ReplyGetOriginalIMEI(GSM_Protocol_Message msg, GSM_StateM
 
 static GSM_Error N6510_GetOriginalIMEI(GSM_StateMachine *s, char *value)
 {
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
+
 	return NOKIA_GetPhoneString(s,"\x00\x07\x02\x01\x00\x01",6,0x42,value,ID_GetOriginalIMEI,14);
 }
 
@@ -2747,6 +2751,8 @@ static GSM_Error N6510_GetManufactureMonth(GSM_StateMachine *s, char *value)
 {
 	unsigned char req[6] = {0x00, 0x05, 0x02, 0x01, 0x00, 0x02};
 //	unsigned char req[6] = {0x00, 0x03, 0x04, 0x0B, 0x01, 0x00};
+
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
 
 	s->Phone.Data.PhoneString=value;
 	smprintf(s, "Getting manufacture month\n");
@@ -3867,6 +3873,8 @@ GSM_Error N6510_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
 	GSM_Error error;
 
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
+
 	/* We have to enable WAP frames in phone */
 	error=N6510_EnableConnectionFunctions(s,N6510_WAP_SETTINGS);
 	if (error!=ERR_NONE) return error;
@@ -4103,7 +4111,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|5140i|6020|6021|6100|6101|6111|6170|6200|6220|6230|6230i|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|6822|7200|7210|7250|7250i|7260|7270|7360|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|5140i|6020|6021|6100|6101|6103|6111|6125|6131|6170|6200|6220|6230|6230i|6233|6270|6280|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|6822|7200|7210|7250|7250i|7260|7270|7360|7370|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/

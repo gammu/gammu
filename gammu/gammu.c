@@ -825,116 +825,114 @@ GSM_AllRingtonesInfo 	Info = {0, NULL};
 bool			callerinit[5] = {false, false, false, false, false};
 bool			ringinit = false;
 
-static void PrintMemoryEntry(GSM_MemoryEntry *entry)
+static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 {
-	GSM_Category		Category;
-	bool			unknown;
-	int			z;
+	GSM_Category	Category;
+	int		z;
 
-	for (i=0;i<entry->EntriesNum;i++) {
-		unknown = false;
-		switch (entry->Entries[i].EntryType) {
-			case PBK_CallLength:
-				printmsg("Call length      : %02i:%02i:%02i\n",entry->Entries[i].CallLength/(60*60),entry->Entries[i].CallLength/60,entry->Entries[i].CallLength%60);
-				continue;				
-			case PBK_Date:
-				printmsg("Date and time    : %s\n",OSDateTime(entry->Entries[i].Date,false));
-				continue;
-			case PBK_Category:
-				if (entry->Entries[i].Number == -1) {
-					printmsg("Category         : \"%s\"\n", DecodeUnicodeConsole(entry->Entries[i].Text));
-				} else {
-					Category.Location = entry->Entries[i].Number;
-					Category.Type = Category_Phonebook;
-					error=Phone->GetCategory(&s, &Category);
-					if (error == ERR_NONE) {
-						printmsg("Category         : \"%s\" (%i)\n", DecodeUnicodeConsole(Category.Name), entry->Entries[i].Number);
-					} else {
-						printmsg("Category         : %i\n", entry->Entries[i].Number);
-					}
-				}
-				continue;
-			case PBK_Private:
-				printmsg("Private          : %s\n", entry->Entries[i].Number == 1 ? "Yes" : "No");
-				continue;
-			case PBK_Number_General     : printmsg("General number  "); break;
-			case PBK_Number_Mobile      : printmsg("Mobile number   "); break;
-			case PBK_Number_Work        : printmsg("Work number     "); break;
-			case PBK_Number_Fax         : printmsg("Fax number      "); break;
-			case PBK_Number_Home        : printmsg("Home number     "); break;
-			case PBK_Number_Pager       : printmsg("Pager number    "); break;
-			case PBK_Number_Other       : printmsg("Other number    "); break;
-			case PBK_Text_Note          : printmsg("Text            "); break;
-			case PBK_Text_Postal        : printmsg("Snail address   "); break;
-			case PBK_Text_Email         : printmsg("Email address 1 "); break;
-			case PBK_Text_Email2        : printmsg("Email address 2 "); break;
-			case PBK_Text_URL           : printmsg("URL address     "); break;
-			case PBK_Text_Name          : printmsg("Name            "); break;
-			case PBK_Text_LastName      : printmsg("Last name       "); break;
-			case PBK_Text_FirstName     : printmsg("First name      "); break;
-			case PBK_Text_Company       : printmsg("Company         "); break;
-			case PBK_Text_JobTitle      : printmsg("Job title       "); break;
-			case PBK_Text_StreetAddress : printmsg("Street address  "); break;
-			case PBK_Text_City          : printmsg("City            "); break;
-			case PBK_Text_State         : printmsg("State           "); break;
-			case PBK_Text_Zip           : printmsg("Zip code        "); break;
-			case PBK_Text_Country       : printmsg("Country         "); break;
-			case PBK_Text_Custom1       : printmsg("Custom text 1   "); break;
-			case PBK_Text_Custom2       : printmsg("Custom text 2   "); break;
-			case PBK_Text_Custom3       : printmsg("Custom text 3   "); break;
-			case PBK_Text_Custom4       : printmsg("Custom text 4   "); break;
-			case PBK_Caller_Group       :
-				unknown = true;
-				if (entry->Entries[i].Number > 5) {
-					printmsg("Caller group     : \"%d\"\n",entry->Entries[i].Number);
-					printmsgerr("Caller group number too high, please increase buffer in sources!\n");
+	switch (entry->EntryType) {
+	case PBK_CallLength:
+		printmsg("Call length      : %02i:%02i:%02i\n",entry->CallLength/(60*60),entry->CallLength/60,entry->CallLength%60);
+		return;
+	case PBK_Date:
+		printmsg("Date and time    : %s\n",OSDateTime(entry->Date,false));
+		return;
+	case PBK_Category:
+		if (entry->Number == -1) {
+			printmsg("Category         : \"%s\"\n", DecodeUnicodeConsole(entry->Text));
+		} else {
+			Category.Location = entry->Number;
+			Category.Type = Category_Phonebook;
+			error=Phone->GetCategory(&s, &Category);
+			if (error == ERR_NONE) {
+				printmsg("Category         : \"%s\" (%i)\n", DecodeUnicodeConsole(Category.Name), entry->Number);
+			} else {
+				printmsg("Category         : %i\n", entry->Number);
+			}
+		}
+		return;
+	case PBK_Private:
+		printmsg("Private          : %s\n", entry->Number == 1 ? "Yes" : "No");
+		return;
+	case PBK_Caller_Group       :
+		if (entry->Number > 5) {
+			printmsg("Caller group     : \"%d\"\n",entry->Number);
+			printmsgerr("Caller group number too high, please increase buffer in sources!\n");
+			break;
+		}
+		if (!callerinit[entry->Number-1]) {
+			caller[entry->Number-1].Type	    = GSM_CallerGroupLogo;
+			caller[entry->Number-1].Location = entry->Number;
+			error=Phone->GetBitmap(&s,&caller[entry->Number-1]);
+			Print_Error(error);
+			if (caller[entry->Number-1].DefaultName) {
+				NOKIA_GetDefaultCallerGroupName(&s,&caller[entry->Number-1]);
+			}
+			callerinit[entry->Number-1]=true;
+		}
+		printmsg("Caller group     : \"%s\"\n",DecodeUnicodeConsole(caller[entry->Number-1].Text));
+		return;
+	case PBK_RingtoneID	     :
+		if (!ringinit) {
+			error=Phone->GetRingtonesInfo(&s,&Info);
+			if (error != ERR_NOTSUPPORTED) Print_Error(error);
+			if (error == ERR_NONE) ringinit = true;
+		}
+		if (ringinit) {
+			for (z=0;z<Info.Number;z++) {
+				if (Info.Ringtone[z].ID == entry->Number) {
+					printmsg("Ringtone         : \"%s\"\n",DecodeUnicodeConsole(Info.Ringtone[z].Name));
 					break;
 				}
-				if (!callerinit[entry->Entries[i].Number-1]) {
-					caller[entry->Entries[i].Number-1].Type	    = GSM_CallerGroupLogo;
-					caller[entry->Entries[i].Number-1].Location = entry->Entries[i].Number;
-					error=Phone->GetBitmap(&s,&caller[entry->Entries[i].Number-1]);
-					Print_Error(error);
-					if (caller[entry->Entries[i].Number-1].DefaultName) {
-						NOKIA_GetDefaultCallerGroupName(&s,&caller[entry->Entries[i].Number-1]);
-					}
-					callerinit[entry->Entries[i].Number-1]=true;
-				}
-				printmsg("Caller group     : \"%s\"\n",DecodeUnicodeConsole(caller[entry->Entries[i].Number-1].Text));
-				break;
-			case PBK_RingtoneID	     :
-				unknown = true;
-				if (!ringinit) {
-					error=Phone->GetRingtonesInfo(&s,&Info);
-					if (error != ERR_NOTSUPPORTED) Print_Error(error);
-					if (error == ERR_NONE) ringinit = true;
-				}
-				if (ringinit) {
-					for (z=0;z<Info.Number;z++) {
-						if (Info.Ringtone[z].ID == entry->Entries[i].Number) {
-							printmsg("Ringtone         : \"%s\"\n",DecodeUnicodeConsole(Info.Ringtone[z].Name));
-							break;
-						}
-					}
-				} else {
-					printmsg("Ringtone ID      : %i\n",entry->Entries[i].Number);
-				}
-				break;
-			case PBK_Text_UserID:
-				unknown = true;
-				printmsg("User ID          : %s\n",DecodeUnicodeString(entry->Entries[i].Text));
-				break;
-			case PBK_PictureID	     :
-				unknown = true;
-				printmsg("Picture ID       : 0x%x\n",entry->Entries[i].Number);
-				break;
-			default		       :
-				printmsg("UNKNOWN\n");
-				unknown = true;
-				break;
+			}
+		} else {
+			printmsg("Ringtone ID      : %i\n",entry->Number);
 		}
-		if (!unknown) printmsg(" : \"%s\"\n", DecodeUnicodeConsole(entry->Entries[i].Text));
+		return;
+	case PBK_Text_UserID:
+		printmsg("User ID          : %s\n",DecodeUnicodeString(entry->Text));
+		return;
+	case PBK_PictureID	     :
+		printmsg("Picture ID       : 0x%x\n",entry->Number);
+		return;
+	case PBK_Number_General     : printmsg("General number  "); break;
+	case PBK_Number_Mobile      : printmsg("Mobile number   "); break;
+	case PBK_Number_Work        : printmsg("Work number     "); break;
+	case PBK_Number_Fax         : printmsg("Fax number      "); break;
+	case PBK_Number_Home        : printmsg("Home number     "); break;
+	case PBK_Number_Pager       : printmsg("Pager number    "); break;
+	case PBK_Number_Other       : printmsg("Other number    "); break;
+	case PBK_Text_Note          : printmsg("Text            "); break;
+	case PBK_Text_Postal        : printmsg("Snail address   "); break;
+	case PBK_Text_Email         : printmsg("Email address 1 "); break;
+	case PBK_Text_Email2        : printmsg("Email address 2 "); break;
+	case PBK_Text_URL           : printmsg("URL address     "); break;
+	case PBK_Text_Name          : printmsg("Name            "); break;
+	case PBK_Text_LastName      : printmsg("Last name       "); break;
+	case PBK_Text_FirstName     : printmsg("First name      "); break;
+	case PBK_Text_Company       : printmsg("Company         "); break;
+	case PBK_Text_JobTitle      : printmsg("Job title       "); break;
+	case PBK_Text_StreetAddress : printmsg("Street address  "); break;
+	case PBK_Text_City          : printmsg("City            "); break;
+	case PBK_Text_State         : printmsg("State           "); break;
+	case PBK_Text_Zip           : printmsg("Zip code        "); break;
+	case PBK_Text_Country       : printmsg("Country         "); break;
+	case PBK_Text_Custom1       : printmsg("Custom text 1   "); break;
+	case PBK_Text_Custom2       : printmsg("Custom text 2   "); break;
+	case PBK_Text_Custom3       : printmsg("Custom text 3   "); break;
+	case PBK_Text_Custom4       : printmsg("Custom text 4   "); break;
+	default:
+		printmsg("UNKNOWN\n");
+		return;
 	}
+	printmsg(" : \"%s\"\n", DecodeUnicodeConsole(entry->Text));
+}
+
+static void PrintMemoryEntry(GSM_MemoryEntry *entry)
+{
+	int i;
+
+	for (i=0;i<entry->EntriesNum;i++) PrintMemorySubEntry(&entry->Entries[i]);
 	printf("\n");
 }
 
@@ -5133,8 +5131,8 @@ static void Restore(int argc, char *argv[])
 	GSM_MultiWAPSettings	Settings;
 	GSM_GPRSAccessPoint	GPRSPoint;
 	GSM_WAPBookmark		Bookmark;
-	int			i, used, max = 0;
-	bool			Past = true;
+	int			i, j, used, max = 0;
+	bool			Past = true, First;
 	bool			Found, DoRestore;
 
 	error=GSM_ReadBackupFile(argv[2],&Backup);
@@ -5151,7 +5149,6 @@ static void Restore(int argc, char *argv[])
 	if (Backup.Model[0]!=0) 	printmsgerr("Phone           : %s\n",Backup.Model);
 	if (Backup.IMEI[0]!=0) 		printmsgerr("IMEI            : %s\n",Backup.IMEI);
 	if (Backup.Creator[0]!=0) 	printmsgerr("File created by : %s\n",Backup.Creator);
-
 	
 	if (argc == 4 && mystrncasecmp(argv[3],"-yes",0)) always_answer_yes = true;
 
@@ -5206,21 +5203,29 @@ static void Restore(int argc, char *argv[])
 			Pbk.MemoryType 	= MEM_ME;
 			Pbk.Location	= i + 1;
 			Pbk.EntriesNum	= 0;
-			if (used<max) {
-				if (Backup.PhonePhonebook[used]->Location == Pbk.Location) {
-					Pbk = *Backup.PhonePhonebook[used];
-					used++;
-					dbgprintf("Location %i\n",Pbk.Location);
-					if (Pbk.EntriesNum != 0) error=Phone->SetMemory(&s, &Pbk);
-					if (error == ERR_PERMISSION && IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_6230iCALLER)) {
-						error=Phone->DeleteMemory(&s, &Pbk);
-						Print_Error(error);
-						error=Phone->SetMemory(&s, &Pbk);
-					}
-					if (error == ERR_MEMORY && IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_6230iCALLER)) {
-						printf("\n  Error - try to (1) add enough number of/restore caller groups and (2) use --restore again\n");
-						GSM_TerminateConnection(&s);
-				 		exit (-1);
+			if (used<max && Backup.PhonePhonebook[used]->Location == Pbk.Location) {
+				Pbk = *Backup.PhonePhonebook[used];
+				used++;
+				dbgprintf("Location %i\n",Pbk.Location);
+				if (Pbk.EntriesNum != 0) error=Phone->SetMemory(&s, &Pbk);
+				if (error == ERR_PERMISSION && IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_6230iCALLER)) {
+					error=Phone->DeleteMemory(&s, &Pbk);
+					Print_Error(error);
+					error=Phone->SetMemory(&s, &Pbk);
+				}
+				if (error == ERR_MEMORY && IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_6230iCALLER)) {
+					printf("\n  Error - try to (1) add enough number of/restore caller groups and (2) use --restore again\n");
+					GSM_TerminateConnection(&s);
+					exit (-1);
+				}
+				if (Pbk.EntriesNum != 0 && error==ERR_NONE) {
+					First = true;
+					for (j=0;j<Pbk.EntriesNum;j++) {
+			 			if (Pbk.Entries[j].AddError == ERR_NONE) continue;
+						if (First) printf("%cLocation %i                 \n  ",13,Pbk.Location);
+						First = false;
+						PrintMemorySubEntry(&Pbk.Entries[j]);
+						printf("    %s\n",print_error(Pbk.Entries[j].AddError,s.di.df,s.msg));
 					}
 				}
 			}
@@ -5252,12 +5257,22 @@ static void Restore(int argc, char *argv[])
 			Pbk.MemoryType 	= MEM_SM;
 			Pbk.Location	= i + 1;
 			Pbk.EntriesNum	= 0;
-			if (used<max) {
-				if (Backup.SIMPhonebook[used]->Location == Pbk.Location) {
-					Pbk = *Backup.SIMPhonebook[used];
-					used++;
-					dbgprintf("Location %i\n",Pbk.Location);
-					if (Pbk.EntriesNum != 0) error=Phone->SetMemory(&s, &Pbk);
+			if (used<max && Backup.SIMPhonebook[used]->Location == Pbk.Location) {
+				Pbk = *Backup.SIMPhonebook[used];
+				used++;
+				dbgprintf("Location %i\n",Pbk.Location);
+				if (Pbk.EntriesNum != 0) {
+					error=Phone->SetMemory(&s, &Pbk);
+					if (error==ERR_NONE) {
+						First = true;
+						for (j=0;j<Pbk.EntriesNum;j++) {
+					 		if (Pbk.Entries[j].AddError == ERR_NONE) continue;
+							if (First) printf("%cLocation %i                 \n  ",13,Pbk.Location);
+							First = false;
+							PrintMemorySubEntry(&Pbk.Entries[j]);
+							printf("    %s\n",print_error(Pbk.Entries[j].AddError,s.di.df,s.msg));
+						}
+					}
 				}
 			}
 			if (Pbk.EntriesNum == 0) error=Phone->DeleteMemory(&s, &Pbk);
@@ -7517,11 +7532,11 @@ static void GetFileSystem(int argc, char *argv[])
 		}
 
 		if (argc <= 2 || !mystrncasecmp(argv[2],"-flatall",0)) {
-			if (UnicodeLength(Files.ID_FullName) < 5 &&
-			    UnicodeLength(Files.ID_FullName) != 0 &&
-			    DecodeUnicodeString(Files.ID_FullName)[0]>='0' &&
-			    DecodeUnicodeString(Files.ID_FullName)[0]<='9') {
-				printf("%5s.",DecodeUnicodeString(Files.ID_FullName));
+			//Nokia filesystem 1
+			if (UnicodeLength(Files.ID_FullName) != 0 &&
+			    (DecodeUnicodeString(Files.ID_FullName)[0]=='C' ||
+			    DecodeUnicodeString(Files.ID_FullName)[0]=='c')) {
+				printf("%8s.",DecodeUnicodeString(Files.ID_FullName));
 			}
 			if (Files.Protected) {
 				printf("P");
@@ -8089,22 +8104,26 @@ static void DeleteFolder(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+typedef struct _PlayListEntry PlayListEntry;
+
+struct _PlayListEntry {
+	unsigned char		*Name;
+	unsigned char		*NameUP;
+	PlayListEntry		*Next;
+};
+
 static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDFolder)
 {
 	bool 			Start = true, Available = false;
 	GSM_File	 	Files,Files2,Files3;
 	int 			i,j,NamesPos=0,NamesPos2=0;
 	unsigned char		Buffer[20],Buffer2[500];
-	unsigned char		*Names,*Names2;
+	unsigned char		*Names,*Names2,*Pointer;
+	PlayListEntry		*First,*Entry,*Prev;
 
-	Names = NULL; Names2 = NULL;
+	First = NULL; Names=NULL; Names2=NULL;
 
 	CopyUnicodeString(Files.ID_FullName,ID);
-
-	Files2.Buffer=NULL;
-	Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,10);
-	sprintf(Files2.Buffer,"#EXTM3U%c%c",13,10);
-	Files2.Used = 9;
 
 	printf("Checking %s\n",DecodeUnicodeString(Name));
 	//looking into folder content (searching for mp3 and similiar)
@@ -8121,15 +8140,27 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 		if (!Files.Folder) {
 			if (mystrcasestr(DecodeUnicodeConsole(Files.Name),".mp3")!=NULL ||
 			    mystrcasestr(DecodeUnicodeConsole(Files.Name),".aac")!=NULL) {
-				Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,Files2.Used+strlen(DecodeUnicodeString(Files.ID_FullName))+2+1);
-				sprintf(Files2.Buffer+Files2.Used,"%s%c%c",DecodeUnicodeString(Files.ID_FullName),13,10);
-				//converting Gammu drives to phone drives
-				if (Files2.Buffer[Files2.Used]=='a' || Files2.Buffer[Files2.Used]=='A') {
-					Files2.Buffer[Files2.Used]='b';
-				} else if (Files2.Buffer[Files2.Used]=='d' || Files2.Buffer[Files2.Used]=='D') {
-					Files2.Buffer[Files2.Used]='a';
+				if (First==NULL) {
+					First = malloc(sizeof(PlayListEntry));
+					Entry = First;
+				} else {
+					Entry->Next = malloc(sizeof(PlayListEntry));
+					Entry = Entry->Next;
 				}
-				Files2.Used+=strlen(DecodeUnicodeString(Files.ID_FullName))+2;
+				Entry->Next = NULL;
+				Entry->Name = malloc(strlen(DecodeUnicodeString(Files.ID_FullName))+1);
+				sprintf(Entry->Name,"%s",DecodeUnicodeString(Files.ID_FullName));
+				//converting Gammu drives to phone drives
+				if (Entry->Name[0]=='a' || Entry->Name[0]=='A') {
+					Entry->Name[0]='b';
+				} else if (Entry->Name[0]=='d' || Entry->Name[0]=='D') {
+					Entry->Name[0]='a';
+				}
+
+				Entry->NameUP = malloc(strlen(DecodeUnicodeString(Files.ID_FullName))+1);
+				for (i=0;i<(int)strlen(DecodeUnicodeString(Files.ID_FullName))+1;i++) {
+					Entry->NameUP[i] = tolower(Entry->Name[i]);
+				}
 			}
 		} else {
 			Names = (unsigned char *)realloc(Names,NamesPos+UnicodeLength(Files.ID_FullName)*2+2);
@@ -8143,7 +8174,24 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 
 		Start = false;
 	}
-	if (Files2.Used!=9) {
+	if (First!=NULL) {
+		//sorting songs names
+		Entry=First;		
+		while (Entry->Next!=NULL) {
+			if (strcmp(Entry->NameUP,Entry->Next->NameUP)>0) {
+				Pointer=Entry->Next->Name;
+				Entry->Next->Name = Entry->Name;
+				Entry->Name = Pointer;
+
+				Pointer=Entry->Next->NameUP;
+				Entry->Next->NameUP = Entry->NameUP;
+				Entry->NameUP = Pointer;
+				
+				Entry=First;
+				continue;
+			}
+			Entry=Entry->Next;
+		}
 		//we checking, if file already exist.if yes, we look for another...
 		i 		= 0;
 		Files3.Buffer 	= NULL;
@@ -8179,27 +8227,55 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 			i++;
 		}
 
-		//preparing new playlist file
-		for (i=0;i<Files2.Used;i++) {
-			if (Files2.Buffer[i]=='/') Files2.Buffer[i]='\\';
-		}
+		//preparing new playlist file date
 		Files2.System	 = false;
 		Files2.Folder 	 = false;
 		Files2.ReadOnly	 = false;
 		Files2.Hidden	 = false;
 		Files2.Protected = false;
-		Files2.Used	 -= 2;
 		Files2.ModifiedEmpty = false;
 		GSM_GetCurrentDateTime (&Files2.Modified);
 		CopyUnicodeString(Files2.ID_FullName,IDFolder);
 	        CopyUnicodeString(Files2.Name,Buffer2);
 
+		//preparing new playlist file content
+		Files2.Buffer=NULL;
+		Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,10);
+		sprintf(Files2.Buffer,"#EXTM3U%c%c",13,10);
+		Files2.Used = 9;
+		Entry=First;		
+		while (Entry!=NULL) {
+			Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,Files2.Used+strlen(Entry->Name)+2+1);
+			sprintf(Files2.Buffer+Files2.Used,"%s%c%c",Entry->Name,13,10);				
+			Files2.Used+=strlen(Entry->Name)+2;
+			Entry=Entry->Next;
+		}
+		Files2.Used	 -= 2;
+		for (i=0;i<Files2.Used;i++) {
+			if (Files2.Buffer[i]=='/') Files2.Buffer[i]='\\';
+		}
+
 		//adding new playlist file
 		sprintf(Buffer2,"  Writing %s: ",DecodeUnicodeString(Files2.Name));
 		AddOneFile(&Files2, Buffer2);
+
+		//cleaning buffers
+		free(Files2.Buffer);
+		Files2.Buffer=NULL;
+		while (Entry!=NULL) {
+			Entry=First;
+			Prev=NULL;
+			while (Entry->Next!=NULL) {
+				Prev=Entry;
+				Entry=Entry->Next;
+			}
+			free(Entry->Name);
+			free(Entry->NameUP);
+			free(Entry);
+			Entry=NULL;
+			if (Prev!=NULL) Prev->Next = NULL;
+		}
 	}
-	free(Files2.Buffer);
-	Files2.Buffer=NULL;
 
 	//going into subfolders
 	if (NamesPos!=0) {

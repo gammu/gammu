@@ -177,6 +177,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_NOSIM,			"Can not access SIM card."},
 	{ERR_GNAPPLETWRONG,		"Wrong GNAPPLET version in phone. Use version from currently used Gammu."},
 	{ERR_FOLDERNOTEMPTY,		"Folder must be empty."},
+	{ERR_DATACONVERTED,		"Data were converted."},
 
 	{0,				""}
 };

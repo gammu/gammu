@@ -1088,7 +1088,9 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 		SaveBackupText(file, "", buffer, false);
 	}
 
-	sprintf(buffer,"# Format of this file was designed for Gammu (see www.mwiacek.com)%c%c%c%c",13,10,13,10);
+	sprintf(buffer,"# This file format was designed for Gammu and is compatible with Gammu+%c%c",13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	sprintf(buffer,"# See www.mwiacek.com and www.gammu.org for more info%c%c%c%c",13,10,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
 	sprintf(buffer,"[Backup]%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);

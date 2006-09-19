@@ -112,7 +112,7 @@ void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 	fake_sm.di = di;
 	fake_sm.di.use_global = true;
 
-	count = count + N71_65_EncodePhonebookFrame(&fake_sm, req+16, *entry, &blocks, true, true);
+	count = count + N71_65_EncodePhonebookFrame(&fake_sm, req+16, entry, &blocks, true, true);
 
 	req[4]=(count-12)%256;
 	req[5]=(count-12)/256;

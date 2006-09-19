@@ -3398,13 +3398,17 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	unsigned char		name[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 	unsigned char		uname[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 	unsigned char		number[GSM_PHONEBOOK_TEXT_LENGTH + 1];
-	int			reqlen;
+	int			reqlen, i;
 	bool			PreferUnicode = false;
 
 	if (entry->Location == 0) return ERR_INVALIDLOCATION;
 
 	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
 	if (error != ERR_NONE) return error;
+
+	for (i=0;i<entry->EntriesNum;i++) {
+		entry->Entries[i].AddError = ERR_NOTSUPPORTED;
+	}
 
 	GSM_PhonebookFindDefaultNameNumberGroup(entry, &Name, &Number, &Group);
 
@@ -3460,6 +3464,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
 			break;
 		}
+		entry->Entries[Name].AddError = ERR_NONE;
 	} else {
 		smprintf(s, "WARNING: No usable name found!\n");
 		len = 0;
@@ -3469,6 +3474,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		GSM_PackSemiOctetNumber(entry->Entries[Number].Text, number, false);
 		NumberType = number[0];
 		sprintf(number,"%s",DecodeUnicodeString(entry->Entries[Number].Text));
+		entry->Entries[Number].AddError = ERR_NONE;
 	} else {
 		smprintf(s, "WARNING: No usable number found!\n");
 		number[0] = 0;
