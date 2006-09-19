@@ -3518,6 +3518,10 @@ GSM_Error ATGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_MemoryStatus	Status;
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
+	/* Switch to desired memory type */
+	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
+	if (error != ERR_NONE) return error;
+
 	/* Find out empty location */
 	error = ATGEN_GetMemoryInfo(s, &Status, AT_NextEmpty);
 	if (error != ERR_NONE) return error;
