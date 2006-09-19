@@ -5,8 +5,8 @@ In brackets names of people, who told about error/problem or helped in fixing
 or inspired me to make it.
 
 This software was sponsored (in time order) by:
- 1. 2002-2005 Tomasz Motylewski
- 2. 2002-2005 Ondrej Rybin (http://business.nabit.cz)
+ 1. 2002-2006 Tomasz Motylewski
+ 2. 2002-2006 Ondrej Rybin (http://business.nabit.cz)
               * SMS service(s) and gateway(s)
  3. 2003-2004 Multi-COM
  4. 2003-2004 Tom Nelson (www.pocketderelict.com)
@@ -30,6 +30,7 @@ This software was sponsored (in time order) by:
 22. 2005      Andreas Leitgeb
 23. 2006      Assemblix Technology Pte Ltd (www.assemblix.com.sg)
 24. 2006      Cameron Laird (http://phaseit.net/claird/home.html)
+25. 2006      Kees Meijs
 
 and others... If you like this project, please help too (see www.mwiacek.com
 for more details)
@@ -40,6 +41,21 @@ For additionals materials and links to them see readme.txt
 [+] New functionality
 [*] Changes in existing functionality
 [-] Fixed error
+
+20060918 - 1.08.00
+[+] --nokiaaddplaylists sort songs in playlists                   (Igor Testen)
+[+] Gammu partially inform user, which phonebook subentries weren't restored
+    with --restore
+[+] some series 40 3.0 phones save names double in pbk - once like 
+    last name, once like name. This version use last name only
+    (name is added, when last name wasn't found)
+[+] WAP/MMS settings, WAP bookmarks are disabled for Series 40 3.0
+[-] FM station names can be 18    (www.gammu.org/bugs/view.php?id=18, pasiasty)
+    chars long for 6230i now. Bug in all previous releases
+[-] --getrootfolders are working   (www.gammu.org/bugs/view.php?id=19, Cavaler)
+    for filesystem1 only phones now. Bug at least in 1.07.25
+[-] 1.07.25 didn't display file ID for filesystem 1 with      (Andreas Leitgeb)
+    --getfilesystem
 
 20060817 - 1.07.25
 [-] 6510: * addfilepart set name (not ID) as name

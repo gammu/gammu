@@ -225,7 +225,7 @@ typedef struct {
 
 /* ------------------- radio FM stations ---------------------------------- */
 
-#define	GSM_MAX_FMSTATION_LENGTH 12
+#define	GSM_MAX_FMSTATION_LENGTH 18
 #define	GSM_MAX_FM_STATION 	 20
 
 typedef struct {
