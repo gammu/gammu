@@ -1253,7 +1253,8 @@ static void ListMemoryCategory(int argc, char *argv[])
 
 static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool displayudh)
 {
-	GSM_SiemensOTASMSInfo SiemensOTA;
+	GSM_SiemensOTASMSInfo 	SiemensOTA;
+	int			i;
 
 	switch (sms.PDU) {
 	case SMS_Status_Report:
@@ -1350,7 +1351,11 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool disp
 		}
 		if (sms.State==SMS_UnSent && sms.Memory==MEM_ME) {
 		} else {
-			printmsg("Remote number    : \"%s\"\n",DecodeUnicodeConsole(sms.Number));
+			printmsg("Remote number(s) : \"%s\"",DecodeUnicodeConsole(sms.Number));
+			for (i=0;i<sms.OtherNumbersNum;i++) {
+				printmsg(", \"%s\"",DecodeUnicodeConsole(sms.OtherNumbers[i]));
+			}
+			printmsg("\n");
 		}
 		printmsg("Status           : ");
 		switch (sms.State) {
@@ -8119,7 +8124,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 	int 			i,j,NamesPos=0,NamesPos2=0;
 	unsigned char		Buffer[20],Buffer2[500];
 	unsigned char		*Names,*Names2,*Pointer;
-	PlayListEntry		*First,*Entry,*Prev;
+	PlayListEntry		*First,*Entry=NULL,*Prev;
 
 	First = NULL; Names=NULL; Names2=NULL;
 

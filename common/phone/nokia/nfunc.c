@@ -1584,7 +1584,31 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				      else smprintf(s, "Audio disabled\n");
 		call.CallIDAvailable = false;
 		break;
-	case 0x0f:
+	case 0x0f: //6111
+		if (msg.Buffer[8]==0x01) {
+			smprintf(s, "Calling from phone keypad ?\n");
+			if (msg.Buffer[14]==0x03) {
+				tmp = 19;
+			} else {
+				tmp = 21;
+				NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,false);
+				smprintf(s, "Name       : \"%s\"\n",DecodeUnicodeString(buffer));
+				tmp+=7;
+			}
+			if (msg.Buffer[tmp-3]==0x11) {
+				call.PhoneNumber[0]=0;
+				call.PhoneNumber[1]='+';
+				NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber+2,false);
+			} else {
+				NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,false);
+			}
+			call.Status = GSM_CALL_OutgoingCall;
+		}
+		if (msg.Buffer[8]==0x00) {
+			smprintf(s, "Call released\n");
+			call.Status = GSM_CALL_CallLocalEnd;
+		}
+		break;
 	case 0x10:
 		smprintf(s, "Meaning not known\n");
 		call.CallIDAvailable = false;

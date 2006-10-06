@@ -305,6 +305,10 @@ typedef struct {
 	 * Sender or recipient number.
 	 */
 	unsigned char	   	Number[(GSM_MAX_NUMBER_LENGTH+1)*2];
+
+	unsigned char	   	OtherNumbers[5][(GSM_MAX_NUMBER_LENGTH+1)*2];
+	int			OtherNumbersNum;
+
 	/**
 	 * SMSC (SMS Center)
 	 */

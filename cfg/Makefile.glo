@@ -120,19 +120,20 @@ DESTDIR =
 
 %.o: %.c $(TOPDIR)/cfg/config.h
 	@echo Making $<
-	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $*.c -o $*.o
+# Add special flags for gammu binary
+	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $*.c -o $*.o $(if $(subst gammu/gammu.c,,$<),,$(GAMMU_CFLAGS))
 
 all: gammu
 
 $(TOPDIR)/gammu/gammu: $(COMMON) $(GAMMU)
 	@echo Linking gammu
-	@$(CC) $(COMMON) $(GAMMU) $(LDLIBS) $(SMSD_LIBS) -o $(TOPDIR)/gammu/gammu $(LDFLAGS)
+	@$(CC) $(COMMON) $(GAMMU) $(LDLIBS) $(GAMMU_LDLIBS) $(SMSD_LIBS) -o $(TOPDIR)/gammu/gammu $(LDFLAGS)
 
 gammu: $(TOPDIR)/gammu/gammu
 
 djgpp: $(COMMON) $(DJGPP) $(GAMMU)
 	@echo Linking gammu
-	@$(CC) $(COMMON) $(DJGPP) $(GAMMU) $(LDLIBS) $(SMSD_LIBS) -o $(TOPDIR)/gammu/gammu
+	@$(CC) $(COMMON) $(DJGPP) $(GAMMU) $(GAMMU_LDLIBS) $(LDLIBS) $(SMSD_LIBS) -o $(TOPDIR)/gammu/gammu
 
 $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR): $(COMMON)
 	@echo Linking libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
@@ -148,7 +149,7 @@ $(TOPDIR)/common/libGammu.a: $(COMMON)
  
 $(TOPDIR)/gammu/gammu-shared: $(COMMON) $(GAMMU) $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
 	@echo Linking gammu-shared
-	@$(CC) -L$(TOPDIR)/common -lGammu $(LDFLAGS) $(SMSD_LIBS) $(LDLIBS) $(GAMMU) -o $(TOPDIR)/gammu/gammu-shared
+	@$(CC) -L$(TOPDIR)/common -lGammu $(GAMMU_LDLIBS) $(SMSD_LIBS) $(GAMMU) -o $(TOPDIR)/gammu/gammu-shared
 
 shared: $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(TOPDIR)/common/libGammu.a $(TOPDIR)/gammu/gammu-shared
  

@@ -11,7 +11,9 @@ LN              = @LN@ -f
 ECHO            = @ECHO@
 CC              = @CC@
 CFLAGS          = @CFLAGS@
+GAMMU_CFLAGS    = @GAMMU_CFLAGS@
 LDLIBS          = @LDLIBS@
+GAMMU_LIBS      = @GAMMU_LIBS@
 SMSD_LIBS       = @SMSD_LIBS@
 INSTALL         = @INSTALL@
 FIND            = @FIND@
@@ -40,3 +42,9 @@ CFLAGS         += -DLOCALE_PATH="\"${INSTALL_LOC_DIR}\""
 # use these 2 in DJGPP:
 # CFLAGS        = -Wall -Wno-format-y2k
 # LDLIBS        = 
+
+# disable pointer signedness warnings in gcc 4.0
+# source - Linux kernel
+check_gcc = $(shell if $(CC) $(1) -S -o /dev/null -xc /dev/null > /dev/null 2>&1; then echo "$(1)"; else echo "$(2)"; fi)
+
+CFLAGS += $(call check_gcc,-Wno-pointer-sign,)

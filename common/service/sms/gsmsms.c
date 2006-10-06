@@ -672,6 +672,7 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 	SMS->MessageReference		= 0;
 	SMS->ReplaceMessage		= 0;
 	SMS->RejectDuplicates		= 0;
+	SMS->OtherNumbersNum		= 0;
 
 	/* This part is required to save SMS */
 	SMS->State			= SMS_UnSent;

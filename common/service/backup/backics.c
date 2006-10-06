@@ -98,9 +98,6 @@ GSM_Error LoadICS(char *FileName, GSM_Backup *backup)
 			numToDo++;
 		}
 	}
-
-	printf("Debug Stop.\n");
-	return ERR_UNKNOWN;
 	return ERR_NONE;
 }
 

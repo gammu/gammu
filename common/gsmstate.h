@@ -1491,6 +1491,11 @@ typedef struct {
 	bool			DefaultDebugFile;
 	bool			DefaultLocalize;
 	bool			DefaultStartInfo;
+	char			TextReminder[32];	/* Text for calendar entry categories in local language */
+	char			TextMeeting[32];
+	char			TextCall[32];
+	char			TextBirthday[32];
+	char			TextMemo[32];
 } GSM_Config;
 
 #define MAX_CONFIG_NUM		5

@@ -57,6 +57,20 @@ char *EncodeUnicodeSpecialChars(unsigned char *buffer)
 			Buf[Pos2*2]   = 0x00;
 			Buf[Pos2*2+1] = '\\';
 			Pos2++;
+		} else if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == ';') {
+			Buf[Pos2*2]   = 0x00;
+			Buf[Pos2*2+1] = '\\';
+			Pos2++;
+			Buf[Pos2*2]   = 0x00;
+			Buf[Pos2*2+1] = ';';
+			Pos2++;
+		} else if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == ',') {
+			Buf[Pos2*2]   = 0x00;
+			Buf[Pos2*2+1] = '\\';
+			Pos2++;
+			Buf[Pos2*2]   = 0x00;
+			Buf[Pos2*2+1] = ',';
+			Pos2++;
 		} else {
 			Buf[Pos2*2]   = buffer[Pos*2];
 			Buf[Pos2*2+1] = buffer[Pos*2+1];
@@ -118,11 +132,11 @@ char *DecodeUnicodeSpecialChars(unsigned char *buffer)
 			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == 'n') {
 				Buf[Pos2*2]   = 0;
 				Buf[Pos2*2+1] = 10;
-			}
+			} else 
 			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == 'r') {
 				Buf[Pos2*2]   = 0;
 				Buf[Pos2*2+1] = 13;
-			}
+			} else 
 			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == '\\') {
 				Buf[Pos2*2]   = 0;
 				Buf[Pos2*2+1] = '\\';
