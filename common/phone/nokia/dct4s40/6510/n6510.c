@@ -1766,6 +1766,7 @@ static GSM_Error N6510_GetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 				 	 0x00};		/* Location */
 
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
+	if (!strcmp(s->Phone.Data.ModelInfo->model,"6020")) return ERR_NOTSUPPORTED;
 
 	error = N6510_EnableConnectionFunctions(s, Type);
 	if (error!=ERR_NONE) return error;

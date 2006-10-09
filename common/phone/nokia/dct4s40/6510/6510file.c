@@ -2197,7 +2197,15 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		CopyUnicodeString(FFF.ID_FullName,Priv->SMSFile.ID_FullName);
 		smprintf(s,"sms file name is %s\n",DecodeUnicodeString(FFF.ID_FullName));	
 		error = ERR_NONE;
-		while (error == ERR_NONE) error = N6510_GetFilePart(s,&FFF,&Handle,&Size);
+		while (error == ERR_NONE) {
+			error = N6510_GetFilePart(s,&FFF,&Handle,&Size);
+			//if mms, don't read all
+			if (error==ERR_NONE && FFF.Used>5 && FFF.Buffer[6] != 0x00) {
+				error = N6510_CloseFile2(s, &Handle);
+				if (error != ERR_NONE) return error;
+				break;
+			}
+		}
 		DumpMessage(&s->di, FFF.Buffer, FFF.Used);
 
 		//0x00 = SMS, 0x01,0x03 = MMS
@@ -2252,7 +2260,8 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		sms->Number = 1;
 		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
 		i+=UnicodeLength(sms->SMS[0].SMSC.Number);
-		if(FFF.Buffer[176]!=0x20) i+=4;
+		//if(FFF.Buffer[176]!=0x20) 
+		i+=4;
 		CopyUnicodeString(sms->SMS[0].Name,FFF.Buffer+i);
 		break;
 	case 0x11:
@@ -2293,7 +2302,16 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 	case 0x31:
 		smprintf(s,"sms sent\n");
 		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
-		i+=15;
+		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
+			smprintf(s,"%02x\n",FFF.Buffer[i+2]);
+			//semioctets to chars in phone number
+			if (FFF.Buffer[i+2] % 2) FFF.Buffer[i+2]++;
+			FFF.Buffer[i+2]=FFF.Buffer[i+2] / 2 + 1;
+			smprintf(s,"number avail. %i\n",FFF.Buffer[i+2]+2);
+			i+=FFF.Buffer[i+2]+4;
+		} else {
+			i+=15;
+		}
 		Layout.firstbyte = 1; //fixme
 		smprintf(s,"TPDCS %02x\n",FFF.Buffer[i]);
 		Layout.TPDCS=i;
@@ -2321,13 +2339,43 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		sms->SMS[0].State = SMS_Sent;
 		sms->Number = 1;
 		CopyUnicodeString(sms->SMS[0].Name,FFF.Buffer+i);
+		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
+			i+=UnicodeLength(sms->SMS[0].Name)*2+5;
+			while (true) {
+				if (FFF.Buffer[i+1]==0x00) break;
+				smprintf(s,"recipient number %02x %02x",FFF.Buffer[i],FFF.Buffer[i+1]);
+				if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
+					CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+i);
+					smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].Number));
+					i+=UnicodeLength(sms->SMS[0].Number)*2+13;
+				} else {
+					CopyUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum],FFF.Buffer+i);
+					smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum]));
+					i+=UnicodeLength(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum])*2+13;
+					sms->SMS[0].OtherNumbersNum++;
+				}
+			}
+		}
 		break;
 	case 0x51:
 	case 0x71:
 		smprintf(s,"sms sent with udh\n");
 		Layout.firstbyte = i;
 		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
-		i+=15;
+		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
+			smprintf(s,"%02x\n",FFF.Buffer[i+2]);
+			if (FFF.Buffer[176]==0x71) {
+				GSM_UnpackSemiOctetNumber(sms->SMS[0].Number,FFF.Buffer+i+2 , true);
+			}
+			//semioctets to chars in phone number
+			if (FFF.Buffer[i+2] % 2) FFF.Buffer[i+2]++;
+			FFF.Buffer[i+2]=FFF.Buffer[i+2] / 2 + 1;
+			smprintf(s,"number avail. %i\n",FFF.Buffer[i+2]+2);
+			i+=FFF.Buffer[i+2]+4;
+		} else {
+			i+=15;
+		}
+
 		smprintf(s,"TPDCS %02x\n",FFF.Buffer[i]);
 		Layout.TPDCS=i;
 		i+=2;
@@ -2348,6 +2396,27 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 			i+=FFF.Buffer[i];
 		}
 		i+=11;
+		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
+			if (FFF.Buffer[176]==0x51) {
+				CopyUnicodeString(sms->SMS[0].Name,FFF.Buffer+i);
+				i+=UnicodeLength(sms->SMS[0].Name)*2+5;
+				while (true) {
+					if (FFF.Buffer[i+1]==0x00) break;
+					smprintf(s,"recipient number %02x %02x",FFF.Buffer[i],FFF.Buffer[i+1]);
+					if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
+						CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+i);
+						smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].Number));
+						i+=UnicodeLength(sms->SMS[0].Number)*2+13;
+					} else {
+						CopyUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum],FFF.Buffer+i);
+						smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum]));
+						i+=UnicodeLength(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum])*2+13;
+						sms->SMS[0].OtherNumbersNum++;
+					}
+				}
+			}
+		}
+
 		sms->SMS[0].PDU = SMS_Deliver;
 		sms->SMS[0].Class = -1;//fixme
 		sms->SMS[0].State = SMS_Sent;
@@ -2368,11 +2437,14 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
 		Layout.TPDCS=i+2;
 		smprintf(s,"TPDCS %02x\n",FFF.Buffer[i+2]);
-		i+=10;
-		smprintf(s,"TPUDL %02x %02x\n",FFF.Buffer[i],FFF.Buffer[i+1]);
-		Layout.TPUDL = i+1;
-		Layout.Text = i+2;
+		smprintf(s,"TPUDL %02x\n",FFF.Buffer[i+11]);
+		Layout.TPUDL = i+11;
+		Layout.Text = i+12;
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
+		if (FFF.Buffer[176]!=0x64) {
+			i+=FFF.Buffer[Layout.TPUDL];
+			EncodeUnicode(sms->SMS[0].SMSC.Number,FFF.Buffer+i+2,FFF.Buffer[i+1]);
+		}
 		sms->SMS[0].PDU = SMS_Deliver;
 		sms->SMS[0].Class = -1;//fixme
 		sms->SMS[0].State = SMS_Sent;

@@ -187,6 +187,7 @@ void SaveVCALDate(char *Buffer, int *Length, GSM_DateTime *Date, char *Start)
 
 bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 {
+	time_t time_t;
 	char year[5]="", month[3]="", day[3]="", hour[3]="", minute[3]="", second[3]="";
 
 	memset(dt,0,sizeof(GSM_DateTime));
@@ -205,10 +206,10 @@ bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 		dt->Hour	= atoi(hour);
 		dt->Minute	= atoi(minute);
 		dt->Second	= atoi(second);
-	}
 
-	/* FIXME */
-	dt->Timezone	= 0;
+		/* FIXME, HACK*/
+		if (Buffer[15] == 'Z') dt->Timezone =2;	
+	}
 
 	if (!CheckTime(dt)) {
 		dbgprintf("incorrect date %d-%d-%d %d:%d:%d\n",dt->Day,dt->Month,dt->Year,dt->Hour,dt->Minute,dt->Second);
@@ -220,6 +221,13 @@ bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 			return false;
 		}
 	}
+
+	if (dt->Timezone != 0) {
+		time_t = Fill_Time_T(*dt) + dt->Timezone*3600;
+		Fill_GSM_DateTime(dt, time_t);
+		dt->Year +=1900;
+	}
+
 	return true;
 }
 
@@ -237,7 +245,7 @@ bool ReadVCALInt(char *Buffer, char *Start, int *Value)
 		strncpy(buff,Buffer+lstart+1,lvalue);
 		strncpy(buff+lvalue,"\0",1);
 		if (sscanf(buff,"%i",Value)) {
-			dbgprintf("ReadVCalInt is \"%i\"\n",*Value);
+			dbgprintf("ReadVCalInt is \"%i\"\n",Value);
 			return true;
 		}
 	}
@@ -245,18 +253,20 @@ bool ReadVCALInt(char *Buffer, char *Start, int *Value)
 }
 
 
-bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date)
+bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_only)
 {
 	unsigned char buff[200];
 	int lstart, lvalue;
 
 	strcpy(buff,Start);
 	strcat(buff,":");
+	*is_date_only = false;
 	if (strncmp(Buffer,buff,strlen(buff))) {
 		strcpy(buff,Start);
 		strcat(buff,";VALUE=DATE:");
 		if (strncmp(Buffer,buff,strlen(buff)))
 			return false;
+		*is_date_only = true;
 	}
 
 	lstart = strlen(buff);
@@ -272,6 +282,7 @@ bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date)
 	return false;
 }
 
+
 void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)
 {
 	char buffer[1000];
@@ -283,6 +294,16 @@ void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)
 		} else {
 			*Length+=sprintf(Buffer+(*Length), "%s;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s%c%c",Start,buffer,13,10);
 		}
+	}
+}
+
+void SaveVCALTextUTF8(char *Buffer, int *Length, char *Text, char *Start)
+{
+	char buffer[1000];
+
+	if (UnicodeLength(Text) != 0) {
+		EncodeUTF8(buffer,Text);
+			*Length+=sprintf(Buffer+(*Length), "%s;CHARSET=UTF-8:%s%c%c",Start,buffer,13,10);
 	}
 }
 
