@@ -877,6 +877,42 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		cfg->StartInfo			 = strdup(cfg->StartInfo);
 		cfg->DefaultStartInfo 		 = false;
 	}
+
+	Temp		 = INI_GetValue(cfg_info, section, "reminder", 		false);
+	if (!Temp) {
+		strcpy(cfg->TextReminder,"Reminder");
+	} else {
+		strcpy(cfg->TextReminder,Temp);
+	}
+
+	Temp		 = INI_GetValue(cfg_info, section, "meeting", 		false);
+	if (!Temp) {
+		strcpy(cfg->TextMeeting,"Meeting");
+	} else {
+		strcpy(cfg->TextMeeting,Temp);
+	}
+
+	Temp		 = INI_GetValue(cfg_info, section, "call", 		false);
+	if (!Temp) {
+		strcpy(cfg->TextCall,"Call");
+	} else {
+		strcpy(cfg->TextCall,Temp);
+	}
+
+	Temp		 = INI_GetValue(cfg_info, section, "birthday", 		false);
+	if (!Temp) {
+		strcpy(cfg->TextBirthday,"Birthday");
+	} else {
+		strcpy(cfg->TextBirthday,Temp);
+	}
+
+	Temp		 = INI_GetValue(cfg_info, section, "memo", 		false);
+	if (!Temp) {
+		strcpy(cfg->TextMemo,"Memo");
+	} else {
+		strcpy(cfg->TextMemo,Temp);
+	}
+
 	return true;
 }
 

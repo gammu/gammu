@@ -42,6 +42,29 @@ For additionals materials and links to them see readme.txt
 [*] Changes in existing functionality
 [-] Fixed error
 
+20061006 - 1.08.07
+[-] fix for adding AT phonebook                                  (Michal Cihar)
+[-] gcc 4 warnings silenced (like in Linux kernel)
+[-] NokiaAddPlayLists2 - removed compilation warning added (BT21, Michal Cihar)
+    in 1.08.00
+[-] Gammu binary should not be linked against uneeded libs (BT22, Michal Cihar)
+[-] 6020 seems not to have WAP/MMS settings                    (BT23, pasiasty)
+[+] added support for some new call frames...
+    SMS reading for Series 40 3.0
+[+] * improved speed (MMS files are not read)
+[+] * added reading SMSC, where possible
+[+] * added reading multiple recipient numbers. it looks, that N6111 3.58
+      returns here errors (wrong numbers) and we can't avoid it. For
+      now --geteachsms can link incorrectly some SMS sequences because of it,
+      I will think how should be it done (for next test release). I still
+      can't access 6233 and don't know, if this is "normal" in Series 40 3.0
+[+] improved support for ICS files (Mozilla calendar). Really          (Markus)
+    for checking
+[*] updated German translation. For checking - I (Frank Brehm, Andreas Leitgeb)
+    was doing some updates from my PC, because I
+    have received broken file
+[*] updated GPL2 text (for example FSF address)
+
 20060918 - 1.08.00
 [+] --nokiaaddplaylists sort songs in playlists                   (Igor Testen)
 [+] Gammu partially inform user, which phonebook subentries weren't restored
