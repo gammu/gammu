@@ -548,7 +548,7 @@ char *GetOS(void)
 	static char 	Buffer[100] = {0x00};
 
 #ifdef WIN32
-	memset(&Ver,sizeof(OSVERSIONINFOEX),0);
+	memset(&Ver,0,sizeof(OSVERSIONINFOEX));
 	Ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFOEX);
 
    	if (!GetVersionEx((OSVERSIONINFO *)&Ver)) {

@@ -192,7 +192,7 @@ GSM_Error DCT3_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
 	unsigned char req[100] = {N6110_FRAME_HEADER, 0x30, 0x64};
 
-	memset(req+6,100-6,0);
+	memset(req+6,0,100-6);
 
 	/* SMSC location */
 	req[5] = smsc->Location;

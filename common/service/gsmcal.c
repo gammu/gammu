@@ -960,9 +960,10 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 	GSM_TimeUnit	unit = GSM_TimeUnit_Unknown;
 	GSM_DeltaTime	trigger;
 	int		deltatime = 0;
-	bool	is_date_only, date_only;
+	bool		is_date_only;
+	bool		date_only = false;
 	int		lBuffer;
- 	int 		Text=-1, Time=-1, Alarm, EndTime, Location;
+ 	int 		Text=-1, Time=-1, Alarm=-1, EndTime=-1, Location=-1;
 
 	if (!Buffer) return ERR_EMPTY;
 
