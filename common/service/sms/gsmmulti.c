@@ -995,8 +995,8 @@ bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo	*Info,
 
 GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT, bool ems)
 {
-	bool			*INPUTSorted, copyit;
-	int			i,OUTPUTNum,j,z,w;
+	bool			*INPUTSorted, copyit,OtherNumbers[GSM_SMS_OTHER_NUMBERS+1],wrong=false;
+	int			i,OUTPUTNum,j,z,w,m,p;
 	GSM_SiemensOTASMSInfo	SiemensOTA,SiemensOTA2;
 
 	i = 0;
@@ -1086,12 +1086,52 @@ GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT,
 						z++;
 						continue;
 					}
-					/* For SMS_Deliver compare also SMSC and Sender number */
+					/* For SMS_Deliver compare also SMSC and Sender numbers */
 					if (INPUT[z]->SMS[0].PDU == SMS_Deliver &&
-					    (strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].SMSC.Number),DecodeUnicodeString(INPUT[i]->SMS[0].SMSC.Number)) ||
-					     strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].Number),DecodeUnicodeString(INPUT[i]->SMS[0].Number)))) {
+					    strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].SMSC.Number),DecodeUnicodeString(INPUT[i]->SMS[0].SMSC.Number))) {
 						z++;
 						continue;
+					}
+					if (INPUT[z]->SMS[0].PDU == SMS_Deliver &&
+					    INPUT[z]->SMS[0].OtherNumbersNum!=INPUT[i]->SMS[0].OtherNumbersNum) {
+						z++;
+						continue;
+					}
+					if (INPUT[z]->SMS[0].PDU == SMS_Deliver) {
+						for (m=0;m<GSM_SMS_OTHER_NUMBERS+1;m++) {
+							OtherNumbers[m]=false;
+						}
+						for (m=0;m<INPUT[z]->SMS[0].OtherNumbersNum+1;m++) {
+							wrong=true;
+							for (p=0;p<INPUT[i]->SMS[0].OtherNumbersNum+1;p++) {
+								if (OtherNumbers[p]) continue;
+								if (m==0 && p==0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].Number),DecodeUnicodeString(INPUT[i]->SMS[0].Number))) {
+									OtherNumbers[0]=true;
+									wrong=false;
+									break;
+								}
+								if (m==0 && p!=0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].Number),DecodeUnicodeString(INPUT[i]->SMS[0].OtherNumbers[p-1]))) {
+									OtherNumbers[p]=true;
+									wrong=false;
+									break;
+								}
+								if (m!=0 && p==0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].OtherNumbers[m-1]),DecodeUnicodeString(INPUT[i]->SMS[0].Number))) {
+									OtherNumbers[0]=true;
+									wrong=false;
+									break;
+								}
+								if (m!=0 && p!=0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].OtherNumbers[m-1]),DecodeUnicodeString(INPUT[i]->SMS[0].OtherNumbers[p-1]))) {
+									OtherNumbers[p]=true;
+									wrong=false;
+									break;
+								}
+							}
+							if (wrong) break;
+						}
+						if (wrong) {
+							z++;
+							continue;
+						}
 					}
 					/* DCT4 Outbox: SMS Deliver. Empty number and SMSC. We compare dates */
 					if (INPUT[z]->SMS[0].PDU == SMS_Deliver 		&&
@@ -1244,12 +1284,52 @@ GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT,
 						z++;
 						continue;
 					}
-					/* For SMS_Deliver compare also SMSC and Sender number */
+					/* For SMS_Deliver compare also SMSC and Sender numbers */
 					if (INPUT[z]->SMS[0].PDU == SMS_Deliver &&
-					    (strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].SMSC.Number),DecodeUnicodeString(INPUT[i]->SMS[0].SMSC.Number)) ||
-					     strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].Number),DecodeUnicodeString(INPUT[i]->SMS[0].Number)))) {
+					    strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].SMSC.Number),DecodeUnicodeString(INPUT[i]->SMS[0].SMSC.Number))) {
 						z++;
 						continue;
+					}
+					if (INPUT[z]->SMS[0].PDU == SMS_Deliver &&
+					    INPUT[z]->SMS[0].OtherNumbersNum!=INPUT[i]->SMS[0].OtherNumbersNum) {
+						z++;
+						continue;
+					}
+					if (INPUT[z]->SMS[0].PDU == SMS_Deliver) {
+						for (m=0;m<GSM_SMS_OTHER_NUMBERS+1;m++) {
+							OtherNumbers[m]=false;
+						}
+						for (m=0;m<INPUT[z]->SMS[0].OtherNumbersNum+1;m++) {
+							wrong=true;
+							for (p=0;p<INPUT[i]->SMS[0].OtherNumbersNum+1;p++) {
+								if (OtherNumbers[p]) continue;
+								if (m==0 && p==0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].Number),DecodeUnicodeString(INPUT[i]->SMS[0].Number))) {
+									OtherNumbers[0]=true;
+									wrong=false;
+									break;
+								}
+								if (m==0 && p!=0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].Number),DecodeUnicodeString(INPUT[i]->SMS[0].OtherNumbers[p-1]))) {
+									OtherNumbers[p]=true;
+									wrong=false;
+									break;
+								}
+								if (m!=0 && p==0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].OtherNumbers[m-1]),DecodeUnicodeString(INPUT[i]->SMS[0].Number))) {
+									OtherNumbers[0]=true;
+									wrong=false;
+									break;
+								}
+								if (m!=0 && p!=0 && !strcmp(DecodeUnicodeString(INPUT[z]->SMS[0].OtherNumbers[m-1]),DecodeUnicodeString(INPUT[i]->SMS[0].OtherNumbers[p-1]))) {
+									OtherNumbers[p]=true;
+									wrong=false;
+									break;
+								}
+							}
+							if (wrong) break;
+						}
+						if (wrong) {
+							z++;
+							continue;
+						}
 					}
 					/* DCT4 Outbox: SMS Deliver. Empty number and SMSC. We compare dates */
 					if (INPUT[z]->SMS[0].PDU == SMS_Deliver 		&&

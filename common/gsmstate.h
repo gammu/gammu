@@ -1592,6 +1592,7 @@ typedef enum {
 	F_CHAT,		/* Phone with Chat settings 					*/
 	F_SYNCML,	/* Phone with SyncML settings 					*/
 	F_FILES2,	/* filesystem version 2 					*/
+	F_NOFILE1,
 	F_6230iWAP,	/* WAP, MMS, etc. settings like in 6230i - unknown now		*/
 	F_PROFILES,	/* Profiles support available					*/
 	F_SERIES40_30,  /* Series 40 3.0						*/

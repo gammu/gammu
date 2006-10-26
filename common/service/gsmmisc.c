@@ -245,7 +245,7 @@ bool ReadVCALInt(char *Buffer, char *Start, int *Value)
 		strncpy(buff,Buffer+lstart+1,lvalue);
 		strncpy(buff+lvalue,"\0",1);
 		if (sscanf(buff,"%i",Value)) {
-			dbgprintf("ReadVCalInt is \"%i\"\n",Value);
+			dbgprintf("ReadVCalInt is \"%i\"\n",*Value);
 			return true;
 		}
 	}

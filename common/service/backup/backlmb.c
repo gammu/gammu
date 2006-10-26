@@ -96,8 +96,9 @@ static void SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
 
 void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 {
-	int count = 16, blocks;
-	char req[500] = {
+	GSM_StateMachine 	fake_sm;
+	int 			count = 16, blocks;
+	char 			req[500] = {
 		'P','B','E','2', /*block identifier*/
 		00,00,           /*block data size*/
 		00,00,
@@ -112,7 +113,7 @@ void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 	fake_sm.di = di;
 	fake_sm.di.use_global = true;
 
-	count = count + N71_65_EncodePhonebookFrame(&fake_sm, req+16, entry, &blocks, true, true);
+	count=count+N71_65_EncodePhonebookFrame(&fake_sm, req+16, entry, &blocks, true, true);
 
 	req[4]=(count-12)%256;
 	req[5]=(count-12)/256;
