@@ -1251,7 +1251,102 @@ static void ListMemoryCategory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool displayudh)
+static void printsmsnumber(unsigned char *number,GSM_Backup *Info)
+{
+	bool 	found=false,found2=false;
+	int 	i,j,z;
+
+	printmsg("\"%s\"",DecodeUnicodeConsole(number));
+
+	if (Info==NULL) return;
+
+	i=0;
+	while (Info->PhonePhonebook[i]!=NULL) {
+		for (j=0;j<Info->PhonePhonebook[i]->EntriesNum;j++) {
+			switch (Info->PhonePhonebook[i]->Entries[j].EntryType) {
+			case PBK_Number_General:
+			case PBK_Number_Mobile:
+			case PBK_Number_Work:
+			case PBK_Number_Fax:
+			case PBK_Number_Home:
+			case PBK_Number_Pager:
+			case PBK_Number_Other:
+				if (mywstrncmp(Info->PhonePhonebook[i]->Entries[j].Text,number,-1)) {
+					found2=true;
+					switch (Info->PhonePhonebook[i]->Entries[j].EntryType) {
+					case PBK_Number_Mobile:
+						printf(" (mobile");
+						break;
+					case PBK_Number_Work:
+						printf(" (work");
+						break;
+					case PBK_Number_Fax:
+						printf(" (fax");
+						break;
+					case PBK_Number_Home:
+						printf(" (home");
+						break;
+					case PBK_Number_Pager:
+						printf(" (pager");
+						break;
+					default:
+						found2=false;
+						break;
+					}
+					found=true;
+				}
+			default:
+				break;
+			}
+			if (found) break;
+		}
+		if (!found) {
+			i++;
+			continue;
+		}
+		found=false;
+		for (z=0;z<Info->PhonePhonebook[i]->EntriesNum;z++) {
+			switch (Info->PhonePhonebook[i]->Entries[z].EntryType) {
+			case PBK_Text_LastName:
+			case PBK_Text_FirstName:
+				if (!found2) {
+					printf(" (");
+					found2=true;
+				} else {
+					if (!found) {
+						printf(", ");
+					} else {
+						printf(" ");
+					}
+				}
+				printf("%s",DecodeUnicodeConsole(Info->PhonePhonebook[i]->Entries[z].Text));
+				found=true;
+				break;
+			default:
+				break;
+			}
+		}
+		for (z=0;z<Info->PhonePhonebook[i]->EntriesNum;z++) {
+			switch (Info->PhonePhonebook[i]->Entries[z].EntryType) {
+			case PBK_Text_Name:
+				if (!found2) {
+					printf(" (");
+					found2=true;
+				} else {
+					printf(", ");
+				}
+				printf("%s",DecodeUnicodeConsole(Info->PhonePhonebook[i]->Entries[z].Text));
+				break;
+			default:
+				break;
+			}
+		}
+		printf(")");
+		break;
+	}
+}
+
+static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool displayudh, GSM_Backup *Info)
 {
 	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	int			i;
@@ -1266,7 +1361,10 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool disp
 			case SMS_UnRead	: printmsg("UnRead");	break;
 			case SMS_UnSent	: printmsg("UnSent");	break;
 		}
-		printmsg("\nRemote number   : \"%s\"\n",DecodeUnicodeConsole(sms.Number));
+		printmsg("\nRemote number   : ");
+		printsmsnumber(sms.Number, Info);
+		printmsg("\n");
+
 		printmsg("Reference number: %d\n",sms.MessageReference);
 		printmsg("Sent            : %s\n",OSDateTime(sms.DateTime,true));
 		printmsg("SMSC number     : \"%s\"\n",DecodeUnicodeConsole(sms.SMSC.Number));
@@ -1351,9 +1449,11 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool disp
 		}
 		if (sms.State==SMS_UnSent && sms.Memory==MEM_ME) {
 		} else {
-			printmsg("Remote number(s) : \"%s\"",DecodeUnicodeConsole(sms.Number));
+			printmsg("Remote number(s) : ");
+			printsmsnumber(sms.Number, Info);
 			for (i=0;i<sms.OtherNumbersNum;i++) {
-				printmsg(", \"%s\"",DecodeUnicodeConsole(sms.OtherNumbers[i]));
+				printmsg(", ");
+				printsmsnumber(sms.OtherNumbers[i], Info);
 			}
 			printmsg("\n");
 		}
@@ -1419,7 +1519,7 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool disp
 	}
 }
 
-static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems)
+static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems, GSM_Backup *Info)
 {
 	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	GSM_MultiPartSMSInfo	SMSInfo;
@@ -1427,24 +1527,24 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems
 	int			j,Pos;
 	GSM_MemoryEntry		pbk;
 
-	/* GSM_DecodeMultiPartSMS returns if decoded SMS contenst correctly */
+	/* GSM_DecodeMultiPartSMS returns if decoded SMS content correctly */
 	RetVal = GSM_DecodeMultiPartSMS(&SMSInfo,&sms,ems);
 
 	if (eachsms) {
 		if (GSM_DecodeSiemensOTASMS(&SiemensOTA,&sms.SMS[0])) udhinfo = false;
 		if (sms.SMS[0].UDH.Type != UDH_NoUDH && sms.SMS[0].UDH.AllParts == sms.Number) udhinfo = false;
 		if (RetVal && !udhinfo) {
-			displaysinglesmsinfo(sms.SMS[0],false,false);
+			displaysinglesmsinfo(sms.SMS[0],false,false,Info);
 			printf("\n");
 		} else {
 			for (j=0;j<sms.Number;j++) {
-				displaysinglesmsinfo(sms.SMS[j],!RetVal,udhinfo);
+				displaysinglesmsinfo(sms.SMS[j],!RetVal,udhinfo,Info);
 				printf("\n");
 			}
 		}
 	} else {
 		for (j=0;j<sms.Number;j++) {
-			displaysinglesmsinfo(sms.SMS[j],!RetVal,true);
+			displaysinglesmsinfo(sms.SMS[j],!RetVal,true,Info);
 			printf("\n");
 		}
 	}
@@ -1601,7 +1701,7 @@ static void DisplayIncomingSMS()
  			printf("\n");
  		}
  	}
- 	displaymultismsinfo(IncomingSMSData,false,false);
+ 	displaymultismsinfo(IncomingSMSData,false,false,NULL);
  	wasincomingsms = false;
 }
 
@@ -1894,7 +1994,7 @@ static void GetSMS(int argc, char *argv[])
 			}
 			if (sms.SMS[0].InboxFolder) printmsg(", Inbox folder");
 			printf("\n");
-			displaymultismsinfo(sms,false,false);
+			displaymultismsinfo(sms,false,false,NULL);
 		}
 	}
 
@@ -1928,8 +2028,48 @@ static void GetAllSMS(int argc, char *argv[])
 	GSM_MultiSMSMessage 	sms;
 	GSM_SMSFolders		folders;
 	bool			start = true;
+	GSM_MemoryStatus	MemStatus;
+	GSM_MemoryEntry		Pbk;
+	int			used,i,smsnum=0,smspos=0;
+	GSM_Backup		Backup;
+
+	GSM_ClearBackup(&Backup);
 
 	GSM_Init(true);
+
+	if (argc == 3 && mystrncasecmp(argv[2],"-pbk",0)) {
+		MemStatus.MemoryType = MEM_ME;
+		error=Phone->GetMemoryStatus(&s, &MemStatus);
+		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
+			Pbk.MemoryType  = MEM_ME;
+			i		= 1;
+			used 		= 0;
+			while (used != MemStatus.MemoryUsed) {
+				Pbk.Location = i;
+				error=Phone->GetMemory(&s, &Pbk);
+				if (error != ERR_EMPTY) {
+					Print_Error(error);
+					if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
+						Backup.PhonePhonebook[used] = malloc(sizeof(GSM_MemoryEntry));
+					        if (Backup.PhonePhonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
+						Backup.PhonePhonebook[used+1] = NULL;
+					} else {
+						printmsg("\n   Only part of data saved - increase %s" , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
+						break;
+					}
+					*Backup.PhonePhonebook[used]=Pbk;
+					used++;
+				}
+				printmsgerr("%cReading phone phonebook: %i percent",13,used*100/MemStatus.MemoryUsed);
+				i++;
+				if (gshutdown) {
+					GSM_Terminate();
+					exit(0);
+				}
+			}
+			printmsgerr("\n");
+		}
+	}
 
 	error=Phone->GetSMSFolders(&s, &folders);
 	Print_Error(error);
@@ -1951,11 +2091,17 @@ static void GetAllSMS(int argc, char *argv[])
 			}
 			if (sms.SMS[0].InboxFolder) printmsg(", Inbox folder");
 			printf("\n");
-			displaymultismsinfo(sms,false,false);
+			smspos++;
+			smsnum+=sms.Number;
+			if (Backup.PhonePhonebook[0]!=NULL) {
+				displaymultismsinfo(sms,false,false,&Backup);
+			} else {
+				displaymultismsinfo(sms,false,false,NULL);
+			}
 		}
 		start=false;
 	}
-	fprintf(stderr,"\n");
+	printf("\n\n%i SMS parts in %i SMS sequences\n",smsnum,smspos);
 
 #ifdef GSM_ENABLE_BEEP
 	GSM_PhoneBeep();
@@ -1967,18 +2113,63 @@ static void GetEachSMS(int argc, char *argv[])
 {
 	GSM_MultiSMSMessage	*GetSMS[PHONE_MAXSMSINFOLDER],*SortedSMS[PHONE_MAXSMSINFOLDER],sms;
 	int			GetSMSNumber = 0,i,j;
+	int			smsnum=0,smspos=0;
 	GSM_SMSFolders		folders;
 	bool			start = true, ems = true;
+	GSM_MemoryStatus	MemStatus;
+	GSM_MemoryEntry		Pbk;
+	int			used;
+	GSM_Backup		Backup;
+
+	GSM_ClearBackup(&Backup);
 
 	GetSMS[0] = NULL;
 
 	GSM_Init(true);
+
+	if (argc == 3 && mystrncasecmp(argv[2],"-pbk",0)) {
+		MemStatus.MemoryType = MEM_ME;
+		error=Phone->GetMemoryStatus(&s, &MemStatus);
+		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
+			Pbk.MemoryType  = MEM_ME;
+			i		= 1;
+			used 		= 0;
+			while (used != MemStatus.MemoryUsed) {
+				Pbk.Location = i;
+				error=Phone->GetMemory(&s, &Pbk);
+				if (error != ERR_EMPTY) {
+					Print_Error(error);
+					if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
+						Backup.PhonePhonebook[used] = malloc(sizeof(GSM_MemoryEntry));
+					        if (Backup.PhonePhonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
+						Backup.PhonePhonebook[used+1] = NULL;
+					} else {
+						printmsg("\n   Only part of data saved - increase %s" , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
+						break;
+					}
+					*Backup.PhonePhonebook[used]=Pbk;
+					used++;
+				}
+				printmsgerr("%cReading phone phonebook: %i percent",13,used*100/MemStatus.MemoryUsed);
+				i++;
+				if (gshutdown) {
+					GSM_Terminate();
+					exit(0);
+				}
+			}
+			printmsgerr("\n");
+		}
+	}
 
 	error=Phone->GetSMSFolders(&s, &folders);
 	Print_Error(error);
 
 	fprintf(stderr,"Reading: ");
 	while (error == ERR_NONE) {
+		if (GetSMSNumber==PHONE_MAXSMSINFOLDER-1) {
+			fprintf(stderr,"\nSMS counter overflow\n");
+			break;
+		}
 		sms.SMS[0].Folder=0x00;
 		error=Phone->GetNextSMS(&s, &sms, start);
 		switch (error) {
@@ -1991,10 +2182,6 @@ static void GetEachSMS(int argc, char *argv[])
 			GetSMS[GetSMSNumber+1] = NULL;
 			memcpy(GetSMS[GetSMSNumber],&sms,sizeof(GSM_MultiSMSMessage));
 			GetSMSNumber++;
-			if (GetSMSNumber==PHONE_MAXSMSINFOLDER) {
-				fprintf(stderr,"SMS counter overflow\n");
-				return;
-			}
 		}
 		fprintf(stderr,"*");
 		start=false;
@@ -2017,7 +2204,9 @@ static void GetEachSMS(int argc, char *argv[])
 
 	i=0;
 	while(SortedSMS[i] != NULL) {
+		smspos++;
 		for (j=0;j<SortedSMS[i]->Number;j++) {
+			smsnum++;
 			if ((j==0) || (j!=0 && SortedSMS[i]->SMS[j].Location != SortedSMS[i]->SMS[j-1].Location)) {
 				printmsg("Location %i, folder \"%s\"",SortedSMS[i]->SMS[j].Location,DecodeUnicodeConsole(folders.Folder[SortedSMS[i]->SMS[j].Folder-1].Name));
 				switch(SortedSMS[i]->SMS[j].Memory) {
@@ -2030,12 +2219,18 @@ static void GetEachSMS(int argc, char *argv[])
 				printf("\n");
 			}
 		}
-		displaymultismsinfo(*SortedSMS[i],true,ems);
+		if (Backup.PhonePhonebook[0]!=NULL) {
+			displaymultismsinfo(*SortedSMS[i],true,ems,&Backup);
+		} else {
+			displaymultismsinfo(*SortedSMS[i],true,ems,NULL);
+		}
 
 		free(SortedSMS[i]);
 		SortedSMS[i] = NULL;
 		i++;
 	}
+
+	printf("\n%i SMS parts in %i SMS sequences\n",smsnum,smspos);
 
 	GSM_Terminate();
 }
@@ -6363,7 +6558,7 @@ static void AddSMS(int argc, char *argv[])
 		Backup.SMS[smsnum]->SMSC.Location = 1;
 		SMS.Number = 1;
 		SMS.SMS[0] = *Backup.SMS[smsnum];
-		displaymultismsinfo(SMS,false,false);
+		displaymultismsinfo(SMS,false,false,NULL);
 		if (answer_yes("Restore sms")) {
 			error=Phone->AddSMS(&s, Backup.SMS[smsnum]);
 			Print_Error(error);
@@ -6400,7 +6595,7 @@ static void RestoreSMS(int argc, char *argv[])
 		if (doit) {
 			SMS.Number = 1;
 			memcpy(&SMS.SMS[0],Backup.SMS[smsnum],sizeof(GSM_SMSMessage));
-			displaymultismsinfo(SMS,false,false);
+			displaymultismsinfo(SMS,false,false,NULL);
 			sprintf(buffer,"Restore %03i sms to folder \"%s\"",smsnum+1,DecodeUnicodeConsole(folders.Folder[Backup.SMS[smsnum]->Folder-1].Name));
 			if (folders.Folder[Backup.SMS[smsnum]->Folder-1].Memory == MEM_SM) strcat(buffer," (SIM)");
 			if (answer_yes(buffer)) {
@@ -9190,8 +9385,8 @@ static GSM_Parameters Parameters[] = {
 	{"--deletesms",			2, 3, DeleteSMS,		{H_SMS,0},			"folder start [stop]"},
 	{"--deleteallsms",		1, 1, DeleteAllSMS,		{H_SMS,0},			"folder"},
 	{"--getsmsfolders",		0, 0, GetSMSFolders,		{H_SMS,0},			""},
-	{"--getallsms",			0, 0, GetAllSMS,		{H_SMS,0},			""},
-	{"--geteachsms",		0, 0, GetEachSMS,		{H_SMS,0},			""},
+	{"--getallsms",			0, 1, GetAllSMS,		{H_SMS,0},			"-pbk"},
+	{"--geteachsms",		0, 1, GetEachSMS,		{H_SMS,0},			"-pbk"},
 
 #define SMS_TEXT_OPTIONS	"[-inputunicode][-16bit][-flash][-len len][-autolen len][-unicode][-enablevoice][-disablevoice][-enablefax][-disablefax][-enableemail][-disableemail][-voidsms][-replacemessages ID][-replacefile file]"
 #define SMS_PICTURE_OPTIONS	"[-text text][-unicode][-alcatelbmmi]"
@@ -9791,11 +9986,33 @@ int main(int argc, char *argv[])
 	/* Check parameters */
 	while (Parameters[z].Function != NULL) {
 		if (mystrncasecmp(Parameters[z].parameter,argv[1+start], 0)) {
-			if (argc-2-start >= Parameters[z].min_arg && argc-2-start <= Parameters[z].max_arg) {
+			if (argc-2-start < Parameters[z].min_arg) {
+				count_failed = true;
+				printmsg("More parameters required (accepted ");
+				if (Parameters[z].min_arg==Parameters[z].max_arg) {
+					printmsg("%i",Parameters[z].min_arg);
+				} else {
+					printmsg("from %i to %i",Parameters[z].min_arg,Parameters[z].max_arg);
+				}
+				if (Parameters[z].help[0] != 0) {
+					printmsg(": %s",Parameters[z].help);
+				}
+				printmsg(")\n");
+			} else if (argc-2-start > Parameters[z].max_arg) {
+				count_failed = true;
+				printmsg("Too many parameters (accepted ");
+				if (Parameters[z].min_arg==Parameters[z].max_arg) {
+					printmsg("%i",Parameters[z].min_arg);
+				} else {
+					printmsg("from %i to %i",Parameters[z].min_arg,Parameters[z].max_arg);
+				}
+				if (Parameters[z].help[0] != 0) {
+					printmsg(": %s",Parameters[z].help);
+				}
+				printmsg(")\n");
+			} else {
 				Parameters[z].Function(argc - start, argv + start);
  				break;
-			} else {
-				count_failed = true;
  			}
  		}
 		z++;
@@ -9803,12 +10020,10 @@ int main(int argc, char *argv[])
 
 	/* Tell user when we did nothing */
 	if (Parameters[z].Function == NULL) {
-		HelpGeneral();
-		if (count_failed) {
-			printmsg("Bad parameter count!\n");
-		} else {
+		if (!count_failed) {
+			HelpGeneral();
 			printmsg("Bad option!\n");
- 		}
+		}
  	}
 
      	/* Close debug output if opened */

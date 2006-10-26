@@ -285,6 +285,8 @@ typedef enum {
  */
 #define GSM_MAX_SMS_NAME_LENGTH	 200
 
+#define GSM_SMS_OTHER_NUMBERS 5
+
 /**
  * SMS message data.
  */
@@ -306,7 +308,7 @@ typedef struct {
 	 */
 	unsigned char	   	Number[(GSM_MAX_NUMBER_LENGTH+1)*2];
 
-	unsigned char	   	OtherNumbers[5][(GSM_MAX_NUMBER_LENGTH+1)*2];
+	unsigned char	   	OtherNumbers[GSM_SMS_OTHER_NUMBERS][(GSM_MAX_NUMBER_LENGTH+1)*2];
 	int			OtherNumbersNum;
 
 	/**
