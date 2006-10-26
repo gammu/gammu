@@ -108,7 +108,6 @@ void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 		00,00,           /*position of phonebook entry*/
 		03,              /*memory type. ME=02;SM=03*/
 		00};
-	GSM_StateMachine fake_sm;
 
 	fake_sm.di = di;
 	fake_sm.di.use_global = true;
