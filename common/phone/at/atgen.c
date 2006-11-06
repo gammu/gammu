@@ -634,6 +634,11 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			strcpy(s->Phone.Data.Manufacturer,"Ericsson");
 			Priv->Manufacturer = AT_Ericsson;
 		}
+		if (strstr(msg.Buffer,"Sony Ericsson")) {
+			smprintf(s, "Sony Ericsson\n");
+			strcpy(s->Phone.Data.Manufacturer,"Sony Ericsson");
+			Priv->Manufacturer = AT_Ericsson;
+		}
 		if (strstr(msg.Buffer,"iPAQ")) {
 			smprintf(s, "iPAQ\n");
 			strcpy(s->Phone.Data.Manufacturer,"HP");
