@@ -13,6 +13,7 @@
 #include "../../gsmstate.h"
 #include "../../service/gsmmisc.h"
 #include "../../protocol/obex/obex.h"
+#include "obexgen-functions.h"
 
 #ifdef GSM_ENABLE_OBEXGEN
 
@@ -71,8 +72,17 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 	switch (service) {
 	case OBEX_None:
 		break;
+	case OBEX_IRMC:
+		/* IrMC Service UUID */
+		req2[0] = 'I'; req2[1] = 'R'; req2[2] = 'M';
+		req2[3] = 'C'; req2[4] = '-'; req2[5] = 'S';
+		req2[6] = 'Y'; req2[7] = 'N'; req2[8] = 'C';
+
+		/* Target block */
+		OBEXAddBlock(req, &Current, 0x46, req2, 9);
+		break;
 	case OBEX_BrowsingFolders:
-		/* Server ID */
+		/* Folder Browsing Service UUID */
 		req2[0] = 0xF9; req2[1] = 0xEC; req2[2] = 0x7B;
 		req2[3] = 0xC4; req2[4] = 0x95; req2[5] = 0x3C;
 		req2[6] = 0x11; req2[7] = 0xD2; req2[8] = 0x98;
@@ -82,6 +92,7 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 
 		/* Target block */
 		OBEXAddBlock(req, &Current, 0x46, req2, 16);
+		break;
 	}
 
 #ifndef xxxx

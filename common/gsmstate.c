@@ -176,6 +176,14 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 				return ERR_NONE;
 			}
 #endif
+#ifdef GSM_ENABLE_SONYERICSSON
+			/* If phone provides Sony-Ericsson specific functions, enable them */
+			if (model->model[0] != 0 && IsPhoneFeatureAvailable(model, F_SONYERICSSON)) {
+				smprintf(s,"[Module           - \"%s\"]\n",SONYERICSSONPhone.models);
+				s->Phone.Functions = &SONYERICSSONPhone;
+				return ERR_NONE;
+			}
+#endif
 			smprintf(s,"[Module           - \"%s\"]\n",ATGENPhone.models);
 			s->Phone.Functions = &ATGENPhone;
 			return ERR_NONE;
@@ -220,6 +228,9 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #endif
 #ifdef GSM_ENABLE_ALCATEL
 	GSM_RegisterModule(s,&ALCATELPhone);
+#endif
+#ifdef GSM_ENABLE_SONYERICSSON
+	GSM_RegisterModule(s,&SONYERICSSONPhone);
 #endif
 	if (s->Phone.Functions==NULL) return ERR_UNKNOWNMODELSTRING;
 	return ERR_NONE;

@@ -40,6 +40,9 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifdef GSM_ENABLE_ALCATEL
 #  include "phone/alcatel/alcatel.h"
 #endif
+#ifdef GSM_ENABLE_SONYERICSSON
+#  include "phone/sonyericsson/sonyericsson.h"
+#endif
 #ifdef GSM_ENABLE_OBEXGEN
 #  include "phone/obex/obexgen.h"
 #endif
@@ -812,6 +815,9 @@ typedef struct {
 #ifdef GSM_ENABLE_ALCATEL
 		GSM_Phone_ALCATELData	 ALCATEL;
 #endif
+#ifdef GSM_ENABLE_SONYERICSSON
+		GSM_Phone_SONYERICSSONData	 SONYERICSSON;
+#endif
 #ifdef GSM_ENABLE_OBEXGEN
 		GSM_Phone_OBEXGENData	 OBEXGEN;
 #endif
@@ -1421,6 +1427,9 @@ typedef struct {
 #ifdef GSM_ENABLE_ALCATEL
 	extern GSM_Phone_Functions ALCATELPhone;
 #endif
+#ifdef GSM_ENABLE_SONYERICSSON
+	extern GSM_Phone_Functions SONYERICSSONPhone;
+#endif
 #ifdef GSM_ENABLE_OBEXGEN
 	extern GSM_Phone_Functions OBEXGENPhone;
 #endif
@@ -1610,7 +1619,8 @@ typedef enum {
 	F_M20SMS,	/* Siemens M20 like SMS handling				*/
 	F_SLOWWRITE,	/* Use slower writing which some phone need			*/
 	F_SMSME900,	/* SMS in ME start from location 900 - case of Sagem		*/
-	F_ALCATEL	/* Phone supports Alcatel protocol				*/
+	F_ALCATEL,	/* Phone supports Alcatel protocol				*/
+	F_SONYERICSSON,	/* Phone supports Sony-Ericsson extensions			*/
 } Feature;
 
 /* For models table */

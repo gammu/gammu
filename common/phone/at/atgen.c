@@ -14,6 +14,7 @@
 #include "../pfunc.h"
 
 #include "atgen.h"
+#include "atgen-functions.h"
 
 #include "samsung.h"
 #include "siemens.h"
