@@ -55,6 +55,7 @@ COMMON    = $(TOPDIR)/common/gsmcomon.o \
             $(TOPDIR)/common/phone/at/samsung.o \
             $(TOPDIR)/common/phone/at/sonyeric.o \
             $(TOPDIR)/common/phone/alcatel/alcatel.o \
+            $(TOPDIR)/common/phone/sonyericsson/sonyericsson.o \
             $(TOPDIR)/common/phone/nokia/dct3/n0650.o \
             $(TOPDIR)/common/phone/nokia/dct3/n6110.o \
             $(TOPDIR)/common/phone/nokia/dct3/n7110.o \

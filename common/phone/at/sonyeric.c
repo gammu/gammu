@@ -17,10 +17,8 @@
 #if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
 
 #include "../obex/obexgen.h"
-
-extern GSM_Protocol_Functions 	OBEXProtocol;
-extern GSM_Reply_Function	OBEXGENReplyFunctions[];
-extern GSM_Reply_Function	ATGENReplyFunctions[];
+#include "../at/atgen-functions.h"
+#include "../obex/obexgen-functions.h"
 
 static GSM_Error SONYERIC_SetOBEXMode(GSM_StateMachine *s)
 {

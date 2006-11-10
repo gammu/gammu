@@ -110,6 +110,9 @@
 /* Alcatel BE5 */
 #undef GSM_ENABLE_ALCATEL
 
+/* Sony-Ericsson support */
+#undef GSM_ENABLE_SONYERICSSON
+
 /* OBEX generic models */
 #undef GSM_ENABLE_OBEXGEN
 

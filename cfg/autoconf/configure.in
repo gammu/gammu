@@ -391,6 +391,10 @@ AC_ARG_ENABLE(alcatel,
         [gsm_enable_alcatel="no"],
         [AC_DEFINE(GSM_ENABLE_ALCABUS)
          AC_DEFINE(GSM_ENABLE_ALCATEL) gsm_enable_alcatel="yes"])
+AC_ARG_ENABLE(sonyericsson,
+        [  --disable-sonyericsson  Disable Sony-Ericsson support],
+        [gsm_enable_sonyericsson="no"],
+        [AC_DEFINE(GSM_ENABLE_SONYERICSSON) gsm_enable_sonyericsson="yes"])
 AC_ARG_ENABLE(3320,
         [  --disable-3320          Disable Nokia 3320 and compatible support],
         [gsm_enable_nokia3320="no"],
@@ -528,6 +532,7 @@ dnl Add info about DKU5
            Incoming call/SMS info               - $gsm_enable_71_92incominginfo
   Nokia 3650                                    - $gsm_enable_nokia3650
   OBEX (Nokia, SonyEricsson, other)             - $gsm_enable_obexgen
+  Sony-Ericsson                                 - $gsm_enable_sonyericsson
   Symbian with gnapplet (Series 60 1 and 2)     - $gsm_enable_gnapgen
 
   Please use now:

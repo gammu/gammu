@@ -18,6 +18,7 @@
 #include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
 #include "../at/atgen-functions.h"
+#include "../obex/obexgen-functions.h"
 #include "sonyericsson.h"
 
 extern GSM_Reply_Function SONYERICSSONReplyFunctions[];
@@ -45,11 +46,11 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s)
 		s->Protocol.Functions = &ATProtocol;
 		return error;
 	}
-	s->Phone.Functions->ReplyFunctions	= SONYERICSSONReplyFunctions;
-	//FIXME:s->Phone.Functions->ReplyFunctions	= OBEXGENReplyFunctions;
+	//FIXME:s->Phone.Functions->ReplyFunctions	= SONYERICSSONReplyFunctions;
+	s->Phone.Functions->ReplyFunctions	= OBEXGENReplyFunctions;
 	Priv->Mode				= SONYERICSSON_ModeOBEX;
 
-	error = OBEXGEN_Disconnect(s);
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -91,7 +92,6 @@ GSM_Error SONYERICSSON_SetATMode(GSM_StateMachine *s)
 GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
-	GSM_Error		error;
 
 	Priv->Mode				= SONYERICSSON_ModeAT;
 

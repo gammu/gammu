@@ -15,9 +15,22 @@
 #  define GSM_USED_BLUEOBEX
 #endif
 
+/**
+ * Service type we want to use on OBEX.
+ */
 typedef enum {
+	/**
+	 * No specific service requested.
+	 */
 	OBEX_None = 1,
-	OBEX_BrowsingFolders
+	/**
+	 * IrMC synchronisation service.
+	 */
+	OBEX_IRMC,
+	/**
+	 * Browsing for folders.
+	 */
+	OBEX_BrowsingFolders,
 } OBEX_Service;
 
 typedef struct {
@@ -30,10 +43,6 @@ typedef struct {
 	int				FrameSize;
 	OBEX_Service			Service;
 } GSM_Phone_OBEXGENData;
-
-GSM_Error OBEXGEN_GetFilePart	(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size);
-GSM_Error OBEXGEN_AddFilePart	(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
-GSM_Error OBEXGEN_Disconnect	(GSM_StateMachine *s);
 
 #endif
 
