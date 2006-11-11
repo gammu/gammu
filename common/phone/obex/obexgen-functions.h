@@ -5,13 +5,15 @@
 
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
-#include "../../service/sms/gsmsms.h"
 
 extern GSM_Reply_Function	OBEXGENReplyFunctions[];
 extern GSM_Error OBEXGEN_GetFilePart	(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size);
 extern GSM_Error OBEXGEN_AddFilePart	(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
+extern GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start);
 extern GSM_Error OBEXGEN_Disconnect	(GSM_StateMachine *s);
 extern GSM_Error OBEXGEN_Connect	(GSM_StateMachine *s, OBEX_Service service);
+extern GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID);
+extern GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File);
 
 
 #endif

@@ -5349,7 +5349,7 @@ static void Restore(int argc, char *argv[])
 	if (Backup.Model[0]!=0) 	printmsgerr("Phone           : %s\n",Backup.Model);
 	if (Backup.IMEI[0]!=0) 		printmsgerr("IMEI            : %s\n",Backup.IMEI);
 	if (Backup.Creator[0]!=0) 	printmsgerr("File created by : %s\n",Backup.Creator);
-	
+
 	if (argc == 4 && mystrncasecmp(argv[3],"-yes",0)) always_answer_yes = true;
 
 	if (Backup.MD5Calculated[0]!=0) {
@@ -8048,6 +8048,7 @@ static void GetFiles(int argc, char *argv[])
 		}
 
 		DecodeUTF8QuotedPrintable(File.ID_FullName,argv[i],strlen(argv[i]));
+		dbgprintf("grabbing '%s' '%s'\n",DecodeUnicodeString(File.ID_FullName),argv[i]);
 		GetOneFile(&File, newtime, i);
 	}
 
@@ -8376,7 +8377,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 	}
 	if (First!=NULL) {
 		//sorting songs names
-		Entry=First;		
+		Entry=First;
 		while (Entry->Next!=NULL) {
 			if (strcmp(Entry->NameUP,Entry->Next->NameUP)>0) {
 				Pointer=Entry->Next->Name;
@@ -8386,7 +8387,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 				Pointer=Entry->Next->NameUP;
 				Entry->Next->NameUP = Entry->NameUP;
 				Entry->NameUP = Pointer;
-				
+
 				Entry=First;
 				continue;
 			}
@@ -8414,7 +8415,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 				}
 				if (error == ERR_EMPTY) break;
 			    	Print_Error(error);
-		
+
 				if (!Files3.Folder) {
 					if (mywstrncasecmp(Buffer2,Files3.Name,-1)) {
 						Available = true;
@@ -8443,10 +8444,10 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 		Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,10);
 		sprintf(Files2.Buffer,"#EXTM3U%c%c",13,10);
 		Files2.Used = 9;
-		Entry=First;		
+		Entry=First;
 		while (Entry!=NULL) {
 			Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,Files2.Used+strlen(Entry->Name)+2+1);
-			sprintf(Files2.Buffer+Files2.Used,"%s%c%c",Entry->Name,13,10);				
+			sprintf(Files2.Buffer+Files2.Used,"%s%c%c",Entry->Name,13,10);
 			Files2.Used+=strlen(Entry->Name)+2;
 			Entry=Entry->Next;
 		}
@@ -8512,10 +8513,10 @@ static void NokiaAddPlayLists(int argc, char *argv[])
 	if (error == ERR_FILENOTEXIST) {
 		printf("Your phone model is not supported. Please report\n");
 		GSM_Terminate();
-		exit(-1);	
+		exit(-1);
 	} else if (error != ERR_EMPTY) {
 	    	Print_Error(error);
-	}	
+	}
 	while (1) {
 		if (!Files.Folder) {
 			if (strstr(DecodeUnicodeConsole(Files.Name),".m3u")!=NULL) {
@@ -8857,11 +8858,11 @@ static void NokiaAddFile(int argc, char *argv[])
 					error = Phone->GetFolderListing(&s,&File2,Start);
 					if (error == ERR_EMPTY) break;
 					Print_Error(error);
-	
+
 					if (File2.Folder && !strcmp(DecodeUnicodeString(File2.Name),buffer)) {
 						break;
 					}
-	
+
 					Start = false;
 				}
 

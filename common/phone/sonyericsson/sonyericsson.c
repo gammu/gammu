@@ -23,7 +23,7 @@
 
 extern GSM_Reply_Function SONYERICSSONReplyFunctions[];
 
-GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s)
+GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 {
 	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
 	GSM_Error		error;
@@ -32,7 +32,7 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s)
 
 	dbgprintf ("Changing to OBEX mode\n");
 
-	error=GSM_WaitFor (s, "AT*SONYERICSSON\r", 9, 0x00, 4, ID_SetOBEX);
+	error=GSM_WaitFor (s, "AT*EOBEX\r", 9, 0x00, 4, ID_SetOBEX);
 	if (error != ERR_NONE) return error;
 
 	dbgprintf ("Changing protocol to OBEX\n");
@@ -50,7 +50,13 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s)
 	s->Phone.Functions->ReplyFunctions	= OBEXGENReplyFunctions;
 	Priv->Mode				= SONYERICSSON_ModeOBEX;
 
-	error = OBEXGEN_Connect(s, OBEX_IRMC);
+
+	/* Choose appropriate connection type (we need different for filesystem and for IrMC) */
+	if (irmc) {
+		error = OBEXGEN_Connect(s, OBEX_IRMC);
+	} else {
+		error = OBEXGEN_Connect(s, OBEX_BrowsingFolders);
+	}
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -78,13 +84,8 @@ GSM_Error SONYERICSSON_SetATMode(GSM_StateMachine *s)
 	s->Phone.Data.Priv.ATGEN.Charset	= 0;
 	s->Phone.Data.Priv.ATGEN.PBKMemory	= 0;
 
-	my_sleep(100);
-
-	/* In case we don't send AT command short after closing binary mode,
-	 * phone takes VERY long to react next time. The error code in
-	 * intetionally ignored.
-	 */
-	GSM_WaitFor (s, "AT\r", 3, 0x00, 0, ID_IncomingFrame);
+	error = s->Protocol.Functions->Initialise(s);
+	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
 }
@@ -556,6 +557,50 @@ GSM_Error SONYERICSSON_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	return ATGEN_SetBitmap(s, Bitmap);
 }
 
+/* OBEX native functions for filesystem */
+
+GSM_Error SONYERICSSON_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+{
+	GSM_Error error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, false))!= ERR_NONE) return error;
+	return OBEXGEN_AddFilePart(s, File, Pos, Handle);
+}
+
+GSM_Error SONYERICSSON_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
+{
+	GSM_Error error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, false))!= ERR_NONE) return error;
+	return OBEXGEN_GetFilePart(s, File, Handle, Size);
+}
+
+GSM_Error SONYERICSSON_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
+{
+	GSM_Error error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, false))!= ERR_NONE) return error;
+	return OBEXGEN_GetNextFileFolder(s, File, start);
+}
+
+GSM_Error SONYERICSSON_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
+{
+	GSM_Error error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, false))!= ERR_NONE) return error;
+	return OBEXGEN_DeleteFile(s, ID);
+}
+
+GSM_Error SONYERICSSON_AddFolder(GSM_StateMachine *s, GSM_File *File)
+{
+	GSM_Error error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, false))!= ERR_NONE) return error;
+	return OBEXGEN_AddFolder(s, File);
+}
+
+/* Native functions using OBEX connection */
+
 GSM_Error SONYERICSSON_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
 	return ERR_NOTIMPLEMENTED;
@@ -755,15 +800,15 @@ GSM_Phone_Functions SONYERICSSONPhone = {
 	NOTSUPPORTED,			/* 	GetFMStation		*/
 	NOTSUPPORTED,			/* 	SetFMStation		*/
 	NOTSUPPORTED,			/* 	ClearFMStations		*/
-	NOTSUPPORTED,			/* 	GetNextFileFolder	*/
+	SONYERICSSON_GetNextFileFolder,
 	NOTSUPPORTED,			/*	GetFolderListing	*/
 	NOTSUPPORTED,			/*	GetNextRootFolder	*/
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
-	NOTSUPPORTED,			/* 	GetFilePart		*/
-	NOTSUPPORTED,			/* 	AddFilePart		*/
+	SONYERICSSON_GetFilePart,
+	SONYERICSSON_AddFilePart,
 	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
-	NOTSUPPORTED,			/* 	DeleteFile		*/
-	NOTSUPPORTED,			/* 	AddFolder		*/
+	SONYERICSSON_DeleteFile,
+	SONYERICSSON_AddFolder,
 	NOTSUPPORTED,			/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
