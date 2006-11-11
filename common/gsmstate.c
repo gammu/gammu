@@ -1220,6 +1220,8 @@ static OnePhoneModel allmodels[] = {
 	{"VDC",		"FAF-1031021-BV" ,"",				   {F_SONYERICSSON, 0}},
 	{"GC89",	"FAF-1051011-BV" ,"",				   {F_SONYERICSSON, 0}},
 	{"GC86",	"FAF-1051012-BV" ,"",				   {F_SONYERICSSON, 0}},
+	/* At least my K750i reports itself as "Sony Ericss" */
+	{"Generic SE",	"Generic SE", "Sony Ericss",			   {F_SONYERICSSON, 0}},
 	/* Other */
 	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},
 	{"A2D"  ,	  "A2D"  ,	  "" ,				   {0}},
