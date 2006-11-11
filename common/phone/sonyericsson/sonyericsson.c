@@ -490,7 +490,7 @@ GSM_Error SONYERICSSON_GetManufacturer(GSM_StateMachine *s)
 
 GSM_Error SONYERICSSON_GetProductCode(GSM_StateMachine *s, char *value)
 {
-       strcpy(value, s->Phone.Data.ModelInfo->model);
+       strcpy(value, s->Phone.Data.Model);
        return ERR_NONE;
 }
 
