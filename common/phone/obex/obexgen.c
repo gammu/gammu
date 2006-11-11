@@ -25,7 +25,7 @@ static void OBEXGEN_FindNextDir(unsigned char *Path, int *Pos, unsigned char *Re
 
 	while(1) {
 		if (Path[(*Pos)*2] == 0 && Path[(*Pos)*2+1] == 0) break;
-		if (Path[(*Pos)*2] == 0 && Path[(*Pos)*2+1] == '\\') {
+		if (Path[(*Pos)*2] == 0 && Path[(*Pos)*2+1] == '/') {
 			(*Pos)++;
 			break;
 		}
@@ -315,6 +315,10 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				s->Phone.Data.File->Buffer = (unsigned char *)realloc(s->Phone.Data.File->Buffer,s->Phone.Data.File->Used);
 				memcpy(s->Phone.Data.File->Buffer+old,msg.Buffer+Pos+3,s->Phone.Data.File->Used-old);
 				return ERR_NONE;
+			case 0xc3:
+				/* Length */
+				/* FIXME: ignored now */
+				Pos += 5;
 			case 0xcb:
 				/* Skip Connection ID (we ignore this for now) */
 				Pos += 5;
@@ -367,7 +371,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 		} else {
 			File->Folder = false;
 
-			if (File->ID_FullName[0] == 0x00) {
+			if (File->ID_FullName[0] == 0x00 && File->ID_FullName[1] == 0x00) {
 				if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
 					/* No file name? Grab OBEX capabilities in browse mode */
 					smprintf(s, "No filename requested, grabbing OBEX capabilities as obex-capability.xml\n");
@@ -450,6 +454,32 @@ GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, 
 	return OBEXGEN_PrivGetFilePart(s,File,false);
 }
 
+
+/**
+ * Merges filename from path and file
+ */
+void CreateFileName(unsigned char *Dest, unsigned char *Path, unsigned char *Name)
+{
+	size_t len;
+
+	/* Folder name */
+	CopyUnicodeString(Dest, Path);
+	len = UnicodeLength(Dest);
+	/* Append slash */
+	if (len > 0) {
+		Dest[2*len + 0] = 0;
+		Dest[2*len + 1] = '/';
+		len++;
+	}
+	/* And add filename */
+	CopyUnicodeString(Dest + 2*len, Name);
+}
+
+/**
+ * List OBEX folder.
+ *
+ * @todo: We assume XML reply is in UTF-8, but this doesn't have to be true.
+ */
 GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -482,7 +512,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 			return ERR_EMPTY;
 		}
 
-		strcpy(File->ID_FullName,Priv->Files[Priv->FilesLocationsCurrent].ID_FullName);
+		CopyUnicodeString(File->ID_FullName,Priv->Files[Priv->FilesLocationsCurrent].ID_FullName);
 		File->Level	= Priv->Files[Priv->FilesLocationsCurrent].Level;
 		File->Folder	= Priv->Files[Priv->FilesLocationsCurrent].Folder;
 		CopyUnicodeString(File->Name,Priv->Files[Priv->FilesLocationsCurrent].Name);
@@ -507,6 +537,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 
 			num = 0;
 			Pos = 0;
+			/* Calculate number of files */
 			while (1) {
 				MyGetLine(File->Buffer, &Pos, Line, File->Used);
 				if (strlen(Line) == 0) break;
@@ -525,6 +556,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 				name = strstr(Line,"file name=\"");
 				if (name != NULL) num++;
 			}
+			/* Shift current files to the end of list */
 			if (num != 0) {
 				i = Priv->FilesLocationsUsed-1;
 				while (1) {
@@ -534,6 +566,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 				}
 			}
 
+			/* Actually parse file listing */
 			Pos 	= 0;
 			pos2 	= 0;
 			while (1) {
@@ -551,12 +584,16 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 					name[j] = 0;
 					if (strcmp(name,".")) {
 						dbgprintf("copying folder %s to %i parent %i\n",name,Priv->FilesLocationsCurrent+pos2,Priv->FilesLocationsCurrent);
-						strcpy(Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,File->ID_FullName);
-						if (strlen(File->ID_FullName) != 0) strcat(Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,"\\");
-						strcat(Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,name);
+						/* Convert filename from UTF-8 */
+						DecodeUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name, name, strlen(name));
+						/* Create file name from parts */
+						CreateFileName(
+							Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,
+							File->ID_FullName,
+							Priv->Files[Priv->FilesLocationsCurrent+pos2].Name
+							);
 						Priv->Files[Priv->FilesLocationsCurrent+pos2].Level  = File->Level+1;
 						Priv->Files[Priv->FilesLocationsCurrent+pos2].Folder = true;
-						EncodeUnicode(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name,name,strlen(name));
 						Priv->FilesLocationsUsed++;
 						pos2++;
 					}
@@ -572,13 +609,17 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 					}
 					name[j] = 0;
 					dbgprintf("copying file %s to %i\n",name,Priv->FilesLocationsCurrent+pos2);
+					/* Convert filename from UTF-8 */
+					DecodeUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name, name, strlen(name));
+					/* Create file name from parts */
+					CreateFileName(
+						Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,
+						File->ID_FullName,
+						Priv->Files[Priv->FilesLocationsCurrent+pos2].Name
+						);
+
 					Priv->Files[Priv->FilesLocationsCurrent+pos2].Level	= File->Level+1;
 					Priv->Files[Priv->FilesLocationsCurrent+pos2].Folder 	= false;
-					strcpy(Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,File->ID_FullName);
-					if (strlen(File->ID_FullName) != 0) strcat(Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,"\\");
-					strcat(Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,name);
-					EncodeUnicode(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name,name,strlen(name));
-
 					Priv->Files[Priv->FilesLocationsCurrent+pos2].Used 	= 0;
 					strcpy(Line2,Line);
 					size = strstr(Line2,"size=\"");
