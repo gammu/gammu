@@ -320,6 +320,7 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				/* Length */
 				/* FIXME: ignored now */
 				Pos += 5;
+				break;
 			case 0xcb:
 				/* Skip Connection ID (we ignore this for now) */
 				Pos += 5;
