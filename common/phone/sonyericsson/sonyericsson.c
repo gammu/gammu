@@ -28,7 +28,16 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
 	GSM_Error		error;
 
-	if (Priv->Mode == SONYERICSSON_ModeOBEX) return ERR_NONE;
+	if (Priv->Mode == SONYERICSSON_ModeOBEX) {
+		/* Choose appropriate connection type (we need different for filesystem and for IrMC) */
+		if (irmc) {
+			error = OBEXGEN_Connect(s, OBEX_IRMC);
+		} else {
+			error = OBEXGEN_Connect(s, OBEX_BrowsingFolders);
+		}
+		if (error != ERR_NONE) return error;
+		return ERR_NONE;
+	}
 
 	dbgprintf ("Changing to OBEX mode\n");
 
