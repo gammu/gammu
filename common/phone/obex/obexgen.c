@@ -141,11 +141,12 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 	s->Phone.Data.Manufacturer[0] 	= 0;
 
 	/* Initialise connection for desired type */
-	if (strcmp(s->CurrentConfig->Model, "obex")) {
+	smprintf(s, "Connected using model %s\n", s->CurrentConfig->Model);
+	if (strcmp(s->CurrentConfig->Model, "obex") == 0) {
 		error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
-	} else if (strcmp(s->CurrentConfig->Model, "obexirmc")) {
+	} else if (strcmp(s->CurrentConfig->Model, "obexirmc") == 0) {
 		error = OBEXGEN_Connect(s,OBEX_IRMC);
-	} else if (strcmp(s->CurrentConfig->Model, "obexnone")) {
+	} else if (strcmp(s->CurrentConfig->Model, "obexnone") == 0) {
 		error = OBEXGEN_Connect(s,OBEX_IRMC);
 	}
 
@@ -380,7 +381,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 
 					/* Type block */
 					OBEXAddBlock(req, &Current, 0x42, req2, strlen(req2));
-				} else if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+				} else if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_IRMC) {
 					/* No file name? Grab devinfo in IrMC mode */
 					smprintf(s, "No filename requested, grabbing device information as devinfo.txt\n");
 					EncodeUnicode(File->Name, "devinfo.txt", 19);
