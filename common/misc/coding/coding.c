@@ -132,11 +132,11 @@ char *DecodeUnicodeSpecialChars(unsigned char *buffer)
 			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == 'n') {
 				Buf[Pos2*2]   = 0;
 				Buf[Pos2*2+1] = 10;
-			} else 
+			} else
 			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == 'r') {
 				Buf[Pos2*2]   = 0;
 				Buf[Pos2*2+1] = 13;
-			} else 
+			} else
 			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == '\\') {
 				Buf[Pos2*2]   = 0;
 				Buf[Pos2*2+1] = '\\';
@@ -1345,7 +1345,7 @@ bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 		if (z>1) {
 			for (w=0;w<z;w++) {
 				sprintf(dest+j, "=%02X",mychar[w]);
-				j = j+3;				
+				j = j+3;
 			}
 			retval  = true;
 		} else {
@@ -1414,8 +1414,11 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, in
 				break;
 			}
 			mychar[z] = 16*DecodeWithHexBinAlphabet(src[z*3+i+1])+DecodeWithHexBinAlphabet(src[z*3+i+2]);
+			/* Is it plain ASCII? */
 			if (z==0 && mychar[0]<194) break;
 			z++;
+			/* Do we already have valid UTF-8 char? */
+			if (DecodeWithUTF8Alphabet2(mychar,&ret,z) == z) break;
 		}
 		if (z>0) {
 			i+=z*3;
