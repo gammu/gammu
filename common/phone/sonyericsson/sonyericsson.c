@@ -23,6 +23,42 @@
 
 extern GSM_Reply_Function SONYERICSSONReplyFunctions[];
 
+
+/**
+ * Ensures phone and Gammu protocol are switched to AT commands mode.
+ */
+GSM_Error SONYERICSSON_SetATMode(GSM_StateMachine *s)
+{
+	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
+	GSM_Error		error;
+
+	/* Aren't we in OBEX mode? */
+	if (Priv->Mode == SONYERICSSON_ModeAT) return ERR_NONE;
+
+	dbgprintf ("Terminating OBEX\n");
+
+	/* Disconnect from OBEX service */
+	error = OBEXGEN_Disconnect(s);
+	if (error != ERR_NONE) return error;
+
+	/* Terminate OBEX protocol */
+	error = s->Protocol.Functions->Terminate(s);
+	if (error != ERR_NONE) return error;
+
+	/* Switch to AT protocol */
+	dbgprintf ("Changing protocol to AT\n");
+	s->Protocol.Functions			= &ATProtocol;
+	s->Phone.Functions->ReplyFunctions	= ATGENReplyFunctions;
+	Priv->Mode				= SONYERICSSON_ModeAT;
+
+	/* Initialise AT protocol */
+	error = s->Protocol.Functions->Initialise(s);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+
 /**
  * Ensures phone and Gammu protocol are in OBEX mode, in IrMC service
  * if requrested.
@@ -39,14 +75,21 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 
 	/* Are we already in OBEX mode? */
 	if (Priv->Mode == SONYERICSSON_ModeOBEX) {
-		/* Choose appropriate connection type (we need different for filesystem and for IrMC) */
+		/* We can not safely switch service, we need to disconnect instead */
 		if (irmc) {
-			error = OBEXGEN_Connect(s, OBEX_IRMC);
+			if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_IRMC) {
+				return ERR_NONE;
+			} else {
+				error = SONYERICSSON_SetATMode(s);
+			}
 		} else {
-			error = OBEXGEN_Connect(s, OBEX_BrowsingFolders);
+			if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
+				return ERR_NONE;
+			} else {
+				error = SONYERICSSON_SetATMode(s);
+			}
 		}
 		if (error != ERR_NONE) return error;
-		return ERR_NONE;
 	}
 
 	dbgprintf ("Changing to OBEX mode\n");
@@ -90,39 +133,6 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 	return ERR_NONE;
 }
 
-/**
- * Ensures phone and Gammu protocol are switched to AT commands mode.
- */
-GSM_Error SONYERICSSON_SetATMode(GSM_StateMachine *s)
-{
-	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
-	GSM_Error		error;
-
-	/* Aren't we in OBEX mode? */
-	if (Priv->Mode == SONYERICSSON_ModeAT) return ERR_NONE;
-
-	dbgprintf ("Terminating OBEX\n");
-
-	/* Disconnect from OBEX service */
-	error = OBEXGEN_Disconnect(s);
-	if (error != ERR_NONE) return error;
-
-	/* Terminate OBEX protocol */
-	error = s->Protocol.Functions->Terminate(s);
-	if (error != ERR_NONE) return error;
-
-	/* Switch to AT protocol */
-	dbgprintf ("Changing protocol to AT\n");
-	s->Protocol.Functions			= &ATProtocol;
-	s->Phone.Functions->ReplyFunctions	= ATGENReplyFunctions;
-	Priv->Mode				= SONYERICSSON_ModeAT;
-
-	/* Initialise AT protocol */
-	error = s->Protocol.Functions->Initialise(s);
-	if (error != ERR_NONE) return error;
-
-	return ERR_NONE;
-}
 
 /**
  * Initialises Sony-Ericsson module internals and calls AT module init.
@@ -326,6 +336,7 @@ GSM_Error SONYERICSSON_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press
 {
 	GSM_Error error;
 
+	/* @todo: Implement completely using AT*EKEY */
 	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_PressKey(s, Key, Press);
 }
@@ -563,12 +574,14 @@ GSM_Error SONYERICSSON_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *St
 	GSM_Error 		error;
 
 	if (Status->MemoryType == MEM_ME) {
-		return ERR_NOTIMPLEMENTED;
+		if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+		return OBEXGEN_GetMemoryStatus(s, Status);
 	} else {
 		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
 		return ATGEN_GetMemoryStatus(s, Status);
 	}
 }
+
 GSM_Error SONYERICSSON_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error 		error;

@@ -14,6 +14,7 @@ extern GSM_Error OBEXGEN_Disconnect	(GSM_StateMachine *s);
 extern GSM_Error OBEXGEN_Connect	(GSM_StateMachine *s, OBEX_Service service);
 extern GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID);
 extern GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File);
+extern GSM_Error OBEXGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status);
 
 
 #endif
