@@ -33,6 +33,16 @@ static struct keys_table_position Keys[] = {
 	{'*',GSM_KEY_ASTERISK},		{'0',GSM_KEY_0},	{'#',GSM_KEY_HASH},
 	{'g',GSM_KEY_GREEN},		{'G',GSM_KEY_GREEN},
 	{'r',GSM_KEY_RED},		{'R',GSM_KEY_RED},
+	{'<',GSM_KEY_LEFT},		{'>',GSM_KEY_RIGHT},
+	{'[',GSM_KEY_SOFT1},		{']',GSM_KEY_SOFT2},
+	{'h',GSM_KEY_HEADSET},		{'H',GSM_KEY_HEADSET},
+	{'c',GSM_KEY_CLEAR},		{'C',GSM_KEY_CLEAR},
+	{'j',GSM_KEY_JOYSTICK},		{'J',GSM_KEY_JOYSTICK},
+	{'f',GSM_KEY_CAMERA},		{'F',GSM_KEY_CAMERA},
+	{'o',GSM_KEY_OPERATOR},		{'O',GSM_KEY_OPERATOR},
+	{'m',GSM_KEY_MEDIA},		{'M',GSM_KEY_MEDIA},
+	{'d',GSM_KEY_DESKTOP},		{'D',GSM_KEY_DESKTOP},
+	{'@',GSM_KEY_RETURN},
 	{' ',0}
 };
 
@@ -208,7 +218,7 @@ bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 		dt->Second	= atoi(second);
 
 		/* FIXME, HACK*/
-		if (Buffer[15] == 'Z') dt->Timezone =2;	
+		if (Buffer[15] == 'Z') dt->Timezone =2;
 	}
 
 	if (!CheckTime(dt)) {

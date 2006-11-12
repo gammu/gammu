@@ -158,7 +158,55 @@ typedef enum {
 	/**
 	 * doesn't available in some phone: ie. N5110
 	 */
-	GSM_KEY_NAMES
+	GSM_KEY_NAMES,
+	/**
+	 * Left arrow
+	 */
+	GSM_KEY_LEFT,
+	/**
+	 * Right arrow
+	 */
+	GSM_KEY_RIGHT,
+	/**
+	 * Software key which has assigned mening on display.
+	 */
+	GSM_KEY_SOFT1,
+	/**
+	 * Software key which has assigned mening on display.
+	 */
+	GSM_KEY_SOFT2,
+	/**
+	 * Button on headset
+	 */
+	GSM_KEY_HEADSET,
+	/**
+	 * Joystick pressed
+	 */
+	GSM_KEY_JOYSTICK,
+	/**
+	 * Camera button pressed
+	 */
+	GSM_KEY_CAMERA,
+	/**
+	 * Media player button
+	 */
+	GSM_KEY_MEDIA,
+	/**
+	 * Multi function key, desktop
+	 */
+	GSM_KEY_DESKTOP,
+	/**
+	 * Operator button
+	 */
+	GSM_KEY_OPERATOR,
+	/**
+	 * Return button
+	 */
+	GSM_KEY_RETURN,
+	/**
+	 * Clear button
+	 */
+	GSM_KEY_CLEAR,
 } GSM_KeyCode;
 
 GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, int *Length);
