@@ -98,6 +98,9 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 	error=GSM_WaitFor (s, "AT*EOBEX\r", 9, 0x00, 4, ID_SetOBEX);
 	if (error != ERR_NONE) return error;
 
+	/* Tell OBEX module it has no service selected */
+	s->Phone.Data.Priv.OBEXGEN.Service = 0;
+
 	dbgprintf ("Changing protocol to OBEX\n");
 
 	/* Stop AT protocol */
@@ -143,6 +146,13 @@ GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 	GSM_Error		error;
 
 	Priv->Mode				= SONYERICSSON_ModeAT;
+
+	/* Init OBEX module also */
+	s->Phone.Data.Priv.OBEXGEN.Service = 0;
+	s->Phone.Data.Priv.OBEXGEN.PbLUID = NULL;
+	s->Phone.Data.Priv.OBEXGEN.PbLUIDCount = 0;
+	s->Phone.Data.Priv.OBEXGEN.CalLUID = NULL;
+	s->Phone.Data.Priv.OBEXGEN.CalLUIDCount = 0;
 
 	/* Init AT module */
 	error = ATGEN_Initialise(s);
@@ -587,7 +597,8 @@ GSM_Error SONYERICSSON_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		return ERR_NOTIMPLEMENTED;
+		if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+		return OBEXGEN_GetMemory(s, entry);
 	} else {
 		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
 		return ATGEN_GetMemory(s, entry);
@@ -599,7 +610,8 @@ GSM_Error SONYERICSSON_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		return ERR_NOTIMPLEMENTED;
+		if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+		return OBEXGEN_GetNextMemory(s, entry, start);
 	} else {
 		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
 		return ATGEN_GetNextMemory(s, entry, start);

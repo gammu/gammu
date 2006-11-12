@@ -1,9 +1,8 @@
 /* (c) 2003 by Marcin Wiacek */
+/* (c) 2006 by Michal Cihar */
+
 /* www.irda.org OBEX specs 1.3 */
 
-/* Module connects to F9EC7BC4-953c-11d2-984E-525400DC9E09 UUID and in the
- * future there will required implementing reconnecting. See "ifdef xxxx"
- */
 
 #include <string.h>
 #include <time.h>
@@ -121,8 +120,13 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 {
 	GSM_Error	error = ERR_NONE;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
-	s->Phone.Data.Priv.OBEXGEN.Service = 0;
+	Priv->Service = 0;
+	Priv->PbLUID = NULL;
+	Priv->PbLUIDCount = 0;
+	Priv->CalLUID = NULL;
+	Priv->CalLUIDCount = 0;
 
 	/**
 	 * @todo: In IrMC mode we might read real model from
@@ -872,6 +876,137 @@ GSM_Error OBEXGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 	free(data);
 
 	return error;
+}
+
+GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, char ***LUID, int *Count)
+{
+	char		*data;
+	GSM_Error 	error;
+	char		*pos;
+	char		*end1;
+	char		*end2;
+	char		*end;
+	char		save;
+	int		Size = 200;
+
+	/* Grab file with listing */
+	error = OBEXGEN_GetTextFile(s, Name, &data);
+	if (error != ERR_NONE) return error;
+
+	pos = data;
+	*Count = 0;
+	/* Allocate initial memory */
+	*LUID = malloc(Size * sizeof(char *));
+	if (*LUID == NULL) {
+		free(data);
+		return ERR_MOREMEMORY;
+	}
+
+	/* Grab LUIDs from list */
+	while ((pos = strstr(pos, "X-IRMC-LUID:")) != NULL) {
+		pos += 12; /* Length of X-IRMC-LUID: */
+		(*Count)++;
+		/* Do we need to reallocate? */
+		if (*Count >= Size) {
+			Size += 20;
+			*LUID = realloc(*LUID, Size * sizeof(char *));
+			if (*LUID == NULL) {
+				free(data);
+				return ERR_MOREMEMORY;
+			}
+		}
+		end = NULL;
+		/* Detect both end of lines */
+		end1 = strchr(pos, '\r');
+		end2 = strchr(pos, '\n');
+		if (end1 == NULL) {
+			end = end2;
+		} else if (end2 == NULL) {
+			end = end1;
+		} else if (end1 < end2) {
+			end = end1;
+		} else {
+			end = end2;
+		}
+		/* We didn't find any? */
+		if (end == NULL) {
+			free(data);
+			free(*LUID); /* FIXME: This leaves allocated strings */
+			*LUID = NULL;
+			return ERR_UNKNOWNRESPONSE;
+		}
+		/* Remember and replace end of string */
+		save = *end;
+		*end = 0;
+		/* Copy LUID */
+		(*LUID)[*Count] = strdup(pos);
+		//smprintf(s, "Added LUID %s at position %d\n", (*LUID)[*Count], *Count);
+		/* Restore original char */
+		*end = save;
+	}
+
+	return ERR_NONE;
+}
+
+GSM_Error OBEXGEN_InitPbLUID(GSM_StateMachine *s)
+{
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We might do validation here using telecom/pb/luid/cc.log, but not on each request */
+	if (Priv->PbLUID != NULL) return ERR_NONE;
+
+	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", &(Priv->PbLUID), &(Priv->PbLUIDCount));
+}
+
+GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	char		*data;
+	char		*path;
+	int		pos = 0;
+
+	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+
+	error = OBEXGEN_InitPbLUID(s);
+	if (error != ERR_NONE) return error;
+
+	if (Entry->Location > Priv->PbLUIDCount) return ERR_EMPTY; /* Maybe invalid location? */
+
+	/* Calculate path */
+	path = malloc(strlen(Priv->PbLUID[Entry->Location]) + 22); /* Length of string bellow */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/pb/luid/%s.vcf", Priv->PbLUID[Entry->Location]);
+	smprintf(s, "Getting vCard %s\n", path);
+
+	/* Grab vCard */
+	error = OBEXGEN_GetTextFile(s, path, &data);
+	free(path);
+	if (error != ERR_NONE) return error;
+
+	/* Decode it */
+	error = GSM_DecodeVCARD(data, &pos, Entry, SonyEricsson_VCard21);
+	free(data);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, bool start)
+{
+	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+
+	/* Get  location */
+	if (start) {
+		Entry->Location = 1;
+	} else {
+		Entry->Location++;
+	}
+
+	/* Do real getting */
+	return OBEXGEN_GetMemory(s, Entry);
 }
 
 GSM_Reply_Function OBEXGENReplyFunctions[] = {
