@@ -23,11 +23,16 @@
 
 extern GSM_Reply_Function SONYERICSSONReplyFunctions[];
 
+/**
+ * Ensures phone and Gammu protocol are in OBEX mode, in IrMC service
+ * if requrested.
+ */
 GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 {
 	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
 	GSM_Error		error;
 
+	/* Are we already in OBEX mode? */
 	if (Priv->Mode == SONYERICSSON_ModeOBEX) {
 		/* Choose appropriate connection type (we need different for filesystem and for IrMC) */
 		if (irmc) {
@@ -41,27 +46,33 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 
 	dbgprintf ("Changing to OBEX mode\n");
 
+	/* Switch phone to OBEX */
 	error=GSM_WaitFor (s, "AT*EOBEX\r", 9, 0x00, 4, ID_SetOBEX);
 	if (error != ERR_NONE) return error;
 
 	dbgprintf ("Changing protocol to OBEX\n");
 
+	/* Stop AT protocol */
 	error = s->Protocol.Functions->Terminate(s);
 	if (error != ERR_NONE) return error;
 
 	/* Need some sleep before starting talk in OBEX */
 	my_sleep(100);
 
+	/* Switch to OBEX protocol and initialise it */
 	s->Protocol.Functions = &OBEXProtocol;
+	s->Phone.Functions->ReplyFunctions	= OBEXGENReplyFunctions;
+
+	/* Initialise protocol */
 	error = s->Protocol.Functions->Initialise(s);
 	if (error != ERR_NONE) {
+		/* Revert back to AT */
 		s->Protocol.Functions = &ATProtocol;
 		return error;
 	}
-	//FIXME:s->Phone.Functions->ReplyFunctions	= SONYERICSSONReplyFunctions;
-	s->Phone.Functions->ReplyFunctions	= OBEXGENReplyFunctions;
-	Priv->Mode				= SONYERICSSON_ModeOBEX;
 
+	/* Remember our state */
+	Priv->Mode				= SONYERICSSON_ModeOBEX;
 
 	/* Choose appropriate connection type (we need different for filesystem and for IrMC) */
 	if (irmc) {
@@ -74,46 +85,55 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 	return ERR_NONE;
 }
 
+/**
+ * Ensures phone and Gammu protocol are switched to AT commands mode.
+ */
 GSM_Error SONYERICSSON_SetATMode(GSM_StateMachine *s)
 {
 	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
 	GSM_Error		error;
 
+	/* Aren't we in OBEX mode? */
 	if (Priv->Mode == SONYERICSSON_ModeAT) return ERR_NONE;
 
 	dbgprintf ("Terminating OBEX\n");
 
+	/* Disconnect from OBEX service */
 	error = OBEXGEN_Disconnect(s);
 	if (error != ERR_NONE) return error;
 
+	/* Terminate OBEX protocol */
 	error = s->Protocol.Functions->Terminate(s);
 	if (error != ERR_NONE) return error;
 
+	/* Switch to AT protocol */
 	dbgprintf ("Changing protocol to AT\n");
 	s->Protocol.Functions			= &ATProtocol;
 	s->Phone.Functions->ReplyFunctions	= ATGENReplyFunctions;
 	Priv->Mode				= SONYERICSSON_ModeAT;
-	s->Phone.Data.Priv.ATGEN.Charset	= 0;
-	s->Phone.Data.Priv.ATGEN.PBKMemory	= 0;
 
+	/* Initialise AT protocol */
 	error = s->Protocol.Functions->Initialise(s);
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
 }
 
+/**
+ * Initialises Sony-Ericsson module internals and calls AT module init.
+ */
 GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
 
 	Priv->Mode				= SONYERICSSON_ModeAT;
 
-	s->Protocol.Functions			= &ATProtocol;
-	s->Phone.Functions->ReplyFunctions	= ATGENReplyFunctions;
-
 	return ATGEN_Initialise(s);
 }
 
+/**
+ * Switch to AT mode and calls AT module termination procedure.
+ */
 GSM_Error SONYERICSSON_Terminate(GSM_StateMachine *s)
 {
 	GSM_Error 		error;
@@ -122,6 +142,8 @@ GSM_Error SONYERICSSON_Terminate(GSM_StateMachine *s)
 	return ATGEN_Terminate(s);
 }
 
+
+/* Wrapper functions for using AT module functionality */
 
 GSM_Error SONYERICSSON_GetIMEI (GSM_StateMachine *s)
 {
@@ -157,88 +179,6 @@ GSM_Error SONYERICSSON_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 
 
-GSM_Error SONYERICSSON_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
-{
-	GSM_Error 		error;
-
-	if (Status->MemoryType == MEM_ME) {
-		return ERR_NOTIMPLEMENTED;
-	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
-		return ATGEN_GetMemoryStatus(s, Status);
-	}
-}
-GSM_Error SONYERICSSON_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
-{
-	GSM_Error 		error;
-
-	if (entry->MemoryType == MEM_ME) {
-		return ERR_NOTIMPLEMENTED;
-	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
-		return ATGEN_GetMemory(s, entry);
-	}
-}
-
-GSM_Error SONYERICSSON_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
-{
-	GSM_Error 		error;
-
-	if (entry->MemoryType == MEM_ME) {
-		return ERR_NOTIMPLEMENTED;
-	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
-		return ATGEN_GetNextMemory(s, entry, start);
-	}
-}
-
-GSM_Error SONYERICSSON_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
-{
-	GSM_Error 		error;
-
-	if (entry->MemoryType == MEM_ME) {
-		return ERR_NOTIMPLEMENTED;
-	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
-		return ATGEN_SetMemory(s, entry);
-	}
-}
-
-GSM_Error SONYERICSSON_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
-{
-	GSM_Error 		error;
-
-	if (entry->MemoryType == MEM_ME) {
-		return ERR_NOTIMPLEMENTED;
-	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
-		return ATGEN_AddMemory(s, entry);
-	}
-}
-
-GSM_Error SONYERICSSON_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
-{
-	GSM_Error 		error;
-
-	if (entry->MemoryType == MEM_ME) {
-		return ERR_NOTIMPLEMENTED;
-	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
-		return ATGEN_DeleteMemory(s, entry);
-	}
-}
-
-GSM_Error SONYERICSSON_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
-{
-	GSM_Error 		error;
-
-	if (type == MEM_ME) {
-		return ERR_NOTIMPLEMENTED;
-	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
-		return ATGEN_DeleteAllMemory(s, type);
-	}
-}
 
 GSM_Error SONYERICSSON_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 {
@@ -611,7 +551,91 @@ GSM_Error SONYERICSSON_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	return OBEXGEN_AddFolder(s, File);
 }
 
-/* Native functions using OBEX connection */
+/* Mixed AT mode/IrMC functions */
+
+GSM_Error SONYERICSSON_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
+{
+	GSM_Error 		error;
+
+	if (Status->MemoryType == MEM_ME) {
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		return ATGEN_GetMemoryStatus(s, Status);
+	}
+}
+GSM_Error SONYERICSSON_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	GSM_Error 		error;
+
+	if (entry->MemoryType == MEM_ME) {
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		return ATGEN_GetMemory(s, entry);
+	}
+}
+
+GSM_Error SONYERICSSON_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
+{
+	GSM_Error 		error;
+
+	if (entry->MemoryType == MEM_ME) {
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		return ATGEN_GetNextMemory(s, entry, start);
+	}
+}
+
+GSM_Error SONYERICSSON_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	GSM_Error 		error;
+
+	if (entry->MemoryType == MEM_ME) {
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		return ATGEN_SetMemory(s, entry);
+	}
+}
+
+GSM_Error SONYERICSSON_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	GSM_Error 		error;
+
+	if (entry->MemoryType == MEM_ME) {
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		return ATGEN_AddMemory(s, entry);
+	}
+}
+
+GSM_Error SONYERICSSON_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	GSM_Error 		error;
+
+	if (entry->MemoryType == MEM_ME) {
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		return ATGEN_DeleteMemory(s, entry);
+	}
+}
+
+GSM_Error SONYERICSSON_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
+{
+	GSM_Error 		error;
+
+	if (type == MEM_ME) {
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		return ATGEN_DeleteAllMemory(s, type);
+	}
+}
+/* Native IrMC functions using OBEX connection */
 
 GSM_Error SONYERICSSON_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
@@ -683,14 +707,11 @@ GSM_Error SONYERICSSON_DeleteAllCalendar (GSM_StateMachine *s)
 	return ERR_NOTIMPLEMENTED;
 }
 
-GSM_Reply_Function SONYERICSSONReplyFunctions[] = {
-{NULL,				"\x00",0x00,0x00, ID_None			}
-};
 
 GSM_Phone_Functions SONYERICSSONPhone = {
 	/* There is much more SE phones which support this! */
 	"sonyericsson|ericsson|sony|k750|k750i",
-	SONYERICSSONReplyFunctions,
+	ATGENReplyFunctions,
 	SONYERICSSON_Initialise,
 	SONYERICSSON_Terminate,
 	SONYERICSSON_DispatchMessage,
