@@ -45,6 +45,7 @@ static GSM_AT_Charset_Info AT_Charsets[] = {
 	{AT_CHARSET_PCCP437,	"PCCP437",	false},
 	{AT_CHARSET_UTF8,	"UTF-8",	true},
 	{AT_CHARSET_UCS2,	"UCS2",		true},
+	{AT_CHARSET_IRA,	"IRA",		false},
 	{0,			NULL}
 };
 
@@ -775,6 +776,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->Charset			= 0;
 	Priv->EncodedCommands		= false;
 	Priv->NormalCharset		= 0;
+	Priv->IRACharset		= 0;
 	Priv->UnicodeCharset		= 0;
 	Priv->PBKMemories[0]		= 0;
 	Priv->FirstCalendarPos		= 0;
@@ -911,9 +913,14 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			while (AT_Charsets[i].charset != 0) {
 				if (strstr(line, AT_Charsets[i].text) != NULL) {
 					Priv->NormalCharset = AT_Charsets[i].charset;
+					Priv->IRACharset = AT_Charsets[i].charset;
 					break;
 				}
 				i++;
+			}
+			/* Use IRA charset if we support it */
+			if (strstr(line, "IRA") != NULL) {
+				Priv->IRACharset = AT_CHARSET_IRA;
 			}
 			if (Priv->NormalCharset == 0) {
 				smprintf(s, "Could not find supported charset in list returned by phone!\n");
@@ -944,7 +951,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 }
 
 
-GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, bool PreferUnicode)
+GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
@@ -970,11 +977,16 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, bool PreferUnicode)
 	}
 
 	/* Find charset we want */
-	if (PreferUnicode) {
+	if (Prefer == AT_PREF_CHARSET_UNICODE) {
 		cset = Priv->UnicodeCharset;
-	} else {
+	} else if (Prefer == AT_PREF_CHARSET_NORMAL) {
 		cset = Priv->NormalCharset;
+	} else if (Prefer == AT_PREF_CHARSET_IRA) {
+		cset = Priv->IRACharset;
+	} else {
+		return ERR_BUG;
 	}
+
 	/* If we already have set our preffered charset there is nothing to do*/
 	if (Priv->Charset == cset) return ERR_NONE;
 
@@ -1077,7 +1089,7 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, bool SIM)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -1611,7 +1623,7 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 
 	/* There is possibility that date will be encoded in text mode */
 	if (Priv->SMSMode == SMS_AT_TXT) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2216,7 +2228,7 @@ GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2266,7 +2278,7 @@ GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 	return ATGEN_PrivSetDateTime(s, date_time, true);
@@ -2281,7 +2293,7 @@ GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2304,7 +2316,7 @@ GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2377,7 +2389,7 @@ GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2570,7 +2582,7 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2891,6 +2903,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
   		case AT_CHARSET_UCS2:
  			DecodeHexUnicode(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2));
   			break;
+  		case AT_CHARSET_IRA: /* IRA is ASCII only, so it's safe to treat is as UTF-8 */
   		case AT_CHARSET_UTF8:
  			DecodeUTF8(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2));
   			break;
@@ -2973,7 +2986,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 	}
 
 
-	error=ATGEN_SetCharset(s, true); /* For reading we prefer unicode */
+	error=ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE); /* For reading we prefer unicode */
 	if (error != ERR_NONE) return error;
 
 	if (endlocation == 0) {
@@ -3410,7 +3423,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	unsigned char		uname[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 	unsigned char		number[GSM_PHONEBOOK_TEXT_LENGTH + 1];
 	int			reqlen, i;
-	bool			PreferUnicode = false;
+	GSM_AT_Charset_Preference	Prefer = AT_PREF_CHARSET_NORMAL;
 
 	if (entry->Location == 0) return ERR_INVALIDLOCATION;
 
@@ -3441,13 +3454,13 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			 * unicode 16, if storing in unicode would truncate
 			 * text, do not use it, otherwise we will use it */
 			if ((Priv->TextLength != 0) && ((Priv->TextLength * 7 / 16) <= len)) {
-				PreferUnicode = false;
+				Prefer = AT_PREF_CHARSET_NORMAL;
 			} else {
-				PreferUnicode = true;
+				Prefer = AT_PREF_CHARSET_UNICODE;
 			}
 		}
 
-		error = ATGEN_SetCharset(s, PreferUnicode);
+		error = ATGEN_SetCharset(s, Prefer);
 		if (error != ERR_NONE) return error;
 
 		switch (Priv->Charset) {
@@ -3464,6 +3477,8 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			EncodeHexUnicode(name, entry->Entries[Name].Text, UnicodeLength(entry->Entries[Name].Text));
 			len = strlen(name);
 			break;
+  		case AT_CHARSET_IRA:
+			return ERR_NOTSUPPORTED;
   		case AT_CHARSET_UTF8:
 			EncodeUTF8(name, entry->Entries[Name].Text);
 			len = strlen(name);
@@ -3848,35 +3863,54 @@ GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *ma
 GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 {
 	GSM_Error	error;
-	unsigned char 	Frame[] = "AT+CKPD=\"?\"\r";
+	unsigned char 	frame[20];
+
+	frame[0] = 0;
+
+	ATGEN_SetCharset(s, AT_PREF_CHARSET_IRA);
+
+	strcat(frame, "AT+CKPD=\"");
 
 	if (Press) {
 		switch (Key) {
-			case GSM_KEY_1 			: Frame[9] = '1'; break;
-			case GSM_KEY_2			: Frame[9] = '2'; break;
-			case GSM_KEY_3			: Frame[9] = '3'; break;
-			case GSM_KEY_4			: Frame[9] = '4'; break;
-			case GSM_KEY_5			: Frame[9] = '5'; break;
-			case GSM_KEY_6			: Frame[9] = '6'; break;
-			case GSM_KEY_7			: Frame[9] = '7'; break;
-			case GSM_KEY_8			: Frame[9] = '8'; break;
-			case GSM_KEY_9			: Frame[9] = '9'; break;
-			case GSM_KEY_0			: Frame[9] = '0'; break;
-			case GSM_KEY_HASH		: Frame[9] = '#'; break;
-			case GSM_KEY_ASTERISK		: Frame[9] = '*'; break;
-			case GSM_KEY_POWER		: return ERR_NOTSUPPORTED;
-			case GSM_KEY_GREEN		: Frame[9] = 'S'; break;
-			case GSM_KEY_RED		: Frame[9] = 'E'; break;
-			case GSM_KEY_INCREASEVOLUME	: Frame[9] = 'U'; break;
-			case GSM_KEY_DECREASEVOLUME	: Frame[9] = 'D'; break;
-			case GSM_KEY_UP			: Frame[9] = '^'; break;
-			case GSM_KEY_DOWN		: Frame[9] = 'V'; break;
-			case GSM_KEY_MENU		: Frame[9] = 'F'; break;
-			case GSM_KEY_NAMES		: Frame[9] = 'C'; break;
-			default				: return ERR_NOTSUPPORTED;
+			case GSM_KEY_1 			: strcat(frame,"1"); break;
+			case GSM_KEY_2			: strcat(frame,"2"); break;
+			case GSM_KEY_3			: strcat(frame,"3"); break;
+			case GSM_KEY_4			: strcat(frame,"4"); break;
+			case GSM_KEY_5			: strcat(frame,"5"); break;
+			case GSM_KEY_6			: strcat(frame,"6"); break;
+			case GSM_KEY_7			: strcat(frame,"7"); break;
+			case GSM_KEY_8			: strcat(frame,"8"); break;
+			case GSM_KEY_9			: strcat(frame,"9"); break;
+			case GSM_KEY_0			: strcat(frame,"0"); break;
+			case GSM_KEY_HASH		: strcat(frame,"#"); break;
+			case GSM_KEY_ASTERISK		: strcat(frame,"*"); break;
+			case GSM_KEY_POWER		: strcat(frame,"P"); break;
+			case GSM_KEY_GREEN		: strcat(frame,"S"); break;
+			case GSM_KEY_RED		: strcat(frame,"E"); break;
+			case GSM_KEY_INCREASEVOLUME	: strcat(frame,"U"); break;
+			case GSM_KEY_DECREASEVOLUME	: strcat(frame,"D"); break;
+			case GSM_KEY_UP			: strcat(frame,"^"); break;
+			case GSM_KEY_DOWN		: strcat(frame,"V"); break;
+			case GSM_KEY_MENU		: strcat(frame,"F"); break;
+			case GSM_KEY_LEFT		: strcat(frame,"<"); break;
+			case GSM_KEY_RIGHT		: strcat(frame,">"); break;
+			case GSM_KEY_SOFT1		: strcat(frame,"["); break;
+			case GSM_KEY_SOFT2		: strcat(frame,"]"); break;
+			case GSM_KEY_HEADSET		: strcat(frame,"H"); break;
+			case GSM_KEY_JOYSTICK		: strcat(frame,":J"); break;
+			case GSM_KEY_CAMERA		: strcat(frame,":C"); break;
+			case GSM_KEY_OPERATOR		: strcat(frame,":O"); break;
+			case GSM_KEY_RETURN		: strcat(frame,":R"); break;
+			case GSM_KEY_CLEAR		: strcat(frame,"C"); break;
+			case GSM_KEY_MEDIA		: strcat(frame,":S"); break;
+			case GSM_KEY_DESKTOP		: strcat(frame,":D"); break;
+			case GSM_KEY_NONE		: return ERR_NONE; /* Nothing to do here */
+			case GSM_KEY_NAMES		: return ERR_NOTSUPPORTED;
 		}
+		strcat(frame, "\"\r");
 		smprintf(s, "Pressing key\n");
-		error = GSM_WaitFor (s, Frame, 12, 0x00, 4, ID_PressKey);
+		error = GSM_WaitFor (s, frame, 12, 0x00, 4, ID_PressKey);
 		if (error != ERR_NONE) return error;
 
 		/* Strange. My T310 needs it */

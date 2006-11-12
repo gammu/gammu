@@ -161,6 +161,29 @@ GSM_Error SONYERICSSON_Terminate(GSM_StateMachine *s)
 }
 
 
+/**
+ * Dispatches message to correct dispatcher according to active protocol
+ */
+GSM_Error SONYERICSSON_DispatchMessage(GSM_StateMachine *s)
+{
+	if (s->Phone.Data.Priv.SONYERICSSON.Mode == SONYERICSSON_ModeOBEX) {
+		return GSM_DispatchMessage(s);
+	} else {
+		return ATGEN_DispatchMessage(s);
+	}
+}
+
+
+/**
+ * We receive product code over AT commands, so we can easily use it
+ */
+GSM_Error SONYERICSSON_GetProductCode(GSM_StateMachine *s, char *value)
+{
+       strcpy(value, s->Phone.Data.Model);
+       return ERR_NONE;
+}
+
+
 /* Wrapper functions for using AT module functionality */
 
 GSM_Error SONYERICSSON_GetIMEI (GSM_StateMachine *s)
@@ -194,9 +217,6 @@ GSM_Error SONYERICSSON_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetDateTime(s, date_time);
 }
-
-
-
 
 GSM_Error SONYERICSSON_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 {
@@ -406,17 +426,6 @@ GSM_Error SONYERICSSON_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 	return ATGEN_GetSIMIMSI(s, IMSI);
 }
 
-
-GSM_Error SONYERICSSON_DispatchMessage(GSM_StateMachine *s)
-{
-	if (s->Phone.Data.Priv.SONYERICSSON.Mode == SONYERICSSON_ModeOBEX) {
-		return GSM_DispatchMessage(s);
-	} else {
-		return ATGEN_DispatchMessage(s);
-	}
-}
-
-
 GSM_Error SONYERICSSON_SetIncomingCB (GSM_StateMachine *s, bool enable)
 {
 	GSM_Error error;
@@ -447,12 +456,6 @@ GSM_Error SONYERICSSON_GetManufacturer(GSM_StateMachine *s)
 
 	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetManufacturer(s);
-}
-
-GSM_Error SONYERICSSON_GetProductCode(GSM_StateMachine *s, char *value)
-{
-       strcpy(value, s->Phone.Data.Model);
-       return ERR_NONE;
 }
 
 GSM_Error SONYERICSSON_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
