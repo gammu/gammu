@@ -32,6 +32,11 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
 	GSM_Error		error;
 
+	/* Is OBEX mode supported? */
+	if (!Priv->HasOBEX) {
+		return ERR_NOTSUPPORTED;
+	}
+
 	/* Are we already in OBEX mode? */
 	if (Priv->Mode == SONYERICSSON_ModeOBEX) {
 		/* Choose appropriate connection type (we need different for filesystem and for IrMC) */
@@ -125,10 +130,23 @@ GSM_Error SONYERICSSON_SetATMode(GSM_StateMachine *s)
 GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
+	GSM_Error		error;
 
 	Priv->Mode				= SONYERICSSON_ModeAT;
 
-	return ATGEN_Initialise(s);
+	/* Init AT module */
+	error = ATGEN_Initialise(s);
+	if (error != ERR_NONE) return error;
+
+	/* Do we have OBEX capability? */
+	error = GSM_WaitFor (s, "AT*EOBEX=?\r", 11, 0x00, 4, ID_SetOBEX);
+	if (error == ERR_NONE) {
+		Priv->HasOBEX = true;
+	} else {
+		Priv->HasOBEX = false;
+	}
+
+	return ERR_NONE;
 }
 
 /**

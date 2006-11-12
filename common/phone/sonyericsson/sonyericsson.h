@@ -41,6 +41,7 @@ typedef struct {
 	 * Mode of current communication.
 	 */
 	GSM_SONYERICSSON_Mode	Mode;
+	bool			HasOBEX;
 
 } GSM_Phone_SONYERICSSONData;
 #endif
