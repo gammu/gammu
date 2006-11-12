@@ -694,6 +694,7 @@ GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine 
 			memmove(s->Phone.Data.Version, s->Phone.Data.Version + 7, strlen(s->Phone.Data.Version + 7) + 1);
 		}
 	}
+	/* @todo: why the hell this? */
 	if (Priv->Manufacturer == AT_Ericsson) {
 		while (1) {
 			if (s->Phone.Data.Version[i] == 0x20) {
@@ -4363,6 +4364,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {SAMSUNG_ReplySetRingtone,	"SDNDCRC ="		,0x00,0x00,ID_SetRingtone	 },
 
 #ifdef GSM_ENABLE_SONYERICSSON
+{ATGEN_GenericReply,		"AT*EOBEX=?"		,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
 
 {ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
