@@ -108,12 +108,7 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 		break;
 	}
 
-#ifndef xxxx
-	//disconnect old service
-#else
-	if (s->Phone.Data.Priv.OBEXGEN.Service != 0) return ERR_NONE;
-#endif
-
+	/* Remember current service */
 	s->Phone.Data.Priv.OBEXGEN.Service = service;
 
 	smprintf(s, "Connecting\n");
@@ -145,6 +140,8 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 	if (strcmp(s->CurrentConfig->Model, "obex") == 0) {
 		error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
 	} else if (strcmp(s->CurrentConfig->Model, "obexirmc") == 0) {
+		error = OBEXGEN_Connect(s,OBEX_IRMC);
+	} else if (strcmp(s->CurrentConfig->Model, "seobex") == 0) {
 		error = OBEXGEN_Connect(s,OBEX_IRMC);
 	} else if (strcmp(s->CurrentConfig->Model, "obexnone") == 0) {
 		error = OBEXGEN_Connect(s,OBEX_IRMC);
@@ -237,7 +234,7 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int
 			error = OBEXGEN_Connect(s,OBEX_None);
 			if (error != ERR_NONE) return error;
 		} else {
-			if (strcmp(s->CurrentConfig->Model,"seobex")) {
+			if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
 				smprintf(s,"Changing to root\n");
 				error = OBEXGEN_ChangePath(s, NULL, 2);
 				if (error != ERR_NONE) return error;
@@ -394,7 +391,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 					return ERR_NOTSUPPORTED;
 				}
 			} else {
-				if (strcmp(s->CurrentConfig->Model,"seobex")) {
+				if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
 					smprintf(s,"Changing to root\n");
 					error = OBEXGEN_ChangePath(s, NULL, 2);
 					if (error != ERR_NONE) return error;
@@ -488,6 +485,11 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 	GSM_Error		error;
 	unsigned char		Line[500],Line2[500],*name,*size;
 	int			Pos,i,j,num,pos2,Current,z;
+
+	/* We can browse files only when using browse service */
+	if (s->Phone.Data.Priv.OBEXGEN.Service != OBEX_BrowsingFolders) {
+		return ERR_NOTSUPPORTED;
+	}
 
 	if (start) {
 		Priv->Files[0].Folder		= true;
@@ -679,7 +681,10 @@ GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 	unsigned int		Current = 0, Pos;
 	unsigned char		req[200],req2[200];
 
-	if (!strcmp(s->CurrentConfig->Model,"seobex")) return ERR_NOTSUPPORTED;
+	/* FIXME: is this really not supported? */
+	if (s->Phone.Data.Priv.OBEXGEN.Service != OBEX_BrowsingFolders) {
+		return ERR_NOTSUPPORTED;
+	}
 
 	smprintf(s,"Changing to root\n");
 	error = OBEXGEN_ChangePath(s, NULL, 2);
@@ -712,7 +717,10 @@ GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	unsigned char		req2[200];
 	unsigned int		Pos;
 
-	if (!strcmp(s->CurrentConfig->Model,"seobex")) return ERR_NOTSUPPORTED;
+	/* FIXME: is this really not supported? */
+	if (s->Phone.Data.Priv.OBEXGEN.Service != OBEX_BrowsingFolders) {
+		return ERR_NOTSUPPORTED;
+	}
 
 	smprintf(s,"Changing to root\n");
 	error = OBEXGEN_ChangePath(s, NULL, 2);
