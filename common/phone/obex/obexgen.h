@@ -1,4 +1,5 @@
 /* (c) 2003 by Marcin Wiacek */
+/* (c) 2006 by Michal Cihar */
 
 #ifndef obexgen_h
 #define obexgen_h
@@ -42,6 +43,23 @@ typedef struct {
 
 	int				FrameSize;
 	OBEX_Service			Service;
+
+	/**
+	 * LUID - location translation map for phonebook
+	 */
+	char				**PbLUID;
+	/**
+	 * Number of entries in PbLUID list.
+	 */
+	int				PbLUIDCount;
+	/**
+	 * LUID - location translation map for calendar (and todo)
+	 */
+	char				**CalLUID;
+	/**
+	 * Number of entries in CalLUID list.
+	 */
+	int				CalLUIDCount;
 } GSM_Phone_OBEXGENData;
 
 #endif
