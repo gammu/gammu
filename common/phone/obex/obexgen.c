@@ -147,7 +147,7 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 		error = OBEXGEN_Connect(s,OBEX_IRMC);
 	}
 
-	return ERR_NONE;
+	return error;
 }
 
 static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -740,6 +740,140 @@ GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	return OBEXGEN_ChangePath(s, File->Name, 0);
 }
 
+/**
+ * Grabs complete single file
+ */
+GSM_Error OBEXGEN_GetFile(GSM_StateMachine *s, const char *FileName, unsigned char ** Buffer, int *len)
+{
+	GSM_Error error = ERR_NONE;
+	GSM_File File;
+	int Handle;
+
+	/* Clear structure */
+	memset(&File, 0, sizeof(GSM_File));
+
+	/* Encode file name to unicode */
+	EncodeUnicode(File.ID_FullName, FileName, strlen(FileName));
+
+	/* Grab complete file */
+	while (error == ERR_NONE) {
+		error = OBEXGEN_GetFilePart(s, &File, &Handle, len);
+	}
+
+	/* We should get ERR_EMPTY at the end of file */
+	if (error != ERR_EMPTY) {
+		if (File.Buffer != NULL) {
+			free(File.Buffer);
+		}
+		return error;
+	}
+
+	/* Return data we got */
+	*Buffer = File.Buffer;
+	*len = File.Used;
+	return ERR_NONE;
+}
+
+/**
+ * Grabs complete single text file
+ */
+GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer)
+{
+	GSM_Error error = ERR_NONE;
+	int len;
+
+	/* Grab complete file */
+	error = OBEXGEN_GetFile(s, FileName, (unsigned char **)Buffer, &len);
+	if (error != ERR_NONE) return error;
+
+	/* Return data we got */
+	smprintf(s, "Got %d data\n", len);
+	*Buffer = realloc(*Buffer, len + 1);
+	if (*Buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	(*Buffer)[len] = 0;
+	return ERR_NONE;
+}
+
+/**
+ * Sets single file on filesystem, file can be created or updated.
+ */
+GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned char *Buffer, int Length)
+{
+	GSM_Error	error = ERR_NONE;
+	GSM_File 	File;
+	int		Pos = 0, Handle;
+
+	/* Fill file structure */
+	EncodeUnicode(File.ID_FullName, FileName, strlen(FileName));
+	EncodeUnicode(File.Name, FileName, strlen(FileName));
+	File.Used 	= Length;
+	File.Buffer 	= Buffer;
+
+	/* Send file */
+	while (error == ERR_NONE) {
+		error = OBEXGEN_AddFilePart(s, &File, &Pos, &Handle);
+	}
+	if (error != ERR_EMPTY) return error;
+
+	return ERR_NONE;
+}
+
+GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free, int *used)
+{
+	char *pos;
+	char free_text[] = "Free-Records:";
+	char used_text[] = "Total-Records:";
+
+	/* Sane defaults */
+	*free = 0;
+	*used = 0;
+
+	smprintf(s, "Parsing data:\n---\n%s\n---\n", data);
+
+	pos = strstr(data, free_text);
+	if (pos == NULL) {
+		smprintf(s, "Could not grab free\n");
+		return ERR_INVALIDDATA;
+	}
+	pos += strlen(free_text);
+	*free = atoi(pos);
+
+	pos = strstr(data, used_text);
+	if (pos == NULL) {
+		smprintf(s, "Could not grab used\n");
+		return ERR_INVALIDDATA;
+	}
+	pos += strlen(used_text);
+	*used = atoi(pos);
+
+	return ERR_NONE;
+}
+
+GSM_Error OBEXGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
+{
+	GSM_Error 	error;
+	char		*data;
+
+	if (Status->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s,OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* Grab log info file */
+	error = OBEXGEN_GetTextFile(s, "telecom/pb/info.log", &data);
+	if (error != ERR_NONE) return error;
+
+	/* Parse it */
+	error = OBEXGEN_ParseInfoLog(s, data, &(Status->MemoryFree), &(Status->MemoryUsed));
+
+	free(data);
+
+	return error;
+}
+
 GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	/* CONTINUE block */
 	{OBEXGEN_ReplyAddFilePart,	"\x90",0x00,0x00,ID_AddFile			},
@@ -807,7 +941,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTIMPLEMENTED,     		/*  	GetCategory 		*/
  	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTIMPLEMENTED,      		/*  	GetCategoryStatus 	*/
-	NOTIMPLEMENTED,			/*	GetMemoryStatus		*/
+	OBEXGEN_GetMemoryStatus,
 	NOTIMPLEMENTED,			/*	GetMemory		*/
 	NOTIMPLEMENTED,			/*	GetNextMemory		*/
 	NOTIMPLEMENTED,			/*	SetMemory		*/
