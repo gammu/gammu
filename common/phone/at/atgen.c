@@ -24,6 +24,10 @@
 GSM_Error ALCATEL_ProtocolVersionReply (GSM_Protocol_Message, GSM_StateMachine *);
 #endif
 
+#ifdef GSM_ENABLE_SONYERICSSON
+#include "../sonyericsson/sonyericsson-functions.h"
+#endif
+
 
 typedef struct {
 	GSM_AT_Charset	charset;
@@ -4247,30 +4251,12 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 	return ERR_NONE;
 }
 
-GSM_Error ATGEN_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
-{
-	if (s->Phone.Data.Priv.ATGEN.Manufacturer==AT_Ericsson) return ERICSSON_GetLocale(s,locale);
-	return ERR_NOTSUPPORTED;
-}
-
-GSM_Error ATGEN_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
-{
-	if (s->Phone.Data.Priv.ATGEN.Manufacturer==AT_Ericsson) return ERICSSON_SetLocale(s,locale);
-	return ERR_NOTSUPPORTED;
-}
-
 GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,		"ATE1" 	 		,0x00,0x00,ID_EnableEcho	 },
 {ATGEN_GenericReply,		"AT+CMEE=" 		,0x00,0x00,ID_EnableErrorInfo	 },
 {ATGEN_GenericReply,		"AT+CKPD="		,0x00,0x00,ID_PressKey		 },
 {ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
-{ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
-
-{ERICSSON_ReplyGetDateLocale,	"AT*ESDF?"		,0x00,0x00,ID_GetLocale		 },
-{ERICSSON_ReplyGetTimeLocale,	"AT*ESTF?"		,0x00,0x00,ID_GetLocale	 	 },
-{ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
-{ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },
 
 {ATGEN_ReplyGetCNMIMode,	"AT+CNMI=?"		,0x00,0x00,ID_GetCNMIMode	 },
 #ifdef GSM_ENABLE_CELLBROADCAST
@@ -4376,6 +4362,15 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {SAMSUNG_ReplyGetRingtone,	"AT+MELR="		,0x00,0x00,ID_GetRingtone	 },
 {SAMSUNG_ReplySetRingtone,	"SDNDCRC ="		,0x00,0x00,ID_SetRingtone	 },
 
+#ifdef GSM_ENABLE_SONYERICSSON
+{ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
+
+{ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
+{ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },
+
+{SONYERICSSON_ReplyGetDateLocale,	"AT*ESDF?"		,0x00,0x00,ID_GetLocale		 },
+{SONYERICSSON_ReplyGetTimeLocale,	"AT*ESTF?"		,0x00,0x00,ID_GetLocale	 	 },
+#endif
 #ifdef GSM_ENABLE_ALCATEL
 /*  Why do I give Alcatel specific things here? It's simple, Alcatel needs
  *  some AT commands to start it's binary mode, so this needs to be in AT
@@ -4413,8 +4408,8 @@ GSM_Phone_Functions ATGENPhone = {
 	ATGEN_SetDateTime,
 	ATGEN_GetAlarm,
 	ATGEN_SetAlarm,
-	ATGEN_GetLocale,
-	ATGEN_SetLocale,
+	NOTSUPPORTED,			/*	GetLocale		*/
+	NOTSUPPORTED,			/*	SetLocale		*/
 	ATGEN_PressKey,
 	ATGEN_Reset,
 	ATGEN_ResetPhoneSettings,
