@@ -49,6 +49,9 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 	error = s->Protocol.Functions->Terminate(s);
 	if (error != ERR_NONE) return error;
 
+	/* Need some sleep before starting talk in OBEX */
+	my_sleep(100);
+
 	s->Protocol.Functions = &OBEXProtocol;
 	error = s->Protocol.Functions->Initialise(s);
 	if (error != ERR_NONE) {
