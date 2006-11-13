@@ -61,6 +61,10 @@ typedef struct {
 	 */
 	int				PbLUIDCount;
 	/**
+	 * Whether to update PbLUID after this request.
+	 */
+	bool				UpdatePbLUID;
+	/**
 	 * Information Exchange Level for phonebook.
 	 */
 	int				PbIEL;
@@ -77,6 +81,18 @@ typedef struct {
 	 */
 	int				*TodoOffsets;
 	/**
+	 * LUID - location translation map for todo
+	 */
+	char				**TodoLUID;
+	/**
+	 * Number of entries in TodoLUID list.
+	 */
+	int				TodoLUIDCount;
+	/**
+	 * Whether to update TodoLUID after this request.
+	 */
+	bool				UpdateTodoLUID;
+	/**
 	 * Number of entries in calendar
 	 */
 	int				CalCount;
@@ -85,13 +101,17 @@ typedef struct {
 	 */
 	int				*CalOffsets;
 	/**
-	 * LUID - location translation map for calendar (and todo)
+	 * LUID - location translation map for calendar
 	 */
 	char				**CalLUID;
 	/**
 	 * Number of entries in CalLUID list.
 	 */
 	int				CalLUIDCount;
+	/**
+	 * Whether to update CalLUID after this request.
+	 */
+	bool				UpdateCalLUID;
 	/**
 	 * Information Exchange Level for calendar.
 	 */
