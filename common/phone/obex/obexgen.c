@@ -827,14 +827,51 @@ GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free, int *used)
 {
 	char *pos;
+	int IEL;
 	char free_text[] = "Free-Records:";
 	char used_text[] = "Total-Records:";
+	char IEL_text[] = "IEL:";
 
 	/* Sane defaults */
 	*free = 0;
 	*used = 0;
 
 	smprintf(s, "Parsing data:\n---\n%s\n---\n", data);
+
+	pos = strstr(data, IEL_text);
+	if (pos == NULL) {
+		smprintf(s, "Could not grab Information Exchange Level, phone does not support it\n");
+		return ERR_NOTSUPPORTED;
+	}
+	pos += strlen(IEL_text);
+	/* This might be hex */
+	if (pos[0] != 0 && pos[0] == '0' && pos[1] != 0 && pos[1] == 'x') {
+		IEL = strtol(pos + 2, (char **)NULL, 16);
+	} else {
+		IEL = atoi(pos);
+	}
+	switch (IEL) {
+		case 0x1:
+			smprintf(s, "Information Exchange Level 1 supported, we need more\n");
+			return ERR_NOTSUPPORTED;
+		case 0x2:
+			smprintf(s, "Information Exchange Level 1 and 2 supported, we need more\n");
+			/* We might operate on whole phonebook here */
+			return ERR_NOTIMPLEMENTED;
+		case 0x4:
+			smprintf(s, "Information Exchange Level 1, 2 and 3 supported, we need more\n");
+			/* We might operate on whole phonebook or static indexes here */
+			return ERR_NOTIMPLEMENTED;
+		case 0x8:
+			smprintf(s, "Information Exchange Level 1, 2 and 4 supported\n");
+			break;
+		case 0x10:
+			smprintf(s, "Information Exchange Level 1, 2, 3 and 4 supported\n");
+			break;
+		default:
+			smprintf(s, "Could not parse Information Exchange Level (0x%x)\n", IEL);
+			return ERR_INVALIDDATA;
+	}
 
 	pos = strstr(data, free_text);
 	if (pos == NULL) {
