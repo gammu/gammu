@@ -1340,10 +1340,84 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		smprintf(s,"Adding phonebook entry %d:\n%s\n", size, req);
 		Priv->UpdatePbLUID = true;
 		return OBEXGEN_SetFile(s, "telecom/pb/luid/.vcf", req, size);
+		/* FIXME: Need to store location somehow */
 	} else {
 		/* I don't know add command for other levels, just plain send vCard */
 		smprintf(s,"Sending phonebook entry\n");
 		return OBEXGEN_SetFile(s, "gammu.vcf", req, size);
+	}
+}
+
+GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, char *Data, int Size)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	char		*path;
+
+	error = OBEXGEN_InitPbLUID(s);
+	if (error != ERR_NONE) return error;
+
+	/* Check bounds */
+	if (Entry->Location > Priv->PbLUIDCount) return ERR_INVALIDLOCATION;
+	if (Priv->PbLUID[Entry->Location] == NULL) return ERR_INVALIDLOCATION;
+
+	/* Calculate path */
+	path = malloc(strlen(Priv->PbLUID[Entry->Location]) + 22); /* Length of string bellow */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/pb/luid/%s.vcf", Priv->PbLUID[Entry->Location]);
+	smprintf(s, "Seting vCard %s\n", path);
+
+	/* Grab vCard */
+	return OBEXGEN_SetFile(s, path, Data, Size);
+}
+
+GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, char *Data, int Size)
+{
+	char		*path;
+
+	/* Calculate path */
+	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/pb/%d.vcf", Entry->Location);
+	smprintf(s, "Seting vCard %s\n", path);
+
+	/* Grab vCard */
+	return OBEXGEN_SetFile(s, path, Data, Size);
+}
+
+GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
+{
+	unsigned char 		req[5000];
+	int			size=0;
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->PbIEL == -1) {
+		error = OBEXGEN_GetPbInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Encode vCard */
+	GSM_EncodeVCARD(req, &size, Entry, true, SonyEricsson_VCard21);
+
+	/* Use correct function according to supported IEL */
+	if (Priv->PbIEL == 0x8 || Priv->PbIEL == 0x10) {
+		return OBEXGEN_SetMemoryLUID(s, Entry, req, size);
+	} else if (Priv->PbIEL == 0x4) {
+		return OBEXGEN_SetMemoryIndex(s, Entry, req, size);
+	} else {
+		return ERR_NOTSUPPORTED;
 	}
 }
 
@@ -1417,7 +1491,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	OBEXGEN_GetMemoryStatus,
 	OBEXGEN_GetMemory,
 	OBEXGEN_GetNextMemory,
-	NOTIMPLEMENTED,			/*	SetMemory		*/
+	OBEXGEN_SetMemory,
 	OBEXGEN_AddMemory,
 	NOTIMPLEMENTED,			/*	DeleteMemory		*/
 	NOTIMPLEMENTED,			/*	DeleteAllMemory		*/
