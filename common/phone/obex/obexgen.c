@@ -194,7 +194,7 @@ static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMach
 		return ERR_NONE;
 	case 0xC3:
 		smprintf(s,"Security error\n");
-		return ERR_SECURITYERROR;
+		return ERR_PERMISSION;
 	case 0xC4:
 		smprintf(s,"File not found\n");
 		return ERR_FILENOTEXIST;
@@ -331,7 +331,7 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 		return ERR_NOTSUPPORTED;
 	case 0xC3:
 		smprintf(s,"Security error\n");
-		return ERR_SECURITYERROR;
+		return ERR_PERMISSION;
 	case 0xC4:
 		smprintf(s,"File not found\n");
 		return ERR_FILENOTEXIST;
@@ -454,7 +454,7 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 		return ERR_UNKNOWNRESPONSE;
 	case 0xC3:
 		smprintf(s,"Security error\n");
-		return ERR_SECURITYERROR;
+		return ERR_PERMISSION;
 	case 0xC0:
 		smprintf(s,"Invalid request\n");
 		return ERR_BUG;
