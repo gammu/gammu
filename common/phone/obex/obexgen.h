@@ -49,6 +49,10 @@ typedef struct {
 	 */
 	int				PbCount;
 	/**
+	 * Offsets of entries in phonebook data
+	 */
+	int				*PbOffsets;
+	/**
 	 * LUID - location translation map for phonebook
 	 */
 	char				**PbLUID;
@@ -65,17 +69,21 @@ typedef struct {
 	 */
 	char				*PbData;
 	/**
-	 * Phonebook data length.
-	 */
-	int				PbDataLen;
-	/**
 	 * Number of entries in todo
 	 */
 	int				TodoCount;
 	/**
+	 * Offsets of todo entries in calendar data
+	 */
+	int				*TodoOffsets;
+	/**
 	 * Number of entries in calendar
 	 */
 	int				CalCount;
+	/**
+	 * Offsets of calendar entries in calendar data
+	 */
+	int				*CalOffsets;
 	/**
 	 * LUID - location translation map for calendar (and todo)
 	 */
@@ -92,10 +100,6 @@ typedef struct {
 	 * Complete calendar data.
 	 */
 	char				*CalData;
-	/**
-	 * Calendar data length.
-	 */
-	int				CalDataLen;
 } GSM_Phone_OBEXGENData;
 
 #endif

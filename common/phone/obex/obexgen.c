@@ -124,14 +124,19 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 
 	Priv->Service = 0;
 	Priv->PbLUID = NULL;
+	Priv->PbData = NULL;
 	Priv->PbLUIDCount = 0;
 	Priv->PbCount = -1;
 	Priv->PbIEL = -1;
 	Priv->CalLUID = NULL;
+	Priv->CalData = NULL;
 	Priv->CalLUIDCount = 0;
 	Priv->CalIEL = -1;
 	Priv->CalCount = -1;
 	Priv->TodoCount = -1;
+	Priv->PbOffsets = NULL;
+	Priv->CalOffsets = NULL;
+	Priv->TodoOffsets = NULL;
 
 	return ERR_NONE;
 }
@@ -973,38 +978,54 @@ GSM_Error OBEXGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 /**
  * Initialises LUID database, which is used for LUID - Location mapping.
  */
-GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const char *Header, int *Count, char ***LUID, int *LUIDCount)
+GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const char *Header, char **Data, int **Offsets, int *Count, char ***LUID, int *LUIDCount)
 {
-	char		*data;
 	GSM_Error 	error;
 	char		*pos;
+	int		LUIDSize = 0;
 	int		Size = 0;
 	int		linepos = 0;
+	int		prevpos;
 	char		line[2000];
 	size_t		len;
 	size_t		hlen;
-	int		level;
+	int		level = 0;
+
+	/* Free data if previously allocated */
+	/* FIXME: should free all data here, but this execution path is not supported now */
+	if (*Data != NULL) free(*Data);
 
 	/* Grab file with listing */
-	error = OBEXGEN_GetTextFile(s, Name, &data);
+	error = OBEXGEN_GetTextFile(s, Name, Data);
 	if (error != ERR_NONE) return error;
 
-	pos = data;
 	*Count = 0;
+	*Offsets = NULL;
 	*LUIDCount = 0;
 	*LUID = NULL;
-	len = strlen(data);
+	len = strlen(*Data);
 	hlen = strlen(Header);
-	level = 0;
 
         while (1) {
-                MyGetLine(data, &linepos, line, len);
+		/* Remember line start position */
+		prevpos = linepos;
+                MyGetLine(*Data, &linepos, line, len);
                 if (strlen(line) == 0) break;
                 switch (level) {
 			case 0:
 				if (strncmp(line, Header, strlen(Header)) == 0) {
 					level = 1;
 					(*Count)++;
+					/* Do we need to reallocate? */
+					if (*Count >= Size) {
+						Size += 20;
+						*Offsets = realloc(*Offsets, Size * sizeof(int));
+						if (*Offsets == NULL) {
+							return ERR_MOREMEMORY;
+						}
+					}
+					/* Store start of item */
+					(*Offsets)[*Count] = prevpos;
 				} else if (strncmp(line, "BEGIN:VCALENDAR", 15) == 0) {
 					/* We need to skip vCalendar header */
 				} else if (strncmp(line, "BEGIN:", 6) == 0) {
@@ -1013,16 +1034,16 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const char *He
 				}
 				break;
 			case 1:
-				if (strncmp(line, "END:", 4) == 0) level = 0;
-				if (strncmp(line, "X-IRMC-LUID:", 12) == 0) {
+				if (strncmp(line, "END:", 4) == 0) {
+					level = 0;
+				} else if (strncmp(line, "X-IRMC-LUID:", 12) == 0) {
 					pos = line + 12; /* Length of X-IRMC-LUID: */
 					(*LUIDCount)++;
 					/* Do we need to reallocate? */
-					if (*LUIDCount >= Size) {
-						Size += 20;
-						*LUID = realloc(*LUID, Size * sizeof(char *));
+					if (*LUIDCount >= LUIDSize) {
+						LUIDSize += 20;
+						*LUID = realloc(*LUID, LUIDSize * sizeof(char *));
 						if (*LUID == NULL) {
-							free(data);
 							return ERR_MOREMEMORY;
 						}
 					}
@@ -1051,10 +1072,10 @@ GSM_Error OBEXGEN_InitPbLUID(GSM_StateMachine *s)
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
-	/* We might do validation here using telecom/pb/luid/cc.log, but not on each request */
-	if (Priv->PbLUID != NULL) return ERR_NONE;
+	/* We might do validation here using telecom/pb/luid/cc.log fir IEL 4, but not on each request */
+	if (Priv->PbData != NULL) return ERR_NONE;
 
-	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", "BEGIN:VCARD", &(Priv->PbCount), &(Priv->PbLUID), &(Priv->PbLUIDCount));
+	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", "BEGIN:VCARD", &(Priv->PbData), &(Priv->PbOffsets), &(Priv->PbCount), &(Priv->PbLUID), &(Priv->PbLUIDCount));
 }
 
 /**
@@ -1127,6 +1148,29 @@ GSM_Error OBEXGEN_GetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	return ERR_NONE;
 }
 
+/**
+ * Reads memory by reading from full data.
+ */
+GSM_Error OBEXGEN_GetMemoryFull(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	int		pos = 0;
+
+	/* Read phonebook data */
+	error = OBEXGEN_InitPbLUID(s);
+	if (error != ERR_NONE) return error;
+
+	/* Check bounds */
+	if (Entry->Location > Priv->PbCount) return ERR_EMPTY; /* Maybe invalid location? */
+
+	/* Decode vCard */
+	error = GSM_DecodeVCARD(Priv->PbData + Priv->PbOffsets[Entry->Location], &pos, Entry, SonyEricsson_VCard21);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
 GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 {
 	GSM_Error 	error;
@@ -1146,8 +1190,7 @@ GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	} else if (Priv->PbIEL == 0x4) {
 		return OBEXGEN_GetMemoryIndex(s, Entry);
 	} else if (Priv->PbIEL == 0x2) {
-		return ERR_NOTIMPLEMENTED;
-//		return OBEXGEN_GetMemoryFull(s, Entry);
+		return OBEXGEN_GetMemoryFull(s, Entry);
 	} else {
 		smprintf(s, "Can not read phonebook from IEL 1 phone\n");
 		return ERR_NOTSUPPORTED;
@@ -1166,7 +1209,7 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, boo
 	}
 
 	/* Do real getting */
-	/* FIXME: this might be broken in non LUID mode */
+	/* FIXME: this might be broken in non LUID modes */
 	return OBEXGEN_GetMemory(s, Entry);
 }
 
