@@ -1281,8 +1281,8 @@ GSM_Phone_Functions OBEXGENPhone = {
  	NOTSUPPORTED,       		/*  	AddCategory 		*/
         NOTIMPLEMENTED,      		/*  	GetCategoryStatus 	*/
 	OBEXGEN_GetMemoryStatus,
-	NOTIMPLEMENTED,			/*	GetMemory		*/
-	NOTIMPLEMENTED,			/*	GetNextMemory		*/
+	OBEXGEN_GetMemory,
+	OBEXGEN_GetNextMemory,
 	NOTIMPLEMENTED,			/*	SetMemory		*/
 	NOTIMPLEMENTED,			/*	AddMemory		*/
 	NOTIMPLEMENTED,			/*	DeleteMemory		*/
