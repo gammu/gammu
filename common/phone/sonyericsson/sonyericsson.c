@@ -620,7 +620,8 @@ GSM_Error SONYERICSSON_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		return ERR_NOTIMPLEMENTED;
+		if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+		return OBEXGEN_SetMemory(s, entry);
 	} else {
 		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
 		return ATGEN_SetMemory(s, entry);
