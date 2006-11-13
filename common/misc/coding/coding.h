@@ -132,7 +132,7 @@ void StringToDouble	(char *text, double *d);
 bool mystrncasecmp 	(unsigned const char *a, unsigned const char *b, int num);
 char *mystrcasestr 	(unsigned const char *a, unsigned const char *b);
 
-void MyGetLine		(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen);
+void MyGetLine		(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, bool MergeLines);
 
 char *EncodeSpecialChars(unsigned char *buffer);
 char *DecodeSpecialChars(unsigned char *buffer);

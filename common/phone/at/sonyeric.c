@@ -283,7 +283,7 @@ GSM_Error SONYERIC_DeleteAllToDo(GSM_StateMachine *s)
 	Buf  = NULL;
 	Used = 0;
 	while (1) {
-		MyGetLine(Priv->file.Buffer, &Pos, Line, Priv->file.Used);
+		MyGetLine(Priv->file.Buffer, &Pos, Line, Priv->file.Used, false);
 		if (strlen(Line) == 0) break;
 		dbgprintf("Line is %s,%i,%i\n",Line,Priv->file.Used,Pos);
 		switch (Level) {
@@ -333,7 +333,7 @@ GSM_Error SONYERIC_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	Buf  = NULL;
 	Used = 0;
 	while (1) {
-		MyGetLine(Priv->file.Buffer, &Pos, Line, Priv->file.Used);
+		MyGetLine(Priv->file.Buffer, &Pos, Line, Priv->file.Used, false);
 		if (strlen(Line) == 0) break;
 		dbgprintf("Line is %s,%i,%i\n",Line,Priv->file.Used,Pos);
 		switch (Level) {

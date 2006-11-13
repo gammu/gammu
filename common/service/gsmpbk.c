@@ -102,6 +102,10 @@ void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, 
 void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool header, GSM_VCardVersion Version)
 {
         int     Name, Number, Group, i;
+	int	firstname = -1, lastname = -1;
+	int	address = -1, city = -1, state = -1, zip = -1, country = -1;
+	unsigned char buffer[1024];
+	int pos;
         bool    ignore;
 
         GSM_PhonebookFindDefaultNameNumberGroup(pbk, &Name, &Number, &Group);
@@ -115,88 +119,58 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
                         *Length +=sprintf(Buffer+(*Length),"TEL:%s%c%c",DecodeUnicodeString(pbk->Entries[Number].Text),13,10);
                 }
                 if (header) *Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
-        } else if (Version == Nokia_VCard21) {
+        } else if (Version == Nokia_VCard21 || Version == SonyEricsson_VCard21) {
                 if (header) *Length+=sprintf(Buffer+(*Length),"BEGIN:VCARD%c%cVERSION:2.1%c%c",13,10,13,10);
-                if (Name != -1) {
-                        SaveVCALText(Buffer, Length, pbk->Entries[Name].Text, "N");
-                }
                 for (i=0; i < pbk->EntriesNum; i++) {
-                        if (i != Name) {
-                                ignore = false;
-                                switch(pbk->Entries[i].EntryType) {
-                                case PBK_Text_Name      :
-                                case PBK_Date           :
-                                case PBK_Caller_Group   :
+			ignore = false;
+			switch(pbk->Entries[i].EntryType) {
+                                case PBK_Text_Name:
+                                        *Length+=sprintf(Buffer+(*Length),"N");
+					break;
+                                case PBK_Text_FirstName:
+					firstname = i;
                                         ignore = true;
-                                        break;
-                                case PBK_Number_General :
-                                        *Length+=sprintf(Buffer+(*Length),"TEL");
-                                        if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-                                        break;
-                                case PBK_Number_Mobile  :
-                                        *Length+=sprintf(Buffer+(*Length),"TEL");
-                                        if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-                                        *Length+=sprintf(Buffer+(*Length),";CELL");
-                                        break;
-                                case PBK_Number_Work    :
-                                        *Length+=sprintf(Buffer+(*Length),"TEL");
-                                        if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-                                        *Length+=sprintf(Buffer+(*Length),";WORK;VOICE");
-                                        break;
-                                case PBK_Number_Fax     :
-                                        *Length+=sprintf(Buffer+(*Length),"TEL");
-                                        if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-                                        *Length+=sprintf(Buffer+(*Length),";FAX");
-                                        break;
-                                case PBK_Number_Home    :
-                                        *Length+=sprintf(Buffer+(*Length),"TEL");
-                                        if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-                                        *Length+=sprintf(Buffer+(*Length),";HOME;VOICE");
-                                        break;
-                                case PBK_Text_Note      :
-                                        *Length+=sprintf(Buffer+(*Length),"NOTE");
-                                        break;
-                                case PBK_Text_Postal    :
-                                        /* Don't ask why. Nokia phones save postal address
-                                         * double - once like LABEL, second like ADR
-                                         */
-                                        SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "LABEL");
-                                        *Length+=sprintf(Buffer+(*Length),"ADR");
-                                        break;
-                                case PBK_Text_Email     :
-                                case PBK_Text_Email2    :
-                                        *Length+=sprintf(Buffer+(*Length),"EMAIL");
-                                        break;
-                                case PBK_Text_URL       :
-                                        *Length+=sprintf(Buffer+(*Length),"URL");
-                                        break;
-                                default :
+					break;
+                                case PBK_Text_LastName:
+					lastname = i;
                                         ignore = true;
-                                        break;
-                                }
-                                if (!ignore) {
-                                        SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "");
-                                }
-                        }
-                }
-                if (header) *Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
-        } else if (Version == SonyEricsson_VCard21) {
-                if (header) *Length+=sprintf(Buffer+(*Length),"BEGIN:VCARD%c%cVERSION:2.1%c%c",13,10,13,10);
-                if (Name != -1) {
-                        SaveVCALText(Buffer, Length, pbk->Entries[Name].Text, "N");
-                }
-                for (i=0; i < pbk->EntriesNum; i++) {
-                        if (i != Name) {
-                                ignore = false;
-                                switch(pbk->Entries[i].EntryType) {
-                                case PBK_Text_Name      :
-                                case PBK_Date           :
-                                case PBK_Caller_Group   :
+					break;
+				case PBK_Text_StreetAddress:
+					address = i;
                                         ignore = true;
-                                        break;
-                                case PBK_Number_General :
+					break;
+				case PBK_Text_City:
+					city = i;
+                                        ignore = true;
+					break;
+				case PBK_Text_State:
+					state = i;
+                                        ignore = true;
+					break;
+				case PBK_Text_Zip:
+					zip = i;
+                                        ignore = true;
+					break;
+				case PBK_Text_Country:
+					country = i;
+                                        ignore = true;
+					break;
+                                case PBK_Date:
+					SaveVCALDate(Buffer, Length, &(pbk->Entries[i].Date), "BDAY");
+                                        ignore = true;
+					break;
+                                case PBK_Number_General:
                                         *Length+=sprintf(Buffer+(*Length),"TEL");
                                         if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+                                        break;
+                                case PBK_Number_Other:
+                                        *Length+=sprintf(Buffer+(*Length),"TEL");
+                                        if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+                                        break;
+                                case PBK_Number_Pager:
+                                        *Length+=sprintf(Buffer+(*Length),"TEL");
+                                        if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+                                        *Length+=sprintf(Buffer+(*Length),";PAGER");
                                         break;
                                 case PBK_Number_Mobile  :
                                         *Length+=sprintf(Buffer+(*Length),"TEL");
@@ -238,15 +212,92 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
                                 case PBK_Text_LUID      :
                                         *Length+=sprintf(Buffer+(*Length),"X-IRMC-LUID");
                                         break;
-                                default :
+				case PBK_Text_JobTitle:
+                                        *Length+=sprintf(Buffer+(*Length),"TITLE");
+                                        break;
+				case PBK_Text_Company:
+                                        *Length+=sprintf(Buffer+(*Length),"ORG");
+                                        break;
+				/* Not supported fields */
+                                case PBK_Caller_Group:
+				case PBK_Category:
+				case PBK_Private:
+				case PBK_RingtoneID:
+				case PBK_RingtoneFileSystemID:
+				case PBK_PictureID:
+				case PBK_SMSListID:
+				case PBK_Text_UserID:
+				case PBK_CallLength:
+				case PBK_Text_Custom1:
+				case PBK_Text_Custom2:
+				case PBK_Text_Custom3:
+				case PBK_Text_Custom4:
                                         ignore = true;
                                         break;
                                 }
                                 if (!ignore) {
                                         SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "");
                                 }
-                        }
                 }
+		/* Save name if it is composed from parts */
+		if (firstname != -1 || lastname != -1) {
+			pos = 0;
+			if (lastname != -1) {
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[lastname].Text);
+				pos += UnicodeLength(pbk->Entries[lastname].Text);
+			}
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			if (firstname != -1) {
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[firstname].Text);
+				pos += UnicodeLength(pbk->Entries[firstname].Text);
+			}
+			SaveVCALText(Buffer, Length, buffer, "N");
+		}
+		/* Save address if it is composed from parts */
+		if (address != -1 || city != -1 || state != -1 || zip != -1 || country != -1) {
+			pos = 0;
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			if (address != -1) {
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[address].Text);
+				pos += UnicodeLength(pbk->Entries[address].Text);
+			}
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			if (city != -1) {
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[city].Text);
+				pos += UnicodeLength(pbk->Entries[city].Text);
+			}
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			if (state != -1) {
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[state].Text);
+				pos += UnicodeLength(pbk->Entries[state].Text);
+			}
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			if (zip != -1) {
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[zip].Text);
+				pos += UnicodeLength(pbk->Entries[zip].Text);
+			}
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			if (country != -1) {
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[country].Text);
+				pos += UnicodeLength(pbk->Entries[country].Text);
+			}
+			SaveVCALText(Buffer, Length, buffer, "ADR");
+		}
                 if (header) *Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
         }
 }
@@ -263,7 +314,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
         Pbk->EntriesNum = 0;
 
         while (1) {
-                MyGetLine(Buffer, Pos, Line, strlen(Buffer));
+                MyGetLine(Buffer, Pos, Line, strlen(Buffer), true);
                 if (strlen(Line) == 0) break;
                 switch (Level) {
                 case 0:
@@ -284,8 +335,11 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 					Pbk->EntriesNum++;
 				} else {
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
-					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LastName;
-					Pbk->EntriesNum++;
+					/* Skip empty name */
+					if (UnicodeLength(Pbk->Entries[Pbk->EntriesNum].Text) > 0) {
+						Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LastName;
+						Pbk->EntriesNum++;
+					}
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
@@ -338,6 +392,11 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Home;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
+                                Pbk->EntriesNum++;
+                        }
+                        if (ReadVCALText(Line, "TITLE", Buff)) {
+                                CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_JobTitle;
                                 Pbk->EntriesNum++;
                         }
                         if (ReadVCALText(Line, "NOTE", Buff)) {
@@ -395,7 +454,8 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				}
                         }
                         if (ReadVCALText(Line, "EMAIL", Buff) ||
-			    ReadVCALText(Line, "EMAIL;INTERNET", Buff)) {
+			    ReadVCALText(Line, "EMAIL;INTERNET", Buff) ||
+			    ReadVCALText(Line, "EMAIL;INTERNET;PREF", Buff)) {
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
                                 Pbk->EntriesNum++;
@@ -421,9 +481,11 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Category;
                                 Pbk->EntriesNum++;
                         }
-                        if (ReadVCALText(Line, "BDAY", Buff) && ReadVCALDateTime(DecodeUnicodeString(Buff), &Pbk->Entries[Pbk->EntriesNum].Date)) {
-                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Date;
-                                Pbk->EntriesNum++;
+                        if (ReadVCALText(Line, "BDAY", Buff)) {
+				if (ReadVCALDateTime(DecodeUnicodeString(Buff), &Pbk->Entries[Pbk->EntriesNum].Date)) {
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Date;
+					Pbk->EntriesNum++;
+				}
                         }
                         break;
                 }

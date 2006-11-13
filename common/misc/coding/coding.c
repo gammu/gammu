@@ -1266,8 +1266,15 @@ ret0:
 #undef tolowerwchar
 }
 
-void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen)
+/**
+ * Gets line from buffer.
+ *
+ * @param MergeLines: determine whether merge lines ending with = (quoted printable)
+ */
+void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, bool MergeLines)
 {
+	bool skip = false;
+
 	OutBuffer[0] = 0;
 	if (Buffer == NULL) return;
 	while (1) {
@@ -1276,12 +1283,27 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 		case 0x00:
 			return;
 		case 0x0A:
-			if (strlen(OutBuffer) != 0) return;
+			if (strlen(OutBuffer) != 0 && !skip) {
+				if (MergeLines && OutBuffer[strlen(OutBuffer) - 1] == '=') {
+					OutBuffer[strlen(OutBuffer) - 1] = 0;
+					skip = true;
+				} else {
+					return;
+				}
+			}
 			break;
 		case 0x0D:
-			if (strlen(OutBuffer) != 0) return;
+			if (strlen(OutBuffer) != 0 && !skip) {
+				if (MergeLines && OutBuffer[strlen(OutBuffer) - 1] == '=') {
+					OutBuffer[strlen(OutBuffer) - 1] = 0;
+					skip = true;
+				} else {
+					return;
+				}
+			}
 			break;
 		default  :
+			skip = false;
 			OutBuffer[strlen(OutBuffer) + 1] = 0;
 			OutBuffer[strlen(OutBuffer)]     = Buffer[*Pos];
 		}
