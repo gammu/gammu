@@ -3,7 +3,7 @@
 
 /* www.irda.org OBEX specs 1.3 */
 
-
+#define _GNU_SOURCE /* Needed for strndup */
 #include <string.h>
 #include <time.h>
 
@@ -131,12 +131,17 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->CalLUID = NULL;
 	Priv->CalData = NULL;
 	Priv->CalLUIDCount = 0;
+	Priv->TodoLUID = NULL;
+	Priv->TodoLUIDCount = 0;
 	Priv->CalIEL = -1;
 	Priv->CalCount = -1;
 	Priv->TodoCount = -1;
 	Priv->PbOffsets = NULL;
 	Priv->CalOffsets = NULL;
 	Priv->TodoOffsets = NULL;
+	Priv->UpdateCalLUID = false;
+	Priv->UpdatePbLUID = false;
+	Priv->UpdateTodoLUID = false;
 
 	return ERR_NONE;
 }
@@ -223,12 +228,103 @@ static GSM_Error OBEXGEN_ChangePath(GSM_StateMachine *s, char *Name, unsigned ch
 
 static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	int Pos=0, pos2, len2;
+	char *LUID = NULL;
+	char *timestamp = NULL;
+	char *CC = NULL;
+	bool UpdatePbLUID, UpdateCalLUID, UpdateTodoLUID;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	UpdatePbLUID = Priv->UpdatePbLUID;
+	Priv->UpdatePbLUID = false;
+	UpdateCalLUID = Priv->UpdateCalLUID;
+	Priv->UpdateCalLUID = false;
+	UpdateTodoLUID = Priv->UpdateTodoLUID;
+	Priv->UpdateTodoLUID = false;
 	switch (msg.Type) {
 	case 0x90:
 		smprintf(s,"Last part of file added OK\n");
 		return ERR_NONE;
 	case 0xA0:
 		smprintf(s,"Part of file added OK\n");
+		/* FIXME: Optionally parse LUID reply here:
+		 * 4CL|00 |16 |01 |0C |300|300|300|322|300|300|300|300|300|300|41 L....0002000000A
+		 * 42B|02 |03 |311|377|355                                        B..175
+		 */
+		while(1) {
+			if (Pos >= msg.Length) break;
+			switch (msg.Buffer[Pos]) {
+			case 0x4C:
+				smprintf(s, "Application data received:");
+				len2 =  msg.Buffer[Pos+1] * 256 + msg.Buffer[Pos+2];
+				pos2 = 0;
+				while(1) {
+					if (pos2 >= len2) break;
+					switch (msg.Buffer[Pos + 3 + pos2]) {
+						case 0x01:
+							LUID = strndup(msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
+							smprintf(s, " LUID=\"%s\"", LUID);
+							break;
+						case 0x02:
+							CC = strndup(msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
+							smprintf(s, " CC=\"%s\"", CC);
+							break;
+						case 0x03:
+							timestamp = strndup(msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
+							smprintf(s, " Timestamp=\"%s\"", timestamp);
+							break;
+					}
+					pos2 += 2 + msg.Buffer[Pos + 3 + pos2 + 1];
+				}
+				smprintf(s, "\n");
+				if (timestamp != NULL) {
+					free(timestamp);
+				}
+				if (CC != NULL) {
+					free(CC);
+				}
+				if (LUID != NULL) {
+					if (UpdatePbLUID) {
+						Priv->PbLUIDCount++;
+						Priv->PbLUID = realloc(Priv->PbLUID, (Priv->PbLUIDCount + 1) * sizeof(char *));
+						if (Priv->PbLUID == NULL) {
+							return ERR_MOREMEMORY;
+						}
+						Priv->PbLUID[Priv->PbLUIDCount] = LUID;
+					} else if (UpdateTodoLUID) {
+						Priv->TodoLUIDCount++;
+						Priv->TodoLUID = realloc(Priv->TodoLUID, (Priv->TodoLUIDCount + 1) * sizeof(char *));
+						if (Priv->TodoLUID == NULL) {
+							return ERR_MOREMEMORY;
+						}
+						Priv->TodoLUID[Priv->TodoLUIDCount] = LUID;
+					} else if (UpdateCalLUID) {
+						Priv->CalLUIDCount++;
+						Priv->CalLUID = realloc(Priv->CalLUID, (Priv->CalLUIDCount + 1) * sizeof(char *));
+						if (Priv->CalLUID == NULL) {
+							return ERR_MOREMEMORY;
+						}
+						Priv->CalLUID[Priv->CalLUIDCount] = LUID;
+					} else {
+						free(LUID);
+					}
+				}
+				Pos += len2;
+				break;
+			case 0xc3:
+				/* Length */
+				/* FIXME: ignored now */
+				Pos += 5;
+				break;
+			case 0xcb:
+				/* Skip Connection ID (we ignore this for now) */
+				Pos += 5;
+				break;
+			default:
+				Pos+=msg.Buffer[Pos+1]*256+msg.Buffer[Pos+2];
+				break;
+			}
+		}
 		return ERR_NONE;
 	case 0xC0:
 		smprintf(s,"Not understand. Probably not supported\n");
@@ -1178,6 +1274,10 @@ GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 
 	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
 
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
 	/* We need IEL to correctly talk to phone */
 	if (Priv->PbIEL == -1) {
 		error = OBEXGEN_GetPbInformation(s, NULL, NULL);
@@ -1211,6 +1311,40 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, boo
 	/* Do real getting */
 	/* FIXME: this might be broken in non LUID modes after deleting entries in same session */
 	return OBEXGEN_GetMemory(s, Entry);
+}
+
+GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
+{
+	unsigned char 		req[5000];
+	int			size=0;
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->PbIEL == -1) {
+		error = OBEXGEN_GetPbInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Encode vCard */
+	GSM_EncodeVCARD(req, &size, Entry, true, SonyEricsson_VCard21);
+
+	/* Use correct function according to supported IEL */
+	if (Priv->PbIEL == 0x8 || Priv->PbIEL == 0x10) {
+		smprintf(s,"Adding phonebook entry %d:\n%s\n", size, req);
+		Priv->UpdatePbLUID = true;
+		return OBEXGEN_SetFile(s, "telecom/pb/luid/.vcf", req, size);
+	} else {
+		/* I don't know add command for other levels, just plain send vCard */
+		smprintf(s,"Sending phonebook entry\n");
+		return OBEXGEN_SetFile(s, "gammu.vcf", req, size);
+	}
 }
 
 GSM_Reply_Function OBEXGENReplyFunctions[] = {
@@ -1284,7 +1418,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	OBEXGEN_GetMemory,
 	OBEXGEN_GetNextMemory,
 	NOTIMPLEMENTED,			/*	SetMemory		*/
-	NOTIMPLEMENTED,			/*	AddMemory		*/
+	OBEXGEN_AddMemory,
 	NOTIMPLEMENTED,			/*	DeleteMemory		*/
 	NOTIMPLEMENTED,			/*	DeleteAllMemory		*/
 	NOTIMPLEMENTED,			/*	GetSpeedDial		*/

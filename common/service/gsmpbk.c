@@ -170,6 +170,71 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
                                 case PBK_Text_URL       :
                                         *Length+=sprintf(Buffer+(*Length),"URL");
                                         break;
+                                default :
+                                        ignore = true;
+                                        break;
+                                }
+                                if (!ignore) {
+                                        SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "");
+                                }
+                        }
+                }
+                if (header) *Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
+        } else if (Version == SonyEricsson_VCard21) {
+                if (header) *Length+=sprintf(Buffer+(*Length),"BEGIN:VCARD%c%cVERSION:2.1%c%c",13,10,13,10);
+                if (Name != -1) {
+                        SaveVCALText(Buffer, Length, pbk->Entries[Name].Text, "N");
+                }
+                for (i=0; i < pbk->EntriesNum; i++) {
+                        if (i != Name) {
+                                ignore = false;
+                                switch(pbk->Entries[i].EntryType) {
+                                case PBK_Text_Name      :
+                                case PBK_Date           :
+                                case PBK_Caller_Group   :
+                                        ignore = true;
+                                        break;
+                                case PBK_Number_General :
+                                        *Length+=sprintf(Buffer+(*Length),"TEL");
+                                        if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+                                        break;
+                                case PBK_Number_Mobile  :
+                                        *Length+=sprintf(Buffer+(*Length),"TEL");
+                                        if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+                                        *Length+=sprintf(Buffer+(*Length),";CELL");
+                                        break;
+                                case PBK_Number_Work    :
+                                        *Length+=sprintf(Buffer+(*Length),"TEL");
+                                        if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+                                        *Length+=sprintf(Buffer+(*Length),";WORK;VOICE");
+                                        break;
+                                case PBK_Number_Fax     :
+                                        *Length+=sprintf(Buffer+(*Length),"TEL");
+                                        if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+                                        *Length+=sprintf(Buffer+(*Length),";FAX");
+                                        break;
+                                case PBK_Number_Home    :
+                                        *Length+=sprintf(Buffer+(*Length),"TEL");
+                                        if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+                                        *Length+=sprintf(Buffer+(*Length),";HOME;VOICE");
+                                        break;
+                                case PBK_Text_Note      :
+                                        *Length+=sprintf(Buffer+(*Length),"NOTE");
+                                        break;
+                                case PBK_Text_Postal    :
+                                        /* Don't ask why. Nokia phones save postal address
+                                         * double - once like LABEL, second like ADR
+                                         */
+                                        SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "LABEL");
+                                        *Length+=sprintf(Buffer+(*Length),"ADR");
+                                        break;
+                                case PBK_Text_Email     :
+                                case PBK_Text_Email2    :
+                                        *Length+=sprintf(Buffer+(*Length),"EMAIL");
+                                        break;
+                                case PBK_Text_URL       :
+                                        *Length+=sprintf(Buffer+(*Length),"URL");
+                                        break;
                                 case PBK_Text_LUID      :
                                         *Length+=sprintf(Buffer+(*Length),"X-IRMC-LUID");
                                         break;
