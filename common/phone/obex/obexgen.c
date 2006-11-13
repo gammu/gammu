@@ -1209,7 +1209,7 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, boo
 	}
 
 	/* Do real getting */
-	/* FIXME: this might be broken in non LUID modes */
+	/* FIXME: this might be broken in non LUID modes after deleting entries in same session */
 	return OBEXGEN_GetMemory(s, Entry);
 }
 
