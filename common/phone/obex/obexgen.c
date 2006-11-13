@@ -667,7 +667,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 			Pos = 0;
 			/* Calculate number of files */
 			while (1) {
-				MyGetLine(File->Buffer, &Pos, Line, File->Used);
+				MyGetLine(File->Buffer, &Pos, Line, File->Used, false);
 				if (strlen(Line) == 0) break;
 				name = strstr(Line,"folder name=\"");
 				if (name != NULL) {
@@ -698,7 +698,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 			Pos 	= 0;
 			pos2 	= 0;
 			while (1) {
-				MyGetLine(File->Buffer, &Pos, Line, File->Used);
+				MyGetLine(File->Buffer, &Pos, Line, File->Used, false);
 				if (strlen(Line) == 0) break;
 				strcpy(Line2,Line);
 				name = strstr(Line2,"folder name=\"");
@@ -1105,7 +1105,7 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const char *He
         while (1) {
 		/* Remember line start position */
 		prevpos = linepos;
-                MyGetLine(*Data, &linepos, line, len);
+                MyGetLine(*Data, &linepos, line, len, false);
                 if (strlen(line) == 0) break;
                 switch (level) {
 			case 0:
@@ -1337,12 +1337,18 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 
 	/* Use correct function according to supported IEL */
 	if (Priv->PbIEL == 0x8 || Priv->PbIEL == 0x10) {
+		/* We need to grab LUID list now in order to keep position later */
+		error = OBEXGEN_InitPbLUID(s);
+		if (error != ERR_NONE) return error;
+
 		smprintf(s,"Adding phonebook entry %d:\n%s\n", size, req);
 		Priv->UpdatePbLUID = true;
-		return OBEXGEN_SetFile(s, "telecom/pb/luid/.vcf", req, size);
-		/* FIXME: Need to store location somehow */
+		error = OBEXGEN_SetFile(s, "telecom/pb/luid/.vcf", req, size);
+		Entry->Location = Priv->PbLUIDCount;
+		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCard */
+		Entry->Location = 0;
 		smprintf(s,"Sending phonebook entry\n");
 		return OBEXGEN_SetFile(s, "gammu.vcf", req, size);
 	}

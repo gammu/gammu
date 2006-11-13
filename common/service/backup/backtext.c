@@ -389,10 +389,16 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				sprintf(buffer,"Entry%02iType = LUID%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
+			case PBK_Date:
+				sprintf(buffer,"Entry%02iType = Date%c%cEntry%02iText",j,13,10, j);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				SaveVCalDate(file, &Pbk->Entries[j].Date, UseUnicode);
+				text = false;
+				break;
 			case PBK_SMSListID:
 			case PBK_RingtoneFileSystemID:
-			case PBK_Date:
 			case PBK_CallLength:
+				text = false;
 				break;
         	}
 		if (text) {
@@ -1380,6 +1386,14 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 					Pbk->Entries[Pbk->EntriesNum].Number = atoi(readvalue);
 				}
 				Pbk->EntriesNum ++;
+				continue;
+			} else if (mystrncasecmp(readvalue,"Date",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Date;
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+				if (readvalue != NULL) {
+					ReadVCALDateTime(readvalue, &Pbk->Entries[Pbk->EntriesNum].Date);
+				}
+				Pbk->EntriesNum++;
 				continue;
 			} else if (mystrncasecmp(readvalue,"UserID",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_UserID;

@@ -117,7 +117,7 @@ static void GSM_JADFindLine(GSM_File File, char *Name, char *Value)
 	Value[0] = 0;
 
 	while (1) {
-		MyGetLine(File.Buffer, &Pos, Line, File.Used);
+		MyGetLine(File.Buffer, &Pos, Line, File.Used, false);
 		if (strlen(Line) == 0) break;
 		if (!strncmp(Line,Name,strlen(Name))) {
 			Pos = strlen(Name);
