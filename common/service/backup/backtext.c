@@ -385,6 +385,10 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				sprintf(buffer,"Entry%02iType = Custom4%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
+			case PBK_Text_LUID:
+				sprintf(buffer,"Entry%02iType = LUID%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				break;
 			case PBK_SMSListID:
 			case PBK_RingtoneFileSystemID:
 			case PBK_Date:
@@ -1323,6 +1327,8 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom3;
 			} else if (mystrncasecmp(readvalue,"Custom4",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom4;
+			} else if (mystrncasecmp(readvalue,"LUID",0)) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LUID;
 			} else if (mystrncasecmp(readvalue,"Name",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Name;
 			} else if (mystrncasecmp(readvalue,"Category",0)) {

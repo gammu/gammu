@@ -1763,6 +1763,7 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= ERR_NONE) return error;
 		if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeContacts, 0))!= ERR_NONE) return error;
 		for (i = 0; i < entry->EntriesNum; i++) {
+			entry->Entries[i].AddError = ERR_NONE;
 			switch (entry->Entries[i].EntryType) {
 				case PBK_Number_General:
 					if ((error = ALCATEL_CreateField(s, Alcatel_phone, 8, entry->Entries[i].Text)) != ERR_NONE) return error;
@@ -1845,6 +1846,7 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 					if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
 					       if ((error = ALCATEL_CreateField(s, Alcatel_int, 25, &(entry->Entries[i].Number))) != ERR_NONE) return error;
 					} else {
+						entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 						smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
 					}
 					break;
@@ -1859,13 +1861,16 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_RingtoneID:
 				case PBK_Text_Postal:
 				case PBK_Text_URL:
+				case PBK_Text_LUID:
 				case PBK_CallLength:
+					entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 					smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
 					break;
 			}
 		}
 		if (NamePosition != -1) {
 			if (NameSet) {
+				entry->Entries[NamePosition].AddError = ERR_NOTSUPPORTED;
 				smprintf(s,"WARNING: Ignoring name, not supported by phone\n");
 			} else {
 				if ((error = ALCATEL_CreateField(s, Alcatel_string, 1, entry->Entries[i].Text)) != ERR_NONE) return error;
@@ -2029,6 +2034,7 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_RingtoneID:
 				case PBK_Text_Postal:
 				case PBK_Text_URL:
+				case PBK_Text_LUID:
 				case PBK_CallLength:
 					entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 					smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
