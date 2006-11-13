@@ -148,11 +148,8 @@ GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 	Priv->Mode				= SONYERICSSON_ModeAT;
 
 	/* Init OBEX module also */
-	s->Phone.Data.Priv.OBEXGEN.Service = 0;
-	s->Phone.Data.Priv.OBEXGEN.PbLUID = NULL;
-	s->Phone.Data.Priv.OBEXGEN.PbLUIDCount = 0;
-	s->Phone.Data.Priv.OBEXGEN.CalLUID = NULL;
-	s->Phone.Data.Priv.OBEXGEN.CalLUIDCount = 0;
+	error = OBEXGEN_InitialiseVars(s);
+	if (error != ERR_NONE) return error;
 
 	/* Init AT module */
 	error = ATGEN_Initialise(s);

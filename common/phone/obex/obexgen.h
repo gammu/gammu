@@ -45,6 +45,10 @@ typedef struct {
 	OBEX_Service			Service;
 
 	/**
+	 * Number of entries in phonebook
+	 */
+	int				PbCount;
+	/**
 	 * LUID - location translation map for phonebook
 	 */
 	char				**PbLUID;
@@ -53,6 +57,26 @@ typedef struct {
 	 */
 	int				PbLUIDCount;
 	/**
+	 * Information Exchange Level for phonebook.
+	 */
+	int				PbIEL;
+	/**
+	 * Complete phonebook data.
+	 */
+	char				*PbData;
+	/**
+	 * Phonebook data length.
+	 */
+	int				PbDataLen;
+	/**
+	 * Number of entries in todo
+	 */
+	int				TodoCount;
+	/**
+	 * Number of entries in calendar
+	 */
+	int				CalCount;
+	/**
 	 * LUID - location translation map for calendar (and todo)
 	 */
 	char				**CalLUID;
@@ -60,6 +84,18 @@ typedef struct {
 	 * Number of entries in CalLUID list.
 	 */
 	int				CalLUIDCount;
+	/**
+	 * Information Exchange Level for calendar.
+	 */
+	int				CalIEL;
+	/**
+	 * Complete calendar data.
+	 */
+	char				*CalData;
+	/**
+	 * Calendar data length.
+	 */
+	int				CalDataLen;
 } GSM_Phone_OBEXGENData;
 
 #endif

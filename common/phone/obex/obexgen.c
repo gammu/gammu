@@ -115,18 +115,37 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 }
 
 /**
- * Initializes OBEX connection in desired mode as defined by config.
+ * Initializes OBEX internal variables. To be used by other who need
+ * OBEX protocol, but don't need it's init.
  */
-GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
+GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 {
-	GSM_Error	error = ERR_NONE;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	Priv->Service = 0;
 	Priv->PbLUID = NULL;
 	Priv->PbLUIDCount = 0;
+	Priv->PbCount = -1;
+	Priv->PbIEL = -1;
 	Priv->CalLUID = NULL;
 	Priv->CalLUIDCount = 0;
+	Priv->CalIEL = -1;
+	Priv->CalCount = -1;
+	Priv->TodoCount = -1;
+
+	return ERR_NONE;
+}
+
+/**
+ * Initializes OBEX connection in desired mode as defined by config.
+ */
+GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
+{
+	GSM_Error	error = ERR_NONE;
+
+	/* Init variables */
+	error = OBEXGEN_InitialiseVars(s);
+	if (error != ERR_NONE) return error;
 
 	/**
 	 * @todo: In IrMC mode we might read real model from
@@ -824,7 +843,13 @@ GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 	return ERR_NONE;
 }
 
-GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free, int *used)
+/**
+ * Parses selected information from IrMC info.log. Information parsed:
+ *  * IEL (Information Exchange Level)
+ *  * Number of free records
+ *  * Number of used records
+ */
+GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free, int *used, int *IEL_save)
 {
 	char *pos;
 	int IEL;
@@ -832,11 +857,7 @@ GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free,
 	char used_text[] = "Total-Records:";
 	char IEL_text[] = "IEL:";
 
-	/* Sane defaults */
-	*free = 0;
-	*used = 0;
-
-	smprintf(s, "Parsing data:\n---\n%s\n---\n", data);
+	smprintf(s, "OBEX info data:\n---\n%s\n---\n", data);
 
 	pos = strstr(data, IEL_text);
 	if (pos == NULL) {
@@ -852,16 +873,14 @@ GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free,
 	}
 	switch (IEL) {
 		case 0x1:
-			smprintf(s, "Information Exchange Level 1 supported, we need more\n");
-			return ERR_NOTSUPPORTED;
+			smprintf(s, "Information Exchange Level 1 supported\n");
+			break;
 		case 0x2:
-			smprintf(s, "Information Exchange Level 1 and 2 supported, we need more\n");
-			/* We might operate on whole phonebook here */
-			return ERR_NOTIMPLEMENTED;
+			smprintf(s, "Information Exchange Level 1 and 2 supported\n");
+			break;
 		case 0x4:
-			smprintf(s, "Information Exchange Level 1, 2 and 3 supported, we need more\n");
-			/* We might operate on whole phonebook or static indexes here */
-			return ERR_NOTIMPLEMENTED;
+			smprintf(s, "Information Exchange Level 1, 2 and 3 supported\n");
+			break;
 		case 0x8:
 			smprintf(s, "Information Exchange Level 1, 2 and 4 supported\n");
 			break;
@@ -873,58 +892,98 @@ GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free,
 			return ERR_INVALIDDATA;
 	}
 
-	pos = strstr(data, free_text);
-	if (pos == NULL) {
-		smprintf(s, "Could not grab free\n");
-		return ERR_INVALIDDATA;
+	if (IEL_save != NULL) {
+		*IEL_save = IEL;
 	}
-	pos += strlen(free_text);
-	*free = atoi(pos);
 
-	pos = strstr(data, used_text);
-	if (pos == NULL) {
-		smprintf(s, "Could not grab used\n");
-		return ERR_INVALIDDATA;
+	if (free != NULL) {
+		*free = 0;
+		pos = strstr(data, free_text);
+		if (pos == NULL) {
+			smprintf(s, "Could not grab free\n");
+			return ERR_INVALIDDATA;
+		}
+		pos += strlen(free_text);
+		*free = atoi(pos);
 	}
-	pos += strlen(used_text);
-	*used = atoi(pos);
+
+	if (used != NULL) {
+		*used = 0;
+		pos = strstr(data, used_text);
+		if (pos == NULL) {
+			smprintf(s, "Could not grab used\n");
+			return ERR_INVALIDDATA;
+		}
+		pos += strlen(used_text);
+		*used = atoi(pos);
+	}
 
 	return ERR_NONE;
 }
 
-GSM_Error OBEXGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
+/**
+ * Grabs information from defined OBEX IrMC information log into variables.
+ */
+GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *free_records, int *used_records, int *IEL)
 {
 	GSM_Error 	error;
 	char		*data;
 
-	if (Status->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+	/* No IEL as default (eg. when file does not exist) */
+	*IEL = 0;
 
 	/* We need IrMC service for this */
-	error = OBEXGEN_Connect(s,OBEX_IRMC);
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;
 
 	/* Grab log info file */
-	error = OBEXGEN_GetTextFile(s, "telecom/pb/info.log", &data);
+	error = OBEXGEN_GetTextFile(s, path, &data);
 	if (error != ERR_NONE) return error;
 
 	/* Parse it */
-	error = OBEXGEN_ParseInfoLog(s, data, &(Status->MemoryFree), &(Status->MemoryUsed));
+	error = OBEXGEN_ParseInfoLog(s, data, free_records, used_records, IEL);
 
 	free(data);
 
 	return error;
 }
 
-GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, char ***LUID, int *Count)
+/**
+ * Parses pb/info.log (phonebook IrMC information log).
+ */
+GSM_Error OBEXGEN_GetPbInformation(GSM_StateMachine *s, int *free, int *used)
+{
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	return OBEXGEN_GetInformation(s, "telecom/pb/info.log", free, used, &(Priv->PbIEL));
+
+}
+
+/**
+ * Grabs phonebook memory status
+ */
+GSM_Error OBEXGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
+{
+	if (Status->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+
+	return OBEXGEN_GetPbInformation(s, &(Status->MemoryFree), &(Status->MemoryUsed));
+
+}
+
+/**
+ * Initialises LUID database, which is used for LUID - Location mapping.
+ */
+GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const char *Header, int *Count, char ***LUID, int *LUIDCount)
 {
 	char		*data;
 	GSM_Error 	error;
 	char		*pos;
-	char		*end1;
-	char		*end2;
-	char		*end;
-	char		save;
-	int		Size = 200;
+	int		Size = 0;
+	int		linepos = 0;
+	char		line[2000];
+	size_t		len;
+	size_t		hlen;
+	int		level;
 
 	/* Grab file with listing */
 	error = OBEXGEN_GetTextFile(s, Name, &data);
@@ -932,59 +991,62 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, char ***LUID, 
 
 	pos = data;
 	*Count = 0;
-	/* Allocate initial memory */
-	*LUID = malloc(Size * sizeof(char *));
-	if (*LUID == NULL) {
-		free(data);
-		return ERR_MOREMEMORY;
+	*LUIDCount = 0;
+	*LUID = NULL;
+	len = strlen(data);
+	hlen = strlen(Header);
+	level = 0;
+
+        while (1) {
+                MyGetLine(data, &linepos, line, len);
+                if (strlen(line) == 0) break;
+                switch (level) {
+			case 0:
+				if (strncmp(line, Header, strlen(Header)) == 0) {
+					level = 1;
+					(*Count)++;
+				} else if (strncmp(line, "BEGIN:VCALENDAR", 15) == 0) {
+					/* We need to skip vCalendar header */
+				} else if (strncmp(line, "BEGIN:", 6) == 0) {
+					/* Skip other event types */
+					level = 2;
+				}
+				break;
+			case 1:
+				if (strncmp(line, "END:", 4) == 0) level = 0;
+				if (strncmp(line, "X-IRMC-LUID:", 12) == 0) {
+					pos = line + 12; /* Length of X-IRMC-LUID: */
+					(*LUIDCount)++;
+					/* Do we need to reallocate? */
+					if (*LUIDCount >= Size) {
+						Size += 20;
+						*LUID = realloc(*LUID, Size * sizeof(char *));
+						if (*LUID == NULL) {
+							free(data);
+							return ERR_MOREMEMORY;
+						}
+					}
+					/* Copy LUID text */
+					(*LUID)[*LUIDCount] = strdup(pos);
+#if 0
+					smprintf(s, "Added LUID %s at position %d\n", (*LUID)[*LUIDCount], *LUIDCount);
+#endif
+				}
+				break;
+			case 2:
+				if (strncmp(line, "END:", 4) == 0) level = 0;
+				break;
+		}
 	}
 
-	/* Grab LUIDs from list */
-	while ((pos = strstr(pos, "X-IRMC-LUID:")) != NULL) {
-		pos += 12; /* Length of X-IRMC-LUID: */
-		(*Count)++;
-		/* Do we need to reallocate? */
-		if (*Count >= Size) {
-			Size += 20;
-			*LUID = realloc(*LUID, Size * sizeof(char *));
-			if (*LUID == NULL) {
-				free(data);
-				return ERR_MOREMEMORY;
-			}
-		}
-		end = NULL;
-		/* Detect both end of lines */
-		end1 = strchr(pos, '\r');
-		end2 = strchr(pos, '\n');
-		if (end1 == NULL) {
-			end = end2;
-		} else if (end2 == NULL) {
-			end = end1;
-		} else if (end1 < end2) {
-			end = end1;
-		} else {
-			end = end2;
-		}
-		/* We didn't find any? */
-		if (end == NULL) {
-			free(data);
-			free(*LUID); /* FIXME: This leaves allocated strings */
-			*LUID = NULL;
-			return ERR_UNKNOWNRESPONSE;
-		}
-		/* Remember and replace end of string */
-		save = *end;
-		*end = 0;
-		/* Copy LUID */
-		(*LUID)[*Count] = strdup(pos);
-		//smprintf(s, "Added LUID %s at position %d\n", (*LUID)[*Count], *Count);
-		/* Restore original char */
-		*end = save;
-	}
+	smprintf(s, "Data parsed, found %d entries and %d LUIDs\n", *Count, *LUIDCount);
 
 	return ERR_NONE;
 }
 
+/**
+ * Initializes phonebook LUID database.
+ */
 GSM_Error OBEXGEN_InitPbLUID(GSM_StateMachine *s)
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -992,10 +1054,44 @@ GSM_Error OBEXGEN_InitPbLUID(GSM_StateMachine *s)
 	/* We might do validation here using telecom/pb/luid/cc.log, but not on each request */
 	if (Priv->PbLUID != NULL) return ERR_NONE;
 
-	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", &(Priv->PbLUID), &(Priv->PbLUIDCount));
+	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", "BEGIN:VCARD", &(Priv->PbCount), &(Priv->PbLUID), &(Priv->PbLUIDCount));
 }
 
-GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
+/**
+ * Read memory by reading static index.
+ */
+GSM_Error OBEXGEN_GetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
+{
+	GSM_Error 	error;
+	char		*data;
+	char		*path;
+	int		pos = 0;
+
+	/* Calculate path */
+	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/pb/%d.vcf", Entry->Location);
+	smprintf(s, "Getting vCard %s\n", path);
+
+	/* Grab vCard */
+	error = OBEXGEN_GetTextFile(s, path, &data);
+	free(path);
+	if (error != ERR_NONE) return error;
+
+	/* Decode it */
+	error = GSM_DecodeVCARD(data, &pos, Entry, SonyEricsson_VCard21);
+	free(data);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+/**
+ * Reads memory by reading from LUID location.
+ */
+GSM_Error OBEXGEN_GetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -1003,12 +1099,12 @@ GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	char		*path;
 	int		pos = 0;
 
-	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
-
 	error = OBEXGEN_InitPbLUID(s);
 	if (error != ERR_NONE) return error;
 
+	/* Check bounds */
 	if (Entry->Location > Priv->PbLUIDCount) return ERR_EMPTY; /* Maybe invalid location? */
+	if (Priv->PbLUID[Entry->Location] == NULL) return ERR_EMPTY;
 
 	/* Calculate path */
 	path = malloc(strlen(Priv->PbLUID[Entry->Location]) + 22); /* Length of string bellow */
@@ -1031,6 +1127,33 @@ GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	return ERR_NONE;
 }
 
+GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->PbIEL == -1) {
+		error = OBEXGEN_GetPbInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Use correct function according to supported IEL */
+	if (Priv->PbIEL == 0x8 || Priv->PbIEL == 0x10) {
+		return OBEXGEN_GetMemoryLUID(s, Entry);
+	} else if (Priv->PbIEL == 0x4) {
+		return OBEXGEN_GetMemoryIndex(s, Entry);
+	} else if (Priv->PbIEL == 0x2) {
+		return ERR_NOTIMPLEMENTED;
+//		return OBEXGEN_GetMemoryFull(s, Entry);
+	} else {
+		smprintf(s, "Can not read phonebook from IEL 1 phone\n");
+		return ERR_NOTSUPPORTED;
+	}
+}
+
 GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, bool start)
 {
 	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
@@ -1043,6 +1166,7 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, boo
 	}
 
 	/* Do real getting */
+	/* FIXME: this might be broken in non LUID mode */
 	return OBEXGEN_GetMemory(s, Entry);
 }
 
