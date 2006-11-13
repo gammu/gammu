@@ -907,6 +907,7 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 	case PBK_Text_Email         : printmsg("Email address 1 "); break;
 	case PBK_Text_Email2        : printmsg("Email address 2 "); break;
 	case PBK_Text_URL           : printmsg("URL address     "); break;
+	case PBK_Text_LUID          : printmsg("LUID            "); break;
 	case PBK_Text_Name          : printmsg("Name            "); break;
 	case PBK_Text_LastName      : printmsg("Last name       "); break;
 	case PBK_Text_FirstName     : printmsg("First name      "); break;
@@ -1075,6 +1076,7 @@ static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 			case PBK_Text_Email         :
 			case PBK_Text_Email2        :
 			case PBK_Text_URL           :
+			case PBK_Text_LUID          :
 			case PBK_Text_Name          :
 			case PBK_Text_LastName      :
 			case PBK_Text_FirstName     :

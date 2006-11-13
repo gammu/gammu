@@ -170,6 +170,9 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
                                 case PBK_Text_URL       :
                                         *Length+=sprintf(Buffer+(*Length),"URL");
                                         break;
+                                case PBK_Text_LUID      :
+                                        *Length+=sprintf(Buffer+(*Length),"X-IRMC-LUID");
+                                        break;
                                 default :
                                         ignore = true;
                                         break;
@@ -330,6 +333,11 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 			    ReadVCALText(Line, "EMAIL;INTERNET", Buff)) {
                                 CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
                                 Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
+                                Pbk->EntriesNum++;
+                        }
+                        if (ReadVCALText(Line, "X-IRMC-LUID", Buff)) {
+                                CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+                                Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LUID;
                                 Pbk->EntriesNum++;
                         }
                         if (ReadVCALText(Line, "URL", Buff)) {
