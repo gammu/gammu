@@ -89,7 +89,9 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 		i 		= fread(File->Buffer+File->Used,1,1000,file);
 		File->Used 	= File->Used + i;
 	}
-	File->Buffer = realloc(File->Buffer,File->Used);
+	File->Buffer = realloc(File->Buffer,File->Used + 1);
+	/* Make it 0 terminated, in case it is needed somewhere (we don't count this to length) */
+	File->Buffer[File->Used] = 0;
 	fclose(file);
 
 	File->ModifiedEmpty = true;
