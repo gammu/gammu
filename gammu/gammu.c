@@ -395,6 +395,12 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 		case CAL_TEXT:
 			printmsg("Text         : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
 			break;
+		case CAL_DESCRIPTION:
+			printmsg("Description  : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
+			break;
+		case CAL_LUID:
+			printmsg("LUID         : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
+			break;
 		case CAL_LOCATION:
 			printmsg("Location     : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
 			break;
