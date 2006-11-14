@@ -646,7 +646,8 @@ GSM_Error SONYERICSSON_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		return ERR_NOTIMPLEMENTED;
+		if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+		return OBEXGEN_DeleteMemory(s, entry);
 	} else {
 		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
 		return ATGEN_DeleteMemory(s, entry);
