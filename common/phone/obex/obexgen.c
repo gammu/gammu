@@ -1,7 +1,11 @@
 /* (c) 2003 by Marcin Wiacek */
 /* (c) 2006 by Michal Cihar */
 
-/* www.irda.org OBEX specs 1.3 */
+/**
+ * Generic OBEX access to phones, made addording to OBEX specification
+ * version 1.3 and IrMC specification version 1.1 as available from IrDA
+ * <http://www.irda.org>.
+ */
 
 #define _GNU_SOURCE /* Needed for strndup */
 #include <string.h>
