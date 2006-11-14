@@ -864,6 +864,8 @@ GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	return OBEXGEN_ChangePath(s, File->Name, 0);
 }
 
+/* OBEX and IrMC helper functions start here */
+
 /**
  * Grabs complete single file
  */
@@ -1050,28 +1052,6 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 }
 
 /**
- * Parses pb/info.log (phonebook IrMC information log).
- */
-GSM_Error OBEXGEN_GetPbInformation(GSM_StateMachine *s, int *free, int *used)
-{
-	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-
-	return OBEXGEN_GetInformation(s, "telecom/pb/info.log", free, used, &(Priv->PbIEL));
-
-}
-
-/**
- * Grabs phonebook memory status
- */
-GSM_Error OBEXGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
-{
-	if (Status->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
-
-	return OBEXGEN_GetPbInformation(s, &(Status->MemoryFree), &(Status->MemoryUsed));
-
-}
-
-/**
  * Initialises LUID database, which is used for LUID - Location mapping.
  */
 GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const char *Header, char **Data, int **Offsets, int *Count, char ***LUID, int *LUIDCount)
@@ -1159,6 +1139,30 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const char *He
 	smprintf(s, "Data parsed, found %d entries and %d LUIDs\n", *Count, *LUIDCount);
 
 	return ERR_NONE;
+}
+
+/* Phonebook support starts here */
+
+/**
+ * Parses pb/info.log (phonebook IrMC information log).
+ */
+GSM_Error OBEXGEN_GetPbInformation(GSM_StateMachine *s, int *free, int *used)
+{
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	return OBEXGEN_GetInformation(s, "telecom/pb/info.log", free, used, &(Priv->PbIEL));
+
+}
+
+/**
+ * Grabs phonebook memory status
+ */
+GSM_Error OBEXGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
+{
+	if (Status->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+
+	return OBEXGEN_GetPbInformation(s, &(Status->MemoryFree), &(Status->MemoryUsed));
+
 }
 
 /**
