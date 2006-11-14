@@ -332,6 +332,14 @@ typedef enum {
 	 */
 	TODO_TEXT,
 	/**
+	 * Description of to do (Text).
+	 */
+	TODO_DESCRIPTION,
+	/**
+	 * Location of to do (Text).
+	 */
+	TODO_LOCATION,
+	/**
 	 * Whether entry is private (Number).
 	 */
 	TODO_PRIVATE,
