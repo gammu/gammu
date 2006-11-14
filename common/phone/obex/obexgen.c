@@ -1422,6 +1422,9 @@ GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		return OBEXGEN_SetMemoryLUID(s, Entry, req, size);
 	} else if (Priv->PbIEL == 0x4) {
 		return OBEXGEN_SetMemoryIndex(s, Entry, req, size);
+	} else if (Priv->PbIEL == 0x2) {
+		/* Work on full phonebook */
+		return ERR_NOTIMPLEMENTED;
 	} else {
 		return ERR_NOTSUPPORTED;
 	}
@@ -1449,6 +1452,34 @@ GSM_Error OBEXGEN_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		return OBEXGEN_SetMemoryLUID(s, Entry, "", 0);
 	} else if (Priv->PbIEL == 0x4) {
 		return OBEXGEN_SetMemoryIndex(s, Entry, "", 0);
+	} else if (Priv->PbIEL == 0x2) {
+		/* Work on full phonebook */
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error OBEXGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType)
+{
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	if (MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->PbIEL == -1) {
+		error = OBEXGEN_GetPbInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Use correct function according to supported IEL */
+	if (Priv->PbIEL == 0x2 || Priv->PbIEL == 0x4 || Priv->PbIEL == 0x8 || Priv->PbIEL == 0x10) {
+		return OBEXGEN_SetFile(s, "telecom/pb.vcf", "", 0);
 	} else {
 		return ERR_NOTSUPPORTED;
 	}
@@ -1527,7 +1558,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	OBEXGEN_SetMemory,
 	OBEXGEN_AddMemory,
 	OBEXGEN_DeleteMemory,
-	NOTIMPLEMENTED,			/*	DeleteAllMemory		*/
+	OBEXGEN_DeleteAllMemory,
 	NOTIMPLEMENTED,			/*	GetSpeedDial		*/
 	NOTIMPLEMENTED,			/*	SetSpeedDial		*/
 	NOTIMPLEMENTED,			/*	GetSMSC			*/

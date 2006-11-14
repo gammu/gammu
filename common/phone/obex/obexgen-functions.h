@@ -21,6 +21,7 @@ extern GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry);
 extern GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry);
 extern GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry);
 extern GSM_Error OBEXGEN_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry);
+extern GSM_Error OBEXGEN_DeleteAllMemory(GSM_StateMachine *, GSM_MemoryType MemoryTypes);
 
 #endif
 
