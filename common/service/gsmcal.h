@@ -168,7 +168,7 @@ typedef enum {
 	/**
 	 * Whether this entry is private.
 	 */
-	 CAL_PRIVATE,
+	CAL_PRIVATE,
 	/**
 	 * Related contact id.
 	 */
