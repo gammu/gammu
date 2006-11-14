@@ -2870,6 +2870,8 @@ static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				break;
 			case CAL_SILENT_ALARM_DATETIME:
 			case CAL_LOCATION:
+			case CAL_DESCRIPTION:
+			case CAL_LUID:
 				smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", Note->Entries[i].EntryType);
 				break;
 		}
@@ -3023,6 +3025,8 @@ static GSM_Error ALCATEL_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				break;
 			case CAL_SILENT_ALARM_DATETIME:
 			case CAL_LOCATION:
+			case CAL_DESCRIPTION:
+			case CAL_LUID:
 				smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", Note->Entries[i].EntryType);
 				break;
 		}

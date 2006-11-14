@@ -518,6 +518,12 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 		case CAL_TEXT:
 			SaveBackupText(file, "Text", Note->Entries[i].Text, UseUnicode);
 			break;
+		case CAL_DESCRIPTION:
+			SaveBackupText(file, "Description", Note->Entries[i].Text, UseUnicode);
+			break;
+		case CAL_LUID:
+			SaveBackupText(file, "LUID", Note->Entries[i].Text, UseUnicode);
+			break;
 		case CAL_PHONE:
 			SaveBackupText(file, "Phone", Note->Entries[i].Text, UseUnicode);
 			break;
@@ -1495,6 +1501,16 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	sprintf(buffer,"Text");
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_TEXT;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"Description");
+	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
+		note->Entries[note->EntriesNum].EntryType = CAL_DESCRIPTION;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"LUID");
+	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
+		note->Entries[note->EntriesNum].EntryType = CAL_LUID;
 		note->EntriesNum++;
 	}
 	sprintf(buffer,"Phone");
