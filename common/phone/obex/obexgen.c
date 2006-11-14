@@ -158,7 +158,7 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 	if (error != ERR_NONE) return error;
 
 	/**
-	 * @todo: In IrMC mode we might read real model from
+	 * @todo In IrMC mode we might read real model from
 	 * telecom/devinfo.txt, in browsing mode from obex capability
 	 * XML
 	 */
@@ -310,7 +310,7 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 			case 0xc3:
 				/* Length */
 				/**
-				 * @todo: Lenght is ignored now
+				 * @todo Lenght is ignored now
 				 */
 				Pos += 5;
 				break;
@@ -349,7 +349,7 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int
 	if (*Pos == 0) {
 		if (!strcmp(DecodeUnicodeString(File->ID_FullName),"")) {
 			/**
-			 * @todo: This was probably supposed to be used as regullar
+			 * @todo This was probably supposed to be used as regullar
 			 * send file to phone and let it handle data, does it actually
 			 * work?
 			 */
@@ -438,7 +438,7 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 			case 0xc3:
 				/* Length */
 				/**
-				 * @todo: ignored now
+				 * @todo ignored now
 				 */
 				Pos += 5;
 				break;
@@ -601,7 +601,7 @@ void CreateFileName(unsigned char *Dest, unsigned char *Path, unsigned char *Nam
 /**
  * List OBEX folder.
  *
- * @todo: We assume XML reply is in UTF-8, but this doesn't have to be true.
+ * @todo We assume XML reply is in UTF-8, but this doesn't have to be true.
  */
 GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
 {
@@ -1052,7 +1052,7 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 /**
  * Initialises LUID database, which is used for LUID - Location mapping.
  */
-GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const char *Header, char **Data, int **Offsets, int *Count, char ***LUID, int *LUIDCount)
+GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const const bool Recalculate, char *Header, char **Data, int **Offsets, int *Count, char ***LUID, int *LUIDCount)
 {
 	GSM_Error 	error;
 	char		*pos;
@@ -1066,14 +1066,18 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const char *He
 	int		level = 0;
 
 	/* Free data if previously allocated */
+	if (!Recalculate) {
+		if (*Data != NULL) free(*Data);
+	}
 	/**
-	 * @todo: should free all data here, but this execution path is not supported now
+	 * @todo should free all data here, but this execution path is not supported now
 	 */
-	if (*Data != NULL) free(*Data);
 
 	/* Grab file with listing */
-	error = OBEXGEN_GetTextFile(s, Name, Data);
-	if (error != ERR_NONE) return error;
+	if (!Recalculate || *Data == NULL) {
+		error = OBEXGEN_GetTextFile(s, Name, Data);
+		if (error != ERR_NONE) return error;
+	}
 
 	*Count = 0;
 	*Offsets = NULL;
@@ -1175,7 +1179,7 @@ GSM_Error OBEXGEN_InitPbLUID(GSM_StateMachine *s)
 	/* We might do validation here using telecom/pb/luid/cc.log fir IEL 4, but not on each request */
 	if (Priv->PbData != NULL) return ERR_NONE;
 
-	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", "BEGIN:VCARD", &(Priv->PbData), &(Priv->PbOffsets), &(Priv->PbCount), &(Priv->PbLUID), &(Priv->PbLUIDCount));
+	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", false, "BEGIN:VCARD", &(Priv->PbData), &(Priv->PbOffsets), &(Priv->PbCount), &(Priv->PbLUID), &(Priv->PbLUIDCount));
 }
 
 /**
@@ -1314,7 +1318,7 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, boo
 
 	/* Do real getting */
 	/**
-	 * @todo: this might be broken in non LUID modes after deleting entries in same session
+	 * @todo this might be broken in non LUID modes after deleting entries in same session
 	 */
 	return OBEXGEN_GetMemory(s, Entry);
 }
@@ -1491,6 +1495,358 @@ GSM_Error OBEXGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType
 	}
 }
 
+/* Common calendar/todo functions start here */
+
+/**
+ * Parses cal/info.log (calendar IrMC information log).
+ */
+GSM_Error OBEXGEN_GetCalInformation(GSM_StateMachine *s, int *free, int *used)
+{
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	return OBEXGEN_GetInformation(s, "telecom/cal/info.log", free, used, &(Priv->CalIEL));
+
+}
+
+/**
+ * Initializes calendar LUID database.
+ */
+GSM_Error OBEXGEN_InitCalLUID(GSM_StateMachine *s)
+{
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	GSM_Error 	error;
+
+	/* We might do validation here using telecom/cal/luid/cc.log fir IEL 4, but not on each request */
+	if (Priv->CalData != NULL) return ERR_NONE;
+
+	error = OBEXGEN_InitLUID(s, "telecom/cal.vcs", false, "BEGIN:VEVENT", &(Priv->CalData), &(Priv->CalOffsets), &(Priv->CalCount), &(Priv->CalLUID), &(Priv->CalLUIDCount));
+	if (error != ERR_NONE) return error;
+	return OBEXGEN_InitLUID(s, "telecom/cal.vcs", true, "BEGIN:VTODO", &(Priv->CalData), &(Priv->TodoOffsets), &(Priv->TodoCount), &(Priv->TodoLUID), &(Priv->TodoLUIDCount));
+}
+
+/* Calendar support starts here */
+
+/**
+ * Grabs calendar memory status
+ */
+GSM_Error OBEXGEN_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
+{
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	GSM_Error 	error;
+
+	error = OBEXGEN_InitCalLUID(s);
+	if (error != ERR_NONE) return error;
+
+	Status->Used = Priv->TodoCount;
+
+	return OBEXGEN_GetCalInformation(s, &(Status->Free), NULL);
+
+}
+
+/**
+ * Read memory by reading static index.
+ */
+GSM_Error OBEXGEN_GetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+	GSM_Error 	error;
+	char		*data;
+	char		*path;
+	int		pos = 0;
+	GSM_ToDoEntry	ToDo;
+
+	/* Calculate path */
+	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/cal/%d.vcs", Entry->Location);
+	smprintf(s, "Getting vCalendar %s\n", path);
+
+	/* Grab vCalendar */
+	error = OBEXGEN_GetTextFile(s, path, &data);
+	free(path);
+	if (error != ERR_NONE) return error;
+
+	/* Decode it */
+	error = GSM_DecodeVCALENDAR_VTODO(data, &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	free(data);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+/**
+ * Reads memory by reading from LUID location.
+ */
+GSM_Error OBEXGEN_GetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	char		*data;
+	char		*path;
+	int		pos = 0;
+	GSM_ToDoEntry	ToDo;
+
+	error = OBEXGEN_InitCalLUID(s);
+	if (error != ERR_NONE) return error;
+
+	/* Check bounds */
+	if (Entry->Location > Priv->CalLUIDCount) return ERR_EMPTY; /* Maybe invalid location? */
+	if (Priv->CalLUID[Entry->Location] == NULL) return ERR_EMPTY;
+
+	/* Calculate path */
+	path = malloc(strlen(Priv->CalLUID[Entry->Location]) + 22); /* Length of string bellow */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/cal/luid/%s.vcs", Priv->CalLUID[Entry->Location]);
+	smprintf(s, "Getting vCalendar %s\n", path);
+
+	/* Grab vCalendar */
+	error = OBEXGEN_GetTextFile(s, path, &data);
+	free(path);
+	if (error != ERR_NONE) return error;
+
+	/* Decode it */
+	error = GSM_DecodeVCALENDAR_VTODO(data, &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	free(data);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+/**
+ * Reads memory by reading from full data.
+ */
+GSM_Error OBEXGEN_GetCalendarFull(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	int		pos = 0;
+	GSM_ToDoEntry	ToDo;
+
+	/* Read calendar data */
+	error = OBEXGEN_InitCalLUID(s);
+	if (error != ERR_NONE) return error;
+
+	/* Check bounds */
+	if (Entry->Location > Priv->CalCount) return ERR_EMPTY; /* Maybe invalid location? */
+
+	/* Decode vCalendar */
+	error = GSM_DecodeVCALENDAR_VTODO(Priv->CalData + Priv->CalOffsets[Entry->Location], &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+GSM_Error OBEXGEN_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->CalIEL == -1) {
+		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Use correct function according to supported IEL */
+	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+		return OBEXGEN_GetCalendarLUID(s, Entry);
+	} else if (Priv->CalIEL == 0x4) {
+		return OBEXGEN_GetCalendarIndex(s, Entry);
+	} else if (Priv->CalIEL == 0x2) {
+		return OBEXGEN_GetCalendarFull(s, Entry);
+	} else {
+		smprintf(s, "Can not read calendar from IEL 1 phone\n");
+		return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error OBEXGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, bool start)
+{
+	/* Get  location */
+	if (start) {
+		Entry->Location = 1;
+	} else {
+		Entry->Location++;
+	}
+
+	/* Do real getting */
+	/**
+	 * @todo this might be broken in non LUID modes after deleting entries in same session
+	 */
+	return OBEXGEN_GetCalendar(s, Entry);
+}
+
+GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+	unsigned char 		req[5000];
+	int			size=0;
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->CalIEL == -1) {
+		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Encode vCalendar */
+	GSM_EncodeVCALENDAR(req, &size, Entry, true, SonyEricsson_VCalendar);
+
+	/* Use correct function according to supported IEL */
+	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+		/* We need to grab LUID list now in order to keep position later */
+		error = OBEXGEN_InitCalLUID(s);
+		if (error != ERR_NONE) return error;
+
+		smprintf(s,"Adding calendar entry %d:\n%s\n", size, req);
+		Priv->UpdateCalLUID = true;
+		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size);
+		Entry->Location = Priv->CalLUIDCount;
+		return error;
+	} else {
+		/* I don't know add command for other levels, just plain send vCalendar */
+		Entry->Location = 0;
+		smprintf(s,"Sending calendar entry\n");
+		return OBEXGEN_SetFile(s, "gammu.vcs", req, size);
+	}
+}
+
+GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry, char *Data, int Size)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	char		*path;
+
+	error = OBEXGEN_InitCalLUID(s);
+	if (error != ERR_NONE) return error;
+
+	/* Check bounds */
+	if (Entry->Location > Priv->CalLUIDCount) return ERR_INVALIDLOCATION;
+	if (Priv->CalLUID[Entry->Location] == NULL) return ERR_INVALIDLOCATION;
+
+	/* Calculate path */
+	path = malloc(strlen(Priv->CalLUID[Entry->Location]) + 22); /* Length of string bellow */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/cal/luid/%s.vcs", Priv->CalLUID[Entry->Location]);
+	smprintf(s, "Seting vCalendar %s\n", path);
+
+	/* Grab vCalendar */
+	return OBEXGEN_SetFile(s, path, Data, Size);
+}
+
+GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry, char *Data, int Size)
+{
+	char		*path;
+
+	/* Calculate path */
+	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/cal/%d.vcs", Entry->Location);
+	smprintf(s, "Seting vCalendar %s\n", path);
+
+	/* Grab vCalendar */
+	return OBEXGEN_SetFile(s, path, Data, Size);
+}
+
+GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+	unsigned char 		req[5000];
+	int			size=0;
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->CalIEL == -1) {
+		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Encode vCalendar */
+	GSM_EncodeVCALENDAR(req, &size, Entry, true, SonyEricsson_VCalendar);
+
+	/* Use correct function according to supported IEL */
+	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+		return OBEXGEN_SetCalendarLUID(s, Entry, req, size);
+	} else if (Priv->CalIEL == 0x4) {
+		return OBEXGEN_SetCalendarIndex(s, Entry, req, size);
+	} else if (Priv->CalIEL == 0x2) {
+		/* Work on full calendar */
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error OBEXGEN_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
+{
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->CalIEL == -1) {
+		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Use correct function according to supported IEL */
+	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+		return OBEXGEN_SetCalendarLUID(s, Entry, "", 0);
+	} else if (Priv->CalIEL == 0x4) {
+		return OBEXGEN_SetCalendarIndex(s, Entry, "", 0);
+	} else if (Priv->CalIEL == 0x2) {
+		/* Work on full calendar */
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error OBEXGEN_DeleteAllCalendar(GSM_StateMachine *s)
+{
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->CalIEL == -1) {
+		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Use correct function according to supported IEL */
+	if (Priv->CalIEL == 0x2 || Priv->CalIEL == 0x4 || Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+		return OBEXGEN_SetFile(s, "telecom/cal.vcs", "", 0);
+	} else {
+		return ERR_NOTSUPPORTED;
+	}
+}
+
 GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	/* CONTINUE block */
 	{OBEXGEN_ReplyAddFilePart,	"\x90",0x00,0x00,ID_AddFile			},
@@ -1625,13 +1981,13 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTIMPLEMENTED,			/*	AddToDo			*/
 	NOTIMPLEMENTED,			/*	DeleteToDo		*/
 	NOTIMPLEMENTED,			/*	DeleteAllToDo		*/
-	NOTIMPLEMENTED,			/*	GetCalendarStatus	*/
-	NOTIMPLEMENTED,			/*	GetCalendar		*/
-    	NOTIMPLEMENTED,			/*  	GetNextCalendar		*/
-	NOTIMPLEMENTED,			/*	SetCalendar		*/
-	NOTIMPLEMENTED,			/*	AddCalendar		*/
-	NOTIMPLEMENTED,			/*	DeleteCalendar		*/
-	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
+	OBEXGEN_GetCalendarStatus,
+	OBEXGEN_GetCalendar,
+    	OBEXGEN_GetNextCalendar,
+	OBEXGEN_SetCalendar,
+	OBEXGEN_AddCalendar,
+	OBEXGEN_DeleteCalendar,
+	OBEXGEN_DeleteAllCalendar,
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
 	NOTSUPPORTED,			/*	GetNoteStatus		*/

@@ -612,6 +612,11 @@ GSM_Error N6510_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Statu
 	return ERR_NONE;
 #endif
 
+	/**
+	 * @todo This should be acquired from phone
+	 */
+	Status->Free = 100;
+
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
 	        /* Method 1 */
 		error=N71_65_GetCalendarInfo1(s, &s->Phone.Data.Priv.N6510.LastCalendar);

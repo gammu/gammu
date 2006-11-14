@@ -154,6 +154,10 @@ typedef enum {
 	 */
 	CAL_TEXT,
 	/**
+	 * Detailed description.
+	 */
+	CAL_DESCRIPTION,
+	/**
 	 * Location.
 	 */
 	CAL_LOCATION,
@@ -196,7 +200,11 @@ typedef enum {
 	/**
 	 * Repeating end.
 	 */
-	CAL_REPEAT_STOPDATE
+	CAL_REPEAT_STOPDATE,
+	/**
+	 * IrMC LUID which can be used for synchronisation.
+	 */
+	CAL_LUID,
 } GSM_CalendarType;
 
 /**
@@ -280,6 +288,10 @@ typedef struct {
  * Structure used for returning calendar status.
  */
 typedef struct {
+	/**
+	 * Number of free positions.
+	 */
+	int		     Free;
 	/**
 	 * Number of used positions.
 	 */
