@@ -462,8 +462,8 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 					memcpy(buffer, note->Entries[Text].Text+ofs, len);
 					memcpy(buffer+len, null, sizeof(null));
 					SaveVCALTextUTF8(Buffer, Length, buffer, "DESCRIPTION");
-		}
-		}
+				}
+			}
 		}
 
 		if (note->Type == GSM_CAL_MEETING && Location != -1) {
@@ -612,7 +612,6 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 				case 0xffff-1    : *Length+=sprintf(Buffer+(*Length), "RRULE:MD1%c%c",13,10); break;
 				case 0xffff 	 : *Length+=sprintf(Buffer+(*Length), "RRULE:YD1%c%c",13,10); break;
 			}
-		} else {
 		}
 
 		if (note->Type == GSM_CAL_CALL) {
@@ -630,25 +629,25 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	} else if (Version == SonyEricsson_VCalendar) {
 		*Length+=sprintf(Buffer+(*Length), "CATEGORIES:");
 		switch (note->Type) {
-		case GSM_CAL_MEETING:
-			*Length+=sprintf(Buffer+(*Length), "MEETING%c%c",13,10);
-			break;
-		case GSM_CAL_REMINDER:
-			*Length+=sprintf(Buffer+(*Length), "DATE%c%c",13,10);
-			break;
-		case GSM_CAL_TRAVEL:
-			*Length+=sprintf(Buffer+(*Length), "TRAVEL%c%c",13,10);
-			break;
-		case GSM_CAL_VACATION:
-			*Length+=sprintf(Buffer+(*Length), "VACATION%c%c",13,10);
-			break;
-		case GSM_CAL_BIRTHDAY:
-			*Length+=sprintf(Buffer+(*Length), "ANNIVERSARY%c%c",13,10);
-			break;
-		case GSM_CAL_MEMO:
-		default:
-			*Length+=sprintf(Buffer+(*Length), "MISCELLANEOUS%c%c",13,10);
-			break;
+			case GSM_CAL_MEETING:
+				*Length+=sprintf(Buffer+(*Length), "MEETING%c%c",13,10);
+				break;
+			case GSM_CAL_REMINDER:
+				*Length+=sprintf(Buffer+(*Length), "DATE%c%c",13,10);
+				break;
+			case GSM_CAL_TRAVEL:
+				*Length+=sprintf(Buffer+(*Length), "TRAVEL%c%c",13,10);
+				break;
+			case GSM_CAL_VACATION:
+				*Length+=sprintf(Buffer+(*Length), "VACATION%c%c",13,10);
+				break;
+			case GSM_CAL_BIRTHDAY:
+				*Length+=sprintf(Buffer+(*Length), "ANNIVERSARY%c%c",13,10);
+				break;
+			case GSM_CAL_MEMO:
+			default:
+				*Length+=sprintf(Buffer+(*Length), "MISCELLANEOUS%c%c",13,10);
+				break;
 		}
 
 		if (Time == -1) return ERR_UNKNOWN;
