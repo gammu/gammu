@@ -1270,6 +1270,10 @@ ret0:
  * Gets line from buffer.
  *
  * @param MergeLines: determine whether merge lines ending with = (quoted printable)
+ * @param Buffer: Data source to parse
+ * @param Pos: Current position in data
+ * @param OutBuffer: Buffer where line will be written
+ * @param MaxLen: Maximal length of data to write
  */
 void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, bool MergeLines)
 {

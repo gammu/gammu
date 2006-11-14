@@ -247,10 +247,6 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 		return ERR_NONE;
 	case 0xA0:
 		smprintf(s,"Part of file added OK\n");
-		/* FIXME: Optionally parse LUID reply here:
-		 * 4CL|00 |16 |01 |0C |300|300|300|322|300|300|300|300|300|300|41 L....0002000000A
-		 * 42B|02 |03 |311|377|355                                        B..175
-		 */
 		while(1) {
 			if (Pos >= msg.Length) break;
 			switch (msg.Buffer[Pos]) {
@@ -313,7 +309,9 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				break;
 			case 0xc3:
 				/* Length */
-				/* FIXME: ignored now */
+				/**
+				 * @todo: Lenght is ignored now
+				 */
 				Pos += 5;
 				break;
 			case 0xcb:
@@ -439,7 +437,9 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				return ERR_NONE;
 			case 0xc3:
 				/* Length */
-				/* FIXME: ignored now */
+				/**
+				 * @todo: ignored now
+				 */
 				Pos += 5;
 				break;
 			case 0xcb:
@@ -805,7 +805,6 @@ GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 	unsigned int		Current = 0, Pos;
 	unsigned char		req[200],req2[200];
 
-	/* FIXME: is this really not supported? */
 	if (s->Phone.Data.Priv.OBEXGEN.Service != OBEX_BrowsingFolders) {
 		return ERR_NOTSUPPORTED;
 	}
@@ -841,7 +840,6 @@ GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	unsigned char		req2[200];
 	unsigned int		Pos;
 
-	/* FIXME: is this really not supported? */
 	if (s->Phone.Data.Priv.OBEXGEN.Service != OBEX_BrowsingFolders) {
 		return ERR_NOTSUPPORTED;
 	}
@@ -1068,7 +1066,9 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const char *He
 	int		level = 0;
 
 	/* Free data if previously allocated */
-	/* FIXME: should free all data here, but this execution path is not supported now */
+	/**
+	 * @todo: should free all data here, but this execution path is not supported now
+	 */
 	if (*Data != NULL) free(*Data);
 
 	/* Grab file with listing */
@@ -1313,7 +1313,9 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, boo
 	}
 
 	/* Do real getting */
-	/* FIXME: this might be broken in non LUID modes after deleting entries in same session */
+	/**
+	 * @todo: this might be broken in non LUID modes after deleting entries in same session
+	 */
 	return OBEXGEN_GetMemory(s, Entry);
 }
 
