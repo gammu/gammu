@@ -2347,6 +2347,7 @@ static GSM_Error ALCATEL_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStat
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
 	status->Used = 0;
+	status->Free = ALCATEL_FREE_MEMORY;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
 	if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;

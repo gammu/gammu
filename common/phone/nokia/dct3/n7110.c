@@ -1378,6 +1378,10 @@ static GSM_Error N7110_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus
         /* Method 1 */
 	error=N71_65_GetCalendarInfo1(s, &s->Phone.Data.Priv.N7110.LastCalendar);
 	if (error!=ERR_NONE) return error;
+	/**
+	 * @todo This should be acquired from phone
+	 */
+	Status->Free = 100;
 	Status->Used = s->Phone.Data.Priv.N6510.LastCalendar.Number;
 	return ERR_NONE;
 

@@ -705,37 +705,58 @@ GSM_Error SONYERICSSON_DeleteToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 
 GSM_Error SONYERICSSON_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *status)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_GetCalendarStatus(s, status);
 }
 
 GSM_Error SONYERICSSON_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_GetCalendar(s, Note);
 }
 
 GSM_Error SONYERICSSON_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_GetNextCalendar(s, Note, start);
 }
 
 GSM_Error SONYERICSSON_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_DeleteCalendar(s, Note);
 }
 
 GSM_Error SONYERICSSON_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_AddCalendar(s, Note);
 }
 
 GSM_Error SONYERICSSON_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_SetCalendar(s, Note);
 }
 
 GSM_Error SONYERICSSON_DeleteAllCalendar (GSM_StateMachine *s)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_DeleteAllCalendar(s);
 }
 
 /* Native AT mode functions */

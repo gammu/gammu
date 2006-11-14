@@ -1125,21 +1125,12 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 					Text = Calendar->EntriesNum;
 					Calendar->EntriesNum++;
 				}
-				/* Append description to text field. */
 				if ((ReadVCALText(Line, "DESCRIPTION", Buff))) {
 					CopyUnicodeString(Buff,DecodeUnicodeSpecialChars(Buff));
-					if (Text == -1) {
-					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TEXT;
-					CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,Buff);
-					Text = Calendar->EntriesNum;
+					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_DESCRIPTION;
+					CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,
+						DecodeUnicodeSpecialChars(Buff));
 					Calendar->EntriesNum++;
-					} else {
-						char del[10];
-						size_t len= UnicodeLength(Calendar->Entries[Text].Text);
-						DecodeUTF8(del,"/",1);
-						CopyUnicodeString(Calendar->Entries[Text].Text+len*2,del);
-						CopyUnicodeString(Calendar->Entries[Text].Text+len*2+2,Buff);
-					}
 				}
 				if (ReadVCALText(Line, "LOCATION", Buff)) {
 					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_LOCATION;
@@ -1150,6 +1141,21 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				}
 			}
 
+			if ((ReadVCALText(Line, "X-IRMC-LUID", Buff))) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_LUID;
+				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,
+					DecodeUnicodeSpecialChars(Buff));
+				Calendar->EntriesNum++;
+			}
+			if ((ReadVCALText(Line, "CLASS", Buff))) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_PRIVATE;
+				if (mywstrncasecmp(Buff, "\0P\0U\0B\0L\0I\0C\0", 0)) {
+					Calendar->Entries[Calendar->EntriesNum].Number = 0;
+				} else {
+					Calendar->Entries[Calendar->EntriesNum].Number = 1;
+				}
+				Calendar->EntriesNum++;
+			}
 			if (ReadVCALDate(Line, "DTSTART", &Date, &is_date_only)) {
 				Calendar->Entries[Calendar->EntriesNum].Date = Date;
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_START_DATETIME;
