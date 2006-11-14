@@ -5,6 +5,9 @@
  * Generic OBEX access to phones, made addording to OBEX specification
  * version 1.3 and IrMC specification version 1.1 as available from IrDA
  * <http://www.irda.org>.
+ *
+ * @author Michal Cihar
+ * @author Marcin Wiacek
  */
 
 #define _GNU_SOURCE /* Needed for strndup */
@@ -186,6 +189,12 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 
 	return error;
 }
+
+/**
+ * \defgroup OBEXfiles OBEX transfer implementation
+ */
+
+/*@{*/
 
 static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -581,7 +590,6 @@ GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, 
 	return OBEXGEN_PrivGetFilePart(s,File,false);
 }
 
-
 /**
  * Merges filename from path and file
  */
@@ -866,7 +874,13 @@ GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	return OBEXGEN_ChangePath(s, File->Name, 0);
 }
 
-/* OBEX and IrMC helper functions start here */
+/*@}*/
+
+/**
+ * \defgroup OBEXhelper OBEX helper functions which are used in IrMC code
+ */
+
+/*@{*/
 
 /**
  * Grabs complete single file
@@ -947,6 +961,14 @@ GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 
 	return ERR_NONE;
 }
+
+/*@}*/
+
+/**
+ * \defgroup IrMChelper Generic IrMC helper functions
+ */
+
+/*@{*/
 
 /**
  * Parses selected information from IrMC info.log. Information parsed:
@@ -1149,7 +1171,13 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const const bo
 	return ERR_NONE;
 }
 
-/* Phonebook support starts here */
+/*@}*/
+
+/**
+ * \defgroup IrMCphonebook IrMC phonebook support
+ */
+
+/*@{*/
 
 /**
  * Parses pb/info.log (phonebook IrMC information log).
@@ -1499,7 +1527,13 @@ GSM_Error OBEXGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType
 	}
 }
 
-/* Common calendar/todo functions start here */
+/*@}*/
+
+/**
+ * \defgroup IrMCcaltodo IrMC common calendar and todo functions
+ */
+
+/*@{*/
 
 /**
  * Parses cal/info.log (calendar IrMC information log).
@@ -1528,7 +1562,13 @@ GSM_Error OBEXGEN_InitCalLUID(GSM_StateMachine *s)
 	return OBEXGEN_InitLUID(s, "telecom/cal.vcs", true, "BEGIN:VTODO", &(Priv->CalData), &(Priv->TodoOffsets), &(Priv->TodoCount), &(Priv->TodoLUID), &(Priv->TodoLUIDCount));
 }
 
-/* Calendar support starts here */
+/*@}*/
+
+/**
+ * \defgroup IrMCcalendar IrMC calendar support
+ */
+
+/*@{*/
 
 /**
  * Grabs calendar memory status
@@ -1850,6 +1890,16 @@ GSM_Error OBEXGEN_DeleteAllCalendar(GSM_StateMachine *s)
 		return ERR_NOTSUPPORTED;
 	}
 }
+
+/*@}*/
+
+/**
+ * \defgroup IrMCtodo IrMC todo support
+ */
+
+/*@{*/
+
+/*@}*/
 
 GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	/* CONTINUE block */
