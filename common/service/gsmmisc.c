@@ -219,8 +219,10 @@ bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 		dt->Minute	= atoi(minute);
 		dt->Second	= atoi(second);
 
-		/* FIXME, HACK*/
-		if (Buffer[15] == 'Z') dt->Timezone =2;
+		/**
+		 * @todo Handle properly timezone information
+		 */
+		if (Buffer[15] == 'Z') dt->Timezone = 0; /* Z = ZULU = GMT */
 	}
 
 	if (!CheckTime(dt)) {

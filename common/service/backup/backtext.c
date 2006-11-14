@@ -929,6 +929,12 @@ static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
             case TODO_PHONE:
 	        SaveBackupText(file, "Phone", ToDo->Entries[j].Text, UseUnicode);
                 break;
+            case TODO_DESCRIPTION:
+	        SaveBackupText(file, "Description", ToDo->Entries[j].Text, UseUnicode);
+                break;
+            case TODO_LOCATION:
+	        SaveBackupText(file, "Location", ToDo->Entries[j].Text, UseUnicode);
+                break;
         }
     }
     sprintf(buffer,"%c%c",13,10);
@@ -1668,6 +1674,18 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 	sprintf(buffer,"Text");
 	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
   	      	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
+        	ToDo->EntriesNum++;
+    	}
+
+	sprintf(buffer,"Description");
+	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
+        	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_DESCRIPTION;
+        	ToDo->EntriesNum++;
+    	}
+
+	sprintf(buffer,"Location");
+	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
+        	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LOCATION;
         	ToDo->EntriesNum++;
     	}
 

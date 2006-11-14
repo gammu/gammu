@@ -7054,6 +7054,12 @@ static void PrintToDo(GSM_ToDoEntry *ToDo)
 		case TODO_PHONE:
 			printmsg("Phone        : \"%s\"\n",DecodeUnicodeConsole(ToDo->Entries[j].Text));
 			break;
+		case TODO_DESCRIPTION:
+			printmsg("Description  : \"%s\"\n",DecodeUnicodeConsole(ToDo->Entries[j].Text));
+			break;
+		case TODO_LOCATION:
+			printmsg("Location     : \"%s\"\n",DecodeUnicodeConsole(ToDo->Entries[j].Text));
+			break;
 		}
 	}
 	printf("\n");
