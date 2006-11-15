@@ -73,6 +73,10 @@ typedef struct {
 	 */
 	char				*PbData;
 	/**
+	 * Number of read phonebook entries.
+	 */
+	int				ReadPhonebook;
+	/**
 	 * Number of entries in todo
 	 */
 	int				TodoCount;
@@ -92,6 +96,10 @@ typedef struct {
 	 * Whether to update TodoLUID after this request.
 	 */
 	bool				UpdateTodoLUID;
+	/**
+	 * Number of read todo entries.
+	 */
+	int				ReadTodo;
 	/**
 	 * Number of entries in calendar
 	 */
@@ -120,6 +128,10 @@ typedef struct {
 	 * Complete calendar data.
 	 */
 	char				*CalData;
+	/**
+	 * Number of read calendar entries.
+	 */
+	int				ReadCalendar;
 } GSM_Phone_OBEXGENData;
 
 #endif
