@@ -1389,7 +1389,13 @@ bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 			}
 			retval  = true;
 		} else {
-			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
+			/* Encode low ASCII chars */
+			if (src[i*2]*256 + src[i*2+1] < 32) {
+				sprintf(dest+j, "=%02X", src[i*2]*256+src[i*2+1]);
+				j = j+3;
+			} else {
+				j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
+			}
 	    	}
 	}
 	dest[j++]=0;
