@@ -285,8 +285,14 @@ void DecodeISO88591 (unsigned char *dest, const char *src, int len)
 	int 		i = 0;
 
 	while (src[i] != 0) {
-		dest[2 * i] = 0;
-		dest[(2 * i) + 1] = src[i];
+		/* Hack for Euro sign */
+		if ((unsigned char)src[i] == 0x80) {
+			dest[2 * i] = 0x20;
+			dest[(2 * i) + 1] = 0xac;
+		} else {
+			dest[2 * i] = 0;
+			dest[(2 * i) + 1] = src[i];
+		}
 		i++;
 	}
 	dest[2 * i] = 0;
