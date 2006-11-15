@@ -1339,20 +1339,32 @@ GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 
 GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, bool start)
 {
-	if (Entry->MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	GSM_Error 	error = ERR_EMPTY;;
 
 	/* Get  location */
 	if (start) {
 		Entry->Location = 1;
+		Priv->ReadPhonebook = 0;
 	} else {
 		Entry->Location++;
 	}
 
+	/* Have we read them all? */
+	if (Priv->ReadPhonebook == Priv->PbCount) {
+		return ERR_EMPTY;
+	}
+
 	/* Do real getting */
-	/**
-	 * @todo this might be broken in non LUID modes after deleting entries in same session
-	 */
-	return OBEXGEN_GetMemory(s, Entry);
+	while (error == ERR_EMPTY) {
+		error = OBEXGEN_GetMemory(s, Entry);
+		if (error == ERR_NONE) {
+			Priv->ReadPhonebook++;
+		} else if (error == ERR_EMPTY) {
+			Entry->Location++;
+		}
+	}
+	return error;
 }
 
 GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
@@ -1713,18 +1725,32 @@ GSM_Error OBEXGEN_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 
 GSM_Error OBEXGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry, bool start)
 {
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	GSM_Error 	error = ERR_EMPTY;;
+
 	/* Get  location */
 	if (start) {
 		Entry->Location = 1;
+		Priv->ReadCalendar = 0;
 	} else {
 		Entry->Location++;
 	}
 
+	/* Have we read them all? */
+	if (Priv->ReadCalendar == Priv->CalCount) {
+		return ERR_EMPTY;
+	}
+
 	/* Do real getting */
-	/**
-	 * @todo this might be broken in non LUID modes after deleting entries in same session
-	 */
-	return OBEXGEN_GetCalendar(s, Entry);
+	while (error == ERR_EMPTY) {
+		error = OBEXGEN_GetCalendar(s, Entry);
+		if (error == ERR_NONE) {
+			Priv->ReadCalendar++;
+		} else if (error == ERR_EMPTY) {
+			Entry->Location++;
+		}
+	}
+	return error;
 }
 
 GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
@@ -2047,18 +2073,32 @@ GSM_Error OBEXGEN_GetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 
 GSM_Error OBEXGEN_GetNextTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, bool start)
 {
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	GSM_Error 	error = ERR_EMPTY;;
+
 	/* Get  location */
 	if (start) {
 		Entry->Location = 1;
+		Priv->ReadTodo = 0;
 	} else {
 		Entry->Location++;
 	}
 
+	/* Have we read them all? */
+	if (Priv->ReadTodo == Priv->TodoCount) {
+		return ERR_EMPTY;
+	}
+
 	/* Do real getting */
-	/**
-	 * @todo this might be broken in non LUID modes after deleting entries in same session
-	 */
-	return OBEXGEN_GetTodo(s, Entry);
+	while (error == ERR_EMPTY) {
+		error = OBEXGEN_GetTodo(s, Entry);
+		if (error == ERR_NONE) {
+			Priv->ReadTodo++;
+		} else if (error == ERR_EMPTY) {
+			Entry->Location++;
+		}
+	}
+	return error;
 }
 
 GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
