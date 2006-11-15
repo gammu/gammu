@@ -11,6 +11,7 @@
 
 extern GSM_Error SONYERICSSON_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMachine *s);
 extern GSM_Error SONYERICSSON_ReplyGetTimeLocale(GSM_Protocol_Message msg, GSM_StateMachine *s);
+extern GSM_Error SONYERICSSON_ReplyGetFileSystemStatus(GSM_Protocol_Message msg, GSM_StateMachine *s);
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

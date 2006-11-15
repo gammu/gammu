@@ -4402,6 +4402,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 
 {SONYERICSSON_ReplyGetDateLocale,	"AT*ESDF?"		,0x00,0x00,ID_GetLocale		 },
 {SONYERICSSON_ReplyGetTimeLocale,	"AT*ESTF?"		,0x00,0x00,ID_GetLocale	 	 },
+{SONYERICSSON_ReplyGetFileSystemStatus,	"AT*EMEM"		,0x00,0x00,ID_FileSystemStatus 	 },
 #endif
 #ifdef GSM_ENABLE_ALCATEL
 /*  Why do I give Alcatel specific things here? It's simple, Alcatel needs
