@@ -147,6 +147,9 @@ GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 
 	Priv->Mode				= SONYERICSSON_ModeAT;
 
+	/* We might receive incoming event */
+	s->Phone.Data.BatteryCharge = NULL;
+
 	/* Init OBEX module also */
 	error = OBEXGEN_InitialiseVars(s);
 	if (error != ERR_NONE) return error;
@@ -257,14 +260,6 @@ GSM_Error SONYERICSSON_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_AddSMS(s, sms);
-}
-
-GSM_Error SONYERICSSON_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
-{
-	GSM_Error error;
-
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
-	return ATGEN_GetBatteryCharge(s, bat);
 }
 
 GSM_Error SONYERICSSON_GetSignalStrength(GSM_StateMachine *s, GSM_SignalQuality *sig)
@@ -909,7 +904,7 @@ GSM_Error SONYERICSSON_ReplyGetFileSystemStatus(GSM_Protocol_Message msg, GSM_St
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 		case AT_Reply_OK:
-			smprintf(s, "Time settings received\n");
+			smprintf(s, "File system status received\n");
 			pos = strstr(msg.Buffer, "*EMEM:");
 			if (pos == NULL) return ERR_UNKNOWNRESPONSE;
 			pos += 7;
@@ -941,6 +936,141 @@ GSM_Error SONYERICSSON_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemSt
 
 	return GSM_WaitFor (s, "AT*EMEM\r", 8, 0x00, 3, ID_FileSystemStatus);
 }
+
+GSM_Error SONYERICSSON_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	char	*pos, *pos2;
+	int	i;
+
+	smprintf(s, "Battery status received\n");
+	if (s->Phone.Data.BatteryCharge == NULL) {
+		return ERR_NONE;
+	}
+	pos = strstr(msg.Buffer, "*EBCA:");
+	/*
+	 * Calculate number of fields to detect version
+	 * of EBCA.
+	 */
+	pos2 = pos;
+	i = 0;
+	while (pos2 != NULL) {
+		i++;
+		pos2++;
+		pos2 = strchr(pos2, ',');
+	}
+
+	/**
+	 * @todo Some SE phones have different format,
+	 * we currently support only version 4.
+	 */
+	if (i == 14) {
+		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		pos += 7;
+		// vbat
+		s->Phone.Data.BatteryCharge->BatteryVoltage = atoi(pos);
+		pos = strchr(pos, ',');
+		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		pos += 1;
+		// dcio
+		s->Phone.Data.BatteryCharge->ChargeVoltage = atoi(pos);
+		pos = strchr(pos, ',');
+		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		pos += 1;
+		// iocharge
+		s->Phone.Data.BatteryCharge->ChargeCurrent = atoi(pos) / 10;
+		pos = strchr(pos, ',');
+		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		pos += 1;
+		// iphone
+		s->Phone.Data.BatteryCharge->PhoneCurrent = atoi(pos) / 10;
+		pos = strchr(pos, ',');
+		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		pos += 1;
+		// tempbattery
+		s->Phone.Data.BatteryCharge->BatteryTemperature = atoi(pos);
+		pos = strchr(pos, ',');
+		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		pos += 1;
+		// tempphone
+		s->Phone.Data.BatteryCharge->PhoneTemperature = atoi(pos);
+		pos = strchr(pos, ',');
+		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		pos += 1;
+		// chargingmethod
+		// Ignored for now
+		pos = strchr(pos, ',');
+		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		pos += 1;
+		// chargestate
+		i = atoi(pos);
+		switch(i) {
+			case 7:
+				s->Phone.Data.BatteryCharge->ChargeState = GSM_BatteryPowered;
+				break;
+			case 2:
+				s->Phone.Data.BatteryCharge->ChargeState = GSM_BatteryCharging;
+				break;
+			case 0:
+			case 3:
+			case 4:
+			case 5:
+			case 15:
+				s->Phone.Data.BatteryCharge->ChargeState = GSM_BatteryConnected;
+				break;
+			case 8:
+				s->Phone.Data.BatteryCharge->ChargeState = GSM_BatteryFull;
+				break;
+		}
+		pos = strchr(pos, ',');
+		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		pos += 1;
+		// remcapacity
+		s->Phone.Data.BatteryCharge->BatteryCapacity = atoi(pos);
+		pos = strchr(pos, ',');
+		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		pos += 1;
+		// remcapacitypercent
+		s->Phone.Data.BatteryCharge->BatteryPercent = atoi(pos);
+		/* We ignore rest: */
+		// powerdissipation
+		// noccycles
+		// nosostimer
+		// suspensioncause
+	} else {
+		return ERR_NOTSUPPORTED;
+	}
+
+	/* Do not further update this */
+	s->Phone.Data.BatteryCharge = NULL;
+	return ERR_NONE;
+}
+
+GSM_Error SONYERICSSON_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
+{
+	GSM_Error error;
+	int	i = 0;
+
+	s->Phone.Data.BatteryCharge = bat;
+
+	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+
+
+	/* Now try ericsson extended reporting */
+	error = GSM_WaitFor (s, "AT*EBCA=1\r", 10, 0x00, 3, ID_GetBatteryCharge);
+	if (error != ERR_NONE) {
+		/* Ty ATGEN state */
+		return ATGEN_GetBatteryCharge(s, bat);
+	}
+	/* Wait for async phone reply */
+	while (s->Phone.Data.BatteryCharge != NULL) {
+		error = GSM_WaitFor (s, "AT\r", 10, 0x00, 3, ID_GetBatteryCharge);
+		if (i == 20) break;
+	}
+	error = GSM_WaitFor (s, "AT*EBCA=0\r", 10, 0x00, 3, ID_GetBatteryCharge);
+	if (i == 20) return ERR_TIMEOUT;
+	return error;
+}
+
 
 GSM_Phone_Functions SONYERICSSONPhone = {
 	/* There is much more SE phones which support this! */

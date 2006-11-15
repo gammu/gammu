@@ -1807,7 +1807,22 @@ static void Monitor(int argc, char *argv[])
 		}
 		if (gshutdown) break;
 		if (Phone->GetBatteryCharge(&s,&BatteryCharge)==ERR_NONE) {
-            		if (BatteryCharge.BatteryPercent != -1) printmsg("Battery level     : %i percent\n", BatteryCharge.BatteryPercent);
+            		if (BatteryCharge.BatteryPercent != -1)
+				printmsg("Battery level     : %i percent\n", BatteryCharge.BatteryPercent);
+            		if (BatteryCharge.BatteryCapacity != -1)
+				printmsg("Battery capacity  : %i mAh\n", BatteryCharge.BatteryCapacity);
+            		if (BatteryCharge.BatteryTemperature != -1)
+				printmsg("Battery temp.     : %i C\n", BatteryCharge.BatteryTemperature);
+            		if (BatteryCharge.PhoneTemperature != -1)
+				printmsg("Phone temp.       : %i C\n", BatteryCharge.PhoneTemperature);
+            		if (BatteryCharge.BatteryVoltage != -1)
+				printmsg("Battery voltage   : %i mV\n", BatteryCharge.BatteryVoltage);
+            		if (BatteryCharge.ChargeVoltage != -1)
+				printmsg("Charge voltage    : %i mV\n", BatteryCharge.ChargeVoltage);
+            		if (BatteryCharge.ChargeCurrent != -1)
+				printmsg("Charge current    : %i mA\n", BatteryCharge.ChargeCurrent);
+            		if (BatteryCharge.PhoneCurrent != -1)
+				printmsg("Phone current     : %i mA\n", BatteryCharge.PhoneCurrent);
             		if (BatteryCharge.ChargeState != 0) {
                 		printmsg("Charge state      : ");
                 		switch (BatteryCharge.ChargeState) {
@@ -1816,6 +1831,12 @@ static void Monitor(int argc, char *argv[])
 						break;
                     			case GSM_BatteryConnected:
 						printmsg("battery connected, but not powered from battery");
+                        			break;
+                    			case GSM_BatteryCharging:
+						printmsg("battery connected and is being charged");
+                        			break;
+                    			case GSM_BatteryFull:
+						printmsg("battery connected and is fully charged");
                         			break;
                     			case GSM_BatteryNotConnected:
                         			printmsg("battery not connected");
