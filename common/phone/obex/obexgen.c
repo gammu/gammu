@@ -1421,6 +1421,12 @@ GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, cha
 	if (Entry->Location > Priv->PbLUIDCount) return ERR_INVALIDLOCATION;
 	if (Priv->PbLUID[Entry->Location] == NULL) return ERR_INVALIDLOCATION;
 
+	/* Forget entry if we're deleting */
+	if (Size == 0) {
+		free(Priv->PbLUID[Entry->Location]);
+		Priv->PbLUID[Entry->Location] = NULL;
+	}
+
 	/* Calculate path */
 	path = malloc(strlen(Priv->PbLUID[Entry->Location]) + 22); /* Length of string bellow */
 	if (path == NULL) {
@@ -1805,6 +1811,12 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 	if (Entry->Location > Priv->CalLUIDCount) return ERR_INVALIDLOCATION;
 	if (Priv->CalLUID[Entry->Location] == NULL) return ERR_INVALIDLOCATION;
 
+	/* Forget entry if we're deleting */
+	if (Size == 0) {
+		free(Priv->CalLUID[Entry->Location]);
+		Priv->CalLUID[Entry->Location] = NULL;
+	}
+
 	/* Calculate path */
 	path = malloc(strlen(Priv->CalLUID[Entry->Location]) + 22); /* Length of string bellow */
 	if (path == NULL) {
@@ -2152,6 +2164,12 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *D
 	/* Check bounds */
 	if (Entry->Location > Priv->TodoLUIDCount) return ERR_INVALIDLOCATION;
 	if (Priv->TodoLUID[Entry->Location] == NULL) return ERR_INVALIDLOCATION;
+
+	/* Forget entry if we're deleting */
+	if (Size == 0) {
+		free(Priv->TodoLUID[Entry->Location]);
+		Priv->TodoLUID[Entry->Location] = NULL;
+	}
 
 	/* Todoculate path */
 	path = malloc(strlen(Priv->TodoLUID[Entry->Location]) + 22); /* Length of string bellow */
