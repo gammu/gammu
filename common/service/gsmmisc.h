@@ -329,6 +329,9 @@ void GSM_IdentifyFileFormat(GSM_File *File);
 typedef struct {
 	int		Free;
 	int		Used;
+	int		UsedImages;
+	int		UsedSounds;
+	int		UsedThemes;
 } GSM_FileSystemStatus;
 
 bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *file);

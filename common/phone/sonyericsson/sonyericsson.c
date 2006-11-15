@@ -903,6 +903,44 @@ GSM_Error SONYERICSSON_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 3, ID_SetLocale);
 }
 
+GSM_Error SONYERICSSON_ReplyGetFileSystemStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	char *pos;
+
+	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+		case AT_Reply_OK:
+			smprintf(s, "Time settings received\n");
+			pos = strstr(msg.Buffer, "*EMEM:");
+			if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+			pos += 7;
+			s->Phone.Data.FileSystemStatus->Free = atoi(pos);
+			pos = strchr(pos, ',');
+			if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+			pos += 2;
+			s->Phone.Data.FileSystemStatus->Used = atoi(pos) - s->Phone.Data.FileSystemStatus->Free;
+			pos = strchr(pos, ',');
+			if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+			pos += 2;
+			s->Phone.Data.FileSystemStatus->UsedImages = atoi(pos);
+			pos = strchr(pos, ',');
+			if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+			pos += 2;
+			s->Phone.Data.FileSystemStatus->UsedSounds = atoi(pos);
+			pos = strchr(pos, ',');
+			if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+			pos += 2;
+			s->Phone.Data.FileSystemStatus->UsedThemes = atoi(pos);
+			return ERR_NONE;
+		default: return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error SONYERICSSON_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *Status)
+{
+	s->Phone.Data.FileSystemStatus = Status;
+
+	return GSM_WaitFor (s, "AT*EMEM\r", 8, 0x00, 3, ID_FileSystemStatus);
+}
 
 GSM_Phone_Functions SONYERICSSONPhone = {
 	/* There is much more SE phones which support this! */
@@ -1035,7 +1073,7 @@ GSM_Phone_Functions SONYERICSSONPhone = {
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	SONYERICSSON_GetFilePart,
 	SONYERICSSON_AddFilePart,
-	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
+	SONYERICSSON_GetFileSystemStatus,
 	SONYERICSSON_DeleteFile,
 	SONYERICSSON_AddFolder,
 	NOTSUPPORTED,			/* 	DeleteFolder		*/

@@ -7746,6 +7746,9 @@ static void GetFileSystemStatus(int argc, char *argv[])
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
 	    	Print_Error(error);
 		printmsg("\nFree memory: %i, total memory: %i\n",Status.Free,Status.Free+Status.Used);
+		if (Status.UsedImages != 0 || Status.UsedSounds != 0 || Status.UsedThemes != 0) {
+			printmsg("Used by: Images: %i, Sounds: %i, Themes: %i\n", Status.UsedImages, Status.UsedSounds, Status.UsedThemes);
+		}
 	}
 
 	GSM_Terminate();
