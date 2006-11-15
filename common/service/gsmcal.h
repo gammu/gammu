@@ -354,7 +354,11 @@ typedef enum {
 	/**
 	 * Number to call (Text).
 	 */
-	TODO_PHONE
+	TODO_PHONE,
+	/**
+	 * IrMC LUID which can be used for synchronisation.
+	 */
+	TODO_LUID,
 } GSM_ToDoType;
 
 /**
