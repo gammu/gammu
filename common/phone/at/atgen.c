@@ -18,7 +18,6 @@
 
 #include "samsung.h"
 #include "siemens.h"
-#include "sonyeric.h"
 
 #ifdef GSM_ENABLE_ALCATEL
 GSM_Error ALCATEL_ProtocolVersionReply (GSM_Protocol_Message, GSM_StateMachine *);
@@ -3793,7 +3792,6 @@ static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *N
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->Manufacturer==AT_Siemens ) return SIEMENS_GetNextCalendar(s,Note,start);
-	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_GetNextCalendar(s,Note,start);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -3810,7 +3808,6 @@ GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_AddCalendarNote(s, Note);
-	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_AddCalendarNote(s, Note);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -3819,7 +3816,6 @@ GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_DelCalendarNote(s, Note);
-	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_DelCalendarNote(s, Note);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -4519,14 +4515,14 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/*	GetNextMMSFileInfo	*/
 	ATGEN_GetBitmap,		/* 	GetBitmap		*/
 	ATGEN_SetBitmap,		/*	SetBitmap		*/
-	SONYERIC_GetToDoStatus,
+	NOTSUPPORTED,			/*	GetToDoStatus		*/
 	NOTSUPPORTED,			/*	GetToDo			*/
-	SONYERIC_GetNextToDo,
+	NOTSUPPORTED,			/*	GetNextToDo		*/
 	NOTSUPPORTED,			/*	SetToDo			*/
-	SONYERIC_AddToDo,
+	NOTSUPPORTED,			/*	AddToDo			*/
 	NOTSUPPORTED,			/*	DeleteToDo		*/
-	SONYERIC_DeleteAllToDo,
-	SONYERIC_GetCalendarStatus,
+	NOTSUPPORTED,			/*	DeleteAllToDo		*/
+	NOTSUPPORTED,			/*	GetCalendarStatus	*/
 	NOTIMPLEMENTED,			/*	GetCalendar		*/
     	ATGEN_GetNextCalendar,
 	NOTIMPLEMENTED,			/*	SetCalendar		*/
