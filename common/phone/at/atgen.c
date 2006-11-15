@@ -3693,9 +3693,6 @@ GSM_Error ATGEN_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine
     GSM_Phone_Data		*Data = &s->Phone.Data;
     int 			i;
 
-    Data->BatteryCharge->BatteryPercent = -1;
-    Data->BatteryCharge->ChargeState 	= 0;
-
     switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
         case AT_Reply_OK:
             smprintf(s, "Battery level received\n");
@@ -3719,6 +3716,7 @@ GSM_Error ATGEN_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine
 
 GSM_Error ATGEN_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 {
+	GSM_ClearBatteryCharge(bat);
 	s->Phone.Data.BatteryCharge = bat;
 	smprintf(s, "Getting battery charge\n");
 	return GSM_WaitFor (s, "AT+CBC\r", 7, 0x00, 4, ID_GetBatteryCharge);
@@ -4400,9 +4398,11 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
 {ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },
 
-{SONYERICSSON_ReplyGetDateLocale,	"AT*ESDF?"		,0x00,0x00,ID_GetLocale		 },
-{SONYERICSSON_ReplyGetTimeLocale,	"AT*ESTF?"		,0x00,0x00,ID_GetLocale	 	 },
-{SONYERICSSON_ReplyGetFileSystemStatus,	"AT*EMEM"		,0x00,0x00,ID_FileSystemStatus 	 },
+{SONYERICSSON_ReplyGetDateLocale,	"AT*ESDF?"	,0x00,0x00,ID_GetLocale		 },
+{SONYERICSSON_ReplyGetTimeLocale,	"AT*ESTF?"	,0x00,0x00,ID_GetLocale	 	 },
+{SONYERICSSON_ReplyGetFileSystemStatus,	"AT*EMEM"	,0x00,0x00,ID_FileSystemStatus 	 },
+{ATGEN_GenericReply,			"AT*EBCA"	,0x00,0x00,ID_GetBatteryCharge 	 },
+{SONYERICSSON_ReplyGetBatteryCharge,	"*EBCA:"	,0x00,0x00,ID_IncomingFrame	 },
 #endif
 #ifdef GSM_ENABLE_ALCATEL
 /*  Why do I give Alcatel specific things here? It's simple, Alcatel needs

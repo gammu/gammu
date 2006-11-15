@@ -666,6 +666,7 @@ static GSM_Error N6110_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *
         GSM_Error       error;
 
         smprintf(s, "Getting battery level\n");
+	GSM_ClearBatteryCharge(bat);
         if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_POWER_BATT)) {
                 error = DCT3_Netmonitor(s, 23, value);
                 if (error!=ERR_NONE) return error;

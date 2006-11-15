@@ -72,6 +72,8 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"NO ANSWER"	,1},	{"+COLP"	,1},
 		{"+CLIP"	,1},
 
+		{"*EBCA"	,1},
+
 		{"SDNDCRC ="	,1},	/* Samsung binary transfer end */
 
 		{NULL		,1}};

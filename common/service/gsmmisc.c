@@ -449,6 +449,19 @@ bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *
 	return true;
 }
 
+void GSM_ClearBatteryCharge(GSM_BatteryCharge *bat)
+{
+    bat->BatteryPercent = -1;
+    bat->ChargeState 	= 0;
+    bat->BatteryVoltage = -1;
+    bat->ChargeVoltage = -1;
+    bat->ChargeCurrent = -1;
+    bat->PhoneCurrent = -1;
+    bat->BatteryTemperature = -1;
+    bat->PhoneTemperature = -1;
+    bat->BatteryCapacity = -1;
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

@@ -1068,6 +1068,7 @@ static GSM_Error N6510_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x0A, 0x02, 0x00};
 
+	GSM_ClearBatteryCharge(bat);
 	s->Phone.Data.BatteryCharge = bat;
 	smprintf(s, "Getting battery level\n");
 	return GSM_WaitFor (s, req, 6, 0x17, 4, ID_GetBatteryCharge);
@@ -2644,7 +2645,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 
 	//no adding to SIM SMS
 	if (UnicodeLength(sms->Name)==0 || sms->Folder < 3) return ERR_NONE;
-	
+
 	folder = sms->Folder;
 	sms->Folder = 0;
 	N6510_GetSMSLocation(s, sms, &folderid, &location);

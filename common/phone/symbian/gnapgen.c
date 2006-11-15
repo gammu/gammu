@@ -168,6 +168,7 @@ static GSM_Error GNAPGEN_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge
 {
 	unsigned char req[] = {0x00, 0x01};
 
+	GSM_ClearBatteryCharge(bat);
 	s->Phone.Data.BatteryCharge = bat;
 	smprintf(s, "Getting battery level\n");
 	return GSM_WaitFor (s, req, 2, 0x04, 4, ID_GetBatteryCharge);
