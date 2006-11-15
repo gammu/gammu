@@ -3248,6 +3248,7 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 
 	ToDo->EntriesNum = Priv->CurrentFieldsCount;
 	ToDo->Priority = GSM_Priority_None;
+	ToDo->Type = GSM_CAL_MEMO;
 
 	for (i=0; i < Priv->CurrentFieldsCount; i++) {
 		if ((error = ALCATEL_GetFieldValue(s, ToDo->Location, Priv->CurrentFields[i]))!= ERR_NONE) return error;
@@ -3405,6 +3406,7 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 				} else {
 					ToDo->Entries[i-j].EntryType = TODO_CONTACTID;
 					ToDo->Entries[i-j].Number = Priv->ReturnInt;
+					ToDo->Type = GSM_CAL_CALL;
 				}
 				break;
 			case 9:
@@ -3415,6 +3417,7 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 					break;
 				}
 				ToDo->Entries[i-j].EntryType = TODO_PHONE;
+				ToDo->Type = GSM_CAL_CALL;
 				CopyUnicodeString(ToDo->Entries[i-j].Text, Priv->ReturnString);
 				break;
 			case 10:

@@ -409,6 +409,10 @@ typedef struct {
  */
 typedef struct {
 	/**
+	 * Type of todo note.
+	 */
+	GSM_CalendarNoteType    Type;
+	/**
 	 * Priority of entry.
 	 */
 	GSM_ToDo_Priority       Priority;

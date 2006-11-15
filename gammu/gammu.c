@@ -6999,6 +6999,38 @@ static void PrintToDo(GSM_ToDoEntry *ToDo)
 	GSM_Category		Category;
 
 	printmsg("Location     : %i\n",ToDo->Location);
+	printmsg("Note type    : ");
+	switch (ToDo->Type) {
+		case GSM_CAL_REMINDER 	: printmsg("Reminder (Date)\n");		break;
+		case GSM_CAL_CALL     	: printmsg("Call\n");			   	break;
+		case GSM_CAL_MEETING  	: printmsg("Meeting\n");		   	break;
+		case GSM_CAL_BIRTHDAY 	: printmsg("Birthday (Anniversary)\n");		break;
+		case GSM_CAL_MEMO	: printmsg("Memo (Miscellaneous)\n");		break;
+		case GSM_CAL_TRAVEL	: printmsg("Travel\n");			   	break;
+		case GSM_CAL_VACATION	: printmsg("Vacation\n");			break;
+		case GSM_CAL_ALARM    	: printmsg("Alarm\n");		   		break;
+		case GSM_CAL_DAILY_ALARM: printmsg("Daily alarm\n");		   	break;
+		case GSM_CAL_T_ATHL   	: printmsg("Training/Athletism\n"); 	   	break;
+		case GSM_CAL_T_BALL   	: printmsg("Training/Ball Games\n"); 	   	break;
+		case GSM_CAL_T_CYCL   	: printmsg("Training/Cycling\n"); 	   	break;
+		case GSM_CAL_T_BUDO   	: printmsg("Training/Budo\n"); 	   		break;
+		case GSM_CAL_T_DANC   	: printmsg("Training/Dance\n"); 	   	break;
+		case GSM_CAL_T_EXTR   	: printmsg("Training/Extreme Sports\n"); 	break;
+		case GSM_CAL_T_FOOT   	: printmsg("Training/Football\n"); 	   	break;
+		case GSM_CAL_T_GOLF   	: printmsg("Training/Golf\n"); 	   		break;
+		case GSM_CAL_T_GYM    	: printmsg("Training/Gym\n"); 	   		break;
+		case GSM_CAL_T_HORS   	: printmsg("Training/Horse Races\n");    	break;
+		case GSM_CAL_T_HOCK   	: printmsg("Training/Hockey\n"); 	  	break;
+		case GSM_CAL_T_RACE   	: printmsg("Training/Races\n"); 	   	break;
+		case GSM_CAL_T_RUGB   	: printmsg("Training/Rugby\n"); 	   	break;
+		case GSM_CAL_T_SAIL   	: printmsg("Training/Sailing\n"); 	   	break;
+		case GSM_CAL_T_STRE   	: printmsg("Training/Street Games\n");   	break;
+		case GSM_CAL_T_SWIM   	: printmsg("Training/Swimming\n"); 	   	break;
+		case GSM_CAL_T_TENN   	: printmsg("Training/Tennis\n"); 	   	break;
+		case GSM_CAL_T_TRAV   	: printmsg("Training/Travels\n");        	break;
+		case GSM_CAL_T_WINT   	: printmsg("Training/Winter Games\n");   	break;
+		default           	: printmsg("UNKNOWN\n");
+	}
 	printmsg("Priority     : ");
 	switch (ToDo->Priority) {
 		case GSM_Priority_Low	 : printmsg("Low\n");	 	break;

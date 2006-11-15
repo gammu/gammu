@@ -443,15 +443,12 @@ static void SaveNoteEntry(FILE *file, GSM_NoteEntry *Note, bool UseUnicode)
 	SaveBackupText(file, "", buffer, UseUnicode);
 }
 
-static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnicode)
+static void SaveCalendarType(FILE *file, GSM_CalendarNoteType Type, bool UseUnicode)
 {
-	int 	i;
 	char	buffer[1000];
 
-	sprintf(buffer,"Location = %d%c%c", Note->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
 	SaveBackupText(file, "", "Type = ", UseUnicode);
-	switch (Note->Type) {
+	switch (Type) {
 		case GSM_CAL_REMINDER 	: sprintf(buffer,"Reminder%c%c", 		13,10); break;
 		case GSM_CAL_CALL     	: sprintf(buffer,"Call%c%c", 			13,10); break;
 		case GSM_CAL_MEETING  	: sprintf(buffer,"Meeting%c%c", 		13,10); break;
@@ -482,6 +479,16 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
                 case GSM_CAL_T_WINT   	: sprintf(buffer,"Training/WinterGames%c%c", 	13,10); break;
 	}
 	SaveBackupText(file, "", buffer, UseUnicode);
+}
+
+static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnicode)
+{
+	int 	i;
+	char	buffer[1000];
+
+	sprintf(buffer,"Location = %d%c%c", Note->Location,13,10);
+	SaveBackupText(file, "", buffer, UseUnicode);
+	SaveCalendarType(file, Note->Type, UseUnicode);
 	for (i=0;i<Note->EntriesNum;i++) {
 		switch (Note->Entries[i].EntryType) {
 		case CAL_START_DATETIME:
@@ -878,6 +885,7 @@ static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
 
 	sprintf(buffer,"Location = %i%c%c",ToDo->Location,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
+	SaveCalendarType(file, ToDo->Type, UseUnicode);
 	switch (ToDo->Priority) {
 	case GSM_Priority_High:
 		sprintf(buffer,"Priority = High%c%c",13,10);
@@ -935,6 +943,9 @@ static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
             case TODO_LOCATION:
 	        SaveBackupText(file, "Location", ToDo->Entries[j].Text, UseUnicode);
                 break;
+	    case TODO_LUID:
+		SaveBackupText(file, "LUID", ToDo->Entries[j].Text, UseUnicode);
+		break;
         }
     }
     sprintf(buffer,"%c%c",13,10);
@@ -1433,6 +1444,72 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 	}
 }
 
+static void ReadCalendarType(INI_Section *file_info, char *section, GSM_CalendarNoteType *type, bool UseUnicode)
+{
+	unsigned char		buffer[10000];
+	char			*readvalue;
+
+	sprintf(buffer,"Type");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	*type = GSM_CAL_REMINDER;
+	if (readvalue!=NULL) {
+		if (mystrncasecmp(readvalue,"Call",0)) {
+			*type = GSM_CAL_CALL;
+		} else if (mystrncasecmp(readvalue,"Meeting",0)) {
+			*type = GSM_CAL_MEETING;
+		} else if (mystrncasecmp(readvalue,"Birthday",0)) {
+			*type = GSM_CAL_BIRTHDAY;
+		} else if (mystrncasecmp(readvalue,"Memo",0)) {
+			*type = GSM_CAL_MEMO;
+		} else if (mystrncasecmp(readvalue,"Travel",0)) {
+			*type = GSM_CAL_TRAVEL;
+		} else if (mystrncasecmp(readvalue,"Vacation",0)) {
+			*type = GSM_CAL_VACATION;
+		} else if (mystrncasecmp(readvalue,"DailyAlarm",0)) {
+			*type = GSM_CAL_DAILY_ALARM;
+		} else if (mystrncasecmp(readvalue,"Alarm",0)) {
+			*type = GSM_CAL_ALARM;
+		} else if (mystrncasecmp(readvalue,"Training/Athletism",0)) {
+			*type = GSM_CAL_T_ATHL;
+		} else if (mystrncasecmp(readvalue,"Training/BallGames",0)) {
+			*type = GSM_CAL_T_BALL;
+		} else if (mystrncasecmp(readvalue,"Training/Cycling",0)) {
+			*type = GSM_CAL_T_CYCL;
+		} else if (mystrncasecmp(readvalue,"Training/Budo",0)) {
+			*type = GSM_CAL_T_BUDO;
+		} else if (mystrncasecmp(readvalue,"Training/Dance",0)) {
+			*type = GSM_CAL_T_DANC;
+		} else if (mystrncasecmp(readvalue,"Training/ExtremeSports",0)) {
+			*type = GSM_CAL_T_EXTR;
+		} else if (mystrncasecmp(readvalue,"Training/Football",0)) {
+			*type = GSM_CAL_T_FOOT;
+		} else if (mystrncasecmp(readvalue,"Training/Golf",0)) {
+			*type = GSM_CAL_T_GOLF;
+		} else if (mystrncasecmp(readvalue,"Training/Gym",0)) {
+			*type = GSM_CAL_T_GYM;
+		} else if (mystrncasecmp(readvalue,"Training/HorseRaces",0)) {
+			*type = GSM_CAL_T_HORS;
+		} else if (mystrncasecmp(readvalue,"Training/Hockey",0)) {
+			*type = GSM_CAL_T_HOCK;
+		} else if (mystrncasecmp(readvalue,"Training/Races",0)) {
+			*type = GSM_CAL_T_RACE;
+		} else if (mystrncasecmp(readvalue,"Training/Rugby",0)) {
+			*type = GSM_CAL_T_RUGB;
+		} else if (mystrncasecmp(readvalue,"Training/Sailing",0)) {
+			*type = GSM_CAL_T_SAIL;
+		} else if (mystrncasecmp(readvalue,"Training/StreetGames",0)) {
+			*type = GSM_CAL_T_STRE;
+		} else if (mystrncasecmp(readvalue,"Training/Swimming",0)) {
+			*type = GSM_CAL_T_SWIM;
+		} else if (mystrncasecmp(readvalue,"Training/Tennis",0)) {
+			*type = GSM_CAL_T_TENN;
+		} else if (mystrncasecmp(readvalue,"Training/Travels",0)) {
+			*type = GSM_CAL_T_TRAV;
+		} else if (mystrncasecmp(readvalue,"Training/WinterGames",0)) {
+			*type = GSM_CAL_T_WINT;
+		}
+	}
+}
 static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_CalendarEntry *note, bool UseUnicode)
 {
 	unsigned char		buffer[10000],buf[20];
@@ -1443,66 +1520,8 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) note->Location = atoi(readvalue);
 
-	sprintf(buffer,"Type");
-	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	note->Type = GSM_CAL_REMINDER;
-	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"Call",0)) {
-			note->Type = GSM_CAL_CALL;
-		} else if (mystrncasecmp(readvalue,"Meeting",0)) {
-			note->Type = GSM_CAL_MEETING;
-		} else if (mystrncasecmp(readvalue,"Birthday",0)) {
-			note->Type = GSM_CAL_BIRTHDAY;
-		} else if (mystrncasecmp(readvalue,"Memo",0)) {
-			note->Type = GSM_CAL_MEMO;
-		} else if (mystrncasecmp(readvalue,"Travel",0)) {
-			note->Type = GSM_CAL_TRAVEL;
-		} else if (mystrncasecmp(readvalue,"Vacation",0)) {
-			note->Type = GSM_CAL_VACATION;
-		} else if (mystrncasecmp(readvalue,"DailyAlarm",0)) {
-			note->Type = GSM_CAL_DAILY_ALARM;
-		} else if (mystrncasecmp(readvalue,"Alarm",0)) {
-			note->Type = GSM_CAL_ALARM;
-		} else if (mystrncasecmp(readvalue,"Training/Athletism",0)) {
-			note->Type = GSM_CAL_T_ATHL;
-		} else if (mystrncasecmp(readvalue,"Training/BallGames",0)) {
-			note->Type = GSM_CAL_T_BALL;
-		} else if (mystrncasecmp(readvalue,"Training/Cycling",0)) {
-			note->Type = GSM_CAL_T_CYCL;
-		} else if (mystrncasecmp(readvalue,"Training/Budo",0)) {
-			note->Type = GSM_CAL_T_BUDO;
-		} else if (mystrncasecmp(readvalue,"Training/Dance",0)) {
-			note->Type = GSM_CAL_T_DANC;
-		} else if (mystrncasecmp(readvalue,"Training/ExtremeSports",0)) {
-			note->Type = GSM_CAL_T_EXTR;
-		} else if (mystrncasecmp(readvalue,"Training/Football",0)) {
-			note->Type = GSM_CAL_T_FOOT;
-		} else if (mystrncasecmp(readvalue,"Training/Golf",0)) {
-			note->Type = GSM_CAL_T_GOLF;
-		} else if (mystrncasecmp(readvalue,"Training/Gym",0)) {
-			note->Type = GSM_CAL_T_GYM;
-		} else if (mystrncasecmp(readvalue,"Training/HorseRaces",0)) {
-			note->Type = GSM_CAL_T_HORS;
-		} else if (mystrncasecmp(readvalue,"Training/Hockey",0)) {
-			note->Type = GSM_CAL_T_HOCK;
-		} else if (mystrncasecmp(readvalue,"Training/Races",0)) {
-			note->Type = GSM_CAL_T_RACE;
-		} else if (mystrncasecmp(readvalue,"Training/Rugby",0)) {
-			note->Type = GSM_CAL_T_RUGB;
-		} else if (mystrncasecmp(readvalue,"Training/Sailing",0)) {
-			note->Type = GSM_CAL_T_SAIL;
-		} else if (mystrncasecmp(readvalue,"Training/StreetGames",0)) {
-			note->Type = GSM_CAL_T_STRE;
-		} else if (mystrncasecmp(readvalue,"Training/Swimming",0)) {
-			note->Type = GSM_CAL_T_SWIM;
-		} else if (mystrncasecmp(readvalue,"Training/Tennis",0)) {
-			note->Type = GSM_CAL_T_TENN;
-		} else if (mystrncasecmp(readvalue,"Training/Travels",0)) {
-			note->Type = GSM_CAL_T_TRAV;
-		} else if (mystrncasecmp(readvalue,"Training/WinterGames",0)) {
-			note->Type = GSM_CAL_T_WINT;
-		}
-	}
+	ReadCalendarType(file_info,section, &(note->Type), UseUnicode);
+
 	note->EntriesNum = 0;
 	sprintf(buffer,"Text");
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
@@ -1659,6 +1678,8 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) ToDo->Location = atoi(readvalue);
 
+	ReadCalendarType(file_info,section, &(ToDo->Type), UseUnicode);
+
 	ToDo->Priority = GSM_Priority_High;
 	sprintf(buffer,"Priority");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -1686,6 +1707,12 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 	sprintf(buffer,"Location");
 	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LOCATION;
+        	ToDo->EntriesNum++;
+    	}
+
+	sprintf(buffer,"LUID");
+	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
+        	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LUID;
         	ToDo->EntriesNum++;
     	}
 

@@ -1047,6 +1047,10 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				return ERR_NONE;
 			}
 
+			if (strstr(Line,"CATEGORIES:")) {
+				GSM_Translate_Category(TRANSL_TO_GSM, Line+11, &ToDo->Type);
+			}
+
 			if (strncmp(Line, "UID:", 4) == 0) {
 				ReadVCALText(Line, "UID", Buff);  // Any use for UIDs?
 				break;
@@ -1118,6 +1122,15 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LUID;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
+				ToDo->EntriesNum++;
+			}
+			if ((ReadVCALText(Line, "CLASS", Buff))) {
+				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_PRIVATE;
+				if (mywstrncasecmp(Buff, "\0P\0U\0B\0L\0I\0C\0", 0)) {
+					ToDo->Entries[ToDo->EntriesNum].Number = 0;
+				} else {
+					ToDo->Entries[ToDo->EntriesNum].Number = 1;
+				}
 				ToDo->EntriesNum++;
 			}
 			break;
