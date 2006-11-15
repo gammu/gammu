@@ -911,7 +911,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			/* Read Mozilla calendar entries. Some of them will not be used here. Notably alarm time
 			   can defined in several ways. We will use the trigger value only since this is the value
 			   Mozilla calendar uses when importing ics-files. */
-			if (strncmp(Line,"UID:", 4) == 0) {
+			if (strncmp(Line, "UID:", 4) == 0) {
 				ReadVCALText(Line, "UID", Buff);  // Any use for UIDs?
 				break;
 			}
@@ -1047,7 +1047,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				return ERR_NONE;
 			}
 
-			if (strstr(Line,"UID:")) {
+			if (strncmp(Line, "UID:", 4) == 0) {
 				ReadVCALText(Line, "UID", Buff);  // Any use for UIDs?
 				break;
 			}
@@ -1082,21 +1082,21 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				ToDo->EntriesNum++;
 			}
 
-			if ((ReadVCALTextUTF8(Line, "SUMMARY", Buff))) {
+			if ((ReadVCALText(Line, "SUMMARY", Buff))) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
 				Text = ToDo->EntriesNum;
 				ToDo->EntriesNum++;
 			}
-			if ((ReadVCALTextUTF8(Line, "DESCRIPTION", Buff))) {
+			if ((ReadVCALText(Line, "DESCRIPTION", Buff))) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_DESCRIPTION;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
 				Text = ToDo->EntriesNum;
 				ToDo->EntriesNum++;
 			}
-			if ((ReadVCALTextUTF8(Line, "LOCATION", Buff))) {
+			if ((ReadVCALText(Line, "LOCATION", Buff))) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LOCATION;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));

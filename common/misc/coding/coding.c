@@ -280,6 +280,20 @@ unsigned char *DecodeUnicodeConsole(const unsigned char *src)
 }
 
 /* Encode string to Unicode. Len is number of input chars */
+void DecodeISO88591 (unsigned char *dest, const char *src, int len)
+{
+	int 		i = 0;
+
+	while (src[i] != 0) {
+		dest[2 * i] = 0;
+		dest[(2 * i) + 1] = src[i];
+		i++;
+	}
+	dest[2 * i] = 0;
+	dest[(2 * i) + 1] = 0;
+}
+
+/* Encode string to Unicode. Len is number of input chars */
 void EncodeUnicode (unsigned char *dest, const char *src, int len)
 {
 	int 		i_len = 0, o_len;
@@ -1422,6 +1436,29 @@ int DecodeWithUTF8Alphabet2(unsigned char *src, wchar_t *dest, int len)
 		return 3;
 	}
 	return 0;
+}
+
+
+/* Make Unicode string from ISO-8859-1 string */
+void DecodeISO88591QuotedPrintable(unsigned char *dest, const unsigned char *src, int len)
+{
+	int 		i = 0, j = 0;
+
+	while (i < len) {
+		if (src[i] == '=' && i + 2 < len
+			&& DecodeWithHexBinAlphabet(src[i + 1]) != -1
+			&& DecodeWithHexBinAlphabet(src[i + 2]) != -1) {
+			dest[j++] = 0;
+			dest[j++] = 16 * DecodeWithHexBinAlphabet(src[i + 1]) + DecodeWithHexBinAlphabet(src[i + 2]);
+			i += 2;
+		} else {
+			dest[j++] = 0;
+			dest[j++] = src[i];
+		}
+		i++;
+	}
+	dest[j++] = 0;
+	dest[j++] = 0;
 }
 
 /* Make Unicode string from UTF8 string */

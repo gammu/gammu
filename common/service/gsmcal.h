@@ -437,6 +437,10 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
  */
 typedef struct {
 	/**
+	 * Number of free positions.
+	 */
+	int	     Free;
+	/**
 	 * Number of used positions.
 	 */
 	int	     Used;

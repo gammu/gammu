@@ -3221,6 +3221,7 @@ static GSM_Error ALCATEL_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *stat
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
 	status->Used = 0;
+	status->Free = ALCATEL_FREE_MEMORY;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= ERR_NONE) return error;
 	if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;

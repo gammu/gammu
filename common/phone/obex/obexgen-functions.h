@@ -29,7 +29,13 @@ extern GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Ent
 extern GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry);
 extern GSM_Error OBEXGEN_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry);
 extern GSM_Error OBEXGEN_DeleteAllCalendar(GSM_StateMachine *s);
-
+extern GSM_Error OBEXGEN_GetTodoStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status);
+extern GSM_Error OBEXGEN_GetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry);
+extern GSM_Error OBEXGEN_GetNextTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, bool start);
+extern GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry);
+extern GSM_Error OBEXGEN_SetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry);
+extern GSM_Error OBEXGEN_DeleteTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry);
+extern GSM_Error OBEXGEN_DeleteAllTodo(GSM_StateMachine *s);
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
