@@ -1114,6 +1114,12 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				ToDo->Entries[ToDo->EntriesNum].Number	  = 1;
 				ToDo->EntriesNum++;
 			}
+			if ((ReadVCALText(Line, "X-IRMC-LUID", Buff))) {
+				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LUID;
+				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
+					DecodeUnicodeSpecialChars(Buff));
+				ToDo->EntriesNum++;
+			}
 			break;
 		}
 	}

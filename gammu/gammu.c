@@ -7060,6 +7060,9 @@ static void PrintToDo(GSM_ToDoEntry *ToDo)
 		case TODO_LOCATION:
 			printmsg("Location     : \"%s\"\n",DecodeUnicodeConsole(ToDo->Entries[j].Text));
 			break;
+		case TODO_LUID:
+			printmsg("LUID         : \"%s\"\n",DecodeUnicodeConsole(ToDo->Entries[j].Text));
+			break;
 		}
 	}
 	printf("\n");
