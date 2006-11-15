@@ -853,6 +853,11 @@ GSM_Error N6510_ReplyGetToDo1(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	smprintf(s, "TODO received method 1\n");
 
+	/**
+	 * @todo There might be better type.
+	 */
+	Last->Type = GSM_CAL_MEMO;
+
 	switch (msg.Buffer[4]) {
 		case 1  : Last->Priority = GSM_Priority_High; 	break;
 		case 2  : Last->Priority = GSM_Priority_Medium; break;
@@ -909,6 +914,11 @@ GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	unsigned long		diff;
 
 	smprintf(s, "ToDo received method 2\n");
+
+	/**
+	 * @todo There might be better type.
+	 */
+	Last->Type = GSM_CAL_MEMO;
 
 	switch (msg.Buffer[44]) {
 		case 0x10: Last->Priority = GSM_Priority_Low; 		break;
