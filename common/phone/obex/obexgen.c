@@ -184,7 +184,10 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 	} else if (strcmp(s->CurrentConfig->Model, "seobex") == 0) {
 		error = OBEXGEN_Connect(s,OBEX_IRMC);
 	} else if (strcmp(s->CurrentConfig->Model, "obexnone") == 0) {
-		error = OBEXGEN_Connect(s,OBEX_IRMC);
+		error = OBEXGEN_Connect(s,OBEX_None);
+	} else {
+		/* Default to file browsing */
+		error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
 	}
 
 	return error;
