@@ -1606,7 +1606,7 @@ GSM_Error OBEXGEN_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Sta
 	error = OBEXGEN_InitCalLUID(s);
 	if (error != ERR_NONE) return error;
 
-	Status->Used = Priv->TodoCount;
+	Status->Used = Priv->CalCount;
 
 	return OBEXGEN_GetCalInformation(s, &(Status->Free), NULL);
 
