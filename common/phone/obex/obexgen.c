@@ -1873,6 +1873,11 @@ GSM_Error OBEXGEN_DeleteAllCalendar(GSM_StateMachine *s)
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
+	/**
+	 * @todo This deletes complete todo AND calendar!
+	 */
+	return ERR_NOTIMPLEMENTED;
+
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
 	if (error != ERR_NONE) return error;
@@ -1898,6 +1903,332 @@ GSM_Error OBEXGEN_DeleteAllCalendar(GSM_StateMachine *s)
  */
 
 /*@{*/
+
+/**
+ * Grabs todo memory status
+ */
+GSM_Error OBEXGEN_GetTodoStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status)
+{
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	GSM_Error 	error;
+
+	error = OBEXGEN_InitCalLUID(s);
+	if (error != ERR_NONE) return error;
+
+	Status->Used = Priv->TodoCount;
+
+	return OBEXGEN_GetCalInformation(s, &(Status->Free), NULL);
+
+}
+
+/**
+ * Read memory by reading static index.
+ */
+GSM_Error OBEXGEN_GetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
+{
+	GSM_Error 	error;
+	char		*data;
+	char		*path;
+	int		pos = 0;
+	GSM_CalendarEntry	Cal;
+
+	/* Todoculate path */
+	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/cal/%d.vcs", Entry->Location);
+	smprintf(s, "Getting vTodo %s\n", path);
+
+	/* Grab vTodo */
+	error = OBEXGEN_GetTextFile(s, path, &data);
+	free(path);
+	if (error != ERR_NONE) return error;
+
+	/* Decode it */
+	error = GSM_DecodeVCALENDAR_VTODO(data, &pos, &Cal, Entry, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	free(data);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+/**
+ * Reads memory by reading from LUID location.
+ */
+GSM_Error OBEXGEN_GetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	char		*data;
+	char		*path;
+	int		pos = 0;
+	GSM_CalendarEntry	Cal;
+
+	error = OBEXGEN_InitCalLUID(s);
+	if (error != ERR_NONE) return error;
+
+	/* Check bounds */
+	if (Entry->Location > Priv->TodoLUIDCount) return ERR_EMPTY; /* Maybe invalid location? */
+	if (Priv->TodoLUID[Entry->Location] == NULL) return ERR_EMPTY;
+
+	/* Todoculate path */
+	path = malloc(strlen(Priv->TodoLUID[Entry->Location]) + 22); /* Length of string bellow */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/cal/luid/%s.vcs", Priv->TodoLUID[Entry->Location]);
+	smprintf(s, "Getting vTodo %s\n", path);
+
+	/* Grab vTodo */
+	error = OBEXGEN_GetTextFile(s, path, &data);
+	free(path);
+	if (error != ERR_NONE) return error;
+
+	/* Decode it */
+	error = GSM_DecodeVCALENDAR_VTODO(data, &pos, &Cal, Entry, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	free(data);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+/**
+ * Reads memory by reading from full data.
+ */
+GSM_Error OBEXGEN_GetTodoFull(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	int		pos = 0;
+	GSM_CalendarEntry	Cal;
+
+	/* Read todo data */
+	error = OBEXGEN_InitCalLUID(s);
+	if (error != ERR_NONE) return error;
+
+	/* Check bounds */
+	if (Entry->Location > Priv->TodoCount) return ERR_EMPTY; /* Maybe invalid location? */
+
+	/* Decode vTodo */
+	error = GSM_DecodeVCALENDAR_VTODO(Priv->CalData + Priv->TodoOffsets[Entry->Location], &pos, &Cal, Entry, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+GSM_Error OBEXGEN_GetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->CalIEL == -1) {
+		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Use correct function according to supported IEL */
+	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+		return OBEXGEN_GetTodoLUID(s, Entry);
+	} else if (Priv->CalIEL == 0x4) {
+		return OBEXGEN_GetTodoIndex(s, Entry);
+	} else if (Priv->CalIEL == 0x2) {
+		return OBEXGEN_GetTodoFull(s, Entry);
+	} else {
+		smprintf(s, "Can not read todo from IEL 1 phone\n");
+		return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error OBEXGEN_GetNextTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, bool start)
+{
+	/* Get  location */
+	if (start) {
+		Entry->Location = 1;
+	} else {
+		Entry->Location++;
+	}
+
+	/* Do real getting */
+	/**
+	 * @todo this might be broken in non LUID modes after deleting entries in same session
+	 */
+	return OBEXGEN_GetTodo(s, Entry);
+}
+
+GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
+{
+	unsigned char 		req[5000];
+	int			size=0;
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->CalIEL == -1) {
+		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Encode vTodo */
+	GSM_EncodeVTODO(req, &size, Entry, true, SonyEricsson_VToDo);
+
+	/* Use correct function according to supported IEL */
+	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+		/* We need to grab LUID list now in order to keep position later */
+		error = OBEXGEN_InitCalLUID(s);
+		if (error != ERR_NONE) return error;
+
+		smprintf(s,"Adding todo entry %d:\n%s\n", size, req);
+		Priv->UpdateTodoLUID = true;
+		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size);
+		Entry->Location = Priv->TodoLUIDCount;
+		return error;
+	} else {
+		/* I don't know add command for other levels, just plain send vTodo */
+		Entry->Location = 0;
+		smprintf(s,"Sending todo entry\n");
+		return OBEXGEN_SetFile(s, "gammu.vcs", req, size);
+	}
+}
+
+GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *Data, int Size)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	char		*path;
+
+	error = OBEXGEN_InitCalLUID(s);
+	if (error != ERR_NONE) return error;
+
+	/* Check bounds */
+	if (Entry->Location > Priv->TodoLUIDCount) return ERR_INVALIDLOCATION;
+	if (Priv->TodoLUID[Entry->Location] == NULL) return ERR_INVALIDLOCATION;
+
+	/* Todoculate path */
+	path = malloc(strlen(Priv->TodoLUID[Entry->Location]) + 22); /* Length of string bellow */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/cal/luid/%s.vcs", Priv->TodoLUID[Entry->Location]);
+	smprintf(s, "Seting vTodo %s\n", path);
+
+	/* Grab vTodo */
+	return OBEXGEN_SetFile(s, path, Data, Size);
+}
+
+GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *Data, int Size)
+{
+	char		*path;
+
+	/* Todoculate path */
+	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/cal/%d.vcs", Entry->Location);
+	smprintf(s, "Seting vTodo %s\n", path);
+
+	/* Grab vTodo */
+	return OBEXGEN_SetFile(s, path, Data, Size);
+}
+
+GSM_Error OBEXGEN_SetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
+{
+	unsigned char 		req[5000];
+	int			size=0;
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->CalIEL == -1) {
+		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Encode vTodo */
+	GSM_EncodeVTODO(req, &size, Entry, true, SonyEricsson_VToDo);
+
+	/* Use correct function according to supported IEL */
+	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+		return OBEXGEN_SetTodoLUID(s, Entry, req, size);
+	} else if (Priv->CalIEL == 0x4) {
+		return OBEXGEN_SetTodoIndex(s, Entry, req, size);
+	} else if (Priv->CalIEL == 0x2) {
+		/* Work on full todo */
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error OBEXGEN_DeleteTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
+{
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->CalIEL == -1) {
+		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Use correct function according to supported IEL */
+	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+		return OBEXGEN_SetTodoLUID(s, Entry, "", 0);
+	} else if (Priv->CalIEL == 0x4) {
+		return OBEXGEN_SetTodoIndex(s, Entry, "", 0);
+	} else if (Priv->CalIEL == 0x2) {
+		/* Work on full todo */
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error OBEXGEN_DeleteAllTodo(GSM_StateMachine *s)
+{
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/**
+	 * @todo This deletes complete todo AND calendar!
+	 */
+	return ERR_NOTIMPLEMENTED;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->CalIEL == -1) {
+		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Use correct function according to supported IEL */
+	if (Priv->CalIEL == 0x2 || Priv->CalIEL == 0x4 || Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+		return OBEXGEN_SetFile(s, "telecom/cal.vcs", "", 0);
+	} else {
+		return ERR_NOTSUPPORTED;
+	}
+}
 
 /*@}*/
 
@@ -2028,13 +2359,13 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTSUPPORTED,			/*	GetNextMMSFileInfo	*/
 	NOTIMPLEMENTED,			/*	GetBitmap		*/
 	NOTIMPLEMENTED,			/*	SetBitmap		*/
-	NOTIMPLEMENTED,			/*	GetToDoStatus		*/
-	NOTIMPLEMENTED,			/*	GetToDo			*/
-	NOTIMPLEMENTED,			/*	GetNextToDo		*/
-	NOTIMPLEMENTED,			/*	SetToDo			*/
-	NOTIMPLEMENTED,			/*	AddToDo			*/
-	NOTIMPLEMENTED,			/*	DeleteToDo		*/
-	NOTIMPLEMENTED,			/*	DeleteAllToDo		*/
+	OBEXGEN_GetTodoStatus,
+	OBEXGEN_GetTodo,
+	OBEXGEN_GetNextTodo,
+	OBEXGEN_SetTodo,
+	OBEXGEN_AddTodo,
+	OBEXGEN_DeleteTodo,
+	OBEXGEN_DeleteAllTodo,
 	OBEXGEN_GetCalendarStatus,
 	OBEXGEN_GetCalendar,
     	OBEXGEN_GetNextCalendar,

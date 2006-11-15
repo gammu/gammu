@@ -670,37 +670,58 @@ GSM_Error SONYERICSSON_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 
 GSM_Error SONYERICSSON_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_GetTodoStatus(s, status);
 }
 
 GSM_Error SONYERICSSON_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_GetTodo(s, ToDo);
 }
 
 GSM_Error SONYERICSSON_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_GetNextTodo(s, ToDo, start);
 }
 
 GSM_Error SONYERICSSON_DeleteAllToDo (GSM_StateMachine *s)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_DeleteAllTodo(s);
 }
 
 GSM_Error SONYERICSSON_AddToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_AddTodo(s, ToDo);
 }
 
 GSM_Error SONYERICSSON_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_SetTodo(s, ToDo);
 }
 
 GSM_Error SONYERICSSON_DeleteToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	return OBEXGEN_DeleteTodo(s, ToDo);
 }
 
 GSM_Error SONYERICSSON_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *status)

@@ -810,6 +810,10 @@ static GSM_Error N6510_GetToDoStatus1(GSM_StateMachine *s, GSM_ToDoStatus *statu
 	if (error != ERR_NONE) return error;
 
 	status->Used = LastToDo->Number;
+	/**
+	 * @todo This should be acquired from phone
+	 */
+	status->Free = 100;
 	return ERR_NONE;
 }
 
@@ -822,6 +826,10 @@ static GSM_Error N6510_GetToDoStatus2(GSM_StateMachine *s, GSM_ToDoStatus *statu
 	if (error!=ERR_NONE) return error;
 
 	status->Used = LastToDo->Number;
+	/**
+	 * @todo This should be acquired from phone
+	 */
+	status->Free = 100;
 	return ERR_NONE;
 }
 

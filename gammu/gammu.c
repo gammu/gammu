@@ -1799,11 +1799,11 @@ static void Monitor(int argc, char *argv[])
 		CHECKMEMORYSTATUS(MemStatus,MEM_ME,"Phone phonebook   : Used","Free");
 		if (gshutdown) break;
 		if (Phone->GetToDoStatus(&s, &ToDoStatus) == ERR_NONE) {
-			printmsg("ToDos             : Used %d\n", ToDoStatus.Used);
+			printmsg("ToDos             : Used %d, Free %d\n", ToDoStatus.Used, ToDoStatus.Free);
 		}
 		if (gshutdown) break;
 		if (Phone->GetCalendarStatus(&s, &CalendarStatus) == ERR_NONE) {
-			printmsg("Calendar          : Used %d\n", CalendarStatus.Used);
+			printmsg("Calendar          : Used %d, Free %d\n", CalendarStatus.Used, CalendarStatus.Free);
 		}
 		if (gshutdown) break;
 		if (Phone->GetBatteryCharge(&s,&BatteryCharge)==ERR_NONE) {
