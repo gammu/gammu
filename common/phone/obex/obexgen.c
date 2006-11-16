@@ -230,13 +230,16 @@ static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMach
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error OBEXGEN_ChangePath(GSM_StateMachine *s, char *Name, unsigned char Flag1)
+/**
+ * Changes current path on OBEX device.
+ */
+static GSM_Error OBEXGEN_ChangePath(GSM_StateMachine *s, char *Name, unsigned char Flag)
 {
 	unsigned char 	req[400];
 	int		Current = 2;
 
 	/* Flags */
-	req[0] = Flag1;
+	req[0] = Flag;
 	req[1] = 0x00;
 
 	/* Name block */
@@ -252,6 +255,43 @@ static GSM_Error OBEXGEN_ChangePath(GSM_StateMachine *s, char *Name, unsigned ch
 	req[Current++] = 0x00; req[Current++] = 0x01;
 
 	return GSM_WaitFor (s, req, Current, 0x85, 4, ID_SetPath);
+}
+
+/**
+ * Changes current path on OBEX device to match GSM_File one.
+ *
+ * @param s State machine
+ * @param File File which path we want to set
+ * @param DirOnly Whether to descend only do directory name of path or full path (/foo or /foo/bar.png)
+ * @param Buffer Optional buffer for storing last path part. Not used if NULL.
+ */
+static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, GSM_File *File, bool DirOnly, unsigned char *Buffer)
+{
+	GSM_Error		error;
+	unsigned int		Pos;
+	unsigned char		*req, req2[200];
+
+	if (Buffer == NULL) {
+		req = req2;
+	} else {
+		req = Buffer;
+	}
+
+	smprintf(s,"Changing to root\n");
+	error = OBEXGEN_ChangePath(s, NULL, 2);
+	if (error != ERR_NONE) return error;
+
+	Pos = 0;
+	do {
+		OBEXGEN_FindNextDir(File->ID_FullName, &Pos, req);
+		if (DirOnly && Pos == UnicodeLength(File->ID_FullName)) break;
+		smprintf(s,"Changing path down to %s\n", DecodeUnicodeString(req));
+		error=OBEXGEN_ChangePath(s, req, 2);
+		if (error != ERR_NONE) return error;
+		if (Pos == UnicodeLength(File->ID_FullName)) break;
+	} while (1);
+
+	return ERR_NONE;
 }
 
 static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -369,8 +409,8 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 {
 	GSM_Error		error;
 	int			j;
-	unsigned int		Pos2, Current = 0;
-	unsigned char 		req[2000],req2[200];
+	unsigned int		Current = 0;
+	unsigned char 		req[2000];
 
 	s->Phone.Data.File = File;
 
@@ -385,19 +425,8 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 			if (error != ERR_NONE) return error;
 		} else {
 			if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
-				smprintf(s,"Changing to root\n");
-				error = OBEXGEN_ChangePath(s, NULL, 2);
+				error = OBEXGEN_ChangeToFilePath(s, File, true, NULL);
 				if (error != ERR_NONE) return error;
-
-				Pos2 = 0;
-				do {
-					OBEXGEN_FindNextDir(File->ID_FullName, &Pos2, req2);
-					smprintf(s,"%s %i %zi\n",DecodeUnicodeString(req2),Pos2,UnicodeLength(File->ID_FullName));
-					smprintf(s,"Changing path down\n");
-					error=OBEXGEN_ChangePath(s, req2, 2);
-					if (error != ERR_NONE) return error;
-					if (Pos2 == UnicodeLength(File->ID_FullName)) break;
-				} while (1);
 			}
 		}
 
@@ -506,7 +535,7 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 
 static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bool FolderList)
 {
-	unsigned int 		Current = 0, Pos;
+	unsigned int 		Current = 0;
 	GSM_Error		error;
 	unsigned char 		req[2000], req2[200];
 
@@ -555,19 +584,8 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 				}
 			} else {
 				if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
-					smprintf(s,"Changing to root\n");
-					error = OBEXGEN_ChangePath(s, NULL, 2);
+					error = OBEXGEN_ChangeToFilePath(s, File, true, req2);
 					if (error != ERR_NONE) return error;
-
-					Pos = 0;
-					do {
-						OBEXGEN_FindNextDir(File->ID_FullName, &Pos, req2);
-						smprintf(s,"%s %i %zi\n",DecodeUnicodeString(req2),Pos,UnicodeLength(File->ID_FullName));
-						if (Pos == UnicodeLength(File->ID_FullName)) break;
-						smprintf(s,"Changing path down\n");
-						error=OBEXGEN_ChangePath(s, req2, 2);
-						if (error != ERR_NONE) return error;
-					} while (1);
 				} else {
 					CopyUnicodeString(req2,File->ID_FullName);
 				}
@@ -674,11 +692,6 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 
 		Priv->FilesLocationsUsed 	= 1;
 		Priv->FilesLocationsCurrent 	= 0;
-		Priv->FileLev			= 0;
-
-		smprintf(s,"Changing to root\n");
-		error = OBEXGEN_ChangePath(s, NULL, 2);
-		if (error != ERR_NONE) return error;
 
 		Current = 0;
 	}
@@ -696,15 +709,8 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 		Priv->FilesLocationsCurrent++;
 
 		if (File->Folder) {
-			while (File->Level <= Priv->FileLev) {
-				smprintf(s,"Changing path up (%d, %d)\n", File->Level, Priv->FileLev);
-				/* Flag 1 means cd .. */
-				error=OBEXGEN_ChangePath(s, NULL, 1 | 2);
-				if (error != ERR_NONE) return error;
-				Priv->FileLev--;
-			}
-
-			smprintf(s,"Level %i %i\n",File->Level,Priv->FileLev);
+			error = OBEXGEN_ChangeToFilePath(s, File, false, NULL);
+			if (error != ERR_NONE) return error;
 
 			File->Buffer		= NULL;
 			File->Used		= 0;
@@ -815,22 +821,6 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 			}
 
 			z = Priv->FilesLocationsCurrent;
-			if (z != 1) {
-				while (1) {
-					if (z == Priv->FilesLocationsUsed) break;
-					if (Priv->Files[z].Folder) {
-						if (Priv->Files[z].Level > File->Level) {
-							smprintf(s,"Changing path down\n");
-							error=OBEXGEN_ChangePath(s, File->Name, 2);
-							if (error != ERR_NONE) return error;
-							Priv->FileLev = File->Level;
-						}
-						break;
-					}
-					z++;
-				}
-			}
-
 			free(File->Buffer);
 		} else {
 			File->Used 	    	= Priv->Files[Priv->FilesLocationsCurrent-1].Used;

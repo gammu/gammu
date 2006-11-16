@@ -35,7 +35,6 @@ typedef enum {
 } OBEX_Service;
 
 typedef struct {
-	int				FileLev;
 	int				FilesLocationsUsed;
 	int				FilesLocationsCurrent;
 	GSM_File			Files[500];
