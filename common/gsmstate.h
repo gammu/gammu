@@ -1620,7 +1620,7 @@ typedef enum {
 	F_SLOWWRITE,	/* Use slower writing which some phone need			*/
 	F_SMSME900,	/* SMS in ME start from location 900 - case of Sagem		*/
 	F_ALCATEL,	/* Phone supports Alcatel protocol				*/
-	F_SONYERICSSON,	/* Phone supports Sony-Ericsson extensions			*/
+	F_OBEX,		/* Phone can switch to OBEX protocol from AT mode		*/
 } Feature;
 
 /* For models table */

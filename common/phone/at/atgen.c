@@ -841,6 +841,10 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	error = ATGEN_GetModel(s);
 	if (error != ERR_NONE) return error;
 
+	smprintf(s, "Checking for OBEX support\n");
+	/* We don't care about error here */
+	GSM_WaitFor (s, "AT+CPROT=?\r", 11, 0x00, 3, ID_SetOBEX);
+
 	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = true;
 	}
@@ -4280,12 +4284,59 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 	return ERR_NONE;
 }
 
+/**
+ * Detects what additional protocols are being supported
+ */
+GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	int			line = 0;
+	char			*str;
+	int			cur;
+
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+		smprintf(s, "Protocol entries received\n");
+		/* Walk through lines with +CPROT: */
+		while (Priv->Lines.numbers[line*2+1]!=0) {
+			str = GetLineString(msg.Buffer,Priv->Lines,line+1);
+			if (strncmp(str, "+CPROT: ", 7) == 0) {
+				if (sscanf(str, "+CPROT: %d,", &cur) == 1 || sscanf(str, "+CPROT: (%d,", &cur) == 1) {
+					smprintf(s, "OBEX seems to be supported!\n");
+					if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)) {
+						/*
+						 * We do not enable this automatically, because some
+						 * phones provide less features over OBEX than AT
+						 * using AT commands.
+						 */
+						smprintf(s, "Please consider adding F_OBEX to your phone capabilities in common/gsmstate.c\n");
+					} else {
+#ifdef GSM_ENABLE_SONYERICSSON
+						/* Tell OBEX driver that AT+CPROT=0 is supported */
+						s->Phone.Data.Priv.SONYERICSSON.HasOBEX = SONYERICSSON_OBEX_CPROT0;
+#endif
+					}
+				}
+			}
+			line++;
+		}
+		return ERR_NONE;
+	case AT_Reply_Error:
+		return ERR_UNKNOWN;
+	case AT_Reply_CMSError:
+	        return ATGEN_HandleCMSError(s);
+	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+}
+
 GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT\r"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,		"ATE1" 	 		,0x00,0x00,ID_EnableEcho	 },
 {ATGEN_GenericReply,		"AT+CMEE=" 		,0x00,0x00,ID_EnableErrorInfo	 },
 {ATGEN_GenericReply,		"AT+CKPD="		,0x00,0x00,ID_PressKey		 },
 {ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
+{ATGEN_ReplyCheckProt,		"AT+CPROT=?" 	 	,0x00,0x00,ID_SetOBEX		 },
 
 {ATGEN_ReplyGetCNMIMode,	"AT+CNMI=?"		,0x00,0x00,ID_GetCNMIMode	 },
 #ifdef GSM_ENABLE_CELLBROADCAST
@@ -4394,6 +4445,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 #ifdef GSM_ENABLE_SONYERICSSON
 {ATGEN_GenericReply,		"AT*EOBEX=?"		,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_GenericReply,		"AT+CPROT=0" 	 	,0x00,0x00,ID_SetOBEX		 },
 
 {ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
 {ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },
@@ -4414,7 +4466,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
  */
 {ATGEN_GenericReply,		"AT+IFC" 	 	,0x00,0x00,ID_SetFlowControl  	 },
 {ALCATEL_ProtocolVersionReply,	"AT+CPROT=?" 	 	,0x00,0x00,ID_AlcatelProtocol    },
-{ATGEN_GenericReply,		"AT+CPROT" 	 	,0x00,0x00,ID_AlcatelConnect	 },
+{ATGEN_GenericReply,		"AT+CPROT=16" 	 	,0x00,0x00,ID_AlcatelConnect	 },
 #endif
 
 {NULL,				"\x00"			,0x00,0x00,ID_None		 }
