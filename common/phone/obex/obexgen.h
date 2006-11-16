@@ -135,6 +135,10 @@ typedef struct {
 	 * Number of read calendar entries.
 	 */
 	int				ReadCalendar;
+	/**
+	 * Capability data.
+	 */
+	char				*OBEXCapability;
 } GSM_Phone_OBEXGENData;
 
 #endif
