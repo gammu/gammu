@@ -3810,6 +3810,14 @@ GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
+GSM_Error ATGEN_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_SetCalendarNote(s, Note);
+	return ERR_NOTSUPPORTED;
+}
+
 GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
@@ -4583,7 +4591,7 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/*	GetCalendarStatus	*/
 	NOTIMPLEMENTED,			/*	GetCalendar		*/
     	ATGEN_GetNextCalendar,
-	NOTIMPLEMENTED,			/*	SetCalendar		*/
+	ATGEN_SetCalendarNote,
 	ATGEN_AddCalendarNote,
 	ATGEN_DelCalendarNote,
 	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/
