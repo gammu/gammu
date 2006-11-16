@@ -160,9 +160,14 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->UpdateCalLUID = false;
 	Priv->UpdatePbLUID = false;
 	Priv->UpdateTodoLUID = false;
+	Priv->OBEXCapability = NULL;
 
 	return ERR_NONE;
 }
+
+/* Defined later */
+GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer);
+GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s);
 
 /**
  * Initializes OBEX connection in desired mode as defined by config.
@@ -176,12 +181,6 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 	error = OBEXGEN_InitialiseVars(s);
 	if (error != ERR_NONE) return error;
 
-	/**
-	 * @todo In IrMC mode we might read real model from
-	 * telecom/devinfo.txt, in browsing mode from obex capability
-	 * XML
-	 */
-	strcpy(s->Phone.Data.Model, "OBEX");
 
 	s->Phone.Data.VerNum 		= 0;
 	s->Phone.Data.Version[0] 	= 0;
@@ -201,8 +200,20 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 	}
 	/* Initialise connection */
 	error = OBEXGEN_Connect(s, Priv->InitialService);
+	if (error != ERR_NONE) return error;
 
-	return error;
+	/* Grab OBEX capability */
+	if (Priv->InitialService == OBEX_BrowsingFolders) {
+		error = OBEXGEN_GetTextFile(s, "", &(Priv->OBEXCapability));
+		if (error != ERR_NONE) return error;
+
+		error = OBEXGEN_GetModel(s);
+		if (error != ERR_NONE) return error;
+	} else {
+		strcpy(s->Phone.Data.Model, "OBEX");
+	}
+
+	return ERR_NONE;
 }
 
 /**
@@ -2337,6 +2348,118 @@ GSM_Error OBEXGEN_DeleteAllTodo(GSM_StateMachine *s)
 
 /*@}*/
 
+/**
+ * \defgroup OBEXcap Phone information using OBEX capability XML
+ */
+
+/*@{*/
+
+GSM_Error OBEXGEN_GetCapabilityField(GSM_StateMachine *s, const char *Name, char *Dest)
+{
+	char			*pos_start;
+	char			*pos_end;
+	char			match[200];
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	if (Priv->OBEXCapability == NULL) return ERR_NOTSUPPORTED;
+
+	/* Match XML begin tag */
+	match[0] = 0;
+	strcat(match, "<");
+	strcat(match, Name);
+	strcat(match, ">");
+
+	pos_start = strstr(Priv->OBEXCapability, match);
+	if (pos_start == NULL) return ERR_INVALIDDATA;
+	pos_start += strlen(match);
+
+	/* Match XML end tag */
+	match[0] = 0;
+	strcat(match, "</");
+	strcat(match, Name);
+	strcat(match, ">");
+
+	pos_end = strstr(pos_start, match);
+	if (pos_end == NULL) return ERR_INVALIDDATA;
+
+	/* Copy result string */
+	strncpy(Dest, pos_start, pos_end - pos_start);
+	Dest[pos_end - pos_start] = 0;
+
+	return ERR_NONE;
+}
+
+GSM_Error OBEXGEN_GetCapabilityFieldAttrib(GSM_StateMachine *s, const char *Name, const char *Attrib, char *Dest)
+{
+	char			*pos_start;
+	char			*pos_end;
+	char			match[200];
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	if (Priv->OBEXCapability == NULL) return ERR_NOTSUPPORTED;
+
+	/* Match XML begin tag */
+	match[0] = 0;
+	strcat(match, "<");
+	strcat(match, Name);
+
+	pos_start = strstr(Priv->OBEXCapability, match);
+	if (pos_start == NULL) return ERR_INVALIDDATA;
+	pos_start += strlen(match);
+
+	/* Match attribute begin */
+	match[0] = 0;
+	strcat(match, Attrib);
+	strcat(match, "=\"");
+
+	pos_start = strstr(pos_start, match);
+	if (pos_start == NULL) return ERR_INVALIDDATA;
+	pos_start += strlen(match);
+
+	/* Match end quote */
+	pos_end = strchr(pos_start, '"');
+	if (pos_end == NULL) return ERR_INVALIDDATA;
+
+	/* Copy result string */
+	strncpy(Dest, pos_start, pos_end - pos_start);
+	Dest[pos_end - pos_start] = 0;
+
+	return ERR_NONE;
+}
+
+GSM_Error OBEXGEN_GetManufacturer(GSM_StateMachine *s)
+{
+	if (s->Phone.Data.Manufacturer[0] != 0) return ERR_NONE;
+
+	return OBEXGEN_GetCapabilityField(s, "Manufacturer", s->Phone.Data.Manufacturer);
+}
+
+GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s)
+{
+	if (s->Phone.Data.Model[0] != 0) return ERR_NONE;
+
+	return OBEXGEN_GetCapabilityField(s, "Model", s->Phone.Data.Model);
+}
+
+GSM_Error OBEXGEN_GetFirmware(GSM_StateMachine *s)
+{
+	GSM_Error		error;
+
+	if (s->Phone.Data.Version[0] != 0) return ERR_NONE;
+
+	error = OBEXGEN_GetCapabilityFieldAttrib(s, "SW", "Version", s->Phone.Data.Version);
+	if (error != ERR_NONE) return error;
+	return OBEXGEN_GetCapabilityFieldAttrib(s, "SW", "Date", s->Phone.Data.VerDate);
+}
+
+GSM_Error OBEXGEN_GetIMEI(GSM_StateMachine *s)
+{
+	if (s->Phone.Data.IMEI[0] != 0) return ERR_NONE;
+
+	return OBEXGEN_GetCapabilityField(s, "SN", s->Phone.Data.IMEI);
+}
+
+/*@}*/
 GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	/* CONTINUE block */
 	{OBEXGEN_ReplyAddFilePart,	"\x90",0x00,0x00,ID_AddFile			},
@@ -2375,10 +2498,10 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NONEFUNCTION,			/*	Terminate 		*/
 	GSM_DispatchMessage,
 	NOTIMPLEMENTED,			/* 	ShowStartInfo		*/
-	NONEFUNCTION,			/*	GetManufacturer		*/
-	NONEFUNCTION,			/*	GetModel		*/
-	NONEFUNCTION,			/*	GetFirmware		*/
-	NOTIMPLEMENTED,			/*	GetIMEI			*/
+	OBEXGEN_GetManufacturer,
+	OBEXGEN_GetModel,
+	OBEXGEN_GetFirmware,
+	OBEXGEN_GetIMEI,
 	NOTIMPLEMENTED,			/*	GetOriginalIMEI		*/
 	NOTIMPLEMENTED,			/*	GetManufactureMonth	*/
 	NOTIMPLEMENTED,			/*	GetProductCode		*/
