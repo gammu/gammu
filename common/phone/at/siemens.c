@@ -228,7 +228,7 @@ GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
-	if (start) Note->Location=Priv->FirstCalendarPos;
+	if (start) Note->Location = Priv->FirstCalendarPos;
 	s->Phone.Data.Cal 	= Note;
 	Note->EntriesNum 	= 0;
 	smprintf(s, "Getting VCALENDAR\n");
@@ -239,7 +239,6 @@ GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 		error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetCalendarNote);
 		if ((error!=ERR_NONE) && (error!=ERR_EMPTY)) return ERR_INVALIDLOCATION;
 		Note->Location 		= Location;
-		Priv->FirstCalendarPos 	= Location;
 		if (Location > MAX_VCALENDAR_LOCATION) return ERR_EMPTY;
 		if (error==ERR_NONE) return error;
 	}
