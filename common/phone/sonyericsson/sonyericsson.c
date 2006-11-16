@@ -69,7 +69,7 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 	GSM_Error		error;
 
 	/* Is OBEX mode supported? */
-	if (!Priv->HasOBEX) {
+	if (Priv->HasOBEX == SONYERICSSON_OBEX_None) {
 		return ERR_NOTSUPPORTED;
 	}
 
@@ -95,7 +95,23 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 	dbgprintf ("Changing to OBEX mode\n");
 
 	/* Switch phone to OBEX */
-	error=GSM_WaitFor (s, "AT*EOBEX\r", 9, 0x00, 4, ID_SetOBEX);
+	error = ERR_NOTSUPPORTED;
+	switch (Priv->HasOBEX) {
+		case SONYERICSSON_OBEX_CPROT0:
+			/* 3GPP TS 27.007 standard */
+			error = GSM_WaitFor (s, "AT+CPROT=0\r", 11, 0x00, 4, ID_SetOBEX);
+			break;
+		case SONYERICSSON_OBEX_EOBEX:
+			/* Sony-Ericsson extension */
+			error = GSM_WaitFor (s, "AT*EOBEX\r", 9, 0x00, 4, ID_SetOBEX);
+			break;
+		case SONYERICSSON_OBEX_MODE22:
+			/* Motorola extension */
+			error = GSM_WaitFor (s, "AT+MODE=22\r", 11, 0x00, 4, ID_SetOBEX);
+			break;
+		case SONYERICSSON_OBEX_None:
+			break;
+	}
 	if (error != ERR_NONE) return error;
 
 	/* Tell OBEX module it has no service selected */
@@ -154,16 +170,29 @@ GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 	error = OBEXGEN_InitialiseVars(s);
 	if (error != ERR_NONE) return error;
 
+	/* This can be filled in by AT module init */
+	Priv->HasOBEX = SONYERICSSON_OBEX_None;
+
 	/* Init AT module */
 	error = ATGEN_Initialise(s);
 	if (error != ERR_NONE) return error;
 
-	/* Do we have OBEX capability? */
-	error = GSM_WaitFor (s, "AT*EOBEX=?\r", 11, 0x00, 4, ID_SetOBEX);
+#if 0
+	/* Do we have AT+CPROT capability? */
+	error = GSM_WaitFor (s, "AT+CPROT=?\r", 11, 0x00, 4, ID_SetOBEX);
 	if (error == ERR_NONE) {
-		Priv->HasOBEX = true;
+		Priv->HasOBEX = SONYERICSSON_OBEX_EOBEX;
 	} else {
-		Priv->HasOBEX = false;
+		Priv->HasOBEX = SONYERICSSON_OBEX_None;
+	}
+#endif
+
+	/* Do we have OBEX capability? */
+	if (Priv->HasOBEX == SONYERICSSON_OBEX_None) {
+		error = GSM_WaitFor (s, "AT*EOBEX=?\r", 11, 0x00, 4, ID_SetOBEX);
+		if (error == ERR_NONE) {
+			Priv->HasOBEX = SONYERICSSON_OBEX_EOBEX;
+		}
 	}
 
 	return ERR_NONE;

@@ -31,6 +31,15 @@ typedef enum {
 } GSM_SONYERICSSON_Mode;
 
 /**
+ * Do we support switch to OBEX?
+ */
+typedef enum {
+	SONYERICSSON_OBEX_None = 1, /**< No OBEX switch command */
+	SONYERICSSON_OBEX_EOBEX, /**< Switch using AT*EOBEX */
+	SONYERICSSON_OBEX_CPROT0, /**< Switch using AT+CPROT=0 */
+	SONYERICSSON_OBEX_MODE22, /**< Switch using AT+MODE=22 */
+} GSM_SONYERICSSON_OBEX;
+/**
  * SONYERICSSON driver private data.
  */
 typedef struct {
@@ -44,7 +53,7 @@ typedef struct {
 	/**
 	 * Whether phone support AT*EOBEX
 	 */
-	bool			HasOBEX;
+	GSM_SONYERICSSON_OBEX	HasOBEX;
 } GSM_Phone_SONYERICSSONData;
 #endif
 
