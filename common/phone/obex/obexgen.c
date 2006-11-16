@@ -77,6 +77,16 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 		0x00,			/* no flags 			*/
 		0x04,0x00};		/* 0x2000 max size of packet 	*/
 
+	/* Are we requsted for initial service? */
+	if (service == 0) {
+		/* If not set, stay as we are configured now */
+		if (s->Phone.Data.Priv.OBEXGEN.InitialService == 0) {
+			return ERR_NONE;
+		}
+		service = s->Phone.Data.Priv.OBEXGEN.InitialService;
+	}
+
+	/* Don't we already have correct service? */
 	if (service == s->Phone.Data.Priv.OBEXGEN.Service) return ERR_NONE;
 
 	/* Disconnect from current service, if we were connected */
@@ -130,6 +140,7 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	Priv->Service = 0;
+	Priv->InitialService = 0;
 	Priv->PbLUID = NULL;
 	Priv->PbData = NULL;
 	Priv->PbLUIDCount = 0;
@@ -159,6 +170,7 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 {
 	GSM_Error	error = ERR_NONE;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
 	/* Init variables */
 	error = OBEXGEN_InitialiseVars(s);
@@ -175,20 +187,20 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 	s->Phone.Data.Version[0] 	= 0;
 	s->Phone.Data.Manufacturer[0] 	= 0;
 
-	/* Initialise connection for desired type */
+	/* Detect connection for desired type */
+	Priv->InitialService = OBEX_BrowsingFolders;
 	smprintf(s, "Connected using model %s\n", s->CurrentConfig->Model);
 	if (strcmp(s->CurrentConfig->Model, "obex") == 0) {
-		error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
+		Priv->InitialService = OBEX_BrowsingFolders;
 	} else if (strcmp(s->CurrentConfig->Model, "obexirmc") == 0) {
-		error = OBEXGEN_Connect(s,OBEX_IRMC);
+		Priv->InitialService = OBEX_IRMC;
 	} else if (strcmp(s->CurrentConfig->Model, "seobex") == 0) {
-		error = OBEXGEN_Connect(s,OBEX_IRMC);
+		Priv->InitialService = OBEX_IRMC;
 	} else if (strcmp(s->CurrentConfig->Model, "obexnone") == 0) {
-		error = OBEXGEN_Connect(s,OBEX_None);
-	} else {
-		/* Default to file browsing */
-		error = OBEXGEN_Connect(s,OBEX_BrowsingFolders);
+		Priv->InitialService = OBEX_None;
 	}
+	/* Initialise connection */
+	error = OBEXGEN_Connect(s, Priv->InitialService);
 
 	return error;
 }
@@ -353,7 +365,7 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
 	GSM_Error		error;
 	int			j;
@@ -427,6 +439,17 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int
 		error=GSM_WaitFor (s, req, Current, 0x02, 4, ID_AddFile);
 	}
 	return error;
+}
+
+GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+{
+	GSM_Error		error;
+
+	/* Go to default service */
+	error = OBEXGEN_Connect(s, 0);
+	if (error != ERR_NONE) return error;
+
+	return OBEXGEN_PrivAddFilePart(s, File, Pos, Handle);
 }
 
 static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -589,8 +612,15 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 
 GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
 {
+	GSM_Error		error;
+
+	/* Go to default service */
+	error = OBEXGEN_Connect(s, 0);
+	if (error != ERR_NONE) return error;
+
+	(*Handle) = 0;
 	(*Size) = 0;
-	return OBEXGEN_PrivGetFilePart(s,File,false);
+	return OBEXGEN_PrivGetFilePart(s, File, false);
 }
 
 /**
@@ -624,6 +654,10 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 	GSM_Error		error;
 	unsigned char		Line[500],Line2[500],*name,*size;
 	int			Pos,i,j,num,pos2,Current,z;
+
+	/* Go to default service */
+	error = OBEXGEN_Connect(s, 0);
+	if (error != ERR_NONE) return error;
 
 	/* We can browse files only when using browse service */
 	if (s->Phone.Data.Priv.OBEXGEN.Service != OBEX_BrowsingFolders) {
@@ -820,6 +854,10 @@ GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 	unsigned int		Current = 0, Pos;
 	unsigned char		req[200],req2[200];
 
+	/* Go to default service */
+	error = OBEXGEN_Connect(s, 0);
+	if (error != ERR_NONE) return error;
+
 	if (s->Phone.Data.Priv.OBEXGEN.Service != OBEX_BrowsingFolders) {
 		return ERR_NOTSUPPORTED;
 	}
@@ -854,6 +892,10 @@ GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	GSM_Error		error;
 	unsigned char		req2[200];
 	unsigned int		Pos;
+
+	/* Go to default service */
+	error = OBEXGEN_Connect(s, 0);
+	if (error != ERR_NONE) return error;
 
 	if (s->Phone.Data.Priv.OBEXGEN.Service != OBEX_BrowsingFolders) {
 		return ERR_NOTSUPPORTED;
@@ -892,7 +934,6 @@ GSM_Error OBEXGEN_GetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 {
 	GSM_Error error = ERR_NONE;
 	GSM_File File;
-	int Handle;
 
 	/* Clear structure */
 	memset(&File, 0, sizeof(GSM_File));
@@ -902,7 +943,7 @@ GSM_Error OBEXGEN_GetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 
 	/* Grab complete file */
 	while (error == ERR_NONE) {
-		error = OBEXGEN_GetFilePart(s, &File, &Handle, len);
+		error = OBEXGEN_PrivGetFilePart(s, &File, false);
 	}
 
 	/* We should get ERR_EMPTY at the end of file */
@@ -958,7 +999,7 @@ GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 
 	/* Send file */
 	while (error == ERR_NONE) {
-		error = OBEXGEN_AddFilePart(s, &File, &Pos, &Handle);
+		error = OBEXGEN_PrivAddFilePart(s, &File, &Pos, &Handle);
 	}
 	if (error != ERR_EMPTY) return error;
 

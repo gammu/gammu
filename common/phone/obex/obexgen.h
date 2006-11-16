@@ -43,6 +43,10 @@ typedef struct {
 
 	int				FrameSize;
 	OBEX_Service			Service;
+	/**
+	 * Initial service used in configuration (this will be used for filesystem browsing)
+	 */
+	OBEX_Service			InitialService;
 
 	/**
 	 * Number of entries in phonebook
