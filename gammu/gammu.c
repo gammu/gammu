@@ -7897,6 +7897,9 @@ static void GetFileSystem(int argc, char *argv[])
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
 	    	Print_Error(error);
 		printmsg("\nPhone memory: %i bytes (free %i bytes, used %i bytes)\n",Status.Free+Status.Used,Status.Free,Status.Used);
+		if (Status.UsedImages != 0 || Status.UsedSounds != 0 || Status.UsedThemes != 0) {
+			printmsg("Used by: Images: %i, Sounds: %i, Themes: %i\n", Status.UsedImages, Status.UsedSounds, Status.UsedThemes);
+		}
 	} else {
 		printmsg("\nUsed in phone: %li bytes",usedphone);
 		if (MemoryCard) printmsg(", used in card: %li bytes",usedcard);

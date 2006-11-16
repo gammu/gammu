@@ -1303,8 +1303,10 @@ static OnePhoneModel allmodels[] = {
 	{"GC89",	"FAF-1051011-BV" ,"",				   {F_SONYERICSSON, 0}},
 	{"GC86",	"FAF-1051012-BV" ,"",				   {F_SONYERICSSON, 0}},
 
+	/* IrDA identifications for Sony-Ericsson */
 	/* At least my K750i reports itself as "Sony Ericss", so detect it for IrDA */
 	{"Generic SE",	"Generic SE", "Sony Ericss",			   {F_SONYERICSSON, 0}},
+	{"K300 series",	"K300 series", "K300 series",			   {F_SONYERICSSON, 0}},
 
 	/* Other */
 	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},

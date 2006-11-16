@@ -855,6 +855,9 @@ GSM_Error SONYERICSSON_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 {
 	GSM_Error error;
 
+	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+
+
 	s->Phone.Data.Locale = locale;
 
 	smprintf(s, "Getting date format\n");
@@ -876,6 +879,8 @@ GSM_Error SONYERICSSON_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 	int	format=0;
 	char	req[12];
 	GSM_Error error;
+
+	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
 
 	if (locale->DateFormat==GSM_Date_OFF) { format=0; } else
 	if ((locale->DateFormat==GSM_Date_DDMMMYY)&&(locale->DateSeparator=='-')) { format=1; } else
@@ -932,6 +937,10 @@ GSM_Error SONYERICSSON_ReplyGetFileSystemStatus(GSM_Protocol_Message msg, GSM_St
 
 GSM_Error SONYERICSSON_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *Status)
 {
+	GSM_Error error;
+
+	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+
 	s->Phone.Data.FileSystemStatus = Status;
 
 	return GSM_WaitFor (s, "AT*EMEM\r", 8, 0x00, 3, ID_FileSystemStatus);
