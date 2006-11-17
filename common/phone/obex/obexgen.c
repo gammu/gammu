@@ -161,6 +161,7 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->UpdatePbLUID = false;
 	Priv->UpdateTodoLUID = false;
 	Priv->OBEXCapability = NULL;
+	Priv->OBEXDevinfo = NULL;
 
 	return ERR_NONE;
 }
@@ -198,22 +199,32 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 	} else if (strcmp(s->CurrentConfig->Model, "obexnone") == 0) {
 		Priv->InitialService = OBEX_None;
 	}
+
+	/* Grab OBEX capability */
+	error = OBEXGEN_Connect(s, OBEX_BrowsingFolders);
+	if (error == ERR_NONE) {
+		error = OBEXGEN_GetTextFile(s, "", &(Priv->OBEXCapability));
+	}
+
+	/* Grab IrMC devinfo */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error == ERR_NONE) {
+		error = OBEXGEN_GetTextFile(s, "", &(Priv->OBEXDevinfo));
+	}
+
 	/* Initialise connection */
 	error = OBEXGEN_Connect(s, Priv->InitialService);
 	if (error != ERR_NONE) return error;
 
-	/* Grab OBEX capability */
-	if (Priv->InitialService == OBEX_BrowsingFolders) {
-		error = OBEXGEN_GetTextFile(s, "", &(Priv->OBEXCapability));
-		if (error != ERR_NONE) return error;
-
-		error = OBEXGEN_GetModel(s);
-		if (error != ERR_NONE) return error;
-	} else {
-		strcpy(s->Phone.Data.Model, "OBEX");
-	}
-
 	return ERR_NONE;
+}
+
+/**
+ * Terminates OBEX connection.
+ */
+GSM_Error OBEXGEN_Terminate(GSM_StateMachine *s)
+{
+	return OBEXGEN_Disconnect(s);
 }
 
 /**
@@ -2349,10 +2360,38 @@ GSM_Error OBEXGEN_DeleteAllTodo(GSM_StateMachine *s)
 /*@}*/
 
 /**
- * \defgroup OBEXcap Phone information using OBEX capability XML
+ * \defgroup OBEXcap Phone information using OBEX capability XML or IrMC devinfo
  */
 
 /*@{*/
+
+GSM_Error OBEXGEN_GetDevinfoField(GSM_StateMachine *s, const char *Name, char *Dest)
+{
+	char			*pos;
+	char			*dest;
+	char			match[200];
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	if (Priv->OBEXDevinfo == NULL) return ERR_NOTSUPPORTED;
+
+	/* Match begin tag */
+	match[0] = 0;
+	strcat(match, Name);
+	strcat(match, ":");
+
+	pos = strstr(Priv->OBEXDevinfo, match);
+	if (pos == NULL) return ERR_INVALIDDATA;
+	pos += strlen(match);
+
+	/* Copy to end of line */
+	dest = Dest;
+	while (*pos != 0 && *pos != '\r' && *pos != '\n') {
+		*(dest++) = *(pos++);
+	}
+	*dest  = 0;
+
+	return ERR_NONE;
+}
 
 GSM_Error OBEXGEN_GetCapabilityField(GSM_StateMachine *s, const char *Name, char *Dest)
 {
@@ -2429,16 +2468,26 @@ GSM_Error OBEXGEN_GetCapabilityFieldAttrib(GSM_StateMachine *s, const char *Name
 
 GSM_Error OBEXGEN_GetManufacturer(GSM_StateMachine *s)
 {
+	GSM_Error		error;
+
 	if (s->Phone.Data.Manufacturer[0] != 0) return ERR_NONE;
 
-	return OBEXGEN_GetCapabilityField(s, "Manufacturer", s->Phone.Data.Manufacturer);
+	error = OBEXGEN_GetCapabilityField(s, "Manufacturer", s->Phone.Data.Manufacturer);
+	if (error == ERR_NONE) return ERR_NONE;
+
+	return OBEXGEN_GetDevinfoField(s, "MANU", s->Phone.Data.Manufacturer);
 }
 
 GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s)
 {
+	GSM_Error		error;
+
 	if (s->Phone.Data.Model[0] != 0) return ERR_NONE;
 
-	return OBEXGEN_GetCapabilityField(s, "Model", s->Phone.Data.Model);
+	error = OBEXGEN_GetCapabilityField(s, "Model", s->Phone.Data.Model);
+	if (error == ERR_NONE) return ERR_NONE;
+
+	return OBEXGEN_GetDevinfoField(s, "MOD", s->Phone.Data.Model);
 }
 
 GSM_Error OBEXGEN_GetFirmware(GSM_StateMachine *s)
@@ -2448,15 +2497,26 @@ GSM_Error OBEXGEN_GetFirmware(GSM_StateMachine *s)
 	if (s->Phone.Data.Version[0] != 0) return ERR_NONE;
 
 	error = OBEXGEN_GetCapabilityFieldAttrib(s, "SW", "Version", s->Phone.Data.Version);
-	if (error != ERR_NONE) return error;
-	return OBEXGEN_GetCapabilityFieldAttrib(s, "SW", "Date", s->Phone.Data.VerDate);
+	if (error == ERR_NONE) {
+		/* We don't care about error here, it is optional */
+		OBEXGEN_GetCapabilityFieldAttrib(s, "SW", "Date", s->Phone.Data.VerDate);
+	}
+	if (error == ERR_NONE) return ERR_NONE;
+	OBEXGEN_GetDevinfoField(s, "SW-DATE", s->Phone.Data.VerDate);
+
+	return OBEXGEN_GetDevinfoField(s, "SW-VERSION", s->Phone.Data.Version);
 }
 
 GSM_Error OBEXGEN_GetIMEI(GSM_StateMachine *s)
 {
+	GSM_Error		error;
+
 	if (s->Phone.Data.IMEI[0] != 0) return ERR_NONE;
 
-	return OBEXGEN_GetCapabilityField(s, "SN", s->Phone.Data.IMEI);
+	error = OBEXGEN_GetCapabilityField(s, "SN", s->Phone.Data.IMEI);
+	if (error == ERR_NONE) return ERR_NONE;
+
+	return OBEXGEN_GetDevinfoField(s, "SN", s->Phone.Data.IMEI);
 }
 
 /*@}*/
@@ -2495,7 +2555,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	"obex|seobex|obexirmc|obexnone",
 	OBEXGENReplyFunctions,
 	OBEXGEN_Initialise,
-	NONEFUNCTION,			/*	Terminate 		*/
+	OBEXGEN_Terminate,
 	GSM_DispatchMessage,
 	NOTIMPLEMENTED,			/* 	ShowStartInfo		*/
 	OBEXGEN_GetManufacturer,
