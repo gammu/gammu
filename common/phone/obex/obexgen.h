@@ -139,6 +139,10 @@ typedef struct {
 	 * Capability data.
 	 */
 	char				*OBEXCapability;
+	/**
+	 * Devinfo data.
+	 */
+	char				*OBEXDevinfo;
 } GSM_Phone_OBEXGENData;
 
 #endif
