@@ -242,6 +242,7 @@ static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMach
 	case 0xA1:
 		smprintf(s,"Folder created\n");
 		return ERR_NONE;
+	case 0xC1:
 	case 0xC3:
 		smprintf(s,"Security error\n");
 		return ERR_PERMISSION;
@@ -417,6 +418,7 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	case 0xC0:
 		smprintf(s,"Not understand. Probably not supported\n");
 		return ERR_NOTSUPPORTED;
+	case 0xC1:
 	case 0xC3:
 		smprintf(s,"Security error\n");
 		return ERR_PERMISSION;
@@ -542,6 +544,7 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 			}
 		}
 		return ERR_UNKNOWNRESPONSE;
+	case 0xC1:
 	case 0xC3:
 		smprintf(s,"Security error\n");
 		return ERR_PERMISSION;
@@ -1112,8 +1115,8 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 	GSM_Error 	error;
 	char		*data;
 
-	/* No IEL as default (eg. when file does not exist) */
-	*IEL = 0;
+	/* IEL by default - support adding */
+	*IEL = 1;
 
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
@@ -1121,7 +1124,20 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 
 	/* Grab log info file */
 	error = OBEXGEN_GetTextFile(s, path, &data);
-	if (error != ERR_NONE) return error;
+
+	/* Level 0 or 1 phones do not have to expose information */
+	if (error == ERR_BUG || error == ERR_FILENOTEXIST) {
+		if (free == NULL) {
+			/* We were asked only for IEL, so don't bail out */
+			return ERR_NONE;
+		} else {
+			/* No support for status if no info.log */
+			return ERR_NOTSUPPORTED;
+		}
+	} else if (error != ERR_NONE) {
+		/* Something wrong has happened */
+		return error;
+	}
 
 	/* Parse it */
 	error = OBEXGEN_ParseInfoLog(s, data, free_records, used_records, IEL);
@@ -2538,6 +2554,11 @@ GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	{OBEXGEN_ReplyConnect,		"\xC0",0x00,0x00,ID_Initialise			},
 	{OBEXGEN_ReplyGetFilePart,	"\xC0",0x00,0x00,ID_GetFile			},
 	{OBEXGEN_ReplyAddFilePart,	"\xC0",0x00,0x00,ID_AddFile			},
+
+	/* Not allowed block */
+	{OBEXGEN_ReplyConnect,		"\xC1",0x00,0x00,ID_Initialise			},
+	{OBEXGEN_ReplyGetFilePart,	"\xC1",0x00,0x00,ID_GetFile			},
+	{OBEXGEN_ReplyAddFilePart,	"\xC1",0x00,0x00,ID_AddFile			},
 
 	/* FORBIDDEN block */
 	{OBEXGEN_ReplyChangePath,	"\xC3",0x00,0x00,ID_SetPath			},
