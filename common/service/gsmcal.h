@@ -154,6 +154,10 @@ typedef enum {
 	 */
 	CAL_TEXT,
 	/**
+	 * Detailed description.
+	 */
+	CAL_DESCRIPTION,
+	/**
 	 * Location.
 	 */
 	CAL_LOCATION,
@@ -164,7 +168,7 @@ typedef enum {
 	/**
 	 * Whether this entry is private.
 	 */
-	 CAL_PRIVATE,
+	CAL_PRIVATE,
 	/**
 	 * Related contact id.
 	 */
@@ -196,7 +200,11 @@ typedef enum {
 	/**
 	 * Repeating end.
 	 */
-	CAL_REPEAT_STOPDATE
+	CAL_REPEAT_STOPDATE,
+	/**
+	 * IrMC LUID which can be used for synchronisation.
+	 */
+	CAL_LUID,
 } GSM_CalendarType;
 
 /**
@@ -281,6 +289,10 @@ typedef struct {
  */
 typedef struct {
 	/**
+	 * Number of free positions.
+	 */
+	int		     Free;
+	/**
 	 * Number of used positions.
 	 */
 	int		     Used;
@@ -320,6 +332,14 @@ typedef enum {
 	 */
 	TODO_TEXT,
 	/**
+	 * Description of to do (Text).
+	 */
+	TODO_DESCRIPTION,
+	/**
+	 * Location of to do (Text).
+	 */
+	TODO_LOCATION,
+	/**
 	 * Whether entry is private (Number).
 	 */
 	TODO_PRIVATE,
@@ -334,7 +354,11 @@ typedef enum {
 	/**
 	 * Number to call (Text).
 	 */
-	TODO_PHONE
+	TODO_PHONE,
+	/**
+	 * IrMC LUID which can be used for synchronisation.
+	 */
+	TODO_LUID,
 } GSM_ToDoType;
 
 /**
@@ -385,6 +409,10 @@ typedef struct {
  */
 typedef struct {
 	/**
+	 * Type of todo note.
+	 */
+	GSM_CalendarNoteType    Type;
+	/**
 	 * Priority of entry.
 	 */
 	GSM_ToDo_Priority       Priority;
@@ -416,6 +444,10 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
  * Status of to do entries.
  */
 typedef struct {
+	/**
+	 * Number of free positions.
+	 */
+	int	     Free;
 	/**
 	 * Number of used positions.
 	 */

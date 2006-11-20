@@ -158,7 +158,55 @@ typedef enum {
 	/**
 	 * doesn't available in some phone: ie. N5110
 	 */
-	GSM_KEY_NAMES
+	GSM_KEY_NAMES,
+	/**
+	 * Left arrow
+	 */
+	GSM_KEY_LEFT,
+	/**
+	 * Right arrow
+	 */
+	GSM_KEY_RIGHT,
+	/**
+	 * Software key which has assigned mening on display.
+	 */
+	GSM_KEY_SOFT1,
+	/**
+	 * Software key which has assigned mening on display.
+	 */
+	GSM_KEY_SOFT2,
+	/**
+	 * Button on headset
+	 */
+	GSM_KEY_HEADSET,
+	/**
+	 * Joystick pressed
+	 */
+	GSM_KEY_JOYSTICK,
+	/**
+	 * Camera button pressed
+	 */
+	GSM_KEY_CAMERA,
+	/**
+	 * Media player button
+	 */
+	GSM_KEY_MEDIA,
+	/**
+	 * Multi function key, desktop
+	 */
+	GSM_KEY_DESKTOP,
+	/**
+	 * Operator button
+	 */
+	GSM_KEY_OPERATOR,
+	/**
+	 * Return button
+	 */
+	GSM_KEY_RETURN,
+	/**
+	 * Clear button
+	 */
+	GSM_KEY_CLEAR,
 } GSM_KeyCode;
 
 GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, int *Length);
@@ -183,13 +231,16 @@ typedef struct {
 	GSM_DisplayFeature 	Feature[7];
 } GSM_DisplayFeatures;
 
-/* ----------------------------- power source ------------------------------ */
-
+/**
+ * Power source
+ */
 typedef enum {
-	GSM_BatteryPowered = 1,
-	GSM_BatteryConnected,
-	GSM_BatteryNotConnected,
-	GSM_PowerFault
+	GSM_BatteryPowered = 1, /**< Powered from battery */
+	GSM_BatteryConnected, /**< Powered from AC, battery connected */
+	GSM_BatteryCharging, /**< Powered from AC, battery is charging */
+	GSM_BatteryNotConnected, /**< Powered from AC, no battery */
+	GSM_BatteryFull, /**< Powered from AC, battery is fully charged */
+	GSM_PowerFault, /**< Power failure */
 } GSM_ChargeState;
 
 typedef struct {
@@ -201,7 +252,41 @@ typedef struct {
 	 * Charge state
 	 */
 	GSM_ChargeState ChargeState;
+	/**
+	 * Current battery voltage (in mV).
+	 */
+	int BatteryVoltage;
+	/**
+	 * Voltage from charger (in mV)
+	 */
+	int ChargeVoltage;
+	/**
+	 * Current from charger (in mA)
+	 */
+	int ChargeCurrent;
+	/**
+	 * Phone current consumption (in mA)
+	 */
+	int PhoneCurrent;
+	/**
+	 * Battery temperature (in degrees Celsius)
+	 */
+	int BatteryTemperature;
+	/**
+	 * Phone temperature (in degrees Celsius)
+	 */
+	int PhoneTemperature;
+	/**
+	 * Remaining battery capacity (in mAh)
+	 */
+	int BatteryCapacity;
+
 } GSM_BatteryCharge;
+
+/**
+ * Resets all members of GSM_BatteryCharge structure.
+ */
+void GSM_ClearBatteryCharge(GSM_BatteryCharge *bat);
 
 /* ------------------------------ categories ------------------------------- */
 
@@ -281,6 +366,9 @@ void GSM_IdentifyFileFormat(GSM_File *File);
 typedef struct {
 	int		Free;
 	int		Used;
+	int		UsedImages;
+	int		UsedSounds;
+	int		UsedThemes;
 } GSM_FileSystemStatus;
 
 bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *file);

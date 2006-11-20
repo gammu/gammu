@@ -1068,6 +1068,7 @@ static GSM_Error N6510_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x0A, 0x02, 0x00};
 
+	GSM_ClearBatteryCharge(bat);
 	s->Phone.Data.BatteryCharge = bat;
 	smprintf(s, "Getting battery level\n");
 	return GSM_WaitFor (s, req, 6, 0x17, 4, ID_GetBatteryCharge);
@@ -2644,7 +2645,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 
 	//no adding to SIM SMS
 	if (UnicodeLength(sms->Name)==0 || sms->Folder < 3) return ERR_NONE;
-	
+
 	folder = sms->Folder;
 	sms->Folder = 0;
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
@@ -4112,7 +4113,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 };
 
 GSM_Phone_Functions N6510Phone = {
-	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|5140i|6020|6021|6100|6101|6103|6111|6125|6131|6170|6200|6220|6230|6230i|6233|6234|6270|6280|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|6822|7200|7210|7250|7250i|7260|7270|7360|7370|7600|8310|8390|8910|8910i",
+	"1100|1100a|1100b|2650|3100|3100b|3105|3108|3200|3200a|3220|3300|3510|3510i|3530|3589i|3590|3595|5100|5140|5140i|6020|6021|6030|6100|6101|6103|6111|6125|6131|6170|6200|6220|6230|6230i|6233|6234|6270|6280|6310|6310i|6385|6510|6610|6610i|6800|6810|6820|6822|7200|7210|7250|7250i|7260|7270|7360|7370|7600|8310|8390|8910|8910i",
 	N6510ReplyFunctions,
 	N6510_Initialise,
 	NONEFUNCTION,			/*	Terminate 		*/

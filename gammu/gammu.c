@@ -395,6 +395,12 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 		case CAL_TEXT:
 			printmsg("Text         : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
 			break;
+		case CAL_DESCRIPTION:
+			printmsg("Description  : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
+			break;
+		case CAL_LUID:
+			printmsg("LUID         : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
+			break;
 		case CAL_LOCATION:
 			printmsg("Location     : \"%s\"\n",DecodeUnicodeConsole(Note->Entries[i].Text));
 			break;
@@ -907,6 +913,7 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 	case PBK_Text_Email         : printmsg("Email address 1 "); break;
 	case PBK_Text_Email2        : printmsg("Email address 2 "); break;
 	case PBK_Text_URL           : printmsg("URL address     "); break;
+	case PBK_Text_LUID          : printmsg("LUID            "); break;
 	case PBK_Text_Name          : printmsg("Name            "); break;
 	case PBK_Text_LastName      : printmsg("Last name       "); break;
 	case PBK_Text_FirstName     : printmsg("First name      "); break;
@@ -1075,6 +1082,7 @@ static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 			case PBK_Text_Email         :
 			case PBK_Text_Email2        :
 			case PBK_Text_URL           :
+			case PBK_Text_LUID          :
 			case PBK_Text_Name          :
 			case PBK_Text_LastName      :
 			case PBK_Text_FirstName     :
@@ -1791,15 +1799,30 @@ static void Monitor(int argc, char *argv[])
 		CHECKMEMORYSTATUS(MemStatus,MEM_ME,"Phone phonebook   : Used","Free");
 		if (gshutdown) break;
 		if (Phone->GetToDoStatus(&s, &ToDoStatus) == ERR_NONE) {
-			printmsg("ToDos             : Used %d\n", ToDoStatus.Used);
+			printmsg("ToDos             : Used %d, Free %d\n", ToDoStatus.Used, ToDoStatus.Free);
 		}
 		if (gshutdown) break;
 		if (Phone->GetCalendarStatus(&s, &CalendarStatus) == ERR_NONE) {
-			printmsg("Calendar          : Used %d\n", CalendarStatus.Used);
+			printmsg("Calendar          : Used %d, Free %d\n", CalendarStatus.Used, CalendarStatus.Free);
 		}
 		if (gshutdown) break;
 		if (Phone->GetBatteryCharge(&s,&BatteryCharge)==ERR_NONE) {
-            		if (BatteryCharge.BatteryPercent != -1) printmsg("Battery level     : %i percent\n", BatteryCharge.BatteryPercent);
+            		if (BatteryCharge.BatteryPercent != -1)
+				printmsg("Battery level     : %i percent\n", BatteryCharge.BatteryPercent);
+            		if (BatteryCharge.BatteryCapacity != -1)
+				printmsg("Battery capacity  : %i mAh\n", BatteryCharge.BatteryCapacity);
+            		if (BatteryCharge.BatteryTemperature != -1)
+				printmsg("Battery temp.     : %i C\n", BatteryCharge.BatteryTemperature);
+            		if (BatteryCharge.PhoneTemperature != -1)
+				printmsg("Phone temp.       : %i C\n", BatteryCharge.PhoneTemperature);
+            		if (BatteryCharge.BatteryVoltage != -1)
+				printmsg("Battery voltage   : %i mV\n", BatteryCharge.BatteryVoltage);
+            		if (BatteryCharge.ChargeVoltage != -1)
+				printmsg("Charge voltage    : %i mV\n", BatteryCharge.ChargeVoltage);
+            		if (BatteryCharge.ChargeCurrent != -1)
+				printmsg("Charge current    : %i mA\n", BatteryCharge.ChargeCurrent);
+            		if (BatteryCharge.PhoneCurrent != -1)
+				printmsg("Phone current     : %i mA\n", BatteryCharge.PhoneCurrent);
             		if (BatteryCharge.ChargeState != 0) {
                 		printmsg("Charge state      : ");
                 		switch (BatteryCharge.ChargeState) {
@@ -1808,6 +1831,12 @@ static void Monitor(int argc, char *argv[])
 						break;
                     			case GSM_BatteryConnected:
 						printmsg("battery connected, but not powered from battery");
+                        			break;
+                    			case GSM_BatteryCharging:
+						printmsg("battery connected and is being charged");
+                        			break;
+                    			case GSM_BatteryFull:
+						printmsg("battery connected and is fully charged");
                         			break;
                     			case GSM_BatteryNotConnected:
                         			printmsg("battery not connected");
@@ -5349,7 +5378,7 @@ static void Restore(int argc, char *argv[])
 	if (Backup.Model[0]!=0) 	printmsgerr("Phone           : %s\n",Backup.Model);
 	if (Backup.IMEI[0]!=0) 		printmsgerr("IMEI            : %s\n",Backup.IMEI);
 	if (Backup.Creator[0]!=0) 	printmsgerr("File created by : %s\n",Backup.Creator);
-	
+
 	if (argc == 4 && mystrncasecmp(argv[3],"-yes",0)) always_answer_yes = true;
 
 	if (Backup.MD5Calculated[0]!=0) {
@@ -6991,6 +7020,38 @@ static void PrintToDo(GSM_ToDoEntry *ToDo)
 	GSM_Category		Category;
 
 	printmsg("Location     : %i\n",ToDo->Location);
+	printmsg("Note type    : ");
+	switch (ToDo->Type) {
+		case GSM_CAL_REMINDER 	: printmsg("Reminder (Date)\n");		break;
+		case GSM_CAL_CALL     	: printmsg("Call\n");			   	break;
+		case GSM_CAL_MEETING  	: printmsg("Meeting\n");		   	break;
+		case GSM_CAL_BIRTHDAY 	: printmsg("Birthday (Anniversary)\n");		break;
+		case GSM_CAL_MEMO	: printmsg("Memo (Miscellaneous)\n");		break;
+		case GSM_CAL_TRAVEL	: printmsg("Travel\n");			   	break;
+		case GSM_CAL_VACATION	: printmsg("Vacation\n");			break;
+		case GSM_CAL_ALARM    	: printmsg("Alarm\n");		   		break;
+		case GSM_CAL_DAILY_ALARM: printmsg("Daily alarm\n");		   	break;
+		case GSM_CAL_T_ATHL   	: printmsg("Training/Athletism\n"); 	   	break;
+		case GSM_CAL_T_BALL   	: printmsg("Training/Ball Games\n"); 	   	break;
+		case GSM_CAL_T_CYCL   	: printmsg("Training/Cycling\n"); 	   	break;
+		case GSM_CAL_T_BUDO   	: printmsg("Training/Budo\n"); 	   		break;
+		case GSM_CAL_T_DANC   	: printmsg("Training/Dance\n"); 	   	break;
+		case GSM_CAL_T_EXTR   	: printmsg("Training/Extreme Sports\n"); 	break;
+		case GSM_CAL_T_FOOT   	: printmsg("Training/Football\n"); 	   	break;
+		case GSM_CAL_T_GOLF   	: printmsg("Training/Golf\n"); 	   		break;
+		case GSM_CAL_T_GYM    	: printmsg("Training/Gym\n"); 	   		break;
+		case GSM_CAL_T_HORS   	: printmsg("Training/Horse Races\n");    	break;
+		case GSM_CAL_T_HOCK   	: printmsg("Training/Hockey\n"); 	  	break;
+		case GSM_CAL_T_RACE   	: printmsg("Training/Races\n"); 	   	break;
+		case GSM_CAL_T_RUGB   	: printmsg("Training/Rugby\n"); 	   	break;
+		case GSM_CAL_T_SAIL   	: printmsg("Training/Sailing\n"); 	   	break;
+		case GSM_CAL_T_STRE   	: printmsg("Training/Street Games\n");   	break;
+		case GSM_CAL_T_SWIM   	: printmsg("Training/Swimming\n"); 	   	break;
+		case GSM_CAL_T_TENN   	: printmsg("Training/Tennis\n"); 	   	break;
+		case GSM_CAL_T_TRAV   	: printmsg("Training/Travels\n");        	break;
+		case GSM_CAL_T_WINT   	: printmsg("Training/Winter Games\n");   	break;
+		default           	: printmsg("UNKNOWN\n");
+	}
 	printmsg("Priority     : ");
 	switch (ToDo->Priority) {
 		case GSM_Priority_Low	 : printmsg("Low\n");	 	break;
@@ -7045,6 +7106,15 @@ static void PrintToDo(GSM_ToDoEntry *ToDo)
 			break;
 		case TODO_PHONE:
 			printmsg("Phone        : \"%s\"\n",DecodeUnicodeConsole(ToDo->Entries[j].Text));
+			break;
+		case TODO_DESCRIPTION:
+			printmsg("Description  : \"%s\"\n",DecodeUnicodeConsole(ToDo->Entries[j].Text));
+			break;
+		case TODO_LOCATION:
+			printmsg("Location     : \"%s\"\n",DecodeUnicodeConsole(ToDo->Entries[j].Text));
+			break;
+		case TODO_LUID:
+			printmsg("LUID         : \"%s\"\n",DecodeUnicodeConsole(ToDo->Entries[j].Text));
 			break;
 		}
 	}
@@ -7697,6 +7767,9 @@ static void GetFileSystemStatus(int argc, char *argv[])
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
 	    	Print_Error(error);
 		printmsg("\nFree memory: %i, total memory: %i\n",Status.Free,Status.Free+Status.Used);
+		if (Status.UsedImages != 0 || Status.UsedSounds != 0 || Status.UsedThemes != 0) {
+			printmsg("Used by: Images: %i, Sounds: %i, Themes: %i\n", Status.UsedImages, Status.UsedSounds, Status.UsedThemes);
+		}
 	}
 
 	GSM_Terminate();
@@ -7824,6 +7897,9 @@ static void GetFileSystem(int argc, char *argv[])
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
 	    	Print_Error(error);
 		printmsg("\nPhone memory: %i bytes (free %i bytes, used %i bytes)\n",Status.Free+Status.Used,Status.Free,Status.Used);
+		if (Status.UsedImages != 0 || Status.UsedSounds != 0 || Status.UsedThemes != 0) {
+			printmsg("Used by: Images: %i, Sounds: %i, Themes: %i\n", Status.UsedImages, Status.UsedSounds, Status.UsedThemes);
+		}
 	} else {
 		printmsg("\nUsed in phone: %li bytes",usedphone);
 		if (MemoryCard) printmsg(", used in card: %li bytes",usedcard);
@@ -8048,6 +8124,7 @@ static void GetFiles(int argc, char *argv[])
 		}
 
 		DecodeUTF8QuotedPrintable(File.ID_FullName,argv[i],strlen(argv[i]));
+		dbgprintf("grabbing '%s' '%s'\n",DecodeUnicodeString(File.ID_FullName),argv[i]);
 		GetOneFile(&File, newtime, i);
 	}
 
@@ -8376,7 +8453,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 	}
 	if (First!=NULL) {
 		//sorting songs names
-		Entry=First;		
+		Entry=First;
 		while (Entry->Next!=NULL) {
 			if (strcmp(Entry->NameUP,Entry->Next->NameUP)>0) {
 				Pointer=Entry->Next->Name;
@@ -8386,7 +8463,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 				Pointer=Entry->Next->NameUP;
 				Entry->Next->NameUP = Entry->NameUP;
 				Entry->NameUP = Pointer;
-				
+
 				Entry=First;
 				continue;
 			}
@@ -8414,7 +8491,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 				}
 				if (error == ERR_EMPTY) break;
 			    	Print_Error(error);
-		
+
 				if (!Files3.Folder) {
 					if (mywstrncasecmp(Buffer2,Files3.Name,-1)) {
 						Available = true;
@@ -8443,10 +8520,10 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 		Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,10);
 		sprintf(Files2.Buffer,"#EXTM3U%c%c",13,10);
 		Files2.Used = 9;
-		Entry=First;		
+		Entry=First;
 		while (Entry!=NULL) {
 			Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,Files2.Used+strlen(Entry->Name)+2+1);
-			sprintf(Files2.Buffer+Files2.Used,"%s%c%c",Entry->Name,13,10);				
+			sprintf(Files2.Buffer+Files2.Used,"%s%c%c",Entry->Name,13,10);
 			Files2.Used+=strlen(Entry->Name)+2;
 			Entry=Entry->Next;
 		}
@@ -8512,10 +8589,10 @@ static void NokiaAddPlayLists(int argc, char *argv[])
 	if (error == ERR_FILENOTEXIST) {
 		printf("Your phone model is not supported. Please report\n");
 		GSM_Terminate();
-		exit(-1);	
+		exit(-1);
 	} else if (error != ERR_EMPTY) {
 	    	Print_Error(error);
-	}	
+	}
 	while (1) {
 		if (!Files.Folder) {
 			if (strstr(DecodeUnicodeConsole(Files.Name),".m3u")!=NULL) {
@@ -8857,11 +8934,11 @@ static void NokiaAddFile(int argc, char *argv[])
 					error = Phone->GetFolderListing(&s,&File2,Start);
 					if (error == ERR_EMPTY) break;
 					Print_Error(error);
-	
+
 					if (File2.Folder && !strcmp(DecodeUnicodeString(File2.Name),buffer)) {
 						break;
 					}
-	
+
 					Start = false;
 				}
 
@@ -9513,7 +9590,7 @@ static GSM_Parameters Parameters[] = {
 	{"--setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"TEXT text"},
 	{"--setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"DEALER text"},
 	{"--copybitmap",		1, 3, CopyBitmap,		{H_Logo,0},			"inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]"},
-	{"--presskeysequence",		1, 1, PressKeySequence,		{H_Other,0},			"mMnNpPuUdD+-123456789*0#gGrRwW"},
+	{"--presskeysequence",		1, 1, PressKeySequence,		{H_Other,0},			"mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"},
 #if defined(WIN32) || defined(HAVE_PTHREAD)
 	{"--searchphone",		0, 1, SearchPhone,		{H_Other,0},			"[-debug]"},
 #endif

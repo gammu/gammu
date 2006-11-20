@@ -340,7 +340,7 @@
 				RelativePath="..\sniff.c">
 			</File>
 			<File
-				RelativePath="..\..\common\phone\at\sonyeric.c">
+				RelativePath="..\..\common\phone\sonyeric\sonyeric.c">
 			</File>
 			<File
 				RelativePath="..\depend\nokia\dct3trac\wmx-gsm.c">
@@ -381,6 +381,9 @@
 			</File>
 			<File
 				RelativePath="..\..\common\phone\at\atgen.h">
+			</File>
+			<File
+				RelativePath="..\..\common\phone\at\atfunc.h">
 			</File>
 			<File
 				RelativePath="..\..\common\service\backup\backgen.h">
@@ -575,7 +578,13 @@
 				RelativePath="..\sniff.h">
 			</File>
 			<File
-				RelativePath="..\..\common\phone\at\sonyeric.h">
+				RelativePath="..\..\common\phone\sonyeric\sonyeric.h">
+			</File>
+			<File
+				RelativePath="..\..\common\phone\sonyeric\sefunc.h">
+			</File>
+			<File
+				RelativePath="..\..\common\phone\obex\obexfunc.h">
 			</File>
 			<File
 				RelativePath="..\depend\nokia\dct3trac\type-cc.h">

@@ -6,8 +6,8 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "1.08.15"
-#define VERSION_WIN "1,08,15,0"
+#define VERSION "1.08.25"
+#define VERSION_WIN "1,08,25,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
@@ -110,6 +110,9 @@
 
 /* Alcatel BE5 */
 #define GSM_ENABLE_ALCATEL 1
+
+/* Sony-Ericsson support */
+#define GSM_ENABLE_SONYERICSSON 1
 
 /* OBEX generic models */
 #define GSM_ENABLE_OBEXGEN 1

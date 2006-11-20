@@ -146,7 +146,7 @@
       <FILE FILENAME="..\..\common\phone\at\atgen.c" FORMNAME="" UNITNAME="atgen" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\at\siemens.c" FORMNAME="" UNITNAME="siemens" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\phone\at\samsung.c" FORMNAME="" UNITNAME="samsung" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
-      <FILE FILENAME="..\..\common\phone\at\sonyeric.c" FORMNAME="" UNITNAME="sonyeric" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="..\..\common\phone\sonyeric\sonyeric.c" FORMNAME="" UNITNAME="sonyeric" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\device\irda\irda.c" FORMNAME="" UNITNAME="irda" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\device\bluetoth\bluetoth.c" FORMNAME="" UNITNAME="bluetoth" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
       <FILE FILENAME="..\..\common\device\bluetoth\bluez.c" FORMNAME="" UNITNAME="bluez" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>

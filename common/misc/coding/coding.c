@@ -132,11 +132,11 @@ char *DecodeUnicodeSpecialChars(unsigned char *buffer)
 			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == 'n') {
 				Buf[Pos2*2]   = 0;
 				Buf[Pos2*2+1] = 10;
-			} else 
+			} else
 			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == 'r') {
 				Buf[Pos2*2]   = 0;
 				Buf[Pos2*2+1] = 13;
-			} else 
+			} else
 			if (buffer[Pos*2] == 0x00 && buffer[Pos*2+1] == '\\') {
 				Buf[Pos2*2]   = 0;
 				Buf[Pos2*2+1] = '\\';
@@ -277,6 +277,26 @@ unsigned char *DecodeUnicodeConsole(const unsigned char *src)
 #endif
 	}
 	return dest;
+}
+
+/* Encode string to Unicode. Len is number of input chars */
+void DecodeISO88591 (unsigned char *dest, const char *src, int len)
+{
+	int 		i = 0;
+
+	while (src[i] != 0) {
+		/* Hack for Euro sign */
+		if ((unsigned char)src[i] == 0x80) {
+			dest[2 * i] = 0x20;
+			dest[(2 * i) + 1] = 0xac;
+		} else {
+			dest[2 * i] = 0;
+			dest[(2 * i) + 1] = src[i];
+		}
+		i++;
+	}
+	dest[2 * i] = 0;
+	dest[(2 * i) + 1] = 0;
 }
 
 /* Encode string to Unicode. Len is number of input chars */
@@ -1266,8 +1286,19 @@ ret0:
 #undef tolowerwchar
 }
 
-void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen)
+/**
+ * Gets line from buffer.
+ *
+ * @param MergeLines: determine whether merge lines ending with = (quoted printable)
+ * @param Buffer: Data source to parse
+ * @param Pos: Current position in data
+ * @param OutBuffer: Buffer where line will be written
+ * @param MaxLen: Maximal length of data to write
+ */
+void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, bool MergeLines)
 {
+	bool skip = false;
+
 	OutBuffer[0] = 0;
 	if (Buffer == NULL) return;
 	while (1) {
@@ -1276,12 +1307,27 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 		case 0x00:
 			return;
 		case 0x0A:
-			if (strlen(OutBuffer) != 0) return;
+			if (strlen(OutBuffer) != 0 && !skip) {
+				if (MergeLines && OutBuffer[strlen(OutBuffer) - 1] == '=') {
+					OutBuffer[strlen(OutBuffer) - 1] = 0;
+					skip = true;
+				} else {
+					return;
+				}
+			}
 			break;
 		case 0x0D:
-			if (strlen(OutBuffer) != 0) return;
+			if (strlen(OutBuffer) != 0 && !skip) {
+				if (MergeLines && OutBuffer[strlen(OutBuffer) - 1] == '=') {
+					OutBuffer[strlen(OutBuffer) - 1] = 0;
+					skip = true;
+				} else {
+					return;
+				}
+			}
 			break;
 		default  :
+			skip = false;
 			OutBuffer[strlen(OutBuffer) + 1] = 0;
 			OutBuffer[strlen(OutBuffer)]     = Buffer[*Pos];
 		}
@@ -1345,11 +1391,17 @@ bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 		if (z>1) {
 			for (w=0;w<z;w++) {
 				sprintf(dest+j, "=%02X",mychar[w]);
-				j = j+3;				
+				j = j+3;
 			}
 			retval  = true;
 		} else {
-			j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
+			/* Encode low ASCII chars */
+			if (src[i*2]*256 + src[i*2+1] < 32) {
+				sprintf(dest+j, "=%02X", src[i*2]*256+src[i*2+1]);
+				j = j+3;
+			} else {
+				j += DecodeWithUnicodeAlphabet(((wchar_t)(src[i*2]*256+src[i*2+1])), dest + j);
+			}
 	    	}
 	}
 	dest[j++]=0;
@@ -1398,6 +1450,29 @@ int DecodeWithUTF8Alphabet2(unsigned char *src, wchar_t *dest, int len)
 	return 0;
 }
 
+
+/* Make Unicode string from ISO-8859-1 string */
+void DecodeISO88591QuotedPrintable(unsigned char *dest, const unsigned char *src, int len)
+{
+	int 		i = 0, j = 0;
+
+	while (i < len) {
+		if (src[i] == '=' && i + 2 < len
+			&& DecodeWithHexBinAlphabet(src[i + 1]) != -1
+			&& DecodeWithHexBinAlphabet(src[i + 2]) != -1) {
+			dest[j++] = 0;
+			dest[j++] = 16 * DecodeWithHexBinAlphabet(src[i + 1]) + DecodeWithHexBinAlphabet(src[i + 2]);
+			i += 2;
+		} else {
+			dest[j++] = 0;
+			dest[j++] = src[i];
+		}
+		i++;
+	}
+	dest[j++] = 0;
+	dest[j++] = 0;
+}
+
 /* Make Unicode string from UTF8 string */
 void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, int len)
 {
@@ -1414,8 +1489,11 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, in
 				break;
 			}
 			mychar[z] = 16*DecodeWithHexBinAlphabet(src[z*3+i+1])+DecodeWithHexBinAlphabet(src[z*3+i+2]);
+			/* Is it plain ASCII? */
 			if (z==0 && mychar[0]<194) break;
 			z++;
+			/* Do we already have valid UTF-8 char? */
+			if (DecodeWithUTF8Alphabet2(mychar,&ret,z) == z) break;
 		}
 		if (z>0) {
 			i+=z*3;

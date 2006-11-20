@@ -100,6 +100,9 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 			case PBK_Text_Custom4:
 				SaveLDIFText(file, "custom4", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
+			case PBK_Text_LUID:
+				SaveLDIFText(file, "luid", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
 			case PBK_Text_Company:
 				SaveLDIFText(file, "o", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
@@ -180,7 +183,7 @@ static GSM_Error GSM_DecodeLDIFEntry(unsigned char *Buffer, int *Pos, GSM_Memory
 	Pbk->EntriesNum = 0;
 
 	while (1) {
-		MyGetLine(Buffer, Pos, Line, strlen(Buffer));
+		MyGetLine(Buffer, Pos, Line, strlen(Buffer), false);
 		if (strlen(Line) == 0) break;
 		switch (Level) {
 		case 0:
@@ -246,6 +249,11 @@ static GSM_Error GSM_DecodeLDIFEntry(unsigned char *Buffer, int *Pos, GSM_Memory
 			if (ReadLDIFText(Line, "homeurl", Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_URL;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "luid", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LUID;
 				Pbk->EntriesNum++;
 			}
 			/* FIXME: add rest */

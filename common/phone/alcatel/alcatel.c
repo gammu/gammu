@@ -32,6 +32,7 @@
 #include "../../misc/misc.h"
 #include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
+#include "../at/atfunc.h"
 #include "alcatel.h"
 
 /* Timeout for GSM_WaitFor calls. */
@@ -56,57 +57,7 @@
 /* Various flags */
 #define ALCATEL_UNICODE_FLAG		0x80
 
-
-/* We need lot of ATGEN functions, because Alcatel is an AT device. */
-
 extern GSM_Reply_Function ALCATELReplyFunctions[];
-extern GSM_Reply_Function ATGENReplyFunctions[];
-
-extern GSM_Error ATGEN_Initialise		(GSM_StateMachine *s);
-extern GSM_Error ATGEN_Terminate		(GSM_StateMachine *s);
-extern GSM_Error ATGEN_GetIMEI 			(GSM_StateMachine *s);
-extern GSM_Error ATGEN_GetFirmware		(GSM_StateMachine *s);
-extern GSM_Error ATGEN_GetModel			(GSM_StateMachine *s);
-extern GSM_Error ATGEN_GetDateTime		(GSM_StateMachine *s, GSM_DateTime *date_time);
-extern GSM_Error ATGEN_GetMemory		(GSM_StateMachine *s, GSM_MemoryEntry *entry);
-extern GSM_Error ATGEN_GetNextMemory		(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start);
-extern GSM_Error ATGEN_SetMemory		(GSM_StateMachine *s, GSM_MemoryEntry *entry);
-extern GSM_Error ATGEN_AddMemory		(GSM_StateMachine *s, GSM_MemoryEntry *entry);
-extern GSM_Error ATGEN_DeleteMemory		(GSM_StateMachine *s, GSM_MemoryEntry *entry);
-extern GSM_Error ATGEN_GetMemoryStatus		(GSM_StateMachine *s, GSM_MemoryStatus *Status);
-extern GSM_Error ATGEN_GetSMSC			(GSM_StateMachine *s, GSM_SMSC *smsc);
-extern GSM_Error ATGEN_SetSMSC			(GSM_StateMachine *s, GSM_SMSC *smsc);
-extern GSM_Error ATGEN_GetSMSFolders		(GSM_StateMachine *s, GSM_SMSFolders *folders);
-extern GSM_Error ATGEN_GetSMSStatus		(GSM_StateMachine *s, GSM_SMSMemoryStatus *status);
-extern GSM_Error ATGEN_GetSMS			(GSM_StateMachine *s, GSM_MultiSMSMessage *sms);
-extern GSM_Error ATGEN_GetNextSMS		(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start);
-extern GSM_Error ATGEN_SendSavedSMS		(GSM_StateMachine *s, int Folder, int Location);
-extern GSM_Error ATGEN_SendSMS			(GSM_StateMachine *s, GSM_SMSMessage *sms);
-extern GSM_Error ATGEN_DeleteSMS		(GSM_StateMachine *s, GSM_SMSMessage *sms);
-extern GSM_Error ATGEN_AddSMS			(GSM_StateMachine *s, GSM_SMSMessage *sms);
-extern GSM_Error ATGEN_GetBatteryCharge		(GSM_StateMachine *s, GSM_BatteryCharge *bat);
-extern GSM_Error ATGEN_GetSignalQuality		(GSM_StateMachine *s, GSM_SignalQuality *sig);
-extern GSM_Error ATGEN_DialVoice		(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber);
-extern GSM_Error ATGEN_AnswerCall		(GSM_StateMachine *s, int ID, bool all);
-extern GSM_Error ATGEN_CancelCall		(GSM_StateMachine *s, int ID, bool all);
-extern GSM_Error ATGEN_SetDateTime		(GSM_StateMachine *s, GSM_DateTime *date_time);
-extern GSM_Error ATGEN_EnterSecurityCode	(GSM_StateMachine *s, GSM_SecurityCode Code);
-extern GSM_Error ATGEN_GetSecurityStatus	(GSM_StateMachine *s, GSM_SecurityCodeType *Status);
-extern GSM_Error ATGEN_ResetPhoneSettings	(GSM_StateMachine *s, GSM_ResetSettingsType Type);
-extern GSM_Error ATGEN_SendDTMF			(GSM_StateMachine *s, char *sequence);
-extern GSM_Error ATGEN_GetSIMIMSI		(GSM_StateMachine *s, char *IMSI);
-extern GSM_Error ATGEN_HandleCMSError		(GSM_StateMachine *s);
-extern GSM_Error ATGEN_GetNetworkInfo		(GSM_StateMachine *s, GSM_NetworkInfo *netinfo);
-extern GSM_Error ATGEN_Reset			(GSM_StateMachine *s, bool hard);
-extern GSM_Error ATGEN_PressKey			(GSM_StateMachine *s, GSM_KeyCode Key, bool Press);
-extern GSM_Error ATGEN_GetDisplayStatus		(GSM_StateMachine *s, GSM_DisplayFeatures *features);
-extern GSM_Error ATGEN_SetAutoNetworkLogin	(GSM_StateMachine *s);
-extern GSM_Error ATGEN_DeleteAllMemory		(GSM_StateMachine *s, GSM_MemoryType type);
-
-extern GSM_Error ATGEN_DispatchMessage		(GSM_StateMachine *s);
-extern GSM_Error ATGEN_SetFastSMSSending	(GSM_StateMachine *s, bool enable);
-extern GSM_Error ATGEN_SetIncomingCB		(GSM_StateMachine *s, bool enable);
-extern GSM_Error ATGEN_SetIncomingSMS		(GSM_StateMachine *s, bool enable);
 
 /**
  * Alcatel uses some 8-bit characters in contacts, calendar etc.. This table
@@ -1812,6 +1763,7 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeContacts, 0))!= ERR_NONE) return error;
 		if ((error = ALCATEL_GoToBinaryState(s, StateEdit, TypeContacts, 0))!= ERR_NONE) return error;
 		for (i = 0; i < entry->EntriesNum; i++) {
+			entry->Entries[i].AddError = ERR_NONE;
 			switch (entry->Entries[i].EntryType) {
 				case PBK_Number_General:
 					if ((error = ALCATEL_CreateField(s, Alcatel_phone, 8, entry->Entries[i].Text)) != ERR_NONE) return error;
@@ -1894,6 +1846,7 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 					if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
 					       if ((error = ALCATEL_CreateField(s, Alcatel_int, 25, &(entry->Entries[i].Number))) != ERR_NONE) return error;
 					} else {
+						entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 						smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
 					}
 					break;
@@ -1908,13 +1861,16 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_RingtoneID:
 				case PBK_Text_Postal:
 				case PBK_Text_URL:
+				case PBK_Text_LUID:
 				case PBK_CallLength:
+					entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 					smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
 					break;
 			}
 		}
 		if (NamePosition != -1) {
 			if (NameSet) {
+				entry->Entries[NamePosition].AddError = ERR_NOTSUPPORTED;
 				smprintf(s,"WARNING: Ignoring name, not supported by phone\n");
 			} else {
 				if ((error = ALCATEL_CreateField(s, Alcatel_string, 1, entry->Entries[i].Text)) != ERR_NONE) return error;
@@ -2078,7 +2034,8 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_RingtoneID:
 				case PBK_Text_Postal:
 				case PBK_Text_URL:
-				case PBK_CallLength:                  	
+				case PBK_Text_LUID:
+				case PBK_CallLength:
 					entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 					smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
 					break;
@@ -2390,6 +2347,7 @@ static GSM_Error ALCATEL_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStat
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
 	status->Used = 0;
+	status->Free = ALCATEL_FREE_MEMORY;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
 	if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
@@ -2912,6 +2870,8 @@ static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				break;
 			case CAL_SILENT_ALARM_DATETIME:
 			case CAL_LOCATION:
+			case CAL_DESCRIPTION:
+			case CAL_LUID:
 				smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", Note->Entries[i].EntryType);
 				break;
 		}
@@ -3065,6 +3025,8 @@ static GSM_Error ALCATEL_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				break;
 			case CAL_SILENT_ALARM_DATETIME:
 			case CAL_LOCATION:
+			case CAL_DESCRIPTION:
+			case CAL_LUID:
 				smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", Note->Entries[i].EntryType);
 				break;
 		}
@@ -3259,6 +3221,7 @@ static GSM_Error ALCATEL_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *stat
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 
 	status->Used = 0;
+	status->Free = ALCATEL_FREE_MEMORY;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeToDo, 0))!= ERR_NONE) return error;
 	if ((error = ALCATEL_GetAvailableIds(s, true))!= ERR_NONE) return error;
@@ -3285,6 +3248,7 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 
 	ToDo->EntriesNum = Priv->CurrentFieldsCount;
 	ToDo->Priority = GSM_Priority_None;
+	ToDo->Type = GSM_CAL_MEMO;
 
 	for (i=0; i < Priv->CurrentFieldsCount; i++) {
 		if ((error = ALCATEL_GetFieldValue(s, ToDo->Location, Priv->CurrentFields[i]))!= ERR_NONE) return error;
@@ -3442,6 +3406,7 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 				} else {
 					ToDo->Entries[i-j].EntryType = TODO_CONTACTID;
 					ToDo->Entries[i-j].Number = Priv->ReturnInt;
+					ToDo->Type = GSM_CAL_CALL;
 				}
 				break;
 			case 9:
@@ -3452,6 +3417,7 @@ static GSM_Error ALCATEL_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 					break;
 				}
 				ToDo->Entries[i-j].EntryType = TODO_PHONE;
+				ToDo->Type = GSM_CAL_CALL;
 				CopyUnicodeString(ToDo->Entries[i-j].Text, Priv->ReturnString);
 				break;
 			case 10:

@@ -168,6 +168,7 @@ static GSM_Error GNAPGEN_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge
 {
 	unsigned char req[] = {0x00, 0x01};
 
+	GSM_ClearBatteryCharge(bat);
 	s->Phone.Data.BatteryCharge = bat;
 	smprintf(s, "Getting battery level\n");
 	return GSM_WaitFor (s, req, 2, 0x04, 4, ID_GetBatteryCharge);
@@ -276,7 +277,7 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 				memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
 				entry->Entries[entry->EntriesNum].Text[len*2]=0;
 				entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
-				entry->EntriesNum++;								
+				entry->EntriesNum++;
 			}
 			pos+=2+len*2;
 			break;
@@ -286,13 +287,13 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 			memcpy(entry->Entries[entry->EntriesNum].Text,msg.Buffer+pos+2,len*2);
 			entry->Entries[entry->EntriesNum].Text[len*2]=0;
 			entry->Entries[entry->EntriesNum].Text[len*2+1]=0;
-			entry->EntriesNum++;								
+			entry->EntriesNum++;
 			pos+=2+len*2;
 			break;
 		case 0x13:
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
 			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date);
-			entry->EntriesNum++;								
+			entry->EntriesNum++;
 			pos+=2+7;
 			break;
 		default:
@@ -300,7 +301,7 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 			return ERR_UNKNOWN;
 		}
 	}
-	
+
 	return ERR_NONE;
 }
 
@@ -337,6 +338,11 @@ GSM_Error GNAPGEN_ReplyGetToDo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	Last->Entries[0].Text[(msg.Buffer[pos]*256+msg.Buffer[pos+1])*2+1] = 0;
 	smprintf(s, "Text: \"%s\"\n",DecodeUnicodeString(Last->Entries[0].Text));
 	pos+=(msg.Buffer[pos]*256+msg.Buffer[pos+1])*2+2;
+
+	/**
+	 * @todo There might be better type.
+	 */
+	Last->Type = GSM_CAL_MEMO;
 
 	switch (msg.Buffer[pos]) {
 		case 1  : Last->Priority = GSM_Priority_High; 	break;
@@ -886,7 +892,7 @@ static GSM_Error GNAPGEN_Initialise (GSM_StateMachine *s)
 	if (error != ERR_NONE) return error;
 
 	if (Priv->GNAPPLETVer==0.18) return ERR_NONE;
-	return ERR_GNAPPLETWRONG;	
+	return ERR_GNAPPLETWRONG;
 }
 
 static GSM_Reply_Function GNAPGENReplyFunctions[] = {

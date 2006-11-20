@@ -612,6 +612,11 @@ GSM_Error N6510_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Statu
 	return ERR_NONE;
 #endif
 
+	/**
+	 * @todo This should be acquired from phone
+	 */
+	Status->Free = 100;
+
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
 	        /* Method 1 */
 		error=N71_65_GetCalendarInfo1(s, &s->Phone.Data.Priv.N6510.LastCalendar);
@@ -805,6 +810,10 @@ static GSM_Error N6510_GetToDoStatus1(GSM_StateMachine *s, GSM_ToDoStatus *statu
 	if (error != ERR_NONE) return error;
 
 	status->Used = LastToDo->Number;
+	/**
+	 * @todo This should be acquired from phone
+	 */
+	status->Free = 100;
 	return ERR_NONE;
 }
 
@@ -817,6 +826,10 @@ static GSM_Error N6510_GetToDoStatus2(GSM_StateMachine *s, GSM_ToDoStatus *statu
 	if (error!=ERR_NONE) return error;
 
 	status->Used = LastToDo->Number;
+	/**
+	 * @todo This should be acquired from phone
+	 */
+	status->Free = 100;
 	return ERR_NONE;
 }
 
@@ -839,6 +852,11 @@ GSM_Error N6510_ReplyGetToDo1(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_ToDoEntry *Last = s->Phone.Data.ToDo;
 
 	smprintf(s, "TODO received method 1\n");
+
+	/**
+	 * @todo There might be better type.
+	 */
+	Last->Type = GSM_CAL_MEMO;
 
 	switch (msg.Buffer[4]) {
 		case 1  : Last->Priority = GSM_Priority_High; 	break;
@@ -896,6 +914,11 @@ GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	unsigned long		diff;
 
 	smprintf(s, "ToDo received method 2\n");
+
+	/**
+	 * @todo There might be better type.
+	 */
+	Last->Type = GSM_CAL_MEMO;
 
 	switch (msg.Buffer[44]) {
 		case 0x10: Last->Priority = GSM_Priority_Low; 		break;

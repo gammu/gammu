@@ -52,6 +52,11 @@ void		EncodeBCD			(unsigned char *dest, const unsigned char *src, int len, bool 
 /* ------------------------------ UTF7 ------------------------------------- */
 void 		DecodeUTF7			(unsigned char *dest, const unsigned char *src, int len);
 
+
+/* ---------------------------- ISO88591 ----------------------------------- */
+void		DecodeISO88591			(unsigned char *dest, const char *src, int len);
+void		DecodeISO88591QuotedPrintable	(unsigned char *dest, const unsigned char *src, int len);
+
 /* ------------------------------ UTF8 ------------------------------------- */
 int 		EncodeWithUTF8Alphabet2		(unsigned char mychar1, unsigned char mychar2, unsigned char *ret);
 int 		DecodeWithUTF8Alphabet2		(unsigned char *src, wchar_t *dest, int len);
@@ -132,7 +137,7 @@ void StringToDouble	(char *text, double *d);
 bool mystrncasecmp 	(unsigned const char *a, unsigned const char *b, int num);
 char *mystrcasestr 	(unsigned const char *a, unsigned const char *b);
 
-void MyGetLine		(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen);
+void MyGetLine		(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, bool MergeLines);
 
 char *EncodeSpecialChars(unsigned char *buffer);
 char *DecodeSpecialChars(unsigned char *buffer);

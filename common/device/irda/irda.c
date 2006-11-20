@@ -113,6 +113,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 {
     	GSM_Device_IrdaData 	*d = &s->Device.Data.Irda;
     	int			fd = -1;
+	bool			failed;
 #ifdef WIN32
     	int 			Enable9WireMode = 1;
     	WSADATA			wsaData;
@@ -142,12 +143,7 @@ static GSM_Error irda_open (GSM_StateMachine *s)
     		strcpy(d->peer.irdaServiceName, "Nokia:PhoNet");
 		break;
     	case GCT_IRDAOBEX:
-		/* IrDA:OBEX not supported by N3650 */
-//    		strcpy(d->peer.irdaServiceName, "IrDA:OBEX");
-
     		strcpy(d->peer.irdaServiceName, "OBEX");
-
-		/* Alternative server is "OBEX:IrXfer" */
 		break;
     	default:
 		return ERR_UNKNOWN;
@@ -156,8 +152,26 @@ static GSM_Error irda_open (GSM_StateMachine *s)
     	/* Connecting to service */
     	if (connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
 		dbgprintf("Can't connect to service %s\n",d->peer.irdaServiceName);
-		close(fd);
-		return ERR_NOTSUPPORTED;
+		failed = true;
+		/* Try alternatives if we failed */
+		if (s->ConnectionType == GCT_IRDAOBEX) {
+			dbgprintf("Trying alternate config: IrDA:OBEX\n");
+			strcpy(d->peer.irdaServiceName, "IrDA:OBEX");
+			if (connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
+				dbgprintf("Can't connect to service %s\n",d->peer.irdaServiceName);
+				dbgprintf("Trying alternate config: OBEX:IrXfer\n");
+				strcpy(d->peer.irdaServiceName, "OBEX:IrXfer");
+				if (!connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
+					failed = false;
+				}
+			} else {
+				failed = false;
+			}
+		}
+		if (failed) {
+			close(fd);
+			return ERR_NOTSUPPORTED;
+		}
     	}
 
     	d->hPhone=fd;

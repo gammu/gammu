@@ -43,6 +43,7 @@ typedef enum {
 	AT_Ericsson,
 	AT_Sagem,
 	AT_Samsung,
+	AT_Mitsubishi,
 	AT_Unknown
 } GSM_AT_Manufacturer;
 
@@ -51,8 +52,15 @@ typedef enum {
 	AT_CHARSET_GSM,
 	AT_CHARSET_UCS2,
 	AT_CHARSET_UTF8,
-	AT_CHARSET_PCCP437
+	AT_CHARSET_PCCP437,
+	AT_CHARSET_IRA,
 } GSM_AT_Charset;
+
+typedef enum {
+	AT_PREF_CHARSET_NORMAL = 1,
+	AT_PREF_CHARSET_UNICODE,
+	AT_PREF_CHARSET_IRA,
+} GSM_AT_Charset_Preference;
 
 typedef enum {
 	AT_AVAILABLE = 1,
@@ -89,6 +97,7 @@ typedef struct {
 	bool			EncodedCommands;	/* True if phone encodes also commands and not only values	*/
 	GSM_AT_Charset		UnicodeCharset;	  	/* Charset to use for unicode mode				*/
 	GSM_AT_Charset		NormalCharset;	  	/* Charset to use for non unicode mode				*/
+	GSM_AT_Charset		IRACharset;	  	/* Charset to use for IRA mode					*/
 	GSM_AT_SBNR		PBKSBNR;
 	int			NumberLength;
 	int			TextLength;

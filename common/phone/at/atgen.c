@@ -14,13 +14,17 @@
 #include "../pfunc.h"
 
 #include "atgen.h"
+#include "atfunc.h"
 
 #include "samsung.h"
 #include "siemens.h"
-#include "sonyeric.h"
 
 #ifdef GSM_ENABLE_ALCATEL
 GSM_Error ALCATEL_ProtocolVersionReply (GSM_Protocol_Message, GSM_StateMachine *);
+#endif
+
+#ifdef GSM_ENABLE_SONYERICSSON
+#include "../sonyeric/sefunc.h"
 #endif
 
 
@@ -40,6 +44,7 @@ static GSM_AT_Charset_Info AT_Charsets[] = {
 	{AT_CHARSET_PCCP437,	"PCCP437",	false},
 	{AT_CHARSET_UTF8,	"UTF-8",	true},
 	{AT_CHARSET_UCS2,	"UCS2",		true},
+	{AT_CHARSET_IRA,	"IRA",		false},
 	{0,			NULL}
 };
 
@@ -634,6 +639,11 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			strcpy(s->Phone.Data.Manufacturer,"Ericsson");
 			Priv->Manufacturer = AT_Ericsson;
 		}
+		if (strstr(msg.Buffer,"Sony Ericsson")) {
+			smprintf(s, "Sony Ericsson\n");
+			strcpy(s->Phone.Data.Manufacturer,"Sony Ericsson");
+			Priv->Manufacturer = AT_Ericsson;
+		}
 		if (strstr(msg.Buffer,"iPAQ")) {
 			smprintf(s, "iPAQ\n");
 			strcpy(s->Phone.Data.Manufacturer,"HP");
@@ -653,6 +663,11 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			smprintf(s, "Samsung\n");
 			strcpy(s->Phone.Data.Manufacturer,"Samsung");
 			Priv->Manufacturer = AT_Samsung;
+		}
+		if (strstr(msg.Buffer,"Mitsubishi")) {
+			smprintf(s, "Mitsubishi\n");
+			strcpy(s->Phone.Data.Manufacturer,"Mitsubishi");
+			Priv->Manufacturer = AT_Mitsubishi;
 		}
 		return ERR_NONE;
 	case AT_Reply_CMSError:
@@ -684,6 +699,7 @@ GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine 
 			memmove(s->Phone.Data.Version, s->Phone.Data.Version + 7, strlen(s->Phone.Data.Version + 7) + 1);
 		}
 	}
+	/* @todo: why the hell this? */
 	if (Priv->Manufacturer == AT_Ericsson) {
 		while (1) {
 			if (s->Phone.Data.Version[i] == 0x20) {
@@ -764,6 +780,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->Charset			= 0;
 	Priv->EncodedCommands		= false;
 	Priv->NormalCharset		= 0;
+	Priv->IRACharset		= 0;
 	Priv->UnicodeCharset		= 0;
 	Priv->PBKMemories[0]		= 0;
 	Priv->FirstCalendarPos		= 0;
@@ -828,6 +845,10 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	error = ATGEN_GetModel(s);
 	if (error != ERR_NONE) return error;
+
+	smprintf(s, "Checking for OBEX support\n");
+	/* We don't care about error here */
+	GSM_WaitFor (s, "AT+CPROT=?\r", 11, 0x00, 3, ID_SetOBEX);
 
 	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = true;
@@ -900,9 +921,14 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			while (AT_Charsets[i].charset != 0) {
 				if (strstr(line, AT_Charsets[i].text) != NULL) {
 					Priv->NormalCharset = AT_Charsets[i].charset;
+					Priv->IRACharset = AT_Charsets[i].charset;
 					break;
 				}
 				i++;
+			}
+			/* Use IRA charset if we support it */
+			if (strstr(line, "IRA") != NULL) {
+				Priv->IRACharset = AT_CHARSET_IRA;
 			}
 			if (Priv->NormalCharset == 0) {
 				smprintf(s, "Could not find supported charset in list returned by phone!\n");
@@ -933,7 +959,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 }
 
 
-GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, bool PreferUnicode)
+GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
@@ -959,11 +985,16 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, bool PreferUnicode)
 	}
 
 	/* Find charset we want */
-	if (PreferUnicode) {
+	if (Prefer == AT_PREF_CHARSET_UNICODE) {
 		cset = Priv->UnicodeCharset;
-	} else {
+	} else if (Prefer == AT_PREF_CHARSET_NORMAL) {
 		cset = Priv->NormalCharset;
+	} else if (Prefer == AT_PREF_CHARSET_IRA) {
+		cset = Priv->IRACharset;
+	} else {
+		return ERR_BUG;
 	}
+
 	/* If we already have set our preffered charset there is nothing to do*/
 	if (Priv->Charset == cset) return ERR_NONE;
 
@@ -1066,7 +1097,7 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, bool SIM)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -1600,7 +1631,7 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 
 	/* There is possibility that date will be encoded in text mode */
 	if (Priv->SMSMode == SMS_AT_TXT) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2205,7 +2236,7 @@ GSM_Error ATGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2255,7 +2286,7 @@ GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 	return ATGEN_PrivSetDateTime(s, date_time, true);
@@ -2270,7 +2301,7 @@ GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2293,7 +2324,7 @@ GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2366,7 +2397,7 @@ GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2559,7 +2590,7 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, false);
+		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
 
@@ -2880,6 +2911,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
   		case AT_CHARSET_UCS2:
  			DecodeHexUnicode(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2));
   			break;
+  		case AT_CHARSET_IRA: /* IRA is ASCII only, so it's safe to treat is as UTF-8 */
   		case AT_CHARSET_UTF8:
  			DecodeUTF8(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2));
   			break;
@@ -2962,7 +2994,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 	}
 
 
-	error=ATGEN_SetCharset(s, true); /* For reading we prefer unicode */
+	error=ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE); /* For reading we prefer unicode */
 	if (error != ERR_NONE) return error;
 
 	if (endlocation == 0) {
@@ -3399,7 +3431,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	unsigned char		uname[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 	unsigned char		number[GSM_PHONEBOOK_TEXT_LENGTH + 1];
 	int			reqlen, i;
-	bool			PreferUnicode = false;
+	GSM_AT_Charset_Preference	Prefer = AT_PREF_CHARSET_NORMAL;
 
 	if (entry->Location == 0) return ERR_INVALIDLOCATION;
 
@@ -3430,13 +3462,13 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			 * unicode 16, if storing in unicode would truncate
 			 * text, do not use it, otherwise we will use it */
 			if ((Priv->TextLength != 0) && ((Priv->TextLength * 7 / 16) <= len)) {
-				PreferUnicode = false;
+				Prefer = AT_PREF_CHARSET_NORMAL;
 			} else {
-				PreferUnicode = true;
+				Prefer = AT_PREF_CHARSET_UNICODE;
 			}
 		}
 
-		error = ATGEN_SetCharset(s, PreferUnicode);
+		error = ATGEN_SetCharset(s, Prefer);
 		if (error != ERR_NONE) return error;
 
 		switch (Priv->Charset) {
@@ -3453,6 +3485,8 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			EncodeHexUnicode(name, entry->Entries[Name].Text, UnicodeLength(entry->Entries[Name].Text));
 			len = strlen(name);
 			break;
+  		case AT_CHARSET_IRA:
+			return ERR_NOTSUPPORTED;
   		case AT_CHARSET_UTF8:
 			EncodeUTF8(name, entry->Entries[Name].Text);
 			len = strlen(name);
@@ -3668,9 +3702,6 @@ GSM_Error ATGEN_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine
     GSM_Phone_Data		*Data = &s->Phone.Data;
     int 			i;
 
-    Data->BatteryCharge->BatteryPercent = -1;
-    Data->BatteryCharge->ChargeState 	= 0;
-
     switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
         case AT_Reply_OK:
             smprintf(s, "Battery level received\n");
@@ -3694,6 +3725,7 @@ GSM_Error ATGEN_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine
 
 GSM_Error ATGEN_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 {
+	GSM_ClearBatteryCharge(bat);
 	s->Phone.Data.BatteryCharge = bat;
 	smprintf(s, "Getting battery charge\n");
 	return GSM_WaitFor (s, "AT+CBC\r", 7, 0x00, 4, ID_GetBatteryCharge);
@@ -3767,7 +3799,6 @@ static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *N
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->Manufacturer==AT_Siemens ) return SIEMENS_GetNextCalendar(s,Note,start);
-	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_GetNextCalendar(s,Note,start);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -3779,12 +3810,19 @@ GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
+GSM_Error ATGEN_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+{
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_SetCalendarNote(s, Note);
+	return ERR_NOTSUPPORTED;
+}
+
 GSM_Error ATGEN_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_AddCalendarNote(s, Note);
-	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_AddCalendarNote(s, Note);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -3793,7 +3831,6 @@ GSM_Error ATGEN_DelCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (Priv->Manufacturer==AT_Siemens)  return SIEMENS_DelCalendarNote(s, Note);
-	if (Priv->Manufacturer==AT_Ericsson) return SONYERIC_DelCalendarNote(s, Note);
 	return ERR_NOTSUPPORTED;
 }
 
@@ -3837,35 +3874,54 @@ GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *ma
 GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 {
 	GSM_Error	error;
-	unsigned char 	Frame[] = "AT+CKPD=\"?\"\r";
+	unsigned char 	frame[20];
+
+	frame[0] = 0;
+
+	ATGEN_SetCharset(s, AT_PREF_CHARSET_IRA);
+
+	strcat(frame, "AT+CKPD=\"");
 
 	if (Press) {
 		switch (Key) {
-			case GSM_KEY_1 			: Frame[9] = '1'; break;
-			case GSM_KEY_2			: Frame[9] = '2'; break;
-			case GSM_KEY_3			: Frame[9] = '3'; break;
-			case GSM_KEY_4			: Frame[9] = '4'; break;
-			case GSM_KEY_5			: Frame[9] = '5'; break;
-			case GSM_KEY_6			: Frame[9] = '6'; break;
-			case GSM_KEY_7			: Frame[9] = '7'; break;
-			case GSM_KEY_8			: Frame[9] = '8'; break;
-			case GSM_KEY_9			: Frame[9] = '9'; break;
-			case GSM_KEY_0			: Frame[9] = '0'; break;
-			case GSM_KEY_HASH		: Frame[9] = '#'; break;
-			case GSM_KEY_ASTERISK		: Frame[9] = '*'; break;
-			case GSM_KEY_POWER		: return ERR_NOTSUPPORTED;
-			case GSM_KEY_GREEN		: Frame[9] = 'S'; break;
-			case GSM_KEY_RED		: Frame[9] = 'E'; break;
-			case GSM_KEY_INCREASEVOLUME	: Frame[9] = 'U'; break;
-			case GSM_KEY_DECREASEVOLUME	: Frame[9] = 'D'; break;
-			case GSM_KEY_UP			: Frame[9] = '^'; break;
-			case GSM_KEY_DOWN		: Frame[9] = 'V'; break;
-			case GSM_KEY_MENU		: Frame[9] = 'F'; break;
-			case GSM_KEY_NAMES		: Frame[9] = 'C'; break;
-			default				: return ERR_NOTSUPPORTED;
+			case GSM_KEY_1 			: strcat(frame,"1"); break;
+			case GSM_KEY_2			: strcat(frame,"2"); break;
+			case GSM_KEY_3			: strcat(frame,"3"); break;
+			case GSM_KEY_4			: strcat(frame,"4"); break;
+			case GSM_KEY_5			: strcat(frame,"5"); break;
+			case GSM_KEY_6			: strcat(frame,"6"); break;
+			case GSM_KEY_7			: strcat(frame,"7"); break;
+			case GSM_KEY_8			: strcat(frame,"8"); break;
+			case GSM_KEY_9			: strcat(frame,"9"); break;
+			case GSM_KEY_0			: strcat(frame,"0"); break;
+			case GSM_KEY_HASH		: strcat(frame,"#"); break;
+			case GSM_KEY_ASTERISK		: strcat(frame,"*"); break;
+			case GSM_KEY_POWER		: strcat(frame,"P"); break;
+			case GSM_KEY_GREEN		: strcat(frame,"S"); break;
+			case GSM_KEY_RED		: strcat(frame,"E"); break;
+			case GSM_KEY_INCREASEVOLUME	: strcat(frame,"U"); break;
+			case GSM_KEY_DECREASEVOLUME	: strcat(frame,"D"); break;
+			case GSM_KEY_UP			: strcat(frame,"^"); break;
+			case GSM_KEY_DOWN		: strcat(frame,"V"); break;
+			case GSM_KEY_MENU		: strcat(frame,"F"); break;
+			case GSM_KEY_LEFT		: strcat(frame,"<"); break;
+			case GSM_KEY_RIGHT		: strcat(frame,">"); break;
+			case GSM_KEY_SOFT1		: strcat(frame,"["); break;
+			case GSM_KEY_SOFT2		: strcat(frame,"]"); break;
+			case GSM_KEY_HEADSET		: strcat(frame,"H"); break;
+			case GSM_KEY_JOYSTICK		: strcat(frame,":J"); break;
+			case GSM_KEY_CAMERA		: strcat(frame,":C"); break;
+			case GSM_KEY_OPERATOR		: strcat(frame,":O"); break;
+			case GSM_KEY_RETURN		: strcat(frame,":R"); break;
+			case GSM_KEY_CLEAR		: strcat(frame,"C"); break;
+			case GSM_KEY_MEDIA		: strcat(frame,":S"); break;
+			case GSM_KEY_DESKTOP		: strcat(frame,":D"); break;
+			case GSM_KEY_NONE		: return ERR_NONE; /* Nothing to do here */
+			case GSM_KEY_NAMES		: return ERR_NOTSUPPORTED;
 		}
+		strcat(frame, "\"\r");
 		smprintf(s, "Pressing key\n");
-		error = GSM_WaitFor (s, Frame, 12, 0x00, 4, ID_PressKey);
+		error = GSM_WaitFor (s, frame, 12, 0x00, 4, ID_PressKey);
 		if (error != ERR_NONE) return error;
 
 		/* Strange. My T310 needs it */
@@ -4241,16 +4297,50 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 	return ERR_NONE;
 }
 
-GSM_Error ATGEN_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
+/**
+ * Detects what additional protocols are being supported
+ */
+GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	if (s->Phone.Data.Priv.ATGEN.Manufacturer==AT_Ericsson) return ERICSSON_GetLocale(s,locale);
-	return ERR_NOTSUPPORTED;
-}
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	int			line = 0;
+	char			*str;
+	int			cur;
 
-GSM_Error ATGEN_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
-{
-	if (s->Phone.Data.Priv.ATGEN.Manufacturer==AT_Ericsson) return ERICSSON_SetLocale(s,locale);
-	return ERR_NOTSUPPORTED;
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+		smprintf(s, "Protocol entries received\n");
+		/* Walk through lines with +CPROT: */
+		while (Priv->Lines.numbers[line*2+1]!=0) {
+			str = GetLineString(msg.Buffer,Priv->Lines,line+1);
+			if (strncmp(str, "+CPROT: ", 7) == 0) {
+				if (sscanf(str, "+CPROT: %d,", &cur) == 1 || sscanf(str, "+CPROT: (%d,", &cur) == 1) {
+					smprintf(s, "OBEX seems to be supported!\n");
+					if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)) {
+						/*
+						 * We do not enable this automatically, because some
+						 * phones provide less features over OBEX than AT
+						 * using AT commands.
+						 */
+						smprintf(s, "Please consider adding F_OBEX to your phone capabilities in common/gsmstate.c\n");
+					} else {
+#ifdef GSM_ENABLE_SONYERICSSON
+						/* Tell OBEX driver that AT+CPROT=0 is supported */
+						s->Phone.Data.Priv.SONYERICSSON.HasOBEX = SONYERICSSON_OBEX_CPROT0;
+#endif
+					}
+				}
+			}
+			line++;
+		}
+		return ERR_NONE;
+	case AT_Reply_Error:
+		return ERR_UNKNOWN;
+	case AT_Reply_CMSError:
+	        return ATGEN_HandleCMSError(s);
+	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
 }
 
 GSM_Reply_Function ATGENReplyFunctions[] = {
@@ -4259,12 +4349,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CMEE=" 		,0x00,0x00,ID_EnableErrorInfo	 },
 {ATGEN_GenericReply,		"AT+CKPD="		,0x00,0x00,ID_PressKey		 },
 {ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
-{ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
-
-{ERICSSON_ReplyGetDateLocale,	"AT*ESDF?"		,0x00,0x00,ID_GetLocale		 },
-{ERICSSON_ReplyGetTimeLocale,	"AT*ESTF?"		,0x00,0x00,ID_GetLocale	 	 },
-{ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
-{ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },
+{ATGEN_ReplyCheckProt,		"AT+CPROT=?" 	 	,0x00,0x00,ID_SetOBEX		 },
 
 {ATGEN_ReplyGetCNMIMode,	"AT+CNMI=?"		,0x00,0x00,ID_GetCNMIMode	 },
 #ifdef GSM_ENABLE_CELLBROADCAST
@@ -4370,6 +4455,20 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {SAMSUNG_ReplyGetRingtone,	"AT+MELR="		,0x00,0x00,ID_GetRingtone	 },
 {SAMSUNG_ReplySetRingtone,	"SDNDCRC ="		,0x00,0x00,ID_SetRingtone	 },
 
+#ifdef GSM_ENABLE_SONYERICSSON
+{ATGEN_GenericReply,		"AT*EOBEX=?"		,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_GenericReply,		"AT+CPROT=0" 	 	,0x00,0x00,ID_SetOBEX		 },
+
+{ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
+{ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },
+
+{SONYERICSSON_ReplyGetDateLocale,	"AT*ESDF?"	,0x00,0x00,ID_GetLocale		 },
+{SONYERICSSON_ReplyGetTimeLocale,	"AT*ESTF?"	,0x00,0x00,ID_GetLocale	 	 },
+{SONYERICSSON_ReplyGetFileSystemStatus,	"AT*EMEM"	,0x00,0x00,ID_FileSystemStatus 	 },
+{ATGEN_GenericReply,			"AT*EBCA"	,0x00,0x00,ID_GetBatteryCharge 	 },
+{SONYERICSSON_ReplyGetBatteryCharge,	"*EBCA:"	,0x00,0x00,ID_IncomingFrame	 },
+#endif
 #ifdef GSM_ENABLE_ALCATEL
 /*  Why do I give Alcatel specific things here? It's simple, Alcatel needs
  *  some AT commands to start it's binary mode, so this needs to be in AT
@@ -4380,7 +4479,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
  */
 {ATGEN_GenericReply,		"AT+IFC" 	 	,0x00,0x00,ID_SetFlowControl  	 },
 {ALCATEL_ProtocolVersionReply,	"AT+CPROT=?" 	 	,0x00,0x00,ID_AlcatelProtocol    },
-{ATGEN_GenericReply,		"AT+CPROT" 	 	,0x00,0x00,ID_AlcatelConnect	 },
+{ATGEN_GenericReply,		"AT+CPROT=16" 	 	,0x00,0x00,ID_AlcatelConnect	 },
 #endif
 
 {NULL,				"\x00"			,0x00,0x00,ID_None		 }
@@ -4407,8 +4506,8 @@ GSM_Phone_Functions ATGENPhone = {
 	ATGEN_SetDateTime,
 	ATGEN_GetAlarm,
 	ATGEN_SetAlarm,
-	ATGEN_GetLocale,
-	ATGEN_SetLocale,
+	NOTSUPPORTED,			/*	GetLocale		*/
+	NOTSUPPORTED,			/*	SetLocale		*/
 	ATGEN_PressKey,
 	ATGEN_Reset,
 	ATGEN_ResetPhoneSettings,
@@ -4482,17 +4581,17 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/*	GetNextMMSFileInfo	*/
 	ATGEN_GetBitmap,		/* 	GetBitmap		*/
 	ATGEN_SetBitmap,		/*	SetBitmap		*/
-	SONYERIC_GetToDoStatus,
+	NOTSUPPORTED,			/*	GetToDoStatus		*/
 	NOTSUPPORTED,			/*	GetToDo			*/
-	SONYERIC_GetNextToDo,
+	NOTSUPPORTED,			/*	GetNextToDo		*/
 	NOTSUPPORTED,			/*	SetToDo			*/
-	SONYERIC_AddToDo,
+	NOTSUPPORTED,			/*	AddToDo			*/
 	NOTSUPPORTED,			/*	DeleteToDo		*/
-	SONYERIC_DeleteAllToDo,
-	SONYERIC_GetCalendarStatus,
+	NOTSUPPORTED,			/*	DeleteAllToDo		*/
+	NOTSUPPORTED,			/*	GetCalendarStatus	*/
 	NOTIMPLEMENTED,			/*	GetCalendar		*/
     	ATGEN_GetNextCalendar,
-	NOTIMPLEMENTED,			/*	SetCalendar		*/
+	ATGEN_SetCalendarNote,
 	ATGEN_AddCalendarNote,
 	ATGEN_DelCalendarNote,
 	NOTIMPLEMENTED,			/*	DeleteAllCalendar	*/

@@ -496,10 +496,42 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				}
 				pos+=len2-1;
 			} else if (file->Buffer[pos] == 0x1F) {
-				dbgprintf("not done yet\n");
-				return ERR_FILENOTSUPPORTED;
+				//hack from coded files
+				len2 = file->Buffer[pos++];
+				type = file->Buffer[pos++] & 0x7f;
+				type +=2;
+				GSM_AddWAPMIMEType(type, buff);
+				i=0;
+				while (i<len2) {
+					switch (file->Buffer[pos+i]) {
+					case 0x89:
+						sprintf(buff,"%s; type=",buff);
+						i++;
+						while (file->Buffer[pos+i]!=0x00) {
+							buff[strlen(buff)+1] = 0;
+							buff[strlen(buff)]   = file->Buffer[pos+i];
+							i++;
+						}
+						i++;
+						break;
+					case 0x8A:
+						sprintf(buff,"%s; start=",buff);
+						i++;
+						while (file->Buffer[pos+i]!=0x00) {
+							buff[strlen(buff)+1] = 0;
+							buff[strlen(buff)]   = file->Buffer[pos+i];
+							i++;
+						}
+						i++;
+						break;
+					default:
+						i++;
+						break;
+					}
+				}
+				pos+=len2+2;
 			} else if (file->Buffer[pos] >= 0x20 && file->Buffer[pos] <= 0x7F) {
-				dbgprintf("not done yet\n");
+				dbgprintf("not done yet 2\n");
 				return ERR_FILENOTSUPPORTED;
 			} else if (file->Buffer[pos] >= 0x80 && file->Buffer[pos] < 0xFF) {
 				type = file->Buffer[pos++] & 0x7f;
@@ -716,7 +748,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 		if (!(file->Buffer[pos-1] & 0x80)) break;
 	}
 	value2 = value;
-//	dbgprintf("  Parts             : %i\n",value2);
+	dbgprintf("  Parts             : %i\n",value2);
 	parts = value;
 
 	for (j=0;j<parts;j++) {

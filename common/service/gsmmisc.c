@@ -33,6 +33,16 @@ static struct keys_table_position Keys[] = {
 	{'*',GSM_KEY_ASTERISK},		{'0',GSM_KEY_0},	{'#',GSM_KEY_HASH},
 	{'g',GSM_KEY_GREEN},		{'G',GSM_KEY_GREEN},
 	{'r',GSM_KEY_RED},		{'R',GSM_KEY_RED},
+	{'<',GSM_KEY_LEFT},		{'>',GSM_KEY_RIGHT},
+	{'[',GSM_KEY_SOFT1},		{']',GSM_KEY_SOFT2},
+	{'h',GSM_KEY_HEADSET},		{'H',GSM_KEY_HEADSET},
+	{'c',GSM_KEY_CLEAR},		{'C',GSM_KEY_CLEAR},
+	{'j',GSM_KEY_JOYSTICK},		{'J',GSM_KEY_JOYSTICK},
+	{'f',GSM_KEY_CAMERA},		{'F',GSM_KEY_CAMERA},
+	{'o',GSM_KEY_OPERATOR},		{'O',GSM_KEY_OPERATOR},
+	{'m',GSM_KEY_MEDIA},		{'M',GSM_KEY_MEDIA},
+	{'d',GSM_KEY_DESKTOP},		{'D',GSM_KEY_DESKTOP},
+	{'@',GSM_KEY_RETURN},
 	{' ',0}
 };
 
@@ -79,7 +89,9 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 		i 		= fread(File->Buffer+File->Used,1,1000,file);
 		File->Used 	= File->Used + i;
 	}
-	File->Buffer = realloc(File->Buffer,File->Used);
+	File->Buffer = realloc(File->Buffer,File->Used + 1);
+	/* Make it 0 terminated, in case it is needed somewhere (we don't count this to length) */
+	File->Buffer[File->Used] = 0;
 	fclose(file);
 
 	File->ModifiedEmpty = true;
@@ -105,7 +117,7 @@ static void GSM_JADFindLine(GSM_File File, char *Name, char *Value)
 	Value[0] = 0;
 
 	while (1) {
-		MyGetLine(File.Buffer, &Pos, Line, File.Used);
+		MyGetLine(File.Buffer, &Pos, Line, File.Used, false);
 		if (strlen(Line) == 0) break;
 		if (!strncmp(Line,Name,strlen(Name))) {
 			Pos = strlen(Name);
@@ -207,8 +219,10 @@ bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
 		dt->Minute	= atoi(minute);
 		dt->Second	= atoi(second);
 
-		/* FIXME, HACK*/
-		if (Buffer[15] == 'Z') dt->Timezone =2;	
+		/**
+		 * @todo Handle properly timezone information
+		 */
+		if (Buffer[15] == 'Z') dt->Timezone = 0; /* Z = ZULU = GMT */
 	}
 
 	if (!CheckTime(dt)) {
@@ -338,15 +352,14 @@ bool ReadVCALText(char *Buffer, char *Start, char *Value)
 	strcpy(buff,Start);
 	strcat(buff,":");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
-		EncodeUnicode(Value,Buffer+strlen(Start)+1,strlen(Buffer)-(strlen(Start)+1));
+		DecodeISO88591(Value,Buffer+strlen(Start)+1,strlen(Buffer)-(strlen(Start)+1));
 		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
 		return true;
 	}
-	/* SE T68i */
 	strcpy(buff,Start);
 	strcat(buff,";ENCODING=QUOTED-PRINTABLE:");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
-		DecodeUTF8QuotedPrintable(Value,Buffer+strlen(Start)+27,strlen(Buffer)-(strlen(Start)+27));
+		DecodeISO88591QuotedPrintable(Value,Buffer+strlen(Start)+27,strlen(Buffer)-(strlen(Start)+27));
 		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
 		return true;
 	}
@@ -369,23 +382,6 @@ bool ReadVCALText(char *Buffer, char *Start, char *Value)
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		DecodeUTF7(Value,Buffer+strlen(Start)+15,strlen(Buffer)-(strlen(Start)+15));
 		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
-		return true;
-	}
-	return false;
-}
-
-bool ReadVCALTextUTF8(char *Buffer, char *Start, char *Value)
-{
-	unsigned char buff[200];
-
-	Value[0] = 0x00;
-	Value[1] = 0x00;
-
-	strcpy(buff,Start);
-	strcat(buff,":");
-	if (!strncmp(Buffer,buff,strlen(buff))) {
-		DecodeUTF8(Value,Buffer+strlen(Start)+1,strlen(Buffer)-(strlen(Start)+1));
-		dbgprintf("ReadVCalTextUTF8 is \"%s\"\n",DecodeUnicodeConsole(Value));
 		return true;
 	}
 	return false;
@@ -451,6 +447,19 @@ bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *
 	}
 
 	return true;
+}
+
+void GSM_ClearBatteryCharge(GSM_BatteryCharge *bat)
+{
+    bat->BatteryPercent = -1;
+    bat->ChargeState 	= 0;
+    bat->BatteryVoltage = -1;
+    bat->ChargeVoltage = -1;
+    bat->ChargeCurrent = -1;
+    bat->PhoneCurrent = -1;
+    bat->BatteryTemperature = -1;
+    bat->PhoneTemperature = -1;
+    bat->BatteryCapacity = -1;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

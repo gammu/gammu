@@ -329,7 +329,7 @@ SOURCE=..\..\..\common\phone\at\siemens.c
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\at\sonyeric.c
+SOURCE=..\..\..\common\phone\sonyeric\sonyeric.c
 # End Source File
 # End Group
 # Begin Group "Header Files"
@@ -585,7 +585,19 @@ SOURCE=..\..\..\common\phone\at\siemens.h
 # End Source File
 # Begin Source File
 
-SOURCE=..\..\..\common\phone\at\sonyeric.h
+SOURCE=..\..\..\common\phone\sonyeric\sefunc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\obex\obexfunc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\at\atfunc.h
+# End Source File
+# Begin Source File
+
+SOURCE=..\..\..\common\phone\sonyeric\sonyeric.h
 # End Source File
 # End Group
 # End Target
