@@ -1310,8 +1310,8 @@ static OnePhoneModel allmodels[] = {
 	{"Generic SE",	"Generic SE", "Sony Ericss",			   {F_OBEX, 0}},
 	{"K300 series",	"K300 series", "K300 series",			   {F_OBEX, 0}},
 
-	/* Mitsubishi (not confirmed) */
-	{"M341i",	"M7", "",					   {F_OBEX, 0}},
+	/* Mitsubishi */
+	{"M341i",	"M7", "",					   {F_OBEX, F_IRMC_LEVEL_2, 0}},
 
 	/* Other */
 	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},
