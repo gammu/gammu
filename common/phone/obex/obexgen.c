@@ -10,7 +10,6 @@
  * @author Marcin Wiacek
  */
 
-#define _GNU_SOURCE /* Needed for strndup */
 #include <string.h>
 #include <time.h>
 
@@ -19,7 +18,7 @@
 #include "../../gsmstate.h"
 #include "../../service/gsmmisc.h"
 #include "../../protocol/obex/obex.h"
-#include "obexgen-functions.h"
+#include "obexfunc.h"
 
 #ifdef GSM_ENABLE_OBEXGEN
 
@@ -349,15 +348,21 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 					if (pos2 >= len2) break;
 					switch (msg.Buffer[Pos + 3 + pos2]) {
 						case 0x01:
-							LUID = strndup(msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
+							LUID = malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
+							memcpy(LUID,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
+							LUID[msg.Buffer[Pos + 3 + pos2 + 1]]=0;
 							smprintf(s, " LUID=\"%s\"", LUID);
 							break;
 						case 0x02:
-							CC = strndup(msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
+							CC = malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
+							memcpy(CC,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
+							CC[msg.Buffer[Pos + 3 + pos2 + 1]]=0;
 							smprintf(s, " CC=\"%s\"", CC);
 							break;
 						case 0x03:
-							timestamp = strndup(msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
+							timestamp = malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
+							memcpy(timestamp,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
+							timestamp[msg.Buffer[Pos + 3 + pos2 + 1]] = 0;
 							smprintf(s, " Timestamp=\"%s\"", timestamp);
 							break;
 					}
@@ -1150,7 +1155,7 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 /**
  * Initialises LUID database, which is used for LUID - Location mapping.
  */
-GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const const bool Recalculate, char *Header, char **Data, int **Offsets, int *Count, char ***LUID, int *LUIDCount)
+GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const bool Recalculate, char *Header, char **Data, int **Offsets, int *Count, char ***LUID, int *LUIDCount)
 {
 	GSM_Error 	error;
 	char		*pos;

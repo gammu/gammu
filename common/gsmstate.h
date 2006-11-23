@@ -41,7 +41,7 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #  include "phone/alcatel/alcatel.h"
 #endif
 #ifdef GSM_ENABLE_SONYERICSSON
-#  include "phone/sonyericsson/sonyericsson.h"
+#  include "phone/sonyeric/sonyeric.h"
 #endif
 #ifdef GSM_ENABLE_OBEXGEN
 #  include "phone/obex/obexgen.h"

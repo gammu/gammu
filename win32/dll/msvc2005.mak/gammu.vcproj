@@ -353,7 +353,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\at\sonyeric.c"
+				RelativePath="..\..\..\common\phone\sonyeric\sonyeric.c"
 				>
 			</File>
 		</Filter>
@@ -610,7 +610,19 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\..\common\phone\at\sonyeric.h"
+				RelativePath="..\..\..\common\phone\sonyeric\sonyeric.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\common\phone\sonyeric\sefunc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\common\phone\at\atfunc.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\common\phone\obex\obexfunc.h"
 				>
 			</File>
 		</Filter>
