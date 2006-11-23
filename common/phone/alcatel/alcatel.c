@@ -32,7 +32,7 @@
 #include "../../misc/misc.h"
 #include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
-#include "../at/atgen-functions.h"
+#include "../at/atfunc.h"
 #include "alcatel.h"
 
 /* Timeout for GSM_WaitFor calls. */

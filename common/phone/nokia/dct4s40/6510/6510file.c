@@ -1559,13 +1559,13 @@ GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool star
 	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
 	if (start) {
+		Priv->Use2 = true;
 		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 			//series 40 3.0 don't have filesystem 1
 			Priv->Use2 = false;
-		} else if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILE1)) {
+		}
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILE1)) {
 			Priv->Use2 = false;
-		} else {
-			Priv->Use2 = true;
 		}
 	}
 	if (Priv->Use2) {

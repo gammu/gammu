@@ -46,6 +46,44 @@ For additionals materials and links to them see readme.txt
 [*] Changes in existing functionality
 [-] Fixed error
 
+20061120 - 1.08.25
+[+] improved MMS decoder                                            (rickytato)
+[+] Nokia 6030 ID                                              (Ravinder Rathi)
+[+] * OBEX                                                       (Michal Cihar)
+      * Use unicode FullIDs
+      * Support for several services
+      * Fix folder browsing
+      * Added IrMC support to OBEX driver, so it can now access many phones
+        which provide IrMC
+      * Added new phone module sonyericsson which uses OBEX IrMC services, 
+        generic AT code and few SE specific commands
+      * IrDA can connect to OBEX service under more names
+      * fix OBEX path transversal to be more compatible with different
+        breakages in phones
+      * added --identify support to OBEX
+    * Sony Ericsson:
+      * Added many SE phones identification, together with listing that they
+        support SE features
+      * Enhance battery information to contain many information which can
+        be grabbed from SE
+      * sonyericsson module now also supports other phones (for now only one
+        Mitsubishi)
+      * F_SONYERICSSON renamed because of it to F_OBEX
+    * Limited (decode only) support for ISO-8859-1 charset 
+      (it is default in vCard/vCalendar/vTodo)
+    * MyGetLine can optionally handle quoted printable split lines
+    * DecodeUTF8QuotedPrintable correctly handles several QP chars in a row
+    * Limited IRA charset support for AT module (used only for sending keys)
+    * Add free information to Calendar and ToDo statuses
+    * Add more detailed info to filesystem
+    * Add type entry to ToDo item
+    * Make vCalendar and vTodo encoding/decoding more behave according to
+      specs while keeping format specific hacks
+    * Added LUID to all entries type, add some fields to calendar and todo
+    * Added support for much more keys
+[-] removed strndup in Michal's patches
+[-] fix calendar rereading in Siemens module                      (Rene Peters)
+
 20061025 - 1.08.15
 [+] 6234 ID                                                             (Vlado)
 [-] 6103 doesn't have filesystem 1                              (BT25, rpolach)

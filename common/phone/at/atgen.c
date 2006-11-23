@@ -14,7 +14,7 @@
 #include "../pfunc.h"
 
 #include "atgen.h"
-#include "atgen-functions.h"
+#include "atfunc.h"
 
 #include "samsung.h"
 #include "siemens.h"
@@ -24,7 +24,7 @@ GSM_Error ALCATEL_ProtocolVersionReply (GSM_Protocol_Message, GSM_StateMachine *
 #endif
 
 #ifdef GSM_ENABLE_SONYERICSSON
-#include "../sonyericsson/sonyericsson-functions.h"
+#include "../sonyeric/sefunc.h"
 #endif
 
 

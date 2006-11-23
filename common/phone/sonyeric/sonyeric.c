@@ -17,9 +17,9 @@
 #include "../../misc/misc.h"
 #include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
-#include "../at/atgen-functions.h"
-#include "../obex/obexgen-functions.h"
-#include "sonyericsson.h"
+#include "../at/atfunc.h"
+#include "../obex/obexfunc.h"
+#include "sonyeric.h"
 
 extern GSM_Reply_Function SONYERICSSONReplyFunctions[];
 
