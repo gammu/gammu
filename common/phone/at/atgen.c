@@ -1,5 +1,16 @@
 /* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 
+/** \file atgen.c
+ * \defgroup ATPhone AT phones communication
+ *
+ * This module implements standard AT commands.
+ *
+ * \see http://www.etsi.org
+ * \see http://www.3gpp.org
+ *
+ * @{
+ */
+
 #include "../../gsmstate.h"
 
 #ifdef GSM_ENABLE_ATGEN
@@ -4663,6 +4674,7 @@ GSM_Phone_Functions ATGENPhone = {
 };
 
 #endif
+/*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

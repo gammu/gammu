@@ -1,6 +1,7 @@
 /* (c) 2002-2005 by Michal Cihar */
-
-/*
+/**
+ * \file alcatel.c
+ * \defgroup AlcatelPhone Alcatel phones communication
  * High level functions for communication with Alcatel One Touch 501 and
  * compatible mobile phone.
  *
@@ -17,6 +18,8 @@
  * Notes for future features:
  * - max phone number length is 61 (BE5)
  * - max name length is 50 (BE5)
+ *
+ * @{
  */
 
 #include "../../gsmstate.h"
@@ -35,10 +38,15 @@
 #include "../at/atfunc.h"
 #include "alcatel.h"
 
-/* Timeout for GSM_WaitFor calls. */
+/**
+ * Timeout for GSM_WaitFor calls.
+ */
 #define ALCATEL_TIMEOUT			64
 
-/* Some magic numbers for protocol follow */
+/**
+ * \name Some magic numbers for protocol
+ * @{
+ */
 
 /* synchronisation types (for everything except begin transfer): */
 #define ALCATEL_SYNC_TYPE_CALENDAR	0x64
@@ -57,12 +65,16 @@
 /* Various flags */
 #define ALCATEL_UNICODE_FLAG		0x80
 
+/*@}*/
+
 extern GSM_Reply_Function ALCATELReplyFunctions[];
 
 /**
  * Alcatel uses some 8-bit characters in contacts, calendar etc.. This table
  * attempts to decode it, it is probably not complete, here are just chars
  * that I found...
+ *
+ * \todo Some characters are not correctly coded.
  */
 unsigned char GSM_AlcatelAlphabet[] =
 {
@@ -139,7 +151,7 @@ unsigned char GSM_AlcatelAlphabet[] =
 	0xbe,		0x1e,0x21,	/* g macron	*/
 	0xbf,		0x01,0x5e,	/* S cedilla	*/
 	0xc0,		0x01,0x5f,	/* s cedilla	*/
-	0xc1,		0x01,0x2f,	/* i ogonek	*/ /* FIXME: not sure with this, it look like normal i */
+	0xc1,		0x01,0x2f,	/* i ogonek	*/ /* Not sure with this, it look like normal i */
 	0xc2,		0x01,0x31,	/* i dotless	*/
 	0xc3,		0x01,0x68,	/* U tilde	*/
 	0xc4,		0x01,0x50,	/* O dbl acute	*/
@@ -179,7 +191,7 @@ unsigned char GSM_AlcatelAlphabet[] =
 	0xdf,		0x00,0x20,	/* empty	*/
 	0xe0,		0x00,0x20,	/* empty	*/
 
-	0xe1,		0x00,0x20,	/* two candles	*/ /* FIXME */
+	0xe1,		0x00,0x20,	/* two candles	*/ /* Does this have unicode representation? */
 
 	0xe2,		0x00,0x20,	/* empty	*/
 	0xe3,		0x00,0x20,	/* empty	*/
@@ -193,10 +205,10 @@ unsigned char GSM_AlcatelAlphabet[] =
 	0xea,		0x01,0x6b,	/* u macron	*/
 	0xeb,		0x00,0x41,	/* A		*/
 	0xec,		0x00,0x40,	/* @		*/
-	0xed,		0x00,0x20,	/* some strange char :-) */ /* FIXME */
+	0xed,		0x00,0x20,	/* some strange char :-) */ /* Does this have unicode representation? */
 
-	0xee,		0x00,0x20,	/* big key stroken	*/ /* FIXME */
-	0xef,		0x00,0x20,	/* big key	*/ /* FIXME */
+	0xee,		0x00,0x20,	/* big key stroken	*/ /* Does this have unicode representation? */
+	0xef,		0x00,0x20,	/* big key	*/ /* Does this have unicode representation? */
 
 	0xf0,		0x00,0x20,	/* empty	*/
 
@@ -207,12 +219,12 @@ unsigned char GSM_AlcatelAlphabet[] =
 	0xf5,		0x23,0x7e,	/* bell		*/
 	0xf6,		0x26,0x6a,	/* note		*/
 
-	0xf7,		0x27,0x13,	/* okay inv	*/ /* FIXME */
+	0xf7,		0x27,0x13,	/* okay inv	*/ /* Does this have unicode representation? */
 	0xf8,		0x27,0x13,	/* okay		*/
 
 	0xf9,		0x00,0x20,	/* empty	*/
 
-	0xfa,		0x00,0x20,	/* key		*/ /* FIXME */
+	0xfa,		0x00,0x20,	/* key		*/ /* Does this have unicode representation? */
 
 	0xfb,		0x00,0x20,	/* empty	*/
 
@@ -225,7 +237,15 @@ unsigned char GSM_AlcatelAlphabet[] =
 	0x00,		0x00,0x00
 };
 
-/* This is being called from atgen */
+/**
+ * \defgroup AlcatelProto Protocol switching
+ * \ingroup AlcatelPhone
+ * @{
+ */
+
+/**
+ * This is being called from atgen.
+ */
 GSM_Error ALCATEL_ProtocolVersionReply	(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	char			*str, *str2;
@@ -259,6 +279,9 @@ GSM_Error ALCATEL_ProtocolVersionReply	(GSM_Protocol_Message msg, GSM_StateMachi
 	}
 }
 
+/**
+ * Switches phone to Alcatel binary protocol
+ */
 static GSM_Error ALCATEL_SetBinaryMode(GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
@@ -302,6 +325,9 @@ static GSM_Error ALCATEL_SetBinaryMode(GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
+/**
+ * Changes state in binary protocol.
+ */
 static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_BinaryState state, GSM_Alcatel_BinaryType type, int item) {
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	GSM_Error		error;
@@ -482,6 +508,9 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
 	return ERR_NONE;
 }
 
+/**
+ * Switches back to AT mode.
+ */
 static GSM_Error ALCATEL_SetATMode(GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
@@ -513,6 +542,11 @@ static GSM_Error ALCATEL_SetATMode(GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
+/*@}*/
+
+/**
+ * Initialisation of Alcatel module
+ */
 static GSM_Error ALCATEL_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
@@ -564,7 +598,9 @@ static GSM_Error ALCATEL_Terminate(GSM_StateMachine *s)
 	return ATGEN_Terminate(s);
 }
 
-/* finds whether id is set in the phone */
+/**
+ * Finds whether id is set in the phone
+ */
 static GSM_Error ALCATEL_IsIdAvailable(GSM_StateMachine *s, int id) {
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int			i;
@@ -593,7 +629,9 @@ static GSM_Error ALCATEL_IsIdAvailable(GSM_StateMachine *s, int id) {
 	return ERR_EMPTY;
 }
 
-/* finds next id that is available in the phone */
+/**
+ * Finds next id that is available in the phone
+ */
 static GSM_Error ALCATEL_GetNextId(GSM_StateMachine *s, int *id) {
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
 	int 			i = 0;
@@ -652,6 +690,9 @@ static GSM_Error ALCATEL_ReplyGetIds(GSM_Protocol_Message msg, GSM_StateMachine 
 	return ERR_NONE;
 }
 
+/**
+ * Lists available ids from phone.
+ */
 static GSM_Error ALCATEL_GetAvailableIds(GSM_StateMachine *s, bool refresh)
 {
 	GSM_Phone_ALCATELData	*Priv = &s->Phone.Data.Priv.ALCATEL;
@@ -861,6 +902,11 @@ static GSM_Error ALCATEL_EncodeString(GSM_StateMachine *s, unsigned const char *
 	return ERR_NONE;
 }
 
+/**
+ * Parses field value.
+ *
+ * \todo Timezone is not correctly set.
+ */
 static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
@@ -872,7 +918,7 @@ static GSM_Error ALCATEL_ReplyGetFieldValue(GSM_Protocol_Message msg, GSM_StateM
 		Priv->ReturnDateTime.Day	= buffer[4];
 		Priv->ReturnDateTime.Month	= buffer[5];
 		Priv->ReturnDateTime.Year	= buffer[7] + (buffer[6] << 8);
-		Priv->ReturnDateTime.Timezone	= 0; /* FIXME: how to acquire this? */
+		Priv->ReturnDateTime.Timezone	= 0; /* how to acquire this? */
 
 		Priv->ReturnDateTime.Hour	= 0;
 		Priv->ReturnDateTime.Minute	= 0;
@@ -4062,6 +4108,8 @@ GSM_Phone_Functions ALCATELPhone = {
 
 #endif
 #endif
+
+/*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
