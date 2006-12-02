@@ -46,6 +46,16 @@ For additionals materials and links to them see readme.txt
 [*] Changes in existing functionality
 [-] Fixed error
 
+20061127 - 1.09.00
+[+] added ID for Nokia 3205                                      (Ivan Campana)
+[+] * changes for Mitsubishi                                     (Michal Cihar)
+[+] * added support for date in calls information for Sony-Ericsson
+[+] * documentation update
+[-] * fixed usage of length in utf-8 decoding (it currently decoded one 
+      more char, which lead to keeping quote in AT phonebook, 
+      rest was probably not affected as the extra converted char 
+      is usually \0)
+
 20061120 - 1.08.25
 [+] improved MMS decoder                                            (rickytato)
 [+] Nokia 6030 ID                                              (Ravinder Rathi)
