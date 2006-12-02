@@ -976,6 +976,7 @@ static OnePhoneModel allmodels[] = {
 	{"3108", "RH-6",  "Nokia 3108",	{0}}, //does it have irda ?
 	{"3200", "RH-30" ,"Nokia 3200",	{F_PBKTONEGAL,0}},//fixme
 	{"3200a","RH-31" ,"Nokia 3200",	{F_PBKTONEGAL,0}},//fixme
+ 	{"3205", "RM-11" ,"Nokia 3205",	{F_CAL62,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,F_PROFILES,F_RADIO,F_PBKSMSLIST,F_PBKTONEGAL,0}},//fixme
 	{"3300" ,"NEM-1" ,"Nokia 3300", {F_PBKTONEGAL,0}},//fixme
 	{"3300" ,"NEM-2" ,"Nokia 3300", {F_PBKTONEGAL,0}},//fixme
 	{"3510" ,"NHM-8" ,"",           {F_CAL35,F_PBK35,F_NOGPRSPOINT,F_VOICETAGS,0}},
