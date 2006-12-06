@@ -179,18 +179,14 @@ GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 	Priv->HasOBEX = SONYERICSSON_OBEX_None;
 
 	/* Init AT module */
+	/* This also enables SONYERICSSON_OBEX_CPROT0 if available */
 	error = ATGEN_Initialise(s);
 	if (error != ERR_NONE) return error;
 
-#if 0
-	/* Do we have AT+CPROT capability? */
-	error = GSM_WaitFor (s, "AT+CPROT=?\r", 11, 0x00, 4, ID_SetOBEX);
-	if (error == ERR_NONE) {
-		Priv->HasOBEX = SONYERICSSON_OBEX_EOBEX;
-	} else {
-		Priv->HasOBEX = SONYERICSSON_OBEX_None;
+	/* Does phone have support for AT+MODE=22 switching? */
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_MODE22)) {
+		Priv->HasOBEX = SONYERICSSON_OBEX_MODE22;
 	}
-#endif
 
 	/* Do we have OBEX capability? */
 	if (Priv->HasOBEX == SONYERICSSON_OBEX_None) {

@@ -556,33 +556,39 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
+	char			*pos, *pos2;
+	char			*line;
 
 	if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_OK) return ERR_NOTSUPPORTED;
 
-	if (strlen(GetLineString(msg.Buffer, Priv->Lines, 2)) <= MAX_MODEL_LENGTH) {
-		CopyLineString(Data->Model, msg.Buffer, Priv->Lines, 2);
+	line = GetLineString(msg.Buffer, Priv->Lines, 2);
+	pos = line;
 
-		/* Sometimes phone adds this before manufacturer (Sagem) */
-		if (strncmp("+CGMM: ", Data->Model, 7) == 0) {
-			memmove(Data->Model, Data->Model + 7, strlen(Data->Model + 7) + 1);
+	/* 
+	 * Motorola returns something like:
+	 * "+CGMM: "GSM900","GSM1800","GSM1900","GSM850","MODEL=V3""
+	 */
+	if ((pos2 = strstr(line, "\"MODEL=")) != NULL) {
+		pos = pos2 + 7; /* Skip above string */
+		pos2 = strchr(pos, '"'); /* Find end quote */
+		if (pos2 != NULL) {
+			/* Terminate string at the end, otherwise we keep it full */
+			*pos2 = 0;
 		}
+	/* Sometimes phone adds this before manufacturer (Sagem) */
+	} else if (strncmp("+CGMM: ", Data->Model, 7) == 0) {
+		pos += 7; /* Skip above string */
+	}
+
+	/* Now store string if it fits */
+	if (strlen(pos) <= MAX_MODEL_LENGTH) {
+		strcpy(Data->Model, pos);
 
 		Data->ModelInfo = GetModelData(NULL,Data->Model,NULL);
 		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(NULL,NULL,Data->Model);
 		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(Data->Model,NULL,NULL);
 
 		if (Data->ModelInfo->number[0] != 0) strcpy(Data->Model,Data->ModelInfo->number);
-
-		if (strstr(msg.Buffer,"Nokia")) 	Priv->Manufacturer = AT_Nokia;
-		else if (strstr(msg.Buffer,"M20")) 	Priv->Manufacturer = AT_Siemens;
-		else if (strstr(msg.Buffer,"MC35")) 	Priv->Manufacturer = AT_Siemens;
-		else if (strstr(msg.Buffer,"TC35")) 	Priv->Manufacturer = AT_Siemens;
-		else if (strstr(msg.Buffer, "iPAQ")) 	Priv->Manufacturer = AT_HP;
-
-		if (strstr(msg.Buffer,"M20")) 		strcpy(Data->Model,"M20");
-		else if (strstr(msg.Buffer,"MC35")) 	strcpy(Data->Model,"MC35");
-		else if (strstr(msg.Buffer,"TC35")) 	strcpy(Data->Model,"TC35");
-		else if (strstr(msg.Buffer, "iPAQ")) 	strcpy(Data->Model,"iPAQ");
 	} else {
 		smprintf(s, "WARNING: Model name too long, increase MAX_MODEL_LENGTH to at least %zd\n", strlen(GetLineString(msg.Buffer, Priv->Lines, 2)));
 	}
@@ -1820,6 +1826,12 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 GSM_Error ATGEN_ReplyGetIMEI(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	CopyLineString(s->Phone.Data.IMEI, msg.Buffer, s->Phone.Data.Priv.ATGEN.Lines, 2);
+	/* Remove various prefies some phones add */
+	if (strncmp(s->Phone.Data.IMEI, "+CGSN: IMEI", 11) == 0) { /* Motorola */
+		memmove(s->Phone.Data.IMEI, s->Phone.Data.IMEI + 11, strlen(s->Phone.Data.IMEI + 11) + 1);
+	} else if (strncmp(s->Phone.Data.IMEI, "+CGSN: ", 7) == 0) {
+		memmove(s->Phone.Data.IMEI, s->Phone.Data.IMEI + 7, strlen(s->Phone.Data.IMEI + 7) + 1);
+	}
 	smprintf(s, "Received IMEI %s\n",s->Phone.Data.IMEI);
 	return ERR_NONE;
 }
@@ -3130,6 +3142,8 @@ GSM_Error ATGEN_ReplyDialVoice(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		return ERR_UNKNOWN;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
@@ -3698,17 +3712,16 @@ GSM_Error ATGEN_ReplyGetSIMIMSI(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
-	char 			*c;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		CopyLineString(Data->PhoneString, msg.Buffer, Priv->Lines, 2);
 
-        	/* Read just IMSI also on phones that prepend it by "<IMSI>:" (Alcatel BE5) */
-		c = strstr(Data->PhoneString, "<IMSI>:");
-		if (c != NULL) {
-			c += 7;
-			memmove(Data->PhoneString, c, strlen(c) + 1);
+		/* Remove various prefies some phones add */
+		if (strncmp(s->Phone.Data.IMEI, "<IMSI>: ", 7) == 0) { /* Alcatel */
+			memmove(s->Phone.Data.IMEI, s->Phone.Data.IMEI + 7, strlen(s->Phone.Data.IMEI + 7) + 1);
+		} else if (strncmp(s->Phone.Data.IMEI, "+CIMI: ", 7) == 0) { /* Motorola */
+			memmove(s->Phone.Data.IMEI, s->Phone.Data.IMEI + 7, strlen(s->Phone.Data.IMEI + 7) + 1);
 		}
 
 		smprintf(s, "Received IMSI %s\n",Data->PhoneString);
@@ -4388,6 +4401,8 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		return ERR_UNKNOWN;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
 	default:
 		return ERR_UNKNOWNRESPONSE;
 	}
@@ -4509,6 +4524,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT*EOBEX=?"		,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT+CPROT=0" 	 	,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_GenericReply,		"AT+MODE=22" 	 	,0x00,0x00,ID_SetOBEX		 },
 
 {ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
 {ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },

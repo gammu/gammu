@@ -1314,6 +1314,9 @@ static OnePhoneModel allmodels[] = {
 	/* Mitsubishi */
 	{"M341i",	"M7", "",					   {F_OBEX, F_IRMC_LEVEL_2, 0}},
 
+	/* Motorola */
+	{"V3",		"V3 Razr", "",					   {F_OBEX, F_MODE22, 0}},
+
 	/* Other */
 	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},
 	{"A2D"  ,	  "A2D"  ,	  "" ,				   {0}},

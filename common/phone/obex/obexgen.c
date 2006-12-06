@@ -1153,11 +1153,11 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 
 	/* Level 0 or 1 phones do not have to expose information */
 	if (error == ERR_BUG || error == ERR_FILENOTEXIST) {
+		/* Some phones do not follow IrMC specs and do not provide info.log for level 2 */
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_IRMC_LEVEL_2)) {
+			*IEL = 2;
+		}
 		if (free == NULL) {
-			/* Some phones do not follow IrMC specs and do not provide info.log for level 2 */
-			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_IRMC_LEVEL_2)) {
-				*IEL = 2;
-			}
 			/* We were asked only for IEL, so don't bail out */
 			return ERR_NONE;
 		} else {
