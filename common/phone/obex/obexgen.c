@@ -308,7 +308,7 @@ static GSM_Error OBEXGEN_ChangePath(GSM_StateMachine *s, char *Name, unsigned ch
  * @param DirOnly Whether to descend only do directory name of path or full path (/foo or /foo/bar.png)
  * @param Buffer Optional buffer for storing last path part. Not used if NULL.
  */
-static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, GSM_File *File, bool DirOnly, unsigned char *Buffer)
+static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, char *File, bool DirOnly, unsigned char *Buffer)
 {
 	GSM_Error		error;
 	unsigned int		Pos;
@@ -326,12 +326,12 @@ static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, GSM_File *File, b
 
 	Pos = 0;
 	do {
-		OBEXGEN_FindNextDir(File->ID_FullName, &Pos, req);
-		if (DirOnly && Pos == UnicodeLength(File->ID_FullName)) break;
-		smprintf(s,"Changing path down to %s\n", DecodeUnicodeString(req));
+		OBEXGEN_FindNextDir(File, &Pos, req);
+		if (DirOnly && Pos == UnicodeLength(File)) break;
+		smprintf(s,"Changing path down to %s (%d, %d)\n", DecodeUnicodeString(req), Pos, UnicodeLength(File));
 		error=OBEXGEN_ChangePath(s, req, 2);
 		if (error != ERR_NONE) return error;
-		if (Pos == UnicodeLength(File->ID_FullName)) break;
+		if (Pos == UnicodeLength(File)) break;
 	} while (1);
 
 	return ERR_NONE;
@@ -475,7 +475,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 			if (error != ERR_NONE) return error;
 		} else {
 			if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
-				error = OBEXGEN_ChangeToFilePath(s, File, true, NULL);
+				error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, true, NULL);
 				if (error != ERR_NONE) return error;
 			}
 		}
@@ -635,7 +635,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 				}
 			} else {
 				if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
-					error = OBEXGEN_ChangeToFilePath(s, File, true, req2);
+					error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, true, req2);
 					if (error != ERR_NONE) return error;
 				} else {
 					CopyUnicodeString(req2,File->ID_FullName);
@@ -760,14 +760,15 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 		Priv->FilesLocationsCurrent++;
 
 		if (File->Folder) {
-			error = OBEXGEN_ChangeToFilePath(s, File, false, NULL);
+			error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, false, NULL);
 			if (error != ERR_NONE) return error;
 
 			File->Buffer		= NULL;
 			File->Used		= 0;
 			File->ModifiedEmpty	= true;
 
-			OBEXGEN_PrivGetFilePart(s, File, true);
+			error = OBEXGEN_PrivGetFilePart(s, File, true);
+			if (error != ERR_NONE && error != ERR_EMPTY) return error;
 
 			num = 0;
 			Pos = 0;
@@ -903,19 +904,9 @@ GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 		return ERR_NOTSUPPORTED;
 	}
 
-	smprintf(s,"Changing to root\n");
-	error = OBEXGEN_ChangePath(s, NULL, 2);
+	/* Go to file directory */
+	error = OBEXGEN_ChangeToFilePath(s, ID, true, req2);
 	if (error != ERR_NONE) return error;
-
-	Pos = 0;
-	do {
-		OBEXGEN_FindNextDir(ID, &Pos, req2);
-		smprintf(s,"%s %i %zi\n",DecodeUnicodeString(req2),Pos,UnicodeLength(ID));
-		if (Pos == UnicodeLength(ID)) break;
-		smprintf(s,"Changing path down\n");
-		error=OBEXGEN_ChangePath(s, req2, 2);
-		if (error != ERR_NONE) return error;
-	} while (1);
 
 	/* Name block */
 	OBEXAddBlock(req, &Current, 0x01, req2, UnicodeLength(req2)*2+2);
@@ -942,19 +933,12 @@ GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 		return ERR_NOTSUPPORTED;
 	}
 
-	smprintf(s,"Changing to root\n");
-	error = OBEXGEN_ChangePath(s, NULL, 2);
+	/* Go to file directory */
+	error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, false, NULL);
 	if (error != ERR_NONE) return error;
-
-	Pos = 0;
-	do {
-		OBEXGEN_FindNextDir(File->ID_FullName, &Pos, req2);
-		smprintf(s,"%s %i %zi\n",DecodeUnicodeString(req2),Pos,UnicodeLength(File->ID_FullName));
-		smprintf(s,"Changing path down\n");
-		error=OBEXGEN_ChangePath(s, req2, 2);
-		if (error != ERR_NONE) return error;
-		if (Pos == UnicodeLength(File->ID_FullName)) break;
-	} while (1);
+	/**
+	 * @todo: Calculate ID here from ID_FullName and Name.
+	 */
 
 	smprintf(s,"Adding directory\n");
 	return OBEXGEN_ChangePath(s, File->Name, 0);
@@ -1061,7 +1045,7 @@ GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
  *  * Number of free records
  *  * Number of used records
  */
-GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free, int *used, int *IEL_save)
+GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_records, int *used, int *IEL_save)
 {
 	char *pos;
 	int IEL;
@@ -1108,15 +1092,15 @@ GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free,
 		*IEL_save = IEL;
 	}
 
-	if (free != NULL) {
-		*free = 0;
+	if (free_records != NULL) {
+		*free_records = 0;
 		pos = strstr(data, free_text);
 		if (pos == NULL) {
-			smprintf(s, "Could not grab free\n");
+			smprintf(s, "Could not grab number of free records\n");
 			return ERR_INVALIDDATA;
 		}
 		pos += strlen(free_text);
-		*free = atoi(pos);
+		*free_records = atoi(pos);
 	}
 
 	if (used != NULL) {
@@ -1152,12 +1136,12 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 	error = OBEXGEN_GetTextFile(s, path, &data);
 
 	/* Level 0 or 1 phones do not have to expose information */
-	if (error == ERR_BUG || error == ERR_FILENOTEXIST) {
+	if (error == ERR_BUG || error == ERR_FILENOTEXIST || error == ERR_PERMISSION) {
 		/* Some phones do not follow IrMC specs and do not provide info.log for level 2 */
 		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_IRMC_LEVEL_2)) {
 			*IEL = 2;
 		}
-		if (free == NULL) {
+		if (free_records == NULL) {
 			/* We were asked only for IEL, so don't bail out */
 			return ERR_NONE;
 		} else {
@@ -1284,11 +1268,11 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const bool Rec
 /**
  * Parses pb/info.log (phonebook IrMC information log).
  */
-GSM_Error OBEXGEN_GetPbInformation(GSM_StateMachine *s, int *free, int *used)
+GSM_Error OBEXGEN_GetPbInformation(GSM_StateMachine *s, int *free_records, int *used)
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
-	return OBEXGEN_GetInformation(s, "telecom/pb/info.log", free, used, &(Priv->PbIEL));
+	return OBEXGEN_GetInformation(s, "telecom/pb/info.log", free_records, used, &(Priv->PbIEL));
 
 }
 
@@ -1665,11 +1649,11 @@ GSM_Error OBEXGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType
 /**
  * Parses cal/info.log (calendar IrMC information log).
  */
-GSM_Error OBEXGEN_GetCalInformation(GSM_StateMachine *s, int *free, int *used)
+GSM_Error OBEXGEN_GetCalInformation(GSM_StateMachine *s, int *free_records, int *used)
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
-	return OBEXGEN_GetInformation(s, "telecom/cal/info.log", free, used, &(Priv->CalIEL));
+	return OBEXGEN_GetInformation(s, "telecom/cal/info.log", free_records, used, &(Priv->CalIEL));
 
 }
 
