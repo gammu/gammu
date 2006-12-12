@@ -2735,7 +2735,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTIMPLEMENTED, 		/* 	GetFileSystemStatus	*/
 	OBEXGEN_DeleteFile,
 	OBEXGEN_AddFolder,
-	NOTSUPPORTED,			/* 	DeleteFolder		*/
+	OBEXGEN_DeleteFile,		/* 	DeleteFolder		*/
 	NOTIMPLEMENTED,			/* 	GetGPRSAccessPoint	*/
 	NOTIMPLEMENTED			/* 	SetGPRSAccessPoint	*/
 };
