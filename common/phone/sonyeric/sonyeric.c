@@ -1288,7 +1288,7 @@ GSM_Phone_Functions SONYERICSSONPhone = {
 	SONYERICSSON_GetFileSystemStatus,
 	SONYERICSSON_DeleteFile,
 	SONYERICSSON_AddFolder,
-	NOTSUPPORTED,			/* 	DeleteFolder		*/
+	SONYERICSSON_DeleteFile,	/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };
