@@ -689,6 +689,8 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 		return ERR_NONE;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
@@ -750,6 +752,8 @@ GSM_Error ATGEN_ReplyGetFirmwareATI(GSM_Protocol_Message msg, GSM_StateMachine *
 		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
@@ -1760,6 +1764,8 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		return ERR_NOTSUPPORTED;
  	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
@@ -1873,6 +1879,8 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 	case AT_Reply_CMSError:
 		/* This error occurs in case that phone couldn't save SMS */
 		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
@@ -2143,6 +2151,12 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			s->User.SendSMSStatus(s->CurrentConfig->Device, Priv->ErrorCode, -1);
 		}
  		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+ 		smprintf(s, "Error %i\n",Priv->ErrorCode);
+ 		if (s->User.SendSMSStatus != NULL) {
+			s->User.SendSMSStatus(s->CurrentConfig->Device, Priv->ErrorCode, -1);
+		}
+		return ATGEN_HandleCMEError(s);
 	case AT_Reply_Error:
  		if (s->User.SendSMSStatus != NULL) {
 			s->User.SendSMSStatus(s->CurrentConfig->Device, -1, -1);
@@ -2246,6 +2260,8 @@ GSM_Error ATGEN_ReplyGetDateTime_Alarm(GSM_Protocol_Message msg, GSM_StateMachin
 		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
@@ -2405,6 +2421,8 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		return ERR_NONE;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
@@ -2448,6 +2466,8 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 		break;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
 	default:
 		return ERR_UNKNOWNRESPONSE;
 	}
@@ -2546,6 +2566,8 @@ GSM_Error ATGEN_ReplyGetNetworkCode(GSM_Protocol_Message msg, GSM_StateMachine *
 		return ERR_NONE;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
@@ -2690,6 +2712,8 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 		} else return ERR_UNKNOWN;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
@@ -2744,6 +2768,8 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 		return ERR_UNKNOWN;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
  	default:
 		return ERR_UNKNOWNRESPONSE;
 	}
@@ -2785,6 +2811,8 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 		return ERR_UNKNOWN;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
 	default:
 		return ERR_UNKNOWNRESPONSE;
 	}
@@ -3278,6 +3306,8 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg, GSM_StateMachine *s)
             return ERR_NONE;
     	case AT_Reply_CMSError:
             return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
         default:
     	    return ERR_UNKNOWN;
 	}
@@ -3366,6 +3396,8 @@ GSM_Error ATGEN_ReplyDeleteSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine
 		return ERR_INVALIDLOCATION;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
@@ -3729,10 +3761,10 @@ GSM_Error ATGEN_ReplyGetSIMIMSI(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case AT_Reply_Error:
 		smprintf(s, "No access to SIM card or not supported by device\n");
 		return ERR_SECURITYERROR;
-	case AT_Reply_CMEError:
-	        return ATGEN_HandleCMEError(s);
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}
@@ -3780,6 +3812,8 @@ GSM_Error ATGEN_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine
         case AT_Reply_CMSError:
             smprintf(s, "Can't get battery level\n");
             return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
         default:
             break;
     }
@@ -3834,6 +3868,8 @@ GSM_Error ATGEN_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine
             return ERR_NONE;
         case AT_Reply_CMSError:
             return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
         default:
             break;
 	}
