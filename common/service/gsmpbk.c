@@ -454,6 +454,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				}
 			}
 			if (ReadVCALText(Line, "EMAIL", Buff) ||
+			    ReadVCALText(Line, "EMAIL;PREF", Buff) ||
 			    ReadVCALText(Line, "EMAIL;INTERNET", Buff) ||
 			    ReadVCALText(Line, "EMAIL;INTERNET;PREF", Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
