@@ -475,7 +475,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 			if (error != ERR_NONE) return error;
 		} else {
 			if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
-				error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, true, NULL);
+				error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, false, NULL);
 				if (error != ERR_NONE) return error;
 			}
 		}
@@ -528,6 +528,9 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int
 	error = OBEXGEN_Connect(s, 0);
 	if (error != ERR_NONE) return error;
 
+	/**
+	 * @todo: Calculate ID here from ID_FullName and Name.
+	 */
 	return OBEXGEN_PrivAddFilePart(s, File, Pos, Handle);
 }
 
