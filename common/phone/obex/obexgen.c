@@ -466,11 +466,6 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 
 	if (*Pos == 0) {
 		if (!strcmp(DecodeUnicodeString(File->ID_FullName),"")) {
-			/**
-			 * @todo This was probably supposed to be used as regullar
-			 * send file to phone and let it handle data, does it actually
-			 * work?
-			 */
 			error = OBEXGEN_Connect(s,OBEX_None);
 			if (error != ERR_NONE) return error;
 		} else {
