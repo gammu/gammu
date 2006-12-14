@@ -2697,20 +2697,20 @@ GSM_Phone_Functions OBEXGENPhone = {
 	OBEXGEN_DeleteAllCalendar,
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED,			/*	GetNoteStatus		*/
-	NOTSUPPORTED,			/*	GetNote			*/
-	NOTSUPPORTED,			/*	GetNextNote		*/
-	NOTSUPPORTED,			/*	SetNote			*/
-	NOTSUPPORTED,			/*	AddNote			*/
-	NOTSUPPORTED,			/* 	DeleteNote		*/
-	NOTSUPPORTED,			/*	DeleteAllNotes		*/
+	NOTIMPLEMENTED,			/*	GetNoteStatus		*/
+	NOTIMPLEMENTED,			/*	GetNote			*/
+	NOTIMPLEMENTED,			/*	GetNextNote		*/
+	NOTIMPLEMENTED,			/*	SetNote			*/
+	NOTIMPLEMENTED,			/*	AddNote			*/
+	NOTIMPLEMENTED,			/* 	DeleteNote		*/
+	NOTIMPLEMENTED,			/*	DeleteAllNotes		*/
 	NOTIMPLEMENTED, 		/*	GetProfile		*/
 	NOTIMPLEMENTED, 		/*	SetProfile		*/
     	NOTIMPLEMENTED,			/*  	GetFMStation        	*/
     	NOTIMPLEMENTED,			/*  	SetFMStation        	*/
     	NOTIMPLEMENTED,			/*  	ClearFMStations       	*/
 	OBEXGEN_GetNextFileFolder,
-	NOTSUPPORTED,			/*	GetFolderListing	*/
+	NOTIMPLEMENTED,			/*	GetFolderListing	*/
 	NOTSUPPORTED,			/*	GetNextRootFolder	*/
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	OBEXGEN_GetFilePart,
@@ -2719,8 +2719,8 @@ GSM_Phone_Functions OBEXGENPhone = {
 	OBEXGEN_DeleteFile,
 	OBEXGEN_AddFolder,
 	OBEXGEN_DeleteFile,		/* 	DeleteFolder		*/
-	NOTIMPLEMENTED,			/* 	GetGPRSAccessPoint	*/
-	NOTIMPLEMENTED			/* 	SetGPRSAccessPoint	*/
+	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
+	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };
 
 #endif
