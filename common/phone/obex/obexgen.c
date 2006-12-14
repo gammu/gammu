@@ -231,6 +231,26 @@ GSM_Error OBEXGEN_Terminate(GSM_StateMachine *s)
  */
 
 /**
+ * Merges filename from path and file
+ */
+void OBEXGEN_CreateFileName(unsigned char *Dest, unsigned char *Path, unsigned char *Name)
+{
+	size_t len;
+
+	/* Folder name */
+	CopyUnicodeString(Dest, Path);
+	len = UnicodeLength(Dest);
+	/* Append slash */
+	if (len > 0) {
+		Dest[2*len + 0] = 0;
+		Dest[2*len + 1] = '/';
+		len++;
+	}
+	/* And add filename */
+	CopyUnicodeString(Dest + 2*len, Name);
+}
+
+/**
  * Grabs path part from complete path
  */
 static void OBEXGEN_FindNextDir(unsigned char *Path, int *Pos, unsigned char *Return)
@@ -252,7 +272,9 @@ static void OBEXGEN_FindNextDir(unsigned char *Path, int *Pos, unsigned char *Re
 	Return[Retlen*2+1]   = 0;
 }
 
-
+/**
+ * Reply handler for changing path
+ */
 static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	switch (msg.Type) {
@@ -337,6 +359,9 @@ static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, char *File, bool 
 	return ERR_NONE;
 }
 
+/**
+ * Reply handler for most file write operations.
+ */
 static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int Pos=0, pos2, len2;
@@ -523,12 +548,19 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int
 	error = OBEXGEN_Connect(s, 0);
 	if (error != ERR_NONE) return error;
 
-	/**
-	 * @todo: Calculate ID here from ID_FullName and Name.
-	 */
-	return OBEXGEN_PrivAddFilePart(s, File, Pos, Handle);
+	/* Add file */
+	smprintf(s,"Adding file\n");
+	error = OBEXGEN_PrivAddFilePart(s, File, Pos, Handle);
+	if (error != ERR_NONE) return error;
+
+	/* Calculate path of added file */
+	OBEXGEN_CreateFileName(File->ID_FullName, File->ID_FullName, File->Name);
+	return ERR_NONE;
 }
 
+/**
+ * Reply handler for file reading operations.
+ */
 static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int old,Pos=0;
@@ -690,25 +722,6 @@ GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, 
 	return OBEXGEN_PrivGetFilePart(s, File, false);
 }
 
-/**
- * Merges filename from path and file
- */
-void CreateFileName(unsigned char *Dest, unsigned char *Path, unsigned char *Name)
-{
-	size_t len;
-
-	/* Folder name */
-	CopyUnicodeString(Dest, Path);
-	len = UnicodeLength(Dest);
-	/* Append slash */
-	if (len > 0) {
-		Dest[2*len + 0] = 0;
-		Dest[2*len + 1] = '/';
-		len++;
-	}
-	/* And add filename */
-	CopyUnicodeString(Dest + 2*len, Name);
-}
 
 /**
  * List OBEX folder.
@@ -820,7 +833,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 						/* Convert filename from UTF-8 */
 						DecodeUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name, name, strlen(name));
 						/* Create file name from parts */
-						CreateFileName(
+						OBEXGEN_CreateFileName(
 							Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,
 							File->ID_FullName,
 							Priv->Files[Priv->FilesLocationsCurrent+pos2].Name
@@ -845,7 +858,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 					/* Convert filename from UTF-8 */
 					DecodeUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name, name, strlen(name));
 					/* Create file name from parts */
-					CreateFileName(
+					OBEXGEN_CreateFileName(
 						Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,
 						File->ID_FullName,
 						Priv->Files[Priv->FilesLocationsCurrent+pos2].Name
@@ -933,12 +946,15 @@ GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 	/* Go to file directory */
 	error = OBEXGEN_ChangeToFilePath(s, File->ID_FullName, false, NULL);
 	if (error != ERR_NONE) return error;
-	/**
-	 * @todo: Calculate ID here from ID_FullName and Name.
-	 */
 
+	/* Add folder */
 	smprintf(s,"Adding directory\n");
-	return OBEXGEN_ChangePath(s, File->Name, 0);
+	error = OBEXGEN_ChangePath(s, File->Name, 0);
+	if (error != ERR_NONE) return error;
+
+	/* Calculate path of added folder */
+	OBEXGEN_CreateFileName(File->ID_FullName, File->ID_FullName, File->Name);
+	return ERR_NONE;
 }
 
 /*@}*/

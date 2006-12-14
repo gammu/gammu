@@ -871,6 +871,9 @@ void CopyUnicodeString(unsigned char *Dest, unsigned char *Source)
 {
 	int j = 0;
 
+	/* No need to copy if both are on same address */
+	if (Dest == Source) return;
+
 	while (Source[j]!=0x00 || Source[j+1]!=0x00) {
 		Dest[j]		= Source[j];
 		Dest[j+1]	= Source[j+1];
