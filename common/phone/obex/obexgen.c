@@ -874,6 +874,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 
 			z = Priv->FilesLocationsCurrent;
 			free(File->Buffer);
+			File->Buffer = NULL;
 		} else {
 			File->Used 	    	= Priv->Files[Priv->FilesLocationsCurrent-1].Used;
 			File->ModifiedEmpty 	= Priv->Files[Priv->FilesLocationsCurrent-1].ModifiedEmpty;
