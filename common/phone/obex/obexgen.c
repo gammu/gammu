@@ -893,7 +893,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 {
 	GSM_Error		error;
-	unsigned int		Current = 0, Pos;
+	unsigned int		Current = 0;
 	unsigned char		req[200],req2[200];
 
 	/* Go to default service */
@@ -922,8 +922,6 @@ GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
 {
 	GSM_Error		error;
-	unsigned char		req2[200];
-	unsigned int		Pos;
 
 	/* Go to default service */
 	error = OBEXGEN_Connect(s, 0);
