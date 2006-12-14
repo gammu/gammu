@@ -1018,11 +1018,13 @@ GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT,
 					case 0x00:
 						dbgprintf("Adding ID to user UDH - linked SMS with 8 bit ID\n");
 						INPUT[i]->SMS[0].UDH.ID8bit	= INPUT[i]->SMS[0].UDH.Text[w+2];
+						INPUT[i]->SMS[0].UDH.ID16bit	= -1;
 						INPUT[i]->SMS[0].UDH.AllParts	= INPUT[i]->SMS[0].UDH.Text[w+3];
 						INPUT[i]->SMS[0].UDH.PartNumber	= INPUT[i]->SMS[0].UDH.Text[w+4];
 						break;
 					case 0x08:
 						dbgprintf("Adding ID to user UDH - linked SMS with 16 bit ID\n");
+						INPUT[i]->SMS[0].UDH.ID8bit	= -1;
 						INPUT[i]->SMS[0].UDH.ID16bit	= INPUT[i]->SMS[0].UDH.Text[w+2]*256+INPUT[i]->SMS[0].UDH.Text[w+3];
 						INPUT[i]->SMS[0].UDH.AllParts	= INPUT[i]->SMS[0].UDH.Text[w+4];
 						INPUT[i]->SMS[0].UDH.PartNumber	= INPUT[i]->SMS[0].UDH.Text[w+5];
