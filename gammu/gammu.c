@@ -1616,6 +1616,8 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems
 		case SMS_ConcatenatedAutoTextLong:
 		case SMS_ConcatenatedTextLong16bit:
 		case SMS_ConcatenatedAutoTextLong16bit:
+		case SMS_NokiaVCARD21Long:
+		case SMS_NokiaVCALENDAR10Long:
 			printmsg("%s\n",DecodeUnicodeConsole(SMSInfo.Entries[i].Buffer));
 			break;
 		case SMS_EMSFixedBitmap:

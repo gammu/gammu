@@ -547,27 +547,33 @@ static bool AddEMSText(GSM_SMSMessage *SMS, GSM_MultiPartSMSInfo *Info, int *Pos
 	    Info->Entries[Info->EntriesNum].ID!=0) {
 		(Info->EntriesNum)++;
 	}
-	BufferLen = UnicodeLength(Info->Entries[Info->EntriesNum].Buffer)*2;
+	BufferLen = UnicodeLength(Info->Entries[Info->EntriesNum].Buffer) * 2 + 2;
 	switch (SMS->Coding) {
+	case -1:
+		/* We will convert the text */
+		SMS->Coding = SMS_Coding_Default_No_Compression;
 	case SMS_Coding_8bit:
-//		memcpy(Info->Entries[Info->EntriesNum].Buffer+BufferLen,SMS->Text+(*Pos),Len);
-//		BufferLen+=Len;
-//		(*Pos)+=Len;
+		Info->Entries[Info->EntriesNum].Buffer = realloc(Info->Entries[Info->EntriesNum].Buffer, BufferLen + (Len * 2));
+		if (Info->Entries[Info->EntriesNum].Buffer == NULL) return false;
+		EncodeUnicode(Info->Entries[Info->EntriesNum].Buffer + BufferLen - 2, SMS->Text + (*Pos) *2, Len);
+		BufferLen += Len * 2;
 		break;
 	case SMS_Coding_Unicode_No_Compression:
 	case SMS_Coding_Default_No_Compression:
-		Info->Entries[Info->EntriesNum].Buffer = realloc(Info->Entries[Info->EntriesNum].Buffer, BufferLen + (Len * 2) + 2);
+		Info->Entries[Info->EntriesNum].Buffer = realloc(Info->Entries[Info->EntriesNum].Buffer, BufferLen + (Len * 2));
 		if (Info->Entries[Info->EntriesNum].Buffer == NULL) return false;
-		memcpy(Info->Entries[Info->EntriesNum].Buffer + BufferLen, SMS->Text + (*Pos) *2, Len * 2);
+		memcpy(Info->Entries[Info->EntriesNum].Buffer + BufferLen - 2, SMS->Text + (*Pos) *2, Len * 2);
 		BufferLen += Len * 2;
 		break;
 	default:
 		break;
 	}
-	(*Pos)+=Len;
-	Info->Entries[Info->EntriesNum].Buffer[BufferLen]	= 0;
-	Info->Entries[Info->EntriesNum].Buffer[BufferLen+1]	= 0;
-	Info->Entries[Info->EntriesNum].ID			= SMS_ConcatenatedTextLong;
+	if (Info->Entries[Info->EntriesNum].Buffer != NULL) {
+		(*Pos)+=Len;
+		Info->Entries[Info->EntriesNum].Buffer[BufferLen - 2]	= 0;
+		Info->Entries[Info->EntriesNum].Buffer[BufferLen - 1]	= 0;
+		Info->Entries[Info->EntriesNum].ID			= SMS_ConcatenatedTextLong;
+	}
 	return true;
 }
 
@@ -594,6 +600,24 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			switch(SMS->SMS[i].UDH.Text[w]) {
 			case 0x00:
 				dbgprintf("UDH part - linked SMS with 8 bit ID\n");
+				break;
+			case 0x05:
+				/* Application data */
+				SMS->SMS[i].Coding = -1;
+				if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].Length-Pos)) return false;
+				Info->Entries[Info->EntriesNum].Number = 
+					((0x00ff & SMS->SMS[i].UDH.Text[w + 2]) << 8) | ( 0x00ff &SMS->SMS[i].UDH.Text[w + 3]);
+				switch (Info->Entries[Info->EntriesNum].Number) {
+					case 0x23f4:
+						dbgprintf("UDH part - vCard");
+						Info->Entries[Info->EntriesNum].ID 	= SMS_NokiaVCARD21Long;
+					case 0x23f5:
+						dbgprintf("UDH part - vCalendar");
+						Info->Entries[Info->EntriesNum].ID 	= SMS_NokiaVCALENDAR10Long;
+					default:
+						dbgprintf("UDH part - unknown application data - 0x%04x", Info->Entries[Info->EntriesNum].Number);
+				}
+				RetVal = true;
 				break;
 			case 0x08:
 				dbgprintf("UDH part - linked SMS with 16 bit ID\n");
@@ -758,7 +782,7 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				dbgprintf("UDH part - Object Distribution Indicator (Media Rights Protecting) ignored now\n");
 				break;
 			default:
-				dbgprintf("UDH part - block %02x\n",SMS->SMS[i].UDH.Text[w]);
+				dbgprintf("UDH part - unknonw block %02x\n",SMS->SMS[i].UDH.Text[w]);
 				Info->Unknown = true;
 			} /* switch */
 			w=w+SMS->SMS[i].UDH.Text[w+1]+2;

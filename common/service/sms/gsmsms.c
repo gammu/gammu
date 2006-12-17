@@ -385,6 +385,7 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	SMS->SMSC.Format		= SMS_FORMAT_Text;
 	SMS->Number[0]			= 0;
 	SMS->Number[1]			= 0;
+	SMS->OtherNumbersNum		= 0;
 	SMS->Name[0]			= 0;
 	SMS->Name[1]			= 0;
 	SMS->ReplyViaSameSMSC		= false;
@@ -670,8 +671,6 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 	SMS->ReplyViaSameSMSC		= 0;
 	SMS->Class			= 0;
 	SMS->MessageReference		= 0;
-	SMS->ReplaceMessage		= 0;
-	SMS->RejectDuplicates		= 0;
 	SMS->OtherNumbersNum		= 0;
 
 	/* This part is required to save SMS */

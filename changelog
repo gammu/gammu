@@ -46,6 +46,23 @@ For additionals materials and links to them see readme.txt
 [*] Changes in existing functionality
 [-] Fixed error
 
+20061217 - 1.09.07
+[-] gammu-1.09.00 failed to build with LDFLAGS=-Wl,--as-needed  (BT 34, mrness)
+[-] increased backup limits                                     (BT 35, mrness)
+[-] gammu-1.09.00 failed to build --disable-irda                (BT 36, mrness)
+    --disable-bluetooth
+[-] Call error handling broken [AT]                       (BT 39, Michal Cihar)
+[-] 'AddCalendar' for Siemens phones was not fully        (BT 40, Michal Cihar)
+    functional
+[-] Missing error checking in OBEX module                 (BT 41, Michal Cihar)
+[-] Parsing email from vCard does not always suceed       (BT 42, Michal Cihar)
+[-] * reset SMS structure in AT module before filing. As some    (Michal Cihar)
+      fields are not set when decoding, it might contain invalid values.
+[-] * 8/16bit IDs were not unset when oposite were set.
+[-] * one field of SMS structure was not cleared (and few others
+      were cleared twice).
+[+] * decoding vCard and vCalendar in SMS.
+
 20061127 - 1.09.00
 [+] added ID for Nokia 3205                                      (Ivan Campana)
 [+] * changes for Mitsubishi                                     (Michal Cihar)

@@ -795,6 +795,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->UnicodeCharset		= 0;
 	Priv->PBKMemories[0]		= 0;
 	Priv->FirstCalendarPos		= 0;
+	Priv->FirstFreeCalendarPos	= 0;
 	Priv->NextMemoryEntry		= 0;
 	Priv->FirstMemoryEntry		= -1;
 	Priv->file.Used 		= 0;
@@ -1628,11 +1629,19 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 {
 	unsigned char		req[20], folderid;
+	int			back_folder, back_location;
 	GSM_Error		error;
 	int			location, getfolder, add = 0;
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 
-	error=ATGEN_GetSMSLocation(s,&sms->SMS[0], &folderid, &location);
+	/* Clear SMS structure of any possible junk */
+	back_folder = sms->SMS[0].Folder;
+	back_location = sms->SMS[0].Location;
+	GSM_SetDefaultSMSData(&sms->SMS[0]);
+	sms->SMS[0].Folder = back_folder;
+	sms->SMS[0].Location = back_location;
+
+	error=ATGEN_GetSMSLocation(s, &sms->SMS[0], &folderid, &location);
 	if (error!=ERR_NONE) return error;
 	if (Priv->SMSMemory == MEM_ME && IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSME900)) add = 899;
 	sprintf(req, "AT+CMGR=%i\r", location + add);
@@ -3130,6 +3139,8 @@ GSM_Error ATGEN_ReplyDialVoice(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		return ERR_UNKNOWN;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
 	default:
 		break;
 	}

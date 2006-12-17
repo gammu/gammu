@@ -767,7 +767,8 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 			File->Used		= 0;
 			File->ModifiedEmpty	= true;
 
-			OBEXGEN_PrivGetFilePart(s, File, true);
+			error = OBEXGEN_PrivGetFilePart(s, File, true);
+			if (error != ERR_NONE) return error;
 
 			num = 0;
 			Pos = 0;
