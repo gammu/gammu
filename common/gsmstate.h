@@ -134,7 +134,7 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifdef GSM_ENABLE_ALCABUS
 #  include "protocol/alcatel/alcabus.h"
 #endif
-#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX)
+#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_SONYERICSSON)
 #  include "protocol/obex/obex.h"
 #endif
 #if defined(GSM_ENABLE_BLUEGNAPBUS) || defined(GSM_ENABLE_IRDAGNAPBUS)
@@ -326,7 +326,7 @@ typedef struct {
 #ifdef GSM_ENABLE_ALCABUS
 	extern GSM_Protocol_Functions ALCABUSProtocol;
 #endif
-#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX)
+#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_SONYERICSSON)
 	extern GSM_Protocol_Functions OBEXProtocol;
 #endif
 #if defined(GSM_ENABLE_BLUEGNAPBUS) || defined(GSM_ENABLE_IRDAGNAPBUS)
@@ -356,7 +356,7 @@ typedef struct {
 #ifdef GSM_ENABLE_ALCABUS
 		GSM_Protocol_ALCABUSData	ALCABUS;
 #endif
-#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX)
+#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_SONYERICSSON)
 		GSM_Protocol_OBEXData		OBEX;
 #endif
 #if defined(GSM_ENABLE_BLUEGNAPBUS) || defined(GSM_ENABLE_IRDAGNAPBUS)

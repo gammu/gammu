@@ -106,6 +106,7 @@ typedef struct {
 	GSM_SMSMemoryStatus	LastSMSStatus;
 	int			LastSMSRead;
 	int			FirstCalendarPos;
+	int			FirstFreeCalendarPos;
 	bool			CanSaveSMS;
 	GSM_AT_SMSMemory	PhoneSMSMemory;	  	/* Is phone SMS memory available ? 				*/
 	GSM_AT_SMSMemory	SIMSMSMemory;	  	/* Is SIM SMS memory available ? 				*/

@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX)
+#if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_SONYERICSSON)
 
 #include "../../gsmcomon.h"
 #include "obex.h"

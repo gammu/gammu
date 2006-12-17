@@ -805,6 +805,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->UnicodeCharset		= 0;
 	Priv->PBKMemories[0]		= 0;
 	Priv->FirstCalendarPos		= 0;
+	Priv->FirstFreeCalendarPos	= 0;
 	Priv->NextMemoryEntry		= 0;
 	Priv->FirstMemoryEntry		= -1;
 	Priv->file.Used 		= 0;
