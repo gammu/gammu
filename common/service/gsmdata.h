@@ -70,8 +70,8 @@ void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, int *Length, GSM_W
 /* -------------------------------- WAP Bookmark --------------------------- */
 
 typedef struct {
-	char			Address		[(255+1)*2];
-	char			Title		[(50+1)*2];
+	unsigned char		Address		[(255+1)*2];
+	unsigned char		Title		[(50+1)*2];
 	int			Location;
 } GSM_WAPBookmark;
 
@@ -81,9 +81,9 @@ GSM_Error 	GSM_EncodeURLFile		(unsigned char *Buffer, int *Length, GSM_WAPBookma
 /* ------------------------------ MMS Indicator ---------------------------- */
 
 typedef struct {
-	unsigned char		Address[500];
-	unsigned char		Title[200];
-	unsigned char		Sender[200];
+	char		Address[500];
+	char		Title[200];
+	char		Sender[200];
 } GSM_MMSIndicator;
 
 void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, int *Length, GSM_MMSIndicator Indicator);
@@ -120,7 +120,7 @@ typedef struct {
 	unsigned char		  Subject[200];		// in Unicode
 	unsigned char		  ContentType[400];	// CT in Unicode
 	unsigned char		  MSGType[50];		// no Unicode
-	
+
 	bool			  DateTimeAvailable;
 	GSM_DateTime		  DateTime;
 
