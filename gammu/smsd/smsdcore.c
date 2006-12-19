@@ -139,6 +139,20 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	if (Config->PhoneID == NULL) Config->PhoneID = "";
 	if (log) WriteSMSDLog("phoneid = %s", Config->PhoneID);
 
+	str = INI_GetValue(smsdcfgfile, "smsd", "smsc", false);
+	if (str) {
+		Config->SMSC.Location		= 1;
+		Config->SMSC.DefaultNumber[0]	= 0;
+		Config->SMSC.DefaultNumber[1]	= 0;
+		Config->SMSC.Name[0]		= 0;
+		Config->SMSC.Name[1]		= 0;
+		Config->SMSC.Validity.Format	= SMS_Validity_NotAvailable;
+		Config->SMSC.Format		= SMS_FORMAT_Text;
+		EncodeUnicode(Config->SMSC.Number, str, strlen(str));
+	} else {
+		Config->SMSC.Location     = 0;
+	}
+
 	if (!strcmp(service,"FILES")) {
 		Config->inboxpath=INI_GetValue(smsdcfgfile, "smsd", "inboxpath", false);
 		if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
@@ -197,7 +211,6 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 
 	Config->retries 	  = 0;
 	Config->prevSMSID[0] 	  = 0;
-	Config->SMSC.Location     = 0;
 	Config->relativevalidity  = -1;
 }
 
