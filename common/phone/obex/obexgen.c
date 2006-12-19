@@ -29,6 +29,10 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer);
 GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s);
 
+/**
+ * How many read attempts will happen.
+ */
+#define OBEX_TIMEOUT 10
 
 /**
  * \defgroup OBEXinit OBEX initialisation and terminating
@@ -59,7 +63,7 @@ static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine
 GSM_Error OBEXGEN_Disconnect(GSM_StateMachine *s)
 {
 	smprintf(s, "Disconnecting\n");
-	return GSM_WaitFor (s, NULL, 0, 0x81, 2, ID_Initialise);
+	return GSM_WaitFor (s, NULL, 0, 0x81, OBEX_TIMEOUT, ID_Initialise);
 }
 
 /**
@@ -126,7 +130,7 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 	s->Phone.Data.Priv.OBEXGEN.Service = service;
 
 	smprintf(s, "Connecting\n");
-	return GSM_WaitFor (s, req, Current, 0x80, 2, ID_Initialise);
+	return GSM_WaitFor (s, req, Current, 0x80, OBEX_TIMEOUT, ID_Initialise);
 }
 
 /**
@@ -319,7 +323,7 @@ static GSM_Error OBEXGEN_ChangePath(GSM_StateMachine *s, char *Name, unsigned ch
 	req[Current++] = 0x00; req[Current++] = 0x00;
 	req[Current++] = 0x00; req[Current++] = 0x01;
 
-	return GSM_WaitFor (s, req, Current, 0x85, 4, ID_SetPath);
+	return GSM_WaitFor (s, req, Current, 0x85, OBEX_TIMEOUT, ID_SetPath);
 }
 
 /**
@@ -527,7 +531,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		OBEXAddBlock(req, &Current, 0x49, File->Buffer+(*Pos), j);
 		smprintf(s, "Adding file part %i %i\n",*Pos,j);
 		*Pos = *Pos + j;
-		error = GSM_WaitFor (s, req, Current, 0x82, 4, ID_AddFile);
+		error = GSM_WaitFor (s, req, Current, 0x82, OBEX_TIMEOUT, ID_AddFile);
 		if (error != ERR_NONE) return error;
 		return ERR_EMPTY;
 	} else {
@@ -535,7 +539,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		OBEXAddBlock(req, &Current, 0x48, File->Buffer+(*Pos), j);
 		smprintf(s, "Adding file part %i %i\n",*Pos,j);
 		*Pos = *Pos + j;
-		error=GSM_WaitFor (s, req, Current, 0x02, 4, ID_AddFile);
+		error=GSM_WaitFor (s, req, Current, 0x02, OBEX_TIMEOUT, ID_AddFile);
 	}
 	return error;
 }
@@ -691,7 +695,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 	}
 
 	smprintf(s, "Getting first file part from filesystem\n");
-	error=GSM_WaitFor (s, req, Current, 0x83, 4, ID_GetFile);
+	error=GSM_WaitFor (s, req, Current, 0x83, OBEX_TIMEOUT, ID_GetFile);
 	if (error != ERR_NONE) return error;
 
 	while (!s->Phone.Data.Priv.OBEXGEN.FileLastPart) {
@@ -703,7 +707,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 			req[Current++] = 0x00; req[Current++] = 0x01;
 		}
 		smprintf(s, "Getting file part from filesystem\n");
-		error=GSM_WaitFor (s, req, Current, 0x83, 4, ID_GetFile);
+		error=GSM_WaitFor (s, req, Current, 0x83, OBEX_TIMEOUT, ID_GetFile);
 		if (error != ERR_NONE) return error;
 	}
 	return ERR_EMPTY;
@@ -928,7 +932,7 @@ GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 	req[Current++] = 0x00; req[Current++] = 0x00;
 	req[Current++] = 0x00; req[Current++] = 0x01;
 
-	return GSM_WaitFor (s, req, Current, 0x82, 4, ID_AddFile);
+	return GSM_WaitFor (s, req, Current, 0x82, OBEX_TIMEOUT, ID_AddFile);
 }
 
 GSM_Error OBEXGEN_AddFolder(GSM_StateMachine *s, GSM_File *File)
