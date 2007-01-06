@@ -564,7 +564,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	line = GetLineString(msg.Buffer, Priv->Lines, 2);
 	pos = line;
 
-	/* 
+	/*
 	 * Motorola returns something like:
 	 * "+CGMM: "GSM900","GSM1800","GSM1900","GSM850","MODEL=V3""
 	 */
