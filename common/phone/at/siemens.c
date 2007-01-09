@@ -245,6 +245,20 @@ GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 	return error;
 }
 
+GSM_Error SIEMENS_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	unsigned char 		req[32];
+
+	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
+
+	s->Phone.Data.Cal = Note;
+	sprintf(req, "AT^SBNR=\"vcs\",%i\r",Note->Location);
+	smprintf(s, "Getting calendar note\n");
+
+	return GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetCalendarNote);
+}
+
 GSM_Error SIEMENS_ReplyAddCalendarNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
     return SIEMENS_ReplySetFunction (msg, s, "Calendar Note");
@@ -282,27 +296,15 @@ GSM_Error SIEMENS_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
-	unsigned char 		req[500], req1[32];
-	int			size=0, Location;
+	unsigned char 		req[500];
+	int			size=0;
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 //	if (Note->Location==0x00) return ERR_INVALIDLOCATION;
 
+	s->Phone.Data.Cal = Note;
 	error=GSM_EncodeVCALENDAR(req,&size,Note,true,Siemens_VCalendar);
 
-	Note->Location = Priv->FirstCalendarPos;
-	s->Phone.Data.Cal 	= Note;
-	Note->EntriesNum 	= 0;
-	smprintf(s, "Getting VCALENDAR\n");
-	Location = Note->Location;
-	while (1){
-		Location++;
-		sprintf(req1, "AT^SBNR=\"vcs\",%i\r",Location);
-		error = GSM_WaitFor (s, req1, strlen(req1), 0x00, 4, ID_GetCalendarNote);
-		Note->Location 		= Location;
-		if (Location > MAX_VCALENDAR_LOCATION) return ERR_INVALIDLOCATION;
-		if (error==ERR_EMPTY) break;
-	}
 	return SetSiemensFrame (s,req,"vcs",Note->Location,ID_SetCalendarNote,size);
 }
 
@@ -318,7 +320,7 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	error=GSM_EncodeVCALENDAR(req,&size,Note,true,Siemens_VCalendar);
 
-	Note->Location = Priv->FirstCalendarPos;
+	Note->Location		= Priv->FirstFreeCalendarPos;
 	s->Phone.Data.Cal 	= Note;
 	Note->EntriesNum 	= 0;
 	smprintf(s, "Getting VCALENDAR\n");
@@ -327,8 +329,14 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 		Location++;
 		sprintf(req1, "AT^SBNR=\"vcs\",%i\r",Location);
 		error = GSM_WaitFor (s, req1, strlen(req1), 0x00, 4, ID_GetCalendarNote);
-		Note->Location 		= Location;
+		Note->Location			= Location;
+		Priv->FirstFreeCalendarPos	= Location;
 		if (error==ERR_EMPTY) break;
+		if (Location > MAX_VCALENDAR_LOCATION) {
+			Priv->FirstFreeCalendarPos = 0;
+			return ERR_FULL;
+		}
+		if (error!=ERR_NONE) return error;
 	}
 	return SetSiemensFrame (s,req,"vcs",Note->Location,ID_SetCalendarNote,size);
 }

@@ -356,6 +356,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
+				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 			}
 			if (ReadVCALText(Line, "TEL;CELL",	      Buff) ||
@@ -365,6 +366,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
+				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 			}
 			if (ReadVCALText(Line, "TEL;WORK",	      Buff) ||
@@ -374,6 +376,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Work;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
+				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 			}
 			if (ReadVCALText(Line, "TEL;FAX",	       Buff) ||
@@ -383,6 +386,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Fax;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
+				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 			}
 			if (ReadVCALText(Line, "TEL;HOME",	      Buff) ||
@@ -392,6 +396,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Home;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
+				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 			}
 			if (ReadVCALText(Line, "TITLE", Buff)) {

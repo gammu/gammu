@@ -83,21 +83,21 @@ typedef enum {
 #define AT_PBK_MAX_MEMORIES	200
 
 typedef struct {
-	GSM_AT_Manufacturer	Manufacturer;	  	/* Who is manufacturer						*/
-	GSM_Lines		Lines;		  	/* Allow to simply get each line in response 			*/
-	GSM_AT_Reply_State	ReplyState;	  	/* What response type - error, OK, etc. 			*/
-	int			ErrorCode;	  	/* Error codes from responses					*/
-    	char			*ErrorText;    	  	/* Error description 						*/
+	GSM_AT_Manufacturer	Manufacturer;	  	/**< Who is manufacturer						*/
+	GSM_Lines		Lines;		  	/**< Allow to simply get each line in response 			*/
+	GSM_AT_Reply_State	ReplyState;	  	/**< What response type - error, OK, etc. 			*/
+	int			ErrorCode;	  	/**< Error codes from responses					*/
+    	char			*ErrorText;    	  	/**< Error description 						*/
 
-	GSM_MemoryType		PBKMemory;	  	/* Last read PBK memory				 		*/
-	char			PBKMemories[AT_PBK_MAX_MEMORIES + 1]; /* Supported by phone PBK memories 		*/
-	int			NextMemoryEntry;  	/* Next empty memory entry					*/
-	int			FirstMemoryEntry;	/* First memory entry to be read				*/
-	GSM_AT_Charset		Charset;	  	/* Charset set in phone						*/
-	bool			EncodedCommands;	/* True if phone encodes also commands and not only values	*/
-	GSM_AT_Charset		UnicodeCharset;	  	/* Charset to use for unicode mode				*/
-	GSM_AT_Charset		NormalCharset;	  	/* Charset to use for non unicode mode				*/
-	GSM_AT_Charset		IRACharset;	  	/* Charset to use for IRA mode					*/
+	GSM_MemoryType		PBKMemory;	  	/**< Last read PBK memory				 		*/
+	char			PBKMemories[AT_PBK_MAX_MEMORIES + 1]; /**< Supported by phone PBK memories 		*/
+	int			NextMemoryEntry;  	/**< Next empty memory entry					*/
+	int			FirstMemoryEntry;	/**< First memory entry to be read				*/
+	GSM_AT_Charset		Charset;	  	/**< Charset set in phone						*/
+	bool			EncodedCommands;	/**< True if phone encodes also commands and not only values	*/
+	GSM_AT_Charset		UnicodeCharset;	  	/**< Charset to use for unicode mode				*/
+	GSM_AT_Charset		NormalCharset;	  	/**< Charset to use for non unicode mode				*/
+	GSM_AT_Charset		IRACharset;	  	/**< Charset to use for IRA mode					*/
 	GSM_AT_SBNR		PBKSBNR;
 	int			NumberLength;
 	int			TextLength;
@@ -108,10 +108,10 @@ typedef struct {
 	int			FirstCalendarPos;
 	int			FirstFreeCalendarPos;
 	bool			CanSaveSMS;
-	GSM_AT_SMSMemory	PhoneSMSMemory;	  	/* Is phone SMS memory available ? 				*/
-	GSM_AT_SMSMemory	SIMSMSMemory;	  	/* Is SIM SMS memory available ? 				*/
-	GSM_MemoryType		SMSMemory;	  	/* Last read SMS memory 					*/
-	GSM_AT_SMS_Modes	SMSMode;	  	/* PDU or TEXT mode for SMS ? 					*/
+	GSM_AT_SMSMemory	PhoneSMSMemory;	  	/**< Is phone SMS memory available ? 				*/
+	GSM_AT_SMSMemory	SIMSMSMemory;	  	/**< Is SIM SMS memory available ? 				*/
+	GSM_MemoryType		SMSMemory;	  	/**< Last read SMS memory 					*/
+	GSM_AT_SMS_Modes	SMSMode;	  	/**< PDU or TEXT mode for SMS ? 					*/
 
 	/**
 	 * Mode used for incoming message notification.
