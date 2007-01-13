@@ -562,6 +562,14 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 			sprintf(buffer, "RepeatFrequency = %d%c%c",Note->Entries[i].Number,13,10);
 			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
+		case CAL_REPEAT_COUNT:
+			sprintf(buffer, "RepeatCount = %d%c%c",Note->Entries[i].Number,13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
+			break;
+		case CAL_REPEAT_DAYOFYEAR:
+			sprintf(buffer, "RepeatDayOfYear = %d%c%c",Note->Entries[i].Number,13,10);
+			SaveBackupText(file, "", buffer, UseUnicode);
+			break;
 		}
 	}
 	sprintf(buffer, "%c%c",13,10);
@@ -1663,6 +1671,20 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"RepeatCount");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue!=NULL) {
+		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_COUNT;
+		note->EntriesNum++;
+	}
+	sprintf(buffer,"RepeatDayOfYear");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue!=NULL) {
+		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_DAYOFYEAR;
 		note->EntriesNum++;
 	}
 }
