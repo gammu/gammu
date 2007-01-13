@@ -707,26 +707,15 @@ GSM_Error ATGEN_GetManufacturer(GSM_StateMachine *s)
 GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	unsigned int		i = 0;
 
-	strcpy(s->Phone.Data.Version,"unknown");
+	strcpy(s->Phone.Data.Version, "Unknown");
 	s->Phone.Data.VerNum = 0;
 	if (Priv->ReplyState == AT_Reply_OK) {
 		CopyLineString(s->Phone.Data.Version, msg.Buffer, Priv->Lines, 2);
 		/* Sometimes phone adds this before manufacturer (Sagem) */
 		if (strncmp("+CGMR: ", s->Phone.Data.Version, 7) == 0) {
+			/* Need to use memmove as strcpy does not correctly handle overlapping regions */
 			memmove(s->Phone.Data.Version, s->Phone.Data.Version + 7, strlen(s->Phone.Data.Version + 7) + 1);
-		}
-	}
-	/* @todo: why the hell this? */
-	if (Priv->Manufacturer == AT_Ericsson) {
-		while (1) {
-			if (s->Phone.Data.Version[i] == 0x20) {
-				s->Phone.Data.Version[i] = 0x00;
-				break;
-			}
-			if (i == strlen(s->Phone.Data.Version)) break;
-			i++;
 		}
 	}
 	smprintf(s, "Received firmware version: \"%s\"\n",s->Phone.Data.Version);
