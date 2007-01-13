@@ -46,6 +46,26 @@ For additionals materials and links to them see readme.txt
 [*] Changes in existing functionality
 [-] Fixed error
 
+20070110 - 1.09.15
+[-] * SMSC reported wrong on N6280                        (BT 44, Michal Cihar)
+[-] * Some strings even when using unicode are not signed (BT 45, Michal Cihar)
+      and some which are native are signed, this is exactly
+      opposite than expected.
+[-] * 1.09.07 had wrong applied Siemens patch (BT 46, Rene Peters,Michal Cihar)
+[-] * Some phones need more time for some OBEX requests   (BT 47, Michal Cihar)
+      so timeout should be increased.
+[+] * config file parameter for own SMSC number for MYSQL (BT 48, Michal Cihar)
+      in SMSD
+[-] * For phones that use vCard (OBEX/Siemens/...), vCard (BT 51, Michal Cihar)
+      decoding might end with undefined voicetag entry.
+[-] * improved docs                                       (BT 57, Michal Cihar)
+[+] * basic Motorola support for testing                         (Michal Cihar)
+[-] * better error handling in AT module
+[*] * cleanup OBEX code to have only one function for changing path
+[-] * OBEX Add functions return correct filename after adding
+[+] * support for switching to OBEX mode using AT+MODE=22
+[-] * deleted cfg/debian/.arch-inventory
+
 20061217 - 1.09.07
 [-] gammu-1.09.00 failed to build with LDFLAGS=-Wl,--as-needed  (BT 34, mrness)
 [-] increased backup limits                                     (BT 35, mrness)
