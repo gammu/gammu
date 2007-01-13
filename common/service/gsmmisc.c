@@ -452,7 +452,8 @@ bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *
 void GSM_ClearBatteryCharge(GSM_BatteryCharge *bat)
 {
     bat->BatteryPercent = -1;
-    bat->ChargeState 	= 0;
+    bat->ChargeState = 0;
+    bat->BatteryType = 0;
     bat->BatteryVoltage = -1;
     bat->ChargeVoltage = -1;
     bat->ChargeCurrent = -1;

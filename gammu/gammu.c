@@ -1852,6 +1852,24 @@ static void Monitor(int argc, char *argv[])
                 		}
                 		printf("\n");
             		}
+            		if (BatteryCharge.BatteryType != 0) {
+                		printmsg("Battery type      : ");
+                		switch (BatteryCharge.BatteryType) {
+                    			case GSM_BatteryLiIon:
+						printmsg("Lithium Ion");
+						break;
+                    			case GSM_BatteryLiPol:
+						printmsg("Lithium Polymer");
+						break;
+                    			case GSM_BatteryNiMH:
+						printmsg("NiMH");
+						break;
+                    			default:
+                        			printmsg("unknown");
+                       				break;
+                		}
+                		printf("\n");
+            		}
         	}
 		if (gshutdown) break;
 		if (Phone->GetSignalQuality(&s,&SignalQuality)==ERR_NONE) {

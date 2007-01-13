@@ -1020,70 +1020,113 @@ GSM_Error SONYERICSSON_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemSt
 GSM_Error SONYERICSSON_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	char	*pos, *pos2;
-	int	i;
+	int	field_count;
+	int	tmp;
+	int	ncapacity;
+	GSM_Error error;
 
-	smprintf(s, "Battery status received\n");
 	if (s->Phone.Data.BatteryCharge == NULL) {
+		smprintf(s, "Battery status received, but not requested right now\n");
 		return ERR_NONE;
 	}
+	smprintf(s, "Battery status received\n");
 	pos = strstr(msg.Buffer, "*EBCA:");
 	/*
 	 * Calculate number of fields to detect version
 	 * of EBCA.
 	 */
 	pos2 = pos;
-	i = 0;
+	field_count = 0;
 	while (pos2 != NULL) {
-		i++;
+		field_count++;
 		pos2++;
 		pos2 = strchr(pos2, ',');
 	}
+	/* Skip EBCA */
+	if (pos == NULL) {
+		error = ERR_UNKNOWNRESPONSE;
+		goto fail;
+	}
+	pos += 7;
 
 	/**
 	 * @todo Some SE phones have different format,
-	 * we currently support only version 4.
+	 * we currently support only version 4 and 2.
 	 */
-	if (i == 14) {
-		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
-		pos += 7;
+	if (field_count == 14) {
 		// vbat
 		s->Phone.Data.BatteryCharge->BatteryVoltage = atoi(pos);
 		pos = strchr(pos, ',');
-		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
 		pos += 1;
 		// dcio
 		s->Phone.Data.BatteryCharge->ChargeVoltage = atoi(pos);
 		pos = strchr(pos, ',');
-		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
 		pos += 1;
 		// iocharge
 		s->Phone.Data.BatteryCharge->ChargeCurrent = atoi(pos) / 10;
 		pos = strchr(pos, ',');
-		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
 		pos += 1;
 		// iphone
 		s->Phone.Data.BatteryCharge->PhoneCurrent = atoi(pos) / 10;
 		pos = strchr(pos, ',');
-		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
 		pos += 1;
 		// tempbattery
 		s->Phone.Data.BatteryCharge->BatteryTemperature = atoi(pos);
 		pos = strchr(pos, ',');
-		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
 		pos += 1;
 		// tempphone
 		s->Phone.Data.BatteryCharge->PhoneTemperature = atoi(pos);
 		pos = strchr(pos, ',');
-		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
 		pos += 1;
-		// chargingmethod
-		// Ignored for now
+		// chargingmethod, used to determine battery type
+		tmp = atoi(pos);
+		switch (tmp) {
+			case 0:
+				s->Phone.Data.BatteryCharge->BatteryType = GSM_BatteryLiPol;
+				break;
+			case 1:
+				s->Phone.Data.BatteryCharge->BatteryType = GSM_BatteryLiIon;
+				break;
+			case 2:
+				s->Phone.Data.BatteryCharge->BatteryType = GSM_BatteryNiMH;
+				break;
+			default:
+				s->Phone.Data.BatteryCharge->BatteryType = GSM_BatteryUnknown;
+				break;
+		}
 		pos = strchr(pos, ',');
-		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
 		pos += 1;
 		// chargestate
-		i = atoi(pos);
-		switch(i) {
+		tmp = atoi(pos);
+		switch(tmp) {
 			case 7:
 				s->Phone.Data.BatteryCharge->ChargeState = GSM_BatteryPowered;
 				break;
@@ -1102,12 +1145,18 @@ GSM_Error SONYERICSSON_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_State
 				break;
 		}
 		pos = strchr(pos, ',');
-		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
 		pos += 1;
 		// remcapacity
 		s->Phone.Data.BatteryCharge->BatteryCapacity = atoi(pos);
 		pos = strchr(pos, ',');
-		if (pos == NULL) return ERR_UNKNOWNRESPONSE;
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
 		pos += 1;
 		// remcapacitypercent
 		s->Phone.Data.BatteryCharge->BatteryPercent = atoi(pos);
@@ -1116,13 +1165,200 @@ GSM_Error SONYERICSSON_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_State
 		// noccycles
 		// nosostimer
 		// suspensioncause
+		error = ERR_NONE;
+	} else if (field_count == 27) {
+		/* Version 2 */
+		// vbat1
+		tmp = atoi(pos);
+		if (tmp > 0) {
+			s->Phone.Data.BatteryCharge->BatteryVoltage = tmp;
+		}
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// vbat2
+		tmp = atoi(pos);
+		if (tmp > 0) {
+			s->Phone.Data.BatteryCharge->BatteryVoltage = tmp;
+		}
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// vbat3
+		tmp = atoi(pos);
+		if (tmp > 0) {
+			s->Phone.Data.BatteryCharge->BatteryVoltage = tmp;
+		}
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// vbat4
+		tmp = atoi(pos);
+		if (tmp > 0) {
+			s->Phone.Data.BatteryCharge->BatteryVoltage = tmp;
+		}
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// btype
+		tmp = atoi(pos);
+		switch (tmp) {
+			case 0:
+				s->Phone.Data.BatteryCharge->BatteryType = GSM_BatteryNiMH;
+				break;
+			case 1:
+				s->Phone.Data.BatteryCharge->BatteryType = GSM_BatteryLiIon;
+				break;
+			case 2:
+			default:
+				s->Phone.Data.BatteryCharge->BatteryType = GSM_BatteryUnknown;
+				break;
+		}
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// dcio
+		s->Phone.Data.BatteryCharge->ChargeVoltage = atoi(pos) * 10;
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// iocharge
+		s->Phone.Data.BatteryCharge->ChargeCurrent = atoi(pos);
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// iphone
+		s->Phone.Data.BatteryCharge->PhoneCurrent = atoi(pos);
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// acapacity, ignored
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// ccapacity, ignored
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// pcapacity, ignored
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// ncapacity, used later for calculation
+		ncapacity = atoi(pos) * 10;
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// tempbattery
+		s->Phone.Data.BatteryCharge->BatteryTemperature = atoi(pos);
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// tempphone
+		s->Phone.Data.BatteryCharge->PhoneTemperature = atoi(pos);
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// chargestate
+		tmp = atoi(pos);
+		switch(tmp) {
+			case 3:
+				s->Phone.Data.BatteryCharge->ChargeState = GSM_BatteryPowered;
+				break;
+			case 0:
+			case 1:
+			case 2:
+				s->Phone.Data.BatteryCharge->ChargeState = GSM_BatteryCharging;
+				break;
+			case 4:
+			case 5:
+			case 6:
+			case 7:
+			case 8:
+				s->Phone.Data.BatteryCharge->ChargeState = GSM_BatteryFull;
+				break;
+		}
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// remcapacitypercent
+		s->Phone.Data.BatteryCharge->BatteryPercent = atoi(pos);
+		pos = strchr(pos, ',');
+		if (pos == NULL) {
+			error = ERR_UNKNOWNRESPONSE;
+			goto fail;
+		}
+		pos += 1;
+		// calculate remaining capacity 
+		s->Phone.Data.BatteryCharge->BatteryCapacity = 100 * ncapacity / s->Phone.Data.BatteryCharge->BatteryPercent;
+		/* We ignore rest: */
+		// cycles
+		// ipulse
+		// ibattery
+		// ChTempMax
+		// ChTempMin
+		// MainChTempMax
+		// MainChTempMin
+		// FlatVTimer
+		// DV
+		// DT
+		// D2V
+		error = ERR_NONE;
 	} else {
-		return ERR_NOTSUPPORTED;
+		smprintf(s, "Unsupported battery status format, you're welcome to help with implementation (fields %d)\n", field_count);
+		error = ERR_NOTIMPLEMENTED;
+		goto fail;
 	}
 
+fail:
 	/* Do not further update this */
 	s->Phone.Data.BatteryCharge = NULL;
-	return ERR_NONE;
+	return error;
 }
 
 GSM_Error SONYERICSSON_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
@@ -1143,10 +1379,19 @@ GSM_Error SONYERICSSON_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *
 	}
 	/* Wait for async phone reply */
 	while (s->Phone.Data.BatteryCharge != NULL) {
-		error = GSM_WaitFor (s, "AT\r", 10, 0x00, 3, ID_GetBatteryCharge);
+		error = GSM_WaitFor (s, "AT\r", 3, 0x00, 1, ID_GetBatteryCharge);
 		if (i == 20) break;
+		if (error != ERR_NONE) {
+			break;
+		}
 	}
-	error = GSM_WaitFor (s, "AT*EBCA=0\r", 10, 0x00, 3, ID_GetBatteryCharge);
+	/* Disable reading information */
+	GSM_WaitFor (s, "AT*EBCA=0\r", 10, 0x00, 3, ID_GetBatteryCharge);
+	/* If something failed, do AT way */
+	if (error != ERR_NONE) {
+		return ATGEN_GetBatteryCharge(s, bat);
+	}
+	/* Did we timeout? */
 	if (i == 20) return ERR_TIMEOUT;
 	return error;
 }

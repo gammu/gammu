@@ -243,6 +243,16 @@ typedef enum {
 	GSM_PowerFault, /**< Power failure */
 } GSM_ChargeState;
 
+/**
+ * Power source
+ */
+typedef enum {
+	GSM_BatteryUnknown = 0, /**< Unknown battery */
+	GSM_BatteryNiMH = 1, /**< NiMH battery */
+	GSM_BatteryLiIon, /**< Lithium Ion battery */
+	GSM_BatteryLiPol, /**< Lithium Polymer battery */
+} GSM_BatteryType;
+
 typedef struct {
 	/**
 	 * Signal strength in percent, -1 = unknown
@@ -280,6 +290,10 @@ typedef struct {
 	 * Remaining battery capacity (in mAh)
 	 */
 	int BatteryCapacity;
+	/**
+	 * Battery type
+	 */
+	GSM_BatteryType BatteryType;
 
 } GSM_BatteryCharge;
 
