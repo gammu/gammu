@@ -197,7 +197,7 @@ void SaveVCALDate(char *Buffer, int *Length, GSM_DateTime *Date, char *Start)
 			Date->Year, Date->Month, Date->Day,13,10);
 }
 
-bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt)
+bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 {
 	time_t time_t;
 	char year[5]="", month[3]="", day[3]="", hour[3]="", minute[3]="", second[3]="";

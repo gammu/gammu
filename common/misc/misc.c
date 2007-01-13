@@ -18,20 +18,80 @@
 #include "../gsmstate.h"
 #include "misc.h"
 
-/* Based on article in Polish PC-Kurier 8/1998 page 104
- * Archive on http://www.pckurier.pl
+
+
+/**
+ * Return day of year index.
+ */
+int GetDayOfYear(int year, int month, int day)
+{
+	time_t t;
+	struct tm st;
+	struct tm *pst;
+
+	memset(&st, 0, sizeof(st));
+
+	st.tm_year = year;
+	st.tm_mon = month;
+	st.tm_mday = day;
+
+	t = mktime(&st);
+	pst = localtime(&t);
+
+	return pst->tm_yday;
+}
+
+/**
+ * Return day of week index.
+ */
+int GetWeekOfMonth(int year, int month, int day)
+{
+	time_t t;
+	struct tm st;
+	struct tm *pst;
+
+	memset(&st, 0, sizeof(st));
+
+	st.tm_year = year;
+	st.tm_mon = month;
+	st.tm_mday = day;
+
+	t = mktime(&st);
+	pst = localtime(&t);
+
+	return 1 + (day - pst->tm_wday / 7);
+}
+
+/**
+ * Return day of week index.
+ */
+int GetDayOfWeek(int year, int month, int day)
+{
+	time_t t;
+	struct tm st;
+	struct tm *pst;
+
+	memset(&st, 0, sizeof(st));
+
+	st.tm_year = year;
+	st.tm_mon = month;
+	st.tm_mday = day;
+
+	t = mktime(&st);
+	pst = localtime(&t);
+
+	return pst->tm_wday;
+}
+
+/**
+ * Return textual representation of day of week;
  */
 char *DayOfWeek (int year, int month, int day)
 {
-	int 		p,q,r,w;
 	static char 	DayOfWeekChar[10];
 
-	p=(14-month) / 12;
-	q=month+12*p-2;
-	r=year-p;
-	w=(day+(31*q) / 12 + r + r / 4 - r / 100 + r / 400) % 7;
 	strcpy(DayOfWeekChar,"");
-	switch (w) {
+	switch (GetDayOfWeek(year, month, day)) {
 		case 0: strcpy(DayOfWeekChar,"Sun"); break;
 		case 1: strcpy(DayOfWeekChar,"Mon"); break;
 		case 2: strcpy(DayOfWeekChar,"Tue"); break;
@@ -102,7 +162,7 @@ GSM_DateTime GSM_AddTime (GSM_DateTime DT , GSM_DeltaTime delta)
 
 	/* TODO: This works only for dates after 1970. But birthday dates may be before, so a more general
 	   method than mktime /localtime should be used. */
-	t_time = mktime (&tm_time);		
+	t_time = mktime (&tm_time);
 	t_time = t_time + delta.Second + 60* (delta.Minute + 60* (delta.Hour + 24*delta.Day));
 
 	Fill_GSM_DateTime ( &Date, t_time);
@@ -132,19 +192,10 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 {
 	struct tm 	timeptr;
 	static char 	retval[200],retval2[200];
-	int 		p,q,r,w;
 
 #ifdef WIN32
 	setlocale(LC_ALL, ".OCP");
 #endif
-
-	/* Based on article in Polish PC-Kurier 8/1998 page 104
-	 * Archive on http://www.pckurier.pl
-	 */
-	p=(14-dt.Month) / 12;
-	q=dt.Month+12*p-2;
-	r=dt.Year-p;
-	w=(dt.Day+(31*q) / 12 + r + r / 4 - r / 100 + r / 400) % 7;
 
 	timeptr.tm_yday 	= 0; 			/* FIXME */
 	timeptr.tm_isdst 	= -1; 			/* FIXME */
@@ -154,7 +205,7 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 	timeptr.tm_hour 	= dt.Hour;
 	timeptr.tm_min  	= dt.Minute;
 	timeptr.tm_sec  	= dt.Second;
-	timeptr.tm_wday 	= w;
+	timeptr.tm_wday 	= GetDayOfWeek(dt.Year, dt.Month, dt.Day);
 #ifdef _BSD_SOURCE
 	timeptr.tm_zone		= NULL;
 #endif
@@ -195,19 +246,10 @@ char *OSDate (GSM_DateTime dt)
 {
 	struct tm 	timeptr;
 	static char 	retval[200],retval2[200];
-	int 		p,q,r,w;
 
 #ifdef WIN32
 	setlocale(LC_ALL, ".OCP");
 #endif
-
-	/* Based on article in Polish PC-Kurier 8/1998 page 104
-	 * Archive on http://www.pckurier.pl
-	 */
-	p=(14-dt.Month) / 12;
-	q=dt.Month+12*p-2;
-	r=dt.Year-p;
-	w=(dt.Day+(31*q) / 12 + r + r / 4 - r / 100 + r / 400) % 7;
 
 	timeptr.tm_yday 	= 0; 			/* FIXME */
 	timeptr.tm_isdst 	= -1; 			/* FIXME */
@@ -217,7 +259,7 @@ char *OSDate (GSM_DateTime dt)
 	timeptr.tm_hour 	= dt.Hour;
 	timeptr.tm_min  	= dt.Minute;
 	timeptr.tm_sec  	= dt.Second;
-	timeptr.tm_wday 	= w;
+	timeptr.tm_wday 	= GetDayOfWeek(dt.Year, dt.Month, dt.Day);
 #ifdef _BSD_SOURCE
 	timeptr.tm_zone		= NULL;
 #endif
