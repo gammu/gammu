@@ -417,7 +417,7 @@ typedef struct {
 
 /* ------------------------------------------------------------------------ */
 
-bool ReadVCALDateTime(char *Buffer, GSM_DateTime *dt);
+bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt);
 void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start);
 
 bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_only);

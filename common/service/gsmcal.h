@@ -182,6 +182,10 @@ typedef enum {
 	 */
 	CAL_REPEAT_DAY,
 	/**
+	 * Repeat each x'th day of year.
+	 */
+	CAL_REPEAT_DAYOFYEAR,
+	/**
 	 * Repeat x'th week of month.
 	 */
 	CAL_REPEAT_WEEKOFMONTH,
@@ -201,6 +205,10 @@ typedef enum {
 	 * Repeating end.
 	 */
 	CAL_REPEAT_STOPDATE,
+	/**
+	 * Number of repetitions.
+	 */
+	CAL_REPEAT_COUNT,
 	/**
 	 * IrMC LUID which can be used for synchronisation.
 	 */

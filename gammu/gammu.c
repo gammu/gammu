@@ -279,8 +279,10 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
     	bool 			repeating 		= false;
     	int 			repeat_dayofweek 	= -1;
     	int 			repeat_day 		= -1;
+    	int 			repeat_dayofyear	= -1;
     	int 			repeat_weekofmonth 	= -1;
     	int 			repeat_month 		= -1;
+    	int 			repeat_count 		= -1;
     	int 			repeat_frequency 	= -1;
     	GSM_DateTime 		repeat_startdate 	= {0,0,0,0,0,0,0};
     	GSM_DateTime 		repeat_stopdate 	= {0,0,0,0,0,0,0};
@@ -322,6 +324,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 	repeating 		= false;
 	repeat_dayofweek 	= -1;
 	repeat_day 		= -1;
+	repeat_dayofyear	= -1;
 	repeat_weekofmonth 	= -1;
 	repeat_month 		= -1;
 	repeat_frequency 	= -1;
@@ -433,6 +436,10 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 			repeat_day 		= Note->Entries[i].Number;
 			repeating 		= true;
 			break;
+		case CAL_REPEAT_DAYOFYEAR:
+			repeat_dayofyear	= Note->Entries[i].Number;
+			repeating 		= true;
+			break;
 		case CAL_REPEAT_WEEKOFMONTH:
 			repeat_weekofmonth 	= Note->Entries[i].Number;
 			repeating 		= true;
@@ -443,6 +450,10 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 			break;
 		case CAL_REPEAT_FREQUENCY:
 			repeat_frequency 	= Note->Entries[i].Number;
+			repeating 		= true;
+			break;
+		case CAL_REPEAT_COUNT:
+			repeat_count	 	= Note->Entries[i].Number;
 			repeating 		= true;
 			break;
 		case CAL_REPEAT_STARTDATE:
@@ -457,6 +468,9 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 	}
 	if (repeating) {
 		printmsg("Repeating    : ");
+		if (repeat_count > 0) {
+			printmsg("for %d times ", repeat_count);
+		}
 		if ((repeat_startdate.Day == 0) && (repeat_stopdate.Day == 0)) {
 			printmsg("forever");
 		} else if (repeat_startdate.Day == 0) {
@@ -532,6 +546,8 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 				} else {
 					printmsg("each month");
 				}
+			} else if (repeat_dayofyear > 0) {
+				printmsg("%d. day of year", repeat_dayofyear);
 			} else {
 				printmsg("day");
 			}

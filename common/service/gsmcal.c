@@ -1,7 +1,17 @@
 /* (c) 2002-2004 by Marcin Wiacek, 2005 by Michal Cihar */
 
+/** \file gsmcal.c
+ * \defgroup Calendar Calendar parsing and encoding
+ *
+ * This module implements calendar related opreations.
+ *
+ * \see http://www.imc.org/pdi/
+ *
+ * @{
+ */
 #include <string.h>
 #include <time.h>
+#include <ctype.h>
 
 #include "gsmcal.h"
 #include "gsmmisc.h"
@@ -794,19 +804,407 @@ int GSM_Make_VCAL_Lines (unsigned char *Buffer, int *lBuffer)
 	return ERR_NONE;
 }
 
+/**
+ * Decode day of week to gammu enumeration (1 = Monday...7 = Sunday).
+ */
+GSM_Error GSM_DecodeVCAL_DOW(const char *Buffer, int *Output)
+{
+	if (toupper(Buffer[0])== 'M' && toupper(Buffer[1]) == 'O') {
+		*Output = 1;
+		return ERR_NONE;
+	} else if (toupper(Buffer[0])== 'T' && toupper(Buffer[1]) == 'U') {
+		*Output = 2;
+		return ERR_NONE;
+	} else if (toupper(Buffer[0])== 'W' && toupper(Buffer[1]) == 'E') {
+		*Output = 3;
+		return ERR_NONE;
+	} else if (toupper(Buffer[0])== 'T' && toupper(Buffer[1]) == 'H') {
+		*Output = 4;
+		return ERR_NONE;
+	} else if (toupper(Buffer[0])== 'F' && toupper(Buffer[1]) == 'R') {
+		*Output = 5;
+		return ERR_NONE;
+	} else if (toupper(Buffer[0])== 'S' && toupper(Buffer[1]) == 'A') {
+		*Output = 6;
+		return ERR_NONE;
+	} else if (toupper(Buffer[0])== 'S' && toupper(Buffer[1]) == 'U') {
+		*Output = 7;
+		return ERR_NONE;
+	}
+	return ERR_UNKNOWN;
+}
+
+/**
+ * Decodes vCalendar RRULE recurrance format into calendar entry. It
+ * should be implemented according to following grammar:
+ *
+ * @code
+ *   {}         0 or more
+ *
+ *   []         0 or 1
+ *
+ *   start      ::= <daily> [<enddate>] |
+ *
+ *               <weekly> [<enddate>] |
+ *
+ *               <monthlybypos> [<enddate>] |
+ *
+ *               <monthlybyday> [<enddate>] |
+ *
+ *               <yearlybymonth> [<enddate>] |
+ *
+ *               <yearlybyday> [<enddate>]
+ *
+ *   digit ::= <0|1|2|3|4|5|6|7|8|9>
+ *
+ *   digits ::= <digit> {<digits>}
+ *
+ *   enddate    ::= ISO 8601_date_time value(e.g., 19940712T101530Z)
+ *
+ *   interval   ::= <digits>
+ *
+ *   duration   ::= #<digits>
+ *
+ *   lastday    ::= LD
+ *
+ *   plus               ::= +
+ *
+ *   minus              ::= -
+ *
+ *   daynumber          ::= <1-31> [<plus>|<minus>]| <lastday>
+ *
+ *   daynumberlist      ::= daynumber {<daynumberlist>}
+ *
+ *   month              ::= <1-12>
+ *
+ *   monthlist  ::= <month> {<monthlist>}
+ *
+ *   day                ::= <1-366>
+ *
+ *   daylist            ::= <day> {<daylist>}
+ *
+ *   occurrence ::= <1-5><plus> | <1-5><minus>
+ *
+ *   weekday    ::= <SU|MO|TU|WE|TH|FR|SA>
+ *
+ *   weekdaylist        ::= <weekday> {<weekdaylist>}
+ *
+ *   occurrenceweekday  ::= [<occurrence>] <weekday>
+ *
+ *   occurenceweekdaylist       ::= <occurenceweekday>
+ *
+ *      {<occurenceweekdaylist>}
+ *
+ *   daily              ::= D<interval> [<duration>]
+ *
+ *   weekly             ::= W<interval> [<weekdaylist>] [<duration>]
+ *
+ *   monthlybypos       ::= MP<interval> [<occurrenceweekdaylist>]
+ *
+ *      [<duration>]
+ *
+ *   monthlybyday       ::= MD<interval> [<daynumberlist>] [<duration>]
+ *
+ *   yearlybymonth      ::= YM<interval> [<monthlist>] [<duration>]
+ *
+ *   yearlybyday        ::= YD<interval> [<daylist>] [<duration>]
+ *
+ * @endcode
+ *
+ * @li @b enddate      Controls when a repeating event terminates. The enddate
+ *              is the last time an event can occur.
+ *
+ * @li @b Interval     Defines the frequency in which a rule repeats.
+ *
+ * @li @b duration     Controls the number of events a rule generates.
+ *
+ * @li @b Lastday      Can be used as a replacement to daynumber to indicate
+ * the last day of the month.
+ *
+ * @li @b daynumber    A number representing a day of the month.
+ *
+ * @li @b month                A number representing a month of the year.
+ *
+ * @li @b day          A number representing a day of the year.
+ *
+ * @li @b occurrence   Controls which week of the month a particular weekday
+ * event occurs.
+ *
+ * @li @b weekday      A symbol representing a day of the week.
+ *
+ * @li @b daily                Defines a rule that repeats on a daily basis.
+ *
+ * @li @b weekly               Defines a rule that repeats on a weekly basis.
+ *
+ * @li @b monthlybypos Defines a rule that repeats on a monthly basis on a
+ * relative day and week.
+ *
+ * @li @b monthlybyday Defines a rule that repeats on a monthly basis on an
+ * absolute day.
+ *
+ * @li @b yearlybymonth        Defines a rule that repeats on specific months
+ * of the year.
+ *
+ * @li @b yearlybyday  Defines a rule that repeats on specific days of the
+ * year.
+ *
+ * @todo Negative week of month and day of month are not supported.
+ */
+GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, int TimePos)
+{
+	const char *pos = Buffer;
+	bool have_info;
+
+/* Skip spaces */
+#define NEXT_NOSPACE \
+	while (isspace(*pos) && *pos) pos++; \
+	if (*pos == 0) return ERR_NONE;
+/* Skip numbers */
+#define NEXT_NONUMBER \
+	while (isdigit(*pos) && *pos) pos++; \
+	if (*pos == 0) return ERR_NONE;
+/* Go to next char */
+#define NEXT_CHAR \
+	pos++; \
+	if (*pos == 0) return ERR_UNKNOWN;
+/* Go to next char */
+#define NEXT_CHAR_NOERR \
+	pos++; \
+	if (*pos == 0) return ERR_NONE;
+
+#define GET_DOW(type) \
+	Calendar->Entries[Calendar->EntriesNum].EntryType = type; \
+	if (GSM_DecodeVCAL_DOW(pos, &Calendar->Entries[Calendar->EntriesNum].Number) != ERR_NONE) return ERR_UNKNOWN; \
+	Calendar->EntriesNum++; \
+	NEXT_CHAR; \
+	NEXT_CHAR_NOERR;
+
+#define GET_NUMBER(type) \
+	Calendar->Entries[Calendar->EntriesNum].EntryType = type; \
+	Calendar->Entries[Calendar->EntriesNum].Number = atoi(pos); \
+	Calendar->EntriesNum++; \
+	NEXT_NONUMBER;
+
+#define GET_FREQUENCY \
+	GET_NUMBER(CAL_REPEAT_FREQUENCY);
+
+	/* This should not happen */
+	if (TimePos == -1) {
+		return ERR_UNKNOWN;
+	}
+
+	NEXT_NOSPACE;
+
+	/* Detect primary rule type */
+	switch (*pos) {
+		/* Daily */
+		case 'D':
+			NEXT_CHAR;
+			GET_FREQUENCY;
+			break;
+		/* Weekly */
+		case 'W':
+			NEXT_CHAR;
+			GET_FREQUENCY;
+			NEXT_NOSPACE;
+			/* There might be now list of months, if there is none, we use date */
+			have_info = false;
+
+			while (isalpha(*pos)) {
+				have_info = true;
+				NEXT_NOSPACE;
+				GET_DOW(CAL_REPEAT_DAYOFWEEK);
+			}
+
+			if (!have_info) {
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAYOFWEEK;
+				Calendar->Entries[Calendar->EntriesNum].Number =
+					GetDayOfWeek(
+						Calendar->Entries[TimePos].Date.Year,
+						Calendar->Entries[TimePos].Date.Month,
+						Calendar->Entries[TimePos].Date.Day);
+				if (Calendar->Entries[Calendar->EntriesNum].Number == 0) {
+					Calendar->Entries[Calendar->EntriesNum].Number = 7;
+				}
+				Calendar->EntriesNum++;
+			}
+			break;
+		/* Monthly */
+		case 'M':
+			NEXT_CHAR;
+			switch (*pos) {
+				/* Monthly by position */
+				case 'P':
+					NEXT_CHAR;
+					GET_FREQUENCY;
+					NEXT_NOSPACE;
+					if (isdigit(*pos)) {
+						GET_NUMBER(CAL_REPEAT_WEEKOFMONTH);
+						if (*pos == '+') {
+							pos++;
+						} else if (*pos == '-') {
+							pos++;
+							dbgprintf("WARNING: Negative week position not supported!");
+						}
+						NEXT_NOSPACE;
+
+						while (isalpha(*pos)) {
+							have_info = true;
+							NEXT_NOSPACE;
+							GET_DOW(CAL_REPEAT_DAYOFWEEK);
+						}
+					} else {
+						/* Need to fill in info from current date */
+						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_WEEKOFMONTH;
+						Calendar->Entries[Calendar->EntriesNum].Number =
+							GetWeekOfMonth(
+								Calendar->Entries[TimePos].Date.Year,
+								Calendar->Entries[TimePos].Date.Month,
+								Calendar->Entries[TimePos].Date.Day);
+						Calendar->EntriesNum++;
+
+						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAYOFWEEK;
+						Calendar->Entries[Calendar->EntriesNum].Number =
+							GetDayOfWeek(
+								Calendar->Entries[TimePos].Date.Year,
+								Calendar->Entries[TimePos].Date.Month,
+								Calendar->Entries[TimePos].Date.Day);
+						if (Calendar->Entries[Calendar->EntriesNum].Number == 0) {
+							Calendar->Entries[Calendar->EntriesNum].Number = 7;
+						}
+						Calendar->EntriesNum++;
+					}
+					break;
+				/* Monthly by day */
+				case 'D':
+					NEXT_CHAR;
+					GET_FREQUENCY;
+					NEXT_NOSPACE;
+					if (isdigit(*pos)) {
+						while (isdigit(*pos)) {
+							GET_NUMBER(CAL_REPEAT_DAY);
+							if (*pos == '+') {
+								pos++;
+							} else if (*pos == '-') {
+								pos++;
+								dbgprintf("WARNING: Negative day position not supported!");
+							}
+							NEXT_NOSPACE;
+						}
+					} else {
+						/* Need to fill in info from current date */
+						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAY;
+						Calendar->Entries[Calendar->EntriesNum].Number = Calendar->Entries[TimePos].Date.Day;
+						Calendar->EntriesNum++;
+					}
+
+					break;
+				default:
+					dbgprintf("Could not decode recurrency: %s\n", pos);
+					return ERR_UNKNOWN;
+			}
+			break;
+		/* Yearly */
+		case 'Y':
+			NEXT_CHAR;
+			switch (*pos) {
+				/* Yearly by month */
+				case 'M':
+					NEXT_CHAR;
+					GET_FREQUENCY;
+					NEXT_NOSPACE;
+					/* We need date of event */
+					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAY;
+					Calendar->Entries[Calendar->EntriesNum].Number =
+						Calendar->Entries[TimePos].Date.Day;
+					Calendar->EntriesNum++;
+					/* There might be now list of months, if there is none, we use date */
+					have_info = false;
+
+					while (isdigit(*pos)) {
+						have_info = true;
+						NEXT_NOSPACE;
+						GET_NUMBER(CAL_REPEAT_MONTH);
+					}
+
+					if (!have_info) {
+						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_MONTH;
+						Calendar->Entries[Calendar->EntriesNum].Number =
+							Calendar->Entries[TimePos].Date.Month;
+						Calendar->EntriesNum++;
+					}
+					break;
+				/* Yearly by day */
+				case 'D':
+					NEXT_CHAR;
+					GET_FREQUENCY;
+					NEXT_NOSPACE;
+					/* There might be now list of days, if there is none, we use date */
+					have_info = false;
+
+					while (isdigit(*pos)) {
+						have_info = true;
+						NEXT_NOSPACE;
+						GET_NUMBER(CAL_REPEAT_DAYOFYEAR);
+					}
+
+					if (!have_info) {
+						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAYOFYEAR;
+						Calendar->Entries[Calendar->EntriesNum].Number =
+							GetDayOfYear(
+								Calendar->Entries[TimePos].Date.Year,
+								Calendar->Entries[TimePos].Date.Month,
+								Calendar->Entries[TimePos].Date.Day);
+						Calendar->EntriesNum++;
+					}
+					break;
+				default:
+					dbgprintf("Could not decode recurrency: %s\n", pos);
+					return ERR_UNKNOWN;
+			}
+			break;
+		default:
+			dbgprintf("Could not decode recurrency: %s\n", pos);
+			return ERR_UNKNOWN;
+	}
+
+	/* Go to duration */
+	NEXT_NOSPACE;
+
+	/* Do we have duration encoded? */
+	if (*pos == '#') {
+		pos++;
+		if (*pos == 0) return ERR_UNKNOWN;
+		GET_NUMBER(CAL_REPEAT_COUNT);
+	}
+
+	/* Go to end date */
+	NEXT_NOSPACE;
+
+	/* Do we have end date encoded? */
+	if (ReadVCALDateTime(pos, &(Calendar->Entries[Calendar->EntriesNum].Date))) {
+		Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
+		Calendar->EntriesNum++;
+	}
+
+	return ERR_NONE;
+}
+
 GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar,
 					GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer)
 {
-	unsigned char 	Line[2000],Buff[2000],bu[20];
+	unsigned char 	Line[2000],Buff[2000];
 	int		Level = 0;
 	GSM_DateTime	Date;
 	GSM_TimeUnit	unit = GSM_TimeUnit_Unknown;
 	GSM_DeltaTime	trigger;
+	GSM_Error	error;
 	int		deltatime = 0;
 	bool		is_date_only;
 	bool		date_only = false;
 	int		lBuffer;
  	int 		Text=-1, Time=-1, Alarm=-1, EndTime=-1, Location=-1;
+	char		*rrule = NULL;
 
 	if (!Buffer) return ERR_EMPTY;
 
@@ -842,6 +1240,13 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 		case 1: /* Calendar note */
 			if (strstr(Line,"END:VEVENT")) {
 				if (Time == -1) return ERR_UNKNOWN;
+				if (rrule != NULL) {
+					error = GSM_DecodeVCAL_RRULE(rrule, Calendar, Time);
+					free(rrule);
+					if (error != ERR_NONE) {
+						return error;
+					}
+				}
 				if (Calendar->EntriesNum == 0) return ERR_EMPTY;
 
 				if (trigger.Timezone != -999) {
@@ -894,33 +1299,13 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			/* Event type. Must be set correctly to let phone calendar work as expected. For example
 			   without GSM_CAL_MEETING the time part of an event date/time will be dropped. */
 			if (strstr(Line,"CATEGORIES:")) {
-				GSM_Translate_Category(TRANSL_TO_GSM, Line+11, &Calendar->Type);
+				GSM_Translate_Category(TRANSL_TO_GSM, Line + 11, &Calendar->Type);
+				break;
 			}
 
-			if (strstr(Line,"RRULE:D1")) {
-				bu[0] = 0;
-				bu[1] = 24;
-				GSM_GetCalendarRecurranceRepeat(bu, NULL, Calendar);
-			}
-			if ((strstr(Line,"RRULE:W1")) || (strstr(Line,"RRULE:D7"))) {
-				bu[0] = 0;
-				bu[1] = 24*7;
-				GSM_GetCalendarRecurranceRepeat(bu, NULL, Calendar);
-			}
-			if (strstr(Line,"RRULE:W2")) {
-				bu[0] = (24*14)/256;
-				bu[1] = (24*14)/256;
-				GSM_GetCalendarRecurranceRepeat(bu, NULL, Calendar);
-			}
-			if (strstr(Line,"RRULE:MD1")) {
-				bu[0] = (0xffff-1)/256;
-				bu[1] = (0xffff-1)/256;
-				GSM_GetCalendarRecurranceRepeat(bu, NULL, Calendar);
-			}
-			if (strstr(Line,"RRULE:YD1")) {
-				bu[0] = (0xffff)/256;
-				bu[1] = (0xffff)/256;
-				GSM_GetCalendarRecurranceRepeat(bu, NULL, Calendar);
+			if (strstr(Line,"RRULE:")) {
+				rrule = strdup(Line + 6);
+				break;
 			}
 
 			if ((ReadVCALText(Line, "SUMMARY", Buff))) {
@@ -952,7 +1337,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			}
 			if ((ReadVCALText(Line, "CLASS", Buff))) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_PRIVATE;
-				if (mywstrncasecmp(Buff, "\0P\0U\0B\0L\0I\0C\0", 0)) {
+				if (mywstrncasecmp(Buff, "\0P\0U\0B\0L\0I\0C\0\0", 0)) {
 					Calendar->Entries[Calendar->EntriesNum].Number = 0;
 				} else {
 					Calendar->Entries[Calendar->EntriesNum].Number = 1;
@@ -1102,6 +1487,7 @@ GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *N
 
 	return ERR_NONE;
 }
+/*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
