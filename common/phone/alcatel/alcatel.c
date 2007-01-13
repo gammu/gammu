@@ -2914,6 +2914,8 @@ static GSM_Error ALCATEL_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				if ((error = ALCATEL_CreateField(s, Alcatel_date, 19, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				repeating 		= true;
 				break;
+			case CAL_REPEAT_COUNT:
+			case CAL_REPEAT_DAYOFYEAR:
 			case CAL_SILENT_ALARM_DATETIME:
 			case CAL_LOCATION:
 			case CAL_DESCRIPTION:
@@ -3069,6 +3071,8 @@ static GSM_Error ALCATEL_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Not
 				if ((error = ALCATEL_UpdateField(s, Alcatel_date, Note->Location, 19, &(Note->Entries[i].Date))) != ERR_NONE) return error;
 				repeating 		= true;
 				break;
+			case CAL_REPEAT_COUNT:
+			case CAL_REPEAT_DAYOFYEAR:
 			case CAL_SILENT_ALARM_DATETIME:
 			case CAL_LOCATION:
 			case CAL_DESCRIPTION:
