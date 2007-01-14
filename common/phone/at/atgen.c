@@ -2240,20 +2240,66 @@ GSM_Error ATGEN_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 GSM_Error ATGEN_ReplyGetDateTime_Alarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data		*Data = &s->Phone.Data;
-	unsigned char		*pos;
+	unsigned char		*pos, loc;
 	unsigned char		buffer[100];
+	GSM_Error		error;
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
-		pos = strchr(msg.Buffer, ':');
+		pos=msg.Buffer;
+loop:
+		pos = strchr(pos, ':');
 		if (pos == NULL) {
 			smprintf(s, "Not set in phone\n");
 			return ERR_EMPTY;
 		}
 		pos++;
 		while (isspace(*pos)) pos++;
-		ATGEN_ExtractOneParameter(pos, buffer);
-		return ATGEN_DecodeDateTime(s, (Data->RequestID == ID_GetDateTime) ? Data->DateTime : &(Data->Alarm->DateTime), buffer);
+		pos+=ATGEN_ExtractOneParameter(pos, buffer);
+		switch (Data->RequestID) {
+		case ID_GetDateTime:
+			return ATGEN_DecodeDateTime(s, Data->DateTime, buffer);
+		case ID_GetAlarm:
+			if (*(pos-1)!=',') {
+			/* reply only with date/time */
+				if (Data->Alarm->Location != 1) return ERR_NOTSUPPORTED;
+				Data->Alarm->Repeating = false;
+				Data->Alarm->Text[0] = 0;
+				Data->Alarm->Text[1] = 0;
+				return ATGEN_DecodeDateTime(s, &Data->Alarm->DateTime, buffer);
+			} else {
+			/* extended reply with date/time, location, text, repeating... */
+			/* based on SE K800i and SE K750i */
+        			pos += ATGEN_ExtractOneParameter(pos, buffer + 50);
+				loc = atoi(buffer + 50);
+				if (loc == Data->Alarm->Location) {
+    					error=ATGEN_DecodeDateTime(s, &Data->Alarm->DateTime, buffer);
+					if (error != ERR_NONE) {
+						return error;
+					}
+	        			pos += ATGEN_ExtractOneParameter(pos, buffer);
+					pos += ATGEN_ExtractOneParameter(pos, buffer);
+					EncodeUnicode(Data->Alarm->Text, buffer+1, strlen(buffer+1)-1);
+					pos += ATGEN_ExtractOneParameter(pos, buffer);
+					/**
+					 * @todo This is not exact, repeating
+					 * can be set for only limited
+					 * set of days (eg. "4,5,6").
+					 */
+					if (!strcmp(buffer, "\"1,2,3,4,5,6,7\"")) {
+						Data->Alarm->Repeating = true;
+					} else {
+						Data->Alarm->Repeating = false;
+					}
+					return ERR_NONE;
+				} else {
+					goto loop;
+				}
+			}
+		default:
+			break;
+		}
+		return ERR_NONE;
 	case AT_Reply_Error:
 		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
@@ -2334,16 +2380,11 @@ GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 	GSM_Error		error;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (alarm->Location != 1) return ERR_NOTSUPPORTED;
-
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
 		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
-
-	alarm->Repeating = true;
-	alarm->Text[0] = 0; alarm->Text[1] = 0;
 
 	s->Phone.Data.Alarm = alarm;
 	smprintf(s, "Getting alarm\n");

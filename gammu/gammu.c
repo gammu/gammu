@@ -802,16 +802,21 @@ static void GetAlarm(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	alarm.Location = 1;
+	if (argc<3) {
+		alarm.Location = 1;
+	} else {
+		alarm.Location = atoi(argv[2]);
+	}
 	error=Phone->GetAlarm(&s, &alarm);
 	switch (error) {
 	case ERR_EMPTY:
-		printmsg("Alarm not set in phone\n");
+		printmsg("Alarm (%i) not set in phone\n", alarm.Location);
 		break;
 	case ERR_NONE:
+		printmsg("Alarm in location %i:\n", alarm.Location);
 		if (alarm.Repeating) {
 			printmsg("Date: %s\n","Every day");
-		} else {
+		} else if (alarm.DateTime.Day!=0) {
 			printmsg("Date: %s\n",OSDate(alarm.DateTime));
 		}
 		printmsg("Time: %02d:%02d\n",alarm.DateTime.Hour, alarm.DateTime.Minute);
@@ -9489,7 +9494,7 @@ static GSM_Parameters Parameters[] = {
 	{"--playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
 	{"--getdatetime",		0, 0, GetDateTime,		{H_DateTime,0},			""},
 	{"--setdatetime",		0, 2, SetDateTime,		{H_DateTime,0},			"[HH:MM[:SS]] [YYYY/MM/DD]"},
-	{"--getalarm",			0, 0, GetAlarm,			{H_DateTime,0},			""},
+	{"--getalarm",			0, 1, GetAlarm,			{H_DateTime,0},			"[start]"},
 	{"--setalarm",			2, 2, SetAlarm,			{H_DateTime,0},			"hour minute"},
 	{"--resetphonesettings",	1, 1, ResetPhoneSettings,	{H_Settings,0},			"PHONE|DEV|UIF|ALL|FACTORY"},
 	{"--getmemory",			2, 4, GetMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL start [stop [-nonempty]]"},
