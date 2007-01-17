@@ -956,64 +956,64 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 	bool have_info;
 
 /* Skip spaces */
-#define NEXT_NOSPACE \
+#define NEXT_NOSPACE(terminate) \
 	while (isspace(*pos) && *pos) pos++; \
-	if (*pos == 0) return ERR_NONE;
+	if (terminate && *pos == 0) return ERR_NONE;
 /* Skip numbers */
-#define NEXT_NONUMBER \
+#define NEXT_NONUMBER(terminate) \
 	while (isdigit(*pos) && *pos) pos++; \
-	if (*pos == 0) return ERR_NONE;
+	if (terminate && *pos == 0) return ERR_NONE;
 /* Go to next char */
-#define NEXT_CHAR \
-	pos++; \
-	if (*pos == 0) return ERR_UNKNOWN;
+#define NEXT_CHAR(terminate) \
+	if (*pos) pos++; \
+	if (terminate && *pos == 0) return ERR_UNKNOWN;
 /* Go to next char */
-#define NEXT_CHAR_NOERR \
-	pos++; \
-	if (*pos == 0) return ERR_NONE;
+#define NEXT_CHAR_NOERR(terminate) \
+	if (*pos) pos++; \
+	if (terminate && *pos == 0) return ERR_NONE;
 
-#define GET_DOW(type) \
+#define GET_DOW(type, terminate) \
 	Calendar->Entries[Calendar->EntriesNum].EntryType = type; \
 	if (GSM_DecodeVCAL_DOW(pos, &Calendar->Entries[Calendar->EntriesNum].Number) != ERR_NONE) return ERR_UNKNOWN; \
 	Calendar->EntriesNum++; \
-	NEXT_CHAR; \
-	NEXT_CHAR_NOERR;
+	NEXT_CHAR(1); \
+	NEXT_CHAR_NOERR(terminate);
 
-#define GET_NUMBER(type) \
+#define GET_NUMBER(type, terminate) \
 	Calendar->Entries[Calendar->EntriesNum].EntryType = type; \
 	Calendar->Entries[Calendar->EntriesNum].Number = atoi(pos); \
 	Calendar->EntriesNum++; \
-	NEXT_NONUMBER;
+	NEXT_NONUMBER(terminate);
 
-#define GET_FREQUENCY \
-	GET_NUMBER(CAL_REPEAT_FREQUENCY);
+#define GET_FREQUENCY(terminate) \
+	GET_NUMBER(CAL_REPEAT_FREQUENCY, terminate);
 
 	/* This should not happen */
 	if (TimePos == -1) {
 		return ERR_UNKNOWN;
 	}
 
-	NEXT_NOSPACE;
+	NEXT_NOSPACE(1);
 
 	/* Detect primary rule type */
 	switch (*pos) {
 		/* Daily */
 		case 'D':
-			NEXT_CHAR;
-			GET_FREQUENCY;
+			NEXT_CHAR(1);
+			GET_FREQUENCY(1);
 			break;
 		/* Weekly */
 		case 'W':
-			NEXT_CHAR;
-			GET_FREQUENCY;
-			NEXT_NOSPACE;
+			NEXT_CHAR(1);
+			GET_FREQUENCY(0);
+			NEXT_NOSPACE(0);
 			/* There might be now list of months, if there is none, we use date */
 			have_info = false;
 
 			while (isalpha(*pos)) {
 				have_info = true;
-				NEXT_NOSPACE;
-				GET_DOW(CAL_REPEAT_DAYOFWEEK);
+				GET_DOW(CAL_REPEAT_DAYOFWEEK, 1);
+				NEXT_NOSPACE(0);
 			}
 
 			if (!have_info) {
@@ -1031,27 +1031,27 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 			break;
 		/* Monthly */
 		case 'M':
-			NEXT_CHAR;
+			NEXT_CHAR(1);
 			switch (*pos) {
 				/* Monthly by position */
 				case 'P':
-					NEXT_CHAR;
-					GET_FREQUENCY;
-					NEXT_NOSPACE;
+					NEXT_CHAR(1);
+					GET_FREQUENCY(0);
+					NEXT_NOSPACE(0);
 					if (isdigit(*pos)) {
-						GET_NUMBER(CAL_REPEAT_WEEKOFMONTH);
+						GET_NUMBER(CAL_REPEAT_WEEKOFMONTH, 0);
 						if (*pos == '+') {
 							pos++;
 						} else if (*pos == '-') {
 							pos++;
 							dbgprintf("WARNING: Negative week position not supported!");
 						}
-						NEXT_NOSPACE;
+						NEXT_NOSPACE(0);
 
 						while (isalpha(*pos)) {
 							have_info = true;
-							NEXT_NOSPACE;
-							GET_DOW(CAL_REPEAT_DAYOFWEEK);
+							GET_DOW(CAL_REPEAT_DAYOFWEEK, 0);
+							NEXT_NOSPACE(0);
 						}
 					} else {
 						/* Need to fill in info from current date */
@@ -1077,19 +1077,19 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 					break;
 				/* Monthly by day */
 				case 'D':
-					NEXT_CHAR;
-					GET_FREQUENCY;
-					NEXT_NOSPACE;
+					NEXT_CHAR(1);
+					GET_FREQUENCY(0);
+					NEXT_NOSPACE(0);
 					if (isdigit(*pos)) {
 						while (isdigit(*pos)) {
-							GET_NUMBER(CAL_REPEAT_DAY);
+							GET_NUMBER(CAL_REPEAT_DAY, 0);
 							if (*pos == '+') {
 								pos++;
 							} else if (*pos == '-') {
 								pos++;
 								dbgprintf("WARNING: Negative day position not supported!");
 							}
-							NEXT_NOSPACE;
+							NEXT_NOSPACE(0);
 						}
 					} else {
 						/* Need to fill in info from current date */
@@ -1106,13 +1106,13 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 			break;
 		/* Yearly */
 		case 'Y':
-			NEXT_CHAR;
+			NEXT_CHAR(1);
 			switch (*pos) {
 				/* Yearly by month */
 				case 'M':
-					NEXT_CHAR;
-					GET_FREQUENCY;
-					NEXT_NOSPACE;
+					NEXT_CHAR(1);
+					GET_FREQUENCY(0);
+					NEXT_NOSPACE(0);
 					/* We need date of event */
 					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAY;
 					Calendar->Entries[Calendar->EntriesNum].Number =
@@ -1123,8 +1123,8 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 
 					while (isdigit(*pos)) {
 						have_info = true;
-						NEXT_NOSPACE;
-						GET_NUMBER(CAL_REPEAT_MONTH);
+						GET_NUMBER(CAL_REPEAT_MONTH, 0);
+						NEXT_NOSPACE(0);
 					}
 
 					if (!have_info) {
@@ -1136,16 +1136,16 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 					break;
 				/* Yearly by day */
 				case 'D':
-					NEXT_CHAR;
-					GET_FREQUENCY;
-					NEXT_NOSPACE;
+					NEXT_CHAR(1);
+					GET_FREQUENCY(0);
+					NEXT_NOSPACE(0);
 					/* There might be now list of days, if there is none, we use date */
 					have_info = false;
 
 					while (isdigit(*pos)) {
 						have_info = true;
-						NEXT_NOSPACE;
-						GET_NUMBER(CAL_REPEAT_DAYOFYEAR);
+						GET_NUMBER(CAL_REPEAT_DAYOFYEAR, 0);
+						NEXT_NOSPACE(0);
 					}
 
 					if (!have_info) {
@@ -1169,17 +1169,17 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 	}
 
 	/* Go to duration */
-	NEXT_NOSPACE;
+	NEXT_NOSPACE(1);
 
 	/* Do we have duration encoded? */
 	if (*pos == '#') {
 		pos++;
 		if (*pos == 0) return ERR_UNKNOWN;
-		GET_NUMBER(CAL_REPEAT_COUNT);
+		GET_NUMBER(CAL_REPEAT_COUNT, 0);
 	}
 
 	/* Go to end date */
-	NEXT_NOSPACE;
+	NEXT_NOSPACE(1);
 
 	/* Do we have end date encoded? */
 	if (ReadVCALDateTime(pos, &(Calendar->Entries[Calendar->EntriesNum].Date))) {

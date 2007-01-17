@@ -18,6 +18,31 @@
 #include "../gsmstate.h"
 #include "misc.h"
 
+/**
+ * Recalculates struct tm content.
+ */
+int RecalcDateTime(struct tm *st, int year, int month, int day, int hour, int minute, int second)
+{
+	memset(st, 0, sizeof(st));
+
+	st->tm_hour = hour;
+	st->tm_min = minute;
+	st->tm_sec = second;
+	st->tm_year = year - 1900;
+	st->tm_mon = month - 1;
+	st->tm_mday = day;
+
+	return mktime(st);
+}
+
+
+/**
+ * Recalculates struct tm content.
+ */
+int RecalcDate(struct tm *st, int year, int month, int day)
+{
+	return RecalcDateTime(st, year, month, day, 0, 0, 0);
+}
 
 
 /**
@@ -25,20 +50,11 @@
  */
 int GetDayOfYear(int year, int month, int day)
 {
-	time_t t;
 	struct tm st;
-	struct tm *pst;
 
-	memset(&st, 0, sizeof(st));
+	RecalcDate(&st, year, month, day);
 
-	st.tm_year = year;
-	st.tm_mon = month;
-	st.tm_mday = day;
-
-	t = mktime(&st);
-	pst = localtime(&t);
-
-	return pst->tm_yday;
+	return st.tm_yday;
 }
 
 /**
@@ -46,20 +62,11 @@ int GetDayOfYear(int year, int month, int day)
  */
 int GetWeekOfMonth(int year, int month, int day)
 {
-	time_t t;
 	struct tm st;
-	struct tm *pst;
 
-	memset(&st, 0, sizeof(st));
+	RecalcDate(&st, year, month, day);
 
-	st.tm_year = year;
-	st.tm_mon = month;
-	st.tm_mday = day;
-
-	t = mktime(&st);
-	pst = localtime(&t);
-
-	return 1 + (day - pst->tm_wday / 7);
+	return 1 + (day - st.tm_wday) / 7;
 }
 
 /**
@@ -67,20 +74,11 @@ int GetWeekOfMonth(int year, int month, int day)
  */
 int GetDayOfWeek(int year, int month, int day)
 {
-	time_t t;
 	struct tm st;
-	struct tm *pst;
 
-	memset(&st, 0, sizeof(st));
+	RecalcDate(&st, year, month, day);
 
-	st.tm_year = year;
-	st.tm_mon = month;
-	st.tm_mday = day;
-
-	t = mktime(&st);
-	pst = localtime(&t);
-
-	return pst->tm_wday;
+	return st.tm_wday;
 }
 
 /**
@@ -197,18 +195,7 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 	setlocale(LC_ALL, ".OCP");
 #endif
 
-	timeptr.tm_yday 	= 0; 			/* FIXME */
-	timeptr.tm_isdst 	= -1; 			/* FIXME */
-	timeptr.tm_year 	= dt.Year - 1900;
-	timeptr.tm_mon  	= dt.Month - 1;
-	timeptr.tm_mday 	= dt.Day;
-	timeptr.tm_hour 	= dt.Hour;
-	timeptr.tm_min  	= dt.Minute;
-	timeptr.tm_sec  	= dt.Second;
-	timeptr.tm_wday 	= GetDayOfWeek(dt.Year, dt.Month, dt.Day);
-#ifdef _BSD_SOURCE
-	timeptr.tm_zone		= NULL;
-#endif
+	RecalcDateTime(&timeptr, dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
 
 #ifdef WIN32
 	strftime(retval2, 200, "%#c", &timeptr);

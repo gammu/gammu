@@ -86,7 +86,7 @@ __attribute__((format(printf, 1, 2)))
 #endif
 int dbgprintf(const char *format, ...);
 #else
-#  ifndef WIN32
+#  ifdef __GNUC__
 #    define dbgprintf(a...) do { } while (0)
 #  else
 #    define dbgprintf
