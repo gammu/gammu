@@ -4315,8 +4315,8 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		while (isspace(*buffer)) buffer++;
 
 		if (strncmp(buffer, "ME", 2) == 0 || strncmp(buffer, "\"ME\"", 4) == 0) {
-			if (Priv->PhoneSMSMemory == AT_AVAILABLE) sms.Folder = 1;
-			else sms.Folder = 3;
+			if (Priv->SIMSMSMemory == AT_AVAILABLE) sms.Folder = 3;
+			else sms.Folder = 1;
 		} else if (strncmp(buffer, "SM", 2) == 0 || strncmp(buffer, "\"SM\"", 4) == 0) {
 			sms.Folder = 1;
 		} else {
