@@ -1,8 +1,42 @@
 # cmake <http://www.cmake.org> build file for Gammu
 # Copyright (c) 2007 Michal Cihar
 
-project (Gammu)
+project (Gammu C)
 
+# I didn't check older versions
+CMAKE_MINIMUM_REQUIRED(VERSION 2.4.2)
+
+# Read version
+FILE(READ "${CMAKE_SOURCE_DIR}/version" VERSION_WIN)
+string(REPLACE "," "." VERSION ${VERSION_WIN})
+message ("Configuring ${CMAKE_PROJECT_NAME} ${VERSION}")
+
+# For debugging
+if (CMAKE_BUILD_TYPE STREQUAL "Debug")
+	set (CMAKE_VERBOSE_MAKEFILE ON)
+	set (CFG_DEBUG 1)
+else (CMAKE_BUILD_TYPE STREQUAL "Debug")
+	set (CMAKE_VERBOSE_MAKEFILE OFF)
+	set (CFG_DEBUG 0)
+endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
+
+# FIXME: we should detect whether compiler supports -Wno-pointer-sign
+SET ( CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall -Wno-pointer-sign")
+SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-pointer-sign")
+
+# No rpath by default
+if (NOT DEFINED WITH_RPATH)
+	set (WITH_RPATH FALSE CACHE BOOL "Enable rpath in resulting libraries")
+	mark_as_advanced(WITH_RPATH)
+endif (NOT DEFINED WITH_RPATH)
+
+if (WITH_RPATH)
+	set(CMAKE_SKIP_RPATH OFF)
+else (WITH_RPATH)
+	set(CMAKE_SKIP_RPATH ON)
+endif (WITH_RPATH)
+
+# Where to lookup modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # Standard packages
@@ -11,10 +45,12 @@ include (CheckCSourceCompiles)
 # Packages in our sources (mostly taken from KDE)
 include (MacroOptionalFindPackage)
 
+# WE use pkgconfig later
 find_package (PkgConfig)
 
 # Standard packages
 macro_optional_find_package (Doxygen)
+macro_optional_find_package (Threads)
 
 # Packages in sources
 macro_optional_find_package (MySQL)
@@ -25,6 +61,7 @@ include_directories (
 	${MYSQL_INCLUDE_DIR}
 	${BLUEZ_INCLUDE_DIR}
 	)
+
 link_directories (
 	${GAMMU_SOURCE_DIR}/common
 	)
@@ -109,6 +146,7 @@ add_executable (gammu
 
 
 target_link_libraries (gammu Gammu)
+target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
 
 if (MYSQL_FOUND)
 	target_link_libraries (gammu ${MYSQL_LIBRARIES})
