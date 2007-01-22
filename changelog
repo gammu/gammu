@@ -46,6 +46,15 @@ For additionals materials and links to them see readme.txt
 [*] Changes in existing functionality
 [-] Fixed error
 
+200701?? - 1.09.17
+    * First release by Michal Cihar.
+    * Experimental CMake build support, so far not completely working
+      (Michal Cihar).
+    * Improved vCard RRULE parsing (me, Rene Peters).
+    * Added support for location of alarm (Peter Ondraska).
+    * Fixed Slovak operator names (Peter Ondraska).
+    * Improved battery reporting for SE phones (Michal Cihar).
+
 20070119 - 1.09.16
 
 There was changed project leader. After few years
@@ -3415,6 +3424,7 @@ Milestone. all important things in 6210 family done. Started DCT4.
 Simply "real" functionality provided.
 
 ........
+
 20020414 - 0.0.1 officialy released
 
 Works identification and phone tests, MBUS2,
@@ -3425,3 +3435,8 @@ I finally end supporting gnokii. Started creating structures.
 
 ----------------------
 YYYYMMDD - description
+
+# vim: et ts=4 sw=4 sts=4
+# vim: ft=changelog fenc=utf-8 encoding=utf-8
+# vim: fde=getline(v\:lnum-1)=~'^\\s*$'&&getline(v\:lnum)=~'^\\d'?'>1'\:1&&v\:lnum>47&&getline(v\:lnum)!~'^#'
+# vim: fdn=1 fdm=expr
