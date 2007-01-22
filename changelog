@@ -41,10 +41,6 @@ for more details)
 
 For additionals materials and links to them see readme.txt
 --------------------
-[!] Important
-[+] New functionality
-[*] Changes in existing functionality
-[-] Fixed error
 
 200701?? - 1.09.17
     * First release by Michal Cihar.
@@ -54,6 +50,7 @@ For additionals materials and links to them see readme.txt
     * Added support for location of alarm (Peter Ondraska).
     * Fixed Slovak operator names (Peter Ondraska).
     * Improved battery reporting for SE phones (Michal Cihar).
+    * Fixed small c-cedilla decoding (Samuel Adam) (bug #64).
 
 20070119 - 1.09.16
 
@@ -71,6 +68,11 @@ it was since few releases.
 
 There will be changed some projects links soon (for example RSS
 channel). See www.gammu.org for more details.
+
+[!] Important
+[+] New functionality
+[*] Changes in existing functionality
+[-] Fixed error
 
 20070110 - 1.09.15
 [-] * SMSC reported wrong on N6280                        (BT 44, Michal Cihar)
