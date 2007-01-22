@@ -51,6 +51,7 @@ For additionals materials and links to them see readme.txt
     * Fixed Slovak operator names (Peter Ondraska).
     * Improved battery reporting for SE phones (Michal Cihar).
     * Fixed small c-cedilla decoding (Samuel Adam) (bug #64).
+    * Fix memory leak in dll (Petr Stasa - Gord).
 
 20070119 - 1.09.16
 
