@@ -22,7 +22,7 @@ static GSM_Error GNAPBUS_WriteMessage (GSM_StateMachine *s, unsigned char *MsgBu
 
 	buffer2 = (unsigned char *)malloc(MsgLength + 10);
 
-	buffer2[0] = GNAPBUS_FRAME_ID,	
+	buffer2[0] = GNAPBUS_FRAME_ID,
 	buffer2[1] = 0x00;
 	buffer2[2] = MsgLength / 256;
 	buffer2[3] = MsgLength % 256;
@@ -92,7 +92,7 @@ static GSM_Error GNAPBUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char
 		break;
 	case RX_GetSource:
 		d->MsgRXState = RX_GetMessage;
-		break;	
+		break;
 	case RX_GetMessage:
 		d->Msg.Buffer[d->Msg.Count] = rx_char;
 		d->Msg.Count++;

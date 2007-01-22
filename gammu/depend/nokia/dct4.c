@@ -1336,7 +1336,7 @@ static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMac
 		case N7110_PBK_GROUPLOGO    	: printf(" (Caller group: logo)");			break;
 		case N7110_PBK_LOGOON	    	: printf(" (Caller group: is logo on ?)");		break;
 		case N7110_PBK_GROUP	    	: printf(" (Caller group number in pbk entry)");	break;
-	
+
 		/* DCT4 only */
 		case N6510_PBK_URL		: printf(" (Text: URL address)");			break;
 		case N6510_PBK_SMSLIST_ID	: printf(" (SMS list assigment)");			break;
@@ -1380,7 +1380,7 @@ static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMac
 void DCT4GetPBKFeatures(int argc, char *argv[])
 {
 	GSM_MemoryType	MemoryType=0;
-	unsigned char 	req[] = {N6110_FRAME_HEADER, 0x25, 
+	unsigned char 	req[] = {N6110_FRAME_HEADER, 0x25,
 				 0x05, 	// memory type
 				 0x00};
 
@@ -1413,7 +1413,7 @@ void DCT4GetPBKFeatures(int argc, char *argv[])
 }
 
 GSM_Reply_Function UserReplyFunctions4[] = {
-	{DCT4_ReplyGetPBKFeatures,	"\x03",0x03,0x26,ID_User3	},	
+	{DCT4_ReplyGetPBKFeatures,	"\x03",0x03,0x26,ID_User3	},
 
 #ifdef DEBUG
 	{DCT4_ReplyResetSecurityCode,	"\x08",0x03,0x05,ID_User2	},

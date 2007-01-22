@@ -605,7 +605,7 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				/* Application data */
 				SMS->SMS[i].Coding = -1;
 				if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].Length-Pos)) return false;
-				Info->Entries[Info->EntriesNum].Number = 
+				Info->Entries[Info->EntriesNum].Number =
 					((0x00ff & SMS->SMS[i].UDH.Text[w + 2]) << 8) | ( 0x00ff &SMS->SMS[i].UDH.Text[w + 3]);
 				switch (Info->Entries[Info->EntriesNum].Number) {
 					case 0x23f4:
