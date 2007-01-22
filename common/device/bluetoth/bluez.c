@@ -212,7 +212,7 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 	sdp_uuid16_create(&(context.group),RFCOMM_UUID);
 
 	if (hci_devinfo(0,&di) < 0) return ERR_DEVICENOTWORK;
-	
+
 	if (!strcmp(s->CurrentConfig->Device,"/dev/ttyS1")) {
 		dbgprintf("Searching for devices\n");
 		if (sdp_general_inquiry(ii, 20, 8, &count) < 0) {

@@ -135,7 +135,7 @@ static int nokia_startup(struct usb_serial *serial)
 		return -1;
 
 	init_waitqueue_head(&serial->port->write_wait);
-	
+
 	return 0;
 }
 
@@ -181,8 +181,8 @@ static void generic_read_bulk_callback(struct urb *urb)
 					  port->bulk_in_endpointAddress),
 			  port->read_urb->transfer_buffer,
 			  port->read_urb->transfer_buffer_length,
-			  ((serial->type->read_bulk_callback) ? 
-			    serial->type->read_bulk_callback : 
+			  ((serial->type->read_bulk_callback) ?
+			    serial->type->read_bulk_callback :
 			    generic_read_bulk_callback), port);
 	result = usb_submit_urb(port->read_urb);
 	if (result)
@@ -217,7 +217,7 @@ static void generic_write_bulk_callback(struct urb *urb)
 static void nokia_shutdown(struct usb_serial *serial)
 {
 	int i;
-	
+
 	dbg("%s", __FUNCTION__);
 
 	for (i = 0; i < serial->num_ports; ++i) {
@@ -225,7 +225,7 @@ static void nokia_shutdown(struct usb_serial *serial)
 			kfree(serial->port[i].private);
 	}
 }
-	
+
 static int __init nokia_init(void)
 {
 	usb_serial_register (&nokia_device);

@@ -1334,7 +1334,7 @@ GSM_Error SONYERICSSON_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_State
 			goto fail;
 		}
 		pos += 1;
-		// calculate remaining capacity 
+		// calculate remaining capacity
 		s->Phone.Data.BatteryCharge->BatteryCapacity = 100 * ncapacity / s->Phone.Data.BatteryCharge->BatteryPercent;
 		/* We ignore rest: */
 		// cycles

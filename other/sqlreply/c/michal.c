@@ -68,7 +68,7 @@ int check_if_avail(unsigned char *buf)
 		if (Row3 == NULL) {
 			found=false;
 			break;
-		}			
+		}
 
 //		printf("%s\n",Row2[3]);
 	}
@@ -227,7 +227,7 @@ void execute_actions()
 void main(int argc, char *argv[])
 {
 	unsigned char buf[5000];
-	
+
 	first_connect 	= true;
 	DBName[0] 	= 0;
 	Pass[0] 	= 0;
@@ -243,7 +243,7 @@ void main(int argc, char *argv[])
 
 	//connect
 	if (!mysql_real_connect(&DB,argv[1],argv[2],argv[3],argv[4],0,NULL,0)) {
-		printf("I can't read rules & actions database");		
+		printf("I can't read rules & actions database");
 		return;
 	}
 
@@ -260,7 +260,7 @@ void main(int argc, char *argv[])
 			//search for all rules with some ID and check them inside
 			sprintf(buf, "SELECT ID,RuleID,DB,SQL,User,Pass,PC FROM `rules` WHERE ID='%s'",Row[0]);
 			if (check_if_avail(buf)==false) continue;
-	
+
 			//yes, we execute actions
 			sprintf(buf, "SELECT ID,ActionID,User,User2,Pass,Pass2,DB,DB2,PC,PC2,SQL,User3,Pass3,DB3,PC3 FROM `actions` WHERE ID='%s'",Row[0]);
 			if (mysql_real_query(&DB,buf,strlen(buf))) {
@@ -272,8 +272,8 @@ void main(int argc, char *argv[])
 			while ((Row2 = mysql_fetch_row(Res2))) {
 				//we don't have two parts
 				if (strstr(Row2[10],"{")==NULL) continue;
-	
-				execute_actions();			
+
+				execute_actions();
 			}
 			mysql_free_result(Res2);
 		}

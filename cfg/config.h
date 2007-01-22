@@ -155,7 +155,7 @@
 #  define HAVE_DIRENT_H 1
 #  define HAVE_SCANDIR 1
 #  define HAVE_ALPHASORT 1
- 
+
 #  define HAVE_PTHREAD 1
 #  define HAVE_SYS_IOCTL_H 1
 #  define HAVE_MYSQL_MYSQL_H 1

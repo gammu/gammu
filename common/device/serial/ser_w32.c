@@ -49,10 +49,10 @@ static GSM_Error serial_close(GSM_StateMachine *s)
 		 */
 		PurgeComm(d->hPhone, PURGE_TXABORT | PURGE_RXABORT |
 				     PURGE_TXCLEAR | PURGE_RXCLEAR);
-	
+
 		/* Clears the DTR (data-terminal-ready) signal */
 		EscapeCommFunction(d->hPhone, CLRDTR);
-	
+
 		/* Restores old settings */
 		if (SetCommState(d->hPhone, &d->old_settings)==0) {
 			GSM_OSErrorInfo(s, "SetCommState in serial_close");
@@ -153,7 +153,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 			KeyNameLen = 100;
 			if (RegEnumValue(hKey,i,KeyName,&KeyNameLen,NULL,NULL,DeviceName2,&DeviceNameLen) != ERROR_SUCCESS) break;
 			if (!strncmp(KeyName,"\\Device\\AtmelVirtualPort",24)) break;
-			DeviceName2[0] = 0;			
+			DeviceName2[0] = 0;
 			i++;
 		}
 		RegCloseKey(hKey);
@@ -169,7 +169,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 				KeyNameLen = 100;
 				if (RegEnumValue(hKey,i,KeyName,&KeyNameLen,NULL,NULL,DeviceName2,&DeviceNameLen) != ERROR_SUCCESS) break;
 				if (!strncmp(KeyName,"PORTNAME",8)) break;
-				DeviceName2[0] = 0;			
+				DeviceName2[0] = 0;
 				i++;
 			}
 			RegCloseKey(hKey);
@@ -225,9 +225,9 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		 */
 		PurgeComm(d->hPhone, PURGE_TXABORT | PURGE_RXABORT |
 				     PURGE_TXCLEAR | PURGE_RXCLEAR);
-	
+
 	 	memcpy(&dcb, &d->old_settings, sizeof(DCB));
-	
+
 		dcb.ByteSize 	 = 8;
 		dcb.Parity 	 = NOPARITY;
 		dcb.StopBits 	 = ONESTOPBIT;
@@ -235,13 +235,13 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		/* No Xon/Xof flow control */
 	//	dcb.fOutX 	 = false;
 	//	dcb.fInX 	 = false;
-	
+
 		/* Hardware flow control */
 	//	dcb.fOutxDsrFlow = true;
 	//	dcb.fOutxCtsFlow = true;
 	//	dcb.fDtrControl  = DTR_CONTROL_HANDSHAKE;
 	//	dcb.fRtsControl  = RTS_CONTROL_HANDSHAKE;
-	
+
 	    	/* Initialise the port settings */
 		if (SetCommState(d->hPhone, &dcb)==0) {
 			GSM_OSErrorInfo(s, "WriteDevice in serial_open");

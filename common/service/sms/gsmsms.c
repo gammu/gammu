@@ -765,7 +765,7 @@ bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo	*Info,
 	if (SMS->Text[20] > 9) return false;
 	memcpy(Info->DataType,SMS->Text+21,SMS->Text[20]);
 	Info->DataType[SMS->Text[20]] = 0;
-	dbgprintf("DataType '%s'\n",Info->DataType);	
+	dbgprintf("DataType '%s'\n",Info->DataType);
 
 	current = 21+SMS->Text[20];
 	if (SMS->Text[current] > 39) return false;

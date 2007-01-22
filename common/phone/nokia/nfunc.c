@@ -471,7 +471,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->Entries[entry->EntriesNum].CallLength = Block[9]*256*256+Block[10]*256+Block[11];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_CallLength;
 			entry->EntriesNum ++;
-			continue;			
+			continue;
 		}
 		if (Block[0] == S4030_PBK_POSTAL) {
 			if (Block[5] == S4030_PBK_POSTAL_EXTADDRESS) {
