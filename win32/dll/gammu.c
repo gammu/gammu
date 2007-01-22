@@ -295,6 +295,21 @@ GSM_Error WINAPI myendconnection(int phone)
 {
 	GSM_Error error=ERR_NONE;
 
+    if (s[phone].s.CurrentConfig->Connection) {
+        free(s[phone].s.CurrentConfig->Connection);
+        s[phone].s.CurrentConfig->Connection = NULL;
+    }
+
+    if (s[phone].s.CurrentConfig->DebugFile) {
+        free(s[phone].s.CurrentConfig->DebugFile);
+        s[phone].s.CurrentConfig->DebugFile = NULL;
+    }
+
+    if (s[phone].s.CurrentConfig->Device) {
+        free(s[phone].s.CurrentConfig->Device);
+        s[phone].s.CurrentConfig->Device = NULL;
+    }
+
 	if (s[phone].Used) {
 		s[phone].ThreadTerminate = true;
 		if (s[phone].s.opened) {
@@ -316,6 +331,7 @@ GSM_Error WINAPI mygetnetworkinfo (int phone, GSM_NetworkInfo *NetworkInfo)
 	error=s[phone].s.Phone.Functions->GetNetworkInfo(&s[phone].s,NetworkInfo);
 	SetErrorCounter(phone, error);
         ReleaseMutex(s[phone].Mutex);
+    if(error==ERR_NONE) ReverseUnicodeString(NetworkInfo->NetworkName);
 	return error;
 }
 
@@ -1502,11 +1518,7 @@ BOOL WINAPI DllMain  ( HANDLE hModule,
 
 	switch (ul_reason_for_call) {
 		case DLL_PROCESS_ATTACH:
-			for (i=0;i<10;i++) {
-				s[i].s.opened 	= false;
-				s[i].Used	= false;
-				s[i].dwThreadID = 0;
-			}
+            memset((void*)s,0,sizeof(s));
 			break;
 		case DLL_THREAD_ATTACH:
 		case DLL_THREAD_DETACH:
