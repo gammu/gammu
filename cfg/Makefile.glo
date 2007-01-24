@@ -136,23 +136,23 @@ djgpp: $(COMMON) $(DJGPP) $(GAMMU)
 	@echo Linking gammu
 	@$(CC) $(COMMON) $(DJGPP) $(GAMMU) $(GAMMU_CFLAGS) $(GAMMU_LIBS) $(LDLIBS) $(SMSD_LIBS) -o $(TOPDIR)/gammu/gammu
 
-$(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR): $(COMMON)
-	@echo Linking libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
-	@$(CC) $(LDFLAGS) -shared -Wl,-soname -Wl,libGammu.so.$(SONAME_MAJOR) $(COMMON) $(LDLIBS) -o $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
-	@$(LN) -s libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR)
-	@$(LN) -s libGammu.so.$(SONAME_MAJOR) $(TOPDIR)/common/libGammu.so
+$(TOPDIR)/common/$(LIBGAMMU_FULLNAME): $(COMMON)
+	@echo Linking $(LIBGAMMU_FULLNAME)
+	@$(CC) $(LDFLAGS) $(LDFLAGS_SHAREDLIB) $(COMMON) $(LDLIBS) -o $(TOPDIR)/common/$(LIBGAMMU_FULLNAME)
+	@$(LN) -s $(LIBGAMMU_FULLNAME) $(TOPDIR)/common/$(LIBGAMMU_MJR_NAME)
+	@$(LN) -s $(LIBGAMMU_MJR_NAME) $(TOPDIR)/common/$(LIBGAMMU_SHRTNAME)
 
-$(TOPDIR)/common/libGammu.a: $(COMMON)
-	@echo Linking libGammu.a
-	@$(RM) $(TOPDIR)/common/libGammu.a
-	@$(AR) cru $(TOPDIR)/common/libGammu.a $(COMMON)
-	@$(RANLIB) $(TOPDIR)/common/libGammu.a
+$(TOPDIR)/common/$(LIBGAMMU_STATIC): $(COMMON)
+	@echo Linking $(LIBGAMMU_STATIC)
+	@$(RM) $(TOPDIR)/common/$(LIBGAMMU_STATIC)
+	@$(AR) cru $(TOPDIR)/common/$(LIBGAMMU_STATIC) $(COMMON)
+	@$(RANLIB) $(TOPDIR)/common/$(LIBGAMMU_STATIC)
  
-$(TOPDIR)/gammu/gammu-shared: $(COMMON) $(GAMMU) $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR)
+$(TOPDIR)/gammu/gammu-shared: $(COMMON) $(GAMMU) $(TOPDIR)/common/$(LIBGAMMU_FULLNAME)
 	@echo Linking gammu-shared
 	@$(CC) -L$(TOPDIR)/common -lGammu $(GAMMU_CFLAGS) $(GAMMU_LIBS) $(SMSD_LIBS) $(GAMMU) -o $(TOPDIR)/gammu/gammu-shared
 
-shared: $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(TOPDIR)/common/libGammu.a $(TOPDIR)/gammu/gammu-shared
+shared: $(TOPDIR)/common/$(LIBGAMMU_FULLNAME) $(TOPDIR)/common/$(LIBGAMMU_STATIC) $(TOPDIR)/gammu/gammu-shared
  
 # Backward compatibility
 makelib: shared
@@ -204,8 +204,11 @@ distclean: distclean0 makelocale clean
    
 uninstall:
 	@echo Uninstalling Gammu
-	@$(RM) $(DESTDIR)$(INSTALL_BIN_DIR)/gammu $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so*
-	@$(RM) $(DESTDIR)$(INSTALL_MAN_DIR)/gammu.1 $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.a
+	@$(RM) $(DESTDIR)$(INSTALL_BIN_DIR)/gammu 
+	@$(RM) $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_FULLNAME)
+	@$(RM) $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_MJR_NAME)
+	@$(RM) $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_SHRTNAME)
+	@$(RM) $(DESTDIR)$(INSTALL_MAN_DIR)/gammu.1 $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_STATIC)
 	@$(RM) -r $(DESTDIR)$(INSTALL_DOC_DIR)/
 	@$(RM) -r $(DESTDIR)$(INSTALL_LOC_DIR)/
 
@@ -251,12 +254,12 @@ installlibonly: shared
 
 	@echo Installing shared library to $(DESTDIR)$(INSTALL_LIB_DIR)
 	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LIB_DIR)
-	@$(INSTALL) -m 0644 $(TOPDIR)/common/libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(DESTDIR)$(INSTALL_LIB_DIR)
-	@$(LN) -s libGammu.so.$(SONAME_MAJOR).$(SONAME_MINOR) $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so.$(SONAME_MAJOR)
-	@$(LN) -s libGammu.so.$(SONAME_MAJOR) $(DESTDIR)$(INSTALL_LIB_DIR)/libGammu.so
+	@$(INSTALL) -m 0755 $(TOPDIR)/common/$(LIBGAMMU_FULLNAME) $(DESTDIR)$(INSTALL_LIB_DIR)
+	@$(LN) -s $(LIBGAMMU_FULLNAME) $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_MJR_NAME)
+	@$(LN) -s $(LIBGAMMU_MJR_NAME) $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_SHRTNAME)
  
 	@echo Installing static library to $(DESTDIR)$(INSTALL_LIB_DIR)
-	@$(INSTALL) -m 0644 $(TOPDIR)/common/libGammu.a $(DESTDIR)$(INSTALL_LIB_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/common/$(LIBGAMMU_STATIC) $(DESTDIR)$(INSTALL_LIB_DIR)
 
 	@echo Installing include files to $(DESTDIR)$(INSTALL_H_DIR)
 	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_H_DIR)

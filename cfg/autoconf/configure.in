@@ -36,7 +36,7 @@ else
 fi
 
 dnl Sets libraries names according to the platform
-if test "$MACHINE" = "Darwin" ; then
+if test "x$MACHINE" = "xDarwin" ; then
     LIBGAMMU="libGammu"
     LIBGAMMU_FULLNAME="\$(LIBGAMMU).\$(SONAME_MAJOR).\$(SONAME_MINOR).0.dylib"
     LIBGAMMU_MJR_NAME="\$(LIBGAMMU).\$(SONAME_MAJOR).dylib"
