@@ -295,29 +295,30 @@ GSM_Error WINAPI myendconnection(int phone)
 {
 	GSM_Error error=ERR_NONE;
 
-    if (s[phone].s.CurrentConfig->Connection) {
-        free(s[phone].s.CurrentConfig->Connection);
-        s[phone].s.CurrentConfig->Connection = NULL;
-    }
-
-    if (s[phone].s.CurrentConfig->DebugFile) {
-        free(s[phone].s.CurrentConfig->DebugFile);
-        s[phone].s.CurrentConfig->DebugFile = NULL;
-    }
-
-    if (s[phone].s.CurrentConfig->Device) {
-        free(s[phone].s.CurrentConfig->Device);
-        s[phone].s.CurrentConfig->Device = NULL;
-    }
-
 	if (s[phone].Used) {
+        /* Close connection */
 		s[phone].ThreadTerminate = true;
 		if (s[phone].s.opened) {
-		        WaitForSingleObject(s[phone].Mutex, INFINITE );
+		    WaitForSingleObject(s[phone].Mutex, INFINITE );
 			error = GSM_TerminateConnection(&s[phone].s);
-		        ReleaseMutex(s[phone].Mutex);
+		    ReleaseMutex(s[phone].Mutex);
 		}
-	}
+
+        /* Free allocated memory */
+        if (s[phone].s.CurrentConfig->Connection != NULL) {
+            free(s[phone].s.CurrentConfig->Connection);
+            s[phone].s.CurrentConfig->Connection=NULL;
+        }
+        if (s[phone].s.CurrentConfig->DebugFile != NULL) {
+            free(s[phone].s.CurrentConfig->DebugFile);
+            s[phone].s.CurrentConfig->DebugFile=NULL;
+        }
+        if (s[phone].s.CurrentConfig->Device != NULL) {
+            free(s[phone].s.CurrentConfig->Device);
+            s[phone].s.CurrentConfig->Device=NULL;
+        }
+
+    }
 	return error;
 }
 
@@ -327,11 +328,15 @@ GSM_Error WINAPI mygetnetworkinfo (int phone, GSM_NetworkInfo *NetworkInfo)
 
 	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
 
-        WaitForSingleObject(s[phone].Mutex, INFINITE );
+    WaitForSingleObject(s[phone].Mutex, INFINITE );
 	error=s[phone].s.Phone.Functions->GetNetworkInfo(&s[phone].s,NetworkInfo);
 	SetErrorCounter(phone, error);
-        ReleaseMutex(s[phone].Mutex);
-    if(error==ERR_NONE) ReverseUnicodeString(NetworkInfo->NetworkName);
+    ReleaseMutex(s[phone].Mutex);
+
+	if (error == ERR_NONE) {
+        ReverseUnicodeString(NetworkInfo->NetworkName);
+    }
+
 	return error;
 }
 
@@ -495,7 +500,7 @@ void WINAPI mygetnetworkname(char *NetworkCode, char *NetworkName)
 
 void WINAPI mygetgammuversion(char *version)
 {
-	sprintf(version, "%s",VERSION);
+	sprintf(version, "%s", VERSION);
 }
 
 GSM_Error WINAPI mygetimei(int phone, char *IMEI)
@@ -1519,6 +1524,12 @@ BOOL WINAPI DllMain  ( HANDLE hModule,
 	switch (ul_reason_for_call) {
 		case DLL_PROCESS_ATTACH:
             memset((void*)s,0,sizeof(s));
+            /* Just to be sure that false is set */
+			for (i=0;i<10;i++) {
+				s[i].s.opened 	= false;
+				s[i].Used	= false;
+				s[i].dwThreadID = 0;
+			}
 			break;
 		case DLL_THREAD_ATTACH:
 		case DLL_THREAD_DETACH:
@@ -1530,4 +1541,123 @@ BOOL WINAPI DllMain  ( HANDLE hModule,
 			break;
     	}
  	return TRUE;
+}
+
+unsigned char* WINAPI mydecodeunicodeconsole(unsigned char* src)
+{
+    return(DecodeUnicodeConsole(src));
+}
+
+unsigned char* WINAPI myreverseunicode(unsigned char* src)
+{
+    ReverseUnicodeString(src);
+    return(src);
+}
+
+GSM_Error WINAPI mygetdatetime(int phone, GSM_DateTime* dt)
+{
+	GSM_Error	 error;
+    if(!s[phone].s.opened) return ERR_NOTCONNECTED;
+    WaitForSingleObject(s[phone].Mutex, INFINITE );
+	error=s[phone].s.Phone.Functions->GetDateTime(&s[phone].s,dt);
+	SetErrorCounter(phone, error);
+    ReleaseMutex(s[phone].Mutex);
+    return error;
+}
+
+GSM_Error WINAPI mygethardware(int phone, char*hw)
+{
+	GSM_Error	 error;
+    if(!s[phone].s.opened) return ERR_NOTCONNECTED;
+    WaitForSingleObject(s[phone].Mutex, INFINITE );
+	error=s[phone].s.Phone.Functions->GetHardware(&s[phone].s,hw);
+	SetErrorCounter(phone, error);
+    ReleaseMutex(s[phone].Mutex);
+    return error;
+}
+
+GSM_Error WINAPI mygetbatterycharge(int phone, GSM_BatteryCharge *bat)
+{
+	GSM_Error	 error;
+    if(!s[phone].s.opened) return ERR_NOTCONNECTED;
+    WaitForSingleObject(s[phone].Mutex, INFINITE );
+	error=s[phone].s.Phone.Functions->GetBatteryCharge(&s[phone].s, bat);
+	SetErrorCounter(phone, error);
+    ReleaseMutex(s[phone].Mutex);
+    return error;
+}
+
+GSM_Error WINAPI mygetsignalquality(int phone, GSM_SignalQuality *sig)
+{
+	GSM_Error	 error;
+    if(!s[phone].s.opened) return ERR_NOTCONNECTED;
+    WaitForSingleObject(s[phone].Mutex, INFINITE );
+	error=s[phone].s.Phone.Functions->GetSignalQuality(&s[phone].s, sig);
+	SetErrorCounter(phone, error);
+    ReleaseMutex(s[phone].Mutex);
+    return error;
+}
+
+GSM_Error WINAPI mygettodostatus(int phone, GSM_ToDoStatus *st)
+{
+	GSM_Error	 error;
+    if(!s[phone].s.opened) return ERR_NOTCONNECTED;
+    WaitForSingleObject(s[phone].Mutex, INFINITE );
+	error=s[phone].s.Phone.Functions->GetToDoStatus(&s[phone].s, st);
+	SetErrorCounter(phone, error);
+    ReleaseMutex(s[phone].Mutex);
+    return error;
+}
+
+GSM_Error WINAPI mygetcalendarstatus(int phone, GSM_CalendarStatus *st)
+{
+	GSM_Error	 error;
+    if(!s[phone].s.opened) return ERR_NOTCONNECTED;
+    WaitForSingleObject(s[phone].Mutex, INFINITE );
+	error=s[phone].s.Phone.Functions->GetCalendarStatus(&s[phone].s, st);
+	SetErrorCounter(phone, error);
+    ReleaseMutex(s[phone].Mutex);
+    return error;
+}
+
+GSM_Error WINAPI mygetnotestatus(int phone, GSM_ToDoStatus *st)
+{
+	GSM_Error	 error;
+    if(!s[phone].s.opened) return ERR_NOTCONNECTED;
+    WaitForSingleObject(s[phone].Mutex, INFINITE );
+	error=s[phone].s.Phone.Functions->GetNotesStatus(&s[phone].s, st);
+	SetErrorCounter(phone, error);
+    ReleaseMutex(s[phone].Mutex);
+    return error;
+}
+
+GSM_Error WINAPI mygetmemorystatus(int phone, GSM_MemoryStatus *memstatus){
+	GSM_Error	 error;
+
+	if(!s[phone].s.opened) return ERR_NOTCONNECTED;
+  WaitForSingleObject(s[phone].Mutex, INFINITE );
+  /* mem.MemoryType has to contain memory type we're asking for */
+		error=s[phone].s.Phone.Functions->GetMemoryStatus(&s[phone].s, memstatus);
+	SetErrorCounter(phone, error);
+  ReleaseMutex(s[phone].Mutex);
+  return error;
+}
+
+static iMemPos=0;
+GSM_Error WINAPI mygetnextmemory(int phone, GSM_MemoryEntry *entry, bool start)
+{
+	GSM_Error 	error;
+
+	if (!s[phone].s.opened) return ERR_NOTCONNECTED;
+
+    if(iMemPos<=0 || start) entry->Location=1;
+    WaitForSingleObject(s[phone].Mutex, INFINITE );
+	error=s[phone].s.Phone.Functions->GetMemory(&s[phone].s,entry);
+	SetErrorCounter(phone, error);
+    ReleaseMutex(s[phone].Mutex);
+    iMemPos++;
+
+    /* String conversion missing here */
+
+	return error;
 }
