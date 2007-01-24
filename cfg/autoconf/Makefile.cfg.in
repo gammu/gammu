@@ -3,6 +3,13 @@
 
 VERSION		= @VERSION@
 
+LIBGAMMU            = @LIBGAMMU@
+LIBGAMMU_FULLNAME   = @LIBGAMMU_FULLNAME@
+LIBGAMMU_MJR_NAME   = @LIBGAMMU_MJR_NAME@
+LIBGAMMU_SHRTNAME   = @LIBGAMMU_SHRTNAME@
+LIBGAMMU_STATIC     = @LIBGAMMU_STATIC@
+LDFLAGS_SHAREDLIB   = @LDFLAGS_SHAREDLIB@
+
 # what is used to delete files, compile, install and find
 RM              = @RM@ -f
 MV              = @MV@ -f

@@ -11,7 +11,7 @@
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
-#define DEBUG 1
+/* #undef DEBUG */
 #endif
 
 /* #undef ENABLE_LGPL */
@@ -130,7 +130,7 @@
  * too.
  */
 /* Enables cell broadcast */
-#define GSM_ENABLE_CELLBROADCAST 1
+/* #undef GSM_ENABLE_CELLBROADCAST */
 
 /* If you want backup/restore stuff. Some people wanted it - they required
  * smalled library made from Gammu and didn't require it. Please note,
@@ -159,8 +159,10 @@
 #  define HAVE_PTHREAD 1
 #  define HAVE_SYS_IOCTL_H 1
 #  define HAVE_MYSQL_MYSQL_H 1
+#  define HAVE_POSTGRESQL_LIBPQ_FE_H 1
 #else
 //#  define HAVE_MYSQL_MYSQL_H 1
+//#  define HAVE_POSTGRESQL_LIBPQ_FE_H 1
 #endif
 
 #ifndef DJGPP

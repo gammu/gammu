@@ -88,6 +88,7 @@ GAMMU     = $(TOPDIR)/gammu/depend/nokia/dct3.o \
             $(TOPDIR)/gammu/smsd/smsdcore.o \
             $(TOPDIR)/gammu/smsd/s_files.o \
             $(TOPDIR)/gammu/smsd/s_mysql.o \
+            $(TOPDIR)/gammu/smsd/s_pgsql.o \
             $(TOPDIR)/gammu/sniff.o \
             $(TOPDIR)/gammu/gammu.o
 

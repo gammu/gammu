@@ -12,6 +12,14 @@
 #endif
 #endif
 
+#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+#ifdef WIN32
+#  include <libpq-fe.h>
+#else
+#  include <postgresql/libpq-fe.h>
+#endif
+#endif
+
 #include "../../common/service/sms/gsmsms.h"
 #include "../../common/service/sms/gsmmulti.h"
 
@@ -32,18 +40,28 @@ typedef struct {
 	unsigned char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
 	unsigned char   *errorsmspath, 	 *inboxformat,  *transmitformat;
 
-	/* options for MYSQL */
-	unsigned char	*database,	 *user,		*password;
-	unsigned char	*PC,		 *skipsmscnumber;
-
 	/* private variables required for work */
 	int		relativevalidity;
 	unsigned int 	retries,	 currdeliveryreport;
 	unsigned char 	SMSID[200],	 prevSMSID[200];
 	GSM_SMSC	SMSC;
-#ifdef HAVE_MYSQL_MYSQL_H
-	MYSQL 		DB;		 char 		DT[20];
+
+#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H)
+	/* options for SQL database */
+	unsigned char	*database,	 *user,		*password;
+	unsigned char	*PC,		 *skipsmscnumber;
+        char 		DT[20];
 	char		CreatorID[200];
+#endif
+
+#ifdef HAVE_MYSQL_MYSQL_H
+       /* MySQL db connection */
+       MYSQL DBConnMySQL;
+#endif
+
+#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+       /* PostgreSQL db connection */
+       PGconn *DBConnPgSQL;
 #endif
 } GSM_SMSDConfig;
 
