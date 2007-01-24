@@ -34,63 +34,63 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 		port = atoi( pport );
 	}
 
-	mysql_init(&Config->DB);
-	if (!mysql_real_connect(&Config->DB,Config->PC,Config->user,Config->password,Config->database,port,NULL,0)) {
-	    	WriteSMSDLog("Error connecting to database: %s\n", mysql_error(&Config->DB));
+	mysql_init(&Config->DBConnMySQL);
+	if (!mysql_real_connect(&Config->DBConnMySQL,Config->PC,Config->user,Config->password,Config->database,port,NULL,0)) {
+	    	WriteSMSDLog("Error connecting to database: %s\n", mysql_error(&Config->DBConnMySQL));
 	    	return ERR_UNKNOWN;
 	}
 	sprintf(buf, "SELECT ID FROM `outbox` WHERE 1");
-	if (mysql_real_query(&Config->DB,buf,strlen(buf))) {
-		WriteSMSDLog("No table for outbox sms: %s\n", mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
+		WriteSMSDLog("No table for outbox sms: %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
-	if (!(Res = mysql_store_result(&Config->DB))) {
-		WriteSMSDLog("No table for outbox sms: %s\n", mysql_error(&Config->DB));
+	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
+		WriteSMSDLog("No table for outbox sms: %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	mysql_free_result(Res);
 	sprintf(buf, "SELECT ID FROM `outbox_multipart` WHERE 1");
-	if (mysql_real_query(&Config->DB,buf,strlen(buf))) {
-		WriteSMSDLog("No table for outbox sms: %s\n", mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
+		WriteSMSDLog("No table for outbox sms: %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
-	if (!(Res = mysql_store_result(&Config->DB))) {
-		WriteSMSDLog("No table for outbox sms: %s\n", mysql_error(&Config->DB));
+	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
+		WriteSMSDLog("No table for outbox sms: %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	mysql_free_result(Res);
 	sprintf(buf, "SELECT ID FROM `sentitems` WHERE 1");
-	if (mysql_real_query(&Config->DB,buf,strlen(buf))) {
-		WriteSMSDLog("No table for sent sms: %s\n", mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
+		WriteSMSDLog("No table for sent sms: %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
-	if (!(Res = mysql_store_result(&Config->DB))) {
-		WriteSMSDLog("No table for sent sms: %s\n", mysql_error(&Config->DB));
+	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
+		WriteSMSDLog("No table for sent sms: %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	mysql_free_result(Res);
 	sprintf(buf, "SELECT ID FROM `inbox` WHERE 1");
-	if (mysql_real_query(&Config->DB,buf,strlen(buf))) {
-		WriteSMSDLog("No table for inbox sms: %s\n", mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
+		WriteSMSDLog("No table for inbox sms: %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
-	if (!(Res = mysql_store_result(&Config->DB))) {
-		WriteSMSDLog("No table for inbox sms: %s\n", mysql_error(&Config->DB));
+	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
+		WriteSMSDLog("No table for inbox sms: %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	mysql_free_result(Res);
 	sprintf(buf, "SELECT Version FROM `gammu` WHERE 1");
-	if (mysql_real_query(&Config->DB,buf,strlen(buf))) {
-		WriteSMSDLog("No Gammu table: %s\n", mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
+		WriteSMSDLog("No Gammu table: %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
-	if (!(Res = mysql_store_result(&Config->DB))) {
-		WriteSMSDLog("No Gammu table: %s\n", mysql_error(&Config->DB));
+	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
+		WriteSMSDLog("No Gammu table: %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	if (!(Row = mysql_fetch_row(Res))) {
 		mysql_free_result(Res);
-		WriteSMSDLog("No version info in Gammu table: %s\n", mysql_error(&Config->DB));
+		WriteSMSDLog("No version info in Gammu table: %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	if (atoi(Row[0]) > 7) {
@@ -106,7 +106,7 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 		return ERR_UNKNOWN;
 	}
 	mysql_free_result(Res);
-	mysql_query(&Config->DB,"SET NAMES utf8;");
+	mysql_query(&Config->DBConnMySQL,"SET NAMES utf8;");
 	return ERR_NONE;
 }
 
@@ -116,8 +116,8 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 
 	sprintf(buf,"DELETE FROM `phones` WHERE `IMEI` = '%s'",s.Phone.Data.IMEI);
 	dbgprintf("%s\n",buf);
-	if (mysql_real_query(&Config->DB,buf,strlen(buf))) {
-		WriteSMSDLog("Error deleting from database (Init): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
+		WriteSMSDLog("Error deleting from database (Init): %d %s\n", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 
@@ -133,8 +133,8 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 
 	sprintf(buf,"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0,'%s')",s.Phone.Data.IMEI,Config->PhoneID,buf2);
 	dbgprintf("%s\n",buf);
-	if (mysql_real_query(&Config->DB,buf,strlen(buf))) {
-		WriteSMSDLog("Error inserting into database (Init): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
+		WriteSMSDLog("Error inserting into database (Init): %d %s\n", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 
@@ -165,12 +165,12 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 					SenderID='%s' AND TPMR='%i' AND DestinationNumber='%s'",
 					Config->PhoneID, sms.SMS[i].MessageReference, buffer2);
 			dbgprintf("%s\n",buffer);
-			if (mysql_real_query(&Config->DB,buffer,strlen(buffer))) {
-				WriteSMSDLog("Error reading from database (SaveInbox): %s %s\n", buffer, mysql_error(&Config->DB));
+			if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
+				WriteSMSDLog("Error reading from database (SaveInbox): %s %s\n", buffer, mysql_error(&Config->DBConnMySQL));
 				return ERR_UNKNOWN;
 			}
-			if (!(Res = mysql_store_result(&Config->DB))) {
-				WriteSMSDLog("Error reading from database (SaveInbox): %s\n", mysql_error(&Config->DB));
+			if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
+				WriteSMSDLog("Error reading from database (SaveInbox): %s\n", mysql_error(&Config->DBConnMySQL));
 				return ERR_UNKNOWN;
 			}
 			found = false;
@@ -221,8 +221,8 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 				sprintf(buffer+strlen(buffer),"', `StatusError` = '%i'",sms.SMS[i].DeliveryStatus);
 				sprintf(buffer+strlen(buffer)," WHERE `ID` = '%s' AND `TPMR` = '%i'",Row[0],sms.SMS[i].MessageReference);
 				dbgprintf("%s\n",buffer);
-				if (mysql_real_query(&Config->DB,buffer,strlen(buffer))) {
-					WriteSMSDLog("Error writing to database (SaveInboxSMS): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+				if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
+					WriteSMSDLog("Error writing to database (SaveInboxSMS): %d %s\n", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
 					return ERR_UNKNOWN;
 				}
 			}
@@ -277,7 +277,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 		case SMS_Coding_Unicode_No_Compression:
 	    	case SMS_Coding_Default_No_Compression:
 			EncodeUTF8(buffer2, sms.SMS[i].Text);
-			mysql_real_escape_string(&Config->DB,buffer4,buffer2,strlen(buffer2));
+			mysql_real_escape_string(&Config->DBConnMySQL,buffer4,buffer2,strlen(buffer2));
 			memcpy(buffer+strlen(buffer),buffer4,strlen(buffer4)+1);
 			break;
 		case SMS_Coding_8bit:
@@ -287,8 +287,8 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 		}
 		sprintf(buffer+strlen(buffer),"','%s')",Config->PhoneID);
 		dbgprintf("%s\n",buffer);
-		if (mysql_real_query(&Config->DB,buffer,strlen(buffer))) {
-			WriteSMSDLog("Error writing to database (SaveInbox): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+		if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
+			WriteSMSDLog("Error writing to database (SaveInbox): %d %s\n", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
 			return ERR_UNKNOWN;
 		}
 	}
@@ -301,12 +301,12 @@ static GSM_Error SMSDMySQL_RefreshSendStatus(GSM_SMSDConfig *Config, unsigned ch
 	unsigned char buffer[10000];
 
 	sprintf(buffer,"UPDATE `outbox` SET `SendingTimeOut`=(now() + INTERVAL 15 SECOND)+0 WHERE `ID` = '%s' AND `SendingTimeOut` < now()",ID);
-	if (mysql_real_query(&Config->DB,buffer,strlen(buffer))) {
-		WriteSMSDLog("Error writing to database (RefreshSendStatus): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
+		WriteSMSDLog("Error writing to database (RefreshSendStatus): %d %s\n", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	dbgprintf("%s\n",buffer);
-	if (mysql_affected_rows(&Config->DB) == 0) return ERR_UNKNOWN;
+	if (mysql_affected_rows(&Config->DBConnMySQL) == 0) return ERR_UNKNOWN;
   	return ERR_NONE;
 }
 
@@ -322,12 +322,12 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	bool			found = false;
 
 	sprintf(buf, "SELECT ID,InsertIntoDB,SendingDateTime,SenderID FROM `outbox` WHERE SendingDateTime < NOW() AND SendingTimeOut < NOW()");
-	if (mysql_real_query(&Config->DB,buf,strlen(buf))) {
-		WriteSMSDLog("Error reading from database (FindOutbox): %s\n", mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
+		WriteSMSDLog("Error reading from database (FindOutbox): %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
-	if (!(Res = mysql_store_result(&Config->DB))) {
-		WriteSMSDLog("Error reading from database (FindOutbox): %s\n", mysql_error(&Config->DB));
+	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
+		WriteSMSDLog("Error reading from database (FindOutbox): %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	while ((Row = mysql_fetch_row(Res))) {
@@ -358,12 +358,12 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 			sprintf(buf, "SELECT Text,Coding,UDH,Class,TextDecoded,ID,SequencePosition FROM `outbox_multipart` WHERE ID='%s' AND SequencePosition='%i'",ID,i);
 		}
 		dbgprintf("%s\n",buf);
-    		if (mysql_real_query(&Config->DB,buf,strlen(buf))) {
-			WriteSMSDLog("Error reading from database (FindOutbox): %s\n", mysql_error(&Config->DB));
+    		if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
+			WriteSMSDLog("Error reading from database (FindOutbox): %s\n", mysql_error(&Config->DBConnMySQL));
 			return ERR_UNKNOWN;
 		}
-		if (!(Res = mysql_store_result(&Config->DB))) {
-			WriteSMSDLog("Error reading from database (FindOutbox): %s\n", mysql_error(&Config->DB));
+		if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
+			WriteSMSDLog("Error reading from database (FindOutbox): %s\n", mysql_error(&Config->DBConnMySQL));
 			return ERR_UNKNOWN;
 		}
 		if (!(Row = mysql_fetch_row(Res))) {
@@ -431,13 +431,13 @@ static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 	unsigned char buffer[10000];
 
 	sprintf(buffer,"DELETE FROM `outbox` WHERE `ID` = '%s'",ID);
-	if (mysql_real_query(&Config->DB,buffer,strlen(buffer))) {
-		WriteSMSDLog("Error deleting from database (MoveSMS): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
+		WriteSMSDLog("Error deleting from database (MoveSMS): %d %s\n", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	sprintf(buffer,"DELETE FROM `outbox_multipart` WHERE `ID` = '%s'",ID);
-	if (mysql_real_query(&Config->DB,buffer,strlen(buffer))) {
-		WriteSMSDLog("Error deleting from database (MoveSMS): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
+		WriteSMSDLog("Error deleting from database (MoveSMS): %d %s\n", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
   	return ERR_NONE;
@@ -452,12 +452,12 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 	MYSQL_ROW 		Row;
 
 	sprintf(buffer,"SELECT ID FROM outbox ORDER BY ID DESC LIMIT 1");
-	if (mysql_real_query(&Config->DB,buffer,strlen(buffer))) {
-		WriteSMSDLog("Error reading from database (CreateOutbox): %s\n", mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
+		WriteSMSDLog("Error reading from database (CreateOutbox): %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
-	if (!(Res = mysql_store_result(&Config->DB))) {
-		WriteSMSDLog("Error reading from database (CreateOutbox): %s\n", mysql_error(&Config->DB));
+	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
+		WriteSMSDLog("Error reading from database (CreateOutbox): %s\n", mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	if ((Row = mysql_fetch_row(Res))) {
@@ -546,7 +546,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		case SMS_Coding_Unicode_No_Compression:
 	    	case SMS_Coding_Default_No_Compression:
 			EncodeUTF8(buffer2, sms->SMS[i].Text);
-			mysql_real_escape_string(&Config->DB,buffer5,buffer2,strlen(buffer2));
+			mysql_real_escape_string(&Config->DBConnMySQL,buffer5,buffer2,strlen(buffer2));
 			memcpy(buffer+strlen(buffer),buffer5,strlen(buffer5)+1);
 			break;
 		default:
@@ -558,12 +558,12 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 				ID++;
 				sprintf(buffer4,"SELECT ID FROM sentitems WHERE ID='%i'",ID);
 				dbgprintf("%s\n",buffer4);
-				if (mysql_real_query(&Config->DB,buffer4,strlen(buffer4))) {
-					WriteSMSDLog("Error reading from database (CreateOutbox): %s\n", mysql_error(&Config->DB));
+				if (mysql_real_query(&Config->DBConnMySQL,buffer4,strlen(buffer4))) {
+					WriteSMSDLog("Error reading from database (CreateOutbox): %s\n", mysql_error(&Config->DBConnMySQL));
 					return ERR_UNKNOWN;
 				}
-				if (!(Res = mysql_store_result(&Config->DB))) {
-					WriteSMSDLog("Error reading from database (CreateOutbox): %s\n", mysql_error(&Config->DB));
+				if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
+					WriteSMSDLog("Error reading from database (CreateOutbox): %s\n", mysql_error(&Config->DBConnMySQL));
 					return ERR_UNKNOWN;
 				}
 				if (!(Row = mysql_fetch_row(Res))) {
@@ -571,12 +571,12 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 					strcpy(buffer4,buffer);
 					sprintf(buffer4+strlen(buffer4),"%i')",ID);
 					dbgprintf("%s\n",buffer4);
-					if (mysql_real_query(&Config->DB,buffer4,strlen(buffer4))) {
-						if (mysql_errno(&Config->DB) == ER_DUP_ENTRY) {
+					if (mysql_real_query(&Config->DBConnMySQL,buffer4,strlen(buffer4))) {
+						if (mysql_errno(&Config->DBConnMySQL) == ER_DUP_ENTRY) {
 							WriteSMSDLog("Duplicated outgoing SMS ID\n");
 							continue;
 						}
-						WriteSMSDLog("Error writing to database (CreateOutbox): %d %s %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB),buffer4);
+						WriteSMSDLog("Error writing to database (CreateOutbox): %d %s %s\n", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL),buffer4);
 						return ERR_UNKNOWN;
 					}
 					mysql_free_result(Res);
@@ -588,8 +588,8 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			strcpy(buffer4,buffer);
 			sprintf(buffer4+strlen(buffer4),"%i')",ID);
 			dbgprintf("%s\n",buffer4);
-			if (mysql_real_query(&Config->DB,buffer4,strlen(buffer4))) {
-				WriteSMSDLog("Error writing to database (CreateOutbox): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+			if (mysql_real_query(&Config->DBConnMySQL,buffer4,strlen(buffer4))) {
+				WriteSMSDLog("Error writing to database (CreateOutbox): %d %s\n", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
 				return ERR_UNKNOWN;
 			}
 		}
@@ -657,7 +657,7 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 	case SMS_Coding_Unicode_No_Compression:
 	case SMS_Coding_Default_No_Compression:
 		EncodeUTF8(buffer2, sms->SMS[Part-1].Text);
-		mysql_real_escape_string(&Config->DB,buffer5,buffer2,strlen(buffer2));
+		mysql_real_escape_string(&Config->DBConnMySQL,buffer5,buffer2,strlen(buffer2));
 		memcpy(buffer+strlen(buffer),buffer5,strlen(buffer5)+1);
 		break;
 	default:
@@ -670,8 +670,8 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 		sprintf(buffer+strlen(buffer),"-1')");
 	}
 	dbgprintf("%s\n",buffer);
-	if (mysql_real_query(&Config->DB,buffer,strlen(buffer))) {
-		WriteSMSDLog("Error writing to database (AddSent): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
+		WriteSMSDLog("Error writing to database (AddSent): %d %s\n", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
   	return ERR_NONE;
@@ -684,8 +684,8 @@ static GSM_Error SMSDMySQL_RefreshPhoneStatus(GSM_SMSDConfig *Config)
 	sprintf(buffer,"UPDATE `phones` SET `TimeOut`= (NOW() + INTERVAL 10 SECOND)+0");
 	sprintf(buffer+strlen(buffer)," WHERE `IMEI` = '%s'",s.Phone.Data.IMEI);
 	dbgprintf("%s\n",buffer);
-	if (mysql_real_query(&Config->DB,buffer,strlen(buffer))) {
-		WriteSMSDLog("Error writing to database (SaveInboxSMS): %d %s\n", mysql_errno(&Config->DB), mysql_error(&Config->DB));
+	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
+		WriteSMSDLog("Error writing to database (SaveInboxSMS): %d %s\n", mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	return ERR_NONE;

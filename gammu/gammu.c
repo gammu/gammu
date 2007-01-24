@@ -9568,8 +9568,11 @@ static GSM_Parameters Parameters[] = {
 #ifdef HAVE_MYSQL_MYSQL_H
 	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"MYSQL configfile"},
 #endif
+#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"PGSQL configfile"},
+#endif
 	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"FILES configfile"},
-	{"--sendsmsdsms",		2,30, SendSaveDisplaySMS,	{H_SMS,H_Other,0},		"TEXT|WAPSETTINGS|... destination FILES|MYSQL configfile ... (options like in sendsms)"},
+	{"--sendsmsdsms",		2,30, SendSaveDisplaySMS,	{H_SMS,H_Other,0},		"TEXT|WAPSETTINGS|... destination FILES|MYSQL|PGSQL configfile ... (options like in sendsms)"},
 	{"--getmmsfolders",		0, 0, GetMMSFolders,		{H_MMS,0},			""},
 	{"--getallmms",			0, 1, GetEachMMS,		{H_MMS,0},			"[-save]"},
 	{"--geteachmms",		0, 1, GetEachMMS,		{H_MMS,0},			"[-save]"},

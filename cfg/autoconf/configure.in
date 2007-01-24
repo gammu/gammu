@@ -28,6 +28,36 @@ else
     CFLAGS="$CFLAGS -fPIC -Wall -Wno-format-y2k"
 fi
 
+dnl Checks for Darwin platform
+if type uname > /dev/null 2>&1 ; then
+    MACHINE=`uname -s`
+else
+    MACHINE=""
+fi
+
+dnl Sets libraries names according to the platform
+if test "$MACHINE" = "Darwin" ; then
+    LIBGAMMU="libGammu"
+    LIBGAMMU_FULLNAME="\$(LIBGAMMU).\$(SONAME_MAJOR).\$(SONAME_MINOR).0.dylib"
+    LIBGAMMU_MJR_NAME="\$(LIBGAMMU).\$(SONAME_MAJOR).dylib"
+    LIBGAMMU_SHRTNAME="\$(LIBGAMMU).dylib"
+    LIBGAMMU_STATIC="\$(LIBGAMMU).a"
+    LDFLAGS_SHAREDLIB="-dynamiclib -Wl,-install_name,\$(INSTALL_LIB_DIR)/\$(LIBGAMMU_MJR_NAME)"
+else
+    LIBGAMMU="libGammu"
+    LIBGAMMU_FULLNAME="\$(LIBGAMMU).so.\$(SONAME_MAJOR).\$(SONAME_MINOR)"
+    LIBGAMMU_MJR_NAME="\$(LIBGAMMU).so.\$(SONAME_MAJOR)"
+    LIBGAMMU_SHRTNAME="\$(LIBGAMMU).so"
+    LIBGAMMU_STATIC="\$(LIBGAMMU).a"
+    LDFLAGS_SHAREDLIB="-shared -Wl,-soname -Wl,\$(LIBGAMMU_MJR_NAME)"
+fi
+AC_SUBST(LIBGAMMU)
+AC_SUBST(LIBGAMMU_FULLNAME)
+AC_SUBST(LIBGAMMU_MJR_NAME)
+AC_SUBST(LIBGAMMU_SHRTNAME)
+AC_SUBST(LIBGAMMU_STATIC)
+AC_SUBST(LDFLAGS_SHAREDLIB)
+
 dnl Checks for programs.
 AC_PATH_PROG(RM, rm, no)
 AC_PATH_PROG(MV, mv, no)
@@ -72,6 +102,16 @@ AC_ARG_ENABLE(mysql,
              SMSD_LIBS="$(mysql_config --libs)"],
             [mysql="no"
              SMSD_LIBS=])
+        ])
+AC_ARG_ENABLE(pgsql,
+        [  --disable-pgsql         Disable postgreSQL support in SMSD],
+        [pgsql="no"
+         SMSD_LIBS=],
+        [AC_CHECK_HEADERS(postgresql/libpq-fe.h,
+            [pgsql="yes"
+             SMSD_LIBS="$SMSD_LIBS -L$(pg_config --libdir) -lpq"],
+            [pgsql="no"
+             SMSD_LIBS="$SMSD_LIBS"])
         ])
 AC_SUBST(SMSD_LIBS)
 
@@ -484,6 +524,7 @@ dnl  LGPL license                                  - $lgpl
   Backup functions                              - $gsm_enable_backup
   Searching phones (requires pthread)           - $pthread
   MySQL SMS plugin (requires mysql)             - $mysql
+  PostgreSQL SMS plugin (requires postgresql)   - $pgsql
   Bluetooth stack                               - $gsm_blue_stack
   Search for RF channel during each connection  - $gsm_enable_bluerfsearch
 

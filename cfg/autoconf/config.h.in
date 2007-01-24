@@ -158,8 +158,10 @@
 #  undef HAVE_PTHREAD
 #  undef HAVE_SYS_IOCTL_H
 #  undef HAVE_MYSQL_MYSQL_H
+#  undef HAVE_POSTGRESQL_LIBPQ_FE_H
 #else
 //#  define HAVE_MYSQL_MYSQL_H 1
+//#  define HAVE_POSTGRESQL_LIBPQ_FE_H 1
 #endif
 
 #ifndef DJGPP

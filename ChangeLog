@@ -44,8 +44,7 @@ For additionals materials and links to them see readme.txt
 
 200701?? - 1.09.17
     * First release by Michal Cihar.
-    * Experimental CMake build support, so far not completely working
-      (Michal Cihar).
+    * Experimental CMake build support, so far not completely working (Michal Cihar).
     * Improved vCard RRULE parsing (me, Rene Peters).
     * Added support for location of alarm (Peter Ondraska).
     * Fixed Slovak operator names (Peter Ondraska).
@@ -53,6 +52,7 @@ For additionals materials and links to them see readme.txt
     * Fixed small c-cedilla decoding (Samuel Adam) (bug #64).
     * Fix memory leak in dll (Petr Stasa - Gord).
     * Add some functions to dll (Petr Stasa - Gord).
+    * PostreSQL support for SMSD (Andrea Riciputi).
 
 20070119 - 1.09.16
 

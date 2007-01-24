@@ -12,6 +12,9 @@
 #ifdef HAVE_MYSQL_MYSQL_H
 #  include "s_mysql.h"
 #endif
+#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+#  include "s_pgsql.h"
+#endif
 
 FILE 		 *smsd_log_file = NULL;
 static int	 TPMR;
@@ -183,6 +186,21 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 
 #ifdef HAVE_MYSQL_MYSQL_H
 	if (!strcmp(service,"MYSQL")) {
+		Config->skipsmscnumber = INI_GetValue(smsdcfgfile, "smsd", "skipsmscnumber", false);
+		if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
+		Config->user = INI_GetValue(smsdcfgfile, "smsd", "user", false);
+		if (Config->user == NULL) Config->user="root";
+		Config->password = INI_GetValue(smsdcfgfile, "smsd", "password", false);
+		if (Config->password == NULL) Config->password="";
+		Config->PC = INI_GetValue(smsdcfgfile, "smsd", "pc", false);
+		if (Config->PC == NULL) Config->PC="localhost";
+		Config->database = INI_GetValue(smsdcfgfile, "smsd", "database", false);
+		if (Config->database == NULL) Config->database="sms";
+	}
+#endif
+
+#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+	if (!strcmp(service,"PGSQL")) {
 		Config->skipsmscnumber = INI_GetValue(smsdcfgfile, "smsd", "skipsmscnumber", false);
 		if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
 		Config->user = INI_GetValue(smsdcfgfile, "smsd", "user", false);
@@ -481,6 +499,10 @@ void SMSDaemon(int argc, char *argv[])
 	} else if (!strcmp(argv[2],"MYSQL")) {
 		Service = &SMSDMySQL;
 #endif
+#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+	} else if (!strcmp(argv[2],"PGSQL")) {
+		Service = &SMSDPgSQL;
+#endif
 	} else {
 		fprintf(stderr,"Unknown service type (\"%s\")\n",argv[2]);
 		exit(-1);
@@ -584,6 +606,10 @@ GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *s
 #ifdef HAVE_MYSQL_MYSQL_H
 	} else if (!strcmp(service,"MYSQL")) {
 		Service = &SMSDMySQL;
+#endif
+#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+	} else if (!strcmp(service,"PGSQL")) {
+		Service = &SMSDPgSQL;
 #endif
 	} else {
 		fprintf(stderr,"Unknown service type (\"%s\")\n",service);
