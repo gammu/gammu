@@ -135,7 +135,7 @@ GSM_Error DCT3_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	DecodeDefault(CB.Text, Buffer, i + 1, false, NULL);
 	smprintf(s, "Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
 	if (s->Phone.Data.EnableIncomingCB && s->User.IncomingCB!=NULL) {
-		s->User.IncomingCB(s->CurrentConfig->Device,CB);
+		s->User.IncomingCB(s,CB);
 	}
 	return ERR_NONE;
 }
@@ -1221,11 +1221,11 @@ GSM_Error DCT3_ReplySendSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 	switch (msg.Buffer[3]) {
 	case 0x02:
 		smprintf(s, "SMS sent OK\n");
-		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,0,msg.Buffer[5]);
+		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s,0,msg.Buffer[5]);
 		return ERR_NONE;
 	case 0x03:
 		smprintf(s, "Error %i\n",msg.Buffer[6]);
-		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s->CurrentConfig->Device,msg.Buffer[6],-1);
+		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s,msg.Buffer[6],-1);
 		return ERR_NONE;
 	}
 	return ERR_UNKNOWNRESPONSE;

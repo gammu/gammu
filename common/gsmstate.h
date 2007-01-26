@@ -1447,11 +1447,11 @@ typedef struct {
 struct _GSM_User {
 	GSM_Reply_Function		*UserReplyFunctions;
 
-	void	  (*IncomingCall)	(char *Device, GSM_Call	      call);
-	void 	  (*IncomingSMS)	(char *Device, GSM_SMSMessage sms);
-	void 	  (*IncomingCB)		(char *Device, GSM_CBMessage  cb);
-	void 	  (*IncomingUSSD)	(char *Device, char	      *Text);
-	void 	  (*SendSMSStatus)	(char *Device, int 	      status, int MessageReference);
+	void	  (*IncomingCall)	(GSM_StateMachine *s, GSM_Call	      call);
+	void 	  (*IncomingSMS)	(GSM_StateMachine *s, GSM_SMSMessage sms);
+	void 	  (*IncomingCB)		(GSM_StateMachine *s, GSM_CBMessage  cb);
+	void 	  (*IncomingUSSD)	(GSM_StateMachine *s, char	      *Text);
+	void 	  (*SendSMSStatus)	(GSM_StateMachine *s, int 	      status, int MessageReference);
 };
 
 /* --------------------------- Statemachine layer -------------------------- */
