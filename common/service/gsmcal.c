@@ -1149,12 +1149,30 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 					}
 
 					if (!have_info) {
+#if 0
+						/* 
+						 * This seems to be according to specification, 
+						 * however several vendors (Siemens, some web based 
+						 * calendars use YD1 for simple year repeating. So 
+						 * we handle this as YM1 just to be compatbile with
+						 * those.
+						 */
 						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAYOFYEAR;
 						Calendar->Entries[Calendar->EntriesNum].Number =
 							GetDayOfYear(
 								Calendar->Entries[TimePos].Date.Year,
 								Calendar->Entries[TimePos].Date.Month,
 								Calendar->Entries[TimePos].Date.Day);
+						Calendar->EntriesNum++;
+#endif
+						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAY;
+						Calendar->Entries[Calendar->EntriesNum].Number =
+							Calendar->Entries[TimePos].Date.Day;
+						Calendar->EntriesNum++;
+
+						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_MONTH;
+						Calendar->Entries[Calendar->EntriesNum].Number =
+							Calendar->Entries[TimePos].Date.Month;
 						Calendar->EntriesNum++;
 					}
 					break;
