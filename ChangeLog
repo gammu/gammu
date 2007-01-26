@@ -61,6 +61,7 @@ For additionals materials and links to them see readme.txt
 [+] * Add some functions to dll (Petr Stasa - Gord).
 [+] * PostreSQL support for SMSD (Andrea Riciputi).
 [+] * Build fixes for Darwin (Andrea Riciputi).
+[+] * Identify M341i over IrDA (Michal Cihar, flewww, bug #65).
 
 20070119 - 1.09.16
 

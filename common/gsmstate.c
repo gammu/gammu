@@ -1313,7 +1313,7 @@ static OnePhoneModel allmodels[] = {
 	{"K300 series",	"K300 series", "K300 series",			   {F_OBEX, 0}},
 
 	/* Mitsubishi */
-	{"M341i",	"M7", "",					   {F_OBEX, F_IRMC_LEVEL_2, 0}},
+	{"M341i",	"M7", "MT170",					   {F_OBEX, F_IRMC_LEVEL_2, 0}},
 
 	/* Motorola */
 	{"V3",		"V3 Razr", "",					   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, 0}},
