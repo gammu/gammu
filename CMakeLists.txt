@@ -46,6 +46,7 @@ include (CheckCSourceCompiles)
 
 # Packages in our sources (mostly taken from KDE)
 include (MacroOptionalFindPackage)
+include (MacroGammuOption)
 
 # WE use pkgconfig later
 find_package (PkgConfig)
@@ -157,6 +158,22 @@ endif (MYSQL_FOUND)
 if (BLUEZ_FOUND)
 	target_link_libraries (Gammu ${BLUEZ_LIBRARIES})
 endif (BLUEZ_FOUND)
+
+macro_gammu_option(NOKIA "Nokia phones support" ON)
+if (WITH_NOKIA)
+    macro_gammu_option(MBUS2 "Nokia MBUS2 protocol" ON)
+    macro_gammu_option(FBUS2 "Nokia FBUS2 protocol" ON)
+    macro_gammu_option(FBUS2DLR3 "Nokia FBUS2DLR3 protocol" ON)
+    macro_gammu_option(DKU2PHONET "Nokia DKU2PHONET protocol" ON)
+    macro_gammu_option(DKU2AT "Nokia DKU2AT protocol" ON)
+    macro_gammu_option(DKU5FBUS2 "Nokia DKU5FBUS2 protocol" ON)
+    macro_gammu_option(FBUS2PL2303 "Nokia FBUS2PL2303 protocol" ON)
+    macro_gammu_option(FBUS2BLUE "Nokia FBUS2BLUE protocol" ON)
+    macro_gammu_option(FBUS2IRDA "Nokia FBUS2IRDA protocol" ON)
+    macro_gammu_option(PHONETBLUE "Nokia PHONETBLUE protocol" ON)
+endif (GSM_ENALE_NOKIA)
+
+macro_gammu_option(AT "AT protocol" ON)
 
 CONFIGURE_FILE(cfg/cmake/config.h.in cfg/config.h)
 

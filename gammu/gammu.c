@@ -8443,6 +8443,7 @@ static void DeleteFolder(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+#if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 typedef struct _PlayListEntry PlayListEntry;
 
 struct _PlayListEntry {
@@ -8691,7 +8692,6 @@ struct NokiaFolderInfo {
 	char 	*level;
 };
 
-#if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 static struct NokiaFolderInfo Folder[] = {
 	/* Language indepedent in DCT4 in filesystem 1 */
 	{"",	 "Application",	   "applications",	"3"},
