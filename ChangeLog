@@ -42,18 +42,25 @@ for more details)
 For additionals materials and links to them see readme.txt
 --------------------
 
+[!] Important
+[+] New functionality
+[*] Changes in existing functionality
+[-] Fixed error
+
+
 200701?? - 1.09.17
-    * First release by Michal Cihar.
-    * Experimental CMake build support, so far not completely working (Michal Cihar).
-    * Improved vCard RRULE parsing (me, Rene Peters).
-    * Added support for location of alarm (Peter Ondraska).
-    * Fixed Slovak operator names (Peter Ondraska).
-    * Improved battery reporting for SE phones (Michal Cihar).
-    * Fixed small c-cedilla decoding (Samuel Adam) (bug #64).
-    * Fix memory leak in dll (Petr Stasa - Gord).
-    * Add some functions to dll (Petr Stasa - Gord).
-    * PostreSQL support for SMSD (Andrea Riciputi).
-    * Build fixes for Darwin (Andrea Riciputi).
+[!] * First release by Michal Cihar, this changes some URLS, see readme.txt.
+[+] * Experimental CMake build support, so far not completely working (Michal
+      Cihar).
+[+] * Improved vCard RRULE parsing (me, Rene Peters).
+[+] * Added support for location of alarm (Peter Ondraska).
+[-] * Fixed Slovak operator names (Peter Ondraska).
+[+] * Improved battery reporting for SE phones (Michal Cihar).
+[-] * Fixed small c-cedilla decoding (Samuel Adam) (bug #64).
+[-] * Fix memory leak in dll (Petr Stasa - Gord).
+[+] * Add some functions to dll (Petr Stasa - Gord).
+[+] * PostreSQL support for SMSD (Andrea Riciputi).
+[+] * Build fixes for Darwin (Andrea Riciputi).
 
 20070119 - 1.09.16
 
@@ -71,11 +78,6 @@ it was since few releases.
 
 There will be changed some projects links soon (for example RSS
 channel). See www.gammu.org for more details.
-
-[!] Important
-[+] New functionality
-[*] Changes in existing functionality
-[-] Fixed error
 
 20070110 - 1.09.15
 [-] * SMSC reported wrong on N6280                        (BT 44, Michal Cihar)
@@ -3443,5 +3445,5 @@ YYYYMMDD - description
 
 # vim: et ts=4 sw=4 sts=4
 # vim: ft=changelog fenc=utf-8 encoding=utf-8
-# vim: fde=getline(v\:lnum-1)=~'^\\s*$'&&getline(v\:lnum)=~'^\\d'?'>1'\:1&&v\:lnum>47&&getline(v\:lnum)!~'^#'
+# vim: fde=getline(v\:lnum-1)=~'^\\s*$'&&getline(v\:lnum)=~'^\\d'?'>1'\:1&&v\:lnum>50&&getline(v\:lnum)!~'^#'
 # vim: fdn=1 fdm=expr
