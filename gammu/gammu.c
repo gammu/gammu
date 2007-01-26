@@ -1697,7 +1697,7 @@ static void NetworkInfo(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void IncomingSMS(char *Device, GSM_SMSMessage sms)
+static void IncomingSMS(GSM_StateMachine *s, GSM_SMSMessage sms)
 {
 	printmsg("SMS message received\n");
  	if (wasincomingsms) {
@@ -1740,13 +1740,13 @@ static void DisplayIncomingSMS()
  	wasincomingsms = false;
 }
 
-static void IncomingCB(char *Device, GSM_CBMessage CB)
+static void IncomingCB(GSM_StateMachine *s, GSM_CBMessage CB)
 {
 	printmsg("CB message received\n");
 	printmsg("Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeConsole(CB.Text));
 }
 
-static void IncomingCall(char *Device, GSM_Call call)
+static void IncomingCall(GSM_StateMachine *s, GSM_Call call)
 {
 	printmsg("Call info : ");
 	if (call.CallIDAvailable) printmsg("ID %i, ",call.CallID);
@@ -1764,7 +1764,7 @@ static void IncomingCall(char *Device, GSM_Call call)
 	}
 }
 
-static void IncomingUSSD(char *Device, char *Buffer)
+static void IncomingUSSD(GSM_StateMachine *s, char *Buffer)
 {
 	printmsg("Service reply: \"%s\"\n",DecodeUnicodeConsole(Buffer));
 }
@@ -1950,7 +1950,7 @@ static void Monitor(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void IncomingUSSD2(char *Device, char *Buffer)
+static void IncomingUSSD2(GSM_StateMachine *s, char *Buffer)
 {
 	printmsg("Service reply: \"%s\"\n",DecodeUnicodeConsole(Buffer));
 
@@ -2582,7 +2582,7 @@ static void DialVoice(int argc, char *argv[])
 
 int TerminateID = -1;
 
-static void IncomingCall0(char *Device, GSM_Call call)
+static void IncomingCall0(GSM_StateMachine *s, GSM_Call call)
 {
 	if (call.CallIDAvailable) TerminateID = call.CallID;
 }
@@ -3288,9 +3288,9 @@ static void DisplaySMSFrame(GSM_SMSMessage *SMS)
 
 static GSM_Error SMSStatus;
 
-static void SendSMSStatus (char *Device, int status, int MessageReference)
+static void SendSMSStatus (GSM_StateMachine *s, int status, int MessageReference)
 {
-	dbgprintf("Sent SMS on device: \"%s\"\n",Device);
+	dbgprintf("Sent SMS on device: \"%s\"\n",s->CurrentConfig->Device);
 	if (status==0) {
 		printmsg("..OK");
 		SMSStatus = ERR_NONE;

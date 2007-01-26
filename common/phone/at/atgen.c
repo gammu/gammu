@@ -530,7 +530,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	if (s->Phone.Data.EnableIncomingUSSD && s->User.IncomingUSSD!=NULL) {
 		EncodeUnicode(buffer2,buffer,strlen(buffer));
-		s->User.IncomingUSSD(s->CurrentConfig->Device, buffer2);
+		s->User.IncomingUSSD(s, buffer2);
 	}
 
 	return ERR_NONE;
@@ -2137,32 +2137,32 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		if (s->User.SendSMSStatus!=NULL) {
 			start = strstr(msg.Buffer, "+CMGS: ");
 			if (start != NULL) {
-				s->User.SendSMSStatus(s->CurrentConfig->Device,0,atoi(start+7));
+				s->User.SendSMSStatus(s,0,atoi(start+7));
 			} else {
-				s->User.SendSMSStatus(s->CurrentConfig->Device,0,-1);
+				s->User.SendSMSStatus(s,0,-1);
 			}
 		}
 		return ERR_NONE;
 	case AT_Reply_CMSError:
  		smprintf(s, "Error %i\n",Priv->ErrorCode);
  		if (s->User.SendSMSStatus != NULL) {
-			s->User.SendSMSStatus(s->CurrentConfig->Device, Priv->ErrorCode, -1);
+			s->User.SendSMSStatus(s, Priv->ErrorCode, -1);
 		}
  		return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
  		smprintf(s, "Error %i\n",Priv->ErrorCode);
  		if (s->User.SendSMSStatus != NULL) {
-			s->User.SendSMSStatus(s->CurrentConfig->Device, Priv->ErrorCode, -1);
+			s->User.SendSMSStatus(s, Priv->ErrorCode, -1);
 		}
 		return ATGEN_HandleCMEError(s);
 	case AT_Reply_Error:
  		if (s->User.SendSMSStatus != NULL) {
-			s->User.SendSMSStatus(s->CurrentConfig->Device, -1, -1);
+			s->User.SendSMSStatus(s, -1, -1);
 		}
 		return ERR_UNKNOWN;
 	default:
  		if (s->User.SendSMSStatus != NULL) {
-			s->User.SendSMSStatus(s->CurrentConfig->Device, -1, -1);
+			s->User.SendSMSStatus(s, -1, -1);
 		}
 		return ERR_UNKNOWNRESPONSE;
 	}
@@ -3340,7 +3340,7 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg, GSM_StateMachine *s)
      	    smprintf(s, "Calls canceled\n");
             call.CallIDAvailable = false;
             call.Status 	 = GSM_CALL_CallLocalEnd;
-            if (s->User.IncomingCall) s->User.IncomingCall(s->CurrentConfig->Device, call);
+            if (s->User.IncomingCall) s->User.IncomingCall(s, call);
 
             return ERR_NONE;
     	case AT_Reply_CMSError:
@@ -3742,7 +3742,7 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 		}
 		EncodeUnicode(call.PhoneNumber, num, strlen(num));
 
-		s->User.IncomingCall(s->CurrentConfig->Device, call);
+		s->User.IncomingCall(s, call);
 	}
 
 	return ERR_NONE;
@@ -4104,7 +4104,7 @@ GSM_Error ATGEN_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	smprintf(s, "Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
 	}
 	if (s->Phone.Data.EnableIncomingCB && s->User.IncomingCB!=NULL) {
-		s->User.IncomingCB(s->CurrentConfig->Device,CB);
+		s->User.IncomingCB(s,CB);
 	}
 	return ERR_NONE;
 }
@@ -4330,7 +4330,7 @@ GSM_Error ATGEN_IncomingSMSInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 		sms.Location = atoi(buffer);
 
-		s->User.IncomingSMS(s->CurrentConfig->Device, sms);
+		s->User.IncomingSMS(s, sms);
 	}
 	return ERR_NONE;
 }
@@ -4372,7 +4372,7 @@ GSM_Error ATGEN_IncomingSMSDeliver(GSM_Protocol_Message msg, GSM_StateMachine *s
 		for(i=0;i<smsframe[PHONE_SMSDeliver.TPUDL];i++) smsframe[i+PHONE_SMSDeliver.Text]=buffer[current++];
 		GSM_DecodeSMSFrame(&sms,smsframe,PHONE_SMSDeliver);
 
-		s->User.IncomingSMS(s->CurrentConfig->Device,sms);
+		s->User.IncomingSMS(s,sms);
 	}
 	return ERR_NONE;
 }

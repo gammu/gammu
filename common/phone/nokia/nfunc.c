@@ -1486,7 +1486,7 @@ GSM_Error N71_65_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	if (s->Phone.Data.EnableIncomingUSSD && s->User.IncomingUSSD!=NULL) {
 		EncodeUnicode(buffer2,buffer,strlen(buffer));
-		s->User.IncomingUSSD(s->CurrentConfig->Device, buffer2);
+		s->User.IncomingUSSD(s, buffer2);
 	}
 
 	return ERR_NONE;
@@ -1646,7 +1646,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (call.CallIDAvailable) smprintf(s, "Call ID    : %d\n",msg.Buffer[4]);
 	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL && call.Status != 0) {
 		if (call.CallIDAvailable) call.CallID = msg.Buffer[4];
-		s->User.IncomingCall(s->CurrentConfig->Device, call);
+		s->User.IncomingCall(s, call);
 	}
 	if (s->Phone.Data.RequestID == ID_DialVoice) {
 		if (msg.Buffer[3] == 0x10) return ERR_NOTSUPPORTED;

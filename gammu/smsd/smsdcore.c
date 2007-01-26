@@ -20,9 +20,9 @@ FILE 		 *smsd_log_file = NULL;
 static int	 TPMR;
 static GSM_Error SendingSMSStatus;
 
-static void SMSSendingSMSStatus (char *Device, int status, int mr)
+static void SMSSendingSMSStatus (GSM_StateMachine *s, int status, int mr)
 {
-	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%d\n",Device, status, mr);
+	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%d\n",s->CurrentConfig->Device, status, mr);
 	TPMR = mr;
 	if (status==0) {
 		SendingSMSStatus = ERR_NONE;
