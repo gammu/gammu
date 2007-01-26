@@ -64,6 +64,7 @@ For additionals materials and links to them see readme.txt
 [+] * Identify M341i over IrDA (Michal Cihar, flewww, bug #65).
 [!] * Callback functions now take pointer to state machine to allow full
       identification of used state machine (Michal Cihar, bug #66).
+[-] * Fixed LAC and CID reading for AT phones (Michal Cihar).
 
 20070119 - 1.09.16
 
