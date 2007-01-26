@@ -2494,6 +2494,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	char			*answer;
 	char			*tmp;
+	int			pos;
 
   	if (s->Phone.Data.RequestID == ID_IncomingFrame) {
 		smprintf(s, "Incoming LAC & CID info\n");
@@ -2551,8 +2552,8 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	}
 	if (NetworkInfo->State == GSM_HomeNetwork ||
 	    NetworkInfo->State == GSM_RoamingNetwork) {
-		memset(NetworkInfo->CID,0,4);
-		memset(NetworkInfo->LAC,0,4);
+		NetworkInfo->LAC[0] = 0;
+		NetworkInfo->CID[0] = 0;
 
 		if (Lines.numbers[3*2+1]==0) return ERR_NONE;
 
@@ -2560,13 +2561,33 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
  		answer = GetLineString(tmp,Lines,3);
  		free(tmp);
 		while (*answer == 0x20) answer++;
-		sprintf(NetworkInfo->LAC,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
+		if (*answer == '"') answer++;
+		pos = 0;
+		while (*answer != '"' && *answer != ',' && *answer != 0 && *answer != '\n') {
+			NetworkInfo->LAC[pos++] = *answer;
+			answer++;
+			if (pos >= sizeof(NetworkInfo->LAC)) {
+				smprintf(s, "LAC too big!\n");
+				return ERR_MOREMEMORY;
+			}
+		}
+		NetworkInfo->LAC[pos++] = 0;
 
  		tmp = strdup(GetLineString(msg.Buffer,Priv->Lines,2));
  		answer = GetLineString(tmp,Lines,4);
  		free(tmp);
 		while (*answer == 0x20) answer++;
-		sprintf(NetworkInfo->CID,	"%c%c%c%c", answer[1], answer[2], answer[3], answer[4]);
+		if (*answer == '"') answer++;
+		pos = 0;
+		while (*answer != '"' && *answer != ',' && *answer != 0 && *answer != '\n') {
+			NetworkInfo->CID[pos++] = *answer;
+			answer++;
+			if (pos >= sizeof(NetworkInfo->CID)) {
+				smprintf(s, "CID too big!\n");
+				return ERR_MOREMEMORY;
+			}
+		}
+		NetworkInfo->CID[pos++] = 0;
 
 		smprintf(s, "LAC   : %s\n",NetworkInfo->LAC);
 		smprintf(s, "CID   : %s\n",NetworkInfo->CID);
