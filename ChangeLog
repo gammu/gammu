@@ -66,6 +66,7 @@ For additionals materials and links to them see readme.txt
       identification of used state machine (Michal Cihar, bug #66).
 [-] * Fixed LAC and CID reading for AT phones (Michal Cihar).
 [-] * Update operator list (Michal Cihar).
+[-] * Updated README.
 
 20070119 - 1.09.16
 

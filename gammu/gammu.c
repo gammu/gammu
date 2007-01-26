@@ -2102,15 +2102,19 @@ static void GetAllSMS(int argc, char *argv[])
 	GSM_MultiSMSMessage 	sms;
 	GSM_SMSFolders		folders;
 	bool			start = true;
+	int			smsnum=0,smspos=0;
+#ifdef GSM_ENABLE_BACKUP
+	int			used,i;
 	GSM_MemoryStatus	MemStatus;
 	GSM_MemoryEntry		Pbk;
-	int			used,i,smsnum=0,smspos=0;
 	GSM_Backup		Backup;
 
 	GSM_ClearBackup(&Backup);
+#endif
 
 	GSM_Init(true);
 
+#ifdef GSM_ENABLE_BACKUP
 	if (argc == 3 && mystrncasecmp(argv[2],"-pbk",0)) {
 		MemStatus.MemoryType = MEM_ME;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
@@ -2144,6 +2148,7 @@ static void GetAllSMS(int argc, char *argv[])
 			printmsgerr("\n");
 		}
 	}
+#endif
 
 	error=Phone->GetSMSFolders(&s, &folders);
 	Print_Error(error);
@@ -2167,11 +2172,15 @@ static void GetAllSMS(int argc, char *argv[])
 			printf("\n");
 			smspos++;
 			smsnum+=sms.Number;
+#ifdef GSM_ENABLE_BACKUP
 			if (Backup.PhonePhonebook[0]!=NULL) {
 				displaymultismsinfo(sms,false,false,&Backup);
 			} else {
+#endif
 				displaymultismsinfo(sms,false,false,NULL);
+#ifdef GSM_ENABLE_BACKUP
 			}
+#endif
 		}
 		start=false;
 	}
@@ -2190,17 +2199,20 @@ static void GetEachSMS(int argc, char *argv[])
 	int			smsnum=0,smspos=0;
 	GSM_SMSFolders		folders;
 	bool			start = true, ems = true;
+#ifdef GSM_ENABLE_BACKUP
 	GSM_MemoryStatus	MemStatus;
 	GSM_MemoryEntry		Pbk;
 	int			used;
 	GSM_Backup		Backup;
 
 	GSM_ClearBackup(&Backup);
+#endif
 
 	GetSMS[0] = NULL;
 
 	GSM_Init(true);
 
+#ifdef GSM_ENABLE_BACKUP
 	if (argc == 3 && mystrncasecmp(argv[2],"-pbk",0)) {
 		MemStatus.MemoryType = MEM_ME;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
@@ -2234,6 +2246,7 @@ static void GetEachSMS(int argc, char *argv[])
 			printmsgerr("\n");
 		}
 	}
+#endif
 
 	error=Phone->GetSMSFolders(&s, &folders);
 	Print_Error(error);
@@ -2293,11 +2306,15 @@ static void GetEachSMS(int argc, char *argv[])
 				printf("\n");
 			}
 		}
+#ifdef GSM_ENABLE_BACKUP
 		if (Backup.PhonePhonebook[0]!=NULL) {
 			displaymultismsinfo(*SortedSMS[i],true,ems,&Backup);
 		} else {
+#endif
 			displaymultismsinfo(*SortedSMS[i],true,ems,NULL);
+#ifdef GSM_ENABLE_BACKUP
 		}
+#endif
 
 		free(SortedSMS[i]);
 		SortedSMS[i] = NULL;
@@ -9485,8 +9502,8 @@ static GSM_Parameters Parameters[] = {
 	{"--getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
 	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
 	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
-	{"--nokiaaddplaylists",		0, 0, NokiaAddPlayLists,	{H_Filesystem,H_Nokia,0},	""},
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
+	{"--nokiaaddplaylists",		0, 0, NokiaAddPlayLists,	{H_Filesystem,H_Nokia,0},	""},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly][-overwrite]"},
 	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
 	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			"number"},

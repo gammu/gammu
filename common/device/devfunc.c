@@ -17,6 +17,7 @@
  */
 
 #include <string.h>
+#include <fcntl.h>
 #ifdef WIN32
 #  include <io.h>
 #else
