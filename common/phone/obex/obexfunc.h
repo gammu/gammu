@@ -5,6 +5,7 @@
 
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
+#include "obexgen.h"
 
 extern GSM_Reply_Function	OBEXGENReplyFunctions[];
 extern GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s);

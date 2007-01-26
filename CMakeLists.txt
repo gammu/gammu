@@ -8,6 +8,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.4.2)
 
 # Read version
 FILE(READ "${CMAKE_SOURCE_DIR}/version" VERSION_WIN)
+string(REPLACE "\n" "" VERSION_WIN ${VERSION_WIN})
+string(REPLACE "\r" "" VERSION_WIN ${VERSION_WIN})
 string(REPLACE "," "." VERSION ${VERSION_WIN})
 message ("Configuring ${CMAKE_PROJECT_NAME} ${VERSION}")
 
@@ -155,4 +157,6 @@ endif (MYSQL_FOUND)
 if (BLUEZ_FOUND)
 	target_link_libraries (Gammu ${BLUEZ_LIBRARIES})
 endif (BLUEZ_FOUND)
+
+CONFIGURE_FILE(cfg/cmake/config.h.in cfg/config.h)
 

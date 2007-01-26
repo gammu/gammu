@@ -1,0 +1,60 @@
+Gammu All Mobile Management Utilities
+=====================================
+
+[About]
+
+Gammu is library and command line utility for mobile phones. It is
+released under GNU GPL version 2.
+
+It has been initiated by Marcin Wiacek and other people. Originally the
+code was baased on Gnokii <http://www.gnokii.org> and later MyGnokii
+<http://www.mwiacek.com> projects. Gammu  was former (up to version
+0.58) called MyGnokii2.
+
+Currently the project is lead by Michal Cihar <michal@cihar.com> with
+help of many contributors.
+
+
+[More information]
+
+On <http://www.gammu.org/> there is wiki and bug tracker, current Gammu
+maintainer keeps information available on <http://cihar.com/gammu/>.
+
+
+[Downloading]
+
+Current releases can be downloaded from several mirrors, primary
+donwload site currently is <http://dl.cihar.com/gammu/releases/>. 
+
+Developers might be interested in snapshot or version control system
+(Bazaar is currently used), information about accessing these is
+available at <http://cihar.com/gammu/>.
+
+
+[Versioning]
+
+There are two types of releases - testing and stable. Stable releases
+have number x.y.0, while testing are x.y.z. Testing releases usually
+provide latest features, but everything does not have to be stabilised
+yet.
+
+
+[Problmes]
+
+Use <http://www.gammu.org/bugs> or mailing list for reporting problems.
+It useful to send logs of gammu executed with enabled debugging. You can
+to it by adding "textall" as first parameter, eg.:
+
+   gammu textall --identify
+
+
+[Developers]
+
+Some information is available on wiki and in docs/docs/english/gammu.htm
+and readme.htm.
+
+
+[Note]
+
+Name Gammu is not connected with Gammu from "Heretics of Dune" written
+by Frank Herbert.
