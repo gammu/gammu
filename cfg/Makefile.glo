@@ -103,6 +103,8 @@ include $(TOPDIR)/cfg/Makefile.cfg
 
 DESTDIR = 
 
+CPPFLAGS += -I$(TOPDIR)/cfg/ -I$(TOPDIR)/common/
+
 # --------------------------- internal source ---------------------------------
 
 # uncomment if you want to have prerequisites files created
@@ -117,12 +119,12 @@ DESTDIR =
 	@echo $*.o \ >> $*.d
 	@$(CC) -MM $(CPPFLAGS) $*.c >> $*.d
 	@echo Making $*.c
-	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $*.c -o $*.o
+	@$(CC) -c $(CFLAGS) $(CPPFLAGS) $*.c -o $*.o
 
 %.o: %.c $(TOPDIR)/cfg/config.h
 	@echo Making $<
 # Add special flags for gammu binary
-	@$(CC) -c $(CFLAGS) -I$(TOPDIR)/common/ $(CPPFLAGS) $*.c -o $*.o $(if $(subst gammu/gammu.c,,$<),,$(GAMMU_CFLAGS))
+	@$(CC) -c $(CFLAGS) $(CPPFLAGS) $*.c -o $*.o $(if $(subst gammu/gammu.c,,$<),,$(GAMMU_CFLAGS))
 
 all: gammu
 
