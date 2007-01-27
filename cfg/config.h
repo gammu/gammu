@@ -6,12 +6,12 @@
 /* -------------------------- Gammu specific ---------------------------- */
 
 /* Version of package */
-#define VERSION "1.09.16"
-#define VERSION_WIN "1,09,16,0"
+#define VERSION "1.09.17"
+#define VERSION_WIN "1,09,17,0"
 
 #ifndef _MSC_VER
 /* Define if want DEBUG info */
-/* #undef DEBUG */
+#define DEBUG 1
 #endif
 
 /* #undef ENABLE_LGPL */
@@ -130,7 +130,7 @@
  * too.
  */
 /* Enables cell broadcast */
-/* #undef GSM_ENABLE_CELLBROADCAST */
+#define GSM_ENABLE_CELLBROADCAST 1
 
 /* If you want backup/restore stuff. Some people wanted it - they required
  * smalled library made from Gammu and didn't require it. Please note,
