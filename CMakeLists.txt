@@ -166,8 +166,11 @@ set (BINARY_SRC
 	gammu/sniff.c
 	gammu/gammu.c)
 
+# Library
 add_library (Gammu ${LIBRARY_SRC})
+set_target_properties (Gammu PROPERTIES VERSION ${VERSION} SOVERSION 1)
 
+# Gammu program
 add_executable (gammu ${BINARY_SRC})
 
 
