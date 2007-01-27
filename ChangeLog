@@ -48,6 +48,9 @@ For additionals materials and links to them see readme.txt
 [-] Fixed error
 
 
+2007???? - 1.09.18
+[-] * Do not ship make-release in tarball.
+
 20070127 - 1.09.17
 [!] * First release by Michal Cihar, this changes some URLS, see readme.txt.
 [+] * Experimental CMake build support, so far not completely working (Michal
