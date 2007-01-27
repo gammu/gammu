@@ -27,6 +27,6 @@ parameters bellow), or using TUI - ccmake.
 
 Useful cmake parameters:
 
-- -DENABLE_SHARED=ON" enables shared library
+- -DENABLE_SHARED=ON enables shared library
 - -DCMAKE_BUILD_TYPE="Debug" enables debug build
 
