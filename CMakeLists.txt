@@ -56,11 +56,14 @@ macro_optional_find_package (Doxygen)
 macro_optional_find_package (Threads)
 
 # Packages in sources
+
 macro_optional_find_package (MySQL)
+macro_optional_find_package (Postgres)
 macro_optional_find_package (Bluez)
 
 include_directories (
 	${GAMMU_SOURCE_DIR}/common
+	${POSTGRES_INCLUDE_DIR}
 	${MYSQL_INCLUDE_DIR}
 	${BLUEZ_INCLUDE_DIR}
 	)
@@ -144,6 +147,7 @@ add_executable (gammu
 	gammu/smsd/smsdcore.c
 	gammu/smsd/s_files.c
 	gammu/smsd/s_mysql.c
+	gammu/smsd/s_pgsql.c
 	gammu/sniff.c
 	gammu/gammu.c)
 
@@ -151,9 +155,16 @@ add_executable (gammu
 target_link_libraries (gammu Gammu)
 target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
 
+# Tune options for found libraries
 if (MYSQL_FOUND)
 	target_link_libraries (gammu ${MYSQL_LIBRARIES})
+    set(HAVE_MYSQL_MYSQL_H TRUE)
 endif (MYSQL_FOUND)
+
+if (POSTGRES_FOUND)
+	target_link_libraries (gammu ${POSTGRES_LIBRARY})
+    set(HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
+endif (POSTGRES_FOUND)
 
 if (BLUEZ_FOUND)
 	target_link_libraries (Gammu ${BLUEZ_LIBRARIES})
@@ -164,6 +175,8 @@ if (BLUEZ_FOUND)
     endif (WITH_BLUETOOTH_RF_SEARCHING)
 endif (BLUEZ_FOUND)
 
+
+# Phone and protocol configuration 
 macro_gammu_option(NOKIA_SUPPORT "Nokia phones support" ON)
 if (WITH_NOKIA_SUPPORT)
     macro_gammu_option(MBUS2 "Nokia MBUS2 protocol" ON)
@@ -236,9 +249,12 @@ endif (WITH_GNAPPLET_SUPPORT)
 option(ENABLE_LGPL "Enable LGPL licensing (disables all GPL only code)" OFF)
 mark_as_advanced(ENABLE_LGPL)
 
+
 # Some generic configurations
 macro_gammu_option(CELLBROADCAST "Cell Broadcast messages support" ON)
 macro_gammu_option(BACKUP "Backup/Restore functions" ON)
 
+
+# Generate config.h
 CONFIGURE_FILE(cfg/cmake/config.h.in cfg/config.h)
 
