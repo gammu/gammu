@@ -87,7 +87,7 @@ check_function_exists (iswspace HAVE_ISWSPACE)
 check_function_exists (towlower HAVE_TOWLOWER)
 
 
-add_library (Gammu 
+set (LIBRARY_SRC
 	common/gsmcomon.c
 	common/gsmstate.c
 	common/misc/misc.c
@@ -149,7 +149,7 @@ add_library (Gammu
 	common/phone/obex/obexgen.c
 	common/phone/symbian/gnapgen.c)
 
-add_executable (gammu 
+set (BINARY_SRC
 	gammu/depend/nokia/dct3.c
 	gammu/depend/nokia/dct3trac/wmx.c
 	gammu/depend/nokia/dct3trac/wmx-gsm.c
@@ -165,6 +165,10 @@ add_executable (gammu
 	gammu/smsd/s_pgsql.c
 	gammu/sniff.c
 	gammu/gammu.c)
+
+add_library (Gammu ${LIBRARY_SRC})
+
+add_executable (gammu ${BINARY_SRC})
 
 
 target_link_libraries (gammu Gammu)
@@ -284,6 +288,23 @@ include_directories (
 	${MYSQL_INCLUDE_DIR}
 	${BLUEZ_INCLUDE_DIR}
 	)
+
+# Generate Doxygen file
+set (DOXYGEN_INPUT ${Gammu_SOURCE_DIR}/common)
+set (DOXYGEN_OUTPUT ${Gammu_BINARY_DIR}/gammu-doc)
+if (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
+    set (HAVE_DOT "NO")
+    set (DOXYGEN_DOT_PATH "")
+else (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
+    set (HAVE_DOT "YES")
+    # Strip binary name from variable
+    string (REGEX REPLACE "/dot$" "" DOXYGEN_DOT_PATH ${DOXYGEN_DOT_EXECUTABLE})
+    message(${DOXYGEN_DOT_PATH})
+endif (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
+configure_file (cfg/doxygen/Doxyfile.in cfg/Doxyfile)
+
+# Target for generating API documentation
+add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} cfg/Doxyfile DEPENDS ${LIBRARY_SRC} COMMENT "Generating API documentation")
 
 # Install instructions
 #INSTALL(FILES ${files} DESTINATION include)
