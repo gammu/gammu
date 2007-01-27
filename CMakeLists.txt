@@ -143,6 +143,10 @@ set (SYMBIAN_FILES
     other/symbian/gnapplet.sis
     )
 
+set (MAN1_PAGES
+    docs/docs/english/gammu.1
+    )
+
 set (HEADERS
     common/device/bluetoth/affix.h
     common/device/bluetoth/blue_w32.h
@@ -465,6 +469,10 @@ if (NOT DEFINED INSTALL_DOC_DIR)
 	set (INSTALL_DOC_DIR "share/doc/gammu" CACHE FILEPATH "Path for documentation installation")
     mark_as_advanced (INSTALL_DOC_DIR)
 endif (NOT DEFINED INSTALL_DOC_DIR)
+if (NOT DEFINED INSTALL_MAN_DIR)
+	set (INSTALL_MAN_DIR "share/man" CACHE FILEPATH "Path for man pages installation")
+    mark_as_advanced (INSTALL_MAN_DIR)
+endif (NOT DEFINED INSTALL_MAN_DIR)
 
 # Generate pkgconfig file
 configure_file (cfg/gammu.pc.cmake cfg/gammu.pc @ONLY)
@@ -529,4 +537,8 @@ foreach (EXAMPLE ${EXAMPLES})
         )
 endforeach (EXAMPLE)
 
-#install (FILES ${HEADERS} DESTINATION include)
+install (
+    FILES ${MAN1_PAGES}
+    DESTINATION "${INSTALL_MAN_DIR}/man1"
+    COMPONENT "basic-documentation"
+    )
