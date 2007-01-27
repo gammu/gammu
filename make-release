@@ -14,6 +14,7 @@ else
     baz export gammu--fixes--1 gammu-$version
 fi
 find gammu-$version -name .arch-inventory -print0 | xargs -0 rm -f
+rm make-release
 tar cfz gammu-$version.tar.gz gammu-$version
 tar cfj gammu-$version.tar.bz2 gammu-$version
 
