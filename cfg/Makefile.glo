@@ -231,9 +231,9 @@ installdocs:
             ) \
 	done
 	@$(RM) -rf $(DESTDIR)$(INSTALL_DOC_DIR)/docs/locale
-	@$(INSTALL) -m 0644 $(TOPDIR)/changelog $(DESTDIR)$(INSTALL_DOC_DIR)
-	@$(INSTALL) -m 0644 $(TOPDIR)/readme.txt $(DESTDIR)$(INSTALL_DOC_DIR)
-	@$(INSTALL) -m 0644 $(TOPDIR)/copying $(DESTDIR)$(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/ChangeLog $(DESTDIR)$(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/README $(DESTDIR)$(INSTALL_DOC_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/COPYING $(DESTDIR)$(INSTALL_DOC_DIR)
 	@echo Installing man to $(DESTDIR)$(INSTALL_MAN_DIR)
 	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_MAN_DIR)
 	@$(INSTALL) -m 0644 $(TOPDIR)/docs/docs/english/gammu.1 $(DESTDIR)$(INSTALL_MAN_DIR)
