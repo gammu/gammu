@@ -86,6 +86,138 @@ check_function_exists (alphasort HAVE_ALPHASORT)
 check_function_exists (iswspace HAVE_ISWSPACE)
 check_function_exists (towlower HAVE_TOWLOWER)
 
+set (LOCALES 
+    cs 
+    de 
+    es 
+    it 
+    pl 
+    ru 
+    us
+    )
+
+set (EXAMPLES
+    docs/examples/config/smsdrc
+    docs/examples/config/gammurc
+    docs/examples/config/mysql.sql
+    docs/examples/config/pgsql.sql
+    docs/examples/fax/faxreceive
+    docs/examples/fax/faxsend
+    docs/examples/media/aliens.nlm
+    docs/examples/media/axelf.txt
+    docs/examples/ppp/data
+    docs/examples/ppp/gprs
+    docs/examples/ppp/startppp
+    docs/examples/ppp/statsppp
+    other/php/php1/admin.php
+    other/php/php2/linked.php
+    other/php/php2/linked.sql
+    other/php/php3/config.php
+    other/php/php3/funcoes/func.gammu.php
+    other/php/php3/funcoes/func.sql.php
+    other/php/php3/index.php
+    other/php/php3/intergammu.txt
+    other/php/php3/proc/admin.php
+    other/php/php3/proclast.sql
+    other/php/php4/sms.php
+    )
+
+set (DEVELDOCS
+    docs/docs/english/replace.txt
+    docs/docs/english/readme.htm
+    docs/docs/english/gammu.htm
+    docs/docs/gammu.png
+    docs/docs/italian/gammu.txt
+    docs/docs/italian/readme.txt
+    )
+
+set (DOCS
+    README 
+    ChangeLog 
+    COPYING
+    )
+
+set (SYMBIAN_FILES
+    other/symbian/readme.txt
+    other/symbian/gnapplet.ini
+    other/symbian/gnapplet.sis
+    )
+
+set (HEADERS
+    common/device/bluetoth/affix.h
+    common/device/bluetoth/blue_w32.h
+    common/device/bluetoth/bluetoth.h
+    common/device/bluetoth/bluez.h
+    common/device/devfunc.h
+    common/device/irda/irda.h
+    common/device/irda/irda_unx.h
+    common/device/irda/irda_w32.h
+    common/device/serial/ser_djg.h
+    common/device/serial/ser_unx.h
+    common/device/serial/ser_w32.h
+    common/gammu.h
+    common/misc/coding/md5.h
+    common/misc/coding/coding.h
+    common/misc/cfg.h
+    common/misc/misc.h
+    common/phone/alcatel/alcatel.h
+    common/phone/at/samsung.h
+    common/phone/at/siemens.h
+    common/phone/at/atfunc.h
+    common/phone/at/atgen.h
+    common/phone/nokia/dct3/dct3comm.h
+    common/phone/nokia/dct3/dct3func.h
+    common/phone/nokia/dct3/n0650.h
+    common/phone/nokia/dct3/n6110.h
+    common/phone/nokia/dct3/n7110.h
+    common/phone/nokia/dct3/n9210.h
+    common/phone/nokia/nfuncold.h
+    common/phone/nokia/ncommon.h
+    common/phone/nokia/nfunc.h
+    common/phone/nokia/wd2/n3650.h
+    common/phone/nokia/dct4s40/6510/6510cal.h
+    common/phone/nokia/dct4s40/6510/6510file.h
+    common/phone/nokia/dct4s40/6510/n6510.h
+    common/phone/nokia/dct4s40/dct4func.h
+    common/phone/nokia/dct4s40/n3320.h
+    common/phone/obex/obexgen.h
+    common/phone/obex/obexfunc.h
+    common/phone/pfunc.h
+    common/phone/symbian/gnapgen.h
+    common/phone/sonyeric/sefunc.h
+    common/phone/sonyeric/sonyeric.h
+    common/protocol/alcatel/alcabus.h
+    common/protocol/at/at.h
+    common/protocol/nokia/fbus2.h
+    common/protocol/nokia/mbus2.h
+    common/protocol/nokia/phonet.h
+    common/protocol/obex/obex.h
+    common/protocol/protocol.h
+    common/protocol/symbian/gnapbus.h
+    common/service/backup/backics.h
+    common/service/backup/backldif.h
+    common/service/backup/backlmb.h
+    common/service/backup/backtext.h
+    common/service/backup/backvcf.h
+    common/service/backup/backvcs.h
+    common/service/backup/gsmback.h
+    common/service/backup/backgen.h
+    common/service/gsmnet.h
+    common/service/gsmprof.h
+    common/service/sms/gsmems.h
+    common/service/sms/gsmmulti.h
+    common/service/sms/gsmsms.h
+    common/service/gsmlogo.h
+    common/service/gsmcal.h
+    common/service/gsmring.h
+    common/service/gsmpbk.h
+    common/service/gsmcall.h
+    common/service/gsmdata.h
+    common/service/gsmmisc.h
+    common/gsmstate.h
+    common/gsmcomon.h
+    common/config.h
+    )
 
 set (LIBRARY_SRC
 	common/gsmcomon.c
@@ -211,12 +343,14 @@ if (WITH_NOKIA_SUPPORT)
     macro_gammu_option (DKU2AT "Nokia DKU2AT protocol" ON)
     macro_gammu_option (DKU5FBUS2 "Nokia DKU5FBUS2 protocol" ON)
     macro_gammu_option (FBUS2PL2303 "Nokia FBUS2PL2303 protocol" ON)
+
     macro_gammu_option (FBUS2BLUE "Nokia FBUS2BLUE protocol" ON)
-    macro_gammu_option (FBUS2IRDA "Nokia FBUS2IRDA protocol" ON)
     macro_gammu_option (PHONETBLUE "Nokia PHONETBLUE protocol" ON)
-    macro_gammu_option (IRDAPHONET "Nokia IRDAPHONET protocol" ON)
     macro_gammu_option (BLUEFBUS2 "Nokia BLUEFBUS2 protocol" ON)
     macro_gammu_option (BLUEPHONET "Nokia BLUEPHONET protocol" ON)
+
+    macro_gammu_option (IRDAPHONET "Nokia IRDAPHONET protocol" ON)
+    macro_gammu_option (FBUS2IRDA "Nokia FBUS2IRDA protocol" ON)
 
     macro_gammu_option (NOKIA3320 "Nokia 3320 and compatible phones support" ON)
     macro_gammu_option (NOKIA650 "Nokia 650 and compatible phones support" ON)
@@ -281,7 +415,7 @@ macro_gammu_option (BACKUP "Backup/Restore functions" ON)
 
 
 # Generate config.h
-configure_file (cfg/cmake/config.h.in cfg/config.h)
+configure_file (cfg/config.h.cmake cfg/config.h ESCAPE_QUOTES)
 
 # Include search path
 include_directories (
@@ -302,12 +436,97 @@ else (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
     set (HAVE_DOT "YES")
     # Strip binary name from variable
     string (REGEX REPLACE "/dot$" "" DOXYGEN_DOT_PATH ${DOXYGEN_DOT_EXECUTABLE})
-    message(${DOXYGEN_DOT_PATH})
 endif (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
-configure_file (cfg/doxygen/Doxyfile.in cfg/Doxyfile)
+configure_file (cfg/Doxyfile.cmake cfg/Doxyfile)
 
 # Target for generating API documentation
-add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} cfg/Doxyfile DEPENDS ${LIBRARY_SRC} COMMENT "Generating API documentation")
+add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} cfg/Doxyfile 
+    DEPENDS ${LIBRARY_SRC} ${HEADERS}
+    COMMENT "Generating API documentation")
+
+# Install paths
+if (NOT DEFINED INSTALL_BIN_DIR)
+	set (INSTALL_BIN_DIR "bin" CACHE FILEPATH "Path for binaries installation")
+    mark_as_advanced (INSTALL_BIN_DIR)
+endif (NOT DEFINED INSTALL_BIN_DIR)
+if (NOT DEFINED INSTALL_LIB_DIR)
+	set (INSTALL_LIB_DIR "lib" CACHE FILEPATH "Path for libraries installation")
+    mark_as_advanced (INSTALL_LIB_DIR)
+endif (NOT DEFINED INSTALL_LIB_DIR)
+if (NOT DEFINED INSTALL_INC_DIR)
+	set (INSTALL_INC_DIR "include/gammu" CACHE FILEPATH "Path for includes installation")
+    mark_as_advanced (INSTALL_INC_DIR)
+endif (NOT DEFINED INSTALL_INC_DIR)
+if (NOT DEFINED INSTALL_LOC_DIR)
+	set (INSTALL_LOC_DIR "share/gammu" CACHE FILEPATH "Path for locales installation")
+    mark_as_advanced (INSTALL_LOC_DIR)
+endif (NOT DEFINED INSTALL_LOC_DIR)
+if (NOT DEFINED INSTALL_DOC_DIR)
+	set (INSTALL_DOC_DIR "share/doc/gammu" CACHE FILEPATH "Path for documentation installation")
+    mark_as_advanced (INSTALL_DOC_DIR)
+endif (NOT DEFINED INSTALL_DOC_DIR)
+
+# Generate pkgconfig file
+configure_file (cfg/gammu.pc.cmake cfg/gammu.pc @ONLY)
 
 # Install instructions
-#INSTALL(FILES ${files} DESTINATION include)
+install (TARGETS gammu Gammu
+        RUNTIME DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
+        LIBRARY DESTINATION ${INSTALL_LIB_DIR} COMPONENT "runtime"
+        ARCHIVE DESTINATION ${INSTALL_LIB_DIR} COMPONENT "development"
+        )
+
+foreach (HEADER ${HEADERS})
+    string (REGEX REPLACE "common(.*)/[^/]*$" "\\1" DIRNAME ${HEADER})
+    install (
+        FILES ${HEADER} 
+        DESTINATION "${INSTALL_INC_DIR}/gammu/${DIRNAME}" 
+        COMPONENT "development"
+        )
+endforeach (HEADER)
+
+foreach (LOCALE ${LOCALES})
+    install (
+        FILES "docs/docs/locale/gammu_${LOCALE}.txt" 
+        DESTINATION "${INSTALL_LOC_DIR}/gammu_${LOCALE}.txt"
+        COMPONENT "locales"
+        )
+endforeach (LOCALE)
+
+install (
+    FILES "${Gammu_BINARY_DIR}/cfg/gammu.pc"
+    DESTINATION "lib/pkgconfig"
+    COMPONENT "development"
+    )
+
+install (
+    FILES ${DOCS}
+    DESTINATION ${INSTALL_DOC_DIR}
+    COMPONENT "basic-documentation"
+    )
+
+install (
+    FILES ${SYMBIAN_FILES}
+    DESTINATION ${INSTALL_DOC_DIR}/symbian
+    COMPONENT "gnapplet"
+    )
+
+foreach (DOC ${DEVELDOCS})
+    string (REGEX REPLACE "docs/docs(.*)/[^/]*$" "\\1" DIRNAME ${DOC})
+    install (
+        FILES ${DOC}
+        DESTINATION "${INSTALL_DOC_DIR}/devel/${DIRNAME}"
+        COMPONENT "developer-documentation"
+        )
+endforeach (DOC)
+
+foreach (EXAMPLE ${EXAMPLES})
+    string (REGEX REPLACE "(docs/examples|other/php)(.*)/[^/]*$" "\\2" DIRNAME ${EXAMPLE})
+    install (
+        FILES ${EXAMPLE}
+        DESTINATION "${INSTALL_DOC_DIR}/examples/${DIRNAME}"
+        COMPONENT "developer-documentation"
+        )
+endforeach (EXAMPLE)
+
+#install (FILES ${HEADERS} DESTINATION include)

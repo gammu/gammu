@@ -29,4 +29,5 @@ Useful cmake parameters:
 
 - -DENABLE_SHARED=ON enables shared library
 - -DCMAKE_BUILD_TYPE="Debug" enables debug build
+- -DCMAKE_INSTALL_PREFIX="/usr" change installation prefix
 
