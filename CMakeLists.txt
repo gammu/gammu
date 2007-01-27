@@ -38,6 +38,16 @@ else (WITH_RPATH)
 	set(CMAKE_SKIP_RPATH ON)
 endif (WITH_RPATH)
 
+# Static library by default
+if (NOT DEFINED ENABLE_SHARED)
+	set (ENABLE_SHARED FALSE CACHE BOOL "Build shared library")
+endif (NOT DEFINED ENABLE_SHARED)
+
+if (ENABLE_SHARED)
+	set(BUILD_SHARED_LIBS ON)
+endif (ENABLE_SHARED)
+
+
 # Where to lookup modules
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -258,3 +268,6 @@ macro_gammu_option(BACKUP "Backup/Restore functions" ON)
 # Generate config.h
 CONFIGURE_FILE(cfg/cmake/config.h.in cfg/config.h)
 
+
+# Install instructions
+#INSTALL(FILES ${files} DESTINATION include)
