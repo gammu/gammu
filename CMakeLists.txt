@@ -4,14 +4,18 @@
 project (Gammu C)
 
 # I didn't check older versions
-CMAKE_MINIMUM_REQUIRED(VERSION 2.4.2)
+cmake_minimum_required(VERSION 2.4.2)
 
 # Read version
-FILE(READ "${CMAKE_SOURCE_DIR}/version" VERSION_WIN)
+file(READ "${CMAKE_SOURCE_DIR}/version" VERSION_WIN)
 string(REPLACE "\n" "" VERSION_WIN ${VERSION_WIN})
 string(REPLACE "\r" "" VERSION_WIN ${VERSION_WIN})
 string(REPLACE "," "." VERSION ${VERSION_WIN})
 message ("Configuring ${CMAKE_PROJECT_NAME} ${VERSION}")
+
+if (${Gammu_BINARY_DIR} STREQUAL ${Gammu_SOURCE_DIR})
+    message (FATAL_ERROR "In tree build is not supported by Gammu, run cmake from different directory where binaries will be placed!")
+endif (${Gammu_BINARY_DIR} STREQUAL ${Gammu_SOURCE_DIR})
 
 # For debugging
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -23,7 +27,7 @@ else (CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
 # FIXME: we should detect whether compiler supports -Wno-pointer-sign
-SET ( CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall -Wno-pointer-sign")
+set ( CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall -Wno-pointer-sign")
 SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-pointer-sign")
 
 # No rpath by default
@@ -71,12 +75,6 @@ macro_optional_find_package (MySQL)
 macro_optional_find_package (Postgres)
 macro_optional_find_package (Bluez)
 
-include_directories (
-	${GAMMU_SOURCE_DIR}/common
-	${POSTGRES_INCLUDE_DIR}
-	${MYSQL_INCLUDE_DIR}
-	${BLUEZ_INCLUDE_DIR}
-	)
 
 link_directories (
 	${GAMMU_SOURCE_DIR}/common
@@ -185,6 +183,9 @@ if (BLUEZ_FOUND)
     endif (WITH_BLUETOOTH_RF_SEARCHING)
 endif (BLUEZ_FOUND)
 
+if (CMAKE_USE_PTHREADS_INIT)
+    set(HAVE_PTHREAD ON)
+endif (CMAKE_USE_PTHREADS_INIT)
 
 # Phone and protocol configuration 
 macro_gammu_option(NOKIA_SUPPORT "Nokia phones support" ON)
@@ -266,8 +267,16 @@ macro_gammu_option(BACKUP "Backup/Restore functions" ON)
 
 
 # Generate config.h
-CONFIGURE_FILE(cfg/cmake/config.h.in cfg/config.h)
+configure_file(cfg/cmake/config.h.in cfg/config.h)
 
+# Include search path
+include_directories (
+    ${Gammu_BINARY_DIR}/cfg
+	${Gammu_SOURCE_DIR}/common
+	${POSTGRES_INCLUDE_DIR}
+	${MYSQL_INCLUDE_DIR}
+	${BLUEZ_INCLUDE_DIR}
+	)
 
 # Install instructions
 #INSTALL(FILES ${files} DESTINATION include)
