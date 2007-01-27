@@ -1,0 +1,20 @@
+#!/bin/sh
+
+# Usage: make-release [branch]
+
+version=`tr , . < version`
+
+tmp=`mktemp -d`
+
+cd $tmp
+if [ "x$1" = "xbranch" ] ; then
+    baz branch gammu--fixes--1 gammu--release--$version
+    baz export gammu--release--$version gammu-$version
+else
+    baz export gammu--fixes--1 gammu-$version
+fi
+find gammu-$version -name .arch-inventory -print0 | xargs -0 rm -f
+tar cfz gammu-$version.tar.gz gammu-$version
+tar cfj gammu-$version.tar.bz2 gammu-$version
+
+echo "Release is in $tmp directory"
