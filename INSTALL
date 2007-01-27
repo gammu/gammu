@@ -1,0 +1,29 @@
+Gammu All Mobile Management Utilities
+=====================================
+
+[Installation]
+
+1. Using autoconf (old, usually working method):
+
+./configure
+make
+make install
+
+To enable shared library, use "make shared" instead of "make".
+
+2. Using cMake <http://www.cmake.org>:
+
+For now, only out of source build is supported, so you have to create
+separate directory for build.
+
+mkdir build
+cd build
+cmake ..
+make
+make install
+
+To enable shared library, use "cmake .. -DENABLE_SHARED=TRUE" instead of
+"cmake ..".
+
+You can configure build parameters either by command line (as shown
+above), or using TUI - ccmake.
