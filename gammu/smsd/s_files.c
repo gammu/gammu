@@ -1,6 +1,6 @@
 /* (c) 2002-2004 by Joergen Thomsen */
 
-#include "../../cfg/config.h"
+#include "gammu.h"
 
 #include <string.h>
 #include <stdio.h>
