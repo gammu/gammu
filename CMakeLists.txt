@@ -57,6 +57,8 @@ set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
 # Standard packages
 include (CheckCSourceCompiles)
+include (CheckIncludeFile)
+include (CheckFunctionExists)
 
 # Packages in our sources (mostly taken from KDE)
 include (MacroOptionalFindPackage)
@@ -75,10 +77,15 @@ macro_optional_find_package (MySQL)
 macro_optional_find_package (Postgres)
 macro_optional_find_package (Bluez)
 
+# Search for needed includes and functions
 
-link_directories (
-	${GAMMU_SOURCE_DIR}/common
-	)
+check_include_file (dirent.h HAVE_DIRENT_H)
+check_include_file (sys/ioctl.h HAVE_SYS_IOCTL_H)
+check_function_exists (scandir HAVE_SCANDIR)
+check_function_exists (alphasort HAVE_ALPHASORT)
+check_function_exists (iswspace HAVE_ISWSPACE)
+check_function_exists (towlower HAVE_TOWLOWER)
+
 
 add_library (Gammu 
 	common/gsmcomon.c
