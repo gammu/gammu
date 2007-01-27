@@ -70,6 +70,16 @@ AC_PATH_PROG(RPMBUILD, rpmbuild)
 AC_PATH_PROG(RPMBUILD, rpm, no)
 AC_PATH_PROG(RPM, rpm)
 AC_PATH_PROG(DOXYGEN, doxygen)
+AC_PATH_PROG(DOT, dot)
+if test -x "$DOT" ; then
+    HAVE_DOT=YES
+    DOXYGEN_DOT_PATH="$(dirname $DOT)"
+else
+    HAVE_DOT=NO
+    DOXYGEN_DOT_PATH=""
+fi
+AC_SUBST(HAVE_DOT)
+AC_SUBST(DOXYGEN_DOT_PATH)
 AC_PATH_PROG(AR, ar)
 AC_PATH_PROG(RANLIB, ranlib)
 AC_PATH_PROG(FAKEROOT, fakeroot)
@@ -172,6 +182,12 @@ AC_ARG_WITH(localedir,
         ]
 )
 AC_SUBST(LOCALE_DIR)
+
+dnl Path for sources for Doxygen
+DOXYGEN_INPUT=./common
+AC_SUBST(DOXYGEN_INPUT)
+DOXYGEN_OUTPUT=./gammu-doc
+AC_SUBST(DOXYGEN_OUTPUT)
 
 dnl Path for making RPM
 AC_MSG_CHECKING(for RPM build dir)
