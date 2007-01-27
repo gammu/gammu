@@ -22,8 +22,11 @@ cmake ..
 make
 make install
 
-To enable shared library, use "cmake .. -DENABLE_SHARED=ON" instead of
-"cmake ..".
+You can configure build parameters either by command line (see
+parameters bellow), or using TUI - ccmake.
 
-You can configure build parameters either by command line (as shown
-above), or using TUI - ccmake.
+Useful cmake parameters:
+
+- -DENABLE_SHARED=ON" enables shared library
+- -DCMAKE_BUILD_TYPE="Debug" enables debug build
+
