@@ -2,7 +2,7 @@
 # --------------- Makefile options, which doesn't depend on OS ----------------
 
 # Version used for soname, should change on each API change
-SONAME_MAJOR = 0
+SONAME_MAJOR = 1
 SONAME_MINOR = 0
 
 # these subdirectories from /docs are copied to docs dir
