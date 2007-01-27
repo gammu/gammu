@@ -20,7 +20,9 @@ bool 		mywstrncasecmp			(unsigned const char *a, unsigned const char *b, int num
 unsigned char	*mywstrstr			(unsigned const char *haystack, unsigned const char *needle);
 bool 		mywstrncmp			(unsigned const char *a, unsigned const char *b, int num);
 bool 		myiswspace	  		(unsigned const char *src);
-int 		mytowlower			(wchar_t c);
+#ifndef HAVE_TOWLOWER
+int 		towlower			(wchar_t c);
+#endif
 
 int		EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
 int		DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);

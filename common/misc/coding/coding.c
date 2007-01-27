@@ -1146,7 +1146,7 @@ bool mywstrncasecmp(unsigned const  char *a, unsigned const  char *b, int num)
 		if ((a[i*2] == 0x00 && a[i*2+1] == 0x00) || (b[i*2] == 0x00 && b[i*2+1] == 0x00)) return false;
  		wc  = a[i*2+1] | (a[i*2] << 8);
  		wc2 = b[i*2+1] | (b[i*2] << 8);
- 		if (mytowlower(wc) != mytowlower(wc2)) return false;
+ 		if (towlower(wc) != towlower(wc2)) return false;
  	}
 	return true;
 }
@@ -1188,18 +1188,16 @@ bool myiswspace(unsigned const char *src)
 #endif
 }
 
-/* FreeBSD boxes 4.7-STABLE does't have it, although it's ANSI standard */
-int mytowlower(wchar_t c)
-{
 #ifndef HAVE_TOWLOWER
+/* FreeBSD boxes 4.7-STABLE does't have it, although it's ANSI standard */
+int towlower(wchar_t c)
+{
 	unsigned char dest[10];
 
 	DecodeWithUnicodeAlphabet(c, dest);
 	return tolower(dest[0]);
-#else
-	return towlower(c);
-#endif
 }
+#endif
 
 /*
  * Following code is based on wcsstr from the GNU C Library, original
@@ -1219,7 +1217,7 @@ int mytowlower(wchar_t c)
 unsigned char *mywstrstr (const unsigned char *haystack, const unsigned char *needle)
 {
 /* One crazy define to convert unicode used in Gammu to standard wchar_t */
-#define tolowerwchar(x) (mytowlower((wchar_t)( (((&(x))[0] & 0xff) << 8) | (((&(x))[1] & 0xff)) )))
+#define tolowerwchar(x) (towlower((wchar_t)( (((&(x))[0] & 0xff) << 8) | (((&(x))[1] & 0xff)) )))
 	 register wchar_t b, c;
 
 	if ((b = tolowerwchar(*needle)) != L'\0') {
