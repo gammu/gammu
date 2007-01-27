@@ -10078,7 +10078,7 @@ int main(int argc, char *argv[])
 
 	if (rsslevel > 0) {
 		RSS.Buffer = NULL;
-		if (GSM_ReadHTTPFile("www.mwiacek.com","gsm/soft/gammu.rss",&RSS)) {
+		if (GSM_ReadHTTPFile("blog.cihar.com","archives/gammu_releases/index-rss.xml",&RSS)) {
 			while (pos < RSS.Used) {
 				if (RSS.Buffer[pos] != 10) {
 					pos++;
