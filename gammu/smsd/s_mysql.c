@@ -1,6 +1,6 @@
 /* (c) 2004 by Marcin Wiacek */
 
-#include "../../cfg/config.h"
+#include "gammu.h"
 
 #ifdef HAVE_MYSQL_MYSQL_H
 

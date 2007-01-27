@@ -1,6 +1,6 @@
 /* (c) 2006 by Andrea Riciputi */
 
-#include "../../cfg/config.h"
+#include "gammu.h"
 
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 
