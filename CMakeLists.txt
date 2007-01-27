@@ -81,6 +81,23 @@ macro_optional_find_package (Bluez)
 
 check_include_file (dirent.h HAVE_DIRENT_H)
 check_include_file (sys/ioctl.h HAVE_SYS_IOCTL_H)
+OPTION(WITH_IrDA "Search for IrDA package" ON)
+if (WITH_IrDA)
+    check_c_source_compiles (
+        "
+#include <sys/socket.h>
+#include <linux/types.h>
+#include <sys/ioctl.h>
+#include <linux/irda.h>
+int main(int argc, char **argv) { 
+    return 0; 
+}
+        " 
+        IRDA_FOUND
+        )
+else (WITH_IrDA)
+    set (IRDA_FOUND)
+endif (WITH_IrDA)
 check_function_exists (scandir HAVE_SCANDIR)
 check_function_exists (alphasort HAVE_ALPHASORT)
 check_function_exists (iswspace HAVE_ISWSPACE)
@@ -327,7 +344,7 @@ endif (POSTGRES_FOUND)
 if (BLUEZ_FOUND)
 	target_link_libraries (Gammu ${BLUEZ_LIBRARIES})
     set (GSM_ENABLE_BLUEZ TRUE)
-    macro_gammu_option (BLUETOOTH_RF_SEARCHING "Searching for RF channels with Bluetooth stack" ON)
+    macro_gammu_option (BLUETOOTH_RF_SEARCHING "Searching for RF channels with Bluetooth stack" ON ON ON)
     if (WITH_BLUETOOTH_RF_SEARCHING)
         set (BLUETOOTH_RF_SEARCHING ON)
     endif (WITH_BLUETOOTH_RF_SEARCHING)
@@ -338,84 +355,80 @@ if (CMAKE_USE_PTHREADS_INIT)
 endif (CMAKE_USE_PTHREADS_INIT)
 
 # Phone and protocol configuration 
-macro_gammu_option (NOKIA_SUPPORT "Nokia phones support" ON)
-if (WITH_NOKIA_SUPPORT)
-    macro_gammu_option (MBUS2 "Nokia MBUS2 protocol" ON)
-    macro_gammu_option (FBUS2 "Nokia FBUS2 protocol" ON)
-    macro_gammu_option (FBUS2DLR3 "Nokia FBUS2DLR3 protocol" ON)
-    macro_gammu_option (DKU2PHONET "Nokia DKU2PHONET protocol" ON)
-    macro_gammu_option (DKU2AT "Nokia DKU2AT protocol" ON)
-    macro_gammu_option (DKU5FBUS2 "Nokia DKU5FBUS2 protocol" ON)
-    macro_gammu_option (FBUS2PL2303 "Nokia FBUS2PL2303 protocol" ON)
 
-    macro_gammu_option (FBUS2BLUE "Nokia FBUS2BLUE protocol" ON)
-    macro_gammu_option (PHONETBLUE "Nokia PHONETBLUE protocol" ON)
-    macro_gammu_option (BLUEFBUS2 "Nokia BLUEFBUS2 protocol" ON)
-    macro_gammu_option (BLUEPHONET "Nokia BLUEPHONET protocol" ON)
+# Nokia phones
+macro_gammu_option (NOKIA_SUPPORT "Nokia support" ON ON ON)
 
-    macro_gammu_option (IRDAPHONET "Nokia IRDAPHONET protocol" ON)
-    macro_gammu_option (FBUS2IRDA "Nokia FBUS2IRDA protocol" ON)
+macro_gammu_option (MBUS2 "Nokia MBUS2 protocol" ON WITH_NOKIA_SUPPORT ON)
+macro_gammu_option (FBUS2 "Nokia FBUS2 protocol" ON WITH_NOKIA_SUPPORT ON)
+macro_gammu_option (FBUS2DLR3 "Nokia FBUS2DLR3 protocol" ON WITH_NOKIA_SUPPORT ON)
+macro_gammu_option (DKU2PHONET "Nokia DKU2PHONET protocol" ON WITH_NOKIA_SUPPORT ON)
+macro_gammu_option (DKU2AT "Nokia DKU2AT protocol" ON WITH_NOKIA_SUPPORT ON)
+macro_gammu_option (DKU5FBUS2 "Nokia DKU5FBUS2 protocol" ON WITH_NOKIA_SUPPORT ON)
+macro_gammu_option (FBUS2PL2303 "Nokia FBUS2PL2303 protocol" ON WITH_NOKIA_SUPPORT ON)
 
-    macro_gammu_option (NOKIA3320 "Nokia 3320 and compatible phones support" ON)
-    macro_gammu_option (NOKIA650 "Nokia 650 and compatible phones support" ON)
-    macro_gammu_option (NOKIA6110 "Nokia 61xx and compatible phones support" ON)
-    macro_gammu_option (NOKIA6510 "Nokia 6510 and compatible phones support" ON)
-    if (WITH_NOKIA6510)
-        macro_gammu_option (DCT4_CALENDAR_6210 "Force using 6210 frames for calendar for DCT4 phones" OFF)
-        if (WITH_DCT4_CALENDAR_6210)
-            set (GSM_FORCE_DCT4_CALENDAR_6210 TRUE)
-        endif (WITH_DCT4_CALENDAR_6210)
-    endif (WITH_NOKIA6510)
-    macro_gammu_option (NOKIA7110 "Nokia 7110 and compatible phones support" ON)
-    macro_gammu_option (NOKIA9210 "Nokia 9210 and compatible phones support" ON)
-    if (WITH_NOKIA7110 OR WITH_NOKIA9210)
-        macro_gammu_option (N71_92INCOMINGINFO "Nokia 62xx/71xx/9xxx incoming call/SMS info" OFF)
-    endif (WITH_NOKIA7110 OR WITH_NOKIA9210)
-    macro_gammu_option (NOKIA3650 "Nokia 3650 and compatible phones support" ON)
-endif (WITH_NOKIA_SUPPORT)
+macro_gammu_option (FBUS2BLUE "Nokia FBUS2BLUE protocol" ON WITH_NOKIA_SUPPORT BLUEZ_FOUND)
+macro_gammu_option (PHONETBLUE "Nokia PHONETBLUE protocol" ON WITH_NOKIA_SUPPORT BLUEZ_FOUND)
+macro_gammu_option (BLUEFBUS2 "Nokia BLUEFBUS2 protocol" ON WITH_NOKIA_SUPPORT BLUEZ_FOUND)
+macro_gammu_option (BLUEPHONET "Nokia BLUEPHONET protocol" ON WITH_NOKIA_SUPPORT BLUEZ_FOUND)
 
-macro_gammu_option (AT_SUPPORT "AT compatible phones support" ON)
-if (WITH_AT_SUPPORT)
-    macro_gammu_option (AT "AT protocol" ON)
-    macro_gammu_option (BLUEAT "AT protocol over Bluetooth" ON)
-    macro_gammu_option (IRDAAT "AT protocol over IrDA" ON)
+macro_gammu_option (IRDAPHONET "Nokia IRDAPHONET protocol" ON WITH_NOKIA_SUPPORT IRDA_FOUND)
+macro_gammu_option (FBUS2IRDA "Nokia FBUS2IRDA protocol" ON WITH_NOKIA_SUPPORT IRDA_FOUND)
 
-    macro_gammu_option (ATGEN "AT phones support" ON)
+macro_gammu_option (NOKIA3320 "Nokia 3320 and compatible phones support" ON WITH_NOKIA_SUPPORT ON)
+macro_gammu_option (NOKIA650 "Nokia 650 and compatible phones support" ON WITH_NOKIA_SUPPORT ON)
+macro_gammu_option (NOKIA6110 "Nokia 61xx and compatible phones support" ON WITH_NOKIA_SUPPORT ON)
+macro_gammu_option (NOKIA6510 "Nokia 6510 and compatible phones support" ON WITH_NOKIA_SUPPORT ON)
+macro_gammu_option (DCT4_CALENDAR_6210 "Force using 6210 frames for calendar for DCT4 phones" OFF WITH_NOKIA_SUPPORT WITH_NOKIA6510)
+if (WITH_DCT4_CALENDAR_6210)
+    set (GSM_FORCE_DCT4_CALENDAR_6210 TRUE)
+endif (WITH_DCT4_CALENDAR_6210)
+macro_gammu_option (NOKIA7110 "Nokia 7110 and compatible phones support" ON WITH_NOKIA_SUPPORT ON)
+macro_gammu_option (NOKIA9210 "Nokia 9210 and compatible phones support" ON WITH_NOKIA_SUPPORT ON)
+if (WITH_NOKIA7110 OR WITH_NOKIA9210)
+    set (wITH_71_92 ON)
+else (WITH_NOKIA7110 OR WITH_NOKIA9210)
+    set (wITH_71_92)
+endif (WITH_NOKIA7110 OR WITH_NOKIA9210)
+macro_gammu_option (N71_92INCOMINGINFO "Nokia 62xx/71xx/9xxx incoming call/SMS info" OFF WITH_NOKIA_SUPPORT WITH_71_92)
+macro_gammu_option (NOKIA3650 "Nokia 3650 and compatible phones support" ON WITH_NOKIA_SUPPORT ON)
 
-    macro_gammu_option (ALCATEL_SUPPORT "Alcatel phones support" ON)
-    if (WITH_ALCATEL_SUPPORT)
-        macro_gammu_option (ALCABUS "Alcatel protocol" ON)
+# AT phones
+macro_gammu_option (AT_SUPPORT "AT support" ON ON ON)
 
-        macro_gammu_option (ALCATEL "Alcatel phones support" ON)
-    endif (WITH_ALCATEL_SUPPORT)
-endif (WITH_AT_SUPPORT)
+macro_gammu_option (AT "AT protocol" ON WITH_AT_SUPPORT ON)
+macro_gammu_option (BLUEAT "AT protocol over Bluetooth" ON WITH_AT_SUPPORT BLUEZ_FOUND)
+macro_gammu_option (IRDAAT "AT protocol over IrDA" ON WITH_AT_SUPPORT IRDA_FOUND)
 
-macro_gammu_option (OBEX_SUPPORT "OBEX compatible phones support" ON)
-if (WITH_OBEX_SUPPORT)
-    macro_gammu_option (IRDAOBEX "OBEX protocol over IrDA" ON)
-    macro_gammu_option (BLUEOBEX "OBEX protocol over Bluetooth" ON)
+macro_gammu_option (ATGEN "AT phones support" ON WITH_AT_SUPPORT ON)
 
-    macro_gammu_option (OBEXGEN "Generic OBEX phones support" ON)
-    if (WITH_AT_SUPPORT)
-        macro_gammu_option (SONYERICSSON "Sony-Ericsson phones support" ON)
-    endif (WITH_AT_SUPPORT)
-endif (WITH_OBEX_SUPPORT)
+macro_gammu_option (ALCATEL_SUPPORT "Alcatel support" ON WITH_AT_SUPPORT ON)
 
-macro_gammu_option (GNAPPLET_SUPPORT "Symbian phones support (gnapplet)" ON)
-if (WITH_GNAPPLET_SUPPORT)
-    macro_gammu_option (IRDAGNAPBUS "GNAPBUS protocol over IrDA" ON)
-    macro_gammu_option (BLUEGNAPBUS "GNAPBUS protocol over Bluetooth" ON)
+macro_gammu_option (ALCABUS "Alcatel protocol" ON WITH_ALCATEL_SUPPORT ON)
 
-    macro_gammu_option (GNAPGEN "Gnapplet phones support" ON)
-endif (WITH_GNAPPLET_SUPPORT)
+macro_gammu_option (ALCATEL "Alcatel phones support" ON WITH_ALCATEL_SUPPORT ON)
+
+# OBEX phones
+macro_gammu_option (OBEX_SUPPORT "OBEX compatible phones support" ON ON ON)
+
+macro_gammu_option (BLUEOBEX "OBEX protocol over Bluetooth" ON WITH_OBEX_SUPPORT BLUEZ_FOUND)
+macro_gammu_option (IRDAOBEX "OBEX protocol over IrDA" ON WITH_OBEX_SUPPORT IRDA_FOUND)
+
+macro_gammu_option (OBEXGEN "Generic OBEX phones support" ON WITH_OBEX_SUPPORT ON)
+macro_gammu_option (SONYERICSSON "Sony-Ericsson phones support" ON WITH_OBEX_SUPPORT WITH_AT_SUPPORT)
+
+macro_gammu_option (GNAPPLET_SUPPORT "Symbian phones support (gnapplet)" ON WITH_NOKIA_SUPPORT ON)
+macro_gammu_option (BLUEGNAPBUS "GNAPBUS protocol over Bluetooth" ON WITH_GNAPPLET_SUPPORT BLUEZ_FOUND)
+macro_gammu_option (IRDAGNAPBUS "GNAPBUS protocol over IrDA" ON WITH_GNAPPLET_SUPPORT IRDA_FOUND)
+
+macro_gammu_option (GNAPGEN "Gnapplet phones support" ON WITH_GNAPPLET_SUPPORT ON)
 
 option (ENABLE_LGPL "Enable LGPL licensing (disables all GPL only code)" OFF)
 mark_as_advanced (ENABLE_LGPL)
 
-
 # Some generic configurations
-macro_gammu_option (CELLBROADCAST "Cell Broadcast messages support" ON)
-macro_gammu_option (BACKUP "Backup/Restore functions" ON)
+macro_gammu_option (CELLBROADCAST "Cell Broadcast messages support" ON ON ON)
+macro_gammu_option (BACKUP "Backup/Restore functions" ON ON ON)
 
 
 # Generate config.h

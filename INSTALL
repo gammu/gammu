@@ -27,7 +27,13 @@ parameters bellow), or using TUI - ccmake.
 
 Useful cmake parameters:
 
-- -DENABLE_SHARED=ON enables shared library
-- -DCMAKE_BUILD_TYPE="Debug" enables debug build
-- -DCMAKE_INSTALL_PREFIX="/usr" change installation prefix
+-DENABLE_SHARED=ON enables shared library
+-DCMAKE_BUILD_TYPE="Debug" enables debug build
+-DCMAKE_INSTALL_PREFIX="/usr" change installation prefix
+
+You can also disable support for whole set of phones:
+
+-DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support
+-DWITH_Bluez=OFF disables Bluetooth support
+-DWITH_IrDA=OFF disables IrDA support
 
