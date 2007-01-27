@@ -22,7 +22,7 @@ cmake ..
 make
 make install
 
-To enable shared library, use "cmake .. -DENABLE_SHARED=TRUE" instead of
+To enable shared library, use "cmake .. -DENABLE_SHARED=ON" instead of
 "cmake ..".
 
 You can configure build parameters either by command line (as shown
