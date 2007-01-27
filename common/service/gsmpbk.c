@@ -253,6 +253,8 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 				CopyUnicodeString(buffer + 2*pos, pbk->Entries[firstname].Text);
 				pos += UnicodeLength(pbk->Entries[firstname].Text);
 			}
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = 0;
 			SaveVCALText(Buffer, Length, buffer, "N");
 		}
 		/* Save address if it is composed from parts */
@@ -296,6 +298,8 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 				CopyUnicodeString(buffer + 2*pos, pbk->Entries[country].Text);
 				pos += UnicodeLength(pbk->Entries[country].Text);
 			}
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = 0;
 			SaveVCALText(Buffer, Length, buffer, "ADR");
 		}
 		if (header) *Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);

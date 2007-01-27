@@ -1386,8 +1386,10 @@ bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 	int		i,j=0,z,w;
 	unsigned char	mychar[3];
 	bool		retval = false;
+	int len;
+	len = UnicodeLength(src);
 
-	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
+	for (i = 0; i < len; i++) {
 		z = EncodeWithUTF8Alphabet2(src[i*2],src[i*2+1],mychar);
 		if (z>1) {
 			for (w=0;w<z;w++) {
