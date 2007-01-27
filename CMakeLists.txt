@@ -20,10 +20,10 @@ endif (${Gammu_BINARY_DIR} STREQUAL ${Gammu_SOURCE_DIR})
 # For debugging
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
 	set (CMAKE_VERBOSE_MAKEFILE ON)
-	set (CFG_DEBUG 1)
+	set (DEBUG 1)
 else (CMAKE_BUILD_TYPE STREQUAL "Debug")
 	set (CMAKE_VERBOSE_MAKEFILE OFF)
-	set (CFG_DEBUG 0)
+	set (DEBUG 0)
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
 # FIXME: we should detect whether compiler supports -Wno-pointer-sign
