@@ -14,6 +14,9 @@
  * to publish their code under.
  */
 
+/* To define GUID and not only declare */
+#define INITGUID
+
 #include "../../gsmstate.h"
 
 #ifdef GSM_ENABLE_SERIALDEVICE
@@ -26,9 +29,8 @@
 #include <memory.h>
 
 #if defined(GSM_ENABLE_DKU2PHONET) || defined(GSM_ENABLE_DKU2AT)
-#  define INITGUID
 #  include <initguid.h>
-#  include <Setupapi.h>
+#  include <setupapi.h>
 #  pragma comment(lib, "setupapi.lib")
 #  pragma comment(lib, "advapi32.lib")
 #endif

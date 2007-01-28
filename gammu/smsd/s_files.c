@@ -127,6 +127,20 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	FILE				*File;
  	int				i, len, phlen;
  	char				*pos1, *pos2, *options;
+#ifdef WIN32
+  	struct _finddata_t 		c_file;
+  	long 				hFile;
+
+  	strcpy(FullName, Config->outboxpath);
+  	strcat(FullName, "OUT*.txt*");
+  	if((hFile = _findfirst( FullName, &c_file )) == -1L ) {
+  		return ERR_EMPTY;
+  	} else {
+  		strcpy(FileName,c_file.name);
+  	}
+  	_findclose( hFile );
+	error = ERR_NONE;
+#else
 #if defined HAVE_DIRENT_H && defined HAVE_SCANDIR & defined HAVE_ALPHASORT
   	struct 				dirent **namelist = NULL;
   	int 				l, m ,n;
@@ -147,20 +161,6 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	free(namelist);
   	namelist = NULL;
  	if (m >= n) return ERR_EMPTY;
-	error = ERR_NONE;
-#else
-#ifdef WIN32
-  	struct _finddata_t 		c_file;
-  	long 				hFile;
-
-  	strcpy(FullName, Config->outboxpath);
-  	strcat(FullName, "OUT*.txt*");
-  	if((hFile = _findfirst( FullName, &c_file )) == -1L ) {
-  		return ERR_EMPTY;
-  	} else {
-  		strcpy(FileName,c_file.name);
-  	}
-  	_findclose( hFile );
 	error = ERR_NONE;
 #endif
 #endif

@@ -37,3 +37,14 @@ You can also disable support for whole set of phones:
 -DWITH_Bluez=OFF disables Bluetooth support
 -DWITH_IrDA=OFF disables IrDA support
 
+3. Cross compilation for Windows:
+
+Only cross compilation using cmake has been tested. You need to install
+MinGW cross toolchain and runtime. On Debian you can do it by apt-get
+install mingw32. Build is then quite simple:
+
+mkdir build-win32
+cd build-win32
+cmake .. -DCROSS_MINGW=ON
+make
+
