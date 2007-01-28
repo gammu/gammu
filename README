@@ -7,7 +7,7 @@ Gammu is library and command line utility for mobile phones. It is
 released under GNU GPL version 2.
 
 It has been initiated by Marcin Wiacek and other people. Originally the
-code was baased on Gnokii <http://www.gnokii.org> and later MyGnokii
+code was based on Gnokii <http://www.gnokii.org> and later MyGnokii
 <http://www.mwiacek.com> projects. Gammu  was former (up to version
 0.58) called MyGnokii2.
 
@@ -24,22 +24,22 @@ maintainer keeps information available on <http://cihar.com/gammu/>.
 [Downloading]
 
 Current releases can be downloaded from several mirrors, primary
-donwload site currently is <http://dl.cihar.com/gammu/releases/>. 
+download site currently is <http://dl.cihar.com/gammu/releases/>. 
 
 Developers might be interested in snapshot or version control system
 (Bazaar is currently used), information about accessing these is
 available at <http://cihar.com/gammu/>.
 
 
-[Versioning]
+[Versions]
 
 There are two types of releases - testing and stable. Stable releases
 have number x.y.0, while testing are x.y.z. Testing releases usually
-provide latest features, but everything does not have to be stabilised
+provide latest features, but everything does not have to be stabilized
 yet.
 
 
-[Problmes]
+[Problems]
 
 Use <http://www.gammu.org/bugs> or mailing list for reporting problems.
 It useful to send logs of gammu executed with enabled debugging. You can
