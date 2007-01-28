@@ -6,11 +6,51 @@ project (Gammu C)
 # I didn't check older versions
 cmake_minimum_required (VERSION 2.4.2)
 
+# Where to lookup modules
+set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+
+# Support for cross compilation
+if (UNIX)
+    option (CROSS_MINGW "Cross compile using MinGW on linux" OFF)
+else (UNIX)
+    set (CROSS_MINGW OFF)
+endif (UNIX)
+if (CROSS_MINGW)
+    message ("Cross compilign using MinGW")
+    set (CMAKE_CXX_COMPILER "i586-mingw32msvc-c++")
+    set (CMAKE_COMPILER_IS_GNUCXX 1)
+    set (CMAKE_C_COMPILER "i586-mingw32msvc-gcc")
+    set (CMAKE_AR "i586-mingw32msvc-ar")
+    set (CMAKE_RANLIB "i586-mingw32msvc-ranlib")
+    set (CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "l")
+    set (WIN32 ON)
+    set (MINGW ON)
+
+    include (WindowsCross)
+
+    # Detection not supported for cross compiling
+    set (HAVE_ISWSPACE ON)
+    set (HAVE_TOWLOWER ON)
+
+    # CPack configuration
+    set (CPACK_GENERATOR "ZIP;NSIS")
+    set (CPACK_SOURCE_GENERATOR "ZIP")
+    set (CPACK_TOPLEVEL_TAG "Source")
+    set (CPACK_SYSTEM_NAME "Windows")
+else (CROSS_MINGW)
+# FIXME: we should detect whether compiler supports -Wno-pointer-sign
+    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall -Wno-pointer-sign")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-pointer-sign")
+endif (CROSS_MINGW)
+
 # Read version
 file (READ "${CMAKE_SOURCE_DIR}/version" VERSION_WIN)
 string (REPLACE "\n" "" VERSION_WIN ${VERSION_WIN})
 string (REPLACE "\r" "" VERSION_WIN ${VERSION_WIN})
 string (REPLACE "," "." VERSION ${VERSION_WIN})
+string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)" "\\1" VERSION_MAJOR ${VERSION})
+string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)" "\\2" VERSION_MINOR ${VERSION})
+string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)" "\\3" VERSION_PATCH ${VERSION})
 message ("Configuring ${CMAKE_PROJECT_NAME} ${VERSION}")
 
 if (${Gammu_BINARY_DIR} STREQUAL ${Gammu_SOURCE_DIR})
@@ -25,10 +65,6 @@ else (CMAKE_BUILD_TYPE STREQUAL "Debug")
 	set (CMAKE_VERBOSE_MAKEFILE OFF)
 	set (DEBUG 0)
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
-
-# FIXME: we should detect whether compiler supports -Wno-pointer-sign
-set ( CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall -Wno-pointer-sign")
-SET ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-pointer-sign")
 
 # No rpath by default
 if (NOT DEFINED WITH_RPATH)
@@ -51,9 +87,34 @@ if (ENABLE_SHARED)
 	set (BUILD_SHARED_LIBS ON)
 endif (ENABLE_SHARED)
 
-
-# Where to lookup modules
-set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
+# Packaging support
+set (CPACK_PACKAGE_NAME "Gammu")
+set (CPACK_PACKAGE_VERSION "${VERSION}")
+set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Gammu ${VERSION}")
+set (CPACK_PACKAGE_VENDOR "Michal Čihař, Macin Wiacek and others")
+set (CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
+set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
+set (CPACK_PACKAGE_VERSION_MAJOR "${VERSION_MAJOR}")
+set (CPACK_PACKAGE_VERSION_MINOR "${VERSION_MINOR}")
+set (CPACK_PACKAGE_VERSION_PATCH "${VERSION_PATCH}")
+if (WIN32)
+set (CPACK_PACKAGE_INSTALL_DIRECTORY "Gammu ${VERSION}")
+endif (WIN32)
+if (WIN32)
+  # There is a bug in NSI that does not handle full unix paths properly. Make
+  # sure there is at least one set of four (4) backlasshes.
+  #set (CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\\\InstallIcon.bmp")
+  #set (CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\MyExecutable.exe")
+  set (CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY} Gammu")
+  set (CPACK_NSIS_HELP_LINK "http:\\\\\\\\www.gammu.org")
+  set (CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\www.gammu.org")
+  set (CPACK_NSIS_CONTACT "michal@cihar.com")
+  set (CPACK_NSIS_MODIFY_PATH ON)
+else (WIN32)
+  set (CPACK_STRIP_FILES "gammu")
+  set (CPACK_SOURCE_STRIP_FILES "")
+endif (WIN32)
+include (CPack)
 
 # Standard packages
 include (CheckCSourceCompiles)
@@ -69,39 +130,44 @@ find_package (PkgConfig)
 
 # Standard packages
 macro_optional_find_package (Doxygen)
-macro_optional_find_package (Threads)
 
-# Packages in sources
+# Check disabled for cross
+if (NOT CROSS_MINGW)
 
-macro_optional_find_package (MySQL)
-macro_optional_find_package (Postgres)
-macro_optional_find_package (Bluez)
+    # Standard packages
+    macro_optional_find_package (Threads)
 
-# Search for needed includes and functions
+    # Packages in sources
+    macro_optional_find_package (MySQL)
+    macro_optional_find_package (Postgres)
+    macro_optional_find_package (Bluez)
 
-check_include_file (dirent.h HAVE_DIRENT_H)
-check_include_file (sys/ioctl.h HAVE_SYS_IOCTL_H)
-OPTION(WITH_IrDA "Search for IrDA package" ON)
-if (WITH_IrDA)
-    check_c_source_compiles (
-        "
+    # Search for needed includes and functions
+    check_include_file (dirent.h HAVE_DIRENT_H)
+    check_include_file (sys/ioctl.h HAVE_SYS_IOCTL_H)
+    OPTION(WITH_IrDA "Search for IrDA package" ON)
+    if (WITH_IrDA)
+        check_c_source_compiles (
+            "
 #include <sys/socket.h>
 #include <linux/types.h>
 #include <sys/ioctl.h>
 #include <linux/irda.h>
-int main(int argc, char **argv) { 
-    return 0; 
-}
-        " 
-        IRDA_FOUND
-        )
-else (WITH_IrDA)
-    set (IRDA_FOUND)
-endif (WITH_IrDA)
-check_function_exists (scandir HAVE_SCANDIR)
-check_function_exists (alphasort HAVE_ALPHASORT)
-check_function_exists (iswspace HAVE_ISWSPACE)
-check_function_exists (towlower HAVE_TOWLOWER)
+    int main(int argc, char **argv) { 
+        return 0; 
+    }
+            " 
+            IRDA_FOUND
+            )
+    else (WITH_IrDA)
+        set (IRDA_FOUND)
+    endif (WITH_IrDA)
+    check_function_exists (scandir HAVE_SCANDIR)
+    check_function_exists (alphasort HAVE_ALPHASORT)
+    check_function_exists (iswspace HAVE_ISWSPACE)
+    check_function_exists (towlower HAVE_TOWLOWER)
+
+endif (NOT CROSS_MINGW)
 
 set (LOCALES 
     cs 
@@ -270,6 +336,7 @@ set (LIBRARY_SRC
 	common/device/bluetoth/bluetoth.c
 	common/device/serial/ser_unx.c
 	common/device/serial/ser_djg.c
+	common/device/serial/ser_w32.c
 	common/device/irda/irda.c
 	common/device/devfunc.c
 	common/protocol/at/at.c
@@ -321,11 +388,32 @@ set (BINARY_SRC
 
 # Library
 add_library (Gammu ${LIBRARY_SRC})
-set_target_properties (Gammu PROPERTIES VERSION ${VERSION} SOVERSION 1)
+if (CROSS_MINGW)
+    if (ENABLE_SHARED)
+        set_target_properties (Gammu PROPERTIES 
+            PREFIX "" 
+            SUFFIX ".dll"
+            IMPORT_PREFIX ""
+            IMPORT_SUFFIX ".lib"
+            )
+    else (ENABLE_SHARED)
+        set_target_properties (Gammu PROPERTIES PREFIX "" SUFFIX ".lib")
+    endif (ENABLE_SHARED)
+else (CROSS_MINGW)
+    set_target_properties (Gammu PROPERTIES VERSION ${VERSION} SOVERSION 1)
+endif (CROSS_MINGW)
+
+# Include search path
+include_directories (
+    ${Gammu_BINARY_DIR}/cfg
+	${Gammu_SOURCE_DIR}/common
+	)
 
 # Gammu program
 add_executable (gammu ${BINARY_SRC})
-
+if (CROSS_MINGW)
+    set_target_properties (gammu PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
 
 target_link_libraries (gammu Gammu)
 target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
@@ -333,16 +421,21 @@ target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
 # Tune options for found libraries
 if (MYSQL_FOUND)
 	target_link_libraries (gammu ${MYSQL_LIBRARIES})
+    include_directories (${MYSQL_INCLUDE_DIR})
     set (HAVE_MYSQL_MYSQL_H TRUE)
 endif (MYSQL_FOUND)
 
 if (POSTGRES_FOUND)
 	target_link_libraries (gammu ${POSTGRES_LIBRARY})
+    include_directories (${POSTGRES_INCLUDE_DIR})
+
     set (HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
 endif (POSTGRES_FOUND)
 
 if (BLUEZ_FOUND)
 	target_link_libraries (Gammu ${BLUEZ_LIBRARIES})
+    include_directories (${BLUEZ_INCLUDE_DIR})
+
     set (GSM_ENABLE_BLUEZ TRUE)
     macro_gammu_option (BLUETOOTH_RF_SEARCHING "Searching for RF channels with Bluetooth stack" ON ON ON)
     if (WITH_BLUETOOTH_RF_SEARCHING)
@@ -430,18 +523,17 @@ mark_as_advanced (ENABLE_LGPL)
 macro_gammu_option (CELLBROADCAST "Cell Broadcast messages support" ON ON ON)
 macro_gammu_option (BACKUP "Backup/Restore functions" ON ON ON)
 
+# Add libraries needed for windows build
+if (WIN32)
+    target_link_libraries (Gammu ws2_32)
+    # These libraries are needed for serial driver
+    if (GSM_ENABLE_DKU2PHONET OR GSM_ENABLE_DKU2AT)
+        target_link_libraries (Gammu setupapi advapi32)
+    endif (GSM_ENABLE_DKU2PHONET OR GSM_ENABLE_DKU2AT)
+endif (WIN32)
 
 # Generate config.h
 configure_file (cfg/config.h.cmake cfg/config.h ESCAPE_QUOTES)
-
-# Include search path
-include_directories (
-    ${Gammu_BINARY_DIR}/cfg
-	${Gammu_SOURCE_DIR}/common
-	${POSTGRES_INCLUDE_DIR}
-	${MYSQL_INCLUDE_DIR}
-	${BLUEZ_INCLUDE_DIR}
-	)
 
 # Generate Doxygen file
 set (DOXYGEN_INPUT ${Gammu_SOURCE_DIR}/common)
@@ -501,7 +593,7 @@ foreach (HEADER ${HEADERS})
     string (REGEX REPLACE "common(.*)/[^/]*$" "\\1" DIRNAME ${HEADER})
     install (
         FILES ${HEADER} 
-        DESTINATION "${INSTALL_INC_DIR}/gammu/${DIRNAME}" 
+        DESTINATION "${INSTALL_INC_DIR}/${DIRNAME}" 
         COMPONENT "development"
         )
 endforeach (HEADER)
