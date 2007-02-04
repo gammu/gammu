@@ -140,7 +140,6 @@ if (NOT CROSS_MINGW)
     # Packages in sources
     macro_optional_find_package (MySQL)
     macro_optional_find_package (Postgres)
-    macro_optional_find_package (Bluez)
 
     # Search for needed includes and functions
     check_include_file (dirent.h HAVE_DIRENT_H)
@@ -151,6 +150,8 @@ if (NOT CROSS_MINGW)
     check_function_exists (towlower HAVE_TOWLOWER)
 
 endif (NOT CROSS_MINGW)
+
+macro_optional_find_package (Bluez)
 
 OPTION(WITH_IrDA "Search for IrDA package" ON)
 if (WITH_IrDA)
@@ -442,7 +443,9 @@ if (BLUEZ_FOUND)
 	target_link_libraries (Gammu ${BLUEZ_LIBRARIES})
     include_directories (${BLUEZ_INCLUDE_DIR})
 
-    set (GSM_ENABLE_BLUEZ TRUE)
+    if (NOT CROSS_MINGW)
+        set (GSM_ENABLE_BLUEZ TRUE)
+    endif (NOT CROSS_MINGW)
     macro_gammu_option (BLUETOOTH_RF_SEARCHING "Searching for RF channels with Bluetooth stack" ON ON ON)
     if (WITH_BLUETOOTH_RF_SEARCHING)
         set (BLUETOOTH_RF_SEARCHING ON)

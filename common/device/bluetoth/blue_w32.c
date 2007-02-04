@@ -1,5 +1,7 @@
 /* (c) 2003-2004 by Marcin Wiacek and Intra */
 
+/* To define GUID and not only declare */
+#define INITGUID
 #include "../../gsmstate.h"
 
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE
@@ -73,6 +75,8 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 }
 
 #ifdef BLUETOOTH_RF_SEARCHING
+
+DEFINE_GUID(L2CAP_PROTOCOL_UUID,  0x00000100, 0x0000, 0x1000, 0x80, 0x00, 0x00, 0x80, 0x5F, 0x9B, 0x34, 0xFB);
 
 #pragma comment(lib, "irprops.lib")
 #pragma comment(lib, "ws2_32.lib")

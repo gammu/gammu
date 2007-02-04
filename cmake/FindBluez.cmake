@@ -10,7 +10,15 @@
 # For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 if (NOT DEFINED BLUEZ_FOUND)
-	pkg_check_modules (BLUEZ bluez)
+    if (CROSS_MINGW)
+       set(BLUEZ_FOUND TRUE CACHE INTERNAL "Bluez found")
+       set(BLUEZ_INCLUDE_DIR)
+       set(BLUEZ_LIBRARIES irprops ws2_32)
+       message(STATUS "Using Windows native Bluetooth: ${BLUEZ_INCLUDE_DIR}, ${BLUEZ_LIBRARIES}")
+    endif (CROSS_MINGW)
+	if (NOT BLUEZ_FOUND)
+        pkg_check_modules (BLUEZ bluez)
+	endif (NOT BLUEZ_FOUND)
 
 	if (NOT BLUEZ_FOUND)
 		find_path(BLUEZ_INCLUDE_DIR bluetooth/bluetooth.h
