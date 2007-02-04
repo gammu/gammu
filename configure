@@ -1,5 +1,5 @@
 #! /bin/sh
-cp -f version cfg/autoconf/VERSION
+cp -f VERSION cfg/autoconf/VERSION
 cd cfg/autoconf
 if [ ! -f ./configure -o "x$1" = "x--regenerate" -o ./configure.in -nt ./configure ] ; then
     echo "Running autoconf..."

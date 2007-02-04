@@ -1,5 +1,5 @@
 /* (c) 2003 by Marcin Wiacek */
-/* (c) 2006 by Michal Cihar */
+/* (c) 2006-2007 by Michal Cihar */
 
 /** \file obexgen.c
  * \defgroup OBEXPhone OBEX phones communication

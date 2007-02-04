@@ -1,6 +1,9 @@
 /* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 /* Checking used compiler (c) 2002 by Michal Cihar */
 
+#include "../gsmstate.h"
+#include "misc.h"
+
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
@@ -11,12 +14,9 @@
 #ifdef WIN32
 #  include "windows.h"
 #endif
-#if defined(linux) || defined(__linux) || defined(__linux__)
+#ifdef HAVE_SYS_UTSNAME_H
 #  include <sys/utsname.h>
 #endif
-
-#include "../gsmstate.h"
-#include "misc.h"
 
 /**
  * Recalculates struct tm content.
@@ -571,7 +571,7 @@ char *GetOS(void)
 	OSVERSIONINFOEX Ver;
 	bool		Extended = true;
 #endif
-#if defined(linux) || defined(__linux) || defined(__linux__)
+#ifdef HAVE_SYS_UTSNAME_H
 	struct utsname	Ver;
 #endif
 	static char 	Buffer[100] = {0x00};
@@ -642,9 +642,9 @@ char *GetOS(void)
 	if (Extended && Ver.wServicePackMajor != 0) {
 		sprintf(Buffer+strlen(Buffer)," SP%i",Ver.wServicePackMajor);
 	}
-#elif defined(linux) || defined(__linux) || defined(__linux__)
+#elif defined(HAVE_SYS_UTSNAME_H)
 	uname(&Ver);
-	sprintf(Buffer, "Linux, kernel %s",Ver.release);
+	sprintf(Buffer, "%s, kernel %s (%s)", Ver.sysname, Ver.release, Ver.version);
 #elif defined(__FreeBSD__)
 	sprintf(Buffer, "FreeBSD");
 #elif defined(__NetBSD__)
