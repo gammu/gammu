@@ -145,8 +145,16 @@ if (NOT CROSS_MINGW)
     # Search for needed includes and functions
     check_include_file (dirent.h HAVE_DIRENT_H)
     check_include_file (sys/ioctl.h HAVE_SYS_IOCTL_H)
-    OPTION(WITH_IrDA "Search for IrDA package" ON)
-    if (WITH_IrDA)
+    check_function_exists (scandir HAVE_SCANDIR)
+    check_function_exists (alphasort HAVE_ALPHASORT)
+    check_function_exists (iswspace HAVE_ISWSPACE)
+    check_function_exists (towlower HAVE_TOWLOWER)
+
+endif (NOT CROSS_MINGW)
+
+OPTION(WITH_IrDA "Search for IrDA package" ON)
+if (WITH_IrDA)
+    if (NOT CROSS_MINGW)
         check_c_source_compiles (
             "
 #include <sys/socket.h>
@@ -159,15 +167,12 @@ if (NOT CROSS_MINGW)
             " 
             IRDA_FOUND
             )
-    else (WITH_IrDA)
-        set (IRDA_FOUND)
-    endif (WITH_IrDA)
-    check_function_exists (scandir HAVE_SCANDIR)
-    check_function_exists (alphasort HAVE_ALPHASORT)
-    check_function_exists (iswspace HAVE_ISWSPACE)
-    check_function_exists (towlower HAVE_TOWLOWER)
-
-endif (NOT CROSS_MINGW)
+    else (NOT CROSS_MINGW)
+        set (IRDA_FOUND YES)
+    endif (NOT CROSS_MINGW)
+else (WITH_IrDA)
+    set (IRDA_FOUND)
+endif (WITH_IrDA)
 
 set (LOCALES 
     cs 
