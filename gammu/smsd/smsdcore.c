@@ -85,12 +85,17 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	GSM_Config 		smsdcfg;
 	unsigned char		*str;
 	static unsigned char	emptyPath[1] = "\0";
+	GSM_Error		error;
 
 	memset(&smsdcfg, 0, sizeof(smsdcfg));
 
-	smsdcfgfile=INI_ReadFile(filename, false);
-	if (smsdcfgfile==NULL) {
-		fprintf(stderr,"Can't find file \"%s\"\n",filename);
+	error = INI_ReadFile(filename, false, &smsdcfgfile);
+	if (smsdcfgfile == NULL || error != ERR_NONE) {
+		if (error == ERR_FILENOTSUPPORTED) {
+			fprintf(stderr,"Could not parse config file \"%s\"\n",filename);
+		} else {
+			fprintf(stderr,"Can't find file \"%s\"\n",filename);
+		}
 		exit(-1);
 	}
 

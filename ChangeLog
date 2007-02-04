@@ -52,6 +52,7 @@ For additionals materials and links to them see readme.txt
 [-] * Do not ship make-release in tarball.
 [-] * Fixed wrong encoding of text to vCard when last field was missing.
 [-] * Fix crash when deleting entry from OBEX using LUIDs.
+[-] * Improve detection of invalid config file (bug #68).
 
 20070127 - 1.09.17
 [!] * First release by Michal Cihar, this changes some URLS, see readme.txt.
