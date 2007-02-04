@@ -1,4 +1,4 @@
-%define ver         1.09.18
+%define ver         1.09.19
 %define name        gammu
 %define bluetooth   1
 %define relnum      1

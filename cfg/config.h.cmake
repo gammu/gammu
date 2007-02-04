@@ -147,6 +147,7 @@
 #cmakedefine HAVE_SYS_IOCTL_H
 #cmakedefine HAVE_MYSQL_MYSQL_H
 #cmakedefine HAVE_POSTGRESQL_LIBPQ_FE_H
+#cmakedefine HAVE_SYS_UTSNAME_H
 
 #cmakedefine HAVE_ISWSPACE
 #cmakedefine HAVE_TOWLOWER

@@ -44,13 +44,14 @@ else (CROSS_MINGW)
 endif (CROSS_MINGW)
 
 # Read version
-file (READ "${CMAKE_SOURCE_DIR}/version" VERSION_WIN)
+file (READ "${CMAKE_SOURCE_DIR}/VERSION" VERSION_WIN)
 string (REPLACE "\n" "" VERSION_WIN ${VERSION_WIN})
 string (REPLACE "\r" "" VERSION_WIN ${VERSION_WIN})
 string (REPLACE "," "." VERSION ${VERSION_WIN})
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)" "\\1" VERSION_MAJOR ${VERSION})
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)" "\\2" VERSION_MINOR ${VERSION})
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)" "\\3" VERSION_PATCH ${VERSION})
+set (VERSION_WIN "${VERSION_WIN},0")
 message ("Configuring ${CMAKE_PROJECT_NAME} ${VERSION}")
 
 if (${Gammu_BINARY_DIR} STREQUAL ${Gammu_SOURCE_DIR})
@@ -144,6 +145,7 @@ if (NOT CROSS_MINGW)
     # Search for needed includes and functions
     check_include_file (dirent.h HAVE_DIRENT_H)
     check_include_file (sys/ioctl.h HAVE_SYS_IOCTL_H)
+    check_include_file (sys/utsname.h HAVE_SYS_UTSNAME_H)
     check_function_exists (scandir HAVE_SCANDIR)
     check_function_exists (alphasort HAVE_ALPHASORT)
     check_function_exists (iswspace HAVE_ISWSPACE)
