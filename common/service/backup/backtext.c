@@ -20,10 +20,12 @@ GSM_Error FindBackupChecksum(char *FileName, bool UseUnicode, char *checksum)
 	INI_Entry		*e;
 	char			*buffer = NULL,buff[100];
 	int			len=0;
+	GSM_Error		error;
 
-	//int i;
-
-	file_info = INI_ReadFile(FileName, UseUnicode);
+	error = INI_ReadFile(FileName, UseUnicode, &file_info);
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	if (UseUnicode) {
 	        for (h = file_info; h != NULL; h = h->Next) {
@@ -2410,8 +2412,12 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	int			num;
 	GSM_MemoryEntry 	PBK;
 	bool			found;
+	GSM_Error		error;
 
-	file_info = INI_ReadFile(FileName, UseUnicode);
+	error = INI_ReadFile(FileName, UseUnicode, &file_info);
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	sprintf(buffer,"Backup");
 	if (UseUnicode) EncodeUnicode(buffer,"Backup",6);
@@ -3077,10 +3083,14 @@ static GSM_Error GSM_ReadSMSBackupTextFile(char *FileName, GSM_SMS_Backup *backu
 	INI_Section	*file_info, *h;
 	char		*readvalue;
 	int		num;
+	GSM_Error		error;
 
 	backup->SMS[0] = NULL;
 
-	file_info = INI_ReadFile(FileName, false);
+	error = INI_ReadFile(FileName, false, &file_info);
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	num = 0;
         for (h = file_info; h != NULL; h = h->Next) {

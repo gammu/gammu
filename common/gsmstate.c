@@ -11,6 +11,12 @@
 #include "misc/coding/coding.h"
 #include "device/devfunc.h"
 
+#if defined(WIN32) || defined(DJGPP)
+#define FALLBACK_GAMMURC "gammurc"
+#else
+#define FALLBACK_GAMMURC "/etc/gammurc"
+#endif
+
 static void GSM_RegisterConnection(GSM_StateMachine *s, unsigned int connection,
 		GSM_Device_Functions *device, GSM_Protocol_Functions *protocol)
 {
@@ -721,11 +727,14 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	return error;
 }
 
-INI_Section *GSM_FindGammuRC(void)
+GSM_Error GSM_FindGammuRC (INI_Section **result)
 {
-	INI_Section	*ini_file;
         char		*HomeDrive,*HomePath,*FileName=malloc(1);
 	int		FileNameUsed=1;
+	GSM_Error	error;
+	GSM_Error	error2;
+
+	*result = NULL;
 
 	FileName[0] = 0;
 #if defined(WIN32) || defined(DJGPP)
@@ -754,21 +763,17 @@ INI_Section *GSM_FindGammuRC(void)
 	FileName = realloc(FileName,FileNameUsed+9+1);
         strcat(FileName, "/.gammurc");
 #endif
-//	dbgprintf("\"%s\"\n",FileName);
+	dbgprintf("Open config: \"%s\"\n", FileName);
 
-	ini_file = INI_ReadFile(FileName, false);
+	error = INI_ReadFile(FileName, false, result);
 	free(FileName);
-        if (ini_file == NULL) {
-#if defined(WIN32) || defined(DJGPP)
-		ini_file = INI_ReadFile("gammurc", false);
-                if (ini_file == NULL) return NULL;
-#else
-		ini_file = INI_ReadFile("/etc/gammurc", false);
-                if (ini_file == NULL) return NULL;
-#endif
+        if (error != ERR_NONE) {
+		dbgprintf("Open fallback config: \"%s\"\n", FALLBACK_GAMMURC);
+		error2 = INI_ReadFile(FALLBACK_GAMMURC, false, result);
+		if (error2 == ERR_NONE) error = ERR_NONE;
         }
 
-	return ini_file;
+	return error;
 }
 
 bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)

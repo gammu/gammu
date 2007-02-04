@@ -303,6 +303,7 @@ set (HEADERS
     common/service/gsmmisc.h
     common/gsmstate.h
     common/gsmcomon.h
+    common/gsmerror.h
     common/config.h
     )
 

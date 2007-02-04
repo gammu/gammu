@@ -10,15 +10,16 @@
 #  include <wctype.h>
 #endif
 
+#include "../gsmerror.h"
 #include "../config.h"
 #include "coding/coding.h"
 #include "cfg.h"
 #include "misc.h"
 
-/*
+/**
  * Read information from file in Windows INI format style
  */
-INI_Section *INI_ReadFile(char *FileName, bool Unicode)
+GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 {
 	FILE		*f;
 	bool		FFEEUnicode=false;
@@ -29,8 +30,10 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
         INI_Section 	*INI_info = NULL, *INI_head = NULL, *heading;
         INI_Entry 	*entry;
 
+	*result = NULL;
+
 	f = fopen(FileName,"rb");
-	if (f == NULL) return NULL;
+	if (f == NULL) return ERR_CANTOPENFILE;
 
 	num = 0;
 	while(1) {
@@ -43,7 +46,9 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
 				if (buffused == 0) {
 					free(buffer); free(buffer1); free(buffer2);
 					fclose(f);
-					return INI_head;
+					*result = INI_head;
+					if (INI_head == NULL) return ERR_FILENOTSUPPORTED;
+					return ERR_NONE;
 				}
 			}
 			if (Unicode) {
@@ -114,7 +119,7 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
 		                        if (heading == NULL) {
 						free(buffer); free(buffer1); free(buffer2);
 						fclose(f);
-		                                return NULL;
+						return ERR_MOREMEMORY;
 		                        }
 					heading->SectionName = (char *)malloc(buffer1used);
 					memcpy(heading->SectionName,buffer1,buffer1used);
@@ -211,7 +216,7 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
                         if (entry == NULL) {
 				free(buffer); free(buffer1); free(buffer2);
 				fclose(f);
-                                return NULL;
+                                return ERR_MOREMEMORY;
                         }
 			if (Unicode) {
 				buffer1 		= realloc(buffer1,buffer1used+2);
@@ -248,7 +253,9 @@ INI_Section *INI_ReadFile(char *FileName, bool Unicode)
 	}
 	free(buffer); free(buffer1); free(buffer2);
 	fclose(f);
-	return INI_head;
+	*result = INI_head;
+	if (INI_head == NULL) return ERR_FILENOTSUPPORTED;
+	return ERR_NONE;
 }
 
 /*

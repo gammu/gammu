@@ -1545,7 +1545,12 @@ GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned char *buffer,
 
 GSM_Error GSM_DispatchMessage		(GSM_StateMachine *s);
 
-INI_Section 				*GSM_FindGammuRC(void);
+/**
+ * Reads gammu configuration.
+ *
+ * @param result Ini file representation
+ */
+GSM_Error GSM_FindGammuRC (INI_Section **result);
 
 bool 	  GSM_ReadConfig		(INI_Section *cfg_info, GSM_Config *cfg, int num);
 

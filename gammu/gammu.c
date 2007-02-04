@@ -9987,8 +9987,15 @@ int main(int argc, char *argv[])
 		if (only_config >= 0) start++; else only_config = -1;
 	}
 
- 	cfg = GSM_FindGammuRC();
- 	if (cfg == NULL) printmsg("Warning: No configuration file found!\n");
+ 	error = GSM_FindGammuRC(&cfg);
+	if (error != ERR_NONE) {
+		if (error == ERR_FILENOTSUPPORTED) {
+			printmsg("Warning: Configuration could not be parsed!\n");
+		} else {
+			printmsg("Warning: No configuration file found!\n");
+		}
+	}
+ 	if (cfg == NULL) printmsg("Warning: No configuration read!\n");
 
 	for (i = 0; i <= MAX_CONFIG_NUM; i++) {
 		if (cfg!=NULL) {
@@ -9997,7 +10004,7 @@ int main(int argc, char *argv[])
 
 		        s.Config[i].Localize = INI_GetValue(cfg, "gammu", "gammuloc", false);
         		if (s.Config[i].Localize) {
-				s.msg=INI_ReadFile(s.Config[i].Localize, true);
+				INI_ReadFile(s.Config[i].Localize, true, &s.msg);
 			} else {
 #if !defined(WIN32) && !defined(DJGPP) && defined(LOCALE_PATH)
  				locale = setlocale(LC_MESSAGES, NULL);
@@ -10006,7 +10013,7 @@ int main(int argc, char *argv[])
 							LOCALE_PATH,
 							tolower(locale[0]),
 							tolower(locale[1]));
-					s.msg = INI_ReadFile(locale_file, true);
+					INI_ReadFile(locale_file, true, &s.msg);
 				}
 #endif
 			}
