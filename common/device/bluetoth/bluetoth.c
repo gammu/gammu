@@ -58,11 +58,7 @@ static int bluetooth_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 	return socket_read(s, buf, nbytes, s->Device.Data.BlueTooth.hPhone);
 }
 
-#ifdef WIN32
-static int bluetooth_write(GSM_StateMachine *s, unsigned char *buf, size_t nbytes)
-#else
 static int bluetooth_write(GSM_StateMachine *s, void *buf, size_t nbytes)
-#endif
 {
 	return socket_write(s, buf, nbytes, s->Device.Data.BlueTooth.hPhone);
 }
