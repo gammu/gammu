@@ -424,9 +424,124 @@ GSM_Error GSM_Translate_Category (GSM_CatTranslation direction, char *string, GS
 	return 0;
 }
 
+/**
+ * Grabs single value of type from calendar note starting with record
+ * start.
+ */
+GSM_Error GSM_Calendar_GetValue(const GSM_CalendarEntry *note, int *start, const GSM_CalendarType type, int *number, GSM_DateTime *date)
+{
+	for (; *start < note->EntriesNum; (*start)++) {
+		if (note->Entries[*start].EntryType == type) {
+			if (number != NULL) {
+				*number = note->Entries[*start].Number;
+			}
+			if (date != NULL) {
+				*date = note->Entries[*start].Date;
+			}
+			(*start)++;
+			return ERR_NONE;
+		}
+	}
+	return ERR_EMPTY;
+}
+
+/**
+ * Converts Gammu recurrence to vCal format. See GSM_DecodeVCAL_RRULE
+ * for grammar description.
+ */
+GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *note)
+{
+	int i;
+	bool repeating = false;
+	int repeat_dayofweek = -1;
+	int repeat_day = -1;
+	int repeat_dayofyear = -1;
+	int repeat_weekofmonth = -1;
+	int repeat_month = -1;
+	int repeat_count = -1;
+	int repeat_frequency = -1;
+	GSM_DateTime repeat_startdate = {0,0,0,0,0,0,0};
+	GSM_DateTime repeat_stopdate = {0,0,0,0,0,0,0};
+
+	/* First scan for entry, whether there is  recurrence at all */
+	for (i = 0; i < note->EntriesNum; i++) {
+		switch (note->Entries[i].EntryType) {
+			/* We don't care about following here */
+			case CAL_PRIVATE:
+			case CAL_CONTACTID:
+			case CAL_START_DATETIME :
+			case CAL_END_DATETIME :
+			case CAL_TONE_ALARM_DATETIME :
+			case CAL_SILENT_ALARM_DATETIME:
+			case CAL_TEXT:
+			case CAL_DESCRIPTION:
+			case CAL_PHONE:
+			case CAL_LOCATION:
+			case CAL_LUID:
+				break;
+			case CAL_REPEAT_DAYOFWEEK:
+				repeat_dayofweek 	= note->Entries[i].Number;
+				repeating 		= true;
+				break;
+			case CAL_REPEAT_DAY:
+				repeat_day 		= note->Entries[i].Number;
+				repeating 		= true;
+				break;
+			case CAL_REPEAT_DAYOFYEAR:
+				repeat_dayofyear	= note->Entries[i].Number;
+				repeating 		= true;
+				break;
+			case CAL_REPEAT_WEEKOFMONTH:
+				repeat_weekofmonth 	= note->Entries[i].Number;
+				repeating 		= true;
+				break;
+			case CAL_REPEAT_MONTH:
+				repeat_month 		= note->Entries[i].Number;
+				repeating 		= true;
+				break;
+			case CAL_REPEAT_FREQUENCY:
+				repeat_frequency 	= note->Entries[i].Number;
+				repeating 		= true;
+				break;
+			case CAL_REPEAT_COUNT:
+				repeat_count	 	= note->Entries[i].Number;
+				repeating 		= true;
+				break;
+			case CAL_REPEAT_STARTDATE:
+				repeat_startdate 	= note->Entries[i].Date;
+				repeating 		= true;
+				break;
+			case CAL_REPEAT_STOPDATE:
+				repeat_stopdate 	= note->Entries[i].Date;
+				repeating 		= true;
+				break;
+		}
+	}
+	/* Did we found something? */
+	if (repeating) {
+		*Length += sprintf(Buffer + (*Length), "RRULE: ");
+
+		if (repeat_dayofyear != -1) {
+			/* Yearly by day */
+		} else if (repeat_day != -1 && repeat_month != -1) {
+			/* Yearly by month and day */
+		} else if (repeat_day != -1) {
+			/* Monthly by day */
+		} else if (repeat_dayofweek != -1 && repeat_weekofmonth != -1) {
+			/* Monthly by day and week */
+		} else if (repeat_dayofweek != -1) {
+			/* Weekly by day */
+		} else {
+			/* Daily */
+		}
+
+		return ERR_NONE;
+	}
+	return ERR_EMPTY;
+}
+
 GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version)
 {
-	char 		rec[20],endday[20];
 	GSM_DateTime 	deltatime;
 	char 		dtstr[20];
 	char		category[100];
@@ -504,6 +619,8 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 			case CAL_REPEAT_FREQUENCY:
 			case CAL_REPEAT_STARTDATE:
 			case CAL_REPEAT_STOPDATE:
+			case CAL_REPEAT_DAYOFYEAR:
+			case CAL_REPEAT_COUNT:
 				/* Handled later */
 				break;
 			case CAL_PRIVATE:
@@ -525,19 +642,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 			}
 			*Length+=sprintf(Buffer+(*Length), "RRULE:YM1%c%c",13,10);
 		} else {
-			/**
-			 * @todo We should completely convert our recurrance to XAPIA recurrance.
-			 */
-			GSM_SetCalendarRecurranceRepeat(rec, endday, note);
-			if (endday[0]*256+endday[1] == 0) {
-				switch(rec[0]*256+rec[1]) {
-					case 1*24	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D1%c%c",13,10);  break;
-					case 7*24	 : *Length+=sprintf(Buffer+(*Length), "RRULE:D7%c%c",13,10);  break;
-					case 14*24	 : *Length+=sprintf(Buffer+(*Length), "RRULE:W2%c%c",13,10);  break;
-					case 0xffff-1    : *Length+=sprintf(Buffer+(*Length), "RRULE:MD1%c%c",13,10); break;
-					case 0xffff 	 : *Length+=sprintf(Buffer+(*Length), "RRULE:YD1%c%c",13,10); break;
-				}
-			}
+			GSM_EncodeVCAL_RRULE(Buffer, Length, note);
 		}
 
 		/* Include mozilla specific alarm encoding */
