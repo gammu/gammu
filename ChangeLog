@@ -55,6 +55,7 @@ For additionals materials and links to them see readme.txt
 [-] * Improve detection of invalid config file (bug #68).
 [+] * Support for MinGW cross compilation including Bluetooth and IrDA.
 [+] * Support for generating installer using CPack.
+[-] * Add Nokia 6030b ID.
 
 20070127 - 1.09.17
 [!] * First release by Michal Cihar, this changes some URLS, see readme.txt.
