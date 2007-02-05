@@ -1,11 +1,14 @@
-/* (c) 2002-2004 by Marcin Wiacek, 2005 by Michal Cihar */
+/* (c) 2002-2004 by Marcin Wiacek, 2005-2007 by Michal Cihar */
 
 /** \file gsmcal.c
  * \defgroup Calendar Calendar parsing and encoding
  *
  * This module implements calendar related opreations.
  *
- * \see http://www.imc.org/pdi/
+ * @see http://www.imc.org/pdi/
+ * @author Michal Čihař <michal@cihar.com>
+ * @author Marcin Wiacek
+ * @date 2002-2007
  *
  * @{
  */
@@ -1150,10 +1153,10 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 
 					if (!have_info) {
 #if 0
-						/* 
-						 * This seems to be according to specification, 
-						 * however several vendors (Siemens, some web based 
-						 * calendars use YD1 for simple year repeating. So 
+						/*
+						 * This seems to be according to specification,
+						 * however several vendors (Siemens, some web based
+						 * calendars use YD1 for simple year repeating. So
 						 * we handle this as YM1 just to be compatbile with
 						 * those.
 						 */
@@ -1322,7 +1325,11 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			}
 
 			if (strstr(Line,"RRULE:")) {
-				rrule = strdup(Line + 6);
+				if (rrule == NULL) {
+					rrule = strdup(Line + 6);
+				} else {
+					dbgprintf("Ignoring second recurrence: %s\n", Line);
+				}
 				break;
 			}
 
