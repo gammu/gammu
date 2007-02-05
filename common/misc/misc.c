@@ -19,11 +19,30 @@
 #endif
 
 /**
- * Recalculates struct tm content.
+ * Recalculates struct tm content. We can not use mktime directly, as it
+ * works only for dates > 1970. Day of week calculation is nased on article
+ * in Polish PC-Kurier 8/1998 page 104.
+ *
+ * @see http://www.pckurier.pl
  */
-int RecalcDateTime(struct tm *st, int year, int month, int day, int hour, int minute, int second)
+int RecalcDateTime(struct tm *st, const int year, const int month, const int day, const int hour, const int minute, const int second)
 {
-	memset(st, 0, sizeof(st));
+	const int days[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+	int i, p, q, r;
+
+	memset(st, 0, sizeof(*st));
+
+	/* Calculate day of year */
+	st->tm_yday = day;
+	for (i = 0; i < month - 1; i++)
+		st->tm_yday += days[i];
+
+	/* Calculate day of week */
+	p = (14 - month) / 12;
+	q = month + 12 * p - 2;
+	r = year - p;
+	st->tm_wday = (day + (31 * q) / 12 + r + r / 4 - r / 100 + r / 400) % 7;
+
 
 	st->tm_hour = hour;
 	st->tm_min = minute;
@@ -32,14 +51,14 @@ int RecalcDateTime(struct tm *st, int year, int month, int day, int hour, int mi
 	st->tm_mon = month - 1;
 	st->tm_mday = day;
 
-	return mktime(st);
+	return 1;
 }
 
 
 /**
  * Recalculates struct tm content.
  */
-int RecalcDate(struct tm *st, int year, int month, int day)
+int RecalcDate(struct tm *st, const int year, const int month, const int day)
 {
 	return RecalcDateTime(st, year, month, day, 0, 0, 0);
 }
