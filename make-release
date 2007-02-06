@@ -2,11 +2,12 @@
 
 # Usage: make-release [branch]
 
-version=`tr , . < version`
+version=`tr , . < VERSION`
 
-tmp=`mktemp -d`
+tmp=`mktemp -dt gammu-build-XXXXXX`
 
 cd $tmp
+echo Working in $tmp
 if [ "x$1" = "xbranch" ] ; then
     baz branch gammu--fixes--1 gammu--release--$version
     baz export gammu--release--$version gammu-$version
@@ -17,5 +18,11 @@ find gammu-$version -name .arch-inventory -print0 | xargs -0 rm -f
 rm make-release
 tar cfz gammu-$version.tar.gz gammu-$version
 tar cfj gammu-$version.tar.bz2 gammu-$version
+mkdir build-win
+cd build-win
+cmake ../gammu-$version -DCROSS_MINGW=ON
+make
+cpack
+mv Gammu-1.09.19-Windows.exe Gammu-1.09.19-Windows.zip ../
 
 echo "Release is in $tmp directory"
