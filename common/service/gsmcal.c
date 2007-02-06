@@ -449,9 +449,11 @@ GSM_Error GSM_Calendar_GetValue(const GSM_CalendarEntry *note, int *start, const
  * Converts Gammu recurrence to vCal format. See GSM_DecodeVCAL_RRULE
  * for grammar description.
  */
-GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *note)
+GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *note, int TimePos)
 {
 	int i;
+	int j;
+	const char *DaysOfWeek[8] = {"SU", "MO", "TU", "WE", "TH", "FR", "SA", "SU"};
 	bool repeating = false;
 	int repeat_dayofweek = -1;
 	int repeat_day = -1;
@@ -521,18 +523,88 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *not
 	if (repeating) {
 		*Length += sprintf(Buffer + (*Length), "RRULE: ");
 
+		/* Safe fallback */
+		if (repeat_frequency == -1) {
+			repeat_frequency = 1;
+		}
+
 		if (repeat_dayofyear != -1) {
 			/* Yearly by day */
+			*Length += sprintf(Buffer + (*Length), "YD%d", repeat_frequency);
+
+			/* Store month numbers */
+			for (i = 0; i < note->EntriesNum; i++) {
+				if (note->Entries[i].EntryType == CAL_REPEAT_DAYOFYEAR) {
+					*Length += sprintf(Buffer + (*Length), " %d",
+						note->Entries[i].Number);
+				}
+			}
 		} else if (repeat_day != -1 && repeat_month != -1) {
 			/* Yearly by month and day */
+			*Length += sprintf(Buffer + (*Length), "YM%d", repeat_frequency);
+
+			/* Store month numbers */
+			for (i = 0; i < note->EntriesNum; i++) {
+				if (note->Entries[i].EntryType == CAL_REPEAT_MONTH) {
+					*Length += sprintf(Buffer + (*Length), " %d",
+						note->Entries[i].Number);
+				}
+			}
 		} else if (repeat_day != -1) {
 			/* Monthly by day */
+			*Length += sprintf(Buffer + (*Length), "MD%d", repeat_frequency);
+
+			/* Store day numbers */
+			for (i = 0; i < note->EntriesNum; i++) {
+				if (note->Entries[i].EntryType == CAL_REPEAT_DAY) {
+					*Length += sprintf(Buffer + (*Length), " %d",
+						note->Entries[i].Number);
+				}
+			}
 		} else if (repeat_dayofweek != -1 && repeat_weekofmonth != -1) {
 			/* Monthly by day and week */
+			*Length += sprintf(Buffer + (*Length), "MP%d", repeat_frequency);
+
+			/* Store week numbers and week days */
+			for (i = 0; i < note->EntriesNum; i++) {
+				if (note->Entries[i].EntryType == CAL_REPEAT_WEEKOFMONTH) {
+					*Length += sprintf(Buffer + (*Length), " %d+",
+						note->Entries[i].Number);
+					for (j = 0; j < note->EntriesNum; j++) {
+						if (note->Entries[j].EntryType == CAL_REPEAT_DAYOFWEEK) {
+							*Length += sprintf(Buffer + (*Length), " %s",
+								DaysOfWeek[note->Entries[j].Number]);
+						}
+					}
+				}
+			}
 		} else if (repeat_dayofweek != -1) {
 			/* Weekly by day */
+			*Length += sprintf(Buffer + (*Length), "W%d", repeat_frequency);
+
+			/* Store week days */
+			for (i = 0; i < note->EntriesNum; i++) {
+				if (note->Entries[i].EntryType == CAL_REPEAT_DAYOFWEEK) {
+					*Length += sprintf(Buffer + (*Length), " %s",
+						DaysOfWeek[note->Entries[i].Number]);
+				}
+			}
 		} else {
 			/* Daily */
+			*Length += sprintf(Buffer + (*Length), "D%d", repeat_frequency);
+		}
+
+		/* Store number of repetitions if available */
+		if (repeat_count != -1) {
+			*Length += sprintf(Buffer + (*Length), " #%d", repeat_count);
+		}
+
+		/* Store end of repetition date if available */
+		if (repeat_stopdate.Day != 0) {
+			SaveVCALDate(Buffer, Length, &repeat_stopdate, NULL);
+		} else {
+			/* Add EOL */
+			*Length += sprintf(Buffer + (*Length), "%c%c", 13, 10);
 		}
 
 		return ERR_NONE;
@@ -634,44 +706,44 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 				/* Not supported */
 				break;
 		}
+	}
 
-		/* Handle recurrance */
-		if (note->Type == GSM_CAL_BIRTHDAY) {
-			if (Version == Mozilla_VCalendar) {
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-RECUR-DEFAULT-UNITS:years%c%c",13,10);
-			}
-			*Length+=sprintf(Buffer+(*Length), "RRULE:YM1%c%c",13,10);
-		} else {
-			GSM_EncodeVCAL_RRULE(Buffer, Length, note);
+	/* Handle recurrance */
+	if (note->Type == GSM_CAL_BIRTHDAY) {
+		if (Version == Mozilla_VCalendar) {
+			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-RECUR-DEFAULT-UNITS:years%c%c",13,10);
 		}
+		*Length+=sprintf(Buffer+(*Length), "RRULE:YM1%c%c",13,10);
+	} else {
+		GSM_EncodeVCAL_RRULE(Buffer, Length, note, date);
+	}
 
-		/* Include mozilla specific alarm encoding */
-		if (Version == Mozilla_VCalendar && alarm != -1 && date != -1) {
-			deltatime = VCALTimeDiff(&note->Entries[alarm].Date, &note->Entries[date].Date);
+	/* Include mozilla specific alarm encoding */
+	if (Version == Mozilla_VCalendar && alarm != -1 && date != -1) {
+		deltatime = VCALTimeDiff(&note->Entries[alarm].Date, &note->Entries[date].Date);
 
-			dtstr[0]='\0';
-			if (deltatime.Minute !=0) {
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:minutes%c%c",13,10);
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
-					deltatime.Minute,13,10);
-				sprintf(dtstr,"-PT%iM",deltatime.Minute);
-			} else if (deltatime.Hour !=0) {
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:hours%c%c",13,10);
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
-					deltatime.Hour,13,10);
-				sprintf(dtstr,"-PT%iH",deltatime.Hour);
-			} else if (deltatime.Day !=0) {
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:days%c%c",13,10);
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
-					deltatime.Day,13,10);
-				sprintf(dtstr,"-P%iD",deltatime.Day);
-			}
-			if (dtstr[0] != '\0') {
-				*Length+=sprintf(Buffer+(*Length), "BEGIN:VALARM%c%c",13,10);
-				*Length+=sprintf(Buffer+(*Length), "TRIGGER;VALUE=DURATION%c%c",13,10);
-				*Length+=sprintf(Buffer+(*Length), " :%s%c%c",dtstr,13,10);
-				*Length+=sprintf(Buffer+(*Length), "END:VALARM%c%c",13,10);
-			}
+		dtstr[0]='\0';
+		if (deltatime.Minute !=0) {
+			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:minutes%c%c",13,10);
+			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
+				deltatime.Minute,13,10);
+			sprintf(dtstr,"-PT%iM",deltatime.Minute);
+		} else if (deltatime.Hour !=0) {
+			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:hours%c%c",13,10);
+			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
+				deltatime.Hour,13,10);
+			sprintf(dtstr,"-PT%iH",deltatime.Hour);
+		} else if (deltatime.Day !=0) {
+			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:days%c%c",13,10);
+			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
+				deltatime.Day,13,10);
+			sprintf(dtstr,"-P%iD",deltatime.Day);
+		}
+		if (dtstr[0] != '\0') {
+			*Length+=sprintf(Buffer+(*Length), "BEGIN:VALARM%c%c",13,10);
+			*Length+=sprintf(Buffer+(*Length), "TRIGGER;VALUE=DURATION%c%c",13,10);
+			*Length+=sprintf(Buffer+(*Length), " :%s%c%c",dtstr,13,10);
+			*Length+=sprintf(Buffer+(*Length), "END:VALARM%c%c",13,10);
 		}
 	}
 
