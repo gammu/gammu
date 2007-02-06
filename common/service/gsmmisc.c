@@ -183,9 +183,11 @@ void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start
 	if (Start != NULL) {
 		*Length+=sprintf(Buffer+(*Length), "%s:",Start);
 	}
-	*Length+=sprintf(Buffer+(*Length), "%04d%02d%02dT%02d%02d%02d%c%c",
+	*Length+=sprintf(Buffer+(*Length), "%04d%02d%02dT%02d%02d%02d%s%c%c",
 			Date->Year, Date->Month, Date->Day,
-			Date->Hour, Date->Minute, Date->Second,13,10);
+			Date->Hour, Date->Minute, Date->Second,
+			Date->Timezone == 0 ? "Z" : "",
+			13,10);
 }
 
 void SaveVCALDate(char *Buffer, int *Length, GSM_DateTime *Date, char *Start)
