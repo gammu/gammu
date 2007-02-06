@@ -194,4 +194,8 @@
 #  endif
 #endif
 
+#if defined(linux) || defined(__linux) || defined(__linux__)
+#  define HAVE_SYS_UTSNAME_H
+#endif
+
 #endif
