@@ -48,6 +48,8 @@ For additionals materials and links to them see readme.txt
 [-] Fixed error
 
 
+2007???? - 1.09.20
+
 20070206 - 1.09.19
 [-] * Do not ship make-release in tarball.
 [-] * Fixed wrong encoding of text to vCard when last field was missing.
