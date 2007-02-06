@@ -139,18 +139,38 @@
 /* ---------------------- C language specific --------------------------- */
 
 /* are the scandir functions available */
+#ifndef HAVE_DIRENT_H
 #cmakedefine HAVE_DIRENT_H
+#endif
+#ifndef HAVE_SCANDIR
 #cmakedefine HAVE_SCANDIR
+#endif
+#ifndef HAVE_ALPHASORT
 #cmakedefine HAVE_ALPHASORT
+#endif
 
+#ifndef HAVE_PTHREAD
 #cmakedefine HAVE_PTHREAD
+#endif
+#ifndef HAVE_SYS_IOCTL_H
 #cmakedefine HAVE_SYS_IOCTL_H
+#endif
+#ifndef HAVE_MYSQL_MYSQL_H
 #cmakedefine HAVE_MYSQL_MYSQL_H
+#endif
+#ifndef HAVE_POSTGRESQL_LIBPQ_FE_H
 #cmakedefine HAVE_POSTGRESQL_LIBPQ_FE_H
+#endif
+#ifndef HAVE_SYS_UTSNAME_H
 #cmakedefine HAVE_SYS_UTSNAME_H
+#endif
 
+#ifndef HAVE_ISWSPACE
 #cmakedefine HAVE_ISWSPACE
+#endif
+#ifndef HAVE_TOWLOWER
 #cmakedefine HAVE_TOWLOWER
+#endif
 
 /* Will be used Bluez BT stack ? */
 #cmakedefine GSM_ENABLE_BLUEZ
