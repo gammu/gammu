@@ -29,7 +29,7 @@ endif
 DEBVER=$(shell head -1 debian/changelog.main | tr -d \n | cut -d\( -f2|cut -d \) -f1)
 OLDVER=$(shell echo $(DEBVER) | cut -d- -f1)
 OLDREL=$(shell echo $(DEBVER) | cut -d- -f2)
-VER=$(shell sed -e 's!,!.!g' version)
+VER=$(shell sed -e 's!,!.!g' VERSION)
 ifeq (mainstream,$(findstring mainstream,$(DEB_BUILD_OPTIONS)))
 	REL=$(OLDREL)
 else
