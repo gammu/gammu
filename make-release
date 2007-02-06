@@ -23,6 +23,6 @@ cd build-win
 cmake ../gammu-$version -DCROSS_MINGW=ON
 make
 cpack
-mv Gammu-1.09.19-Windows.exe Gammu-1.09.19-Windows.zip ../
+mv Gammu-*-Windows.* ../
 
 echo "Release is in $tmp directory"
