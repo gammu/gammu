@@ -21,7 +21,7 @@
 #  include <utime.h>
 #endif
 
-#include "../common/gammu.h"
+#include <gammu.h>
 #include "gammu.h"
 #include "smsd/smsdcore.h"
 #ifdef DEBUG
