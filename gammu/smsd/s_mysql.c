@@ -1,6 +1,6 @@
 /* (c) 2004 by Marcin Wiacek */
 
-#include "gammu.h"
+#include <gammu.h>
 
 #ifdef HAVE_MYSQL_MYSQL_H
 
@@ -13,8 +13,6 @@
 #  pragma comment(lib, "libmysql.lib")
 #endif
 
-#include "../../common/misc/coding/coding.h"
-#include "../../common/service/backup/gsmback.h"
 #include "../gammu.h"
 #include "smsdcore.h"
 

@@ -1,6 +1,6 @@
 /* (c) 2002-2004 by Joergen Thomsen */
 
-#include "gammu.h"
+#include <gammu.h>
 
 #include <string.h>
 #include <stdio.h>
@@ -13,8 +13,6 @@
 #  include <dirent.h>
 #endif
 
-#include "../../common/misc/coding/coding.h"
-#include "../../common/service/backup/gsmback.h"
 #include "smsdcore.h"
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
