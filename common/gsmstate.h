@@ -1377,6 +1377,10 @@ typedef struct {
 	 */
 	GSM_Error (*AddFilePart)	(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
 	/**
+	 * Sends file to phone, it's up to phone to decide what to do with it.
+	 */
+	GSM_Error (*SendFilePart)	(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
+	/**
 	 * Acquires filesystem status.
 	 */
 	GSM_Error (*GetFileSystemStatus)(GSM_StateMachine *s, GSM_FileSystemStatus *Status);

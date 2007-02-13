@@ -4102,6 +4102,7 @@ GSM_Phone_Functions ALCATELPhone = {
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/* 	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFilePart		*/
+	NOTSUPPORTED,			/* 	SendFilePart		*/
 	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
 	NOTSUPPORTED,			/* 	DeleteFile		*/
 	NOTSUPPORTED,			/* 	AddFolder		*/

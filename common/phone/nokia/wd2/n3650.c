@@ -392,6 +392,7 @@ GSM_Phone_Functions N3650Phone = {
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	N3650_GetFilePart,
 	NOTIMPLEMENTED,			/*	AddFilePart		*/
+	NOTSUPPORTED,			/* 	SendFilePart		*/
 	NOTSUPPORTED,	 		/* 	GetFileSystemStatus	*/
 	NOTIMPLEMENTED,			/*	DeleteFile		*/
 	NOTIMPLEMENTED,			/*	AddFolder		*/

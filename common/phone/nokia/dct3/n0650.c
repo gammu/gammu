@@ -146,6 +146,7 @@ GSM_Phone_Functions N650Phone = {
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/* 	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFilePart		*/
+	NOTSUPPORTED,			/* 	SendFilePart		*/
 	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
 	NOTSUPPORTED,			/* 	DeleteFile		*/
 	NOTSUPPORTED,			/* 	AddFolder		*/

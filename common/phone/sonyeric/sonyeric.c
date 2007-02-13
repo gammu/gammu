@@ -578,6 +578,14 @@ GSM_Error SONYERICSSON_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos
 	return OBEXGEN_AddFilePart(s, File, Pos, Handle);
 }
 
+GSM_Error SONYERICSSON_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+{
+	GSM_Error error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, false))!= ERR_NONE) return error;
+	return OBEXGEN_SendFilePart(s, File, Pos, Handle);
+}
+
 GSM_Error SONYERICSSON_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
 {
 	GSM_Error error;
@@ -1530,6 +1538,7 @@ GSM_Phone_Functions SONYERICSSONPhone = {
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	SONYERICSSON_GetFilePart,
 	SONYERICSSON_AddFilePart,
+	SONYERICSSON_SendFilePart,
 	SONYERICSSON_GetFileSystemStatus,
 	SONYERICSSON_DeleteFile,
 	SONYERICSSON_AddFolder,

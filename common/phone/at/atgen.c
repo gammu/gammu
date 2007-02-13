@@ -4784,7 +4784,8 @@ GSM_Phone_Functions ATGENPhone = {
 	NOTSUPPORTED,			/*	GetNextRootFolder	*/
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/* 	GetFilePart		*/
-	NOTSUPPORTED,			/* 	AddFile			*/
+	NOTSUPPORTED,			/* 	AddFilePart		*/
+	NOTSUPPORTED,			/* 	SendFilePart		*/
 	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
 	NOTSUPPORTED,			/* 	DeleteFile		*/
 	NOTSUPPORTED,			/* 	AddFolder		*/

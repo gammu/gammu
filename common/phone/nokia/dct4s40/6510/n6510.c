@@ -4250,6 +4250,7 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_SetFileAttributes,
 	N6510_GetFilePart,
 	N6510_AddFilePart,
+	NOTSUPPORTED,			/* 	SendFilePart		*/
 	N6510_GetFileSystemStatus,
 	N6510_DeleteFile,
 	N6510_AddFolder,
