@@ -8269,7 +8269,7 @@ static void GetFileFolder(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void AddOneFile(GSM_File *File, char *text)
+static void AddOneFile(GSM_File *File, char *text, bool send)
 {
 	int 		Pos,Handle,i,j,old1;
 	time_t     	t_time1,t_time2;
@@ -8284,7 +8284,11 @@ static void AddOneFile(GSM_File *File, char *text)
 	error 	= ERR_NONE;
 	Pos	= 0;
 	while (error == ERR_NONE) {
-		error = Phone->AddFilePart(&s,File,&Pos,&Handle);
+		if (send) {
+			error = Phone->SendFilePart(&s,File,&Pos,&Handle);
+		} else {
+			error = Phone->AddFilePart(&s,File,&Pos,&Handle);
+		}
 	    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
 		if (File->Used != 0) {
 			printmsgerr("%c%s%03i percent",13,text,Pos*100/File->Used);
@@ -8309,23 +8313,33 @@ static void AddOneFile(GSM_File *File, char *text)
 	}
 }
 
-static void AddFile(int argc, char *argv[])
+static void AddSendFile(int argc, char *argv[])
 {
 	GSM_File		File;
 	int			i,nextlong;
 	char			IDUTF[200];
+	bool			sendfile = false;
+	int			optint = 2;
+
+	if (mystrncasecmp(argv[1], "--sendfile", 0)) {
+		sendfile = true;
+	}
 
 	File.Buffer = NULL;
-	DecodeUTF8QuotedPrintable(File.ID_FullName,argv[2],strlen(argv[2]));
-	error = GSM_ReadFile(argv[3], &File);
+	if (!sendfile) {
+		DecodeUTF8QuotedPrintable(File.ID_FullName,argv[optint],strlen(argv[optint]));
+		optint++;
+	}
+	error = GSM_ReadFile(argv[optint], &File);
 	Print_Error(error);
-	EncodeUnicode(File.Name,argv[3],strlen(argv[3]));
-	for (i=strlen(argv[3])-1;i>0;i--) {
-		if (argv[3][i] == '\\' || argv[3][i] == '/') break;
+	EncodeUnicode(File.Name,argv[optint],strlen(argv[optint]));
+	for (i=strlen(argv[optint])-1;i>0;i--) {
+		if (argv[optint][i] == '\\' || argv[optint][i] == '/') break;
 	}
-	if (argv[3][i] == '\\' || argv[3][i] == '/') {
-		EncodeUnicode(File.Name,argv[3]+i+1,strlen(argv[3])-i-1);
+	if (argv[optint][i] == '\\' || argv[optint][i] == '/') {
+		EncodeUnicode(File.Name,argv[optint]+i+1,strlen(argv[optint])-i-1);
 	}
+	optint++;
 
 	GSM_IdentifyFileFormat(&File);
 
@@ -8334,9 +8348,9 @@ static void AddFile(int argc, char *argv[])
 	File.Hidden	= false;
 	File.System	= false;
 
-	if (argc > 4) {
+	if (argc > optint) {
 		nextlong = 0;
-		for (i=4;i<argc;i++) {
+		for (i = optint; i < argc; i++) {
 			switch(nextlong) {
 			case 0:
 				if (mystrncasecmp(argv[i],"-type",0)) {
@@ -8402,7 +8416,7 @@ static void AddFile(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	AddOneFile(&File, "Writing: ");
+	AddOneFile(&File, "Writing: ", sendfile);
 	EncodeUTF8QuotedPrintable(IDUTF,File.ID_FullName);
 	printf("ID of new file is \"%s\"\n",IDUTF);
 
@@ -8597,7 +8611,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 
 		//adding new playlist file
 		sprintf(Buffer2,"  Writing %s: ",DecodeUnicodeString(Files2.Name));
-		AddOneFile(&Files2, Buffer2);
+		AddOneFile(&Files2, Buffer2, false);
 
 		//cleaning buffers
 		free(Files2.Buffer);
@@ -9034,7 +9048,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		File.Type 	   = GSM_File_Other;
 		File.ModifiedEmpty = true;
 		dbgprintf("file id is \"%s\"\n",DecodeUnicodeString(File.ID_FullName));
-		AddOneFile(&File, "Writing JAD file: ");
+		AddOneFile(&File, "Writing JAD file: ", false);
 
 		if (argc > 4) {
 			for (i=4;i<argc;i++) {
@@ -9053,7 +9067,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		File.Type 	   = GSM_File_Java_JAR;
 		File.ModifiedEmpty = true;
-		AddOneFile(&File, "Writing JAR file: ");
+		AddOneFile(&File, "Writing JAR file: ", false);
 		free(File.Buffer);
 		GSM_Terminate();
 		return;
@@ -9128,7 +9142,7 @@ static void NokiaAddFile(int argc, char *argv[])
 
 	GSM_IdentifyFileFormat(&File);
 
-	AddOneFile(&File, "Writing file: ");
+	AddOneFile(&File, "Writing file: ", false);
 	free(File.Buffer);
 	GSM_Terminate();
 }
@@ -9500,7 +9514,8 @@ static GSM_Parameters Parameters[] = {
 	{"--getrootfolders",		0, 0, GetRootFolders,		{H_Filesystem,0},		""},
 	{"--setfileattrib",		1, 5, SetFileAttrib,		{H_Filesystem,0},		"folderID [-system] [-readonly] [-hidden] [-protected]"},
 	{"--getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
-	{"--addfile",			2, 6, AddFile,			{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
+	{"--addfile",			2, 6, AddSendFile,		{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
+	{"--sendfile",			2, 6, AddSendFile,		{H_Filesystem,0},		"name"},
 	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 	{"--nokiaaddplaylists",		0, 0, NokiaAddPlayLists,	{H_Filesystem,H_Nokia,0},	""},

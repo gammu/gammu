@@ -562,6 +562,26 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int
 	return ERR_NONE;
 }
 
+GSM_Error OBEXGEN_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+{
+	GSM_Error		error;
+
+	/* No service for this */
+	error = OBEXGEN_Connect(s, OBEX_None);
+	if (error != ERR_NONE) return error;
+
+	/* Send file */
+	smprintf(s,"Sending file\n");
+	File->ID_FullName[0] = 0;
+	File->ID_FullName[1] = 0;
+	error = OBEXGEN_PrivAddFilePart(s, File, Pos, Handle);
+	if (error != ERR_NONE) return error;
+
+	/* Calculate path of added file */
+	OBEXGEN_CreateFileName(File->ID_FullName, File->ID_FullName, File->Name);
+	return ERR_NONE;
+}
+
 /**
  * Reply handler for file reading operations.
  */
@@ -2733,6 +2753,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	OBEXGEN_GetFilePart,
 	OBEXGEN_AddFilePart,
+	OBEXGEN_SendFilePart,
 	NOTIMPLEMENTED, 		/* 	GetFileSystemStatus	*/
 	OBEXGEN_DeleteFile,
 	OBEXGEN_AddFolder,

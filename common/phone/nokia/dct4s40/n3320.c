@@ -274,6 +274,7 @@ GSM_Phone_Functions N3320Phone = {
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/*	GetFilePart		*/
 	NOTIMPLEMENTED,			/*	AddFilePart		*/
+	NOTSUPPORTED,			/* 	SendFilePart		*/
 	NOTSUPPORTED,	 		/* 	GetFileSystemStatus	*/
 	NOTIMPLEMENTED,			/*	DeleteFile		*/
 	NOTIMPLEMENTED,			/*	AddFolder		*/
