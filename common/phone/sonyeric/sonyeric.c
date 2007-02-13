@@ -68,7 +68,7 @@ GSM_Error SONYERICSSON_SetATMode(GSM_StateMachine *s)
  * Ensures phone and Gammu protocol are in OBEX mode, in IrMC service
  * if requrested.
  */
-GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
+GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
 {
 	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
 	GSM_Error		error;
@@ -81,18 +81,10 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 	/* Are we already in OBEX mode? */
 	if (Priv->Mode == SONYERICSSON_ModeOBEX) {
 		/* We can not safely switch service, we need to disconnect instead */
-		if (irmc) {
-			if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_IRMC) {
-				return ERR_NONE;
-			} else {
-				error = SONYERICSSON_SetATMode(s);
-			}
+		if (s->Phone.Data.Priv.OBEXGEN.Service == service) {
+			return ERR_NONE;
 		} else {
-			if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
-				return ERR_NONE;
-			} else {
-				error = SONYERICSSON_SetATMode(s);
-			}
+			error = SONYERICSSON_SetATMode(s);
 		}
 		if (error != ERR_NONE) return error;
 	}
@@ -122,7 +114,7 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 	/* Tell OBEX module it has no service selected */
 	s->Phone.Data.Priv.OBEXGEN.Service = 0;
 
-	dbgprintf ("Changing protocol to OBEX\n");
+	smprintf(s, "Changing protocol to OBEX\n");
 
 	/* Stop AT protocol */
 	error = s->Protocol.Functions->Terminate(s);
@@ -147,11 +139,8 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, bool irmc)
 	Priv->Mode				= SONYERICSSON_ModeOBEX;
 
 	/* Choose appropriate connection type (we need different for filesystem and for IrMC) */
-	if (irmc) {
-		error = OBEXGEN_Connect(s, OBEX_IRMC);
-	} else {
-		error = OBEXGEN_Connect(s, OBEX_BrowsingFolders);
-	}
+	smprintf(s, "Setting service %d\n", service);
+	error = OBEXGEN_Connect(s, service);
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -574,7 +563,7 @@ GSM_Error SONYERICSSON_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, false))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
 	return OBEXGEN_AddFilePart(s, File, Pos, Handle);
 }
 
@@ -582,7 +571,7 @@ GSM_Error SONYERICSSON_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Po
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, false))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_None))!= ERR_NONE) return error;
 	return OBEXGEN_SendFilePart(s, File, Pos, Handle);
 }
 
@@ -590,7 +579,7 @@ GSM_Error SONYERICSSON_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Han
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, false))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
 	return OBEXGEN_GetFilePart(s, File, Handle, Size);
 }
 
@@ -598,7 +587,7 @@ GSM_Error SONYERICSSON_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bo
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, false))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
 	return OBEXGEN_GetNextFileFolder(s, File, start);
 }
 
@@ -606,7 +595,7 @@ GSM_Error SONYERICSSON_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, false))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteFile(s, ID);
 }
 
@@ -614,7 +603,7 @@ GSM_Error SONYERICSSON_AddFolder(GSM_StateMachine *s, GSM_File *File)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, false))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
 	return OBEXGEN_AddFolder(s, File);
 }
 
@@ -630,7 +619,7 @@ GSM_Error SONYERICSSON_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *St
 	GSM_Error 		error;
 
 	if (Status->MemoryType == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_GetMemoryStatus(s, Status);
 	} else {
 		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
@@ -643,7 +632,7 @@ GSM_Error SONYERICSSON_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_GetMemory(s, entry);
 	} else {
 		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
@@ -656,7 +645,7 @@ GSM_Error SONYERICSSON_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_GetNextMemory(s, entry, start);
 	} else {
 		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
@@ -669,7 +658,7 @@ GSM_Error SONYERICSSON_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_SetMemory(s, entry);
 	} else {
 		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
@@ -682,7 +671,7 @@ GSM_Error SONYERICSSON_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_AddMemory(s, entry);
 	} else {
 		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
@@ -695,7 +684,7 @@ GSM_Error SONYERICSSON_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_DeleteMemory(s, entry);
 	} else {
 		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
@@ -708,7 +697,7 @@ GSM_Error SONYERICSSON_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 	GSM_Error 		error;
 
 	if (type == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_DeleteAllMemory(s, type);
 	} else {
 		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
@@ -727,7 +716,7 @@ GSM_Error SONYERICSSON_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetTodoStatus(s, status);
 }
 
@@ -735,7 +724,7 @@ GSM_Error SONYERICSSON_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetTodo(s, ToDo);
 }
 
@@ -743,7 +732,7 @@ GSM_Error SONYERICSSON_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, boo
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetNextTodo(s, ToDo, start);
 }
 
@@ -751,7 +740,7 @@ GSM_Error SONYERICSSON_DeleteAllToDo (GSM_StateMachine *s)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteAllTodo(s);
 }
 
@@ -759,7 +748,7 @@ GSM_Error SONYERICSSON_AddToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_AddTodo(s, ToDo);
 }
 
@@ -767,7 +756,7 @@ GSM_Error SONYERICSSON_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_SetTodo(s, ToDo);
 }
 
@@ -775,7 +764,7 @@ GSM_Error SONYERICSSON_DeleteToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteTodo(s, ToDo);
 }
 
@@ -783,7 +772,7 @@ GSM_Error SONYERICSSON_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetCalendarStatus(s, status);
 }
 
@@ -791,7 +780,7 @@ GSM_Error SONYERICSSON_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetCalendar(s, Note);
 }
 
@@ -799,7 +788,7 @@ GSM_Error SONYERICSSON_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *N
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetNextCalendar(s, Note, start);
 }
 
@@ -807,7 +796,7 @@ GSM_Error SONYERICSSON_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *No
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteCalendar(s, Note);
 }
 
@@ -815,7 +804,7 @@ GSM_Error SONYERICSSON_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_AddCalendar(s, Note);
 }
 
@@ -823,7 +812,7 @@ GSM_Error SONYERICSSON_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_SetCalendar(s, Note);
 }
 
@@ -831,7 +820,7 @@ GSM_Error SONYERICSSON_DeleteAllCalendar (GSM_StateMachine *s)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, true))!= ERR_NONE) return error;
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteAllCalendar(s);
 }
 
