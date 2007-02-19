@@ -51,6 +51,7 @@ For additionals materials and links to them see readme.txt
 2007???? - 1.09.20
 [-] * Added include paths to MSVC configuration files.
 [+] * Support for sending file to phone (--sendfile).
+[-] * Russian translation update (Acid Jack).
 
 20070206 - 1.09.19
 [-] * Do not ship make-release in tarball.
