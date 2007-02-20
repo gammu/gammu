@@ -333,22 +333,29 @@ void ATGEN_TweakInternationalNumber(unsigned char *Number, unsigned char *numTyp
 	}
 }
 
-GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned char *input)
+/**
+ * This function parses datetime strings in the format:
+ * [YY[YY]/MM/DD,]hh:mm[:ss[+TZ]] , [] enclosed parts are optional
+ * (or the same hex/unicode encoded).
+ *
+ * @todo too much static buffers
+ */
+GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned char *_input)
 {
-       	/* This function parses datetime strings in the format:
-	[YY[YY]/MM/DD,]hh:mm[:ss[+TZ]] , [] enclosed parts are optional */
-	/* (or the same hex/unicode encoded) */
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 	unsigned char		buffer[100];
 	unsigned char		*pos;
 	unsigned char		buffer2[100];
+	unsigned char		input[100];
 	int			len;
 
+	strncpy(input, _input, 100);
+	input[99] = '\0';
 	pos = input;
 
 	/* Strip possible quotes */
 	if (*pos == '"') pos++;
-	if (buffer[strlen(pos) - 1] == '"') buffer[strlen(pos) - 1] = 0;
+	if (input[strlen(pos) - 1] == '"') input[strlen(pos) - 1] = 0;
 
 	len = strlen(pos);
 
