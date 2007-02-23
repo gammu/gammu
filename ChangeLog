@@ -54,6 +54,7 @@ For additionals materials and links to them see readme.txt
 [-] * Russian translation update (Acid Jack).
 [-] * Fixed possible uninitalized value in date decoding (Stanislav
       Brabec).
+[-] * Fixed reading of contacts from Samsung.
 
 20070206 - 1.09.19
 [-] * Do not ship make-release in tarball.
