@@ -449,7 +449,7 @@ GSM_Error GSM_Calendar_GetValue(const GSM_CalendarEntry *note, int *start, const
  * Converts Gammu recurrence to vCal format. See GSM_DecodeVCAL_RRULE
  * for grammar description.
  */
-GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *note, int TimePos)
+GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *note, int TimePos, GSM_VCalendarVersion Version)
 {
 	int i;
 	int j;
@@ -521,14 +521,14 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *not
 	}
 	/* Did we found something? */
 	if (repeating) {
-		*Length += sprintf(Buffer + (*Length), "RRULE: ");
+		*Length += sprintf(Buffer + (*Length), "RRULE:");
 
 		/* Safe fallback */
 		if (repeat_frequency == -1) {
 			repeat_frequency = 1;
 		}
 
-		if (repeat_dayofyear != -1) {
+		if ((repeat_dayofyear != -1) || (Version == Siemens_VCalendar && repeat_day != -1 && repeat_month != -1)) {
 			/* Yearly by day */
 			*Length += sprintf(Buffer + (*Length), "YD%d", repeat_frequency);
 
@@ -712,10 +712,13 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	if (note->Type == GSM_CAL_BIRTHDAY) {
 		if (Version == Mozilla_VCalendar) {
 			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-RECUR-DEFAULT-UNITS:years%c%c",13,10);
+		} else if (Version == Siemens_VCalendar) {
+			*Length+=sprintf(Buffer+(*Length), "RRULE:YD1%c%c",13,10);
+		} else {
+			*Length+=sprintf(Buffer+(*Length), "RRULE:YM1%c%c",13,10);
 		}
-		*Length+=sprintf(Buffer+(*Length), "RRULE:YM1%c%c",13,10);
 	} else {
-		GSM_EncodeVCAL_RRULE(Buffer, Length, note, date);
+		GSM_EncodeVCAL_RRULE(Buffer, Length, note, date, Version);
 	}
 
 	/* Include mozilla specific alarm encoding */
@@ -1562,7 +1565,11 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			}
 			if (ReadVCALDate(Line, "DALARM", &Date, &is_date_only)) {
 				Calendar->Entries[Calendar->EntriesNum].Date = Date;
-				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
+				if (CalVer == Siemens_VCalendar) {
+					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TONE_ALARM_DATETIME;
+				} else {
+					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
+				}
 				Alarm = Calendar->EntriesNum;
 				Calendar->EntriesNum++;
 			}
