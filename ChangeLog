@@ -55,6 +55,7 @@ For additionals materials and links to them see readme.txt
 [-] * Fixed possible uninitalized value in date decoding (Stanislav
       Brabec).
 [-] * Fixed reading of contacts from Samsung.
+[-] * Fixed vCard handling for Siemens (bug #72).
 
 20070206 - 1.09.19
 [-] * Do not ship make-release in tarball.
