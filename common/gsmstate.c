@@ -1089,6 +1089,7 @@ static OnePhoneModel allmodels[] = {
 	{"V200" ,	  "SGH-V200" ,    "",				   {0}},
 	{"T100" ,	  "SGH-T100" ,    "",				   {0}},
 	{"E700" ,	  "SGH-E700" ,    "",				   {0}},
+	{"X461",	  "SGH-X461" ,    "",				   {0}},
 
 	/* Ericsson/Sony Ericsson */
 	{"T28s",	"1101101-BVT28s","",				   {F_OBEX, 0}},
