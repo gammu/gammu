@@ -1561,77 +1561,79 @@ bool 	  GSM_ReadConfig		(INI_Section *cfg_info, GSM_Config *cfg, int num);
 void 	  GSM_DumpMessageLevel2		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);
 void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);
 
-/* ---------------------- Phone features ----------------------------------- */
-
+/**
+ * Phone features definition. This is usually used for things, which can not
+ * be determined on run time.
+ */
 typedef enum {
 	/* n6110.c */
-	F_CAL33 = 1,	/* Calendar,3310 style - 10 reminders, Unicode, 3 coding types	*/
-	F_CAL52,	/* Calendar,5210 style - full Unicode, etc.			*/
-	F_CAL82,	/* Calendar,8250 style - "normal", but with Unicode		*/
-	F_RING_SM,	/* Ringtones returned in SM format - 33xx			*/
-	F_NORING,	/* No ringtones							*/
-	F_NOPBKUNICODE,	/* No phonebook in Unicode					*/
-	F_NOWAP,      	/* No WAP							*/
-	F_NOCALLER,	/* No caller groups						*/
-	F_NOPICTURE,	/* No Picture Images						*/
-	F_NOPICTUREUNI,	/* No Picture Images text in Unicode				*/
-	F_NOSTARTUP,	/* No startup logo						*/
-	F_NOCALENDAR,	/* No calendar							*/
-	F_NOSTARTANI,	/* Startup logo is not animated 				*/
-	F_POWER_BATT,	/* Network and battery level get from netmonitor		*/
-	F_PROFILES33,	/* Phone profiles in 3310 style					*/
-	F_PROFILES51,	/* Phone profiles in 5110 style					*/
-	F_MAGICBYTES,	/* Phone can make authentication with magic bytes		*/
-	F_NODTMF,	/* Phone can't send DTMF					*/
-	F_DISPSTATUS,	/* Phone return display status					*/
+	F_CAL33 = 1,	 /**< Calendar,3310 style - 10 reminders, Unicode, 3 coding types */
+	F_CAL52,	 /**< Calendar,5210 style - full Unicode, etc. */
+	F_CAL82,	 /**< Calendar,8250 style - "normal", but with Unicode */
+	F_RING_SM,	 /**< Ringtones returned in SM format - 33xx */
+	F_NORING,	 /**< No ringtones */
+	F_NOPBKUNICODE,	 /**< No phonebook in Unicode */
+	F_NOWAP,      	 /**< No WAP */
+	F_NOCALLER,	 /**< No caller groups */
+	F_NOPICTURE,	 /**< No Picture Images */
+	F_NOPICTUREUNI,	 /**< No Picture Images text in Unicode */
+	F_NOSTARTUP,	 /**< No startup logo */
+	F_NOCALENDAR,	 /**< No calendar */
+	F_NOSTARTANI,	 /**< Startup logo is not animated */
+	F_POWER_BATT,	 /**< Network and battery level get from netmonitor */
+	F_PROFILES33,	 /**< Phone profiles in 3310 style */
+	F_PROFILES51,	 /**< Phone profiles in 5110 style */
+	F_MAGICBYTES,	 /**< Phone can make authentication with magic bytes */
+	F_NODTMF,	 /**< Phone can't send DTMF */
+	F_DISPSTATUS,	 /**< Phone return display status */
 	F_NOCALLINFO,
 
 	/* n3320.c */
-	F_DAYMONTH,	/* Day and month reversed in pbk, when compare to GSM models	*/
+	F_DAYMONTH,	 /**< Day and month reversed in pbk, when compare to GSM models */
 
 	/* n6510.c */
-	F_PBK35,	/* Phonebook in 3510 style with ringtones ID			*/
-	F_PBKIMG,	/* Phonebook in 7250 style with picture ID			*/
-	F_PBKTONEGAL,	/* Phonebook with selecting ringtones from gallery              */
-	F_PBKSMSLIST,	/* Phonebook with SMS list					*/
-	F_PBKUSER,	/* Phonebook with user ID					*/
-	F_6230iCALLER,	/* Caller groups like in 6230i					*/
-	F_RADIO,	/* Phone with FM radio						*/
-	F_TODO63,	/* ToDo in 6310 style - 0x55 msg type				*/
-	F_TODO66,	/* ToDo in 6610 style - like calendar, with date and other	*/
-	F_NOMIDI,	/* No ringtones in MIDI						*/
-	F_BLUETOOTH,	/* Bluetooth support						*/
-	F_NOFILESYSTEM,	/* No images, ringtones, java saved in special filesystem	*/
-	F_NOMMS,	/* No MMS sets in phone						*/
-	F_NOGPRSPOINT,	/* GPRS point are not useable					*/
-	F_CAL35,	/* Calendar,3510 style - Reminder,Call,Birthday			*/
-	F_CAL65,	/* Calendar,6510 style - CBMM, method 3				*/
-	F_WAPMMSPROXY,	/* WAP & MMS settings contains first & second proxy		*/
-	F_CHAT,		/* Phone with Chat settings 					*/
-	F_SYNCML,	/* Phone with SyncML settings 					*/
-	F_FILES2,	/* filesystem version 2 					*/
+	F_PBK35,	 /**< Phonebook in 3510 style with ringtones ID */
+	F_PBKIMG,	 /**< Phonebook in 7250 style with picture ID */
+	F_PBKTONEGAL,	 /**< Phonebook with selecting ringtones from gallery */
+	F_PBKSMSLIST,	 /**< Phonebook with SMS list */
+	F_PBKUSER,	 /**< Phonebook with user ID */
+	F_6230iCALLER,	 /**< Caller groups like in 6230i */
+	F_RADIO,	 /**< Phone with FM radio */
+	F_TODO63,	 /**< ToDo in 6310 style - 0x55 msg type */
+	F_TODO66,	 /**< ToDo in 6610 style - like calendar, with date and other */
+	F_NOMIDI,	 /**< No ringtones in MIDI */
+	F_BLUETOOTH,	 /**< Bluetooth support */
+	F_NOFILESYSTEM,	 /**< No images, ringtones, java saved in special filesystem */
+	F_NOMMS,	 /**< No MMS sets in phone */
+	F_NOGPRSPOINT,	 /**< GPRS point are not useable */
+	F_CAL35,	 /**< Calendar,3510 style - Reminder,Call,Birthday */
+	F_CAL65,	 /**< Calendar,6510 style - CBMM, method 3 */
+	F_WAPMMSPROXY,	 /**< WAP & MMS settings contains first & second proxy */
+	F_CHAT,		 /**< Phone with Chat settings */
+	F_SYNCML,	 /**< Phone with SyncML settings */
+	F_FILES2,	 /**< filesystem version 2 */
 	F_NOFILE1,
-	F_6230iWAP,	/* WAP, MMS, etc. settings like in 6230i - unknown now		*/
-	F_PROFILES,	/* Profiles support available					*/
-	F_SERIES40_30,  /* Series 40 3.0						*/
-	F_SMS_FILES,  	/* SMS are read from filesystem files like in Series 40 3.0	*/
+	F_6230iWAP,	 /**< WAP, MMS, etc. settings like in 6230i - unknown now */
+	F_PROFILES,	 /**< Profiles support available */
+	F_SERIES40_30,   /**< Series 40 3.0 */
+	F_SMS_FILES,  	 /**< SMS are read from filesystem files like in Series 40 3.0 */
 	F_3220_MMS,
 
 	/* n6510.c && n7110.c */
-	F_VOICETAGS,	/* Voice tags available						*/
-	F_CAL62,	/* Calendar,6210 style - Call,Birthday,Memo,Meeting		*/
+	F_VOICETAGS,	 /**< Voice tags available */
+	F_CAL62,	 /**< Calendar,6210 style - Call,Birthday,Memo,Meeting */
 	F_NOTES,
 
 	/* AT modules */
-	F_SMSONLYSENT,	/* Phone supports only sent/unsent messages			*/
-	F_BROKENCPBS, 	/* CPBS on some memories can hang phone				*/
-	F_M20SMS,	/* Siemens M20 like SMS handling				*/
-	F_SLOWWRITE,	/* Use slower writing which some phone need			*/
-	F_SMSME900,	/* SMS in ME start from location 900 - case of Sagem		*/
-	F_ALCATEL,	/* Phone supports Alcatel protocol				*/
-	F_OBEX,		/* Phone can switch to OBEX protocol from AT mode		*/
-	F_IRMC_LEVEL_2,	/* Phone supports IrMC level 2 even if it doesn't report it	*/
-	F_MODE22,	/* Switching to OBEX mode is done using AT+MODE=22		*/
+	F_SMSONLYSENT,	 /**< Phone supports only sent/unsent messages */
+	F_BROKENCPBS, 	 /**< CPBS on some memories can hang phone */
+	F_M20SMS,	 /**< Siemens M20 like SMS handling */
+	F_SLOWWRITE,	 /**< Use slower writing which some phone need */
+	F_SMSME900,	 /**< SMS in ME start from location 900 - case of Sagem */
+	F_ALCATEL,	 /**< Phone supports Alcatel protocol */
+	F_OBEX,		 /**< Phone can switch to OBEX protocol from AT mode */
+	F_IRMC_LEVEL_2,	 /**< Phone supports IrMC level 2 even if it doesn't report it */
+	F_MODE22,	 /**< Switching to OBEX mode is done using AT+MODE=22 */
 } Feature;
 
 /* For models table */
