@@ -2674,14 +2674,30 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	return error;
 }
 
+/**
+ * Stores available phonebook memories in PBKMemories.
+ *
+ * @todo Should parse reply, not copy it as is.
+ */
 GSM_Error ATGEN_ReplyGetPBKMemories(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	smprintf(s, "PBK memories received\n");
+	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+	case AT_Reply_OK:
+		break;
+	case AT_Reply_CMSError:
+	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
+	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+
 	if (strlen(msg.Buffer) > AT_PBK_MAX_MEMORIES) {
 		smprintf(s, "ERROR: Too long phonebook memories information received! (Recevided %zd, AT_PBK_MAX_MEMORIES is %d\n", strlen(msg.Buffer), AT_PBK_MAX_MEMORIES);
 		return ERR_MOREMEMORY;
 	}
-	memcpy(s->Phone.Data.Priv.ATGEN.PBKMemories,msg.Buffer,strlen(msg.Buffer));
+	strcpy(s->Phone.Data.Priv.ATGEN.PBKMemories, msg.Buffer);
+	smprintf(s, "PBK memories received: %s\n", s->Phone.Data.Priv.ATGEN.PBKMemories);
 	return ERR_NONE;
 }
 
@@ -2708,7 +2724,15 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 
 	if (Priv->PBKMemories[0] == 0) {
 		error=GSM_WaitFor (s, "AT+CPBS=?\r", 10, 0x00, 3, ID_SetMemoryType);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			/* 
+			 * We weren't able to read available memories, let's 
+			 * guess that phone supports all. This is tru at least 
+			 * for Samsung.
+			 */
+			strcpy(s->Phone.Data.Priv.ATGEN.PBKMemories, "\"ME\",\"SM\",\"DC\",\"ON\",\"LD\",\"FD\",\"MC\",\"RC\"");
+			smprintf(s, "Falling back to default memories list: %s\n", s->Phone.Data.Priv.ATGEN.PBKMemories);
+		}
 	}
 
 	switch (MemType) {
@@ -2803,7 +2827,13 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 		pos = strchr(msg.Buffer, '(');
  		if (!pos) {
  			pos = strchr(msg.Buffer, ':');
- 			if (!pos) return ERR_UNKNOWNRESPONSE;
+ 			if (!pos) {
+				/* We don't get reply on first attempt on Samsung */
+				if (Priv->Manufacturer == AT_Samsung) {
+					return ERR_NONE;
+				}
+				return ERR_UNKNOWNRESPONSE;
+			}
  			pos++;
  			if (*pos ==  ' ') pos++;
  			if (!isdigit(*pos)) return ERR_UNKNOWNRESPONSE;
@@ -2900,8 +2930,10 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	Priv->NumberLength		= 0;
 
 	error = GSM_WaitFor (s, "AT+CPBR=?\r", 10, 0x00, 4, ID_GetMemoryStatus);
-	if (Priv->Manufacturer == AT_Samsung)
+	/* We don't get reply on first attempt on Samsung */
+	if (Priv->Manufacturer == AT_Samsung) {
 		error = GSM_WaitFor (s, "", 0, 0x00, 4, ID_GetMemoryStatus);
+	}
 	if (error != ERR_NONE) return error;
 	if (NeededInfo == AT_Total || NeededInfo == AT_Sizes || NeededInfo == AT_First) return ERR_NONE;
 
