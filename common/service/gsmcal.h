@@ -1,5 +1,18 @@
-/* (c) 2002-2004 by Marcin Wiacek */
-/* 5210 calendar IDs by Frederick Ros */
+/* (c) 2002-2004 by Marcin Wiacek, 2005-2007 by Michal Cihar */
+
+/** \file gsmcal.c
+ * \defgroup Calendar Calendar parsing and encoding
+ *
+ * This module implements calendar related opreations.
+ *
+ * @see http://www.imc.org/pdi/
+ * @author Michal Čihař <michal@cihar.com>
+ * @author Marcin Wiacek
+ * @author Frederick Ros
+ * @date 2002-2007
+ *
+ * @{
+ */
 
 #ifndef __gsm_cal_h
 #define __gsm_cal_h
@@ -500,6 +513,7 @@ typedef struct {
 GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer);
 
 #endif
+/*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
