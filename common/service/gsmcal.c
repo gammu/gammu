@@ -1,15 +1,13 @@
 /* (c) 2002-2004 by Marcin Wiacek, 2005-2007 by Michal Cihar */
 
-/** \file gsmcal.c
- * \defgroup Calendar Calendar parsing and encoding
- *
- * This module implements calendar related opreations.
- *
- * @see http://www.imc.org/pdi/
+/**
+ * @file gsmcal.c
  * @author Michal Čihař <michal@cihar.com>
  * @author Marcin Wiacek
  * @date 2002-2007
- *
+ */
+/**
+ * \addtogroup Calendar
  * @{
  */
 #include <string.h>
