@@ -1,12 +1,17 @@
 /* (c) 2002-2007 by Marcin Wiacek and Michal Cihar */
 
-/** \file atgen.h
- * \defgroup ATPhone AT phones communication
+/**
+ * @file atgen.h
+ * @author Michal Čihař
+ * @author Marcin Wiacek
+ */
+/**
+ * @defgroup ATPhone AT phones communication
  *
  * This module implements standard AT commands.
  *
- * \see http://www.etsi.org
- * \see http://www.3gpp.org
+ * @see http://www.etsi.org
+ * @see http://www.3gpp.org
  *
  * @{
  */
