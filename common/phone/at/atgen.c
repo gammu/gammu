@@ -338,7 +338,7 @@ void ATGEN_TweakInternationalNumber(unsigned char *Number, unsigned char *numTyp
  * [YY[YY]/MM/DD,]hh:mm[:ss[+TZ]] , [] enclosed parts are optional
  * (or the same hex/unicode encoded).
  *
- * @todo too much static buffers
+ * @todo Too much static buffers are used here.
  */
 GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned char *_input)
 {
@@ -2725,9 +2725,9 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 	if (Priv->PBKMemories[0] == 0) {
 		error=GSM_WaitFor (s, "AT+CPBS=?\r", 10, 0x00, 3, ID_SetMemoryType);
 		if (error != ERR_NONE) {
-			/* 
-			 * We weren't able to read available memories, let's 
-			 * guess that phone supports all. This is tru at least 
+			/*
+			 * We weren't able to read available memories, let's
+			 * guess that phone supports all. This is tru at least
 			 * for Samsung.
 			 */
 			strcpy(s->Phone.Data.Priv.ATGEN.PBKMemories, "\"ME\",\"SM\",\"DC\",\"ON\",\"LD\",\"FD\",\"MC\",\"RC\"");

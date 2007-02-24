@@ -316,7 +316,9 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry *entry, int *Te
 }
 
 
-/*  Function to compute time difference between alarm and event time */
+/**
+ * Function to compute time difference between alarm and event time.
+ */
 GSM_DateTime	VCALTimeDiff ( GSM_DateTime *Alarm,  GSM_DateTime *Time)
 {
 	int dt;
@@ -967,7 +969,9 @@ GSM_DeltaTime ReadVCALTriggerTime (unsigned char *Buffer)
 	return dt;
 }
 
-/* Prepare input buffer (notably line continuations) */
+/**
+ * Prepare input buffer (notably line continuations).
+ */
 int GSM_Make_VCAL_Lines (unsigned char *Buffer, int *lBuffer)
 {
 	int src=0;
