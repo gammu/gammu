@@ -49,6 +49,7 @@ For additionals materials and links to them see readme.txt
 
 
 2007???? - 1.10.1
+[-] * Fixed encoding of name for Nokia phones.
 
 20070223 - 1.10.0
 [-] * Added include paths to MSVC configuration files.
