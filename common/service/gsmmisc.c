@@ -313,16 +313,6 @@ void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)
 	}
 }
 
-void SaveVCALTextUTF8(char *Buffer, int *Length, char *Text, char *Start)
-{
-	char buffer[1000];
-
-	if (UnicodeLength(Text) != 0) {
-		EncodeUTF8(buffer,Text);
-			*Length+=sprintf(Buffer+(*Length), "%s;CHARSET=UTF-8:%s%c%c",Start,buffer,13,10);
-	}
-}
-
 unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
 {
 	static unsigned char	tmp[1000];
