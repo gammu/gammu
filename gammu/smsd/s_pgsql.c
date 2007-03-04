@@ -31,7 +31,7 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig *Config)
 		port = atoi( pport );
 	}
 
-	sprintf(buf, "host = %s user = %s password = %s dbname = %s port = %d", \
+	sprintf(buf, "host = '%s' user = '%s' password = '%s' dbname = '%s' port = %d", \
 		Config->PC, Config->user, Config->password, Config->database, port);
 
 	Config->DBConnPgSQL = PQconnectdb(buf);
