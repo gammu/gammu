@@ -92,6 +92,9 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
  		for (i = 0; i < entry->EntriesNum; i++) {
 			if (entry->Entries[i].EntryType == PBK_Text_LastName ||
 			    entry->Entries[i].EntryType == PBK_Text_FirstName) {
+				if (UnicodeLength(string+1) > 0) {
+					string[UnicodeLength(string+1)*2+1] = ' ';
+				}
 				CopyUnicodeString(string+UnicodeLength(string+1)*2+1,entry->Entries[i].Text);
 				entry->Entries[i].AddError = ERR_DATACONVERTED;
 				found=true;
