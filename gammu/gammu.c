@@ -1771,10 +1771,15 @@ static void IncomingUSSD(GSM_StateMachine *s, char *Buffer)
 
 #define CHECKMEMORYSTATUS(x, m, a1, b1) { 				\
 	x.MemoryType=m;							\
-	if (Phone->GetMemoryStatus(&s, &x) == ERR_NONE)			\
+	if ( (error = Phone->GetMemoryStatus(&s, &x)) == ERR_NONE)			\
 		printmsg("%s %03d, %s %03d\n", a1, x.MemoryUsed, b1, x.MemoryFree);	\
 }
 
+#define CHECK_EXIT \
+	{ \
+	if (gshutdown) break; \
+	if (error != ERR_NONE && error != ERR_NOTSUPPORTED && error != ERR_EMPTY && error != ERR_SOURCENOTAVAILABLE && error != ERR_NOTIMPLEMENTED) break; \
+	}
 static void Monitor(int argc, char *argv[])
 {
 	GSM_MemoryStatus	MemStatus;
@@ -1784,6 +1789,7 @@ static void Monitor(int argc, char *argv[])
 	GSM_NetworkInfo		NetInfo;
     	GSM_BatteryCharge   	BatteryCharge;
     	GSM_SignalQuality   	SignalQuality;
+	GSM_Error		error;
 	int 			count = -1;
 
 	if (argc >= 3) {
@@ -1814,26 +1820,26 @@ static void Monitor(int argc, char *argv[])
 	while (!gshutdown && count != 0) {
 		if (count > 0) count--;
 		CHECKMEMORYSTATUS(MemStatus,MEM_SM,"SIM phonebook     : Used","Free");
-		if (gshutdown) break;
+		CHECK_EXIT;
 		CHECKMEMORYSTATUS(MemStatus,MEM_DC,"Dialled numbers   : Used","Free");
-		if (gshutdown) break;
+		CHECK_EXIT;
 		CHECKMEMORYSTATUS(MemStatus,MEM_RC,"Received numbers  : Used","Free");
-		if (gshutdown) break;
+		CHECK_EXIT;
 		CHECKMEMORYSTATUS(MemStatus,MEM_MC,"Missed numbers    : Used","Free");
-		if (gshutdown) break;
+		CHECK_EXIT;
 		CHECKMEMORYSTATUS(MemStatus,MEM_ON,"Own numbers       : Used","Free");
-		if (gshutdown) break;
+		CHECK_EXIT;
 		CHECKMEMORYSTATUS(MemStatus,MEM_ME,"Phone phonebook   : Used","Free");
-		if (gshutdown) break;
-		if (Phone->GetToDoStatus(&s, &ToDoStatus) == ERR_NONE) {
+		CHECK_EXIT;
+		if ( (error = Phone->GetToDoStatus(&s, &ToDoStatus)) == ERR_NONE) {
 			printmsg("ToDos             : Used %d, Free %d\n", ToDoStatus.Used, ToDoStatus.Free);
 		}
-		if (gshutdown) break;
-		if (Phone->GetCalendarStatus(&s, &CalendarStatus) == ERR_NONE) {
+		CHECK_EXIT;
+		if ( (error = Phone->GetCalendarStatus(&s, &CalendarStatus)) == ERR_NONE) {
 			printmsg("Calendar          : Used %d, Free %d\n", CalendarStatus.Used, CalendarStatus.Free);
 		}
-		if (gshutdown) break;
-		if (Phone->GetBatteryCharge(&s,&BatteryCharge)==ERR_NONE) {
+		CHECK_EXIT;
+		if ( (error = Phone->GetBatteryCharge(&s,&BatteryCharge)) == ERR_NONE) {
             		if (BatteryCharge.BatteryPercent != -1)
 				printmsg("Battery level     : %i percent\n", BatteryCharge.BatteryPercent);
             		if (BatteryCharge.BatteryCapacity != -1)
@@ -1896,14 +1902,14 @@ static void Monitor(int argc, char *argv[])
                 		printf("\n");
             		}
         	}
-		if (gshutdown) break;
-		if (Phone->GetSignalQuality(&s,&SignalQuality)==ERR_NONE) {
+		CHECK_EXIT;
+		if ( (error = Phone->GetSignalQuality(&s,&SignalQuality)) == ERR_NONE) {
             		if (SignalQuality.SignalStrength != -1) printmsg("Signal strength   : %i dBm\n",     SignalQuality.SignalStrength);
             		if (SignalQuality.SignalPercent  != -1) printmsg("Network level     : %i percent\n", SignalQuality.SignalPercent);
             		if (SignalQuality.BitErrorRate   != -1) printmsg("Bit error rate    : %i percent\n", SignalQuality.BitErrorRate);
         	}
-		if (gshutdown) break;
-		if (Phone->GetSMSStatus(&s,&SMSStatus)==ERR_NONE) {
+		CHECK_EXIT;
+		if ( (error = Phone->GetSMSStatus(&s,&SMSStatus)) == ERR_NONE) {
 			if (SMSStatus.SIMSize > 0) {
 				printmsg("SIM SMS status    : %i used, %i unread, %i locations\n",
 					SMSStatus.SIMUsed,
@@ -1920,8 +1926,8 @@ static void Monitor(int argc, char *argv[])
 				printf("\n");
 			}
 		}
-		if (gshutdown) break;
-		if (Phone->GetNetworkInfo(&s,&NetInfo)==ERR_NONE) {
+		CHECK_EXIT;
+		if ( (error = Phone->GetNetworkInfo(&s,&NetInfo)) == ERR_NONE) {
 			printmsg("Network state     : ");
                         switch (NetInfo.State) {
 				case GSM_HomeNetwork		: printmsg("home network\n"); 		 	break;
@@ -9497,7 +9503,19 @@ static void NokiaVibraTest(int argc, char *argv[])
 }
 #endif
 
+#ifdef DEBUG
+/**
+ * Function for testing purposes.
+ */
+static void Foo(int argc, char *argv[])
+{
+}
+#endif
+
 static GSM_Parameters Parameters[] = {
+#ifdef DEBUG
+	{"--foo",			0, 0, Foo,			{0},				""},
+#endif
 	{"--identify",			0, 0, Identify,			{H_Info,0},			""},
 	{"--version",			0, 0, Version,			{H_Other,0},			""},
 	{"--getdisplaystatus",		0, 0, GetDisplayStatus,		{H_Info,0},			""},
