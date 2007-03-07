@@ -14,6 +14,7 @@
  * to publish their code under.
  */
 
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1529,6 +1530,81 @@ void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len)
 	}
 	dest[j++] = 0;
 	dest[j++] = 0;
+}
+
+void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len)
+{
+	char *tmp;
+	char *pos, *pos_end;
+	const char *lastpos;
+	char *entity;
+	unsigned long int c;
+	int tmplen;
+
+	/* Allocate buffer */
+	tmp = (char *)calloc(len + 1, sizeof(char));
+	if (tmp == NULL) {
+		/* We have no memory for XML decoding */
+		DecodeUTF8(dest, src, len);
+		return;
+	}
+
+	/* Find ampersand and decode the */
+	lastpos = src;
+	while ((lastpos != 0) && ((pos = strchr(lastpos, '&')) != NULL)) {
+		/* Store current string */
+		strncat(tmp, lastpos, pos - lastpos);
+		lastpos = pos;
+		/* Skip ampersand */
+		pos++;
+		/* Detect end of string */
+		if (pos == 0) break;
+		/* Find entity length */
+		pos_end = strchr(pos, ';');
+		if (pos_end - pos > 6 || pos_end == NULL) {
+			if (pos_end == NULL) {
+				dbgprintf("No entity end found, ignoring!\n");
+			} else {
+				dbgprintf("Too long html entity, ignoring!\n");
+			}
+			strncat(tmp, lastpos, 1);
+			lastpos++;
+			continue;
+		}
+		/* Create entity */
+		entity = strndup(pos, pos_end - pos);
+		dbgprintf("Found XML entity: %s\n", entity);
+		if (entity == NULL) break;
+		if (entity[0] == '#') {
+			if (entity[1] == 'x' || entity[1] == 'X') {
+				c = strtoull(entity + 2, NULL, 16);
+			} else {
+				c = strtoull(entity + 1, NULL, 10);
+			}
+			dbgprintf("Unicode char 0x%04lx\n", c);
+			tmplen = strlen(tmp);
+			tmplen += EncodeWithUTF8Alphabet2((c >> 8) & 0xff, c & 0xff, tmp + tmplen);
+			tmp[tmplen] = 0;
+		} else if (strcmp(entity, "amp") == 0) {
+			strcat(tmp, "&");
+		} else if (strcmp(entity, "apos") == 0) {
+			strcat(tmp, "'");
+		} else if (strcmp(entity, "gt") == 0) {
+			strcat(tmp, ">");
+		} else if (strcmp(entity, "lt") == 0) {
+			strcat(tmp, "<");
+		} else if (strcmp(entity, "quot") == 0) {
+			strcat(tmp, "\"");
+		} else {
+			dbgprintf("Could not decode XML entity!\n");
+			strncat(tmp, lastpos, pos_end - pos + 1);
+		}
+		lastpos = pos_end + 1;
+	}
+	/* Copy rest of string */
+	strcat(tmp, lastpos);
+	DecodeUTF8(dest, tmp, strlen(tmp));
+	free(tmp);
 }
 
 void DecodeUTF7(unsigned char *dest, const unsigned char *src, int len)
