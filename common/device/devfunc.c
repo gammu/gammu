@@ -61,6 +61,8 @@ GSM_Error bluetooth_checkservicename(GSM_StateMachine *s, char *name)
 int socket_read(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
 {
 	fd_set 		readfds;
+	int result = 0;
+	int flags;
 #ifdef WIN32
 	struct timeval 	timer;
 #endif
@@ -68,16 +70,22 @@ int socket_read(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
 	FD_ZERO(&readfds);
 	FD_SET(hPhone, &readfds);
 #ifndef WIN32
-	if (select(hPhone+1, &readfds, NULL, NULL, 0)) {
-		return(read(hPhone, buf, nbytes));
+	if (select(hPhone+1, &readfds, NULL, NULL, 0) > 0) {
+		flags = fcntl(hPhone, F_GETFL);
+		fcntl(hPhone, F_SETFL, flags | O_NONBLOCK);
+		result = read(hPhone, buf, nbytes);
+		if (result < 0 && errno != EINTR) {
+			return 0;
+		}
+		fcntl(hPhone, F_SETFL, flags);
 	}
 #else
 	memset(&timer,0,sizeof(timer));
-	if (select(0, &readfds, NULL, NULL, &timer) != 0) {
-		return(recv(hPhone, buf, nbytes, 0));
+	if (select(0, &readfds, NULL, NULL, &timer) > 0) {
+		result = recv(hPhone, buf, nbytes, 0);
 	}
 #endif
-	return 0;
+	return result;
 }
 
 #ifdef WIN32
@@ -92,7 +100,12 @@ int socket_write(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
 	do {
 		ret = send(hPhone, buf, nbytes - actual, 0);
         	if (ret < 0) {
-            		if (actual != nbytes) GSM_OSErrorInfo(s,"socket_write");
+            		if (actual != nbytes) {
+				GSM_OSErrorInfo(s,"socket_write");
+				if (errno != EINTR) {
+					return 0;
+				}
+			}
             		return actual;
         	}
 		actual 	+= ret;
