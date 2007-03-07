@@ -855,7 +855,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 					if (strcmp(name,".")) {
 						dbgprintf("copying folder %s to %i parent %i\n",name,Priv->FilesLocationsCurrent+pos2,Priv->FilesLocationsCurrent);
 						/* Convert filename from UTF-8 */
-						DecodeUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name, name, strlen(name));
+						DecodeXMLUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name, name, strlen(name));
 						/* Create file name from parts */
 						OBEXGEN_CreateFileName(
 							Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,
@@ -880,7 +880,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 					name[j] = 0;
 					dbgprintf("copying file %s to %i\n",name,Priv->FilesLocationsCurrent+pos2);
 					/* Convert filename from UTF-8 */
-					DecodeUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name, name, strlen(name));
+					DecodeXMLUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name, name, strlen(name));
 					/* Create file name from parts */
 					OBEXGEN_CreateFileName(
 						Priv->Files[Priv->FilesLocationsCurrent+pos2].ID_FullName,

@@ -69,6 +69,11 @@ void 		DecodeUTF8QuotedPrintable	(unsigned char *dest, const unsigned char *src,
 bool 		EncodeUTF8			(unsigned char *dest, const unsigned char *src);
 void 		DecodeUTF8			(unsigned char *dest, const unsigned char *src, int len);
 
+/**
+ * Decodes UTF-8 text with XML entities to Unicode.
+ */
+void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len);
+
 /* ------------------------------- BASE64 ---------------------------------- */
 void 		EncodeBASE64			(const unsigned char *Input, unsigned char *Output, int Length);
 int 		DecodeBASE64			(const unsigned char *Input, unsigned char *Output, int Length);
