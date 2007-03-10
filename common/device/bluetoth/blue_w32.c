@@ -83,7 +83,8 @@ DEFINE_GUID(L2CAP_PROTOCOL_UUID,  0x00000100, 0x0000, 0x1000, 0x80, 0x00, 0x00, 
 
 static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, char *address, WSAPROTOCOL_INFO *protocolInfo)
 {
-	bool				found = -1;
+	int				found = -1;
+	int				score, bestscore = 0;
 	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
 	WSAQUERYSET 			querySet;
 	DWORD				flags;
@@ -120,15 +121,14 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, char *address, WSAPR
 			addressAsString,&addressSize)==0) {
                 	smprintf(s, "%s - ", addressAsString);
 		}
-		smprintf(s, "\"%s\"\n", pResults->lpszServiceInstanceName);
+		score = bluetooth_checkservicename(s, pResults->lpszServiceInstanceName);
+		smprintf(s, "\"%s\" (score=%d)\n", pResults->lpszServiceInstanceName, score);
 		if (addressAsString[0] != 0) {
 			for (i=strlen(addressAsString)-1;i>0;i--) {
 				if (addressAsString[i] == ':') break;
 			}
-			if (found == -1) {
-				if (bluetooth_checkservicename(s, pResults->lpszServiceInstanceName) == ERR_NONE) {
-					found = atoi(addressAsString+i+1);
-				}
+			if (score > bestscore) {
+				found = atoi(addressAsString+i+1);
 			}
 		}
 	}

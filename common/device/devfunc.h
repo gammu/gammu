@@ -7,7 +7,7 @@
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE
 #ifdef BLUETOOTH_RF_SEARCHING
 
-GSM_Error bluetooth_checkservicename(GSM_StateMachine *s, char *name);
+int bluetooth_checkservicename(GSM_StateMachine *s, const char *name);
 
 #endif
 #endif

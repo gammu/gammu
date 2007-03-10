@@ -48,6 +48,9 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	bdaddr_t			bdaddr;
 	int 				fd;
 
+	memset(&laddr, 0, sizeof(laddr));
+	memset(&raddr, 0, sizeof(raddr));
+
 	smprintf(s, "Connecting to RF channel %i\n",port);
 
 	fd = socket(PF_BLUETOOTH, SOCK_STREAM, BTPROTO_RFCOMM);
@@ -83,108 +86,85 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 
 #ifdef BLUETOOTH_RF_SEARCHING
 
-struct search_context {
-	char				*svc;
-	uuid_t				group;
-	int				tree;
-	uint32_t			handle;
-};
-
-static void print_service_desc(void *value, void *user)
-{
-	sdp_data_t 	*p = (sdp_data_t *)value;
-	int 		i = 0, proto = 0, *channel = (int *)user;
-
-	for (; p; p = p->next, i++) {
-		switch (p->dtd) {
-		case SDP_UUID16:
-		case SDP_UUID32:
-		case SDP_UUID128:
-			proto = sdp_uuid_to_proto(&p->val.uuid);
-			break;
-		case SDP_UINT8:
-			if (proto == RFCOMM_UUID) {
-				(*channel) = p->val.uint8;
-				return;
-			}
-			break;
-		}
-	}
-}
-
-void print_access_protos(void *value, void *user)
-{
-	sdp_list_t 	*protDescSeq = (sdp_list_t *)value;
-	int		*channel = (int *)user;
-
-	sdp_list_foreach(protDescSeq,print_service_desc,channel);
-}
-
-static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, struct search_context *context)
+static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, uuid_t *group)
 {
 	sdp_session_t			*sess;
 	sdp_record_t 			*rec;
-	sdp_list_t			*attrid, *search, *seq, *next, *proto = 0;
+	sdp_list_t			*attrid, *search, *seq, *next, *proto;
 	sdp_data_t			*d;
 	bdaddr_t			interface;
 	uint32_t			range = 0x0000ffff;
-	struct search_context 		subcontext;
 	char				str[20];
-	int				channel,channel2,dd;
+	int				channel,dd;
 	char 				name[1000];
+	int				score, bestscore = 0;
+	int				found = -1;
+	uuid_t subgroup;
 
 	bacpy(&interface,BDADDR_ANY);
 
 	ba2str(bdaddr, str);
 	smprintf(s,"Device %s", str);
+
+	/* Try to read name */
 	dd = hci_open_dev(0);
-	if (dd<0) return ERR_UNKNOWN;
-	memset(name,0,sizeof(name));
-	if (hci_read_remote_name(dd,bdaddr,sizeof(name),name,100000)>=0) {
-	    smprintf(s," (\"%s\")",name);
+	if (dd < 0) return ERR_UNKNOWN;
+	memset(name, 0, sizeof(name));
+	if (hci_read_remote_name(dd, bdaddr, sizeof(name), name, 100000) >= 0) {
+	    smprintf(s, " (\"%s\")", name);
 	}
 	close(dd);
 	smprintf(s,"\n");
 
+	/* Connect to device */
 	sess = sdp_connect(&interface, bdaddr, SDP_RETRY_IF_BUSY);
 	if (!sess) {
-		dbgprintf("Failed to connect to SDP server on %s: %s\n", str, strerror(errno));
+		smprintf(s, "Failed to connect to SDP server on %s: %s\n", str, strerror(errno));
 		return ERR_TIMEOUT;
 	}
+
+	/* List available channels */
 	attrid = sdp_list_append(0, &range);
-	search = sdp_list_append(0, &context->group);
+	search = sdp_list_append(0, group);
 	if (sdp_service_search_attr_req(sess, search, SDP_ATTR_REQ_RANGE, attrid, &seq)) {
-		dbgprintf("Service Search failed: %s\n", strerror(errno));
+		smprintf(s, "Service Search failed: %s\n", strerror(errno));
 		sdp_close(sess);
 		return ERR_UNKNOWN;
 	}
 	sdp_list_free(attrid, 0);
 	sdp_list_free(search, 0);
 
-	channel2 = -1;
 	for (; seq; seq = next) {
 		rec 	= (sdp_record_t *) seq->data;
 
-		if (!context->tree) {
-			d = sdp_data_get(rec,SDP_ATTR_SVCNAME_PRIMARY);
-			if (sdp_get_access_protos(rec,&proto) == 0) {
-				channel = -1;
-				sdp_list_foreach(proto,print_access_protos,&channel);
-				sdp_list_free(proto,(sdp_free_func_t)sdp_data_free);
-			}
-			smprintf(s,"   Channel %i",channel);
-			if (d) {
-				smprintf(s," - \"%s\"\n",d->val.str);
-    				if (channel2 == -1 && bluetooth_checkservicename(s, d->val.str) == ERR_NONE) {
-					channel2 = channel;
-				}
-			} else {
-				smprintf(s,"\n");
-			}
+		/* Get channel info */
+		if (sdp_get_access_protos(rec, &proto) == 0) {
+			channel = sdp_get_proto_port(proto, RFCOMM_UUID);
+			sdp_list_foreach(proto, (sdp_list_func_t)sdp_list_free, 0);
+			sdp_list_free(proto, 0);
+		} else {
+			continue;
 		}
-    		if (sdp_get_group_id(rec,&subcontext.group) != -1) {
-			memcpy(&subcontext, context, sizeof(struct search_context));
-			if (subcontext.group.value.uuid16 != context->group.value.uuid16) bluetooth_checkdevice(s,bdaddr,&subcontext);
+		smprintf(s, "   Channel %i", channel);
+
+		/* Get service name and check it */
+		d = sdp_data_get(rec, SDP_ATTR_SVCNAME_PRIMARY);
+		if (d) {
+			score = bluetooth_checkservicename(s, d->val.str);
+			smprintf(s," - \"%s\" (score=%d)\n", d->val.str, score);
+			if (score > bestscore) {
+				found = channel;
+			}
+		} else {
+			smprintf(s,"\n");
+		}
+
+		/* Descent to subroups */
+		memset(&subgroup, 0, sizeof(subgroup));
+    		if (sdp_get_group_id(rec, &subgroup) != -1) {
+			if (subgroup.value.uuid16 != group->value.uuid16) {
+				bluetooth_checkdevice(s, bdaddr, &subgroup);
+			}
 		}
 
 		next = seq->next;
@@ -193,7 +173,9 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, st
 	}
 	sdp_close(sess);
 
-	if (channel2 != -1) return bluetooth_connect(s, channel2, str);
+	if (found != -1) {
+		return bluetooth_connect(s, found, str);
+	}
 
 	return ERR_NOTSUPPORTED;
 }
@@ -203,17 +185,17 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 	inquiry_info			ii[20];
 	uint8_t				count = 0;
 	int				i;
-	struct search_context 		context;
 	GSM_Error			error = ERR_TIMEOUT;
 	struct hci_dev_info		di;
+	uuid_t group;
 
-	memset(&context, '\0', sizeof(struct search_context));
-//	sdp_uuid16_create(&(context.group),PUBLIC_BROWSE_GROUP);
-	sdp_uuid16_create(&(context.group),RFCOMM_UUID);
+	memset(&group, 0, sizeof(group));
+	/* We're looking only for rfcomm channels */
+	sdp_uuid16_create(&group, RFCOMM_UUID);
 
-	if (hci_devinfo(0,&di) < 0) return ERR_DEVICENOTWORK;
+	if (hci_devinfo(0, &di) < 0) return ERR_DEVICENOTWORK;
 
-	if (!strcmp(s->CurrentConfig->Device,"/dev/ttyS1")) {
+	if (strcmp(s->CurrentConfig->Device, "/dev/ttyS1") == 0) {
 		dbgprintf("Searching for devices\n");
 		if (sdp_general_inquiry(ii, 20, 8, &count) < 0) {
 			return ERR_UNKNOWN;
@@ -223,7 +205,7 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 		str2ba(s->CurrentConfig->Device,&ii[0].bdaddr);
 	}
 	for (i=0;i<count;i++) {
-		error = bluetooth_checkdevice(s,&ii[i].bdaddr,&context);
+		error = bluetooth_checkdevice(s,&ii[i].bdaddr,&group);
 		if (error == ERR_NONE) return error;
 	}
 	return error;
