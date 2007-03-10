@@ -59,6 +59,7 @@ For additionals materials and links to them see readme.txt
       unknown models.
 [-] * Simplified searching of channels using Bluez stack.
 [+] * RF searching now better detects OBEX channels.
+[-] * Fix format strnings for 64-bit architectures (bug #77).
 
 20070223 - 1.10.0
 [-] * Added include paths to MSVC configuration files.
