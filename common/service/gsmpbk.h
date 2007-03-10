@@ -7,6 +7,7 @@
 
 #include "../gsmcomon.h"
 #include "gsmmisc.h"
+#include "../misc/coding/coding.h"
 
 /**
  * Structure contains info about number of used/free entries in phonebook
@@ -240,6 +241,8 @@ typedef enum {
 	SonyEricsson_VCard10,
 	SonyEricsson_VCard21
 } GSM_VCardVersion;
+
+void GSM_TweakInternationalNumber(unsigned char *Number, const GSM_NumberType numType);
 
 void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, int *Number, int *Group);
 unsigned char *GSM_PhonebookGetEntryName (GSM_MemoryEntry *entry);
