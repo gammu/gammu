@@ -20,9 +20,6 @@
 #include <string.h>
 #include <ctype.h>
 #include <locale.h>
-#ifndef __OpenBSD__
-#  include <wctype.h>
-#endif
 #ifdef WIN32
 #  include "windows.h"
 #endif

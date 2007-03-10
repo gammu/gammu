@@ -8,10 +8,13 @@
 #endif
 
 #include <stdlib.h>
+#ifdef HAVE_ISWSPACE
+#  include <wctype.h>
+#endif
 
 #include "../misc.h"
 
-#ifdef __OpenBSD__
+#ifndef HAVE_ISWSPACE
 typedef		int wint_t;
 #endif
 
