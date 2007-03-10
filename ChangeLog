@@ -57,6 +57,8 @@ For additionals materials and links to them see readme.txt
 [-] * OBEX driver correctly detects models.
 [+] * Native OBEX connections (blueobex and irdaobex) should work also with
       unknown models.
+[-] * Simplified searching of channels using Bluez stack.
+[+] * RF searching now better detects OBEX channels.
 
 20070223 - 1.10.0
 [-] * Added include paths to MSVC configuration files.

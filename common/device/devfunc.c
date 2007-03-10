@@ -31,26 +31,60 @@
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE
 #ifdef BLUETOOTH_RF_SEARCHING
 
-GSM_Error bluetooth_checkservicename(GSM_StateMachine *s, char *name)
+int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 {
 	/* Phonet */
 	if (s->ConnectionType == GCT_BLUEPHONET) {
-		if (strstr(name, "Nokia PC Suite") != NULL) return ERR_NONE;
+		if (strstr(name, "Nokia PC Suite") != NULL) return 1;
 
 	/* OBEX */
 	} else if (s->ConnectionType == GCT_BLUEOBEX) {
-		if (strstr(name, "OBEX") != NULL) return ERR_NONE;
+		/* Prefer this on Nokia as this gives better access to filesystem */
+		if (strstr(name, "Nokia OBEX PC Suite Services") != NULL) {
+			if (strcmp(s->CurrentConfig->Model, "obex") == 0) {
+				return 5;
+			}
+			return 3;
+		}
+		/* For filesystem, we prefer file transfer */
+		if (strstr(name, "OBEX File Transfer") != NULL || strstr(name, "OBEX file transfer") != NULL) {
+			if (strcmp(s->CurrentConfig->Model, "obex") == 0) {
+				return 4;
+			}
+			return 3;
+		}
+		/* Ususally this name also contains OBEX, preffered for irmc */
+		if (strstr(name, "IrMC Sync") != NULL || strstr(name, "OBEX Synchronisation")) {
+			if (strcmp(s->CurrentConfig->Model, "obexirmc") == 0 ||
+				strcmp(s->CurrentConfig->Model, "seobex") == 0) {
+				return 4;
+			}
+			return 3;
+		}
+		/* Simple send of files should work here */
+		if (strstr(name, "OBEX Object Push") != NULL) {
+			if (strcmp(s->CurrentConfig->Model, "obexnone") == 0) {
+				return 3;
+			}
+			return 2;
+		}
+		/* Anything matching OBEX has lowest priority */
+		if (strstr(name, "OBEX") != NULL) return 1;
 
 	/* AT */
 	} else if (s->ConnectionType == GCT_BLUEAT) {
-		if (strstr(name, "COM") != NULL) return ERR_NONE;
 		/* Sony-Ericsson */
-		if (strstr(name, "Serial Port") != NULL) return ERR_NONE;
+		if (strstr(name, "Serial Port 1") != NULL) return 3;
+		if (strstr(name, "Serial Port") != NULL) return 2;
 		/* Siemens, Thomas Eitzenberger */
-		if (strstr(name, "SerialPort") != NULL) return ERR_NONE;
+		if (strstr(name, "SerialPort1") != NULL) return 3;
+		if (strstr(name, "SerialPort") != NULL) return 2;
+
+		if (strstr(name, "COM1") != NULL) return 3;
+		if (strstr(name, "COM") != NULL) return 1;
 	}
 
-        return ERR_UNKNOWN;
+        return 0;
 }
 
 #endif
