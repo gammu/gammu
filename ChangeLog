@@ -66,6 +66,7 @@ For additionals materials and links to them see readme.txt
 [-] * Fixed retrieving messages with some phones who index them from zero like
       CG79 (bug #20).
 [-] * Ignore error when there is too much members in group in phone (bug #3).
+[-] * Compilation fixes for OpenBSD with libutf8 (bug #10).
 
 20070223 - 1.10.0
 [-] * Added include paths to MSVC configuration files.
