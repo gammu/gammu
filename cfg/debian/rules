@@ -101,9 +101,9 @@ binary-arch: build install
 	dh_compress
 	dh_fixperms
 	dh_movefiles
-	for name in gammu libgammu0 libgammu0-dev ; do install -m644 debian/bug.control debian/$$name/usr/share/bug/$$name/control ; done
-	dh_makeshlibs -V 'libgammu0 (= $(VER)-$(REL))'
-	dh_shlibdeps -L libgammu0 -l debian/libgammu0/usr/lib
+	for name in gammu libgammu1 libgammu1-dev ; do install -m644 debian/bug.control debian/$$name/usr/share/bug/$$name/control ; done
+	dh_makeshlibs -V 'libgammu1 (= $(VER)-$(REL))'
+	dh_shlibdeps -L libgammu1 -l debian/libgammu1/usr/lib
 	dh_installdeb
 	dh_gencontrol
 	dh_md5sums
