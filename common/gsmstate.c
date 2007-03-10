@@ -195,6 +195,14 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 			return ERR_NONE;
 		}
 #endif
+		/* With OBEXgen and auto model we can work with unknown models too */
+#ifdef GSM_ENABLE_OBEXGEN
+		if (s->ConnectionType==GCT_BLUEOBEX || s->ConnectionType==GCT_IRDAOBEX) {
+			smprintf(s,"[Module           - \"%s\"]\n",OBEXGENPhone.models);
+			s->Phone.Functions = &OBEXGENPhone;
+			return ERR_NONE;
+		}
+#endif
 		if (model->model[0] == 0) return ERR_UNKNOWNMODELSTRING;
 	}
 	s->Phone.Functions=NULL;

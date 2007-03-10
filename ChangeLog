@@ -55,6 +55,8 @@ For additionals materials and links to them see readme.txt
 [-] * Fixed behaviour on Bluetooth disconnect.
 [-] * Fixed handling of files with special chars on OBEX.
 [-] * OBEX driver correctly detects models.
+[+] * Native OBEX connections (blueobex and irdaobex) should work also with
+      unknown models.
 
 20070223 - 1.10.0
 [-] * Added include paths to MSVC configuration files.
