@@ -306,6 +306,55 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 	}
 }
 
+void GSM_TweakInternationalNumber(unsigned char *Number, const GSM_NumberType numType)
+{
+	/* Checks if International number needs to be corrected */
+	char* pos; /* current position in the buffer */
+	char buf[500]; /* Taken from DecodeUnicodeString(). How to get length of the encoded unicode string? There may be embedded 0s. */
+
+	if (numType == NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN || numType + 1 == NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN) {
+		sprintf(buf+1,"%s",DecodeUnicodeString(Number)); /* leave 1 free char before the number, we'll need it */
+		/* International number may be without + (e.g. (Sony)Ericsson)
+			we can add it, but must handle numbers in the form:
+			         NNNNNN         N - any digit (char)
+			   *code#NNNNNN         any number of Ns
+			*[*]code*NNNNNN[...]
+			other combinations (like *code1*code2*number#)
+			will have to be added if found in real life
+			Or does somebody know the exact allowed syntax
+			from some standard?
+		*/
+		pos=buf+1;
+		if (*pos=='*') { /* Code? Skip it. */
+			/* probably with code */
+			while (*pos=='*') { /* skip leading asterisks */
+				*(pos-1)=*pos; /* shift the chars by one */
+				pos++;
+			}
+			while ((*pos!='*')&&(*pos!='#')) { /* skip code - anything except * or # */
+				*(pos-1)=*pos;
+				pos++;
+			}
+			*(pos-1)=*pos; /* shift the last delimiter */
+			pos++;
+	        }
+		/* check the guessed location, if + is correctly there */
+		if (*pos=='+') {
+			/* yes, just shift the rest of the string */
+			while (*pos) {
+				*(pos-1) = *pos;
+				pos++;
+			}
+			*(pos-1)=0; /* kill the last char, which now got doubled */
+		} else {
+			/* no, insert + and exit, no more shifting */
+			*(pos-1)='+';
+		}
+		EncodeUnicode(Number,buf,strlen(buf));
+	}
+}
+
+
 GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version)
 {
 	unsigned char   Line[2000],Buff[2000];
@@ -357,6 +406,9 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 			    ReadVCALText(Line, "TEL;VOICE",	     Buff) ||
 			    ReadVCALText(Line, "TEL;PREF",	      Buff) ||
 			    ReadVCALText(Line, "TEL;PREF;VOICE",	Buff)) {
+				if (Buff[1] == '+') {
+					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
+				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
@@ -367,6 +419,9 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 			    ReadVCALText(Line, "TEL;CELL;VOICE",	Buff) ||
 			    ReadVCALText(Line, "TEL;PREF;CELL",	 Buff) ||
 			    ReadVCALText(Line, "TEL;PREF;CELL;VOICE",   Buff)) {
+				if (Buff[1] == '+') {
+					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
+				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
@@ -377,6 +432,9 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 			    ReadVCALText(Line, "TEL;PREF;WORK",	 Buff) ||
 			    ReadVCALText(Line, "TEL;WORK;VOICE",	Buff) ||
 			    ReadVCALText(Line, "TEL;PREF;WORK;VOICE",   Buff)) {
+				if (Buff[1] == '+') {
+					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
+				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Work;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
@@ -387,6 +445,9 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 			    ReadVCALText(Line, "TEL;PREF;FAX",	  Buff) ||
 			    ReadVCALText(Line, "TEL;FAX;VOICE",	 Buff) ||
 			    ReadVCALText(Line, "TEL;PREF;FAX;VOICE",    Buff)) {
+				if (Buff[1] == '+') {
+					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
+				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Fax;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
@@ -397,6 +458,9 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 			    ReadVCALText(Line, "TEL;PREF;HOME",	 Buff) ||
 			    ReadVCALText(Line, "TEL;HOME;VOICE",	Buff) ||
 			    ReadVCALText(Line, "TEL;PREF;HOME;VOICE",   Buff)) {
+				if (Buff[1] == '+') {
+					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
+				}
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Home;
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;

@@ -68,6 +68,7 @@ For additionals materials and links to them see readme.txt
 [-] * Ignore error when there is too much members in group in phone (bug #3).
 [-] * Compilation fixes for OpenBSD with libutf8 (bug #10).
 [-] * Handle another error while reading 6510 phonebook (bug #49).
+[-] * Fix international number handling in vCard (bug #71).
 
 20070223 - 1.10.0
 [-] * Added include paths to MSVC configuration files.
