@@ -40,7 +40,7 @@ You can also disable support for whole set of phones:
 3. Cross compilation for Windows:
 
 Only cross compilation using cmake has been tested. You need to install
-MinGW cross toolchain and runtime. On Debian you can do it by apt-get
+MinGW cross tool chain and run time. On Debian you can do it by apt-get
 install mingw32. Build is then quite simple:
 
 mkdir build-win32
