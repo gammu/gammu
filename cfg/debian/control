@@ -26,12 +26,12 @@ Description: Mobile phone management utility
  .
  This package contains gammu binary.
 
-Package: libgammu0-dev
+Package: libgammu1-dev
 Replaces: libgammu-dev
-Conflicts: libgammu-dev, libgammu, libgammu0 (<< 0.92.9-1)
+Conflicts: libgammu-dev, libgammu
 Section: libdevel
 Architecture: any
-Depends: libgammu0 (= ${Source-Version})
+Depends: libgammu1 (= ${Source-Version})
 Description: Header files for Gammu
  Gammu (GNU All Mobile Management Utility) is program to manage mobile phone.
  .
@@ -49,7 +49,7 @@ Description: Header files for Gammu
  .
  This package contains header files needed for compiling programs with Gammu.
 
-Package: libgammu0
+Package: libgammu1
 Replaces: libgammu
 Conflicts: libgammu
 Suggests: gammu
