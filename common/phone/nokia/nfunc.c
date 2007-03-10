@@ -1300,6 +1300,10 @@ GSM_Error N71_65_ReplyGetMemoryError(unsigned char error, GSM_StateMachine *s)
 		if (s->Phone.Data.Memory->MemoryType == MEM_ME) return ERR_EMPTY;
 		if (s->Phone.Data.Memory->MemoryType == MEM_SM) return ERR_EMPTY;
 		return ERR_NOTSUPPORTED;
+	case 0x31:
+		smprintf(s, "Invalid memory type?\n");
+		s->Phone.Data.Memory->EntriesNum = 0;
+		return ERR_EMPTY;
 	case 0x33:
 		smprintf(s, "Empty location\n");
 		s->Phone.Data.Memory->EntriesNum = 0;
