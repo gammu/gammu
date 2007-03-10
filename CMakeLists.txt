@@ -611,7 +611,7 @@ endforeach (HEADER)
 
 foreach (LOCALE ${LOCALES})
     install (
-        FILES "docs/docs/locale/gammu_${LOCALE}.txt" 
+        FILES "locale/gammu_${LOCALE}.txt" 
         DESTINATION "${INSTALL_LOC_DIR}/gammu_${LOCALE}.txt"
         COMPONENT "locales"
         )

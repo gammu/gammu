@@ -217,7 +217,7 @@ uninstall:
 installlocales:
 	@echo Installing locales to $(DESTDIR)$(INSTALL_LOC_DIR)
 	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LOC_DIR)
-	@$(FIND) docs/docs/locale -type f -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_LOC_DIR) \;
+	@$(FIND) locale -type f -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_LOC_DIR) \;
 
 installdocs:
 	@echo Installing docs to $(DESTDIR)$(INSTALL_DOC_DIR)
@@ -230,7 +230,6 @@ installdocs:
                     -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_DOC_DIR)/$$xxx/{} \; \
             ) \
 	done
-	@$(RM) -rf $(DESTDIR)$(INSTALL_DOC_DIR)/docs/locale
 	@$(INSTALL) -m 0644 $(TOPDIR)/ChangeLog $(DESTDIR)$(INSTALL_DOC_DIR)
 	@$(INSTALL) -m 0644 $(TOPDIR)/README $(DESTDIR)$(INSTALL_DOC_DIR)
 	@$(INSTALL) -m 0644 $(TOPDIR)/COPYING $(DESTDIR)$(INSTALL_DOC_DIR)
