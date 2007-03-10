@@ -143,7 +143,7 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, uu
 			sdp_list_foreach(proto, (sdp_list_func_t)sdp_list_free, 0);
 			sdp_list_free(proto, 0);
 		} else {
-			continue;
+			goto next_seq;
 		}
 		smprintf(s, "   Channel %i", channel);
 
@@ -167,6 +167,7 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, uu
 			}
 		}
 
+next_seq:
 		next = seq->next;
 		free(seq);
 		sdp_record_free(rec);
