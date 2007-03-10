@@ -1342,6 +1342,9 @@ GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine 
 		case 0x3e:
 			smprintf(s, "Too much entries\n");
 			return ERR_NOTSUPPORTED;
+		case 50:
+			smprintf(s, "Ignoring ERROR: unknown 50 (probably group contains 50 entries)\n");
+			return ERR_NONE;
 		default:
 			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[10]);
 			return ERR_UNKNOWNRESPONSE;
