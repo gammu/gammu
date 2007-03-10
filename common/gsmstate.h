@@ -1634,6 +1634,7 @@ typedef enum {
 	F_OBEX,		 /**< Phone can switch to OBEX protocol from AT mode */
 	F_IRMC_LEVEL_2,	 /**< Phone supports IrMC level 2 even if it doesn't report it */
 	F_MODE22,	 /**< Switching to OBEX mode is done using AT+MODE=22 */
+	F_SMS_LOCATION_0, /**< Locations of SMS memories start from 0 */
 } Feature;
 
 /* For models table */

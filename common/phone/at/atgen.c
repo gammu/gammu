@@ -1227,6 +1227,12 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 		*folderid = sms->Folder <= 2 ? 1 : 2;
 		*location = sms->Location;
 	}
+
+	/* Some phones start locations from 0, handle them here */
+	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_LOCATION_0)) {
+		(*location)--;
+	}
+
 	smprintf(s, "SMS folder %i & location %i -> ATGEN folder %i & location %i\n",
 		sms->Folder,sms->Location,*folderid,*location);
 
