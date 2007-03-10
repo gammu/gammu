@@ -212,7 +212,7 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 	}
 
 	/* Initialise connection */
-	error = OBEXGEN_Connect(s, Priv->InitialService);
+	error = OBEXGEN_Connect(s, 0);
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -2548,13 +2548,26 @@ GSM_Error OBEXGEN_GetManufacturer(GSM_StateMachine *s)
 GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s)
 {
 	GSM_Error		error;
+	GSM_Phone_Data		*Data = &s->Phone.Data;
 
-	if (s->Phone.Data.Model[0] != 0) return ERR_NONE;
+	if (Data->Model[0] != 0) return ERR_NONE;
 
 	error = OBEXGEN_GetCapabilityField(s, "Model", s->Phone.Data.Model);
-	if (error == ERR_NONE) return ERR_NONE;
+	if (error == ERR_NONE) {
+		Data->ModelInfo = GetModelData(NULL,Data->Model,NULL);
+		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(NULL,NULL,Data->Model);
+		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(Data->Model,NULL,NULL);
+		return ERR_NONE;
+	}
 
-	return OBEXGEN_GetDevinfoField(s, "MOD", s->Phone.Data.Model);
+	error = OBEXGEN_GetDevinfoField(s, "MOD", s->Phone.Data.Model);
+	if (error == ERR_NONE) {
+		Data->ModelInfo = GetModelData(NULL,Data->Model,NULL);
+		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(NULL,NULL,Data->Model);
+		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(Data->Model,NULL,NULL);
+		return ERR_NONE;
+	}
+	return error;
 }
 
 GSM_Error OBEXGEN_GetFirmware(GSM_StateMachine *s)

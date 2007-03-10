@@ -54,6 +54,7 @@ For additionals materials and links to them see readme.txt
 [-] * Fixed infinite loop in --monitor (bug #75).
 [-] * Fixed behaviour on Bluetooth disconnect.
 [-] * Fixed handling of files with special chars on OBEX.
+[-] * OBEX driver correctly detects models.
 
 20070223 - 1.10.0
 [-] * Added include paths to MSVC configuration files.
