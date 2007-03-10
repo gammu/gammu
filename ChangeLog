@@ -63,6 +63,8 @@ For additionals materials and links to them see readme.txt
 [-] * Cleanup documentation structure.
 [-] * Moved locales out of documentation.
 [-] * Fixes locales and documentaion install in CMake (bug #76).
+[-] * Fixed retrieving messages with some phones who index them from zero like
+      CG79 (bug #20).
 
 20070223 - 1.10.0
 [-] * Added include paths to MSVC configuration files.
