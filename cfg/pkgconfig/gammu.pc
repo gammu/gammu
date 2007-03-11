@@ -1,10 +1,10 @@
-prefix=/usr
+prefix=/usr/local
 exec_prefix=${prefix}
 libdir=${exec_prefix}/lib
 includedir=${prefix}/include
 
 Name: gammu
 Description: Gammu library
-Version: 1.10.1
+Version: 1.10.2
 Libs: -L${libdir} -lGammu -lm
 Cflags: -I${includedir}/gammu
