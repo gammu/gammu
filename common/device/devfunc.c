@@ -136,9 +136,11 @@ int socket_write(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
         	if (ret < 0) {
             		if (actual != nbytes) {
 				GSM_OSErrorInfo(s,"socket_write");
+#ifndef WIN32
 				if (errno != EINTR) {
 					return 0;
 				}
+#endif
 			}
             		return actual;
         	}

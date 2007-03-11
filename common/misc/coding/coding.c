@@ -14,7 +14,6 @@
  * to publish their code under.
  */
 
-#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -1569,7 +1568,9 @@ void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len)
 			continue;
 		}
 		/* Create entity */
-		entity = strndup(pos, pos_end - pos);
+		/* strndup would be better, but not portable */
+		entity = strdup(pos);
+		entity[pos_end - pos] = 0;
 		dbgprintf("Found XML entity: %s\n", entity);
 		if (entity == NULL) break;
 		if (entity[0] == '#') {
