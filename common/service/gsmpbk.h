@@ -82,7 +82,7 @@ typedef enum {
 	 */
 	PBK_Text_URL,
 	/**
-	 * Date and time. FIXME: describe better (Date)
+	 * Date and time of last call.
 	 */
 	PBK_Date,
 	/**

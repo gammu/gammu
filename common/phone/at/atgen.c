@@ -326,11 +326,11 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	if (strchr(pos, '/')) {
 		/* date present */
 		/* Samsung phones report year as %d instead of %02d */
-		dt->Year=atoi(pos);
-		if(dt->Year>80 && dt->Year<1000) {
-			dt->Year+=1900;
-		} else {
-			dt->Year+=2000;
+		dt->Year = atoi(pos);
+		if (dt->Year > 80 && dt->Year < 1000) {
+			dt->Year += 1900;
+		} else if (dt->Year < 100) {
+			dt->Year += 2000;
 		}
 		pos = strchr(pos, '/');
 		pos++;
