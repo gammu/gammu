@@ -622,7 +622,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	/* Write header */
 	if (header) {
 		*Length+=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
-		*Length+=sprintf(Buffer+(*Length), "VERSION:1.0%c%c",13,10);
+		*Length+=sprintf(Buffer+(*Length), "VERSION:%s%c%c", Version == Mozilla_VCalendar ? "2.0" : "1.0", 13, 10);
 	}
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VEVENT%c%c",13,10);
 

@@ -22,7 +22,7 @@ GSM_Error SaveICS(char *FileName, GSM_Backup *backup)
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	Length=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
-	Length+=sprintf(Buffer+Length, "VERSION:1.0%c%c",13,10);
+	Length+=sprintf(Buffer+Length, "VERSION:2.0%c%c",13,10);
 	fwrite(Buffer,1,Length,file);
 
 	i=0;
