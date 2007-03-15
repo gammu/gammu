@@ -326,7 +326,7 @@ set (HEADERS
     common/gsmstate.h
     common/gsmcomon.h
     common/gsmerror.h
-    common/config.h
+    cfg/config.h
     )
 
 set (LIBRARY_SRC
@@ -615,7 +615,7 @@ install (TARGETS gammu Gammu
         )
 
 foreach (HEADER ${HEADERS})
-    string (REGEX REPLACE "common(.*)/[^/]*$" "\\1" DIRNAME ${HEADER})
+    string (REGEX REPLACE "(common|cfg)(.*)/[^/]*$" "\\2" DIRNAME ${HEADER})
     install (
         FILES ${HEADER} 
         DESTINATION "${INSTALL_INC_DIR}/${DIRNAME}" 
