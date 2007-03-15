@@ -111,6 +111,7 @@ void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 
 	fake_sm.di = di;
 	fake_sm.di.use_global = true;
+	fake_sm.Phone.Data.ModelInfo = GetModelData("unknown",NULL,NULL);
 
 	count=count+N71_65_EncodePhonebookFrame(&fake_sm, req+16, entry, &blocks, true, true);
 

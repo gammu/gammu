@@ -49,6 +49,7 @@ For additionals materials and links to them see readme.txt
 
 
 2007???? - 1.10.2
+[-] * Fixed crash on LMB export (bug #261).
 
 20070311 - 1.10.1
 [-] * Fixed encoding of name for Nokia phones.
