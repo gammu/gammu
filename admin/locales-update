@@ -1,0 +1,25 @@
+#!/bin/sh
+LOCS=`ls locale/*.po | while read name; do basename $name ; done | sed 's/\.po$//'`
+xgettext \
+    -d gammu \
+    --msgid-bugs-address=michal@cihar.com \
+    -o locale/gammu.pot \
+    --language=C \
+    --keyword=_ \
+    --keyword=N_ \
+    --add-comments=l10n \
+    --add-location \
+    --copyright-holder="Michal Čihař" \
+    `find . -name '*.c'`
+
+ver=`cat VERSION | tr , .`
+sed -i '
+    s/SOME DESCRIPTIVE TITLE/Gammu translation/;
+    s/PACKAGE/Gammu/;
+    s/(C) YEAR/(C) 2003 - 2007/;
+    s/VERSION/'$ver'/;
+    ' locale/gammu.pot
+
+for loc in $LOCS ; do
+    msgmerge -U locale/$loc.po locale/gammu.pot
+done
