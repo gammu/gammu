@@ -123,9 +123,7 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 	UDH->AllParts	= -1;
 
 	i=-1;
-	while (true) {
-		i++;
-		if (UDHHeaders[i].Type==UDH_NoUDH) break;
+	while (UDHHeaders[++i].Type != UDH_NoUDH) {
 
 		tmp=UDHHeaders[i].Length;
 		/* if length is the same */
