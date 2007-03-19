@@ -50,7 +50,7 @@ For additionals materials and links to them see readme.txt
 
 2007???? - 1.10.2
 [-] * Fixed crash on LMB export/import (bug #261).
-[-] * Correct version in iCalendar export.
+[-] * Correct version in iCalendar export/import.
 [-] * Fixed devel files installation using CMake (bug #78).
 [-] * Fixed decoding of call date.
 [+] * Use gettext for translation.
