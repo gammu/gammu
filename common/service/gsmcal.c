@@ -799,7 +799,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 	/* Write header */
 	if (header) {
 		*Length+=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
-		*Length+=sprintf(Buffer+(*Length), "VERSION:1.0%c%c",13,10);
+		*Length+=sprintf(Buffer+(*Length), "VERSION:%s%c%c", Version == Mozilla_VToDo ? "2.0" : "1.0", 13, 10);
 	}
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VTODO%c%c",13,10);
 
