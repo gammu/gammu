@@ -1422,6 +1422,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				continue;
 			} else if (mystrncasecmp(readvalue,"Date",0)) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Date;
+				sprintf(buffer,"Entry%02iText",num);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				if (readvalue != NULL) {
 					ReadVCALDateTime(readvalue, &Pbk->Entries[Pbk->EntriesNum].Date);
