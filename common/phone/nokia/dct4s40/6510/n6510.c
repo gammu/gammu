@@ -21,6 +21,7 @@
 #include <time.h>
 
 #include "../../../../misc/coding/coding.h"
+#include "../../../../misc/locales.h"
 #include "../../../../gsmcomon.h"
 #include "../../../../service/gsmlogo.h"
 #include "../../nfunc.h"
@@ -504,10 +505,10 @@ static GSM_Error N6510_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMac
 GSM_Error N6510_GetSMSFoldersS40_30(GSM_StateMachine *s, GSM_SMSFolders *folders)
 {
 	folders->Number=4;
-	EncodeUnicode(folders->Folder[0].Name,GetMsg(s->msg,"SIM"),strlen(GetMsg(s->msg,"SIM")));
-	EncodeUnicode(folders->Folder[1].Name,GetMsg(s->msg,"Inbox"),strlen(GetMsg(s->msg,"Inbox")));
-	EncodeUnicode(folders->Folder[2].Name,GetMsg(s->msg,"Sent items"),strlen(GetMsg(s->msg,"Sent items")));
-	EncodeUnicode(folders->Folder[3].Name,GetMsg(s->msg,"Saved items"),strlen(GetMsg(s->msg,"Saved items")));
+	EncodeUnicode(folders->Folder[0].Name,_("SIM"),strlen(_("SIM")));
+	EncodeUnicode(folders->Folder[1].Name,_("Inbox"),strlen(_("Inbox")));
+	EncodeUnicode(folders->Folder[2].Name,_("Sent items"),strlen(_("Sent items")));
+	EncodeUnicode(folders->Folder[3].Name,_("Saved items"),strlen(_("Saved items")));
 	folders->Folder[0].InboxFolder = true;
 	folders->Folder[1].InboxFolder = true;
 	folders->Folder[2].InboxFolder = false;

@@ -22,6 +22,7 @@
 
 #include "../../../../cfg/config.h"
 #include "../../../misc/coding/coding.h"
+#include "../../../misc/locales.h"
 #include "../../../service/sms/gsmsms.h"
 #include "../../../gsmcomon.h"
 #include "../../pfunc.h"
@@ -1954,25 +1955,25 @@ static GSM_Error N6110_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
                 NOKIA_GetDefaultProfileName(s, Profile);
                 if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES51)) {
                         switch(Profile->Location) {
-                        case 1: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Personal"),strlen(GetMsg(s->msg,"Personal")));
+                        case 1: EncodeUnicode(Profile->Name,_("Personal"),strlen(_("Personal")));
                                 break;
-                        case 2: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Car"),strlen(GetMsg(s->msg,"Car")));
+                        case 2: EncodeUnicode(Profile->Name,_("Car"),strlen(_("Car")));
                                 break;
-                        case 3: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Headset"),strlen(GetMsg(s->msg,"Headset")));
+                        case 3: EncodeUnicode(Profile->Name,_("Headset"),strlen(_("Headset")));
                                 break;
                         }
                 }
                 if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES33)) {
                         switch(Profile->Location) {
-                        case 1: EncodeUnicode(Profile->Name,GetMsg(s->msg,"General"),strlen(GetMsg(s->msg,"General")));
+                        case 1: EncodeUnicode(Profile->Name,_("General"),strlen(_("General")));
                                 break;
-                        case 2: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Silent"),strlen(GetMsg(s->msg,"Silent")));
+                        case 2: EncodeUnicode(Profile->Name,_("Silent"),strlen(_("Silent")));
                                 break;
-                        case 3: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Discreet"),strlen(GetMsg(s->msg,"Discreet")));
+                        case 3: EncodeUnicode(Profile->Name,_("Discreet"),strlen(_("Discreet")));
                                 break;
-                        case 4: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Loud"),strlen(GetMsg(s->msg,"Loud")));
+                        case 4: EncodeUnicode(Profile->Name,_("Loud"),strlen(_("Loud")));
                                 break;
-                        case 5: EncodeUnicode(Profile->Name,GetMsg(s->msg,"My style"),strlen(GetMsg(s->msg,"My style")));
+                        case 5: EncodeUnicode(Profile->Name,_("My style"),strlen(_("My style")));
                                 break;
                         case 6: Profile->Name[0] = 0; Profile->Name[1] = 0;
                                 break;

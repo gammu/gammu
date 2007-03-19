@@ -6,6 +6,7 @@
 #include <time.h>
 
 #include "../../common/misc/coding/coding.h"
+#include "../../common/misc/locales.h"
 #include "../gammu.h"
 #include "smsdcore.h"
 #include "s_files.h"
@@ -36,7 +37,7 @@ void GSM_Terminate_SMSD(char *msg, int error, bool exitprogram, int rc)
 	int ret = ERR_NONE;
 
 	if (s.opened) {
-		WriteSMSDLog("Terminating communication");
+		WriteSMSDLog(_("Terminating communication"));
 		ret=GSM_TerminateConnection(&s);
 		if (ret!=ERR_NONE) {
 			printf("%s\n",print_error(error,s.di.df,s.msg));
@@ -66,7 +67,7 @@ void WriteSMSDLog(char *format, ...)
 
 	if (smsd_log_file != NULL) {
 		va_start(argp, format);
-		result = vsprintf(Buffer,GetMsg(s.msg,format),argp);
+		result = vsprintf(Buffer,format,argp);
 		va_end(argp);
 
 		GSM_GetCurrentDateTime(&date_time);
@@ -108,7 +109,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 		}
 		fprintf(stderr,"Log filename is \"%s\"\n",Config->logfilename);
 	}
-	if (log) WriteSMSDLog("Start GAMMU smsd");
+	if (log) WriteSMSDLog(_("Start GAMMU smsd"));
 
 	/* Include Numbers used, because we don't want create new variable */
 	Config->IncludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "gammu", false);
@@ -120,10 +121,10 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 
 	Config->PINCode=INI_GetValue(smsdcfgfile, "smsd", "PIN", false);
 	if (Config->PINCode == NULL) {
- 		if (log) WriteSMSDLog("Warning: No PIN code in %s file",filename);
+ 		if (log) WriteSMSDLog(_("Warning: No PIN code in %s file"),filename);
  		fprintf(stderr,"Warning: No PIN code in %s file\n",filename);
 	} else {
-		if (log) WriteSMSDLog("PIN code is \"%s\"",Config->PINCode);
+		if (log) WriteSMSDLog(_("PIN code is \"%s\""),Config->PINCode);
 	}
 
 	str = INI_GetValue(smsdcfgfile, "smsd", "commtimeout", false);
@@ -134,18 +135,18 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	if (str) Config->receivefrequency=atoi(str); else Config->receivefrequency = 0;
 	str = INI_GetValue(smsdcfgfile, "smsd", "resetfrequency", false);
 	if (str) Config->resetfrequency=atoi(str); else Config->resetfrequency = 0;
-	if (log) WriteSMSDLog("commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i",
+	if (log) WriteSMSDLog(_("commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"),
 			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency);
 
 	Config->deliveryreport = INI_GetValue(smsdcfgfile, "smsd", "deliveryreport", false);
 	if (Config->deliveryreport == NULL || (!mystrncasecmp(Config->deliveryreport, "log", 3) && !mystrncasecmp(Config->deliveryreport, "sms", 3))) {
 		Config->deliveryreport = "no";
 	}
-	if (log) WriteSMSDLog("deliveryreport = %s", Config->deliveryreport);
+	if (log) WriteSMSDLog(_("deliveryreport = %s"), Config->deliveryreport);
 
 	Config->PhoneID = INI_GetValue(smsdcfgfile, "smsd", "phoneid", false);
 	if (Config->PhoneID == NULL) Config->PhoneID = "";
-	if (log) WriteSMSDLog("phoneid = %s", Config->PhoneID);
+	if (log) WriteSMSDLog(_("phoneid = %s"), Config->PhoneID);
 
 	str = INI_GetValue(smsdcfgfile, "smsd", "smsc", false);
 	if (str) {
@@ -169,7 +170,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 		if (Config->inboxformat == NULL || (!mystrncasecmp(Config->inboxformat, "detail", 6) && !mystrncasecmp(Config->inboxformat, "unicode", 7))) {
 			Config->inboxformat = "standard";
 		}
-		if (log) WriteSMSDLog("Inbox is \"%s\" with format \"%s\"", Config->inboxpath, Config->inboxformat);
+		if (log) WriteSMSDLog(_("Inbox is \"%s\" with format \"%s\""), Config->inboxpath, Config->inboxformat);
 
 		Config->outboxpath=INI_GetValue(smsdcfgfile, "smsd", "outboxpath", false);
 		if (Config->outboxpath == NULL) Config->outboxpath = emptyPath;
@@ -178,15 +179,15 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 		if (Config->transmitformat == NULL || (!mystrncasecmp(Config->transmitformat, "auto", 4) && !mystrncasecmp(Config->transmitformat, "unicode", 7))) {
 			Config->transmitformat = "7bit";
 		}
-		if (log) WriteSMSDLog("Outbox is \"%s\" with transmission format \"%s\"", Config->outboxpath, Config->transmitformat);
+		if (log) WriteSMSDLog(_("Outbox is \"%s\" with transmission format \"%s\""), Config->outboxpath, Config->transmitformat);
 
 		Config->sentsmspath=INI_GetValue(smsdcfgfile, "smsd", "sentsmspath", false);
 		if (Config->sentsmspath == NULL) Config->sentsmspath = Config->outboxpath;
-		if (log) WriteSMSDLog("Sent SMS moved to \"%s\"",Config->sentsmspath);
+		if (log) WriteSMSDLog(_("Sent SMS moved to \"%s\""),Config->sentsmspath);
 
 		Config->errorsmspath=INI_GetValue(smsdcfgfile, "smsd", "errorsmspath", false);
 		if (Config->errorsmspath == NULL) Config->errorsmspath = Config->sentsmspath;
-		if (log) WriteSMSDLog("SMS with errors moved to \"%s\"",Config->errorsmspath);
+		if (log) WriteSMSDLog(_("SMS with errors moved to \"%s\""),Config->errorsmspath);
 	}
 
 #ifdef HAVE_MYSQL_MYSQL_H
@@ -222,13 +223,13 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	Config->IncludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "include_numbers", false);
 	Config->ExcludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "exclude_numbers", false);
 	if (Config->IncludeNumbers != NULL) {
-		if (log) WriteSMSDLog("Include numbers available");
+		if (log) WriteSMSDLog(_("Include numbers available"));
 	}
 	if (Config->ExcludeNumbers != NULL) {
 		if (Config->IncludeNumbers == NULL) {
-			if (log) WriteSMSDLog("Exclude numbers available");
+			if (log) WriteSMSDLog(_("Exclude numbers available"));
 		} else {
-			if (log) WriteSMSDLog("Exclude numbers available, but IGNORED");
+			if (log) WriteSMSDLog(_("Exclude numbers available, but IGNORED"));
 		}
 	}
 
@@ -246,7 +247,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	error=Phone->GetSecurityStatus(&s,&SecurityCode.Type);
 	/* Unknown error */
 	if (error != ERR_NOTSUPPORTED && error != ERR_NONE) {
-		WriteSMSDLog("Error getting security status (%i)", error);
+		WriteSMSDLog(_("Error getting security status (%i)"), error);
 		return false;
 	}
 	/* No supported - do not check more */
@@ -256,17 +257,17 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	switch (SecurityCode.Type) {
 	case SEC_Pin:
 		if (Config->PINCode==NULL) {
-			WriteSMSDLog("Warning: no PIN in config");
+			WriteSMSDLog(_("Warning: no PIN in config"));
 			return false;
 		} else {
-			WriteSMSDLog("Trying to enter PIN");
+			WriteSMSDLog(_("Trying to enter PIN"));
 			strcpy(SecurityCode.Code,Config->PINCode);
 			error=Phone->EnterSecurityCode(&s,SecurityCode);
 			if (error == ERR_SECURITYERROR) {
-				GSM_Terminate_SMSD("ERROR: incorrect PIN", error, true, -1);
+				GSM_Terminate_SMSD(_("ERROR: incorrect PIN"), error, true, -1);
 			}
 			if (error != ERR_NONE) {
-				WriteSMSDLog("Error entering PIN (%i)", error);
+				WriteSMSDLog(_("Error entering PIN (%i)"), error);
 				return false;
 		  	}
 		}
@@ -275,7 +276,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	case SEC_Pin2:
 	case SEC_Puk:
 	case SEC_Puk2:
-		GSM_Terminate_SMSD("ERROR: phone requires not supported code type", 0, true, -1);
+		GSM_Terminate_SMSD(_("ERROR: phone requires not supported code type"), 0, true, -1);
 	case SEC_None:
 		break;
 	}
@@ -329,11 +330,11 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 			if (process) {
 	 			Service->SaveInboxSMS(sms, Config);
 			} else {
-				WriteSMSDLog("Excluded %s", buffer);
+				WriteSMSDLog(_("Excluded %s"), buffer);
 			}
 			break;
 		default:
-	 		WriteSMSDLog("Error getting SMS (%i)", error);
+	 		WriteSMSDLog(_("Error getting SMS (%i)"), error);
 			return false;
 		}
 		if (error == ERR_NONE && sms.SMS[0].InboxFolder) {
@@ -345,7 +346,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				case ERR_EMPTY:
 					break;
 				default:
-					WriteSMSDLog("Error deleting SMS (%i)", error);
+					WriteSMSDLog(_("Error deleting SMS (%i)"), error);
 					return false;
 				}
 			}
@@ -363,7 +364,7 @@ bool SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	/* Do we have any SMS in phone ? */
 	error=Phone->GetSMSStatus(&s,&SMSStatus);
 	if (error != ERR_NONE) {
-		WriteSMSDLog("Error getting SMS status (%i)", error);
+		WriteSMSDLog(_("Error getting SMS status (%i)"), error);
 		return false;
 	}
 	/* Yes. We have SMS in phone */
@@ -397,7 +398,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	}
 	if (error != ERR_NONE) {
 		/* Unknown error - escape */
-		WriteSMSDLog("Error in outbox on %s", Config->SMSID);
+		WriteSMSDLog(_("Error in outbox on %s"), Config->SMSID);
 		for (i=0;i<sms.Number;i++) {
 			Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
 		}
@@ -411,7 +412,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			if (Config->retries > MAX_RETRIES) {
 				Config->retries = 0;
 				strcpy(Config->prevSMSID, "");
-				WriteSMSDLog("Moved to errorbox: %s", Config->SMSID);
+				WriteSMSDLog(_("Moved to errorbox: %s"), Config->SMSID);
 				for (i=0;i<sms.Number;i++) {
 					Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
 				}
@@ -428,7 +429,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 					Config->SMSC.Location = 1;
 					error = Phone->GetSMSC(&s,&Config->SMSC);
 					if (error!=ERR_NONE) {
-						WriteSMSDLog("Error getting SMSC from phone");
+						WriteSMSDLog(_("Error getting SMSC from phone"));
 						return false;
 					}
 
@@ -450,7 +451,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			error=Phone->SendSMS(&s, &sms.SMS[i]);
 			if (error!=ERR_NONE) {
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, -1);
-				WriteSMSDLog("Error sending SMS %s (%i): %s", Config->SMSID, error,print_error(error,s.di.df,s.msg));
+				WriteSMSDLog(_("Error sending SMS %s (%i): %s"), Config->SMSID, error,print_error(error,s.di.df,s.msg));
 				return false;
 			}
 			Service->RefreshPhoneStatus(Config);
@@ -474,7 +475,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			}
 			if (SendingSMSStatus != ERR_NONE) {
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, TPMR);
-				WriteSMSDLog("Error getting send status of %s (%i): %s", Config->SMSID, SendingSMSStatus,print_error(SendingSMSStatus,s.di.df,s.msg));
+				WriteSMSDLog(_("Error getting send status of %s (%i): %s"), Config->SMSID, SendingSMSStatus,print_error(SendingSMSStatus,s.di.df,s.msg));
 				return false;
 			}
 			error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, TPMR);
@@ -517,7 +518,7 @@ void SMSDaemon(int argc, char *argv[])
 
 	error = Service->Init(&Config);
 	if (error!=ERR_NONE) {
-		GSM_Terminate_SMSD("Stop GAMMU smsd (%i)", error, true, -1);
+		GSM_Terminate_SMSD(_("Stop GAMMU smsd (%i)"), error, true, -1);
 	}
 
 	signal(SIGINT, interrupt);
@@ -532,11 +533,11 @@ void SMSDaemon(int argc, char *argv[])
 		/* There were errors in communication - try to recover */
 		if (errors > 2) {
 			if (errors != 255) {
-				WriteSMSDLog("Terminating communication (%i,%i)", error, errors);
+				WriteSMSDLog(_("Terminating communication (%i,%i)"), error, errors);
 				error=GSM_TerminateConnection(&s);
 			}
 			if (initerrors++ > 3) my_sleep(30000);
-			WriteSMSDLog("Starting communication");
+			WriteSMSDLog(_("Starting communication"));
 			error=GSM_InitConnection(&s,2);
 			switch (error) {
 			case ERR_NONE:
@@ -550,7 +551,7 @@ void SMSDaemon(int argc, char *argv[])
 					} else {
 						error = Service->InitAfterConnect(&Config);
 						if (error!=ERR_NONE) {
-							GSM_Terminate_SMSD("Stop GAMMU smsd (%i)", error, true, -1);
+							GSM_Terminate_SMSD(_("Stop GAMMU smsd (%i)"), error, true, -1);
 						}
 						Phone->SetFastSMSSending(&s,true);
 					}
@@ -559,7 +560,7 @@ void SMSDaemon(int argc, char *argv[])
 				}
 				if (initerrors > 3 || initerrors < 0) {
 					error=Phone->Reset(&s, false); /* soft reset */
-					WriteSMSDLog("Reset return code: %s (%i) ", error == ERR_NONE? "OK":"ERROR", error);
+					WriteSMSDLog(_("Reset return code: %s (%i) "), error == ERR_NONE? "OK":"ERROR", error);
 					lastreset = time(NULL);
 					my_sleep(5000);
 				}
@@ -567,9 +568,9 @@ void SMSDaemon(int argc, char *argv[])
 //				di 			= s.di;
 				break;
 			case ERR_DEVICEOPENERROR:
-				GSM_Terminate_SMSD("Can't open device (%i)", error, true, -1);
+				GSM_Terminate_SMSD(_("Can't open device (%i)"), error, true, -1);
 			default:
-				WriteSMSDLog("Error at init connection (%i)", error);
+				WriteSMSDLog(_("Error at init connection (%i)"), error);
 				errors = 250;
 			}
 			continue;
@@ -598,7 +599,7 @@ void SMSDaemon(int argc, char *argv[])
 		if (!SMSD_SendSMS(&Config,Service)) continue;
 	}
 	Phone->SetFastSMSSending(&s,false);
-	GSM_Terminate_SMSD("Stop GAMMU smsd", 0, false, 0);
+	GSM_Terminate_SMSD(_("Stop GAMMU smsd"), 0, false, 0);
 }
 
 GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *sms)

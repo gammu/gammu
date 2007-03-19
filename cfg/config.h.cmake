@@ -138,6 +138,9 @@
 
 /* ---------------------- C language specific --------------------------- */
 
+/* Do we have gettext support? */
+#cmakedefine GETTEXTLIBS_FOUND
+
 /* are the scandir functions available */
 #ifndef HAVE_DIRENT_H
 #cmakedefine HAVE_DIRENT_H

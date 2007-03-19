@@ -6,6 +6,7 @@
 #include "../gsmstate.h"
 #include "../service/sms/gsmsms.h"
 #include "../misc/coding/coding.h"
+#include "../misc/locales.h"
 
 /* These SMS layouts are used exactly as written in Nokia DCT3 phones.
  * In AT module(s) we have to use some layouts to convert AT frame to format
@@ -35,8 +36,8 @@ GSM_SMSMessageLayout PHONE_SMSStatusReport = {
 GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 {
 	folders->Number=2;
-	EncodeUnicode(folders->Folder[0].Name,GetMsg(s->msg,"Inbox"),strlen(GetMsg(s->msg,"Inbox")));
-	EncodeUnicode(folders->Folder[1].Name,GetMsg(s->msg,"Outbox"),strlen(GetMsg(s->msg,"Outbox")));
+	EncodeUnicode(folders->Folder[0].Name,_("Inbox"),strlen(_("Inbox")));
+	EncodeUnicode(folders->Folder[1].Name,_("Outbox"),strlen(_("Outbox")));
 	folders->Folder[0].InboxFolder = true;
 	folders->Folder[1].InboxFolder = false;
 	folders->Folder[0].Memory      = MEM_SM;
