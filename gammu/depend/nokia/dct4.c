@@ -12,6 +12,7 @@
 #include "../../../common/phone/nokia/nfunc.h"
 #include "../../../common/phone/nokia/dct4s40/dct4func.h"
 #include "../../../common/misc/coding/coding.h"
+#include "../../../common/misc/locales.h"
 
 extern GSM_Reply_Function UserReplyFunctions4[];
 
@@ -52,7 +53,7 @@ static void CheckDCT4()
 		Print_Error(ERR_NOTSUPPORTED);
 		break;
 	case ERR_OTHERCONNECTIONREQUIRED:
-		printf("Can't do it with current phone protocol\n");
+		printf(_("Can't do it with current phone protocol\n"));
 		GSM_TerminateConnection(&s);
 		exit(-1);
 	default:
@@ -66,11 +67,11 @@ static bool answer_yes2(char *text)
     	char        ans[99];
 
 	while (1) {
-		printf("%s (yes/no) ? ",text);
+		printf(_("%s (yes/no) ? "),text);
 		len=GetLine(stdin, ans, 99);
 		if (len==-1) exit(-1);
-		if (mystrncasecmp(ans, "yes",0)) return true;
-		if (mystrncasecmp(ans, "no" ,0)) return false;
+		if (mystrncasecmp(ans, _("yes"),0)) return true;
+		if (mystrncasecmp(ans, _("no") ,0)) return false;
 	}
 }
 
@@ -249,7 +250,7 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
 
 static GSM_Error DCT4_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	printf("Setting done OK\n");
+	printf(_("Setting done OK\n"));
 	return ERR_NONE;
 }
 
@@ -286,7 +287,7 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 	}
 
 	if (current == 10) {
-		printf("Sorry, but configuration matrix for this model is not added yet. Please report\n");
+		printf(_("Sorry, but configuration matrix for this model is not added yet. Please report\n"));
 		return;
 	}
 
@@ -352,14 +353,14 @@ static GSM_Error DCT4_ReplyTestsStatus(GSM_Protocol_Message msg, GSM_StateMachin
 			if (DCT4Tests.Tests[j].ID == msg.Buffer[pos+2]) {
 				printf("\"%40s\" : ",DCT4Tests.Tests[j].Name);
 				switch(msg.Buffer[pos+3]) {
-					case 0x00: printf("Passed"); 		break;
-					case 0x01: printf("Fail");   		break;
-					case 0x03: printf("Not executed"); 	break;
-					case 0x06: printf("No signal");		break;
-					case 0x0D: printf("Timeout");		break;
-					default  : printf("Unknown (%x)",msg.Buffer[pos+3]);
+					case 0x00: printf(_("Passed")); 		break;
+					case 0x01: printf(_("Fail"));   		break;
+					case 0x03: printf(_("Not executed")); 	break;
+					case 0x06: printf(_("No signal"));		break;
+					case 0x0D: printf(_("Timeout"));		break;
+					default  : printf(_("Unknown (%x)"),msg.Buffer[pos+3]);
 				}
-				if (DCT4Tests.Tests[j].Startup) printf(" (startup)");
+				if (DCT4Tests.Tests[j].Startup) printf(_(" (startup)"));
 				printf("\n");
 				break;
 			}
@@ -477,7 +478,7 @@ void DCT4VibraTest(int argc, char *argv[])
 	error=DCT4EnableVibra(&s, true);
 	Print_Error(error);
 
-	printf("Press any key to continue...\n");
+	printf(_("Press any key to continue...\n"));
 	GetLine(stdin, ans, 99);
 
 	error=DCT4EnableVibra(&s, false);
@@ -489,10 +490,10 @@ static GSM_Error DCT4_ReplyResetSecurityCode(GSM_Protocol_Message msg, GSM_State
 {
 	switch (msg.Buffer[3]) {
 	case 0x05:
-		printf("Security code set to \"12345\"\n");
+		printf(_("Security code set to \"12345\"\n"));
 		return ERR_NONE;
 	case 0x06:
-		printf("Unknown reason. Can't reset your security code\n");
+		printf(_("Unknown reason. Can't reset your security code\n"));
 		return ERR_UNKNOWN;
 	}
 	return ERR_UNKNOWNRESPONSE;
@@ -515,7 +516,7 @@ void DCT4ResetSecurityCode(int argc, char *argv[])
 	if (error == ERR_UNKNOWN) {
 		if (answer_yes2("Try brutal force ?")) {
 			for (i=10000;i<9999999;i++) {
-				printf("Trying %i\n",i);
+				printf(_("Trying %i\n"),i);
 				memset(ResetCode+6,0,22);
 				sprintf(ResetCode+5,"%i",i);
 				sprintf(ResetCode+16,"12345");
@@ -534,7 +535,7 @@ static GSM_Error DCT4_ReplyGetSecurityCode(GSM_Protocol_Message msg, GSM_StateMa
 	if (msg.Length > 12) {
 		SecLength = msg.Buffer[13];
 		if ((msg.Buffer[17]+18) == msg.Length) {
-			printf("Security code is %s\n",msg.Buffer+18);
+			printf(_("Security code is %s\n"),msg.Buffer+18);
 //			DumpMessage(stdout, msg.Buffer, msg.Length);
 		}
 	}
@@ -666,7 +667,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 
 	Location = atoi(argv[2]);
 	if (Location == 0x00) {
-		printf("Please numerate locations from 1\n");
+		printf(_("Please numerate locations from 1\n"));
 		return;
 	}
 	Location--;
@@ -775,7 +776,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 
 static GSM_Error DCT4_ReplyGetBTInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	printf("device address %02x%02x%02x%02x%02x%02x\n",
+	printf(_("device address %02x%02x%02x%02x%02x%02x\n"),
 		msg.Buffer[9],msg.Buffer[10],msg.Buffer[11],
 		msg.Buffer[12],msg.Buffer[13],msg.Buffer[14]);
 	return ERR_NONE;
@@ -799,7 +800,7 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 		buff[4] = buff[3];
 		buff[3] = ' ';
 		if (strcmp(DecodeUnicodeString(GSM_GetNetworkName(buff)),"unknown")) {
-			printf("Old simlock   : %s (%s)\n",DecodeUnicodeString(GSM_GetNetworkName(buff)),buff);
+			printf(_("Old simlock   : %s (%s)\n"),DecodeUnicodeString(GSM_GetNetworkName(buff)),buff);
 		}
 
 		dbgprintf("\n");
@@ -817,7 +818,7 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 				dbgprintf("%02x",msg.Buffer[i]);
 			}
 			dbgprintf("\n");
-			printf("Simlock data  : ");
+			printf(_("Simlock data  : "));
 			for (i=60;i<63;i++) {
 				printf("%02x",msg.Buffer[i]);
 			}
@@ -841,7 +842,7 @@ void DCT4Info(int argc, char *argv[])
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
 	if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_BLUETOOTH)) {
-		printf("Bluetooth     : ");
+		printf(_("Bluetooth     : "));
 
 		error=GSM_WaitFor (&s, GetBTAddress, 8, 0xD7, 4, ID_User6);
 		Print_Error(error);
@@ -857,7 +858,7 @@ void DCT4Info(int argc, char *argv[])
 	Print_Error(error);
 	error=NOKIA_GetPhoneString(&s,"\x00\x03\x02\x07\x00\x08",6,0x1b,value,ID_User6,10);
 	Print_Error(error);
-	printf("UEM           : %s\n",value);
+	printf(_("UEM           : %s\n"),value);
 }
 
 static FILE 	*T9File;
@@ -925,14 +926,14 @@ void DCT4SetLight(int argc, char *argv[])
 	} else if (mystrncasecmp(argv[2],"keypad",0)) {	type = N6510_LIGHT_KEYPAD;
 	} else if (mystrncasecmp(argv[2],"torch",0)) {	type = N6510_LIGHT_TORCH;
 	} else {
-		printf("What lights should I enable (\"%s\") ?\n",argv[2]);
+		printf(_("What lights should I enable (\"%s\") ?\n"),argv[2]);
 		exit(-1);
 	}
 
 	if (mystrncasecmp(argv[3],"on",0)) { 		enable = true;
 	} else if (mystrncasecmp(argv[3],"off",0)) {	enable = false;
 	} else {
-		printf("What should I do (\"%s\") ?\n",argv[3]);
+		printf(_("What should I do (\"%s\") ?\n"),argv[3]);
 		exit(-1);
 	}
 
@@ -970,7 +971,7 @@ void DCT4DisplayTest(int argc, char *argv[])
 	req[8] = atoi(argv[2]);
 	s.Protocol.Functions->WriteMessage(&s, req, 10, 0x40);
 
-	printf("Press any key to continue...\n");
+	printf(_("Press any key to continue...\n"));
 	GetLine(stdin, ans, 99);
 
 	DCT4_SetPhoneMode(&s, DCT4_MODE_NORMAL);
@@ -983,11 +984,11 @@ static GSM_Error DCT4_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (msg.Buffer[6] == 0xff && msg.Buffer[7] == 0xff) return ERR_NONE;
 	switch (msg.Buffer[3]) {
 	case 0x10:
-		printf("raw ");
+		printf(_("raw "));
 		printf("%10i ",msg.Buffer[8]*256+msg.Buffer[9]);
 		break;
 	case 0x12:
-		printf("unit result ");
+		printf(_("unit result "));
 		printf("%10i ",(msg.Buffer[8]*256+msg.Buffer[9])*ADC);
 		break;
 	}
@@ -1120,14 +1121,14 @@ void DCT4TuneRadio(int argc, char *argv[])
 	FMStat.Location = 1;
 	error = Phone->GetFMStation(&s,&FMStat);
 	if (error != ERR_NONE && error != ERR_EMPTY) {
-		printf("Phone seems not to support radio\n");
+		printf(_("Phone seems not to support radio\n"));
 		GSM_Terminate();
 		exit(-1);
 	}
 
 	error=GSM_WaitFor (&s, Enable, 6, 0x3E, 4, ID_User3);
 	if (error == ERR_PERMISSION) {
-		printf("Please connect headset. Required as antenna\n");
+		printf(_("Please connect headset. Required as antenna\n"));
 		GSM_Terminate();
 		exit(-1);
 	}
@@ -1239,7 +1240,7 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 	error=GSM_WaitFor (&s, req, 18, 0x1F, 4, ID_User3);
 	Print_Error(error);
 
-//	for (i=0;i<Info.Number;i++) printmsg("%i. \"%s\"\n",i,DecodeUnicodeConsole(Info.Ringtone[i].Name));
+//	for (i=0;i<Info.Number;i++) printf(_("%i. \")%s\"\n",i,DecodeUnicodeConsole(Info.Ringtone[i].Name));
 
 	GSM_Terminate();
 }
@@ -1318,59 +1319,59 @@ static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMac
 {
 	int i,pos=6;
 
-	printf("%i entries types\n",msg.Buffer[5]-1);
+	printf(_("%i entries types\n"),msg.Buffer[5]-1);
 
 	for (i=0;i<msg.Buffer[5]-1;i++) {
-		printf("  entry ID %02X",msg.Buffer[pos+4]);
+		printf(_("  entry ID %02X"),msg.Buffer[pos+4]);
 		switch (msg.Buffer[pos+4]) {
-		case N7110_PBK_SIM_SPEEDDIAL	: printf(" (Speed dial on SIM)"); 			break;
-		case N7110_PBK_NAME	    	: printf(" (Text: name (always the only one)");		break;
-		case N7110_PBK_EMAIL	    	: printf(" (Text: email adress)");			break;
-		case N7110_PBK_POSTAL	    	: printf(" (Text: postal address)");			break;
-		case N7110_PBK_NOTE	    	: printf(" (Text: note)");				break;
-		case N7110_PBK_NUMBER 	    	: printf(" (Phone number)");				break;
-		case N7110_PBK_RINGTONE_ID  	: printf(" (Ringtone ID)");				break;
-		case N7110_PBK_DATETIME    	: printf(" (Call register: date and time)");		break;
-		case N7110_PBK_UNKNOWN1	    	: printf(" (Call register: with missed calls)");	break;
-		case N7110_PBK_SPEEDDIAL    	: printf(" (Speed dial)");				break;
-		case N7110_PBK_GROUPLOGO    	: printf(" (Caller group: logo)");			break;
-		case N7110_PBK_LOGOON	    	: printf(" (Caller group: is logo on ?)");		break;
-		case N7110_PBK_GROUP	    	: printf(" (Caller group number in pbk entry)");	break;
+		case N7110_PBK_SIM_SPEEDDIAL	: printf(_(" (Speed dial on SIM)")); 			break;
+		case N7110_PBK_NAME	    	: printf(_(" (Text: name (always the only one)"));		break;
+		case N7110_PBK_EMAIL	    	: printf(_(" (Text: email adress)"));			break;
+		case N7110_PBK_POSTAL	    	: printf(_(" (Text: postal address)"));			break;
+		case N7110_PBK_NOTE	    	: printf(_(" (Text: note)"));				break;
+		case N7110_PBK_NUMBER 	    	: printf(_(" (Phone number)"));				break;
+		case N7110_PBK_RINGTONE_ID  	: printf(_(" (Ringtone ID)"));				break;
+		case N7110_PBK_DATETIME    	: printf(_(" (Call register: date and time)"));		break;
+		case N7110_PBK_UNKNOWN1	    	: printf(_(" (Call register: with missed calls)"));	break;
+		case N7110_PBK_SPEEDDIAL    	: printf(_(" (Speed dial)"));				break;
+		case N7110_PBK_GROUPLOGO    	: printf(_(" (Caller group: logo)"));			break;
+		case N7110_PBK_LOGOON	    	: printf(_(" (Caller group: is logo on ?)"));		break;
+		case N7110_PBK_GROUP	    	: printf(_(" (Caller group number in pbk entry)"));	break;
 
 		/* DCT4 only */
-		case N6510_PBK_URL		: printf(" (Text: URL address)");			break;
-		case N6510_PBK_SMSLIST_ID	: printf(" (SMS list assigment)");			break;
-		case N6510_PBK_VOICETAG_ID	: printf(" (Voice tag assigment)");			break;
-		case N6510_PBK_PICTURE_ID	: printf(" (Picture ID assigment)");			break;
-		case N6510_PBK_RINGTONEFILE_ID  : printf(" (Ringtone ID from filesystem/internal)");	break;
-		case N6510_PBK_USER_ID          : printf(" (Text: user ID)");				break;
-		case N6510_PBK_UNKNOWN2	        : printf(" (conversation list ID)");			break;
-		case N6510_PBK_UNKNOWN3	 	: printf(" (Instant Messaging service list ID ?)");	break;
-		case N6510_PBK_UNKNOWN4	 	: printf(" (presence list ID ?)");			break;
-		case N6510_PBK_PUSHTOTALK_ID	: printf(" (SIP Address (Push to Talk address))");	break;
-		case N6510_PBK_GROUP2_ID	: printf(" (Group ID (6230i or later))");		break;
+		case N6510_PBK_URL		: printf(_(" (Text: URL address)"));			break;
+		case N6510_PBK_SMSLIST_ID	: printf(_(" (SMS list assigment)"));			break;
+		case N6510_PBK_VOICETAG_ID	: printf(_(" (Voice tag assigment)"));			break;
+		case N6510_PBK_PICTURE_ID	: printf(_(" (Picture ID assigment)"));			break;
+		case N6510_PBK_RINGTONEFILE_ID  : printf(_(" (Ringtone ID from filesystem/internal)"));	break;
+		case N6510_PBK_USER_ID          : printf(_(" (Text: user ID)"));				break;
+		case N6510_PBK_UNKNOWN2	        : printf(_(" (conversation list ID)"));			break;
+		case N6510_PBK_UNKNOWN3	 	: printf(_(" (Instant Messaging service list ID ?)"));	break;
+		case N6510_PBK_UNKNOWN4	 	: printf(_(" (presence list ID ?)"));			break;
+		case N6510_PBK_PUSHTOTALK_ID	: printf(_(" (SIP Address (Push to Talk address))"));	break;
+		case N6510_PBK_GROUP2_ID	: printf(_(" (Group ID (6230i or later))"));		break;
 		}
-		printf(", type ");
+		printf(_(", type "));
 		switch (msg.Buffer[pos+5]) {
-		case 0x05: printf("string"); 	break;
-		case 0x02: printf("byte"); 	break;
-		case 0x03: printf("2 bytes"); 	break;
-		case 0x06: printf("4 bytes"); 	break;
+		case 0x05: printf(_("string")); 	break;
+		case 0x02: printf(_("byte")); 	break;
+		case 0x03: printf(_("2 bytes")); 	break;
+		case 0x06: printf(_("4 bytes")); 	break;
 		default  : printf("%02X",msg.Buffer[pos+5]);
 		}
 		printf("\n");
 		pos+=msg.Buffer[pos+3];
 	}
 
-	printf("%i phone number types\n",msg.Buffer[pos+4]);
+	printf(_("%i phone number types\n"),msg.Buffer[pos+4]);
 	for (i=0;i<msg.Buffer[pos+4];i++) {
 		switch (msg.Buffer[pos+5+i]) {
-		case 0x02: printf("  Home Number\n"); 		break;
-		case 0x03: printf("  Mobile Number\n"); 	break;
-		case 0x04: printf("  Fax Number\n"); 		break;
-		case 0x06: printf("  Office Number\n"); 	break;
-		case 0x0A: printf("  Standard Number\n"); 	break;
-		default:   printf("  unknown\n");
+		case 0x02: printf(_("  Home Number\n")); 		break;
+		case 0x03: printf(_("  Mobile Number\n")); 	break;
+		case 0x04: printf(_("  Fax Number\n")); 		break;
+		case 0x06: printf(_("  Office Number\n")); 	break;
+		case 0x0A: printf(_("  Standard Number\n")); 	break;
+		default:   printf(_("  unknown\n"));
 		}
 	}
 
@@ -1393,7 +1394,7 @@ void DCT4GetPBKFeatures(int argc, char *argv[])
 	if (mystrncasecmp(argv[2],"VM",0)) MemoryType=MEM_VM;
 	if (mystrncasecmp(argv[2],"FD",0)) MemoryType=MEM_FD;
 	if (MemoryType==0) {
-		printf("ERROR: unknown memory type (\"%s\")\n",argv[2]);
+		printf(_("ERROR: unknown memory type (\"%s\")\n"),argv[2]);
 		exit (-1);
 	}
 

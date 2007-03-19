@@ -30,13 +30,17 @@ extern GSM_Error NotSupportedFunction	(void);
 #define NOTIMPLEMENTED 	(void *) NotImplementedFunction
 #define NOTSUPPORTED 	(void *) NotSupportedFunction
 
-unsigned char *GetMsg 		(INI_Section *cfg, unsigned char *default_string);
 unsigned char *print_error	(GSM_Error e, FILE *df, INI_Section *cfg);
 
 GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi);
 
 const char *GetGammuLocalePath(void);
 const char *GetGammuVersion(void);
+
+/**
+ * Initializes locales.
+ */
+void InitLocales(const char *path);
 
 #endif
 

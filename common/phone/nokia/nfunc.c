@@ -8,6 +8,7 @@
 
 #include "../../gsmstate.h"
 #include "../../misc/coding/coding.h"
+#include "../../misc/locales.h"
 #include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
 #include "nfunc.h"
@@ -674,15 +675,15 @@ void NOKIA_GetDefaultCallerGroupName(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	if (Bitmap->Text[0]==0x00 && Bitmap->Text[1]==0x00) {
 		Bitmap->DefaultName = true;
 		switch(Bitmap->Location) {
-		case 1: EncodeUnicode(Bitmap->Text,GetMsg(s->msg,"Family"),strlen(GetMsg(s->msg,"Family")));
+		case 1: EncodeUnicode(Bitmap->Text,_("Family"),strlen(_("Family")));
 			break;
-		case 2: EncodeUnicode(Bitmap->Text,GetMsg(s->msg,"VIP"),strlen(GetMsg(s->msg,"VIP")));
+		case 2: EncodeUnicode(Bitmap->Text,_("VIP"),strlen(_("VIP")));
 			break;
-		case 3: EncodeUnicode(Bitmap->Text,GetMsg(s->msg,"Friends"),strlen(GetMsg(s->msg,"Friends")));
+		case 3: EncodeUnicode(Bitmap->Text,_("Friends"),strlen(_("Friends")));
 			break;
-		case 4: EncodeUnicode(Bitmap->Text,GetMsg(s->msg,"Colleagues"),strlen(GetMsg(s->msg,"Colleagues")));
+		case 4: EncodeUnicode(Bitmap->Text,_("Colleagues"),strlen(_("Colleagues")));
 			break;
-		case 5: EncodeUnicode(Bitmap->Text,GetMsg(s->msg,"Other"),strlen(GetMsg(s->msg,"Other")));
+		case 5: EncodeUnicode(Bitmap->Text,_("Other"),strlen(_("Other")));
 			break;
 		}
 	}
@@ -840,19 +841,19 @@ void NOKIA_GetDefaultProfileName(GSM_StateMachine *s, GSM_Profile *Profile)
 {
 	if (Profile->DefaultName) {
 		switch(Profile->Location) {
-		case 1:	EncodeUnicode(Profile->Name,GetMsg(s->msg,"General"),strlen(GetMsg(s->msg,"General")));
+		case 1:	EncodeUnicode(Profile->Name,_("General"),strlen(_("General")));
 			break;
-		case 2: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Silent"),strlen(GetMsg(s->msg,"Silent")));
+		case 2: EncodeUnicode(Profile->Name,_("Silent"),strlen(_("Silent")));
 			break;
-		case 3: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Meeting"),strlen(GetMsg(s->msg,"Meeting")));
+		case 3: EncodeUnicode(Profile->Name,_("Meeting"),strlen(_("Meeting")));
 			break;
-		case 4:	EncodeUnicode(Profile->Name,GetMsg(s->msg,"Outdoor"),strlen(GetMsg(s->msg,"Outdoor")));
+		case 4:	EncodeUnicode(Profile->Name,_("Outdoor"),strlen(_("Outdoor")));
 			break;
-		case 5:	EncodeUnicode(Profile->Name,GetMsg(s->msg,"Pager"),strlen(GetMsg(s->msg,"Pager")));
+		case 5:	EncodeUnicode(Profile->Name,_("Pager"),strlen(_("Pager")));
 			break;
-		case 6: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Car"),strlen(GetMsg(s->msg,"Car")));
+		case 6: EncodeUnicode(Profile->Name,_("Car"),strlen(_("Car")));
 			break;
-		case 7: EncodeUnicode(Profile->Name,GetMsg(s->msg,"Headset"),strlen(GetMsg(s->msg,"Headset")));
+		case 7: EncodeUnicode(Profile->Name,_("Headset"),strlen(_("Headset")));
 			break;
 		}
 	}

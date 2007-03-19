@@ -16,6 +16,8 @@
 #  include <signal.h>
 #endif
 
+#include "misc/locales.h"
+
 /* Commit flag for opening files is MS extension, some other
  * implementations (like BCC 5.5) don't like this flag at all */
 #ifdef _MSC_VER
@@ -42,82 +44,20 @@ GSM_Error NotSupportedFunction(void)
 	return ERR_NOTSUPPORTED;
 }
 
-unsigned char *GetMsg (INI_Section *cfg, unsigned char *default_string)
-{
-	unsigned char 		*retval, buffer[40], buff2[40], buff[2000];
-	static unsigned char	def_str[2000];
-	INI_Entry		*e;
-	INI_Section 		*h;
-	int			num;
-	int			len;
-
-	if (cfg==NULL) return default_string;
-
-	EncodeUnicode (buff2, "common", 6);
-
-	/* Set all 0x0a to \n */
-	memset(def_str,0,sizeof(def_str));
-	for (num=0;num<((int)strlen(default_string));num++) {
-		if (default_string[num] == 0x0a) {
-			def_str[strlen(def_str)] = '\\';
-			def_str[strlen(def_str)] = 'n';
-		} else def_str[strlen(def_str)] = default_string[num];
+void InitLocales(const char *path) {
+	setlocale(LC_ALL, "");
+#ifdef GETTEXTLIBS_FOUND
+	if (path == NULL) {
+#if defined(LOCALE_PATH)
+		bindtextdomain("gammu", LOCALE_PATH);
+#else
+		bindtextdomain("gammu", ".");
+#endif
+	} else {
+		bindtextdomain("gammu", path);
 	}
-
-	e = NULL;
-	/* First find our section */
-        for (h = cfg; h != NULL; h = h->Next) {
-		if (mywstrncasecmp(buff2, h->SectionName, 0)) {
-			e = h->SubEntries;
-			break;
-		}
-	}
-	while (e != NULL) {
-		num = -1;
-		DecodeUnicode(e->EntryName,buffer);
-		if (strlen(buffer) == 5 && (buffer[0] == 'F' || buffer[0] == 'f')) {
-			num = atoi(buffer+2);
-		}
-		if (num!=-1) {
-			DecodeUnicode(e->EntryValue,buff);
-			/* Remove quotes */
-			if (buff[0] == '"') {
-				len = strlen(buff);
-				memmove(buff, buff + 1, len - 1);
-				if (buff[len - 2] == '"') buff[len - 2] = 0;
-			}
-			if (strcmp(buff, def_str) == 0) {
-				sprintf(buff,"T%04i",num);
-				EncodeUnicode (buffer, buff, 5);
-			        retval = INI_GetValue(cfg, buff2, buffer, true);
-			        if (retval) {
-					DecodeUnicode(retval+2,buff);
-					buff[strlen(buff)-1] = 0;
-					/* Set all \n to 0x0a */
-					memset(def_str,0,sizeof(def_str));
-					num = 0;
-					while (num != (int)strlen(buff)) {
-						if (num < (int)strlen(buff) - 1) {
-							if (buff[num] == '\\' && buff[num+1] == 'n') {
-								def_str[strlen(def_str)] = 0x0a;
-								num+=2;
-							} else {
-								def_str[strlen(def_str)] = buff[num++];
-							}
-						} else {
-							def_str[strlen(def_str)] = buff[num++];
-						}
-					}
-					retval = def_str;
-				} else {
-					retval = default_string;
-				}
-				return retval;
-			}
-		}
-		e = e->Next;
-	}
-	return default_string;
+	textdomain("gammu");
+#endif
 }
 
 typedef struct {
@@ -126,58 +66,58 @@ typedef struct {
 } PrintErrorEntry;
 
 static PrintErrorEntry PrintErrorEntries[] = {
-	{ERR_NONE,			"No error."},
-	{ERR_DEVICEOPENERROR,		"Error opening device. Unknown/busy or no permissions."},
-	{ERR_DEVICELOCKED,		"Error opening device. Device locked."},
-	{ERR_DEVICENOTEXIST,		"Error opening device. Doesn't exist."},
-	{ERR_DEVICEBUSY,		"Error opening device. Already opened by other application."},
-	{ERR_DEVICENOPERMISSION,	"Error opening device. No permissions."},
-	{ERR_DEVICENODRIVER,		"Error opening device. No required driver in operating system."},
-	{ERR_DEVICENOTWORK,		"Error opening device. Some hardware not connected/wrong configured."},
-	{ERR_DEVICEDTRRTSERROR,		"Error setting device DTR or RTS."},
-	{ERR_DEVICECHANGESPEEDERROR,	"Error setting device speed. Maybe speed not supported."},
-	{ERR_DEVICEWRITEERROR,		"Error writing device."},
-	{ERR_DEVICEREADERROR,		"Error during reading device."},
-	{ERR_DEVICEPARITYERROR,		"Can't set parity on device."},
-	{ERR_TIMEOUT,			"No response in specified timeout. Probably phone not connected."},
+	{ERR_NONE,			N_("No error.")},
+	{ERR_DEVICEOPENERROR,		N_("Error opening device. Unknown/busy or no permissions.")},
+	{ERR_DEVICELOCKED,		N_("Error opening device. Device locked.")},
+	{ERR_DEVICENOTEXIST,		N_("Error opening device. Doesn't exist.")},
+	{ERR_DEVICEBUSY,		N_("Error opening device. Already opened by other application.")},
+	{ERR_DEVICENOPERMISSION,	N_("Error opening device. No permissions.")},
+	{ERR_DEVICENODRIVER,		N_("Error opening device. No required driver in operating system.")},
+	{ERR_DEVICENOTWORK,		N_("Error opening device. Some hardware not connected/wrong configured.")},
+	{ERR_DEVICEDTRRTSERROR,		N_("Error setting device DTR or RTS.")},
+	{ERR_DEVICECHANGESPEEDERROR,	N_("Error setting device speed. Maybe speed not supported.")},
+	{ERR_DEVICEWRITEERROR,		N_("Error writing device.")},
+	{ERR_DEVICEREADERROR,		N_("Error during reading device.")},
+	{ERR_DEVICEPARITYERROR,		N_("Can't set parity on device.")},
+	{ERR_TIMEOUT,			N_("No response in specified timeout. Probably phone not connected.")},
 	/* Some missed */
-	{ERR_UNKNOWNRESPONSE,		"Unknown response from phone. See readme.txt, how to report it."},
+	{ERR_UNKNOWNRESPONSE,		N_("Unknown response from phone. See readme.txt, how to report it.")},
 	/* Some missed */
-	{ERR_UNKNOWNCONNECTIONTYPESTRING,"Unknown connection type string. Check config file."},
-	{ERR_UNKNOWNMODELSTRING,	"Unknown model type string. Check config file."},
-	{ERR_SOURCENOTAVAILABLE,	"Some functions not available for your OS (disabled in config or not written)."},
-	{ERR_NOTSUPPORTED,		"Function not supported by phone."},
-	{ERR_EMPTY,			"Entry is empty"},
-	{ERR_SECURITYERROR,		"Security error. Maybe no PIN ?"},
-	{ERR_INVALIDLOCATION,		"Invalid location. Maybe too high ?"},
-	{ERR_NOTIMPLEMENTED,		"Function not implemented. Help required."},
-	{ERR_FULL,			"Memory full."},
-	{ERR_UNKNOWN,			"Unknown error."},
+	{ERR_UNKNOWNCONNECTIONTYPESTRING,N_("Unknown connection type string. Check config file.")},
+	{ERR_UNKNOWNMODELSTRING,	N_("Unknown model type string. Check config file.")},
+	{ERR_SOURCENOTAVAILABLE,	N_("Some functions not available for your OS (disabled in config or not written).")},
+	{ERR_NOTSUPPORTED,		N_("Function not supported by phone.")},
+	{ERR_EMPTY,			N_("Entry is empty")},
+	{ERR_SECURITYERROR,		N_("Security error. Maybe no PIN ?")},
+	{ERR_INVALIDLOCATION,		N_("Invalid location. Maybe too high ?")},
+	{ERR_NOTIMPLEMENTED,		N_("Function not implemented. Help required.")},
+	{ERR_FULL,			N_("Memory full.")},
+	{ERR_UNKNOWN,			N_("Unknown error.")},
 	/* Some missed */
-	{ERR_CANTOPENFILE,		"Can't open specified file. Read only ?"},
-	{ERR_MOREMEMORY,		"More memory required..."},
-	{ERR_PERMISSION,		"Permission to file/device required..."},
-	{ERR_EMPTYSMSC,			"Empty SMSC number. Set in phone or use -smscnumber."},
-	{ERR_INSIDEPHONEMENU,		"You're inside phone menu (during editing ?). Leave it and try again."},
-	{ERR_WORKINPROGRESS,		"Function is during writing. If want help, please contact with authors."},
-	{ERR_PHONEOFF,			"Phone is disabled and connected to charger."},
-	{ERR_FILENOTSUPPORTED,		"File format not supported by Gammu."},
-	{ERR_BUG,			"Nobody is perfect, some bug appeared in protocol implementation. Please contact authors."},
-	{ERR_CANCELED,			"Transfer was canceled by phone (you pressed cancel on phone?)"},
+	{ERR_CANTOPENFILE,		N_("Can't open specified file. Read only ?")},
+	{ERR_MOREMEMORY,		N_("More memory required...")},
+	{ERR_PERMISSION,		N_("Permission to file/device required...")},
+	{ERR_EMPTYSMSC,			N_("Empty SMSC number. Set in phone or use -smscnumber.")},
+	{ERR_INSIDEPHONEMENU,		N_("You're inside phone menu (during editing ?). Leave it and try again.")},
+	{ERR_WORKINPROGRESS,		N_("Function is during writing. If want help, please contact with authors.")},
+	{ERR_PHONEOFF,			N_("Phone is disabled and connected to charger.")},
+	{ERR_FILENOTSUPPORTED,		N_("File format not supported by Gammu.")},
+	{ERR_BUG,			N_("Nobody is perfect, some bug appeared in protocol implementation. Please contact authors.")},
+	{ERR_CANCELED,			N_("Transfer was canceled by phone (you pressed cancel on phone?)")},
 	/* Some missed */
-	{ERR_OTHERCONNECTIONREQUIRED,	"Current connection type doesn't support called function."},
-	{ERR_WRONGCRC,			"CRC error."},
-	{ERR_INVALIDDATETIME,		"Invalid date or time specified."},
-	{ERR_MEMORY,			"Phone memory error, maybe it is read only."},
-	{ERR_INVALIDDATA,		"Invalid data given to phone."},
-	{ERR_FILEALREADYEXIST,		"File with specified name already exist."},
-	{ERR_FILENOTEXIST,		"File with specified name doesn't exist."},
-	{ERR_SHOULDBEFOLDER,		"You have to give folder (not file) name."},
-	{ERR_SHOULDBEFILE,		"You have to give file (not folder) name."},
-	{ERR_NOSIM,			"Can not access SIM card."},
-	{ERR_GNAPPLETWRONG,		"Wrong GNAPPLET version in phone. Use version from currently used Gammu."},
-	{ERR_FOLDERNOTEMPTY,		"Folder must be empty."},
-	{ERR_DATACONVERTED,		"Data were converted."},
+	{ERR_OTHERCONNECTIONREQUIRED,	N_("Current connection type doesn't support called function.")},
+	{ERR_WRONGCRC,			N_("CRC error.")},
+	{ERR_INVALIDDATETIME,		N_("Invalid date or time specified.")},
+	{ERR_MEMORY,			N_("Phone memory error, maybe it is read only.")},
+	{ERR_INVALIDDATA,		N_("Invalid data given to phone.")},
+	{ERR_FILEALREADYEXIST,		N_("File with specified name already exist.")},
+	{ERR_FILENOTEXIST,		N_("File with specified name doesn't exist.")},
+	{ERR_SHOULDBEFOLDER,		N_("You have to give folder (not file) name.")},
+	{ERR_SHOULDBEFILE,		N_("You have to give file (not folder) name.")},
+	{ERR_NOSIM,			N_("Can not access SIM card.")},
+	{ERR_GNAPPLETWRONG,		N_("Wrong GNAPPLET version in phone. Use version from currently used Gammu.")},
+	{ERR_FOLDERNOTEMPTY,		N_("Folder must be empty.")},
+	{ERR_DATACONVERTED,		N_("Data were converted.")},
 
 	{0,				""}
 };
@@ -194,10 +134,10 @@ unsigned char *print_error(GSM_Error e, FILE *df, INI_Section *cfg)
 		}
 		i++;
 	}
-	if (def == NULL) def = "Unknown error.";
-	if (df!=NULL && di.dl!=0) fprintf(df,"[ERROR %i: %s]\n",e,def);
+	if (def == NULL) def = N_("Unknown error.");
+	if (df!=NULL && di.dl!=0) fprintf(df,"[ERROR %i: %s]\n", e, gettext(def));
 
-	return GetMsg(cfg,def);
+	return gettext(def);
 }
 
 const char *GetGammuLocalePath(void)

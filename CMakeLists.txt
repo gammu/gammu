@@ -141,6 +141,8 @@ if (NOT CROSS_MINGW)
     # Packages in sources
     macro_optional_find_package (MySQL)
     macro_optional_find_package (Postgres)
+    macro_optional_find_package (Gettext)
+    macro_optional_find_package (GettextLibs)
 
     # Search for needed includes and functions
     check_include_file (dirent.h HAVE_DIRENT_H)
@@ -454,6 +456,11 @@ if (POSTGRES_FOUND)
 
     set (HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
 endif (POSTGRES_FOUND)
+
+if (GETTEXTLIBS_FOUND)
+	target_link_libraries (gammu ${GETTEXT_LIBRARY})
+    include_directories (${GETTEXT_INCLUDE_DIR})
+endif (GETTEXTLIBS_FOUND)
 
 if (BLUEZ_FOUND)
 	target_link_libraries (Gammu ${BLUEZ_LIBRARIES})

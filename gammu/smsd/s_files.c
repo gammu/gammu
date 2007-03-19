@@ -14,6 +14,7 @@
 #endif
 
 #include "smsdcore.h"
+#include "../../common/misc/locales.h"
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
 static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config)
@@ -50,7 +51,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 		if (file) {
 			fclose(file);
 			if (i == 0) {
-				WriteSMSDLog("Cannot save %s. No available file names", FileName);
+				WriteSMSDLog(_("Cannot save %s. No available file names"), FileName);
 				return ERR_CANTOPENFILE;
 			}
 		}
@@ -58,7 +59,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 
 		if ((sms.SMS[i].PDU == SMS_Status_Report) && mystrncasecmp(Config->deliveryreport, "log", 3)) {
 			strcpy(buffer, DecodeUnicodeString(sms.SMS[i].Number));
-			WriteSMSDLog("Delivery report: %s to %s", DecodeUnicodeString(sms.SMS[i].Text), buffer);
+			WriteSMSDLog(_("Delivery report: %s to %s"), DecodeUnicodeString(sms.SMS[i].Text), buffer);
 		} else {
 #ifdef GSM_ENABLE_BACKUP
 			if (mystrncasecmp(Config->inboxformat, "detail", 0)) {
@@ -93,9 +94,9 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 				} else error = ERR_CANTOPENFILE;
 			}
 			if (error == ERR_NONE) {
-				WriteSMSDLog("%s %s", (sms.SMS[i].PDU == SMS_Status_Report?"Delivery report":"Received"), FileName);
+				WriteSMSDLog("%s %s", (sms.SMS[i].PDU == SMS_Status_Report ? _("Delivery report"): _("Received")), FileName);
 			} else {
-				WriteSMSDLog("Cannot save %s (%i)", FileName, errno);
+				WriteSMSDLog(_("Cannot save %s (%i)"), FileName, errno);
 				return ERR_CANTOPENFILE;
 			}
 		}
@@ -321,15 +322,15 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 	}
 	if (ilen == olen) {
 		if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0)) {
-			WriteSMSDLog("Could not delete %s (%i)", ifilename, errno);
+			WriteSMSDLog(_("Could not delete %s (%i)"), ifilename, errno);
 			return ERR_UNKNOWN;
 		}
 		return ERR_NONE;
 	} else {
-		WriteSMSDLog("Error copying SMS %s -> %s", ifilename, ofilename);
+		WriteSMSDLog(_("Error copying SMS %s -> %s"), ifilename, ofilename);
 		if (alwaysDelete) {
 			if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0))
-				WriteSMSDLog("Could not delete %s (%i)", ifilename, errno);
+				WriteSMSDLog(_("Could not delete %s (%i)"), ifilename, errno);
 		}
 		return ERR_UNKNOWN;
 	}
@@ -337,7 +338,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 
 static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, int Part, GSM_SMSDSendingError err, int TPMR)
 {
-	if (err == SMSD_SEND_OK) WriteSMSDLog("Transmitted %s (%s: %i) to %s", Config->SMSID, (Part == sms->Number?"total":"part"),Part,DecodeUnicodeString(sms->SMS[0].Number));
+	if (err == SMSD_SEND_OK) WriteSMSDLog(_("Transmitted %s (%s: %i) to %s"), Config->SMSID, (Part == sms->Number?"total":"part"),Part,DecodeUnicodeString(sms->SMS[0].Number));
 
   	return ERR_NONE;
 }
