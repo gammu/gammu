@@ -161,36 +161,36 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 					break;
 				case PBK_Number_General:
 					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					break;
 				case PBK_Number_Other:
 					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					break;
 				case PBK_Number_Pager:
 					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					*Length+=sprintf(Buffer+(*Length),";PAGER");
 					break;
 				case PBK_Number_Mobile  :
 					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					*Length+=sprintf(Buffer+(*Length),";CELL");
 					break;
 				case PBK_Number_Work    :
 					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-					*Length+=sprintf(Buffer+(*Length),";WORK;VOICE");
+					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+					*Length+=sprintf(Buffer+(*Length),";WORK");
 					break;
 				case PBK_Number_Fax     :
 					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					*Length+=sprintf(Buffer+(*Length),";FAX");
 					break;
 				case PBK_Number_Home    :
 					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-					*Length+=sprintf(Buffer+(*Length),";HOME;VOICE");
+					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+					*Length+=sprintf(Buffer+(*Length),";HOME");
 					break;
 				case PBK_Text_Note      :
 					*Length+=sprintf(Buffer+(*Length),"NOTE");
