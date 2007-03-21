@@ -57,6 +57,7 @@ For additionals materials and links to them see readme.txt
 [+] * --clearall also attempts to delete calls.
 [-] * Fixed decoding of date from backup (bug #267).
 [-] * Backup saves and restores numbers as same type (bug #266).
+[+] * Support for call notifications on AT phones.
 
 20070311 - 1.10.1
 [-] * Fixed encoding of name for Nokia phones.

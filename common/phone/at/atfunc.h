@@ -52,6 +52,7 @@ extern GSM_Error ATGEN_DeleteAllMemory		(GSM_StateMachine *s, GSM_MemoryType typ
 
 extern GSM_Error ATGEN_DispatchMessage		(GSM_StateMachine *s);
 extern GSM_Error ATGEN_SetFastSMSSending	(GSM_StateMachine *s, bool enable);
+extern GSM_Error ATGEN_SetIncomingCall		(GSM_StateMachine *s, bool enable);
 extern GSM_Error ATGEN_SetIncomingCB		(GSM_StateMachine *s, bool enable);
 extern GSM_Error ATGEN_SetIncomingSMS		(GSM_StateMachine *s, bool enable);
 

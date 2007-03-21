@@ -464,6 +464,14 @@ GSM_Error SONYERICSSON_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 	return ATGEN_GetSIMIMSI(s, IMSI);
 }
 
+GSM_Error SONYERICSSON_SetIncomingCall (GSM_StateMachine *s, bool enable)
+{
+	GSM_Error error;
+
+	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	return ATGEN_SetIncomingCall(s, enable);
+}
+
 GSM_Error SONYERICSSON_SetIncomingCB (GSM_StateMachine *s, bool enable)
 {
 	GSM_Error error;
@@ -1470,7 +1478,7 @@ GSM_Phone_Functions SONYERICSSONPhone = {
  	NOTSUPPORTED,			/* 	GetCallDivert		*/
  	NOTSUPPORTED,			/* 	SetCallDivert		*/
  	NOTSUPPORTED,			/* 	CancelAllDiverts	*/
-	NONEFUNCTION,			/* 	SetIncomingCall		*/
+	SONYERICSSON_SetIncomingCall,
 	SONYERICSSON_SetIncomingUSSD,
 	SONYERICSSON_SendDTMF,
 	SONYERICSSON_GetRingtone,
