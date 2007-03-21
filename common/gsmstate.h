@@ -427,6 +427,7 @@ typedef enum {
 	ID_SetCalendarNote,
 	ID_SetIncomingSMS,
 	ID_SetIncomingCB,
+	ID_SetIncomingCall,
 	ID_GetCNMIMode,
 	ID_GetCalendarNotePos,
 	ID_Initialise,

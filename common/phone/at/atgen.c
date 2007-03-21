@@ -3732,10 +3732,27 @@ void Extract_CLIP_number(char *dest, char *buf)
 	return;
 }
 
+GSM_Error ATGEN_SetIncomingCall(GSM_StateMachine *s, bool enable)
+{
+	if (enable) {
+		smprintf(s, "Enabling incoming call\n");
+		GSM_WaitFor(s, "AT+CRC=1\r", 9, 0x00, 3, ID_SetIncomingCall);
+		GSM_WaitFor(s, "AT+CLIP=1\r", 10, 0x00, 3, ID_SetIncomingCall);
+	} else {
+		smprintf(s, "Disabling incoming call\n");
+		GSM_WaitFor(s, "AT+CRC=0\r", 9, 0x00, 3, ID_SetIncomingCall);
+		GSM_WaitFor(s, "AT+CLIP=0\r", 10, 0x00, 3, ID_SetIncomingCall);
+	}
+	s->Phone.Data.EnableIncomingCall = enable;
+	return ERR_NONE;
+}
+
 GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	char 			num[128];
 	GSM_Call 		call;
+
+	memset(&call, 0, sizeof(call));
 
 	smprintf(s, "Incoming call info\n");
 	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL) {
@@ -4598,12 +4615,15 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyCancelCall,		"AT+CHUP"		,0x00,0x00,ID_CancelCall	 },
 {ATGEN_ReplyDialVoice,		"ATDT"			,0x00,0x00,ID_DialVoice		 },
 {ATGEN_ReplyCancelCall,		"ATH"			,0x00,0x00,ID_CancelCall	 },
+{ATGEN_GenericReply, 		"AT+CRC"		,0x00,0x00,ID_SetIncomingCall	 },
+{ATGEN_GenericReply, 		"AT+CLIP"		,0x00,0x00,ID_SetIncomingCall	 },
 {ATGEN_GenericReply, 		"AT+CUSD"		,0x00,0x00,ID_SetUSSD		 },
 {ATGEN_ReplyGetUSSD, 		"+CUSD"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,            "AT+CLIP=1"      	,0x00,0x00,ID_IncomingFrame      },
 {ATGEN_ReplyIncomingCallInfo,	"+CLIP"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_ReplyIncomingCallInfo,	"+COLP"    		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_ReplyIncomingCallInfo,	"RING"			,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_ReplyIncomingCallInfo,	"+CRING"		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_ReplyIncomingCallInfo,	"NO CARRIER"		,0x00,0x00,ID_IncomingFrame	 },
 
 {ATGEN_ReplyReset,		"AT^SRESET"		,0x00,0x00,ID_Reset		 },
@@ -4720,7 +4740,7 @@ GSM_Phone_Functions ATGENPhone = {
  	NOTSUPPORTED,			/* 	GetCallDivert		*/
  	NOTSUPPORTED,			/* 	SetCallDivert		*/
  	NOTSUPPORTED,			/* 	CancelAllDiverts	*/
-	NONEFUNCTION,			/*	SetIncomingCall		*/
+	ATGEN_SetIncomingCall,
 	ATGEN_SetIncomingUSSD,
 	ATGEN_SendDTMF,
 	ATGEN_GetRingtone,
