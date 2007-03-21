@@ -1,0 +1,365 @@
+
+# Gammu translation.
+# Copyright (C) 2003 - 2007 Michal Čihař
+# This file is distributed under the same license as the Gammu package.
+# Michal Čihař <michal@cihar.com>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"POT-Creation-Date: 2007-03-20 09:12+0100\n"
+"PO-Revision-Date: 2007-03-20 09:13+0100\n"
+"Last-Translator: Michal Cihar\n"
+"Language-Team: Language =cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "No error."
+msgstr "Žadná chyba."
+
+msgid "Error opening device. Unknown/busy or no permissions."
+msgstr "Chyba při otevírání zařízení. Přístup odmítnut."
+
+msgid "Error setting device speed. Maybe speed not supported."
+msgstr "Chyba při nastavování rychlosti zařízení. Rychlost pravděpodobně není podporována."
+
+msgid "Error writing device."
+msgstr "Chyba při zápisu."
+
+msgid "No response in specified timeout. Probably phone not connected."
+msgstr "Žadna odpověď v očekaváné době. Telefon pravděpodobně není připojen."
+
+msgid "Unknown response from phone. See readme.txt, how to report it."
+msgstr "Neznámá odpověď od telefonu. Přečtěte si readme.txt jak tuto událost nahlásit."
+
+msgid "Unknown connection type string. Check config file."
+msgstr "Zadán neznamý typ připojení. Zkontrolujte konfigurační soubor."
+
+msgid "Unknown model type string. Check config file."
+msgstr "Zadán neznamý model telefonu. Zkontrolujte konfigurační soubor."
+
+msgid "Function not supported by phone."
+msgstr "Funkce není podporována telefonem."
+
+msgid "Entry is empty."
+msgstr "Záznam je prazdný."
+
+msgid "Unknown error."
+msgstr "Neznamá chyba."
+
+msgid "Security error. Maybe no PIN ?"
+msgstr "Bezpečnostní chyba. Možná nebyl zadán PIN."
+
+msgid "Invalid location. Maybe too high ?"
+msgstr "Cybná pozice. Možná příliš vysoká."
+
+msgid "Function not implemented. Help required."
+msgstr "Funkce není implementována, pomoc s implementací bude uvítána."
+
+msgid "Can't open specified file. Read only ?"
+msgstr "Soubor nezle otevřít, není jen pro čtení?"
+
+msgid "Memory full."
+msgstr "Paměť je plná."
+
+msgid "More memory required..."
+msgstr "Je potřeba více paměti..."
+
+msgid "Permission to file/device required..."
+msgstr "Přístup k souboru nebo zařízení odmítnut..."
+
+msgid "Family"
+msgstr "Rodina"
+
+msgid "Friends"
+msgstr "Přatelé"
+
+msgid "Colleagues"
+msgstr "Kolegové"
+
+msgid "Other"
+msgstr "Ostatní"
+
+msgid "Inbox"
+msgstr "Příchozí"
+
+msgid "Outbox"
+msgstr "Odchozí"
+
+msgid "You're inside phone menu (during editing ?). Leave it and try again."
+msgstr "Jste v menu telefonu nebo v něm upravujete záznam. Opusťtě ho a zkuste znovu."
+
+msgid "Personal"
+msgstr "Osobní"
+
+msgid "Car"
+msgstr "Auto"
+
+msgid "Headset"
+msgstr "Sluchátka"
+
+msgid "General"
+msgstr "Obecné"
+
+msgid "Silent"
+msgstr "Tiché"
+
+msgid "Meeting"
+msgstr "Zchůzka"
+
+msgid "Outdoor"
+msgstr "Venkovní"
+
+msgid "Discreet"
+msgstr "Diskritní"
+
+msgid "Loud"
+msgstr "Hlasité"
+
+msgid "My style"
+msgstr "Můj styl"
+
+msgid "Function is during writing. If want help, please contact with authors."
+msgstr "Funkce je rozepsána. Pokud chcete pomoci, kontaktuje autory."
+
+msgid "Waiting for PIN.\n"
+msgstr "Čeká na PIN.\n"
+
+msgid "Waiting for PIN2.\n"
+msgstr "Čeká na PIN2.\n"
+
+msgid "Waiting for PUK.\n"
+msgstr "Čeká na PUK.\n"
+
+msgid "Waiting for PUK2.\n"
+msgstr "Čeká na PUK2.\n"
+
+msgid "Nothing to enter.\n"
+msgstr "Není co zadat.\n"
+
+msgid "Unknown\n"
+msgstr "Neznámý\n"
+
+msgid "Security status: "
+msgstr "Stav bezpečnosti: "
+
+msgid "ERROR: enumerate locations from 1\n"
+msgstr "CHYBA: číslujte pozice od 1\n"
+
+msgid "UNKNOWN\n"
+msgstr "NEZNAMO\n"
+
+msgid "Manufacturer  : %s\n"
+msgstr "Výrobce       : %s\n"
+
+msgid "Original IMEI : %s\n"
+msgstr "Původní IMEI  : %s\n"
+
+msgid "Manufactured  : %s\n"
+msgstr "Vyrobeno      : %s\n"
+
+msgid "Product code  : %s\n"
+msgstr "Kód produktu  : %s\n"
+
+msgid "Phone time is %s\n"
+msgstr "Čas v telefonu je %s\n"
+
+msgid "Time format is "
+msgstr "Formát času je "
+
+msgid "12 hours\n"
+msgstr "12 hodin\n"
+
+msgid "Date format is "
+msgstr "Formát data je "
+
+msgid ", date separator is %c\n"
+msgstr ", oddělovač data je %c\n"
+
+msgid "Alarm not set in phone\n"
+msgstr "Budík není v telefonu nastaven\n"
+
+msgid "Date: %s\n"
+msgstr "Datum: %s\n"
+
+msgid "Time: %02d:%02d\n"
+msgstr "Čas  : %02d:%02d\n"
+
+msgid "Text: \"%s\"\n"
+msgstr "Text : \"%s\"n"
+
+msgid "Date and time    : %s\n"
+msgstr "Datum a čas      : %s\n"
+
+msgid "Category         : \"%s\" (%i)\n"
+msgstr "Kategorie        : \"%s\" (%i)\n"
+
+msgid "Category         : %i\n"
+msgstr "Kategorie        : %i\n"
+
+msgid "Private          : %s\n"
+msgstr "Osobní           : %s\n"
+
+msgid "Caller group     : \"%s\"\n"
+msgstr "Skupina          : \"%s\"\n"
+
+msgid "Ringtone         : \"%s\"\n"
+msgstr "Vyzvánění        : \"%s\"\n"
+
+msgid "Ringtone ID      : %i\n"
+msgstr "ID vyzvánění     : %i\n"
+
+msgid "Picture ID       : 0x%x\n"
+msgstr "ID obrázku       : 0x%x\n"
+
+msgid "General number  "
+msgstr "Obecné číslo    "
+
+msgid "Mobile number   "
+msgstr "Číslo na mobil  "
+
+msgid "Work number     "
+msgstr "Číslo do práce  "
+
+msgid "Fax number      "
+msgstr "Faxové číslo    "
+
+msgid "Home number     "
+msgstr "Číslo domů      "
+
+msgid "Pager number    "
+msgstr "Číslo na pager  "
+
+msgid "Other number    "
+msgstr "Další číslo     "
+
+msgid "Snail address   "
+msgstr "Poštovní adresa "
+
+msgid "Email address 1 "
+msgstr "Email 1         "
+
+msgid "Email address 2 "
+msgstr "Email 2         "
+
+msgid "URL address     "
+msgstr "URL             "
+
+msgid "Name            "
+msgstr "Jméno           "
+
+msgid "Last name       "
+msgstr "Příjmení        "
+
+msgid "First name      "
+msgstr "Křestní jméno   "
+
+msgid "Company         "
+msgstr "Firma           "
+
+msgid "Job title       "
+msgstr "Funkce          "
+
+msgid "Street address  "
+msgstr "Adresa          "
+
+msgid "City            "
+msgstr "Město           "
+
+msgid "State           "
+msgstr "Stát            "
+
+msgid "Zip code        "
+msgstr "PSČ             "
+
+msgid "Country         "
+msgstr "Země            "
+
+msgid "Custom text 1   "
+msgstr "Osobní info 1   "
+
+msgid "Custom text 2   "
+msgstr "Osobní info 2   "
+
+msgid "Custom text 3   "
+msgstr "Osobní info 2   "
+
+msgid "Custom text 4   "
+msgstr "Osobní info 4   "
+
+msgid "ERROR: unknown memory type (\"%s\")\n"
+msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
+
+msgid "Memory %s, Location %i\n"
+msgstr "Paměť %s, pozice %i\n"
+
+msgid "WARNING: you will have null names in entries. Upgrade firmware in phone to higher than 4.06\n"
+msgstr "VAROVÁNÍ: budete mít prázná jména v položkách. Aktualizujte si firmware na vyšší než 4.06\n"
+
+msgid "Entry is empty\n"
+msgstr "Záznam je prazdný\n"
+
+msgid "Search text too long, truncating to %d chars!\n"
+msgstr "Text pro vyhledávání je příliš dlouhý, zkracuji na %d znaků!\n"
+
+msgid "SMS status report\n"
+msgstr "Informace o stavu SMS\n"
+
+msgid "Sent"
+msgstr "Odesláno"
+
+msgid "Read"
+msgstr "Přečteno"
+
+msgid "UnRead"
+msgstr "Nepřečteno"
+
+msgid "UnSent"
+msgstr "Neodesláno"
+
+msgid "Sent            : %s\n"
+msgstr "Odesláno        : %s\n"
+
+msgid "SMSC number     : \"%s\"\n"
+msgstr "Středisko zpráv : \"%s\"\n"
+
+msgid "SMSC response   : %s\n"
+msgstr "Odpověd SMSC    : %s\n"
+
+msgid "Delivery status : %s\n"
+msgstr "Stav doručení   : %s\n"
+
+msgid "Details         : "
+msgstr "Detaily         : "
+
+msgid "Temporary error, "
+msgstr "Dočasná chyba, "
+
+msgid "Permanent error, "
+msgstr "Trvalá chyba, "
+
+msgid "\nResponse:"
+msgstr "\nOdpověď:"
+
+msgid "   Number     : %s\n"
+msgstr "   Číslo      : %\n"
+
+msgid "   Manufacturer  : %s\n"
+msgstr "   Výrobce       : %s\n"
+
+msgid "Usage: gammu [confign] [nothing|text|textall|binary|errors] [options]\n\n"
+msgstr "Použití: gammu [číslokonf] [nothing|text|textall|binary|rrors] [parametry]\n\n"
+
+msgid "Unknown help topic specified!\n"
+msgstr "Zadáno neznámé téma nápovědy!\n"
+
+msgid "Gammu parameters, topic: %s\n\n"
+msgstr "Parametry Gammu, téma: %s\n\n"
+
+msgid "Too few parameters!\n"
+msgstr "Příliš málo parametrů!\n"
+
+msgid "ERROR: version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
+msgstr "CHYBA: verze instalované libGammu.so (%s) se liší od verze Gammu (%s)\n"

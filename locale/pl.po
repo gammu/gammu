@@ -1,0 +1,218 @@
+
+# Gammu translation.
+# Copyright (C) 2003 - 2007 Michal Čihař
+# This file is distributed under the same license as the Gammu package.
+# Michal Čihař <michal@cihar.com>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"POT-Creation-Date: 2007-03-20 09:12+0100\n"
+"PO-Revision-Date: 2007-03-20 09:13+0100\n"
+"Last-Translator: \n"
+"Language-Team: Language =pl\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "No error."
+msgstr "Nie ma błędu."
+
+msgid "Error opening device. Unknown/busy or no permissions."
+msgstr "Błąd podczas otwierania urządzenia. Nieznane/zajęte lub brak uprawnień."
+
+msgid "Error setting device speed. Maybe speed not supported."
+msgstr "Błąd ustawienia szybkości urządzenia. Prawdopodobnie prędkość nieobsługiwana."
+
+msgid "Error writing device."
+msgstr "Błąd zapisu do urządzenia."
+
+msgid "Function not supported by phone."
+msgstr "Funkcja nie obsługiwana przez telefon."
+
+msgid "Entry is empty."
+msgstr "Pozycja jest pusta."
+
+msgid "Unknown error."
+msgstr "Nieznany błąd."
+
+msgid "Memory full."
+msgstr "Pamięć pełna."
+
+msgid "More memory required..."
+msgstr "Potrzebne więcej pamięci..."
+
+msgid "Family"
+msgstr "Rodzina"
+
+msgid "Friends"
+msgstr "Przyjaciele"
+
+msgid "Other"
+msgstr "Inni"
+
+msgid "Inbox"
+msgstr "Skrzynka odbiorcza"
+
+msgid "Outbox"
+msgstr "Skrzynka nadawcza"
+
+msgid "My style"
+msgstr "Mój styl"
+
+msgid "Error during reading device."
+msgstr "Błąd podczas odczytu urządzenia."
+
+msgid "Error opening device. Device locked."
+msgstr "Błąd podczas otwierania urządzenia. Urządzenie zablokowane."
+
+msgid "Error opening device. Doesn't exist."
+msgstr "Błąd podczas otwierania urządzenia. Urządzenie nie istnieje."
+
+msgid "Error opening device. Already opened by other application."
+msgstr "Błąd podczas otwierania urządzenia. Urządzenie otwarte przez inną aplikację."
+
+msgid "Error opening device. No permissions."
+msgstr "Błąd podczas otwierania urządzenia. Brak uprawnień."
+
+msgid "Error opening device. No required driver in operating system."
+msgstr "Błąd podczas otwierania urządzenia. Brak wymaganego sterownika w systemie."
+
+msgid "Error opening device. Some hardware not connected/wrong configured."
+msgstr "Błąd podczas otwierania urządzenia. Jakiś sprzęt nie podłączony/źle skonfigurowany."
+
+msgid "File with specified name doesn't exist."
+msgstr "Plik o określonej nazwie nie istnieje."
+
+msgid "Monday"
+msgstr "Poniedziałek"
+
+msgid "Tuesday"
+msgstr "Wtorek"
+
+msgid "Wednesday"
+msgstr "Środa"
+
+msgid "Thursday"
+msgstr "Czwartek"
+
+msgid "Friday"
+msgstr "Piątek"
+
+msgid "Saturday"
+msgstr "Sobota"
+
+msgid "Sunday"
+msgstr "Niedziela"
+
+msgid "Bad day!"
+msgstr "Nieprawidłowy dzień!"
+
+msgid "Date format is "
+msgstr "Format daty: "
+
+msgid "DD MM YYYY"
+msgstr "DD MM RRRR"
+
+msgid "MM DD YYYY"
+msgstr "MM DD RRRR"
+
+msgid "YYYY MM DD"
+msgstr "RRRR MM DD"
+
+msgid "DD MMM YY"
+msgstr "DD MMM RR"
+
+msgid "MM DD YY"
+msgstr "MM DD RR"
+
+msgid "DD MM YY"
+msgstr "DD MM RR"
+
+msgid "YY MM DD"
+msgstr "RR MM DD"
+
+msgid ", date separator is %c\n"
+msgstr ", separator daty: %c\n"
+
+msgid "Time: %02d:%02d\n"
+msgstr "Czas: %02d:%02d\n"
+
+msgid "ERROR: unknown memory type (\"%s\")\n"
+msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
+
+msgid "If you want break, press Ctrl+C...\n"
+msgstr "Jeśli chcesz przerwać, wciśnij Ctrl+C...\n"
+
+msgid "No vendor info in JAD file\n"
+msgstr "Brak informacji o producencie w pliku JAD\n"
+
+msgid "No name info in JAD file\n"
+msgstr "Brak informacji o nazwie w pliku JAD\n"
+
+msgid "No JAR URL info in JAD file\n"
+msgstr "Brak informacji JAR URL w pliku JAD\n"
+
+msgid "INFO: declared JAR file size is different than real. Fixed by Gammu\n"
+msgstr "INFO: zadeklarowany rozmiar pliku JAR jest inny niż rzeczywisty. Popraione przez Gammu\n"
+
+msgid "INFO: no JAR size info in JAD file. Added by Gammu\n"
+msgstr "INFO: brak informacji o rozmiarze pliku JAR w pliku JAD. Dodana przez Gammu\n"
+
+msgid "Adding \"%s\""
+msgstr "Dodaję \"%s\""
+
+msgid " version %s"
+msgstr " wersja %s"
+
+msgid " created by %s\n"
+msgstr " utworzone przez %s\n"
+
+msgid "INFO: Application already exist. Deleting by Gammu\n"
+msgstr "INFO: Aplikacja już istnieje. Usuwanie przez Gammu\n"
+
+msgid "  Deleting %s\n"
+msgstr "  Usuwam %s\n"
+
+msgid "   Number     : %s\n"
+msgstr "   Numer      : %s\n"
+
+msgid "   Manufacturer  : %s\n"
+msgstr "   Producent     : %s\n"
+
+msgid "[Gammu version %s built %s %s]\n\n"
+msgstr "[Wersja Gammu %s zbudowana %s %s]\n\n"
+
+msgid "Usage: gammu [confign] [nothing|text|textall|binary|errors] [options]\n\n"
+msgstr "Użycie: gammu [confign] [nothing|text|textall|binary|errors] [options]\n\n"
+
+msgid "First parameter optionally specifies which config section to use (all are probed by default).\n"
+msgstr "Pierwszy parametr opcjonalnie określa której sekcji konfiguracyjnej użyć (domyślnie wszystkie są sprawdzane).\n"
+
+msgid "Second parameter optionally controls debug level, next one specifies actions.\n\n"
+msgstr "Drugi parametr opcjonalnie kontroluje poziom debugowania, następny określa akcje.\n\n"
+
+msgid "For more details, call help on specific topic (gammu --help topic). Topics are:\n\n"
+msgstr "By uzyskać więcej informacji przeczytaj pomoc na określony temat (gammu --help temat). Tematy:\n\n"
+
+msgid "Unknown help topic specified!\n"
+msgstr "Podano nieznany temat pomocy!\n"
+
+msgid "Gammu parameters, topic: %s\n\n"
+msgstr "Parametry Gammu, temat: %s\n\n"
+
+msgid "Too few parameters!\n"
+msgstr "Za mało parametrów!\n"
+
+msgid "Warning: No configuration file found!\n"
+msgstr "Ostrzeżenie: Nie znaleziono pliku konfiguracji!\n"
+
+msgid "ERROR: version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
+msgstr "BŁĄD: wersja zainstalowanej biblioteki libGammu.so (%s) jest inna niż wersja Gammu (%s)\n"
+
+msgid "INFO: there is later stable Gammu (%s instead of %s) available !\n"
+msgstr "INFO: nowa wersja stabilna Gammu (%s zamiast %s) jest osiągalna !\n"
+
+msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
+msgstr "INFO: nowa wersja testowa Gammu (%s zamiast %s) jest osiągalna !\n"

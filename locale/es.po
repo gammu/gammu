@@ -1,0 +1,806 @@
+
+# Gammu translation.
+# Copyright (C) 2003 - 2007 Michal Čihař
+# This file is distributed under the same license as the Gammu package.
+# Michal Čihař <michal@cihar.com>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"POT-Creation-Date: 2007-03-20 09:12+0100\n"
+"PO-Revision-Date: 2007-03-20 09:13+0100\n"
+"Last-Translator: Ernesto Serrano\n"
+"Language-Team: Language =es\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "No error."
+msgstr "Sin error."
+
+msgid "Error opening device. Unknown/busy or no permissions."
+msgstr "Error abriendo dispositivo. Desconocido/ocupado o sin permisos."
+
+msgid "Error setting device DTR or RTS."
+msgstr "Error estableciendo dispositivo DTR o RTS."
+
+msgid "Error setting device speed. Maybe speed not supported."
+msgstr "Error estableciendo velocidad del dispositivo. Maybe velocidad no soportada."
+
+msgid "Error writing device."
+msgstr "Error escribiendo en el dispositivo."
+
+msgid "No response in specified timeout. Probably phone not connected."
+msgstr "No se recibió respuesta en el tiempo especificado. Probablemente el teléfono no está conectado."
+
+msgid "Unknown response from phone. See readme.txt, how to report it."
+msgstr "El teléfono devolvió una respuesta desconocida. Vea el archivo readme.txt para conocer cómo indicarnos el error."
+
+msgid "Unknown connection type string. Check config file."
+msgstr "Cadena de conexión desconocida. Verifice el archivo de configuración."
+
+msgid "Unknown model type string. Check config file."
+msgstr "Modelo desconocido. Verifique el archivo de configuración"
+
+msgid "Some functions not available for your OS (disabled in config or not written)."
+msgstr "Algunas funciones no están disponibles para tu SO (desactivadas en la configuración o no escritas)."
+
+msgid "Function not supported by phone."
+msgstr "Función no soportada por el teléfono."
+
+msgid "Entry is empty."
+msgstr "La entrada está vacía."
+
+msgid "Unknown error."
+msgstr "Error desconocido."
+
+msgid "Security error. Maybe no PIN ?"
+msgstr "Error de seguridad. Maybe no PIN ?"
+
+msgid "Invalid location. Maybe too high ?"
+msgstr "Destino inválido. Maybe too high ?"
+
+msgid "Function not implemented. Help required."
+msgstr "Función no implementada. Ayudanos a implementarla."
+
+msgid "Can't open specified file. Read only ?"
+msgstr "No se puede abrir el archivo especificado. ¿Sólo lectura?"
+
+msgid "Memory full."
+msgstr "Memoria llena."
+
+msgid "More memory required..."
+msgstr "Mas memoria requerida..."
+
+msgid "Permission to file/device required..."
+msgstr "Se necesitan más permisos para archivo/dispositivo..."
+
+msgid "Family"
+msgstr "Familia"
+
+msgid "Friends"
+msgstr "Amigos"
+
+msgid "Other"
+msgstr "Otros"
+
+msgid "Inbox"
+msgstr "Bandeja de entrada"
+
+msgid "Outbox"
+msgstr "Bandeja de salida"
+
+msgid "Empty SMSC number. Set in phone or use -smscnumber."
+msgstr "Numero SMSC vacío. Establezcalo en el teléfono o use -smscnumber."
+
+msgid "Car"
+msgstr "Coche"
+
+msgid "Silent"
+msgstr "Silencio"
+
+msgid "My style"
+msgstr "Mis estilos"
+
+msgid "Error during reading device."
+msgstr "Error mientras se leía el dispositivo."
+
+msgid "Can't set parity on device."
+msgstr "Imposible establecer la paridad en el dispositivo."
+
+msgid "Phone is disabled and connected to charger."
+msgstr "El teléfono está desactivado y conectado al cargador."
+
+msgid "File format not supported by Gammu."
+msgstr "Formato de archivo no soportado por Gammu."
+
+msgid "Nobody is perfect, some bug appeared in protocol implementation. Please contact authors."
+msgstr "Nadie es perfecto, hay algunos bugs en la implementación del protocolo. Por favor, contacte con los autores."
+
+msgid "Transfer was canceled by phone (you pressed cancel on phone?)"
+msgstr "La transferencia fue cancelada por el teléfono (¿Apretaste la tecla Cancel en el teléfono?)"
+
+msgid "CRC error."
+msgstr "Error de CRC."
+
+msgid "Invalid date or time specified."
+msgstr "La hora o fecha especificada no es válida."
+
+msgid "Phone memory error, maybe it is read only."
+msgstr "Error en la memoria del teléfono, maybe es sólo lectura."
+
+msgid "Reminder (Date)\n"
+msgstr "Recordatorio (Fecha)\n"
+
+msgid "Call\n"
+msgstr "Llamada\n"
+
+msgid "Birthday (Anniversary)\n"
+msgstr "Cumpleaños (Aniversario)\n"
+
+msgid "Memo (Miscellaneous)\n"
+msgstr "Memo (Miscelánea)\n"
+
+msgid "Travel\n"
+msgstr "Viaje\n"
+
+msgid "Vacation\n"
+msgstr "Vacaciones\n"
+
+msgid "Alarm\n"
+msgstr "Alarma\n"
+
+msgid "Daily alarm\n"
+msgstr "Alarma diaria\n"
+
+msgid "Training/Athletism\n"
+msgstr "Entrenamiento/Atletismo\n"
+
+msgid "Training/Ball Games\n"
+msgstr "Entrenamiento/Juegos de pelota\n"
+
+msgid "Training/Cycling\n"
+msgstr "Entrenamiento/Ciclismo\n"
+
+msgid "Training/Budo\n"
+msgstr "Entrenamiento/Budo\n"
+
+msgid "Training/Dance\n"
+msgstr "Entrenamiento/Baile\n"
+
+msgid "Training/Extreme Sports\n"
+msgstr "Entrenamiento/Deportes de riesgo\n"
+
+msgid "Training/Football\n"
+msgstr "Entrenamiento/Fútbol\n"
+
+msgid "Training/Golf\n"
+msgstr "Entrenamiento/Golf\n"
+
+msgid "Training/Gym\n"
+msgstr "Entrenamiento/Gimnasia\n"
+
+msgid "Training/Horse Races\n"
+msgstr "Entrenamiento/Carreas de caballos\n"
+
+msgid "Training/Hockey\n"
+msgstr "Entrenamiento/Hockey\n"
+
+msgid "Training/Races\n"
+msgstr "Entrenamiento/Carreras\n"
+
+msgid "Training/Rugby\n"
+msgstr "Entrenamiento/Rugby\n"
+
+msgid "Training/Sailing\n"
+msgstr "Entrenamiento/Sailing\n"
+
+msgid "Training/Street Games\n"
+msgstr "Entrenamiento/Juegos callejeros\n"
+
+msgid "Training/Swimming\n"
+msgstr "Entrenamiento/Natación\n"
+
+msgid "Training/Tennis\n"
+msgstr "Entrenamiento/Tenis\n"
+
+msgid "Training/Travels\n"
+msgstr "Entrenamiento/Viajes\n"
+
+msgid "Training/Winter Games\n"
+msgstr "Entrenamiento/Juegos de invierno\n"
+
+msgid "UNKNOWN\n"
+msgstr "DESCONOCIDO\n"
+
+msgid "January"
+msgstr "Enero"
+
+msgid "February"
+msgstr "Febrero"
+
+msgid "March"
+msgstr "Marzo"
+
+msgid "April"
+msgstr "Abril"
+
+msgid "May"
+msgstr "Mayo"
+
+msgid "June"
+msgstr "Junio"
+
+msgid "July"
+msgstr "Julio"
+
+msgid "August"
+msgstr "Agosto"
+
+msgid "September"
+msgstr "Septiembre"
+
+msgid "October"
+msgstr "Octubre"
+
+msgid "November"
+msgstr "Noviembre"
+
+msgid "December"
+msgstr "Diciembre"
+
+msgid "Bad month!"
+msgstr "Mes incorrecto!"
+
+msgid "each month"
+msgstr "cada mes"
+
+msgid "%d. day of "
+msgstr "%d. dia de "
+
+msgid "day"
+msgstr "dia"
+
+msgid "Age          : %d %s\n"
+msgstr "Edad          : %d %s\n"
+
+msgid "Original IMEI : %s\n"
+msgstr "IMEI original : %s\n"
+
+msgid "Manufactured  : %s\n"
+msgstr "Fabricado     : %s\n"
+
+msgid "Product code  : %s\n"
+msgstr "Producto code : %s\n"
+
+msgid "Date and time not set in phone\n"
+msgstr "Fecha y hora no establecidas en el teléfono\n"
+
+msgid "Phone time is %s\n"
+msgstr "Hora del teléfono es %s\n"
+
+msgid "Time format is "
+msgstr "El formato de hora es "
+
+msgid "12 hours\n"
+msgstr "12 horas\n"
+
+msgid "Date format is "
+msgstr "El formato de fecha es "
+
+msgid ", date separator is %c\n"
+msgstr ", separator de fecha es %c\n"
+
+msgid "Alarm not set in phone\n"
+msgstr "Alarma no establecida en el teléfono\n"
+
+msgid "Date: %s\n"
+msgstr "Fecha: %s\n"
+
+msgid "Time: %02d:%02d\n"
+msgstr "Hora: %02d:%02d\n"
+
+msgid "Text: \"%s\"\n"
+msgstr "Texto: \"%s\"\n"
+
+msgid "Category         : \"%s\"\n"
+msgstr "Categoría        : \"%s\"\n"
+
+msgid "Category         : \"%s\" (%i)\n"
+msgstr "Categoría        : \"%s\" (%i)\n"
+
+msgid "Category         : %i\n"
+msgstr "Categoría        : %i\n"
+
+msgid "Private          : %s\n"
+msgstr "Privado          : %s\n"
+
+msgid "Caller group     : \"%s\"\n"
+msgstr "Grupo de llamada : \"%s\"\n"
+
+msgid "Ringtone         : \"%s\"\n"
+msgstr "Tono             : \"%s\"\n"
+
+msgid "Ringtone ID      : %i\n"
+msgstr "ID Tono          : %i\n"
+
+msgid "User ID          : %s\n"
+msgstr "ID Usuario       : %s\n"
+
+msgid "Picture ID       : 0x%x\n"
+msgstr "ID Imagen        : 0x%x\n"
+
+msgid "General number  "
+msgstr "General         "
+
+msgid "Mobile number   "
+msgstr "Móvil           "
+
+msgid "Work number     "
+msgstr "Trabajo         "
+
+msgid "Fax number      "
+msgstr "Fax             "
+
+msgid "Other number    "
+msgstr "Otro            "
+
+msgid "Text            "
+msgstr "Texto           "
+
+msgid "Snail address   "
+msgstr "Dirección       "
+
+msgid "Email address 1 "
+msgstr "Email 1         "
+
+msgid "Email address 2 "
+msgstr "Email 2         "
+
+msgid "URL address     "
+msgstr "Página web      "
+
+msgid "Name            "
+msgstr "Nombre          "
+
+msgid "Last name       "
+msgstr "2º Apellido     "
+
+msgid "First name      "
+msgstr "1er Apellido    "
+
+msgid "Company         "
+msgstr "Compañía        "
+
+msgid "Job title       "
+msgstr "Profesión       "
+
+msgid "Street address  "
+msgstr "Calle           "
+
+msgid "City            "
+msgstr "Ciudad          "
+
+msgid "State           "
+msgstr "Estado          "
+
+msgid "Zip code        "
+msgstr "Código postal   "
+
+msgid "Country         "
+msgstr "País            "
+
+msgid "Custom text 1   "
+msgstr "Personalizado 1 "
+
+msgid "Custom text 2   "
+msgstr "Personalizado 2 "
+
+msgid "Custom text 3   "
+msgstr "Personalizado 3 "
+
+msgid "Custom text 4   "
+msgstr "Personalizado 4 "
+
+msgid "ERROR: unknown memory type (\"%s\")\n"
+msgstr "ERROR: tipo de memoria desconocido (\"%s\")\n"
+
+msgid "Memory %s, Location %i\n"
+msgstr "Memoria %s, Location %i\n"
+
+msgid "ERROR: unknown parameter \"%s\"\n"
+msgstr "ERROR: parámetro desconocido \"%s\"\n"
+
+msgid "WARNING: you will have null names in entries. Upgrade firmware in phone to higher than 4.06\n"
+msgstr "ADVERTENCIA: you will have null names in entries. Upgrade firmware in phone to higher than 4.06\n"
+
+msgid "SMS status report\n"
+msgstr "Informe de estado de SMS\n"
+
+msgid "Status          : "
+msgstr "Estado          : "
+
+msgid "Sent"
+msgstr "Enviados"
+
+msgid "Read"
+msgstr "Leídos"
+
+msgid "UnRead"
+msgstr "No leídos"
+
+msgid "UnSent"
+msgstr "No enviados"
+
+msgid "Sent            : %s\n"
+msgstr "Enviado         : %s\n"
+
+msgid "Details         : "
+msgstr "Detalles        : "
+
+msgid "Congestion"
+msgstr "Congestión"
+
+msgid "Name             : \"%s\"\n"
+msgstr "Nombre           : \"%s\"\n"
+
+msgid "Status           : "
+msgstr "Estado	        : "
+
+msgid "Sent\n"
+msgstr "Enviado\n"
+
+msgid "Read\n"
+msgstr "Leído\n"
+
+msgid "UnRead\n"
+msgstr "No leído\n"
+
+msgid "UnSent\n"
+msgstr "No enviado\n"
+
+msgid "Concatenated (linked) message"
+msgstr "Mensaje concatenado (enlazado)"
+
+msgid "Battery level     : %i percent\n"
+msgstr "Nivel de batería  : %i percent\n"
+
+msgid "Charge state      : "
+msgstr "Estado de carga   : "
+
+msgid "Format         : "
+msgstr "Formato        : "
+
+msgid "Text"
+msgstr "Texto"
+
+msgid "Validity       : "
+msgstr "Validez        : "
+
+msgid "1 hour"
+msgstr "1 hora"
+
+msgid "6 hours"
+msgstr "6 horas"
+
+msgid "24 hours"
+msgstr "24 horas"
+
+msgid "72 hours"
+msgstr "72 horas"
+
+msgid "1 week"
+msgstr "1 semana"
+
+msgid "Maximum time"
+msgstr "Tiempo máximo"
+
+msgid "Unknown parameter (\"%s\")\n"
+msgstr "Parámetro desconocido (\"%s\")\n"
+
+msgid "What type of reset do you want (\"%s\") ?\n"
+msgstr "¿Qué tipo de reseteo quieres (\"%s\") ?\n"
+
+msgid "Auto deleting disabled"
+msgstr "Auto borrado desactivado"
+
+msgid "Auto deleting notes after %i day(s)"
+msgstr "Auto borrado de notas después de %i dia(s)"
+
+msgid "\nWeek start on "
+msgstr "\nLa semana empieza en "
+
+msgid "Name    : \"%s\"\n"
+msgstr "Nombre    : \"%s\"\n"
+
+msgid "Address : \"%s\"\n"
+msgstr "Dirección : \"%s\"\n"
+
+msgid "%i. Access point %i"
+msgstr "%i. Punto de aceso %i"
+
+msgid " (active)"
+msgstr " (activo)"
+
+msgid "\nAddress : \"%s\"\n\n"
+msgstr "\nDirección : \"%s\"\n\n"
+
+msgid "Text   : \"%s\"\n"
+msgstr "Texto   : \"%s\"\n"
+
+msgid "Name   : \"%s\"\n"
+msgstr "Nombre   : \"%s\"\n"
+
+msgid "Unknown parameter \"%s\""
+msgstr "Parámetro desconocido \"%s\""
+
+msgid "..OK"
+msgstr "..Correcto"
+
+msgid "Warning: 0 chars read !\n"
+msgstr "Advertencia: 0 carácteres leidos !\n"
+
+msgid "Phone           : %s\n"
+msgstr "Teléfono        : %s\n"
+
+msgid "IP address          : \"%s\"\n"
+msgstr "Dirección IP        : \"%s\"\n"
+
+msgid "Login Type          : Manual\n"
+msgstr "Tipo de login       : Manual\n"
+
+msgid "Login Type          : Automatic\n"
+msgstr "Tipo de login       : Automatic\n"
+
+msgid "Authentication type : Normal\n"
+msgstr "Tipo de autentic.   : Normal\n"
+
+msgid "Authentication type : Secure\n"
+msgstr "Tipo de autentic.   : Secure\n"
+
+msgid "User name           : \"%s\"\n"
+msgstr "Nombre de usuario   : \"%s\"\n"
+
+msgid "Password            : \"%s\"\n"
+msgstr "Contraseña          : \"%s\"\n"
+
+msgid "\nService code        : \"%s\"\n"
+msgstr "\nCódigo de servicio: \"%s\"\n"
+
+msgid "Address type        : IP address\nIPaddress           : \"%s\"\n"
+msgstr "Tipo de dirección   : IP address\nIPaddress           : \"%s\"\n"
+
+msgid "Address type        : Service number\nService number      : \"%s\"\n"
+msgstr "Tipo de dirección   : Service number\nService number      : \"%s\"\n"
+
+msgid "Access point        : \"%s\"\n"
+msgstr "Punto de acceso     : \"%s\"\n"
+
+msgid "Set %i"
+msgstr "Establecer %i"
+
+msgid "\nRead only           : yes"
+msgstr "\nSólo lectura       : yes"
+
+msgid "User                : \"%s\"\n"
+msgstr "Usuario             : \"%s\"\n"
+
+msgid "Phonebook database  : \"%s\"\n"
+msgstr "Agenda BBDD         : \"%s\"\n"
+
+msgid "Calendar database   : \"%s\"\n"
+msgstr "Calendario BBDD     : \"%s\"\n"
+
+msgid "Server              : \"%s\"\n"
+msgstr "Servidor            : \"%s\"\n"
+
+msgid "Sync. phonebook     : "
+msgstr "Sinc. agenda        : "
+
+msgid "yes\n"
+msgstr "si\n"
+
+msgid "Sync. calendar      : "
+msgstr "Sinc. calendario    : "
+
+msgid "Homepage            : \"%s\"\n"
+msgstr "Inicio              : \"%s\"\n"
+
+msgid "\nHomepage            : \"%s\"\n"
+msgstr "\nInicio            : \"%s\"\n"
+
+msgid "%cDeleting: %i percent"
+msgstr "%cBorrado: %i porciento"
+
+msgid "Startup logo"
+msgstr "Logo de inicio"
+
+msgid "Operator logo"
+msgstr "Logo de operador"
+
+msgid "Level 1\n"
+msgstr "Nivel 1\n"
+
+msgid "Level 2\n"
+msgstr "Nivel 2\n"
+
+msgid "Level 3\n"
+msgstr "Nivel 3\n"
+
+msgid "Level 4\n"
+msgstr "Nivel 4\n"
+
+msgid "Level 5\n"
+msgstr "Nivel 5\n"
+
+msgid "Off\n"
+msgstr "Silencio\n"
+
+msgid "Ringing\n"
+msgstr "Muy alto\n"
+
+msgid "Beep once\n"
+msgstr "Un bip\n"
+
+msgid "Ascending\n"
+msgstr "Ascendente\n"
+
+msgid "Standard\n"
+msgstr "Normal\n"
+
+msgid "Special\n"
+msgstr "Especial\n"
+
+msgid "Vibrate first\n"
+msgstr "Vibrador primero\n"
+
+msgid "5 seconds\n"
+msgstr "5 segundos\n"
+
+msgid "20 seconds\n"
+msgstr "20 segundos\n"
+
+msgid "1 minute\n"
+msgstr "1 minuto\n"
+
+msgid "2 minutes\n"
+msgstr "2 minutos\n"
+
+msgid "5 minutes\n"
+msgstr "5 minutos\n"
+
+msgid "10 minutes\n"
+msgstr "10 minutos\n"
+
+msgid " Name \"%s\","
+msgstr " Nombre \"%s\","
+
+msgid " Number \"%s\""
+msgstr " Número \"%s\""
+
+msgid "Deleting SMS from \"%s\" folder: "
+msgstr "Borrando SMS de la carpeta \"%s\": "
+
+msgid "Unread SMS\n"
+msgstr "SMS No leídos\n"
+
+msgid "Voice call\n"
+msgstr "Llamada de voz\n"
+
+msgid "Fax call\n"
+msgstr "Llamada de fax\n"
+
+msgid "Data call\n"
+msgstr "Llamada de datos\n"
+
+msgid "Keypad locked\n"
+msgstr "Teclado bloqueado\n"
+
+msgid "SMS memory full\n"
+msgstr "Memoria SMS llena\n"
+
+msgid "Networks for %s:\n\n"
+msgstr "Redes para %s:\n\n"
+
+msgid "Unknown country name."
+msgstr "Nombre de país desconocido."
+
+msgid "Network  Name\n"
+msgstr "Nombre de red\n"
+
+msgid "[Gammu version %s built %s %s"
+msgstr "[Versión de Gammu %s compilación %s %s"
+
+msgid " in %s"
+msgstr " en %s"
+
+msgid "Entry number %i is empty\n"
+msgstr "La entrada número %i está vacía\n"
+
+msgid "it's folder. Please give only file names\n"
+msgstr "es un directorio. Por favor, indique solamente nombres de fichero\n"
+
+msgid "%c  %i percent"
+msgstr "%c  %i porciento"
+
+msgid " (%02i:%02i minutes left)"
+msgstr " (%02i:%02i minutos quedan)"
+
+msgid "WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n"
+msgstr "ADVERTENCIA: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n"
+
+msgid "  Saving to %s\n"
+msgstr "  Guardando en %s\n"
+
+msgid "%c%s%03i percent"
+msgstr "%c%s%03i porcentaje"
+
+msgid "Adding \"%s\""
+msgstr "Añadiendo \"%s\""
+
+msgid " version %s"
+msgstr " versión %s"
+
+msgid " created by %s\n"
+msgstr " creado por %s\n"
+
+msgid "Unknown call type (\"%s\")\n"
+msgstr "Tipo de llamada desconocido (\"%s\")\n"
+
+msgid "Changed:\n   Divert type: "
+msgstr "Cambiado:\n   Divert type: "
+
+msgid "when busy"
+msgstr "cuando ocupado"
+
+msgid "when not answered"
+msgstr "cuando no contesta"
+
+msgid "when phone off or no coverage"
+msgstr "cuando el teléfono está desconectado o sin cobertura"
+
+msgid "unknown %i"
+msgstr "desconocido %i"
+
+msgid "\n   Calls type : "
+msgstr "\n   Tipo de llamadas: "
+
+msgid "voice"
+msgstr "voz"
+
+msgid "data"
+msgstr "datos"
+
+msgid "data & fax & voice"
+msgstr "datos & fax & voz"
+
+msgid "\nResponse:"
+msgstr "\nRespuesta:"
+
+msgid "   Number     : %s\n"
+msgstr "   Número     : %s\n"
+
+msgid "   Manufacturer  : %s\n"
+msgstr "   Fabricante  : %s\n"
+
+msgid "   Model         : %s (%s)\n"
+msgstr "   Modelo         : %s (%s)\n"
+
+msgid "For more details, call help on specific topic (gammu --help topic). Topics are:\n\n"
+msgstr "Para mas detalles, llame a una entrada específica de la ayuda (gammu --help entrada). Las entrada  are:\n\n"
+
+msgid "Unknown help topic specified!\n"
+msgstr "Entrada de la ayuda desconocida!\n"
+
+msgid "Gammu parameters, topic: %s\n\n"
+msgstr "Parámetros de Gammu, entrada: %s\n\n"
+
+msgid "Too few parameters!\n"
+msgstr "Demasiados parámetros!\n"
+
+msgid "Warning: No configuration file found!\n"
+msgstr "Advertencia: No se encontró el archivo de configuración!\n"
+
+msgid "ERROR: version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
+msgstr "ERROR: la versión instalada de libGammu.so (%s) es diferente a la version de Gammu (%s)\n"
