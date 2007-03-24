@@ -9484,7 +9484,7 @@ static void Foo(int argc, char *argv[])
 }
 #endif
 
-char CheckParameters(char start, int argc, char *argv[]);
+char ProcessParameters(char start, int argc, char *argv[]);
 
 /**
  * Reads commands from file (argv[2]) or stdin and executes them
@@ -9544,7 +9544,7 @@ static void RunBatch(int argc, char *argv[]) {
 				/* we have some usable command and parameters, send them into standard processing */
 				printf(_("----------------------------------------------------------------------------\n"));
 				printf(_("Executing batch \"%s\" - command %i: %s"), name, ++c, ln);
-				CheckParameters(0, argsc + 1, argsv);
+				ProcessParameters(0, argsc + 1, argsv);
 				/* FIXME: handle return value somehow ... */
 				for (i = 1; i <= argsc; i++) {
 					free(argsv[i]);
@@ -9562,51 +9562,51 @@ static void RunBatch(int argc, char *argv[]) {
 
 static GSM_Parameters Parameters[] = {
 #ifdef DEBUG
-	{"--foo",			0, 0, Foo,			{0},				""},
+	{"foo",			0, 0, Foo,			{0},				""},
 #endif
-	{"--identify",			0, 0, Identify,			{H_Info,0},			""},
-	{"--version",			0, 0, Version,			{H_Other,0},			""},
-	{"--getdisplaystatus",		0, 0, GetDisplayStatus,		{H_Info,0},			""},
-	{"--monitor",			0, 1, Monitor,			{H_Info,H_Network,H_Call,0},	"[times]"},
-	{"--setautonetworklogin",	0, 0, SetAutoNetworkLogin,	{H_Network,0},			""},
-	{"--listnetworks",		0, 1, ListNetworks,		{H_Network,0},			"[country]"},
-	{"--getgprspoint",		1, 2, GetGPRSPoint,		{H_Network,0},			"start [stop]"},
-	{"--getfilesystemstatus",	0, 0, GetFileSystemStatus,	{H_Filesystem,0},		""},
-	{"--getfilesystem",		0, 1, GetFileSystem,		{H_Filesystem,0},		"[-flatall|-flat]"},
-	{"--getfilefolder",		1,40, GetFileFolder,		{H_Filesystem,0},		"ID1, ID2, ..."},
-	{"--addfolder",			2, 2, AddFolder,		{H_Filesystem,0},		"parentfolderID name"},
-	{"--deletefolder",		1, 1, DeleteFolder,		{H_Filesystem,0},		"name"},
-	{"--getfolderlisting",		1, 1, GetFolderListing,		{H_Filesystem,0},		"folderID"},
-	{"--getrootfolders",		0, 0, GetRootFolders,		{H_Filesystem,0},		""},
-	{"--setfileattrib",		1, 5, SetFileAttrib,		{H_Filesystem,0},		"folderID [-system] [-readonly] [-hidden] [-protected]"},
-	{"--getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
-	{"--addfile",			2, 6, AddSendFile,		{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
-	{"--sendfile",			1, 1, AddSendFile,		{H_Filesystem,0},		"name"},
-	{"--deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
+	{"identify",			0, 0, Identify,			{H_Info,0},			""},
+	{"version",			0, 0, Version,			{H_Other,0},			""},
+	{"getdisplaystatus",		0, 0, GetDisplayStatus,		{H_Info,0},			""},
+	{"monitor",			0, 1, Monitor,			{H_Info,H_Network,H_Call,0},	"[times]"},
+	{"setautonetworklogin",	0, 0, SetAutoNetworkLogin,	{H_Network,0},			""},
+	{"listnetworks",		0, 1, ListNetworks,		{H_Network,0},			"[country]"},
+	{"getgprspoint",		1, 2, GetGPRSPoint,		{H_Network,0},			"start [stop]"},
+	{"getfilesystemstatus",	0, 0, GetFileSystemStatus,	{H_Filesystem,0},		""},
+	{"getfilesystem",		0, 1, GetFileSystem,		{H_Filesystem,0},		"[-flatall|-flat]"},
+	{"getfilefolder",		1,40, GetFileFolder,		{H_Filesystem,0},		"ID1, ID2, ..."},
+	{"addfolder",			2, 2, AddFolder,		{H_Filesystem,0},		"parentfolderID name"},
+	{"deletefolder",		1, 1, DeleteFolder,		{H_Filesystem,0},		"name"},
+	{"getfolderlisting",		1, 1, GetFolderListing,		{H_Filesystem,0},		"folderID"},
+	{"getrootfolders",		0, 0, GetRootFolders,		{H_Filesystem,0},		""},
+	{"setfileattrib",		1, 5, SetFileAttrib,		{H_Filesystem,0},		"folderID [-system] [-readonly] [-hidden] [-protected]"},
+	{"getfiles",			1,40, GetFiles,			{H_Filesystem,0},		"ID1, ID2, ..."},
+	{"addfile",			2, 6, AddSendFile,		{H_Filesystem,0},		"folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"},
+	{"sendfile",			1, 1, AddSendFile,		{H_Filesystem,0},		"name"},
+	{"deletefiles",		1,20, DeleteFiles,		{H_Filesystem,0},		"fileID"},
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
-	{"--nokiaaddplaylists",		0, 0, NokiaAddPlayLists,	{H_Filesystem,H_Nokia,0},	""},
-	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly][-overwrite]"},
-	{"--nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
-	{"--playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			"number"},
+	{"nokiaaddplaylists",		0, 0, NokiaAddPlayLists,	{H_Filesystem,H_Nokia,0},	""},
+	{"nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Application|Game file [-readonly][-overwrite]"},
+	{"nokiaaddfile",		2, 5, NokiaAddFile,		{H_Filesystem,H_Nokia,0},	"Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"},
+	{"playsavedringtone",		1, 1, DCT4PlaySavedRingtone, 	{H_Ringtone,0},			"number"},
 #endif
-	{"--playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
-	{"--getdatetime",		0, 0, GetDateTime,		{H_DateTime,0},			""},
-	{"--setdatetime",		0, 2, SetDateTime,		{H_DateTime,0},			"[HH:MM[:SS]] [YYYY/MM/DD]"},
-	{"--getalarm",			0, 1, GetAlarm,			{H_DateTime,0},			"[start]"},
-	{"--setalarm",			2, 2, SetAlarm,			{H_DateTime,0},			"hour minute"},
-	{"--resetphonesettings",	1, 1, ResetPhoneSettings,	{H_Settings,0},			"PHONE|DEV|UIF|ALL|FACTORY"},
-	{"--getmemory",			2, 4, GetMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL start [stop [-nonempty]]"},
-	{"--getallmemory",		1, 2, GetAllMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL"},
-	{"--searchmemory",		1, 1, SearchMemory,		{H_Memory,0},			"text"},
-	{"--listmemorycategory",	1, 1, ListMemoryCategory,	{H_Memory, H_Category,0},	"text|number"},
-	{"--getfmstation",		1, 2, GetFMStation,		{H_FM,0},			"start [stop]"},
-	{"--getsmsc",			1, 2, GetSMSC,			{H_SMS,0},			"start [stop]"},
-	{"--getsms",			2, 3, GetSMS,			{H_SMS,0},			"folder start [stop]"},
-	{"--deletesms",			2, 3, DeleteSMS,		{H_SMS,0},			"folder start [stop]"},
-	{"--deleteallsms",		1, 1, DeleteAllSMS,		{H_SMS,0},			"folder"},
-	{"--getsmsfolders",		0, 0, GetSMSFolders,		{H_SMS,0},			""},
-	{"--getallsms",			0, 1, GetAllSMS,		{H_SMS,0},			"-pbk"},
-	{"--geteachsms",		0, 1, GetEachSMS,		{H_SMS,0},			"-pbk"},
+	{"playringtone",		1, 1, PlayRingtone, 		{H_Ringtone,0},			"file"},
+	{"getdatetime",		0, 0, GetDateTime,		{H_DateTime,0},			""},
+	{"setdatetime",		0, 2, SetDateTime,		{H_DateTime,0},			"[HH:MM[:SS]] [YYYY/MM/DD]"},
+	{"getalarm",			0, 1, GetAlarm,			{H_DateTime,0},			"[start]"},
+	{"setalarm",			2, 2, SetAlarm,			{H_DateTime,0},			"hour minute"},
+	{"resetphonesettings",	1, 1, ResetPhoneSettings,	{H_Settings,0},			"PHONE|DEV|UIF|ALL|FACTORY"},
+	{"getmemory",			2, 4, GetMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL start [stop [-nonempty]]"},
+	{"getallmemory",		1, 2, GetAllMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL"},
+	{"searchmemory",		1, 1, SearchMemory,		{H_Memory,0},			"text"},
+	{"listmemorycategory",	1, 1, ListMemoryCategory,	{H_Memory, H_Category,0},	"text|number"},
+	{"getfmstation",		1, 2, GetFMStation,		{H_FM,0},			"start [stop]"},
+	{"getsmsc",			1, 2, GetSMSC,			{H_SMS,0},			"start [stop]"},
+	{"getsms",			2, 3, GetSMS,			{H_SMS,0},			"folder start [stop]"},
+	{"deletesms",			2, 3, DeleteSMS,		{H_SMS,0},			"folder start [stop]"},
+	{"deleteallsms",		1, 1, DeleteAllSMS,		{H_SMS,0},			"folder"},
+	{"getsmsfolders",		0, 0, GetSMSFolders,		{H_SMS,0},			""},
+	{"getallsms",			0, 1, GetAllSMS,		{H_SMS,0},			"-pbk"},
+	{"geteachsms",		0, 1, GetEachSMS,		{H_SMS,0},			"-pbk"},
 
 #define SMS_TEXT_OPTIONS	"[-inputunicode][-16bit][-flash][-len len][-autolen len][-unicode][-enablevoice][-disablevoice][-enablefax][-disablefax][-enableemail][-disableemail][-voidsms][-replacemessages ID][-replacefile file]"
 #define SMS_PICTURE_OPTIONS	"[-text text][-unicode][-alcatelbmmi]"
@@ -9620,181 +9620,181 @@ static GSM_Parameters Parameters[] = {
 #define SMS_SEND_OPTIONS	"[-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]]"
 #define SMS_COMMON_OPTIONS	"[-smscset number][-smscnumber number][-reply][-maxsms num]"
 
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,0},			"TEXT " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_TEXT_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Ringtone,0},		"RINGTONE file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_RINGTONE_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"OPERATOR file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_OPERATOR_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"CALLER file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"PICTURE file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_PICTURE_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"ANIMATION frames file1 file2... " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_ANIMATION_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_MMS,0},		"MMSINDICATOR URL Title Sender " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_WAP,0},		"WAPINDICATOR URL Title " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,0},			"TEXT " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_TEXT_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Ringtone,0},		"RINGTONE file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_RINGTONE_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"OPERATOR file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_OPERATOR_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"CALLER file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"PICTURE file " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_PICTURE_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"ANIMATION frames file1 file2... " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_ANIMATION_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_MMS,0},		"MMSINDICATOR URL Title Sender " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_WAP,0},		"WAPINDICATOR URL Title " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
 #ifdef GSM_ENABLE_BACKUP
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_WAP,0},		"BOOKMARK file location " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_WAP,0},		"WAPSETTINGS file location DATA|GPRS " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_MMS,0},		"MMSSETTINGS file location  " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Calendar,0},		"CALENDAR file location " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_ToDo,0},		"TODO file location " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Memory,0},		"VCARD10|VCARD21 file SM|ME location [-nokia]" SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_WAP,0},		"BOOKMARK file location " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_WAP,0},		"WAPSETTINGS file location DATA|GPRS " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_MMS,0},		"MMSSETTINGS file location  " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Calendar,0},		"CALENDAR file location " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_ToDo,0},		"TODO file location " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Memory,0},		"VCARD10|VCARD21 file SM|ME location [-nokia]" SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS},
 #endif
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Settings,0},		"PROFILE " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_PROFILE_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,0},			"EMS " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_EMS_OPTIONS},
-	{"--savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,0},			"SMSTEMPLATE " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_SMSTEMPLATE_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,H_Settings,0},		"PROFILE " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_PROFILE_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,0},			"EMS " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_EMS_OPTIONS},
+	{"savesms",			1,30, SendSaveDisplaySMS,	{H_SMS,0},			"SMSTEMPLATE " SMS_SAVE_OPTIONS SMS_COMMON_OPTIONS SMS_SMSTEMPLATE_OPTIONS},
 
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,0},			"TEXT destination " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_TEXT_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Ringtone,0},		"RINGTONE destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_RINGTONE_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"OPERATOR destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_OPERATOR_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"CALLER destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"PICTURE destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_PICTURE_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"ANIMATION destination frames file1 file2... " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_ANIMATION_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_MMS,0},		"MMSINDICATOR destination URL Title Sender " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_WAP,0},		"WAPINDICATOR destination URL Title " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,0},			"TEXT destination " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_TEXT_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Ringtone,0},		"RINGTONE destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_RINGTONE_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"OPERATOR destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_OPERATOR_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"CALLER destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"PICTURE destination file " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_PICTURE_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Logo,0},		"ANIMATION destination frames file1 file2... " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_ANIMATION_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_MMS,0},		"MMSINDICATOR destination URL Title Sender " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_WAP,0},		"WAPINDICATOR destination URL Title " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
 #ifdef GSM_ENABLE_BACKUP
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_WAP,0},		"BOOKMARK destination file location " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_WAP,0},		"WAPSETTINGS destination file location DATA|GPRS " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_MMS,0},		"MMSSETTINGS destination file location " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Calendar,0},		"CALENDAR destination file location " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_ToDo,0},		"TODO destination file location " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Memory,0},		"VCARD10|VCARD21 destination file SM|ME location [-nokia]" SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_WAP,0},		"BOOKMARK destination file location " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_WAP,0},		"WAPSETTINGS destination file location DATA|GPRS " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_MMS,0},		"MMSSETTINGS destination file location " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Calendar,0},		"CALENDAR destination file location " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_ToDo,0},		"TODO destination file location " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Memory,0},		"VCARD10|VCARD21 destination file SM|ME location [-nokia]" SMS_SEND_OPTIONS SMS_COMMON_OPTIONS},
 #endif
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Settings,0},		"PROFILE destination " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS ""SMS_PROFILE_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,0},			"EMS destination " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_EMS_OPTIONS},
-	{"--sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,0},			"SMSTEMPLATE destination " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_SMSTEMPLATE_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,H_Settings,0},		"PROFILE destination " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS ""SMS_PROFILE_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,0},			"EMS destination " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_EMS_OPTIONS},
+	{"sendsms",			2,30, SendSaveDisplaySMS,	{H_SMS,0},			"SMSTEMPLATE destination " SMS_SEND_OPTIONS SMS_COMMON_OPTIONS SMS_SMSTEMPLATE_OPTIONS},
 
-	{"--displaysms",		2,30, SendSaveDisplaySMS,	{H_SMS,0},			"... (options like in sendsms)"},
+	{"displaysms",		2,30, SendSaveDisplaySMS,	{H_SMS,0},			"... (options like in sendsms)"},
 
-	{"--addsmsfolder",		1, 1, AddSMSFolder,		{H_SMS,0},			"name"},
+	{"addsmsfolder",		1, 1, AddSMSFolder,		{H_SMS,0},			"name"},
 #ifdef HAVE_MYSQL_MYSQL_H
-	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"MYSQL configfile"},
+	{"smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"MYSQL configfile"},
 #endif
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"PGSQL configfile"},
+	{"smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"PGSQL configfile"},
 #endif
-	{"--smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"FILES configfile"},
-	{"--sendsmsdsms",		2,30, SendSaveDisplaySMS,	{H_SMS,H_Other,0},		"TEXT|WAPSETTINGS|... destination FILES|MYSQL|PGSQL configfile ... (options like in sendsms)"},
-	{"--getmmsfolders",		0, 0, GetMMSFolders,		{H_MMS,0},			""},
-	{"--getallmms",			0, 1, GetEachMMS,		{H_MMS,0},			"[-save]"},
-	{"--geteachmms",		0, 1, GetEachMMS,		{H_MMS,0},			"[-save]"},
-	{"--getringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
-	{"--getphoneringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
-	{"--getringtoneslist",		0, 0, GetRingtonesList,		{H_Ringtone,0},			""},
-	{"--setringtone",		1, 6, SetRingtone,		{H_Ringtone,0},			"file [-location location][-scale][-name name]"},
+	{"smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"FILES configfile"},
+	{"sendsmsdsms",		2,30, SendSaveDisplaySMS,	{H_SMS,H_Other,0},		"TEXT|WAPSETTINGS|... destination FILES|MYSQL|PGSQL configfile ... (options like in sendsms)"},
+	{"getmmsfolders",		0, 0, GetMMSFolders,		{H_MMS,0},			""},
+	{"getallmms",			0, 1, GetEachMMS,		{H_MMS,0},			"[-save]"},
+	{"geteachmms",		0, 1, GetEachMMS,		{H_MMS,0},			"[-save]"},
+	{"getringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
+	{"getphoneringtone",		1, 2, GetRingtone,		{H_Ringtone,0},			"location [file]"},
+	{"getringtoneslist",		0, 0, GetRingtonesList,		{H_Ringtone,0},			""},
+	{"setringtone",		1, 6, SetRingtone,		{H_Ringtone,0},			"file [-location location][-scale][-name name]"},
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
-	{"--nokiacomposer",		1, 1, NokiaComposer,		{H_Ringtone,H_Nokia,0},		"file"},
+	{"nokiacomposer",		1, 1, NokiaComposer,		{H_Ringtone,H_Nokia,0},		"file"},
 #endif
-	{"--copyringtone",		2, 3, CopyRingtone,		{H_Ringtone,0},			"source destination [RTTL|BINARY]"},
-	{"--getussd",			1, 1, GetUSSD,			{H_Call,0},			"code"},
-	{"--dialvoice",			1, 2, DialVoice,		{H_Call,0},			"number [show|hide]"},
-	{"--maketerminatedcall",	2, 3, MakeTerminatedCall,	{H_Call,0},			"number length [show|hide]"},
-	{"--getspeeddial",		1, 2, GetSpeedDial,		{H_Call,H_Memory,0},		"start [stop]"},
-	{"--cancelcall",		0, 1, CancelCall,		{H_Call,0},			"[ID]"},
-	{"--answercall",		0, 1, AnswerCall,		{H_Call,0},			"[ID]"},
-	{"--unholdcall",		1, 1, UnholdCall,		{H_Call,0},			"ID"},
-	{"--holdcall",			1, 1, HoldCall,			{H_Call,0},			"ID"},
-	{"--conferencecall",		1, 1, ConferenceCall,		{H_Call,0},			"ID"},
-	{"--splitcall",			1, 1, SplitCall,		{H_Call,0},			"ID"},
-	{"--switchcall",		0, 1, SwitchCall,		{H_Call,0},			"[ID]"},
-	{"--transfercall",		0, 1, TransferCall,		{H_Call,0},			"[ID]"},
-	{"--divert",			3, 5, CallDivert,		{H_Call,0},			"get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]"},
-	{"--canceldiverts",		0, 0, CancelAllDiverts,		{H_Call,0},			""},
-	{"--senddtmf",			1, 1, SendDTMF,			{H_Call,0},			"sequence"},
-	{"--getcalendarsettings",	0, 0, GetCalendarSettings,	{H_Calendar,H_Settings,0},	""},
-	{"--getalltodo",		0, 0, GetAllToDo,		{H_ToDo,0},			""},
-	{"--listtodocategory",		1, 1, ListToDoCategory,		{H_ToDo, H_Category,0},		"text|number"},
-	{"--gettodo",			1, 2, GetToDo,			{H_ToDo,0},			"start [stop]"},
-	{"--deletetodo",		1, 2, DeleteToDo,		{H_ToDo,0},			"start [stop]"},
-	{"--getallnotes",		0, 0, GetAllNotes,		{H_Note,0},			""},
-	{"--deletecalendar",		1, 2, DeleteCalendar,		{H_Calendar,0},			"start [stop]"},
-	{"--getallcalendar",		0, 0, GetAllCalendar,		{H_Calendar,0},			""},
-	{"--getcalendar",		1, 2, GetCalendar,		{H_Calendar,0},			"start [stop]"},
-	{"--addcategory",       	2, 2, AddCategory,       	{H_Category,H_ToDo,H_Memory,0},	"TODO|PHONEBOOK text"},
-	{"--getcategory",       	2, 3, GetCategory,       	{H_Category,H_ToDo,H_Memory,0},	"TODO|PHONEBOOK start [stop]"},
-	{"--getallcategory",	  	1, 1, GetAllCategories,  	{H_Category,H_ToDo,H_Memory,0},	"TODO|PHONEBOOK"},
-	{"--reset",			1, 1, Reset,			{H_Other,0},			"SOFT|HARD"},
-	{"--getprofile",		1, 2, GetProfile,		{H_Settings,0},			"start [stop]"},
-	{"--getsecuritystatus",		0, 0, GetSecurityStatus,	{H_Info,0},			""},
-	{"--entersecuritycode",		2, 2, EnterSecurityCode,	{H_Other,0},			"PIN|PUK|PIN2|PUK2 code"},
-	{"--deletewapbookmark", 	1, 2, DeleteWAPBookmark, 	{H_WAP,0},			"start [stop]"},
-	{"--getwapbookmark",		1, 2, GetWAPBookmark,		{H_WAP,0},			"start [stop]"},
-	{"--getwapsettings",		1, 2, GetWAPMMSSettings,	{H_WAP,0},			"start [stop]"},
-	{"--getmmssettings",		1, 2, GetWAPMMSSettings,	{H_MMS,0},			"start [stop]"},
-	{"--getsyncmlsettings",		1, 2, GetSyncMLSettings,	{H_WAP,0},			"start [stop]"},
-	{"--getchatsettings",		1, 2, GetChatSettings,		{H_WAP,0},			"start [stop]"},
-	{"--readmmsfile",		1, 2, ReadMMSFile,		{H_MMS,0},			"file [-save]"},
-	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"STARTUP [file]"},
-	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"CALLER location [file]"},
-	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"OPERATOR [file]"},
-	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"PICTURE location [file]"},
-	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"TEXT"},
-	{"--getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"DEALER"},
-	{"--setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"STARTUP file|1|2|3"},
-	{"--setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"COLOURSTARTUP [fileID]"},
-	{"--setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"WALLPAPER fileID"},
-	{"--setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"CALLER location [file]"},
-	{"--setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"OPERATOR [file [netcode]]"},
-	{"--setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"COLOUROPERATOR [fileID [netcode]]"},
-	{"--setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"PICTURE file location [text]"},
-	{"--setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"TEXT text"},
-	{"--setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"DEALER text"},
-	{"--copybitmap",		1, 3, CopyBitmap,		{H_Logo,0},			"inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]"},
-	{"--presskeysequence",		1, 1, PressKeySequence,		{H_Other,0},			"mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"},
+	{"copyringtone",		2, 3, CopyRingtone,		{H_Ringtone,0},			"source destination [RTTL|BINARY]"},
+	{"getussd",			1, 1, GetUSSD,			{H_Call,0},			"code"},
+	{"dialvoice",			1, 2, DialVoice,		{H_Call,0},			"number [show|hide]"},
+	{"maketerminatedcall",	2, 3, MakeTerminatedCall,	{H_Call,0},			"number length [show|hide]"},
+	{"getspeeddial",		1, 2, GetSpeedDial,		{H_Call,H_Memory,0},		"start [stop]"},
+	{"cancelcall",		0, 1, CancelCall,		{H_Call,0},			"[ID]"},
+	{"answercall",		0, 1, AnswerCall,		{H_Call,0},			"[ID]"},
+	{"unholdcall",		1, 1, UnholdCall,		{H_Call,0},			"ID"},
+	{"holdcall",			1, 1, HoldCall,			{H_Call,0},			"ID"},
+	{"conferencecall",		1, 1, ConferenceCall,		{H_Call,0},			"ID"},
+	{"splitcall",			1, 1, SplitCall,		{H_Call,0},			"ID"},
+	{"switchcall",		0, 1, SwitchCall,		{H_Call,0},			"[ID]"},
+	{"transfercall",		0, 1, TransferCall,		{H_Call,0},			"[ID]"},
+	{"divert",			3, 5, CallDivert,		{H_Call,0},			"get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]"},
+	{"canceldiverts",		0, 0, CancelAllDiverts,		{H_Call,0},			""},
+	{"senddtmf",			1, 1, SendDTMF,			{H_Call,0},			"sequence"},
+	{"getcalendarsettings",	0, 0, GetCalendarSettings,	{H_Calendar,H_Settings,0},	""},
+	{"getalltodo",		0, 0, GetAllToDo,		{H_ToDo,0},			""},
+	{"listtodocategory",		1, 1, ListToDoCategory,		{H_ToDo, H_Category,0},		"text|number"},
+	{"gettodo",			1, 2, GetToDo,			{H_ToDo,0},			"start [stop]"},
+	{"deletetodo",		1, 2, DeleteToDo,		{H_ToDo,0},			"start [stop]"},
+	{"getallnotes",		0, 0, GetAllNotes,		{H_Note,0},			""},
+	{"deletecalendar",		1, 2, DeleteCalendar,		{H_Calendar,0},			"start [stop]"},
+	{"getallcalendar",		0, 0, GetAllCalendar,		{H_Calendar,0},			""},
+	{"getcalendar",		1, 2, GetCalendar,		{H_Calendar,0},			"start [stop]"},
+	{"addcategory",       	2, 2, AddCategory,       	{H_Category,H_ToDo,H_Memory,0},	"TODO|PHONEBOOK text"},
+	{"getcategory",       	2, 3, GetCategory,       	{H_Category,H_ToDo,H_Memory,0},	"TODO|PHONEBOOK start [stop]"},
+	{"getallcategory",	  	1, 1, GetAllCategories,  	{H_Category,H_ToDo,H_Memory,0},	"TODO|PHONEBOOK"},
+	{"reset",			1, 1, Reset,			{H_Other,0},			"SOFT|HARD"},
+	{"getprofile",		1, 2, GetProfile,		{H_Settings,0},			"start [stop]"},
+	{"getsecuritystatus",		0, 0, GetSecurityStatus,	{H_Info,0},			""},
+	{"entersecuritycode",		2, 2, EnterSecurityCode,	{H_Other,0},			"PIN|PUK|PIN2|PUK2 code"},
+	{"deletewapbookmark", 	1, 2, DeleteWAPBookmark, 	{H_WAP,0},			"start [stop]"},
+	{"getwapbookmark",		1, 2, GetWAPBookmark,		{H_WAP,0},			"start [stop]"},
+	{"getwapsettings",		1, 2, GetWAPMMSSettings,	{H_WAP,0},			"start [stop]"},
+	{"getmmssettings",		1, 2, GetWAPMMSSettings,	{H_MMS,0},			"start [stop]"},
+	{"getsyncmlsettings",		1, 2, GetSyncMLSettings,	{H_WAP,0},			"start [stop]"},
+	{"getchatsettings",		1, 2, GetChatSettings,		{H_WAP,0},			"start [stop]"},
+	{"readmmsfile",		1, 2, ReadMMSFile,		{H_MMS,0},			"file [-save]"},
+	{"getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"STARTUP [file]"},
+	{"getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"CALLER location [file]"},
+	{"getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"OPERATOR [file]"},
+	{"getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"PICTURE location [file]"},
+	{"getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"TEXT"},
+	{"getbitmap",			1, 3, GetBitmap,		{H_Logo,0},			"DEALER"},
+	{"setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"STARTUP file|1|2|3"},
+	{"setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"COLOURSTARTUP [fileID]"},
+	{"setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"WALLPAPER fileID"},
+	{"setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"CALLER location [file]"},
+	{"setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"OPERATOR [file [netcode]]"},
+	{"setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"COLOUROPERATOR [fileID [netcode]]"},
+	{"setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"PICTURE file location [text]"},
+	{"setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"TEXT text"},
+	{"setbitmap",			1, 4, SetBitmap,		{H_Logo,0},			"DEALER text"},
+	{"copybitmap",		1, 3, CopyBitmap,		{H_Logo,0},			"inputfile [outputfile [OPERATOR|PICTURE|STARTUP|CALLER]]"},
+	{"presskeysequence",		1, 1, PressKeySequence,		{H_Other,0},			"mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"},
 #if defined(WIN32) || defined(HAVE_PTHREAD)
-	{"--searchphone",		0, 1, SearchPhone,		{H_Other,0},			"[-debug]"},
+	{"searchphone",		0, 1, SearchPhone,		{H_Other,0},			"[-debug]"},
 #endif
 #ifdef GSM_ENABLE_BACKUP
-	{"--savefile",			4, 5, SaveFile,			{H_Backup,H_Calendar,0},	"CALENDAR target.vcs file location"},
-	{"--savefile",			4, 5, SaveFile,			{H_Backup,H_ToDo,0},		"TODO target.vcs file location"},
-	{"--savefile",			4, 5, SaveFile,			{H_Backup,H_Memory,0},		"VCARD10|VCARD21 target.vcf file SM|ME location"},
-	{"--savefile",			4, 5, SaveFile,			{H_Backup,H_WAP,0},		"BOOKMARK target.url file location"},
-	{"--backup",			1, 2, Backup,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
-	{"--backupsms",			1, 1, BackupSMS,		{H_Backup,H_SMS,0},		"file"},
-	{"--restore",			1, 2, Restore,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
-	{"--addnew",			1, 1, AddNew,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file"},
-	{"--restoresms",		1, 1, RestoreSMS,		{H_Backup,H_SMS,0},		"file"},
-	{"--addsms",			2, 2, AddSMS,			{H_Backup,H_SMS,0},		"folder file"},
+	{"savefile",			4, 5, SaveFile,			{H_Backup,H_Calendar,0},	"CALENDAR target.vcs file location"},
+	{"savefile",			4, 5, SaveFile,			{H_Backup,H_ToDo,0},		"TODO target.vcs file location"},
+	{"savefile",			4, 5, SaveFile,			{H_Backup,H_Memory,0},		"VCARD10|VCARD21 target.vcf file SM|ME location"},
+	{"savefile",			4, 5, SaveFile,			{H_Backup,H_WAP,0},		"BOOKMARK target.url file location"},
+	{"backup",			1, 2, Backup,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
+	{"backupsms",			1, 1, BackupSMS,		{H_Backup,H_SMS,0},		"file"},
+	{"restore",			1, 2, Restore,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
+	{"addnew",			1, 1, AddNew,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file"},
+	{"restoresms",		1, 1, RestoreSMS,		{H_Backup,H_SMS,0},		"file"},
+	{"addsms",			2, 2, AddSMS,			{H_Backup,H_SMS,0},		"folder file"},
 #endif
-	{"--clearall",			0, 0, ClearAll,			{H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},	""},
-	{"--networkinfo",		0, 0, NetworkInfo,		{H_Network,0},			""},
+	{"clearall",			0, 0, ClearAll,			{H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},	""},
+	{"networkinfo",		0, 0, NetworkInfo,		{H_Network,0},			""},
 #ifdef GSM_ENABLE_AT
-	{"--siemenssatnetmon",		0, 0, ATSIEMENSSATNetmon,	{H_Siemens,H_Network,0},	""},
-	{"--siemensnetmonact",		1, 1, ATSIEMENSActivateNetmon,	{H_Siemens,H_Network,0},	"netmon_type (1-full, 2-simple)"},
-	{"--siemensnetmonitor",		1, 1, ATSIEMENSNetmonitor,	{H_Siemens,H_Network,0},	"test"},
+	{"siemenssatnetmon",		0, 0, ATSIEMENSSATNetmon,	{H_Siemens,H_Network,0},	""},
+	{"siemensnetmonact",		1, 1, ATSIEMENSActivateNetmon,	{H_Siemens,H_Network,0},	"netmon_type (1-full, 2-simple)"},
+	{"siemensnetmonitor",		1, 1, ATSIEMENSNetmonitor,	{H_Siemens,H_Network,0},	"test"},
 #endif
 #ifdef GSM_ENABLE_NOKIA6110
-	{"--nokiagetoperatorname", 	0, 0, DCT3GetOperatorName,	{H_Nokia,H_Network,0},		""},
-	{"--nokiasetoperatorname", 	0, 2, DCT3SetOperatorName,	{H_Nokia,H_Network,0},		"[networkcode name]"},
-	{"--nokiadisplayoutput", 	0, 0, DCT3DisplayOutput,	{H_Nokia,0},			""},
+	{"nokiagetoperatorname", 	0, 0, DCT3GetOperatorName,	{H_Nokia,H_Network,0},		""},
+	{"nokiasetoperatorname", 	0, 2, DCT3SetOperatorName,	{H_Nokia,H_Network,0},		"[networkcode name]"},
+	{"nokiadisplayoutput", 	0, 0, DCT3DisplayOutput,	{H_Nokia,0},			""},
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT3
-	{"--nokianetmonitor",		1, 1, DCT3netmonitor,		{H_Nokia,H_Network,0},		"test"},
-	{"--nokianetmonitor36",		0, 0, DCT3ResetTest36,		{H_Nokia,0},			""},
-	{"--nokiadebug",		1, 2, DCT3SetDebug,		{H_Nokia,H_Network,0},		"filename [[v11-22][,v33-44]...]"},
+	{"nokianetmonitor",		1, 1, DCT3netmonitor,		{H_Nokia,H_Network,0},		"test"},
+	{"nokianetmonitor36",		0, 0, DCT3ResetTest36,		{H_Nokia,0},			""},
+	{"nokiadebug",		1, 2, DCT3SetDebug,		{H_Nokia,H_Network,0},		"filename [[v11-22][,v33-44]...]"},
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-	{"--nokiagetpbkfeatures",	1, 1, DCT4GetPBKFeatures,	{H_Nokia,H_Memory,0},		"memorytype"},
-	{"--nokiasetvibralevel",	1, 1, DCT4SetVibraLevel,	{H_Nokia,H_Other,0},		"level"},
-	{"--nokiagetvoicerecord",	1, 1, DCT4GetVoiceRecord,	{H_Nokia,H_Other,0},		"location"},
+	{"nokiagetpbkfeatures",	1, 1, DCT4GetPBKFeatures,	{H_Nokia,H_Memory,0},		"memorytype"},
+	{"nokiasetvibralevel",	1, 1, DCT4SetVibraLevel,	{H_Nokia,H_Other,0},		"level"},
+	{"nokiagetvoicerecord",	1, 1, DCT4GetVoiceRecord,	{H_Nokia,H_Other,0},		"location"},
 #ifdef GSM_ENABLE_NOKIA6510
-	{"--nokiasetlights",		2, 2, DCT4SetLight,		{H_Nokia,H_Tests,0},		"keypad|display|torch on|off"},
-	{"--nokiatuneradio",		0, 0, DCT4TuneRadio,		{H_Nokia,H_FM,0},		""},
+	{"nokiasetlights",		2, 2, DCT4SetLight,		{H_Nokia,H_Tests,0},		"keypad|display|torch on|off"},
+	{"nokiatuneradio",		0, 0, DCT4TuneRadio,		{H_Nokia,H_FM,0},		""},
 #endif
-	{"--nokiamakecamerashoot",	0, 0, DCT4MakeCameraShoot,	{H_Nokia,H_Other,0},		""},
-	{"--nokiagetscreendump",	0, 0, DCT4GetScreenDump,	{H_Nokia,H_Other,0},		""},
+	{"nokiamakecamerashoot",	0, 0, DCT4MakeCameraShoot,	{H_Nokia,H_Other,0},		""},
+	{"nokiagetscreendump",	0, 0, DCT4GetScreenDump,	{H_Nokia,H_Other,0},		""},
 #endif
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
-	{"--nokiavibratest",		0, 0, NokiaVibraTest,		{H_Nokia,H_Tests,0},		""},
-	{"--nokiagett9",		0, 0, NokiaGetT9,		{H_Nokia,H_SMS,0},		""},
-	{"--nokiadisplaytest",		1, 1, NokiaDisplayTest,		{H_Nokia,H_Tests,0},		"number"},
-	{"--nokiagetadc",		0, 0, NokiaGetADC,		{H_Nokia,H_Tests,0},		""},
-	{"--nokiasecuritycode",		0, 0, NokiaSecurityCode,	{H_Nokia,H_Info,0},		""},
-	{"--nokiaselftests",		0, 0, NokiaSelfTests,		{H_Nokia,H_Tests,0},		""},
-	{"--nokiasetphonemenus",	0, 0, NokiaSetPhoneMenus,	{H_Nokia,H_Other,0},		""},
+	{"nokiavibratest",		0, 0, NokiaVibraTest,		{H_Nokia,H_Tests,0},		""},
+	{"nokiagett9",		0, 0, NokiaGetT9,		{H_Nokia,H_SMS,0},		""},
+	{"nokiadisplaytest",		1, 1, NokiaDisplayTest,		{H_Nokia,H_Tests,0},		"number"},
+	{"nokiagetadc",		0, 0, NokiaGetADC,		{H_Nokia,H_Tests,0},		""},
+	{"nokiasecuritycode",		0, 0, NokiaSecurityCode,	{H_Nokia,H_Info,0},		""},
+	{"nokiaselftests",		0, 0, NokiaSelfTests,		{H_Nokia,H_Tests,0},		""},
+	{"nokiasetphonemenus",	0, 0, NokiaSetPhoneMenus,	{H_Nokia,H_Other,0},		""},
 #endif
 #ifdef DEBUG
-	{"--decodesniff",		2, 3, decodesniff,		{H_Decode,0},			"MBUS2|IRDA file [phonemodel]"},
-	{"--decodebinarydump",		1, 2, decodebinarydump,		{H_Decode,0},			"file [phonemodel]"},
-	{"--makeconverttable",		1, 1, MakeConvertTable,		{H_Decode,0},			"file"},
+	{"decodesniff",		2, 3, decodesniff,		{H_Decode,0},			"MBUS2|IRDA file [phonemodel]"},
+	{"decodebinarydump",		1, 2, decodebinarydump,		{H_Decode,0},			"file [phonemodel]"},
+	{"makeconverttable",		1, 1, MakeConvertTable,		{H_Decode,0},			"file"},
 #endif
-	{"--batch",			0, 1, RunBatch,			{H_Other,0},			"[file]"},
+	{"batch",			0, 1, RunBatch,			{H_Other,0},			"[file]"},
 	{"",				0, 0, NULL			}
 };
 
@@ -9845,9 +9845,11 @@ static void HelpGeneral(void)
 
 	HelpHeader();
 
- 	printf(_("Usage: gammu [confign] [nothing|text|textall|binary|errors] [options]\n\n"));
+ 	printf(_("Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> [options]\n\n"));
  	printf(_("First parameter optionally specifies which config section to use (all are probed by default).\n"));
  	printf(_("Second parameter optionally controls debug level, next one specifies actions.\n\n"));
+
+ 	printf(_("Commands can be specified with or without leading --.\n\n"));
 
 	/* We might want to put here some most used commands */
 	printf(_("For more details, call help on specific topic (gammu --help topic). Topics are:\n\n"));
@@ -9996,7 +9998,7 @@ static void Help(int argc, char *argv[])
 			}
 		}
 		if (disp) {
-			printf("%s", Parameters[j].parameter);
+			printf("--%s", Parameters[j].parameter);
 			if (Parameters[j].help[0] == 0) {
 				printf("\n");
 			} else {
@@ -10026,13 +10028,16 @@ int FoundVersion(unsigned char *Buffer)
 	return retval + atoi(Buffer+pos);
 }
 
-char CheckParameters(char start, int argc, char *argv[]) {
+char ProcessParameters(char start, int argc, char *argv[]) {
 	int 		z = 0;
  	bool		count_failed = false;
 
 	/* Check parameters */
 	while (Parameters[z].Function != NULL) {
-		if (strcasecmp(Parameters[z].parameter,argv[1+start]) == 0) {
+		if (strcasecmp(Parameters[z].parameter, argv[1 + start]) == 0 ||
+			(strncmp(argv[1 + start], "--", 2) == 0 &&
+			strcasecmp(Parameters[z].parameter, argv[1 + start] + 2) == 0)
+			) {
 			if (argc-2-start < Parameters[z].min_arg) {
 				count_failed = true;
 				if (Parameters[z].min_arg==Parameters[z].max_arg) {
@@ -10106,7 +10111,9 @@ int main(int argc, char *argv[])
 	}
 
  	/* Help? */
-	if (strncmp(argv[1 + start], "--help", 6) == 0) {
+	if (strcasecmp(argv[1 + start], "--help") == 0 ||
+		strcasecmp(argv[1 + start], "-h") == 0 ||
+		strcasecmp(argv[1 + start], "help") == 0) {
 		Help(argc - start, argv + start);
 		exit(1);
 	}
@@ -10264,7 +10271,7 @@ int main(int argc, char *argv[])
 	}
 
 
-	CheckParameters(start, argc, argv);
+	ProcessParameters(start, argc, argv);
 
      	/* Close debug output if opened */
      	if (di.df!=stdout) fclose(di.df);
