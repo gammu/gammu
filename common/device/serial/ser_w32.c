@@ -31,8 +31,10 @@
 #if defined(GSM_ENABLE_DKU2PHONET) || defined(GSM_ENABLE_DKU2AT)
 #  include <initguid.h>
 #  include <setupapi.h>
-#  pragma comment(lib, "setupapi.lib")
-#  pragma comment(lib, "advapi32.lib")
+#  ifndef __GNUC__
+#    pragma comment(lib, "setupapi.lib")
+#    pragma comment(lib, "advapi32.lib")
+#  endif
 #endif
 
 #include "../../gsmcomon.h"

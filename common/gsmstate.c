@@ -1458,7 +1458,7 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 					lpMsgBuf[i] = ' ';
 				}
 			}
-			smprintf(s,"[System error     - %s, %i, \"%s\"]\n",description,GetLastError(),(LPCTSTR)lpMsgBuf);
+			smprintf(s,"[System error     - %s, %i, \"%s\"]\n", description, (int)GetLastError(), (LPCTSTR)lpMsgBuf);
 			LocalFree(lpMsgBuf);
 		}
 	}

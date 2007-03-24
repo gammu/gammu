@@ -96,9 +96,10 @@ int socket_read(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
 {
 	fd_set 		readfds;
 	int result = 0;
-	int flags;
 #ifdef WIN32
 	struct timeval 	timer;
+#else
+	int flags;
 #endif
 
 	FD_ZERO(&readfds);

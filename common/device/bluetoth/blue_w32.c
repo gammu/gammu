@@ -78,14 +78,15 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 
 DEFINE_GUID(L2CAP_PROTOCOL_UUID,  0x00000100, 0x0000, 0x1000, 0x80, 0x00, 0x00, 0x80, 0x5F, 0x9B, 0x34, 0xFB);
 
+#ifndef __GNUC__
 #pragma comment(lib, "irprops.lib")
 #pragma comment(lib, "ws2_32.lib")
+#endif
 
 static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, char *address, WSAPROTOCOL_INFO *protocolInfo)
 {
 	int				found = -1;
 	int				score, bestscore = 0;
-	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
 	WSAQUERYSET 			querySet;
 	DWORD				flags;
 	GUID				protocol;
