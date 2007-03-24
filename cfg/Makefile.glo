@@ -99,6 +99,13 @@ LOCALE    = $(TOPDIR)/common/misc/misc.o \
      
 LOCALE2   = $(TOPDIR)/cfg/locale
 
+TRANSLATIONS = $(TOPDIR)/locale/cs.mo \
+	$(TOPDIR)/locale/de.mo \
+	$(TOPDIR)/locale/es.mo \
+	$(TOPDIR)/locale/it.mo \
+	$(TOPDIR)/locale/pl.mo \
+	$(TOPDIR)/locale/ru.mo
+
 include $(TOPDIR)/cfg/Makefile.cfg
 
 DESTDIR = 
@@ -126,7 +133,7 @@ CPPFLAGS += -I$(TOPDIR)/cfg/ -I$(TOPDIR)/common/
 # Add special flags for gammu binary
 	@$(CC) -c $(CFLAGS) $(CPPFLAGS) $*.c -o $*.o $(if $(subst gammu/gammu.c,,$<),,$(GAMMU_CFLAGS))
 
-all: gammu
+all: gammu locales
 
 $(TOPDIR)/gammu/gammu: $(COMMON) $(GAMMU)
 	@echo Linking gammu
@@ -159,11 +166,18 @@ shared: $(TOPDIR)/common/$(LIBGAMMU_FULLNAME) $(TOPDIR)/common/$(LIBGAMMU_STATIC
 # Backward compatibility
 makelib: shared
 
+locales: $(TRANSLATIONS)
+
+%.mo: %.po
+	@echo "Generating $@..."
+	@msgfmt -o $@ $<
+
 clean:
 	@echo Cleaning binaries and object files
 	@$(RM) $(COMMON) $(GAMMU) core $(TOPDIR)/common/libGammu*
 	@$(RM) $(TOPDIR)/gammu/gammu $(TOPDIR)/gammu/gammu-shared tags
 	@$(RM) $(TOPDIR)/cfg/locale/locale.o $(TOPDIR)/cfg/locale/locale
+	@$(RM) $(TRANSLATIONS)
 	@echo Cleaning autoconf stuff
 	@$(RM) -r $(TOPDIR)/cfg/autoconf/*.cache \
             $(TOPDIR)/cfg/autoconf/config.log \
@@ -212,12 +226,15 @@ uninstall:
 	@$(RM) $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_SHRTNAME)
 	@$(RM) $(DESTDIR)$(INSTALL_MAN_DIR)/gammu.1 $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_STATIC)
 	@$(RM) -r $(DESTDIR)$(INSTALL_DOC_DIR)/
-	@$(RM) -r $(DESTDIR)$(INSTALL_LOC_DIR)/
 
-installlocales:
+installlocales: $(TRANSLATIONS)
 	@echo Installing locales to $(DESTDIR)$(INSTALL_LOC_DIR)
-	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_LOC_DIR)
-	@$(FIND) locale -type f -exec $(INSTALL) -m 0644 {} $(DESTDIR)$(INSTALL_LOC_DIR) \;
+	@for x in $(TRANSLATIONS) ; do \
+		name=`echo $$x | sed 's@.*/@@; s@\..*@@'`; \
+		dir=$(DESTDIR)$(INSTALL_LOC_DIR)/$$name/LC_MESSAGES ; \
+		install -d $$dir ; \
+		install -m 644 $$x $$dir/gammu.mo; \
+	done
 
 installdocs:
 	@echo Installing docs to $(DESTDIR)$(INSTALL_DOC_DIR)
