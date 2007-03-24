@@ -216,11 +216,7 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 
 	RecalcDateTime(&timeptr, dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
 
-#ifdef WIN32
-	strftime(retval2, 200, "%#c", &timeptr);
-#else
 	strftime(retval2, 200, "%c", &timeptr);
-#endif
 	if (TimeZone) {
 		if (dt.Timezone >= 0) {
 			sprintf(retval," +%02i00",dt.Timezone);
@@ -270,11 +266,8 @@ char *OSDate (GSM_DateTime dt)
 	timeptr.tm_zone		= NULL;
 #endif
 
-#ifdef WIN32
-	strftime(retval2, 200, "%#x", &timeptr);
-#else
 	strftime(retval2, 200, "%x", &timeptr);
-#endif
+
 	/* If don't have weekday name, include it */
 	strftime(retval, 200, "%A", &timeptr);
 	if (strstr(retval2,retval)==NULL) {
@@ -655,7 +648,7 @@ char *GetOS(void)
 		sprintf(Buffer,"Win 2003");
 
 	} else {
-		sprintf(Buffer, "Windows %i.%i.%i",Ver.dwMajorVersion,Ver.dwMinorVersion,Ver.dwBuildNumber);
+		sprintf(Buffer, "Windows %i.%i.%i",(int)Ver.dwMajorVersion,(int)Ver.dwMinorVersion,(int)Ver.dwBuildNumber);
 	}
 
 	if (Extended && Ver.wServicePackMajor != 0) {

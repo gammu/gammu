@@ -9350,7 +9350,7 @@ static void SearchPhone(int argc, char *argv[])
 	num = 0;
 #ifdef WIN32
 #  ifdef GSM_ENABLE_IRDADEVICE
-	sprintf(SearchDevices[dev].Device,"");
+	SearchDevices[dev].Device[0] = 0;
 	sprintf(SearchDevices[dev].Connections[0].Connection,"irdaphonet");
 	sprintf(SearchDevices[dev].Connections[1].Connection,"irdaat");
 	SearchDevices[dev].Connections[2].Connection[0] = 0;
