@@ -19,6 +19,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <locale.h>
+#include <limits.h>
 #ifdef WIN32
 #  include "windows.h"
 #endif
@@ -176,18 +177,30 @@ char *DecodeSpecialChars(unsigned char *buffer)
 	return Buf;
 }
 
-char *mystrcasestr(unsigned const char *a, unsigned const char *b)
+#ifndef HAVE_STRCASESTR
+/**
+ * Find the first occurrence of find in s, ignore case.
+ * Copyright (c) 1990, 1993 The Regents of the University of California.
+ */
+char * strcasestr(const char *s, const char *find)
 {
-	unsigned char 	A[2000], B[200];
-	int 		i;
+	char c, sc;
+	size_t len;
 
-	memset(A,0,sizeof(A));
-	memset(B,0,sizeof(B));
-	for (i=0;i<(int)strlen(a);i++) A[i] = tolower(a[i]);
-	for (i=0;i<(int)strlen(b);i++) B[i] = tolower(b[i]);
-
-	return strstr(A,B);
+	if ((c = *find++) != 0) {
+		c = tolower((unsigned char)c);
+		len = strlen(find);
+		do {
+			do {
+				if ((sc = *s++) == 0)
+					return (NULL);
+			} while ((char)tolower((unsigned char)sc) != c);
+		} while (strncasecmp(s, find, len) != 0);
+		s--;
+	}
+	return ((char *)s);
 }
+#endif
 
 size_t UnicodeLength(const unsigned char *str)
 {
@@ -1110,21 +1123,79 @@ void DecodeUnicodeSpecialNOKIAChars(unsigned char *dest, const unsigned char *sr
 	dest[current++] = 0x00;
 }
 
-bool mystrncasecmp(unsigned const char *a, unsigned const char *b, int num)
+#ifndef HAVE_STRNCASECMP
+#define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
+/**
+ * Case insensitive string comparator
+ * Copyright (C) 1998, 1999, 2005 Free Software Foundation, Inc.
+ */
+int strncasecmp (const char *s1, const char *s2, size_t n)
 {
-	int i;
+	register const unsigned char *p1 = (const unsigned char *) s1;
+	register const unsigned char *p2 = (const unsigned char *) s2;
+	unsigned char c1, c2;
 
-	if (a == NULL || b == NULL) return false;
+	if (p1 == p2 || n == 0)
+		return 0;
 
-	if (num == 0) num = -1;
+	do {
+		c1 = TOLOWER (*p1);
+		c2 = TOLOWER (*p2);
 
-	for (i = 0; i != num; i++) {
-		if (a[i] == 0x00 && b[i] == 0x00) return true;
-		if (a[i] == 0x00 || b[i] == 0x00) return false;
-		if (tolower(a[i]) != tolower(b[i])) return false;
- 	}
-	return true;
+		if (--n == 0 || c1 == '\0')
+			break;
+
+		++p1;
+		++p2;
+	} while (c1 == c2);
+
+	if (UCHAR_MAX <= INT_MAX)
+		return c1 - c2;
+	else
+	/* On machines where 'char' and 'int' are types of the same size, the
+	difference of two 'unsigned char' values - including the sign bit -
+	doesn't fit in an 'int'.  */
+		return (c1 > c2 ? 1 : c1 < c2 ? -1 : 0);
 }
+#undef TOLOWER
+#endif
+
+#ifndef HAVE_STRCASECMP
+#define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
+/**
+ * Case insensitive string comparator
+ * Copyright (C) 1998, 1999, 2005 Free Software Foundation, Inc.
+ */
+int strcasecmp (const char *s1, const char *s2)
+{
+	register const unsigned char *p1 = (const unsigned char *) s1;
+	register const unsigned char *p2 = (const unsigned char *) s2;
+	unsigned char c1, c2;
+
+	if (p1 == p2)
+		return 0;
+
+	do {
+		c1 = TOLOWER (*p1);
+		c2 = TOLOWER (*p2);
+
+		if (c1 == '\0')
+			break;
+
+		++p1;
+		++p2;
+	} while (c1 == c2);
+
+	if (UCHAR_MAX <= INT_MAX)
+		return c1 - c2;
+	else
+	/* On machines where 'char' and 'int' are types of the same size, the
+	difference of two 'unsigned char' values - including the sign bit -
+	doesn't fit in an 'int'.  */
+		return (c1 > c2 ? 1 : c1 < c2 ? -1 : 0);
+}
+#undef TOLOWER
+#endif
 
 /* Compares two Unicode strings without regarding to case.
  * Return true, when they're equal

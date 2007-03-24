@@ -139,7 +139,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency);
 
 	Config->deliveryreport = INI_GetValue(smsdcfgfile, "smsd", "deliveryreport", false);
-	if (Config->deliveryreport == NULL || (!mystrncasecmp(Config->deliveryreport, "log", 3) && !mystrncasecmp(Config->deliveryreport, "sms", 3))) {
+	if (Config->deliveryreport == NULL || (strncasecmp(Config->deliveryreport, "log", 3) != 0 && strncasecmp(Config->deliveryreport, "sms", 3) != 0)) {
 		Config->deliveryreport = "no";
 	}
 	if (log) WriteSMSDLog(_("deliveryreport = %s"), Config->deliveryreport);
@@ -167,7 +167,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 		if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
 
 		Config->inboxformat=INI_GetValue(smsdcfgfile, "smsd", "inboxformat", false);
-		if (Config->inboxformat == NULL || (!mystrncasecmp(Config->inboxformat, "detail", 6) && !mystrncasecmp(Config->inboxformat, "unicode", 7))) {
+		if (Config->inboxformat == NULL || (strncasecmp(Config->inboxformat, "detail", 6) != 0 && strncasecmp(Config->inboxformat, "unicode", 7) != 0)) {
 			Config->inboxformat = "standard";
 		}
 		if (log) WriteSMSDLog(_("Inbox is \"%s\" with format \"%s\""), Config->inboxpath, Config->inboxformat);
@@ -176,7 +176,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 		if (Config->outboxpath == NULL) Config->outboxpath = emptyPath;
 
 		Config->transmitformat=INI_GetValue(smsdcfgfile, "smsd", "transmitformat", false);
-		if (Config->transmitformat == NULL || (!mystrncasecmp(Config->transmitformat, "auto", 4) && !mystrncasecmp(Config->transmitformat, "unicode", 7))) {
+		if (Config->transmitformat == NULL || (strncasecmp(Config->transmitformat, "auto", 4) != 0 && strncasecmp(Config->transmitformat, "unicode", 7) != 0)) {
 			Config->transmitformat = "7bit";
 		}
 		if (log) WriteSMSDLog(_("Outbox is \"%s\" with transmission format \"%s\""), Config->outboxpath, Config->transmitformat);

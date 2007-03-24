@@ -176,7 +176,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 	for (i=0; i<sms.Number; i++) {
 		if (sms.SMS[i].PDU == SMS_Status_Report) {
 			strcpy(buffer2, DecodeUnicodeString(sms.SMS[i].Number));
-			if (mystrncasecmp(Config->deliveryreport, "log", 3)) {
+			if (strncasecmp(Config->deliveryreport, "log", 3) == 0) {
 				WriteSMSDLog(_("Delivery report: %s to %s"), DecodeUnicodeString(sms.SMS[i].Text), buffer2);
 			}
 

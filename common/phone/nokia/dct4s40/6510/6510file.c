@@ -1338,10 +1338,10 @@ static GSM_Error N6510_GetFolderListing2(GSM_StateMachine *s, GSM_File *File, bo
 	int			i;
 
 	if (start) {
-		if (mystrncasecmp(DecodeUnicodeString(File->ID_FullName),"a:",0)   ||
-		    mystrncasecmp(DecodeUnicodeString(File->ID_FullName),"a:\\",0) ||
-		    mystrncasecmp(DecodeUnicodeString(File->ID_FullName),"d:",0)   ||
-		    mystrncasecmp(DecodeUnicodeString(File->ID_FullName),"d:\\",0)) {
+		if (strcasecmp(DecodeUnicodeString(File->ID_FullName),"a:") == 0   ||
+		    strcasecmp(DecodeUnicodeString(File->ID_FullName),"a:\\") == 0 ||
+		    strcasecmp(DecodeUnicodeString(File->ID_FullName),"d:") == 0   ||
+		    strcasecmp(DecodeUnicodeString(File->ID_FullName),"d:\\") == 0) {
 		} else {
 			//we must check, if user gave folder name or not
 			error = N6510_GetFileFolderInfo2(s, File);

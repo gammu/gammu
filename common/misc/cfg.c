@@ -289,11 +289,11 @@ unsigned char *INI_GetValue(INI_Section *cfg, unsigned char *section, unsigned c
 	        /* Search for section */
 		sec = cfg;
 		while (sec != NULL) {
-	                if (mystrncasecmp(section, sec->SectionName, 0)) {
+	                if (strcasecmp(section, sec->SectionName) == 0) {
 	                        /* Search for key inside section */
 				ent = sec->SubEntries;
 				while (ent != NULL) {
-	                                if (mystrncasecmp(key,ent->EntryName,0)) {
+	                                if (strcasecmp(key,ent->EntryName) == 0) {
 	                                        return ent->EntryValue;
 	                                }
 					ent = ent->Next;
@@ -320,7 +320,7 @@ INI_Entry *INI_FindLastSectionEntry(INI_Section *file_info, unsigned char *secti
 				break;
 			}
 		} else {
-			if (mystrncasecmp(section, h->SectionName, 0)) {
+			if (strcasecmp(section, h->SectionName) == 0) {
 				e = h->SubEntries;
 				break;
 			}

@@ -33,41 +33,41 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 	 */
 	s->ConnectionType = 0;
 	// cables
-	if (mystrncasecmp("mbus"	,connection,0)) s->ConnectionType = GCT_MBUS2;
-	if (mystrncasecmp("fbus"	,connection,0)) s->ConnectionType = GCT_FBUS2;
-	if (mystrncasecmp("fbuspl2303"	,connection,0)) s->ConnectionType = GCT_FBUS2PL2303;
-	if (mystrncasecmp("dlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
-	if (mystrncasecmp("fbusdlr3"	,connection,0)) s->ConnectionType = GCT_FBUS2DLR3;
-	if (mystrncasecmp("dku5"	,connection,0)) s->ConnectionType = GCT_DKU5FBUS2;
-	if (mystrncasecmp("dku5fbus"	,connection,0)) s->ConnectionType = GCT_DKU5FBUS2;
-	if (mystrncasecmp("dku2"	,connection,0)) s->ConnectionType = GCT_DKU2PHONET;
-	if (mystrncasecmp("dku2phonet"	,connection,0)) s->ConnectionType = GCT_DKU2PHONET;
-	if (mystrncasecmp("dku2at"	,connection,0)) s->ConnectionType = GCT_DKU2AT;
+	if (strcasecmp("mbus"	,connection) == 0) s->ConnectionType = GCT_MBUS2;
+	if (strcasecmp("fbus"	,connection) == 0) s->ConnectionType = GCT_FBUS2;
+	if (strcasecmp("fbuspl2303"	,connection) == 0) s->ConnectionType = GCT_FBUS2PL2303;
+	if (strcasecmp("dlr3"	,connection) == 0) s->ConnectionType = GCT_FBUS2DLR3;
+	if (strcasecmp("fbusdlr3"	,connection) == 0) s->ConnectionType = GCT_FBUS2DLR3;
+	if (strcasecmp("dku5"	,connection) == 0) s->ConnectionType = GCT_DKU5FBUS2;
+	if (strcasecmp("dku5fbus"	,connection) == 0) s->ConnectionType = GCT_DKU5FBUS2;
+	if (strcasecmp("dku2"	,connection) == 0) s->ConnectionType = GCT_DKU2PHONET;
+	if (strcasecmp("dku2phonet"	,connection) == 0) s->ConnectionType = GCT_DKU2PHONET;
+	if (strcasecmp("dku2at"	,connection) == 0) s->ConnectionType = GCT_DKU2AT;
 
         // for serial ports assigned by bt stack
-	if (mystrncasecmp("fbusblue"	,connection,0)) s->ConnectionType = GCT_FBUS2BLUE;
-	if (mystrncasecmp("phonetblue"	,connection,0)) s->ConnectionType = GCT_PHONETBLUE;
+	if (strcasecmp("fbusblue"	,connection) == 0) s->ConnectionType = GCT_FBUS2BLUE;
+	if (strcasecmp("phonetblue"	,connection) == 0) s->ConnectionType = GCT_PHONETBLUE;
 	// bt
-	if (mystrncasecmp("blueobex"	,connection,0)) s->ConnectionType = GCT_BLUEOBEX;
-	if (mystrncasecmp("bluephonet"	,connection,0)) s->ConnectionType = GCT_BLUEPHONET;
-	if (mystrncasecmp("blueat"	,connection,0)) s->ConnectionType = GCT_BLUEAT;
-	if (mystrncasecmp("bluerfobex"	,connection,0)) s->ConnectionType = GCT_BLUEOBEX;
-	if (mystrncasecmp("bluerffbus"	,connection,0)) s->ConnectionType = GCT_BLUEFBUS2;
-	if (mystrncasecmp("bluerfphonet",connection,0)) s->ConnectionType = GCT_BLUEPHONET;
-	if (mystrncasecmp("bluerfat"	,connection,0)) s->ConnectionType = GCT_BLUEAT;
-	if (mystrncasecmp("bluerfgnapbus",connection,0)) s->ConnectionType = GCT_BLUEGNAPBUS;
+	if (strcasecmp("blueobex"	,connection) == 0) s->ConnectionType = GCT_BLUEOBEX;
+	if (strcasecmp("bluephonet"	,connection) == 0) s->ConnectionType = GCT_BLUEPHONET;
+	if (strcasecmp("blueat"	,connection) == 0) s->ConnectionType = GCT_BLUEAT;
+	if (strcasecmp("bluerfobex"	,connection) == 0) s->ConnectionType = GCT_BLUEOBEX;
+	if (strcasecmp("bluerffbus"	,connection) == 0) s->ConnectionType = GCT_BLUEFBUS2;
+	if (strcasecmp("bluerfphonet",connection) == 0) s->ConnectionType = GCT_BLUEPHONET;
+	if (strcasecmp("bluerfat"	,connection) == 0) s->ConnectionType = GCT_BLUEAT;
+	if (strcasecmp("bluerfgnapbus",connection) == 0) s->ConnectionType = GCT_BLUEGNAPBUS;
 
 	// old "serial" irda
-	if (mystrncasecmp("infrared"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
-	if (mystrncasecmp("fbusirda"	,connection,0)) s->ConnectionType = GCT_FBUS2IRDA;
+	if (strcasecmp("infrared"	,connection) == 0) s->ConnectionType = GCT_FBUS2IRDA;
+	if (strcasecmp("fbusirda"	,connection) == 0) s->ConnectionType = GCT_FBUS2IRDA;
 	// socket irda
-	if (mystrncasecmp("irda"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
-	if (mystrncasecmp("irdaphonet"	,connection,0)) s->ConnectionType = GCT_IRDAPHONET;
-	if (mystrncasecmp("irdaat"	,connection,0)) s->ConnectionType = GCT_IRDAAT;
-	if (mystrncasecmp("irdaobex"	,connection,0)) s->ConnectionType = GCT_IRDAOBEX;
-	if (mystrncasecmp("irdagnapbus" ,connection,0)) s->ConnectionType = GCT_IRDAGNAPBUS;
+	if (strcasecmp("irda"	,connection) == 0) s->ConnectionType = GCT_IRDAPHONET;
+	if (strcasecmp("irdaphonet"	,connection) == 0) s->ConnectionType = GCT_IRDAPHONET;
+	if (strcasecmp("irdaat"	,connection) == 0) s->ConnectionType = GCT_IRDAAT;
+	if (strcasecmp("irdaobex"	,connection) == 0) s->ConnectionType = GCT_IRDAOBEX;
+	if (strcasecmp("irdagnapbus" ,connection) == 0) s->ConnectionType = GCT_IRDAGNAPBUS;
 
-	if (mystrncasecmp("at"		,connection,2)) {
+	if (strncasecmp("at"		,connection,2) == 0) {
 		/* Use some resonable default, when no speed defined */
 		if (strlen(connection) == 2) {
 			s->Speed = 19200;
@@ -315,7 +315,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 
 		/* Model auto */
 		if (s->CurrentConfig->Model[0]==0) {
-			if (mystrncasecmp(s->CurrentConfig->LockDevice,"yes",0)) {
+			if (strcasecmp(s->CurrentConfig->LockDevice,"yes") == 0) {
 				error = lock_device(s->CurrentConfig->Device, &(s->LockFile));
 				if (error != ERR_NONE) return error;
 			}
@@ -406,7 +406,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 
 		/* We didn't open device earlier ? Make it now */
 		if (!s->opened) {
-			if (mystrncasecmp(s->CurrentConfig->LockDevice,"yes",0)) {
+			if (strcasecmp(s->CurrentConfig->LockDevice,"yes") == 0) {
 				error = lock_device(s->CurrentConfig->Device, &(s->LockFile));
 				if (error != ERR_NONE) return error;
 			}
@@ -436,12 +436,12 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
 		if (error != ERR_NONE) return error;
 
-		if (mystrncasecmp(s->CurrentConfig->StartInfo,"yes",0)) {
+		if (strcasecmp(s->CurrentConfig->StartInfo,"yes") == 0) {
 			s->Phone.Functions->ShowStartInfo(s,true);
 			s->Phone.Data.StartInfoCounter = 30;
 		}
 
-		if (mystrncasecmp(s->CurrentConfig->SyncTime,"yes",0)) {
+		if (strcasecmp(s->CurrentConfig->SyncTime,"yes") == 0) {
 			GSM_GetCurrentDateTime (&time);
 			s->Phone.Functions->SetDateTime(s,&time);
 		}
@@ -491,7 +491,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 
 	smprintf(s,"[Closing]\n");
 
-	if (mystrncasecmp(s->CurrentConfig->StartInfo,"yes",0)) {
+	if (strcasecmp(s->CurrentConfig->StartInfo,"yes") == 0) {
 		if (s->Phone.Data.StartInfoCounter > 0) s->Phone.Functions->ShowStartInfo(s,false);
 	}
 
@@ -564,7 +564,7 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned char *buffer,
 	GSM_Error		error;
 	int			reply;
 
-	if (mystrncasecmp(s->CurrentConfig->StartInfo,"yes",0)) {
+	if (strcasecmp(s->CurrentConfig->StartInfo,"yes") == 0) {
 		if (Phone->StartInfoCounter > 0) {
 			Phone->StartInfoCounter--;
 			if (Phone->StartInfoCounter == 0) s->Phone.Functions->ShowStartInfo(s,false);
@@ -817,7 +817,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		sprintf(section,"gammu%i",num);
 	}
         for (h = cfg_info; h != NULL; h = h->Next) {
-                if (mystrncasecmp(section, h->SectionName, strlen(section))) {
+                if (strncasecmp(section, h->SectionName, strlen(section)) == 0) {
 			found = true;
 			break;
 		}

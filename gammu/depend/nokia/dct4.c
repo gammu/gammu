@@ -70,8 +70,8 @@ static bool answer_yes2(char *text)
 		printf(_("%s (yes/no) ? "),text);
 		len=GetLine(stdin, ans, 99);
 		if (len==-1) exit(-1);
-		if (mystrncasecmp(ans, _("yes"),0)) return true;
-		if (mystrncasecmp(ans, _("no") ,0)) return false;
+		if (strcasecmp(ans, _("yes")) == 0) return true;
+		if (strcasecmp(ans, _("no")) == 0) return false;
 	}
 }
 
@@ -922,16 +922,16 @@ void DCT4SetLight(int argc, char *argv[])
 	N6510_PHONE_LIGHTS 	type;
 	bool			enable;
 
-	if (mystrncasecmp(argv[2],"display",0)) { 	type = N6510_LIGHT_DISPLAY;
-	} else if (mystrncasecmp(argv[2],"keypad",0)) {	type = N6510_LIGHT_KEYPAD;
-	} else if (mystrncasecmp(argv[2],"torch",0)) {	type = N6510_LIGHT_TORCH;
+	if (strcasecmp(argv[2],"display") == 0) { 	type = N6510_LIGHT_DISPLAY;
+	} else if (strcasecmp(argv[2],"keypad") == 0) {	type = N6510_LIGHT_KEYPAD;
+	} else if (strcasecmp(argv[2],"torch") == 0) {	type = N6510_LIGHT_TORCH;
 	} else {
 		printf(_("What lights should I enable (\"%s\") ?\n"),argv[2]);
 		exit(-1);
 	}
 
-	if (mystrncasecmp(argv[3],"on",0)) { 		enable = true;
-	} else if (mystrncasecmp(argv[3],"off",0)) {	enable = false;
+	if (strcasecmp(argv[3],"on") == 0) { 		enable = true;
+	} else if (strcasecmp(argv[3],"off") == 0) {	enable = false;
 	} else {
 		printf(_("What should I do (\"%s\") ?\n"),argv[3]);
 		exit(-1);
@@ -1385,14 +1385,14 @@ void DCT4GetPBKFeatures(int argc, char *argv[])
 				 0x05, 	// memory type
 				 0x00};
 
-	if (mystrncasecmp(argv[2],"DC",0)) MemoryType=MEM_DC;
-	if (mystrncasecmp(argv[2],"ON",0)) MemoryType=MEM_ON;
-	if (mystrncasecmp(argv[2],"RC",0)) MemoryType=MEM_RC;
-	if (mystrncasecmp(argv[2],"MC",0)) MemoryType=MEM_MC;
-	if (mystrncasecmp(argv[2],"ME",0)) MemoryType=MEM_ME;
-	if (mystrncasecmp(argv[2],"SM",0)) MemoryType=MEM_SM;
-	if (mystrncasecmp(argv[2],"VM",0)) MemoryType=MEM_VM;
-	if (mystrncasecmp(argv[2],"FD",0)) MemoryType=MEM_FD;
+	if (strcasecmp(argv[2],"DC") == 0) MemoryType=MEM_DC;
+	if (strcasecmp(argv[2],"ON") == 0) MemoryType=MEM_ON;
+	if (strcasecmp(argv[2],"RC") == 0) MemoryType=MEM_RC;
+	if (strcasecmp(argv[2],"MC") == 0) MemoryType=MEM_MC;
+	if (strcasecmp(argv[2],"ME") == 0) MemoryType=MEM_ME;
+	if (strcasecmp(argv[2],"SM") == 0) MemoryType=MEM_SM;
+	if (strcasecmp(argv[2],"VM") == 0) MemoryType=MEM_VM;
+	if (strcasecmp(argv[2],"FD") == 0) MemoryType=MEM_FD;
 	if (MemoryType==0) {
 		printf(_("ERROR: unknown memory type (\"%s\")\n"),argv[2]);
 		exit (-1);

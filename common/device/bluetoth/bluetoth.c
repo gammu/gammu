@@ -31,9 +31,9 @@ GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 	GSM_Error error;
 
 #ifdef BLUETOOTH_RF_SEARCHING
-	if (!mystrncasecmp(s->CurrentConfig->Connection, "bluerf", 6)) return bluetooth_findchannel(s);
+	if (!strncasecmp(s->CurrentConfig->Connection, "bluerf", 6) == 0) return bluetooth_findchannel(s);
 #else
-	if (!mystrncasecmp(s->CurrentConfig->Connection, "bluerf", 6)) return ERR_SOURCENOTAVAILABLE;
+	if (!strncasecmp(s->CurrentConfig->Connection, "bluerf", 6) == 0) return ERR_SOURCENOTAVAILABLE;
 #endif
 
 	switch (s->ConnectionType) {

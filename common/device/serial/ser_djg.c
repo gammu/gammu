@@ -207,22 +207,22 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	int			i;
 
 	/**** Set various things according to com port number */
-	if (mystrncasecmp(s->CurrentConfig->Device,"com1:",0)) {
+	if (strcasecmp(s->CurrentConfig->Device,"com1:") == 0) {
 		Port 		= 0x03F8;
 		VectorNum 	= 0x0C;
 		EnableIRQ 	= 0xEF;
 		DisableIRQ 	= 0x10;
-	} else if (mystrncasecmp(s->CurrentConfig->Device,"com2:",0)) {
+	} else if (strcasecmp(s->CurrentConfig->Device,"com2:") == 0) {
 		Port 		= 0x02F8;
 		VectorNum 	= 0x0B;
 		EnableIRQ 	= 0xF7;
 		DisableIRQ 	= 0x08;
-	} else if (mystrncasecmp(s->CurrentConfig->Device,"com3:",0)) {
+	} else if (strcasecmp(s->CurrentConfig->Device,"com3:") == 0) {
 		Port 		= 0x03E8;
 		VectorNum 	= 0x0C;
 		EnableIRQ 	= 0xEF;
 		DisableIRQ 	= 0x10;
-	} else if (mystrncasecmp(s->CurrentConfig->Device,"com4:",0)) {
+	} else if (strcasecmp(s->CurrentConfig->Device,"com4:") == 0) {
 		Port 		= 0x02E8;
 		VectorNum 	= 0x0B;
 		EnableIRQ 	= 0xF7;
