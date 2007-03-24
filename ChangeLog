@@ -58,6 +58,7 @@ For additionals materials and links to them see readme.txt
 [-] * Fixed decoding of date from backup (bug #267).
 [-] * Backup saves and restores numbers as same type (bug #266).
 [+] * Support for call notifications on AT phones.
+[+] * Support for batch mode - you can script gammu (thanks to ace).
 
 20070311 - 1.10.1
 [-] * Fixed encoding of name for Nokia phones.

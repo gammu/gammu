@@ -59,6 +59,8 @@ volatile bool 			gshutdown 		= false;
 volatile bool 			wasincomingsms 		= false;
 GSM_MultiSMSMessage		IncomingSMSData;
 bool 				phonedb 		= false;
+bool				batch			= false;
+bool				batchConn		= false;
 
 void interrupt(int sign)
 {
@@ -114,9 +116,14 @@ void GSM_Init(bool checkerror)
 	GSM_File 	PhoneDB;
 	unsigned char 	buff[200],ver[200];
 	int	 	pos=0,oldpos=0,i;
+	if (batch && batchConn) return;
 
 	error=GSM_InitConnection(&s,3);
 	if (checkerror) Print_Error(error);
+
+	if (batch) {
+		if (error == ERR_NONE) { batchConn=true; }
+	}
 
 	Phone=s.Phone.Functions;
 
@@ -170,8 +177,10 @@ void GSM_Init(bool checkerror)
 
 void GSM_Terminate(void)
 {
-	error=GSM_TerminateConnection(&s);
-	Print_Error(error);
+	if (!batch) {
+		error=GSM_TerminateConnection(&s);
+		Print_Error(error);
+	}
 }
 
 static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
@@ -6182,7 +6191,7 @@ static void ClearMemory(GSM_MemoryType type, const char *question)
 				Pbk.EntriesNum	= 0;
 				error=Phone->DeleteMemory(&s, &Pbk);
 				Print_Error(error);
-				fprintf(stderr, _("%cClearing: %i percent"), 13, 
+				fprintf(stderr, _("%cClearing: %i percent"), 13,
 						(i + 1) * 100 / (MemStatus.MemoryUsed + MemStatus.MemoryFree));
 				if (gshutdown) {
 					GSM_Terminate();
@@ -6755,31 +6764,31 @@ static void NokiaComposer(int argc, char *argv[])
 			}
 			if (started) {
 				switch (Note->Duration) {
-					case Duration_Full: printf(_("1")); break;
-					case Duration_1_2 : printf(_("2")); break;
-					case Duration_1_4 : printf(_("4")); break;
-					case Duration_1_8 : printf(_("8")); break;
-					case Duration_1_16: printf(_("16"));break;
-					case Duration_1_32: printf(_("32"));break;
+					case Duration_Full: printf("1"); break;
+					case Duration_1_2 : printf("2"); break;
+					case Duration_1_4 : printf("4"); break;
+					case Duration_1_8 : printf("8"); break;
+					case Duration_1_16: printf("16");break;
+					case Duration_1_32: printf("32");break;
 				}
 				if (Note->DurationSpec == DottedNote) printf(_("."));
 				switch (Note->Note) {
-					case Note_C  	: printf(_("c"));	break;
-					case Note_Cis	: printf(_("#c"));	break;
-					case Note_D  	 :printf(_("d"));	break;
-					case Note_Dis	: printf(_("#d"));	break;
-					case Note_E  	: printf(_("e"));	break;
-					case Note_F  	: printf(_("f"));	break;
-					case Note_Fis	: printf(_("#f"));	break;
-					case Note_G  	: printf(_("g"));	break;
-					case Note_Gis	: printf(_("#g"));	break;
-					case Note_A  	: printf(_("a"));	break;
-					case Note_Ais	: printf(_("#a"));	break;
-					case Note_H  	: printf(_("h"));	break;
-					case Note_Pause : printf(_("-"));	break;
+					case Note_C  	: printf("c");	break;
+					case Note_Cis	: printf("#c");	break;
+					case Note_D  	 :printf("d");	break;
+					case Note_Dis	: printf("#d");	break;
+					case Note_E  	: printf("e");	break;
+					case Note_F  	: printf("f");	break;
+					case Note_Fis	: printf("#f");	break;
+					case Note_G  	: printf("g");	break;
+					case Note_Gis	: printf("#g");	break;
+					case Note_A  	: printf("a");	break;
+					case Note_Ais	: printf("#a");	break;
+					case Note_H  	: printf("h");	break;
+					case Note_Pause : printf("-");	break;
 				}
-				if (Note->Note != Note_Pause) printf(_("%i"),Note->Scale - 4);
-				printf(_(" "));
+				if (Note->Note != Note_Pause) printf("%i",Note->Scale - 4);
+				printf(" ");
 			}
 		}
 	}
@@ -6794,14 +6803,14 @@ static void NokiaComposer(int argc, char *argv[])
 			}
 			if (started) {
 				switch (Note->Note) {
-	      				case Note_C  : case Note_Cis:	printf(_("1"));break;
-	      				case Note_D  : case Note_Dis:	printf(_("2"));break;
-	      				case Note_E  :			printf(_("3"));break;
-	      				case Note_F  : case Note_Fis:	printf(_("4"));break;
-	      				case Note_G  : case Note_Gis:	printf(_("5"));break;
-	      				case Note_A  : case Note_Ais:	printf(_("6"));break;
-	      				case Note_H  :			printf(_("7"));break;
-	      				default      :			printf(_("0"));break;
+	      				case Note_C  : case Note_Cis:	printf("1");break;
+	      				case Note_D  : case Note_Dis:	printf("2");break;
+	      				case Note_E  :			printf("3");break;
+	      				case Note_F  : case Note_Fis:	printf("4");break;
+	      				case Note_G  : case Note_Gis:	printf("5");break;
+	      				case Note_A  : case Note_Ais:	printf("6");break;
+	      				case Note_H  :			printf("7");break;
+	      				default      :			printf("0");break;
 				}
 				if (Note->DurationSpec == DottedNote) printf(_("(longer)"));
 	    			switch (Note->Note) {
@@ -6834,17 +6843,17 @@ static void NokiaComposer(int argc, char *argv[])
 				}
 				if (Duration > DefNoteDuration) {
 		        		while (DefNoteDuration != Duration) {
-						printf(_("9"));
+						printf("9");
 			  			DefNoteDuration = DefNoteDuration * 2;
 					}
 			      	}
 				if (Duration < DefNoteDuration) {
 		        		while (DefNoteDuration != Duration) {
-						printf(_("8"));
+						printf("8");
 			  			DefNoteDuration = DefNoteDuration / 2;
 					}
 			      	}
-				printf(_(" "));
+				printf(" ");
 			}
 		}
 	}
@@ -9474,6 +9483,82 @@ static void Foo(int argc, char *argv[])
 }
 #endif
 
+char CheckParameters(char start, int argc, char *argv[]);
+
+/**
+ * Reads commands from file (argv[2]) or stdin and executes them
+ * sequentially as if they were given on the command line. Also allows
+ * recursive calling (nested batches in the batch files).
+ *
+ * @todo Allocate memory dynamically
+ */
+static void RunBatch(int argc, char *argv[]) {
+	FILE *bf;
+	char ln[2000];
+	int i,j,c=0,argsc;
+	char* argsv[20];
+	bool origbatch;
+	char *name;
+	char std_name[] = "stdin";
+
+	if (argc == 2 || strcmp(argv[2], "-") == 0) {
+		bf = stdin;
+		name = std_name;
+	} else {
+		bf = fopen(argv[2], "r");
+		name = argv[2];
+	}
+
+	if (bf == NULL) {
+		printf(_("Batch file could not be opened: %s\n"), argv[2]);
+		return; /* not exit(), so that any parent batch can continue */
+	}
+
+	argsv[0] = argv[0];
+	origbatch = batch;
+	batch = true;
+	while (!feof(bf)) {
+		ln[0] = 0;
+		fgets(ln, sizeof(ln) - 2, bf);
+		if (ln[strlen(ln) - 2] == 0x0D ) {
+		/* reduce CRLF to LF so we have the same EOL on Windows and Linux */
+			ln[strlen(ln) - 2] = 0x0A;
+			ln[strlen(ln) - 1] = 0;
+		}
+		if (strlen(ln) > 1 && ln[0] != '#') {
+			/* if line is not empty and is not a comment, split words into strings in the array argsv */
+			i=0;j=0;
+			argsc=0;
+			while (i < strlen(ln)) {
+				if (ln[i]==' ' || ln[i]==0x0A) {
+					argsc++;
+					argsv[argsc] = malloc(i-j+1);
+					strncpy(argsv[argsc], ln + j, i - j);
+					argsv[argsc][i - j] = 0;
+					j = i + 1;
+				}
+				i++;
+			}
+			if(argsc > 0) {
+				/* we have some usable command and parameters, send them into standard processing */
+				printf(_("----------------------------------------------------------------------------\n"));
+				printf(_("Executing batch \"%s\" - command %i: %s"), name, ++c, ln);
+				CheckParameters(0, argsc + 1, argsv);
+				/* FIXME: handle return value somehow ... */
+				for (i = 1; i <= argsc; i++) {
+					free(argsv[i]);
+				}
+			}
+		}
+	}
+	if (!origbatch) {
+		/* only close the batch if we are not in a nested batch */
+		batch=false;
+		if (batchConn) { GSM_Terminate(); }
+	}
+	fclose(bf);
+}
+
 static GSM_Parameters Parameters[] = {
 #ifdef DEBUG
 	{"--foo",			0, 0, Foo,			{0},				""},
@@ -9708,6 +9793,7 @@ static GSM_Parameters Parameters[] = {
 	{"--decodebinarydump",		1, 2, decodebinarydump,		{H_Decode,0},			"file [phonemodel]"},
 	{"--makeconverttable",		1, 1, MakeConvertTable,		{H_Decode,0},			"file"},
 #endif
+	{"--batch",			0, 1, RunBatch,			{H_Other,0},			"[file]"},
 	{"",				0, 0, NULL			}
 };
 
@@ -9913,7 +9999,7 @@ static void Help(int argc, char *argv[])
 			if (Parameters[j].help[0] == 0) {
 				printf("\n");
 			} else {
-				HelpSplit(cols - 1, strlen(Parameters[j].parameter) + 1, Parameters[j].help);
+				HelpSplit(cols - 1, strlen(Parameters[j].parameter) + 1, gettext(Parameters[j].help));
 			}
 		}
 		j++;
@@ -9939,18 +10025,65 @@ int FoundVersion(unsigned char *Buffer)
 	return retval + atoi(Buffer+pos);
 }
 
+char CheckParameters(char start, int argc, char *argv[]) {
+	int 		z = 0;
+ 	bool		count_failed = false;
+
+	/* Check parameters */
+	while (Parameters[z].Function != NULL) {
+		if (mystrncasecmp(Parameters[z].parameter,argv[1+start], 0)) {
+			if (argc-2-start < Parameters[z].min_arg) {
+				count_failed = true;
+				if (Parameters[z].min_arg==Parameters[z].max_arg) {
+					printf(_("More parameters required (function accepts %d)\n"), Parameters[z].min_arg);
+				} else {
+					printf(_("More parameters required (function accepts %d to %d)\n"), Parameters[z].min_arg, Parameters[z].max_arg);
+				}
+				if (Parameters[z].help[0] != 0) {
+					printf(_("Help: %s\n"), gettext(Parameters[z].help));
+				}
+			} else if (argc-2-start > Parameters[z].max_arg) {
+				count_failed = true;
+				if (Parameters[z].min_arg==Parameters[z].max_arg) {
+					printf(_("Too many parameters (function accepts %d)\n"), Parameters[z].min_arg);
+				} else {
+					printf(_("Too many parameters (function accepts %d to %d)\n"), Parameters[z].min_arg, Parameters[z].max_arg);
+				}
+				if (Parameters[z].help[0] != 0) {
+					printf(_("Help: %s\n"), gettext(Parameters[z].help));
+				}
+			} else {
+				Parameters[z].Function(argc - start, argv + start);
+ 				break;
+ 			}
+ 		}
+		z++;
+	}
+
+	/* Tell user when we did nothing */
+	if (Parameters[z].Function == NULL) {
+		if (!count_failed) {
+			HelpGeneral();
+			printf(_("Bad option!\n"));
+			return 2;
+		}
+		return 1;
+ 	}
+	return 0;
+}
+
 int main(int argc, char *argv[])
 {
 	GSM_File	RSS;
 	int		rsslevel = 0,pos = 0,oldpos = 0;
-	int 		z = 0,start=0;
+	int 		start = 0;
 	unsigned int	i;
 	int		only_config = -1;
 #if !defined(WIN32) && !defined(DJGPP) && defined(LOCALE_PATH)
 	char		*locale, locale_file[201];
 #endif
 	char		*cp,*rss,buff[200];
- 	bool		count_failed = false;
+
 
 	s.opened 	= false;
 	s.msg	 	= NULL;
@@ -10129,48 +10262,8 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	/* Check parameters */
-	while (Parameters[z].Function != NULL) {
-		if (mystrncasecmp(Parameters[z].parameter,argv[1+start], 0)) {
-			if (argc-2-start < Parameters[z].min_arg) {
-				count_failed = true;
-				printf(_("More parameters required (accepted "));
-				if (Parameters[z].min_arg==Parameters[z].max_arg) {
-					printf(_("%i"),Parameters[z].min_arg);
-				} else {
-					printf(_("from %i to %i"),Parameters[z].min_arg,Parameters[z].max_arg);
-				}
-				if (Parameters[z].help[0] != 0) {
-					printf(_(": %s"),Parameters[z].help);
-				}
-				printf(_(")\n"));
-			} else if (argc-2-start > Parameters[z].max_arg) {
-				count_failed = true;
-				printf(_("Too many parameters (accepted "));
-				if (Parameters[z].min_arg==Parameters[z].max_arg) {
-					printf(_("%i"),Parameters[z].min_arg);
-				} else {
-					printf(_("from %i to %i"),Parameters[z].min_arg,Parameters[z].max_arg);
-				}
-				if (Parameters[z].help[0] != 0) {
-					printf(_(": %s"),Parameters[z].help);
-				}
-				printf(_(")\n"));
-			} else {
-				Parameters[z].Function(argc - start, argv + start);
- 				break;
- 			}
- 		}
-		z++;
-	}
 
-	/* Tell user when we did nothing */
-	if (Parameters[z].Function == NULL) {
-		if (!count_failed) {
-			HelpGeneral();
-			printf(_("Bad option!\n"));
-		}
- 	}
+	CheckParameters(start, argc, argv);
 
      	/* Close debug output if opened */
      	if (di.df!=stdout) fclose(di.df);
