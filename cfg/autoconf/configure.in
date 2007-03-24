@@ -171,7 +171,7 @@ AC_ARG_WITH(docdir,
 AC_SUBST(DOC_DIR)
 
 dnl locales directory
-LOCALE_DIR="$datadir/gammu"
+LOCALE_DIR="$datadir/locale"
 AC_ARG_WITH(localedir,
         [  --with-localedir=DIR    Specifies the localisation directory],
         [ if test x$withval = xyes; then
@@ -418,9 +418,9 @@ AC_ARG_ENABLE(debug,
         [AC_DEFINE(DEBUG) debug="yes"],
         [debug="no"])
 AC_ARG_ENABLE(cb,
-        [  --enable-cb             Enable Cell Broadcast messages support],
-        [AC_DEFINE(GSM_ENABLE_CELLBROADCAST) gsm_enable_cellbroadcast="yes"],
-        [gsm_enable_cellbroadcast="no"])
+        [  --disable-cb             Disable Cell Broadcast messages support],
+        [gsm_enable_cellbroadcast="no"],
+        [AC_DEFINE(GSM_ENABLE_CELLBROADCAST) gsm_enable_cellbroadcast="yes"])
 AC_ARG_ENABLE(7110incoming,
         [  --enable-7110incoming   Enable Nokia 62xx/71xx/9xxx incoming call/SMS info],
         [AC_DEFINE(GSM_ENABLE_N71_92INCOMINGINFO) gsm_enable_71_92incominginfo="yes"],

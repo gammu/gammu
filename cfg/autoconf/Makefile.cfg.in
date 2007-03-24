@@ -35,6 +35,7 @@ CHECKINSTALL    = @CHECKINSTALL@
 # where is temporary directory and directory for making RPM
 prefix          = @prefix@
 exec_prefix     = @exec_prefix@
+datarootdir     = @datarootdir@
 INSTALL_BIN_DIR	= @bindir@
 INSTALL_DOC_DIR = @DOC_DIR@
 INSTALL_LOC_DIR = @LOCALE_DIR@
