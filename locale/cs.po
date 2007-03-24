@@ -1671,7 +1671,7 @@ msgstr "Čas  : %02d:%02d\n"
 #: gammu/gammu.c:806
 #, c-format
 msgid "Text: \"%s\"\n"
-msgstr "Text : \"%s\"n"
+msgstr "Text : \"%s\"\n"
 
 #: gammu/gammu.c:848
 #, c-format

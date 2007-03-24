@@ -1666,7 +1666,7 @@ msgstr "Setze die Uhrzeit im Telefon auf die Uhrzeit im PC.\n"
 #: gammu/gammu.c:745
 #, c-format
 msgid "Updating specified parts of date and time in phone.\n"
-msgstr "Aktualiseire die angegebenen Teile von Datum und Uhrzeit im Telefon."
+msgstr "Aktualiseire die angegebenen Teile von Datum und Uhrzeit im Telefon.\n"
 
 #: gammu/gammu.c:795
 #, fuzzy, c-format
@@ -1732,7 +1732,8 @@ msgstr "Anrufergruppe    : \"%d\"\n"
 #, c-format
 msgid "Caller group number too high, please increase buffer in sources!\n"
 msgstr ""
-"Anrufergruppennummer zu groß, bitte vergrößern Sie den Puffer in den Quellen!"
+"Anrufergruppennummer zu groß, bitte vergrößern Sie den Puffer in den "
+"Quellen!\n"
 
 #: gammu/gammu.c:886
 #, c-format
@@ -2486,7 +2487,7 @@ msgstr "Eigenes Netz\n"
 #: gammu/gammu.c:1663 gammu/gammu.c:1916
 #, c-format
 msgid "roaming network\n"
-msgstr "Roaming Netz"
+msgstr "Roaming Netz\n"
 
 #: gammu/gammu.c:1664 gammu/gammu.c:1917
 #, c-format
@@ -3235,7 +3236,7 @@ msgstr "Bitmap      : aktiviert\n"
 #: gammu/gammu.c:3007
 #, c-format
 msgid "Bitmap      : disabled\n"
-msgstr "Bitmap      : deaktiviertn"
+msgstr "Bitmap      : deaktiviert\n"
 
 #: gammu/gammu.c:3010
 #, c-format
@@ -5583,9 +5584,9 @@ msgstr ""
 "verfügbar!\n"
 
 #, fuzzy
-#~ msgid "from %i to %i"
-#~ msgstr ", Teil %i von %i"
-
-#, fuzzy
 #~ msgid ": %s"
 #~ msgstr "Datum: %s\n"
+
+#, fuzzy
+#~ msgid "from %i to %i"
+#~ msgstr ", Teil %i von %i"

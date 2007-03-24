@@ -5452,9 +5452,9 @@ msgstr ""
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr ""
 
-#~ msgid "from %i to %i"
-#~ msgstr "de %i a %i"
-
 #, fuzzy
 #~ msgid ": %s"
 #~ msgstr "Fecha: %s\n"
+
+#~ msgid "from %i to %i"
+#~ msgstr "de %i a %i"

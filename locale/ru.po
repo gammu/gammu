@@ -1034,7 +1034,7 @@ msgstr "Ожидается ввод кода защиты.\n"
 #: gammu/gammu.c:82
 #, c-format
 msgid "Waiting for PIN.\n"
-msgstr "Ожидается PIN."
+msgstr "Ожидается PIN.\n"
 
 #: gammu/gammu.c:85
 #, c-format
@@ -1069,7 +1069,7 @@ msgstr "Состояние безопасности: "
 #: gammu/gammu.c:171
 #, c-format
 msgid "INFO: there is later phone firmware (%s instead of %s) available !\n"
-msgstr "ИНФО: для телефона доступна новая прошивка (%s вместо %s)!"
+msgstr "ИНФО: для телефона доступна новая прошивка (%s вместо %s)!\n"
 
 #: gammu/gammu.c:191
 #, c-format
@@ -1094,7 +1094,7 @@ msgstr "%s (yes/no/ALL/ONLY/NONE)?"
 #: gammu/gammu.c:228
 #, c-format
 msgid "YES (always)\n"
-msgstr "ДА (для всех)"
+msgstr "ДА (для всех)\n"
 
 #: gammu/gammu.c:232
 #, c-format
@@ -1119,7 +1119,7 @@ msgstr "Позвонить\n"
 #: gammu/gammu.c:276 gammu/gammu.c:7062
 #, c-format
 msgid "Meeting\n"
-msgstr "Встреча"
+msgstr "Встреча\n"
 
 #: gammu/gammu.c:277 gammu/gammu.c:7063
 #, c-format
@@ -3484,7 +3484,7 @@ msgstr "Сохранение SMS %i/%i\n"
 #: gammu/gammu.c:4551
 #, c-format
 msgid "Saved in folder \"%s\", location %i"
-msgstr "Сохранено в папке \"%s\", размещение %i\n"
+msgstr "Сохранено в папке \"%s\", размещение %i"
 
 #: gammu/gammu.c:4554
 #, c-format
@@ -4460,7 +4460,7 @@ msgstr "Категорию какого типа нужно добавить (\"
 #: gammu/gammu.c:7009
 #, c-format
 msgid "Text too long, truncating to %d chars!\n"
-msgstr "Текст слишком длинный. Обрезается до %d символов."
+msgstr "Текст слишком длинный. Обрезается до %d символов.\n"
 
 #: gammu/gammu.c:7035
 #, c-format
@@ -5186,7 +5186,7 @@ msgstr " версия %s"
 #: gammu/gammu.c:8935
 #, c-format
 msgid " created by %s\n"
-msgstr " автор: %s"
+msgstr " автор: %s\n"
 
 #: gammu/gammu.c:8982
 #, c-format
@@ -5567,9 +5567,6 @@ msgstr "ИНФО: Есть более новая стабильная верси
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr "ИНФО: Есть более новая тестовая версия Gammu (%s против of %s).\n"
 
-#~ msgid "from %i to %i"
-#~ msgstr "от %i до %i"
-
 #, fuzzy
 #~ msgid ": %s"
 #~ msgstr "Дата: %s\n"
@@ -5580,3 +5577,6 @@ msgstr "ИНФО: Есть более новая тестовая версия G
 #~ msgstr ""
 #~ "Имя        : \"%s\"\n"
 #~ "\n"
+
+#~ msgid "from %i to %i"
+#~ msgstr "от %i до %i"

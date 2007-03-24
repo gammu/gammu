@@ -3240,7 +3240,7 @@ msgstr "Immagine    : abilitata\n"
 #: gammu/gammu.c:3023
 #, c-format
 msgid "No operator logo in phone\n"
-msgstr "Nessun logo operatore nel telefono"
+msgstr "Nessun logo operatore nel telefono\n"
 
 #: gammu/gammu.c:3028
 #, c-format
@@ -5511,9 +5511,9 @@ msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr ""
 
 #, fuzzy
-#~ msgid "from %i to %i"
-#~ msgstr ", parte %i di %i"
-
-#, fuzzy
 #~ msgid ": %s"
 #~ msgstr "Data   : %s\n"
+
+#, fuzzy
+#~ msgid "from %i to %i"
+#~ msgstr ", parte %i di %i"

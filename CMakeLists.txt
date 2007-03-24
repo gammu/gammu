@@ -132,6 +132,9 @@ find_package (PkgConfig)
 # Standard packages
 macro_optional_find_package (Doxygen)
 
+# Packages in sources
+macro_optional_find_package (Gettext)
+
 # Check disabled for cross
 if (NOT CROSS_MINGW)
 
@@ -141,7 +144,6 @@ if (NOT CROSS_MINGW)
     # Packages in sources
     macro_optional_find_package (MySQL)
     macro_optional_find_package (Postgres)
-    macro_optional_find_package (Gettext)
     macro_optional_find_package (GettextLibs)
 
     # Search for needed includes and functions
@@ -189,7 +191,6 @@ set (LOCALES
     it 
     pl 
     ru 
-    us
     )
 
 set (EXAMPLES
@@ -414,6 +415,13 @@ set (BINARY_SRC
 	gammu/sniff.c
 	gammu/gammu.c)
 
+# Locales
+set (LOCALEFILES)
+foreach (LOCALE ${LOCALES})
+    list(APPEND LOCALEFILES "locale/${LOCALE}.po")
+endforeach (LOCALE ${LOCALES})
+GETTEXT_CREATE_TRANSLATIONS("locale/gammu.pot" ALL ${LOCALEFILES})
+
 # Library
 add_library (Gammu ${LIBRARY_SRC})
 if (CROSS_MINGW)
@@ -632,14 +640,6 @@ foreach (HEADER ${HEADERS})
         COMPONENT "development"
         )
 endforeach (HEADER)
-
-foreach (LOCALE ${LOCALES})
-    install (
-        FILES "locale/gammu_${LOCALE}.txt" 
-        DESTINATION "${INSTALL_LOC_DIR}"
-        COMPONENT "locales"
-        )
-endforeach (LOCALE)
 
 install (
     FILES "${Gammu_BINARY_DIR}/cfg/gammu.pc"
