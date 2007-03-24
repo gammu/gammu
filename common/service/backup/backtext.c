@@ -50,7 +50,7 @@ GSM_Error FindBackupChecksum(char *FileName, bool UseUnicode, char *checksum)
 		}
 	} else {
 	        for (h = file_info; h != NULL; h = h->Next) {
-	            	if (mystrncasecmp("Checksum", h->SectionName, 8)) continue;
+	            	if (strncasecmp("Checksum", h->SectionName, 8) == 0) continue;
 
 			buffer = (unsigned char *)realloc(buffer,len+strlen(h->SectionName)+1);
 			strcpy(buffer+len,h->SectionName);
@@ -1307,8 +1307,8 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 			sprintf(buffer,"%s",e->EntryName);
 		}
 		if (strlen(buffer) == 11) {
-			if (mystrncasecmp("Entry", buffer,   5) &&
-			    mystrncasecmp("Type",  buffer+7, 4)) {
+			if (strncasecmp("Entry", buffer,   5) == 0 &&
+			    strncasecmp("Type",  buffer+7, 4) == 0) {
 				num = atoi(buffer+5);
 			}
 		}
@@ -1316,61 +1316,61 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 		if (num != -1) {
 			sprintf(buffer,"Entry%02iType",num);
 			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-			if (mystrncasecmp(readvalue,"NumberGeneral",0)) {
+			if (strcasecmp(readvalue,"NumberGeneral") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_General;
-			} else if (mystrncasecmp(readvalue,"NumberMobile",0)) {
+			} else if (strcasecmp(readvalue,"NumberMobile") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile;
-			} else if (mystrncasecmp(readvalue,"NumberWork",0)) {
+			} else if (strcasecmp(readvalue,"NumberWork") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Work;
-			} else if (mystrncasecmp(readvalue,"NumberFax",0)) {
+			} else if (strcasecmp(readvalue,"NumberFax") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Fax;
-			} else if (mystrncasecmp(readvalue,"NumberHome",0)) {
+			} else if (strcasecmp(readvalue,"NumberHome") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Home;
-			} else if (mystrncasecmp(readvalue,"NumberOther",0)) {
+			} else if (strcasecmp(readvalue,"NumberOther") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Other;
-			} else if (mystrncasecmp(readvalue,"NumberPager",0)) {
+			} else if (strcasecmp(readvalue,"NumberPager") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Pager;
-			} else if (mystrncasecmp(readvalue,"Note",0)) {
+			} else if (strcasecmp(readvalue,"Note") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Note;
-			} else if (mystrncasecmp(readvalue,"Postal",0)) {
+			} else if (strcasecmp(readvalue,"Postal") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
-			} else if (mystrncasecmp(readvalue,"Email",0)) {
+			} else if (strcasecmp(readvalue,"Email") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
-			} else if (mystrncasecmp(readvalue,"Email2",0)) {
+			} else if (strcasecmp(readvalue,"Email2") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email2;
-			} else if (mystrncasecmp(readvalue,"URL",0)) {
+			} else if (strcasecmp(readvalue,"URL") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_URL;
-			} else if (mystrncasecmp(readvalue,"FirstName",0)) {
+			} else if (strcasecmp(readvalue,"FirstName") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FirstName;
-			} else if (mystrncasecmp(readvalue,"LastName",0)) {
+			} else if (strcasecmp(readvalue,"LastName") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LastName;
-			} else if (mystrncasecmp(readvalue,"Company",0)) {
+			} else if (strcasecmp(readvalue,"Company") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Company;
-			} else if (mystrncasecmp(readvalue,"JobTitle",0)) {
+			} else if (strcasecmp(readvalue,"JobTitle") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_JobTitle;
-			} else if (mystrncasecmp(readvalue,"Address",0)) {
+			} else if (strcasecmp(readvalue,"Address") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_StreetAddress;
-			} else if (mystrncasecmp(readvalue,"City",0)) {
+			} else if (strcasecmp(readvalue,"City") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_City;
-			} else if (mystrncasecmp(readvalue,"State",0)) {
+			} else if (strcasecmp(readvalue,"State") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_State;
-			} else if (mystrncasecmp(readvalue,"Zip",0)) {
+			} else if (strcasecmp(readvalue,"Zip") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Zip;
-			} else if (mystrncasecmp(readvalue,"Country",0)) {
+			} else if (strcasecmp(readvalue,"Country") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Country;
-			} else if (mystrncasecmp(readvalue,"Custom1",0)) {
+			} else if (strcasecmp(readvalue,"Custom1") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom1;
-			} else if (mystrncasecmp(readvalue,"Custom2",0)) {
+			} else if (strcasecmp(readvalue,"Custom2") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom2;
-			} else if (mystrncasecmp(readvalue,"Custom3",0)) {
+			} else if (strcasecmp(readvalue,"Custom3") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom3;
-			} else if (mystrncasecmp(readvalue,"Custom4",0)) {
+			} else if (strcasecmp(readvalue,"Custom4") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom4;
-			} else if (mystrncasecmp(readvalue,"LUID",0)) {
+			} else if (strcasecmp(readvalue,"LUID") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LUID;
-			} else if (mystrncasecmp(readvalue,"Name",0)) {
+			} else if (strcasecmp(readvalue,"Name") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Name;
-			} else if (mystrncasecmp(readvalue,"Category",0)) {
+			} else if (strcasecmp(readvalue,"Category") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Category;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
@@ -1380,7 +1380,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				}
 				Pbk->EntriesNum ++;
 				continue;
-			} else if (mystrncasecmp(readvalue,"Private",0)) {
+			} else if (strcasecmp(readvalue,"Private") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Private;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
@@ -1390,7 +1390,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				}
 				Pbk->EntriesNum ++;
 				continue;
-			} else if (mystrncasecmp(readvalue,"CallerGroup",0)) {
+			} else if (strcasecmp(readvalue,"CallerGroup") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Caller_Group;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
@@ -1400,7 +1400,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				}
 				Pbk->EntriesNum ++;
 				continue;
-			} else if (mystrncasecmp(readvalue,"RingtoneID",0)) {
+			} else if (strcasecmp(readvalue,"RingtoneID") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_RingtoneID;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
@@ -1410,7 +1410,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				}
 				Pbk->EntriesNum ++;
 				continue;
-			} else if (mystrncasecmp(readvalue,"PictureID",0)) {
+			} else if (strcasecmp(readvalue,"PictureID") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_PictureID;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
@@ -1420,7 +1420,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				}
 				Pbk->EntriesNum ++;
 				continue;
-			} else if (mystrncasecmp(readvalue,"Date",0)) {
+			} else if (strcasecmp(readvalue,"Date") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Date;
 				sprintf(buffer,"Entry%02iText",num);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -1429,7 +1429,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				}
 				Pbk->EntriesNum++;
 				continue;
-			} else if (mystrncasecmp(readvalue,"UserID",0)) {
+			} else if (strcasecmp(readvalue,"UserID") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_UserID;
 			}
 			sprintf(buffer,"Entry%02iText",num);
@@ -1464,59 +1464,59 @@ static void ReadCalendarType(INI_Section *file_info, char *section, GSM_Calendar
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	*type = GSM_CAL_REMINDER;
 	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"Call",0)) {
+		if (strcasecmp(readvalue,"Call") == 0) {
 			*type = GSM_CAL_CALL;
-		} else if (mystrncasecmp(readvalue,"Meeting",0)) {
+		} else if (strcasecmp(readvalue,"Meeting") == 0) {
 			*type = GSM_CAL_MEETING;
-		} else if (mystrncasecmp(readvalue,"Birthday",0)) {
+		} else if (strcasecmp(readvalue,"Birthday") == 0) {
 			*type = GSM_CAL_BIRTHDAY;
-		} else if (mystrncasecmp(readvalue,"Memo",0)) {
+		} else if (strcasecmp(readvalue,"Memo") == 0) {
 			*type = GSM_CAL_MEMO;
-		} else if (mystrncasecmp(readvalue,"Travel",0)) {
+		} else if (strcasecmp(readvalue,"Travel") == 0) {
 			*type = GSM_CAL_TRAVEL;
-		} else if (mystrncasecmp(readvalue,"Vacation",0)) {
+		} else if (strcasecmp(readvalue,"Vacation") == 0) {
 			*type = GSM_CAL_VACATION;
-		} else if (mystrncasecmp(readvalue,"DailyAlarm",0)) {
+		} else if (strcasecmp(readvalue,"DailyAlarm") == 0) {
 			*type = GSM_CAL_DAILY_ALARM;
-		} else if (mystrncasecmp(readvalue,"Alarm",0)) {
+		} else if (strcasecmp(readvalue,"Alarm") == 0) {
 			*type = GSM_CAL_ALARM;
-		} else if (mystrncasecmp(readvalue,"Training/Athletism",0)) {
+		} else if (strcasecmp(readvalue,"Training/Athletism") == 0) {
 			*type = GSM_CAL_T_ATHL;
-		} else if (mystrncasecmp(readvalue,"Training/BallGames",0)) {
+		} else if (strcasecmp(readvalue,"Training/BallGames") == 0) {
 			*type = GSM_CAL_T_BALL;
-		} else if (mystrncasecmp(readvalue,"Training/Cycling",0)) {
+		} else if (strcasecmp(readvalue,"Training/Cycling") == 0) {
 			*type = GSM_CAL_T_CYCL;
-		} else if (mystrncasecmp(readvalue,"Training/Budo",0)) {
+		} else if (strcasecmp(readvalue,"Training/Budo") == 0) {
 			*type = GSM_CAL_T_BUDO;
-		} else if (mystrncasecmp(readvalue,"Training/Dance",0)) {
+		} else if (strcasecmp(readvalue,"Training/Dance") == 0) {
 			*type = GSM_CAL_T_DANC;
-		} else if (mystrncasecmp(readvalue,"Training/ExtremeSports",0)) {
+		} else if (strcasecmp(readvalue,"Training/ExtremeSports") == 0) {
 			*type = GSM_CAL_T_EXTR;
-		} else if (mystrncasecmp(readvalue,"Training/Football",0)) {
+		} else if (strcasecmp(readvalue,"Training/Football") == 0) {
 			*type = GSM_CAL_T_FOOT;
-		} else if (mystrncasecmp(readvalue,"Training/Golf",0)) {
+		} else if (strcasecmp(readvalue,"Training/Golf") == 0) {
 			*type = GSM_CAL_T_GOLF;
-		} else if (mystrncasecmp(readvalue,"Training/Gym",0)) {
+		} else if (strcasecmp(readvalue,"Training/Gym") == 0) {
 			*type = GSM_CAL_T_GYM;
-		} else if (mystrncasecmp(readvalue,"Training/HorseRaces",0)) {
+		} else if (strcasecmp(readvalue,"Training/HorseRaces") == 0) {
 			*type = GSM_CAL_T_HORS;
-		} else if (mystrncasecmp(readvalue,"Training/Hockey",0)) {
+		} else if (strcasecmp(readvalue,"Training/Hockey") == 0) {
 			*type = GSM_CAL_T_HOCK;
-		} else if (mystrncasecmp(readvalue,"Training/Races",0)) {
+		} else if (strcasecmp(readvalue,"Training/Races") == 0) {
 			*type = GSM_CAL_T_RACE;
-		} else if (mystrncasecmp(readvalue,"Training/Rugby",0)) {
+		} else if (strcasecmp(readvalue,"Training/Rugby") == 0) {
 			*type = GSM_CAL_T_RUGB;
-		} else if (mystrncasecmp(readvalue,"Training/Sailing",0)) {
+		} else if (strcasecmp(readvalue,"Training/Sailing") == 0) {
 			*type = GSM_CAL_T_SAIL;
-		} else if (mystrncasecmp(readvalue,"Training/StreetGames",0)) {
+		} else if (strcasecmp(readvalue,"Training/StreetGames") == 0) {
 			*type = GSM_CAL_T_STRE;
-		} else if (mystrncasecmp(readvalue,"Training/Swimming",0)) {
+		} else if (strcasecmp(readvalue,"Training/Swimming") == 0) {
 			*type = GSM_CAL_T_SWIM;
-		} else if (mystrncasecmp(readvalue,"Training/Tennis",0)) {
+		} else if (strcasecmp(readvalue,"Training/Tennis") == 0) {
 			*type = GSM_CAL_T_TENN;
-		} else if (mystrncasecmp(readvalue,"Training/Travels",0)) {
+		} else if (strcasecmp(readvalue,"Training/Travels") == 0) {
 			*type = GSM_CAL_T_TRAV;
-		} else if (mystrncasecmp(readvalue,"Training/WinterGames",0)) {
+		} else if (strcasecmp(readvalue,"Training/WinterGames") == 0) {
 			*type = GSM_CAL_T_WINT;
 		}
 	}
@@ -1623,7 +1623,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 		if (readvalue!=NULL)
 		{
-			if (mystrncasecmp(readvalue,"Silent",0)) {
+			if (strcasecmp(readvalue,"Silent") == 0) {
 				note->Entries[note->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
 			}
 		}
@@ -1872,7 +1872,7 @@ static void ReadCallerEntry(INI_Section *file_info, char *section, GSM_Bitmap *b
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
         bitmap->BitmapEnabled = true;
 	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"False",0)) bitmap->BitmapEnabled = false;
+		if (strcasecmp(readvalue,"False") == 0) bitmap->BitmapEnabled = false;
 	}
 	bitmap->FileSystemPicture = false;
 	/* FIXME */
@@ -1934,11 +1934,11 @@ static void ReadSMSCEntry(INI_Section *file_info, char *section, GSM_SMSC *SMSC,
 	SMSC->Format = SMS_FORMAT_Text;
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"Fax",0)) {
+		if (strcasecmp(readvalue,"Fax") == 0) {
 			SMSC->Format = SMS_FORMAT_Fax;
-		} else if (mystrncasecmp(readvalue,"Email",0)) {
+		} else if (strcasecmp(readvalue,"Email") == 0) {
 			SMSC->Format = SMS_FORMAT_Email;
-		} else if (mystrncasecmp(readvalue,"Pager",0)) {
+		} else if (strcasecmp(readvalue,"Pager") == 0) {
 			SMSC->Format = SMS_FORMAT_Pager;
 		}
 	}
@@ -1946,15 +1946,15 @@ static void ReadSMSCEntry(INI_Section *file_info, char *section, GSM_SMSC *SMSC,
 	SMSC->Validity.Relative = SMS_VALID_Max_Time;
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"1hour",0)) {
+		if (strcasecmp(readvalue,"1hour") == 0) {
 			SMSC->Validity.Relative = SMS_VALID_1_Hour;
-		} else if (mystrncasecmp(readvalue,"6hours",0)) {
+		} else if (strcasecmp(readvalue,"6hours") == 0) {
 			SMSC->Validity.Relative = SMS_VALID_6_Hours;
-		} else if (mystrncasecmp(readvalue,"24hours",0)) {
+		} else if (strcasecmp(readvalue,"24hours") == 0) {
 			SMSC->Validity.Relative = SMS_VALID_1_Day;
-		} else if (mystrncasecmp(readvalue,"72hours",0)) {
+		} else if (strcasecmp(readvalue,"72hours") == 0) {
 			SMSC->Validity.Relative = SMS_VALID_3_Days;
-		} else if (mystrncasecmp(readvalue,"1week",0)) {
+		} else if (strcasecmp(readvalue,"1week") == 0) {
 			SMSC->Validity.Relative = SMS_VALID_1_Week;
 		}
 	}
@@ -1970,11 +1970,11 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 	sprintf(buffer,"Bearer");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"SMS",0)) {
+		if (strcasecmp(readvalue,"SMS") == 0) {
 			settings->ActiveBearer = WAPSETTINGS_BEARER_SMS;
-		} else if (mystrncasecmp(readvalue,"GPRS",0)) {
+		} else if (strcasecmp(readvalue,"GPRS") == 0) {
 			settings->ActiveBearer = WAPSETTINGS_BEARER_GPRS;
-		} else if (mystrncasecmp(readvalue,"USSD",0)) {
+		} else if (strcasecmp(readvalue,"USSD") == 0) {
 			settings->ActiveBearer = WAPSETTINGS_BEARER_USSD;
 		}
 	}
@@ -1983,14 +1983,14 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 	sprintf(buffer,"Active");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"Yes",0)) settings->Active = true;
+		if (strcasecmp(readvalue,"Yes") == 0) settings->Active = true;
 	}
 
 	settings->ReadOnly = false;
 	sprintf(buffer,"ReadOnly");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"Yes",0)) settings->ReadOnly = true;
+		if (strcasecmp(readvalue,"Yes") == 0) settings->ReadOnly = true;
 	}
 
 	sprintf(buffer,"Proxy");
@@ -2016,7 +2016,7 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 			sprintf(buffer,"%s",e->EntryName);
 		}
 		if (strlen(buffer) == 7) {
-			if (mystrncasecmp("Title", buffer,5)) num = atoi(buffer+5);
+			if (strncasecmp("Title", buffer,5) == 0) num = atoi(buffer+5);
 		}
 		e = e->Prev;
 		if (num != -1) {
@@ -2028,28 +2028,28 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 			settings->Settings[settings->Number].IsContinuous = true;
 			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 			if (readvalue!=NULL) {
-				if (mystrncasecmp(readvalue,"Temporary",0)) settings->Settings[settings->Number].IsContinuous = false;
+				if (strcasecmp(readvalue,"Temporary") == 0) settings->Settings[settings->Number].IsContinuous = false;
 			}
 			sprintf(buffer,"Security%02i",num);
 			settings->Settings[settings->Number].IsSecurity = true;
 			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 			if (readvalue!=NULL)
 			{
-				if (mystrncasecmp(readvalue,"Off",0)) settings->Settings[settings->Number].IsSecurity = false;
+				if (strcasecmp(readvalue,"Off") == 0) settings->Settings[settings->Number].IsSecurity = false;
 			}
 			sprintf(buffer,"Bearer%02i",num);
 			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 			if (readvalue!=NULL)
 			{
-				if (mystrncasecmp(readvalue,"SMS",0)) {
+				if (strcasecmp(readvalue,"SMS") == 0) {
 					settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_SMS;
 					sprintf(buffer,"Server%02i",num);
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Server,UseUnicode);
 					sprintf(buffer,"Service%02i",num);
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Service,UseUnicode);
-				} else if ((mystrncasecmp(readvalue,"Data",0) || mystrncasecmp(readvalue,"GPRS",0))) {
+				} else if ((strcasecmp(readvalue,"Data") == 0 || strcasecmp(readvalue,"GPRS") == 0)) {
 					settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_DATA;
-					if (mystrncasecmp(readvalue,"GPRS",0)) settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_GPRS;
+					if (strcasecmp(readvalue,"GPRS") == 0) settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_GPRS;
 					sprintf(buffer,"Number%02i",num);
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].DialUp,UseUnicode);
 					sprintf(buffer,"IP%02i",num);
@@ -2063,31 +2063,31 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 					if (readvalue!=NULL)
 					{
-						if (mystrncasecmp(readvalue,"Secure",0)) settings->Settings[settings->Number].IsNormalAuthentication = false;
+						if (strcasecmp(readvalue,"Secure") == 0) settings->Settings[settings->Number].IsNormalAuthentication = false;
 					}
 					sprintf(buffer,"CallSpeed%02i",num);
 					settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_14400;
 					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 					if (readvalue!=NULL)
 					{
-						if (mystrncasecmp(readvalue,"9600",0)) settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_9600;
-						if (mystrncasecmp(readvalue,"auto",0)) settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_AUTO;
+						if (strcasecmp(readvalue,"9600") == 0) settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_9600;
+						if (strcasecmp(readvalue,"auto") == 0) settings->Settings[settings->Number].Speed = WAPSETTINGS_SPEED_AUTO;
 					}
 					sprintf(buffer,"Login%02i",num);
 					settings->Settings[settings->Number].ManualLogin = false;
 					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 					if (readvalue!=NULL)
 					{
-						if (mystrncasecmp(readvalue,"Manual",0)) settings->Settings[settings->Number].ManualLogin = true;
+						if (strcasecmp(readvalue,"Manual") == 0) settings->Settings[settings->Number].ManualLogin = true;
 					}
 					sprintf(buffer,"CallType%02i",num);
 					settings->Settings[settings->Number].IsISDNCall = true;
 					readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 					if (readvalue!=NULL)
 					{
-						if (mystrncasecmp(readvalue,"Analogue",0)) settings->Settings[settings->Number].IsISDNCall = false;
+						if (strcasecmp(readvalue,"Analogue") == 0) settings->Settings[settings->Number].IsISDNCall = false;
 					}
-				} else if (mystrncasecmp(readvalue,"USSD",0)) {
+				} else if (strcasecmp(readvalue,"USSD") == 0) {
 					settings->Settings[settings->Number].Bearer = WAPSETTINGS_BEARER_USSD;
 					sprintf(buffer,"ServiceCode%02i",num);
 					ReadBackupText(file_info, section, buffer, settings->Settings[settings->Number].Code,UseUnicode);
@@ -2155,17 +2155,17 @@ static void ReadProfileEntry(INI_Section *file_info, char *section, GSM_Profile 
 	Profile->DefaultName = false;
 	sprintf(buffer,"DefaultName");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL && mystrncasecmp(buffer,"true",0)) Profile->DefaultName = true;
+	if (readvalue!=NULL && strcasecmp(buffer,"true") == 0) Profile->DefaultName = true;
 
 	Profile->HeadSetProfile = false;
 	sprintf(buffer,"HeadSetProfile");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL && mystrncasecmp(buffer,"true",0)) Profile->HeadSetProfile = true;
+	if (readvalue!=NULL && strcasecmp(buffer,"true") == 0) Profile->HeadSetProfile = true;
 
 	Profile->CarKitProfile = false;
 	sprintf(buffer,"CarKitProfile");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL && mystrncasecmp(buffer,"true",0)) Profile->CarKitProfile = true;
+	if (readvalue!=NULL && strcasecmp(buffer,"true") == 0) Profile->CarKitProfile = true;
 
 	Profile->FeaturesNumber = 0;
 	e = INI_FindLastSectionEntry(file_info, section, UseUnicode);
@@ -2177,7 +2177,7 @@ static void ReadProfileEntry(INI_Section *file_info, char *section, GSM_Profile 
 			sprintf(buffer,"%s",e->EntryName);
 		}
 		if (strlen(buffer) == 9) {
-			if (mystrncasecmp("Feature", buffer, 7)) num = atoi(buffer+7);
+			if (strncasecmp("Feature", buffer, 7) == 0) num = atoi(buffer+7);
 		}
 		e = e->Prev;
 		if (num != -1) {
@@ -2185,25 +2185,25 @@ static void ReadProfileEntry(INI_Section *file_info, char *section, GSM_Profile 
 			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 			if (readvalue==NULL) break;
 			unknown = true;
-			if (mystrncasecmp(readvalue,"RingtoneID",0)) {
+			if (strcasecmp(readvalue,"RingtoneID") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_RingtoneID;
 				sprintf(buffer,"Value%02i",num);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				Profile->FeatureValue[Profile->FeaturesNumber]=atoi(readvalue);
 				Profile->FeaturesNumber++;
-			} else if (mystrncasecmp(readvalue,"MessageToneID",0)) {
+			} else if (strcasecmp(readvalue,"MessageToneID") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_MessageToneID;
 				sprintf(buffer,"Value%02i",num);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				Profile->FeatureValue[Profile->FeaturesNumber]=atoi(readvalue);
 				Profile->FeaturesNumber++;
-			} else if (mystrncasecmp(readvalue,"ScreenSaverNumber",0)) {
+			} else if (strcasecmp(readvalue,"ScreenSaverNumber") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_ScreenSaverNumber;
 				sprintf(buffer,"Value%02i",num);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				Profile->FeatureValue[Profile->FeaturesNumber]=atoi(readvalue);
 				Profile->FeaturesNumber++;
-			} else if (mystrncasecmp(readvalue,"CallerGroups",0)) {
+			} else if (strcasecmp(readvalue,"CallerGroups") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_CallerGroups;
 				sprintf(buffer,"Value%02i",num);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2212,60 +2212,60 @@ static void ReadProfileEntry(INI_Section *file_info, char *section, GSM_Profile 
 					if (strstr(readvalue,"1"+j)!=NULL) Profile->CallerGroups[j]=true;
 				}
 				Profile->FeaturesNumber++;
-			} else if (mystrncasecmp(readvalue,"IncomingCallAlert",0)) {
+			} else if (strcasecmp(readvalue,"IncomingCallAlert") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_CallAlert;
 				unknown = false;
-			} else if (mystrncasecmp(readvalue,"RingtoneVolume",0)) {
+			} else if (strcasecmp(readvalue,"RingtoneVolume") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_RingtoneVolume;
 				unknown = false;
-			} else if (mystrncasecmp(readvalue,"Vibrating",0)) {
+			} else if (strcasecmp(readvalue,"Vibrating") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_Vibration;
 				unknown = false;
-			} else if (mystrncasecmp(readvalue,"MessageTone",0)) {
+			} else if (strcasecmp(readvalue,"MessageTone") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_MessageTone;
 				unknown = false;
-			} else if (mystrncasecmp(readvalue,"KeypadTones",0)) {
+			} else if (strcasecmp(readvalue,"KeypadTones") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_KeypadTone;
 				unknown = false;
-			} else if (mystrncasecmp(readvalue,"WarningTones",0)) {
+			} else if (strcasecmp(readvalue,"WarningTones") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_WarningTone;
 				unknown = false;
-			} else if (mystrncasecmp(readvalue,"ScreenSaver",0)) {
+			} else if (strcasecmp(readvalue,"ScreenSaver") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_ScreenSaver;
 				unknown = false;
-			} else if (mystrncasecmp(readvalue,"ScreenSaverTimeout",0)) {
+			} else if (strcasecmp(readvalue,"ScreenSaverTimeout") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_ScreenSaverTime;
 				unknown = false;
-			} else if (mystrncasecmp(readvalue,"AutomaticAnswer",0)) {
+			} else if (strcasecmp(readvalue,"AutomaticAnswer") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_AutoAnswer;
 				unknown = false;
-			} else if (mystrncasecmp(readvalue,"Lights",0)) {
+			} else if (strcasecmp(readvalue,"Lights") == 0) {
 				Profile->FeatureID[Profile->FeaturesNumber]=Profile_Lights;
 				unknown = false;
 			}
 			if (!unknown) {
 				sprintf(buffer,"Value%02i",num);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-				if (mystrncasecmp(readvalue,"Level1",0)) {
+				if (strcasecmp(readvalue,"Level1") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL1;
 					if (Profile->FeatureID[Profile->FeaturesNumber]==Profile_KeypadTone) {
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_KEYPAD_LEVEL1;
 					}
-				} else if (mystrncasecmp(readvalue,"Level2",0)) {
+				} else if (strcasecmp(readvalue,"Level2") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL2;
 					if (Profile->FeatureID[Profile->FeaturesNumber]==Profile_KeypadTone) {
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_KEYPAD_LEVEL2;
 					}
-				} else if (mystrncasecmp(readvalue,"Level3",0)) {
+				} else if (strcasecmp(readvalue,"Level3") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL3;
 					if (Profile->FeatureID[Profile->FeaturesNumber]==Profile_KeypadTone) {
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_KEYPAD_LEVEL3;
 					}
-				} else if (mystrncasecmp(readvalue,"Level4",0)) {
+				} else if (strcasecmp(readvalue,"Level4") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL4;
-				} else if (mystrncasecmp(readvalue,"Level5",0)) {
+				} else if (strcasecmp(readvalue,"Level5") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VOLUME_LEVEL5;
-				} else if (mystrncasecmp(readvalue,"Off",0)) {
+				} else if (strcasecmp(readvalue,"Off") == 0) {
 					switch (Profile->FeatureID[Profile->FeaturesNumber]) {
 					case Profile_MessageTone:
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_MESSAGE_NOTONE;
@@ -2292,44 +2292,44 @@ static void ReadProfileEntry(INI_Section *file_info, char *section, GSM_Profile 
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_KEYPAD_OFF;
 						break;
 					}
-				} else if (mystrncasecmp(readvalue,"Ringing",0)) {
+				} else if (strcasecmp(readvalue,"Ringing") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_CALLALERT_RINGING;
-				} else if (mystrncasecmp(readvalue,"BeepOnce",0)) {
+				} else if (strcasecmp(readvalue,"BeepOnce") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_CALLALERT_BEEPONCE;
 					if (Profile->FeatureID[Profile->FeaturesNumber]==Profile_MessageTone) {
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_MESSAGE_BEEPONCE;
 					}
-				} else if (mystrncasecmp(readvalue,"RingOnce",0)) {
+				} else if (strcasecmp(readvalue,"RingOnce") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_CALLALERT_RINGONCE;
-				} else if (mystrncasecmp(readvalue,"Ascending",0)) {
+				} else if (strcasecmp(readvalue,"Ascending") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_CALLALERT_ASCENDING;
-				} else if (mystrncasecmp(readvalue,"CallerGroups",0)) {
+				} else if (strcasecmp(readvalue,"CallerGroups") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_CALLALERT_CALLERGROUPS;
-				} else if (mystrncasecmp(readvalue,"Standard",0)) {
+				} else if (strcasecmp(readvalue,"Standard") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_MESSAGE_STANDARD;
-				} else if (mystrncasecmp(readvalue,"Special",0)) {
+				} else if (strcasecmp(readvalue,"Special") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_MESSAGE_SPECIAL;
-				} else if (mystrncasecmp(readvalue,"Ascending",0)) {
+				} else if (strcasecmp(readvalue,"Ascending") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_MESSAGE_ASCENDING;
-				} else if (mystrncasecmp(readvalue,"Personal",0)) {
+				} else if (strcasecmp(readvalue,"Personal") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_MESSAGE_PERSONAL;
-				} else if (mystrncasecmp(readvalue,"VibrateFirst",0)) {
+				} else if (strcasecmp(readvalue,"VibrateFirst") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_VIBRATION_FIRST;
-				} else if (mystrncasecmp(readvalue,"Auto",0)) {
+				} else if (strcasecmp(readvalue,"Auto") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_LIGHTS_AUTO;
-				} else if (mystrncasecmp(readvalue,"5Seconds",0)) {
+				} else if (strcasecmp(readvalue,"5Seconds") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_SAVER_TIMEOUT_5SEC;
-				} else if (mystrncasecmp(readvalue,"20Seconds",0)) {
+				} else if (strcasecmp(readvalue,"20Seconds") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_SAVER_TIMEOUT_20SEC;
-				} else if (mystrncasecmp(readvalue,"1Minute",0)) {
+				} else if (strcasecmp(readvalue,"1Minute") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_SAVER_TIMEOUT_1MIN;
-				} else if (mystrncasecmp(readvalue,"2Minutes",0)) {
+				} else if (strcasecmp(readvalue,"2Minutes") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_SAVER_TIMEOUT_2MIN;
-				} else if (mystrncasecmp(readvalue,"5Minutes",0)) {
+				} else if (strcasecmp(readvalue,"5Minutes") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_SAVER_TIMEOUT_5MIN;
-				} else if (mystrncasecmp(readvalue,"10Minutes",0)) {
+				} else if (strcasecmp(readvalue,"10Minutes") == 0) {
 					Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_SAVER_TIMEOUT_10MIN;
-				} else if (mystrncasecmp(readvalue,"On",0)) {
+				} else if (strcasecmp(readvalue,"On") == 0) {
 					switch (Profile->FeatureID[Profile->FeaturesNumber]) {
 					case Profile_AutoAnswer:
 						Profile->FeatureValue[Profile->FeaturesNumber]=PROFILE_AUTOANSWER_ON;
@@ -2384,7 +2384,7 @@ static void ReadGPRSPointEntry(INI_Section *file_info, char *section, GSM_GPRSAc
 	sprintf(buffer,"Active");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"Yes",0)) GPRSPoint->Active = true;
+		if (strcasecmp(readvalue,"Yes") == 0) GPRSPoint->Active = true;
 	}
 
 	sprintf(buffer,"Location");
@@ -2453,7 +2453,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"Profile",7);
 			if (mywstrncasecmp(buffer, h->SectionName, 7)) found = true;
 		} else {
-	                if (mystrncasecmp("Profile", h->SectionName, 7)) found = true;
+	                if (strncasecmp("Profile", h->SectionName, 7) == 0) found = true;
 		}
 		if (found) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Location", UseUnicode);
@@ -2477,7 +2477,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"PhonePBK",8);
 			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 		} else {
-	                if (mystrncasecmp("PhonePBK", h->SectionName, 8)) found = true;
+	                if (strncasecmp("PhonePBK", h->SectionName, 8) == 0) found = true;
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Location", UseUnicode);
@@ -2518,7 +2518,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"SIMPBK",6);
 			if (mywstrncasecmp(buffer, h->SectionName, 6)) found = true;
 		} else {
-	                if (mystrncasecmp("SIMPBK", h->SectionName, 6)) found = true;
+	                if (strncasecmp("SIMPBK", h->SectionName, 6) == 0) found = true;
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Location", UseUnicode);
@@ -2558,7 +2558,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"Calendar",8);
 			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 		} else {
-	                if (mystrncasecmp("Calendar", h->SectionName, 8)) found = true;
+	                if (strncasecmp("Calendar", h->SectionName, 8) == 0) found = true;
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Type", UseUnicode);
@@ -2583,7 +2583,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"Caller",6);
 			if (mywstrncasecmp(buffer, h->SectionName, 6)) found = true;
 		} else {
-	                if (mystrncasecmp("Caller", h->SectionName, 6)) found = true;
+	                if (strncasecmp("Caller", h->SectionName, 6) == 0) found = true;
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Location", UseUnicode);
@@ -2608,7 +2608,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"SMSC",4);
 			if (mywstrncasecmp(buffer, h->SectionName, 4)) found = true;
 		} else {
-	                if (mystrncasecmp("SMSC", h->SectionName, 4)) found = true;
+	                if (strncasecmp("SMSC", h->SectionName, 4) == 0) found = true;
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Location", UseUnicode);
@@ -2637,9 +2637,9 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 				if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 			}
 		} else {
-	                if (mystrncasecmp("WAPBookmark", h->SectionName, 11)) found = true;
+	                if (strncasecmp("WAPBookmark", h->SectionName, 11) == 0) found = true;
 			if (!found) {
-				if (mystrncasecmp("Bookmark", h->SectionName, 8)) found = true;
+				if (strncasecmp("Bookmark", h->SectionName, 8) == 0) found = true;
 			}
 		}
                 if (found) {
@@ -2669,9 +2669,9 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 				if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 			}
 		} else {
-	                if (mystrncasecmp("WAPSettings", h->SectionName, 11)) found = true;
+	                if (strncasecmp("WAPSettings", h->SectionName, 11) == 0) found = true;
 			if (!found) {
-		                if (mystrncasecmp("Settings", h->SectionName, 8)) found = true;
+		                if (strncasecmp("Settings", h->SectionName, 8) == 0) found = true;
 			}
 		}
                 if (found) {
@@ -2698,7 +2698,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"MMSSettings",8);
 			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 		} else {
-	                if (mystrncasecmp("MMSSettings", h->SectionName, 8)) found = true;
+	                if (strncasecmp("MMSSettings", h->SectionName, 8) == 0) found = true;
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Title00", UseUnicode);
@@ -2724,7 +2724,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"Ringtone",8);
 			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 		} else {
-	                if (mystrncasecmp("Ringtone", h->SectionName, 8)) found = true;
+	                if (strncasecmp("Ringtone", h->SectionName, 8) == 0) found = true;
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Location", UseUnicode);
@@ -2748,7 +2748,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"TODO",4);
 			if (mywstrncasecmp(buffer, h->SectionName, 4)) found = true;
 		} else {
-	                if (mystrncasecmp("TODO", h->SectionName, 4)) found = true;
+	                if (strncasecmp("TODO", h->SectionName, 4) == 0) found = true;
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Location", UseUnicode);
@@ -2790,7 +2790,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"FMStation",9);
 			if (mywstrncasecmp(buffer, h->SectionName, 9)) found = true;
 		} else {
-	                if (mystrncasecmp("FMStation", h->SectionName, 9)) found = true;
+	                if (strncasecmp("FMStation", h->SectionName, 9) == 0) found = true;
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Location", UseUnicode);
@@ -2815,7 +2815,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"GPRSPoint",9);
 			if (mywstrncasecmp(buffer, h->SectionName, 9)) found = true;
 		} else {
-	                if (mystrncasecmp("GPRSPoint", h->SectionName, 9)) found = true;
+	                if (strncasecmp("GPRSPoint", h->SectionName, 9) == 0) found = true;
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Location", UseUnicode);
@@ -2840,7 +2840,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"Note",4);
 			if (mywstrncasecmp(buffer, h->SectionName, 4)) found = true;
 		} else {
-	                if (mystrncasecmp("Note", h->SectionName, 4)) found = true;
+	                if (strncasecmp("Note", h->SectionName, 4) == 0) found = true;
 		}
                 if (found) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Text", UseUnicode);
@@ -2866,49 +2866,49 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 			EncodeUnicode(buffer,"Backup",6);
 			if (mywstrncasecmp(buffer, h->SectionName, 6)) found = true;
 		} else {
-	                if (mystrncasecmp("Backup", h->SectionName, 6)) found = true;
+	                if (strncasecmp("Backup", h->SectionName, 6) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"Checksum",8);
 			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 		} else {
-	                if (mystrncasecmp("Checksum", h->SectionName, 8)) found = true;
+	                if (strncasecmp("Checksum", h->SectionName, 8) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"Profile",7);
 			if (mywstrncasecmp(buffer, h->SectionName, 7)) found = true;
 		} else {
-	                if (mystrncasecmp("Profile", h->SectionName, 7)) found = true;
+	                if (strncasecmp("Profile", h->SectionName, 7) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"PhonePBK",8);
 			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 		} else {
-	                if (mystrncasecmp("PhonePBK", h->SectionName, 8)) found = true;
+	                if (strncasecmp("PhonePBK", h->SectionName, 8) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"SIMPBK",6);
 			if (mywstrncasecmp(buffer, h->SectionName, 6)) found = true;
 		} else {
-	                if (mystrncasecmp("SIMPBK", h->SectionName, 6)) found = true;
+	                if (strncasecmp("SIMPBK", h->SectionName, 6) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"Calendar",8);
 			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 		} else {
-	                if (mystrncasecmp("Calendar", h->SectionName, 8)) found = true;
+	                if (strncasecmp("Calendar", h->SectionName, 8) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"Caller",6);
 			if (mywstrncasecmp(buffer, h->SectionName, 6)) found = true;
 		} else {
-	                if (mystrncasecmp("Caller", h->SectionName, 6)) found = true;
+	                if (strncasecmp("Caller", h->SectionName, 6) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"SMSC",4);
 			if (mywstrncasecmp(buffer, h->SectionName, 4)) found = true;
 		} else {
-	                if (mystrncasecmp("SMSC", h->SectionName, 4)) found = true;
+	                if (strncasecmp("SMSC", h->SectionName, 4) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"WAPBookmark",11);
@@ -2918,9 +2918,9 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 				if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 			}
 		} else {
-	                if (mystrncasecmp("WAPBookmark", h->SectionName, 11)) found = true;
+	                if (strncasecmp("WAPBookmark", h->SectionName, 11) == 0) found = true;
 			if (!found) {
-				if (mystrncasecmp("Bookmark", h->SectionName, 8)) found = true;
+				if (strncasecmp("Bookmark", h->SectionName, 8) == 0) found = true;
 			}
 		}
 		if (UseUnicode) {
@@ -2931,58 +2931,58 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 				if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 			}
 		} else {
-	                if (mystrncasecmp("WAPSettings", h->SectionName, 11)) found = true;
+	                if (strncasecmp("WAPSettings", h->SectionName, 11) == 0) found = true;
 			if (!found) {
-		                if (mystrncasecmp("Settings", h->SectionName, 8)) found = true;
+		                if (strncasecmp("Settings", h->SectionName, 8) == 0) found = true;
 			}
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"MMSSettings",8);
 			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 		} else {
-	                if (mystrncasecmp("MMSSettings", h->SectionName, 8)) found = true;
+	                if (strncasecmp("MMSSettings", h->SectionName, 8) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"Ringtone",8);
 			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 		} else {
-	                if (mystrncasecmp("Ringtone", h->SectionName, 8)) found = true;
+	                if (strncasecmp("Ringtone", h->SectionName, 8) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"TODO",4);
 			if (mywstrncasecmp(buffer, h->SectionName, 4)) found = true;
 		} else {
-	                if (mystrncasecmp("TODO", h->SectionName, 4)) found = true;
+	                if (strncasecmp("TODO", h->SectionName, 4) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"Startup",7);
 			if (mywstrncasecmp(buffer, h->SectionName, 7)) found = true;
 		} else {
-	                if (mystrncasecmp("Startup", h->SectionName, 7)) found = true;
+	                if (strncasecmp("Startup", h->SectionName, 7) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"Operator",8);
 			if (mywstrncasecmp(buffer, h->SectionName, 8)) found = true;
 		} else {
-	                if (mystrncasecmp("Operator", h->SectionName, 8)) found = true;
+	                if (strncasecmp("Operator", h->SectionName, 8) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"FMStation",9);
 			if (mywstrncasecmp(buffer, h->SectionName, 9)) found = true;
 		} else {
-	                if (mystrncasecmp("FMStation", h->SectionName, 9)) found = true;
+	                if (strncasecmp("FMStation", h->SectionName, 9) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"GPRSPoint",9);
 			if (mywstrncasecmp(buffer, h->SectionName, 9)) found = true;
 		} else {
-	                if (mystrncasecmp("GPRSPoint", h->SectionName, 9)) found = true;
+	                if (strncasecmp("GPRSPoint", h->SectionName, 9) == 0) found = true;
 		}
 		if (UseUnicode) {
 			EncodeUnicode(buffer,"Note",4);
 			if (mywstrncasecmp(buffer, h->SectionName, 4)) found = true;
 		} else {
-	                if (mystrncasecmp("Note", h->SectionName, 4)) found = true;
+	                if (strncasecmp("Note", h->SectionName, 4) == 0) found = true;
 		}
 		if (!found) return ERR_NOTIMPLEMENTED;
         }
@@ -3006,7 +3006,7 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 	SMS->ReplyViaSameSMSC = false;
 	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"True",0)) SMS->ReplyViaSameSMSC = true;
+		if (strcasecmp(readvalue,"True") == 0) SMS->ReplyViaSameSMSC = true;
 	}
 	sprintf(buffer,"Class");
 	SMS->Class = -1;
@@ -3021,7 +3021,7 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 	SMS->RejectDuplicates = false;
 	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"True",0)) SMS->RejectDuplicates = true;
+		if (strcasecmp(readvalue,"True") == 0) SMS->RejectDuplicates = true;
 	}
 	sprintf(buffer,"ReplaceMessage");
 	SMS->ReplaceMessage = 0;
@@ -3035,9 +3035,9 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 	SMS->State = SMS_UnRead;
 	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"Read",0))		SMS->State = SMS_Read;
-		else if (mystrncasecmp(readvalue,"Sent",0))	SMS->State = SMS_Sent;
-		else if (mystrncasecmp(readvalue,"UnSent",0))	SMS->State = SMS_UnSent;
+		if (strcasecmp(readvalue,"Read") == 0)		SMS->State = SMS_Read;
+		else if (strcasecmp(readvalue,"Sent") == 0)	SMS->State = SMS_Sent;
+		else if (strcasecmp(readvalue,"UnSent") == 0)	SMS->State = SMS_UnSent;
 	}
 	sprintf(buffer,"Number");
 	ReadBackupText(file_info, section, buffer, SMS->Number, false);
@@ -3051,9 +3051,9 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 	SMS->Coding  = SMS_Coding_8bit;
 	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) {
-		if (mystrncasecmp(readvalue,"Unicode",0)) {
+		if (strcasecmp(readvalue,"Unicode") == 0) {
 			SMS->Coding = SMS_Coding_Unicode_No_Compression;
-		} else if (mystrncasecmp(readvalue,"Default",0)) {
+		} else if (strcasecmp(readvalue,"Default") == 0) {
 			SMS->Coding = SMS_Coding_Default_No_Compression;
 		}
 	}
@@ -3095,7 +3095,7 @@ static GSM_Error GSM_ReadSMSBackupTextFile(char *FileName, GSM_SMS_Backup *backu
 
 	num = 0;
         for (h = file_info; h != NULL; h = h->Next) {
-                if (mystrncasecmp("SMSBackup", h->SectionName, 9)) {
+                if (strncasecmp("SMSBackup", h->SectionName, 9) == 0) {
 			readvalue = ReadCFGText(file_info, h->SectionName, "Number", false);
 			if (readvalue==NULL) break;
 			if (num < GSM_BACKUP_MAX_SMS) {

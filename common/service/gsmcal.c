@@ -10,6 +10,7 @@
  * \addtogroup Calendar
  * @{
  */
+#define _GNU_SOURCE
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
@@ -929,10 +930,10 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 
 GSM_TimeUnit ReadVCALTimeUnits (unsigned char *Buffer)
 {
-	if (mystrcasestr(Buffer,"days"))	return GSM_TimeUnit_Days;
-	if (mystrcasestr(Buffer,"hours"))	return GSM_TimeUnit_Hours;
-	if (mystrcasestr(Buffer,"minutes")) return GSM_TimeUnit_Minutes;
-	if (mystrcasestr(Buffer,"seconds")) return GSM_TimeUnit_Seconds;
+	if (strcasestr(Buffer,"days"))	return GSM_TimeUnit_Days;
+	if (strcasestr(Buffer,"hours"))	return GSM_TimeUnit_Hours;
+	if (strcasestr(Buffer,"minutes")) return GSM_TimeUnit_Minutes;
+	if (strcasestr(Buffer,"seconds")) return GSM_TimeUnit_Seconds;
 	return GSM_TimeUnit_Unknown;
 }
 

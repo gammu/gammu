@@ -174,6 +174,15 @@
 #ifndef HAVE_TOWLOWER
 #cmakedefine HAVE_TOWLOWER
 #endif
+#ifndef HAVE_STRNCASECMP
+#cmakedefine HAVE_STRNCASECMP 
+#endif
+#ifndef HAVE_STRCASECMP
+#cmakedefine HAVE_STRCASECMP 
+#endif
+#ifndef HAVE_STRCASESTR
+#cmakedefine HAVE_STRCASESTR 
+#endif
 
 /* Will be used Bluez BT stack ? */
 #cmakedefine GSM_ENABLE_BLUEZ

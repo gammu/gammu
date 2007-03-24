@@ -39,8 +39,8 @@ if (CROSS_MINGW)
     set (CPACK_SYSTEM_NAME "Windows")
 else (CROSS_MINGW)
 # FIXME: we should detect whether compiler supports -Wno-pointer-sign
-    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall -Wno-pointer-sign")
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-pointer-sign")
+    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall -Wno-pointer-sign -Werror-implicit-function-declaration")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-pointer-sign -Werror-implicit-function-declaration")
 endif (CROSS_MINGW)
 
 # Read version
@@ -152,6 +152,9 @@ if (NOT CROSS_MINGW)
     check_function_exists (alphasort HAVE_ALPHASORT)
     check_function_exists (iswspace HAVE_ISWSPACE)
     check_function_exists (towlower HAVE_TOWLOWER)
+    check_function_exists (strncasecmp HAVE_STRNCASECMP)
+    check_function_exists (strcasecmp HAVE_STRCASECMP)
+    check_function_exists (strcasestr HAVE_STRCASESTR)
 
 endif (NOT CROSS_MINGW)
 

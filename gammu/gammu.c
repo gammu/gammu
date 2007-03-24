@@ -1,6 +1,7 @@
 /* (c) 2002-2006 by Marcin Wiacek and Michal Cihar */
 /* FM stuff by Walek */
 
+#define _GNU_SOURCE
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -246,8 +247,8 @@ static bool answer_yes(const char *text)
 			always_answer_yes = true;
 			return true;
 		}
-		if (mystrncasecmp(ans, "yes",0)) return true;
-		if (mystrncasecmp(ans, "no" ,0)) return false;
+		if (strcasecmp(ans, "yes") == 0) return true;
+		if (strcasecmp(ans, "no" ) == 0) return false;
 	}
 }
 
@@ -960,15 +961,15 @@ static void GetAllMemory(int argc, char *argv[])
 
 	Entry.MemoryType = 0;
 
-	if (mystrncasecmp(argv[2],"DC",0)) Entry.MemoryType=MEM_DC;
-	if (mystrncasecmp(argv[2],"ON",0)) Entry.MemoryType=MEM_ON;
-	if (mystrncasecmp(argv[2],"RC",0)) Entry.MemoryType=MEM_RC;
-	if (mystrncasecmp(argv[2],"MC",0)) Entry.MemoryType=MEM_MC;
-	if (mystrncasecmp(argv[2],"ME",0)) Entry.MemoryType=MEM_ME;
-	if (mystrncasecmp(argv[2],"SM",0)) Entry.MemoryType=MEM_SM;
-	if (mystrncasecmp(argv[2],"VM",0)) Entry.MemoryType=MEM_VM;
-	if (mystrncasecmp(argv[2],"FD",0)) Entry.MemoryType=MEM_FD;
-	if (mystrncasecmp(argv[2],"SL",0)) Entry.MemoryType=MEM_SL;
+	if (strcasecmp(argv[2],"DC") == 0) Entry.MemoryType=MEM_DC;
+	if (strcasecmp(argv[2],"ON") == 0) Entry.MemoryType=MEM_ON;
+	if (strcasecmp(argv[2],"RC") == 0) Entry.MemoryType=MEM_RC;
+	if (strcasecmp(argv[2],"MC") == 0) Entry.MemoryType=MEM_MC;
+	if (strcasecmp(argv[2],"ME") == 0) Entry.MemoryType=MEM_ME;
+	if (strcasecmp(argv[2],"SM") == 0) Entry.MemoryType=MEM_SM;
+	if (strcasecmp(argv[2],"VM") == 0) Entry.MemoryType=MEM_VM;
+	if (strcasecmp(argv[2],"FD") == 0) Entry.MemoryType=MEM_FD;
+	if (strcasecmp(argv[2],"SL") == 0) Entry.MemoryType=MEM_SL;
 	if (Entry.MemoryType==0) {
 		printf(_("ERROR: unknown memory type (\"%s\")\n"),argv[2]);
 		exit (-1);
@@ -999,15 +1000,15 @@ static void GetMemory(int argc, char *argv[])
 
 	entry.MemoryType=0;
 
-	if (mystrncasecmp(argv[2],"DC",0)) entry.MemoryType=MEM_DC;
-	if (mystrncasecmp(argv[2],"ON",0)) entry.MemoryType=MEM_ON;
-	if (mystrncasecmp(argv[2],"RC",0)) entry.MemoryType=MEM_RC;
-	if (mystrncasecmp(argv[2],"MC",0)) entry.MemoryType=MEM_MC;
-	if (mystrncasecmp(argv[2],"ME",0)) entry.MemoryType=MEM_ME;
-	if (mystrncasecmp(argv[2],"SM",0)) entry.MemoryType=MEM_SM;
-	if (mystrncasecmp(argv[2],"VM",0)) entry.MemoryType=MEM_VM;
-	if (mystrncasecmp(argv[2],"FD",0)) entry.MemoryType=MEM_FD;
-	if (mystrncasecmp(argv[2],"SL",0)) entry.MemoryType=MEM_SL;
+	if (strcasecmp(argv[2],"DC") == 0) entry.MemoryType=MEM_DC;
+	if (strcasecmp(argv[2],"ON") == 0) entry.MemoryType=MEM_ON;
+	if (strcasecmp(argv[2],"RC") == 0) entry.MemoryType=MEM_RC;
+	if (strcasecmp(argv[2],"MC") == 0) entry.MemoryType=MEM_MC;
+	if (strcasecmp(argv[2],"ME") == 0) entry.MemoryType=MEM_ME;
+	if (strcasecmp(argv[2],"SM") == 0) entry.MemoryType=MEM_SM;
+	if (strcasecmp(argv[2],"VM") == 0) entry.MemoryType=MEM_VM;
+	if (strcasecmp(argv[2],"FD") == 0) entry.MemoryType=MEM_FD;
+	if (strcasecmp(argv[2],"SL") == 0) entry.MemoryType=MEM_SL;
 	if (entry.MemoryType==0) {
 		printf(_("ERROR: unknown memory type (\"%s\")\n"),argv[2]);
 		exit (-1);
@@ -1016,7 +1017,7 @@ static void GetMemory(int argc, char *argv[])
 	GetStartStop(&start, &stop, 3, argc, argv);
 
 	if (argc > 5 && strcmp(argv[5],"")) {
-		if (mystrncasecmp(argv[5],"-nonempty",0)) {
+		if (strcasecmp(argv[5],"-nonempty") == 0) {
 			empty = false;
 		} else {
 			printf(_("ERROR: unknown parameter \"%s\"\n"),argv[5]);
@@ -2103,7 +2104,7 @@ static void GetAllSMS(int argc, char *argv[])
 	GSM_Init(true);
 
 #ifdef GSM_ENABLE_BACKUP
-	if (argc == 3 && mystrncasecmp(argv[2],"-pbk",0)) {
+	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
 		MemStatus.MemoryType = MEM_ME;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
@@ -2201,7 +2202,7 @@ static void GetEachSMS(int argc, char *argv[])
 	GSM_Init(true);
 
 #ifdef GSM_ENABLE_BACKUP
-	if (argc == 3 && mystrncasecmp(argv[2],"-pbk",0)) {
+	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
 		MemStatus.MemoryType = MEM_ME;
 		error=Phone->GetMemoryStatus(&s, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
@@ -2466,7 +2467,7 @@ static void GetEachMMS(int argc, char *argv[])
 	GSM_MMSFolders 		folders;
 	int			Handle,Size,num=-1;
 
-	if (argc>2 && mystrncasecmp(argv[2],"-save",0)) num=0;
+	if (argc>2 && strcasecmp(argv[2],"-save") == 0) num=0;
 
 	GSM_Init(true);
 
@@ -2519,7 +2520,7 @@ static void GetRingtone(int argc, char *argv[])
 	GSM_Ringtone 	ringtone;
 	bool		PhoneRingtone = false;
 
-	if (mystrncasecmp(argv[1],"--getphoneringtone",0)) PhoneRingtone = true;
+	if (strcasecmp(argv[1],"--getphoneringtone") == 0) PhoneRingtone = true;
 
 	GetStartStop(&ringtone.Location, NULL, 2, argc, argv);
 
@@ -2569,8 +2570,8 @@ static void DialVoice(int argc, char *argv[])
 	GSM_CallShowNumber ShowNumber = GSM_CALL_DefaultNumberPresence;
 
 	if (argc > 3) {
-		if (mystrncasecmp(argv[3],"show",0)) {		ShowNumber = GSM_CALL_ShowNumber;
-		} else if (mystrncasecmp(argv[3],"hide",0)) {	ShowNumber = GSM_CALL_HideNumber;
+		if (strcasecmp(argv[3],"show") == 0) {		ShowNumber = GSM_CALL_ShowNumber;
+		} else if (strcasecmp(argv[3],"hide") == 0) {	ShowNumber = GSM_CALL_HideNumber;
 		} else {
 			printf(_("Unknown parameter (\"%s\")\n"),argv[3]);
 			exit(-1);
@@ -2599,8 +2600,8 @@ static void MakeTerminatedCall(int argc, char *argv[])
 //	time_t			one,two;
 
 	if (argc > 4) {
-		if (mystrncasecmp(argv[4],"show",0)) {		ShowNumber = GSM_CALL_ShowNumber;
-		} else if (mystrncasecmp(argv[4],"hide",0)) {	ShowNumber = GSM_CALL_HideNumber;
+		if (strcasecmp(argv[4],"show") == 0) {		ShowNumber = GSM_CALL_ShowNumber;
+		} else if (strcasecmp(argv[4],"hide") == 0) {	ShowNumber = GSM_CALL_HideNumber;
 		} else {
 			printf(_("Unknown parameter (\"%s\")\n"),argv[4]);
 			exit(-1);
@@ -2750,8 +2751,8 @@ static void Reset(int argc, char *argv[])
 {
 	bool hard;
 
-	if (mystrncasecmp(argv[2],"SOFT",0)) {		hard=false;
-	} else if (mystrncasecmp(argv[2],"HARD",0)) {	hard=true;
+	if (strcasecmp(argv[2],"SOFT") == 0) {		hard=false;
+	} else if (strcasecmp(argv[2],"HARD") == 0) {	hard=true;
 	} else {
 		printf(_("What type of reset do you want (\"%s\") ?\n"),argv[2]);
 		exit(-1);
@@ -2926,23 +2927,23 @@ static void GetBitmap(int argc, char *argv[])
  	GSM_AllRingtonesInfo 	Info = {0, NULL};
 	unsigned char		buffer[10];
 
-	if (mystrncasecmp(argv[2],"STARTUP",0)) {
+	if (strcasecmp(argv[2],"STARTUP") == 0) {
 		MultiBitmap.Bitmap[0].Type=GSM_StartupLogo;
-	} else if (mystrncasecmp(argv[2],"CALLER",0)) {
+	} else if (strcasecmp(argv[2],"CALLER") == 0) {
 		MultiBitmap.Bitmap[0].Type=GSM_CallerGroupLogo;
 		GetStartStop(&location, NULL, 3, argc, argv);
 		if (location>5) {
 			printf(_("Maximal location for caller logo can be 5\n"));
 			exit (-1);
 		}
-	} else if (mystrncasecmp(argv[2],"PICTURE",0)) {
+	} else if (strcasecmp(argv[2],"PICTURE") == 0) {
 		MultiBitmap.Bitmap[0].Type=GSM_PictureImage;
 		GetStartStop(&location, NULL, 3, argc, argv);
-	} else if (mystrncasecmp(argv[2],"TEXT",0)) {
+	} else if (strcasecmp(argv[2],"TEXT") == 0) {
 		MultiBitmap.Bitmap[0].Type=GSM_WelcomeNote_Text;
-	} else if (mystrncasecmp(argv[2],"DEALER",0)) {
+	} else if (strcasecmp(argv[2],"DEALER") == 0) {
 		MultiBitmap.Bitmap[0].Type=GSM_DealerNote_Text;
-	} else if (mystrncasecmp(argv[2],"OPERATOR",0)) {
+	} else if (strcasecmp(argv[2],"OPERATOR") == 0) {
 		MultiBitmap.Bitmap[0].Type=GSM_OperatorLogo;
 	} else {
 		printf(_("What type of logo do you want to get (\"%s\") ?\n"),argv[2]);
@@ -3052,7 +3053,7 @@ static void SetBitmap(int argc, char *argv[])
 	GSM_NetworkInfo		NetInfo;
 	bool			init = true;
 
-	if (mystrncasecmp(argv[2],"STARTUP",0)) {
+	if (strcasecmp(argv[2],"STARTUP") == 0) {
 		if (argc<4) {
 			printf(_("More arguments required\n"));
 			exit(-1);
@@ -3067,21 +3068,21 @@ static void SetBitmap(int argc, char *argv[])
 			Print_Error(error);
 		}
 		memcpy(&Bitmap,&MultiBitmap.Bitmap[0],sizeof(GSM_Bitmap));
-	} else if (mystrncasecmp(argv[2],"TEXT",0)) {
+	} else if (strcasecmp(argv[2],"TEXT") == 0) {
 		if (argc<4) {
 			printf(_("More arguments required\n"));
 			exit(-1);
 		}
 		Bitmap.Type=GSM_WelcomeNote_Text;
 		EncodeUnicode(Bitmap.Text,argv[3],strlen(argv[3]));
-	} else if (mystrncasecmp(argv[2],"DEALER",0)) {
+	} else if (strcasecmp(argv[2],"DEALER") == 0) {
 		if (argc<4) {
 			printf(_("More arguments required\n"));
 			exit(-1);
 		}
 		Bitmap.Type=GSM_DealerNote_Text;
 		EncodeUnicode(Bitmap.Text,argv[3],strlen(argv[3]));
-	} else if (mystrncasecmp(argv[2],"CALLER",0)) {
+	} else if (strcasecmp(argv[2],"CALLER") == 0) {
 		if (argc<4) {
 			printf(_("More arguments required\n"));
 			exit(-1);
@@ -3111,7 +3112,7 @@ static void SetBitmap(int argc, char *argv[])
 			CopyUnicodeString(Bitmap.Text, NewBitmap.Text);
 			Bitmap.DefaultName	  = NewBitmap.DefaultName;
 		}
-	} else if (mystrncasecmp(argv[2],"PICTURE",0)) {
+	} else if (strcasecmp(argv[2],"PICTURE") == 0) {
 		if (argc<5) {
 			printf(_("More arguments required\n"));
 			exit(-1);
@@ -3126,7 +3127,7 @@ static void SetBitmap(int argc, char *argv[])
 		if (argc == 6) EncodeUnicode(Bitmap.Text,argv[5],strlen(argv[5]));
 		Bitmap.Sender[0]=0;
 		Bitmap.Sender[1]=0;
-	} else if (mystrncasecmp(argv[2],"COLOUROPERATOR",0)) {
+	} else if (strcasecmp(argv[2],"COLOUROPERATOR") == 0) {
 		Bitmap.Type = GSM_ColourOperatorLogo_ID;
 		strcpy(Bitmap.NetworkCode,"000 00");
 		if (argc > 3) {
@@ -3141,18 +3142,18 @@ static void SetBitmap(int argc, char *argv[])
 				strcpy(Bitmap.NetworkCode,NetInfo.NetworkCode);
 			}
 		}
-	} else if (mystrncasecmp(argv[2],"COLOURSTARTUP",0)) {
+	} else if (strcasecmp(argv[2],"COLOURSTARTUP") == 0) {
 		Bitmap.Type 	= GSM_ColourStartupLogo_ID;
 		Bitmap.Location = 0;
 		if (argc > 3) {
 			Bitmap.Location = 1;
 			Bitmap.ID 	= atoi(argv[3]);
 		}
-	} else if (mystrncasecmp(argv[2],"WALLPAPER",0)) {
+	} else if (strcasecmp(argv[2],"WALLPAPER") == 0) {
 		Bitmap.Type 		= GSM_ColourWallPaper_ID;
 		Bitmap.ID		= 0;
 		if (argc > 3) Bitmap.ID = atoi(argv[3]);
-	} else if (mystrncasecmp(argv[2],"OPERATOR",0)) {
+	} else if (strcasecmp(argv[2],"OPERATOR") == 0) {
 		MultiBitmap.Bitmap[0].Type	= GSM_OperatorLogo;
 		MultiBitmap.Bitmap[0].Location 	= 1;
 		strcpy(MultiBitmap.Bitmap[0].NetworkCode,"000 00");
@@ -3199,15 +3200,15 @@ static void SetRingtone(int argc, char *argv[])
 	for (i=3;i<argc;i++) {
 		switch (nextlong) {
 		case 0:
-			if (mystrncasecmp(argv[i],"-scale",0)) {
+			if (strcasecmp(argv[i],"-scale") == 0) {
 				ringtone.NoteTone.AllNotesScale = true;
 				break;
 			}
-			if (mystrncasecmp(argv[i],"-location",0)) {
+			if (strcasecmp(argv[i],"-location") == 0) {
 				nextlong = 1;
 				break;
 			}
-			if (mystrncasecmp(argv[i],"-name",0)) {
+			if (strcasecmp(argv[i],"-name") == 0) {
 				nextlong = 2;
 				break;
 			}
@@ -3351,7 +3352,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	SMSInfo.ReplaceMessage		= 0;
 	SMSInfo.EntriesNum		= 1;
 
-	if (mystrncasecmp(argv[1],"--savesms",0)) {
+	if (strcasecmp(argv[1],"--savesms") == 0) {
 		EncodeUnicode(Sender,"Gammu",5);
 		Name[0]  	= 0;
 		Name[1]  	= 0;
@@ -3361,13 +3362,13 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		startarg 	= 1;
 		Validity.Format = 0;
 	}
-	if (mystrncasecmp(argv[1],"--sendsmsdsms",0)) {
+	if (strcasecmp(argv[1],"--sendsmsdsms") == 0) {
 		startarg=startarg+2;
 		EncodeUnicode(SMSC,"1234",4);
 		SMSCSet	= 0;
 	}
 
-	if (mystrncasecmp(argv[2],"TEXT",0)) {
+	if (strcasecmp(argv[2],"TEXT") == 0) {
 		chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
 		if (chars_read == 0) printf(_("Warning: 0 chars read !\n"));
 		InputBuffer[chars_read] 		= 0x00;
@@ -3377,7 +3378,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		SMSInfo.Entries[0].ID			= SMS_Text;
 		SMSInfo.UnicodeCoding   		= false;
 		startarg += 3;
-	} else if (mystrncasecmp(argv[2],"SMSTEMPLATE",0)) {
+	} else if (strcasecmp(argv[2],"SMSTEMPLATE") == 0) {
 		SMSInfo.UnicodeCoding   		= false;
 		SMSInfo.EntriesNum 			= 1;
 		Buffer[0][0]				= 0x00;
@@ -3385,38 +3386,38 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		SMSInfo.Entries[0].Buffer  		= Buffer[0];
 		SMSInfo.Entries[0].ID			= SMS_AlcatelSMSTemplateName;
 		startarg += 3;
-	} else if (mystrncasecmp(argv[2],"EMS",0)) {
+	} else if (strcasecmp(argv[2],"EMS") == 0) {
 		SMSInfo.UnicodeCoding   		= false;
 		SMSInfo.EntriesNum 			= 0;
 		startarg += 3;
-	} else if (mystrncasecmp(argv[2],"MMSINDICATOR",0)) {
+	} else if (strcasecmp(argv[2],"MMSINDICATOR") == 0) {
 		if (argc<6+startarg) {
 			printf(_("Where are parameters ?\n"));
 			exit(-1);
 		}
 		SMSInfo.Entries[0].ID 	 	= SMS_MMSIndicatorLong;
 		SMSInfo.Entries[0].MMSIndicator = &MMSInfo;
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			EncodeUnicode(Sender,"MMS Info",8);
 		}
 		strcpy(MMSInfo.Address,	argv[3+startarg]);
 		strcpy(MMSInfo.Title,	argv[4+startarg]);
 		strcpy(MMSInfo.Sender,	argv[5+startarg]);
 		startarg += 6;
-	} else if (mystrncasecmp(argv[2],"WAPINDICATOR",0)) {
+	} else if (strcasecmp(argv[2],"WAPINDICATOR") == 0) {
 		if (argc<5+startarg) {
 			printf(_("Where are parameters ?\n"));
 			exit(-1);
 		}
 		SMSInfo.Entries[0].ID 	 	= SMS_WAPIndicatorLong;
 		SMSInfo.Entries[0].MMSIndicator = &MMSInfo;
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			EncodeUnicode(Sender,"WAP Info",8);
 		}
 		strcpy(MMSInfo.Address,	argv[3+startarg]);
 		strcpy(MMSInfo.Title,	argv[4+startarg]);
 		startarg += 5;
-	} else if (mystrncasecmp(argv[2],"RINGTONE",0)) {
+	} else if (strcasecmp(argv[2],"RINGTONE") == 0) {
 		if (argc<4+startarg) {
 			printf(_("Where is ringtone filename ?\n"));
 			exit(-1);
@@ -3426,13 +3427,13 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		Print_Error(error);
 		SMSInfo.Entries[0].ID 	 = SMS_NokiaRingtone;
 		SMSInfo.Entries[0].Ringtone = &ringtone[0];
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			CopyUnicodeString(Sender, ringtone[0].Name);
 			EncodeUnicode(Name,"Ringtone ",9);
 			CopyUnicodeString(Name+9*2, ringtone[0].Name);
 		}
 		startarg += 4;
-	} else if (mystrncasecmp(argv[2],"OPERATOR",0)) {
+	} else if (strcasecmp(argv[2],"OPERATOR") == 0) {
 		if (argc<4+startarg) {
 			printf(_("Where is logo filename ?\n"));
 			exit(-1);
@@ -3443,12 +3444,12 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		strcpy(bitmap[0].Bitmap[0].NetworkCode,"000 00");
 		SMSInfo.Entries[0].ID 	 = SMS_NokiaOperatorLogo;
 		SMSInfo.Entries[0].Bitmap   = &bitmap[0];
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			EncodeUnicode(Sender, "OpLogo",6);
 			EncodeUnicode(Name,"OpLogo ",7);
 		}
 		startarg += 4;
-	} else if (mystrncasecmp(argv[2],"CALLER",0)) {
+	} else if (strcasecmp(argv[2],"CALLER") == 0) {
 		if (argc<4+startarg) {
 			printf(_("Where is logo filename ?\n"));
 			exit(-1);
@@ -3458,11 +3459,11 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		Print_Error(error);
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaCallerLogo;
 		SMSInfo.Entries[0].Bitmap   = &bitmap[0];
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			EncodeUnicode(Sender, "Caller",6);
 		}
 		startarg += 4;
-	} else if (mystrncasecmp(argv[2],"ANIMATION",0)) {
+	} else if (strcasecmp(argv[2],"ANIMATION") == 0) {
 		SMSInfo.UnicodeCoding   		= false;
 		SMSInfo.EntriesNum 			= 1;
 		if (argc<4+startarg) {
@@ -3488,7 +3489,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		bitmap[0].Bitmap[0].Text[0]	= 0;
 		bitmap[0].Bitmap[0].Text[1]	= 0;
 		startarg += 4 + atoi(argv[3+startarg]);
-	} else if (mystrncasecmp(argv[2],"PICTURE",0)) {
+	} else if (strcasecmp(argv[2],"PICTURE") == 0) {
 		if (argc<4+startarg) {
 			printf(_("Where is logo filename ?\n"));
 			exit(-1);
@@ -3502,13 +3503,13 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		SMSInfo.UnicodeCoding 		= false;
 		bitmap[0].Bitmap[0].Text[0]	= 0;
 		bitmap[0].Bitmap[0].Text[1]	= 0;
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			EncodeUnicode(Sender, "Picture",7);
 			EncodeUnicode(Name,"Picture Image",13);
 		}
 		startarg += 4;
 #ifdef GSM_ENABLE_BACKUP
-	} else if (mystrncasecmp(argv[2],"BOOKMARK",0)) {
+	} else if (strcasecmp(argv[2],"BOOKMARK") == 0) {
 		if (argc<5+startarg) {
 			printf(_("Where is backup filename and location ?\n"));
 			exit(-1);
@@ -3526,12 +3527,12 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaWAPBookmarkLong;
 		SMSInfo.Entries[0].Bookmark = Backup.WAPBookmark[i];
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			EncodeUnicode(Sender, "Bookmark",8);
 			EncodeUnicode(Name,"WAP Bookmark",12);
 		}
 		startarg += 5;
-	} else if (mystrncasecmp(argv[2],"WAPSETTINGS",0)) {
+	} else if (strcasecmp(argv[2],"WAPSETTINGS") == 0) {
 		if (argc<6+startarg) {
 			printf(_("Where is backup filename and location ?\n"));
 			exit(-1);
@@ -3551,12 +3552,12 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		for (j=0;j<Backup.WAPSettings[i]->Number;j++) {
 			switch (Backup.WAPSettings[i]->Settings[j].Bearer) {
 			case WAPSETTINGS_BEARER_GPRS:
-				if (mystrncasecmp(argv[5+startarg],"GPRS",0)) {
+				if (strcasecmp(argv[5+startarg],"GPRS") == 0) {
 					SMSInfo.Entries[0].Settings = &Backup.WAPSettings[i]->Settings[j];
 					break;
 				}
 			case WAPSETTINGS_BEARER_DATA:
-				if (mystrncasecmp(argv[5+startarg],"DATA",0)) {
+				if (strcasecmp(argv[5+startarg],"DATA") == 0) {
 					SMSInfo.Entries[0].Settings = &Backup.WAPSettings[i]->Settings[j];
 					break;
 				}
@@ -3569,12 +3570,12 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			exit(-1);
 		}
 		SMSInfo.Entries[0].ID = SMS_NokiaWAPSettingsLong;
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			EncodeUnicode(Sender, "Settings",8);
 			EncodeUnicode(Name,"WAP Settings",12);
 		}
 		startarg += 6;
-	} else if (mystrncasecmp(argv[2],"MMSSETTINGS",0)) {
+	} else if (strcasecmp(argv[2],"MMSSETTINGS") == 0) {
 		if (argc<5+startarg) {
 			printf(_("Where is backup filename and location ?\n"));
 			exit(-1);
@@ -3605,12 +3606,12 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			exit(-1);
 		}
 		SMSInfo.Entries[0].ID = SMS_NokiaMMSSettingsLong;
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			EncodeUnicode(Sender, "Settings",8);
 			EncodeUnicode(Name,"MMS Settings",12);
 		}
 		startarg += 5;
-	} else if (mystrncasecmp(argv[2],"CALENDAR",0)) {
+	} else if (strcasecmp(argv[2],"CALENDAR") == 0) {
 		if (argc<5+startarg) {
 			printf(_("Where is backup filename and location ?\n"));
 			exit(-1);
@@ -3628,11 +3629,11 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaVCALENDAR10Long;
 		SMSInfo.Entries[0].Calendar = Backup.Calendar[i];
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			EncodeUnicode(Sender, "Calendar",8);
 		}
 		startarg += 5;
-	} else if (mystrncasecmp(argv[2],"TODO",0)) {
+	} else if (strcasecmp(argv[2],"TODO") == 0) {
 		if (argc<5+startarg) {
 			printf(_("Where is backup filename and location ?\n"));
 			exit(-1);
@@ -3650,11 +3651,11 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 		SMSInfo.Entries[0].ID 	 	= SMS_NokiaVTODOLong;
 		SMSInfo.Entries[0].ToDo 	= Backup.ToDo[i];
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			EncodeUnicode(Sender, "ToDo",8);
 		}
 		startarg += 5;
-	} else if (mystrncasecmp(argv[2],"VCARD10",0) || mystrncasecmp(argv[2],"VCARD21",0)) {
+	} else if (strcasecmp(argv[2],"VCARD10") == 0 || strcasecmp(argv[2],"VCARD21") == 0) {
 		if (argc<6+startarg) {
 			printf(_("Where is backup filename and location and memory type ?\n"));
 			exit(-1);
@@ -3662,7 +3663,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
-		if (mystrncasecmp(argv[4+startarg],"SM",0)) {
+		if (strcasecmp(argv[4+startarg],"SM") == 0) {
 			while (Backup.SIMPhonebook[i]!=NULL) {
 				if (i == atoi(argv[5+startarg])-1) break;
 				i++;
@@ -3672,7 +3673,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 				exit(-1);
 			}
 			SMSInfo.Entries[0].Phonebook = Backup.SIMPhonebook[i];
-		} else if (mystrncasecmp(argv[4+startarg],"ME",0)) {
+		} else if (strcasecmp(argv[4+startarg],"ME") == 0) {
 			while (Backup.PhonePhonebook[i]!=NULL) {
 				if (i == atoi(argv[5+startarg])-1) break;
 				i++;
@@ -3686,20 +3687,20 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			printf(_("Unknown memory type: \"%s\"\n"),argv[4+startarg]);
 			exit(-1);
 		}
-		if (mystrncasecmp(argv[2],"VCARD10",0)) {
+		if (strcasecmp(argv[2],"VCARD10") == 0) {
 			SMSInfo.Entries[0].ID = SMS_VCARD10Long;
 		} else {
 			SMSInfo.Entries[0].ID = SMS_VCARD21Long;
 		}
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			EncodeUnicode(Sender, "VCARD",5);
 			EncodeUnicode(Name, "Phonebook entry",15);
 		}
 		startarg += 6;
 #endif
-	} else if (mystrncasecmp(argv[2],"PROFILE",0)) {
+	} else if (strcasecmp(argv[2],"PROFILE") == 0) {
 		SMSInfo.Entries[0].ID = SMS_NokiaProfileLong;
-		if (mystrncasecmp(argv[1],"--savesms",0)) {
+		if (strcasecmp(argv[1],"--savesms") == 0) {
 			EncodeUnicode(Sender, "Profile",7);
 		}
 		startarg += 3;
@@ -3711,155 +3712,155 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	for (i=startarg;i<argc;i++) {
 		switch (nextlong) {
 		case 0:
-			if (mystrncasecmp(argv[1],"--savesms",0) || SendSaved) {
-				if (mystrncasecmp(argv[i],"-folder",0)) {
+			if (strcasecmp(argv[1],"--savesms") == 0 || SendSaved) {
+				if (strcasecmp(argv[i],"-folder") == 0) {
 					nextlong=1;
 					continue;
 				}
 			}
-			if (mystrncasecmp(argv[1],"--savesms",0)) {
-				if (mystrncasecmp(argv[i],"-unread",0)) {
+			if (strcasecmp(argv[1],"--savesms") == 0) {
+				if (strcasecmp(argv[i],"-unread") == 0) {
 					State = SMS_UnRead;
 					continue;
 				}
-				if (mystrncasecmp(argv[i],"-read",0)) {
+				if (strcasecmp(argv[i],"-read") == 0) {
 					State = SMS_Read;
 					continue;
 				}
-				if (mystrncasecmp(argv[i],"-unsent",0)) {
+				if (strcasecmp(argv[i],"-unsent") == 0) {
 					State = SMS_UnSent;
 					continue;
 				}
-				if (mystrncasecmp(argv[i],"-sent",0)) {
+				if (strcasecmp(argv[i],"-sent") == 0) {
 					State = SMS_Sent;
 					continue;
 				}
-				if (mystrncasecmp(argv[i],"-sender",0)) {
+				if (strcasecmp(argv[i],"-sender") == 0) {
 					nextlong=2;
 					continue;
 				}
-				if (mystrncasecmp(argv[i],"-smsname",0)) {
+				if (strcasecmp(argv[i],"-smsname") == 0) {
 					nextlong=25;
 					continue;
 				}
 			} else {
-				if (mystrncasecmp(argv[i],"-save",0)) {
+				if (strcasecmp(argv[i],"-save") == 0) {
 					SendSaved=true;
 					continue;
 				}
-				if (mystrncasecmp(argv[i],"-report",0)) {
+				if (strcasecmp(argv[i],"-report") == 0) {
 					DeliveryReport=true;
 					continue;
 				}
-				if (mystrncasecmp(argv[i],"-validity",0)) {
+				if (strcasecmp(argv[i],"-validity") == 0) {
 					nextlong=10;
 					continue;
 				}
 			}
-			if (mystrncasecmp(argv[i],"-smscset",0)) {
+			if (strcasecmp(argv[i],"-smscset") == 0) {
 				nextlong=3;
 				continue;
 			}
-			if (mystrncasecmp(argv[i],"-smscnumber",0)) {
+			if (strcasecmp(argv[i],"-smscnumber") == 0) {
 				nextlong=4;
 				continue;
 			}
-			if (mystrncasecmp(argv[i],"-protected",0)) {
+			if (strcasecmp(argv[i],"-protected") == 0) {
 				nextlong=19;
 				continue;
 			}
-			if (mystrncasecmp(argv[i],"-reply",0)) {
+			if (strcasecmp(argv[i],"-reply") == 0) {
 				ReplyViaSameSMSC=true;
 				continue;
 			}
-			if (mystrncasecmp(argv[i],"-maxsms",0)) {
+			if (strcasecmp(argv[i],"-maxsms") == 0) {
 				nextlong=21;
 				continue;
 			}
-			if (mystrncasecmp(argv[2],"RINGTONE",0)) {
-				if (mystrncasecmp(argv[i],"-long",0)) {
+			if (strcasecmp(argv[2],"RINGTONE") == 0) {
+				if (strcasecmp(argv[i],"-long") == 0) {
 					SMSInfo.Entries[0].ID = SMS_NokiaRingtoneLong;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-scale",0)) {
+				if (strcasecmp(argv[i],"-scale") == 0) {
 					ringtone[0].NoteTone.AllNotesScale=true;
 					break;
 				}
 			}
-			if (mystrncasecmp(argv[2],"TEXT",0)) {
-				if (mystrncasecmp(argv[i],"-inputunicode",0)) {
+			if (strcasecmp(argv[2],"TEXT") == 0) {
+				if (strcasecmp(argv[i],"-inputunicode") == 0) {
 					ReadUnicodeFile(Buffer[0],InputBuffer);
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-16bit",0)) {
+				if (strcasecmp(argv[i],"-16bit") == 0) {
 					if (SMSInfo.Entries[0].ID == SMS_ConcatenatedTextLong) SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong16bit;
 					if (SMSInfo.Entries[0].ID == SMS_ConcatenatedAutoTextLong) SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong16bit;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-flash",0)) {
+				if (strcasecmp(argv[i],"-flash") == 0) {
 					SMSInfo.Class = 0;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-len",0)) {
+				if (strcasecmp(argv[i],"-len") == 0) {
 					nextlong = 5;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-autolen",0)) {
+				if (strcasecmp(argv[i],"-autolen") == 0) {
 					nextlong = 5;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-unicode",0)) {
+				if (strcasecmp(argv[i],"-unicode") == 0) {
 					SMSInfo.UnicodeCoding = true;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-enablevoice",0)) {
+				if (strcasecmp(argv[i],"-enablevoice") == 0) {
 					SMSInfo.Entries[0].ID = SMS_EnableVoice;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-disablevoice",0)) {
+				if (strcasecmp(argv[i],"-disablevoice") == 0) {
 					SMSInfo.Entries[0].ID = SMS_DisableVoice;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-enablefax",0)) {
+				if (strcasecmp(argv[i],"-enablefax") == 0) {
 					SMSInfo.Entries[0].ID = SMS_EnableFax;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-disablefax",0)) {
+				if (strcasecmp(argv[i],"-disablefax") == 0) {
 					SMSInfo.Entries[0].ID = SMS_DisableFax;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-enableemail",0)) {
+				if (strcasecmp(argv[i],"-enableemail") == 0) {
 					SMSInfo.Entries[0].ID = SMS_EnableEmail;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-disableemail",0)) {
+				if (strcasecmp(argv[i],"-disableemail") == 0) {
 					SMSInfo.Entries[0].ID = SMS_DisableEmail;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-voidsms",0)) {
+				if (strcasecmp(argv[i],"-voidsms") == 0) {
 					SMSInfo.Entries[0].ID = SMS_VoidSMS;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-replacemessages",0) &&
+				if (strcasecmp(argv[i],"-replacemessages") == 0 &&
 				    SMSInfo.Entries[0].ID != SMS_ConcatenatedTextLong) {
 					nextlong = 8;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-replacefile",0)) {
+				if (strcasecmp(argv[i],"-replacefile") == 0) {
 					nextlong = 9;
 					continue;
 				}
 			}
-			if (mystrncasecmp(argv[2],"PICTURE",0)) {
-				if (mystrncasecmp(argv[i],"-text",0)) {
+			if (strcasecmp(argv[2],"PICTURE") == 0) {
+				if (strcasecmp(argv[i],"-text") == 0) {
 					nextlong = 6;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-unicode",0)) {
+				if (strcasecmp(argv[i],"-unicode") == 0) {
 					SMSInfo.UnicodeCoding = true;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-alcatelbmmi",0)) {
+				if (strcasecmp(argv[i],"-alcatelbmmi") == 0) {
 					bitmap[0].Bitmap[0].Type=GSM_StartupLogo;
 					error=GSM_ReadBitmapFile(argv[startarg-1],&bitmap[0]);
 					Print_Error(error);
@@ -3869,58 +3870,58 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 				}
 				break;
 			}
-			if (mystrncasecmp(argv[2],"VCARD10",0)) {
-				if (mystrncasecmp(argv[i],"-nokia",0)) {
+			if (strcasecmp(argv[2],"VCARD10") == 0) {
+				if (strcasecmp(argv[i],"-nokia") == 0) {
 					SMSInfo.Entries[0].ID = SMS_NokiaVCARD10Long;
 					break;
 				}
 				break;
 			}
-			if (mystrncasecmp(argv[2],"VCARD21",0)) {
-				if (mystrncasecmp(argv[i],"-nokia",0)) {
+			if (strcasecmp(argv[2],"VCARD21") == 0) {
+				if (strcasecmp(argv[i],"-nokia") == 0) {
 					SMSInfo.Entries[0].ID = SMS_NokiaVCARD21Long;
 					break;
 				}
 				break;
 			}
-			if (mystrncasecmp(argv[2],"PROFILE",0)) {
-				if (mystrncasecmp(argv[i],"-name",0)) {
+			if (strcasecmp(argv[2],"PROFILE") == 0) {
+				if (strcasecmp(argv[i],"-name") == 0) {
 					nextlong = 22;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-ringtone",0)) {
+				if (strcasecmp(argv[i],"-ringtone") == 0) {
 					nextlong = 23;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-bitmap",0)) {
+				if (strcasecmp(argv[i],"-bitmap") == 0) {
 					nextlong = 24;
 					break;
 				}
 			}
-			if (mystrncasecmp(argv[2],"SMSTEMPLATE",0)) {
-				if (mystrncasecmp(argv[i],"-unicode",0)) {
+			if (strcasecmp(argv[2],"SMSTEMPLATE") == 0) {
+				if (strcasecmp(argv[i],"-unicode") == 0) {
 					SMSInfo.UnicodeCoding = true;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-text",0)) {
+				if (strcasecmp(argv[i],"-text") == 0) {
 					nextlong = 11;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-unicodefiletext",0)) {
+				if (strcasecmp(argv[i],"-unicodefiletext") == 0) {
 					nextlong = 18;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-defsound",0)) {
+				if (strcasecmp(argv[i],"-defsound") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSPredefinedSound;
 					nextlong = 12;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-defanimation",0)) {
+				if (strcasecmp(argv[i],"-defanimation") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSPredefinedAnimation;
 					nextlong = 12;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-tone10",0)) {
+				if (strcasecmp(argv[i],"-tone10") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound10;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -3929,7 +3930,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-tone10long",0)) {
+				if (strcasecmp(argv[i],"-tone10long") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound10Long;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -3938,7 +3939,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-tone12",0)) {
+				if (strcasecmp(argv[i],"-tone12") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound12;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -3947,7 +3948,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-tone12long",0)) {
+				if (strcasecmp(argv[i],"-tone12long") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound12Long;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -3956,7 +3957,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-toneSE",0)) {
+				if (strcasecmp(argv[i],"-toneSE") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSonyEricssonSound;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -3965,7 +3966,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-toneSElong",0)) {
+				if (strcasecmp(argv[i],"-toneSElong") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSonyEricssonSoundLong;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -3974,7 +3975,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-variablebitmap",0)) {
+				if (strcasecmp(argv[i],"-variablebitmap") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSVariableBitmap;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -3983,7 +3984,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 15;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-variablebitmaplong",0)) {
+				if (strcasecmp(argv[i],"-variablebitmaplong") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSVariableBitmapLong;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -3992,7 +3993,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 15;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-animation",0)) {
+				if (strcasecmp(argv[i],"-animation") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID  = SMS_EMSAnimation;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -4003,38 +4004,38 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					break;
 				}
 			}
-			if (mystrncasecmp(argv[2],"EMS",0)) {
-				if (mystrncasecmp(argv[i],"-unicode",0)) {
+			if (strcasecmp(argv[2],"EMS") == 0) {
+				if (strcasecmp(argv[i],"-unicode") == 0) {
 					SMSInfo.UnicodeCoding = true;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-16bit",0)) {
+				if (strcasecmp(argv[i],"-16bit") == 0) {
 					EMS16Bit = true;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-format",0)) {
+				if (strcasecmp(argv[i],"-format") == 0) {
 					nextlong = 20;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-text",0)) {
+				if (strcasecmp(argv[i],"-text") == 0) {
 					nextlong = 11;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-unicodefiletext",0)) {
+				if (strcasecmp(argv[i],"-unicodefiletext") == 0) {
 					nextlong = 18;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-defsound",0)) {
+				if (strcasecmp(argv[i],"-defsound") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSPredefinedSound;
 					nextlong = 12;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-defanimation",0)) {
+				if (strcasecmp(argv[i],"-defanimation") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSPredefinedAnimation;
 					nextlong = 12;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-tone10",0)) {
+				if (strcasecmp(argv[i],"-tone10") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound10;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -4043,7 +4044,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-tone10long",0)) {
+				if (strcasecmp(argv[i],"-tone10long") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound10Long;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -4052,7 +4053,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-tone12",0)) {
+				if (strcasecmp(argv[i],"-tone12") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound12;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -4061,7 +4062,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-tone12long",0)) {
+				if (strcasecmp(argv[i],"-tone12long") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSound12Long;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -4070,7 +4071,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-toneSE",0)) {
+				if (strcasecmp(argv[i],"-toneSE") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSonyEricssonSound;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -4079,7 +4080,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-toneSElong",0)) {
+				if (strcasecmp(argv[i],"-toneSElong") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSSonyEricssonSoundLong;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -4088,7 +4089,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 14;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-fixedbitmap",0)) {
+				if (strcasecmp(argv[i],"-fixedbitmap") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSFixedBitmap;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -4097,7 +4098,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 15;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-variablebitmap",0)) {
+				if (strcasecmp(argv[i],"-variablebitmap") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSVariableBitmap;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -4106,7 +4107,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 15;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-variablebitmaplong",0)) {
+				if (strcasecmp(argv[i],"-variablebitmaplong") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID = SMS_EMSVariableBitmapLong;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -4115,7 +4116,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					nextlong = 15;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-animation",0)) {
+				if (strcasecmp(argv[i],"-animation") == 0) {
 					SMSInfo.Entries[SMSInfo.EntriesNum].ID  = SMS_EMSAnimation;
 					if (Protected != 0) {
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
@@ -4126,12 +4127,12 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 					break;
 				}
 			}
-			if (mystrncasecmp(argv[2],"OPERATOR",0)) {
-				if (mystrncasecmp(argv[i],"-netcode",0)) {
+			if (strcasecmp(argv[2],"OPERATOR") == 0) {
+				if (strcasecmp(argv[i],"-netcode") == 0) {
 					nextlong = 7;
 					break;
 				}
-				if (mystrncasecmp(argv[i],"-biglogo",0)) {
+				if (strcasecmp(argv[i],"-biglogo") == 0) {
 					SMSInfo.Entries[0].ID = SMS_NokiaOperatorLogoLong;
 					break;
 				}
@@ -4164,7 +4165,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 				Buffer[0][atoi(argv[i])*2+1]	= 0x00;
 			}
 			SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
-			if (mystrncasecmp(argv[i-1],"-autolen",0)) SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
+			if (strcasecmp(argv[i-1],"-autolen") == 0) SMSInfo.Entries[0].ID = SMS_ConcatenatedAutoTextLong;
 			nextlong = 0;
 			break;
 		case 6:	/* Picture Images - text */
@@ -4177,7 +4178,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 				printf(_("Unknown GSM network code (\"%s\")\n"),argv[i]);
 				exit(-1);
 			}
-			if (mystrncasecmp(argv[1],"--savesms",0)) {
+			if (strcasecmp(argv[1],"--savesms") == 0) {
 				EncodeUnicode(Sender, "OpLogo",6);
 				EncodeUnicode(Sender+6*2,bitmap[0].Bitmap[0].NetworkCode,3);
 				EncodeUnicode(Sender+6*2+3*2,bitmap[0].Bitmap[0].NetworkCode+4,2);
@@ -4219,12 +4220,12 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			break;
 		case 10:
 			Validity.Format = SMS_Validity_RelativeFormat;
-			if (mystrncasecmp(argv[i],"HOUR",0)) 		Validity.Relative = SMS_VALID_1_Hour;
-			else if (mystrncasecmp(argv[i],"6HOURS",0))	Validity.Relative = SMS_VALID_6_Hours;
-			else if (mystrncasecmp(argv[i],"DAY",0)) 	Validity.Relative = SMS_VALID_1_Day;
-			else if (mystrncasecmp(argv[i],"3DAYS",0)) 	Validity.Relative = SMS_VALID_3_Days;
-			else if (mystrncasecmp(argv[i],"WEEK",0)) 	Validity.Relative = SMS_VALID_1_Week;
-			else if (mystrncasecmp(argv[i],"MAX",0)) 	Validity.Relative = SMS_VALID_Max_Time;
+			if (strcasecmp(argv[i],"HOUR") == 0) 		Validity.Relative = SMS_VALID_1_Hour;
+			else if (strcasecmp(argv[i],"6HOURS") == 0)	Validity.Relative = SMS_VALID_6_Hours;
+			else if (strcasecmp(argv[i],"DAY") == 0) 	Validity.Relative = SMS_VALID_1_Day;
+			else if (strcasecmp(argv[i],"3DAYS") == 0) 	Validity.Relative = SMS_VALID_3_Days;
+			else if (strcasecmp(argv[i],"WEEK") == 0) 	Validity.Relative = SMS_VALID_1_Week;
+			else if (strcasecmp(argv[i],"MAX") == 0) 	Validity.Relative = SMS_VALID_Max_Time;
 			else {
 				printf(_("Unknown validity string (\"%s\")\n"),argv[i]);
 				exit(-1);
@@ -4386,7 +4387,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		exit(-1);
 	}
 
-	if (mystrncasecmp(argv[2],"EMS",0) && EMS16Bit) {
+	if (strcasecmp(argv[2],"EMS") == 0 && EMS16Bit) {
 		for (i=0;i<SMSInfo.EntriesNum;i++) {
 			switch (SMSInfo.Entries[i].ID) {
 			case SMS_ConcatenatedTextLong:
@@ -4398,7 +4399,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 
 	}
-	if (mystrncasecmp(argv[2],"TEXT",0)) {
+	if (strcasecmp(argv[2],"TEXT") == 0) {
 		chars_read = UnicodeLength(Buffer[0]);
 		if (chars_read != 0) {
 			/* Trim \n at the end of string */
@@ -4409,8 +4410,8 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 	}
 
-	if (mystrncasecmp(argv[1],"--displaysms",0) || mystrncasecmp(argv[1],"--sendsmsdsms",0)) {
-		if (mystrncasecmp(argv[2],"OPERATOR",0)) {
+	if (strcasecmp(argv[1],"--displaysms") == 0 || strcasecmp(argv[1],"--sendsmsdsms") == 0) {
+		if (strcasecmp(argv[2],"OPERATOR") == 0) {
 			if (bitmap[0].Bitmap[0].Type==GSM_OperatorLogo && strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0) {
 				printf(_("No network code\n"));
 				exit(-1);
@@ -4419,12 +4420,12 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	} else {
 		GSM_Init(true);
 
-		if (mystrncasecmp(argv[2],"OPERATOR",0)) {
+		if (strcasecmp(argv[2],"OPERATOR") == 0) {
 			if (bitmap[0].Bitmap[0].Type==GSM_OperatorLogo && strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0) {
 				error=Phone->GetNetworkInfo(&s,&NetInfo);
 				Print_Error(error);
 				strcpy(bitmap[0].Bitmap[0].NetworkCode,NetInfo.NetworkCode);
-				if (mystrncasecmp(argv[1],"--savesms",0)) {
+				if (strcasecmp(argv[1],"--savesms") == 0) {
 					EncodeUnicode(Sender, "OpLogo",6);
 					EncodeUnicode(Sender+6*2,bitmap[0].Bitmap[0].NetworkCode,3);
 					EncodeUnicode(Sender+6*2+3*2,bitmap[0].Bitmap[0].NetworkCode+4,2);
@@ -4464,11 +4465,11 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	}
 	if (MaxSMS != -1 && sms.Number > MaxSMS) {
 		printf(_("There is %i SMS packed and %i limit. Exiting\n"),sms.Number,MaxSMS);
-		if (!mystrncasecmp(argv[1],"--displaysms",0) && !mystrncasecmp(argv[1],"--sendsmsdsms",0)) GSM_Terminate();
+		if (!strcasecmp(argv[1],"--displaysms") == 0 && !strcasecmp(argv[1],"--sendsmsdsms") == 0) GSM_Terminate();
 		exit(-1);
 	}
 
-	if (mystrncasecmp(argv[1],"--displaysms",0)) {
+	if (strcasecmp(argv[1],"--displaysms") == 0) {
 		if (SMSCSet != 0) {
 			printf(_("Use -smscnumber option to give SMSC number\n"));
 			exit(-1);
@@ -4489,7 +4490,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		printf(_("\nNumber of SMS: %i\n"),sms.Number);
 		exit(sms.Number);
 	}
-	if (mystrncasecmp(argv[1],"--sendsmsdsms",0)) {
+	if (strcasecmp(argv[1],"--sendsmsdsms") == 0) {
 		if (SMSCSet != 0) {
 			printf(_("Use -smscnumber option to give SMSC number\n"));
 			exit(-1);
@@ -4508,7 +4509,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		SMSDaemonSendSMS(argv[4],argv[5],&sms);
 		exit(0);
 	}
-	if (mystrncasecmp(argv[1],"--savesms",0) || SendSaved) {
+	if (strcasecmp(argv[1],"--savesms") == 0 || SendSaved) {
 		error=Phone->GetSMSFolders(&s, &folders);
 		Print_Error(error);
 
@@ -4627,7 +4628,7 @@ static void SaveFile(int argc, char *argv[])
 	unsigned char		Buffer[10000];
 	GSM_MemoryEntry		*pbk;
 
-	if (mystrncasecmp(argv[2],"CALENDAR",0)) {
+	if (strcasecmp(argv[2],"CALENDAR") == 0) {
 		if (argc<5) {
 			printf(_("Where is backup filename and location ?\n"));
 			exit(-1);
@@ -4645,7 +4646,7 @@ static void SaveFile(int argc, char *argv[])
 		}
 		j = 0;
 		GSM_EncodeVCALENDAR(Buffer, &j, Backup.Calendar[i],true,Nokia_VCalendar);
-	} else if (mystrncasecmp(argv[2],"BOOKMARK",0)) {
+	} else if (strcasecmp(argv[2],"BOOKMARK") == 0) {
 		if (argc<5) {
 			printf(_("Where is backup filename and location ?\n"));
 			exit(-1);
@@ -4663,7 +4664,7 @@ static void SaveFile(int argc, char *argv[])
 		}
 		j = 0;
 		GSM_EncodeURLFile(Buffer, &j, Backup.WAPBookmark[i]);
-	} else if (mystrncasecmp(argv[2],"NOTE",0)) {
+	} else if (strcasecmp(argv[2],"NOTE") == 0) {
 		if (argc<5) {
 			printf(_("Where is backup filename and location ?\n"));
 			exit(-1);
@@ -4681,7 +4682,7 @@ static void SaveFile(int argc, char *argv[])
 		}
 		j = 0;
 		GSM_EncodeVNTFile(Buffer, &j, Backup.Note[i]);
-	} else if (mystrncasecmp(argv[2],"TODO",0)) {
+	} else if (strcasecmp(argv[2],"TODO") == 0) {
 		if (argc<5) {
 			printf(_("Where is backup filename and location ?\n"));
 			exit(-1);
@@ -4699,7 +4700,7 @@ static void SaveFile(int argc, char *argv[])
 		}
 		j = 0;
 		GSM_EncodeVTODO(Buffer, &j, Backup.ToDo[i], true, Nokia_VToDo);
-	} else if (mystrncasecmp(argv[2],"VCARD10",0) || mystrncasecmp(argv[2],"VCARD21",0)) {
+	} else if (strcasecmp(argv[2],"VCARD10") == 0 || strcasecmp(argv[2],"VCARD21") == 0) {
 		if (argc<6) {
 			printf(_("Where is backup filename and location and memory type ?\n"));
 			exit(-1);
@@ -4707,7 +4708,7 @@ static void SaveFile(int argc, char *argv[])
 		error=GSM_ReadBackupFile(argv[4],&Backup);
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
-		if (mystrncasecmp(argv[5],"SM",0)) {
+		if (strcasecmp(argv[5],"SM") == 0) {
 			while (Backup.SIMPhonebook[i]!=NULL) {
 				if (i == atoi(argv[6])-1) break;
 				i++;
@@ -4717,7 +4718,7 @@ static void SaveFile(int argc, char *argv[])
 				exit(-1);
 			}
 			pbk = Backup.SIMPhonebook[i];
-		} else if (mystrncasecmp(argv[5],"ME",0)) {
+		} else if (strcasecmp(argv[5],"ME") == 0) {
 			while (Backup.PhonePhonebook[i]!=NULL) {
 				if (i == atoi(argv[6])-1) break;
 				i++;
@@ -4732,7 +4733,7 @@ static void SaveFile(int argc, char *argv[])
 			exit(-1);
 		}
 		j = 0;
-		if (mystrncasecmp(argv[2],"VCARD10",0)) {
+		if (strcasecmp(argv[2],"VCARD10") == 0) {
 			GSM_EncodeVCARD(Buffer,&j,pbk,true,Nokia_VCard10);
 		} else {
 			GSM_EncodeVCARD(Buffer,&j,pbk,true,Nokia_VCard21);
@@ -4770,7 +4771,7 @@ static void Backup(int argc, char *argv[])
  	GSM_GPRSAccessPoint	GPRSPoint;
 	bool			DoBackup;
 
-	if (argc == 4 && mystrncasecmp(argv[3],"-yes",0)) always_answer_yes = true;
+	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
 
 	GSM_ClearBackup(&Backup);
 	GSM_GetBackupFormatFeatures(argv[2],&Info);
@@ -5429,7 +5430,7 @@ static void Restore(int argc, char *argv[])
 	if (Backup.IMEI[0]!=0) 		fprintf(stderr, _("IMEI            : %s\n"),Backup.IMEI);
 	if (Backup.Creator[0]!=0) 	fprintf(stderr, _("File created by : %s\n"),Backup.Creator);
 
-	if (argc == 4 && mystrncasecmp(argv[3],"-yes",0)) always_answer_yes = true;
+	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
 
 	if (Backup.MD5Calculated[0]!=0) {
 		dbgprintf("\"%s\"\n",Backup.MD5Original);
@@ -5565,7 +5566,7 @@ static void Restore(int argc, char *argv[])
 		fprintf(stderr, "\n");
 	}
 
-	if (!mystrncasecmp(s.CurrentConfig->SyncTime,"yes",0)) {
+	if (!strcasecmp(s.CurrentConfig->SyncTime,"yes") == 0) {
 		if (answer_yes(_("Do you want to set phone date/time (NOTE: in some phones it's required to correctly restore calendar notes and other items)"))) {
 			GSM_GetCurrentDateTime(&date_time);
 
@@ -6093,7 +6094,7 @@ static void AddNew(int argc, char *argv[])
 		}
 	}
 
-	if (!mystrncasecmp(s.CurrentConfig->SyncTime,"yes",0)) {
+	if (!strcasecmp(s.CurrentConfig->SyncTime,"yes") == 0) {
 		if (answer_yes(_("Do you want to set phone date/time (NOTE: in some phones it's required to correctly restore calendar notes and other items)"))) {
 			GSM_GetCurrentDateTime(&date_time);
 
@@ -6504,7 +6505,7 @@ static void GetWAPMMSSettings(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		settings.Location=i;
-		if (mystrncasecmp(argv[1],"--getwapsettings",0)) {
+		if (strcasecmp(argv[1],"--getwapsettings") == 0) {
 			error=Phone->GetWAPSettings(&s,&settings);
 		} else {
 			error=Phone->GetMMSSettings(&s,&settings);
@@ -6700,13 +6701,13 @@ static void CopyBitmap(int argc, char *argv[])
 	} else {
 		if (argc == 5) {
 			for (i=0;i<Bitmap.Number;i++) {
-				if (mystrncasecmp(argv[4],"PICTURE",0)) {
+				if (strcasecmp(argv[4],"PICTURE") == 0) {
 					Bitmap.Bitmap[i].Type = GSM_PictureImage;
-				} else if (mystrncasecmp(argv[4],"STARTUP",0)) {
+				} else if (strcasecmp(argv[4],"STARTUP") == 0) {
 					Bitmap.Bitmap[i].Type = GSM_StartupLogo;
-				} else if (mystrncasecmp(argv[4],"CALLER",0)) {
+				} else if (strcasecmp(argv[4],"CALLER") == 0) {
 					Bitmap.Bitmap[i].Type = GSM_CallerGroupLogo;
-				} else if (mystrncasecmp(argv[4],"OPERATOR",0)) {
+				} else if (strcasecmp(argv[4],"OPERATOR") == 0) {
 					Bitmap.Bitmap[i].Type = GSM_OperatorLogo;
 				} else {
 					printf(_("What format of output file logo (\"%s\") ?\n"),argv[4]);
@@ -6873,8 +6874,8 @@ static void CopyRingtone(int argc, char *argv[])
 
 	Format = ringtone.Format;
 	if (argc == 5) {
-		if (mystrncasecmp(argv[4],"RTTL",0)) {		Format = RING_NOTETONE;
-		} else if (mystrncasecmp(argv[4],"BINARY",0)) {	Format = RING_NOKIABINARY;
+		if (strcasecmp(argv[4],"RTTL") == 0) {		Format = RING_NOTETONE;
+		} else if (strcasecmp(argv[4],"BINARY") == 0) {	Format = RING_NOKIABINARY;
 		} else {
 			printf(_("What format of output ringtone file (\"%s\") ?\n"),argv[4]);
 			exit(-1);
@@ -6917,10 +6918,10 @@ static void GetAllCategories(int argc, char *argv[])
 	GSM_CategoryStatus	Status;
 	int			j, count;
 
-	if (mystrncasecmp(argv[2],"TODO",0)) {
+	if (strcasecmp(argv[2],"TODO") == 0) {
         	Category.Type 	= Category_ToDo;
         	Status.Type 	= Category_ToDo;
-	} else if (mystrncasecmp(argv[2],"PHONEBOOK",0)) {
+	} else if (strcasecmp(argv[2],"PHONEBOOK") == 0) {
 	        Category.Type 	= Category_Phonebook;
         	Status.Type 	= Category_Phonebook;
 	} else {
@@ -6956,9 +6957,9 @@ static void GetCategory(int argc, char *argv[])
 	GSM_Category	Category;
 	int		start,stop,j;
 
-	if (mystrncasecmp(argv[2],"TODO",0)) {
+	if (strcasecmp(argv[2],"TODO") == 0) {
     		Category.Type = Category_ToDo;
-	} else if (mystrncasecmp(argv[2],"PHONEBOOK",0)) {
+	} else if (strcasecmp(argv[2],"PHONEBOOK") == 0) {
     		Category.Type = Category_Phonebook;
 	} else {
 		printf(_("What type of categories do you want to get (\"%s\") ?\n"),argv[2]);
@@ -6993,9 +6994,9 @@ static void AddCategory(int argc, char *argv[])
 	GSM_Category	Category;
 	int		Length;
 
-	if (mystrncasecmp(argv[2],"TODO",0)) {
+	if (strcasecmp(argv[2],"TODO") == 0) {
     		Category.Type = Category_ToDo;
-	} else if (mystrncasecmp(argv[2],"PHONEBOOK",0)) {
+	} else if (strcasecmp(argv[2],"PHONEBOOK") == 0) {
     		Category.Type = Category_Phonebook;
 	} else {
 		printf(_("What type of category do you want to add (\"%s\") ?\n"),argv[2]);
@@ -7306,10 +7307,10 @@ static void EnterSecurityCode(int argc, char *argv[])
 {
 	GSM_SecurityCode Code;
 
-	if (mystrncasecmp(argv[2],"PIN",0)) {		Code.Type = SEC_Pin;
-	} else if (mystrncasecmp(argv[2],"PUK",0)) {	Code.Type = SEC_Puk;
-	} else if (mystrncasecmp(argv[2],"PIN2",0)) {	Code.Type = SEC_Pin2;
-	} else if (mystrncasecmp(argv[2],"PUK2",0)) {	Code.Type = SEC_Puk2;
+	if (strcasecmp(argv[2],"PIN") == 0) {		Code.Type = SEC_Pin;
+	} else if (strcasecmp(argv[2],"PUK") == 0) {	Code.Type = SEC_Puk;
+	} else if (strcasecmp(argv[2],"PIN2") == 0) {	Code.Type = SEC_Pin2;
+	} else if (strcasecmp(argv[2],"PUK2") == 0) {	Code.Type = SEC_Puk2;
 	} else {
 		printf(_("What security code (\"%s\") ?\n"),argv[2]);
 		exit(-1);
@@ -7503,11 +7504,11 @@ static void ResetPhoneSettings(int argc, char *argv[])
 {
 	GSM_ResetSettingsType Type;
 
-	if (mystrncasecmp(argv[2],"PHONE",0)) {		 Type = GSM_RESET_PHONESETTINGS;
-	} else if (mystrncasecmp(argv[2],"UIF",0)) {	 Type = GSM_RESET_USERINTERFACE;
-	} else if (mystrncasecmp(argv[2],"ALL",0)) {	 Type = GSM_RESET_USERINTERFACE_PHONESETTINGS;
-	} else if (mystrncasecmp(argv[2],"DEV",0)) {	 Type = GSM_RESET_DEVICE;
-	} else if (mystrncasecmp(argv[2],"FACTORY",0)) { Type = GSM_RESET_FULLFACTORY;
+	if (strcasecmp(argv[2],"PHONE") == 0) {		 Type = GSM_RESET_PHONESETTINGS;
+	} else if (strcasecmp(argv[2],"UIF") == 0) {	 Type = GSM_RESET_USERINTERFACE;
+	} else if (strcasecmp(argv[2],"ALL") == 0) {	 Type = GSM_RESET_USERINTERFACE_PHONESETTINGS;
+	} else if (strcasecmp(argv[2],"DEV") == 0) {	 Type = GSM_RESET_DEVICE;
+	} else if (strcasecmp(argv[2],"FACTORY") == 0) { Type = GSM_RESET_FULLFACTORY;
 	} else {
 		printf(_("What type of reset phone settings (\"%s\") ?\n"),argv[2]);
 		exit(-1);
@@ -7839,7 +7840,7 @@ static void GetFileSystem(int argc, char *argv[])
 			}
 		}
 
-		if (argc <= 2 || !mystrncasecmp(argv[2],"-flatall",0)) {
+		if (argc <= 2 || !strcasecmp(argv[2],"-flatall") == 0) {
 			//Nokia filesystem 1
 			if (UnicodeLength(Files.ID_FullName) != 0 &&
 			    (DecodeUnicodeString(Files.ID_FullName)[0]=='C' ||
@@ -7870,9 +7871,9 @@ static void GetFileSystem(int argc, char *argv[])
 			} else {
 				printf(" ");
 			}
-			if (argc > 2 &&  mystrncasecmp(argv[2],"-flat",0)) {
+			if (argc > 2 &&  strcasecmp(argv[2],"-flat") == 0) {
 				if (!Files.Folder) {
-					if (mystrncasecmp(argv[2],"-flatall",0)) {
+					if (strcasecmp(argv[2],"-flatall") == 0) {
 						if (!Files.ModifiedEmpty) {
 							printf(" %30s",OSDateTime(Files.Modified,false));
 						} else printf(" %30c",0x20);
@@ -7900,7 +7901,7 @@ static void GetFileSystem(int argc, char *argv[])
 				}
 			}
 			printf("\"%s\"\n",DecodeUnicodeConsole(Files.Name));
-		} else if (argc > 2 && mystrncasecmp(argv[2],"-flatall",0)) {
+		} else if (argc > 2 && strcasecmp(argv[2],"-flatall") == 0) {
 			/* format for a folder ID;Folder;FOLDER_NAME;[FOLDER_PARAMETERS]
 			 * format for a file   ID;File;FOLDER_NAME;FILE_NAME;DATESTAMP;FILE_SIZE;[FILE_PARAMETERS]  */
 			EncodeUTF8QuotedPrintable(IDUTF,Files.ID_FullName);
@@ -7961,13 +7962,13 @@ static void SetFileAttrib(int argc, char *argv[])
 	DecodeUTF8QuotedPrintable(Files.ID_FullName,argv[2],strlen(argv[2]));
 
 	for (i=3;i<argc;i++) {
-		if (mystrncasecmp(argv[i],"-readonly",0)) {
+		if (strcasecmp(argv[i],"-readonly") == 0) {
 			Files.ReadOnly = true;
-		} else if (mystrncasecmp(argv[i],"-protected",0)) {
+		} else if (strcasecmp(argv[i],"-protected") == 0) {
 			Files.Protected = true;
-		} else if (mystrncasecmp(argv[i],"-system",0)) {
+		} else if (strcasecmp(argv[i],"-system") == 0) {
 			Files.System = true;
-		} else if (mystrncasecmp(argv[i],"-hidden",0)) {
+		} else if (strcasecmp(argv[i],"-hidden") == 0) {
 			Files.Hidden = true;
 		} else {
 			fprintf(stderr, _("Unknown attribute (%s)\n"),argv[i]);
@@ -8157,7 +8158,7 @@ static void GetFiles(int argc, char *argv[])
 	GSM_Init(true);
 
 	for (i=2;i<argc;i++) {
-		if (mystrncasecmp(argv[i],"-newtime",0)) {
+		if (strcasecmp(argv[i],"-newtime") == 0) {
 			newtime = true;
 			continue;
 		}
@@ -8184,7 +8185,7 @@ static void GetFileFolder(int argc, char *argv[])
 	GSM_Init(true);
 
 	for (i=2;i<argc;i++) {
-		if (mystrncasecmp(argv[i],"-newtime",0)) {
+		if (strcasecmp(argv[i],"-newtime") == 0) {
 			newtime = true;
 			continue;
 		}
@@ -8200,7 +8201,7 @@ static void GetFileFolder(int argc, char *argv[])
 			/* We search for file or folder */
 			found = false;
 			for (i=2;i<argc;i++) {
-				if (mystrncasecmp(argv[i],"-newtime",0)) {
+				if (strcasecmp(argv[i],"-newtime") == 0) {
 					continue;
 				}
 				dbgprintf("comparing %s %s\n",DecodeUnicodeString(File.ID_FullName),argv[i]);
@@ -8298,7 +8299,7 @@ static void AddSendFile(int argc, char *argv[])
 	bool			sendfile = false;
 	int			optint = 2;
 
-	if (mystrncasecmp(argv[1], "--sendfile", 0)) {
+	if (strcasecmp(argv[1], "--sendfile") == 0) {
 		sendfile = true;
 	}
 
@@ -8330,52 +8331,52 @@ static void AddSendFile(int argc, char *argv[])
 		for (i = optint; i < argc; i++) {
 			switch(nextlong) {
 			case 0:
-				if (mystrncasecmp(argv[i],"-type",0)) {
+				if (strcasecmp(argv[i],"-type") == 0) {
 					nextlong = 1;
 					continue;
 				}
-				if (mystrncasecmp(argv[i],"-protected",0)) {
+				if (strcasecmp(argv[i],"-protected") == 0) {
 					File.Protected = true;
 					continue;
 				}
-				if (mystrncasecmp(argv[i],"-readonly",0)) {
+				if (strcasecmp(argv[i],"-readonly") == 0) {
 					File.ReadOnly = true;
 					continue;
 				}
-				if (mystrncasecmp(argv[i],"-hidden",0)) {
+				if (strcasecmp(argv[i],"-hidden") == 0) {
 					File.Hidden = true;
 					continue;
 				}
-				if (mystrncasecmp(argv[i],"-system",0)) {
+				if (strcasecmp(argv[i],"-system") == 0) {
 					File.System = true;
 					continue;
 				}
-				if (mystrncasecmp(argv[i],"-newtime",0)) {
+				if (strcasecmp(argv[i],"-newtime") == 0) {
 					File.ModifiedEmpty = true;
 					continue;
 				}
 				printf(_("Parameter \"%s\" unknown\n"),argv[i]);
 				exit(-1);
 			case 1:
-				if (mystrncasecmp(argv[i],"JAR",0)) {
+				if (strcasecmp(argv[i],"JAR") == 0) {
 					File.Type = GSM_File_Java_JAR;
-				} else if (mystrncasecmp(argv[i],"JPG",0)) {
+				} else if (strcasecmp(argv[i],"JPG") == 0) {
 					File.Type = GSM_File_Image_JPG;
-				} else if (mystrncasecmp(argv[i],"BMP",0)) {
+				} else if (strcasecmp(argv[i],"BMP") == 0) {
 					File.Type = GSM_File_Image_BMP;
-				} else if (mystrncasecmp(argv[i],"WBMP",0)) {
+				} else if (strcasecmp(argv[i],"WBMP") == 0) {
 					File.Type = GSM_File_Image_WBMP;
-				} else if (mystrncasecmp(argv[i],"GIF",0)) {
+				} else if (strcasecmp(argv[i],"GIF") == 0) {
 					File.Type = GSM_File_Image_GIF;
-				} else if (mystrncasecmp(argv[i],"PNG",0)) {
+				} else if (strcasecmp(argv[i],"PNG") == 0) {
 					File.Type = GSM_File_Image_PNG;
-                                } else if (mystrncasecmp(argv[i],"MIDI",0)) {
+                                } else if (strcasecmp(argv[i],"MIDI") == 0) {
                                         File.Type = GSM_File_Sound_MIDI;
-                                } else if (mystrncasecmp(argv[i],"AMR",0)) {
+                                } else if (strcasecmp(argv[i],"AMR") == 0) {
                                         File.Type = GSM_File_Sound_AMR;
-                                } else if (mystrncasecmp(argv[i],"NRT",0)) {
+                                } else if (strcasecmp(argv[i],"NRT") == 0) {
                                         File.Type = GSM_File_Sound_NRT;
-                                } else if (mystrncasecmp(argv[i],"3GP",0)) {
+                                } else if (strcasecmp(argv[i],"3GP") == 0) {
                                         File.Type = GSM_File_Video_3GP;
 				} else {
 					printf(_("What file type (\"%s\") ?\n"),argv[i]);
@@ -8469,8 +8470,8 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 	    	Print_Error(error);
 
 		if (!Files.Folder) {
-			if (mystrcasestr(DecodeUnicodeConsole(Files.Name),".mp3")!=NULL ||
-			    mystrcasestr(DecodeUnicodeConsole(Files.Name),".aac")!=NULL) {
+			if (strcasestr(DecodeUnicodeConsole(Files.Name),".mp3")!=NULL ||
+			    strcasestr(DecodeUnicodeConsole(Files.Name),".aac")!=NULL) {
 				if (First==NULL) {
 					First = malloc(sizeof(PlayListEntry));
 					Entry = First;
@@ -8741,7 +8742,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	int			i = 0, Pos, Size, Size2, nextlong;
 
 	while (Folder[i].parameter[0] != 0) {
-		if (mystrncasecmp(argv[2],Folder[i].parameter,0)) {
+		if (strcasecmp(argv[2],Folder[i].parameter) == 0) {
 			Found = true;
 			break;
 		}
@@ -8752,7 +8753,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		exit(-1);
 	}
 
-	if (mystrncasecmp(argv[2],"Application",0) || mystrncasecmp(argv[2],"Game",0)) {
+	if (strcasecmp(argv[2],"Application") == 0 || strcasecmp(argv[2],"Game") == 0) {
 		sprintf(buffer,"%s.jad",argv[3]);
 		file = fopen(buffer,"rb");
 		if (file == NULL) Print_Error(ERR_CANTOPENFILE);
@@ -8774,7 +8775,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		i = 0;
 		while (Folder[i].parameter[0] != 0) {
 			if (!strcmp("obex",Folder[i].model) &&
-			     mystrncasecmp(argv[2],Folder[i].parameter,0)) {
+			     strcasecmp(argv[2],Folder[i].parameter) == 0) {
 				EncodeUnicode(Files.ID_FullName,Folder[i].folder,strlen(Folder[i].folder));
 				Found = true;
 				break;
@@ -8791,7 +8792,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		while (Folder[i].parameter[0] != 0) {
 			if ((Folder[i].folder[0] == 'a' || Folder[i].folder[0] == 'd') &&
 			    Folder[i].level[0] == 0x00 &&
-			    mystrncasecmp(argv[2],Folder[i].parameter,0)) {
+			    strcasecmp(argv[2],Folder[i].parameter) == 0) {
 				if (strstr(Folder[i].folder,"d:/predefjava/")!= NULL &&
 				    !IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_SERIES40_30)) {
 					i++;
@@ -8818,14 +8819,14 @@ static void NokiaAddFile(int argc, char *argv[])
 				while (Folder[i].parameter[0] != 0) {
 					EncodeUnicode(buffer,Folder[i].folder,strlen(Folder[i].folder));
 					dbgprintf("comparing \"%s\" \"%s\" \"%s\"\n",s.Phone.Data.ModelInfo->model,DecodeUnicodeString(Files.ID_FullName),Folder[i].level);
-					if (mystrncasecmp(argv[2],Folder[i].parameter,0)  &&
+					if (strcasecmp(argv[2],Folder[i].parameter) == 0  &&
 					    mywstrncasecmp(Files.Name,buffer,0) &&
 					    Files.Level == atoi(Folder[i].level)) {
 						dbgprintf("found 1\n");
 						Found = true;
 						break;
 					}
-					if (mystrncasecmp(argv[2],Folder[i].parameter,0) &&
+					if (strcasecmp(argv[2],Folder[i].parameter) == 0 &&
 					    !strcmp(DecodeUnicodeString(Files.ID_FullName),Folder[i].folder) &&
 					    Folder[i].level[0] == 0x00) {
 						Found = true;
@@ -8836,7 +8837,7 @@ static void NokiaAddFile(int argc, char *argv[])
 						DecodeHexUnicode (buffer, Folder[i].folder,strlen(Folder[i].folder));
 						dbgprintf("comparing \"%s\"",DecodeUnicodeString(buffer));
 						dbgprintf("and \"%s\"\n",DecodeUnicodeString(Files.Name));
-						if (mystrncasecmp(argv[2],Folder[i].parameter,0)  &&
+						if (strcasecmp(argv[2],Folder[i].parameter) == 0  &&
 						    mywstrncasecmp(Files.Name,buffer,0) &&
 						    Files.Level == atoi(Folder[i].level)) {
 							Found = true;
@@ -8865,7 +8866,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	File.Hidden	= false;
 	File.System	= false;
 
-	if (mystrncasecmp(argv[2],"Application",0) || mystrncasecmp(argv[2],"Game",0)) {
+	if (strcasecmp(argv[2],"Application") == 0 || strcasecmp(argv[2],"Game") == 0) {
 		/* reading jar file */
 		sprintf(buffer,"%s.jar",argv[3]);
 		error = GSM_ReadFile(buffer, &File);
@@ -8899,7 +8900,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		if (Size != Size2) {
 			fprintf(stderr, _("INFO: declared JAR file size is different than real. Fixed by Gammu\n"));
 			for (i=0;i<File.Used;i++) {
-				if (mystrncasecmp(File.Buffer+i,"MIDlet-Jar-Size: ",17)) {
+				if (strncasecmp(File.Buffer+i,"MIDlet-Jar-Size: ",17) == 0) {
 					break;
 				}
 			}
@@ -8967,7 +8968,7 @@ static void NokiaAddFile(int argc, char *argv[])
 
 		if (argc > 4) {
 			for (i=4;i<argc;i++) {
-				if (mystrncasecmp(argv[i],"-overwrite",0)) Overwrite = true;
+				if (strcasecmp(argv[i],"-overwrite") == 0) Overwrite = true;
 			}
 		}
 
@@ -9029,7 +9030,7 @@ static void NokiaAddFile(int argc, char *argv[])
 
 		if (argc > 4) {
 			for (i=4;i<argc;i++) {
-				if (mystrncasecmp(argv[i],"-readonly",0)) File.ReadOnly = true;
+				if (strcasecmp(argv[i],"-readonly") == 0) File.ReadOnly = true;
 			}
 		}
 
@@ -9050,42 +9051,42 @@ static void NokiaAddFile(int argc, char *argv[])
 		return;
 	}
 
-	if (mystrncasecmp(argv[2],"Gallery" 	 ,0) ||
-	    mystrncasecmp(argv[2],"Gallery2"	 ,0) ||
-	    mystrncasecmp(argv[2],"Camera"  	 ,0) ||
-	    mystrncasecmp(argv[2],"Tones"   	 ,0) ||
-	    mystrncasecmp(argv[2],"Tones2"  	 ,0) ||
-	    mystrncasecmp(argv[2],"Records" 	 ,0) ||
-	    mystrncasecmp(argv[2],"Video"   	 ,0) ||
-	    mystrncasecmp(argv[2],"Playlist"	 ,0) ||
-	    mystrncasecmp(argv[2],"MemoryCard"   ,0)) {
+	if (strcasecmp(argv[2],"Gallery" 	 ) == 0 ||
+	    strcasecmp(argv[2],"Gallery2"	 ) == 0 ||
+	    strcasecmp(argv[2],"Camera"  	 ) == 0 ||
+	    strcasecmp(argv[2],"Tones"   	 ) == 0 ||
+	    strcasecmp(argv[2],"Tones2"  	 ) == 0 ||
+	    strcasecmp(argv[2],"Records" 	 ) == 0 ||
+	    strcasecmp(argv[2],"Video"   	 ) == 0 ||
+	    strcasecmp(argv[2],"Playlist"	 ) == 0 ||
+	    strcasecmp(argv[2],"MemoryCard"   ) == 0) {
 		strcpy(buffer,argv[3]);
 		if (argc > 4) {
 			nextlong = 0;
 			for (i=4;i<argc;i++) {
 				switch(nextlong) {
 				case 0:
-					if (mystrncasecmp(argv[i],"-name",0)) {
+					if (strcasecmp(argv[i],"-name") == 0) {
 						nextlong = 1;
 						continue;
 					}
-					if (mystrncasecmp(argv[i],"-protected",0)) {
+					if (strcasecmp(argv[i],"-protected") == 0) {
 						File.Protected = true;
 						continue;
 					}
-					if (mystrncasecmp(argv[i],"-readonly",0)) {
+					if (strcasecmp(argv[i],"-readonly") == 0) {
 						File.ReadOnly = true;
 						continue;
 					}
-					if (mystrncasecmp(argv[i],"-hidden",0)) {
+					if (strcasecmp(argv[i],"-hidden") == 0) {
 						File.Hidden = true;
 						continue;
 					}
-					if (mystrncasecmp(argv[i],"-system",0)) {
+					if (strcasecmp(argv[i],"-system") == 0) {
 						File.System = true;
 						continue;
 					}
-					if (mystrncasecmp(argv[i],"-newtime",0)) {
+					if (strcasecmp(argv[i],"-newtime") == 0) {
 						ModEmpty = true;
 						continue;
 					}
@@ -9150,7 +9151,7 @@ static void ReadMMSFile(int argc, char *argv[])
 	error = GSM_ReadFile(argv[2], &File);
 	Print_Error(error);
 
-	if (argc>3 && mystrncasecmp(argv[3],"-save",0)) num=0;
+	if (argc>3 && strcasecmp(argv[3],"-save") == 0) num=0;
 
 	DecodeMMSFile(&File,num);
 
@@ -9161,26 +9162,26 @@ static void CallDivert(int argc, char *argv[])
 {
 	GSM_MultiCallDivert cd;
 
-	     if (mystrncasecmp("get",	argv[2],0)) {}
-	else if (mystrncasecmp("set",	argv[2],0)) {}
+	     if (strcasecmp("get",	argv[2]) == 0) {}
+	else if (strcasecmp("set",	argv[2]) == 0) {}
 	else {
 		printf(_("Unknown divert action (\"%s\")\n"),argv[2]);
 		exit(-1);
 	}
 
-	     if (mystrncasecmp("all"       , argv[3],0)) {cd.Request.DivertType = GSM_DIVERT_AllTypes  ;}
-	else if (mystrncasecmp("busy"      , argv[3],0)) {cd.Request.DivertType = GSM_DIVERT_Busy      ;}
-	else if (mystrncasecmp("noans"     , argv[3],0)) {cd.Request.DivertType = GSM_DIVERT_NoAnswer  ;}
-	else if (mystrncasecmp("outofreach", argv[3],0)) {cd.Request.DivertType = GSM_DIVERT_OutOfReach;}
+	     if (strcasecmp("all"       , argv[3]) == 0) {cd.Request.DivertType = GSM_DIVERT_AllTypes  ;}
+	else if (strcasecmp("busy"      , argv[3]) == 0) {cd.Request.DivertType = GSM_DIVERT_Busy      ;}
+	else if (strcasecmp("noans"     , argv[3]) == 0) {cd.Request.DivertType = GSM_DIVERT_NoAnswer  ;}
+	else if (strcasecmp("outofreach", argv[3]) == 0) {cd.Request.DivertType = GSM_DIVERT_OutOfReach;}
 	else {
 		printf(_("Unknown divert type (\"%s\")\n"),argv[3]);
 		exit(-1);
 	}
 
-	     if (mystrncasecmp("all"  , argv[4],0)) {cd.Request.CallType = GSM_DIVERT_AllCalls  ;}
-	else if (mystrncasecmp("voice", argv[4],0)) {cd.Request.CallType = GSM_DIVERT_VoiceCalls;}
-	else if (mystrncasecmp("fax"  , argv[4],0)) {cd.Request.CallType = GSM_DIVERT_FaxCalls  ;}
-	else if (mystrncasecmp("data" , argv[4],0)) {cd.Request.CallType = GSM_DIVERT_DataCalls ;}
+	     if (strcasecmp("all"  , argv[4]) == 0) {cd.Request.CallType = GSM_DIVERT_AllCalls  ;}
+	else if (strcasecmp("voice", argv[4]) == 0) {cd.Request.CallType = GSM_DIVERT_VoiceCalls;}
+	else if (strcasecmp("fax"  , argv[4]) == 0) {cd.Request.CallType = GSM_DIVERT_FaxCalls  ;}
+	else if (strcasecmp("data" , argv[4]) == 0) {cd.Request.CallType = GSM_DIVERT_DataCalls ;}
 	else {
 		printf(_("Unknown call type (\"%s\")\n"),argv[4]);
 		exit(-1);
@@ -9188,7 +9189,7 @@ static void CallDivert(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (mystrncasecmp("get", argv[2],0)) {
+	if (strcasecmp("get", argv[2]) == 0) {
 		error = Phone->GetCallDivert(&s,&cd);
 	    	Print_Error(error);
 		printf(_("Query:\n   Divert type: "));
@@ -9344,7 +9345,7 @@ static void SearchPhone(int argc, char *argv[])
 	int i,dev = 0, dev2 = 0;
 
 	SearchOutput = false;
-	if (argc == 3 && mystrncasecmp(argv[2], "-debug",0)) SearchOutput = true;
+	if (argc == 3 && strcasecmp(argv[2], "-debug") == 0) SearchOutput = true;
 
 	num = 0;
 #ifdef WIN32
@@ -9933,7 +9934,7 @@ static void Help(int argc, char *argv[])
 		HelpHeader();
 	} else {
 		while (HelpDescriptions[i].category != 0) {
-			if (mystrncasecmp(argv[2], HelpDescriptions[i].option,0)) break;
+			if (strcasecmp(argv[2], HelpDescriptions[i].option) == 0) break;
 			i++;
 		}
 		if (HelpDescriptions[i].category == 0) {
@@ -10031,7 +10032,7 @@ char CheckParameters(char start, int argc, char *argv[]) {
 
 	/* Check parameters */
 	while (Parameters[z].Function != NULL) {
-		if (mystrncasecmp(Parameters[z].parameter,argv[1+start], 0)) {
+		if (strcasecmp(Parameters[z].parameter,argv[1+start]) == 0) {
 			if (argc-2-start < Parameters[z].min_arg) {
 				count_failed = true;
 				if (Parameters[z].min_arg==Parameters[z].max_arg) {
@@ -10185,14 +10186,14 @@ int main(int argc, char *argv[])
 		if (i==0) {
 		        rss = INI_GetValue(cfg, "gammu", "rsslevel", false);
         		if (rss) {
-				if (mystrncasecmp(rss,"teststable",0)) {
+				if (strcasecmp(rss,"teststable") == 0) {
 					rsslevel = 2;
-				} else if (mystrncasecmp(rss,"stable",0)) {
+				} else if (strcasecmp(rss,"stable") == 0) {
 					rsslevel = 1;
 				}
 			}
 		        rss = INI_GetValue(cfg, "gammu", "usephonedb", false);
-        		if (rss && mystrncasecmp(rss,"yes",0)) phonedb = true;
+        		if (rss && strcasecmp(rss,"yes") == 0) phonedb = true;
 		}
 
  		/* We wanted to read just user specified configuration. */
@@ -10207,7 +10208,7 @@ int main(int argc, char *argv[])
 	}
 
 	/* Check used version vs. compiled */
-	if (!mystrncasecmp(GetGammuVersion(),VERSION,0)) {
+	if (!strcasecmp(GetGammuVersion(),VERSION) == 0) {
 		printf(_("ERROR: version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"),
 					GetGammuVersion(),VERSION);
 		exit(-1);

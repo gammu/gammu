@@ -1,5 +1,6 @@
 /* (c) 2001-2004 by Marcin Wiacek */
 
+#define _GNU_SOURCE
 #include <string.h>
 #include <stdlib.h>
 #include <sys/stat.h>
@@ -628,17 +629,17 @@ GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	/* Attempt to identify filetype */
-	if (mystrcasestr(FileName,".nlm")) {
+	if (strcasestr(FileName,".nlm")) {
 		error=savenlm(file,bitmap);
-	} else if (mystrcasestr(FileName,".ngg")) {
+	} else if (strcasestr(FileName,".ngg")) {
 		error=savengg(file,bitmap);
-	} else if (mystrcasestr(FileName,".nol")) {
+	} else if (strcasestr(FileName,".nol")) {
 		error=savenol(file,bitmap);
-	} else if (mystrcasestr(FileName,".xpm")) {
+	} else if (strcasestr(FileName,".xpm")) {
 		error=savexpm(file,bitmap);
-	} else if (mystrcasestr(FileName,".nsl")) {
+	} else if (strcasestr(FileName,".nsl")) {
 		error=savensl(file,bitmap);
-	} else if (mystrcasestr(FileName,".wbmp")) {
+	} else if (strcasestr(FileName,".wbmp")) {
 		error=savewbmp(file,bitmap);
 	} else {
 		error=savebmp(file,bitmap);

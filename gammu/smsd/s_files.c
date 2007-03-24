@@ -57,26 +57,26 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 		}
 		errno = 0;
 
-		if ((sms.SMS[i].PDU == SMS_Status_Report) && mystrncasecmp(Config->deliveryreport, "log", 3)) {
+		if ((sms.SMS[i].PDU == SMS_Status_Report) && strncasecmp(Config->deliveryreport, "log", 3) == 0) {
 			strcpy(buffer, DecodeUnicodeString(sms.SMS[i].Number));
 			WriteSMSDLog(_("Delivery report: %s to %s"), DecodeUnicodeString(sms.SMS[i].Text), buffer);
 		} else {
 #ifdef GSM_ENABLE_BACKUP
-			if (mystrncasecmp(Config->inboxformat, "detail", 0)) {
+			if (strcasecmp(Config->inboxformat, "detail") == 0) {
 				for (j=0;j<sms.Number;j++) backup.SMS[j] = &sms.SMS[j];
 				backup.SMS[sms.Number] = NULL;
 				error = GSM_AddSMSBackupFile(FullName, &backup);
 				done = true;
 			}
 #endif
-			if (!mystrncasecmp(Config->inboxformat, "detail", 0)) {
+			if (!strcasecmp(Config->inboxformat, "detail") == 0) {
 				file = fopen(FullName, "wb");
 				if (file) {
 					switch (sms.SMS[i].Coding) {
 					case SMS_Coding_Unicode_No_Compression:
 	    				case SMS_Coding_Default_No_Compression:
 					    DecodeUnicode(sms.SMS[i].Text,buffer2);
-					    if (mystrncasecmp(Config->inboxformat, "unicode", 0)) {
+					    if (strcasecmp(Config->inboxformat, "unicode") == 0) {
 						buffer[0] = 0xFE;
 	    					buffer[1] = 0xFF;
 						fwrite(buffer,1,2,file);
@@ -149,9 +149,9 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	n = scandir(FullName, &namelist, 0, alphasort);
   	m = 0;
  	while ((m < n) && ((*(namelist[m]->d_name) == '.') || // directory and UNIX hidden file
- 	                   !mystrncasecmp(namelist[m]->d_name,"out", 3) || // must start with 'out'
+ 	                   !strncasecmp(namelist[m]->d_name,"out", 3) == 0 || // must start with 'out'
  	                   ((strlen(namelist[m]->d_name) >= 4) &&
- 	                    !mystrncasecmp(strrchr(namelist[m]->d_name, '.'),".txt",4)
+ 	                    strncasecmp(strrchr(namelist[m]->d_name, '.'),".txt",4) != 0
  	                   )
  	                  )
  	      ) m++;
@@ -196,10 +196,10 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 	if (strchr(options, 'd')) Config->currdeliveryreport	= 1;
 	if (strchr(options, 'f')) SMSInfo.Class 		= 0; /* flash SMS */
 
- 	if (mystrncasecmp(Config->transmitformat, "unicode", 0)) {
+ 	if (strcasecmp(Config->transmitformat, "unicode") == 0) {
  		SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
  		SMSInfo.UnicodeCoding = true;
- 	} else if (mystrncasecmp(Config->transmitformat, "7bit", 0)) {
+ 	} else if (strcasecmp(Config->transmitformat, "7bit") == 0) {
  		SMSInfo.Entries[0].ID = SMS_ConcatenatedTextLong;
  		SMSInfo.UnicodeCoding = false;
  	} else {
@@ -309,7 +309,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 	strcat(ofilename, ID);
 
 #ifdef WIN32
-	if (!mystrncasecmp(ifilename, ofilename, strlen(ofilename))) {
+	if (!strncasecmp(ifilename, ofilename, strlen(ofilename) == 0)) {
 #else
 	if (strcmp(ifilename, ofilename) != 0) {
 #endif

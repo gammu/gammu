@@ -1,5 +1,6 @@
 /* (c) 2002-2004 by Marcin Wiacek & Michal Cihar */
 
+#define _GNU_SOURCE
 #include <string.h>
 #include <ctype.h>
 
@@ -132,15 +133,15 @@ void GSM_FreeBackup(GSM_Backup *backup)
 
 GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode)
 {
-	if (mystrcasestr(FileName,".lmb")) {
+	if (strcasestr(FileName,".lmb")) {
 		return SaveLMB(FileName,backup);
-	} else if (mystrcasestr(FileName,".vcs")) {
+	} else if (strcasestr(FileName,".vcs")) {
 		return SaveVCalendar(FileName,backup);
-	} else if (mystrcasestr(FileName,".vcf")) {
+	} else if (strcasestr(FileName,".vcf")) {
 		return SaveVCard(FileName,backup);
-	} else if (mystrcasestr(FileName,".ldif")) {
+	} else if (strcasestr(FileName,".ldif")) {
 		return SaveLDIF(FileName,backup);
-	} else if (mystrcasestr(FileName,".ics")) {
+	} else if (strcasestr(FileName,".ics")) {
 		return SaveICS(FileName,backup);
 	} else {
 		return SaveBackup(FileName,backup, UseUnicode);
@@ -160,13 +161,13 @@ GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 	GSM_ClearBackup(backup);
 
 	/* Attempt to identify filetype */
-	if (mystrcasestr(FileName,".vcs")) {
+	if (strcasestr(FileName,".vcs")) {
 		return LoadVCalendar(FileName,backup);
-	} else if (mystrcasestr(FileName,".vcf")) {
+	} else if (strcasestr(FileName,".vcf")) {
 		return LoadVCard(FileName,backup);
-	} else if (mystrcasestr(FileName,".ldif")) {
+	} else if (strcasestr(FileName,".ldif")) {
 		return LoadLDIF(FileName,backup);
-	} else if (mystrcasestr(FileName,".ics")) {
+	} else if (strcasestr(FileName,".ics")) {
 		return LoadICS(FileName,backup);
 	} else if (memcmp(buffer, "LMB ",4)==0) {
 		return LoadLMB(FileName,backup);

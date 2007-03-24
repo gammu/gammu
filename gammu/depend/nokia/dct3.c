@@ -71,8 +71,8 @@ static bool answer_yes3(char *text)
 		printf("%s (yes/no) ? ",text);
 		len=GetLine(stdin, ans, 99);
 		if (len==-1) exit(-1);
-		if (mystrncasecmp(ans, "yes",0)) return true;
-		if (mystrncasecmp(ans, "no" ,0)) return false;
+		if (strcasecmp(ans, "yes") == 0) return true;
+		if (strcasecmp(ans, "no" ) == 0) return false;
 	}
 }
 

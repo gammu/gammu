@@ -59,6 +59,7 @@ For additionals materials and links to them see readme.txt
 [-] * Backup saves and restores numbers as same type (bug #266).
 [+] * Support for call notifications on AT phones.
 [+] * Support for batch mode - you can script gammu (thanks to ace).
+[-] * Use standard libc functions for string comparsion if available.
 
 20070311 - 1.10.1
 [-] * Fixed encoding of name for Nokia phones.
