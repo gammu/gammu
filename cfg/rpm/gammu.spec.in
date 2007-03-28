@@ -1,6 +1,5 @@
 %define ver         @VERSION@
 %define name        gammu
-%define bluetooth   1
 %define relnum      1
 
 %if %_vendor == "suse"
@@ -21,12 +20,6 @@
 %define gammu_docdir %_docdir/%name-%ver
 %else
 %define gammu_docdir %_docdir/%name
-%endif
-
-%if %bluetooth
-%define configureparams ""
-%else
-%define configureparams "--disable-bluetooth"
 %endif
 
 Summary:            Mobile phones tools for Unix (Linux) and Win32
