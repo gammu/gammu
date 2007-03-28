@@ -70,7 +70,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		{"RING"		,1},	{"NO CARRIER"	,1},
 		{"NO ANSWER"	,1},	{"+COLP"	,1},
-		{"+CLIP"	,1},	{"+CRING"	,1},
+		{"+CLIP"	,2},	{"+CRING"	,2},
 
 		{"*EBCA"	,1},
 
@@ -117,7 +117,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			while (SpecialAnswers[i].text != NULL) {
 				if (strncmp(SpecialAnswers[i].text,d->Msg.Buffer+d->LineStart,strlen(SpecialAnswers[i].text)) == 0) {
 					/* We need something better here */
-				  	if (s->Phone.Data.RequestID == ID_GetNetworkInfo && strncmp(SpecialAnswers[i].text,"+CREG:",6) == 0) {
+				  	if (s->Phone.Data.RequestID == ID_GetNetworkInfo && strcmp(SpecialAnswers[i].text, "+CREG:") == 0) {
 						i++;
 						continue;
 					}
