@@ -41,18 +41,18 @@ Group:              Applications/Communications
 %endif
 %if %bluetooth
 %if %_vendor == "suse"
-BuildRequires:      bluez-libs >= 2.0
+BuildRequires:      bluez-libs >= 2.0 gettext cmake
 %else
 %if %_vendor == "MandrakeSoft"
-BuildRequires:      libbluez1 >= 2.0 libbluez1-devel >= 2.0
+BuildRequires:      libbluez1 >= 2.0 libbluez1-devel >= 2.0 gettext cmake
 %else
-BuildRequires:      bluez-libs >= 2.0 bluez-libs-devel >= 2.0
+BuildRequires:      bluez-libs >= 2.0 bluez-libs-devel >= 2.0 gettext cmake
 %endif
 %endif
 %endif
-Vendor:             Marcin Wiacek <marcin@mwiacek.com>
-Source:             http://www.mwiacek.com/zips/gsm/%name/older/%{name}-%{ver}.tar.gz
-URL:                http://www.mwiacek.com/gsm/gammu/gammu.html
+Vendor:             Michal Cihar <michal@cihar.com>
+Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.bz2
+URL:                http://cihar.com/gammu/
 Buildroot:          %{_tmppath}/%name-%version-root
 
 %description
@@ -83,20 +83,13 @@ settings and bookmarks and much more. Functions depend on the phone model.
 %setup -q
 
 %build
-%configure --with-docdir=%gammu_docdir/ %configureparams
-make shared
+mkdir build-dir
+cd build-dir && cmake ../ -DENABLE_SHARED=ON -DCMAKE_INSTALL_PREFIX=%_prefix -DINSTALL_DOC_DIR=%_docdir/%name
+make -C build-dir
 
 %install
 rm -rf %buildroot
-make installshared DESTDIR=%buildroot
-install -m 755 -d %buildroot%gammu_docdir/other/config
-#install -m 755 -d %buildroot%gammu_docdir/other/basic
-install -m 755 -d %buildroot%gammu_docdir/other/smsdutil
-install -m 755 -d %buildroot%gammu_docdir/other/files
-install -m 755 other/bash/config/gammu-config %buildroot%gammu_docdir/other/config
-#install -m 644 other/bash/basic/* %buildroot%gammu_docdir/other/basic
-install -m 644 other/bash/smsdutil/* %buildroot%gammu_docdir/other/smsdutil
-install -m 644 other/bash/files/* %buildroot%gammu_docdir/other/files
+make -C build-dir install DESTDIR=%buildroot
 
 %post
 if test -f /etc/ld.so.conf ; then
@@ -111,9 +104,9 @@ fi
 %files
 %defattr(-,root,root)
 %_bindir/*
-%_libdir/*.so*
+%_libdir/*.so.*
 #localisations:
-/usr/share/gammu
+/usr/share/locale
 %doc %_mandir/man1/*
 %doc %gammu_docdir
 
@@ -121,12 +114,15 @@ fi
 %defattr(-,root,root)
 %_includedir/%name
 %_libdir/pkgconfig/%name.pc
-%_libdir/*.a
+%_libdir/*.so
 
 %clean
 rm -rf %buildroot
 
 %changelog
+* Thu Mar 28 2007  Michal Cihar <michal@cihar.com>
+- update to current code status
+
 * Thu Jan  6 2005  Michal Cihar <michal@cihar.com>
 - add support for Mandrake, thanks to Olivier BERTEN <Olivier.Berten@advalvas.be> for testing
 - use new disable-bluetooth

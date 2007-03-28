@@ -54,11 +54,11 @@ Some information is available on wiki and in docs/develop/ folder. You
 can also generate documentation using Doxygen.
 
 
-[Localisation]
+[Localization]
 
-Localisation uses Gettext. You can set locales you want to use by
+Localization uses Gettext. You can set locales you want to use by
 specifying LANG or LC_* environment variables (on Linux you usually
-don't care about this, on Windows just export eg. LANG=cs_CZ.
+don't care about this, on Windows just export e.g. LANG=cs_CZ.
 
 If you want to improve existing translation, please visit
 <http://l10n.cihar.com/projects/gammu/>. For adding new one, you need to
