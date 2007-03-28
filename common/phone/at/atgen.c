@@ -3713,38 +3713,53 @@ GSM_Error ATGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	return ATGEN_PrivSetMemory(s, entry);
 }
 
-/* Use ATGEN_ExtractOneParameter ?? */
-void Extract_CLIP_number(char *dest, char *buf)
-{
-	char 	*start, *stop;
-	int 	i = 0;
-
-	stop = strstr(buf, ",");
-        if (stop != NULL) {
-        	start = strstr(buf, ":");
-	        if (start != NULL) {
-			for (start = start + 2; start + i < stop;  i++)
-			dest[i] = start[i];
-       		}
-	}
-	dest[i] = 0; /* end the number */
-
-	return;
-}
-
 GSM_Error ATGEN_SetIncomingCall(GSM_StateMachine *s, bool enable)
 {
+	GSM_Error error;
 	if (enable) {
 		smprintf(s, "Enabling incoming call\n");
-		GSM_WaitFor(s, "AT+CRC=1\r", 9, 0x00, 3, ID_SetIncomingCall);
-		GSM_WaitFor(s, "AT+CLIP=1\r", 10, 0x00, 3, ID_SetIncomingCall);
+		/* SE phones are fucked up when we want to see CLIP information */
+		if (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Ericsson) {
+			error = GSM_WaitFor(s, "AT+CLIP=1\r", 10, 0x00, 3, ID_SetIncomingCall);
+			if (error != ERR_NONE) return error;
+			error = GSM_WaitFor(s, "AT+CRC=1\r", 9, 0x00, 3, ID_SetIncomingCall);
+			if (error != ERR_NONE) return error;
+		} else {
+			error = GSM_WaitFor(s, "AT+CRC=0\r", 9, 0x00, 3, ID_SetIncomingCall);
+			if (error != ERR_NONE) return error;
+		}
 	} else {
 		smprintf(s, "Disabling incoming call\n");
-		GSM_WaitFor(s, "AT+CRC=0\r", 9, 0x00, 3, ID_SetIncomingCall);
-		GSM_WaitFor(s, "AT+CLIP=0\r", 10, 0x00, 3, ID_SetIncomingCall);
 	}
 	s->Phone.Data.EnableIncomingCall = enable;
 	return ERR_NONE;
+}
+
+/**
+ * Extract number of incoming call from +CLIP: response.
+ */
+void ATGEN_Extract_CLIP_number(GSM_StateMachine *s, char *dest, const char *buf)
+{
+	char *pos;
+	size_t len;
+
+	pos = strstr(buf, "+CLIP:");
+	if (pos == NULL) return;
+	/* Go after +CLIP: */
+	pos += 6;
+
+	/* Extract number */
+	while (*pos != '"') pos++;
+	pos += ATGEN_ExtractOneParameter(pos, dest);
+
+	if (dest[0] == '"') {
+		len = strlen(dest) - 2;
+		memmove(dest, dest + 1, len);
+		dest[len] = 0;
+	}
+	smprintf(s, "Incoming call number: %s\n", dest);
+
+	return;
 }
 
 GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -3760,12 +3775,12 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 		num[0] 			= 0;
 		if (strstr(msg.Buffer, "RING")) {
 			call.Status = GSM_CALL_IncomingCall;
-			Extract_CLIP_number(num, msg.Buffer);
+			ATGEN_Extract_CLIP_number(s, num, msg.Buffer);
 		} else if (strstr(msg.Buffer, "NO CARRIER")) {
 			call.Status = GSM_CALL_CallEnd;
 		} else if (strstr(msg.Buffer, "COLP:")) {
 			call.Status = GSM_CALL_CallStart;
-			Extract_CLIP_number(num, msg.Buffer);
+			ATGEN_Extract_CLIP_number(s,num, msg.Buffer);
 		} else {
 			smprintf(s, "CLIP: error\n");
 			return ERR_NONE;
