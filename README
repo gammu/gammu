@@ -65,6 +65,9 @@ If you want to improve existing translation, please visit
 contact <michal@cihar.com> and then you will be able to edit it on
 former mentioned URL.
 
+You can also go ahead with traditional way of creating/updating po files
+in locale/ folder and then sending updated ones to bug tracker.
+
 
 [Note]
 

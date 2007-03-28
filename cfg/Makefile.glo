@@ -92,13 +92,6 @@ GAMMU     = $(TOPDIR)/gammu/depend/nokia/dct3.o \
             $(TOPDIR)/gammu/sniff.o \
             $(TOPDIR)/gammu/gammu.o
 
-LOCALE    = $(TOPDIR)/common/misc/misc.o \
-            $(TOPDIR)/common/misc/cfg.o \
-            $(TOPDIR)/common/misc/coding/coding.o \
-            $(TOPDIR)/cfg/locale/locale.o
-     
-LOCALE2   = $(TOPDIR)/cfg/locale
-
 TRANSLATIONS = $(TOPDIR)/locale/cs.mo \
 	$(TOPDIR)/locale/de.mo \
 	$(TOPDIR)/locale/es.mo \
@@ -176,7 +169,6 @@ clean:
 	@echo Cleaning binaries and object files
 	@$(RM) $(COMMON) $(GAMMU) core $(TOPDIR)/common/libGammu*
 	@$(RM) $(TOPDIR)/gammu/gammu $(TOPDIR)/gammu/gammu-shared tags
-	@$(RM) $(TOPDIR)/cfg/locale/locale.o $(TOPDIR)/cfg/locale/locale
 	@$(RM) $(TRANSLATIONS)
 	@echo Cleaning autoconf stuff
 	@$(RM) -r $(TOPDIR)/cfg/autoconf/*.cache \
@@ -186,16 +178,6 @@ clean:
             $(TOPDIR)/cfg/autoconf/configure
 	@echo Cleaning API documentation
 	@$(RM) -r gammu-doc
-
-makelocale: $(LOCALE)
-	@echo Linking locale application
-	@$(CC) $(LOCALE) $(LDLIBS) -o $(TOPDIR)/cfg/locale/locale
-	@for xxx in $(LOCALE2); do \
-            ( cd $$xxx; \
-                ./locale \
-            ) \
-	done
-	@$(RM) $(TOPDIR)/cfg/locale/locale.o $(TOPDIR)/cfg/locale/locale
 
 distclean0:
 	@echo Setting default config
@@ -216,7 +198,7 @@ distclean0:
 	$(TOPDIR)/cfg/autoconf/VERSION \
 	$(TOPDIR)/cfg/autoconf/configure
 
-distclean: distclean0 makelocale clean
+distclean: distclean0 clean
    
 uninstall:
 	@echo Uninstalling Gammu
