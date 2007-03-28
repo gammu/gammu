@@ -50,8 +50,20 @@ to it by adding "textall" as first parameter, eg.:
 
 [Developers]
 
-Some information is available on wiki and in docs/docs/english/gammu.htm
-and readme.htm.
+Some information is available on wiki and in docs/develop/ folder. You
+can also generate documentation using Doxygen.
+
+
+[Localisation]
+
+Localisation uses Gettext. You can set locales you want to use by
+specifying LANG or LC_* environment variables (on Linux you usually
+don't care about this, on Windows just export eg. LANG=cs_CZ.
+
+If you want to improve existing translation, please visit
+<http://l10n.cihar.com/projects/gammu/>. For adding new one, you need to
+contact <michal@cihar.com> and then you will be able to edit it on
+former mentioned URL.
 
 
 [Note]
