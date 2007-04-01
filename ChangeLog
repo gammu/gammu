@@ -62,6 +62,7 @@ For additionals materials and links to them see readme.txt
 [-] * Use standard libc functions for string comparsion if available.
 [+] * Gammu commands are now accepted also without leading --.
 [+] * Detect more Nokia phones (5300, 6300, 8800) (some by Peter Stuge).
+[-] * Allow compilation with MySQL and without PGSQL (thanks to Alin Năstac).
 
 20070311 - 1.10.1
 [-] * Fixed encoding of name for Nokia phones.
