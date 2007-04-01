@@ -103,25 +103,22 @@ AC_HEADER_STDC
 AC_CHECK_HEADERS(dirent.h)
 AC_CHECK_HEADERS(sys/ioctl.h)
 
+SMSD_LIBS=
 AC_ARG_ENABLE(mysql,
         [  --disable-mysql         Disable MySQL support in SMSD],
-        [mysql="no"
-         SMSD_LIBS=],
+        [mysql="no"],
         [AC_CHECK_HEADERS(mysql/mysql.h,
             [mysql="yes"
-             SMSD_LIBS="$(mysql_config --libs)"],
-            [mysql="no"
-             SMSD_LIBS=])
+             SMSD_LIBS="$SMSD_LIBS $(mysql_config --libs)"],
+            [mysql="no"])
         ])
 AC_ARG_ENABLE(pgsql,
         [  --disable-pgsql         Disable postgreSQL support in SMSD],
-        [pgsql="no"
-         SMSD_LIBS=],
+        [pgsql="no"],
         [AC_CHECK_HEADERS(postgresql/libpq-fe.h,
             [pgsql="yes"
              SMSD_LIBS="$SMSD_LIBS -L$(pg_config --libdir) -lpq"],
-            [pgsql="no"
-             SMSD_LIBS="$SMSD_LIBS"])
+            [pgsql="no"])
         ])
 AC_SUBST(SMSD_LIBS)
 
