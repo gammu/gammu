@@ -193,7 +193,7 @@ static bool ReadBackupText(INI_Section *file_info, char *section, char *myname, 
 		strcat(paramname,"Unicode");
 		readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
-			dbgprintf("%s %i\n",readvalue,strlen(readvalue));
+			dbgprintf("%s %zu\n",readvalue,strlen(readvalue));
 			DecodeHexBin (myvalue, readvalue, strlen(readvalue));
 			myvalue[strlen(readvalue)/2]=0;
 			myvalue[strlen(readvalue)/2+1]=0;

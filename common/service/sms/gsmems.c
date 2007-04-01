@@ -93,7 +93,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				}
 				Len += CopiedText;
 				if (Len == UnicodeLength(Entry->Buffer)) break;
-				dbgprintf("%i %i\n",Len,UnicodeLength(Entry->Buffer));
+				dbgprintf("%u %zu\n",Len,UnicodeLength(Entry->Buffer));
 			}
 			break;
 		case SMS_EMSPredefinedSound:
@@ -530,7 +530,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 	for (i=0;i<SMS->Number;i++) {
 		dbgprintf("UDH length %i\n",SMS->SMS[i].UDH.Length);
 		DumpMessage(&di, SMS->SMS[i].UDH.Text, SMS->SMS[i].UDH.Length);
-		dbgprintf("SMS length %i\n",UnicodeLength(SMS->SMS[i].Text)*2);
+		dbgprintf("SMS length %zu\n",UnicodeLength(SMS->SMS[i].Text)*2);
 		DumpMessage(&di, SMS->SMS[i].Text, UnicodeLength(SMS->SMS[i].Text)*2);
 	}
 #endif

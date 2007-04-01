@@ -7728,29 +7728,27 @@ static void Version(int argc, char *argv[])
 	unsigned char	bzz[4];
 	int		j,z,w;
 #endif
-//	unsigned char 	buff[10];
-//	int		len;
 
 	printf(_("[Gammu version %s built %s %s"),VERSION,__TIME__,__DATE__);
 	if (strlen(GetCompiler()) != 0) printf(_(" in %s"),GetCompiler());
 	printf(_("]\n\n"));
 
 #ifdef DEBUG
-	for (w=1;w<65535;w++) {
-		j = EncodeWithUTF8Alphabet2(w/256,w%256,bzz);
-		for (z=0;z<j;z++) {
-			if (bzz[z] == 0x00) printf("%i\n",w);
+	for (w = 1; w < 65535; w++) {
+		j = EncodeWithUTF8Alphabet2(w / 256, w % 256, bzz);
+		for (z = 0; z < j; z++) {
+			if (bzz[z] == 0x00) printf("%i\n", w);
 		}
 	}
 
-	printf(_("GSM_SMSMessage  - %i\n"),sizeof(GSM_SMSMessage));
-	printf(_("GSM_SMSC        - %i\n"),sizeof(GSM_SMSC));
-	printf(_("GSM_SMS_State   - %i\n"),sizeof(GSM_SMS_State));
-	printf(_("GSM_UDHHeader   - %i\n"),sizeof(GSM_UDHHeader));
-	printf(_("bool            - %i\n"),sizeof(bool));
-	printf(_("GSM_DateTime    - %i\n"),sizeof(GSM_DateTime));
-	printf(_("int             - %i\n"),sizeof(int));
-	printf(_("GSM_NetworkInfo - %i\n"),sizeof(GSM_NetworkInfo));
+	printf("GSM_SMSMessage  - %zd\n", sizeof(GSM_SMSMessage));
+	printf("GSM_SMSC        - %zd\n", sizeof(GSM_SMSC));
+	printf("GSM_SMS_State   - %zd\n", sizeof(GSM_SMS_State));
+	printf("GSM_UDHHeader   - %zd\n", sizeof(GSM_UDHHeader));
+	printf("bool            - %zd\n", sizeof(bool));
+	printf("GSM_DateTime    - %zd\n", sizeof(GSM_DateTime));
+	printf("int             - %zd\n", sizeof(int));
+	printf("GSM_NetworkInfo - %zd\n" ,sizeof(GSM_NetworkInfo));
 	dt.Year = 2005;
 	dt.Month = 2;
 	dt.Day=29;
@@ -7760,9 +7758,6 @@ static void Version(int argc, char *argv[])
 	dt.Day=29;
 	if (CheckDate(&dt)) printf(_("ok2"));
 #endif
-
-//	len=DecodeBASE64("AXw", buff, 3);
-//	DumpMessage(stdout, buff, len);
 }
 
 static void GetFMStation(int argc, char *argv[])
