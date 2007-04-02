@@ -719,6 +719,10 @@ char *GetCompiler(void)
 	sprintf(Buffer, "gcc %i.%i", __GNUC__, __GNUC_MINOR__);
 #elif defined(__SUNPRO_CC)
 	sprintf(Buffer, "Sun C++ %x", __SUNPRO_CC);
+#elif defined(__INTEL_COMPILER)
+	sprintf(Buffer, "Intel Compiler %ld", __INTEL_COMPILER);
+#else
+	sprintf(Buffer, "unknown compiler");
 #endif
 
 	return Buffer;

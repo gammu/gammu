@@ -169,7 +169,7 @@ void GSM_Init(bool checkerror)
 	}
 	while(i!=strlen(ver)) {
 		if (ver[i] > s.Phone.Data.Version[i]) {
-			printf(_("INFO: there is later phone firmware (%s instead of %s) available !\n"),ver,s.Phone.Data.Version);
+			printf(_("INFO: there is later phone firmware (%s instead of %s) available !\n"), ver, s.Phone.Data.Version);
 			return;
 		}
 		i++;
@@ -224,6 +224,7 @@ static bool answer_yes(const char *text)
     	char        ans[99];
 
 	while (1) {
+		/* l10n: %s is replaced by question, answers have to match corresponding translations */
 		fprintf(stderr, _("%s (yes/no/ALL/ONLY/NONE) ? "),text);
 		if (always_answer_yes) {
 			fprintf(stderr, _("YES (always)\n"));
@@ -235,20 +236,20 @@ static bool answer_yes(const char *text)
 		}
 		len=GetLine(stdin, ans, 99);
 		if (len==-1) exit(-1);
-		if (!strcmp(ans, "NONE")) {
+		if (!strcmp(ans, _("NONE"))) {
 			always_answer_no = true;
 			return false;
 		}
-		if (!strcmp(ans, "ONLY")) {
+		if (!strcmp(ans, _("ONLY"))) {
 			always_answer_no = true;
 			return true;
 		}
-		if (!strcmp(ans, "ALL")) {
+		if (!strcmp(ans, _("ALL"))) {
 			always_answer_yes = true;
 			return true;
 		}
-		if (strcasecmp(ans, "yes") == 0) return true;
-		if (strcasecmp(ans, "no" ) == 0) return false;
+		if (strcasecmp(ans, _("yes")) == 0) return true;
+		if (strcasecmp(ans, _("no")) == 0) return false;
 	}
 }
 
@@ -621,9 +622,9 @@ static void Identify(int argc, char *argv[])
 	error=Phone->GetPPM(&s, buffer);
 	if (error != ERR_NOTSUPPORTED) {
 		if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
-		if (error == ERR_NONE) printf(_(" %s"),buffer);
+		if (error == ERR_NONE) printf(" %s", buffer);
 	}
-	if (s.Phone.Data.VerDate[0]!=0) printf(_(" (%s)"),s.Phone.Data.VerDate);
+	if (s.Phone.Data.VerDate[0]!=0) printf(" (%s)", s.Phone.Data.VerDate);
 	printf("\n");
 
 	error=Phone->GetHardware(&s, buffer);
@@ -1752,17 +1753,19 @@ static void IncomingUSSD(GSM_StateMachine *s, char *Buffer)
 	printf(_("Service reply: \"%s\"\n"),DecodeUnicodeConsole(Buffer));
 }
 
-#define CHECKMEMORYSTATUS(x, m, a1, b1) { 				\
+#define CHECKMEMORYSTATUS(x, m, a1, b1) \
+{ \
 	x.MemoryType=m;							\
 	if ( (error = Phone->GetMemoryStatus(&s, &x)) == ERR_NONE)			\
-		printf(_("%s %03d, %s %03d\n"), a1, x.MemoryUsed, b1, x.MemoryFree);	\
+		printf("%s %03d, %s %03d\n", a1, x.MemoryUsed, b1, x.MemoryFree);	\
 }
 
 #define CHECK_EXIT \
-	{ \
+{ \
 	if (gshutdown) break; \
 	if (error != ERR_NONE && error != ERR_NOTSUPPORTED && error != ERR_EMPTY && error != ERR_SOURCENOTAVAILABLE && error != ERR_NOTIMPLEMENTED) break; \
-	}
+}
+
 static void Monitor(int argc, char *argv[])
 {
 	GSM_MemoryStatus	MemStatus;
@@ -1923,7 +1926,7 @@ static void Monitor(int argc, char *argv[])
 			}
 			if (NetInfo.State == GSM_HomeNetwork || NetInfo.State == GSM_RoamingNetwork) {
 				printf(_("Network           : %s (%s"),	NetInfo.NetworkCode,DecodeUnicodeConsole(GSM_GetNetworkName(NetInfo.NetworkCode)));
-				printf(_(", %s)"),				DecodeUnicodeConsole(GSM_GetCountryName(NetInfo.NetworkCode)));
+				printf(", %s)",				DecodeUnicodeConsole(GSM_GetCountryName(NetInfo.NetworkCode)));
 				printf(_(", LAC %s, CID %s\n"),		NetInfo.LAC,NetInfo.CID);
 				if (NetInfo.NetworkName[0] != 0x00 || NetInfo.NetworkName[1] != 0x00) {
 					printf(_("Name in phone     : \"%s\"\n"),DecodeUnicodeConsole(NetInfo.NetworkName));
@@ -2243,7 +2246,7 @@ static void GetEachSMS(int argc, char *argv[])
 	fprintf(stderr,"Reading: ");
 	while (error == ERR_NONE) {
 		if (GetSMSNumber==PHONE_MAXSMSINFOLDER-1) {
-			fprintf(stderr,"\nSMS counter overflow\n");
+			fprintf(stderr, _("\nSMS counter overflow\n"));
 			break;
 		}
 		sms.SMS[0].Folder=0x00;
@@ -2498,7 +2501,7 @@ static void GetEachMMS(int argc, char *argv[])
 			Print_Error(error);
 			fprintf(stderr, _("%c  Reading: %i percent"),13,File.Used*100/Size);
 		}
-		fprintf(stderr, _("%c"),13);
+		fprintf(stderr, "%c",13);
 
 		if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_SERIES40_30)) {
 			memcpy(File.Buffer,File.Buffer+176,File.Used-176);
@@ -2904,7 +2907,7 @@ static void GetGPRSPoint(int argc, char *argv[])
 		error=Phone->GetGPRSAccessPoint(&s,&point);
 		if (error != ERR_EMPTY) {
 			Print_Error(error);
-			printf(_("%i. \"%s\""),point.Location,DecodeUnicodeConsole(point.Name));
+			printf("%i. \"%s\"",point.Location,DecodeUnicodeConsole(point.Name));
 		} else {
 			printf(_("%i. Access point %i"),point.Location,point.Location);
 		}
@@ -2912,7 +2915,7 @@ static void GetGPRSPoint(int argc, char *argv[])
 		if (error != ERR_EMPTY) {
 			printf(_("\nAddress : \"%s\"\n\n"),DecodeUnicodeConsole(point.URL));
 		} else {
-			printf(_("\n\n"));
+			printf("\n\n");
 		}
 	}
 
@@ -6818,7 +6821,7 @@ static void NokiaComposer(int argc, char *argv[])
       					case Note_Cis: case Note_Dis:
       					case Note_Fis: case Note_Gis:
       					case Note_Ais:
-						printf(_("#"));
+						printf("#");
 						break;
       					default      :
 						break;
@@ -7349,7 +7352,7 @@ static void GetProfile(int argc, char *argv[])
 		if (error != ERR_NONE && Info.Ringtone) free(Info.Ringtone);
 		Print_Error(error);
 
-		printf(_("%i. \"%s\""),i,DecodeUnicodeConsole(Profile.Name));
+		printf("%i. \"%s\"",i,DecodeUnicodeConsole(Profile.Name));
 		if (Profile.Active)		printf(_(" (active)"));
 		if (Profile.DefaultName) 	printf(_(" (default name)"));
 		if (Profile.HeadSetProfile) 	printf(_(" (HeadSet profile)"));
@@ -7367,9 +7370,9 @@ static void GetProfile(int argc, char *argv[])
 					printf(_("Message alert tone ID : "));
 				}
 				if (UnicodeLength(GSM_GetRingtoneName(&Info,Profile.FeatureValue[j]))!=0) {
-					printf(_("\"%s\"\n"),DecodeUnicodeConsole(GSM_GetRingtoneName(&Info,Profile.FeatureValue[j])));
+					printf("\"%s\"\n",DecodeUnicodeConsole(GSM_GetRingtoneName(&Info,Profile.FeatureValue[j])));
 				} else {
-					printf(_("%i\n"),Profile.FeatureValue[j]);
+					printf("%i\n",Profile.FeatureValue[j]);
 				}
 				break;
 			case Profile_CallerGroups:
@@ -7388,7 +7391,7 @@ static void GetProfile(int argc, char *argv[])
 							}
 							callerinit[k]	= true;
 						}
-						printf(_(" \"%s\""),DecodeUnicodeConsole(caller[k].Text));
+						printf(" \"%s\"",DecodeUnicodeConsole(caller[k].Text));
 					}
 				}
 				printf("\n");
@@ -7396,7 +7399,7 @@ static void GetProfile(int argc, char *argv[])
 			case Profile_ScreenSaverNumber:
 				special = true;
 				printf(_("Screen saver number   : "));
-				printf(_("%i\n"),Profile.FeatureValue[j]);
+				printf("%i\n",Profile.FeatureValue[j]);
 				break;
 			case Profile_CallAlert  	: printf(_("Incoming call alert   : ")); break;
 			case Profile_RingtoneVolume 	: printf(_("Ringtone volume       : ")); break;
@@ -7477,7 +7480,7 @@ static void GetSpeedDial(int argc, char *argv[])
 	for (i=start;i<=stop;i++) {
 		SpeedDial.Location=i;
 		error=Phone->GetSpeedDial(&s,&SpeedDial);
-		printf(_("%i."),i);
+		printf("%i.",i);
 		switch (error) {
 		case ERR_EMPTY:
 			printf(_(" speed dial not assigned\n"));
@@ -7712,10 +7715,10 @@ static void ListNetworks(int argc, char *argv[])
 	while (GSM_Networks[i*2]!=NULL) {
 		if (argc>2) {
 		        if (!strncmp(GSM_Networks[i*2],country,strlen(country))) {
-				printf(_("%s   %s\n"), GSM_Networks[i*2], GSM_Networks[i*2+1]);
+				printf("%s   %s\n", GSM_Networks[i*2], GSM_Networks[i*2+1]);
 			}
 		} else {
-			printf(_("%s   %s\n"), GSM_Networks[i*2], GSM_Networks[i*2+1]);
+			printf("%s   %s\n", GSM_Networks[i*2], GSM_Networks[i*2+1]);
 		}
 		i++;
 	}
@@ -7729,9 +7732,11 @@ static void Version(int argc, char *argv[])
 	int		j,z,w;
 #endif
 
-	printf(_("[Gammu version %s built %s %s"),VERSION,__TIME__,__DATE__);
-	if (strlen(GetCompiler()) != 0) printf(_(" in %s"),GetCompiler());
-	printf(_("]\n\n"));
+	printf(_("[Gammu version %s built %s %s in %s]\n\n"),
+		VERSION,
+		__TIME__,
+		__DATE__,
+		GetCompiler());
 
 #ifdef DEBUG
 	for (w = 1; w < 65535; w++) {
@@ -7752,11 +7757,11 @@ static void Version(int argc, char *argv[])
 	dt.Year = 2005;
 	dt.Month = 2;
 	dt.Day=29;
-	if (CheckDate(&dt)) printf(_("ok1"));
+	if (CheckDate(&dt)) printf("ok1");
 	dt.Year = 2008;
 	dt.Month = 2;
 	dt.Day=29;
-	if (CheckDate(&dt)) printf(_("ok2"));
+	if (CheckDate(&dt)) printf("ok2");
 #endif
 }
 
@@ -8095,7 +8100,7 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 						q = old1/60;
 						fprintf(stderr, _(" (%02i:%02i minutes left)"),q,old1-q*60);
 					} else {
-						fprintf(stderr, _("%30c"),0x20);
+						fprintf(stderr, "%30c",0x20);
 					}
 				}
 			}
@@ -8275,7 +8280,7 @@ static void AddOneFile(GSM_File *File, char *text, bool send)
 					j = old1/60;
 					fprintf(stderr, _(" (%02i:%02i minutes left)"),j,old1-j*60);
 				} else {
-					fprintf(stderr, _("%30c"),0x20);
+					fprintf(stderr, "%30c",0x20);
 				}
 			}
 		}
@@ -9537,7 +9542,7 @@ static void RunBatch(int argc, char *argv[]) {
 			}
 			if(argsc > 0) {
 				/* we have some usable command and parameters, send them into standard processing */
-				printf(_("----------------------------------------------------------------------------\n"));
+				printf("----------------------------------------------------------------------------\n");
 				printf(_("Executing batch \"%s\" - command %i: %s"), name, ++c, ln);
 				ProcessParameters(0, argsc + 1, argsv);
 				/* FIXME: handle return value somehow ... */
@@ -9831,7 +9836,10 @@ static HelpCategoryDescriptions HelpDescriptions[] = {
 
 void HelpHeader(void)
 {
-	printf(_("[Gammu version %s built %s %s]\n\n"),VERSION,__TIME__,__DATE__);
+	printf(_("[Gammu version %s built %s %s]\n\n"),
+			VERSION,
+			__TIME__,
+			__DATE__);
 }
 
 static void HelpGeneral(void)
