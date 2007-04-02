@@ -26,56 +26,83 @@ static void GSM_RegisterConnection(GSM_StateMachine *s, unsigned int connection,
 	}
 }
 
+typedef struct {
+	const char *Name;
+	const GSM_ConnectionType Connection;
+} GSM_ConnectionInfo;
+
+/**
+ * Mapping of connection names to internal identifications.
+ */
+static const GSM_ConnectionInfo GSM_Connections[] = {
+	{"at", GCT_AT},
+
+	// cables
+	{"mbus", GCT_MBUS2},
+	{"fbus", GCT_FBUS2},
+	{"fbuspl2303", GCT_FBUS2PL2303},
+	{"dlr3", GCT_FBUS2DLR3},
+	{"fbusdlr3", GCT_FBUS2DLR3},
+	{"dku5", GCT_DKU5FBUS2},
+	{"dku5fbus", GCT_DKU5FBUS2},
+	{"dku2", GCT_DKU2PHONET},
+	{"dku2phonet", GCT_DKU2PHONET},
+	{"dku2at", GCT_DKU2AT},
+
+        // for serial ports assigned by bt stack
+	{"fbusblue", GCT_FBUS2BLUE},
+	{"phonetblue", GCT_PHONETBLUE},
+
+	// bt
+	{"blueobex", GCT_BLUEOBEX},
+	{"bluephonet", GCT_BLUEPHONET},
+	{"blueat", GCT_BLUEAT},
+	{"bluerfobex", GCT_BLUEOBEX},
+	{"bluerffbus", GCT_BLUEFBUS2},
+	{"bluerfphonet", GCT_BLUEPHONET},
+	{"bluerfat", GCT_BLUEAT},
+	{"bluerfgnapbus", GCT_BLUEGNAPBUS},
+
+	// old "serial" irda
+	{"infrared", GCT_FBUS2IRDA},
+	{"fbusirda", GCT_FBUS2IRDA},
+
+	// socket irda
+	{"irda", GCT_IRDAPHONET},
+	{"irdaphonet", GCT_IRDAPHONET},
+	{"irdaat", GCT_IRDAAT},
+	{"irdaobex", GCT_IRDAOBEX},
+	{"irdagnapbus", GCT_IRDAGNAPBUS},
+};
+
 static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connection)
 {
+	int i;
 	/* We check here is used connection string type is correct for ANY
 	 * OS. If not, we return with error, that string is incorrect at all
 	 */
 	s->ConnectionType = 0;
-	// cables
-	if (strcasecmp("mbus"	,connection) == 0) s->ConnectionType = GCT_MBUS2;
-	if (strcasecmp("fbus"	,connection) == 0) s->ConnectionType = GCT_FBUS2;
-	if (strcasecmp("fbuspl2303"	,connection) == 0) s->ConnectionType = GCT_FBUS2PL2303;
-	if (strcasecmp("dlr3"	,connection) == 0) s->ConnectionType = GCT_FBUS2DLR3;
-	if (strcasecmp("fbusdlr3"	,connection) == 0) s->ConnectionType = GCT_FBUS2DLR3;
-	if (strcasecmp("dku5"	,connection) == 0) s->ConnectionType = GCT_DKU5FBUS2;
-	if (strcasecmp("dku5fbus"	,connection) == 0) s->ConnectionType = GCT_DKU5FBUS2;
-	if (strcasecmp("dku2"	,connection) == 0) s->ConnectionType = GCT_DKU2PHONET;
-	if (strcasecmp("dku2phonet"	,connection) == 0) s->ConnectionType = GCT_DKU2PHONET;
-	if (strcasecmp("dku2at"	,connection) == 0) s->ConnectionType = GCT_DKU2AT;
 
-        // for serial ports assigned by bt stack
-	if (strcasecmp("fbusblue"	,connection) == 0) s->ConnectionType = GCT_FBUS2BLUE;
-	if (strcasecmp("phonetblue"	,connection) == 0) s->ConnectionType = GCT_PHONETBLUE;
-	// bt
-	if (strcasecmp("blueobex"	,connection) == 0) s->ConnectionType = GCT_BLUEOBEX;
-	if (strcasecmp("bluephonet"	,connection) == 0) s->ConnectionType = GCT_BLUEPHONET;
-	if (strcasecmp("blueat"	,connection) == 0) s->ConnectionType = GCT_BLUEAT;
-	if (strcasecmp("bluerfobex"	,connection) == 0) s->ConnectionType = GCT_BLUEOBEX;
-	if (strcasecmp("bluerffbus"	,connection) == 0) s->ConnectionType = GCT_BLUEFBUS2;
-	if (strcasecmp("bluerfphonet",connection) == 0) s->ConnectionType = GCT_BLUEPHONET;
-	if (strcasecmp("bluerfat"	,connection) == 0) s->ConnectionType = GCT_BLUEAT;
-	if (strcasecmp("bluerfgnapbus",connection) == 0) s->ConnectionType = GCT_BLUEGNAPBUS;
+	for (i = 0; i < sizeof(GSM_Connections) / sizeof(GSM_Connections[0]); i++) {
+		if (strcasecmp(GSM_Connections[i].Name, connection) == 0) {
+			s->ConnectionType = GSM_Connections[i].Connection;
+			break;
+		}
+	}
 
-	// old "serial" irda
-	if (strcasecmp("infrared"	,connection) == 0) s->ConnectionType = GCT_FBUS2IRDA;
-	if (strcasecmp("fbusirda"	,connection) == 0) s->ConnectionType = GCT_FBUS2IRDA;
-	// socket irda
-	if (strcasecmp("irda"	,connection) == 0) s->ConnectionType = GCT_IRDAPHONET;
-	if (strcasecmp("irdaphonet"	,connection) == 0) s->ConnectionType = GCT_IRDAPHONET;
-	if (strcasecmp("irdaat"	,connection) == 0) s->ConnectionType = GCT_IRDAAT;
-	if (strcasecmp("irdaobex"	,connection) == 0) s->ConnectionType = GCT_IRDAOBEX;
-	if (strcasecmp("irdagnapbus" ,connection) == 0) s->ConnectionType = GCT_IRDAGNAPBUS;
-
-	if (strncasecmp("at"		,connection,2) == 0) {
+	/* Special case - at can contains speed */
+	if (s->ConnectionType == 0 && strncasecmp("at", connection, 2) == 0) {
 		/* Use some resonable default, when no speed defined */
 		if (strlen(connection) == 2) {
 			s->Speed = 19200;
 		} else {
 			s->Speed = FindSerialSpeed(connection+2);
 		}
-		if (s->Speed != 0) s->ConnectionType = GCT_AT;
+		if (s->Speed != 0) {
+			s->ConnectionType = GCT_AT;
+		}
 	}
+
 	if (s->ConnectionType==0) return ERR_UNKNOWNCONNECTIONTYPESTRING;
 
 	/* We check now if user gave connection type compiled & available
