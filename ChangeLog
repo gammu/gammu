@@ -64,6 +64,7 @@ For additionals materials and links to them see readme.txt
 [+] * Detect more Nokia phones (5300, 6300, 8800) (some by Peter Stuge).
 [-] * Allow compilation with MySQL and without PGSQL (thanks to Alin Năstac).
 [-] * Fixed format strings for size_t (thanks to Alin Năstac).
+[+] * New connection ark3316fbus for use with ark3116 module.
 
 20070311 - 1.10.1
 [-] * Fixed encoding of name for Nokia phones.

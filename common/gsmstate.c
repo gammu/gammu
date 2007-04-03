@@ -45,6 +45,7 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 	{"fbusdlr3", GCT_FBUS2DLR3},
 	{"dku5", GCT_DKU5FBUS2},
 	{"dku5fbus", GCT_DKU5FBUS2},
+	{"ark3316fbus", GCT_ARK3316FBUS2},
 	{"dku2", GCT_DKU2PHONET},
 	{"dku2phonet", GCT_DKU2PHONET},
 	{"dku2at", GCT_DKU2AT},
@@ -121,6 +122,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #endif
 #ifdef GSM_ENABLE_DKU5FBUS2
 	GSM_RegisterConnection(s, GCT_DKU5FBUS2,  &SerialDevice,  &FBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_ARK3316FBUS2,  &SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2PL2303
 	GSM_RegisterConnection(s, GCT_FBUS2PL2303,&SerialDevice,  &FBUS2Protocol);
@@ -401,6 +403,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 					case GCT_FBUS2BLUE:
 					case GCT_FBUS2IRDA:
 					case GCT_DKU5FBUS2:
+					case GCT_ARK3316FBUS2:
 					case GCT_DKU2PHONET:
 					case GCT_PHONETBLUE:
 					case GCT_IRDAPHONET:
