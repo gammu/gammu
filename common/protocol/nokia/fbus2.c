@@ -278,7 +278,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			case GCT_FBUS2:
 			case GCT_FBUS2DLR3:
 			case GCT_DKU5FBUS2:
-			case GCT_ARK3316FBUS2:
+			case GCT_ARK3116FBUS2:
 			case GCT_FBUS2PL2303:
 			case GCT_FBUS2BLUE:
 			case GCT_BLUEFBUS2:
@@ -370,8 +370,8 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	case GCT_DKU5FBUS2:
 	case GCT_FBUS2PL2303:
 	case GCT_FBUS2DLR3:
-	case GCT_ARK3316FBUS2:
-		if (s->ConnectionType != GCT_ARK3316FBUS2) {
+	case GCT_ARK3116FBUS2:
+		if (s->ConnectionType != GCT_ARK3116FBUS2) {
 			error=Device->DeviceSetDtrRts(s,false,false);
 			if (error!=ERR_NONE) return error;
 			my_sleep(1000);
@@ -392,7 +392,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 
 		error=Device->OpenDevice(s);
 		if (error!=ERR_NONE) return error;
-		if (s->ConnectionType != GCT_ARK3316FBUS2) {
+		if (s->ConnectionType != GCT_ARK3116FBUS2) {
 			error=Device->DeviceSetParity(s,false);
 			if (error!=ERR_NONE) return error;
 			error=Device->DeviceSetSpeed(s,115200);
