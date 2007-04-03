@@ -1,4 +1,4 @@
-%define ver         1.10.2
+%define ver         1.10.3
 %define name        gammu
 %define relnum      1
 
