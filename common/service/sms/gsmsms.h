@@ -468,7 +468,7 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS);
 /**
  * Number of possible SMS folders.
  */
-#define GSM_MAX_SMS_FOLDERS	     	24
+#define GSM_MAX_SMS_FOLDERS	     	50
 /**
  * Maximal length of SMS folder name.
  */
