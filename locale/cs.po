@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-04-02 21:39+0200\n"
-"PO-Revision-Date: 2007-03-30 13:54+0200\n"
+"PO-Revision-Date: 2007-04-10 14:07+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs\n"
 "MIME-Version: 1.0\n"
@@ -368,7 +368,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:361
 #, c-format
 msgid "Unknown (%x)"
-msgstr "Neznámý (%s)"
+msgstr "Neznámý (%x)"
 
 #: gammu/depend/nokia/dct4.c:363
 #, c-format
@@ -829,9 +829,9 @@ msgid "Cannot save %s. No available file names"
 msgstr ""
 
 #: gammu/smsd/s_files.c:62 gammu/smsd/s_mysql.c:159 gammu/smsd/s_pgsql.c:180
-#, fuzzy, c-format
+#, c-format
 msgid "Delivery report: %s to %s"
-msgstr "Stav doručení   : %s\n"
+msgstr "Doručenka: %s pro %s"
 
 #: gammu/smsd/s_files.c:97
 msgid "Delivery report"
@@ -1657,14 +1657,16 @@ msgid "Updating specified parts of date and time in phone.\n"
 msgstr ""
 
 #: gammu/gammu.c:797
-#, fuzzy, c-format
+#, c-format
 msgid "Alarm (%i) not set in phone\n"
-msgstr "Budík není v telefonu nastaven\n"
+msgstr ""
+"Budík (%i) není v telefonu nastaven\n"
 
 #: gammu/gammu.c:800
-#, fuzzy, c-format
+#, c-format
 msgid "Alarm in location %i:\n"
-msgstr "Paměť %s, pozice %i\n"
+msgstr ""
+"Budík na pozici %i:\n"
 
 #: gammu/gammu.c:802 gammu/gammu.c:804
 #, c-format
@@ -2509,9 +2511,10 @@ msgid "We already have one pending, ignoring!\n"
 msgstr ""
 
 #: gammu/gammu.c:1707 gammu/gammu.c:2049
-#, fuzzy, c-format
+#, c-format
 msgid "Location %i\n"
-msgstr "Paměť %s, pozice %i\n"
+msgstr ""
+"Pozice %i\n"
 
 #: gammu/gammu.c:1708 gammu/gammu.c:2050
 #, c-format
@@ -2807,9 +2810,10 @@ msgid "%i. Set %i\n"
 msgstr ""
 
 #: gammu/gammu.c:1992
-#, fuzzy, c-format
+#, c-format
 msgid "Number         : \"%s\"\n"
-msgstr "   Číslo      : %\n"
+msgstr ""
+"Číslo          : \"%s\"\n"
 
 #: gammu/gammu.c:1993
 #, fuzzy, c-format
@@ -3090,9 +3094,9 @@ msgid ""
 msgstr ""
 
 #: gammu/gammu.c:2871
-#, fuzzy, c-format
+#, c-format
 msgid "Name    : \"%s\"\n"
-msgstr "   Číslo      : %\n"
+msgstr "Jméno   : \"%s\""
 
 #: gammu/gammu.c:2872
 #, fuzzy, c-format
@@ -3226,9 +3230,9 @@ msgid "What type of logo do you want to set (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/gammu.c:3218
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown parameter \"%s\""
-msgstr "Příliš málo parametrů!\n"
+msgstr "Neznámý parametr \"%s\""
 
 #: gammu/gammu.c:3231 gammu/gammu.c:4389 gammu/gammu.c:8390 gammu/gammu.c:9102
 #, c-format
@@ -3373,9 +3377,10 @@ msgid "Can't open file \"%s\"\n"
 msgstr ""
 
 #: gammu/gammu.c:4343
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown parameter \"%c\"\n"
-msgstr "Příliš málo parametrů!\n"
+msgstr ""
+"Neznámý parameter \"%c\"\n"
 
 #: gammu/gammu.c:4348
 #, c-format
@@ -4294,9 +4299,10 @@ msgid "What type of categories do you want to get (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/gammu.c:6946 gammu/gammu.c:6978
-#, fuzzy, c-format
+#, c-format
 msgid "Location: %i\n"
-msgstr "Paměť %s, pozice %i\n"
+msgstr ""
+"Pozice: %i\n"
 
 #: gammu/gammu.c:6950 gammu/gammu.c:6988
 #, fuzzy, c-format
@@ -4325,9 +4331,10 @@ msgid "Text too long, truncating to %d chars!\n"
 msgstr "Text pro vyhledávání je příliš dlouhý, zkracuji na %d znaků!\n"
 
 #: gammu/gammu.c:7039
-#, fuzzy, c-format
+#, c-format
 msgid "Location  : %i\n"
-msgstr "Paměť %s, pozice %i\n"
+msgstr ""
+"Pozice: %i\n"
 
 #: gammu/gammu.c:7044
 #, c-format
