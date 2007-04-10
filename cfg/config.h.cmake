@@ -183,6 +183,9 @@
 #ifndef HAVE_STRCASESTR
 #cmakedefine HAVE_STRCASESTR 
 #endif
+#ifndef HAVE_STRCHRNUL
+#cmakedefine HAVE_STRCHRNUL 
+#endif
 
 /* Will be used Bluez BT stack ? */
 #cmakedefine GSM_ENABLE_BLUEZ
