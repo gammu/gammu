@@ -1131,9 +1131,9 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 		SaveBackupText(file, "", buffer, false);
 	}
 
-	sprintf(buffer,"# This file format was designed for Gammu and is compatible with Gammu+%c%c",13,10);
+	sprintf(buffer, BACKUP_MAIN_HEADER "%c%c", 13, 10);
 	SaveBackupText(file, "", buffer, UseUnicode);
-	sprintf(buffer,"# See www.mwiacek.com and www.gammu.org for more info%c%c%c%c",13,10,13,10);
+	sprintf(buffer, BACKUP_INFO_HEADER "%c%c", 13, 10);
 	SaveBackupText(file, "", buffer, UseUnicode);
 	sprintf(buffer,"[Backup]%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
@@ -3135,7 +3135,8 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 	unsigned char 	buffer[10000];
 	GSM_DateTime	DT;
 
-	fprintf(file,"\n# File created by Gammu (www.mwiacek.com) version %s\n",VERSION);
+	fprintf(file, BACKUP_MAIN_HEADER "\n");
+	fprintf(file, BACKUP_INFO_HEADER "\n");
 	GSM_GetCurrentDateTime (&DT);
 	fprintf(file,"# Saved ");
 	fprintf(file, "%04d%02d%02dT%02d%02d%02d",
