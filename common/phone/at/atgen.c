@@ -598,6 +598,7 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 		if (strstr(msg.Buffer,"Nokia")) {
 			smprintf(s, "Nokia\n");
 			strcpy(s->Phone.Data.Manufacturer,"Nokia");
+			smprintf(s, "HINT: Consider using Nokia specific protocol instead of generic AT.\n");
 			Priv->Manufacturer = AT_Nokia;
 		}
 		if (strstr(msg.Buffer,"SIEMENS")) {
@@ -4513,7 +4514,7 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 						 * phones provide less features over OBEX than AT
 						 * using AT commands.
 						 */
-						smprintf(s, "Please consider adding F_OBEX to your phone capabilities in common/gsmstate.c\n");
+						smprintf(s, "HINT: Please consider adding F_OBEX to your phone capabilities in common/gsmstate.c\n");
 					} else {
 #ifdef GSM_ENABLE_SONYERICSSON
 						/* Tell OBEX driver that AT+CPROT=0 is supported */
