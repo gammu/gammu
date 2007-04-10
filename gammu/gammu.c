@@ -343,7 +343,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 					case 12: printf(_("December")); 	 break;
 					default: printf(_("Bad month!")); break;
 				}
-				printf(_(" %02i:%02i:%02i\n"),
+				printf(" %02i:%02i:%02i\n",
 					Note->Entries[i].Date.Hour,
 					Note->Entries[i].Date.Minute,
 					Note->Entries[i].Date.Second);
@@ -370,7 +370,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 					case 12: printf(_("December")); 	 break;
 					default: printf(_("Bad month!")); break;
 				}
-				printf(_(" %02i:%02i:%02i\n"),
+				printf(" %02i:%02i:%02i\n",
 					Note->Entries[i].Date.Hour,
 					Note->Entries[i].Date.Minute,
 					Note->Entries[i].Date.Second);
@@ -10049,7 +10049,7 @@ char ProcessParameters(char start, int argc, char *argv[]) {
 					printf(_("More parameters required (function accepts %d to %d)\n"), Parameters[z].min_arg, Parameters[z].max_arg);
 				}
 				if (Parameters[z].help[0] != 0) {
-					printf(_("Help: %s\n"), gettext(Parameters[z].help));
+					printf(_("Parameters help: %s\n"), gettext(Parameters[z].help));
 				}
 			} else if (argc-2-start > Parameters[z].max_arg) {
 				count_failed = true;
@@ -10059,7 +10059,7 @@ char ProcessParameters(char start, int argc, char *argv[]) {
 					printf(_("Too many parameters (function accepts %d to %d)\n"), Parameters[z].min_arg, Parameters[z].max_arg);
 				}
 				if (Parameters[z].help[0] != 0) {
-					printf(_("Help: %s\n"), gettext(Parameters[z].help));
+					printf(_("Parameters help: %s\n"), gettext(Parameters[z].help));
 				}
 			} else {
 				Parameters[z].Function(argc - start, argv + start);
