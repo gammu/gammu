@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-02 21:39+0200\n"
+"POT-Creation-Date: 2007-04-10 21:15+0200\n"
 "PO-Revision-Date: 2007-03-20 11:32+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =de\n"
@@ -1352,11 +1352,6 @@ msgstr "Dezember"
 #, c-format
 msgid "Bad month!"
 msgstr "Ungültiger Monat!"
-
-#: gammu/gammu.c:346 gammu/gammu.c:373
-#, fuzzy, c-format
-msgid " %02i:%02i:%02i\n"
-msgstr "Anruflänge       : %02i:%02i:%02i\n"
 
 #: gammu/gammu.c:351
 #, c-format
@@ -5417,8 +5412,10 @@ msgstr "FEHLER: mehr Parameter benötigt \n"
 
 #: gammu/gammu.c:10052 gammu/gammu.c:10062
 #, fuzzy, c-format
-msgid "Help: %s\n"
-msgstr "Datum: %s\n"
+msgid "Parameters help: %s\n"
+msgstr ""
+"Gammu-Parameter, Gegenstand: %s\n"
+"\n"
 
 #: gammu/gammu.c:10057
 #, fuzzy, c-format
@@ -5476,6 +5473,14 @@ msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr ""
 "INFO: Es ist eine neuere Entwicklungsversion von Gammu (%s anstatt %s) "
 "verfügbar!\n"
+
+#, fuzzy
+#~ msgid " %02i:%02i:%02i\n"
+#~ msgstr "Anruflänge       : %02i:%02i:%02i\n"
+
+#, fuzzy
+#~ msgid "Help: %s\n"
+#~ msgstr "Datum: %s\n"
 
 #, fuzzy
 #~ msgid " %s"
