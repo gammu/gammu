@@ -3775,15 +3775,28 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 		call.CallIDAvailable 	= false;
 		num[0] 			= 0;
 		if (strstr(msg.Buffer, "RING")) {
+			smprintf(s, "Ring detected - ");
+			/* We ignore RING for most phones, see ATGEN_SetIncomingCall */
+			if (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Ericsson) {
+				smprintf(s, "ignoring\n");
+				return ERR_NONE;
+			}
+			smprintf(s, "generating event\n");
 			call.Status = GSM_CALL_IncomingCall;
 			ATGEN_Extract_CLIP_number(s, num, msg.Buffer);
+		} else if (strstr(msg.Buffer, "CLIP:")) {
+			smprintf(s, "CLIP detected\n");
+			call.Status = GSM_CALL_IncomingCall;
+			ATGEN_Extract_CLIP_number(s,num, msg.Buffer);
 		} else if (strstr(msg.Buffer, "NO CARRIER")) {
+			smprintf(s, "Call end detected\n");
 			call.Status = GSM_CALL_CallEnd;
 		} else if (strstr(msg.Buffer, "COLP:")) {
+			smprintf(s, "CLIP detected\n");
 			call.Status = GSM_CALL_CallStart;
 			ATGEN_Extract_CLIP_number(s,num, msg.Buffer);
 		} else {
-			smprintf(s, "CLIP: error\n");
+			smprintf(s, "Incoming call error\n");
 			return ERR_NONE;
 		}
 		EncodeUnicode(call.PhoneNumber, num, strlen(num));
