@@ -57,7 +57,7 @@ typedef struct {
 	GSM_Bitmap		*OperatorLogo;
 } GSM_Backup;
 
-#define GSM_BACKUP_MAX_SMS	500
+#define GSM_BACKUP_MAX_SMS	1000
 
 typedef struct {
 	GSM_SMSMessage		*SMS[GSM_BACKUP_MAX_SMS + 1];
