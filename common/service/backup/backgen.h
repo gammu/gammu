@@ -60,7 +60,7 @@ typedef struct {
 #define GSM_BACKUP_MAX_SMS	500
 
 typedef struct {
-	GSM_SMSMessage		*SMS[GSM_BACKUP_MAX_SMS];
+	GSM_SMSMessage		*SMS[GSM_BACKUP_MAX_SMS + 1];
 } GSM_SMS_Backup;
 
 extern GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup);

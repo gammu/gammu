@@ -6576,7 +6576,7 @@ static void BackupSMS(int argc, char *argv[])
 						if (smsnum < GSM_BACKUP_MAX_SMS) {
 							Backup.SMS[smsnum] = malloc(sizeof(GSM_SMSMessage));
 						        if (Backup.SMS[smsnum] == NULL) Print_Error(ERR_MOREMEMORY);
-							Backup.SMS[smsnum+1] = NULL;
+							Backup.SMS[smsnum + 1] = NULL;
 						} else {
 							printf(_("   Increase %s\n") , "GSM_BACKUP_MAX_SMS");
 							GSM_Terminate();
