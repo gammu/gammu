@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-02 21:39+0200\n"
+"POT-Creation-Date: 2007-04-10 21:15+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Language =ru\n"
@@ -1343,11 +1343,6 @@ msgstr "декабря"
 #, c-format
 msgid "Bad month!"
 msgstr "Неверный месяц!"
-
-#: gammu/gammu.c:346 gammu/gammu.c:373
-#, fuzzy, c-format
-msgid " %02i:%02i:%02i\n"
-msgstr "Время звонка     : %02i:%02i:%02i\n"
 
 #: gammu/gammu.c:351
 #, c-format
@@ -5404,8 +5399,10 @@ msgstr "Нужны дополнительные параметры (допуск
 
 #: gammu/gammu.c:10052 gammu/gammu.c:10062
 #, fuzzy, c-format
-msgid "Help: %s\n"
-msgstr "Дата: %s\n"
+msgid "Parameters help: %s\n"
+msgstr ""
+"Параметры Gammu, раздел: %s\n"
+"\n"
 
 #: gammu/gammu.c:10057
 #, fuzzy, c-format
@@ -5460,6 +5457,14 @@ msgstr "ИНФО: Есть более новая стабильная верси
 #, c-format
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr "ИНФО: Есть более новая тестовая версия Gammu (%s против of %s).\n"
+
+#, fuzzy
+#~ msgid " %02i:%02i:%02i\n"
+#~ msgstr "Время звонка     : %02i:%02i:%02i\n"
+
+#, fuzzy
+#~ msgid "Help: %s\n"
+#~ msgstr "Дата: %s\n"
 
 #, fuzzy
 #~ msgid " %s"
