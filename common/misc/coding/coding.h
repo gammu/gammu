@@ -153,6 +153,9 @@ int strcasecmp (const char *s1, const char *s2);
 #ifndef HAVE_STRCASESTR
 char *strcasestr(const char *s, const char *find);
 #endif
+#ifndef HAVE_STRCHRNUL
+char *strchrnul(char *s, int find);
+#endif
 
 void MyGetLine		(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, bool MergeLines);
 

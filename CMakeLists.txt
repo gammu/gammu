@@ -1,5 +1,6 @@
 # cmake <http://www.cmake.org> build file for Gammu
 # Copyright (c) 2007 Michal Cihar
+# vim: expandtab sw=4 ts=4 sts=4:
 
 project (Gammu C)
 
@@ -62,32 +63,32 @@ endif (${Gammu_BINARY_DIR} STREQUAL ${Gammu_SOURCE_DIR})
 
 # For debugging
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-	set (CMAKE_VERBOSE_MAKEFILE ON)
-	set (DEBUG 1)
+    set (CMAKE_VERBOSE_MAKEFILE ON)
+    set (DEBUG 1)
 else (CMAKE_BUILD_TYPE STREQUAL "Debug")
-	set (CMAKE_VERBOSE_MAKEFILE OFF)
-	set (DEBUG 0)
+    set (CMAKE_VERBOSE_MAKEFILE OFF)
+    set (DEBUG 0)
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
 # No rpath by default
 if (NOT DEFINED WITH_RPATH)
-	set (WITH_RPATH FALSE CACHE BOOL "Enable rpath in resulting libraries")
-	mark_as_advanced (WITH_RPATH)
+    set (WITH_RPATH FALSE CACHE BOOL "Enable rpath in resulting libraries")
+    mark_as_advanced (WITH_RPATH)
 endif (NOT DEFINED WITH_RPATH)
 
 if (WITH_RPATH)
-	set (CMAKE_SKIP_RPATH OFF)
+    set (CMAKE_SKIP_RPATH OFF)
 else (WITH_RPATH)
-	set (CMAKE_SKIP_RPATH ON)
+    set (CMAKE_SKIP_RPATH ON)
 endif (WITH_RPATH)
 
 # Static library by default
 if (NOT DEFINED ENABLE_SHARED)
-	set (ENABLE_SHARED FALSE CACHE BOOL "Build shared library")
+    set (ENABLE_SHARED FALSE CACHE BOOL "Build shared library")
 endif (NOT DEFINED ENABLE_SHARED)
 
 if (ENABLE_SHARED)
-	set (BUILD_SHARED_LIBS ON)
+    set (BUILD_SHARED_LIBS ON)
 endif (ENABLE_SHARED)
 
 # Packaging support
@@ -159,6 +160,7 @@ if (NOT CROSS_MINGW)
     check_function_exists (strncasecmp HAVE_STRNCASECMP)
     check_function_exists (strcasecmp HAVE_STRCASECMP)
     check_function_exists (strcasestr HAVE_STRCASESTR)
+    check_function_exists (strchrnul HAVE_STRCHRNUL)
 
 endif (NOT CROSS_MINGW)
 
@@ -338,84 +340,84 @@ set (HEADERS
     )
 
 set (LIBRARY_SRC
-	common/gsmcomon.c
-	common/gsmstate.c
-	common/misc/misc.c
-	common/misc/cfg.c
-	common/misc/coding/coding.c
-	common/misc/coding/md5.c
-	common/service/sms/gsmsms.c
-	common/service/sms/gsmems.c
-	common/service/sms/gsmmulti.c
-	common/service/gsmcal.c
-	common/service/gsmdata.c
-	common/service/gsmpbk.c
-	common/service/gsmring.c
-	common/service/gsmlogo.c
-	common/service/gsmmisc.c
-	common/service/gsmnet.c
-	common/service/backup/gsmback.c
-	common/service/backup/backldif.c
-	common/service/backup/backlmb.c
-	common/service/backup/backtext.c
-	common/service/backup/backvcs.c
-	common/service/backup/backvcf.c
-	common/service/backup/backics.c
-	common/device/bluetoth/affix.c
-	common/device/bluetoth/bluez.c
-	common/device/bluetoth/blue_w32.c
-	common/device/bluetoth/bluetoth.c
-	common/device/serial/ser_unx.c
-	common/device/serial/ser_djg.c
-	common/device/serial/ser_w32.c
-	common/device/irda/irda.c
-	common/device/devfunc.c
-	common/protocol/at/at.c
-	common/protocol/alcatel/alcabus.c
-	common/protocol/nokia/mbus2.c
-	common/protocol/nokia/fbus2.c
-	common/protocol/nokia/phonet.c
-	common/protocol/obex/obex.c
-	common/protocol/symbian/gnapbus.c
-	common/phone/pfunc.c
-	common/phone/at/atgen.c
-	common/phone/at/siemens.c
-	common/phone/at/samsung.c
-	common/phone/alcatel/alcatel.c
-	common/phone/sonyeric/sonyeric.c
-	common/phone/nokia/dct3/n0650.c
-	common/phone/nokia/dct3/n6110.c
-	common/phone/nokia/dct3/n7110.c
-	common/phone/nokia/dct3/n9210.c
-	common/phone/nokia/dct3/dct3func.c
-	common/phone/nokia/dct4s40/n3320.c
-	common/phone/nokia/dct4s40/dct4func.c
-	common/phone/nokia/dct4s40/6510/n6510.c
-	common/phone/nokia/dct4s40/6510/6510cal.c
-	common/phone/nokia/dct4s40/6510/6510file.c
-	common/phone/nokia/wd2/n3650.c
-	common/phone/nokia/nauto.c
-	common/phone/nokia/nfunc.c
-	common/phone/nokia/nfuncold.c
-	common/phone/obex/obexgen.c
-	common/phone/symbian/gnapgen.c)
+    common/gsmcomon.c
+    common/gsmstate.c
+    common/misc/misc.c
+    common/misc/cfg.c
+    common/misc/coding/coding.c
+    common/misc/coding/md5.c
+    common/service/sms/gsmsms.c
+    common/service/sms/gsmems.c
+    common/service/sms/gsmmulti.c
+    common/service/gsmcal.c
+    common/service/gsmdata.c
+    common/service/gsmpbk.c
+    common/service/gsmring.c
+    common/service/gsmlogo.c
+    common/service/gsmmisc.c
+    common/service/gsmnet.c
+    common/service/backup/gsmback.c
+    common/service/backup/backldif.c
+    common/service/backup/backlmb.c
+    common/service/backup/backtext.c
+    common/service/backup/backvcs.c
+    common/service/backup/backvcf.c
+    common/service/backup/backics.c
+    common/device/bluetoth/affix.c
+    common/device/bluetoth/bluez.c
+    common/device/bluetoth/blue_w32.c
+    common/device/bluetoth/bluetoth.c
+    common/device/serial/ser_unx.c
+    common/device/serial/ser_djg.c
+    common/device/serial/ser_w32.c
+    common/device/irda/irda.c
+    common/device/devfunc.c
+    common/protocol/at/at.c
+    common/protocol/alcatel/alcabus.c
+    common/protocol/nokia/mbus2.c
+    common/protocol/nokia/fbus2.c
+    common/protocol/nokia/phonet.c
+    common/protocol/obex/obex.c
+    common/protocol/symbian/gnapbus.c
+    common/phone/pfunc.c
+    common/phone/at/atgen.c
+    common/phone/at/siemens.c
+    common/phone/at/samsung.c
+    common/phone/alcatel/alcatel.c
+    common/phone/sonyeric/sonyeric.c
+    common/phone/nokia/dct3/n0650.c
+    common/phone/nokia/dct3/n6110.c
+    common/phone/nokia/dct3/n7110.c
+    common/phone/nokia/dct3/n9210.c
+    common/phone/nokia/dct3/dct3func.c
+    common/phone/nokia/dct4s40/n3320.c
+    common/phone/nokia/dct4s40/dct4func.c
+    common/phone/nokia/dct4s40/6510/n6510.c
+    common/phone/nokia/dct4s40/6510/6510cal.c
+    common/phone/nokia/dct4s40/6510/6510file.c
+    common/phone/nokia/wd2/n3650.c
+    common/phone/nokia/nauto.c
+    common/phone/nokia/nfunc.c
+    common/phone/nokia/nfuncold.c
+    common/phone/obex/obexgen.c
+    common/phone/symbian/gnapgen.c)
 
 set (BINARY_SRC
-	gammu/depend/nokia/dct3.c
-	gammu/depend/nokia/dct3trac/wmx.c
-	gammu/depend/nokia/dct3trac/wmx-gsm.c
-	gammu/depend/nokia/dct3trac/wmx-list.c
-	gammu/depend/nokia/dct3trac/wmx-sim.c
-	gammu/depend/nokia/dct3trac/wmx-util.c
-	gammu/depend/nokia/dct4.c
-	gammu/depend/siemens/dsiemens.c
-	gammu/depend/siemens/chiffre.c
-	gammu/smsd/smsdcore.c
-	gammu/smsd/s_files.c
-	gammu/smsd/s_mysql.c
-	gammu/smsd/s_pgsql.c
-	gammu/sniff.c
-	gammu/gammu.c)
+    gammu/depend/nokia/dct3.c
+    gammu/depend/nokia/dct3trac/wmx.c
+    gammu/depend/nokia/dct3trac/wmx-gsm.c
+    gammu/depend/nokia/dct3trac/wmx-list.c
+    gammu/depend/nokia/dct3trac/wmx-sim.c
+    gammu/depend/nokia/dct3trac/wmx-util.c
+    gammu/depend/nokia/dct4.c
+    gammu/depend/siemens/dsiemens.c
+    gammu/depend/siemens/chiffre.c
+    gammu/smsd/smsdcore.c
+    gammu/smsd/s_files.c
+    gammu/smsd/s_mysql.c
+    gammu/smsd/s_pgsql.c
+    gammu/sniff.c
+    gammu/gammu.c)
 
 # Locales
 set (LOCALEFILES)
@@ -444,8 +446,8 @@ endif (CROSS_MINGW)
 # Include search path
 include_directories (
     ${Gammu_BINARY_DIR}/cfg
-	${Gammu_SOURCE_DIR}/common
-	)
+    ${Gammu_SOURCE_DIR}/common
+    )
 
 # Gammu program
 add_executable (gammu ${BINARY_SRC})
@@ -458,25 +460,25 @@ target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
 
 # Tune options for found libraries
 if (MYSQL_FOUND)
-	target_link_libraries (gammu ${MYSQL_LIBRARIES})
+    target_link_libraries (gammu ${MYSQL_LIBRARIES})
     include_directories (${MYSQL_INCLUDE_DIR})
     set (HAVE_MYSQL_MYSQL_H TRUE)
 endif (MYSQL_FOUND)
 
 if (POSTGRES_FOUND)
-	target_link_libraries (gammu ${POSTGRES_LIBRARY})
+    target_link_libraries (gammu ${POSTGRES_LIBRARY})
     include_directories (${POSTGRES_INCLUDE_DIR})
 
     set (HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
 endif (POSTGRES_FOUND)
 
 if (GETTEXTLIBS_FOUND)
-	target_link_libraries (gammu ${GETTEXT_LIBRARY})
+    target_link_libraries (gammu ${GETTEXT_LIBRARY})
     include_directories (${GETTEXT_INCLUDE_DIR})
 endif (GETTEXTLIBS_FOUND)
 
 if (BLUEZ_FOUND)
-	target_link_libraries (Gammu ${BLUEZ_LIBRARIES})
+    target_link_libraries (Gammu ${BLUEZ_LIBRARIES})
     include_directories (${BLUEZ_INCLUDE_DIR})
 
     if (NOT CROSS_MINGW)
@@ -600,27 +602,27 @@ add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} cfg/Doxyfile
 
 # Install paths
 if (NOT DEFINED INSTALL_BIN_DIR)
-	set (INSTALL_BIN_DIR "bin" CACHE FILEPATH "Path for binaries installation")
+    set (INSTALL_BIN_DIR "bin" CACHE FILEPATH "Path for binaries installation")
     mark_as_advanced (INSTALL_BIN_DIR)
 endif (NOT DEFINED INSTALL_BIN_DIR)
 if (NOT DEFINED INSTALL_LIB_DIR)
-	set (INSTALL_LIB_DIR "lib" CACHE FILEPATH "Path for libraries installation")
+    set (INSTALL_LIB_DIR "lib" CACHE FILEPATH "Path for libraries installation")
     mark_as_advanced (INSTALL_LIB_DIR)
 endif (NOT DEFINED INSTALL_LIB_DIR)
 if (NOT DEFINED INSTALL_INC_DIR)
-	set (INSTALL_INC_DIR "include/gammu" CACHE FILEPATH "Path for includes installation")
+    set (INSTALL_INC_DIR "include/gammu" CACHE FILEPATH "Path for includes installation")
     mark_as_advanced (INSTALL_INC_DIR)
 endif (NOT DEFINED INSTALL_INC_DIR)
 if (NOT DEFINED INSTALL_LOC_DIR)
-	set (INSTALL_LOC_DIR "share/gammu" CACHE FILEPATH "Path for locales installation")
+    set (INSTALL_LOC_DIR "share/gammu" CACHE FILEPATH "Path for locales installation")
     mark_as_advanced (INSTALL_LOC_DIR)
 endif (NOT DEFINED INSTALL_LOC_DIR)
 if (NOT DEFINED INSTALL_DOC_DIR)
-	set (INSTALL_DOC_DIR "share/doc/gammu" CACHE FILEPATH "Path for documentation installation")
+    set (INSTALL_DOC_DIR "share/doc/gammu" CACHE FILEPATH "Path for documentation installation")
     mark_as_advanced (INSTALL_DOC_DIR)
 endif (NOT DEFINED INSTALL_DOC_DIR)
 if (NOT DEFINED INSTALL_MAN_DIR)
-	set (INSTALL_MAN_DIR "share/man" CACHE FILEPATH "Path for man pages installation")
+    set (INSTALL_MAN_DIR "share/man" CACHE FILEPATH "Path for man pages installation")
     mark_as_advanced (INSTALL_MAN_DIR)
 endif (NOT DEFINED INSTALL_MAN_DIR)
 

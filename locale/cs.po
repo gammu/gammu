@@ -3096,12 +3096,12 @@ msgstr ""
 #: gammu/gammu.c:2871
 #, c-format
 msgid "Name    : \"%s\"\n"
-msgstr "Jméno   : \"%s\""
+msgstr "Jméno   : \"%s\"\n"
 
 #: gammu/gammu.c:2872
-#, fuzzy, c-format
+#, c-format
 msgid "Address : \"%s\"\n"
-msgstr "Text : \"%s\"n"
+msgstr "Adresa : \"%s\"\n"
 
 #: gammu/gammu.c:2912
 #, c-format

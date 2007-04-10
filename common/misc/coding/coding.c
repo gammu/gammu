@@ -182,7 +182,7 @@ char *DecodeSpecialChars(unsigned char *buffer)
  * Find the first occurrence of find in s, ignore case.
  * Copyright (c) 1990, 1993 The Regents of the University of California.
  */
-char * strcasestr(const char *s, const char *find)
+char *strcasestr(const char *s, const char *find)
 {
 	char c, sc;
 	size_t len;
@@ -199,6 +199,16 @@ char * strcasestr(const char *s, const char *find)
 		s--;
 	}
 	return ((char *)s);
+}
+#endif
+
+#ifndef HAVE_STRCHRNUL
+char *strchrnul(char *s, int find)
+{
+	char *ret;
+	ret = strchr(s, find);
+	if (ret == NULL) return s + strlen(s);
+	return ret;
 }
 #endif
 

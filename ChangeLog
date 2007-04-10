@@ -49,6 +49,7 @@ For additionals materials and links to them see readme.txt
 
 
 2007???? - 1.10.3
+[-] * Work with AT phones which can not write SMS to ME (bug #282).
 
 20070403 - 1.10.2
 [-] * Fixed crash on LMB export/import (bug #261).

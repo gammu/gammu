@@ -123,7 +123,8 @@ typedef struct {
 	int			LastSMSRead;
 	int			FirstCalendarPos;
 	int			FirstFreeCalendarPos;
-	bool			CanSaveSMS;
+	GSM_AT_SMSMemory	SIMSaveSMS;		/**< Can we write messages to SIM memory? */
+	GSM_AT_SMSMemory	PhoneSaveSMS;		/**< Can we write messages to phone memory? */
 	GSM_AT_SMSMemory	PhoneSMSMemory;	  	/**< Is phone SMS memory available ? 				*/
 	GSM_AT_SMSMemory	SIMSMSMemory;	  	/**< Is SIM SMS memory available ? 				*/
 	GSM_MemoryType		SMSMemory;	  	/**< Last read SMS memory 					*/
