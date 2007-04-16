@@ -90,7 +90,7 @@ AC_PROG_GCC_TRADITIONAL
 AC_FUNC_MEMCMP
 AC_TYPE_SIGNAL
 AC_FUNC_VPRINTF
-AC_CHECK_FUNCS(scandir alphasort iswspace towlower)
+AC_CHECK_FUNCS(scandir alphasort iswspace towlower strncasecmp strcasecmp strcasestr strchrnul)
 dnl Now this is checking is not used
 dnl AC_CHECK_FUNCS(mktime select socket strdup strerror strstr)
 dnl AC_SUBST(HAVE_SCANDIR)

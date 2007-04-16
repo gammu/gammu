@@ -159,14 +159,31 @@
 #  undef HAVE_SYS_IOCTL_H
 #  undef HAVE_MYSQL_MYSQL_H
 #  undef HAVE_POSTGRESQL_LIBPQ_FE_H
+
+#ifndef HAVE_STRNCASECMP
+#  undef HAVE_STRNCASECMP 
+#endif
+#ifndef HAVE_STRCASECMP
+#  undef HAVE_STRCASECMP 
+#endif
+#ifndef HAVE_STRCASESTR
+#  undef HAVE_STRCASESTR 
+#endif
+#ifndef HAVE_STRCHRNUL
+#  undef HAVE_STRCHRNUL 
+#endif
 #else
 //#  define HAVE_MYSQL_MYSQL_H 1
 //#  define HAVE_POSTGRESQL_LIBPQ_FE_H 1
 #endif
 
 #ifndef DJGPP
+#ifndef HAVE_ISWSPACE
 #  undef HAVE_ISWSPACE
+#endif
+#ifndef HAVE_TOWLOWER
 #  undef HAVE_TOWLOWER
+#endif
 #endif
 
 #if !defined(WIN32) && !defined(DJGPP)
