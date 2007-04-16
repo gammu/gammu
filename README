@@ -27,8 +27,11 @@ Current releases can be downloaded from several mirrors, primary
 download site currently is <http://dl.cihar.com/gammu/releases/>. 
 
 Developers might be interested in snapshot or version control system
-(Bazaar is currently used), information about accessing these is
+(Subversion is being used), information about accessing these is
 available at <http://cihar.com/gammu/>.
+
+Anonymous Subversion is available using <svn://svn.cihar.com/gammu>,
+there is also web browser for it - <http://viewsvn.cihar.com/gammu>.
 
 
 [Versions]
