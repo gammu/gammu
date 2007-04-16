@@ -214,18 +214,32 @@ set (EXAMPLES
     )
 
 set (DEVELDOCS
-    docs/docs/english/replace.txt
-    docs/docs/english/readme.htm
-    docs/docs/english/gammu.htm
-    docs/docs/gammu.png
-    docs/docs/italian/gammu.txt
-    docs/docs/italian/readme.txt
+    docs/develop/Gammu.htm
+    docs/develop/develop.txt
+    docs/develop/gammu_hints.txt
+    "docs/develop/protocol/TDMA 5120.txt"
+    docs/develop/protocol/carkit.txt
+    docs/develop/protocol/n6110.txt
+    docs/develop/protocol/n6510.txt
+    docs/develop/protocol/n7110.txt
+    docs/develop/protocol/nokia.txt
+    docs/develop/protocol/readme
+    docs/develop/sms/charset.txt
+    docs/develop/sms/convert.txt
+    docs/develop/sms/readme
+    docs/develop/sounds/readme
+    docs/develop/sounds/ring2.txt
     )
 
 set (DOCS
     README 
     ChangeLog 
     COPYING
+    docs/user/replace.txt
+    docs/user/readme.htm
+    docs/user/gammu.htm
+    docs/user/gammu.it.txt
+    docs/user/readme.it.txt
     )
 
 set (SYMBIAN_FILES
@@ -235,7 +249,7 @@ set (SYMBIAN_FILES
     )
 
 set (MAN1_PAGES
-    docs/docs/english/gammu.1
+    docs/user/gammu.1
     )
 
 set (HEADERS
@@ -612,7 +626,7 @@ endforeach (HEADER)
 foreach (LOCALE ${LOCALES})
     install (
         FILES "locale/gammu_${LOCALE}.txt" 
-        DESTINATION "${INSTALL_LOC_DIR}/gammu_${LOCALE}.txt"
+        DESTINATION "${INSTALL_LOC_DIR}"
         COMPONENT "locales"
         )
 endforeach (LOCALE)
@@ -636,7 +650,7 @@ install (
     )
 
 foreach (DOC ${DEVELDOCS})
-    string (REGEX REPLACE "docs/docs(.*)/[^/]*$" "\\1" DIRNAME ${DOC})
+    string (REGEX REPLACE "docs/develop(.*)/[^/]*$" "\\1" DIRNAME ${DOC})
     install (
         FILES ${DOC}
         DESTINATION "${INSTALL_DOC_DIR}/devel/${DIRNAME}"

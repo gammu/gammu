@@ -7,7 +7,7 @@ SONAME_MINOR = 0
 
 # these subdirectories from /docs are copied to docs dir
 # ("\" CHAR IS AFTER NAME WITHOUT SPACE)
-DOCS      = docs\
+DOCS      = user\
             examples
 
 # common files
