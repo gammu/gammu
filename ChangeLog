@@ -60,6 +60,9 @@ For additionals materials and links to them see readme.txt
 [-] * Simplified searching of channels using Bluez stack.
 [+] * RF searching now better detects OBEX channels.
 [-] * Fix format strnings for 64-bit architectures (bug #77).
+[-] * Cleanup documentation structure.
+[-] * Moved locales out of documentation.
+[-] * Fixes locales and documentaion install in CMake (bug #76).
 
 20070223 - 1.10.0
 [-] * Added include paths to MSVC configuration files.
