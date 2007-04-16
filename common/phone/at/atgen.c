@@ -1717,7 +1717,39 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "SMS status received\n");
-		start = strstr(msg.Buffer, "+CPMS: ") + 7;
+		start = strstr(msg.Buffer, "+CPMS: ");
+		/*
+		 * Samsung formats this different way, sample response:
+		 * 1 "AT+CPMS="SM","SM""
+		 * 2 "+CPMS:"SM",3,30,"SM",3,30,"SM",3,30"
+		 * 3 "OK"
+		 */
+		if (start == NULL) {
+			start = strstr(msg.Buffer, "+CPMS:\"") + 6;
+			current+=ATGEN_ExtractOneParameter(start+current, buffer);
+			if (strcmp(buffer, "\"ME\"") == 0) {
+				current+=ATGEN_ExtractOneParameter(start+current, buffer);
+				SMSStatus->PhoneUsed = atoi(buffer);
+				current+=ATGEN_ExtractOneParameter(start+current, buffer);
+				SMSStatus->PhoneSize = atoi(buffer);
+				smprintf(s, "Used : %i\n",SMSStatus->PhoneUsed);
+				smprintf(s, "Size : %i\n",SMSStatus->PhoneSize);
+				return ERR_NONE;
+			} else if (strcmp(buffer, "\"SM\"") == 0) {
+				current+=ATGEN_ExtractOneParameter(start+current, buffer);
+				SMSStatus->SIMUsed = atoi(buffer);
+				current+=ATGEN_ExtractOneParameter(start+current, buffer);
+				SMSStatus->SIMSize = atoi(buffer);
+				smprintf(s, "Used : %i\n",SMSStatus->SIMUsed);
+				smprintf(s, "Size : %i\n",SMSStatus->SIMSize);
+				return ERR_NONE;
+			} else {
+				smprintf(s, "Unknown memory: %s\n", buffer);
+				return ERR_UNKNOWNRESPONSE;
+			}
+		}
+		/* Skip +CPMS: */
+		start += 7;
 		if (strstr(msg.Buffer,"ME")!=NULL) {
 			SMSStatus->PhoneUsed 	= atoi(start);
 			current+=ATGEN_ExtractOneParameter(start+current, buffer);
@@ -3991,6 +4023,8 @@ GSM_Error ATGEN_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine
             return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
 	        return ATGEN_HandleCMEError(s);
+	case AT_Reply_Error:
+		return ERR_NOTSUPPORTED;
         default:
             break;
 	}
