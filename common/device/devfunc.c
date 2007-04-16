@@ -76,6 +76,8 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 		/* Sony-Ericsson */
 		if (strstr(name, "Serial Port 1") != NULL) return 3;
 		if (strstr(name, "Serial Port") != NULL) return 2;
+		/* Motorola */
+		if (strstr(name, "Serial port") != NULL) return 2;
 		/* Siemens, Thomas Eitzenberger */
 		if (strstr(name, "SerialPort1") != NULL) return 3;
 		if (strstr(name, "SerialPort") != NULL) return 2;
