@@ -40,7 +40,7 @@ const char *GetGammuVersion(void);
 /**
  * Initializes locales.
  */
-void InitLocales(const char *path);
+extern void InitLocales(const char *path);
 
 #endif
 
