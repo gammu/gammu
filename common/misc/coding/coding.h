@@ -145,16 +145,16 @@ int ClearBit (unsigned char *Buffer, int BitNum);
 void StringToDouble	(char *text, double *d);
 
 #ifndef HAVE_STRNCASECMP
-int strncasecmp (const char *s1, const char *s2, size_t n);
+extern int strncasecmp (const char *s1, const char *s2, size_t n);
 #endif
 #ifndef HAVE_STRCASECMP
-int strcasecmp (const char *s1, const char *s2);
+extern int strcasecmp (const char *s1, const char *s2);
 #endif
 #ifndef HAVE_STRCASESTR
-char *strcasestr(const char *s, const char *find);
+extern char *strcasestr(const char *s, const char *find);
 #endif
 #ifndef HAVE_STRCHRNUL
-char *strchrnul(char *s, int find);
+extern char *strchrnul(char *s, int find);
 #endif
 
 void MyGetLine		(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, bool MergeLines);
