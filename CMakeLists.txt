@@ -443,6 +443,12 @@ if (CROSS_MINGW)
     endif (ENABLE_SHARED)
 else (CROSS_MINGW)
     set_target_properties (Gammu PROPERTIES VERSION ${VERSION} SOVERSION 1)
+
+    # -fPIC on Linux
+    if (CMAKE_SYSTEM_NAME MATCHES "Linux")
+        set_target_properties (Gammu PROPERTIES COMPILE_FLAGS "-fPIC")
+    endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
+
 endif (CROSS_MINGW)
 
 # Include search path
