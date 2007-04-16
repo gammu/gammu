@@ -91,6 +91,7 @@ if (ENABLE_SHARED)
     set (BUILD_SHARED_LIBS ON)
 endif (ENABLE_SHARED)
 
+
 # Packaging support
 set (CPACK_PACKAGE_NAME "Gammu")
 set (CPACK_PACKAGE_VERSION "${VERSION}")
@@ -161,6 +162,7 @@ if (NOT CROSS_MINGW)
     check_function_exists (strcasecmp HAVE_STRCASECMP)
     check_function_exists (strcasestr HAVE_STRCASESTR)
     check_function_exists (strchrnul HAVE_STRCHRNUL)
+    check_function_exists (sin HAVE_SIN)
 
 endif (NOT CROSS_MINGW)
 
@@ -489,6 +491,10 @@ if (BLUEZ_FOUND)
         set (BLUETOOTH_RF_SEARCHING ON)
     endif (WITH_BLUETOOTH_RF_SEARCHING)
 endif (BLUEZ_FOUND)
+
+if (NOT HAVE_SIN)
+    target_link_libraries (Gammu m)
+endif (NOT HAVE_SIN)
 
 if (CMAKE_USE_PTHREADS_INIT)
     set (HAVE_PTHREAD ON)
