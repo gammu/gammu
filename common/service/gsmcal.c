@@ -472,9 +472,10 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *not
 			/* We don't care about following here */
 			case CAL_PRIVATE:
 			case CAL_CONTACTID:
-			case CAL_START_DATETIME :
-			case CAL_END_DATETIME :
-			case CAL_TONE_ALARM_DATETIME :
+			case CAL_START_DATETIME:
+			case CAL_END_DATETIME:
+			case CAL_LAST_MODIFIED:
+			case CAL_TONE_ALARM_DATETIME:
 			case CAL_SILENT_ALARM_DATETIME:
 			case CAL_TEXT:
 			case CAL_DESCRIPTION:
@@ -669,6 +670,13 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DALARM");
 				}
 				break;
+			case CAL_LAST_MODIFIED:
+				if (Version == Mozilla_VCalendar && (note->Type == GSM_CAL_MEMO || note->Type == GSM_CAL_BIRTHDAY)) {
+					SaveVCALDate(Buffer, Length, &note->Entries[i].Date, "LAST-MODIFIED;VALUE=DATE");
+				} else {
+					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "LAST-MODIFIED");
+				}
+				break;
 			case CAL_TEXT:
 				SaveVCALText(Buffer, Length, note->Entries[i].Text, "SUMMARY");
 				break;
@@ -854,6 +862,9 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 				if (Version != Mozilla_VCalendar || note->Type != GSM_CAL_BIRTHDAY) {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DALARM");
 				}
+				break;
+			case TODO_LAST_MODIFIED:
+				SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "LAST-MODIFIED");
 				break;
 			case TODO_TEXT:
 				SaveVCALText(Buffer, Length, note->Entries[i].Text, "SUMMARY");

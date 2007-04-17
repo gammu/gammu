@@ -228,6 +228,10 @@ typedef enum {
 	 * IrMC LUID which can be used for synchronisation.
 	 */
 	CAL_LUID,
+	/**
+	 * Date and time of last modification.
+	 */
+	CAL_LAST_MODIFIED,
 } GSM_CalendarType;
 
 /**
@@ -382,6 +386,10 @@ typedef enum {
 	 * IrMC LUID which can be used for synchronisation.
 	 */
 	TODO_LUID,
+	/**
+	 * Date and time of last modification.
+	 */
+	TODO_LAST_MODIFIED,
 } GSM_ToDoType;
 
 /**

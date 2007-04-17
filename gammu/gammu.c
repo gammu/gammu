@@ -325,6 +325,9 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 			printf(_("Stop         : %s\n"),OSDateTime(Note->Entries[i].Date,false));
 			memcpy(&DateTime,&Note->Entries[i].Date,sizeof(GSM_DateTime));
 			break;
+		case CAL_LAST_MODIFIED:
+			printf(_("Last modified: %s\n"),OSDateTime(Note->Entries[i].Date,false));
+			break;
 		case CAL_TONE_ALARM_DATETIME:
 			if (Note->Type==GSM_CAL_BIRTHDAY) {
 				printf(_("Tone alarm   : forever on each %i. day of "),Note->Entries[i].Date.Day);
@@ -7111,6 +7114,9 @@ static void PrintToDo(GSM_ToDoEntry *ToDo)
 			break;
 		case TODO_SILENT_ALARM_DATETIME:
 			printf(_("Silent alarm : %s\n"),OSDateTime(ToDo->Entries[j].Date,false));
+			break;
+		case TODO_LAST_MODIFIED:
+			printf(_("Last modified: %s\n"),OSDateTime(ToDo->Entries[j].Date,false));
 			break;
 		case TODO_TEXT:
 			printf(_("Text         : \"%s\"\n"),DecodeUnicodeConsole(ToDo->Entries[j].Text));

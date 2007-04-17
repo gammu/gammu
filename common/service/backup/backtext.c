@@ -513,6 +513,10 @@ static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnico
 			sprintf(buffer,"AlarmType = Silent%c%c",13,10);
 			SaveBackupText(file, "", buffer, UseUnicode);
 			break;
+		case CAL_LAST_MODIFIED:
+			SaveBackupText(file, "", "LastModified", UseUnicode);
+			SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			break;
 		case CAL_PRIVATE:
 			sprintf(buffer, "Private = %d%c%c",Note->Entries[i].Number,13,10);
 			SaveBackupText(file, "", buffer, UseUnicode);
@@ -929,6 +933,10 @@ static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
 		SaveBackupText(file, "", "SilentAlarm", UseUnicode);
                 SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
                 break;
+	    case TODO_LAST_MODIFIED:
+		SaveBackupText(file, "", "LastModified", UseUnicode);
+		SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
+		break;
             case TODO_TEXT:
 	        SaveBackupText(file, "Text", ToDo->Entries[j].Text, UseUnicode);
                 break;
@@ -1629,6 +1637,13 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		}
 		note->EntriesNum++;
 	}
+	sprintf(buffer,"LastModified");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
+        	note->Entries[note->EntriesNum].EntryType = CAL_LAST_MODIFIED;
+        	note->EntriesNum++;
+   	}
+
 	sprintf(buffer,"RepeatStartDate");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
@@ -1787,6 +1802,13 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_END_DATETIME;
+        	ToDo->EntriesNum++;
+   	}
+
+	sprintf(buffer,"LastModified");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
+        	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LAST_MODIFIED;
         	ToDo->EntriesNum++;
    	}
 
