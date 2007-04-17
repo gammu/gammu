@@ -424,7 +424,7 @@ set (BINARY_SRC
 # Locales
 set (LOCALEFILES)
 foreach (LOCALE ${LOCALES})
-    list(APPEND LOCALEFILES "locale/${LOCALE}.po")
+    list(APPEND LOCALEFILES "locale/${LOCALE}/gammu.po")
 endforeach (LOCALE ${LOCALES})
 GETTEXT_CREATE_TRANSLATIONS("locale/gammu.pot" ALL ${LOCALEFILES})
 
