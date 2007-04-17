@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-10 21:15+0200\n"
+"POT-Creation-Date: 2007-04-17 13:36+0200\n"
 "PO-Revision-Date: 2007-03-20 19:21+0100\n"
 "Last-Translator: Pablo Gomez <pgomez@arrakis.es>\n"
 "Language-Team: Language =es\n"
@@ -15,94 +15,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Pootle 0.10.1\n"
-
-#: common/phone/nokia/dct3/n6110.c:1958
-msgid "Personal"
-msgstr ""
-
-#: common/phone/nokia/dct3/n6110.c:1960 common/phone/nokia/nfunc.c:854
-msgid "Car"
-msgstr "Coche"
-
-#: common/phone/nokia/dct3/n6110.c:1962 common/phone/nokia/nfunc.c:856
-msgid "Headset"
-msgstr ""
-
-#: common/phone/nokia/dct3/n6110.c:1968 common/phone/nokia/nfunc.c:844
-#, fuzzy
-msgid "General"
-msgstr "General         "
-
-#: common/phone/nokia/dct3/n6110.c:1970 common/phone/nokia/nfunc.c:846
-msgid "Silent"
-msgstr "Silencio"
-
-#: common/phone/nokia/dct3/n6110.c:1972
-msgid "Discreet"
-msgstr ""
-
-#: common/phone/nokia/dct3/n6110.c:1974
-msgid "Loud"
-msgstr ""
-
-#: common/phone/nokia/dct3/n6110.c:1976
-msgid "My style"
-msgstr "Mis estilos"
-
-#: common/phone/nokia/nfunc.c:678
-msgid "Family"
-msgstr "Familia"
-
-#: common/phone/nokia/nfunc.c:680
-msgid "VIP"
-msgstr ""
-
-#: common/phone/nokia/nfunc.c:682
-msgid "Friends"
-msgstr "Amigos"
-
-#: common/phone/nokia/nfunc.c:684
-msgid "Colleagues"
-msgstr ""
-
-#: common/phone/nokia/nfunc.c:686
-msgid "Other"
-msgstr "Otros"
-
-#: common/phone/nokia/nfunc.c:848
-msgid "Meeting"
-msgstr ""
-
-#: common/phone/nokia/nfunc.c:850
-#, fuzzy
-msgid "Outdoor"
-msgstr "Bandeja de salida"
-
-#: common/phone/nokia/nfunc.c:852 gammu/gammu.c:2000
-#, c-format
-msgid "Pager"
-msgstr ""
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:508
-msgid "SIM"
-msgstr ""
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:509 common/phone/pfunc.c:39
-msgid "Inbox"
-msgstr "Bandeja de entrada"
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:510
-#, fuzzy
-msgid "Sent items"
-msgstr "Establecer %i"
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:511
-msgid "Saved items"
-msgstr ""
-
-#: common/phone/pfunc.c:40
-msgid "Outbox"
-msgstr "Bandeja de salida"
 
 #: common/gsmcomon.c:69
 msgid "No error."
@@ -316,6 +228,94 @@ msgstr ""
 #: common/gsmcomon.c:120
 msgid "Data were converted."
 msgstr ""
+
+#: common/phone/pfunc.c:39 common/phone/nokia/dct4s40/6510/n6510.c:509
+msgid "Inbox"
+msgstr "Bandeja de entrada"
+
+#: common/phone/pfunc.c:40
+msgid "Outbox"
+msgstr "Bandeja de salida"
+
+#: common/phone/nokia/nfunc.c:678
+msgid "Family"
+msgstr "Familia"
+
+#: common/phone/nokia/nfunc.c:680
+msgid "VIP"
+msgstr ""
+
+#: common/phone/nokia/nfunc.c:682
+msgid "Friends"
+msgstr "Amigos"
+
+#: common/phone/nokia/nfunc.c:684
+msgid "Colleagues"
+msgstr ""
+
+#: common/phone/nokia/nfunc.c:686
+msgid "Other"
+msgstr "Otros"
+
+#: common/phone/nokia/nfunc.c:844 common/phone/nokia/dct3/n6110.c:1968
+#, fuzzy
+msgid "General"
+msgstr "General         "
+
+#: common/phone/nokia/nfunc.c:846 common/phone/nokia/dct3/n6110.c:1970
+msgid "Silent"
+msgstr "Silencio"
+
+#: common/phone/nokia/nfunc.c:848
+msgid "Meeting"
+msgstr ""
+
+#: common/phone/nokia/nfunc.c:850
+#, fuzzy
+msgid "Outdoor"
+msgstr "Bandeja de salida"
+
+#: common/phone/nokia/nfunc.c:852 gammu/gammu.c:2000
+#, c-format
+msgid "Pager"
+msgstr ""
+
+#: common/phone/nokia/nfunc.c:854 common/phone/nokia/dct3/n6110.c:1960
+msgid "Car"
+msgstr "Coche"
+
+#: common/phone/nokia/nfunc.c:856 common/phone/nokia/dct3/n6110.c:1962
+msgid "Headset"
+msgstr ""
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:508
+msgid "SIM"
+msgstr ""
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:510
+#, fuzzy
+msgid "Sent items"
+msgstr "Establecer %i"
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:511
+msgid "Saved items"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1958
+msgid "Personal"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1972
+msgid "Discreet"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1974
+msgid "Loud"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1976
+msgid "My style"
+msgstr "Mis estilos"
 
 #: gammu/depend/nokia/dct4.c:56
 #, c-format
@@ -663,6 +663,203 @@ msgstr "desconocido %i"
 msgid "ERROR: unknown memory type (\"%s\")\n"
 msgstr "ERROR: tipo de memoria desconocido (\"%s\")\n"
 
+#: gammu/smsd/s_pgsql.c:40 gammu/smsd/s_mysql.c:38
+#, fuzzy, c-format
+msgid "Error connecting to database: %s\n"
+msgstr "Agenda BBDD         : \"%s\"\n"
+
+#: gammu/smsd/s_pgsql.c:48 gammu/smsd/s_pgsql.c:58 gammu/smsd/s_mysql.c:43
+#: gammu/smsd/s_mysql.c:47 gammu/smsd/s_mysql.c:53 gammu/smsd/s_mysql.c:57
+#, c-format
+msgid "No table for outbox sms: %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:68 gammu/smsd/s_mysql.c:63 gammu/smsd/s_mysql.c:67
+#, c-format
+msgid "No table for sent sms: %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:78 gammu/smsd/s_mysql.c:73 gammu/smsd/s_mysql.c:77
+#, c-format
+msgid "No table for inbox sms: %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:88 gammu/smsd/s_mysql.c:83 gammu/smsd/s_mysql.c:87
+#, c-format
+msgid "No Gammu table: %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:94 gammu/smsd/s_mysql.c:92
+#, c-format
+msgid "No version info in Gammu table: %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:100 gammu/smsd/s_mysql.c:97
+msgid "DataBase structures are from higher Gammu version"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:101 gammu/smsd/s_mysql.c:98
+msgid "Please update this client application"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:108 gammu/smsd/s_mysql.c:103
+msgid "DataBase structures are from older Gammu version"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:109 gammu/smsd/s_mysql.c:104
+msgid "Please update DataBase, if you want to use this client application"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:132
+#, c-format
+msgid "Error deleting from database (Init): %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:153
+#, c-format
+msgid "Error inserting into database (Init): %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:180 gammu/smsd/s_files.c:62 gammu/smsd/s_mysql.c:159
+#, c-format
+msgid "Delivery report: %s to %s"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:192 gammu/smsd/s_mysql.c:168
+#, c-format
+msgid "Error reading from database (SaveInbox): %s %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:269 gammu/smsd/s_pgsql.c:905
+#, c-format
+msgid "Error writing to database (SaveInboxSMS): %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:361
+#, c-format
+msgid "Error writing to database (SaveInbox): %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:383
+#, c-format
+msgid "Error writing to database (RefreshSendStatus): %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:415 gammu/smsd/s_pgsql.c:461 gammu/smsd/s_mysql.c:325
+#: gammu/smsd/s_mysql.c:329 gammu/smsd/s_mysql.c:361 gammu/smsd/s_mysql.c:365
+#, c-format
+msgid "Error reading from database (FindOutbox): %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:551 gammu/smsd/s_pgsql.c:563
+#, c-format
+msgid "Error deleting from database (MoveSMS): %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:587 gammu/smsd/s_pgsql.c:718 gammu/smsd/s_pgsql.c:751
+#: gammu/smsd/s_mysql.c:455 gammu/smsd/s_mysql.c:459 gammu/smsd/s_mysql.c:561
+#: gammu/smsd/s_mysql.c:565
+#, c-format
+msgid "Error reading from database (CreateOutbox): %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:732 gammu/smsd/s_pgsql.c:768
+#, c-format
+msgid "Error writing to database (CreateOutbox): %s\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:742 gammu/smsd/s_mysql.c:575
+msgid "Duplicated outgoing SMS ID\n"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:788 gammu/smsd/s_files.c:341 gammu/smsd/s_mysql.c:604
+#, c-format
+msgid "Transmitted %s (%s: %i) to %s"
+msgstr ""
+
+#: gammu/smsd/s_pgsql.c:883
+#, c-format
+msgid "Error writing to database (AddSent): %s\n"
+msgstr ""
+
+#: gammu/smsd/s_files.c:54
+#, c-format
+msgid "Cannot save %s. No available file names"
+msgstr ""
+
+#: gammu/smsd/s_files.c:97
+msgid "Delivery report"
+msgstr ""
+
+#: gammu/smsd/s_files.c:97
+msgid "Received"
+msgstr ""
+
+#: gammu/smsd/s_files.c:99
+#, c-format
+msgid "Cannot save %s (%i)"
+msgstr ""
+
+#: gammu/smsd/s_files.c:325 gammu/smsd/s_files.c:333
+#, c-format
+msgid "Could not delete %s (%i)"
+msgstr ""
+
+#: gammu/smsd/s_files.c:330
+#, c-format
+msgid "Error copying SMS %s -> %s"
+msgstr ""
+
+#: gammu/smsd/s_mysql.c:119
+#, c-format
+msgid "Error deleting from database (Init): %d %s\n"
+msgstr ""
+
+#: gammu/smsd/s_mysql.c:136
+#, c-format
+msgid "Error inserting into database (Init): %d %s\n"
+msgstr ""
+
+#: gammu/smsd/s_mysql.c:172
+#, c-format
+msgid "Error reading from database (SaveInbox): %s\n"
+msgstr ""
+
+#: gammu/smsd/s_mysql.c:224 gammu/smsd/s_mysql.c:687
+#, c-format
+msgid "Error writing to database (SaveInboxSMS): %d %s\n"
+msgstr ""
+
+#: gammu/smsd/s_mysql.c:290
+#, c-format
+msgid "Error writing to database (SaveInbox): %d %s\n"
+msgstr ""
+
+#: gammu/smsd/s_mysql.c:304
+#, c-format
+msgid "Error writing to database (RefreshSendStatus): %d %s\n"
+msgstr ""
+
+#: gammu/smsd/s_mysql.c:434 gammu/smsd/s_mysql.c:439
+#, c-format
+msgid "Error deleting from database (MoveSMS): %d %s\n"
+msgstr ""
+
+#: gammu/smsd/s_mysql.c:578
+#, c-format
+msgid "Error writing to database (CreateOutbox): %d %s %s\n"
+msgstr ""
+
+#: gammu/smsd/s_mysql.c:591
+#, c-format
+msgid "Error writing to database (CreateOutbox): %d %s\n"
+msgstr ""
+
+#: gammu/smsd/s_mysql.c:673
+#, c-format
+msgid "Error writing to database (AddSent): %d %s\n"
+msgstr ""
+
 #: gammu/smsd/smsdcore.c:40
 msgid "Terminating communication"
 msgstr ""
@@ -829,203 +1026,6 @@ msgstr ""
 
 #: gammu/smsd/smsdcore.c:602
 msgid "Stop GAMMU smsd"
-msgstr ""
-
-#: gammu/smsd/s_files.c:54
-#, c-format
-msgid "Cannot save %s. No available file names"
-msgstr ""
-
-#: gammu/smsd/s_files.c:62 gammu/smsd/s_mysql.c:159 gammu/smsd/s_pgsql.c:180
-#, c-format
-msgid "Delivery report: %s to %s"
-msgstr ""
-
-#: gammu/smsd/s_files.c:97
-msgid "Delivery report"
-msgstr ""
-
-#: gammu/smsd/s_files.c:97
-msgid "Received"
-msgstr ""
-
-#: gammu/smsd/s_files.c:99
-#, c-format
-msgid "Cannot save %s (%i)"
-msgstr ""
-
-#: gammu/smsd/s_files.c:325 gammu/smsd/s_files.c:333
-#, c-format
-msgid "Could not delete %s (%i)"
-msgstr ""
-
-#: gammu/smsd/s_files.c:330
-#, c-format
-msgid "Error copying SMS %s -> %s"
-msgstr ""
-
-#: gammu/smsd/s_files.c:341 gammu/smsd/s_mysql.c:604 gammu/smsd/s_pgsql.c:788
-#, c-format
-msgid "Transmitted %s (%s: %i) to %s"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:38 gammu/smsd/s_pgsql.c:40
-#, fuzzy, c-format
-msgid "Error connecting to database: %s\n"
-msgstr "Agenda BBDD         : \"%s\"\n"
-
-#: gammu/smsd/s_mysql.c:43 gammu/smsd/s_mysql.c:47 gammu/smsd/s_mysql.c:53
-#: gammu/smsd/s_mysql.c:57 gammu/smsd/s_pgsql.c:48 gammu/smsd/s_pgsql.c:58
-#, c-format
-msgid "No table for outbox sms: %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:63 gammu/smsd/s_mysql.c:67 gammu/smsd/s_pgsql.c:68
-#, c-format
-msgid "No table for sent sms: %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:73 gammu/smsd/s_mysql.c:77 gammu/smsd/s_pgsql.c:78
-#, c-format
-msgid "No table for inbox sms: %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:83 gammu/smsd/s_mysql.c:87 gammu/smsd/s_pgsql.c:88
-#, c-format
-msgid "No Gammu table: %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:92 gammu/smsd/s_pgsql.c:94
-#, c-format
-msgid "No version info in Gammu table: %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:97 gammu/smsd/s_pgsql.c:100
-msgid "DataBase structures are from higher Gammu version"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:98 gammu/smsd/s_pgsql.c:101
-msgid "Please update this client application"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:103 gammu/smsd/s_pgsql.c:108
-msgid "DataBase structures are from older Gammu version"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:104 gammu/smsd/s_pgsql.c:109
-msgid "Please update DataBase, if you want to use this client application"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:119
-#, c-format
-msgid "Error deleting from database (Init): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:136
-#, c-format
-msgid "Error inserting into database (Init): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:168 gammu/smsd/s_pgsql.c:192
-#, c-format
-msgid "Error reading from database (SaveInbox): %s %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:172
-#, c-format
-msgid "Error reading from database (SaveInbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:224 gammu/smsd/s_mysql.c:687
-#, c-format
-msgid "Error writing to database (SaveInboxSMS): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:290
-#, c-format
-msgid "Error writing to database (SaveInbox): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:304
-#, c-format
-msgid "Error writing to database (RefreshSendStatus): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:325 gammu/smsd/s_mysql.c:329 gammu/smsd/s_mysql.c:361
-#: gammu/smsd/s_mysql.c:365 gammu/smsd/s_pgsql.c:415 gammu/smsd/s_pgsql.c:461
-#, c-format
-msgid "Error reading from database (FindOutbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:434 gammu/smsd/s_mysql.c:439
-#, c-format
-msgid "Error deleting from database (MoveSMS): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:455 gammu/smsd/s_mysql.c:459 gammu/smsd/s_mysql.c:561
-#: gammu/smsd/s_mysql.c:565 gammu/smsd/s_pgsql.c:587 gammu/smsd/s_pgsql.c:718
-#: gammu/smsd/s_pgsql.c:751
-#, c-format
-msgid "Error reading from database (CreateOutbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:575 gammu/smsd/s_pgsql.c:742
-msgid "Duplicated outgoing SMS ID\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:578
-#, c-format
-msgid "Error writing to database (CreateOutbox): %d %s %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:591
-#, c-format
-msgid "Error writing to database (CreateOutbox): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:673
-#, c-format
-msgid "Error writing to database (AddSent): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:132
-#, c-format
-msgid "Error deleting from database (Init): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:153
-#, c-format
-msgid "Error inserting into database (Init): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:269 gammu/smsd/s_pgsql.c:905
-#, c-format
-msgid "Error writing to database (SaveInboxSMS): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:361
-#, c-format
-msgid "Error writing to database (SaveInbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:383
-#, c-format
-msgid "Error writing to database (RefreshSendStatus): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:551 gammu/smsd/s_pgsql.c:563
-#, c-format
-msgid "Error deleting from database (MoveSMS): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:732 gammu/smsd/s_pgsql.c:768
-#, c-format
-msgid "Error writing to database (CreateOutbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:883
-#, c-format
-msgid "Error writing to database (AddSent): %s\n"
 msgstr ""
 
 #: gammu/gammu.c:80
