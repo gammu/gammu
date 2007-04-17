@@ -1,6 +1,8 @@
 #! /bin/sh
 cp -f VERSION cfg/autoconf/VERSION
 cd cfg/autoconf
+echo 'WARNING: configure support will be deprecated one time, consider switching to cmake'
+echo 'More information about cmake is available at <http://www.cmake.org>.'
 if [ ! -f ./configure -o "x$1" = "x--regenerate" -o ./configure.in -nt ./configure ] ; then
     echo "Running autoconf..."
     if ! type autoconf > /dev/null 2>&1 ; then
