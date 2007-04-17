@@ -92,12 +92,12 @@ GAMMU     = $(TOPDIR)/gammu/depend/nokia/dct3.o \
             $(TOPDIR)/gammu/sniff.o \
             $(TOPDIR)/gammu/gammu.o
 
-TRANSLATIONS = $(TOPDIR)/locale/cs.mo \
-	$(TOPDIR)/locale/de.mo \
-	$(TOPDIR)/locale/es.mo \
-	$(TOPDIR)/locale/it.mo \
-	$(TOPDIR)/locale/pl.mo \
-	$(TOPDIR)/locale/ru.mo
+TRANSLATIONS = $(TOPDIR)/locale/cs/gammu.mo \
+	$(TOPDIR)/locale/de/gammu.mo \
+	$(TOPDIR)/locale/es/gammu.mo \
+	$(TOPDIR)/locale/it/gammu.mo \
+	$(TOPDIR)/locale/pl/gammu.mo \
+	$(TOPDIR)/locale/ru/gammu.mo
 
 include $(TOPDIR)/cfg/Makefile.cfg
 
@@ -212,7 +212,7 @@ uninstall:
 installlocales: $(TRANSLATIONS)
 	@echo Installing locales to $(DESTDIR)$(INSTALL_LOC_DIR)
 	@for x in $(TRANSLATIONS) ; do \
-		name=`echo $$x | sed 's@.*/@@; s@\..*@@'`; \
+		name=`echo $$x | sed 's@.*/\(.*\)/[^/]*@\1@'`; \
 		dir=$(DESTDIR)$(INSTALL_LOC_DIR)/$$name/LC_MESSAGES ; \
 		install -d $$dir ; \
 		install -m 644 $$x $$dir/gammu.mo; \
