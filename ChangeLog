@@ -54,7 +54,8 @@ For additionals materials and links to them see readme.txt
 [!] * Development switched to Subversion, see README for details.
 [-] * Detect Motorola Bluetooth port (Daniel Gimpelevich).
 [-] * Fixup AT driver to work with Samsung SGH X160.
-[+] * Support for last modified field in vCards.
+[+] * Support for last modified field in vCalendar.
+[-] * Adjust vCalendar entries from SE phones on DST (bug #81).
 
 20070403 - 1.10.2
 [-] * Fixed crash on LMB export/import (bug #261).
