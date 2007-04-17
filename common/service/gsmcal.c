@@ -614,6 +614,73 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *not
 	return ERR_EMPTY;
 }
 
+/**
+ * Adjusts all datetime information in calendar entry according to delta.
+ */
+void GSM_Calendar_AdjustDate(GSM_CalendarEntry *note, GSM_DeltaTime *delta)
+{
+	int i;
+
+	/* Loop over entries */
+	for (i=0; i < note->EntriesNum; i++) {
+		switch (note->Entries[i].EntryType) {
+			case CAL_START_DATETIME :
+			case CAL_END_DATETIME :
+			case CAL_TONE_ALARM_DATETIME :
+			case CAL_SILENT_ALARM_DATETIME:
+			case CAL_LAST_MODIFIED:
+			case CAL_REPEAT_STARTDATE:
+			case CAL_REPEAT_STOPDATE:
+				note->Entries[i].Date = GSM_AddTime(note->Entries[i].Date, *delta);
+				break;
+			case CAL_TEXT:
+			case CAL_DESCRIPTION:
+			case CAL_PHONE:
+			case CAL_LOCATION:
+			case CAL_LUID:
+			case CAL_REPEAT_DAYOFWEEK:
+			case CAL_REPEAT_DAY:
+			case CAL_REPEAT_WEEKOFMONTH:
+			case CAL_REPEAT_MONTH:
+			case CAL_REPEAT_FREQUENCY:
+			case CAL_REPEAT_DAYOFYEAR:
+			case CAL_REPEAT_COUNT:
+			case CAL_PRIVATE:
+			case CAL_CONTACTID:
+				/* No need to care */
+				break;
+		}
+	}
+}
+
+void GSM_ToDo_AdjustDate(GSM_ToDoEntry *note, GSM_DeltaTime *delta)
+{
+	int i;
+
+	/* Loop over entries */
+	for (i=0; i < note->EntriesNum; i++) {
+		switch (note->Entries[i].EntryType) {
+			case TODO_END_DATETIME :
+			case TODO_ALARM_DATETIME :
+			case TODO_SILENT_ALARM_DATETIME:
+			case TODO_LAST_MODIFIED:
+				note->Entries[i].Date = GSM_AddTime(note->Entries[i].Date, *delta);
+				break;
+			case TODO_TEXT:
+			case TODO_DESCRIPTION:
+			case TODO_PHONE:
+			case TODO_LOCATION:
+			case TODO_LUID:
+			case TODO_PRIVATE:
+			case TODO_COMPLETED:
+			case TODO_CONTACTID:
+			case TODO_CATEGORY:
+				/* No need to care */
+				break;
+		}
+	}
+}
+
 GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version)
 {
 	GSM_DateTime 	deltatime;
@@ -1411,10 +1478,19 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 	unsigned char 	Line[2000],Buff[2000];
 	int		Level = 0;
 	GSM_DateTime	Date;
+	GSM_DeltaTime	OneHour = {
+		.Timezone = 0,
+		.Second = 0,
+		.Minute = 0,
+		.Hour = 1,
+		.Day = 0,
+		.Month = 0,
+		.Year = 0};
 	GSM_TimeUnit	unit = GSM_TimeUnit_Unknown;
 	GSM_DeltaTime	trigger;
 	GSM_Error	error;
 	int		deltatime = 0;
+	int		dstflag = 0;
 	bool		is_date_only;
 	bool		date_only = false;
 	int		lBuffer;
@@ -1443,11 +1519,13 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			if (strstr(Line,"BEGIN:VEVENT")) {
 				Calendar->Type = -1;
 				date_only = true;
+				dstflag = 0;
 				Text=-1; Time=-1; Alarm=-1; EndTime=-1; Location=-1;
 				Level 		= 1;
 			}
 			if (strstr(Line,"BEGIN:VTODO")) {
 				ToDo->Priority 	= GSM_Priority_None;
+				dstflag = 0;
 				Text=-1; Time=-1; Alarm=-1; EndTime=-1; Location=-1;
 				Level 		= 2;
 			}
@@ -1469,6 +1547,19 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 					Calendar->Entries[Alarm].Date = GSM_AddTime (Calendar->Entries[Time].Date, trigger);
 					Calendar->Entries[Alarm].EntryType = CAL_TONE_ALARM_DATETIME;
 					Calendar->EntriesNum++;
+				}
+
+				if (dstflag != 0) {
+					/*
+					 * Day saving time was active while entry was created,
+					 * add one hour to adjust it.
+					 */
+					if (dstflag == 4) {
+						GSM_Calendar_AdjustDate(Calendar, &OneHour);
+						dbgprintf("Adjusting DST: %i\n", dstflag);
+					} else {
+						dbgprintf("Unknown DST flag: %i\n", dstflag);
+					}
 				}
 
 				/* If event type is undefined choose appropriate type. Memos carry dates only, no times.
@@ -1593,11 +1684,30 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				Alarm = Calendar->EntriesNum;
 				Calendar->EntriesNum++;
 			}
+			if (strstr(Line,"X-SONYERICSSON-DST:")) {
+				if (ReadVCALInt(Line, "X-SONYERICSSON-DST", &dstflag)) {
+					break;
+				}
+			}
 			break;
 
 		case 2: /* ToDo note */
 			if (strstr(Line,"END:VTODO")) {
 				if (ToDo->EntriesNum == 0) return ERR_EMPTY;
+
+				if (dstflag != 0) {
+					/*
+					 * Day saving time was active while entry was created,
+					 * add one hour to adjust it.
+					 */
+					if (dstflag == 4) {
+						GSM_ToDo_AdjustDate(ToDo, &OneHour);
+						dbgprintf("Adjusting DST: %i\n", dstflag);
+					} else {
+						dbgprintf("Unknown DST flag: %i\n", dstflag);
+					}
+				}
+
 				return ERR_NONE;
 			}
 
@@ -1617,6 +1727,11 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			}
 			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-LENGTH:")) {
 				if (ReadVCALInt(Line, "X-MOZILLA-ALARM-DEFAULT-LENGTH", &deltatime)) {
+					break;
+				}
+			}
+			if (strstr(Line,"X-SONYERICSSON-DST:")) {
+				if (ReadVCALInt(Line, "X-SONYERICSSON-DST", &dstflag)) {
 					break;
 				}
 			}
