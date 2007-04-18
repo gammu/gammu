@@ -1,0 +1,34 @@
+NEWS
+====
+
+Major changes for each release are described here. Detailed changes between
+two versions are always in ChangeLog.
+
+0.6
+=== (2004-09-06)
+
+* Library is now thread safe.
+
+0.5
+=== (2004-03-03)
+
+* Better handling of SMS validity.
+* Can make voice calls.
+
+0.4
+=== (2004-01-04)
+
+* SMS with some data are now converted to/from Pyyhon correctly.
+* Added work with SMS folders.
+* Added support for creating categories.
+* Ringtone parts of SMS are now also converted.
+* Can save ringtones.
+* Support for reading/writing backups.
+* Works much better in multi thread applications - releases Pythons global
+  lock for communication with phone.
+
+0.3
+=== (2003-12-27)
+
+* First widely announced release.
+
