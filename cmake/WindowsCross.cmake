@@ -20,10 +20,8 @@ SET(CMAKE_LINK_LIBRARY_FLAG "-l")
 SET(CMAKE_EXTRA_LINK_EXTENSIONS ".lib") # MinGW can also link to a MS .lib
 SET(CMAKE_CREATE_WIN32_EXE  "-mwindows")
 
-IF(MINGW)
-  SET(CMAKE_FIND_LIBRARY_PREFIXES "lib" "")
-  SET(CMAKE_FIND_LIBRARY_SUFFIXES ".dll" ".dll.a" ".a" ".lib")
-ENDIF(MINGW)
+SET(CMAKE_FIND_LIBRARY_PREFIXES "lib" "")
+SET(CMAKE_FIND_LIBRARY_SUFFIXES ".dll" ".dll.a" ".a" ".lib")
 
 SET(CMAKE_GNULD_IMAGE_VERSION
   "-Wl,--major-image-version,<TARGET_VERSION_MAJOR>,--minor-image-version,<TARGET_VERSION_MINOR>")
@@ -47,9 +45,7 @@ SET(CMAKE_CXX_LINK_EXECUTABLE
 # building a shared library, shared module, or executable that links
 # to other libraries to select whether to use the static or shared
 # versions of the libraries.
-IF(MSYS OR MINGW)
-  FOREACH(type SHARED_LIBRARY SHARED_MODULE EXE)
-    SET(CMAKE_${type}_LINK_STATIC_C_FLAGS "-Wl,-Bstatic")
-    SET(CMAKE_${type}_LINK_DYNAMIC_C_FLAGS "-Wl,-Bdynamic")
-  ENDFOREACH(type)
-ENDIF(MSYS OR MINGW)
+FOREACH(type SHARED_LIBRARY SHARED_MODULE EXE)
+SET(CMAKE_${type}_LINK_STATIC_C_FLAGS "-Wl,-Bstatic")
+SET(CMAKE_${type}_LINK_DYNAMIC_C_FLAGS "-Wl,-Bdynamic")
+ENDFOREACH(type)
