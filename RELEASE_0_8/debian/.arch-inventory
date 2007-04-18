@@ -1,0 +1,2 @@
+precious ^(python-gammu(|\.substvars)|files)$
+
