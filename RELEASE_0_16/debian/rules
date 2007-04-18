@@ -1,0 +1,68 @@
+#!/usr/bin/make -f
+
+#export DH_VERBOSE=1
+
+PYVERSIONS=$(shell pyversions -r)
+# default is first version
+DEFAULTPY=$(shell pyversions -d -v)
+
+build: build-stamp
+
+build-stamp:
+	dh_testdir
+	set -e; \
+	for v in $(PYVERSIONS) ; do \
+		$$v setup.py build ; \
+	done
+	epydoc build/lib*$(DEFAULTPY)/gammu.so
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	set -e; \
+	for v in $(PYVERSIONS) ; do \
+		$$v setup.py clean; \
+	done
+	rm -rf build
+	rm -rf html
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	set -e; \
+	for v in $(PYVERSIONS) ; do \
+		PYTHON=$$v ; \
+		PYTMP="debian/python-gammu" ; \
+		$$PYTHON setup.py install --no-compile --root=$$PYTMP ; \
+	done
+
+# Used by later rules in another make process
+binary-common:
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installdocs
+	dh_installexamples 
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-indep: install
+	$(MAKE) -f debian/rules DH_OPTIONS=-i binary-common
+	
+binary-arch: install
+	$(MAKE) -f debian/rules DH_OPTIONS=-a binary-common
+
+binary: binary-indep binary-arch
+
+.PHONY: build clean binary-indep binary-arch binary install
