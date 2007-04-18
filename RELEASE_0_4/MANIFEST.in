@@ -1,0 +1,15 @@
+include AUTHORS
+include COPYING
+include ChangeLog
+include INSTALL
+include NEWS
+include README
+include *.h
+recursive-include examples *.py
+include python-gammu.spec
+include debian/bug.control
+include debian/changelog
+include debian/compat
+include debian/control
+include debian/copyright
+include debian/rules

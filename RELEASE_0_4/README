@@ -1,0 +1,11 @@
+python-gammu
+============
+
+Python bingings for Gammu library. Currently this should be treated as alfa
+quality code and is released only for testing purposes.
+
+documentation
+=============
+
+import gammu
+help(gammu)

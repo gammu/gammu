@@ -1,0 +1,16 @@
+python-gammu installation
+=========================
+
+It uses standard distutils, so:
+python setup.py build
+su
+python setup.py install
+
+You need Gammu installed as shared and you need pkg-config.
+
+If you want to build with another Gammu than is accessible using pkg-config,
+you may use:
+
+GAMMU_LIB=path_to_gammu_library \
+GAMMU_INC=path_to_gammu_includes \
+python setup.py build running build

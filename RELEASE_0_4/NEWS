@@ -1,0 +1,23 @@
+NEWS
+====
+
+Major changes for each release are described here. Detailed changes between
+two versions are allways in ChangeLog.
+
+0.4
+===
+
+* SMS with some data are now converted to/from Pyyhon correctly.
+* Added work with SMS folders.
+* Added support for creating categories.
+* Ringtone parts of SMS are now also converted.
+* Can save ringtones.
+* Support for reading/writing backups.
+* Works much better in multi thread applications - releases Pythons global
+  lock for communication with phone.
+
+0.3
+===
+
+* First widely announced release.
+
