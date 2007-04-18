@@ -3,24 +3,26 @@
 
 # Usage: make-release [branch]
 
+repo=gammu
+
 version=`tr , . < VERSION`
 
-tmp=`mktemp -dt gammu-build-XXXXXX`
+tmp=`mktemp -dt $repo-build-XXXXXX`
 
 cd $tmp
 echo Working in $tmp
 if [ "x$1" = "xbranch" ] ; then
     rel=RELEASE_`echo -n $version|tr . _`
-    svn cp -m "Tag release $version" svn+ssh://mort/home/svn/gammu/trunk svn+ssh://mort/home/svn/gammu/tags/$rel
-    svn export svn+ssh://mort/home/svn/gammu/tags/$rel gammu-$version
+    svn cp -m "Tag release $version" svn+ssh://mort/home/svn/$repo/trunk svn+ssh://mort/home/svn/$repo/tags/$rel
+    svn export svn+ssh://mort/home/svn/$repo/tags/$rel $repo-$version
 else
-    svn export svn+ssh://mort/home/svn/gammu/trunk gammu-$version
+    svn export svn+ssh://mort/home/svn/$repo/trunk $repo-$version
 fi
-tar cfz gammu-$version.tar.gz gammu-$version
-tar cfj gammu-$version.tar.bz2 gammu-$version
+tar cfz $repo-$version.tar.gz $repo-$version
+tar cfj $repo-$version.tar.bz2 $repo-$version
 mkdir build-win
 cd build-win
-cmake ../gammu-$version -DCROSS_MINGW=ON
+cmake ../$repo-$version -DCROSS_MINGW=ON
 make
 cpack
 mv Gammu-*-Windows.* ../
