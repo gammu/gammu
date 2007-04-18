@@ -59,6 +59,7 @@ For additionals materials and links to them see readme.txt
 [-] * Fix updating of delivery report date in SMSD (thanks to Peter Stuge).
 [-] * Fix format strings for Win32 build.
 [-] * Fix crash when no config exists.
+[+] * Support for MinGW crosscompation with MySQL.
 
 20070403 - 1.10.2
 [-] * Fixed crash on LMB export/import (bug #261).

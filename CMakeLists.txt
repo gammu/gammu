@@ -139,9 +139,20 @@ macro_optional_find_package (Doxygen)
 # Packages in sources
 macro_optional_find_package (Gettext)
 
-# Check disabled for cross
-if (NOT CROSS_MINGW)
-
+# Check disabled for cross, but we have some libraries
+if (CROSS_MINGW)
+    set (MYSQL_CROSS_PATH ${Gammu_SOURCE_DIR}/../../win-cross/mysql CACHE FILEPATH "Path to MySQL for cross compilation")
+    find_library (MYSQL_LIBRARIES 
+        mysql ${MYSQL_CROSS_PATH}/lib/opt 
+        NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
+    if (MYSQL_LIBRARIES) 
+        set (MYSQL_FOUND ON)
+        set (MYSQL_INCLUDE_DIR ${MYSQL_CROSS_PATH}/include)
+        message ("Cross MySQL found, libs: ${MYSQL_LIBRARIES}, incs: ${MYSQL_INCLUDE_DIR}")
+    else (MYSQL_LIBRARIES) 
+        message ("Cross MySQL not found")
+    endif (MYSQL_LIBRARIES) 
+else (CROSS_MINGW)
     # Standard packages
     macro_optional_find_package (Threads)
 
@@ -164,7 +175,7 @@ if (NOT CROSS_MINGW)
     check_function_exists (strchrnul HAVE_STRCHRNUL)
     check_function_exists (sin HAVE_SIN)
 
-endif (NOT CROSS_MINGW)
+endif (CROSS_MINGW)
 
 macro_optional_find_package (Bluez)
 
@@ -585,6 +596,8 @@ macro_gammu_option (BACKUP "Backup/Restore functions" ON ON ON)
 # Add libraries needed for windows build
 if (WIN32)
     target_link_libraries (Gammu ws2_32)
+    #    target_link_libraries (Gammu ntdll) # needed for MySQL
+    #    target_link_libraries (Gammu msvcr71) # needed for MySQL
     # These libraries are needed for serial driver
     if (GSM_ENABLE_DKU2PHONET OR GSM_ENABLE_DKU2AT)
         target_link_libraries (Gammu setupapi advapi32)
@@ -647,6 +660,13 @@ install (TARGETS gammu Gammu
         LIBRARY DESTINATION ${INSTALL_LIB_DIR} COMPONENT "runtime"
         ARCHIVE DESTINATION ${INSTALL_LIB_DIR} COMPONENT "development"
         )
+
+# Install MySQL library for Windows if we need it
+if (CROSS_MINGW AND MYSQL_FOUND)
+    install (FILES ${MYSQL_CROSS_PATH}/lib/opt/libmysql.dll
+            DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
+            )
+endif (CROSS_MINGW AND MYSQL_FOUND)
 
 foreach (HEADER ${HEADERS})
     string (REGEX REPLACE "(common|cfg)(.*)/[^/]*$" "\\2" DIRNAME ${HEADER})

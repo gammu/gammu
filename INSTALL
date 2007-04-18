@@ -31,7 +31,7 @@ Useful cmake parameters:
 -DCMAKE_BUILD_TYPE="Debug" enables debug build
 -DCMAKE_INSTALL_PREFIX="/usr" change installation prefix
 
-You can also disable support for whole set of phones:
+You can also disable support for whole set of phones, eg.:
 
 -DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support
 -DWITH_Bluez=OFF disables Bluetooth support
@@ -48,3 +48,15 @@ cd build-win32
 cmake .. -DCROSS_MINGW=ON
 make
 
+If you want MySQL support in Win32 build, add path to MySQL binaries in
+MYSQL_CROSS_PATH variable:
+
+-DMYSQL_CROSS_PATH=/path/to/mysql
+
+You can download MySQL binaries from <http://dev.mysql.com/>, but they
+need some tweaks:
+
+cd mysql/lib/opt
+reimp.exe libmysql.lib
+mv LIBMYSQL.def libmysql.def
+i586-mingw32msvc-dlltool --input-def libmysql.def --dllname libmysql.dll --output-lib libmysql.a
