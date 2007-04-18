@@ -141,6 +141,7 @@ macro_optional_find_package (Gettext)
 
 # Check disabled for cross, but we have some libraries
 if (CROSS_MINGW)
+
     set (MYSQL_CROSS_PATH ${Gammu_SOURCE_DIR}/../../win-cross/mysql CACHE FILEPATH "Path to MySQL for cross compilation")
     find_library (MYSQL_LIBRARIES 
         mysql ${MYSQL_CROSS_PATH}/lib/opt 
@@ -152,6 +153,19 @@ if (CROSS_MINGW)
     else (MYSQL_LIBRARIES) 
         message ("Cross MySQL not found")
     endif (MYSQL_LIBRARIES) 
+
+    set (POSTGRES_CROSS_PATH ${Gammu_SOURCE_DIR}/../../win-cross/pgsql CACHE FILEPATH "Path to PostgreSQL for cross compilation")
+    find_library (POSTGRES_LIBRARY 
+        pq ${POSTGRES_CROSS_PATH}/lib
+        NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
+    if (POSTGRES_LIBRARY) 
+        set (POSTGRES_FOUND ON)
+        set (POSTGRES_INCLUDE_DIR ${POSTGRES_CROSS_PATH}/include)
+        message ("Cross PostgreSQL found, libs: ${POSTGRES_LIBRARY}, incs: ${POSTGRES_INCLUDE_DIR}")
+    else (POSTGRES_LIBRARY) 
+        message ("Cross PostgreSQL not found")
+    endif (POSTGRES_LIBRARY) 
+
 else (CROSS_MINGW)
     # Standard packages
     macro_optional_find_package (Threads)
@@ -667,6 +681,21 @@ if (CROSS_MINGW AND MYSQL_FOUND)
             DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
             )
 endif (CROSS_MINGW AND MYSQL_FOUND)
+
+# Install PostgreSQL library (and deps) for Windows if we need it
+if (CROSS_MINGW AND POSTGRES_FOUND)
+    install (FILES 
+            ${POSTGRES_CROSS_PATH}/lib/libpq.dll
+            ${POSTGRES_CROSS_PATH}/bin/comerr32.dll
+            ${POSTGRES_CROSS_PATH}/bin/libeay32.dll
+            ${POSTGRES_CROSS_PATH}/bin/libiconv-2.dll
+            ${POSTGRES_CROSS_PATH}/bin/libintl-2.dll
+            ${POSTGRES_CROSS_PATH}/bin/krb5_32.dll
+            ${POSTGRES_CROSS_PATH}/bin/ssleay32.dll
+            ${POSTGRES_CROSS_PATH}/bin/wldap32.dll
+            DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
+            )
+endif (CROSS_MINGW AND POSTGRES_FOUND)
 
 foreach (HEADER ${HEADERS})
     string (REGEX REPLACE "(common|cfg)(.*)/[^/]*$" "\\2" DIRNAME ${HEADER})
