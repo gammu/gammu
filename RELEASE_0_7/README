@@ -1,0 +1,15 @@
+python-gammu
+============
+
+Python bingings for Gammu library.
+
+license
+=======
+
+GNU GPL version 2.
+
+documentation
+=============
+
+import gammu
+help(gammu)
