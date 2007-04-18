@@ -839,7 +839,33 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	cfg->UseGlobalDebugFile	 = DefaultUseGlobalDebugFile;
 
-	if (cfg_info==NULL) return false;
+	if (cfg_info==NULL) {
+		/* Special case, this config needs to be somehow valid */
+		if (num == 0) {
+			cfg->Device		 	 = strdup(DefaultPort);
+			cfg->DefaultDevice		 = true;
+			cfg->DefaultConnection		 = true;
+			cfg->Connection	 		 = strdup(DefaultConnection);
+			cfg->DefaultSyncTime		 = true;
+			cfg->SyncTime		 	 = strdup(DefaultSynchronizeTime);
+			cfg->DefaultDebugFile		 = true;
+			cfg->DebugFile		 	 = strdup(DefaultDebugFile);
+			cfg->DefaultLockDevice		 = true;
+			cfg->LockDevice	 		 = strdup(DefaultLockDevice);
+			cfg->DefaultModel		 = true;
+			strcpy(cfg->Model,DefaultModel);
+			cfg->DefaultDebugLevel		 = true;
+			strcpy(cfg->DebugLevel,DefaultDebugLevel);
+			cfg->DefaultStartInfo		 = true;
+			cfg->StartInfo	 		 = strdup(DefaultStartInfo);
+			strcpy(cfg->TextReminder,"Reminder");
+			strcpy(cfg->TextMeeting,"Meeting");
+			strcpy(cfg->TextCall,"Call");
+			strcpy(cfg->TextBirthday,"Birthday");
+			strcpy(cfg->TextMemo,"Memo");
+		}
+		return false;
+	}
 
 	if (num == 0) {
 		sprintf(section,"gammu");
@@ -866,7 +892,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	free(cfg->Connection);
 	cfg->Connection  = INI_GetValue(cfg_info, section, "connection", 	false);
-	if (!cfg->Connection) {
+	if (cfg->Connection == NULL) {
 		cfg->DefaultConnection		 = true;
 		cfg->Connection	 		 = strdup(DefaultConnection);
 	} else {
