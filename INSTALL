@@ -60,3 +60,6 @@ cd mysql/lib/opt
 reimp.exe libmysql.lib
 mv LIBMYSQL.def libmysql.def
 i586-mingw32msvc-dlltool --input-def libmysql.def --dllname libmysql.dll --output-lib libmysql.a
+
+reimp.exe is part of mingw-utils and can be run through wine, I didn't
+try to compile native binary from it.
