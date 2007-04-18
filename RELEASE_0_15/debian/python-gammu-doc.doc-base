@@ -1,0 +1,13 @@
+Document: python-gammu
+Title: Debian python-gammu Manual
+Author: Michal Čihař <michal@cihar.com>
+Abstract: This manual describes python-gammu internals. It has been
+ generated usign epydoc so it contains basically same information as
+ online help in python.
+Section: comm
+
+Format: HTML
+Index: /usr/share/doc/python-gammu-doc/html/index.html
+Files: /usr/share/doc/python-gammu-doc/html/private/*.html /usr/share/doc/python-gammu-doc/html/public/*.html
+
+  
