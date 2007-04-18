@@ -1,0 +1,15 @@
+Source: python-gammu
+Section: comm
+Priority: optional
+Maintainer: Michal Cihar <michal@cihar.com>
+Build-Depends-Indep: debhelper (>= 4.0.0), python2.3-dev, libgammu0 (>= 0.92.9), libgammu0-devel
+Standards-Version: 3.5.8
+
+Package: python-gammu
+Architecture: any
+Depends: ${shlibs:Depends}, ${python:Depends}
+Description: Python module to communicate with mobile phones
+ This provides gammu module, that can work with any phone Gammu
+ supports - many Nokias, Siemens, Alcatel, ...
+ .
+ URL: http://www.cihar.com/gammu/python

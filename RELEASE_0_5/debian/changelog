@@ -1,0 +1,24 @@
+python-gammu (0.5) unstable; urgency=low
+
+  * New version.
+
+ -- Michal Cihar <michal@cihar.com>  Wed,  3 Mar 2004 22:40:32 +0100
+
+python-gammu (0.4) unstable; urgency=low
+
+  * New version.
+  * Included examples.
+
+ -- Michal Cihar <michal@cihar.com>  Sun, 18 Jan 2004 17:13:31 +0100
+
+python-gammu (0.3.1) unstable; urgency=low
+
+  * New version, not publicly released.
+
+ -- Michal Cihar <michal@cihar.com>  Wed, 14 Jan 2004 22:09:21 +0100
+
+python-gammu (0.3) unstable; urgency=low
+
+  * Initial packaging.
+
+ -- Michal Cihar <michal@cihar.com>  Sun,  4 Jan 2004 16:49:04 +0100
