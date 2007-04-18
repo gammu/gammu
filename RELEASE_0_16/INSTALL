@@ -1,0 +1,64 @@
+python-gammu installation
+=========================
+
+
+UNIX systems - installation from sources
+----------------------------------------
+
+First you need Gammu installed as shared library and with header files.
+
+1. Download recent Gammu sources from <http://www.gammu.org/>.
+2. Unpack it:
+    > tar xfj gammu-XXX.tar.bz2
+3. Configure (you might want to tweak configure parameters):
+    > cd gammu-XXX
+    > ./configure --prefix=/usr
+4. Build as shared library:
+    > make share
+    > su
+5. Install as shared library:
+    # make installshared
+
+For finding gammu libraries, pkg-config is used, so please install it also.
+
+Then you can build and install python-gammu. It uses standard distutils, so:
+
+> python setup.py build
+> su
+# python setup.py install
+
+
+Custom installation place
+-------------------------
+
+You can override values acquired from pkg-config by passing parameters to
+build_ext target. This is useful when you don't have gammu installed,
+you can pass path common directory in gammu sources as path to includes
+and library:
+
+python setup.py build_ext \
+    --gammu-libs=path_to_gammu_library \
+    --gammu-incs=path_to_gammu_includes
+
+Alternatively you can point setup.py to location where you built gammu:
+
+python setup.py build_ext \
+    --gammu-build=path_to_gammu_build_directory
+
+See `python setup.py build_ext --help` for more options.
+
+
+Windows systems
+---------------
+
+Current known working way to make static gammu library and then use it.
+Files for static gammu build are placed in win32/STATIC/ directory in
+gammu sources.
+
+When you have the library, you need to point build system to right
+location. As pkg-config is not well supported on Windows, you have to
+specify paths manually in parameters (see above section).
+
+Now you can launch build of python-gammu module.
+
+Alternatively there are be prebuilt modules on python-gammu web site.
