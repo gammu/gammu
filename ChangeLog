@@ -58,6 +58,7 @@ For additionals materials and links to them see readme.txt
 [-] * Adjust vCalendar entries from SE phones on DST (bug #81).
 [-] * Fix updating of delivery report date in SMSD (thanks to Peter Stuge).
 [-] * Fix format strings for Win32 build.
+[-] * Fix crash when no config exists.
 
 20070403 - 1.10.2
 [-] * Fixed crash on LMB export/import (bug #261).
