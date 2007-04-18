@@ -1,2 +1,0 @@
-precious ^(.*\.pyd|.*\.o|convertors|pyg-config.h)$
-

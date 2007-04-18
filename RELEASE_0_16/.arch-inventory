@@ -1,2 +1,0 @@
-precious ^(build-stamp|html|dist)$
-
