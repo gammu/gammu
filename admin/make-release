@@ -1,4 +1,5 @@
 #!/bin/sh
+# vim: expandtab sw=4 ts=4 sts=4:
 
 # Usage: make-release [branch]
 
@@ -9,12 +10,12 @@ tmp=`mktemp -dt gammu-build-XXXXXX`
 cd $tmp
 echo Working in $tmp
 if [ "x$1" = "xbranch" ] ; then
-    baz branch gammu--fixes--1 gammu--release--$version
-    baz export gammu--release--$version gammu-$version
+    rel=RELEASE_`echo -n $version|tr . _`
+    svn cp -m "Tag release $version" svn+ssh://mort/home/svn/gammu/trunk svn+ssh://mort/home/svn/gammu/tags/$rel
+    svn export svn+ssh://mort/home/svn/gammu/tags/$rel gammu-$version
 else
-    baz export gammu--fixes--1 gammu-$version
+    svn export svn+ssh://mort/home/svn/gammu/trunk gammu-$version
 fi
-find gammu-$version -name .arch-inventory -print0 | xargs -0 rm -f
 tar cfz gammu-$version.tar.gz gammu-$version
 tar cfj gammu-$version.tar.bz2 gammu-$version
 mkdir build-win
