@@ -1,1 +1,0 @@
-precious ^(changelog|files|gammu|gammu.substvars|libgammu0|libgammu0-dev|libgammu0.postinst.debhelper|libgammu0.postrm.debhelper|libgammu0.substvars|tmp)$
