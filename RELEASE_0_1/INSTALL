@@ -1,0 +1,9 @@
+python-gammu installation
+=========================
+
+It uses standard distutils, so:
+python setup.py build
+su
+python setup.py install
+
+You need Gammu installed as shared and you need pkg-config.
