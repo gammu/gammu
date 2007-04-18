@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Usage: make-release [branch]
+
+version=`./setup.py --dump-config | sed -n 's/.*PYTHON_GAMMU_VERSION "\(.*\)"/\1/p' | tr -d '\n'`
+
+tmp=`mktemp -dt python-gammu-build-XXXXXX`
+
+cd $tmp
+echo Working in $tmp
+if [ "x$1" = "xbranch" ] ; then
+    baz branch python-gammu--devel--1 python-gammu--release--$version
+    baz export python-gammu--release--$version python-gammu-$version
+else
+    baz export python-gammu--devel--1 python-gammu-$version
+fi
+find python-gammu-$version -name .arch-inventory -print0 | xargs -0 rm -f
+rm python-gammu-$version/make-release
+cd python-gammu-$version
+./setup.py sdist --formats=gztar,bztar,zip
+mv dist/* ../
+
+echo "Release is in $tmp directory"

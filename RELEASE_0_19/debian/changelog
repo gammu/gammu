@@ -1,0 +1,161 @@
+python-gammu (0.19-1) unstable; urgency=low
+
+  * New upstream release.
+  * Fixes segfault on startup (Closes: #410345).
+
+ -- Michal Čihař <michal@cihar.com>  Sat, 10 Feb 2007 12:57:37 +0100
+
+python-gammu (0.18-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Michal Čihař <michal@cihar.com>  Wed,  7 Feb 2007 21:43:39 +0100
+
+python-gammu (0.17-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Michal Čihař <michal@cihar.com>  Mon, 18 Dec 2006 17:32:11 +0100
+
+python-gammu (0.16-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Michal Čihař <michal@cihar.com>  Mon,  4 Dec 2006 22:41:59 +0100
+
+python-gammu (0.15-1) unstable; urgency=low
+
+  * New upstream release.
+
+ -- Michal Čihař <michal@cihar.com>  Wed, 20 Sep 2006 08:13:34 +0200
+
+python-gammu (0.14-2) unstable; urgency=low
+
+  * python-gammu is not dummy package anymore, don't say so in description.
+  * Rebuild against current libgammu0 (Closes: #376486).
+
+ -- Michal Čihař <michal@cihar.com>  Wed, 12 Jul 2006 10:12:41 +0200
+
+python-gammu (0.14-1) unstable; urgency=low
+
+  * New upstream release.
+  * Build for all python version at once according to new Python policy
+    (Closes: #373536).
+
+ -- Michal Čihař <michal@cihar.com>  Thu, 29 Jun 2006 22:03:29 +0200
+
+python-gammu (0.13-1) unstable; urgency=low
+
+  * New upstream release.
+  * Updated policy to 3.7.2.0 (no changes needed).
+  * Add watch file.
+  * Section of python-gammu-doc is doc.
+
+ -- Michal Čihař <michal@cihar.com>  Sun, 14 May 2006 17:07:43 +0200
+
+python-gammu (0.12-2) unstable; urgency=low
+
+  * Rebuilt against gammu 1.06.00.
+
+ -- Michal Čihař <michal@cihar.com>  Tue, 25 Apr 2006 18:48:23 +0200
+
+python-gammu (0.12-1) unstable; urgency=low
+
+  * New upstream release.
+  * Build depends on pkg-config.
+
+ -- Michal Čihař <michal@cihar.com>  Fri, 24 Mar 2006 23:14:03 +0100
+
+python-gammu (0.11-4) unstable; urgency=low
+
+  * Change build deps to libgammu-dev.
+
+ -- Michal Čihař <michal@cihar.com>  Thu, 16 Mar 2006 22:14:30 +0100
+
+python-gammu (0.11-3) unstable; urgency=low
+
+  * Rebuilt agains gammu 1.05.00-2.
+
+ -- Michal Čihař <michal@cihar.com>  Wed, 15 Mar 2006 19:56:46 +0100
+
+python-gammu (0.11-2) unstable; urgency=low
+
+  * Rebuilt against gammu 1.05.00.
+
+ -- Michal Čihař <michal@cihar.com>  Mon, 13 Mar 2006 21:53:05 +0100
+
+python-gammu (0.11-1) unstable; urgency=low
+
+  * Not native package any more, it is better for expected inclusion in
+    Debian.
+  * New upstream version.
+  * Initial release for Debian archives (Closes: #326711).
+
+ -- Michal Čihař <michal@cihar.com>  Thu,  9 Mar 2006 20:46:00 +0100
+
+python-gammu (0.10.1) unstable; urgency=low
+
+  * Rebuilt against fixed gammu.
+
+ -- Michal Čihař <michal@cihar.com>  Wed, 25 Jan 2006 20:47:20 +0100
+
+python-gammu (0.10) unstable; urgency=low
+
+  * New version.
+  * Fix homepage in control file to fit current recommendations.
+
+ -- Michal Čihař <michal@cihar.com>  Sun,  8 Jan 2006 19:48:41 +0100
+
+python-gammu (0.9) unstable; urgency=low
+
+  * Drop bug.control file.
+  * Build for both python 2.3 and 2.4.
+  * Add epydoc documentation to python-gammu-doc package.
+  * Move exaples to -doc package.
+  * This was supposed to be initial upload to Debian archives, howerver I
+    still lack sponsor.
+
+ -- Michal Čihař <michal@cihar.com>  Sat, 24 Dec 2005 01:21:30 +0100
+
+python-gammu (0.8) unstable; urgency=low
+
+  * New release.
+
+ -- Michal Čihař <michal@cihar.com>  Tue, 17 May 2005 14:30:52 +0200
+
+python-gammu (0.7) unstable; urgency=low
+
+  * New version.
+
+ -- Michal Čihař <michal@cihar.com>  Sun, 23 Jan 2005 22:27:30 +0100
+
+python-gammu (0.6) unstable; urgency=low
+
+  * New version.
+
+ -- Michal Čihař <michal@cihar.com>  Mon,  6 Sep 2004 10:26:02 +0200
+
+python-gammu (0.5) unstable; urgency=low
+
+  * New version.
+
+ -- Michal Cihar <michal@cihar.com>  Wed,  3 Mar 2004 22:40:32 +0100
+
+python-gammu (0.4) unstable; urgency=low
+
+  * New version.
+  * Included examples.
+
+ -- Michal Cihar <michal@cihar.com>  Sun, 18 Jan 2004 17:13:31 +0100
+
+python-gammu (0.3.1) unstable; urgency=low
+
+  * New version, not publicly released.
+
+ -- Michal Cihar <michal@cihar.com>  Wed, 14 Jan 2004 22:09:21 +0100
+
+python-gammu (0.3) unstable; urgency=low
+
+  * Initial packaging.
+
+ -- Michal Cihar <michal@cihar.com>  Sun,  4 Jan 2004 16:49:04 +0100

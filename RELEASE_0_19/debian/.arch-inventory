@@ -1,0 +1,2 @@
+precious ^(.*(\.debhelper|\.substvars)|files|python([[:digit:]]+\.[[:digit:]])?-gammu(-doc)?)$
+
