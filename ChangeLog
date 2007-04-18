@@ -61,6 +61,7 @@ For additionals materials and links to them see readme.txt
 [-] * Fix crash when no config exists.
 [+] * Support for MinGW crosscompation with MySQL.
 [+] * Support for MinGW crosscompation with PostgreSQL.
+[-] * MakeTerminatedCall can be now called more times in batch mode.
 
 20070403 - 1.10.2
 [-] * Fixed crash on LMB export/import (bug #261).
