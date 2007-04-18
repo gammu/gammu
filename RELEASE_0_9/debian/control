@@ -1,0 +1,53 @@
+Source: python-gammu
+Section: comm
+Priority: optional
+Maintainer: Michal Čihař <michal@cihar.com>
+Build-Depends: debhelper (>= 4.0.0), python, python2.4-dev, python2.3-dev, libgammu0-dev (>= 1.01.00), python-epydoc
+Standards-Version: 3.6.2
+
+Package: python-gammu
+Architecture: all
+Depends: python2.3-gammu (>= ${Source-Version})
+Suggests: python-gammu-doc (>= ${Source-Version})
+Description: Python module to communicate with mobile phones
+ This provides gammu module, that can work with any phone Gammu
+ supports - many Nokias, Siemens, Alcatel, ...
+ .
+ This package is an empty dummy package that always depends on
+ a package built for Debian's default Python version.
+ .
+ Website: http://www.cihar.com/gammu/python
+
+Package: python2.3-gammu
+Architecture: any
+Depends: ${shlibs:Depends}, ${python:Depends}, ${misc:Depends}
+Description: Python module to communicate with mobile phones
+ This provides gammu module, that can work with any phone Gammu
+ supports - many Nokias, Siemens, Alcatel, ...
+ .
+ This package is built with Python 2.3.
+ .
+ Website: http://www.cihar.com/gammu/python
+
+Package: python2.4-gammu
+Architecture: any
+Depends: ${shlibs:Depends}, ${python:Depends}, ${misc:Depends}
+Description: Python module to communicate with mobile phones
+ This provides gammu module, that can work with any phone Gammu
+ supports - many Nokias, Siemens, Alcatel, ...
+ .
+ This package is built with Python 2.4.
+ .
+ Website: http://www.cihar.com/gammu/python
+
+Package: python-gammu-doc
+Architecture: all
+Depends: ${shlibs:Depends}, ${python:Depends}, ${misc:Depends}, python-gammu (>= ${Source-Version})
+Description: Python module to communicate with mobile phones
+ This provides gammu module, that can work with any phone Gammu
+ supports - many Nokias, Siemens, Alcatel, ...
+ .
+ This package contains documentation and examples.
+ .
+ Website: http://www.cihar.com/gammu/python
+

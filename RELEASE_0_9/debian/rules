@@ -1,0 +1,61 @@
+#!/usr/bin/make -f
+
+#export DH_VERBOSE=1
+
+PYVERSIONS=2.3 2.4
+# default is first version
+DEFAULTPY=$(shell echo $(PYVERSIONS) | sed 's/ .*//')
+
+build: build-stamp
+
+build-stamp:
+	dh_testdir
+	for v in $(PYVERSIONS) ; do \
+		python$$v setup.py build ; \
+	done
+	epydoc build/lib*$(DEFAULTPY)/gammu.so
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp
+	for v in $(PYVERSIONS) ; do \
+		python$$v setup.py clean || true; \
+	done
+	-rm -rf build
+	-rm -rf html
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	for v in $(PYVERSIONS) ; do \
+		PYTHON=python$$v ; \
+		PYTMP="debian/$$PYTHON-gammu" ; \
+		$$PYTHON setup.py install --no-compile --root=$$PYTMP ; \
+	done
+
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installchangelogs
+	dh_installdocs
+	dh_installexamples 
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_python
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-arch: build install
+
+binary: binary-indep binary-arch
+
+.PHONY: build clean binary-indep binary-arch binary install configure
