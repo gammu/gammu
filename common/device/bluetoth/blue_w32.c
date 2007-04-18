@@ -58,8 +58,8 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 			sab.btAddr = sab.btAddr + (device[i]-'A'+10);
 		}
 	}
-	dbgprintf("Remote Bluetooth device is %04lx%08lx\n",
-	  		(long)GET_NAP(sab.btAddr), GET_SAP(sab.btAddr));
+	dbgprintf("Remote Bluetooth device is %04llx%08llx\n",
+	  		GET_NAP(sab.btAddr), GET_SAP(sab.btAddr));
 
 	if (connect (d->hPhone, (struct sockaddr *)&sab, sizeof(sab)) != 0) {
 		i = GetLastError();
