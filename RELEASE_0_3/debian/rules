@@ -1,0 +1,49 @@
+#!/usr/bin/make -f
+
+#export DH_VERBOSE=1
+export DH_COMPAT=3
+
+build: build-stamp
+
+build-stamp:
+	dh_testdir
+	/usr/bin/python2.3 setup.py build
+	touch build-stamp
+
+clean:
+	dh_testdir
+	dh_testroot
+	rm -f build-stamp 
+	-/usr/bin/python2.3 setup.py clean
+	-rm -rf build 
+	dh_clean
+
+install: build
+	dh_testdir
+	dh_testroot
+	dh_clean -k
+	dh_installdirs
+	/usr/bin/python2.3 setup.py install --prefix $(CURDIR)/debian/python-gammu/usr
+
+binary-indep: build install
+	dh_testdir
+	dh_testroot
+	dh_installdocs AUTHORS README
+	dh_installchangelogs ChangeLog
+	install -d debian/python-gammu/usr/share/bug/python-gammu
+	install -m644 debian/bug.control debian/python-gammu/usr/share/bug/python-gammu/control
+	dh_strip
+	dh_compress
+	dh_fixperms
+	dh_python
+	dh_installdeb
+	dh_shlibdeps
+	dh_gencontrol
+	dh_md5sums
+	dh_builddeb
+
+binary-arch: build install
+
+binary: binary-indep binary-arch
+
+.PHONY: build clean binary-indep binary-arch binary install configure
