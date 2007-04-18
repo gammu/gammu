@@ -72,7 +72,7 @@ static bool irda_discover_device(GSM_StateMachine *state, int *fd)
 
 			if (getsockopt(*fd, SOL_IRLMP, IRLMP_ENUMDEVICES, buf, &s) == 0) {
 		    		for (i = 0; i < (int)list->numDevice; i++) {
-					dbgprintf("Irda: found device \"%s\" (address %x) - ",list->Device[i].irdaDeviceName,list->Device[i].irdaDeviceID);
+					dbgprintf("Irda: found device \"%s\" (address %lx) - ",list->Device[i].irdaDeviceName,list->Device[i].irdaDeviceID);
 					if (strcmp(GetModelData(NULL,NULL,list->Device[i].irdaDeviceName)->number,"") != 0) {
 						founddevice = true;
 						/* Model AUTO */
