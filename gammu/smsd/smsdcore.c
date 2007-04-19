@@ -55,7 +55,7 @@ void GSM_Terminate_SMSD(char *msg, int error, bool exitprogram, int rc)
 	}
 }
 
-#ifdef __GNUC__
+#if defined(__GNUC__) && !defined(printf)
 __attribute__((format(printf, 1, 2)))
 #endif
 void WriteSMSDLog(char *format, ...)
