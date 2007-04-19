@@ -89,7 +89,7 @@ then you need to add wldap32.dll library to bin.
 Gettext
 -------
 
-For Gettext (internationalisation support), you need gettext-0.14.4-bin.zip,
+For Gettext (internationalization support), you need gettext-0.14.4-bin.zip,
 gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from
 <http://gnuwin32.sourceforge.net/>. Unpack these to some directory and point
 build 
