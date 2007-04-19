@@ -48,7 +48,7 @@ Problems
 
 Use <http://www.gammu.org/bugs> or mailing list for reporting problems.
 It useful to send logs of gammu executed with enabled debugging. You can
-to it by adding "textall" as first parameter, eg.:
+to it by adding "textall" as first parameter, e.g.:
 
    gammu textall --identify
 
