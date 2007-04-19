@@ -1,9 +1,10 @@
-Gammu All Mobile Management Utilities
-=====================================
+Gammu All Mobile Management Utilities - Installation
+====================================================
 
-[Installation]
+From Sources - Using CMake
+==========================
 
-1. Using cMake <http://www.cmake.org>:
+You can get CMake from <http://www.cmake.org>
 
 For now, only out of source build is supported, so you have to create
 separate directory for build.
@@ -29,7 +30,10 @@ You can also disable support for whole set of phones, e.g.:
 -DWITH_Bluez=OFF disables Bluetooth support
 -DWITH_IrDA=OFF disables IrDA support
 
-2. Using autoconf (old, usually working method):
+From Sources - Using autoconf (old method)
+==========================================
+
+This method is deprecated and will be removed in future.
 
 ./configure
 make
@@ -37,7 +41,8 @@ make install
 
 To enable shared library, use "make shared" instead of "make".
 
-[Cross compilation for Windows]
+Cross compilation for Windows
+=============================
 
 Only cross compilation using cmake has been tested. You need to install
 MinGW cross tool chain and run time. On Debian you can do it by apt-get
@@ -47,6 +52,10 @@ mkdir build-win32
 cd build-win32
 cmake .. -DCROSS_MINGW=ON
 make
+
+
+MySQL
+-----
 
 If you want MySQL support in Win32 build, add path to MySQL binaries in
 MYSQL_CROSS_PATH variable:
@@ -65,6 +74,9 @@ reimp.exe is part of mingw-utils and can be run through wine, I didn't
 try to compile native binary from it.
 
 
+PostgreSQL
+----------
+
 If you want PostgreSQL support in Win32 build, add path to MySQL
 binaries in POSTGRE_CROSS_PATH variable:
 
@@ -73,10 +85,14 @@ binaries in POSTGRE_CROSS_PATH variable:
 You can download PostgreSQL binaries from <http://www.postgresql.org/>, but
 then you need to add wldap32.dll library to bin.
 
+
+Gettext
+-------
+
 For Gettext (internationalisation support), you need gettext-0.14.4-bin.zip,
 gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from
 <http://gnuwin32.sourceforge.net/>. Unpack these to some directory and point
 build 
 
--DGETTEXT_CROSS_PATH=/path/to/pgsql
+-DGETTEXT_CROSS_PATH=/path/to/gettext
 
