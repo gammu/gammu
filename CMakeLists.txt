@@ -710,13 +710,13 @@ if (CROSS_MINGW AND POSTGRES_FOUND)
 endif (CROSS_MINGW AND POSTGRES_FOUND)
 
 # Install Gettext library (and deps) for Windows if we need it
-if (CROSS_MINGW AND GETTEXT_FOUND)
+if (CROSS_MINGW AND GETTEXTLIBS_FOUND)
     install (FILES 
             ${GETTEXT_CROSS_PATH}/bin/libintl3.dll
             ${GETTEXT_CROSS_PATH}/bin/libiconv2.dll
             DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
             )
-endif (CROSS_MINGW AND GETTEXT_FOUND)
+endif (CROSS_MINGW AND GETTEXTLIBS_FOUND)
 
 foreach (HEADER ${HEADERS})
     string (REGEX REPLACE "(common|cfg)(.*)/[^/]*$" "\\2" DIRNAME ${HEADER})
