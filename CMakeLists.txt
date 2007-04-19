@@ -282,6 +282,7 @@ set (DEVELDOCS
 
 set (DOCS
     README 
+    SUPPORTERS
     ChangeLog 
     COPYING
     docs/user/replace.txt
