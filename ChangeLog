@@ -62,6 +62,7 @@ For additionals materials and links to them see readme.txt
 [+] * Support for MinGW crosscompation with MySQL.
 [+] * Support for MinGW crosscompation with PostgreSQL.
 [-] * MakeTerminatedCall can be now called more times in batch mode.
+[+] * Support for MinGW crosscompation with Gettext.
 
 20070403 - 1.10.2
 [-] * Fixed crash on LMB export/import (bug #261).

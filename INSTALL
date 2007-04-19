@@ -3,15 +3,7 @@ Gammu All Mobile Management Utilities
 
 [Installation]
 
-1. Using autoconf (old, usually working method):
-
-./configure
-make
-make install
-
-To enable shared library, use "make shared" instead of "make".
-
-2. Using cMake <http://www.cmake.org>:
+1. Using cMake <http://www.cmake.org>:
 
 For now, only out of source build is supported, so you have to create
 separate directory for build.
@@ -37,7 +29,15 @@ You can also disable support for whole set of phones, e.g.:
 -DWITH_Bluez=OFF disables Bluetooth support
 -DWITH_IrDA=OFF disables IrDA support
 
-3. Cross compilation for Windows:
+2. Using autoconf (old, usually working method):
+
+./configure
+make
+make install
+
+To enable shared library, use "make shared" instead of "make".
+
+[Cross compilation for Windows]
 
 Only cross compilation using cmake has been tested. You need to install
 MinGW cross tool chain and run time. On Debian you can do it by apt-get
@@ -68,7 +68,15 @@ try to compile native binary from it.
 If you want PostgreSQL support in Win32 build, add path to MySQL
 binaries in POSTGRE_CROSS_PATH variable:
 
--DPOSTGRE_CROSS_PATH=/path/to/pgsql
+-DPOSTGRES_CROSS_PATH=/path/to/pgsql
 
-You can download MySQL binaries from <http://www.postgresql.org/>, but
+You can download PostgreSQL binaries from <http://www.postgresql.org/>, but
 then you need to add wldap32.dll library to bin.
+
+For Gettext (internationalisation support), you need gettext-0.14.4-bin.zip,
+gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from
+<http://gnuwin32.sourceforge.net/>. Unpack these to some directory and point
+build 
+
+-DGETTEXT_CROSS_PATH=/path/to/pgsql
+
