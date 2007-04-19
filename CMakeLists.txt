@@ -688,36 +688,39 @@ install (TARGETS gammu Gammu
         ARCHIVE DESTINATION ${INSTALL_LIB_DIR} COMPONENT "development"
         )
 
-# Install MySQL library for Windows if we need it
-if (CROSS_MINGW AND MYSQL_FOUND)
-    install (FILES ${MYSQL_CROSS_PATH}/lib/opt/libmysql.dll
-            DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
-            )
-endif (CROSS_MINGW AND MYSQL_FOUND)
+# Install Windows libraries
+if (CROSS_MINGW)
+    # MySQL
+    if (MYSQL_FOUND)
+        install (FILES ${MYSQL_CROSS_PATH}/lib/opt/libmysql.dll
+                DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
+                )
+    endif (MYSQL_FOUND)
 
-# Install PostgreSQL library (and deps) for Windows if we need it
-if (CROSS_MINGW AND POSTGRES_FOUND)
-    install (FILES 
-            ${POSTGRES_CROSS_PATH}/lib/libpq.dll
-            ${POSTGRES_CROSS_PATH}/bin/comerr32.dll
-            ${POSTGRES_CROSS_PATH}/bin/libeay32.dll
-            ${POSTGRES_CROSS_PATH}/bin/libiconv-2.dll
-            ${POSTGRES_CROSS_PATH}/bin/libintl-2.dll
-            ${POSTGRES_CROSS_PATH}/bin/krb5_32.dll
-            ${POSTGRES_CROSS_PATH}/bin/ssleay32.dll
-            ${POSTGRES_CROSS_PATH}/bin/wldap32.dll
-            DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
-            )
-endif (CROSS_MINGW AND POSTGRES_FOUND)
+    # PostgreSQL and dependencies
+    if (POSTGRES_FOUND)
+        install (FILES 
+                ${POSTGRES_CROSS_PATH}/lib/libpq.dll
+                ${POSTGRES_CROSS_PATH}/bin/comerr32.dll
+                ${POSTGRES_CROSS_PATH}/bin/libeay32.dll
+                ${POSTGRES_CROSS_PATH}/bin/libiconv-2.dll
+                ${POSTGRES_CROSS_PATH}/bin/libintl-2.dll
+                ${POSTGRES_CROSS_PATH}/bin/krb5_32.dll
+                ${POSTGRES_CROSS_PATH}/bin/ssleay32.dll
+                ${POSTGRES_CROSS_PATH}/bin/wldap32.dll
+                DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
+                )
+    endif (POSTGRES_FOUND)
 
-# Install Gettext library (and deps) for Windows if we need it
-if (CROSS_MINGW AND GETTEXTLIBS_FOUND)
-    install (FILES 
-            ${GETTEXT_CROSS_PATH}/bin/libintl3.dll
-            ${GETTEXT_CROSS_PATH}/bin/libiconv2.dll
-            DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
-            )
-endif (CROSS_MINGW AND GETTEXTLIBS_FOUND)
+    # Gettext and dependencies
+    if (GETTEXTLIBS_FOUND)
+        install (FILES 
+                ${GETTEXT_CROSS_PATH}/bin/libintl3.dll
+                ${GETTEXT_CROSS_PATH}/bin/libiconv2.dll
+                DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
+                )
+    endif (GETTEXTLIBS_FOUND)
+endif (CROSS_MINGW)
 
 foreach (HEADER ${HEADERS})
     string (REGEX REPLACE "(common|cfg)(.*)/[^/]*$" "\\2" DIRNAME ${HEADER})
