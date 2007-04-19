@@ -48,6 +48,8 @@ For additionals materials and links to them see readme.txt
 [-] Fixed error
 
 
+2007???? - 1.10.4
+
 20070419 - 1.10.3
 [-] * Work with AT phones which can not write SMS to ME (bug #282).
 [-] * Increse limits for SMS backups (this requires dynamic allocation).
