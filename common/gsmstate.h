@@ -1650,7 +1650,7 @@ struct _OnePhoneModel {
 bool 		IsPhoneFeatureAvailable	(OnePhoneModel *model, Feature feature);
 OnePhoneModel 	*GetModelData		(char *model, char *number, char *irdamodel);
 
-#ifdef __GNUC__
+#if defined(__GNUC__) && !defined(printf)
 __attribute__((format(printf, 2, 3)))
 #endif
 int smprintf(GSM_StateMachine *s, const char *format, ...);
