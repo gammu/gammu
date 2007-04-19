@@ -1,8 +1,6 @@
 Gammu All Mobile Management Utilities
 =====================================
 
-[About]
-
 Gammu is library and command line utility for mobile phones. It is
 released under GNU GPL version 2.
 
@@ -15,13 +13,15 @@ Currently the project is lead by Michal Cihar <michal@cihar.com> with
 help of many contributors.
 
 
-[More information]
+More information
+================
 
 On <http://www.gammu.org/> there is wiki and bug tracker, current Gammu
 maintainer keeps information available on <http://cihar.com/gammu/>.
 
 
-[Downloading]
+Downloading
+===========
 
 Current releases can be downloaded from several mirrors, primary
 download site currently is <http://dl.cihar.com/gammu/releases/>. 
@@ -34,7 +34,8 @@ Anonymous Subversion is available using <svn://svn.cihar.com/gammu>,
 there is also web browser for it - <http://viewsvn.cihar.com/gammu>.
 
 
-[Versions]
+Versions
+========
 
 There are two types of releases - testing and stable. Stable releases
 have number x.y.0, while testing are x.y.z. Testing releases usually
@@ -42,7 +43,8 @@ provide latest features, but everything does not have to be stabilized
 yet.
 
 
-[Problems]
+Problems
+========
 
 Use <http://www.gammu.org/bugs> or mailing list for reporting problems.
 It useful to send logs of gammu executed with enabled debugging. You can
@@ -51,13 +53,15 @@ to it by adding "textall" as first parameter, eg.:
    gammu textall --identify
 
 
-[Developers]
+Developers
+==========
 
 Some information is available on wiki and in docs/develop/ folder. You
 can also generate documentation using Doxygen.
 
 
-[Localization]
+Localization
+============
 
 Localization uses Gettext. You can set locales you want to use by
 specifying LANG or LC_* environment variables (on Linux you usually
@@ -72,13 +76,15 @@ You can also go ahead with traditional way of creating/updating po files
 in locale/ folder and then sending updated ones to bug tracker.
 
 
-[Note]
+Note
+====
 
 Name Gammu is not connected with Gammu from "Heretics of Dune" written
 by Frank Herbert.
 
 
-[Feedback]
+Feedback
+========
 
 Any feedback is welcome, if you found bug, please follow description in
 section "Problems". You can contact developers and users on
