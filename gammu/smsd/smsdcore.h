@@ -87,7 +87,7 @@ typedef struct {
 	GSM_Error	(*RefreshPhoneStatus) (GSM_SMSDConfig *Config);
 } GSM_SMSDService;
 
-#ifdef __GNUC__
+#if defined(__GNUC__) && !defined(printf)
 __attribute__((format(printf, 1, 2)))
 #endif
 void WriteSMSDLog(char *format, ...);
