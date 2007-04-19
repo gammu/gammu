@@ -166,6 +166,18 @@ if (CROSS_MINGW)
         message ("Cross PostgreSQL not found")
     endif (POSTGRES_LIBRARY) 
 
+    set (GETTEXT_CROSS_PATH ${Gammu_SOURCE_DIR}/../../win-cross/gettext CACHE FILEPATH "Path to Gettext for cross compilation")
+    find_library (GETTEXT_LIBRARY 
+        intl ${GETTEXT_CROSS_PATH}/lib
+        NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
+    if (GETTEXT_LIBRARY) 
+        set (GETTEXTLIBS_FOUND ON)
+        set (GETTEXT_INCLUDE_DIR ${GETTEXT_CROSS_PATH}/include)
+        message ("Cross Gettext found, libs: ${GETTEXT_LIBRARY}, incs: ${GETTEXT_INCLUDE_DIR}")
+    else (GETTEXT_LIBRARY) 
+        message ("Cross Gettext not found")
+    endif (GETTEXT_LIBRARY) 
+
 else (CROSS_MINGW)
     # Standard packages
     macro_optional_find_package (Threads)
@@ -696,6 +708,15 @@ if (CROSS_MINGW AND POSTGRES_FOUND)
             DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
             )
 endif (CROSS_MINGW AND POSTGRES_FOUND)
+
+# Install Gettext library (and deps) for Windows if we need it
+if (CROSS_MINGW AND GETTEXT_FOUND)
+    install (FILES 
+            ${GETTEXT_CROSS_PATH}/bin/libintl3.dll
+            ${GETTEXT_CROSS_PATH}/bin/libiconv2.dll
+            DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
+            )
+endif (CROSS_MINGW AND GETTEXT_FOUND)
 
 foreach (HEADER ${HEADERS})
     string (REGEX REPLACE "(common|cfg)(.*)/[^/]*$" "\\2" DIRNAME ${HEADER})
