@@ -4,6 +4,7 @@
 # Usage: make-release [branch]
 
 repo=gammu
+srcdir=`pwd`
 
 version=`tr , . < VERSION`
 
@@ -22,7 +23,12 @@ tar cfz $repo-$version.tar.gz $repo-$version
 tar cfj $repo-$version.tar.bz2 $repo-$version
 mkdir build-win
 cd build-win
-cmake ../$repo-$version -DCROSS_MINGW=ON
+cmake ../$repo-$version \
+    -DCROSS_MINGW=ON \
+    -DGETTEXT_CROSS_PATH=$srcdir/../../win-cross/gettext \
+    -DMYSQL_CROSS_PATH=$srcdir/../../win-cross/mysql \
+    -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
+
 make
 cpack
 mv Gammu-*-Windows.* ../
