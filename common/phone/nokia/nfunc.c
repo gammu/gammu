@@ -272,6 +272,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	int					length = 0, i, bs = 0;
 	GSM_71_65_Phonebook_Entries_Types	Type;
 	bool					found=false;
+	bool					foundbb5add=false;
 
 	entry->EntriesNum 	= 0;
 
@@ -301,7 +302,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		bs = 256*Block[2]+Block[3];
 #ifdef DEBUG
 		smprintf(s, "Phonebook entry block - length %i", bs-6);
-		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Block+5, bs-6);
+		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Block+0, bs-1);
 #endif
 		if (entry->EntriesNum==GSM_PHONEBOOK_ENTRIES) {
 			smprintf(s, "Too many entries\n");
@@ -342,7 +343,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		bs = 256*Block[2]+Block[3];
 #ifdef DEBUG
 		smprintf(s, "Phonebook entry block - length %i", bs-6);
-		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Block+5, bs-6);
+		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Block+0, bs-1);
 #endif
 		if (entry->EntriesNum==GSM_PHONEBOOK_ENTRIES) {
 			smprintf(s, "Too many entries\n");
@@ -496,6 +497,11 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (Block[5] == S4030_PBK_POSTAL_COUNTRY) {
 				Type = PBK_Text_Country;    	smprintf(s,"Country ");
 			}
+			if ((Type == 0x00) && (Block[7]>0)) {
+				smprintf(s, "Found new bb5 style address\n");
+				foundbb5add=true;
+				continue;
+			}
 			if (Type == 0x00) {
 				smprintf(s, "Unknown address type %02x\n",Block[5]);
 				return ERR_UNKNOWNRESPONSE;
@@ -510,6 +516,82 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->EntriesNum ++;
 			continue;
 		}
+
+
+		if ((Block[0] == S4030_PBK_POSTAL_EXTADDRESS) && (foundbb5add==true)) {
+			Type = PBK_Text_Custom1;    	smprintf(s,"Address extension ? ");
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			entry->Entries[entry->EntriesNum].EntryType=Type;
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
+			continue;
+		}
+		if ((Block[0] == S4030_PBK_POSTAL_STREET) && (foundbb5add==true)) {
+			Type = PBK_Text_StreetAddress;  smprintf(s,"Street ");
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			entry->Entries[entry->EntriesNum].EntryType=Type;
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
+			continue;
+		}
+		if ((Block[0] == S4030_PBK_POSTAL_CITY) && (foundbb5add==true)) {
+			Type = PBK_Text_City;    	smprintf(s,"City ");
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			entry->Entries[entry->EntriesNum].EntryType=Type;
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
+			continue;
+		}
+		if ((Block[0] == S4030_PBK_POSTAL_STATE) && (foundbb5add==true)) {
+			Type = PBK_Text_State;    	smprintf(s,"State ");
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			entry->Entries[entry->EntriesNum].EntryType=Type;
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
+			continue;
+		}
+		if ((Block[0] == S4030_PBK_POSTAL_POSTAL) && (foundbb5add==true)) {
+			Type = PBK_Text_Postal;    	smprintf(s,"Postal ");
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			entry->Entries[entry->EntriesNum].EntryType=Type;
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
+			continue;
+		}
+		if ((Block[0] == S4030_PBK_POSTAL_COUNTRY) && (foundbb5add==true)) {
+			Type = PBK_Text_Country;    	smprintf(s,"Country ");
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			entry->Entries[entry->EntriesNum].EntryType=Type;
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
+			continue;
+		}
+
+
 		if (Block[0] == N7110_PBK_RINGTONE_ID) {
 			if (entry->MemoryType==MEM7110_CG) {
 				bitmap->RingtoneID=Block[5];
@@ -553,7 +635,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		if (Block[0] == N6510_PBK_VOICETAG_ID) {
 			smprintf(s, "Entry %i has voice tag %i\n",Block[5]-1,Block[7]);
-			entry->Entries[Block[5]-1].VoiceTag = Block[7];
+			entry->Entries[entry->EntriesNum].VoiceTag = Block[7];
 			continue;
 		}
 

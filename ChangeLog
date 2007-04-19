@@ -49,6 +49,8 @@ For additionals materials and links to them see readme.txt
 
 
 2007???? - 1.10.4
+[-] * Fix decoding of new style address records in Nokia phones. Thanks to
+      Martin Strigl, see also bug #286.
 
 20070419 - 1.10.3
 [-] * Work with AT phones which can not write SMS to ME (bug #282).
