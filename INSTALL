@@ -68,7 +68,8 @@ need some tweaks:
 cd mysql/lib/opt
 reimp.exe libmysql.lib
 mv LIBMYSQL.def libmysql.def
-i586-mingw32msvc-dlltool --input-def libmysql.def --dllname libmysql.dll --output-lib libmysql.a
+i586-mingw32msvc-dlltool --input-def libmysql.def \
+    --dllname libmysql.dll --output-lib libmysql.a
 
 reimp.exe is part of mingw-utils and can be run through wine, I didn't
 try to compile native binary from it.
@@ -82,17 +83,18 @@ binaries in POSTGRE_CROSS_PATH variable:
 
 -DPOSTGRES_CROSS_PATH=/path/to/pgsql
 
-You can download PostgreSQL binaries from <http://www.postgresql.org/>, but
-then you need to add wldap32.dll library to bin.
+You can download PostgreSQL binaries from <http://www.postgresql.org/>,
+but then you need to add wldap32.dll library to bin.
 
 
 Gettext
 -------
 
-For Gettext (internationalization support), you need gettext-0.14.4-bin.zip,
-gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip from
-<http://gnuwin32.sourceforge.net/>. Unpack these to some directory and point
-build 
+For Gettext (internationalization support), you need
+gettext-0.14.4-bin.zip, gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip
+from <http://gnuwin32.sourceforge.net/>. Unpack these to some directory
+and point build 
 
 -DGETTEXT_CROSS_PATH=/path/to/gettext
 
+# vim: et ts=4 sw=4 sts=4 tw=72

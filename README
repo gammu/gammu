@@ -46,9 +46,9 @@ yet.
 Problems
 ========
 
-Use <http://www.gammu.org/bugs> or mailing list for reporting problems.
-It useful to send logs of gammu executed with enabled debugging. You can
-to it by adding "textall" as first parameter, e.g.:
+Use <http://bugs.cihar.com/> or mailing list for reporting problems.  It
+useful to send logs of gammu executed with enabled debugging. You can to
+it by adding "textall" as first parameter, e.g.:
 
    gammu textall --identify
 
@@ -90,3 +90,5 @@ Any feedback is welcome, if you found bug, please follow description in
 section "Problems". You can contact developers and users on
 <gammu-users@lists.sourceforge.net> mailing list or directly current
 maintainer at <michal@cihar.com>.
+
+# vim: et ts=4 sw=4 sts=4 tw=72
