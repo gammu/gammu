@@ -3499,7 +3499,7 @@ I finally end supporting gnokii. Started creating structures.
 ----------------------
 YYYYMMDD - description
 
-# vim: et ts=4 sw=4 sts=4
+# vim: et ts=4 sw=4 sts=4 tw=72
 # vim: ft=changelog fenc=utf-8 encoding=utf-8
 # vim: fde=getline(v\:lnum-1)=~'^\\s*$'&&getline(v\:lnum)=~'^\\d'?'>1'\:1&&v\:lnum>50&&getline(v\:lnum)!~'^#'
 # vim: fdn=1 fdm=expr
