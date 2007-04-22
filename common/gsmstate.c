@@ -1403,7 +1403,7 @@ static OnePhoneModel allmodels[] = {
 	{"BE5", 	  "ONE TOUCH 500","",				   {F_ALCATEL,F_SMSONLYSENT,F_BROKENCPBS,0}},
 	{"BH4",		  "ONE TOUCH 535","ALCATEL OT535",		   {F_ALCATEL,F_SMSONLYSENT,0}},
 	{"BF5", 	  "ONE TOUCH 715","ALCATEL OT715",		   {F_ALCATEL,F_SMSONLYSENT,F_BROKENCPBS,0}},
-	{"OT - C55x",	  "ONE TOUCH 55x","ALCATEL OT55x",		   {F_ALCATEL,0}},
+	{"OT - C55x",	  "OT - C55x","ALCATEL OT55x",			   {F_ALCATEL,0}},
 #endif
 	{"unknown",	  ""      ,"",           {0}}
 };
