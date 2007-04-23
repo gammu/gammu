@@ -4577,19 +4577,22 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			str = GetLineString(msg.Buffer,Priv->Lines,line+1);
 			if (strncmp(str, "+CPROT: ", 7) == 0) {
 				if (sscanf(str, "+CPROT: %d,", &cur) == 1 || sscanf(str, "+CPROT: (%d,", &cur) == 1) {
-					smprintf(s, "OBEX seems to be supported!\n");
-					if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)) {
-						/*
-						 * We do not enable this automatically, because some
-						 * phones provide less features over OBEX than AT
-						 * using AT commands.
-						 */
-						smprintf(s, "HINT: Please consider adding F_OBEX to your phone capabilities in common/gsmstate.c\n");
-					} else {
+					/* OBEX has ID of 0 */
+					if (cur == 0) {
+						smprintf(s, "OBEX seems to be supported!\n");
+						if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)) {
+							/*
+							 * We do not enable this automatically, because some
+							 * phones provide less features over OBEX than AT
+							 * using AT commands.
+							 */
+							smprintf(s, "HINT: Please consider adding F_OBEX to your phone capabilities in common/gsmstate.c\n");
+						} else {
 #ifdef GSM_ENABLE_SONYERICSSON
-						/* Tell OBEX driver that AT+CPROT=0 is supported */
-						s->Phone.Data.Priv.SONYERICSSON.HasOBEX = SONYERICSSON_OBEX_CPROT0;
+							/* Tell OBEX driver that AT+CPROT=0 is supported */
+							s->Phone.Data.Priv.SONYERICSSON.HasOBEX = SONYERICSSON_OBEX_CPROT0;
 #endif
+						}
 					}
 				}
 			}
