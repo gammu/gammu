@@ -21,6 +21,7 @@ ChangeLog
 [-] * Reorganised documentation a bit.
 [-] * Use correct format strings for IrDA debug messages.
 [-] * Identify Alcatel One Touch 55x.
+[-] * Improve detection of OBEX support.
 
 20070419 - 1.10.3
 [-] * Work with AT phones which can not write SMS to ME (bug #282).
