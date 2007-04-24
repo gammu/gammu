@@ -646,6 +646,7 @@ else (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
     string (REGEX REPLACE "/dot$" "" DOXYGEN_DOT_PATH ${DOXYGEN_DOT_EXECUTABLE})
 endif (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
 configure_file (cfg/Doxyfile.cmake cfg/Doxyfile)
+configure_file (cfg/mainpage.desc.cmake mainpage.desc)
 
 # Target for generating API documentation
 add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} cfg/Doxyfile 
