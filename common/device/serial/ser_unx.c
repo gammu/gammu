@@ -197,7 +197,8 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		return ERR_DEVICEOPENERROR;
     	}
 
-    	memcpy(&t, &d->old_settings, sizeof(struct termios));
+	/* Use previous settings as start */
+	t = d->old_settings;
 
 	/* Opening without parity */
     	t.c_iflag       = IGNPAR;
