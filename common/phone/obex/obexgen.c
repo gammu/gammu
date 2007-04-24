@@ -1,7 +1,16 @@
 /* (c) 2003 by Marcin Wiacek */
 /* (c) 2006-2007 by Michal Cihar */
 
-/** \file obexgen.c
+/** 
+ * \file obexgen.c
+ * @author Michal Čihař
+ * @author Marcin Wiacek
+ */
+/**
+ * @addtogroup Phone
+ * @{
+ */
+/**
  * \defgroup OBEXPhone OBEX phones communication
  * Generic OBEX access to phones, made addording to OBEX specification
  * version 1.3 and IrMC specification version 1.1 as available from IrDA
@@ -2776,6 +2785,7 @@ GSM_Phone_Functions OBEXGENPhone = {
 };
 
 #endif
+/*@}*/
 /*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.

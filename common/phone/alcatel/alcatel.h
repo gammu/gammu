@@ -1,5 +1,17 @@
 /* (c) 2002-2004 by Michal Cihar */
 
+/**
+ * \file alcatel.h
+ * @author Michal Čihař
+ */
+/**
+ * @addtogroup Phone
+ * @{
+ */
+/**
+ * @addtogroup AlcatelPhone
+ * @{
+ */
 /*
  * High level functions for communication with Alcatel One Touch 501 and
  * compatible mobile phone.
@@ -281,6 +293,9 @@ typedef struct {
 
 } GSM_Phone_ALCATELData;
 #endif
+
+/*@}*/
+/*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

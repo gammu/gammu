@@ -1,6 +1,19 @@
 /* (c) 2003 by Marcin Wiacek */
 /* (c) 2006 by Michal Cihar */
 
+/** 
+ * \file obexgen.h
+ * @author Michal Čihař
+ * @author Marcin Wiacek
+ */
+/**
+ * @addtogroup Phone
+ * @{
+ */
+/**
+ * @addtogroup OBEXPhone
+ * @{
+ */
 #ifndef obexgen_h
 #define obexgen_h
 
@@ -146,6 +159,8 @@ typedef struct {
 } GSM_Phone_OBEXGENData;
 
 #endif
+/*@}*/
+/*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

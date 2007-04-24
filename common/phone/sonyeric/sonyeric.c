@@ -1,6 +1,14 @@
 /* (c) 2006 by Michal Cihar */
 
-/** \file sonyeric.c
+/**
+ * \file sonyeric.c
+ * @author Michal Čihař
+ */
+/**
+ * @addtogroup Phone
+ * @{
+ */
+/**
  * \defgroup SEPhone Sony-Ericsson phones communication
  * High level functions for communication with Sony-Ericsson phones.
  *
@@ -1546,6 +1554,7 @@ GSM_Phone_Functions SONYERICSSONPhone = {
 
 #endif
 #endif
+/*@}*/
 /*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
