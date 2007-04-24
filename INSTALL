@@ -66,9 +66,8 @@ You can download MySQL binaries from <http://dev.mysql.com/>, but then
 need some tweaks:
 
 cd mysql/lib/opt
-reimp.exe libmysql.lib
-mv LIBMYSQL.def libmysql.def
-i586-mingw32msvc-dlltool --input-def libmysql.def \
+reimp.exe -d libmysql.lib
+i586-mingw32msvc-dlltool --kill-at --input-def libmysql.def \
     --dllname libmysql.dll --output-lib libmysql.a
 
 reimp.exe is part of mingw-utils and can be run through wine, I didn't
