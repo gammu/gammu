@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.10.4
+20070424 - 1.10.4
 [-] * Fix decoding of new style address records in Nokia phones. Thanks to
       Martin Strigl, see also bug #286.
 [-] * Reorganised documentation a bit.
