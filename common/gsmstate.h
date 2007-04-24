@@ -1,5 +1,19 @@
 /* (c) 2002-2004 by Marcin Wiacek & Michal Cihar */
 
+/**
+ * @file gsmstate.h
+ * @author Michal Čihař
+ * @author Marcin Wiacek
+ */
+
+/**
+ * @defgroup StateMachine State machine data
+ *
+ * This module implements core of state machine.
+ *
+ * @{
+ */
+
 #ifndef __gsm_state_h
 #define __gsm_state_h
 
@@ -256,13 +270,22 @@ typedef struct {
 } GSM_Device_Functions;
 
 #ifdef GSM_ENABLE_SERIALDEVICE
-	extern GSM_Device_Functions SerialDevice;
+/**
+ * Serial device functions.
+ */
+extern GSM_Device_Functions SerialDevice;
 #endif
 #ifdef GSM_ENABLE_IRDADEVICE
-	extern GSM_Device_Functions IrdaDevice;
+/**
+ * IrDA device functions.
+ */
+extern GSM_Device_Functions IrdaDevice;
 #endif
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE
-	extern GSM_Device_Functions BlueToothDevice;
+/**
+ * Bluetooth device functions.
+ */
+extern GSM_Device_Functions BlueToothDevice;
 #endif
 
 /**
@@ -272,17 +295,32 @@ typedef struct {
  */
 typedef struct {
 	union {
+		/**
+		 * Fake memeber to ensure union has always at least one member.
+		 */
 		char fake;
 #ifdef GSM_ENABLE_SERIALDEVICE
+		/**
+		 * Data for serial port device.
+		 */
 		GSM_Device_SerialData		Serial;
 #endif
 #ifdef GSM_ENABLE_IRDADEVICE
+		/**
+		 * Data for IrDA port device.
+		 */
 		GSM_Device_IrdaData		Irda;
 #endif
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE
+		/**
+		 * Data for Bluetooth port device.
+		 */
 		GSM_Device_BlueToothData	BlueTooth;
 #endif
 	} Data;
+	/**
+	 * Functions for currently used device.
+	 */
 	GSM_Device_Functions *Functions;
 } GSM_Device;
 
@@ -363,6 +401,9 @@ typedef struct {
 		GSM_Protocol_GNAPBUSData	GNAPBUS;
 #endif
 	} Data;
+	/**
+	 * Functions for currently used protocol layer.
+	 */
 	GSM_Protocol_Functions *Functions;
 } GSM_Protocol;
 
@@ -688,13 +729,16 @@ typedef struct {
 	 */
 	unsigned char		*Netmonitor;
 	/**
-	 * Pointer to structure used internally by phone drivers.
+	 * Pointer to call diversion structure used internally by phone drivers.
 	 */
 	GSM_MultiCallDivert	*Divert;
 	/**
-	 * Pointer to structure used internally by phone drivers.
+	 * Pointer to todo structure used internally by phone drivers.
 	 */
 	GSM_ToDoEntry		*ToDo;
+	/**
+	 * Pointer to note structure used internally by phone drivers.
+	 */
 	GSM_NoteEntry		*Note;
 	/**
 	 * Used internally by phone drivers.
@@ -749,7 +793,13 @@ typedef struct {
 	 * Pointer to structure used internally by phone drivers.
 	 */
 	GSM_FileSystemStatus	*FileSystemStatus;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_ChatSettings	*ChatSettings;
+	/**
+	 * Pointer to structure used internally by phone drivers.
+	 */
 	GSM_SyncMLSettings	*SyncMLSettings;
 
 	/**
@@ -1093,6 +1143,9 @@ typedef struct {
 	 * Sends SMS already saved in phone.
 	 */
 	GSM_Error (*SendSavedSMS)	(GSM_StateMachine *s, int Folder, int Location);
+	/**
+	 * Configures fast SMS sending.
+	 */
 	GSM_Error (*SetFastSMSSending)  (GSM_StateMachine *s, bool enable);
 	/**
 	 * Enable/disable notification on incoming SMS.
@@ -1238,7 +1291,13 @@ typedef struct {
 	 * Changes MMS settings.
 	 */
 	GSM_Error (*SetMMSSettings)     (GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
+	/**
+	 * Lists MMS folders.
+	 */
 	GSM_Error (*GetMMSFolders)      (GSM_StateMachine *s, GSM_MMSFolders *folders);
+	/**
+	 * Retrieves next part of MMS file information.
+	 */
 	GSM_Error (*GetNextMMSFileInfo)	(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start);
 	/**
 	 * Gets bitmap.
@@ -1370,8 +1429,17 @@ typedef struct {
 	 * Gets file part from filesystem.
 	 */
 	GSM_Error (*GetFolderListing)   (GSM_StateMachine *s, GSM_File *File, bool start);
+	/**
+	 * Gets next root folder.
+	 */
 	GSM_Error (*GetNextRootFolder)  (GSM_StateMachine *s, GSM_File *File);
+	/**
+	 * Sets file system attributes.
+	 */
 	GSM_Error (*SetFileAttributes)  (GSM_StateMachine *s, GSM_File *File);
+	/**
+	 * Retrieves file part.
+	 */
 	GSM_Error (*GetFilePart)	(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size);
 	/**
 	 * Adds file part to filesystem.
@@ -1393,6 +1461,9 @@ typedef struct {
 	 * Adds folder to filesystem.
 	 */
 	GSM_Error (*AddFolder)	  	(GSM_StateMachine *s, GSM_File *File);
+	/**
+	 * Deletes folder from filesystem.
+	 */
 	GSM_Error (*DeleteFolder)	(GSM_StateMachine *s, unsigned char *ID);
 	/**
 	 * Gets GPRS access point.
@@ -1442,8 +1513,17 @@ typedef struct {
 	extern GSM_Phone_Functions GNAPGENPhone;
 #endif
 
+/**
+ * Phone functions and private data.
+ */
 typedef struct {
+	/**
+	 * Private data for current phone driver.
+	 */
 	GSM_Phone_Data		 Data;
+	/**
+	 * Functions for current phone driver.
+	 */
 	GSM_Phone_Functions	*Functions;
 } GSM_Phone;
 
@@ -1487,16 +1567,16 @@ typedef enum {
 
 typedef struct {
 	/* Config file (or Registry or...) variables */
-	char			Model[50];	   /* Model from config file 		*/
-	char			DebugLevel[50];    /* Debug level			*/
-	char 			*Device;	   /* Device name from config file 	*/
-	char			*Connection;	   /* Connection type as string		*/
-	char			*SyncTime;	   /* Synchronize time on startup? 	*/
-	char			*LockDevice;	   /* Lock device ? (Unix)		*/
-	char			*DebugFile;        /* Name of debug file		*/
-	char 			*Localize;	   /* Name of localisation file		*/
-	char			*StartInfo;	   /* Display something during start ?  */
-	bool			UseGlobalDebugFile;/* Should we use global debug file?	*/
+	char			Model[50];	   /**< Model from config file 		*/
+	char			DebugLevel[50];    /**< Debug level			*/
+	char 			*Device;	   /**< Device name from config file 	*/
+	char			*Connection;	   /**< Connection type as string		*/
+	char			*SyncTime;	   /**< Synchronize time on startup? 	*/
+	char			*LockDevice;	   /**< Lock device ? (Unix)		*/
+	char			*DebugFile;        /**< Name of debug file		*/
+	char 			*Localize;	   /**< Name of localisation file		*/
+	char			*StartInfo;	   /**< Display something during start ?  */
+	bool			UseGlobalDebugFile;/**< Should we use global debug file?	*/
 	bool			DefaultModel;
 	bool			DefaultDebugLevel;
 	bool			DefaultDevice;
@@ -1506,31 +1586,34 @@ typedef struct {
 	bool			DefaultDebugFile;
 	bool			DefaultLocalize;
 	bool			DefaultStartInfo;
-	char			TextReminder[32];	/* Text for calendar entry categories in local language */
-	char			TextMeeting[32];
-	char			TextCall[32];
-	char			TextBirthday[32];
-	char			TextMemo[32];
+	char			TextReminder[32]; /**< Text for reminder calendar entry category in local language */
+	char			TextMeeting[32]; /**< Text for meeting calendar entry category in local language */
+	char			TextCall[32]; /**< Text for call calendar entry category in local language */
+	char			TextBirthday[32]; /**< Text for birthday calendar entry category in local language */
+	char			TextMemo[32]; /**< Text for memo calendar entry category in local language */
 } GSM_Config;
 
+/**
+ * Maximum number of concurrent configurations.
+ */
 #define MAX_CONFIG_NUM		5
 
 struct _GSM_StateMachine {
-	GSM_ConnectionType 	ConnectionType;				/* Type of connection as int			*/
-	char			*LockFile;				/* Lock file name for Unix 			*/
-	Debug_Info		di;					/* Debug information				*/
-	bool			opened;					/* Is connection opened ?			*/
-	GSM_Config		Config[MAX_CONFIG_NUM + 1];
-	GSM_Config		*CurrentConfig;				/* Config file (or Registry or...) variables 	*/
-	int			ConfigNum;
-	INI_Section 		*msg;					/* Localisation strings structure    		*/
-	int			ReplyNum;				/* How many times make sth. 			*/
-	int			Speed;					/* For some protocols used speed		*/
+	GSM_ConnectionType 	ConnectionType;				/**< Type of connection as int			*/
+	char			*LockFile;				/**< Lock file name for Unix 			*/
+	Debug_Info		di;					/**< Debug information				*/
+	bool			opened;					/**< Is connection opened ?			*/
+	GSM_Config		Config[MAX_CONFIG_NUM + 1];		/**< Configuration data */
+	GSM_Config		*CurrentConfig;				/**< Config file (or Registry or...) variables 	*/
+	int			ConfigNum;				/**< Number of actual configurations */
+	INI_Section 		*msg;					/**< Localisation strings structure    		*/
+	int			ReplyNum;				/**< How many times make sth. 			*/
+	int			Speed;					/**< For some protocols used speed		*/
 
-	GSM_Device		Device;
-	GSM_Protocol		Protocol;
-	GSM_Phone		Phone;
-	GSM_User		User;
+	GSM_Device		Device; /**< Device driver data and functions */
+	GSM_Protocol		Protocol; /**< Protocol driver data and functions */
+	GSM_Phone		Phone; /**< Phone driver data and functions */
+	GSM_User		User; /**< User defined functions */
 };
 
 /* ------------------------ Other general definitions ---------------------- */
@@ -1639,12 +1722,14 @@ typedef enum {
 	F_SMS_LOCATION_0, /**< Locations of SMS memories start from 0 */
 } Feature;
 
-/* For models table */
+/**
+ * Model identification, used for finding phone features.
+ */
 struct _OnePhoneModel {
-	char		*model;
-	char		*number;
-	char		*irdamodel;
-	Feature		features[14];
+	char		*model; /**< Model as returned by phone */
+	char		*number; /**< Identification by Gammu */
+	char		*irdamodel; /**< Model as used over IrDA */
+	Feature		features[14]; /**< List of supported features */
 };
 
 bool 		IsPhoneFeatureAvailable	(OnePhoneModel *model, Feature feature);
@@ -1662,6 +1747,7 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info);
 #endif
 
 #endif
+/*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
