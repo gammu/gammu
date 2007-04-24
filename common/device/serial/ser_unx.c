@@ -180,8 +180,8 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	if (d->hPhone < 0) {
 		i = errno;
 		GSM_OSErrorInfo(s,"open in serial_open");
-		if (i ==  2) return ERR_DEVICENOTEXIST;		//no such file or directory
-		if (i == 13) return ERR_DEVICENOPERMISSION;	//permission denied
+		if (i == ENOENT) return ERR_DEVICENOTEXIST;		//no such file or directory
+		if (i == EACCES) return ERR_DEVICENOPERMISSION;	//permission denied
 		return ERR_DEVICEOPENERROR;
 	}
 
