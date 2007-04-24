@@ -1671,7 +1671,7 @@ typedef enum {
 	F_MAGICBYTES,	 /**< Phone can make authentication with magic bytes */
 	F_NODTMF,	 /**< Phone can't send DTMF */
 	F_DISPSTATUS,	 /**< Phone return display status */
-	F_NOCALLINFO,
+	F_NOCALLINFO,	 /**< Phone does not return call info */
 
 	/* n3320.c */
 	F_DAYMONTH,	 /**< Day and month reversed in pbk, when compare to GSM models */
@@ -1707,7 +1707,7 @@ typedef enum {
 	/* n6510.c && n7110.c */
 	F_VOICETAGS,	 /**< Voice tags available */
 	F_CAL62,	 /**< Calendar,6210 style - Call,Birthday,Memo,Meeting */
-	F_NOTES,
+	F_NOTES,	 /**< Notes supported */
 
 	/* AT modules */
 	F_SMSONLYSENT,	 /**< Phone supports only sent/unsent messages */
