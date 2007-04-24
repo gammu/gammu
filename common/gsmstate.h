@@ -1696,13 +1696,13 @@ typedef enum {
 	F_WAPMMSPROXY,	 /**< WAP & MMS settings contains first & second proxy */
 	F_CHAT,		 /**< Phone with Chat settings */
 	F_SYNCML,	 /**< Phone with SyncML settings */
-	F_FILES2,	 /**< filesystem version 2 */
-	F_NOFILE1,
+	F_FILES2,	 /**< Filesystem version 2 */
+	F_NOFILE1,	 /**< No filesystem version 1 */
 	F_6230iWAP,	 /**< WAP, MMS, etc. settings like in 6230i - unknown now */
 	F_PROFILES,	 /**< Profiles support available */
 	F_SERIES40_30,   /**< Series 40 3.0 */
 	F_SMS_FILES,  	 /**< SMS are read from filesystem files like in Series 40 3.0 */
-	F_3220_MMS,
+	F_3220_MMS,	 /**< MMS storage as in 3320 */
 
 	/* n6510.c && n7110.c */
 	F_VOICETAGS,	 /**< Voice tags available */
