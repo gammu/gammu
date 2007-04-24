@@ -650,6 +650,7 @@ configure_file (cfg/mainpage.desc.cmake mainpage.desc)
 
 # Target for generating API documentation
 add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} cfg/Doxyfile 
+    COMMAND find ${DOXYGEN_OUTPUT}/html -name '*.html' -print0 | xargs -0 sed -i 's@text/html\;charset=iso-8859-1@text/html\;charset=utf-8@'
     DEPENDS ${LIBRARY_SRC} ${HEADERS}
     COMMENT "Generating API documentation")
 
