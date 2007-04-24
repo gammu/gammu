@@ -224,13 +224,6 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		return ERR_DEVICEOPENERROR;
     	}
 
-    	/* Making file descriptor non blocking. */
-    	if (fcntl(d->hPhone, F_SETFL, FNONBLOCK) == -1) {
-		serial_close(s);
-		GSM_OSErrorInfo(s,"fcntl in serial_open");
-		return ERR_DEVICEOPENERROR;
-    	}
-
     	return ERR_NONE;
 }
 
