@@ -17,6 +17,8 @@ ChangeLog
 
 2007???? - 1.10.5
 [-] * Doxygen documentation improvements.
+[-] * Fix USB serial devices with Linux kernel 2.6.21, we don't use
+      ASYNC IO, so we should not set it.
 
 20070424 - 1.10.4
 [-] * Fix decoding of new style address records in Nokia phones. Thanks to

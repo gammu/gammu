@@ -25,6 +25,7 @@
 #include <string.h>
 #include <termios.h>
 #include <errno.h>
+#include <assert.h>
 
 #include "../../gsmcomon.h"
 #include "ser_unx.h"
@@ -155,11 +156,15 @@ static GSM_Error serial_close(GSM_StateMachine *s)
 {
 	GSM_Device_SerialData *d = &s->Device.Data.Serial;
 
+	assert(d->hPhone >= 0);
+
 	/* Restores old settings */
 	tcsetattr(d->hPhone, TCSANOW, &d->old_settings);
 
 	/* Closes device */
 	close(d->hPhone);
+
+	d->hPhone = -1;
 
 	return ERR_NONE;
 }
@@ -219,8 +224,8 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		return ERR_DEVICEOPENERROR;
     	}
 
-    	/* Making file descriptor asynchronous. */
-    	if (fcntl(d->hPhone, F_SETFL, FASYNC | FNONBLOCK) == -1) {
+    	/* Making file descriptor non blocking. */
+    	if (fcntl(d->hPhone, F_SETFL, FNONBLOCK) == -1) {
 		serial_close(s);
 		GSM_OSErrorInfo(s,"fcntl in serial_open");
 		return ERR_DEVICEOPENERROR;
@@ -233,6 +238,8 @@ static GSM_Error serial_setparity(GSM_StateMachine *s, bool parity)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
     	struct termios	  	t;
+
+	assert(d->hPhone >= 0);
 
     	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setparity");
@@ -260,6 +267,8 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
     	struct termios	  	t;
     	unsigned int	    	flags;
+
+	assert(d->hPhone >= 0);
 
     	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setdtrrts");
@@ -312,6 +321,8 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 	baud_record		*curr = baud_table;
 
 
+	assert(d->hPhone >= 0);
+
     	if (tcgetattr(d->hPhone, &t)) {
 		GSM_OSErrorInfo(s,"tcgetattr in serial_setspeed");
 		return ERR_DEVICEREADERROR;
@@ -350,6 +361,8 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
     	fd_set	  			readfds;
     	int	     			actual = 0;
 
+	assert(d->hPhone >= 0);
+
     	FD_ZERO(&readfds);
     	FD_SET(d->hPhone, &readfds);
 
@@ -370,14 +383,16 @@ static int serial_write(GSM_StateMachine *s, void *buf, size_t nbytes)
     	int		     	ret;
     	size_t		  	actual = 0;
 
+	assert(d->hPhone >= 0);
+
     	do {
 		ret = write(d->hPhone, (unsigned char *)buf, nbytes - actual);
-		if (ret < 0 && errno == EAGAIN) {
-			my_sleep(1);
-			continue;
-                }
 		if (ret < 0) {
-	    		if (actual != nbytes) GSM_OSErrorInfo(s,"serial_write");
+			if (errno == EAGAIN) {
+				my_sleep(1);
+				continue;
+			}
+	    		if (actual != nbytes) GSM_OSErrorInfo(s, "serial_write");
 	    		return actual;
 		}
 		actual  += ret;
