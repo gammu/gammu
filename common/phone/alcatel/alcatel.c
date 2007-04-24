@@ -1,6 +1,13 @@
 /* (c) 2002-2005 by Michal Cihar */
 /**
  * \file alcatel.c
+ * @author Michal Čihař
+ */
+/**
+ * @addtogroup Phone
+ * @{
+ */
+/**
  * \defgroup AlcatelPhone Alcatel phones communication
  * High level functions for communication with Alcatel One Touch 501 and
  * compatible mobile phone.
@@ -4116,6 +4123,7 @@ GSM_Phone_Functions ALCATELPhone = {
 #endif
 #endif
 
+/*@}*/
 /*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.

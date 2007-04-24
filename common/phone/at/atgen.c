@@ -6,6 +6,10 @@
  * @author Marcin Wiacek
  */
 /**
+ * @ingroup Phone
+ * @{
+ */
+/**
  * @addtogroup ATPhone
  * @{
  */
@@ -4896,6 +4900,7 @@ GSM_Phone_Functions ATGENPhone = {
 };
 
 #endif
+/*@}*/
 /*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.

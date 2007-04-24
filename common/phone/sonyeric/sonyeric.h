@@ -1,7 +1,16 @@
 /* (c) 2006 by Michal Cihar */
 
 /**
- * High level functions for communication with Sony-Ericsson phones.
+ * \file sonyeric.h
+ * @author Michal Čihař
+ */
+/**
+ * @addtogroup Phone
+ * @{
+ */
+/**
+ * @addtogroup SEPhone
+ * @{
  */
 
 #ifndef sonyericsson_h
@@ -56,6 +65,8 @@ typedef struct {
 	GSM_SONYERICSSON_OBEX	HasOBEX;
 } GSM_Phone_SONYERICSSONData;
 #endif
+/*@}*/
+/*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

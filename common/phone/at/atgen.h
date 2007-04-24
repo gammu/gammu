@@ -6,6 +6,10 @@
  * @author Marcin Wiacek
  */
 /**
+ * @addtogroup Phone
+ * @{
+ */
+/**
  * @defgroup ATPhone AT phones communication
  *
  * This module implements standard AT commands.
@@ -158,6 +162,7 @@ GSM_Error ATGEN_HandleCMEError	(GSM_StateMachine *);
 GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
 
 #endif
+/*@}*/
 /*@}*/
 
 /* How should editor hadle tabs in this file? Add editor commands here.
