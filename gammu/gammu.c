@@ -10,6 +10,7 @@
 #include <signal.h>
 #include <ctype.h>
 #include <wchar.h>
+#include <unistd.h>
 #ifdef WIN32
 #  include <windows.h>
 #  include <process.h>
@@ -3376,6 +3377,9 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	}
 
 	if (strcasecmp(argv[2],"TEXT") == 0) {
+		if (isatty(fileno(stdin))) {
+			printf(_("Enter message text and press ^D:\n"));
+		}
 		chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
 		if (chars_read == 0) printf(_("Warning: 0 chars read !\n"));
 		InputBuffer[chars_read] 		= 0x00;
@@ -4600,6 +4604,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 
 		for (i=0;i<sms.Number;i++) {
 			printf(_("Sending SMS %i/%i"),i+1,sms.Number);
+			fflush(stdout);
 			sms.SMS[i].Location			= 0;
 			sms.SMS[i].ReplyViaSameSMSC		= ReplyViaSameSMSC;
 			sms.SMS[i].SMSC.Location		= SMSCSet;
@@ -4612,6 +4617,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			error=Phone->SendSMS(&s, &sms.SMS[i]);
 			Print_Error(error);
 			printf(_("....waiting for network answer"));
+			fflush(stdout);
 			while (!gshutdown) {
 				GSM_ReadDevice(&s,true);
 				if (SMSStatus == ERR_UNKNOWN) {
