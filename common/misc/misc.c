@@ -611,29 +611,29 @@ char *GetOS(void)
 
 	/* no info about Win95 SP1, Win95 OSR2.1, Win95 OSR2.5.... */
 	if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 0 && Ver.dwBuildNumber == 950) {
-		sprintf(Buffer,"Win 95");
+		sprintf(Buffer,"Windows 95");
 	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 0 && Ver.dwBuildNumber == 1111) {
-		sprintf(Buffer,"Win 95 OSR2.x");
+		sprintf(Buffer,"Windows 95 OSR2.x");
 
 	/* no info about Win98 SP1.... */
 	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 10 && Ver.dwBuildNumber == 1998) {
-		sprintf(Buffer,"Win 98");
+		sprintf(Buffer,"Windows 98");
 	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 10 && Ver.dwBuildNumber == 2222) {
-		sprintf(Buffer,"Win 98 SE");
+		sprintf(Buffer,"Windows 98 SE");
 
 	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 90 && Ver.dwBuildNumber == 3000) {
-		sprintf(Buffer,"Win ME");
+		sprintf(Buffer,"Windows ME");
 
 	/* ---------------- NT family ------------------- */
 
 	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 0 && Ver.dwBuildNumber == 1381) {
-		sprintf(Buffer,"Win NT 4.0");
+		sprintf(Buffer,"Windows NT 4.0");
 
 	} else if (Ver.dwMajorVersion == 5 && Ver.dwMinorVersion == 0 && Ver.dwBuildNumber == 2195) {
-		sprintf(Buffer,"Win 2000");
+		sprintf(Buffer,"Windows 2000");
 
 	} else if (Ver.dwMajorVersion == 5 && Ver.dwMinorVersion == 1 && Ver.dwBuildNumber == 2600) {
-		sprintf(Buffer,"Win XP");
+		sprintf(Buffer,"Windows XP");
 #if _MSC_VER > 1200 //6.0 has it undeclared
 		if (Extended) {
 			if (Ver.wSuiteMask & VER_SUITE_PERSONAL) {
@@ -645,7 +645,13 @@ char *GetOS(void)
 #endif
 
 	} else if (Ver.dwMajorVersion == 5 && Ver.dwMinorVersion == 2) {
-		sprintf(Buffer,"Win 2003");
+		sprintf(Buffer,"Windows 2003");
+
+	} else if (Ver.dwMajorVersion == 6 && Ver.dwMinorVersion == 0) {
+		sprintf(Buffer,"Windows Vista");
+
+	} else if (Ver.dwMajorVersion == 6 && Ver.dwMinorVersion > 0) {
+		sprintf(Buffer,"Windows Server 2007");
 
 	} else {
 		sprintf(Buffer, "Windows %i.%i.%i",(int)Ver.dwMajorVersion,(int)Ver.dwMinorVersion,(int)Ver.dwBuildNumber);
