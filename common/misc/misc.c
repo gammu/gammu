@@ -376,7 +376,7 @@ void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, in
 Debug_Info di = {0,NULL,false,""};
 
 #ifdef DEBUG
-#ifdef __GNUC__
+#if defined(__GNUC__) && !defined(printf)
 __attribute__((format(printf, 1, 2)))
 #endif
 int dbgprintf(const char *format, ...)
@@ -411,7 +411,7 @@ int dbgprintf(const char *format, ...)
 }
 #endif
 
-#ifdef __GNUC__
+#if defined(__GNUC__) && !defined(printf)
 __attribute__((format(printf, 2, 3)))
 #endif
 int smfprintf(Debug_Info *d, const char *format, ...)

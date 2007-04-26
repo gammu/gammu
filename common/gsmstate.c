@@ -1471,7 +1471,7 @@ void GSM_DumpMessageLevel3(GSM_StateMachine *s, unsigned char *message, int mess
 	}
 }
 
-#ifdef __GNUC__
+#if defined(__GNUC__) && !defined(printf)
 __attribute__((format(printf, 2, 3)))
 #endif
 int smprintf(GSM_StateMachine *s, const char *format, ...)

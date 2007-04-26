@@ -64,6 +64,24 @@ bool 				phonedb 		= false;
 bool				batch			= false;
 bool				batchConn		= false;
 
+#if defined(__GNUC__) && !defined(printf)
+__attribute__((format(printf, 1, 2)))
+#endif
+int printf_err(const char *format, ...)
+{
+	va_list ap;
+	int ret;
+
+	/* l10n: Generic prefix for error messages */
+	printf("%s: ", _("Error"));
+
+	va_start(ap, format);
+	ret = vprintf(format, ap);
+	va_end(ap);
+
+	return ret;
+}
+
 void interrupt(int sign)
 {
 	signal(sign, SIG_IGN);
@@ -190,13 +208,13 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 	int tmp;
 
 	if (argc <= num) {
-		printf("%s\n", _("ERROR: more parameters required"));
+		printf_err("%s\n", _("more parameters required"));
 		exit (-1);
 	}
 
 	*start=atoi(argv[num]);
 	if (*start==0) {
-		printf("%s\n",_("ERROR: enumerate locations from 1"));
+		printf_err("%s\n",_("enumerate locations from 1"));
 		exit (-1);
 	}
 
@@ -204,7 +222,7 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 		*stop=*start;
 		if (argc>=num+2) *stop=atoi(argv[num+1]);
 		if (*stop==0) {
-			printf("%s\n", _("ERROR: enumerate locations from 1"));
+			printf_err("%s\n", _("enumerate locations from 1"));
 			exit (-1);
 		}
 		if (*stop < *start) {
@@ -974,7 +992,7 @@ static void GetAllMemory(int argc, char *argv[])
 	if (strcasecmp(argv[2],"FD") == 0) Entry.MemoryType=MEM_FD;
 	if (strcasecmp(argv[2],"SL") == 0) Entry.MemoryType=MEM_SL;
 	if (Entry.MemoryType==0) {
-		printf(_("ERROR: unknown memory type (\"%s\")\n"),argv[2]);
+		printf_err(_("unknown memory type (\"%s\")\n"),argv[2]);
 		exit (-1);
 	}
 
@@ -1013,7 +1031,7 @@ static void GetMemory(int argc, char *argv[])
 	if (strcasecmp(argv[2],"FD") == 0) entry.MemoryType=MEM_FD;
 	if (strcasecmp(argv[2],"SL") == 0) entry.MemoryType=MEM_SL;
 	if (entry.MemoryType==0) {
-		printf(_("ERROR: unknown memory type (\"%s\")\n"),argv[2]);
+		printf_err(_("unknown memory type (\"%s\")\n"),argv[2]);
 		exit (-1);
 	}
 
@@ -1023,7 +1041,7 @@ static void GetMemory(int argc, char *argv[])
 		if (strcasecmp(argv[5],"-nonempty") == 0) {
 			empty = false;
 		} else {
-			printf(_("ERROR: unknown parameter \"%s\"\n"),argv[5]);
+			printf_err(_("unknown parameter \"%s\"\n"),argv[5]);
 			exit (-1);
 		}
 	}
@@ -3235,7 +3253,7 @@ static void SetRingtone(int argc, char *argv[])
 		exit(-1);
 	}
 	if (ringtone.Location==0) {
-		printf(_("ERROR: enumerate locations from 1\n"));
+		printf_err(_("enumerate locations from 1\n"));
 		exit (-1);
 	}
 
@@ -10238,7 +10256,7 @@ int main(int argc, char *argv[])
 
 	/* Check used version vs. compiled */
 	if (!strcasecmp(GetGammuVersion(),VERSION) == 0) {
-		printf(_("ERROR: version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"),
+		printf_err(_("version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"),
 					GetGammuVersion(),VERSION);
 		exit(-1);
 	}
