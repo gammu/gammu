@@ -7423,19 +7423,19 @@ static void GetProfile(int argc, char *argv[])
 			case Profile_AutoAnswer		: printf(_("Automatic answer      : ")); break;
 			case Profile_Lights		: printf(_("Lights                : ")); break;
 			default:
-				printf(_("Unknown\n"));
+				printf("%s\n", _("Unknown"));
 				special = true;
 			}
 			if (!special) {
 				switch (Profile.FeatureValue[j]) {
 				case PROFILE_VOLUME_LEVEL1 		:
-				case PROFILE_KEYPAD_LEVEL1 		: printf(_("Level 1\n")); 		break;
+				case PROFILE_KEYPAD_LEVEL1 		: printf("%s\n", _("Level 1")); 		break;
 				case PROFILE_VOLUME_LEVEL2 		:
-				case PROFILE_KEYPAD_LEVEL2 		: printf(_("Level 2\n"));		break;
+				case PROFILE_KEYPAD_LEVEL2 		: printf("%s\n", _("Level 2"));		break;
 				case PROFILE_VOLUME_LEVEL3 		:
-				case PROFILE_KEYPAD_LEVEL3 		: printf(_("Level 3\n")); 		break;
-				case PROFILE_VOLUME_LEVEL4 		: printf(_("Level 4\n")); 		break;
-				case PROFILE_VOLUME_LEVEL5 		: printf(_("Level 5\n")); 		break;
+				case PROFILE_KEYPAD_LEVEL3 		: printf("%s\n", _("Level 3")); 		break;
+				case PROFILE_VOLUME_LEVEL4 		: printf("%s\n", _("Level 4")); 		break;
+				case PROFILE_VOLUME_LEVEL5 		: printf("%s\n", _("Level 5")); 		break;
 				case PROFILE_MESSAGE_NOTONE 		:
 				case PROFILE_AUTOANSWER_OFF		:
 				case PROFILE_LIGHTS_OFF  		:
@@ -7443,30 +7443,30 @@ static void GetProfile(int argc, char *argv[])
 				case PROFILE_WARNING_OFF		:
 				case PROFILE_CALLALERT_OFF	 	:
 				case PROFILE_VIBRATION_OFF 		:
-				case PROFILE_KEYPAD_OFF	   		: printf(_("Off\n"));	  	break;
-				case PROFILE_CALLALERT_RINGING   	: printf(_("Ringing\n"));		break;
+				case PROFILE_KEYPAD_OFF	   		: printf("%s\n", _("Off"));	  	break;
+				case PROFILE_CALLALERT_RINGING   	: printf("%s\n", _("Ringing"));		break;
 				case PROFILE_CALLALERT_BEEPONCE  	:
-				case PROFILE_MESSAGE_BEEPONCE 		: printf(_("Beep once\n")); 	break;
-				case PROFILE_CALLALERT_RINGONCE  	: printf(_("Ring once\n"));	break;
-				case PROFILE_CALLALERT_ASCENDING 	: printf(_("Ascending\n"));        break;
-				case PROFILE_CALLALERT_CALLERGROUPS	: printf(_("Caller groups\n"));	break;
-				case PROFILE_MESSAGE_STANDARD 		: printf(_("Standard\n"));  	break;
-				case PROFILE_MESSAGE_SPECIAL 		: printf(_("Special\n"));	 	break;
-				case PROFILE_MESSAGE_ASCENDING		: printf(_("Ascending\n")); 	break;
-				case PROFILE_MESSAGE_PERSONAL		: printf(_("Personal\n"));		break;
+				case PROFILE_MESSAGE_BEEPONCE 		: printf("%s\n", _("Beep once")); 	break;
+				case PROFILE_CALLALERT_RINGONCE  	: printf("%s\n", _("Ring once"));	break;
+				case PROFILE_CALLALERT_ASCENDING 	: printf("%s\n", _("Ascending"));        break;
+				case PROFILE_CALLALERT_CALLERGROUPS	: printf("%s\n", _("Caller groups"));	break;
+				case PROFILE_MESSAGE_STANDARD 		: printf("%s\n", _("Standard"));  	break;
+				case PROFILE_MESSAGE_SPECIAL 		: printf("%s\n", _("Special"));	 	break;
+				case PROFILE_MESSAGE_ASCENDING		: printf("%s\n", _("Ascending")); 	break;
+				case PROFILE_MESSAGE_PERSONAL		: printf("%s\n", _("Personal"));		break;
 				case PROFILE_AUTOANSWER_ON		:
 				case PROFILE_WARNING_ON			:
 				case PROFILE_SAVER_ON			:
-				case PROFILE_VIBRATION_ON 		: printf(_("On\n"));  		break;
-				case PROFILE_VIBRATION_FIRST 		: printf(_("Vibrate first\n"));	break;
-				case PROFILE_LIGHTS_AUTO 		: printf(_("Auto\n")); 		break;
-				case PROFILE_SAVER_TIMEOUT_5SEC	 	: printf(_("5 seconds\n")); 	break;
-				case PROFILE_SAVER_TIMEOUT_20SEC 	: printf(_("20 seconds\n")); 	break;
-				case PROFILE_SAVER_TIMEOUT_1MIN	 	: printf(_("1 minute\n"));		break;
-				case PROFILE_SAVER_TIMEOUT_2MIN	 	: printf(_("2 minutes\n"));	break;
-				case PROFILE_SAVER_TIMEOUT_5MIN	 	: printf(_("5 minutes\n"));	break;
-				case PROFILE_SAVER_TIMEOUT_10MIN 	: printf(_("10 minutes\n"));	break;
-				default					: printf(_("UNKNOWN\n"));
+				case PROFILE_VIBRATION_ON 		: printf("%s\n", _("On"));  		break;
+				case PROFILE_VIBRATION_FIRST 		: printf("%s\n", _("Vibrate first"));	break;
+				case PROFILE_LIGHTS_AUTO 		: printf("%s\n", _("Auto")); 		break;
+				case PROFILE_SAVER_TIMEOUT_5SEC	 	: printf("%s\n", _("5 seconds")); 	break;
+				case PROFILE_SAVER_TIMEOUT_20SEC 	: printf("%s\n", _("20 seconds")); 	break;
+				case PROFILE_SAVER_TIMEOUT_1MIN	 	: printf("%s\n", _("1 minute"));		break;
+				case PROFILE_SAVER_TIMEOUT_2MIN	 	: printf("%s\n", _("2 minutes"));	break;
+				case PROFILE_SAVER_TIMEOUT_5MIN	 	: printf("%s\n", _("5 minutes"));	break;
+				case PROFILE_SAVER_TIMEOUT_10MIN 	: printf("%s\n", _("10 minutes"));	break;
+				default					: printf("%s\n", _("UNKNOWN"));
 				}
 			}
 		}
@@ -7494,7 +7494,7 @@ static void GetSpeedDial(int argc, char *argv[])
 		printf("%i.",i);
 		switch (error) {
 		case ERR_EMPTY:
-			printf(_(" speed dial not assigned\n"));
+			printf("%s\n", _(" speed dial not assigned"));
 			break;
 		default:
 			Print_Error(error);
@@ -7645,17 +7645,17 @@ static void GetDisplayStatus(int argc, char *argv[])
 	error=Phone->GetDisplayStatus(&s,&Features);
 	Print_Error(error);
 
-	printf(_("Current display features :\n"));
+	printf("%s\n", _("Current display features :"));
 
 	for (i=0;i<Features.Number;i++) {
 		switch(Features.Feature[i]) {
-		case GSM_CallActive	: printf(_("Call active\n"));	break;
-		case GSM_UnreadSMS	: printf(_("Unread SMS\n"));	break;
-		case GSM_VoiceCall	: printf(_("Voice call\n"));	break;
-		case GSM_FaxCall	: printf(_("Fax call\n"));	break;
-		case GSM_DataCall	: printf(_("Data call\n"));	break;
-		case GSM_KeypadLocked	: printf(_("Keypad locked\n"));	break;
-		case GSM_SMSMemoryFull	: printf(_("SMS memory full\n"));
+		case GSM_CallActive	: printf("%s\n", _("Call active"));	break;
+		case GSM_UnreadSMS	: printf("%s\n", _("Unread SMS"));	break;
+		case GSM_VoiceCall	: printf("%s\n", _("Voice call"));	break;
+		case GSM_FaxCall	: printf("%s\n", _("Fax call"));	break;
+		case GSM_DataCall	: printf("%s\n", _("Data call"));	break;
+		case GSM_KeypadLocked	: printf("%s\n", _("Keypad locked"));	break;
+		case GSM_SMSMemoryFull	: printf("%s\n", _("SMS memory full"));
 		}
 	}
 
@@ -7717,19 +7717,20 @@ static void ListNetworks(int argc, char *argv[])
 			i++;
 		}
 		if (!*country) {
-			printf(_("Unknown country name."));
+			printf(_("Unknown country name: %s."), argv[2]);
+			printf("\n");
 			exit(-1);
 		}
 	}
-	printf(_("Network  Name\n"));
+	printf("%-10s %s\n", _("Network"), _("Name"));
 	i=0;
 	while (GSM_Networks[i*2]!=NULL) {
 		if (argc>2) {
 		        if (!strncmp(GSM_Networks[i*2],country,strlen(country))) {
-				printf("%s   %s\n", GSM_Networks[i*2], GSM_Networks[i*2+1]);
+				printf("%-10s %s\n", GSM_Networks[i*2], GSM_Networks[i*2+1]);
 			}
 		} else {
-			printf("%s   %s\n", GSM_Networks[i*2], GSM_Networks[i*2+1]);
+			printf("%-10s %s\n", GSM_Networks[i*2], GSM_Networks[i*2+1]);
 		}
 		i++;
 	}
