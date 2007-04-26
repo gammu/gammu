@@ -2,19 +2,19 @@
 # Copyright (C) 2003 - 2007 Michal Čihař
 # This file is distributed under the same license as the Gammu package.
 # Michal Čihař <michal@cihar.com>, 2007.
-#
+# 
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 11:19+0200\n"
-"PO-Revision-Date: 2007-04-26 11:24+0200\n"
+"POT-Creation-Date: 2007-04-26 12:41+0200\n"
+"PO-Revision-Date: 2007-04-26 12:39+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
-"Language-Team: Language =cs\n"
+"Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 0.11\n"
 
 #: common/gsmcomon.c:69
 msgid "No error."
@@ -313,8 +313,7 @@ msgstr "Můj styl"
 #: gammu/depend/nokia/dct4.c:56
 #, c-format
 msgid "Can't do it with current phone protocol\n"
-msgstr ""
-"Operaci nelze provést se současným protokolem\n"
+msgstr "Operaci nelze provést se současným protokolem\n"
 
 #: gammu/depend/nokia/dct4.c:70
 #, c-format
@@ -332,8 +331,7 @@ msgstr "ne"
 #: gammu/depend/nokia/dct4.c:253
 #, c-format
 msgid "Setting done\n"
-msgstr ""
-"Nastavení provedeno\n"
+msgstr "Nastavení provedeno\n"
 
 #: gammu/depend/nokia/dct4.c:290
 #, c-format
@@ -400,8 +398,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:538
 #, c-format
 msgid "Security code is %s\n"
-msgstr ""
-"Bezpečnostní kód je %s\n"
+msgstr "Bezpečnostní kód je %s\n"
 
 #: gammu/depend/nokia/dct4.c:670
 #, c-format
@@ -431,8 +428,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:861
 #, c-format
 msgid "UEM           : %s\n"
-msgstr ""
-"UEM           : %s\n"
+msgstr "UEM           : %s\n"
 
 #: gammu/depend/nokia/dct4.c:929
 #, c-format
@@ -1027,8 +1023,7 @@ msgstr ""
 #: gammu/gammu.c:81
 #, c-format
 msgid "Waiting for Security Code.\n"
-msgstr ""
-"Čeká na bezpečnostní kód.\n"
+msgstr "Čeká na bezpečnostní kód.\n"
 
 #: gammu/gammu.c:84
 #, c-format
@@ -1395,11 +1390,11 @@ msgstr "Osobní           : %s\n"
 
 #: gammu/gammu.c:402
 msgid "Yes"
-msgstr ""
+msgstr "Ano"
 
 #: gammu/gammu.c:402
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #: gammu/gammu.c:411 gammu/gammu.c:7153
 #, fuzzy, c-format
@@ -1614,8 +1609,7 @@ msgstr "12 hodin\n"
 #: gammu/gammu.c:716
 #, c-format
 msgid "24 hours\n"
-msgstr ""
-"24 hodin\n"
+msgstr "24 hodin\n"
 
 #: gammu/gammu.c:717
 #, c-format
@@ -3781,7 +3775,7 @@ msgstr ""
 #: gammu/gammu.c:6219 gammu/gammu.c:6262 gammu/gammu.c:6285 gammu/gammu.c:6332
 #, c-format
 msgid "Done\n"
-msgstr ""
+msgstr "Hotovo\n"
 
 #: gammu/gammu.c:5646
 msgid "Restore phone ToDo"
@@ -4120,20 +4114,10 @@ msgstr ""
 msgid "Access point        : \"%s\"\n"
 msgstr "Vyzvánění        : \"%s\"\n"
 
-#: gammu/gammu.c:6439 gammu/gammu.c:6486 gammu/gammu.c:6530
-#, c-format
-msgid "%i. "
-msgstr ""
-
 #: gammu/gammu.c:6441 gammu/gammu.c:6488 gammu/gammu.c:6532
 #, fuzzy, c-format
 msgid "Set %i"
 msgstr "Odesláno"
-
-#: gammu/gammu.c:6443 gammu/gammu.c:6490 gammu/gammu.c:6534
-#, c-format
-msgid "%s"
-msgstr ""
 
 #: gammu/gammu.c:6448 gammu/gammu.c:6496
 #, fuzzy, c-format
@@ -4224,7 +4208,7 @@ msgstr ""
 
 #: gammu/gammu.c:6680
 msgid " (SIM)"
-msgstr ""
+msgstr " (SIM)"
 
 #: gammu/gammu.c:6682
 #, c-format
@@ -5026,9 +5010,9 @@ msgid "all types of diverts"
 msgstr ""
 
 #: gammu/gammu.c:9229 gammu/gammu.c:9237 gammu/gammu.c:9247
-#, fuzzy, c-format
+#, c-format
 msgid "unknown %i"
-msgstr "Neznámý\n"
+msgstr "neznámý %i"
 
 #: gammu/gammu.c:9231 gammu/gammu.c:9242
 #, c-format

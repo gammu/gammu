@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 11:19+0200\n"
+"POT-Creation-Date: 2007-04-26 12:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -4099,19 +4099,9 @@ msgstr ""
 msgid "Access point        : \"%s\"\n"
 msgstr ""
 
-#: gammu/gammu.c:6439 gammu/gammu.c:6486 gammu/gammu.c:6530
-#, c-format
-msgid "%i. "
-msgstr ""
-
 #: gammu/gammu.c:6441 gammu/gammu.c:6488 gammu/gammu.c:6532
 #, c-format
 msgid "Set %i"
-msgstr ""
-
-#: gammu/gammu.c:6443 gammu/gammu.c:6490 gammu/gammu.c:6534
-#, c-format
-msgid "%s"
 msgstr ""
 
 #: gammu/gammu.c:6448 gammu/gammu.c:6496
