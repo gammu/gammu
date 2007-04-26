@@ -7709,9 +7709,10 @@ static void ListNetworks(int argc, char *argv[])
 
 	if (argc>2) {
 		while (GSM_Countries[i*2]!=NULL) {
-			if (!strncmp(GSM_Countries[i*2+1],argv[2],strlen(argv[2]))) {
+			if (strncmp(GSM_Countries[i * 2 + 1], argv[2], strlen(argv[2])) == 0 ||
+				strncmp(GSM_Countries[i * 2], argv[2], strlen(argv[2])) == 0) {
 				strcpy(country,GSM_Countries[i*2]);
-				printf(_("Networks for %s:\n\n"),GSM_Countries[i*2+1]);
+				printf(_("Networks for %s:\n\n"),GSM_Countries[i * 2 + 1]);
 				break;
 			}
 			i++;
