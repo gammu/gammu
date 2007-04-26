@@ -64,6 +64,9 @@ bool 				phonedb 		= false;
 bool				batch			= false;
 bool				batchConn		= false;
 
+/**
+ * Write error to user.
+ */
 #if defined(__GNUC__) && !defined(printf)
 __attribute__((format(printf, 1, 2)))
 #endif
@@ -73,6 +76,27 @@ int printf_err(const char *format, ...)
 	int ret;
 
 	/* l10n: Generic prefix for error messages */
+	printf("%s: ", _("Error"));
+
+	va_start(ap, format);
+	ret = vprintf(format, ap);
+	va_end(ap);
+
+	return ret;
+}
+
+/**
+ * Write warning to user.
+ */
+#if defined(__GNUC__) && !defined(printf)
+__attribute__((format(printf, 1, 2)))
+#endif
+int printf_warning(const char *format, ...)
+{
+	va_list ap;
+	int ret;
+
+	/* l10n: Generic prefix for warning messages */
 	printf("%s: ", _("Error"));
 
 	va_start(ap, format);
@@ -226,7 +250,7 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 			exit (-1);
 		}
 		if (*stop < *start) {
-			printf("%s\n", _("WARNING: swapping start and end location"));
+			printf_warn("%s\n", _("swapping start and end location"));
 			tmp    = *stop;
 			*stop  = *start;
 			*start = tmp;
@@ -1049,7 +1073,7 @@ static void GetMemory(int argc, char *argv[])
 	GSM_Init(true);
 
 	if (!strcmp(s.Phone.Data.ModelInfo->model,"3310")) {
-		if (s.Phone.Data.VerNum<=4.06) printf(_("WARNING: you will have null names in entries. Upgrade firmware in phone to higher than 4.06\n"));
+		if (s.Phone.Data.VerNum<=4.06) printf_warn(_("you will have null names in entries. Upgrade firmware in phone to higher than 4.06\n"));
 	}
 
 	for (j=start;j<=stop;j++) {
@@ -5448,7 +5472,7 @@ static void Restore(int argc, char *argv[])
 	if (error!=ERR_NOTIMPLEMENTED) {
 		Print_Error(error);
 	} else {
-		fprintf(stderr, _("WARNING: Some data not read from file. It can be damaged or restoring some settings from this file format not implemented (maybe higher Gammu required ?)\n"));
+		printf_warn(_("Some data not read from file. It can be damaged or restoring some settings from this file format not implemented (maybe higher Gammu required ?)\n"));
 	}
 
 	signal(SIGINT, interrupt);
@@ -6782,7 +6806,7 @@ static void NokiaComposer(int argc, char *argv[])
 			if (started) j++;
 		}
 	}
-    	if (j>50) printf(_("WARNING: LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES."),j);
+    	if (j>50) printf_warn(_("LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES."),j);
 
 	printf(_("\n\nThis ringtone in Nokia Composer in phone should look: "));
 	started = false;
@@ -8143,7 +8167,7 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 			}
 			if (error == ERR_EMPTY) break;
 			if (error == ERR_WRONGCRC) {
-				printf(_("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n"));
+				printf_warn(_("File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n"));
 				break;
 			}
 		}
@@ -8324,7 +8348,7 @@ static void AddOneFile(GSM_File *File, char *text, bool send)
 	}
 	fprintf(stderr, "\n");
 	if (error == ERR_WRONGCRC) {
-		printf(_("WARNING: File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n"));
+		printf_warn(_("File checksum calculated by phone doesn't match with value calculated by Gammu. File damaged or error in Gammu\n"));
 	}
 }
 
