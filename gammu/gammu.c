@@ -1048,7 +1048,7 @@ static void GetMemory(int argc, char *argv[])
 		if (error == ERR_EMPTY) {
 			emptynum++;
 			if (empty) {
-				printf(_("Entry is empty\n"));
+				printf("%s\n", _("Entry is empty"));
 				printf("\n");
 			}
 		} else {
@@ -6991,7 +6991,7 @@ static void GetCategory(int argc, char *argv[])
 		if (error != ERR_EMPTY) Print_Error(error);
 
 		if (error == ERR_EMPTY) {
-			printf(_("Entry is empty\n\n"));
+			printf("%s\n", _("Entry is empty\n"));
 		} else {
         		printf(_("Name    : \"%s\"\n\n"),DecodeUnicodeConsole(Category.Name));
     		}
@@ -7796,14 +7796,14 @@ static void GetFMStation(int argc, char *argv[])
 	for (i=start;i<=stop;i++) {
 		Station.Location=i;
 		error=Phone->GetFMStation(&s,&Station);
+		printf(_("%-13s: %i\n"), _("Location"), i);
 		switch (error) {
 		case ERR_EMPTY:
- 			printf(_("Entry number %i is empty\n"),i);
+			printf("%s\n", _("Entry is empty"));
 		    	break;
 		case ERR_NONE:
- 			printf(_("Entry number %i\nStation name : \"%s\"\nFrequency    : %.1f MHz\n"),
- 				    i,DecodeUnicodeConsole(Station.StationName),
-				    Station.Frequency);
+			printf("%-13s : \"%s\"\n", _("Station name"), DecodeUnicodeConsole(Station.StationName));
+			printf("%-13s : %.1f MHz\n", _("Frequency"), Station.Frequency);
 			break;
 		default:
 			Print_Error(error);

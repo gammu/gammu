@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 14:51+0200\n"
+"POT-Creation-Date: 2007-04-26 14:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -94,7 +94,7 @@ msgstr ""
 msgid "Function not supported by phone."
 msgstr ""
 
-#: common/gsmcomon.c:90
+#: common/gsmcomon.c:90 gammu/gammu.c:1051 gammu/gammu.c:7802
 msgid "Entry is empty"
 msgstr ""
 
@@ -1880,11 +1880,6 @@ msgstr ""
 msgid ""
 "WARNING: you will have null names in entries. Upgrade firmware in phone to "
 "higher than 4.06\n"
-msgstr ""
-
-#: gammu/gammu.c:1051
-#, c-format
-msgid "Entry is empty\n"
 msgstr ""
 
 #: gammu/gammu.c:1061
@@ -4282,10 +4277,7 @@ msgid ""
 msgstr ""
 
 #: gammu/gammu.c:6994
-#, c-format
-msgid ""
-"Entry is empty\n"
-"\n"
+msgid "Entry is empty\n"
 msgstr ""
 
 #: gammu/gammu.c:7013
@@ -4792,17 +4784,21 @@ msgstr ""
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: gammu/gammu.c:7801
+#: gammu/gammu.c:7799
 #, c-format
-msgid "Entry number %i is empty\n"
+msgid "%-13s: %i\n"
 msgstr ""
 
-#: gammu/gammu.c:7804
-#, c-format
-msgid ""
-"Entry number %i\n"
-"Station name : \"%s\"\n"
-"Frequency    : %.1f MHz\n"
+#: gammu/gammu.c:7799
+msgid "Location"
+msgstr ""
+
+#: gammu/gammu.c:7805
+msgid "Station name"
+msgstr ""
+
+#: gammu/gammu.c:7806
+msgid "Frequency"
 msgstr ""
 
 #: gammu/gammu.c:7824

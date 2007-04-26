@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 14:51+0200\n"
+"POT-Creation-Date: 2007-04-26 14:55+0200\n"
 "PO-Revision-Date: 2007-04-26 12:46+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -101,7 +101,7 @@ msgstr ""
 msgid "Function not supported by phone."
 msgstr "Funkce není podporována telefonem."
 
-#: common/gsmcomon.c:90
+#: common/gsmcomon.c:90 gammu/gammu.c:1051 gammu/gammu.c:7802
 msgid "Entry is empty"
 msgstr "Záznam je prázdný"
 
@@ -1907,11 +1907,6 @@ msgid ""
 msgstr ""
 "VAROVÁNÍ: budete mít prázná jména v položkách. Aktualizujte si firmware na "
 "vyšší než 4.06\n"
-
-#: gammu/gammu.c:1051
-#, c-format
-msgid "Entry is empty\n"
-msgstr "Záznam je prázdný\n"
 
 #: gammu/gammu.c:1061
 #, c-format
@@ -4308,13 +4303,8 @@ msgid ""
 msgstr "   Číslo      : %\n"
 
 #: gammu/gammu.c:6994
-#, c-format
-msgid ""
-"Entry is empty\n"
-"\n"
-msgstr ""
-"Záznam je prázdný\n"
-"\n"
+msgid "Entry is empty\n"
+msgstr "Záznam je prázdný\n"
 
 #: gammu/gammu.c:7013
 #, c-format
@@ -4826,17 +4816,23 @@ msgstr ""
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: gammu/gammu.c:7801
+#: gammu/gammu.c:7799
 #, c-format
-msgid "Entry number %i is empty\n"
-msgstr "Záznam číslo %i je prázdný\n"
+msgid "%-13s: %i\n"
+msgstr ""
 
-#: gammu/gammu.c:7804
-#, c-format
-msgid ""
-"Entry number %i\n"
-"Station name : \"%s\"\n"
-"Frequency    : %.1f MHz\n"
+#: gammu/gammu.c:7799
+#, fuzzy
+msgid "Location"
+msgstr "Pozice %i\n"
+
+#: gammu/gammu.c:7805
+#, fuzzy
+msgid "Station name"
+msgstr "Vyzvánění        : \"%s\"\n"
+
+#: gammu/gammu.c:7806
+msgid "Frequency"
 msgstr ""
 
 #: gammu/gammu.c:7824
@@ -5427,6 +5423,20 @@ msgstr ""
 #, c-format
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr ""
+
+#~ msgid ""
+#~ "Entry is empty\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Záznam je prázdný\n"
+#~ "\n"
+
+#~ msgid "Entry number %i is empty\n"
+#~ msgstr "Záznam číslo %i je prázdný\n"
+
+#, fuzzy
+#~ msgid "Entry number %i\n"
+#~ msgstr "Záznam číslo %i je prázdný\n"
 
 #, fuzzy
 #~ msgid "Personal\n"
