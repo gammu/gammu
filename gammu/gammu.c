@@ -91,7 +91,7 @@ int printf_err(const char *format, ...)
 #if defined(__GNUC__) && !defined(printf)
 __attribute__((format(printf, 1, 2)))
 #endif
-int printf_warning(const char *format, ...)
+int printf_warn(const char *format, ...)
 {
 	va_list ap;
 	int ret;
@@ -7854,11 +7854,12 @@ static void GetFMStation(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetFileSystemStatus(int argc, char *argv[])
+/**
+ * Displays status of filesystem (if available).
+ */
+GSM_Error PrintFileSystemStatus()
 {
 	GSM_FileSystemStatus	Status;
-
-	GSM_Init(true);
 
 	error = Phone->GetFileSystemStatus(&s,&Status);
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
@@ -7868,6 +7869,14 @@ static void GetFileSystemStatus(int argc, char *argv[])
 			printf(_("Used by: Images: %i, Sounds: %i, Themes: %i\n"), Status.UsedImages, Status.UsedSounds, Status.UsedThemes);
 		}
 	}
+	return error;
+}
+
+static void GetFileSystemStatus(int argc, char *argv[])
+{
+	GSM_Init(true);
+
+	PrintFileSystemStatus();
 
 	GSM_Terminate();
 }
@@ -7878,7 +7887,6 @@ static void GetFileSystem(int argc, char *argv[])
 	GSM_File	 	Files;
 	int			j;
 	long			usedphone=0,usedcard=0;
-	GSM_FileSystemStatus	Status;
 	char 			FolderName[256],IDUTF[200];
 
 	GSM_Init(true);
@@ -7994,14 +8002,9 @@ static void GetFileSystem(int argc, char *argv[])
 		Start = false;
 	}
 
-	error = Phone->GetFileSystemStatus(&s,&Status);
-	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
-	    	Print_Error(error);
-		printf(_("\nPhone memory: %i bytes (free %i bytes, used %i bytes)\n"),Status.Free+Status.Used,Status.Free,Status.Used);
-		if (Status.UsedImages != 0 || Status.UsedSounds != 0 || Status.UsedThemes != 0) {
-			printf(_("Used by: Images: %i, Sounds: %i, Themes: %i\n"), Status.UsedImages, Status.UsedSounds, Status.UsedThemes);
-		}
-	} else {
+	error = PrintFileSystemStatus();
+
+	if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
 		printf(_("\nUsed in phone: %li bytes"),usedphone);
 		if (MemoryCard) printf(_(", used in card: %li bytes"),usedcard);
 		printf("\n");
