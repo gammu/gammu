@@ -635,7 +635,7 @@ endif (WIN32)
 configure_file (cfg/config.h.cmake cfg/config.h ESCAPE_QUOTES)
 
 # Generate Doxygen file
-set (DOXYGEN_INPUT ${Gammu_SOURCE_DIR}/common)
+set (DOXYGEN_INPUT ${Gammu_SOURCE_DIR}/common ${Gammu_SOURCE_DIR}/gammu)
 set (DOXYGEN_OUTPUT ${Gammu_BINARY_DIR}/gammu-doc)
 if (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
     set (HAVE_DOT "NO")
