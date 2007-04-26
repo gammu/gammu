@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 11:15+0200\n"
+"POT-Creation-Date: 2007-04-26 11:19+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: Language =pl\n"
@@ -326,9 +326,9 @@ msgid "no"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:253
-#, c-format
-msgid "Setting done OK\n"
-msgstr ""
+#, fuzzy, c-format
+msgid "Setting done\n"
+msgstr "Dodaję \"%s\""
 
 #: gammu/depend/nokia/dct4.c:290
 #, c-format
