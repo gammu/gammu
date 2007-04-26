@@ -9554,13 +9554,12 @@ int ProcessParameters(char start, int argc, char *argv[]);
  * Reads commands from file (argv[2]) or stdin and executes them
  * sequentially as if they were given on the command line. Also allows
  * recursive calling (nested batches in the batch files).
- *
- * @todo Allocate memory dynamically.
- *
- * @todo Handle return value from ProcessParameters.
  */
 static void RunBatch(int argc, char *argv[]) {
 	FILE *bf;
+	/**
+	 * @todo Allocate memory dynamically.
+	 */
 	char ln[2000];
 	int i,j,c=0,argsc;
 	char* argsv[20];
@@ -9610,6 +9609,9 @@ static void RunBatch(int argc, char *argv[]) {
 				/* we have some usable command and parameters, send them into standard processing */
 				printf("----------------------------------------------------------------------------\n");
 				printf(_("Executing batch \"%s\" - command %i: %s"), name, ++c, ln);
+				/**
+				 * @todo Handle return value from ProcessParameters.
+				 */
 				ProcessParameters(0, argsc + 1, argsv);
 				for (i = 1; i <= argsc; i++) {
 					free(argsv[i]);
