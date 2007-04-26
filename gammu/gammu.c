@@ -3273,7 +3273,7 @@ static void SetRingtone(int argc, char *argv[])
 		}
 	}
 	if (nextlong!=0) {
-		printf(_("Parameter missed...\n"));
+		printf_err("%s\n", _("Parameter missing!"));
 		exit(-1);
 	}
 	if (ringtone.Location==0) {
@@ -4434,7 +4434,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 	}
 	if (nextlong!=0) {
-		printf(_("Parameter missed...\n"));
+		printf_err("%s\n", _("Parameter missing!"));
 		exit(-1);
 	}
 
@@ -8451,7 +8451,7 @@ static void AddSendFile(int argc, char *argv[])
 			}
 		}
 		if (nextlong!=0) {
-			printf(_("Parameter missed...\n"));
+			printf_err("%s\n", _("Parameter missing!"));
 			exit(-1);
 		}
 	}
@@ -9163,7 +9163,7 @@ static void NokiaAddFile(int argc, char *argv[])
 				}
 			}
 			if (nextlong!=0) {
-				printf(_("Parameter missed...\n"));
+				printf_err("%s\n", _("Parameter missing!"));
 				exit(-1);
 			}
 		}
