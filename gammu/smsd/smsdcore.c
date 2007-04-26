@@ -93,9 +93,9 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	error = INI_ReadFile(filename, false, &smsdcfgfile);
 	if (smsdcfgfile == NULL || error != ERR_NONE) {
 		if (error == ERR_FILENOTSUPPORTED) {
-			fprintf(stderr,"Could not parse config file \"%s\"\n",filename);
+			fprintf(stderr, _("Could not parse config file \"%s\"\n"),filename);
 		} else {
-			fprintf(stderr,"Can't find file \"%s\"\n",filename);
+			fprintf(stderr, _("Can't find file \"%s\"\n"),filename);
 		}
 		exit(-1);
 	}
@@ -104,12 +104,12 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	if (Config->logfilename != NULL) {
 		smsd_log_file=fopen(Config->logfilename,"ab");
 		if (smsd_log_file == NULL) {
-			fprintf(stderr,"Can't open file \"%s\"\n",Config->logfilename);
+			fprintf(stderr, _("Can't open file \"%s\"\n"),Config->logfilename);
 			exit(-1);
 		}
-		fprintf(stderr,"Log filename is \"%s\"\n",Config->logfilename);
+		fprintf(stderr, _("Log filename is \"%s\"\n"),Config->logfilename);
 	}
-	if (log) WriteSMSDLog(_("Start GAMMU smsd"));
+	if (log) WriteSMSDLog(_("Starting GAMMU smsd"));
 
 	/* Include Numbers used, because we don't want create new variable */
 	Config->IncludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "gammu", false);
@@ -122,7 +122,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	Config->PINCode=INI_GetValue(smsdcfgfile, "smsd", "PIN", false);
 	if (Config->PINCode == NULL) {
  		if (log) WriteSMSDLog(_("Warning: No PIN code in %s file"),filename);
- 		fprintf(stderr,"Warning: No PIN code in %s file\n",filename);
+ 		fprintf(stderr, _("Warning: No PIN code in %s file\n"),filename);
 	} else {
 		if (log) WriteSMSDLog(_("PIN code is \"%s\""),Config->PINCode);
 	}
