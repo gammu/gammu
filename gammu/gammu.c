@@ -507,11 +507,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 						default: printf(_("Bad month!")); break;
 					}
 				} else {
-					if (!strcmp(s.Phone.Data.Manufacturer,"Siemens")) {
-					printf(_("each week"));
-					} else {
 					printf(_("each month"));
-					}
 				}
 			} else if (repeat_day > 0) {
 				printf(_("%d. day of "), repeat_day);
