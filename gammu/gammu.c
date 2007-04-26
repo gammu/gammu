@@ -7712,7 +7712,8 @@ static void ListNetworks(int argc, char *argv[])
 			if (strncmp(GSM_Countries[i * 2 + 1], argv[2], strlen(argv[2])) == 0 ||
 				strncmp(GSM_Countries[i * 2], argv[2], strlen(argv[2])) == 0) {
 				strcpy(country,GSM_Countries[i*2]);
-				printf(_("Networks for %s:\n\n"),GSM_Countries[i * 2 + 1]);
+				printf(_("Networks for %s:"), GSM_Countries[i * 2 + 1]);
+				printf("\n\n");
 				break;
 			}
 			i++;
@@ -7745,11 +7746,12 @@ static void Version(int argc, char *argv[])
 	int		j,z,w;
 #endif
 
-	printf(_("[Gammu version %s built %s %s in %s]\n\n"),
+	printf(_("[Gammu version %s built %s on %s using %s]"),
 		VERSION,
 		__TIME__,
 		__DATE__,
 		GetCompiler());
+	printf("\n\n");
 
 #ifdef DEBUG
 	for (w = 1; w < 65535; w++) {
