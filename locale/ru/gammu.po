@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 14:51+0200\n"
+"POT-Creation-Date: 2007-04-26 14:55+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Language =ru\n"
@@ -101,7 +101,7 @@ msgstr ""
 msgid "Function not supported by phone."
 msgstr "Функция не поддерживается телефоном."
 
-#: common/gsmcomon.c:90
+#: common/gsmcomon.c:90 gammu/gammu.c:1051 gammu/gammu.c:7802
 #, fuzzy
 msgid "Entry is empty"
 msgstr "Запись пуста."
@@ -1946,11 +1946,6 @@ msgid ""
 msgstr ""
 "ПРЕДУПРЕЖДЕНИЕ: в записях присутствуют пустые имена. Обновите прошивку в "
 "телефоне на более позднюю, чем 4.06\n"
-
-#: gammu/gammu.c:1051
-#, c-format
-msgid "Entry is empty\n"
-msgstr "Запись пуста\n"
 
 #: gammu/gammu.c:1061
 #, c-format
@@ -4460,13 +4455,8 @@ msgid ""
 msgstr "Имя     : \"%s\"\n"
 
 #: gammu/gammu.c:6994
-#, c-format
-msgid ""
-"Entry is empty\n"
-"\n"
-msgstr ""
-"Запись пуста\n"
-"\n"
+msgid "Entry is empty\n"
+msgstr "Запись пуста\n"
 
 #: gammu/gammu.c:7013
 #, c-format
@@ -5009,21 +4999,24 @@ msgstr ""
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: gammu/gammu.c:7801
+#: gammu/gammu.c:7799
 #, c-format
-msgid "Entry number %i is empty\n"
-msgstr "Запись номер %i пуста\n"
-
-#: gammu/gammu.c:7804
-#, c-format
-msgid ""
-"Entry number %i\n"
-"Station name : \"%s\"\n"
-"Frequency    : %.1f MHz\n"
+msgid "%-13s: %i\n"
 msgstr ""
-"Запись номер %i\n"
-"Название станции : \"%s\"\n"
-"Частота          : %.1f МГц\n"
+
+#: gammu/gammu.c:7799
+#, fuzzy
+msgid "Location"
+msgstr "Местонахождение %i\n"
+
+#: gammu/gammu.c:7805
+#, fuzzy
+msgid "Station name"
+msgstr "Местонахождение  : %s\n"
+
+#: gammu/gammu.c:7806
+msgid "Frequency"
+msgstr ""
 
 #: gammu/gammu.c:7824
 #, c-format
@@ -5648,6 +5641,29 @@ msgstr "ИНФО: Есть более новая стабильная верси
 #, c-format
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr "ИНФО: Есть более новая тестовая версия Gammu (%s против of %s).\n"
+
+#~ msgid ""
+#~ "Entry is empty\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Запись пуста\n"
+#~ "\n"
+
+#~ msgid "Entry number %i is empty\n"
+#~ msgstr "Запись номер %i пуста\n"
+
+#, fuzzy
+#~ msgid "Entry number %i\n"
+#~ msgstr "Запись номер %i пуста\n"
+
+#~ msgid ""
+#~ "Entry number %i\n"
+#~ "Station name : \"%s\"\n"
+#~ "Frequency    : %.1f MHz\n"
+#~ msgstr ""
+#~ "Запись номер %i\n"
+#~ "Название станции : \"%s\"\n"
+#~ "Частота          : %.1f МГц\n"
 
 #~ msgid "Personal\n"
 #~ msgstr "Личный\n"

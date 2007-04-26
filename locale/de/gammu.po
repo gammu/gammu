@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 14:51+0200\n"
+"POT-Creation-Date: 2007-04-26 14:55+0200\n"
 "PO-Revision-Date: 2007-03-20 11:32+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =de\n"
@@ -106,7 +106,7 @@ msgstr ""
 msgid "Function not supported by phone."
 msgstr "Funktion wird nicht vom Telefon unterstützt."
 
-#: common/gsmcomon.c:90
+#: common/gsmcomon.c:90 gammu/gammu.c:1051 gammu/gammu.c:7802
 #, fuzzy
 msgid "Entry is empty"
 msgstr "Eintrag ist leer."
@@ -1954,11 +1954,6 @@ msgid ""
 msgstr ""
 "WARNUNG: Sie haben Null-Namen in den Einträgen.  Erneuern Sie die "
 "Telefonfirmware auf größer als 4.06\n"
-
-#: gammu/gammu.c:1051
-#, c-format
-msgid "Entry is empty\n"
-msgstr "Der Eintrag ist leer\n"
 
 #: gammu/gammu.c:1061
 #, c-format
@@ -4467,13 +4462,8 @@ msgstr ""
 "\n"
 
 #: gammu/gammu.c:6994
-#, c-format
-msgid ""
-"Entry is empty\n"
-"\n"
-msgstr ""
-"Eintrag ist leer\n"
-"\n"
+msgid "Entry is empty\n"
+msgstr "Der Eintrag ist leer\n"
 
 #: gammu/gammu.c:7013
 #, c-format
@@ -5015,21 +5005,24 @@ msgstr ""
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: gammu/gammu.c:7801
+#: gammu/gammu.c:7799
 #, c-format
-msgid "Entry number %i is empty\n"
-msgstr "Eintrag Nummer %i ist frei\n"
-
-#: gammu/gammu.c:7804
-#, c-format
-msgid ""
-"Entry number %i\n"
-"Station name : \"%s\"\n"
-"Frequency    : %.1f MHz\n"
+msgid "%-13s: %i\n"
 msgstr ""
-"Eintrag Nummer %i\n"
-"Stationsname : \"%s\"\n"
-"Frequenz     : %.1f MHz\n"
+
+#: gammu/gammu.c:7799
+#, fuzzy
+msgid "Location"
+msgstr "Speicherplatz %i\n"
+
+#: gammu/gammu.c:7805
+#, fuzzy
+msgid "Station name"
+msgstr "Speicherplatz: \"%s\"\n"
+
+#: gammu/gammu.c:7806
+msgid "Frequency"
+msgstr ""
 
 #: gammu/gammu.c:7824
 #, c-format
@@ -5662,6 +5655,29 @@ msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr ""
 "INFO: Es ist eine neuere Entwicklungsversion von Gammu (%s anstatt %s) "
 "verfügbar!\n"
+
+#~ msgid ""
+#~ "Entry is empty\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Eintrag ist leer\n"
+#~ "\n"
+
+#~ msgid "Entry number %i is empty\n"
+#~ msgstr "Eintrag Nummer %i ist frei\n"
+
+#, fuzzy
+#~ msgid "Entry number %i\n"
+#~ msgstr "Eintrag Nummer %i ist frei\n"
+
+#~ msgid ""
+#~ "Entry number %i\n"
+#~ "Station name : \"%s\"\n"
+#~ "Frequency    : %.1f MHz\n"
+#~ msgstr ""
+#~ "Eintrag Nummer %i\n"
+#~ "Stationsname : \"%s\"\n"
+#~ "Frequenz     : %.1f MHz\n"
 
 #~ msgid "Personal\n"
 #~ msgstr "Persönlich\n"
