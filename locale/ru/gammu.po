@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 14:15+0200\n"
+"POT-Creation-Date: 2007-04-26 14:18+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Language =ru\n"
@@ -1440,8 +1440,10 @@ msgstr "Повторять        : "
 
 #: gammu/gammu.c:460
 #, c-format
-msgid "for %d times "
-msgstr ""
+msgid "for %d time "
+msgid_plural "for %d times "
+msgstr[0] ""
+msgstr[1] ""
 
 #: gammu/gammu.c:463
 #, c-format
