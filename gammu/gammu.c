@@ -6436,11 +6436,11 @@ static void GetSyncMLSettings(int argc, char *argv[])
 		settings.Location=i;
 		error=Phone->GetSyncMLSettings(&s,&settings);
 		Print_Error(error);
-		printf(_("%i. "),i);
+		printf("%i. ", i);
 		if (settings.Name[0]==0 && settings.Name[1]==0) {
 			printf(_("Set %i"),i);
 		} else {
-			printf(_("%s"),DecodeUnicodeConsole(settings.Name));
+			printf("%s", DecodeUnicodeConsole(settings.Name));
 		}
 		if (settings.Active) printf(_(" (active)"));
 //		if (settings.ReadOnly) printf(_("\nRead only           : yes"));
@@ -6483,11 +6483,11 @@ static void GetChatSettings(int argc, char *argv[])
 		settings.Location=i;
 		error=Phone->GetChatSettings(&s,&settings);
 		Print_Error(error);
-		printf(_("%i. "),i);
+		printf("%i. ",i);
 		if (settings.Name[0]==0 && settings.Name[1]==0) {
 			printf(_("Set %i"),i);
 		} else {
-			printf(_("%s"),DecodeUnicodeConsole(settings.Name));
+			printf("%s", DecodeUnicodeConsole(settings.Name));
 		}
 		if (settings.Active) printf(_(" (active)"));
 //		if (settings.ReadOnly) printf(_("\nRead only           : yes"));
@@ -6527,11 +6527,11 @@ static void GetWAPMMSSettings(int argc, char *argv[])
 		}
 		Print_Error(error);
 		for (j=0;j<settings.Number;j++) {
-			printf(_("%i. "),i);
+			printf("%i. ", i);
 			if (settings.Settings[j].Title[0]==0 && settings.Settings[j].Title[1]==0) {
 				printf(_("Set %i"),i);
 			} else {
-				printf(_("%s"),DecodeUnicodeConsole(settings.Settings[j].Title));
+				printf("%s", DecodeUnicodeConsole(settings.Settings[j].Title));
 			}
 			if (settings.Active) printf(_(" (active)"));
 			if (settings.ReadOnly) printf(_("\nRead only           : yes"));
