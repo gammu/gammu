@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 16:04+0200\n"
+"POT-Creation-Date: 2007-04-26 16:07+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Language =ru\n"
@@ -4981,7 +4981,7 @@ msgstr ""
 msgid "Unknown country name: %s."
 msgstr "Неизвестная страна."
 
-#: gammu/gammu.c:7769 gammu/gammu.c:9886
+#: gammu/gammu.c:7769 gammu/gammu.c:9887
 #, fuzzy
 msgid "Network"
 msgstr "Название сети\n"
@@ -5396,114 +5396,114 @@ msgstr "   Производитель : %s\n"
 msgid "   Model         : %s (%s)\n"
 msgstr "   Модель        : %s (%s)\n"
 
-#: gammu/gammu.c:9578
+#: gammu/gammu.c:9580
 #, c-format
 msgid "Batch file could not be opened: %s\n"
 msgstr ""
 
-#: gammu/gammu.c:9610
+#: gammu/gammu.c:9612
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s"
 msgstr ""
 
-#: gammu/gammu.c:9866
+#: gammu/gammu.c:9867
 #, fuzzy
 msgid "Calls"
 msgstr "Позвонить\n"
 
-#: gammu/gammu.c:9867
+#: gammu/gammu.c:9868
 msgid "SMS and EMS"
 msgstr ""
 
-#: gammu/gammu.c:9868
+#: gammu/gammu.c:9869
 msgid "Memory (phonebooks and calls)"
 msgstr ""
 
-#: gammu/gammu.c:9869
+#: gammu/gammu.c:9870
 msgid "Filesystem"
 msgstr ""
 
-#: gammu/gammu.c:9870
+#: gammu/gammu.c:9871
 msgid "Logo and pictures"
 msgstr ""
 
-#: gammu/gammu.c:9871
+#: gammu/gammu.c:9872
 #, fuzzy
 msgid "Ringtones"
 msgstr "Рингтон \"%s\"\n"
 
-#: gammu/gammu.c:9872
+#: gammu/gammu.c:9873
 #, fuzzy
 msgid "Calendar notes"
 msgstr "Nokia: заметка в календаре"
 
-#: gammu/gammu.c:9873
+#: gammu/gammu.c:9874
 msgid "To do lists"
 msgstr ""
 
-#: gammu/gammu.c:9874
+#: gammu/gammu.c:9875
 msgid "Notes"
 msgstr ""
 
-#: gammu/gammu.c:9875
+#: gammu/gammu.c:9876
 msgid "Date, time and alarms"
 msgstr ""
 
-#: gammu/gammu.c:9876
+#: gammu/gammu.c:9877
 msgid "Categories"
 msgstr ""
 
-#: gammu/gammu.c:9878
+#: gammu/gammu.c:9879
 msgid "Backing up and restoring"
 msgstr ""
 
-#: gammu/gammu.c:9881
+#: gammu/gammu.c:9882
 #, fuzzy
 msgid "Nokia specific"
 msgstr "Nokia: профиль"
 
-#: gammu/gammu.c:9884
+#: gammu/gammu.c:9885
 #, fuzzy
 msgid "Siemens specific"
 msgstr "Файл Siemens\n"
 
-#: gammu/gammu.c:9887
+#: gammu/gammu.c:9888
 #, fuzzy
 msgid "WAP settings and bookmarks"
 msgstr "Удаление старых закладок: "
 
-#: gammu/gammu.c:9888
+#: gammu/gammu.c:9889
 #, fuzzy
 msgid "MMS and MMS settings"
 msgstr "Проверяются настройки MMS телефона\n"
 
-#: gammu/gammu.c:9889
+#: gammu/gammu.c:9890
 #, fuzzy
 msgid "Phone tests"
 msgstr "Время телефона - %s\n"
 
-#: gammu/gammu.c:9890
+#: gammu/gammu.c:9891
 msgid "FM radio"
 msgstr ""
 
-#: gammu/gammu.c:9891
+#: gammu/gammu.c:9892
 msgid "Phone information"
 msgstr ""
 
-#: gammu/gammu.c:9892
+#: gammu/gammu.c:9893
 #, fuzzy
 msgid "Phone settings"
 msgstr "Проверяются настройки WAP телефона\n"
 
-#: gammu/gammu.c:9894
+#: gammu/gammu.c:9895
 msgid "Dumps decoding"
 msgstr ""
 
-#: gammu/gammu.c:9896
+#: gammu/gammu.c:9897
 msgid "Functions that don't fit elsewhere"
 msgstr ""
 
-#: gammu/gammu.c:9903
+#: gammu/gammu.c:9904
 #, c-format
 msgid ""
 "[Gammu version %s built %s %s]\n"
@@ -5512,7 +5512,7 @@ msgstr ""
 "[Gammu, версия %s, сборка %s %s]\n"
 "\n"
 
-#: gammu/gammu.c:9915
+#: gammu/gammu.c:9916
 #, fuzzy, c-format
 msgid ""
 "Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> "
@@ -5522,7 +5522,7 @@ msgstr ""
 "Использование: gammu [confign] [nothing|text|textall|binary|errors] [опции]\n"
 "\n"
 
-#: gammu/gammu.c:9916
+#: gammu/gammu.c:9917
 #, c-format
 msgid ""
 "First parameter optionally specifies which config section to use (all are "
@@ -5531,7 +5531,7 @@ msgstr ""
 "Первый параметр описывает, которой из разделов конфигурационного файла "
 "следует использовать (по умолчанию проверяются все разделы).\n"
 
-#: gammu/gammu.c:9917
+#: gammu/gammu.c:9918
 #, c-format
 msgid ""
 "Second parameter optionally controls debug level, next one specifies "
@@ -5541,14 +5541,14 @@ msgstr ""
 "Второй параметр управляет уровнем отладки; следующий определяет действия.\n"
 "\n"
 
-#: gammu/gammu.c:9919
+#: gammu/gammu.c:9920
 #, c-format
 msgid ""
 "Commands can be specified with or without leading --.\n"
 "\n"
 msgstr ""
 
-#: gammu/gammu.c:9922
+#: gammu/gammu.c:9923
 #, c-format
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
@@ -5559,12 +5559,12 @@ msgstr ""
 "(gammu --help раздел). Разделы:\n"
 "\n"
 
-#: gammu/gammu.c:10011
+#: gammu/gammu.c:10012
 #, c-format
 msgid "Unknown help topic specified!\n"
 msgstr "Указан неизвестный раздел справки!\n"
 
-#: gammu/gammu.c:10015
+#: gammu/gammu.c:10016
 #, c-format
 msgid ""
 "Gammu parameters, topic: %s\n"
@@ -5573,59 +5573,59 @@ msgstr ""
 "Параметры Gammu, раздел: %s\n"
 "\n"
 
-#: gammu/gammu.c:10111
+#: gammu/gammu.c:10112
 #, fuzzy, c-format
 msgid "More parameters required (function accepts %d)\n"
 msgstr "Нужны дополнительные параметры (допускается "
 
-#: gammu/gammu.c:10113
+#: gammu/gammu.c:10114
 #, fuzzy, c-format
 msgid "More parameters required (function accepts %d to %d)\n"
 msgstr "Нужны дополнительные параметры (допускается "
 
-#: gammu/gammu.c:10116 gammu/gammu.c:10126
+#: gammu/gammu.c:10117 gammu/gammu.c:10127
 #, fuzzy, c-format
 msgid "Parameters help: %s\n"
 msgstr ""
 "Параметры Gammu, раздел: %s\n"
 "\n"
 
-#: gammu/gammu.c:10121
+#: gammu/gammu.c:10122
 #, fuzzy, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "Слишком много параметров (допускается "
 
-#: gammu/gammu.c:10123
+#: gammu/gammu.c:10124
 #, fuzzy, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "Слишком много параметров (допускается "
 
-#: gammu/gammu.c:10140
+#: gammu/gammu.c:10141
 #, fuzzy, c-format
 msgid "Bad option!\n"
 msgstr "Неверный месяц!"
 
-#: gammu/gammu.c:10176 gammu/gammu.c:10280
+#: gammu/gammu.c:10177 gammu/gammu.c:10281
 #, c-format
 msgid "Too few parameters!\n"
 msgstr "Слишком мало параметров!\n"
 
-#: gammu/gammu.c:10197
+#: gammu/gammu.c:10198
 #, fuzzy, c-format
 msgid "Warning: Configuration could not be parsed!\n"
 msgstr "Предупреждение: не найден конфигурационный файл!\n"
 
-#: gammu/gammu.c:10199
+#: gammu/gammu.c:10200
 #, c-format
 msgid "Warning: No configuration file found!\n"
 msgstr "Предупреждение: не найден конфигурационный файл!\n"
 
-#: gammu/gammu.c:10202
+#: gammu/gammu.c:10203
 #, fuzzy, c-format
 msgid "Warning: No configuration read!\n"
 msgstr "Предупреждение: не найден конфигурационный файл!\n"
 
-#: gammu/gammu.c:10286
+#: gammu/gammu.c:10287
 #, fuzzy, c-format
 msgid ""
 "version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -5633,12 +5633,12 @@ msgstr ""
 "ОШИБКА: Версия установленной библиотеки libGammu.so (%s) отличается от "
 "версии Gammu (%s)\n"
 
-#: gammu/gammu.c:10316
+#: gammu/gammu.c:10317
 #, c-format
 msgid "INFO: there is later stable Gammu (%s instead of %s) available !\n"
 msgstr "ИНФО: Есть более новая стабильная версия Gammu (%s против %s).\n"
 
-#: gammu/gammu.c:10329
+#: gammu/gammu.c:10330
 #, c-format
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr "ИНФО: Есть более новая тестовая версия Gammu (%s против of %s).\n"

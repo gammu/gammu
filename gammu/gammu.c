@@ -9548,14 +9548,16 @@ static void Foo(int argc, char *argv[])
 }
 #endif
 
-char ProcessParameters(char start, int argc, char *argv[]);
+int ProcessParameters(char start, int argc, char *argv[]);
 
 /**
  * Reads commands from file (argv[2]) or stdin and executes them
  * sequentially as if they were given on the command line. Also allows
  * recursive calling (nested batches in the batch files).
  *
- * @todo Allocate memory dynamically
+ * @todo Allocate memory dynamically.
+ *
+ * @todo Handle return value from ProcessParameters.
  */
 static void RunBatch(int argc, char *argv[]) {
 	FILE *bf;
@@ -9609,7 +9611,6 @@ static void RunBatch(int argc, char *argv[]) {
 				printf("----------------------------------------------------------------------------\n");
 				printf(_("Executing batch \"%s\" - command %i: %s"), name, ++c, ln);
 				ProcessParameters(0, argsc + 1, argsv);
-				/* FIXME: handle return value somehow ... */
 				for (i = 1; i <= argsc; i++) {
 					free(argsv[i]);
 				}
@@ -10095,7 +10096,7 @@ int FoundVersion(unsigned char *Buffer)
 	return retval + atoi(Buffer+pos);
 }
 
-char ProcessParameters(char start, int argc, char *argv[]) {
+int ProcessParameters(char start, int argc, char *argv[]) {
 	int 		z = 0;
  	bool		count_failed = false;
 
