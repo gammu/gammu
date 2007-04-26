@@ -457,7 +457,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 	if (repeating) {
 		printf(_("Repeating    : "));
 		if (repeat_count > 0) {
-			printf(_("for %d times "), repeat_count);
+			printf(ngettext("for %d time ", "for %d times ", repeat_count), repeat_count);
 		}
 		if ((repeat_startdate.Day == 0) && (repeat_stopdate.Day == 0)) {
 			printf(_("forever"));

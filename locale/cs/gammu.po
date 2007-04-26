@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 14:15+0200\n"
+"POT-Creation-Date: 2007-04-26 14:18+0200\n"
 "PO-Revision-Date: 2007-04-26 12:46+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -1405,8 +1405,10 @@ msgstr ""
 
 #: gammu/gammu.c:460
 #, c-format
-msgid "for %d times "
-msgstr ""
+msgid "for %d time "
+msgid_plural "for %d times "
+msgstr[0] ""
+msgstr[1] ""
 
 #: gammu/gammu.c:463
 #, c-format
