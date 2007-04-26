@@ -1168,7 +1168,7 @@ static void SearchMemory(int argc, char *argv[])
 	int			Length;
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, _("Press Ctrl+C to break...\n"));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	Length = strlen(argv[2]);
 	if (Length > GSM_PHONEBOOK_TEXT_LENGTH) {
@@ -1228,7 +1228,7 @@ static void ListMemoryCategory(int argc, char *argv[])
 	GSM_Init(true);
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, _("Press Ctrl+C to break...\n"));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	Length = strlen(argv[2]);
 	for (j = 0; j < Length; j++) {
@@ -1786,7 +1786,7 @@ static void Monitor(int argc, char *argv[])
 	}
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, _("Press Ctrl+C to break...\n"));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 	printf(_("Entering monitor mode...\n\n"));
 
 	GSM_Init(true);
@@ -1956,7 +1956,7 @@ static void GetUSSD(int argc, char *argv[])
 	GSM_Init(true);
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, _("Press Ctrl+C to break...\n"));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	s.User.IncomingUSSD = IncomingUSSD2;
 
@@ -2817,7 +2817,7 @@ static void GetAllCalendar(int argc, char *argv[])
 	bool			refresh	= true;
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, _("Press Ctrl+C to break...\n"));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	GSM_Init(true);
 
@@ -4798,7 +4798,7 @@ static void Backup(int argc, char *argv[])
 	}
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, _("Press Ctrl+C to break...\n"));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	GSM_Init(true);
 
@@ -5434,7 +5434,7 @@ static void Restore(int argc, char *argv[])
 	}
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, _("Press Ctrl+C to break...\n"));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	if (Backup.DateTimeAvailable) 	fprintf(stderr, _("Time of backup  : %s\n"),OSDateTime(Backup.DateTime,false));
 	if (Backup.Model[0]!=0) 	fprintf(stderr, _("Phone           : %s\n"),Backup.Model);
@@ -5983,7 +5983,7 @@ static void AddNew(int argc, char *argv[])
 	if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, _("Press Ctrl+C to break...\n"));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	if (Backup.DateTimeAvailable) 	fprintf(stderr, _("Time of backup : %s\n"),OSDateTime(Backup.DateTime,false));
 	if (Backup.Model[0]!=0) 	fprintf(stderr, _("Phone          : %s\n"),Backup.Model);
@@ -7202,7 +7202,7 @@ static void ListToDoCategory(int argc, char *argv[])
 	GSM_Init(true);
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, _("Press Ctrl+C to break...\n"));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	Length = strlen(argv[2]);
 	for (j = 0; j < Length; j++) {
@@ -7272,7 +7272,7 @@ static void GetAllToDo(int argc, char *argv[])
 	bool			start = true;
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, _("Press Ctrl+C to break...\n"));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	GSM_Init(true);
 
@@ -7293,7 +7293,7 @@ static void GetAllNotes(int argc, char *argv[])
 	bool			start = true;
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, _("Press Ctrl+C to break...\n"));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	GSM_Init(true);
 

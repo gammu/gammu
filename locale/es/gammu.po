@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 14:23+0200\n"
+"POT-Creation-Date: 2007-04-26 14:24+0200\n"
 "PO-Revision-Date: 2007-03-20 19:21+0100\n"
 "Last-Translator: Pablo Gomez <pgomez@arrakis.es>\n"
 "Language-Team: Language =es\n"
@@ -1549,7 +1549,10 @@ msgid_plural "%d years"
 msgstr[0] "%d. dia de "
 msgstr[1] "%d. dia de "
 
-#: gammu/gammu.c:573 gammu/gammu.c:963
+#: gammu/gammu.c:573 gammu/gammu.c:963 gammu/gammu.c:1171 gammu/gammu.c:1231
+#: gammu/gammu.c:1789 gammu/gammu.c:1959 gammu/gammu.c:2820 gammu/gammu.c:4801
+#: gammu/gammu.c:5437 gammu/gammu.c:5986 gammu/gammu.c:7205 gammu/gammu.c:7275
+#: gammu/gammu.c:7296
 msgid "Press Ctrl+C to break..."
 msgstr ""
 
@@ -1941,13 +1944,6 @@ msgstr "La entrada está vacía."
 #: gammu/gammu.c:1061
 #, c-format
 msgid "%i entries empty, %i entries filled\n"
-msgstr ""
-
-#: gammu/gammu.c:1171 gammu/gammu.c:1231 gammu/gammu.c:1789 gammu/gammu.c:1959
-#: gammu/gammu.c:2820 gammu/gammu.c:4801 gammu/gammu.c:5437 gammu/gammu.c:5986
-#: gammu/gammu.c:7205 gammu/gammu.c:7275 gammu/gammu.c:7296
-#, c-format
-msgid "Press Ctrl+C to break...\n"
 msgstr ""
 
 #: gammu/gammu.c:1175 gammu/gammu.c:1248 gammu/gammu.c:7222
