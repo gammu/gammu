@@ -78,25 +78,25 @@ static void PrintSecurityStatus()
 	Print_Error(error);
 	switch(Status) {
 		case SEC_SecurityCode:
-			printf(_("Waiting for Security Code.\n"));
+			printf("%s\n", _("Waiting for Security Code."));
 			break;
 		case SEC_Pin:
-			printf(_("Waiting for PIN.\n"));
+			printf("%s\n", _("Waiting for PIN."));
 			break;
 		case SEC_Pin2:
-			printf(_("Waiting for PIN2.\n"));
+			printf("%s\n", _("Waiting for PIN2."));
 			break;
 		case SEC_Puk:
-			printf(_("Waiting for PUK.\n"));
+			printf("%s\n", _("Waiting for PUK."));
 			break;
 		case SEC_Puk2:
-			printf(_("Waiting for PUK2.\n"));
+			printf("%s\n", _("Waiting for PUK2."));
 			break;
 		case SEC_None:
-			printf(_("Nothing to enter.\n"));
+			printf("%s\n", _("Nothing to enter."));
 			break;
 		default:
-			printf(_("Unknown\n"));
+			printf("%s\n", _("Unknown security status."));
 	}
 }
 
@@ -190,13 +190,13 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 	int tmp;
 
 	if (argc <= num) {
-		printf(_("ERROR: more parameters required\n"));
+		printf("%s\n", _("ERROR: more parameters required"));
 		exit (-1);
 	}
 
 	*start=atoi(argv[num]);
 	if (*start==0) {
-		printf(_("ERROR: enumerate locations from 1\n"));
+		printf("%s\n",_("ERROR: enumerate locations from 1"));
 		exit (-1);
 	}
 
@@ -204,11 +204,11 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 		*stop=*start;
 		if (argc>=num+2) *stop=atoi(argv[num+1]);
 		if (*stop==0) {
-			printf(_("ERROR: enumerate locations from 1\n"));
+			printf(_("%s\n","ERROR: enumerate locations from 1"));
 			exit (-1);
 		}
 		if (*stop < *start) {
-			printf(_("WARNING: swapping start and end location\n"));
+			printf(_("%s\n","WARNING: swapping start and end location"));
 			tmp    = *stop;
 			*stop  = *start;
 			*start = tmp;
@@ -228,11 +228,11 @@ static bool answer_yes(const char *text)
 		/* l10n: %s is replaced by question, answers have to match corresponding translations */
 		fprintf(stderr, _("%s (yes/no/ALL/ONLY/NONE) ? "),text);
 		if (always_answer_yes) {
-			fprintf(stderr, _("YES (always)\n"));
+			fprintf(stderr, "%s\n", _("YES (always)"));
 			return true;
 		}
 		if (always_answer_no) {
-			fprintf(stderr, _("NO (always)\n"));
+			fprintf(stderr,"%s\n",  _("NO (always)"));
 			return false;
 		}
 		len=GetLine(stdin, ans, 99);
@@ -274,35 +274,35 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 
 	printf(_("Note type    : "));
 	switch (Note->Type) {
-		case GSM_CAL_REMINDER 	: printf(_("Reminder (Date)\n"));		break;
-		case GSM_CAL_CALL     	: printf(_("Call\n"));			   	break;
-		case GSM_CAL_MEETING  	: printf(_("Meeting\n"));		   	break;
-		case GSM_CAL_BIRTHDAY 	: printf(_("Birthday (Anniversary)\n"));		break;
-		case GSM_CAL_MEMO	: printf(_("Memo (Miscellaneous)\n"));		break;
-		case GSM_CAL_TRAVEL	: printf(_("Travel\n"));			   	break;
-		case GSM_CAL_VACATION	: printf(_("Vacation\n"));			break;
-		case GSM_CAL_ALARM    	: printf(_("Alarm\n"));		   		break;
-		case GSM_CAL_DAILY_ALARM: printf(_("Daily alarm\n"));		   	break;
-		case GSM_CAL_T_ATHL   	: printf(_("Training/Athletism\n")); 	   	break;
-		case GSM_CAL_T_BALL   	: printf(_("Training/Ball Games\n")); 	   	break;
-		case GSM_CAL_T_CYCL   	: printf(_("Training/Cycling\n")); 	   	break;
-		case GSM_CAL_T_BUDO   	: printf(_("Training/Budo\n")); 	   		break;
-		case GSM_CAL_T_DANC   	: printf(_("Training/Dance\n")); 	   	break;
-		case GSM_CAL_T_EXTR   	: printf(_("Training/Extreme Sports\n")); 	break;
-		case GSM_CAL_T_FOOT   	: printf(_("Training/Football\n")); 	   	break;
-		case GSM_CAL_T_GOLF   	: printf(_("Training/Golf\n")); 	   		break;
-		case GSM_CAL_T_GYM    	: printf(_("Training/Gym\n")); 	   		break;
-		case GSM_CAL_T_HORS   	: printf(_("Training/Horse Races\n"));    	break;
-		case GSM_CAL_T_HOCK   	: printf(_("Training/Hockey\n")); 	  	break;
-		case GSM_CAL_T_RACE   	: printf(_("Training/Races\n")); 	   	break;
-		case GSM_CAL_T_RUGB   	: printf(_("Training/Rugby\n")); 	   	break;
-		case GSM_CAL_T_SAIL   	: printf(_("Training/Sailing\n")); 	   	break;
-		case GSM_CAL_T_STRE   	: printf(_("Training/Street Games\n"));   	break;
-		case GSM_CAL_T_SWIM   	: printf(_("Training/Swimming\n")); 	   	break;
-		case GSM_CAL_T_TENN   	: printf(_("Training/Tennis\n")); 	   	break;
-		case GSM_CAL_T_TRAV   	: printf(_("Training/Travels\n"));        	break;
-		case GSM_CAL_T_WINT   	: printf(_("Training/Winter Games\n"));   	break;
-		default           	: printf(_("UNKNOWN\n"));
+		case GSM_CAL_REMINDER 	: printf("%s\n", _("Reminder (Date)"));		break;
+		case GSM_CAL_CALL     	: printf("%s\n", _("Call"));			   	break;
+		case GSM_CAL_MEETING  	: printf("%s\n", _("Meeting"));		   	break;
+		case GSM_CAL_BIRTHDAY 	: printf("%s\n", _("Birthday (Anniversary)"));		break;
+		case GSM_CAL_MEMO	: printf("%s\n", _("Memo (Miscellaneous)"));		break;
+		case GSM_CAL_TRAVEL	: printf("%s\n", _("Travel"));			   	break;
+		case GSM_CAL_VACATION	: printf("%s\n", _("Vacation"));			break;
+		case GSM_CAL_ALARM    	: printf("%s\n", _("Alarm"));		   		break;
+		case GSM_CAL_DAILY_ALARM: printf("%s\n", _("Daily alarm"));		   	break;
+		case GSM_CAL_T_ATHL   	: printf("%s\n", _("Training/Athletism")); 	   	break;
+		case GSM_CAL_T_BALL   	: printf("%s\n", _("Training/Ball Games")); 	   	break;
+		case GSM_CAL_T_CYCL   	: printf("%s\n", _("Training/Cycling")); 	   	break;
+		case GSM_CAL_T_BUDO   	: printf("%s\n", _("Training/Budo")); 	   		break;
+		case GSM_CAL_T_DANC   	: printf("%s\n", _("Training/Dance")); 	   	break;
+		case GSM_CAL_T_EXTR   	: printf("%s\n", _("Training/Extreme Sports")); 	break;
+		case GSM_CAL_T_FOOT   	: printf("%s\n", _("Training/Football")); 	   	break;
+		case GSM_CAL_T_GOLF   	: printf("%s\n", _("Training/Golf")); 	   		break;
+		case GSM_CAL_T_GYM    	: printf("%s\n", _("Training/Gym")); 	   		break;
+		case GSM_CAL_T_HORS   	: printf("%s\n", _("Training/Horse Races"));    	break;
+		case GSM_CAL_T_HOCK   	: printf("%s\n", _("Training/Hockey")); 	  	break;
+		case GSM_CAL_T_RACE   	: printf("%s\n", _("Training/Races")); 	   	break;
+		case GSM_CAL_T_RUGB   	: printf("%s\n", _("Training/Rugby")); 	   	break;
+		case GSM_CAL_T_SAIL   	: printf("%s\n", _("Training/Sailing")); 	   	break;
+		case GSM_CAL_T_STRE   	: printf("%s\n", _("Training/Street Games"));   	break;
+		case GSM_CAL_T_SWIM   	: printf("%s\n", _("Training/Swimming")); 	   	break;
+		case GSM_CAL_T_TENN   	: printf("%s\n", _("Training/Tennis")); 	   	break;
+		case GSM_CAL_T_TRAV   	: printf("%s\n", _("Training/Travels"));        	break;
+		case GSM_CAL_T_WINT   	: printf("%s\n", _("Training/Winter Games"));   	break;
+		default           	: printf("%s\n", _("UNKNOWN"));
 	}
 	Alarm.Year = 0;
 

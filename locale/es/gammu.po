@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 12:41+0200\n"
+"POT-Creation-Date: 2007-04-26 14:15+0200\n"
 "PO-Revision-Date: 2007-03-20 19:21+0100\n"
 "Last-Translator: Pablo Gomez <pgomez@arrakis.es>\n"
 "Language-Team: Language =es\n"
@@ -266,7 +266,7 @@ msgstr "General         "
 msgid "Silent"
 msgstr "Silencio"
 
-#: common/phone/nokia/nfunc.c:930
+#: common/phone/nokia/nfunc.c:930 gammu/gammu.c:279
 msgid "Meeting"
 msgstr ""
 
@@ -864,13 +864,38 @@ msgstr ""
 msgid "Terminating communication"
 msgstr ""
 
+#: gammu/smsd/smsdcore.c:96
+#, c-format
+msgid "Could not parse config file \"%s\"\n"
+msgstr ""
+
+#: gammu/smsd/smsdcore.c:98
+#, fuzzy, c-format
+msgid "Can't find file \"%s\"\n"
+msgstr "Hora del teléfono es %s\n"
+
+#: gammu/smsd/smsdcore.c:107 gammu/gammu.c:4303
+#, c-format
+msgid "Can't open file \"%s\"\n"
+msgstr ""
+
+#: gammu/smsd/smsdcore.c:110
+#, fuzzy, c-format
+msgid "Log filename is \"%s\"\n"
+msgstr "Hora del teléfono es %s\n"
+
 #: gammu/smsd/smsdcore.c:112
-msgid "Start GAMMU smsd"
+msgid "Starting GAMMU smsd"
 msgstr ""
 
 #: gammu/smsd/smsdcore.c:124
 #, fuzzy, c-format
 msgid "Warning: No PIN code in %s file"
+msgstr "Advertencia: No se encontró el archivo de configuración!\n"
+
+#: gammu/smsd/smsdcore.c:125
+#, fuzzy, c-format
+msgid "Warning: No PIN code in %s file\n"
 msgstr "Advertencia: No se encontró el archivo de configuración!\n"
 
 #: gammu/smsd/smsdcore.c:127
@@ -1029,39 +1054,33 @@ msgid "Stop GAMMU smsd"
 msgstr ""
 
 #: gammu/gammu.c:81
-#, c-format
-msgid "Waiting for Security Code.\n"
+msgid "Waiting for Security Code."
 msgstr ""
 
 #: gammu/gammu.c:84
-#, c-format
-msgid "Waiting for PIN.\n"
+msgid "Waiting for PIN."
 msgstr ""
 
 #: gammu/gammu.c:87
-#, c-format
-msgid "Waiting for PIN2.\n"
+msgid "Waiting for PIN2."
 msgstr ""
 
 #: gammu/gammu.c:90
-#, c-format
-msgid "Waiting for PUK.\n"
+msgid "Waiting for PUK."
 msgstr ""
 
 #: gammu/gammu.c:93
-#, c-format
-msgid "Waiting for PUK2.\n"
+msgid "Waiting for PUK2."
 msgstr ""
 
 #: gammu/gammu.c:96
-#, c-format
-msgid "Nothing to enter.\n"
+msgid "Nothing to enter."
 msgstr ""
 
-#: gammu/gammu.c:99 gammu/gammu.c:7111 gammu/gammu.c:7430
-#, fuzzy, c-format
-msgid "Unknown\n"
-msgstr "desconocido %i"
+#: gammu/gammu.c:99
+#, fuzzy
+msgid "Unknown security status."
+msgstr "Nombre de país desconocido."
 
 #: gammu/gammu.c:108
 #, c-format
@@ -1074,19 +1093,18 @@ msgid "INFO: there is later phone firmware (%s instead of %s) available !\n"
 msgstr ""
 
 #: gammu/gammu.c:193
-#, fuzzy, c-format
-msgid "ERROR: more parameters required\n"
+#, fuzzy
+msgid "ERROR: more parameters required"
 msgstr "ERROR: parámetro desconocido \"%s\"\n"
 
-#: gammu/gammu.c:199 gammu/gammu.c:207 gammu/gammu.c:3242
-#, c-format
-msgid "ERROR: enumerate locations from 1\n"
+#: gammu/gammu.c:199
+msgid "ERROR: enumerate locations from 1"
 msgstr ""
 
-#: gammu/gammu.c:211
-#, c-format
-msgid "WARNING: swapping start and end location\n"
-msgstr ""
+#: gammu/gammu.c:207 gammu/gammu.c:211
+#, fuzzy, c-format
+msgid "%s\n"
+msgstr "Texto: \"%s\"\n"
 
 #. l10n: %s is replaced by question, answers have to match corresponding translations
 #: gammu/gammu.c:229
@@ -1095,13 +1113,11 @@ msgid "%s (yes/no/ALL/ONLY/NONE) ? "
 msgstr ""
 
 #: gammu/gammu.c:231
-#, c-format
-msgid "YES (always)\n"
+msgid "YES (always)"
 msgstr ""
 
 #: gammu/gammu.c:235
-#, c-format
-msgid "NO (always)\n"
+msgid "NO (always)"
 msgstr ""
 
 #: gammu/gammu.c:240
@@ -1121,149 +1137,144 @@ msgstr ""
 msgid "Note type    : "
 msgstr ""
 
-#: gammu/gammu.c:277 gammu/gammu.c:7076
-#, c-format
-msgid "Reminder (Date)\n"
+#: gammu/gammu.c:277
+#, fuzzy
+msgid "Reminder (Date)"
 msgstr "Recordatorio (Fecha)\n"
 
-#: gammu/gammu.c:278 gammu/gammu.c:7077
-#, c-format
-msgid "Call\n"
+#: gammu/gammu.c:278
+#, fuzzy
+msgid "Call"
 msgstr "Llamada\n"
 
-#: gammu/gammu.c:279 gammu/gammu.c:7078
-#, c-format
-msgid "Meeting\n"
-msgstr ""
-
-#: gammu/gammu.c:280 gammu/gammu.c:7079
-#, c-format
-msgid "Birthday (Anniversary)\n"
+#: gammu/gammu.c:280
+#, fuzzy
+msgid "Birthday (Anniversary)"
 msgstr "Cumpleaños (Aniversario)\n"
 
-#: gammu/gammu.c:281 gammu/gammu.c:7080
-#, c-format
-msgid "Memo (Miscellaneous)\n"
+#: gammu/gammu.c:281
+#, fuzzy
+msgid "Memo (Miscellaneous)"
 msgstr "Memo (Miscelánea)\n"
 
-#: gammu/gammu.c:282 gammu/gammu.c:7081
-#, c-format
-msgid "Travel\n"
+#: gammu/gammu.c:282
+#, fuzzy
+msgid "Travel"
 msgstr "Viaje\n"
 
-#: gammu/gammu.c:283 gammu/gammu.c:7082
-#, c-format
-msgid "Vacation\n"
+#: gammu/gammu.c:283
+#, fuzzy
+msgid "Vacation"
 msgstr "Vacaciones\n"
 
-#: gammu/gammu.c:284 gammu/gammu.c:7083
-#, c-format
-msgid "Alarm\n"
+#: gammu/gammu.c:284
+#, fuzzy
+msgid "Alarm"
 msgstr "Alarma\n"
 
-#: gammu/gammu.c:285 gammu/gammu.c:7084
-#, c-format
-msgid "Daily alarm\n"
+#: gammu/gammu.c:285
+#, fuzzy
+msgid "Daily alarm"
 msgstr "Alarma diaria\n"
 
-#: gammu/gammu.c:286 gammu/gammu.c:7085
-#, c-format
-msgid "Training/Athletism\n"
+#: gammu/gammu.c:286
+#, fuzzy
+msgid "Training/Athletism"
 msgstr "Entrenamiento/Atletismo\n"
 
-#: gammu/gammu.c:287 gammu/gammu.c:7086
-#, c-format
-msgid "Training/Ball Games\n"
+#: gammu/gammu.c:287
+#, fuzzy
+msgid "Training/Ball Games"
 msgstr "Entrenamiento/Juegos de pelota\n"
 
-#: gammu/gammu.c:288 gammu/gammu.c:7087
-#, c-format
-msgid "Training/Cycling\n"
+#: gammu/gammu.c:288
+#, fuzzy
+msgid "Training/Cycling"
 msgstr "Entrenamiento/Ciclismo\n"
 
-#: gammu/gammu.c:289 gammu/gammu.c:7088
-#, c-format
-msgid "Training/Budo\n"
+#: gammu/gammu.c:289
+#, fuzzy
+msgid "Training/Budo"
 msgstr "Entrenamiento/Budo\n"
 
-#: gammu/gammu.c:290 gammu/gammu.c:7089
-#, c-format
-msgid "Training/Dance\n"
+#: gammu/gammu.c:290
+#, fuzzy
+msgid "Training/Dance"
 msgstr "Entrenamiento/Baile\n"
 
-#: gammu/gammu.c:291 gammu/gammu.c:7090
-#, c-format
-msgid "Training/Extreme Sports\n"
+#: gammu/gammu.c:291
+#, fuzzy
+msgid "Training/Extreme Sports"
 msgstr "Entrenamiento/Deportes de riesgo\n"
 
-#: gammu/gammu.c:292 gammu/gammu.c:7091
-#, c-format
-msgid "Training/Football\n"
+#: gammu/gammu.c:292
+#, fuzzy
+msgid "Training/Football"
 msgstr "Entrenamiento/Fútbol\n"
 
-#: gammu/gammu.c:293 gammu/gammu.c:7092
-#, c-format
-msgid "Training/Golf\n"
+#: gammu/gammu.c:293
+#, fuzzy
+msgid "Training/Golf"
 msgstr "Entrenamiento/Golf\n"
 
-#: gammu/gammu.c:294 gammu/gammu.c:7093
-#, c-format
-msgid "Training/Gym\n"
+#: gammu/gammu.c:294
+#, fuzzy
+msgid "Training/Gym"
 msgstr "Entrenamiento/Gimnasia\n"
 
-#: gammu/gammu.c:295 gammu/gammu.c:7094
-#, c-format
-msgid "Training/Horse Races\n"
+#: gammu/gammu.c:295
+#, fuzzy
+msgid "Training/Horse Races"
 msgstr "Entrenamiento/Carreas de caballos\n"
 
-#: gammu/gammu.c:296 gammu/gammu.c:7095
-#, c-format
-msgid "Training/Hockey\n"
+#: gammu/gammu.c:296
+#, fuzzy
+msgid "Training/Hockey"
 msgstr "Entrenamiento/Hockey\n"
 
-#: gammu/gammu.c:297 gammu/gammu.c:7096
-#, c-format
-msgid "Training/Races\n"
+#: gammu/gammu.c:297
+#, fuzzy
+msgid "Training/Races"
 msgstr "Entrenamiento/Carreras\n"
 
-#: gammu/gammu.c:298 gammu/gammu.c:7097
-#, c-format
-msgid "Training/Rugby\n"
+#: gammu/gammu.c:298
+#, fuzzy
+msgid "Training/Rugby"
 msgstr "Entrenamiento/Rugby\n"
 
-#: gammu/gammu.c:299 gammu/gammu.c:7098
-#, c-format
-msgid "Training/Sailing\n"
+#: gammu/gammu.c:299
+#, fuzzy
+msgid "Training/Sailing"
 msgstr "Entrenamiento/Sailing\n"
 
-#: gammu/gammu.c:300 gammu/gammu.c:7099
-#, c-format
-msgid "Training/Street Games\n"
+#: gammu/gammu.c:300
+#, fuzzy
+msgid "Training/Street Games"
 msgstr "Entrenamiento/Juegos callejeros\n"
 
-#: gammu/gammu.c:301 gammu/gammu.c:7100
-#, c-format
-msgid "Training/Swimming\n"
+#: gammu/gammu.c:301
+#, fuzzy
+msgid "Training/Swimming"
 msgstr "Entrenamiento/Natación\n"
 
-#: gammu/gammu.c:302 gammu/gammu.c:7101
-#, c-format
-msgid "Training/Tennis\n"
+#: gammu/gammu.c:302
+#, fuzzy
+msgid "Training/Tennis"
 msgstr "Entrenamiento/Tenis\n"
 
-#: gammu/gammu.c:303 gammu/gammu.c:7102
-#, c-format
-msgid "Training/Travels\n"
+#: gammu/gammu.c:303
+#, fuzzy
+msgid "Training/Travels"
 msgstr "Entrenamiento/Viajes\n"
 
-#: gammu/gammu.c:304 gammu/gammu.c:7103
-#, c-format
-msgid "Training/Winter Games\n"
+#: gammu/gammu.c:304
+#, fuzzy
+msgid "Training/Winter Games"
 msgstr "Entrenamiento/Juegos de invierno\n"
 
-#: gammu/gammu.c:305 gammu/gammu.c:947 gammu/gammu.c:7104 gammu/gammu.c:7473
-#, c-format
-msgid "UNKNOWN\n"
+#: gammu/gammu.c:305
+#, fuzzy
+msgid "UNKNOWN"
 msgstr "DESCONOCIDO\n"
 
 #: gammu/gammu.c:322
@@ -1904,6 +1915,11 @@ msgstr "Personalizado 3 "
 #, c-format
 msgid "Custom text 4   "
 msgstr "Personalizado 4 "
+
+#: gammu/gammu.c:947 gammu/gammu.c:7104 gammu/gammu.c:7473
+#, c-format
+msgid "UNKNOWN\n"
+msgstr "DESCONOCIDO\n"
 
 #: gammu/gammu.c:992 gammu/gammu.c:1042 gammu/gammu.c:1060 gammu/gammu.c:1118
 #: gammu/gammu.c:1214
@@ -3266,6 +3282,11 @@ msgstr "Parámetro desconocido \"%s\""
 msgid "Parameter missed...\n"
 msgstr ""
 
+#: gammu/gammu.c:3242
+#, c-format
+msgid "ERROR: enumerate locations from 1\n"
+msgstr ""
+
 #: gammu/gammu.c:3280
 #, c-format
 msgid "msg:%s nb:%i udh:%s\n"
@@ -3401,11 +3422,6 @@ msgstr "Tipo de llamada desconocido (\"%s\")\n"
 #: gammu/gammu.c:4280
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
-msgstr ""
-
-#: gammu/gammu.c:4303
-#, c-format
-msgid "Can't open file \"%s\"\n"
 msgstr ""
 
 #: gammu/gammu.c:4353
@@ -4383,6 +4399,146 @@ msgstr "La entrada está vacía."
 msgid "Location     : %i\n"
 msgstr "Categoría        : %i\n"
 
+#: gammu/gammu.c:7076
+#, c-format
+msgid "Reminder (Date)\n"
+msgstr "Recordatorio (Fecha)\n"
+
+#: gammu/gammu.c:7077
+#, c-format
+msgid "Call\n"
+msgstr "Llamada\n"
+
+#: gammu/gammu.c:7078
+#, c-format
+msgid "Meeting\n"
+msgstr ""
+
+#: gammu/gammu.c:7079
+#, c-format
+msgid "Birthday (Anniversary)\n"
+msgstr "Cumpleaños (Aniversario)\n"
+
+#: gammu/gammu.c:7080
+#, c-format
+msgid "Memo (Miscellaneous)\n"
+msgstr "Memo (Miscelánea)\n"
+
+#: gammu/gammu.c:7081
+#, c-format
+msgid "Travel\n"
+msgstr "Viaje\n"
+
+#: gammu/gammu.c:7082
+#, c-format
+msgid "Vacation\n"
+msgstr "Vacaciones\n"
+
+#: gammu/gammu.c:7083
+#, c-format
+msgid "Alarm\n"
+msgstr "Alarma\n"
+
+#: gammu/gammu.c:7084
+#, c-format
+msgid "Daily alarm\n"
+msgstr "Alarma diaria\n"
+
+#: gammu/gammu.c:7085
+#, c-format
+msgid "Training/Athletism\n"
+msgstr "Entrenamiento/Atletismo\n"
+
+#: gammu/gammu.c:7086
+#, c-format
+msgid "Training/Ball Games\n"
+msgstr "Entrenamiento/Juegos de pelota\n"
+
+#: gammu/gammu.c:7087
+#, c-format
+msgid "Training/Cycling\n"
+msgstr "Entrenamiento/Ciclismo\n"
+
+#: gammu/gammu.c:7088
+#, c-format
+msgid "Training/Budo\n"
+msgstr "Entrenamiento/Budo\n"
+
+#: gammu/gammu.c:7089
+#, c-format
+msgid "Training/Dance\n"
+msgstr "Entrenamiento/Baile\n"
+
+#: gammu/gammu.c:7090
+#, c-format
+msgid "Training/Extreme Sports\n"
+msgstr "Entrenamiento/Deportes de riesgo\n"
+
+#: gammu/gammu.c:7091
+#, c-format
+msgid "Training/Football\n"
+msgstr "Entrenamiento/Fútbol\n"
+
+#: gammu/gammu.c:7092
+#, c-format
+msgid "Training/Golf\n"
+msgstr "Entrenamiento/Golf\n"
+
+#: gammu/gammu.c:7093
+#, c-format
+msgid "Training/Gym\n"
+msgstr "Entrenamiento/Gimnasia\n"
+
+#: gammu/gammu.c:7094
+#, c-format
+msgid "Training/Horse Races\n"
+msgstr "Entrenamiento/Carreas de caballos\n"
+
+#: gammu/gammu.c:7095
+#, c-format
+msgid "Training/Hockey\n"
+msgstr "Entrenamiento/Hockey\n"
+
+#: gammu/gammu.c:7096
+#, c-format
+msgid "Training/Races\n"
+msgstr "Entrenamiento/Carreras\n"
+
+#: gammu/gammu.c:7097
+#, c-format
+msgid "Training/Rugby\n"
+msgstr "Entrenamiento/Rugby\n"
+
+#: gammu/gammu.c:7098
+#, c-format
+msgid "Training/Sailing\n"
+msgstr "Entrenamiento/Sailing\n"
+
+#: gammu/gammu.c:7099
+#, c-format
+msgid "Training/Street Games\n"
+msgstr "Entrenamiento/Juegos callejeros\n"
+
+#: gammu/gammu.c:7100
+#, c-format
+msgid "Training/Swimming\n"
+msgstr "Entrenamiento/Natación\n"
+
+#: gammu/gammu.c:7101
+#, c-format
+msgid "Training/Tennis\n"
+msgstr "Entrenamiento/Tenis\n"
+
+#: gammu/gammu.c:7102
+#, c-format
+msgid "Training/Travels\n"
+msgstr "Entrenamiento/Viajes\n"
+
+#: gammu/gammu.c:7103
+#, c-format
+msgid "Training/Winter Games\n"
+msgstr "Entrenamiento/Juegos de invierno\n"
+
 #: gammu/gammu.c:7106
 #, fuzzy, c-format
 msgid "Priority     : "
@@ -4402,6 +4558,11 @@ msgstr ""
 #, c-format
 msgid "High\n"
 msgstr ""
+
+#: gammu/gammu.c:7111 gammu/gammu.c:7430
+#, fuzzy, c-format
+msgid "Unknown\n"
+msgstr "desconocido %i"
 
 #: gammu/gammu.c:7116
 #, fuzzy, c-format
@@ -5374,10 +5535,6 @@ msgstr ""
 #, fuzzy
 #~ msgid "%i. \"%s\""
 #~ msgstr "Añadiendo \"%s\""
-
-#, fuzzy
-#~ msgid "\"%s\"\n"
-#~ msgstr "Texto: \"%s\"\n"
 
 #, fuzzy
 #~ msgid " \"%s\""
