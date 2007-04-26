@@ -619,7 +619,7 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 			case 0xc3:
 				/* Length */
 				/**
-				 * @todo ignored now
+				 * @todo Length is ignored now
 				 */
 				Pos += 5;
 				break;
@@ -758,7 +758,8 @@ GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, 
 
 /**
  * List OBEX folder.
- *
+ */
+/**
  * @todo We assume XML reply is in UTF-8, but this doesn't have to be true.
  */
 GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
