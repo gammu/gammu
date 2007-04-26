@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-04-26 11:19+0200\n"
-"PO-Revision-Date: 2007-04-10 14:07+0200\n"
+"PO-Revision-Date: 2007-04-26 11:24+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 0.10.1\n"
+"X-Generator: Pootle 0.11\n"
 
 #: common/gsmcomon.c:69
 msgid "No error."
@@ -314,24 +314,26 @@ msgstr "Můj styl"
 #, c-format
 msgid "Can't do it with current phone protocol\n"
 msgstr ""
+"Operaci nelze provést se současným protokolem\n"
 
 #: gammu/depend/nokia/dct4.c:70
 #, c-format
 msgid "%s (yes/no) ? "
-msgstr ""
+msgstr "%s (ano/ne) ? "
 
 #: gammu/depend/nokia/dct4.c:73 gammu/gammu.c:252
 msgid "yes"
-msgstr ""
+msgstr "ano"
 
 #: gammu/depend/nokia/dct4.c:74 gammu/gammu.c:253
 msgid "no"
-msgstr ""
+msgstr "ne"
 
 #: gammu/depend/nokia/dct4.c:253
-#, fuzzy, c-format
+#, c-format
 msgid "Setting done\n"
-msgstr "Text : \"%s\"n"
+msgstr ""
+"Nastavení provedeno\n"
 
 #: gammu/depend/nokia/dct4.c:290
 #, c-format
@@ -343,27 +345,27 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:356
 #, c-format
 msgid "Passed"
-msgstr ""
+msgstr "Prošlo"
 
 #: gammu/depend/nokia/dct4.c:357
-#, fuzzy, c-format
+#, c-format
 msgid "Fail"
-msgstr "Rodina"
+msgstr "Selhalo"
 
 #: gammu/depend/nokia/dct4.c:358
 #, c-format
 msgid "Not executed"
-msgstr ""
+msgstr "Nespuštěno"
 
 #: gammu/depend/nokia/dct4.c:359
 #, c-format
 msgid "No signal"
-msgstr ""
+msgstr "Žádný signál"
 
 #: gammu/depend/nokia/dct4.c:360
 #, c-format
 msgid "Timeout"
-msgstr ""
+msgstr "Vypršel čas"
 
 #: gammu/depend/nokia/dct4.c:361
 #, c-format
@@ -396,9 +398,10 @@ msgid "Trying %i\n"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:538
-#, fuzzy, c-format
+#, c-format
 msgid "Security code is %s\n"
-msgstr "Kód produktu  : %s\n"
+msgstr ""
+"Bezpečnostní kód je %s\n"
 
 #: gammu/depend/nokia/dct4.c:670
 #, c-format
@@ -426,9 +429,10 @@ msgid "Bluetooth     : "
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:861
-#, fuzzy, c-format
+#, c-format
 msgid "UEM           : %s\n"
-msgstr "Odesláno        : %s\n"
+msgstr ""
+"UEM           : %s\n"
 
 #: gammu/depend/nokia/dct4.c:929
 #, c-format
@@ -596,9 +600,9 @@ msgid ", type "
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1356
-#, fuzzy, c-format
+#, c-format
 msgid "string"
-msgstr "Zchůzka"
+msgstr "text"
 
 #: gammu/depend/nokia/dct4.c:1357
 #, c-format
@@ -1021,9 +1025,10 @@ msgid "Stop GAMMU smsd"
 msgstr ""
 
 #: gammu/gammu.c:81
-#, fuzzy, c-format
+#, c-format
 msgid "Waiting for Security Code.\n"
-msgstr "Čeká na PIN.\n"
+msgstr ""
+"Čeká na bezpečnostní kód.\n"
 
 #: gammu/gammu.c:84
 #, c-format
@@ -1607,9 +1612,10 @@ msgid "12 hours\n"
 msgstr "12 hodin\n"
 
 #: gammu/gammu.c:716
-#, fuzzy, c-format
+#, c-format
 msgid "24 hours\n"
-msgstr "12 hodin\n"
+msgstr ""
+"24 hodin\n"
 
 #: gammu/gammu.c:717
 #, c-format
@@ -1889,7 +1895,7 @@ msgstr "Osobní info 2   "
 #: gammu/gammu.c:944
 #, c-format
 msgid "Custom text 3   "
-msgstr "Osobní info 2   "
+msgstr "Osobní info 3   "
 
 #: gammu/gammu.c:945
 #, c-format
@@ -2857,24 +2863,24 @@ msgid "Validity       : "
 msgstr "Město           "
 
 #: gammu/gammu.c:2012
-#, fuzzy, c-format
+#, c-format
 msgid "1 hour"
-msgstr "12 hodin\n"
+msgstr "1 hodina"
 
 #: gammu/gammu.c:2013
-#, fuzzy, c-format
+#, c-format
 msgid "6 hours"
-msgstr "12 hodin\n"
+msgstr "6 hodin"
 
 #: gammu/gammu.c:2014
-#, fuzzy, c-format
+#, c-format
 msgid "24 hours"
-msgstr "12 hodin\n"
+msgstr "24 hodin"
 
 #: gammu/gammu.c:2015
-#, fuzzy, c-format
+#, c-format
 msgid "72 hours"
-msgstr "12 hodin\n"
+msgstr "72 hodin"
 
 #: gammu/gammu.c:2016
 #, c-format
