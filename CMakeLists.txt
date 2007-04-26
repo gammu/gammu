@@ -632,7 +632,7 @@ if (WIN32)
 endif (WIN32)
 
 # Generate config.h
-configure_file (cfg/config.h.cmake cfg/config.h ESCAPE_QUOTES)
+configure_file (templates/config.h.cmake cfg/config.h ESCAPE_QUOTES)
 
 # Generate Doxygen file
 set (DOXYGEN_INPUT ${Gammu_SOURCE_DIR}/common ${Gammu_SOURCE_DIR}/gammu)
@@ -645,8 +645,8 @@ else (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
     # Strip binary name from variable
     string (REGEX REPLACE "/dot$" "" DOXYGEN_DOT_PATH ${DOXYGEN_DOT_EXECUTABLE})
 endif (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
-configure_file (cfg/Doxyfile.cmake cfg/Doxyfile)
-configure_file (cfg/mainpage.desc.cmake mainpage.desc)
+configure_file (templates/Doxyfile.cmake cfg/Doxyfile)
+configure_file (templates/mainpage.desc.cmake mainpage.desc)
 
 # Target for generating API documentation
 add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} cfg/Doxyfile 
@@ -681,7 +681,7 @@ if (NOT DEFINED INSTALL_MAN_DIR)
 endif (NOT DEFINED INSTALL_MAN_DIR)
 
 # Generate pkgconfig file
-configure_file (cfg/gammu.pc.cmake cfg/gammu.pc @ONLY)
+configure_file (templates/gammu.pc.cmake cfg/gammu.pc @ONLY)
 
 # Install instructions
 install (TARGETS gammu Gammu
