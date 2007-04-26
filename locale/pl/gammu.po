@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 15:43+0200\n"
+"POT-Creation-Date: 2007-04-26 15:48+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: Language =pl\n"
@@ -4239,7 +4239,7 @@ msgstr ""
 
 #: gammu/gammu.c:6809
 #, c-format
-msgid "LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES."
+msgid "length=%i notes, but you will enter only first 50 tones."
 msgstr ""
 
 #: gammu/gammu.c:6811
@@ -4828,11 +4828,11 @@ msgstr "   Numer      : %s\n"
 msgid "Frequency"
 msgstr ""
 
-#: gammu/gammu.c:7866
+#: gammu/gammu.c:7866 gammu/gammu.c:8000
 #, c-format
 msgid ""
 "\n"
-"Free memory: %i, total memory: %i\n"
+"Phone memory: %i bytes (free %i bytes, used %i bytes)\n"
 msgstr ""
 
 #: gammu/gammu.c:7868 gammu/gammu.c:8002
@@ -4887,13 +4887,6 @@ msgstr ""
 #: gammu/gammu.c:7982
 #, c-format
 msgid "Folder;"
-msgstr ""
-
-#: gammu/gammu.c:8000
-#, c-format
-msgid ""
-"\n"
-"Phone memory: %i bytes (free %i bytes, used %i bytes)\n"
 msgstr ""
 
 #: gammu/gammu.c:8005

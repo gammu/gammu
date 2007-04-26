@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 15:43+0200\n"
+"POT-Creation-Date: 2007-04-26 15:48+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Language =ru\n"
@@ -4402,9 +4402,9 @@ msgstr ""
 "\n"
 
 #: gammu/gammu.c:6809
-#, fuzzy, c-format
-msgid "LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES."
-msgstr "ПРЕДУПРЕЖДЕНИЕ: ДЛИНА=%i НОТ, НО ВВЕСТИ МОЖНО ТОЛЬКО ПЕРВЫЕ 50 ТОНОВ."
+#, c-format
+msgid "length=%i notes, but you will enter only first 50 tones."
+msgstr ""
 
 #: gammu/gammu.c:6811
 #, c-format
@@ -5029,14 +5029,14 @@ msgstr "Местонахождение  : %s\n"
 msgid "Frequency"
 msgstr ""
 
-#: gammu/gammu.c:7866
+#: gammu/gammu.c:7866 gammu/gammu.c:8000
 #, c-format
 msgid ""
 "\n"
-"Free memory: %i, total memory: %i\n"
+"Phone memory: %i bytes (free %i bytes, used %i bytes)\n"
 msgstr ""
 "\n"
-"Свободная память: %i, всего памяти: %i\n"
+"Память телефона: %i байт (свободно %i байт, использовано %i байт)\n"
 
 #: gammu/gammu.c:7868 gammu/gammu.c:8002
 #, c-format
@@ -5091,15 +5091,6 @@ msgstr ", папка Входящие"
 #, c-format
 msgid "Folder;"
 msgstr ""
-
-#: gammu/gammu.c:8000
-#, c-format
-msgid ""
-"\n"
-"Phone memory: %i bytes (free %i bytes, used %i bytes)\n"
-msgstr ""
-"\n"
-"Память телефона: %i байт (свободно %i байт, использовано %i байт)\n"
 
 #: gammu/gammu.c:8005
 #, c-format
@@ -5651,6 +5642,18 @@ msgstr "ИНФО: Есть более новая стабильная верси
 #, c-format
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr "ИНФО: Есть более новая тестовая версия Gammu (%s против of %s).\n"
+
+#, fuzzy
+#~ msgid "LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES."
+#~ msgstr ""
+#~ "ПРЕДУПРЕЖДЕНИЕ: ДЛИНА=%i НОТ, НО ВВЕСТИ МОЖНО ТОЛЬКО ПЕРВЫЕ 50 ТОНОВ."
+
+#~ msgid ""
+#~ "\n"
+#~ "Free memory: %i, total memory: %i\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Свободная память: %i, всего памяти: %i\n"
 
 #, fuzzy
 #~ msgid "ERROR: enumerate locations from 1"
