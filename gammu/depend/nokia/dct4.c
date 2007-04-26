@@ -250,7 +250,7 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
 
 static GSM_Error DCT4_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	printf(_("Setting done OK\n"));
+	printf(_("Setting done\n"));
 	return ERR_NONE;
 }
 
