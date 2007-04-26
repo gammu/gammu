@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-04-26 15:43+0200\n"
+"POT-Creation-Date: 2007-04-26 15:48+0200\n"
 "PO-Revision-Date: 2007-03-20 11:32+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =de\n"
@@ -4406,10 +4406,9 @@ msgstr ""
 "\n"
 
 #: gammu/gammu.c:6809
-#, fuzzy, c-format
-msgid "LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES."
+#, c-format
+msgid "length=%i notes, but you will enter only first 50 tones."
 msgstr ""
-"WARNUNG: LÄNGE=%i NOTEN, ABER ES WERDEN NUR DIE ERSTEN 50 TÖNE EINGEGEBEN."
 
 #: gammu/gammu.c:6811
 #, c-format
@@ -5035,14 +5034,14 @@ msgstr "Speicherplatz: \"%s\"\n"
 msgid "Frequency"
 msgstr ""
 
-#: gammu/gammu.c:7866
+#: gammu/gammu.c:7866 gammu/gammu.c:8000
 #, c-format
 msgid ""
 "\n"
-"Free memory: %i, total memory: %i\n"
+"Phone memory: %i bytes (free %i bytes, used %i bytes)\n"
 msgstr ""
 "\n"
-"Freier Speicher: %i, Speicher gesamt: %i\n"
+"Telefonspeicher: %i Bytes (frei %i Bytes, verwendet %i Bytes)\n"
 
 #: gammu/gammu.c:7868 gammu/gammu.c:8002
 #, c-format
@@ -5097,15 +5096,6 @@ msgstr ", Posteingangsordner"
 #, c-format
 msgid "Folder;"
 msgstr ""
-
-#: gammu/gammu.c:8000
-#, c-format
-msgid ""
-"\n"
-"Phone memory: %i bytes (free %i bytes, used %i bytes)\n"
-msgstr ""
-"\n"
-"Telefonspeicher: %i Bytes (frei %i Bytes, verwendet %i Bytes)\n"
 
 #: gammu/gammu.c:8005
 #, c-format
@@ -5665,6 +5655,18 @@ msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr ""
 "INFO: Es ist eine neuere Entwicklungsversion von Gammu (%s anstatt %s) "
 "verfügbar!\n"
+
+#, fuzzy
+#~ msgid "LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES."
+#~ msgstr ""
+#~ "WARNUNG: LÄNGE=%i NOTEN, ABER ES WERDEN NUR DIE ERSTEN 50 TÖNE EINGEGEBEN."
+
+#~ msgid ""
+#~ "\n"
+#~ "Free memory: %i, total memory: %i\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Freier Speicher: %i, Speicher gesamt: %i\n"
 
 #, fuzzy
 #~ msgid "ERROR: enumerate locations from 1"

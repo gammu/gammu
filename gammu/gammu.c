@@ -6806,7 +6806,7 @@ static void NokiaComposer(int argc, char *argv[])
 			if (started) j++;
 		}
 	}
-    	if (j>50) printf_warn(_("LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES."),j);
+    	if (j>50) printf_warn(_("length=%i notes, but you will enter only first 50 tones."),j);
 
 	printf(_("\n\nThis ringtone in Nokia Composer in phone should look: "));
 	started = false;
@@ -7863,7 +7863,7 @@ static void GetFileSystemStatus(int argc, char *argv[])
 	error = Phone->GetFileSystemStatus(&s,&Status);
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
 	    	Print_Error(error);
-		printf(_("\nFree memory: %i, total memory: %i\n"),Status.Free,Status.Free+Status.Used);
+		printf(_("\nPhone memory: %i bytes (free %i bytes, used %i bytes)\n"),Status.Free+Status.Used,Status.Free,Status.Used);
 		if (Status.UsedImages != 0 || Status.UsedSounds != 0 || Status.UsedThemes != 0) {
 			printf(_("Used by: Images: %i, Sounds: %i, Themes: %i\n"), Status.UsedImages, Status.UsedSounds, Status.UsedThemes);
 		}
