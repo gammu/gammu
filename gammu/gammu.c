@@ -204,11 +204,11 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 		*stop=*start;
 		if (argc>=num+2) *stop=atoi(argv[num+1]);
 		if (*stop==0) {
-			printf(_("%s\n","ERROR: enumerate locations from 1"));
+			printf("%s\n", _("ERROR: enumerate locations from 1"));
 			exit (-1);
 		}
 		if (*stop < *start) {
-			printf(_("%s\n","WARNING: swapping start and end location"));
+			printf("%s\n", _("WARNING: swapping start and end location"));
 			tmp    = *stop;
 			*stop  = *start;
 			*start = tmp;
@@ -570,7 +570,7 @@ static GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone)
 	GSM_Error 	error;
 
 	signal(SIGINT, interrupt);
-	printf(_("Press Ctrl+C to break...\n"));
+	printf("%s\n", _("Press Ctrl+C to break..."));
 
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (gshutdown) break;
@@ -960,7 +960,7 @@ static void GetAllMemory(int argc, char *argv[])
 	bool			start = true;
 
 	signal(SIGINT, interrupt);
-	fprintf(stderr, _("Press Ctrl+C to break...\n"));
+	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	Entry.MemoryType = 0;
 
