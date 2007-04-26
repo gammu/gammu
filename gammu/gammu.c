@@ -7772,7 +7772,7 @@ static void Version(int argc, char *argv[])
 	printf("bool            - %zd\n", sizeof(bool));
 	printf("GSM_DateTime    - %zd\n", sizeof(GSM_DateTime));
 	printf("int             - %zd\n", sizeof(int));
-	printf("GSM_NetworkInfo - %zd\n" ,sizeof(GSM_NetworkInfo));
+	printf("GSM_NetworkInfo - %zd\n", sizeof(GSM_NetworkInfo));
 	dt.Year = 2005;
 	dt.Month = 2;
 	dt.Day=29;
