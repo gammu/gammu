@@ -20,6 +20,7 @@
 #else
 #define _(x) (x)
 #define gettext(x) (x)
+#define ngettext(singular, plural, number) (number == 1 ? singular : plural)
 #endif
 
 #define N_(x) (x)

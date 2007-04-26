@@ -399,7 +399,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 			printf(_("Phone        : \"%s\"\n"),DecodeUnicodeConsole(Note->Entries[i].Text));
 			break;
 		case CAL_PRIVATE:
-			printf(_("Private      : %s\n"),Note->Entries[i].Number == 1 ? "Yes" : "No");
+			printf(_("Private      : %s\n"),Note->Entries[i].Number == 1 ? _("Yes") : _("No"));
 			break;
 		case CAL_CONTACTID:
 			entry.Location = Note->Entries[i].Number;
@@ -551,7 +551,9 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 			    DateTime.Day < Alarm.Day) {
 				i_age++;
 			}
-			printf(_("Age          : %d %s\n"),i_age, (i_age==1)?"year":"years");
+			printf(_("Age          : "));
+			printf(ngettext("%d year", "%d years", i_age), i_age);
+			printf("\n");
 		}
 	}
 	printf("\n");
