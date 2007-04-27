@@ -373,7 +373,7 @@ void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, in
 	dest[strlen(GetLineString(src, lines, start))] = 0;
 }
 
-Debug_Info di = {0,NULL,false,""};
+Debug_Info di = {0,NULL,false,"",false};
 
 #ifdef DEBUG
 #if defined(__GNUC__) && !defined(printf)

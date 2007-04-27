@@ -145,7 +145,7 @@ static void PrintSecurityStatus()
 void Print_Error(GSM_Error error)
 {
 	if (error != ERR_NONE) {
- 		printf("%s\n",print_error(error,s.di.df,s.msg));
+ 		printf("%s\n",print_error(error,s.di.df));
 		if (error == ERR_SECURITYERROR) {
 			printf(_("Security status: "));
 			PrintSecurityStatus();
@@ -1839,13 +1839,13 @@ static void Monitor(int argc, char *argv[])
 	s.User.IncomingUSSD 	= IncomingUSSD;
 
 	error=Phone->SetIncomingSMS  		(&s,true);
-	printf(_("Enabling info about incoming SMS : %s\n"),print_error(error,NULL,s.msg));
+	printf(_("Enabling info about incoming SMS : %s\n"),print_error(error,NULL));
 	error=Phone->SetIncomingCB   		(&s,true);
-	printf(_("Enabling info about incoming CB  : %s\n"),print_error(error,NULL,s.msg));
+	printf(_("Enabling info about incoming CB  : %s\n"),print_error(error,NULL));
 	error=Phone->SetIncomingCall 		(&s,true);
-	printf(_("Enabling info about calls        : %s\n"),print_error(error,NULL,s.msg));
+	printf(_("Enabling info about calls        : %s\n"),print_error(error,NULL));
 	error=Phone->SetIncomingUSSD 		(&s,true);
-	printf(_("Enabling info about USSD         : %s\n\n"),print_error(error,NULL,s.msg));
+	printf(_("Enabling info about USSD         : %s\n\n"),print_error(error,NULL));
 
 	while (!gshutdown && count != 0) {
 		if (count > 0) count--;
@@ -5558,7 +5558,7 @@ static void Restore(int argc, char *argv[])
 						if (First) printf(_("%cLocation %i                 \n  "),13,Pbk.Location);
 						First = false;
 						PrintMemorySubEntry(&Pbk.Entries[j]);
-						printf("    %s\n",print_error(Pbk.Entries[j].AddError,s.di.df,s.msg));
+						printf("    %s\n",print_error(Pbk.Entries[j].AddError,s.di.df));
 					}
 				}
 			}
@@ -5603,7 +5603,7 @@ static void Restore(int argc, char *argv[])
 							if (First) printf(_("%cLocation %i                 \n  "),13,Pbk.Location);
 							First = false;
 							PrintMemorySubEntry(&Pbk.Entries[j]);
-							printf("    %s\n",print_error(Pbk.Entries[j].AddError,s.di.df,s.msg));
+							printf("    %s\n",print_error(Pbk.Entries[j].AddError,s.di.df));
 						}
 					}
 				}
@@ -9314,13 +9314,19 @@ static void CancelAllDiverts(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+/**
+ * Structure to hold information about connection for searching.
+ */
 typedef struct {
-	unsigned char		Connection[50];
+	unsigned char		Connection[50]; /**< Connection name */
 } OneConnectionInfo;
 
+/**
+ * Structure to hold device information for phone searching.
+ */
 typedef struct {
-	unsigned char 		Device[50];
-	OneConnectionInfo 	Connections[5];
+	unsigned char 		Device[50]; /**< Device name */
+	OneConnectionInfo 	Connections[5]; /**< List of connections to try */
 } OneDeviceInfo;
 
 int				num;
@@ -9335,7 +9341,6 @@ void SearchPhoneThread(OneDeviceInfo *Info)
 	j = 0;
 	while(strlen(Info->Connections[j].Connection) != 0) {
 		memcpy(&ss.di,&s.di,sizeof(Debug_Info));
-		ss.msg				= s.msg;
 		ss.ConfigNum			= 1;
 		ss.opened 			= false;
 	    	ss.Config[0].UseGlobalDebugFile = s.Config[0].UseGlobalDebugFile;
@@ -9363,13 +9368,13 @@ void SearchPhoneThread(OneDeviceInfo *Info)
 						ss.Phone.Data.ModelInfo->model,
 						ss.Phone.Data.Model);
 				} else {
-					if (SearchOutput) printf("   %s\n",print_error(error,ss.di.df,ss.msg));
+					if (SearchOutput) printf("   %s\n",print_error(error,ss.di.df));
 				}
 			} else {
-				if (SearchOutput) printf("   %s\n",print_error(error,ss.di.df,ss.msg));
+				if (SearchOutput) printf("   %s\n",print_error(error,ss.di.df));
 			}
 		} else {
-			if (SearchOutput) printf("   %s\n",print_error(error,ss.di.df,ss.msg));
+			if (SearchOutput) printf("   %s\n",print_error(error,ss.di.df));
 		}
 		if (error != ERR_DEVICEOPENERROR) {
 			GSM_TerminateConnection(&ss);
@@ -10155,14 +10160,10 @@ int main(int argc, char *argv[])
 	int 		start = 0;
 	unsigned int	i;
 	int		only_config = -1;
-#if !defined(WIN32) && !defined(DJGPP) && defined(LOCALE_PATH)
-	char		*locale, locale_file[201];
-#endif
 	char		*cp,*rss,buff[200];
 
 
 	s.opened 	= false;
-	s.msg	 	= NULL;
 	s.ConfigNum 	= 0;
 
 	InitLocales(NULL);
@@ -10210,21 +10211,8 @@ int main(int argc, char *argv[])
         		if (cp) di.coding = cp;
 
 		        s.Config[i].Localize = INI_GetValue(cfg, "gammu", "gammuloc", false);
-        		if (s.Config[i].Localize) {
-				InitLocales(s.Config[i].Localize);
-				INI_ReadFile(s.Config[i].Localize, true, &s.msg);
-			} else {
-#if !defined(WIN32) && !defined(DJGPP) && defined(LOCALE_PATH)
- 				locale = setlocale(LC_MESSAGES, NULL);
- 				if (locale != NULL) {
-					snprintf(locale_file, 200, "%s/gammu_%c%c.txt",
-							LOCALE_PATH,
-							tolower(locale[0]),
-							tolower(locale[1]));
-					INI_ReadFile(locale_file, true, &s.msg);
-				}
-#endif
-			}
+			/* It is safe to pass NULL here */
+			InitLocales(s.Config[i].Localize);
 		}
 
 		/* Wanted user specific configuration? */

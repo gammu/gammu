@@ -44,6 +44,11 @@ GSM_Error NotSupportedFunction(void)
 	return ERR_NOTSUPPORTED;
 }
 
+/**
+ * Initializes locales from given path or from system default.
+ *
+ * @param path Optional path to locales, can be NULL.
+ */
 void InitLocales(const char *path) {
 	setlocale(LC_ALL, "");
 #ifdef GETTEXTLIBS_FOUND
@@ -60,11 +65,17 @@ void InitLocales(const char *path) {
 #endif
 }
 
+/**
+ * Gammu errors descriptions.
+ */
 typedef struct {
-	GSM_Error		ErrorNum;
-	unsigned char		*ErrorText;
+	GSM_Error		ErrorNum; /**< Error code */
+	unsigned char		*ErrorText; /**< Textual representation, not localised, use gettext to get localised string */
 } PrintErrorEntry;
 
+/**
+ * Mapping of error numbers to descriptions.
+ */
 static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_NONE,			N_("No error.")},
 	{ERR_DEVICEOPENERROR,		N_("Error opening device. Unknown/busy or no permissions.")},
@@ -122,7 +133,13 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{0,				""}
 };
 
-unsigned char *print_error(GSM_Error e, FILE *df, INI_Section *cfg)
+/**
+ * Prints text for error.
+ *
+ * @param e Error code.
+ * @param df Debuf file.
+ */
+unsigned char *print_error(GSM_Error e, FILE *df)
 {
 	unsigned char 	*def 	= NULL;
 	int 		i	= 0;
