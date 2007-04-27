@@ -154,6 +154,10 @@ static GSM_Error N7110_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMac
 			current=current+2+UnicodeLength(buffer)*2;
 			Data->SMSFolders->Folder[j].InboxFolder = false;
 			if (j==0) Data->SMSFolders->Folder[j].InboxFolder = true;
+			Data->SMSFolders->Folder[j].OutboxFolder = false;
+			/**
+			 * @todo We should detect outbox here.
+			 */
 			Data->SMSFolders->Folder[j].Memory = MEM_ME;
 			if (j==0 || j==1) Data->SMSFolders->Folder[j].InboxFolder = MEM_MT;
 		}

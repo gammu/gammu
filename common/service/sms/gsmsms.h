@@ -478,18 +478,10 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS);
  * Information about SMS folder.
  */
 typedef struct {
-	/**
-	 * Whether it is really inbox.
-	 */
-	bool		    	InboxFolder;
-	/**
-	 * Where exactly it's saved
-	 */
-	GSM_MemoryType		Memory;
-        /**
-  	 * Name for SMS folder.
-	 */
-        unsigned char		Name[(GSM_MAX_SMS_FOLDER_NAME_LEN+1)*2];
+	bool		    	InboxFolder; /**< Whether it is inbox. */
+	bool		    	OutboxFolder; /**< Whether it is outbox. */
+	GSM_MemoryType		Memory; /**< Where exactly it's saved. */
+        unsigned char		Name[(GSM_MAX_SMS_FOLDER_NAME_LEN+1)*2]; /**< Name of the folder */
 } GSM_OneSMSFolder;
 
 /**

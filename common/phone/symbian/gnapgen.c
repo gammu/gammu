@@ -628,6 +628,10 @@ static GSM_Error GNAPGEN_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateM
 		smprintf(s, ", folder name: \"%s\"\n",DecodeUnicodeString(Data->SMSFolders->Folder[j].Name));
 		Data->SMSFolders->Folder[j].InboxFolder = false;
 		if (j==0) Data->SMSFolders->Folder[j].InboxFolder = true;
+		Data->SMSFolders->Folder[j].OutboxFolder = false;
+		/**
+		 * @todo Need to detect outbox folder somehow.
+		 */
 		Data->SMSFolders->Folder[j].Memory 	  = MEM_ME;
 		pos+=msg.Buffer[pos+3]*2+4;
 	}
