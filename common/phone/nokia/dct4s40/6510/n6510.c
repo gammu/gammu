@@ -482,16 +482,21 @@ static GSM_Error N6510_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMac
 			if (num == 0x01) { /* OUTBOX SIM */
 				Data->SMSFolders->Folder[0].Memory 	= MEM_SM;
 				Data->SMSFolders->Folder[0].InboxFolder = true;
+				Data->SMSFolders->Folder[0].OutboxFolder = false;
 
 				Data->SMSFolders->Folder[1].Memory 	= MEM_SM;
+				Data->SMSFolders->Folder[1].InboxFolder = false;
+				Data->SMSFolders->Folder[1].OutboxFolder = true;
 
 				CopyUnicodeString(Data->SMSFolders->Folder[2].Name,Data->SMSFolders->Folder[0].Name);
 				Data->SMSFolders->Folder[2].Memory 	= MEM_ME;
 				Data->SMSFolders->Folder[2].InboxFolder = true;
+				Data->SMSFolders->Folder[2].OutboxFolder = false;
 
 				CopyUnicodeString(Data->SMSFolders->Folder[3].Name,Data->SMSFolders->Folder[1].Name);
 				Data->SMSFolders->Folder[3].Memory 	= MEM_ME;
 				Data->SMSFolders->Folder[3].InboxFolder = false;
+				Data->SMSFolders->Folder[3].OutboxFolder = true;
 
 				num+=2;
 			}
@@ -513,6 +518,10 @@ GSM_Error N6510_GetSMSFoldersS40_30(GSM_StateMachine *s, GSM_SMSFolders *folders
 	folders->Folder[1].InboxFolder = true;
 	folders->Folder[2].InboxFolder = false;
 	folders->Folder[3].InboxFolder = false;
+	folders->Folder[0].OutboxFolder = true;
+	folders->Folder[1].OutboxFolder = false;
+	folders->Folder[2].OutboxFolder = true;
+	folders->Folder[3].OutboxFolder = false;
 	folders->Folder[0].Memory      = MEM_SM;
 	folders->Folder[1].Memory      = MEM_ME;
 	folders->Folder[2].Memory      = MEM_ME;

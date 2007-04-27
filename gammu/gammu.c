@@ -2380,6 +2380,7 @@ static void GetSMSFolders(int argc, char *argv[])
 			default    : break;
 		}
 		if (folders.Folder[i].InboxFolder) printf(_(", Inbox folder"));
+		if (folders.Folder[i].OutboxFolder) printf(_(", Outbox folder"));
 		printf("\n");
 	}
 

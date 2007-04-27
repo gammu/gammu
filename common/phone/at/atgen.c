@@ -3569,8 +3569,10 @@ GSM_Error ATGEN_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 		if (used != 0) {
 			CopyUnicodeString(folders->Folder[used    ].Name,folders->Folder[0].Name);
 			CopyUnicodeString(folders->Folder[used + 1].Name,folders->Folder[1].Name);
-			folders->Folder[used    ].InboxFolder 	= true;
-			folders->Folder[used + 1].InboxFolder 	= false;
+			folders->Folder[used    ].InboxFolder 	= folders->Folder[0].InboxFolder;
+			folders->Folder[used + 1].InboxFolder 	= folders->Folder[1].InboxFolder;
+			folders->Folder[used    ].OutboxFolder 	= folders->Folder[0].OutboxFolder;
+			folders->Folder[used + 1].OutboxFolder 	= folders->Folder[1].OutboxFolder;
 		}
 		folders->Folder[used    ].Memory 	= MEM_ME;
 		folders->Folder[used + 1].Memory 	= MEM_ME;

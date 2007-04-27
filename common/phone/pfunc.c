@@ -40,6 +40,8 @@ GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 	EncodeUnicode(folders->Folder[1].Name,_("Outbox"),strlen(_("Outbox")));
 	folders->Folder[0].InboxFolder = true;
 	folders->Folder[1].InboxFolder = false;
+	folders->Folder[0].OutboxFolder 	= false;
+	folders->Folder[1].OutboxFolder 	= true;
 	folders->Folder[0].Memory      = MEM_SM;
 	folders->Folder[1].Memory      = MEM_SM;
 	return ERR_NONE;

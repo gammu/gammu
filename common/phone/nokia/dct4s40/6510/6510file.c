@@ -2133,6 +2133,10 @@ GSM_Error N6510_PrivGetFilesystemSMSFolders(GSM_StateMachine *s, GSM_SMSFolders 
 		if (!strcmp(DecodeUnicodeString(Files.Name),"1")) {
 			folders->Folder[folders->Number].InboxFolder = true;
 		}
+		folders->Folder[folders->Number].OutboxFolder = false;
+		if (!strcmp(DecodeUnicodeString(Files.Name),"6")) {
+			folders->Folder[folders->Number].OutboxFolder = true;
+		}
 		if (real) {
 			CopyUnicodeString(folders->Folder[folders->Number].Name,Files.Name);
 		} else {

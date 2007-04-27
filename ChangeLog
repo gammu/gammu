@@ -23,6 +23,7 @@ ChangeLog
 [-] * Cleaned up transatable strings.
 [-] * Improve networks listing.
 [-] * Allow networks to be listed by country code.
+[+] * Add flag to SMS folders whether it is outbox.
 
 20070424 - 1.10.4
 [-] * Fix decoding of new style address records in Nokia phones. Thanks to
