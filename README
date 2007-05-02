@@ -43,6 +43,17 @@ provide latest features, but everything does not have to be stabilized
 yet.
 
 
+Configuration
+=============
+
+Gammu requires configuration to be able to properly talk to your phone.
+You can create own by starting from example in
+docs/examples/config/gammurc, where are parameters are described.
+Alternatively you might want to try GUI for Gammu called Wammu (see
+<http://wammu.eu/>), which can automatically generate configuration for
+you.
+
+
 Problems
 ========
 
