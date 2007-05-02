@@ -3160,7 +3160,7 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 	fprintf(file, BACKUP_MAIN_HEADER "\n");
 	fprintf(file, BACKUP_INFO_HEADER "\n");
 	GSM_GetCurrentDateTime (&DT);
-	fprintf(file,"# Saved ");
+	fprintf(file,"; Saved ");
 	fprintf(file, "%04d%02d%02dT%02d%02d%02d",
 			DT.Year, DT.Month, DT.Day,
 			DT.Hour, DT.Minute, DT.Second);
@@ -3173,12 +3173,12 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 			case SMS_Coding_Unicode_No_Compression:
 			case SMS_Coding_Default_No_Compression:
 				sprintf(buffer,"%s",DecodeUnicodeString(backup->SMS[i]->Text));
-				fprintf(file,"#");
+				fprintf(file,";");
 				current = 0;
 				for (w=0;w<(int)(strlen(buffer));w++) {
 					switch (buffer[w]) {
 						case 10:
-							fprintf(file,"\n#");
+							fprintf(file,"\n;");
 							current = 0;
 							break;
 						case 13:
@@ -3189,7 +3189,7 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 								current ++;
 							}
 							if (current == 75) {
-								fprintf(file,"\n#");
+								fprintf(file,"\n;");
 								current = 0;
 							}
 					}

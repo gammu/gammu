@@ -8,8 +8,8 @@
 #endif
 
 #define GAMMU_URL "<http://www.gammu.org>"
-#define BACKUP_MAIN_HEADER "# This file format was designed for Gammu and is compatible with Gammu+"
-#define BACKUP_INFO_HEADER "# See " GAMMU_URL " for more info"
+#define BACKUP_MAIN_HEADER "; This file format was designed for Gammu and is compatible with Gammu+"
+#define BACKUP_INFO_HEADER "; See " GAMMU_URL " for more info"
 
 #include <stdio.h>
 #include <time.h>
