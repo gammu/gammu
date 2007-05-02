@@ -1,6 +1,7 @@
 #!/bin/bash
 # Gammu configuration generator
-# Copyright (C) 2003 Michal Cihar <cihar at email dot cz>
+# Copyright (C) 2003 - 2007 Michal Cihar <michal@cihar.com>
+# vim: expandtab sw=4 ts=4 sts=4:
 
 DIALOG_SIZE="7 70"
 MENU_SIZE="0 0 0"
@@ -8,14 +9,14 @@ INPUT_SIZE="0 0"
 FILE_SIZE="20 60"
 CONFIG=~/.gammurc
 NAME="Gammu configurator"
-VERSION="0.2"
-COPYRIGHT="Copyright (C) 2003 Michal Cihar <cihar at email dot cz>"
+VERSION="0.3"
+COPYRIGHT="Copyright (C) 2003 - 2007 Michal Cihar <michal@cihar.com>"
 FORCE=0
 
 # Some defaults:
 
 D_PORT=/dev/mobile
-D_MODEL=at
+D_MODEL=
 D_CONNECTION=at19200
 D_SYNCHRONIZETIME=yes
 D_LOGFILE=
@@ -164,19 +165,32 @@ editgeneral() {
 
 editC() {
     editgeneral "Select your phone connection" CONNECTION \
-        fbus "" \
-        mbus "" \
-        dlr3 "" \
-        irda "" \
-        infrared "" \
         at19200 "" \
         at115200 "" \
-        atblue "" \
-        dlr3blue "" 
+        fbus "" \
+        fbusirda "" \
+        fbusdlr3 "" \
+        fbusdku5 "" \
+        mbus "" \
+        irdaphonet "" \
+        irdaat "" \
+        irdaobex "" \
+        dku2phonet "" \
+        dku5fbus2 "" \
+        bluerffbus "" \
+        bluerfphonet "" \
+        bluephonet "" \
+        bluerfat "" \
+        blueat "" \
+        phonetblue "" \
+        fbusblue "" \
+        fbuspl2303 "" \
+
 }
 
 editM() {
     editgeneral "Select your phone model" MODEL \
+        "" "Automatic detection (use this if unsure)" \
         at "AT Generic phones" \
         alcatel "Alcatel BE5 (501,701)" \
         7110 "Nokia 6210|6250|7110|7190" \

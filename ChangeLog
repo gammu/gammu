@@ -17,6 +17,7 @@ ChangeLog
 
 2007???? - 1.10.6
 [*] * Backup file uses ; instead of # (bug #85, patch by Marcin).
+[-] * Updated shell script gammu-config to generate configuration.
 
 20070430 - 1.10.5
 [-] * Doxygen documentation improvements.
