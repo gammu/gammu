@@ -344,7 +344,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 		case GSM_CAL_T_TENN   	: printf("%s\n", _("Training/Tennis")); 	   	break;
 		case GSM_CAL_T_TRAV   	: printf("%s\n", _("Training/Travels"));        	break;
 		case GSM_CAL_T_WINT   	: printf("%s\n", _("Training/Winter Games"));   	break;
-		default           	: printf("%s\n", _("UNKNOWN"));
+		default           	: printf("%s\n", _("unknown type!"));
 	}
 	Alarm.Year = 0;
 
@@ -982,7 +982,7 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 	case PBK_Text_Custom3       : printf(_("Custom text 3   ")); break;
 	case PBK_Text_Custom4       : printf(_("Custom text 4   ")); break;
 	default:
-		printf(_("UNKNOWN\n"));
+		printf("%s\n", _("unknown field type"));
 		return;
 	}
 	printf(" : \"%s\"\n", DecodeUnicodeConsole(entry->Text));
