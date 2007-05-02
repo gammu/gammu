@@ -57,9 +57,9 @@ string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)" "\\3" VERSION_PATCH ${VE
 set (VERSION_WIN "${VERSION_WIN},0")
 message ("Configuring ${CMAKE_PROJECT_NAME} ${VERSION}")
 
-if (${Gammu_BINARY_DIR} STREQUAL ${Gammu_SOURCE_DIR})
+if ("${Gammu_BINARY_DIR}" STREQUAL "${Gammu_SOURCE_DIR}")
     message (FATAL_ERROR "In tree build is not supported by Gammu, run cmake from different directory where binaries will be placed!")
-endif (${Gammu_BINARY_DIR} STREQUAL ${Gammu_SOURCE_DIR})
+endif ("${Gammu_BINARY_DIR}" STREQUAL "${Gammu_SOURCE_DIR}")
 
 # For debugging
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -142,37 +142,37 @@ macro_optional_find_package (Gettext)
 # Check disabled for cross, but we have some libraries
 if (CROSS_MINGW)
 
-    set (MYSQL_CROSS_PATH ${Gammu_SOURCE_DIR}/../../win-cross/mysql CACHE FILEPATH "Path to MySQL for cross compilation")
+    set (MYSQL_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/mysql" CACHE FILEPATH "Path to MySQL for cross compilation")
     find_library (MYSQL_LIBRARIES 
-        mysql ${MYSQL_CROSS_PATH}/lib/opt 
+        mysql "${MYSQL_CROSS_PATH}/lib/opt" 
         NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
     if (MYSQL_LIBRARIES) 
         set (MYSQL_FOUND ON)
-        set (MYSQL_INCLUDE_DIR ${MYSQL_CROSS_PATH}/include)
+        set (MYSQL_INCLUDE_DIR "${MYSQL_CROSS_PATH}/include")
         message ("Cross MySQL found, libs: ${MYSQL_LIBRARIES}, incs: ${MYSQL_INCLUDE_DIR}")
     else (MYSQL_LIBRARIES) 
         message ("Cross MySQL not found")
     endif (MYSQL_LIBRARIES) 
 
-    set (POSTGRES_CROSS_PATH ${Gammu_SOURCE_DIR}/../../win-cross/pgsql CACHE FILEPATH "Path to PostgreSQL for cross compilation")
+    set (POSTGRES_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/pgsql" CACHE FILEPATH "Path to PostgreSQL for cross compilation")
     find_library (POSTGRES_LIBRARY 
-        pq ${POSTGRES_CROSS_PATH}/lib
+        pq "${POSTGRES_CROSS_PATH}/lib"
         NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
     if (POSTGRES_LIBRARY) 
         set (POSTGRES_FOUND ON)
-        set (POSTGRES_INCLUDE_DIR ${POSTGRES_CROSS_PATH}/include)
+        set (POSTGRES_INCLUDE_DIR "${POSTGRES_CROSS_PATH}/include")
         message ("Cross PostgreSQL found, libs: ${POSTGRES_LIBRARY}, incs: ${POSTGRES_INCLUDE_DIR}")
     else (POSTGRES_LIBRARY) 
         message ("Cross PostgreSQL not found")
     endif (POSTGRES_LIBRARY) 
 
-    set (GETTEXT_CROSS_PATH ${Gammu_SOURCE_DIR}/../../win-cross/gettext CACHE FILEPATH "Path to Gettext for cross compilation")
+    set (GETTEXT_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/gettext" CACHE FILEPATH "Path to Gettext for cross compilation")
     find_library (GETTEXT_LIBRARY 
-        intl ${GETTEXT_CROSS_PATH}/lib
+        intl "${GETTEXT_CROSS_PATH}/lib"
         NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
     if (GETTEXT_LIBRARY) 
         set (GETTEXTLIBS_FOUND ON)
-        set (GETTEXT_INCLUDE_DIR ${GETTEXT_CROSS_PATH}/include)
+        set (GETTEXT_INCLUDE_DIR "${GETTEXT_CROSS_PATH}/include")
         message ("Cross Gettext found, libs: ${GETTEXT_LIBRARY}, incs: ${GETTEXT_INCLUDE_DIR}")
     else (GETTEXT_LIBRARY) 
         message ("Cross Gettext not found")
@@ -495,8 +495,8 @@ endif (CROSS_MINGW)
 
 # Include search path
 include_directories (
-    ${Gammu_BINARY_DIR}/cfg
-    ${Gammu_SOURCE_DIR}/common
+    "${Gammu_BINARY_DIR}/cfg"
+    "${Gammu_SOURCE_DIR}/common"
     )
 
 # Gammu program
@@ -640,7 +640,7 @@ configure_file (templates/config.h.cmake cfg/config.h ESCAPE_QUOTES)
 
 # Generate Doxygen file
 set (DOXYGEN_INPUT "${Gammu_SOURCE_DIR}/common ${Gammu_SOURCE_DIR}/gammu")
-set (DOXYGEN_OUTPUT ${Gammu_BINARY_DIR}/gammu-doc)
+set (DOXYGEN_OUTPUT "${Gammu_BINARY_DIR}/gammu-doc")
 if (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
     set (HAVE_DOT "NO")
     set (DOXYGEN_DOT_PATH "")
@@ -689,31 +689,31 @@ configure_file (templates/gammu.pc.cmake cfg/gammu.pc @ONLY)
 
 # Install instructions
 install (TARGETS gammu Gammu
-        RUNTIME DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
-        LIBRARY DESTINATION ${INSTALL_LIB_DIR} COMPONENT "runtime"
-        ARCHIVE DESTINATION ${INSTALL_LIB_DIR} COMPONENT "development"
+        RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT "runtime"
+        LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT "runtime"
+        ARCHIVE DESTINATION "${INSTALL_LIB_DIR}" COMPONENT "development"
         )
 
 # Install Windows libraries
 if (CROSS_MINGW)
     # MySQL
     if (MYSQL_FOUND)
-        install (FILES ${MYSQL_CROSS_PATH}/lib/opt/libmysql.dll
-                DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
+        install (FILES "${MYSQL_CROSS_PATH}/lib/opt/libmysql.dll"
+                DESTINATION "${INSTALL_BIN_DIR}" COMPONENT "runtime"
                 )
     endif (MYSQL_FOUND)
 
     # PostgreSQL and dependencies
     if (POSTGRES_FOUND)
         install (FILES 
-                ${POSTGRES_CROSS_PATH}/lib/libpq.dll
-                ${POSTGRES_CROSS_PATH}/bin/comerr32.dll
-                ${POSTGRES_CROSS_PATH}/bin/libeay32.dll
-                ${POSTGRES_CROSS_PATH}/bin/libiconv-2.dll
-                ${POSTGRES_CROSS_PATH}/bin/libintl-2.dll
-                ${POSTGRES_CROSS_PATH}/bin/krb5_32.dll
-                ${POSTGRES_CROSS_PATH}/bin/ssleay32.dll
-                ${POSTGRES_CROSS_PATH}/bin/wldap32.dll
+                "${POSTGRES_CROSS_PATH}/lib/libpq.dll"
+                "${POSTGRES_CROSS_PATH}/bin/comerr32.dll"
+                "${POSTGRES_CROSS_PATH}/bin/libeay32.dll"
+                "${POSTGRES_CROSS_PATH}/bin/libiconv-2.dll"
+                "${POSTGRES_CROSS_PATH}/bin/libintl-2.dll"
+                "${POSTGRES_CROSS_PATH}/bin/krb5_32.dll"
+                "${POSTGRES_CROSS_PATH}/bin/ssleay32.dll"
+                "${POSTGRES_CROSS_PATH}/bin/wldap32.dll"
                 DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
                 )
     endif (POSTGRES_FOUND)
@@ -721,9 +721,9 @@ if (CROSS_MINGW)
     # Gettext and dependencies
     if (GETTEXTLIBS_FOUND)
         install (FILES 
-                ${GETTEXT_CROSS_PATH}/bin/libintl3.dll
-                ${GETTEXT_CROSS_PATH}/bin/libiconv2.dll
-                DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
+                "${GETTEXT_CROSS_PATH}/bin/libintl3.dll"
+                "${GETTEXT_CROSS_PATH}/bin/libiconv2.dll"
+                DESTINATION "${INSTALL_BIN_DIR}" COMPONENT "runtime"
                 )
     endif (GETTEXTLIBS_FOUND)
 endif (CROSS_MINGW)
@@ -738,7 +738,7 @@ foreach (HEADER ${HEADERS})
 endforeach (HEADER)
 
 install (
-    PROGRAMS "${UTILS}"
+    PROGRAMS ${UTILS}
     DESTINATION "${INSTALL_BIN_DIR}"
     COMPONENT "Utilities"
     )
@@ -751,13 +751,13 @@ install (
 
 install (
     FILES ${DOCS}
-    DESTINATION ${INSTALL_DOC_DIR}
+    DESTINATION "${INSTALL_DOC_DIR}"
     COMPONENT "basic-documentation"
     )
 
 install (
     FILES ${SYMBIAN_FILES}
-    DESTINATION ${INSTALL_DOC_DIR}/symbian
+    DESTINATION "${INSTALL_DOC_DIR}/symbian"
     COMPONENT "gnapplet"
     )
 
