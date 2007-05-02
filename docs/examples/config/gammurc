@@ -3,6 +3,7 @@
 ;                or into /etc and name it gammurc
 ; In Win32       copy it into directory with Gammu.exe and name gammurc
 ; More about parameters later
+; Anything behind ; or # is comment.
 ; -----------------------------------------------------------------------------
 
 [gammu]
