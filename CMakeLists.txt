@@ -292,6 +292,10 @@ set (DOCS
     docs/user/readme.it.txt
     )
 
+set (UTILS
+    utils/gammu-config
+    )
+
 set (SYMBIAN_FILES
     other/symbian/readme.txt
     other/symbian/gnapplet.ini
@@ -732,6 +736,12 @@ foreach (HEADER ${HEADERS})
         COMPONENT "development"
         )
 endforeach (HEADER)
+
+install (
+    PROGRAMS "${UTILS}"
+    DESTINATION "${INSTALL_BIN_DIR}"
+    COMPONENT "Utilities"
+    )
 
 install (
     FILES "${Gammu_BINARY_DIR}/cfg/gammu.pc"

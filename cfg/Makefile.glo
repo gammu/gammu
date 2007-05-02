@@ -238,7 +238,12 @@ installdocs:
 	@$(INSTALL) -m 0644 $(TOPDIR)/docs/user/gammu.1 $(DESTDIR)$(INSTALL_MAN_DIR)
 	@$(RM) $(DESTDIR)$(INSTALL_DOC_DIR)/docs/user/gammu.1
  
-install: uninstall all installdocs installlocales installonly
+install: uninstall all installdocs installlocales installonly installutils
+
+installutils:
+	@echo Installing utilities to $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_BIN_DIR)
+	@$(INSTALL) -m 0755 $(TOPDIR)/utils/gammu-config $(DESTDIR)$(INSTALL_BIN_DIR)
 
 installonly: all
 	@echo Installing binaries to $(DESTDIR)$(INSTALL_BIN_DIR)
