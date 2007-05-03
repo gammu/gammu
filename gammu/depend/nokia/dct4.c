@@ -1366,12 +1366,12 @@ static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMac
 	printf(_("%i phone number types\n"),msg.Buffer[pos+4]);
 	for (i=0;i<msg.Buffer[pos+4];i++) {
 		switch (msg.Buffer[pos+5+i]) {
-		case 0x02: printf(_("  Home Number\n")); 		break;
-		case 0x03: printf(_("  Mobile Number\n")); 	break;
-		case 0x04: printf(_("  Fax Number\n")); 		break;
-		case 0x06: printf(_("  Office Number\n")); 	break;
-		case 0x0A: printf(_("  Standard Number\n")); 	break;
-		default:   printf(_("  unknown\n"));
+		case 0x02: printf("  %s\n", _("Home number")); 		break;
+		case 0x03: printf("  %s\n", _("Mobile number")); 	break;
+		case 0x04: printf("  %s\n", _("Fax number")); 		break;
+		case 0x06: printf("  %s\n", _("Office number")); 	break;
+		case 0x0A: printf("  %s\n", _("Standard number")); 	break;
+		default:   printf("  %s\n", _("Unknown number"));
 		}
 	}
 
