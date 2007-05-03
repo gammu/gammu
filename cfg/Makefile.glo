@@ -292,9 +292,11 @@ apidoc:
 	@echo "Generating API documentation in gammu-doc directory"
 	@$(DOXYGEN) cfg/doxygen/Doxyfile
 
-tags: $(shell find . -name '*.[ch]' -o -name '*.cpp')
+TAGFILESFIND = find gammu common -name '*.[ch]' -o -name '*.cpp'
+
+tags: $(shell $(TAGFILESFIND))
 	@echo Generating tags file
-	@ctags $(shell find gammu common -name '*.[ch]' -o -name '*.cpp')
+	@ctags $(shell $(TAGFILESFIND))
 
 # This will convert all *.[ch] files to CRLF (DOS/Windoze), it expects all
 # files are LF only or CRLF only
