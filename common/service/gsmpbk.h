@@ -170,11 +170,12 @@ typedef enum {
 	 * User ID. (Text)
 	 */
 	PBK_Text_UserID,
-	PBK_CallLength,
+	PBK_CallLength, /**< Length of call (Number) */
 	/**
 	 * LUID - Unique Identifier used for synchronisation
 	 */
 	PBK_Text_LUID,
+	PBK_LastModified, /**< Date of last modification */
 } GSM_EntryType;
 
 #define GSM_PHONEBOOK_TEXT_LENGTH       200

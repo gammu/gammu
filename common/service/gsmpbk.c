@@ -159,6 +159,10 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 					SaveVCALDate(Buffer, Length, &(pbk->Entries[i].Date), "BDAY");
 					ignore = true;
 					break;
+				case PBK_LastModified:
+					SaveVCALDateTime(Buffer, Length, &(pbk->Entries[i].Date), "LAST-MODIFIED");
+					ignore = true;
+					break;
 				case PBK_Number_General:
 					*Length+=sprintf(Buffer+(*Length),"TEL");
 					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
@@ -558,6 +562,12 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 			if (ReadVCALText(Line, "BDAY", Buff, false)) {
 				if (ReadVCALDateTime(DecodeUnicodeString(Buff), &Pbk->Entries[Pbk->EntriesNum].Date)) {
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Date;
+					Pbk->EntriesNum++;
+				}
+			}
+			if (ReadVCALText(Line, "LAST-MODIFIED", Buff, false)) {
+				if (ReadVCALDateTime(DecodeUnicodeString(Buff), &Pbk->Entries[Pbk->EntriesNum].Date)) {
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_LastModified;
 					Pbk->EntriesNum++;
 				}
 			}

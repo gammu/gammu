@@ -397,6 +397,12 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				SaveVCalDate(file, &Pbk->Entries[j].Date, UseUnicode);
 				text = false;
 				break;
+			case PBK_LastModified:
+				sprintf(buffer,"Entry%02iType = LastModified%c%cEntry%02iText",j,13,10, j);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				SaveVCalDateTime(file, &Pbk->Entries[j].Date, UseUnicode);
+				text = false;
+				break;
 			case PBK_SMSListID:
 			case PBK_RingtoneFileSystemID:
 			case PBK_CallLength:
@@ -1430,6 +1436,15 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				continue;
 			} else if (strcasecmp(readvalue,"Date") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Date;
+				sprintf(buffer,"Entry%02iText",num);
+				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+				if (readvalue != NULL) {
+					ReadVCALDateTime(readvalue, &Pbk->Entries[Pbk->EntriesNum].Date);
+				}
+				Pbk->EntriesNum++;
+				continue;
+			} else if (strcasecmp(readvalue,"LastModified") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_LastModified;
 				sprintf(buffer,"Entry%02iText",num);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				if (readvalue != NULL) {
