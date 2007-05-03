@@ -300,16 +300,21 @@ bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_o
 }
 
 
-void SaveVCALText(char *Buffer, int *Length, unsigned char *Text, char *Start)
+void SaveVCALText(char *Buffer, int *Length, unsigned char *Text, char *Start, bool UTF8)
 {
 	char buffer[1000];
 
 	if (UnicodeLength(Text) != 0) {
-		EncodeUTF8QuotedPrintable(buffer,Text);
-		if (UnicodeLength(Text)==strlen(buffer)) {
-			*Length+=sprintf(Buffer+(*Length), "%s:%s%c%c",Start,DecodeUnicodeString(Text),13,10);
+		if (UTF8) { 
+			EncodeUTF8(buffer, Text);
+			*Length += sprintf(Buffer+(*Length), "%s:%s%c%c", Start, DecodeUnicodeString(Text), 13, 10);
 		} else {
-			*Length+=sprintf(Buffer+(*Length), "%s;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s%c%c",Start,buffer,13,10);
+			EncodeUTF8QuotedPrintable(buffer,Text);
+			if (UnicodeLength(Text)==strlen(buffer)) {
+				*Length+=sprintf(Buffer+(*Length), "%s:%s%c%c",Start,DecodeUnicodeString(Text),13,10);
+			} else {
+				*Length+=sprintf(Buffer+(*Length), "%s;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s%c%c",Start,buffer,13,10);
+			}
 		}
 	}
 }
@@ -335,7 +340,7 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
 	return tmp;
 }
 
-bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value)
+bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 {
 	unsigned char buff[200];
 
@@ -345,7 +350,11 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value)
 	strcpy(buff,Start);
 	strcat(buff,":");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
-		DecodeISO88591(Value,Buffer+strlen(Start)+1,strlen(Buffer)-(strlen(Start)+1));
+		if (UTF8) {
+			DecodeUTF8(Value, Buffer + strlen(Start) + 1, strlen(Buffer) - (strlen(Start) + 1));
+		} else {
+			DecodeISO88591(Value, Buffer + strlen(Start) + 1, strlen(Buffer) - (strlen(Start) + 1));
+		}
 		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
 		return true;
 	}

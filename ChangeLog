@@ -19,6 +19,7 @@ ChangeLog
 [*] * Backup file uses ; instead of # (bug #85, patch by Marcin).
 [-] * Updated shell script gammu-config to generate configuration.
 [-] * Install gammu-config script to ease generating configuration.
+[+] * Correctly encode text in iCalendar (bug #262).
 
 20070430 - 1.10.5
 [-] * Doxygen documentation improvements.

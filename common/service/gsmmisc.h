@@ -430,8 +430,9 @@ void SaveVCALDate(char *Buffer, int *Length, GSM_DateTime *Date, char *Start);
  * @param Length Current position in output buffer (will be updated).
  * @param Text Value to be stored.
  * @param Start Name of field which is being stored.
+ * @param UTF8 Whether text should be stored in UTF-8 without prefix.
  */
-void SaveVCALText(char *Buffer, int *Length, unsigned char *Text, char *Start);
+void SaveVCALText(char *Buffer, int *Length, unsigned char *Text, char *Start, bool UTF8);
 
 /**
  * Reads text from vCalendar/vCard formatted buffer.
@@ -439,8 +440,9 @@ void SaveVCALText(char *Buffer, int *Length, unsigned char *Text, char *Start);
  * @param Buffer Buffer where input is stored.
  * @param Start Name of field which is being read.
  * @param Text Storage for read value.
+ * @param UTF8 Whether text should be read in UTF-8 without prefix.
  */
-bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value);
+bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8);
 
 bool ReadVCALInt(char *Buffer, char *Start, int *Value);
 

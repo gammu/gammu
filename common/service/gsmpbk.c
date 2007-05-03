@@ -199,7 +199,7 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 					/* Don't ask why. Nokia phones save postal address
 					 * double - once like LABEL, second like ADR
 					 */
-					SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "LABEL");
+					SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "LABEL", false);
 					*Length+=sprintf(Buffer+(*Length),"ADR");
 					break;
 				case PBK_Text_Email     :
@@ -236,7 +236,7 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 					break;
 				}
 				if (!ignore) {
-					SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "");
+					SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "", false);
 				}
 		}
 		/* Save name if it is composed from parts */
@@ -255,7 +255,7 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 			}
 			buffer[2*pos] = 0;
 			buffer[2*pos + 1] = 0;
-			SaveVCALText(Buffer, Length, buffer, "N");
+			SaveVCALText(Buffer, Length, buffer, "N", false);
 		}
 		/* Save address if it is composed from parts */
 		if (address != -1 || city != -1 || state != -1 || zip != -1 || country != -1) {
@@ -300,7 +300,7 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 			}
 			buffer[2*pos] = 0;
 			buffer[2*pos + 1] = 0;
-			SaveVCALText(Buffer, Length, buffer, "ADR");
+			SaveVCALText(Buffer, Length, buffer, "ADR", false);
 		}
 		if (header) *Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
 	}
@@ -379,7 +379,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				if (Pbk->EntriesNum == 0) return ERR_EMPTY;
 				return ERR_NONE;
 			}
-			if (ReadVCALText(Line, "N", Buff)) {
+			if (ReadVCALText(Line, "N", Buff, false)) {
 				pos = 0;
 				s = VCALGetTextPart(Buff, &pos);
 				if (s == NULL) {
@@ -402,10 +402,10 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 					Pbk->EntriesNum++;
 				}
 			}
-			if (ReadVCALText(Line, "TEL",		   Buff) ||
-			    ReadVCALText(Line, "TEL;VOICE",	     Buff) ||
-			    ReadVCALText(Line, "TEL;PREF",	      Buff) ||
-			    ReadVCALText(Line, "TEL;PREF;VOICE",	Buff)) {
+			if (ReadVCALText(Line, "TEL",		   Buff, false) ||
+			    ReadVCALText(Line, "TEL;VOICE",	     Buff, false) ||
+			    ReadVCALText(Line, "TEL;PREF",	      Buff, false) ||
+			    ReadVCALText(Line, "TEL;PREF;VOICE",	Buff, false)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -415,10 +415,10 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "TEL;CELL",	      Buff) ||
-			    ReadVCALText(Line, "TEL;CELL;VOICE",	Buff) ||
-			    ReadVCALText(Line, "TEL;PREF;CELL",	 Buff) ||
-			    ReadVCALText(Line, "TEL;PREF;CELL;VOICE",   Buff)) {
+			if (ReadVCALText(Line, "TEL;CELL",	      Buff, false) ||
+			    ReadVCALText(Line, "TEL;CELL;VOICE",	Buff, false) ||
+			    ReadVCALText(Line, "TEL;PREF;CELL",	 Buff, false) ||
+			    ReadVCALText(Line, "TEL;PREF;CELL;VOICE",   Buff, false)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -428,10 +428,10 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "TEL;WORK",	      Buff) ||
-			    ReadVCALText(Line, "TEL;PREF;WORK",	 Buff) ||
-			    ReadVCALText(Line, "TEL;WORK;VOICE",	Buff) ||
-			    ReadVCALText(Line, "TEL;PREF;WORK;VOICE",   Buff)) {
+			if (ReadVCALText(Line, "TEL;WORK",	      Buff, false) ||
+			    ReadVCALText(Line, "TEL;PREF;WORK",	 Buff, false) ||
+			    ReadVCALText(Line, "TEL;WORK;VOICE",	Buff, false) ||
+			    ReadVCALText(Line, "TEL;PREF;WORK;VOICE",   Buff, false)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -441,10 +441,10 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "TEL;FAX",	       Buff) ||
-			    ReadVCALText(Line, "TEL;PREF;FAX",	  Buff) ||
-			    ReadVCALText(Line, "TEL;FAX;VOICE",	 Buff) ||
-			    ReadVCALText(Line, "TEL;PREF;FAX;VOICE",    Buff)) {
+			if (ReadVCALText(Line, "TEL;FAX",	       Buff, false) ||
+			    ReadVCALText(Line, "TEL;PREF;FAX",	  Buff, false) ||
+			    ReadVCALText(Line, "TEL;FAX;VOICE",	 Buff, false) ||
+			    ReadVCALText(Line, "TEL;PREF;FAX;VOICE",    Buff, false)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -454,10 +454,10 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "TEL;HOME",	      Buff) ||
-			    ReadVCALText(Line, "TEL;PREF;HOME",	 Buff) ||
-			    ReadVCALText(Line, "TEL;HOME;VOICE",	Buff) ||
-			    ReadVCALText(Line, "TEL;PREF;HOME;VOICE",   Buff)) {
+			if (ReadVCALText(Line, "TEL;HOME",	      Buff, false) ||
+			    ReadVCALText(Line, "TEL;PREF;HOME",	 Buff, false) ||
+			    ReadVCALText(Line, "TEL;HOME;VOICE",	Buff, false) ||
+			    ReadVCALText(Line, "TEL;PREF;HOME;VOICE",   Buff, false)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -467,19 +467,19 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "TITLE", Buff)) {
+			if (ReadVCALText(Line, "TITLE", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_JobTitle;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "NOTE", Buff)) {
+			if (ReadVCALText(Line, "NOTE", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Note;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "LABEL", Buff) ||
-			    ReadVCALText(Line, "ADR", Buff) ||
-			    ReadVCALText(Line, "ADR;HOME", Buff)) {
+			if (ReadVCALText(Line, "LABEL", Buff, false) ||
+			    ReadVCALText(Line, "ADR", Buff, false) ||
+			    ReadVCALText(Line, "ADR;HOME", Buff, false)) {
 				if (address) continue;
 				address = true;
 				pos = 0;
@@ -526,36 +526,36 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 					Pbk->EntriesNum++;
 				}
 			}
-			if (ReadVCALText(Line, "EMAIL", Buff) ||
-			    ReadVCALText(Line, "EMAIL;PREF", Buff) ||
-			    ReadVCALText(Line, "EMAIL;INTERNET", Buff) ||
-			    ReadVCALText(Line, "EMAIL;INTERNET;PREF", Buff)) {
+			if (ReadVCALText(Line, "EMAIL", Buff, false) ||
+			    ReadVCALText(Line, "EMAIL;PREF", Buff, false) ||
+			    ReadVCALText(Line, "EMAIL;INTERNET", Buff, false) ||
+			    ReadVCALText(Line, "EMAIL;INTERNET;PREF", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "X-IRMC-LUID", Buff)) {
+			if (ReadVCALText(Line, "X-IRMC-LUID", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LUID;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "URL", Buff)) {
+			if (ReadVCALText(Line, "URL", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_URL;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "ORG", Buff)) {
+			if (ReadVCALText(Line, "ORG", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Company;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "CATEGORIES", Buff)) {
+			if (ReadVCALText(Line, "CATEGORIES", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].Number = -1;
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Category;
 				Pbk->EntriesNum++;
 			}
-			if (ReadVCALText(Line, "BDAY", Buff)) {
+			if (ReadVCALText(Line, "BDAY", Buff, false)) {
 				if (ReadVCALDateTime(DecodeUnicodeString(Buff), &Pbk->Entries[Pbk->EntriesNum].Date)) {
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Date;
 					Pbk->EntriesNum++;
