@@ -25,6 +25,7 @@ ChangeLog
 [+] * Support for last modified field from vCard.
 [-] * Use unsigned char to avoid trimming at 60 chars (bug #274).
 [+] * Properly handle vCard style continuation (bug #268).
+[-] * Detect Motorola specific error while reading SMSes (bug #288).
 
 20070430 - 1.10.5
 [-] * Doxygen documentation improvements.
