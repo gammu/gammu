@@ -1054,7 +1054,7 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 		if (strstr(msg.Buffer, "\"ME\"") != NULL) s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_AVAILABLE;
 		else s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_NOTAVAILABLE;
 
-		smprintf(s, "Available SMS memories received: ME = %d, SM = %d, cansavesms: ME = %d, SM = %d\n", 
+		smprintf(s, "Available SMS memories received: read: ME = %d, SM = %d, save: ME = %d, SM = %d\n", 
 				s->Phone.Data.Priv.ATGEN.PhoneSMSMemory, 
 				s->Phone.Data.Priv.ATGEN.SIMSMSMemory,
 				s->Phone.Data.Priv.ATGEN.PhoneSaveSMS,
