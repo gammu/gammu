@@ -4550,7 +4550,9 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			DisplaySMSFrame(&sms.SMS[i]);
 		}
 
-		printf(_("\nNumber of SMS: %i\n"),sms.Number);
+		printf("\n");
+		printf(ngettext(_("Number of SMS: %i"), _("Number of SMSes: %i"), sms.Number), sms.Number);
+		printf("\n");
 		exit(sms.Number);
 	}
 	if (strcasecmp(argv[1],"--sendsmsdsms") == 0) {
