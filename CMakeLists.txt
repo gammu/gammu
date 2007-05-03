@@ -87,9 +87,7 @@ if (NOT DEFINED ENABLE_SHARED)
     set (ENABLE_SHARED FALSE CACHE BOOL "Build shared library")
 endif (NOT DEFINED ENABLE_SHARED)
 
-if (ENABLE_SHARED)
-    set (BUILD_SHARED_LIBS ON)
-endif (ENABLE_SHARED)
+set (BUILD_SHARED_LIBS ${ENABLE_SHARED} CACHE INTERNAL "Shared build")
 
 
 # Packaging support
