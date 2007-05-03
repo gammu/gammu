@@ -463,6 +463,7 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *not
 	int repeat_month = -1;
 	int repeat_count = -1;
 	int repeat_frequency = -1;
+	bool header;
 	GSM_DateTime repeat_startdate = {0,0,0,0,0,0,0};
 	GSM_DateTime repeat_stopdate = {0,0,0,0,0,0,0};
 
@@ -532,49 +533,130 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *not
 
 		if ((repeat_dayofyear != -1) || (Version == Siemens_VCalendar && repeat_day != -1 && repeat_month != -1)) {
 			/* Yearly by day */
-			*Length += sprintf(Buffer + (*Length), "YD%d", repeat_frequency);
+			if (Version == Mozilla_iCalendar) {
+				*Length += sprintf(Buffer + (*Length), "FREQ=YEARLY");
+			} else {
+				*Length += sprintf(Buffer + (*Length), "YD%d", repeat_frequency);
+			}
 
 			/* Store month numbers */
+			header = false;
 			for (i = 0; i < note->EntriesNum; i++) {
 				if (note->Entries[i].EntryType == CAL_REPEAT_DAYOFYEAR) {
-					*Length += sprintf(Buffer + (*Length), " %d",
-						note->Entries[i].Number);
+					if (Version == Mozilla_iCalendar) {
+						if (!header) {
+							*Length += sprintf(Buffer + (*Length), ";BYYEARDAY=%d",
+								note->Entries[i].Number);
+							header = true;
+						} else {
+							*Length += sprintf(Buffer + (*Length), ",%d",
+								note->Entries[i].Number);
+						}
+					} else {
+						*Length += sprintf(Buffer + (*Length), " %d",
+							note->Entries[i].Number);
+					}
 				}
 			}
 		} else if (repeat_day != -1 && repeat_month != -1) {
 			/* Yearly by month and day */
-			*Length += sprintf(Buffer + (*Length), "YM%d", repeat_frequency);
+			if (Version == Mozilla_iCalendar) {
+				*Length += sprintf(Buffer + (*Length), "FREQ=YEARLY");
+			} else {
+				*Length += sprintf(Buffer + (*Length), "YM%d", repeat_frequency);
+			}
 
 			/* Store month numbers */
+			header = false;
 			for (i = 0; i < note->EntriesNum; i++) {
 				if (note->Entries[i].EntryType == CAL_REPEAT_MONTH) {
-					*Length += sprintf(Buffer + (*Length), " %d",
-						note->Entries[i].Number);
+					if (Version == Mozilla_iCalendar) {
+						if (!header) {
+							*Length += sprintf(Buffer + (*Length), ";BYMONTH=%d",
+								note->Entries[i].Number);
+							header = true;
+						} else {
+							*Length += sprintf(Buffer + (*Length), ",%d",
+								note->Entries[i].Number);
+						}
+					} else {
+						*Length += sprintf(Buffer + (*Length), " %d",
+							note->Entries[i].Number);
+					}
 				}
 			}
 		} else if (repeat_day != -1) {
 			/* Monthly by day */
-			*Length += sprintf(Buffer + (*Length), "MD%d", repeat_frequency);
+			if (Version == Mozilla_iCalendar) {
+				*Length += sprintf(Buffer + (*Length), "FREQ=MONTHLY");
+			} else {
+				*Length += sprintf(Buffer + (*Length), "MD%d", repeat_frequency);
+			}
 
 			/* Store day numbers */
+			header = false;
 			for (i = 0; i < note->EntriesNum; i++) {
 				if (note->Entries[i].EntryType == CAL_REPEAT_DAY) {
-					*Length += sprintf(Buffer + (*Length), " %d",
-						note->Entries[i].Number);
+					if (Version == Mozilla_iCalendar) {
+						if (!header) {
+							*Length += sprintf(Buffer + (*Length), ";BYMONTHDAY=%d",
+								note->Entries[i].Number);
+							header = true;
+						} else {
+							*Length += sprintf(Buffer + (*Length), ",%d",
+								note->Entries[i].Number);
+						}
+					} else {
+						*Length += sprintf(Buffer + (*Length), " %d",
+							note->Entries[i].Number);
+					}
 				}
 			}
 		} else if (repeat_dayofweek != -1 && repeat_weekofmonth != -1) {
 			/* Monthly by day and week */
-			*Length += sprintf(Buffer + (*Length), "MP%d", repeat_frequency);
+			if (Version == Mozilla_iCalendar) {
+				*Length += sprintf(Buffer + (*Length), "FREQ=MONTHLY");
+			} else {
+				*Length += sprintf(Buffer + (*Length), "MP%d", repeat_frequency);
+			}
 
 			/* Store week numbers and week days */
-			for (i = 0; i < note->EntriesNum; i++) {
-				if (note->Entries[i].EntryType == CAL_REPEAT_WEEKOFMONTH) {
-					*Length += sprintf(Buffer + (*Length), " %d+",
-						note->Entries[i].Number);
-					for (j = 0; j < note->EntriesNum; j++) {
-						if (note->Entries[j].EntryType == CAL_REPEAT_DAYOFWEEK) {
-							*Length += sprintf(Buffer + (*Length), " %s",
+			if (Version != Mozilla_iCalendar) {
+				for (i = 0; i < note->EntriesNum; i++) {
+					if (note->Entries[i].EntryType == CAL_REPEAT_WEEKOFMONTH) {
+						*Length += sprintf(Buffer + (*Length), " %d+",
+							note->Entries[i].Number);
+						for (j = 0; j < note->EntriesNum; j++) {
+							if (note->Entries[j].EntryType == CAL_REPEAT_DAYOFWEEK) {
+								*Length += sprintf(Buffer + (*Length), " %s",
+									DaysOfWeek[note->Entries[j].Number]);
+							}
+						}
+					}
+				}
+			} else {
+				header = false;
+				for (i = 0; i < note->EntriesNum; i++) {
+					if (note->Entries[i].EntryType == CAL_REPEAT_WEEKOFMONTH) {
+						if (!header) {
+							*Length += sprintf(Buffer + (*Length), ";BYSETPOS=%d",
+								note->Entries[i].Number);
+							header = true;
+						} else {
+							*Length += sprintf(Buffer + (*Length), ",%d",
+								note->Entries[i].Number);
+						}
+					}
+				}
+				header = false;
+				for (j = 0; j < note->EntriesNum; j++) {
+					if (note->Entries[j].EntryType == CAL_REPEAT_DAYOFWEEK) {
+						if (!header) {
+							*Length += sprintf(Buffer + (*Length), ";BYDAY=%s",
+								DaysOfWeek[note->Entries[j].Number]);
+							header = true;
+						} else {
+							*Length += sprintf(Buffer + (*Length), ",%s",
 								DaysOfWeek[note->Entries[j].Number]);
 						}
 					}
@@ -582,27 +664,61 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *not
 			}
 		} else if (repeat_dayofweek != -1) {
 			/* Weekly by day */
-			*Length += sprintf(Buffer + (*Length), "W%d", repeat_frequency);
+			if (Version == Mozilla_iCalendar) {
+				*Length += sprintf(Buffer + (*Length), "FREQ=WEEKLY");
+			} else {
+				*Length += sprintf(Buffer + (*Length), "W%d", repeat_frequency);
+			}
 
 			/* Store week days */
+			header = false;
 			for (i = 0; i < note->EntriesNum; i++) {
 				if (note->Entries[i].EntryType == CAL_REPEAT_DAYOFWEEK) {
-					*Length += sprintf(Buffer + (*Length), " %s",
-						DaysOfWeek[note->Entries[i].Number]);
+					if (Version == Mozilla_iCalendar) {
+						if (!header) {
+							*Length += sprintf(Buffer + (*Length), ";BYDAY=%s",
+								DaysOfWeek[note->Entries[j].Number]);
+							header = true;
+						} else {
+							*Length += sprintf(Buffer + (*Length), ",%s",
+								DaysOfWeek[note->Entries[j].Number]);
+						}
+					} else {
+						*Length += sprintf(Buffer + (*Length), " %s",
+							DaysOfWeek[note->Entries[i].Number]);
+					}
 				}
 			}
 		} else {
 			/* Daily */
-			*Length += sprintf(Buffer + (*Length), "D%d", repeat_frequency);
+			if (Version == Mozilla_iCalendar) {
+				*Length += sprintf(Buffer + (*Length), "FREQ=DAILY");
+			} else {
+				*Length += sprintf(Buffer + (*Length), "D%d", repeat_frequency);
+			}
+		}
+
+		/* Store frequency */
+		if (Version == Mozilla_iCalendar && repeat_frequency > 1) {
+			*Length += sprintf(Buffer + (*Length), ";INTERVAL=%d", repeat_frequency);
 		}
 
 		/* Store number of repetitions if available */
 		if (repeat_count != -1) {
-			*Length += sprintf(Buffer + (*Length), " #%d", repeat_count);
+			if (Version == Mozilla_iCalendar) {
+				if (repeat_count > 0) {
+					*Length += sprintf(Buffer + (*Length), ";COUNT=%d", repeat_count);
+				}
+			} else {
+				*Length += sprintf(Buffer + (*Length), " #%d", repeat_count);
+			}
 		}
 
 		/* Store end of repetition date if available */
 		if (repeat_stopdate.Day != 0) {
+			if (Version == Mozilla_iCalendar) {
+				*Length += sprintf(Buffer + (*Length), ";UNTIL=");
+			}
 			SaveVCALDate(Buffer, Length, &repeat_stopdate, NULL);
 		} else {
 			/* Add EOL */
