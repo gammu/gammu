@@ -300,7 +300,7 @@ bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_o
 }
 
 
-void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start)
+void SaveVCALText(char *Buffer, int *Length, unsigned char *Text, char *Start)
 {
 	char buffer[1000];
 
@@ -335,7 +335,7 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
 	return tmp;
 }
 
-bool ReadVCALText(char *Buffer, char *Start, char *Value)
+bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value)
 {
 	unsigned char buff[200];
 
