@@ -46,7 +46,7 @@ int N71_65_PackPBKBlock(GSM_StateMachine *s, int id, int size, int no, unsigned 
 int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry *entry, int *block2, bool DCT4, bool VoiceTag)
 {
 	int		count=0, len, i, block=0, j;
-	char		string[500];
+	unsigned char	string[500];
 	unsigned char	type;
 	bool		found;
 

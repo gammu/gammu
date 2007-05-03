@@ -23,6 +23,7 @@ ChangeLog
 [+] * Correctly encode recurrance in iCalendar (bug #262).
 [+] * Read last modified field from vCalendar.
 [+] * Support for last modified field from vCard.
+[-] * Use unsigned char to avoid trimming at 60 chars (bug #274).
 
 20070430 - 1.10.5
 [-] * Doxygen documentation improvements.
