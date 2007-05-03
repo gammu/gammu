@@ -294,7 +294,7 @@ apidoc:
 
 tags: $(shell find . -name '*.[ch]' -o -name '*.cpp')
 	@echo Generating tags file
-	@ctags $(shell find . -name '*.[ch]' -o -name '*.cpp')
+	@ctags $(shell find gammu common -name '*.[ch]' -o -name '*.cpp')
 
 # This will convert all *.[ch] files to CRLF (DOS/Windoze), it expects all
 # files are LF only or CRLF only
