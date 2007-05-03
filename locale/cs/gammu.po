@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-03 17:35+0200\n"
-"PO-Revision-Date: 2007-05-03 17:32+0200\n"
+"POT-Creation-Date: 2007-05-03 17:38+0200\n"
+"PO-Revision-Date: 2007-05-03 17:37+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1874,12 +1874,11 @@ msgid "UnSent"
 msgstr "Neodesláno"
 
 #: gammu/gammu.c:1435 gammu/gammu.c:1524
-#, fuzzy
 msgid "Remote number"
 msgid_plural "Remote numbers"
 msgstr[0] "Vzdálené číslo"
-msgstr[1] "Vzdálené číslo"
-msgstr[2] "Vzdálené číslo"
+msgstr[1] "Vzdálené čísla"
+msgstr[2] "Vzdálené čísla"
 
 #: gammu/gammu.c:1439 gammu/gammu.c:1505
 msgid "Reference number"
