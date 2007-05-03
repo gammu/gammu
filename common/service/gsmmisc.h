@@ -426,9 +426,6 @@ void SaveVCALDate(char *Buffer, int *Length, GSM_DateTime *Date, char *Start);
 void SaveVCALText(char *Buffer, int *Length, char *Text, char *Start);
 bool ReadVCALText(char *Buffer, char *Start, char *Value);
 
-void SaveVCALTextUTF8(char *Buffer, int *Length, char *Text, char *Start);
-bool ReadVCALTextUTF8(char *Buffer, char *Start, char *Value);
-
 bool ReadVCALInt(char *Buffer, char *Start, int *Value);
 
 unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos);
