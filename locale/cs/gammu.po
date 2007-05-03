@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-03 17:32+0200\n"
+"POT-Creation-Date: 2007-05-03 17:35+0200\n"
 "PO-Revision-Date: 2007-05-03 17:32+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -1382,7 +1382,10 @@ msgstr "Opakování"
 #: gammu/gammu.c:509
 #, c-format
 msgid "for %d time "
-msgstr ""
+msgid_plural "for %d times "
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: gammu/gammu.c:512
 #, c-format
@@ -1496,7 +1499,10 @@ msgstr ""
 #: gammu/gammu.c:600
 #, c-format
 msgid "%d year"
-msgstr ""
+msgid_plural "%d years"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: gammu/gammu.c:622 gammu/gammu.c:1012 gammu/gammu.c:1220 gammu/gammu.c:1280
 #: gammu/gammu.c:1842 gammu/gammu.c:2012 gammu/gammu.c:2874 gammu/gammu.c:4855
@@ -1868,8 +1874,12 @@ msgid "UnSent"
 msgstr "Neodesláno"
 
 #: gammu/gammu.c:1435 gammu/gammu.c:1524
+#, fuzzy
 msgid "Remote number"
-msgstr "Vzdálené číslo"
+msgid_plural "Remote numbers"
+msgstr[0] "Vzdálené číslo"
+msgstr[1] "Vzdálené číslo"
+msgstr[2] "Vzdálené číslo"
 
 #: gammu/gammu.c:1439 gammu/gammu.c:1505
 msgid "Reference number"
