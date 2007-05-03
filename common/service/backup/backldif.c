@@ -129,6 +129,7 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 			case PBK_RingtoneID:
 			case PBK_PictureID:
 			case PBK_Date:
+			case PBK_LastModified:
 			case PBK_RingtoneFileSystemID:
 			case PBK_Text_UserID:
 			case PBK_SMSListID:
