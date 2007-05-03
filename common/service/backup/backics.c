@@ -30,7 +30,7 @@ GSM_Error SaveICS(char *FileName, GSM_Backup *backup)
 		sprintf(Buffer, "%c%c",13,10);
 		fwrite(Buffer,1,2,file);
 		Length = 0;
-		GSM_EncodeVCALENDAR(Buffer,&Length,backup->Calendar[i],false,Mozilla_VCalendar);
+		GSM_EncodeVCALENDAR(Buffer,&Length,backup->Calendar[i],false,Mozilla_iCalendar);
 		fwrite(Buffer,1,Length,file);
 		i++;
 	}
@@ -65,7 +65,7 @@ GSM_Error LoadICS(char *FileName, GSM_Backup *backup)
 
 	Pos = 0;
 	while (1) {
-		error = GSM_DecodeVCALENDAR_VTODO(File.Buffer, &Pos, &Calendar, &ToDo, Mozilla_VCalendar, Mozilla_VToDo);
+		error = GSM_DecodeVCALENDAR_VTODO(File.Buffer, &Pos, &Calendar, &ToDo, Mozilla_iCalendar, Mozilla_VToDo);
 		if (error == ERR_EMPTY) break;
 		if (error != ERR_NONE) return error;
 

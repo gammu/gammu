@@ -284,11 +284,14 @@ typedef struct {
 
 void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *EndTime, int *Location);
 
+/**
+ * Format of vCalendar export.
+ */
 typedef enum {
-	Nokia_VCalendar = 1,
-	Siemens_VCalendar,
-	SonyEricsson_VCalendar,
-	Mozilla_VCalendar
+	Nokia_VCalendar = 1, /**< vCalendar specially hacked for Nokia */
+	Siemens_VCalendar, /**< vCalendar specially hacked for Nokia */
+	SonyEricsson_VCalendar, /**< Standard vCalendar (which works for Sony-Ericsson phones) */
+	Mozilla_iCalendar /**< iCalendar as compatible with Mozilla */
 } GSM_VCalendarVersion;
 
 typedef enum {
