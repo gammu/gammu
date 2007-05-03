@@ -49,6 +49,8 @@
 #  include <sys/ioctl.h>
 #endif
 
+#define LISTFORMAT "%-20s : "
+
 
 GSM_StateMachine		s;
 GSM_Phone_Functions		*Phone;
@@ -279,19 +281,24 @@ static bool answer_yes(const char *text)
 		}
 		len=GetLine(stdin, ans, 99);
 		if (len==-1) exit(-1);
+		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (!strcmp(ans, _("NONE"))) {
 			always_answer_no = true;
 			return false;
 		}
+		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (!strcmp(ans, _("ONLY"))) {
 			always_answer_no = true;
 			return true;
 		}
+		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (!strcmp(ans, _("ALL"))) {
 			always_answer_yes = true;
 			return true;
 		}
+		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (strcasecmp(ans, _("yes")) == 0) return true;
+		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (strcasecmp(ans, _("no")) == 0) return false;
 	}
 }
@@ -314,7 +321,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
     	GSM_DateTime 		repeat_startdate 	= {0,0,0,0,0,0,0};
     	GSM_DateTime 		repeat_stopdate 	= {0,0,0,0,0,0,0};
 
-	printf(_("Note type    : "));
+	printf(LISTFORMAT, _("Note type"));
 	switch (Note->Type) {
 		case GSM_CAL_REMINDER 	: printf("%s\n", _("Reminder (Date)"));		break;
 		case GSM_CAL_CALL     	: printf("%s\n", _("Call"));			   	break;
@@ -361,87 +368,87 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 	for (i=0;i<Note->EntriesNum;i++) {
 		switch (Note->Entries[i].EntryType) {
 		case CAL_START_DATETIME:
-			printf(_("Start        : %s\n"),OSDateTime(Note->Entries[i].Date,false));
+			printf(LISTFORMAT "%s\n", _("Start"), OSDateTime(Note->Entries[i].Date,false));
 			memcpy(&DateTime,&Note->Entries[i].Date,sizeof(GSM_DateTime));
 			break;
 		case CAL_END_DATETIME:
-			printf(_("Stop         : %s\n"),OSDateTime(Note->Entries[i].Date,false));
+			printf(LISTFORMAT "%s\n", _("Stop"), OSDateTime(Note->Entries[i].Date,false));
 			memcpy(&DateTime,&Note->Entries[i].Date,sizeof(GSM_DateTime));
 			break;
 		case CAL_LAST_MODIFIED:
-			printf(_("Last modified: %s\n"),OSDateTime(Note->Entries[i].Date,false));
+			printf(LISTFORMAT "%s\n", _("Last modified"), OSDateTime(Note->Entries[i].Date,false));
 			break;
 		case CAL_TONE_ALARM_DATETIME:
 			if (Note->Type==GSM_CAL_BIRTHDAY) {
-				printf(_("Tone alarm   : forever on each %i. day of "),Note->Entries[i].Date.Day);
-				switch(Note->Entries[i].Date.Month) {
-					case 1 : printf(_("January")); 	 break;
-					case 2 : printf(_("February")); 	 break;
-					case 3 : printf(_("March")); 	 break;
-					case 4 : printf(_("April")); 	 break;
-					case 5 : printf(_("May")); 	 break;
-					case 6 : printf(_("June")); 	 break;
-					case 7 : printf(_("July")); 	 break;
-					case 8 : printf(_("August")); 	 break;
-					case 9 : printf(_("September"));  break;
-					case 10: printf(_("October")); 	 break;
-					case 11: printf(_("November")); 	 break;
-					case 12: printf(_("December")); 	 break;
-					default: printf(_("Bad month!")); break;
-				}
+				printf(LISTFORMAT, _("Tone alarm"));
+				printf(_("forever on each %i. day of %s"),
+					Note->Entries[i].Date.Day,
+					Note->Entries[i].Date.Month == 1 ? _("January") : (
+					Note->Entries[i].Date.Month == 2 ? _("February") : (
+					Note->Entries[i].Date.Month == 3 ? _("March") : (
+					Note->Entries[i].Date.Month == 4 ? _("April") : (
+					Note->Entries[i].Date.Month == 5 ? _("May") : (
+					Note->Entries[i].Date.Month == 6 ? _("June") : (
+					Note->Entries[i].Date.Month == 7 ? _("July") : (
+					Note->Entries[i].Date.Month == 8 ? _("August") : (
+					Note->Entries[i].Date.Month == 9 ? _("September") : (
+					Note->Entries[i].Date.Month == 10 ? _("October") : (
+					Note->Entries[i].Date.Month == 11 ? _("November") : (
+					Note->Entries[i].Date.Month == 12 ? _("December") :
+					_("bad month!")))))))))))));
 				printf(" %02i:%02i:%02i\n",
 					Note->Entries[i].Date.Hour,
 					Note->Entries[i].Date.Minute,
 					Note->Entries[i].Date.Second);
 			} else {
-				printf(_("Tone alarm   : %s\n"),OSDateTime(Note->Entries[i].Date,false));
+				printf(LISTFORMAT "%s\n", _("Tone alarm"), OSDateTime(Note->Entries[i].Date,false));
 			}
 			memcpy(&Alarm,&Note->Entries[i].Date,sizeof(GSM_DateTime));
 			break;
 		case CAL_SILENT_ALARM_DATETIME:
 			if (Note->Type==GSM_CAL_BIRTHDAY) {
-				printf(_("Silent alarm : forever on each %i. day of "),Note->Entries[i].Date.Day);
-				switch(Note->Entries[i].Date.Month) {
-					case 1 : printf(_("January")); 	 break;
-					case 2 : printf(_("February")); 	 break;
-					case 3 : printf(_("March")); 	 break;
-					case 4 : printf(_("April")); 	 break;
-					case 5 : printf(_("May")); 	 break;
-					case 6 : printf(_("June")); 	 break;
-					case 7 : printf(_("July")); 	 break;
-					case 8 : printf(_("August")); 	 break;
-					case 9 : printf(_("September"));  break;
-					case 10: printf(_("October")); 	 break;
-					case 11: printf(_("November")); 	 break;
-					case 12: printf(_("December")); 	 break;
-					default: printf(_("Bad month!")); break;
-				}
+				printf(LISTFORMAT, _("Silent alarm"));
+				printf(_("forever on each %i. day of %s"),
+					Note->Entries[i].Date.Day,
+					Note->Entries[i].Date.Month == 1 ? _("January") : (
+					Note->Entries[i].Date.Month == 2 ? _("February") : (
+					Note->Entries[i].Date.Month == 3 ? _("March") : (
+					Note->Entries[i].Date.Month == 4 ? _("April") : (
+					Note->Entries[i].Date.Month == 5 ? _("May") : (
+					Note->Entries[i].Date.Month == 6 ? _("June") : (
+					Note->Entries[i].Date.Month == 7 ? _("July") : (
+					Note->Entries[i].Date.Month == 8 ? _("August") : (
+					Note->Entries[i].Date.Month == 9 ? _("September") : (
+					Note->Entries[i].Date.Month == 10 ? _("October") : (
+					Note->Entries[i].Date.Month == 11 ? _("November") : (
+					Note->Entries[i].Date.Month == 12 ? _("December") :
+					_("bad month!")))))))))))));
 				printf(" %02i:%02i:%02i\n",
 					Note->Entries[i].Date.Hour,
 					Note->Entries[i].Date.Minute,
 					Note->Entries[i].Date.Second);
 			} else {
-				printf(_("Silent alarm : %s\n"),OSDateTime(Note->Entries[i].Date,false));
+				printf(LISTFORMAT "%s\n", _("Silent alarm"), OSDateTime(Note->Entries[i].Date,false));
 			}
 			memcpy(&Alarm,&Note->Entries[i].Date,sizeof(GSM_DateTime));
 			break;
 		case CAL_TEXT:
-			printf(_("Text         : \"%s\"\n"),DecodeUnicodeConsole(Note->Entries[i].Text));
+			printf(LISTFORMAT "\"%s\"\n", _("Text"),DecodeUnicodeConsole(Note->Entries[i].Text));
 			break;
 		case CAL_DESCRIPTION:
-			printf(_("Description  : \"%s\"\n"),DecodeUnicodeConsole(Note->Entries[i].Text));
+			printf(LISTFORMAT "\"%s\"\n", _("Description"),DecodeUnicodeConsole(Note->Entries[i].Text));
 			break;
 		case CAL_LUID:
-			printf(_("LUID         : \"%s\"\n"),DecodeUnicodeConsole(Note->Entries[i].Text));
+			printf(LISTFORMAT "\"%s\"\n", _("LUID"),DecodeUnicodeConsole(Note->Entries[i].Text));
 			break;
 		case CAL_LOCATION:
-			printf(_("Location     : \"%s\"\n"),DecodeUnicodeConsole(Note->Entries[i].Text));
+			printf(LISTFORMAT "\"%s\"\n", _("Location"),DecodeUnicodeConsole(Note->Entries[i].Text));
 			break;
 		case CAL_PHONE:
-			printf(_("Phone        : \"%s\"\n"),DecodeUnicodeConsole(Note->Entries[i].Text));
+			printf(LISTFORMAT "\"%s\"\n", _("Phone"),DecodeUnicodeConsole(Note->Entries[i].Text));
 			break;
 		case CAL_PRIVATE:
-			printf(_("Private      : %s\n"),Note->Entries[i].Number == 1 ? _("Yes") : _("No"));
+			printf(LISTFORMAT "%s\n", _("Private"),Note->Entries[i].Number == 1 ? _("Yes") : _("No"));
 			break;
 		case CAL_CONTACTID:
 			entry.Location = Note->Entries[i].Number;
@@ -450,12 +457,12 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 			if (error == ERR_NONE) {
 				name = GSM_PhonebookGetEntryName(&entry);
 				if (name != NULL) {
-					printf(_("Contact ID   : \"%s\" (%d)\n"), DecodeUnicodeConsole(name), Note->Entries[i].Number);
+					printf(LISTFORMAT "\"%s\" (%d)\n", _("Contact ID"), DecodeUnicodeConsole(name), Note->Entries[i].Number);
 				} else {
-					printf(_("Contact ID   : %d\n"),Note->Entries[i].Number);
+					printf(LISTFORMAT "%d\n", _("Contact ID"), Note->Entries[i].Number);
 				}
 			} else {
-				printf(_("Contact ID   : %d\n"),Note->Entries[i].Number);
+				printf(LISTFORMAT "%d\n", _("Contact ID"), Note->Entries[i].Number);
 			}
 			break;
 		case CAL_REPEAT_DAYOFWEEK:
@@ -497,7 +504,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 		}
 	}
 	if (repeating) {
-		printf(_("Repeating    : "));
+		printf(LISTFORMAT, _("Repeating"));
 		if (repeat_count > 0) {
 			printf(ngettext("for %d time ", "for %d times ", repeat_count), repeat_count);
 		}
@@ -589,7 +596,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 			    DateTime.Day < Alarm.Day) {
 				i_age++;
 			}
-			printf(_("Age          : "));
+			printf(LISTFORMAT, _("Age"));
 			printf(ngettext("%d year", "%d years", i_age), i_age);
 			printf("\n");
 		}
@@ -2829,7 +2836,7 @@ static void GetCalendar(int argc, char *argv[])
 		error = Phone->GetCalendar(&s, &Note);
 		if (error == ERR_EMPTY) continue;
 		Print_Error(error);
-		printf(_("Location     : %d\n"), Note.Location);
+		printf(LISTFORMAT "%d\n", _("Location"), Note.Location);
 		PrintCalendar(&Note);
 	}
 
@@ -2868,7 +2875,7 @@ static void GetAllCalendar(int argc, char *argv[])
 		error=Phone->GetNextCalendar(&s,&Note,refresh);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
-		printf(_("Location     : %d\n"), Note.Location);
+		printf(LISTFORMAT "%d\n", _("Location"), Note.Location);
 		PrintCalendar(&Note);
 		refresh=false;
 	}
