@@ -147,6 +147,7 @@ static ATErrorCode CMSErrorCodes[] = {
 	{340,  "no CNMA acknowledgement expected"},
 	{500,  "unknown error"},
 	/* > 512 are manufacturer specific according to GSM 07.05 subclause 3.2.5 */
+	{516,  "Motorola - too high location?"},
 	{-1,   ""}
 };
 
@@ -262,6 +263,7 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
         case 322:
             	return ERR_FULL;
         case 321:
+        case 516:
             	return ERR_INVALIDLOCATION;
         default:
 		return ERR_UNKNOWN;
