@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-03 17:42+0200\n"
+"POT-Creation-Date: 2007-05-03 17:43+0200\n"
 "PO-Revision-Date: 2007-03-20 11:32+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =de\n"
@@ -3279,14 +3279,11 @@ msgstr "Verwenden Sie die -smscnumber Option, um die SMSC-Nummer anzugeben\n"
 #: gammu/gammu.c:4554
 #, fuzzy, c-format
 msgid "Number of SMS: %i"
-msgstr ""
+msgid_plural "Number of SMSes: %i"
+msgstr[0] ""
 "\n"
 "Nummer der SMS: %i\n"
-
-#: gammu/gammu.c:4554
-#, fuzzy, c-format
-msgid "Number of SMSes: %i"
-msgstr ""
+msgstr[1] ""
 "\n"
 "Nummer der SMS: %i\n"
 
@@ -5104,6 +5101,12 @@ msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr ""
 "INFO: Es ist eine neuere Entwicklungsversion von Gammu (%s anstatt %s) "
 "verfügbar!\n"
+
+#, fuzzy
+#~ msgid "Number of SMSes: %i"
+#~ msgstr ""
+#~ "\n"
+#~ "Nummer der SMS: %i\n"
 
 #, fuzzy
 #~ msgid "Remote number(s)"
