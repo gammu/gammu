@@ -9,13 +9,14 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-05-03 17:44+0200\n"
-"PO-Revision-Date: 2007-05-03 17:37+0200\n"
+"PO-Revision-Date: 2007-05-03 17:50+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Pootle 0.11\n"
 
 #: common/gsmcomon.c:80
 msgid "No error."
@@ -85,11 +86,11 @@ msgstr ""
 
 #: common/gsmcomon.c:97
 msgid "Unknown connection type string. Check config file."
-msgstr "Zadán neznamý typ připojení. Zkontrolujte konfigurační soubor."
+msgstr "Zadán neznámý typ připojení. Zkontrolujte konfigurační soubor."
 
 #: common/gsmcomon.c:98
 msgid "Unknown model type string. Check config file."
-msgstr "Zadán neznamý model telefonu. Zkontrolujte konfigurační soubor."
+msgstr "Zadán neznámý model telefonu. Zkontrolujte konfigurační soubor."
 
 #: common/gsmcomon.c:99
 msgid ""
@@ -125,7 +126,7 @@ msgstr "Paměť je plná."
 
 #: common/gsmcomon.c:106 common/gsmcomon.c:154
 msgid "Unknown error."
-msgstr "Neznamá chyba."
+msgstr "Neznámá chyba."
 
 #: common/gsmcomon.c:108
 msgid "Can't open specified file. Read only ?"
@@ -525,14 +526,14 @@ msgid " (Speed dial)"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1337
-#, fuzzy, c-format
+#, c-format
 msgid " (Caller group: logo)"
-msgstr "Skupina          : \"%s\"\n"
+msgstr "(Skupina: logo)"
 
 #: gammu/depend/nokia/dct4.c:1338
-#, fuzzy, c-format
+#, c-format
 msgid " (Caller group: is logo on ?)"
-msgstr "Skupina          : \"%s\"\n"
+msgstr "(Skupina: logo zapnuto?)"
 
 #: gammu/depend/nokia/dct4.c:1339
 #, c-format
@@ -646,7 +647,7 @@ msgstr "Standardní číslo"
 
 #: gammu/depend/nokia/dct4.c:1374
 msgid "Unknown number"
-msgstr "Neznamé číslo"
+msgstr "Neznámé číslo"
 
 #: gammu/depend/nokia/dct4.c:1397
 #, c-format
@@ -860,9 +861,10 @@ msgid "Could not parse config file \"%s\"\n"
 msgstr ""
 
 #: gammu/smsd/smsdcore.c:98
-#, fuzzy, c-format
+#, c-format
 msgid "Can't find file \"%s\"\n"
-msgstr "Čas v telefonu je %s\n"
+msgstr ""
+"Nepodařilo se nalézt soubor \"%s\"\n"
 
 #: gammu/smsd/smsdcore.c:107 gammu/gammu.c:4353
 #, c-format
@@ -870,9 +872,10 @@ msgid "Can't open file \"%s\"\n"
 msgstr ""
 
 #: gammu/smsd/smsdcore.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "Log filename is \"%s\"\n"
-msgstr "Čas v telefonu je %s\n"
+msgstr ""
+"Jméno logu je \"%s\"\n"
 
 #: gammu/smsd/smsdcore.c:112
 msgid "Starting GAMMU smsd"
@@ -1650,7 +1653,8 @@ msgstr ""
 #: gammu/gammu.c:857
 #, c-format
 msgid "Time: %02d:%02d\n"
-msgstr "Čas  : %02d:%02d\n"
+msgstr ""
+"Čas: %02d:%02d\n"
 
 #: gammu/gammu.c:901
 #, c-format
@@ -1877,8 +1881,8 @@ msgstr "Neodesláno"
 msgid "Remote number"
 msgid_plural "Remote numbers"
 msgstr[0] "Vzdálené číslo"
-msgstr[1] "Vzdálené čísla"
-msgstr[2] "Vzdálené čísla"
+msgstr[1] "Vzdálená čísla"
+msgstr[2] "Vzdálená čísla"
 
 #: gammu/gammu.c:1439 gammu/gammu.c:1505
 msgid "Reference number"
@@ -2025,9 +2029,8 @@ msgid " (set for reply)"
 msgstr ""
 
 #: gammu/gammu.c:1499
-#, fuzzy
 msgid "SMS replacing ID"
-msgstr "Odpověd SMSC    : %s\n"
+msgstr "SMS nahrazuje ID"
 
 #: gammu/gammu.c:1512
 msgid "Class"
@@ -2204,9 +2207,10 @@ msgid " - VCARD"
 msgstr ""
 
 #: gammu/gammu.c:1647
-#, fuzzy, c-format
+#, c-format
 msgid "Ringtone \"%s\"\n"
-msgstr "Vyzvánění        : \"%s\"\n"
+msgstr ""
+"Vyzvánění \"%s\"\n"
 
 #: gammu/gammu.c:1652
 msgid "Do you want to play it"
@@ -2481,9 +2485,8 @@ msgid "Phone current     : %i mA\n"
 msgstr ""
 
 #: gammu/gammu.c:1901
-#, fuzzy
 msgid "Charge state"
-msgstr "Příjmení        "
+msgstr "Stav nabíjení"
 
 #: gammu/gammu.c:1904
 #, c-format
@@ -2583,9 +2586,8 @@ msgid "Number"
 msgstr "Číslo"
 
 #: gammu/gammu.c:2048
-#, fuzzy
 msgid "Default number"
-msgstr "Středisko zpráv : \"%s\"\n"
+msgstr "Výchozí číslo"
 
 #: gammu/gammu.c:2050
 msgid "Format"
@@ -2883,9 +2885,10 @@ msgid "No operator logo in phone"
 msgstr ""
 
 #: gammu/gammu.c:3096
-#, fuzzy, c-format
+#, c-format
 msgid "Welcome note text is \"%s\"\n"
-msgstr "Čas v telefonu je %s\n"
+msgstr ""
+"Uvítací zpráva je \"%s\"\n"
 
 #: gammu/gammu.c:3099
 #, c-format
@@ -3041,9 +3044,10 @@ msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr ""
 
 #: gammu/gammu.c:4403
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown parameter (\"%c\")\n"
-msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
+msgstr ""
+"Neznámý parametr (\"%c\")\n"
 
 #: gammu/gammu.c:4408
 msgid "Last parameter wasn't text"
@@ -3074,9 +3078,9 @@ msgid "Use -smscnumber option to give SMSC number"
 msgstr ""
 
 #: gammu/gammu.c:4554
-#, fuzzy, c-format
+#, c-format
 msgid "Number of messages: %i"
-msgstr "   Číslo      : %\n"
+msgstr "Počet zpráv: %i"
 
 #: gammu/gammu.c:4593 gammu/gammu.c:4655
 msgid "If you want break, press Ctrl+C..."
@@ -3088,9 +3092,10 @@ msgid "Saving SMS %i/%i\n"
 msgstr ""
 
 #: gammu/gammu.c:4617
-#, fuzzy, c-format
+#, c-format
 msgid "Saved in folder \"%s\", location %i"
-msgstr "Paměť %s, pozice %i\n"
+msgstr ""
+"Uloženo ve složce \"%s\", pozice %i\n"
 
 #: gammu/gammu.c:4622
 msgid "SMS name ignored"
@@ -3102,9 +3107,10 @@ msgid "phone"
 msgstr "Telefon"
 
 #: gammu/gammu.c:4629
-#, fuzzy, c-format
+#, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
-msgstr "Paměť %s, pozice %i\n"
+msgstr ""
+"Odesílám zprávu ze složky \"%s\", pozice %i\n"
 
 #: gammu/gammu.c:4634 gammu/gammu.c:4673
 #, c-format
@@ -3560,18 +3566,16 @@ msgid "Server number"
 msgstr "Číslo serveru"
 
 #: gammu/gammu.c:6419
-#, fuzzy
 msgid "Service number"
-msgstr "Středisko zpráv : \"%s\"\n"
+msgstr "Servisní středisko"
 
 #: gammu/gammu.c:6422
 msgid "Data (CSD)"
 msgstr ""
 
 #: gammu/gammu.c:6425
-#, fuzzy
 msgid "Dial-up number"
-msgstr "Středisko zpráv : \"%s\"\n"
+msgstr "Číslo pro vytáčení"
 
 #: gammu/gammu.c:6426 gammu/gammu.c:6476
 msgid "IP address"
@@ -3920,9 +3924,8 @@ msgid "Message alert tone ID"
 msgstr ""
 
 #: gammu/gammu.c:7453
-#, fuzzy
 msgid "Call alert for"
-msgstr "Kategorie        : %i\n"
+msgstr "Upozornění na hovor pro"
 
 #: gammu/gammu.c:7474
 msgid "Screen saver number"
@@ -4109,9 +4112,9 @@ msgid "Networks for %s:"
 msgstr "Sítě pro %s:"
 
 #: gammu/gammu.c:7784
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown country name: %s."
-msgstr "Neznamá chyba."
+msgstr "Neznámé jméno země: %s."
 
 #: gammu/gammu.c:7789 gammu/gammu.c:9918
 msgid "Network"
