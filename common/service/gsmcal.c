@@ -691,11 +691,11 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	/* Write header */
 	if (header) {
 		*Length+=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
-		*Length+=sprintf(Buffer+(*Length), "VERSION:%s%c%c", Version == Mozilla_VCalendar ? "2.0" : "1.0", 13, 10);
+		*Length+=sprintf(Buffer+(*Length), "VERSION:%s%c%c", Version == Mozilla_iCalendar ? "2.0" : "1.0", 13, 10);
 	}
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VEVENT%c%c",13,10);
 
-	if (Version == Mozilla_VCalendar) {
+	if (Version == Mozilla_iCalendar) {
 		/* Mozilla Calendar needs UIDs. http://www.innerjoin.org/iCalendar/events-and-uids.html */
 		*Length+=sprintf(Buffer+(*Length), "UID:calendar-%i%c%c",note->Location,13,10);
 		*Length+=sprintf(Buffer+(*Length), "STATUS:CONFIRMED%c%c",13,10);
@@ -710,14 +710,14 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 		switch (note->Entries[i].EntryType) {
 			case CAL_START_DATETIME :
 				date = i;
-				if (Version == Mozilla_VCalendar && (note->Type == GSM_CAL_MEMO || note->Type == GSM_CAL_BIRTHDAY)) {
+				if (Version == Mozilla_iCalendar && (note->Type == GSM_CAL_MEMO || note->Type == GSM_CAL_BIRTHDAY)) {
 					SaveVCALDate(Buffer, Length, &note->Entries[i].Date, "DTSTART;VALUE=DATE");
 				} else {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DTSTART");
 				}
 				break;
 			case CAL_END_DATETIME :
-				if (Version == Mozilla_VCalendar && (note->Type == GSM_CAL_MEMO || note->Type == GSM_CAL_BIRTHDAY)) {
+				if (Version == Mozilla_iCalendar && (note->Type == GSM_CAL_MEMO || note->Type == GSM_CAL_BIRTHDAY)) {
 					SaveVCALDate(Buffer, Length, &note->Entries[i].Date, "DTEND;VALUE=DATE");
 				} else {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DTEND");
@@ -726,19 +726,19 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 			case CAL_TONE_ALARM_DATETIME :
 				alarm = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
-				if (Version != Mozilla_VCalendar || note->Type != GSM_CAL_BIRTHDAY) {
+				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "AALARM");
 				}
 				break;
 			case CAL_SILENT_ALARM_DATETIME:
 				alarm = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
-				if (Version != Mozilla_VCalendar || note->Type != GSM_CAL_BIRTHDAY) {
+				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DALARM");
 				}
 				break;
 			case CAL_LAST_MODIFIED:
-				if (Version == Mozilla_VCalendar && (note->Type == GSM_CAL_MEMO || note->Type == GSM_CAL_BIRTHDAY)) {
+				if (Version == Mozilla_iCalendar && (note->Type == GSM_CAL_MEMO || note->Type == GSM_CAL_BIRTHDAY)) {
 					SaveVCALDate(Buffer, Length, &note->Entries[i].Date, "LAST-MODIFIED;VALUE=DATE");
 				} else {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "LAST-MODIFIED");
@@ -786,7 +786,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 
 	/* Handle recurrance */
 	if (note->Type == GSM_CAL_BIRTHDAY) {
-		if (Version == Mozilla_VCalendar) {
+		if (Version == Mozilla_iCalendar) {
 			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-RECUR-DEFAULT-UNITS:years%c%c",13,10);
 		} else if (Version == Siemens_VCalendar) {
 			*Length+=sprintf(Buffer+(*Length), "RRULE:YD1%c%c",13,10);
@@ -798,7 +798,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	}
 
 	/* Include mozilla specific alarm encoding */
-	if (Version == Mozilla_VCalendar && alarm != -1 && date != -1) {
+	if (Version == Mozilla_iCalendar && alarm != -1 && date != -1) {
 		deltatime = VCALTimeDiff(&note->Entries[alarm].Date, &note->Entries[date].Date);
 
 		dtstr[0]='\0';
@@ -879,7 +879,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 	}
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VTODO%c%c",13,10);
 
-	if (Version == Mozilla_VCalendar) {
+	if (Version == Mozilla_iCalendar) {
 		/* Mozilla Calendar needs UIDs. http://www.innerjoin.org/iCalendar/events-and-uids.html */
 		*Length+=sprintf(Buffer+(*Length), "UID:calendar-%i%c%c",note->Location,13,10);
 		*Length+=sprintf(Buffer+(*Length), "STATUS:CONFIRMED%c%c",13,10);
@@ -919,14 +919,14 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 			case TODO_ALARM_DATETIME :
 				alarm = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
-				if (Version != Mozilla_VCalendar || note->Type != GSM_CAL_BIRTHDAY) {
+				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "AALARM");
 				}
 				break;
 			case TODO_SILENT_ALARM_DATETIME:
 				alarm = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
-				if (Version != Mozilla_VCalendar || note->Type != GSM_CAL_BIRTHDAY) {
+				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DALARM");
 				}
 				break;
@@ -971,7 +971,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 		}
 
 		/* Include mozilla specific alarm encoding */
-		if (Version == Mozilla_VCalendar && alarm != -1 && date != -1) {
+		if (Version == Mozilla_iCalendar && alarm != -1 && date != -1) {
 			deltatime = VCALTimeDiff(&note->Entries[alarm].Date, &note->Entries[date].Date);
 
 			dtstr[0]='\0';
@@ -1504,7 +1504,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 	lBuffer = strlen(Buffer);
 	trigger.Timezone = -999;
 
-	if (CalVer == Mozilla_VCalendar && *Pos ==0) {
+	if (CalVer == Mozilla_iCalendar && *Pos ==0) {
 		int error;
 		error = GSM_Make_VCAL_Lines (Buffer, &lBuffer);
 		if (error != ERR_NONE) return error;
