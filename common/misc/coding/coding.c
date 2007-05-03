@@ -1377,38 +1377,44 @@ ret0:
 void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, bool MergeLines)
 {
 	bool skip = false;
+	size_t pos;
+	int tmp;
 
 	OutBuffer[0] = 0;
+	pos = 0;
 	if (Buffer == NULL) return;
-	while (1) {
-		if ((*Pos) >= MaxLen) return;
+	while ((*Pos) < MaxLen) {
 		switch (Buffer[*Pos]) {
 		case 0x00:
 			return;
 		case 0x0A:
-			if (strlen(OutBuffer) != 0 && !skip) {
-				if (MergeLines && OutBuffer[strlen(OutBuffer) - 1] == '=') {
-					OutBuffer[strlen(OutBuffer) - 1] = 0;
-					skip = true;
-				} else {
-					return;
-				}
-			}
-			break;
 		case 0x0D:
-			if (strlen(OutBuffer) != 0 && !skip) {
-				if (MergeLines && OutBuffer[strlen(OutBuffer) - 1] == '=') {
-					OutBuffer[strlen(OutBuffer) - 1] = 0;
-					skip = true;
-				} else {
-					return;
+			if (pos != 0 && !skip) {
+				if (MergeLines) { 
+					/* (Quote printable new line) Does string end with = ? */
+					if (OutBuffer[pos - 1] == '=') {
+						OutBuffer[pos - 1] = 0;
+						skip = true;
+						break;
+					}
+					/* (vCard continuation) Next line start with space? */
+					tmp = *Pos + 1;
+					if (Buffer[*Pos + 1] == 0x0a || Buffer[*Pos + 1] == 0x0d) {
+						tmp += 1;
+					}
+					if (Buffer[tmp] == ' ') {
+						*Pos = tmp;
+						break;
+					}
 				}
+				return;
 			}
 			break;
 		default  :
 			skip = false;
-			OutBuffer[strlen(OutBuffer) + 1] = 0;
-			OutBuffer[strlen(OutBuffer)]     = Buffer[*Pos];
+			OutBuffer[pos]     = Buffer[*Pos];
+			pos++;
+			OutBuffer[pos] = 0;
 		}
 		(*Pos)++;
 	}
