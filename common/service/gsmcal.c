@@ -1800,6 +1800,11 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				Alarm = Calendar->EntriesNum;
 				Calendar->EntriesNum++;
 			}
+			if (ReadVCALDate(Line, "LAST-MODIFIED", &Date, &is_date_only)) {
+				Calendar->Entries[Calendar->EntriesNum].Date = Date;
+				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_LAST_MODIFIED;
+				Calendar->EntriesNum++;
+			}
 			if (strstr(Line,"X-SONYERICSSON-DST:")) {
 				if (ReadVCALInt(Line, "X-SONYERICSSON-DST", &dstflag)) {
 					break;
@@ -1868,6 +1873,11 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				ToDo->Entries[ToDo->EntriesNum].Date = Date;
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_SILENT_ALARM_DATETIME;
 				Alarm = Calendar->EntriesNum;
+				ToDo->EntriesNum++;
+			}
+			if (ReadVCALDate(Line, "LAST-MODIFIED", &Date, &is_date_only)) {
+				ToDo->Entries[ToDo->EntriesNum].Date = Date;
+				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LAST_MODIFIED;
 				ToDo->EntriesNum++;
 			}
 			if (ReadVCALDate(Line, "AALARM", &Date, &is_date_only)) {
