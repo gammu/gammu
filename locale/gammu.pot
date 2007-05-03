@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-03 17:43+0200\n"
+"POT-Creation-Date: 2007-05-03 17:44+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3044,10 +3044,8 @@ msgstr ""
 
 #: gammu/gammu.c:4554
 #, c-format
-msgid "Number of SMS: %i"
-msgid_plural "Number of SMSes: %i"
-msgstr[0] ""
-msgstr[1] ""
+msgid "Number of messages: %i"
+msgstr ""
 
 #: gammu/gammu.c:4593 gammu/gammu.c:4655
 msgid "If you want break, press Ctrl+C..."

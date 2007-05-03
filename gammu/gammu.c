@@ -4551,7 +4551,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 
 		printf("\n");
-		printf(ngettext("Number of SMS: %i", "Number of SMSes: %i", sms.Number), sms.Number);
+		printf(_("Number of messages: %i"), sms.Number);
 		printf("\n");
 		exit(sms.Number);
 	}
