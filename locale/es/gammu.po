@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-03 17:43+0200\n"
+"POT-Creation-Date: 2007-05-03 17:44+0200\n"
 "PO-Revision-Date: 2007-03-20 19:21+0100\n"
 "Last-Translator: Pablo Gomez <pgomez@arrakis.es>\n"
 "Language-Team: Language =es\n"
@@ -3197,10 +3197,8 @@ msgstr ""
 
 #: gammu/gammu.c:4554
 #, fuzzy, c-format
-msgid "Number of SMS: %i"
-msgid_plural "Number of SMSes: %i"
-msgstr[0] "   Número     : %s\n"
-msgstr[1] "   Número     : %s\n"
+msgid "Number of messages: %i"
+msgstr "   Número     : %s\n"
 
 #: gammu/gammu.c:4593 gammu/gammu.c:4655
 msgid "If you want break, press Ctrl+C..."
@@ -4898,8 +4896,10 @@ msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr ""
 
 #, fuzzy
-#~ msgid "Number of SMSes: %i"
-#~ msgstr "   Número     : %s\n"
+#~ msgid "Number of SMS: %i"
+#~ msgid_plural "Number of SMSes: %i"
+#~ msgstr[0] "   Número     : %s\n"
+#~ msgstr[1] "   Número     : %s\n"
 
 #, fuzzy
 #~ msgid "Remote number(s)"
