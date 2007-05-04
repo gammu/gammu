@@ -1908,7 +1908,6 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				/* Following fields are not supported: */
 				case PBK_Text_UserID:
 				case PBK_SMSListID:
-				case PBK_RingtoneFileSystemID:
 				case PBK_Date:
 				case PBK_LastModified:
 				case PBK_Caller_Group:
@@ -2082,7 +2081,6 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				/* Following fields are not supported: */
 				case PBK_Text_UserID:
 				case PBK_SMSListID:
-				case PBK_RingtoneFileSystemID:
 				case PBK_Date:
 				case PBK_LastModified:
 				case PBK_Caller_Group:

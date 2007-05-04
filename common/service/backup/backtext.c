@@ -404,7 +404,6 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				text = false;
 				break;
 			case PBK_SMSListID:
-			case PBK_RingtoneFileSystemID:
 			case PBK_CallLength:
 				text = false;
 				break;
