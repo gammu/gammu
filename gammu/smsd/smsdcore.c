@@ -146,7 +146,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 
 	Config->PhoneID = INI_GetValue(smsdcfgfile, "smsd", "phoneid", false);
 	if (Config->PhoneID == NULL) Config->PhoneID = "";
-	if (log) WriteSMSDLog("phoneid = %s" Config->PhoneID);
+	if (log) WriteSMSDLog("phoneid = %s", Config->PhoneID);
 
 	str = INI_GetValue(smsdcfgfile, "smsd", "smsc", false);
 	if (str) {
