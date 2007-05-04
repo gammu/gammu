@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-05-04 11:08+0200\n"
-"PO-Revision-Date: 2007-05-04 11:01+0200\n"
+"PO-Revision-Date: 2007-05-04 11:17+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -27,24 +27,20 @@ msgid "Error opening device. Unknown/busy or no permissions."
 msgstr "Chyba při otevírání zařízení. Přístup odmítnut."
 
 #: common/gsmcomon.c:82
-#, fuzzy
 msgid "Error opening device, it is locked."
-msgstr "Chyba při otevírání zařízení. Zařízení je zamčené."
+msgstr "Chyba při otevírání zařízení, je zamčené."
 
 #: common/gsmcomon.c:83
-#, fuzzy
 msgid "Error opening device, it doesn't exist."
-msgstr "Chyba při otevírání zařízení. Zařízení neexistuje."
+msgstr "Chyba při otevírání zařízení, neexistuje."
 
 #: common/gsmcomon.c:84
-#, fuzzy
 msgid "Error opening device, it is already opened by other application."
-msgstr "Chyba při otevírání zařízení. Zařízení je již používáno."
+msgstr "Chyba při otevírání zařízení, je již používáno."
 
 #: common/gsmcomon.c:85
-#, fuzzy
 msgid "Error opening device, you don't have permissions."
-msgstr "Chyba při otevírání zařízení. Přístup odmítnut."
+msgstr "Chyba při otevírání zařízení, přístup odmítnut."
 
 #: common/gsmcomon.c:86
 msgid "Error opening device. No required driver in operating system."
@@ -52,9 +48,7 @@ msgstr "Chyba při otevírání zařízení. Chybí ovladač v operačním syst�
 
 #: common/gsmcomon.c:87
 msgid "Error opening device. Some hardware not connected/wrong configured."
-msgstr ""
-"Chyba při otevírání zařízení. Zařízení může být špatně připojeno nebo "
-"nakonfigurováno."
+msgstr "Chyba při otevírání zařízení. Hardware může být špatně připojen nebo nakonfigurován."
 
 #: common/gsmcomon.c:88
 msgid "Error setting device DTR or RTS."
@@ -114,11 +108,11 @@ msgstr "Záznam je prázdný"
 
 #: common/gsmcomon.c:102
 msgid "Security error. Maybe no PIN ?"
-msgstr "Bezpečnostní chyba. Možná nebyl zadán PIN."
+msgstr "Bezpečnostní chyba. Možná nebyl zadán PIN?"
 
 #: common/gsmcomon.c:103
 msgid "Invalid location. Maybe too high ?"
-msgstr "Cybná pozice. Možná příliš vysoká."
+msgstr "Cybná pozice. Možná příliš vysoká?"
 
 #: common/gsmcomon.c:104
 msgid "Function not implemented. Help required."
@@ -134,7 +128,7 @@ msgstr "Neznámá chyba."
 
 #: common/gsmcomon.c:108
 msgid "Can't open specified file. Read only ?"
-msgstr "Soubor nezle otevřít, není jen pro čtení?"
+msgstr "Soubor nezle otevřít. Není jen pro čtení?"
 
 #: common/gsmcomon.c:109
 msgid "More memory required..."
@@ -151,8 +145,7 @@ msgstr ""
 
 #: common/gsmcomon.c:112
 msgid "You're inside phone menu (during editing ?). Leave it and try again."
-msgstr ""
-"Jste v menu telefonu nebo v něm upravujete záznam. Opusťtě ho a zkuste znovu."
+msgstr "Jste v menu telefonu (upravujete záznam?). Opusťtě ho a zkuste znovu."
 
 #: common/gsmcomon.c:113
 msgid "Function is during writing. If want help, please contact with authors."
@@ -208,11 +201,11 @@ msgstr "Soubor se zadaným jménem neexistuje."
 
 #: common/gsmcomon.c:126
 msgid "You have to give folder (not file) name."
-msgstr "Musíte zadat jméno složky, ne souboru."
+msgstr "Musíte zadat jméno složky (ne souboru)."
 
 #: common/gsmcomon.c:127
 msgid "You have to give file (not folder) name."
-msgstr "Musíte zadat jméno souboru, ne složky."
+msgstr "Musíte zadat jméno souboru (ne složky)."
 
 #: common/gsmcomon.c:128
 msgid "Can not access SIM card."
@@ -2432,24 +2425,20 @@ msgid "Entering monitor mode..."
 msgstr ""
 
 #: gammu/gammu.c:1886
-#, fuzzy
 msgid "Enabling info about incoming SMS"
-msgstr "Odesláno        : %s\n"
+msgstr "Povoluji informace o příchozích SMS"
 
 #: gammu/gammu.c:1888
-#, fuzzy
 msgid "Enabling info about incoming CB"
-msgstr "Odesláno        : %s\n"
+msgstr "Povoluji informace o příchozích CB"
 
 #: gammu/gammu.c:1890
-#, fuzzy
 msgid "Enabling info about calls"
-msgstr "Odesláno        : %s\n"
+msgstr "Povoluji informace o příchozích hovorech"
 
 #: gammu/gammu.c:1892
-#, fuzzy
 msgid "Enabling info about USSD"
-msgstr "Odesláno        : %s\n"
+msgstr "Povoluji informace o USSD"
 
 #: gammu/gammu.c:1909
 msgid "ToDos"
@@ -2588,9 +2577,8 @@ msgid "Bit error rate"
 msgstr ""
 
 #: gammu/gammu.c:2025
-#, fuzzy
 msgid "SIM SMS status"
-msgstr "Informace o stavu SMS"
+msgstr "Stav SMS ns SIM"
 
 #: gammu/gammu.c:2026 gammu/gammu.c:2036
 #, c-format
@@ -2600,17 +2588,16 @@ msgstr "%i použito"
 #: gammu/gammu.c:2028 gammu/gammu.c:2038
 #, c-format
 msgid "%i unread"
-msgstr "%d nepřečteno"
+msgstr "%i nepřečteno"
 
 #: gammu/gammu.c:2030 gammu/gammu.c:2040
 #, c-format
 msgid "%i locations"
-msgstr "%d pozic"
+msgstr "%i pozic"
 
 #: gammu/gammu.c:2035
-#, fuzzy
 msgid "Phone SMS status"
-msgstr "Testy telefonu"
+msgstr "Stav SMS v telefonu"
 
 #: gammu/gammu.c:2043
 #, c-format
@@ -3010,9 +2997,10 @@ msgid "Phonebook entry not found in file"
 msgstr ""
 
 #: gammu/gammu.c:3824 gammu/gammu.c:4873
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
+msgstr ""
+"Neznámý typ paměti: \"%s\"\n"
 
 #: gammu/gammu.c:3845
 #, c-format
@@ -3020,9 +3008,10 @@ msgid "What format of sms (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/gammu.c:4315
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
-msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
+msgstr ""
+"Neznámý kód sítě (\"%s\")\n"
 
 #: gammu/gammu.c:4334
 #, c-format
@@ -4187,9 +4176,10 @@ msgid "Folder"
 msgstr ""
 
 #: gammu/gammu.c:8242
-#, fuzzy, c-format
+#, c-format
 msgid "Getting \"%s\"\n"
-msgstr "Text : \"%s\"n"
+msgstr ""
+"Stahuji \"%s\"\n"
 
 #: gammu/gammu.c:8248
 msgid "it's folder. Please give only file names"
@@ -4321,19 +4311,22 @@ msgid "  Deleting %s\n"
 msgstr ""
 
 #: gammu/gammu.c:9330
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown divert action (\"%s\")\n"
-msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
+msgstr ""
+"Neznámá akce přesměrování (\"%s\")\n"
 
 #: gammu/gammu.c:9339
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown divert type (\"%s\")\n"
-msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
+msgstr ""
+"Neznámý typ přesměrování (\"%s\")\n"
 
 #: gammu/gammu.c:9348
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown call type (\"%s\")\n"
-msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
+msgstr ""
+"Neznámý typ hovoru (\"%s\")\n"
 
 #: gammu/gammu.c:9357
 #, c-format
@@ -4580,7 +4573,8 @@ msgstr "Příliš málo parametrů (funkce požaduje %d až %d)!\n"
 #: gammu/gammu.c:10224 gammu/gammu.c:10234
 #, c-format
 msgid "Parameters help: %s\n"
-msgstr "Parametry Gammu, téma: %s\n"
+msgstr ""
+"Nápověda pro parametry: %s\n"
 
 #: gammu/gammu.c:10229
 #, c-format
