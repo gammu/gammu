@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-05-04 11:33+0200\n"
-"PO-Revision-Date: 2007-05-04 11:17+0200\n"
+"PO-Revision-Date: 2007-05-04 11:34+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -93,13 +93,10 @@ msgid "Unknown model type string. Check config file."
 msgstr "Zadán neznámý model telefonu. Zkontrolujte konfigurační soubor."
 
 #: common/gsmcomon.c:99
-#, fuzzy
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "written)."
-msgstr ""
-"Některé funkce nejsou dostupné (vypnuté při kompilaci nebo nejsou "
-"implementovány)."
+msgstr "Některé funkce nejsou dostupné pro váš systém (vypnuté při kompilaci nebo nejsou implementovány)."
 
 #: common/gsmcomon.c:100
 msgid "Function not supported by phone."
@@ -111,18 +108,16 @@ msgid "Entry is empty"
 msgstr "Záznam je prázdný"
 
 #: common/gsmcomon.c:102
-#, fuzzy
 msgid "Security error. Maybe no PIN?"
 msgstr "Bezpečnostní chyba. Možná nebyl zadán PIN?"
 
 #: common/gsmcomon.c:103
-#, fuzzy
 msgid "Invalid location. Maybe too high?"
-msgstr "Cybná pozice. Možná příliš vysoká?"
+msgstr "Chybná pozice. Možná příliš vysoká?"
 
 #: common/gsmcomon.c:104
 msgid "Function not implemented. Help required."
-msgstr "Funkce není implementována, pomoc s implementací bude uvítána."
+msgstr "Funkce není implementována. Pomoc s implementací je vítána."
 
 #: common/gsmcomon.c:105
 msgid "Memory full."
@@ -133,9 +128,8 @@ msgid "Unknown error."
 msgstr "Neznámá chyba."
 
 #: common/gsmcomon.c:108
-#, fuzzy
 msgid "Can't open specified file. Read only?"
-msgstr "Soubor nezle otevřít. Není jen pro čtení?"
+msgstr "Soubor nelze otevřít. Není jen pro čtení?"
 
 #: common/gsmcomon.c:109
 msgid "More memory required..."
@@ -151,9 +145,8 @@ msgstr ""
 "Prázdné číslo SMS centra. Nastavte ho v telefonu nebo použijte -smscnumber."
 
 #: common/gsmcomon.c:112
-#, fuzzy
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
-msgstr "Jste v menu telefonu (upravujete záznam?). Opusťtě ho a zkuste znovu."
+msgstr "Jste v menu telefonu (upravujete záznam?). Opusťte ho a zkuste znovu."
 
 #: common/gsmcomon.c:113
 msgid "Function is during writing. If want help, please contact with authors."
@@ -176,9 +169,8 @@ msgstr ""
 "Prosím kontaktujte autory."
 
 #: common/gsmcomon.c:117
-#, fuzzy
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
-msgstr "Přenos zrušen telefonem (zadali jste zrušení přenosu v telefonu?)."
+msgstr "Přenos zrušen telefonem, možná jste zadali zrušení přenosu v telefonu."
 
 #: common/gsmcomon.c:119
 msgid "Current connection type doesn't support called function."
@@ -209,14 +201,12 @@ msgid "File with specified name doesn't exist."
 msgstr "Soubor se zadaným jménem neexistuje."
 
 #: common/gsmcomon.c:126
-#, fuzzy
 msgid "You have to give folder name and not file name."
-msgstr "Musíte zadat jméno složky (ne souboru)."
+msgstr "Musíte zadat jméno složky, ne souboru."
 
 #: common/gsmcomon.c:127
-#, fuzzy
 msgid "You have to give file name and not folder name."
-msgstr "Musíte zadat jméno souboru (ne složky)."
+msgstr "Musíte zadat jméno souboru, ne složky."
 
 #: common/gsmcomon.c:128
 msgid "Can not access SIM card."
@@ -509,7 +499,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1333
 #, c-format
 msgid " (Ringtone ID)"
-msgstr "(ID vyzvánění)"
+msgstr " (ID vyzvánění)"
 
 #: gammu/depend/nokia/dct4.c:1334
 #, c-format
@@ -529,12 +519,12 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1337
 #, c-format
 msgid " (Caller group: logo)"
-msgstr "(Skupina: logo)"
+msgstr " (Skupina: logo)"
 
 #: gammu/depend/nokia/dct4.c:1338
 #, c-format
 msgid " (Caller group: is logo on ?)"
-msgstr "(Skupina: logo zapnuto?)"
+msgstr " (Skupina: logo zapnuto?)"
 
 #: gammu/depend/nokia/dct4.c:1339
 #, c-format
@@ -544,7 +534,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1342
 #, c-format
 msgid " (Text: URL address)"
-msgstr "(Texy: URL adresa)"
+msgstr " (Text: URL adresa)"
 
 #: gammu/depend/nokia/dct4.c:1343
 #, c-format
@@ -1079,9 +1069,9 @@ msgstr[2] "%d týdnů"
 #, c-format
 msgid "%d year"
 msgid_plural "%d years"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d rok"
+msgstr[1] "%d roky"
+msgstr[2] "%d let"
 
 #. l10n: Generic prefix for error messages
 #: gammu/gammu.c:88 gammu/gammu.c:1744 gammu/gammu.c:3390
@@ -1119,7 +1109,7 @@ msgstr "Není co zadat."
 
 #: gammu/gammu.c:150
 msgid "Unknown security status."
-msgstr "Neznámý stav bezpečnosti"
+msgstr "Neznámý stav bezpečnosti."
 
 #: gammu/gammu.c:159
 msgid "Security status"
@@ -1319,7 +1309,7 @@ msgstr ""
 
 #: gammu/gammu.c:390
 msgid "unknown type!"
-msgstr "neznámý typ"
+msgstr "neznámý typ!"
 
 #: gammu/gammu.c:407
 msgid "Start"
@@ -1570,14 +1560,14 @@ msgstr ""
 
 #: gammu/gammu.c:635
 msgid "Age"
-msgstr ""
+msgstr "Věk"
 
 #: gammu/gammu.c:658 gammu/gammu.c:1054 gammu/gammu.c:1262 gammu/gammu.c:1322
 #: gammu/gammu.c:1876 gammu/gammu.c:2074 gammu/gammu.c:2949 gammu/gammu.c:4932
 #: gammu/gammu.c:5568 gammu/gammu.c:6117 gammu/gammu.c:7342 gammu/gammu.c:7412
 #: gammu/gammu.c:7433
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "Stiskněte Ctrl+C pro přerušení..."
 
 #: gammu/gammu.c:699 gammu/gammu.c:9466
 msgid "Manufacturer"
@@ -2478,7 +2468,6 @@ msgid "%i mAh"
 msgstr ""
 
 #: gammu/gammu.c:1929
-#, fuzzy
 msgid "Battery temperature"
 msgstr "Teplota baterie"
 
@@ -2489,7 +2478,6 @@ msgid "%i C"
 msgstr ""
 
 #: gammu/gammu.c:1935
-#, fuzzy
 msgid "Phone temperature"
 msgstr "Teplota telefonu"
 
@@ -3022,7 +3010,8 @@ msgstr ""
 #: gammu/gammu.c:4316
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
-msgstr "Neznámý kód sítě (\"%s\")\n"
+msgstr ""
+"Neznámý kód GSM sítě (\"%s\")\n"
 
 #: gammu/gammu.c:4335
 #, c-format
@@ -3573,9 +3562,9 @@ msgid "IP address"
 msgstr "IP adresa"
 
 #: gammu/gammu.c:6503 gammu/gammu.c:6541
-#, fuzzy, c-format
+#, c-format
 msgid "Login Type          : Manual\n"
-msgstr "Odesláno        : %s\n"
+msgstr ""
 
 #: gammu/gammu.c:6505 gammu/gammu.c:6543
 #, c-format
@@ -3593,9 +3582,9 @@ msgid "Authentication type : Secure\n"
 msgstr ""
 
 #: gammu/gammu.c:6513
-#, fuzzy, c-format
+#, c-format
 msgid "Data call type      : ISDN\n"
-msgstr "Datum a čas      : %s\n"
+msgstr ""
 
 #: gammu/gammu.c:6515
 #, c-format
@@ -3703,11 +3692,11 @@ msgid "Connection set name : %s\n"
 msgstr ""
 
 #: gammu/gammu.c:6670
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "Read only           : yes"
-msgstr "Odesláno        : %s\n"
+msgstr ""
 
 #: gammu/gammu.c:6671
 msgid ""
@@ -4411,9 +4400,9 @@ msgstr ""
 "Odpověď:"
 
 #: gammu/gammu.c:9398
-#, fuzzy, c-format
+#, c-format
 msgid "   Timeout    : "
-msgstr "   Číslo      : %\n"
+msgstr ""
 
 #: gammu/gammu.c:9459 gammu/gammu.c:9465
 #, c-format
@@ -4570,12 +4559,14 @@ msgstr ""
 #: gammu/gammu.c:10220
 #, c-format
 msgid "More parameters required (function requires %d)\n"
-msgstr "Příliš málo parametrů (funkce požaduje %d)!\n"
+msgstr ""
+"Příliš málo parametrů (funkce požaduje %d)\n"
 
 #: gammu/gammu.c:10222
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
-msgstr "Příliš málo parametrů (funkce požaduje %d až %d)!\n"
+msgstr ""
+"Příliš málo parametrů (funkce požaduje %d až %d)\n"
 
 #: gammu/gammu.c:10225 gammu/gammu.c:10235
 #, c-format
@@ -4585,12 +4576,14 @@ msgstr "Nápověda pro parametry: %s\n"
 #: gammu/gammu.c:10230
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
-msgstr "Příliš mnoho parametrů (funkce akceptuje %d)!\n"
+msgstr ""
+"Příliš mnoho parametrů (funkce akceptuje %d)\n"
 
 #: gammu/gammu.c:10232
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
-msgstr "Příliš mnoho parametrů (funkce akceptuje %d až %d)!\n"
+msgstr ""
+"Příliš mnoho parametrů (funkce akceptuje %d až %d)\n"
 
 #: gammu/gammu.c:10249
 msgid "Bad option!"
