@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 10:13+0200\n"
+"POT-Creation-Date: 2007-05-04 10:20+0200\n"
 "PO-Revision-Date: 2007-03-20 11:32+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =de\n"
@@ -1094,11 +1094,16 @@ msgstr[0] "%i Wochen"
 msgstr[1] "%i Wochen"
 
 #. l10n: Generic prefix for error messages
-#. l10n: Generic prefix for warning messages
-#: gammu/gammu.c:87 gammu/gammu.c:108 gammu/gammu.c:1714 gammu/gammu.c:3386
+#: gammu/gammu.c:87 gammu/gammu.c:1714 gammu/gammu.c:3386
 #, fuzzy
 msgid "Error"
 msgstr "Fehler\n"
+
+#. l10n: Generic prefix for warning messages
+#: gammu/gammu.c:108
+#, fuzzy
+msgid "Warning"
+msgstr "Konferenz"
 
 #: gammu/gammu.c:131
 #, fuzzy
@@ -2907,7 +2912,7 @@ msgid "Saved to file %s\n"
 msgstr "Kann datei nicht öffnen \"%s\"\n"
 
 #: gammu/gammu.c:2514
-msgid "Warning: some MMS file features unknown for Gammu decoder"
+msgid "Some MMS file features unknown for Gammu decoder"
 msgstr ""
 
 #: gammu/gammu.c:2520 gammu/gammu.c:3161
@@ -3152,7 +3157,7 @@ msgstr ""
 
 #: gammu/gammu.c:3507
 #, fuzzy
-msgid "Warning: 0 chars read !"
+msgid "0 chars read !"
 msgstr "Warnung: Kein Zeichen gelesen!\n"
 
 #: gammu/gammu.c:3529 gammu/gammu.c:3543
@@ -3283,8 +3288,8 @@ msgid "No network code"
 msgstr "Kein Netz-Code\n"
 
 #: gammu/gammu.c:4592
-#, c-format
-msgid "Warning: ringtone too long. %i percent part cut\n"
+#, fuzzy, c-format
+msgid "Ringtone too long. %i percent part cut\n"
 msgstr "Warnung: der Klingelton ist zu lang. %i Prozent werden abgeschnitten\n"
 
 #: gammu/gammu.c:4601
@@ -5050,17 +5055,17 @@ msgstr "Zu wenig Parameter!\n"
 
 #: gammu/gammu.c:10298
 #, fuzzy
-msgid "Warning: Configuration could not be parsed!"
+msgid "Configuration could not be parsed!"
 msgstr "Warnung: keine Konfigurationsdatei gefunden!\n"
 
 #: gammu/gammu.c:10300
 #, fuzzy
-msgid "Warning: No configuration file found!"
+msgid "No configuration file found!"
 msgstr "Warnung: keine Konfigurationsdatei gefunden!\n"
 
 #: gammu/gammu.c:10303
 #, fuzzy
-msgid "Warning: No configuration read!"
+msgid "No configuration read!"
 msgstr "Warnung: keine Konfigurationsdatei gefunden!\n"
 
 #: gammu/gammu.c:10374
