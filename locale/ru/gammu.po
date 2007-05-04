@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 11:19+0200\n"
+"POT-Creation-Date: 2007-05-04 11:24+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Language =ru\n"
@@ -216,11 +216,13 @@ msgid "File with specified name doesn't exist."
 msgstr "Файл с указанным именем не существует."
 
 #: common/gsmcomon.c:126
-msgid "You have to give folder (not file) name."
+#, fuzzy
+msgid "You have to give folder name and not file name."
 msgstr "Необходимо указать имя каталога, а не файла."
 
 #: common/gsmcomon.c:127
-msgid "You have to give file (not folder) name."
+#, fuzzy
+msgid "You have to give file name and not folder name."
 msgstr "Необходимо указать имя файла, а не каталога."
 
 #: common/gsmcomon.c:128
