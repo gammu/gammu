@@ -1810,7 +1810,11 @@ static void IncomingUSSD(GSM_StateMachine *s, char *Buffer)
 
 #define PRINTUSED(name, used, free) \
 { \
-		printf(LISTFORMAT "%s %03d, %s %03d\n", name, _("Used"), used, _("Free"), free);	\
+	printf(LISTFORMAT, name);	\
+	printf(_("%3d used"), used); \
+	printf(", "); \
+	printf(_("%3d free"), free); \
+	printf("\n"); \
 }
 
 #define CHECKMEMORYSTATUS(x, m, name) \
@@ -1887,28 +1891,45 @@ static void Monitor(int argc, char *argv[])
 		CHECK_EXIT;
 		if ( (error = Phone->GetBatteryCharge(&s,&BatteryCharge)) == ERR_NONE) {
             		if (BatteryCharge.BatteryPercent != -1) {
-				printf(_("Battery level     : %i percent\n"), BatteryCharge.BatteryPercent);
+				printf(LISTFORMAT, _("Battery level"));
+				printf(_("%i percent"), BatteryCharge.BatteryPercent);
+				printf("\n");
 			}
             		if (BatteryCharge.BatteryCapacity != -1) {
-				printf(_("Battery capacity  : %i mAh\n"), BatteryCharge.BatteryCapacity);
+				printf(LISTFORMAT, _("Battery capacity"));  
+				printf(_("%i mAh"), BatteryCharge.BatteryCapacity);
+				printf("\n");
 			}
             		if (BatteryCharge.BatteryTemperature != -1) {
-				printf(_("Battery temp.     : %i C\n"), BatteryCharge.BatteryTemperature);
+				printf(LISTFORMAT, _("Battery temp."));    
+				/* l10n: This means degrees Celsius */
+				printf(_("%i C"), BatteryCharge.BatteryTemperature);
+				printf("\n");
 			}
             		if (BatteryCharge.PhoneTemperature != -1) {
-				printf(_("Phone temp.       : %i C\n"), BatteryCharge.PhoneTemperature);
+				printf(LISTFORMAT, _("Phone temp."));      
+				printf(_("%i C"), BatteryCharge.PhoneTemperature);
+				printf("\n");
 			}
             		if (BatteryCharge.BatteryVoltage != -1) {
-				printf(_("Battery voltage   : %i mV\n"), BatteryCharge.BatteryVoltage);
+				printf(LISTFORMAT, _("Battery voltage"));  
+				printf(_("%i mV"), BatteryCharge.BatteryVoltage);
+				printf("\n");
 			}
             		if (BatteryCharge.ChargeVoltage != -1) {
-				printf(_("Charge voltage    : %i mV\n"), BatteryCharge.ChargeVoltage);
+				printf(LISTFORMAT, _("Charge voltage"));   
+				printf(_("%i mV"), BatteryCharge.ChargeVoltage);
+				printf("\n");
 			}
             		if (BatteryCharge.ChargeCurrent != -1) {
-				printf(_("Charge current    : %i mA\n"), BatteryCharge.ChargeCurrent);
+				printf(LISTFORMAT, _("Charge current"));    
+				printf(_("%i mA"), BatteryCharge.ChargeCurrent);
+				printf("\n");
 			}
             		if (BatteryCharge.PhoneCurrent != -1) {
-				printf(_("Phone current     : %i mA\n"), BatteryCharge.PhoneCurrent);
+				printf(LISTFORMAT, _("Phone current"));    
+				printf(_("%i mA"), BatteryCharge.PhoneCurrent);
+				printf("\n");
 			}
             		if (BatteryCharge.ChargeState != 0) {
                 		printf(LISTFORMAT, _("Charge state"));
@@ -1958,9 +1979,21 @@ static void Monitor(int argc, char *argv[])
         	}
 		CHECK_EXIT;
 		if ( (error = Phone->GetSignalQuality(&s,&SignalQuality)) == ERR_NONE) {
-            		if (SignalQuality.SignalStrength != -1) printf(_("Signal strength   : %i dBm\n"),     SignalQuality.SignalStrength);
-            		if (SignalQuality.SignalPercent  != -1) printf(_("Network level     : %i percent\n"), SignalQuality.SignalPercent);
-            		if (SignalQuality.BitErrorRate   != -1) printf(_("Bit error rate    : %i percent\n"), SignalQuality.BitErrorRate);
+            		if (SignalQuality.SignalStrength != -1) {
+				printf(LISTFORMAT, _("Signal strength"));   
+				printf(_("%i dBm"), SignalQuality.SignalStrength);
+                		printf("\n");
+			}
+            		if (SignalQuality.SignalPercent  != -1) {
+				printf(LISTFORMAT, _("Network level"));     
+				printf(_("%i percent"), SignalQuality.SignalPercent);
+                		printf("\n");
+			}
+            		if (SignalQuality.BitErrorRate   != -1) {
+				printf(LISTFORMAT, _("Bit error rate"));    
+				printf(_("%i percent"), SignalQuality.BitErrorRate);
+                		printf("\n");
+			}
         	}
 		CHECK_EXIT;
 		if ( (error = Phone->GetSMSStatus(&s,&SMSStatus)) == ERR_NONE) {
