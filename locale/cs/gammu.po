@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-05-04 13:28+0200\n"
-"PO-Revision-Date: 2007-05-04 11:34+0200\n"
+"PO-Revision-Date: 2007-05-04 13:29+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1880,29 +1880,25 @@ msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Text pro vyhledávání je příliš dlouhý, zkracuji na %d znaků!\n"
 
 #: gammu/gammu.c:1408
-#, fuzzy
 msgid "mobile"
-msgstr "Funkce"
+msgstr "mobil"
 
 #: gammu/gammu.c:1411
-#, fuzzy
 msgid "work"
-msgstr "Síť"
+msgstr "práce"
 
 #: gammu/gammu.c:1414 gammu/gammu.c:9414 gammu/gammu.c:9425
 #, c-format
 msgid "fax"
-msgstr ""
+msgstr "fax"
 
 #: gammu/gammu.c:1417
-#, fuzzy
 msgid "home"
-msgstr "Telefon"
+msgstr "domů"
 
 #: gammu/gammu.c:1420
-#, fuzzy
 msgid "pager"
-msgstr "Pager"
+msgstr "pager"
 
 #: gammu/gammu.c:1486
 msgid "SMS status report"
@@ -1910,7 +1906,7 @@ msgstr "Informace o stavu SMS"
 
 #: gammu/gammu.c:1488 gammu/gammu.c:1594
 msgid "Status"
-msgstr ""
+msgstr "Stav"
 
 #: gammu/gammu.c:1490 gammu/gammu.c:1502 gammu/gammu.c:1554 gammu/gammu.c:1596
 #, c-format
@@ -3863,9 +3859,8 @@ msgid "High"
 msgstr ""
 
 #: gammu/gammu.c:7273
-#, fuzzy
 msgid "None"
-msgstr "Hotovo"
+msgstr "Žádná"
 
 #: gammu/gammu.c:7281
 msgid "DueTime"
