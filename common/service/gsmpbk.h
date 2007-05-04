@@ -161,7 +161,6 @@ typedef enum {
 	 * Picture ID. (Number)
 	 */
 	PBK_PictureID,
-	PBK_SMSListID,
 	/**
 	 * User ID. (Text)
 	 */
