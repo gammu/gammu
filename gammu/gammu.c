@@ -57,8 +57,14 @@
 #define PRINTWEEKS(num) printf(ngettext("%d week", "%d weeks", num), num);
 #define PRINTYEARS(num) printf(ngettext("%d year", "%d years", num), num);
 
+/**
+ * Hides default case in switch, to allow checking whether all cases are handled.
+ */
+#undef CHECK_CASES
 
-
+/**
+ * Global state machine used in Gammu.
+ */
 GSM_StateMachine		s;
 GSM_Phone_Functions		*Phone;
 static INI_Section		*cfg 			= NULL;
@@ -146,8 +152,10 @@ static void PrintSecurityStatus()
 		case SEC_None:
 			printf("%s\n", _("Nothing to enter."));
 			break;
+#ifndef CHECK_CASES
 		default:
 			printf("%s\n", _("Unknown security status."));
+#endif
 	}
 }
 
@@ -320,7 +328,9 @@ void PrintNetworkInfo(GSM_NetworkInfo NetInfo)
 		case GSM_NoNetwork		: printf("%s\n", _("not logged into network")); 	break;
 		case GSM_RegistrationDenied	: printf("%s\n", _("registration to network denied"));	break;
 		case GSM_NetworkStatusUnknown	: printf("%s\n", _("unknown"));			break;
+#ifndef CHECK_CASES
 		default				: printf("%s\n", _("unknown"));
+#endif
 	}
 	if (NetInfo.State == GSM_HomeNetwork || NetInfo.State == GSM_RoamingNetwork) {
 		printf(LISTFORMAT, _("Network"));
@@ -387,7 +397,9 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 		case GSM_CAL_T_TENN   	: printf("%s\n", _("Training/Tennis")); 	   	break;
 		case GSM_CAL_T_TRAV   	: printf("%s\n", _("Training/Travels"));        	break;
 		case GSM_CAL_T_WINT   	: printf("%s\n", _("Training/Winter Games"));   	break;
+#ifndef CHECK_CASES
 		default           	: printf("%s\n", _("unknown type!"));
+#endif
 	}
 	Alarm.Year = 0;
 
@@ -945,6 +957,9 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 	case PBK_Date:
 		printf(LISTFORMAT "%s\n", _("Date and time"),OSDateTime(entry->Date,false));
 		return;
+	case PBK_LastModified:
+		printf(LISTFORMAT "%s\n", _("Last modified"), OSDateTime(entry->Date,false));
+		return;
 	case PBK_Category:
 		if (entry->Number == -1) {
 			printf(LISTFORMAT "\"%s\"\n", _("Category"), DecodeUnicodeConsole(entry->Text));
@@ -1030,9 +1045,11 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 	case PBK_Text_Custom2       : printf(LISTFORMAT, _("Custom text 2")); break;
 	case PBK_Text_Custom3       : printf(LISTFORMAT, _("Custom text 3")); break;
 	case PBK_Text_Custom4       : printf(LISTFORMAT, _("Custom text 4")); break;
+#ifndef CHECK_CASES
 	default:
 		printf("%s\n", _("unknown field type"));
 		return;
+#endif
 	}
 	printf(" : \"%s\"\n", DecodeUnicodeConsole(entry->Text));
 }
@@ -1199,6 +1216,7 @@ static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 			case PBK_Text_Custom2       :
 			case PBK_Text_Custom3       :
 			case PBK_Text_Custom4       :
+			case PBK_Text_UserID:
 			case PBK_Caller_Group       :
 				if (mywstrstr(Entry->Entries[i].Text, Text) != NULL) {
 					fprintf(stderr,"\n");
@@ -1207,8 +1225,10 @@ static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 					return;
 				}
 				break;
+#ifndef CHECK_CASES
 			default:
 				break;
+#endif
 		}
 	}
 }
@@ -1385,19 +1405,19 @@ static void printsmsnumber(unsigned char *number,GSM_Backup *Info)
 					found2=true;
 					switch (Info->PhonePhonebook[i]->Entries[j].EntryType) {
 					case PBK_Number_Mobile:
-						printf(_(" (mobile"));
+						printf("(%s", _("mobile"));
 						break;
 					case PBK_Number_Work:
-						printf(_(" (work"));
+						printf("(%s", _("work"));
 						break;
 					case PBK_Number_Fax:
-						printf(_(" (fax"));
+						printf("(%s", _("fax"));
 						break;
 					case PBK_Number_Home:
-						printf(_(" (home"));
+						printf("(%s", _("home"));
 						break;
 					case PBK_Number_Pager:
-						printf(_(" (pager"));
+						printf("(%s", _("pager"));
 						break;
 					default:
 						found2=false;
@@ -1740,9 +1760,11 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems
 		case SMS_EMSPredefinedAnimation:
 			printf("\n" LISTFORMAT "%i\n", _("EMS animation ID"),SMSInfo.Entries[i].Number);
 			break;
+#ifndef CHECK_CASES
 		default:
 			printf("%s\n", _("Error"));
 			break;
+#endif
 		}
 	}
 	printf("\n");
@@ -1977,9 +1999,11 @@ static void Monitor(int argc, char *argv[])
                     			case GSM_PowerFault:
                         			printf(_("detected power failure"));
                         			break;
+#ifndef CHECK_CASES
                     			default:
                         			printf(_("unknown"));
                        				break;
+#endif
                 		}
                 		printf("\n");
             		}
@@ -1995,7 +2019,10 @@ static void Monitor(int argc, char *argv[])
                     			case GSM_BatteryNiMH:
 						printf(_("NiMH"));
 						break;
+					case GSM_BatteryUnknown:
+#ifndef CHECK_CASES
                     			default:
+#endif
                         			printf(_("unknown"));
                        				break;
                 		}
@@ -7234,14 +7261,19 @@ static void PrintToDo(GSM_ToDoEntry *ToDo)
 		case GSM_CAL_T_TENN   	: printf("%s\n", _("Training/Tennis")); 	   	break;
 		case GSM_CAL_T_TRAV   	: printf("%s\n", _("Training/Travels"));        	break;
 		case GSM_CAL_T_WINT   	: printf("%s\n", _("Training/Winter Games"));   	break;
+#ifndef CHECK_CASES
 		default           	: printf("%s\n", _("Unknown"));
+#endif
 	}
 	printf(LISTFORMAT, _("Priority"));
 	switch (ToDo->Priority) {
 		case GSM_Priority_Low	 : printf("%s\n", _("Low"));	 	break;
 		case GSM_Priority_Medium : printf("%s\n", _("Medium")); 	break;
 		case GSM_Priority_High	 : printf("%s\n", _("High"));		break;
+		case GSM_Priority_None	 : printf("%s\n", _("None"));		break;
+#ifndef CHECK_CASES
 		default			 : printf("%s\n", _("Unknown"));	break;
+#endif
 	}
 	for (j=0;j<ToDo->EntriesNum;j++) {
 		switch (ToDo->Entries[j].EntryType) {
