@@ -309,6 +309,35 @@ static bool answer_yes(const char *text)
 	}
 }
 
+void PrintNetworkInfo(GSM_NetworkInfo NetInfo)
+{
+	printf(LISTFORMAT, _("Network state"));
+	switch (NetInfo.State) {
+		case GSM_HomeNetwork		: printf("%s\n", _("home network")); 		 	break;
+		case GSM_RoamingNetwork		: printf("%s\n", _("roaming network")); 	 	break;
+		case GSM_RequestingNetwork	: printf("%s\n", _("requesting network")); 	 	break;
+		case GSM_NoNetwork		: printf("%s\n", _("not logged into network")); 	break;
+		case GSM_RegistrationDenied	: printf("%s\n", _("registration to network denied"));	break;
+		case GSM_NetworkStatusUnknown	: printf("%s\n", _("unknown"));			break;
+		default				: printf("%s\n", _("unknown"));
+	}
+	if (NetInfo.State == GSM_HomeNetwork || NetInfo.State == GSM_RoamingNetwork) {
+		printf(LISTFORMAT, _("Network"));
+		printf("%s (%s",	
+			NetInfo.NetworkCode,
+			DecodeUnicodeConsole(GSM_GetNetworkName(NetInfo.NetworkCode)));
+		printf(", %s)",				
+			DecodeUnicodeConsole(GSM_GetCountryName(NetInfo.NetworkCode)));
+		printf(", LAC %s, CID %s\n",		
+			NetInfo.LAC,NetInfo.CID);
+		if (NetInfo.NetworkName[0] != 0x00 || NetInfo.NetworkName[1] != 0x00) {
+			printf(LISTFORMAT "\"%s\"\n", 
+				_("Name in phone"),
+				DecodeUnicodeConsole(NetInfo.NetworkName));
+		}
+	}
+}
+
 static void PrintCalendar(GSM_CalendarEntry *Note)
 {
 	int			i_age = 0,i;
@@ -1726,24 +1755,7 @@ static void NetworkInfo(int argc, char *argv[])
 	GSM_Init(true);
 
 	if (Phone->GetNetworkInfo(&s,&NetInfo)==ERR_NONE) {
-		printf(LISTFORMAT, _("Network state"));
-		switch (NetInfo.State) {
-			case GSM_HomeNetwork		: printf("%s\n", _("home network"));			break;
-			case GSM_RoamingNetwork		: printf("%s\n", _("roaming network"));		break;
-			case GSM_RequestingNetwork	: printf("%s\n", _("requesting network"));		break;
-			case GSM_NoNetwork		: printf("%s\n", _("not logged into network"));	break;
-			case GSM_RegistrationDenied	: printf("%s\n", _("registration to network denied"));	break;
-			case GSM_NetworkStatusUnknown	: printf("%s\n", _("unknown"));			break;
-			default				: printf("%s\n", _("unknown"));
-		}
-		if (NetInfo.State == GSM_HomeNetwork || NetInfo.State == GSM_RoamingNetwork) {
-			printf(_("Network           : %s (%s"),	NetInfo.NetworkCode,DecodeUnicodeConsole(GSM_GetNetworkName(NetInfo.NetworkCode)));
-			printf(_(", %s)"),				DecodeUnicodeConsole(GSM_GetCountryName(NetInfo.NetworkCode)));
-			printf(_(", LAC %s, CellID %s\n"),		NetInfo.LAC,NetInfo.CID);
-			if (NetInfo.NetworkName[0] != 0x00 || NetInfo.NetworkName[1] != 0x00) {
-				printf(LISTFORMAT "\"%s\"\n", _("Name in phone"),DecodeUnicodeConsole(NetInfo.NetworkName));
-			}
-		}
+		PrintNetworkInfo(NetInfo);
 	}
 	GSM_Terminate();
 }
@@ -2035,31 +2047,7 @@ static void Monitor(int argc, char *argv[])
 		}
 		CHECK_EXIT;
 		if ( (error = Phone->GetNetworkInfo(&s,&NetInfo)) == ERR_NONE) {
-			printf(LISTFORMAT, _("Network state"));
-                        switch (NetInfo.State) {
-				case GSM_HomeNetwork		: printf("%s\n", _("home network")); 		 	break;
-				case GSM_RoamingNetwork		: printf("%s\n", _("roaming network")); 	 	break;
-				case GSM_RequestingNetwork	: printf("%s\n", _("requesting network")); 	 	break;
-				case GSM_NoNetwork		: printf("%s\n", _("not logged into network")); 	break;
-				case GSM_RegistrationDenied	: printf("%s\n", _("registration to network denied"));	break;
-				case GSM_NetworkStatusUnknown	: printf("%s\n", _("unknown"));			break;
-				default				: printf("%s\n", _("unknown"));
-			}
-			if (NetInfo.State == GSM_HomeNetwork || NetInfo.State == GSM_RoamingNetwork) {
-				printf(LISTFORMAT, _("Network"));
-				printf("%s (%s",	
-					NetInfo.NetworkCode,
-					DecodeUnicodeConsole(GSM_GetNetworkName(NetInfo.NetworkCode)));
-				printf(", %s)",				
-					DecodeUnicodeConsole(GSM_GetCountryName(NetInfo.NetworkCode)));
-				printf(", LAC %s, CID %s\n",		
-					NetInfo.LAC,NetInfo.CID);
-				if (NetInfo.NetworkName[0] != 0x00 || NetInfo.NetworkName[1] != 0x00) {
-					printf(LISTFORMAT "\"%s\"\n", 
-						_("Name in phone"),
-						DecodeUnicodeConsole(NetInfo.NetworkName));
-				}
-			}
+			PrintNetworkInfo(NetInfo);
 		}
 		if (wasincomingsms) DisplayIncomingSMS();
 		printf("\n");
