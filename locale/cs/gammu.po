@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-05-04 10:57+0200\n"
-"PO-Revision-Date: 2007-05-04 10:22+0200\n"
+"PO-Revision-Date: 2007-05-04 11:01+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2591,19 +2591,19 @@ msgid "SIM SMS status"
 msgstr "Informace o stavu SMS"
 
 #: gammu/gammu.c:2026 gammu/gammu.c:2036
-#, fuzzy, c-format
+#, c-format
 msgid "%i used"
-msgstr "%d sekunda"
+msgstr "%i použito"
 
 #: gammu/gammu.c:2028 gammu/gammu.c:2038
 #, c-format
 msgid "%i unread"
-msgstr ""
+msgstr "%d nepřečteno"
 
 #: gammu/gammu.c:2030 gammu/gammu.c:2040
-#, fuzzy, c-format
+#, c-format
 msgid "%i locations"
-msgstr "Pozice"
+msgstr "%d pozic"
 
 #: gammu/gammu.c:2035
 #, fuzzy
@@ -2866,9 +2866,10 @@ msgid "default"
 msgstr ""
 
 #: gammu/gammu.c:3122
-#, fuzzy, c-format
+#, c-format
 msgid "(file with ID %i)\n"
-msgstr "ID vyzvánění     : %i\n"
+msgstr ""
+"(soubor ID %i)\n"
 
 #: gammu/gammu.c:3130
 #, c-format
