@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 10:13+0200\n"
+"POT-Creation-Date: 2007-05-04 10:20+0200\n"
 "PO-Revision-Date: 2007-05-04 10:04+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -1077,10 +1077,15 @@ msgstr[1] ""
 msgstr[2] ""
 
 #. l10n: Generic prefix for error messages
-#. l10n: Generic prefix for warning messages
-#: gammu/gammu.c:87 gammu/gammu.c:108 gammu/gammu.c:1714 gammu/gammu.c:3386
+#: gammu/gammu.c:87 gammu/gammu.c:1714 gammu/gammu.c:3386
 msgid "Error"
 msgstr ""
+
+#. l10n: Generic prefix for warning messages
+#: gammu/gammu.c:108
+#, fuzzy
+msgid "Warning"
+msgstr "text"
 
 #: gammu/gammu.c:131
 msgid "Waiting for Security Code."
@@ -2719,7 +2724,7 @@ msgid "Saved to file %s\n"
 msgstr ""
 
 #: gammu/gammu.c:2514
-msgid "Warning: some MMS file features unknown for Gammu decoder"
+msgid "Some MMS file features unknown for Gammu decoder"
 msgstr ""
 
 #: gammu/gammu.c:2520 gammu/gammu.c:3161
@@ -2948,7 +2953,7 @@ msgid "Enter message text and press ^D:"
 msgstr ""
 
 #: gammu/gammu.c:3507
-msgid "Warning: 0 chars read !"
+msgid "0 chars read !"
 msgstr ""
 
 #: gammu/gammu.c:3529 gammu/gammu.c:3543
@@ -3064,7 +3069,7 @@ msgstr "Žádný kód sítě"
 
 #: gammu/gammu.c:4592
 #, c-format
-msgid "Warning: ringtone too long. %i percent part cut\n"
+msgid "Ringtone too long. %i percent part cut\n"
 msgstr ""
 
 #: gammu/gammu.c:4601
@@ -4610,15 +4615,15 @@ msgid "Too few parameters!"
 msgstr "Příliš málo parametrů!"
 
 #: gammu/gammu.c:10298
-msgid "Warning: Configuration could not be parsed!"
+msgid "Configuration could not be parsed!"
 msgstr ""
 
 #: gammu/gammu.c:10300
-msgid "Warning: No configuration file found!"
+msgid "No configuration file found!"
 msgstr ""
 
 #: gammu/gammu.c:10303
-msgid "Warning: No configuration read!"
+msgid "No configuration read!"
 msgstr ""
 
 #: gammu/gammu.c:10374

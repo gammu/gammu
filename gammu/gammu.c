@@ -105,7 +105,7 @@ int printf_warn(const char *format, ...)
 	int ret;
 
 	/* l10n: Generic prefix for warning messages */
-	printf("%s: ", _("Error"));
+	printf("%s: ", _("Warning"));
 
 	va_start(ap, format);
 	ret = vprintf(format, ap);
@@ -2511,7 +2511,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 
 	error = GSM_DecodeMMSFileToMultiPart(file, &info);
 	if (error == ERR_FILENOTSUPPORTED) {
-		printf("%s\n", _("Warning: some MMS file features unknown for Gammu decoder"));
+		printf_warn("%s\n", _("Some MMS file features unknown for Gammu decoder"));
 		return;
 	}
 	Print_Error(error);
@@ -3504,7 +3504,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			printf("%s\n", _("Enter message text and press ^D:"));
 		}
 		chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
-		if (chars_read == 0) printf("%s\n", _("Warning: 0 chars read !"));
+		if (chars_read == 0) printf_warn("%s\n", _("0 chars read !"));
 		InputBuffer[chars_read] 		= 0x00;
 		InputBuffer[chars_read+1] 		= 0x00;
 		EncodeUnicode(Buffer[0],InputBuffer,strlen(InputBuffer));
@@ -4589,7 +4589,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			case SMS_EMSSound12Long:
 			case SMS_EMSSonyEricssonSoundLong:
 				if (SMSInfo.Entries[i].RingtoneNotes!=SMSInfo.Entries[i].Ringtone->NoteTone.NrCommands) {
-					printf(_("Warning: ringtone too long. %i percent part cut\n"),
+					printf_warn(_("Ringtone too long. %i percent part cut\n"),
 						(SMSInfo.Entries[i].Ringtone->NoteTone.NrCommands-SMSInfo.Entries[i].RingtoneNotes)*100/SMSInfo.Entries[i].Ringtone->NoteTone.NrCommands);
 				}
 			default:
@@ -10295,12 +10295,12 @@ int main(int argc, char *argv[])
  	error = GSM_FindGammuRC(&cfg);
 	if (error != ERR_NONE) {
 		if (error == ERR_FILENOTSUPPORTED) {
-			printf("%s\n", _("Warning: Configuration could not be parsed!"));
+			printf_warn("%s\n", _("Configuration could not be parsed!"));
 		} else {
-			printf("%s\n", _("Warning: No configuration file found!"));
+			printf_warn("%s\n", _("No configuration file found!"));
 		}
 	}
- 	if (cfg == NULL) printf("%s\n", _("Warning: No configuration read!"));
+ 	if (cfg == NULL) printf_warn("%s\n", _("No configuration read!"));
 
 	for (i = 0; i <= MAX_CONFIG_NUM; i++) {
 		if (cfg!=NULL) {
