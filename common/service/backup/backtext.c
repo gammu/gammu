@@ -403,7 +403,6 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				SaveVCalDateTime(file, &Pbk->Entries[j].Date, UseUnicode);
 				text = false;
 				break;
-			case PBK_SMSListID:
 			case PBK_CallLength:
 				text = false;
 				break;

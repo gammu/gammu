@@ -228,7 +228,6 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 				case PBK_Private:
 				case PBK_RingtoneID:
 				case PBK_PictureID:
-				case PBK_SMSListID:
 				case PBK_Text_UserID:
 				case PBK_CallLength:
 				case PBK_Text_Custom1:
