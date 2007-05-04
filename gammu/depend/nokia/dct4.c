@@ -53,7 +53,7 @@ static void CheckDCT4()
 		Print_Error(ERR_NOTSUPPORTED);
 		break;
 	case ERR_OTHERCONNECTIONREQUIRED:
-		printf(_("Can't do it with current phone protocol\n"));
+		printf("%s\n", _("Can't do it with current phone protocol"));
 		GSM_TerminateConnection(&s);
 		exit(-1);
 	default:
@@ -250,7 +250,7 @@ static DCT4_Phone_Features DCT4PhoneFeatures[] = {
 
 static GSM_Error DCT4_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	printf(_("Setting done\n"));
+	printf("%s\n", _("Setting done"));
 	return ERR_NONE;
 }
 
@@ -287,7 +287,7 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 	}
 
 	if (current == 10) {
-		printf(_("Sorry, but configuration matrix for this model is not added yet. Please report\n"));
+		printf("%s\n", _("Sorry, but configuration matrix for this model is not added yet. Please report"));
 		return;
 	}
 
@@ -478,7 +478,7 @@ void DCT4VibraTest(int argc, char *argv[])
 	error=DCT4EnableVibra(&s, true);
 	Print_Error(error);
 
-	printf(_("Press any key to continue...\n"));
+	printf("%s\n", _("Press any key to continue..."));
 	GetLine(stdin, ans, 99);
 
 	error=DCT4EnableVibra(&s, false);
@@ -493,7 +493,7 @@ static GSM_Error DCT4_ReplyResetSecurityCode(GSM_Protocol_Message msg, GSM_State
 		printf(_("Security code set to \"12345\"\n"));
 		return ERR_NONE;
 	case 0x06:
-		printf(_("Unknown reason. Can't reset your security code\n"));
+		printf("%s\n", _("Unknown reason. Can't reset your security code"));
 		return ERR_UNKNOWN;
 	}
 	return ERR_UNKNOWNRESPONSE;
@@ -667,7 +667,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 
 	Location = atoi(argv[2]);
 	if (Location == 0x00) {
-		printf(_("Please numerate locations from 1\n"));
+		printf("%s\n", _("Please enumerate locations from 1"));
 		return;
 	}
 	Location--;
@@ -971,7 +971,7 @@ void DCT4DisplayTest(int argc, char *argv[])
 	req[8] = atoi(argv[2]);
 	s.Protocol.Functions->WriteMessage(&s, req, 10, 0x40);
 
-	printf(_("Press any key to continue...\n"));
+	printf("%s\n", _("Press any key to continue..."));
 	GetLine(stdin, ans, 99);
 
 	DCT4_SetPhoneMode(&s, DCT4_MODE_NORMAL);
@@ -1121,14 +1121,14 @@ void DCT4TuneRadio(int argc, char *argv[])
 	FMStat.Location = 1;
 	error = Phone->GetFMStation(&s,&FMStat);
 	if (error != ERR_NONE && error != ERR_EMPTY) {
-		printf(_("Phone seems not to support radio\n"));
+		printf("%s\n", _("Phone seems not to support radio"));
 		GSM_Terminate();
 		exit(-1);
 	}
 
 	error=GSM_WaitFor (&s, Enable, 6, 0x3E, 4, ID_User3);
 	if (error == ERR_PERMISSION) {
-		printf(_("Please connect headset. Required as antenna\n"));
+		printf("%s\n", _("Please connect headset. Required as antenna"));
 		GSM_Terminate();
 		exit(-1);
 	}

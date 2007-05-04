@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-03 17:44+0200\n"
+"POT-Creation-Date: 2007-05-04 09:24+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Language =ru\n"
@@ -315,8 +315,7 @@ msgid "My style"
 msgstr "Мой стиль"
 
 #: gammu/depend/nokia/dct4.c:56
-#, c-format
-msgid "Can't do it with current phone protocol\n"
+msgid "Can't do it with current phone protocol"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:70
@@ -337,15 +336,14 @@ msgid "no"
 msgstr "нет\n"
 
 #: gammu/depend/nokia/dct4.c:253
-#, fuzzy, c-format
-msgid "Setting done\n"
+#, fuzzy
+msgid "Setting done"
 msgstr "Один звонок\n"
 
 #: gammu/depend/nokia/dct4.c:290
-#, c-format
 msgid ""
 "Sorry, but configuration matrix for this model is not added yet. Please "
-"report\n"
+"report"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:356
@@ -384,8 +382,7 @@ msgid " (startup)"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:481 gammu/depend/nokia/dct4.c:974
-#, c-format
-msgid "Press any key to continue...\n"
+msgid "Press any key to continue..."
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:493
@@ -394,8 +391,7 @@ msgid "Security code set to \"12345\"\n"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:496
-#, c-format
-msgid "Unknown reason. Can't reset your security code\n"
+msgid "Unknown reason. Can't reset your security code"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:519
@@ -408,9 +404,9 @@ msgstr ""
 msgid "Security code is %s\n"
 msgstr "Код защиты (\"%s\")?\n"
 
-#: gammu/depend/nokia/dct4.c:670
-#, fuzzy, c-format
-msgid "Please numerate locations from 1\n"
+#: gammu/depend/nokia/dct4.c:670 gammu/gammu.c:243 gammu/gammu.c:251
+#, fuzzy
+msgid "Please enumerate locations from 1"
 msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
 
 #: gammu/depend/nokia/dct4.c:779
@@ -459,13 +455,11 @@ msgid "unit result "
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1124
-#, c-format
-msgid "Phone seems not to support radio\n"
+msgid "Phone seems not to support radio"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1131
-#, c-format
-msgid "Please connect headset. Required as antenna\n"
+msgid "Please connect headset. Required as antenna"
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1322
@@ -1110,11 +1104,6 @@ msgstr "ИНФО: для телефона доступна новая проши
 #, fuzzy
 msgid "More parameters required!"
 msgstr "ОШИБКА: требуются дополнительные параметры\n"
-
-#: gammu/gammu.c:243 gammu/gammu.c:251
-#, fuzzy
-msgid "Please enumerate locations from 1"
-msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
 
 #: gammu/gammu.c:255
 #, fuzzy
@@ -5093,6 +5082,10 @@ msgstr "ИНФО: Есть более новая стабильная верси
 #, c-format
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr "ИНФО: Есть более новая тестовая версия Gammu (%s против of %s).\n"
+
+#, fuzzy
+#~ msgid "Please numerate locations from 1"
+#~ msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
 
 #, fuzzy
 #~ msgid "Number of SMS: %i"
