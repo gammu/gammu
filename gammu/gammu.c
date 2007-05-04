@@ -50,11 +50,11 @@
 #endif
 
 #define LISTFORMAT "%-20s : "
-#define PRINTSECONDS (num) printf(ngettext("%d second", "%d seconds", num), num);
-#define PRINTMINUTES (num) printf(ngettext("%d minute", "%d minutes", num), num);
-#define PRINTHOURS (num) printf(ngettext("%d hour", "%d hours", num), num);
-#define PRINTDAYS (num) printf(ngettext("%d day", "%d days", num), num);
-#define PRINTWEEKS (num) printf(ngettext("%d week", "%d weeks", num), num);
+#define PRINTSECONDS(num) printf(ngettext("%d second", "%d seconds", num), num);
+#define PRINTMINUTES(num) printf(ngettext("%d minute", "%d minutes", num), num);
+#define PRINTHOURS(num) printf(ngettext("%d hour", "%d hours", num), num);
+#define PRINTDAYS(num) printf(ngettext("%d day", "%d days", num), num);
+#define PRINTWEEKS(num) printf(ngettext("%d week", "%d weeks", num), num);
 
 
 
@@ -2010,18 +2010,26 @@ static void Monitor(int argc, char *argv[])
 		CHECK_EXIT;
 		if ( (error = Phone->GetSMSStatus(&s,&SMSStatus)) == ERR_NONE) {
 			if (SMSStatus.SIMSize > 0) {
-				printf(_("SIM SMS status    : %i used, %i unread, %i locations\n"),
-					SMSStatus.SIMUsed,
-					SMSStatus.SIMUnRead,
-					SMSStatus.SIMSize);
+				printf(LISTFORMAT, _("SIM SMS status"));
+				printf(_("%i used"), SMSStatus.SIMUsed);
+				printf(", ");
+				printf(_("%i unread"), SMSStatus.SIMUnRead);
+				printf(", ");
+				printf(_("%i locations"), SMSStatus.SIMSize);
+				printf("\n");
 			}
 
 			if (SMSStatus.PhoneSize > 0) {
-				printf(_("Phone SMS status  : %i used, %i unread, %i locations"),
-					SMSStatus.PhoneUsed,
-					SMSStatus.PhoneUnRead,
-					SMSStatus.PhoneSize);
-				if (SMSStatus.TemplatesUsed!=0) printf(_(", %i templates"), SMSStatus.TemplatesUsed);
+				printf(LISTFORMAT, _("Phone SMS status"));
+				printf(_("%i used"), SMSStatus.PhoneUsed);
+				printf(", ");
+				printf(_("%i unread"), SMSStatus.PhoneUnRead);
+				printf(", ");
+				printf(_("%i locations"), SMSStatus.PhoneSize);
+				if (SMSStatus.TemplatesUsed != 0) {
+					printf(", ");
+					printf(_("%i templates"), SMSStatus.TemplatesUsed);
+				}
 				printf("\n");
 			}
 		}
@@ -2038,11 +2046,18 @@ static void Monitor(int argc, char *argv[])
 				default				: printf("%s\n", _("unknown"));
 			}
 			if (NetInfo.State == GSM_HomeNetwork || NetInfo.State == GSM_RoamingNetwork) {
-				printf(_("Network           : %s (%s"),	NetInfo.NetworkCode,DecodeUnicodeConsole(GSM_GetNetworkName(NetInfo.NetworkCode)));
-				printf(", %s)",				DecodeUnicodeConsole(GSM_GetCountryName(NetInfo.NetworkCode)));
-				printf(_(", LAC %s, CID %s\n"),		NetInfo.LAC,NetInfo.CID);
+				printf(LISTFORMAT, _("Network"));
+				printf("%s (%s",	
+					NetInfo.NetworkCode,
+					DecodeUnicodeConsole(GSM_GetNetworkName(NetInfo.NetworkCode)));
+				printf(", %s)",				
+					DecodeUnicodeConsole(GSM_GetCountryName(NetInfo.NetworkCode)));
+				printf(", LAC %s, CID %s\n",		
+					NetInfo.LAC,NetInfo.CID);
 				if (NetInfo.NetworkName[0] != 0x00 || NetInfo.NetworkName[1] != 0x00) {
-					printf(LISTFORMAT "\"%s\"\n", _("Name in phone"),DecodeUnicodeConsole(NetInfo.NetworkName));
+					printf(LISTFORMAT "\"%s\"\n", 
+						_("Name in phone"),
+						DecodeUnicodeConsole(NetInfo.NetworkName));
 				}
 			}
 		}
@@ -2139,7 +2154,7 @@ static void GetSMSC(int argc, char *argv[])
 				if (smsc.Validity.Relative >= 0 && smsc.Validity.Relative <= 143) {
 					PRINTMINUTES((smsc.Validity.Relative + 1) * 5);
 				} else if (smsc.Validity.Relative >= 144 && smsc.Validity.Relative <= 167) {
-					PRINTMINUTES(12 * 60 + (smsc.Validity.Relative - 143) * 30));
+					PRINTMINUTES(12 * 60 + (smsc.Validity.Relative - 143) * 30);
 				} else if (smsc.Validity.Relative >= 168 && smsc.Validity.Relative <= 196) {
 					PRINTDAYS(smsc.Validity.Relative - 166);
 				} else if (smsc.Validity.Relative >= 197 && smsc.Validity.Relative <= 255) {
