@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 11:19+0200\n"
+"POT-Creation-Date: 2007-05-04 11:24+0200\n"
 "PO-Revision-Date: 2007-05-04 11:17+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -209,11 +209,13 @@ msgid "File with specified name doesn't exist."
 msgstr "Soubor se zadaným jménem neexistuje."
 
 #: common/gsmcomon.c:126
-msgid "You have to give folder (not file) name."
+#, fuzzy
+msgid "You have to give folder name and not file name."
 msgstr "Musíte zadat jméno složky (ne souboru)."
 
 #: common/gsmcomon.c:127
-msgid "You have to give file (not folder) name."
+#, fuzzy
+msgid "You have to give file name and not folder name."
 msgstr "Musíte zadat jméno souboru (ne složky)."
 
 #: common/gsmcomon.c:128
