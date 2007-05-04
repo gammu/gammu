@@ -55,6 +55,7 @@
 #define PRINTHOURS(num) printf(ngettext("%d hour", "%d hours", num), num);
 #define PRINTDAYS(num) printf(ngettext("%d day", "%d days", num), num);
 #define PRINTWEEKS(num) printf(ngettext("%d week", "%d weeks", num), num);
+#define PRINTYEARS(num) printf(ngettext("%d year", "%d years", num), num);
 
 
 
@@ -632,7 +633,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 				i_age++;
 			}
 			printf(LISTFORMAT, _("Age"));
-			printf(ngettext("%d year", "%d years", i_age), i_age);
+			PRINTYEARS(i_age);
 			printf("\n");
 		}
 	}
