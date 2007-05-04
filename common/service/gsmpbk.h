@@ -158,10 +158,6 @@ typedef enum {
 	 */
 	PBK_RingtoneID,
 	/**
-	 * Ringtone ID in phone filesystem. (Number)
-	 */
-	PBK_RingtoneFileSystemID,
-	/**
 	 * Picture ID. (Number)
 	 */
 	PBK_PictureID,
