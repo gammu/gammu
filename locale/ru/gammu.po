@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 10:57+0200\n"
+"POT-Creation-Date: 2007-05-04 11:04+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Language =ru\n"
@@ -24,19 +24,23 @@ msgid "Error opening device. Unknown/busy or no permissions."
 msgstr "Ошибка подключения к устройству: неизвестно, занято или нет доступа."
 
 #: common/gsmcomon.c:82
-msgid "Error opening device. Device locked."
+#, fuzzy
+msgid "Error opening device, it is locked."
 msgstr "Ошибка подключения к устройству: заблокировано."
 
 #: common/gsmcomon.c:83
-msgid "Error opening device. Doesn't exist."
+#, fuzzy
+msgid "Error opening device, it doesn't exist."
 msgstr "Ошибка подключения к устройству: не существует."
 
 #: common/gsmcomon.c:84
-msgid "Error opening device. Already opened by other application."
+#, fuzzy
+msgid "Error opening device, it is already opened by other application."
 msgstr "Ошибка подключения к устройству: используется другим приложением."
 
 #: common/gsmcomon.c:85
-msgid "Error opening device. No permissions."
+#, fuzzy
+msgid "Error opening device, you don't have permissions."
 msgstr "Ошибка подключения к устройству: не хватает прав доступа."
 
 #: common/gsmcomon.c:86
