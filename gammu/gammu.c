@@ -1808,11 +1808,16 @@ static void IncomingUSSD(GSM_StateMachine *s, char *Buffer)
 	printf(LISTFORMAT "\"%s\"\n", _("Service reply"),DecodeUnicodeConsole(Buffer));
 }
 
-#define CHECKMEMORYSTATUS(x, m, a1, b1) \
+#define PRINTUSED(name, used, free) \
+{ \
+		printf(LISTFORMAT "%s %03d, %s %03d\n", name, _("Used"), used, _("Free"), free);	\
+}
+
+#define CHECKMEMORYSTATUS(x, m, name) \
 { \
 	x.MemoryType=m;							\
 	if ( (error = Phone->GetMemoryStatus(&s, &x)) == ERR_NONE)			\
-		printf("%s %03d, %s %03d\n", a1, x.MemoryUsed, b1, x.MemoryFree);	\
+		PRINTUSED(name, x.MemoryUsed, x.MemoryFree);  \
 }
 
 #define CHECK_EXIT \
@@ -1860,43 +1865,51 @@ static void Monitor(int argc, char *argv[])
 
 	while (!gshutdown && count != 0) {
 		if (count > 0) count--;
-		CHECKMEMORYSTATUS(MemStatus,MEM_SM,"SIM phonebook     : Used","Free");
+		CHECKMEMORYSTATUS(MemStatus,MEM_SM,"SIM phonebook");
 		CHECK_EXIT;
-		CHECKMEMORYSTATUS(MemStatus,MEM_DC,"Dialled numbers   : Used","Free");
+		CHECKMEMORYSTATUS(MemStatus,MEM_DC,"Dialled numbers");
 		CHECK_EXIT;
-		CHECKMEMORYSTATUS(MemStatus,MEM_RC,"Received numbers  : Used","Free");
+		CHECKMEMORYSTATUS(MemStatus,MEM_RC,"Received numbers");
 		CHECK_EXIT;
-		CHECKMEMORYSTATUS(MemStatus,MEM_MC,"Missed numbers    : Used","Free");
+		CHECKMEMORYSTATUS(MemStatus,MEM_MC,"Missed numbers");
 		CHECK_EXIT;
-		CHECKMEMORYSTATUS(MemStatus,MEM_ON,"Own numbers       : Used","Free");
+		CHECKMEMORYSTATUS(MemStatus,MEM_ON,"Own numbers");
 		CHECK_EXIT;
-		CHECKMEMORYSTATUS(MemStatus,MEM_ME,"Phone phonebook   : Used","Free");
+		CHECKMEMORYSTATUS(MemStatus,MEM_ME,"Phone phonebook");
 		CHECK_EXIT;
 		if ( (error = Phone->GetToDoStatus(&s, &ToDoStatus)) == ERR_NONE) {
-			printf(_("ToDos             : Used %d, Free %d\n"), ToDoStatus.Used, ToDoStatus.Free);
+			PRINTUSED(_("ToDos"), ToDoStatus.Used, ToDoStatus.Free);
 		}
 		CHECK_EXIT;
 		if ( (error = Phone->GetCalendarStatus(&s, &CalendarStatus)) == ERR_NONE) {
-			printf(_("Calendar          : Used %d, Free %d\n"), CalendarStatus.Used, CalendarStatus.Free);
+			PRINTUSED(_("Calendar"), CalendarStatus.Used, CalendarStatus.Free);
 		}
 		CHECK_EXIT;
 		if ( (error = Phone->GetBatteryCharge(&s,&BatteryCharge)) == ERR_NONE) {
-            		if (BatteryCharge.BatteryPercent != -1)
+            		if (BatteryCharge.BatteryPercent != -1) {
 				printf(_("Battery level     : %i percent\n"), BatteryCharge.BatteryPercent);
-            		if (BatteryCharge.BatteryCapacity != -1)
+			}
+            		if (BatteryCharge.BatteryCapacity != -1) {
 				printf(_("Battery capacity  : %i mAh\n"), BatteryCharge.BatteryCapacity);
-            		if (BatteryCharge.BatteryTemperature != -1)
+			}
+            		if (BatteryCharge.BatteryTemperature != -1) {
 				printf(_("Battery temp.     : %i C\n"), BatteryCharge.BatteryTemperature);
-            		if (BatteryCharge.PhoneTemperature != -1)
+			}
+            		if (BatteryCharge.PhoneTemperature != -1) {
 				printf(_("Phone temp.       : %i C\n"), BatteryCharge.PhoneTemperature);
-            		if (BatteryCharge.BatteryVoltage != -1)
+			}
+            		if (BatteryCharge.BatteryVoltage != -1) {
 				printf(_("Battery voltage   : %i mV\n"), BatteryCharge.BatteryVoltage);
-            		if (BatteryCharge.ChargeVoltage != -1)
+			}
+            		if (BatteryCharge.ChargeVoltage != -1) {
 				printf(_("Charge voltage    : %i mV\n"), BatteryCharge.ChargeVoltage);
-            		if (BatteryCharge.ChargeCurrent != -1)
+			}
+            		if (BatteryCharge.ChargeCurrent != -1) {
 				printf(_("Charge current    : %i mA\n"), BatteryCharge.ChargeCurrent);
-            		if (BatteryCharge.PhoneCurrent != -1)
+			}
+            		if (BatteryCharge.PhoneCurrent != -1) {
 				printf(_("Phone current     : %i mA\n"), BatteryCharge.PhoneCurrent);
+			}
             		if (BatteryCharge.ChargeState != 0) {
                 		printf(LISTFORMAT, _("Charge state"));
                 		switch (BatteryCharge.ChargeState) {
