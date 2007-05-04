@@ -1883,13 +1883,13 @@ static void Monitor(int argc, char *argv[])
 	s.User.IncomingUSSD 	= IncomingUSSD;
 
 	error=Phone->SetIncomingSMS  		(&s,true);
-	printf(_("Enabling info about incoming SMS : %s\n"),print_error(error,NULL));
+	printf("%-35s : %s\n", _("Enabling info about incoming SMS"), print_error(error,NULL));
 	error=Phone->SetIncomingCB   		(&s,true);
-	printf(_("Enabling info about incoming CB  : %s\n"),print_error(error,NULL));
+	printf("%-35s : %s\n", _("Enabling info about incoming CB"), print_error(error,NULL));
 	error=Phone->SetIncomingCall 		(&s,true);
-	printf(_("Enabling info about calls        : %s\n"),print_error(error,NULL));
+	printf("%-35s : %s\n", _("Enabling info about calls"), print_error(error,NULL));
 	error=Phone->SetIncomingUSSD 		(&s,true);
-	printf(_("Enabling info about USSD         : %s\n\n"),print_error(error,NULL));
+	printf("%-35s : %s\n", _("Enabling info about USSD"), print_error(error,NULL));
 
 	while (!gshutdown && count != 0) {
 		if (count > 0) count--;

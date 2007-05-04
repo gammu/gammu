@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 11:04+0200\n"
+"POT-Creation-Date: 2007-05-04 11:08+0200\n"
 "PO-Revision-Date: 2007-03-20 11:32+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =de\n"
@@ -2598,25 +2598,23 @@ msgstr ""
 "\n"
 
 #: gammu/gammu.c:1886
-#, c-format
-msgid "Enabling info about incoming SMS : %s\n"
+#, fuzzy
+msgid "Enabling info about incoming SMS"
 msgstr "Aktiviere Infos über eigehende SMS     : %s\n"
 
 #: gammu/gammu.c:1888
-#, c-format
-msgid "Enabling info about incoming CB  : %s\n"
+#, fuzzy
+msgid "Enabling info about incoming CB"
 msgstr "Aktiviere Infos über einkommende CB's  : %s\n"
 
 #: gammu/gammu.c:1890
-#, c-format
-msgid "Enabling info about calls        : %s\n"
+#, fuzzy
+msgid "Enabling info about calls"
 msgstr "Aktiviere Infos über einkommende Anrufe: %s\n"
 
 #: gammu/gammu.c:1892
-#, c-format
-msgid ""
-"Enabling info about USSD         : %s\n"
-"\n"
+#, fuzzy
+msgid "Enabling info about USSD"
 msgstr ""
 "Aktiviere Infos über USSD              : %s\n"
 "\n"
