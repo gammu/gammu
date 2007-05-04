@@ -21,5 +21,10 @@ sed -i '
     ' locale/gammu.pot
 
 for loc in $LOCS ; do
+	sed -i '
+		s/SOME DESCRIPTIVE TITLE/Gammu translation/;
+		s/PACKAGE/Gammu/;
+		s/VERSION/'$ver'/;
+		' locale/$loc/gammu.po
     msgmerge -U locale/$loc/gammu.po locale/gammu.pot
 done
