@@ -142,11 +142,11 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	if (Config->deliveryreport == NULL || (strncasecmp(Config->deliveryreport, "log", 3) != 0 && strncasecmp(Config->deliveryreport, "sms", 3) != 0)) {
 		Config->deliveryreport = "no";
 	}
-	if (log) WriteSMSDLog(_("deliveryreport = %s"), Config->deliveryreport);
+	if (log) WriteSMSDLog("deliveryreport = %s", Config->deliveryreport);
 
 	Config->PhoneID = INI_GetValue(smsdcfgfile, "smsd", "phoneid", false);
 	if (Config->PhoneID == NULL) Config->PhoneID = "";
-	if (log) WriteSMSDLog(_("phoneid = %s"), Config->PhoneID);
+	if (log) WriteSMSDLog("phoneid = %s" Config->PhoneID);
 
 	str = INI_GetValue(smsdcfgfile, "smsd", "smsc", false);
 	if (str) {
