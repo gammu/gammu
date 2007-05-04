@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 10:57+0200\n"
+"POT-Creation-Date: 2007-05-04 11:04+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,19 +26,19 @@ msgid "Error opening device. Unknown/busy or no permissions."
 msgstr ""
 
 #: common/gsmcomon.c:82
-msgid "Error opening device. Device locked."
+msgid "Error opening device, it is locked."
 msgstr ""
 
 #: common/gsmcomon.c:83
-msgid "Error opening device. Doesn't exist."
+msgid "Error opening device, it doesn't exist."
 msgstr ""
 
 #: common/gsmcomon.c:84
-msgid "Error opening device. Already opened by other application."
+msgid "Error opening device, it is already opened by other application."
 msgstr ""
 
 #: common/gsmcomon.c:85
-msgid "Error opening device. No permissions."
+msgid "Error opening device, you don't have permissions."
 msgstr ""
 
 #: common/gsmcomon.c:86

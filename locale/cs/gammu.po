@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 10:57+0200\n"
+"POT-Creation-Date: 2007-05-04 11:04+0200\n"
 "PO-Revision-Date: 2007-05-04 11:01+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -27,19 +27,23 @@ msgid "Error opening device. Unknown/busy or no permissions."
 msgstr "Chyba při otevírání zařízení. Přístup odmítnut."
 
 #: common/gsmcomon.c:82
-msgid "Error opening device. Device locked."
+#, fuzzy
+msgid "Error opening device, it is locked."
 msgstr "Chyba při otevírání zařízení. Zařízení je zamčené."
 
 #: common/gsmcomon.c:83
-msgid "Error opening device. Doesn't exist."
+#, fuzzy
+msgid "Error opening device, it doesn't exist."
 msgstr "Chyba při otevírání zařízení. Zařízení neexistuje."
 
 #: common/gsmcomon.c:84
-msgid "Error opening device. Already opened by other application."
+#, fuzzy
+msgid "Error opening device, it is already opened by other application."
 msgstr "Chyba při otevírání zařízení. Zařízení je již používáno."
 
 #: common/gsmcomon.c:85
-msgid "Error opening device. No permissions."
+#, fuzzy
+msgid "Error opening device, you don't have permissions."
 msgstr "Chyba při otevírání zařízení. Přístup odmítnut."
 
 #: common/gsmcomon.c:86
@@ -2868,8 +2872,7 @@ msgstr ""
 #: gammu/gammu.c:3122
 #, c-format
 msgid "(file with ID %i)\n"
-msgstr ""
-"(soubor ID %i)\n"
+msgstr "(soubor ID %i)\n"
 
 #: gammu/gammu.c:3130
 #, c-format

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 10:57+0200\n"
+"POT-Creation-Date: 2007-05-04 11:04+0200\n"
 "PO-Revision-Date: 2007-03-20 19:21+0100\n"
 "Last-Translator: Pablo Gomez <pgomez@arrakis.es>\n"
 "Language-Team: Language =es\n"
@@ -26,22 +26,22 @@ msgstr "Error abriendo dispositivo. Desconocido/ocupado o sin permisos."
 
 #: common/gsmcomon.c:82
 #, fuzzy
-msgid "Error opening device. Device locked."
+msgid "Error opening device, it is locked."
 msgstr "Error estableciendo dispositivo DTR o RTS."
 
 #: common/gsmcomon.c:83
 #, fuzzy
-msgid "Error opening device. Doesn't exist."
+msgid "Error opening device, it doesn't exist."
 msgstr "Error abriendo dispositivo. Desconocido/ocupado o sin permisos."
 
 #: common/gsmcomon.c:84
 #, fuzzy
-msgid "Error opening device. Already opened by other application."
+msgid "Error opening device, it is already opened by other application."
 msgstr "Error abriendo dispositivo. Desconocido/ocupado o sin permisos."
 
 #: common/gsmcomon.c:85
 #, fuzzy
-msgid "Error opening device. No permissions."
+msgid "Error opening device, you don't have permissions."
 msgstr "Error abriendo dispositivo. Desconocido/ocupado o sin permisos."
 
 #: common/gsmcomon.c:86
