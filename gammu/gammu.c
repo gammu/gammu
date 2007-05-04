@@ -1925,13 +1925,13 @@ static void Monitor(int argc, char *argv[])
 				printf("\n");
 			}
             		if (BatteryCharge.BatteryTemperature != -1) {
-				printf(LISTFORMAT, _("Battery temp."));    
+				printf(LISTFORMAT, _("Battery temperature"));    
 				/* l10n: This means degrees Celsius */
 				printf(_("%i C"), BatteryCharge.BatteryTemperature);
 				printf("\n");
 			}
             		if (BatteryCharge.PhoneTemperature != -1) {
-				printf(LISTFORMAT, _("Phone temp."));      
+				printf(LISTFORMAT, _("Phone temperature"));      
 				printf(_("%i C"), BatteryCharge.PhoneTemperature);
 				printf("\n");
 			}

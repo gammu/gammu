@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 11:24+0200\n"
+"POT-Creation-Date: 2007-05-04 11:26+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Language =ru\n"
@@ -2657,7 +2657,7 @@ msgstr ""
 
 #: gammu/gammu.c:1928
 #, fuzzy
-msgid "Battery temp."
+msgid "Battery temperature"
 msgstr "Температура аккум.: %i C\n"
 
 #. l10n: This means degrees Celsius
@@ -2668,7 +2668,7 @@ msgstr ""
 
 #: gammu/gammu.c:1934
 #, fuzzy
-msgid "Phone temp."
+msgid "Phone temperature"
 msgstr "Время телефона - %s\n"
 
 #: gammu/gammu.c:1939

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 11:24+0200\n"
+"POT-Creation-Date: 2007-05-04 11:26+0200\n"
 "PO-Revision-Date: 2007-05-04 11:17+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -2478,7 +2478,8 @@ msgid "%i mAh"
 msgstr ""
 
 #: gammu/gammu.c:1928
-msgid "Battery temp."
+#, fuzzy
+msgid "Battery temperature"
 msgstr "Teplota baterie"
 
 #. l10n: This means degrees Celsius
@@ -2488,7 +2489,8 @@ msgid "%i C"
 msgstr ""
 
 #: gammu/gammu.c:1934
-msgid "Phone temp."
+#, fuzzy
+msgid "Phone temperature"
 msgstr "Teplota telefonu"
 
 #: gammu/gammu.c:1939
