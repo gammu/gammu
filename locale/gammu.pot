@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 10:50+0200\n"
+"POT-Creation-Date: 2007-05-04 10:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -875,16 +875,6 @@ msgstr ""
 #: gammu/smsd/smsdcore.c:138
 #, c-format
 msgid "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"
-msgstr ""
-
-#: gammu/smsd/smsdcore.c:145
-#, c-format
-msgid "deliveryreport = %s"
-msgstr ""
-
-#: gammu/smsd/smsdcore.c:149
-#, c-format
-msgid "phoneid = %s"
 msgstr ""
 
 #: gammu/smsd/smsdcore.c:173

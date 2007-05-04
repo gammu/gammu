@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 10:50+0200\n"
+"POT-Creation-Date: 2007-05-04 10:52+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Language =ru\n"
@@ -902,16 +902,6 @@ msgstr ""
 #, c-format
 msgid "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"
 msgstr ""
-
-#: gammu/smsd/smsdcore.c:145
-#, fuzzy, c-format
-msgid "deliveryreport = %s"
-msgstr "Состояние доставки : %s\n"
-
-#: gammu/smsd/smsdcore.c:149
-#, fuzzy, c-format
-msgid "phoneid = %s"
-msgstr "Время телефона - %s\n"
 
 #: gammu/smsd/smsdcore.c:173
 #, c-format
@@ -5092,6 +5082,14 @@ msgstr "ИНФО: Есть более новая стабильная верси
 #, c-format
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr "ИНФО: Есть более новая тестовая версия Gammu (%s против of %s).\n"
+
+#, fuzzy
+#~ msgid "deliveryreport = %s"
+#~ msgstr "Состояние доставки : %s\n"
+
+#, fuzzy
+#~ msgid "phoneid = %s"
+#~ msgstr "Время телефона - %s\n"
 
 #~ msgid "SIM SMS status    : %i used, %i unread, %i locations\n"
 #~ msgstr "Состояние SMS SIM : %i использовано, %i непрочитанных, %i ячеек\n"
