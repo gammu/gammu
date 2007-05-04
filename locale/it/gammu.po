@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 11:08+0200\n"
+"POT-Creation-Date: 2007-05-04 11:19+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Andrea Spadaccini\n"
 "Language-Team: Language =it\n"
@@ -111,7 +111,8 @@ msgstr "Modello sconosciuto. Controllare il file di configurazione."
 
 #: common/gsmcomon.c:99
 msgid ""
-"Some functions not available for your OS (disabled in config or not written)."
+"Some functions not available for your system (disabled in config or not "
+"written)."
 msgstr ""
 
 #: common/gsmcomon.c:100
@@ -125,11 +126,13 @@ msgid "Entry is empty"
 msgstr "Locazione vuota\n"
 
 #: common/gsmcomon.c:102
-msgid "Security error. Maybe no PIN ?"
+#, fuzzy
+msgid "Security error. Maybe no PIN?"
 msgstr "Errore sconosciuto. Forse non c'è PIN?"
 
 #: common/gsmcomon.c:103
-msgid "Invalid location. Maybe too high ?"
+#, fuzzy
+msgid "Invalid location. Maybe too high?"
 msgstr "Locazione non valita. Forse troppo alta?"
 
 #: common/gsmcomon.c:104
@@ -145,7 +148,8 @@ msgid "Unknown error."
 msgstr "Errore sconosciuto."
 
 #: common/gsmcomon.c:108
-msgid "Can't open specified file. Read only ?"
+#, fuzzy
+msgid "Can't open specified file. Read only?"
 msgstr "Impossibile aprire il file specificato. E' a sola lettura?"
 
 #: common/gsmcomon.c:109
@@ -161,7 +165,8 @@ msgid "Empty SMSC number. Set in phone or use -smscnumber."
 msgstr ""
 
 #: common/gsmcomon.c:112
-msgid "You're inside phone menu (during editing ?). Leave it and try again."
+#, fuzzy
+msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr "Siete dentro il menu del telefono. Uscite e riprovate."
 
 #: common/gsmcomon.c:113
@@ -184,7 +189,7 @@ msgid ""
 msgstr ""
 
 #: common/gsmcomon.c:117
-msgid "Transfer was canceled by phone (you pressed cancel on phone?)"
+msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
 
 #: common/gsmcomon.c:119

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.5\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 11:08+0200\n"
+"POT-Creation-Date: 2007-05-04 11:19+0200\n"
 "PO-Revision-Date: 2007-05-04 11:17+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -48,7 +48,9 @@ msgstr "Chyba při otevírání zařízení. Chybí ovladač v operačním syst�
 
 #: common/gsmcomon.c:87
 msgid "Error opening device. Some hardware not connected/wrong configured."
-msgstr "Chyba při otevírání zařízení. Hardware může být špatně připojen nebo nakonfigurován."
+msgstr ""
+"Chyba při otevírání zařízení. Hardware může být špatně připojen nebo "
+"nakonfigurován."
 
 #: common/gsmcomon.c:88
 msgid "Error setting device DTR or RTS."
@@ -91,8 +93,10 @@ msgid "Unknown model type string. Check config file."
 msgstr "Zadán neznámý model telefonu. Zkontrolujte konfigurační soubor."
 
 #: common/gsmcomon.c:99
+#, fuzzy
 msgid ""
-"Some functions not available for your OS (disabled in config or not written)."
+"Some functions not available for your system (disabled in config or not "
+"written)."
 msgstr ""
 "Některé funkce nejsou dostupné (vypnuté při kompilaci nebo nejsou "
 "implementovány)."
@@ -107,11 +111,13 @@ msgid "Entry is empty"
 msgstr "Záznam je prázdný"
 
 #: common/gsmcomon.c:102
-msgid "Security error. Maybe no PIN ?"
+#, fuzzy
+msgid "Security error. Maybe no PIN?"
 msgstr "Bezpečnostní chyba. Možná nebyl zadán PIN?"
 
 #: common/gsmcomon.c:103
-msgid "Invalid location. Maybe too high ?"
+#, fuzzy
+msgid "Invalid location. Maybe too high?"
 msgstr "Cybná pozice. Možná příliš vysoká?"
 
 #: common/gsmcomon.c:104
@@ -127,7 +133,8 @@ msgid "Unknown error."
 msgstr "Neznámá chyba."
 
 #: common/gsmcomon.c:108
-msgid "Can't open specified file. Read only ?"
+#, fuzzy
+msgid "Can't open specified file. Read only?"
 msgstr "Soubor nezle otevřít. Není jen pro čtení?"
 
 #: common/gsmcomon.c:109
@@ -144,7 +151,8 @@ msgstr ""
 "Prázdné číslo SMS centra. Nastavte ho v telefonu nebo použijte -smscnumber."
 
 #: common/gsmcomon.c:112
-msgid "You're inside phone menu (during editing ?). Leave it and try again."
+#, fuzzy
+msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr "Jste v menu telefonu (upravujete záznam?). Opusťtě ho a zkuste znovu."
 
 #: common/gsmcomon.c:113
@@ -168,7 +176,8 @@ msgstr ""
 "Prosím kontaktujte autory."
 
 #: common/gsmcomon.c:117
-msgid "Transfer was canceled by phone (you pressed cancel on phone?)"
+#, fuzzy
+msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr "Přenos zrušen telefonem (zadali jste zrušení přenosu v telefonu?)."
 
 #: common/gsmcomon.c:119
@@ -2999,8 +3008,7 @@ msgstr ""
 #: gammu/gammu.c:3824 gammu/gammu.c:4873
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
-msgstr ""
-"Neznámý typ paměti: \"%s\"\n"
+msgstr "Neznámý typ paměti: \"%s\"\n"
 
 #: gammu/gammu.c:3845
 #, c-format
@@ -3010,8 +3018,7 @@ msgstr ""
 #: gammu/gammu.c:4315
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
-msgstr ""
-"Neznámý kód sítě (\"%s\")\n"
+msgstr "Neznámý kód sítě (\"%s\")\n"
 
 #: gammu/gammu.c:4334
 #, c-format
@@ -4178,8 +4185,7 @@ msgstr ""
 #: gammu/gammu.c:8242
 #, c-format
 msgid "Getting \"%s\"\n"
-msgstr ""
-"Stahuji \"%s\"\n"
+msgstr "Stahuji \"%s\"\n"
 
 #: gammu/gammu.c:8248
 msgid "it's folder. Please give only file names"
@@ -4313,20 +4319,17 @@ msgstr ""
 #: gammu/gammu.c:9330
 #, c-format
 msgid "Unknown divert action (\"%s\")\n"
-msgstr ""
-"Neznámá akce přesměrování (\"%s\")\n"
+msgstr "Neznámá akce přesměrování (\"%s\")\n"
 
 #: gammu/gammu.c:9339
 #, c-format
 msgid "Unknown divert type (\"%s\")\n"
-msgstr ""
-"Neznámý typ přesměrování (\"%s\")\n"
+msgstr "Neznámý typ přesměrování (\"%s\")\n"
 
 #: gammu/gammu.c:9348
 #, c-format
 msgid "Unknown call type (\"%s\")\n"
-msgstr ""
-"Neznámý typ hovoru (\"%s\")\n"
+msgstr "Neznámý typ hovoru (\"%s\")\n"
 
 #: gammu/gammu.c:9357
 #, c-format
@@ -4573,8 +4576,7 @@ msgstr "Příliš málo parametrů (funkce požaduje %d až %d)!\n"
 #: gammu/gammu.c:10224 gammu/gammu.c:10234
 #, c-format
 msgid "Parameters help: %s\n"
-msgstr ""
-"Nápověda pro parametry: %s\n"
+msgstr "Nápověda pro parametry: %s\n"
 
 #: gammu/gammu.c:10229
 #, c-format

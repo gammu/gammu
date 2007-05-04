@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 11:08+0200\n"
+"POT-Creation-Date: 2007-05-04 11:19+0200\n"
 "PO-Revision-Date: 2007-03-20 19:21+0100\n"
 "Last-Translator: Pablo Gomez <pgomez@arrakis.es>\n"
 "Language-Team: Language =es\n"
@@ -95,8 +95,10 @@ msgid "Unknown model type string. Check config file."
 msgstr "Modelo desconocido. Verifique el archivo de configuración"
 
 #: common/gsmcomon.c:99
+#, fuzzy
 msgid ""
-"Some functions not available for your OS (disabled in config or not written)."
+"Some functions not available for your system (disabled in config or not "
+"written)."
 msgstr ""
 "Algunas funciones no están disponibles para tu SO (desactivadas en la "
 "configuración o no escritas)."
@@ -112,11 +114,13 @@ msgid "Entry is empty"
 msgstr "La entrada está vacía."
 
 #: common/gsmcomon.c:102
-msgid "Security error. Maybe no PIN ?"
+#, fuzzy
+msgid "Security error. Maybe no PIN?"
 msgstr "Error de seguridad. Maybe no PIN ?"
 
 #: common/gsmcomon.c:103
-msgid "Invalid location. Maybe too high ?"
+#, fuzzy
+msgid "Invalid location. Maybe too high?"
 msgstr "Destino inválido. Maybe too high ?"
 
 #: common/gsmcomon.c:104
@@ -132,7 +136,8 @@ msgid "Unknown error."
 msgstr "Error desconocido."
 
 #: common/gsmcomon.c:108
-msgid "Can't open specified file. Read only ?"
+#, fuzzy
+msgid "Can't open specified file. Read only?"
 msgstr "No se puede abrir el archivo especificado. ¿Sólo lectura?"
 
 #: common/gsmcomon.c:109
@@ -148,7 +153,7 @@ msgid "Empty SMSC number. Set in phone or use -smscnumber."
 msgstr "Numero SMSC vacío. Establezcalo en el teléfono o use -smscnumber."
 
 #: common/gsmcomon.c:112
-msgid "You're inside phone menu (during editing ?). Leave it and try again."
+msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
 
 #: common/gsmcomon.c:113
@@ -172,7 +177,8 @@ msgstr ""
 "favor, contacte con los autores."
 
 #: common/gsmcomon.c:117
-msgid "Transfer was canceled by phone (you pressed cancel on phone?)"
+#, fuzzy
+msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
 "La transferencia fue cancelada por el teléfono (¿Apretaste la tecla Cancel "
 "en el teléfono?)"
