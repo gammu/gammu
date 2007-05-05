@@ -1,7 +1,7 @@
 /* (c) 2003 by Marcin Wiacek */
 /* (c) 2006-2007 by Michal Cihar */
 
-/** 
+/**
  * \file obexgen.c
  * @author Michal Čihař
  * @author Marcin Wiacek
@@ -666,13 +666,8 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 			strcpy(req2,"x-obex/folder-listing");
 			OBEXAddBlock(req, &Current, 0x42, req2, strlen(req2)+1);
 
-			/* Name block */
-			if (UnicodeLength(File->Name) == 0x00) {
-				OBEXAddBlock(req, &Current, 0x01, NULL, 0);
-			} else {
-				CopyUnicodeString(req2,File->Name);
-				OBEXAddBlock(req, &Current, 0x01, req2, UnicodeLength(req2)*2+2);
-			}
+			/* Name block should be empty, we're already in this folder */
+			OBEXAddBlock(req, &Current, 0x01, NULL, 0);
 		} else {
 			File->Folder = false;
 
