@@ -1,20 +1,110 @@
+# translation of gammu.po to Español
+# translation of gammu.po to
 # Gammu translation.
 # Copyright (C) 2003 - 2007 Michal Čihař
 # This file is distributed under the same license as the Gammu package.
-# Michal Čihař <michal@cihar.com>, 2007.
 #
+# Michal Čihař <michal@cihar.com>, 2007.
+# Raúl Sánchez Siles <rasasi78@gmail.com>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.10.6\n"
+"Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-04 13:28+0200\n"
-"PO-Revision-Date: 2007-03-20 19:21+0100\n"
-"Last-Translator: Pablo Gomez <pgomez@arrakis.es>\n"
-"Language-Team: Language =es\n"
+"POT-Creation-Date: 2007-05-05 20:44+0200\n"
+"PO-Revision-Date: 2007-05-05 20:04+0200\n"
+"Last-Translator: Raúl Sánchez Siles <rasasi78@gmail.com>\n"
+"Language-Team: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 0.10.1\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:513 gammu/gammu.c:4722
+msgid "SIM"
+msgstr ""
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:514 common/phone/pfunc.c:39
+msgid "Inbox"
+msgstr "Bandeja de entrada"
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:515
+msgid "Sent items"
+msgstr "Elementos enviados"
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:516
+msgid "Saved items"
+msgstr "Elementos guardados"
+
+#: common/phone/nokia/dct3/n6110.c:1958 gammu/gammu.c:7625
+msgid "Personal"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1960 common/phone/nokia/nfunc.c:936
+msgid "Car"
+msgstr "Coche"
+
+#: common/phone/nokia/dct3/n6110.c:1962 common/phone/nokia/nfunc.c:938
+msgid "Headset"
+msgstr "Auriculares"
+
+#: common/phone/nokia/dct3/n6110.c:1968 common/phone/nokia/nfunc.c:926
+#, fuzzy
+msgid "General"
+msgstr "General         "
+
+#: common/phone/nokia/dct3/n6110.c:1970 common/phone/nokia/nfunc.c:928
+msgid "Silent"
+msgstr "Silencio"
+
+#: common/phone/nokia/dct3/n6110.c:1972
+msgid "Discreet"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1974
+msgid "Loud"
+msgstr "Alto"
+
+#: common/phone/nokia/dct3/n6110.c:1976
+msgid "My style"
+msgstr "Mis estilos"
+
+#: common/phone/nokia/nfunc.c:760
+msgid "Family"
+msgstr "Familia"
+
+#: common/phone/nokia/nfunc.c:762
+msgid "VIP"
+msgstr "VIP"
+
+#: common/phone/nokia/nfunc.c:764
+msgid "Friends"
+msgstr "Amigos"
+
+#: common/phone/nokia/nfunc.c:766
+msgid "Colleagues"
+msgstr "Compañeros."
+
+#: common/phone/nokia/nfunc.c:768
+msgid "Other"
+msgstr "Otros"
+
+#: common/phone/nokia/nfunc.c:930 gammu/gammu.c:374 gammu/gammu.c:7238
+msgid "Meeting"
+msgstr "Citas"
+
+#: common/phone/nokia/nfunc.c:932
+#, fuzzy
+msgid "Outdoor"
+msgstr "Bandeja de salida"
+
+#: common/phone/nokia/nfunc.c:934 gammu/gammu.c:2144
+#, c-format
+msgid "Pager"
+msgstr "Paginador"
+
+#: common/phone/pfunc.c:40
+msgid "Outbox"
+msgstr "Bandeja de salida"
 
 #: common/gsmcomon.c:80
 msgid "No error."
@@ -25,42 +115,40 @@ msgid "Error opening device. Unknown/busy or no permissions."
 msgstr "Error abriendo dispositivo. Desconocido/ocupado o sin permisos."
 
 #: common/gsmcomon.c:82
-#, fuzzy
 msgid "Error opening device, it is locked."
-msgstr "Error estableciendo dispositivo DTR o RTS."
+msgstr "Error abriendo el dispositivo. Se encuentra bloqueado."
 
 #: common/gsmcomon.c:83
-#, fuzzy
 msgid "Error opening device, it doesn't exist."
-msgstr "Error abriendo dispositivo. Desconocido/ocupado o sin permisos."
+msgstr "Error abriendo dispositivo. No existe."
 
 #: common/gsmcomon.c:84
-#, fuzzy
 msgid "Error opening device, it is already opened by other application."
-msgstr "Error abriendo dispositivo. Desconocido/ocupado o sin permisos."
+msgstr "Error abriendo dispositivo. Otra aplicación lo está utilizando."
 
 #: common/gsmcomon.c:85
-#, fuzzy
 msgid "Error opening device, you don't have permissions."
-msgstr "Error abriendo dispositivo. Desconocido/ocupado o sin permisos."
+msgstr "Error abriendo dispositivo. Permisos insuficientes."
 
 #: common/gsmcomon.c:86
-#, fuzzy
 msgid "Error opening device. No required driver in operating system."
-msgstr "Error abriendo dispositivo. Desconocido/ocupado o sin permisos."
+msgstr "Error abriendo dispositivo. Controlador no disponible."
 
 #: common/gsmcomon.c:87
 msgid "Error opening device. Some hardware not connected/wrong configured."
 msgstr ""
+"Error abriendo dispositivo. El hardware no está conectado o está mal "
+"configurado."
 
 #: common/gsmcomon.c:88
 msgid "Error setting device DTR or RTS."
-msgstr "Error estableciendo dispositivo DTR o RTS."
+msgstr "Error estableciendo DTR ó RTS."
 
 #: common/gsmcomon.c:89
 msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
-"Error estableciendo velocidad del dispositivo. Maybe velocidad no soportada."
+"Error estableciendo velocidad del dispositivo. Velocidad posiblemente no "
+"soportada."
 
 #: common/gsmcomon.c:90
 msgid "Error writing device."
@@ -68,7 +156,7 @@ msgstr "Error escribiendo en el dispositivo."
 
 #: common/gsmcomon.c:91
 msgid "Error during reading device."
-msgstr "Error mientras se leía el dispositivo."
+msgstr "Error mientras se leía del dispositivo."
 
 #: common/gsmcomon.c:92
 msgid "Can't set parity on device."
@@ -95,12 +183,11 @@ msgid "Unknown model type string. Check config file."
 msgstr "Modelo desconocido. Verifique el archivo de configuración"
 
 #: common/gsmcomon.c:99
-#, fuzzy
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "written)."
 msgstr ""
-"Algunas funciones no están disponibles para tu SO (desactivadas en la "
+"Algunas funciones no están disponibles para su SO (desactivadas en la "
 "configuración o no escritas)."
 
 #: common/gsmcomon.c:100
@@ -114,14 +201,12 @@ msgid "Entry is empty"
 msgstr "La entrada está vacía."
 
 #: common/gsmcomon.c:102
-#, fuzzy
 msgid "Security error. Maybe no PIN?"
-msgstr "Error de seguridad. Maybe no PIN ?"
+msgstr "Error de seguridad. ¿Ha introducido el PIN ?"
 
 #: common/gsmcomon.c:103
-#, fuzzy
 msgid "Invalid location. Maybe too high?"
-msgstr "Destino inválido. Maybe too high ?"
+msgstr "Destino inválido. ¿Demasiado alto?"
 
 #: common/gsmcomon.c:104
 msgid "Function not implemented. Help required."
@@ -155,10 +240,14 @@ msgstr "Numero SMSC vacío. Establezcalo en el teléfono o use -smscnumber."
 #: common/gsmcomon.c:112
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
+"Se encuentra dentro del menú del teléfono (quizás editando. Salga e "
+"inténtelo de nuevo."
 
 #: common/gsmcomon.c:113
 msgid "Function is during writing. If want help, please contact with authors."
 msgstr ""
+"La función está escribiendo, si necesita ayuda, por favor, contácte con los "
+"Autores."
 
 #: common/gsmcomon.c:114
 msgid "Phone is disabled and connected to charger."
@@ -177,15 +266,14 @@ msgstr ""
 "favor, contacte con los autores."
 
 #: common/gsmcomon.c:117
-#, fuzzy
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
-"La transferencia fue cancelada por el teléfono (¿Apretaste la tecla Cancel "
-"en el teléfono?)"
+"La transferencia fue cancelada por el teléfono.¿ Ha pulsado la tecla "
+"cancelar en el teléfono?"
 
 #: common/gsmcomon.c:119
 msgid "Current connection type doesn't support called function."
-msgstr ""
+msgstr "El tipo de conexión actual no soporta esta función."
 
 #: common/gsmcomon.c:120
 msgid "CRC error."
@@ -200,243 +288,156 @@ msgid "Phone memory error, maybe it is read only."
 msgstr "Error en la memoria del teléfono, maybe es sólo lectura."
 
 #: common/gsmcomon.c:123
-#, fuzzy
 msgid "Invalid data given to phone."
-msgstr "La hora o fecha especificada no es válida."
+msgstr "Datos inválidos proporcionados al teléfono."
 
 #: common/gsmcomon.c:124
 msgid "File with specified name already exist."
-msgstr ""
+msgstr "Un archivo con el nombre especificado ya existe."
 
 #: common/gsmcomon.c:125
 msgid "File with specified name doesn't exist."
-msgstr ""
+msgstr "El archivo con el nombre especificado no existe."
 
 #: common/gsmcomon.c:126
 msgid "You have to give folder name and not file name."
-msgstr ""
+msgstr "Debe proporcionar un nombre de carpeta, no de archivo."
 
 #: common/gsmcomon.c:127
 msgid "You have to give file name and not folder name."
-msgstr ""
+msgstr "Debe proporcionar un nombre de archivo, no de carpeta."
 
 #: common/gsmcomon.c:128
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "No es posible acceder a la tarjeta SIM."
 
 #: common/gsmcomon.c:129
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
+"Versión de GNAPPLET incorrecta en el teléfono. Utilice la versión utilizada "
+"por Gammu."
 
 #: common/gsmcomon.c:130
 msgid "Folder must be empty."
-msgstr ""
+msgstr "La carpeta debe estar vacía."
 
 #: common/gsmcomon.c:131
 msgid "Data were converted."
-msgstr ""
-
-#: common/phone/pfunc.c:39 common/phone/nokia/dct4s40/6510/n6510.c:514
-msgid "Inbox"
-msgstr "Bandeja de entrada"
-
-#: common/phone/pfunc.c:40
-msgid "Outbox"
-msgstr "Bandeja de salida"
-
-#: common/phone/nokia/nfunc.c:760
-msgid "Family"
-msgstr "Familia"
-
-#: common/phone/nokia/nfunc.c:762
-msgid "VIP"
-msgstr ""
-
-#: common/phone/nokia/nfunc.c:764
-msgid "Friends"
-msgstr "Amigos"
-
-#: common/phone/nokia/nfunc.c:766
-msgid "Colleagues"
-msgstr ""
-
-#: common/phone/nokia/nfunc.c:768
-msgid "Other"
-msgstr "Otros"
-
-#: common/phone/nokia/nfunc.c:926 common/phone/nokia/dct3/n6110.c:1968
-#, fuzzy
-msgid "General"
-msgstr "General         "
-
-#: common/phone/nokia/nfunc.c:928 common/phone/nokia/dct3/n6110.c:1970
-msgid "Silent"
-msgstr "Silencio"
-
-#: common/phone/nokia/nfunc.c:930 gammu/gammu.c:374 gammu/gammu.c:7238
-msgid "Meeting"
-msgstr ""
-
-#: common/phone/nokia/nfunc.c:932
-#, fuzzy
-msgid "Outdoor"
-msgstr "Bandeja de salida"
-
-#: common/phone/nokia/nfunc.c:934 gammu/gammu.c:2144
-#, c-format
-msgid "Pager"
-msgstr ""
-
-#: common/phone/nokia/nfunc.c:936 common/phone/nokia/dct3/n6110.c:1960
-msgid "Car"
-msgstr "Coche"
-
-#: common/phone/nokia/nfunc.c:938 common/phone/nokia/dct3/n6110.c:1962
-msgid "Headset"
-msgstr ""
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:513 gammu/gammu.c:4722
-msgid "SIM"
-msgstr ""
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:515
-#, fuzzy
-msgid "Sent items"
-msgstr "Establecer %i"
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:516
-msgid "Saved items"
-msgstr ""
-
-#: common/phone/nokia/dct3/n6110.c:1958 gammu/gammu.c:7625
-msgid "Personal"
-msgstr ""
-
-#: common/phone/nokia/dct3/n6110.c:1972
-msgid "Discreet"
-msgstr ""
-
-#: common/phone/nokia/dct3/n6110.c:1974
-msgid "Loud"
-msgstr ""
-
-#: common/phone/nokia/dct3/n6110.c:1976
-msgid "My style"
-msgstr "Mis estilos"
+msgstr "Los datos se han convertido."
 
 #: gammu/depend/nokia/dct4.c:56
 msgid "Can't do it with current phone protocol"
-msgstr ""
+msgstr "No es posible con el protocolo de teléfono actual."
 
 #: gammu/depend/nokia/dct4.c:70
 #, c-format
 msgid "%s (yes/no) ? "
-msgstr ""
+msgstr "¿ %s (si/no) ?"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/depend/nokia/dct4.c:73 gammu/gammu.c:315
-#, fuzzy
 msgid "yes"
-msgstr "si\n"
+msgstr "si"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/depend/nokia/dct4.c:74 gammu/gammu.c:317
 msgid "no"
-msgstr ""
+msgstr "no"
 
 #: gammu/depend/nokia/dct4.c:253
-#, fuzzy
 msgid "Setting done"
-msgstr "Muy alto\n"
+msgstr "Ajustado."
 
 #: gammu/depend/nokia/dct4.c:290
 msgid ""
 "Sorry, but configuration matrix for this model is not added yet. Please "
 "report"
 msgstr ""
+"Disculpe pero la matriz de configuración para este modelo no se ha "
+"añadidotodavía. Por favor, informe."
 
 #: gammu/depend/nokia/dct4.c:356
 #, c-format
 msgid "Passed"
-msgstr ""
+msgstr "Correcto"
 
 #: gammu/depend/nokia/dct4.c:357
-#, fuzzy, c-format
+#, c-format
 msgid "Fail"
-msgstr "Familia"
+msgstr "Fallo"
 
 #: gammu/depend/nokia/dct4.c:358
 #, c-format
 msgid "Not executed"
-msgstr ""
+msgstr "No ejecutado"
 
 #: gammu/depend/nokia/dct4.c:359
 #, c-format
 msgid "No signal"
-msgstr ""
+msgstr "Sin señal"
 
 #: gammu/depend/nokia/dct4.c:360
 #, c-format
 msgid "Timeout"
-msgstr ""
+msgstr "Expiró el tiempo"
 
 #: gammu/depend/nokia/dct4.c:361
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown (%x)"
-msgstr "desconocido %i"
+msgstr "Desconocido (%x)"
 
 #: gammu/depend/nokia/dct4.c:363
 #, c-format
 msgid " (startup)"
-msgstr ""
+msgstr " (comienzo)"
 
 #: gammu/depend/nokia/dct4.c:481 gammu/depend/nokia/dct4.c:974
 msgid "Press any key to continue..."
-msgstr ""
+msgstr "Pulse cualquier tecla para continuar..."
 
 #: gammu/depend/nokia/dct4.c:493
 #, c-format
 msgid "Security code set to \"12345\"\n"
-msgstr ""
+msgstr "Código de seguridad establecido a \"1234\"\n"
 
 #: gammu/depend/nokia/dct4.c:496
 msgid "Unknown reason. Can't reset your security code"
-msgstr ""
+msgstr "No es posible borrar su código de seguridad. Razón desconocida."
 
 #: gammu/depend/nokia/dct4.c:519
 #, c-format
 msgid "Trying %i\n"
-msgstr ""
+msgstr "Intentado %i\n"
 
 #: gammu/depend/nokia/dct4.c:538
-#, fuzzy, c-format
+#, c-format
 msgid "Security code is %s\n"
-msgstr "Producto code : %s\n"
+msgstr "El código de seguridad es: %s\n"
 
 #: gammu/depend/nokia/dct4.c:670 gammu/gammu.c:258 gammu/gammu.c:266
 #: gammu/gammu.c:3394
 msgid "Please enumerate locations from 1"
-msgstr ""
+msgstr "Por favor, enumere localizaciones para 1"
 
 #: gammu/depend/nokia/dct4.c:779
 #, c-format
 msgid "device address %02x%02x%02x%02x%02x%02x\n"
-msgstr ""
+msgstr "dirección del dispositivo %02x%02x%02x%02x%02x%02x\n"
 
 #: gammu/depend/nokia/dct4.c:803
 #, c-format
 msgid "Old simlock   : %s (%s)\n"
-msgstr ""
+msgstr "simlock antiguo   : %s (%s)\n"
 
 #: gammu/depend/nokia/dct4.c:821
 #, c-format
 msgid "Simlock data  : "
-msgstr ""
+msgstr "Datos simlock  : "
 
 #: gammu/depend/nokia/dct4.c:845
 #, c-format
 msgid "Bluetooth     : "
-msgstr ""
+msgstr "Bluetooth     : "
 
 #: gammu/depend/nokia/dct4.c:861
 #, fuzzy, c-format
@@ -446,70 +447,70 @@ msgstr "ID Usuario       : %s\n"
 #: gammu/depend/nokia/dct4.c:929
 #, c-format
 msgid "What lights should I enable (\"%s\") ?\n"
-msgstr ""
+msgstr "¿ Qué luces debo habilitar (\"%s\") ?\n"
 
 #: gammu/depend/nokia/dct4.c:936
-#, fuzzy, c-format
+#, c-format
 msgid "What should I do (\"%s\") ?\n"
-msgstr "¿Qué tipo de reseteo quieres (\"%s\") ?\n"
+msgstr "¿ Qué debo hacer (\"%s\") ?\n"
 
 #: gammu/depend/nokia/dct4.c:987
 #, c-format
 msgid "raw "
-msgstr ""
+msgstr "en crudo"
 
 #: gammu/depend/nokia/dct4.c:991
 #, c-format
 msgid "unit result "
-msgstr ""
+msgstr "resultado unitario/de la unidad"
 
 #: gammu/depend/nokia/dct4.c:1124
 msgid "Phone seems not to support radio"
-msgstr ""
+msgstr "El teléfono no parece tener radio"
 
 #: gammu/depend/nokia/dct4.c:1131
 msgid "Please connect headset. Required as antenna"
-msgstr ""
+msgstr "Por favor, conecte los auriculares. Necesarios como antena"
 
 #: gammu/depend/nokia/dct4.c:1322
 #, c-format
 msgid "%i entries types\n"
-msgstr ""
+msgstr "%i tipos de entradas\n"
 
 #: gammu/depend/nokia/dct4.c:1325
 #, c-format
 msgid "  entry ID %02X"
-msgstr ""
+msgstr "  ID de entrada %02X"
 
 #: gammu/depend/nokia/dct4.c:1327
 #, c-format
 msgid " (Speed dial on SIM)"
-msgstr ""
+msgstr " (Marcado rápido en SIM)"
 
 #: gammu/depend/nokia/dct4.c:1328
 #, c-format
 msgid " (Text: name (always the only one)"
-msgstr ""
+msgstr " (Texto: nombre (siempre el único)"
 
 #: gammu/depend/nokia/dct4.c:1329
 #, c-format
 msgid " (Text: email adress)"
-msgstr ""
+msgstr " (Texto: dirección de correo electrónico)"
 
 #: gammu/depend/nokia/dct4.c:1330
 #, c-format
 msgid " (Text: postal address)"
-msgstr ""
+msgstr " (Texto: dirección postal)"
 
 #: gammu/depend/nokia/dct4.c:1331
 #, c-format
 msgid " (Text: note)"
-msgstr ""
+msgstr " (Texto: nota)"
 
 #: gammu/depend/nokia/dct4.c:1332
 #, c-format
 msgid " (Phone number)"
-msgstr ""
+msgstr " (Número de teléfono)"
 
 #: gammu/depend/nokia/dct4.c:1333
 #, fuzzy, c-format
@@ -519,22 +520,22 @@ msgstr "ID Tono          : %i\n"
 #: gammu/depend/nokia/dct4.c:1334
 #, c-format
 msgid " (Call register: date and time)"
-msgstr ""
+msgstr " (Archivo de llamadas: fecha y hora)"
 
 #: gammu/depend/nokia/dct4.c:1335
 #, c-format
 msgid " (Call register: with missed calls)"
-msgstr ""
+msgstr " (Archivo de llamadas: llamadas perdidas)"
 
 #: gammu/depend/nokia/dct4.c:1336
 #, c-format
 msgid " (Speed dial)"
-msgstr ""
+msgstr " (Marcado rápido)"
 
 #: gammu/depend/nokia/dct4.c:1337
-#, fuzzy, c-format
+#, c-format
 msgid " (Caller group: logo)"
-msgstr "Grupo de llamada : \"%s\"\n"
+msgstr " (Grupo de llamada : logotipo"
 
 #: gammu/depend/nokia/dct4.c:1338
 #, fuzzy, c-format
@@ -604,397 +605,192 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1354
 #, c-format
 msgid ", type "
-msgstr ""
+msgstr ", tipo "
 
 #: gammu/depend/nokia/dct4.c:1356
 #, c-format
 msgid "string"
-msgstr ""
+msgstr "cadena"
 
 #: gammu/depend/nokia/dct4.c:1357
 #, c-format
 msgid "byte"
-msgstr ""
+msgstr "byte"
 
 #: gammu/depend/nokia/dct4.c:1358
 #, c-format
 msgid "2 bytes"
-msgstr ""
+msgstr "2 bytes"
 
 #: gammu/depend/nokia/dct4.c:1359
 #, c-format
 msgid "4 bytes"
-msgstr ""
+msgstr "4 bytes"
 
 #: gammu/depend/nokia/dct4.c:1366
 #, c-format
 msgid "%i phone number types\n"
-msgstr ""
+msgstr "%i tipos de número de teléfono\n"
 
 #: gammu/depend/nokia/dct4.c:1369 gammu/gammu.c:1025
-#, fuzzy
 msgid "Home number"
-msgstr "Trabajo         "
+msgstr "Teléfono del trabajo"
 
 #: gammu/depend/nokia/dct4.c:1370 gammu/gammu.c:1022
-#, fuzzy
 msgid "Mobile number"
-msgstr "Móvil           "
+msgstr "Teléfono móvil"
 
 #: gammu/depend/nokia/dct4.c:1371 gammu/gammu.c:1024
-#, fuzzy
 msgid "Fax number"
-msgstr "   Número     : %s\n"
+msgstr "Número de fax"
 
 #: gammu/depend/nokia/dct4.c:1372
-#, fuzzy
 msgid "Office number"
-msgstr ""
-"\n"
-"Código de servicio: \"%s\"\n"
+msgstr "Teléfono de la oficina"
 
 #: gammu/depend/nokia/dct4.c:1373
-#, fuzzy
 msgid "Standard number"
-msgstr "Normal\n"
+msgstr "Teléfono habitual"
 
 #: gammu/depend/nokia/dct4.c:1374
-#, fuzzy
 msgid "Unknown number"
-msgstr "Error desconocido."
+msgstr "Teléfono desconocido"
 
 #: gammu/depend/nokia/dct4.c:1397
 #, c-format
 msgid "ERROR: unknown memory type (\"%s\")\n"
 msgstr "ERROR: tipo de memoria desconocido (\"%s\")\n"
 
-#: gammu/smsd/s_pgsql.c:42 gammu/smsd/s_mysql.c:40
-#, fuzzy, c-format
-msgid "Error connecting to database: %s\n"
-msgstr "Agenda BBDD         : \"%s\"\n"
-
-#: gammu/smsd/s_pgsql.c:50 gammu/smsd/s_pgsql.c:60 gammu/smsd/s_mysql.c:45
-#: gammu/smsd/s_mysql.c:49 gammu/smsd/s_mysql.c:55 gammu/smsd/s_mysql.c:59
-#, c-format
-msgid "No table for outbox sms: %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:70 gammu/smsd/s_mysql.c:65 gammu/smsd/s_mysql.c:69
-#, c-format
-msgid "No table for sent sms: %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:80 gammu/smsd/s_mysql.c:75 gammu/smsd/s_mysql.c:79
-#, c-format
-msgid "No table for inbox sms: %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:90 gammu/smsd/s_mysql.c:85 gammu/smsd/s_mysql.c:89
-#, c-format
-msgid "No Gammu table: %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:96 gammu/smsd/s_mysql.c:94
-#, c-format
-msgid "No version info in Gammu table: %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:102 gammu/smsd/s_mysql.c:99
-msgid "DataBase structures are from higher Gammu version"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:103 gammu/smsd/s_mysql.c:100
-msgid "Please update this client application"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:110 gammu/smsd/s_mysql.c:105
-msgid "DataBase structures are from older Gammu version"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:111 gammu/smsd/s_mysql.c:106
-msgid "Please update DataBase, if you want to use this client application"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:134
-#, c-format
-msgid "Error deleting from database (Init): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:155
-#, c-format
-msgid "Error inserting into database (Init): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:182 gammu/smsd/s_files.c:62 gammu/smsd/s_mysql.c:161
-#, c-format
-msgid "Delivery report: %s to %s"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:194 gammu/smsd/s_mysql.c:170
-#, c-format
-msgid "Error reading from database (SaveInbox): %s %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:271 gammu/smsd/s_pgsql.c:907
-#, c-format
-msgid "Error writing to database (SaveInboxSMS): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:363
-#, c-format
-msgid "Error writing to database (SaveInbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:385
-#, c-format
-msgid "Error writing to database (RefreshSendStatus): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:417 gammu/smsd/s_pgsql.c:463 gammu/smsd/s_mysql.c:327
-#: gammu/smsd/s_mysql.c:331 gammu/smsd/s_mysql.c:363 gammu/smsd/s_mysql.c:367
-#, c-format
-msgid "Error reading from database (FindOutbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:553 gammu/smsd/s_pgsql.c:565
-#, c-format
-msgid "Error deleting from database (MoveSMS): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:589 gammu/smsd/s_pgsql.c:720 gammu/smsd/s_pgsql.c:753
-#: gammu/smsd/s_mysql.c:457 gammu/smsd/s_mysql.c:461 gammu/smsd/s_mysql.c:563
-#: gammu/smsd/s_mysql.c:567
-#, c-format
-msgid "Error reading from database (CreateOutbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:734 gammu/smsd/s_pgsql.c:770
-#, c-format
-msgid "Error writing to database (CreateOutbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:744 gammu/smsd/s_mysql.c:577
-msgid "Duplicated outgoing SMS ID\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:790 gammu/smsd/s_files.c:341 gammu/smsd/s_mysql.c:606
-#, c-format
-msgid "Transmitted %s (%s: %i) to %s"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:885
-#, c-format
-msgid "Error writing to database (AddSent): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_files.c:54
-#, c-format
-msgid "Cannot save %s. No available file names"
-msgstr ""
-
-#: gammu/smsd/s_files.c:97 gammu/gammu.c:2580
-msgid "Delivery report"
-msgstr ""
-
-#: gammu/smsd/s_files.c:97
-msgid "Received"
-msgstr ""
-
-#: gammu/smsd/s_files.c:99
-#, c-format
-msgid "Cannot save %s (%i)"
-msgstr ""
-
-#: gammu/smsd/s_files.c:325 gammu/smsd/s_files.c:333
-#, c-format
-msgid "Could not delete %s (%i)"
-msgstr ""
-
-#: gammu/smsd/s_files.c:330
-#, c-format
-msgid "Error copying SMS %s -> %s"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:121
-#, c-format
-msgid "Error deleting from database (Init): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:138
-#, c-format
-msgid "Error inserting into database (Init): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:174
-#, c-format
-msgid "Error reading from database (SaveInbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:226 gammu/smsd/s_mysql.c:689
-#, c-format
-msgid "Error writing to database (SaveInboxSMS): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:292
-#, c-format
-msgid "Error writing to database (SaveInbox): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:306
-#, c-format
-msgid "Error writing to database (RefreshSendStatus): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:436 gammu/smsd/s_mysql.c:441
-#, c-format
-msgid "Error deleting from database (MoveSMS): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:580
-#, c-format
-msgid "Error writing to database (CreateOutbox): %d %s %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:593
-#, c-format
-msgid "Error writing to database (CreateOutbox): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:675
-#, c-format
-msgid "Error writing to database (AddSent): %d %s\n"
-msgstr ""
-
 #: gammu/smsd/smsdcore.c:40
 msgid "Terminating communication"
-msgstr ""
+msgstr "Terminando la comunicación"
 
 #: gammu/smsd/smsdcore.c:96
 #, c-format
 msgid "Could not parse config file \"%s\"\n"
-msgstr ""
+msgstr "No fue posible procesar el archivo de configuración \"%s\"\n"
 
 #: gammu/smsd/smsdcore.c:98
-#, fuzzy, c-format
+#, c-format
 msgid "Can't find file \"%s\"\n"
-msgstr "Hora del teléfono es %s\n"
+msgstr "No se pudo encontrar el archivo \"%s\"\n"
 
 #: gammu/smsd/smsdcore.c:107 gammu/gammu.c:4455
 #, c-format
 msgid "Can't open file \"%s\"\n"
-msgstr ""
+msgstr "No se pudo abrir el archivo \"%s\"\n"
 
 #: gammu/smsd/smsdcore.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "Log filename is \"%s\"\n"
-msgstr "Hora del teléfono es %s\n"
+msgstr "El nombre del archivo de log es \"%s\"\n"
 
 #: gammu/smsd/smsdcore.c:112
 msgid "Starting GAMMU smsd"
-msgstr ""
+msgstr "Arrancando GAMMU smsd"
 
 #: gammu/smsd/smsdcore.c:124
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: No PIN code in %s file"
-msgstr "Advertencia: No se encontró el archivo de configuración!\n"
+msgstr "Aviso: El archivo %s file no contiene el código PIN"
 
 #: gammu/smsd/smsdcore.c:125
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: No PIN code in %s file\n"
-msgstr "Advertencia: No se encontró el archivo de configuración!\n"
+msgstr "Aviso: El archivo %s file no contiene el código PIN\n"
 
 #: gammu/smsd/smsdcore.c:127
 #, c-format
 msgid "PIN code is \"%s\""
-msgstr ""
+msgstr "El código PIN es \"%s\""
 
 #: gammu/smsd/smsdcore.c:138
-#, c-format
+#, fuzzy, c-format
 msgid "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"
-msgstr ""
+msgstr "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"
 
 #: gammu/smsd/smsdcore.c:173
 #, c-format
 msgid "Inbox is \"%s\" with format \"%s\""
-msgstr ""
+msgstr "La carpeta de entrada es \"%s\" con formato \"%s\""
 
 #: gammu/smsd/smsdcore.c:182
 #, c-format
 msgid "Outbox is \"%s\" with transmission format \"%s\""
-msgstr ""
+msgstr "La carpeta de salida es \"%s\" con formato \"%s\""
 
 #: gammu/smsd/smsdcore.c:186
 #, c-format
 msgid "Sent SMS moved to \"%s\""
-msgstr ""
+msgstr "Los SMS enviados se han movido a \"%s\""
 
 #: gammu/smsd/smsdcore.c:190
 #, c-format
 msgid "SMS with errors moved to \"%s\""
-msgstr ""
+msgstr "Los SMS con errores se han movido a \"%s\""
 
 #: gammu/smsd/smsdcore.c:226
 msgid "Include numbers available"
-msgstr ""
+msgstr "Disponible incluir números"
 
 #: gammu/smsd/smsdcore.c:230
 msgid "Exclude numbers available"
-msgstr ""
+msgstr "Disponible excluir números"
 
 #: gammu/smsd/smsdcore.c:232
 msgid "Exclude numbers available, but IGNORED"
-msgstr ""
+msgstr "Disponible excluir números, pero IGNORADO"
 
 #: gammu/smsd/smsdcore.c:250
 #, c-format
 msgid "Error getting security status (%i)"
-msgstr ""
+msgstr "Error obteniendo el estado de seguridad (%i)"
 
 #: gammu/smsd/smsdcore.c:260
 msgid "Warning: no PIN in config"
-msgstr ""
+msgstr "Aviso: sin PIN en configuración"
 
 #: gammu/smsd/smsdcore.c:263
 msgid "Trying to enter PIN"
-msgstr ""
+msgstr "Intentando introducir el PIN"
 
 #: gammu/smsd/smsdcore.c:267
 msgid "ERROR: incorrect PIN"
-msgstr ""
+msgstr "ERROR: PIN incorrecto"
 
 #: gammu/smsd/smsdcore.c:270
 #, c-format
 msgid "Error entering PIN (%i)"
-msgstr ""
+msgstr "Error introduciendo PIN (%i)"
 
 #: gammu/smsd/smsdcore.c:279
 msgid "ERROR: phone requires not supported code type"
-msgstr ""
+msgstr "ERROR: el teléfono precisa de un código no soportado"
 
 #: gammu/smsd/smsdcore.c:333
 #, c-format
 msgid "Excluded %s"
-msgstr ""
+msgstr "Exluido %s"
 
 #: gammu/smsd/smsdcore.c:337
 #, c-format
 msgid "Error getting SMS (%i)"
-msgstr ""
+msgstr "Error obteniendo SMS (%i)"
 
 #: gammu/smsd/smsdcore.c:349
 #, c-format
 msgid "Error deleting SMS (%i)"
-msgstr ""
+msgstr "Error borrando SMS (%i)"
 
 #: gammu/smsd/smsdcore.c:367
 #, c-format
 msgid "Error getting SMS status (%i)"
-msgstr ""
+msgstr "Error obteniendo estado SMS (%i)"
 
 #: gammu/smsd/smsdcore.c:401
 #, c-format
 msgid "Error in outbox on %s"
-msgstr ""
+msgstr "Error en carpeta de salida en %s"
 
 #: gammu/smsd/smsdcore.c:415
 #, c-format
@@ -1047,6 +843,207 @@ msgstr ""
 #: gammu/smsd/smsdcore.c:602
 msgid "Stop GAMMU smsd"
 msgstr ""
+
+#: gammu/smsd/s_files.c:54
+#, c-format
+msgid "Cannot save %s. No available file names"
+msgstr "No es posible salvar %s. No hay nombres de archivo disponibles."
+
+#: gammu/smsd/s_files.c:62 gammu/smsd/s_mysql.c:161 gammu/smsd/s_pgsql.c:182
+#, c-format
+msgid "Delivery report: %s to %s"
+msgstr "Informe de envío: de %s a %s"
+
+#: gammu/smsd/s_files.c:97 gammu/gammu.c:2580
+msgid "Delivery report"
+msgstr "Informe de entrega."
+
+#: gammu/smsd/s_files.c:97
+msgid "Received"
+msgstr "Recibido"
+
+#: gammu/smsd/s_files.c:99
+#, c-format
+msgid "Cannot save %s (%i)"
+msgstr "No es posible salvar %s (%i)"
+
+#: gammu/smsd/s_files.c:325 gammu/smsd/s_files.c:333
+#, c-format
+msgid "Could not delete %s (%i)"
+msgstr "No es posible borrar %s (%i)"
+
+#: gammu/smsd/s_files.c:330
+#, c-format
+msgid "Error copying SMS %s -> %s"
+msgstr "Error copiando SMS %s -> %s"
+
+#: gammu/smsd/s_files.c:341 gammu/smsd/s_mysql.c:606 gammu/smsd/s_pgsql.c:790
+#, c-format
+msgid "Transmitted %s (%s: %i) to %s"
+msgstr "Transmitido desde %s (%s: %i) hasta %s"
+
+#: gammu/smsd/s_mysql.c:40 gammu/smsd/s_pgsql.c:42
+#, c-format
+msgid "Error connecting to database: %s\n"
+msgstr "Error de conexión la base de datos: %s\n"
+
+#: gammu/smsd/s_mysql.c:45 gammu/smsd/s_mysql.c:49 gammu/smsd/s_mysql.c:55
+#: gammu/smsd/s_mysql.c:59 gammu/smsd/s_pgsql.c:50 gammu/smsd/s_pgsql.c:60
+#, c-format
+msgid "No table for outbox sms: %s\n"
+msgstr "No existe la tabla para mensajes salientes: %s\n"
+
+#: gammu/smsd/s_mysql.c:65 gammu/smsd/s_mysql.c:69 gammu/smsd/s_pgsql.c:70
+#, c-format
+msgid "No table for sent sms: %s\n"
+msgstr "No existe la tabla para mensajes enviados: %s\n"
+
+#: gammu/smsd/s_mysql.c:75 gammu/smsd/s_mysql.c:79 gammu/smsd/s_pgsql.c:80
+#, c-format
+msgid "No table for inbox sms: %s\n"
+msgstr "No existe la tabla para mensajes entrantes: %s\n"
+
+#: gammu/smsd/s_mysql.c:85 gammu/smsd/s_mysql.c:89 gammu/smsd/s_pgsql.c:90
+#, c-format
+msgid "No Gammu table: %s\n"
+msgstr "No existe la tabla de Gammu: %s\n"
+
+#: gammu/smsd/s_mysql.c:94 gammu/smsd/s_pgsql.c:96
+#, c-format
+msgid "No version info in Gammu table: %s\n"
+msgstr "No existe información de versión de Gammu en la tabla: %s\n"
+
+#: gammu/smsd/s_mysql.c:99 gammu/smsd/s_pgsql.c:102
+msgid "DataBase structures are from higher Gammu version"
+msgstr ""
+"Las estructuras de la base de datos son para una versión superior de Gammu"
+
+#: gammu/smsd/s_mysql.c:100 gammu/smsd/s_pgsql.c:103
+msgid "Please update this client application"
+msgstr "Por favor, actualice la versión de esta aplicación cliente"
+
+#: gammu/smsd/s_mysql.c:105 gammu/smsd/s_pgsql.c:110
+msgid "DataBase structures are from older Gammu version"
+msgstr ""
+"Las estructuras de la base de datos son para una versión inferior de Gammu"
+
+#: gammu/smsd/s_mysql.c:106 gammu/smsd/s_pgsql.c:111
+msgid "Please update DataBase, if you want to use this client application"
+msgstr ""
+"Por favor, actualice la base de datos si quiere utilizar esta aplicación "
+"cliente"
+
+#: gammu/smsd/s_mysql.c:121
+#, c-format
+msgid "Error deleting from database (Init): %d %s\n"
+msgstr "Error borrando de la base de datos (Init): %d %s\n"
+
+#: gammu/smsd/s_mysql.c:138
+#, c-format
+msgid "Error inserting into database (Init): %d %s\n"
+msgstr "Error insertando a la base de datos (Init): %d %s\n"
+
+#: gammu/smsd/s_mysql.c:170 gammu/smsd/s_pgsql.c:194
+#, c-format
+msgid "Error reading from database (SaveInbox): %s %s\n"
+msgstr "Error leyendo de la base de datos (SaveInbox): %s %s\n"
+
+#: gammu/smsd/s_mysql.c:174
+#, c-format
+msgid "Error reading from database (SaveInbox): %s\n"
+msgstr "Error leyendo desde la base de datos(SaveIbox): %s\n"
+
+#: gammu/smsd/s_mysql.c:226 gammu/smsd/s_mysql.c:689
+#, c-format
+msgid "Error writing to database (SaveInboxSMS): %d %s\n"
+msgstr "Error escribiendo a la base de datos (SaveInboxSMS): %d %s\n"
+
+#: gammu/smsd/s_mysql.c:292
+#, c-format
+msgid "Error writing to database (SaveInbox): %d %s\n"
+msgstr "Error escribiendo a la base de datos (SaveInbox): %d %s\n"
+
+#: gammu/smsd/s_mysql.c:306
+#, c-format
+msgid "Error writing to database (RefreshSendStatus): %d %s\n"
+msgstr "Error escribiendo a la base de datos (RefreshSendStatus): %d %s\n"
+
+#: gammu/smsd/s_mysql.c:327 gammu/smsd/s_mysql.c:331 gammu/smsd/s_mysql.c:363
+#: gammu/smsd/s_mysql.c:367 gammu/smsd/s_pgsql.c:417 gammu/smsd/s_pgsql.c:463
+#, c-format
+msgid "Error reading from database (FindOutbox): %s\n"
+msgstr "Error leyendo de la base de datos (FindOutBox): %s\n"
+
+#: gammu/smsd/s_mysql.c:436 gammu/smsd/s_mysql.c:441
+#, c-format
+msgid "Error deleting from database (MoveSMS): %d %s\n"
+msgstr "Error borrando de la base de datos (MoveSMS): %d %s\n"
+
+#: gammu/smsd/s_mysql.c:457 gammu/smsd/s_mysql.c:461 gammu/smsd/s_mysql.c:563
+#: gammu/smsd/s_mysql.c:567 gammu/smsd/s_pgsql.c:589 gammu/smsd/s_pgsql.c:720
+#: gammu/smsd/s_pgsql.c:753
+#, c-format
+msgid "Error reading from database (CreateOutbox): %s\n"
+msgstr "Error leyendo de la base de datos (CreateOutbox): %s\n"
+
+#: gammu/smsd/s_mysql.c:577 gammu/smsd/s_pgsql.c:744
+msgid "Duplicated outgoing SMS ID\n"
+msgstr "ID de SMS saliente duplicado\n"
+
+#: gammu/smsd/s_mysql.c:580
+#, c-format
+msgid "Error writing to database (CreateOutbox): %d %s %s\n"
+msgstr "Error escribiendo a la base de datos (CreateOutBox): %d %s %s\n"
+
+#: gammu/smsd/s_mysql.c:593
+#, c-format
+msgid "Error writing to database (CreateOutbox): %d %s\n"
+msgstr "Error escribiendo a la base de datos (CreateOutBox): %d %s\n"
+
+#: gammu/smsd/s_mysql.c:675
+#, c-format
+msgid "Error writing to database (AddSent): %d %s\n"
+msgstr "Error escribiendo a la base de datos (AddSent): %d %s\n"
+
+#: gammu/smsd/s_pgsql.c:134
+#, c-format
+msgid "Error deleting from database (Init): %s\n"
+msgstr "Error borando dsde la base de datos (Init): %s\n"
+
+#: gammu/smsd/s_pgsql.c:155
+#, c-format
+msgid "Error inserting into database (Init): %s\n"
+msgstr "Error insertando en la base de datos (Init): %s\n"
+
+#: gammu/smsd/s_pgsql.c:271 gammu/smsd/s_pgsql.c:907
+#, c-format
+msgid "Error writing to database (SaveInboxSMS): %s\n"
+msgstr "Error escribiendo a la base de datos (SaveInboxSMS): %s\n"
+
+#: gammu/smsd/s_pgsql.c:363
+#, c-format
+msgid "Error writing to database (SaveInbox): %s\n"
+msgstr "Error escribiendo a la base de datos (SaveInbox): %s\n"
+
+#: gammu/smsd/s_pgsql.c:385
+#, c-format
+msgid "Error writing to database (RefreshSendStatus): %s\n"
+msgstr "Error escribiendo a la base de datos (RefreshSendStatus): %s\n"
+
+#: gammu/smsd/s_pgsql.c:553 gammu/smsd/s_pgsql.c:565
+#, c-format
+msgid "Error deleting from database (MoveSMS): %s\n"
+msgstr "Error borrando de la base de datos (MoveSMS): %s\n"
+
+#: gammu/smsd/s_pgsql.c:734 gammu/smsd/s_pgsql.c:770
+#, c-format
+msgid "Error writing to database (CreateOutbox): %s\n"
+msgstr "Error escribiendo a la base de datos (CreateOutbox): %s\n"
+
+#: gammu/smsd/s_pgsql.c:885
+#, c-format
+msgid "Error writing to database (AddSent): %s\n"
+msgstr "Error escribiendo a la base de datos (AddSent): %s\n"
 
 #: gammu/gammu.c:53
 #, fuzzy, c-format
@@ -4822,763 +4819,53 @@ msgstr ""
 "\n"
 
 #: gammu/gammu.c:10262
-#, fuzzy, c-format
+#, c-format
 msgid "Too many parameters (function accepts %d)\n"
-msgstr "Demasiados parámetros!\n"
+msgstr "Demasiados parámetros (la función acepta %d)\n"
 
 #: gammu/gammu.c:10264
-#, fuzzy, c-format
+#, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
-msgstr "Demasiados parámetros!\n"
+msgstr "Demasiados parámetros (la función acepta de %d a %d)\n"
 
 #: gammu/gammu.c:10281
-#, fuzzy
 msgid "Bad option!"
-msgstr "Mes incorrecto!"
+msgstr "¡Opción incorrecta!"
 
 #: gammu/gammu.c:10313 gammu/gammu.c:10404
-#, fuzzy
 msgid "Too few parameters!"
-msgstr "Demasiados parámetros!\n"
+msgstr "¡Muy pocos parámetros!"
 
 #: gammu/gammu.c:10334
-#, fuzzy
 msgid "Configuration could not be parsed!"
-msgstr "Advertencia: No se encontró el archivo de configuración!\n"
+msgstr "Advertencia: ¡El archivo de configuración es incorrecto!"
 
 #: gammu/gammu.c:10336
-#, fuzzy
 msgid "No configuration file found!"
-msgstr "Advertencia: No se encontró el archivo de configuración!\n"
+msgstr "Advertencia: ¡No se encontró el archivo de configuración!"
 
 #: gammu/gammu.c:10339
-#, fuzzy
 msgid "No configuration read!"
-msgstr "Advertencia: No se encontró el archivo de configuración!\n"
+msgstr "Advertencia: ¡No se encontró el archivo de configuración!"
 
 #: gammu/gammu.c:10410
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
 msgstr ""
-"ERROR: la versión instalada de libGammu.so (%s) es diferente a la version de "
+"ERROR: la versión instalada de libGammu.so (%s) es diferente a la versión de "
 "Gammu (%s)\n"
 
 #: gammu/gammu.c:10440
 #, c-format
 msgid "INFO: there is later stable Gammu (%s instead of %s) available !\n"
 msgstr ""
+"INFO: ¡está disponible una versión estable de Gammu ( %s en lugar de %s ) "
+"más reciente!\n"
 
 #: gammu/gammu.c:10453
 #, c-format
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr ""
-
-#, fuzzy
-#~ msgid "Network           : %s (%s"
-#~ msgstr "Edad          : %d %s\n"
-
-#, fuzzy
-#~ msgid "phoneid = %s"
-#~ msgstr "Hora del teléfono es %s\n"
-
-#~ msgid "6 hours"
-#~ msgstr "6 horas"
-
-#~ msgid "72 hours"
-#~ msgstr "72 horas"
-
-#~ msgid "1 week"
-#~ msgstr "1 semana"
-
-#, fuzzy
-#~ msgid "20 seconds"
-#~ msgstr "20 segundos\n"
-
-#, fuzzy
-#~ msgid "1 minute"
-#~ msgstr "1 minuto\n"
-
-#, fuzzy
-#~ msgid "2 minutes"
-#~ msgstr "2 minutos\n"
-
-#, fuzzy
-#~ msgid "5 minutes"
-#~ msgstr "5 minutos\n"
-
-#, fuzzy
-#~ msgid "10 minutes"
-#~ msgstr "10 minutos\n"
-
-#, fuzzy
-#~ msgid "More arguments required"
-#~ msgstr "Mas memoria requerida..."
-
-#, fuzzy
-#~ msgid "Used"
-#~ msgstr "No leídos"
-
-#, fuzzy
-#~ msgid "Network level     : %i percent\n"
-#~ msgstr "Nivel de batería  : %i percent\n"
-
-#~ msgid "Battery level     : %i percent\n"
-#~ msgstr "Nivel de batería  : %i percent\n"
-
-#, fuzzy
-#~ msgid "Battery temp.     : %i C\n"
-#~ msgstr "Nivel de batería  : %i percent\n"
-
-#, fuzzy
-#~ msgid "Phone temp.       : %i C\n"
-#~ msgstr "Teléfono        : %s\n"
-
-#, fuzzy
-#~ msgid "Battery voltage   : %i mV\n"
-#~ msgstr "Nivel de batería  : %i percent\n"
-
-#, fuzzy
-#~ msgid "Charge voltage    : %i mV\n"
-#~ msgstr "Estado de carga   : "
-
-#, fuzzy
-#~ msgid "ToDos             : Used %d, Free %d\n"
-#~ msgstr "Usuario             : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Calendar          : Used %d, Free %d\n"
-#~ msgstr "Edad          : %d %s\n"
-
-#, fuzzy
-#~ msgid "Number of SMS: %i"
-#~ msgid_plural "Number of SMSes: %i"
-#~ msgstr[0] "   Número     : %s\n"
-#~ msgstr[1] "   Número     : %s\n"
-
-#, fuzzy
-#~ msgid "Remote number(s)"
-#~ msgstr "General         "
-
-#, fuzzy
-#~ msgid "   Number"
-#~ msgstr "   Número     : %s\n"
-
-#~ msgid " Name \"%s\","
-#~ msgstr " Nombre \"%s\","
-
-#~ msgid " Number \"%s\""
-#~ msgstr " Número \"%s\""
-
-#, fuzzy
-#~ msgid "unknown memory type (\"%s\")\n"
-#~ msgstr "ERROR: tipo de memoria desconocido (\"%s\")\n"
-
-#, fuzzy
-#~ msgid "unknown parameter \"%s\"\n"
-#~ msgstr "Parámetro desconocido \"%s\""
-
-#~ msgid "Unknown parameter \"%s\""
-#~ msgstr "Parámetro desconocido \"%s\""
-
-#, fuzzy
-#~ msgid "Unknown parameter \"%c\"\n"
-#~ msgstr "Parámetro desconocido \"%s\""
-
-#, fuzzy
-#~ msgid "  Sender"
-#~ msgstr "General         "
-
-#, fuzzy
-#~ msgid "  Date               : %s\n"
-#~ msgstr "Nombre           : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "  Subject            : %s\n"
-#~ msgstr "Enviado         : %s\n"
-
-#, fuzzy
-#~ msgid "    Content type     : %s\n"
-#~ msgstr "Edad          : %d %s\n"
-
-#, fuzzy
-#~ msgid "      Name           : %s"
-#~ msgstr "Nombre          "
-
-#, fuzzy
-#~ msgid "Ringtone ID           : "
-#~ msgstr "ID Tono          : %i\n"
-
-#, fuzzy
-#~ msgid "UNKNOWN"
-#~ msgstr "DESCONOCIDO\n"
-
-#, fuzzy
-#~ msgid "Keypad tones          : "
-#~ msgstr ""
-#~ "\n"
-#~ "Sólo lectura       : yes"
-
-#, fuzzy
-#~ msgid "Screen saver          : "
-#~ msgstr "Enviado         : %s\n"
-
-#, fuzzy
-#~ msgid "Lights                : "
-#~ msgstr "Usuario             : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "24 hours\n"
-#~ msgstr "24 horas"
-
-#, fuzzy
-#~ msgid "unknown\n"
-#~ msgstr "desconocido %i"
-
-#~ msgid "yes\n"
-#~ msgstr "si\n"
-
-#, fuzzy
-#~ msgid "Ringtone    : default\n"
-#~ msgstr "ID Tono          : %i\n"
-
-#, fuzzy
-#~ msgid "Entry is empty\n"
-#~ msgstr "La entrada está vacía."
-
-#~ msgid "Reminder (Date)\n"
-#~ msgstr "Recordatorio (Fecha)\n"
-
-#~ msgid "Call\n"
-#~ msgstr "Llamada\n"
-
-#~ msgid "Birthday (Anniversary)\n"
-#~ msgstr "Cumpleaños (Aniversario)\n"
-
-#~ msgid "Memo (Miscellaneous)\n"
-#~ msgstr "Memo (Miscelánea)\n"
-
-#~ msgid "Travel\n"
-#~ msgstr "Viaje\n"
-
-#~ msgid "Vacation\n"
-#~ msgstr "Vacaciones\n"
-
-#~ msgid "Alarm\n"
-#~ msgstr "Alarma\n"
-
-#~ msgid "Daily alarm\n"
-#~ msgstr "Alarma diaria\n"
-
-#~ msgid "Training/Athletism\n"
-#~ msgstr "Entrenamiento/Atletismo\n"
-
-#~ msgid "Training/Ball Games\n"
-#~ msgstr "Entrenamiento/Juegos de pelota\n"
-
-#~ msgid "Training/Cycling\n"
-#~ msgstr "Entrenamiento/Ciclismo\n"
-
-#~ msgid "Training/Budo\n"
-#~ msgstr "Entrenamiento/Budo\n"
-
-#~ msgid "Training/Dance\n"
-#~ msgstr "Entrenamiento/Baile\n"
-
-#~ msgid "Training/Extreme Sports\n"
-#~ msgstr "Entrenamiento/Deportes de riesgo\n"
-
-#~ msgid "Training/Football\n"
-#~ msgstr "Entrenamiento/Fútbol\n"
-
-#~ msgid "Training/Golf\n"
-#~ msgstr "Entrenamiento/Golf\n"
-
-#~ msgid "Training/Gym\n"
-#~ msgstr "Entrenamiento/Gimnasia\n"
-
-#~ msgid "Training/Horse Races\n"
-#~ msgstr "Entrenamiento/Carreas de caballos\n"
-
-#~ msgid "Training/Hockey\n"
-#~ msgstr "Entrenamiento/Hockey\n"
-
-#~ msgid "Training/Races\n"
-#~ msgstr "Entrenamiento/Carreras\n"
-
-#~ msgid "Training/Rugby\n"
-#~ msgstr "Entrenamiento/Rugby\n"
-
-#~ msgid "Training/Sailing\n"
-#~ msgstr "Entrenamiento/Sailing\n"
-
-#~ msgid "Training/Street Games\n"
-#~ msgstr "Entrenamiento/Juegos callejeros\n"
-
-#~ msgid "Training/Swimming\n"
-#~ msgstr "Entrenamiento/Natación\n"
-
-#~ msgid "Training/Tennis\n"
-#~ msgstr "Entrenamiento/Tenis\n"
-
-#~ msgid "Training/Travels\n"
-#~ msgstr "Entrenamiento/Viajes\n"
-
-#~ msgid "Training/Winter Games\n"
-#~ msgstr "Entrenamiento/Juegos de invierno\n"
-
-#~ msgid "UNKNOWN\n"
-#~ msgstr "DESCONOCIDO\n"
-
-#, fuzzy
-#~ msgid "Unknown\n"
-#~ msgstr "desconocido %i"
-
-#, fuzzy
-#~ msgid "Caller group     : \"%d\"\n"
-#~ msgstr "Grupo de llamada : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Home Number"
-#~ msgstr "Trabajo         "
-
-#, fuzzy
-#~ msgid "Mobile Number"
-#~ msgstr "Móvil           "
-
-#, fuzzy
-#~ msgid "Fax Number"
-#~ msgstr "   Número     : %s\n"
-
-#, fuzzy
-#~ msgid "  Home Number\n"
-#~ msgstr "   Número     : %s\n"
-
-#, fuzzy
-#~ msgid "  Mobile Number\n"
-#~ msgstr "Móvil           "
-
-#, fuzzy
-#~ msgid "  Fax Number\n"
-#~ msgstr "   Número     : %s\n"
-
-#, fuzzy
-#~ msgid "  unknown\n"
-#~ msgstr "desconocido %i"
-
-#~ msgid "Sent\n"
-#~ msgstr "Enviado\n"
-
-#~ msgid "Read\n"
-#~ msgstr "Leído\n"
-
-#~ msgid "UnRead\n"
-#~ msgstr "No leído\n"
-
-#~ msgid "UnSent\n"
-#~ msgstr "No enviado\n"
-
-#~ msgid "Picture ID       : 0x%x\n"
-#~ msgstr "ID Imagen        : 0x%x\n"
-
-#~ msgid "Fax number      "
-#~ msgstr "Fax             "
-
-#~ msgid "Text            "
-#~ msgstr "Texto           "
-
-#, fuzzy
-#~ msgid "LUID            "
-#~ msgstr "Texto           "
-
-#~ msgid "Name            "
-#~ msgstr "Nombre          "
-
-#~ msgid "City            "
-#~ msgstr "Ciudad          "
-
-#~ msgid "State           "
-#~ msgstr "Estado          "
-
-#~ msgid "Details         : "
-#~ msgstr "Detalles        : "
-
-#, fuzzy
-#~ msgid "Coding           : "
-#~ msgstr "Ciudad          "
-
-#~ msgid "Status           : "
-#~ msgstr "Estado\t        : "
-
-#~ msgid "Format         : "
-#~ msgstr "Formato        : "
-
-#, fuzzy
-#~ msgid "  Sender             : "
-#~ msgstr "Enviado         : %s\n"
-
-#, fuzzy
-#~ msgid "  CC                 : "
-#~ msgstr "Usuario             : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Ringtone    : "
-#~ msgstr "ID Tono          : %i\n"
-
-#, fuzzy
-#~ msgid "Model         : %s (%s)\n"
-#~ msgstr "   Modelo         : %s (%s)\n"
-
-#, fuzzy
-#~ msgid "Hardware      : %s\n"
-#~ msgstr "Privado          : %s\n"
-
-#, fuzzy
-#~ msgid "IMEI          : %s\n"
-#~ msgstr "ID Usuario       : %s\n"
-
-#, fuzzy
-#~ msgid "SIM IMSI      : %s\n"
-#~ msgstr "Enviado         : %s\n"
-
-#~ msgid "Text: \"%s\"\n"
-#~ msgstr "Texto: \"%s\"\n"
-
-#~ msgid "Category         : \"%s\"\n"
-#~ msgstr "Categoría        : \"%s\"\n"
-
-#~ msgid "Category         : \"%s\" (%i)\n"
-#~ msgstr "Categoría        : \"%s\" (%i)\n"
-
-#~ msgid "Category         : %i\n"
-#~ msgstr "Categoría        : %i\n"
-
-#~ msgid "Private          : %s\n"
-#~ msgstr "Privado          : %s\n"
-
-#~ msgid "Caller group     : \"%s\"\n"
-#~ msgstr "Grupo de llamada : \"%s\"\n"
-
-#~ msgid "Ringtone         : \"%s\"\n"
-#~ msgstr "Tono             : \"%s\"\n"
-
-#~ msgid "Ringtone ID      : %i\n"
-#~ msgstr "ID Tono          : %i\n"
-
-#~ msgid "User ID          : %s\n"
-#~ msgstr "ID Usuario       : %s\n"
-
-#~ msgid "Status          : "
-#~ msgstr "Estado          : "
-
-#~ msgid "Sent            : %s\n"
-#~ msgstr "Enviado         : %s\n"
-
-#, fuzzy
-#~ msgid "Saved            : %s\n"
-#~ msgstr "Enviado         : %s\n"
-
-#, fuzzy
-#~ msgid "SMSC number      : \"%s\""
-#~ msgstr "   Número     : %s\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Sent             : %s\n"
-#~ msgstr "Enviado         : %s\n"
-
-#~ msgid "Name             : \"%s\"\n"
-#~ msgstr "Nombre           : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Class            : %i\n"
-#~ msgstr "Contraseña          : \"%s\"\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Text: \"%s\"\n"
-#~ "\n"
-#~ msgstr "Texto: \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Number         : \"%s\"\n"
-#~ msgstr "Nombre           : \"%s\"\n"
-
-#~ msgid "Name    : \"%s\"\n"
-#~ msgstr "Nombre    : \"%s\"\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "Address : \"%s\"\n"
-#~ "\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Dirección : \"%s\"\n"
-#~ "\n"
-
-#, fuzzy
-#~ msgid "Ringtone    : %i\n"
-#~ msgstr "ID Tono          : %i\n"
-
-#~ msgid "Text   : \"%s\"\n"
-#~ msgstr "Texto   : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Sender : \"%s\"\n"
-#~ msgstr "Dirección : \"%s\"\n"
-
-#~ msgid "Name   : \"%s\"\n"
-#~ msgstr "Nombre   : \"%s\"\n"
-
-#~ msgid "Phone           : %s\n"
-#~ msgstr "Teléfono        : %s\n"
-
-#, fuzzy
-#~ msgid "IMEI            : %s\n"
-#~ msgstr "Enviado         : %s\n"
-
-#, fuzzy
-#~ msgid "Phone          : %s\n"
-#~ msgstr "Teléfono        : %s\n"
-
-#, fuzzy
-#~ msgid "IMEI           : %s\n"
-#~ msgstr "Enviado         : %s\n"
-
-#, fuzzy
-#~ msgid "Bearer              : SMS"
-#~ msgstr "Servidor            : \"%s\"\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Server number       : \"%s\"\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Código de servicio: \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Bearer              : Data (CSD)"
-#~ msgstr "Servidor            : \"%s\"\n"
-
-#~ msgid "IP address          : \"%s\"\n"
-#~ msgstr "Dirección IP        : \"%s\"\n"
-
-#~ msgid "User name           : \"%s\"\n"
-#~ msgstr "Nombre de usuario   : \"%s\"\n"
-
-#~ msgid "Password            : \"%s\"\n"
-#~ msgstr "Contraseña          : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Bearer              : USSD"
-#~ msgstr "Servidor            : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Bearer              : GPRS"
-#~ msgstr "Servidor            : \"%s\"\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Login Type          : Manual\n"
-#~ msgstr "Tipo de login       : Manual\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "\n"
-#~ "Login Type          : Automatic\n"
-#~ msgstr "Tipo de login       : Automatic\n"
-
-#~ msgid "Access point        : \"%s\"\n"
-#~ msgstr "Punto de acceso     : \"%s\"\n"
-
-#~ msgid "User                : \"%s\"\n"
-#~ msgstr "Usuario             : \"%s\"\n"
-
-#~ msgid "Server              : \"%s\"\n"
-#~ msgstr "Servidor            : \"%s\"\n"
-
-#~ msgid "Homepage            : \"%s\"\n"
-#~ msgstr "Inicio              : \"%s\"\n"
-
-#~ msgid ""
-#~ "\n"
-#~ "Homepage            : \"%s\"\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Inicio            : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Location: %i\n"
-#~ msgstr "Memoria %s, Location %i\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Name    : \"%s\"\n"
-#~ "\n"
-#~ msgstr "Nombre    : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Location  : %i\n"
-#~ msgstr "Memoria %s, Location %i\n"
-
-#, fuzzy
-#~ msgid "Location     : %i\n"
-#~ msgstr "Categoría        : %i\n"
-
-#, fuzzy
-#~ msgid "DueTime      : %s\n"
-#~ msgstr "   Número     : %s\n"
-
-#, fuzzy
-#~ msgid "Alarm        : %s\n"
-#~ msgstr "Edad          : %d %s\n"
-
-#, fuzzy
-#~ msgid "Silent alarm : %s\n"
-#~ msgstr "Alarma diaria\n"
-
-#, fuzzy
-#~ msgid "Text         : \"%s\"\n"
-#~ msgstr "Texto   : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Private      : %s\n"
-#~ msgstr "Privado          : %s\n"
-
-#, fuzzy
-#~ msgid "Category     : \"%s\" (%i)\n"
-#~ msgstr "Categoría        : \"%s\" (%i)\n"
-
-#, fuzzy
-#~ msgid "Category     : %i\n"
-#~ msgstr "Categoría        : %i\n"
-
-#, fuzzy
-#~ msgid "Contact ID   : \"%s\" (%d)\n"
-#~ msgstr "Categoría        : \"%s\" (%i)\n"
-
-#, fuzzy
-#~ msgid "Contact ID   : %d\n"
-#~ msgstr "ID Tono          : %i\n"
-
-#, fuzzy
-#~ msgid "Phone        : \"%s\"\n"
-#~ msgstr "Teléfono        : %s\n"
-
-#, fuzzy
-#~ msgid "Description  : \"%s\"\n"
-#~ msgstr "Texto   : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Location     : \"%s\"\n"
-#~ msgstr "Nombre    : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "LUID         : \"%s\"\n"
-#~ msgstr "ID Usuario       : %s\n"
-
-#~ msgid "   Number     : %s\n"
-#~ msgstr "   Número     : %s\n"
-
-#~ msgid "   Manufacturer  : %s\n"
-#~ msgstr "   Fabricante  : %s\n"
-
-#~ msgid "   Model         : %s (%s)\n"
-#~ msgstr "   Modelo         : %s (%s)\n"
-
-#, fuzzy
-#~ msgid "Start        : %s\n"
-#~ msgstr "Estado          : "
-
-#, fuzzy
-#~ msgid "Stop         : %s\n"
-#~ msgstr "Enviado         : %s\n"
-
-#, fuzzy
-#~ msgid "Age          : "
-#~ msgstr "Edad          : %d %s\n"
-
-#, fuzzy
-#~ msgid "Location     : %d\n"
-#~ msgstr "Categoría        : %i\n"
-
-#~ msgid "ERROR: unknown parameter \"%s\"\n"
-#~ msgstr "ERROR: parámetro desconocido \"%s\"\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Entry is empty\n"
-#~ "\n"
-#~ msgstr "La entrada está vacía."
-
-#~ msgid "Entry number %i is empty\n"
-#~ msgstr "La entrada número %i está vacía\n"
-
-#, fuzzy
-#~ msgid "Entry number %i\n"
-#~ msgstr "La entrada número %i está vacía\n"
-
-#~ msgid "Network  Name\n"
-#~ msgstr "Nombre de red\n"
-
-#, fuzzy
-#~ msgid "%s\n"
-#~ msgstr "Texto: \"%s\"\n"
-
-#, fuzzy
-#~ msgid "each week"
-#~ msgstr "1 semana"
-
-#, fuzzy
-#~ msgid " %02i:%02i:%02i\n"
-#~ msgstr "Hora: %02d:%02d\n"
-
-#, fuzzy
-#~ msgid "Help: %s\n"
-#~ msgstr "Fecha: %s\n"
-
-#, fuzzy
-#~ msgid " %s"
-#~ msgstr " en %s"
-
-#, fuzzy
-#~ msgid "%i. \"%s\""
-#~ msgstr "Añadiendo \"%s\""
-
-#, fuzzy
-#~ msgid " \"%s\""
-#~ msgstr "Texto: \"%s\"\n"
-
-#~ msgid "[Gammu version %s built %s %s"
-#~ msgstr "[Versión de Gammu %s compilación %s %s"
-
-#~ msgid " in %s"
-#~ msgstr " en %s"
-
-#, fuzzy
-#~ msgid "GSM_SMSC        - %i\n"
-#~ msgstr "Categoría        : %i\n"
-
-#, fuzzy
-#~ msgid "bool            - %i\n"
-#~ msgstr "Enviado         : %s\n"
-
-#, fuzzy
-#~ msgid "int             - %i\n"
-#~ msgstr "Enviado         : %s\n"
-
-#, fuzzy
-#~ msgid "GSM_NetworkInfo - %i\n"
-#~ msgstr ""
-#~ "Redes para %s:\n"
-#~ "\n"
-
-#, fuzzy
-#~ msgid ": %s"
-#~ msgstr "Fecha: %s\n"
-
-#~ msgid "from %i to %i"
-#~ msgstr "de %i a %i"
+"INFO: ¡está disponible una versión de prueba de Gammu ( %s en lugar de %s ) "
+"más reciente!\n"
