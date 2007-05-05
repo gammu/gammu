@@ -264,7 +264,7 @@ set (DEVELDOCS
     docs/develop/Gammu.htm
     docs/develop/develop.txt
     docs/develop/gammu_hints.txt
-    "docs/develop/protocol/TDMA 5120.txt"
+    docs/develop/protocol/TDMA_5120.txt
     docs/develop/protocol/carkit.txt
     docs/develop/protocol/n6110.txt
     docs/develop/protocol/n6510.txt
