@@ -1,4 +1,5 @@
-/* (c) 2003 by Marcin Wiacek */
+/* (c) 2003 by Marcin Wiacek
+ * (C) 2007 Matthias Lechner <matthias@lmme.de> */
 
 #ifndef gnapgen_h
 #define gnapgen_h
@@ -16,6 +17,13 @@
 #endif
 
 typedef struct {
+	int				byte1;
+	int				byte2;
+	int				byte3;
+	int				byte4;
+} TUint32;
+
+typedef struct {
 	int				LastCalendarYear;
 	int				LastCalendarPos;
 	GSM_NOKIACalToDoLocations	LastCalendar;
@@ -24,8 +32,16 @@ typedef struct {
 	GSM_CalendarNoteType		CalendarIconsTypes[10];
 	int				CalendarIconsNum;
 
-	GSM_NOKIASMSFolder		LastSMSFolder;
-	GSM_SMSFolders			LastSMSFolders;
+	bool				LastContactArrived;
+
+	//GSM_OneSMSFolder		CurrentSMSFolder;
+	GSM_SMSFolders			CurrentSMSFolders;
+	int				SMSFolderID[100];
+	int				CurrentFolderNumber;
+
+	TUint32				SMSIDs[5000];
+	int				SMSCount;
+	int				CurrentSMSNumber;
 
 	GSM_NOKIACalToDoLocations	LastToDo;
 

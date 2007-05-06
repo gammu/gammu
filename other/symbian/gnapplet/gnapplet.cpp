@@ -213,6 +213,7 @@ void GNApplet::InitPhoneBookL(void)
 	if (cdb) return;
 
 	cdb = CContactDatabase::OpenL();
+	contactIter = new TContactIter( *cdb );
 }
 
 
