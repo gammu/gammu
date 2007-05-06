@@ -83,6 +83,7 @@ public:
 
 	// Phonebook
 	CContactDatabase *cdb;
+	TContactIter *contactIter;
 	void InitPhoneBookL(void);
 
 	// Log client

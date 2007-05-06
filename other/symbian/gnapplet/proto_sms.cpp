@@ -22,6 +22,7 @@
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  *
  * Copyright (C) 2004 BORBELY Zoltan
+ * Copyright (C) 2007 Matthias Lechner <matthias@lmme.de>
  *
  * This file contains the SMS message handler.
  *
@@ -209,11 +210,23 @@ static void FolderStatusL(PktBuf &in, PktBuf &out)
 	out << (TUint16)GNAPPLET_MSG_SMS_FOLDER_STATUS_RESP;
 	out << (TUint16)GN_ERR_NONE;
 	out << memtype;
-	out << (TUint32)entry->Count();
-	for (i = 0; i < n; i++) {
-		const TMsvEntry &child = (*entry)[i];
+	/// @todo erm, this is a waste of resources :o) better replace this when I have time
 
-		out << (TUint32)child.Id();
+	// count sms entries
+	TUint32 count=0;
+	for( i=0; i<n; i++ ) {
+		const TMsvEntry &child = (*entry)[i];
+		if( child.iMtm == KUidMsgTypeSMS )
+			count++;
+	}
+
+	out << count;
+
+	for (i = 0; i < n; i++) {
+		// only sms are supported atm
+		const TMsvEntry &child = (*entry)[i];
+		if( child.iMtm == KUidMsgTypeSMS )
+			out << (TUint32)child.Id();
 	}
 
 	CleanupStack::PopAndDestroy(entry);
@@ -289,7 +302,6 @@ static void ReadMessageL(PktBuf &in, PktBuf &out)
 	TUint32 location;
 	CMsvEntry *entry;
 	CArrayFixFlat<TSms> *sms_array;
-	TSms::TPdu pdu;
 	TUint8 status;
 
 	g->InitSmsL(sms_observer);
@@ -317,10 +329,12 @@ static void ReadMessageL(PktBuf &in, PktBuf &out)
 	out << (TUint16)GNAPPLET_MSG_SMS_MESSAGE_READ_RESP;
 	out << (TUint16)GN_ERR_NONE;
 
-	sms_array = new (ELeave)CArrayFixFlat<TSms>(1);
+	sms_array = new (ELeave)CArrayFixFlat<TSms>(5);
 	CleanupStack::PushL(sms_array);
 	msg.EncodeMessagePDUsL(*sms_array);
-	pdu = (*sms_array)[0].PduL();
+	out << (TUint16) sms_array->Count();
+	for( int i=0; i<sms_array->Count(); i++ )
+		out << (*sms_array)[i].PduL();
 	CleanupStack::PopAndDestroy(sms_array);
 
 	if (f.SendingState() == KMsvSendStateSent) {
@@ -333,7 +347,6 @@ static void ReadMessageL(PktBuf &in, PktBuf &out)
 		status = GN_SMS_Read;
 	}
 
-	out << pdu;
 	out << status;
 
 	CleanupStack::PopAndDestroy(entry);
