@@ -58,7 +58,20 @@ typedef struct {
 } GSM_Lines;
 
 void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsigned char *whitespaces, int spaceslen, bool eot);
+/**
+ * Returns pointer to static buffer containing line.
+ * @param message Parsed message.
+ * @param lines Parsed lines information.
+ * @param start Which line we want.
+ */
 char *GetLineString(unsigned char *message, GSM_Lines lines, int start);
+/**
+ * Returns line length.
+ * @param message Parsed message.
+ * @param lines Parsed lines information.
+ * @param start Which line we want.
+ */
+int GetLineLength(unsigned char *message, GSM_Lines lines, int start);
 void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, int start);
 
 /* ------------------------------------------------------------------------- */

@@ -367,6 +367,11 @@ char *GetLineString(unsigned char *message, GSM_Lines lines, int start)
 	return retval;
 }
 
+int GetLineLength(unsigned char *message, GSM_Lines lines, int start)
+{
+	return lines.numbers[start*2-2+1]-lines.numbers[start*2-2];
+}
+
 void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, int start)
 {
 	memcpy(dest,GetLineString(src, lines, start),strlen(GetLineString(src, lines, start)));

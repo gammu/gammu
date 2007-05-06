@@ -551,7 +551,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 		if (Data->ModelInfo->number[0] != 0) strcpy(Data->Model,Data->ModelInfo->number);
 	} else {
-		smprintf(s, "WARNING: Model name too long, increase MAX_MODEL_LENGTH to at least %zd\n", strlen(GetLineString(msg.Buffer, Priv->Lines, 2)));
+		smprintf(s, "WARNING: Model name too long, increase MAX_MODEL_LENGTH to at least %zd\n", strlen(pos));
 	}
 
 	return ERR_NONE;
@@ -582,10 +582,10 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 	case AT_Reply_OK:
 		smprintf(s, "Manufacturer info received\n");
 		Priv->Manufacturer = AT_Unknown;
-		if (strlen(GetLineString(msg.Buffer, Priv->Lines, 2)) <= MAX_MANUFACTURER_LENGTH) {
+		if (GetLineLength(msg.Buffer, Priv->Lines, 2) <= MAX_MANUFACTURER_LENGTH) {
 			CopyLineString(s->Phone.Data.Manufacturer, msg.Buffer, Priv->Lines, 2);
 		} else {
-			smprintf(s, "WARNING: Manufacturer name too long, increase MAX_MANUFACTURER_LENGTH to at least %zd\n", strlen(GetLineString(msg.Buffer, Priv->Lines, 2)));
+			smprintf(s, "WARNING: Manufacturer name too long, increase MAX_MANUFACTURER_LENGTH to at least %zd\n", GetLineLength(msg.Buffer, Priv->Lines, 2));
 			s->Phone.Data.Manufacturer[0] = 0;
 		}
 		/* Sometimes phone adds this before manufacturer (Sagem) */
@@ -1056,8 +1056,8 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 		if (strstr(msg.Buffer, "\"ME\"") != NULL) s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_AVAILABLE;
 		else s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_NOTAVAILABLE;
 
-		smprintf(s, "Available SMS memories received: read: ME = %d, SM = %d, save: ME = %d, SM = %d\n", 
-				s->Phone.Data.Priv.ATGEN.PhoneSMSMemory, 
+		smprintf(s, "Available SMS memories received: read: ME = %d, SM = %d, save: ME = %d, SM = %d\n",
+				s->Phone.Data.Priv.ATGEN.PhoneSMSMemory,
 				s->Phone.Data.Priv.ATGEN.SIMSMSMemory,
 				s->Phone.Data.Priv.ATGEN.PhoneSaveSMS,
 				s->Phone.Data.Priv.ATGEN.SIMSaveSMS
@@ -1253,7 +1253,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				case '2': sms->State = SMS_UnSent;	break;
 				default : sms->State = SMS_Sent;	break;//case '3'
 			}
-			DecodeHexBin (buffer, GetLineString(msg.Buffer,Priv->Lines,3), strlen(GetLineString(msg.Buffer,Priv->Lines,3)));
+			DecodeHexBin (buffer, GetLineString(msg.Buffer,Priv->Lines,3), GetLineLength(msg.Buffer,Priv->Lines,3));
 			/* Siemens MC35 (only ?) */
 			if (strstr(msg.Buffer,"+CMGR: 0,,0")!=NULL) return ERR_EMPTY;
 			/* Siemens M20 */
@@ -2535,7 +2535,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	}
 
 	SplitLines(GetLineString(msg.Buffer,Priv->Lines,2),
-		strlen(GetLineString(msg.Buffer,Priv->Lines,2)),
+		GetLineLength(msg.Buffer,Priv->Lines,2),
 		&Lines, ",", 1, true);
 
 	/* Find number of lines */
@@ -4481,7 +4481,7 @@ GSM_Error ATGEN_IncomingSMSDeliver(GSM_Protocol_Message msg, GSM_StateMachine *s
 		}
 		DecodeHexBin (buffer,
 			GetLineString(msg.Buffer,Data->Priv.ATGEN.Lines,i),
-			strlen(GetLineString(msg.Buffer,Data->Priv.ATGEN.Lines,i)));
+			GetLineLength(msg.Buffer,Data->Priv.ATGEN.Lines,i));
 
 		/* We use locations from SMS layouts like in ../phone2.c(h) */
 		for(i=0;i<buffer[0]+1;i++) smsframe[i]=buffer[current++];

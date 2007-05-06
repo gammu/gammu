@@ -27,6 +27,7 @@ ChangeLog
 [+] * Properly handle vCard style continuation (bug #268).
 [-] * Detect Motorola specific error while reading SMSes (bug #288).
 [-] * Fix OBEX listing to behave according to specs (bug #290).
+[-] * Fix crash on invalid SMS reply from phone (bug #293).
 
 20070430 - 1.10.5
 [-] * Doxygen documentation improvements.
