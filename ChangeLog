@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.10.6
+20070506 - 1.10.6
 [*] * Backup file uses ; instead of # (bug #85, patch by Marcin).
 [-] * Updated shell script gammu-config to generate configuration.
 [-] * Install gammu-config script to ease generating configuration.
