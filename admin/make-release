@@ -8,6 +8,11 @@ srcdir=`pwd`
 
 version=`tr , . < VERSION`
 
+if grep -q '^200[0-9]???? - ' ChangeLog ; then
+    echo 'ChangeLog does not seem to be finalised, aborting!'
+    exit 1
+fi
+
 tmp=`mktemp -dt $repo-build-XXXXXX`
 
 cd $tmp
