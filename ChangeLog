@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.10.6
+2007???? - 1.10.7
 [-] * Do not use asynchronous I/O on Windows.
 
 20070506 - 1.10.6
