@@ -8,6 +8,7 @@ srcdir=`pwd`
 
 version=`tr , . < VERSION`
 
+# Pre release checks
 if [ "x$1" = "xbranch" ] ; then
     if grep -q '^200[0-9]???? - ' ChangeLog ; then
         echo 'ChangeLog does not seem to be finalised, aborting!'
