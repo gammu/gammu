@@ -198,7 +198,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 			       0,
 			       0,
 			       OPEN_EXISTING,
-			       FILE_ATTRIBUTE_NORMAL | FILE_FLAG_OVERLAPPED,
+			       FILE_ATTRIBUTE_NORMAL,
 			       NULL);
 
 	if (d->hPhone == INVALID_HANDLE_VALUE) {
