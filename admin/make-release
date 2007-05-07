@@ -41,4 +41,5 @@ make
 cpack
 mv Gammu-*-Windows.* ../
 
-echo "Release is in $tmp directory"
+echo "Release is in $tmp directory:"
+ls -lh $tmp
