@@ -2408,11 +2408,19 @@ GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, bo
 
 	error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetDateTime);
 
-	if (error == ERR_INVALIDDATA && set_timezone
-		&& (s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_CMEError)
-		&& (s->Phone.Data.Priv.ATGEN.ErrorCode == 24)) {
-		/* Some firmwares of Ericsson R320s don't like the timezone part,
-		even though it is in its command reference. */
+	if (set_timezone && (
+		(error == ERR_INVALIDDATA 
+		&& s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_CMEError
+		&& s->Phone.Data.Priv.ATGEN.ErrorCode == 24) ||
+		(error == ERR_INVALIDLOCATION
+		&& s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_CMEError
+		&& s->Phone.Data.Priv.ATGEN.ErrorCode == 21)
+		)) {
+		/* 
+		 * Some firmwares of Ericsson R320s don't like the timezone part,
+		 * even though it is in its command reference. Similar issue 
+		 * exists for MC75 
+		 */
 		smprintf(s, "Retrying without timezone suffix\n");
 		error = ATGEN_PrivSetDateTime(s, date_time, false);
 	}
