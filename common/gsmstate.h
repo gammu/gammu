@@ -1540,7 +1540,7 @@ struct _GSM_User {
 	void	  (*IncomingCall)	(GSM_StateMachine *s, GSM_Call	      call);
 	void 	  (*IncomingSMS)	(GSM_StateMachine *s, GSM_SMSMessage sms);
 	void 	  (*IncomingCB)		(GSM_StateMachine *s, GSM_CBMessage  cb);
-	void 	  (*IncomingUSSD)	(GSM_StateMachine *s, int 	      status, char	      *Text);
+	void 	  (*IncomingUSSD)	(GSM_StateMachine *s, GSM_USSDMessage ussd);
 	void 	  (*SendSMSStatus)	(GSM_StateMachine *s, int 	      status, int MessageReference);
 };
 

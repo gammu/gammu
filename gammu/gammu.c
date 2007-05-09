@@ -1850,11 +1850,11 @@ static void IncomingCall(GSM_StateMachine *s, GSM_Call call)
 	}
 }
 
-static void IncomingUSSD(GSM_StateMachine *s, int status, char *Buffer)
+static void IncomingUSSD(GSM_StateMachine *s, GSM_USSDMessage ussd)
 {
 	printf("%s\n", _("USSD received"));
-	printf(LISTFORMAT "\"%d\"\n", _("Status"), status);
-	printf(LISTFORMAT "\"%s\"\n", _("Service reply"), DecodeUnicodeConsole(Buffer));
+	printf(LISTFORMAT "\"%d\"\n", _("Status"), ussd.Status);
+	printf(LISTFORMAT "\"%s\"\n", _("Service reply"), DecodeUnicodeConsole(ussd.Text));
 }
 
 #define PRINTUSED(name, used, free) \
@@ -2088,9 +2088,9 @@ static void Monitor(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void IncomingUSSD2(GSM_StateMachine *s, int status, char *Buffer)
+static void IncomingUSSD2(GSM_StateMachine *s, GSM_USSDMessage ussd)
 {
-	IncomingUSSD(s, status, Buffer);
+	IncomingUSSD(s, ussd);
 
 	gshutdown = true;
 }

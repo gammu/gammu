@@ -45,6 +45,22 @@ typedef struct {
 	int     Channel;
 } GSM_CBMessage;
 
+/* -------------------- USSD ------------------------------------ */
+
+/**
+ * Structure for Cell Broadcast messages.
+ */
+typedef struct {
+	/**
+	 * Message text.
+	 */
+	unsigned char Text[2000];
+	/**
+	 * Channel number.
+	 */
+	int     Status;
+} GSM_USSDMessage;
+
 /* ------------------------ SMS status ------------------------------------ */
 
 /**
