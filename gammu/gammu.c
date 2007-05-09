@@ -1850,9 +1850,11 @@ static void IncomingCall(GSM_StateMachine *s, GSM_Call call)
 	}
 }
 
-static void IncomingUSSD(GSM_StateMachine *s, char *Buffer)
+static void IncomingUSSD(GSM_StateMachine *s, int status, char *Buffer)
 {
-	printf(LISTFORMAT "\"%s\"\n", _("Service reply"),DecodeUnicodeConsole(Buffer));
+	printf("%s\n", _("USSD received"));
+	printf(LISTFORMAT "\"%d\"\n", _("Status"), status);
+	printf(LISTFORMAT "\"%s\"\n", _("Service reply"), DecodeUnicodeConsole(Buffer));
 }
 
 #define PRINTUSED(name, used, free) \
@@ -2086,9 +2088,9 @@ static void Monitor(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void IncomingUSSD2(GSM_StateMachine *s, char *Buffer)
+static void IncomingUSSD2(GSM_StateMachine *s, int status, char *Buffer)
 {
-	printf(LISTFORMAT "\"%s\"\n", _("Service reply"),DecodeUnicodeConsole(Buffer));
+	IncomingUSSD(s, status, Buffer);
 
 	gshutdown = true;
 }
@@ -2105,10 +2107,17 @@ static void GetUSSD(int argc, char *argv[])
 	error=Phone->SetIncomingUSSD(&s,true);
 	Print_Error(error);
 
-	error=Phone->DialVoice(&s, argv[2], GSM_CALL_DefaultNumberPresence);
+	error=Phone->DialService(&s, argv[2]);
+	/* Fallback to voice call, it can work wit hsome phones */
+	if (error == ERR_NOTIMPLEMENTED || error == ERR_NOTSUPPORTED) {
+		error=Phone->DialVoice(&s, argv[2], GSM_CALL_DefaultNumberPresence);
+	}
 	Print_Error(error);
 
-	while (!gshutdown) GSM_ReadDevice(&s,true);
+	while (!gshutdown) GSM_ReadDevice(&s, false);
+
+	error=Phone->SetIncomingUSSD(&s, false);
+	Print_Error(error);
 
 	GSM_Terminate();
 }

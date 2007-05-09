@@ -17,6 +17,7 @@ ChangeLog
 
 2007???? - 1.10.7
 [-] * Do not use asynchronous I/O on Windows.
+[-] * Make USSD work with AT phones.
 
 20070506 - 1.10.6
 [*] * Backup file uses ; instead of # (bug #85, patch by Marcin).

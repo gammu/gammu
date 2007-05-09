@@ -333,6 +333,14 @@ GSM_Error SONYERICSSON_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShow
 	return ATGEN_DialVoice(s, number, ShowNumber);
 }
 
+GSM_Error SONYERICSSON_DialService(GSM_StateMachine *s, char *number)
+{
+	GSM_Error error;
+
+	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	return ATGEN_DialService(s, number);
+}
+
 GSM_Error SONYERICSSON_AnswerCall(GSM_StateMachine *s, int ID, bool all)
 {
 	GSM_Error error;
@@ -1475,6 +1483,7 @@ GSM_Phone_Functions SONYERICSSONPhone = {
  	NOTSUPPORTED,			/* 	AddSMSFolder		*/
  	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
 	SONYERICSSON_DialVoice,
+	SONYERICSSON_DialService,
 	SONYERICSSON_AnswerCall,
 	SONYERICSSON_CancelCall,
  	NOTSUPPORTED,			/* 	HoldCall 		*/

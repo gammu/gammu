@@ -2703,6 +2703,7 @@ GSM_Phone_Functions OBEXGENPhone = {
  	NOTIMPLEMENTED,			/* 	AddSMSFolder		*/
  	NOTIMPLEMENTED,			/* 	DeleteSMSFolder		*/
 	NOTIMPLEMENTED,			/*	DialVoice		*/
+        NOTIMPLEMENTED,			/*	DialService		*/
 	NOTIMPLEMENTED,			/*	AnswerCall		*/
 	NOTIMPLEMENTED,			/*	CancelCall		*/
  	NOTIMPLEMENTED,			/* 	HoldCall 		*/

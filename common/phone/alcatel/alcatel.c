@@ -2264,6 +2264,14 @@ static GSM_Error ALCATEL_DialVoice(GSM_StateMachine *s, char *number, GSM_CallSh
 	return ATGEN_DialVoice(s, number, ShowNumber);
 }
 
+static GSM_Error ALCATEL_DialService(GSM_StateMachine *s, char *number)
+{
+	GSM_Error error;
+
+	if ((error = ALCATEL_SetATMode(s))!= ERR_NONE) return error;
+	return ATGEN_DialService(s, number);
+}
+
 static GSM_Error ALCATEL_AnswerCall(GSM_StateMachine *s, int ID, bool all)
 {
 	GSM_Error error;
@@ -4041,6 +4049,7 @@ GSM_Phone_Functions ALCATELPhone = {
  	NOTSUPPORTED,			/* 	AddSMSFolder		*/
  	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
 	ALCATEL_DialVoice,
+	ALCATEL_DialService,
 	ALCATEL_AnswerCall,
 	ALCATEL_CancelCall,
  	NOTSUPPORTED,			/* 	HoldCall 		*/

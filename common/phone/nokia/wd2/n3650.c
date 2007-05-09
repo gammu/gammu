@@ -324,6 +324,7 @@ GSM_Phone_Functions N3650Phone = {
  	NOTSUPPORTED,			/* 	AddSMSFolder		*/
  	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
 	NOTIMPLEMENTED,			/*	DialVoice		*/
+        NOTIMPLEMENTED,			/*	DialService		*/
 	NOTIMPLEMENTED,			/*	AnswerCall		*/
 	NOTIMPLEMENTED,			/*	CancelCall		*/
  	NOTIMPLEMENTED,			/* 	HoldCall 		*/

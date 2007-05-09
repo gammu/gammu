@@ -431,6 +431,7 @@ typedef enum {
 	ID_EnableErrorInfo,
 	ID_SetOBEX,
 	ID_SetUSSD,
+	ID_GetUSSD,
 	ID_GetNote,
 	ID_SetNote,
 	ID_GetSignalQuality,
@@ -1172,6 +1173,10 @@ typedef struct {
 	 */
 	GSM_Error (*DialVoice)	  	(GSM_StateMachine *s, char *Number, GSM_CallShowNumber ShowNumber);
 	/**
+	 * Dials service number (usually for USSD).
+	 */
+	GSM_Error (*DialService)	(GSM_StateMachine *s, char *Number);
+	/**
 	 * Accept current incoming call.
 	 */
 	GSM_Error (*AnswerCall)	 	(GSM_StateMachine *s, int ID, bool all);
@@ -1535,7 +1540,7 @@ struct _GSM_User {
 	void	  (*IncomingCall)	(GSM_StateMachine *s, GSM_Call	      call);
 	void 	  (*IncomingSMS)	(GSM_StateMachine *s, GSM_SMSMessage sms);
 	void 	  (*IncomingCB)		(GSM_StateMachine *s, GSM_CBMessage  cb);
-	void 	  (*IncomingUSSD)	(GSM_StateMachine *s, char	      *Text);
+	void 	  (*IncomingUSSD)	(GSM_StateMachine *s, int 	      status, char	      *Text);
 	void 	  (*SendSMSStatus)	(GSM_StateMachine *s, int 	      status, int MessageReference);
 };
 

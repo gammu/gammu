@@ -2477,7 +2477,10 @@ GSM_Error N6110_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
         if (s->Phone.Data.EnableIncomingUSSD && s->User.IncomingUSSD!=NULL) {
                 EncodeUnicode(buffer2,buffer,strlen(buffer));
-                s->User.IncomingUSSD(s, buffer2);
+		/**
+		 * @todo: Should determine status.
+		 */
+                s->User.IncomingUSSD(s, -1, buffer2);
         }
 
         return ERR_NONE;
@@ -2841,6 +2844,7 @@ GSM_Phone_Functions N6110Phone = {
         NOTSUPPORTED,                   /*      AddSMSFolder            */
         NOTSUPPORTED,                   /*      DeleteSMSFolder         */
         N6110_DialVoice,
+        NOTIMPLEMENTED,			/*	DialService		*/
         N6110_AnswerCall,
         DCT3_CancelCall,
         N6110_HoldCall,

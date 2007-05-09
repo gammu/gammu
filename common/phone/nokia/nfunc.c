@@ -1579,7 +1579,10 @@ GSM_Error N71_65_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	if (s->Phone.Data.EnableIncomingUSSD && s->User.IncomingUSSD!=NULL) {
 		EncodeUnicode(buffer2,buffer,strlen(buffer));
-		s->User.IncomingUSSD(s, buffer2);
+		/**
+		 * @todo: Should determine status.
+		 */
+		s->User.IncomingUSSD(s, -1, buffer2);
 	}
 
 	return ERR_NONE;

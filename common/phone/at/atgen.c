@@ -478,20 +478,50 @@ GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	unsigned char 	buffer[2000],buffer2[4000];
-	int 		i = 10;
+	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
+	unsigned char 	buffer[2000],buffer2[4000],text[4000];
+	int status;
+	size_t len;
+	char *pos;
 
-	/* Ugly hack */
-	while (msg.Buffer[i]!=13) i++;
-	i = i - 6;
-	memcpy(buffer,msg.Buffer+10,i-11);
-	buffer[i-11] = 0x00;
+	/* 
+	 * Reply format:
+	 * +CUSD: 2,"...",15
+	 */
+	smprintf(s, "Incoming USSD received\n");
 
-	smprintf(s, "USSD reply: \"%s\"\n",buffer);
+	if (s->Phone.Data.EnableIncomingUSSD) {
 
-	if (s->Phone.Data.EnableIncomingUSSD && s->User.IncomingUSSD!=NULL) {
-		EncodeUnicode(buffer2,buffer,strlen(buffer));
-		s->User.IncomingUSSD(s, buffer2);
+		pos = strstr(msg.Buffer, "+CUSD:");
+		if (pos == NULL) return ERR_UNKNOWN;
+		/* Go after +CUSD: */
+		pos += 6;
+
+		/* Status */
+		while (*pos && !isdigit(*pos)) pos++;
+		status = atoi(pos);
+		smprintf(s, "Status: %d\n", status);
+
+		/* Text */
+		while (*pos != '"') pos++;
+		pos += ATGEN_ExtractOneParameter(pos, buffer);
+		smprintf(s, "Text: %s\n", buffer);
+
+		len = strlen(buffer + 1) - 1;
+		if (Priv->Charset == AT_CHARSET_HEX) {
+			/* This is hex encoded number */
+			DecodeHexBin(buffer2, buffer+1, len);
+			DecodeDefault(text ,buffer2, strlen(buffer2), false, NULL);
+		} else if (Priv->Charset == AT_CHARSET_UCS2) {
+			/* This is unicode encoded number */
+			DecodeHexUnicode(text, buffer + 1,len);
+		} else  {
+			EncodeUnicode(text, buffer + 1, len);
+		}
+
+		if (s->User.IncomingUSSD!=NULL) {
+			s->User.IncomingUSSD(s, status, text);
+		}
 	}
 
 	return ERR_NONE;
@@ -501,10 +531,15 @@ GSM_Error ATGEN_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
 {
 	GSM_Error error;
 
+	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
+	if (error != ERR_NONE) return error;
+
 	if (enable) {
 		smprintf(s, "Enabling incoming USSD\n");
 		error=GSM_WaitFor (s, "AT+CUSD=1\r", 10, 0x00, 3, ID_SetUSSD);
 	} else {
+		smprintf(s, "Terminating possible incoming USSD\n");
+		error=GSM_WaitFor (s, "AT+CUSD=2\r", 10, 0x00, 3, ID_SetUSSD);
 		smprintf(s, "Disabling incoming USSD\n");
 		error=GSM_WaitFor (s, "AT+CUSD=0\r", 10, 0x00, 3, ID_SetUSSD);
 	}
@@ -3292,6 +3327,25 @@ GSM_Error ATGEN_ReplyDialVoice(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_UNKNOWNRESPONSE;
 }
 
+GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
+{
+	char *req;
+	const char format[] = "AT+CUSD=%d,\"%s\"\r";
+	GSM_Error error;
+
+	req = (char *)malloc(strlen(format) + strlen(number) + 1);
+	if (req == NULL) {
+		return ERR_MOREMEMORY;
+	}
+
+	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
+	if (error != ERR_NONE) return error;
+
+	sprintf(req, format, s->Phone.Data.EnableIncomingUSSD ? 1 : 0, number);
+
+	return GSM_WaitFor (s, req, strlen(req), 0x00, 30, ID_GetUSSD);
+}
+
 GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber)
 {
 	char req[39] = "ATDT";
@@ -4715,6 +4769,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply, 		"AT+CRC"		,0x00,0x00,ID_SetIncomingCall	 },
 {ATGEN_GenericReply, 		"AT+CLIP"		,0x00,0x00,ID_SetIncomingCall	 },
 {ATGEN_GenericReply, 		"AT+CUSD"		,0x00,0x00,ID_SetUSSD		 },
+{ATGEN_ReplyGetUSSD, 		"AT+CUSD"		,0x00,0x00,ID_GetUSSD		 },
 {ATGEN_ReplyGetUSSD, 		"+CUSD"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,            "AT+CLIP=1"      	,0x00,0x00,ID_IncomingFrame      },
 {ATGEN_ReplyIncomingCallInfo,	"+CLIP"			,0x00,0x00,ID_IncomingFrame	 },
@@ -4826,6 +4881,7 @@ GSM_Phone_Functions ATGENPhone = {
  	NOTSUPPORTED,			/* 	AddSMSFolder		*/
  	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
 	ATGEN_DialVoice,
+	ATGEN_DialService,
 	ATGEN_AnswerCall,
 	ATGEN_CancelCall,
  	NOTSUPPORTED,			/* 	HoldCall 		*/
