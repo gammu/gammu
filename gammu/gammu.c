@@ -1876,7 +1876,7 @@ static void IncomingUSSD(GSM_StateMachine *s, GSM_USSDMessage ussd)
 #define CHECK_EXIT \
 { \
 	if (gshutdown) break; \
-	if (error != ERR_NONE && error != ERR_NOTSUPPORTED && error != ERR_EMPTY && error != ERR_SOURCENOTAVAILABLE && error != ERR_NOTIMPLEMENTED) break; \
+	if (error != ERR_NONE && error != ERR_UNKNOWN && error != ERR_NOTSUPPORTED && error != ERR_EMPTY && error != ERR_SOURCENOTAVAILABLE && error != ERR_NOTIMPLEMENTED) break; \
 }
 
 static void Monitor(int argc, char *argv[])
