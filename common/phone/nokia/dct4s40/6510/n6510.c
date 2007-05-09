@@ -4192,6 +4192,7 @@ GSM_Phone_Functions N6510Phone = {
  	N6510_AddSMSFolder,
  	NOTIMPLEMENTED,			/* 	DeleteSMSFolder		*/
 	N6510_DialVoice,
+        NOTIMPLEMENTED,			/*	DialService		*/
  	N6510_AnswerCall,
  	N6510_CancelCall,
  	NOTIMPLEMENTED,			/* 	HoldCall 		*/

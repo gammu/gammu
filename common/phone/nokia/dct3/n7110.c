@@ -1675,6 +1675,7 @@ GSM_Phone_Functions N7110Phone = {
  	NOTIMPLEMENTED,			/* 	AddSMSFolder		*/
  	NOTIMPLEMENTED,			/* 	DeleteSMSFolder		*/
 	DCT3_DialVoice,
+        NOTIMPLEMENTED,			/*	DialService		*/
 	N7110_AnswerCall,
 	DCT3_CancelCall,
  	NOTIMPLEMENTED,			/* 	HoldCall 		*/

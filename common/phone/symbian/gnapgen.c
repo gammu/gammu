@@ -1801,6 +1801,7 @@ GSM_Phone_Functions GNAPGENPhone = {
  	NOTSUPPORTED,			/* 	AddSMSFolder		*/
  	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
 	GNAPGEN_DialVoice,		/*	DialVoice		*/
+        NOTIMPLEMENTED,			/*	DialService		*/
 	NOTSUPPORTED,			/*	AnswerCall		*/
 	NOTSUPPORTED,			/*	CancelCall		*/
  	NOTSUPPORTED,			/* 	HoldCall 		*/

@@ -34,6 +34,7 @@ extern GSM_Error ATGEN_AddSMS			(GSM_StateMachine *s, GSM_SMSMessage *sms);
 extern GSM_Error ATGEN_GetBatteryCharge		(GSM_StateMachine *s, GSM_BatteryCharge *bat);
 extern GSM_Error ATGEN_GetSignalQuality		(GSM_StateMachine *s, GSM_SignalQuality *sig);
 extern GSM_Error ATGEN_DialVoice		(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber);
+extern GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number);
 extern GSM_Error ATGEN_AnswerCall		(GSM_StateMachine *s, int ID, bool all);
 extern GSM_Error ATGEN_CancelCall		(GSM_StateMachine *s, int ID, bool all);
 extern GSM_Error ATGEN_SetDateTime		(GSM_StateMachine *s, GSM_DateTime *date_time);
@@ -64,6 +65,8 @@ extern GSM_Error ATGEN_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 extern GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength);
 extern GSM_Error ATGEN_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
 extern GSM_Error ATGEN_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
+
+extern GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer);
 
 #endif
 

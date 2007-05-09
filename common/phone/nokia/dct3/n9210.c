@@ -326,6 +326,7 @@ GSM_Phone_Functions N9210Phone = {
  	NOTSUPPORTED,			/* 	AddSMSFolder		*/
  	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
 	DCT3_DialVoice,
+        NOTIMPLEMENTED,			/*	DialService		*/
 	N9210_AnswerCall,
 	DCT3_CancelCall,
  	NOTSUPPORTED,			/* 	HoldCall 		*/
