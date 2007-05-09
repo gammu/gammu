@@ -479,8 +479,8 @@ GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg, GSM_StateMachine *s)
 GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
-	unsigned char 	buffer[2000],buffer2[4000],text[4000];
-	int status;
+	GSM_USSDMessage ussd;
+	unsigned char 	buffer[2000],buffer2[4000];
 	size_t len;
 	char *pos;
 
@@ -499,8 +499,8 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 		/* Status */
 		while (*pos && !isdigit(*pos)) pos++;
-		status = atoi(pos);
-		smprintf(s, "Status: %d\n", status);
+		ussd.Status = atoi(pos);
+		smprintf(s, "Status: %d\n", ussd.Status);
 
 		/* Text */
 		while (*pos != '"') pos++;
@@ -511,16 +511,16 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		if (Priv->Charset == AT_CHARSET_HEX) {
 			/* This is hex encoded number */
 			DecodeHexBin(buffer2, buffer+1, len);
-			DecodeDefault(text ,buffer2, strlen(buffer2), false, NULL);
+			DecodeDefault(ussd.Text ,buffer2, strlen(buffer2), false, NULL);
 		} else if (Priv->Charset == AT_CHARSET_UCS2) {
 			/* This is unicode encoded number */
-			DecodeHexUnicode(text, buffer + 1,len);
+			DecodeHexUnicode(ussd.Text, buffer + 1,len);
 		} else  {
-			EncodeUnicode(text, buffer + 1, len);
+			EncodeUnicode(ussd.Text, buffer + 1, len);
 		}
 
 		if (s->User.IncomingUSSD!=NULL) {
-			s->User.IncomingUSSD(s, status, text);
+			s->User.IncomingUSSD(s, ussd);
 		}
 	}
 

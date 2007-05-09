@@ -1568,7 +1568,8 @@ GSM_Error NOKIA_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 
 GSM_Error N71_65_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	unsigned char buffer[2000],buffer2[4000];
+	unsigned char buffer[2000];
+	GSM_USSDMessage ussd;
 
 	if (s->Phone.Data.RequestID == ID_Divert) return ERR_NONE;
 
@@ -1578,11 +1579,12 @@ GSM_Error N71_65_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	smprintf(s, "USSD reply: \"%s\"\n",buffer);
 
 	if (s->Phone.Data.EnableIncomingUSSD && s->User.IncomingUSSD!=NULL) {
-		EncodeUnicode(buffer2,buffer,strlen(buffer));
+		EncodeUnicode(ussd.Text,buffer,strlen(buffer));
 		/**
 		 * @todo: Should determine status.
 		 */
-		s->User.IncomingUSSD(s, -1, buffer2);
+		ussd.Status = -1;
+		s->User.IncomingUSSD(s, ussd);
 	}
 
 	return ERR_NONE;

@@ -2467,8 +2467,9 @@ static GSM_Error N6110_GetNextCalendarNote(GSM_StateMachine *s, GSM_CalendarEntr
 
 GSM_Error N6110_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-        unsigned char   buffer[2000],buffer2[4000];
+        unsigned char   buffer[2000];
         int             tmp;
+	GSM_USSDMessage ussd;
 
         tmp=GSM_UnpackEightBitsToSeven(0, msg.Buffer[7], 82, msg.Buffer+8, buffer);
 	buffer[tmp] = 0;
@@ -2476,11 +2477,12 @@ GSM_Error N6110_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
         smprintf(s, "USSD reply: \"%s\"\n",buffer);
 
         if (s->Phone.Data.EnableIncomingUSSD && s->User.IncomingUSSD!=NULL) {
-                EncodeUnicode(buffer2,buffer,strlen(buffer));
+                EncodeUnicode(ussd.Text,buffer,strlen(buffer));
 		/**
 		 * @todo: Should determine status.
 		 */
-                s->User.IncomingUSSD(s, -1, buffer2);
+		ussd.Status = -1;
+                s->User.IncomingUSSD(s, ussd);
         }
 
         return ERR_NONE;
