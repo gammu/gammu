@@ -1,6 +1,8 @@
-Gammu (Gnu All Mobile Management Utilities) 1.10.7
+Gammu (Gammu All Mobile Management Utilities) 1.10.7
 
-Gammu allows you to manage your mobile phone directly from
-your PC. It has many features, such as SMS handling, Calendar,
-Java support, ringtones, pictures, and many, many other good
-things.
+Gammu is command line utility and library to work with mobile phones
+from many vendors. Support for different models differs, but basic
+functions should work with majority of them. Program can work with
+contacts, messages (SMS, EMS and MMS), calendar, todos, filesystem,
+integrated radio, camera, etc. It also supports daemon mode to send and
+receive SMSes.
