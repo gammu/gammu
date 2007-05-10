@@ -49,11 +49,12 @@ URL:                http://cihar.com/gammu/
 Buildroot:          %{_tmppath}/%name-%version-root
 
 %description
-Gammu can do such things with cellular phones as making data calls,
-updating the address book, changing calendar and ToDo entries, sending and
-receiving SMS messages, loading and getting ring tones and pictures (different
-types of logos), synchronizing time, enabling NetMonitor, managing WAP
-settings and bookmarks and much more. Functions depend on the phone model.
+Gammu is command line utility and library to work with mobile phones
+from many vendors. Support for different models differs, but basic
+functions should work with majority of them. Program can work with
+contacts, messages (SMS, EMS and MMS), calendar, todos, filesystem,
+integrated radio, camera, etc. It also supports daemon mode to send and
+receive SMSes.
 
 %package devel
 Summary:      Development files for Gammu
@@ -66,11 +67,14 @@ Autoreqprov:  on
 Requires:           %name = %ver-%rel
 
 %description devel
-Gammu can do such things with cellular phones as making data calls,
-updating the address book, changing calendar and ToDo entries, sending and
-receiving SMS messages, loading and getting ring tones and pictures (different
-types of logos), synchronizing time, enabling NetMonitor, managing WAP
-settings and bookmarks and much more. Functions depend on the phone model.
+Gammu is command line utility and library to work with mobile phones
+from many vendors. Support for different models differs, but basic
+functions should work with majority of them. Program can work with
+contacts, messages (SMS, EMS and MMS), calendar, todos, filesystem,
+integrated radio, camera, etc. It also supports daemon mode to send and
+receive SMSes.
+
+This package contain files needed for development.
 
 %prep
 %setup -q
