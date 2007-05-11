@@ -808,7 +808,6 @@ GSM_Error GSM_FindGammuRC (INI_Section **result)
         strcat(FileName, "/.gammurc");
 #endif
 	dbgprintf("Open config: \"%s\"\n", FileName);
-	printf("Open config: \"%s\"\n", FileName);
 
 	error = INI_ReadFile(FileName, false, result);
 	free(FileName);
