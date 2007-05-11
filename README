@@ -56,6 +56,10 @@ Alternatively you might want to try GUI for Gammu called Wammu (see
 <http://wammu.eu/>), which can automatically generate configuration for
 you.
 
+The configuration file should be placed in ~/.gammurc or /etc/gammurc on
+Unixes. On Windoes you can place gammurc in Application Data folder in
+yout profile or in same directory as is binary being executed from.
+
 
 Problems
 ========

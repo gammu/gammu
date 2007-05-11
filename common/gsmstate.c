@@ -12,6 +12,8 @@
 #include "device/devfunc.h"
 
 #if defined(WIN32) || defined(DJGPP)
+#include <shlobj.h>
+
 #define FALLBACK_GAMMURC "gammurc"
 #else
 #define FALLBACK_GAMMURC "/etc/gammurc"
@@ -776,19 +778,23 @@ GSM_Error GSM_FindGammuRC (INI_Section **result)
 
 	FileName[0] = 0;
 #if defined(WIN32) || defined(DJGPP)
-        HomeDrive = getenv("HOMEDRIVE");
-	if (HomeDrive) {
-		FileName 	=  realloc(FileName,FileNameUsed+strlen(HomeDrive)+1);
-		FileName 	=  strcat(FileName, HomeDrive);
-		FileNameUsed	+= strlen(HomeDrive)+1;
+	FileName = (char *)realloc(FileName, MAX_PATH);
+
+	if (!SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, FileName))) {
+		HomeDrive = getenv("HOMEDRIVE");
+		if (HomeDrive) {
+			FileName 	=  realloc(FileName,FileNameUsed+strlen(HomeDrive)+1);
+			FileName 	=  strcat(FileName, HomeDrive);
+			FileNameUsed	+= strlen(HomeDrive)+1;
+		}
+		HomePath = getenv("HOMEPATH");
+		if (HomePath) {
+			FileName 	=  realloc(FileName,FileNameUsed+strlen(HomePath)+1);
+			FileName 	=  strcat(FileName, HomePath);
+			FileNameUsed	+= strlen(HomePath)+1;
+		}
+		FileName = (char *)realloc(FileName,FileNameUsed+8+1);
 	}
-        HomePath = getenv("HOMEPATH");
-        if (HomePath) {
-		FileName 	=  realloc(FileName,FileNameUsed+strlen(HomePath)+1);
-		FileName 	=  strcat(FileName, HomePath);
-		FileNameUsed	+= strlen(HomePath)+1;
-	}
-	FileName = realloc(FileName,FileNameUsed+8+1);
         strcat(FileName, "\\gammurc");
 #else
 	HomeDrive = NULL;
@@ -802,6 +808,7 @@ GSM_Error GSM_FindGammuRC (INI_Section **result)
         strcat(FileName, "/.gammurc");
 #endif
 	dbgprintf("Open config: \"%s\"\n", FileName);
+	printf("Open config: \"%s\"\n", FileName);
 
 	error = INI_ReadFile(FileName, false, result);
 	free(FileName);
