@@ -1853,7 +1853,33 @@ static void IncomingCall(GSM_StateMachine *s, GSM_Call call)
 static void IncomingUSSD(GSM_StateMachine *s, GSM_USSDMessage ussd)
 {
 	printf("%s\n", _("USSD received"));
-	printf(LISTFORMAT "\"%d\"\n", _("Status"), ussd.Status);
+	printf(LISTFORMAT, _("Status"));
+	switch(ussd.Status) {
+		case USSD_NoActionNeeded:
+			printf("%s\n", _("No action needed"));
+			break;
+		case USSD_ActionNeeded:
+			printf("%s\n", _("Action needed"));
+			break;
+		case USSD_Terminated:
+			printf("%s\n", _("Terminated"));
+			break;
+		case USSD_AnotherClient:
+			printf("%s\n", _("Another client replied"));
+			break;
+		case USSD_NotSupported:
+			printf("%s\n", _("Not supported"));
+			break;
+		case USSD_Timeout:
+			printf("%s\n", _("Timeout"));
+			break;
+#ifndef CHECK_CASES
+		default:
+#endif
+		case USSD_Unknown:
+			printf("%s\n", _("Unknown"));
+			break;
+	}
 	printf(LISTFORMAT "\"%s\"\n", _("Service reply"), DecodeUnicodeConsole(ussd.Text));
 }
 

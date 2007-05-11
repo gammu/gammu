@@ -2481,7 +2481,7 @@ GSM_Error N6110_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/**
 		 * @todo: Should determine status.
 		 */
-		ussd.Status = -1;
+		ussd.Status = USSD_Unknown;
                 s->User.IncomingUSSD(s, ussd);
         }
 

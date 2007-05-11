@@ -501,6 +501,28 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		while (*pos && !isdigit(*pos)) pos++;
 		ussd.Status = atoi(pos);
 		smprintf(s, "Status: %d\n", ussd.Status);
+		switch(ussd.Status) {
+			case 0: 
+				ussd.Status = USSD_NoActionNeeded; 
+				break;
+			case 1: 
+				ussd.Status = USSD_ActionNeeded; 
+				break;
+			case 2: 
+				ussd.Status = USSD_Terminated;
+				break;
+			case 3: 
+				ussd.Status = USSD_AnotherClient;
+				break;
+			case 4: 
+				ussd.Status = USSD_NotSupported;
+				break;
+			case 5: 
+				ussd.Status = USSD_Timeout;
+				break;
+			default:
+				ussd.Status = USSD_Unknown;
+		}
 
 		/* Text */
 		while (*pos != '"') pos++;
