@@ -48,7 +48,20 @@ typedef struct {
 /* -------------------- USSD ------------------------------------ */
 
 /**
- * Structure for Cell Broadcast messages.
+ * Status of USSD message.
+ */
+typedef enum {
+	USSD_Unknown = 1, /**< Unknown status */
+	USSD_NoActionNeeded, /**< No action is needed, maybe network initiated USSD */
+	USSD_ActionNeeded, /**< Reply is expected */
+	USSD_Terminated, /**< USSD dialog terminated */
+	USSD_AnotherClient, /**< Another client replied */
+	USSD_NotSupported, /**< Operation not supported */
+	USSD_Timeout, /**< Network timeout */
+} GSM_USSDStatus;
+
+/**
+ * Structure for USSD messages.
  */
 typedef struct {
 	/**
@@ -56,9 +69,9 @@ typedef struct {
 	 */
 	unsigned char Text[2000];
 	/**
-	 * Channel number.
+	 * Message status.
 	 */
-	int     Status;
+	GSM_USSDStatus Status;
 } GSM_USSDMessage;
 
 /* ------------------------ SMS status ------------------------------------ */
