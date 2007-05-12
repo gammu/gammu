@@ -236,10 +236,10 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 				case PBK_Text_Custom4:
 					ignore = true;
 					break;
-				}
-				if (!ignore) {
-					SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "", false);
-				}
+			}
+			if (!ignore) {
+				SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "", false);
+			}
 		}
 		/* Save name if it is composed from parts */
 		if (firstname != -1 || lastname != -1) {
