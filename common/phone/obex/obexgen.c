@@ -44,6 +44,46 @@ GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s);
 #define OBEX_TIMEOUT 10
 
 /**
+ * Handles various error codes in OBEX protocol.
+ */
+static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	switch (msg.Type & 0x7f) {
+		/* HTTP based codes */
+		case 0x40:
+		case 0x45:
+		case 0x46:
+		case 0x47:
+		case 0x48:
+		case 0x49:
+		case 0x4c:
+		case 0x4d:
+		case 0x4e:
+		case 0x4f:
+			smprintf(s, "Bad request (0x%02x)\n", msg.Type);
+			return ERR_BUG;
+		case 0x41:
+		case 0x42:
+		case 0x43:
+			smprintf(s, "Security error (0x%02x)\n", msg.Type);
+			return ERR_PERMISSION;
+		case 0x44:
+		case 0x4a:
+			smprintf(s, "File not found (0x%02x)\n", msg.Type);
+			return ERR_FILENOTEXIST;
+		/* OBEX specials */
+		case 0x60:
+			smprintf(s, "Database full\n");
+			return ERR_FULL;
+		case 0x61:
+			smprintf(s, "Database locked\n");
+			return ERR_FULL;
+	}
+	smprintf(s, "Unknown OBEX error (0x%02x)\n", msg.Type);
+	return ERR_UNKNOWN;
+}
+
+/**
  * \defgroup OBEXinit OBEX initialisation and terminating
  * \ingroup OBEXPhone
  * @{
@@ -290,6 +330,9 @@ static void OBEXGEN_FindNextDir(unsigned char *Path, int *Pos, unsigned char *Re
  */
 static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	if ((msg.Type & 0x7f) >= 0x40) {
+		return OBEXGEN_HandleError(msg, s);
+	}
 	switch (msg.Type) {
 	case 0xA0:
 		smprintf(s,"Path set OK\n");
@@ -297,13 +340,6 @@ static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMach
 	case 0xA1:
 		smprintf(s,"Folder created\n");
 		return ERR_NONE;
-	case 0xC1:
-	case 0xC3:
-		smprintf(s,"Security error\n");
-		return ERR_PERMISSION;
-	case 0xC4:
-		smprintf(s,"File not found\n");
-		return ERR_FILENOTEXIST;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
@@ -390,6 +426,9 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	Priv->UpdateCalLUID = false;
 	UpdateTodoLUID = Priv->UpdateTodoLUID;
 	Priv->UpdateTodoLUID = false;
+	if ((msg.Type & 0x7f) >= 0x40) {
+		return OBEXGEN_HandleError(msg, s);
+	}
 	switch (msg.Type) {
 	case 0x90:
 		smprintf(s,"Last part of file added OK\n");
@@ -479,16 +518,6 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 			}
 		}
 		return ERR_NONE;
-	case 0xC0:
-		smprintf(s,"Not understand. Probably not supported\n");
-		return ERR_NOTSUPPORTED;
-	case 0xC1:
-	case 0xC3:
-		smprintf(s,"Security error\n");
-		return ERR_PERMISSION;
-	case 0xC4:
-		smprintf(s,"File not found\n");
-		return ERR_FILENOTEXIST;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
@@ -598,6 +627,10 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 {
 	int old,Pos=0;
 
+	if ((msg.Type & 0x7f) >= 0x40) {
+		return OBEXGEN_HandleError(msg, s);
+	}
+
 	switch (msg.Type) {
 	case 0xA0:
 		smprintf(s,"Last file part received\n");
@@ -633,16 +666,6 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 			}
 		}
 		return ERR_UNKNOWNRESPONSE;
-	case 0xC1:
-	case 0xC3:
-		smprintf(s,"Security error\n");
-		return ERR_PERMISSION;
-	case 0xC0:
-		smprintf(s,"Invalid request\n");
-		return ERR_BUG;
-	case 0xC4:
-		smprintf(s,"File not found\n");
-		return ERR_FILENOTEXIST;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
