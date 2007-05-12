@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-05-05 20:44+0200\n"
-"PO-Revision-Date: 2007-05-04 14:15+0200\n"
-"Last-Translator: Kay Bieri <bierik@climate.unibe.ch>\n"
+"PO-Revision-Date: 2007-05-10 19:57+0200\n"
+"Last-Translator: Thorsten Gutsche <thorsten.gutsche@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,20 +18,19 @@ msgstr ""
 
 #: common/phone/nokia/dct4s40/6510/n6510.c:513 gammu/gammu.c:4722
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: common/phone/nokia/dct4s40/6510/n6510.c:514 common/phone/pfunc.c:39
 msgid "Inbox"
 msgstr "Eingang"
 
 #: common/phone/nokia/dct4s40/6510/n6510.c:515
-#, fuzzy
 msgid "Sent items"
-msgstr "Setze %i"
+msgstr "Versandte Mitteilungen"
 
 #: common/phone/nokia/dct4s40/6510/n6510.c:516
 msgid "Saved items"
-msgstr ""
+msgstr "Gespeicherte Mitteilungen"
 
 #: common/phone/nokia/dct3/n6110.c:1958 gammu/gammu.c:7625
 msgid "Personal"
@@ -43,7 +42,7 @@ msgstr "Auto"
 
 #: common/phone/nokia/dct3/n6110.c:1962 common/phone/nokia/nfunc.c:938
 msgid "Headset"
-msgstr ""
+msgstr "Headset"
 
 #: common/phone/nokia/dct3/n6110.c:1968 common/phone/nokia/nfunc.c:926
 msgid "General"
@@ -71,7 +70,7 @@ msgstr "Familie"
 
 #: common/phone/nokia/nfunc.c:762
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #: common/phone/nokia/nfunc.c:764
 msgid "Friends"
@@ -96,7 +95,7 @@ msgstr "Draussen"
 #: common/phone/nokia/nfunc.c:934 gammu/gammu.c:2144
 #, c-format
 msgid "Pager"
-msgstr ""
+msgstr "Pager"
 
 #: common/phone/pfunc.c:40
 msgid "Outbox"
@@ -112,24 +111,18 @@ msgstr ""
 "Fehler beim öffnen des Gerätes. Unbekannt/Belegt oder keine Berechtigung"
 
 #: common/gsmcomon.c:82
-#, fuzzy
 msgid "Error opening device, it is locked."
 msgstr "Fehler beim Öffnen des Geräts, es ist gesperrt."
 
 #: common/gsmcomon.c:83
-#, fuzzy
 msgid "Error opening device, it doesn't exist."
 msgstr "Fehler beim Öffnen des Geräts, es existiert nicht."
 
 #: common/gsmcomon.c:84
-#, fuzzy
 msgid "Error opening device, it is already opened by other application."
-msgstr ""
-"Fehler beim Öffnen des Geräts, es wird bereits durch eine andere Anwendung "
-"verwendet."
+msgstr "Fehler beim Öffnen des Geräts, es wird bereits durch eine andere Anwendung verwendet."
 
 #: common/gsmcomon.c:85
-#, fuzzy
 msgid "Error opening device, you don't have permissions."
 msgstr "Fehler beim Öffnen des Geräts, ungenügende Berechtigungen."
 
@@ -186,13 +179,10 @@ msgid "Unknown model type string. Check config file."
 msgstr "Unbekannter Modelltyp. Bitte Konfig-Datei überprüfen."
 
 #: common/gsmcomon.c:99
-#, fuzzy
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "written)."
-msgstr ""
-"Einige Funktionen sind für Ihr Betriebssystem nicht verfügbar (in Konfig-"
-"Datei gesperrt oder nicht geschrieben)."
+msgstr "Einige Funktionen sind für Ihr Betriebssystem nicht verfügbar (in Konfigurationsdatei gesperrt oder nicht geschrieben)."
 
 #: common/gsmcomon.c:100
 msgid "Function not supported by phone."
@@ -200,17 +190,14 @@ msgstr "Funktion wird nicht vom Telefon unterstützt."
 
 #: common/gsmcomon.c:101 gammu/gammu.c:1159 gammu/gammu.c:7158
 #: gammu/gammu.c:7971
-#, fuzzy
 msgid "Entry is empty"
 msgstr "Eintrag ist leer."
 
 #: common/gsmcomon.c:102
-#, fuzzy
 msgid "Security error. Maybe no PIN?"
 msgstr "Sicherheitsfehler.Vielleicht keine PIN?"
 
 #: common/gsmcomon.c:103
-#, fuzzy
 msgid "Invalid location. Maybe too high?"
 msgstr "Ungültige Speicherstelle. Vielleicht zu hoch?"
 
@@ -227,9 +214,8 @@ msgid "Unknown error."
 msgstr "Unbekannter Fehler."
 
 #: common/gsmcomon.c:108
-#, fuzzy
 msgid "Can't open specified file. Read only?"
-msgstr "Kann Datei nicht öffnen. Keine Schreibberechtigung?"
+msgstr "Kann gewählte Datei nicht öffnen. Keine Schreibberechtigung?"
 
 #: common/gsmcomon.c:109
 msgid "More memory required..."
@@ -245,11 +231,8 @@ msgstr ""
 "Leere SMSC-Nummer. Setzen Sie sie im Telefon oder verwenden Sie -smscnumber."
 
 #: common/gsmcomon.c:112
-#, fuzzy
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
-msgstr ""
-"Du bist innerhalb des Telefon-Menüs (beim Bearbeiten?). Verlass es und "
-"versuche es erneut."
+msgstr "Sie sind innerhalb des Telefon-Menüs (beim Bearbeiten?). Verlassen Sie es und versuchen es erneut."
 
 #: common/gsmcomon.c:113
 msgid "Function is during writing. If want help, please contact with authors."
@@ -274,11 +257,8 @@ msgstr ""
 "aufgetreten. Bitte wenden Sie sich an den Autor."
 
 #: common/gsmcomon.c:117
-#, fuzzy
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
-msgstr ""
-"Die Übertragung wurde vom Telefon abgebrochen (haben Sie vielleicht Abbruch "
-"am Telefon gedrückt?)"
+msgstr "Die Übertragung wurde vom Telefon abgebrochen. Vielleicht haben Sie Abbruch am Handy gedrückt."
 
 #: common/gsmcomon.c:119
 msgid "Current connection type doesn't support called function."
@@ -298,9 +278,8 @@ msgid "Phone memory error, maybe it is read only."
 msgstr "Telefonspeicherfehler, möglicherweise nur lesend."
 
 #: common/gsmcomon.c:123
-#, fuzzy
 msgid "Invalid data given to phone."
-msgstr "Ungültige Daten."
+msgstr "Ungültige Daten, die an das Handy übertragen wurden."
 
 #: common/gsmcomon.c:124
 msgid "File with specified name already exist."
@@ -308,169 +287,171 @@ msgstr "Der angegebene Dateiname existiert bereits."
 
 #: common/gsmcomon.c:125
 msgid "File with specified name doesn't exist."
-msgstr "Die datei mit dem angegebenen Namen existiert nicht."
+msgstr "Die Datei mit dem angegebenen Namen existiert nicht."
 
 #: common/gsmcomon.c:126
-#, fuzzy
 msgid "You have to give folder name and not file name."
 msgstr "Sie müssen einen Verzeichnis-, keinen Dateinamen angeben."
 
 #: common/gsmcomon.c:127
-#, fuzzy
 msgid "You have to give file name and not folder name."
 msgstr "Sie müssen einen Datei-, keinen Verzeichnisnamen angeben."
 
 #: common/gsmcomon.c:128
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "Kein Zugriff auf die SIM-Karte."
 
 #: common/gsmcomon.c:129
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
-msgstr ""
+msgstr "Im Handy befindet sich eine falsche GNAPPLET-Version. Verwenden Sie die Version des aktuell verwendeten Gammu."
 
 #: common/gsmcomon.c:130
 msgid "Folder must be empty."
-msgstr ""
+msgstr "Das Verzeichnis muss leer sein."
 
 #: common/gsmcomon.c:131
 msgid "Data were converted."
-msgstr ""
+msgstr "Die Daten wurden umgewandelt."
 
 #: gammu/depend/nokia/dct4.c:56
 msgid "Can't do it with current phone protocol"
-msgstr ""
+msgstr "Dies kann mit dem gegenwärtigen Handyprotokoll nicht gemacht werden."
 
 #: gammu/depend/nokia/dct4.c:70
-#, fuzzy, c-format
+#, c-format
 msgid "%s (yes/no) ? "
-msgstr "%s (yes/no/ALL/ONLY/NONE)? "
+msgstr "%s (yes/no) ?"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/depend/nokia/dct4.c:73 gammu/gammu.c:315
-#, fuzzy
 msgid "yes"
-msgstr "ja\n"
+msgstr "ja"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/depend/nokia/dct4.c:74 gammu/gammu.c:317
-#, fuzzy
 msgid "no"
-msgstr "nein\n"
+msgstr "nein"
 
 #: gammu/depend/nokia/dct4.c:253
-#, fuzzy
 msgid "Setting done"
-msgstr "Einmal Klingeln\n"
+msgstr "Einstellungen übernommen"
 
 #: gammu/depend/nokia/dct4.c:290
 msgid ""
 "Sorry, but configuration matrix for this model is not added yet. Please "
 "report"
-msgstr ""
+msgstr "Leider ist die Konfigurationsmatrix für dieses Modell noch nicht hinzugefügt worden. Bitte berichten Sie"
 
 #: gammu/depend/nokia/dct4.c:356
 #, c-format
 msgid "Passed"
-msgstr ""
+msgstr "Absolviert"
 
 #: gammu/depend/nokia/dct4.c:357
-#, fuzzy, c-format
+#, c-format
 msgid "Fail"
-msgstr "Familie"
+msgstr "Fehlgeschlagen"
 
 #: gammu/depend/nokia/dct4.c:358
 #, c-format
 msgid "Not executed"
-msgstr ""
+msgstr "Nicht ausgeführt"
 
 #: gammu/depend/nokia/dct4.c:359
-#, fuzzy, c-format
+#, c-format
 msgid "No signal"
-msgstr "Nicht erhältlich"
+msgstr "Kein Signal"
 
 #: gammu/depend/nokia/dct4.c:360
 #, c-format
 msgid "Timeout"
-msgstr ""
+msgstr "Zeitüberschreitung"
 
 #: gammu/depend/nokia/dct4.c:361
 #, c-format
 msgid "Unknown (%x)"
-msgstr "Unbekannt (%i)"
+msgstr "Unbekannt (%x)"
 
 #: gammu/depend/nokia/dct4.c:363
 #, c-format
 msgid " (startup)"
-msgstr ""
+msgstr "(Programmstart)"
 
 #: gammu/depend/nokia/dct4.c:481 gammu/depend/nokia/dct4.c:974
 msgid "Press any key to continue..."
-msgstr ""
+msgstr "Beliebige Taste drücken um fortzufahen..."
 
 #: gammu/depend/nokia/dct4.c:493
 #, c-format
 msgid "Security code set to \"12345\"\n"
 msgstr ""
+"Sicherheitscode wurde auf \"12345\" gesetzt \n"
 
 #: gammu/depend/nokia/dct4.c:496
 msgid "Unknown reason. Can't reset your security code"
-msgstr ""
+msgstr "Unbekannte Ursache. Ihr Sicherheitscode kann nicht zurückgesetzt werden"
 
 #: gammu/depend/nokia/dct4.c:519
 #, c-format
 msgid "Trying %i\n"
 msgstr ""
+"Versuche %i\n"
 
 #: gammu/depend/nokia/dct4.c:538
-#, fuzzy, c-format
+#, c-format
 msgid "Security code is %s\n"
-msgstr "Welcher Sicherheitscode (\"%s\")?\n"
+msgstr ""
+"Der Sicherheitscode lautet %s\n"
 
 #: gammu/depend/nokia/dct4.c:670 gammu/gammu.c:258 gammu/gammu.c:266
 #: gammu/gammu.c:3394
-#, fuzzy
 msgid "Please enumerate locations from 1"
-msgstr "FEHLER: Nummeriere Speicherplätze von 1 an\n"
+msgstr "Nummeriere Speicherplätze von 1 an"
 
 #: gammu/depend/nokia/dct4.c:779
 #, c-format
 msgid "device address %02x%02x%02x%02x%02x%02x\n"
 msgstr ""
+"Geräteadresse %02x%02x%02x%02x%02x%02x\n"
 
 #: gammu/depend/nokia/dct4.c:803
-#, fuzzy, c-format
+#, c-format
 msgid "Old simlock   : %s (%s)\n"
-msgstr "Modell        : %s (%s)\n"
+msgstr ""
+"Alte SIM-Sperre: %s (%s)\n"
 
 #: gammu/depend/nokia/dct4.c:821
 #, c-format
 msgid "Simlock data  : "
-msgstr ""
+msgstr "Daten zur SIM-Sperre:"
 
 #: gammu/depend/nokia/dct4.c:845
-#, fuzzy, c-format
+#, c-format
 msgid "Bluetooth     : "
-msgstr "Netz Empfang     : "
+msgstr "Bluetooth: "
 
 #: gammu/depend/nokia/dct4.c:861
-#, fuzzy, c-format
+#, c-format
 msgid "UEM           : %s\n"
-msgstr "Benutzer-ID      : %s\n"
+msgstr ""
+"UEM: %s\n"
 
 #: gammu/depend/nokia/dct4.c:929
-#, fuzzy, c-format
+#, c-format
 msgid "What lights should I enable (\"%s\") ?\n"
-msgstr "Welcher Sicherheitscode (\"%s\")?\n"
+msgstr ""
+"Welche Lichter sollen aktiviert werden (\"%s\") ?\n"
 
 #: gammu/depend/nokia/dct4.c:936
-#, fuzzy, c-format
+#, c-format
 msgid "What should I do (\"%s\") ?\n"
-msgstr "Welcher Ordnertyp (\"%s\")?\n"
+msgstr ""
+"Was soll gemacht werden (\"%s\") ?\n"
 
 #: gammu/depend/nokia/dct4.c:987
 #, c-format
 msgid "raw "
-msgstr ""
+msgstr "roh"
 
 #: gammu/depend/nokia/dct4.c:991
 #, c-format
@@ -479,91 +460,92 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1124
 msgid "Phone seems not to support radio"
-msgstr ""
+msgstr "Das Handy scheint kein Radio zu haben"
 
 #: gammu/depend/nokia/dct4.c:1131
 msgid "Please connect headset. Required as antenna"
-msgstr ""
+msgstr "Bitte das Headset anschließen. Es dient als Antenne"
 
 #: gammu/depend/nokia/dct4.c:1322
-#, fuzzy, c-format
+#, c-format
 msgid "%i entries types\n"
-msgstr "%i Eintäge in Backup-Datei\n"
+msgstr ""
+"%i Eintragstypen\n"
 
 #: gammu/depend/nokia/dct4.c:1325
 #, c-format
 msgid "  entry ID %02X"
-msgstr ""
+msgstr "ID des Eintrags %02X"
 
 #: gammu/depend/nokia/dct4.c:1327
 #, c-format
 msgid " (Speed dial on SIM)"
-msgstr ""
+msgstr "(Schnellwahl auf SIM)"
 
 #: gammu/depend/nokia/dct4.c:1328
 #, c-format
 msgid " (Text: name (always the only one)"
-msgstr ""
+msgstr "(Text: Name (immer der Einzige))"
 
 #: gammu/depend/nokia/dct4.c:1329
 #, c-format
 msgid " (Text: email adress)"
-msgstr ""
+msgstr "(Text: eMail-Adresse)"
 
 #: gammu/depend/nokia/dct4.c:1330
 #, c-format
 msgid " (Text: postal address)"
-msgstr ""
+msgstr "(Text: Anschrift)"
 
 #: gammu/depend/nokia/dct4.c:1331
 #, c-format
 msgid " (Text: note)"
-msgstr ""
+msgstr "(Text: Notiz)"
 
 #: gammu/depend/nokia/dct4.c:1332
-#, fuzzy, c-format
+#, c-format
 msgid " (Phone number)"
-msgstr ", Telefonspeicher"
+msgstr "(Telefonnummer)"
 
 #: gammu/depend/nokia/dct4.c:1333
-#, fuzzy, c-format
+#, c-format
 msgid " (Ringtone ID)"
-msgstr "Klingelton \"%s\"\n"
+msgstr "(ID des Klingeltons)"
 
 #: gammu/depend/nokia/dct4.c:1334
 #, c-format
 msgid " (Call register: date and time)"
-msgstr ""
+msgstr "(Liste aufrufen: Datum und Uhrzeit)"
 
 #: gammu/depend/nokia/dct4.c:1335
 #, c-format
 msgid " (Call register: with missed calls)"
-msgstr ""
+msgstr "(Liste aufrufen: mit verpassten Anrufen)"
 
 #: gammu/depend/nokia/dct4.c:1336
 #, c-format
 msgid " (Speed dial)"
-msgstr ""
+msgstr "(Schnellwahl)"
 
 #: gammu/depend/nokia/dct4.c:1337
-#, fuzzy, c-format
+#, c-format
 msgid " (Caller group: logo)"
-msgstr "Anruferguppenlogo"
+msgstr "(Anruferguppe: Logo)"
 
 #: gammu/depend/nokia/dct4.c:1338
-#, fuzzy, c-format
+#, c-format
 msgid " (Caller group: is logo on ?)"
-msgstr "Anruferguppenlogo"
+msgstr "(Anruferguppe: ist das Logo aktiviert?)"
 
 #: gammu/depend/nokia/dct4.c:1339
 #, c-format
 msgid " (Caller group number in pbk entry)"
-msgstr ""
+msgstr "(Anrufergruppennummer im Telefonbucheintrag)"
 
 #: gammu/depend/nokia/dct4.c:1342
-#, fuzzy, c-format
+#, c-format
 msgid " (Text: URL address)"
-msgstr "Webadresse        "
+msgstr "(Text: Webadresse)"
 
 #: gammu/depend/nokia/dct4.c:1343
 #, c-format
@@ -583,12 +565,12 @@ msgstr "Bild"
 #: gammu/depend/nokia/dct4.c:1346
 #, c-format
 msgid " (Ringtone ID from filesystem/internal)"
-msgstr ""
+msgstr "(Klingelton-ID des Dataisystems/Intern)"
 
 #: gammu/depend/nokia/dct4.c:1347
 #, c-format
 msgid " (Text: user ID)"
-msgstr ""
+msgstr "(Text: Benutzer-ID)"
 
 #: gammu/depend/nokia/dct4.c:1348
 #, c-format
@@ -608,12 +590,12 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:1351
 #, c-format
 msgid " (SIP Address (Push to Talk address))"
-msgstr ""
+msgstr "(SIP-Adresse (Push-to-Talk-Adresse))"
 
 #: gammu/depend/nokia/dct4.c:1352
 #, c-format
 msgid " (Group ID (6230i or later))"
-msgstr ""
+msgstr "(Gruppen-ID (6230i oder neuer))"
 
 #: gammu/depend/nokia/dct4.c:1354
 #, c-format
@@ -621,59 +603,54 @@ msgid ", type "
 msgstr ""
 
 #: gammu/depend/nokia/dct4.c:1356
-#, fuzzy, c-format
+#, c-format
 msgid "string"
-msgstr "Konferenz"
+msgstr "String"
 
 #: gammu/depend/nokia/dct4.c:1357
 #, c-format
 msgid "byte"
-msgstr ""
+msgstr "Byte"
 
 #: gammu/depend/nokia/dct4.c:1358
 #, c-format
 msgid "2 bytes"
-msgstr ""
+msgstr "2 Bytes"
 
 #: gammu/depend/nokia/dct4.c:1359
 #, c-format
 msgid "4 bytes"
-msgstr ""
+msgstr "4 Bytes"
 
 #: gammu/depend/nokia/dct4.c:1366
-#, fuzzy, c-format
+#, c-format
 msgid "%i phone number types\n"
-msgstr "Überprüfe Telefon-Benutzer-Klingeltöne\n"
+msgstr ""
+"%i Arten von Telefonnummern\n"
 
 #: gammu/depend/nokia/dct4.c:1369 gammu/gammu.c:1025
-#, fuzzy
 msgid "Home number"
-msgstr "Nummer zuhause    "
+msgstr "Privatnummer   "
 
 #: gammu/depend/nokia/dct4.c:1370 gammu/gammu.c:1022
-#, fuzzy
 msgid "Mobile number"
 msgstr "Handynummer       "
 
 #: gammu/depend/nokia/dct4.c:1371 gammu/gammu.c:1024
-#, fuzzy
 msgid "Fax number"
-msgstr "   Nummer     : %s\n"
+msgstr "Faxnummer"
 
 #: gammu/depend/nokia/dct4.c:1372
-#, fuzzy
 msgid "Office number"
-msgstr "Servicenummer         : \"%s\"\n"
+msgstr "Geschäftsnummer"
 
 #: gammu/depend/nokia/dct4.c:1373
-#, fuzzy
 msgid "Standard number"
-msgstr "Pager-Nummer      "
+msgstr "Standardnummer "
 
 #: gammu/depend/nokia/dct4.c:1374
-#, fuzzy
 msgid "Unknown number"
-msgstr "Unbekannter Fehler."
+msgstr "Unbekannte Nummer"
 
 #: gammu/depend/nokia/dct4.c:1397
 #, c-format
@@ -682,46 +659,51 @@ msgstr "FEHLER: Unbekannter Speichertyp (\"%s\")\n"
 
 #: gammu/smsd/smsdcore.c:40
 msgid "Terminating communication"
-msgstr ""
+msgstr "Verbindung wird beendet"
 
 #: gammu/smsd/smsdcore.c:96
-#, fuzzy, c-format
+#, c-format
 msgid "Could not parse config file \"%s\"\n"
-msgstr "Kann datei nicht öffnen \"%s\"\n"
+msgstr ""
+"Die Konfigurationsdatei \"%s\" konnte nicht ausgelesen werden\n"
 
 #: gammu/smsd/smsdcore.c:98
-#, fuzzy, c-format
+#, c-format
 msgid "Can't find file \"%s\"\n"
-msgstr "Kann datei nicht öffnen \"%s\"\n"
+msgstr ""
+"Die Datei \"%s\" wurde nicht gefunden\n"
 
 #: gammu/smsd/smsdcore.c:107 gammu/gammu.c:4455
 #, c-format
 msgid "Can't open file \"%s\"\n"
-msgstr "Kann datei nicht öffnen \"%s\"\n"
+msgstr ""
+"Die Datei \"%s\" kann nicht geöffnet werden\n"
 
 #: gammu/smsd/smsdcore.c:110
-#, fuzzy, c-format
+#, c-format
 msgid "Log filename is \"%s\"\n"
-msgstr "Die Uhrzeit im Telefon ist %s\n"
+msgstr ""
+"Der Name der Log-Datei lautet \"%s\"\n"
 
 #: gammu/smsd/smsdcore.c:112
 msgid "Starting GAMMU smsd"
-msgstr ""
+msgstr "GAMMU smsd wird gestartet"
 
 #: gammu/smsd/smsdcore.c:124
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: No PIN code in %s file"
-msgstr "Warnung: keine Konfigurationsdatei gefunden!\n"
+msgstr "Warnung: Es befindet sich kein PIN-Code in der Datei %s"
 
 #: gammu/smsd/smsdcore.c:125
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: No PIN code in %s file\n"
-msgstr "Warnung: keine Konfigurationsdatei gefunden!\n"
+msgstr ""
+"Warnung: Es befindet sich kein PIN-Code in der Datei %s\n"
 
 #: gammu/smsd/smsdcore.c:127
 #, c-format
 msgid "PIN code is \"%s\""
-msgstr ""
+msgstr "Der PIN-Code lautet \"%s\""
 
 #: gammu/smsd/smsdcore.c:138
 #, c-format
@@ -750,62 +732,61 @@ msgstr ""
 
 #: gammu/smsd/smsdcore.c:226
 msgid "Include numbers available"
-msgstr ""
+msgstr "Schließe verfügbare Nummern ein"
 
 #: gammu/smsd/smsdcore.c:230
 msgid "Exclude numbers available"
-msgstr ""
+msgstr "Schließe verfügbare Nummern aus"
 
 #: gammu/smsd/smsdcore.c:232
 msgid "Exclude numbers available, but IGNORED"
-msgstr ""
+msgstr "Schließe verfügbare, aber IGNORIERTE Nummern aus"
 
 #: gammu/smsd/smsdcore.c:250
 #, c-format
 msgid "Error getting security status (%i)"
-msgstr ""
+msgstr "Fehler während des Abrufs des Sicherheitsstatus (%i)"
 
 #: gammu/smsd/smsdcore.c:260
 msgid "Warning: no PIN in config"
-msgstr ""
+msgstr "Warnung: keine PIN in der Konfiguration"
 
 #: gammu/smsd/smsdcore.c:263
-#, fuzzy
 msgid "Trying to enter PIN"
-msgstr "Nichts zum Eingeben.\n"
+msgstr "Versuche die PIN einzugeben"
 
 #: gammu/smsd/smsdcore.c:267
 msgid "ERROR: incorrect PIN"
-msgstr ""
+msgstr "FEHLER: ungültige PIN"
 
 #: gammu/smsd/smsdcore.c:270
 #, c-format
 msgid "Error entering PIN (%i)"
-msgstr ""
+msgstr "Fehler bei der Eingabe der PIN (%i)"
 
 #: gammu/smsd/smsdcore.c:279
 msgid "ERROR: phone requires not supported code type"
-msgstr ""
+msgstr "FEHLER: Handy benötigt nicht unterstützte Codetype"
 
 #: gammu/smsd/smsdcore.c:333
 #, c-format
 msgid "Excluded %s"
-msgstr ""
+msgstr "Ausgeschlossene %s"
 
 #: gammu/smsd/smsdcore.c:337
-#, fuzzy, c-format
+#, c-format
 msgid "Error getting SMS (%i)"
-msgstr "Fehler in der SME"
+msgstr "Fehler beim abrufen der SMS (%i)"
 
 #: gammu/smsd/smsdcore.c:349
-#, fuzzy, c-format
+#, c-format
 msgid "Error deleting SMS (%i)"
-msgstr "Fehler in der SME"
+msgstr "Fehler beim löschen der SMS (%i)"
 
 #: gammu/smsd/smsdcore.c:367
 #, c-format
 msgid "Error getting SMS status (%i)"
-msgstr ""
+msgstr "Fehler beim abrufen des SMS-Status (%i)"
 
 #: gammu/smsd/smsdcore.c:401
 #, c-format
@@ -822,28 +803,28 @@ msgid "Error getting SMSC from phone"
 msgstr ""
 
 #: gammu/smsd/smsdcore.c:454
-#, fuzzy, c-format
+#, c-format
 msgid "Error sending SMS %s (%i): %s"
-msgstr "Sende SMS %i/%i"
+msgstr "Fehler beim Versand der SMS %s (%i): %s"
 
 #: gammu/smsd/smsdcore.c:478
 #, c-format
 msgid "Error getting send status of %s (%i): %s"
-msgstr ""
+msgstr "Fehler beim Abrufen des Versandstatus von %s (%i): %s"
 
 #: gammu/smsd/smsdcore.c:521 gammu/smsd/smsdcore.c:554
 #, c-format
 msgid "Stop GAMMU smsd (%i)"
-msgstr ""
+msgstr "GAMMU smsd anhalten (%i)"
 
 #: gammu/smsd/smsdcore.c:536
 #, c-format
 msgid "Terminating communication (%i,%i)"
-msgstr ""
+msgstr "Kommunikation beenden (%i,%i)"
 
 #: gammu/smsd/smsdcore.c:540
 msgid "Starting communication"
-msgstr ""
+msgstr "Kommunikation beginnen"
 
 #: gammu/smsd/smsdcore.c:563
 #, c-format
@@ -851,9 +832,9 @@ msgid "Reset return code: %s (%i) "
 msgstr ""
 
 #: gammu/smsd/smsdcore.c:571
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open device (%i)"
-msgstr "Kann datei nicht öffnen \"%s\"\n"
+msgstr "Gerät kann nicht geöffnet werden (%i)"
 
 #: gammu/smsd/smsdcore.c:573
 #, c-format
@@ -862,40 +843,40 @@ msgstr ""
 
 #: gammu/smsd/smsdcore.c:602
 msgid "Stop GAMMU smsd"
-msgstr ""
+msgstr "GAMMU smsd anhalten"
 
 #: gammu/smsd/s_files.c:54
 #, c-format
 msgid "Cannot save %s. No available file names"
-msgstr ""
+msgstr "%s kann nicht gespeichert werden. Keine verfügbaren Dateinamen"
 
 #: gammu/smsd/s_files.c:62 gammu/smsd/s_mysql.c:161 gammu/smsd/s_pgsql.c:182
-#, fuzzy, c-format
+#, c-format
 msgid "Delivery report: %s to %s"
-msgstr "Auslieferungsstatus : %s\n"
+msgstr "Sendebericht : %s bis %s"
 
 #: gammu/smsd/s_files.c:97 gammu/gammu.c:2580
 msgid "Delivery report"
-msgstr ""
+msgstr "Sendebericht"
 
 #: gammu/smsd/s_files.c:97
 msgid "Received"
-msgstr ""
+msgstr "Empfangen"
 
 #: gammu/smsd/s_files.c:99
 #, c-format
 msgid "Cannot save %s (%i)"
-msgstr ""
+msgstr "Speichern von %s (%i) nicht möglich"
 
 #: gammu/smsd/s_files.c:325 gammu/smsd/s_files.c:333
 #, c-format
 msgid "Could not delete %s (%i)"
-msgstr ""
+msgstr "Löschen von %s (%i) nicht möglich"
 
 #: gammu/smsd/s_files.c:330
 #, c-format
 msgid "Error copying SMS %s -> %s"
-msgstr ""
+msgstr "Fehler beim kopieren der SMS %s -> %s"
 
 #: gammu/smsd/s_files.c:341 gammu/smsd/s_mysql.c:606 gammu/smsd/s_pgsql.c:790
 #, c-format
@@ -903,9 +884,10 @@ msgid "Transmitted %s (%s: %i) to %s"
 msgstr ""
 
 #: gammu/smsd/s_mysql.c:40 gammu/smsd/s_pgsql.c:42
-#, fuzzy, c-format
+#, c-format
 msgid "Error connecting to database: %s\n"
-msgstr "Verbindungssatzname  : %s\n"
+msgstr ""
+"Fehler beim Verbinden mit der Datenbank: %s\n"
 
 #: gammu/smsd/s_mysql.c:45 gammu/smsd/s_mysql.c:49 gammu/smsd/s_mysql.c:55
 #: gammu/smsd/s_mysql.c:59 gammu/smsd/s_pgsql.c:50 gammu/smsd/s_pgsql.c:60
