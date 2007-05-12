@@ -164,42 +164,78 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 					ignore = true;
 					break;
 				case PBK_Number_General:
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"TEL");
 					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					break;
 				case PBK_Number_Other:
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"TEL");
 					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					break;
 				case PBK_Number_Pager:
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"TEL");
 					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					*Length+=sprintf(Buffer+(*Length),";PAGER");
 					break;
 				case PBK_Number_Mobile  :
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"TEL");
 					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					*Length+=sprintf(Buffer+(*Length),";CELL");
 					break;
 				case PBK_Number_Work    :
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"TEL");
 					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					*Length+=sprintf(Buffer+(*Length),";WORK");
 					break;
 				case PBK_Number_Fax     :
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"TEL");
 					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					*Length+=sprintf(Buffer+(*Length),";FAX");
 					break;
 				case PBK_Number_Home    :
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"TEL");
 					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
 					*Length+=sprintf(Buffer+(*Length),";HOME");
 					break;
 				case PBK_Text_Note      :
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"NOTE");
 					break;
 				case PBK_Text_Postal    :
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					/* Don't ask why. Nokia phones save postal address
 					 * double - once like LABEL, second like ADR
 					 */
@@ -208,18 +244,38 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 					break;
 				case PBK_Text_Email     :
 				case PBK_Text_Email2    :
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"EMAIL");
 					break;
 				case PBK_Text_URL       :
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"URL");
 					break;
 				case PBK_Text_LUID      :
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"X-IRMC-LUID");
 					break;
 				case PBK_Text_JobTitle:
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"TITLE");
 					break;
 				case PBK_Text_Company:
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
 					*Length+=sprintf(Buffer+(*Length),"ORG");
 					break;
 				/* Not supported fields */
