@@ -21,6 +21,7 @@ ChangeLog
 [-] * Fix setting date on Siemens MC75 (Rudolf Cejka).
 [-] * Config file on Windows is now searched in Application Data folder.
 [-] * Avoid corrupting vCard when some fields are empty.
+[-] * Properly handle OBEX error codes (bug #298).
 
 20070506 - 1.10.6
 [*] * Backup file uses ; instead of # (bug #85, patch by Marcin).
