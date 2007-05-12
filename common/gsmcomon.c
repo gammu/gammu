@@ -92,7 +92,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_DEVICEPARITYERROR,		N_("Can't set parity on device.")},
 	{ERR_TIMEOUT,			N_("No response in specified timeout. Probably phone not connected.")},
 	/* Some missed */
-	{ERR_UNKNOWNRESPONSE,		N_("Unknown response from phone. See readme.txt, how to report it.")},
+	{ERR_UNKNOWNRESPONSE,		N_("Unknown response from phone. See <http://cihar.com/gammu/report> for information how to report it.")},
 	/* Some missed */
 	{ERR_UNKNOWNCONNECTIONTYPESTRING,N_("Unknown connection type string. Check config file.")},
 	{ERR_UNKNOWNMODELSTRING,	N_("Unknown model type string. Check config file.")},

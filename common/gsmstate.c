@@ -752,7 +752,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	}
 
 	if (disp) {
-		smprintf(s,". If you can, PLEASE report it (see readme.txt). THANK YOU\n");
+		smprintf(s,". If you can, please report it (see <http://cihar.com/gammu/report>). Thank you\n");
 		if (Phone->SentMsg != NULL) {
 			smprintf(s,"LAST SENT frame ");
 			smprintf(s, "type 0x%02X/length %i", Phone->SentMsg->Type, Phone->SentMsg->Length);
