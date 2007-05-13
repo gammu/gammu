@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.10.7
+20070513 - 1.11.0
 [-] * Do not use asynchronous I/O on Windows.
 [-] * Make USSD work with AT phones.
 [-] * Fix setting date on Siemens MC75 (Rudolf Cejka).
