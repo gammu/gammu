@@ -1,0 +1,34 @@
+Cross compiling python-gammu for Windows
+========================================
+
+What you need:
+
+1. Built Gammu library (tested only with static one).
+
+2. Python for Windows. You can install it in Wine:
+    /usr/bin/msiexec /i /tmp/python-2.5.msi
+
+3. If Gammu was built with gettext, you will need it (otherwise you have
+   to modify Makefile).
+
+Building steps:
+
+1. Edit Makefile to contain paths that fit your environment.
+
+2. Run make and pray.
+
+3. You will get Core.pyd, which should work on Windows (but it will
+   probably need libintl3.dll and libiconv2.dll libraries).
+
+To create installer on Windows:
+
+1. Unpack python-gammu sources on Windows
+
+2. Copy Core.pyd and libintl3.dll and libiconv2.dll libraries to
+   build/lib.win32-2.5/gammu/ directory inside sources.
+
+3. Run:
+    python.exe setup.py build_ext -s build -s bdist_wininst
+
+Now you shoud have installator in dist directory.
+
