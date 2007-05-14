@@ -48,7 +48,13 @@ typedef enum {
 	S4030_PBK_CALLLENGTH	 = 0x44,
 	S4030_PBK_FIRSTNAME	 = 0x46,
 	S4030_PBK_LASTNAME	 = 0x47,
-	S4030_PBK_POSTAL	 = 0x4A
+	S4030_PBK_POSTAL	 = 0x4A,
+
+	S4030_PBK_FORMALNAME      = 0x52,
+	S4030_PBK_JOBTITLE        = 0x54,
+	S4030_PBK_COMPANY         = 0x55,
+	S4030_PBK_NICKNAME        = 0x56,
+	S4030_PBK_BIRTHDAY        = 0x57,
 } GSM_71_65_Phonebook_Entries_Types;
 
 typedef enum {

@@ -58,8 +58,7 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 				SaveLDIFText(file, "homeurl", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			case PBK_Text_Name:
-				SaveLDIFText(file, "givenName", backup->PhonePhonebook[i]->Entries[j].Text);
-				SaveLDIFText(file, "cn", backup->PhonePhonebook[i]->Entries[j].Text);
+				/* Handled above */
 				break;
 			case PBK_Text_Note:
 				SaveLDIFText(file, "Description", backup->PhonePhonebook[i]->Entries[j].Text);
@@ -124,6 +123,15 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 			case PBK_Text_Country:
 				SaveLDIFText(file, "mozillaHomeCountryName", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
+			case PBK_Text_LastName:
+				SaveLDIFText(file, "sn", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
+			case PBK_Text_FirstName:
+				SaveLDIFText(file, "cn", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
+			case PBK_Text_NickName:
+				SaveLDIFText(file, "nickname", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
 			case PBK_Number_Other:
 			case PBK_Caller_Group:
 			case PBK_RingtoneID:
@@ -133,8 +141,6 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 			case PBK_Text_UserID:
 			case PBK_Category:
 			case PBK_Private:
-			case PBK_Text_LastName:
-			case PBK_Text_FirstName:
 			case PBK_CallLength:
 				dbgprintf("Feature missed\n");
 				break;

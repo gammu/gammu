@@ -127,6 +127,9 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 				case PBK_Text_Name:
 					*Length+=sprintf(Buffer+(*Length),"N");
 					break;
+				case PBK_Text_NickName:
+					*Length+=sprintf(Buffer+(*Length),"NICKNAME");
+					break;
 				case PBK_Text_FirstName:
 					firstname = i;
 					ignore = true;
@@ -605,6 +608,11 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 			if (ReadVCALText(Line, "ORG", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Company;
+				Pbk->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "NICKNAME", Buff, false)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_NickName;
 				Pbk->EntriesNum++;
 			}
 			if (ReadVCALText(Line, "CATEGORIES", Buff, false)) {
