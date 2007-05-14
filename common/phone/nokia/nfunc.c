@@ -590,6 +590,69 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->EntriesNum ++;
 			continue;
 		}
+		if (Block[0] == S4030_PBK_FORMALNAME) {
+			Type = PBK_Text_Name;    	smprintf(s,"FormalName ");
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			entry->Entries[entry->EntriesNum].EntryType=Type;
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
+			continue;
+		}
+		if (Block[0] == S4030_PBK_JOBTITLE) {
+			Type = PBK_Text_JobTitle;    	smprintf(s,"JobTitle ");
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			entry->Entries[entry->EntriesNum].EntryType=Type;
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
+			continue;
+		}
+		if (Block[0] == S4030_PBK_COMPANY) {
+			Type = PBK_Text_Company;    	smprintf(s,"Company ");
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			entry->Entries[entry->EntriesNum].EntryType=Type;
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
+			continue;
+		}
+		if (Block[0] == S4030_PBK_NICKNAME) {
+			Type = PBK_Text_NickName;    	smprintf(s,"NickName ");
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			entry->Entries[entry->EntriesNum].EntryType=Type;
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
+			continue;
+		}
+		if (Block[0] == S4030_PBK_BIRTHDAY) {
+			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
+			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date);
+			//some phones reverse it
+			if (entry->Entries[entry->EntriesNum].Date.Year > 3000) {
+				entry->Entries[entry->EntriesNum].Date.Year = Block[7]*256+Block[6];
+			}
+			if (DayMonthReverse) {
+				i = entry->Entries[entry->EntriesNum].Date.Month;
+				entry->Entries[entry->EntriesNum].Date.Month = entry->Entries[entry->EntriesNum].Date.Day;
+				entry->Entries[entry->EntriesNum].Date.Day   = i;
+			}
+			entry->EntriesNum ++;
+			continue;
+		}
 
 
 		if (Block[0] == N7110_PBK_RINGTONE_ID) {

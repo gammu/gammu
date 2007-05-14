@@ -343,6 +343,10 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				sprintf(buffer,"Entry%02iType = FirstName%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
+			case PBK_Text_NickName:
+				sprintf(buffer,"Entry%02iType = NickName%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				break;
 			case PBK_Text_Company:
 				sprintf(buffer,"Entry%02iType = Company%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
@@ -1354,6 +1358,8 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_URL;
 			} else if (strcasecmp(readvalue,"FirstName") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FirstName;
+			} else if (strcasecmp(readvalue,"NickName") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_NickName;
 			} else if (strcasecmp(readvalue,"LastName") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LastName;
 			} else if (strcasecmp(readvalue,"Company") == 0) {
