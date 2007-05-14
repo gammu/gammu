@@ -206,7 +206,9 @@ uninstall:
 	@$(RM) $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_FULLNAME)
 	@$(RM) $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_MJR_NAME)
 	@$(RM) $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_SHRTNAME)
-	@$(RM) $(DESTDIR)$(INSTALL_MAN_DIR)/gammu.1 $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_STATIC)
+	@$(RM) $(DESTDIR)$(INSTALL_MAN_DIR)/gammu.1 
+	@$(RM) $(DESTDIR)$(INSTALL_MAN_DIR)/gammu-config.1 
+	@$(RM) $(DESTDIR)$(INSTALL_LIB_DIR)/$(LIBGAMMU_STATIC)
 	@$(RM) -r $(DESTDIR)$(INSTALL_DOC_DIR)/
 
 installlocales: $(TRANSLATIONS)
@@ -236,7 +238,9 @@ installdocs:
 	@echo Installing man to $(DESTDIR)$(INSTALL_MAN_DIR)
 	@$(INSTALL) -m 0755 -d $(DESTDIR)$(INSTALL_MAN_DIR)
 	@$(INSTALL) -m 0644 $(TOPDIR)/docs/user/gammu.1 $(DESTDIR)$(INSTALL_MAN_DIR)
+	@$(INSTALL) -m 0644 $(TOPDIR)/docs/user/gammu-config.1 $(DESTDIR)$(INSTALL_MAN_DIR)
 	@$(RM) $(DESTDIR)$(INSTALL_DOC_DIR)/docs/user/gammu.1
+	@$(RM) $(DESTDIR)$(INSTALL_DOC_DIR)/docs/user/gammu-config.1
  
 install: uninstall all installdocs installlocales installonly installutils
 
