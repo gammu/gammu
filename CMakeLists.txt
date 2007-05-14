@@ -379,7 +379,7 @@ set (HEADERS
     common/gsmstate.h
     common/gsmcomon.h
     common/gsmerror.h
-    cfg/config.h
+    ${Gammu_BINARY_DIR}/cfg/config.h
     )
 
 set (LIBRARY_SRC
@@ -728,7 +728,8 @@ if (CROSS_MINGW)
 endif (CROSS_MINGW)
 
 foreach (HEADER ${HEADERS})
-    string (REGEX REPLACE "(common|cfg)(.*)/[^/]*$" "\\2" DIRNAME ${HEADER})
+    string (REPLACE "${Gammu_BINARY_DIR}" "" DIRNAME ${HEADER})
+    string (REGEX REPLACE "(common|cfg)(.*)/[^/]*$" "\\2" DIRNAME ${DIRNAME})
     install (
         FILES ${HEADER} 
         DESTINATION "${INSTALL_INC_DIR}/${DIRNAME}" 
