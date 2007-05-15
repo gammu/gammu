@@ -484,7 +484,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	size_t len;
 	char *pos;
 
-	/* 
+	/*
 	 * Reply format:
 	 * +CUSD: 2,"...",15
 	 */
@@ -502,22 +502,22 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		ussd.Status = atoi(pos);
 		smprintf(s, "Status: %d\n", ussd.Status);
 		switch(ussd.Status) {
-			case 0: 
-				ussd.Status = USSD_NoActionNeeded; 
+			case 0:
+				ussd.Status = USSD_NoActionNeeded;
 				break;
-			case 1: 
-				ussd.Status = USSD_ActionNeeded; 
+			case 1:
+				ussd.Status = USSD_ActionNeeded;
 				break;
-			case 2: 
+			case 2:
 				ussd.Status = USSD_Terminated;
 				break;
-			case 3: 
+			case 3:
 				ussd.Status = USSD_AnotherClient;
 				break;
-			case 4: 
+			case 4:
 				ussd.Status = USSD_NotSupported;
 				break;
-			case 5: 
+			case 5:
 				ussd.Status = USSD_Timeout;
 				break;
 			default:
@@ -642,7 +642,7 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 		if (GetLineLength(msg.Buffer, Priv->Lines, 2) <= MAX_MANUFACTURER_LENGTH) {
 			CopyLineString(s->Phone.Data.Manufacturer, msg.Buffer, Priv->Lines, 2);
 		} else {
-			smprintf(s, "WARNING: Manufacturer name too long, increase MAX_MANUFACTURER_LENGTH to at least %zd\n", GetLineLength(msg.Buffer, Priv->Lines, 2));
+			smprintf(s, "WARNING: Manufacturer name too long, increase MAX_MANUFACTURER_LENGTH to at least %d\n", GetLineLength(msg.Buffer, Priv->Lines, 2));
 			s->Phone.Data.Manufacturer[0] = 0;
 		}
 		/* Sometimes phone adds this before manufacturer (Sagem) */
@@ -2431,17 +2431,17 @@ GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, bo
 	error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_SetDateTime);
 
 	if (set_timezone && (
-		(error == ERR_INVALIDDATA 
+		(error == ERR_INVALIDDATA
 		&& s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_CMEError
 		&& s->Phone.Data.Priv.ATGEN.ErrorCode == 24) ||
 		(error == ERR_INVALIDLOCATION
 		&& s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_CMEError
 		&& s->Phone.Data.Priv.ATGEN.ErrorCode == 21)
 		)) {
-		/* 
+		/*
 		 * Some firmwares of Ericsson R320s don't like the timezone part,
-		 * even though it is in its command reference. Similar issue 
-		 * exists for MC75 
+		 * even though it is in its command reference. Similar issue
+		 * exists for MC75
 		 */
 		smprintf(s, "Retrying without timezone suffix\n");
 		error = ATGEN_PrivSetDateTime(s, date_time, false);
