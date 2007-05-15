@@ -162,7 +162,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 		Config->SMSC.Location     = 0;
 	}
 
-	if (!strcmp(service,"FILES")) {
+	if (!strcasecmp(service,"FILES")) {
 		Config->inboxpath=INI_GetValue(smsdcfgfile, "smsd", "inboxpath", false);
 		if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
 
@@ -191,7 +191,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	}
 
 #ifdef HAVE_MYSQL_MYSQL_H
-	if (!strcmp(service,"MYSQL")) {
+	if (!strcasecmp(service,"MYSQL")) {
 		Config->skipsmscnumber = INI_GetValue(smsdcfgfile, "smsd", "skipsmscnumber", false);
 		if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
 		Config->user = INI_GetValue(smsdcfgfile, "smsd", "user", false);
@@ -206,7 +206,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 #endif
 
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-	if (!strcmp(service,"PGSQL")) {
+	if (!strcasecmp(service,"PGSQL")) {
 		Config->skipsmscnumber = INI_GetValue(smsdcfgfile, "smsd", "skipsmscnumber", false);
 		if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
 		Config->user = INI_GetValue(smsdcfgfile, "smsd", "user", false);
