@@ -677,11 +677,11 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *not
 					if (Version == Mozilla_iCalendar) {
 						if (!header) {
 							*Length += sprintf(Buffer + (*Length), ";BYDAY=%s",
-								DaysOfWeek[note->Entries[j].Number]);
+								DaysOfWeek[note->Entries[i].Number]);
 							header = true;
 						} else {
 							*Length += sprintf(Buffer + (*Length), ",%s",
-								DaysOfWeek[note->Entries[j].Number]);
+								DaysOfWeek[note->Entries[i].Number]);
 						}
 					} else {
 						*Length += sprintf(Buffer + (*Length), " %s",

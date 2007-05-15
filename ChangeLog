@@ -18,6 +18,7 @@ ChangeLog
 2007???? - 1.11.90
 [+] * Support for some new Nokia fields.
 [-] * Made SMSD mode case insensitive.
+[-] * Fix iCalendar export typo (Alin Năstac).
 
 20070513 - 1.11.0
 [-] * Do not use asynchronous I/O on Windows.
