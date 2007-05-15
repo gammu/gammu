@@ -10282,25 +10282,35 @@ int ProcessParameters(char start, int argc, char *argv[]) {
 			strcasecmp(Parameters[z].parameter, argv[1 + start] + 2) == 0)
 			) {
 			if (argc-2-start < Parameters[z].min_arg) {
-				count_failed = true;
-				if (Parameters[z].min_arg==Parameters[z].max_arg) {
-					printf(_("More parameters required (function requires %d)\n"), Parameters[z].min_arg);
-				} else {
-					printf(_("More parameters required (function requires %d to %d)\n"), Parameters[z].min_arg, Parameters[z].max_arg);
+				if (!count_failed) {
+					if (Parameters[z].min_arg==Parameters[z].max_arg) {
+						printf(_("More parameters required (function requires %d)\n"), Parameters[z].min_arg);
+					} else {
+						printf(_("More parameters required (function requires %d to %d)\n"), Parameters[z].min_arg, Parameters[z].max_arg);
+					}
+					if (Parameters[z].help[0] != 0) {
+						printf("%s:\n", _("Parameters help"));
+					}
 				}
 				if (Parameters[z].help[0] != 0) {
-					printf(_("Parameters help: %s\n"), gettext(Parameters[z].help));
+					printf("%s\n", gettext(Parameters[z].help));
 				}
+				count_failed = true;
 			} else if (argc-2-start > Parameters[z].max_arg) {
-				count_failed = true;
-				if (Parameters[z].min_arg==Parameters[z].max_arg) {
-					printf(_("Too many parameters (function accepts %d)\n"), Parameters[z].min_arg);
-				} else {
-					printf(_("Too many parameters (function accepts %d to %d)\n"), Parameters[z].min_arg, Parameters[z].max_arg);
+				if (!count_failed) {
+					if (Parameters[z].min_arg==Parameters[z].max_arg) {
+						printf(_("Too many parameters (function accepts %d)\n"), Parameters[z].min_arg);
+					} else {
+						printf(_("Too many parameters (function accepts %d to %d)\n"), Parameters[z].min_arg, Parameters[z].max_arg);
+					}
+					if (Parameters[z].help[0] != 0) {
+						printf("%s:\n", _("Parameters help"));
+					}
 				}
 				if (Parameters[z].help[0] != 0) {
-					printf(_("Parameters help: %s\n"), gettext(Parameters[z].help));
+					printf("%s\n", gettext(Parameters[z].help));
 				}
+				count_failed = true;
 			} else {
 				Parameters[z].Function(argc - start, argv + start);
  				break;
