@@ -510,7 +510,7 @@ void SMSDaemon(int argc, char *argv[])
 		Service = &SMSDPgSQL;
 #endif
 	} else {
-		fprintf(stderr,"Unknown service type (\"%s\")\n",argv[2]);
+		fprintf(stderr, _("Unknown SMSD service type (\"%s\")\n"), argv[2]);
 		exit(-1);
 	}
 
