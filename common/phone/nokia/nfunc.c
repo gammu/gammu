@@ -259,6 +259,13 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 				count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
 				continue;
 			}
+			if (entry->Entries[i].EntryType == PBK_Date) {
+				entry->Entries[i].AddError = ERR_NONE;
+
+				NOKIA_EncodeDateTime(s, string + 1, entry->Entries[i].DateTime);
+				count += N71_65_PackPBKBlock(s, S4030_PBK_BIRTHDAY, 5, block++, string, req + count);
+				continue;
+			}
 		}
 		if (entry->Entries[i].EntryType == PBK_Text_UserID) {
 			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKUSER)) {
