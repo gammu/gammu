@@ -1051,7 +1051,7 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 		return;
 #endif
 	}
-	printf(" : \"%s\"\n", DecodeUnicodeConsole(entry->Text));
+	printf("\"%s\"\n", DecodeUnicodeConsole(entry->Text));
 }
 
 static void PrintMemoryEntry(GSM_MemoryEntry *entry)
