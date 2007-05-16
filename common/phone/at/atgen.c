@@ -2891,17 +2891,36 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 	return ERR_UNKNOWNRESPONSE;
 }
 
+/**
+ * Parse reply from phone about available entries.
+ *
+ * Standard format:
+ * \verbatim
+ * +CPBR: (first-last),max_number_len,max_name_len
+ * \endverbatim
+ *
+ * Some phones (eg. Motorola C350) reply is different:
+ * \verbatim
+ * +CPBR: (first-last),max_number_len,max_name_len
+ * \endverbatim
+ *
+ * Some phones do not list positions (Sharp):
+ * \verbatim
+ * +CPBR: (),max_number_len,max_name_len
+ * \endverbatim
+ *
+ * \todo
+ * We currently guess memory size for Sharp to 1000.
+ */
 GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	char 			*pos;
+	char *tmppos;
 
  	switch (Priv->ReplyState) {
  	case AT_Reply_OK:
 		smprintf(s, "Memory info received\n");
- 		/* Parse +CPBR: (first-last),max_number_len,max_name_len */
- 		/* Some phones (eg. Motorola C350) reply is different:
-		   +CPBR: first-last,max_number_len,max_name_len */
 
 		/* Parse first location */
 		pos = strchr(msg.Buffer, '(');
@@ -2923,10 +2942,21 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 		Priv->FirstMemoryEntry = atoi(pos);
 
 		/* Parse last location*/
+		tmppos = pos;
 		pos = strchr(pos, '-');
- 		if (!pos) return ERR_UNKNOWNRESPONSE;
-		pos++;
-		Priv->MemorySize = atoi(pos) + 1 - Priv->FirstMemoryEntry;
+ 		if (!pos) {
+			/* Sharp does not show locations */
+			if (*tmppos == ')') {
+				pos = tmppos + 1;
+				Priv->FirstMemoryEntry = 1;
+				Priv->MemorySize = 1000;
+			}
+
+			return ERR_UNKNOWNRESPONSE;
+		} else {
+			pos++;
+			Priv->MemorySize = atoi(pos) + 1 - Priv->FirstMemoryEntry;
+		}
 
 		/* Parse number length*/
 		pos = strchr(pos, ',');
