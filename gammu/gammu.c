@@ -1034,6 +1034,8 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 	case PBK_Text_Name          : printf(LISTFORMAT, _("Name")); break;
 	case PBK_Text_LastName      : printf(LISTFORMAT, _("Last name")); break;
 	case PBK_Text_FirstName     : printf(LISTFORMAT, _("First name")); break;
+	case PBK_Text_FormalName     : printf(LISTFORMAT, _("Formal name")); break;
+	case PBK_Text_NickName     : printf(LISTFORMAT, _("Nick name")); break;
 	case PBK_Text_Company       : printf(LISTFORMAT, _("Company")); break;
 	case PBK_Text_JobTitle      : printf(LISTFORMAT, _("Job title")); break;
 	case PBK_Text_StreetAddress : printf(LISTFORMAT, _("Street address")); break;
@@ -1205,6 +1207,8 @@ static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 			case PBK_Text_Name          :
 			case PBK_Text_LastName      :
 			case PBK_Text_FirstName     :
+			case PBK_Text_FormalName    :
+			case PBK_Text_NickName      :
 			case PBK_Text_Company       :
 			case PBK_Text_JobTitle      :
 			case PBK_Text_StreetAddress :
@@ -1225,10 +1229,17 @@ static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 					return;
 				}
 				break;
+			case PBK_Date:
+			case PBK_Category:
+			case PBK_Private:
+			case PBK_RingtoneID:
+			case PBK_PictureID:
+			case PBK_CallLength:
+			case PBK_LastModified:
 #ifndef CHECK_CASES
 			default:
-				break;
 #endif
+				break;
 		}
 	}
 }
