@@ -13,7 +13,7 @@
 #ifndef _cfg_h
 #define _cfg_h
 
-#include "../gsmerror.h"
+#include <gammu-error.h>
 #include "misc.h"
 
 /* -------------------------------- structures ----------------------------- */

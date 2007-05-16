@@ -10,7 +10,6 @@
 #  include <wctype.h>
 #endif
 
-#include "../gsmerror.h"
 #include "../config.h"
 #include "coding/coding.h"
 #include "cfg.h"

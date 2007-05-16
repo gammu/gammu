@@ -203,6 +203,16 @@ endif (CROSS_MINGW)
 
 macro_optional_find_package (Bluez)
 
+if (BLUEZ_FOUND)
+    if (NOT CROSS_MINGW)
+        set (GSM_ENABLE_BLUEZ TRUE)
+    endif (NOT CROSS_MINGW)
+    macro_gammu_option (BLUETOOTH_RF_SEARCHING "Searching for RF channels with Bluetooth stack" ON ON ON)
+    if (WITH_BLUETOOTH_RF_SEARCHING)
+        set (BLUETOOTH_RF_SEARCHING ON)
+    endif (WITH_BLUETOOTH_RF_SEARCHING)
+endif (BLUEZ_FOUND)
+
 OPTION(WITH_IrDA "Search for IrDA package" ON)
 if (WITH_IrDA)
     if (NOT CROSS_MINGW)
@@ -224,6 +234,10 @@ if (WITH_IrDA)
 else (WITH_IrDA)
     set (IRDA_FOUND)
 endif (WITH_IrDA)
+
+add_subdirectory(common)
+
+add_subdirectory(gammu)
 
 set (LOCALES 
     cs 
@@ -445,103 +459,12 @@ set (LIBRARY_SRC
     common/phone/obex/obexgen.c
     common/phone/symbian/gnapgen.c)
 
-set (BINARY_SRC
-    gammu/depend/nokia/dct3.c
-    gammu/depend/nokia/dct3trac/wmx.c
-    gammu/depend/nokia/dct3trac/wmx-gsm.c
-    gammu/depend/nokia/dct3trac/wmx-list.c
-    gammu/depend/nokia/dct3trac/wmx-sim.c
-    gammu/depend/nokia/dct3trac/wmx-util.c
-    gammu/depend/nokia/dct4.c
-    gammu/depend/siemens/dsiemens.c
-    gammu/depend/siemens/chiffre.c
-    gammu/smsd/smsdcore.c
-    gammu/smsd/s_files.c
-    gammu/smsd/s_mysql.c
-    gammu/smsd/s_pgsql.c
-    gammu/sniff.c
-    gammu/gammu.c)
-
 # Locales
 set (LOCALEFILES)
 foreach (LOCALE ${LOCALES})
     list(APPEND LOCALEFILES "locale/${LOCALE}/gammu.po")
 endforeach (LOCALE ${LOCALES})
 GETTEXT_CREATE_TRANSLATIONS("locale/gammu.pot" ALL ${LOCALEFILES})
-
-# Library
-add_library (Gammu ${LIBRARY_SRC})
-if (CROSS_MINGW)
-    if (ENABLE_SHARED)
-        set_target_properties (Gammu PROPERTIES 
-            PREFIX "" 
-            SUFFIX ".dll"
-            IMPORT_PREFIX ""
-            IMPORT_SUFFIX ".lib"
-            )
-    else (ENABLE_SHARED)
-        set_target_properties (Gammu PROPERTIES PREFIX "" SUFFIX ".lib")
-    endif (ENABLE_SHARED)
-else (CROSS_MINGW)
-    set_target_properties (Gammu PROPERTIES VERSION ${VERSION} SOVERSION 1)
-
-    # -fPIC on Linux
-    if (CMAKE_SYSTEM_NAME MATCHES "Linux")
-        set_target_properties (Gammu PROPERTIES COMPILE_FLAGS "-fPIC")
-    endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
-
-endif (CROSS_MINGW)
-
-# Include search path
-include_directories (
-    "${Gammu_BINARY_DIR}/cfg"
-    "${Gammu_SOURCE_DIR}/common"
-    )
-
-# Gammu program
-add_executable (gammu ${BINARY_SRC})
-if (CROSS_MINGW)
-    set_target_properties (gammu PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
-
-target_link_libraries (gammu Gammu)
-target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
-
-# Tune options for found libraries
-if (MYSQL_FOUND)
-    target_link_libraries (gammu ${MYSQL_LIBRARIES})
-    include_directories (${MYSQL_INCLUDE_DIR})
-    set (HAVE_MYSQL_MYSQL_H TRUE)
-endif (MYSQL_FOUND)
-
-if (POSTGRES_FOUND)
-    target_link_libraries (gammu ${POSTGRES_LIBRARY})
-    include_directories (${POSTGRES_INCLUDE_DIR})
-
-    set (HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
-endif (POSTGRES_FOUND)
-
-if (GETTEXTLIBS_FOUND)
-    target_link_libraries (gammu ${GETTEXT_LIBRARY})
-    include_directories (${GETTEXT_INCLUDE_DIR})
-endif (GETTEXTLIBS_FOUND)
-
-if (BLUEZ_FOUND)
-    target_link_libraries (Gammu ${BLUEZ_LIBRARIES})
-    include_directories (${BLUEZ_INCLUDE_DIR})
-
-    if (NOT CROSS_MINGW)
-        set (GSM_ENABLE_BLUEZ TRUE)
-    endif (NOT CROSS_MINGW)
-    macro_gammu_option (BLUETOOTH_RF_SEARCHING "Searching for RF channels with Bluetooth stack" ON ON ON)
-    if (WITH_BLUETOOTH_RF_SEARCHING)
-        set (BLUETOOTH_RF_SEARCHING ON)
-    endif (WITH_BLUETOOTH_RF_SEARCHING)
-endif (BLUEZ_FOUND)
-
-if (NOT HAVE_SIN)
-    target_link_libraries (Gammu m)
-endif (NOT HAVE_SIN)
 
 if (CMAKE_USE_PTHREADS_INIT)
     set (HAVE_PTHREAD ON)
@@ -695,11 +618,6 @@ endif (NOT DEFINED INSTALL_MAN_DIR)
 configure_file (templates/gammu.pc.cmake cfg/gammu.pc @ONLY)
 
 # Install instructions
-install (TARGETS gammu Gammu
-        RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT "runtime"
-        LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT "runtime"
-        ARCHIVE DESTINATION "${INSTALL_LIB_DIR}" COMPONENT "development"
-        )
 
 # Install Windows libraries
 if (CROSS_MINGW)

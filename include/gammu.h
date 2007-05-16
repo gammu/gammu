@@ -7,6 +7,11 @@
 #ifndef __gammu_gammu_h
 #define __gammu_gammu_h
 
+/* FIXME: This should be moved! */
+#ifndef bool
+#  define bool	char
+#endif
+
 struct _GSM_StateMachine;
 
 /**
@@ -20,7 +25,7 @@ struct _GSM_StateMachine;
  */
 typedef struct _GSM_StateMachine 	GSM_StateMachine;
 
-#include <error.h>
+#include <gammu-error.h>
 
 /**
  * Initiates connection.
