@@ -8,8 +8,8 @@
 #  include <unistd.h>
 #endif
 
+#include <gammu.h>
 #include "config.h"
-#include "gsmerror.h"
 #include "misc/misc.h"
 
 #define MAX_MANUFACTURER_LENGTH		50

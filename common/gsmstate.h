@@ -22,7 +22,6 @@
 #include "config.h"
 #include "misc/cfg.h"
 
-typedef struct _GSM_StateMachine 	GSM_StateMachine;
 typedef struct _GSM_User	 	GSM_User;
 typedef struct _OnePhoneModel	 	OnePhoneModel;
 typedef struct _GSM_Reply_Function	GSM_Reply_Function;
