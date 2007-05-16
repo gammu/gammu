@@ -638,8 +638,10 @@ endif (WIN32)
 configure_file (templates/config.h.cmake cfg/config.h ESCAPE_QUOTES)
 
 # Generate Doxygen file
-set (DOXYGEN_INPUT "${Gammu_SOURCE_DIR}/common ${Gammu_SOURCE_DIR}/gammu")
+set (DOXYGEN_INPUT "${Gammu_SOURCE_DIR}/include")
+set (DOXYGEN_INTERNAL_INPUT "${Gammu_SOURCE_DIR}/common ${Gammu_SOURCE_DIR}/gammu")
 set (DOXYGEN_OUTPUT "${Gammu_BINARY_DIR}/gammu-doc")
+set (DOXYGEN_INTERNAL_OUTPUT "${Gammu_BINARY_DIR}/gammu-internal-doc")
 if (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
     set (HAVE_DOT "NO")
     set (DOXYGEN_DOT_PATH "")
@@ -648,14 +650,20 @@ else (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
     # Strip binary name from variable
     string (REGEX REPLACE "/dot$" "" DOXYGEN_DOT_PATH ${DOXYGEN_DOT_EXECUTABLE})
 endif (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
-configure_file (templates/Doxyfile.cmake cfg/Doxyfile)
-configure_file (templates/mainpage.desc.cmake mainpage.desc)
+configure_file (templates/Doxyfile.cmake doxygen/Doxyfile)
+configure_file (templates/Doxyfile-internal.cmake doxygen/Doxyfile-internal)
+configure_file (templates/mainpage.desc.cmake doxygen/mainpage.desc)
 
 # Target for generating API documentation
-add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} cfg/Doxyfile 
+add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile 
     COMMAND find ${DOXYGEN_OUTPUT}/html -name '*.html' -print0 | xargs -0 sed -i 's@text/html\;charset=iso-8859-1@text/html\;charset=utf-8@'
     DEPENDS ${LIBRARY_SRC} ${HEADERS}
     COMMENT "Generating API documentation")
+
+add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal 
+    COMMAND find ${DOXYGEN_INTERNAL_OUTPUT}/html -name '*.html' -print0 | xargs -0 sed -i 's@text/html\;charset=iso-8859-1@text/html\;charset=utf-8@'
+    DEPENDS ${LIBRARY_SRC} ${HEADERS}
+    COMMENT "Generating internal documentation")
 
 # Install paths
 if (NOT DEFINED INSTALL_BIN_DIR)
