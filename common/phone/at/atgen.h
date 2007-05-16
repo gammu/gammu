@@ -64,6 +64,7 @@ typedef enum {
 	AT_Sagem,
 	AT_Samsung,
 	AT_Mitsubishi,
+	AT_Sharp,
 	AT_Unknown
 } GSM_AT_Manufacturer;
 
