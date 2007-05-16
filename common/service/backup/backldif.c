@@ -132,6 +132,9 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 			case PBK_Text_NickName:
 				SaveLDIFText(file, "nickname", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
+			case PBK_Text_FormalName:
+				SaveLDIFText(file, "cn", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
 			case PBK_Number_Other:
 			case PBK_Caller_Group:
 			case PBK_RingtoneID:

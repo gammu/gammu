@@ -172,6 +172,7 @@ typedef enum {
 	PBK_Text_LUID,
 	PBK_LastModified, /**< Date of last modification */
 	PBK_Text_NickName, /**< Nick name (Text) */
+	PBK_Text_FormalName, /**< Formal name (Text) */
 } GSM_EntryType;
 
 #define GSM_PHONEBOOK_TEXT_LENGTH       200
