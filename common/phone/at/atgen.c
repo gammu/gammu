@@ -670,6 +670,11 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			strcpy(s->Phone.Data.Manufacturer,"Siemens");
 			Priv->Manufacturer = AT_Siemens;
 		}
+		if (strstr(msg.Buffer,"SHARP")) {
+			smprintf(s, "Sharp\n");
+			strcpy(s->Phone.Data.Manufacturer,"Sharp");
+			Priv->Manufacturer = AT_Sharp;
+		}
 		if (strstr(msg.Buffer,"ERICSSON")) {
 			smprintf(s, "Ericsson\n");
 			strcpy(s->Phone.Data.Manufacturer,"Ericsson");
