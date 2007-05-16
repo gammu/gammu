@@ -2897,7 +2897,7 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 }
 
 /**
- * Parse reply from phone about available entries.
+ * Parses reply from phone about available entries.
  *
  * Standard format:
  * \verbatim
