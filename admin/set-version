@@ -1,0 +1,26 @@
+#!/bin/sh
+# vim: expandtab sw=4 ts=4 sts=4:
+
+if [ -z "$1" ] ; then
+    echo "Usage: set-version VERSION"
+    exit 1
+fi
+
+version=$1
+version_win=`echo $1| tr . , `,0
+
+do_replace() {
+    sed "s/@VERSION@/$version/; s/@VERSION_WIN@/$version_win/" < $1 > $2
+}
+
+echo "Setting version to $version"
+
+do_replace cfg/rpm/gammu.spec.in gammu.spec
+do_replace description.pak.in description.pak
+do_replace win32/dll/msvc06.mak/gammu.rc.in win32/dll/msvc06.mak/gammu.rc
+do_replace win32/dll/msvc2003.mak/gammu.rc.in win32/dll/msvc2003.mak/gammu.rc
+do_replace gammu/bcc06.mak/gammu.bpr.in gammu/bcc06.mak/gammu.bpr
+do_replace gammu/msvc06.mak/gammu.rc.in gammu/msvc06.mak/gammu.rc
+do_replace gammu/msvc2003.mak/gammu.rc.in gammu/msvc2003.mak/gammu.rc
+
+echo $version > VERSION
