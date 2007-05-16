@@ -30,7 +30,7 @@ PROJECT_NUMBER         = @VERSION@
 # If a relative path is entered, it will be relative to the location 
 # where doxygen was started. If left blank the current directory will be used.
 
-OUTPUT_DIRECTORY       = @DOXYGEN_OUTPUT@
+OUTPUT_DIRECTORY       = @DOXYGEN_INTERNAL_OUTPUT@
 
 # If the CREATE_SUBDIRS tag is set to YES, then doxygen will create 
 # 4096 sub-directories (in 2 levels) under the output directory of each output 
@@ -417,7 +417,7 @@ WARN_LOGFILE           =
 # directories like "/usr/src/myproject". Separate the files or directories 
 # with spaces.
 
-INPUT                  = @DOXYGEN_INPUT@ doxygen
+INPUT                  = @DOXYGEN_INTERNAL_INPUT@ .
 
 # If the value of the INPUT tag contains directories, you can use the 
 # FILE_PATTERNS tag to specify one or more wildcard pattern (like *.cpp 
