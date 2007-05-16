@@ -243,6 +243,23 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 			}
 			continue;
 		}
+		/* Maybe we should use separate feature for these new entries... */
+		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+			type = 0;
+			if (entry->Entries[i].EntryType == PBK_Text_FormalName) type = S4030_PBK_FORMALNAME;
+			if (entry->Entries[i].EntryType == PBK_Text_JobTitle) type = S4030_PBK_JOBTITLE;
+			if (entry->Entries[i].EntryType == PBK_Text_Company) type = S4030_PBK_COMPANY;
+			if (entry->Entries[i].EntryType == PBK_Text_NickName) type = S4030_PBK_NICKNAME;
+			if (type != 0) {
+				if (entry->Entries[i].AddError==ERR_NOTSUPPORTED) entry->Entries[i].AddError = ERR_NONE;
+				len = UnicodeLength(entry->Entries[i].Text);
+				string[0] = len*2+2;
+				CopyUnicodeString(string+1,entry->Entries[i].Text);
+				string[len*2+1] = 0;
+				count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
+				continue;
+			}
+		}
 		if (entry->Entries[i].EntryType == PBK_Text_UserID) {
 			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKUSER)) {
 				entry->Entries[i].AddError = ERR_NONE;
@@ -591,7 +608,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			continue;
 		}
 		if (Block[0] == S4030_PBK_FORMALNAME) {
-			Type = PBK_Text_Name;    	smprintf(s,"FormalName ");
+			Type = PBK_Text_FormalName;    	smprintf(s,"FormalName ");
 			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
 				smprintf(s, "Too long text\n");
 				return ERR_UNKNOWNRESPONSE;
