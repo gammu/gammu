@@ -263,7 +263,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 				entry->Entries[i].AddError = ERR_NONE;
 
 				NOKIA_EncodeDateTime(s, string + 1, &(entry->Entries[i].Date));
-				count += N71_65_PackPBKBlock(s, S4030_PBK_BIRTHDAY, 5, block++, string, req + count);
+				count += N71_65_PackPBKBlock(s, S4030_PBK_BIRTHDAY, 6, block++, string, req + count);
 				continue;
 			}
 		}
