@@ -439,7 +439,7 @@ void SaveVCALText(char *Buffer, int *Length, unsigned char *Text, char *Start, b
  *
  * @param Buffer Buffer where input is stored.
  * @param Start Name of field which is being read.
- * @param Text Storage for read value.
+ * @param Value Storage for read value.
  * @param UTF8 Whether text should be read in UTF-8 without prefix.
  */
 bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8);
