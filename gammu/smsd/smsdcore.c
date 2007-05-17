@@ -43,15 +43,15 @@ void GSM_Terminate_SMSD(char *msg, int error, bool exitprogram, int rc)
 		WriteSMSDLog(_("Terminating communication"));
 		ret=GSM_TerminateConnection(&s);
 		if (ret!=ERR_NONE) {
-			printf("%s\n",print_error(error,NULL));
+			printf("%s\n",GAMMU_ErrorString(error));
 			if (GSM_IsConnected(&s)) {
 				GSM_TerminateConnection(&s);
 			}
 		}
 	}
 	if (error != 0) {
-		WriteSMSDLog(msg, error, print_error(error, NULL));
-		fprintf(stderr, msg, error, print_error(error, NULL));
+		WriteSMSDLog(msg, error, GAMMU_ErrorString(error));
+		fprintf(stderr, msg, error, GAMMU_ErrorString(error));
 		fprintf(stderr, "\n");
 	}
 	if (exitprogram) {
@@ -458,7 +458,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			error=GAMMU_SendSMS(&s, &sms.SMS[i]);
 			if (error!=ERR_NONE) {
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, -1);
-				WriteSMSDLog(_("Error sending SMS %s (%i): %s"), Config->SMSID, error,print_error(error,NULL));
+				WriteSMSDLog(_("Error sending SMS %s (%i): %s"), Config->SMSID, error,GAMMU_ErrorString(error));
 				return false;
 			}
 			Service->RefreshPhoneStatus(Config);
@@ -482,7 +482,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			}
 			if (SendingSMSStatus != ERR_NONE) {
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, TPMR);
-				WriteSMSDLog(_("Error getting send status of %s (%i): %s"), Config->SMSID, SendingSMSStatus,print_error(SendingSMSStatus,NULL));
+				WriteSMSDLog(_("Error getting send status of %s (%i): %s"), Config->SMSID, SendingSMSStatus,GAMMU_ErrorString(SendingSMSStatus));
 				return false;
 			}
 			error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, TPMR);

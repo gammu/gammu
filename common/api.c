@@ -3,26 +3,42 @@
 #include <gammu.h>
 #include "gsmstate.h"
 
+#define PRINT_LOG_ERROR(err) \
+{ \
+	if (err != ERR_NONE) { \
+		smprintf(s, "%s failed with error %d: %s\n", __FUNCTION__, err, GAMMU_ErrorString(err)); \
+	} \
+}
+
 /**
  * Reads manufacturer from phone.
  */
 GSM_Error GAMMU_GetManufacturer(GSM_StateMachine *s)
 {
-	return s->Phone.Functions->GetManufacturer(s);
+	GSM_Error err;
+	err = s->Phone.Functions->GetManufacturer(s);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads model from phone.
  */
 GSM_Error GAMMU_GetModel(GSM_StateMachine *s)
 {
-	return s->Phone.Functions->GetModel(s);
+	GSM_Error err;
+	err = s->Phone.Functions->GetModel(s);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads firmware information from phone.
  */
 GSM_Error GAMMU_GetFirmware(GSM_StateMachine *s)
 {
-	return s->Phone.Functions->GetFirmware(s);
+	GSM_Error err;
+	err = s->Phone.Functions->GetFirmware(s);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads IMEI/serial number from phone.
@@ -37,6 +53,7 @@ GSM_Error GAMMU_GetIMEI(GSM_StateMachine *s, char *value)
 		strcpy(value, s->Phone.Data.IMEI);
 	}
 
+	PRINT_LOG_ERROR(err);
 	return err;
 }
 /**
@@ -44,28 +61,40 @@ GSM_Error GAMMU_GetIMEI(GSM_StateMachine *s, char *value)
  */
 GSM_Error GAMMU_GetOriginalIMEI(GSM_StateMachine *s, char *value)
 {
-	return s->Phone.Functions->GetOriginalIMEI(s, value);
+	GSM_Error err;
+	err = s->Phone.Functions->GetOriginalIMEI(s, value);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets month when device was manufactured.
  */
 GSM_Error GAMMU_GetManufactureMonth(GSM_StateMachine *s, char *value)
 {
-	return s->Phone.Functions->GetManufactureMonth(s, value);
+	GSM_Error err;
+	err = s->Phone.Functions->GetManufactureMonth(s, value);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets product code of device.
  */
 GSM_Error GAMMU_GetProductCode(GSM_StateMachine *s, char *value)
 {
-	return s->Phone.Functions->GetProductCode(s, value);
+	GSM_Error err;
+	err = s->Phone.Functions->GetProductCode(s, value);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets hardware information about device.
  */
 GSM_Error GAMMU_GetHardware(GSM_StateMachine *s, char *value)
 {
-	return s->Phone.Functions->GetHardware(s, value);
+	GSM_Error err;
+	err = s->Phone.Functions->GetHardware(s, value);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets PPM (Post Programmable Memory) info from phone
@@ -73,147 +102,210 @@ GSM_Error GAMMU_GetHardware(GSM_StateMachine *s, char *value)
  */
 GSM_Error GAMMU_GetPPM(GSM_StateMachine *s, char *value)
 {
-	return s->Phone.Functions->GetPPM(s, value);
+	GSM_Error err;
+	err = s->Phone.Functions->GetPPM(s, value);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets SIM IMSI from phone.
  */
 GSM_Error GAMMU_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 {
-	return s->Phone.Functions->GetSIMIMSI(s, IMSI);
+	GSM_Error err;
+	err = s->Phone.Functions->GetSIMIMSI(s, IMSI);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads date and time from phone.
  */
 GSM_Error GAMMU_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
-	return s->Phone.Functions->GetDateTime(s, date_time);
+	GSM_Error err;
+	err = s->Phone.Functions->GetDateTime(s, date_time);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets date and time in phone.
  */
 GSM_Error GAMMU_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
-	return s->Phone.Functions->SetDateTime(s, date_time);
+	GSM_Error err;
+	err = s->Phone.Functions->SetDateTime(s, date_time);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads alarm set in phone.
  */
 GSM_Error GAMMU_GetAlarm(GSM_StateMachine *s, GSM_Alarm	*alarm)
 {
-	return s->Phone.Functions->GetAlarm(s, alarm);
+	GSM_Error err;
+	err = s->Phone.Functions->GetAlarm(s, alarm);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets alarm in phone.
  */
 GSM_Error GAMMU_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
-	return s->Phone.Functions->SetAlarm(s, alarm);
+	GSM_Error err;
+	err = s->Phone.Functions->SetAlarm(s, alarm);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets locale from phone.
  */
 GSM_Error GAMMU_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 {
-	return s->Phone.Functions->GetLocale(s, locale);
+	GSM_Error err;
+	err = s->Phone.Functions->GetLocale(s, locale);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets locale of phone.
  */
 GSM_Error GAMMU_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 {
-	return s->Phone.Functions->SetLocale(s, locale);
+	GSM_Error err;
+	err = s->Phone.Functions->SetLocale(s, locale);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Emulates key press or key release.
  */
 GSM_Error GAMMU_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 {
-	return s->Phone.Functions->PressKey(s, Key, Press);
+	GSM_Error err;
+	err = s->Phone.Functions->PressKey(s, Key, Press);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Performs phone reset.
  */
 GSM_Error GAMMU_Reset(GSM_StateMachine *s, bool hard)
 {
-	return s->Phone.Functions->Reset(s, hard);
+	GSM_Error err;
+	err = s->Phone.Functions->Reset(s, hard);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Resets phone settings.
  */
 GSM_Error GAMMU_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type)
 {
-	return s->Phone.Functions->ResetPhoneSettings(s, Type);
+	GSM_Error err;
+	err = s->Phone.Functions->ResetPhoneSettings(s, Type);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Enters security code (PIN, PUK,...) .
  */
 GSM_Error GAMMU_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 {
-	return s->Phone.Functions->EnterSecurityCode(s, Code);
+	GSM_Error err;
+	err = s->Phone.Functions->EnterSecurityCode(s, Code);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Queries whether some security code needs to be entered./
  */
 GSM_Error GAMMU_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Status)
 {
-	return s->Phone.Functions->GetSecurityStatus(s, Status);
+	GSM_Error err;
+	err = s->Phone.Functions->GetSecurityStatus(s, Status);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Acquired display status.
  */
 GSM_Error GAMMU_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *features)
 {
-	return s->Phone.Functions->GetDisplayStatus(s, features);
+	GSM_Error err;
+	err = s->Phone.Functions->GetDisplayStatus(s, features);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Enables network auto login.
  */
 GSM_Error GAMMU_SetAutoNetworkLogin(GSM_StateMachine *s)
 {
-	return s->Phone.Functions->SetAutoNetworkLogin(s);
+	GSM_Error err;
+	err = s->Phone.Functions->SetAutoNetworkLogin(s);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets information about batery charge and phone charging state.
  */
 GSM_Error GAMMU_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 {
-	return s->Phone.Functions->GetBatteryCharge(s, bat);
+	GSM_Error err;
+	err = s->Phone.Functions->GetBatteryCharge(s, bat);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads signal quality (strength and error rate).
  */
 GSM_Error GAMMU_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
 {
-	return s->Phone.Functions->GetSignalQuality(s, sig);
+	GSM_Error err;
+	err = s->Phone.Functions->GetSignalQuality(s, sig);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets network information.
  */
 GSM_Error GAMMU_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 {
-	return s->Phone.Functions->GetNetworkInfo(s, netinfo);
+	GSM_Error err;
+	err = s->Phone.Functions->GetNetworkInfo(s, netinfo);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads category from phone.
  */
 GSM_Error GAMMU_GetCategory(GSM_StateMachine *s, GSM_Category *Category)
 {
-	return s->Phone.Functions->GetCategory(s, Category);
+	GSM_Error err;
+	err = s->Phone.Functions->GetCategory(s, Category);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Adds category to phone.
  */
 GSM_Error GAMMU_AddCategory(GSM_StateMachine *s, GSM_Category *Category)
 {
-	return s->Phone.Functions->AddCategory(s, Category);
+	GSM_Error err;
+	err = s->Phone.Functions->AddCategory(s, Category);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads category status (number of used entries) from phone.
  */
 GSM_Error GAMMU_GetCategoryStatus(GSM_StateMachine *s, GSM_CategoryStatus *Status)
 {
-	return s->Phone.Functions->GetCategoryStatus(s, Status);
+	GSM_Error err;
+	err = s->Phone.Functions->GetCategoryStatus(s, Status);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets memory (phonebooks or calls) status (eg. number of used and
@@ -221,7 +313,10 @@ GSM_Error GAMMU_GetCategoryStatus(GSM_StateMachine *s, GSM_CategoryStatus *Statu
  */
 GSM_Error GAMMU_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *status)
 {
-	return s->Phone.Functions->GetMemoryStatus(s, status);
+	GSM_Error err;
+	err = s->Phone.Functions->GetMemoryStatus(s, status);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads entry from memory (phonebooks or calls). Which entry should
@@ -229,7 +324,10 @@ GSM_Error GAMMU_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *status)
  */
 GSM_Error GAMMU_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-	return s->Phone.Functions->GetMemory(s, entry);
+	GSM_Error err;
+	err = s->Phone.Functions->GetMemory(s, entry);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads entry from memory (phonebooks or calls). Which entry should
@@ -237,63 +335,90 @@ GSM_Error GAMMU_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
  */
 GSM_Error GAMMU_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
 {
-	return s->Phone.Functions->GetNextMemory(s, entry, start);
+	GSM_Error err;
+	err = s->Phone.Functions->GetNextMemory(s, entry, start);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets memory (phonebooks or calls) entry.
  */
 GSM_Error GAMMU_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-	return s->Phone.Functions->SetMemory(s, entry);
+	GSM_Error err;
+	err = s->Phone.Functions->SetMemory(s, entry);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes memory (phonebooks or calls) entry.
  */
 GSM_Error GAMMU_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-	return s->Phone.Functions->AddMemory(s, entry);
+	GSM_Error err;
+	err = s->Phone.Functions->AddMemory(s, entry);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes memory (phonebooks or calls) entry.
  */
 GSM_Error GAMMU_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-	return s->Phone.Functions->DeleteMemory(s, entry);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteMemory(s, entry);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes all memory (phonebooks or calls) entries of specified type.
  */
 GSM_Error GAMMU_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType)
 {
-	return s->Phone.Functions->DeleteAllMemory(s, MemoryType);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteAllMemory(s, MemoryType);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets speed dial.
  */
 GSM_Error GAMMU_GetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed)
 {
-	return s->Phone.Functions->GetSpeedDial(s, Speed);
+	GSM_Error err;
+	err = s->Phone.Functions->GetSpeedDial(s, Speed);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets speed dial.
  */
 GSM_Error GAMMU_SetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed)
 {
-	return s->Phone.Functions->SetSpeedDial(s, Speed);
+	GSM_Error err;
+	err = s->Phone.Functions->SetSpeedDial(s, Speed);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets SMS Service Center number and SMS settings.
  */
 GSM_Error GAMMU_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
-	return s->Phone.Functions->GetSMSC(s, smsc);
+	GSM_Error err;
+	err = s->Phone.Functions->GetSMSC(s, smsc);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets SMS Service Center number and SMS settings.
  */
 GSM_Error GAMMU_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
-	return s->Phone.Functions->SetSMSC(s, smsc);
+	GSM_Error err;
+	err = s->Phone.Functions->SetSMSC(s, smsc);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets information about SMS memory (read/unread/size of memory for
@@ -301,14 +426,20 @@ GSM_Error GAMMU_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
  */
 GSM_Error GAMMU_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 {
-	return s->Phone.Functions->GetSMSStatus(s, status);
+	GSM_Error err;
+	err = s->Phone.Functions->GetSMSStatus(s, status);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads SMS message.
  */
 GSM_Error GAMMU_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 {
-	return s->Phone.Functions->GetSMS(s, sms);
+	GSM_Error err;
+	err = s->Phone.Functions->GetSMS(s, sms);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads next (or first if start set) SMS message. This might be
@@ -316,399 +447,570 @@ GSM_Error GAMMU_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
  */
 GSM_Error GAMMU_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
 {
-	return s->Phone.Functions->GetNextSMS(s, sms, start);
+	GSM_Error err;
+	err = s->Phone.Functions->GetNextSMS(s, sms, start);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets SMS.
  */
 GSM_Error GAMMU_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	return s->Phone.Functions->SetSMS(s, sms);
+	GSM_Error err;
+	err = s->Phone.Functions->SetSMS(s, sms);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Adds SMS to specified folder.
  */
 GSM_Error GAMMU_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	return s->Phone.Functions->AddSMS(s, sms);
+	GSM_Error err;
+	err = s->Phone.Functions->AddSMS(s, sms);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes SMS.
  */
 GSM_Error GAMMU_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	return s->Phone.Functions->DeleteSMS(s, sms);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteSMS(s, sms);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sends SMS.
  */
 GSM_Error GAMMU_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	return s->Phone.Functions->SendSMS(s, sms);
+	GSM_Error err;
+	err = s->Phone.Functions->SendSMS(s, sms);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sends SMS already saved in phone.
  */
 GSM_Error GAMMU_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 {
-	return s->Phone.Functions->SendSavedSMS(s, Folder, Location);
+	GSM_Error err;
+	err = s->Phone.Functions->SendSavedSMS(s, Folder, Location);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Configures fast SMS sending.
  */
 GSM_Error GAMMU_SetFastSMSSending(GSM_StateMachine *s, bool enable)
 {
-	return s->Phone.Functions->SetFastSMSSending(s, enable);
+	GSM_Error err;
+	err = s->Phone.Functions->SetFastSMSSending(s, enable);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Enable/disable notification on incoming SMS.
  */
 GSM_Error GAMMU_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 {
-	return s->Phone.Functions->SetIncomingSMS(s, enable);
+	GSM_Error err;
+	err = s->Phone.Functions->SetIncomingSMS(s, enable);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets network information from phone.
  */
 GSM_Error GAMMU_SetIncomingCB(GSM_StateMachine *s, bool enable)
 {
-	return s->Phone.Functions->SetIncomingCB(s, enable);
+	GSM_Error err;
+	err = s->Phone.Functions->SetIncomingCB(s, enable);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Returns SMS folders information.
  */
 GSM_Error GAMMU_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 {
-	return s->Phone.Functions->GetSMSFolders(s, folders);
+	GSM_Error err;
+	err = s->Phone.Functions->GetSMSFolders(s, folders);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Creates SMS folder.
  */
 GSM_Error GAMMU_AddSMSFolder(GSM_StateMachine *s, unsigned char *name)
 {
-	return s->Phone.Functions->AddSMSFolder(s, name);
+	GSM_Error err;
+	err = s->Phone.Functions->AddSMSFolder(s, name);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes SMS folder.
  */
 GSM_Error GAMMU_DeleteSMSFolder(GSM_StateMachine *s, int ID)
 {
-	return s->Phone.Functions->DeleteSMSFolder(s, ID);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteSMSFolder(s, ID);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Dials number and starts voice call.
  */
 GSM_Error GAMMU_DialVoice(GSM_StateMachine *s, char *Number, GSM_CallShowNumber ShowNumber)
 {
-	return s->Phone.Functions->DialVoice(s, Number, ShowNumber);
+	GSM_Error err;
+	err = s->Phone.Functions->DialVoice(s, Number, ShowNumber);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Dials service number (usually for USSD).
  */
 GSM_Error GAMMU_DialService(GSM_StateMachine *s, char *Number)
 {
-	return s->Phone.Functions->DialService(s, Number);
+	GSM_Error err;
+	err = s->Phone.Functions->DialService(s, Number);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Accept current incoming call.
  */
 GSM_Error GAMMU_AnswerCall(GSM_StateMachine *s, int ID, bool all)
 {
-	return s->Phone.Functions->AnswerCall(s, ID, all);
+	GSM_Error err;
+	err = s->Phone.Functions->AnswerCall(s, ID, all);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deny current incoming call.
  */
 GSM_Error GAMMU_CancelCall(GSM_StateMachine *s, int ID, bool all)
 {
-	return s->Phone.Functions->CancelCall(s, ID, all);
+	GSM_Error err;
+	err = s->Phone.Functions->CancelCall(s, ID, all);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Holds call.
  */
 GSM_Error GAMMU_HoldCall(GSM_StateMachine *s, int ID)
 {
-	return s->Phone.Functions->HoldCall(s, ID);
+	GSM_Error err;
+	err = s->Phone.Functions->HoldCall(s, ID);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Unholds call.
  */
 GSM_Error GAMMU_UnholdCall(GSM_StateMachine *s, int ID)
 {
-	return s->Phone.Functions->UnholdCall(s, ID);
+	GSM_Error err;
+	err = s->Phone.Functions->UnholdCall(s, ID);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Initiates conference call.
  */
 GSM_Error GAMMU_ConferenceCall(GSM_StateMachine *s, int ID)
 {
-	return s->Phone.Functions->ConferenceCall(s, ID);
+	GSM_Error err;
+	err = s->Phone.Functions->ConferenceCall(s, ID);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Splits call.
  */
 GSM_Error GAMMU_SplitCall(GSM_StateMachine *s, int ID)
 {
-	return s->Phone.Functions->SplitCall(s, ID);
+	GSM_Error err;
+	err = s->Phone.Functions->SplitCall(s, ID);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Transfers call.
  */
 GSM_Error GAMMU_TransferCall(GSM_StateMachine *s, int ID, bool next)
 {
-	return s->Phone.Functions->TransferCall(s, ID, next);
+	GSM_Error err;
+	err = s->Phone.Functions->TransferCall(s, ID, next);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Switches call.
  */
 GSM_Error GAMMU_SwitchCall(GSM_StateMachine *s, int ID, bool next)
 {
-	return s->Phone.Functions->SwitchCall(s, ID, next);
+	GSM_Error err;
+	err = s->Phone.Functions->SwitchCall(s, ID, next);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets call diverts.
  */
 GSM_Error GAMMU_GetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
 {
-	return s->Phone.Functions->GetCallDivert(s, divert);
+	GSM_Error err;
+	err = s->Phone.Functions->GetCallDivert(s, divert);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets call diverts.
  */
 GSM_Error GAMMU_SetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
 {
-	return s->Phone.Functions->SetCallDivert(s, divert);
+	GSM_Error err;
+	err = s->Phone.Functions->SetCallDivert(s, divert);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Cancels all diverts.
  */
 GSM_Error GAMMU_CancelAllDiverts(GSM_StateMachine *s)
 {
-	return s->Phone.Functions->CancelAllDiverts(s);
+	GSM_Error err;
+	err = s->Phone.Functions->CancelAllDiverts(s);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Activates/deactivates noticing about incoming calls.
  */
 GSM_Error GAMMU_SetIncomingCall(GSM_StateMachine *s, bool enable)
 {
-	return s->Phone.Functions->SetIncomingCall(s, enable);
+	GSM_Error err;
+	err = s->Phone.Functions->SetIncomingCall(s, enable);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).
  */
 GSM_Error GAMMU_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
 {
-	return s->Phone.Functions->SetIncomingUSSD(s, enable);
+	GSM_Error err;
+	err = s->Phone.Functions->SetIncomingUSSD(s, enable);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sends DTMF (Dual Tone Multi Frequency) tone.
  */
 GSM_Error GAMMU_SendDTMF(GSM_StateMachine *s, char *sequence)
 {
-	return s->Phone.Functions->SendDTMF(s, sequence);
+	GSM_Error err;
+	err = s->Phone.Functions->SendDTMF(s, sequence);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets ringtone from phone.
  */
 GSM_Error GAMMU_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
 {
-	return s->Phone.Functions->GetRingtone(s, Ringtone, PhoneRingtone);
+	GSM_Error err;
+	err = s->Phone.Functions->GetRingtone(s, Ringtone, PhoneRingtone);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets ringtone in phone.
  */
 GSM_Error GAMMU_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
 {
-	return s->Phone.Functions->SetRingtone(s, Ringtone, maxlength);
+	GSM_Error err;
+	err = s->Phone.Functions->SetRingtone(s, Ringtone, maxlength);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Acquires ringtone informaiton.
  */
 GSM_Error GAMMU_GetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtonesInfo *Info)
 {
-	return s->Phone.Functions->GetRingtonesInfo(s, Info);
+	GSM_Error err;
+	err = s->Phone.Functions->GetRingtonesInfo(s, Info);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes user defined ringtones from phone.
  */
 GSM_Error GAMMU_DeleteUserRingtones(GSM_StateMachine *s)
 {
-	return s->Phone.Functions->DeleteUserRingtones(s);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteUserRingtones(s);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Plays tone.
  */
 GSM_Error GAMMU_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, bool start)
 {
-	return s->Phone.Functions->PlayTone(s, Herz, Volume, start);
+	GSM_Error err;
+	err = s->Phone.Functions->PlayTone(s, Herz, Volume, start);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads WAP bookmark.
  */
 GSM_Error GAMMU_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
-	return s->Phone.Functions->GetWAPBookmark(s, bookmark);
+	GSM_Error err;
+	err = s->Phone.Functions->GetWAPBookmark(s, bookmark);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets WAP bookmark.
  */
 GSM_Error GAMMU_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
-	return s->Phone.Functions->SetWAPBookmark(s, bookmark);
+	GSM_Error err;
+	err = s->Phone.Functions->SetWAPBookmark(s, bookmark);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes WAP bookmark.
  */
 GSM_Error GAMMU_DeleteWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
-	return s->Phone.Functions->DeleteWAPBookmark(s, bookmark);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteWAPBookmark(s, bookmark);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Acquires WAP settings.
  */
 GSM_Error GAMMU_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
-	return s->Phone.Functions->GetWAPSettings(s, settings);
+	GSM_Error err;
+	err = s->Phone.Functions->GetWAPSettings(s, settings);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Changes WAP settings.
  */
 GSM_Error GAMMU_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
-	return s->Phone.Functions->SetWAPSettings(s, settings);
+	GSM_Error err;
+	err = s->Phone.Functions->SetWAPSettings(s, settings);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Acquires SyncML settings.
  */
 GSM_Error GAMMU_GetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings *settings)
 {
-	return s->Phone.Functions->GetSyncMLSettings(s, settings);
+	GSM_Error err;
+	err = s->Phone.Functions->GetSyncMLSettings(s, settings);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Changes SyncML settings.
  */
 GSM_Error GAMMU_SetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings *settings)
 {
-	return s->Phone.Functions->SetSyncMLSettings(s, settings);
+	GSM_Error err;
+	err = s->Phone.Functions->SetSyncMLSettings(s, settings);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Acquires chat/presence settings.
  */
 GSM_Error GAMMU_GetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *settings)
 {
-	return s->Phone.Functions->GetChatSettings(s, settings);
+	GSM_Error err;
+	err = s->Phone.Functions->GetChatSettings(s, settings);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Changes chat/presence settings.
  */
 GSM_Error GAMMU_SetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *settings)
 {
-	return s->Phone.Functions->SetChatSettings(s, settings);
+	GSM_Error err;
+	err = s->Phone.Functions->SetChatSettings(s, settings);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Acquires MMS settings.
  */
 GSM_Error GAMMU_GetMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
-	return s->Phone.Functions->GetMMSSettings(s, settings);
+	GSM_Error err;
+	err = s->Phone.Functions->GetMMSSettings(s, settings);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Changes MMS settings.
  */
 GSM_Error GAMMU_SetMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
-	return s->Phone.Functions->SetMMSSettings(s, settings);
+	GSM_Error err;
+	err = s->Phone.Functions->SetMMSSettings(s, settings);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Lists MMS folders.
  */
 GSM_Error GAMMU_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 {
-	return s->Phone.Functions->GetMMSFolders(s, folders);
+	GSM_Error err;
+	err = s->Phone.Functions->GetMMSFolders(s, folders);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Retrieves next part of MMS file information.
  */
 GSM_Error GAMMU_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start)
 {
-	return s->Phone.Functions->GetNextMMSFileInfo(s, FileID, MMSFolder, start);
+	GSM_Error err;
+	err = s->Phone.Functions->GetNextMMSFileInfo(s, FileID, MMSFolder, start);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets bitmap.
  */
 GSM_Error GAMMU_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
-	return s->Phone.Functions->GetBitmap(s, Bitmap);
+	GSM_Error err;
+	err = s->Phone.Functions->GetBitmap(s, Bitmap);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets bitmap.
  */
 GSM_Error GAMMU_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
-	return s->Phone.Functions->SetBitmap(s, Bitmap);
+	GSM_Error err;
+	err = s->Phone.Functions->SetBitmap(s, Bitmap);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets status of ToDos (count of used entries).
  */
 GSM_Error GAMMU_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
-	return s->Phone.Functions->GetToDoStatus(s, status);
+	GSM_Error err;
+	err = s->Phone.Functions->GetToDoStatus(s, status);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads ToDo from phone.
  */
 GSM_Error GAMMU_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
-	return s->Phone.Functions->GetToDo(s, ToDo);
+	GSM_Error err;
+	err = s->Phone.Functions->GetToDo(s, ToDo);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads ToDo from phone.
  */
 GSM_Error GAMMU_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
 {
-	return s->Phone.Functions->GetNextToDo(s, ToDo, start);
+	GSM_Error err;
+	err = s->Phone.Functions->GetNextToDo(s, ToDo, start);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets ToDo in phone.
  */
 GSM_Error GAMMU_SetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
-	return s->Phone.Functions->SetToDo(s, ToDo);
+	GSM_Error err;
+	err = s->Phone.Functions->SetToDo(s, ToDo);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Adds ToDo in phone.
  */
 GSM_Error GAMMU_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
-	return s->Phone.Functions->AddToDo(s, ToDo);
+	GSM_Error err;
+	err = s->Phone.Functions->AddToDo(s, ToDo);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes ToDo entry in phone.
  */
 GSM_Error GAMMU_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
-	return s->Phone.Functions->DeleteToDo(s, ToDo);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteToDo(s, ToDo);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes all todo entries in phone.
  */
 GSM_Error GAMMU_DeleteAllToDo(GSM_StateMachine *s)
 {
-	return s->Phone.Functions->DeleteAllToDo(s);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteAllToDo(s);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Retrieves calendar status (number of used entries).
  */
 GSM_Error GAMMU_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
 {
-	return s->Phone.Functions->GetCalendarStatus(s, Status);
+	GSM_Error err;
+	err = s->Phone.Functions->GetCalendarStatus(s, Status);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Retrieves calendar entry.
  */
 GSM_Error GAMMU_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return s->Phone.Functions->GetCalendar(s, Note);
+	GSM_Error err;
+	err = s->Phone.Functions->GetCalendar(s, Note);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Retrieves calendar entry. This is useful for continuous reading of all
@@ -716,63 +1018,90 @@ GSM_Error GAMMU_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
  */
 GSM_Error GAMMU_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
-	return s->Phone.Functions->GetNextCalendar(s, Note, start);
+	GSM_Error err;
+	err = s->Phone.Functions->GetNextCalendar(s, Note, start);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets calendar entry
  */
 GSM_Error GAMMU_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return s->Phone.Functions->SetCalendar(s, Note);
+	GSM_Error err;
+	err = s->Phone.Functions->SetCalendar(s, Note);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Adds calendar entry.
  */
 GSM_Error GAMMU_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return s->Phone.Functions->AddCalendar(s, Note);
+	GSM_Error err;
+	err = s->Phone.Functions->AddCalendar(s, Note);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes calendar entry.
  */
 GSM_Error GAMMU_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-	return s->Phone.Functions->DeleteCalendar(s, Note);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteCalendar(s, Note);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes all calendar entries.
  */
 GSM_Error GAMMU_DeleteAllCalendar(GSM_StateMachine *s)
 {
-	return s->Phone.Functions->DeleteAllCalendar(s);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteAllCalendar(s);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads calendar settings.
  */
 GSM_Error GAMMU_GetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *settings)
 {
-	return s->Phone.Functions->GetCalendarSettings(s, settings);
+	GSM_Error err;
+	err = s->Phone.Functions->GetCalendarSettings(s, settings);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets calendar settings.
  */
 GSM_Error GAMMU_SetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *settings)
 {
-	return s->Phone.Functions->SetCalendarSettings(s, settings);
+	GSM_Error err;
+	err = s->Phone.Functions->SetCalendarSettings(s, settings);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Retrieves notes status (number of used entries).
  */
 GSM_Error GAMMU_GetNotesStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
-	return s->Phone.Functions->GetNotesStatus(s, status);
+	GSM_Error err;
+	err = s->Phone.Functions->GetNotesStatus(s, status);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Retrieves notes entry.
  */
 GSM_Error GAMMU_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
-	return s->Phone.Functions->GetNote(s, Note);
+	GSM_Error err;
+	err = s->Phone.Functions->GetNote(s, Note);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Retrieves note entry. This is useful for continuous reading of all
@@ -780,159 +1109,228 @@ GSM_Error GAMMU_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
  */
 GSM_Error GAMMU_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start)
 {
-	return s->Phone.Functions->GetNextNote(s, Note, start);
+	GSM_Error err;
+	err = s->Phone.Functions->GetNextNote(s, Note, start);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets note entry
  */
 GSM_Error GAMMU_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
-	return s->Phone.Functions->SetNote(s, Note);
+	GSM_Error err;
+	err = s->Phone.Functions->SetNote(s, Note);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Adds note entry.
  */
 GSM_Error GAMMU_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
-	return s->Phone.Functions->AddNote(s, Note);
+	GSM_Error err;
+	err = s->Phone.Functions->AddNote(s, Note);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes note entry.
  */
 GSM_Error GAMMU_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
-	return s->Phone.Functions->DeleteNote(s, Note);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteNote(s, Note);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes all notes entries.
  */
 GSM_Error GAMMU_DeleteAllNotes(GSM_StateMachine *s)
 {
-	return s->Phone.Functions->DeleteAllNotes(s);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteAllNotes(s);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads profile.
  */
 GSM_Error GAMMU_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 {
-	return s->Phone.Functions->GetProfile(s, Profile);
+	GSM_Error err;
+	err = s->Phone.Functions->GetProfile(s, Profile);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Updates profile.
  */
 GSM_Error GAMMU_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 {
-	return s->Phone.Functions->SetProfile(s, Profile);
+	GSM_Error err;
+	err = s->Phone.Functions->SetProfile(s, Profile);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Reads FM station.
  */
 GSM_Error GAMMU_GetFMStation(GSM_StateMachine *s, GSM_FMStation *FMStation)
 {
-	return s->Phone.Functions->GetFMStation(s, FMStation);
+	GSM_Error err;
+	err = s->Phone.Functions->GetFMStation(s, FMStation);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets FM station.
  */
 GSM_Error GAMMU_SetFMStation(GSM_StateMachine *s, GSM_FMStation *FMStation)
 {
-	return s->Phone.Functions->SetFMStation(s, FMStation);
+	GSM_Error err;
+	err = s->Phone.Functions->SetFMStation(s, FMStation);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Clears defined FM stations.
  */
 GSM_Error GAMMU_ClearFMStations(GSM_StateMachine *s)
 {
-	return s->Phone.Functions->ClearFMStations(s);
+	GSM_Error err;
+	err = s->Phone.Functions->ClearFMStations(s);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets next filename from filesystem.
  */
 GSM_Error GAMMU_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
 {
-	return s->Phone.Functions->GetNextFileFolder(s, File, start);
+	GSM_Error err;
+	err = s->Phone.Functions->GetNextFileFolder(s, File, start);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets file part from filesystem.
  */
 GSM_Error GAMMU_GetFolderListing(GSM_StateMachine *s, GSM_File *File, bool start)
 {
-	return s->Phone.Functions->GetFolderListing(s, File, start);
+	GSM_Error err;
+	err = s->Phone.Functions->GetFolderListing(s, File, start);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets next root folder.
  */
 GSM_Error GAMMU_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 {
-	return s->Phone.Functions->GetNextRootFolder(s, File);
+	GSM_Error err;
+	err = s->Phone.Functions->GetNextRootFolder(s, File);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets file system attributes.
  */
 GSM_Error GAMMU_SetFileAttributes(GSM_StateMachine *s, GSM_File *File)
 {
-	return s->Phone.Functions->SetFileAttributes(s, File);
+	GSM_Error err;
+	err = s->Phone.Functions->SetFileAttributes(s, File);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Retrieves file part.
  */
 GSM_Error GAMMU_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
 {
-	return s->Phone.Functions->GetFilePart(s, File, Handle, Size);
+	GSM_Error err;
+	err = s->Phone.Functions->GetFilePart(s, File, Handle, Size);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Adds file part to filesystem.
  */
 GSM_Error GAMMU_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
-	return s->Phone.Functions->AddFilePart(s, File, Pos, Handle);
+	GSM_Error err;
+	err = s->Phone.Functions->AddFilePart(s, File, Pos, Handle);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sends file to phone, it's up to phone to decide what to do with it.
  */
 GSM_Error GAMMU_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
-	return s->Phone.Functions->SendFilePart(s, File, Pos, Handle);
+	GSM_Error err;
+	err = s->Phone.Functions->SendFilePart(s, File, Pos, Handle);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Acquires filesystem status.
  */
 GSM_Error GAMMU_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *Status)
 {
-	return s->Phone.Functions->GetFileSystemStatus(s, Status);
+	GSM_Error err;
+	err = s->Phone.Functions->GetFileSystemStatus(s, Status);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes file from filessytem.
  */
 GSM_Error GAMMU_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 {
-	return s->Phone.Functions->DeleteFile(s, ID);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteFile(s, ID);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Adds folder to filesystem.
  */
 GSM_Error GAMMU_AddFolder(GSM_StateMachine *s, GSM_File *File)
 {
-	return s->Phone.Functions->AddFolder(s, File);
+	GSM_Error err;
+	err = s->Phone.Functions->AddFolder(s, File);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Deletes folder from filesystem.
  */
 GSM_Error GAMMU_DeleteFolder(GSM_StateMachine *s, unsigned char *ID)
 {
-	return s->Phone.Functions->DeleteFolder(s, ID);
+	GSM_Error err;
+	err = s->Phone.Functions->DeleteFolder(s, ID);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Gets GPRS access point.
  */
 GSM_Error GAMMU_GetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoint *point)
 {
-	return s->Phone.Functions->GetGPRSAccessPoint(s, point);
+	GSM_Error err;
+	err = s->Phone.Functions->GetGPRSAccessPoint(s, point);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
 /**
  * Sets GPRS access point.
  */
 GSM_Error GAMMU_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoint *point)
 {
-	return s->Phone.Functions->SetGPRSAccessPoint(s, point);
+	GSM_Error err;
+	err = s->Phone.Functions->SetGPRSAccessPoint(s, point);
+	PRINT_LOG_ERROR(err);
+	return err;
 }
