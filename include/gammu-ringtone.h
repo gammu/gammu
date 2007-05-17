@@ -12,6 +12,10 @@
  * Ringtones manipulations.
  */
 
+#include <gammu-types.h>
+#include <gammu-error.h>
+#include <gammu-statemachine.h>
+
 
 #define MAX_RINGTONE_NOTES 255
 
@@ -159,5 +163,16 @@ typedef struct {
 	int					Number;
  	GSM_RingtoneInfo			*Ringtone;
 } GSM_AllRingtonesInfo;
+
+/**
+ * Play one note using state machine interface.
+ */
+GSM_Error PHONE_RTTLPlayOneNote		(GSM_StateMachine *s, GSM_RingNote note, bool first);
+
+/**
+ * Makes phone beek using state machine interface.
+ */
+GSM_Error PHONE_Beep			(GSM_StateMachine *s);
+
 
 #endif

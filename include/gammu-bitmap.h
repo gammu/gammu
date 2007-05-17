@@ -12,6 +12,8 @@
  * Bitmaps manipulations.
  */
 
+#include <gammu-limits.h>
+
 typedef enum {
 	PICTURE_BMP = 1,
 	PICTURE_GIF,

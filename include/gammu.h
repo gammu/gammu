@@ -13,6 +13,7 @@
 #include <gammu-inifile.h>
 #include <gammu-backup.h>
 #include <gammu-config.h>
+#include <gammu-nokia.h>
 
 #endif
 /* Editor configuration

@@ -20,6 +20,8 @@
 #include <string.h>
 #include <time.h>
 
+#include <gammu-nokia.h>
+
 #include "../../../../misc/coding/coding.h"
 #include "../../../../misc/locales.h"
 #include "../../../../gsmcomon.h"

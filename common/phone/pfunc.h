@@ -45,16 +45,6 @@ GSM_Error PHONE_EncodeSMSFrame		(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsig
 GSM_Error PHONE_Terminate		(GSM_StateMachine *s);
 
 /**
- * Play one note using state machine interface.
- */
-GSM_Error PHONE_RTTLPlayOneNote		(GSM_StateMachine *s, GSM_RingNote note, bool first);
-
-/**
- * Makes phone beek using state machine interface.
- */
-GSM_Error PHONE_Beep			(GSM_StateMachine *s);
-
-/**
  * Generic reply function when no reply is requested.
  */
 GSM_Error NoneReply(GSM_Protocol_Message msg, GSM_StateMachine *s);
