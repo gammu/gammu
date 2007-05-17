@@ -1674,10 +1674,15 @@ void GAMMU_SetSendSMSStatusCallback(GSM_StateMachine *s, SendSMSStatusCallback c
 	s->User.SendSMSStatus = callback;
 }
 
-GSM_StateMachine *GAMMU_AllocStateMachine(void) {
+GSM_StateMachine *GAMMU_AllocStateMachine(void)
+{
 	return (GSM_StateMachine *)calloc(1, sizeof(GSM_StateMachine));
 }
 
+OnePhoneModel *GAMMU_GetModelInfo(GSM_StateMachine *s)
+{
+	return s->Phone.Data.ModelInfo;
+}
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
