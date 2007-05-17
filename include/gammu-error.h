@@ -12,8 +12,6 @@
  * Error handling and manipulation.
  */
 
-#include <stdio.h>
-
 /**
  * Error types.
  * \ingroup Error
@@ -74,7 +72,15 @@ typedef enum {
 	ERR_DATACONVERTED /**< Data were converted */
 } GSM_Error;
 
-unsigned char *print_error(GSM_Error e, FILE *df);
+/**
+ * Returns text for error.
+ *
+ * \param e Error code.
+ * \return Text (in current locales) describing error
+ *
+ * \ingroup Error
+ */
+char *GAMMU_ErrorString(GSM_Error e);
 
 #endif
 

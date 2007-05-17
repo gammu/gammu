@@ -162,7 +162,7 @@ static void PrintSecurityStatus()
 void Print_Error(GSM_Error error)
 {
 	if (error != ERR_NONE) {
- 		printf("%s\n",print_error(error,s.di.df));
+ 		printf("%s\n",GAMMU_ErrorString(error));
 		if (error == ERR_SECURITYERROR) {
 			printf(LISTFORMAT, _("Security status"));
 			PrintSecurityStatus();
@@ -1943,13 +1943,13 @@ static void Monitor(int argc, char *argv[])
 	s.User.IncomingUSSD 	= IncomingUSSD;
 
 	error=GAMMU_SetIncomingSMS  		(&s,true);
-	printf("%-35s : %s\n", _("Enabling info about incoming SMS"), print_error(error,NULL));
+	printf("%-35s : %s\n", _("Enabling info about incoming SMS"), GAMMU_ErrorString(error));
 	error=GAMMU_SetIncomingCB   		(&s,true);
-	printf("%-35s : %s\n", _("Enabling info about incoming CB"), print_error(error,NULL));
+	printf("%-35s : %s\n", _("Enabling info about incoming CB"), GAMMU_ErrorString(error));
 	error=GAMMU_SetIncomingCall 		(&s,true);
-	printf("%-35s : %s\n", _("Enabling info about calls"), print_error(error,NULL));
+	printf("%-35s : %s\n", _("Enabling info about calls"), GAMMU_ErrorString(error));
 	error=GAMMU_SetIncomingUSSD 		(&s,true);
-	printf("%-35s : %s\n", _("Enabling info about USSD"), print_error(error,NULL));
+	printf("%-35s : %s\n", _("Enabling info about USSD"), GAMMU_ErrorString(error));
 
 	while (!gshutdown && count != 0) {
 		if (count > 0) count--;
@@ -5717,7 +5717,7 @@ static void Restore(int argc, char *argv[])
 						if (First) printf(_("%cLocation %i                 \n  "),13,Pbk.Location);
 						First = false;
 						PrintMemorySubEntry(&Pbk.Entries[j]);
-						printf("    %s\n",print_error(Pbk.Entries[j].AddError,s.di.df));
+						printf("    %s\n",GAMMU_ErrorString(Pbk.Entries[j].AddError));
 					}
 				}
 			}
@@ -5762,7 +5762,7 @@ static void Restore(int argc, char *argv[])
 							if (First) printf(_("%cLocation %i                 \n  "),13,Pbk.Location);
 							First = false;
 							PrintMemorySubEntry(&Pbk.Entries[j]);
-							printf("    %s\n",print_error(Pbk.Entries[j].AddError,s.di.df));
+							printf("    %s\n",GAMMU_ErrorString(Pbk.Entries[j].AddError));
 						}
 					}
 				}
@@ -9544,13 +9544,13 @@ void SearchPhoneThread(OneDeviceInfo *Info)
 						ss.Phone.Data.ModelInfo->model,
 						ss.Phone.Data.Model);
 				} else {
-					if (SearchOutput) printf("\t%s\n",print_error(error,ss.di.df));
+					if (SearchOutput) printf("\t%s\n",GAMMU_ErrorString(error));
 				}
 			} else {
-				if (SearchOutput) printf("\t%s\n",print_error(error,ss.di.df));
+				if (SearchOutput) printf("\t%s\n",GAMMU_ErrorString(error));
 			}
 		} else {
-			if (SearchOutput) printf("\t%s\n",print_error(error,ss.di.df));
+			if (SearchOutput) printf("\t%s\n",GAMMU_ErrorString(error));
 		}
 		if (error != ERR_DEVICEOPENERROR) {
 			GSM_TerminateConnection(&ss);

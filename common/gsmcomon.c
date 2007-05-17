@@ -133,13 +133,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{0,				""}
 };
 
-/**
- * Prints text for error.
- *
- * @param e Error code.
- * @param df Debuf file.
- */
-unsigned char *print_error(GSM_Error e, FILE *df)
+char *GAMMU_ErrorString(GSM_Error e)
 {
 	unsigned char 	*def 	= NULL;
 	int 		i	= 0;
@@ -152,7 +146,6 @@ unsigned char *print_error(GSM_Error e, FILE *df)
 		i++;
 	}
 	if (def == NULL) def = N_("Unknown error.");
-	if (df!=NULL && di.dl!=0) fprintf(df,"[ERROR %i: %s]\n", e, gettext(def));
 
 	return gettext(def);
 }
