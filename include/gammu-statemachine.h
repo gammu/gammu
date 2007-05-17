@@ -156,13 +156,24 @@ int GAMMU_GetConfigNum(const GSM_StateMachine *s);
 void GAMMU_SetConfigNum(GSM_StateMachine *s, int sections);
 
 /**
- * Allocates new clean state machine structure by malloc.
+ * Allocates new clean state machine structure. You should free it then
+ * by \ref GAMMU_FreeStateMachine.
  *
- * \return Pointer to state machien structure, can be freed using free.
+ * \return Pointer to state machine structure.
  *
  * \ingroup StateMachine
  */
 GSM_StateMachine *GAMMU_AllocStateMachine(void);
+
+/**
+ * Frees state machine structure allocated by 
+ * \ref GAMMU_AllocStateMachine.
+ *
+ * \param s Pointer to state machine structure.
+ *
+ * \ingroup StateMachine
+ */
+void GAMMU_FreeStateMachine(GSM_StateMachine *s);
 #endif
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
