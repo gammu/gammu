@@ -8,7 +8,7 @@
 #define __gammu_types_h
 
 /**
- * \defgroup Types Types
+ * \defgroup Type Types
  * Definition of various useful types.
  */
 
@@ -23,7 +23,7 @@
 /**
  * False value for \ref bool.
  *
- * \ingroup Types
+ * \ingroup Type
  */
 #    define false (0)
 #  endif
@@ -31,7 +31,7 @@
 /**
  * True value for \ref bool.
  *
- * \ingroup Types
+ * \ingroup Type
  */
 #    define true (1)
 #  endif
@@ -39,7 +39,7 @@
 /**
  * Boolean type.
  *
- * \ingroup Types
+ * \ingroup Type
  */
 #    define bool int
 #  endif
