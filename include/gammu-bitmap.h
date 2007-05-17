@@ -13,6 +13,7 @@
  */
 
 #include <gammu-limits.h>
+#include <stdio.h>
 
 typedef enum {
 	PICTURE_BMP = 1,
@@ -30,6 +31,8 @@ typedef struct {
 
 /**
  * Enum to handle all possible bitmaps, which are not saved in various filesystems.
+ *
+ * \ingroup Bitmap
  */
 typedef enum {
 	GSM_None = 1,
@@ -80,6 +83,8 @@ typedef enum {
 
 /**
  * Structure for all possible bitmaps, which are not saved in various filesystems
+ *
+ * \ingroup Bitmap
  */
 typedef struct {
 	/**
@@ -161,6 +166,8 @@ typedef struct {
 
 /**
  * Structure to handle more than one bitmap
+ *
+ * \ingroup Bitmap
  */
 typedef struct {
 	/**
@@ -174,11 +181,28 @@ typedef struct {
 } GSM_MultiBitmap;
 
 /**
- * Gets bitmap.
+ * Gets bitmap from phone.
+ *
+ * \ingroup Bitmap
  */
 GSM_Error GAMMU_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
 /**
- * Sets bitmap.
+ * Sets bitmap in phone.
+ *
+ * \ingroup Bitmap
  */
 GSM_Error GAMMU_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
+
+/**
+ * Prints bitmap to file.
+ *
+ * \param file Where to print.
+ * \param bitmap Bitmap to print.
+ *
+ * \ingroup Bitmap
+ */
+void GSM_PrintBitmap(FILE *file, GSM_Bitmap *bitmap);
+
+GSM_Error GSM_SaveBitmapFile	(char *FileName, GSM_MultiBitmap *bitmap);
+GSM_Error GSM_ReadBitmapFile	(char *FileName, GSM_MultiBitmap *bitmap);
 #endif

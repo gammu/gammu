@@ -50,9 +50,9 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 		printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
 		DumpMessage(&ldi, d->Msg.Buffer, d->Msg.Length);
 		if (d->Msg.Destination != MBUS2_DEVICE_PHONE) {
-			if (s.Phone.Functions != NULL) {
-				s.Phone.Data.RequestMsg = &d->Msg;
-				s.Phone.Functions->DispatchMessage(&s);
+			if (s->Phone.Functions != NULL) {
+				s->Phone.Data.RequestMsg = &d->Msg;
+				s->Phone.Functions->DispatchMessage(s);
 			}
 		}
 		d->MsgRXState = RX_Sync;
@@ -131,9 +131,9 @@ static void DecodeInputIRDA(unsigned char rx_byte)
 		printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
 		DumpMessage(&ldi, d->Msg.Buffer, d->Msg.Length);
 		if (d->Msg.Destination != PHONET_DEVICE_PHONE) {
-			if (s.Phone.Functions != NULL) {
-				s.Phone.Data.RequestMsg = &d->Msg;
-				s.Phone.Functions->DispatchMessage(&s);
+			if (s->Phone.Functions != NULL) {
+				s->Phone.Data.RequestMsg = &d->Msg;
+				s->Phone.Functions->DispatchMessage(s);
 			}
 		}
 		d->MsgRXState = RX_Sync;
@@ -206,7 +206,7 @@ static double				VersionNum;
 
 static void prepareStateMachine()
 {
-	GSM_Phone_Data	*Phone = &s.Phone.Data;
+	GSM_Phone_Data	*Phone = &(s->Phone.Data);
 
 	strcpy(Phone->IMEI,		IMEI);
 	strcpy(Phone->Model,		Model);
@@ -240,8 +240,8 @@ static void prepareStateMachine()
 	Version[0]			= 0;
 	VersionNum			= 0;
 
-	s.Phone.Functions		= NULL;
-	s.User.UserReplyFunctions	= NULL;
+	s->Phone.Functions		= NULL;
+	s->User.UserReplyFunctions	= NULL;
 	Phone->RequestID		= ID_EachFrame;
 }
 
@@ -269,8 +269,8 @@ void decodesniff(int argc, char *argv[])
 	}
 	prepareStateMachine();
 	if (argc > 4) {
-		strcpy(s.CurrentConfig->Model,argv[4]);
-		error=GSM_RegisterAllPhoneModules(&s);
+		strcpy(s->CurrentConfig->Model,argv[4]);
+		error=GSM_RegisterAllPhoneModules(s);
 		if (error!=ERR_NONE) Print_Error(error);
 	}
 	/* Irda uses simple "raw" format */
@@ -354,8 +354,8 @@ void decodebinarydump(int argc, char *argv[])
 
 	prepareStateMachine();
 	if (argc > 3) {
-		strcpy(s.CurrentConfig->Model,argv[3]);
-		error=GSM_RegisterAllPhoneModules(&s);
+		strcpy(s->CurrentConfig->Model,argv[3]);
+		error=GSM_RegisterAllPhoneModules(s);
 		if (error!=ERR_NONE) Print_Error(error);
 	}
 	file = fopen(argv[2], "rb");
@@ -387,13 +387,13 @@ void decodebinarydump(int argc, char *argv[])
 			dbgprintf("0x%02x / 0x%04x", type, len);
 			DumpMessage(&ldi, Buffer+i, len);
 			fflush(stdout);
-			if (s.Phone.Functions != NULL && !sent) {
+			if (s->Phone.Functions != NULL && !sent) {
 				msg.Buffer = (unsigned char *)realloc(msg.Buffer,len);
 				memcpy(msg.Buffer,Buffer+i,len);
 				msg.Type		= type;
 				msg.Length		= len;
-				s.Phone.Data.RequestMsg = &msg;
-				s.Phone.Functions->DispatchMessage(&s);
+				s->Phone.Data.RequestMsg = &msg;
+				s->Phone.Functions->DispatchMessage(s);
 			}
 			i = i + len;
 		}

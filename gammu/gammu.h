@@ -53,7 +53,7 @@ void	Print_Error		(GSM_Error error);
 void	GSM_Init		(bool checkerror);
 void	GSM_Terminate		(void);
 
-extern	GSM_StateMachine	s;
+extern	GSM_StateMachine	*s;
 extern	GSM_Error		error;
 
 extern volatile bool 		gshutdown;

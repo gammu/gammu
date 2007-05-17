@@ -66,7 +66,7 @@
 /**
  * Global state machine used in Gammu.
  */
-GSM_StateMachine		s;
+GSM_StateMachine		*s;
 static INI_Section		*cfg 			= NULL;
 
 GSM_Error			error 			= ERR_NONE;
@@ -131,7 +131,7 @@ static void PrintSecurityStatus()
 {
 	GSM_SecurityCodeType Status;
 
-	error=GAMMU_GetSecurityStatus(&s,&Status);
+	error=GAMMU_GetSecurityStatus(s,&Status);
 	Print_Error(error);
 	switch(Status) {
 		case SEC_SecurityCode:
@@ -167,7 +167,7 @@ void Print_Error(GSM_Error error)
 			printf(LISTFORMAT, _("Security status"));
 			PrintSecurityStatus();
 		}
-		if (s.opened) GSM_TerminateConnection(&s);
+		if (GSM_IsConnected(s)) GSM_TerminateConnection(s);
  		exit (-1);
  	}
 }
@@ -176,11 +176,12 @@ void GSM_Init(bool checkerror)
 {
 	GSM_File 	PhoneDB;
 	char model[100];
+	char version[100];
 	unsigned char 	buff[200],ver[200];
 	int	 	pos=0,oldpos=0,i;
 	if (batch && batchConn) return;
 
-	error=GSM_InitConnection(&s,3);
+	error=GSM_InitConnection(s,3);
 	if (checkerror) Print_Error(error);
 
 	if (batch) {
@@ -189,7 +190,7 @@ void GSM_Init(bool checkerror)
 
 	if (!phonedb) return;
 
-	error=GAMMU_GetModel(&s, model);
+	error=GAMMU_GetModel(s, model);
 	Print_Error(error);
 
 	sprintf(buff,"support/phones/phonedbxml.php?model=%s", model);
@@ -219,16 +220,16 @@ void GSM_Init(bool checkerror)
 	}
 	free(PhoneDB.Buffer);
 
-	error=GAMMU_GetFirmware(&s, NULL, NULL, NULL);
+	error=GAMMU_GetFirmware(s, version, NULL, NULL);
 	Print_Error(error);
-	if (s.Phone.Data.Version[0] == '0') {
+	if (version[0] == '0') {
 		i=1;
 	} else {
 		i=0;
 	}
 	while(i!=strlen(ver)) {
-		if (ver[i] > s.Phone.Data.Version[i]) {
-			printf(_("INFO: there is later phone firmware (%s instead of %s) available !\n"), ver, s.Phone.Data.Version);
+		if (ver[i] > version[i]) {
+			printf(_("INFO: there is later phone firmware (%s instead of %s) available !\n"), ver, version);
 			return;
 		}
 		i++;
@@ -238,7 +239,7 @@ void GSM_Init(bool checkerror)
 void GSM_Terminate(void)
 {
 	if (!batch) {
-		error=GSM_TerminateConnection(&s);
+		error=GSM_TerminateConnection(s);
 		Print_Error(error);
 	}
 }
@@ -500,7 +501,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 		case CAL_CONTACTID:
 			entry.Location = Note->Entries[i].Number;
 			entry.MemoryType = MEM_ME;
-			error=GAMMU_GetMemory(&s, &entry);
+			error=GAMMU_GetMemory(s, &entry);
 			if (error == ERR_NONE) {
 				name = GSM_PhonebookGetEntryName(&entry);
 				if (name != NULL) {
@@ -654,7 +655,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 #ifdef GSM_ENABLE_BEEP
 void GSM_PhoneBeep(void)
 {
-	error = PHONE_Beep(&s);
+	error = PHONE_Beep(s);
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) Print_Error(error);
 }
 #endif
@@ -671,13 +672,13 @@ static GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone)
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (gshutdown) break;
 		if (ringtone.NoteTone.Commands[i].Type != RING_NOTETONE) continue;
-		error=PHONE_RTTLPlayOneNote(&s,ringtone.NoteTone.Commands[i].Note,first);
+		error=PHONE_RTTLPlayOneNote(s,ringtone.NoteTone.Commands[i].Note,first);
 		if (error!=ERR_NONE) return error;
 		first = false;
 	}
 
 	/* Disables buzzer */
-	return s.Phone.Functions->PlayTone(&s,255*255,0,false);
+	return GAMMU_PlayTone(s,255*255,0,false);
 }
 
 static void PlayRingtone(int argc, char *argv[])
@@ -707,57 +708,57 @@ static void Identify(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetManufacturer(&s, buffer);
+	error=GAMMU_GetManufacturer(s, buffer);
 	Print_Error(error);
 	printf(LISTFORMAT "%s\n", _("Manufacturer"), buffer);
-	error=GAMMU_GetModel(&s, buffer);
+	error=GAMMU_GetModel(s, buffer);
 	Print_Error(error);
 	printf(LISTFORMAT "%s (%s)\n", _("Model"),
-			s.Phone.Data.ModelInfo->model,
+			GAMMU_GetModelInfo(s)->model,
 			buffer);
 
-	error=GAMMU_GetFirmware(&s, buffer, date, &num);
+	error=GAMMU_GetFirmware(s, buffer, date, &num);
 	Print_Error(error);
-	printf(LISTFORMAT "%s", _("Firmware"),s.Phone.Data.Version);
-	error=GAMMU_GetPPM(&s, buffer);
+	printf(LISTFORMAT "%s", _("Firmware"), buffer);
+	error=GAMMU_GetPPM(s, buffer);
 	if (error != ERR_NOTSUPPORTED) {
 		if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
 		if (error == ERR_NONE) printf(" %s", buffer);
 	}
-	if (s.Phone.Data.VerDate[0]!=0) printf(" (%s)", s.Phone.Data.VerDate);
+	if (date[0] != 0) printf(" (%s)", date);
 	printf("\n");
 
-	error=GAMMU_GetHardware(&s, buffer);
+	error=GAMMU_GetHardware(s, buffer);
 	if (error != ERR_NOTSUPPORTED) {
 		if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
 		if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Hardware"),buffer);
 	}
 
-	error=GAMMU_GetIMEI(&s, buffer);
+	error=GAMMU_GetIMEI(s, buffer);
 	if (error != ERR_NOTSUPPORTED) {
 		if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
 		if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("IMEI"), buffer);
 
-		error=GAMMU_GetOriginalIMEI(&s, buffer);
+		error=GAMMU_GetOriginalIMEI(s, buffer);
 		if (error != ERR_NOTSUPPORTED && error != ERR_SECURITYERROR) {
 			if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
 			if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Original IMEI"), buffer);
 		}
 	}
 
-	error=GAMMU_GetManufactureMonth(&s, buffer);
+	error=GAMMU_GetManufactureMonth(s, buffer);
 	if (error != ERR_NOTSUPPORTED && error != ERR_SECURITYERROR) {
 		if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
 		if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Manufactured"),buffer);
 	}
 
-	error=GAMMU_GetProductCode(&s, buffer);
+	error=GAMMU_GetProductCode(s, buffer);
 	if (error != ERR_NOTSUPPORTED) {
 		if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
 		if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Product code"),buffer);
 	}
 
-	error=GAMMU_GetSIMIMSI(&s, buffer);
+	error=GAMMU_GetSIMIMSI(s, buffer);
 	switch (error) {
 		case ERR_SECURITYERROR:
 		case ERR_NOTSUPPORTED:
@@ -787,7 +788,7 @@ static void GetDateTime(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetDateTime(&s, &date_time);
+	error=GAMMU_GetDateTime(s, &date_time);
 	switch (error) {
 	case ERR_EMPTY:
 		printf("%s\n", _("Date and time not set in phone"));
@@ -799,7 +800,7 @@ static void GetDateTime(int argc, char *argv[])
 		Print_Error(error);
 	}
 
-	error=GAMMU_GetLocale(&s, &locale);
+	error=GAMMU_GetLocale(s, &locale);
 	switch (error) {
 	case ERR_NOTSUPPORTED:
 	case ERR_NOTIMPLEMENTED:
@@ -846,7 +847,7 @@ static void SetDateTime(int argc, char *argv[])
 	} else {
 		/* update only parts the user specified,
 		leave the rest in the phone as is */
-		error=GAMMU_GetDateTime(&s, &date_time);
+		error=GAMMU_GetDateTime(s, &date_time);
 		Print_Error(error);
 
 		if (error==ERR_NONE) {
@@ -879,7 +880,7 @@ static void SetDateTime(int argc, char *argv[])
 		}
 	}
 	if (error==ERR_NONE) {
-		error=GAMMU_SetDateTime(&s, &date_time);
+		error=GAMMU_SetDateTime(s, &date_time);
 	}
 	Print_Error(error);
 
@@ -897,7 +898,7 @@ static void GetAlarm(int argc, char *argv[])
 	} else {
 		alarm.Location = atoi(argv[2]);
 	}
-	error=GAMMU_GetAlarm(&s, &alarm);
+	error=GAMMU_GetAlarm(s, &alarm);
 	switch (error) {
 	case ERR_EMPTY:
 		printf(_("Alarm (%i) not set in phone\n"), alarm.Location);
@@ -935,7 +936,7 @@ static void SetAlarm(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_SetAlarm(&s, &alarm);
+	error=GAMMU_SetAlarm(s, &alarm);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -967,7 +968,7 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 		} else {
 			Category.Location = entry->Number;
 			Category.Type = Category_Phonebook;
-			error=GAMMU_GetCategory(&s, &Category);
+			error=GAMMU_GetCategory(s, &Category);
 			if (error == ERR_NONE) {
 				printf(LISTFORMAT "\"%s\" (%i)\n", _("Category"), DecodeUnicodeConsole(Category.Name), entry->Number);
 			} else {
@@ -987,10 +988,10 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 		if (!callerinit[entry->Number-1]) {
 			caller[entry->Number-1].Type	    = GSM_CallerGroupLogo;
 			caller[entry->Number-1].Location = entry->Number;
-			error=GAMMU_GetBitmap(&s,&caller[entry->Number-1]);
+			error=GAMMU_GetBitmap(s,&caller[entry->Number-1]);
 			Print_Error(error);
 			if (caller[entry->Number-1].DefaultName) {
-				NOKIA_GetDefaultCallerGroupName(&s,&caller[entry->Number-1]);
+				NOKIA_GetDefaultCallerGroupName(s,&caller[entry->Number-1]);
 			}
 			callerinit[entry->Number-1]=true;
 		}
@@ -998,7 +999,7 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 		return;
 	case PBK_RingtoneID	     :
 		if (!ringinit) {
-			error=GAMMU_GetRingtonesInfo(&s,&Info);
+			error=GAMMU_GetRingtonesInfo(s,&Info);
 			if (error != ERR_NOTSUPPORTED) Print_Error(error);
 			if (error == ERR_NONE) ringinit = true;
 		}
@@ -1092,7 +1093,7 @@ static void GetAllMemory(int argc, char *argv[])
 	GSM_Init(true);
 
 	while (!gshutdown) {
-		error = GAMMU_GetNextMemory(&s, &Entry, start);
+		error = GAMMU_GetNextMemory(s, &Entry, start);
 		if (error == ERR_EMPTY) break;
 		if (error != ERR_NONE && Info.Ringtone) free(Info.Ringtone);
 		Print_Error(error);
@@ -1111,6 +1112,7 @@ static void GetMemory(int argc, char *argv[])
 	int			j, start, stop, emptynum = 0, fillednum = 0;
 	GSM_MemoryEntry		entry;
 	bool			empty = true;
+	double version;
 
 	entry.MemoryType=0;
 
@@ -1141,8 +1143,11 @@ static void GetMemory(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (!strcmp(s.Phone.Data.ModelInfo->model,"3310")) {
-		if (s.Phone.Data.VerNum<=4.06) printf_warn("%s\n", _("You will have null names in entries. Upgrade firmware in phone to higher than 4.06"));
+	if (!strcmp(GAMMU_GetModelInfo(s)->model,"3310")) {
+		GAMMU_GetFirmware(s, NULL, NULL, &version);
+		if (version <= 4.06) {
+			printf_warn("%s\n", _("You will have null names in entries. Upgrade firmware in phone to higher than 4.06"));
+		}
 	}
 
 	for (j=start;j<=stop;j++) {
@@ -1150,7 +1155,7 @@ static void GetMemory(int argc, char *argv[])
 
 		entry.Location=j;
 
-		error=GAMMU_GetMemory(&s, &entry);
+		error=GAMMU_GetMemory(s, &entry);
 		if (error != ERR_EMPTY) {
 			if (Info.Ringtone) free(Info.Ringtone);
 			Print_Error(error);
@@ -1255,14 +1260,14 @@ static void SearchOneMemory(GSM_MemoryType MemoryType, char *Title, unsigned cha
 	Status.MemoryType = MemoryType;
 	Entry.MemoryType  = MemoryType;
 
-	if (GAMMU_GetMemoryStatus(&s, &Status) == ERR_NONE) {
+	if (GAMMU_GetMemoryStatus(s, &Status) == ERR_NONE) {
 		fprintf(stderr,"%c%s: %i%%", 13, Title, (i+1)*100/(Status.MemoryUsed+1));
 		if (GAMMU_GetNextMemory != NOTSUPPORTED && GAMMU_GetNextMemory != NOTIMPLEMENTED) {
 			while (i < Status.MemoryUsed) {
 				if (gshutdown) return;
 				i++;
 				fprintf(stderr,"\r%s: %i%%", Title, (i+1)*100/(Status.MemoryUsed+1));
-				error = GAMMU_GetNextMemory(&s, &Entry, start);
+				error = GAMMU_GetNextMemory(s, &Entry, start);
 				if (error == ERR_EMPTY) break;
 				Print_Error(error);
 				SearchOneEntry(&Entry, Text);
@@ -1271,7 +1276,7 @@ static void SearchOneMemory(GSM_MemoryType MemoryType, char *Title, unsigned cha
 		} else {
 			while (i < Status.MemoryUsed) {
 				Entry.Location = l;
-				error = GAMMU_GetMemory(&s, &Entry);
+				error = GAMMU_GetMemory(s, &Entry);
 				if (error != ERR_EMPTY) {
 					Print_Error(error);
 					i++;
@@ -1325,7 +1330,7 @@ static void ListMemoryCategoryEntries(int Category)
 	Entry.MemoryType  = MEM_ME;
 
 	while (!gshutdown) {
-		error = GAMMU_GetNextMemory(&s, &Entry, start);
+		error = GAMMU_GetNextMemory(s, &Entry, start);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
 		for (j=0;j<Entry.EntriesNum;j++) {
@@ -1376,10 +1381,10 @@ static void ListMemoryCategory(int argc, char *argv[])
 		Category.Type 	= Category_Phonebook;
 		Status.Type 	= Category_Phonebook;
 
-		if (GAMMU_GetCategoryStatus(&s, &Status) == ERR_NONE) {
+		if (GAMMU_GetCategoryStatus(s, &Status) == ERR_NONE) {
 			for (count=0,j=1;count<Status.Used;j++) {
 				Category.Location=j;
-				error=GAMMU_GetCategory(&s, &Category);
+				error=GAMMU_GetCategory(s, &Category);
 
 				if (error != ERR_EMPTY) {
 					count++;
@@ -1721,8 +1726,8 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems
 			printf(_("Ringtone \"%s\"\n"),DecodeUnicodeConsole(SMSInfo.Entries[i].Ringtone->Name));
 			saverttl(stdout,SMSInfo.Entries[i].Ringtone);
 			printf("\n");
-			if (s.Phone.Functions->PlayTone!=NOTSUPPORTED &&
-			    s.Phone.Functions->PlayTone!=NOTIMPLEMENTED) {
+			if (GAMMU_PlayTone!=NOTSUPPORTED &&
+			    GAMMU_PlayTone!=NOTIMPLEMENTED) {
 				if (answer_yes(_("Do you want to play it"))) GSM_PlayRingtone(*SMSInfo.Entries[i].Ringtone);
 			}
 			break;
@@ -1789,7 +1794,7 @@ static void NetworkInfo(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (GAMMU_GetNetworkInfo(&s,&NetInfo)==ERR_NONE) {
+	if (GAMMU_GetNetworkInfo(s,&NetInfo)==ERR_NONE) {
 		PrintNetworkInfo(NetInfo);
 	}
 	GSM_Terminate();
@@ -1812,10 +1817,10 @@ static void DisplayIncomingSMS()
  	GSM_SMSFolders folders;
 
  	if (IncomingSMSData.SMS[0].State == 0) {
- 		error=GAMMU_GetSMSFolders(&s, &folders);
+ 		error=GAMMU_GetSMSFolders(s, &folders);
  		Print_Error(error);
 
- 		error=GAMMU_GetSMS(&s, &IncomingSMSData);
+ 		error=GAMMU_GetSMS(s, &IncomingSMSData);
  		switch (error) {
  		case ERR_EMPTY:
  			printf(_("Location %i\n"),IncomingSMSData.SMS[0].Location);
@@ -1907,7 +1912,7 @@ static void IncomingUSSD(GSM_StateMachine *s, GSM_USSDMessage ussd)
 #define CHECKMEMORYSTATUS(x, m, name) \
 { \
 	x.MemoryType=m;							\
-	if ( (error = GAMMU_GetMemoryStatus(&s, &x)) == ERR_NONE)			\
+	if ( (error = GAMMU_GetMemoryStatus(s, &x)) == ERR_NONE)			\
 		PRINTUSED(name, x.MemoryUsed, x.MemoryFree);  \
 }
 
@@ -1940,18 +1945,18 @@ static void Monitor(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	s.User.IncomingSMS 	= IncomingSMS;
-	s.User.IncomingCB 	= IncomingCB;
-	s.User.IncomingCall 	= IncomingCall;
-	s.User.IncomingUSSD 	= IncomingUSSD;
+	GAMMU_SetIncomingSMSCallback(s, IncomingSMS);
+	GAMMU_SetIncomingCBCallback(s, IncomingCB);
+	GAMMU_SetIncomingCallCallback(s, IncomingCall);
+	GAMMU_SetIncomingUSSDCallback(s, IncomingUSSD);
 
-	error=GAMMU_SetIncomingSMS  		(&s,true);
+	error=GAMMU_SetIncomingSMS  		(s,true);
 	printf("%-35s : %s\n", _("Enabling info about incoming SMS"), GAMMU_ErrorString(error));
-	error=GAMMU_SetIncomingCB   		(&s,true);
+	error=GAMMU_SetIncomingCB   		(s,true);
 	printf("%-35s : %s\n", _("Enabling info about incoming CB"), GAMMU_ErrorString(error));
-	error=GAMMU_SetIncomingCall 		(&s,true);
+	error=GAMMU_SetIncomingCall 		(s,true);
 	printf("%-35s : %s\n", _("Enabling info about calls"), GAMMU_ErrorString(error));
-	error=GAMMU_SetIncomingUSSD 		(&s,true);
+	error=GAMMU_SetIncomingUSSD 		(s,true);
 	printf("%-35s : %s\n", _("Enabling info about USSD"), GAMMU_ErrorString(error));
 
 	while (!gshutdown && count != 0) {
@@ -1968,15 +1973,15 @@ static void Monitor(int argc, char *argv[])
 		CHECK_EXIT;
 		CHECKMEMORYSTATUS(MemStatus,MEM_ME,"Phone phonebook");
 		CHECK_EXIT;
-		if ( (error = GAMMU_GetToDoStatus(&s, &ToDoStatus)) == ERR_NONE) {
+		if ( (error = GAMMU_GetToDoStatus(s, &ToDoStatus)) == ERR_NONE) {
 			PRINTUSED(_("ToDos"), ToDoStatus.Used, ToDoStatus.Free);
 		}
 		CHECK_EXIT;
-		if ( (error = GAMMU_GetCalendarStatus(&s, &CalendarStatus)) == ERR_NONE) {
+		if ( (error = GAMMU_GetCalendarStatus(s, &CalendarStatus)) == ERR_NONE) {
 			PRINTUSED(_("Calendar"), CalendarStatus.Used, CalendarStatus.Free);
 		}
 		CHECK_EXIT;
-		if ( (error = GAMMU_GetBatteryCharge(&s,&BatteryCharge)) == ERR_NONE) {
+		if ( (error = GAMMU_GetBatteryCharge(s,&BatteryCharge)) == ERR_NONE) {
             		if (BatteryCharge.BatteryPercent != -1) {
 				printf(LISTFORMAT, _("Battery level"));
 				printf(_("%i percent"), BatteryCharge.BatteryPercent);
@@ -2070,7 +2075,7 @@ static void Monitor(int argc, char *argv[])
             		}
         	}
 		CHECK_EXIT;
-		if ( (error = GAMMU_GetSignalQuality(&s,&SignalQuality)) == ERR_NONE) {
+		if ( (error = GAMMU_GetSignalQuality(s,&SignalQuality)) == ERR_NONE) {
             		if (SignalQuality.SignalStrength != -1) {
 				printf(LISTFORMAT, _("Signal strength"));   
 				printf(_("%i dBm"), SignalQuality.SignalStrength);
@@ -2088,7 +2093,7 @@ static void Monitor(int argc, char *argv[])
 			}
         	}
 		CHECK_EXIT;
-		if ( (error = GAMMU_GetSMSStatus(&s,&SMSStatus)) == ERR_NONE) {
+		if ( (error = GAMMU_GetSMSStatus(s,&SMSStatus)) == ERR_NONE) {
 			if (SMSStatus.SIMSize > 0) {
 				printf(LISTFORMAT, _("SIM SMS status"));
 				printf(_("%i used"), SMSStatus.SIMUsed);
@@ -2114,7 +2119,7 @@ static void Monitor(int argc, char *argv[])
 			}
 		}
 		CHECK_EXIT;
-		if ( (error = GAMMU_GetNetworkInfo(&s,&NetInfo)) == ERR_NONE) {
+		if ( (error = GAMMU_GetNetworkInfo(s,&NetInfo)) == ERR_NONE) {
 			PrintNetworkInfo(NetInfo);
 		}
 		if (wasincomingsms) DisplayIncomingSMS();
@@ -2142,19 +2147,19 @@ static void GetUSSD(int argc, char *argv[])
 
 	s.User.IncomingUSSD = IncomingUSSD2;
 
-	error=GAMMU_SetIncomingUSSD(&s,true);
+	error=GAMMU_SetIncomingUSSD(s,true);
 	Print_Error(error);
 
-	error=GAMMU_DialService(&s, argv[2]);
+	error=GAMMU_DialService(s, argv[2]);
 	/* Fallback to voice call, it can work wit hsome phones */
 	if (error == ERR_NOTIMPLEMENTED || error == ERR_NOTSUPPORTED) {
-		error=GAMMU_DialVoice(&s, argv[2], GSM_CALL_DefaultNumberPresence);
+		error=GAMMU_DialVoice(s, argv[2], GSM_CALL_DefaultNumberPresence);
 	}
 	Print_Error(error);
 
-	while (!gshutdown) GSM_ReadDevice(&s, false);
+	while (!gshutdown) GSM_ReadDevice(s, false);
 
-	error=GAMMU_SetIncomingUSSD(&s, false);
+	error=GAMMU_SetIncomingUSSD(s, false);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -2172,7 +2177,7 @@ static void GetSMSC(int argc, char *argv[])
 	for (i=start;i<=stop;i++) {
 		smsc.Location=i;
 
-		error=GAMMU_GetSMSC(&s, &smsc);
+		error=GAMMU_GetSMSC(s, &smsc);
 		Print_Error(error);
 
 		if (!strcmp(DecodeUnicodeConsole(smsc.Name),"")) {
@@ -2241,13 +2246,13 @@ static void GetSMS(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetSMSFolders(&s, &folders);
+	error=GAMMU_GetSMSFolders(s, &folders);
 	Print_Error(error);
 
 	for (j = start; j <= stop; j++) {
 		sms.SMS[0].Folder	= atoi(argv[2]);
 		sms.SMS[0].Location	= j;
-		error=GAMMU_GetSMS(&s, &sms);
+		error=GAMMU_GetSMS(s, &sms);
 		switch (error) {
 		case ERR_EMPTY:
 			printf(_("Location %i\n"),sms.SMS[0].Location);
@@ -2284,7 +2289,7 @@ static void DeleteSMS(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		sms.Location	= i;
-		error=GAMMU_DeleteSMS(&s, &sms);
+		error=GAMMU_DeleteSMS(s, &sms);
 		Print_Error(error);
 	}
 #ifdef GSM_ENABLE_BEEP
@@ -2313,14 +2318,14 @@ static void GetAllSMS(int argc, char *argv[])
 #ifdef GSM_ENABLE_BACKUP
 	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
 		MemStatus.MemoryType = MEM_ME;
-		error=GAMMU_GetMemoryStatus(&s, &MemStatus);
+		error=GAMMU_GetMemoryStatus(s, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
 			Pbk.MemoryType  = MEM_ME;
 			i		= 1;
 			used 		= 0;
 			while (used != MemStatus.MemoryUsed) {
 				Pbk.Location = i;
-				error=GAMMU_GetMemory(&s, &Pbk);
+				error=GAMMU_GetMemory(s, &Pbk);
 				if (error != ERR_EMPTY) {
 					Print_Error(error);
 					if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
@@ -2346,12 +2351,12 @@ static void GetAllSMS(int argc, char *argv[])
 	}
 #endif
 
-	error=GAMMU_GetSMSFolders(&s, &folders);
+	error=GAMMU_GetSMSFolders(s, &folders);
 	Print_Error(error);
 
 	while (error == ERR_NONE) {
 		sms.SMS[0].Folder=0x00;
-		error=GAMMU_GetNextSMS(&s, &sms, start);
+		error=GAMMU_GetNextSMS(s, &sms, start);
 		switch (error) {
 		case ERR_EMPTY:
 			break;
@@ -2411,14 +2416,14 @@ static void GetEachSMS(int argc, char *argv[])
 #ifdef GSM_ENABLE_BACKUP
 	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
 		MemStatus.MemoryType = MEM_ME;
-		error=GAMMU_GetMemoryStatus(&s, &MemStatus);
+		error=GAMMU_GetMemoryStatus(s, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
 			Pbk.MemoryType  = MEM_ME;
 			i		= 1;
 			used 		= 0;
 			while (used != MemStatus.MemoryUsed) {
 				Pbk.Location = i;
-				error=GAMMU_GetMemory(&s, &Pbk);
+				error=GAMMU_GetMemory(s, &Pbk);
 				if (error != ERR_EMPTY) {
 					Print_Error(error);
 					if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
@@ -2444,7 +2449,7 @@ static void GetEachSMS(int argc, char *argv[])
 	}
 #endif
 
-	error=GAMMU_GetSMSFolders(&s, &folders);
+	error=GAMMU_GetSMSFolders(s, &folders);
 	Print_Error(error);
 
 	fprintf(stderr, LISTFORMAT, _("Reading"));
@@ -2454,7 +2459,7 @@ static void GetEachSMS(int argc, char *argv[])
 			break;
 		}
 		sms.SMS[0].Folder=0x00;
-		error=GAMMU_GetNextSMS(&s, &sms, start);
+		error=GAMMU_GetNextSMS(s, &sms, start);
 		switch (error) {
 		case ERR_EMPTY:
 			break;
@@ -2528,7 +2533,7 @@ static void GetSMSFolders(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetSMSFolders(&s,&folders);
+	error=GAMMU_GetSMSFolders(s,&folders);
 	Print_Error(error);
 
 	for (i=0;i<folders.Number;i++) {
@@ -2553,7 +2558,7 @@ static void GetMMSFolders(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetMMSFolders(&s,&folders);
+	error=GAMMU_GetMMSFolders(s,&folders);
 	Print_Error(error);
 
 	for (i=0;i<folders.Number;i++) {
@@ -2679,13 +2684,13 @@ static void GetEachMMS(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetMMSFolders(&s,&folders);
+	error=GAMMU_GetMMSFolders(s,&folders);
 	Print_Error(error);
 
 	File.Buffer = NULL;
 
 	while (1) {
-		error=GAMMU_GetNextMMSFileInfo(&s,File.ID_FullName,&FileFolder,start);
+		error=GAMMU_GetNextMMSFileInfo(s,File.ID_FullName,&FileFolder,start);
 		if (error==ERR_EMPTY) break;
 		Print_Error(error);
 		start = false;
@@ -2701,14 +2706,14 @@ static void GetEachMMS(int argc, char *argv[])
 		}
 		File.Used = 0;
 		while (true) {
-			error = GAMMU_GetFilePart(&s,&File,&Handle,&Size);
+			error = GAMMU_GetFilePart(s,&File,&Handle,&Size);
 			if (error == ERR_EMPTY) break;
 			Print_Error(error);
 			fprintf(stderr, _("%c  Reading: %i percent"),13,File.Used*100/Size);
 		}
 		fprintf(stderr, "%c",13);
 
-		if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (IsPhoneFeatureAvailable(GAMMU_GetModelInfo(s), F_SERIES40_30)) {
 			memcpy(File.Buffer,File.Buffer+176,File.Used-176);
 			File.Used-=176;
 			File.Buffer = realloc(File.Buffer,File.Used);
@@ -2736,7 +2741,7 @@ static void GetRingtone(int argc, char *argv[])
 
 	ringtone.Format=0;
 
-	error=GAMMU_GetRingtone(&s,&ringtone,PhoneRingtone);
+	error=GAMMU_GetRingtone(s,&ringtone,PhoneRingtone);
 	Print_Error(error);
 
 	switch (ringtone.Format) {
@@ -2762,7 +2767,7 @@ static void GetRingtonesList(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetRingtonesInfo(&s,&Info);
+	error=GAMMU_GetRingtonesInfo(s,&Info);
  	if (error != ERR_NONE && Info.Ringtone) free(Info.Ringtone);
 	Print_Error(error);
 
@@ -2788,7 +2793,7 @@ static void DialVoice(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_DialVoice(&s, argv[2], ShowNumber);
+	error=GAMMU_DialVoice(s, argv[2], ShowNumber);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -2821,10 +2826,10 @@ static void MakeTerminatedCall(int argc, char *argv[])
 	TerminateID = -1;
 	s.User.IncomingCall = IncomingCall0;
 
-	error=GAMMU_SetIncomingCall(&s,true);
+	error=GAMMU_SetIncomingCall(s,true);
 	Print_Error(error);
 
-	error=GAMMU_DialVoice(&s, argv[2], ShowNumber);
+	error=GAMMU_DialVoice(s, argv[2], ShowNumber);
 	Print_Error(error);
 
 //	GSM_GetCurrentDateTime (&DT);
@@ -2835,11 +2840,11 @@ static void MakeTerminatedCall(int argc, char *argv[])
 //		GSM_GetCurrentDateTime (&DT);
 //		two = Fill_Time_T(DT);
 //		if (two - one > atoi(argv[3])) break;
-		GSM_ReadDevice(&s,true);
+		GSM_ReadDevice(s,true);
 //	}
 
 	if (TerminateID != -1) {
-		error=GAMMU_CancelCall(&s,TerminateID,false);
+		error=GAMMU_CancelCall(s,TerminateID,false);
 		Print_Error(error);
 	}
 
@@ -2852,9 +2857,9 @@ static void CancelCall(int argc, char *argv[])
 	GSM_Init(true);
 
 	if (argc>2) {
-		error=GAMMU_CancelCall(&s,atoi(argv[2]),false);
+		error=GAMMU_CancelCall(s,atoi(argv[2]),false);
 	} else {
-		error=GAMMU_CancelCall(&s,0,true);
+		error=GAMMU_CancelCall(s,0,true);
 	}
 	Print_Error(error);
 
@@ -2866,9 +2871,9 @@ static void AnswerCall(int argc, char *argv[])
 	GSM_Init(true);
 
 	if (argc>2) {
-		error=GAMMU_AnswerCall(&s,atoi(argv[2]),false);
+		error=GAMMU_AnswerCall(s,atoi(argv[2]),false);
 	} else {
-		error=GAMMU_AnswerCall(&s,0,true);
+		error=GAMMU_AnswerCall(s,0,true);
 	}
 	Print_Error(error);
 
@@ -2879,7 +2884,7 @@ static void UnholdCall(int argc, char *argv[])
 {
 	GSM_Init(true);
 
-	error=GAMMU_UnholdCall(&s,atoi(argv[2]));
+	error=GAMMU_UnholdCall(s,atoi(argv[2]));
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -2889,7 +2894,7 @@ static void HoldCall(int argc, char *argv[])
 {
 	GSM_Init(true);
 
-	error=GAMMU_HoldCall(&s,atoi(argv[2]));
+	error=GAMMU_HoldCall(s,atoi(argv[2]));
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -2899,7 +2904,7 @@ static void ConferenceCall(int argc, char *argv[])
 {
 	GSM_Init(true);
 
-	error=GAMMU_ConferenceCall(&s,atoi(argv[2]));
+	error=GAMMU_ConferenceCall(s,atoi(argv[2]));
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -2909,7 +2914,7 @@ static void SplitCall(int argc, char *argv[])
 {
 	GSM_Init(true);
 
-	error=GAMMU_SplitCall(&s,atoi(argv[2]));
+	error=GAMMU_SplitCall(s,atoi(argv[2]));
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -2920,9 +2925,9 @@ static void SwitchCall(int argc, char *argv[])
 	GSM_Init(true);
 
 	if (argc > 2) {
-		error=GAMMU_SwitchCall(&s,atoi(argv[2]),false);
+		error=GAMMU_SwitchCall(s,atoi(argv[2]),false);
 	} else {
-		error=GAMMU_SwitchCall(&s,0,true);
+		error=GAMMU_SwitchCall(s,0,true);
 	}
 	Print_Error(error);
 
@@ -2934,9 +2939,9 @@ static void TransferCall(int argc, char *argv[])
 	GSM_Init(true);
 
 	if (argc > 2) {
-		error=GAMMU_TransferCall(&s,atoi(argv[2]),false);
+		error=GAMMU_TransferCall(s,atoi(argv[2]),false);
 	} else {
-		error=GAMMU_TransferCall(&s,0,true);
+		error=GAMMU_TransferCall(s,0,true);
 	}
 	Print_Error(error);
 
@@ -2950,7 +2955,7 @@ static void AddSMSFolder(int argc, char *argv[])
 	GSM_Init(true);
 
 	EncodeUnicode(buffer,argv[2],strlen(argv[2]));
-	error=GAMMU_AddSMSFolder(&s,buffer);
+	error=GAMMU_AddSMSFolder(s,buffer);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -2969,7 +2974,7 @@ static void Reset(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_Reset(&s, hard);
+	error=GAMMU_Reset(s, hard);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -2986,7 +2991,7 @@ static void GetCalendar(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		Note.Location=i;
-		error = GAMMU_GetCalendar(&s, &Note);
+		error = GAMMU_GetCalendar(s, &Note);
 		if (error == ERR_EMPTY) continue;
 		Print_Error(error);
 		printf(LISTFORMAT "%d\n", _("Location"), Note.Location);
@@ -3007,7 +3012,7 @@ static void DeleteCalendar(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		Note.Location=i;
-		error = GAMMU_DeleteCalendar(&s, &Note);
+		error = GAMMU_DeleteCalendar(s, &Note);
 		Print_Error(error);
 	}
 
@@ -3025,7 +3030,7 @@ static void GetAllCalendar(int argc, char *argv[])
 	GSM_Init(true);
 
 	while (!gshutdown) {
-		error=GAMMU_GetNextCalendar(&s,&Note,refresh);
+		error=GAMMU_GetNextCalendar(s,&Note,refresh);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
 		printf(LISTFORMAT "%d\n", _("Location"), Note.Location);
@@ -3042,7 +3047,7 @@ static void GetCalendarSettings(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetCalendarSettings(&s,&settings);
+	error=GAMMU_GetCalendarSettings(s,&settings);
 	Print_Error(error);
 
 	if (settings.AutoDelete == 0) {
@@ -3072,7 +3077,7 @@ static void GetWAPBookmark(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		bookmark.Location=i;
-		error=GAMMU_GetWAPBookmark(&s,&bookmark);
+		error=GAMMU_GetWAPBookmark(s,&bookmark);
 		Print_Error(error);
 		printf(LISTFORMAT "\"%s\"\n", _("Name"),DecodeUnicodeConsole(bookmark.Title));
 		printf(LISTFORMAT "\"%s\"\n", _("Address"),DecodeUnicodeConsole(bookmark.Address));
@@ -3092,7 +3097,7 @@ static void DeleteWAPBookmark(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		bookmark.Location=i;
-		error=GAMMU_DeleteWAPBookmark(&s, &bookmark);
+		error=GAMMU_DeleteWAPBookmark(s, &bookmark);
 		Print_Error(error);
 	}
 
@@ -3110,7 +3115,7 @@ static void GetGPRSPoint(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		point.Location=i;
-		error=GAMMU_GetGPRSAccessPoint(&s,&point);
+		error=GAMMU_GetGPRSAccessPoint(s,&point);
 		if (error != ERR_EMPTY) {
 			Print_Error(error);
 			printf("%i. \"%s\"",point.Location,DecodeUnicodeConsole(point.Name));
@@ -3163,7 +3168,7 @@ static void GetBitmap(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetBitmap(&s,&MultiBitmap.Bitmap[0]);
+	error=GAMMU_GetBitmap(s,&MultiBitmap.Bitmap[0]);
 	Print_Error(error);
 
 	MultiBitmap.Number = 1;
@@ -3177,7 +3182,7 @@ static void GetBitmap(int argc, char *argv[])
 		printf("\n");
 		if (MultiBitmap.Bitmap[0].DefaultRingtone) {
 			printf(LISTFORMAT "%s\n", _("Ringtone"), _("default"));
-		} else if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_6230iCALLER)) {
+		} else if (IsPhoneFeatureAvailable(GAMMU_GetModelInfo(s), F_6230iCALLER)) {
 			printf(LISTFORMAT "%i\n", _("Ringtone"),MultiBitmap.Bitmap[0].RingtoneID);
 		} else if (MultiBitmap.Bitmap[0].FileSystemRingtone) {
 			sprintf(buffer,"%i",MultiBitmap.Bitmap[0].RingtoneID);
@@ -3188,7 +3193,7 @@ static void GetBitmap(int argc, char *argv[])
 
 			error = ERR_NONE;
 //			while (error == ERR_NONE) {
-				error = GAMMU_GetFilePart(&s,&File,&Handle,&Size);
+				error = GAMMU_GetFilePart(s,&File,&Handle,&Size);
 //			}
 		    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
 			error = ERR_NONE;
@@ -3196,7 +3201,7 @@ static void GetBitmap(int argc, char *argv[])
 			printf(LISTFORMAT "\"%s\" ", _("Ringtone"), DecodeUnicodeString(File.Name));
 			printf(_("(file with ID %i)\n"), MultiBitmap.Bitmap[0].RingtoneID);
 		} else {
-			error = GAMMU_GetRingtonesInfo(&s,&Info);
+			error = GAMMU_GetRingtonesInfo(s,&Info);
 			if (error != ERR_NONE) Info.Number = 0;
 			error = ERR_NONE;
 
@@ -3313,7 +3318,7 @@ static void SetBitmap(int argc, char *argv[])
 			init = false;
 			NewBitmap.Type 	   = GSM_CallerGroupLogo;
 			NewBitmap.Location = i;
-			error=GAMMU_GetBitmap(&s,&NewBitmap);
+			error=GAMMU_GetBitmap(s,&NewBitmap);
 			Print_Error(error);
 			Bitmap.RingtoneID	  = NewBitmap.RingtoneID;
 			Bitmap.DefaultRingtone 	  = NewBitmap.DefaultRingtone;
@@ -3346,7 +3351,7 @@ static void SetBitmap(int argc, char *argv[])
 			} else {
 				GSM_Init(true);
 				init = false;
-				error=GAMMU_GetNetworkInfo(&s,&NetInfo);
+				error=GAMMU_GetNetworkInfo(s,&NetInfo);
 				Print_Error(error);
 				strcpy(Bitmap.NetworkCode,NetInfo.NetworkCode);
 			}
@@ -3374,7 +3379,7 @@ static void SetBitmap(int argc, char *argv[])
 			} else {
 				GSM_Init(true);
 				init = false;
-				error=GAMMU_GetNetworkInfo(&s,&NetInfo);
+				error=GAMMU_GetNetworkInfo(s,&NetInfo);
 				Print_Error(error);
 				strcpy(MultiBitmap.Bitmap[0].NetworkCode,NetInfo.NetworkCode);
 			}
@@ -3387,7 +3392,7 @@ static void SetBitmap(int argc, char *argv[])
 
 	if (init) GSM_Init(true);
 
-	error=GAMMU_SetBitmap(&s,&Bitmap);
+	error=GAMMU_SetBitmap(s,&Bitmap);
 	Print_Error(error);
 
 #ifdef GSM_ENABLE_BEEP
@@ -3443,7 +3448,7 @@ static void SetRingtone(int argc, char *argv[])
 	}
 
 	GSM_Init(true);
-	error=GAMMU_SetRingtone(&s, &ringtone, &i);
+	error=GAMMU_SetRingtone(s, &ringtone, &i);
 	Print_Error(error);
 #ifdef GSM_ENABLE_BEEP
 	GSM_PhoneBeep();
@@ -3459,7 +3464,7 @@ static void DisplaySMSFrame(GSM_SMSMessage *SMS)
 #ifdef OSCAR
         unsigned char           hexmsg[1000], hexudh[1000];
 #endif
-	error=PHONE_EncodeSMSFrame(&s,SMS,buffer,PHONE_SMSSubmit,&length,true);
+	error=PHONE_EncodeSMSFrame(s,SMS,buffer,PHONE_SMSSubmit,&length,true);
 	if (error != ERR_NONE) {
 		printf("%s\n", _("Error"));
 		exit(-1);
@@ -4634,7 +4639,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 
 		if (strcasecmp(argv[2],"OPERATOR") == 0) {
 			if (bitmap[0].Bitmap[0].Type==GSM_OperatorLogo && strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0) {
-				error=GAMMU_GetNetworkInfo(&s,&NetInfo);
+				error=GAMMU_GetNetworkInfo(s,&NetInfo);
 				Print_Error(error);
 				strcpy(bitmap[0].Bitmap[0].NetworkCode,NetInfo.NetworkCode);
 				if (strcasecmp(argv[1],"--savesms") == 0) {
@@ -4724,13 +4729,13 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		exit(0);
 	}
 	if (strcasecmp(argv[1],"--savesms") == 0 || SendSaved) {
-		error=GAMMU_GetSMSFolders(&s, &folders);
+		error=GAMMU_GetSMSFolders(s, &folders);
 		Print_Error(error);
 
 		if (SendSaved)	{
 			if (Validity.Format != 0 && SMSCSet != 0) {
 				PhoneSMSC.Location = SMSCSet;
-				error=GAMMU_GetSMSC(&s,&PhoneSMSC);
+				error=GAMMU_GetSMSC(s,&PhoneSMSC);
 				Print_Error(error);
 				CopyUnicodeString(SMSC,PhoneSMSC.Number);
 				SMSCSet = 0;
@@ -4761,7 +4766,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			CopyUnicodeString(sms.SMS[i].Number, Sender);
 			CopyUnicodeString(sms.SMS[i].Name, Name);
 			if (SMSCSet==0) CopyUnicodeString(sms.SMS[i].SMSC.Number, SMSC);
-			error=GAMMU_AddSMS(&s, &sms.SMS[i]);
+			error=GAMMU_AddSMS(s, &sms.SMS[i]);
 			Print_Error(error);
 			printf(_("Saved in folder \"%s\", location %i"),
 				DecodeUnicodeConsole(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
@@ -4778,11 +4783,11 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 				printf(_("Sending sms from folder \"%s\", location %i\n"),
 					DecodeUnicodeString(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
 				SMSStatus = ERR_TIMEOUT;
-				error=GAMMU_SendSavedSMS(&s, 0, sms.SMS[i].Location);
+				error=GAMMU_SendSavedSMS(s, 0, sms.SMS[i].Location);
 				Print_Error(error);
 				printf(_("....waiting for network answer"));
 				while (!gshutdown) {
-					GSM_ReadDevice(&s,true);
+					GSM_ReadDevice(s,true);
 					if (SMSStatus == ERR_UNKNOWN) {
 						GSM_Terminate();
 						exit(-1);
@@ -4794,7 +4799,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	} else {
 		if (Validity.Format != 0 && SMSCSet != 0) {
 			PhoneSMSC.Location = SMSCSet;
-			error=GAMMU_GetSMSC(&s,&PhoneSMSC);
+			error=GAMMU_GetSMSC(s,&PhoneSMSC);
 			Print_Error(error);
 			CopyUnicodeString(SMSC,PhoneSMSC.Number);
 			SMSCSet = 0;
@@ -4817,12 +4822,12 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			if (SMSCSet==0) CopyUnicodeString(sms.SMS[i].SMSC.Number, SMSC);
 			if (Validity.Format != 0) memcpy(&sms.SMS[i].SMSC.Validity,&Validity,sizeof(GSM_SMSValidity));
 			SMSStatus = ERR_TIMEOUT;
-			error=GAMMU_SendSMS(&s, &sms.SMS[i]);
+			error=GAMMU_SendSMS(s, &sms.SMS[i]);
 			Print_Error(error);
 			printf(_("....waiting for network answer"));
 			fflush(stdout);
 			while (!gshutdown) {
-				GSM_ReadDevice(&s,true);
+				GSM_ReadDevice(s,true);
 				if (SMSStatus == ERR_UNKNOWN) {
 					GSM_Terminate();
 					exit(-1);
@@ -5015,20 +5020,20 @@ static void Backup(int argc, char *argv[])
 		Backup.DateTimeAvailable=true;
 	}
 	if (Info.Model) {
-		error=GAMMU_GetManufacturer(&s, Backup.Model);
+		error=GAMMU_GetManufacturer(s, Backup.Model);
 		Print_Error(error);
 		strcat(Backup.Model," ");
 		strcat(Backup.Model,s.Phone.Data.Model);
-		if (s.Phone.Data.ModelInfo->model[0]!=0) {
+		if (GAMMU_GetModelInfo(s)->model[0]!=0) {
 			strcat(Backup.Model," (");
-			strcat(Backup.Model,s.Phone.Data.ModelInfo->model);
+			strcat(Backup.Model,GAMMU_GetModelInfo(s)->model);
 			strcat(Backup.Model,")");
 		}
 		strcat(Backup.Model," ");
 		strcat(Backup.Model,s.Phone.Data.Version);
 	}
 	if (Info.IMEI) {
-		error=GAMMU_GetIMEI(&s, Backup.IMEI);
+		error=GAMMU_GetIMEI(s, Backup.IMEI);
 		if (error != ERR_NOTSUPPORTED) {
 			Print_Error(error);
 		} else {
@@ -5041,7 +5046,7 @@ static void Backup(int argc, char *argv[])
 	if (Info.PhonePhonebook) {
 		printf("%s\n", _("Checking phone phonebook"));
 		MemStatus.MemoryType = MEM_ME;
-		error=GAMMU_GetMemoryStatus(&s, &MemStatus);
+		error=GAMMU_GetMemoryStatus(s, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
 			if (answer_yes(_("   Backup phone phonebook"))) DoBackup = true;
 		}
@@ -5052,7 +5057,7 @@ static void Backup(int argc, char *argv[])
 		used 		= 0;
 		while (used != MemStatus.MemoryUsed) {
 			Pbk.Location = i;
-			error=GAMMU_GetMemory(&s, &Pbk);
+			error=GAMMU_GetMemory(s, &Pbk);
 			if (error != ERR_EMPTY) {
 				Print_Error(error);
 				if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
@@ -5079,7 +5084,7 @@ static void Backup(int argc, char *argv[])
 	if (Info.SIMPhonebook) {
 		printf("%s\n", _("Checking SIM phonebook"));
 		MemStatus.MemoryType = MEM_SM;
-		error=GAMMU_GetMemoryStatus(&s, &MemStatus);
+		error=GAMMU_GetMemoryStatus(s, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
 			if (answer_yes(_("   Backup SIM phonebook"))) DoBackup=true;
 		}
@@ -5090,7 +5095,7 @@ static void Backup(int argc, char *argv[])
 		used 		= 0;
 		while (used != MemStatus.MemoryUsed) {
 			Pbk.Location = i;
-			error=GAMMU_GetMemory(&s, &Pbk);
+			error=GAMMU_GetMemory(s, &Pbk);
 			if (error != ERR_EMPTY) {
 				Print_Error(error);
 				if (used < GSM_BACKUP_MAX_SIMPHONEBOOK) {
@@ -5116,7 +5121,7 @@ static void Backup(int argc, char *argv[])
 	DoBackup = false;
 	if (Info.Calendar) {
 		printf("%s\n", _("Checking phone calendar"));
-		error=GAMMU_GetNextCalendar(&s,&Calendar,true);
+		error=GAMMU_GetNextCalendar(s,&Calendar,true);
 		if (error==ERR_NONE) {
 			if (answer_yes(_("   Backup phone calendar notes"))) DoBackup = true;
 		}
@@ -5135,7 +5140,7 @@ static void Backup(int argc, char *argv[])
 			}
 			*Backup.Calendar[used]=Calendar;
 			used ++;
-			error=GAMMU_GetNextCalendar(&s,&Calendar,false);
+			error=GAMMU_GetNextCalendar(s,&Calendar,false);
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -5147,14 +5152,14 @@ static void Backup(int argc, char *argv[])
 	DoBackup = false;
 	if (Info.ToDo) {
 		printf("%s\n", _("Checking phone ToDo"));
-		error=GAMMU_GetToDoStatus(&s,&ToDoStatus);
+		error=GAMMU_GetToDoStatus(s,&ToDoStatus);
 		if (error == ERR_NONE && ToDoStatus.Used != 0) {
 			if (answer_yes(_("   Backup phone ToDo"))) DoBackup = true;
 		}
 	}
 	if (DoBackup) {
 		used = 0;
-		error=GAMMU_GetNextToDo(&s,&ToDo,true);
+		error=GAMMU_GetNextToDo(s,&ToDo,true);
 		while (error == ERR_NONE) {
 			if (used < GSM_MAXCALENDARTODONOTES) {
 				Backup.ToDo[used] = malloc(sizeof(GSM_ToDoEntry));
@@ -5166,7 +5171,7 @@ static void Backup(int argc, char *argv[])
 			}
 			*Backup.ToDo[used]=ToDo;
 			used ++;
-			error=GAMMU_GetNextToDo(&s,&ToDo,false);
+			error=GAMMU_GetNextToDo(s,&ToDo,false);
 			fprintf(stderr, _("%c   Reading: %i percent"),13,used*100/ToDoStatus.Used);
 			if (gshutdown) {
 				GSM_Terminate();
@@ -5178,7 +5183,7 @@ static void Backup(int argc, char *argv[])
 	DoBackup = false;
 	if (Info.Note) {
 		printf("%s\n", _("Checking phone notes"));
-		error=GAMMU_GetNextNote(&s,&Note,true);
+		error=GAMMU_GetNextNote(s,&Note,true);
 		if (error==ERR_NONE) {
 			if (answer_yes(_("   Backup phone notes"))) DoBackup = true;
 		}
@@ -5197,7 +5202,7 @@ static void Backup(int argc, char *argv[])
 			}
 			*Backup.Note[used]=Note;
 			used ++;
-			error=GAMMU_GetNextNote(&s,&Note,false);
+			error=GAMMU_GetNextNote(s,&Note,false);
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -5211,7 +5216,7 @@ static void Backup(int argc, char *argv[])
 		printf("%s\n", _("Checking phone caller logos"));
 		Bitmap.Type 	= GSM_CallerGroupLogo;
 		Bitmap.Location = 1;
-		error=GAMMU_GetBitmap(&s,&Bitmap);
+		error=GAMMU_GetBitmap(s,&Bitmap);
 		if (error == ERR_NONE) {
 			if (answer_yes(_("   Backup phone caller groups and logos"))) DoBackup = true;
 		}
@@ -5232,7 +5237,7 @@ static void Backup(int argc, char *argv[])
 			*Backup.CallerLogos[used] = Bitmap;
 			used ++;
 			Bitmap.Location = used + 1;
-			error=GAMMU_GetBitmap(&s,&Bitmap);
+			error=GAMMU_GetBitmap(s,&Bitmap);
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -5251,7 +5256,7 @@ static void Backup(int argc, char *argv[])
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (true) {
 			SMSC.Location = used + 1;
-			error = GAMMU_GetSMSC(&s,&SMSC);
+			error = GAMMU_GetSMSC(s,&SMSC);
 			if (error != ERR_NONE) break;
 			if (used < GSM_BACKUP_MAX_SMSC) {
 				Backup.SMSC[used] = malloc(sizeof(GSM_SMSC));
@@ -5271,7 +5276,7 @@ static void Backup(int argc, char *argv[])
 	if (Info.StartupLogo) {
 		printf("%s\n", _("Checking phone startup text"));
 		Bitmap.Type = GSM_WelcomeNote_Text;
-		error = GAMMU_GetBitmap(&s,&Bitmap);
+		error = GAMMU_GetBitmap(s,&Bitmap);
 		if (error == ERR_NONE) {
 			if (answer_yes(_("   Backup phone startup logo/text"))) DoBackup = true;
 		}
@@ -5282,7 +5287,7 @@ static void Backup(int argc, char *argv[])
 		*Backup.StartupLogo = Bitmap;
 		if (Bitmap.Text[0]==0 && Bitmap.Text[1]==0) {
 			Bitmap.Type = GSM_StartupLogo;
-			error = GAMMU_GetBitmap(&s,&Bitmap);
+			error = GAMMU_GetBitmap(s,&Bitmap);
 			if (error == ERR_NONE) *Backup.StartupLogo = Bitmap;
 		}
 	}
@@ -5290,7 +5295,7 @@ static void Backup(int argc, char *argv[])
 	if (Info.OperatorLogo) {
 		printf("%s\n", _("Checking phone operator logo"));
 		Bitmap.Type = GSM_OperatorLogo;
-		error=GAMMU_GetBitmap(&s,&Bitmap);
+		error=GAMMU_GetBitmap(s,&Bitmap);
 		if (error == ERR_NONE) {
 			if (strcmp(Bitmap.NetworkCode,"000 00")!=0) {
 				if (answer_yes(_("   Backup phone operator logo"))) DoBackup = true;
@@ -5306,7 +5311,7 @@ static void Backup(int argc, char *argv[])
 	if (Info.WAPBookmark) {
 		printf("%s\n", _("Checking phone WAP bookmarks"));
 		Bookmark.Location = 1;
-		error=GAMMU_GetWAPBookmark(&s,&Bookmark);
+		error=GAMMU_GetWAPBookmark(s,&Bookmark);
 		if (error==ERR_NONE) {
 			if (answer_yes(_("   Backup phone WAP bookmarks"))) DoBackup = true;
 		}
@@ -5326,7 +5331,7 @@ static void Backup(int argc, char *argv[])
 			*Backup.WAPBookmark[used]=Bookmark;
 			used ++;
 			Bookmark.Location = used+1;
-			error=GAMMU_GetWAPBookmark(&s,&Bookmark);
+			error=GAMMU_GetWAPBookmark(s,&Bookmark);
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -5339,7 +5344,7 @@ static void Backup(int argc, char *argv[])
 	if (Info.WAPSettings) {
 		printf("%s\n", _("Checking phone WAP settings"));
 		Settings.Location = 1;
-		error=GAMMU_GetWAPSettings(&s,&Settings);
+		error=GAMMU_GetWAPSettings(s,&Settings);
 		if (error==ERR_NONE) {
 			if (answer_yes(_("   Backup phone WAP settings"))) DoBackup = true;
 		}
@@ -5359,7 +5364,7 @@ static void Backup(int argc, char *argv[])
 			*Backup.WAPSettings[used]=Settings;
 			used ++;
 			Settings.Location = used+1;
-			error=GAMMU_GetWAPSettings(&s,&Settings);
+			error=GAMMU_GetWAPSettings(s,&Settings);
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -5372,7 +5377,7 @@ static void Backup(int argc, char *argv[])
 	if (Info.MMSSettings) {
 		printf("%s\n", _("Checking phone MMS settings"));
 		Settings.Location = 1;
-		error=GAMMU_GetMMSSettings(&s,&Settings);
+		error=GAMMU_GetMMSSettings(s,&Settings);
 		if (error==ERR_NONE) {
 			if (answer_yes(_("   Backup phone MMS settings"))) DoBackup = true;
 		}
@@ -5392,7 +5397,7 @@ static void Backup(int argc, char *argv[])
 			*Backup.MMSSettings[used]=Settings;
 			used ++;
 			Settings.Location = used+1;
-			error=GAMMU_GetMMSSettings(&s,&Settings);
+			error=GAMMU_GetMMSSettings(s,&Settings);
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -5405,7 +5410,7 @@ static void Backup(int argc, char *argv[])
 	if (Info.ChatSettings) {
 		printf("%s\n", _("Checking phone Chat settings"));
 		Chat.Location = 1;
-		error=GAMMU_GetChatSettings(&s,&Chat);
+		error=GAMMU_GetChatSettings(s,&Chat);
 		if (error==ERR_NONE) {
 			if (answer_yes(_("   Backup phone Chat settings"))) DoBackup = true;
 		}
@@ -5425,7 +5430,7 @@ static void Backup(int argc, char *argv[])
 			*Backup.ChatSettings[used]=Chat;
 			used ++;
 			Chat.Location = used+1;
-			error=GAMMU_GetChatSettings(&s,&Chat);
+			error=GAMMU_GetChatSettings(s,&Chat);
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -5438,7 +5443,7 @@ static void Backup(int argc, char *argv[])
 	if (Info.SyncMLSettings) {
 		printf("%s\n", _("Checking phone SyncML settings"));
 		SyncML.Location = 1;
-		error=GAMMU_GetSyncMLSettings(&s,&SyncML);
+		error=GAMMU_GetSyncMLSettings(s,&SyncML);
 		if (error==ERR_NONE) {
 			if (answer_yes(_("   Backup phone SyncML settings"))) DoBackup = true;
 		}
@@ -5458,7 +5463,7 @@ static void Backup(int argc, char *argv[])
 			*Backup.SyncMLSettings[used]=SyncML;
 			used ++;
 			SyncML.Location = used+1;
-			error=GAMMU_GetSyncMLSettings(&s,&SyncML);
+			error=GAMMU_GetSyncMLSettings(s,&SyncML);
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -5472,7 +5477,7 @@ static void Backup(int argc, char *argv[])
 		printf("%s\n", _("Checking phone user ringtones"));
 		Ringtone.Location 	= 1;
 		Ringtone.Format		= 0;
-		error=GAMMU_GetRingtone(&s,&Ringtone,false);
+		error=GAMMU_GetRingtone(s,&Ringtone,false);
 		if (error==ERR_EMPTY || error == ERR_NONE) {
 			if (answer_yes(_("   Backup phone user ringtones"))) DoBackup = true;
 		}
@@ -5497,7 +5502,7 @@ static void Backup(int argc, char *argv[])
 			i++;
 			Ringtone.Location = i;
 			Ringtone.Format	  = 0;
-			error=GAMMU_GetRingtone(&s,&Ringtone,false);
+			error=GAMMU_GetRingtone(s,&Ringtone,false);
 			fprintf(stderr, "*");
 			if (gshutdown) {
 				GSM_Terminate();
@@ -5510,7 +5515,7 @@ static void Backup(int argc, char *argv[])
 	if (Info.Profiles) {
 		printf("%s\n", _("Checking phone profiles"));
 		Profile.Location = 1;
-		error = GAMMU_GetProfile(&s,&Profile);
+		error = GAMMU_GetProfile(s,&Profile);
 	        if (error == ERR_NONE) {
 			if (answer_yes(_("   Backup phone profiles"))) DoBackup = true;
 		}
@@ -5520,7 +5525,7 @@ static void Backup(int argc, char *argv[])
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (true) {
 			Profile.Location = used + 1;
-			error = GAMMU_GetProfile(&s,&Profile);
+			error = GAMMU_GetProfile(s,&Profile);
 			if (error != ERR_NONE) break;
 			if (used < GSM_BACKUP_MAX_PROFILES) {
 				Backup.Profiles[used] = malloc(sizeof(GSM_Profile));
@@ -5540,7 +5545,7 @@ static void Backup(int argc, char *argv[])
  	if (Info.FMStation) {
 		printf("%s\n", _("Checking phone FM radio stations"));
  		FMStation.Location = 1;
- 		error = GAMMU_GetFMStation(&s,&FMStation);
+ 		error = GAMMU_GetFMStation(s,&FMStation);
  	        if (error == ERR_NONE || error == ERR_EMPTY) {
  			if (answer_yes(_("   Backup phone FM radio stations"))) DoBackup=true;
 		}
@@ -5550,7 +5555,7 @@ static void Backup(int argc, char *argv[])
 		i	= 1;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (error == ERR_NONE || error == ERR_EMPTY) {
-			error = GAMMU_GetFMStation(&s,&FMStation);
+			error = GAMMU_GetFMStation(s,&FMStation);
 			if (error == ERR_NONE) {
  				if (used < GSM_BACKUP_MAX_FMSTATIONS) {
  					Backup.FMStation[used] = malloc(sizeof(GSM_FMStation));
@@ -5573,7 +5578,7 @@ static void Backup(int argc, char *argv[])
  	if (Info.GPRSPoint) {
 		printf("%s\n", _("Checking phone GPRS access points"));
  		GPRSPoint.Location = 1;
- 		error = GAMMU_GetGPRSAccessPoint(&s,&GPRSPoint);
+ 		error = GAMMU_GetGPRSAccessPoint(s,&GPRSPoint);
  	        if (error == ERR_NONE || error == ERR_EMPTY) {
  			if (answer_yes(_("   Backup phone GPRS access points"))) DoBackup = true;
 		}
@@ -5583,7 +5588,7 @@ static void Backup(int argc, char *argv[])
 		i	= 1;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (error == ERR_NONE || error == ERR_EMPTY) {
-			error = GAMMU_GetGPRSAccessPoint(&s,&GPRSPoint);
+			error = GAMMU_GetGPRSAccessPoint(s,&GPRSPoint);
  			if (error == ERR_NONE) {
  				if (used < GSM_BACKUP_MAX_GPRSPOINT) {
  					Backup.GPRSPoint[used] = malloc(sizeof(GSM_GPRSAccessPoint));
@@ -5661,7 +5666,7 @@ static void Restore(int argc, char *argv[])
 	if (Backup.CallerLogos[0] != NULL) {
 		Bitmap.Type 	= GSM_CallerGroupLogo;
 		Bitmap.Location = 1;
-		error=GAMMU_GetBitmap(&s,&Bitmap);
+		error=GAMMU_GetBitmap(s,&Bitmap);
 		if (error == ERR_NONE) {
 			if (answer_yes(_("Restore phone caller groups and logos"))) DoRestore = true;
 		}
@@ -5670,7 +5675,7 @@ static void Restore(int argc, char *argv[])
 		max = 0;
 		while (Backup.CallerLogos[max]!=NULL) max++;
 		for (i=0;i<max;i++) {
-			error=GAMMU_SetBitmap(&s,Backup.CallerLogos[i]);
+			error=GAMMU_SetBitmap(s,Backup.CallerLogos[i]);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 			if (gshutdown) {
@@ -5684,7 +5689,7 @@ static void Restore(int argc, char *argv[])
 	DoRestore = false;
 	if (Backup.PhonePhonebook[0] != NULL) {
 		MemStatus.MemoryType = MEM_ME;
-		error=GAMMU_GetMemoryStatus(&s, &MemStatus);
+		error=GAMMU_GetMemoryStatus(s, &MemStatus);
 		if (error==ERR_NONE) {
 			max = 0;
 			while (Backup.PhonePhonebook[max]!=NULL) max++;
@@ -5702,15 +5707,15 @@ static void Restore(int argc, char *argv[])
 				Pbk = *Backup.PhonePhonebook[used];
 				used++;
 				dbgprintf("Location %i\n",Pbk.Location);
-				if (Pbk.EntriesNum != 0) error=GAMMU_SetMemory(&s, &Pbk);
-				if (error == ERR_PERMISSION && IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_6230iCALLER)) {
-					error=GAMMU_DeleteMemory(&s, &Pbk);
+				if (Pbk.EntriesNum != 0) error=GAMMU_SetMemory(s, &Pbk);
+				if (error == ERR_PERMISSION && IsPhoneFeatureAvailable(GAMMU_GetModelInfo(s), F_6230iCALLER)) {
+					error=GAMMU_DeleteMemory(s, &Pbk);
 					Print_Error(error);
-					error=GAMMU_SetMemory(&s, &Pbk);
+					error=GAMMU_SetMemory(s, &Pbk);
 				}
-				if (error == ERR_MEMORY && IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_6230iCALLER)) {
+				if (error == ERR_MEMORY && IsPhoneFeatureAvailable(GAMMU_GetModelInfo(s), F_6230iCALLER)) {
 					printf("\n%s\n", _("Error - try to (1) add enough number of/restore caller groups and (2) use --restore again"));
-					GSM_TerminateConnection(&s);
+					GSM_TerminateConnection(s);
 					exit (-1);
 				}
 				if (Pbk.EntriesNum != 0 && error==ERR_NONE) {
@@ -5724,7 +5729,7 @@ static void Restore(int argc, char *argv[])
 					}
 				}
 			}
-			if (Pbk.EntriesNum == 0) error=GAMMU_DeleteMemory(&s, &Pbk);
+			if (Pbk.EntriesNum == 0) error=GAMMU_DeleteMemory(s, &Pbk);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/(MemStatus.MemoryUsed+MemStatus.MemoryFree));
 			if (gshutdown) {
@@ -5738,7 +5743,7 @@ static void Restore(int argc, char *argv[])
 	DoRestore = false;
 	if (Backup.SIMPhonebook[0] != NULL) {
 		MemStatus.MemoryType = MEM_SM;
-		error=GAMMU_GetMemoryStatus(&s, &MemStatus);
+		error=GAMMU_GetMemoryStatus(s, &MemStatus);
 		if (error==ERR_NONE) {
 			max = 0;
 			while (Backup.SIMPhonebook[max]!=NULL) max++;
@@ -5757,7 +5762,7 @@ static void Restore(int argc, char *argv[])
 				used++;
 				dbgprintf("Location %i\n",Pbk.Location);
 				if (Pbk.EntriesNum != 0) {
-					error=GAMMU_SetMemory(&s, &Pbk);
+					error=GAMMU_SetMemory(s, &Pbk);
 					if (error==ERR_NONE) {
 						First = true;
 						for (j=0;j<Pbk.EntriesNum;j++) {
@@ -5770,7 +5775,7 @@ static void Restore(int argc, char *argv[])
 					}
 				}
 			}
-			if (Pbk.EntriesNum == 0) error=GAMMU_DeleteMemory(&s, &Pbk);
+			if (Pbk.EntriesNum == 0) error=GAMMU_DeleteMemory(s, &Pbk);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/(MemStatus.MemoryUsed+MemStatus.MemoryFree));
 			if (gshutdown) {
@@ -5785,14 +5790,14 @@ static void Restore(int argc, char *argv[])
 		if (answer_yes(_("Do you want to set phone date/time (NOTE: in some phones it's required to correctly restore calendar notes and other items)"))) {
 			GSM_GetCurrentDateTime(&date_time);
 
-			error=GAMMU_SetDateTime(&s, &date_time);
+			error=GAMMU_SetDateTime(s, &date_time);
 			Print_Error(error);
 		}
 	}
 	DoRestore = false;
 	if (Backup.Calendar[0] != NULL) {
 		/* N6110 doesn't support getting calendar status */
-		error = GAMMU_GetNextCalendar(&s,&Calendar,true);
+		error = GAMMU_GetNextCalendar(s,&Calendar,true);
 		if (error == ERR_NONE || error == ERR_INVALIDLOCATION || error == ERR_EMPTY) {
 			max = 0;
 			while (Backup.Calendar[max] != NULL) max++;
@@ -5805,12 +5810,12 @@ static void Restore(int argc, char *argv[])
 	}
 	if (DoRestore) {
 		fprintf(stderr, _("Deleting old notes: "));
-		error = GAMMU_DeleteAllCalendar(&s);
+		error = GAMMU_DeleteAllCalendar(s);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
  			while (1) {
-				error = GAMMU_GetNextCalendar(&s,&Calendar,true);
+				error = GAMMU_GetNextCalendar(s,&Calendar,true);
 				if (error != ERR_NONE) break;
-				error = GAMMU_DeleteCalendar(&s,&Calendar);
+				error = GAMMU_DeleteCalendar(s,&Calendar);
  				Print_Error(error);
 				fprintf(stderr, "*");
 			}
@@ -5824,7 +5829,7 @@ static void Restore(int argc, char *argv[])
 			if (!Past && IsCalendarNoteFromThePast(Backup.Calendar[i])) continue;
 
 			Calendar = *Backup.Calendar[i];
-			error=GAMMU_AddCalendar(&s,&Calendar);
+			error=GAMMU_AddCalendar(s,&Calendar);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 			if (gshutdown) {
@@ -5837,7 +5842,7 @@ static void Restore(int argc, char *argv[])
 
 	DoRestore = false;
 	if (Backup.ToDo[0] != NULL) {
-		error = GAMMU_GetToDoStatus(&s,&ToDoStatus);
+		error = GAMMU_GetToDoStatus(s,&ToDoStatus);
 		if (error == ERR_NONE) {
 			max = 0;
 			while (Backup.ToDo[max]!=NULL) max++;
@@ -5848,16 +5853,16 @@ static void Restore(int argc, char *argv[])
 	}
 	if (DoRestore) {
 		ToDo  = *Backup.ToDo[0];
-		error = GAMMU_SetToDo(&s,&ToDo);
+		error = GAMMU_SetToDo(s,&ToDo);
 	}
 	if (DoRestore && (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED)) {
 		fprintf(stderr, _("Deleting old ToDo: "));
-		error=GAMMU_DeleteAllToDo(&s);
+		error=GAMMU_DeleteAllToDo(s);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
 			while (1) {
-				error = GAMMU_GetNextToDo(&s,&ToDo,true);
+				error = GAMMU_GetNextToDo(s,&ToDo,true);
 				if (error != ERR_NONE) break;
-				error = GAMMU_DeleteToDo(&s,&ToDo);
+				error = GAMMU_DeleteToDo(s,&ToDo);
  				Print_Error(error);
 				fprintf(stderr, "*");
 			}
@@ -5870,7 +5875,7 @@ static void Restore(int argc, char *argv[])
 		for (i=0;i<max;i++) {
 			ToDo 		= *Backup.ToDo[i];
 			ToDo.Location 	= 0;
-			error=GAMMU_AddToDo(&s,&ToDo);
+			error=GAMMU_AddToDo(s,&ToDo);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 			if (gshutdown) {
@@ -5882,7 +5887,7 @@ static void Restore(int argc, char *argv[])
 	} else if (DoRestore) {
 		/* At first delete entries, that were deleted */
 		used  = 0;
-		error = GAMMU_GetNextToDo(&s,&ToDo,true);
+		error = GAMMU_GetNextToDo(s,&ToDo,true);
 		while (error == ERR_NONE) {
 			used++;
 			Found = false;
@@ -5893,10 +5898,10 @@ static void Restore(int argc, char *argv[])
 				}
 			}
 			if (!Found) {
-				error=GAMMU_DeleteToDo(&s,&ToDo);
+				error=GAMMU_DeleteToDo(s,&ToDo);
 				Print_Error(error);
 			}
-			error = GAMMU_GetNextToDo(&s,&ToDo,false);
+			error = GAMMU_GetNextToDo(s,&ToDo,false);
 			fprintf(stderr, _("%cCleaning: %i percent"),13,used*100/ToDoStatus.Used);
 			if (gshutdown) {
 				GSM_Terminate();
@@ -5908,7 +5913,7 @@ static void Restore(int argc, char *argv[])
 		/* Now write modified/new entries */
 		for (i=0;i<max;i++) {
 			ToDo  = *Backup.ToDo[i];
-			error = GAMMU_SetToDo(&s,&ToDo);
+			error = GAMMU_SetToDo(s,&ToDo);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 			if (gshutdown) {
@@ -5921,7 +5926,7 @@ static void Restore(int argc, char *argv[])
 
 	DoRestore = false;
 	if (Backup.Note[0] != NULL) {
-		error = GAMMU_GetNotesStatus(&s,&ToDoStatus);
+		error = GAMMU_GetNotesStatus(s,&ToDoStatus);
 		if (error == ERR_NONE) {
 			max = 0;
 			while (Backup.Note[max]!=NULL) max++;
@@ -5933,9 +5938,9 @@ static void Restore(int argc, char *argv[])
 	if (DoRestore) {
 		fprintf(stderr, _("Deleting old Notes: "));
 		while (1) {
-			error = GAMMU_GetNextNote(&s,&Note,true);
+			error = GAMMU_GetNextNote(s,&Note,true);
 			if (error != ERR_NONE) break;
-			error = GAMMU_DeleteNote(&s,&Note);
+			error = GAMMU_DeleteNote(s,&Note);
  			Print_Error(error);
 			fprintf(stderr, "*");
 		}
@@ -5944,7 +5949,7 @@ static void Restore(int argc, char *argv[])
 		for (i=0;i<max;i++) {
 			Note 		= *Backup.Note[i];
 			Note.Location 	= 0;
-			error=GAMMU_AddNote(&s,&Note);
+			error=GAMMU_AddNote(s,&Note);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 			if (gshutdown) {
@@ -5959,7 +5964,7 @@ static void Restore(int argc, char *argv[])
 		max = 0;
 		while (Backup.SMSC[max]!=NULL) max++;
 		for (i=0;i<max;i++) {
-			error=GAMMU_SetSMSC(&s,Backup.SMSC[i]);
+			error=GAMMU_SetSMSC(s,Backup.SMSC[i]);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 			if (gshutdown) {
@@ -5970,17 +5975,17 @@ static void Restore(int argc, char *argv[])
 		fprintf(stderr, "\n");
 	}
 	if (Backup.StartupLogo != NULL && answer_yes(_("Restore phone startup logo/text"))) {
-		error=GAMMU_SetBitmap(&s,Backup.StartupLogo);
+		error=GAMMU_SetBitmap(s,Backup.StartupLogo);
 		Print_Error(error);
 	}
 	if (Backup.OperatorLogo != NULL && answer_yes(_("Restore phone operator logo"))) {
-		error=GAMMU_SetBitmap(&s,Backup.OperatorLogo);
+		error=GAMMU_SetBitmap(s,Backup.OperatorLogo);
 		Print_Error(error);
 	}
 	DoRestore = false;
 	if (Backup.WAPBookmark[0] != NULL) {
 		Bookmark.Location = 1;
-		error = GAMMU_GetWAPBookmark(&s,&Bookmark);
+		error = GAMMU_GetWAPBookmark(s,&Bookmark);
 		if (error == ERR_NONE || error == ERR_INVALIDLOCATION) {
 			if (answer_yes(_("Restore phone WAP bookmarks"))) DoRestore = true;
 		}
@@ -5994,9 +5999,9 @@ static void Restore(int argc, char *argv[])
 		 * it later
 		 */
 		while (error==ERR_NONE) {
-			error = GAMMU_DeleteWAPBookmark(&s,&Bookmark);
+			error = GAMMU_DeleteWAPBookmark(s,&Bookmark);
 			Bookmark.Location = 1;
-			error = GAMMU_GetWAPBookmark(&s,&Bookmark);
+			error = GAMMU_GetWAPBookmark(s,&Bookmark);
 			fprintf(stderr, "*");
 		}
 		fprintf(stderr, "\n");
@@ -6005,7 +6010,7 @@ static void Restore(int argc, char *argv[])
 		for (i=0;i<max;i++) {
 			Bookmark 	  = *Backup.WAPBookmark[i];
 			Bookmark.Location = 0;
-			error=GAMMU_SetWAPBookmark(&s,&Bookmark);
+			error=GAMMU_SetWAPBookmark(s,&Bookmark);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 			if (gshutdown) {
@@ -6018,7 +6023,7 @@ static void Restore(int argc, char *argv[])
 	DoRestore = false;
 	if (Backup.WAPSettings[0] != NULL) {
 		Settings.Location = 1;
-		error = GAMMU_GetWAPSettings(&s,&Settings);
+		error = GAMMU_GetWAPSettings(s,&Settings);
 		if (error == ERR_NONE) {
 			if (answer_yes(_("Restore phone WAP settings"))) DoRestore = true;
 		}
@@ -6027,7 +6032,7 @@ static void Restore(int argc, char *argv[])
 		max = 0;
 		while (Backup.WAPSettings[max]!=NULL) max++;
 		for (i=0;i<max;i++) {
-			error=GAMMU_SetWAPSettings(&s,Backup.WAPSettings[i]);
+			error=GAMMU_SetWAPSettings(s,Backup.WAPSettings[i]);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 			if (gshutdown) {
@@ -6040,7 +6045,7 @@ static void Restore(int argc, char *argv[])
 	DoRestore = false;
 	if (Backup.MMSSettings[0] != NULL) {
 		Settings.Location = 1;
-		error = GAMMU_GetMMSSettings(&s,&Settings);
+		error = GAMMU_GetMMSSettings(s,&Settings);
 		if (error == ERR_NONE) {
 			if (answer_yes(_("Restore phone MMS settings"))) DoRestore = true;
 		}
@@ -6049,7 +6054,7 @@ static void Restore(int argc, char *argv[])
 		max = 0;
 		while (Backup.MMSSettings[max]!=NULL) max++;
 		for (i=0;i<max;i++) {
-			error=GAMMU_SetMMSSettings(&s,Backup.MMSSettings[i]);
+			error=GAMMU_SetMMSSettings(s,Backup.MMSSettings[i]);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 			if (gshutdown) {
@@ -6063,7 +6068,7 @@ static void Restore(int argc, char *argv[])
 	if (Backup.Ringtone[0] != NULL) {
 		Ringtone.Location 	= 1;
 		Ringtone.Format		= 0;
-		error = GAMMU_GetRingtone(&s,&Ringtone,false);
+		error = GAMMU_GetRingtone(s,&Ringtone,false);
 		if (error == ERR_NONE || error ==ERR_EMPTY) {
 			if (GAMMU_DeleteUserRingtones != NOTSUPPORTED) {
 				if (answer_yes(_("Delete all phone user ringtones"))) DoRestore = true;
@@ -6072,7 +6077,7 @@ static void Restore(int argc, char *argv[])
 	}
 	if (DoRestore) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
-		error=GAMMU_DeleteUserRingtones(&s);
+		error=GAMMU_DeleteUserRingtones(s);
 		Print_Error(error);
 		fprintf(stderr, "%s\n", _("Done"));
 		DoRestore = false;
@@ -6084,7 +6089,7 @@ static void Restore(int argc, char *argv[])
 		for (i=0;i<max;i++) {
 			error=GSM_RingtoneConvert(&Ringtone, Backup.Ringtone[i], Ringtone.Format);
 			Print_Error(error);
-			error=GAMMU_SetRingtone(&s,&Ringtone,&i);
+			error=GAMMU_SetRingtone(s,&Ringtone,&i);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 			if (gshutdown) {
@@ -6097,7 +6102,7 @@ static void Restore(int argc, char *argv[])
 	DoRestore = false;
 	if (Backup.Profiles[0] != NULL) {
 		Profile.Location = 1;
-		error = GAMMU_GetProfile(&s,&Profile);
+		error = GAMMU_GetProfile(s,&Profile);
 		if (error == ERR_NONE) {
 			if (answer_yes(_("Restore phone profiles"))) DoRestore = true;
 		}
@@ -6108,7 +6113,7 @@ static void Restore(int argc, char *argv[])
 		while (Backup.Profiles[max]!=NULL) max++;
 		for (i=0;i<max;i++) {
 			Profile	= *Backup.Profiles[i];
-			error=GAMMU_SetProfile(&s,&Profile);
+			error=GAMMU_SetProfile(s,&Profile);
 			Print_Error(error);
 			if (gshutdown) {
 				GSM_Terminate();
@@ -6120,21 +6125,21 @@ static void Restore(int argc, char *argv[])
 	DoRestore = false;
 	if (Backup.FMStation[0] != NULL) {
 		FMStation.Location = 1;
-		error = GAMMU_GetFMStation(&s,&FMStation);
+		error = GAMMU_GetFMStation(s,&FMStation);
 		if (error == ERR_NONE || error == ERR_EMPTY) {
 			if (answer_yes(_("Restore phone FM radio stations"))) DoRestore = true;
 		}
 	}
 	if (DoRestore) {
 		fprintf(stderr, _("Deleting old FM stations: "));
-		error=GAMMU_ClearFMStations(&s);
+		error=GAMMU_ClearFMStations(s);
 		Print_Error(error);
 		fprintf(stderr, "%s\n", _("Done"));
 		max = 0;
 		while (Backup.FMStation[max]!=NULL) max++;
 		for (i=0;i<max;i++) {
 			FMStation = *Backup.FMStation[i];
-			error=GAMMU_SetFMStation(&s,&FMStation);
+			error=GAMMU_SetFMStation(s,&FMStation);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 			if (gshutdown) {
@@ -6147,7 +6152,7 @@ static void Restore(int argc, char *argv[])
 	DoRestore = false;
 	if (Backup.GPRSPoint[0] != NULL) {
 		GPRSPoint.Location = 1;
-		error = GAMMU_GetGPRSAccessPoint(&s,&GPRSPoint);
+		error = GAMMU_GetGPRSAccessPoint(s,&GPRSPoint);
 		if (error == ERR_NONE || error == ERR_EMPTY) {
 			if (answer_yes(_("Restore phone GPRS Points"))) DoRestore = true;
 		}
@@ -6156,7 +6161,7 @@ static void Restore(int argc, char *argv[])
 		max = 0;
 		while (Backup.GPRSPoint[max]!=NULL) max++;
 		for (i=0;i<max;i++) {
-			error=GAMMU_SetGPRSAccessPoint(&s,Backup.GPRSPoint[i]);
+			error=GAMMU_SetGPRSAccessPoint(s,Backup.GPRSPoint[i]);
 			Print_Error(error);
 			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 			if (gshutdown) {
@@ -6197,7 +6202,7 @@ static void AddNew(int argc, char *argv[])
 
 	if (Backup.PhonePhonebook[0] != NULL) {
 		MemStatus.MemoryType = MEM_ME;
-		error=GAMMU_GetMemoryStatus(&s, &MemStatus);
+		error=GAMMU_GetMemoryStatus(s, &MemStatus);
 		if (error==ERR_NONE) {
 			max = 0;
 			while (Backup.PhonePhonebook[max]!=NULL) max++;
@@ -6212,7 +6217,7 @@ static void AddNew(int argc, char *argv[])
 						while (true) {
 							Pbk.MemoryType  = MEM_ME;
 							Pbk.Location 	= j;
-							error=GAMMU_GetMemory(&s, &Pbk);
+							error=GAMMU_GetMemory(s, &Pbk);
 							if (error == ERR_EMPTY) break;
 							if (error != ERR_NONE) Print_Error(error);
 							j++;
@@ -6224,11 +6229,11 @@ static void AddNew(int argc, char *argv[])
 						Pbk 		= *Backup.PhonePhonebook[i];
 						Pbk.MemoryType 	= MEM_ME;
 						Pbk.Location 	= j;
-						error=GAMMU_SetMemory(&s, &Pbk);
-						if (error == ERR_PERMISSION && IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_6230iCALLER)) {
-							error=GAMMU_DeleteMemory(&s, &Pbk);
+						error=GAMMU_SetMemory(s, &Pbk);
+						if (error == ERR_PERMISSION && IsPhoneFeatureAvailable(GAMMU_GetModelInfo(s), F_6230iCALLER)) {
+							error=GAMMU_DeleteMemory(s, &Pbk);
 							Print_Error(error);
-							error=GAMMU_SetMemory(&s, &Pbk);
+							error=GAMMU_SetMemory(s, &Pbk);
 						}
 						Print_Error(error);
 						fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
@@ -6241,7 +6246,7 @@ static void AddNew(int argc, char *argv[])
 					for (i=0;i<max;i++) {
 						Pbk 		= *Backup.PhonePhonebook[i];
 						Pbk.MemoryType 	= MEM_ME;
-						error=GAMMU_AddMemory(&s, &Pbk);
+						error=GAMMU_AddMemory(s, &Pbk);
 						Print_Error(error);
 						fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 						if (gshutdown) {
@@ -6256,7 +6261,7 @@ static void AddNew(int argc, char *argv[])
 	}
 	if (Backup.SIMPhonebook[0] != NULL) {
 		MemStatus.MemoryType = MEM_SM;
-		error=GAMMU_GetMemoryStatus(&s, &MemStatus);
+		error=GAMMU_GetMemoryStatus(s, &MemStatus);
 		if (error==ERR_NONE) {
 			max = 0;
 			while (Backup.SIMPhonebook[max]!=NULL) max++;
@@ -6271,7 +6276,7 @@ static void AddNew(int argc, char *argv[])
 						while (true) {
 							Pbk.MemoryType  = MEM_SM;
 							Pbk.Location 	= j;
-							error=GAMMU_GetMemory(&s, &Pbk);
+							error=GAMMU_GetMemory(s, &Pbk);
 							if (error == ERR_EMPTY) break;
 							if (error != ERR_NONE) Print_Error(error);
 							j++;
@@ -6283,7 +6288,7 @@ static void AddNew(int argc, char *argv[])
 						Pbk 		= *Backup.SIMPhonebook[i];
 						Pbk.MemoryType 	= MEM_SM;
 						Pbk.Location 	= j;
-						error=GAMMU_SetMemory(&s, &Pbk);
+						error=GAMMU_SetMemory(s, &Pbk);
 						Print_Error(error);
 						fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 						if (gshutdown) {
@@ -6295,7 +6300,7 @@ static void AddNew(int argc, char *argv[])
 					for (i=0;i<max;i++) {
 						Pbk 		= *Backup.SIMPhonebook[i];
 						Pbk.MemoryType 	= MEM_SM;
-						error=GAMMU_AddMemory(&s, &Pbk);
+						error=GAMMU_AddMemory(s, &Pbk);
 						Print_Error(error);
 						fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 						if (gshutdown) {
@@ -6313,19 +6318,19 @@ static void AddNew(int argc, char *argv[])
 		if (answer_yes(_("Do you want to set phone date/time (NOTE: in some phones it's required to correctly restore calendar notes and other items)"))) {
 			GSM_GetCurrentDateTime(&date_time);
 
-			error=GAMMU_SetDateTime(&s, &date_time);
+			error=GAMMU_SetDateTime(s, &date_time);
 			Print_Error(error);
 		}
 	}
 	if (Backup.Calendar[0] != NULL) {
-		error = GAMMU_GetNextCalendar(&s,&Calendar,true);
+		error = GAMMU_GetNextCalendar(s,&Calendar,true);
 		if (error == ERR_NONE || error == ERR_INVALIDLOCATION || error == ERR_EMPTY) {
 			if (answer_yes(_("Add phone calendar notes"))) {
 				max = 0;
 				while (Backup.Calendar[max]!=NULL) max++;
 				for (i=0;i<max;i++) {
 					Calendar = *Backup.Calendar[i];
-					error=GAMMU_AddCalendar(&s,&Calendar);
+					error=GAMMU_AddCalendar(s,&Calendar);
 					Print_Error(error);
 					fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 					if (gshutdown) {
@@ -6339,14 +6344,14 @@ static void AddNew(int argc, char *argv[])
 	}
 	if (Backup.ToDo[0] != NULL) {
 		ToDo.Location = 1;
-		error=GAMMU_GetToDoStatus(&s,&ToDoStatus);
+		error=GAMMU_GetToDoStatus(s,&ToDoStatus);
 		if (error == ERR_NONE) {
 			if (answer_yes(_("Add phone ToDo"))) {
 				max = 0;
 				while (Backup.ToDo[max]!=NULL) max++;
 				for (i=0;i<max;i++) {
 					ToDo  = *Backup.ToDo[i];
-					error = GAMMU_AddToDo(&s,&ToDo);
+					error = GAMMU_AddToDo(s,&ToDo);
 					Print_Error(error);
 					fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 					if (gshutdown) {
@@ -6360,7 +6365,7 @@ static void AddNew(int argc, char *argv[])
 	}
 	if (Backup.WAPBookmark[0] != NULL) {
 		Bookmark.Location = 1;
-		error = GAMMU_GetWAPBookmark(&s,&Bookmark);
+		error = GAMMU_GetWAPBookmark(s,&Bookmark);
 		if (error == ERR_NONE || error == ERR_INVALIDLOCATION) {
 			if (answer_yes(_("Add phone WAP bookmarks"))) {
 				max = 0;
@@ -6368,7 +6373,7 @@ static void AddNew(int argc, char *argv[])
 				for (i=0;i<max;i++) {
 					Bookmark 	  = *Backup.WAPBookmark[i];
 					Bookmark.Location = 0;
-					error=GAMMU_SetWAPBookmark(&s,&Bookmark);
+					error=GAMMU_SetWAPBookmark(s,&Bookmark);
 					Print_Error(error);
 					fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
 					if (gshutdown) {
@@ -6394,18 +6399,18 @@ static void ClearMemory(GSM_MemoryType type, const char *question)
 
 	DoClear = false;
 	MemStatus.MemoryType = type;
-	error = GAMMU_GetMemoryStatus(&s, &MemStatus);
+	error = GAMMU_GetMemoryStatus(s, &MemStatus);
 	if (error == ERR_NONE && MemStatus.MemoryUsed !=0) {
 		if (answer_yes(question)) DoClear = true;
 	}
 	if (DoClear) {
-		error = GAMMU_DeleteAllMemory(&s, type);
+		error = GAMMU_DeleteAllMemory(s, type);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
 			for (i = 0; i < MemStatus.MemoryUsed + MemStatus.MemoryFree; i++) {
 				Pbk.MemoryType 	= type;
 				Pbk.Location	= i + 1;
 				Pbk.EntriesNum	= 0;
-				error=GAMMU_DeleteMemory(&s, &Pbk);
+				error=GAMMU_DeleteMemory(s, &Pbk);
 				Print_Error(error);
 				fprintf(stderr, _("%cClearing: %i percent"), 13,
 						(i + 1) * 100 / (MemStatus.MemoryUsed + MemStatus.MemoryFree));
@@ -6442,18 +6447,18 @@ static void ClearAll(int argc, char *argv[])
 	ClearMemory(MEM_RC, _("Delete received calls"));
 
 	DoClear = false;
-	error = GAMMU_GetNextCalendar(&s,&Calendar,true);
+	error = GAMMU_GetNextCalendar(s,&Calendar,true);
 	if (error == ERR_NONE) {
  		if (answer_yes(_("Delete phone calendar notes"))) DoClear = true;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
-		error=GAMMU_DeleteAllCalendar(&s);
+		error=GAMMU_DeleteAllCalendar(s);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
  			while (1) {
-				error = GAMMU_GetNextCalendar(&s,&Calendar,true);
+				error = GAMMU_GetNextCalendar(s,&Calendar,true);
 				if (error != ERR_NONE) break;
-				error = GAMMU_DeleteCalendar(&s,&Calendar);
+				error = GAMMU_DeleteCalendar(s,&Calendar);
  				Print_Error(error);
 				fprintf(stderr, "*");
 			}
@@ -6465,18 +6470,18 @@ static void ClearAll(int argc, char *argv[])
 	}
 
 	DoClear = false;
-	error = GAMMU_GetToDoStatus(&s,&ToDoStatus);
+	error = GAMMU_GetToDoStatus(s,&ToDoStatus);
 	if (error == ERR_NONE && ToDoStatus.Used != 0) {
 		if (answer_yes(_("Delete phone ToDo"))) DoClear = true;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
-		error=GAMMU_DeleteAllToDo(&s);
+		error=GAMMU_DeleteAllToDo(s);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
  			while (1) {
-				error = GAMMU_GetNextToDo(&s,&ToDo,true);
+				error = GAMMU_GetNextToDo(s,&ToDo,true);
 				if (error != ERR_NONE) break;
-				error = GAMMU_DeleteToDo(&s,&ToDo);
+				error = GAMMU_DeleteToDo(s,&ToDo);
  				Print_Error(error);
 				fprintf(stderr, "*");
 			}
@@ -6488,16 +6493,16 @@ static void ClearAll(int argc, char *argv[])
 	}
 
 	DoClear = false;
-	error = GAMMU_GetNotesStatus(&s,&ToDoStatus);
+	error = GAMMU_GetNotesStatus(s,&ToDoStatus);
 	if (error == ERR_NONE && ToDoStatus.Used != 0) {
 		if (answer_yes(_("Delete phone Notes"))) DoClear = true;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
 		while (1) {
-			error = GAMMU_GetNextNote(&s,&Note,true);
+			error = GAMMU_GetNextNote(s,&Note,true);
 			if (error != ERR_NONE) break;
-			error = GAMMU_DeleteNote(&s,&Note);
+			error = GAMMU_DeleteNote(s,&Note);
 			Print_Error(error);
 			fprintf(stderr, "*");
 		}
@@ -6505,7 +6510,7 @@ static void ClearAll(int argc, char *argv[])
 	}
 
 	Bookmark.Location = 1;
-	error = GAMMU_GetWAPBookmark(&s,&Bookmark);
+	error = GAMMU_GetWAPBookmark(s,&Bookmark);
 	if (error == ERR_NONE || error == ERR_INVALIDLOCATION) {
 		if (answer_yes(_("Delete phone WAP bookmarks"))) {
 			fprintf(stderr, LISTFORMAT, _("Deleting"));
@@ -6516,9 +6521,9 @@ static void ClearAll(int argc, char *argv[])
 			 * it later
 			 */
 			while (error==ERR_NONE) {
-				error = GAMMU_DeleteWAPBookmark(&s,&Bookmark);
+				error = GAMMU_DeleteWAPBookmark(s,&Bookmark);
 				Bookmark.Location = 1;
-				error = GAMMU_GetWAPBookmark(&s,&Bookmark);
+				error = GAMMU_GetWAPBookmark(s,&Bookmark);
 				fprintf(stderr, "*");
 			}
 			fprintf(stderr, "\n");
@@ -6527,16 +6532,16 @@ static void ClearAll(int argc, char *argv[])
 	if (GAMMU_DeleteUserRingtones != NOTSUPPORTED) {
 		if (answer_yes(_("Delete all phone user ringtones"))) {
 			fprintf(stderr, LISTFORMAT, _("Deleting"));
-			error=GAMMU_DeleteUserRingtones(&s);
+			error=GAMMU_DeleteUserRingtones(s);
 			Print_Error(error);
 			fprintf(stderr, "%s\n", _("Done"));
 		}
 	}
 	Station.Location=i;
-	error=GAMMU_GetFMStation(&s,&Station);
+	error=GAMMU_GetFMStation(s,&Station);
 	if (error == ERR_NONE || error == ERR_EMPTY) {
 	 	if (answer_yes(_("Delete all phone FM radio stations"))) {
- 			error=GAMMU_ClearFMStations(&s);
+ 			error=GAMMU_ClearFMStations(s);
  			Print_Error(error);
 		}
  	}
@@ -6638,7 +6643,7 @@ static void GetSyncMLSettings(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		settings.Location=i;
-		error=GAMMU_GetSyncMLSettings(&s,&settings);
+		error=GAMMU_GetSyncMLSettings(s,&settings);
 		Print_Error(error);
 		printf("%i. ", i);
 		if (settings.Name[0]==0 && settings.Name[1]==0) {
@@ -6687,7 +6692,7 @@ static void GetChatSettings(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		settings.Location=i;
-		error=GAMMU_GetChatSettings(&s,&settings);
+		error=GAMMU_GetChatSettings(s,&settings);
 		Print_Error(error);
 		printf("%i. ",i);
 		if (settings.Name[0]==0 && settings.Name[1]==0) {
@@ -6727,9 +6732,9 @@ static void GetWAPMMSSettings(int argc, char *argv[])
 	for (i=start;i<=stop;i++) {
 		settings.Location=i;
 		if (strcasecmp(argv[1],"--getwapsettings") == 0) {
-			error=GAMMU_GetWAPSettings(&s,&settings);
+			error=GAMMU_GetWAPSettings(s,&settings);
 		} else {
-			error=GAMMU_GetMMSSettings(&s,&settings);
+			error=GAMMU_GetMMSSettings(s,&settings);
 		}
 		Print_Error(error);
 		for (j=0;j<settings.Number;j++) {
@@ -6763,7 +6768,7 @@ static void BackupSMS(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetSMSFolders(&s, &folders);
+	error=GAMMU_GetSMSFolders(s, &folders);
 	Print_Error(error);
 
 	DeleteAfter=answer_yes(_("Delete each sms after backup"));
@@ -6777,7 +6782,7 @@ static void BackupSMS(int argc, char *argv[])
 
 	while (error == ERR_NONE) {
 		sms.SMS[0].Folder=0x00;
-		error=GAMMU_GetNextSMS(&s, &sms, start);
+		error=GAMMU_GetNextSMS(s, &sms, start);
 		switch (error) {
 		case ERR_EMPTY:
 			break;
@@ -6816,7 +6821,7 @@ static void BackupSMS(int argc, char *argv[])
 	if (DeleteAfter) {
 		for (j=0;j<smsnum;j++) {
 			Backup.SMS[j]->Folder = 0;
-			error=GAMMU_DeleteSMS(&s, Backup.SMS[j]);
+			error=GAMMU_DeleteSMS(s, Backup.SMS[j]);
 			Print_Error(error);
 			fprintf(stderr, _("%cDeleting: %i percent"),13,(j+1)*100/smsnum);
 		}
@@ -6846,7 +6851,7 @@ static void AddSMS(int argc, char *argv[])
 		SMS.SMS[0] = *Backup.SMS[smsnum];
 		displaymultismsinfo(SMS,false,false,NULL);
 		if (answer_yes(_("Restore sms"))) {
-			error=GAMMU_AddSMS(&s, Backup.SMS[smsnum]);
+			error=GAMMU_AddSMS(s, Backup.SMS[smsnum]);
 			Print_Error(error);
 		}
 		smsnum++;
@@ -6872,7 +6877,7 @@ static void RestoreSMS(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetSMSFolders(&s, &folders);
+	error=GAMMU_GetSMSFolders(s, &folders);
 	Print_Error(error);
 
 	while (Backup.SMS[smsnum] != NULL) {
@@ -6885,8 +6890,8 @@ static void RestoreSMS(int argc, char *argv[])
 			sprintf(buffer, _("Restore %03i sms to folder \"%s\""),smsnum+1,DecodeUnicodeConsole(folders.Folder[Backup.SMS[smsnum]->Folder-1].Name));
 			if (folders.Folder[Backup.SMS[smsnum]->Folder-1].Memory == MEM_SM) strcat(buffer, _(" (SIM)"));
 			if (answer_yes(buffer)) {
-				smprintf(&s, _("saving %i SMS\n"),smsnum);
-				error=GAMMU_AddSMS(&s, Backup.SMS[smsnum]);
+				smprintf(s, _("saving %i SMS\n"),smsnum);
+				error=GAMMU_AddSMS(s, Backup.SMS[smsnum]);
 				Print_Error(error);
 			}
 		}
@@ -7124,9 +7129,9 @@ static void PressKeySequence(int argc, char *argv[])
 	GSM_Init(true);
 
 	for (i=0;i<Length;i++) {
-		error=GAMMU_PressKey(&s, KeyCode[i], true);
+		error=GAMMU_PressKey(s, KeyCode[i], true);
 		Print_Error(error);
-		error=GAMMU_PressKey(&s, KeyCode[i], false);
+		error=GAMMU_PressKey(s, KeyCode[i], false);
 		Print_Error(error);
 	}
 
@@ -7152,13 +7157,13 @@ static void GetAllCategories(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetCategoryStatus(&s, &Status);
+	error=GAMMU_GetCategoryStatus(s, &Status);
 	Print_Error(error);
 
 	for (count=0,j=1;count<Status.Used;j++)
 	{
     		Category.Location=j;
-		error=GAMMU_GetCategory(&s, &Category);
+		error=GAMMU_GetCategory(s, &Category);
 
 		if (error != ERR_EMPTY) {
 			printf(LISTFORMAT "%i\n", _("Location"),j);
@@ -7197,7 +7202,7 @@ static void GetCategory(int argc, char *argv[])
 
 		Category.Location=j;
 
-		error=GAMMU_GetCategory(&s, &Category);
+		error=GAMMU_GetCategory(s, &Category);
 		if (error != ERR_EMPTY) Print_Error(error);
 
 		if (error == ERR_EMPTY) {
@@ -7235,7 +7240,7 @@ static void AddCategory(int argc, char *argv[])
 
 	Category.Location = 0;
 
-	error = GAMMU_AddCategory(&s, &Category);
+	error = GAMMU_AddCategory(s, &Category);
 
 	Print_Error(error);
 
@@ -7255,7 +7260,7 @@ static void DeleteToDo(int argc, char *argv[])
 	for (i=start;i<=stop;i++) {
 		ToDo.Location=i;
 		printf(LISTFORMAT "%i\n", _("Location"),i);
-		error=GAMMU_DeleteToDo(&s,&ToDo);
+		error=GAMMU_DeleteToDo(s,&ToDo);
 		if (error != ERR_EMPTY) Print_Error(error);
 
 		if (error == ERR_EMPTY) {
@@ -7347,7 +7352,7 @@ static void PrintToDo(GSM_ToDoEntry *ToDo)
 		case TODO_CATEGORY:
 			Category.Location = ToDo->Entries[j].Number;
 			Category.Type = Category_ToDo;
-			error=GAMMU_GetCategory(&s, &Category);
+			error=GAMMU_GetCategory(s, &Category);
 			if (error == ERR_NONE) {
 				printf(LISTFORMAT "\"%s\" (%i)\n", _("Category"), DecodeUnicodeConsole(Category.Name), ToDo->Entries[j].Number);
 			} else {
@@ -7357,7 +7362,7 @@ static void PrintToDo(GSM_ToDoEntry *ToDo)
 		case TODO_CONTACTID:
 			entry.Location = ToDo->Entries[j].Number;
 			entry.MemoryType = MEM_ME;
-			error=GAMMU_GetMemory(&s, &entry);
+			error=GAMMU_GetMemory(s, &entry);
 			if (error == ERR_NONE) {
 				name = GSM_PhonebookGetEntryName(&entry);
 				if (name != NULL) {
@@ -7393,7 +7398,7 @@ static void ListToDoCategoryEntries(int Category)
 	int			j;
 
 	while (!gshutdown) {
-		error = GAMMU_GetNextToDo(&s, &Entry, start);
+		error = GAMMU_GetNextToDo(s, &Entry, start);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
 		for (j=0;j<Entry.EntriesNum;j++) {
@@ -7442,10 +7447,10 @@ static void ListToDoCategory(int argc, char *argv[])
 		Category.Type 	= Category_ToDo;
 		Status.Type 	= Category_ToDo;
 
-		if (GAMMU_GetCategoryStatus(&s, &Status) == ERR_NONE) {
+		if (GAMMU_GetCategoryStatus(s, &Status) == ERR_NONE) {
 			for (count=0,j=1;count<Status.Used;j++) {
 				Category.Location=j;
-				error=GAMMU_GetCategory(&s, &Category);
+				error=GAMMU_GetCategory(s, &Category);
 
 				if (error != ERR_EMPTY) {
 					count++;
@@ -7472,7 +7477,7 @@ static void GetToDo(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		ToDo.Location=i;
-		error = GAMMU_GetToDo(&s,&ToDo);
+		error = GAMMU_GetToDo(s,&ToDo);
 		if (error == ERR_EMPTY) continue;
 		Print_Error(error);
 		PrintToDo(&ToDo);
@@ -7492,7 +7497,7 @@ static void GetAllToDo(int argc, char *argv[])
 	GSM_Init(true);
 
 	while (!gshutdown) {
-		error = GAMMU_GetNextToDo(&s, &ToDo, start);
+		error = GAMMU_GetNextToDo(s, &ToDo, start);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
 		PrintToDo(&ToDo);
@@ -7513,7 +7518,7 @@ static void GetAllNotes(int argc, char *argv[])
 	GSM_Init(true);
 
 	while (!gshutdown) {
-		error = GAMMU_GetNextNote(&s, &Note, start);
+		error = GAMMU_GetNextNote(s, &Note, start);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
 		printf(LISTFORMAT "\"%s\"\n", _("Text"),DecodeUnicodeConsole(Note.Text));
@@ -7549,7 +7554,7 @@ static void EnterSecurityCode(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_EnterSecurityCode(&s,Code);
+	error=GAMMU_EnterSecurityCode(s,Code);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -7569,12 +7574,12 @@ static void GetProfile(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetRingtonesInfo(&s,&Info);
+	error=GAMMU_GetRingtonesInfo(s,&Info);
 	if (error != ERR_NONE) Info.Number = 0;
 
 	for (i=start;i<=stop;i++) {
 		Profile.Location=i;
-		error=GAMMU_GetProfile(&s,&Profile);
+		error=GAMMU_GetProfile(s,&Profile);
 		if (error != ERR_NONE && Info.Ringtone) free(Info.Ringtone);
 		Print_Error(error);
 
@@ -7609,9 +7614,9 @@ static void GetProfile(int argc, char *argv[])
 						if (!callerinit[k]) {
 							caller[k].Type	 	= GSM_CallerGroupLogo;
 							caller[k].Location 	= k + 1;
-							error=GAMMU_GetBitmap(&s,&caller[k]);
+							error=GAMMU_GetBitmap(s,&caller[k]);
 							if (error == ERR_SECURITYERROR) {
-								NOKIA_GetDefaultCallerGroupName(&s,&caller[k]);
+								NOKIA_GetDefaultCallerGroupName(s,&caller[k]);
 							} else {
 								Print_Error(error);
 							}
@@ -7705,7 +7710,7 @@ static void GetSpeedDial(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		SpeedDial.Location=i;
-		error=GAMMU_GetSpeedDial(&s,&SpeedDial);
+		error=GAMMU_GetSpeedDial(s,&SpeedDial);
 		printf(LISTFORMAT "%i\n", _("Location"), i);
 		switch (error) {
 		case ERR_EMPTY:
@@ -7716,7 +7721,7 @@ static void GetSpeedDial(int argc, char *argv[])
 
 			Phonebook.Location	= SpeedDial.MemoryLocation;
 			Phonebook.MemoryType 	= SpeedDial.MemoryType;
-			error=GAMMU_GetMemory(&s,&Phonebook);
+			error=GAMMU_GetMemory(s,&Phonebook);
 
 			GSM_PhonebookFindDefaultNameNumberGroup(&Phonebook, &Name, &Number, &Group);
 
@@ -7745,7 +7750,7 @@ static void ResetPhoneSettings(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_ResetPhoneSettings(&s,Type);
+	error=GAMMU_ResetPhoneSettings(s,Type);
 	Print_Error(error);
 
  	GSM_Terminate();
@@ -7805,7 +7810,7 @@ static void DeleteAllSMS(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetSMSFolders(&s, &folders);
+	error=GAMMU_GetSMSFolders(s, &folders);
 	Print_Error(error);
 
 	GetStartStop(&foldernum, NULL, 2, argc, argv);
@@ -7819,7 +7824,7 @@ static void DeleteAllSMS(int argc, char *argv[])
 
 	while (error == ERR_NONE) {
 		sms.SMS[0].Folder=0x00;
-		error=GAMMU_GetNextSMS(&s, &sms, start);
+		error=GAMMU_GetNextSMS(s, &sms, start);
 		switch (error) {
 		case ERR_EMPTY:
 			break;
@@ -7827,7 +7832,7 @@ static void DeleteAllSMS(int argc, char *argv[])
 			Print_Error(error);
 			if (sms.SMS[0].Folder == foldernum) {
 				sms.SMS[0].Folder=0x00;
-				error=GAMMU_DeleteSMS(&s, &sms.SMS[0]);
+				error=GAMMU_DeleteSMS(s, &sms.SMS[0]);
 				Print_Error(error);
 				printf("*");
 			}
@@ -7844,7 +7849,7 @@ static void SendDTMF(int argc, char *argv[])
 {
 	GSM_Init(true);
 
-	error=GAMMU_SendDTMF(&s,argv[2]);
+	error=GAMMU_SendDTMF(s,argv[2]);
 	Print_Error(error);
 
  	GSM_Terminate();
@@ -7857,7 +7862,7 @@ static void GetDisplayStatus(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GAMMU_GetDisplayStatus(&s,&Features);
+	error=GAMMU_GetDisplayStatus(s,&Features);
 	Print_Error(error);
 
 	printf(LISTFORMAT "\n", _("Current display features"));
@@ -7881,7 +7886,7 @@ static void SetAutoNetworkLogin(int argc, char *argv[])
 {
 	GSM_Init(true);
 
-	error=GAMMU_SetAutoNetworkLogin(&s);
+	error=GAMMU_SetAutoNetworkLogin(s);
 	Print_Error(error);
 
  	GSM_Terminate();
@@ -8010,7 +8015,7 @@ static void GetFMStation(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		Station.Location=i;
-		error=GAMMU_GetFMStation(&s,&Station);
+		error=GAMMU_GetFMStation(s,&Station);
 		printf(LISTFORMAT "%i\n", _("Location"), i);
 		switch (error) {
 		case ERR_EMPTY:
@@ -8034,7 +8039,7 @@ GSM_Error PrintFileSystemStatus()
 {
 	GSM_FileSystemStatus	Status;
 
-	error = GAMMU_GetFileSystemStatus(&s,&Status);
+	error = GAMMU_GetFileSystemStatus(s,&Status);
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
 	    	Print_Error(error);
 		printf("\n");
@@ -8068,12 +8073,12 @@ static void GetFileSystem(int argc, char *argv[])
 	GSM_Init(true);
 
 	while (1) {
-		error = GAMMU_GetNextFileFolder(&s,&Files,Start);
+		error = GAMMU_GetNextFileFolder(s,&Files,Start);
 		if (error == ERR_EMPTY) break;
 	    	if (error != ERR_FOLDERPART) Print_Error(error);
 
 		if (!Files.Folder) {
-			if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_FILES2)) {
+			if (IsPhoneFeatureAvailable(GAMMU_GetModelInfo(s), F_FILES2)) {
 				if (DecodeUnicodeString(Files.ID_FullName)[0] == 'a') {
 					MemoryCard = true;
 					usedcard+=Files.Used;
@@ -8218,7 +8223,7 @@ static void SetFileAttrib(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error = GAMMU_SetFileAttributes(&s,&Files);
+	error = GAMMU_SetFileAttributes(s,&Files);
     	Print_Error(error);
 
 	GSM_Terminate();
@@ -8235,7 +8240,7 @@ static void GetRootFolders(int argc, char *argv[])
 	File.ID_FullName[1] = 0;
 
 	while (1) {
-		if (GAMMU_GetNextRootFolder(&s,&File)!=ERR_NONE) break;
+		if (GAMMU_GetNextRootFolder(s,&File)!=ERR_NONE) break;
 		EncodeUTF8QuotedPrintable(IDUTF,File.ID_FullName);
 		printf("%s ",IDUTF);
 		printf("- %s\n",DecodeUnicodeString(File.Name));
@@ -8255,7 +8260,7 @@ static void GetFolderListing(int argc, char *argv[])
 	DecodeUTF8QuotedPrintable(Files.ID_FullName,argv[2],strlen(argv[2]));
 
 	while (1) {
-		error = GAMMU_GetFolderListing(&s,&Files,Start);
+		error = GAMMU_GetFolderListing(s,&Files,Start);
 		if (error == ERR_EMPTY) break;
 		if (error != ERR_FOLDERPART) {
 			Print_Error(error);
@@ -8315,7 +8320,7 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 
 	error = ERR_NONE;
 	while (error == ERR_NONE) {
-		error = GAMMU_GetFilePart(&s,File,&Handle,&Size);
+		error = GAMMU_GetFilePart(s,File,&Handle,&Size);
 		if (error == ERR_NONE || error == ERR_EMPTY || error == ERR_WRONGCRC) {
 			if (start) {
 				printf(_("Getting \"%s\"\n"), DecodeUnicodeConsole(File->Name));
@@ -8434,7 +8439,7 @@ static void GetFileFolder(int argc, char *argv[])
 	}
 
 	while (allnum != num) {
-		error = GAMMU_GetNextFileFolder(&s,&File,Start);
+		error = GAMMU_GetNextFileFolder(s,&File,Start);
 		if (error == ERR_EMPTY) break;
 	    	Print_Error(error);
 
@@ -8504,9 +8509,9 @@ static void AddOneFile(GSM_File *File, char *text, bool send)
 	Pos	= 0;
 	while (error == ERR_NONE) {
 		if (send) {
-			error = GAMMU_SendFilePart(&s,File,&Pos,&Handle);
+			error = GAMMU_SendFilePart(s,File,&Pos,&Handle);
 		} else {
-			error = GAMMU_AddFilePart(&s,File,&Pos,&Handle);
+			error = GAMMU_AddFilePart(s,File,&Pos,&Handle);
 		}
 	    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
 		if (File->Used != 0) {
@@ -8654,7 +8659,7 @@ static void AddFolder(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error = GAMMU_AddFolder(&s,&File);
+	error = GAMMU_AddFolder(s,&File);
     	Print_Error(error);
 	EncodeUTF8QuotedPrintable(IDUTF,File.ID_FullName);
 	printf(_("ID of new folder is \"%s\"\n"),IDUTF);
@@ -8670,7 +8675,7 @@ static void DeleteFolder(int argc, char *argv[])
 
 	DecodeUTF8QuotedPrintable(buffer,argv[2],strlen(argv[2]));
 
-	error = GAMMU_DeleteFolder(&s,buffer);
+	error = GAMMU_DeleteFolder(s,buffer);
     	Print_Error(error);
 
 	GSM_Terminate();
@@ -8701,7 +8706,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 	printf(_("Checking %s\n"),DecodeUnicodeString(Name));
 	//looking into folder content (searching for mp3 and similiar)
 	while (1) {
-		error = GAMMU_GetFolderListing(&s,&Files,Start);
+		error = GAMMU_GetFolderListing(s,&Files,Start);
 		if (error == ERR_FOLDERPART) {
 			printf("%s\n", _("  Only part handled!"));
 			break;
@@ -8780,7 +8785,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 			Start = true;
 			Available = false;
 			while (1) {
-				error = GAMMU_GetFolderListing(&s,&Files3,Start);
+				error = GAMMU_GetFolderListing(s,&Files3,Start);
 				if (error == ERR_FOLDERPART) {
 					printf("%s\n", _("  Problem with adding playlist"));
 					break;
@@ -8874,11 +8879,11 @@ static void NokiaAddPlayLists(int argc, char *argv[])
 	//delete old playlists
 	EncodeUnicode(IDFolder,"d:\\predefplaylist",17);
 	CopyUnicodeString(Files.ID_FullName,IDFolder);
-	error = GAMMU_GetFolderListing(&s,&Files,Start);
+	error = GAMMU_GetFolderListing(s,&Files,Start);
 	if (error == ERR_FILENOTEXIST) {
 		EncodeUnicode(IDFolder,"d:\\predefgallery\\predefplaylist",17+14);
 		CopyUnicodeString(Files.ID_FullName,IDFolder);
-		error = GAMMU_GetFolderListing(&s,&Files,Start);
+		error = GAMMU_GetFolderListing(s,&Files,Start);
 	} else if (error != ERR_EMPTY) {
 	    	Print_Error(error);
 	}
@@ -8892,12 +8897,12 @@ static void NokiaAddPlayLists(int argc, char *argv[])
 	while (1) {
 		if (!Files.Folder) {
 			if (strstr(DecodeUnicodeConsole(Files.Name),".m3u")!=NULL) {
-				error = GAMMU_DeleteFile(&s,Files.ID_FullName);
+				error = GAMMU_DeleteFile(s,Files.ID_FullName);
 			    	Print_Error(error);
 			}
 		}
 		Start = false;
-		error = GAMMU_GetFolderListing(&s,&Files,Start);
+		error = GAMMU_GetFolderListing(s,&Files,Start);
 		if (error == ERR_FOLDERPART) {
 			printf("%s\n", _("Problem with deleting playlist"));
 			break;
@@ -9028,14 +9033,14 @@ static void NokiaAddFile(int argc, char *argv[])
 			GSM_Terminate();
 			exit(-1);
 		}
-	} else if (IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_FILES2)) {
+	} else if (IsPhoneFeatureAvailable(GAMMU_GetModelInfo(s), F_FILES2)) {
 		i = 0;
 		while (Folder[i].parameter[0] != 0) {
 			if ((Folder[i].folder[0] == 'a' || Folder[i].folder[0] == 'd') &&
 			    Folder[i].level[0] == 0x00 &&
 			    strcasecmp(argv[2],Folder[i].parameter) == 0) {
 				if (strstr(Folder[i].folder,"d:/predefjava/")!= NULL &&
-				    !IsPhoneFeatureAvailable(s.Phone.Data.ModelInfo, F_SERIES40_30)) {
+				    !IsPhoneFeatureAvailable(GAMMU_GetModelInfo(s), F_SERIES40_30)) {
 					i++;
 					continue;
 				}
@@ -9049,7 +9054,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	if (!Found) {
 		fprintf(stderr, _("Searching for phone folder: "));
 		while (1) {
-			error = GAMMU_GetNextFileFolder(&s,&Files,Start);
+			error = GAMMU_GetNextFileFolder(s,&Files,Start);
 			if (error == ERR_EMPTY) break;
 		    	Print_Error(error);
 
@@ -9059,7 +9064,7 @@ static void NokiaAddFile(int argc, char *argv[])
 				i 	= 0;
 				while (Folder[i].parameter[0] != 0) {
 					EncodeUnicode(buffer,Folder[i].folder,strlen(Folder[i].folder));
-					dbgprintf("comparing \"%s\" \"%s\" \"%s\"\n",s.Phone.Data.ModelInfo->model,DecodeUnicodeString(Files.ID_FullName),Folder[i].level);
+					dbgprintf("comparing \"%s\" \"%s\" \"%s\"\n",GAMMU_GetModelInfo(s)->model,DecodeUnicodeString(Files.ID_FullName),Folder[i].level);
 					if (strcasecmp(argv[2],Folder[i].parameter) == 0  &&
 					    mywstrncasecmp(Files.Name,buffer,0) &&
 					    Files.Level == atoi(Folder[i].level)) {
@@ -9219,14 +9224,14 @@ static void NokiaAddFile(int argc, char *argv[])
 			strcat(buffer,Name);
 			EncodeUnicode(File.Name,buffer,strlen(buffer));
 			CopyUnicodeString(File.ID_FullName,Files.ID_FullName);
-			error = GAMMU_AddFolder(&s,&File);
+			error = GAMMU_AddFolder(s,&File);
 			if (Overwrite && (error == ERR_FILEALREADYEXIST)) {
 				fprintf(stderr, "%s\n", _("INFO: Application already exist. Deleting by Gammu"));
 
 				Start = true;
 				CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
 				while (1) {
-					error = GAMMU_GetFolderListing(&s,&File2,Start);
+					error = GAMMU_GetFolderListing(s,&File2,Start);
 					if (error == ERR_EMPTY) break;
 					Print_Error(error);
 
@@ -9240,13 +9245,13 @@ static void NokiaAddFile(int argc, char *argv[])
 				CopyUnicodeString(buffer,File2.ID_FullName);
 				while (1) {
 					CopyUnicodeString(File2.ID_FullName,buffer);
-					error = GAMMU_GetFolderListing(&s,&File2,true);
+					error = GAMMU_GetFolderListing(s,&File2,true);
 					if (error == ERR_EMPTY) break;
 					Print_Error(error);
 
 					fprintf(stderr, _("  Deleting %s\n"),DecodeUnicodeString(File2.Name));
 
-					error = GAMMU_DeleteFile(&s,File2.ID_FullName);
+					error = GAMMU_DeleteFile(s,File2.ID_FullName);
 					Print_Error(error);
 				}
 
@@ -9376,7 +9381,7 @@ static void DeleteFiles(int argc, char *argv[])
 
 	for (i=2;i<argc;i++) {
 		DecodeUTF8QuotedPrintable(buffer,argv[i],strlen(argv[i]));
-		error = GAMMU_DeleteFile(&s,buffer);
+		error = GAMMU_DeleteFile(s,buffer);
 	    	Print_Error(error);
 	}
 
@@ -9431,7 +9436,7 @@ static void CallDivert(int argc, char *argv[])
 	GSM_Init(true);
 
 	if (strcasecmp("get", argv[2]) == 0) {
-		error = GAMMU_GetCallDivert(&s,&cd);
+		error = GAMMU_GetCallDivert(s,&cd);
 	    	Print_Error(error);
 		printf(_("Query:\n   Divert type: "));
 	} else {
@@ -9442,7 +9447,7 @@ static void CallDivert(int argc, char *argv[])
 		cd.Request.Timeout = 0;
 		if (argc > 6) cd.Request.Timeout = atoi(argv[6]);
 
-		error = GAMMU_SetCallDivert(&s,&cd);
+		error = GAMMU_SetCallDivert(s,&cd);
 	    	Print_Error(error);
 		printf(_("Changed:\n   Divert type: "));
 	}
@@ -9487,7 +9492,7 @@ static void CancelAllDiverts(int argc, char *argv[])
 {
 	GSM_Init(true);
 
-	error = GAMMU_CancelAllDiverts(&s);
+	error = GAMMU_CancelAllDiverts(s);
     	Print_Error(error);
 
 	GSM_Terminate();
@@ -9519,7 +9524,7 @@ void SearchPhoneThread(OneDeviceInfo *Info)
 
 	j = 0;
 	while(strlen(Info->Connections[j].Connection) != 0) {
-		memcpy(&ss.di,&s.di,sizeof(Debug_Info));
+		memcpy(&ss.di,s.di,sizeof(Debug_Info));
 		ss.ConfigNum			= 1;
 		ss.opened 			= false;
 	    	ss.Config[0].UseGlobalDebugFile = s.Config[0].UseGlobalDebugFile;
@@ -9536,15 +9541,15 @@ void SearchPhoneThread(OneDeviceInfo *Info)
 		error = GSM_InitConnection(&ss,1);
 		if (SearchOutput) printf(_("Connection \"%s\" on device \"%s\"\n"),Info->Connections[j].Connection,Info->Device);
 		if (error == ERR_NONE) {
-			error=ss.Phone.Functions->GetManufacturer(&ss);
+			error=GAMMU_GetManufacturer(&ss);
 			if (error == ERR_NONE) {
-				error=ss.Phone.Functions->GetModel(&ss);
+				error=GAMMU_GetModel(&ss);
 				if (error == ERR_NONE) {
 					if (!SearchOutput) printf(_("Connection \"%s\" on device \"%s\"\n"),Info->Connections[j].Connection,Info->Device);
 					printf("\t" LISTFORMAT "%s\n", _("Manufacturer"),
 						ss.Phone.Data.Manufacturer);
 					printf("\t" LISTFORMAT "%s (%s)\n", _("Model"),
-						ss.Phone.Data.ModelInfo->model,
+						GAMMU_GetModelInfo(ss)->model,
 						ss.Phone.Data.Model);
 				} else {
 					if (SearchOutput) printf("\t%s\n",GAMMU_ErrorString(error));
@@ -10352,8 +10357,7 @@ int main(int argc, char *argv[])
 	char		*cp,*rss,buff[200];
 
 
-	s.opened 	= false;
-	s.ConfigNum 	= 0;
+	s = GAMMU_AllocStateMachine();
 
 	InitLocales(NULL);
 
@@ -10407,9 +10411,9 @@ int main(int argc, char *argv[])
 		/* Wanted user specific configuration? */
 		if (only_config != -1) {
 			/* Here we get only in first for loop */
-			if (!GSM_ReadConfig(cfg, &s.Config[0], only_config)) break;
+			if (!GSM_ReadConfig(cfg, s.Config[0], only_config)) break;
 		} else {
-			if (!GSM_ReadConfig(cfg, &s.Config[i], i) && i != 0) break;
+			if (!GSM_ReadConfig(cfg, s.Config[i], i) && i != 0) break;
 		}
 		s.ConfigNum++;
 
@@ -10522,6 +10526,8 @@ int main(int argc, char *argv[])
 
      	/* Close debug output if opened */
      	if (di.df!=stdout) fclose(di.df);
+
+	GAMMU_FreeStateMachine(s);
 
 	exit(0);
 }

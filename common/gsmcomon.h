@@ -23,14 +23,6 @@ extern GSM_Error NotSupportedFunction	(void);
 
 GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi);
 
-const char *GetGammuLocalePath(void);
-const char *GetGammuVersion(void);
-
-/**
- * Initializes locales.
- */
-extern void InitLocales(const char *path);
-
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

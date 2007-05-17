@@ -195,4 +195,7 @@ GSM_Error GAMMU_DeleteUserRingtones(GSM_StateMachine *s);
  */
 GSM_Error GAMMU_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, bool start);
 
+GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_RingtoneFormat	Format);
+GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone);
+
 #endif

@@ -314,9 +314,8 @@ int GetLine(FILE *File, char *Line, int count)
 
 	if (fgets(Line, count, File) != NULL) {
 		num = strlen(Line) - 1;
-		while(1) {
+		while (num > 0) {
 			if (Line[num] != '\n' && Line[num] != '\r') break;
-			if (num == 0) break;
 			Line[num--] = 0;
 		}
 		return strlen(Line);
