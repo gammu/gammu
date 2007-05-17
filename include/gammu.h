@@ -20,6 +20,10 @@
 #include <gammu-call.h>
 #include <gammu-calendar.h>
 #include <gammu-callback.h>
+#include <gammu-category.h>
+#include <gammu-message.h>
+#include <gammu-file.h>
+#include <gammu-ringtone.h>
 
 #endif
 /* Editor configuration

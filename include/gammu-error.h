@@ -11,6 +11,9 @@
  * \defgroup Error Error handling
  * Error handling and manipulation.
  */
+
+#include <stdio.h>
+
 /**
  * Error types.
  * \ingroup Error
@@ -70,6 +73,9 @@ typedef enum {
 	ERR_FOLDERNOTEMPTY, /**< Folder is not empty */
 	ERR_DATACONVERTED /**< Data were converted */
 } GSM_Error;
+
+unsigned char *print_error(GSM_Error e, FILE *df);
+
 #endif
 
 /* Editor configuration

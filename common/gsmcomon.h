@@ -21,8 +21,6 @@ extern GSM_Error NotSupportedFunction	(void);
 #define NOTIMPLEMENTED 	(void *) NotImplementedFunction
 #define NOTSUPPORTED 	(void *) NotSupportedFunction
 
-unsigned char *print_error	(GSM_Error e, FILE *df);
-
 GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi);
 
 const char *GetGammuLocalePath(void);
