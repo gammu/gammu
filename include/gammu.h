@@ -23,6 +23,7 @@ typedef struct _GSM_StateMachine 	GSM_StateMachine;
 #include <gammu-error.h>
 #include <gammu-inifile.h>
 #include <gammu-backup.h>
+#include <gammu-config.h>
 
 /**
  * Initiates connection.
