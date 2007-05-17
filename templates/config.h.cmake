@@ -93,6 +93,14 @@
 /* n3650.c (DCT4 with Symbian) models */
 #cmakedefine GSM_ENABLE_NOKIA3650
 
+/* Global defines for enabling phone families */
+#if defined(GSM_ENABLE_NOKIA3320) || defined(GSM_ENABLE_NOKIA650) || defined(GSM_ENABLE_NOKIA6110) || defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9210)
+#  define GSM_ENABLE_NOKIA_DCT3
+#endif
+#if defined(GSM_ENABLE_NOKIA3650) || defined(GSM_ENABLE_NOKIA6510)
+#  define GSM_ENABLE_NOKIA_DCT4
+#endif
+
 /* AT generic models */
 #cmakedefine GSM_ENABLE_ATGEN
 
