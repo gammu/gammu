@@ -19,17 +19,7 @@
 
 #include "../config.h"
 
-#ifndef __cplusplus
-#ifndef false
-#  define false 0
-#endif
-#ifndef true
-#  define true 	!0
-#endif
-#ifndef bool
-#  define bool	char
-#endif
-#endif /* __cplusplus */
+#include <gammu-types.h>
 
 #ifdef WIN32
 #  ifdef __BORLANDC__
