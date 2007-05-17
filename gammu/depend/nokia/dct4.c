@@ -1119,7 +1119,7 @@ void DCT4TuneRadio(int argc, char *argv[])
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
 	FMStat.Location = 1;
-	error = Phone->GetFMStation(&s,&FMStat);
+	error = GAMMU_GetFMStation(&s,&FMStat);
 	if (error != ERR_NONE && error != ERR_EMPTY) {
 		printf("%s\n", _("Phone seems not to support radio"));
 		GSM_Terminate();
@@ -1189,12 +1189,12 @@ void DCT4TuneRadio(int argc, char *argv[])
 
 	if (answer_yes2("Do you want to save found stations")) {
 		fprintf(stderr,"Deleting old FM stations: ");
-		error=Phone->ClearFMStations(&s);
+		error=GAMMU_ClearFMStations(&s);
 		Print_Error(error);
 		fprintf(stderr,"Done\n");
 		for (i=0;i<num;i++) {
 			FMStation[i].Location = i+1;
-			error=Phone->SetFMStation(&s,&FMStation[i]);
+			error=GAMMU_SetFMStation(&s,&FMStation[i]);
 			Print_Error(error);
 			fprintf(stderr,"%cWriting: %i percent",13,(i+1)*100/num);
 		}
@@ -1226,7 +1226,7 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 
 	s.User.UserReplyFunctions=UserReplyFunctions4;
 
-	error=Phone->GetRingtonesInfo(&s,&Info);
+	error=GAMMU_GetRingtonesInfo(&s,&Info);
 	Print_Error(error);
 
 	if (atoi(argv[2]) > Info.Number-1) {

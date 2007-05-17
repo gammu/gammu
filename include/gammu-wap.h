@@ -77,4 +77,26 @@ typedef struct {
 
 	WAPSettings_Bearer	ActiveBearer;
 } GSM_MultiWAPSettings;
+
+/**
+ * Reads WAP bookmark.
+ */
+GSM_Error GAMMU_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark);
+/**
+ * Sets WAP bookmark.
+ */
+GSM_Error GAMMU_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark);
+/**
+ * Deletes WAP bookmark.
+ */
+GSM_Error GAMMU_DeleteWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark);
+
+/**
+ * Acquires WAP settings.
+ */
+GSM_Error GAMMU_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
+/**
+ * Changes WAP settings.
+ */
+GSM_Error GAMMU_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
 #endif

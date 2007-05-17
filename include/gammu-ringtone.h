@@ -174,5 +174,25 @@ GSM_Error PHONE_RTTLPlayOneNote		(GSM_StateMachine *s, GSM_RingNote note, bool f
  */
 GSM_Error PHONE_Beep			(GSM_StateMachine *s);
 
+/**
+ * Gets ringtone from phone.
+ */
+GSM_Error GAMMU_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone);
+/**
+ * Sets ringtone in phone.
+ */
+GSM_Error GAMMU_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength);
+/**
+ * Acquires ringtone informaiton.
+ */
+GSM_Error GAMMU_GetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtonesInfo *Info);
+/**
+ * Deletes user defined ringtones from phone.
+ */
+GSM_Error GAMMU_DeleteUserRingtones(GSM_StateMachine *s);
+/**
+ * Plays tone.
+ */
+GSM_Error GAMMU_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, bool start);
 
 #endif

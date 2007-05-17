@@ -288,4 +288,65 @@ typedef struct {
 	GSM_SubMemoryEntry      Entries[GSM_PHONEBOOK_ENTRIES];
 } GSM_MemoryEntry;
 
+/**
+ * Structure for saving speed dials
+ */
+typedef struct {
+	/**
+	 * Number of speed dial: 2,3..,8,9
+	 */
+	int	     		Location;
+	/**
+	 * ID of phone number used in phonebook entry
+	 */
+	int	     		MemoryNumberID;
+	/**
+	 * Memory, where is saved used phonebook entry
+	 */
+	GSM_MemoryType  	MemoryType;
+	/**
+	 * Location in memory, where is saved used phonebook entry
+	 */
+	int	     		MemoryLocation;
+} GSM_SpeedDial;
+
+/**
+ * Gets memory (phonebooks or calls) status (eg. number of used and
+ * free entries).
+ */
+GSM_Error GAMMU_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *status);
+/**
+ * Reads entry from memory (phonebooks or calls). Which entry should
+ * be read is defined in entry.
+ */
+GSM_Error GAMMU_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
+/**
+ * Reads entry from memory (phonebooks or calls). Which entry should
+ * be read is defined in entry. This can be easily used for reading all entries.
+ */
+GSM_Error GAMMU_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start);
+/**
+ * Sets memory (phonebooks or calls) entry.
+ */
+GSM_Error GAMMU_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
+/**
+ * Deletes memory (phonebooks or calls) entry.
+ */
+GSM_Error GAMMU_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
+/**
+ * Deletes memory (phonebooks or calls) entry.
+ */
+GSM_Error GAMMU_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
+/**
+ * Deletes all memory (phonebooks or calls) entries of specified type.
+ */
+GSM_Error GAMMU_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType);
+/**
+ * Gets speed dial.
+ */
+GSM_Error GAMMU_GetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed);
+/**
+ * Sets speed dial.
+ */
+GSM_Error GAMMU_SetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed);
 #endif

@@ -4,13 +4,6 @@
 #define __gsm_prof_h
 
 
-typedef struct {
-	GSM_Profile_Feat_ID	ID;
-	GSM_Profile_Feat_Value	Value;
-	unsigned char		PhoneID;
-	unsigned char		PhoneValue;
-} GSM_Profile_PhoneTableValue;
-
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

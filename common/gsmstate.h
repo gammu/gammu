@@ -19,6 +19,9 @@
 
 #include <time.h>
 
+#include <gammu-file.h>
+#include <gammu-info.h>
+
 #include "config.h"
 #include "misc/cfg.h"
 
@@ -1569,34 +1572,6 @@ typedef enum {
 	GCT_BLUEOBEX
 } GSM_ConnectionType;
 
-typedef struct {
-	/* Config file (or Registry or...) variables */
-	char			Model[50];	   /**< Model from config file 		*/
-	char			DebugLevel[50];    /**< Debug level			*/
-	char 			*Device;	   /**< Device name from config file 	*/
-	char			*Connection;	   /**< Connection type as string		*/
-	char			*SyncTime;	   /**< Synchronize time on startup? 	*/
-	char			*LockDevice;	   /**< Lock device ? (Unix)		*/
-	char			*DebugFile;        /**< Name of debug file		*/
-	char 			*Localize;	   /**< Name of localisation file		*/
-	char			*StartInfo;	   /**< Display something during start ?  */
-	bool			UseGlobalDebugFile;/**< Should we use global debug file?	*/
-	bool			DefaultModel;
-	bool			DefaultDebugLevel;
-	bool			DefaultDevice;
-	bool			DefaultConnection;
-	bool			DefaultSyncTime;
-	bool			DefaultLockDevice;
-	bool			DefaultDebugFile;
-	bool			DefaultLocalize;
-	bool			DefaultStartInfo;
-	char			TextReminder[32]; /**< Text for reminder calendar entry category in local language */
-	char			TextMeeting[32]; /**< Text for meeting calendar entry category in local language */
-	char			TextCall[32]; /**< Text for call calendar entry category in local language */
-	char			TextBirthday[32]; /**< Text for birthday calendar entry category in local language */
-	char			TextMemo[32]; /**< Text for memo calendar entry category in local language */
-} GSM_Config;
-
 /**
  * Maximum number of concurrent configurations.
  */
@@ -1636,15 +1611,6 @@ GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned char *buffer,
 					 GSM_Phone_RequestID request);
 
 GSM_Error GSM_DispatchMessage		(GSM_StateMachine *s);
-
-/**
- * Reads gammu configuration.
- *
- * @param result Ini file representation
- */
-GSM_Error GSM_FindGammuRC (INI_Section **result);
-
-bool 	  GSM_ReadConfig		(INI_Section *cfg_info, GSM_Config *cfg, int num);
 
 void 	  GSM_DumpMessageLevel2		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);
 void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);

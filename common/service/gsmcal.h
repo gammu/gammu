@@ -44,30 +44,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 
 bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note);
 
-typedef struct {
-	/**
-	 * Monday = 1, Tuesday = 2,...
-	 */
-	int		     StartDay;
-	/**
-	 * 0 = no delete, 1 = after day,...
-	 */
-	int		     AutoDelete;
-} GSM_CalendarSettings;
 
-/**
- * Structure used for returning calendar status.
- */
-typedef struct {
-	/**
-	 * Number of free positions.
-	 */
-	int		     Free;
-	/**
-	 * Number of used positions.
-	 */
-	int		     Used;
-} GSM_CalendarStatus;
 
 void GSM_GetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry);
 void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry);
@@ -85,19 +62,6 @@ typedef enum {
 
 GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version);
 
-/**
- * Status of to do entries.
- */
-typedef struct {
-	/**
-	 * Number of free positions.
-	 */
-	int	     Free;
-	/**
-	 * Number of used positions.
-	 */
-	int	     Used;
-} GSM_ToDoStatus;
 
 /* --------------------------- note ---------------------------------------- */
 
@@ -105,28 +69,6 @@ typedef struct {
 GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *Note);
 
 /* --------------------------- alarm --------------------------------------- */
-
-/**
- * Alarm values.
- */
-typedef struct {
-	/**
-	 * Location where it is stored.
-	 */
-	int	     	Location;
-	/**
-	 * Date and time of alarm.
-	 */
-	GSM_DateTime    DateTime;
-	/**
-	 * Whether it repeats each day.
-	 */
-	bool	    	Repeating;
-	/**
-	 * Text that is shown on display.
-	 */
-	unsigned char	Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
-} GSM_Alarm;
 
 /* --------------------------- calendar & todo ----------------------------- */
 

@@ -39,22 +39,6 @@ void GSM_SMSCounter(int		 	MessageLength,
 		    int		 	*SMSNum,
 		    int		 	*CharsLeft);
 
-#define MAX_MULTI_SMS 10
-
-/**
- * Multiple SMS messages, used for Smart Messaging 3.0/EMS.
- */
-typedef struct {
-	/**
-	 * Sender or recipient number.
-	 */
-	unsigned char   Number;
-	/**
-	 * Array of SMSes.
-	 */
-	GSM_SMSMessage  SMS[MAX_MULTI_SMS];
-} GSM_MultiSMSMessage;
-
 GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage       *SMS,
 				GSM_Coding_Type	 	Coding,
 				char		    	*Buffer,

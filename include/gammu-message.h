@@ -535,6 +535,59 @@ typedef struct {
 bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo	*Info,
 			     GSM_SMSMessage 		*SMS);
 
+#define MAX_MULTI_SMS 10
+
+/**
+ * Multiple SMS messages, used for Smart Messaging 3.0/EMS.
+ */
+typedef struct {
+	/**
+	 * Sender or recipient number.
+	 */
+	unsigned char   Number;
+	/**
+	 * Array of SMSes.
+	 */
+	GSM_SMSMessage  SMS[MAX_MULTI_SMS];
+} GSM_MultiSMSMessage;
+
+/**
+ * Number of possible MMS folders.
+ */
+#define GSM_MAX_MMS_FOLDERS	     	10
+/**
+ * Maximal length of MMS folder name.
+ */
+#define GSM_MAX_MMS_FOLDER_NAME_LEN     20
+
+/**
+ * Information about MMS folder.
+ */
+typedef struct {
+	/**
+	 * Whether it is really inbox.
+	 */
+	bool		    	InboxFolder;
+        /**
+  	 * Name for MMS folder.
+	 */
+        char	    		Name[(GSM_MAX_MMS_FOLDER_NAME_LEN+1)*2];
+} GSM_OneMMSFolder;
+
+/**
+ * List of MMS folders.
+ */
+typedef struct {
+        /**
+	 * Array of structures holding information about each folder.
+	 */
+        GSM_OneMMSFolder	Folder[GSM_MAX_MMS_FOLDERS];
+        /**
+ 	 * Number of MMS folders.
+	 */
+        unsigned char	   	Number;
+} GSM_MMSFolders;
+
 extern GSM_SMSMessageLayout PHONE_SMSSubmit;
 extern GSM_SMSMessageLayout PHONE_SMSDeliver;
 extern GSM_SMSMessageLayout PHONE_SMSStatusReport;
@@ -544,5 +597,84 @@ extern GSM_SMSMessageLayout PHONE_SMSStatusReport;
  */
 GSM_Error PHONE_EncodeSMSFrame		(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear);
 
+/**
+ * Gets SMS Service Center number and SMS settings.
+ */
+GSM_Error GAMMU_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc);
+/**
+ * Sets SMS Service Center number and SMS settings.
+ */
+GSM_Error GAMMU_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc);
+/**
+ * Gets information about SMS memory (read/unread/size of memory for
+ * both SIM and phone).
+ */
+GSM_Error GAMMU_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status);
+/**
+ * Reads SMS message.
+ */
+GSM_Error GAMMU_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms);
+/**
+ * Reads next (or first if start set) SMS message. This might be
+ * faster for some phones than using @ref GetSMS for each message.
+ */
+GSM_Error GAMMU_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start);
+/**
+ * Sets SMS.
+ */
+GSM_Error GAMMU_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
+/**
+ * Adds SMS to specified folder.
+ */
+GSM_Error GAMMU_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
+/**
+ * Deletes SMS.
+ */
+GSM_Error GAMMU_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
+/**
+ * Sends SMS.
+ */
+GSM_Error GAMMU_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
+/**
+ * Sends SMS already saved in phone.
+ */
+GSM_Error GAMMU_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location);
+/**
+ * Configures fast SMS sending.
+ */
+GSM_Error GAMMU_SetFastSMSSending(GSM_StateMachine *s, bool enable);
+/**
+ * Enable/disable notification on incoming SMS.
+ */
+GSM_Error GAMMU_SetIncomingSMS(GSM_StateMachine *s, bool enable);
+/**
+ * Gets network information from phone.
+ */
+GSM_Error GAMMU_SetIncomingCB(GSM_StateMachine *s, bool enable);
+/**
+ * Returns SMS folders information.
+ */
+GSM_Error GAMMU_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders);
+/**
+ * Creates SMS folder.
+ */
+GSM_Error GAMMU_AddSMSFolder(GSM_StateMachine *s, unsigned char *name);
+/**
+ * Deletes SMS folder.
+ */
+GSM_Error GAMMU_DeleteSMSFolder(GSM_StateMachine *s, int ID);
+
+/**
+ * Lists MMS folders.
+ */
+GSM_Error GAMMU_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders);
+/**
+ * Retrieves next part of MMS file information.
+ */
+GSM_Error GAMMU_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start);
+/**
+ * Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).
+ */
+GSM_Error GAMMU_SetIncomingUSSD(GSM_StateMachine *s, bool enable);
 #endif
 

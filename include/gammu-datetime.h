@@ -13,6 +13,7 @@
  */
 
 #include <time.h>
+#include <gammu-statemachine.h>
 
 /**
  * Structure used for saving date and time
@@ -65,4 +66,12 @@ void GetTimeDifference		(unsigned long diff, GSM_DateTime *DT, bool Plus, int mu
 void Fill_GSM_DateTime		(GSM_DateTime *Date, time_t timet);
 bool CheckDate			(GSM_DateTime *date);
 bool CheckTime			(GSM_DateTime *date);
+/**
+ * Reads date and time from phone.
+ */
+GSM_Error GAMMU_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time);
+/**
+ * Sets date and time in phone.
+ */
+GSM_Error GAMMU_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time);
 #endif
