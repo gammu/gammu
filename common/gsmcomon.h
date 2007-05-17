@@ -9,17 +9,9 @@
 #endif
 
 #include <gammu.h>
+#include <gammu-limits.h>
 #include "config.h"
 #include "misc/misc.h"
-
-#define MAX_MANUFACTURER_LENGTH		50
-#define MAX_MODEL_LENGTH		50
-#define MAX_VERSION_LENGTH		100
-#define MAX_VERSION_DATE_LENGTH		50
-#define	MAX_IMEI_LENGTH			20
-#define PHONE_MAXSMSINFOLDER		600
-#define GSM_MAX_NUMBER_LENGTH		50
-#define GSM_MAXCALENDARTODONOTES	550
 
 extern GSM_Error NoneFunction		(void);
 extern GSM_Error NotImplementedFunction	(void);

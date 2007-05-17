@@ -5,55 +5,6 @@
 
 #include "../gsmcomon.h"
 
-/**
- * Enum defines ID for various phone and SIM memories.
- * Phone modules can translate them to values specific for concrete models
- * Two letter codes (excluding VM and SL) are from GSM 07.07
- */
-typedef enum {
-	/**
-	 * Internal memory of the mobile equipment
-	 */
-	MEM_ME=1,
-	/**
-	 * SIM card memory
-	 */
-	MEM_SM,
-	/**
-	 * Own numbers
-	 */
-	MEM_ON,
-	/**
-	 * Dialled calls
-	 */
-	MEM_DC,
-	/**
-	 * Received calls
-	 */
-	MEM_RC,
-	/**
-	 * Missed calls
-	 */
-	MEM_MC,
-	/**
-	 * Combined ME and SIM phonebook
-	 */
-	MEM_MT,
-	/**
-	 * Fixed dial
-	 */
-	MEM_FD,
-
-	/**
-	 * Voice mailbox
-	 */
-	MEM_VM,
-
-	/**
-	 * Sent SMS logs
-	 */
-	MEM_SL
-} GSM_MemoryType;
 
 /* --------------------------- resetting phone settings  ------------------- */
 
@@ -324,14 +275,6 @@ typedef struct {
 
 /* ------------------- radio FM stations ---------------------------------- */
 
-#define	GSM_MAX_FMSTATION_LENGTH 18
-#define	GSM_MAX_FM_STATION 	 20
-
-typedef struct {
-	int			Location;
-        char 			StationName [(GSM_MAX_FMSTATION_LENGTH+1)*2];
-	double			Frequency;
-} GSM_FMStation;
 
 /* ----------------------- filesystem ------------------------------------- */
 
@@ -389,12 +332,6 @@ bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *
 
 /* ----------------------------- GPRS access points ----------------------- */
 
-typedef struct {
-	int		Location;
-	unsigned char 	Name[300];
-	unsigned char 	URL[500];
-	bool		Active;
-} GSM_GPRSAccessPoint;
 
 /* ------------------------------------------------------------------------ */
 
