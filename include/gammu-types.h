@@ -17,12 +17,33 @@
  * define this also
  */
 
-#ifndef bool
+#ifndef __cplusplus
+
+#  ifndef false
+/**
+ * False value for \ref bool.
+ *
+ * \ingroup Types
+ */
+#    define false (0)
+#  endif
+#  ifndef true
+/**
+ * True value for \ref bool.
+ *
+ * \ingroup Types
+ */
+#    define true (1)
+#  endif
+#  ifndef bool
 /**
  * Boolean type.
+ *
+ * \ingroup Types
  */
-#  define bool int
-#endif
+#    define bool int
+#  endif
+#endif /* __cplusplus */
 
 #endif
 

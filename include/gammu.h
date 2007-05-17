@@ -9,9 +9,6 @@
 
 #include <gammu-types.h>
 
-/* Forward declarations */
-struct _GSM_StateMachine;
-
 /**
  * \defgroup StateMachine State machine
  * Generic state machine layer.
@@ -24,6 +21,7 @@ struct _GSM_StateMachine;
 typedef struct _GSM_StateMachine 	GSM_StateMachine;
 
 #include <gammu-error.h>
+#include <gammu-inifile.h>
 
 /**
  * Initiates connection.

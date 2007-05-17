@@ -319,6 +319,13 @@ set (MAN1_PAGES
     docs/user/gammu-config.1    
     )
 
+set (PUBLIC_HEADERS
+    include/gammu-error.h
+    include/gammu-inifile.h
+    include/gammu-inifile.h
+    include/gammu-types.h
+    include/gammu.h
+    )
 set (HEADERS
     common/device/bluetoth/affix.h
     common/device/bluetoth/blue_w32.h
@@ -392,7 +399,6 @@ set (HEADERS
     common/service/gsmmisc.h
     common/gsmstate.h
     common/gsmcomon.h
-    common/gsmerror.h
     ${Gammu_BINARY_DIR}/cfg/config.h
     )
 
@@ -580,7 +586,7 @@ configure_file (templates/mainpage.desc.cmake doxygen/mainpage.desc)
 # Target for generating API documentation
 add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile 
     COMMAND find ${DOXYGEN_OUTPUT}/html -name '*.html' -print0 | xargs -0 sed -i 's@text/html\;charset=iso-8859-1@text/html\;charset=utf-8@'
-    DEPENDS ${LIBRARY_SRC} ${HEADERS}
+    DEPENDS ${PUBLIC_HEADERS}
     COMMENT "Generating API documentation")
 
 add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal 
