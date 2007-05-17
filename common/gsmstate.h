@@ -127,13 +127,6 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #  undef GSM_ENABLE_BLUEGNAPBUS
 #endif
 
-#if defined(GSM_ENABLE_NOKIA3320) || defined(GSM_ENABLE_NOKIA650) || defined(GSM_ENABLE_NOKIA6110) || defined(GSM_ENABLE_NOKIA7110) || defined(GSM_ENABLE_NOKIA9210)
-#  define GSM_ENABLE_NOKIA_DCT3
-#endif
-#if defined(GSM_ENABLE_NOKIA3650) || defined(GSM_ENABLE_NOKIA6510)
-#  define GSM_ENABLE_NOKIA_DCT4
-#endif
-
 #include "protocol/protocol.h"
 #if defined(GSM_ENABLE_FBUS2) || defined(GSM_ENABLE_FBUS2IRDA) || defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_DKU5FBUS2) || defined(GSM_ENABLE_FBUS2PL2303)
 #  include "protocol/nokia/fbus2.h"

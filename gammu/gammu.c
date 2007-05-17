@@ -24,6 +24,7 @@
 #endif
 
 #include <gammu.h>
+#include <gammu-config.h>
 #include "gammu.h"
 #include "smsd/smsdcore.h"
 #include "../common/misc/locales.h"
@@ -184,8 +185,6 @@ void GSM_Init(bool checkerror)
 	if (batch) {
 		if (error == ERR_NONE) { batchConn=true; }
 	}
-
-	Phone=s.Phone.Functions;
 
 	if (!phonedb) return;
 
@@ -731,15 +730,15 @@ static void Identify(int argc, char *argv[])
 		if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Hardware"),buffer);
 	}
 
-	error=GAMMU_GetIMEI(&s);
+	error=GAMMU_GetIMEI(&s, buffer);
 	if (error != ERR_NOTSUPPORTED) {
 		if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
-		if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("IMEI"),s.Phone.Data.IMEI);
+		if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("IMEI"), buffer);
 
 		error=GAMMU_GetOriginalIMEI(&s, buffer);
 		if (error != ERR_NOTSUPPORTED && error != ERR_SECURITYERROR) {
 			if (error != ERR_NOTIMPLEMENTED) Print_Error(error);
-			if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Original IMEI"),buffer);
+			if (error == ERR_NONE) printf(LISTFORMAT "%s\n", _("Original IMEI"), buffer);
 		}
 	}
 
@@ -5026,9 +5025,8 @@ static void Backup(int argc, char *argv[])
 		strcat(Backup.Model,s.Phone.Data.Version);
 	}
 	if (Info.IMEI) {
-		error=GAMMU_GetIMEI(&s);
+		error=GAMMU_GetIMEI(&s, Backup.IMEI);
 		if (error != ERR_NOTSUPPORTED) {
-			strcpy(Backup.IMEI, s.Phone.Data.IMEI);
 			Print_Error(error);
 		} else {
 			Backup.IMEI[0] = 0;

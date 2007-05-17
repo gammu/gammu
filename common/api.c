@@ -1,3 +1,5 @@
+#include <string.h>
+
 #include <gammu.h>
 #include "gsmstate.h"
 
@@ -27,11 +29,15 @@ GSM_Error GAMMU_GetFirmware(GSM_StateMachine *s)
  */
 GSM_Error GAMMU_GetIMEI(GSM_StateMachine *s, char *value)
 {
-	if (value != NULL) {
-		value = s->Phone.Data.IMEI;
-	}
+	GSM_Error err;
+
 	s->Phone.Data.IMEI[0] = 0;
-	return s->Phone.Functions->GetIMEI(s);
+	err = s->Phone.Functions->GetIMEI(s);
+	if (value != NULL) {
+		strcpy(value, s->Phone.Data.IMEI);
+	}
+
+	return err;
 }
 /**
  * Gets date and time from phone.
