@@ -25,8 +25,6 @@ void ATSIEMENSSATNetmon(int argc, char *argv[]);
 void ATSIEMENSNetmonitor(int argc, char *argv[]);
 void ATSIEMENSActivateNetmon(int argc, char *argv[]);
 
-#include "../../../common/gsmstate.h"
-
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

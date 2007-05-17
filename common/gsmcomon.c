@@ -222,6 +222,11 @@ GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
 	return ERR_NONE;
 }
 
+GSM_Error GSM_SetGlobalDebugFile(char *info)
+{
+	return GSM_SetDebugFile(info, &di);
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
