@@ -24,7 +24,7 @@ static GSM_Error SendingSMSStatus;
 void SMSSendingSMSStatus (GSM_StateMachine *s, int status, int mr)
 {
 	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%d\n",
-			GSM_GetConfig(s, -1)->Device, 
+			GAMMU_GetConfig(s, -1)->Device, 
 			status, 
 			mr);
 	TPMR = mr;
@@ -121,7 +121,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	Config->IncludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "gammu", false);
 	if (Config->IncludeNumbers) {
 		GSM_ReadConfig(smsdcfgfile, &smsdcfg, 0);
-		gammucfg = GSM_GetConfig(&s, 0);
+		gammucfg = GAMMU_GetConfig(&s, 0);
 		*gammucfg = smsdcfg;
 		error=GSM_SetDebugFile(gammucfg->DebugFile, &di);
 	}

@@ -824,7 +824,7 @@ GSM_Error GSM_FindGammuRC (INI_Section **result)
 	return error;
 }
 
-GSM_Config *GSM_GetConfig(GSM_StateMachine *s, int num) {
+GSM_Config *GAMMU_GetConfig(GSM_StateMachine *s, int num) {
 	if (num == -1) {
 		return s->CurrentConfig;
 	} else {
