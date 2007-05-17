@@ -175,6 +175,7 @@ void Print_Error(GSM_Error error)
 void GSM_Init(bool checkerror)
 {
 	GSM_File 	PhoneDB;
+	char model[100];
 	unsigned char 	buff[200],ver[200];
 	int	 	pos=0,oldpos=0,i;
 	if (batch && batchConn) return;
@@ -188,10 +189,10 @@ void GSM_Init(bool checkerror)
 
 	if (!phonedb) return;
 
-	error=GAMMU_GetModel(&s);
+	error=GAMMU_GetModel(&s, model);
 	Print_Error(error);
 
-	sprintf(buff,"support/phones/phonedbxml.php?model=%s",s.Phone.Data.Model);
+	sprintf(buff,"support/phones/phonedbxml.php?model=%s", model);
 	PhoneDB.Buffer = NULL;
 	if (!GSM_ReadHTTPFile("www.gammu.org",buff,&PhoneDB)) return;
 
@@ -218,7 +219,7 @@ void GSM_Init(bool checkerror)
 	}
 	free(PhoneDB.Buffer);
 
-	error=GAMMU_GetFirmware(&s);
+	error=GAMMU_GetFirmware(&s, NULL, NULL, NULL);
 	Print_Error(error);
 	if (s.Phone.Data.Version[0] == '0') {
 		i=1;
@@ -700,20 +701,22 @@ static void PlayRingtone(int argc, char *argv[])
 
 static void Identify(int argc, char *argv[])
 {
-	unsigned char buffer[100];
+	char buffer[100];
+	char date[100];
+	double num;
 
 	GSM_Init(true);
 
-	error=GAMMU_GetManufacturer(&s);
+	error=GAMMU_GetManufacturer(&s, buffer);
 	Print_Error(error);
-	printf(LISTFORMAT "%s\n", _("Manufacturer"), s.Phone.Data.Manufacturer);
-	error=GAMMU_GetModel(&s);
+	printf(LISTFORMAT "%s\n", _("Manufacturer"), buffer);
+	error=GAMMU_GetModel(&s, buffer);
 	Print_Error(error);
 	printf(LISTFORMAT "%s (%s)\n", _("Model"),
 			s.Phone.Data.ModelInfo->model,
-			s.Phone.Data.Model);
+			buffer);
 
-	error=GAMMU_GetFirmware(&s);
+	error=GAMMU_GetFirmware(&s, buffer, date, &num);
 	Print_Error(error);
 	printf(LISTFORMAT "%s", _("Firmware"),s.Phone.Data.Version);
 	error=GAMMU_GetPPM(&s, buffer);
@@ -5012,9 +5015,9 @@ static void Backup(int argc, char *argv[])
 		Backup.DateTimeAvailable=true;
 	}
 	if (Info.Model) {
-		error=GAMMU_GetManufacturer(&s);
+		error=GAMMU_GetManufacturer(&s, Backup.Model);
 		Print_Error(error);
-		sprintf(Backup.Model,"%s ",s.Phone.Data.Manufacturer);
+		strcat(Backup.Model," ");
 		strcat(Backup.Model,s.Phone.Data.Model);
 		if (s.Phone.Data.ModelInfo->model[0]!=0) {
 			strcat(Backup.Model," (");
