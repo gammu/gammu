@@ -1,3 +1,9 @@
+/**
+ * \file gammu-types.h
+ * \author Michal Čihař
+ * 
+ * Error codes definitions.
+ */
 #ifndef __gammu_error_h
 #define __gammu_error_h
 
