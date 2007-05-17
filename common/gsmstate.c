@@ -1679,6 +1679,25 @@ GSM_StateMachine *GAMMU_AllocStateMachine(void)
 	return (GSM_StateMachine *)calloc(1, sizeof(GSM_StateMachine));
 }
 
+void GAMMU_FreeStateMachine(GSM_StateMachine *s)
+{
+	int i;
+
+	/* Free allocated memory */
+	for (i = 0; i < MAX_CONFIG_NUM; i++) {
+		free(s->Config[i].Device);
+		free(s->Config[i].Connection);
+		free(s->Config[i].SyncTime);
+		free(s->Config[i].DebugFile);
+		free(s->Config[i].LockDevice);
+		free(s->Config[i].StartInfo);
+	}
+
+	free(s);
+}
+
+
+
 OnePhoneModel *GAMMU_GetModelInfo(GSM_StateMachine *s)
 {
 	return s->Phone.Data.ModelInfo;
