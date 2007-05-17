@@ -26,6 +26,27 @@ typedef struct _INI_Entry INI_Entry;
 typedef struct _INI_Section INI_Section;
 
 /**
+ * Structure used to save value for single key in INI style file
+ * \ingroup INI
+ * \todo This should be probably private.
+ */
+struct _INI_Entry {
+	INI_Entry 		*Next, *Prev;
+	unsigned char 		*EntryName;
+        unsigned char 		*EntryValue;
+};
+
+/**
+ * Structure used to save section in INI style file
+ * \ingroup INI
+ * \todo This should be probably private.
+ */
+struct _INI_Section {
+        INI_Section 		*Next, *Prev;
+        INI_Entry 		*SubEntries;
+        unsigned char		*SectionName;
+};
+/**
  * Free INI data.
  *
  * \ingroup INI

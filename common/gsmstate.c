@@ -824,6 +824,15 @@ GSM_Error GSM_FindGammuRC (INI_Section **result)
 	return error;
 }
 
+GSM_Config *GSM_GetConfig(GSM_StateMachine *s, int num) {
+	if (num == -1) {
+		return s->CurrentConfig;
+	} else {
+		return &(s->Config[num]);
+	}
+}
+
+
 bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 {
 	INI_Section 	*h;
@@ -1625,6 +1634,32 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
 		}
 	}
 }
+
+void GAMMU_SetIncomingCallCallback(GSM_StateMachine *s, IncomingCallCallback callback)
+{
+	s->User.IncomingCall = callback;
+}
+
+void GAMMU_SetIncomingSMSCallback(GSM_StateMachine *s, IncomingSMSCallback callback)
+{
+	s->User.IncomingSMS = callback;
+}
+
+void GAMMU_SetIncomingCBCallback(GSM_StateMachine *s, IncomingCBCallback callback)
+{
+	s->User.IncomingCB = callback;
+}
+
+void GAMMU_SetIncomingUSSDCallback(GSM_StateMachine *s, IncomingUSSDCallback callback)
+{
+	s->User.IncomingUSSD = callback;
+}
+
+void GAMMU_SetSendSMSStatusCallback(GSM_StateMachine *s, SendSMSStatusCallback callback)
+{
+	s->User.SendSMSStatus = callback;
+}
+
 
 #endif
 
