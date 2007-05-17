@@ -7,12 +7,6 @@
 
 #ifdef GSM_ENABLE_BACKUP
 
-GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode);
-GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup);
-
-void GSM_ClearBackup (GSM_Backup *backup);
-void GSM_FreeBackup  (GSM_Backup *backup);
-
 typedef struct {
 	bool UseUnicode;
 
