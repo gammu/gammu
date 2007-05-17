@@ -60,6 +60,10 @@ The configuration file should be placed in ~/.gammurc or /etc/gammurc on
 Unixes. On Windoes you can place gammurc in Application Data folder in
 yout profile or in same directory as is binary being executed from.
 
+For hints about configuring your phone, you can check Gammu Phone
+Database <http://cihar.com/gammu/phonedb/> to see what user users
+experienced.
+
 
 Problems
 ========
