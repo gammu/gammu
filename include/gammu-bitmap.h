@@ -173,4 +173,12 @@ typedef struct {
 	GSM_Bitmap		Bitmap[MAX_MULTI_BITMAP];
 } GSM_MultiBitmap;
 
+/**
+ * Gets bitmap.
+ */
+GSM_Error GAMMU_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
+/**
+ * Sets bitmap.
+ */
+GSM_Error GAMMU_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
 #endif

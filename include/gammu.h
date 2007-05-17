@@ -14,6 +14,10 @@
 #include <gammu-backup.h>
 #include <gammu-config.h>
 #include <gammu-nokia.h>
+#include <gammu-call.h>
+#include <gammu-security.h>
+#include <gammu-keys.h>
+#include <gammu-call.h>
 
 #endif
 /* Editor configuration

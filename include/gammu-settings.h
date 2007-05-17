@@ -28,6 +28,14 @@ typedef struct {
 
 /* ------------------------------------------------------------------------ */
 
+typedef enum {
+	GSM_RESET_PHONESETTINGS = 1,
+	GSM_RESET_USERINTERFACE,
+	GSM_RESET_USERINTERFACE_PHONESETTINGS,
+	GSM_RESET_DEVICE,
+	GSM_RESET_FULLFACTORY
+} GSM_ResetSettingsType;
+
 typedef struct {
 	char			Name[(50+1)*2];
 	char			HomePage[(200+1)*2];
@@ -140,4 +148,102 @@ typedef struct {
 	unsigned char 	URL[500];
 	bool		Active;
 } GSM_GPRSAccessPoint;
+
+typedef enum {
+	GSM_Date_DDMMYYYY = 1,
+	GSM_Date_MMDDYYYY,
+	GSM_Date_YYYYMMDD,
+	GSM_Date_DDMMMYY,
+	GSM_Date_MMDDYY,
+	GSM_Date_DDMMYY,
+	GSM_Date_YYMMDD,
+	GSM_Date_OFF
+} GSM_DateFormat;
+
+typedef struct {
+	unsigned char 	DateSeparator;
+	GSM_DateFormat	DateFormat;
+	bool		AMPMTime;
+} GSM_Locale;
+
+
+typedef struct {
+	GSM_Profile_Feat_ID	ID;
+	GSM_Profile_Feat_Value	Value;
+	unsigned char		PhoneID;
+	unsigned char		PhoneValue;
+} GSM_Profile_PhoneTableValue;
+/**
+ * Gets locale from phone.
+ */
+GSM_Error GAMMU_GetLocale(GSM_StateMachine *s, GSM_Locale *locale);
+/**
+ * Sets locale of phone.
+ */
+GSM_Error GAMMU_SetLocale(GSM_StateMachine *s, GSM_Locale *locale);
+
+/**
+ * Acquires SyncML settings.
+ */
+GSM_Error GAMMU_GetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings *settings);
+/**
+ * Changes SyncML settings.
+ */
+GSM_Error GAMMU_SetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings *settings);
+/**
+ * Acquires chat/presence settings.
+ */
+GSM_Error GAMMU_GetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *settings);
+/**
+ * Changes chat/presence settings.
+ */
+GSM_Error GAMMU_SetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *settings);
+/**
+ * Acquires MMS settings.
+ */
+GSM_Error GAMMU_GetMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
+/**
+ * Changes MMS settings.
+ */
+GSM_Error GAMMU_SetMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
+/**
+ * Enables network auto login.
+ */
+GSM_Error GAMMU_SetAutoNetworkLogin(GSM_StateMachine *s);
+/**
+ * Performs phone reset.
+ */
+GSM_Error GAMMU_Reset(GSM_StateMachine *s, bool hard);
+/**
+ * Resets phone settings.
+ */
+GSM_Error GAMMU_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type);
+/**
+ * Reads profile.
+ */
+GSM_Error GAMMU_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile);
+/**
+ * Updates profile.
+ */
+GSM_Error GAMMU_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile);
+/**
+ * Reads FM station.
+ */
+GSM_Error GAMMU_GetFMStation(GSM_StateMachine *s, GSM_FMStation *FMStation);
+/**
+ * Sets FM station.
+ */
+GSM_Error GAMMU_SetFMStation(GSM_StateMachine *s, GSM_FMStation *FMStation);
+/**
+ * Clears defined FM stations.
+ */
+GSM_Error GAMMU_ClearFMStations(GSM_StateMachine *s);
+/**
+ * Gets GPRS access point.
+ */
+GSM_Error GAMMU_GetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoint *point);
+/**
+ * Sets GPRS access point.
+ */
+GSM_Error GAMMU_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoint *point);
 #endif

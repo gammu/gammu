@@ -296,7 +296,7 @@ apidoc:
 	@echo "Generating API documentation in gammu-doc directory"
 	@$(DOXYGEN) cfg/doxygen/Doxyfile
 
-TAGFILESFIND = find gammu common -name '*.[ch]' -o -name '*.cpp'
+TAGFILESFIND = find gammu common include -name '*.[ch]' -o -name '*.cpp'
 
 tags: $(shell $(TAGFILESFIND))
 	@echo Generating tags file

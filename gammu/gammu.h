@@ -1,9 +1,5 @@
 /* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
 
-#include "../common/config.h"
-#include "../common/misc/misc.h"
-#include "../common/gsmstate.h"
-
 typedef enum {
 	H_Call=1,
  	H_SMS,
@@ -58,7 +54,6 @@ void	GSM_Init		(bool checkerror);
 void	GSM_Terminate		(void);
 
 extern	GSM_StateMachine	s;
-extern	GSM_Phone_Functions	*Phone;
 extern	GSM_Error		error;
 
 extern volatile bool 		gshutdown;

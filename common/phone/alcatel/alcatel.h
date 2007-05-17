@@ -30,6 +30,9 @@
 #ifndef alcatel_h
 #define alcatel_h
 
+#include <gammu-limits.h>
+#include <gammu-category.h>
+
 #include "../../gsmcomon.h"
 #include "../../service/gsmpbk.h"
 

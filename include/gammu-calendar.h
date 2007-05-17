@@ -15,6 +15,42 @@
 #define GSM_CALENDAR_ENTRIES	    	16
 #define MAX_CALENDAR_TEXT_LENGTH	256 /* In 6310 max. 256 chars */
 
+typedef struct {
+	/**
+	 * Monday = 1, Tuesday = 2,...
+	 */
+	int		     StartDay;
+	/**
+	 * 0 = no delete, 1 = after day,...
+	 */
+	int		     AutoDelete;
+} GSM_CalendarSettings;
+/**
+ * Status of to do entries.
+ */
+typedef struct {
+	/**
+	 * Number of free positions.
+	 */
+	int	     Free;
+	/**
+	 * Number of used positions.
+	 */
+	int	     Used;
+} GSM_ToDoStatus;
+/**
+ * Structure used for returning calendar status.
+ */
+typedef struct {
+	/**
+	 * Number of free positions.
+	 */
+	int		     Free;
+	/**
+	 * Number of used positions.
+	 */
+	int		     Used;
+} GSM_CalendarStatus;
 /**
  * Enum defines types of calendar notes
  */
@@ -408,4 +444,130 @@ typedef struct {
 	int	     Location;
 	char	     Text[3000*2];
 } GSM_NoteEntry;
+
+/**
+ * Alarm values.
+ */
+typedef struct {
+	/**
+	 * Location where it is stored.
+	 */
+	int	     	Location;
+	/**
+	 * Date and time of alarm.
+	 */
+	GSM_DateTime    DateTime;
+	/**
+	 * Whether it repeats each day.
+	 */
+	bool	    	Repeating;
+	/**
+	 * Text that is shown on display.
+	 */
+	unsigned char	Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
+} GSM_Alarm;
+
+/**
+ * Reads alarm set in phone.
+ */
+GSM_Error GAMMU_GetAlarm(GSM_StateMachine *s, GSM_Alarm	*alarm);
+/**
+ * Sets alarm in phone.
+ */
+GSM_Error GAMMU_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm);
+
+/**
+ * Gets status of ToDos (count of used entries).
+ */
+GSM_Error GAMMU_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status);
+/**
+ * Reads ToDo from phone.
+ */
+GSM_Error GAMMU_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
+/**
+ * Reads ToDo from phone.
+ */
+GSM_Error GAMMU_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start);
+/**
+ * Sets ToDo in phone.
+ */
+GSM_Error GAMMU_SetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
+/**
+ * Adds ToDo in phone.
+ */
+GSM_Error GAMMU_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
+/**
+ * Deletes ToDo entry in phone.
+ */
+GSM_Error GAMMU_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
+/**
+ * Deletes all todo entries in phone.
+ */
+GSM_Error GAMMU_DeleteAllToDo(GSM_StateMachine *s);
+/**
+ * Retrieves calendar status (number of used entries).
+ */
+GSM_Error GAMMU_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status);
+/**
+ * Retrieves calendar entry.
+ */
+GSM_Error GAMMU_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+/**
+ * Retrieves calendar entry. This is useful for continuous reading of all
+ * calendar entries.
+ */
+GSM_Error GAMMU_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start);
+/**
+ * Sets calendar entry
+ */
+GSM_Error GAMMU_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+/**
+ * Adds calendar entry.
+ */
+GSM_Error GAMMU_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+/**
+ * Deletes calendar entry.
+ */
+GSM_Error GAMMU_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+/**
+ * Deletes all calendar entries.
+ */
+GSM_Error GAMMU_DeleteAllCalendar(GSM_StateMachine *s);
+/**
+ * Reads calendar settings.
+ */
+GSM_Error GAMMU_GetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *settings);
+/**
+ * Sets calendar settings.
+ */
+GSM_Error GAMMU_SetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *settings);
+/**
+ * Retrieves notes status (number of used entries).
+ */
+GSM_Error GAMMU_GetNotesStatus(GSM_StateMachine *s, GSM_ToDoStatus *status);
+/**
+ * Retrieves notes entry.
+ */
+GSM_Error GAMMU_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Note);
+/**
+ * Retrieves note entry. This is useful for continuous reading of all
+ * notes entries.
+ */
+GSM_Error GAMMU_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start);
+/**
+ * Sets note entry
+ */
+GSM_Error GAMMU_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Note);
+/**
+ * Adds note entry.
+ */
+GSM_Error GAMMU_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Note);
+/**
+ * Deletes note entry.
+ */
+GSM_Error GAMMU_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *Note);
+/**
+ * Deletes all notes entries.
+ */
+GSM_Error GAMMU_DeleteAllNotes(GSM_StateMachine *s);
 #endif

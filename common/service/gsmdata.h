@@ -72,42 +72,6 @@ GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo2 *info);
 
 /* ---------------------- MMS folders ------------------------------------- */
 
-/**
- * Number of possible MMS folders.
- */
-#define GSM_MAX_MMS_FOLDERS	     	10
-/**
- * Maximal length of MMS folder name.
- */
-#define GSM_MAX_MMS_FOLDER_NAME_LEN     20
-
-/**
- * Information about MMS folder.
- */
-typedef struct {
-	/**
-	 * Whether it is really inbox.
-	 */
-	bool		    	InboxFolder;
-        /**
-  	 * Name for MMS folder.
-	 */
-        char	    		Name[(GSM_MAX_MMS_FOLDER_NAME_LEN+1)*2];
-} GSM_OneMMSFolder;
-
-/**
- * List of MMS folders.
- */
-typedef struct {
-        /**
-	 * Array of structures holding information about each folder.
-	 */
-        GSM_OneMMSFolder	Folder[GSM_MAX_MMS_FOLDERS];
-        /**
- 	 * Number of MMS folders.
-	 */
-        unsigned char	   	Number;
-} GSM_MMSFolders;
 
 /* ------------------------------------------------------------------------ */
 
