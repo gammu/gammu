@@ -140,7 +140,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	_findclose( hFile );
 	error = ERR_NONE;
 #else
-#if defined HAVE_DIRENT_H && defined HAVE_SCANDIR & defined HAVE_ALPHASORT
+#if defined HAVE_DIRENT_H && defined HAVE_SCANDIR && defined HAVE_ALPHASORT
   	struct 				dirent **namelist = NULL;
   	int 				l, m ,n;
 
