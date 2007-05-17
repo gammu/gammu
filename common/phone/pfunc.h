@@ -22,21 +22,12 @@
 
 #include "../service/sms/gsmsms.h"
 
-extern GSM_SMSMessageLayout PHONE_SMSSubmit;
-extern GSM_SMSMessageLayout PHONE_SMSDeliver;
-extern GSM_SMSMessageLayout PHONE_SMSStatusReport;
-
 GSM_Error PHONE_GetSMSFolders		(GSM_StateMachine *s, GSM_SMSFolders *folders);
 
 /**
  * Parses string firmware number into numeric.
  */
 void 	  GSM_CreateFirmwareNumber	(GSM_StateMachine *s);
-
-/**
- * Encodes SMS frame according to layout.
- */
-GSM_Error PHONE_EncodeSMSFrame		(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear);
 
 /**
  * Generic function for terminating phone connection.
