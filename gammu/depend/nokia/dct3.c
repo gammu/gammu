@@ -1,16 +1,14 @@
 /* (c) 2002-2004 by Marcin Wiacek */
 /* MSID by Walek */
 
-#include "../../../common/gsmstate.h"
+#include <gammu.h>
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 
 #include <string.h>
 #include <signal.h>
 
-#include "../../../common/misc/coding/coding.h"
-#include "../../../common/gsmcomon.h"
-#include "../../../common/service/gsmpbk.h"
+#include "../../../common/gsmstate.h"
 #include "../../../common/phone/nokia/dct3/dct3func.h"
 #include "../../../common/phone/pfunc.h"
 #include "../../gammu.h"
