@@ -784,6 +784,31 @@ typedef struct {
 GSM_Error PHONE_EncodeSMSFrame		(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear);
 
 /**
+ * Encodes multi part SMS from "readable" format.
+ */
+GSM_Error GSM_EncodeMultiPartSMS (GSM_MultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS);
+
+/**
+ * Decodes multi part SMS to "readable" format.
+ */
+bool GSM_DecodeMultiPartSMS (GSM_MultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS, bool ems);
+
+/**
+ * Clears @ref GSM_MultiPartSMSInfo to default values.
+ */
+void GSM_ClearMultiPartSMSInfo (GSM_MultiPartSMSInfo *Info);
+
+/**
+ * Frees any allocated structures inside @ref GSM_MultiPartSMSInfo.
+ */
+void GSM_FreeMultiPartSMSInfo (GSM_MultiPartSMSInfo *Info);
+
+/**
+ * Links SMS messages according to IDs.
+ */
+GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT, bool ems);
+
+/**
  * Gets SMS Service Center number and SMS settings.
  */
 GSM_Error GAMMU_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc);

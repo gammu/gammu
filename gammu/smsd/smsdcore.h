@@ -1,6 +1,6 @@
 /* (c) 2002-2004 by Marcin Wiacek and Joergen Thomsen */
 
-#include "../../cfg/config.h"
+#include <gammu.h>
 
 #ifdef HAVE_MYSQL_MYSQL_H
 #ifdef WIN32
@@ -19,9 +19,6 @@
 #  include <postgresql/libpq-fe.h>
 #endif
 #endif
-
-#include "../../common/service/sms/gsmsms.h"
-#include "../../common/service/sms/gsmmulti.h"
 
 #define MAX_RETRIES 1
 
@@ -91,6 +88,14 @@ typedef struct {
 __attribute__((format(printf, 1, 2)))
 #endif
 void WriteSMSDLog(char *format, ...);
+
+extern GSM_Error SMSD_NoneFunction		(void);
+extern GSM_Error SMSD_NotImplementedFunction	(void);
+extern GSM_Error SMSD_NotSupportedFunction	(void);
+
+#define NONEFUNCTION 	(void *) SMSD_NoneFunction
+#define NOTIMPLEMENTED 	(void *) SMSD_NotImplementedFunction
+#define NOTSUPPORTED 	(void *) SMSD_NotSupportedFunction
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:

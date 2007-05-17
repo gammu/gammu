@@ -6,6 +6,8 @@
 #include <stdio.h>
 #include <errno.h>
 #include <time.h>
+#include <stdlib.h>
+
 #ifdef WIN32
 #  include <io.h>
 #endif
@@ -15,6 +17,10 @@
 
 #include "smsdcore.h"
 #include "../../common/misc/locales.h"
+/* For debugging output */
+#include "../../common/misc/misc.h"
+/* mywstrstr */
+#include "../../common/misc/coding/coding.h"
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
 static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config)

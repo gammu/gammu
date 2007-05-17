@@ -60,30 +60,6 @@ void GSM_Find_Free_Used_SMS2(GSM_Coding_Type Coding,GSM_SMSMessage SMS, int *Use
 
 unsigned char GSM_MakeSMSIDFromTime(void);
 
-/**
- * Encodes multi part SMS from "readable" format.
- */
-GSM_Error GSM_EncodeMultiPartSMS (GSM_MultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS);
-
-/**
- * Decodes multi part SMS to "readable" format.
- */
-bool GSM_DecodeMultiPartSMS (GSM_MultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS, bool ems);
-
-/**
- * Clears @ref GSM_MultiPartSMSInfo to default values.
- */
-void GSM_ClearMultiPartSMSInfo (GSM_MultiPartSMSInfo *Info);
-
-/**
- * Frees any allocated structures inside @ref GSM_MultiPartSMSInfo.
- */
-void GSM_FreeMultiPartSMSInfo (GSM_MultiPartSMSInfo *Info);
-
-/**
- * Links SMS messages according to IDs.
- */
-GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT, bool ems);
 
 #if defined(_MSC_VER) && defined(__cplusplus)
     }

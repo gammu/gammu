@@ -12,6 +12,8 @@
 #  include <wctype.h>
 #endif
 
+#include <gammu-unicode.h>
+
 #include "../misc.h"
 
 #ifndef HAVE_ISWSPACE
@@ -30,16 +32,9 @@ int 		towlower			(wchar_t c);
 int		EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
 int		DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);
 
-size_t		UnicodeLength			(const unsigned char *str);
-unsigned char	*DecodeUnicodeString		(const unsigned char *src);
-unsigned char   *DecodeUnicodeConsole		(const unsigned char *src);
-void		DecodeUnicode			(const unsigned char *src, unsigned char *dest);
-void		EncodeUnicode			(unsigned char *dest, const char *src, int len);
 
 void 		CopyUnicodeString		(unsigned char *Dest, unsigned char *Source);
 void 		ReverseUnicodeString		(unsigned char *String);
-
-void 		ReadUnicodeFile			(unsigned char *Dest, unsigned char *Source);
 
 void 		DecodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, int len);
 void 		EncodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, int len);

@@ -4,6 +4,7 @@
 #include <signal.h>
 #include <stdarg.h>
 #include <time.h>
+#include <unistd.h>
 
 #include "../../common/misc/coding/coding.h"
 #include "../../common/misc/locales.h"
@@ -123,7 +124,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 		GSM_ReadConfig(smsdcfgfile, &smsdcfg, 0);
 		gammucfg = GAMMU_GetConfig(&s, 0);
 		*gammucfg = smsdcfg;
-		error=GSM_SetDebugFile(gammucfg->DebugFile, &di);
+		error=GSM_SetGlobalDebugFile(gammucfg->DebugFile);
 	}
 
 	Config->PINCode=INI_GetValue(smsdcfgfile, "smsd", "PIN", false);
@@ -569,8 +570,6 @@ void SMSDaemon(int argc, char *argv[])
 					lastreset = time(NULL);
 					my_sleep(5000);
 				}
-				/* Marcin Wiacek: FIXME. To check */
-//				di 			= s.di;
 				break;
 			case ERR_DEVICEOPENERROR:
 				GSM_Terminate_SMSD(_("Can't open device (%i)"), error, true, -1);
@@ -635,6 +634,20 @@ GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *s
 	return Service->CreateOutboxSMS(sms,&Config);
 }
 
+GSM_Error SMSD_NoneFunction(void)
+{
+	return ERR_NONE;
+}
+
+GSM_Error SMSD_NotImplementedFunction(void)
+{
+	return ERR_NOTIMPLEMENTED;
+}
+
+GSM_Error SMSD_NotSupportedFunction(void)
+{
+	return ERR_NOTSUPPORTED;
+}
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
