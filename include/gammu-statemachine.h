@@ -133,7 +133,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num);
  *
  * \ingroup StateMachine
  */
-GSM_Config *GSM_GetConfig(GSM_StateMachine *s, int num);
+GSM_Config *GAMMU_GetConfig(GSM_StateMachine *s, int num);
 
 /**
  * Allocates new clean state machine structure by malloc.
