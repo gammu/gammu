@@ -19,12 +19,6 @@ GSM_Error 	GSM_EncodeURLFile		(unsigned char *Buffer, int *Length, GSM_WAPBookma
 
 /* ------------------------------ MMS Indicator ---------------------------- */
 
-typedef struct {
-	char		Address[500];
-	char		Title[200];
-	char		Sender[200];
-} GSM_MMSIndicator;
-
 void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, int *Length, GSM_MMSIndicator Indicator);
 
 void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, int *Length, char *Text, char *URL);
