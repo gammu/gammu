@@ -1660,6 +1660,9 @@ void GAMMU_SetSendSMSStatusCallback(GSM_StateMachine *s, SendSMSStatusCallback c
 	s->User.SendSMSStatus = callback;
 }
 
+GSM_StateMachine *GAMMU_AllocStateMachine(void) {
+	return (GSM_StateMachine *)calloc(1, sizeof(GSM_StateMachine));
+}
 
 #endif
 

@@ -134,6 +134,15 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num);
  * \ingroup StateMachine
  */
 GSM_Config *GSM_GetConfig(GSM_StateMachine *s, int num);
+
+/**
+ * Allocates new clean state machine structure by malloc.
+ *
+ * \return Pointer to state machien structure, can be freed using free.
+ *
+ * \ingroup StateMachine
+ */
+GSM_StateMachine *GAMMU_AllocStateMachine(void);
 #endif
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
