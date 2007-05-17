@@ -3,6 +3,8 @@
 #include <string.h>
 #include <ctype.h>
 
+#include <gammu-ringtone.h>
+
 #include "../gsmstate.h"
 #include "../service/sms/gsmsms.h"
 #include "../misc/coding/coding.h"

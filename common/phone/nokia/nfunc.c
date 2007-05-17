@@ -6,6 +6,8 @@
 #include <ctype.h>
 #include <time.h>
 
+#include <gammu-nokia.h>
+
 #include "../../gsmstate.h"
 #include "../../misc/coding/coding.h"
 #include "../../misc/locales.h"

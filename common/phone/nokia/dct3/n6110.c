@@ -20,6 +20,8 @@
 
 #include <string.h>
 
+#include <gammu-nokia.h>
+
 #include "../../../../cfg/config.h"
 #include "../../../misc/coding/coding.h"
 #include "../../../misc/locales.h"
