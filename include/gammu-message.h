@@ -535,5 +535,14 @@ typedef struct {
 bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo	*Info,
 			     GSM_SMSMessage 		*SMS);
 
+extern GSM_SMSMessageLayout PHONE_SMSSubmit;
+extern GSM_SMSMessageLayout PHONE_SMSDeliver;
+extern GSM_SMSMessageLayout PHONE_SMSStatusReport;
+
+/**
+ * Encodes SMS frame according to layout.
+ */
+GSM_Error PHONE_EncodeSMSFrame		(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear);
+
 #endif
 
