@@ -20,7 +20,6 @@ typedef enum {
 void GSM_TweakInternationalNumber(unsigned char *Number, const GSM_NumberType numType);
 
 void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, int *Number, int *Group);
-unsigned char *GSM_PhonebookGetEntryName (GSM_MemoryEntry *entry);
 
 void      GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool header, GSM_VCardVersion Version);
 GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version);

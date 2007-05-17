@@ -21,6 +21,7 @@
 
 #include <gammu-types.h>
 #include <gammu-datetime.h>
+#include <gammu-misc.h>
 
 #ifdef WIN32
 #  ifdef __BORLANDC__
@@ -41,8 +42,6 @@
 /* ------------------------------------------------------------------------- */
 
 #define MAX_LINES 50
-
-int GetLine(FILE *File, char *Line, int count);
 
 typedef struct {
 	int numbers[MAX_LINES*2];

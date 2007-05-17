@@ -3,6 +3,7 @@
 #ifndef __gsm_ring_h
 #define __gsm_ring_h
 
+#include <gammu-ringtone.h>
 /* --------------- Smart Messaging Specification 2.0 & 3.0 ----------------- */
 
 #define SM_CommandEnd_CommandEnd 		0x00
@@ -29,7 +30,6 @@
 
 
 GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone);
-GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone);
 
 void saveott(FILE *file, GSM_Ringtone *ringtone);
 void savemid(FILE *file, GSM_Ringtone *ringtone);
@@ -43,7 +43,6 @@ unsigned char 	GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *packag
 
 GSM_Error	GSM_DecodeNokiaRTTLRingtone	(GSM_Ringtone *ringtone, unsigned char *package, int maxlength);
 
-GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_RingtoneFormat	Format);
 
 int GSM_RTTLGetTempo		(int Beats);
 int GSM_RingNoteGetFrequency	(GSM_RingNote Note);

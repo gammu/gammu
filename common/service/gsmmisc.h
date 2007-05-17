@@ -41,7 +41,6 @@ GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR, ch
 
 void GSM_IdentifyFileFormat(GSM_File *File);
 
-bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *file);
 
 /* ----------------------------- GPRS access points ----------------------- */
 

@@ -349,4 +349,6 @@ GSM_Error GAMMU_GetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed);
  * Sets speed dial.
  */
 GSM_Error GAMMU_SetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed);
+
+unsigned char *GSM_PhonebookGetEntryName (GSM_MemoryEntry *entry);
 #endif

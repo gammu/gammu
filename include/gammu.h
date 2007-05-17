@@ -26,6 +26,7 @@
 #include <gammu-ringtone.h>
 #include <gammu-info.h>
 #include <gammu-unicode.h>
+#include <gammu-misc.h>
 
 #endif
 /* Editor configuration

@@ -7,6 +7,7 @@
 
 
 #include <gammu-calendar.h>
+#include <gammu-bitmap.h>
 
 typedef enum {
 	GSM_NokiaStartupLogo = 1,	/*size 84*48*/
@@ -32,10 +33,7 @@ void GSM_ResizeBitmap		(GSM_Bitmap 		*dest, GSM_Bitmap *src, int width, int heig
 void GSM_ReverseBitmap		(GSM_Bitmap 		*Bitmap);
 void GSM_GetMaxBitmapWidthHeight(GSM_Bitmap_Types 	Type, unsigned char *width, unsigned char *height);
 int  GSM_GetBitmapSize		(GSM_Bitmap 		*bmp);
-void GSM_PrintBitmap		(FILE 			*file, GSM_Bitmap *bitmap);
 
-GSM_Error GSM_SaveBitmapFile	(char *FileName, GSM_MultiBitmap *bitmap);
-GSM_Error GSM_ReadBitmapFile	(char *FileName, GSM_MultiBitmap *bitmap);
 
 GSM_Error BMP2Bitmap            (unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
 GSM_Error Bitmap2BMP            (unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);

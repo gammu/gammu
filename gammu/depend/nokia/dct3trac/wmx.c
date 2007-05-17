@@ -415,17 +415,17 @@ void DCT3SetDebug(int argc, char *argv[])
 	/* We Need DCT3 */
 	if (CheckDCT3Only()!=ERR_NONE) return;
 
-	error=DCT3_EnableSecurity (&s, 0x01);
+	error=DCT3_EnableSecurity (s, 0x01);
 	Print_Error(error);
 
-	s.User.UserReplyFunctions=UserReplyFunctionsX;
+	s->User.UserReplyFunctions=UserReplyFunctionsX;
 
-	//error=GSM_WaitFor (&s, reqTest, sizeof(reqTest), 0x40, 1, ID_DebugSwitch);
+	//error=GSM_WaitFor (s, reqTest, sizeof(reqTest), 0x40, 1, ID_DebugSwitch);
 
-	//error=GSM_WaitFor (&s, reqTest2, sizeof(reqTest2), 0xD1, 4, ID_RPC);
+	//error=GSM_WaitFor (s, reqTest2, sizeof(reqTest2), 0xD1, 4, ID_RPC);
 
 	/* Enable Debug Mode */
-	error=GSM_WaitFor (&s, reqEnable, sizeof(reqEnable), 0x40, 4, ID_DebugSwitch);
+	error=GSM_WaitFor (s, reqEnable, sizeof(reqEnable), 0x40, 4, ID_DebugSwitch);
 
 	Print_Error(error);
 	signal(SIGINT, interrupt);
@@ -435,13 +435,13 @@ void DCT3SetDebug(int argc, char *argv[])
 	/*
 	while(x<100) {
 		//printf(": %02x\n",x);
-		s.Phone.Data.RequestID	= ID_DebugTrace;
-		res = s.Device.Functions->ReadDevice(&s, buff, 255);
+		s->Phone.Data.RequestID	= ID_DebugTrace;
+		res = s->Device.Functions->ReadDevice(s, buff, 255);
 		if(res) {
 			printf("%02x\n",x);
 			for(y=0;y<res;y++) {
 				//printf("%02x\n",x,buff[y]&0xFF);
-				s.Protocol.Functions->StateMachine(&s,buff[y]);
+				s->Protocol.Functions->StateMachine(s,buff[y]);
 				x++;
 			}
 		}
@@ -451,12 +451,12 @@ void DCT3SetDebug(int argc, char *argv[])
 
 	/* todo: wait and dump for some time */
 	while (!gshutdown) {
-		GSM_ReadDevice(&s,true);
+		GSM_ReadDevice(s,true);
 		my_sleep(10);
 	}
 	signal(SIGINT, SIG_DFL);
 	printf("Disabling\n");
-	error=GSM_WaitFor (&s, reqDisable, sizeof(reqDisable), 0x40, 10, ID_DebugSwitch);
+	error=GSM_WaitFor (s, reqDisable, sizeof(reqDisable), 0x40, 10, ID_DebugSwitch);
 	Print_Error(error);
 
 	GSMDecoder_free(gsmdec);
