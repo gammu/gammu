@@ -214,19 +214,19 @@ typedef struct {
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetManufacturer(GSM_StateMachine *s);
+GSM_Error GAMMU_GetManufacturer(GSM_StateMachine *s, char *value);
 /**
  * Reads model from phone.
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetModel(GSM_StateMachine *s);
+GSM_Error GAMMU_GetModel(GSM_StateMachine *s, char *value);
 /**
  * Reads firmware information from phone.
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetFirmware(GSM_StateMachine *s);
+GSM_Error GAMMU_GetFirmware(GSM_StateMachine *s, char *value, char *date, double *num);
 /**
  * Reads IMEI/serial number from phone.
  *

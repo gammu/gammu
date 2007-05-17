@@ -13,30 +13,54 @@
 /**
  * Reads manufacturer from phone.
  */
-GSM_Error GAMMU_GetManufacturer(GSM_StateMachine *s)
+GSM_Error GAMMU_GetManufacturer(GSM_StateMachine *s, char *value)
 {
 	GSM_Error err;
+
+	s->Phone.Data.Manufacturer[0] = 0;
 	err = s->Phone.Functions->GetManufacturer(s);
+	if (value != NULL) {
+		strcpy(value, s->Phone.Data.Manufacturer);
+	}
+
 	PRINT_LOG_ERROR(err);
 	return err;
 }
 /**
  * Reads model from phone.
  */
-GSM_Error GAMMU_GetModel(GSM_StateMachine *s)
+GSM_Error GAMMU_GetModel(GSM_StateMachine *s, char *value)
 {
 	GSM_Error err;
+
+	s->Phone.Data.Model[0] = 0;
 	err = s->Phone.Functions->GetModel(s);
+	if (value != NULL) {
+		strcpy(value, s->Phone.Data.Model);
+	}
+
 	PRINT_LOG_ERROR(err);
 	return err;
 }
 /**
  * Reads firmware information from phone.
  */
-GSM_Error GAMMU_GetFirmware(GSM_StateMachine *s)
+GSM_Error GAMMU_GetFirmware(GSM_StateMachine *s, char *value, char *date, double *num)
 {
 	GSM_Error err;
+
+	s->Phone.Data.Version[0] = 0;
 	err = s->Phone.Functions->GetFirmware(s);
+	if (value != NULL) {
+		strcpy(value, s->Phone.Data.Version);
+	}
+	if (date != NULL) {
+		strcpy(date, s->Phone.Data.VerDate);
+	}
+	if (num != NULL) {
+		*num = s->Phone.Data.VerNum;
+	}
+
 	PRINT_LOG_ERROR(err);
 	return err;
 }

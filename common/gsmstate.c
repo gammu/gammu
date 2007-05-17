@@ -824,18 +824,26 @@ GSM_Error GSM_FindGammuRC (INI_Section **result)
 	return error;
 }
 
-GSM_Config *GAMMU_GetConfig(GSM_StateMachine *s, int num) {
+GSM_Config *GAMMU_GetConfig(GSM_StateMachine *s, int num) 
+{
 	if (num == -1) {
 		return s->CurrentConfig;
 	} else {
-		if (num >= MAX_CONFIG_NUM) return NULL;
+		if (num > MAX_CONFIG_NUM) return NULL;
 		return &(s->Config[num]);
 	}
 }
 
 
-int GAMMU_GetConfigNum(const GSM_StateMachine *s) {
+int GAMMU_GetConfigNum(const GSM_StateMachine *s) 
+{
 	return s->ConfigNum;
+}
+
+void GAMMU_SetConfigNum(GSM_StateMachine *s, int sections)
+{
+	if (sections > MAX_CONFIG_NUM) return;
+	s->ConfigNum = sections;
 }
 
 

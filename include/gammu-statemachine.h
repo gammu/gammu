@@ -146,6 +146,16 @@ GSM_Config *GAMMU_GetConfig(GSM_StateMachine *s, int num);
 int GAMMU_GetConfigNum(const GSM_StateMachine *s);
 
 /**
+ * Gets number of active gammu configurations.
+ *
+ * \param s State machine data
+ * \param sections Number of sections.
+ *
+ * \ingroup StateMachine
+ */
+void GAMMU_SetConfigNum(GSM_StateMachine *s, int sections);
+
+/**
  * Allocates new clean state machine structure by malloc.
  *
  * \return Pointer to state machien structure, can be freed using free.
