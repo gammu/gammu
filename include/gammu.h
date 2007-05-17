@@ -7,11 +7,9 @@
 #ifndef __gammu_gammu_h
 #define __gammu_gammu_h
 
-/* FIXME: This should be moved! */
-#ifndef bool
-#  define bool	char
-#endif
+#include <gammu-types.h>
 
+/* Forward declarations */
 struct _GSM_StateMachine;
 
 /**
