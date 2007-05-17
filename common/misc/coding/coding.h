@@ -33,7 +33,6 @@ int		EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);
 int		DecodeWithUnicodeAlphabet	(wchar_t value, unsigned char *dest);
 
 
-void 		CopyUnicodeString		(unsigned char *Dest, unsigned char *Source);
 void 		ReverseUnicodeString		(unsigned char *String);
 
 void 		DecodeUnicodeSpecialNOKIAChars	(unsigned char *dest, const unsigned char *src, int len);
