@@ -548,7 +548,7 @@ void SMSDaemon(int argc, char *argv[])
 			error=GSM_InitConnection(&s,2);
 			switch (error) {
 			case ERR_NONE:
-				GAMMU_SetIncomingSMSCallback(&s, SMSSendingSMSStatus);
+				GAMMU_SetSendSMSStatusCallback(&s, SMSSendingSMSStatus);
 				if (errors == 255) {
 					errors = 0;
 					if (GAMMU_GetIMEI(&s, NULL) != ERR_NONE) {
