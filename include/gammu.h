@@ -18,6 +18,7 @@
 #include <gammu-security.h>
 #include <gammu-keys.h>
 #include <gammu-call.h>
+#include <gammu-calendar.h>
 
 #endif
 /* Editor configuration
