@@ -1,5 +1,5 @@
 /**
- * \file gammu-types.h
+ * \file gammu-error.h
  * \author Michal Čihař
  * 
  * Error codes definitions.
