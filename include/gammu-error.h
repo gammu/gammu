@@ -16,14 +16,14 @@
  * \ingroup Errors
  */
 typedef enum {
-/* 1*/	ERR_NONE=1,
+/* 1*/	ERR_NONE=1, /**< No error */
 	ERR_DEVICEOPENERROR, /**< Error during opening device */
 	ERR_DEVICELOCKED, /**< Device locked */
-	ERR_DEVICENOTEXIST, 
-	ERR_DEVICEBUSY, 
-	ERR_DEVICENOPERMISSION, 
-	ERR_DEVICENODRIVER, 
-	ERR_DEVICENOTWORK, 
+	ERR_DEVICENOTEXIST, /**< Device does not exits */
+	ERR_DEVICEBUSY, /**< Device is busy */
+	ERR_DEVICENOPERMISSION, /**< No permissions to open device */
+	ERR_DEVICENODRIVER, /**< No driver installed for a device */
+	ERR_DEVICENOTWORK, /**< Device doesn't seem to be working */
 	ERR_DEVICEDTRRTSERROR, /**< Error during setting DTR/RTS in device */
 /*10*/	ERR_DEVICECHANGESPEEDERROR, /**< Error during changing speed in device */
 	ERR_DEVICEWRITEERROR, /**< Error during writing device */
@@ -42,7 +42,7 @@ typedef enum {
 	ERR_INVALIDLOCATION, /**< Too high or too low location... */
 	ERR_NOTIMPLEMENTED, /**< Function not implemented */
 	ERR_FULL, /**< Memory is full */
-	ERR_UNKNOWN, 
+	ERR_UNKNOWN, /**< Unknown response from phone */
 	ERR_CANTOPENFILE, /**< Error during opening file */
 	ERR_MOREMEMORY, /**< More memory required */
 /*30*/	ERR_PERMISSION, /**< No permission */
@@ -55,8 +55,8 @@ typedef enum {
 	ERR_BUG, /**< Found bug in implementation or phone */
     	ERR_CANCELED, /**< Action was canceled by user */
 	ERR_NEEDANOTHERANSWER, /**< Inside Gammu: phone module need to send another answer frame */
-/*40*/	ERR_OTHERCONNECTIONREQUIRED, 
-	ERR_WRONGCRC, 
+/*40*/	ERR_OTHERCONNECTIONREQUIRED,  /**< You need other connectin for this operation. */
+	ERR_WRONGCRC, /**< Wrong CRC */
 	ERR_INVALIDDATETIME, /**< Invalid date/time */
 	ERR_MEMORY, /**< Phone memory error, maybe it is read only */
 	ERR_INVALIDDATA, /**< Invalid data given to phone */
@@ -65,10 +65,10 @@ typedef enum {
 	ERR_SHOULDBEFOLDER, /**< You have to give folder (not file) name */
 	ERR_SHOULDBEFILE, /**< You have to give file (not folder) name */
 	ERR_NOSIM, /**< Can not access SIM card */
-	ERR_GNAPPLETWRONG,
-	ERR_FOLDERPART,
-	ERR_FOLDERNOTEMPTY,
-	ERR_DATACONVERTED
+	ERR_GNAPPLETWRONG, /**< Invalid gnapplet version */
+	ERR_FOLDERPART, /**< Only part of folders listed */
+	ERR_FOLDERNOTEMPTY, /**< Folder is not empty */
+	ERR_DATACONVERTED /**< Data were converted */
 } GSM_Error;
 #endif
 
