@@ -230,9 +230,11 @@ GSM_Error GAMMU_GetFirmware(GSM_StateMachine *s);
 /**
  * Reads IMEI/serial number from phone.
  *
+ * \param value Pointer where to store IMEI, NULL to ignore.
+ *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetIMEI(GSM_StateMachine *s);
+GSM_Error GAMMU_GetIMEI(GSM_StateMachine *s, char *value);
 /**
  * Gets date and time from phone.
  *

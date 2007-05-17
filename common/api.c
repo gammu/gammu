@@ -25,8 +25,12 @@ GSM_Error GAMMU_GetFirmware(GSM_StateMachine *s)
 /**
  * Reads IMEI/serial number from phone.
  */
-GSM_Error GAMMU_GetIMEI(GSM_StateMachine *s)
+GSM_Error GAMMU_GetIMEI(GSM_StateMachine *s, char *value)
 {
+	if (value != NULL) {
+		value = s->Phone.Data.IMEI;
+	}
+	s->Phone.Data.IMEI[0] = 0;
 	return s->Phone.Functions->GetIMEI(s);
 }
 /**

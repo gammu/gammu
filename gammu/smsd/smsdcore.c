@@ -21,9 +21,12 @@ FILE 		 *smsd_log_file = NULL;
 static int	 TPMR;
 static GSM_Error SendingSMSStatus;
 
-static void SMSSendingSMSStatus (GSM_StateMachine *s, int status, int mr)
+void SMSSendingSMSStatus (GSM_StateMachine *s, int status, int mr)
 {
-	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%d\n",s->CurrentConfig->Device, status, mr);
+	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%d\n",
+			GSM_GetConfig(s, -1)->Device, 
+			status, 
+			mr);
 	TPMR = mr;
 	if (status==0) {
 		SendingSMSStatus = ERR_NONE;
@@ -86,6 +89,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 {
 	INI_Section 		*smsdcfgfile = NULL;
 	GSM_Config 		smsdcfg;
+	GSM_Config 		*gammucfg;
 	unsigned char		*str;
 	static unsigned char	emptyPath[1] = "\0";
 	GSM_Error		error;
@@ -117,8 +121,9 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	Config->IncludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "gammu", false);
 	if (Config->IncludeNumbers) {
 		GSM_ReadConfig(smsdcfgfile, &smsdcfg, 0);
-		memcpy(&s.Config,&smsdcfg,sizeof(GSM_Config));
-		error=GSM_SetDebugFile(s.Config[0].DebugFile, &di);
+		gammucfg = GSM_GetConfig(&s, 0);
+		*gammucfg = smsdcfg;
+		error=GSM_SetDebugFile(gammucfg->DebugFile, &di);
 	}
 
 	Config->PINCode=INI_GetValue(smsdcfgfile, "smsd", "PIN", false);
@@ -453,7 +458,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			error=GAMMU_SendSMS(&s, &sms.SMS[i]);
 			if (error!=ERR_NONE) {
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, -1);
-				WriteSMSDLog(_("Error sending SMS %s (%i): %s"), Config->SMSID, error,print_error(error,s.di.df));
+				WriteSMSDLog(_("Error sending SMS %s (%i): %s"), Config->SMSID, error,print_error(error,NULL));
 				return false;
 			}
 			Service->RefreshPhoneStatus(Config);
@@ -477,7 +482,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			}
 			if (SendingSMSStatus != ERR_NONE) {
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, TPMR);
-				WriteSMSDLog(_("Error getting send status of %s (%i): %s"), Config->SMSID, SendingSMSStatus,print_error(SendingSMSStatus,s.di.df));
+				WriteSMSDLog(_("Error getting send status of %s (%i): %s"), Config->SMSID, SendingSMSStatus,print_error(SendingSMSStatus,NULL));
 				return false;
 			}
 			error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, TPMR);
@@ -543,12 +548,10 @@ void SMSDaemon(int argc, char *argv[])
 			error=GSM_InitConnection(&s,2);
 			switch (error) {
 			case ERR_NONE:
-				s.User.SendSMSStatus 	= SMSSendingSMSStatus;
-				Phone			= s.Phone.Functions;
+				GAMMU_SetIncomingSMSCallback(&s, SMSSendingSMSStatus);
 				if (errors == 255) {
 					errors = 0;
-					s.Phone.Data.IMEI[0] = 0;
-					if (!(GAMMU_GetIMEI(&s))) {
+					if (GAMMU_GetIMEI(&s, NULL) != ERR_NONE) {
 						errors++;
 					} else {
 						error = Service->InitAfterConnect(&Config);

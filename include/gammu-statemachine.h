@@ -2,7 +2,7 @@
  * \file gammu-statemachine.h
  * \author Michal Čihař
  * 
- * Top level include for applications.
+ * State machine data.
  */
 #ifndef __gammu_statemachine_h
 #define __gammu_statemachine_h
@@ -108,7 +108,7 @@ bool GSM_IsConnected(GSM_StateMachine *s);
  *
  * \ingroup StateMachine
  */
-GSM_Error GSM_FindGammuRC (INI_Section **result);
+GSM_Error GSM_FindGammuRC(INI_Section **result);
 
 
 /**
@@ -121,8 +121,19 @@ GSM_Error GSM_FindGammuRC (INI_Section **result);
  *
  * \ingroup StateMachine
  */
-bool 	  GSM_ReadConfig		(INI_Section *cfg_info, GSM_Config *cfg, int num);
+bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num);
 
+
+/**
+ * Gets gammu configuration from state machine.
+ *
+ * \param s State machine data
+ * \param num Number of section to read, -1 for currently used.
+ * \return Pointer to configuration.
+ *
+ * \ingroup StateMachine
+ */
+GSM_Config *GSM_GetConfig(GSM_StateMachine *s, int num);
 #endif
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
