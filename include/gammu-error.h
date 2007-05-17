@@ -8,12 +8,12 @@
 #define __gammu_error_h
 
 /**
- * \defgroup Errors Error handling
+ * \defgroup Error Error handling
  * Error handling and manipulation.
  */
 /**
  * Error types.
- * \ingroup Errors
+ * \ingroup Error
  */
 typedef enum {
 /* 1*/	ERR_NONE=1, /**< No error */

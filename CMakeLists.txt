@@ -320,12 +320,22 @@ set (MAN1_PAGES
     )
 
 set (PUBLIC_HEADERS
-    include/gammu-error.h
-    include/gammu-inifile.h
-    include/gammu-inifile.h
-    include/gammu-types.h
     include/gammu.h
+    include/gammu-memory.h
+    include/gammu-datetime.h
+    include/gammu-limits.h
+    include/gammu-types.h
+    include/gammu-backup.h
+    include/gammu-settings.h
+    include/gammu-error.h
+    include/gammu-wap.h
+    include/gammu-bitmap.h
+    include/gammu-message.h
+    include/gammu-inifile.h
+    include/gammu-calendar.h
+    include/gammu-ringtone.h
     )
+
 set (HEADERS
     common/device/bluetoth/affix.h
     common/device/bluetoth/blue_w32.h
