@@ -72,7 +72,6 @@ int 		DecodeBASE64			(const unsigned char *Input, unsigned char *Output, int Len
 
 /* ----------------------------- HexBin ------------------------------------ */
 void		DecodeHexBin			(unsigned char *dest, const unsigned char *src, int len);
-void		EncodeHexBin			(unsigned char *dest, const unsigned char *src, int len);
 
 /* ----------------------------- HexUnicode -------------------------------- */
 void		DecodeHexUnicode		(unsigned char *dest, const unsigned char *src, int len);
