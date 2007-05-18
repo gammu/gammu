@@ -2145,7 +2145,7 @@ static void GetUSSD(int argc, char *argv[])
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
-	s.User.IncomingUSSD = IncomingUSSD2;
+	GSM_SetIncomingUSSDCallback(s, IncomingUSSD2);
 
 	error=GSM_SetIncomingUSSD(s,true);
 	Print_Error(error);
@@ -2713,7 +2713,7 @@ static void GetEachMMS(int argc, char *argv[])
 		}
 		fprintf(stderr, "%c",13);
 
-		if (IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_SERIES40_30)) {
+		if (GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_SERIES40_30)) {
 			memcpy(File.Buffer,File.Buffer+176,File.Used-176);
 			File.Used-=176;
 			File.Buffer = realloc(File.Buffer,File.Used);
@@ -3182,7 +3182,7 @@ static void GetBitmap(int argc, char *argv[])
 		printf("\n");
 		if (MultiBitmap.Bitmap[0].DefaultRingtone) {
 			printf(LISTFORMAT "%s\n", _("Ringtone"), _("default"));
-		} else if (IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_6230iCALLER)) {
+		} else if (GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_6230iCALLER)) {
 			printf(LISTFORMAT "%i\n", _("Ringtone"),MultiBitmap.Bitmap[0].RingtoneID);
 		} else if (MultiBitmap.Bitmap[0].FileSystemRingtone) {
 			sprintf(buffer,"%i",MultiBitmap.Bitmap[0].RingtoneID);
@@ -5708,12 +5708,12 @@ static void Restore(int argc, char *argv[])
 				used++;
 				dbgprintf("Location %i\n",Pbk.Location);
 				if (Pbk.EntriesNum != 0) error=GSM_SetMemory(s, &Pbk);
-				if (error == ERR_PERMISSION && IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_6230iCALLER)) {
+				if (error == ERR_PERMISSION && GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_6230iCALLER)) {
 					error=GSM_DeleteMemory(s, &Pbk);
 					Print_Error(error);
 					error=GSM_SetMemory(s, &Pbk);
 				}
-				if (error == ERR_MEMORY && IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_6230iCALLER)) {
+				if (error == ERR_MEMORY && GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_6230iCALLER)) {
 					printf("\n%s\n", _("Error - try to (1) add enough number of/restore caller groups and (2) use --restore again"));
 					GSM_TerminateConnection(s);
 					exit (-1);
@@ -6230,7 +6230,7 @@ static void AddNew(int argc, char *argv[])
 						Pbk.MemoryType 	= MEM_ME;
 						Pbk.Location 	= j;
 						error=GSM_SetMemory(s, &Pbk);
-						if (error == ERR_PERMISSION && IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_6230iCALLER)) {
+						if (error == ERR_PERMISSION && GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_6230iCALLER)) {
 							error=GSM_DeleteMemory(s, &Pbk);
 							Print_Error(error);
 							error=GSM_SetMemory(s, &Pbk);
@@ -8078,7 +8078,7 @@ static void GetFileSystem(int argc, char *argv[])
 	    	if (error != ERR_FOLDERPART) Print_Error(error);
 
 		if (!Files.Folder) {
-			if (IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_FILES2)) {
+			if (GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_FILES2)) {
 				if (DecodeUnicodeString(Files.ID_FullName)[0] == 'a') {
 					MemoryCard = true;
 					usedcard+=Files.Used;
@@ -9033,14 +9033,14 @@ static void NokiaAddFile(int argc, char *argv[])
 			GSM_Terminate();
 			exit(-1);
 		}
-	} else if (IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_FILES2)) {
+	} else if (GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_FILES2)) {
 		i = 0;
 		while (Folder[i].parameter[0] != 0) {
 			if ((Folder[i].folder[0] == 'a' || Folder[i].folder[0] == 'd') &&
 			    Folder[i].level[0] == 0x00 &&
 			    strcasecmp(argv[2],Folder[i].parameter) == 0) {
 				if (strstr(Folder[i].folder,"d:/predefjava/")!= NULL &&
-				    !IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_SERIES40_30)) {
+				    !GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_SERIES40_30)) {
 					i++;
 					continue;
 				}

@@ -57,7 +57,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 	}
 	memset(string,0,sizeof(string));
 	found = false;
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
  		for (i = 0; i < entry->EntriesNum; i++) {
 			if (entry->Entries[i].EntryType == PBK_Text_LastName ||
 			    entry->Entries[i].EntryType == PBK_Text_FirstName) {
@@ -200,9 +200,9 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 			continue;
 		}
 		if (entry->Entries[i].EntryType == PBK_Caller_Group) {
-			if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) {
+			if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) {
 				entry->Entries[i].AddError = ERR_NONE;
-				if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
+				if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
 					string[0] = 0;
 					string[1] = 0;
 					count += N71_65_PackPBKBlock(s, N6510_PBK_GROUP2_ID, 2, block++, string, req + count);
@@ -216,7 +216,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 			continue;
 		}
 		if (entry->Entries[i].EntryType == PBK_RingtoneID) {
-			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) {
+			if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) {
 				entry->Entries[i].AddError = ERR_NONE;
 				string[0] = 0x00;
 				string[1] = 0x00;
@@ -228,7 +228,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 			continue;
 		}
 		if (entry->Entries[i].EntryType == PBK_PictureID) {
-			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKIMG)) {
+			if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKIMG)) {
 				entry->Entries[i].AddError = ERR_NONE;
 				string[0] = 0x00;
 				string[1] = 0x00;
@@ -246,7 +246,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 			continue;
 		}
 		/* Maybe we should use separate feature for these new entries... */
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 			type = 0;
 			if (entry->Entries[i].EntryType == PBK_Text_FormalName) type = S4030_PBK_FORMALNAME;
 			if (entry->Entries[i].EntryType == PBK_Text_JobTitle) type = S4030_PBK_JOBTITLE;
@@ -270,7 +270,7 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 			}
 		}
 		if (entry->Entries[i].EntryType == PBK_Text_UserID) {
-			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKUSER)) {
+			if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKUSER)) {
 				entry->Entries[i].AddError = ERR_NONE;
 				string[0] = UnicodeLength(entry->Entries[i].Text)*2;
 				CopyUnicodeString(string+1,entry->Entries[i].Text);
@@ -309,7 +309,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		bitmap->DefaultRingtone 	= true;
 		bitmap->FileSystemPicture 	= false;
 	}
-	if (entry->MemoryType==MEM6510_CG2 && IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
+	if (entry->MemoryType==MEM6510_CG2 && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
 		bitmap->DefaultName 		= false;
 		bitmap->DefaultBitmap 		= true;
 		bitmap->DefaultRingtone 	= true;
@@ -1205,7 +1205,7 @@ GSM_Error DCT3DCT4_SendDTMF(GSM_StateMachine *s, char *DTMFSequence)
 	unsigned char req[100] = {N6110_FRAME_HEADER, 0x50,
 				  0x00}; 	/* Length */
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NODTMF)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NODTMF)) return ERR_NOTSUPPORTED;
 	if (strlen(DTMFSequence) > 100 - 5) return ERR_NOTSUPPORTED;
 
   	req[4] = strlen(DTMFSequence);
@@ -1290,7 +1290,7 @@ GSM_Error DCT3DCT4_EnableWAPFunctions(GSM_StateMachine *s)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x00};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_NOWAP)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_NOWAP)) return ERR_NOTSUPPORTED;
 
 	smprintf(s, "Enabling WAP\n");
 	return GSM_WaitFor (s, req, 4, 0x3f, 4, ID_EnableConnectFunc);
@@ -1306,7 +1306,7 @@ GSM_Error DCT3DCT4_DisableConnectionFunctions(GSM_StateMachine *s)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x03};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_NOWAP)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_NOWAP)) return ERR_NOTSUPPORTED;
 
 	smprintf(s, "Disabling connection settings\n");
 	return GSM_WaitFor (s, req, 4, 0x3f, 4, ID_DisableConnectFunc);
@@ -1694,7 +1694,7 @@ GSM_Error NOKIA_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
 
 GSM_Error NOKIA_SetIncomingCall(GSM_StateMachine *s, bool enable)
 {
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_NOCALLINFO)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo,F_NOCALLINFO)) return ERR_NOTSUPPORTED;
 
 	s->Phone.Data.EnableIncomingCall = enable;
 #ifdef DEBUG
@@ -1888,8 +1888,8 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
  	NoteType = N71_65_FindCalendarType(Note->Type, s->Phone.Data.ModelInfo);
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62) ||
-	    IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL65)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62) ||
+	    GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL65)) {
 		switch(NoteType) {
 		case GSM_CAL_MEETING 	: req[18] = 0x01; length = 25; break;
 		case GSM_CAL_CALL    	: req[18] = 0x02; length = 27; break;
@@ -1925,9 +1925,9 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 		/* 6230 and probably other new models handle it differently
                    we don't make difference from 1980 year
                  */
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL35) ||
-		    IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL65) ||
-		    IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL35) ||
+		    GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL65) ||
+		    GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
 			Date.Year = 1980;
 		}
 		Date.Hour = 22; Date.Minute = 58; Date.Second = 58;
@@ -1979,7 +1979,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 		/* Sometimes we have difference in minutes */
 		if (NoteType == GSM_CAL_MEETING) diff = diff / 60;
-		if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL35)) {
+		if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL35)) {
 			if (NoteType == GSM_CAL_MEMO || NoteType == GSM_CAL_CALL) {
 				diff = diff / 60;
 			}
@@ -2507,16 +2507,16 @@ GSM_CalendarNoteType N71_65_FindCalendarType(GSM_CalendarNoteType Type, OnePhone
 	case GSM_CAL_BIRTHDAY:
 		return GSM_CAL_BIRTHDAY;
 	case GSM_CAL_MEETING:
-		if (IsPhoneFeatureAvailable(model, F_CAL35)) {
+		if (GSM_IsPhoneFeatureAvailable(model, F_CAL35)) {
 			return GSM_CAL_REMINDER;
 		} else return GSM_CAL_MEETING;
 	case GSM_CAL_MEMO:
-		if (IsPhoneFeatureAvailable(model, F_CAL35)) {
+		if (GSM_IsPhoneFeatureAvailable(model, F_CAL35)) {
 			return GSM_CAL_REMINDER;
 		} else return GSM_CAL_MEMO;
 	case GSM_CAL_REMINDER:
-		if (IsPhoneFeatureAvailable(model, F_CAL62) ||
-		    IsPhoneFeatureAvailable(model, F_CAL65)) {
+		if (GSM_IsPhoneFeatureAvailable(model, F_CAL62) ||
+		    GSM_IsPhoneFeatureAvailable(model, F_CAL65)) {
 			return GSM_CAL_CALL;
 		} else return GSM_CAL_REMINDER;
 	default:

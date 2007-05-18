@@ -535,8 +535,8 @@ static GSM_Error N6510_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folder
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x12, 0x00, 0x00};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return N6510_GetFilesystemSMSFolders(s,folders);
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return N6510_GetFilesystemSMSFolders(s,folders);
 		return N6510_GetSMSFoldersS40_30(s,folders);
 	}
 
@@ -570,7 +570,7 @@ static GSM_Error N6510_GetSMSFolderStatus(GSM_StateMachine *s, int folderid)
 			       0x00,		/* Folder ID		*/
 			       0x0f, 0x55, 0x55, 0x55};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 		switch (folderid) {
 			case 0x01: req[5] = 0x01; 			break; /* SIM 		*/
 			default	 : req[5] = folderid; req[4] = 0x02; 	break; /* ME folders	*/
@@ -712,7 +712,7 @@ static GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 		case 0x00:
 		case 0x01:
 		case 0x02:
-			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+			if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 				Data->GetSMSMessage->Number=0;
 				i = 14;
 				while (true) {
@@ -797,7 +797,7 @@ static GSM_Error N6510_PrivGetSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 
 	N6510_GetSMSLocation(s, &sms->SMS[0], &folderid, &location);
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 		switch (folderid) {
 			case 0x01: req[5] = 0x01; 			 break; /* SIM 		*/
 			default	 : req[5] = folderid; req[4] = 0x02; 	 break; /* ME folders	*/
@@ -829,7 +829,7 @@ static GSM_Error N6510_PrivGetSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 			N6510_SetSMSLocation(s, &sms->SMS[i], folderid, location);
 			sms->SMS[i].Folder 	= folderid;
 
-			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+			if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 				sms->SMS[i].InboxFolder = true;
 				if (folderid > 2) sms->SMS[i].InboxFolder = false;
 				sms->SMS[i].Memory = MEM_ME;
@@ -857,8 +857,8 @@ static GSM_Error N6510_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 	bool			found = false;
 	int			back_folder, back_location;
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return ERR_NOTSUPPORTED;
 	}
 
 	/* Clear SMS structure of any possible junk */
@@ -927,8 +927,8 @@ static GSM_Error N6510_GetNextSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 
 static GSM_Error N6510_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
 {
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return N6510_GetNextFilesystemSMS(s,sms,start);
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return N6510_GetNextFilesystemSMS(s,sms,start);
 	}
 
 	return N6510_GetNextSMSMessageBitmap(s, sms, start, NULL);
@@ -1021,8 +1021,8 @@ static GSM_Error N6510_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		smprintf(s, "Getting welcome note\n");
 		return GSM_WaitFor (s, reqNote, 6, 0x7A, 4, ID_GetBitmap);
 	case GSM_CallerGroupLogo:
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) return ERR_NOTSUPPORTED;
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK35)) return ERR_NOTSUPPORTED;
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
 			pbk.MemoryType	= MEM6510_CG2;
 			pbk.Location	= Bitmap->Location;
 			smprintf(s, "Getting caller group logo method 2\n");
@@ -1156,7 +1156,7 @@ static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	req[12] = entry->Location / 256;
 	req[13] = entry->Location % 256;
 
-	count = count + N71_65_EncodePhonebookFrame(s, req+22, entry, &blocks, true, IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_VOICETAGS));
+	count = count + N71_65_EncodePhonebookFrame(s, req+22, entry, &blocks, true, GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_VOICETAGS));
 	req[21] = blocks;
 
 	smprintf(s, "Writing phonebook entry\n");
@@ -1180,7 +1180,7 @@ static GSM_Error N6510_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 		0x00, 0x00,		/* location */
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
 		return ERR_NOTSUPPORTED;
 	}
 
@@ -1193,7 +1193,7 @@ static GSM_Error N6510_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 
 	/* Ringtone */
 	if (!bitmap->DefaultRingtone) {
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKTONEGAL)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKTONEGAL)) {
 		} else {
 			string[0] = 0x00;
 			string[1] = 0x00;
@@ -1515,11 +1515,11 @@ static GSM_Error N6510_EnableConnectionFunctions(GSM_StateMachine *s, N6510_Conn
 	unsigned char 	req3[] = {N6110_FRAME_HEADER, 0x00, 0x03};
 	unsigned char 	req4[] = {N6110_FRAME_HEADER, 0x00, 0x04};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iWAP)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iWAP)) return ERR_NOTSUPPORTED;
 
-	if (Type == N6510_MMS_SETTINGS    && IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOMMS)) return ERR_NOTSUPPORTED;
-	if (Type == N6510_CHAT_SETTINGS   && !IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CHAT)) return ERR_NOTSUPPORTED;
-	if (Type == N6510_SYNCML_SETTINGS && !IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SYNCML)) return ERR_NOTSUPPORTED;
+	if (Type == N6510_MMS_SETTINGS    && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOMMS)) return ERR_NOTSUPPORTED;
+	if (Type == N6510_CHAT_SETTINGS   && !GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CHAT)) return ERR_NOTSUPPORTED;
+	if (Type == N6510_SYNCML_SETTINGS && !GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SYNCML)) return ERR_NOTSUPPORTED;
 
 	error=DCT3DCT4_DisableConnectionFunctions(s);
 	if (error!=ERR_NONE) return error;
@@ -1724,7 +1724,7 @@ static GSM_Error N6510_ReplyGetConnectionSettings(GSM_Protocol_Message msg, GSM_
 		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer, Data->WAPSettings->Settings[num].Password,true);
 		smprintf(s, "Password: \"%s\"\n",DecodeUnicodeString(Data->WAPSettings->Settings[num].Password));
 
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_WAPMMSPROXY)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_WAPMMSPROXY)) {
 			if (msg.Buffer[tmp] == 0x00 && msg.Buffer[tmp+1] == 0x00) tmp = tmp+2;
 
 			memcpy(buff,msg.Buffer+tmp+10,msg.Buffer[tmp+4]);
@@ -1786,7 +1786,7 @@ static GSM_Error N6510_GetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 	unsigned char 		req[] = {N6110_FRAME_HEADER, 0x15,
 				 	 0x00};		/* Location */
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
 	if (!strcmp(s->Phone.Data.ModelInfo->model,"6020")) return ERR_NOTSUPPORTED;
 
 	error = N6510_EnableConnectionFunctions(s, Type);
@@ -2068,7 +2068,7 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 	} else {
 		req[pos] = 0x02;
 	}
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_WAPMMSPROXY)) req[pos] += 2;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_WAPMMSPROXY)) req[pos] += 2;
 	pos++;
  	pos += pad;
 
@@ -2125,7 +2125,7 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 	} else {
 		length = 7;
 	}
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_WAPMMSPROXY)) length+=2;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_WAPMMSPROXY)) length+=2;
 	length += 7;
 	req[pos++] = length / 256;
 	req[pos++] = length % 256;
@@ -2143,7 +2143,7 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 		pos += 10;
 	}
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_WAPMMSPROXY)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_WAPMMSPROXY)) {
 		req[pos++] = 0x00;
 		req[pos++] = 0x00;
 
@@ -2303,7 +2303,7 @@ static GSM_Error N6510_ReplyGetOriginalIMEI(GSM_Protocol_Message msg, GSM_StateM
 
 static GSM_Error N6510_GetOriginalIMEI(GSM_StateMachine *s, char *value)
 {
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
 
 	return NOKIA_GetPhoneString(s,"\x00\x07\x02\x01\x00\x01",6,0x42,value,ID_GetOriginalIMEI,14);
 }
@@ -2349,7 +2349,7 @@ static GSM_Error N6510_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *st
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x08, 0x00, 0x00};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
 
 	s->Phone.Data.SMSStatus=status;
 	smprintf(s, "Getting SMS status\n");
@@ -2395,13 +2395,13 @@ static GSM_Error N6510_DeleteSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms
 					 0x00, 0x02, 	/* Location */
 					 0x0F, 0x55};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return ERR_NOTSUPPORTED;
 	}
 
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 		switch (folderid) {
 			case 0x01: req[5] = 0x01; 			 break; /* SIM 		*/
 			default	 : req[5] = folderid; req[4] = 0x02; 	 break; /* ME folders	*/
@@ -2548,7 +2548,7 @@ static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 
 		smprintf(s, "Folder info: %i %i\n",msg.Buffer[5],msg.Buffer[8]);
 		Data->SaveSMSMessage->Memory = MEM_ME;
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 			folder = msg.Buffer[8];
 		} else {
 			folder = msg.Buffer[8] + 1;
@@ -2589,13 +2589,13 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 		0x02,			/* Folder   		*/
 		0x00, 0x01};		/* Location 		*/
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return ERR_NOTSUPPORTED;
 	}
 
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
 	if (folderid == 0x99) return ERR_INVALIDLOCATION;
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 		switch (folderid) {
 			case 0x02: req[4] = 0x02; req[5] = 0x02; break; //inbox
 			//sms saved to sent items make problems later during reading
@@ -2612,7 +2612,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 	req[6]=location / 256;
 	req[7]=location % 256;
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 		switch (sms->PDU) {
 		case SMS_Status_Report: //this is SMS submit with delivery report request
 		case SMS_Submit:
@@ -2670,7 +2670,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 	sms->Folder = 0;
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 		switch (folderid) {
 			case 0x03: NameReq[4] = 0x02; NameReq[5] = 0x02; break; //sent items
 			case 0x02: NameReq[4] = 0x02; NameReq[5] = 0x03; break; //inbox
@@ -2774,7 +2774,7 @@ static GSM_Error N6510_GetManufactureMonth(GSM_StateMachine *s, char *value)
 	unsigned char req[6] = {0x00, 0x05, 0x02, 0x01, 0x00, 0x02};
 //	unsigned char req[6] = {0x00, 0x03, 0x04, 0x0B, 0x01, 0x00};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
 
 	s->Phone.Data.PhoneString=value;
 	smprintf(s, "Getting manufacture month\n");
@@ -3171,7 +3171,7 @@ static GSM_Error N6510_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 	int 		i, length = 7;
 	GSM_Error	error;
 
-	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES)) return ERR_NOTSUPPORTED;
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES)) return ERR_NOTSUPPORTED;
 
 //	if (!strcmp(s->Phone.Data.ModelInfo->model,"3510")) {
 //		if (s->Phone.Data.VerNum>3.37) return ERR_NOTSUPPORTED;
@@ -3254,7 +3254,7 @@ static GSM_Error N6510_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 				    0x06,		/* Number of blocks */
 				    0x03};
 
-	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES)) return ERR_NOTSUPPORTED;
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES)) return ERR_NOTSUPPORTED;
 
 	if (Profile->Location>5) return ERR_INVALIDLOCATION;
 
@@ -3412,7 +3412,7 @@ static GSM_Error N6510_GetFMStatus(GSM_StateMachine *s)
 {
  	unsigned char req[7] = {N6110_FRAME_HEADER, 0x0d, 0x00, 0x00, 0x01};
 
- 	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return ERR_NOTSUPPORTED;
+ 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return ERR_NOTSUPPORTED;
  	return GSM_WaitFor (s, req, 7, 0x3E, 2, ID_GetFMStation);
 }
 
@@ -3448,7 +3448,7 @@ static GSM_Error N6510_GetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
  					  0x00, 		// location
 	    				  0x00,0x01};
 
-  	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return ERR_NOTSUPPORTED;
+  	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return ERR_NOTSUPPORTED;
    	if (FMStation->Location > GSM_MAX_FM_STATION) return ERR_INVALIDLOCATION;
 
   	s->Phone.Data.FMStation = FMStation;
@@ -3480,7 +3480,7 @@ static GSM_Error N6510_ClearFMStations (GSM_StateMachine *s)
 {
 	unsigned char req[7] = {N6110_FRAME_HEADER, 0x03,0x0f,0x00,0x01};
 
-	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return ERR_NOTSUPPORTED;
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return ERR_NOTSUPPORTED;
 
 	smprintf(s, "Cleaning FM Stations\n");
 	return GSM_WaitFor (s, req, 7, 0x3E, 2, ID_SetFMStation);
@@ -3505,7 +3505,7 @@ static GSM_Error N6510_SetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
  				0x00, 			// freqLo
  				0x01};
 
- 	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return ERR_NOTSUPPORTED;
+ 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return ERR_NOTSUPPORTED;
 
  	s->Phone.Data.FMStation = FMStation;
  	location = FMStation->Location-1;
@@ -3595,7 +3595,7 @@ static GSM_Error N6510_EnableGPRSAccessPoint(GSM_StateMachine *s)
 		N7110_FRAME_HEADER, 0x05, 0x00, 0x00, 0x00, 0x2C, 0x00,
 		0x04, 0x00, 0x00, 0x00, 0x02, 0x00, 0x00};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOGPRSPOINT)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOGPRSPOINT)) return ERR_NOTSUPPORTED;
 
 	for (i=0;i<3;i++) {
 		smprintf(s, "Activating full GPRS access point support\n");
@@ -3644,7 +3644,7 @@ static GSM_Error N6510_GetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoi
 		N7110_FRAME_HEADER, 0x05, 0x00, 0x00, 0x00, 0x2C, 0x00,
 		0x02, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOGPRSPOINT)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOGPRSPOINT)) return ERR_NOTSUPPORTED;
 	if (point->Location < 1) return ERR_UNKNOWN;
 	if (point->Location > 5) return ERR_INVALIDLOCATION;
 
@@ -3698,7 +3698,7 @@ static GSM_Error N6510_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoi
 		N7110_FRAME_HEADER, 0x05, 0x00, 0x00, 0x00, 0x2C, 0x00,
 		0x02, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00};
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOGPRSPOINT)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOGPRSPOINT)) return ERR_NOTSUPPORTED;
 	if (point->Location < 1) return ERR_UNKNOWN;
 	if (point->Location > 5) return ERR_INVALIDLOCATION;
 
@@ -3895,7 +3895,7 @@ GSM_Error N6510_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
 	GSM_Error error;
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
 
 	/* We have to enable WAP frames in phone */
 	error=N6510_EnableConnectionFunctions(s,N6510_WAP_SETTINGS);

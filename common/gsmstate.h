@@ -1608,7 +1608,6 @@ void 	  GSM_DumpMessageLevel2		(GSM_StateMachine *s, unsigned char *message, int
 void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);
 
 
-bool 		IsPhoneFeatureAvailable	(OnePhoneModel *model, Feature feature);
 OnePhoneModel 	*GetModelData		(char *model, char *number, char *irdamodel);
 
 #if defined(__GNUC__) && !defined(printf)

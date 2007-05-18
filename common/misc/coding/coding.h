@@ -23,7 +23,6 @@ typedef		int wint_t;
 /* ---------------------------- Unicode ------------------------------------ */
 bool 		mywstrncasecmp			(unsigned const char *a, unsigned const char *b, int num);
 unsigned char	*mywstrstr			(unsigned const char *haystack, unsigned const char *needle);
-bool 		mywstrncmp			(unsigned const char *a, unsigned const char *b, int num);
 bool 		myiswspace	  		(unsigned const char *src);
 #ifndef HAVE_TOWLOWER
 int 		towlower			(wchar_t c);

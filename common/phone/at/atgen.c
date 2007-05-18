@@ -886,7 +886,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	/* We don't care about error here */
 	GSM_WaitFor (s, "AT+CPROT=?\r", 11, 0x00, 3, ID_SetOBEX);
 
-	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = true;
 	}
 
@@ -1269,7 +1269,7 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 	}
 
 	/* Some phones start locations from 0, handle them here */
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_LOCATION_0)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_LOCATION_0)) {
 		(*location)--;
 	}
 
@@ -1319,7 +1319,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 			/* Siemens MC35 (only ?) */
 			if (strstr(msg.Buffer,"+CMGR: 0,,0")!=NULL) return ERR_EMPTY;
 			/* Siemens M20 */
-			if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
+			if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
 				/* we check for the most often visible */
 				if (buffer[1]!=NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN && buffer[1]!=NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN &&
 				    buffer[1]!=NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN) {
@@ -1356,7 +1356,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				}
 				sms->InboxFolder = true;
 				current2=((buffer[current])+1)/2+1;
-				if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
+				if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
 					if (buffer[current+1]==NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN) {
 						smprintf(s, "Trying to read alphanumeric number\n");
 						for(i=0;i<4;i++) smsframe[PHONE_SMSDeliver.Number+i]=buffer[current++];
@@ -1387,7 +1387,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				sms->InboxFolder = false;
 				smsframe[PHONE_SMSSubmit.TPMR] = buffer[current++];
 				current2=((buffer[current])+1)/2+1;
-				if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
+				if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
 					if (buffer[current+1]==NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN) {
 						smprintf(s, "Trying to read alphanumeric number\n");
 						for(i=0;i<4;i++) smsframe[PHONE_SMSSubmit.Number+i]=buffer[current++];
@@ -1694,7 +1694,7 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 
 	error=ATGEN_GetSMSLocation(s, &sms->SMS[0], &folderid, &location, false);
 	if (error!=ERR_NONE) return error;
-	if (Priv->SMSMemory == MEM_ME && IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSME900)) add = 899;
+	if (Priv->SMSMemory == MEM_ME && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSME900)) add = 899;
 	sprintf(req, "AT+CMGR=%i\r", location + add);
 
 	error=ATGEN_GetSMSMode(s);
@@ -2088,7 +2088,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	unsigned char		*statetxt;
 
 	/* This phone supports only sent/unsent messages on SIM */
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSONLYSENT)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSONLYSENT)) {
 		if (sms->Folder != 2) {
 			smprintf(s, "This phone supports only folder = 2!\n");
 			return ERR_NOTSUPPORTED;
@@ -2128,7 +2128,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 			if (sms->State == SMS_Read || sms->State == SMS_Sent) state = 3;
 		}
 		/* Siemens M20 */
-		if (IsPhoneFeatureAvailable(Phone->ModelInfo, F_M20SMS)) {
+		if (GSM_IsPhoneFeatureAvailable(Phone->ModelInfo, F_M20SMS)) {
 			/* No (good and 100% working) support for alphanumeric numbers */
 			if (sms->Number[1]!='+' && (sms->Number[1]<'0' || sms->Number[1]>'9')) {
 				EncodeUnicode(sms->Number,"123",3);
@@ -2147,7 +2147,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 			if (sms->State == SMS_Read || sms->State == SMS_Sent) statetxt = "STO SENT";
 		}
 		/* Siemens M20 */
-		if (IsPhoneFeatureAvailable(Phone->ModelInfo, F_M20SMS)) {
+		if (GSM_IsPhoneFeatureAvailable(Phone->ModelInfo, F_M20SMS)) {
 			/* No (good and 100% working) support for alphanumeric numbers */
 			/* FIXME: Try to autodetect support for <stat> (statetxt) parameter although:
 			 * Siemens M20 supports +CMGW <stat> specification but on my model it just
@@ -3088,7 +3088,7 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 	/* Some workaround for buggy mobile, that hangs after "AT+CPBS?" for other
 	 * memory than SM.
 	 */
-	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKENCPBS) || (Status->MemoryType == MEM_SM)) {
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKENCPBS) || (Status->MemoryType == MEM_SM)) {
 		smprintf(s, "Getting memory status\n");
 		error=GSM_WaitFor (s, "AT+CPBS?\r", 9, 0x00, 4, ID_GetMemoryStatus);
 		if (error == ERR_NONE) return ERR_NONE;
@@ -4707,7 +4707,7 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					/* OBEX has ID of 0 */
 					if (cur == 0) {
 						smprintf(s, "OBEX seems to be supported!\n");
-						if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)) {
+						if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)) {
 							/*
 							 * We do not enable this automatically, because some
 							 * phones provide less features over OBEX than AT

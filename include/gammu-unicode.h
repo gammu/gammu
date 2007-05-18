@@ -13,3 +13,7 @@ bool		EncodeUTF8QuotedPrintable	(unsigned char *dest, const unsigned char *src);
 void 		DecodeUTF8QuotedPrintable	(unsigned char *dest, const unsigned char *src, int len);
 int 		EncodeWithUTF8Alphabet2		(unsigned char mychar1, unsigned char mychar2, unsigned char *ret);
 int 		DecodeWithUTF8Alphabet2		(unsigned char *src, wchar_t *dest, int len);
+
+
+bool 		mywstrncmp			(unsigned const char *a, unsigned const char *b, int num);
+unsigned char	*mywstrstr			(unsigned const char *haystack, unsigned const char *needle);
