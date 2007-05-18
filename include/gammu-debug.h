@@ -57,7 +57,7 @@ int dbgprintf(const char *format, ...);
 /**
  * Prints string to defined debug log.
  *
- * \param d Debug information structure, where to print.
+ * \param s State machine, where to print.
  * \param format Format string as for printf.
  * \return Upon successful return, these functions return the number of characters printed (as printf).
  *
@@ -66,7 +66,7 @@ int dbgprintf(const char *format, ...);
 #if defined(__GNUC__) && !defined(printf)
 __attribute__((format(printf, 2, 3)))
 #endif
-int smfprintf(GSM_Debug_Info *d, const char *format, ...);
+int smprintf(GSM_StateMachine *s, const char *format, ...);
 
 
 /**
