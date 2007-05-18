@@ -87,7 +87,7 @@ GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi);
  *
  * \ingroup Debug
  */
-GSM_Debug_Info *GSM_GetGlobalDebug();
+GSM_Debug_Info *GSM_GetGlobalDebug(void);
 
 /**
  * Sets debug level.
