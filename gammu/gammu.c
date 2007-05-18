@@ -4991,6 +4991,7 @@ static void Backup(int argc, char *argv[])
  	GSM_FMStation		FMStation;
  	GSM_GPRSAccessPoint	GPRSPoint;
 	bool			DoBackup;
+	char buffer[100];
 
 	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
 
@@ -5023,14 +5024,16 @@ static void Backup(int argc, char *argv[])
 		error=GSM_GetManufacturer(s, Backup.Model);
 		Print_Error(error);
 		strcat(Backup.Model," ");
-		strcat(Backup.Model,s.Phone.Data.Model);
+		error=GSM_GetModel(s, buffer);
+		strcat(Backup.Model, buffer);
 		if (GSM_GetModelInfo(s)->model[0]!=0) {
 			strcat(Backup.Model," (");
 			strcat(Backup.Model,GSM_GetModelInfo(s)->model);
 			strcat(Backup.Model,")");
 		}
 		strcat(Backup.Model," ");
-		strcat(Backup.Model,s.Phone.Data.Version);
+		error=GSM_GetFirmware(s, buffer, NULL, NULL);
+		strcat(Backup.Model,buffer);
 	}
 	if (Info.IMEI) {
 		error=GSM_GetIMEI(s, Backup.IMEI);
@@ -9520,37 +9523,44 @@ void SearchPhoneThread(OneDeviceInfo *Info)
 {
 	int 		 	j;
 	GSM_Error	 	error;
-	GSM_StateMachine	ss;
+	GSM_StateMachine	*ss;
+	GSM_Config *cfg;
+	GSM_Config *globalcfg;
+	char buffer[100];
 
 	j = 0;
 	while(strlen(Info->Connections[j].Connection) != 0) {
-		memcpy(&ss.di,s.di,sizeof(Debug_Info));
-		ss.ConfigNum			= 1;
-		ss.opened 			= false;
-	    	ss.Config[0].UseGlobalDebugFile = s.Config[0].UseGlobalDebugFile;
-		ss.Config[0].Localize		= s.Config[0].Localize;
-		ss.Config[0].Device 		= Info->Device;
-		ss.Config[0].Connection		= Info->Connections[j].Connection;
-		ss.Config[0].SyncTime		= "no";
-		ss.Config[0].DebugFile		= s.Config[0].DebugFile;
-		ss.Config[0].Model[0]		= 0;
-		strcpy(ss.Config[0].DebugLevel,s.Config[0].DebugLevel);
-		ss.Config[0].LockDevice		= "no";
-		ss.Config[0].StartInfo		= "no";
+		ss = GSM_AllocStateMachine();
+		if (ss == NULL) return;
 
-		error = GSM_InitConnection(&ss,1);
+		cfg = GSM_GetConfig(ss, 0);
+		globalcfg = GSM_GetConfig(s, 0);
+
+	    	cfg->UseGlobalDebugFile = globalcfg->UseGlobalDebugFile;
+		cfg->Localize		= globalcfg->Localize;
+		cfg->Device 		= Info->Device;
+		cfg->Connection		= Info->Connections[j].Connection;
+		cfg->SyncTime		= "no";
+		cfg->DebugFile		= globalcfg->DebugFile;
+		cfg->Model[0]		= 0;
+		strcpy(cfg->DebugLevel,globalcfg->DebugLevel);
+		cfg->LockDevice		= "no";
+		cfg->StartInfo		= "no";
+
+		GSM_SetConfigNum(ss, 1);
+
+		error = GSM_InitConnection(ss,1);
 		if (SearchOutput) printf(_("Connection \"%s\" on device \"%s\"\n"),Info->Connections[j].Connection,Info->Device);
 		if (error == ERR_NONE) {
-			error=GSM_GetManufacturer(&ss);
+			error=GSM_GetManufacturer(ss, buffer);
 			if (error == ERR_NONE) {
-				error=GSM_GetModel(&ss);
+				if (!SearchOutput) printf(_("Connection \"%s\" on device \"%s\"\n"),Info->Connections[j].Connection,Info->Device);
+				printf("\t" LISTFORMAT "%s\n", _("Manufacturer"), buffer);
+				error=GSM_GetModel(ss, buffer);
 				if (error == ERR_NONE) {
-					if (!SearchOutput) printf(_("Connection \"%s\" on device \"%s\"\n"),Info->Connections[j].Connection,Info->Device);
-					printf("\t" LISTFORMAT "%s\n", _("Manufacturer"),
-						ss.Phone.Data.Manufacturer);
 					printf("\t" LISTFORMAT "%s (%s)\n", _("Model"),
 						GSM_GetModelInfo(ss)->model,
-						ss.Phone.Data.Model);
+						buffer);
 				} else {
 					if (SearchOutput) printf("\t%s\n",GSM_ErrorString(error));
 				}
@@ -9561,11 +9571,12 @@ void SearchPhoneThread(OneDeviceInfo *Info)
 			if (SearchOutput) printf("\t%s\n",GSM_ErrorString(error));
 		}
 		if (error != ERR_DEVICEOPENERROR) {
-			GSM_TerminateConnection(&ss);
+			GSM_TerminateConnection(ss);
 			dbgprintf("Closing done\n");
 		}
 		if (error == ERR_DEVICEOPENERROR) break;
 		j++;
+		GSM_FreeStateMachine(ss);
 	}
 	num--;
 }
