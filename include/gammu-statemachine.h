@@ -17,7 +17,9 @@
 #include <gammu-inifile.h>
 
 /**
- * Private structure holding information about phone connection.
+ * Private structure holding information about phone connection. Should
+ * be allocated by \ref GSM_AllocStateMachine and freed by
+ * \ref GSM_FreeStateMachine.
  *
  * \ingroup StateMachine
  */
