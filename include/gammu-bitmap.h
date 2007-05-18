@@ -15,6 +15,11 @@
 #include <gammu-limits.h>
 #include <stdio.h>
 
+/**
+ * Binary picture types.
+ *
+ * \ingroup Bitmap
+ */
 typedef enum {
 	PICTURE_BMP = 1,
 	PICTURE_GIF,
@@ -23,6 +28,11 @@ typedef enum {
 	PICTURE_PNG
 } GSM_BinaryPicture_Types;
 
+/**
+ * Binary picture data.
+ *
+ * \ingroup Bitmap
+ */
 typedef struct {
 	GSM_BinaryPicture_Types Type;
 	unsigned char *Buffer;
@@ -99,7 +109,7 @@ typedef struct {
 	/**
 	 * For dealer/welcome note text: text
 	 * For caller group logo: name of group
-         * For picture images: text assigned to it
+	 * For picture images: text assigned to it
 	 */
 	unsigned char Text[2 * (GSM_BITMAP_TEXT_LENGTH + 1)];
 	/**
@@ -186,6 +196,7 @@ typedef struct {
  * \ingroup Bitmap
  */
 GSM_Error GSM_GetBitmap(GSM_StateMachine * s, GSM_Bitmap * Bitmap);
+
 /**
  * Sets bitmap in phone.
  *
@@ -194,7 +205,7 @@ GSM_Error GSM_GetBitmap(GSM_StateMachine * s, GSM_Bitmap * Bitmap);
 GSM_Error GSM_SetBitmap(GSM_StateMachine * s, GSM_Bitmap * Bitmap);
 
 /**
- * Prints bitmap to file.
+ * Prints bitmap to file descriptor.
  *
  * \param file Where to print.
  * \param bitmap Bitmap to print.
@@ -203,6 +214,27 @@ GSM_Error GSM_SetBitmap(GSM_StateMachine * s, GSM_Bitmap * Bitmap);
  */
 void GSM_PrintBitmap(FILE * file, GSM_Bitmap * bitmap);
 
+/**
+ * Saves bitmap to file.
+ *
+ * \param FileName Where to save.
+ * \param bitmap Bitmap to save.
+ *
+ * \return Error code
+ *
+ * \ingroup Bitmap
+ */
 GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap * bitmap);
+
+/**
+ * Reads bitmap from file.
+ *
+ * \param FileName Where to load from.
+ * \param bitmap Pointer where to load bitmap.
+ *
+ * \return Error code
+ *
+ * \ingroup Bitmap
+ */
 GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap * bitmap);
 #endif
