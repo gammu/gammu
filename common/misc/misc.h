@@ -56,7 +56,6 @@ extern GSM_Debug_Info	di;
 
 void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesize);
 
-bool GSM_SetDebugLevel(char *info, GSM_Debug_Info *di);
 
 /* ------------------------------------------------------------------------- */
 

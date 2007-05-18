@@ -49,7 +49,7 @@ GSM_Error NotSupportedFunction(void)
  *
  * @param path Optional path to locales, can be NULL.
  */
-void InitLocales(const char *path) {
+void GSM_InitLocales(const char *path) {
 	setlocale(LC_ALL, "");
 #ifdef GETTEXTLIBS_FOUND
 	if (path == NULL) {
@@ -166,6 +166,11 @@ const char *GetGammuVersion(void)
 	return Buffer;
 }
 
+GSM_Debug_Info *GSM_GetGlobalDebug()
+{
+	return &di;
+}
+
 GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
 {
 	FILE *testfile;
@@ -220,11 +225,6 @@ GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
 		}
 	}
 	return ERR_NONE;
-}
-
-GSM_Error GSM_SetGlobalDebugFile(char *info)
-{
-	return GSM_SetDebugFile(info, &di);
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.
