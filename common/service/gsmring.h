@@ -35,7 +35,6 @@ unsigned char 	GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *packag
 GSM_Error	GSM_DecodeNokiaRTTLRingtone	(GSM_Ringtone *ringtone, unsigned char *package, int maxlength);
 
 
-int GSM_RTTLGetTempo		(int Beats);
 int GSM_RingNoteGetFrequency	(GSM_RingNote Note);
 int GSM_RingNoteGetFullDuration	(GSM_RingNote Note);
 
