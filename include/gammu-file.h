@@ -60,6 +60,11 @@ typedef struct {
 	bool		System;
 } GSM_File;
 
+GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR, char *Version, int *Size);
+
+GSM_Error GSM_ReadFile(char *FileName, GSM_File *File);
+void GSM_IdentifyFileFormat(GSM_File *File);
+
 /**
  * Gets next filename from filesystem.
  */
