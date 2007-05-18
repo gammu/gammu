@@ -182,31 +182,106 @@ extern GSM_Error GSM_AddSMSBackupFile(char *FileName, GSM_SMS_Backup * backup);
  * \ingroup Backup
  */
 typedef struct {
-	char IMEI[MAX_IMEI_LENGTH]; /**< IMEI of phone which has been backed up */
-	char Model[MAX_MODEL_LENGTH + MAX_VERSION_LENGTH]; /**< Model of phone which has been backed up */
-	char Creator[80]; /**< Name of program which created backup */
-	GSM_DateTime DateTime; /**< Timestamp of backup */
-	bool DateTimeAvailable; /**< Whether timestamp is present */
-	char MD5Original[100]; /**< Original MD5 of backup from file */
-	char MD5Calculated[100]; /**< Calculated MD5 of backup*/
-	GSM_MemoryEntry *PhonePhonebook[GSM_BACKUP_MAX_PHONEPHONEBOOK + 1]; /**< Phone phonebook */
-	GSM_MemoryEntry *SIMPhonebook[GSM_BACKUP_MAX_SIMPHONEBOOK + 1]; /**< SIM phonebook */
-	GSM_CalendarEntry *Calendar[GSM_MAXCALENDARTODONOTES + 1]; /**< Calendar */
-	GSM_Bitmap *CallerLogos[GSM_BACKUP_MAX_CALLER + 1]; /**< Caller logos */
-	GSM_SMSC *SMSC[GSM_BACKUP_MAX_SMSC + 1]; /**< SMS configuration */
-	GSM_WAPBookmark *WAPBookmark[GSM_BACKUP_MAX_WAPBOOKMARK + 1]; /**< WAP bookmarks */
-	GSM_MultiWAPSettings *WAPSettings[GSM_BACKUP_MAX_WAPSETTINGS + 1]; /**< WAP settings */
-	GSM_MultiWAPSettings *MMSSettings[GSM_BACKUP_MAX_MMSSETTINGS + 1]; /**< MMS settings */
-	GSM_SyncMLSettings *SyncMLSettings[GSM_BACKUP_MAX_SYNCMLSETTINGS + 1]; /**< SyncMC settings */
-	GSM_ChatSettings *ChatSettings[GSM_BACKUP_MAX_CHATSETTINGS + 1]; /**< Chat settings */
-	GSM_Ringtone *Ringtone[GSM_BACKUP_MAX_RINGTONES + 1]; /**< Ringtones */
-	GSM_ToDoEntry *ToDo[GSM_MAXCALENDARTODONOTES + 1]; /**< To do tasks */
-	GSM_Profile *Profiles[GSM_BACKUP_MAX_PROFILES + 1]; /**< Progiles */
-	GSM_FMStation *FMStation[GSM_BACKUP_MAX_FMSTATIONS + 1]; /**< FM stations */
-	GSM_GPRSAccessPoint *GPRSPoint[GSM_BACKUP_MAX_GPRSPOINT + 1]; /**< GPRS configurations */
-	GSM_NoteEntry *Note[GSM_BACKUP_MAX_NOTE + 1]; /**< Notes */
-	GSM_Bitmap *StartupLogo; /**< Statup logo */
-	GSM_Bitmap *OperatorLogo; /**< Operator logo */
+	/**
+	 * IMEI of phone which has been backed up 
+	 */
+	char IMEI[MAX_IMEI_LENGTH];
+	/**
+	 * Model of phone which has been backed up 
+	 */
+	char Model[MAX_MODEL_LENGTH + MAX_VERSION_LENGTH];
+	/**
+	 * Name of program which created backup 
+	 */
+	char Creator[80];
+	/**
+	 * Timestamp of backup 
+	 */
+	GSM_DateTime DateTime;
+	/**
+	 * Whether timestamp is present 
+	 */
+	bool DateTimeAvailable;
+	/**
+	 * Original MD5 of backup from file 
+	 */
+	char MD5Original[100];
+	/**
+	 * Calculated MD5 of backup
+	 */
+	char MD5Calculated[100];
+	/**
+	 * Phone phonebook 
+	 */
+	GSM_MemoryEntry *PhonePhonebook[GSM_BACKUP_MAX_PHONEPHONEBOOK + 1];
+	/**
+	 * SIM phonebook 
+	 */
+	GSM_MemoryEntry *SIMPhonebook[GSM_BACKUP_MAX_SIMPHONEBOOK + 1];
+	/**
+	 * Calendar 
+	 */
+	GSM_CalendarEntry *Calendar[GSM_MAXCALENDARTODONOTES + 1];
+	/**
+	 * Caller logos 
+	 */
+	GSM_Bitmap *CallerLogos[GSM_BACKUP_MAX_CALLER + 1];
+	/**
+	 * SMS configuration 
+	 */
+	GSM_SMSC *SMSC[GSM_BACKUP_MAX_SMSC + 1];
+	/**
+	 * WAP bookmarks 
+	 */
+	GSM_WAPBookmark *WAPBookmark[GSM_BACKUP_MAX_WAPBOOKMARK + 1];
+	/**
+	 * WAP settings 
+	 */
+	GSM_MultiWAPSettings *WAPSettings[GSM_BACKUP_MAX_WAPSETTINGS + 1];
+	/**
+	 * MMS settings 
+	 */
+	GSM_MultiWAPSettings *MMSSettings[GSM_BACKUP_MAX_MMSSETTINGS + 1];
+	/**
+	 * SyncMC settings 
+	 */
+	GSM_SyncMLSettings *SyncMLSettings[GSM_BACKUP_MAX_SYNCMLSETTINGS + 1];
+	/**
+	 * Chat settings 
+	 */
+	GSM_ChatSettings *ChatSettings[GSM_BACKUP_MAX_CHATSETTINGS + 1];
+	/**
+	 * Ringtones 
+	 */
+	GSM_Ringtone *Ringtone[GSM_BACKUP_MAX_RINGTONES + 1];
+	/**
+	 * To do tasks 
+	 */
+	GSM_ToDoEntry *ToDo[GSM_MAXCALENDARTODONOTES + 1];
+	/**
+	 * Progiles 
+	 */
+	GSM_Profile *Profiles[GSM_BACKUP_MAX_PROFILES + 1];
+	/**
+	 * FM stations 
+	 */
+	GSM_FMStation *FMStation[GSM_BACKUP_MAX_FMSTATIONS + 1];
+	/**
+	 * GPRS configurations 
+	 */
+	GSM_GPRSAccessPoint *GPRSPoint[GSM_BACKUP_MAX_GPRSPOINT + 1];
+	/**
+	 * Notes 
+	 */
+	GSM_NoteEntry *Note[GSM_BACKUP_MAX_NOTE + 1];
+	/**
+	 * Statup logo 
+	 */
+	GSM_Bitmap *StartupLogo;
+	/**
+	 * Operator logo 
+	 */
+	GSM_Bitmap *OperatorLogo;
 } GSM_Backup;
 
 /**
