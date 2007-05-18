@@ -107,4 +107,16 @@ bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info *privdi);
  */
 bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info *privdi);
 
+/**
+ * Enables using of global debugging configuration. Makes no effect on 
+ * global debug configuration.
+ *
+ * \param info Enable global debug usage..
+ * \param privdi Pointer to debug information data.
+ * \return True on success.
+ *
+ * \ingroup Debug.
+ */
+bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info *privdi);
+
 #endif

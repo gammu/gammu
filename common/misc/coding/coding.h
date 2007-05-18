@@ -72,8 +72,6 @@ int 		DecodeBASE64			(const unsigned char *Input, unsigned char *Output, int Len
 void		DecodeHexBin			(unsigned char *dest, const unsigned char *src, int len);
 
 /* ----------------------------- HexUnicode -------------------------------- */
-void		DecodeHexUnicode		(unsigned char *dest, const unsigned char *src, int len);
-void		EncodeHexUnicode		(unsigned char *dest, const unsigned char *src, int len);
 
 /* ---------------------- DefaultAlphabet for SMS -------------------------- */
 void 		EncodeDefault			(unsigned char *dest, const unsigned char *src, int *len, bool UseExtensions, unsigned char *ExtraAlphabet);

@@ -513,6 +513,12 @@ bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info *privdi)
 	return true;
 }
 
+bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info *privdi)
+{
+	privdi->use_global = info;
+	return true;
+}
+
 /* Dumps a message */
 void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesize)
 {
