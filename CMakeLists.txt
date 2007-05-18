@@ -348,7 +348,6 @@ set (HEADERS
     common/device/serial/ser_djg.h
     common/device/serial/ser_unx.h
     common/device/serial/ser_w32.h
-    common/gammu.h
     common/misc/coding/md5.h
     common/misc/coding/coding.h
     common/misc/cfg.h
