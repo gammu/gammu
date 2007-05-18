@@ -10366,6 +10366,8 @@ int main(int argc, char *argv[])
 	unsigned int	i;
 	int		only_config = -1;
 	char		*cp,*rss,buff[200];
+	GSM_Config *smcfg;
+	GSM_Config *smcfg0;
 
 
 	s = GSM_AllocStateMachine();
@@ -10409,46 +10411,50 @@ int main(int argc, char *argv[])
 	}
  	if (cfg == NULL) printf_warn("%s\n", _("No configuration read!"));
 
+	smcfg0 = GSM_GetConfig(s, 0);
+
 	for (i = 0; i <= MAX_CONFIG_NUM; i++) {
+		/* Wanted user specific configuration? */
+		if (only_config != -1) {
+			smcfg = smcfg0;
+			/* Here we get only in first for loop */
+			if (!GSM_ReadConfig(cfg, smcfg, only_config)) break;
+		} else {
+			smcfg = GSM_GetConfig(s, i);
+			if (!GSM_ReadConfig(cfg, smcfg, i) && i != 0) break;
+		}
+		s.ConfigNum++;
+
 		if (cfg!=NULL) {
 		        cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
         		if (cp) di.coding = cp;
 
-		        s.Config[i].Localize = INI_GetValue(cfg, "gammu", "gammuloc", false);
+		        gammucfg->Localize = INI_GetValue(cfg, "gammu", "gammuloc", false);
 			/* It is safe to pass NULL here */
-			InitLocales(s.Config[i].Localize);
+			InitLocales(gammucfg->Localize);
 		}
-
-		/* Wanted user specific configuration? */
-		if (only_config != -1) {
-			/* Here we get only in first for loop */
-			if (!GSM_ReadConfig(cfg, s.Config[0], only_config)) break;
-		} else {
-			if (!GSM_ReadConfig(cfg, s.Config[i], i) && i != 0) break;
-		}
-		s.ConfigNum++;
 
      		/* We want to use only one file descriptor for global and state machine debug output */
- 	    	s.Config[i].UseGlobalDebugFile = true;
+ 	    	smcfg->UseGlobalDebugFile = true;
 
 		/* It makes no sense to open several debug logs... */
 		if (i != 0) {
-			strcpy(s.Config[i].DebugLevel, s.Config[0].DebugLevel);
-			free(s.Config[i].DebugFile);
-			s.Config[i].DebugFile = strdup(s.Config[0].DebugFile);
+			strcpy(smcfg->DebugLevel, smcfg0->DebugLevel);
+			free(smcfg->DebugFile);
+			smcfg->DebugFile = strdup(smcfg0->DebugFile);
  		} else {
 			/* Just for first config */
 			/* When user gave debug level on command line */
 			if (argc > 1 + start && GSM_SetDebugLevel(argv[1 + start], &di)) {
 				/* Debug level from command line will be used with phone too */
-				strcpy(s.Config[i].DebugLevel,argv[1 + start]);
+				strcpy(smcfg->DebugLevel,argv[1 + start]);
 				start++;
 			} else {
 				/* Try to set debug level from config file */
-				GSM_SetDebugLevel(s.Config[i].DebugLevel, &di);
+				GSM_SetDebugLevel(smcfg->DebugLevel, &di);
 			}
 			/* If user gave debug file in gammurc, we will use it */
-			error=GSM_SetDebugFile(s.Config[i].DebugFile, &di);
+			error=GSM_SetDebugFile(smcfg->DebugFile, &di);
 			Print_Error(error);
  		}
 
