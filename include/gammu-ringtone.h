@@ -16,6 +16,7 @@
 #include <gammu-error.h>
 #include <gammu-statemachine.h>
 
+#include <stdio.h>
 
 #define MAX_RINGTONE_NOTES 255
 
@@ -197,5 +198,16 @@ GSM_Error GSM_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, bool
 
 GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_RingtoneFormat	Format);
 GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone);
+GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone);
+
+void GSM_SaveRingtoneOtt(FILE *file, GSM_Ringtone *ringtone);
+void GSM_SaveRingtoneMidi(FILE *file, GSM_Ringtone *ringtone);
+void GSM_SaveRingtoneRng(FILE *file, GSM_Ringtone *ringtone);
+void GSM_SaveRingtoneIMelody(FILE *file, GSM_Ringtone *ringtone);
+GSM_Error GSM_SaveRingtoneWav(FILE *file, GSM_Ringtone *ringtone);
+GSM_Error GSM_SaveRingtoneRttl(FILE *file, GSM_Ringtone *ringtone);
+
+char *GSM_GetRingtoneName(GSM_AllRingtonesInfo *Info, int ID);
+
 
 #endif

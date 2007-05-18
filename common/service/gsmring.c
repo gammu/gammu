@@ -89,7 +89,7 @@ int GSM_RingNoteGetFullDuration(GSM_RingNote Note)
 
 #define WAV_SAMPLE_RATE 44100
 
-GSM_Error savewav(FILE *file, GSM_Ringtone *ringtone)
+GSM_Error GSM_SaveRingtoneWav(FILE *file, GSM_Ringtone *ringtone)
 {
 	unsigned char 	WAV_Header[] = {
 			'R','I','F','F',
@@ -169,7 +169,7 @@ static GSM_Error savemmf(FILE *file, GSM_Ringtone *ringtone)
 	return ERR_NONE;
 }
 
-GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone)
+GSM_Error GSM_SaveRingtoneRttl(FILE *file, GSM_Ringtone *ringtone)
 {
 	GSM_RingNoteScale	DefNoteScale;
 	GSM_RingNoteDuration	DefNoteDuration;
@@ -341,7 +341,7 @@ GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone)
 	return ERR_NONE;
 }
 
-void saveimelody(FILE *file, GSM_Ringtone *ringtone)
+void GSM_SaveRingtoneIMelody(FILE *file, GSM_Ringtone *ringtone)
 {
 	char 	Buffer[2000];
   	int 	i=2000;
@@ -378,7 +378,7 @@ static void WriteVarLen(unsigned char* midifile, int* current, long value)
 #define singlepauses
 
 /* FIXME: need adding tempo before each note and scale too ? */
-void savemid(FILE* file, GSM_Ringtone *ringtone)
+void GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 {
 	int 		pause 	= 0, current = 26, duration, i, note=0, length = 20;
 	bool		started = false;
@@ -455,7 +455,7 @@ void savemid(FILE* file, GSM_Ringtone *ringtone)
 
 #endif
 
-void saveott(FILE *file, GSM_Ringtone *ringtone)
+void GSM_SaveRingtoneOtt(FILE *file, GSM_Ringtone *ringtone)
 {
 	char 	Buffer[2000];
   	int 	i=2000;
@@ -475,21 +475,21 @@ GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 	switch (ringtone->Format) {
 	case RING_NOTETONE:
 		if (strstr(FileName,".ott")) {
-			saveott(file,ringtone);
+			GSM_SaveRingtoneOtt(file,ringtone);
 		} else if (strstr(FileName,".rng")) {
-			saveott(file,ringtone);
+			GSM_SaveRingtoneOtt(file,ringtone);
 #ifndef ENABLE_LGPL
 		} else if (strstr(FileName,".mid")) {
-			savemid(file,ringtone);
+			GSM_SaveRingtoneMidi(file,ringtone);
 #endif
 		} else if (strstr(FileName,".imy")) {
-			saveimelody(file,ringtone);
+			GSM_SaveRingtoneIMelody(file,ringtone);
 		} else if (strstr(FileName,".ime")) {
-			saveimelody(file,ringtone);
+			GSM_SaveRingtoneIMelody(file,ringtone);
 		} else if (strstr(FileName,".wav")) {
-			savewav(file,ringtone);
+			GSM_SaveRingtoneWav(file,ringtone);
 		} else {
-			saverttl(file, ringtone);
+			GSM_SaveRingtoneRttl(file, ringtone);
 		}
 		break;
 	case RING_NOKIABINARY:
