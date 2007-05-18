@@ -1610,11 +1610,6 @@ void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned char *message, int
 
 OnePhoneModel 	*GetModelData		(char *model, char *number, char *irdamodel);
 
-#if defined(__GNUC__) && !defined(printf)
-__attribute__((format(printf, 2, 3)))
-#endif
-int smprintf(GSM_StateMachine *s, const char *format, ...);
-
 void GSM_OSErrorInfo(GSM_StateMachine *s, char *description);
 
 #ifdef GSM_ENABLE_BACKUP
