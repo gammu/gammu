@@ -1724,7 +1724,7 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems
 			break;
 		case SMS_NokiaRingtone:
 			printf(_("Ringtone \"%s\"\n"),DecodeUnicodeConsole(SMSInfo.Entries[i].Ringtone->Name));
-			saverttl(stdout,SMSInfo.Entries[i].Ringtone);
+			GSM_SaveRingtoneRttl(stdout,SMSInfo.Entries[i].Ringtone);
 			printf("\n");
 			if (GSM_PlayTone!=NOTSUPPORTED &&
 			    GSM_PlayTone!=NOTIMPLEMENTED) {

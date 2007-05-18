@@ -29,15 +29,6 @@
 /* ------ end of Smart Messaging Specification 2.0 & 3.0 definitions ------- */
 
 
-GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone);
-
-void saveott(FILE *file, GSM_Ringtone *ringtone);
-void savemid(FILE *file, GSM_Ringtone *ringtone);
-void saverng(FILE *file, GSM_Ringtone *ringtone);
-void saveimelody(FILE *file, GSM_Ringtone *ringtone);
-GSM_Error savewav(FILE *file, GSM_Ringtone *ringtone);
-GSM_Error saverttl(FILE *file, GSM_Ringtone *ringtone);
-
 unsigned char	GSM_EncodeNokiaRTTLRingtone	(GSM_Ringtone ringtone, unsigned char *package, int *maxlength);
 unsigned char 	GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *package, int *maxlength, double version, bool start);
 
@@ -47,8 +38,6 @@ GSM_Error	GSM_DecodeNokiaRTTLRingtone	(GSM_Ringtone *ringtone, unsigned char *pa
 int GSM_RTTLGetTempo		(int Beats);
 int GSM_RingNoteGetFrequency	(GSM_RingNote Note);
 int GSM_RingNoteGetFullDuration	(GSM_RingNote Note);
-
-char *GSM_GetRingtoneName(GSM_AllRingtonesInfo *Info, int ID);
 
 #endif
 
