@@ -837,11 +837,11 @@ void DCT4Info(int argc, char *argv[])
 
         if (CheckDCT4Only()!=ERR_NONE) return;
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return;
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return;
 
 	s->User.UserReplyFunctions=UserReplyFunctions4;
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BLUETOOTH)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BLUETOOTH)) {
 		printf(_("Bluetooth     : "));
 
 		error=GSM_WaitFor (s, GetBTAddress, 8, 0xD7, 4, ID_User6);

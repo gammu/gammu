@@ -207,7 +207,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
 #ifdef GSM_ENABLE_ALCATEL
 			/* If phone provides Alcatel specific functions, enable them */
-			if (model->model[0] != 0 && IsPhoneFeatureAvailable(model, F_ALCATEL)) {
+			if (model->model[0] != 0 && GSM_IsPhoneFeatureAvailable(model, F_ALCATEL)) {
 				smprintf(s,"[Module           - \"%s\"]\n",ALCATELPhone.models);
 				s->Phone.Functions = &ALCATELPhone;
 				return ERR_NONE;
@@ -215,7 +215,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #endif
 #ifdef GSM_ENABLE_SONYERICSSON
 			/* If phone provides Sony-Ericsson specific functions, enable them */
-			if (model->model[0] != 0 && IsPhoneFeatureAvailable(model, F_OBEX)) {
+			if (model->model[0] != 0 && GSM_IsPhoneFeatureAvailable(model, F_OBEX)) {
 				smprintf(s,"[Module           - \"%s\"]\n",SONYERICSSONPhone.models);
 				s->Phone.Functions = &SONYERICSSONPhone;
 				return ERR_NONE;
@@ -1467,7 +1467,7 @@ OnePhoneModel *GetModelData(char *model, char *number, char *irdamodel)
 	return (&allmodels[i]);
 }
 
-bool IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature)
+bool GSM_GSM_IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature)
 {
 	int	i	= 0;
 

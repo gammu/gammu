@@ -32,12 +32,12 @@ static void N71_65_GetCalendarAlarm(GSM_StateMachine *s, unsigned char *buffer, 
 			GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
 			break;
 		case GSM_CAL_MEMO:
-			if (!IsPhoneFeatureAvailable(Data->ModelInfo, F_CAL35)) {
+			if (!GSM_IsPhoneFeatureAvailable(Data->ModelInfo, F_CAL35)) {
 				GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
 				break;
 			}
 		case GSM_CAL_CALL:
-			if (!IsPhoneFeatureAvailable(Data->ModelInfo, F_CAL35)) {
+			if (!GSM_IsPhoneFeatureAvailable(Data->ModelInfo, F_CAL35)) {
 				GetTimeDifference(diff, &entry->Entries[entry->EntriesNum].Date, false, 60);
 				break;
 			}

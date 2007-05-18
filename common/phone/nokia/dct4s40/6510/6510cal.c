@@ -362,9 +362,9 @@ static GSM_Error N6510_FindCalendarIconID3(GSM_StateMachine *s, GSM_CalendarEntr
 	memcpy(&LastCalendar1,&Priv->LastCalendar,sizeof(GSM_NOKIACalToDoLocations));
 	if (error != ERR_NONE) return error;
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL35) ||
-	    IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL65) ||
-	    IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL35) ||
+	    GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL65) ||
+	    GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
 		error=N71_65_AddCalendar2(s,Entry);
 	} else {
 		/* First method 1 was used for meeting only
@@ -565,9 +565,9 @@ static GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note
 	}
 
 	if (Location != -1 && NoteType == GSM_CAL_MEETING) {
-		if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62) ||
-		    IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL65) ||
-		    IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL35)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62) ||
+		    GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL65) ||
+		    GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL35)) {
 		} else {
 			req[50] = UnicodeLength(Note->Entries[Location].Text);
 			CopyUnicodeString(req+54+req[49]*2,Note->Entries[Location].Text);
@@ -588,7 +588,7 @@ GSM_Error N6510_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, b
 	return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
 #endif
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
 		/* Method 1. Some features missed. Not working with some notes in 3510 */
 		return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
 
@@ -617,7 +617,7 @@ GSM_Error N6510_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Statu
 	 */
 	Status->Free = 100;
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
 	        /* Method 1 */
 		error=N71_65_GetCalendarInfo1(s, &s->Phone.Data.Priv.N6510.LastCalendar);
 		if (error!=ERR_NONE) return error;
@@ -641,7 +641,7 @@ GSM_Error N6510_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return N71_65_AddCalendar2(s,Note);
 #endif
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
 		return N71_65_AddCalendar2(s,Note);
 //		return N71_65_AddCalendar1(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos);
 	} else {
@@ -669,7 +669,7 @@ GSM_Error N6510_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start
 	GSM_Error 			error;
 	GSM_NOKIACalToDoLocations	*LastNote = &s->Phone.Data.Priv.N6510.LastNote;
 
-	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOTES)) return ERR_NOTSUPPORTED;
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOTES)) return ERR_NOTSUPPORTED;
 
 	if (start) {
 		error=N6510_GetCalendarInfo3(s,LastNote,2);
@@ -692,7 +692,7 @@ GSM_Error N6510_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *Not)
 	GSM_NOKIACalToDoLocations	*LastNote = &s->Phone.Data.Priv.N6510.LastNote;
 	GSM_CalendarEntry		Note;
 
-	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOTES)) return ERR_NOTSUPPORTED;
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOTES)) return ERR_NOTSUPPORTED;
 
 	error=N6510_GetCalendarInfo3(s,LastNote,2);
 	if (error!=ERR_NONE) return error;
@@ -837,9 +837,9 @@ GSM_Error N6510_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
 	status->Used = 0;
 
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO63)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO63)) {
 		return N6510_GetToDoStatus1(s, status);
-	} else if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO66)) {
+	} else if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO66)) {
 		return N6510_GetToDoStatus2(s, status);
 	} else {
 		return ERR_NOTSUPPORTED;
@@ -1017,9 +1017,9 @@ static GSM_Error N6510_GetNextToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bo
 
 GSM_Error N6510_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refresh)
 {
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO63)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO63)) {
 		return N6510_GetNextToDo1(s, ToDo, refresh);
-	} else if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO66)) {
+	} else if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO66)) {
 		return N6510_GetNextToDo2(s, ToDo, refresh);
 	} else {
 		return ERR_NOTSUPPORTED;
@@ -1038,7 +1038,7 @@ GSM_Error N6510_DeleteAllToDo1(GSM_StateMachine *s)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x11};
 
-	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO63)) {
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO63)) {
 		return ERR_NOTSUPPORTED;
 	}
 
@@ -1052,7 +1052,7 @@ GSM_Error N6510_DeleteToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	GSM_NOKIACalToDoLocations	*LastToDo = &s->Phone.Data.Priv.N6510.LastToDo;
 	GSM_CalendarEntry		Note;
 
-	if (!IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO66)) {
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO66)) {
 		return ERR_NOTSUPPORTED;
 	}
 
@@ -1250,9 +1250,9 @@ static GSM_Error N6510_AddToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 
 GSM_Error N6510_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO63)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO63)) {
 		return N6510_AddToDo1(s, ToDo);
-	} else if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO66)) {
+	} else if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_TODO66)) {
 		return N6510_AddToDo2(s, ToDo);
 	} else {
 		return ERR_NOTSUPPORTED;

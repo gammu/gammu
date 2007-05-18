@@ -301,6 +301,18 @@ typedef struct {
 } OnePhoneModel;
 
 /**
+ * Checks whether phone supports features.
+ *
+ * \param model Model information (you can get it using \ref GSM_GetModelInfo).
+ * \param feature Feature to check for.
+ *
+ * \return True if phone has defined this feature.
+ *
+ * \ingroup Info
+ */
+bool GSM_IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature);
+
+/**
  * Reads manufacturer from phone.
  *
  * \ingroup Info

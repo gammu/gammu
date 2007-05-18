@@ -181,7 +181,7 @@ GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 	if (error != ERR_NONE) return error;
 
 	/* Does phone have support for AT+MODE=22 switching? */
-	if (IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_MODE22)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_MODE22)) {
 		Priv->HasOBEX = SONYERICSSON_OBEX_MODE22;
 	}
 
