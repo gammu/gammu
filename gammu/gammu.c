@@ -4741,7 +4741,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 				SMSCSet = 0;
 			}
 
-			s.User.SendSMSStatus = SendSMSStatus;
+			GSM_SetSendSMSStatusCallback(s, SendSMSStatus);
 
 			signal(SIGINT, interrupt);
 			fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C..."));
@@ -4808,7 +4808,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		signal(SIGINT, interrupt);
 		fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C..."));
 
-		s.User.SendSMSStatus = SendSMSStatus;
+		GSM_SetSendSMSStatusCallback(s, SendSMSStatus);
 
 		for (i=0;i<sms.Number;i++) {
 			printf(_("Sending SMS %i/%i"),i+1,sms.Number);
