@@ -30,16 +30,10 @@ typedef enum {
 	TRANSL_TO_VCAL,
 } GSM_CatTranslation;
 
-
-bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note);
-
-
-
 void GSM_GetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry);
 void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry);
 
 /* ------------------------------ to-do ------------------------------------ */
-
 
 void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, int *Alarm, int *Completed, int *EndTime, int *Phone);
 

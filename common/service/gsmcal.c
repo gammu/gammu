@@ -235,7 +235,7 @@ void GSM_GetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 		entry->Entries[entry->EntriesNum-1].Date.Second);
 }
 
-bool IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
+bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 {
 	bool 		Past = true;
 	int		i,End=-1;

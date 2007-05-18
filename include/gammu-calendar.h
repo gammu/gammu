@@ -498,6 +498,9 @@ GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *N
 
 GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer);
 
+
+bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry *note);
+
 /**
  * Reads alarm set in phone.
  */

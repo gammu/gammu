@@ -14,7 +14,6 @@
 
 void GSM_TweakInternationalNumber(unsigned char *Number, const GSM_NumberType numType);
 
-void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, int *Number, int *Group);
 
 
 
