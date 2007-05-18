@@ -37,6 +37,8 @@ code, change it to appropriate variable name if it differs.
 3. All callbacks are set by function GSM_Set*Callback instead of
    directly accessing structure.
 
+4. Some function have been renamed to follow GSM_* naming conventions.
+
 As there might be some functions still missing from new API, don't
 hesitate to contact author or ask on mailing list if you miss something.
 
