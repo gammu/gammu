@@ -2824,7 +2824,7 @@ static void MakeTerminatedCall(int argc, char *argv[])
 	GSM_Init(true);
 
 	TerminateID = -1;
-	s.User.IncomingCall = IncomingCall0;
+	GSM_SetIncomingCallCallback(s, IncomingCall0);
 
 	error=GSM_SetIncomingCall(s,true);
 	Print_Error(error);

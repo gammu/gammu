@@ -581,7 +581,7 @@ bool HeapCheck(char* loc) {
 }
 #endif
 
-char *GetOS(void)
+const char *GetOS(void)
 {
 #ifdef WIN32
 	OSVERSIONINFOEX Ver;
@@ -703,7 +703,7 @@ char *GetOS(void)
 	return Buffer;
 }
 
-char *GetCompiler(void)
+const char *GetCompiler(void)
 {
 	static char Buffer[100] = {0x00};
 

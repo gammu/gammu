@@ -7,34 +7,7 @@
 
 #ifdef GSM_ENABLE_BACKUP
 
-typedef struct {
-	bool UseUnicode;
-
-	bool IMEI;
-	bool Model;
-	bool DateTime;
-	bool ToDo;
-	bool PhonePhonebook;
-	bool SIMPhonebook;
-	bool Calendar;
-	bool CallerLogos;
-	bool SMSC;
-	bool WAPBookmark;
-	bool Profiles;
-	bool WAPSettings;
-	bool MMSSettings;
-	bool SyncMLSettings;
-	bool ChatSettings;
-	bool Ringtone;
-	bool StartupLogo;
-	bool OperatorLogo;
- 	bool FMStation;
-	bool GPRSPoint;
-	bool Note;
-} GSM_Backup_Info;
-
-void GSM_GetBackupFormatFeatures(char *FileName, GSM_Backup_Info *info);
-void GSM_GetBackupFileFeatures  (char *FileName, GSM_Backup_Info *info, GSM_Backup *backup);
+#include <gammu-backup.h>
 
 #endif
 #endif
