@@ -9020,7 +9020,7 @@ static void NokiaAddFile(int argc, char *argv[])
 	GSM_Init(true);
 
 	Found = false;
-    	if (s.ConnectionType == GCT_IRDAOBEX || s.ConnectionType == GCT_BLUEOBEX) {
+    	if (GSM_GetUsedConnection(s) == GCT_IRDAOBEX || GSM_GetUsedConnection(s) == GCT_BLUEOBEX) {
 		i = 0;
 		while (Folder[i].parameter[0] != 0) {
 			if (!strcmp("obex",Folder[i].model) &&

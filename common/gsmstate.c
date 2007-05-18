@@ -824,7 +824,7 @@ GSM_Error GSM_FindGammuRC (INI_Section **result)
 	return error;
 }
 
-GSM_Config *GAMMU_GetConfig(GSM_StateMachine *s, int num) 
+GSM_Config *GSM_GetConfig(GSM_StateMachine *s, int num) 
 {
 	if (num == -1) {
 		return s->CurrentConfig;
@@ -835,12 +835,12 @@ GSM_Config *GAMMU_GetConfig(GSM_StateMachine *s, int num)
 }
 
 
-int GAMMU_GetConfigNum(const GSM_StateMachine *s) 
+int GSM_GetConfigNum(const GSM_StateMachine *s) 
 {
 	return s->ConfigNum;
 }
 
-void GAMMU_SetConfigNum(GSM_StateMachine *s, int sections)
+void GSM_SetConfigNum(GSM_StateMachine *s, int sections)
 {
 	if (sections > MAX_CONFIG_NUM) return;
 	s->ConfigNum = sections;
@@ -1467,7 +1467,7 @@ OnePhoneModel *GetModelData(char *model, char *number, char *irdamodel)
 	return (&allmodels[i]);
 }
 
-bool GSM_GSM_IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature)
+bool GSM_IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature)
 {
 	int	i	= 0;
 
@@ -1649,37 +1649,37 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
 	}
 }
 
-void GAMMU_SetIncomingCallCallback(GSM_StateMachine *s, IncomingCallCallback callback)
+void GSM_SetIncomingCallCallback(GSM_StateMachine *s, IncomingCallCallback callback)
 {
 	s->User.IncomingCall = callback;
 }
 
-void GAMMU_SetIncomingSMSCallback(GSM_StateMachine *s, IncomingSMSCallback callback)
+void GSM_SetIncomingSMSCallback(GSM_StateMachine *s, IncomingSMSCallback callback)
 {
 	s->User.IncomingSMS = callback;
 }
 
-void GAMMU_SetIncomingCBCallback(GSM_StateMachine *s, IncomingCBCallback callback)
+void GSM_SetIncomingCBCallback(GSM_StateMachine *s, IncomingCBCallback callback)
 {
 	s->User.IncomingCB = callback;
 }
 
-void GAMMU_SetIncomingUSSDCallback(GSM_StateMachine *s, IncomingUSSDCallback callback)
+void GSM_SetIncomingUSSDCallback(GSM_StateMachine *s, IncomingUSSDCallback callback)
 {
 	s->User.IncomingUSSD = callback;
 }
 
-void GAMMU_SetSendSMSStatusCallback(GSM_StateMachine *s, SendSMSStatusCallback callback)
+void GSM_SetSendSMSStatusCallback(GSM_StateMachine *s, SendSMSStatusCallback callback)
 {
 	s->User.SendSMSStatus = callback;
 }
 
-GSM_StateMachine *GAMMU_AllocStateMachine(void)
+GSM_StateMachine *GSM_AllocStateMachine(void)
 {
 	return (GSM_StateMachine *)calloc(1, sizeof(GSM_StateMachine));
 }
 
-void GAMMU_FreeStateMachine(GSM_StateMachine *s)
+void GSM_FreeStateMachine(GSM_StateMachine *s)
 {
 	int i;
 
@@ -1697,8 +1697,12 @@ void GAMMU_FreeStateMachine(GSM_StateMachine *s)
 }
 
 
+GSM_ConnectionType GSM_GetUsedConnection(GSM_StateMachine *s)
+{
+	return s->ConnectionType;
+}
 
-OnePhoneModel *GAMMU_GetModelInfo(GSM_StateMachine *s)
+OnePhoneModel *GSM_GetModelInfo(GSM_StateMachine *s)
 {
 	return s->Phone.Data.ModelInfo;
 }

@@ -133,7 +133,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{0,				""}
 };
 
-char *GAMMU_ErrorString(GSM_Error e)
+char *GSM_ErrorString(GSM_Error e)
 {
 	unsigned char 	*def 	= NULL;
 	int 		i	= 0;
