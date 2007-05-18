@@ -133,7 +133,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num);
  *
  * \ingroup StateMachine
  */
-GSM_Config *GAMMU_GetConfig(GSM_StateMachine *s, int num);
+GSM_Config *GSM_GetConfig(GSM_StateMachine *s, int num);
 
 /**
  * Gets number of active gammu configurations.
@@ -143,7 +143,7 @@ GSM_Config *GAMMU_GetConfig(GSM_StateMachine *s, int num);
  *
  * \ingroup StateMachine
  */
-int GAMMU_GetConfigNum(const GSM_StateMachine *s);
+int GSM_GetConfigNum(const GSM_StateMachine *s);
 
 /**
  * Gets number of active gammu configurations.
@@ -153,27 +153,27 @@ int GAMMU_GetConfigNum(const GSM_StateMachine *s);
  *
  * \ingroup StateMachine
  */
-void GAMMU_SetConfigNum(GSM_StateMachine *s, int sections);
+void GSM_SetConfigNum(GSM_StateMachine *s, int sections);
 
 /**
  * Allocates new clean state machine structure. You should free it then
- * by \ref GAMMU_FreeStateMachine.
+ * by \ref GSM_FreeStateMachine.
  *
  * \return Pointer to state machine structure.
  *
  * \ingroup StateMachine
  */
-GSM_StateMachine *GAMMU_AllocStateMachine(void);
+GSM_StateMachine *GSM_AllocStateMachine(void);
 
 /**
  * Frees state machine structure allocated by 
- * \ref GAMMU_AllocStateMachine.
+ * \ref GSM_AllocStateMachine.
  *
  * \param s Pointer to state machine structure.
  *
  * \ingroup StateMachine
  */
-void GAMMU_FreeStateMachine(GSM_StateMachine *s);
+void GSM_FreeStateMachine(GSM_StateMachine *s);
 #endif
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:

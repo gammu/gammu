@@ -129,5 +129,5 @@ GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, int *Length);
  *
  * \ingroup Keys
  */
-GSM_Error GAMMU_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press);
+GSM_Error GSM_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press);
 #endif

@@ -305,25 +305,25 @@ typedef struct {
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetManufacturer(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetManufacturer(GSM_StateMachine *s, char *value);
 /**
  * Reads model from phone.
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetModel(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetModel(GSM_StateMachine *s, char *value);
 /**
  * Reads model info from state machine.
  *
  * \ingroup Info
  */
-OnePhoneModel *GAMMU_GetModelInfo(GSM_StateMachine *s);
+OnePhoneModel *GSM_GetModelInfo(GSM_StateMachine *s);
 /**
  * Reads firmware information from phone.
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetFirmware(GSM_StateMachine *s, char *value, char *date, double *num);
+GSM_Error GSM_GetFirmware(GSM_StateMachine *s, char *value, char *date, double *num);
 /**
  * Reads IMEI/serial number from phone.
  *
@@ -331,66 +331,66 @@ GSM_Error GAMMU_GetFirmware(GSM_StateMachine *s, char *value, char *date, double
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetIMEI(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetIMEI(GSM_StateMachine *s, char *value);
 /**
  * Gets date and time from phone.
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetOriginalIMEI(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetOriginalIMEI(GSM_StateMachine *s, char *value);
 /**
  * Gets month when device was manufactured.
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetManufactureMonth(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetManufactureMonth(GSM_StateMachine *s, char *value);
 /**
  * Gets product code of device.
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetProductCode(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetProductCode(GSM_StateMachine *s, char *value);
 /**
  * Gets hardware information about device.
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetHardware(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetHardware(GSM_StateMachine *s, char *value);
 /**
  * Gets PPM (Post Programmable Memory) info from phone
  * (in other words for Nokia get, which language pack is in phone)
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetPPM(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetPPM(GSM_StateMachine *s, char *value);
 /**
  * Gets SIM IMSI from phone.
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetSIMIMSI(GSM_StateMachine *s, char *IMSI);
+GSM_Error GSM_GetSIMIMSI(GSM_StateMachine *s, char *IMSI);
 /**
  * Gets information about batery charge and phone charging state.
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat);
+GSM_Error GSM_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat);
 /**
  * Reads signal quality (strength and error rate).
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig);
+GSM_Error GSM_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig);
 /**
  * Gets network information.
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo);
+GSM_Error GSM_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo);
 /**
  * Acquired display status.
  *
  * \ingroup Info
  */
-GSM_Error GAMMU_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *features);
+GSM_Error GSM_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *features);
 #endif

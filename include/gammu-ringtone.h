@@ -177,23 +177,23 @@ GSM_Error PHONE_Beep			(GSM_StateMachine *s);
 /**
  * Gets ringtone from phone.
  */
-GSM_Error GAMMU_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone);
+GSM_Error GSM_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone);
 /**
  * Sets ringtone in phone.
  */
-GSM_Error GAMMU_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength);
+GSM_Error GSM_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength);
 /**
  * Acquires ringtone informaiton.
  */
-GSM_Error GAMMU_GetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtonesInfo *Info);
+GSM_Error GSM_GetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtonesInfo *Info);
 /**
  * Deletes user defined ringtones from phone.
  */
-GSM_Error GAMMU_DeleteUserRingtones(GSM_StateMachine *s);
+GSM_Error GSM_DeleteUserRingtones(GSM_StateMachine *s);
 /**
  * Plays tone.
  */
-GSM_Error GAMMU_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, bool start);
+GSM_Error GSM_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, bool start);
 
 GSM_Error GSM_RingtoneConvert(GSM_Ringtone *dest, GSM_Ringtone *src, GSM_RingtoneFormat	Format);
 GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone);

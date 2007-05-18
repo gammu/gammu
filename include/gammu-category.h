@@ -47,17 +47,17 @@ typedef struct {
  *
  * \ingroup Category
  */
-GSM_Error GAMMU_GetCategory(GSM_StateMachine *s, GSM_Category *Category);
+GSM_Error GSM_GetCategory(GSM_StateMachine *s, GSM_Category *Category);
 /**
  * Adds category to phone.
  *
  * \ingroup Category
  */
-GSM_Error GAMMU_AddCategory(GSM_StateMachine *s, GSM_Category *Category);
+GSM_Error GSM_AddCategory(GSM_StateMachine *s, GSM_Category *Category);
 /**
  * Reads category status (number of used entries) from phone.
  *
  * \ingroup Category
  */
-GSM_Error GAMMU_GetCategoryStatus(GSM_StateMachine *s, GSM_CategoryStatus *Status);
+GSM_Error GSM_GetCategoryStatus(GSM_StateMachine *s, GSM_CategoryStatus *Status);
 #endif

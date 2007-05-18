@@ -314,41 +314,41 @@ typedef struct {
  * Gets memory (phonebooks or calls) status (eg. number of used and
  * free entries).
  */
-GSM_Error GAMMU_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *status);
+GSM_Error GSM_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *status);
 /**
  * Reads entry from memory (phonebooks or calls). Which entry should
  * be read is defined in entry.
  */
-GSM_Error GAMMU_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
+GSM_Error GSM_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
 /**
  * Reads entry from memory (phonebooks or calls). Which entry should
  * be read is defined in entry. This can be easily used for reading all entries.
  */
-GSM_Error GAMMU_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start);
+GSM_Error GSM_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start);
 /**
  * Sets memory (phonebooks or calls) entry.
  */
-GSM_Error GAMMU_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
+GSM_Error GSM_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
 /**
  * Deletes memory (phonebooks or calls) entry.
  */
-GSM_Error GAMMU_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
+GSM_Error GSM_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
 /**
  * Deletes memory (phonebooks or calls) entry.
  */
-GSM_Error GAMMU_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
+GSM_Error GSM_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
 /**
  * Deletes all memory (phonebooks or calls) entries of specified type.
  */
-GSM_Error GAMMU_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType);
+GSM_Error GSM_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType);
 /**
  * Gets speed dial.
  */
-GSM_Error GAMMU_GetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed);
+GSM_Error GSM_GetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed);
 /**
  * Sets speed dial.
  */
-GSM_Error GAMMU_SetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed);
+GSM_Error GSM_SetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed);
 
 unsigned char *GSM_PhonebookGetEntryName (GSM_MemoryEntry *entry);
 #endif

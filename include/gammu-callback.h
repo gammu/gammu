@@ -60,7 +60,7 @@ typedef void (*SendSMSStatusCallback) (GSM_StateMachine *s, int status, int Mess
  *
  * \ingroup Callback
  */
-void GAMMU_SetIncomingCallCallback(GSM_StateMachine *s, IncomingCallCallback callback);
+void GSM_SetIncomingCallCallback(GSM_StateMachine *s, IncomingCallCallback callback);
 
 /**
  * Sets callback for incoming SMSes.
@@ -70,7 +70,7 @@ void GAMMU_SetIncomingCallCallback(GSM_StateMachine *s, IncomingCallCallback cal
  *
  * \ingroup Callback
  */
-void GAMMU_SetIncomingSMSCallback(GSM_StateMachine *s, IncomingSMSCallback callback);
+void GSM_SetIncomingSMSCallback(GSM_StateMachine *s, IncomingSMSCallback callback);
 
 /**
  * Sets callback for incoming CB.
@@ -80,7 +80,7 @@ void GAMMU_SetIncomingSMSCallback(GSM_StateMachine *s, IncomingSMSCallback callb
  *
  * \ingroup Callback
  */
-void GAMMU_SetIncomingCBCallback(GSM_StateMachine *s, IncomingCBCallback callback);
+void GSM_SetIncomingCBCallback(GSM_StateMachine *s, IncomingCBCallback callback);
 
 /**
  * Sets callback for incoming USSD.
@@ -90,7 +90,7 @@ void GAMMU_SetIncomingCBCallback(GSM_StateMachine *s, IncomingCBCallback callbac
  *
  * \ingroup Callback
  */
-void GAMMU_SetIncomingUSSDCallback(GSM_StateMachine *s, IncomingUSSDCallback callback);
+void GSM_SetIncomingUSSDCallback(GSM_StateMachine *s, IncomingUSSDCallback callback);
 
 /**
  * Sets callback for sending SMS.
@@ -100,5 +100,5 @@ void GAMMU_SetIncomingUSSDCallback(GSM_StateMachine *s, IncomingUSSDCallback cal
  *
  * \ingroup Callback
  */
-void GAMMU_SetSendSMSStatusCallback(GSM_StateMachine *s, SendSMSStatusCallback callback);
+void GSM_SetSendSMSStatusCallback(GSM_StateMachine *s, SendSMSStatusCallback callback);
 #endif

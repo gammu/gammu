@@ -25,7 +25,7 @@ static GSM_Error SendingSMSStatus;
 void SMSSendingSMSStatus (GSM_StateMachine *s, int status, int mr)
 {
 	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%d\n",
-			GAMMU_GetConfig(s, -1)->Device, 
+			GSM_GetConfig(s, -1)->Device, 
 			status, 
 			mr);
 	TPMR = mr;
@@ -44,15 +44,15 @@ void GSM_Terminate_SMSD(char *msg, int error, bool exitprogram, int rc)
 		WriteSMSDLog(_("Terminating communication"));
 		ret=GSM_TerminateConnection(s);
 		if (ret!=ERR_NONE) {
-			printf("%s\n",GAMMU_ErrorString(error));
+			printf("%s\n",GSM_ErrorString(error));
 			if (GSM_IsConnected(s)) {
 				GSM_TerminateConnection(s);
 			}
 		}
 	}
 	if (error != 0) {
-		WriteSMSDLog(msg, error, GAMMU_ErrorString(error));
-		fprintf(stderr, msg, error, GAMMU_ErrorString(error));
+		WriteSMSDLog(msg, error, GSM_ErrorString(error));
+		fprintf(stderr, msg, error, GSM_ErrorString(error));
 		fprintf(stderr, "\n");
 	}
 	if (exitprogram) {
@@ -122,7 +122,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	Config->IncludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "gammu", false);
 	if (Config->IncludeNumbers) {
 		GSM_ReadConfig(smsdcfgfile, &smsdcfg, 0);
-		gammucfg = GAMMU_GetConfig(s, 0);
+		gammucfg = GSM_GetConfig(s, 0);
 		*gammucfg = smsdcfg;
 		error=GSM_SetGlobalDebugFile(gammucfg->DebugFile);
 	}
@@ -252,7 +252,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	GSM_Error		error;
 
 	/* Need PIN ? */
-	error=GAMMU_GetSecurityStatus(s,&SecurityCode.Type);
+	error=GSM_GetSecurityStatus(s,&SecurityCode.Type);
 	/* Unknown error */
 	if (error != ERR_NOTSUPPORTED && error != ERR_NONE) {
 		WriteSMSDLog(_("Error getting security status (%i)"), error);
@@ -270,7 +270,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 		} else {
 			WriteSMSDLog(_("Trying to enter PIN"));
 			strcpy(SecurityCode.Code,Config->PINCode);
-			error=GAMMU_EnterSecurityCode(s,SecurityCode);
+			error=GSM_EnterSecurityCode(s,SecurityCode);
 			if (error == ERR_SECURITYERROR) {
 				GSM_Terminate_SMSD(_("ERROR: incorrect PIN"), error, true, -1);
 			}
@@ -303,7 +303,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	start=true;
 	while (error == ERR_NONE && !gshutdown) {
 		sms.SMS[0].Folder=0x00;
-		error=GAMMU_GetNextSMS(s, &sms, start);
+		error=GSM_GetNextSMS(s, &sms, start);
 		switch (error) {
 		case ERR_EMPTY:
 			break;
@@ -348,7 +348,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 		if (error == ERR_NONE && sms.SMS[0].InboxFolder) {
 			for (i=0;i<sms.Number;i++) {
 				sms.SMS[i].Folder=0;
-				error=GAMMU_DeleteSMS(s,&sms.SMS[i]);
+				error=GSM_DeleteSMS(s,&sms.SMS[i]);
 				switch (error) {
 				case ERR_NONE:
 				case ERR_EMPTY:
@@ -370,7 +370,7 @@ bool SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	GSM_Error		error;
 
 	/* Do we have any SMS in phone ? */
-	error=GAMMU_GetSMSStatus(s,&SMSStatus);
+	error=GSM_GetSMSStatus(s,&SMSStatus);
 	if (error != ERR_NONE) {
 		WriteSMSDLog(_("Error getting SMS status (%i)"), error);
 		return false;
@@ -435,7 +435,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			if (sms.SMS[i].SMSC.Location == 1) {
 			    	if (Config->SMSC.Location == 0) {
 					Config->SMSC.Location = 1;
-					error = GAMMU_GetSMSC(s,&Config->SMSC);
+					error = GSM_GetSMSC(s,&Config->SMSC);
 					if (error!=ERR_NONE) {
 						WriteSMSDLog(_("Error getting SMSC from phone"));
 						return false;
@@ -456,10 +456,10 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				if ((strcmp(Config->deliveryreport, "no") != 0 && (Config->currdeliveryreport == -1))) sms.SMS[i].PDU = SMS_Status_Report;
 			}
 
-			error=GAMMU_SendSMS(s, &sms.SMS[i]);
+			error=GSM_SendSMS(s, &sms.SMS[i]);
 			if (error!=ERR_NONE) {
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, -1);
-				WriteSMSDLog(_("Error sending SMS %s (%i): %s"), Config->SMSID, error,GAMMU_ErrorString(error));
+				WriteSMSDLog(_("Error sending SMS %s (%i): %s"), Config->SMSID, error,GSM_ErrorString(error));
 				return false;
 			}
 			Service->RefreshPhoneStatus(Config);
@@ -483,7 +483,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			}
 			if (SendingSMSStatus != ERR_NONE) {
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, TPMR);
-				WriteSMSDLog(_("Error getting send status of %s (%i): %s"), Config->SMSID, SendingSMSStatus,GAMMU_ErrorString(SendingSMSStatus));
+				WriteSMSDLog(_("Error getting send status of %s (%i): %s"), Config->SMSID, SendingSMSStatus,GSM_ErrorString(SendingSMSStatus));
 				return false;
 			}
 			error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, TPMR);
@@ -549,23 +549,23 @@ void SMSDaemon(int argc, char *argv[])
 			error=GSM_InitConnection(s,2);
 			switch (error) {
 			case ERR_NONE:
-				GAMMU_SetSendSMSStatusCallback(s, SMSSendingSMSStatus);
+				GSM_SetSendSMSStatusCallback(s, SMSSendingSMSStatus);
 				if (errors == 255) {
 					errors = 0;
-					if (GAMMU_GetIMEI(s, NULL) != ERR_NONE) {
+					if (GSM_GetIMEI(s, NULL) != ERR_NONE) {
 						errors++;
 					} else {
 						error = Service->InitAfterConnect(&Config);
 						if (error!=ERR_NONE) {
 							GSM_Terminate_SMSD(_("Stop GAMMU smsd (%i)"), error, true, -1);
 						}
-						GAMMU_SetFastSMSSending(s,true);
+						GSM_SetFastSMSSending(s,true);
 					}
 				} else {
 					errors = 0;
 				}
 				if (initerrors > 3 || initerrors < 0) {
-					error=GAMMU_Reset(s, false); /* soft reset */
+					error=GSM_Reset(s, false); /* soft reset */
 					WriteSMSDLog(_("Reset return code: %s (%i) "), error == ERR_NONE? "OK":"ERROR", error);
 					lastreset = time(NULL);
 					my_sleep(5000);
@@ -602,7 +602,7 @@ void SMSDaemon(int argc, char *argv[])
 		}
 		if (!SMSD_SendSMS(&Config,Service)) continue;
 	}
-	GAMMU_SetFastSMSSending(s,false);
+	GSM_SetFastSMSSending(s,false);
 	GSM_Terminate_SMSD(_("Stop GAMMU smsd"), 0, false, 0);
 }
 
