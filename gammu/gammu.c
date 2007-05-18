@@ -10413,14 +10413,13 @@ int main(int argc, char *argv[])
 
 	smcfg0 = GSM_GetConfig(s, 0);
 
-	for (i = 0; i <= MAX_CONFIG_NUM; i++) {
+	for (i = 0; (smcfg = GSM_GetConfig(s, i)) != NULL; i++) {
 		/* Wanted user specific configuration? */
 		if (only_config != -1) {
 			smcfg = smcfg0;
 			/* Here we get only in first for loop */
 			if (!GSM_ReadConfig(cfg, smcfg, only_config)) break;
 		} else {
-			smcfg = GSM_GetConfig(s, i);
 			if (!GSM_ReadConfig(cfg, smcfg, i) && i != 0) break;
 		}
 		GSM_SetConfigNum(s, GSM_GetConfigNum(s) + 1);
