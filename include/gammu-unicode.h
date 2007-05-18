@@ -1,3 +1,4 @@
+#include <gammu-types.h>
 
 size_t		UnicodeLength			(const unsigned char *str);
 unsigned char	*DecodeUnicodeString		(const unsigned char *src);

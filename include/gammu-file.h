@@ -63,45 +63,45 @@ typedef struct {
 /**
  * Gets next filename from filesystem.
  */
-GSM_Error GAMMU_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start);
+GSM_Error GSM_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start);
 /**
  * Gets file part from filesystem.
  */
-GSM_Error GAMMU_GetFolderListing(GSM_StateMachine *s, GSM_File *File, bool start);
+GSM_Error GSM_GetFolderListing(GSM_StateMachine *s, GSM_File *File, bool start);
 /**
  * Gets next root folder.
  */
-GSM_Error GAMMU_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File);
+GSM_Error GSM_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File);
 /**
  * Sets file system attributes.
  */
-GSM_Error GAMMU_SetFileAttributes(GSM_StateMachine *s, GSM_File *File);
+GSM_Error GSM_SetFileAttributes(GSM_StateMachine *s, GSM_File *File);
 /**
  * Retrieves file part.
  */
-GSM_Error GAMMU_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size);
+GSM_Error GSM_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size);
 /**
  * Adds file part to filesystem.
  */
-GSM_Error GAMMU_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
+GSM_Error GSM_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
 /**
  * Sends file to phone, it's up to phone to decide what to do with it.
  */
-GSM_Error GAMMU_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
+GSM_Error GSM_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle);
 /**
  * Acquires filesystem status.
  */
-GSM_Error GAMMU_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *Status);
+GSM_Error GSM_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *Status);
 /**
  * Deletes file from filessytem.
  */
-GSM_Error GAMMU_DeleteFile(GSM_StateMachine *s, unsigned char *ID);
+GSM_Error GSM_DeleteFile(GSM_StateMachine *s, unsigned char *ID);
 /**
  * Adds folder to filesystem.
  */
-GSM_Error GAMMU_AddFolder(GSM_StateMachine *s, GSM_File *File);
+GSM_Error GSM_AddFolder(GSM_StateMachine *s, GSM_File *File);
 /**
  * Deletes folder from filesystem.
  */
-GSM_Error GAMMU_DeleteFolder(GSM_StateMachine *s, unsigned char *ID);
+GSM_Error GSM_DeleteFolder(GSM_StateMachine *s, unsigned char *ID);
 #endif

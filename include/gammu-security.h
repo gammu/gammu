@@ -47,8 +47,8 @@ typedef struct {
 /**
  * Enters security code (PIN, PUK,...) .
  */
-GSM_Error GAMMU_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code);
+GSM_Error GSM_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code);
 /**
  * Queries whether some security code needs to be entered./
  */
-GSM_Error GAMMU_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Status);
+GSM_Error GSM_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Status);

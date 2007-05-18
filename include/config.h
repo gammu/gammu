@@ -5,9 +5,9 @@
  * tree and installation.
  */
 
-#ifndef GAMMU_CONFIG_INCLUDED
+#ifndef GSM_CONFIG_INCLUDED
 #  include <config.h>
-#  define GAMMU_CONFIG_INCLUDED
+#  define GSM_CONFIG_INCLUDED
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

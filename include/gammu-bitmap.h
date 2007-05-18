@@ -185,13 +185,13 @@ typedef struct {
  *
  * \ingroup Bitmap
  */
-GSM_Error GAMMU_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
+GSM_Error GSM_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
 /**
  * Sets bitmap in phone.
  *
  * \ingroup Bitmap
  */
-GSM_Error GAMMU_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
+GSM_Error GSM_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
 
 /**
  * Prints bitmap to file.

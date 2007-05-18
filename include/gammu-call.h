@@ -204,90 +204,90 @@ typedef enum {
  *
  * \ingroup Call
  */
-GSM_Error GAMMU_DialVoice(GSM_StateMachine *s, char *Number, GSM_CallShowNumber ShowNumber);
+GSM_Error GSM_DialVoice(GSM_StateMachine *s, char *Number, GSM_CallShowNumber ShowNumber);
 /**
  * Dials service number (usually for USSD).
  *
  * \ingroup Call
  */
-GSM_Error GAMMU_DialService(GSM_StateMachine *s, char *Number);
+GSM_Error GSM_DialService(GSM_StateMachine *s, char *Number);
 /**
  * Accept current incoming call.
  *
  * \ingroup Call
  */
-GSM_Error GAMMU_AnswerCall(GSM_StateMachine *s, int ID, bool all);
+GSM_Error GSM_AnswerCall(GSM_StateMachine *s, int ID, bool all);
 /**
  * Deny current incoming call.
  *
  * \ingroup Call
  */
-GSM_Error GAMMU_CancelCall(GSM_StateMachine *s, int ID, bool all);
+GSM_Error GSM_CancelCall(GSM_StateMachine *s, int ID, bool all);
 /**
  * Holds call.
  *
  * \ingroup Call
  */
-GSM_Error GAMMU_HoldCall(GSM_StateMachine *s, int ID);
+GSM_Error GSM_HoldCall(GSM_StateMachine *s, int ID);
 /**
  * Unholds call.
  *
  * \ingroup Call
  */
-GSM_Error GAMMU_UnholdCall(GSM_StateMachine *s, int ID);
+GSM_Error GSM_UnholdCall(GSM_StateMachine *s, int ID);
 /**
  * Initiates conference call.
  *
  * \ingroup Call
  */
-GSM_Error GAMMU_ConferenceCall(GSM_StateMachine *s, int ID);
+GSM_Error GSM_ConferenceCall(GSM_StateMachine *s, int ID);
 /**
  * Splits call.
  *
  * \ingroup Call
  */
-GSM_Error GAMMU_SplitCall(GSM_StateMachine *s, int ID);
+GSM_Error GSM_SplitCall(GSM_StateMachine *s, int ID);
 /**
  * Transfers call.
  *
  * \ingroup Call
  */
-GSM_Error GAMMU_TransferCall(GSM_StateMachine *s, int ID, bool next);
+GSM_Error GSM_TransferCall(GSM_StateMachine *s, int ID, bool next);
 /**
  * Switches call.
  *
  * \ingroup Call
  */
-GSM_Error GAMMU_SwitchCall(GSM_StateMachine *s, int ID, bool next);
+GSM_Error GSM_SwitchCall(GSM_StateMachine *s, int ID, bool next);
 /**
  * Gets call diverts.
  *
  * \ingroup Divert
  */
-GSM_Error GAMMU_GetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
+GSM_Error GSM_GetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
 /**
  * Sets call diverts.
  *
  * \ingroup Divert
  */
-GSM_Error GAMMU_SetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
+GSM_Error GSM_SetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
 /**
  * Cancels all diverts.
  *
  * \ingroup Divert
  */
-GSM_Error GAMMU_CancelAllDiverts(GSM_StateMachine *s);
+GSM_Error GSM_CancelAllDiverts(GSM_StateMachine *s);
 /**
  * Activates/deactivates noticing about incoming calls.
  *
  * \ingroup Call
  */
-GSM_Error GAMMU_SetIncomingCall(GSM_StateMachine *s, bool enable);
+GSM_Error GSM_SetIncomingCall(GSM_StateMachine *s, bool enable);
 /**
  * Sends DTMF (Dual Tone Multi Frequency) tone.
  *
  * \ingroup Call
  */
-GSM_Error GAMMU_SendDTMF(GSM_StateMachine *s, char *sequence);
+GSM_Error GSM_SendDTMF(GSM_StateMachine *s, char *sequence);
 
 #endif

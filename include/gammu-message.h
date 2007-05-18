@@ -811,81 +811,81 @@ GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT,
 /**
  * Gets SMS Service Center number and SMS settings.
  */
-GSM_Error GAMMU_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc);
+GSM_Error GSM_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc);
 /**
  * Sets SMS Service Center number and SMS settings.
  */
-GSM_Error GAMMU_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc);
+GSM_Error GSM_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc);
 /**
  * Gets information about SMS memory (read/unread/size of memory for
  * both SIM and phone).
  */
-GSM_Error GAMMU_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status);
+GSM_Error GSM_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status);
 /**
  * Reads SMS message.
  */
-GSM_Error GAMMU_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms);
+GSM_Error GSM_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms);
 /**
  * Reads next (or first if start set) SMS message. This might be
  * faster for some phones than using @ref GetSMS for each message.
  */
-GSM_Error GAMMU_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start);
+GSM_Error GSM_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start);
 /**
  * Sets SMS.
  */
-GSM_Error GAMMU_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
+GSM_Error GSM_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
 /**
  * Adds SMS to specified folder.
  */
-GSM_Error GAMMU_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
+GSM_Error GSM_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
 /**
  * Deletes SMS.
  */
-GSM_Error GAMMU_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
+GSM_Error GSM_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
 /**
  * Sends SMS.
  */
-GSM_Error GAMMU_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
+GSM_Error GSM_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
 /**
  * Sends SMS already saved in phone.
  */
-GSM_Error GAMMU_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location);
+GSM_Error GSM_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location);
 /**
  * Configures fast SMS sending.
  */
-GSM_Error GAMMU_SetFastSMSSending(GSM_StateMachine *s, bool enable);
+GSM_Error GSM_SetFastSMSSending(GSM_StateMachine *s, bool enable);
 /**
  * Enable/disable notification on incoming SMS.
  */
-GSM_Error GAMMU_SetIncomingSMS(GSM_StateMachine *s, bool enable);
+GSM_Error GSM_SetIncomingSMS(GSM_StateMachine *s, bool enable);
 /**
  * Gets network information from phone.
  */
-GSM_Error GAMMU_SetIncomingCB(GSM_StateMachine *s, bool enable);
+GSM_Error GSM_SetIncomingCB(GSM_StateMachine *s, bool enable);
 /**
  * Returns SMS folders information.
  */
-GSM_Error GAMMU_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders);
+GSM_Error GSM_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders);
 /**
  * Creates SMS folder.
  */
-GSM_Error GAMMU_AddSMSFolder(GSM_StateMachine *s, unsigned char *name);
+GSM_Error GSM_AddSMSFolder(GSM_StateMachine *s, unsigned char *name);
 /**
  * Deletes SMS folder.
  */
-GSM_Error GAMMU_DeleteSMSFolder(GSM_StateMachine *s, int ID);
+GSM_Error GSM_DeleteSMSFolder(GSM_StateMachine *s, int ID);
 
 /**
  * Lists MMS folders.
  */
-GSM_Error GAMMU_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders);
+GSM_Error GSM_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders);
 /**
  * Retrieves next part of MMS file information.
  */
-GSM_Error GAMMU_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start);
+GSM_Error GSM_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start);
 /**
  * Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).
  */
-GSM_Error GAMMU_SetIncomingUSSD(GSM_StateMachine *s, bool enable);
+GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine *s, bool enable);
 #endif
 

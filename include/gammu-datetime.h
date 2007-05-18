@@ -69,9 +69,9 @@ bool CheckTime			(GSM_DateTime *date);
 /**
  * Reads date and time from phone.
  */
-GSM_Error GAMMU_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time);
+GSM_Error GSM_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time);
 /**
  * Sets date and time in phone.
  */
-GSM_Error GAMMU_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time);
+GSM_Error GSM_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time);
 #endif

@@ -80,7 +80,7 @@ typedef enum {
  *
  * \ingroup Error
  */
-char *GAMMU_ErrorString(GSM_Error e);
+char *GSM_ErrorString(GSM_Error e);
 
 /**
  * Sets debug file.
