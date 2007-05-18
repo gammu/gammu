@@ -35,11 +35,7 @@ void GSM_ClearBatteryCharge(GSM_BatteryCharge *bat);
 /* ----------------------- filesystem ------------------------------------- */
 
 
-GSM_Error GSM_ReadFile(char *FileName, GSM_File *File);
 
-GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR, char *Version, int *Size);
-
-void GSM_IdentifyFileFormat(GSM_File *File);
 
 
 /* ----------------------------- GPRS access points ----------------------- */
