@@ -3510,7 +3510,7 @@ static GSM_Error SMSStatus;
 
 static void SendSMSStatus (GSM_StateMachine *s, int status, int MessageReference)
 {
-	dbgprintf("Sent SMS on device: \"%s\"\n",s->CurrentConfig->Device);
+	dbgprintf("Sent SMS on device: \"%s\"\n", GSM_GetConfig(s, -1)->Device);
 	if (status==0) {
 		printf(_("..OK"));
 		SMSStatus = ERR_NONE;
@@ -5789,7 +5789,7 @@ static void Restore(int argc, char *argv[])
 		fprintf(stderr, "\n");
 	}
 
-	if (!strcasecmp(s.CurrentConfig->SyncTime,"yes") == 0) {
+	if (!strcasecmp(GSM_GetConfig(s, -1)->SyncTime,"yes") == 0) {
 		if (answer_yes(_("Do you want to set phone date/time (NOTE: in some phones it's required to correctly restore calendar notes and other items)"))) {
 			GSM_GetCurrentDateTime(&date_time);
 
@@ -6317,7 +6317,7 @@ static void AddNew(int argc, char *argv[])
 		}
 	}
 
-	if (!strcasecmp(s.CurrentConfig->SyncTime,"yes") == 0) {
+	if (!strcasecmp(GSM_GetConfig(s, -1)->SyncTime,"yes") == 0) {
 		if (answer_yes(_("Do you want to set phone date/time (NOTE: in some phones it's required to correctly restore calendar notes and other items)"))) {
 			GSM_GetCurrentDateTime(&date_time);
 
