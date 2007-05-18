@@ -59,11 +59,26 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesiz
 
 /* ------------------------------------------------------------------------- */
 
+
+/**
+ * Debugging level.
+ */
+typedef enum {
+	DL_NONE = 0,		/**< No debug messages		*/
+	DL_BINARY = 1,		/**< Binary transmission dump 	*/
+	DL_TEXT,		/**< Text transmission dump	*/
+	DL_TEXTALL,		/**< Everything			*/
+	DL_TEXTERROR,		/**< Only errors			*/
+	DL_TEXTDATE,		/**< Text transmission dump	*/
+	DL_TEXTALLDATE,		/**< Everything			*/
+	DL_TEXTERRORDATE	/**< Only errors			*/
+} Debug_Level;
+
 struct _DebugInfo {
 	Debug_Level	dl; /**< Level of messages to display */
 	FILE		*df; /**< File used for debug messages output */
 	bool        	use_global; /**< Whether to use global debug structure instead of this one. */
-	char		*coding; /**< Encoding used in console */
+	const char	*coding; /**< Encoding used in console */
 	bool		was_lf; /**< Has there already been new line */
 };
 

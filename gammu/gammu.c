@@ -10369,15 +10369,18 @@ int main(int argc, char *argv[])
 	GSM_Config *smcfg;
 	GSM_Config *smcfg0;
 
+#ifdef DEBUG
+	GSM_Debug_Info *di;
+#endif
 
 	s = GSM_AllocStateMachine();
 
 	GSM_InitLocales(NULL);
 
 #ifdef DEBUG
-	di.dl		= DL_TEXTALL;
-	di.df	 	= stdout;
-	di.was_lf	= true;
+	di = GSM_GetGlobalDebug();
+	GSM_SetDebugFileDescriptor(stdout, di);
+	GSM_SetDebugLevel("textall", di);
 #endif
 
  	/* Any parameters? */
@@ -10426,11 +10429,13 @@ int main(int argc, char *argv[])
 
 		if (cfg!=NULL) {
 		        cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
-        		if (cp) di.coding = cp;
+        		if (cp) {
+				GSM_SetDebugCoding(cp, di);
+			}
 
 		        smcfg->Localize = INI_GetValue(cfg, "gammu", "gammuloc", false);
 			/* It is safe to pass NULL here */
-			InitLocales(smcfg->Localize);
+			GSM_InitLocales(smcfg->Localize);
 		}
 
      		/* We want to use only one file descriptor for global and state machine debug output */
@@ -10444,16 +10449,16 @@ int main(int argc, char *argv[])
  		} else {
 			/* Just for first config */
 			/* When user gave debug level on command line */
-			if (argc > 1 + start && GSM_SetDebugLevel(argv[1 + start], &di)) {
+			if (argc > 1 + start && GSM_SetDebugLevel(argv[1 + start], di)) {
 				/* Debug level from command line will be used with phone too */
 				strcpy(smcfg->DebugLevel,argv[1 + start]);
 				start++;
 			} else {
 				/* Try to set debug level from config file */
-				GSM_SetDebugLevel(smcfg->DebugLevel, &di);
+				GSM_SetDebugLevel(smcfg->DebugLevel, di);
 			}
 			/* If user gave debug file in gammurc, we will use it */
-			error=GSM_SetDebugFile(smcfg->DebugFile, &di);
+			error=GSM_SetDebugFile(smcfg->DebugFile, di);
 			Print_Error(error);
  		}
 
@@ -10541,7 +10546,7 @@ int main(int argc, char *argv[])
 	ProcessParameters(start, argc, argv);
 
      	/* Close debug output if opened */
-     	if (di.df!=stdout) fclose(di.df);
+	GSM_SetDebugFileDescriptor(NULL, di);
 
 	GSM_FreeStateMachine(s);
 

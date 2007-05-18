@@ -13,21 +13,6 @@
  */
 
 /**
- * Debugging level.
- * \ingroup Debug
- */
-typedef enum {
-	DL_NONE = 0,		/**< No debug messages		*/
-	DL_BINARY = 1,		/**< Binary transmission dump 	*/
-	DL_TEXT,		/**< Text transmission dump	*/
-	DL_TEXTALL,		/**< Everything			*/
-	DL_TEXTERROR,		/**< Only errors			*/
-	DL_TEXTDATE,		/**< Text transmission dump	*/
-	DL_TEXTALLDATE,		/**< Everything			*/
-	DL_TEXTERRORDATE	/**< Only errors			*/
-} Debug_Level;
-
-/**
  * Debugging configuration.
  * \ingroup Debug
  */
@@ -81,6 +66,17 @@ int smprintf(GSM_StateMachine *s, const char *format, ...);
 GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi);
 
 /**
+ * Sets debug file.
+ *
+ * \param fd File descriptor.
+ * \param privdi Pointert to debug information data.
+ * \return Error code.
+ *
+ * \ingroup Debug
+ */
+GSM_Error GSM_SetDebugFileDescriptor(FILE *fd, GSM_Debug_Info *privdi);
+
+/**
  * Returns global debug settings.
  *
  * \return Pointer to global settings.
@@ -92,12 +88,23 @@ GSM_Debug_Info *GSM_GetGlobalDebug(void);
 /**
  * Sets debug level.
  *
- * \param info File path.
+ * \param info Level as text.
  * \param privdi Pointer to debug information data.
  * \return True on success.
  *
  * \ingroup Debug.
  */
-bool GSM_SetDebugLevel(char *info, GSM_Debug_Info *privdi);
+bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info *privdi);
+
+/**
+ * Sets debug encoding.
+ *
+ * \param info Encoding to set.
+ * \param privdi Pointer to debug information data.
+ * \return True on success.
+ *
+ * \ingroup Debug.
+ */
+bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info *privdi);
 
 #endif

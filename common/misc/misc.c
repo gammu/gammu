@@ -493,7 +493,7 @@ int smfprintf(GSM_Debug_Info *d, const char *format, ...)
 	return result;
 }
 
-bool GSM_SetDebugLevel(char *info, GSM_Debug_Info *privdi)
+bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info *privdi)
 {
 	if (info == NULL)			{privdi->dl = DL_NONE;	 	return true;}
 	if (!strcmp(info,"nothing")) 		{privdi->dl = DL_NONE;	 	return true;}
@@ -505,6 +505,12 @@ bool GSM_SetDebugLevel(char *info, GSM_Debug_Info *privdi)
 	if (!strcmp(info,"textalldate")) 	{privdi->dl = DL_TEXTALLDATE;    	return true;}
 	if (!strcmp(info,"errorsdate"))  	{privdi->dl = DL_TEXTERRORDATE;  	return true;}
 	return false;
+}
+
+bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info *privdi)
+{
+	privdi->coding = info;
+	return true;
 }
 
 /* Dumps a message */
