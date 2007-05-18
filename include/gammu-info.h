@@ -339,7 +339,10 @@ GSM_Error GSM_GetFirmware(GSM_StateMachine *s, char *value, char *date, double *
 /**
  * Reads IMEI/serial number from phone.
  *
+ * \param s State machine pointer.
  * \param value Pointer where to store IMEI, NULL to ignore.
+ *
+ * \return Error code.
  *
  * \ingroup Info
  */

@@ -867,7 +867,7 @@ GSM_Error GSM_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status);
 GSM_Error GSM_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms);
 /**
  * Reads next (or first if start set) SMS message. This might be
- * faster for some phones than using @ref GetSMS for each message.
+ * faster for some phones than using \ref GSM_GetSMS for each message.
  */
 GSM_Error GSM_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start);
 /**
