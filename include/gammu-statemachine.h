@@ -58,6 +58,30 @@ typedef struct {
 	char			TextMemo[32]; /**< Text for memo calendar entry category in local language */
 } GSM_Config;
 
+typedef enum {
+	GCT_MBUS2=1,
+	GCT_FBUS2,
+	GCT_FBUS2DLR3,
+	GCT_DKU2AT,
+	GCT_DKU2PHONET,
+	GCT_DKU5FBUS2,
+	GCT_ARK3116FBUS2,
+	GCT_FBUS2PL2303,
+	GCT_FBUS2BLUE,
+	GCT_FBUS2IRDA,
+	GCT_PHONETBLUE,
+	GCT_AT,
+	GCT_BLUEGNAPBUS,
+	GCT_IRDAOBEX,
+	GCT_IRDAGNAPBUS,
+	GCT_IRDAAT,
+	GCT_IRDAPHONET,
+	GCT_BLUEFBUS2,
+	GCT_BLUEAT,
+	GCT_BLUEPHONET,
+	GCT_BLUEOBEX
+} GSM_ConnectionType;
+
 /**
  * Initiates connection.
  *
@@ -176,6 +200,16 @@ GSM_StateMachine *GSM_AllocStateMachine(void);
  * \ingroup StateMachine
  */
 void GSM_FreeStateMachine(GSM_StateMachine *s);
+
+/**
+ * Gets number of active gammu configurations.
+ *
+ * \param s State machine data
+ * \return Connection type.
+ *
+ * \ingroup StateMachine
+ */
+GSM_ConnectionType GSM_GetUsedConnection(GSM_StateMachine *s);
 #endif
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
