@@ -21,7 +21,6 @@ extern GSM_Error NotSupportedFunction	(void);
 #define NOTIMPLEMENTED 	(void *) NotImplementedFunction
 #define NOTSUPPORTED 	(void *) NotSupportedFunction
 
-GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi);
 
 #endif
 

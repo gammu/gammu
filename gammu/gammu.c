@@ -10372,7 +10372,7 @@ int main(int argc, char *argv[])
 
 	s = GSM_AllocStateMachine();
 
-	InitLocales(NULL);
+	GSM_InitLocales(NULL);
 
 #ifdef DEBUG
 	di.dl		= DL_TEXTALL;

@@ -12,7 +12,7 @@ const char *GetGammuLocalePath(void);
 /**
  * Initializes locales.
  */
-extern void InitLocales(const char *path);
+extern void GSM_InitLocales(const char *path);
 
 #undef MAX
 #define MAX(a,b) ((a)>(b) ? (a) : (b))

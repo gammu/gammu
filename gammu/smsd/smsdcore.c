@@ -124,7 +124,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 		GSM_ReadConfig(smsdcfgfile, &smsdcfg, 0);
 		gammucfg = GSM_GetConfig(s, 0);
 		*gammucfg = smsdcfg;
-		error=GSM_SetGlobalDebugFile(gammucfg->DebugFile);
+		error = GSM_SetDebugFile(gammucfg->DebugFile, GSM_GetGlobalDebug());
 	}
 
 	Config->PINCode=INI_GetValue(smsdcfgfile, "smsd", "PIN", false);
