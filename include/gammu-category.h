@@ -28,9 +28,9 @@ typedef enum {
  * \ingroup Category
  */
 typedef struct {
-	GSM_CategoryType    Type; /**< Type of category */
-	int                 Location; /**< Location of category */
-	unsigned char       Name[(GSM_MAX_CATEGORY_NAME_LENGTH + 1)*2]; /**< Name of category */
+	GSM_CategoryType Type;	  /**< Type of category */
+	int Location;		      /**< Location of category */
+	unsigned char Name[(GSM_MAX_CATEGORY_NAME_LENGTH + 1) * 2];	/**< Name of category */
 } GSM_Category;
 
 /**
@@ -38,8 +38,8 @@ typedef struct {
  * \ingroup Category
  */
 typedef struct {
-	GSM_CategoryType    Type; /**< Type of category */
-	int                 Used; /**< Number of used category names */
+	GSM_CategoryType Type;	  /**< Type of category */
+	int Used;		  /**< Number of used category names */
 } GSM_CategoryStatus;
 
 /**
@@ -47,17 +47,18 @@ typedef struct {
  *
  * \ingroup Category
  */
-GSM_Error GSM_GetCategory(GSM_StateMachine *s, GSM_Category *Category);
+GSM_Error GSM_GetCategory(GSM_StateMachine * s, GSM_Category * Category);
 /**
  * Adds category to phone.
  *
  * \ingroup Category
  */
-GSM_Error GSM_AddCategory(GSM_StateMachine *s, GSM_Category *Category);
+GSM_Error GSM_AddCategory(GSM_StateMachine * s, GSM_Category * Category);
 /**
  * Reads category status (number of used entries) from phone.
  *
  * \ingroup Category
  */
-GSM_Error GSM_GetCategoryStatus(GSM_StateMachine *s, GSM_CategoryStatus *Status);
+GSM_Error GSM_GetCategoryStatus(GSM_StateMachine * s,
+				GSM_CategoryStatus * Status);
 #endif

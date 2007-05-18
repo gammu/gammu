@@ -1,12 +1,13 @@
 #include <stdio.h>
 #include <gammu-file.h>
 
-int GetLine(FILE *File, char *Line, int count);
-bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *file);
+int GetLine(FILE * File, char *Line, int count);
+bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename,
+		      GSM_File * file);
 
 const char *GetGammuVersion(void);
-const char 				*GetCompiler(void);
-const char 				*GetOS(void);
+const char *GetCompiler(void);
+const char *GetOS(void);
 
 const char *GetGammuLocalePath(void);
 /**
@@ -30,4 +31,4 @@ extern void GSM_InitLocales(const char *path);
 #  define my_sleep(x) usleep(x*1000)
 #endif
 
-void		EncodeHexBin			(unsigned char *dest, const unsigned char *src, int len);
+void EncodeHexBin(unsigned char *dest, const unsigned char *src, int len);

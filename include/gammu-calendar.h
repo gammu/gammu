@@ -13,17 +13,17 @@
  */
 
 #define GSM_CALENDAR_ENTRIES	    	16
-#define MAX_CALENDAR_TEXT_LENGTH	256 /* In 6310 max. 256 chars */
+#define MAX_CALENDAR_TEXT_LENGTH	256	/* In 6310 max. 256 chars */
 
 typedef struct {
 	/**
 	 * Monday = 1, Tuesday = 2,...
 	 */
-	int		     StartDay;
+	int StartDay;
 	/**
 	 * 0 = no delete, 1 = after day,...
 	 */
-	int		     AutoDelete;
+	int AutoDelete;
 } GSM_CalendarSettings;
 /**
  * Status of to do entries.
@@ -32,11 +32,11 @@ typedef struct {
 	/**
 	 * Number of free positions.
 	 */
-	int	     Free;
+	int Free;
 	/**
 	 * Number of used positions.
 	 */
-	int	     Used;
+	int Used;
 } GSM_ToDoStatus;
 /**
  * Structure used for returning calendar status.
@@ -45,11 +45,11 @@ typedef struct {
 	/**
 	 * Number of free positions.
 	 */
-	int		     Free;
+	int Free;
 	/**
 	 * Number of used positions.
 	 */
-	int		     Used;
+	int Used;
 } GSM_CalendarStatus;
 /**
  * Enum defines types of calendar notes
@@ -58,7 +58,7 @@ typedef enum {
 	/**
 	 * Reminder or Date
 	 */
-	GSM_CAL_REMINDER=1,
+	GSM_CAL_REMINDER = 1,
 	/**
 	 * Call
 	 */
@@ -266,23 +266,23 @@ typedef struct {
 	/**
 	 * Type of value.
 	 */
-	 GSM_CalendarType	EntryType;
+	GSM_CalendarType EntryType;
 	/**
 	 * Text of value, if applicable.
 	 */
-	 unsigned char	   	Text[(MAX_CALENDAR_TEXT_LENGTH + 1)*2];
+	unsigned char Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
 	/**
 	 * Date and time of value, if applicable.
 	 */
-	 GSM_DateTime	    	Date;
+	GSM_DateTime Date;
 	/**
 	 * Number of value, if applicable.
 	 */
-	 unsigned int	    	Number;
+	unsigned int Number;
 	/**
 	 * During adding SubEntry Gammu can return here info, if it was done OK
 	 */
-	GSM_Error		AddError;
+	GSM_Error AddError;
 } GSM_SubCalendarEntry;
 
 /**
@@ -292,25 +292,28 @@ typedef struct {
 	/**
 	 * Type of calendar note.
 	 */
-	GSM_CalendarNoteType    Type;
+	GSM_CalendarNoteType Type;
 	/**
 	 * Location in memory.
 	 */
-	int		     	Location;
+	int Location;
 	/**
 	 * Number of entries.
 	 */
-	int		     	EntriesNum;
+	int EntriesNum;
 	/**
 	 * Values of entries.
 	 */
-	GSM_SubCalendarEntry    Entries[GSM_CALENDAR_ENTRIES];
+	GSM_SubCalendarEntry Entries[GSM_CALENDAR_ENTRIES];
 } GSM_CalendarEntry;
 
-void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry *entry, int *Text, int *Time, int *Alarm, int *Phone, int *EndTime, int *Location);
+void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry * entry,
+					       int *Text, int *Time, int *Alarm,
+					       int *Phone, int *EndTime,
+					       int *Location);
 
 #define GSM_TODO_ENTRIES		7
-#define MAX_TODO_TEXT_LENGTH	    	160 /* N6230i */
+#define MAX_TODO_TEXT_LENGTH	    	160	/* N6230i */
 
 /**
  * Types of to do values. In parenthesis is member of @ref GSM_SubToDoEntry,
@@ -399,19 +402,19 @@ typedef struct {
 	/**
 	 * Type of entry.
 	 */
-	GSM_ToDoType    EntryType;
+	GSM_ToDoType EntryType;
 	/**
 	 * Text of value, if appropriate, see @ref GSM_ToDoType.
 	 */
-	unsigned char   Text[(MAX_TODO_TEXT_LENGTH + 1)*2];
+	unsigned char Text[(MAX_TODO_TEXT_LENGTH + 1) * 2];
 	/**
 	 * Date of value, if appropriate, see @ref GSM_ToDoType.
 	 */
-	GSM_DateTime    Date;
+	GSM_DateTime Date;
 	/**
 	 * Number of value, if appropriate, see @ref GSM_ToDoType.
 	 */
-	unsigned int    Number;
+	unsigned int Number;
 } GSM_SubToDoEntry;
 
 /**
@@ -421,28 +424,28 @@ typedef struct {
 	/**
 	 * Type of todo note.
 	 */
-	GSM_CalendarNoteType    Type;
+	GSM_CalendarNoteType Type;
 	/**
 	 * Priority of entry.
 	 */
-	GSM_ToDo_Priority       Priority;
+	GSM_ToDo_Priority Priority;
 	/**
 	 * Location in memory.
 	 */
-	int		     	Location;
+	int Location;
 	/**
 	 * Number of entries.
 	 */
-	int		     	EntriesNum;
+	int EntriesNum;
 	/**
 	 * Values of current entry.
 	 */
-	GSM_SubToDoEntry	Entries[GSM_TODO_ENTRIES];
+	GSM_SubToDoEntry Entries[GSM_TODO_ENTRIES];
 } GSM_ToDoEntry;
 
 typedef struct {
-	int	     Location;
-	char	     Text[3000*2];
+	int Location;
+	char Text[3000 * 2];
 } GSM_NoteEntry;
 
 /**
@@ -452,19 +455,19 @@ typedef struct {
 	/**
 	 * Location where it is stored.
 	 */
-	int	     	Location;
+	int Location;
 	/**
 	 * Date and time of alarm.
 	 */
-	GSM_DateTime    DateTime;
+	GSM_DateTime DateTime;
 	/**
 	 * Whether it repeats each day.
 	 */
-	bool	    	Repeating;
+	bool Repeating;
 	/**
 	 * Text that is shown on display.
 	 */
-	unsigned char	Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
+	unsigned char Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
 } GSM_Alarm;
 
 typedef enum {
@@ -473,7 +476,8 @@ typedef enum {
 	Mozilla_VToDo
 } GSM_VToDoVersion;
 
-GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version);
+GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry * note,
+			  bool header, GSM_VToDoVersion Version);
 
 /**
  * Format of vCalendar export.
@@ -481,127 +485,138 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 typedef enum {
 	Nokia_VCalendar = 1, /**< vCalendar specially hacked for Nokia */
 	Siemens_VCalendar, /**< vCalendar specially hacked for Nokia */
-	SonyEricsson_VCalendar, /**< Standard vCalendar (which works for Sony-Ericsson phones) */
+	SonyEricsson_VCalendar,	/**< Standard vCalendar (which works for Sony-Ericsson phones) */
 	Mozilla_iCalendar /**< iCalendar as compatible with Mozilla */
 } GSM_VCalendarVersion;
 
-GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version);
+GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length,
+			      GSM_CalendarEntry * note, bool header,
+			      GSM_VCalendarVersion Version);
 
 /* --------------------------- note ---------------------------------------- */
 
-
-GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *Note);
+GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length,
+			    GSM_NoteEntry * Note);
 
 /* --------------------------- alarm --------------------------------------- */
 
 /* --------------------------- calendar & todo ----------------------------- */
 
-GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar, GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer);
+GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos,
+				    GSM_CalendarEntry * Calendar,
+				    GSM_ToDoEntry * ToDo,
+				    GSM_VCalendarVersion CalVer,
+				    GSM_VToDoVersion ToDoVer);
 
-
-bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry *note);
+bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry * note);
 
 /**
  * Reads alarm set in phone.
  */
-GSM_Error GSM_GetAlarm(GSM_StateMachine *s, GSM_Alarm	*alarm);
+GSM_Error GSM_GetAlarm(GSM_StateMachine * s, GSM_Alarm * alarm);
 /**
  * Sets alarm in phone.
  */
-GSM_Error GSM_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm);
+GSM_Error GSM_SetAlarm(GSM_StateMachine * s, GSM_Alarm * alarm);
 
 /**
  * Gets status of ToDos (count of used entries).
  */
-GSM_Error GSM_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status);
+GSM_Error GSM_GetToDoStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
 /**
  * Reads ToDo from phone.
  */
-GSM_Error GSM_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
+GSM_Error GSM_GetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
 /**
  * Reads ToDo from phone.
  */
-GSM_Error GSM_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start);
+GSM_Error GSM_GetNextToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo,
+			  bool start);
 /**
  * Sets ToDo in phone.
  */
-GSM_Error GSM_SetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
+GSM_Error GSM_SetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
 /**
  * Adds ToDo in phone.
  */
-GSM_Error GSM_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
+GSM_Error GSM_AddToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
 /**
  * Deletes ToDo entry in phone.
  */
-GSM_Error GSM_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
+GSM_Error GSM_DeleteToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
 /**
  * Deletes all todo entries in phone.
  */
-GSM_Error GSM_DeleteAllToDo(GSM_StateMachine *s);
+GSM_Error GSM_DeleteAllToDo(GSM_StateMachine * s);
 /**
  * Retrieves calendar status (number of used entries).
  */
-GSM_Error GSM_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status);
+GSM_Error GSM_GetCalendarStatus(GSM_StateMachine * s,
+				GSM_CalendarStatus * Status);
 /**
  * Retrieves calendar entry.
  */
-GSM_Error GSM_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+GSM_Error GSM_GetCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
 /**
  * Retrieves calendar entry. This is useful for continuous reading of all
  * calendar entries.
  */
-GSM_Error GSM_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start);
+GSM_Error GSM_GetNextCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note,
+			      bool start);
 /**
  * Sets calendar entry
  */
-GSM_Error GSM_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+GSM_Error GSM_SetCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
 /**
  * Adds calendar entry.
  */
-GSM_Error GSM_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+GSM_Error GSM_AddCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
 /**
  * Deletes calendar entry.
  */
-GSM_Error GSM_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
+GSM_Error GSM_DeleteCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
 /**
  * Deletes all calendar entries.
  */
-GSM_Error GSM_DeleteAllCalendar(GSM_StateMachine *s);
+GSM_Error GSM_DeleteAllCalendar(GSM_StateMachine * s);
 /**
  * Reads calendar settings.
  */
-GSM_Error GSM_GetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *settings);
+GSM_Error GSM_GetCalendarSettings(GSM_StateMachine * s,
+				  GSM_CalendarSettings * settings);
 /**
  * Sets calendar settings.
  */
-GSM_Error GSM_SetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *settings);
+GSM_Error GSM_SetCalendarSettings(GSM_StateMachine * s,
+				  GSM_CalendarSettings * settings);
 /**
  * Retrieves notes status (number of used entries).
  */
-GSM_Error GSM_GetNotesStatus(GSM_StateMachine *s, GSM_ToDoStatus *status);
+GSM_Error GSM_GetNotesStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
 /**
  * Retrieves notes entry.
  */
-GSM_Error GSM_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Note);
+GSM_Error GSM_GetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
 /**
  * Retrieves note entry. This is useful for continuous reading of all
  * notes entries.
  */
-GSM_Error GSM_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start);
+GSM_Error GSM_GetNextNote(GSM_StateMachine * s, GSM_NoteEntry * Note,
+			  bool start);
 /**
  * Sets note entry
  */
-GSM_Error GSM_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Note);
+GSM_Error GSM_SetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
 /**
  * Adds note entry.
  */
-GSM_Error GSM_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Note);
+GSM_Error GSM_AddNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
 /**
  * Deletes note entry.
  */
-GSM_Error GSM_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *Note);
+GSM_Error GSM_DeleteNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
 /**
  * Deletes all notes entries.
  */
-GSM_Error GSM_DeleteAllNotes(GSM_StateMachine *s);
+GSM_Error GSM_DeleteAllNotes(GSM_StateMachine * s);
 #endif

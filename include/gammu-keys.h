@@ -122,12 +122,12 @@ typedef enum {
  *
  * \ingroup Keys
  */
-GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, int *Length);
+GSM_Error MakeKeySequence(char *text, GSM_KeyCode * KeyCode, int *Length);
 
 /**
  * Emulates key press or key release.
  *
  * \ingroup Keys
  */
-GSM_Error GSM_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press);
+GSM_Error GSM_PressKey(GSM_StateMachine * s, GSM_KeyCode Key, bool Press);
 #endif

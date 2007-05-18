@@ -23,7 +23,7 @@
  *
  * \ingroup StateMachine
  */
-typedef struct _GSM_StateMachine 	GSM_StateMachine;
+typedef struct _GSM_StateMachine GSM_StateMachine;
 
 /**
  * Configuration of state machine.
@@ -32,34 +32,34 @@ typedef struct _GSM_StateMachine 	GSM_StateMachine;
  */
 typedef struct {
 	/* Config file (or Registry or...) variables */
-	char			Model[50];	   /**< Model from config file 		*/
-	char			DebugLevel[50];    /**< Debug level			*/
-	char 			*Device;	   /**< Device name from config file 	*/
-	char			*Connection;	   /**< Connection type as string		*/
-	char			*SyncTime;	   /**< Synchronize time on startup? 	*/
-	char			*LockDevice;	   /**< Lock device ? (Unix)		*/
-	char			*DebugFile;        /**< Name of debug file		*/
-	char 			*Localize;	   /**< Name of localisation file		*/
-	char			*StartInfo;	   /**< Display something during start ?  */
-	bool			UseGlobalDebugFile;/**< Should we use global debug file?	*/
-	bool			DefaultModel;
-	bool			DefaultDebugLevel;
-	bool			DefaultDevice;
-	bool			DefaultConnection;
-	bool			DefaultSyncTime;
-	bool			DefaultLockDevice;
-	bool			DefaultDebugFile;
-	bool			DefaultLocalize;
-	bool			DefaultStartInfo;
-	char			TextReminder[32]; /**< Text for reminder calendar entry category in local language */
-	char			TextMeeting[32]; /**< Text for meeting calendar entry category in local language */
-	char			TextCall[32]; /**< Text for call calendar entry category in local language */
-	char			TextBirthday[32]; /**< Text for birthday calendar entry category in local language */
-	char			TextMemo[32]; /**< Text for memo calendar entry category in local language */
+	char Model[50];				   /**< Model from config file 		*/
+	char DebugLevel[50];			   /**< Debug level			*/
+	char *Device;				   /**< Device name from config file 	*/
+	char *Connection;			   /**< Connection type as string		*/
+	char *SyncTime;				   /**< Synchronize time on startup? 	*/
+	char *LockDevice;			   /**< Lock device ? (Unix)		*/
+	char *DebugFile;			   /**< Name of debug file		*/
+	char *Localize;				   /**< Name of localisation file		*/
+	char *StartInfo;			   /**< Display something during start ?  */
+	bool UseGlobalDebugFile;		   /**< Should we use global debug file?	*/
+	bool DefaultModel;
+	bool DefaultDebugLevel;
+	bool DefaultDevice;
+	bool DefaultConnection;
+	bool DefaultSyncTime;
+	bool DefaultLockDevice;
+	bool DefaultDebugFile;
+	bool DefaultLocalize;
+	bool DefaultStartInfo;
+	char TextReminder[32];			  /**< Text for reminder calendar entry category in local language */
+	char TextMeeting[32];			 /**< Text for meeting calendar entry category in local language */
+	char TextCall[32];		      /**< Text for call calendar entry category in local language */
+	char TextBirthday[32];			  /**< Text for birthday calendar entry category in local language */
+	char TextMemo[32];		      /**< Text for memo calendar entry category in local language */
 } GSM_Config;
 
 typedef enum {
-	GCT_MBUS2=1,
+	GCT_MBUS2 = 1,
 	GCT_FBUS2,
 	GCT_FBUS2DLR3,
 	GCT_DKU2AT,
@@ -91,7 +91,7 @@ typedef enum {
  * \param ReplyNum Number of replies to await (usually 3).
  * \return Error code
  */
-GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum);
+GSM_Error GSM_InitConnection(GSM_StateMachine * s, int ReplyNum);
 
 /**
  * Terminates connection.
@@ -101,7 +101,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum);
  * \param s State machine data
  * \return Error code
  */
-GSM_Error GSM_TerminateConnection(GSM_StateMachine *s);
+GSM_Error GSM_TerminateConnection(GSM_StateMachine * s);
 
 /**
  * Attempts to read data from phone. This can be used for getting 
@@ -114,7 +114,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s);
  * \param wait Whether to wait for some event
  * \return Number of read bytes
  */
-int GSM_ReadDevice(GSM_StateMachine *s, bool wait);
+int GSM_ReadDevice(GSM_StateMachine * s, bool wait);
 
 /**
  * Detects whether state machine is connected.
@@ -124,7 +124,7 @@ int GSM_ReadDevice(GSM_StateMachine *s, bool wait);
  * \param s State machine data
  * \return Whether phone is connected.
  */
-bool GSM_IsConnected(GSM_StateMachine *s);
+bool GSM_IsConnected(GSM_StateMachine * s);
 
 /**
  * Reads gammu configuration file.
@@ -134,8 +134,7 @@ bool GSM_IsConnected(GSM_StateMachine *s);
  *
  * \ingroup StateMachine
  */
-GSM_Error GSM_FindGammuRC(INI_Section **result);
-
+GSM_Error GSM_FindGammuRC(INI_Section ** result);
 
 /**
  * Processes gammu configuration.
@@ -147,8 +146,7 @@ GSM_Error GSM_FindGammuRC(INI_Section **result);
  *
  * \ingroup StateMachine
  */
-bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num);
-
+bool GSM_ReadConfig(INI_Section * cfg_info, GSM_Config * cfg, int num);
 
 /**
  * Gets gammu configuration from state machine.
@@ -159,7 +157,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num);
  *
  * \ingroup StateMachine
  */
-GSM_Config *GSM_GetConfig(GSM_StateMachine *s, int num);
+GSM_Config *GSM_GetConfig(GSM_StateMachine * s, int num);
 
 /**
  * Gets number of active gammu configurations.
@@ -169,7 +167,7 @@ GSM_Config *GSM_GetConfig(GSM_StateMachine *s, int num);
  *
  * \ingroup StateMachine
  */
-int GSM_GetConfigNum(const GSM_StateMachine *s);
+int GSM_GetConfigNum(const GSM_StateMachine * s);
 
 /**
  * Gets number of active gammu configurations.
@@ -179,7 +177,7 @@ int GSM_GetConfigNum(const GSM_StateMachine *s);
  *
  * \ingroup StateMachine
  */
-void GSM_SetConfigNum(GSM_StateMachine *s, int sections);
+void GSM_SetConfigNum(GSM_StateMachine * s, int sections);
 
 /**
  * Allocates new clean state machine structure. You should free it then
@@ -199,7 +197,7 @@ GSM_StateMachine *GSM_AllocStateMachine(void);
  *
  * \ingroup StateMachine
  */
-void GSM_FreeStateMachine(GSM_StateMachine *s);
+void GSM_FreeStateMachine(GSM_StateMachine * s);
 
 /**
  * Gets number of active gammu configurations.
@@ -209,7 +207,7 @@ void GSM_FreeStateMachine(GSM_StateMachine *s);
  *
  * \ingroup StateMachine
  */
-GSM_ConnectionType GSM_GetUsedConnection(GSM_StateMachine *s);
+GSM_ConnectionType GSM_GetUsedConnection(GSM_StateMachine * s);
 #endif
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:

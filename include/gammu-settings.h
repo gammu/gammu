@@ -13,17 +13,17 @@
  */
 
 typedef struct {
-	int			Location;
-	bool			Active;
-	bool			SyncPhonebook;
-	bool			SyncCalendar;
-	char			Name[(20+1)*2];
-	char			PhonebookDataBase[(50+1)*2];
-	char			CalendarDataBase[(50+1)*2];
-	char			User[(30+1)*2];
-	char			Password[(20+1)*2];
-	char			Server[(128+1)*2];
-	GSM_MultiWAPSettings	Connection;
+	int Location;
+	bool Active;
+	bool SyncPhonebook;
+	bool SyncCalendar;
+	char Name[(20 + 1) * 2];
+	char PhonebookDataBase[(50 + 1) * 2];
+	char CalendarDataBase[(50 + 1) * 2];
+	char User[(30 + 1) * 2];
+	char Password[(20 + 1) * 2];
+	char Server[(128 + 1) * 2];
+	GSM_MultiWAPSettings Connection;
 } GSM_SyncMLSettings;
 
 /* ------------------------------------------------------------------------ */
@@ -37,13 +37,13 @@ typedef enum {
 } GSM_ResetSettingsType;
 
 typedef struct {
-	char			Name[(50+1)*2];
-	char			HomePage[(200+1)*2];
-	char			User[(50+1)*2];
-	char			Password[(50+1)*2];
-	int			Location;
-	bool			Active;
-	GSM_MultiWAPSettings	Connection;
+	char Name[(50 + 1) * 2];
+	char HomePage[(200 + 1) * 2];
+	char User[(50 + 1) * 2];
+	char Password[(50 + 1) * 2];
+	int Location;
+	bool Active;
+	GSM_MultiWAPSettings Connection;
 } GSM_ChatSettings;
 
 typedef enum {
@@ -109,44 +109,44 @@ typedef enum {
  * It contains phone profiles
  */
 typedef struct {
-	bool			Active;
+	bool Active;
 
 	/**
 	 * Profile number
 	 */
-	int 			Location;
+	int Location;
 	/**
  	 * Profile name
 	 */
-	char 			Name[40*2];
+	char Name[40 * 2];
 	/**
 	 * Is it default name for profile ?
 	 */
-	bool 			DefaultName;
-	bool			HeadSetProfile;
-	bool			CarKitProfile;
+	bool DefaultName;
+	bool HeadSetProfile;
+	bool CarKitProfile;
 
-	int			FeaturesNumber;
-	GSM_Profile_Feat_Value	FeatureValue[15];
-	GSM_Profile_Feat_ID	FeatureID[15];
+	int FeaturesNumber;
+	GSM_Profile_Feat_Value FeatureValue[15];
+	GSM_Profile_Feat_ID FeatureID[15];
 
-	bool			CallerGroups[5];
+	bool CallerGroups[5];
 } GSM_Profile;
 
 #define	GSM_MAX_FMSTATION_LENGTH 18
 #define	GSM_MAX_FM_STATION 	 20
 
 typedef struct {
-	int			Location;
-        char 			StationName [(GSM_MAX_FMSTATION_LENGTH+1)*2];
-	double			Frequency;
+	int Location;
+	char StationName[(GSM_MAX_FMSTATION_LENGTH + 1) * 2];
+	double Frequency;
 } GSM_FMStation;
 
 typedef struct {
-	int		Location;
-	unsigned char 	Name[300];
-	unsigned char 	URL[500];
-	bool		Active;
+	int Location;
+	unsigned char Name[300];
+	unsigned char URL[500];
+	bool Active;
 } GSM_GPRSAccessPoint;
 
 typedef enum {
@@ -161,89 +161,97 @@ typedef enum {
 } GSM_DateFormat;
 
 typedef struct {
-	unsigned char 	DateSeparator;
-	GSM_DateFormat	DateFormat;
-	bool		AMPMTime;
+	unsigned char DateSeparator;
+	GSM_DateFormat DateFormat;
+	bool AMPMTime;
 } GSM_Locale;
 
-
 typedef struct {
-	GSM_Profile_Feat_ID	ID;
-	GSM_Profile_Feat_Value	Value;
-	unsigned char		PhoneID;
-	unsigned char		PhoneValue;
+	GSM_Profile_Feat_ID ID;
+	GSM_Profile_Feat_Value Value;
+	unsigned char PhoneID;
+	unsigned char PhoneValue;
 } GSM_Profile_PhoneTableValue;
 /**
  * Gets locale from phone.
  */
-GSM_Error GSM_GetLocale(GSM_StateMachine *s, GSM_Locale *locale);
+GSM_Error GSM_GetLocale(GSM_StateMachine * s, GSM_Locale * locale);
 /**
  * Sets locale of phone.
  */
-GSM_Error GSM_SetLocale(GSM_StateMachine *s, GSM_Locale *locale);
+GSM_Error GSM_SetLocale(GSM_StateMachine * s, GSM_Locale * locale);
 
 /**
  * Acquires SyncML settings.
  */
-GSM_Error GSM_GetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings *settings);
+GSM_Error GSM_GetSyncMLSettings(GSM_StateMachine * s,
+				GSM_SyncMLSettings * settings);
 /**
  * Changes SyncML settings.
  */
-GSM_Error GSM_SetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings *settings);
+GSM_Error GSM_SetSyncMLSettings(GSM_StateMachine * s,
+				GSM_SyncMLSettings * settings);
 /**
  * Acquires chat/presence settings.
  */
-GSM_Error GSM_GetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *settings);
+GSM_Error GSM_GetChatSettings(GSM_StateMachine * s,
+			      GSM_ChatSettings * settings);
 /**
  * Changes chat/presence settings.
  */
-GSM_Error GSM_SetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *settings);
+GSM_Error GSM_SetChatSettings(GSM_StateMachine * s,
+			      GSM_ChatSettings * settings);
 /**
  * Acquires MMS settings.
  */
-GSM_Error GSM_GetMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
+GSM_Error GSM_GetMMSSettings(GSM_StateMachine * s,
+			     GSM_MultiWAPSettings * settings);
 /**
  * Changes MMS settings.
  */
-GSM_Error GSM_SetMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings);
+GSM_Error GSM_SetMMSSettings(GSM_StateMachine * s,
+			     GSM_MultiWAPSettings * settings);
 /**
  * Enables network auto login.
  */
-GSM_Error GSM_SetAutoNetworkLogin(GSM_StateMachine *s);
+GSM_Error GSM_SetAutoNetworkLogin(GSM_StateMachine * s);
 /**
  * Performs phone reset.
  */
-GSM_Error GSM_Reset(GSM_StateMachine *s, bool hard);
+GSM_Error GSM_Reset(GSM_StateMachine * s, bool hard);
 /**
  * Resets phone settings.
  */
-GSM_Error GSM_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type);
+GSM_Error GSM_ResetPhoneSettings(GSM_StateMachine * s,
+				 GSM_ResetSettingsType Type);
 /**
  * Reads profile.
  */
-GSM_Error GSM_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile);
+GSM_Error GSM_GetProfile(GSM_StateMachine * s, GSM_Profile * Profile);
 /**
  * Updates profile.
  */
-GSM_Error GSM_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile);
+GSM_Error GSM_SetProfile(GSM_StateMachine * s, GSM_Profile * Profile);
 /**
  * Reads FM station.
  */
-GSM_Error GSM_GetFMStation(GSM_StateMachine *s, GSM_FMStation *FMStation);
+GSM_Error GSM_GetFMStation(GSM_StateMachine * s, GSM_FMStation * FMStation);
 /**
  * Sets FM station.
  */
-GSM_Error GSM_SetFMStation(GSM_StateMachine *s, GSM_FMStation *FMStation);
+GSM_Error GSM_SetFMStation(GSM_StateMachine * s, GSM_FMStation * FMStation);
 /**
  * Clears defined FM stations.
  */
-GSM_Error GSM_ClearFMStations(GSM_StateMachine *s);
+GSM_Error GSM_ClearFMStations(GSM_StateMachine * s);
 /**
  * Gets GPRS access point.
  */
-GSM_Error GSM_GetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoint *point);
+GSM_Error GSM_GetGPRSAccessPoint(GSM_StateMachine * s,
+				 GSM_GPRSAccessPoint * point);
 /**
  * Sets GPRS access point.
  */
-GSM_Error GSM_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoint *point);
+GSM_Error GSM_SetGPRSAccessPoint(GSM_StateMachine * s,
+				 GSM_GPRSAccessPoint * point);
 #endif

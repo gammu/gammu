@@ -23,7 +23,7 @@ typedef enum {
 	/**
 	 * Internal memory of the mobile equipment
 	 */
-	MEM_ME=1,
+	MEM_ME = 1,
 	/**
 	 * SIM card memory
 	 */
@@ -72,15 +72,15 @@ typedef struct {
 	/**
 	 * Number of used entries
 	 */
-	int	     	MemoryUsed;
+	int MemoryUsed;
 	/**
 	 * Memory type
 	 */
-	GSM_MemoryType  MemoryType;
+	GSM_MemoryType MemoryType;
 	/**
 	 * Number of free entries
 	 */
-	int	     	MemoryFree;
+	int MemoryFree;
 } GSM_MemoryStatus;
 
 /**
@@ -220,7 +220,7 @@ typedef enum {
 	 * User ID. (Text)
 	 */
 	PBK_Text_UserID,
-	PBK_CallLength, /**< Length of call (Number) */
+	PBK_CallLength,	/**< Length of call (Number) */
 	/**
 	 * LUID - Unique Identifier used for synchronisation
 	 */
@@ -240,30 +240,30 @@ typedef struct {
 	/**
 	 * Type of entry.
 	 */
-	GSM_EntryType	   	EntryType;
+	GSM_EntryType EntryType;
 	/**
 	 * Text of entry (if applicable, see @ref GSM_EntryType).
 	 */
-	unsigned char	   	Text[(GSM_PHONEBOOK_TEXT_LENGTH+1)*2];
+	unsigned char Text[(GSM_PHONEBOOK_TEXT_LENGTH + 1) * 2];
 	/**
 	 * Text of entry (if applicable, see @ref GSM_EntryType).
 	 */
-	GSM_DateTime	    	Date;
+	GSM_DateTime Date;
 	/**
 	 * Number of entry (if applicable, see @ref GSM_EntryType).
 	 */
-	int		     	Number;
+	int Number;
 	/**
 	 * Voice dialling tag.
 	 */
-	int		     	VoiceTag;
-	int			SMSList[20];
-	int			CallLength;
+	int VoiceTag;
+	int SMSList[20];
+	int CallLength;
 
 	/**
 	 * During adding SubEntry Gammu can return here info, if it was done OK
 	 */
-	GSM_Error		AddError;
+	GSM_Error AddError;
 } GSM_SubMemoryEntry;
 
 /**
@@ -273,19 +273,19 @@ typedef struct {
 	/**
 	 * Used memory for phonebook entry
 	 */
-	GSM_MemoryType	  	MemoryType;
+	GSM_MemoryType MemoryType;
 	/**
 	 * Used location for phonebook entry
 	 */
-	int		     	Location;
+	int Location;
 	/**
 	 * Number of SubEntries in Entries table.
 	 */
-	int		     	EntriesNum;
+	int EntriesNum;
 	/**
 	 * Values of SubEntries.
 	 */
-	GSM_SubMemoryEntry      Entries[GSM_PHONEBOOK_ENTRIES];
+	GSM_SubMemoryEntry Entries[GSM_PHONEBOOK_ENTRIES];
 } GSM_MemoryEntry;
 
 /**
@@ -295,63 +295,65 @@ typedef struct {
 	/**
 	 * Number of speed dial: 2,3..,8,9
 	 */
-	int	     		Location;
+	int Location;
 	/**
 	 * ID of phone number used in phonebook entry
 	 */
-	int	     		MemoryNumberID;
+	int MemoryNumberID;
 	/**
 	 * Memory, where is saved used phonebook entry
 	 */
-	GSM_MemoryType  	MemoryType;
+	GSM_MemoryType MemoryType;
 	/**
 	 * Location in memory, where is saved used phonebook entry
 	 */
-	int	     		MemoryLocation;
+	int MemoryLocation;
 } GSM_SpeedDial;
 
 /**
  * Gets memory (phonebooks or calls) status (eg. number of used and
  * free entries).
  */
-GSM_Error GSM_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *status);
+GSM_Error GSM_GetMemoryStatus(GSM_StateMachine * s, GSM_MemoryStatus * status);
 /**
  * Reads entry from memory (phonebooks or calls). Which entry should
  * be read is defined in entry.
  */
-GSM_Error GSM_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
+GSM_Error GSM_GetMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
 /**
  * Reads entry from memory (phonebooks or calls). Which entry should
  * be read is defined in entry. This can be easily used for reading all entries.
  */
-GSM_Error GSM_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start);
+GSM_Error GSM_GetNextMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry,
+			    bool start);
 /**
  * Sets memory (phonebooks or calls) entry.
  */
-GSM_Error GSM_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
+GSM_Error GSM_SetMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
 /**
  * Deletes memory (phonebooks or calls) entry.
  */
-GSM_Error GSM_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
+GSM_Error GSM_AddMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
 /**
  * Deletes memory (phonebooks or calls) entry.
  */
-GSM_Error GSM_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry);
+GSM_Error GSM_DeleteMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
 /**
  * Deletes all memory (phonebooks or calls) entries of specified type.
  */
-GSM_Error GSM_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType);
+GSM_Error GSM_DeleteAllMemory(GSM_StateMachine * s, GSM_MemoryType MemoryType);
 /**
  * Gets speed dial.
  */
-GSM_Error GSM_GetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed);
+GSM_Error GSM_GetSpeedDial(GSM_StateMachine * s, GSM_SpeedDial * Speed);
 /**
  * Sets speed dial.
  */
-GSM_Error GSM_SetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed);
+GSM_Error GSM_SetSpeedDial(GSM_StateMachine * s, GSM_SpeedDial * Speed);
 
-unsigned char *GSM_PhonebookGetEntryName (GSM_MemoryEntry *entry);
-void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, int *Number, int *Group);
+unsigned char *GSM_PhonebookGetEntryName(GSM_MemoryEntry * entry);
+void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry * entry, int *Name,
+					     int *Number, int *Group);
 
 typedef enum {
 	Nokia_VCard10 = 1,
@@ -360,7 +362,9 @@ typedef enum {
 	SonyEricsson_VCard21
 } GSM_VCardVersion;
 
-void      GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool header, GSM_VCardVersion Version);
-GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version);
+void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry * pbk,
+		     bool header, GSM_VCardVersion Version);
+GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos,
+			  GSM_MemoryEntry * Pbk, GSM_VCardVersion Version);
 
 #endif
