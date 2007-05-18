@@ -166,7 +166,7 @@ const char *GetGammuVersion(void)
 	return Buffer;
 }
 
-GSM_Error GSM_SetDebugFile(char *info, Debug_Info *privdi)
+GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
 {
 	FILE *testfile;
 

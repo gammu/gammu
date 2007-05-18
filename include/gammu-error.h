@@ -81,18 +81,6 @@ typedef enum {
  * \ingroup Error
  */
 char *GSM_ErrorString(GSM_Error e);
-
-/**
- * Sets debug file.
- *
- * \param info File path.
- * \return Error code.
- *
- * \ingroup Error
- *
- * \todo This might be placed somewhere else than in error.
- */
-GSM_Error GSM_SetGlobalDebugFile(char *info);
 #endif
 
 /* Editor configuration

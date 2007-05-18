@@ -1572,7 +1572,7 @@ typedef enum {
 struct _GSM_StateMachine {
 	GSM_ConnectionType 	ConnectionType;				/**< Type of connection as int			*/
 	char			*LockFile;				/**< Lock file name for Unix 			*/
-	Debug_Info		di;					/**< Debug information				*/
+	GSM_Debug_Info		di;					/**< Debug information				*/
 	bool			opened;					/**< Is connection opened ?			*/
 	GSM_Config		Config[MAX_CONFIG_NUM + 1];		/**< Configuration data */
 	GSM_Config		*CurrentConfig;				/**< Config file (or Registry or...) variables 	*/
