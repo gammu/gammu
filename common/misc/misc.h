@@ -22,6 +22,7 @@
 #include <gammu-types.h>
 #include <gammu-datetime.h>
 #include <gammu-misc.h>
+#include <gammu-debug.h>
 
 /* ------------------------------------------------------------------------- */
 
@@ -50,57 +51,22 @@ void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, in
 
 /* ------------------------------------------------------------------------- */
 
-/**
- * Debugging level.
- */
-typedef enum {
-	DL_NONE = 0,		/**< No debug messages		*/
-	DL_BINARY = 1,		/**< Binary transmission dump 	*/
-	DL_TEXT,		/**< Text transmission dump	*/
-	DL_TEXTALL,		/**< Everything			*/
-	DL_TEXTERROR,		/**< Only errors			*/
-	DL_TEXTDATE,		/**< Text transmission dump	*/
-	DL_TEXTALLDATE,		/**< Everything			*/
-	DL_TEXTERRORDATE	/**< Only errors			*/
-} Debug_Level;
 
-/**
- * Debugging configuration.
- */
-typedef struct {
+extern GSM_Debug_Info	di;
+
+void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesize);
+
+bool GSM_SetDebugLevel(char *info, GSM_Debug_Info *di);
+
+/* ------------------------------------------------------------------------- */
+
+struct _DebugInfo {
 	Debug_Level	dl; /**< Level of messages to display */
 	FILE		*df; /**< File used for debug messages output */
 	bool        	use_global; /**< Whether to use global debug structure instead of this one. */
 	char		*coding; /**< Encoding used in console */
 	bool		was_lf; /**< Has there already been new line */
-} Debug_Info;
-
-extern Debug_Info	di;
-
-#ifdef DEBUG
-#if defined(__GNUC__) && !defined(printf)
-__attribute__((format(printf, 1, 2)))
-#endif
-int dbgprintf(const char *format, ...);
-#else
-#  ifdef __GNUC__
-#    define dbgprintf(a...) do { } while (0)
-#  else
-#    define dbgprintf
-#  endif
-#endif
-
-#if defined(__GNUC__) && !defined(printf)
-__attribute__((format(printf, 2, 3)))
-#endif
-int smfprintf(Debug_Info *d, const char *format, ...);
-
-void DumpMessage(Debug_Info *d, const unsigned char *message, int messagesize);
-
-bool GSM_SetDebugLevel(char *info, Debug_Info *di);
-
-/* ------------------------------------------------------------------------- */
-
+};
 
 
 #if defined(_MSC_VER) && defined(__cplusplus)

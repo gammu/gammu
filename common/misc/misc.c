@@ -377,7 +377,7 @@ void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, in
 	dest[strlen(GetLineString(src, lines, start))] = 0;
 }
 
-Debug_Info di = {0,NULL,false,"",false};
+GSM_Debug_Info di = {0,NULL,false,"",false};
 
 #ifdef DEBUG
 #if defined(__GNUC__) && !defined(printf)
@@ -418,7 +418,7 @@ int dbgprintf(const char *format, ...)
 #if defined(__GNUC__) && !defined(printf)
 __attribute__((format(printf, 2, 3)))
 #endif
-int smfprintf(Debug_Info *d, const char *format, ...)
+int smfprintf(GSM_Debug_Info *d, const char *format, ...)
 {
         va_list 		argp;
 	int 			result=0;
@@ -493,7 +493,7 @@ int smfprintf(Debug_Info *d, const char *format, ...)
 	return result;
 }
 
-bool GSM_SetDebugLevel(char *info, Debug_Info *di)
+bool GSM_SetDebugLevel(char *info, GSM_Debug_Info *di)
 {
 	if (info == NULL)			{di->dl = DL_NONE;	 	return true;}
 	if (!strcmp(info,"nothing")) 		{di->dl = DL_NONE;	 	return true;}
@@ -508,7 +508,7 @@ bool GSM_SetDebugLevel(char *info, Debug_Info *di)
 }
 
 /* Dumps a message */
-void DumpMessage(Debug_Info *d, const unsigned char *message, int messagesize)
+void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesize)
 {
 	int 		i,j=0,len=16;
 	unsigned char	buffer[200];

@@ -27,6 +27,7 @@
 #include <gammu-info.h>
 #include <gammu-unicode.h>
 #include <gammu-misc.h>
+#include <gammu-debug.h>
 
 #endif
 /* Editor configuration
