@@ -29,3 +29,5 @@ extern void InitLocales(const char *path);
 #else
 #  define my_sleep(x) usleep(x*1000)
 #endif
+
+void		EncodeHexBin			(unsigned char *dest, const unsigned char *src, int len);
