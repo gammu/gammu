@@ -10423,15 +10423,15 @@ int main(int argc, char *argv[])
 			smcfg = GSM_GetConfig(s, i);
 			if (!GSM_ReadConfig(cfg, smcfg, i) && i != 0) break;
 		}
-		s.ConfigNum++;
+		GSM_SetConfigNum(s, GSM_GetConfigNum(s) + 1);
 
 		if (cfg!=NULL) {
 		        cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
         		if (cp) di.coding = cp;
 
-		        gammucfg->Localize = INI_GetValue(cfg, "gammu", "gammuloc", false);
+		        smcfg->Localize = INI_GetValue(cfg, "gammu", "gammuloc", false);
 			/* It is safe to pass NULL here */
-			InitLocales(gammucfg->Localize);
+			InitLocales(smcfg->Localize);
 		}
 
      		/* We want to use only one file descriptor for global and state machine debug output */
