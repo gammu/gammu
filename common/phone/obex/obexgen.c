@@ -268,7 +268,7 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 }
 
 /**
- * Terminates OBEX connection.
+ * Frees internal OBEX variables.
  */
 void OBEXGEN_FreeVars(GSM_StateMachine *s)
 {
