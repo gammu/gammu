@@ -270,6 +270,25 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 /**
  * Terminates OBEX connection.
  */
+void OBEXGEN_FreeVars(GSM_StateMachine *s)
+{
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	free(Priv->PbLUID);
+	free(Priv->PbData);
+	free(Priv->CalLUID);
+	free(Priv->CalData);
+	free(Priv->TodoLUID);
+	free(Priv->PbOffsets);
+	free(Priv->CalOffsets);
+	free(Priv->TodoOffsets);
+	free(Priv->OBEXCapability);
+	free(Priv->OBEXDevinfo);
+
+}
+/**
+ * Terminates OBEX connection.
+ */
 GSM_Error OBEXGEN_Terminate(GSM_StateMachine *s)
 {
 	return OBEXGEN_Disconnect(s);

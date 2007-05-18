@@ -204,6 +204,7 @@ GSM_Error SONYERICSSON_Terminate(GSM_StateMachine *s)
 	GSM_Error 		error;
 
 	error = SONYERICSSON_SetATMode(s);
+	OBEXGEN_FreeVars(s);
 	return ATGEN_Terminate(s);
 }
 
