@@ -31,9 +31,9 @@ typedef struct _INI_Section INI_Section;
  * \todo This should be probably private.
  */
 struct _INI_Entry {
-	INI_Entry 		*Next, *Prev;
-	unsigned char 		*EntryName;
-        unsigned char 		*EntryValue;
+	INI_Entry *Next, *Prev;
+	unsigned char *EntryName;
+	unsigned char *EntryValue;
 };
 
 /**
@@ -42,9 +42,9 @@ struct _INI_Entry {
  * \todo This should be probably private.
  */
 struct _INI_Section {
-        INI_Section 		*Next, *Prev;
-        INI_Entry 		*SubEntries;
-        unsigned char		*SectionName;
+	INI_Section *Next, *Prev;
+	INI_Entry *SubEntries;
+	unsigned char *SectionName;
 };
 /**
  * Free INI data.
@@ -53,7 +53,7 @@ struct _INI_Section {
  *
  * \param head INI section data.
  */
-void INI_Free(INI_Section *head);
+void INI_Free(INI_Section * head);
 
 /**
  * Reads INI data.
@@ -66,7 +66,7 @@ void INI_Free(INI_Section *head);
  * 
  * \return Error code
  */
-GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result);
+GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section ** result);
 
 /**
  * Returns pointer to last INI entry of given section.
@@ -81,7 +81,8 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result);
  *
  * \bug Unicode should be part of file_info.
  */
-INI_Entry 	*INI_FindLastSectionEntry (INI_Section *file_info, unsigned char *section, bool Unicode);
+INI_Entry *INI_FindLastSectionEntry(INI_Section * file_info,
+				    unsigned char *section, bool Unicode);
 
 /**
  * Returns value of INI file entry.
@@ -97,5 +98,6 @@ INI_Entry 	*INI_FindLastSectionEntry (INI_Section *file_info, unsigned char *sec
  *
  * \bug Unicode should be part of file_info.
  */
-unsigned char *INI_GetValue(INI_Section *file_info, unsigned char *section, unsigned char *key, bool Unicode);
+unsigned char *INI_GetValue(INI_Section * file_info, unsigned char *section,
+			    unsigned char *key, bool Unicode);
 #endif

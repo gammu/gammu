@@ -43,7 +43,7 @@
  */
 #    define bool int
 #  endif
-#endif /* __cplusplus */
+#endif				/* __cplusplus */
 
 #endif
 

@@ -12,7 +12,6 @@
  * Phone information.
  */
 
-
 /**
  * Find network name from given network code.
  *
@@ -68,24 +67,24 @@ typedef struct {
 	/**
 	 * Cell ID (CID)
 	 */
-	unsigned char		   CID[10];
+	unsigned char CID[10];
 	/**
 	 * GSM network code.
 	 */
-	char			   NetworkCode[10];
+	char NetworkCode[10];
 	/**
 	 * Status of network logging. If phone is not logged into any network,
          * some values are not filled
 	 */
-	GSM_NetworkInfo_State	   State;
+	GSM_NetworkInfo_State State;
 	/**
 	 * LAC (Local Area Code).
 	 */
-	unsigned char		   LAC[10];
+	unsigned char LAC[10];
 	/**
 	 * Name of current network like returned from phone (or empty).
 	 */
-	unsigned char		   NetworkName[15*2];
+	unsigned char NetworkName[15 * 2];
 } GSM_NetworkInfo;
 
 /**
@@ -97,15 +96,15 @@ typedef struct {
 	/*
 	 * Signal strength in dBm
 	 */
-	int     SignalStrength;
+	int SignalStrength;
 	/**
 	 * Signal strength in percent.
 	 */
-	int     SignalPercent;
+	int SignalPercent;
 	/**
 	 * Bit error rate in percent.
 	 */
-	int     BitErrorRate;
+	int BitErrorRate;
 } GSM_SignalQuality;
 
 /**
@@ -114,12 +113,12 @@ typedef struct {
  * \ingroup Info
  */
 typedef enum {
-	GSM_BatteryPowered = 1, /**< Powered from battery */
+	GSM_BatteryPowered = 1,	/**< Powered from battery */
 	GSM_BatteryConnected, /**< Powered from AC, battery connected */
 	GSM_BatteryCharging, /**< Powered from AC, battery is charging */
 	GSM_BatteryNotConnected, /**< Powered from AC, no battery */
 	GSM_BatteryFull, /**< Powered from AC, battery is fully charged */
-	GSM_PowerFault, /**< Power failure */
+	GSM_PowerFault,	/**< Power failure */
 } GSM_ChargeState;
 
 /**
@@ -128,7 +127,7 @@ typedef enum {
  * \ingroup Info
  */
 typedef enum {
-	GSM_BatteryUnknown = 0, /**< Unknown battery */
+	GSM_BatteryUnknown = 0,	/**< Unknown battery */
 	GSM_BatteryNiMH = 1, /**< NiMH battery */
 	GSM_BatteryLiIon, /**< Lithium Ion battery */
 	GSM_BatteryLiPol, /**< Lithium Polymer battery */
@@ -206,8 +205,8 @@ typedef enum {
  * \ingroup Info
  */
 typedef struct {
-	int 			Number;
-	GSM_DisplayFeature 	Feature[7];
+	int Number;
+	GSM_DisplayFeature Feature[7];
 } GSM_DisplayFeatures;
 
 /**
@@ -224,7 +223,7 @@ typedef enum {
 	F_RING_SM,	 /**< Ringtones returned in SM format - 33xx */
 	F_NORING,	 /**< No ringtones */
 	F_NOPBKUNICODE,	 /**< No phonebook in Unicode */
-	F_NOWAP,      	 /**< No WAP */
+	F_NOWAP,	 /**< No WAP */
 	F_NOCALLER,	 /**< No caller groups */
 	F_NOPICTURE,	 /**< No Picture Images */
 	F_NOPICTUREUNI,	 /**< No Picture Images text in Unicode */
@@ -266,8 +265,8 @@ typedef enum {
 	F_NOFILE1,	 /**< No filesystem version 1 */
 	F_6230iWAP,	 /**< WAP, MMS, etc. settings like in 6230i - unknown now */
 	F_PROFILES,	 /**< Profiles support available */
-	F_SERIES40_30,   /**< Series 40 3.0 */
-	F_SMS_FILES,  	 /**< SMS are read from filesystem files like in Series 40 3.0 */
+	F_SERIES40_30,	 /**< Series 40 3.0 */
+	F_SMS_FILES,	 /**< SMS are read from filesystem files like in Series 40 3.0 */
 	F_3220_MMS,	 /**< MMS storage as in 3320 */
 
 	/* n6510.c && n7110.c */
@@ -277,7 +276,7 @@ typedef enum {
 
 	/* AT modules */
 	F_SMSONLYSENT,	 /**< Phone supports only sent/unsent messages */
-	F_BROKENCPBS, 	 /**< CPBS on some memories can hang phone */
+	F_BROKENCPBS,	 /**< CPBS on some memories can hang phone */
 	F_M20SMS,	 /**< Siemens M20 like SMS handling */
 	F_SLOWWRITE,	 /**< Use slower writing which some phone need */
 	F_SMSME900,	 /**< SMS in ME start from location 900 - case of Sagem */
@@ -294,10 +293,10 @@ typedef enum {
  * \ingroup Info
  */
 typedef struct {
-	char		*model; /**< Model as returned by phone */
-	char		*number; /**< Identification by Gammu */
-	char		*irdamodel; /**< Model as used over IrDA */
-	Feature		features[14]; /**< List of supported features */
+	char *model;		/**< Model as returned by phone */
+	char *number;		 /**< Identification by Gammu */
+	char *irdamodel;	    /**< Model as used over IrDA */
+	Feature features[14];	      /**< List of supported features */
 } OnePhoneModel;
 
 /**
@@ -310,32 +309,33 @@ typedef struct {
  *
  * \ingroup Info
  */
-bool GSM_IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature);
+bool GSM_IsPhoneFeatureAvailable(OnePhoneModel * model, Feature feature);
 
 /**
  * Reads manufacturer from phone.
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetManufacturer(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetManufacturer(GSM_StateMachine * s, char *value);
 /**
  * Reads model from phone.
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetModel(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetModel(GSM_StateMachine * s, char *value);
 /**
  * Reads model info from state machine.
  *
  * \ingroup Info
  */
-OnePhoneModel *GSM_GetModelInfo(GSM_StateMachine *s);
+OnePhoneModel *GSM_GetModelInfo(GSM_StateMachine * s);
 /**
  * Reads firmware information from phone.
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetFirmware(GSM_StateMachine *s, char *value, char *date, double *num);
+GSM_Error GSM_GetFirmware(GSM_StateMachine * s, char *value, char *date,
+			  double *num);
 /**
  * Reads IMEI/serial number from phone.
  *
@@ -346,66 +346,67 @@ GSM_Error GSM_GetFirmware(GSM_StateMachine *s, char *value, char *date, double *
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetIMEI(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetIMEI(GSM_StateMachine * s, char *value);
 /**
  * Gets date and time from phone.
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetOriginalIMEI(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetOriginalIMEI(GSM_StateMachine * s, char *value);
 /**
  * Gets month when device was manufactured.
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetManufactureMonth(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetManufactureMonth(GSM_StateMachine * s, char *value);
 /**
  * Gets product code of device.
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetProductCode(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetProductCode(GSM_StateMachine * s, char *value);
 /**
  * Gets hardware information about device.
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetHardware(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetHardware(GSM_StateMachine * s, char *value);
 /**
  * Gets PPM (Post Programmable Memory) info from phone
  * (in other words for Nokia get, which language pack is in phone)
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetPPM(GSM_StateMachine *s, char *value);
+GSM_Error GSM_GetPPM(GSM_StateMachine * s, char *value);
 /**
  * Gets SIM IMSI from phone.
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetSIMIMSI(GSM_StateMachine *s, char *IMSI);
+GSM_Error GSM_GetSIMIMSI(GSM_StateMachine * s, char *IMSI);
 /**
  * Gets information about batery charge and phone charging state.
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat);
+GSM_Error GSM_GetBatteryCharge(GSM_StateMachine * s, GSM_BatteryCharge * bat);
 /**
  * Reads signal quality (strength and error rate).
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig);
+GSM_Error GSM_GetSignalQuality(GSM_StateMachine * s, GSM_SignalQuality * sig);
 /**
  * Gets network information.
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo);
+GSM_Error GSM_GetNetworkInfo(GSM_StateMachine * s, GSM_NetworkInfo * netinfo);
 /**
  * Acquired display status.
  *
  * \ingroup Info
  */
-GSM_Error GSM_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *features);
+GSM_Error GSM_GetDisplayStatus(GSM_StateMachine * s,
+			       GSM_DisplayFeatures * features);
 #endif

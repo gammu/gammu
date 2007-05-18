@@ -15,6 +15,6 @@
 #include <gammu-statemachine.h>
 #include <gammu-bitmap.h>
 
-void 		NOKIA_GetDefaultCallerGroupName	(GSM_StateMachine *s, GSM_Bitmap *Bitmap);
+void NOKIA_GetDefaultCallerGroupName(GSM_StateMachine * s, GSM_Bitmap * Bitmap);
 
 #endif

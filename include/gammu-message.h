@@ -22,12 +22,10 @@
  */
 
 typedef struct {
-	char		Address[500];
-	char		Title[200];
-	char		Sender[200];
+	char Address[500];
+	char Title[200];
+	char Sender[200];
 } GSM_MMSIndicator;
-
-
 
 /* --------------------- Some general definitions ------------------------- */
 
@@ -44,11 +42,11 @@ typedef struct {
 	/**
 	 * Message text.
 	 */
-	char    Text[300];
+	char Text[300];
 	/**
 	 * Channel number.
 	 */
-	int     Channel;
+	int Channel;
 } GSM_CBMessage;
 
 /* -------------------- USSD ------------------------------------ */
@@ -89,31 +87,31 @@ typedef struct {
 	/**
 	 * Number of unread messages on SIM.
 	 */
-	int     SIMUnRead;
+	int SIMUnRead;
 	/**
 	 * Number of all saved messages (including unread) on SIM.
 	 */
-	int     SIMUsed;
+	int SIMUsed;
 	/**
 	 * Number of all possible messages on SIM.
 	 */
-	int     SIMSize;
+	int SIMSize;
 	/**
 	 * Number of used templates (62xx/63xx/7110/etc.).
 	 */
-	int     TemplatesUsed;
+	int TemplatesUsed;
 	/**
 	 * Number of unread messages in phone.
 	 */
-	int     PhoneUnRead;
+	int PhoneUnRead;
 	/**
 	 * Number of all saved messages in phone.
 	 */
-	int     PhoneUsed;
+	int PhoneUsed;
 	/**
 	 * Number of all possible messages on phone.
 	 */
-	int     PhoneSize;
+	int PhoneSize;
 } GSM_SMSMemoryStatus;
 
 /* --------------------- SMS Center --------------------------------------- */
@@ -126,7 +124,7 @@ typedef enum {
 	SMS_FORMAT_Fax,
 	SMS_FORMAT_Email,
 	SMS_FORMAT_Text
-	/* Some values not handled here */
+	    /* Some values not handled here */
 } GSM_SMSFormat;
 
 /**
@@ -135,11 +133,11 @@ typedef enum {
  * more values
  */
 typedef enum {
-	SMS_VALID_1_Hour   = 0x0b,
-	SMS_VALID_6_Hours  = 0x47,
-	SMS_VALID_1_Day    = 0xa7,
-	SMS_VALID_3_Days   = 0xa9,
-	SMS_VALID_1_Week   = 0xad,
+	SMS_VALID_1_Hour = 0x0b,
+	SMS_VALID_6_Hours = 0x47,
+	SMS_VALID_1_Day = 0xa7,
+	SMS_VALID_3_Days = 0xa9,
+	SMS_VALID_1_Week = 0xad,
 	SMS_VALID_Max_Time = 0xff
 } GSM_ValidityPeriod;
 
@@ -150,18 +148,18 @@ typedef enum {
 typedef enum {
 	SMS_Validity_NotAvailable = 1,
 	SMS_Validity_RelativeFormat
-	/* Specification gives also other possibilities */
+	    /* Specification gives also other possibilities */
 } GSM_ValidityPeriodFormat;
 
 /**
  * Structure for validity of SMS messages
  */
 typedef struct {
-	GSM_ValidityPeriodFormat	Format;
+	GSM_ValidityPeriodFormat Format;
 	/**
 	 * Value defines period for relative format
 	 */
-	GSM_ValidityPeriod	      	Relative;
+	GSM_ValidityPeriod Relative;
 } GSM_SMSValidity;
 
 #define GSM_MAX_SMSC_NAME_LENGTH	50
@@ -173,15 +171,15 @@ typedef struct {
 	/**
 	 * Number of the SMSC on SIM
 	 */
-	int	     	Location;
+	int Location;
 	/**
 	 * Name of the SMSC
 	 */
-	unsigned char   Name[(GSM_MAX_SMSC_NAME_LENGTH+1)*2];
+	unsigned char Name[(GSM_MAX_SMSC_NAME_LENGTH + 1) * 2];
 	/**
 	 * SMSC phone number.
 	 */
-	unsigned char   Number[(GSM_MAX_NUMBER_LENGTH+1)*2];
+	unsigned char Number[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 	/**
 	 * Validity of SMS messages.
 	 */
@@ -189,11 +187,11 @@ typedef struct {
 	/**
 	 * Format of sent SMS messages.
 	 */
-	GSM_SMSFormat   Format;
+	GSM_SMSFormat Format;
 	/**
 	 * Default recipient number. In old DCT3 ignored
 	 */
-	unsigned char   DefaultNumber[(GSM_MAX_NUMBER_LENGTH+1)*2];
+	unsigned char DefaultNumber[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 } GSM_SMSC;
 
 /* --------------------- single SMS --------------------------------------- */
@@ -269,31 +267,31 @@ typedef struct {
 	/**
 	 * UDH type.
 	 */
-	GSM_UDH	 	Type;
+	GSM_UDH Type;
 	/**
 	 * UDH length.
 	 */
-	int	     	Length;
+	int Length;
 	/**
 	 * UDH text.
 	 */
-	unsigned char   Text[GSM_MAX_UDH_LENGTH];
+	unsigned char Text[GSM_MAX_UDH_LENGTH];
 	/**
 	 * 8-bit ID, when required (-1 otherwise).
 	 */
-	int	     	ID8bit;
+	int ID8bit;
 	/**
 	 * 16-bit ID, when required (-1 otherwise).
 	 */
-	int	     	ID16bit;
+	int ID16bit;
 	/**
 	 * Number of current part.
 	 */
-	int	     	PartNumber;
+	int PartNumber;
 	/**
 	 * Total number of parts.
 	 */
-	int	     	AllParts;
+	int AllParts;
 } GSM_UDHHeader;
 
 /**
@@ -312,7 +310,7 @@ typedef enum {
 	 * SMS for sending or in Outbox
 	 */
 	SMS_Submit
-	/* specification gives more */
+	    /* specification gives more */
 } GSM_SMSMessageType;
 
 /**
@@ -329,91 +327,93 @@ typedef struct {
 	/**
 	 * Message to be replaced.
 	 */
-	unsigned char	   	ReplaceMessage;
+	unsigned char ReplaceMessage;
 	/**
 	 * Whether to reject duplicates.
 	 */
-	bool		    	RejectDuplicates;
+	bool RejectDuplicates;
 	/**
 	 * UDH (User Data Header)
 	 */
-	GSM_UDHHeader	   	UDH;
+	GSM_UDHHeader UDH;
 	/**
 	 * Sender or recipient number.
 	 */
-	unsigned char	   	Number[(GSM_MAX_NUMBER_LENGTH+1)*2];
+	unsigned char Number[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 
-	unsigned char	   	OtherNumbers[GSM_SMS_OTHER_NUMBERS][(GSM_MAX_NUMBER_LENGTH+1)*2];
-	int			OtherNumbersNum;
+	unsigned char
+	    OtherNumbers[GSM_SMS_OTHER_NUMBERS][(GSM_MAX_NUMBER_LENGTH +
+						 1) * 2];
+	int OtherNumbersNum;
 
 	/**
 	 * SMSC (SMS Center)
 	 */
-	GSM_SMSC		SMSC;
+	GSM_SMSC SMSC;
 	/**
 	 * For saved SMS: where exactly it's saved (SIM/phone)
 	 */
-	GSM_MemoryType		Memory;
+	GSM_MemoryType Memory;
 	/**
 	 * For saved SMS: location of SMS in memory.
 	 */
-	int		     	Location;
+	int Location;
 	/**
 	 * For saved SMS: number of folder, where SMS is saved
 	 */
-	int		     	Folder;
+	int Folder;
 	/**
 	 * For saved SMS: whether SMS is really in Inbox.
 	 */
-	bool		    	InboxFolder;
+	bool InboxFolder;
 	/**
 	 * Length of the SMS message.
 	 */
-	int		     	Length;
+	int Length;
 	/**
 	 * Status (read/unread/...) of SMS message.
 	 */
-	GSM_SMS_State	   	State;
+	GSM_SMS_State State;
 	/**
 	 * Name in Nokia with SMS memory (6210/7110, etc.) Ignored in other.
 	 */
-	unsigned char	   	Name[(GSM_MAX_SMS_NAME_LENGTH+1)*2];
+	unsigned char Name[(GSM_MAX_SMS_NAME_LENGTH + 1) * 2];
 	/**
 	 * Text for SMS.
 	 */
-	unsigned char	   	Text[(GSM_MAX_SMS_LENGTH+1)*2];
+	unsigned char Text[(GSM_MAX_SMS_LENGTH + 1) * 2];
 	/**
 	 * Type of message.
 	 */
-	GSM_SMSMessageType      PDU;
+	GSM_SMSMessageType PDU;
 	/**
 	 * Type of coding.
 	 */
-	GSM_Coding_Type	 	Coding;
+	GSM_Coding_Type Coding;
 	/**
 	 * Date and time, when SMS was saved or sent
 	 */
-	GSM_DateTime	    	DateTime;
+	GSM_DateTime DateTime;
 	/**
 	 * Date of SMSC response in DeliveryReport messages.
 	 */
-	GSM_DateTime	    	SMSCTime;
+	GSM_DateTime SMSCTime;
 	/**
 	 * In delivery reports: status.
 	 */
-	unsigned char	   	DeliveryStatus;
+	unsigned char DeliveryStatus;
 	/**
 	 * Indicates whether "Reply via same center" is set.
 	 */
-	bool		    	ReplyViaSameSMSC;
+	bool ReplyViaSameSMSC;
 	/**
 	 * SMS class.
 	 */
-	signed char		Class;
+	signed char Class;
 	/**
 	 * Message reference.
 	 */
-	unsigned char	   	MessageReference;
+	unsigned char MessageReference;
 } GSM_SMSMessage;
 
 /* In layouts are saved locations for some SMS part. Below are listed
@@ -487,16 +487,22 @@ typedef struct {
 	unsigned char TPPID;
 } GSM_SMSMessageLayout;
 
-GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout);
-GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear);
+GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage * SMS, unsigned char *buffer,
+			     GSM_SMSMessageLayout Layout);
+GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage * SMS, unsigned char *buffer,
+			     GSM_SMSMessageLayout Layout, int *length,
+			     bool clear);
 
-GSM_Error GSM_DecodeSMSFrameStatusReportData    (GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout);
-GSM_Error GSM_DecodeSMSFrameText		(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout);
+GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_SMSMessage * SMS,
+					     unsigned char *buffer,
+					     GSM_SMSMessageLayout Layout);
+GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage * SMS, unsigned char *buffer,
+				 GSM_SMSMessageLayout Layout);
 
-void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH);
-void GSM_EncodeUDHHeader(GSM_UDHHeader *UDH);
+void GSM_DecodeUDHHeader(GSM_UDHHeader * UDH);
+void GSM_EncodeUDHHeader(GSM_UDHHeader * UDH);
 
-void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS);
+void GSM_SetDefaultSMSData(GSM_SMSMessage * SMS);
 
 /* ---------------------- SMS folders ------------------------------------- */
 
@@ -513,40 +519,40 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS);
  * Information about SMS folder.
  */
 typedef struct {
-	bool		    	InboxFolder; /**< Whether it is inbox. */
-	bool		    	OutboxFolder; /**< Whether it is outbox. */
-	GSM_MemoryType		Memory; /**< Where exactly it's saved. */
-        unsigned char		Name[(GSM_MAX_SMS_FOLDER_NAME_LEN+1)*2]; /**< Name of the folder */
+	bool InboxFolder;		     /**< Whether it is inbox. */
+	bool OutboxFolder;		      /**< Whether it is outbox. */
+	GSM_MemoryType Memory;		/**< Where exactly it's saved. */
+	unsigned char Name[(GSM_MAX_SMS_FOLDER_NAME_LEN + 1) * 2];	 /**< Name of the folder */
 } GSM_OneSMSFolder;
 
 /**
  * List of SMS folders.
  */
 typedef struct {
-        /**
+	/**
 	 * Array of structures holding information about each folder.
 	 */
-        GSM_OneSMSFolder	Folder[GSM_MAX_SMS_FOLDERS];
-        /**
+	GSM_OneSMSFolder Folder[GSM_MAX_SMS_FOLDERS];
+	/**
  	 * Number of SMS folders.
 	 */
-        unsigned char	   	Number;
+	unsigned char Number;
 } GSM_SMSFolders;
 
 typedef struct {
-	unsigned long	SequenceID;
-	unsigned int	PacketsNum;
-	unsigned int	PacketNum;
-	unsigned long	AllDataLen;
+	unsigned long SequenceID;
+	unsigned int PacketsNum;
+	unsigned int PacketNum;
+	unsigned long AllDataLen;
 
-	unsigned char	DataType[10];
-	unsigned char	DataName[40];
-	unsigned int 	DataLen;
-	unsigned char	Data[140];
+	unsigned char DataType[10];
+	unsigned char DataName[40];
+	unsigned int DataLen;
+	unsigned char Data[140];
 } GSM_SiemensOTASMSInfo;
 
-bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo	*Info,
-			     GSM_SMSMessage 		*SMS);
+bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo * Info,
+			     GSM_SMSMessage * SMS);
 
 #define MAX_MULTI_SMS 10
 
@@ -557,11 +563,11 @@ typedef struct {
 	/**
 	 * Sender or recipient number.
 	 */
-	unsigned char   Number;
+	unsigned char Number;
 	/**
 	 * Array of SMSes.
 	 */
-	GSM_SMSMessage  SMS[MAX_MULTI_SMS];
+	GSM_SMSMessage SMS[MAX_MULTI_SMS];
 } GSM_MultiSMSMessage;
 
 /**
@@ -580,25 +586,25 @@ typedef struct {
 	/**
 	 * Whether it is really inbox.
 	 */
-	bool		    	InboxFolder;
-        /**
+	bool InboxFolder;
+	/**
   	 * Name for MMS folder.
 	 */
-        char	    		Name[(GSM_MAX_MMS_FOLDER_NAME_LEN+1)*2];
+	char Name[(GSM_MAX_MMS_FOLDER_NAME_LEN + 1) * 2];
 } GSM_OneMMSFolder;
 
 /**
  * List of MMS folders.
  */
 typedef struct {
-        /**
+	/**
 	 * Array of structures holding information about each folder.
 	 */
-        GSM_OneMMSFolder	Folder[GSM_MAX_MMS_FOLDERS];
-        /**
+	GSM_OneMMSFolder Folder[GSM_MAX_MMS_FOLDERS];
+	/**
  	 * Number of MMS folders.
 	 */
-        unsigned char	   	Number;
+	unsigned char Number;
 } GSM_MMSFolders;
 
 extern GSM_SMSMessageLayout PHONE_SMSSubmit;
@@ -740,74 +746,79 @@ typedef enum {
 } EncodeMultiPartSMSID;
 
 typedef struct {
-	EncodeMultiPartSMSID    ID;
+	EncodeMultiPartSMSID ID;
 
-	int		     	Number;
-	GSM_Ringtone	    	*Ringtone;
-	GSM_MultiBitmap	 	*Bitmap;
-	GSM_WAPBookmark	 	*Bookmark;
-	GSM_WAPSettings	 	*Settings;
-	GSM_MMSIndicator	*MMSIndicator;
-	GSM_MemoryEntry 	*Phonebook;
-	GSM_CalendarEntry       *Calendar;
-	GSM_ToDoEntry	   	*ToDo;
-	GSM_File		*File;
-	bool		    	Protected;
+	int Number;
+	GSM_Ringtone *Ringtone;
+	GSM_MultiBitmap *Bitmap;
+	GSM_WAPBookmark *Bookmark;
+	GSM_WAPSettings *Settings;
+	GSM_MMSIndicator *MMSIndicator;
+	GSM_MemoryEntry *Phonebook;
+	GSM_CalendarEntry *Calendar;
+	GSM_ToDoEntry *ToDo;
+	GSM_File *File;
+	bool Protected;
 
-	unsigned char	   	*Buffer;
-	bool		    	Left;
-	bool		    	Right;
-	bool		    	Center;
-	bool		    	Large;
-	bool		    	Small;
-	bool		    	Bold;
-	bool		    	Italic;
-	bool		    	Underlined;
-	bool		    	Strikethrough;
+	unsigned char *Buffer;
+	bool Left;
+	bool Right;
+	bool Center;
+	bool Large;
+	bool Small;
+	bool Bold;
+	bool Italic;
+	bool Underlined;
+	bool Strikethrough;
 
 	/* Return values */
-	int		     	RingtoneNotes;
+	int RingtoneNotes;
 } MultiPartSMSEntry;
 
 typedef struct {
-	MultiPartSMSEntry	Entries[MAX_MULTI_SMS];
-	int			EntriesNum;
-	bool			UnicodeCoding;
-	int			Class;
-	unsigned char		ReplaceMessage;
-	bool			Unknown;
+	MultiPartSMSEntry Entries[MAX_MULTI_SMS];
+	int EntriesNum;
+	bool UnicodeCoding;
+	int Class;
+	unsigned char ReplaceMessage;
+	bool Unknown;
 } GSM_MultiPartSMSInfo;
 
 /**
  * Encodes SMS frame according to layout.
  */
-GSM_Error PHONE_EncodeSMSFrame		(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear);
+GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine * s, GSM_SMSMessage * SMS,
+			       unsigned char *buffer,
+			       GSM_SMSMessageLayout Layout, int *length,
+			       bool clear);
 
 /**
  * Encodes multi part SMS from "readable" format.
  */
-GSM_Error GSM_EncodeMultiPartSMS (GSM_MultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS);
+GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo * Info,
+				 GSM_MultiSMSMessage * SMS);
 
 /**
  * Decodes multi part SMS to "readable" format.
  */
-bool GSM_DecodeMultiPartSMS (GSM_MultiPartSMSInfo *Info, GSM_MultiSMSMessage *SMS, bool ems);
+bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo * Info,
+			    GSM_MultiSMSMessage * SMS, bool ems);
 
 /**
  * Clears @ref GSM_MultiPartSMSInfo to default values.
  */
-void GSM_ClearMultiPartSMSInfo (GSM_MultiPartSMSInfo *Info);
+void GSM_ClearMultiPartSMSInfo(GSM_MultiPartSMSInfo * Info);
 
 /**
  * Frees any allocated structures inside @ref GSM_MultiPartSMSInfo.
  */
-void GSM_FreeMultiPartSMSInfo (GSM_MultiPartSMSInfo *Info);
+void GSM_FreeMultiPartSMSInfo(GSM_MultiPartSMSInfo * Info);
 
 /**
  * Links SMS messages according to IDs.
  */
-GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT, bool ems);
-
+GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage ** INPUT,
+		      GSM_MultiSMSMessage ** OUTPUT, bool ems);
 
 #define MAX_MULTI_MMS 20
 
@@ -817,115 +828,117 @@ typedef enum {
 } MMSAddressType;
 
 typedef struct {
-	GSM_File		File;
-	unsigned char		ContentType[400];	// CT in Unicode
-	unsigned char		SMIL[400];		// Smil ID in Unicode
+	GSM_File File;
+	unsigned char ContentType[400];	// CT in Unicode
+	unsigned char SMIL[400];	// Smil ID in Unicode
 } EncodedMultiPartMMSEntry2;
 
 typedef struct {
 	/* Subparts */
 	EncodedMultiPartMMSEntry2 Entries[MAX_MULTI_MMS];
-	int			  EntriesNum;
+	int EntriesNum;
 
-	unsigned char		  Source[200];		// in Unicode
-	MMSAddressType		  SourceType;
-	unsigned char		  Destination[200];	// in Unicode
-	MMSAddressType		  DestinationType;
-	unsigned char	  	  CC[200];		// in Unicode
-	MMSAddressType		  CCType;
+	unsigned char Source[200];	// in Unicode
+	MMSAddressType SourceType;
+	unsigned char Destination[200];	// in Unicode
+	MMSAddressType DestinationType;
+	unsigned char CC[200];	// in Unicode
+	MMSAddressType CCType;
 
-	unsigned char		  Subject[200];		// in Unicode
-	unsigned char		  ContentType[400];	// CT in Unicode
-	unsigned char		  MSGType[50];		// no Unicode
+	unsigned char Subject[200];	// in Unicode
+	unsigned char ContentType[400];	// CT in Unicode
+	unsigned char MSGType[50];	// no Unicode
 
-	bool			  DateTimeAvailable;
-	GSM_DateTime		  DateTime;
+	bool DateTimeAvailable;
+	GSM_DateTime DateTime;
 
-	bool			  MMSReportAvailable;
-	bool			  MMSReport;
+	bool MMSReportAvailable;
+	bool MMSReport;
 } GSM_EncodedMultiPartMMSInfo2;
 
-GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSInfo2 *info);
-GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo2 *info);
+GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File * file,
+				       GSM_EncodedMultiPartMMSInfo2 * info);
+GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo2 * info);
 
 /**
  * Gets SMS Service Center number and SMS settings.
  */
-GSM_Error GSM_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc);
+GSM_Error GSM_GetSMSC(GSM_StateMachine * s, GSM_SMSC * smsc);
 /**
  * Sets SMS Service Center number and SMS settings.
  */
-GSM_Error GSM_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc);
+GSM_Error GSM_SetSMSC(GSM_StateMachine * s, GSM_SMSC * smsc);
 /**
  * Gets information about SMS memory (read/unread/size of memory for
  * both SIM and phone).
  */
-GSM_Error GSM_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status);
+GSM_Error GSM_GetSMSStatus(GSM_StateMachine * s, GSM_SMSMemoryStatus * status);
 /**
  * Reads SMS message.
  */
-GSM_Error GSM_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms);
+GSM_Error GSM_GetSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms);
 /**
  * Reads next (or first if start set) SMS message. This might be
  * faster for some phones than using \ref GSM_GetSMS for each message.
  */
-GSM_Error GSM_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start);
+GSM_Error GSM_GetNextSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms,
+			 bool start);
 /**
  * Sets SMS.
  */
-GSM_Error GSM_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
+GSM_Error GSM_SetSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
 /**
  * Adds SMS to specified folder.
  */
-GSM_Error GSM_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
+GSM_Error GSM_AddSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
 /**
  * Deletes SMS.
  */
-GSM_Error GSM_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
+GSM_Error GSM_DeleteSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
 /**
  * Sends SMS.
  */
-GSM_Error GSM_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms);
+GSM_Error GSM_SendSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
 /**
  * Sends SMS already saved in phone.
  */
-GSM_Error GSM_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location);
+GSM_Error GSM_SendSavedSMS(GSM_StateMachine * s, int Folder, int Location);
 /**
  * Configures fast SMS sending.
  */
-GSM_Error GSM_SetFastSMSSending(GSM_StateMachine *s, bool enable);
+GSM_Error GSM_SetFastSMSSending(GSM_StateMachine * s, bool enable);
 /**
  * Enable/disable notification on incoming SMS.
  */
-GSM_Error GSM_SetIncomingSMS(GSM_StateMachine *s, bool enable);
+GSM_Error GSM_SetIncomingSMS(GSM_StateMachine * s, bool enable);
 /**
  * Gets network information from phone.
  */
-GSM_Error GSM_SetIncomingCB(GSM_StateMachine *s, bool enable);
+GSM_Error GSM_SetIncomingCB(GSM_StateMachine * s, bool enable);
 /**
  * Returns SMS folders information.
  */
-GSM_Error GSM_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders);
+GSM_Error GSM_GetSMSFolders(GSM_StateMachine * s, GSM_SMSFolders * folders);
 /**
  * Creates SMS folder.
  */
-GSM_Error GSM_AddSMSFolder(GSM_StateMachine *s, unsigned char *name);
+GSM_Error GSM_AddSMSFolder(GSM_StateMachine * s, unsigned char *name);
 /**
  * Deletes SMS folder.
  */
-GSM_Error GSM_DeleteSMSFolder(GSM_StateMachine *s, int ID);
+GSM_Error GSM_DeleteSMSFolder(GSM_StateMachine * s, int ID);
 
 /**
  * Lists MMS folders.
  */
-GSM_Error GSM_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders);
+GSM_Error GSM_GetMMSFolders(GSM_StateMachine * s, GSM_MMSFolders * folders);
 /**
  * Retrieves next part of MMS file information.
  */
-GSM_Error GSM_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start);
+GSM_Error GSM_GetNextMMSFileInfo(GSM_StateMachine * s, unsigned char *FileID,
+				 int *MMSFolder, bool start);
 /**
  * Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).
  */
-GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine *s, bool enable);
+GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine * s, bool enable);
 #endif
-

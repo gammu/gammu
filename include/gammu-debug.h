@@ -28,7 +28,7 @@ typedef struct _DebugInfo GSM_Debug_Info;
  */
 #ifdef DEBUG
 #if defined(__GNUC__) && !defined(printf)
-__attribute__((format(printf, 1, 2)))
+__attribute__ ((format(printf, 1, 2)))
 #endif
 int dbgprintf(const char *format, ...);
 #else
@@ -49,10 +49,9 @@ int dbgprintf(const char *format, ...);
  * \ingroup Debug
  */
 #if defined(__GNUC__) && !defined(printf)
-__attribute__((format(printf, 2, 3)))
+__attribute__ ((format(printf, 2, 3)))
 #endif
-int smprintf(GSM_StateMachine *s, const char *format, ...);
-
+int smprintf(GSM_StateMachine * s, const char *format, ...);
 
 /**
  * Sets debug file.
@@ -63,7 +62,7 @@ int smprintf(GSM_StateMachine *s, const char *format, ...);
  *
  * \ingroup Debug
  */
-GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi);
+GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info * privdi);
 
 /**
  * Sets debug file.
@@ -74,7 +73,7 @@ GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi);
  *
  * \ingroup Debug
  */
-GSM_Error GSM_SetDebugFileDescriptor(FILE *fd, GSM_Debug_Info *privdi);
+GSM_Error GSM_SetDebugFileDescriptor(FILE * fd, GSM_Debug_Info * privdi);
 
 /**
  * Returns global debug settings.
@@ -94,7 +93,7 @@ GSM_Debug_Info *GSM_GetGlobalDebug(void);
  *
  * \ingroup Debug.
  */
-bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info *privdi);
+bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info * privdi);
 
 /**
  * Sets debug encoding.
@@ -105,7 +104,7 @@ bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info *privdi);
  *
  * \ingroup Debug.
  */
-bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info *privdi);
+bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info * privdi);
 
 /**
  * Enables using of global debugging configuration. Makes no effect on 
@@ -117,6 +116,6 @@ bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info *privdi);
  *
  * \ingroup Debug.
  */
-bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info *privdi);
+bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info * privdi);
 
 #endif
