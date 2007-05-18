@@ -171,9 +171,9 @@ GSM_Debug_Info *GSM_GetGlobalDebug()
 	return &di;
 }
 
-GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
+GSM_Error GSM_SetDebugFileDescriptor(FILE *fd, GSM_Debug_Info *privdi)
 {
-	FILE *testfile;
+	privdi->was_lf = true;
 
 	/* If we should use global file descriptor, use it */
 	if (privdi->use_global) {
@@ -192,8 +192,18 @@ GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
         	if (privdi->df == di.df) privdi->df = stdout;
     	}
 
+	if (privdi->df && privdi->df != stdout) {
+		fclose(privdi->df);
+	}
+	privdi->df = fd;
+	return ERR_NONE;
+}
+
+GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
+{
+	FILE *testfile;
+
 	if (info != NULL && info[0]!=0 && privdi->dl != 0) {
-		privdi->was_lf = true;
 		switch (privdi->dl) {
 		case DL_BINARY:
 			testfile = fopen(info,"wb" COMMIT_FLAG);
@@ -218,10 +228,7 @@ GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
 			dbgprintf("Can't open debug file\n");
 			return ERR_CANTOPENFILE;
 		} else {
-			if (privdi->df && privdi->df != stdout) {
-				fclose(privdi->df);
-			}
-			privdi->df = testfile;
+			GSM_SetDebugFileDescriptor(testfile, privdi);
 		}
 	}
 	return ERR_NONE;
