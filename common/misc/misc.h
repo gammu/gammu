@@ -23,22 +23,6 @@
 #include <gammu-datetime.h>
 #include <gammu-misc.h>
 
-#ifdef WIN32
-#  ifdef __BORLANDC__
-/* BCC has a proper Sleep(), which takes milliseconds */
-#    define my_sleep(x) Sleep(x)
-#  else
-#    define my_sleep(x) ((x)<1000 ? Sleep(1) : Sleep((x)/1000))
-#  endif
-#else
-#  define my_sleep(x) usleep(x*1000)
-#endif
-
-#undef MAX
-#define MAX(a,b) ((a)>(b) ? (a) : (b))
-#undef MIN
-#define MIN(a,b) ((a)<(b) ? (a) : (b))
-
 /* ------------------------------------------------------------------------- */
 
 #define MAX_LINES 50
@@ -118,8 +102,6 @@ bool GSM_SetDebugLevel(char *info, Debug_Info *di);
 /* ------------------------------------------------------------------------- */
 
 
-char 				*GetCompiler(void);
-char 				*GetOS(void);
 
 #if defined(_MSC_VER) && defined(__cplusplus)
     }

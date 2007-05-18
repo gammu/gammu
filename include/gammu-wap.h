@@ -78,6 +78,8 @@ typedef struct {
 	WAPSettings_Bearer	ActiveBearer;
 } GSM_MultiWAPSettings;
 
+GSM_Error 	GSM_EncodeURLFile		(unsigned char *Buffer, int *Length, GSM_WAPBookmark *bookmark);
+
 /**
  * Reads WAP bookmark.
  */
