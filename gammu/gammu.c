@@ -5829,7 +5829,7 @@ static void Restore(int argc, char *argv[])
 		}
 
 		for (i=0;i<max;i++) {
-			if (!Past && IsCalendarNoteFromThePast(Backup.Calendar[i])) continue;
+			if (!Past && GSM_IsCalendarNoteFromThePast(Backup.Calendar[i])) continue;
 
 			Calendar = *Backup.Calendar[i];
 			error=GSM_AddCalendar(s,&Calendar);

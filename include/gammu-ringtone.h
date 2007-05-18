@@ -209,5 +209,4 @@ GSM_Error GSM_SaveRingtoneRttl(FILE *file, GSM_Ringtone *ringtone);
 
 char *GSM_GetRingtoneName(GSM_AllRingtonesInfo *Info, int ID);
 
-
 #endif
