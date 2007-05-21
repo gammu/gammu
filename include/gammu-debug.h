@@ -131,3 +131,6 @@ bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info * privdi);
 bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info * privdi);
 
 #endif
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */
