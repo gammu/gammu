@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-21 09:15+0200\n"
+"POT-Creation-Date: 2007-05-21 16:57+0200\n"
 "PO-Revision-Date: 2007-05-19 21:48+0200\n"
 "Last-Translator: Alejandro Caldito <acaldito@amena.com>\n"
 "Language-Team: Español\n"
@@ -4871,23 +4871,23 @@ msgstr "Demasiados parámetros (la función acepta de %d a %d)\n"
 msgid "Bad option!"
 msgstr "¡Opción incorrecta!"
 
-#: gammu/gammu.c:10389 gammu/gammu.c:10485
+#: gammu/gammu.c:10387 gammu/gammu.c:10483
 msgid "Too few parameters!"
 msgstr "¡Muy pocos parámetros!"
 
-#: gammu/gammu.c:10410
+#: gammu/gammu.c:10408
 msgid "Configuration could not be parsed!"
 msgstr "Advertencia: ¡El archivo de configuración es incorrecto!"
 
-#: gammu/gammu.c:10412
+#: gammu/gammu.c:10410
 msgid "No configuration file found!"
 msgstr "Advertencia: ¡No se encontró el archivo de configuración!"
 
-#: gammu/gammu.c:10415
+#: gammu/gammu.c:10413
 msgid "No configuration read!"
 msgstr "Advertencia: ¡No se encontró el archivo de configuración!"
 
-#: gammu/gammu.c:10491
+#: gammu/gammu.c:10489
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -4895,14 +4895,14 @@ msgstr ""
 "ERROR: la versión instalada de libGammu.so (%s) es diferente a la versión de "
 "Gammu (%s)\n"
 
-#: gammu/gammu.c:10521
+#: gammu/gammu.c:10519
 #, c-format
 msgid "INFO: there is later stable Gammu (%s instead of %s) available !\n"
 msgstr ""
 "INFO: ¡está disponible una versión estable de Gammu ( %s en lugar de %s ) "
 "más reciente!\n"
 
-#: gammu/gammu.c:10534
+#: gammu/gammu.c:10532
 #, c-format
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr ""

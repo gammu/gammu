@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-21 09:15+0200\n"
+"POT-Creation-Date: 2007-05-21 16:57+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: Language =pl\n"
@@ -4701,27 +4701,27 @@ msgstr "Za mało parametrów!\n"
 msgid "Bad option!"
 msgstr ""
 
-#: gammu/gammu.c:10389 gammu/gammu.c:10485
+#: gammu/gammu.c:10387 gammu/gammu.c:10483
 #, fuzzy
 msgid "Too few parameters!"
 msgstr "Za mało parametrów!\n"
 
-#: gammu/gammu.c:10410
+#: gammu/gammu.c:10408
 #, fuzzy
 msgid "Configuration could not be parsed!"
 msgstr "Ostrzeżenie: Nie znaleziono pliku konfiguracji!\n"
 
-#: gammu/gammu.c:10412
+#: gammu/gammu.c:10410
 #, fuzzy
 msgid "No configuration file found!"
 msgstr "Ostrzeżenie: Nie znaleziono pliku konfiguracji!\n"
 
-#: gammu/gammu.c:10415
+#: gammu/gammu.c:10413
 #, fuzzy
 msgid "No configuration read!"
 msgstr "Ostrzeżenie: Nie znaleziono pliku konfiguracji!\n"
 
-#: gammu/gammu.c:10491
+#: gammu/gammu.c:10489
 #, fuzzy, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -4729,12 +4729,12 @@ msgstr ""
 "BŁĄD: wersja zainstalowanej biblioteki libGammu.so (%s) jest inna niż wersja "
 "Gammu (%s)\n"
 
-#: gammu/gammu.c:10521
+#: gammu/gammu.c:10519
 #, c-format
 msgid "INFO: there is later stable Gammu (%s instead of %s) available !\n"
 msgstr "INFO: nowa wersja stabilna Gammu (%s zamiast %s) jest osiągalna !\n"
 
-#: gammu/gammu.c:10534
+#: gammu/gammu.c:10532
 #, c-format
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr "INFO: nowa wersja testowa Gammu (%s zamiast %s) jest osiągalna !\n"
