@@ -1,4 +1,5 @@
 #include <gammu-types.h>
+#include <gammu-config.h>
 
 size_t UnicodeLength(const unsigned char *str);
 unsigned char *DecodeUnicodeString(const unsigned char *src);
@@ -24,3 +25,7 @@ unsigned char *mywstrstr(unsigned const char *haystack,
 			 unsigned const char *needle);
 
 bool mywstrncasecmp(unsigned const char *a, unsigned const char *b, int num);
+
+#ifndef HAVE_STRCASESTR
+extern char *strcasestr(const char *s, const char *find);
+#endif

@@ -53,6 +53,15 @@ if (GETTEXTLIBS_FOUND)
     include_directories (${GETTEXT_INCLUDE_DIR})
 endif (GETTEXTLIBS_FOUND)
 
+# Add libraries needed for windows build
+if (WIN32)
+    target_link_libraries (gammu ws2_32)
+    # These libraries are needed for serial driver
+    if (GSM_ENABLE_DKU2PHONET OR GSM_ENABLE_DKU2AT)
+        target_link_libraries (gammu setupapi advapi32)
+    endif (GSM_ENABLE_DKU2PHONET OR GSM_ENABLE_DKU2AT)
+endif (WIN32)
+
 install (TARGETS gammu
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT "runtime"
         LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT "runtime"

@@ -562,17 +562,6 @@ mark_as_advanced (ENABLE_LGPL)
 macro_gammu_option (CELLBROADCAST "Cell Broadcast messages support" ON ON ON)
 macro_gammu_option (BACKUP "Backup/Restore functions" ON ON ON)
 
-# Add libraries needed for windows build
-if (WIN32)
-    target_link_libraries (Gammu ws2_32)
-    #    target_link_libraries (Gammu ntdll) # needed for MySQL
-    #    target_link_libraries (Gammu msvcr71) # needed for MySQL
-    # These libraries are needed for serial driver
-    if (GSM_ENABLE_DKU2PHONET OR GSM_ENABLE_DKU2AT)
-        target_link_libraries (Gammu setupapi advapi32)
-    endif (GSM_ENABLE_DKU2PHONET OR GSM_ENABLE_DKU2AT)
-endif (WIN32)
-
 # Generate config.h
 configure_file (templates/gammu-config.h.cmake include/gammu-config.h ESCAPE_QUOTES)
 
