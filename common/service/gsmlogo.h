@@ -26,6 +26,9 @@ typedef enum {
 } GSM_Phone_Bitmap_Types;
 
 void GSM_GetMaxBitmapWidthHeight(GSM_Bitmap_Types 	Type, unsigned char *width, unsigned char *height);
+void GSM_ResizeBitmap(GSM_Bitmap * dest, GSM_Bitmap * src, int width, int height);
+void GSM_ReverseBitmap(GSM_Bitmap * Bitmap);
+int GSM_GetBitmapSize(GSM_Bitmap * bmp);
 
 
 GSM_Error BMP2Bitmap            (unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);

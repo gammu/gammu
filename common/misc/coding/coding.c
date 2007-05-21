@@ -943,12 +943,12 @@ void ReadUnicodeFile(unsigned char *Dest, unsigned char *Source)
 	Dest[current++]	= 0;
 }
 
-int GetBit(unsigned char *Buffer, int BitNum)
+inline int GetBit(unsigned char *Buffer, int BitNum)
 {
 	return Buffer[BitNum/8] & 1<<(7-(BitNum%8));
 }
 
-int SetBit(unsigned char *Buffer, int BitNum)
+inline int SetBit(unsigned char *Buffer, int BitNum)
 {
 	return Buffer[BitNum/8] |= 1<<(7-(BitNum%8));
 }

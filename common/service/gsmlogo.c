@@ -223,7 +223,11 @@ void GSM_ClearPointBitmap(GSM_Bitmap *bmp, int x, int y)
 
 bool GSM_IsPointBitmap(GSM_Bitmap *bmp, int x, int y)
 {
-	if (GetBit(bmp->BitmapPoints,y*bmp->BitmapWidth+x)) return true; else return false;
+	if (GetBit(bmp->BitmapPoints, (y * bmp->BitmapWidth) + x)) {
+		return true; 
+	} else {
+		return false;
+	}
 }
 
 void GSM_ClearBitmap(GSM_Bitmap *bmp)
@@ -233,7 +237,7 @@ void GSM_ClearBitmap(GSM_Bitmap *bmp)
 
 int GSM_GetBitmapSize(GSM_Bitmap *bmp)
 {
-	return bmp->BitmapWidth*bmp->BitmapHeight/8+1;
+	return ((bmp->BitmapWidth * bmp->BitmapHeight) / 8) + 1;
 }
 
 void GSM_PrintBitmap(FILE *file, GSM_Bitmap *bitmap)
