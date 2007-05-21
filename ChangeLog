@@ -22,6 +22,7 @@ ChangeLog
 [-] * Better compatibility with Sharp phones.
 [!] * Completely changed public API to avoid too often ABI changes.
 [!] * See PORTING file for changes you have to do.
+[!] * Dropped autoconf support, use CMake instead.
 
 20070513 - 1.11.0
 [-] * Do not use asynchronous I/O on Windows.
