@@ -12,6 +12,8 @@
  * Debuging handling.
  */
 
+#include <gammu-statemachine.h>
+
 /**
  * Debugging configuration.
  * \ingroup Debug
@@ -83,6 +85,16 @@ GSM_Error GSM_SetDebugFileDescriptor(FILE * fd, GSM_Debug_Info * privdi);
  * \ingroup Debug
  */
 GSM_Debug_Info *GSM_GetGlobalDebug(void);
+
+/**
+ * Gets debug information for state machine.
+ *
+ * \param s State machine data
+ * \return Debug information.
+ *
+ * \ingroup StateMachine
+ */
+GSM_Debug_Info *GSM_GetDebug(GSM_StateMachine *s);
 
 /**
  * Sets debug level.

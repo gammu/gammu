@@ -1706,6 +1706,12 @@ OnePhoneModel *GSM_GetModelInfo(GSM_StateMachine *s)
 {
 	return s->Phone.Data.ModelInfo;
 }
+
+GSM_Debug_Info *GSM_GetDebug(GSM_StateMachine *s)
+{
+	return &(s->di);
+}
+
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

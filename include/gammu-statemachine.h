@@ -208,6 +208,7 @@ void GSM_FreeStateMachine(GSM_StateMachine * s);
  * \ingroup StateMachine
  */
 GSM_ConnectionType GSM_GetUsedConnection(GSM_StateMachine * s);
+
 #endif
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
