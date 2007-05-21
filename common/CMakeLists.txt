@@ -110,13 +110,16 @@ include_directories (
 # Add libraries needed for windows build
 if (WIN32)
     target_link_libraries (Gammu ws2_32)
-    #    target_link_libraries (Gammu ntdll) # needed for MySQL
-    #    target_link_libraries (Gammu msvcr71) # needed for MySQL
     # These libraries are needed for serial driver
     if (GSM_ENABLE_DKU2PHONET OR GSM_ENABLE_DKU2AT)
         target_link_libraries (Gammu setupapi advapi32)
     endif (GSM_ENABLE_DKU2PHONET OR GSM_ENABLE_DKU2AT)
 endif (WIN32)
+
+if (GETTEXTLIBS_FOUND)
+    target_link_libraries (Gammu ${GETTEXT_LIBRARY})
+    include_directories (${GETTEXT_INCLUDE_DIR})
+endif (GETTEXTLIBS_FOUND)
 
 # Install instructions
 install (TARGETS Gammu

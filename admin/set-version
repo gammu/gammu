@@ -19,6 +19,9 @@ echo "Setting version to $version"
 do_replace packaging/rpm/gammu.spec.in gammu.spec
 do_replace packaging/slackware/description-pak.in description-pak
 
+# Include for windows
+do_replace templates/gammu-config.h.cmake include/gammu-config.h
+
 # Windows build
 do_replace win32/dll/msvc06.mak/gammu.rc.in win32/dll/msvc06.mak/gammu.rc
 do_replace win32/dll/msvc2003.mak/gammu.rc.in win32/dll/msvc2003.mak/gammu.rc
