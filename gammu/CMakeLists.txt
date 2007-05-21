@@ -31,7 +31,7 @@ target_link_libraries (gammu Gammu)
 target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
 
 include_directories (
-    "${Gammu_BINARY_DIR}/cfg"
+    "${Gammu_BINARY_DIR}/include"
 	"${Gammu_SOURCE_DIR}/include"
     )
 # Tune options for found libraries

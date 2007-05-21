@@ -334,6 +334,7 @@ set (PUBLIC_HEADERS
     include/gammu-inifile.h
     include/gammu-calendar.h
     include/gammu-ringtone.h
+    ${Gammu_BINARY_DIR}/include/gammu-config.h
     )
 
 set (HEADERS
@@ -408,7 +409,7 @@ set (HEADERS
     common/service/gsmmisc.h
     common/gsmstate.h
     common/gsmcomon.h
-    ${Gammu_BINARY_DIR}/cfg/config.h
+    ${Gammu_BINARY_DIR}/include/gammu-config.h
     )
 
 set (LIBRARY_SRC
@@ -573,7 +574,7 @@ if (WIN32)
 endif (WIN32)
 
 # Generate config.h
-configure_file (templates/config.h.cmake cfg/config.h ESCAPE_QUOTES)
+configure_file (templates/gammu-config.h.cmake include/gammu-config.h ESCAPE_QUOTES)
 
 # Generate Doxygen file
 set (DOXYGEN_INPUT "${Gammu_SOURCE_DIR}/include")
@@ -668,9 +669,9 @@ if (CROSS_MINGW)
     endif (GETTEXTLIBS_FOUND)
 endif (CROSS_MINGW)
 
-foreach (HEADER ${HEADERS})
+foreach (HEADER ${PUBLIC_HEADERS})
     string (REPLACE "${Gammu_BINARY_DIR}" "" DIRNAME ${HEADER})
-    string (REGEX REPLACE "(common|cfg)(.*)/[^/]*$" "\\2" DIRNAME ${DIRNAME})
+    string (REGEX REPLACE "(include)(.*)/[^/]*$" "\\2" DIRNAME ${DIRNAME})
     install (
         FILES ${HEADER} 
         DESTINATION "${INSTALL_INC_DIR}/${DIRNAME}" 

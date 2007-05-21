@@ -6,7 +6,7 @@
  */
 
 #ifndef GAMMU_CONFIG_INCLUDED
-#  include <config.h>
+#  include <gammu-config.h>
 #  define GAMMU_CONFIG_INCLUDED
 #endif
 
