@@ -342,8 +342,7 @@ typedef struct {
 	unsigned char Number[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 
 	unsigned char
-	    OtherNumbers[GSM_SMS_OTHER_NUMBERS][(GSM_MAX_NUMBER_LENGTH +
-						 1) * 2];
+	 OtherNumbers[GSM_SMS_OTHER_NUMBERS][(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 	int OtherNumbersNum;
 
 	/**
