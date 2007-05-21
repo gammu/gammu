@@ -15,8 +15,11 @@ do_replace() {
 
 echo "Setting version to $version"
 
-do_replace cfg/rpm/gammu.spec.in gammu.spec
-do_replace description.pak.in description.pak
+# Packaging
+do_replace packaging/rpm/gammu.spec.in gammu.spec
+do_replace packaging/slackware/description-pak.in description-pak
+
+# Windows build
 do_replace win32/dll/msvc06.mak/gammu.rc.in win32/dll/msvc06.mak/gammu.rc
 do_replace win32/dll/msvc2003.mak/gammu.rc.in win32/dll/msvc2003.mak/gammu.rc
 do_replace gammu/bcc06.mak/gammu.bpr.in gammu/bcc06.mak/gammu.bpr
