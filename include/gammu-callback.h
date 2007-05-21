@@ -14,7 +14,6 @@
 
 #include <gammu-types.h>
 #include <gammu-message.h>
-#include <gammu-callback.h>
 #include <gammu-call.h>
 
 /**
