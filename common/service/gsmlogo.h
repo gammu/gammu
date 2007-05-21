@@ -25,14 +25,7 @@ typedef enum {
 	GSM_EMSVariablePicture
 } GSM_Phone_Bitmap_Types;
 
-bool GSM_IsPointBitmap		(GSM_Bitmap 		*bmp, int x, int y);
-void GSM_SetPointBitmap		(GSM_Bitmap 		*bmp, int x, int y);
-void GSM_ClearPointBitmap	(GSM_Bitmap 		*bmp, int x, int y);
-void GSM_ClearBitmap		(GSM_Bitmap 		*bmp);
-void GSM_ResizeBitmap		(GSM_Bitmap 		*dest, GSM_Bitmap *src, int width, int height);
-void GSM_ReverseBitmap		(GSM_Bitmap 		*Bitmap);
 void GSM_GetMaxBitmapWidthHeight(GSM_Bitmap_Types 	Type, unsigned char *width, unsigned char *height);
-int  GSM_GetBitmapSize		(GSM_Bitmap 		*bmp);
 
 
 GSM_Error BMP2Bitmap            (unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap);
