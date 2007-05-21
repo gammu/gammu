@@ -238,14 +238,51 @@ GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap * bitmap);
  */
 GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap * bitmap);
 
+/**
+ * Checks whether point is set in bitmap.
+ * 
+ * \param bmp Bitmap
+ * \param x Horizontal coordinate.
+ * \param y Vertical coordinate.
+ * \return True if point is set.
+ *
+ * \ingroup Bitmap.
+ */
 bool GSM_IsPointBitmap(GSM_Bitmap * bmp, int x, int y);
+
+/**
+ * Sets point in bitmap.
+ * 
+ * \param bmp Bitmap
+ * \param x Horizontal coordinate.
+ * \param y Vertical coordinate.
+ *
+ * \ingroup Bitmap.
+ */
 void GSM_SetPointBitmap(GSM_Bitmap * bmp, int x, int y);
+
+/**
+ * Clears point in bitmap.
+ * 
+ * \param bmp Bitmap
+ * \param x Horizontal coordinate.
+ * \param y Vertical coordinate.
+ *
+ * \ingroup Bitmap.
+ */
 void GSM_ClearPointBitmap(GSM_Bitmap * bmp, int x, int y);
+
+/**
+ * Clears bitmap.
+ * 
+ * \param bmp Bitmap
+ * \param x Horizontal coordinate.
+ * \param y Vertical coordinate.
+ *
+ * \ingroup Bitmap.
+ */
 void GSM_ClearBitmap(GSM_Bitmap * bmp);
-void GSM_ResizeBitmap(GSM_Bitmap * dest, GSM_Bitmap * src, int width,
-		      int height);
-void GSM_ReverseBitmap(GSM_Bitmap * Bitmap);
-int GSM_GetBitmapSize(GSM_Bitmap * bmp);
+
 #endif
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
