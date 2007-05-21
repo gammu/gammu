@@ -208,7 +208,6 @@ GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone * ringtone);
 
 void GSM_SaveRingtoneOtt(FILE * file, GSM_Ringtone * ringtone);
 void GSM_SaveRingtoneMidi(FILE * file, GSM_Ringtone * ringtone);
-void GSM_SaveRingtoneRng(FILE * file, GSM_Ringtone * ringtone);
 void GSM_SaveRingtoneIMelody(FILE * file, GSM_Ringtone * ringtone);
 GSM_Error GSM_SaveRingtoneWav(FILE * file, GSM_Ringtone * ringtone);
 GSM_Error GSM_SaveRingtoneRttl(FILE * file, GSM_Ringtone * ringtone);
