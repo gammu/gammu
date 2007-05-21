@@ -10368,17 +10368,15 @@ int main(int argc, char *argv[])
 	char		*cp,*rss,buff[200];
 	GSM_Config *smcfg;
 	GSM_Config *smcfg0;
-
-#ifdef DEBUG
 	GSM_Debug_Info *di;
-#endif
 
 	s = GSM_AllocStateMachine();
 
 	GSM_InitLocales(NULL);
 
-#ifdef DEBUG
 	di = GSM_GetGlobalDebug();
+
+#ifdef DEBUG
 	GSM_SetDebugFileDescriptor(stdout, di);
 	GSM_SetDebugLevel("textall", di);
 #endif
