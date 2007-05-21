@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-05-21 16:57+0200\n"
-"PO-Revision-Date: 2007-05-04 13:29+0200\n"
+"PO-Revision-Date: 2007-05-21 17:44+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -79,13 +79,10 @@ msgid "No response in specified timeout. Probably phone not connected."
 msgstr "Žadná odpověď v očekaváné době. Telefon pravděpodobně není připojen."
 
 #: common/gsmcomon.c:95
-#, fuzzy
 msgid ""
 "Unknown response from phone. See <http://cihar.com/gammu/report> for "
 "information how to report it."
-msgstr ""
-"Neznámá odpověď od telefonu. Přečtěte si readme.txt jak tuto událost "
-"nahlásit."
+msgstr "Neznámá odpověď od telefonu. Přečtěte si <http://cihar.com/gammu/report> jak tuto událost nahlásit."
 
 #: common/gsmcomon.c:97
 msgid "Unknown connection type string. Check config file."
@@ -146,8 +143,7 @@ msgstr "Přístup k souboru nebo zařízení odmítnut..."
 
 #: common/gsmcomon.c:111
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
-msgstr ""
-"Prázdné číslo SMS centra. Nastavte ho v telefonu nebo použijte -smscnumber."
+msgstr "Prázdné číslo SMSC. Nastavte ho v telefonu nebo použijte -smscnumber."
 
 #: common/gsmcomon.c:112
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
@@ -648,7 +644,8 @@ msgstr "Neznámé číslo"
 #: gammu/depend/nokia/dct4.c:1397
 #, c-format
 msgid "ERROR: unknown memory type (\"%s\")\n"
-msgstr "CHYBA: neznámý typ paměti (\"%s\")\n"
+msgstr ""
+"CHYBA: neznámý typ paměti (\"%s\")\n"
 
 #: gammu/smsd/s_pgsql.c:42 gammu/smsd/s_mysql.c:40
 #, c-format
@@ -998,9 +995,10 @@ msgid "Error getting send status of %s (%i): %s"
 msgstr ""
 
 #: gammu/smsd/smsdcore.c:521
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown SMSD service type (\"%s\")\n"
-msgstr "Neznámý typ paměti (\"%s\")\n"
+msgstr ""
+"Neznámý typ služby SMSD (\"%s\")\n"
 
 #: gammu/smsd/smsdcore.c:529 gammu/smsd/smsdcore.c:560
 #, c-format
@@ -1806,14 +1804,12 @@ msgid "First name"
 msgstr "Křestní jméno"
 
 #: gammu/gammu.c:1039
-#, fuzzy
 msgid "Formal name"
-msgstr "Křestní jméno"
+msgstr "Formální jméno"
 
 #: gammu/gammu.c:1040
-#, fuzzy
 msgid "Nick name"
-msgstr "Křestní jméno"
+msgstr "Přezdívka"
 
 #: gammu/gammu.c:1041
 msgid "Company"
@@ -1837,7 +1833,7 @@ msgstr "Stát"
 
 #: gammu/gammu.c:1046
 msgid "Zip code"
-msgstr "PSČ"
+msgstr "Směrovací číslo"
 
 #: gammu/gammu.c:1047
 msgid "Country"
@@ -2424,9 +2420,8 @@ msgid "call switched"
 msgstr ""
 
 #: gammu/gammu.c:1872
-#, fuzzy
 msgid "USSD received"
-msgstr "Doručená"
+msgstr "Přijato USSD"
 
 #: gammu/gammu.c:1876
 msgid "No action needed"
@@ -2445,9 +2440,8 @@ msgid "Another client replied"
 msgstr ""
 
 #: gammu/gammu.c:1888
-#, fuzzy
 msgid "Not supported"
-msgstr "Nespuštěno"
+msgstr "Není podporováno"
 
 #: gammu/gammu.c:1897 gammu/gammu.c:7319 gammu/gammu.c:7329 gammu/gammu.c:7649
 #: gammu/gammu.c:7692
@@ -4594,7 +4588,7 @@ msgid ""
 "Gammu parameters, topic: %s\n"
 "\n"
 msgstr ""
-"Parametry Gammu, téma: %s\n"
+"Gammu, parametry pro téma: %s\n"
 "\n"
 
 #: gammu/gammu.c:10314
@@ -4608,9 +4602,8 @@ msgid "More parameters required (function requires %d to %d)\n"
 msgstr "Příliš málo parametrů (funkce požaduje %d až %d)\n"
 
 #: gammu/gammu.c:10319 gammu/gammu.c:10334
-#, fuzzy
 msgid "Parameters help"
-msgstr "Nápověda pro parametry: %s\n"
+msgstr "Nápověda pro parametry"
 
 #: gammu/gammu.c:10329
 #, c-format
