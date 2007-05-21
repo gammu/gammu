@@ -102,7 +102,7 @@ endif (NOT HAVE_SIN)
 
 # Include search path
 include_directories (
-    "${Gammu_BINARY_DIR}/cfg"
+    "${Gammu_BINARY_DIR}/include"
 	"${Gammu_SOURCE_DIR}/include"
 	"${Gammu_SOURCE_DIR}/common"
     )
