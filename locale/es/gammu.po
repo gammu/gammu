@@ -1052,15 +1052,15 @@ msgstr ""
 #, c-format
 msgid "%d second"
 msgid_plural "%d seconds"
-msgstr[0] "%d segundo\n"
-msgstr[1] "%d segundos\n"
+msgstr[0] "%d segundo"
+msgstr[1] "%d segundos"
 
 #: gammu/gammu.c:55
 #, c-format
 msgid "%d minute"
 msgid_plural "%d minutes"
-msgstr[0] "%d minuto\n"
-msgstr[1] "%d minutos\n"
+msgstr[0] "%d minuto"
+msgstr[1] "%d minutos"
 
 #: gammu/gammu.c:56
 #, c-format
