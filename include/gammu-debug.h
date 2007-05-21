@@ -94,7 +94,7 @@ GSM_Debug_Info *GSM_GetGlobalDebug(void);
  *
  * \ingroup StateMachine
  */
-GSM_Debug_Info *GSM_GetDebug(GSM_StateMachine *s);
+GSM_Debug_Info *GSM_GetDebug(GSM_StateMachine * s);
 
 /**
  * Sets debug level.
