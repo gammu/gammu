@@ -86,16 +86,4 @@ and point build
 
 -DGETTEXT_CROSS_PATH=/path/to/gettext
 
-
-From Sources - Using autoconf (old method)
-==========================================
-
-This method is deprecated and will be removed in future.
-
-./configure
-make
-make install
-
-To enable shared library, use "make shared" instead of "make".
-
 # vim: et ts=4 sw=4 sts=4 tw=72
