@@ -69,7 +69,8 @@ while [ "$#" -gt 0 ] ; do
             CMAKE_DEBUG=
             ;;
         *)
-            echo 'Unknown parameter: $1'
+            echo "Unknown parameter: $1"
+            echo
             help
             ;;
     esac
