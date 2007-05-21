@@ -38,12 +38,12 @@ RSC=rc.exe
 # PROP Intermediate_Dir "Release"
 # PROP Ignore_Export_Lib 0
 # PROP Target_Dir ""
-# ADD BASE CPP /I "..\..\..\cfg" /I "..\..\..\common" /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SMS_DLL_EXPORTS" /YX /FD /c
-# ADD CPP /I "..\..\..\cfg" /I "..\..\..\common" /nologo /Gz /W3 /GX /Od /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SMS_DLL_EXPORTS" /YX /FD /c
+# ADD BASE CPP /I "..\..\..\include" /nologo /MT /W3 /GX /O2 /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SMS_DLL_EXPORTS" /YX /FD /c
+# ADD CPP/I "..\..\..\include" /nologo /Gz /W3 /GX /Od /D "WIN32" /D "NDEBUG" /D "_WINDOWS" /D "_MBCS" /D "_USRDLL" /D "SMS_DLL_EXPORTS" /YX /FD /c
 # ADD BASE MTL /nologo /D "NDEBUG" /mktyplib203 /win32
 # ADD MTL /nologo /D "NDEBUG" /mktyplib203 /win32
-# ADD BASE RSC /I "..\..\..\cfg" /I "..\..\..\common" /l 0x415 /d "NDEBUG"
-# ADD RSC /I "..\..\..\cfg" /I "..\..\..\common" /l 0x415 /d "NDEBUG"
+# ADD BASE RSC /I "..\..\..\include" /l 0x415 /d "NDEBUG"
+# ADD RSC /I "..\..\..\include" /l 0x415 /d "NDEBUG"
 BSC32=bscmake.exe
 # ADD BASE BSC32 /nologo
 # ADD BSC32 /nologo

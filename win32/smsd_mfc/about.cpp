@@ -8,7 +8,7 @@
 #include <mysql.h>
 
 #include "../../common/misc/misc.h"
-#include "../../cfg/config.h"
+#include <gammu-config.h>
 
 #include "resource.h"
 #include "about.h"
