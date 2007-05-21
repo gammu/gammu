@@ -12,9 +12,39 @@
  * Calendar events manipulations.
  */
 
-#define GSM_CALENDAR_ENTRIES	    	16
-#define MAX_CALENDAR_TEXT_LENGTH	256	/* In 6310 max. 256 chars */
+/**
+ * Maximal number of calendar entries.
+ *
+ * \ingroup Calendar
+ */
+#define GSM_CALENDAR_ENTRIES 16
 
+/**
+ * Maximal length of text in calendar.
+ *
+ * \ingroup Calendar
+ */
+#define MAX_CALENDAR_TEXT_LENGTH 256
+
+/**
+ * Maximal number of todo entries.
+ *
+ * \ingroup Calendar
+ */
+#define GSM_TODO_ENTRIES 7
+
+/**
+ * Maximal length of text in todo.
+ *
+ * \ingroup Calendar
+ */
+#define MAX_TODO_TEXT_LENGTH 160
+
+/**
+ * Calendar settings structure.
+ *
+ * \ingroup Calendar
+ */
 typedef struct {
 	/**
 	 * Monday = 1, Tuesday = 2,...
@@ -25,8 +55,11 @@ typedef struct {
 	 */
 	int AutoDelete;
 } GSM_CalendarSettings;
+
 /**
  * Status of to do entries.
+ *
+ * \ingroup Calendar
  */
 typedef struct {
 	/**
@@ -38,8 +71,11 @@ typedef struct {
 	 */
 	int Used;
 } GSM_ToDoStatus;
+
 /**
  * Structure used for returning calendar status.
+ *
+ * \ingroup Calendar
  */
 typedef struct {
 	/**
@@ -51,8 +87,11 @@ typedef struct {
 	 */
 	int Used;
 } GSM_CalendarStatus;
+
 /**
  * Enum defines types of calendar notes
+ *
+ * \ingroup Calendar
  */
 typedef enum {
 	/**
@@ -171,6 +210,8 @@ typedef enum {
 
 /**
  * One value of calendar event.
+ *
+ * \ingroup Calendar
  */
 typedef enum {
 	/**
@@ -261,6 +302,8 @@ typedef enum {
 
 /**
  * One value of calendar event.
+ *
+ * \ingroup Calendar
  */
 typedef struct {
 	/**
@@ -287,6 +330,8 @@ typedef struct {
 
 /**
  * Calendar note values.
+ *
+ * \ingroup Calendar
  */
 typedef struct {
 	/**
@@ -307,17 +352,22 @@ typedef struct {
 	GSM_SubCalendarEntry Entries[GSM_CALENDAR_ENTRIES];
 } GSM_CalendarEntry;
 
+/**
+ * Finds inxedes of default entries.
+ *
+ * \ingroup Calendar
+ */
 void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry * entry,
 					       int *Text, int *Time, int *Alarm,
 					       int *Phone, int *EndTime,
 					       int *Location);
 
-#define GSM_TODO_ENTRIES		7
-#define MAX_TODO_TEXT_LENGTH	    	160	/* N6230i */
 
 /**
  * Types of to do values. In parenthesis is member of @ref GSM_SubToDoEntry,
  * where value is stored.
+ *
+ * \ingroup Calendar
  */
 typedef enum {
 	/**
@@ -376,6 +426,8 @@ typedef enum {
 
 /**
  * Priority of to do.
+ *
+ * \ingroup Calendar
  */
 typedef enum {
 	GSM_Priority_None = 0,
@@ -386,6 +438,8 @@ typedef enum {
 
 /**
  * Time Units.
+ *
+ * \ingroup Calendar
  */
 typedef enum {
 	GSM_TimeUnit_Unknown = 0,
@@ -397,6 +451,8 @@ typedef enum {
 
 /**
  * Value of to do entry.
+ *
+ * \ingroup Calendar
  */
 typedef struct {
 	/**
@@ -419,6 +475,8 @@ typedef struct {
 
 /**
  * To do entry.
+ *
+ * \ingroup Calendar
  */
 typedef struct {
 	/**
@@ -443,13 +501,26 @@ typedef struct {
 	GSM_SubToDoEntry Entries[GSM_TODO_ENTRIES];
 } GSM_ToDoEntry;
 
+/**
+ * Note entry.
+ *
+ * \ingroup Calendar
+ */
 typedef struct {
+	/**
+	 * Location in memory.
+	 */
 	int Location;
+	/**
+	 * Text of note.
+	 */
 	char Text[3000 * 2];
 } GSM_NoteEntry;
 
 /**
  * Alarm values.
+ *
+ * \ingroup Calendar
  */
 typedef struct {
 	/**
@@ -470,153 +541,393 @@ typedef struct {
 	unsigned char Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
 } GSM_Alarm;
 
+/**
+ * Format of vTodo.
+ *
+ * \ingroup Calendar
+ */
 typedef enum {
+	/**
+	 * Format compatible with Nokia - limited subsed of standard.
+	 */
 	Nokia_VToDo = 1,
+	/**
+	 * Format compatible with SonyEricsson - complete standard.
+	 */
 	SonyEricsson_VToDo,
-	Mozilla_VToDo
+	/**
+	 * Format compatible with Mozilla - iCalendar based.
+	 */
+	Mozilla_VToDo,
 } GSM_VToDoVersion;
 
+/**
+ * Format of vCalendar export.
+ *
+ * \ingroup Calendar
+ */
+typedef enum {
+	/**
+	 * vCalendar specially hacked for Nokia .
+	 */
+	Nokia_VCalendar = 1,
+	/**
+	 * vCalendar specially hacked for Siemens.
+	 */
+	Siemens_VCalendar,
+	/**
+	 * Standard vCalendar (which works for Sony-Ericsson phones) 
+	 */
+	SonyEricsson_VCalendar,
+	/**
+	 * iCalendar as compatible with Mozilla. 
+	 */
+	Mozilla_iCalendar,
+} GSM_VCalendarVersion;
+
+/**
+ * Encodes vTodo to buffer.
+ *
+ * \param Buffer Storage for data.
+ * \param Length Pointer to current position in data (will be incremented).
+ * \param note Note to encode.
+ * \param header Whether to include vCalendar header.
+ * \param Version Format of vTodo to create.
+ *
+ * \return Error code.
+ *
+ * \ingroup Calendar
+ */
 GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry * note,
 			  bool header, GSM_VToDoVersion Version);
 
 /**
- * Format of vCalendar export.
+ * Encodes vCalendar to buffer.
+ *
+ * \param Buffer Storage for data.
+ * \param Length Pointer to current position in data (will be incremented).
+ * \param note Note to encode.
+ * \param header Whether to include vCalendar header.
+ * \param Version Format of vCalendar to create.
+ *
+ * \return Error code.
+ *
+ * \ingroup Calendar
  */
-typedef enum {
-	Nokia_VCalendar = 1, /**< vCalendar specially hacked for Nokia */
-	Siemens_VCalendar, /**< vCalendar specially hacked for Nokia */
-	SonyEricsson_VCalendar,	/**< Standard vCalendar (which works for Sony-Ericsson phones) */
-	Mozilla_iCalendar /**< iCalendar as compatible with Mozilla */
-} GSM_VCalendarVersion;
-
 GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length,
 			      GSM_CalendarEntry * note, bool header,
 			      GSM_VCalendarVersion Version);
 
-/* --------------------------- note ---------------------------------------- */
-
+/**
+ * Encodes vNote to buffer.
+ * 
+ * \param Buffer Storage for data.
+ * \param Length Pointer to current position in data (will be incremented).
+ * \param note Note to encode.
+ *
+ * \return Error code.
+ *
+ * \ingroup Calendar
+ */
 GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length,
 			    GSM_NoteEntry * Note);
 
-/* --------------------------- alarm --------------------------------------- */
 
-/* --------------------------- calendar & todo ----------------------------- */
-
+/**
+ * Decodes vCalendar and vTodo buffer.
+ *
+ * \param Buffer Buffer to decode.
+ * \param Pos Current position in buffer (will be updated).
+ * \param Calendar Storage for calendar entry.
+ * \param ToDo Storage for todo entry.
+ * \param CalVer Format of vCalendar.
+ * \param ToDoVer Format of vTodo.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
+ */
 GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos,
 				    GSM_CalendarEntry * Calendar,
 				    GSM_ToDoEntry * ToDo,
 				    GSM_VCalendarVersion CalVer,
 				    GSM_VToDoVersion ToDoVer);
 
+/**
+ * Detects whether calendar note is in past.
+ *
+ * \param note Note to check.
+ *
+ * \return Whether entry is in past.
+ *
+ * \ingroup Calendar.
+ */
 bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry * note);
 
 /**
  * Reads alarm set in phone.
+ *
+ * \param s State machine pointer.
+ * \param alarm Storage for alarm.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_GetAlarm(GSM_StateMachine * s, GSM_Alarm * alarm);
 /**
  * Sets alarm in phone.
+ *
+ * \param s State machine pointer.
+ * \param alarm Alarm to set.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_SetAlarm(GSM_StateMachine * s, GSM_Alarm * alarm);
 
 /**
  * Gets status of ToDos (count of used entries).
+ *
+ * \param s State machine pointer.
+ * \param status Storage for todo status.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_GetToDoStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
 /**
  * Reads ToDo from phone.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_GetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
 /**
  * Reads ToDo from phone.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_GetNextToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo,
 			  bool start);
 /**
  * Sets ToDo in phone.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_SetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
 /**
  * Adds ToDo in phone.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_AddToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
 /**
  * Deletes ToDo entry in phone.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_DeleteToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
 /**
  * Deletes all todo entries in phone.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_DeleteAllToDo(GSM_StateMachine * s);
 /**
  * Retrieves calendar status (number of used entries).
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_GetCalendarStatus(GSM_StateMachine * s,
 				GSM_CalendarStatus * Status);
 /**
  * Retrieves calendar entry.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_GetCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
 /**
  * Retrieves calendar entry. This is useful for continuous reading of all
  * calendar entries.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_GetNextCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note,
 			      bool start);
 /**
  * Sets calendar entry
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_SetCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
 /**
  * Adds calendar entry.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_AddCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
 /**
  * Deletes calendar entry.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_DeleteCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
 /**
  * Deletes all calendar entries.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_DeleteAllCalendar(GSM_StateMachine * s);
 /**
  * Reads calendar settings.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_GetCalendarSettings(GSM_StateMachine * s,
 				  GSM_CalendarSettings * settings);
 /**
  * Sets calendar settings.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_SetCalendarSettings(GSM_StateMachine * s,
 				  GSM_CalendarSettings * settings);
 /**
  * Retrieves notes status (number of used entries).
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_GetNotesStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
 /**
  * Retrieves notes entry.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_GetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
 /**
  * Retrieves note entry. This is useful for continuous reading of all
  * notes entries.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_GetNextNote(GSM_StateMachine * s, GSM_NoteEntry * Note,
 			  bool start);
 /**
  * Sets note entry
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_SetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
 /**
  * Adds note entry.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_AddNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
 /**
  * Deletes note entry.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_DeleteNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
 /**
  * Deletes all notes entries.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
+ * \ingroup Calendar
  */
 GSM_Error GSM_DeleteAllNotes(GSM_StateMachine * s);
+
 #endif
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */
