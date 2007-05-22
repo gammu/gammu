@@ -447,21 +447,6 @@ typedef enum {
 } GSM_ToDo_Priority;
 
 /**
- * Time Units.
- *
- * \ingroup Calendar
- */
-#if 0
-typedef enum {
-	GSM_TimeUnit_Unknown = 0,
-	GSM_TimeUnit_Days,
-	GSM_TimeUnit_Hours,
-	GSM_TimeUnit_Minutes,
-	GSM_TimeUnit_Seconds
-} GSM_TimeUnit;
-#endif
-
-/**
  * Value of to do entry.
  *
  * \ingroup Todo
