@@ -14,7 +14,6 @@
 
 /**
  * \defgroup Divert Divert
- * \ingroup Call
  * Diversion entries manipulations.
  */
 
@@ -292,3 +291,7 @@ GSM_Error GSM_SetIncomingCall(GSM_StateMachine * s, bool enable);
 GSM_Error GSM_SendDTMF(GSM_StateMachine * s, char *sequence);
 
 #endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */

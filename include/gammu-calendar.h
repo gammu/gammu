@@ -13,6 +13,16 @@
  */
 
 /**
+ * \defgroup Note Note
+ * Notes manipulations.
+ */
+
+/**
+ * \defgroup Todo Todo
+ * Todo entries manipulations.
+ */
+
+/**
  * Maximal number of calendar entries.
  *
  * \ingroup Calendar
@@ -59,7 +69,7 @@ typedef struct {
 /**
  * Status of to do entries.
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 typedef struct {
 	/**
@@ -367,7 +377,7 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry * entry,
  * Types of to do values. In parenthesis is member of @ref GSM_SubToDoEntry,
  * where value is stored.
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 typedef enum {
 	/**
@@ -427,7 +437,7 @@ typedef enum {
 /**
  * Priority of to do.
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 typedef enum {
 	GSM_Priority_None = 0,
@@ -441,6 +451,7 @@ typedef enum {
  *
  * \ingroup Calendar
  */
+#if 0
 typedef enum {
 	GSM_TimeUnit_Unknown = 0,
 	GSM_TimeUnit_Days,
@@ -448,11 +459,12 @@ typedef enum {
 	GSM_TimeUnit_Minutes,
 	GSM_TimeUnit_Seconds
 } GSM_TimeUnit;
+#endif
 
 /**
  * Value of to do entry.
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 typedef struct {
 	/**
@@ -476,7 +488,7 @@ typedef struct {
 /**
  * To do entry.
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 typedef struct {
 	/**
@@ -504,7 +516,7 @@ typedef struct {
 /**
  * Note entry.
  *
- * \ingroup Calendar
+ * \ingroup Note
  */
 typedef struct {
 	/**
@@ -544,7 +556,7 @@ typedef struct {
 /**
  * Format of vTodo.
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 typedef enum {
 	/**
@@ -596,7 +608,7 @@ typedef enum {
  *
  * \return Error code.
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry * note,
 			  bool header, GSM_VToDoVersion Version);
@@ -627,7 +639,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length,
  *
  * \return Error code.
  *
- * \ingroup Calendar
+ * \ingroup Note
  */
 GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length,
 			    GSM_NoteEntry * Note);
@@ -646,6 +658,7 @@ GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length,
  * \return Error code
  *
  * \ingroup Calendar
+ * \ingroup Todo
  */
 GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos,
 				    GSM_CalendarEntry * Calendar,
@@ -695,7 +708,7 @@ GSM_Error GSM_SetAlarm(GSM_StateMachine * s, GSM_Alarm * alarm);
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 GSM_Error GSM_GetToDoStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
 /**
@@ -705,7 +718,7 @@ GSM_Error GSM_GetToDoStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 GSM_Error GSM_GetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
 /**
@@ -715,7 +728,7 @@ GSM_Error GSM_GetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 GSM_Error GSM_GetNextToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo,
 			  bool start);
@@ -726,7 +739,7 @@ GSM_Error GSM_GetNextToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo,
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 GSM_Error GSM_SetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
 /**
@@ -736,7 +749,7 @@ GSM_Error GSM_SetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 GSM_Error GSM_AddToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
 /**
@@ -746,7 +759,7 @@ GSM_Error GSM_AddToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 GSM_Error GSM_DeleteToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
 /**
@@ -756,7 +769,7 @@ GSM_Error GSM_DeleteToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 GSM_Error GSM_DeleteAllToDo(GSM_StateMachine * s);
 /**
@@ -861,7 +874,7 @@ GSM_Error GSM_SetCalendarSettings(GSM_StateMachine * s,
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Note
  */
 GSM_Error GSM_GetNotesStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
 /**
@@ -871,7 +884,7 @@ GSM_Error GSM_GetNotesStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Note
  */
 GSM_Error GSM_GetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
 /**
@@ -882,7 +895,7 @@ GSM_Error GSM_GetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Note
  */
 GSM_Error GSM_GetNextNote(GSM_StateMachine * s, GSM_NoteEntry * Note,
 			  bool start);
@@ -893,7 +906,7 @@ GSM_Error GSM_GetNextNote(GSM_StateMachine * s, GSM_NoteEntry * Note,
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Note
  */
 GSM_Error GSM_SetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
 /**
@@ -903,7 +916,7 @@ GSM_Error GSM_SetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Note
  */
 GSM_Error GSM_AddNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
 /**
@@ -913,7 +926,7 @@ GSM_Error GSM_AddNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Note
  */
 GSM_Error GSM_DeleteNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
 /**
@@ -923,11 +936,12 @@ GSM_Error GSM_DeleteNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
  *
  * \return Error code
  *
- * \ingroup Calendar
+ * \ingroup Note
  */
 GSM_Error GSM_DeleteAllNotes(GSM_StateMachine * s);
 
 #endif
+
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
