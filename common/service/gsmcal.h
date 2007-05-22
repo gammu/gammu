@@ -25,6 +25,17 @@
 
 #include <gammu-calendar.h>
 
+/**
+ * Time Units.
+ */
+typedef enum {
+	GSM_TimeUnit_Unknown = 0,
+	GSM_TimeUnit_Days,
+	GSM_TimeUnit_Hours,
+	GSM_TimeUnit_Minutes,
+	GSM_TimeUnit_Seconds
+} GSM_TimeUnit;
+
 typedef enum {
 	TRANSL_TO_GSM = 1,
 	TRANSL_TO_VCAL,
