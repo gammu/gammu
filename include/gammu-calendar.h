@@ -39,14 +39,14 @@
 /**
  * Maximal number of todo entries.
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 #define GSM_TODO_ENTRIES 7
 
 /**
  * Maximal length of text in todo.
  *
- * \ingroup Calendar
+ * \ingroup Todo
  */
 #define MAX_TODO_TEXT_LENGTH 160
 
