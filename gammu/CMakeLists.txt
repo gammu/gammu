@@ -32,7 +32,6 @@ target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
 
 include_directories (
     "${Gammu_BINARY_DIR}/include"
-	"${Gammu_SOURCE_DIR}/include"
     )
 # Tune options for found libraries
 if (MYSQL_FOUND)

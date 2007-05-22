@@ -321,19 +321,31 @@ set (MAN1_PAGES
 
 set (PUBLIC_HEADERS
     include/gammu.h
+    include/gammu-info.h
+    include/gammu-callback.h
     include/gammu-memory.h
+    include/gammu-security.h
     include/gammu-datetime.h
     include/gammu-limits.h
     include/gammu-types.h
     include/gammu-backup.h
+    include/gammu-unicode.h
+    include/gammu-misc.h
     include/gammu-settings.h
     include/gammu-error.h
     include/gammu-wap.h
     include/gammu-bitmap.h
+    include/gammu-category.h
+    include/gammu-debug.h
     include/gammu-message.h
+    include/gammu-file.h
+    include/gammu-statemachine.h
+    include/gammu-keys.h
     include/gammu-inifile.h
     include/gammu-calendar.h
+    include/gammu-call.h
     include/gammu-ringtone.h
+    include/gammu-nokia.h
     ${Gammu_BINARY_DIR}/include/gammu-config.h
     )
 
@@ -566,6 +578,13 @@ macro_gammu_option (BACKUP "Backup/Restore functions" ON ON ON)
 
 # Generate config.h
 configure_file (templates/gammu-config.h.cmake include/gammu-config.h ESCAPE_QUOTES)
+
+# Fill in include dir for build
+foreach (HEADER ${PUBLIC_HEADERS})
+    if (NOT ${HEADER} MATCHES "gammu-config.h")
+        configure_file (${HEADER} ${HEADER} COPY_ONLY)
+    endif (NOT ${HEADER} MATCHES "gammu-config.h")
+endforeach (HEADER)
 
 # Generate Doxygen file
 set (DOXYGEN_INPUT "${Gammu_SOURCE_DIR}/include")
