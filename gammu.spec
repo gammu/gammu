@@ -27,12 +27,15 @@ Name:               %name
 Version:            %ver
 Release:            %rel
 License:            GPL
+
 %if %_vendor == "suse"
 Group:              Hardware/Mobile
 %else
 Group:              Applications/Communications
 %endif
+
 %if %bluetooth
+
 %if %_vendor == "suse"
 BuildRequires:      bluez-libs >= 2.0 gettext cmake
 %else
@@ -41,10 +44,13 @@ BuildRequires:      libbluez1 >= 2.0 libbluez1-devel >= 2.0 gettext cmake
 %else
 BuildRequires:      bluez-libs >= 2.0 bluez-libs-devel >= 2.0 gettext cmake
 %endif
+
 %endif
+%else
+BuildRequires:      gettext cmake
 %endif
 Vendor:             Michal Cihar <michal@cihar.com>
-Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.bz2
+Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.gz
 URL:                http://cihar.com/gammu/
 Buildroot:          %{_tmppath}/%name-%version-root
 
