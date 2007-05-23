@@ -3,6 +3,11 @@
 #include <gammu.h>
 #include "gsmstate.h"
 
+/**
+ * Prints error message (if any) to debug log.
+ *
+ * \param err Error code to check.
+ */
 #define PRINT_LOG_ERROR(err) \
 { \
 	if (err != ERR_NONE) { \
@@ -10,6 +15,10 @@
 	} \
 }
 
+/**
+ * Checks whether we are connected to phone, fails with error 
+ * otherwise.
+ */
 #define CHECK_PHONE_CONNECTION() \
 { \
 	if ((s->Phone.Functions == NULL) || !(s->opened)) { \
