@@ -10,15 +10,21 @@
 	} \
 }
 
+#define CHECK_PHONE_CONNECTION() \
+{ \
+	if ((s->Phone.Functions == NULL) || !(s->opened)) { \
+		return ERR_NOTCONNECTED; \
+	} \
+}
+
 /**
  * Reads manufacturer from phone.
  */
 GSM_Error GSM_GetManufacturer(GSM_StateMachine *s, char *value)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
 
 	s->Phone.Data.Manufacturer[0] = 0;
 	err = s->Phone.Functions->GetManufacturer(s);
@@ -35,9 +41,8 @@ GSM_Error GSM_GetManufacturer(GSM_StateMachine *s, char *value)
 GSM_Error GSM_GetModel(GSM_StateMachine *s, char *value)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
 
 	s->Phone.Data.Model[0] = 0;
 	err = s->Phone.Functions->GetModel(s);
@@ -54,9 +59,8 @@ GSM_Error GSM_GetModel(GSM_StateMachine *s, char *value)
 GSM_Error GSM_GetFirmware(GSM_StateMachine *s, char *value, char *date, double *num)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
 
 	s->Phone.Data.Version[0] = 0;
 	err = s->Phone.Functions->GetFirmware(s);
@@ -79,9 +83,8 @@ GSM_Error GSM_GetFirmware(GSM_StateMachine *s, char *value, char *date, double *
 GSM_Error GSM_GetIMEI(GSM_StateMachine *s, char *value)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
 
 	s->Phone.Data.IMEI[0] = 0;
 	err = s->Phone.Functions->GetIMEI(s);
@@ -98,9 +101,9 @@ GSM_Error GSM_GetIMEI(GSM_StateMachine *s, char *value)
 GSM_Error GSM_GetOriginalIMEI(GSM_StateMachine *s, char *value)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetOriginalIMEI(s, value);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -111,9 +114,9 @@ GSM_Error GSM_GetOriginalIMEI(GSM_StateMachine *s, char *value)
 GSM_Error GSM_GetManufactureMonth(GSM_StateMachine *s, char *value)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetManufactureMonth(s, value);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -124,9 +127,9 @@ GSM_Error GSM_GetManufactureMonth(GSM_StateMachine *s, char *value)
 GSM_Error GSM_GetProductCode(GSM_StateMachine *s, char *value)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetProductCode(s, value);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -137,9 +140,9 @@ GSM_Error GSM_GetProductCode(GSM_StateMachine *s, char *value)
 GSM_Error GSM_GetHardware(GSM_StateMachine *s, char *value)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetHardware(s, value);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -151,9 +154,9 @@ GSM_Error GSM_GetHardware(GSM_StateMachine *s, char *value)
 GSM_Error GSM_GetPPM(GSM_StateMachine *s, char *value)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetPPM(s, value);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -164,9 +167,9 @@ GSM_Error GSM_GetPPM(GSM_StateMachine *s, char *value)
 GSM_Error GSM_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetSIMIMSI(s, IMSI);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -177,9 +180,9 @@ GSM_Error GSM_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 GSM_Error GSM_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetDateTime(s, date_time);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -190,9 +193,9 @@ GSM_Error GSM_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 GSM_Error GSM_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetDateTime(s, date_time);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -203,9 +206,9 @@ GSM_Error GSM_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 GSM_Error GSM_GetAlarm(GSM_StateMachine *s, GSM_Alarm	*alarm)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetAlarm(s, alarm);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -216,9 +219,9 @@ GSM_Error GSM_GetAlarm(GSM_StateMachine *s, GSM_Alarm	*alarm)
 GSM_Error GSM_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetAlarm(s, alarm);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -229,9 +232,9 @@ GSM_Error GSM_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 GSM_Error GSM_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetLocale(s, locale);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -242,9 +245,9 @@ GSM_Error GSM_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 GSM_Error GSM_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetLocale(s, locale);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -255,9 +258,9 @@ GSM_Error GSM_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 GSM_Error GSM_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->PressKey(s, Key, Press);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -268,9 +271,9 @@ GSM_Error GSM_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 GSM_Error GSM_Reset(GSM_StateMachine *s, bool hard)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->Reset(s, hard);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -281,9 +284,9 @@ GSM_Error GSM_Reset(GSM_StateMachine *s, bool hard)
 GSM_Error GSM_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->ResetPhoneSettings(s, Type);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -294,9 +297,9 @@ GSM_Error GSM_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type
 GSM_Error GSM_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->EnterSecurityCode(s, Code);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -307,9 +310,9 @@ GSM_Error GSM_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 GSM_Error GSM_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Status)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetSecurityStatus(s, Status);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -320,9 +323,9 @@ GSM_Error GSM_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Statu
 GSM_Error GSM_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *features)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetDisplayStatus(s, features);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -333,9 +336,9 @@ GSM_Error GSM_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *feature
 GSM_Error GSM_SetAutoNetworkLogin(GSM_StateMachine *s)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetAutoNetworkLogin(s);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -346,9 +349,9 @@ GSM_Error GSM_SetAutoNetworkLogin(GSM_StateMachine *s)
 GSM_Error GSM_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetBatteryCharge(s, bat);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -359,9 +362,9 @@ GSM_Error GSM_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 GSM_Error GSM_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetSignalQuality(s, sig);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -372,9 +375,9 @@ GSM_Error GSM_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
 GSM_Error GSM_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetNetworkInfo(s, netinfo);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -385,9 +388,9 @@ GSM_Error GSM_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 GSM_Error GSM_GetCategory(GSM_StateMachine *s, GSM_Category *Category)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetCategory(s, Category);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -398,9 +401,9 @@ GSM_Error GSM_GetCategory(GSM_StateMachine *s, GSM_Category *Category)
 GSM_Error GSM_AddCategory(GSM_StateMachine *s, GSM_Category *Category)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->AddCategory(s, Category);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -411,9 +414,9 @@ GSM_Error GSM_AddCategory(GSM_StateMachine *s, GSM_Category *Category)
 GSM_Error GSM_GetCategoryStatus(GSM_StateMachine *s, GSM_CategoryStatus *Status)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetCategoryStatus(s, Status);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -425,9 +428,9 @@ GSM_Error GSM_GetCategoryStatus(GSM_StateMachine *s, GSM_CategoryStatus *Status)
 GSM_Error GSM_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *status)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetMemoryStatus(s, status);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -439,9 +442,9 @@ GSM_Error GSM_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *status)
 GSM_Error GSM_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetMemory(s, entry);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -453,9 +456,9 @@ GSM_Error GSM_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 GSM_Error GSM_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetNextMemory(s, entry, start);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -466,9 +469,9 @@ GSM_Error GSM_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool st
 GSM_Error GSM_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetMemory(s, entry);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -479,9 +482,9 @@ GSM_Error GSM_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 GSM_Error GSM_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->AddMemory(s, entry);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -492,9 +495,9 @@ GSM_Error GSM_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 GSM_Error GSM_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteMemory(s, entry);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -505,9 +508,9 @@ GSM_Error GSM_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 GSM_Error GSM_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteAllMemory(s, MemoryType);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -518,9 +521,9 @@ GSM_Error GSM_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType)
 GSM_Error GSM_GetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetSpeedDial(s, Speed);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -531,9 +534,9 @@ GSM_Error GSM_GetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed)
 GSM_Error GSM_SetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetSpeedDial(s, Speed);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -544,9 +547,9 @@ GSM_Error GSM_SetSpeedDial(GSM_StateMachine *s, GSM_SpeedDial *Speed)
 GSM_Error GSM_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetSMSC(s, smsc);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -557,9 +560,9 @@ GSM_Error GSM_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 GSM_Error GSM_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetSMSC(s, smsc);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -571,9 +574,9 @@ GSM_Error GSM_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 GSM_Error GSM_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetSMSStatus(s, status);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -584,9 +587,9 @@ GSM_Error GSM_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 GSM_Error GSM_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetSMS(s, sms);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -598,9 +601,9 @@ GSM_Error GSM_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 GSM_Error GSM_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetNextSMS(s, sms, start);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -611,9 +614,9 @@ GSM_Error GSM_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool sta
 GSM_Error GSM_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetSMS(s, sms);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -624,9 +627,9 @@ GSM_Error GSM_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 GSM_Error GSM_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->AddSMS(s, sms);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -637,9 +640,9 @@ GSM_Error GSM_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 GSM_Error GSM_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteSMS(s, sms);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -650,9 +653,9 @@ GSM_Error GSM_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 GSM_Error GSM_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SendSMS(s, sms);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -663,9 +666,9 @@ GSM_Error GSM_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 GSM_Error GSM_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SendSavedSMS(s, Folder, Location);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -676,9 +679,9 @@ GSM_Error GSM_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 GSM_Error GSM_SetFastSMSSending(GSM_StateMachine *s, bool enable)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetFastSMSSending(s, enable);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -689,9 +692,9 @@ GSM_Error GSM_SetFastSMSSending(GSM_StateMachine *s, bool enable)
 GSM_Error GSM_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetIncomingSMS(s, enable);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -702,9 +705,9 @@ GSM_Error GSM_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 GSM_Error GSM_SetIncomingCB(GSM_StateMachine *s, bool enable)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetIncomingCB(s, enable);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -715,9 +718,9 @@ GSM_Error GSM_SetIncomingCB(GSM_StateMachine *s, bool enable)
 GSM_Error GSM_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetSMSFolders(s, folders);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -728,9 +731,9 @@ GSM_Error GSM_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 GSM_Error GSM_AddSMSFolder(GSM_StateMachine *s, unsigned char *name)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->AddSMSFolder(s, name);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -741,9 +744,9 @@ GSM_Error GSM_AddSMSFolder(GSM_StateMachine *s, unsigned char *name)
 GSM_Error GSM_DeleteSMSFolder(GSM_StateMachine *s, int ID)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteSMSFolder(s, ID);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -754,9 +757,9 @@ GSM_Error GSM_DeleteSMSFolder(GSM_StateMachine *s, int ID)
 GSM_Error GSM_DialVoice(GSM_StateMachine *s, char *Number, GSM_CallShowNumber ShowNumber)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DialVoice(s, Number, ShowNumber);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -767,9 +770,9 @@ GSM_Error GSM_DialVoice(GSM_StateMachine *s, char *Number, GSM_CallShowNumber Sh
 GSM_Error GSM_DialService(GSM_StateMachine *s, char *Number)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DialService(s, Number);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -780,9 +783,9 @@ GSM_Error GSM_DialService(GSM_StateMachine *s, char *Number)
 GSM_Error GSM_AnswerCall(GSM_StateMachine *s, int ID, bool all)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->AnswerCall(s, ID, all);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -793,9 +796,9 @@ GSM_Error GSM_AnswerCall(GSM_StateMachine *s, int ID, bool all)
 GSM_Error GSM_CancelCall(GSM_StateMachine *s, int ID, bool all)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->CancelCall(s, ID, all);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -806,9 +809,9 @@ GSM_Error GSM_CancelCall(GSM_StateMachine *s, int ID, bool all)
 GSM_Error GSM_HoldCall(GSM_StateMachine *s, int ID)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->HoldCall(s, ID);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -819,9 +822,9 @@ GSM_Error GSM_HoldCall(GSM_StateMachine *s, int ID)
 GSM_Error GSM_UnholdCall(GSM_StateMachine *s, int ID)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->UnholdCall(s, ID);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -832,9 +835,9 @@ GSM_Error GSM_UnholdCall(GSM_StateMachine *s, int ID)
 GSM_Error GSM_ConferenceCall(GSM_StateMachine *s, int ID)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->ConferenceCall(s, ID);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -845,9 +848,9 @@ GSM_Error GSM_ConferenceCall(GSM_StateMachine *s, int ID)
 GSM_Error GSM_SplitCall(GSM_StateMachine *s, int ID)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SplitCall(s, ID);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -858,9 +861,9 @@ GSM_Error GSM_SplitCall(GSM_StateMachine *s, int ID)
 GSM_Error GSM_TransferCall(GSM_StateMachine *s, int ID, bool next)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->TransferCall(s, ID, next);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -871,9 +874,9 @@ GSM_Error GSM_TransferCall(GSM_StateMachine *s, int ID, bool next)
 GSM_Error GSM_SwitchCall(GSM_StateMachine *s, int ID, bool next)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SwitchCall(s, ID, next);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -884,9 +887,9 @@ GSM_Error GSM_SwitchCall(GSM_StateMachine *s, int ID, bool next)
 GSM_Error GSM_GetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetCallDivert(s, divert);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -897,9 +900,9 @@ GSM_Error GSM_GetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
 GSM_Error GSM_SetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetCallDivert(s, divert);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -910,9 +913,9 @@ GSM_Error GSM_SetCallDivert(GSM_StateMachine *s, GSM_MultiCallDivert *divert)
 GSM_Error GSM_CancelAllDiverts(GSM_StateMachine *s)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->CancelAllDiverts(s);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -923,9 +926,9 @@ GSM_Error GSM_CancelAllDiverts(GSM_StateMachine *s)
 GSM_Error GSM_SetIncomingCall(GSM_StateMachine *s, bool enable)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetIncomingCall(s, enable);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -936,9 +939,9 @@ GSM_Error GSM_SetIncomingCall(GSM_StateMachine *s, bool enable)
 GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetIncomingUSSD(s, enable);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -949,9 +952,9 @@ GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
 GSM_Error GSM_SendDTMF(GSM_StateMachine *s, char *sequence)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SendDTMF(s, sequence);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -962,9 +965,9 @@ GSM_Error GSM_SendDTMF(GSM_StateMachine *s, char *sequence)
 GSM_Error GSM_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetRingtone(s, Ringtone, PhoneRingtone);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -975,9 +978,9 @@ GSM_Error GSM_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool Phon
 GSM_Error GSM_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetRingtone(s, Ringtone, maxlength);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -988,9 +991,9 @@ GSM_Error GSM_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxl
 GSM_Error GSM_GetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtonesInfo *Info)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetRingtonesInfo(s, Info);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1001,9 +1004,9 @@ GSM_Error GSM_GetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtonesInfo *Info)
 GSM_Error GSM_DeleteUserRingtones(GSM_StateMachine *s)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteUserRingtones(s);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1014,9 +1017,9 @@ GSM_Error GSM_DeleteUserRingtones(GSM_StateMachine *s)
 GSM_Error GSM_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, bool start)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->PlayTone(s, Herz, Volume, start);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1027,9 +1030,9 @@ GSM_Error GSM_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Volume, bool
 GSM_Error GSM_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetWAPBookmark(s, bookmark);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1040,9 +1043,9 @@ GSM_Error GSM_GetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 GSM_Error GSM_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetWAPBookmark(s, bookmark);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1053,9 +1056,9 @@ GSM_Error GSM_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 GSM_Error GSM_DeleteWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteWAPBookmark(s, bookmark);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1066,9 +1069,9 @@ GSM_Error GSM_DeleteWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 GSM_Error GSM_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetWAPSettings(s, settings);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1079,9 +1082,9 @@ GSM_Error GSM_GetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings
 GSM_Error GSM_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetWAPSettings(s, settings);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1092,9 +1095,9 @@ GSM_Error GSM_SetWAPSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings
 GSM_Error GSM_GetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings *settings)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetSyncMLSettings(s, settings);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1105,9 +1108,9 @@ GSM_Error GSM_GetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings *setting
 GSM_Error GSM_SetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings *settings)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetSyncMLSettings(s, settings);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1118,9 +1121,9 @@ GSM_Error GSM_SetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings *setting
 GSM_Error GSM_GetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *settings)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetChatSettings(s, settings);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1131,9 +1134,9 @@ GSM_Error GSM_GetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *settings)
 GSM_Error GSM_SetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *settings)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetChatSettings(s, settings);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1144,9 +1147,9 @@ GSM_Error GSM_SetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *settings)
 GSM_Error GSM_GetMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetMMSSettings(s, settings);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1157,9 +1160,9 @@ GSM_Error GSM_GetMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings
 GSM_Error GSM_SetMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetMMSSettings(s, settings);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1170,9 +1173,9 @@ GSM_Error GSM_SetMMSSettings(GSM_StateMachine *s, GSM_MultiWAPSettings *settings
 GSM_Error GSM_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetMMSFolders(s, folders);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1183,9 +1186,9 @@ GSM_Error GSM_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 GSM_Error GSM_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int *MMSFolder, bool start)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetNextMMSFileInfo(s, FileID, MMSFolder, start);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1196,9 +1199,9 @@ GSM_Error GSM_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int
 GSM_Error GSM_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetBitmap(s, Bitmap);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1209,9 +1212,9 @@ GSM_Error GSM_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 GSM_Error GSM_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetBitmap(s, Bitmap);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1222,9 +1225,9 @@ GSM_Error GSM_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 GSM_Error GSM_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetToDoStatus(s, status);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1235,9 +1238,9 @@ GSM_Error GSM_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 GSM_Error GSM_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetToDo(s, ToDo);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1248,9 +1251,9 @@ GSM_Error GSM_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 GSM_Error GSM_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetNextToDo(s, ToDo, start);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1261,9 +1264,9 @@ GSM_Error GSM_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
 GSM_Error GSM_SetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetToDo(s, ToDo);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1274,9 +1277,9 @@ GSM_Error GSM_SetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 GSM_Error GSM_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->AddToDo(s, ToDo);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1287,9 +1290,9 @@ GSM_Error GSM_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 GSM_Error GSM_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteToDo(s, ToDo);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1300,9 +1303,9 @@ GSM_Error GSM_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 GSM_Error GSM_DeleteAllToDo(GSM_StateMachine *s)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteAllToDo(s);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1313,9 +1316,9 @@ GSM_Error GSM_DeleteAllToDo(GSM_StateMachine *s)
 GSM_Error GSM_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetCalendarStatus(s, Status);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1326,9 +1329,9 @@ GSM_Error GSM_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
 GSM_Error GSM_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetCalendar(s, Note);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1340,9 +1343,9 @@ GSM_Error GSM_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 GSM_Error GSM_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetNextCalendar(s, Note, start);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1353,9 +1356,9 @@ GSM_Error GSM_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 GSM_Error GSM_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetCalendar(s, Note);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1366,9 +1369,9 @@ GSM_Error GSM_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 GSM_Error GSM_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->AddCalendar(s, Note);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1379,9 +1382,9 @@ GSM_Error GSM_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 GSM_Error GSM_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteCalendar(s, Note);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1392,9 +1395,9 @@ GSM_Error GSM_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 GSM_Error GSM_DeleteAllCalendar(GSM_StateMachine *s)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteAllCalendar(s);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1405,9 +1408,9 @@ GSM_Error GSM_DeleteAllCalendar(GSM_StateMachine *s)
 GSM_Error GSM_GetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *settings)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetCalendarSettings(s, settings);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1418,9 +1421,9 @@ GSM_Error GSM_GetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *set
 GSM_Error GSM_SetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *settings)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetCalendarSettings(s, settings);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1431,9 +1434,9 @@ GSM_Error GSM_SetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *set
 GSM_Error GSM_GetNotesStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetNotesStatus(s, status);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1444,9 +1447,9 @@ GSM_Error GSM_GetNotesStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 GSM_Error GSM_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetNote(s, Note);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1458,9 +1461,9 @@ GSM_Error GSM_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 GSM_Error GSM_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetNextNote(s, Note, start);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1471,9 +1474,9 @@ GSM_Error GSM_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start)
 GSM_Error GSM_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetNote(s, Note);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1484,9 +1487,9 @@ GSM_Error GSM_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 GSM_Error GSM_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->AddNote(s, Note);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1497,9 +1500,9 @@ GSM_Error GSM_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 GSM_Error GSM_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteNote(s, Note);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1510,9 +1513,9 @@ GSM_Error GSM_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 GSM_Error GSM_DeleteAllNotes(GSM_StateMachine *s)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteAllNotes(s);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1523,9 +1526,9 @@ GSM_Error GSM_DeleteAllNotes(GSM_StateMachine *s)
 GSM_Error GSM_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetProfile(s, Profile);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1536,9 +1539,9 @@ GSM_Error GSM_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 GSM_Error GSM_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetProfile(s, Profile);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1549,9 +1552,9 @@ GSM_Error GSM_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 GSM_Error GSM_GetFMStation(GSM_StateMachine *s, GSM_FMStation *FMStation)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetFMStation(s, FMStation);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1562,9 +1565,9 @@ GSM_Error GSM_GetFMStation(GSM_StateMachine *s, GSM_FMStation *FMStation)
 GSM_Error GSM_SetFMStation(GSM_StateMachine *s, GSM_FMStation *FMStation)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetFMStation(s, FMStation);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1575,9 +1578,9 @@ GSM_Error GSM_SetFMStation(GSM_StateMachine *s, GSM_FMStation *FMStation)
 GSM_Error GSM_ClearFMStations(GSM_StateMachine *s)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->ClearFMStations(s);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1588,9 +1591,9 @@ GSM_Error GSM_ClearFMStations(GSM_StateMachine *s)
 GSM_Error GSM_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetNextFileFolder(s, File, start);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1601,9 +1604,9 @@ GSM_Error GSM_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
 GSM_Error GSM_GetFolderListing(GSM_StateMachine *s, GSM_File *File, bool start)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetFolderListing(s, File, start);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1614,9 +1617,9 @@ GSM_Error GSM_GetFolderListing(GSM_StateMachine *s, GSM_File *File, bool start)
 GSM_Error GSM_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetNextRootFolder(s, File);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1627,9 +1630,9 @@ GSM_Error GSM_GetNextRootFolder(GSM_StateMachine *s, GSM_File *File)
 GSM_Error GSM_SetFileAttributes(GSM_StateMachine *s, GSM_File *File)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetFileAttributes(s, File);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1640,9 +1643,9 @@ GSM_Error GSM_SetFileAttributes(GSM_StateMachine *s, GSM_File *File)
 GSM_Error GSM_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetFilePart(s, File, Handle, Size);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1653,9 +1656,9 @@ GSM_Error GSM_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int 
 GSM_Error GSM_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->AddFilePart(s, File, Pos, Handle);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1666,9 +1669,9 @@ GSM_Error GSM_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Ha
 GSM_Error GSM_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SendFilePart(s, File, Pos, Handle);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1679,9 +1682,9 @@ GSM_Error GSM_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *H
 GSM_Error GSM_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *Status)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetFileSystemStatus(s, Status);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1692,9 +1695,9 @@ GSM_Error GSM_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *Sta
 GSM_Error GSM_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteFile(s, ID);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1705,9 +1708,9 @@ GSM_Error GSM_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 GSM_Error GSM_AddFolder(GSM_StateMachine *s, GSM_File *File)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->AddFolder(s, File);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1718,9 +1721,9 @@ GSM_Error GSM_AddFolder(GSM_StateMachine *s, GSM_File *File)
 GSM_Error GSM_DeleteFolder(GSM_StateMachine *s, unsigned char *ID)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->DeleteFolder(s, ID);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1731,9 +1734,9 @@ GSM_Error GSM_DeleteFolder(GSM_StateMachine *s, unsigned char *ID)
 GSM_Error GSM_GetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoint *point)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->GetGPRSAccessPoint(s, point);
 	PRINT_LOG_ERROR(err);
 	return err;
@@ -1744,9 +1747,9 @@ GSM_Error GSM_GetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoint *point
 GSM_Error GSM_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoint *point)
 {
 	GSM_Error err;
-	if ((s->Phone.Functions == NULL) || !(s->opened)) {
-		return ERR_NOTCONNECTED;
-	}
+
+	CHECK_PHONE_CONNECTION();
+
 	err = s->Phone.Functions->SetGPRSAccessPoint(s, point);
 	PRINT_LOG_ERROR(err);
 	return err;
