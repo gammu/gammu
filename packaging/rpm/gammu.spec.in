@@ -44,7 +44,7 @@ BuildRequires:      bluez-libs >= 2.0 bluez-libs-devel >= 2.0 gettext cmake
 %endif
 %endif
 Vendor:             Michal Cihar <michal@cihar.com>
-Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.bz2
+Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.gz
 URL:                http://cihar.com/gammu/
 Buildroot:          %{_tmppath}/%name-%version-root
 
@@ -81,8 +81,9 @@ This package contain files needed for development.
 
 %build
 mkdir build-dir
-cd build-dir && cmake ../ -DENABLE_SHARED=ON -DCMAKE_INSTALL_PREFIX=%_prefix -DINSTALL_DOC_DIR=%_docdir/%name
-make -C build-dir
+cd build-dir
+cmake ../ -DENABLE_SHARED=ON -DCMAKE_INSTALL_PREFIX=%_prefix -DINSTALL_DOC_DIR=%_docdir/%name
+make
 
 %install
 rm -rf %buildroot
