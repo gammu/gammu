@@ -2,14 +2,14 @@
  * \file gammu-unicode.h
  * \author Michal Čihař
  * 
- * Unicode converions
+ * Unicode manipulation functions.
  */
 #ifndef __gammu_unicode_h
 #define __gammu_unicode_h
 
 /**
  * \defgroup Unicode Unicode
- * Unicode converions.
+ * Unicode manipulation functions.
  */
 #include <gammu-types.h>
 #include <gammu-config.h>
