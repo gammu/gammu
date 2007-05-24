@@ -2201,7 +2201,7 @@ static GSM_Error N6110_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *N
                                         req[22]++;              /* one additional char */
                                         req[current++] = 0x01;  /* we use now subset 1 */
                                         for (i=0;i<((int)UnicodeLength(Note->Entries[Text].Text));i++) {
-						j = EncodeWithUTF8Alphabet2(Note->Entries[Text].Text[i*2],Note->Entries[Text].Text[i*2+1],req+current);
+						j = EncodeWithUTF8Alphabet(Note->Entries[Text].Text[i*2],Note->Entries[Text].Text[i*2+1],req+current);
 						if (j > 1) {
                                                         req[23]= 0x03; /* use subset 3         */
                                                         req[22]+=j-1;  /* few additional chars */
@@ -2274,7 +2274,7 @@ static void Decode3310Subset3(int j, GSM_Protocol_Message msg, GSM_Phone_Data *D
 
         i = j;
         while (i!=msg.Buffer[23]) {
-		w = DecodeWithUTF8Alphabet2(msg.Buffer+24+i,&wc,msg.Buffer[23]-i);
+		w = DecodeWithUTF8Alphabet(msg.Buffer+24+i,&wc,msg.Buffer[23]-i);
 		if (w>1) {
 			i+=w;
 		} else {
