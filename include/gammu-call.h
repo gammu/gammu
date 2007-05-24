@@ -201,6 +201,10 @@ typedef enum {
 /**
  * Dials number and starts voice call.
  *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
  * \ingroup Call
  */
 GSM_Error GSM_DialVoice(GSM_StateMachine * s, char *Number,
@@ -208,11 +212,19 @@ GSM_Error GSM_DialVoice(GSM_StateMachine * s, char *Number,
 /**
  * Dials service number (usually for USSD).
  *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
  * \ingroup Call
  */
 GSM_Error GSM_DialService(GSM_StateMachine * s, char *Number);
 /**
  * Accept current incoming call.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
  *
  * \ingroup Call
  */
@@ -220,11 +232,19 @@ GSM_Error GSM_AnswerCall(GSM_StateMachine * s, int ID, bool all);
 /**
  * Deny current incoming call.
  *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
  * \ingroup Call
  */
 GSM_Error GSM_CancelCall(GSM_StateMachine * s, int ID, bool all);
 /**
  * Holds call.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
  *
  * \ingroup Call
  */
@@ -232,11 +252,19 @@ GSM_Error GSM_HoldCall(GSM_StateMachine * s, int ID);
 /**
  * Unholds call.
  *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
  * \ingroup Call
  */
 GSM_Error GSM_UnholdCall(GSM_StateMachine * s, int ID);
 /**
  * Initiates conference call.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
  *
  * \ingroup Call
  */
@@ -244,11 +272,19 @@ GSM_Error GSM_ConferenceCall(GSM_StateMachine * s, int ID);
 /**
  * Splits call.
  *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
  * \ingroup Call
  */
 GSM_Error GSM_SplitCall(GSM_StateMachine * s, int ID);
 /**
  * Transfers call.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
  *
  * \ingroup Call
  */
@@ -256,11 +292,19 @@ GSM_Error GSM_TransferCall(GSM_StateMachine * s, int ID, bool next);
 /**
  * Switches call.
  *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
  * \ingroup Call
  */
 GSM_Error GSM_SwitchCall(GSM_StateMachine * s, int ID, bool next);
 /**
  * Gets call diverts.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
  *
  * \ingroup Divert
  */
@@ -268,11 +312,19 @@ GSM_Error GSM_GetCallDivert(GSM_StateMachine * s, GSM_MultiCallDivert * divert);
 /**
  * Sets call diverts.
  *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
  * \ingroup Divert
  */
 GSM_Error GSM_SetCallDivert(GSM_StateMachine * s, GSM_MultiCallDivert * divert);
 /**
  * Cancels all diverts.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
  *
  * \ingroup Divert
  */
@@ -280,11 +332,19 @@ GSM_Error GSM_CancelAllDiverts(GSM_StateMachine * s);
 /**
  * Activates/deactivates noticing about incoming calls.
  *
+ * \param s State machine pointer.
+ *
+ * \return Error code
+ *
  * \ingroup Call
  */
 GSM_Error GSM_SetIncomingCall(GSM_StateMachine * s, bool enable);
 /**
  * Sends DTMF (Dual Tone Multi Frequency) tone.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code
  *
  * \ingroup Call
  */
