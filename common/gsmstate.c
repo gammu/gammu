@@ -876,20 +876,12 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		/* Special case, this config needs to be somehow valid */
 		if (num == 0) {
 			cfg->Device		 	 = strdup(DefaultPort);
-			cfg->DefaultDevice		 = true;
-			cfg->DefaultConnection		 = true;
 			cfg->Connection	 		 = strdup(DefaultConnection);
-			cfg->DefaultSyncTime		 = true;
 			cfg->SyncTime		 	 = strdup(DefaultSynchronizeTime);
-			cfg->DefaultDebugFile		 = true;
 			cfg->DebugFile		 	 = strdup(DefaultDebugFile);
-			cfg->DefaultLockDevice		 = true;
 			cfg->LockDevice	 		 = strdup(DefaultLockDevice);
-			cfg->DefaultModel		 = true;
 			strcpy(cfg->Model,DefaultModel);
-			cfg->DefaultDebugLevel		 = true;
 			strcpy(cfg->DebugLevel,DefaultDebugLevel);
-			cfg->DefaultStartInfo		 = true;
 			cfg->StartInfo	 		 = strdup(DefaultStartInfo);
 			strcpy(cfg->TextReminder,"Reminder");
 			strcpy(cfg->TextMeeting,"Meeting");
@@ -917,78 +909,62 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	cfg->Device 	 = INI_GetValue(cfg_info, section, "port", 		false);
 	if (!cfg->Device) {
 		cfg->Device		 	 = strdup(DefaultPort);
-		cfg->DefaultDevice		 = true;
 	} else {
 		cfg->Device			 = strdup(cfg->Device);
-		cfg->DefaultDevice 		 = false;
 	}
 
 	free(cfg->Connection);
 	cfg->Connection  = INI_GetValue(cfg_info, section, "connection", 	false);
 	if (cfg->Connection == NULL) {
-		cfg->DefaultConnection		 = true;
 		cfg->Connection	 		 = strdup(DefaultConnection);
 	} else {
 		cfg->Connection			 = strdup(cfg->Connection);
-		cfg->DefaultConnection		 = false;
 	}
 
 	free(cfg->SyncTime);
 	cfg->SyncTime 	 = INI_GetValue(cfg_info, section, "synchronizetime",	false);
 	if (!cfg->SyncTime) {
-		cfg->DefaultSyncTime		 = true;
 		cfg->SyncTime		 	 = strdup(DefaultSynchronizeTime);
 	} else {
 		cfg->SyncTime			 = strdup(cfg->SyncTime);
-		cfg->DefaultSyncTime		 = false;
 	}
 
 	free(cfg->DebugFile);
 	cfg->DebugFile   = INI_GetValue(cfg_info, section, "logfile", 		false);
 	if (!cfg->DebugFile) {
-		cfg->DefaultDebugFile		 = true;
 		cfg->DebugFile		 	 = strdup(DefaultDebugFile);
 	} else {
 		cfg->DebugFile			 = strdup(cfg->DebugFile);
-		cfg->DefaultDebugFile 		 = false;
 	}
 
 	free(cfg->LockDevice);
 	cfg->LockDevice  = INI_GetValue(cfg_info, section, "use_locking", 	false);
 	if (!cfg->LockDevice) {
-		cfg->DefaultLockDevice		 = true;
 		cfg->LockDevice	 		 = strdup(DefaultLockDevice);
 	} else {
 		cfg->LockDevice			 = strdup(cfg->LockDevice);
-		cfg->DefaultLockDevice		 = false;
 	}
 
 	Temp		 = INI_GetValue(cfg_info, section, "model", 		false);
 	if (!Temp) {
-		cfg->DefaultModel		 = true;
 		strcpy(cfg->Model,DefaultModel);
 	} else {
-		cfg->DefaultModel 		 = false;
 		strcpy(cfg->Model,Temp);
 	}
 
 	Temp		 = INI_GetValue(cfg_info, section, "logformat", 	false);
 	if (!Temp) {
-		cfg->DefaultDebugLevel		 = true;
 		strcpy(cfg->DebugLevel,DefaultDebugLevel);
 	} else {
-		cfg->DefaultDebugLevel 		 = false;
 		strcpy(cfg->DebugLevel,Temp);
 	}
 
 	free(cfg->StartInfo);
 	cfg->StartInfo   = INI_GetValue(cfg_info, section, "startinfo", 	false);
 	if (!cfg->StartInfo) {
-		cfg->DefaultStartInfo		 = true;
 		cfg->StartInfo	 		 = strdup(DefaultStartInfo);
 	} else {
 		cfg->StartInfo			 = strdup(cfg->StartInfo);
-		cfg->DefaultStartInfo 		 = false;
 	}
 
 	Temp		 = INI_GetValue(cfg_info, section, "reminder", 		false);
