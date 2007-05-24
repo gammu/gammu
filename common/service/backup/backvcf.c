@@ -5,8 +5,6 @@
 
 #include <gammu-config.h>
 
-#include "../../phone/nokia/nfunc.h"
-#include "../../phone/nokia/dct3/n7110.h"
 #include "../../misc/coding/coding.h"
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
