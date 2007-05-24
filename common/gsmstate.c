@@ -1642,6 +1642,7 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
 		}
 	}
 }
+#endif
 
 void GSM_SetIncomingCallCallback(GSM_StateMachine *s, IncomingCallCallback callback)
 {
@@ -1706,7 +1707,6 @@ GSM_Debug_Info *GSM_GetDebug(GSM_StateMachine *s)
 	return &(s->di);
 }
 
-#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
