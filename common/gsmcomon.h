@@ -10,7 +10,7 @@
 
 #include <gammu-config.h>
 #include <gammu-limits.h>
-#include "misc/misc.h"
+#include <gammu-error.h>
 
 extern GSM_Error NoneFunction		(void);
 extern GSM_Error NotImplementedFunction	(void);

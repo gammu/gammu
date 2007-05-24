@@ -25,6 +25,7 @@
 
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
+#include "../../misc/misc.h"
 
 #ifndef GSM_USED_AT
 #  define GSM_USED_AT
