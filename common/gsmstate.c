@@ -868,11 +868,13 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	static const char *DefaultStartInfo		= "no";
 
 	/* By default all debug output will go to one filedescriptor */
-	bool DefaultUseGlobalDebugFile 	= true;
+	static const bool DefaultUseGlobalDebugFile 	= true;
 
 	cfg->UseGlobalDebugFile	 = DefaultUseGlobalDebugFile;
 
+	/* If we don't have valid config, bail out */
 	if (cfg_info==NULL) {
+
 		/* Special case, this config needs to be somehow valid */
 		if (num == 0) {
 			cfg->Device		 	 = strdup(DefaultPort);
@@ -892,11 +894,14 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		return false;
 	}
 
+	/* Which section should we read? */
 	if (num == 0) {
 		sprintf(section,"gammu");
 	} else {
 		sprintf(section,"gammu%i",num);
 	}
+
+	/* Scan for section */
         for (h = cfg_info; h != NULL; h = h->Next) {
                 if (strncasecmp(section, h->SectionName, strlen(section)) == 0) {
 			found = true;
@@ -905,6 +910,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
         }
 	if (!found) return false;
 
+	/* Set device name */
 	free(cfg->Device);
 	cfg->Device 	 = INI_GetValue(cfg_info, section, "port", 		false);
 	if (!cfg->Device) {
@@ -913,6 +919,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		cfg->Device			 = strdup(cfg->Device);
 	}
 
+	/* Set connection type */
 	free(cfg->Connection);
 	cfg->Connection  = INI_GetValue(cfg_info, section, "connection", 	false);
 	if (cfg->Connection == NULL) {
@@ -921,6 +928,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		cfg->Connection			 = strdup(cfg->Connection);
 	}
 
+	/* Set time sync */
 	free(cfg->SyncTime);
 	cfg->SyncTime 	 = INI_GetValue(cfg_info, section, "synchronizetime",	false);
 	if (!cfg->SyncTime) {
@@ -929,6 +937,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		cfg->SyncTime			 = strdup(cfg->SyncTime);
 	}
 
+	/* Set debug file */
 	free(cfg->DebugFile);
 	cfg->DebugFile   = INI_GetValue(cfg_info, section, "logfile", 		false);
 	if (!cfg->DebugFile) {
@@ -937,6 +946,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		cfg->DebugFile			 = strdup(cfg->DebugFile);
 	}
 
+	/* Set file locking */
 	free(cfg->LockDevice);
 	cfg->LockDevice  = INI_GetValue(cfg_info, section, "use_locking", 	false);
 	if (!cfg->LockDevice) {
@@ -945,6 +955,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		cfg->LockDevice			 = strdup(cfg->LockDevice);
 	}
 
+	/* Set model */
 	Temp		 = INI_GetValue(cfg_info, section, "model", 		false);
 	if (!Temp) {
 		strcpy(cfg->Model,DefaultModel);
@@ -952,6 +963,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		strcpy(cfg->Model,Temp);
 	}
 
+	/* Set Log format */
 	Temp		 = INI_GetValue(cfg_info, section, "logformat", 	false);
 	if (!Temp) {
 		strcpy(cfg->DebugLevel,DefaultDebugLevel);
@@ -959,6 +971,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		strcpy(cfg->DebugLevel,Temp);
 	}
 
+	/* Set startup info */
 	free(cfg->StartInfo);
 	cfg->StartInfo   = INI_GetValue(cfg_info, section, "startinfo", 	false);
 	if (!cfg->StartInfo) {
@@ -966,6 +979,8 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	} else {
 		cfg->StartInfo			 = strdup(cfg->StartInfo);
 	}
+
+	/* Read localised strings for some phones */
 
 	Temp		 = INI_GetValue(cfg_info, section, "reminder", 		false);
 	if (!Temp) {
@@ -1005,6 +1020,9 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	return true;
 }
 
+/**
+ * Flags needed for various phone models.
+ */
 static OnePhoneModel allmodels[] = {
 #ifdef GSM_ENABLE_NOKIA650
 	{"0650" ,"THF-12","",           {0}},
