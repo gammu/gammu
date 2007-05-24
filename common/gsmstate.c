@@ -6,6 +6,7 @@
 #include <errno.h>
 
 #include <gammu-call.h>
+#include <gammu-settings.h>
 
 #include "gsmcomon.h"
 #include "gsmstate.h"

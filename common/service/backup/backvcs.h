@@ -3,7 +3,8 @@
 #ifndef __gsm_backvcs_h
 #define __gsm_backvcs_h
 
-#include "backgen.h"
+#include <gammu-error.h>
+#include <gammu-backup.h>
 
 #ifdef GSM_ENABLE_BACKUP
 GSM_Error SaveVCalendar(char *FileName, GSM_Backup *backup);

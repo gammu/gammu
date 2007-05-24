@@ -3,7 +3,8 @@
 #ifndef __gsm_backlmb_h
 #define __gsm_backlmb_h
 
-#include "backgen.h"
+#include <gammu-error.h>
+#include <gammu-backup.h>
 
 #ifdef GSM_ENABLE_BACKUP
 GSM_Error SaveLMB(char *FileName, GSM_Backup *backup);
