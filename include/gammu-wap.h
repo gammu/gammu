@@ -9,7 +9,7 @@
 
 /**
  * \defgroup WAP WAP
- * WAPs manipulations.
+ * WAP bookmars and settings manipulations.
  */
 
 /**
