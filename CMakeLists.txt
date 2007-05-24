@@ -411,7 +411,6 @@ set (HEADERS
     common/service/gsmprof.h
     common/service/sms/gsmems.h
     common/service/sms/gsmmulti.h
-    common/service/sms/gsmsms.h
     common/service/gsmlogo.h
     common/service/gsmcal.h
     common/service/gsmring.h
@@ -585,7 +584,7 @@ endforeach (HEADER)
 
 # Generate Doxygen file
 set (DOXYGEN_INPUT "${Gammu_SOURCE_DIR}/include")
-set (DOXYGEN_INTERNAL_INPUT "${Gammu_SOURCE_DIR}/common ${Gammu_SOURCE_DIR}/gammu")
+set (DOXYGEN_INTERNAL_INPUT "${Gammu_SOURCE_DIR}/common")
 set (DOXYGEN_OUTPUT "${Gammu_BINARY_DIR}/gammu-doc")
 set (DOXYGEN_INTERNAL_OUTPUT "${Gammu_BINARY_DIR}/gammu-internal-doc")
 if (${DOXYGEN_DOT_EXECUTABLE} STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
