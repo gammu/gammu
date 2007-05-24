@@ -563,39 +563,6 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesiz
 	if (j != 0) smfprintf(d, "%s\n", buffer);
 }
 
-#ifdef WIN32
-#include <malloc.h>
-
-bool HeapCheck(char* loc) {
-   /* Check heap status */
-   int heapstatus = _heapchk();
-   switch( heapstatus )
-   {
-   case _HEAPOK:
-		dbgprintf("%s: OK - heap is fine\n", loc );
-		return false;
-		break;
-   case _HEAPEMPTY:
-	   dbgprintf("%s: OK - heap is empty\n", loc );
-		return false;
-		break;
-   case _HEAPBADBEGIN:
-	   dbgprintf( "%s: ERROR - bad start of heap\n", loc );
-		return true;
-		break;
-   case _HEAPBADNODE:
-	   dbgprintf( "%s: ERROR - bad node in heap\n", loc );
-		return true;
-		break;
-   }
-   return false;
-}
-#else
-bool HeapCheck(char* loc) {
-	return false;
-}
-#endif
-
 const char *GetOS(void)
 {
 #ifdef WIN32
