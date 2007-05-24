@@ -12,15 +12,27 @@
  * Categories handling.
  */
 
+/**
+ * Maximal length of category name.
+ *
+ * \ingroup Category
+ */
 #define GSM_MAX_CATEGORY_NAME_LENGTH 60
 
 /**
  * Type of category
+ *
  * \ingroup Category
  */
 typedef enum {
-	Category_ToDo = 1, /**< Todo entry category */
-	Category_Phonebook /**< Phonebook entry category */
+	/**
+	 * Todo entry category 
+	 */
+	Category_ToDo = 1, 
+	/**
+	 * Phonebook entry category 
+	 */
+	Category_Phonebook 
 } GSM_CategoryType;
 
 /**
@@ -28,9 +40,18 @@ typedef enum {
  * \ingroup Category
  */
 typedef struct {
-	GSM_CategoryType Type;	  /**< Type of category */
-	int Location;		      /**< Location of category */
-	unsigned char Name[(GSM_MAX_CATEGORY_NAME_LENGTH + 1) * 2];	/**< Name of category */
+	/**
+	 * Type of category 
+	 */
+	GSM_CategoryType Type;	  
+	/**
+	 * Location of category 
+	 */
+	int Location;		      
+	/**
+	 * Name of category 
+	 */
+	unsigned char Name[(GSM_MAX_CATEGORY_NAME_LENGTH + 1) * 2];	
 } GSM_Category;
 
 /**
@@ -38,12 +59,23 @@ typedef struct {
  * \ingroup Category
  */
 typedef struct {
-	GSM_CategoryType Type;	  /**< Type of category */
-	int Used;		  /**< Number of used category names */
+	/**
+	 * Type of category 
+	 */
+	GSM_CategoryType Type;	  
+	/**
+	 * Number of used category names 
+	 */
+	int Used;		  
 } GSM_CategoryStatus;
 
 /**
  * Reads category from phone.
+ *
+ * \param s State machine pointer.
+ * \param Category Storage for category, containing its type and location.
+ *
+ * \return Error code
  *
  * \ingroup Category
  */
@@ -51,14 +83,28 @@ GSM_Error GSM_GetCategory(GSM_StateMachine * s, GSM_Category * Category);
 /**
  * Adds category to phone.
  *
+ * \param s State machine pointer.
+ * \param Category New category, containing its type and location.
+ *
+ * \return Error code
+ *
  * \ingroup Category
  */
 GSM_Error GSM_AddCategory(GSM_StateMachine * s, GSM_Category * Category);
 /**
  * Reads category status (number of used entries) from phone.
  *
+ * \param s State machine pointer.
+ * \param Status Category status, fill in type before calling.
+ *
+ * \return Error code
+ *
  * \ingroup Category
  */
 GSM_Error GSM_GetCategoryStatus(GSM_StateMachine * s,
 				GSM_CategoryStatus * Status);
 #endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */
