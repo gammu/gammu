@@ -12,6 +12,8 @@
  * Calendar events manipulations.
  */
 
+#include <gammu-datetime.h>
+
 /**
  * \defgroup Note Note
  * Notes manipulations.
