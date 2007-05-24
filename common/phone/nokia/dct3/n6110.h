@@ -3,8 +3,8 @@
 #ifndef n6110_h
 #define n6110_h
 
-#include "../../../config.h"
-#include "../../../service/sms/gsmsms.h"
+#include <gammu-config.h>
+#include <gammu-message.h>
 #include "dct3comm.h"
 
 typedef struct {

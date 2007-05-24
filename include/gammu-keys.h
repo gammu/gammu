@@ -12,6 +12,9 @@
  * Keyboard manipulations.
  */
 
+#include <gammu-error.h>
+#include <gammu-statemachine.h>
+
 /**
  * Key event identifiers.
  *

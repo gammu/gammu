@@ -17,8 +17,7 @@
 #  include <windows.h>
 #endif
 
-#include "../config.h"
-
+#include <gammu-config.h>
 #include <gammu-types.h>
 #include <gammu-datetime.h>
 #include <gammu-misc.h>

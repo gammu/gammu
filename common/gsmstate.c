@@ -5,6 +5,8 @@
 #include <string.h>
 #include <errno.h>
 
+#include <gammu-call.h>
+
 #include "gsmcomon.h"
 #include "gsmstate.h"
 #include "misc/cfg.h"

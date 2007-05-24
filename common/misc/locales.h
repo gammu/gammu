@@ -10,7 +10,7 @@
 #ifndef __LOCALES_H
 #define __LOCALES_H
 
-#include "../config.h"
+#include <gammu-config.h>
 
 #include <locale.h>
 

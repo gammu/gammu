@@ -12,6 +12,11 @@
  * Call entries manipulations.
  */
 
+#include <gammu-types.h>
+#include <gammu-limits.h>
+#include <gammu-error.h>
+#include <gammu-statemachine.h>
+
 /**
  * \defgroup Divert Divert
  * Diversion entries manipulations.
