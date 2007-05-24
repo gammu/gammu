@@ -379,6 +379,7 @@ void GSM_GetBackupFormatFeatures(char *FileName, GSM_Backup_Info * info);
 void GSM_GetBackupFileFeatures(char *FileName, GSM_Backup_Info * info,
 			       GSM_Backup * backup);
 #endif
+
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
