@@ -1,5 +1,21 @@
 /**
+ * \file gammu-security.h
+ * \author Michal Čihař
+ * 
+ * Security functions.
+ */
+#ifndef __gammu_security_h
+#define __gammu_security_h
+
+/**
+ * \defgroup Security Security
+ * Security related operations with phone.
+ */
+
+/**
  * Definition of security codes.
+ *
+ * \ingroup Security
  */
 typedef enum {
 	/**
@@ -32,6 +48,8 @@ typedef enum {
 
 /**
  * Security code definition.
+ *
+ * \ingroup Security
  */
 typedef struct {
 	/**
@@ -46,10 +64,20 @@ typedef struct {
 
 /**
  * Enters security code (PIN, PUK,...) .
+ *
+ * \ingroup Security
  */
 GSM_Error GSM_EnterSecurityCode(GSM_StateMachine * s, GSM_SecurityCode Code);
 /**
  * Queries whether some security code needs to be entered./
+ *
+ * \ingroup Security
  */
 GSM_Error GSM_GetSecurityStatus(GSM_StateMachine * s,
 				GSM_SecurityCodeType * Status);
+
+#endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */

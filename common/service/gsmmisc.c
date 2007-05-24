@@ -12,6 +12,7 @@
 #  include <sys/socket.h>
 #endif
 
+#include <gammu-keys.h>
 #include "../misc/coding/coding.h"
 #include "../gsmcomon.h"
 #include "gsmmisc.h"

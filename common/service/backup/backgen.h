@@ -14,7 +14,9 @@
 #ifndef __gsm_backgen_h
 #define __gsm_backgen_h
 
-#include "../../config.h"
+#include <gammu-config.h>
+#include <gammu-backup.h>
+
 #include "../../misc/misc.h"
 #include "../gsmpbk.h"
 #include "../gsmcal.h"
@@ -24,8 +26,6 @@
 #include "../gsmprof.h"
 #include "../gsmmisc.h"
 #include "../sms/gsmsms.h"
-
-#include <gammu-backup.h>
 
 #endif
 /*@}*/

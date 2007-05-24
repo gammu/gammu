@@ -10,7 +10,7 @@
 #  include <wctype.h>
 #endif
 
-#include "../config.h"
+#include <gammu-config.h>
 #include "coding/coding.h"
 #include "cfg.h"
 #include "misc.h"

@@ -8,9 +8,8 @@
 #  include <unistd.h>
 #endif
 
-#include <gammu.h>
+#include <gammu-config.h>
 #include <gammu-limits.h>
-#include "config.h"
 #include "misc/misc.h"
 
 extern GSM_Error NoneFunction		(void);

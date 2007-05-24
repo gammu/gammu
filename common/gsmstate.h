@@ -21,8 +21,11 @@
 
 #include <gammu-file.h>
 #include <gammu-info.h>
+#include <gammu-config.h>
+#include <gammu-keys.h>
+#include <gammu-security.h>
+#include <gammu-callback.h>
 
-#include "config.h"
 #include "misc/cfg.h"
 
 typedef struct _GSM_User	 	GSM_User;
