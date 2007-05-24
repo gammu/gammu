@@ -249,7 +249,7 @@ int DecodeWithUnicodeAlphabet(wchar_t src, unsigned char *dest)
         }
 }
 
-void DecodeUnicode (const unsigned char *src, unsigned char *dest)
+void DecodeUnicode (const unsigned char *src, char *dest)
 {
  	int 		i=0,o=0;
  	wchar_t 	wc;
@@ -263,7 +263,7 @@ void DecodeUnicode (const unsigned char *src, unsigned char *dest)
 }
 
 /* Decode Unicode string and return as function result */
-unsigned char *DecodeUnicodeString (const unsigned char *src)
+char *DecodeUnicodeString (const unsigned char *src)
 {
  	static char dest[500];
 
@@ -274,7 +274,7 @@ unsigned char *DecodeUnicodeString (const unsigned char *src)
 /* Decode Unicode string to UTF8 or other console charset
  * and return as function result
  */
-unsigned char *DecodeUnicodeConsole(const unsigned char *src)
+char *DecodeUnicodeConsole(const unsigned char *src)
 {
  	static char dest[500];
 
@@ -877,7 +877,7 @@ int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool s
 	return length / 2 + 1;
 }
 
-void CopyUnicodeString(unsigned char *Dest, unsigned char *Source)
+void CopyUnicodeString(unsigned char *Dest, const unsigned char *Source)
 {
 	int j = 0;
 
@@ -912,7 +912,7 @@ void ReverseUnicodeString(unsigned char *String)
 
 /* All input is in Unicode. First char can show Unicode minor/major order.
    Output is Unicode string in Gammu minor/major order */
-void ReadUnicodeFile(unsigned char *Dest, unsigned char *Source)
+void ReadUnicodeFile(unsigned char *Dest, const unsigned char *Source)
 {
 	int j = 0, current = 0;
 
@@ -1431,7 +1431,7 @@ void StringToDouble(char *text, double *d)
 }
 
 /* When char can be converted, convert it from Unicode to UTF8 */
-int EncodeWithUTF8Alphabet2(unsigned char mychar1, unsigned char mychar2, unsigned char *ret)
+int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsigned char *ret)
 {
 	int src = mychar1*256+mychar2;
 
@@ -1464,7 +1464,7 @@ bool EncodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src)
 	len = UnicodeLength(src);
 
 	for (i = 0; i < len; i++) {
-		z = EncodeWithUTF8Alphabet2(src[i*2],src[i*2+1],mychar);
+		z = EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],mychar);
 		if (z>1) {
 			for (w=0;w<z;w++) {
 				sprintf(dest+j, "=%02X",mychar[w]);
@@ -1492,7 +1492,7 @@ bool EncodeUTF8(unsigned char *dest, const unsigned char *src)
 	bool		retval = false;
 
 	for (i = 0; i < (int)(UnicodeLength(src)); i++) {
-		z = EncodeWithUTF8Alphabet2(src[i*2],src[i*2+1],mychar);
+		z = EncodeWithUTF8Alphabet(src[i*2],src[i*2+1],mychar);
 		if (z>1) {
 			memcpy(dest+j,mychar,z);
 			j+=z;
@@ -1506,7 +1506,7 @@ bool EncodeUTF8(unsigned char *dest, const unsigned char *src)
 }
 
 /* Decode UTF8 char to Unicode char */
-int DecodeWithUTF8Alphabet2(unsigned char *src, wchar_t *dest, int len)
+int DecodeWithUTF8Alphabet(unsigned char *src, wchar_t *dest, int len)
 {
 	if (len < 1) return 0;
 	if (src[0] < 128) {
@@ -1570,12 +1570,12 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, in
 			if (z==0 && mychar[0]<194) break;
 			z++;
 			/* Do we already have valid UTF-8 char? */
-			if (DecodeWithUTF8Alphabet2(mychar,&ret,z) == z) break;
+			if (DecodeWithUTF8Alphabet(mychar,&ret,z) == z) break;
 		}
 		if (z>0) {
 			i+=z*3;
 			// we ignore wrong sequence
-			if (DecodeWithUTF8Alphabet2(mychar,&ret,z)==0) continue;
+			if (DecodeWithUTF8Alphabet(mychar,&ret,z)==0) continue;
 		} else {
 			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
 		}
@@ -1592,7 +1592,7 @@ void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len)
 	wchar_t		ret;
 
 	while (i < len) {
-		z = DecodeWithUTF8Alphabet2((unsigned char *)src+i,&ret,len-i);
+		z = DecodeWithUTF8Alphabet((unsigned char *)src+i,&ret,len-i);
 		if (z<2) {
 			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
 		} else {
@@ -1658,7 +1658,7 @@ void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len)
 			}
 			dbgprintf("Unicode char 0x%04lx\n", c);
 			tmplen = strlen(tmp);
-			tmplen += EncodeWithUTF8Alphabet2((c >> 8) & 0xff, c & 0xff, tmp + tmplen);
+			tmplen += EncodeWithUTF8Alphabet((c >> 8) & 0xff, c & 0xff, tmp + tmplen);
 			tmp[tmplen] = 0;
 		} else if (strcmp(entity, "amp") == 0) {
 			strcat(tmp, "&");

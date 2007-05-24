@@ -7982,7 +7982,7 @@ static void Version(int argc, char *argv[])
 
 #ifdef DEBUG
 	for (w = 1; w < 65535; w++) {
-		j = EncodeWithUTF8Alphabet2(w / 256, w % 256, bzz);
+		j = EncodeWithUTF8Alphabet(w / 256, w % 256, bzz);
 		for (z = 0; z < j; z++) {
 			if (bzz[z] == 0x00) printf("%i\n", w);
 		}
