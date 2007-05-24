@@ -10,8 +10,6 @@
 /* Define if want DEBUG info */
 #cmakedefine DEBUG
 
-#cmakedefine ENABLE_LGPL
-
 /* ---------------------- Connections ---------------------------------- */
 
 /* MBUS2 over cable */

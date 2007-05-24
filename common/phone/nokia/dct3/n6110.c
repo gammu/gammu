@@ -139,7 +139,6 @@ static void N6110_EncodeUnicode(GSM_StateMachine *s, unsigned char *dest, const 
         dest[(o_len*2)+1]       = 0;
 }
 
-#ifndef ENABLE_LGPL
 
 /* Pavel Janik */
 /* This function provides Nokia authentication protocol.
@@ -251,13 +250,9 @@ static GSM_Error N6110_MakeAuthentication(GSM_StateMachine *s)
         return s->Protocol.Functions->WriteMessage(s, magic_connect, 45, 0x64);
 }
 
-#endif
 
 static GSM_Error N6110_ShowStartInfo(GSM_StateMachine *s, bool enable)
 {
-#ifdef ENABLE_LGPL
-        return ERR_NONE;
-#else
         GSM_Error error=ERR_NONE;
 
         if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_MAGICBYTES)) {
@@ -267,7 +262,6 @@ static GSM_Error N6110_ShowStartInfo(GSM_StateMachine *s, bool enable)
                 }
         }
         return error;
-#endif
 }
 
 static GSM_Error N6110_Initialise (GSM_StateMachine *s)
@@ -2774,9 +2768,7 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
         {N6110_ReplyGetSetPicture,        "\x47",0x03,0x05,ID_SetBitmap          },
         {N6110_ReplyGetSetPicture,        "\x47",0x03,0x06,ID_GetBitmap          },
 
-#ifndef ENABLE_LGPL
         {N6110_ReplyGetMagicBytes,        "\x64",0x00,0x00,ID_MakeAuthentication },
-#endif
 
         {DCT3DCT4_ReplyGetModelFirmware,  "\xD2",0x02,0x00,ID_GetModel           },
         {DCT3DCT4_ReplyGetModelFirmware,  "\xD2",0x02,0x00,ID_GetFirmware        },

@@ -701,14 +701,11 @@ void FindDefaultAlphabetLen(const unsigned char *src, int *srclen, int *smslen, 
 	*smslen = current;
 }
 
-#ifndef ENABLE_LGPL
-#  define ByteMask ((1 << Bits) - 1)
-#endif
+#define ByteMask ((1 << Bits) - 1)
 
 int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
                            unsigned char *input, unsigned char *output)
 {
-#ifndef ENABLE_LGPL
 	/* (c) by Pavel Janik and Pawel Kot */
 
         unsigned char *OUTPUT 	= output; /* Current pointer to the output buffer */
@@ -744,14 +741,10 @@ int GSM_UnpackEightBitsToSeven(int offset, int in_length, int out_length,
         }
 
         return OUTPUT - output;
-#else
-	return 0;
-#endif
 }
 
 int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *output, int length)
 {
-#ifndef ENABLE_LGPL
 	/* (c) by Pavel Janik and Pawel Kot */
 
         unsigned char 	*OUTPUT = output; /* Current pointer to the output buffer */
@@ -783,9 +776,6 @@ int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *ou
                 INPUT++;
         }
         return (OUTPUT - output);
-#else
-	return 0;
-#endif
 }
 
 void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, bool semioctet)
