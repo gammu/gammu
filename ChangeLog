@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.11.90
+20070524 - 1.11.90
 [+] * Support for some new Nokia fields.
 [-] * Made SMSD mode case insensitive.
 [-] * Fix iCalendar export typo (Alin Năstac).
