@@ -55,7 +55,7 @@ void GetTimeDifference(unsigned long diff, GSM_DateTime * DT, bool Plus,
  * Convert time_t to gammu \ref GSM_DateTime structure.
  *
  * \param Date Storage for date.
- * \param time_t Input date.
+ * \param timet Input date.
  */
 void Fill_GSM_DateTime(GSM_DateTime * Date, time_t timet);
 

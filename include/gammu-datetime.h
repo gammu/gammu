@@ -18,7 +18,7 @@
 /**
  * Structure used for saving date and time
  *
- * \ingroup DateTime.
+ * \ingroup DateTime
  */
 typedef struct {
 	/**
@@ -56,7 +56,7 @@ typedef struct {
 /**
  * Structure used for saving relative date and time
  *
- * \ingroup DateTime.
+ * \ingroup DateTime
  */
 typedef struct {
 	/**
@@ -115,7 +115,7 @@ time_t Fill_Time_T(GSM_DateTime DT);
 /**
  * Converts timestamp to string according to OS settings.
  *
- * \parma dt Input timestamp.
+ * \param dt Input timestamp.
  * \param TimeZone Whether to include time zone.
  *
  * \return Pointer to static buffer containing string.
@@ -127,7 +127,7 @@ char *OSDateTime(GSM_DateTime dt, bool TimeZone);
 /**
  * Converts date from timestamp to string according to OS settings.
  *
- * \parma dt Input timestamp.
+ * \param dt Input timestamp.
  *
  * \return Pointer to static buffer containing string.
  * 

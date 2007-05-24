@@ -620,7 +620,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length,
  * 
  * \param Buffer Storage for data.
  * \param Length Pointer to current position in data (will be incremented).
- * \param note Note to encode.
+ * \param Note Note to encode.
  *
  * \return Error code.
  *
@@ -643,7 +643,6 @@ GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length,
  * \return Error code
  *
  * \ingroup Calendar
- * \ingroup Todo
  */
 GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos,
 				    GSM_CalendarEntry * Calendar,
@@ -658,7 +657,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos,
  *
  * \return Whether entry is in past.
  *
- * \ingroup Calendar.
+ * \ingroup Calendar
  */
 bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry * note);
 

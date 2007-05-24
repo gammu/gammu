@@ -246,7 +246,7 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap * bitmap);
  * \param y Vertical coordinate.
  * \return True if point is set.
  *
- * \ingroup Bitmap.
+ * \ingroup Bitmap
  */
 bool GSM_IsPointBitmap(GSM_Bitmap * bmp, int x, int y);
 
@@ -257,7 +257,7 @@ bool GSM_IsPointBitmap(GSM_Bitmap * bmp, int x, int y);
  * \param x Horizontal coordinate.
  * \param y Vertical coordinate.
  *
- * \ingroup Bitmap.
+ * \ingroup Bitmap
  */
 void GSM_SetPointBitmap(GSM_Bitmap * bmp, int x, int y);
 
@@ -268,7 +268,7 @@ void GSM_SetPointBitmap(GSM_Bitmap * bmp, int x, int y);
  * \param x Horizontal coordinate.
  * \param y Vertical coordinate.
  *
- * \ingroup Bitmap.
+ * \ingroup Bitmap
  */
 void GSM_ClearPointBitmap(GSM_Bitmap * bmp, int x, int y);
 
@@ -276,10 +276,8 @@ void GSM_ClearPointBitmap(GSM_Bitmap * bmp, int x, int y);
  * Clears bitmap.
  * 
  * \param bmp Bitmap
- * \param x Horizontal coordinate.
- * \param y Vertical coordinate.
  *
- * \ingroup Bitmap.
+ * \ingroup Bitmap
  */
 void GSM_ClearBitmap(GSM_Bitmap * bmp);
 

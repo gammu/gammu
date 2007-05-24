@@ -103,7 +103,7 @@ GSM_Debug_Info *GSM_GetDebug(GSM_StateMachine * s);
  * \param privdi Pointer to debug information data.
  * \return True on success.
  *
- * \ingroup Debug.
+ * \ingroup Debug
  */
 bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info * privdi);
 
@@ -114,7 +114,7 @@ bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info * privdi);
  * \param privdi Pointer to debug information data.
  * \return True on success.
  *
- * \ingroup Debug.
+ * \ingroup Debug
  */
 bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info * privdi);
 
@@ -126,7 +126,7 @@ bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info * privdi);
  * \param privdi Pointer to debug information data.
  * \return True on success.
  *
- * \ingroup Debug.
+ * \ingroup Debug
  */
 bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info * privdi);
 
