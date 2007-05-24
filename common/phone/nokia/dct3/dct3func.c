@@ -20,7 +20,6 @@
 
 #include "../../../gsmstate.h"
 #include "../../../misc/coding/coding.h"
-#include "../../../service/sms/gsmsms.h"
 #include "../../pfunc.h"
 #include "../nfunc.h"
 #include "dct3func.h"

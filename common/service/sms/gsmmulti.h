@@ -13,7 +13,6 @@
 #include "../gsmpbk.h"
 #include "../gsmdata.h"
 #include "../gsmring.h"
-#include "gsmsms.h"
 
 /* ---------------------- multi SMS --------------------------------------- */
 

@@ -25,7 +25,6 @@
 
 #include "../../../misc/coding/coding.h"
 #include "../../../misc/locales.h"
-#include "../../../service/sms/gsmsms.h"
 #include "../../../gsmcomon.h"
 #include "../../pfunc.h"
 #include "../nfunc.h"

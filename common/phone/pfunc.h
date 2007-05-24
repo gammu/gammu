@@ -20,8 +20,6 @@
 #ifndef phone_common2_h
 #define phone_common2_h
 
-#include "../service/sms/gsmsms.h"
-
 GSM_Error PHONE_GetSMSFolders		(GSM_StateMachine *s, GSM_SMSFolders *folders);
 
 /**

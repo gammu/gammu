@@ -27,7 +27,6 @@
 #include "../misc/coding/coding.h"
 #include "../gsmstate.h"
 #include "gsmring.h"
-#include "sms/gsmsms.h"
 
 int GSM_RingNoteGetFrequency(GSM_RingNote Note)
 {

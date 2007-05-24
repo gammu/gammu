@@ -40,7 +40,6 @@
 #include "../../gsmcomon.h"
 #include "../../misc/coding/coding.h"
 #include "../../misc/misc.h"
-#include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
 #include "../at/atfunc.h"
 #include "alcatel.h"

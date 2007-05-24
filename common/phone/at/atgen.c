@@ -25,7 +25,6 @@
 
 #include "../../gsmcomon.h"
 #include "../../misc/coding/coding.h"
-#include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
 
 #include "atgen.h"

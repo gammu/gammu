@@ -4,7 +4,6 @@
 #define n3320_h
 
 #include "../ncommon.h"
-#include "../../../service/sms/gsmsms.h"
 
 #ifndef GSM_USED_MBUS2
 #  define GSM_USED_MBUS2

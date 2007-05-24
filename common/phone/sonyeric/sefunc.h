@@ -5,7 +5,6 @@
 
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
-#include "../../service/sms/gsmsms.h"
 
 /* Reply functions which are hooked into AT module */
 

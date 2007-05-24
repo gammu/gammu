@@ -25,7 +25,6 @@
 #include "../gsmdata.h"
 #include "../gsmprof.h"
 #include "../gsmmisc.h"
-#include "../sms/gsmsms.h"
 
 #endif
 /*@}*/

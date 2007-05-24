@@ -7,7 +7,6 @@
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
 #include "../../service/gsmmisc.h"
-#include "../../service/sms/gsmsms.h"
 
 #ifndef GSM_USED_BLUEGNAPBUS
 #  define GSM_USED_BLUEGNAPBUS
