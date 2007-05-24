@@ -1,4 +1,4 @@
-%define ver         1.11.90
+%define ver         1.11.91
 %define name        gammu
 %define relnum      1
 
@@ -27,15 +27,12 @@ Name:               %name
 Version:            %ver
 Release:            %rel
 License:            GPL
-
 %if %_vendor == "suse"
 Group:              Hardware/Mobile
 %else
 Group:              Applications/Communications
 %endif
-
 %if %bluetooth
-
 %if %_vendor == "suse"
 BuildRequires:      bluez-libs >= 2.0 gettext cmake
 %else
@@ -44,10 +41,7 @@ BuildRequires:      libbluez1 >= 2.0 libbluez1-devel >= 2.0 gettext cmake
 %else
 BuildRequires:      bluez-libs >= 2.0 bluez-libs-devel >= 2.0 gettext cmake
 %endif
-
 %endif
-%else
-BuildRequires:      gettext cmake
 %endif
 Vendor:             Michal Cihar <michal@cihar.com>
 Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.gz
@@ -87,8 +81,9 @@ This package contain files needed for development.
 
 %build
 mkdir build-dir
-cd build-dir && cmake ../ -DENABLE_SHARED=ON -DCMAKE_INSTALL_PREFIX=%_prefix -DINSTALL_DOC_DIR=%_docdir/%name
-make -C build-dir
+cd build-dir
+cmake ../ -DENABLE_SHARED=ON -DCMAKE_INSTALL_PREFIX=%_prefix -DINSTALL_DOC_DIR=%_docdir/%name
+make
 
 %install
 rm -rf %buildroot
