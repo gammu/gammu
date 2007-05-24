@@ -13,17 +13,30 @@
  */
 
 /**
+ * WAP bookmark data.
+ *
  * \ingroup WAP
  */
 typedef struct {
+	/**
+	 * Bookmark URL.
+	 */
 	unsigned char Address[(255 + 1) * 2];
+	/**
+	 * Bookmark title.
+	 */
 	unsigned char Title[(50 + 1) * 2];
+	/**
+	 * Location where it is stored.
+	 */
 	int Location;
 } GSM_WAPBookmark;
 
 /* --------------------------- WAP or MMS settings ------------------------- */
 
 /**
+ * Connection speed configuration.
+ *
  * \ingroup WAP
  */
 typedef enum {
@@ -33,6 +46,8 @@ typedef enum {
 } WAPSettings_Speed;
 
 /**
+ * Connection bearer configuration.
+ *
  * \ingroup WAP
  */
 typedef enum {
@@ -43,6 +58,8 @@ typedef enum {
 } WAPSettings_Bearer;
 
 /**
+ * WAP setting.
+ *
  * \ingroup WAP
  */
 typedef struct {
@@ -52,43 +69,109 @@ typedef struct {
 	bool IsSecurity;
 	bool IsContinuous;
 
-	/* for data bearer */
+	/**
+	 * Whether is ISDN for data bearer
+	 */
 	bool IsISDNCall;
+	/**
+	 * Whether is normal auth for data bearer
+	 */
 	bool IsNormalAuthentication;
 
-	/* for sms bearer */
+	/**
+	 * Server for sms bearer.
+	 */
 	char Server[(21 + 1) * 2];
 
-	/* for sms or ussd bearer */
+	/**
+	 * Service for sms or ussd bearer.
+	 */
 	char Service[(20 + 1) * 2];
+	/**
+	 * Whether is IP, for sms or ussd bearer.
+	 */
 	bool IsIP;
 
-	/* for ussd bearer */
+	/**
+	 * Code for ussd bearer.
+	 */
 	char Code[(10 + 1) * 2];
 
-	/* for data or gprs */
+	/**
+	 * IP address for data or gprs.
+	 */
 	char IPAddress[(20 + 1) * 2];
+	/**
+	 * Login for data or gprs.
+	 */
 	bool ManualLogin;
+	/**
+	 * Dial up number for data or gprs.
+	 */
 	char DialUp[(20 + 1) * 2];
-	char User[(50 + 1) * 2];	/*is length OK ? */
-	char Password[(50 + 1) * 2];	/*is length OK ? */
+	/**
+	 * User name for data or gprs.
+	 *
+	 * \todo Is length okay?
+	 */
+	char User[(50 + 1) * 2];
+	/**
+	 * User password for data or gprs.
+	 *
+	 * \todo Is length okay?
+	 */
+	char Password[(50 + 1) * 2];
+	/**
+	 * Speed settings for data or gprs.
+	 */
 	WAPSettings_Speed Speed;
 } GSM_WAPSettings;
 
 /**
+ * Set of WAP settings.
+ *
  * \ingroup WAP
  */
 typedef struct {
+	/**
+	 * Location.
+	 */
 	int Location;
+	/**
+	 * Number of elements in Settings.
+	 */
 	unsigned char Number;
+	/**
+	 * Real WAP settings.
+	 */
 	GSM_WAPSettings Settings[4];
+	/**
+	 * Whether this configuration is active.
+	 */
 	bool Active;
+	/**
+	 * Whether this configuration is read only.
+	 */
 	bool ReadOnly;
+	/**
+	 * Proxy server.
+	 */
 	char Proxy[(100 + 1) * 2];
+	/**
+	 * Proxy port.
+	 */
 	int ProxyPort;
+	/**
+	 * Second proxy server.
+	 */
 	char Proxy2[(100 + 1) * 2];
+	/**
+	 * Second proxy port.
+	 */
 	int Proxy2Port;
-
+	/**
+	 * Bearer of current connection.
+	 */
 	WAPSettings_Bearer ActiveBearer;
 } GSM_MultiWAPSettings;
 
