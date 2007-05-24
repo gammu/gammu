@@ -108,3 +108,7 @@ void GSM_SetIncomingUSSDCallback(GSM_StateMachine * s,
 void GSM_SetSendSMSStatusCallback(GSM_StateMachine * s,
 				  SendSMSStatusCallback callback);
 #endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */

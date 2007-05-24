@@ -284,6 +284,7 @@ void GSM_ClearPointBitmap(GSM_Bitmap * bmp, int x, int y);
 void GSM_ClearBitmap(GSM_Bitmap * bmp);
 
 #endif
+
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
