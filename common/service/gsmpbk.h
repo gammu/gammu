@@ -7,15 +7,9 @@
 
 #include <gammu-memory.h>
 
-#include "../gsmcomon.h"
-#include "gsmmisc.h"
 #include "../misc/coding/coding.h"
 
-
 void GSM_TweakInternationalNumber(unsigned char *Number, const GSM_NumberType numType);
-
-
-
 
 #endif
 
