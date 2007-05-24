@@ -852,20 +852,20 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	INI_Section 	*h;
 	unsigned char 	section[50];
 	bool		found = false;
+	char *Temp;
 
 #if defined(WIN32) || defined(DJGPP)
-        char *DefaultPort		= "com2:";
+        static const char *DefaultPort		= "com2:";
 #else
-        char *DefaultPort		= "/dev/ttyS1";
+        static const char *DefaultPort		= "/dev/ttyS1";
 #endif
-        char *DefaultModel		= "";
-        char *DefaultConnection		= "fbus";
-	char *DefaultSynchronizeTime	= "no";
-	char *DefaultDebugFile		= "";
-	char *DefaultDebugLevel		= "";
-	char *DefaultLockDevice		= "no";
-	char *DefaultStartInfo		= "no";
-	char *Temp;
+        static const char *DefaultModel		= "";
+        static const char *DefaultConnection		= "fbus";
+	static const char *DefaultSynchronizeTime	= "no";
+	static const char *DefaultDebugFile		= "";
+	static const char *DefaultDebugLevel		= "";
+	static const char *DefaultLockDevice		= "no";
+	static const char *DefaultStartInfo		= "no";
 
 	/* By default all debug output will go to one filedescriptor */
 	bool DefaultUseGlobalDebugFile 	= true;
