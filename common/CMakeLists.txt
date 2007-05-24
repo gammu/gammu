@@ -110,9 +110,7 @@ include_directories (
 if (WIN32)
     target_link_libraries (Gammu ws2_32)
     # These libraries are needed for serial driver
-    if (GSM_ENABLE_DKU2PHONET OR GSM_ENABLE_DKU2AT)
-        target_link_libraries (Gammu setupapi advapi32)
-    endif (GSM_ENABLE_DKU2PHONET OR GSM_ENABLE_DKU2AT)
+    target_link_libraries (Gammu setupapi advapi32)
 endif (WIN32)
 
 if (GETTEXTLIBS_FOUND)
