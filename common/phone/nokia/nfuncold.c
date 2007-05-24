@@ -7,7 +7,6 @@
 
 #include "../../misc/coding/coding.h"
 #include "../../gsmstate.h"
-#include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
 #include "nfunc.h"
 

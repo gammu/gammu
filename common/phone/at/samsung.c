@@ -13,7 +13,6 @@
 
 #include "../../misc/coding/coding.h"
 #include "../../gsmcomon.h"
-#include "../../service/sms/gsmsms.h"
 #include "../pfunc.h"
 
 #include "atgen.h"

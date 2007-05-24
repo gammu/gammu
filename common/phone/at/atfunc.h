@@ -5,7 +5,6 @@
 
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
-#include "../../service/sms/gsmsms.h"
 
 extern GSM_Reply_Function ATGENReplyFunctions[];
 

@@ -4,7 +4,6 @@
 #define n6510_h
 
 #include "../../ncommon.h"
-#include "../../../../service/sms/gsmsms.h"
 
 typedef enum {
 	N6510_MMS_SETTINGS = 0x01,

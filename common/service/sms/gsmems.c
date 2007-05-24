@@ -12,7 +12,6 @@
 #include "../gsmring.h"
 #include "../gsmdata.h"
 #include "../gsmnet.h"
-#include "gsmsms.h"
 #include "gsmmulti.h"
 
 /* EMS Developers' Guidelines from www.sonyericsson.com

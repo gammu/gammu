@@ -25,7 +25,6 @@
 #include "../gsmring.h"
 #include "../gsmdata.h"
 #include "../gsmnet.h"
-#include "gsmsms.h"
 
 /* User data headers */
 static GSM_UDHHeader UDHHeaders[] = {
