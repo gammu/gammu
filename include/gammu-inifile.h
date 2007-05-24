@@ -8,6 +8,7 @@
 #define __gammu_inifile_h
 
 #include <gammu-types.h>
+#include <gammu-error.h>
 /**
  * \defgroup INI INI files
  * Handling of INI files.

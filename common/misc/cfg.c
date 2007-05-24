@@ -11,9 +11,8 @@
 #endif
 
 #include <gammu-config.h>
+#include <gammu-inifile.h>
 #include "coding/coding.h"
-#include "cfg.h"
-#include "misc.h"
 
 /**
  * Read information from file in Windows INI format style

@@ -9,7 +9,6 @@
 
 #include "gsmcomon.h"
 #include "gsmstate.h"
-#include "misc/cfg.h"
 #include "misc/coding/coding.h"
 #include "device/devfunc.h"
 
