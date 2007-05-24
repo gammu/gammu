@@ -8307,7 +8307,6 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 	struct utimbuf		filedate;
 	int			Handle,Size,p,q,j,old1;
 	time_t     		t_time1,t_time2;
-	GSM_DateTime		dt;
 	long			diff;
 
 	if (File->Buffer != NULL) {
@@ -8317,8 +8316,7 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 	File->Used 	= 0;
 	start		= true;
 
-	GSM_GetCurrentDateTime(&dt);
-	t_time1 	= Fill_Time_T(dt);
+	t_time1 	= time(NULL);
 	old1 		= 65536;
 
 	error = ERR_NONE;
@@ -8340,8 +8338,7 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 			} else {
 				fprintf(stderr, _("%c  %i percent"), 13, File->Used*100/Size);
 				if (File->Used*100/Size >= 2) {
-					GSM_GetCurrentDateTime(&dt);
-					t_time2 = Fill_Time_T(dt);
+					t_time2 = time(NULL);
 					diff 	= t_time2-t_time1;
 					p 	= diff*(Size-File->Used)/File->Used;
 					if (p != 0) {
