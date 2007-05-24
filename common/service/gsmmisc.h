@@ -3,8 +3,6 @@
 #ifndef __gsm_misc_h
 #define __gsm_misc_h
 
-#include "../gsmcomon.h"
-
 #include <gammu-file.h>
 #include <gammu-info.h>
 
