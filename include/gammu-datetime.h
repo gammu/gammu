@@ -17,6 +17,8 @@
 
 /**
  * Structure used for saving date and time
+ *
+ * \ingroup DateTime.
  */
 typedef struct {
 	/**
@@ -24,10 +26,22 @@ typedef struct {
 	 */
 	int Timezone;
 
+	/**
+	 * Seconds.
+	 */
 	unsigned int Second;
+	/**
+	 * Minutes.
+	 */
 	unsigned int Minute;
+	/**
+	 * Hours.
+	 */
 	unsigned int Hour;
 
+	/**
+	 * Days.
+	 */
 	unsigned int Day;
 	/**
 	 * January = 1, February = 2, etc.
@@ -39,40 +53,137 @@ typedef struct {
 	unsigned int Year;
 } GSM_DateTime;
 
+/**
+ * Structure used for saving relative date and time
+ *
+ * \ingroup DateTime.
+ */
 typedef struct {
-	/* for relative times */
+	/**
+	 * The difference of timezones.
+	 */
 	int Timezone;
 
+	/**
+	 * Seconds diff.
+	 */
 	int Second;
+	/**
+	 * Minutes diff.
+	 */
 	int Minute;
+	/**
+	 * Hours diff.
+	 */
 	int Hour;
 
+	/**
+	 * Days diff.
+	 */
 	int Day;
+	/**
+	 * Months diff.
+	 */
 	int Month;
+	/**
+	 * Years diff.
+	 */
 	int Year;
 } GSM_DeltaTime;
 
+/**
+ * Returns current timestamp.
+ *
+ * \param Date Storage for date time structure.
+ * 
+ * \ingroup DateTime
+ */
 void GSM_GetCurrentDateTime(GSM_DateTime * Date);
-GSM_DateTime GSM_AddTime(GSM_DateTime DT, GSM_DeltaTime delta);
-bool HeapCheck(char *loc);
-char *OSDateTime(GSM_DateTime dt, bool TimeZone);
-char *OSDate(GSM_DateTime dt);
-int GetDayOfYear(int year, int month, int day);
-int GetWeekOfMonth(int year, int month, int day);
-int GetDayOfWeek(int year, int month, int day);
-char *DayOfWeek(int year, int month, int day);
+
+
+/**
+ * Converts \ref GSM_DateTime to time_t.
+ *
+ * \param DT Input timestamp.
+ *
+ * \return time_t value.
+ * 
+ * \ingroup DateTime
+ */
 time_t Fill_Time_T(GSM_DateTime DT);
-void GetTimeDifference(unsigned long diff, GSM_DateTime * DT, bool Plus,
-		       int multi);
-void Fill_GSM_DateTime(GSM_DateTime * Date, time_t timet);
+
+/**
+ * Converts timestamp to string according to OS settings.
+ *
+ * \parma dt Input timestamp.
+ * \param TimeZone Whether to include time zone.
+ *
+ * \return Pointer to static buffer containing string.
+ * 
+ * \ingroup DateTime
+ */
+char *OSDateTime(GSM_DateTime dt, bool TimeZone);
+
+/**
+ * Converts date from timestamp to string according to OS settings.
+ *
+ * \parma dt Input timestamp.
+ *
+ * \return Pointer to static buffer containing string.
+ * 
+ * \ingroup DateTime
+ */
+char *OSDate(GSM_DateTime dt);
+
+/**
+ * Checks whether date is valid. This does not check time, see 
+ * \ref CheckTime for this.
+ *
+ * \param date Structure where to check date.
+ *
+ * \return True if date is correct.
+ * 
+ * \ingroup DateTime
+ */
 bool CheckDate(GSM_DateTime * date);
+
+/**
+ * Checks whether time is valid. This does not check date, see 
+ * \ref CheckDate for this.
+ *
+ * \param date Structure where to check time.
+ *
+ * \return True if time is correct.
+ * 
+ * \ingroup DateTime
+ */
 bool CheckTime(GSM_DateTime * date);
+
 /**
  * Reads date and time from phone.
+ *
+ * \param s State machine pointer.
+ * \param date_time Storage for date.
+ *
+ * \return Error code
+ *
+ * \ingroup Category
  */
 GSM_Error GSM_GetDateTime(GSM_StateMachine * s, GSM_DateTime * date_time);
+
 /**
  * Sets date and time in phone.
+ *
+ * \param s State machine pointer.
+ * \param date_time Date to set.
+ *
+ * \return Error code
+ *
+ * \ingroup Category
  */
 GSM_Error GSM_SetDateTime(GSM_StateMachine * s, GSM_DateTime * date_time);
 #endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */
