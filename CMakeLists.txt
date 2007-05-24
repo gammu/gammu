@@ -405,7 +405,6 @@ set (HEADERS
     common/service/backup/backvcf.h
     common/service/backup/backvcs.h
     common/service/backup/gsmback.h
-    common/service/backup/backgen.h
     common/service/gsmnet.h
     common/service/gsmprof.h
     common/service/sms/gsmems.h

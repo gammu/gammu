@@ -3,7 +3,9 @@
 #ifndef __gsm_backtext_h
 #define __gsm_backtext_h
 
-#include "backgen.h"
+#include <gammu-error.h>
+#include <gammu-types.h>
+#include <gammu-backup.h>
 
 #ifdef GSM_ENABLE_BACKUP
 GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode);

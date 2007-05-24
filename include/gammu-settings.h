@@ -12,6 +12,8 @@
  * Phone settings manipulations.
  */
 
+#include <gammu-wap.h>
+
 typedef struct {
 	int Location;
 	bool Active;

@@ -2,9 +2,17 @@
 
 #include <string.h>
 #include <ctype.h>
+#include <stdlib.h>
 
+#include <gammu-config.h>
 #include <gammu-inifile.h>
 #include <gammu-backup.h>
+#include <gammu-unicode.h>
+
+#include "../../service/gsmcal.h"
+#include "../../service/gsmlogo.h"
+#include "../../service/gsmmisc.h"
+#include "../../misc/coding/coding.h"
 #include "../../misc/coding/md5.h"
 #include "backtext.h"
 

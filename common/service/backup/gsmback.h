@@ -3,8 +3,6 @@
 #ifndef __gsm_back_h
 #define __gsm_back_h
 
-#include "backgen.h"
-
 #ifdef GSM_ENABLE_BACKUP
 
 #include <gammu-backup.h>
