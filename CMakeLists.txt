@@ -363,7 +363,6 @@ set (HEADERS
     common/device/serial/ser_w32.h
     common/misc/coding/md5.h
     common/misc/coding/coding.h
-    common/misc/cfg.h
     common/misc/misc.h
     common/phone/alcatel/alcatel.h
     common/phone/at/samsung.h
