@@ -63,10 +63,25 @@ typedef enum {
  * \ingroup WAP
  */
 typedef struct {
+	/**
+	 * Settings name.
+	 */
 	char Title[(20 + 1) * 2];
+	/**
+	 * Home page.
+	 */
 	char HomePage[(100 + 1) * 2];
+	/**
+	 * Bearer of WAP connection.
+	 */
 	WAPSettings_Bearer Bearer;
+	/**
+	 * Secure connection?
+	 */
 	bool IsSecurity;
+	/**
+	 * Is this connectin continuous?
+	 */
 	bool IsContinuous;
 
 	/**
