@@ -3,13 +3,9 @@
 #include <string.h>
 #include <ctype.h>
 
-#include "../../phone/nokia/nfunc.h"
-#include "../../phone/nokia/dct3/n7110.h"
-#include "../../misc/cfg.h"
-#include "../../misc/coding/coding.h"
+#include <gammu-inifile.h>
+#include <gammu-backup.h>
 #include "../../misc/coding/md5.h"
-#include "../gsmlogo.h"
-#include "../gsmmisc.h"
 #include "backtext.h"
 
 #ifdef GSM_ENABLE_BACKUP
