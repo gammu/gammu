@@ -31,33 +31,71 @@ typedef struct _GSM_StateMachine GSM_StateMachine;
  * \ingroup StateMachine
  */
 typedef struct {
-	/* Config file (or Registry or...) variables */
-	char Model[50];				   /**< Model from config file 		*/
-	char DebugLevel[50];			   /**< Debug level			*/
-	char *Device;				   /**< Device name from config file 	*/
-	char *Connection;			   /**< Connection type as string		*/
-	char *SyncTime;				   /**< Synchronize time on startup? 	*/
-	char *LockDevice;			   /**< Lock device ? (Unix)		*/
-	char *DebugFile;			   /**< Name of debug file		*/
-	char *Localize;				   /**< Name of localisation file		*/
-	char *StartInfo;			   /**< Display something during start ?  */
-	bool UseGlobalDebugFile;		   /**< Should we use global debug file?	*/
-	bool DefaultModel;
-	bool DefaultDebugLevel;
-	bool DefaultDevice;
-	bool DefaultConnection;
-	bool DefaultSyncTime;
-	bool DefaultLockDevice;
-	bool DefaultDebugFile;
-	bool DefaultLocalize;
-	bool DefaultStartInfo;
-	char TextReminder[32];			  /**< Text for reminder calendar entry category in local language */
-	char TextMeeting[32];			 /**< Text for meeting calendar entry category in local language */
-	char TextCall[32];		      /**< Text for call calendar entry category in local language */
-	char TextBirthday[32];			  /**< Text for birthday calendar entry category in local language */
-	char TextMemo[32];		      /**< Text for memo calendar entry category in local language */
+	/**
+	 * Model from config file 		
+	 */
+	char Model[50];				   
+	/**
+	 * Debug level			
+	 */
+	char DebugLevel[50];			   
+	/**
+	 * Device name from config file 	
+	 */
+	char *Device;				   
+	/**
+	 * Connection type as string		
+	 */
+	char *Connection;			   
+	/**
+	 * Synchronize time on startup? 	
+	 */
+	char *SyncTime;				   
+	/**
+	 * Lock device ? (Unix)		
+	 */
+	char *LockDevice;			   
+	/**
+	 * Name of debug file		
+	 */
+	char *DebugFile;			   
+	/**
+	 * Name of localisation file		
+	 */
+	char *Localize;				   
+	/**
+	 * Display something during start ?  
+	 */
+	char *StartInfo;			   
+	/**
+	 * Should we use global debug file?	
+	 */
+	bool UseGlobalDebugFile;		   
+	/**
+	 * Text for reminder calendar entry category in local language 
+	 */
+	char TextReminder[32];			  
+	/**
+	 * Text for meeting calendar entry category in local language 
+	 */
+	char TextMeeting[32];			 
+	/**
+	 * Text for call calendar entry category in local language 
+	 */
+	char TextCall[32];		      
+	/**
+	 * Text for birthday calendar entry category in local language 
+	 */
+	char TextBirthday[32];			  
+	/**
+	 * Text for memo calendar entry category in local language 
+	 */
+	char TextMemo[32];		      
 } GSM_Config;
 
+/**
+ * Connection types definitions.
+ */
 typedef enum {
 	GCT_MBUS2 = 1,
 	GCT_FBUS2,
@@ -210,6 +248,7 @@ void GSM_FreeStateMachine(GSM_StateMachine * s);
 GSM_ConnectionType GSM_GetUsedConnection(GSM_StateMachine * s);
 
 #endif
+
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
