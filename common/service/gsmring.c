@@ -351,8 +351,6 @@ void GSM_SaveRingtoneIMelody(FILE *file, GSM_Ringtone *ringtone)
 	fwrite(Buffer, 1, i, file);
 }
 
-#ifndef ENABLE_LGPL
-
 static void WriteVarLen(unsigned char* midifile, int* current, long value)
 {
 	long buffer;
@@ -453,8 +451,6 @@ void GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 	fwrite(midifile,1,current,file);
 }
 
-#endif
-
 void GSM_SaveRingtoneOtt(FILE *file, GSM_Ringtone *ringtone)
 {
 	char 	Buffer[2000];
@@ -478,10 +474,8 @@ GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 			GSM_SaveRingtoneOtt(file,ringtone);
 		} else if (strstr(FileName,".rng")) {
 			GSM_SaveRingtoneOtt(file,ringtone);
-#ifndef ENABLE_LGPL
 		} else if (strstr(FileName,".mid")) {
 			GSM_SaveRingtoneMidi(file,ringtone);
-#endif
 		} else if (strstr(FileName,".imy")) {
 			GSM_SaveRingtoneIMelody(file,ringtone);
 		} else if (strstr(FileName,".ime")) {

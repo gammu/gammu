@@ -167,21 +167,6 @@ GSM_Error socket_close(GSM_StateMachine *s, int hPhone)
 
 #endif
 
-#ifdef ENABLE_LGPL
-
-GSM_Error lock_device(const char* port, char **lock_device)
-{
-	*lock_device = 0;
-	return ERR_NONE;
-}
-
-bool unlock_device(char **lock_file)
-{
-	return true;
-}
-
-#else
-
 #define max_buf_len 	128
 #define lock_path 	"/var/lock/LCK.."
 
@@ -318,8 +303,6 @@ bool unlock_device(char **lock_file)
 	return true;
 #endif
 }
-
-#endif
 
 int FindSerialSpeed(char *buffer)
 {

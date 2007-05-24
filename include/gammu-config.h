@@ -12,8 +12,6 @@
 /* Define if want DEBUG info */
 /* #undef DEBUG */
 
-/* #undef ENABLE_LGPL */
-
 /* ---------------------- Connections ---------------------------------- */
 
 /* MBUS2 over cable */

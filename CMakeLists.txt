@@ -569,9 +569,6 @@ macro_gammu_option (IRDAGNAPBUS "GNAPBUS protocol over IrDA" ON WITH_GNAPPLET_SU
 
 macro_gammu_option (GNAPGEN "Gnapplet phones support" ON WITH_GNAPPLET_SUPPORT ON)
 
-option (ENABLE_LGPL "Enable LGPL licensing (disables all GPL only code)" OFF)
-mark_as_advanced (ENABLE_LGPL)
-
 # Some generic configurations
 macro_gammu_option (CELLBROADCAST "Cell Broadcast messages support" ON ON ON)
 macro_gammu_option (BACKUP "Backup/Restore functions" ON ON ON)

@@ -180,26 +180,6 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #  undef GSM_ENABLE_FBUS2BLUE
 #endif
 
-#ifndef WIN32
-#  ifdef ENABLE_LGPL
-#    undef GSM_ENABLE_IRDADEVICE
-#    undef GSM_ENABLE_IRDAPHONET
-#    undef GSM_ENABLE_IRDAGNAPBUS
-#    undef GSM_ENABLE_IRDAOBEX
-#    undef GSM_ENABLE_IRDAAT
-#    undef GSM_ENABLE_DKU2AT
-#    undef GSM_ENABLE_FBUS2IRDA
-#    undef GSM_ENABLE_BLUETOOTHDEVICE
-#    undef GSM_ENABLE_BLUEPHONET
-#    undef GSM_ENABLE_BLUEOBEX
-#    undef GSM_ENABLE_BLUEAT
-#    undef GSM_ENABLE_BLUEFBUS2
-#    undef GSM_ENABLE_BLUEGNAPBUS
-#    undef GSM_ENABLE_PHONETBLUE
-#    undef GSM_ENABLE_FBUS2BLUE
-#  endif
-#endif
-
 #ifdef GSM_ENABLE_SERIALDEVICE
 #  include "device/serial/ser_w32.h"
 #  include "device/serial/ser_unx.h"

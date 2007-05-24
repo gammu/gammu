@@ -8,9 +8,7 @@
 #include "dct3comm.h"
 
 typedef struct {
-#ifndef ENABLE_LGPL
 	unsigned char			MagicBytes[4];
-#endif
 	int				LastCalendarPos;
 	DCT3_WAPSettings_Locations	WAPLocations;
 

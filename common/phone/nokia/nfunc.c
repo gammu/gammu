@@ -2103,13 +2103,11 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		req[count++] = 0xff;
 		req[count++] = 0xff;
 		if (Alarm != -1) {
-#ifndef ENABLE_LGPL
 			/* Comment from original source by Gabriele Zappi:
 			 * I try with Time.Year = Alarm.Year. If negative, I increase 1 year,
 			 * but only once ! This thing, because I may have Alarm period across
 			 * a year. (eg. Birthday on 2001-01-10 and Alarm on 2000-12-27)
 			 */
-#endif
 			DT.Year = Note->Entries[Alarm].Date.Year;
 			seconds = Fill_Time_T(DT)-Fill_Time_T(Note->Entries[Alarm].Date);
 			if (seconds<0L) {
