@@ -23,9 +23,11 @@
 #ifndef atgen_h
 #define atgen_h
 
-#include "../../gsmcomon.h"
-#include "../../gsmstate.h"
-#include "../../misc/misc.h"
+#include <gammu-types.h>
+#include <gammu-error.h>
+#include <gammu-statemachine.h>
+
+#include "../../misc/misc.h" /* For GSM_Lines */
 
 #ifndef GSM_USED_AT
 #  define GSM_USED_AT

@@ -16,8 +16,6 @@
 #ifndef sonyericsson_h
 #define sonyericsson_h
 
-#include "../../gsmcomon.h"
-
 #ifndef GSM_USED_AT
 # define GSM_USED_AT
 #endif
