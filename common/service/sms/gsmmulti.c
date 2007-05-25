@@ -5,8 +5,6 @@
 #include <time.h>
 
 #include "../../misc/coding/coding.h"
-#include "../gsmcal.h"
-#include "../gsmpbk.h"
 #include "../gsmlogo.h"
 #include "../gsmring.h"
 #include "../gsmdata.h"
