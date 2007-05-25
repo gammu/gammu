@@ -33,9 +33,6 @@
 #include <gammu-limits.h>
 #include <gammu-category.h>
 
-#include "../../gsmcomon.h"
-#include "../../service/gsmpbk.h"
-
 #ifndef GSM_USED_AT
 # define GSM_USED_AT
 #endif
