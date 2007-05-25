@@ -3,7 +3,6 @@
 #ifndef __gsm_ems_h
 #define __gsm_ems_h
 
-#include "../../gsmcomon.h"
 #include "gsmmulti.h"
 
 GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
