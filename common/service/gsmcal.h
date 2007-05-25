@@ -19,8 +19,6 @@
 #ifndef __gsm_cal_h
 #define __gsm_cal_h
 
-#include "../gsmcomon.h"
-
 /* ---------------------------- calendar ----------------------------------- */
 
 #include <gammu-calendar.h>
