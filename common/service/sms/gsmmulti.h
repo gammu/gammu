@@ -7,11 +7,7 @@
     extern "C" {
 #endif
 
-#include "../gsmlogo.h"
-#include "../gsmcal.h"
-#include "../gsmpbk.h"
-#include "../gsmdata.h"
-#include "../gsmring.h"
+#include <gammu-message.h>
 
 /* ---------------------- multi SMS --------------------------------------- */
 
