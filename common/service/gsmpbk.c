@@ -1,6 +1,7 @@
 /* (c) 2001-2005 by Marcin Wiacek, Michal Cihar... */
 
 #include <string.h>
+#include <stdio.h>
 
 #include "../misc/coding/coding.h"
 #include "gsmpbk.h"

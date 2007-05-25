@@ -6,6 +6,7 @@
 #include <gammu-config.h>
 
 #include "../../misc/coding/coding.h"
+#include "../../misc/misc.h"
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
 #include "backvcf.h"

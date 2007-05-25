@@ -17,14 +17,13 @@
 #include <string.h>
 #include <time.h>
 
-#include "../../gsmcomon.h"
+#include <gammu-calendar.h>
+#include <gammu-message.h>
+#include <gammu-unicode.h>
+#include <gammu-debug.h>
+
 #include "../../misc/coding/coding.h"
-#include "../gsmcal.h"
-#include "../gsmpbk.h"
-#include "../gsmlogo.h"
-#include "../gsmring.h"
-#include "../gsmdata.h"
-#include "../gsmnet.h"
+#include "../../misc/misc.h"
 
 /* User data headers */
 static GSM_UDHHeader UDHHeaders[] = {

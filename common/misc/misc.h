@@ -79,12 +79,6 @@ int GetWeekOfMonth(int year, int month, int day);
  */
 int GetDayOfWeek(int year, int month, int day);
 
-/**
- * 
- * \ingroup DateTime
- */
-char *DayOfWeek(int year, int month, int day);
-
 
 /* ------------------------------------------------------------------------- */
 

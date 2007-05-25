@@ -14,9 +14,15 @@
 #include <string.h>
 #include <time.h>
 #include <ctype.h>
+#include <stdio.h>
+#include <stdlib.h>
 
-#include "gsmcal.h"
+#include <gammu-calendar.h>
+#include <gammu-unicode.h>
+
+#include "../misc/misc.h"
 #include "gsmmisc.h"
+#include "gsmcal.h"
 #include "../misc/coding/coding.h"
 
 void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)

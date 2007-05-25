@@ -14,6 +14,7 @@
 #include "../../service/gsmmisc.h"
 #include "../../misc/coding/coding.h"
 #include "../../misc/coding/md5.h"
+#include "../../misc/misc.h"
 #include "backtext.h"
 
 #ifdef GSM_ENABLE_BACKUP

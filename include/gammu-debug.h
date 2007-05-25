@@ -12,7 +12,10 @@
  * Debuging handling.
  */
 
+#include <stdio.h>
+
 #include <gammu-statemachine.h>
+#include <gammu-error.h>
 
 /**
  * Debugging configuration.
