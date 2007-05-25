@@ -11,6 +11,9 @@
  * \defgroup Unicode Unicode
  * Unicode manipulation functions.
  */
+
+#include <wchar.h>
+
 #include <gammu-types.h>
 #include <gammu-config.h>
 
