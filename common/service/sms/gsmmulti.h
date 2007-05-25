@@ -7,7 +7,6 @@
     extern "C" {
 #endif
 
-#include "../../gsmcomon.h"
 #include "../gsmlogo.h"
 #include "../gsmcal.h"
 #include "../gsmpbk.h"
