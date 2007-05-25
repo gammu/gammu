@@ -3,9 +3,6 @@
 #ifndef __gsm_bitmaps_h
 #define __gsm_bitmaps_h
 
-#include "../gsmcomon.h"
-
-
 #include <gammu-calendar.h>
 #include <gammu-bitmap.h>
 
