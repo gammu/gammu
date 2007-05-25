@@ -4,13 +4,17 @@
 #include <string.h>
 #include <time.h>
 
-#include "../../misc/coding/coding.h"
-#include "../gsmlogo.h"
+#include <gammu-unicode.h>
+#include <gammu-debug.h>
+
+#include "gsmmulti.h"
 #include "../gsmring.h"
+#include "../gsmlogo.h"
+#include "../../misc/coding/coding.h"
+#include "../../misc/misc.h"
+#include "gsmems.h"
 #include "../gsmdata.h"
 #include "../gsmnet.h"
-#include "gsmmulti.h"
-#include "gsmems.h"
 
 /* ----------------- Splitting SMS into parts ------------------------------ */
 

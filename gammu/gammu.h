@@ -1,5 +1,8 @@
 /* (c) 2002-2003 by Marcin Wiacek and Michal Cihar */
 
+#include <gammu-error.h>
+#include <gammu-statemachine.h>
+
 typedef enum {
 	H_Call=1,
  	H_SMS,

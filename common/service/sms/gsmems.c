@@ -4,14 +4,15 @@
 #include <string.h>
 #include <time.h>
 
+#include <gammu-unicode.h>
+#include <gammu-debug.h>
+
 #include "../../misc/coding/coding.h"
-#include "../gsmcal.h"
-#include "../gsmpbk.h"
+#include "../../misc/misc.h"
+#include "../../misc/coding/coding.h"
 #include "../gsmlogo.h"
-#include "../gsmring.h"
-#include "../gsmdata.h"
-#include "../gsmnet.h"
 #include "gsmmulti.h"
+#include "../gsmring.h"
 
 /* EMS Developers' Guidelines from www.sonyericsson.com
  * docs from Alcatel

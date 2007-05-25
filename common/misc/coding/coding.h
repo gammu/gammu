@@ -14,8 +14,6 @@
 
 #include <gammu-unicode.h>
 
-#include "../misc.h"
-
 #ifndef HAVE_ISWSPACE
 typedef		int wint_t;
 #endif

@@ -92,6 +92,19 @@ typedef struct {
 } GSM_DeltaTime;
 
 /**
+ * Returns string for current day of week.
+ *
+ * \param year Year.
+ * \param month Month.
+ * \param day Day.
+ *
+ * \return Pointer to static buffer containing day of week string.
+ * 
+ * \ingroup DateTime
+ */
+char *DayOfWeek(int year, int month, int day);
+
+/**
  * Returns current timestamp.
  *
  * \param Date Storage for date time structure.
