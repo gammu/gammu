@@ -3,9 +3,6 @@
 #ifndef __gsm_wap_h
 #define __gsm_wap_h
 
-#include "gsmmisc.h"
-#include "../misc/misc.h"
-
 #include <gammu-wap.h>
 #include <gammu-message.h>
 

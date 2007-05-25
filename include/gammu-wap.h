@@ -12,6 +12,10 @@
  * WAP bookmars and settings manipulations.
  */
 
+#include <gammu-types.h>
+#include <gammu-error.h>
+#include <gammu-statemachine.h>
+
 /**
  * WAP bookmark data.
  *
