@@ -51,12 +51,6 @@ void 		DecodeUTF7			(unsigned char *dest, const unsigned char *src, int len);
 void		DecodeISO88591			(unsigned char *dest, const char *src, int len);
 void		DecodeISO88591QuotedPrintable	(unsigned char *dest, const unsigned char *src, int len);
 
-/* ------------------------------ UTF8 ------------------------------------- */
-
-
-bool 		EncodeUTF8			(unsigned char *dest, const unsigned char *src);
-void 		DecodeUTF8			(unsigned char *dest, const unsigned char *src, int len);
-
 /**
  * Decodes UTF-8 text with XML entities to Unicode.
  */
@@ -65,11 +59,6 @@ void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len);
 /* ------------------------------- BASE64 ---------------------------------- */
 void 		EncodeBASE64			(const unsigned char *Input, unsigned char *Output, int Length);
 int 		DecodeBASE64			(const unsigned char *Input, unsigned char *Output, int Length);
-
-/* ----------------------------- HexBin ------------------------------------ */
-void		DecodeHexBin			(unsigned char *dest, const unsigned char *src, int len);
-
-/* ----------------------------- HexUnicode -------------------------------- */
 
 /* ---------------------- DefaultAlphabet for SMS -------------------------- */
 void 		EncodeDefault			(unsigned char *dest, const unsigned char *src, int *len, bool UseExtensions, unsigned char *ExtraAlphabet);

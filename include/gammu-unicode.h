@@ -90,7 +90,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src,
  * \ingroup Unicode
  */
 int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2,
-			    unsigned char *ret);
+			   unsigned char *ret);
 /**
  * Decodes string from UTF-8.
  *
@@ -142,6 +142,27 @@ bool mywstrncasecmp(unsigned const char *a, unsigned const char *b, int num);
  */
 extern char *strcasestr(const char *s, const char *find);
 #endif
+
+/**
+ * Encode text to UTF-8.
+ *
+ * \ingroup Unicode
+ */
+bool EncodeUTF8(unsigned char *dest, const unsigned char *src);
+
+/**
+ * Decode text from UTF-8.
+ *
+ * \ingroup Unicode
+ */
+void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len);
+
+/**
+ * Decode hex encoded binary text.
+ *
+ * \ingroup Unicode
+ */
+void DecodeHexBin(unsigned char *dest, const unsigned char *src, int len);
 
 #endif
 
