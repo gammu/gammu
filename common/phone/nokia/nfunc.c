@@ -839,7 +839,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	return ERR_NONE;
 }
 
-void NOKIA_GetDefaultCallerGroupName(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
+void NOKIA_GetDefaultCallerGroupName(GSM_Bitmap *Bitmap)
 {
 	Bitmap->DefaultName = false;
 	if (Bitmap->Text[0]==0x00 && Bitmap->Text[1]==0x00) {
@@ -1007,7 +1007,7 @@ void NOKIA_SortSMSFolderStatus(GSM_StateMachine *s, GSM_NOKIASMSFolder *Folder)
 	}
 }
 
-void NOKIA_GetDefaultProfileName(GSM_StateMachine *s, GSM_Profile *Profile)
+void NOKIA_GetDefaultProfileName(GSM_Profile *Profile)
 {
 	if (Profile->DefaultName) {
 		switch(Profile->Location) {

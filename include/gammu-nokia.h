@@ -12,9 +12,28 @@
  * Nokias manipulations.
  */
 
-#include <gammu-statemachine.h>
 #include <gammu-bitmap.h>
+#include <gammu-settings.h>
 
-void NOKIA_GetDefaultCallerGroupName(GSM_StateMachine * s, GSM_Bitmap * Bitmap);
+/**
+ * Gets default caller group name.
+ *
+ * \param Bitmap Storage for default bitmap.
+ *
+ * \ingroup Nokia
+ */
+void NOKIA_GetDefaultCallerGroupName(GSM_Bitmap * Bitmap);
 
+/**
+ * Gets default profile name.
+ *
+ * \param Profile Storage for default profile.
+ *
+ * \ingroup Nokia
+ */
+void NOKIA_GetDefaultProfileName(GSM_Profile * Profile);
 #endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */

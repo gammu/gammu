@@ -639,7 +639,7 @@ static GSM_Error N7110_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		pbk.Location   = Bitmap->Location;
 		smprintf(s, "Getting caller group logo\n");
 		error=N7110_GetMemory(s,&pbk);
-		if (error==ERR_NONE) NOKIA_GetDefaultCallerGroupName(s,Bitmap);
+		if (error==ERR_NONE) NOKIA_GetDefaultCallerGroupName(Bitmap);
 		return error;
 	case GSM_OperatorLogo:
 		smprintf(s, "Getting operator logo\n");
@@ -1247,7 +1247,7 @@ static GSM_Error N7110_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 		error = GSM_WaitFor (s, req, 9, 0x39, 4, ID_GetProfile);
 		if (error!=ERR_NONE) return error;
 	}
-	NOKIA_GetDefaultProfileName(s, Profile);
+	NOKIA_GetDefaultProfileName(Profile);
 	Profile->Active = false;
 	return error;
 }

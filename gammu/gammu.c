@@ -991,7 +991,7 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 			error=GSM_GetBitmap(s,&caller[entry->Number-1]);
 			Print_Error(error);
 			if (caller[entry->Number-1].DefaultName) {
-				NOKIA_GetDefaultCallerGroupName(s,&caller[entry->Number-1]);
+				NOKIA_GetDefaultCallerGroupName(&caller[entry->Number-1]);
 			}
 			callerinit[entry->Number-1]=true;
 		}
@@ -7619,7 +7619,7 @@ static void GetProfile(int argc, char *argv[])
 							caller[k].Location 	= k + 1;
 							error=GSM_GetBitmap(s,&caller[k]);
 							if (error == ERR_SECURITYERROR) {
-								NOKIA_GetDefaultCallerGroupName(s,&caller[k]);
+								NOKIA_GetDefaultCallerGroupName(&caller[k]);
 							} else {
 								Print_Error(error);
 							}

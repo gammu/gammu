@@ -1035,7 +1035,7 @@ static GSM_Error N6510_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		pbk.Location	= Bitmap->Location;
 		smprintf(s, "Getting caller group logo\n");
 		error=N6510_GetMemory(s,&pbk);
-		if (error==ERR_NONE) NOKIA_GetDefaultCallerGroupName(s, Bitmap);
+		if (error==ERR_NONE) NOKIA_GetDefaultCallerGroupName(Bitmap);
 		return error;
 	case GSM_OperatorLogo:
 		smprintf(s, "Getting operator logo\n");

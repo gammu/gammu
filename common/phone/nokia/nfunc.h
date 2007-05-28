@@ -3,6 +3,8 @@
 #ifndef phone_nokia_h
 #define phone_nokia_h
 
+#include <gammu-nokia.h>
+
 #include "ncommon.h"
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
@@ -66,7 +68,6 @@ void 		NOKIA_DecodeSMSState		(GSM_StateMachine *s, unsigned char state, GSM_SMSM
 void		NOKIA_EncodeDateTime		(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime);
 void		NOKIA_DecodeDateTime		(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime);
 void 		NOKIA_SortSMSFolderStatus	(GSM_StateMachine *s, GSM_NOKIASMSFolder *Folder);
-void 		NOKIA_GetDefaultProfileName	(GSM_StateMachine *s, GSM_Profile *Profile);
 void NOKIA_FindFeatureValue(GSM_StateMachine		*s,
 			    GSM_Profile_PhoneTableValue ProfileTable[],
   			    unsigned char 		ID,
