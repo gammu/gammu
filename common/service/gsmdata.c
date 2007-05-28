@@ -3,9 +3,11 @@
 #include <string.h>
 #include <stdio.h>
 
+#include <gammu-debug.h>
+#include <gammu-datetime.h>
+
 #include "gsmdata.h"
 #include "../misc/coding/coding.h"
-#include "../misc/misc.h"
 
 /* http://forum.nokia.com: OTA MMS Settings 1.0, OTA Settings 7.0 */
 static void AddWAPSMSParameterText(unsigned char *Buffer, int *Length, unsigned char ID, char *Text, int Len)

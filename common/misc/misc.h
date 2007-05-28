@@ -51,14 +51,6 @@ void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, in
 void GetTimeDifference(unsigned long diff, GSM_DateTime * DT, bool Plus,
 		       int multi);
 
-/**
- * Convert time_t to gammu \ref GSM_DateTime structure.
- *
- * \param Date Storage for date.
- * \param timet Input date.
- */
-void Fill_GSM_DateTime(GSM_DateTime * Date, time_t timet);
-
 GSM_DateTime GSM_AddTime(GSM_DateTime DT, GSM_DeltaTime delta);
 
 /**
