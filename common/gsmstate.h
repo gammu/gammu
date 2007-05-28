@@ -201,7 +201,6 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #include "service/gsmdata.h"
 #include "service/gsmlogo.h"
 #include "service/gsmmisc.h"
-#include "service/gsmprof.h"
 #include "service/gsmcall.h"
 #include "service/sms/gsmems.h"
 #include "service/sms/gsmmulti.h"
