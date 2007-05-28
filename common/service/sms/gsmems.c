@@ -9,7 +9,6 @@
 
 #include "../../misc/coding/coding.h"
 #include "../../misc/misc.h"
-#include "../../misc/coding/coding.h"
 #include "../gsmlogo.h"
 #include "gsmmulti.h"
 #include "../gsmring.h"
