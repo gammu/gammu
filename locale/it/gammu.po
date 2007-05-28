@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-05-21 16:57+0200\n"
+"POT-Creation-Date: 2007-05-28 09:15+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Andrea Spadaccini\n"
 "Language-Team: Language =it\n"
@@ -15,86 +15,86 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: common/gsmcomon.c:80
+#: common/gsmcomon.c:84
 msgid "No error."
 msgstr "Nessun errore."
 
-#: common/gsmcomon.c:81
-msgid "Error opening device. Unknown/busy or no permissions."
-msgstr ""
-"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
-"permessi."
-
-#: common/gsmcomon.c:82
-#, fuzzy
-msgid "Error opening device, it is locked."
-msgstr ""
-"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
-"permessi."
-
-#: common/gsmcomon.c:83
-#, fuzzy
-msgid "Error opening device, it doesn't exist."
-msgstr ""
-"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
-"permessi."
-
-#: common/gsmcomon.c:84
-#, fuzzy
-msgid "Error opening device, it is already opened by other application."
-msgstr ""
-"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
-"permessi."
-
 #: common/gsmcomon.c:85
-#, fuzzy
-msgid "Error opening device, you don't have permissions."
+msgid "Error opening device. Unknown/busy or no permissions."
 msgstr ""
 "Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
 "permessi."
 
 #: common/gsmcomon.c:86
 #, fuzzy
-msgid "Error opening device. No required driver in operating system."
+msgid "Error opening device, it is locked."
 msgstr ""
 "Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
 "permessi."
 
 #: common/gsmcomon.c:87
+#, fuzzy
+msgid "Error opening device, it doesn't exist."
+msgstr ""
+"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
+"permessi."
+
+#: common/gsmcomon.c:88
+#, fuzzy
+msgid "Error opening device, it is already opened by other application."
+msgstr ""
+"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
+"permessi."
+
+#: common/gsmcomon.c:89
+#, fuzzy
+msgid "Error opening device, you don't have permissions."
+msgstr ""
+"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
+"permessi."
+
+#: common/gsmcomon.c:90
+#, fuzzy
+msgid "Error opening device. No required driver in operating system."
+msgstr ""
+"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
+"permessi."
+
+#: common/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrong configured."
 msgstr ""
 
-#: common/gsmcomon.c:88
+#: common/gsmcomon.c:92
 #, fuzzy
 msgid "Error setting device DTR or RTS."
 msgstr "Errore durante la scrittura sul dispositivo."
 
-#: common/gsmcomon.c:89
+#: common/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
 "Errore nel cambiare la velocità del dispositivo. Forse la velocità non è "
 "supportata."
 
-#: common/gsmcomon.c:90
+#: common/gsmcomon.c:94
 msgid "Error writing device."
 msgstr "Errore durante la scrittura sul dispositivo."
 
-#: common/gsmcomon.c:91
+#: common/gsmcomon.c:95
 #, fuzzy
 msgid "Error during reading device."
 msgstr "Errore durante la scrittura sul dispositivo."
 
-#: common/gsmcomon.c:92
+#: common/gsmcomon.c:96
 msgid "Can't set parity on device."
 msgstr ""
 
-#: common/gsmcomon.c:93
+#: common/gsmcomon.c:97
 msgid "No response in specified timeout. Probably phone not connected."
 msgstr ""
 "Nessuna risposta nel tempo specificato. Probabilmente il telefono non è "
 "connesso."
 
-#: common/gsmcomon.c:95
+#: common/gsmcomon.c:99
 #, fuzzy
 msgid ""
 "Unknown response from phone. See <http://cihar.com/gammu/report> for "
@@ -103,208 +103,208 @@ msgstr ""
 "Risposta sconosciuta dal telefono. Leggere readme.txt, per sapere come "
 "contattarci."
 
-#: common/gsmcomon.c:97
+#: common/gsmcomon.c:101
 msgid "Unknown connection type string. Check config file."
 msgstr ""
 "Tipo di connessione sconosciuto. Controllare il file di configurazione."
 
-#: common/gsmcomon.c:98
+#: common/gsmcomon.c:102
 msgid "Unknown model type string. Check config file."
 msgstr "Modello sconosciuto. Controllare il file di configurazione."
 
-#: common/gsmcomon.c:99
+#: common/gsmcomon.c:103
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "written)."
 msgstr ""
 
-#: common/gsmcomon.c:100
+#: common/gsmcomon.c:104
 msgid "Function not supported by phone."
 msgstr "Funzione non supportata dal telefono."
 
-#: common/gsmcomon.c:101 gammu/gammu.c:1167 gammu/gammu.c:7212
+#: common/gsmcomon.c:105 gammu/gammu.c:1167 gammu/gammu.c:7212
 #: gammu/gammu.c:8025
 #, fuzzy
 msgid "Entry is empty"
 msgstr "Locazione vuota\n"
 
-#: common/gsmcomon.c:102
+#: common/gsmcomon.c:106
 #, fuzzy
 msgid "Security error. Maybe no PIN?"
 msgstr "Errore sconosciuto. Forse non c'è PIN?"
 
-#: common/gsmcomon.c:103
+#: common/gsmcomon.c:107
 #, fuzzy
 msgid "Invalid location. Maybe too high?"
 msgstr "Locazione non valita. Forse troppo alta?"
 
-#: common/gsmcomon.c:104
+#: common/gsmcomon.c:108
 msgid "Function not implemented. Help required."
 msgstr "Funzione non implementata. Serve aiuto."
 
-#: common/gsmcomon.c:105
+#: common/gsmcomon.c:109
 msgid "Memory full."
 msgstr "Memoria piena."
 
-#: common/gsmcomon.c:106 common/gsmcomon.c:148
+#: common/gsmcomon.c:110 common/gsmcomon.c:152
 msgid "Unknown error."
 msgstr "Errore sconosciuto."
 
-#: common/gsmcomon.c:108
+#: common/gsmcomon.c:112
 #, fuzzy
 msgid "Can't open specified file. Read only?"
 msgstr "Impossibile aprire il file specificato. E' a sola lettura?"
 
-#: common/gsmcomon.c:109
+#: common/gsmcomon.c:113
 msgid "More memory required..."
 msgstr "Serve più memoria..."
 
-#: common/gsmcomon.c:110
+#: common/gsmcomon.c:114
 msgid "Permission to file/device required..."
 msgstr "Servono i permessi per il file/dispositivo.."
 
-#: common/gsmcomon.c:111
+#: common/gsmcomon.c:115
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
 msgstr ""
 
-#: common/gsmcomon.c:112
+#: common/gsmcomon.c:116
 #, fuzzy
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr "Siete dentro il menu del telefono. Uscite e riprovate."
 
-#: common/gsmcomon.c:113
+#: common/gsmcomon.c:117
 msgid "Function is during writing. If want help, please contact with authors."
 msgstr ""
 
-#: common/gsmcomon.c:114
+#: common/gsmcomon.c:118
 msgid "Phone is disabled and connected to charger."
 msgstr ""
 
-#: common/gsmcomon.c:115
+#: common/gsmcomon.c:119
 #, fuzzy
 msgid "File format not supported by Gammu."
 msgstr "Funzione non supportata dal telefono."
 
-#: common/gsmcomon.c:116
+#: common/gsmcomon.c:120
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
 
-#: common/gsmcomon.c:117
+#: common/gsmcomon.c:121
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
 
-#: common/gsmcomon.c:119
+#: common/gsmcomon.c:123
 msgid "Current connection type doesn't support called function."
 msgstr ""
 
-#: common/gsmcomon.c:120
+#: common/gsmcomon.c:124
 #, fuzzy
 msgid "CRC error."
 msgstr "Nessun errore."
 
-#: common/gsmcomon.c:121
+#: common/gsmcomon.c:125
 msgid "Invalid date or time specified."
 msgstr ""
 
-#: common/gsmcomon.c:122
+#: common/gsmcomon.c:126
 msgid "Phone memory error, maybe it is read only."
 msgstr ""
 
-#: common/gsmcomon.c:123
+#: common/gsmcomon.c:127
 msgid "Invalid data given to phone."
 msgstr ""
 
-#: common/gsmcomon.c:124
+#: common/gsmcomon.c:128
 msgid "File with specified name already exist."
 msgstr ""
 
-#: common/gsmcomon.c:125
+#: common/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
 msgstr ""
 
-#: common/gsmcomon.c:126
+#: common/gsmcomon.c:130
 msgid "You have to give folder name and not file name."
 msgstr ""
 
-#: common/gsmcomon.c:127
+#: common/gsmcomon.c:131
 msgid "You have to give file name and not folder name."
 msgstr ""
 
-#: common/gsmcomon.c:128
+#: common/gsmcomon.c:132
 msgid "Can not access SIM card."
 msgstr ""
 
-#: common/gsmcomon.c:129
+#: common/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
 
-#: common/gsmcomon.c:130
+#: common/gsmcomon.c:134
 msgid "Folder must be empty."
 msgstr ""
 
-#: common/gsmcomon.c:131
+#: common/gsmcomon.c:135
 msgid "Data were converted."
 msgstr ""
 
-#: common/phone/pfunc.c:41 common/phone/nokia/dct4s40/6510/n6510.c:516
+#: common/phone/pfunc.c:40 common/phone/nokia/dct4s40/6510/n6510.c:516
 msgid "Inbox"
 msgstr "Ricevuti"
 
-#: common/phone/pfunc.c:42
+#: common/phone/pfunc.c:41
 msgid "Outbox"
 msgstr "Messaggi inviati"
 
-#: common/phone/nokia/nfunc.c:849
+#: common/phone/nokia/nfunc.c:848
 msgid "Family"
 msgstr "Famiglia"
 
-#: common/phone/nokia/nfunc.c:851
+#: common/phone/nokia/nfunc.c:850
 msgid "VIP"
 msgstr ""
 
-#: common/phone/nokia/nfunc.c:853
+#: common/phone/nokia/nfunc.c:852
 msgid "Friends"
 msgstr "Amici"
 
-#: common/phone/nokia/nfunc.c:855
+#: common/phone/nokia/nfunc.c:854
 msgid "Colleagues"
 msgstr "Colleghi"
 
-#: common/phone/nokia/nfunc.c:857
+#: common/phone/nokia/nfunc.c:856
 msgid "Other"
 msgstr "Altri"
 
-#: common/phone/nokia/nfunc.c:1015 common/phone/nokia/dct3/n6110.c:1970
+#: common/phone/nokia/nfunc.c:1014 common/phone/nokia/dct3/n6110.c:1963
 #, fuzzy
 msgid "General"
 msgstr "Numero principale "
 
-#: common/phone/nokia/nfunc.c:1017 common/phone/nokia/dct3/n6110.c:1972
+#: common/phone/nokia/nfunc.c:1016 common/phone/nokia/dct3/n6110.c:1965
 msgid "Silent"
 msgstr "Silenzioso"
 
-#: common/phone/nokia/nfunc.c:1019 gammu/gammu.c:374 gammu/gammu.c:7292
+#: common/phone/nokia/nfunc.c:1018 gammu/gammu.c:374 gammu/gammu.c:7292
 #, fuzzy
 msgid "Meeting"
 msgstr "Cancellazione delle vecchie stazioni FM: "
 
-#: common/phone/nokia/nfunc.c:1021
+#: common/phone/nokia/nfunc.c:1020
 #, fuzzy
 msgid "Outdoor"
 msgstr "Messaggi inviati"
 
-#: common/phone/nokia/nfunc.c:1023 gammu/gammu.c:2196
+#: common/phone/nokia/nfunc.c:1022 gammu/gammu.c:2196
 #, c-format
 msgid "Pager"
 msgstr ""
 
-#: common/phone/nokia/nfunc.c:1025 common/phone/nokia/dct3/n6110.c:1962
+#: common/phone/nokia/nfunc.c:1024 common/phone/nokia/dct3/n6110.c:1955
 msgid "Car"
 msgstr ""
 
-#: common/phone/nokia/nfunc.c:1027 common/phone/nokia/dct3/n6110.c:1964
+#: common/phone/nokia/nfunc.c:1026 common/phone/nokia/dct3/n6110.c:1957
 msgid "Headset"
 msgstr ""
 
@@ -320,20 +320,20 @@ msgstr ""
 msgid "Saved items"
 msgstr ""
 
-#: common/phone/nokia/dct3/n6110.c:1960 gammu/gammu.c:7679
+#: common/phone/nokia/dct3/n6110.c:1953 gammu/gammu.c:7679
 #, fuzzy
 msgid "Personal"
 msgstr "Personale\n"
 
-#: common/phone/nokia/dct3/n6110.c:1974
+#: common/phone/nokia/dct3/n6110.c:1967
 msgid "Discreet"
 msgstr "Toni bassi"
 
-#: common/phone/nokia/dct3/n6110.c:1976
+#: common/phone/nokia/dct3/n6110.c:1969
 msgid "Loud"
 msgstr "Toni alti"
 
-#: common/phone/nokia/dct3/n6110.c:1978
+#: common/phone/nokia/dct3/n6110.c:1971
 msgid "My style"
 msgstr ""
 
@@ -1237,7 +1237,7 @@ msgstr "connessione rifiutata dalla rete\n"
 msgid "unknown"
 msgstr "sconosciuto"
 
-#: gammu/gammu.c:336 gammu/gammu.c:7950 gammu/gammu.c:10089
+#: gammu/gammu.c:336 gammu/gammu.c:7950 gammu/gammu.c:10086
 #, fuzzy
 msgid "Network"
 msgstr "Codice rete assente\n"
@@ -1640,12 +1640,12 @@ msgstr ""
 msgid "Press Ctrl+C to break..."
 msgstr "Premere Ctrl+C per interrompere...\n"
 
-#: gammu/gammu.c:713 gammu/gammu.c:9558
+#: gammu/gammu.c:713 gammu/gammu.c:9555
 #, fuzzy
 msgid "Manufacturer"
 msgstr "Produttore         : %s\n"
 
-#: gammu/gammu.c:716 gammu/gammu.c:9561
+#: gammu/gammu.c:716 gammu/gammu.c:9558
 msgid "Model"
 msgstr ""
 
@@ -2005,7 +2005,7 @@ msgstr "Lavoro            "
 msgid "work"
 msgstr "Codice rete assente\n"
 
-#: gammu/gammu.c:1431 gammu/gammu.c:9468 gammu/gammu.c:9479
+#: gammu/gammu.c:1431 gammu/gammu.c:9465 gammu/gammu.c:9476
 #, c-format
 msgid "fax"
 msgstr ""
@@ -2827,7 +2827,7 @@ msgstr "Abbandono della modalità monitor...\n"
 msgid "%i. Set %i\n"
 msgstr "%i. Punto di accesso %i "
 
-#: gammu/gammu.c:2188 gammu/gammu.c:7732 gammu/gammu.c:9487
+#: gammu/gammu.c:2188 gammu/gammu.c:7732 gammu/gammu.c:9484
 #, fuzzy
 msgid "Number"
 msgstr "Novembre"
@@ -3132,7 +3132,7 @@ msgstr "Che tipo di logo vuoi impostare (\"%s\") ?\n"
 msgid "Unknown parameter (\"%s\")"
 msgstr "Parametro sconosciuto (\"%s\")\n"
 
-#: gammu/gammu.c:3442 gammu/gammu.c:4603 gammu/gammu.c:8639 gammu/gammu.c:9351
+#: gammu/gammu.c:3442 gammu/gammu.c:4603 gammu/gammu.c:8636 gammu/gammu.c:9348
 #, fuzzy
 msgid "Parameter missing!"
 msgstr "Manca un parametro...\n"
@@ -4543,27 +4543,27 @@ msgstr ", cartella Ricevuti"
 msgid "Folder"
 msgstr ""
 
-#: gammu/gammu.c:8329
+#: gammu/gammu.c:8327
 #, fuzzy, c-format
 msgid "Getting \"%s\"\n"
 msgstr "Testo  : %s\n"
 
-#: gammu/gammu.c:8335
+#: gammu/gammu.c:8333
 #, fuzzy
 msgid "it's folder. Please give only file names"
 msgstr "è una cartella. Inserire solo nomi di file\n"
 
-#: gammu/gammu.c:8341
+#: gammu/gammu.c:8339
 #, fuzzy, c-format
 msgid "%c  %i percent"
 msgstr "%cScrittura : %i%"
 
-#: gammu/gammu.c:8350 gammu/gammu.c:8530
+#: gammu/gammu.c:8347 gammu/gammu.c:8527
 #, c-format
 msgid " (%02i:%02i minutes left)"
 msgstr ""
 
-#: gammu/gammu.c:8358 gammu/gammu.c:8539
+#: gammu/gammu.c:8355 gammu/gammu.c:8536
 #, fuzzy
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
@@ -4572,176 +4572,176 @@ msgstr ""
 "ATTENZIONE: Il checksum calcolato dal telefono non corrisponde a quello "
 "calcolato da Gammu. File danneggiato o errore in Gammu\n"
 
-#: gammu/gammu.c:8383
+#: gammu/gammu.c:8380
 #, c-format
 msgid "  Saving to %s\n"
 msgstr "  Sto salvando su %s\n"
 
-#: gammu/gammu.c:8521
+#: gammu/gammu.c:8518
 #, fuzzy, c-format
 msgid "%c%s%03i percent"
 msgstr "%cScrittura : %i%"
 
-#: gammu/gammu.c:8607 gammu/gammu.c:9342
+#: gammu/gammu.c:8604 gammu/gammu.c:9339
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr "Parametro \"%s\" sconosciuto\n"
 
-#: gammu/gammu.c:8631
+#: gammu/gammu.c:8628
 #, c-format
 msgid "What file type (\"%s\") ?\n"
 msgstr "Che tipo di file (\"%s\") ?\n"
 
-#: gammu/gammu.c:8648
+#: gammu/gammu.c:8645
 #, fuzzy, c-format
 msgid "ID of new file is \"%s\"\n"
 msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#: gammu/gammu.c:8668
+#: gammu/gammu.c:8665
 #, fuzzy, c-format
 msgid "ID of new folder is \"%s\"\n"
 msgstr "Il messaggio iniziale dell'operatore è \"%s\"\n"
 
-#: gammu/gammu.c:8709
+#: gammu/gammu.c:8706
 #, fuzzy, c-format
 msgid "Checking %s\n"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/gammu.c:8714
+#: gammu/gammu.c:8711
 msgid "  Only part handled!"
 msgstr ""
 
-#: gammu/gammu.c:8793
+#: gammu/gammu.c:8790
 msgid "  Problem with adding playlist"
 msgstr ""
 
-#: gammu/gammu.c:8894
+#: gammu/gammu.c:8891
 msgid "Your phone model is not supported. Please report"
 msgstr ""
 
-#: gammu/gammu.c:8910
+#: gammu/gammu.c:8907
 msgid "Problem with deleting playlist"
 msgstr ""
 
-#: gammu/gammu.c:9001
+#: gammu/gammu.c:8998
 #, c-format
 msgid "What folder type (\"%s\") ?\n"
 msgstr "Che tipo di cartella (\"%s\") ?\n"
 
-#: gammu/gammu.c:9035 gammu/gammu.c:9108
+#: gammu/gammu.c:9032 gammu/gammu.c:9105
 #, fuzzy
 msgid "Folder not found. Probably function not supported !"
 msgstr "Cartella non trovata. Probabilmente la funzione non è supportata !\n"
 
-#: gammu/gammu.c:9058
+#: gammu/gammu.c:9055
 #, c-format
 msgid "Searching for phone folder: "
 msgstr "Sto cercando le cartelle nel telefono: "
 
-#: gammu/gammu.c:9134
+#: gammu/gammu.c:9131
 #, fuzzy
 msgid "No vendor info in JAD file"
 msgstr "Nessuna informazione sul produttore nel file JAD\n"
 
-#: gammu/gammu.c:9139
+#: gammu/gammu.c:9136
 #, fuzzy
 msgid "No name info in JAD file"
 msgstr "Nessun nome specificato nel JAD\n"
 
-#: gammu/gammu.c:9144
+#: gammu/gammu.c:9141
 #, fuzzy
 msgid "No JAR URL info in JAD file"
 msgstr "Nessun informazione sull'URL del JAR nel file JAD\n"
 
-#: gammu/gammu.c:9150
+#: gammu/gammu.c:9147
 #, fuzzy
 msgid "INFO: declared JAR file size is different than real. Fixed by Gammu"
 msgstr "Nessun informazione sull'URL del JAR nel file JAD\n"
 
-#: gammu/gammu.c:9174
+#: gammu/gammu.c:9171
 #, fuzzy
 msgid "INFO: no JAR size info in JAD file. Added by Gammu"
 msgstr "Nessun informazione sull'URL del JAR nel file JAD\n"
 
-#: gammu/gammu.c:9183
+#: gammu/gammu.c:9180
 #, c-format
 msgid "Adding \"%s\""
 msgstr "Sto aggiungendo \"%s\""
 
-#: gammu/gammu.c:9184
+#: gammu/gammu.c:9181
 #, c-format
 msgid " version %s"
 msgstr " versione %s"
 
-#: gammu/gammu.c:9185
+#: gammu/gammu.c:9182
 #, c-format
 msgid " created by %s\n"
 msgstr " creato da %s\n"
 
-#: gammu/gammu.c:9232
+#: gammu/gammu.c:9229
 msgid "INFO: Application already exist. Deleting by Gammu"
 msgstr ""
 
-#: gammu/gammu.c:9255
+#: gammu/gammu.c:9252
 #, fuzzy, c-format
 msgid "  Deleting %s\n"
 msgstr "Cancellazione delle vecchie stazioni FM: "
 
-#: gammu/gammu.c:9417
+#: gammu/gammu.c:9414
 #, c-format
 msgid "Unknown divert action (\"%s\")\n"
 msgstr "Azione di deviazione sconosciuta (\"%s\")\n"
 
-#: gammu/gammu.c:9426
+#: gammu/gammu.c:9423
 #, c-format
 msgid "Unknown divert type (\"%s\")\n"
 msgstr "Tipo di deviazione sconosciuta (\"%s\")\n"
 
-#: gammu/gammu.c:9435
+#: gammu/gammu.c:9432
 #, c-format
 msgid "Unknown call type (\"%s\")\n"
 msgstr "Tipo di chiamata sconosciuta (\"%s\")\n"
 
-#: gammu/gammu.c:9444
+#: gammu/gammu.c:9441
 #, c-format
 msgid ""
 "Query:\n"
 "   Divert type: "
 msgstr ""
 
-#: gammu/gammu.c:9455
+#: gammu/gammu.c:9452
 #, c-format
 msgid ""
 "Changed:\n"
 "   Divert type: "
 msgstr ""
 
-#: gammu/gammu.c:9459
+#: gammu/gammu.c:9456
 #, c-format
 msgid "when busy"
 msgstr "se occupato"
 
-#: gammu/gammu.c:9460
+#: gammu/gammu.c:9457
 #, c-format
 msgid "when not answered"
 msgstr "se non si risponde"
 
-#: gammu/gammu.c:9461
+#: gammu/gammu.c:9458
 #, c-format
 msgid "when phone off or no coverage"
 msgstr "a telefono spento o non raggiungibile"
 
-#: gammu/gammu.c:9462
+#: gammu/gammu.c:9459
 #, c-format
 msgid "all types of diverts"
 msgstr "tutti i tipi di deviazione"
 
-#: gammu/gammu.c:9463 gammu/gammu.c:9471 gammu/gammu.c:9481
+#: gammu/gammu.c:9460 gammu/gammu.c:9468 gammu/gammu.c:9478
 #, c-format
 msgid "unknown %i"
 msgstr "sconosiuto %i"
 
-#: gammu/gammu.c:9465 gammu/gammu.c:9476
+#: gammu/gammu.c:9462 gammu/gammu.c:9473
 #, c-format
 msgid ""
 "\n"
@@ -4750,22 +4750,22 @@ msgstr ""
 "\n"
 "   Tipi di chiamate : "
 
-#: gammu/gammu.c:9467 gammu/gammu.c:9478
+#: gammu/gammu.c:9464 gammu/gammu.c:9475
 #, c-format
 msgid "voice"
 msgstr "voce"
 
-#: gammu/gammu.c:9469 gammu/gammu.c:9480
+#: gammu/gammu.c:9466 gammu/gammu.c:9477
 #, c-format
 msgid "data"
 msgstr "dati"
 
-#: gammu/gammu.c:9470
+#: gammu/gammu.c:9467
 #, c-format
 msgid "data & fax & voice"
 msgstr "dati & fax & voce"
 
-#: gammu/gammu.c:9473
+#: gammu/gammu.c:9470
 #, c-format
 msgid ""
 "\n"
@@ -4774,120 +4774,120 @@ msgstr ""
 "\n"
 "Risposta:"
 
-#: gammu/gammu.c:9484
+#: gammu/gammu.c:9481
 #, fuzzy, c-format
 msgid "   Timeout    : "
 msgstr "   Timeout    : %i secondi\n"
 
-#: gammu/gammu.c:9553 gammu/gammu.c:9557
+#: gammu/gammu.c:9550 gammu/gammu.c:9554
 #, fuzzy, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr "Locazione %i, cartella \"%s\""
 
-#: gammu/gammu.c:9779
+#: gammu/gammu.c:9776
 #, c-format
 msgid "Batch file could not be opened: %s\n"
 msgstr ""
 
-#: gammu/gammu.c:9811
+#: gammu/gammu.c:9808
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s"
 msgstr ""
 
-#: gammu/gammu.c:10069
+#: gammu/gammu.c:10066
 #, fuzzy
 msgid "Calls"
 msgstr "Chiamata\n"
 
-#: gammu/gammu.c:10070
+#: gammu/gammu.c:10067
 msgid "SMS and EMS"
 msgstr ""
 
-#: gammu/gammu.c:10071
+#: gammu/gammu.c:10068
 msgid "Memory (phonebooks and calls)"
 msgstr ""
 
-#: gammu/gammu.c:10072
+#: gammu/gammu.c:10069
 msgid "Filesystem"
 msgstr ""
 
-#: gammu/gammu.c:10073
+#: gammu/gammu.c:10070
 msgid "Logo and pictures"
 msgstr ""
 
-#: gammu/gammu.c:10074
+#: gammu/gammu.c:10071
 #, fuzzy
 msgid "Ringtones"
 msgstr "Suoneria \"%s\"\n"
 
-#: gammu/gammu.c:10075
+#: gammu/gammu.c:10072
 msgid "Calendar notes"
 msgstr ""
 
-#: gammu/gammu.c:10076
+#: gammu/gammu.c:10073
 msgid "To do lists"
 msgstr ""
 
-#: gammu/gammu.c:10077
+#: gammu/gammu.c:10074
 msgid "Notes"
 msgstr ""
 
-#: gammu/gammu.c:10078
+#: gammu/gammu.c:10075
 msgid "Date, time and alarms"
 msgstr ""
 
-#: gammu/gammu.c:10079
+#: gammu/gammu.c:10076
 msgid "Categories"
 msgstr ""
 
-#: gammu/gammu.c:10081
+#: gammu/gammu.c:10078
 msgid "Backing up and restoring"
 msgstr ""
 
-#: gammu/gammu.c:10084
+#: gammu/gammu.c:10081
 #, fuzzy
 msgid "Nokia specific"
 msgstr "Profilo Nokia"
 
-#: gammu/gammu.c:10087
+#: gammu/gammu.c:10084
 msgid "Siemens specific"
 msgstr ""
 
-#: gammu/gammu.c:10090
+#: gammu/gammu.c:10087
 #, fuzzy
 msgid "WAP settings and bookmarks"
 msgstr "Cancello i vecchi bookmarks: "
 
-#: gammu/gammu.c:10091
+#: gammu/gammu.c:10088
 msgid "MMS and MMS settings"
 msgstr ""
 
-#: gammu/gammu.c:10092
+#: gammu/gammu.c:10089
 #, fuzzy
 msgid "Phone tests"
 msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#: gammu/gammu.c:10093
+#: gammu/gammu.c:10090
 msgid "FM radio"
 msgstr ""
 
-#: gammu/gammu.c:10094
+#: gammu/gammu.c:10091
 msgid "Phone information"
 msgstr ""
 
-#: gammu/gammu.c:10095
+#: gammu/gammu.c:10092
 msgid "Phone settings"
 msgstr ""
 
-#: gammu/gammu.c:10097
+#: gammu/gammu.c:10094
 msgid "Dumps decoding"
 msgstr ""
 
-#: gammu/gammu.c:10099
+#: gammu/gammu.c:10096
 msgid "Functions that don't fit elsewhere"
 msgstr ""
 
-#: gammu/gammu.c:10106
+#: gammu/gammu.c:10103
 #, c-format
 msgid ""
 "[Gammu version %s built %s %s]\n"
@@ -4896,7 +4896,7 @@ msgstr ""
 "[Gammu versione %s compilato alle %s di %s]\n"
 "\n"
 
-#: gammu/gammu.c:10118
+#: gammu/gammu.c:10115
 #, fuzzy
 msgid ""
 "Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> "
@@ -4905,33 +4905,33 @@ msgstr ""
 "Utilizzo: gammu [confign] [nothing|text|textall|binary|errors] [opzioni]\n"
 "\n"
 
-#: gammu/gammu.c:10119
+#: gammu/gammu.c:10116
 msgid ""
 "First parameter optionally specifies which config section to use (all are "
 "probed by default)."
 msgstr ""
 
-#: gammu/gammu.c:10120
+#: gammu/gammu.c:10117
 msgid ""
 "Second parameter optionally controls debug level, next one specifies actions."
 msgstr ""
 
-#: gammu/gammu.c:10122
+#: gammu/gammu.c:10119
 msgid "Commands can be specified with or without leading --."
 msgstr ""
 
-#: gammu/gammu.c:10125
+#: gammu/gammu.c:10122
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
 
-#: gammu/gammu.c:10214
+#: gammu/gammu.c:10211
 #, fuzzy
 msgid "Unknown help topic specified!"
 msgstr "L'argomento specificato non esiste!\n"
 
-#: gammu/gammu.c:10218
+#: gammu/gammu.c:10215
 #, c-format
 msgid ""
 "Gammu parameters, topic: %s\n"
@@ -4940,59 +4940,59 @@ msgstr ""
 "Parametri di Gammu, argomento : %s\n"
 "\n"
 
-#: gammu/gammu.c:10314
+#: gammu/gammu.c:10311
 #, fuzzy, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "Servono più parametri\n"
 
-#: gammu/gammu.c:10316
+#: gammu/gammu.c:10313
 #, fuzzy, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "Servono più parametri\n"
 
-#: gammu/gammu.c:10319 gammu/gammu.c:10334
+#: gammu/gammu.c:10316 gammu/gammu.c:10331
 #, fuzzy
 msgid "Parameters help"
 msgstr ""
 "Parametri di Gammu, argomento : %s\n"
 "\n"
 
-#: gammu/gammu.c:10329
+#: gammu/gammu.c:10326
 #, fuzzy, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "I parametri sono troppo pochi!\n"
 
-#: gammu/gammu.c:10331
+#: gammu/gammu.c:10328
 #, fuzzy, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "I parametri sono troppo pochi!\n"
 
-#: gammu/gammu.c:10353
+#: gammu/gammu.c:10350
 #, fuzzy
 msgid "Bad option!"
 msgstr "Mese non valido!"
 
-#: gammu/gammu.c:10387 gammu/gammu.c:10483
+#: gammu/gammu.c:10384 gammu/gammu.c:10480
 #, fuzzy
 msgid "Too few parameters!"
 msgstr "I parametri sono troppo pochi!\n"
 
-#: gammu/gammu.c:10408
+#: gammu/gammu.c:10405
 #, fuzzy
 msgid "Configuration could not be parsed!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/gammu.c:10410
+#: gammu/gammu.c:10407
 #, fuzzy
 msgid "No configuration file found!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/gammu.c:10413
+#: gammu/gammu.c:10410
 #, fuzzy
 msgid "No configuration read!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/gammu.c:10489
+#: gammu/gammu.c:10486
 #, fuzzy, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -5000,12 +5000,12 @@ msgstr ""
 "ERRORE: la versione installata di libGammu.so (%s) è diversa dalla versione "
 "di Gammu (%s)\n"
 
-#: gammu/gammu.c:10519
+#: gammu/gammu.c:10516
 #, c-format
 msgid "INFO: there is later stable Gammu (%s instead of %s) available !\n"
 msgstr ""
 
-#: gammu/gammu.c:10532
+#: gammu/gammu.c:10529
 #, c-format
 msgid "INFO: there is later test Gammu (%s instead of %s) available !\n"
 msgstr ""
