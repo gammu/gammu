@@ -23,9 +23,10 @@
 #  include <windows.h>
 #endif
 
-#include "../gsmcomon.h"
+#include <gammu-debug.h>
+#include <gammu-unicode.h>
+
 #include "../misc/coding/coding.h"
-#include "../gsmstate.h"
 #include "gsmring.h"
 
 int GSM_RingNoteGetFrequency(GSM_RingNote Note)

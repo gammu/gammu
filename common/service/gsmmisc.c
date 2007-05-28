@@ -13,8 +13,9 @@
 #endif
 
 #include <gammu-keys.h>
+#include <gammu-debug.h>
+
 #include "../misc/coding/coding.h"
-#include "../misc/misc.h"
 #include "../gsmcomon.h"
 #include "gsmmisc.h"
 

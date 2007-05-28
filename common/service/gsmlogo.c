@@ -5,7 +5,8 @@
 #include <stdlib.h>
 #include <sys/stat.h>
 
-#include "../misc/misc.h"
+#include <gammu-debug.h>
+
 #include "../misc/coding/coding.h"
 #include "gsmlogo.h"
 #include "gsmnet.h"
