@@ -1,7 +1,7 @@
 /* (c) 2003-2006 by Marcin Wiacek */
 /* function for making CRC for filesystem (c) 2003 by Michael Schroeder */
 
-#include "../../../../gsmstate.h"
+#include <gammu-config.h>
 
 #ifdef GSM_ENABLE_NOKIA6510
 

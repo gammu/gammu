@@ -1,6 +1,6 @@
 /* (c) 2002-2003 by Marcin Wiacek */
 
-#include "../../../gsmstate.h"
+#include <gammu-config.h>
 
 #ifdef GSM_ENABLE_NOKIA9210
 

@@ -24,6 +24,8 @@
 #include "../nfunc.h"
 #include "dct3func.h"
 
+#include <gammu-config.h>
+
 #ifdef GSM_ENABLE_NOKIA_DCT3
 
 GSM_Error DCT3_DeleteWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
