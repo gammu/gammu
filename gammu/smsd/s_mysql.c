@@ -8,6 +8,8 @@
 #include <stdio.h>
 #include <errno.h>
 #include <time.h>
+#include <stdlib.h>
+
 #ifdef WIN32
 #  include <windows.h>
 #ifndef __GNUC__
@@ -113,9 +115,10 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 
 static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 {
-	unsigned char buf[400],buf2[200];
+	unsigned char buf[400],buf2[200],imei[100];
 
-	sprintf(buf,"DELETE FROM `phones` WHERE `IMEI` = '%s'",s.Phone.Data.IMEI);
+	GSM_GetIMEI(s, imei);
+	sprintf(buf,"DELETE FROM `phones` WHERE `IMEI` = '%s'", imei);
 	dbgprintf("%s\n",buf);
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
 		WriteSMSDLog(_("Error deleting from database (Init): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
@@ -132,7 +135,7 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 		strcat(buf2+strlen(buf2),GetCompiler());
 	}
 
-	sprintf(buf,"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0,'%s')",s.Phone.Data.IMEI,Config->PhoneID,buf2);
+	sprintf(buf,"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0,'%s')",imei,Config->PhoneID,buf2);
 	dbgprintf("%s\n",buf);
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
 		WriteSMSDLog(_("Error inserting into database (Init): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
@@ -680,10 +683,12 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 
 static GSM_Error SMSDMySQL_RefreshPhoneStatus(GSM_SMSDConfig *Config)
 {
-	unsigned char buffer[500];
+	unsigned char buffer[500],imei[100];
+
+	GSM_GetIMEI(s, imei);
 
 	sprintf(buffer,"UPDATE `phones` SET `TimeOut`= (NOW() + INTERVAL 10 SECOND)+0");
-	sprintf(buffer+strlen(buffer)," WHERE `IMEI` = '%s'",s.Phone.Data.IMEI);
+	sprintf(buffer+strlen(buffer)," WHERE `IMEI` = '%s'",imei);
 	dbgprintf("%s\n",buffer);
 	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
 		WriteSMSDLog(_("Error writing to database (SaveInboxSMS): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
