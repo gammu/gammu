@@ -126,6 +126,17 @@ void GSM_GetCurrentDateTime(GSM_DateTime * Date);
 time_t Fill_Time_T(GSM_DateTime DT);
 
 /**
+ * Converts time_t to gammu \ref GSM_DateTime structure.
+ *
+ * \param Date Storage for date.
+ * \param timet Input date.
+ *
+ * \ingroup DateTime
+ */
+void Fill_GSM_DateTime(GSM_DateTime * Date, time_t timet);
+
+
+/**
  * Converts timestamp to string according to OS settings.
  *
  * \param dt Input timestamp.
