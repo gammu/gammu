@@ -37,14 +37,11 @@ include_directories (
 if (MYSQL_FOUND)
     target_link_libraries (gammu ${MYSQL_LIBRARIES})
     include_directories (${MYSQL_INCLUDE_DIR})
-    set (HAVE_MYSQL_MYSQL_H TRUE)
 endif (MYSQL_FOUND)
 
 if (POSTGRES_FOUND)
     target_link_libraries (gammu ${POSTGRES_LIBRARY})
     include_directories (${POSTGRES_INCLUDE_DIR})
-
-    set (HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
 endif (POSTGRES_FOUND)
 
 if (GETTEXTLIBS_FOUND)
