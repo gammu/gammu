@@ -1031,7 +1031,7 @@ static GSM_Error N6110_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
                 req[3] = 0x10;
                 req[4] = Bitmap->Location - 1;
                 error = GSM_WaitFor (s, req, 5, 0x03, 4, ID_GetBitmap);
-                if (error==ERR_NONE) NOKIA_GetDefaultCallerGroupName(s,Bitmap);
+                if (error==ERR_NONE) NOKIA_GetDefaultCallerGroupName(Bitmap);
                 return error;
         case GSM_OperatorLogo:
                 req[3] = 0x33;
@@ -1947,7 +1947,7 @@ static GSM_Error N6110_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
         error = GSM_WaitFor (s, name_req, 5, 0x05, 4, ID_GetProfile);
         if (error!=ERR_NONE) return error;
         if (Profile->DefaultName) {
-                NOKIA_GetDefaultProfileName(s, Profile);
+                NOKIA_GetDefaultProfileName(Profile);
                 if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES51)) {
                         switch(Profile->Location) {
                         case 1: EncodeUnicode(Profile->Name,_("Personal"),strlen(_("Personal")));
