@@ -4,6 +4,7 @@
 
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 
+#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include <errno.h>
@@ -123,11 +124,13 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig *Config)
 
 static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig *Config)
 {
-	unsigned char buf[400],buf2[200];
+	unsigned char buf[400],buf2[200],imei[100];
 
 	PGresult *Res;
 
-	sprintf(buf,"DELETE FROM phones WHERE IMEI = '%s'",s.Phone.Data.IMEI);
+	GSM_GetIMEI(s, imei);
+
+	sprintf(buf,"DELETE FROM phones WHERE IMEI = '%s'",imei);
 	dbgprintf("%s\n",buf);
 	Res = PQexec(Config->DBConnPgSQL, buf);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_COMMAND_OK)) {
@@ -148,7 +151,7 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig *Config)
 		strcat(buf2+strlen(buf2),GetCompiler());
 	}
 
-	sprintf(buf, "INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client) VALUES ('%s', '%s', 'yes', 'yes', now(), now() + interval '10 seconds', '%s')", s.Phone.Data.IMEI,Config->PhoneID, buf2);
+	sprintf(buf, "INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client) VALUES ('%s', '%s', 'yes', 'yes', now(), now() + interval '10 seconds', '%s')", imei,Config->PhoneID, buf2);
 	dbgprintf("%s\n",buf);
 	Res = PQexec(Config->DBConnPgSQL, buf);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_COMMAND_OK)) {
@@ -896,10 +899,12 @@ static GSM_Error SMSDPgSQL_RefreshPhoneStatus(GSM_SMSDConfig *Config)
 {
   PGresult *Res;
 
-  unsigned char buffer[500];
+  unsigned char buffer[500],imei[100];
+
+  GSM_GetIMEI(s, imei);
 
   sprintf(buffer, "UPDATE phones SET TimeOut= now() + INTERVAL '10 seconds'");
-  sprintf(buffer+strlen(buffer), " WHERE IMEI = '%s'", s.Phone.Data.IMEI);
+  sprintf(buffer+strlen(buffer), " WHERE IMEI = '%s'", imei);
   dbgprintf("%s\n", buffer);
 
   Res = PQexec(Config->DBConnPgSQL, buffer);
