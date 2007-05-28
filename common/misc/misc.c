@@ -1,7 +1,7 @@
 /* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 /* Checking used compiler (c) 2002 by Michal Cihar */
 
-#include "../gsmstate.h"
+#include <gammu-config.h>
 #include "misc.h"
 
 #include <string.h>
@@ -12,7 +12,7 @@
 #include <locale.h>
 #include <sys/timeb.h>
 #ifdef WIN32
-#  include "windows.h"
+#  include <windows.h>
 #endif
 #ifdef HAVE_SYS_UTSNAME_H
 #  include <sys/utsname.h>
