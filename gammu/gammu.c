@@ -7961,6 +7961,150 @@ static void ListNetworks(int argc, char *argv[])
 	}
 }
 
+
+static void PrintVersion()
+{
+	printf(_("[Gammu version %s built %s on %s using %s]"),
+		VERSION,
+		__TIME__,
+		__DATE__,
+		GetCompiler());
+	printf("\n\n");
+}
+
+static void Features(int argc, char *argv[])
+{
+	PrintVersion();
+
+	printf("%s\n", _("Compiled in features:"));
+
+	printf(" * %s\n", _("Protocols"));
+#ifdef GSM_ENABLE_MBUS2
+	printf("  - %s\n", "MBUS2");
+#endif
+#ifdef GSM_ENABLE_FBUS2
+	printf("  - %s\n", "FBUS2");
+#endif
+#ifdef GSM_ENABLE_FBUS2DLR3
+	printf("  - %s\n", "FBUS2DLR3");
+#endif
+#ifdef GSM_ENABLE_FBUS2PL2303
+	printf("  - %s\n", "FBUS2PL2303");
+#endif
+#ifdef GSM_ENABLE_FBUS2BLUE
+	printf("  - %s\n", "FBUS2BLUE");
+#endif
+#ifdef GSM_ENABLE_FBUS2IRDA
+	printf("  - %s\n", "FBUS2IRDA");
+#endif
+#ifdef GSM_ENABLE_DKU2PHONET
+	printf("  - %s\n", "DKU2PHONET");
+#endif
+#ifdef GSM_ENABLE_DKU2AT
+	printf("  - %s\n", "DKU2AT");
+#endif
+#ifdef GSM_ENABLE_DKU5FBUS2
+	printf("  - %s\n", "DKU5FBUS2");
+#endif
+#ifdef GSM_ENABLE_PHONETBLUE
+	printf("  - %s\n", "PHONETBLUE");
+#endif
+#ifdef GSM_ENABLE_AT
+	printf("  - %s\n", "AT");
+#endif
+#ifdef GSM_ENABLE_ALCABUS
+	printf("  - %s\n", "ALCABUS");
+#endif
+#ifdef GSM_ENABLE_IRDAPHONET
+	printf("  - %s\n", "IRDAPHONET");
+#endif
+#ifdef GSM_ENABLE_IRDAAT
+	printf("  - %s\n", "IRDAAT");
+#endif
+#ifdef GSM_ENABLE_IRDAOBEX
+	printf("  - %s\n", "IRDAOBEX");
+#endif
+#ifdef GSM_ENABLE_IRDAGNAPBUS
+	printf("  - %s\n", "IRDAGNAPBUS");
+#endif
+#ifdef GSM_ENABLE_BLUEGNAPBUS
+	printf("  - %s\n", "BLUEGNAPBUS");
+#endif
+#ifdef GSM_ENABLE_BLUEFBUS2
+	printf("  - %s\n", "BLUEFBUS2");
+#endif
+#ifdef GSM_ENABLE_BLUEPHONET
+	printf("  - %s\n", "BLUEPHONET");
+#endif
+#ifdef GSM_ENABLE_BLUEAT
+	printf("  - %s\n", "BLUEAT");
+#endif
+#ifdef GSM_ENABLE_BLUEOBEX
+	printf("  - %s\n", "BLUEOBEX");
+#endif
+
+	printf(" * %s\n", _("Phones"));
+#ifdef GSM_ENABLE_NOKIA650
+	printf("  - %s\n", "NOKIA650");
+#endif
+#ifdef GSM_ENABLE_NOKIA3320
+	printf("  - %s\n", "NOKIA3320");
+#endif
+#ifdef GSM_ENABLE_NOKIA6110
+	printf("  - %s\n", "NOKIA6110");
+#endif
+#ifdef GSM_ENABLE_NOKIA7110
+	printf("  - %s\n", "NOKIA7110");
+#endif
+#ifdef GSM_ENABLE_NOKIA9210
+	printf("  - %s\n", "NOKIA9210");
+#endif
+#ifdef GSM_ENABLE_NOKIA6510
+	printf("  - %s\n", "NOKIA6510");
+#endif
+#ifdef GSM_ENABLE_NOKIA3650
+	printf("  - %s\n", "NOKIA3650");
+#endif
+#ifdef GSM_ENABLE_NOKIA_DCT3
+	printf("  - %s\n", "DCT3");
+#endif
+#ifdef GSM_ENABLE_NOKIA_DCT4
+	printf("  - %s\n", "DCT4");
+#endif
+#ifdef GSM_ENABLE_ATGEN
+	printf("  - %s\n", "ATGEN");
+#endif
+#ifdef GSM_ENABLE_ALCATEL
+	printf("  - %s\n", "ALCATEL");
+#endif
+#ifdef GSM_ENABLE_SONYERICSSON
+	printf("  - %s\n", "SONYERICSSON");
+#endif
+#ifdef GSM_ENABLE_OBEXGEN
+	printf("  - %s\n", "OBEXGEN");
+#endif
+#ifdef GSM_ENABLE_GNAPGEN
+	printf("  - %s\n", "GNAPGEN");
+#endif
+
+	printf(" * %s\n", _("Miscellaneous"));
+#ifdef GSM_ENABLE_CELLBROADCAST
+	printf("  - %s\n", "CELLBROADCAST");
+#endif
+#ifdef GSM_ENABLE_BACKUP
+	printf("  - %s\n", "BACKUP");
+#endif
+#ifdef GETTEXTLIBS_FOUND
+	printf("  - %s\n", "GETTEXT");
+#endif
+#ifdef HAVE_MYSQL_MYSQL_H
+	printf("  - %s\n", "MYSQL");
+#endif
+#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+	printf("  - %s\n", "POSTGRESQL");
+#endif
+}
+
 static void Version(int argc, char *argv[])
 {
 #ifdef DEBUG
@@ -7969,12 +8113,7 @@ static void Version(int argc, char *argv[])
 	int		j,z,w;
 #endif
 
-	printf(_("[Gammu version %s built %s on %s using %s]"),
-		VERSION,
-		__TIME__,
-		__DATE__,
-		GetCompiler());
-	printf("\n\n");
+	PrintVersion();
 	printf("%s\n", _("This is free software.  You may redistribute copies of it under the terms of"));
 	printf("%s\n", _("the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."));
 	printf("%s\n", _("There is NO WARRANTY, to the extent permitted by law."));
@@ -9830,6 +9969,7 @@ static GSM_Parameters Parameters[] = {
 #endif
 	{"identify",			0, 0, Identify,			{H_Info,0},			""},
 	{"version",			0, 0, Version,			{H_Other,0},			""},
+	{"features",			0, 0, Features,			{H_Other,0},			""},
 	{"getdisplaystatus",		0, 0, GetDisplayStatus,		{H_Info,0},			""},
 	{"monitor",			0, 1, Monitor,			{H_Info,H_Network,H_Call,0},	"[times]"},
 	{"setautonetworklogin",	0, 0, SetAutoNetworkLogin,	{H_Network,0},			""},
