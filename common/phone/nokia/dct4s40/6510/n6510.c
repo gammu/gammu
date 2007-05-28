@@ -13,7 +13,7 @@
  * to publish their code under.
  */
 
-#include "../../../../gsmstate.h"
+#include <gammu-config.h>
 
 #ifdef GSM_ENABLE_NOKIA6510
 

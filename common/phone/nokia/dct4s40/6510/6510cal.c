@@ -1,6 +1,6 @@
 /* (c) 2002-2005 by Marcin Wiacek */
 
-#include "../../../../gsmstate.h"
+#include <gammu-config.h>
 
 #ifdef GSM_ENABLE_NOKIA6510
 

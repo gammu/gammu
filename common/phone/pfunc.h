@@ -20,6 +20,10 @@
 #ifndef phone_common2_h
 #define phone_common2_h
 
+#include <gammu-statemachine.h>
+#include <gammu-message.h>
+#include "../protocol/protocol.h"
+
 GSM_Error PHONE_GetSMSFolders		(GSM_StateMachine *s, GSM_SMSFolders *folders);
 
 /**

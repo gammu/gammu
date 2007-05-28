@@ -1,9 +1,9 @@
 /* (c) 2002-2003 by Marcin Wiacek */
 
-#include "../../../gsmstate.h"
-
 #include <string.h>
 #include <time.h>
+
+#include <gammu-config.h>
 
 #include "../../../gsmcomon.h"
 #include "../../../misc/coding/coding.h"
