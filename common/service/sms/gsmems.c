@@ -29,7 +29,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 	GSM_Ringtone		Ring;
 	GSM_Coding_Type 	Coding 	= SMS_Coding_Default_No_Compression;
 	GSM_Phone_Bitmap_Types	BitmapType;
-	MultiPartSMSEntry 	*Entry;
+	GSM_MultiPartSMSEntry 	*Entry;
 	bool			start;
 	GSM_DateTime		Date;
 
