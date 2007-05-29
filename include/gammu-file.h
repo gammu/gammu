@@ -18,7 +18,7 @@
 /**
  * Status of filesystem.
  *
- * \ingroup File.
+ * \ingroup File
  */
 typedef struct {
 	int Free;
@@ -31,7 +31,7 @@ typedef struct {
 /**
  * File type identifier.
  *
- * \ingroup File.
+ * \ingroup File
  */
 typedef enum {
 	GSM_File_Other = 1,
@@ -54,7 +54,7 @@ typedef enum {
 /**
  * Structure for holding file information and data.
  *
- * \ingroup File.
+ * \ingroup File
  */
 typedef struct {
 	/**
@@ -124,7 +124,7 @@ typedef struct {
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR,
 			  char *Version, int *Size);
@@ -133,11 +133,11 @@ GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR,
  * Reads file from filesystem to \ref GSM_File structure.
  *
  * \param FileName File to read.
- * \param GSM_File Storage for data.
+ * \param File Storage for data.
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_ReadFile(char *FileName, GSM_File * File);
 
@@ -146,7 +146,7 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File * File);
  *
  * \param File File data, Type member will be filled in.
  *
- * \ingroup File.
+ * \ingroup File
  */
 void GSM_IdentifyFileFormat(GSM_File * File);
 
@@ -157,7 +157,7 @@ void GSM_IdentifyFileFormat(GSM_File * File);
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_GetNextFileFolder(GSM_StateMachine * s, GSM_File * File,
 				bool start);
@@ -168,7 +168,7 @@ GSM_Error GSM_GetNextFileFolder(GSM_StateMachine * s, GSM_File * File,
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_GetFolderListing(GSM_StateMachine * s, GSM_File * File,
 			       bool start);
@@ -179,7 +179,7 @@ GSM_Error GSM_GetFolderListing(GSM_StateMachine * s, GSM_File * File,
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_GetNextRootFolder(GSM_StateMachine * s, GSM_File * File);
 
@@ -190,7 +190,7 @@ GSM_Error GSM_GetNextRootFolder(GSM_StateMachine * s, GSM_File * File);
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_SetFileAttributes(GSM_StateMachine * s, GSM_File * File);
 
@@ -201,7 +201,7 @@ GSM_Error GSM_SetFileAttributes(GSM_StateMachine * s, GSM_File * File);
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_GetFilePart(GSM_StateMachine * s, GSM_File * File, int *Handle,
 			  int *Size);
@@ -212,7 +212,7 @@ GSM_Error GSM_GetFilePart(GSM_StateMachine * s, GSM_File * File, int *Handle,
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_AddFilePart(GSM_StateMachine * s, GSM_File * File, int *Pos,
 			  int *Handle);
@@ -223,7 +223,7 @@ GSM_Error GSM_AddFilePart(GSM_StateMachine * s, GSM_File * File, int *Pos,
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_SendFilePart(GSM_StateMachine * s, GSM_File * File, int *Pos,
 			   int *Handle);
@@ -234,7 +234,7 @@ GSM_Error GSM_SendFilePart(GSM_StateMachine * s, GSM_File * File, int *Pos,
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_GetFileSystemStatus(GSM_StateMachine * s,
 				  GSM_FileSystemStatus * Status);
@@ -246,7 +246,7 @@ GSM_Error GSM_GetFileSystemStatus(GSM_StateMachine * s,
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_DeleteFile(GSM_StateMachine * s, unsigned char *ID);
 
@@ -259,7 +259,7 @@ GSM_Error GSM_DeleteFile(GSM_StateMachine * s, unsigned char *ID);
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_AddFolder(GSM_StateMachine * s, GSM_File * File);
 
@@ -271,7 +271,7 @@ GSM_Error GSM_AddFolder(GSM_StateMachine * s, GSM_File * File);
  *
  * \return Error code.
  *
- * \ingroup File.
+ * \ingroup File
  */
 GSM_Error GSM_DeleteFolder(GSM_StateMachine * s, unsigned char *ID);
 #endif
