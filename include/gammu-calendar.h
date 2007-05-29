@@ -1,7 +1,7 @@
 /**
  * \file gammu-calendar.h
  * \author Michal Čihař
- * 
+ *
  * Calendar data and functions.
  */
 #ifndef __gammu_calendar_h
@@ -548,11 +548,11 @@ typedef enum {
 	 */
 	Siemens_VCalendar,
 	/**
-	 * Standard vCalendar (which works for Sony-Ericsson phones) 
+	 * Standard vCalendar (which works for Sony-Ericsson phones)
 	 */
 	SonyEricsson_VCalendar,
 	/**
-	 * iCalendar as compatible with Mozilla. 
+	 * iCalendar as compatible with Mozilla.
 	 */
 	Mozilla_iCalendar,
 } GSM_VCalendarVersion;
@@ -592,7 +592,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length,
 
 /**
  * Encodes vNote to buffer.
- * 
+ *
  * \param Buffer Storage for data.
  * \param Length Pointer to current position in data (will be incremented).
  * \param Note Note to encode.
