@@ -1,7 +1,7 @@
 /**
  * \file gammu-error.h
  * \author Michal Čihař
- * 
+ *
  * Error codes definitions.
  */
 #ifndef __gammu_error_h
@@ -18,227 +18,227 @@
  */
 typedef enum {
 	/**
-	 * No error 
+	 * No error
 	 */
-	ERR_NONE = 1, 
+	ERR_NONE = 1,
 	/**
-	 * Error during opening device 
+	 * Error during opening device
 	 */
-	ERR_DEVICEOPENERROR, 
+	ERR_DEVICEOPENERROR,
 	/**
-	 * Device locked 
+	 * Device locked
 	 */
-	ERR_DEVICELOCKED, 
+	ERR_DEVICELOCKED,
 	/**
-	 * Device does not exits 
+	 * Device does not exits
 	 */
-	ERR_DEVICENOTEXIST, 
+	ERR_DEVICENOTEXIST,
 	/**
-	 * Device is busy 
+	 * Device is busy
 	 */
-	ERR_DEVICEBUSY,	
+	ERR_DEVICEBUSY,
 	/**
-	 * No permissions to open device 
+	 * No permissions to open device
 	 */
-	ERR_DEVICENOPERMISSION,	
+	ERR_DEVICENOPERMISSION,
 	/**
-	 * No driver installed for a device 
+	 * No driver installed for a device
 	 */
-	ERR_DEVICENODRIVER, 
+	ERR_DEVICENODRIVER,
 	/**
-	 * Device doesn't seem to be working 
+	 * Device doesn't seem to be working
 	 */
-	ERR_DEVICENOTWORK, 
+	ERR_DEVICENOTWORK,
 	/**
-	 * Error during setting DTR/RTS in device 
+	 * Error during setting DTR/RTS in device
 	 */
-	ERR_DEVICEDTRRTSERROR, 
+	ERR_DEVICEDTRRTSERROR,
 
 	/** 10 **/
 	/**
-	 * Error during changing speed in device 
+	 * Error during changing speed in device
 	 */
-	ERR_DEVICECHANGESPEEDERROR, 
+	ERR_DEVICECHANGESPEEDERROR,
 	/**
-	 * Error during writing device 
+	 * Error during writing device
 	 */
-	ERR_DEVICEWRITEERROR, 
+	ERR_DEVICEWRITEERROR,
 	/**
-	 * Error during reading device 
+	 * Error during reading device
 	 */
-	ERR_DEVICEREADERROR, 
+	ERR_DEVICEREADERROR,
 	/**
-	 * Can't set parity on device 
+	 * Can't set parity on device
 	 */
-	ERR_DEVICEPARITYERROR, 
+	ERR_DEVICEPARITYERROR,
 	/**
-	 * Command timed out 
+	 * Command timed out
 	 */
-	ERR_TIMEOUT, 
+	ERR_TIMEOUT,
 	/**
-	 * Frame handled, but not requested in this moment 
+	 * Frame handled, but not requested in this moment
 	 */
-	ERR_FRAMENOTREQUESTED, 
+	ERR_FRAMENOTREQUESTED,
 	/**
-	 * Response not handled by gammu 
+	 * Response not handled by gammu
 	 */
-	ERR_UNKNOWNRESPONSE, 
+	ERR_UNKNOWNRESPONSE,
 	/**
-	 * Frame not handled by gammu 
+	 * Frame not handled by gammu
 	 */
-	ERR_UNKNOWNFRAME, 
+	ERR_UNKNOWNFRAME,
 	/**
-	 * Unknown connection type given by user 
+	 * Unknown connection type given by user
 	 */
-	ERR_UNKNOWNCONNECTIONTYPESTRING, 
+	ERR_UNKNOWNCONNECTIONTYPESTRING,
 	/**
-	 * Unknown model given by user 
+	 * Unknown model given by user
 	 */
-	ERR_UNKNOWNMODELSTRING,	
+	ERR_UNKNOWNMODELSTRING,
 
 	/** 20 **/
 	/**
-	 * Some functions not compiled in your OS 
+	 * Some functions not compiled in your OS
 	 */
-	ERR_SOURCENOTAVAILABLE,	
+	ERR_SOURCENOTAVAILABLE,
 	/**
-	 * Not supported by phone 
+	 * Not supported by phone
 	 */
-	ERR_NOTSUPPORTED, 
+	ERR_NOTSUPPORTED,
 	/**
-	 * Empty phonebook entry, ... 
+	 * Empty phonebook entry, ...
 	 */
-	ERR_EMPTY, 
+	ERR_EMPTY,
 	/**
-	 * Not allowed 
+	 * Not allowed
 	 */
-	ERR_SECURITYERROR, 
+	ERR_SECURITYERROR,
 	/**
-	 * Too high or too low location... 
+	 * Too high or too low location...
 	 */
-	ERR_INVALIDLOCATION, 
+	ERR_INVALIDLOCATION,
 	/**
-	 * Function not implemented 
+	 * Function not implemented
 	 */
-	ERR_NOTIMPLEMENTED, 
+	ERR_NOTIMPLEMENTED,
 	/**
-	 * Memory is full 
+	 * Memory is full
 	 */
-	ERR_FULL, 
+	ERR_FULL,
 	/**
-	 * Unknown response from phone 
+	 * Unknown response from phone
 	 */
-	ERR_UNKNOWN, 
+	ERR_UNKNOWN,
 	/**
-	 * Error during opening file 
+	 * Error during opening file
 	 */
-	ERR_CANTOPENFILE, 
+	ERR_CANTOPENFILE,
 	/**
-	 * More memory required 
+	 * More memory required
 	 */
-	ERR_MOREMEMORY,	
+	ERR_MOREMEMORY,
 
 	/** 30 **/
 	/**
-	 * No permission 
+	 * No permission
 	 */
-	ERR_PERMISSION,	
+	ERR_PERMISSION,
 	/**
-	 * SMSC number is empty 
+	 * SMSC number is empty
 	 */
-	ERR_EMPTYSMSC, 
+	ERR_EMPTYSMSC,
 	/**
-	 * Inside phone menu - can't make something 
+	 * Inside phone menu - can't make something
 	 */
-	ERR_INSIDEPHONEMENU, 
+	ERR_INSIDEPHONEMENU,
 	/**
-	 * Phone NOT connected - can't make something 
+	 * Phone NOT connected - can't make something
 	 */
-	ERR_NOTCONNECTED, 
+	ERR_NOTCONNECTED,
 	/**
-	 * Work in progress 
+	 * Work in progress
 	 */
-	ERR_WORKINPROGRESS, 
+	ERR_WORKINPROGRESS,
 	/**
-	 * Phone is disabled and connected to charger 
+	 * Phone is disabled and connected to charger
 	 */
-	ERR_PHONEOFF, 
+	ERR_PHONEOFF,
 	/**
-	 * File format not supported by Gammu 
+	 * File format not supported by Gammu
 	 */
-	ERR_FILENOTSUPPORTED, 
+	ERR_FILENOTSUPPORTED,
 	/**
-	 * Found bug in implementation or phone 
+	 * Found bug in implementation or phone
 	 */
-	ERR_BUG, 
+	ERR_BUG,
 	/**
-	 * Action was canceled by user 
+	 * Action was canceled by user
 	 */
-	ERR_CANCELED, 
+	ERR_CANCELED,
 	/**
-	 * Inside Gammu: phone module need to send another answer frame 
+	 * Inside Gammu: phone module need to send another answer frame
 	 */
-	ERR_NEEDANOTHERANSWER, 
+	ERR_NEEDANOTHERANSWER,
 
 	/** 40 **/
 	/**
-	 * You need other connectin for this operation. 
+	 * You need other connectin for this operation.
 	 */
-	ERR_OTHERCONNECTIONREQUIRED, 
+	ERR_OTHERCONNECTIONREQUIRED,
 	/**
-	 * Wrong CRC 
+	 * Wrong CRC
 	 */
-	ERR_WRONGCRC, 
+	ERR_WRONGCRC,
 	/**
-	 * Invalid date/time 
+	 * Invalid date/time
 	 */
-	ERR_INVALIDDATETIME, 
+	ERR_INVALIDDATETIME,
 	/**
-	 * Phone memory error, maybe it is read only 
+	 * Phone memory error, maybe it is read only
 	 */
-	ERR_MEMORY, 
+	ERR_MEMORY,
 	/**
-	 * Invalid data given to phone 
+	 * Invalid data given to phone
 	 */
-	ERR_INVALIDDATA, 
+	ERR_INVALIDDATA,
 	/**
-	 * File with specified name already exist 
+	 * File with specified name already exist
 	 */
-	ERR_FILEALREADYEXIST, 
+	ERR_FILEALREADYEXIST,
 	/**
-	 * File with specified name doesn't exist 
+	 * File with specified name doesn't exist
 	 */
-	ERR_FILENOTEXIST, 
+	ERR_FILENOTEXIST,
 	/**
-	 * You have to give folder (not file) name 
+	 * You have to give folder (not file) name
 	 */
-	ERR_SHOULDBEFOLDER, 
+	ERR_SHOULDBEFOLDER,
 	/**
-	 * You have to give file (not folder) name 
+	 * You have to give file (not folder) name
 	 */
-	ERR_SHOULDBEFILE, 
+	ERR_SHOULDBEFILE,
 	/**
-	 * Can not access SIM card 
+	 * Can not access SIM card
 	 */
-	ERR_NOSIM, 
+	ERR_NOSIM,
 
 	/** 50 **/
 	/**
-	 * Invalid gnapplet version 
+	 * Invalid gnapplet version
 	 */
-	ERR_GNAPPLETWRONG, 
+	ERR_GNAPPLETWRONG,
 	/**
-	 * Only part of folders listed 
+	 * Only part of folders listed
 	 */
-	ERR_FOLDERPART,	
+	ERR_FOLDERPART,
 	/**
-	 * Folder is not empty 
+	 * Folder is not empty
 	 */
-	ERR_FOLDERNOTEMPTY, 
+	ERR_FOLDERNOTEMPTY,
 	/**
-	 * Data were converted 
+	 * Data were converted
 	 */
-	ERR_DATACONVERTED 
+	ERR_DATACONVERTED
 } GSM_Error;
 
 /**
