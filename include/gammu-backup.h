@@ -1,7 +1,7 @@
 /**
  * \file gammu-backup.h
  * \author Michal Čihař
- * 
+ *
  * Backup data and functions.
  */
 #ifndef __gammu_backup_h
@@ -183,27 +183,27 @@ extern GSM_Error GSM_AddSMSBackupFile(char *FileName, GSM_SMS_Backup * backup);
  */
 typedef struct {
 	/**
-	 * IMEI of phone which has been backed up 
+	 * IMEI of phone which has been backed up
 	 */
 	char IMEI[GSM_MAX_IMEI_LENGTH];
 	/**
-	 * Model of phone which has been backed up 
+	 * Model of phone which has been backed up
 	 */
 	char Model[GSM_MAX_MODEL_LENGTH + GSM_MAX_VERSION_LENGTH];
 	/**
-	 * Name of program which created backup 
+	 * Name of program which created backup
 	 */
 	char Creator[80];
 	/**
-	 * Timestamp of backup 
+	 * Timestamp of backup
 	 */
 	GSM_DateTime DateTime;
 	/**
-	 * Whether timestamp is present 
+	 * Whether timestamp is present
 	 */
 	bool DateTimeAvailable;
 	/**
-	 * Original MD5 of backup from file 
+	 * Original MD5 of backup from file
 	 */
 	char MD5Original[100];
 	/**
@@ -211,75 +211,75 @@ typedef struct {
 	 */
 	char MD5Calculated[100];
 	/**
-	 * Phone phonebook 
+	 * Phone phonebook
 	 */
 	GSM_MemoryEntry *PhonePhonebook[GSM_BACKUP_MAX_PHONEPHONEBOOK + 1];
 	/**
-	 * SIM phonebook 
+	 * SIM phonebook
 	 */
 	GSM_MemoryEntry *SIMPhonebook[GSM_BACKUP_MAX_SIMPHONEBOOK + 1];
 	/**
-	 * Calendar 
+	 * Calendar
 	 */
 	GSM_CalendarEntry *Calendar[GSM_MAXCALENDARTODONOTES + 1];
 	/**
-	 * Caller logos 
+	 * Caller logos
 	 */
 	GSM_Bitmap *CallerLogos[GSM_BACKUP_MAX_CALLER + 1];
 	/**
-	 * SMS configuration 
+	 * SMS configuration
 	 */
 	GSM_SMSC *SMSC[GSM_BACKUP_MAX_SMSC + 1];
 	/**
-	 * WAP bookmarks 
+	 * WAP bookmarks
 	 */
 	GSM_WAPBookmark *WAPBookmark[GSM_BACKUP_MAX_WAPBOOKMARK + 1];
 	/**
-	 * WAP settings 
+	 * WAP settings
 	 */
 	GSM_MultiWAPSettings *WAPSettings[GSM_BACKUP_MAX_WAPSETTINGS + 1];
 	/**
-	 * MMS settings 
+	 * MMS settings
 	 */
 	GSM_MultiWAPSettings *MMSSettings[GSM_BACKUP_MAX_MMSSETTINGS + 1];
 	/**
-	 * SyncMC settings 
+	 * SyncMC settings
 	 */
 	GSM_SyncMLSettings *SyncMLSettings[GSM_BACKUP_MAX_SYNCMLSETTINGS + 1];
 	/**
-	 * Chat settings 
+	 * Chat settings
 	 */
 	GSM_ChatSettings *ChatSettings[GSM_BACKUP_MAX_CHATSETTINGS + 1];
 	/**
-	 * Ringtones 
+	 * Ringtones
 	 */
 	GSM_Ringtone *Ringtone[GSM_BACKUP_MAX_RINGTONES + 1];
 	/**
-	 * To do tasks 
+	 * To do tasks
 	 */
 	GSM_ToDoEntry *ToDo[GSM_MAXCALENDARTODONOTES + 1];
 	/**
-	 * Progiles 
+	 * Progiles
 	 */
 	GSM_Profile *Profiles[GSM_BACKUP_MAX_PROFILES + 1];
 	/**
-	 * FM stations 
+	 * FM stations
 	 */
 	GSM_FMStation *FMStation[GSM_BACKUP_MAX_FMSTATIONS + 1];
 	/**
-	 * GPRS configurations 
+	 * GPRS configurations
 	 */
 	GSM_GPRSAccessPoint *GPRSPoint[GSM_BACKUP_MAX_GPRSPOINT + 1];
 	/**
-	 * Notes 
+	 * Notes
 	 */
 	GSM_NoteEntry *Note[GSM_BACKUP_MAX_NOTE + 1];
 	/**
-	 * Statup logo 
+	 * Statup logo
 	 */
 	GSM_Bitmap *StartupLogo;
 	/**
-	 * Operator logo 
+	 * Operator logo
 	 */
 	GSM_Bitmap *OperatorLogo;
 } GSM_Backup;
