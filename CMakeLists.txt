@@ -85,6 +85,8 @@ endif (WITH_RPATH)
 # Static library by default
 if (NOT DEFINED ENABLE_SHARED)
     set (ENABLE_SHARED FALSE CACHE BOOL "Build shared library")
+else (NOT DEFINED ENABLE_SHARED)
+    set (ENABLE_SHARED ${ENABLE_SHARED} CACHE BOOL "Build shared library")
 endif (NOT DEFINED ENABLE_SHARED)
 
 set (BUILD_SHARED_LIBS ${ENABLE_SHARED} CACHE INTERNAL "Shared build")
