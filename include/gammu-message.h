@@ -903,7 +903,7 @@ typedef struct {
 
 	/* Return values */
 	int RingtoneNotes;
-} MultiPartSMSEntry;
+} GSM_MultiPartSMSEntry;
 
 /**
  * Multipart SMS information.
@@ -911,7 +911,7 @@ typedef struct {
  * \ingroup SMS
  */
 typedef struct {
-	MultiPartSMSEntry Entries[GSM_MAX_MULTI_SMS];
+	GSM_MultiPartSMSEntry Entries[GSM_MAX_MULTI_SMS];
 	int EntriesNum;
 	bool UnicodeCoding;
 	int Class;
