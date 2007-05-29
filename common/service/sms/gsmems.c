@@ -20,7 +20,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				    GSM_MultiSMSMessage 	*SMS,
 				    GSM_UDH			UDHType)
 {
-	unsigned char		Buffer[GSM_MAX_SMS_LENGTH*2*MAX_MULTI_SMS];
+	unsigned char		Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
 	int 			i,UsedText,j,Length,Width,Height,z,x,y;
 	unsigned int		Len;
 	int 			Used,FreeText,FreeBytes,Width2,CopiedText,CopiedSMSText;
@@ -40,7 +40,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 	if (Info->UnicodeCoding) Coding = SMS_Coding_Unicode_No_Compression;
 
 	/* Cleaning on the start */
-	for (i=0;i<MAX_MULTI_SMS;i++) {
+	for (i=0;i<GSM_MAX_MULTI_SMS;i++) {
 		GSM_SetDefaultSMSData(&SMS->SMS[i]);
 		SMS->SMS[i].UDH.Type = UDHType;
 		GSM_EncodeUDHHeader(&SMS->SMS[i].UDH);
@@ -583,7 +583,7 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 	GSM_Phone_Bitmap_Types 	BitmapType;
 	GSM_Bitmap		Bitmap,Bitmap2;
 
-	for (i=0;i<MAX_MULTI_SMS;i++) {
+	for (i=0;i<GSM_MAX_MULTI_SMS;i++) {
 		Info->Entries[i].ID	   = 0;
 	}
 
@@ -591,7 +591,7 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 		Pos 	= 0;
 		w	= 1;
 		while (w < SMS->SMS[i].UDH.Length) {
-			if (Info->EntriesNum + 1 == MAX_MULTI_SMS) {
+			if (Info->EntriesNum + 1 == GSM_MAX_MULTI_SMS) {
 				dbgprintf("Couldn't parse SMS, contains too many EMS parts!\n");
 				return false;
 			}

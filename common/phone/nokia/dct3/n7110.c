@@ -113,9 +113,9 @@ static void N7110_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsig
 
 	/* simulate flat SMS memory */
 	if (sms->Folder==0x00) {
-		ifolderid = sms->Location / PHONE_MAXSMSINFOLDER;
+		ifolderid = sms->Location / GSM_PHONE_MAXSMSINFOLDER;
 		*folderid = (ifolderid + 1) * 0x08;
-		*location = sms->Location - ifolderid * PHONE_MAXSMSINFOLDER;
+		*location = sms->Location - ifolderid * GSM_PHONE_MAXSMSINFOLDER;
 	} else {
 		*folderid = sms->Folder * 0x08;
 		*location = sms->Location;
@@ -127,7 +127,7 @@ static void N7110_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsig
 static void N7110_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char folderid, int location)
 {
 	sms->Folder	= 0;
-	sms->Location	= (folderid / 0x08 - 1) * PHONE_MAXSMSINFOLDER + location;
+	sms->Location	= (folderid / 0x08 - 1) * GSM_PHONE_MAXSMSINFOLDER + location;
 	smprintf(s, "7110 folder %i & location %i -> SMS folder %i & location %i\n",
 		folderid,location,sms->Folder,sms->Location);
 }
@@ -194,8 +194,8 @@ static GSM_Error N7110_ReplyGetSMSFolderStatus(GSM_Protocol_Message msg, GSM_Sta
 	smprintf(s, "Locations: ");
 	for (i=0;i<Priv->LastSMSFolder.Number;i++) {
 		Priv->LastSMSFolder.Location[i]=msg.Buffer[6+(i*2)]*256+msg.Buffer[(i*2)+7];
-		if (Priv->LastSMSFolder.Location[i] > PHONE_MAXSMSINFOLDER) {
-			smprintf(s, "Increase PHONE_MAXSMSINFOLDER\n");
+		if (Priv->LastSMSFolder.Location[i] > GSM_PHONE_MAXSMSINFOLDER) {
+			smprintf(s, "Increase GSM_PHONE_MAXSMSINFOLDER\n");
 			return ERR_UNKNOWNRESPONSE;
 		}
 		smprintf(s, "%i ",Priv->LastSMSFolder.Location[i]);

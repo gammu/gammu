@@ -598,7 +598,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 
 	/* Now store string if it fits */
-	if (strlen(pos) <= MAX_MODEL_LENGTH) {
+	if (strlen(pos) <= GSM_MAX_MODEL_LENGTH) {
 		strcpy(Data->Model, pos);
 
 		Data->ModelInfo = GetModelData(NULL,Data->Model,NULL);
@@ -607,7 +607,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 		if (Data->ModelInfo->number[0] != 0) strcpy(Data->Model,Data->ModelInfo->number);
 	} else {
-		smprintf(s, "WARNING: Model name too long, increase MAX_MODEL_LENGTH to at least %zd\n", strlen(pos));
+		smprintf(s, "WARNING: Model name too long, increase GSM_MAX_MODEL_LENGTH to at least %zd\n", strlen(pos));
 	}
 
 	return ERR_NONE;
@@ -638,10 +638,10 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 	case AT_Reply_OK:
 		smprintf(s, "Manufacturer info received\n");
 		Priv->Manufacturer = AT_Unknown;
-		if (GetLineLength(msg.Buffer, Priv->Lines, 2) <= MAX_MANUFACTURER_LENGTH) {
+		if (GetLineLength(msg.Buffer, Priv->Lines, 2) <= GSM_MAX_MANUFACTURER_LENGTH) {
 			CopyLineString(s->Phone.Data.Manufacturer, msg.Buffer, Priv->Lines, 2);
 		} else {
-			smprintf(s, "WARNING: Manufacturer name too long, increase MAX_MANUFACTURER_LENGTH to at least %d\n", GetLineLength(msg.Buffer, Priv->Lines, 2));
+			smprintf(s, "WARNING: Manufacturer name too long, increase GSM_MAX_MANUFACTURER_LENGTH to at least %d\n", GetLineLength(msg.Buffer, Priv->Lines, 2));
 			s->Phone.Data.Manufacturer[0] = 0;
 		}
 		/* Sometimes phone adds this before manufacturer (Sagem) */
@@ -1257,10 +1257,10 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 
 	/* simulate flat SMS memory */
 	if (sms->Folder == 0x00) {
-		ifolderid = sms->Location / PHONE_MAXSMSINFOLDER;
+		ifolderid = sms->Location / GSM_PHONE_MAXSMSINFOLDER;
 		if (ifolderid + 1 > maxfolder) return ERR_NOTSUPPORTED;
 		*folderid = ifolderid + 1;
-		*location = sms->Location - ifolderid * PHONE_MAXSMSINFOLDER;
+		*location = sms->Location - ifolderid * GSM_PHONE_MAXSMSINFOLDER;
 	} else {
 		if (sms->Folder > 2 * maxfolder) return ERR_NOTSUPPORTED;
 		*folderid = sms->Folder <= 2 ? 1 : 2;
@@ -1285,7 +1285,7 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 void ATGEN_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char folderid, int location)
 {
 	sms->Folder	= 0;
-	sms->Location	= (folderid - 1) * PHONE_MAXSMSINFOLDER + location;
+	sms->Location	= (folderid - 1) * GSM_PHONE_MAXSMSINFOLDER + location;
 	smprintf(s, "ATGEN folder %i & location %i -> SMS folder %i & location %i\n",
 		folderid,location,sms->Folder,sms->Location);
 }
@@ -1746,7 +1746,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 	}
 	while (true) {
 		sms->SMS[0].Location++;
-		if (sms->SMS[0].Location < PHONE_MAXSMSINFOLDER) {
+		if (sms->SMS[0].Location < GSM_PHONE_MAXSMSINFOLDER) {
 			if (Priv->SIMSMSMemory == AT_AVAILABLE) {
 				usedsms = Priv->LastSMSStatus.SIMUsed;
 			} else {
@@ -1756,7 +1756,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 			if (Priv->LastSMSRead >= usedsms) {
 				if (Priv->PhoneSMSMemory == AT_NOTAVAILABLE || Priv->LastSMSStatus.PhoneUsed==0) return ERR_EMPTY;
 				Priv->LastSMSRead	= 0;
-				sms->SMS[0].Location 	= PHONE_MAXSMSINFOLDER + 1;
+				sms->SMS[0].Location 	= GSM_PHONE_MAXSMSINFOLDER + 1;
 			}
 		} else {
 			if (Priv->PhoneSMSMemory == AT_NOTAVAILABLE) return ERR_EMPTY;

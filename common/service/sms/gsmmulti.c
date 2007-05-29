@@ -170,7 +170,7 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 		Len += CopiedText;
 		dbgprintf("%i %i\n",Len,MessageLength);
 		if (Len == MessageLength) break;
-		if (SMS->Number == MAX_MULTI_SMS) break;
+		if (SMS->Number == GSM_MAX_MULTI_SMS) break;
 		SMS->Number++;
 	}
 
@@ -280,7 +280,7 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 	int 		p,i;
 	GSM_UDHHeader	MyUDH;
 
-	for (i=0;i<MAX_MULTI_SMS;i++) {
+	for (i=0;i<GSM_MAX_MULTI_SMS;i++) {
 		GSM_SetDefaultSMSData(&SMS->SMS[i]);
 		SMS->SMS[i].UDH.Type    = UDH_UserUDH;
 		SMS->SMS[i].UDH.Text[1] = 0x80;	/* Alcatel */
@@ -335,8 +335,8 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 			    	 GSM_MultiSMSMessage		*SMS)
 {
-	unsigned char	Buffer[GSM_MAX_SMS_LENGTH*2*MAX_MULTI_SMS];
-	unsigned char	Buffer2[GSM_MAX_SMS_LENGTH*2*MAX_MULTI_SMS];
+	unsigned char	Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
+	unsigned char	Buffer2[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
 	int		Length = 0,smslen,i, Class = -1, j,p;
 	GSM_Error	error;
 	GSM_Coding_Type Coding 	= SMS_Coding_8bit;
@@ -716,7 +716,7 @@ void GSM_ClearMultiPartSMSInfo(GSM_MultiPartSMSInfo *Info)
 {
 	int i;
 
-	for (i=0;i<MAX_MULTI_SMS;i++) {
+	for (i=0;i<GSM_MAX_MULTI_SMS;i++) {
 		Info->Entries[i].Number		= 0;
 		Info->Entries[i].Ringtone	= NULL;
 		Info->Entries[i].Bitmap		= NULL;
@@ -753,7 +753,7 @@ void GSM_FreeMultiPartSMSInfo(GSM_MultiPartSMSInfo *Info)
 {
 	int i;
 
-	for (i=0;i<MAX_MULTI_SMS;i++) {
+	for (i=0;i<GSM_MAX_MULTI_SMS;i++) {
 		free(Info->Entries[i].Ringtone);
 		Info->Entries[i].Ringtone = NULL;
 		free(Info->Entries[i].Bitmap);
@@ -783,7 +783,7 @@ bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo	*Info,
 {
 	int 			i, Length = 0;
 	unsigned int	j;
-	char			Buffer[GSM_MAX_SMS_LENGTH*2*MAX_MULTI_SMS];
+	char			Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
 	bool 			emsexist = false;
 	GSM_SiemensOTASMSInfo	SiemensInfo;
 

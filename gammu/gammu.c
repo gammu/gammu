@@ -2395,7 +2395,7 @@ static void GetAllSMS(int argc, char *argv[])
 
 static void GetEachSMS(int argc, char *argv[])
 {
-	GSM_MultiSMSMessage	*GetSMS[PHONE_MAXSMSINFOLDER],*SortedSMS[PHONE_MAXSMSINFOLDER],sms;
+	GSM_MultiSMSMessage	*GetSMS[GSM_PHONE_MAXSMSINFOLDER],*SortedSMS[GSM_PHONE_MAXSMSINFOLDER],sms;
 	int			GetSMSNumber = 0,i,j;
 	int			smsnum=0,smspos=0;
 	GSM_SMSFolders		folders;
@@ -2454,7 +2454,7 @@ static void GetEachSMS(int argc, char *argv[])
 
 	fprintf(stderr, LISTFORMAT, _("Reading"));
 	while (error == ERR_NONE) {
-		if (GetSMSNumber==PHONE_MAXSMSINFOLDER-1) {
+		if (GetSMSNumber==GSM_PHONE_MAXSMSINFOLDER-1) {
 			fprintf(stderr, "\n%s\n", _("SMS counter overflow"));
 			break;
 		}
@@ -2589,7 +2589,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 		printf(_("Saved to file %s\n"),buff);
 	}
 
-	for (i=0;i<MAX_MULTI_MMS;i++) info.Entries[i].File.Buffer = NULL;
+	for (i=0;i<GSM_MAX_MULTI_MMS;i++) info.Entries[i].File.Buffer = NULL;
 	GSM_ClearMMSMultiPart(&info);
 
 	error = GSM_DecodeMMSFileToMultiPart(file, &info);
@@ -3530,15 +3530,15 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	int				Protected = 0;
 	GSM_SMSFolders			folders;
 	GSM_MultiSMSMessage		sms;
-	GSM_Ringtone			ringtone[MAX_MULTI_SMS];
-	GSM_MultiBitmap			bitmap[MAX_MULTI_SMS],bitmap2;
+	GSM_Ringtone			ringtone[GSM_MAX_MULTI_SMS];
+	GSM_MultiBitmap			bitmap[GSM_MAX_MULTI_SMS],bitmap2;
 	GSM_MultiPartSMSInfo		SMSInfo;
 	GSM_NetworkInfo			NetInfo;
 	GSM_MMSIndicator		MMSInfo;
 	FILE 				*ReplaceFile,*f;
 	char				ReplaceBuffer2	[200],ReplaceBuffer[200];
 	char				InputBuffer	[SEND_SAVE_SMS_BUFFER_SIZE/2+1];
-	char				Buffer		[MAX_MULTI_SMS][SEND_SAVE_SMS_BUFFER_SIZE];
+	char				Buffer		[GSM_MAX_MULTI_SMS][SEND_SAVE_SMS_BUFFER_SIZE];
 	char				Sender		[(GSM_MAX_NUMBER_LENGTH+1)*2];
 	char				Name		[(GSM_MAX_SMS_NAME_LENGTH+1)*2];
 	char				SMSC		[(GSM_MAX_NUMBER_LENGTH+1)*2];

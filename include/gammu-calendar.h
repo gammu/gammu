@@ -298,7 +298,7 @@ typedef struct {
 	/**
 	 * Text of value, if applicable.
 	 */
-	unsigned char Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
+	unsigned char Text[(GSM_MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
 	/**
 	 * Date and time of value, if applicable.
 	 */
@@ -434,7 +434,7 @@ typedef struct {
 	/**
 	 * Text of value, if appropriate, see @ref GSM_ToDoType.
 	 */
-	unsigned char Text[(MAX_TODO_TEXT_LENGTH + 1) * 2];
+	unsigned char Text[(GSM_MAX_TODO_TEXT_LENGTH + 1) * 2];
 	/**
 	 * Date of value, if appropriate, see @ref GSM_ToDoType.
 	 */
@@ -510,7 +510,7 @@ typedef struct {
 	/**
 	 * Text that is shown on display.
 	 */
-	unsigned char Text[(MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
+	unsigned char Text[(GSM_MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
 } GSM_Alarm;
 
 /**
