@@ -255,3 +255,7 @@ GSM_Error GSM_GetGPRSAccessPoint(GSM_StateMachine * s,
 GSM_Error GSM_SetGPRSAccessPoint(GSM_StateMachine * s,
 				 GSM_GPRSAccessPoint * point);
 #endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */

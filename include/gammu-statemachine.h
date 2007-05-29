@@ -1,7 +1,7 @@
 /**
  * \file gammu-statemachine.h
  * \author Michal Čihař
- * 
+ *
  * State machine data.
  */
 #ifndef __gammu_statemachine_h
@@ -32,65 +32,65 @@ typedef struct _GSM_StateMachine GSM_StateMachine;
  */
 typedef struct {
 	/**
-	 * Model from config file 		
+	 * Model from config file
 	 */
-	char Model[50];				   
+	char Model[50];
 	/**
-	 * Debug level			
+	 * Debug level
 	 */
-	char DebugLevel[50];			   
+	char DebugLevel[50];
 	/**
-	 * Device name from config file 	
+	 * Device name from config file
 	 */
-	char *Device;				   
+	char *Device;
 	/**
-	 * Connection type as string		
+	 * Connection type as string
 	 */
-	char *Connection;			   
+	char *Connection;
 	/**
-	 * Synchronize time on startup? 	
+	 * Synchronize time on startup?
 	 */
-	char *SyncTime;				   
+	char *SyncTime;
 	/**
-	 * Lock device ? (Unix)		
+	 * Lock device ? (Unix)
 	 */
-	char *LockDevice;			   
+	char *LockDevice;
 	/**
-	 * Name of debug file		
+	 * Name of debug file
 	 */
-	char *DebugFile;			   
+	char *DebugFile;
 	/**
-	 * Name of localisation file		
+	 * Name of localisation file
 	 */
-	char *Localize;				   
+	char *Localize;
 	/**
-	 * Display something during start ?  
+	 * Display something during start ?
 	 */
-	char *StartInfo;			   
+	char *StartInfo;
 	/**
-	 * Should we use global debug file?	
+	 * Should we use global debug file?
 	 */
-	bool UseGlobalDebugFile;		   
+	bool UseGlobalDebugFile;
 	/**
-	 * Text for reminder calendar entry category in local language 
+	 * Text for reminder calendar entry category in local language
 	 */
-	char TextReminder[32];			  
+	char TextReminder[32];
 	/**
-	 * Text for meeting calendar entry category in local language 
+	 * Text for meeting calendar entry category in local language
 	 */
-	char TextMeeting[32];			 
+	char TextMeeting[32];
 	/**
-	 * Text for call calendar entry category in local language 
+	 * Text for call calendar entry category in local language
 	 */
-	char TextCall[32];		      
+	char TextCall[32];
 	/**
-	 * Text for birthday calendar entry category in local language 
+	 * Text for birthday calendar entry category in local language
 	 */
-	char TextBirthday[32];			  
+	char TextBirthday[32];
 	/**
-	 * Text for memo calendar entry category in local language 
+	 * Text for memo calendar entry category in local language
 	 */
-	char TextMemo[32];		      
+	char TextMemo[32];
 } GSM_Config;
 
 /**
@@ -142,8 +142,8 @@ GSM_Error GSM_InitConnection(GSM_StateMachine * s, int ReplyNum);
 GSM_Error GSM_TerminateConnection(GSM_StateMachine * s);
 
 /**
- * Attempts to read data from phone. This can be used for getting 
- * status of incoming events, which would not be found out without 
+ * Attempts to read data from phone. This can be used for getting
+ * status of incoming events, which would not be found out without
  * polling device.
  *
  * \ingroup StateMachine
@@ -228,7 +228,7 @@ void GSM_SetConfigNum(GSM_StateMachine * s, int sections);
 GSM_StateMachine *GSM_AllocStateMachine(void);
 
 /**
- * Frees state machine structure allocated by 
+ * Frees state machine structure allocated by
  * \ref GSM_AllocStateMachine.
  *
  * \param s Pointer to state machine structure.
