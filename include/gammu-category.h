@@ -1,7 +1,7 @@
 /**
  * \info gammu-category.h
  * \author Michal Čihař
- * 
+ *
  * Categories handling.
  */
 #ifndef __gammu_category_h
@@ -26,13 +26,13 @@
  */
 typedef enum {
 	/**
-	 * Todo entry category 
+	 * Todo entry category
 	 */
-	Category_ToDo = 1, 
+	Category_ToDo = 1,
 	/**
-	 * Phonebook entry category 
+	 * Phonebook entry category
 	 */
-	Category_Phonebook 
+	Category_Phonebook
 } GSM_CategoryType;
 
 /**
@@ -41,17 +41,17 @@ typedef enum {
  */
 typedef struct {
 	/**
-	 * Type of category 
+	 * Type of category
 	 */
-	GSM_CategoryType Type;	  
+	GSM_CategoryType Type;
 	/**
-	 * Location of category 
+	 * Location of category
 	 */
-	int Location;		      
+	int Location;
 	/**
-	 * Name of category 
+	 * Name of category
 	 */
-	unsigned char Name[(GSM_MAX_CATEGORY_NAME_LENGTH + 1) * 2];	
+	unsigned char Name[(GSM_MAX_CATEGORY_NAME_LENGTH + 1) * 2];
 } GSM_Category;
 
 /**
@@ -60,13 +60,13 @@ typedef struct {
  */
 typedef struct {
 	/**
-	 * Type of category 
+	 * Type of category.
 	 */
-	GSM_CategoryType Type;	  
+	GSM_CategoryType Type;
 	/**
-	 * Number of used category names 
+	 * Number of used category names.
 	 */
-	int Used;		  
+	int Used;
 } GSM_CategoryStatus;
 
 /**
