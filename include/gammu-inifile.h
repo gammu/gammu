@@ -1,7 +1,7 @@
 /**
  * \file gammu-inifile.h
  * \author Michal Čihař
- * 
+ *
  * INI files manipulation.
  */
 #ifndef __gammu_inifile_h
@@ -64,7 +64,7 @@ void INI_Free(INI_Section * head);
  * \param FileName File to read.
  * \param Unicode Whether file shoul be treated like unicode.
  * \param result Pointer where file will be read.
- * 
+ *
  * \return Error code
  */
 GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section ** result);
@@ -102,3 +102,7 @@ INI_Entry *INI_FindLastSectionEntry(INI_Section * file_info,
 unsigned char *INI_GetValue(INI_Section * file_info, unsigned char *section,
 			    unsigned char *key, bool Unicode);
 #endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */
