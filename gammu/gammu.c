@@ -159,6 +159,43 @@ static void PrintSecurityStatus()
 	}
 }
 
+const char *GetMonthName(const int month)
+{
+	static char result[100];
+	switch(month) {
+		case 1 : strcpy(result, _("January")); 	break;
+		case 2 : strcpy(result, _("February")); 	break;
+		case 3 : strcpy(result, _("March"));	break;
+		case 4 : strcpy(result, _("April")); 	break;
+		case 5 : strcpy(result, _("May")); 	break;
+		case 6 : strcpy(result, _("June")); 	break;
+		case 7 : strcpy(result, _("July")); 	break;
+		case 8 : strcpy(result, _("August")); 	break;
+		case 9 : strcpy(result, _("September")); break;
+		case 10: strcpy(result, _("October")); 	break;
+		case 11: strcpy(result, _("November")); 	break;
+		case 12: strcpy(result, _("December")); 	break;
+		default: strcpy(result, _("Bad month!"));break;
+	}
+	return result;
+}
+
+const char *GetDayName(const int day)
+{
+	static char result[100];
+	switch(day) {
+		case 1 : strcpy(result, _("Monday")); 	break;
+		case 2 : strcpy(result, _("Tuesday")); 	break;
+		case 3 : strcpy(result, _("Wednesday")); break;
+		case 4 : strcpy(result, _("Thursday")); 	break;
+		case 5 : strcpy(result, _("Friday")); 	break;
+		case 6 : strcpy(result, _("Saturday")); 	break;
+		case 7 : strcpy(result, _("Sunday")); 	break;
+		default: strcpy(result, _("Bad day!")); 	break;
+	}
+	return result;
+}
+
 void Print_Error(GSM_Error error)
 {
 	if (error != ERR_NONE) {
@@ -260,7 +297,7 @@ static void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 	}
 
 	if (stop!=NULL) {
-		*stop=*start;
+		*stop = *start;
 		if (argc>=num+2) *stop=atoi(argv[num+1]);
 		if (*stop==0) {
 			printf_err("%s\n", _("Please enumerate locations from 1"));
@@ -295,7 +332,7 @@ static bool answer_yes(const char *text)
 			return false;
 		}
 		len=GetLine(stdin, ans, 99);
-		if (len==-1) exit(-1);
+		if (len == -1) exit(-1);
 		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (!strcmp(ans, _("NONE"))) {
 			always_answer_no = true;
@@ -431,19 +468,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 				printf(LISTFORMAT, _("Tone alarm"));
 				printf(_("forever on each %i. day of %s"),
 					Note->Entries[i].Date.Day,
-					Note->Entries[i].Date.Month == 1 ? _("January") : (
-					Note->Entries[i].Date.Month == 2 ? _("February") : (
-					Note->Entries[i].Date.Month == 3 ? _("March") : (
-					Note->Entries[i].Date.Month == 4 ? _("April") : (
-					Note->Entries[i].Date.Month == 5 ? _("May") : (
-					Note->Entries[i].Date.Month == 6 ? _("June") : (
-					Note->Entries[i].Date.Month == 7 ? _("July") : (
-					Note->Entries[i].Date.Month == 8 ? _("August") : (
-					Note->Entries[i].Date.Month == 9 ? _("September") : (
-					Note->Entries[i].Date.Month == 10 ? _("October") : (
-					Note->Entries[i].Date.Month == 11 ? _("November") : (
-					Note->Entries[i].Date.Month == 12 ? _("December") :
-					_("bad month!")))))))))))));
+					GetMonthName(Note->Entries[i].Date.Month));
 				printf(" %02i:%02i:%02i\n",
 					Note->Entries[i].Date.Hour,
 					Note->Entries[i].Date.Minute,
@@ -458,19 +483,7 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 				printf(LISTFORMAT, _("Silent alarm"));
 				printf(_("forever on each %i. day of %s"),
 					Note->Entries[i].Date.Day,
-					Note->Entries[i].Date.Month == 1 ? _("January") : (
-					Note->Entries[i].Date.Month == 2 ? _("February") : (
-					Note->Entries[i].Date.Month == 3 ? _("March") : (
-					Note->Entries[i].Date.Month == 4 ? _("April") : (
-					Note->Entries[i].Date.Month == 5 ? _("May") : (
-					Note->Entries[i].Date.Month == 6 ? _("June") : (
-					Note->Entries[i].Date.Month == 7 ? _("July") : (
-					Note->Entries[i].Date.Month == 8 ? _("August") : (
-					Note->Entries[i].Date.Month == 9 ? _("September") : (
-					Note->Entries[i].Date.Month == 10 ? _("October") : (
-					Note->Entries[i].Date.Month == 11 ? _("November") : (
-					Note->Entries[i].Date.Month == 12 ? _("December") :
-					_("bad month!")))))))))))));
+					GetMonthName(Note->Entries[i].Date.Month));
 				printf(" %02i:%02i:%02i\n",
 					Note->Entries[i].Date.Hour,
 					Note->Entries[i].Date.Minute,
@@ -572,58 +585,21 @@ static void PrintCalendar(GSM_CalendarEntry *Note)
 				printf(_(" on each %d. "), repeat_frequency);
 			}
 			if (repeat_dayofweek > 0) {
-				switch (repeat_dayofweek) {
-					case 1 : printf(_("Monday")); 	break;
-					case 2 : printf(_("Tuesday")); 	break;
-					case 3 : printf(_("Wednesday")); break;
-					case 4 : printf(_("Thursday")); 	break;
-					case 5 : printf(_("Friday")); 	break;
-					case 6 : printf(_("Saturday")); 	break;
-					case 7 : printf(_("Sunday")); 	break;
-					default: printf(_("Bad day!")); 	break;
-				}
+				printf("%s", GetDayName(repeat_dayofweek));
 				if (repeat_weekofmonth > 0) {
 					printf(_(" in %d. week of "), repeat_weekofmonth);
 				} else {
 					printf(_(" in "));
 				}
 				if (repeat_month > 0) {
-					switch(repeat_month) {
-						case 1 : printf(_("January")); 	 break;
-						case 2 : printf(_("February")); 	 break;
-						case 3 : printf(_("March")); 	 break;
-						case 4 : printf(_("April")); 	 break;
-						case 5 : printf(_("May")); 	 break;
-						case 6 : printf(_("June")); 	 break;
-						case 7 : printf(_("July")); 	 break;
-						case 8 : printf(_("August")); 	 break;
-						case 9 : printf(_("September"));  break;
-						case 10: printf(_("October")); 	 break;
-						case 11: printf(_("November")); 	 break;
-						case 12: printf(_("December")); 	 break;
-						default: printf(_("Bad month!")); break;
-					}
+					printf("%s", GetMonthName(repeat_month));
 				} else {
 					printf(_("each month"));
 				}
 			} else if (repeat_day > 0) {
 				printf(_("%d. day of "), repeat_day);
 				if (repeat_month > 0) {
-					switch(repeat_month) {
-						case 1 : printf(_("January")); 	break;
-						case 2 : printf(_("February")); 	break;
-						case 3 : printf(_("March"));	break;
-						case 4 : printf(_("April")); 	break;
-						case 5 : printf(_("May")); 	break;
-						case 6 : printf(_("June")); 	break;
-						case 7 : printf(_("July")); 	break;
-						case 8 : printf(_("August")); 	break;
-						case 9 : printf(_("September")); break;
-						case 10: printf(_("October")); 	break;
-						case 11: printf(_("November")); 	break;
-						case 12: printf(_("December")); 	break;
-						default: printf(_("Bad month!"));break;
-					}
+					printf("%s", GetMonthName(repeat_month));
 				} else {
 					printf(_("each month"));
 				}
@@ -2678,7 +2654,7 @@ static void GetEachMMS(int argc, char *argv[])
 	GSM_File		File;
 	bool			start = true;
 	GSM_MMSFolders 		folders;
-	int			Handle,Size,num=-1;
+	int			Handle,Size,num = -1;
 
 	if (argc>2 && strcasecmp(argv[2],"-save") == 0) num=0;
 
@@ -2720,7 +2696,7 @@ static void GetEachMMS(int argc, char *argv[])
 		}
 
 		DecodeMMSFile(&File,num);
-		if (num!=-1) num++;
+		if (num != -1) num++;
 	}
 
 	if (File.Buffer != NULL) free(File.Buffer);
@@ -3055,12 +3031,8 @@ static void GetCalendarSettings(int argc, char *argv[])
 	} else {
 		printf(_("Auto deleting notes after %i day(s)"),settings.AutoDelete);
 	}
-	printf(_("\nWeek start on "));
-	switch(settings.StartDay) {
-		case 1: printf(_("Monday")); 	break;
-		case 6: printf(_("Saturday")); 	break;
-		case 7: printf(_("Sunday")); 	break;
-	}
+	printf("\n");
+	printf(_("Week starts on %s"), GetDayName(settings.StartDay));
 	printf("\n");
 
 	GSM_Terminate();
