@@ -17,8 +17,10 @@
 
 /**
  * Enum defines ID for various phone and SIM memories.
- * Phone modules can translate them to values specific for concrete models
- * Two letter codes (excluding VM and SL) are from GSM 07.07
+ * Phone modules can translate them to values specific for concrete models.
+ * Two letter codes (excluding VM and SL) are from GSM 07.07.
+ * 
+ * \ingroup Memory
  */
 typedef enum {
 	/**
@@ -67,7 +69,9 @@ typedef enum {
 
 /**
  * Structure contains info about number of used/free entries in phonebook
- * memory
+ * memory.
+ * 
+ * \ingroup Memory
  */
 typedef struct {
 	/**
@@ -87,6 +91,8 @@ typedef struct {
 /**
  * Type of specific phonebook entry. In parenthesis is specified in which
  * member of @ref GSM_SubMemoryEntry value is stored.
+ * 
+ * \ingroup Memory
  */
 typedef enum {
 	/**
@@ -221,18 +227,32 @@ typedef enum {
 	 * User ID. (Text)
 	 */
 	PBK_Text_UserID,
-	PBK_CallLength,	/**< Length of call (Number) */
+	/**
+	 * Length of call (Number) 
+	 */
+	PBK_CallLength,	
 	/**
 	 * LUID - Unique Identifier used for synchronisation
 	 */
 	PBK_Text_LUID,
-	PBK_LastModified, /**< Date of last modification */
-	PBK_Text_NickName, /**< Nick name (Text) */
-	PBK_Text_FormalName, /**< Formal name (Text) */
+	/**
+	 * Date of last modification 
+	 */
+	PBK_LastModified, 
+	/**
+	 * Nick name (Text) 
+	 */
+	PBK_Text_NickName, 
+	/**
+	 * Formal name (Text) 
+	 */
+	PBK_Text_FormalName, 
 } GSM_EntryType;
 
 /**
  * One value of phonebook memory entry.
+ * 
+ * \ingroup Memory
  */
 typedef struct {
 	/**
@@ -265,7 +285,9 @@ typedef struct {
 } GSM_SubMemoryEntry;
 
 /**
- * Structure for saving phonebook entries
+ * Structure for saving phonebook entries.
+ * 
+ * \ingroup Memory
  */
 typedef struct {
 	/**
@@ -287,7 +309,9 @@ typedef struct {
 } GSM_MemoryEntry;
 
 /**
- * Structure for saving speed dials
+ * Structure for saving speed dials.
+ * 
+ * \ingroup Memory
  */
 typedef struct {
 	/**
@@ -311,58 +335,174 @@ typedef struct {
 /**
  * Gets memory (phonebooks or calls) status (eg. number of used and
  * free entries).
+ * 
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup Memory
  */
 GSM_Error GSM_GetMemoryStatus(GSM_StateMachine * s, GSM_MemoryStatus * status);
+
 /**
  * Reads entry from memory (phonebooks or calls). Which entry should
  * be read is defined in entry.
+ * 
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup Memory
  */
 GSM_Error GSM_GetMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
+
 /**
  * Reads entry from memory (phonebooks or calls). Which entry should
  * be read is defined in entry. This can be easily used for reading all entries.
+ * 
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup Memory
  */
 GSM_Error GSM_GetNextMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry,
 			    bool start);
+
 /**
  * Sets memory (phonebooks or calls) entry.
+ * 
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup Memory
  */
 GSM_Error GSM_SetMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
+
 /**
  * Deletes memory (phonebooks or calls) entry.
+ * 
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup Memory
  */
 GSM_Error GSM_AddMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
+
 /**
  * Deletes memory (phonebooks or calls) entry.
+ * 
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup Memory
  */
 GSM_Error GSM_DeleteMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
+
 /**
  * Deletes all memory (phonebooks or calls) entries of specified type.
+ * 
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup Memory
  */
 GSM_Error GSM_DeleteAllMemory(GSM_StateMachine * s, GSM_MemoryType MemoryType);
+
 /**
  * Gets speed dial.
+ * 
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup Memory
  */
 GSM_Error GSM_GetSpeedDial(GSM_StateMachine * s, GSM_SpeedDial * Speed);
+
 /**
  * Sets speed dial.
+ * 
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup Memory
  */
 GSM_Error GSM_SetSpeedDial(GSM_StateMachine * s, GSM_SpeedDial * Speed);
 
+/**
+ * Returns name of entry. It might be possibly concatenated from first
+ * and last names.
+ * 
+ * \param entry Entry to process.
+ *
+ * \return Static unicode string containing name.
+ *
+ * \ingroup Memory
+ */
 unsigned char *GSM_PhonebookGetEntryName(GSM_MemoryEntry * entry);
+
+/**
+ * Finds default name, number and group for entry.
+ * 
+ * \param entry Entry to process.
+ * \param Name Output index of name.
+ * \param Number Output index of number.
+ * \param Group Output index of group.
+ *
+ * \ingroup Memory
+ */
 void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry * entry, int *Name,
 					     int *Number, int *Group);
-
+/**
+ * Types of vCard.
+ *
+ * \ingroup Memory
+ */
 typedef enum {
+	/**
+	 * vCard 1.0 hacked for Nokia.
+	 */
 	Nokia_VCard10 = 1,
+	/**
+	 * vCard 2.1 hacked for Nokia.
+	 */
 	Nokia_VCard21,
+	/**
+	 * vCard 1.0 hacked for Sony-Ericsson (should be standard
+	 * vCard).
+	 */
 	SonyEricsson_VCard10,
+	/**
+	 * vCard 2.1 hacked for Sony-Ericsson (should be standard
+	 * vCard).
+	 */
 	SonyEricsson_VCard21
 } GSM_VCardVersion;
 
+/**
+ * Encodes memory entry to vCard.
+ *
+ * \ingroup Memory
+ */
 void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry * pbk,
 		     bool header, GSM_VCardVersion Version);
+
+/**
+ * Decodes memory entry from vCard.
+ *
+ * \ingroup Memory
+ */
 GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos,
 			  GSM_MemoryEntry * Pbk, GSM_VCardVersion Version);
 
 #endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */
