@@ -1,7 +1,7 @@
 /**
  * \file gammu-ringtone.h
  * \author Michal Čihař
- * 
+ *
  * Ringtone data and functions.
  */
 #ifndef __gammu_ringtone_h
@@ -67,13 +67,25 @@ typedef enum {
 } GSM_RingNoteDurationSpec;
 
 typedef enum {
-	Scale_55 = 1,		/* 55 Hz for note A      */
-	Scale_110,		/* 110 Hz for note A     */
+	/**
+	 * 55 Hz for note A
+	 */
+	Scale_55 = 1,
+	/**
+	 * 110 Hz for note A
+	 */
+	Scale_110,
 	Scale_220,
-	Scale_440,		/* first scale for Nokia */
+	/**
+	 * first scale for Nokia
+	 */
+	Scale_440,
 	Scale_880,
 	Scale_1760,
-	Scale_3520,		/* last scale for Nokia  */
+	/**
+	 * last scale for Nokia
+	 */
+	Scale_3520,
 	Scale_7040,
 	Scale_14080
 } GSM_RingNoteScale;
@@ -216,3 +228,7 @@ char *GSM_GetRingtoneName(GSM_AllRingtonesInfo * Info, int ID);
 int GSM_RTTLGetTempo(int Beats);
 
 #endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */
