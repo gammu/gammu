@@ -1,7 +1,7 @@
 /**
  * \file gammu-keys.h
  * \author Michal Čihař
- * 
+ *
  * Keys data and functions.
  */
 #ifndef __gammu_keys_h
@@ -40,9 +40,12 @@ typedef enum {
 	 * *
 	 */
 	GSM_KEY_ASTERISK,
+	/**
+	 * Power key.
+	 */
 	GSM_KEY_POWER,
 	/**
-         * in some phone ie. N5110 sometimes works identical to POWER
+	 * in some phone ie. N5110 sometimes works identical to POWER
 	 */
 	GSM_KEY_GREEN,
 	/**
@@ -50,18 +53,18 @@ typedef enum {
 	 */
 	GSM_KEY_RED,
 	/**
-	 * doesn't available in some phones as separate button: ie. N5110
+	 * Not available in some phones as separate button: ie. N5110
 	 */
 	GSM_KEY_INCREASEVOLUME,
 	/**
-	 * doesn't available in some phones as separate button: ie. N5110
+	 * Not available in some phones as separate button: ie. N5110
 	 */
 	GSM_KEY_DECREASEVOLUME,
 	GSM_KEY_UP = 0x17,
 	GSM_KEY_DOWN,
 	GSM_KEY_MENU,
 	/**
-	 * doesn't available in some phone: ie. N5110
+	 * Not available in some phone: ie. N5110
 	 */
 	GSM_KEY_NAMES,
 	/**
@@ -134,3 +137,7 @@ GSM_Error MakeKeySequence(char *text, GSM_KeyCode * KeyCode, int *Length);
  */
 GSM_Error GSM_PressKey(GSM_StateMachine * s, GSM_KeyCode Key, bool Press);
 #endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */
