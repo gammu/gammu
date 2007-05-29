@@ -13,6 +13,7 @@
  */
 
 #include <gammu-datetime.h>
+#include <gammu-limits.h>
 
 /**
  * Enum defines ID for various phone and SIM memories.
@@ -229,9 +230,6 @@ typedef enum {
 	PBK_Text_NickName, /**< Nick name (Text) */
 	PBK_Text_FormalName, /**< Formal name (Text) */
 } GSM_EntryType;
-
-#define GSM_PHONEBOOK_TEXT_LENGTH       200
-#define GSM_PHONEBOOK_ENTRIES	   	26
 
 /**
  * One value of phonebook memory entry.

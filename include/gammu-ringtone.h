@@ -14,11 +14,10 @@
 
 #include <gammu-types.h>
 #include <gammu-error.h>
+#include <gammu-limits.h>
 #include <gammu-statemachine.h>
 
 #include <stdio.h>
-
-#define MAX_RINGTONE_NOTES 255
 
 typedef enum {
 	/**
