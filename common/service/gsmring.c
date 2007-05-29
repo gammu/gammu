@@ -585,7 +585,7 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 	i++;
 
 	/* ------------------------- notes ------------------------------ */
-	while (buffer[i] != 0x00 && ringtone->NoteTone.NrCommands != MAX_RINGTONE_NOTES) {
+	while (buffer[i] != 0x00 && ringtone->NoteTone.NrCommands != GSM_MAX_RINGTONE_NOTES) {
 		switch(buffer[i]) {
 		case 'z': case 'Z':
 			switch (buffer[i+1]) {
@@ -1154,7 +1154,7 @@ GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *pac
 			Note->Scale = DefScale;
 			Note->Style = DefStyle;
 			Note->Tempo = DefTempo;
-			if (ringtone->NoteTone.NrCommands==MAX_RINGTONE_NOTES) break;
+			if (ringtone->NoteTone.NrCommands==GSM_MAX_RINGTONE_NOTES) break;
 			ringtone->NoteTone.NrCommands++;
 			break;
 		default:

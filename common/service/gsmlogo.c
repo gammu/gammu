@@ -857,7 +857,7 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 			if (pos2!=7) {pos2=7;pos++;}
 		}
 		bitmap->Number++;
-		if (bitmap->Number == MAX_MULTI_BITMAP) break;
+		if (bitmap->Number == GSM_MAX_MULTI_BITMAP) break;
 	}
 	return (ERR_NONE);
 }

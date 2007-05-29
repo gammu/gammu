@@ -185,11 +185,11 @@ typedef struct {
 	/**
 	 * IMEI of phone which has been backed up 
 	 */
-	char IMEI[MAX_IMEI_LENGTH];
+	char IMEI[GSM_MAX_IMEI_LENGTH];
 	/**
 	 * Model of phone which has been backed up 
 	 */
-	char Model[MAX_MODEL_LENGTH + MAX_VERSION_LENGTH];
+	char Model[GSM_MAX_MODEL_LENGTH + GSM_MAX_VERSION_LENGTH];
 	/**
 	 * Name of program which created backup 
 	 */

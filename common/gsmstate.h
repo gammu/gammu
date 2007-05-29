@@ -570,15 +570,15 @@ typedef struct {
 	/**
 	 * Phone IMEI (or serial number).
 	 */
-	char			IMEI[MAX_IMEI_LENGTH];
+	char			IMEI[GSM_MAX_IMEI_LENGTH];
 	/**
 	 * Phone manufacturer as reported by phone.
 	 */
-	char			Manufacturer[MAX_MANUFACTURER_LENGTH];
+	char			Manufacturer[GSM_MAX_MANUFACTURER_LENGTH];
 	/**
 	 * Phone model as reported by phone.
 	 */
-	char			Model[MAX_MODEL_LENGTH];
+	char			Model[GSM_MAX_MODEL_LENGTH];
 	/**
 	 * Model information, pointer to static @ref allmodels array.
 	 */
@@ -587,11 +587,11 @@ typedef struct {
 	 * Phone version as reported by phone. It doesn't have to be numerical
 	 * at all.
 	 */
-	char			Version[MAX_VERSION_LENGTH];
+	char			Version[GSM_MAX_VERSION_LENGTH];
 	/**
 	 * Phone version date, might be empty for some models.
 	 */
-	char			VerDate[MAX_VERSION_DATE_LENGTH];
+	char			VerDate[GSM_MAX_VERSION_DATE_LENGTH];
 	/**
 	 * Phone version as number, if applicable.
 	 */

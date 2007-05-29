@@ -593,9 +593,9 @@ static void N6510_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsig
 
 	/* simulate flat SMS memory */
 	if (sms->Folder==0x00) {
-		ifolderid = sms->Location / PHONE_MAXSMSINFOLDER;
+		ifolderid = sms->Location / GSM_PHONE_MAXSMSINFOLDER;
 		*folderid = ifolderid + 0x01;
-		*location = sms->Location - ifolderid * PHONE_MAXSMSINFOLDER;
+		*location = sms->Location - ifolderid * GSM_PHONE_MAXSMSINFOLDER;
 		if (*folderid == 0x1B) (*folderid)=0x99; //0x1A is Outbox in 6230i
 	} else {
 		*folderid = sms->Folder;
@@ -609,7 +609,7 @@ static void N6510_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsig
 static void N6510_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char folderid, int location)
 {
 	sms->Folder	= 0;
-	sms->Location	= (folderid - 0x01) * PHONE_MAXSMSINFOLDER + location;
+	sms->Location	= (folderid - 0x01) * GSM_PHONE_MAXSMSINFOLDER + location;
 	smprintf(s, "6510 folder %i & location %i -> SMS folder %i & location %i\n",
 		folderid,location,sms->Folder,sms->Location);
 }

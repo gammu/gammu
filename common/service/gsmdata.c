@@ -399,13 +399,13 @@ GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo2 *info)
 {
 	int i;
 
-	for (i=0;i<MAX_MULTI_MMS;i++) {
+	for (i=0;i<GSM_MAX_MULTI_MMS;i++) {
 		if (info->Entries[i].File.Buffer != NULL) free(info->Entries[i].File.Buffer);
 	}
 
 	memset(info,0,sizeof(GSM_EncodedMultiPartMMSInfo2));
 
-	for (i=0;i<MAX_MULTI_MMS;i++) info->Entries[i].File.Buffer = NULL;
+	for (i=0;i<GSM_MAX_MULTI_MMS;i++) info->Entries[i].File.Buffer = NULL;
 	info->DateTimeAvailable = false;
 
 	return ERR_NONE;

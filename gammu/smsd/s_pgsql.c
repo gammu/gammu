@@ -517,13 +517,13 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 	PQclear(Res);
 
 	sms->Number = 0;
-	for (i = 0; i < MAX_MULTI_SMS; i++) {
+	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
 		GSM_SetDefaultSMSData(&sms->SMS[i]);
 		sms->SMS[i].SMSC.Number[0] = 0;
 		sms->SMS[i].SMSC.Number[1] = 0;
 	}
 
-	for (i = 1; i < MAX_MULTI_SMS + 1; i++) {
+	for (i = 1; i < GSM_MAX_MULTI_SMS + 1; i++) {
 		if (i == 1) {
 			sprintf(buf,
 				"SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart, \

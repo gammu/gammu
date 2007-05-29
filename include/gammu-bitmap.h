@@ -185,7 +185,7 @@ typedef struct {
 	/**
 	 * All bitmaps
 	 */
-	GSM_Bitmap Bitmap[MAX_MULTI_BITMAP];
+	GSM_Bitmap Bitmap[GSM_MAX_MULTI_BITMAP];
 } GSM_MultiBitmap;
 
 /**

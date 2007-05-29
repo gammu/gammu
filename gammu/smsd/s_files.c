@@ -127,8 +127,8 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	GSM_MultiPartSMSInfo		SMSInfo;
 	GSM_WAPBookmark			Bookmark;
  	unsigned char 			FileName[100],FullName[400];
-	unsigned char			Buffer[(GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS+1)*2];
- 	unsigned char			Buffer2[(GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS+1)*2];
+	unsigned char			Buffer[(GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS+1)*2];
+ 	unsigned char			Buffer2[(GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS+1)*2];
   	FILE				*File;
  	int				i, len, phlen;
  	char				*pos1, *pos2, *options;
@@ -181,7 +181,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  	if ((len <  2) ||
             (len >= 2  && ((Buffer[0] != 0xFF || Buffer[1] != 0xFE) &&
 	                   (Buffer[0] != 0xFE || Buffer[1] != 0xFF)))) {
- 		if (len > GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS) len = GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS;
+ 		if (len > GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS) len = GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS;
  		EncodeUnicode(Buffer2, Buffer, len);
  		len = len*2;
  		memmove(Buffer, Buffer2, len);
@@ -299,7 +299,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 {
 	FILE 	*oFile,*iFile;
 	int 	ilen = 0, olen = 0;
-	char 	Buffer[(GSM_MAX_SMS_LENGTH*MAX_MULTI_SMS+1)*2],ifilename[400],ofilename[400];
+	char 	Buffer[(GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS+1)*2],ifilename[400],ofilename[400];
 	char	*sourcepath, *destpath;
 
 	sourcepath = Config->outboxpath;

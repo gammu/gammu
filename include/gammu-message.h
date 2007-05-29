@@ -540,7 +540,7 @@ typedef struct {
 	/**
 	 * Array of SMSes.
 	 */
-	GSM_SMSMessage SMS[MAX_MULTI_SMS];
+	GSM_SMSMessage SMS[GSM_MAX_MULTI_SMS];
 } GSM_MultiSMSMessage;
 
 /**
@@ -740,7 +740,7 @@ typedef struct {
 } MultiPartSMSEntry;
 
 typedef struct {
-	MultiPartSMSEntry Entries[MAX_MULTI_SMS];
+	MultiPartSMSEntry Entries[GSM_MAX_MULTI_SMS];
 	int EntriesNum;
 	bool UnicodeCoding;
 	int Class;
@@ -797,7 +797,7 @@ typedef struct {
 
 typedef struct {
 	/* Subparts */
-	EncodedMultiPartMMSEntry2 Entries[MAX_MULTI_MMS];
+	EncodedMultiPartMMSEntry2 Entries[GSM_MAX_MULTI_MMS];
 	int EntriesNum;
 
 	unsigned char Source[200];	// in Unicode

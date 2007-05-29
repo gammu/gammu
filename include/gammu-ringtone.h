@@ -106,7 +106,7 @@ typedef struct {
 
 typedef struct {
 	int NrCommands;
-	GSM_RingCommand Commands[MAX_RINGTONE_NOTES];
+	GSM_RingCommand Commands[GSM_MAX_RINGTONE_NOTES];
 	bool AllNotesScale;
 } GSM_NoteRingtone;
 
