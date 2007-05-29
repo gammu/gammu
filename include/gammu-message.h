@@ -992,7 +992,7 @@ typedef struct {
 	GSM_File File;
 	unsigned char ContentType[400];	// CT in Unicode
 	unsigned char SMIL[400];	// Smil ID in Unicode
-} EncodedMultiPartMMSEntry2;
+} GSM_EncodedMultiPartMMSEntry;
 
 /**
  * MMS part.
@@ -1001,7 +1001,7 @@ typedef struct {
  */
 typedef struct {
 	/* Subparts */
-	EncodedMultiPartMMSEntry2 Entries[GSM_MAX_MULTI_MMS];
+	GSM_EncodedMultiPartMMSEntry Entries[GSM_MAX_MULTI_MMS];
 	int EntriesNum;
 
 	unsigned char Source[200];	// in Unicode
@@ -1020,7 +1020,7 @@ typedef struct {
 
 	bool MMSReportAvailable;
 	bool MMSReport;
-} GSM_EncodedMultiPartMMSInfo2;
+} GSM_EncodedMultiPartMMSInfo;
 
 /**
  * Decodes MMS data.
@@ -1028,14 +1028,14 @@ typedef struct {
  * \ingroup MMS
  */
 GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File * file,
-				       GSM_EncodedMultiPartMMSInfo2 * info);
+				       GSM_EncodedMultiPartMMSInfo * info);
 
 /**
  * Clears MMS data, used to initialize structure.
  *
  * \ingroup MMS
  */
-GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo2 * info);
+GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo * info);
 
 /**
  * Gets SMS Service Center number and SMS settings.

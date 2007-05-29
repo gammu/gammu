@@ -2574,7 +2574,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 {
 	int				i,Pos;
 	char				buff[200];
-	GSM_EncodedMultiPartMMSInfo2 	info;
+	GSM_EncodedMultiPartMMSInfo 	info;
 	GSM_Error			error;
 	FILE				*file2;
 	GSM_MemoryEntry			pbk;

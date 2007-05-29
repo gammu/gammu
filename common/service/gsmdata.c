@@ -395,7 +395,7 @@ void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, int *Length, GSM_MMSIn
 	Buffer[(*Length)++] = 0x00;
 }
 
-GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo2 *info)
+GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo *info)
 {
 	int i;
 
@@ -403,7 +403,7 @@ GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo2 *info)
 		if (info->Entries[i].File.Buffer != NULL) free(info->Entries[i].File.Buffer);
 	}
 
-	memset(info,0,sizeof(GSM_EncodedMultiPartMMSInfo2));
+	memset(info,0,sizeof(GSM_EncodedMultiPartMMSInfo));
 
 	for (i=0;i<GSM_MAX_MULTI_MMS;i++) info->Entries[i].File.Buffer = NULL;
 	info->DateTimeAvailable = false;
@@ -425,7 +425,7 @@ void GSM_AddWAPMIMEType(int type, unsigned char *buffer)
 	}
 }
 
-GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSInfo2 *info)
+GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSInfo *info)
 {
 	int 		pos=0,type=0,parts,j;
 	int		i,len2,len3,len4,value2;
