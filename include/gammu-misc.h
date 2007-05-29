@@ -2,10 +2,10 @@
  * \file gammu-misc.h
  * \author Michal Čihař
  *
- * Message data and functions.
+ * Miscellaneous helper functions.
  */
-#ifndef __gammu_message_h
-#define __gammu_message_h
+#ifndef __gammu_misc_h
+#define __gammu_misc_h
 
 #include <stdio.h>
 #include <gammu-file.h>
