@@ -318,8 +318,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 
 				Res = PQexec(Config->DBConnPgSQL, buffer);
 				if ((!Res)
-				    || (PQresultStatus(Res) !=
-					PGRES_TUPLES_OK)) {
+				    || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
 					WriteSMSDLog(_
 						     ("Error writing to database (SaveInboxSMS): %s\n"),
 						     PQresultErrorMessage(Res));
@@ -340,47 +339,51 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 			Class, TextDecoded, RecipientID) VALUES ('%04d-%02d-%02d %02d:%02d:%02d', '", sms.SMS[i].DateTime.Year, sms.SMS[i].DateTime.Month, sms.SMS[i].DateTime.Day, sms.SMS[i].DateTime.Hour, sms.SMS[i].DateTime.Minute, sms.SMS[i].DateTime.Second);
 
 		switch (sms.SMS[i].Coding) {
-		case SMS_Coding_Unicode_No_Compression:
+			case SMS_Coding_Unicode_No_Compression:
 
-		case SMS_Coding_Default_No_Compression:
-			EncodeHexUnicode(buffer + strlen(buffer),
-					 sms.SMS[i].Text,
-					 UnicodeLength(sms.SMS[i].Text));
-			break;
+			case SMS_Coding_Default_No_Compression:
+				EncodeHexUnicode(buffer + strlen(buffer),
+						 sms.SMS[i].Text,
+						 UnicodeLength(sms.SMS[i].
+							       Text));
+				break;
 
-		case SMS_Coding_8bit:
-			EncodeHexBin(buffer + strlen(buffer), sms.SMS[i].Text,
-				     sms.SMS[i].Length);
+			case SMS_Coding_8bit:
+				EncodeHexBin(buffer + strlen(buffer),
+					     sms.SMS[i].Text,
+					     sms.SMS[i].Length);
 
-		default:
-			break;
+			default:
+				break;
 		}
 
 		sprintf(buffer + strlen(buffer), "','%s','",
 			DecodeUnicodeString(sms.SMS[i].Number));
 
 		switch (sms.SMS[i].Coding) {
-		case SMS_Coding_Unicode_No_Compression:
-			sprintf(buffer + strlen(buffer),
-				"Unicode_No_Compression");
-			break;
+			case SMS_Coding_Unicode_No_Compression:
+				sprintf(buffer + strlen(buffer),
+					"Unicode_No_Compression");
+				break;
 
-		case SMS_Coding_Unicode_Compression:
-			sprintf(buffer + strlen(buffer), "Unicode_Compression");
-			break;
+			case SMS_Coding_Unicode_Compression:
+				sprintf(buffer + strlen(buffer),
+					"Unicode_Compression");
+				break;
 
-		case SMS_Coding_Default_No_Compression:
-			sprintf(buffer + strlen(buffer),
-				"Default_No_Compression");
-			break;
+			case SMS_Coding_Default_No_Compression:
+				sprintf(buffer + strlen(buffer),
+					"Default_No_Compression");
+				break;
 
-		case SMS_Coding_Default_Compression:
-			sprintf(buffer + strlen(buffer), "Default_Compression");
-			break;
+			case SMS_Coding_Default_Compression:
+				sprintf(buffer + strlen(buffer),
+					"Default_Compression");
+				break;
 
-		case SMS_Coding_8bit:
-			sprintf(buffer + strlen(buffer), "8bit");
-			break;
+			case SMS_Coding_8bit:
+				sprintf(buffer + strlen(buffer), "8bit");
+				break;
 		}
 
 		sprintf(buffer + strlen(buffer), "','%s'",
@@ -399,23 +402,24 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 		sprintf(buffer + strlen(buffer), ",'%i','", sms.SMS[i].Class);
 
 		switch (sms.SMS[i].Coding) {
-			int error;
+				int error;
 
-		case SMS_Coding_Unicode_No_Compression:
+			case SMS_Coding_Unicode_No_Compression:
 
-		case SMS_Coding_Default_No_Compression:
-			EncodeUTF8(buffer2, sms.SMS[i].Text);
-			PQescapeStringConn(Config->DBConnPgSQL, buffer4,
-					   buffer2, strlen(buffer2), &error);
-			memcpy(buffer + strlen(buffer), buffer4,
-			       strlen(buffer4) + 1);
-			break;
+			case SMS_Coding_Default_No_Compression:
+				EncodeUTF8(buffer2, sms.SMS[i].Text);
+				PQescapeStringConn(Config->DBConnPgSQL, buffer4,
+						   buffer2, strlen(buffer2),
+						   &error);
+				memcpy(buffer + strlen(buffer), buffer4,
+				       strlen(buffer4) + 1);
+				break;
 
-		case SMS_Coding_8bit:
-			break;
+			case SMS_Coding_8bit:
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 
 		sprintf(buffer + strlen(buffer), "','%s')", Config->PhoneID);
@@ -571,23 +575,26 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 				   strlen(PQgetvalue(Res, 0, 4)));
 		} else {
 			switch (sms->SMS[sms->Number].Coding) {
-			case SMS_Coding_Unicode_No_Compression:
+				case SMS_Coding_Unicode_No_Compression:
 
-			case SMS_Coding_Default_No_Compression:
-				DecodeHexUnicode(sms->SMS[sms->Number].Text,
-						 PQgetvalue(Res, 0, 0),
-						 strlen(PQgetvalue(Res, 0, 0)));
-				break;
+				case SMS_Coding_Default_No_Compression:
+					DecodeHexUnicode(sms->SMS[sms->Number].
+							 Text, PQgetvalue(Res,
+									  0, 0),
+							 strlen(PQgetvalue
+								(Res, 0, 0)));
+					break;
 
-			case SMS_Coding_8bit:
-				DecodeHexBin(sms->SMS[sms->Number].Text,
-					     PQgetvalue(Res, 0, 0),
-					     strlen(PQgetvalue(Res, 0, 0)));
-				sms->SMS[sms->Number].Length =
-				    strlen(PQgetvalue(Res, 0, 0)) / 2;
+				case SMS_Coding_8bit:
+					DecodeHexBin(sms->SMS[sms->Number].Text,
+						     PQgetvalue(Res, 0, 0),
+						     strlen(PQgetvalue
+							    (Res, 0, 0)));
+					sms->SMS[sms->Number].Length =
+					    strlen(PQgetvalue(Res, 0, 0)) / 2;
 
-			default:
-				break;
+				default:
+					break;
 			}
 		}
 
@@ -751,20 +758,22 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 		sprintf(buffer + strlen(buffer), ", '");
 
 		switch (sms->SMS[i].Coding) {
-		case SMS_Coding_Unicode_No_Compression:
+			case SMS_Coding_Unicode_No_Compression:
 
-		case SMS_Coding_Default_No_Compression:
-			EncodeHexUnicode(buffer + strlen(buffer),
-					 sms->SMS[i].Text,
-					 UnicodeLength(sms->SMS[i].Text));
-			break;
+			case SMS_Coding_Default_No_Compression:
+				EncodeHexUnicode(buffer + strlen(buffer),
+						 sms->SMS[i].Text,
+						 UnicodeLength(sms->SMS[i].
+							       Text));
+				break;
 
-		case SMS_Coding_8bit:
-			EncodeHexBin(buffer + strlen(buffer), sms->SMS[i].Text,
-				     sms->SMS[i].Length);
+			case SMS_Coding_8bit:
+				EncodeHexBin(buffer + strlen(buffer),
+					     sms->SMS[i].Text,
+					     sms->SMS[i].Length);
 
-		default:
-			break;
+			default:
+				break;
 		}
 
 		sprintf(buffer + strlen(buffer), "', ");
@@ -783,27 +792,29 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 		sprintf(buffer + strlen(buffer), "'");
 		switch (sms->SMS[i].Coding) {
-		case SMS_Coding_Unicode_No_Compression:
-			sprintf(buffer + strlen(buffer),
-				"Unicode_No_Compression");
-			break;
+			case SMS_Coding_Unicode_No_Compression:
+				sprintf(buffer + strlen(buffer),
+					"Unicode_No_Compression");
+				break;
 
-		case SMS_Coding_Unicode_Compression:
-			sprintf(buffer + strlen(buffer), "Unicode_Compression");
-			break;
+			case SMS_Coding_Unicode_Compression:
+				sprintf(buffer + strlen(buffer),
+					"Unicode_Compression");
+				break;
 
-		case SMS_Coding_Default_No_Compression:
-			sprintf(buffer + strlen(buffer),
-				"Default_No_Compression");
-			break;
+			case SMS_Coding_Default_No_Compression:
+				sprintf(buffer + strlen(buffer),
+					"Default_No_Compression");
+				break;
 
-		case SMS_Coding_Default_Compression:
-			sprintf(buffer + strlen(buffer), "Default_Compression");
-			break;
+			case SMS_Coding_Default_Compression:
+				sprintf(buffer + strlen(buffer),
+					"Default_Compression");
+				break;
 
-		case SMS_Coding_8bit:
-			sprintf(buffer + strlen(buffer), "8bit");
-			break;
+			case SMS_Coding_8bit:
+				sprintf(buffer + strlen(buffer), "8bit");
+				break;
 		}
 
 		sprintf(buffer + strlen(buffer), "', '");
@@ -816,18 +827,19 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 		sprintf(buffer + strlen(buffer), "', '%i', '",
 			sms->SMS[i].Class);
 		switch (sms->SMS[i].Coding) {
-		case SMS_Coding_Unicode_No_Compression:
+			case SMS_Coding_Unicode_No_Compression:
 
-		case SMS_Coding_Default_No_Compression:
-			EncodeUTF8(buffer2, sms->SMS[i].Text);
-			PQescapeStringConn(Config->DBConnPgSQL, buffer5,
-					   buffer2, strlen(buffer2), &error);
-			memcpy(buffer + strlen(buffer), buffer5,
-			       strlen(buffer5) + 1);
-			break;
+			case SMS_Coding_Default_No_Compression:
+				EncodeUTF8(buffer2, sms->SMS[i].Text);
+				PQescapeStringConn(Config->DBConnPgSQL, buffer5,
+						   buffer2, strlen(buffer2),
+						   &error);
+				memcpy(buffer + strlen(buffer), buffer5,
+				       strlen(buffer5) + 1);
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 
 		sprintf(buffer + strlen(buffer), "', '");
@@ -841,8 +853,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 				Res = PQexec(Config->DBConnPgSQL, buffer4);
 				if ((!Res)
-				    || (PQresultStatus(Res) !=
-					PGRES_TUPLES_OK)) {
+				    || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
 					WriteSMSDLog(_
 						     ("Error reading from database (CreateOutbox): %s\n"),
 						     PQresultErrorMessage(Res));
@@ -970,45 +981,49 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 		Config->PhoneID);
 
 	switch (sms->SMS[Part - 1].Coding) {
-	case SMS_Coding_Unicode_No_Compression:
+		case SMS_Coding_Unicode_No_Compression:
 
-	case SMS_Coding_Default_No_Compression:
-		EncodeHexUnicode(buffer + strlen(buffer),
-				 sms->SMS[Part - 1].Text,
-				 UnicodeLength(sms->SMS[Part - 1].Text));
-		break;
+		case SMS_Coding_Default_No_Compression:
+			EncodeHexUnicode(buffer + strlen(buffer),
+					 sms->SMS[Part - 1].Text,
+					 UnicodeLength(sms->SMS[Part - 1].
+						       Text));
+			break;
 
-	case SMS_Coding_8bit:
-		EncodeHexBin(buffer + strlen(buffer), sms->SMS[Part - 1].Text,
-			     sms->SMS[Part - 1].Length);
+		case SMS_Coding_8bit:
+			EncodeHexBin(buffer + strlen(buffer),
+				     sms->SMS[Part - 1].Text,
+				     sms->SMS[Part - 1].Length);
 
-	default:
-		break;
+		default:
+			break;
 	}
 
 	sprintf(buffer + strlen(buffer), "', '%s', '",
 		DecodeUnicodeString(sms->SMS[Part - 1].Number));
 
 	switch (sms->SMS[Part - 1].Coding) {
-	case SMS_Coding_Unicode_No_Compression:
-		sprintf(buffer + strlen(buffer), "Unicode_No_Compression");
-		break;
+		case SMS_Coding_Unicode_No_Compression:
+			sprintf(buffer + strlen(buffer),
+				"Unicode_No_Compression");
+			break;
 
-	case SMS_Coding_Unicode_Compression:
-		sprintf(buffer + strlen(buffer), "Unicode_Compression");
-		break;
+		case SMS_Coding_Unicode_Compression:
+			sprintf(buffer + strlen(buffer), "Unicode_Compression");
+			break;
 
-	case SMS_Coding_Default_No_Compression:
-		sprintf(buffer + strlen(buffer), "Default_No_Compression");
-		break;
+		case SMS_Coding_Default_No_Compression:
+			sprintf(buffer + strlen(buffer),
+				"Default_No_Compression");
+			break;
 
-	case SMS_Coding_Default_Compression:
-		sprintf(buffer + strlen(buffer), "Default_Compression");
-		break;
+		case SMS_Coding_Default_Compression:
+			sprintf(buffer + strlen(buffer), "Default_Compression");
+			break;
 
-	case SMS_Coding_8bit:
-		sprintf(buffer + strlen(buffer), "8bit");
-		break;
+		case SMS_Coding_8bit:
+			sprintf(buffer + strlen(buffer), "8bit");
+			break;
 	}
 
 	sprintf(buffer + strlen(buffer), "', '");
@@ -1023,17 +1038,19 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 		sms->SMS[Part - 1].Class);
 
 	switch (sms->SMS[Part - 1].Coding) {
-	case SMS_Coding_Unicode_No_Compression:
+		case SMS_Coding_Unicode_No_Compression:
 
-	case SMS_Coding_Default_No_Compression:
-		EncodeUTF8(buffer2, sms->SMS[Part - 1].Text);
-		PQescapeStringConn(Config->DBConnPgSQL, buffer5, buffer2,
-				   strlen(buffer2), &escape_error);
-		memcpy(buffer + strlen(buffer), buffer5, strlen(buffer5) + 1);
-		break;
+		case SMS_Coding_Default_No_Compression:
+			EncodeUTF8(buffer2, sms->SMS[Part - 1].Text);
+			PQescapeStringConn(Config->DBConnPgSQL, buffer5,
+					   buffer2, strlen(buffer2),
+					   &escape_error);
+			memcpy(buffer + strlen(buffer), buffer5,
+			       strlen(buffer5) + 1);
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 
 	sprintf(buffer + strlen(buffer), "', '%s', '", Config->DT);
