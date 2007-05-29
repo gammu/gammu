@@ -1,7 +1,7 @@
 /**
  * \file gammu-message.h
  * \author Michal Čihař
- * 
+ *
  * Message data and functions.
  */
 #ifndef __gammu_message_h
@@ -17,20 +17,49 @@
 #include <gammu-file.h>
 
 /**
- * \defgroup Message Message
+ * \defgroup Message Messages
  * Messages manipulations.
  */
 
+/**
+ * \defgroup USSD USSD messages
+ * USSD messages manipulations.
+ * \ingroup Message
+ */
+
+/**
+ * \defgroup CB CB messages
+ * Cell broadcast messages manipulations.
+ * \ingroup Message
+ */
+
+/**
+ * \defgroup SMS SMS messages
+ * SMS messages manipulations.
+ * \ingroup Message
+ */
+
+/**
+ * \defgroup MMS MMS messages
+ * MMS messages manipulations.
+ * \ingroup Message
+ */
+
+/**
+ * MMS indicator data.
+ *
+ * \ingroup MMS
+ */
 typedef struct {
 	char Address[500];
 	char Title[200];
 	char Sender[200];
 } GSM_MMSIndicator;
 
-/* -------------------- Cell Broadcast ------------------------------------ */
-
 /**
  * Structure for Cell Broadcast messages.
+ *
+ * \ingroup CB
  */
 typedef struct {
 	/**
@@ -43,23 +72,46 @@ typedef struct {
 	int Channel;
 } GSM_CBMessage;
 
-/* -------------------- USSD ------------------------------------ */
-
 /**
  * Status of USSD message.
+ *
+ * \ingroup USSD
  */
 typedef enum {
-	USSD_Unknown = 1, /**< Unknown status */
-	USSD_NoActionNeeded, /**< No action is needed, maybe network initiated USSD */
-	USSD_ActionNeeded, /**< Reply is expected */
-	USSD_Terminated, /**< USSD dialog terminated */
-	USSD_AnotherClient, /**< Another client replied */
-	USSD_NotSupported, /**< Operation not supported */
-	USSD_Timeout, /**< Network timeout */
+	/**
+	 * Unknown status
+	 */
+	USSD_Unknown = 1,
+	/**
+	 * No action is needed, maybe network initiated USSD
+	 */
+	USSD_NoActionNeeded,
+	/**
+	 * Reply is expected
+	 */
+	USSD_ActionNeeded,
+	/**
+	 * USSD dialog terminated
+	 */
+	USSD_Terminated,
+	/**
+	 * Another client replied
+	 */
+	USSD_AnotherClient,
+	/**
+	 * Operation not supported
+	 */
+	USSD_NotSupported,
+	/**
+	 * Network timeout
+	 */
+	USSD_Timeout,
 } GSM_USSDStatus;
 
 /**
  * Structure for USSD messages.
+ *
+ * \ingroup USSD
  */
 typedef struct {
 	/**
@@ -72,10 +124,10 @@ typedef struct {
 	GSM_USSDStatus Status;
 } GSM_USSDMessage;
 
-/* ------------------------ SMS status ------------------------------------ */
-
 /**
  * Status of SMS memory.
+ *
+ * \ingroup SMS
  */
 typedef struct {
 	/**
@@ -108,10 +160,10 @@ typedef struct {
 	int PhoneSize;
 } GSM_SMSMemoryStatus;
 
-/* --------------------- SMS Center --------------------------------------- */
-
 /**
  * Enum defines format of SMS messages. See GSM 03.40 section 9.2.3.9
+ *
+ * \ingroup SMS
  */
 typedef enum {
 	SMS_FORMAT_Pager = 1,
@@ -124,7 +176,9 @@ typedef enum {
 /**
  * Enum defines some the most often used validity lengths for SMS messages
  * for relative validity format. See GSM 03.40 section 9.2.3.12.1 - it gives
- * more values
+ * more values.
+ *
+ * \ingroup SMS
  */
 typedef enum {
 	SMS_VALID_1_Hour = 0x0b,
@@ -138,6 +192,8 @@ typedef enum {
 /**
  * Enum defines format of validity period for SMS messages.
  * See GSM 03.40 section 9.2.3.12
+ *
+ * \ingroup SMS
  */
 typedef enum {
 	SMS_Validity_NotAvailable = 1,
@@ -147,6 +203,8 @@ typedef enum {
 
 /**
  * Structure for validity of SMS messages
+ *
+ * \ingroup SMS
  */
 typedef struct {
 	GSM_ValidityPeriodFormat Format;
@@ -158,6 +216,8 @@ typedef struct {
 
 /**
  * Structure for SMSC (SMS Center) information.
+ *
+ * \ingroup SMS
  */
 typedef struct {
 	/**
@@ -186,10 +246,10 @@ typedef struct {
 	unsigned char DefaultNumber[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 } GSM_SMSC;
 
-/* --------------------- single SMS --------------------------------------- */
-
 /**
  * Status of SMS message.
+ *
+ * \ingroup SMS
  */
 typedef enum {
 	SMS_Sent = 1,
@@ -200,6 +260,8 @@ typedef enum {
 
 /**
  * Coding type of SMS.
+ *
+ * \ingroup SMS
  */
 typedef enum {
 	/**
@@ -220,6 +282,8 @@ typedef enum {
 
 /**
  * Types of UDH (User Data Header).
+ *
+ * \ingroup SMS
  */
 typedef enum {
 	UDH_NoUDH = 1,
@@ -254,6 +318,8 @@ typedef enum {
 
 /**
  * Structure for User Data Header.
+ *
+ * \ingroup SMS
  */
 typedef struct {
 	/**
@@ -288,6 +354,8 @@ typedef struct {
 
 /**
  * TP-Message-Type-Indicator. See GSM 03.40 section 9.2.3.1.
+ *
+ * \ingroup SMS
  */
 typedef enum {
 	/**
@@ -307,6 +375,8 @@ typedef enum {
 
 /**
  * SMS message data.
+ *
+ * \ingroup SMS
  */
 typedef struct {
 	/**
@@ -402,6 +472,8 @@ typedef struct {
 
 /* In layouts are saved locations for some SMS part. Below are listed
  * specs, which describe them
+ *
+ * \ingroup SMS
  */
 typedef struct {
 	/**
@@ -471,37 +543,91 @@ typedef struct {
 	unsigned char TPPID;
 } GSM_SMSMessageLayout;
 
+/**
+ * Decodes SMS frame.
+ *
+ * \ingroup SMS
+ */
 GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage * SMS, unsigned char *buffer,
 			     GSM_SMSMessageLayout Layout);
+
+/**
+ * Encodes SMS frame.
+ *
+ * \ingroup SMS
+ */
 GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage * SMS, unsigned char *buffer,
 			     GSM_SMSMessageLayout Layout, int *length,
 			     bool clear);
 
+/**
+ * Decodes SMS frame for status report.
+ *
+ * \ingroup SMS
+ */
 GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_SMSMessage * SMS,
 					     unsigned char *buffer,
 					     GSM_SMSMessageLayout Layout);
+
+/**
+ * Decodes SMS frame in textual representation.
+ *
+ * \ingroup SMS
+ */
 GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage * SMS, unsigned char *buffer,
 				 GSM_SMSMessageLayout Layout);
 
+/**
+ * Decodes UDH header.
+ *
+ * \ingroup SMS
+ */
 void GSM_DecodeUDHHeader(GSM_UDHHeader * UDH);
+
+/**
+ * Encodes UDH header.
+ *
+ * \ingroup SMS
+ */
 void GSM_EncodeUDHHeader(GSM_UDHHeader * UDH);
 
+/**
+ * Sets default content for SMS. Use this for clearing structure.
+ *
+ * \param SMS Pointer to structure which should be cleaned up.
+ *
+ * \ingroup SMS
+ */
 void GSM_SetDefaultSMSData(GSM_SMSMessage * SMS);
-
-/* ---------------------- SMS folders ------------------------------------- */
 
 /**
  * Information about SMS folder.
+ *
+ * \ingroup SMS
  */
 typedef struct {
-	bool InboxFolder;		     /**< Whether it is inbox. */
-	bool OutboxFolder;		      /**< Whether it is outbox. */
-	GSM_MemoryType Memory;		/**< Where exactly it's saved. */
-	unsigned char Name[(GSM_MAX_SMS_FOLDER_NAME_LEN + 1) * 2];	 /**< Name of the folder */
+	/**
+	 * Whether it is inbox.
+	 */
+	bool InboxFolder;
+	/**
+	 * Whether it is outbox.
+	 */
+	bool OutboxFolder;
+	/**
+	 * Where exactly it's saved.
+	 */
+	GSM_MemoryType Memory;
+	/**
+	 * Name of the folder
+	 */
+	unsigned char Name[(GSM_MAX_SMS_FOLDER_NAME_LEN + 1) * 2];
 } GSM_OneSMSFolder;
 
 /**
  * List of SMS folders.
+ *
+ * \ingroup SMS
  */
 typedef struct {
 	/**
@@ -514,6 +640,11 @@ typedef struct {
 	unsigned char Number;
 } GSM_SMSFolders;
 
+/**
+ * Siemens OTA data.
+ *
+ * \ingroup SMS
+ */
 typedef struct {
 	unsigned long SequenceID;
 	unsigned int PacketsNum;
@@ -526,11 +657,18 @@ typedef struct {
 	unsigned char Data[140];
 } GSM_SiemensOTASMSInfo;
 
+/**
+ * Decodes Siemens OTA data.
+ *
+ * \ingroup SMS
+ */
 bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo * Info,
 			     GSM_SMSMessage * SMS);
 
 /**
  * Multiple SMS messages, used for Smart Messaging 3.0/EMS.
+ *
+ * \ingroup SMS
  */
 typedef struct {
 	/**
@@ -545,6 +683,8 @@ typedef struct {
 
 /**
  * Information about MMS folder.
+ *
+ * \ingroup MMS
  */
 typedef struct {
 	/**
@@ -559,6 +699,8 @@ typedef struct {
 
 /**
  * List of MMS folders.
+ *
+ * \ingroup MMS
  */
 typedef struct {
 	/**
@@ -571,12 +713,31 @@ typedef struct {
 	unsigned char Number;
 } GSM_MMSFolders;
 
+/**
+ * Layout for submit message.
+ *
+ * \ingroup SMS
+ */
 extern GSM_SMSMessageLayout PHONE_SMSSubmit;
+
+/**
+ * Layout for deliver message.
+ *
+ * \ingroup SMS
+ */
 extern GSM_SMSMessageLayout PHONE_SMSDeliver;
+
+/**
+ * Layout for status report message.
+ *
+ * \ingroup SMS
+ */
 extern GSM_SMSMessageLayout PHONE_SMSStatusReport;
 
 /**
  * ID during packing SMS for Smart Messaging 3.0, EMS and other
+ *
+ * \ingroup SMS
  */
 typedef enum {
 	/**
@@ -709,6 +870,11 @@ typedef enum {
 	SMS_SiemensFile
 } EncodeMultiPartSMSID;
 
+/**
+ * Entry of multipart SMS.
+ *
+ * \ingroup SMS
+ */
 typedef struct {
 	EncodeMultiPartSMSID ID;
 
@@ -739,6 +905,11 @@ typedef struct {
 	int RingtoneNotes;
 } MultiPartSMSEntry;
 
+/**
+ * Multipart SMS information.
+ *
+ * \ingroup SMS
+ */
 typedef struct {
 	MultiPartSMSEntry Entries[GSM_MAX_MULTI_SMS];
 	int EntriesNum;
@@ -750,6 +921,10 @@ typedef struct {
 
 /**
  * Encodes SMS frame according to layout.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine * s, GSM_SMSMessage * SMS,
 			       unsigned char *buffer,
@@ -758,43 +933,72 @@ GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine * s, GSM_SMSMessage * SMS,
 
 /**
  * Encodes multi part SMS from "readable" format.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo * Info,
 				 GSM_MultiSMSMessage * SMS);
 
 /**
  * Decodes multi part SMS to "readable" format.
+ *
+ * \ingroup SMS
  */
 bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo * Info,
 			    GSM_MultiSMSMessage * SMS, bool ems);
 
 /**
  * Clears @ref GSM_MultiPartSMSInfo to default values.
+ *
+ * \ingroup SMS
  */
 void GSM_ClearMultiPartSMSInfo(GSM_MultiPartSMSInfo * Info);
 
 /**
  * Frees any allocated structures inside @ref GSM_MultiPartSMSInfo.
+ *
+ * \ingroup SMS
  */
 void GSM_FreeMultiPartSMSInfo(GSM_MultiPartSMSInfo * Info);
 
 /**
  * Links SMS messages according to IDs.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage ** INPUT,
 		      GSM_MultiSMSMessage ** OUTPUT, bool ems);
 
+/**
+ * MMS address type.
+ *
+ * \ingroup MMS
+ */
 typedef enum {
 	MMSADDRESS_PHONE,
 	MMSADDRESS_UNKNOWN
 } MMSAddressType;
 
+/**
+ * MMS entry.
+ *
+ * \ingroup MMS
+ */
 typedef struct {
 	GSM_File File;
 	unsigned char ContentType[400];	// CT in Unicode
 	unsigned char SMIL[400];	// Smil ID in Unicode
 } EncodedMultiPartMMSEntry2;
 
+/**
+ * MMS part.
+ *
+ * \ingroup MMS
+ */
 typedef struct {
 	/* Subparts */
 	EncodedMultiPartMMSEntry2 Entries[GSM_MAX_MULTI_MMS];
@@ -818,89 +1022,218 @@ typedef struct {
 	bool MMSReport;
 } GSM_EncodedMultiPartMMSInfo2;
 
+/**
+ * Decodes MMS data.
+ *
+ * \ingroup MMS
+ */
 GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File * file,
 				       GSM_EncodedMultiPartMMSInfo2 * info);
+
+/**
+ * Clears MMS data, used to initialize structure.
+ *
+ * \ingroup MMS
+ */
 GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo2 * info);
 
 /**
  * Gets SMS Service Center number and SMS settings.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_GetSMSC(GSM_StateMachine * s, GSM_SMSC * smsc);
 /**
  * Sets SMS Service Center number and SMS settings.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_SetSMSC(GSM_StateMachine * s, GSM_SMSC * smsc);
 /**
  * Gets information about SMS memory (read/unread/size of memory for
  * both SIM and phone).
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_GetSMSStatus(GSM_StateMachine * s, GSM_SMSMemoryStatus * status);
 /**
  * Reads SMS message.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_GetSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms);
 /**
  * Reads next (or first if start set) SMS message. This might be
  * faster for some phones than using \ref GSM_GetSMS for each message.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_GetNextSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms,
 			 bool start);
 /**
  * Sets SMS.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_SetSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
 /**
  * Adds SMS to specified folder.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_AddSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
 /**
  * Deletes SMS.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_DeleteSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
 /**
  * Sends SMS.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_SendSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
 /**
  * Sends SMS already saved in phone.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_SendSavedSMS(GSM_StateMachine * s, int Folder, int Location);
 /**
  * Configures fast SMS sending.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_SetFastSMSSending(GSM_StateMachine * s, bool enable);
 /**
  * Enable/disable notification on incoming SMS.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_SetIncomingSMS(GSM_StateMachine * s, bool enable);
 /**
  * Gets network information from phone.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup CB
  */
 GSM_Error GSM_SetIncomingCB(GSM_StateMachine * s, bool enable);
 /**
  * Returns SMS folders information.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_GetSMSFolders(GSM_StateMachine * s, GSM_SMSFolders * folders);
 /**
  * Creates SMS folder.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_AddSMSFolder(GSM_StateMachine * s, unsigned char *name);
 /**
  * Deletes SMS folder.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup SMS
  */
 GSM_Error GSM_DeleteSMSFolder(GSM_StateMachine * s, int ID);
 
 /**
  * Lists MMS folders.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup MMS
  */
 GSM_Error GSM_GetMMSFolders(GSM_StateMachine * s, GSM_MMSFolders * folders);
 /**
  * Retrieves next part of MMS file information.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup MMS
  */
 GSM_Error GSM_GetNextMMSFileInfo(GSM_StateMachine * s, unsigned char *FileID,
 				 int *MMSFolder, bool start);
 /**
  * Activates/deactivates noticing about incoming USSDs (UnStructured Supplementary Services).
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code.
+ *
+ * \ingroup USSD
  */
 GSM_Error GSM_SetIncomingUSSD(GSM_StateMachine * s, bool enable);
 #endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */
