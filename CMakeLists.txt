@@ -647,6 +647,7 @@ endif (NOT DEFINED INSTALL_MAN_DIR)
 
 # Generate pkgconfig file
 configure_file (templates/gammu.pc.cmake cfg/gammu.pc @ONLY)
+configure_file (templates/gammu-uninstalled.pc.cmake pkgconfig/gammu.pc @ONLY)
 
 # Install instructions
 
