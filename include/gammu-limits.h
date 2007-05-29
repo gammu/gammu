@@ -226,7 +226,7 @@
 /**
  * Maximal size of bitmap.
  *
- * \ingroup Limits.
+ * \ingroup Limits
  */
 #define GSM_BITMAP_SIZE (65+7)/8*96
 
