@@ -230,7 +230,7 @@ typedef enum {
 	/**
 	 * Length of call (Number) 
 	 */
-	PBK_CallLength,	
+	PBK_CallLength,
 	/**
 	 * LUID - Unique Identifier used for synchronisation
 	 */
@@ -238,15 +238,15 @@ typedef enum {
 	/**
 	 * Date of last modification 
 	 */
-	PBK_LastModified, 
+	PBK_LastModified,
 	/**
 	 * Nick name (Text) 
 	 */
-	PBK_Text_NickName, 
+	PBK_Text_NickName,
 	/**
 	 * Formal name (Text) 
 	 */
-	PBK_Text_FormalName, 
+	PBK_Text_FormalName,
 } GSM_EntryType;
 
 /**
