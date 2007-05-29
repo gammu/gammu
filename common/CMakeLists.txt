@@ -91,9 +91,14 @@ else (CROSS_MINGW)
 
 endif (CROSS_MINGW)
 
+set (GAMMU_LIBS "")
+
 if (BLUEZ_FOUND)
     target_link_libraries (Gammu ${BLUEZ_LIBRARIES})
     include_directories (${BLUEZ_INCLUDE_DIR})
+    if (NOT "${BLUEZ_LIBRARIES}" STREQUAL "") 
+        set (GAMMU_LIBS "${GAMMU_LIBS} -l${BLUEZ_LIBRARIES}")
+    endif (NOT "${BLUEZ_LIBRARIES}" STREQUAL "") 
 endif (BLUEZ_FOUND)
 
 if (NOT HAVE_SIN)
@@ -116,7 +121,17 @@ endif (WIN32)
 if (GETTEXTLIBS_FOUND)
     target_link_libraries (Gammu ${GETTEXT_LIBRARY})
     include_directories (${GETTEXT_INCLUDE_DIR})
+    if (NOT "${GETTEXT_LIBRARIES}" STREQUAL "") 
+        set (GAMMU_LIBS "${GAMMU_LIBS} -l${GETTEXT_LIBRARIES}")
+    endif (NOT "${GETTEXT_LIBRARIES}" STREQUAL "") 
 endif (GETTEXTLIBS_FOUND)
+
+# Define required libraries for gammu library if it is static
+if (ENABLE_SHARED)
+    set (GAMMU_PRIVATE_LIBS "" CACHE INTERNAL "Private libraries for gammu library")
+else (ENABLE_SHARED)
+    set (GAMMU_PRIVATE_LIBS "${GAMMU_LIBS}" CACHE INTERNAL "Private libraries for gammu library")
+endif (ENABLE_SHARED)
 
 # Install instructions
 install (TARGETS Gammu
