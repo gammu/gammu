@@ -13,6 +13,7 @@
  */
 
 #include <gammu-datetime.h>
+#include <gammu-limits.h>
 
 /**
  * \defgroup Note Note
@@ -23,34 +24,6 @@
  * \defgroup Todo Todo
  * Todo entries manipulations.
  */
-
-/**
- * Maximal number of calendar entries.
- *
- * \ingroup Calendar
- */
-#define GSM_CALENDAR_ENTRIES 16
-
-/**
- * Maximal length of text in calendar.
- *
- * \ingroup Calendar
- */
-#define MAX_CALENDAR_TEXT_LENGTH 256
-
-/**
- * Maximal number of todo entries.
- *
- * \ingroup Todo
- */
-#define GSM_TODO_ENTRIES 7
-
-/**
- * Maximal length of text in todo.
- *
- * \ingroup Todo
- */
-#define MAX_TODO_TEXT_LENGTH 160
 
 /**
  * Calendar settings structure.

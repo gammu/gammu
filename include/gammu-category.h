@@ -12,12 +12,7 @@
  * Categories handling.
  */
 
-/**
- * Maximal length of category name.
- *
- * \ingroup Category
- */
-#define GSM_MAX_CATEGORY_NAME_LENGTH 60
+#include <gammu-limits.h>
 
 /**
  * Type of category

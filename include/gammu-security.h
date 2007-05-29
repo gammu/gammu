@@ -12,6 +12,8 @@
  * Security related operations with phone.
  */
 
+#include <gammu-limits.h>
+
 /**
  * Definition of security codes.
  *
@@ -44,8 +46,6 @@ typedef enum {
 	SEC_None
 } GSM_SecurityCodeType;
 
-#define GSM_SECURITY_CODE_LEN	15
-
 /**
  * Security code definition.
  *
@@ -68,8 +68,9 @@ typedef struct {
  * \ingroup Security
  */
 GSM_Error GSM_EnterSecurityCode(GSM_StateMachine * s, GSM_SecurityCode Code);
+
 /**
- * Queries whether some security code needs to be entered./
+ * Queries whether some security code needs to be entered.
  *
  * \ingroup Security
  */

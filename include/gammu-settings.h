@@ -13,6 +13,7 @@
  */
 
 #include <gammu-wap.h>
+#include <gammu-limits.h>
 
 typedef struct {
 	int Location;
@@ -134,9 +135,6 @@ typedef struct {
 
 	bool CallerGroups[5];
 } GSM_Profile;
-
-#define	GSM_MAX_FMSTATION_LENGTH 18
-#define	GSM_MAX_FM_STATION 	 20
 
 typedef struct {
 	int Location;

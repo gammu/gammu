@@ -27,12 +27,6 @@ typedef struct {
 	char Sender[200];
 } GSM_MMSIndicator;
 
-/* --------------------- Some general definitions ------------------------- */
-
-#define GSM_MAX_UDH_LENGTH		140
-#define GSM_MAX_SMS_LENGTH		160
-#define GSM_MAX_8BIT_SMS_LENGTH	 	140
-
 /* -------------------- Cell Broadcast ------------------------------------ */
 
 /**
@@ -161,8 +155,6 @@ typedef struct {
 	 */
 	GSM_ValidityPeriod Relative;
 } GSM_SMSValidity;
-
-#define GSM_MAX_SMSC_NAME_LENGTH	50
 
 /**
  * Structure for SMSC (SMS Center) information.
@@ -312,13 +304,6 @@ typedef enum {
 	SMS_Submit
 	    /* specification gives more */
 } GSM_SMSMessageType;
-
-/**
- * Maximal length of SMS name.
- */
-#define GSM_MAX_SMS_NAME_LENGTH	 200
-
-#define GSM_SMS_OTHER_NUMBERS 5
 
 /**
  * SMS message data.
@@ -506,15 +491,6 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage * SMS);
 /* ---------------------- SMS folders ------------------------------------- */
 
 /**
- * Number of possible SMS folders.
- */
-#define GSM_MAX_SMS_FOLDERS	     	50
-/**
- * Maximal length of SMS folder name.
- */
-#define GSM_MAX_SMS_FOLDER_NAME_LEN     20
-
-/**
  * Information about SMS folder.
  */
 typedef struct {
@@ -553,8 +529,6 @@ typedef struct {
 bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo * Info,
 			     GSM_SMSMessage * SMS);
 
-#define MAX_MULTI_SMS 10
-
 /**
  * Multiple SMS messages, used for Smart Messaging 3.0/EMS.
  */
@@ -568,15 +542,6 @@ typedef struct {
 	 */
 	GSM_SMSMessage SMS[MAX_MULTI_SMS];
 } GSM_MultiSMSMessage;
-
-/**
- * Number of possible MMS folders.
- */
-#define GSM_MAX_MMS_FOLDERS	     	10
-/**
- * Maximal length of MMS folder name.
- */
-#define GSM_MAX_MMS_FOLDER_NAME_LEN     20
 
 /**
  * Information about MMS folder.
@@ -818,8 +783,6 @@ void GSM_FreeMultiPartSMSInfo(GSM_MultiPartSMSInfo * Info);
  */
 GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage ** INPUT,
 		      GSM_MultiSMSMessage ** OUTPUT, bool ems);
-
-#define MAX_MULTI_MMS 20
 
 typedef enum {
 	MMSADDRESS_PHONE,

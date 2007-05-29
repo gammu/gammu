@@ -91,9 +91,6 @@ typedef enum {
 	GSM_PictureBinary
 } GSM_Bitmap_Types;
 
-#define GSM_BITMAP_SIZE	(65+7)/8*96
-#define GSM_BITMAP_TEXT_LENGTH 128
-
 /**
  * Structure for all possible bitmaps, which are not saved in various filesystems
  *
@@ -174,8 +171,6 @@ typedef struct {
 	 */
 	char *Name;
 } GSM_Bitmap;
-
-#define MAX_MULTI_BITMAP 6
 
 /**
  * Structure to handle more than one bitmap
