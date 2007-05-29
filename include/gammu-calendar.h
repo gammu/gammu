@@ -347,7 +347,6 @@ void GSM_CalendarFindDefaultTextTimeAlarmPhone(GSM_CalendarEntry * entry,
 					       int *Phone, int *EndTime,
 					       int *Location);
 
-
 /**
  * Types of to do values. In parenthesis is member of @ref GSM_SubToDoEntry,
  * where value is stored.
@@ -603,7 +602,6 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length,
  */
 GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length,
 			    GSM_NoteEntry * Note);
-
 
 /**
  * Decodes vCalendar and vTodo buffer.

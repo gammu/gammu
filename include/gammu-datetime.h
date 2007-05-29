@@ -113,7 +113,6 @@ char *DayOfWeek(int year, int month, int day);
  */
 void GSM_GetCurrentDateTime(GSM_DateTime * Date);
 
-
 /**
  * Converts \ref GSM_DateTime to time_t.
  *
@@ -134,7 +133,6 @@ time_t Fill_Time_T(GSM_DateTime DT);
  * \ingroup DateTime
  */
 void Fill_GSM_DateTime(GSM_DateTime * Date, time_t timet);
-
 
 /**
  * Converts timestamp to string according to OS settings.
