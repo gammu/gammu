@@ -1,11 +1,14 @@
 /* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 
+#include <gammu-config.h>
+
 #include <string.h>
 #include <stdlib.h>
 #include <sys/stat.h>
 #ifdef WIN32
 #  include <io.h>
 #  include <fcntl.h>
+#  include <winsock2.h>
 #else
 #  include <netdb.h>
 #  include <netinet/in.h>

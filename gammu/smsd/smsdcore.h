@@ -4,6 +4,7 @@
 
 #ifdef HAVE_MYSQL_MYSQL_H
 #ifdef WIN32
+#  include <winsock2.h>
 #  include <mysql.h>
 #  include <mysqld_error.h>
 #else
