@@ -247,6 +247,30 @@ typedef enum {
 	 * Formal name (Text) 
 	 */
 	PBK_Text_FormalName,
+	/**
+	 * Work street address. (Text)
+	 */
+	PBK_Text_WorkStreetAddress,
+	/**
+	 * Work city. (Text)
+	 */
+	PBK_Text_WorkCity,
+	/**
+	 * Work state. (Text)
+	 */
+	PBK_Text_WorkState,
+	/**
+	 * Work zip code. (Text)
+	 */
+	PBK_Text_WorkZip,
+	/**
+	 * Work country. (Text)
+	 */
+	PBK_Text_WorkCountry,
+	/**
+	 * Complete work postal address. (Text)
+	 */
+	PBK_Text_WorkPostal,
 } GSM_EntryType;
 
 /**

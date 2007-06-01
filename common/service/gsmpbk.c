@@ -105,6 +105,7 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 	int Name, Number, Group, i;
 	int firstname = -1, lastname = -1;
 	int address = -1, city = -1, state = -1, zip = -1, country = -1;
+	int workaddress = -1, workcity = -1, workstate = -1, workzip = -1, workcountry = -1;
 	unsigned char buffer[1024];
 	int pos;
 	bool ignore;
@@ -160,6 +161,26 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 					break;
 				case PBK_Text_Country:
 					country = i;
+					ignore = true;
+					break;
+				case PBK_Text_WorkStreetAddress:
+					workaddress = i;
+					ignore = true;
+					break;
+				case PBK_Text_WorkCity:
+					workcity = i;
+					ignore = true;
+					break;
+				case PBK_Text_WorkState:
+					workstate = i;
+					ignore = true;
+					break;
+				case PBK_Text_WorkZip:
+					workzip = i;
+					ignore = true;
+					break;
+				case PBK_Text_WorkCountry:
+					workcountry = i;
 					ignore = true;
 					break;
 				case PBK_Date:
@@ -249,6 +270,13 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 					SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "LABEL", false);
 					*Length+=sprintf(Buffer+(*Length),"ADR");
 					break;
+				case PBK_Text_WorkPostal    :
+					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
+						ignore = true;
+						break;
+					}
+					*Length+=sprintf(Buffer+(*Length),"ADR;WORK");
+					break;
 				case PBK_Text_Email     :
 				case PBK_Text_Email2    :
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
@@ -321,6 +349,51 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 			buffer[2*pos] = 0;
 			buffer[2*pos + 1] = 0;
 			SaveVCALText(Buffer, Length, buffer, "N", false);
+		}
+		/* Save workaddress if it is composed from parts */
+		if (workaddress != -1 || workcity != -1 || workstate != -1 || workzip != -1 || workcountry != -1) {
+			pos = 0;
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			if (workaddress != -1) {
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[workaddress].Text);
+				pos += UnicodeLength(pbk->Entries[workaddress].Text);
+			}
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			if (workcity != -1) {
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[workcity].Text);
+				pos += UnicodeLength(pbk->Entries[workcity].Text);
+			}
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			if (workstate != -1) {
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[workstate].Text);
+				pos += UnicodeLength(pbk->Entries[workstate].Text);
+			}
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			if (workzip != -1) {
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[workzip].Text);
+				pos += UnicodeLength(pbk->Entries[workzip].Text);
+			}
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = ';';
+			pos++;
+			if (workcountry != -1) {
+				CopyUnicodeString(buffer + 2*pos, pbk->Entries[workcountry].Text);
+				pos += UnicodeLength(pbk->Entries[workcountry].Text);
+			}
+			buffer[2*pos] = 0;
+			buffer[2*pos + 1] = 0;
+			SaveVCALText(Buffer, Length, buffer, "ADR;WORK", false);
 		}
 		/* Save address if it is composed from parts */
 		if (address != -1 || city != -1 || state != -1 || zip != -1 || country != -1) {
@@ -588,6 +661,53 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Country;
+					Pbk->EntriesNum++;
+				}
+			}
+			if (ReadVCALText(Line, "ADR;WORK", Buff, false)) {
+				if (address) continue;
+				address = true;
+				pos = 0;
+				s = VCALGetTextPart(Buff, &pos); /* PO box, ignore for now */
+				if (s == NULL) {
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkPostal;
+					Pbk->EntriesNum++;
+				} else {
+					s = VCALGetTextPart(Buff, &pos); /* Don't know ... */
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkStreetAddress;
+					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkCity;
+					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkState;
+					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkZip;
+					Pbk->EntriesNum++;
+					if (Pbk->EntriesNum == GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+
+					s = VCALGetTextPart(Buff, &pos);
+					if (s == NULL) continue;
+					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
+					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkCountry;
 					Pbk->EntriesNum++;
 				}
 			}

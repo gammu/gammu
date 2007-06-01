@@ -19,6 +19,7 @@ ChangeLog
 [-] * Reduced inclusion dependencies.
 [-] * Fixed compilation on OS X.
 [+] * Added --features to show compiled in features.
+[+] * Add support for work address.
 
 20070524 - 1.11.90
 [+] * Support for some new Nokia fields.

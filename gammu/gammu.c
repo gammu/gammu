@@ -1005,6 +1005,7 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 	case PBK_Number_Other       : printf(LISTFORMAT, _("Other number")); break;
 	case PBK_Text_Note          : printf(LISTFORMAT, _("Text")); break;
 	case PBK_Text_Postal        : printf(LISTFORMAT, _("Snail address")); break;
+	case PBK_Text_WorkPostal    : printf(LISTFORMAT, _("Work snail address")); break;
 	case PBK_Text_Email         : printf(LISTFORMAT, _("Email address 1")); break;
 	case PBK_Text_Email2        : printf(LISTFORMAT, _("Email address 2")); break;
 	case PBK_Text_URL           : printf(LISTFORMAT, _("URL address")); break;
@@ -1021,6 +1022,11 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 	case PBK_Text_State         : printf(LISTFORMAT, _("State")); break;
 	case PBK_Text_Zip           : printf(LISTFORMAT, _("Zip code")); break;
 	case PBK_Text_Country       : printf(LISTFORMAT, _("Country")); break;
+	case PBK_Text_WorkStreetAddress : printf(LISTFORMAT, _("Work street address")); break;
+	case PBK_Text_WorkCity      : printf(LISTFORMAT, _("Work city")); break;
+	case PBK_Text_WorkState     : printf(LISTFORMAT, _("Work state")); break;
+	case PBK_Text_WorkZip       : printf(LISTFORMAT, _("Work zip code")); break;
+	case PBK_Text_WorkCountry   : printf(LISTFORMAT, _("Work country")); break;
 	case PBK_Text_Custom1       : printf(LISTFORMAT, _("Custom text 1")); break;
 	case PBK_Text_Custom2       : printf(LISTFORMAT, _("Custom text 2")); break;
 	case PBK_Text_Custom3       : printf(LISTFORMAT, _("Custom text 3")); break;
@@ -1182,6 +1188,7 @@ static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 			case PBK_Number_Other       :
 			case PBK_Text_Note          :
 			case PBK_Text_Postal        :
+			case PBK_Text_WorkPostal:
 			case PBK_Text_Email         :
 			case PBK_Text_Email2        :
 			case PBK_Text_URL           :
@@ -1198,6 +1205,11 @@ static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 			case PBK_Text_State         :
 			case PBK_Text_Zip           :
 			case PBK_Text_Country       :
+			case PBK_Text_WorkStreetAddress :
+			case PBK_Text_WorkCity          :
+			case PBK_Text_WorkState         :
+			case PBK_Text_WorkZip           :
+			case PBK_Text_WorkCountry       :
 			case PBK_Text_Custom1       :
 			case PBK_Text_Custom2       :
 			case PBK_Text_Custom3       :
