@@ -137,7 +137,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{0,				""}
 };
 
-char *GSM_ErrorString(GSM_Error e)
+const char *GSM_ErrorString(GSM_Error e)
 {
 	unsigned char 	*def 	= NULL;
 	int 		i	= 0;
