@@ -249,7 +249,7 @@ typedef enum {
  *
  * \ingroup Error
  */
-char *GSM_ErrorString(GSM_Error e);
+const char *GSM_ErrorString(GSM_Error e);
 #endif
 
 /* Editor configuration
