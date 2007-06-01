@@ -1,0 +1,9 @@
+Examples for libGammu usage
+===========================
+
+This directory contains few examples for libGammu usage from C. You will
+probably need to set GAMMU_BUILD variable before invoking make, it
+should point to place where you have built gammu. You can ignore this if
+you have properly installed Gammu on your system.
+
+# vim: et ts=4 sw=4 sts=4 tw=72

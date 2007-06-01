@@ -4,7 +4,14 @@ GAMMU_BUILD=../../../build/
 
 CFLAGS=$(shell PKG_CONFIG_PATH=$(GAMMU_BUILD)/pkgconfig pkg-config --cflags --libs gammu) -Wall
 
-all: phone-info
+ALL=phone-info
+
+.PHONY: all clean
+
+all: $(ALL)
+
+clean: 
+	rm -f $(ALL)
 
 %:%.c
 	$(CC) $< $(CFLAGS) -o $@
