@@ -285,6 +285,10 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				sprintf(buffer,"Entry%02iType = Postal%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
+			case PBK_Text_WorkPostal:
+				sprintf(buffer,"Entry%02iType = WorkPostal%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				break;
 			case PBK_Text_Email:
 				sprintf(buffer,"Entry%02iType = Email%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
@@ -382,6 +386,26 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				break;
 			case PBK_Text_Country:
 				sprintf(buffer,"Entry%02iType = Country%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				break;
+			case PBK_Text_WorkStreetAddress:
+				sprintf(buffer,"Entry%02iType = WorkAddress%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				break;
+			case PBK_Text_WorkCity:
+				sprintf(buffer,"Entry%02iType = WorkCity%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				break;
+			case PBK_Text_WorkState:
+				sprintf(buffer,"Entry%02iType = WorkState%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				break;
+			case PBK_Text_WorkZip:
+				sprintf(buffer,"Entry%02iType = WorkZip%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				break;
+			case PBK_Text_WorkCountry:
+				sprintf(buffer,"Entry%02iType = WorkCountry%c%c",j,13,10);
 				SaveBackupText(file, "", buffer, UseUnicode);
 				break;
 			case PBK_Text_Custom1:
@@ -1359,6 +1383,8 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Note;
 			} else if (strcasecmp(readvalue,"Postal") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
+			} else if (strcasecmp(readvalue,"WorkPostal") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkPostal;
 			} else if (strcasecmp(readvalue,"Email") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
 			} else if (strcasecmp(readvalue,"Email2") == 0) {
@@ -1387,6 +1413,16 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Zip;
 			} else if (strcasecmp(readvalue,"Country") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Country;
+			} else if (strcasecmp(readvalue,"WorkAddress") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkStreetAddress;
+			} else if (strcasecmp(readvalue,"WorkCity") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkCity;
+			} else if (strcasecmp(readvalue,"WorkState") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkState;
+			} else if (strcasecmp(readvalue,"WorkZip") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkZip;
+			} else if (strcasecmp(readvalue,"WorkCountry") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkCountry;
 			} else if (strcasecmp(readvalue,"Custom1") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Custom1;
 			} else if (strcasecmp(readvalue,"Custom2") == 0) {

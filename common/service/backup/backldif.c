@@ -55,6 +55,10 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 			case PBK_Text_Postal:
 				SaveLDIFText(file, "HomePostalAddress", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
+			case PBK_Text_WorkPostal:
+				/* This does not conform to standard, but I think it's better to have it saved */
+				SaveLDIFText(file, "WorkPostalAddress", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
 			case PBK_Text_URL:
 				SaveLDIFText(file, "homeurl", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
@@ -108,6 +112,21 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 				break;
 			case PBK_Text_JobTitle:
 				SaveLDIFText(file, "title", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
+			case PBK_Text_WorkStreetAddress:
+				SaveLDIFText(file, "workPostalAddress", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
+			case PBK_Text_WorkCity:
+				SaveLDIFText(file, "workLocalityName", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
+			case PBK_Text_WorkState:
+				SaveLDIFText(file, "workState", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
+			case PBK_Text_WorkZip:
+				SaveLDIFText(file, "workPostalCode", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
+			case PBK_Text_WorkCountry:
+				SaveLDIFText(file, "workCountryName", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			case PBK_Text_StreetAddress:
 				SaveLDIFText(file, "homePostalAddress", backup->PhonePhonebook[i]->Entries[j].Text);
@@ -248,6 +267,11 @@ static GSM_Error GSM_DecodeLDIFEntry(unsigned char *Buffer, int *Pos, GSM_Memory
 			if (ReadLDIFText(Line, "HomePostalAddress", Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "womePostalAddress", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkPostal;
 				Pbk->EntriesNum++;
 			}
 			if (ReadLDIFText(Line, "mail", Buff)) {
