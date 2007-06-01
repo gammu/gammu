@@ -287,6 +287,7 @@ set (EXAMPLES
 
 set (DEVELDOCS
     docs/develop/Gammu.htm
+    docs/develop/PORTING
     docs/develop/develop.txt
     docs/develop/gammu_hints.txt
     docs/develop/protocol/TDMA_5120.txt
@@ -301,6 +302,8 @@ set (DEVELDOCS
     docs/develop/sms/readme
     docs/develop/sounds/readme
     docs/develop/sounds/ring2.txt
+    docs/develop/examples/Makefile
+    docs/develop/examples/phone-info.c
     )
 
 set (DOCS
