@@ -371,15 +371,15 @@ void PrintNetworkInfo(GSM_NetworkInfo NetInfo)
 	}
 	if (NetInfo.State == GSM_HomeNetwork || NetInfo.State == GSM_RoamingNetwork) {
 		printf(LISTFORMAT, _("Network"));
-		printf("%s (%s",	
+		printf("%s (%s",
 			NetInfo.NetworkCode,
 			DecodeUnicodeConsole(GSM_GetNetworkName(NetInfo.NetworkCode)));
-		printf(", %s)",				
+		printf(", %s)",
 			DecodeUnicodeConsole(GSM_GetCountryName(NetInfo.NetworkCode)));
-		printf(", LAC %s, CID %s\n",		
+		printf(", LAC %s, CID %s\n",
 			NetInfo.LAC,NetInfo.CID);
 		if (NetInfo.NetworkName[0] != 0x00 || NetInfo.NetworkName[1] != 0x00) {
-			printf(LISTFORMAT "\"%s\"\n", 
+			printf(LISTFORMAT "\"%s\"\n",
 				_("Name in phone"),
 				DecodeUnicodeConsole(NetInfo.NetworkName));
 		}
@@ -786,7 +786,7 @@ static void GetDateTime(int argc, char *argv[])
 		printf(_("Time format is "));
 		if (locale.AMPMTime) {
 			/* l10n: AM/PM time */
-			printf("%s\n", _("12 hours")); 
+			printf("%s\n", _("12 hours"));
 		} else {
 			/* l10n: 24 hours time */
 			printf("%s\n", _("24 hours"));
@@ -1976,38 +1976,38 @@ static void Monitor(int argc, char *argv[])
 				printf("\n");
 			}
             		if (BatteryCharge.BatteryCapacity != -1) {
-				printf(LISTFORMAT, _("Battery capacity"));  
+				printf(LISTFORMAT, _("Battery capacity"));
 				printf(_("%i mAh"), BatteryCharge.BatteryCapacity);
 				printf("\n");
 			}
             		if (BatteryCharge.BatteryTemperature != -1) {
-				printf(LISTFORMAT, _("Battery temperature"));    
+				printf(LISTFORMAT, _("Battery temperature"));
 				/* l10n: This means degrees Celsius */
 				printf(_("%i C"), BatteryCharge.BatteryTemperature);
 				printf("\n");
 			}
             		if (BatteryCharge.PhoneTemperature != -1) {
-				printf(LISTFORMAT, _("Phone temperature"));      
+				printf(LISTFORMAT, _("Phone temperature"));
 				printf(_("%i C"), BatteryCharge.PhoneTemperature);
 				printf("\n");
 			}
             		if (BatteryCharge.BatteryVoltage != -1) {
-				printf(LISTFORMAT, _("Battery voltage"));  
+				printf(LISTFORMAT, _("Battery voltage"));
 				printf(_("%i mV"), BatteryCharge.BatteryVoltage);
 				printf("\n");
 			}
             		if (BatteryCharge.ChargeVoltage != -1) {
-				printf(LISTFORMAT, _("Charge voltage"));   
+				printf(LISTFORMAT, _("Charge voltage"));
 				printf(_("%i mV"), BatteryCharge.ChargeVoltage);
 				printf("\n");
 			}
             		if (BatteryCharge.ChargeCurrent != -1) {
-				printf(LISTFORMAT, _("Charge current"));    
+				printf(LISTFORMAT, _("Charge current"));
 				printf(_("%i mA"), BatteryCharge.ChargeCurrent);
 				printf("\n");
 			}
             		if (BatteryCharge.PhoneCurrent != -1) {
-				printf(LISTFORMAT, _("Phone current"));    
+				printf(LISTFORMAT, _("Phone current"));
 				printf(_("%i mA"), BatteryCharge.PhoneCurrent);
 				printf("\n");
 			}
@@ -2065,17 +2065,17 @@ static void Monitor(int argc, char *argv[])
 		CHECK_EXIT;
 		if ( (error = GSM_GetSignalQuality(s,&SignalQuality)) == ERR_NONE) {
             		if (SignalQuality.SignalStrength != -1) {
-				printf(LISTFORMAT, _("Signal strength"));   
+				printf(LISTFORMAT, _("Signal strength"));
 				printf(_("%i dBm"), SignalQuality.SignalStrength);
                 		printf("\n");
 			}
             		if (SignalQuality.SignalPercent  != -1) {
-				printf(LISTFORMAT, _("Network level"));     
+				printf(LISTFORMAT, _("Network level"));
 				printf(_("%i percent"), SignalQuality.SignalPercent);
                 		printf("\n");
 			}
             		if (SignalQuality.BitErrorRate   != -1) {
-				printf(LISTFORMAT, _("Bit error rate"));    
+				printf(LISTFORMAT, _("Bit error rate"));
 				printf(_("%i percent"), SignalQuality.BitErrorRate);
                 		printf("\n");
 			}
@@ -2188,23 +2188,23 @@ static void GetSMSC(int argc, char *argv[])
 		printf(LISTFORMAT, _("Validity"));
 
 		switch (smsc.Validity.Relative) {
-			case SMS_VALID_1_Hour	: 
+			case SMS_VALID_1_Hour	:
 				PRINTHOURS(1);
 				break;
-			case SMS_VALID_6_Hours 	: 
+			case SMS_VALID_6_Hours 	:
 				PRINTHOURS(6);
 				break;
-			case SMS_VALID_1_Day	: 
+			case SMS_VALID_1_Day	:
 				PRINTDAYS(1);
 				break;
-			case SMS_VALID_3_Days	: 
+			case SMS_VALID_3_Days	:
 				PRINTDAYS(3);
 				break;
-			case SMS_VALID_1_Week  	: 
+			case SMS_VALID_1_Week  	:
 				PRINTWEEKS(1);
 				break;
-			case SMS_VALID_Max_Time	: 
-				printf(_("Maximum time")); 
+			case SMS_VALID_Max_Time	:
+				printf(_("Maximum time"));
 				break;
 			default           	:
 				if (smsc.Validity.Relative >= 0 && smsc.Validity.Relative <= 143) {
@@ -2721,7 +2721,9 @@ static void GetRingtone(int argc, char *argv[])
 	GSM_Ringtone 	ringtone;
 	bool		PhoneRingtone = false;
 
-	if (strcasecmp(argv[1],"--getphoneringtone") == 0) PhoneRingtone = true;
+	if (strcasestr(argv[1], "getphoneringtone") != NULL) {
+		PhoneRingtone = true;
+	}
 
 	GetStartStop(&ringtone.Location, NULL, 2, argc, argv);
 
@@ -3544,13 +3546,27 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	GSM_SMSC		    	PhoneSMSC;
 	bool				DeliveryReport		= false;
 
+	bool SaveSMS = false, SendSMS = false, DisplaySMS = false, SendSMSDSMS = false;
+
+	if (strcasestr(argv[1], "savesms") != NULL) {
+		SaveSMS = true;
+	} else if (strcasestr(argv[1], "sendsms") != NULL) {
+		SendSMS = true;
+	} else if (strcasestr(argv[1], "displaysms") != NULL) {
+		DisplaySMS = true;
+	} else if (strcasestr(argv[1], "sendsmsdsms") != NULL) {
+		SendSMSDSMS = true;
+	} else {
+		return -1;
+	}
+
 	ReplaceBuffer[0] = 0;
 	ReplaceBuffer[1] = 0;
 	GSM_ClearMultiPartSMSInfo(&SMSInfo);
 	SMSInfo.ReplaceMessage		= 0;
 	SMSInfo.EntriesNum		= 1;
 
-	if (strcasecmp(argv[1],"--savesms") == 0) {
+	if (SaveSMS) {
 		EncodeUnicode(Sender,"Gammu",5);
 		Name[0]  	= 0;
 		Name[1]  	= 0;
@@ -3560,7 +3576,8 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		startarg 	= 1;
 		Validity.Format = 0;
 	}
-	if (strcasecmp(argv[1],"--sendsmsdsms") == 0) {
+
+	if (SendSMSDSMS) {
 		startarg=startarg+2;
 		EncodeUnicode(SMSC,"1234",4);
 		SMSCSet	= 0;
@@ -3598,7 +3615,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 		SMSInfo.Entries[0].ID 	 	= SMS_MMSIndicatorLong;
 		SMSInfo.Entries[0].MMSIndicator = &MMSInfo;
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			EncodeUnicode(Sender,"MMS Info",8);
 		}
 		strcpy(MMSInfo.Address,	argv[3+startarg]);
@@ -3612,7 +3629,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 		SMSInfo.Entries[0].ID 	 	= SMS_WAPIndicatorLong;
 		SMSInfo.Entries[0].MMSIndicator = &MMSInfo;
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			EncodeUnicode(Sender,"WAP Info",8);
 		}
 		strcpy(MMSInfo.Address,	argv[3+startarg]);
@@ -3628,7 +3645,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		Print_Error(error);
 		SMSInfo.Entries[0].ID 	 = SMS_NokiaRingtone;
 		SMSInfo.Entries[0].Ringtone = &ringtone[0];
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			CopyUnicodeString(Sender, ringtone[0].Name);
 			EncodeUnicode(Name,"Ringtone ",9);
 			CopyUnicodeString(Name+9*2, ringtone[0].Name);
@@ -3645,7 +3662,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		strcpy(bitmap[0].Bitmap[0].NetworkCode,"000 00");
 		SMSInfo.Entries[0].ID 	 = SMS_NokiaOperatorLogo;
 		SMSInfo.Entries[0].Bitmap   = &bitmap[0];
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			EncodeUnicode(Sender, "OpLogo",6);
 			EncodeUnicode(Name,"OpLogo ",7);
 		}
@@ -3660,7 +3677,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		Print_Error(error);
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaCallerLogo;
 		SMSInfo.Entries[0].Bitmap   = &bitmap[0];
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			EncodeUnicode(Sender, "Caller",6);
 		}
 		startarg += 4;
@@ -3704,7 +3721,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		SMSInfo.UnicodeCoding 		= false;
 		bitmap[0].Bitmap[0].Text[0]	= 0;
 		bitmap[0].Bitmap[0].Text[1]	= 0;
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			EncodeUnicode(Sender, "Picture",7);
 			EncodeUnicode(Name,"Picture Image",13);
 		}
@@ -3728,7 +3745,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaWAPBookmarkLong;
 		SMSInfo.Entries[0].Bookmark = Backup.WAPBookmark[i];
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			EncodeUnicode(Sender, "Bookmark",8);
 			EncodeUnicode(Name,"WAP Bookmark",12);
 		}
@@ -3771,7 +3788,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			exit(-1);
 		}
 		SMSInfo.Entries[0].ID = SMS_NokiaWAPSettingsLong;
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			EncodeUnicode(Sender, "Settings",8);
 			EncodeUnicode(Name,"WAP Settings",12);
 		}
@@ -3807,7 +3824,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			exit(-1);
 		}
 		SMSInfo.Entries[0].ID = SMS_NokiaMMSSettingsLong;
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			EncodeUnicode(Sender, "Settings",8);
 			EncodeUnicode(Name,"MMS Settings",12);
 		}
@@ -3830,7 +3847,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaVCALENDAR10Long;
 		SMSInfo.Entries[0].Calendar = Backup.Calendar[i];
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			EncodeUnicode(Sender, "Calendar",8);
 		}
 		startarg += 5;
@@ -3852,7 +3869,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 		SMSInfo.Entries[0].ID 	 	= SMS_NokiaVTODOLong;
 		SMSInfo.Entries[0].ToDo 	= Backup.ToDo[i];
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			EncodeUnicode(Sender, "ToDo",8);
 		}
 		startarg += 5;
@@ -3893,7 +3910,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		} else {
 			SMSInfo.Entries[0].ID = SMS_VCARD21Long;
 		}
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			EncodeUnicode(Sender, "VCARD",5);
 			EncodeUnicode(Name, "Phonebook entry",15);
 		}
@@ -3901,7 +3918,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 #endif
 	} else if (strcasecmp(argv[2],"PROFILE") == 0) {
 		SMSInfo.Entries[0].ID = SMS_NokiaProfileLong;
-		if (strcasecmp(argv[1],"--savesms") == 0) {
+		if (SaveSMS) {
 			EncodeUnicode(Sender, "Profile",7);
 		}
 		startarg += 3;
@@ -3913,13 +3930,13 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	for (i=startarg;i<argc;i++) {
 		switch (nextlong) {
 		case 0:
-			if (strcasecmp(argv[1],"--savesms") == 0 || SendSaved) {
+			if (SaveSMS || SendSaved) {
 				if (strcasecmp(argv[i],"-folder") == 0) {
 					nextlong=1;
 					continue;
 				}
 			}
-			if (strcasecmp(argv[1],"--savesms") == 0) {
+			if (SaveSMS) {
 				if (strcasecmp(argv[i],"-unread") == 0) {
 					State = SMS_UnRead;
 					continue;
@@ -4379,7 +4396,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 				printf(_("Unknown GSM network code (\"%s\")\n"),argv[i]);
 				exit(-1);
 			}
-			if (strcasecmp(argv[1],"--savesms") == 0) {
+			if (SaveSMS) {
 				EncodeUnicode(Sender, "OpLogo",6);
 				EncodeUnicode(Sender+6*2,bitmap[0].Bitmap[0].NetworkCode,3);
 				EncodeUnicode(Sender+6*2+3*2,bitmap[0].Bitmap[0].NetworkCode+4,2);
@@ -4611,7 +4628,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 	}
 
-	if (strcasecmp(argv[1],"--displaysms") == 0 || strcasecmp(argv[1],"--sendsmsdsms") == 0) {
+	if (DisplaySMS || SendSMSDSMS) {
 		if (strcasecmp(argv[2],"OPERATOR") == 0) {
 			if (bitmap[0].Bitmap[0].Type==GSM_OperatorLogo && strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0) {
 				printf("%s\n", _("No network code"));
@@ -4626,7 +4643,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 				error=GSM_GetNetworkInfo(s,&NetInfo);
 				Print_Error(error);
 				strcpy(bitmap[0].Bitmap[0].NetworkCode,NetInfo.NetworkCode);
-				if (strcasecmp(argv[1],"--savesms") == 0) {
+				if (SaveSMS) {
 					EncodeUnicode(Sender, "OpLogo",6);
 					EncodeUnicode(Sender+6*2,bitmap[0].Bitmap[0].NetworkCode,3);
 					EncodeUnicode(Sender+6*2+3*2,bitmap[0].Bitmap[0].NetworkCode+4,2);
@@ -4666,11 +4683,11 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	}
 	if (MaxSMS != -1 && sms.Number > MaxSMS) {
 		printf(_("There is %i SMS packed and %i limit. Exiting\n"),sms.Number,MaxSMS);
-		if (!strcasecmp(argv[1],"--displaysms") == 0 && !strcasecmp(argv[1],"--sendsmsdsms") == 0) GSM_Terminate();
+		GSM_Terminate();
 		exit(-1);
 	}
 
-	if (strcasecmp(argv[1],"--displaysms") == 0) {
+	if (DisplaySMS) {
 		if (SMSCSet != 0) {
 			printf("%s\n", _("Use -smscnumber option to give SMSC number"));
 			exit(-1);
@@ -4693,7 +4710,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		printf("\n");
 		exit(sms.Number);
 	}
-	if (strcasecmp(argv[1],"--sendsmsdsms") == 0) {
+	if (SendSMSDSMS) {
 		if (SMSCSet != 0) {
 			printf("%s\n", _("Use -smscnumber option to give SMSC number"));
 			exit(-1);
@@ -4712,7 +4729,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		SMSDaemonSendSMS(argv[4],argv[5],&sms);
 		exit(0);
 	}
-	if (strcasecmp(argv[1],"--savesms") == 0 || SendSaved) {
+	if (SaveSMS || SendSaved) {
 		error=GSM_GetSMSFolders(s, &folders);
 		Print_Error(error);
 
@@ -6718,7 +6735,7 @@ static void GetWAPMMSSettings(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		settings.Location=i;
-		if (strcasecmp(argv[1],"--getwapsettings") == 0) {
+		if (strcasestr(argv[1], "getwapsettings") != NULL) {
 			error=GSM_GetWAPSettings(s,&settings);
 		} else {
 			error=GSM_GetMMSSettings(s,&settings);
@@ -8668,7 +8685,7 @@ static void AddSendFile(int argc, char *argv[])
 	bool			sendfile = false;
 	int			optint = 2;
 
-	if (strcasecmp(argv[1], "--sendfile") == 0) {
+	if (strcasestr(argv[1], "sendfile") != NULL) {
 		sendfile = true;
 	}
 
