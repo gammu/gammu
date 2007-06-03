@@ -568,10 +568,10 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 
 		/* File size block */
 		req[Current++] = 0xC3; // ID
-		req[Current++] = 0;
-		req[Current++] = 0;
-		req[Current++] = File->Used / 256;
-		req[Current++] = File->Used % 256;
+		req[Current++] = (File->Used >> 24) & 0xff;
+		req[Current++] = (File->Used >> 16) & 0xff;
+		req[Current++] = (File->Used >> 8) & 0xff;
+		req[Current++] = File->Used & 0xff;
 	}
 
 	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
@@ -588,7 +588,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		j = File->Used - *Pos;
 		/* End of file body block */
 		OBEXAddBlock(req, &Current, 0x49, File->Buffer+(*Pos), j);
-		smprintf(s, "Adding file part %i %i\n",*Pos,j);
+		smprintf(s, "Adding last file part %i %i\n",*Pos,j);
 		*Pos = *Pos + j;
 		error = GSM_WaitFor (s, req, Current, 0x82, OBEX_TIMEOUT, ID_AddFile);
 		if (error != ERR_NONE) return error;
