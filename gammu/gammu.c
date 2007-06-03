@@ -266,7 +266,7 @@ void GSM_Init(bool checkerror)
 	}
 	while(i!=strlen(ver)) {
 		if (ver[i] > version[i]) {
-			printf(_("INFO: there is later phone firmware (%s instead of %s) available !\n"), ver, version);
+			printf(_("INFO: there is later phone firmware (%s instead of %s) available!\n"), ver, version);
 			return;
 		}
 		i++;
@@ -3588,7 +3588,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 			printf("%s\n", _("Enter message text and press ^D:"));
 		}
 		chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
-		if (chars_read == 0) printf_warn("%s\n", _("0 chars read !"));
+		if (chars_read == 0) printf_warn("%s\n", _("0 chars read!"));
 		InputBuffer[chars_read] 		= 0x00;
 		InputBuffer[chars_read+1] 		= 0x00;
 		EncodeUnicode(Buffer[0],InputBuffer,strlen(InputBuffer));
@@ -9179,7 +9179,7 @@ static void NokiaAddFile(int argc, char *argv[])
 			i++;
 		}
 		if (!Found) {
-			printf("%s\n", _("Folder not found. Probably function not supported !"));
+			printf("%s\n", _("Folder not found. Probably function not supported!"));
 			GSM_Terminate();
 			exit(-1);
 		}
@@ -9252,7 +9252,7 @@ static void NokiaAddFile(int argc, char *argv[])
 		fprintf(stderr, "\n");
 	}
 	if (!Found) {
-		printf("%s\n", _("Folder not found. Probably function not supported !"));
+		printf("%s\n", _("Folder not found. Probably function not supported!"));
 		GSM_Terminate();
 		exit(-1);
 	}
@@ -10664,7 +10664,7 @@ int main(int argc, char *argv[])
 						}
 					}
 					if (FoundVersion(buff) > FoundVersion(VERSION)) {
-						printf(_("INFO: there is later stable Gammu (%s instead of %s) available !\n"),buff,VERSION);
+						printf(_("INFO: there is later stable Gammu (%s instead of %s) available!\n"),buff,VERSION);
 						break;
 					}
 				}
@@ -10677,7 +10677,7 @@ int main(int argc, char *argv[])
 						}
 					}
 					if (FoundVersion(buff) > FoundVersion(VERSION)) {
-						printf(_("INFO: there is later test Gammu (%s instead of %s) available !\n"),buff,VERSION);
+						printf(_("INFO: there is later test Gammu (%s instead of %s) available!\n"),buff,VERSION);
 						break;
 					}
 				}
