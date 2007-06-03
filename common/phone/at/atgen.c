@@ -15,7 +15,7 @@
  */
 
 #define _GNU_SOURCE
-#include "../../gsmstate.h"
+#include <gammu-config.h>
 
 #ifdef GSM_ENABLE_ATGEN
 
@@ -24,6 +24,7 @@
 #include <ctype.h>
 
 #include "../../gsmcomon.h"
+#include "../../gsmphones.h"
 #include "../../misc/coding/coding.h"
 #include "../pfunc.h"
 

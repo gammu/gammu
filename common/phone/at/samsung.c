@@ -3,7 +3,7 @@
  * Tested with S300 only!
  */
 
-#include "../../gsmstate.h"
+#include <gammu-config.h>
 
 #ifdef GSM_ENABLE_ATGEN
 
@@ -300,7 +300,7 @@ GSM_Error SAMSUNG_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	}
 
 	/* Check if picture size matches phone model */
-	model = GetModelData(NULL,Data->Model,NULL)->model;
+	model = Data->ModelInfo->model;
 	smprintf(s, "Checking picture size for %s\n", model);
 	for (i = 0; modres[i].model; i++) {
 		if (!strcmp(model, modres[i].model)) {

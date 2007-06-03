@@ -24,9 +24,11 @@
 #include <string.h>
 #include <time.h>
 
+#include <gammu-config.h>
+
 #include "../../misc/coding/coding.h"
 #include "../../gsmcomon.h"
-#include "../../gsmstate.h"
+#include "../../gsmphones.h"
 #include "../../service/gsmmisc.h"
 #include "../../protocol/obex/obex.h"
 #include "obexfunc.h"

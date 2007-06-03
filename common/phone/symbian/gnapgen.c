@@ -4,8 +4,10 @@
 #include <string.h>
 #include <time.h>
 
+#include <gammu-config.h>
+
 #include "../../gsmcomon.h"
-#include "../../gsmstate.h"
+#include "../../gsmphones.h"
 #include "../../misc/coding/coding.h"
 #include "../../service/gsmmisc.h"
 #include "../nokia/nfunc.h"
