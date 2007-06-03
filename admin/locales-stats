@@ -1,0 +1,6 @@
+#!/bin/sh
+for x in locale/*/gammu.po  ; do 
+    lang=`echo $x | sed 's@locale/\(.*\)/gammu.po@\1@'`
+    echo -n "$lang: "
+    msgfmt --statistics -o - $x > /dev/null
+done
