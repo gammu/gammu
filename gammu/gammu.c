@@ -8655,7 +8655,9 @@ static void AddOneFile(GSM_File *File, char *text, bool send)
 		}
 	    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
 		if (File->Used != 0) {
-			fprintf(stderr, _("%c%s%03i percent"),13,text,Pos*100/File->Used);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s", text);
+			fprintf(stderr, _("%3i percent"), Pos * 100 / File->Used);
 			if (Pos*100/File->Used >= 2) {
 				GSM_GetCurrentDateTime(&dt);
 				t_time2 = Fill_Time_T(dt);
@@ -8664,9 +8666,9 @@ static void AddOneFile(GSM_File *File, char *text, bool send)
 				if (i != 0) {
 					if (i<old1) old1 = i;
 					j = old1/60;
-					fprintf(stderr, _(" (%02i:%02i minutes left)"),j,old1-j*60);
+					fprintf(stderr, _(" (%02i:%02i minutes left)"), j , old1 - (j * 60));
 				} else {
-					fprintf(stderr, "%30c",0x20);
+					fprintf(stderr, "%30c", ' ');
 				}
 			}
 		}
