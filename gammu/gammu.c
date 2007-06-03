@@ -5726,10 +5726,14 @@ static void Restore(int argc, char *argv[])
 					First = true;
 					for (j=0;j<Pbk.EntriesNum;j++) {
 			 			if (Pbk.Entries[j].AddError == ERR_NONE) continue;
-						if (First) printf(_("%cLocation %i                 \n  "),13,Pbk.Location);
-						First = false;
+						if (First) {
+							printf("\r");
+							printf(_("Location %d"), Pbk.Location);
+							printf("%20s\n    ", " ");
+							First = false;
+						}
 						PrintMemorySubEntry(&Pbk.Entries[j]);
-						printf("    %s\n",GSM_ErrorString(Pbk.Entries[j].AddError));
+						printf("    %s\n", GSM_ErrorString(Pbk.Entries[j].AddError));
 					}
 				}
 			}
@@ -5771,8 +5775,12 @@ static void Restore(int argc, char *argv[])
 						First = true;
 						for (j=0;j<Pbk.EntriesNum;j++) {
 					 		if (Pbk.Entries[j].AddError == ERR_NONE) continue;
-							if (First) printf(_("%cLocation %i                 \n  "),13,Pbk.Location);
-							First = false;
+							if (First) {
+								printf("\r");
+								printf(_("Location %d"), Pbk.Location);
+								printf("%20s\n    ", " ");
+								First = false;
+							}
 							PrintMemorySubEntry(&Pbk.Entries[j]);
 							printf("    %s\n",GSM_ErrorString(Pbk.Entries[j].AddError));
 						}
