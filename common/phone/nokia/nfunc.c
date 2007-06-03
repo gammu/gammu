@@ -9,6 +9,7 @@
 #include <gammu-nokia.h>
 
 #include "../../gsmstate.h"
+#include "../../gsmphones.h"
 #include "../../misc/coding/coding.h"
 #include "../../misc/locales.h"
 #include "../pfunc.h"

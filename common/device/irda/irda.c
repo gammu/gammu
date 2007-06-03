@@ -39,6 +39,7 @@
 #endif
 
 #include "../../gsmcomon.h"
+#include "../../gsmphones.h"
 #include "../devfunc.h"
 #include "irda.h"
 

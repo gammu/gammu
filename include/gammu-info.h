@@ -12,6 +12,10 @@
  * Phone information.
  */
 
+#include <gammu-types.h>
+#include <gammu-error.h>
+#include <gammu-statemachine.h>
+
 /**
  * Find network name from given network code.
  *

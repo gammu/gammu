@@ -10,6 +10,7 @@
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
 #include "backlmb.h"
+#include "../../gsmphones.h"
 
 #ifdef GSM_ENABLE_BACKUP
 

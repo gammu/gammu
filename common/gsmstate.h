@@ -1565,8 +1565,6 @@ void 	  GSM_DumpMessageLevel2		(GSM_StateMachine *s, unsigned char *message, int
 void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);
 
 
-OnePhoneModel 	*GetModelData		(char *model, char *number, char *irdamodel);
-
 void GSM_OSErrorInfo(GSM_StateMachine *s, char *description);
 
 #ifdef GSM_ENABLE_BACKUP

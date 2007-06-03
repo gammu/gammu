@@ -6,6 +6,7 @@ project (libGammu C)
 
 set (LIBRARY_SRC
     gsmcomon.c
+    gsmphones.c
     gsmstate.c
     api.c
     misc/misc.c
