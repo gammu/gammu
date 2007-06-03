@@ -3557,7 +3557,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 	} else if (strcasestr(argv[1], "sendsmsdsms") != NULL) {
 		SendSMSDSMS = true;
 	} else {
-		return -1;
+		return;
 	}
 
 	ReplaceBuffer[0] = 0;
