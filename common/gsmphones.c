@@ -6,6 +6,8 @@
 /* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
 /* Phones ID (c) partially by Walek */
 
+#include <gammu-config.h>
+
 #include "gsmphones.h"
 
 #include <string.h>
