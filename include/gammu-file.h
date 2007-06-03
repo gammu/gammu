@@ -60,7 +60,7 @@ typedef struct {
 	/**
 	 * How many bytes are used.
 	 */
-	int Used;
+	size_t Used;
 	/**
 	 * Name in Unicode
 	 */
