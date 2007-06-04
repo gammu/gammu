@@ -392,9 +392,11 @@ int dbgprintf(const char *format, ...)
 	unsigned char		buffer[2000];
 	GSM_DateTime 		date_time;
 
+	va_start(argp, format);
+	result = vsprintf(buffer, format, argp);
+	va_end(argp);
+
 	if (di.df != NULL && (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE)) {
-		va_start(argp, format);
-		result = vsprintf(buffer, format, argp);
 		strcat(nextline, buffer);
 
 		if (strstr(buffer, "\n") != NULL) {
@@ -407,12 +409,9 @@ int dbgprintf(const char *format, ...)
 			} else {
 				fprintf(di.df, "%s", nextline);
 			}
-			fflush(di.df);
-			fsync(fileno(di.df));
 			strcpy(nextline, "");
 		}
 
-		va_end(argp);
 		return result;
 	}
 	return 0;
@@ -445,6 +444,7 @@ int smfprintf(GSM_Debug_Info *d, const char *format, ...)
 
 	va_start(argp, format);
 	result = vsprintf(buffer, format, argp);
+	va_end(argp);
 	pos = buffer;
 
 	while (*pos != 0) {
@@ -494,7 +494,6 @@ int smfprintf(GSM_Debug_Info *d, const char *format, ...)
 	fflush(f);
 	fsync(fileno(f));
 
-	va_end(argp);
 	return result;
 }
 
