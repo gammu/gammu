@@ -1812,6 +1812,46 @@ int DecodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
 	return outpos;
 }
 
+#ifdef ICONV_FOUND
+
+#include <iconv.h>
+
+bool IconvDecode(const char *charset, char *input, size_t inlen, unsigned char *output, size_t outlen)
+{
+	iconv_t ic;
+	char *in, *out;
+
+	ic = iconv_open("UCS-2BE", charset);
+	if (ic == (iconv_t)(-1)) return false;
+
+	in = input;
+	out = output;
+	iconv(ic, &in, &inlen, &out, &outlen);
+
+	iconv_close(ic);
+
+	return (inlen == 0);
+}
+
+bool IconvEncode(const char *charset, unsigned char *input, size_t inlen, char *output, size_t outlen)
+{
+	iconv_t ic;
+	char *in, *out;
+
+	ic = iconv_open(charset, "UCS-2BE");
+	if (ic == (iconv_t)(-1)) return false;
+
+	in = input;
+	out = output;
+	iconv(ic, &in, &inlen, &out, &outlen);
+
+	iconv_close(ic);
+
+	return (inlen == 0);
+}
+#endif
+
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

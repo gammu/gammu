@@ -187,6 +187,7 @@ else (CROSS_MINGW)
     macro_optional_find_package (MySQL)
     macro_optional_find_package (Postgres)
     macro_optional_find_package (GettextLibs)
+    macro_optional_find_package (Iconv)
 
     # Search for needed includes and functions
     check_include_file (dirent.h HAVE_DIRENT_H)
