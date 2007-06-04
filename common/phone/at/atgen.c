@@ -1589,7 +1589,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				if ((TPDCS & 0xC0) == 0) {
 					/* bits 7..4 set to 00xx */
 					if ((TPDCS & 0xC) == 0xC) {
-						dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
+						smprintf(s, "WARNING: reserved alphabet value in TPDCS\n");
 					} else {
 						if (TPDCS == 0) 		sms->Coding=SMS_Coding_Default_No_Compression;
 						if ((TPDCS & 0x2C) == 0x00) 	sms->Coding=SMS_Coding_Default_No_Compression;
@@ -1600,26 +1600,26 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				} else if ((TPDCS & 0xF0) >= 0x40 &&
 					   (TPDCS & 0xF0) <= 0xB0) {
 					/* bits 7..4 set to 0100 ... 1011 */
-					dbgprintf("WARNING: reserved coding group in TPDCS\n");
+					smprintf(s, "WARNING: reserved coding group in TPDCS\n");
 				} else if (((TPDCS & 0xF0) == 0xC0) ||
 				      	   ((TPDCS & 0xF0) == 0xD0)) {
 					/* bits 7..4 set to 1100 or 1101 */
 					if ((TPDCS & 4) == 4) {
-						dbgprintf("WARNING: set reserved bit 2 in TPDCS\n");
+						smprintf(s, "WARNING: set reserved bit 2 in TPDCS\n");
 					} else {
 						sms->Coding=SMS_Coding_Default_No_Compression;
 					}
 				} else if ((TPDCS & 0xF0) == 0xE0) {
 					/* bits 7..4 set to 1110 */
 					if ((TPDCS & 4) == 4) {
-						dbgprintf("WARNING: set reserved bit 2 in TPDCS\n");
+						smprintf(s, "WARNING: set reserved bit 2 in TPDCS\n");
 					} else {
 						sms->Coding=SMS_Coding_Unicode_No_Compression;
 					}
 				} else if ((TPDCS & 0xF0) == 0xF0) {
 					/* bits 7..4 set to 1111 */
 					if ((TPDCS & 8) == 8) {
-						dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
+						smprintf(s, "WARNING: set reserved bit 3 in TPDCS\n");
 					} else {
 						if ((TPDCS & 4) == 0) sms->Coding=SMS_Coding_Default_No_Compression;
 					}
@@ -1628,14 +1628,14 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				if ((TPDCS & 0xD0) == 0x10) {
 					/* bits 7..4 set to 00x1 */
 					if ((TPDCS & 0xC) == 0xC) {
-						dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
+						smprintf(s, "WARNING: reserved alphabet value in TPDCS\n");
 					} else {
 						sms->Class = (TPDCS & 3);
 					}
 				} else if ((TPDCS & 0xF0) == 0xF0) {
 					/* bits 7..4 set to 1111 */
 					if ((TPDCS & 8) == 8) {
-						dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
+						smprintf(s, "WARNING: set reserved bit 3 in TPDCS\n");
 					} else {
 						sms->Class = (TPDCS & 3);
 					}
