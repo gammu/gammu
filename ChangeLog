@@ -17,6 +17,7 @@ ChangeLog
 
 2007???? - 1.11.92
 [-] * Properly report uploaded file size when using OBEX.
+[-] * Fix HEX charset encoding.
 
 20070601 - 1.11.91
 [-] * Reduced inclusion dependencies.
