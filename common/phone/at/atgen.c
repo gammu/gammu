@@ -60,6 +60,14 @@ static GSM_AT_Charset_Info AT_Charsets[] = {
 	{AT_CHARSET_UTF8,	"UTF-8",	true},
 	{AT_CHARSET_UCS2,	"UCS2",		true},
 	{AT_CHARSET_IRA,	"IRA",		false},
+#ifdef ICONV_FOUND
+	{AT_CHARSET_ISO88591,	"8859-1",	false},
+	{AT_CHARSET_ISO88592,	"8859-2",	false},
+	{AT_CHARSET_ISO88593,	"8859-3",	false},
+	{AT_CHARSET_ISO88594,	"8859-4",	false},
+	{AT_CHARSET_ISO88595,	"8859-5",	false},
+	{AT_CHARSET_ISO88596,	"8859-6",	false},
+#endif
 	{0,			NULL}
 };
 
@@ -3180,10 +3188,37 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
   		case AT_CHARSET_UTF8:
  			DecodeUTF8(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2));
   			break;
+#ifdef ICONV_FOUND
+  		case AT_CHARSET_PCCP437:
+			IconvDecode("CP437", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+			break;
+  		case AT_CHARSET_ISO88591:
+			IconvDecode("ISO-8859-1", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+			break;
+  		case AT_CHARSET_ISO88592:
+			IconvDecode("ISO-8859-2", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+			break;
+  		case AT_CHARSET_ISO88593:
+			IconvDecode("ISO-8859-3", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+			break;
+  		case AT_CHARSET_ISO88594:
+			IconvDecode("ISO-8859-4", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+			break;
+  		case AT_CHARSET_ISO88595:
+			IconvDecode("ISO-8859-5", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+			break;
+  		case AT_CHARSET_ISO88596:
+			IconvDecode("ISO-8859-6", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+			break;
+#else
   		case AT_CHARSET_PCCP437:
   			/* FIXME: correctly decode PCCP437 */
   			DecodeDefault(Memory->Entries[1].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
 			break;
+#endif
+		default:
+			smprintf(s, "Unsupported charset! (%d)\n", Priv->Charset);
+			return ERR_SOURCENOTAVAILABLE;
 		}
 
 		/* Samsung number type */
@@ -3236,10 +3271,37 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				case AT_CHARSET_UTF8:
 					DecodeUTF8(Memory->Entries[2].Text, buffer + offset, strlen(buffer) - (offset * 2));
 					break;
+#ifdef ICONV_FOUND
+				case AT_CHARSET_PCCP437:
+					IconvDecode("CP437", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[2].Text, sizeof(Memory->Entries[2].Text));
+					break;
+				case AT_CHARSET_ISO88591:
+					IconvDecode("ISO-8859-1", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[2].Text, sizeof(Memory->Entries[2].Text));
+					break;
+				case AT_CHARSET_ISO88592:
+					IconvDecode("ISO-8859-2", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[2].Text, sizeof(Memory->Entries[2].Text));
+					break;
+				case AT_CHARSET_ISO88593:
+					IconvDecode("ISO-8859-3", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[2].Text, sizeof(Memory->Entries[2].Text));
+					break;
+				case AT_CHARSET_ISO88594:
+					IconvDecode("ISO-8859-4", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[2].Text, sizeof(Memory->Entries[2].Text));
+					break;
+				case AT_CHARSET_ISO88595:
+					IconvDecode("ISO-8859-5", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[2].Text, sizeof(Memory->Entries[2].Text));
+					break;
+				case AT_CHARSET_ISO88596:
+					IconvDecode("ISO-8859-6", buffer + offset, strlen(buffer) - (offset * 2), Memory->Entries[2].Text, sizeof(Memory->Entries[2].Text));
+					break;
+#else
 				case AT_CHARSET_PCCP437:
 					/* FIXME: correctly decode PCCP437 */
 					DecodeDefault(Memory->Entries[2].Text, buffer + offset, strlen(buffer) - (offset * 2), false, NULL);
 					break;
+#endif
+				default:
+					smprintf(s, "Unsupported charset! (%d)\n", Priv->Charset);
+					return ERR_SOURCENOTAVAILABLE;
 				}
 
 				/* Decode date */
@@ -3823,12 +3885,46 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			EncodeUTF8(name, entry->Entries[Name].Text);
 			len = strlen(name);
   			break;
+#ifdef ICONV_FOUND
+  		case AT_CHARSET_PCCP437:
+			len = UnicodeLength(entry->Entries[Name].Text);
+			IconvEncode("CP437", entry->Entries[Name].Text, len, name, sizeof(name));
+			break;
+  		case AT_CHARSET_ISO88591:
+			len = UnicodeLength(entry->Entries[Name].Text);
+			IconvEncode("ISO-8859-1", entry->Entries[Name].Text, len, name, sizeof(name));
+			break;
+  		case AT_CHARSET_ISO88592:
+			len = UnicodeLength(entry->Entries[Name].Text);
+			IconvEncode("ISO-8859-2", entry->Entries[Name].Text, len, name, sizeof(name));
+			break;
+  		case AT_CHARSET_ISO88593:
+			len = UnicodeLength(entry->Entries[Name].Text);
+			IconvEncode("ISO-8859-3", entry->Entries[Name].Text, len, name, sizeof(name));
+			break;
+  		case AT_CHARSET_ISO88594:
+			len = UnicodeLength(entry->Entries[Name].Text);
+			IconvEncode("ISO-8859-4", entry->Entries[Name].Text, len, name, sizeof(name));
+			break;
+  		case AT_CHARSET_ISO88595:
+			len = UnicodeLength(entry->Entries[Name].Text);
+			IconvEncode("ISO-8859-5", entry->Entries[Name].Text, len, name, sizeof(name));
+			break;
+  		case AT_CHARSET_ISO88596:
+			len = UnicodeLength(entry->Entries[Name].Text);
+			IconvEncode("ISO-8859-6", entry->Entries[Name].Text, len, name, sizeof(name));
+			break;
+#else
 		case AT_CHARSET_PCCP437:
 			/* FIXME: correctly decode PCCP437 */
 			smprintf(s, "str: %s\n", DecodeUnicodeString(entry->Entries[Name].Text));
 			len = UnicodeLength(entry->Entries[Name].Text);
 			EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
 			break;
+#endif
+		default:
+			smprintf(s, "Unsupported charset! (%d)\n", Priv->Charset);
+			return ERR_SOURCENOTAVAILABLE;
 		}
 		entry->Entries[Name].AddError = ERR_NONE;
 	} else {

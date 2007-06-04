@@ -19,6 +19,7 @@ ChangeLog
 [-] * Properly report uploaded file size when using OBEX.
 [-] * Fix HEX charset encoding.
 [-] * Improve vCard address handling.
+[+] * Support for iso charsets in AT phone when iconv is available.
 
 20070601 - 1.11.91
 [-] * Reduced inclusion dependencies.

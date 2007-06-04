@@ -193,6 +193,9 @@
 #cmakedefine HAVE_STRCHRNUL 
 #endif
 
+/* Iconv support */
+#cmakedefine ICONV_FOUND
+
 /* Will be used Bluez BT stack ? */
 #cmakedefine GSM_ENABLE_BLUEZ
 /* Will be used Affix BT stack ? */
