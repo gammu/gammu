@@ -54,11 +54,11 @@ typedef struct {
  * defines their preferences, so if first is found it is used.
  */
 static GSM_AT_Charset_Info AT_Charsets[] = {
+	{AT_CHARSET_HEX,	"HEX",		false},
 	{AT_CHARSET_GSM,	"GSM",		false},
 	{AT_CHARSET_PCCP437,	"PCCP437",	false},
 	{AT_CHARSET_UTF8,	"UTF-8",	true},
 	{AT_CHARSET_UCS2,	"UCS2",		true},
-	{AT_CHARSET_HEX,	"HEX",		false},
 	{AT_CHARSET_IRA,	"IRA",		false},
 	{0,			NULL}
 };
@@ -3167,7 +3167,6 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 		switch (Priv->Charset) {
 		case AT_CHARSET_HEX:
-			/* We have no idea how text should look like here, it could be in any encoding phone supports! */
  			DecodeHexBin(buffer2, buffer + offset, strlen(buffer) - (offset * 2));
    			DecodeDefault(Memory->Entries[1].Text,buffer2,strlen(buffer2),false,NULL);
   			break;
@@ -3805,7 +3804,8 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 		switch (Priv->Charset) {
 		case AT_CHARSET_HEX:
-			EncodeHexBin(name, DecodeUnicodeString(entry->Entries[Name].Text), UnicodeLength(entry->Entries[Name].Text));
+			EncodeDefault(uname, entry->Entries[Name].Text, &len, true, NULL);
+			EncodeHexBin(name, uname, len);
 			len = strlen(name);
 			break;
 		case AT_CHARSET_GSM:
