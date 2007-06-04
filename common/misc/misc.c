@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <locale.h>
 #include <sys/timeb.h>
+#include <unistd.h>
 #ifdef WIN32
 #  include <windows.h>
 #endif
@@ -395,7 +396,8 @@ int dbgprintf(const char *format, ...)
 		va_start(argp, format);
 		result = vsprintf(buffer, format, argp);
 		strcat(nextline, buffer);
-		if (strstr(buffer, "\n")) {
+
+		if (strstr(buffer, "\n") != NULL) {
 			if (di.dl == DL_TEXTALLDATE) {
 				GSM_GetCurrentDateTime(&date_time);
 				fprintf(di.df,"%s %4d/%02d/%02d %02d:%02d:%02d: %s",
@@ -403,11 +405,13 @@ int dbgprintf(const char *format, ...)
 		                	date_time.Year, date_time.Month, date_time.Day,
 		                	date_time.Hour, date_time.Minute, date_time.Second,nextline);
 			} else {
-				fprintf(di.df,"%s",nextline);
+				fprintf(di.df, "%s", nextline);
 			}
+			fflush(di.df);
+			fsync(fileno(di.df));
 			strcpy(nextline, "");
 		}
-		fflush(di.df);
+
 		va_end(argp);
 		return result;
 	}
@@ -487,7 +491,8 @@ int smfprintf(GSM_Debug_Info *d, const char *format, ...)
 	}
 
 	/* Flush buffers, this might be configurable, but it could cause drop of last log messages */
-	fflush(d->df);
+	fflush(f);
+	fsync(fileno(f));
 
 	va_end(argp);
 	return result;
