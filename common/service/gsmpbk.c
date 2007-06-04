@@ -268,7 +268,7 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 					 * double - once like LABEL, second like ADR
 					 */
 					SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "LABEL", false);
-					*Length+=sprintf(Buffer+(*Length),"ADR");
+					*Length+=sprintf(Buffer+(*Length),"ADR;HOME");
 					break;
 				case PBK_Text_WorkPostal    :
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
@@ -438,7 +438,7 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 			}
 			buffer[2*pos] = 0;
 			buffer[2*pos + 1] = 0;
-			SaveVCALText(Buffer, Length, buffer, "ADR", false);
+			SaveVCALText(Buffer, Length, buffer, "ADR;HOME", false);
 		}
 		if (header) *Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
 	}
@@ -499,7 +499,6 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 	int	     Level = 0;
 	unsigned char   *s;
 	int		pos;
-	bool		address = false;
 
 	Buff[0]	 = 0;
 	Pbk->EntriesNum = 0;
@@ -618,8 +617,6 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 			if (ReadVCALText(Line, "LABEL", Buff, false) ||
 			    ReadVCALText(Line, "ADR", Buff, false) ||
 			    ReadVCALText(Line, "ADR;HOME", Buff, false)) {
-				if (address) continue;
-				address = true;
 				pos = 0;
 				s = VCALGetTextPart(Buff, &pos); /* PO box, ignore for now */
 				if (s == NULL) {
@@ -665,8 +662,6 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				}
 			}
 			if (ReadVCALText(Line, "ADR;WORK", Buff, false)) {
-				if (address) continue;
-				address = true;
 				pos = 0;
 				s = VCALGetTextPart(Buff, &pos); /* PO box, ignore for now */
 				if (s == NULL) {
