@@ -14,11 +14,7 @@
 #endif
 
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-#ifdef WIN32
 #  include <libpq-fe.h>
-#else
-#  include <postgresql/libpq-fe.h>
-#endif
 #endif
 
 #define MAX_RETRIES 1
