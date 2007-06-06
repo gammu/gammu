@@ -51,6 +51,9 @@ endif (GETTEXTLIBS_FOUND)
 
 # Add libraries needed for windows build
 if (WIN32)
+    # Magic needed for SHGetFolderPathA
+    target_link_libraries (gammu shfolder shell32)
+    # Win sock
     target_link_libraries (gammu ws2_32)
     # These libraries are needed for serial driver
     target_link_libraries (gammu setupapi advapi32)

@@ -114,6 +114,9 @@ include_directories (
 
 # Add libraries needed for windows build
 if (WIN32)
+    # Magic needed for SHGetFolderPathA
+    target_link_libraries (Gammu shfolder shell32)
+    # Win sock
     target_link_libraries (Gammu ws2_32)
     # These libraries are needed for serial driver
     target_link_libraries (Gammu setupapi advapi32)
