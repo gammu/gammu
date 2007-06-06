@@ -51,7 +51,7 @@ ChangeLog
 [-] * Updated shell script gammu-config to generate configuration.
 [-] * Install gammu-config script to ease generating configuration.
 [+] * Correctly encode text in iCalendar (bug #262).
-[+] * Correctly encode recurrance in iCalendar (bug #262).
+[+] * Correctly encode recurrence in iCalendar (bug #262).
 [+] * Read last modified field from vCalendar.
 [+] * Support for last modified field from vCard.
 [-] * Use unsigned char to avoid trimming at 60 chars (bug #274).
@@ -66,7 +66,7 @@ ChangeLog
 [-] * Fix USB serial devices with Linux kernel 2.6.21, we don't use
       ASYNC IO, so we should not set it.
 [-] * Tell user that he should enter text for SMS.
-[-] * Cleaned up transatable strings.
+[-] * Cleaned up translatable strings.
 [-] * Improve networks listing.
 [-] * Allow networks to be listed by country code.
 [+] * Add flag to SMS folders whether it is outbox.
@@ -74,7 +74,7 @@ ChangeLog
 20070424 - 1.10.4
 [-] * Fix decoding of new style address records in Nokia phones. Thanks to
       Martin Strigl, see also bug #286.
-[-] * Reorganised documentation a bit.
+[-] * Reorganized documentation a bit.
 [-] * Use correct format strings for IrDA debug messages.
 [-] * Identify Alcatel One Touch 55x.
 [-] * Improve detection of OBEX support.
@@ -82,7 +82,7 @@ ChangeLog
 
 20070419 - 1.10.3
 [-] * Work with AT phones which can not write SMS to ME (bug #282).
-[-] * Increse limits for SMS backups (this requires dynamic allocation).
+[-] * Increase limits for SMS backups (this requires dynamic allocation).
 [!] * Development switched to Subversion, see README for details.
 [-] * Detect Motorola Bluetooth port (Daniel Gimpelevich).
 [-] * Fixup AT driver to work with Samsung SGH X160.
@@ -3558,7 +3558,7 @@ I finally end supporting gnokii. Started creating structures.
 ----------------------
 YYYYMMDD - description
 
-# vim: et ts=4 sw=4 sts=4 tw=72
+# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
 # vim: ft=changelog fenc=utf-8 encoding=utf-8
 # vim: fde=getline(v\:lnum-1)=~'^\\s*$'&&getline(v\:lnum)=~'^\\d'?'>1'\:1&&v\:lnum>17&&getline(v\:lnum)!~'^#'
 # vim: fdn=1 fdm=expr
