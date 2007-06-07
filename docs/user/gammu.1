@@ -1,14 +1,14 @@
-.TH "Gammu" "1" "28.06.2003 (0,79)" "Marcin Wiacek and others" "Cellurar phones utilities"
+.TH "Gammu" "1" "07.06.2007 (1.12.0)" "Gammu team" "Cellular phones utilities"
 .SH "NAME"
 .LP
 Gammu \- Does some neat things with your cellular phone or modem
 .SH "SYNTAX"
 .LP
-gammu [\fInothing|text|textall|binary|errors\fP] [\fIoptions\fP]
+gammu [\fIconfign\fP] [\fInothing|text|textall|binary|errors\fP] [\fIoptions\fP]
 .br
 .SH "DESCRIPTION"
 .LP
-This program is a tool for Nokia and other mobile phones.
+This program is a tool for mobile phones.
 
 Parameters, which allow to control debug level:
 
@@ -22,8 +22,13 @@ Parameters, which allow to control debug level:
 .br
 \fBbinary\fR  - transmission dump in binary format
 
-Please put them between Gammu name and "real" \fBOPTIONS\fR.
+Please put them between Gammu name and "real" options.
+
+You can also specify which configuration section to use by
+\fBconfign\fR.
 .SH "OPTIONS"
+.LP
+All options can be also specified without leading \-\-.
 .LP 
 .TP 
 \fB\-\-help\fR
@@ -680,12 +685,18 @@ Restore settings written in file created using \fB\-\-backup option\fR. All thin
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
 
+Please note that restoring deletes all current content in phone. If you
+want only to add entries to phone, use \-\-addnew.
+
 In some phones restoring calendar notes will not show error, but won't
 be done, when phone doesn't have set clock inside.
 .TP
 \fB\-\-restoresms file\fR
 .TP
 \fB\-\-addnew file\fR
+Adds settings written in file created using \fB\-\-backup option\fR. All things
+backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
+file).
 .TP
 \fB\-\-clearall\fR
 .TP 
@@ -714,19 +725,23 @@ To check it out, edit \fI~/.gammurc\fP and put there something like
 
 \fB[gammu]
 .br
-port = /dev/ircomm0
+port = /dev/ttyACM0
 .br
-connection = irda
+connection = at
 \fR
 
 and try \fBgammu \-\-identify\fR
 .SH "AUTHORS"
 .LP 
-\fIMarcin Wiacek\fR
+\fIMichal Cihar\fR
+<michal@cihar.com>
 .br
+<http://cihar.com/>
+.LP 
+\fIMarcin Wiacek\fR
 <marcin@mwiacek.com>
 .br
-www.mwiacek.com
+<http://www.mwiacek.com/>
 
 Here are some people, who somehow helped in this project. Probably not
 everyone is mentioned. If you think, you're missed, please let us know:
@@ -758,12 +773,12 @@ like \fIGabriele Zappi\fR, \fIRalf Thelen\fR, .... (see CREDITS from MyGnokii)
 
 .SH "SEE ALSO"
 .LP
-readme.txt
+README
 
-www.mwiacek.com
+<http://www.gammu.org/>
+
+cu(1)
 
 gnokii(1)
 
 xgnokii(2)
-
-http://www.gnokii.org
