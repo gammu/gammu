@@ -6210,6 +6210,8 @@ static void AddNew(int argc, char *argv[])
 	if (Backup.Model[0]!=0) 	fprintf(stderr, LISTFORMAT "%s\n", _("Phone"),Backup.Model);
 	if (Backup.IMEI[0]!=0) 		fprintf(stderr, LISTFORMAT "%s\n", _("IMEI"),Backup.IMEI);
 
+	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
+
 	GSM_Init(true);
 
 	if (Backup.PhonePhonebook[0] != NULL) {
@@ -10163,7 +10165,7 @@ static GSM_Parameters Parameters[] = {
 	{"backup",			1, 2, Backup,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
 	{"backupsms",			1, 1, BackupSMS,		{H_Backup,H_SMS,0},		"file"},
 	{"restore",			1, 2, Restore,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
-	{"addnew",			1, 1, AddNew,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file"},
+	{"addnew",			1, 2, AddNew,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
 	{"restoresms",		1, 1, RestoreSMS,		{H_Backup,H_SMS,0},		"file"},
 	{"addsms",			2, 2, AddSMS,			{H_Backup,H_SMS,0},		"folder file"},
 #endif
