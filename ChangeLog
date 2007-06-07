@@ -24,6 +24,7 @@ ChangeLog
 [-] * addnew accepts -yes parameter.
 [-] * There is no error on most fields when storing to vCard.
 [-] * Fix detecting length of input (thanks to Peter Stuge).
+[-] * Improve check for MySQL.
 
 20070601 - 1.11.91
 [-] * Reduced inclusion dependencies.
