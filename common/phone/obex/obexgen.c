@@ -1610,7 +1610,7 @@ GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, cha
 		Priv->PbCount--;
 	}
 
-	/* Grab vCard */
+	/* Store vCard */
 	return OBEXGEN_SetFile(s, path, Data, Size);
 }
 
@@ -1632,7 +1632,7 @@ GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, ch
 	sprintf(path, "telecom/pb/%d.vcf", Entry->Location);
 	smprintf(s, "Seting vCard %s\n", path);
 
-	/* Grab vCard */
+	/* Store vCard */
 	return OBEXGEN_SetFile(s, path, Data, Size);
 }
 
@@ -2009,7 +2009,7 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 		Priv->CalCount--;
 	}
 
-	/* Grab vCalendar */
+	/* Store vCalendar */
 	return OBEXGEN_SetFile(s, path, Data, Size);
 }
 
@@ -2031,7 +2031,7 @@ GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	sprintf(path, "telecom/cal/%d.vcs", Entry->Location);
 	smprintf(s, "Seting vCalendar %s\n", path);
 
-	/* Grab vCalendar */
+	/* Store vCalendar */
 	return OBEXGEN_SetFile(s, path, Data, Size);
 }
 
@@ -2368,7 +2368,7 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *D
 		Priv->TodoCount--;
 	}
 
-	/* Grab vTodo */
+	/* Store vTodo */
 	return OBEXGEN_SetFile(s, path, Data, Size);
 }
 
@@ -2390,7 +2390,7 @@ GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *
 	sprintf(path, "telecom/cal/%d.vcs", Entry->Location);
 	smprintf(s, "Seting vTodo %s\n", path);
 
-	/* Grab vTodo */
+	/* Store vTodo */
 	return OBEXGEN_SetFile(s, path, Data, Size);
 }
 
