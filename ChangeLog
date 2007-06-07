@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.11.92
+20070607 - 1.11.92
 [-] * Properly report uploaded file size when using OBEX.
 [-] * Fix HEX charset encoding.
 [-] * Improve vCard address handling.
