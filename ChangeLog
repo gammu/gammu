@@ -22,6 +22,7 @@ ChangeLog
 [+] * Support for iso charsets in AT phone when iconv is available.
 [-] * Fix restoring of phonebook over OBEX (bug #317).
 [-] * addnew accepts -yes parameter.
+[-] * There is no error on most fields when storing to vCard.
 
 20070601 - 1.11.91
 [-] * Reduced inclusion dependencies.

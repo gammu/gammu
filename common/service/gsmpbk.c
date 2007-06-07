@@ -125,6 +125,7 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 		if (header) *Length+=sprintf(Buffer+(*Length),"BEGIN:VCARD%c%cVERSION:2.1%c%c",13,10,13,10);
 		for (i=0; i < pbk->EntriesNum; i++) {
 			ignore = false;
+			pbk->Entries[i].AddError = ERR_NONE;
 			switch(pbk->Entries[i].EntryType) {
 				case PBK_Text_Name:
 					*Length+=sprintf(Buffer+(*Length),"N");
@@ -325,6 +326,7 @@ void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool heade
 				case PBK_Text_Custom2:
 				case PBK_Text_Custom3:
 				case PBK_Text_Custom4:
+					pbk->Entries[i].AddError = ERR_NOTSUPPORTED;
 					ignore = true;
 					break;
 			}
