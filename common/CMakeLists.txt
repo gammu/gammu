@@ -83,14 +83,14 @@ if (CROSS_MINGW)
         set_target_properties (Gammu PROPERTIES PREFIX "" SUFFIX ".lib")
     endif (ENABLE_SHARED)
 else (CROSS_MINGW)
-    set_target_properties (Gammu PROPERTIES VERSION ${VERSION} SOVERSION 2)
-
     # -fPIC on Linux
     if (CMAKE_SYSTEM_NAME MATCHES "Linux")
         set_target_properties (Gammu PROPERTIES COMPILE_FLAGS "-fPIC")
     endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
 endif (CROSS_MINGW)
+
+set_target_properties (Gammu PROPERTIES VERSION 2.${VERSION} SOVERSION 2)
 
 set (GAMMU_LIBS "")
 
