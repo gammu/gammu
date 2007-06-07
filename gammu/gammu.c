@@ -3591,7 +3591,7 @@ static void SendSaveDisplaySMS(int argc, char *argv[])
 		if (chars_read == 0) printf_warn("%s\n", _("0 chars read!"));
 		InputBuffer[chars_read] 		= 0x00;
 		InputBuffer[chars_read+1] 		= 0x00;
-		EncodeUnicode(Buffer[0],InputBuffer,strlen(InputBuffer));
+		EncodeUnicode(Buffer[0],InputBuffer,chars_read);
 		SMSInfo.Entries[0].Buffer  		= Buffer[0];
 		SMSInfo.Entries[0].ID			= SMS_Text;
 		SMSInfo.UnicodeCoding   		= false;
