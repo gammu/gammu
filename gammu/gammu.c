@@ -5666,7 +5666,7 @@ static void Restore(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	printf("%s\n", _("Please note that restoring any data will cause existing data in phone to be deleted."));
+	printf("%s\n", _("Please note that restoring data will cause existing data in phone to be deleted."));
 
 	DoRestore = false;
 	if (Backup.CallerLogos[0] != NULL) {
