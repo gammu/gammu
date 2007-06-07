@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-06-03 18:35+0200\n"
-"PO-Revision-Date: 2007-06-01 12:47+0200\n"
+"PO-Revision-Date: 2007-06-04 12:56+0200\n"
 "Last-Translator: Thorsten Gutsche <thorsten.gutsche@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "MIME-Version: 1.0\n"
@@ -1219,9 +1219,10 @@ msgid "Security status"
 msgstr "Sicherheitsstatus:"
 
 #: gammu/gammu.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "INFO: there is later phone firmware (%s instead of %s) available!\n"
-msgstr "INFO: Es ist eine neuere Telefon-Firmware (%s anstatt %s) verfügbar!\n"
+msgstr ""
+"INFO: Es ist eine neuere Handy-Firmware (%s anstatt %s) verfügbar!\n"
 
 #: gammu/gammu.c:289 gammu/gammu.c:3258 gammu/gammu.c:3273 gammu/gammu.c:3280
 #: gammu/gammu.c:3287 gammu/gammu.c:3317
@@ -1765,9 +1766,8 @@ msgid "Snail address"
 msgstr "Postanschrift"
 
 #: gammu/gammu.c:1008
-#, fuzzy
 msgid "Work snail address"
-msgstr "Postanschrift"
+msgstr "Dienstliche Postanschrift"
 
 #: gammu/gammu.c:1009
 msgid "Email address 1"
@@ -1832,28 +1832,24 @@ msgid "Country"
 msgstr "Land              "
 
 #: gammu/gammu.c:1025
-#, fuzzy
 msgid "Work street address"
-msgstr "Straße            "
+msgstr "Dienstlicher Straßenname"
 
 #: gammu/gammu.c:1026
 msgid "Work city"
-msgstr ""
+msgstr "Dienstliche Stadt"
 
 #: gammu/gammu.c:1027
-#, fuzzy
 msgid "Work state"
-msgstr "Netzstärke"
+msgstr "Dienstliches Bundesland"
 
 #: gammu/gammu.c:1028
-#, fuzzy
 msgid "Work zip code"
-msgstr "Postleitzahl      "
+msgstr "Dienstliche Postleitzahl"
 
 #: gammu/gammu.c:1029
-#, fuzzy
 msgid "Work country"
-msgstr "Land              "
+msgstr "Dienstlicher Staat     "
 
 #: gammu/gammu.c:1030
 msgid "Custom text 1"
@@ -2814,7 +2810,7 @@ msgstr "Typ des Inhalts"
 #: gammu/gammu.c:2634
 #, c-format
 msgid " (%s in SMIL)"
-msgstr ""
+msgstr "(%s in SMIL)"
 
 #: gammu/gammu.c:2650
 msgid "Do you want to save this attachment"
@@ -2857,7 +2853,7 @@ msgstr "MIDI"
 #: gammu/gammu.c:2741
 #, c-format
 msgid "SMAF (MMF)"
-msgstr ""
+msgstr "SMAF (MMF)"
 
 #: gammu/gammu.c:2743
 #, c-format
@@ -2880,11 +2876,9 @@ msgid "Auto deleting notes after %i day(s)"
 msgstr "Automatisches Löschen von Notizen nach %i Tag(en)"
 
 #: gammu/gammu.c:3049
-#, fuzzy, c-format
+#, c-format
 msgid "Week starts on %s"
-msgstr ""
-"\n"
-"Die Woche beginnt am "
+msgstr "Die Woche beginnt am %s"
 
 #: gammu/gammu.c:3069 gammu/gammu.c:3114
 msgid "Address"
@@ -2979,6 +2973,7 @@ msgstr "Parameter fehlt!"
 #, c-format
 msgid "msg:%s nb:%i udh:%s\n"
 msgstr ""
+"msg:%s nb:%i udh%s\n"
 
 #: gammu/gammu.c:3501
 #, c-format
@@ -3000,9 +2995,8 @@ msgid "Enter message text and press ^D:"
 msgstr "Nachricht eingeben und Strg-D drücken zum Abschliessen:"
 
 #: gammu/gammu.c:3591
-#, fuzzy
 msgid "0 chars read!"
-msgstr "Kein Zeichen gelesen!"
+msgstr "0 Zeichen gelesen!"
 
 #: gammu/gammu.c:3613 gammu/gammu.c:3627
 msgid "Where are parameters?"
@@ -3392,9 +3386,9 @@ msgstr ""
 "das Kommando --restore nochmals auszuführen"
 
 #: gammu/gammu.c:5731 gammu/gammu.c:5780
-#, fuzzy, c-format
+#, c-format
 msgid "Location %d"
-msgstr "Speicherplatz %i\n"
+msgstr "Ort %d"
 
 #: gammu/gammu.c:5759
 msgid "Restore SIM phonebook"
@@ -4169,17 +4163,15 @@ msgstr ""
 
 #: gammu/gammu.c:7990
 msgid "Protocols"
-msgstr ""
+msgstr "Protokolle"
 
 #: gammu/gammu.c:8055
-#, fuzzy
 msgid "Phones"
-msgstr "Telefon"
+msgstr "Handys"
 
 #: gammu/gammu.c:8099
-#, fuzzy
 msgid "Miscellaneous"
-msgstr "Notiz (Verschiedenes)"
+msgstr "Verschiedenes"
 
 #: gammu/gammu.c:8126
 msgid ""
@@ -4320,9 +4312,9 @@ msgid "  Saving to %s\n"
 msgstr "  Speichere nach %s\n"
 
 #: gammu/gammu.c:8668
-#, fuzzy, c-format
+#, c-format
 msgid "%3i percent"
-msgstr "%i Prozent"
+msgstr "%3i Prozent"
 
 #: gammu/gammu.c:8754 gammu/gammu.c:9489
 #, c-format
@@ -4372,10 +4364,8 @@ msgid "What folder type (\"%s\") ?\n"
 msgstr "Welcher Ordnertyp (\"%s\")?\n"
 
 #: gammu/gammu.c:9182 gammu/gammu.c:9255
-#, fuzzy
 msgid "Folder not found. Probably function not supported!"
-msgstr ""
-"Ordner nicht gefunden. Vermutlich wird diese Funktion nicht unterstützt!"
+msgstr "Ordner nicht gefunden. Vermutlich wird diese Funktion nicht unterstützt!"
 
 #: gammu/gammu.c:9205
 #, c-format
@@ -4739,17 +4729,16 @@ msgstr ""
 "von Gammu (%s)\n"
 
 #: gammu/gammu.c:10667
-#, fuzzy, c-format
+#, c-format
 msgid "INFO: there is later stable Gammu (%s instead of %s) available!\n"
 msgstr ""
 "INFO: Es ist eine neuere stabile Gammu-Version (%s anstatt %s) verfügbar!\n"
 
 #: gammu/gammu.c:10680
-#, fuzzy, c-format
+#, c-format
 msgid "INFO: there is later test Gammu (%s instead of %s) available!\n"
 msgstr ""
-"INFO: Es ist eine neuere Entwicklungsversion von Gammu (%s anstatt %s) "
-"verfügbar!\n"
+"INFO: Es ist eine neuere Entwicklungsversion von Gammu (%s anstatt %s) verfügbar!\n"
 
 #~ msgid "bad month!"
 #~ msgstr "Ungültiger Monat!"
