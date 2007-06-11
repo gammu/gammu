@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-06-07 14:27+0200\n"
-"PO-Revision-Date: 2007-05-24 17:14+0200\n"
+"PO-Revision-Date: 2007-06-08 16:36+0200\n"
 "Last-Translator: Alejandro Caldito <acaldito@amena.com>\n"
 "Language-Team: Español\n"
 "MIME-Version: 1.0\n"
@@ -536,9 +536,9 @@ msgid " (Caller group: logo)"
 msgstr " (Grupo de llamada : logotipo"
 
 #: gammu/depend/nokia/dct4.c:1338
-#, fuzzy, c-format
+#, c-format
 msgid " (Caller group: is logo on ?)"
-msgstr "Grupo de llamada : \"%s\"\n"
+msgstr "(Grupo de llamada: ¿está el logo activado?)"
 
 #: gammu/depend/nokia/dct4.c:1339
 #, c-format
@@ -792,55 +792,51 @@ msgid "Bad month!"
 msgstr "Mes incorrecto!"
 
 #: gammu/gammu.c:187
-#, fuzzy
 msgid "Monday"
-msgstr "Mayo"
+msgstr "Lunes"
 
 #: gammu/gammu.c:188
-#, fuzzy
 msgid "Tuesday"
-msgstr "dia"
+msgstr "Martes"
 
 #: gammu/gammu.c:189
 msgid "Wednesday"
-msgstr ""
+msgstr "Miércoles"
 
 #: gammu/gammu.c:190
 msgid "Thursday"
-msgstr ""
+msgstr "Jueves"
 
 #: gammu/gammu.c:191
-#, fuzzy
 msgid "Friday"
-msgstr "dia"
+msgstr "Viernes"
 
 #: gammu/gammu.c:192
 msgid "Saturday"
-msgstr ""
+msgstr "Sábado"
 
 #: gammu/gammu.c:193
-#, fuzzy
 msgid "Sunday"
-msgstr "dia"
+msgstr "Domingo"
 
 #: gammu/gammu.c:194
 msgid "Bad day!"
-msgstr ""
+msgstr "¡Mal día!"
 
 #: gammu/gammu.c:204
 msgid "Security status"
 msgstr "Estado de seguridad"
 
 #: gammu/gammu.c:269
-#, fuzzy, c-format
+#, c-format
 msgid "INFO: there is later phone firmware (%s instead of %s) available!\n"
 msgstr ""
-"INFO: hay una nueva versión de firmware disponible (%s en vez de la %s). \n"
+"INFO: hay una última versión de firmware disponible (%s en vez de la %s).\n"
 
 #: gammu/gammu.c:289 gammu/gammu.c:3258 gammu/gammu.c:3273 gammu/gammu.c:3280
 #: gammu/gammu.c:3287 gammu/gammu.c:3317
 msgid "More parameters required!"
-msgstr "Faltan parámetros."
+msgstr "Faltan más parámetros."
 
 #: gammu/gammu.c:307
 msgid "Swapping start and end location"
@@ -850,7 +846,7 @@ msgstr "Intercambiando posición de inicio y fin"
 #: gammu/gammu.c:325
 #, c-format
 msgid "%s (yes/no/ALL/ONLY/NONE) ? "
-msgstr "%s (si/no/todo/uno/ninguno) ¿?"
+msgstr "¿%s (si/no/TODO/UNO/NINGUNO)?"
 
 #: gammu/gammu.c:327
 msgid "YES (always)"
@@ -858,7 +854,7 @@ msgstr "SI (siempre)"
 
 #: gammu/gammu.c:331
 msgid "NO (always)"
-msgstr "NO (siempre)"
+msgstr "NO (nunca)"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/gammu.c:337
@@ -889,7 +885,7 @@ msgstr "red en itinerancia"
 
 #: gammu/gammu.c:364
 msgid "requesting network"
-msgstr "pidiendo a la red"
+msgstr "solicitando red"
 
 #: gammu/gammu.c:365
 msgid "not logged into network"
@@ -1128,12 +1124,12 @@ msgstr "desde %s hasta %s"
 #: gammu/gammu.c:583
 #, c-format
 msgid " on each "
-msgstr ""
+msgstr "en cada"
 
 #: gammu/gammu.c:585
 #, c-format
 msgid " on each %d. "
-msgstr ""
+msgstr "en cada %d."
 
 #: gammu/gammu.c:590
 #, c-format
@@ -1156,9 +1152,9 @@ msgid "%d. day of "
 msgstr "%d. dia de "
 
 #: gammu/gammu.c:607
-#, fuzzy, c-format
+#, c-format
 msgid "%d. day of year"
-msgstr "%d. dia de "
+msgstr "%d. dia del año"
 
 #: gammu/gammu.c:609
 #, c-format
@@ -1167,76 +1163,70 @@ msgstr "dia"
 
 #: gammu/gammu.c:623
 msgid "Age"
-msgstr ""
+msgstr "Edad"
 
 #: gammu/gammu.c:646 gammu/gammu.c:1057 gammu/gammu.c:1287 gammu/gammu.c:1347
 #: gammu/gammu.c:1931 gammu/gammu.c:2134 gammu/gammu.c:3018 gammu/gammu.c:5013
 #: gammu/gammu.c:5650 gammu/gammu.c:6209 gammu/gammu.c:7441 gammu/gammu.c:7511
 #: gammu/gammu.c:7532
 msgid "Press Ctrl+C to break..."
-msgstr ""
+msgstr "Pulsar Control+C para detener ..."
 
 #: gammu/gammu.c:689 gammu/gammu.c:9709
-#, fuzzy
 msgid "Manufacturer"
-msgstr "Fabricado     : %s\n"
+msgstr "Fabricante"
 
 #: gammu/gammu.c:692 gammu/gammu.c:9712
 msgid "Model"
-msgstr ""
+msgstr "Modelo"
 
 #: gammu/gammu.c:698
-#, fuzzy
 msgid "Firmware"
-msgstr "Formato        : "
+msgstr "Firmware"
 
 #: gammu/gammu.c:710
 msgid "Hardware"
-msgstr ""
+msgstr "Hardware"
 
 #: gammu/gammu.c:716 gammu/gammu.c:5654 gammu/gammu.c:6213
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #: gammu/gammu.c:721
-#, fuzzy
 msgid "Original IMEI"
-msgstr "IMEI original : %s\n"
+msgstr "IMEI original"
 
 #: gammu/gammu.c:728
-#, fuzzy
 msgid "Manufactured"
-msgstr "Fabricado     : %s\n"
+msgstr "Fabricado"
 
 #: gammu/gammu.c:734
-#, fuzzy
 msgid "Product code"
-msgstr "Producto code : %s\n"
+msgstr "Código de producto"
 
 #: gammu/gammu.c:744
 msgid "SIM IMSI"
-msgstr ""
+msgstr "IMSI SIM"
 
 #: gammu/gammu.c:770
-#, fuzzy
 msgid "Date and time not set in phone"
-msgstr "Fecha y hora no establecidas en el teléfono\n"
+msgstr "Fecha y hora no establecidas en el teléfono"
 
 #: gammu/gammu.c:773
 #, c-format
 msgid "Phone time is %s\n"
-msgstr "Hora del teléfono es %s\n"
+msgstr ""
+"Hora del teléfono es %s\n"
 
 #: gammu/gammu.c:786
 #, c-format
 msgid "Time format is "
-msgstr "El formato de hora es "
+msgstr "El formato de hora es"
 
 #. l10n: AM/PM time
 #: gammu/gammu.c:789
-#, fuzzy
 msgid "12 hours"
-msgstr "12 horas\n"
+msgstr "12 horas"
 
 #. l10n: 24 hours time
 #: gammu/gammu.c:792
@@ -1251,100 +1241,101 @@ msgstr "El formato de fecha es "
 #: gammu/gammu.c:796
 #, c-format
 msgid "DD MM YYYY"
-msgstr ""
+msgstr "DD MM AAAA"
 
 #: gammu/gammu.c:797
 #, c-format
 msgid "MM DD YYYY"
-msgstr ""
+msgstr "MM DD AAAA"
 
 #: gammu/gammu.c:798
 #, c-format
 msgid "YYYY MM DD"
-msgstr ""
+msgstr "AAAA MM DD"
 
 #: gammu/gammu.c:799
 #, c-format
 msgid "DD MMM YY"
-msgstr ""
+msgstr "DD MMM AA"
 
 #: gammu/gammu.c:800
 #, c-format
 msgid "MM DD YY"
-msgstr ""
+msgstr "MM DD AA"
 
 #: gammu/gammu.c:801
 #, c-format
 msgid "DD MM YY"
-msgstr ""
+msgstr "DD MM AA"
 
 #: gammu/gammu.c:802
 #, c-format
 msgid "YY MM DD"
-msgstr ""
+msgstr "AA MM DD"
 
 #: gammu/gammu.c:803
 #, c-format
 msgid "OFF"
-msgstr ""
+msgstr "Apagado"
 
 #: gammu/gammu.c:806
 #, c-format
 msgid ", date separator is %c\n"
-msgstr ", separator de fecha es %c\n"
+msgstr ""
+", el separador de fecha es %c\n"
 
 #: gammu/gammu.c:821
 msgid "Setting time in phone to the time on PC."
-msgstr ""
+msgstr "Estableciendo hora del teléfono a la hora del PC."
 
 #: gammu/gammu.c:830
 msgid "Updating specified parts of date and time in phone."
-msgstr ""
+msgstr "Actualizando en el teléfono las partes especificadas de fecha y hora."
 
 #: gammu/gammu.c:880
-#, fuzzy, c-format
+#, c-format
 msgid "Alarm (%i) not set in phone\n"
-msgstr "Alarma no establecida en el teléfono\n"
+msgstr ""
+"Alarma (%i) no establecida en el teléfono\n"
 
 #: gammu/gammu.c:883
-#, fuzzy, c-format
+#, c-format
 msgid "Alarm in location %i:\n"
-msgstr "Memoria %s, Location %i\n"
+msgstr ""
+"Alarma en posición %i:\n"
 
 #: gammu/gammu.c:885 gammu/gammu.c:887 gammu/gammu.c:2615
-#, fuzzy
 msgid "Date"
-msgstr "Fecha: %s\n"
+msgstr "Fecha:"
 
 #: gammu/gammu.c:885
 msgid "Every day"
-msgstr ""
+msgstr "Todos los días"
 
 #: gammu/gammu.c:889
 #, c-format
 msgid "Time: %02d:%02d\n"
-msgstr "Hora: %02d:%02d\n"
+msgstr ""
+"Hora: %02d:%02d\n"
 
 #: gammu/gammu.c:933
 #, c-format
 msgid "Call length      : %02i:%02i:%02i\n"
 msgstr ""
+"Tiempo de llamada: %02i:%02i:%02i\n"
 
 #: gammu/gammu.c:936
-#, fuzzy
 msgid "Date and time"
-msgstr "Fecha y hora no establecidas en el teléfono\n"
+msgstr "Fecha y hora"
 
 #: gammu/gammu.c:943 gammu/gammu.c:949 gammu/gammu.c:951 gammu/gammu.c:7373
 #: gammu/gammu.c:7375
-#, fuzzy
 msgid "Category"
-msgstr "Categorías"
+msgstr "Categoría"
 
 #: gammu/gammu.c:960 gammu/gammu.c:974
-#, fuzzy
 msgid "Caller group"
-msgstr "Grupo de llamada : \"%s\"\n"
+msgstr "Grupo de llamada:"
 
 #: gammu/gammu.c:961
 msgid "Caller group number too high, please increase buffer in sources!"
@@ -1352,30 +1343,26 @@ msgstr ""
 
 #: gammu/gammu.c:985 gammu/gammu.c:3170 gammu/gammu.c:3172 gammu/gammu.c:3187
 #: gammu/gammu.c:3194
-#, fuzzy
 msgid "Ringtone"
-msgstr "Tonos de llamada"
+msgstr "Tono de llamada"
 
 #: gammu/gammu.c:990 gammu/gammu.c:7615
-#, fuzzy
 msgid "Ringtone ID"
-msgstr "ID Tono          : %i\n"
+msgstr "ID Tono"
 
 #: gammu/gammu.c:994
 msgid "User ID"
-msgstr ""
+msgstr "ID usuario"
 
 #: gammu/gammu.c:997
 msgid "Picture ID"
-msgstr ""
+msgstr "ID imagen"
 
 #: gammu/gammu.c:999
-#, fuzzy
 msgid "General number"
-msgstr "General         "
+msgstr "Número general"
 
 #: gammu/gammu.c:1001
-#, fuzzy
 msgid "Work number"
 msgstr "Trabajo         "
 
@@ -1385,9 +1372,8 @@ msgid "Pager number"
 msgstr "Otro            "
 
 #: gammu/gammu.c:1005
-#, fuzzy
 msgid "Other number"
-msgstr "Otro            "
+msgstr "Otro número"
 
 #: gammu/gammu.c:1007
 #, fuzzy
@@ -1410,64 +1396,54 @@ msgid "Email address 2"
 msgstr "Email 2         "
 
 #: gammu/gammu.c:1011
-#, fuzzy
 msgid "URL address"
-msgstr "Página web      "
+msgstr "Página web"
 
 #: gammu/gammu.c:1013 gammu/gammu.c:1576 gammu/gammu.c:2632 gammu/gammu.c:3068
 #: gammu/gammu.c:3232 gammu/gammu.c:7189 gammu/gammu.c:7227 gammu/gammu.c:7744
 #: gammu/gammu.c:7963
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: gammu/gammu.c:1014
-#, fuzzy
 msgid "Last name"
-msgstr "2º Apellido     "
+msgstr "2º Apellido"
 
 #: gammu/gammu.c:1015
-#, fuzzy
 msgid "First name"
-msgstr "1er Apellido    "
+msgstr "1er Apellido"
 
 #: gammu/gammu.c:1016
-#, fuzzy
 msgid "Formal name"
-msgstr "1er Apellido    "
+msgstr "Nombre formal"
 
 #: gammu/gammu.c:1017
-#, fuzzy
 msgid "Nick name"
-msgstr "1er Apellido    "
+msgstr "Apodo"
 
 #: gammu/gammu.c:1018
-#, fuzzy
 msgid "Company"
 msgstr "Compañía        "
 
 #: gammu/gammu.c:1019
-#, fuzzy
 msgid "Job title"
-msgstr "Profesión       "
+msgstr "Puesto"
 
 #: gammu/gammu.c:1020
-#, fuzzy
 msgid "Street address"
-msgstr "Calle           "
+msgstr "Dirección"
 
 #: gammu/gammu.c:1021
 msgid "City"
-msgstr ""
+msgstr "Ciudad"
 
 #: gammu/gammu.c:1022
-#, fuzzy
 msgid "State"
-msgstr "Normal\n"
+msgstr "Estado/provincia"
 
 #: gammu/gammu.c:1023
-#, fuzzy
 msgid "Zip code"
-msgstr "Código postal   "
+msgstr "Código postal"
 
 #: gammu/gammu.c:1024
 #, fuzzy
