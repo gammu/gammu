@@ -97,9 +97,7 @@ set (CPACK_PACKAGE_VERSION_MAJOR "${VERSION_MAJOR}")
 set (CPACK_PACKAGE_VERSION_MINOR "${VERSION_MINOR}")
 set (CPACK_PACKAGE_VERSION_PATCH "${VERSION_PATCH}")
 if (WIN32)
-set (CPACK_PACKAGE_INSTALL_DIRECTORY "Gammu ${VERSION}")
-endif (WIN32)
-if (WIN32)
+  set (CPACK_PACKAGE_INSTALL_DIRECTORY "Gammu ${VERSION}")
   # There is a bug in NSI that does not handle full unix paths properly. Make
   # sure there is at least one set of four (4) backlasshes.
   #set (CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\\\InstallIcon.bmp")
@@ -240,10 +238,6 @@ endif (MYSQL_FOUND)
 if (POSTGRES_FOUND)
     set (HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
 endif (POSTGRES_FOUND)
-
-add_subdirectory(common)
-
-add_subdirectory(gammu)
 
 set (LOCALES 
     cs 
@@ -733,3 +727,7 @@ install (
     DESTINATION "${INSTALL_MAN_DIR}/man1"
     COMPONENT "basic-documentation"
     )
+
+add_subdirectory(common)
+
+add_subdirectory(gammu)
