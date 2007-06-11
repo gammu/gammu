@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-06-07 14:27+0200\n"
-"PO-Revision-Date: 2007-05-21 17:44+0200\n"
+"PO-Revision-Date: 2007-06-07 14:36+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1368,9 +1368,8 @@ msgid "Snail address"
 msgstr "Poštovní adresa"
 
 #: gammu/gammu.c:1008
-#, fuzzy
 msgid "Work snail address"
-msgstr "Poštovní adresa"
+msgstr "Pracovní poštovní adresa"
 
 #: gammu/gammu.c:1009
 msgid "Email address 1"
@@ -1435,28 +1434,24 @@ msgid "Country"
 msgstr "Země"
 
 #: gammu/gammu.c:1025
-#, fuzzy
 msgid "Work street address"
-msgstr "Adresa"
+msgstr "Pracovní adresa"
 
 #: gammu/gammu.c:1026
 msgid "Work city"
 msgstr ""
 
 #: gammu/gammu.c:1027
-#, fuzzy
 msgid "Work state"
-msgstr "Stav sítě"
+msgstr "Stát pracoviště"
 
 #: gammu/gammu.c:1028
-#, fuzzy
 msgid "Work zip code"
-msgstr "Směrovací číslo"
+msgstr "Směrovací číslo pracoviště"
 
 #: gammu/gammu.c:1029
-#, fuzzy
 msgid "Work country"
-msgstr "Země"
+msgstr "Země pracoviště"
 
 #: gammu/gammu.c:1030
 msgid "Custom text 1"
@@ -2989,9 +2984,9 @@ msgid ""
 msgstr ""
 
 #: gammu/gammu.c:5733 gammu/gammu.c:5782
-#, fuzzy, c-format
+#, c-format
 msgid "Location %d"
-msgstr "Pozice %i\n"
+msgstr "Pozice %d"
 
 #: gammu/gammu.c:5761
 msgid "Restore SIM phonebook"
@@ -3750,9 +3745,8 @@ msgid "Protocols"
 msgstr ""
 
 #: gammu/gammu.c:8059
-#, fuzzy
 msgid "Phones"
-msgstr "Telefon"
+msgstr "Telefony"
 
 #: gammu/gammu.c:8103
 msgid "Miscellaneous"
