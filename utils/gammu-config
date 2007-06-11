@@ -168,6 +168,7 @@ editC() {
         at19200 "" \
         at115200 "" \
         fbus "" \
+        fbus-nodtr "" \
         fbusirda "" \
         fbusdlr3 "" \
         fbusdku5 "" \
@@ -177,6 +178,7 @@ editC() {
         irdaobex "" \
         dku2phonet "" \
         dku5fbus2 "" \
+        dku5fbus2-nodtr "" \
         bluerffbus "" \
         bluerfphonet "" \
         bluephonet "" \
