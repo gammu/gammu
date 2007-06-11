@@ -16,6 +16,8 @@ ChangeLog
 =========
 
 2007???? - 1.11.93
+[+] * Added dku5fbus-nodtr and fbus-nodtr variants, which do not care
+      about DTR/RTS signals (thanks to Jakub Zawadzki).
 
 
 20070607 - 1.11.92
