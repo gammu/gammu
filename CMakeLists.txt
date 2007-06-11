@@ -71,10 +71,8 @@ else (CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
 # No rpath by default
-if (NOT DEFINED WITH_RPATH)
-    set (WITH_RPATH FALSE CACHE BOOL "Enable rpath in resulting libraries")
-    mark_as_advanced (WITH_RPATH)
-endif (NOT DEFINED WITH_RPATH)
+set (WITH_RPATH FALSE CACHE BOOL "Enable rpath in resulting libraries")
+mark_as_advanced (WITH_RPATH)
 
 if (WITH_RPATH)
     set (CMAKE_SKIP_RPATH OFF)
@@ -83,11 +81,7 @@ else (WITH_RPATH)
 endif (WITH_RPATH)
 
 # Static library by default
-if (NOT DEFINED ENABLE_SHARED)
-    set (ENABLE_SHARED FALSE CACHE BOOL "Build shared library")
-else (NOT DEFINED ENABLE_SHARED)
-    set (ENABLE_SHARED ${ENABLE_SHARED} CACHE BOOL "Build shared library")
-endif (NOT DEFINED ENABLE_SHARED)
+set (ENABLE_SHARED FALSE CACHE BOOL "Build shared library")
 
 set (BUILD_SHARED_LIBS ${ENABLE_SHARED} CACHE INTERNAL "Shared build")
 
@@ -624,30 +618,23 @@ add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
     COMMENT "Generating internal documentation")
 
 # Install paths
-if (NOT DEFINED INSTALL_BIN_DIR)
-    set (INSTALL_BIN_DIR "bin" CACHE FILEPATH "Path for binaries installation")
-    mark_as_advanced (INSTALL_BIN_DIR)
-endif (NOT DEFINED INSTALL_BIN_DIR)
-if (NOT DEFINED INSTALL_LIB_DIR)
-    set (INSTALL_LIB_DIR "lib" CACHE FILEPATH "Path for libraries installation")
-    mark_as_advanced (INSTALL_LIB_DIR)
-endif (NOT DEFINED INSTALL_LIB_DIR)
-if (NOT DEFINED INSTALL_INC_DIR)
-    set (INSTALL_INC_DIR "include/gammu" CACHE FILEPATH "Path for includes installation")
-    mark_as_advanced (INSTALL_INC_DIR)
-endif (NOT DEFINED INSTALL_INC_DIR)
-if (NOT DEFINED INSTALL_LOC_DIR)
-    set (INSTALL_LOC_DIR "share/gammu" CACHE FILEPATH "Path for locales installation")
-    mark_as_advanced (INSTALL_LOC_DIR)
-endif (NOT DEFINED INSTALL_LOC_DIR)
-if (NOT DEFINED INSTALL_DOC_DIR)
-    set (INSTALL_DOC_DIR "share/doc/gammu" CACHE FILEPATH "Path for documentation installation")
-    mark_as_advanced (INSTALL_DOC_DIR)
-endif (NOT DEFINED INSTALL_DOC_DIR)
-if (NOT DEFINED INSTALL_MAN_DIR)
-    set (INSTALL_MAN_DIR "share/man" CACHE FILEPATH "Path for man pages installation")
-    mark_as_advanced (INSTALL_MAN_DIR)
-endif (NOT DEFINED INSTALL_MAN_DIR)
+set (INSTALL_BIN_DIR "bin" CACHE FILEPATH "Path for binaries installation")
+mark_as_advanced (INSTALL_BIN_DIR)
+
+set (INSTALL_LIB_DIR "lib" CACHE FILEPATH "Path for libraries installation")
+mark_as_advanced (INSTALL_LIB_DIR)
+
+set (INSTALL_INC_DIR "include/gammu" CACHE FILEPATH "Path for includes installation")
+mark_as_advanced (INSTALL_INC_DIR)
+
+set (INSTALL_LOC_DIR "share/gammu" CACHE FILEPATH "Path for locales installation")
+mark_as_advanced (INSTALL_LOC_DIR)
+
+set (INSTALL_DOC_DIR "share/doc/gammu" CACHE FILEPATH "Path for documentation installation")
+mark_as_advanced (INSTALL_DOC_DIR)
+
+set (INSTALL_MAN_DIR "share/man" CACHE FILEPATH "Path for man pages installation")
+mark_as_advanced (INSTALL_MAN_DIR)
 
 # Generate pkgconfig file
 configure_file (templates/gammu.pc.cmake cfg/gammu.pc @ONLY)
