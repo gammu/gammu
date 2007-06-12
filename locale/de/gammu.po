@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-06-07 14:27+0200\n"
+"POT-Creation-Date: 2007-06-12 15:46+0200\n"
 "PO-Revision-Date: 2007-06-04 12:56+0200\n"
 "Last-Translator: Thorsten Gutsche <thorsten.gutsche@googlemail.com>\n"
 "Language-Team: Language =de\n"
@@ -1748,11 +1748,6 @@ msgstr "Vorgabe-GSM-Alphabet (Kompression)"
 #: gammu/gammu.c:1587
 msgid "8 bit"
 msgstr "8 Bit"
-
-#: gammu/gammu.c:1594
-#, c-format
-msgid ", "
-msgstr ","
 
 #: gammu/gammu.c:1607
 msgid "User Data Header"
@@ -3498,11 +3493,6 @@ msgstr ""
 "\n"
 "Dieser Klingelton sollte im Nokia Composer so aussehen: "
 
-#: gammu/gammu.c:7017
-#, c-format
-msgid "."
-msgstr "."
-
 #: gammu/gammu.c:7039
 #, c-format
 msgid ""
@@ -4583,7 +4573,8 @@ msgid "Error at init connection (%i)"
 msgstr "Fehler beim Verbindungsaufbau (%i)"
 
 #: gammu/smsd/smsdcore.c:606
-msgid "Stop GAMMU smsd"
+#, fuzzy
+msgid "Stopping Gammu smsd"
 msgstr "GAMMU smsd anhalten"
 
 #: gammu/smsd/s_mysql.c:42 gammu/smsd/s_pgsql.c:45
@@ -4745,6 +4736,12 @@ msgstr "Fehler beim Schreiben in die Datenbank (CreateOutbox): %s\n"
 #, c-format
 msgid "Error writing to database (AddSent): %s\n"
 msgstr "Fehler beim Schreiben in die Datenbank (AddSent): %s\n"
+
+#~ msgid ", "
+#~ msgstr ","
+
+#~ msgid "."
+#~ msgstr "."
 
 #~ msgid "bad month!"
 #~ msgstr "Ungültiger Monat!"

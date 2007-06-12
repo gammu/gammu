@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-06-07 14:27+0200\n"
+"POT-Creation-Date: 2007-06-12 15:46+0200\n"
 "PO-Revision-Date: 2007-03-20 09:13+0100\n"
 "Last-Translator: Pavel Maryanov <acid_jack@ukr.net>\n"
 "Language-Team: Language =ru\n"
@@ -1889,11 +1889,6 @@ msgstr "Стандартный алфавит GSM (со сжатием)\n"
 #, fuzzy
 msgid "8 bit"
 msgstr "8 бит\n"
-
-#: gammu/gammu.c:1594
-#, c-format
-msgid ", "
-msgstr ""
 
 #: gammu/gammu.c:1607
 #, fuzzy
@@ -3817,11 +3812,6 @@ msgstr ""
 "\n"
 "Этот рингтон в Nokia Composer телефона должен выглядеть: "
 
-#: gammu/gammu.c:7017
-#, c-format
-msgid "."
-msgstr ""
-
 #: gammu/gammu.c:7039
 #, c-format
 msgid ""
@@ -4983,7 +4973,7 @@ msgid "Error at init connection (%i)"
 msgstr ""
 
 #: gammu/smsd/smsdcore.c:606
-msgid "Stop GAMMU smsd"
+msgid "Stopping Gammu smsd"
 msgstr ""
 
 #: gammu/smsd/s_mysql.c:42 gammu/smsd/s_pgsql.c:45
