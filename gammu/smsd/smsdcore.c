@@ -603,7 +603,7 @@ void SMSDaemon(int argc, char *argv[])
 		if (!SMSD_SendSMS(&Config,Service)) continue;
 	}
 	GSM_SetFastSMSSending(s,false);
-	GSM_Terminate_SMSD(_("Stop GAMMU smsd"), 0, false, 0);
+	GSM_Terminate_SMSD(_("Stopping Gammu smsd"), 0, false, 0);
 }
 
 GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *sms)
