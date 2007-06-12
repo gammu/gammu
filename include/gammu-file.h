@@ -154,6 +154,9 @@ void GSM_IdentifyFileFormat(GSM_File * File);
  * Gets next filename from filesystem.
  *
  * \param s State machine pointer.
+ * \param File File structure where path will be stored, if start is
+ * false, it should contain data from previous reading (at least ID).
+ * \param start Whether we're starting transfer.
  *
  * \return Error code.
  *
@@ -162,9 +165,13 @@ void GSM_IdentifyFileFormat(GSM_File * File);
 GSM_Error GSM_GetNextFileFolder(GSM_StateMachine * s, GSM_File * File,
 				bool start);
 /**
- * Gets file part from filesystem.
+ * Gets listing of folder.
  *
  * \param s State machine pointer.
+ * \param File File structure where path will be stored, if start is
+ * false, it should contain data from previous reading (at least ID). On
+ * start it should contain path to directory.
+ * \param start Whether we're starting transfer.
  *
  * \return Error code.
  *
@@ -176,6 +183,7 @@ GSM_Error GSM_GetFolderListing(GSM_StateMachine * s, GSM_File * File,
  * Gets next root folder.
  *
  * \param s State machine pointer.
+ * \param File File structure where path will be stored.
  *
  * \return Error code.
  *
@@ -187,6 +195,7 @@ GSM_Error GSM_GetNextRootFolder(GSM_StateMachine * s, GSM_File * File);
  * Sets file system attributes.
  *
  * \param s State machine pointer.
+ * \param File File structure with path and attributes.
  *
  * \return Error code.
  *
@@ -198,19 +207,29 @@ GSM_Error GSM_SetFileAttributes(GSM_StateMachine * s, GSM_File * File);
  * Retrieves file part.
  *
  * \param s State machine pointer.
+ * \param File File structure with path, data will be stored here.
+ * \param Size Size of transmitted data.
+ * \param Handle Handle for saving file, some drivers need this
+ * information to be kept between function calls.
  *
- * \return Error code.
+ * \return Error code, \ref ERR_EMPTY after transfer end.
  *
  * \ingroup File
  */
 GSM_Error GSM_GetFilePart(GSM_StateMachine * s, GSM_File * File, int *Handle,
 			  int *Size);
+
 /**
- * Adds file part to filesystem.
+ * Adds file to filesystem. Call repeatedly until function returns 
+ * \ref ERR_EMPTY.
  *
  * \param s State machine pointer.
+ * \param File File structure and data.
+ * \param Pos Position of transmitted data. Should be 0 on start.
+ * \param Handle Handle for saving file, some drivers need this
+ * information to be kept between function calls.
  *
- * \return Error code.
+ * \return Error code, \ref ERR_EMPTY after transfer end.
  *
  * \ingroup File
  */
@@ -218,10 +237,16 @@ GSM_Error GSM_AddFilePart(GSM_StateMachine * s, GSM_File * File, int *Pos,
 			  int *Handle);
 /**
  * Sends file to phone, it's up to phone to decide what to do with it.
+ * It is usually same as when you receive file over Bluetooth from other
+ * phone. Use in same way as \ref GSM_AddFilePart.
  *
  * \param s State machine pointer.
+ * \param File File structure and data.
+ * \param Pos Position of transmitted data. Should be 0 on start.
+ * \param Handle Handle for saving file, some drivers need this
+ * information to be kept between function calls.
  *
- * \return Error code.
+ * \return Error code, \ref ERR_EMPTY after transfer end.
  *
  * \ingroup File
  */
@@ -231,6 +256,7 @@ GSM_Error GSM_SendFilePart(GSM_StateMachine * s, GSM_File * File, int *Pos,
  * Acquires filesystem status.
  *
  * \param s State machine pointer.
+ * \param Status Storage for status information.
  *
  * \return Error code.
  *
