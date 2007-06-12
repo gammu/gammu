@@ -507,14 +507,14 @@ void SMSDaemon(int argc, char *argv[])
  	time_t			lastreceive, lastreset = 0;
 	GSM_SMSDConfig		Config;
 
-	if (!strcmp(argv[2],"FILES")) {
+	if (!strcasecmp(argv[2],"FILES")) {
 		Service = &SMSDFiles;
 #ifdef HAVE_MYSQL_MYSQL_H
-	} else if (!strcmp(argv[2],"MYSQL")) {
+	} else if (!strcasecmp(argv[2],"MYSQL")) {
 		Service = &SMSDMySQL;
 #endif
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-	} else if (!strcmp(argv[2],"PGSQL")) {
+	} else if (!strcasecmp(argv[2],"PGSQL")) {
 		Service = &SMSDPgSQL;
 #endif
 	} else {
