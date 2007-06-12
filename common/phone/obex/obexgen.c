@@ -1593,6 +1593,9 @@ GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, cha
 	/* Check bounds */
 	if (Entry->Location > Priv->PbLUIDCount ||
 			Priv->PbLUID[Entry->Location] == NULL) {
+		/**
+		 * \todo We should keep location here!
+		 */
 		OBEXGEN_AddMemory(s, Entry);
 	}
 
@@ -1992,6 +1995,9 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 	/* Check bounds */
 	if (Entry->Location > Priv->CalLUIDCount 
 			|| Priv->CalLUID[Entry->Location] == NULL) {
+		/**
+		 * \todo We should keep location here!
+		 */
 		OBEXGEN_AddCalendar(s, Entry);
 	}
 
@@ -2351,6 +2357,9 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *D
 	/* Check bounds */
 	if (Entry->Location > Priv->TodoLUIDCount ||
 			Priv->TodoLUID[Entry->Location] == NULL) {
+		/**
+		 * \todo We should keep location here!
+		 */
 		OBEXGEN_AddTodo(s, Entry);
 	}
 
