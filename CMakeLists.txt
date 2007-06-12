@@ -584,7 +584,7 @@ foreach (HEADER ${PUBLIC_HEADERS})
 endforeach (HEADER)
 
 # Generate Doxygen file
-set (DOXYGEN_INPUT "${Gammu_SOURCE_DIR}/include")
+set (DOXYGEN_INPUT "${Gammu_BINARY_DIR}/include")
 set (DOXYGEN_INTERNAL_INPUT "${Gammu_SOURCE_DIR}/common")
 set (DOXYGEN_OUTPUT "${Gammu_BINARY_DIR}/gammu-doc")
 set (DOXYGEN_INTERNAL_OUTPUT "${Gammu_BINARY_DIR}/gammu-internal-doc")
