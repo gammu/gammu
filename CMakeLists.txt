@@ -597,7 +597,8 @@ else ("${DOXYGEN_DOT_EXECUTABLE}" STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
 endif ("${DOXYGEN_DOT_EXECUTABLE}" STREQUAL DOXYGEN_DOT_EXECUTABLE-NOTFOUND)
 configure_file (templates/Doxyfile.cmake doxygen/Doxyfile)
 configure_file (templates/Doxyfile-internal.cmake doxygen/Doxyfile-internal)
-configure_file (templates/mainpage.desc.cmake doxygen/mainpage.desc)
+configure_file (templates/api.desc.cmake doxygen/api.desc)
+configure_file (templates/internals.desc.cmake doxygen/internals.desc)
 
 # Target for generating API documentation
 add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile 
