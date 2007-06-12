@@ -1591,7 +1591,7 @@ static void displaysinglesmsinfo(GSM_SMSMessage sms, bool displaytext, bool disp
 			printf(LISTFORMAT, ngettext("Remote number", "Remote numbers", sms.OtherNumbersNum + 1));
 			printsmsnumber(sms.Number, Info);
 			for (i=0;i<sms.OtherNumbersNum;i++) {
-				printf(_(", "));
+				printf(", ");
 				printsmsnumber(sms.OtherNumbers[i], Info);
 			}
 			printf("\n");
@@ -7014,7 +7014,7 @@ static void NokiaComposer(int argc, char *argv[])
 					case Duration_1_16: printf("16");break;
 					case Duration_1_32: printf("32");break;
 				}
-				if (Note->DurationSpec == DottedNote) printf(_("."));
+				if (Note->DurationSpec == DottedNote) printf(".");
 				switch (Note->Note) {
 					case Note_C  	: printf("c");	break;
 					case Note_Cis	: printf("#c");	break;
