@@ -206,6 +206,7 @@ GSM_Error GSM_GetRingtonesInfo(GSM_StateMachine * s,
  * Deletes user defined ringtones from phone.
  */
 GSM_Error GSM_DeleteUserRingtones(GSM_StateMachine * s);
+
 /**
  * Plays tone.
  */

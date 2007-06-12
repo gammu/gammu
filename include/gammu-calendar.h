@@ -645,6 +645,7 @@ bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry * note);
  * \ingroup Calendar
  */
 GSM_Error GSM_GetAlarm(GSM_StateMachine * s, GSM_Alarm * alarm);
+
 /**
  * Sets alarm in phone.
  *
@@ -668,6 +669,7 @@ GSM_Error GSM_SetAlarm(GSM_StateMachine * s, GSM_Alarm * alarm);
  * \ingroup Todo
  */
 GSM_Error GSM_GetToDoStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
+
 /**
  * Reads ToDo from phone.
  *
@@ -678,6 +680,7 @@ GSM_Error GSM_GetToDoStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
  * \ingroup Todo
  */
 GSM_Error GSM_GetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
+
 /**
  * Reads ToDo from phone.
  *
@@ -699,6 +702,7 @@ GSM_Error GSM_GetNextToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo,
  * \ingroup Todo
  */
 GSM_Error GSM_SetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
+
 /**
  * Adds ToDo in phone.
  *
@@ -709,6 +713,7 @@ GSM_Error GSM_SetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
  * \ingroup Todo
  */
 GSM_Error GSM_AddToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
+
 /**
  * Deletes ToDo entry in phone.
  *
@@ -719,6 +724,7 @@ GSM_Error GSM_AddToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
  * \ingroup Todo
  */
 GSM_Error GSM_DeleteToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
+
 /**
  * Deletes all todo entries in phone.
  *
@@ -729,6 +735,7 @@ GSM_Error GSM_DeleteToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
  * \ingroup Todo
  */
 GSM_Error GSM_DeleteAllToDo(GSM_StateMachine * s);
+
 /**
  * Retrieves calendar status (number of used entries).
  *
@@ -750,6 +757,7 @@ GSM_Error GSM_GetCalendarStatus(GSM_StateMachine * s,
  * \ingroup Calendar
  */
 GSM_Error GSM_GetCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
+
 /**
  * Retrieves calendar entry. This is useful for continuous reading of all
  * calendar entries.
@@ -772,6 +780,7 @@ GSM_Error GSM_GetNextCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note,
  * \ingroup Calendar
  */
 GSM_Error GSM_SetCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
+
 /**
  * Adds calendar entry.
  *
@@ -782,6 +791,7 @@ GSM_Error GSM_SetCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
  * \ingroup Calendar
  */
 GSM_Error GSM_AddCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
+
 /**
  * Deletes calendar entry.
  *
@@ -792,6 +802,7 @@ GSM_Error GSM_AddCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
  * \ingroup Calendar
  */
 GSM_Error GSM_DeleteCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
+
 /**
  * Deletes all calendar entries.
  *
@@ -802,6 +813,7 @@ GSM_Error GSM_DeleteCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
  * \ingroup Calendar
  */
 GSM_Error GSM_DeleteAllCalendar(GSM_StateMachine * s);
+
 /**
  * Reads calendar settings.
  *
@@ -834,6 +846,7 @@ GSM_Error GSM_SetCalendarSettings(GSM_StateMachine * s,
  * \ingroup Note
  */
 GSM_Error GSM_GetNotesStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
+
 /**
  * Retrieves notes entry.
  *
@@ -844,6 +857,7 @@ GSM_Error GSM_GetNotesStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
  * \ingroup Note
  */
 GSM_Error GSM_GetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
+
 /**
  * Retrieves note entry. This is useful for continuous reading of all
  * notes entries.
@@ -866,6 +880,7 @@ GSM_Error GSM_GetNextNote(GSM_StateMachine * s, GSM_NoteEntry * Note,
  * \ingroup Note
  */
 GSM_Error GSM_SetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
+
 /**
  * Adds note entry.
  *
@@ -876,6 +891,7 @@ GSM_Error GSM_SetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
  * \ingroup Note
  */
 GSM_Error GSM_AddNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
+
 /**
  * Deletes note entry.
  *
@@ -886,6 +902,7 @@ GSM_Error GSM_AddNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
  * \ingroup Note
  */
 GSM_Error GSM_DeleteNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
+
 /**
  * Deletes all notes entries.
  *

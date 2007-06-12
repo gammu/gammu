@@ -172,10 +172,12 @@ typedef struct {
 	unsigned char PhoneID;
 	unsigned char PhoneValue;
 } GSM_Profile_PhoneTableValue;
+
 /**
  * Gets locale from phone.
  */
 GSM_Error GSM_GetLocale(GSM_StateMachine * s, GSM_Locale * locale);
+
 /**
  * Sets locale of phone.
  */
@@ -215,10 +217,12 @@ GSM_Error GSM_SetMMSSettings(GSM_StateMachine * s,
  * Enables network auto login.
  */
 GSM_Error GSM_SetAutoNetworkLogin(GSM_StateMachine * s);
+
 /**
  * Performs phone reset.
  */
 GSM_Error GSM_Reset(GSM_StateMachine * s, bool hard);
+
 /**
  * Resets phone settings.
  */
@@ -228,22 +232,27 @@ GSM_Error GSM_ResetPhoneSettings(GSM_StateMachine * s,
  * Reads profile.
  */
 GSM_Error GSM_GetProfile(GSM_StateMachine * s, GSM_Profile * Profile);
+
 /**
  * Updates profile.
  */
 GSM_Error GSM_SetProfile(GSM_StateMachine * s, GSM_Profile * Profile);
+
 /**
  * Reads FM station.
  */
 GSM_Error GSM_GetFMStation(GSM_StateMachine * s, GSM_FMStation * FMStation);
+
 /**
  * Sets FM station.
  */
 GSM_Error GSM_SetFMStation(GSM_StateMachine * s, GSM_FMStation * FMStation);
+
 /**
  * Clears defined FM stations.
  */
 GSM_Error GSM_ClearFMStations(GSM_StateMachine * s);
+
 /**
  * Gets GPRS access point.
  */

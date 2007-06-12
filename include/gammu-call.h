@@ -224,6 +224,7 @@ GSM_Error GSM_DialVoice(GSM_StateMachine * s, char *Number,
  * \ingroup Call
  */
 GSM_Error GSM_DialService(GSM_StateMachine * s, char *Number);
+
 /**
  * Accept current incoming call.
  *
@@ -234,6 +235,7 @@ GSM_Error GSM_DialService(GSM_StateMachine * s, char *Number);
  * \ingroup Call
  */
 GSM_Error GSM_AnswerCall(GSM_StateMachine * s, int ID, bool all);
+
 /**
  * Deny current incoming call.
  *
@@ -244,6 +246,7 @@ GSM_Error GSM_AnswerCall(GSM_StateMachine * s, int ID, bool all);
  * \ingroup Call
  */
 GSM_Error GSM_CancelCall(GSM_StateMachine * s, int ID, bool all);
+
 /**
  * Holds call.
  *
@@ -254,6 +257,7 @@ GSM_Error GSM_CancelCall(GSM_StateMachine * s, int ID, bool all);
  * \ingroup Call
  */
 GSM_Error GSM_HoldCall(GSM_StateMachine * s, int ID);
+
 /**
  * Unholds call.
  *
@@ -264,6 +268,7 @@ GSM_Error GSM_HoldCall(GSM_StateMachine * s, int ID);
  * \ingroup Call
  */
 GSM_Error GSM_UnholdCall(GSM_StateMachine * s, int ID);
+
 /**
  * Initiates conference call.
  *
@@ -274,6 +279,7 @@ GSM_Error GSM_UnholdCall(GSM_StateMachine * s, int ID);
  * \ingroup Call
  */
 GSM_Error GSM_ConferenceCall(GSM_StateMachine * s, int ID);
+
 /**
  * Splits call.
  *
@@ -284,6 +290,7 @@ GSM_Error GSM_ConferenceCall(GSM_StateMachine * s, int ID);
  * \ingroup Call
  */
 GSM_Error GSM_SplitCall(GSM_StateMachine * s, int ID);
+
 /**
  * Transfers call.
  *
@@ -294,6 +301,7 @@ GSM_Error GSM_SplitCall(GSM_StateMachine * s, int ID);
  * \ingroup Call
  */
 GSM_Error GSM_TransferCall(GSM_StateMachine * s, int ID, bool next);
+
 /**
  * Switches call.
  *
@@ -304,6 +312,7 @@ GSM_Error GSM_TransferCall(GSM_StateMachine * s, int ID, bool next);
  * \ingroup Call
  */
 GSM_Error GSM_SwitchCall(GSM_StateMachine * s, int ID, bool next);
+
 /**
  * Gets call diverts.
  *
@@ -314,6 +323,7 @@ GSM_Error GSM_SwitchCall(GSM_StateMachine * s, int ID, bool next);
  * \ingroup Divert
  */
 GSM_Error GSM_GetCallDivert(GSM_StateMachine * s, GSM_MultiCallDivert * divert);
+
 /**
  * Sets call diverts.
  *
@@ -324,6 +334,7 @@ GSM_Error GSM_GetCallDivert(GSM_StateMachine * s, GSM_MultiCallDivert * divert);
  * \ingroup Divert
  */
 GSM_Error GSM_SetCallDivert(GSM_StateMachine * s, GSM_MultiCallDivert * divert);
+
 /**
  * Cancels all diverts.
  *
@@ -334,6 +345,7 @@ GSM_Error GSM_SetCallDivert(GSM_StateMachine * s, GSM_MultiCallDivert * divert);
  * \ingroup Divert
  */
 GSM_Error GSM_CancelAllDiverts(GSM_StateMachine * s);
+
 /**
  * Activates/deactivates noticing about incoming calls.
  *
@@ -344,6 +356,7 @@ GSM_Error GSM_CancelAllDiverts(GSM_StateMachine * s);
  * \ingroup Call
  */
 GSM_Error GSM_SetIncomingCall(GSM_StateMachine * s, bool enable);
+
 /**
  * Sends DTMF (Dual Tone Multi Frequency) tone.
  *

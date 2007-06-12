@@ -47,6 +47,7 @@ struct _INI_Section {
 	INI_Entry *SubEntries;
 	unsigned char *SectionName;
 };
+
 /**
  * Free INI data.
  *
