@@ -11,7 +11,10 @@
 #include <gammu-error.h>
 /**
  * \defgroup INI INI files
- * Handling of INI files.
+ * These functions parse ini file and make them available in easily
+ * accessable manner.
+ *
+ * File format is standard ini file, comments are both # and ;.
  */
 
 /**
