@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: common/gsmcomon.c:84
 msgid "No error."
@@ -1090,7 +1090,10 @@ msgstr "Opakování"
 #: gammu/gammu.c:570
 #, c-format
 msgid "for %d time "
-msgstr ""
+msgid_plural "for %d times "
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
 
 #: gammu/gammu.c:573
 #, c-format

@@ -5739,9 +5739,16 @@ static void Restore(int argc, char *argv[])
 					}
 				}
 			}
-			if (Pbk.EntriesNum == 0) error=GSM_DeleteMemory(s, &Pbk);
+			if (Pbk.EntriesNum == 0) {
+				/* Delete only when there was some content in phone */
+				if (MemStatus.MemoryUsed > 0)
+					error=GSM_DeleteMemory(s, &Pbk);
+			}
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/(MemStatus.MemoryUsed+MemStatus.MemoryFree));
+			fprintf(stderr, _("%cWriting: %i percent"),
+					13,
+					(i + 1) * 100 / (MemStatus.MemoryUsed + MemStatus.MemoryFree)
+					);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
