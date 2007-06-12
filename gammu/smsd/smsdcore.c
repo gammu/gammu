@@ -611,14 +611,14 @@ GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *s
 	GSM_SMSDService		*Service;
 	GSM_SMSDConfig		Config;
 
-	if (!strcmp(service,"FILES")) {
+	if (!strcasecmp(service,"FILES")) {
 		Service = &SMSDFiles;
 #ifdef HAVE_MYSQL_MYSQL_H
-	} else if (!strcmp(service,"MYSQL")) {
+	} else if (!strcasecmp(service,"MYSQL")) {
 		Service = &SMSDMySQL;
 #endif
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-	} else if (!strcmp(service,"PGSQL")) {
+	} else if (!strcasecmp(service,"PGSQL")) {
 		Service = &SMSDPgSQL;
 #endif
 	} else {
