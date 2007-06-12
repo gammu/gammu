@@ -8,15 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-06-07 14:27+0200\n"
-"PO-Revision-Date: 2007-06-07 14:36+0200\n"
+"POT-Creation-Date: 2007-06-11 12:17+0200\n"
+"PO-Revision-Date: 2007-06-12 15:40+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Pootle 0.11\n"
 
 #: common/gsmcomon.c:84
 msgid "No error."
@@ -380,7 +379,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:481 gammu/depend/nokia/dct4.c:974
 msgid "Press any key to continue..."
-msgstr ""
+msgstr "Stiskněte libobolnou klávesu pro pokračování..."
 
 #: gammu/depend/nokia/dct4.c:493
 #, c-format
@@ -394,7 +393,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:519
 #, c-format
 msgid "Trying %i\n"
-msgstr ""
+msgstr "Zkouším %i\n"
 
 #: gammu/depend/nokia/dct4.c:538
 #, c-format
@@ -424,7 +423,7 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:845
 #, c-format
 msgid "Bluetooth     : "
-msgstr ""
+msgstr "Bluetooth     : "
 
 #: gammu/depend/nokia/dct4.c:861
 #, c-format
@@ -740,7 +739,7 @@ msgstr "Leden"
 
 #: gammu/gammu.c:167
 msgid "February"
-msgstr ""
+msgstr "Únor"
 
 #: gammu/gammu.c:168
 msgid "March"
@@ -748,7 +747,7 @@ msgstr "Březen"
 
 #: gammu/gammu.c:169
 msgid "April"
-msgstr ""
+msgstr "Duben"
 
 #: gammu/gammu.c:170
 msgid "May"
@@ -764,7 +763,7 @@ msgstr "Červenec"
 
 #: gammu/gammu.c:173
 msgid "August"
-msgstr ""
+msgstr "Srpen"
 
 #: gammu/gammu.c:174
 msgid "September"
@@ -780,11 +779,11 @@ msgstr "Listopad"
 
 #: gammu/gammu.c:177
 msgid "December"
-msgstr ""
+msgstr "Prosinec"
 
 #: gammu/gammu.c:178
 msgid "Bad month!"
-msgstr ""
+msgstr "Chybný měsíc!"
 
 #: gammu/gammu.c:187
 msgid "Monday"
@@ -800,7 +799,7 @@ msgstr "Středa"
 
 #: gammu/gammu.c:190
 msgid "Thursday"
-msgstr ""
+msgstr "Čtvrtek"
 
 #: gammu/gammu.c:191
 msgid "Friday"
@@ -816,7 +815,7 @@ msgstr "Neděle"
 
 #: gammu/gammu.c:194
 msgid "Bad day!"
-msgstr ""
+msgstr "Chybný den!"
 
 #: gammu/gammu.c:204
 msgid "Security status"
@@ -840,30 +839,30 @@ msgstr ""
 #: gammu/gammu.c:325
 #, c-format
 msgid "%s (yes/no/ALL/ONLY/NONE) ? "
-msgstr ""
+msgstr "%s (ano/ne/VSE/JEDNO/NIC) ? "
 
 #: gammu/gammu.c:327
 msgid "YES (always)"
-msgstr ""
+msgstr "ANO (vždy)"
 
 #: gammu/gammu.c:331
 msgid "NO (always)"
-msgstr ""
+msgstr "NE (vždy)"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/gammu.c:337
 msgid "NONE"
-msgstr ""
+msgstr "NIC"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/gammu.c:342
 msgid "ONLY"
-msgstr ""
+msgstr "JEDNO"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
 #: gammu/gammu.c:347
 msgid "ALL"
-msgstr ""
+msgstr "VSE"
 
 #: gammu/gammu.c:360
 msgid "Network state"
@@ -904,7 +903,7 @@ msgstr "Název v telefonu"
 
 #: gammu/gammu.c:407 gammu/gammu.c:7301
 msgid "Note type"
-msgstr ""
+msgstr "Typ poznámky"
 
 #: gammu/gammu.c:409 gammu/gammu.c:7303
 msgid "Reminder (Date)"
@@ -912,7 +911,7 @@ msgstr ""
 
 #: gammu/gammu.c:410 gammu/gammu.c:7304
 msgid "Call"
-msgstr ""
+msgstr "Hovor"
 
 #: gammu/gammu.c:412 gammu/gammu.c:7306
 msgid "Birthday (Anniversary)"
@@ -924,7 +923,7 @@ msgstr ""
 
 #: gammu/gammu.c:414 gammu/gammu.c:7308
 msgid "Travel"
-msgstr ""
+msgstr "Cesta"
 
 #: gammu/gammu.c:415 gammu/gammu.c:7309
 msgid "Vacation"
@@ -932,11 +931,11 @@ msgstr "Dovolená"
 
 #: gammu/gammu.c:416 gammu/gammu.c:7310 gammu/gammu.c:7354
 msgid "Alarm"
-msgstr ""
+msgstr "Budík"
 
 #: gammu/gammu.c:417 gammu/gammu.c:7311
 msgid "Daily alarm"
-msgstr ""
+msgstr "Denní budík"
 
 #: gammu/gammu.c:418 gammu/gammu.c:7312
 msgid "Training/Athletism"
@@ -1020,15 +1019,15 @@ msgstr "neznámý typ!"
 
 #: gammu/gammu.c:456
 msgid "Start"
-msgstr ""
+msgstr "Začátek"
 
 #: gammu/gammu.c:460
 msgid "Stop"
-msgstr ""
+msgstr "Konec"
 
 #: gammu/gammu.c:464 gammu/gammu.c:939 gammu/gammu.c:7360
 msgid "Last modified"
-msgstr ""
+msgstr "Poslední změna"
 
 #: gammu/gammu.c:468 gammu/gammu.c:477
 msgid "Tone alarm"
@@ -1047,15 +1046,15 @@ msgstr "Tiché upozornění"
 #: gammu/gammu.c:2181 gammu/gammu.c:3229 gammu/gammu.c:7363 gammu/gammu.c:7540
 #, c-format
 msgid "Text"
-msgstr ""
+msgstr "Text"
 
 #: gammu/gammu.c:500 gammu/gammu.c:7397
 msgid "Description"
-msgstr ""
+msgstr "Popis"
 
 #: gammu/gammu.c:503 gammu/gammu.c:1012 gammu/gammu.c:7403
 msgid "LUID"
-msgstr ""
+msgstr "LUID"
 
 #: gammu/gammu.c:506 gammu/gammu.c:2987 gammu/gammu.c:3026 gammu/gammu.c:7185
 #: gammu/gammu.c:7217 gammu/gammu.c:7278 gammu/gammu.c:7300 gammu/gammu.c:7400
@@ -1181,11 +1180,11 @@ msgstr "Firmware"
 
 #: gammu/gammu.c:710
 msgid "Hardware"
-msgstr ""
+msgstr "Hardware"
 
 #: gammu/gammu.c:716 gammu/gammu.c:5654 gammu/gammu.c:6213
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #: gammu/gammu.c:721
 msgid "Original IMEI"
@@ -1301,7 +1300,7 @@ msgstr "Datum"
 
 #: gammu/gammu.c:885
 msgid "Every day"
-msgstr ""
+msgstr "Každý den"
 
 #: gammu/gammu.c:889
 #, c-format
@@ -1419,7 +1418,7 @@ msgstr "Adresa"
 
 #: gammu/gammu.c:1021
 msgid "City"
-msgstr ""
+msgstr "Město"
 
 #: gammu/gammu.c:1022
 msgid "State"
@@ -1439,7 +1438,7 @@ msgstr "Pracovní adresa"
 
 #: gammu/gammu.c:1026
 msgid "Work city"
-msgstr ""
+msgstr "Město práce"
 
 #: gammu/gammu.c:1027
 msgid "Work state"
@@ -1581,7 +1580,7 @@ msgstr "Stav doručení"
 
 #: gammu/gammu.c:1511
 msgid "Details"
-msgstr ""
+msgstr "Podrobnosti"
 
 #: gammu/gammu.c:1514 gammu/gammu.c:1519
 #, c-format
@@ -1713,11 +1712,11 @@ msgstr "SMS nahrazuje ID"
 
 #: gammu/gammu.c:1579
 msgid "Class"
-msgstr ""
+msgstr "Třída"
 
 #: gammu/gammu.c:1581
 msgid "Coding"
-msgstr ""
+msgstr "Kódování"
 
 #: gammu/gammu.c:1583
 msgid "Unicode (no compression)"
