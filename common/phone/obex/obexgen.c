@@ -790,8 +790,9 @@ GSM_Error OBEXGEN_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, 
 	if (error != ERR_NONE) return error;
 
 	(*Handle) = 0;
-	(*Size) = 0;
-	return OBEXGEN_PrivGetFilePart(s, File, false);
+	error = OBEXGEN_PrivGetFilePart(s, File, false);
+	(*Size) = File->Used;
+	return error;
 }
 
 
