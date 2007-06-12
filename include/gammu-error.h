@@ -106,7 +106,7 @@ typedef enum {
 	 */
 	ERR_NOTSUPPORTED,
 	/**
-	 * Empty phonebook entry, ...
+	 * Empty entry or transfer end.
 	 */
 	ERR_EMPTY,
 	/**
