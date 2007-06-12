@@ -740,6 +740,7 @@ GSM_Error GSM_DeleteAllToDo(GSM_StateMachine * s);
  * Retrieves calendar status (number of used entries).
  *
  * \param s State machine pointer.
+ * \param Status Storage for status.
  *
  * \return Error code
  *
@@ -751,6 +752,7 @@ GSM_Error GSM_GetCalendarStatus(GSM_StateMachine * s,
  * Retrieves calendar entry.
  *
  * \param s State machine pointer.
+ * \param Note Storage for note.
  *
  * \return Error code
  *
@@ -763,6 +765,9 @@ GSM_Error GSM_GetCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
  * calendar entries.
  *
  * \param s State machine pointer.
+ * \param Note Storage for note, if start is false, should contain
+ * data from previous read (at least position).
+ * \param start Whether we're doing initial read or continue in reading.
  *
  * \return Error code
  *
@@ -774,6 +779,7 @@ GSM_Error GSM_GetNextCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note,
  * Sets calendar entry
  *
  * \param s State machine pointer.
+ * \param Note Storage for note, should contain position to read.
  *
  * \return Error code
  *
@@ -785,6 +791,7 @@ GSM_Error GSM_SetCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
  * Adds calendar entry.
  *
  * \param s State machine pointer.
+ * \param Note Note to add.
  *
  * \return Error code
  *
@@ -796,6 +803,7 @@ GSM_Error GSM_AddCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note);
  * Deletes calendar entry.
  *
  * \param s State machine pointer.
+ * \param Note Note to delete, must contain position.
  *
  * \return Error code
  *
@@ -818,6 +826,7 @@ GSM_Error GSM_DeleteAllCalendar(GSM_StateMachine * s);
  * Reads calendar settings.
  *
  * \param s State machine pointer.
+ * \param settings Storage for settings.
  *
  * \return Error code
  *
@@ -829,6 +838,7 @@ GSM_Error GSM_GetCalendarSettings(GSM_StateMachine * s,
  * Sets calendar settings.
  *
  * \param s State machine pointer.
+ * \param settings New calendar settings.
  *
  * \return Error code
  *
@@ -840,6 +850,7 @@ GSM_Error GSM_SetCalendarSettings(GSM_StateMachine * s,
  * Retrieves notes status (number of used entries).
  *
  * \param s State machine pointer.
+ * \param status Storage for status.
  *
  * \return Error code
  *
