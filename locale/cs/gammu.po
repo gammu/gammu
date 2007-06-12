@@ -9,13 +9,13 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-06-12 15:46+0200\n"
-"PO-Revision-Date: 2007-06-12 15:40+0200\n"
+"PO-Revision-Date: 2007-06-12 15:57+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
 
 #: common/gsmcomon.c:84
 msgid "No error."
@@ -915,11 +915,11 @@ msgstr "Hovor"
 
 #: gammu/gammu.c:412 gammu/gammu.c:7306
 msgid "Birthday (Anniversary)"
-msgstr ""
+msgstr "Narozeniny (výročí)"
 
 #: gammu/gammu.c:413 gammu/gammu.c:7307
 msgid "Memo (Miscellaneous)"
-msgstr ""
+msgstr "Poznámka (různé)"
 
 #: gammu/gammu.c:414 gammu/gammu.c:7308
 msgid "Travel"
@@ -939,79 +939,79 @@ msgstr "Denní budík"
 
 #: gammu/gammu.c:418 gammu/gammu.c:7312
 msgid "Training/Athletism"
-msgstr ""
+msgstr "Tréning/Atletika"
 
 #: gammu/gammu.c:419 gammu/gammu.c:7313
 msgid "Training/Ball Games"
-msgstr ""
+msgstr "Tréning/Míčové hry"
 
 #: gammu/gammu.c:420 gammu/gammu.c:7314
 msgid "Training/Cycling"
-msgstr ""
+msgstr "Tréning/Cyklistika"
 
 #: gammu/gammu.c:421 gammu/gammu.c:7315
 msgid "Training/Budo"
-msgstr ""
+msgstr "Tréning/Budo"
 
 #: gammu/gammu.c:422 gammu/gammu.c:7316
 msgid "Training/Dance"
-msgstr ""
+msgstr "Tréning/Tanec"
 
 #: gammu/gammu.c:423 gammu/gammu.c:7317
 msgid "Training/Extreme Sports"
-msgstr ""
+msgstr "Tréning/Extrémní sporty"
 
 #: gammu/gammu.c:424 gammu/gammu.c:7318
 msgid "Training/Football"
-msgstr ""
+msgstr "Tréning/Fotbal"
 
 #: gammu/gammu.c:425 gammu/gammu.c:7319
 msgid "Training/Golf"
-msgstr ""
+msgstr "Tréning/Golf"
 
 #: gammu/gammu.c:426 gammu/gammu.c:7320
 msgid "Training/Gym"
-msgstr ""
+msgstr "Tréning/Tělocvična"
 
 #: gammu/gammu.c:427 gammu/gammu.c:7321
 msgid "Training/Horse Races"
-msgstr ""
+msgstr "Tréning/Dostihy"
 
 #: gammu/gammu.c:428 gammu/gammu.c:7322
 msgid "Training/Hockey"
-msgstr ""
+msgstr "Tréning/Hokey"
 
 #: gammu/gammu.c:429 gammu/gammu.c:7323
 msgid "Training/Races"
-msgstr ""
+msgstr "Tréning/Závody"
 
 #: gammu/gammu.c:430 gammu/gammu.c:7324
 msgid "Training/Rugby"
-msgstr ""
+msgstr "Tréning/Ragby"
 
 #: gammu/gammu.c:431 gammu/gammu.c:7325
 msgid "Training/Sailing"
-msgstr ""
+msgstr "Tréning/Plavba"
 
 #: gammu/gammu.c:432 gammu/gammu.c:7326
 msgid "Training/Street Games"
-msgstr ""
+msgstr "Tréning/Pouliční hry"
 
 #: gammu/gammu.c:433 gammu/gammu.c:7327
 msgid "Training/Swimming"
-msgstr ""
+msgstr "Tréning/Plavání"
 
 #: gammu/gammu.c:434 gammu/gammu.c:7328
 msgid "Training/Tennis"
-msgstr ""
+msgstr "Tréning/Tenis"
 
 #: gammu/gammu.c:435 gammu/gammu.c:7329
 msgid "Training/Travels"
-msgstr ""
+msgstr "Tréning/Cestování"
 
 #: gammu/gammu.c:436 gammu/gammu.c:7330
 msgid "Training/Winter Games"
-msgstr ""
+msgstr "Tréning/Zimní hry"
 
 #: gammu/gammu.c:438
 msgid "unknown type!"
@@ -1090,30 +1090,27 @@ msgstr "Opakování"
 #: gammu/gammu.c:570
 #, c-format
 msgid "for %d time "
-msgid_plural "for %d times "
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr ""
 
 #: gammu/gammu.c:573
 #, c-format
 msgid "forever"
-msgstr ""
+msgstr "navždy"
 
 #: gammu/gammu.c:575
 #, c-format
 msgid "till %s"
-msgstr ""
+msgstr "do %s"
 
 #: gammu/gammu.c:577
 #, c-format
 msgid "since %s"
-msgstr ""
+msgstr "od %s"
 
 #: gammu/gammu.c:579
 #, c-format
 msgid "since %s till %s"
-msgstr ""
+msgstr "od %s do %s"
 
 #: gammu/gammu.c:583
 #, c-format
@@ -1278,7 +1275,7 @@ msgstr ", oddělovač data je %c\n"
 
 #: gammu/gammu.c:821
 msgid "Setting time in phone to the time on PC."
-msgstr ""
+msgstr "Nastavuji čas v telefonu podle času v počítači."
 
 #: gammu/gammu.c:830
 msgid "Updating specified parts of date and time in phone."
@@ -1877,7 +1874,7 @@ msgstr ""
 
 #: gammu/gammu.c:1702
 msgid " - VCARD"
-msgstr ""
+msgstr " - VCARD"
 
 #: gammu/gammu.c:1714
 #, c-format
@@ -1977,7 +1974,7 @@ msgstr ""
 
 #: gammu/gammu.c:1842
 msgid "Call info"
-msgstr ""
+msgstr "Informace o hovoru"
 
 #: gammu/gammu.c:1843
 #, c-format
@@ -2105,7 +2102,7 @@ msgstr "Stav baterie"
 #: gammu/gammu.c:1975 gammu/gammu.c:2074 gammu/gammu.c:2079
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i procent"
 
 #: gammu/gammu.c:1979
 msgid "Battery capacity"
@@ -2114,7 +2111,7 @@ msgstr "Kapacita baterie"
 #: gammu/gammu.c:1980
 #, c-format
 msgid "%i mAh"
-msgstr ""
+msgstr "%i mAh"
 
 #: gammu/gammu.c:1984
 msgid "Battery temperature"
@@ -2124,7 +2121,7 @@ msgstr "Teplota baterie"
 #: gammu/gammu.c:1986 gammu/gammu.c:1991
 #, c-format
 msgid "%i C"
-msgstr ""
+msgstr "%i C"
 
 #: gammu/gammu.c:1990
 msgid "Phone temperature"
@@ -2137,7 +2134,7 @@ msgstr "Napětí baterie"
 #: gammu/gammu.c:1996 gammu/gammu.c:2001
 #, c-format
 msgid "%i mV"
-msgstr ""
+msgstr "%i mV"
 
 #: gammu/gammu.c:2000
 msgid "Charge voltage"
@@ -2150,7 +2147,7 @@ msgstr "Nabíjecí proud"
 #: gammu/gammu.c:2006 gammu/gammu.c:2011
 #, c-format
 msgid "%i mA"
-msgstr ""
+msgstr "%i mA"
 
 #: gammu/gammu.c:2010
 msgid "Phone current"
@@ -2163,32 +2160,32 @@ msgstr "Stav nabíjení"
 #: gammu/gammu.c:2018
 #, c-format
 msgid "powered from battery"
-msgstr ""
+msgstr "napájeno z baterie"
 
 #: gammu/gammu.c:2021
 #, c-format
 msgid "battery connected, but not powered from battery"
-msgstr ""
+msgstr "baterie připojena, ale telefon ji nepoužívá"
 
 #: gammu/gammu.c:2024
 #, c-format
 msgid "battery connected and is being charged"
-msgstr ""
+msgstr "baterie připojena a je nabíjena"
 
 #: gammu/gammu.c:2027
 #, c-format
 msgid "battery connected and is fully charged"
-msgstr ""
+msgstr "baterie připojena a je plně nabita"
 
 #: gammu/gammu.c:2030
 #, c-format
 msgid "battery not connected"
-msgstr ""
+msgstr "baterie není připojena"
 
 #: gammu/gammu.c:2033
 #, c-format
 msgid "detected power failure"
-msgstr ""
+msgstr "zjištěna chyba napájení"
 
 #: gammu/gammu.c:2044
 msgid "Battery type"
@@ -2197,26 +2194,26 @@ msgstr "Typ baterie"
 #: gammu/gammu.c:2047
 #, c-format
 msgid "Lithium Ion"
-msgstr ""
+msgstr "Lithium Ion"
 
 #: gammu/gammu.c:2050
 #, c-format
 msgid "Lithium Polymer"
-msgstr ""
+msgstr "Lithium Polymer"
 
 #: gammu/gammu.c:2053
 #, c-format
 msgid "NiMH"
-msgstr ""
+msgstr "NiMH"
 
 #: gammu/gammu.c:2068
 msgid "Signal strength"
-msgstr ""
+msgstr "Síla signálu"
 
 #: gammu/gammu.c:2069
 #, c-format
 msgid "%i dBm"
-msgstr ""
+msgstr "%i dBm"
 
 #: gammu/gammu.c:2073
 msgid "Network level"
@@ -2273,17 +2270,17 @@ msgstr "Výchozí číslo"
 
 #: gammu/gammu.c:2179
 msgid "Format"
-msgstr ""
+msgstr "Formát"
 
 #: gammu/gammu.c:2182
 #, c-format
 msgid "Fax"
-msgstr ""
+msgstr "Fax"
 
 #: gammu/gammu.c:2183
 #, c-format
 msgid "Email"
-msgstr ""
+msgstr "Email"
 
 #: gammu/gammu.c:2188
 msgid "Validity"
@@ -2292,7 +2289,7 @@ msgstr "Platnost"
 #: gammu/gammu.c:2207
 #, c-format
 msgid "Maximum time"
-msgstr ""
+msgstr "Maximální čas"
 
 #: gammu/gammu.c:2324 gammu/gammu.c:2422 gammu/gammu.c:5072 gammu/gammu.c:5110
 #: gammu/gammu.c:5142 gammu/gammu.c:5173 gammu/gammu.c:5204 gammu/gammu.c:5238
@@ -2436,12 +2433,12 @@ msgstr ""
 #: gammu/gammu.c:2740
 #, c-format
 msgid "MIDI"
-msgstr ""
+msgstr "MIDI"
 
 #: gammu/gammu.c:2741
 #, c-format
 msgid "SMAF (MMF)"
-msgstr ""
+msgstr "SMAF (MMF)"
 
 #: gammu/gammu.c:2743
 #, c-format
@@ -2555,7 +2552,7 @@ msgstr "Neznámý parametr (\"%s\")"
 
 #: gammu/gammu.c:3428 gammu/gammu.c:4604 gammu/gammu.c:8790 gammu/gammu.c:9502
 msgid "Parameter missing!"
-msgstr ""
+msgstr "Chybí parametr!"
 
 #: gammu/gammu.c:3470
 #, c-format
@@ -2565,12 +2562,12 @@ msgstr ""
 #: gammu/gammu.c:3501
 #, c-format
 msgid "..OK"
-msgstr ""
+msgstr "..OK"
 
 #: gammu/gammu.c:3504
 #, c-format
 msgid "..error %i"
-msgstr ""
+msgstr "..chyba %i"
 
 #: gammu/gammu.c:3507
 #, c-format
@@ -2583,7 +2580,7 @@ msgstr ""
 
 #: gammu/gammu.c:3591
 msgid "0 chars read!"
-msgstr ""
+msgstr "Přečteno 0 znaků!"
 
 #: gammu/gammu.c:3613 gammu/gammu.c:3627
 msgid "Where are parameters?"
@@ -2931,11 +2928,11 @@ msgstr ""
 
 #: gammu/gammu.c:5652 gammu/gammu.c:6211
 msgid "Time of backup"
-msgstr ""
+msgstr "Čas zálohy"
 
 #: gammu/gammu.c:5655
 msgid "File created by"
-msgstr ""
+msgstr "Soubor vytvořen"
 
 #: gammu/gammu.c:5663
 msgid "Checksum in backup file do not match. Continue"
@@ -3275,7 +3272,7 @@ msgstr "Heslo"
 
 #: gammu/gammu.c:6620
 msgid "USSD"
-msgstr ""
+msgstr "USSD"
 
 #: gammu/gammu.c:6623
 msgid "Service code"
@@ -3297,7 +3294,7 @@ msgstr ""
 
 #: gammu/gammu.c:6631
 msgid "GPRS"
-msgstr ""
+msgstr "GPRS"
 
 #: gammu/gammu.c:6644
 msgid "Access point"
@@ -3310,7 +3307,7 @@ msgstr "Nastavení %i"
 
 #: gammu/gammu.c:6673 gammu/gammu.c:6723
 msgid "User"
-msgstr ""
+msgstr "Uživatel"
 
 #: gammu/gammu.c:6675
 msgid "Phonebook database"
@@ -3338,7 +3335,7 @@ msgstr ""
 
 #: gammu/gammu.c:6722
 msgid "Homepage"
-msgstr ""
+msgstr "Domovská stránka"
 
 #: gammu/gammu.c:6728
 #, c-format
@@ -3497,19 +3494,19 @@ msgstr "Záznam byl vymazán"
 
 #: gammu/gammu.c:7335
 msgid "Priority"
-msgstr ""
+msgstr "Priorita"
 
 #: gammu/gammu.c:7337
 msgid "Low"
-msgstr ""
+msgstr "Nízká"
 
 #: gammu/gammu.c:7338
 msgid "Medium"
-msgstr ""
+msgstr "Střední"
 
 #: gammu/gammu.c:7339
 msgid "High"
-msgstr ""
+msgstr "Vysoká"
 
 #: gammu/gammu.c:7340
 msgid "None"
@@ -3617,7 +3614,7 @@ msgstr ""
 
 #: gammu/gammu.c:7682
 msgid "Off"
-msgstr ""
+msgstr "Vypnuto"
 
 #: gammu/gammu.c:7683
 msgid "Ringing"
@@ -4086,7 +4083,7 @@ msgstr ""
 
 #: gammu/gammu.c:10221
 msgid "Calls"
-msgstr ""
+msgstr "Hovory"
 
 #: gammu/gammu.c:10222
 msgid "SMS and EMS"
@@ -4098,7 +4095,7 @@ msgstr ""
 
 #: gammu/gammu.c:10224
 msgid "Filesystem"
-msgstr ""
+msgstr "Soubory"
 
 #: gammu/gammu.c:10225
 msgid "Logo and pictures"
@@ -4106,7 +4103,7 @@ msgstr ""
 
 #: gammu/gammu.c:10226
 msgid "Ringtones"
-msgstr ""
+msgstr "Zvonění"
 
 #: gammu/gammu.c:10227
 msgid "Calendar notes"
@@ -4118,7 +4115,7 @@ msgstr ""
 
 #: gammu/gammu.c:10229
 msgid "Notes"
-msgstr ""
+msgstr "Poznámky"
 
 #: gammu/gammu.c:10230
 msgid "Date, time and alarms"
@@ -4126,7 +4123,7 @@ msgstr ""
 
 #: gammu/gammu.c:10231
 msgid "Categories"
-msgstr ""
+msgstr "Kategorie"
 
 #: gammu/gammu.c:10233
 msgid "Backing up and restoring"
@@ -4154,15 +4151,15 @@ msgstr "Testy telefonu"
 
 #: gammu/gammu.c:10245
 msgid "FM radio"
-msgstr ""
+msgstr "FM rádio"
 
 #: gammu/gammu.c:10246
 msgid "Phone information"
-msgstr ""
+msgstr "Informace o telefonu"
 
 #: gammu/gammu.c:10247
 msgid "Phone settings"
-msgstr ""
+msgstr "Nastavení telefonu"
 
 #: gammu/gammu.c:10249
 msgid "Dumps decoding"
@@ -4247,7 +4244,7 @@ msgstr "Příliš mnoho parametrů (funkce akceptuje %d až %d)\n"
 
 #: gammu/gammu.c:10505
 msgid "Bad option!"
-msgstr ""
+msgstr "Chybná volba!"
 
 #: gammu/gammu.c:10539 gammu/gammu.c:10635
 msgid "Too few parameters!"
@@ -4405,7 +4402,7 @@ msgstr "Pokouším se zadat PIN"
 
 #: gammu/smsd/smsdcore.c:275
 msgid "ERROR: incorrect PIN"
-msgstr ""
+msgstr "CHYBA: Špatný PIN"
 
 #: gammu/smsd/smsdcore.c:278
 #, c-format
