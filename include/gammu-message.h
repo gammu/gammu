@@ -1047,6 +1047,7 @@ GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo * info);
  * \ingroup SMS
  */
 GSM_Error GSM_GetSMSC(GSM_StateMachine * s, GSM_SMSC * smsc);
+
 /**
  * Sets SMS Service Center number and SMS settings.
  *
@@ -1057,6 +1058,7 @@ GSM_Error GSM_GetSMSC(GSM_StateMachine * s, GSM_SMSC * smsc);
  * \ingroup SMS
  */
 GSM_Error GSM_SetSMSC(GSM_StateMachine * s, GSM_SMSC * smsc);
+
 /**
  * Gets information about SMS memory (read/unread/size of memory for
  * both SIM and phone).
@@ -1068,6 +1070,7 @@ GSM_Error GSM_SetSMSC(GSM_StateMachine * s, GSM_SMSC * smsc);
  * \ingroup SMS
  */
 GSM_Error GSM_GetSMSStatus(GSM_StateMachine * s, GSM_SMSMemoryStatus * status);
+
 /**
  * Reads SMS message.
  *
@@ -1078,6 +1081,7 @@ GSM_Error GSM_GetSMSStatus(GSM_StateMachine * s, GSM_SMSMemoryStatus * status);
  * \ingroup SMS
  */
 GSM_Error GSM_GetSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms);
+
 /**
  * Reads next (or first if start set) SMS message. This might be
  * faster for some phones than using \ref GSM_GetSMS for each message.
@@ -1100,6 +1104,7 @@ GSM_Error GSM_GetNextSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms,
  * \ingroup SMS
  */
 GSM_Error GSM_SetSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
+
 /**
  * Adds SMS to specified folder.
  *
@@ -1110,6 +1115,7 @@ GSM_Error GSM_SetSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
  * \ingroup SMS
  */
 GSM_Error GSM_AddSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
+
 /**
  * Deletes SMS.
  *
@@ -1120,6 +1126,7 @@ GSM_Error GSM_AddSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
  * \ingroup SMS
  */
 GSM_Error GSM_DeleteSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
+
 /**
  * Sends SMS.
  *
@@ -1130,6 +1137,7 @@ GSM_Error GSM_DeleteSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
  * \ingroup SMS
  */
 GSM_Error GSM_SendSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
+
 /**
  * Sends SMS already saved in phone.
  *
@@ -1140,6 +1148,7 @@ GSM_Error GSM_SendSMS(GSM_StateMachine * s, GSM_SMSMessage * sms);
  * \ingroup SMS
  */
 GSM_Error GSM_SendSavedSMS(GSM_StateMachine * s, int Folder, int Location);
+
 /**
  * Configures fast SMS sending.
  *
@@ -1150,6 +1159,7 @@ GSM_Error GSM_SendSavedSMS(GSM_StateMachine * s, int Folder, int Location);
  * \ingroup SMS
  */
 GSM_Error GSM_SetFastSMSSending(GSM_StateMachine * s, bool enable);
+
 /**
  * Enable/disable notification on incoming SMS.
  *
@@ -1160,6 +1170,7 @@ GSM_Error GSM_SetFastSMSSending(GSM_StateMachine * s, bool enable);
  * \ingroup SMS
  */
 GSM_Error GSM_SetIncomingSMS(GSM_StateMachine * s, bool enable);
+
 /**
  * Gets network information from phone.
  *
@@ -1170,6 +1181,7 @@ GSM_Error GSM_SetIncomingSMS(GSM_StateMachine * s, bool enable);
  * \ingroup CB
  */
 GSM_Error GSM_SetIncomingCB(GSM_StateMachine * s, bool enable);
+
 /**
  * Returns SMS folders information.
  *
@@ -1180,6 +1192,7 @@ GSM_Error GSM_SetIncomingCB(GSM_StateMachine * s, bool enable);
  * \ingroup SMS
  */
 GSM_Error GSM_GetSMSFolders(GSM_StateMachine * s, GSM_SMSFolders * folders);
+
 /**
  * Creates SMS folder.
  *
@@ -1190,6 +1203,7 @@ GSM_Error GSM_GetSMSFolders(GSM_StateMachine * s, GSM_SMSFolders * folders);
  * \ingroup SMS
  */
 GSM_Error GSM_AddSMSFolder(GSM_StateMachine * s, unsigned char *name);
+
 /**
  * Deletes SMS folder.
  *
@@ -1211,6 +1225,7 @@ GSM_Error GSM_DeleteSMSFolder(GSM_StateMachine * s, int ID);
  * \ingroup MMS
  */
 GSM_Error GSM_GetMMSFolders(GSM_StateMachine * s, GSM_MMSFolders * folders);
+
 /**
  * Retrieves next part of MMS file information.
  *

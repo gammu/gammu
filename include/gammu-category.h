@@ -75,6 +75,7 @@ typedef struct {
  * \ingroup Category
  */
 GSM_Error GSM_GetCategory(GSM_StateMachine * s, GSM_Category * Category);
+
 /**
  * Adds category to phone.
  *
@@ -86,6 +87,7 @@ GSM_Error GSM_GetCategory(GSM_StateMachine * s, GSM_Category * Category);
  * \ingroup Category
  */
 GSM_Error GSM_AddCategory(GSM_StateMachine * s, GSM_Category * Category);
+
 /**
  * Reads category status (number of used entries) from phone.
  *
