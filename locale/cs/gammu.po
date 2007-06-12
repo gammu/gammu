@@ -9,13 +9,14 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-06-12 16:39+0200\n"
-"PO-Revision-Date: 2007-06-12 15:57+0200\n"
+"PO-Revision-Date: 2007-06-12 16:45+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Pootle 0.11\n"
 
 #: common/gsmcomon.c:84
 msgid "No error."
@@ -1091,9 +1092,9 @@ msgstr "Opakování"
 #, c-format
 msgid "for %d time "
 msgid_plural "for %d times "
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgstr[0] "%d-krát "
+msgstr[1] "%d-krát "
+msgstr[2] "%d-krát "
 
 #: gammu/gammu.c:573
 #, c-format
