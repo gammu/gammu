@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-06-07 14:27+0200\n"
+"POT-Creation-Date: 2007-06-12 15:46+0200\n"
 "PO-Revision-Date: 2007-06-08 16:36+0200\n"
 "Last-Translator: Alejandro Caldito <acaldito@amena.com>\n"
 "Language-Team: Español\n"
@@ -1215,8 +1215,7 @@ msgstr "Fecha y hora no establecidas en el teléfono"
 #: gammu/gammu.c:773
 #, c-format
 msgid "Phone time is %s\n"
-msgstr ""
-"Hora del teléfono es %s\n"
+msgstr "Hora del teléfono es %s\n"
 
 #: gammu/gammu.c:786
 #, c-format
@@ -1281,8 +1280,7 @@ msgstr "Apagado"
 #: gammu/gammu.c:806
 #, c-format
 msgid ", date separator is %c\n"
-msgstr ""
-", el separador de fecha es %c\n"
+msgstr ", el separador de fecha es %c\n"
 
 #: gammu/gammu.c:821
 msgid "Setting time in phone to the time on PC."
@@ -1295,14 +1293,12 @@ msgstr "Actualizando en el teléfono las partes especificadas de fecha y hora."
 #: gammu/gammu.c:880
 #, c-format
 msgid "Alarm (%i) not set in phone\n"
-msgstr ""
-"Alarma (%i) no establecida en el teléfono\n"
+msgstr "Alarma (%i) no establecida en el teléfono\n"
 
 #: gammu/gammu.c:883
 #, c-format
 msgid "Alarm in location %i:\n"
-msgstr ""
-"Alarma en posición %i:\n"
+msgstr "Alarma en posición %i:\n"
 
 #: gammu/gammu.c:885 gammu/gammu.c:887 gammu/gammu.c:2615
 msgid "Date"
@@ -1315,14 +1311,12 @@ msgstr "Todos los días"
 #: gammu/gammu.c:889
 #, c-format
 msgid "Time: %02d:%02d\n"
-msgstr ""
-"Hora: %02d:%02d\n"
+msgstr "Hora: %02d:%02d\n"
 
 #: gammu/gammu.c:933
 #, c-format
 msgid "Call length      : %02i:%02i:%02i\n"
-msgstr ""
-"Tiempo de llamada: %02i:%02i:%02i\n"
+msgstr "Tiempo de llamada: %02i:%02i:%02i\n"
 
 #: gammu/gammu.c:936
 msgid "Date and time"
@@ -1778,11 +1772,6 @@ msgstr ""
 
 #: gammu/gammu.c:1587
 msgid "8 bit"
-msgstr ""
-
-#: gammu/gammu.c:1594
-#, c-format
-msgid ", "
 msgstr ""
 
 #: gammu/gammu.c:1607
@@ -3579,11 +3568,6 @@ msgid ""
 "This ringtone in Nokia Composer in phone should look: "
 msgstr ""
 
-#: gammu/gammu.c:7017
-#, c-format
-msgid "."
-msgstr ""
-
 #: gammu/gammu.c:7039
 #, c-format
 msgid ""
@@ -4704,7 +4688,8 @@ msgid "Error at init connection (%i)"
 msgstr "Error de conexión inicial (%i)"
 
 #: gammu/smsd/smsdcore.c:606
-msgid "Stop GAMMU smsd"
+#, fuzzy
+msgid "Stopping Gammu smsd"
 msgstr "Detener servicio smsd"
 
 #: gammu/smsd/s_mysql.c:42 gammu/smsd/s_pgsql.c:45
