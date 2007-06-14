@@ -9695,15 +9695,19 @@ void SearchPhoneThread(OneDeviceInfo *Info)
 		globalcfg = GSM_GetConfig(s, 0);
 
 	    	cfg->UseGlobalDebugFile = globalcfg->UseGlobalDebugFile;
-		cfg->Localize		= globalcfg->Localize;
-		cfg->Device 		= Info->Device;
-		cfg->Connection		= Info->Connections[j].Connection;
-		cfg->SyncTime		= "no";
-		cfg->DebugFile		= globalcfg->DebugFile;
+		if (globalcfg->Localize == NULL) {
+			cfg->Localize = NULL;
+		} else {
+			cfg->Localize = strdup(globalcfg->Localize);
+		}
+		cfg->Device 		= strdup(Info->Device);
+		cfg->Connection		= strdup(Info->Connections[j].Connection);
+		cfg->SyncTime		= strdup("no");
+		cfg->DebugFile		= strdup(globalcfg->DebugFile);
 		cfg->Model[0]		= 0;
 		strcpy(cfg->DebugLevel,globalcfg->DebugLevel);
-		cfg->LockDevice		= "no";
-		cfg->StartInfo		= "no";
+		cfg->LockDevice		= strdup("no");
+		cfg->StartInfo		= strdup("no");
 
 		GSM_SetConfigNum(ss, 1);
 
@@ -9771,14 +9775,11 @@ static void SearchPhone(int argc, char *argv[])
 
 	num = 0;
 #ifdef WIN32
-#  ifdef GSM_ENABLE_IRDADEVICE
 	SearchDevices[dev].Device[0] = 0;
 	sprintf(SearchDevices[dev].Connections[0].Connection,"irdaphonet");
 	sprintf(SearchDevices[dev].Connections[1].Connection,"irdaat");
 	SearchDevices[dev].Connections[2].Connection[0] = 0;
 	dev++;
-#  endif
-#  ifdef GSM_ENABLE_SERIALDEVICE
 	dev2 = dev;
 	for(i=0;i<20;i++) {
 		sprintf(SearchDevices[dev2].Device,"com%i:",i+1);
@@ -9789,10 +9790,8 @@ static void SearchPhone(int argc, char *argv[])
 		SearchDevices[dev2].Connections[4].Connection[0] = 0;
 		dev2++;
 	}
-#  endif
 #endif
 #ifdef __linux__
-#  ifdef GSM_ENABLE_IRDADEVICE
 	for(i=0;i<6;i++) {
 		sprintf(SearchDevices[dev].Device,"/dev/ircomm%i",i);
 		sprintf(SearchDevices[dev].Connections[0].Connection,"irdaphonet");
@@ -9800,8 +9799,6 @@ static void SearchPhone(int argc, char *argv[])
 		SearchDevices[dev].Connections[2].Connection[0] = 0;
 		dev++;
 	}
-#  endif
-#  ifdef GSM_ENABLE_SERIALDEVICE
 	dev2 = dev;
 	for(i=0;i<10;i++) {
 		sprintf(SearchDevices[dev2].Device,"/dev/ttyS%i",i);
@@ -9830,7 +9827,6 @@ static void SearchPhone(int argc, char *argv[])
 		SearchDevices[dev2].Connections[4].Connection[0] = 0;
 		dev2++;
 	}
-#  endif
 #endif
 	for(i=0;i<dev;i++) MakeSearchThread(i);
 	while (num != 0) my_sleep(5);
