@@ -19,6 +19,10 @@ ChangeLog
 [+] * Added dku5fbus-nodtr and fbus-nodtr variants, which do not care
       about DTR/RTS signals (thanks to Jakub Zawadzki).
 [-] * Do not delete phonebook entries when there are none (bug #317).
+[!] * This release comes with new API, which should provide stable ABI
+      for upcoming versions. If you're distributor, who had special
+      dependency handling for libGammu, you can now keep it on soname,
+      versions with same soname will be backwards compatible.
 
 20070607 - 1.11.92
 [-] * Properly report uploaded file size when using OBEX.
