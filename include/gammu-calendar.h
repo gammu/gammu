@@ -296,10 +296,6 @@ typedef struct {
 	 */
 	GSM_CalendarType EntryType;
 	/**
-	 * Text of value, if applicable.
-	 */
-	unsigned char Text[(GSM_MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
-	/**
 	 * Date and time of value, if applicable.
 	 */
 	GSM_DateTime Date;
@@ -311,6 +307,10 @@ typedef struct {
 	 * During adding SubEntry Gammu can return here info, if it was done OK
 	 */
 	GSM_Error AddError;
+	/**
+	 * Text of value, if applicable.
+	 */
+	unsigned char Text[(GSM_MAX_CALENDAR_TEXT_LENGTH + 1) * 2];
 } GSM_SubCalendarEntry;
 
 /**
@@ -431,10 +431,6 @@ typedef struct {
 	 */
 	GSM_ToDoType EntryType;
 	/**
-	 * Text of value, if appropriate, see @ref GSM_ToDoType.
-	 */
-	unsigned char Text[(GSM_MAX_TODO_TEXT_LENGTH + 1) * 2];
-	/**
 	 * Date of value, if appropriate, see @ref GSM_ToDoType.
 	 */
 	GSM_DateTime Date;
@@ -442,6 +438,10 @@ typedef struct {
 	 * Number of value, if appropriate, see @ref GSM_ToDoType.
 	 */
 	unsigned int Number;
+	/**
+	 * Text of value, if appropriate, see @ref GSM_ToDoType.
+	 */
+	unsigned char Text[(GSM_MAX_TODO_TEXT_LENGTH + 1) * 2];
 } GSM_SubToDoEntry;
 
 /**

@@ -53,13 +53,13 @@ typedef enum {
  */
 typedef struct {
 	/**
-	 * Actual code.
-	 */
-	char Code[GSM_SECURITY_CODE_LEN + 1];
-	/**
 	 * Type of the code.
 	 */
 	GSM_SecurityCodeType Type;
+	/**
+	 * Actual code.
+	 */
+	char Code[GSM_SECURITY_CODE_LEN + 1];
 } GSM_SecurityCode;
 
 /**

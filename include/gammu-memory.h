@@ -286,10 +286,6 @@ typedef struct {
 	/**
 	 * Text of entry (if applicable, see @ref GSM_EntryType).
 	 */
-	unsigned char Text[(GSM_PHONEBOOK_TEXT_LENGTH + 1) * 2];
-	/**
-	 * Text of entry (if applicable, see @ref GSM_EntryType).
-	 */
 	GSM_DateTime Date;
 	/**
 	 * Number of entry (if applicable, see @ref GSM_EntryType).
@@ -306,6 +302,10 @@ typedef struct {
 	 * During adding SubEntry Gammu can return here info, if it was done OK
 	 */
 	GSM_Error AddError;
+	/**
+	 * Text of entry (if applicable, see @ref GSM_EntryType).
+	 */
+	unsigned char Text[(GSM_PHONEBOOK_TEXT_LENGTH + 1) * 2];
 } GSM_SubMemoryEntry;
 
 /**

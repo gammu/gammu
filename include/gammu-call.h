@@ -81,10 +81,6 @@ typedef struct {
 	 */
 	GSM_CallStatus Status;
 	/**
-	 * Remote phone number.
-	 */
-	unsigned char PhoneNumber[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
-	/**
 	 * Call ID
 	 */
 	int CallID;
@@ -96,6 +92,10 @@ typedef struct {
 	 * Status code.
 	 */
 	int StatusCode;
+	/**
+	 * Remote phone number.
+	 */
+	unsigned char PhoneNumber[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 } GSM_Call;
 
 /**
@@ -161,13 +161,13 @@ typedef struct {
 	 */
 	GSM_Divert_CallTypes CallType;
 	/**
-	 * Number where to divert.
-	 */
-	char Number[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
-	/**
 	 * Timeout for diversion.
 	 */
 	unsigned int Timeout;
+	/**
+	 * Number where to divert.
+	 */
+	char Number[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 } GSM_CallDivert;
 
 /**

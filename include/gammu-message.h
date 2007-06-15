@@ -63,13 +63,13 @@ typedef struct {
  */
 typedef struct {
 	/**
-	 * Message text.
-	 */
-	char Text[300];
-	/**
 	 * Channel number.
 	 */
 	int Channel;
+	/**
+	 * Message text.
+	 */
+	char Text[300];
 } GSM_CBMessage;
 
 /**
@@ -704,13 +704,13 @@ typedef struct {
  */
 typedef struct {
 	/**
-	 * Array of structures holding information about each folder.
-	 */
-	GSM_OneMMSFolder Folder[GSM_MAX_MMS_FOLDERS];
-	/**
  	 * Number of MMS folders.
 	 */
 	unsigned char Number;
+	/**
+	 * Array of structures holding information about each folder.
+	 */
+	GSM_OneMMSFolder Folder[GSM_MAX_MMS_FOLDERS];
 } GSM_MMSFolders;
 
 /**
@@ -911,12 +911,12 @@ typedef struct {
  * \ingroup SMS
  */
 typedef struct {
-	GSM_MultiPartSMSEntry Entries[GSM_MAX_MULTI_SMS];
 	int EntriesNum;
 	bool UnicodeCoding;
 	int Class;
 	unsigned char ReplaceMessage;
 	bool Unknown;
+	GSM_MultiPartSMSEntry Entries[GSM_MAX_MULTI_SMS];
 } GSM_MultiPartSMSInfo;
 
 /**
@@ -1000,8 +1000,6 @@ typedef struct {
  * \ingroup MMS
  */
 typedef struct {
-	/* Subparts */
-	GSM_EncodedMultiPartMMSEntry Entries[GSM_MAX_MULTI_MMS];
 	int EntriesNum;
 
 	unsigned char Source[200];	// in Unicode
@@ -1020,6 +1018,10 @@ typedef struct {
 
 	bool MMSReportAvailable;
 	bool MMSReport;
+	/**
+	 * Subparts.
+	 */
+	GSM_EncodedMultiPartMMSEntry Entries[GSM_MAX_MULTI_MMS];
 } GSM_EncodedMultiPartMMSInfo;
 
 /**

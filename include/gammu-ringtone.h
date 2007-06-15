@@ -118,8 +118,8 @@ typedef struct {
 
 typedef struct {
 	int NrCommands;
-	GSM_RingCommand Commands[GSM_MAX_RINGTONE_NOTES];
 	bool AllNotesScale;
+	GSM_RingCommand Commands[GSM_MAX_RINGTONE_NOTES];
 } GSM_NoteRingtone;
 
 /* FIXME: should use BinaryTone instead? */
