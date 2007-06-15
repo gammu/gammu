@@ -138,15 +138,15 @@ typedef struct {
 
 typedef struct {
 	int Location;
-	char StationName[(GSM_MAX_FMSTATION_LENGTH + 1) * 2];
 	double Frequency;
+	char StationName[(GSM_MAX_FMSTATION_LENGTH + 1) * 2];
 } GSM_FMStation;
 
 typedef struct {
 	int Location;
+	bool Active;
 	unsigned char Name[300];
 	unsigned char URL[500];
-	bool Active;
 } GSM_GPRSAccessPoint;
 
 typedef enum {

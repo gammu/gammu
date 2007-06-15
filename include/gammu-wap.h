@@ -23,6 +23,10 @@
  */
 typedef struct {
 	/**
+	 * Location where it is stored.
+	 */
+	int Location;
+	/**
 	 * Bookmark URL.
 	 */
 	unsigned char Address[(255 + 1) * 2];
@@ -30,10 +34,6 @@ typedef struct {
 	 * Bookmark title.
 	 */
 	unsigned char Title[(50 + 1) * 2];
-	/**
-	 * Location where it is stored.
-	 */
-	int Location;
 } GSM_WAPBookmark;
 
 /* --------------------------- WAP or MMS settings ------------------------- */
