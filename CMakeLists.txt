@@ -370,6 +370,7 @@ set (HEADERS
     common/phone/alcatel/alcatel.h
     common/phone/at/samsung.h
     common/phone/at/siemens.h
+    common/phone/at/motorola.h
     common/phone/at/atfunc.h
     common/phone/at/atgen.h
     common/phone/nokia/dct3/dct3comm.h
