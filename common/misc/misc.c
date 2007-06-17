@@ -492,9 +492,6 @@ int smfprintf(GSM_Debug_Info *d, const char *format, ...)
 
 	/* Flush buffers, this might be configurable, but it could cause drop of last log messages */
 	fflush(f);
-#ifndef WIN32
-	fsync(fileno(f));
-#endif
 
 	return result;
 }
