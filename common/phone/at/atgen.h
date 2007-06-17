@@ -162,7 +162,14 @@ typedef struct {
 	int			CNMIBroadcastProcedure;
 #endif
 
-	bool			OBEX;
+	/**
+	 * Whether phone support Motorola like mode switching.
+	 */
+	bool			Mode;
+	/**
+	 * Current Motorola mode.
+	 */
+	int			CurrentMode;
 	GSM_File		file;
 } GSM_Phone_ATGENData;
 

@@ -510,6 +510,7 @@ typedef enum {
 	ID_AddFolder,
 	ID_DeleteFolder,
 	ID_DeleteFile,
+	ID_ModeSwitch,
 #ifdef GSM_ENABLE_ALCATEL
     	/* AT mode */
     	ID_SetFlowControl,
@@ -816,7 +817,6 @@ typedef struct {
 	 * Structure with private phone modules data.
 	 */
 	struct {
-		int			 fake;
 #ifdef GSM_ENABLE_NOKIA3320
 		GSM_Phone_N3320Data	 N3320;
 #endif
