@@ -424,7 +424,7 @@ bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *
 
 	if (connect(s,(struct sockaddr *)&address,sizeof(address))<0) return false;
 
-	sprintf(buff,"GET http://%s/%s HTTP/1.0\n\n",server,filename);
+	sprintf(buff,"GET /%s HTTP/1.1\x0d\x0aHost: %s\x0d\x0aUser-Agent: Gammu/%s\x0d\x0a\x0d\x0a", filename, server, VERSION);
 	if (send(s,buff,strlen(buff),0)<0) return false;
 
 	free(file->Buffer);
