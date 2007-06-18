@@ -215,25 +215,35 @@ void GSM_Init(bool checkerror)
 	char model[100];
 	char version[100];
 	unsigned char 	buff[200],ver[200];
-	int	 	pos=0,oldpos=0,i;
+	int	 	pos = 0, oldpos = 0, i;
 	if (batch && batchConn) return;
 
 	error=GSM_InitConnection(s,3);
 	if (checkerror) Print_Error(error);
 
+	/* Check for batch mode */
 	if (batch) {
-		if (error == ERR_NONE) { batchConn=true; }
+		if (error == ERR_NONE) { 
+			batchConn = true; 
+		}
 	}
 
+	/* No phonedb check? */
 	if (!phonedb) return;
 
+	/* Get model information */
 	error=GSM_GetModel(s, model);
 	Print_Error(error);
 
+	/* Empty string */
+	ver[0] = 0;
+
+	/* Request information from phone db */
 	sprintf(buff,"support/phones/phonedbxml.php?model=%s", model);
 	PhoneDB.Buffer = NULL;
 	if (!GSM_ReadHTTPFile("www.gammu.org",buff,&PhoneDB)) return;
 
+	/* Parse reply */
 	while (pos < PhoneDB.Used) {
 		if (PhoneDB.Buffer[pos] != 10) {
 			pos++;
@@ -257,6 +267,12 @@ void GSM_Init(bool checkerror)
 	}
 	free(PhoneDB.Buffer);
 
+	/* Did we find something? */
+	if (ver[0] == 0) {
+		return;
+	}
+
+	/* Get phone firmware version */
 	error=GSM_GetFirmware(s, version, NULL, NULL);
 	Print_Error(error);
 	if (version[0] == '0') {
@@ -264,6 +280,8 @@ void GSM_Init(bool checkerror)
 	} else {
 		i=0;
 	}
+
+	/* Compare firware from database to our one */
 	while(i!=strlen(ver)) {
 		if (ver[i] > version[i]) {
 			printf(_("INFO: there is later phone firmware (%s instead of %s) available!\n"), ver, version);
