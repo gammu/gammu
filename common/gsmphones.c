@@ -419,9 +419,12 @@ OnePhoneModel allmodels[] = {
 	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},
 	{"A2D"  ,	  "A2D"  ,	  "" ,				   {0}},
 	{"9210" ,	  "RAE-3",	  "Nokia Communicator GSM900/1800",{0}},
+
+	/* Sagem */
 	{"myV-65",	"myV-65 GPRS",	  "",				   {F_SMSME900,0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)
+	/* Alcatel */
 	{"BE5", 	  "ONE TOUCH 500","",				   {F_ALCATEL,F_SMSONLYSENT,F_BROKENCPBS,0}},
 	{"BH4",		  "ONE TOUCH 535","ALCATEL OT535",		   {F_ALCATEL,F_SMSONLYSENT,0}},
 	{"BF5", 	  "ONE TOUCH 715","ALCATEL OT715",		   {F_ALCATEL,F_SMSONLYSENT,F_BROKENCPBS,0}},
