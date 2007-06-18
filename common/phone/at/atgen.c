@@ -907,9 +907,12 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	error = ATGEN_GetModel(s);
 	if (error != ERR_NONE) return error;
 
-	smprintf(s, "Checking for OBEX support\n");
-	/* We don't care about error here */
-	ATGEN_WaitFor(s, "AT+CPROT=?\r", 11, 0x00, 3, ID_SetOBEX);
+	/* Mode switching cabaple phones can switch using AT+MODE */
+	if (!Priv->Mode) {
+		smprintf(s, "Checking for OBEX support\n");
+		/* We don't care about error here */
+		ATGEN_WaitFor(s, "AT+CPROT=?\r", 11, 0x00, 3, ID_SetOBEX);
+	}
 
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = true;

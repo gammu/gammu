@@ -160,6 +160,7 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
 GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 {
 	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
+	GSM_Phone_ATGENData	*PrivAT = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 
 	Priv->Mode				= SONYERICSSON_ModeAT;
@@ -182,6 +183,11 @@ GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 	/* Does phone have support for AT+MODE=22 switching? */
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_MODE22)) {
 		Priv->HasOBEX = SONYERICSSON_OBEX_MODE22;
+	} else {
+		if (PrivAT->Mode) {
+			smprintf(s, "Guessed mode style switching\n");
+			Priv->HasOBEX = SONYERICSSON_OBEX_MODE22;
+		}
 	}
 
 	/* Do we have OBEX capability? */
