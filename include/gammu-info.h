@@ -499,6 +499,10 @@ typedef enum {
 	 * Locations of SMS memories start from 0
 	 */
 	F_SMS_LOCATION_0,
+	/**
+	 * Phone does not support UCS2 even if it reports it.
+	 */
+	F_NO_UCS2,
 } Feature;
 
 /**

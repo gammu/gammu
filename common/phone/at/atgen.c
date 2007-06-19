@@ -1007,8 +1007,11 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			Priv->UnicodeCharset = 0;
 			while (AT_Charsets[i].charset != 0) {
 				if (AT_Charsets[i].unicode && (strstr(line, AT_Charsets[i].text) != NULL)) {
-					Priv->UnicodeCharset = AT_Charsets[i].charset;
-					break;
+					if (AT_Charsets[i].charset != AT_CHARSET_UCS2 ||
+							!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_UCS2)) {
+						Priv->UnicodeCharset = AT_Charsets[i].charset;
+						break;
+					}
 				}
 				i++;
 			}
