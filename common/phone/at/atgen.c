@@ -904,6 +904,11 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		}
 	}
 
+	/* Switch to GSM charset */
+	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
+	if (error != ERR_NONE) return error;
+
+	/* Get model, it is useful to know it now */
 	error = ATGEN_GetModel(s);
 	if (error != ERR_NONE) return error;
 
@@ -1033,19 +1038,26 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 	int			i = 0;
 	GSM_AT_Charset		cset;
 
-	/* Do we know available charsets? */
-	if (Priv->NormalCharset == 0) {
-		/* Get available charsets */
-		ATGEN_WaitFor(s, "AT+CSCS=?\r", 10, 0x00, 3, ID_GetMemoryCharset);
-		if (error != ERR_NONE) return error;
-	}
-
 	/* Do we know current charset? */
 	if (Priv->Charset == 0) {
 		/* Get current charset */
 		ATGEN_WaitFor(s, "AT+CSCS?\r", 9, 0x00, 3, ID_GetMemoryCharset);
 		/* ERR_NOTSUPPORTED means that we do not know charset phone returned */
 		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) return error;
+	}
+
+	/* Do we know available charsets? */
+	if (Priv->NormalCharset == 0) {
+		/* Switch to GSM to be safe (UCS2 can give us encoded result) */
+		if (Priv->Charset == AT_CHARSET_UCS2 && Priv->EncodedCommands) {
+			ATGEN_WaitFor(s, "AT+CSCS=\"00470053004D\"\r", 23, 0x00, 3, ID_SetMemoryCharset);
+			if (error == ERR_NONE) {
+				Priv->Charset = AT_CHARSET_GSM;
+			}
+		}
+		/* Get available charsets */
+		ATGEN_WaitFor(s, "AT+CSCS=?\r", 10, 0x00, 3, ID_GetMemoryCharset);
+		if (error != ERR_NONE) return error;
 	}
 
 	/* Find charset we want */
@@ -2849,10 +2861,8 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 	Priv->NumberLength		= 0;
 
 	/* If phone encodes also values in command, we need normal charset */
-	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
-		if (error != ERR_NONE) return error;
-	}
+	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
+	if (error != ERR_NONE) return error;
 
 	if (Priv->PBKMemories[0] == 0) {
 		ATGEN_WaitFor(s, "AT+CPBS=?\r", 10, 0x00, 3, ID_SetMemoryType);
