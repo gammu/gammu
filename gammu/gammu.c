@@ -8135,6 +8135,9 @@ static void Features(int argc, char *argv[])
 #ifdef GETTEXTLIBS_FOUND
 	printf("  - %s\n", "GETTEXT");
 #endif
+#ifdef ICONV_FOUND
+	printf("  - %s\n", "ICONV");
+#endif
 #ifdef HAVE_MYSQL_MYSQL_H
 	printf("  - %s\n", "MYSQL");
 #endif
