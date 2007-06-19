@@ -423,6 +423,9 @@ OnePhoneModel allmodels[] = {
 
 	/* Sagem */
 	{"myV-65",	"myV-65 GPRS",	  "",				   {F_SMSME900,0}},
+
+	/* LG */
+	{"KG800", "KG800", "", {F_NO_UCS2, 0}},
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)
 	/* Alcatel */
