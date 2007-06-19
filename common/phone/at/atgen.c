@@ -325,7 +325,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	if (Priv->Charset == AT_CHARSET_HEX && (len > 10) && (len % 2 == 0) && (strchr(pos, '/') == NULL)) {
 		/* This is probably hex encoded number */
 		DecodeHexBin(buffer, input, len);
-	} else if (Priv->Charset == AT_CHARSET_UCS2 && (len > 20) && (len % 4 == 0) && (strchr(pos, '/') == NULL)) {
+	} else if (Priv->Charset == AT_CHARSET_UCS2 && (len > 8) && (len % 4 == 0) && (strchr(pos, '/') == NULL)) {
 		/* This is probably unicode encoded number */
 		DecodeHexUnicode(buffer2, pos, len);
 		DecodeUnicode(buffer2, buffer);
@@ -2587,7 +2587,7 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		 */
 		len 		= strlen(buffer + 1) - 1;
 		buffer[len + 1] = 0;
-		if ((len > 20) && (len % 4 == 0) && (strchr(buffer + 1, '+') == NULL)) {
+		if ((len > 8) && (len % 4 == 0) && (strchr(buffer + 1, '+') == NULL)) {
 			/* This is probably unicode encoded number */
 			DecodeHexUnicode(SMSC->Number,buffer + 1,len);
 		} else  {
@@ -3200,7 +3200,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			/* This is probably hex encoded number */
 			DecodeHexBin(buffer2, buffer+1, len);
 			DecodeDefault(Memory->Entries[0].Text ,buffer2, strlen(buffer2), false, NULL);
-		} else if (Priv->Charset == AT_CHARSET_UCS2 && (len > 20) && (len % 4 == 0) && (strchr(buffer + 1, '+') == NULL)) {
+		} else if (Priv->Charset == AT_CHARSET_UCS2 && (len > 8) && (len % 4 == 0) && (strchr(buffer + 1, '+') == NULL)) {
 			/* This is probably unicode encoded number */
 			DecodeHexUnicode(Memory->Entries[0].Text, buffer + 1,len);
 		} else  {
