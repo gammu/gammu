@@ -407,6 +407,7 @@ OnePhoneModel allmodels[] = {
 	/* At least my K750i reports itself as "Sony Ericss", so detect it for IrDA */
 	{"Generic SE",	"Generic SE", "Sony Ericss",			   {F_OBEX, 0}},
 	{"K300 series",	"K300 series", "K300 series",			   {F_OBEX, 0}},
+	{"K700 series",	"K700 series", "K700 series",			   {F_OBEX, 0}},
 
 	/* Mitsubishi */
 	{"M341i",	"M7", "MT170",					   {F_OBEX, F_IRMC_LEVEL_2, 0}},
