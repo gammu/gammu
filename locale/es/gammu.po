@@ -18,6 +18,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Pootle 0.11\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: common/gsmcomon.c:84
 msgid "No error."
@@ -4637,7 +4638,7 @@ msgstr "Error en carpeta de salida en %s"
 #: gammu/smsd/smsdcore.c:423
 #, c-format
 msgid "Moved to errorbox: %s"
-msgstr "Movido a la bandeja de error:"
+msgstr "Movido a la bandeja de error: %s"
 
 #: gammu/smsd/smsdcore.c:440
 msgid "Error getting SMSC from phone"
