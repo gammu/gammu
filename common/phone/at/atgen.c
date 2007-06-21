@@ -1835,6 +1835,7 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "SMS status received\n");
+		/* Check for +CPMS: 0,30,0,30,8,330, this is according to ETSI */
 		start = strstr(msg.Buffer, "+CPMS: ");
 		/*
 		 * Samsung formats this different way, sample response:
@@ -1843,7 +1844,17 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		 * 3 "OK"
 		 */
 		if (start == NULL) {
-			start = strstr(msg.Buffer, "+CPMS:\"") + 6;
+			start = strstr(msg.Buffer, "+CPMS:\"");
+			if (start == NULL) {
+				/* Check for +CPMS:0,30,0,30,8,330 */
+				start = strstr(msg.Buffer, "+CPMS:");
+				if (start == NULL) {
+					return ERR_UNKNOWNRESPONSE;
+				}
+				start += 6;
+				goto parse_sizes;
+			}
+			start += 6;
 			current+=ATGEN_ExtractOneParameter(start+current, buffer);
 			if (strcmp(buffer, "\"ME\"") == 0) {
 				current+=ATGEN_ExtractOneParameter(start+current, buffer);
@@ -1868,6 +1879,7 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		}
 		/* Skip +CPMS: */
 		start += 7;
+parse_sizes:
 		if (strstr(msg.Buffer,"ME")!=NULL) {
 			SMSStatus->PhoneUsed 	= atoi(start);
 			current+=ATGEN_ExtractOneParameter(start+current, buffer);

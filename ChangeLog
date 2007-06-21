@@ -20,6 +20,7 @@ ChangeLog
 [-] * Avoid work on uninitialized buffer when checking firmware.
 [-] * Use HTTP/1.1 requests for getting firmware and version info.
 [+] * Improve charset handling for AT phones.
+[-] * Fix crash on broken CPMS response.
 
 20070615 - 1.12.0
 [+] * Added dku5fbus-nodtr and fbus-nodtr variants, which do not care
