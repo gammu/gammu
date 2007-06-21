@@ -396,12 +396,15 @@ OnePhoneModel allmodels[] = {
 	{"W950i",	"FAD-3022013-BV" ,"",				   {F_OBEX, 0}},
 	{"GC99",	"FAD-3031012-BV" ,"",				   {F_OBEX, 0}},
 	{"GC79",	"FAE-1021011-BV" ,"",				   {F_OBEX, F_SMS_LOCATION_0, 0}},
-	{"GC79",	"FAE-1021011-BVGC79" ,"",			   {F_OBEX, F_SMS_LOCATION_0, 0}},
 	{"GC85",	"FAF-1021011-BV" ,"",				   {F_OBEX, 0}},
 	{"GC83",	"FAF-1031011-BV" ,"",				   {F_OBEX, 0}},
 	{"VDC",		"FAF-1031021-BV" ,"",				   {F_OBEX, 0}},
 	{"GC89",	"FAF-1051011-BV" ,"",				   {F_OBEX, 0}},
 	{"GC86",	"FAF-1051012-BV" ,"",				   {F_OBEX, 0}},
+
+
+	/* Some cards identify a bit different */
+	{"GC79",	"FAE-1021011-BVGC79" ,"",			   {F_OBEX, F_SMS_LOCATION_0, 0}},
 
 	/* IrDA identifications for Sony-Ericsson */
 	/* At least my K750i reports itself as "Sony Ericss", so detect it for IrDA */
@@ -475,3 +478,6 @@ bool GSM_IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature)
 	return false;
 }
 
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */
