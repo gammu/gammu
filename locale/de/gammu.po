@@ -15,6 +15,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Pootle 0.11\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: common/gsmcomon.c:84
 msgid "No error."
@@ -2002,7 +2003,7 @@ msgstr "Kennung %i,"
 #: gammu/gammu.c:1845
 #, c-format
 msgid "incoming call from \"%s\"\n"
-msgstr "eingehender Anruf von \"s\"\n"
+msgstr "eingehender Anruf von \"%s\"\n"
 
 #: gammu/gammu.c:1846
 #, c-format
