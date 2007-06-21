@@ -1596,7 +1596,7 @@ GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, cha
 		/**
 		 * \todo We should keep location here!
 		 */
-		OBEXGEN_AddMemory(s, Entry);
+		return OBEXGEN_AddMemory(s, Entry);
 	}
 
 	/* Calculate path */
@@ -1998,7 +1998,7 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 		/**
 		 * \todo We should keep location here!
 		 */
-		OBEXGEN_AddCalendar(s, Entry);
+		return OBEXGEN_AddCalendar(s, Entry);
 	}
 
 	/* Calculate path */
@@ -2360,7 +2360,7 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *D
 		/**
 		 * \todo We should keep location here!
 		 */
-		OBEXGEN_AddTodo(s, Entry);
+		return OBEXGEN_AddTodo(s, Entry);
 	}
 
 	/* Calculate path */
