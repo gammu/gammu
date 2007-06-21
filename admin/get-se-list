@@ -1,0 +1,47 @@
+#!/bin/sh
+
+# This script downloads list of Sony-Ericsson phones from web and
+# prepares list suitable for common/gsmphones.c
+
+URL=http://homepage.mac.com/alvinmok/ericsson/types.html
+
+tmp=`mktemp`
+wget -O - "$URL" | tr '\r' '\n' > "$tmp"
+
+awk 'BEGIN { p = 0; }
+/Type code orderin/ { p = 1; }
+/<tr><th>.*<\/th><td>.*<\/td><\/tr>/ { if (p) print $0; }
+/<\/table>/ { p = 0;}' < "$tmp" | \
+	sed 's@</td></tr><tr><th>@\n@; s@<tr><th>@@; s@</th><td>@;@g; s@</td></tr>@@' | \
+	grep -Ev '&nbsp;|Cancelled' | \
+	awk -F \; '{ 
+		delete models;
+		delete ids;
+		models[0] = $1;
+		ids[0] = $2;
+		if (match($2, "\(.*\)/\(.*\)/\(.*\)", a)) {
+			ids[0] = a[1];
+			ids[1] = a[2];
+			ids[2] = a[3];
+		} else
+		if (match($2, "\(.*\)/\(.*\)", a)) {
+			ids[0] = a[1];
+			ids[1] = a[2];
+		}
+		if (match($1, "\(.*\)-\([^-]*\)/\(.*\)", a)) {
+			models[0] = a[1]"-"a[2];
+			models[1] = a[1]"-"a[3];
+		}
+		if (length(models) == 2 && length(ids) == 2) {
+				print "\t{\""ids[0]"\", \""models[0]"\", \"\", {F_OBEX, 0}},"; 
+				print "\t{\""ids[1]"\", \""models[1]"\", \"\", {F_OBEX, 0}},"; 
+		} else {
+			for (model in models) {
+				for (id in ids) {
+					print "\t{\""ids[id]"\", \""models[model]"\", \"\", {F_OBEX, 0}},"; 
+				}
+			}
+		}
+	}'
+
+rm -f "$tmp"
