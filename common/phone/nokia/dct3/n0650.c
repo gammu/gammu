@@ -78,6 +78,7 @@ GSM_Phone_Functions N650Phone = {
  	NOTSUPPORTED,			/* 	AddSMSFolder		*/
  	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
 	NOTSUPPORTED,			/*	DialVoice		*/
+	NOTIMPLEMENTED,			/*	DialService		*/
 	NOTSUPPORTED,			/*	AnswerCall		*/
 	NOTSUPPORTED,			/*	CancelCall		*/
  	NOTSUPPORTED,			/* 	HoldCall 		*/

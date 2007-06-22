@@ -1746,6 +1746,7 @@ GSM_Phone_Functions N7110Phone = {
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/*	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFile			*/
+	NOTSUPPORTED,			/* 	SendFilePart		*/
 	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
 	NOTSUPPORTED,			/*	DeleteFile		*/
 	NOTSUPPORTED,			/*	AddFolder		*/

@@ -546,7 +546,7 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
 	GSM_Error		error;
-	int			j;
+	size_t			j;
 	unsigned int		Current = 0;
 	unsigned char 		req[2000];
 

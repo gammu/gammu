@@ -69,7 +69,7 @@ static GSM_AT_Charset_Info AT_Charsets[] = {
 	{AT_CHARSET_ISO88595,	"8859-5",	false},
 	{AT_CHARSET_ISO88596,	"8859-6",	false},
 #endif
-	{0,			NULL}
+	{0,			NULL, false}
 };
 
 typedef struct {

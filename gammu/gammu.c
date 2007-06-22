@@ -215,7 +215,7 @@ void GSM_Init(bool checkerror)
 	char model[100];
 	char version[100];
 	unsigned char 	buff[200],ver[200];
-	int	 	pos = 0, oldpos = 0, i;
+	size_t pos = 0, oldpos = 0, i;
 	if (batch && batchConn) return;
 
 	error=GSM_InitConnection(s,3);
@@ -256,7 +256,7 @@ void GSM_Init(bool checkerror)
 			continue;
 		}
 		sprintf(ver,strstr(PhoneDB.Buffer+oldpos,"<version>")+9);
-		for (i=0;i<(int)strlen(ver);i++) {
+		for (i = 0; i < strlen(ver); i++) {
 			if (ver[i] == '<') {
 				ver[i] = 0;
 				break;
@@ -8876,7 +8876,8 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 {
 	bool 			Start = true, Available = false;
 	GSM_File	 	Files,Files2,Files3;
-	int 			i,j,NamesPos=0,NamesPos2=0;
+	int 			j,NamesPos2=0;
+	size_t i, NamesPos = 0;
 	unsigned char		Buffer[20],Buffer2[500];
 	unsigned char		*Names,*Names2,*Pointer;
 	PlayListEntry		*First,*Entry=NULL,*Prev;
@@ -8918,7 +8919,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 				}
 
 				Entry->NameUP = malloc(strlen(DecodeUnicodeString(Files.ID_FullName))+1);
-				for (i=0;i<(int)strlen(DecodeUnicodeString(Files.ID_FullName))+1;i++) {
+				for (i = 0; i < strlen(DecodeUnicodeString(Files.ID_FullName)) + 1; i++) {
 					Entry->NameUP[i] = tolower(Entry->Name[i]);
 				}
 			}
@@ -9038,9 +9039,9 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 	}
 
 	//going into subfolders
-	if (NamesPos!=0) {
+	if (NamesPos != 0) {
 		i = 0; j = 0;
-		while (i!=NamesPos) {
+		while (i != NamesPos) {
 			NokiaAddPlayLists2(Names+i,Names2+j,IDFolder);
 			i+=UnicodeLength(Names+i)*2+2;
 			j+=UnicodeLength(Names2+j)*2+2;
@@ -9167,7 +9168,9 @@ static void NokiaAddFile(int argc, char *argv[])
 	unsigned char 		buffer[10000],JAR[500],Vendor[500],Name[500],Version[500],FileID[400];
 	bool 			Start = true, Found = false, wasclr;
 	bool			ModEmpty = false, Overwrite = false;
-	int			i = 0, Pos, Size, Size2, nextlong;
+	size_t i = 0, Pos;
+	int Size, Size2;
+	int nextlong, j;
 
 	while (Folder[i].parameter[0] != 0) {
 		if (strcasecmp(argv[2],Folder[i].parameter) == 0) {
@@ -9395,8 +9398,8 @@ static void NokiaAddFile(int argc, char *argv[])
 		memcpy(File.Buffer,buffer,Pos);
 
 		if (argc > 4) {
-			for (i=4;i<argc;i++) {
-				if (strcasecmp(argv[i],"-overwrite") == 0) Overwrite = true;
+			for (j = 4; j < argc; j++) {
+				if (strcasecmp(argv[j],"-overwrite") == 0) Overwrite = true;
 			}
 		}
 
@@ -9457,8 +9460,8 @@ static void NokiaAddFile(int argc, char *argv[])
 		AddOneFile(&File, "Writing JAD file: ", false);
 
 		if (argc > 4) {
-			for (i=4;i<argc;i++) {
-				if (strcasecmp(argv[i],"-readonly") == 0) File.ReadOnly = true;
+			for (j = 4; j < argc; j++) {
+				if (strcasecmp(argv[j],"-readonly") == 0) File.ReadOnly = true;
 			}
 		}
 
@@ -9491,37 +9494,37 @@ static void NokiaAddFile(int argc, char *argv[])
 		strcpy(buffer,argv[3]);
 		if (argc > 4) {
 			nextlong = 0;
-			for (i=4;i<argc;i++) {
+			for (j = 4; j < argc; j++) {
 				switch(nextlong) {
 				case 0:
-					if (strcasecmp(argv[i],"-name") == 0) {
+					if (strcasecmp(argv[j],"-name") == 0) {
 						nextlong = 1;
 						continue;
 					}
-					if (strcasecmp(argv[i],"-protected") == 0) {
+					if (strcasecmp(argv[j],"-protected") == 0) {
 						File.Protected = true;
 						continue;
 					}
-					if (strcasecmp(argv[i],"-readonly") == 0) {
+					if (strcasecmp(argv[j],"-readonly") == 0) {
 						File.ReadOnly = true;
 						continue;
 					}
-					if (strcasecmp(argv[i],"-hidden") == 0) {
+					if (strcasecmp(argv[j],"-hidden") == 0) {
 						File.Hidden = true;
 						continue;
 					}
-					if (strcasecmp(argv[i],"-system") == 0) {
+					if (strcasecmp(argv[j],"-system") == 0) {
 						File.System = true;
 						continue;
 					}
-					if (strcasecmp(argv[i],"-newtime") == 0) {
+					if (strcasecmp(argv[j],"-newtime") == 0) {
 						ModEmpty = true;
 						continue;
 					}
-					printf(_("Parameter \"%s\" unknown\n"),argv[i]);
+					printf(_("Parameter \"%s\" unknown\n"),argv[j]);
 					exit(-1);
 				case 1:
-					strcpy(buffer,argv[i]);
+					strcpy(buffer,argv[j]);
 					nextlong = 0;
 					break;
 				}
@@ -9936,7 +9939,8 @@ static void RunBatch(int argc, char *argv[]) {
 	 * @todo Allocate memory dynamically.
 	 */
 	char ln[2000];
-	int i,j,c=0,argsc;
+	size_t i;
+	int j,c=0,argsc;
 	char* argsv[20];
 	bool origbatch;
 	char *name;
@@ -9988,8 +9992,8 @@ static void RunBatch(int argc, char *argv[]) {
 				 * @todo Handle return value from ProcessParameters.
 				 */
 				ProcessParameters(0, argsc + 1, argsv);
-				for (i = 1; i <= argsc; i++) {
-					free(argsv[i]);
+				for (j = 1; j <= argsc; j++) {
+					free(argsv[j]);
 				}
 			}
 		}
@@ -10238,7 +10242,7 @@ static GSM_Parameters Parameters[] = {
 	{"makeconverttable",		1, 1, MakeConvertTable,		{H_Decode,0},			"file"},
 #endif
 	{"batch",			0, 1, RunBatch,			{H_Other,0},			"[file]"},
-	{"",				0, 0, NULL			}
+	{"",				0, 0, NULL,			{0}, ""}
 };
 
 static HelpCategoryDescriptions HelpDescriptions[] = {
@@ -10457,7 +10461,7 @@ static void Help(int argc, char *argv[])
 
 int FoundVersion(unsigned char *Buffer)
 {
-	int retval = 0, pos = 0;
+	size_t retval = 0, pos = 0;
 
 	retval = atoi(Buffer) * 10000;
 	while (Buffer[pos] != '.') {
@@ -10537,7 +10541,8 @@ int ProcessParameters(char start, int argc, char *argv[]) {
 int main(int argc, char *argv[])
 {
 	GSM_File	RSS;
-	int		rsslevel = 0,pos = 0,oldpos = 0;
+	int		rsslevel = 0,oldpos = 0;
+	size_t pos = 0;
 	int 		start = 0;
 	unsigned int	i;
 	int		only_config = -1;
