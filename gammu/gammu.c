@@ -675,7 +675,7 @@ static GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone)
 	return GSM_PlayTone(s,255*255,0,false);
 }
 
-static void PlayRingtone(int argc, char *argv[])
+static void PlayRingtone(int argc UNUSED, char *argv[])
 {
 	GSM_Ringtone ringtone,ringtone2;
 
@@ -775,7 +775,7 @@ static void Identify(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetDateTime(int argc, char *argv[])
+static void GetDateTime(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_DateTime 	date_time;
 	GSM_Locale	locale;
@@ -916,7 +916,7 @@ static void GetAlarm(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void SetAlarm(int argc, char *argv[])
+static void SetAlarm(int argc UNUSED, char *argv[])
 {
 	GSM_Alarm alarm;
 
@@ -1066,7 +1066,7 @@ static void PrintMemoryEntry(GSM_MemoryEntry *entry)
 	printf("\n");
 }
 
-static void GetAllMemory(int argc, char *argv[])
+static void GetAllMemory(int argc UNUSED, char *argv[])
 {
 	GSM_MemoryEntry		Entry;
 	bool			start = true;
@@ -1296,7 +1296,7 @@ static void SearchOneMemory(GSM_MemoryType MemoryType, char *Title, unsigned cha
 	}
 }
 
-static void SearchMemory(int argc, char *argv[])
+static void SearchMemory(int argc UNUSED, char *argv[])
 {
 	unsigned char		Text[(GSM_PHONEBOOK_TEXT_LENGTH+1)*2];
 	int			Length;
@@ -1349,7 +1349,7 @@ static void ListMemoryCategoryEntries(int Category)
 	}
 }
 
-static void ListMemoryCategory(int argc, char *argv[])
+static void ListMemoryCategory(int argc UNUSED, char *argv[])
 {
 	GSM_Category		Category;
 	GSM_CategoryStatus	Status;
@@ -1794,7 +1794,7 @@ static void displaymultismsinfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems
 	GSM_FreeMultiPartSMSInfo(&SMSInfo);
 }
 
-static void NetworkInfo(int argc, char *argv[])
+static void NetworkInfo(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_NetworkInfo		NetInfo;
 
@@ -1806,7 +1806,7 @@ static void NetworkInfo(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void IncomingSMS(GSM_StateMachine *s, GSM_SMSMessage sms)
+static void IncomingSMS(GSM_StateMachine *s UNUSED, GSM_SMSMessage sms)
 {
 	printf("%s\n", _("SMS message received"));
  	if (wasincomingsms) {
@@ -1849,13 +1849,13 @@ static void DisplayIncomingSMS()
  	wasincomingsms = false;
 }
 
-static void IncomingCB(GSM_StateMachine *s, GSM_CBMessage CB)
+static void IncomingCB(GSM_StateMachine *s UNUSED, GSM_CBMessage CB)
 {
 	printf("%s\n", _("CB message received"));
 	printf(_("Channel %i, text \"%s\"\n"),CB.Channel,DecodeUnicodeConsole(CB.Text));
 }
 
-static void IncomingCall(GSM_StateMachine *s, GSM_Call call)
+static void IncomingCall(GSM_StateMachine *s UNUSED, GSM_Call call)
 {
 	printf(LISTFORMAT, _("Call info"));
 	if (call.CallIDAvailable) printf(_("ID %i, "),call.CallID);
@@ -1873,7 +1873,7 @@ static void IncomingCall(GSM_StateMachine *s, GSM_Call call)
 	}
 }
 
-static void IncomingUSSD(GSM_StateMachine *s, GSM_USSDMessage ussd)
+static void IncomingUSSD(GSM_StateMachine *s UNUSED, GSM_USSDMessage ussd)
 {
 	printf("%s\n", _("USSD received"));
 	printf(LISTFORMAT, _("Status"));
@@ -2144,7 +2144,7 @@ static void IncomingUSSD2(GSM_StateMachine *s, GSM_USSDMessage ussd)
 	gshutdown = true;
 }
 
-static void GetUSSD(int argc, char *argv[])
+static void GetUSSD(int argc UNUSED, char *argv[])
 {
 	GSM_Init(true);
 
@@ -2533,7 +2533,7 @@ static void GetEachSMS(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetSMSFolders(int argc, char *argv[])
+static void GetSMSFolders(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_SMSFolders folders;
 
@@ -2558,7 +2558,7 @@ static void GetSMSFolders(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetMMSFolders(int argc, char *argv[])
+static void GetMMSFolders(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_MMSFolders folders;
 
@@ -2768,7 +2768,7 @@ static void GetRingtone(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetRingtonesList(int argc, char *argv[])
+static void GetRingtonesList(int argc UNUSED, char *argv[] UNUSED)
 {
  	GSM_AllRingtonesInfo 	Info = {0, NULL};
 	int			i;
@@ -2809,7 +2809,7 @@ static void DialVoice(int argc, char *argv[])
 
 int TerminateID = -1;
 
-static void IncomingCall0(GSM_StateMachine *s, GSM_Call call)
+static void IncomingCall0(GSM_StateMachine *s UNUSED, GSM_Call call)
 {
 	if (call.CallIDAvailable) TerminateID = call.CallID;
 }
@@ -2888,7 +2888,7 @@ static void AnswerCall(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void UnholdCall(int argc, char *argv[])
+static void UnholdCall(int argc UNUSED, char *argv[])
 {
 	GSM_Init(true);
 
@@ -2898,7 +2898,7 @@ static void UnholdCall(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void HoldCall(int argc, char *argv[])
+static void HoldCall(int argc UNUSED, char *argv[])
 {
 	GSM_Init(true);
 
@@ -2908,7 +2908,7 @@ static void HoldCall(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void ConferenceCall(int argc, char *argv[])
+static void ConferenceCall(int argc UNUSED, char *argv[])
 {
 	GSM_Init(true);
 
@@ -2918,7 +2918,7 @@ static void ConferenceCall(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void SplitCall(int argc, char *argv[])
+static void SplitCall(int argc UNUSED, char *argv[])
 {
 	GSM_Init(true);
 
@@ -2956,7 +2956,7 @@ static void TransferCall(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void AddSMSFolder(int argc, char *argv[])
+static void AddSMSFolder(int argc UNUSED, char *argv[])
 {
 	unsigned char buffer[200];
 
@@ -2969,7 +2969,7 @@ static void AddSMSFolder(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void Reset(int argc, char *argv[])
+static void Reset(int argc UNUSED, char *argv[])
 {
 	bool hard;
 
@@ -2988,7 +2988,7 @@ static void Reset(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetCalendar(int argc, char *argv[])
+static void GetCalendar(int argc UNUSED, char *argv[])
 {
 	GSM_CalendarEntry	Note;
 	int			start,stop;
@@ -3027,7 +3027,7 @@ static void DeleteCalendar(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetAllCalendar(int argc, char *argv[])
+static void GetAllCalendar(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_CalendarEntry	Note;
 	bool			refresh	= true;
@@ -3049,7 +3049,7 @@ static void GetAllCalendar(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetCalendarSettings(int argc, char *argv[])
+static void GetCalendarSettings(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_CalendarSettings settings;
 
@@ -6469,7 +6469,7 @@ static void ClearMemory(GSM_MemoryType type, const char *question)
 }
 
 
-static void ClearAll(int argc, char *argv[])
+static void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_ToDoStatus		ToDoStatus;
 	GSM_CalendarEntry	Calendar;
@@ -6796,7 +6796,7 @@ static void GetWAPMMSSettings(int argc, char *argv[])
 }
 
 #ifdef GSM_ENABLE_BACKUP
-static void BackupSMS(int argc, char *argv[])
+static void BackupSMS(int argc UNUSED, char *argv[])
 {
 	GSM_SMS_Backup		Backup;
 	GSM_MultiSMSMessage 	sms;
@@ -6871,7 +6871,7 @@ static void BackupSMS(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void AddSMS(int argc, char *argv[])
+static void AddSMS(int argc UNUSED, char *argv[])
 {
 	GSM_MultiSMSMessage 	SMS;
 	GSM_SMS_Backup		Backup;
@@ -6901,7 +6901,7 @@ static void AddSMS(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void RestoreSMS(int argc, char *argv[])
+static void RestoreSMS(int argc UNUSED, char *argv[])
 {
 	GSM_MultiSMSMessage 	SMS;
 	GSM_SMS_Backup		Backup;
@@ -6988,7 +6988,7 @@ static void CopyBitmap(int argc, char *argv[])
 }
 
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
-static void NokiaComposer(int argc, char *argv[])
+static void NokiaComposer(int argc UNUSED, char *argv[])
 {
 	GSM_Ringtone 		ringtone;
 	bool			started;
@@ -7156,7 +7156,7 @@ static void CopyRingtone(int argc, char *argv[])
 	Print_Error(error);
 }
 
-static void PressKeySequence(int argc, char *argv[])
+static void PressKeySequence(int argc UNUSED, char *argv[])
 {
 	int 		i,Length;
 	GSM_KeyCode	KeyCode[500];
@@ -7179,7 +7179,7 @@ static void PressKeySequence(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetAllCategories(int argc, char *argv[])
+static void GetAllCategories(int argc UNUSED, char *argv[])
 {
 	GSM_Category		Category;
 	GSM_CategoryStatus	Status;
@@ -7256,7 +7256,7 @@ static void GetCategory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void AddCategory(int argc, char *argv[])
+static void AddCategory(int argc UNUSED, char *argv[])
 {
 	GSM_Category	Category;
 	int		Length;
@@ -7450,7 +7450,7 @@ static void ListToDoCategoryEntries(int Category)
 	}
 }
 
-static void ListToDoCategory(int argc, char *argv[])
+static void ListToDoCategory(int argc UNUSED, char *argv[])
 {
 	GSM_Category		Category;
 	GSM_CategoryStatus	Status;
@@ -7527,7 +7527,7 @@ static void GetToDo(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetAllToDo(int argc, char *argv[])
+static void GetAllToDo(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_ToDoEntry		ToDo;
 	bool			start = true;
@@ -7548,7 +7548,7 @@ static void GetAllToDo(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetAllNotes(int argc, char *argv[])
+static void GetAllNotes(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_NoteEntry		Note;
 	bool			start = true;
@@ -7569,7 +7569,7 @@ static void GetAllNotes(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetSecurityStatus(int argc, char *argv[])
+static void GetSecurityStatus(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_Init(true);
 
@@ -7578,7 +7578,7 @@ static void GetSecurityStatus(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void EnterSecurityCode(int argc, char *argv[])
+static void EnterSecurityCode(int argc UNUSED, char *argv[])
 {
 	GSM_SecurityCode Code;
 
@@ -7775,7 +7775,7 @@ static void GetSpeedDial(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void ResetPhoneSettings(int argc, char *argv[])
+static void ResetPhoneSettings(int argc UNUSED, char *argv[])
 {
 	GSM_ResetSettingsType Type;
 
@@ -7886,7 +7886,7 @@ static void DeleteAllSMS(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void SendDTMF(int argc, char *argv[])
+static void SendDTMF(int argc UNUSED, char *argv[])
 {
 	GSM_Init(true);
 
@@ -7896,7 +7896,7 @@ static void SendDTMF(int argc, char *argv[])
  	GSM_Terminate();
 }
 
-static void GetDisplayStatus(int argc, char *argv[])
+static void GetDisplayStatus(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_DisplayFeatures 	Features;
 	int			i;
@@ -7923,7 +7923,7 @@ static void GetDisplayStatus(int argc, char *argv[])
  	GSM_Terminate();
 }
 
-static void SetAutoNetworkLogin(int argc, char *argv[])
+static void SetAutoNetworkLogin(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_Init(true);
 
@@ -7934,7 +7934,7 @@ static void SetAutoNetworkLogin(int argc, char *argv[])
 }
 
 #ifdef DEBUG
-static void MakeConvertTable(int argc, char *argv[])
+static void MakeConvertTable(int argc UNUSED, char *argv[])
 {
 	unsigned char 	InputBuffer[10000], Buffer[10000];
 	FILE		*file;
@@ -8010,7 +8010,7 @@ static void PrintVersion()
 	printf("\n\n");
 }
 
-static void Features(int argc, char *argv[])
+static void Features(int argc UNUSED, char *argv[] UNUSED)
 {
 	PrintVersion();
 
@@ -8146,7 +8146,7 @@ static void Features(int argc, char *argv[])
 #endif
 }
 
-static void Version(int argc, char *argv[])
+static void Version(int argc UNUSED, char *argv[] UNUSED)
 {
 #ifdef DEBUG
 	GSM_DateTime	dt;
@@ -8236,7 +8236,7 @@ GSM_Error PrintFileSystemStatus()
 	return error;
 }
 
-static void GetFileSystemStatus(int argc, char *argv[])
+static void GetFileSystemStatus(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_Init(true);
 
@@ -8412,7 +8412,7 @@ static void SetFileAttrib(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetRootFolders(int argc, char *argv[])
+static void GetRootFolders(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_File 	File;
 	char 		IDUTF[200];
@@ -8432,7 +8432,7 @@ static void GetRootFolders(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void GetFolderListing(int argc, char *argv[])
+static void GetFolderListing(int argc UNUSED, char *argv[])
 {
 	bool 			Start = true;
 	GSM_File	 	Files;
@@ -8830,7 +8830,7 @@ static void AddSendFile(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void AddFolder(int argc, char *argv[])
+static void AddFolder(int argc UNUSED, char *argv[])
 {
 	char			IDUTF[200];
 	GSM_File 		File;
@@ -8849,7 +8849,7 @@ static void AddFolder(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void DeleteFolder(int argc, char *argv[])
+static void DeleteFolder(int argc UNUSED, char *argv[] UNUSED)
 {
 	unsigned char buffer[500];
 
@@ -9051,7 +9051,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 	free(Names2);
 }
 
-static void NokiaAddPlayLists(int argc, char *argv[])
+static void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
 {
 	bool 			Start = true;
 	GSM_File	 	Files;
@@ -9673,7 +9673,7 @@ static void CallDivert(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void CancelAllDiverts(int argc, char *argv[])
+static void CancelAllDiverts(int argc UNUSED, char *argv[] UNUSED)
 {
 	GSM_Init(true);
 
@@ -9921,7 +9921,7 @@ static void NokiaVibraTest(int argc, char *argv[])
 /**
  * Function for testing purposes.
  */
-static void Foo(int argc, char *argv[])
+static void Foo(int argc UNUSED, char *argv[] UNUSED)
 {
 }
 #endif
