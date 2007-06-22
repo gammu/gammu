@@ -1600,14 +1600,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 	unsigned char 	Line[2000],Buff[2000];
 	int		Level = 0;
 	GSM_DateTime	Date;
-	GSM_DeltaTime	OneHour = {
-		.Timezone = 0,
-		.Second = 0,
-		.Minute = 0,
-		.Hour = 1,
-		.Day = 0,
-		.Month = 0,
-		.Year = 0};
+	GSM_DeltaTime	OneHour = {0, 0, 0, 1, 0, 0, 0};
 	GSM_TimeUnit	unit = GSM_TimeUnit_Unknown;
 	GSM_DeltaTime	trigger;
 	GSM_Error	error;
