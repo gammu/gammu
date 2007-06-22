@@ -85,7 +85,7 @@ GSM_Error DCT3_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 	}
 }
 
-GSM_Error DCT3_ReplyPlayTone(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3_ReplyPlayTone(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Tone played\n");
 	return ERR_NONE;
@@ -183,7 +183,7 @@ GSM_Error DCT3_SetIncomingCB(GSM_StateMachine *s, bool enable)
 #endif
 }
 
-GSM_Error DCT3_ReplySetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3_ReplySetSMSC(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "SMSC set\n");
 	return ERR_NONE;
@@ -222,7 +222,7 @@ GSM_Error DCT3_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 	return GSM_WaitFor (s, req, 35+UnicodeLength(smsc->Name), 0x02, 4, ID_SetSMSC);
 }
 
-GSM_Error DCT3_ReplyEnableSecurity(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3_ReplyEnableSecurity(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "State of security commands set\n");
 	return ERR_NONE;
@@ -274,13 +274,13 @@ GSM_Error DCT3_GetIMEI (GSM_StateMachine *s)
 	return GSM_WaitFor (s, req, 4, 0x40, 2, ID_GetIMEI);
 }
 
-GSM_Error DCT3_ReplySIMLogin(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3_ReplySIMLogin(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Login for SIM card\n");
 	return ERR_NONE;
 }
 
-GSM_Error DCT3_ReplySIMLogout(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3_ReplySIMLogout(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Logout for SIM card\n");
 	return ERR_NONE;
@@ -557,7 +557,7 @@ GSM_Error DCT3_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	return GSM_WaitFor (s, req, 4, 0x0a, 4, ID_GetNetworkInfo);
 }
 
-GSM_Error DCT3_ReplyDialCommand(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3_ReplyDialCommand(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Answer for call commands\n");
 	return ERR_NONE;
@@ -1516,7 +1516,7 @@ GSM_Error N61_91_ReplySetOpLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error N61_71_ReplyResetPhoneSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N61_71_ReplyResetPhoneSettings(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Phone settings cleaned OK\n");
 	return ERR_NONE;
