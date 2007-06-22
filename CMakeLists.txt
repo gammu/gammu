@@ -143,6 +143,11 @@ if (HAVE_WERRORDECLARATION)
     set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror-implicit-function-declaration")
 endif (HAVE_WERRORDECLARATION)
 
+check_c_compiler_flag("-Wdeclaration-after-statement" HAVE_WERRORDECLARATION)
+if (HAVE_WERRORDECLARATION)
+    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wdeclaration-after-statement")
+endif (HAVE_WERRORDECLARATION)
+
 # This is extremely noisy, use only in debug builds
 if (DEBUG)
     check_c_compiler_flag("-Wextra" HAVE_WERRORDECLARATION)
