@@ -427,7 +427,8 @@ void GSM_AddWAPMIMEType(int type, unsigned char *buffer)
 
 GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSInfo *info)
 {
-	int 		pos=0,type=0,parts,j;
+	size_t pos = 0;
+	int type=0,parts,j;
 	int		i,len2,len3,len4,value2;
 	long 		value;
 	time_t 		timet;
