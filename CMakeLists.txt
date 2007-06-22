@@ -133,15 +133,24 @@ if (HAVE_WALL)
     set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall")
 endif (HAVE_WALL)
 
-check_c_compiler_flag("-Wall" HAVE_WPOINTERSIGN)
+check_c_compiler_flag("-Wno-pointer-sign" HAVE_WPOINTERSIGN)
 if (HAVE_WPOINTERSIGN)
     set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-pointer-sign")
 endif (HAVE_WPOINTERSIGN)
 
-check_c_compiler_flag("-Wall" HAVE_WERRORDECLARATION)
+check_c_compiler_flag("-Werror-implicit-function-declaration" HAVE_WERRORDECLARATION)
 if (HAVE_WERRORDECLARATION)
     set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror-implicit-function-declaration")
 endif (HAVE_WERRORDECLARATION)
+
+# This is extremely noisy, use only in debug builds
+if (DEBUG)
+    check_c_compiler_flag("-Wextra" HAVE_WERRORDECLARATION)
+    if (HAVE_WERRORDECLARATION)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wextra")
+    endif (HAVE_WERRORDECLARATION)
+endif (DEBUG)
+
 
 # Check disabled for cross, but we have some libraries
 if (CROSS_MINGW)

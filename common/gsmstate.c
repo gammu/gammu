@@ -85,7 +85,7 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 
 static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connection)
 {
-	int i;
+	size_t i;
 	/* We check here is used connection string type is correct for ANY
 	 * OS. If not, we return with error, that string is incorrect at all
 	 */

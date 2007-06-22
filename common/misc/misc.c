@@ -304,9 +304,9 @@ bool CheckDate(GSM_DateTime *date)
 
 bool CheckTime(GSM_DateTime *date)
 {
-	return date->Hour <= 23 && date->Hour >= 0 &&
-		date->Minute <= 59 && date->Minute >= 0 &&
-		date->Second <= 59 && date->Second >= 0;
+	return date->Hour <= 23 &&
+		date->Minute <= 59 &&
+		date->Second <= 59;
 }
 
 int GetLine(FILE *File, char *Line, int count)

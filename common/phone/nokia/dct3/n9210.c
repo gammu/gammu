@@ -395,6 +395,7 @@ GSM_Phone_Functions N9210Phone = {
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
 	NOTSUPPORTED,			/*	GetFilePart		*/
 	NOTSUPPORTED,			/* 	AddFile			*/
+	NOTSUPPORTED,			/* 	SendFilePart		*/
 	NOTSUPPORTED, 			/* 	GetFileSystemStatus	*/
 	NOTSUPPORTED,			/*	DeleteFile		*/
 	NOTSUPPORTED,			/*	AddFolder		*/
