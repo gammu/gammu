@@ -2,6 +2,7 @@
 /* Checking used compiler (c) 2002 by Michal Cihar */
 
 #include <gammu-config.h>
+#include <gammu-misc.h>
 #include "misc.h"
 
 #include <string.h>
@@ -381,9 +382,7 @@ void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, in
 GSM_Debug_Info di = {0,NULL,false,"",false};
 
 #ifdef DEBUG
-#if defined(__GNUC__) && !defined(printf)
-__attribute__((format(printf, 1, 2)))
-#endif
+PRINTF_STYLE(1, 2)
 int dbgprintf(const char *format, ...)
 {
 	va_list			argp;
@@ -418,9 +417,7 @@ int dbgprintf(const char *format, ...)
 }
 #endif
 
-#if defined(__GNUC__) && !defined(printf)
-__attribute__((format(printf, 2, 3)))
-#endif
+PRINTF_STYLE(2, 3)
 int smfprintf(GSM_Debug_Info *d, const char *format, ...)
 {
         va_list 		argp;
