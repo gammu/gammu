@@ -302,9 +302,9 @@ char *DecodeUnicodeConsole(const unsigned char *src)
 /* Encode string to Unicode. Len is number of input chars */
 void DecodeISO88591 (unsigned char *dest, const char *src, int len)
 {
-	int 		i = 0;
+	int i;
 
-	while (src[i] != 0) {
+	for (i = 0; i < len; i++) {
 		/* Hack for Euro sign */
 		if ((unsigned char)src[i] == 0x80) {
 			dest[2 * i] = 0x20;
@@ -313,7 +313,6 @@ void DecodeISO88591 (unsigned char *dest, const char *src, int len)
 			dest[2 * i] = 0;
 			dest[(2 * i) + 1] = src[i];
 		}
-		i++;
 	}
 	dest[2 * i] = 0;
 	dest[(2 * i) + 1] = 0;

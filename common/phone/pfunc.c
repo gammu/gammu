@@ -34,7 +34,7 @@ GSM_SMSMessageLayout PHONE_SMSStatusReport = {
 	255	/*	TPVP		*/,	12  /*	firstbyte	*/,
 	13	/*	TPMR		*/,	255 /*  TPPID??		*/};
 
-GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
+GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s UNUSED, GSM_SMSFolders *folders)
 {
 	folders->Number=2;
 	EncodeUnicode(folders->Folder[0].Name,_("Inbox"),strlen(_("Inbox")));
@@ -132,7 +132,7 @@ GSM_Error PHONE_Beep(GSM_StateMachine *s)
 	return s->Phone.Functions->PlayTone(s,255*255,0,false);
 }
 
-GSM_Error NoneReply(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error NoneReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s,"None answer\n");
 	return ERR_NONE;

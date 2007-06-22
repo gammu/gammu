@@ -184,7 +184,7 @@ GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
 	return ERR_NONE;
 }
 
-static GSM_Error LoadLMBCallerEntry(unsigned char *buffer, unsigned char *buffer2, GSM_Backup *backup)
+static GSM_Error LoadLMBCallerEntry(unsigned char *buffer UNUSED, unsigned char *buffer2, GSM_Backup *backup)
 {
 	GSM_Bitmap 	bitmap;
 	int 		num;
@@ -239,7 +239,7 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer, unsigned char *buffer
 	return ERR_NONE;
 }
 
-static GSM_Error LoadLMBStartupEntry(unsigned char *buffer, unsigned char *buffer2, GSM_Backup *backup)
+static GSM_Error LoadLMBStartupEntry(unsigned char *buffer UNUSED, unsigned char *buffer2, GSM_Backup *backup)
 {
 	int 			i,j;
 #ifdef DEBUG
