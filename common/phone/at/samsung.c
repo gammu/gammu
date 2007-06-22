@@ -397,7 +397,7 @@ GSM_Error SAMSUNG_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
 	}
 }
 
-GSM_Error SAMSUNG_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
+GSM_Error SAMSUNG_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone UNUSED)
 {
 	unsigned char req[100];
 
@@ -413,7 +413,7 @@ GSM_Error SAMSUNG_ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
 	return ReplySetSamsungFrame(msg, s);
 }
 
-GSM_Error SAMSUNG_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
+GSM_Error SAMSUNG_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength UNUSED)
 {
 	unsigned char	req[100];
 	unsigned long	crc;

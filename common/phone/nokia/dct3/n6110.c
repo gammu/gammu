@@ -250,7 +250,7 @@ static GSM_Error N6110_MakeAuthentication(GSM_StateMachine *s)
 }
 
 
-static GSM_Error N6110_ShowStartInfo(GSM_StateMachine *s, bool enable)
+static GSM_Error N6110_ShowStartInfo(GSM_StateMachine *s, bool enable UNUSED)
 {
         GSM_Error error=ERR_NONE;
 
@@ -1075,7 +1075,7 @@ static GSM_Error N6110_SetProfileFeature(GSM_StateMachine *s, unsigned char prof
         return GSM_WaitFor (s, req, 8, 0x05, 4, ID_SetProfile);
 }
 
-static GSM_Error N6110_ReplySetStartup(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N6110_ReplySetStartup(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
         smprintf(s, "Startup logo set OK\n");
         return ERR_NONE;
