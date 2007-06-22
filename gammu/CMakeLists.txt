@@ -2,7 +2,7 @@
 # Copyright (c) 2007 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
-project (gammu C)
+project (gammu-binary C)
 
 set (BINARY_SRC
     depend/nokia/dct3.c
