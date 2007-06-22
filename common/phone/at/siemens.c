@@ -89,7 +89,7 @@ GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	else return ERR_UNKNOWN;
 }
 
-GSM_Error SIEMENS_ReplySetFunction (GSM_Protocol_Message msg, GSM_StateMachine *s,char *function)
+GSM_Error SIEMENS_ReplySetFunction (GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s,char *function)
 {
 	if (s->Protocol.Data.AT.EditMode) {
 	    s->Protocol.Data.AT.EditMode = false;
@@ -157,7 +157,7 @@ GSM_Error SIEMENS_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
 	return ERR_NONE;
 }
 
-GSM_Error SIEMENS_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
+GSM_Error SIEMENS_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone UNUSED)
 {
 	unsigned char req[32];
 
@@ -172,7 +172,7 @@ GSM_Error SIEMENS_ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
 	return SIEMENS_ReplySetFunction (msg, s, "Ringtone");
 }
 
-GSM_Error SIEMENS_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
+GSM_Error SIEMENS_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength UNUSED)
 {
 	GSM_Phone_Data *Phone = &s->Phone.Data;
 
@@ -263,7 +263,7 @@ GSM_Error SIEMENS_ReplyAddCalendarNote(GSM_Protocol_Message msg, GSM_StateMachin
     return SIEMENS_ReplySetFunction (msg, s, "Calendar Note");
 }
 
-GSM_Error SIEMENS_ReplyDelCalendarNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error SIEMENS_ReplyDelCalendarNote(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 

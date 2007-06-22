@@ -417,7 +417,7 @@ static GSM_Error N7110_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 {
 	GSM_Error		error;
 	unsigned char		folderid;
-	int			location;
+	unsigned int		location;
 	GSM_Phone_N7110Data	*Priv = &s->Phone.Data.Priv.N7110;
 	int			i;
 	bool			found = false;
@@ -439,7 +439,7 @@ static GSM_Error N7110_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 {
 	GSM_Phone_N7110Data	*Priv = &s->Phone.Data.Priv.N7110;
 	unsigned char		folderid;
-	int			location;
+	unsigned int		location;
 	GSM_Error		error;
 	int			i;
 	bool			findnextfolder = false;
@@ -838,13 +838,13 @@ static GSM_Error N7110_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	return N7110_PrivSetSMSMessage(s, sms);
 }
 
-static GSM_Error N7110_ReplyClearOperatorLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N7110_ReplyClearOperatorLogo(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Clearing operator logo.....\n");
 	return ERR_NONE;
 }
 
-static GSM_Error N7110_ReplySetOperatorLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N7110_ReplySetOperatorLogo(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Setting operator logo.....\n");
 	return ERR_NONE;
@@ -1074,7 +1074,7 @@ static GSM_Error N7110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	return ERR_NOTSUPPORTED;
 }
 
-static GSM_Error N7110_ReplyDeleteMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N7110_ReplyDeleteMemory(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Phonebook entry deleted\n");
 	return ERR_NONE;
@@ -1252,7 +1252,7 @@ static GSM_Error N7110_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 	return error;
 }
 
-static GSM_Error N7110_ReplySetProfileFeature(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N7110_ReplySetProfileFeature(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Profile feature set\n");
 	return ERR_NONE;
@@ -1401,7 +1401,7 @@ static GSM_Error N7110_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	return N71_65_AddCalendar2(s,Note);
 }
 
-static GSM_Error N7110_ReplyGetNetworkInfoError(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N7110_ReplyGetNetworkInfoError(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Probably means no PIN\n");
 	return ERR_SECURITYERROR;

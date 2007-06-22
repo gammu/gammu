@@ -1257,7 +1257,7 @@ static GSM_Error ALCATEL_DeleteItem(GSM_StateMachine *s, int id) {
 	return ERR_NONE;
 }
 
-static GSM_Error ALCATEL_ReplyDeleteItem(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error ALCATEL_ReplyDeleteItem(GSM_Protocol_Message msg, GSM_StateMachine *s UNUSED)
 {
 	if (msg.Buffer[8] != 0x25) return ERR_UNKNOWNRESPONSE;
 	return ERR_NONE;
@@ -3623,11 +3623,11 @@ static GSM_Error ALCATEL_AddToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 			break;
 		case GSM_Priority_None:
 		default:
-			val = -1;
+			val = 0xff;
 			break;
 	}
 
-	if (val != -1) {
+	if (val != 0xff) {
 		/* This one seems to be byte for BF5 and enum for BE5 */
 		if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
 		       if ((error = ALCATEL_CreateField(s, Alcatel_byte, 7, &val)) != ERR_NONE) return error;
@@ -3723,11 +3723,11 @@ static GSM_Error ALCATEL_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 			break;
 		case GSM_Priority_None:
 		default:
-			val = -1;
+			val = 0xff;
 			break;
 	}
 
-	if (val != -1) {
+	if (val != 0xff) {
 		/* This one seems to be byte for BF5 and enum for BE5 */
 		if (s->Phone.Data.Priv.ALCATEL.ProtocolVersion == V_1_1) {
 		       if ((error = ALCATEL_UpdateField(s, Alcatel_byte, ToDo->Location, 7, &val)) != ERR_NONE) return error;
