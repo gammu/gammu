@@ -27,7 +27,8 @@
 
 void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)
 {
-	int		i,start=-1,frequency=-1,dow=-1,day=-1,month=-1,end=-1,Recurrance = 0, Repeat=0;
+	unsigned int i;
+	int start=-1,frequency=-1,dow=-1,day=-1,month=-1,end=-1,Recurrance = 0, Repeat=0, j;
 	char 		Buf[20];
 	GSM_DateTime	DT;
 	time_t		t_time1,t_time2;
@@ -35,13 +36,13 @@ void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 	rec[0] = 0;
 	rec[1] = 0;
 
-	for (i=0;i<entry->EntriesNum;i++) {
-		if (entry->Entries[i].EntryType == CAL_START_DATETIME)   start 		= i;
-		if (entry->Entries[i].EntryType == CAL_REPEAT_FREQUENCY) frequency 	= i;
-		if (entry->Entries[i].EntryType == CAL_REPEAT_DAYOFWEEK) dow 		= i;
-		if (entry->Entries[i].EntryType == CAL_REPEAT_DAY)       day 		= i;
-		if (entry->Entries[i].EntryType == CAL_REPEAT_MONTH)     month 		= i;
-		if (entry->Entries[i].EntryType == CAL_REPEAT_STOPDATE)  end 		= i;
+	for (j = 0; j < entry->EntriesNum; j++) {
+		if (entry->Entries[j].EntryType == CAL_START_DATETIME)   start 		= j;
+		if (entry->Entries[j].EntryType == CAL_REPEAT_FREQUENCY) frequency 	= j;
+		if (entry->Entries[j].EntryType == CAL_REPEAT_DAYOFWEEK) dow 		= j;
+		if (entry->Entries[j].EntryType == CAL_REPEAT_DAY)       day 		= j;
+		if (entry->Entries[j].EntryType == CAL_REPEAT_MONTH)     month 		= j;
+		if (entry->Entries[j].EntryType == CAL_REPEAT_STOPDATE)  end 		= j;
 	}
 	if (start == -1) return;
 
@@ -1679,7 +1680,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 
 				/* If event type is undefined choose appropriate type. Memos carry dates only, no times.
 				   Use Meetings for events with full date+time settings. */
-				if (Calendar->Type == -1) {
+				if (Calendar->Type == 0) {
 					if (date_only)
 						Calendar->Type = GSM_CAL_MEMO;
 					else
