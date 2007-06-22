@@ -16,6 +16,7 @@
 
 #include <gammu-statemachine.h>
 #include <gammu-error.h>
+#include <gammu-misc.h>
 
 /**
  * Debugging configuration.
@@ -32,9 +33,7 @@ typedef struct _DebugInfo GSM_Debug_Info;
  * \ingroup Debug
  */
 #ifdef DEBUG
-#if defined(__GNUC__) && !defined(printf)
-__attribute__ ((format(printf, 1, 2)))
-#endif
+PRINTF_STYLE(1, 2)
 int dbgprintf(const char *format, ...);
 #else
 #  ifdef __GNUC__

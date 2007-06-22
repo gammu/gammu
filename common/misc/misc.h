@@ -106,9 +106,7 @@ struct _DebugInfo {
 };
 
 
-#if defined(__GNUC__) && !defined(printf)
-__attribute__((format(printf, 2, 3)))
-#endif
+PRINTF_STYLE(2, 3)
 int smfprintf(GSM_Debug_Info *d, const char *format, ...);
 
 #if defined(_MSC_VER) && defined(__cplusplus)

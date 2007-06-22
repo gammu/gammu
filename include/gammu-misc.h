@@ -75,6 +75,17 @@ extern void GSM_InitLocales(const char *path);
 #  define my_sleep(x) usleep(x*1000)
 #endif
 
+/* Various hints for compilers */
+#if __GNUC__ && !defined(printf)
+#define NORETURN __attribute__ ((noreturn))
+#define PRINTF_STYLE(f, a) __attribute__ ((format(printf, f, a)))
+#define UNUSED __attribute__ ((unused))
+#else
+#define NORETURN
+#define PRINTF_STYLE(f, a)
+#define UNUSED
+#endif
+
 /**
  * Encodes text to hexadecimal binary representation.
  */
