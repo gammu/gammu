@@ -20,8 +20,6 @@ if (CROSS_MINGW)
     message (STATUS "Cross compilign using MinGW")
     set (CMAKE_CXX_COMPILER "i586-mingw32msvc-c++")
     set (CMAKE_COMPILER_IS_GNUCXX 1)
-    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall -Werror-implicit-function-declaration")
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Werror-implicit-function-declaration")
     set (CMAKE_C_COMPILER "i586-mingw32msvc-gcc")
     set (CMAKE_AR "i586-mingw32msvc-ar")
     set (CMAKE_RANLIB "i586-mingw32msvc-ranlib")
@@ -40,10 +38,6 @@ if (CROSS_MINGW)
     set (CPACK_SOURCE_GENERATOR "ZIP")
     set (CPACK_TOPLEVEL_TAG "Source")
     set (CPACK_SYSTEM_NAME "Windows")
-else (CROSS_MINGW)
-# FIXME: we should detect whether compiler supports -Wno-pointer-sign
-    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall -Wno-pointer-sign -Werror-implicit-function-declaration")
-    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wno-pointer-sign -Werror-implicit-function-declaration")
 endif (CROSS_MINGW)
 
 # Read version
@@ -115,6 +109,7 @@ include (CPack)
 
 # Standard packages
 include (CheckCSourceCompiles)
+include (CheckCCompilerFlag)
 include (CheckIncludeFile)
 include (CheckFunctionExists)
 include (CheckSymbolExists)
@@ -131,6 +126,22 @@ macro_optional_find_package (Doxygen)
 
 # Packages in sources
 macro_optional_find_package (Gettext)
+
+# Check for compiler flags we want to use
+check_c_compiler_flag("-Wall" HAVE_WALL)
+if (HAVE_WALL)
+    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall")
+endif (HAVE_WALL)
+
+check_c_compiler_flag("-Wall" HAVE_WPOINTERSIGN)
+if (HAVE_WPOINTERSIGN)
+    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-pointer-sign")
+endif (HAVE_WPOINTERSIGN)
+
+check_c_compiler_flag("-Wall" HAVE_WERRORDECLARATION)
+if (HAVE_WERRORDECLARATION)
+    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror-implicit-function-declaration")
+endif (HAVE_WERRORDECLARATION)
 
 # Check disabled for cross, but we have some libraries
 if (CROSS_MINGW)
