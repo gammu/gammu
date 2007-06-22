@@ -37,7 +37,7 @@ static GSM_Error N9210_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	return ERR_NOTSUPPORTED;
 }
 
-static GSM_Error N9210_ReplySetOpLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N9210_ReplySetOpLogo(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Operator logo clear/set\n");
 	return ERR_NONE;
