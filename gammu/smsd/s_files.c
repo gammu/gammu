@@ -1,5 +1,6 @@
 /* (c) 2002-2004 by Joergen Thomsen */
 
+#include "../../common/misc/locales.h"
 #include <gammu.h>
 
 #include <string.h>
@@ -16,7 +17,6 @@
 #endif
 
 #include "smsdcore.h"
-#include "../../common/misc/locales.h"
 /* For debugging output */
 #include "../../common/misc/misc.h"
 /* mywstrstr */
