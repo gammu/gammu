@@ -16,11 +16,10 @@
 #  include <signal.h>
 #endif
 
-#include <gammu-debug.h>
-
 #include "misc/locales.h"
 #include "misc/misc.h"
 
+#include <gammu-debug.h>
 
 /* Commit flag for opening files is MS extension, some other
  * implementations (like BCC 5.5) don't like this flag at all */

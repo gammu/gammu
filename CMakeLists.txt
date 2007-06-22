@@ -133,10 +133,13 @@ if (HAVE_WALL)
     set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall")
 endif (HAVE_WALL)
 
-check_c_compiler_flag("-Wno-pointer-sign" HAVE_WPOINTERSIGN)
-if (HAVE_WPOINTERSIGN)
-    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-pointer-sign")
-endif (HAVE_WPOINTERSIGN)
+# Not supported in MinGW
+if (NOT CROSS_MINGW)
+    check_c_compiler_flag("-Wno-pointer-sign" HAVE_WPOINTERSIGN)
+    if (HAVE_WPOINTERSIGN)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-pointer-sign")
+    endif (HAVE_WPOINTERSIGN)
+endif (NOT CROSS_MINGW)
 
 check_c_compiler_flag("-Werror-implicit-function-declaration" HAVE_WERRORDECLARATION)
 if (HAVE_WERRORDECLARATION)
