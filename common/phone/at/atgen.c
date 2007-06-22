@@ -3108,6 +3108,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	char			req[20];
 	int			start;
 	int			end;
+	int			memory_end;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	smprintf(s, "Getting memory information\n");
@@ -3131,17 +3132,31 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	Status->MemoryFree		= 0;
 	start				= Priv->FirstMemoryEntry;
 	Priv->NextMemoryEntry		= 0;
+	memory_end = Priv->MemorySize + Priv->FirstMemoryEntry - 1;
 	while (1) {
+		/* Calculate end of next request */
 		end	= start + 20;
-		if (end > Priv->MemorySize) end = Priv->MemorySize;
+		if (end > memory_end)
+			end = memory_end;
+
+		/* Read next interval */
 		sprintf(req, "AT+CPBR=%i,%i\r", start, end);
 		ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemoryStatus);
 		if (error != ERR_NONE) return error;
-		if (NeededInfo == AT_NextEmpty && Priv->NextMemoryEntry != 0 && Priv->NextMemoryEntry != end + 1) return ERR_NONE;
-		if (end == Priv->MemorySize) {
+
+		/* Do we already have first empty record? */
+		if (NeededInfo == AT_NextEmpty && 
+				Priv->NextMemoryEntry != 0 && 
+				Priv->NextMemoryEntry != end + 1) 
+			return ERR_NONE;
+
+		/* Did we hit memory end? */
+		if (end == memory_end) {
 			Status->MemoryFree = Priv->MemorySize - Status->MemoryUsed;
 			return ERR_NONE;
 		}
+
+		/* Continue on next location */
 		start = end + 1;
 	}
 }
