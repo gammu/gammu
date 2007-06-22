@@ -26,14 +26,13 @@ unsigned char GNAPGEN_MEMORY_TYPES[] = {
 
 GSM_Error GNAPGEN_ReplyGetSMSFolderStatus(GSM_Protocol_Message msg, GSM_StateMachine *s) {
 	GSM_Phone_GNAPGENData           *Priv = &s->Phone.Data.Priv.GNAPGEN;
+	int i;
+	int pos = 10;
 
 	if( msg.Buffer[3] == 17){
 		smprintf(s, "Invalid memory type");
 		return ERR_UNKNOWN;
 	}
-
-	int i;
-	int pos = 10;
 
 	Priv->SMSCount = msg.Buffer[8] * 256 + msg.Buffer[9];
 	smprintf(s, "SMS count: %d\n", Priv->SMSCount );
@@ -296,6 +295,9 @@ static GSM_Error GNAPGEN_ReplyGetSMS(GSM_Protocol_Message msg, GSM_StateMachine 
 	int numberOfMessages = 0;
 	int messageLen = 0;
 	int state = 0;
+	int i;
+	int current=6;
+	GSM_SMSMessageLayout layout;
 
 	numberOfMessages = msg.Buffer[4] * 256 + msg.Buffer[5];
 	s->Phone.Data.GetSMSMessage->Number = numberOfMessages;
@@ -315,9 +317,6 @@ static GSM_Error GNAPGEN_ReplyGetSMS(GSM_Protocol_Message msg, GSM_StateMachine 
 			break;
 	}
 
-	int i;
-	int current=6;
-	GSM_SMSMessageLayout layout;
 	for( i=0; i<numberOfMessages; i++ ) {
 		messageLen = msg.Buffer[current] * 256 + msg.Buffer[current+1];
 		memset( buffer, 0, 800 );
@@ -346,6 +345,9 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	unsigned char req [8] = {0,11,
 				 0x00,0x0c, 		//folder
 				 0x00,0x10,0x00,0x3F};	//location
+	int i;
+	bool skipfolder;
+	GSM_Error error;
 
 	if( start ) {
 		Priv->CurrentFolderNumber = 0;
@@ -356,12 +358,10 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	if( Priv->CurrentSMSNumber == 0 )
 		GNAPGEN_PrivGetSMSFolderStatus(s,Priv->SMSFolderID[Priv->CurrentFolderNumber]);
 
-	int i;
 	for( i=0; i<5; i++ )
 		GSM_SetDefaultSMSData(&sms->SMS[i]);
 
 	// if there are no SMS in current folder, just skip it
-	bool skipfolder;
 	do {
 		if( Priv->SMSCount == 0 ) {
 			if( (Data->SMSFolders->Number - 1) == Priv->CurrentFolderNumber )
@@ -392,7 +392,7 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 
 	s->Phone.Data.GetSMSMessage=sms;
 
-	GSM_Error error = GSM_WaitFor (s, req, 8, 0x6, 500, ID_GetSMSMessage);
+	error = GSM_WaitFor (s, req, 8, 0x6, 500, ID_GetSMSMessage);
 	if( error != ERR_NONE )
 		return error;
 
@@ -946,7 +946,12 @@ static GSM_Error GNAPGEN_SetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				   0x00, 0x00, 		/* memory type */
 				   0x00, 0x00, 0x00, 0x00, /* location */
 				   0x00, 0x00 };	/* number of entries to read */
-
+	// for each entry, 2 bytes are reserved for the entry type,
+	// 2 bytes for the entry sub-type if available and 64 byte for the actual entry
+	int currentByte = 10;
+	int i = 0;
+	int entryCount = 0;
+	GSM_SubMemoryEntry *subMemoryEntry;
 
 	memset( req + 3,0x00,sizeof(req) - 3 );
 
@@ -960,13 +965,6 @@ static GSM_Error GNAPGEN_SetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	req[6] = entry->Location / 256;
 	req[7] = entry->Location % 256;
 
-	// for each entry, 2 bytes are reserved for the entry type,
-	// 2 bytes for the entry sub-type if available and 64 byte for the actual entry
-	int currentByte = 10;
-	int i = 0;
-	int entryCount = 0;
-
-	GSM_SubMemoryEntry *subMemoryEntry;
 	for( i=0; i< entry->EntriesNum; i++ ) {
 		subMemoryEntry = &entry->Entries[i];
 		switch( subMemoryEntry->EntryType ) {
@@ -1514,11 +1512,12 @@ GSM_Error GNAPGEN_ReplyDialVoice( GSM_Protocol_Message msg, GSM_StateMachine *s 
 static GSM_Error GNAPGEN_DialVoice ( GSM_StateMachine *s, char *Number, GSM_CallShowNumber ShowNumber ) {
 	/// @todo implement ShowNumber
 	unsigned char req[100] = {0x00,0x09};
-	memset( req + 2,0x00,sizeof(req) - 2 );
 
 	int currentByte = 2;
 
 	unsigned char unicodeNumber[200];
+
+	memset( req + 2,0x00,sizeof(req) - 2 );
 
 	EncodeUnicode( unicodeNumber, Number, strlen(Number) );
 
