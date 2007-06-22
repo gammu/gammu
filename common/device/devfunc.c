@@ -94,7 +94,7 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 
 #if defined (GSM_ENABLE_BLUETOOTHDEVICE) || defined (GSM_ENABLE_IRDADEVICE)
 
-int socket_read(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
+int socket_read(GSM_StateMachine *s UNUSED, void *buf, size_t nbytes, int hPhone)
 {
 	fd_set 		readfds;
 	int result = 0;
@@ -154,7 +154,7 @@ int socket_write(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
 	return actual;
 }
 
-GSM_Error socket_close(GSM_StateMachine *s, int hPhone)
+GSM_Error socket_close(GSM_StateMachine *s UNUSED, int hPhone)
 {
 	shutdown(hPhone, 0);
 #ifdef WIN32

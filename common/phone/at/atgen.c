@@ -467,7 +467,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	return GSM_DispatchMessage(s);
 }
 
-GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 		case AT_Reply_OK:
@@ -759,7 +759,7 @@ GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine 
 	return ERR_NONE;
 }
 
-GSM_Error ATGEN_ReplyGetFirmwareATI(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplyGetFirmwareATI(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
@@ -2660,7 +2660,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	char			*answer;
 	char			*tmp;
-	int			pos;
+	size_t pos;
 
   	if (s->Phone.Data.RequestID == ID_IncomingFrame) {
 		smprintf(s, "Incoming LAC & CID info\n");
@@ -3518,7 +3518,7 @@ GSM_Error ATGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 	return ERR_NONE;
 }
 
-GSM_Error ATGEN_ReplyDialVoice(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplyDialVoice(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
@@ -3575,7 +3575,7 @@ GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber 
 	return error;
 }
 
-GSM_Error ATGEN_ReplyEnterSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplyEnterSecurityCode(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
@@ -3671,7 +3671,7 @@ GSM_Error ATGEN_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Sta
 	return error;
 }
 
-GSM_Error ATGEN_AnswerCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error ATGEN_AnswerCall(GSM_StateMachine *s, int ID UNUSED, bool all)
 {
 	GSM_Error error;
 
@@ -3683,7 +3683,7 @@ GSM_Error ATGEN_AnswerCall(GSM_StateMachine *s, int ID, bool all)
 	return ERR_NOTSUPPORTED;
 }
 
-GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	GSM_Call call;
 
@@ -3704,7 +3704,7 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 }
 
-GSM_Error ATGEN_CancelCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error ATGEN_CancelCall(GSM_StateMachine *s, int ID UNUSED, bool all)
 {
 	GSM_Error error;
 
@@ -3720,7 +3720,7 @@ GSM_Error ATGEN_CancelCall(GSM_StateMachine *s, int ID, bool all)
 	return ERR_NOTSUPPORTED;
 }
 
-GSM_Error ATGEN_ReplyReset(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplyReset(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Reset done\n");
 	return ERR_NONE;
@@ -3742,13 +3742,13 @@ GSM_Error ATGEN_Reset(GSM_StateMachine *s, bool hard)
 	return error;
 }
 
-GSM_Error ATGEN_ReplyResetPhoneSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplyResetPhoneSettings(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Reset done\n");
 	return ERR_NONE;
 }
 
-GSM_Error ATGEN_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type)
+GSM_Error ATGEN_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type UNUSED)
 {
 	GSM_Error error;
 
@@ -3788,7 +3788,7 @@ GSM_Error ATGEN_SendDTMF(GSM_StateMachine *s, char *sequence)
 	return error;
 }
 
-GSM_Error ATGEN_ReplyDeleteSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplyDeleteSMSMessage(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
@@ -3876,7 +3876,7 @@ GSM_Error ATGEN_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 	return ERR_NONE;
 }
 
-GSM_Error ATGEN_ReplySetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplySetMemory(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
@@ -4198,7 +4198,7 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 	return ERR_NONE;
 }
 
-GSM_Error ATGEN_IncomingGPRS(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_IncomingGPRS(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	/* "+CGREG: 1,1" */
 	smprintf(s, "GPRS change\n");
@@ -4271,7 +4271,7 @@ GSM_Error ATGEN_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 	return error;
 }
 
-GSM_Error ATGEN_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *features)
+GSM_Error ATGEN_GetDisplayStatus(GSM_StateMachine *s UNUSED, GSM_DisplayFeatures *features UNUSED)
 {
 	return ERR_NOTIMPLEMENTED;
 #if 0
@@ -4287,7 +4287,7 @@ GSM_Error ATGEN_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *featu
 #endif
 }
 
-GSM_Error ATGEN_IncomingSMSCInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_IncomingSMSCInfo(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s UNUSED)
 {
 	return ERR_NONE;
 }
@@ -4398,7 +4398,7 @@ GSM_Error ATGEN_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *sig)
    MC35 and other return OK after answer for AT+CPIN?. Here we handle it.
    Any better idea ?
  */
-GSM_Error ATGEN_ReplyOK(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplyOK(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s UNUSED)
 {
 	return ERR_NONE;
 }
@@ -4858,7 +4858,7 @@ GSM_Error ATGEN_IncomingSMSDeliver(GSM_Protocol_Message msg, GSM_StateMachine *s
 }
 
 /* I don't have phone able to do it and can't fill it */
-GSM_Error ATGEN_IncomingSMSReport(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_IncomingSMSReport(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Incoming SMS received (Report)\n");
 	return ERR_NONE;

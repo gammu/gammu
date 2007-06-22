@@ -1044,7 +1044,7 @@ unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone ringtone, unsigned char *
 	return(i);
 }
 
-GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *package, int maxlength)
+GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *package, int maxlength UNUSED)
 {
 	int 			StartBit=0, HowMany, l, q, i, spec;
 	char 			Buffer[100];

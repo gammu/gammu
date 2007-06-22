@@ -69,6 +69,8 @@ static bool PHONE_IsPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x
 {
 	int i=0, pixel;
 
+	if (x > width || y > height) return false;
+
 	switch (Type) {
 	case GSM_NokiaStartupLogo:
 	case GSM_Nokia6210StartupLogo:
