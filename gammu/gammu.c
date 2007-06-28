@@ -200,11 +200,20 @@ void Print_Error(GSM_Error error)
 {
 	if (error != ERR_NONE) {
  		printf("%s\n",GSM_ErrorString(error));
+		/* Check for security error */
 		if (error == ERR_SECURITYERROR) {
 			printf(LISTFORMAT, _("Security status"));
 			PrintSecurityStatus();
 		}
-		if (GSM_IsConnected(s)) GSM_TerminateConnection(s);
+
+		/* Disconnect from phone */
+		if (GSM_IsConnected(s)) {
+			GSM_TerminateConnection(s);
+		}
+
+		/* Free state machine */
+		GSM_FreeStateMachine(s);
+
  		exit (-1);
  	}
 }
@@ -223,8 +232,8 @@ void GSM_Init(bool checkerror)
 
 	/* Check for batch mode */
 	if (batch) {
-		if (error == ERR_NONE) { 
-			batchConn = true; 
+		if (error == ERR_NONE) {
+			batchConn = true;
 		}
 	}
 
