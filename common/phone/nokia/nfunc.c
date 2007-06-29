@@ -667,6 +667,8 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		if (Block[0] == S4030_PBK_BIRTHDAY) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
 			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date);
+			// We don't have seconds available here
+			entry->Entries[entry->EntriesNum].Date.Second = 0;
 			//some phones reverse it
 			if (entry->Entries[entry->EntriesNum].Date.Year > 3000) {
 				entry->Entries[entry->EntriesNum].Date.Year = Block[7]*256+Block[6];
