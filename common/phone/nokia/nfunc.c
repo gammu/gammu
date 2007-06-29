@@ -925,7 +925,7 @@ GSM_Error NOKIA_GetManufacturer(GSM_StateMachine *s)
  * 3. string (unicode, no termination)
  * This function read string to output and increases counter
  */
-void NOKIA_GetUnicodeString(GSM_StateMachine *s, int *current, unsigned char *input, unsigned char *output, bool FullLength)
+void NOKIA_GetUnicodeString(GSM_StateMachine *s UNUSED, int *current, unsigned char *input, unsigned char *output, bool FullLength)
 {
 	int length;
 
@@ -943,7 +943,7 @@ void NOKIA_GetUnicodeString(GSM_StateMachine *s, int *current, unsigned char *in
 	output[length+1] = 0;
 }
 
-int NOKIA_SetUnicodeString(GSM_StateMachine *s, unsigned char *dest, unsigned char *string, bool FullLength)
+int NOKIA_SetUnicodeString(GSM_StateMachine *s UNUSED, unsigned char *dest, unsigned char *string, bool FullLength)
 {
 	int length;
 
@@ -961,7 +961,7 @@ int NOKIA_SetUnicodeString(GSM_StateMachine *s, unsigned char *dest, unsigned ch
 }
 
 /* Returns correct ID for concrete memory type */
-GSM_MemoryType NOKIA_GetMemoryType(GSM_StateMachine *s, GSM_MemoryType memory_type, unsigned char *ID)
+GSM_MemoryType NOKIA_GetMemoryType(GSM_StateMachine *s UNUSED, GSM_MemoryType memory_type, unsigned char *ID)
 {
 	int i=0;
 
@@ -972,7 +972,7 @@ GSM_MemoryType NOKIA_GetMemoryType(GSM_StateMachine *s, GSM_MemoryType memory_ty
 	return 0xff;
 }
 
-void NOKIA_EncodeDateTime(GSM_StateMachine *s, unsigned char* buffer, GSM_DateTime *datetime)
+void NOKIA_EncodeDateTime(GSM_StateMachine *s UNUSED, unsigned char* buffer, GSM_DateTime *datetime)
 {
 	buffer[0] = datetime->Year / 256;
 	buffer[1] = datetime->Year % 256;
@@ -1182,7 +1182,7 @@ GSM_Error DCT3DCT4_GetActiveConnectSet(GSM_StateMachine *s)
 	return GSM_WaitFor (s, GetSetreq, 4, 0x3f, 4, ID_GetConnectSet);
 }
 
-GSM_Error DCT3DCT4_ReplySetActiveConnectSet(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplySetActiveConnectSet(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Connection settings activated\n");
 	return ERR_NONE;
@@ -1282,7 +1282,7 @@ GSM_Error DCT3DCT4_ReplySetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachin
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error DCT3DCT4_ReplyEnableConnectFunc(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplyEnableConnectFunc(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Connection functions enabled\n");
 	return ERR_NONE;
@@ -1298,7 +1298,7 @@ GSM_Error DCT3DCT4_EnableWAPFunctions(GSM_StateMachine *s)
 	return GSM_WaitFor (s, req, 4, 0x3f, 4, ID_EnableConnectFunc);
 }
 
-GSM_Error DCT3DCT4_ReplyDisableConnectFunc(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3DCT4_ReplyDisableConnectFunc(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Connection functions disabled\n");
 	return ERR_NONE;
@@ -1860,7 +1860,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 }
 
 /* method 2 */
-GSM_Error N71_65_ReplyAddCalendar2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N71_65_ReplyAddCalendar2(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Calendar note added\n");
 	return ERR_NONE;
