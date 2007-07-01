@@ -1015,8 +1015,13 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				}
 				i++;
 			}
+			/* Fallback for unicode charset */
 			if (Priv->UnicodeCharset == 0) {
 				Priv->UnicodeCharset = Priv->NormalCharset;
+			}
+			/* If we have unicode charset, it's better than GSM for IRA */
+			if (Priv->IRACharset == AT_CHARSET_GSM) {
+				Priv->IRACharset = Priv->UnicodeCharset;
 			}
 			return ERR_NONE;
 		case AT_Reply_Error:
@@ -3145,9 +3150,9 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 		if (error != ERR_NONE) return error;
 
 		/* Do we already have first empty record? */
-		if (NeededInfo == AT_NextEmpty && 
-				Priv->NextMemoryEntry != 0 && 
-				Priv->NextMemoryEntry != end + 1) 
+		if (NeededInfo == AT_NextEmpty &&
+				Priv->NextMemoryEntry != 0 &&
+				Priv->NextMemoryEntry != end + 1)
 			return ERR_NONE;
 
 		/* Did we hit memory end? */
@@ -4491,62 +4496,98 @@ GSM_Error ATGEN_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *ma
 GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 {
 	GSM_Error	error;
-	unsigned char 	frame[20];
+	unsigned char 	frame[40];
+	char key[20];
+	size_t len;
+	unsigned char unicode_key[20];
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+
+	/* We do nothing on release event */
+	if (!Press) {
+		return ERR_NONE;
+	}
+
+	/* Prefer IRA charaset to avoid tricky conversions */
+	ATGEN_SetCharset(s, AT_PREF_CHARSET_IRA);
 
 	frame[0] = 0;
 
-	ATGEN_SetCharset(s, AT_PREF_CHARSET_IRA);
-
 	strcat(frame, "AT+CKPD=\"");
 
-	if (Press) {
-		switch (Key) {
-			case GSM_KEY_1 			: strcat(frame,"1"); break;
-			case GSM_KEY_2			: strcat(frame,"2"); break;
-			case GSM_KEY_3			: strcat(frame,"3"); break;
-			case GSM_KEY_4			: strcat(frame,"4"); break;
-			case GSM_KEY_5			: strcat(frame,"5"); break;
-			case GSM_KEY_6			: strcat(frame,"6"); break;
-			case GSM_KEY_7			: strcat(frame,"7"); break;
-			case GSM_KEY_8			: strcat(frame,"8"); break;
-			case GSM_KEY_9			: strcat(frame,"9"); break;
-			case GSM_KEY_0			: strcat(frame,"0"); break;
-			case GSM_KEY_HASH		: strcat(frame,"#"); break;
-			case GSM_KEY_ASTERISK		: strcat(frame,"*"); break;
-			case GSM_KEY_POWER		: strcat(frame,"P"); break;
-			case GSM_KEY_GREEN		: strcat(frame,"S"); break;
-			case GSM_KEY_RED		: strcat(frame,"E"); break;
-			case GSM_KEY_INCREASEVOLUME	: strcat(frame,"U"); break;
-			case GSM_KEY_DECREASEVOLUME	: strcat(frame,"D"); break;
-			case GSM_KEY_UP			: strcat(frame,"^"); break;
-			case GSM_KEY_DOWN		: strcat(frame,"V"); break;
-			case GSM_KEY_MENU		: strcat(frame,"F"); break;
-			case GSM_KEY_LEFT		: strcat(frame,"<"); break;
-			case GSM_KEY_RIGHT		: strcat(frame,">"); break;
-			case GSM_KEY_SOFT1		: strcat(frame,"["); break;
-			case GSM_KEY_SOFT2		: strcat(frame,"]"); break;
-			case GSM_KEY_HEADSET		: strcat(frame,"H"); break;
-			case GSM_KEY_JOYSTICK		: strcat(frame,":J"); break;
-			case GSM_KEY_CAMERA		: strcat(frame,":C"); break;
-			case GSM_KEY_OPERATOR		: strcat(frame,":O"); break;
-			case GSM_KEY_RETURN		: strcat(frame,":R"); break;
-			case GSM_KEY_CLEAR		: strcat(frame,"C"); break;
-			case GSM_KEY_MEDIA		: strcat(frame,":S"); break;
-			case GSM_KEY_DESKTOP		: strcat(frame,":D"); break;
-			case GSM_KEY_NONE		: return ERR_NONE; /* Nothing to do here */
-			case GSM_KEY_NAMES		: return ERR_NOTSUPPORTED;
-		}
-		strcat(frame, "\"\r");
-		smprintf(s, "Pressing key\n");
-		ATGEN_WaitFor(s, frame, 12, 0x00, 4, ID_PressKey);
-		if (error != ERR_NONE) return error;
-
-		/* Strange. My T310 needs it */
-		ATGEN_WaitFor(s, "ATE1\r", 5, 0x00, 4, ID_EnableEcho);
-		return error;
-	} else {
-		return ERR_NONE;
+	/* Get key code */
+	switch (Key) {
+		case GSM_KEY_1 			: strcpy(key, "1"); break;
+		case GSM_KEY_2			: strcpy(key, "2"); break;
+		case GSM_KEY_3			: strcpy(key, "3"); break;
+		case GSM_KEY_4			: strcpy(key, "4"); break;
+		case GSM_KEY_5			: strcpy(key, "5"); break;
+		case GSM_KEY_6			: strcpy(key, "6"); break;
+		case GSM_KEY_7			: strcpy(key, "7"); break;
+		case GSM_KEY_8			: strcpy(key, "8"); break;
+		case GSM_KEY_9			: strcpy(key, "9"); break;
+		case GSM_KEY_0			: strcpy(key, "0"); break;
+		case GSM_KEY_HASH		: strcpy(key, "#"); break;
+		case GSM_KEY_ASTERISK		: strcpy(key, "*"); break;
+		case GSM_KEY_POWER		: strcpy(key, "P"); break;
+		case GSM_KEY_GREEN		: strcpy(key, "S"); break;
+		case GSM_KEY_RED		: strcpy(key, "E"); break;
+		case GSM_KEY_INCREASEVOLUME	: strcpy(key, "U"); break;
+		case GSM_KEY_DECREASEVOLUME	: strcpy(key, "D"); break;
+		case GSM_KEY_UP			: strcpy(key, "^"); break;
+		case GSM_KEY_DOWN		: strcpy(key, "V"); break;
+		case GSM_KEY_MENU		: strcpy(key, "F"); break;
+		case GSM_KEY_LEFT		: strcpy(key, "<"); break;
+		case GSM_KEY_RIGHT		: strcpy(key, ">"); break;
+		case GSM_KEY_SOFT1		: strcpy(key, "["); break;
+		case GSM_KEY_SOFT2		: strcpy(key, "]"); break;
+		case GSM_KEY_HEADSET		: strcpy(key, "H"); break;
+		case GSM_KEY_JOYSTICK		: strcpy(key, ":J"); break;
+		case GSM_KEY_CAMERA		: strcpy(key, ":C"); break;
+		case GSM_KEY_OPERATOR		: strcpy(key, ":O"); break;
+		case GSM_KEY_RETURN		: strcpy(key, ":R"); break;
+		case GSM_KEY_CLEAR		: strcpy(key, "C"); break;
+		case GSM_KEY_MEDIA		: strcpy(key, ":S"); break;
+		case GSM_KEY_DESKTOP		: strcpy(key, ":D"); break;
+		case GSM_KEY_NONE		: return ERR_NONE; /* Nothing to do here */
+		case GSM_KEY_NAMES		: return ERR_NOTSUPPORTED;
 	}
+
+	/* Convert charset if needed */
+	EncodeUnicode(unicode_key, key, strlen(key));
+	len = UnicodeLength(unicode_key);
+
+	switch (Priv->Charset) {
+		case AT_CHARSET_GSM:
+			/* No extensions here */
+			EncodeDefault(key, unicode_key, &len, false, NULL);
+			if (strcmp(key, "?") == 0) {
+				smprintf(s, "Could not encode key to GSM charset!\n");
+				return ERR_NOTSUPPORTED;
+			}
+			break;
+		case AT_CHARSET_IRA:
+		case AT_CHARSET_UTF8:
+		case AT_CHARSET_ISO88591:
+			/* Nothing to do here */
+			break;
+		case AT_CHARSET_UCS2:
+			EncodeHexUnicode(key, unicode_key, len);
+			break;
+		default:
+			smprintf(s, "Not supported charset for key presses (%d)!\n", Priv->Charset);
+			return ERR_NOTIMPLEMENTED;
+	}
+
+	strcat(frame, key);
+
+	strcat(frame, "\"\r");
+	smprintf(s, "Pressing key\n");
+	ATGEN_WaitFor(s, frame, strlen(frame), 0x00, 4, ID_PressKey);
+	if (error != ERR_NONE) return error;
+
+	/* Strange. My T310 needs it */
+	ATGEN_WaitFor(s, "ATE1\r", 5, 0x00, 4, ID_EnableEcho);
+	return error;
 }
 
 #ifdef GSM_ENABLE_CELLBROADCAST

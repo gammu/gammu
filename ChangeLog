@@ -22,6 +22,7 @@ ChangeLog
 [+] * Improve charset handling for AT phones.
 [-] * Fix crash on broken CPMS response.
 [-] * Fix reading of memory not starting from 1 (thanks to drgerafe).
+[-] * Fix pressing of keys on phones who do not support IRA charset.
 
 20070615 - 1.12.0
 [+] * Added dku5fbus-nodtr and fbus-nodtr variants, which do not care
