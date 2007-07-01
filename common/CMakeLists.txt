@@ -103,9 +103,9 @@ if (BLUEZ_FOUND)
     endif (NOT "${BLUEZ_LIBRARIES}" STREQUAL "") 
 endif (BLUEZ_FOUND)
 
-if (NOT HAVE_SIN)
+if (UNIX)
     target_link_libraries (Gammu m)
-endif (NOT HAVE_SIN)
+endif (UNIX)
 
 # Include search path
 include_directories (
