@@ -2724,7 +2724,7 @@ static void GetEachMMS(int argc, char *argv[])
 			error = GSM_GetFilePart(s,&File,&Handle,&Size);
 			if (error == ERR_EMPTY) break;
 			Print_Error(error);
-			fprintf(stderr, _("%c  Reading: %i percent"),13,File.Used*100/Size);
+			fprintf(stderr, _("%c  Reading: %i percent"),13, (int)(File.Used*100/Size));
 		}
 		fprintf(stderr, "%c",13);
 
@@ -8319,7 +8319,7 @@ static void GetFileSystem(int argc, char *argv[])
 						if (!Files.ModifiedEmpty) {
 							printf(" %30s",OSDateTime(Files.Modified,false));
 						} else printf(" %30c",0x20);
-						printf(" %9i",Files.Used);
+						printf(" %9zi",Files.Used);
 						printf(" ");
 					} else printf("|-- ");
 				} else {
@@ -8355,7 +8355,7 @@ static void GetFileSystem(int argc, char *argv[])
 				if (!Files.ModifiedEmpty) {
 					printf("\"%s\";",OSDateTime(Files.Modified,false));
 				} else  printf("\"%c\";",0x20);
-				printf("%i;",Files.Used);
+				printf("%zi;",Files.Used);
 			} else {
 				if (error == ERR_FOLDERPART) {
 					printf(_("Part of folder;"));
@@ -8470,7 +8470,7 @@ static void GetFolderListing(int argc UNUSED, char *argv[])
 			if (!Files.ModifiedEmpty) {
 				printf("\"%s\";",OSDateTime(Files.Modified,false));
 			} else  printf("\"%c\";",0x20);
-			printf("%i;",Files.Used);
+			printf("%zi;",Files.Used);
 		} else {
 			printf(_("Folder"));
 			printf(";\"%s\";",DecodeUnicodeConsole(Files.Name));
@@ -8525,7 +8525,7 @@ static void GetOneFile(GSM_File *File, bool newtime, int i)
 			if (Size==0) {
 				printf("*");
 			} else {
-				fprintf(stderr, _("%c  %i percent"), 13, File->Used*100/Size);
+				fprintf(stderr, _("%c  %i percent"), 13, (int)(File->Used*100/Size));
 				if (File->Used*100/Size >= 2) {
 					t_time2 = time(NULL);
 					diff 	= t_time2-t_time1;
@@ -8706,7 +8706,7 @@ static void AddOneFile(GSM_File *File, char *text, bool send)
 		if (File->Used != 0) {
 			fprintf(stderr, "\r");
 			fprintf(stderr, "%s", text);
-			fprintf(stderr, _("%3i percent"), Pos * 100 / File->Used);
+			fprintf(stderr, _("%3i percent"), (int)(Pos * 100 / File->Used));
 			if (Pos*100/File->Used >= 2) {
 				GSM_GetCurrentDateTime(&dt);
 				t_time2 = Fill_Time_T(dt);
