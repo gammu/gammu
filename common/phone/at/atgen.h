@@ -71,17 +71,50 @@ typedef enum {
 } GSM_AT_Manufacturer;
 
 typedef enum {
+	/**
+	 * Hex encoded GSM.
+	 */
 	AT_CHARSET_HEX = 1,
+	/**
+	 * GSM charset.
+	 */
 	AT_CHARSET_GSM,
+	/**
+	 * Hex encoded UCS2.
+	 */
 	AT_CHARSET_UCS2,
+	/**
+	 * UTF-8.
+	 */
 	AT_CHARSET_UTF8,
 	AT_CHARSET_PCCP437,
+	/**
+	 * IRA, what is same as 7-bit ASCII.
+	 */
 	AT_CHARSET_IRA,
+	/**
+	 * ISO-8859-1, supported only with iconv.
+	 */
 	AT_CHARSET_ISO88591,
+	/**
+	 * ISO-8859-2, supported only with iconv.
+	 */
 	AT_CHARSET_ISO88592,
+	/**
+	 * ISO-8859-3, supported only with iconv.
+	 */
 	AT_CHARSET_ISO88593,
+	/**
+	 * ISO-8859-4, supported only with iconv.
+	 */
 	AT_CHARSET_ISO88594,
+	/**
+	 * ISO-8859-5, supported only with iconv.
+	 */
 	AT_CHARSET_ISO88595,
+	/**
+	 * ISO-8859-6, supported only with iconv.
+	 */
 	AT_CHARSET_ISO88596,
 } GSM_AT_Charset;
 
