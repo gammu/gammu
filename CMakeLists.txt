@@ -221,8 +221,6 @@ else (CROSS_MINGW)
     check_symbol_exists (strcasecmp "strings.h" HAVE_STRCASECMP)
     check_function_exists (strcasestr HAVE_STRCASESTR)
     check_function_exists (strchrnul HAVE_STRCHRNUL)
-    check_symbol_exists (sin "math.h" HAVE_SIN)
-
 endif (CROSS_MINGW)
 
 macro_optional_find_package (Bluez)
