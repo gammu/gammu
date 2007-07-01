@@ -717,7 +717,7 @@ install (
 
 install (
     FILES "${Gammu_BINARY_DIR}/cfg/gammu.pc"
-    DESTINATION "lib/pkgconfig"
+    DESTINATION "${INSTALL_LIB_DIR}/pkgconfig"
     COMPONENT "development"
     )
 
