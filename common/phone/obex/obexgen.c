@@ -588,7 +588,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		j = File->Used - *Pos;
 		/* End of file body block */
 		OBEXAddBlock(req, &Current, 0x49, File->Buffer+(*Pos), j);
-		smprintf(s, "Adding last file part %i %i\n",*Pos,j);
+		smprintf(s, "Adding last file part %i %zi\n", *Pos, j);
 		*Pos = *Pos + j;
 		error = GSM_WaitFor (s, req, Current, 0x82, OBEX_TIMEOUT, ID_AddFile);
 		if (error != ERR_NONE) return error;
@@ -596,7 +596,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 	} else {
 		/* File body block */
 		OBEXAddBlock(req, &Current, 0x48, File->Buffer+(*Pos), j);
-		smprintf(s, "Adding file part %i %i\n",*Pos,j);
+		smprintf(s, "Adding file part %i %zi\n", *Pos, j);
 		*Pos = *Pos + j;
 		error=GSM_WaitFor (s, req, Current, 0x02, OBEX_TIMEOUT, ID_AddFile);
 	}
