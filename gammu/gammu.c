@@ -8969,7 +8969,7 @@ static void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned ch
 			CopyUnicodeString(Files3.ID_FullName,IDFolder);
 	        	CopyUnicodeString(Buffer2,Name);
 			if (i!=0) {
-				sprintf(Buffer,"%i",i);
+				sprintf(Buffer,"%zi",i);
 		        	EncodeUnicode(Buffer2+UnicodeLength(Buffer2)*2,Buffer,strlen(Buffer));
 			}
 	        	EncodeUnicode(Buffer2+UnicodeLength(Buffer2)*2,".m3u",4);
