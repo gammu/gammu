@@ -1,6 +1,8 @@
 %define ver         1.12.91
 %define name        gammu
 %define relnum      1
+# Set to 0 to disable bluetooth support
+%define bluetooth   1
 
 %if %_vendor == "suse"
 %define rel         %{relnum}suse
