@@ -1,11 +1,15 @@
 /**
  * \file gammu.h
  * \author Michal Čihař
- * 
+ *
  * Top level include for applications.
  */
 #ifndef __gammu_gammu_h
 #define __gammu_gammu_h
+
+#ifdef	__cplusplus
+extern "C" {
+#endif
 
 #include <gammu-types.h>
 #include <gammu-statemachine.h>
@@ -28,6 +32,10 @@
 #include <gammu-unicode.h>
 #include <gammu-misc.h>
 #include <gammu-debug.h>
+
+#ifdef	__cplusplus
+}
+#endif
 
 #endif
 /* Editor configuration
