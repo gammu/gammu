@@ -27,7 +27,8 @@
 #define GSM_MAX_MODEL_LENGTH 50
 
 /**
- * Maximal length of version text.
+ * Maximal length of version text. This needs to hold all information we
+ * receive, so buffer has to be big enough.
  *
  * \ingroup Limits
  */
