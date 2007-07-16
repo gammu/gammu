@@ -742,11 +742,16 @@ GSM_Error ATGEN_GetManufacturer(GSM_StateMachine *s)
 
 GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+		
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	strcpy(s->Phone.Data.Version, "Unknown");
 	s->Phone.Data.VerNum = 0;
 	if (Priv->ReplyState == AT_Reply_OK) {
+		if (GetLineLength(msg.Buffer, Priv->Lines, 2) > GSM_MAX_VERSION_LENGTH - 1) {
+			smprintf(s, "Please increase GSM_MAX_VERSION_LENGTH!\n");
+			return ERR_MOREMEMORY;
+		}
 		CopyLineString(s->Phone.Data.Version, msg.Buffer, Priv->Lines, 2);
 		/* Sometimes phone adds this before manufacturer (Sagem) */
 		if (strncmp("+CGMR: ", s->Phone.Data.Version, 7) == 0) {
