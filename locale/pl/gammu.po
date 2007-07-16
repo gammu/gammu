@@ -8,12 +8,13 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-06-12 16:39+0200\n"
-"PO-Revision-Date: 2007-03-20 09:13+0100\n"
-"Last-Translator: \n"
+"PO-Revision-Date: 2007-07-04 00:30+0200\n"
+"Last-Translator: Frank <nobange@poczta.onet.pl>\n"
 "Language-Team: Language =pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.0.1\n"
 
 #: common/gsmcomon.c:84
 msgid "No error."
@@ -161,9 +162,8 @@ msgid "Phone is disabled and connected to charger."
 msgstr ""
 
 #: common/gsmcomon.c:119
-#, fuzzy
 msgid "File format not supported by Gammu."
-msgstr "Funkcja nie obsługiwana przez telefon."
+msgstr "Format pliku nie obsługiwany przez telefon."
 
 #: common/gsmcomon.c:120
 msgid ""
@@ -180,9 +180,8 @@ msgid "Current connection type doesn't support called function."
 msgstr ""
 
 #: common/gsmcomon.c:124
-#, fuzzy
 msgid "CRC error."
-msgstr "Nie ma błędu."
+msgstr "Błąd CRC"
 
 #: common/gsmcomon.c:125
 msgid "Invalid date or time specified."
@@ -197,9 +196,8 @@ msgid "Invalid data given to phone."
 msgstr ""
 
 #: common/gsmcomon.c:128
-#, fuzzy
 msgid "File with specified name already exist."
-msgstr "Plik o określonej nazwie nie istnieje."
+msgstr "Plik o określonej nazwie już istnieje."
 
 #: common/gsmcomon.c:129
 msgid "File with specified name doesn't exist."
@@ -215,7 +213,7 @@ msgstr ""
 
 #: common/gsmcomon.c:132
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "Brak dostępu do karty SIM"
 
 #: common/gsmcomon.c:133
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
@@ -223,7 +221,7 @@ msgstr ""
 
 #: common/gsmcomon.c:134
 msgid "Folder must be empty."
-msgstr ""
+msgstr "Katalog musi być pusty."
 
 #: common/gsmcomon.c:135
 msgid "Data were converted."
@@ -231,31 +229,31 @@ msgstr ""
 
 #: common/phone/nokia/dct3/n6110.c:1953 gammu/gammu.c:7699
 msgid "Personal"
-msgstr ""
+msgstr "Osobiste"
 
 #: common/phone/nokia/dct3/n6110.c:1955 common/phone/nokia/nfunc.c:1025
 msgid "Car"
-msgstr ""
+msgstr "Samochód"
 
 #: common/phone/nokia/dct3/n6110.c:1957 common/phone/nokia/nfunc.c:1027
 msgid "Headset"
-msgstr ""
+msgstr "Zestaw słuchawkowy"
 
 #: common/phone/nokia/dct3/n6110.c:1963 common/phone/nokia/nfunc.c:1015
 msgid "General"
-msgstr ""
+msgstr "Ogólny"
 
 #: common/phone/nokia/dct3/n6110.c:1965 common/phone/nokia/nfunc.c:1017
 msgid "Silent"
-msgstr ""
+msgstr "Milczy"
 
 #: common/phone/nokia/dct3/n6110.c:1967
 msgid "Discreet"
-msgstr ""
+msgstr "Dyskretny"
 
 #: common/phone/nokia/dct3/n6110.c:1969
 msgid "Loud"
-msgstr ""
+msgstr "Głośny"
 
 #: common/phone/nokia/dct3/n6110.c:1971
 msgid "My style"
@@ -263,7 +261,7 @@ msgstr "Mój styl"
 
 #: common/phone/nokia/dct4s40/6510/n6510.c:515 gammu/gammu.c:4775
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: common/phone/nokia/dct4s40/6510/n6510.c:516 common/phone/pfunc.c:40
 msgid "Inbox"
@@ -271,11 +269,11 @@ msgstr "Skrzynka odbiorcza"
 
 #: common/phone/nokia/dct4s40/6510/n6510.c:517
 msgid "Sent items"
-msgstr ""
+msgstr "Wysłane"
 
 #: common/phone/nokia/dct4s40/6510/n6510.c:518
 msgid "Saved items"
-msgstr ""
+msgstr "Zapisane"
 
 #: common/phone/nokia/nfunc.c:849
 msgid "Family"
@@ -283,7 +281,7 @@ msgstr "Rodzina"
 
 #: common/phone/nokia/nfunc.c:851
 msgid "VIP"
-msgstr ""
+msgstr "VIP"
 
 #: common/phone/nokia/nfunc.c:853
 msgid "Friends"
@@ -291,7 +289,7 @@ msgstr "Przyjaciele"
 
 #: common/phone/nokia/nfunc.c:855
 msgid "Colleagues"
-msgstr ""
+msgstr "Koledzy"
 
 #: common/phone/nokia/nfunc.c:857
 msgid "Other"
@@ -299,7 +297,7 @@ msgstr "Inni"
 
 #: common/phone/nokia/nfunc.c:1019 gammu/gammu.c:411 gammu/gammu.c:7312
 msgid "Meeting"
-msgstr ""
+msgstr "Spotkanie"
 
 #: common/phone/nokia/nfunc.c:1021
 #, fuzzy
@@ -348,22 +346,22 @@ msgstr ""
 #: gammu/depend/nokia/dct4.c:356
 #, c-format
 msgid "Passed"
-msgstr ""
+msgstr "Udane"
 
 #: gammu/depend/nokia/dct4.c:357
-#, fuzzy, c-format
+#, c-format
 msgid "Fail"
-msgstr "Rodzina"
+msgstr "Niepowodzenie"
 
 #: gammu/depend/nokia/dct4.c:358
 #, c-format
 msgid "Not executed"
-msgstr ""
+msgstr "Nie wykonane"
 
 #: gammu/depend/nokia/dct4.c:359
 #, c-format
 msgid "No signal"
-msgstr ""
+msgstr "Brak sygnału"
 
 #: gammu/depend/nokia/dct4.c:360 gammu/gammu.c:1879
 #, c-format
