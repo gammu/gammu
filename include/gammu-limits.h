@@ -31,7 +31,7 @@
  *
  * \ingroup Limits
  */
-#define GSM_MAX_VERSION_LENGTH 100
+#define GSM_MAX_VERSION_LENGTH 200
 
 /**
  * Maximal length of version date.
