@@ -3034,7 +3034,14 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 				pos = tmppos + 1;
 				Priv->FirstMemoryEntry = 1;
 				Priv->MemorySize = 1000;
+				return ERR_NONE;
 			}
+			/* There might be also only one location */
+			pos = strchr(pos, ')');
+			if (pos != NULL) {
+				Priv->MemorySize = 1;
+				return ERR_NONE;
+			} 
 
 			return ERR_UNKNOWNRESPONSE;
 		} else {
