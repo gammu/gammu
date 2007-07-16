@@ -2848,6 +2848,8 @@ GSM_Error ATGEN_ReplyGetPBKMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		break;
+	case AT_Reply_Error:
+		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
