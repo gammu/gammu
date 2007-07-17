@@ -3216,6 +3216,18 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 	return ATGEN_GetMemoryInfo(s, Status, AT_Status);
 }
 
+/**
+ * Parses reply on AT+CPBR=n.
+ *
+ * \todo Handle special replies from some phones:
+ * LG C1200:
+ * +CPBR: 23,"Primary Number",145,"Name",3,"0123456789",145,2,"0123456789",145,1,"E-Mail-Address without domain","Fax-Number",255
+ * 3 = Home Number
+ * 2 = Office Number
+ * 1 = Mobile Number
+ * Samsung SGH-E250:
+ * +CPBR: 14,"646578345",4,"Laguna","Ver__nica","",6,"",7,"",2,"",5,"","","",1,65535,255,255,65535,"","""
+ */
 GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
