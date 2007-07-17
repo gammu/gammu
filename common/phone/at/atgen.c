@@ -338,16 +338,36 @@ inline bool ATGEN_IsHex(const char *text, const size_t length)
  * \param length Length of string to convert.
  * \param output Storage for converted text.
  * \param outlength Size of output storage.
+ * \param guess Allow guessing whether input is really encoded.
  *
  * \return Error code.
  */
-GSM_Error ATGEN_DecodeText(GSM_StateMachine *s, const unsigned char *input, const size_t length, unsigned char *output, const size_t outlength)
+GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
+		const unsigned char *input,
+		const size_t length,
+		unsigned char *output,
+		const size_t outlength,
+		const bool guess)
 {
 	unsigned char *buffer;
 	GSM_AT_Charset charset;
 
+	/* Default to charset from state machine */
 	charset = s->Phone.Data.Priv.ATGEN.Charset;
 
+	/* Can we do guesses? */
+	if (guess) {
+		if  (charset == AT_CHARSET_HEX
+			&& ! ATGEN_IsHex(input, length)) {
+			charset = AT_CHARSET_GSM;
+		}
+		if  (charset == AT_CHARSET_UCS2
+			&& ! ATGEN_IsUCS2(input, length)) {
+			charset = AT_CHARSET_GSM;
+		}
+	}
+
+	/* Finally do conversion */
 	switch (charset) {
 		case AT_CHARSET_HEX:
 			/* Length must be enough, because we have two chars for byte */
@@ -3460,7 +3480,8 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Decode string */
 		error = ATGEN_DecodeText(s,
 				buffer + offset, strlen(buffer) - (offset * 2),
-				Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+				Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
+				false);
 		if (error != ERR_NONE) return error;
 
 		/* Samsung number type */
@@ -3500,7 +3521,8 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				/* Decode text */
 				error = ATGEN_DecodeText(s,
 						buffer + offset, strlen(buffer) - (offset * 2),
-						Memory->Entries[2].Text, sizeof(Memory->Entries[1].Text));
+						Memory->Entries[2].Text, sizeof(Memory->Entries[1].Text),
+						true);
 				if (error != ERR_NONE) return error;
 
 				/* Decode date */
