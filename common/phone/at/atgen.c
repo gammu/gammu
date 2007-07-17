@@ -327,10 +327,6 @@ inline bool ATGEN_IsHex(const char *text, const size_t length)
 		ATGEN_HasOnlyHexChars(text, length);
 }
 
-/* Will be removed ! */
-#define ATGEN_DetectHEX(s, len, text) (s->Phone.Data.Priv.ATGEN.Charset == AT_CHARSET_HEX && ATGEN_IsHex(text, len))
-#define ATGEN_DetectUCS2(s, len, text) (s->Phone.Data.Priv.ATGEN.Charset == AT_CHARSET_UCS2 && ATGEN_IsUCS2(text, len))
-
 /**
  * Decodes text from phone encoding to internal representation.
  *
@@ -2739,6 +2735,7 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	int			current;
 	unsigned char		buffer[500];
+	GSM_Error		error;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -2752,10 +2749,11 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
 
 		/* Decode the number */
-		ATGEN_DecodeText(s,
+		error = ATGEN_DecodeText(s,
 				buffer + 1, strlen(buffer + 1) - 1,
 				SMSC->Number, sizeof(SMSC->Number),
 				true);
+		if (error != ERR_NONE) return error;
 
 		smprintf(s, "Number: \"%s\"\n", DecodeUnicodeString(SMSC->Number));
 
@@ -3409,8 +3407,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
 	GSM_Error		error;
 	char			*pos;
-	unsigned char		buffer[500], buffer2[500];
-	int			len;
+	unsigned char		buffer[500];
 	int			offset;
 
 	switch (Priv->ReplyState) {
@@ -3437,17 +3434,12 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		Memory->Entries[0].VoiceTag   = 0;
  		Memory->Entries[0].SMSList[0] = 0;
 
-		len = strlen(buffer + 1) - 1;
-		if (ATGEN_DetectHEX(s, len, buffer + 1)) {
-			/* This is probably hex encoded number */
-			DecodeHexBin(buffer2, buffer+1, len);
-			DecodeDefault(Memory->Entries[0].Text ,buffer2, strlen(buffer2), false, NULL);
-		} else if (ATGEN_DetectUCS2(s, len, buffer + 1)) {
-			/* This is probably unicode encoded number */
-			DecodeHexUnicode(Memory->Entries[0].Text, buffer + 1,len);
-		} else  {
-	 		EncodeUnicode(Memory->Entries[0].Text, buffer + 1, len);
-		}
+		/* Decode number */
+		error = ATGEN_DecodeText(s,
+				buffer + 1, strlen(buffer + 1) - 1,
+				Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+				true);
+		if (error != ERR_NONE) return error;
 
 		/* Number format */
 		pos += ATGEN_ExtractOneParameter(pos, buffer);
