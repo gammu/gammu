@@ -327,6 +327,7 @@ inline bool ATGEN_IsHex(const char *text, const size_t length)
 		ATGEN_HasOnlyHexChars(text, length);
 }
 
+/* Will be removed ! */
 #define ATGEN_DetectHEX(s, len, text) (s->Phone.Data.Priv.ATGEN.Charset == AT_CHARSET_HEX && ATGEN_IsHex(text, len))
 #define ATGEN_DetectUCS2(s, len, text) (s->Phone.Data.Priv.ATGEN.Charset == AT_CHARSET_UCS2 && ATGEN_IsUCS2(text, len))
 
@@ -2737,8 +2738,7 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_SMSC		*SMSC = s->Phone.Data.SMSC;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	int			current;
-	int			len;
-	unsigned char		buffer[500],buffer2[500];
+	unsigned char		buffer[500];
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -2750,24 +2750,14 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* SMSC number */
 		/* FIXME: support for all formats */
 		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
-		/*
-		 * Some phones return this as unicode encoded when they are
-		 * switched to UCS2 mode, so we try to solve this correctly.
-		 */
-		len 		= strlen(buffer + 1) - 1;
-		buffer[len + 1] = 0;
 
-		if (ATGEN_DetectHEX(s, len, buffer + 1)) {
-			/* This is probably hex encoded number */
-			DecodeHexBin(buffer2, buffer+1, len);
-			DecodeDefault(SMSC->Number ,buffer2, strlen(buffer2), false, NULL);
-		} else if (ATGEN_DetectUCS2(s, len, buffer + 1)) {
-			/* This is probably unicode encoded number */
-			DecodeHexUnicode(SMSC->Number, buffer + 1,len);
-		} else  {
-	 		EncodeUnicode(SMSC->Number, buffer + 1, len);
-		}
-		smprintf(s, "Number: \"%s\"\n",DecodeUnicodeString(SMSC->Number));
+		/* Decode the number */
+		ATGEN_DecodeText(s,
+				buffer + 1, strlen(buffer + 1) - 1,
+				SMSC->Number, sizeof(SMSC->Number),
+				true);
+
+		smprintf(s, "Number: \"%s\"\n", DecodeUnicodeString(SMSC->Number));
 
 		/* Format of SMSC number */
 		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
