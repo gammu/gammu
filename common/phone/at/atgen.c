@@ -280,6 +280,57 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 }
 
 /**
+ * Checks whether string contains some non hex chars.
+ *
+ * \param text String to check.
+ *
+ * \return True when text does not contain non hex chars.
+ */
+inline bool ATGEN_HasOnlyHexChars(const char *text, const size_t length)
+{
+	size_t i;
+
+	for (i = 0; i < length; i++) {
+		if (!isxdigit(text[i])) return false;
+	}
+
+	return true;
+}
+
+/**
+ * Detects whether given text can be UCS2.
+ *
+ * \param s State machine structure.
+ * \param len Length of string.
+ * \param text Text.
+ * \return True when text can be UCS2.
+ */
+inline bool ATGEN_IsUCS2(const char *text, const size_t length)
+{
+	return (length > 8) &&
+		(length % 4 == 0) &&
+		ATGEN_HasOnlyHexChars(text, length);
+}
+
+/**
+ * Detects whether given text can be HEX.
+ *
+ * \param s State machine structure.
+ * \param len Length of string.
+ * \param text Text.
+ * \return True when text can be HEX.
+ */
+inline bool ATGEN_IsHex(const char *text, const size_t length)
+{
+	return (length > 4) &&
+		(length % 2 == 0) &&
+		ATGEN_HasOnlyHexChars(text, length);
+}
+
+#define ATGEN_DetectHEX(s, len, text) (s->Phone.Data.Priv.ATGEN.Charset == AT_CHARSET_HEX && ATGEN_IsHex(text, len))
+#define ATGEN_DetectUCS2(s, len, text) (s->Phone.Data.Priv.ATGEN.Charset == AT_CHARSET_UCS2 && ATGEN_IsUCS2(text, len))
+
+/**
  * Decodes text from phone encoding to internal representation.
  *
  * \param s State machine structure.

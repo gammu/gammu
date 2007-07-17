@@ -235,54 +235,6 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
         if (error != ERR_NONE) return error; \
         error = GSM_WaitFor(s, cmd, len, type, time, request);
 
-
-/**
- * Checks whether string contains some non hex chars.
- *
- * \param text String to check.
- *
- * \return True when text does not contain non hex chars.
- */
-#define ATGEN_FindNonHexChars(text) (\
-	 (strchr(text, '.') == NULL) && \
-	 (strchr(text, '/') == NULL) && \
-	 (strchr(text, '+') == NULL) \
-	 )
-
-/**
- * Detects whether given text can be UCS2.
- *
- * \todo This too simple heuristics right now.
- *
- * \param s State machine structure.
- * \param len Length of string.
- * \param text Text.
- * \return True when text can be UCS2.
- */
-#define ATGEN_DetectUCS2(s, len, text) (\
-	s->Phone.Data.Priv.ATGEN.Charset == AT_CHARSET_UCS2 && \
-	(len > 8) && \
-	(len % 4 == 0) && \
-	ATGEN_FindNonHexChars(text) \
-	)
-
-/**
- * Detects whether given text can be HEX.
- *
- * \todo This too simple heuristics right now.
- *
- * \param s State machine structure.
- * \param len Length of string.
- * \param text Text.
- * \return True when text can be HEX.
- */
-#define ATGEN_DetectHEX(s, len, text) (\
-	s->Phone.Data.Priv.ATGEN.Charset == AT_CHARSET_HEX && \
-	(len > 8) && \
-	(len % 2 == 0) && \
-	ATGEN_FindNonHexChars(text) \
-	)
-
 #endif
 /*@}*/
 /*@}*/
