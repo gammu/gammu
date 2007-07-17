@@ -3253,6 +3253,19 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
  * tone: Tono básico
  * category: Empresas
  * notes: Somd notes
+ *
+ * Samsung format:
+ * location,"number",type,"0x02surname0x03","number",type,"number",type,"number",type,"number",type,"email","NA","note",category?,x,x,x,ringtone?,"NA","photo"
+ *
+ * NA fields were empty
+ * x fields are some numbers, default is 1,65535,255,255,65535
+ *
+ * Samsung number types:
+ * 4 - cell
+ * 6 - home
+ * 7 - office
+ * 2 - fax
+ * 5 - other
  */
 GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
