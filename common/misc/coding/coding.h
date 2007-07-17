@@ -131,8 +131,8 @@ char *EncodeSpecialChars(unsigned char *buffer);
 char *DecodeSpecialChars(unsigned char *buffer);
 
 #ifdef ICONV_FOUND
-bool IconvDecode(const char *charset, char *input, size_t inlen, unsigned char *output, size_t outlen);
-bool IconvEncode(const char *charset, unsigned char *input, size_t inlen, char *output, size_t outlen);
+bool IconvDecode(const char *charset, const char *input, const size_t inlen, unsigned char *output, size_t outlen);
+bool IconvEncode(const char *charset, const unsigned char *input, const size_t inlen, char *output, size_t outlen);
 #endif
 
 #if defined(_MSC_VER) && defined(__cplusplus)

@@ -1378,7 +1378,7 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 		case 0x0A:
 		case 0x0D:
 			if (pos != 0 && !skip) {
-				if (MergeLines) { 
+				if (MergeLines) {
 					/* (Quote printable new line) Does string end with = ? */
 					if (OutBuffer[pos - 1] == '=') {
 						OutBuffer[pos - 1] = 0;
@@ -1814,7 +1814,7 @@ int DecodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
 
 #include <iconv.h>
 
-bool IconvDecode(const char *charset, char *input, size_t inlen, unsigned char *output, size_t outlen)
+bool IconvDecode(const char *charset, const char *input, const size_t inlen, unsigned char *output, size_t outlen)
 {
 	iconv_t ic;
 	char *in, *out;
@@ -1831,7 +1831,7 @@ bool IconvDecode(const char *charset, char *input, size_t inlen, unsigned char *
 	return (inlen == 0);
 }
 
-bool IconvEncode(const char *charset, unsigned char *input, size_t inlen, char *output, size_t outlen)
+bool IconvEncode(const char *charset, const unsigned char *input, const size_t inlen, char *output, size_t outlen)
 {
 	iconv_t ic;
 	char *in, *out;
