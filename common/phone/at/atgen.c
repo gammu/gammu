@@ -2589,11 +2589,12 @@ GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_SMSC		*SMSC = s->Phone.Data.SMSC;
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	int			current;
 	int			len;
-	unsigned char 		buffer[100];
+	unsigned char		buffer[500],buffer2[500];
 
-	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "SMSC info received\n");
 
@@ -2609,11 +2610,16 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		 */
 		len 		= strlen(buffer + 1) - 1;
 		buffer[len + 1] = 0;
-		if ((len > 8) && (len % 4 == 0) && (strchr(buffer + 1, '+') == NULL)) {
+
+		if (Priv->Charset == AT_CHARSET_HEX && (len > 10) && (len % 2 == 0) && (strchr(buffer + 1, '+') == NULL)) {
+			/* This is probably hex encoded number */
+			DecodeHexBin(buffer2, buffer+1, len);
+			DecodeDefault(SMSC->Number ,buffer2, strlen(buffer2), false, NULL);
+		} else if (Priv->Charset == AT_CHARSET_UCS2 && (len > 8) && (len % 4 == 0) && (strchr(buffer + 1, '+') == NULL)) {
 			/* This is probably unicode encoded number */
-			DecodeHexUnicode(SMSC->Number,buffer + 1,len);
+			DecodeHexUnicode(SMSC->Number, buffer + 1,len);
 		} else  {
-			EncodeUnicode(SMSC->Number,buffer + 1,len);
+	 		EncodeUnicode(SMSC->Number, buffer + 1, len);
 		}
 		smprintf(s, "Number: \"%s\"\n",DecodeUnicodeString(SMSC->Number));
 
@@ -2644,16 +2650,13 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
-	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 
 	if (smsc->Location==0x00 || smsc->Location!=0x01) return ERR_INVALIDLOCATION;
 
-	/* If phone encodes also values in command, we need normal charset */
-	if (Priv->EncodedCommands) {
-		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
-		if (error != ERR_NONE) return error;
-	}
+	/* We prefer normal charset */
+	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
+	if (error != ERR_NONE) return error;
 
 	s->Phone.Data.SMSC=smsc;
 	smprintf(s, "Getting SMSC\n");
