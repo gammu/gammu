@@ -452,7 +452,6 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	unsigned char		*pos;
 	unsigned char		buffer_unicode[200];
 	unsigned char		input[100];
-	size_t			len;
 	GSM_Error error;
 
 	strncpy(input, _input, 100);
@@ -463,11 +462,9 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	if (*pos == '"') pos++;
 	if (input[strlen(pos) - 1] == '"') input[strlen(pos) - 1] = 0;
 
-	len = strlen(pos);
-
 	/* Convert to normal charset */
 	error = ATGEN_DecodeText(s,
-			pos, len,
+			pos, strlen(pos),
 			buffer_unicode, sizeof(buffer_unicode),
 			true);
 	if (error != ERR_NONE) return error;
@@ -627,11 +624,10 @@ GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *
 
 GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 	GSM_USSDMessage ussd;
-	unsigned char 	buffer[2000],buffer2[4000];
-	size_t len;
+	unsigned char 	buffer[2000];
 	char *pos;
+	GSM_Error error;
 
 	/*
 	 * Reply format:
@@ -678,17 +674,12 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		pos += ATGEN_ExtractOneParameter(pos, buffer);
 		smprintf(s, "Text: %s\n", buffer);
 
-		len = strlen(buffer + 1) - 1;
-		if (Priv->Charset == AT_CHARSET_HEX) {
-			/* This is hex encoded number */
-			DecodeHexBin(buffer2, buffer+1, len);
-			DecodeDefault(ussd.Text ,buffer2, strlen(buffer2), false, NULL);
-		} else if (Priv->Charset == AT_CHARSET_UCS2) {
-			/* This is unicode encoded number */
-			DecodeHexUnicode(ussd.Text, buffer + 1,len);
-		} else  {
-			EncodeUnicode(ussd.Text, buffer + 1, len);
-		}
+		/* Decode text */
+		error = ATGEN_DecodeText(s,
+				buffer + 1, strlen(buffer + 1) - 1,
+				ussd.Text, sizeof(ussd.Text),
+				true);
+		if (error != ERR_NONE) return error;
 
 		if (s->User.IncomingUSSD!=NULL) {
 			s->User.IncomingUSSD(s, ussd);
