@@ -24,7 +24,7 @@
 #include "phonet.h"
 
 static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
-				      unsigned char 	*MsgBuffer,
+				      unsigned const char 	*MsgBuffer,
 				      int 		MsgLength,
 				      unsigned char 	MsgType)
 {

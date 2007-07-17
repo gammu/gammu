@@ -12,7 +12,7 @@
 #include "mbus2.h"
 
 static GSM_Error MBUS2_WriteMessage (GSM_StateMachine 	*s,
-				     unsigned char 	*MsgBuffer,
+				     unsigned const char 	*MsgBuffer,
 				     int 		MsgLength,
 				     unsigned char 	MsgType)
 {

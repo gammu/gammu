@@ -126,9 +126,9 @@ int socket_read(GSM_StateMachine *s UNUSED, void *buf, size_t nbytes, int hPhone
 }
 
 #ifdef WIN32
-int socket_write(GSM_StateMachine *s, unsigned char *buf, size_t nbytes, int hPhone)
+int socket_write(GSM_StateMachine *s, unsigned const char *buf, size_t nbytes, int hPhone)
 #else
-int socket_write(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone)
+int socket_write(GSM_StateMachine *s, const void *buf, size_t nbytes, int hPhone)
 #endif
 {
 	int		ret;

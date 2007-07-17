@@ -29,6 +29,8 @@
 
 #include "../../misc/misc.h" /* For GSM_Lines */
 
+#include "motorola.h"
+
 #ifndef GSM_USED_AT
 #  define GSM_USED_AT
 #endif
@@ -222,6 +224,46 @@ typedef struct {
 GSM_Error ATGEN_HandleCMSError	(GSM_StateMachine *);
 GSM_Error ATGEN_HandleCMEError	(GSM_StateMachine *);
 GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
+
+/**
+ * Wrapper around \ref GSM_WaitFor, which automatically sets
+ * correct Motorola mode. It accepts same parameters as
+ * \ref GSM_WaitFor.
+ */
+#define ATGEN_WaitFor(s, cmd, len, type, time, request) \
+        error = MOTOROLA_SetMode(s, cmd); \
+        if (error != ERR_NONE) return error; \
+        error = GSM_WaitFor(s, cmd, len, type, time, request);
+
+/**
+ * Detects whether given text can be UCS2.
+ *
+ * \todo This too simple heuristics right now.
+ *
+ * \param len Length of string.
+ * \param text Text.
+ * \return True when text can be UCS2.
+ */
+#define ATGEN_DetectUCS2(len, text) \
+	(Priv->Charset == AT_CHARSET_UCS2 && \
+	 (len > 8) && \
+	 (len % 4 == 0) && \
+	 (strchr(text, '+') == NULL))
+
+/**
+ * Detects whether given text can be HEX.
+ *
+ * \todo This too simple heuristics right now.
+ *
+ * \param len Length of string.
+ * \param text Text.
+ * \return True when text can be HEX.
+ */
+#define ATGEN_DetectHEX(len, text) \
+	(Priv->Charset == AT_CHARSET_HEX && \
+	 (len > 8) && \
+	 (len % 2 == 0) && \
+	 (strchr(text, '+') == NULL))
 
 #endif
 /*@}*/
