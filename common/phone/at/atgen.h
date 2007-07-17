@@ -254,12 +254,13 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
  *
  * \todo This too simple heuristics right now.
  *
+ * \param s State machine structure.
  * \param len Length of string.
  * \param text Text.
  * \return True when text can be UCS2.
  */
-#define ATGEN_DetectUCS2(len, text) (\
-	Priv->Charset == AT_CHARSET_UCS2 && \
+#define ATGEN_DetectUCS2(s, len, text) (\
+	s->Phone.Data.Priv.ATGEN.Charset == AT_CHARSET_UCS2 && \
 	(len > 8) && \
 	(len % 4 == 0) && \
 	ATGEN_FindNonHexChars(text) \
@@ -270,12 +271,13 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
  *
  * \todo This too simple heuristics right now.
  *
+ * \param s State machine structure.
  * \param len Length of string.
  * \param text Text.
  * \return True when text can be HEX.
  */
-#define ATGEN_DetectHEX(len, text) (\
-	Priv->Charset == AT_CHARSET_HEX && \
+#define ATGEN_DetectHEX(s, len, text) (\
+	s->Phone.Data.Priv.ATGEN.Charset == AT_CHARSET_HEX && \
 	(len > 8) && \
 	(len % 2 == 0) && \
 	ATGEN_FindNonHexChars(text) \
