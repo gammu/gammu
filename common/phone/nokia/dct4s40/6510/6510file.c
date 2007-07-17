@@ -2495,7 +2495,8 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		break;
 	default:
 		smprintf(s,"unknown sms file %02x\n",FFF.Buffer[i]);
-		break;
+		free(FFF.Buffer);
+		return ERR_UNKNOWN;
 	}
 
 	sms->SMS[0].Memory = MEM_ME;
