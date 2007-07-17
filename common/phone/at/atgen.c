@@ -742,7 +742,7 @@ GSM_Error ATGEN_GetManufacturer(GSM_StateMachine *s)
 
 GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-		
+
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	strcpy(s->Phone.Data.Version, "Unknown");
@@ -3054,7 +3054,7 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 			if (pos != NULL) {
 				Priv->MemorySize = 1;
 				return ERR_NONE;
-			} 
+			}
 
 			return ERR_UNKNOWNRESPONSE;
 		} else {
@@ -3226,7 +3226,33 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
  * 2 = Office Number
  * 1 = Mobile Number
  * Samsung SGH-E250:
- * +CPBR: 14,"646578345",4,"Laguna","Ver__nica","",6,"",7,"",2,"",5,"","","",1,65535,255,255,65535,"","""
+ * +CPBR: 6,"123456789",4,"Sullivan","John","987654321",6,"123654789",7,"987456123",2,"555258741",5,"jsulli@dot.com","","Somd notes",32,65535,1,255,43,"","Fotos-0004.jpg"
+ * RECEIVED frame type 0x00/length 0xC1/193
+ * 41A|54T|2B+|43C|50P|42B|52R|3D=|366|0D |0D |0A |2B+|43C|50P|42 AT+CPBR=6...+CPB
+ * 52R|3A:|20 |366|2C,|22"|311|322|333|344|355|366|377|388|399|22 R: 6,"123456789"
+ * 2C,|344|2C,|22"|02 |53S|75u|6Cl|6Cl|69i|76v|61a|6En|03 |22"|2C ,4,".Sullivan.",
+ * 22"|02 |4AJ|6Fo|68h|6En|03 |22"|2C,|22"|399|388|377|366|355|34 ".John.","987654
+ * 333|322|311|22"|2C,|366|2C,|22"|311|322|333|366|355|344|377|38 321",6,"12365478
+ * 399|22"|2C,|377|2C,|22"|399|388|377|344|355|366|311|322|333|22 9",7,"987456123"
+ * 2C,|322|2C,|22"|355|355|355|322|355|388|377|344|311|22"|2C,|35 ,2,"555258741",5
+ * 2C,|22"|6Aj|73s|75u|6Cl|6Cl|69i|40@|64d|6Fo|74t|2E.|63c|6Fo|6D ,"jsulli@dot.com
+ * 22"|2C,|22"|22"|2C,|22"|02 |53S|6Fo|6Dm|64d|20 |6En|6Fo|74t|65 ","",".Somd note
+ * 73s|03 |22"|2C,|333|322|2C,|366|355|355|333|355|2C,|311|2C,|32 s.",32,65535,1,2
+ * 355|355|2C,|344|333|2C,|22"|22"|2C,|22"|46F|6Fo|74t|6Fo|73s|2D 55,43,"","Fotos-
+ * 300|300|300|344|2E.|6Aj|70p|67g|22"|0D |0A |0D |0A |4FO|4BK|0D 0004.jpg"....OK.
+ * 0A
+ * Name: John
+ * Sur name: Sullivan
+ * cellular: 123456789
+ * home phone: 987654321
+ * office: 123654789
+ * fax: 987456123
+ * etc: 555258741
+ * email: jsulli@dot.com
+ * imagen: Fotos-0004.jpg
+ * tone: Tono básico
+ * category: Empresas
+ * notes: Somd notes
  */
 GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
