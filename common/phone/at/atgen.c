@@ -292,10 +292,12 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
  */
 GSM_Error ATGEN_DecodeText(GSM_StateMachine *s, const unsigned char *input, const size_t length, unsigned char *output, const size_t outlength)
 {
- 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	unsigned char		*buffer;
+	unsigned char *buffer;
+	GSM_AT_Charset charset;
 
-	switch (Priv->Charset) {
+	charset = s->Phone.Data.Priv.ATGEN.Charset;
+
+	switch (charset) {
 		case AT_CHARSET_HEX:
 			/* Length must be enough, because we have two chars for byte */
 			buffer = (unsigned char *)malloc(length);
@@ -345,7 +347,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s, const unsigned char *input, cons
 			break;
 #endif
 		default:
-			smprintf(s, "Unsupported charset! (%d)\n", Priv->Charset);
+			smprintf(s, "Unsupported charset! (%d)\n", charset);
 			return ERR_SOURCENOTAVAILABLE;
 	}
 
@@ -2684,11 +2686,11 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		len 		= strlen(buffer + 1) - 1;
 		buffer[len + 1] = 0;
 
-		if (ATGEN_DetectHEX(len, buffer + 1)) {
+		if (ATGEN_DetectHEX(s, len, buffer + 1)) {
 			/* This is probably hex encoded number */
 			DecodeHexBin(buffer2, buffer+1, len);
 			DecodeDefault(SMSC->Number ,buffer2, strlen(buffer2), false, NULL);
-		} else if (ATGEN_DetectUCS2(len, buffer + 1)) {
+		} else if (ATGEN_DetectUCS2(s, len, buffer + 1)) {
 			/* This is probably unicode encoded number */
 			DecodeHexUnicode(SMSC->Number, buffer + 1,len);
 		} else  {
@@ -3375,11 +3377,11 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		Memory->Entries[0].SMSList[0] = 0;
 
 		len = strlen(buffer + 1) - 1;
-		if (ATGEN_DetectHEX(len, buffer + 1)) {
+		if (ATGEN_DetectHEX(s, len, buffer + 1)) {
 			/* This is probably hex encoded number */
 			DecodeHexBin(buffer2, buffer+1, len);
 			DecodeDefault(Memory->Entries[0].Text ,buffer2, strlen(buffer2), false, NULL);
-		} else if (ATGEN_DetectUCS2(len, buffer + 1)) {
+		} else if (ATGEN_DetectUCS2(s, len, buffer + 1)) {
 			/* This is probably unicode encoded number */
 			DecodeHexUnicode(Memory->Entries[0].Text, buffer + 1,len);
 		} else  {
