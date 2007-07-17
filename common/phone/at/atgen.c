@@ -448,12 +448,12 @@ int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
  */
 GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned char *_input)
 {
-	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 	unsigned char		buffer[100];
 	unsigned char		*pos;
-	unsigned char		buffer2[100];
+	unsigned char		buffer_unicode[200];
 	unsigned char		input[100];
-	int			len;
+	size_t			len;
+	GSM_Error error;
 
 	strncpy(input, _input, 100);
 	input[99] = '\0';
@@ -465,16 +465,13 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 
 	len = strlen(pos);
 
-	if (Priv->Charset == AT_CHARSET_HEX && (len > 10) && (len % 2 == 0) && (strchr(pos, '/') == NULL)) {
-		/* This is probably hex encoded number */
-		DecodeHexBin(buffer, input, len);
-	} else if (Priv->Charset == AT_CHARSET_UCS2 && (len > 8) && (len % 4 == 0) && (strchr(pos, '/') == NULL)) {
-		/* This is probably unicode encoded number */
-		DecodeHexUnicode(buffer2, pos, len);
-		DecodeUnicode(buffer2, buffer);
-	} else  {
-		strcpy(buffer, pos);
-	}
+	/* Convert to normal charset */
+	error = ATGEN_DecodeText(s,
+			pos, len,
+			buffer_unicode, sizeof(buffer_unicode),
+			true);
+	if (error != ERR_NONE) return error;
+	DecodeUnicode(buffer_unicode, buffer);
 
 	pos = buffer;
 
