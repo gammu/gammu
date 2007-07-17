@@ -1257,7 +1257,7 @@ bool myiswspace(unsigned const char *src)
 
 #ifndef HAVE_TOWLOWER
 /* FreeBSD boxes 4.7-STABLE does't have it, although it's ANSI standard */
-int towlower(wchar_t c)
+wchar_t towlower(wchar_t c)
 {
 	unsigned char dest[10];
 
@@ -1285,7 +1285,9 @@ unsigned char *mywstrstr (const unsigned char *haystack, const unsigned char *ne
 {
 /* One crazy define to convert unicode used in Gammu to standard wchar_t */
 #define tolowerwchar(x) (towlower((wchar_t)( (((&(x))[0] & 0xff) << 8) | (((&(x))[1] & 0xff)) )))
-	 register wchar_t b, c;
+	register wchar_t a, b, c;
+	register const unsigned char *rhaystack, *rneedle;
+
 
 	if ((b = tolowerwchar(*needle)) != L'\0') {
 		haystack -= 2;				/* possible ANSI violation */
@@ -1302,9 +1304,6 @@ unsigned char *mywstrstr (const unsigned char *haystack, const unsigned char *ne
 		goto jin;
 
 		for (;;) {
-			register wchar_t a;
-			register const unsigned char *rhaystack, *rneedle;
-
 			do {
 				haystack += 2;
 				if ((a = tolowerwchar(*haystack)) == L'\0')

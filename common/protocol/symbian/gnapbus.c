@@ -10,7 +10,7 @@
 #include "../../gsmcomon.h"
 #include "gnapbus.h"
 
-static GSM_Error GNAPBUS_WriteMessage (GSM_StateMachine *s, unsigned char *MsgBuffer,
+static GSM_Error GNAPBUS_WriteMessage (GSM_StateMachine *s, unsigned const char *MsgBuffer,
 				    int MsgLength, unsigned char MsgType)
 {
 	unsigned char		*buffer2;

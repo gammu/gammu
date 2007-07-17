@@ -370,7 +370,7 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
     	return actual;
 }
 
-static int serial_write(GSM_StateMachine *s, void *buf, size_t nbytes)
+static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
     	int		     	ret;

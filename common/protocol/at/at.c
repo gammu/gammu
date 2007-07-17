@@ -10,7 +10,7 @@
 #include "../../gsmcomon.h"
 #include "at.h"
 
-static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
+static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned const char *buffer,
 				     int length, unsigned char type)
 {
 	int i,sent = 0;

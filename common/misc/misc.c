@@ -368,7 +368,7 @@ char *GetLineString(unsigned char *message, GSM_Lines lines, int start)
 	return retval;
 }
 
-int GetLineLength(unsigned char *message, GSM_Lines lines, int start)
+int GetLineLength(unsigned char *message UNUSED, GSM_Lines lines, int start)
 {
 	return lines.numbers[start*2-2+1]-lines.numbers[start*2-2];
 }

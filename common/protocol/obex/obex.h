@@ -24,7 +24,7 @@ typedef struct {
 #  endif
 #endif
 
-void OBEXAddBlock(char *Buffer, int *Pos, unsigned char ID, char *AddBuffer, int AddLength);
+void OBEXAddBlock(char *Buffer, int *Pos, unsigned char ID, const char *AddBuffer, int AddLength);
 
 #endif
 

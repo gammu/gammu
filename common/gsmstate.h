@@ -240,7 +240,7 @@ typedef struct {
 	/**
 	 * Attempts to read nbytes from device.
 	 */
-	int       (*WriteDevice)       (GSM_StateMachine *s, void *buf, size_t nbytes);
+	int       (*WriteDevice)       (GSM_StateMachine *s, const void *buf, size_t nbytes);
 } GSM_Device_Functions;
 
 #ifdef GSM_ENABLE_SERIALDEVICE
@@ -307,7 +307,7 @@ typedef struct {
 	/**
 	 * Writes message to device.
 	 */
-	GSM_Error (*WriteMessage) (GSM_StateMachine *s, unsigned char *buffer,
+	GSM_Error (*WriteMessage) (GSM_StateMachine *s, unsigned const char *buffer,
 				   int length, unsigned char type);
 	/**
 	 * This one is called when character is received from device.
@@ -1552,17 +1552,17 @@ GSM_Error GSM_TerminateConnection	(GSM_StateMachine *s);
 
 int 	  GSM_ReadDevice		(GSM_StateMachine *s, bool wait);
 
-GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, unsigned char *buffer,
+GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, unsigned const char *buffer,
 			  		 int length, unsigned char type, int time);
 
-GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned char *buffer,
+GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned const char *buffer,
 		       			 int length, unsigned char type, int time,
 					 GSM_Phone_RequestID request);
 
 GSM_Error GSM_DispatchMessage		(GSM_StateMachine *s);
 
-void 	  GSM_DumpMessageLevel2		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);
-void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned char *message, int messagesize, int type);
+void 	  GSM_DumpMessageLevel2		(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type);
+void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type);
 
 
 void GSM_OSErrorInfo(GSM_StateMachine *s, char *description);

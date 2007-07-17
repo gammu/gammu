@@ -563,7 +563,7 @@ bool GSM_IsConnected(GSM_StateMachine *s) {
 	return s->opened;
 }
 
-GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned char *buffer,
+GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 			  int length, unsigned char type, int time)
 {
 	GSM_Phone_Data			*Phone = &s->Phone.Data;
@@ -597,7 +597,7 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned char *buffer,
 	return ERR_TIMEOUT;
 }
 
-GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned char *buffer,
+GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
 		       int length, unsigned char type, int time,
 		       GSM_Phone_RequestID request)
 {
@@ -1025,7 +1025,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	return true;
 }
 
-void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned char *message, int messagesize, int type)
+void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
 {
 	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
 	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
@@ -1037,7 +1037,7 @@ void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned char *message, int mess
 	}
 }
 
-void GSM_DumpMessageLevel3(GSM_StateMachine *s, unsigned char *message, int messagesize, int type)
+void GSM_DumpMessageLevel3(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
 {
 	int i;
 

@@ -2611,11 +2611,11 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		len 		= strlen(buffer + 1) - 1;
 		buffer[len + 1] = 0;
 
-		if (Priv->Charset == AT_CHARSET_HEX && (len > 10) && (len % 2 == 0) && (strchr(buffer + 1, '+') == NULL)) {
+		if (ATGEN_DetectHEX(len, buffer + 1)) {
 			/* This is probably hex encoded number */
 			DecodeHexBin(buffer2, buffer+1, len);
 			DecodeDefault(SMSC->Number ,buffer2, strlen(buffer2), false, NULL);
-		} else if (Priv->Charset == AT_CHARSET_UCS2 && (len > 8) && (len % 4 == 0) && (strchr(buffer + 1, '+') == NULL)) {
+		} else if (ATGEN_DetectUCS2(len, buffer + 1)) {
 			/* This is probably unicode encoded number */
 			DecodeHexUnicode(SMSC->Number, buffer + 1,len);
 		} else  {
@@ -2650,17 +2650,22 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
-	GSM_Error		error;
+	GSM_Error error;
+	const char req[] = "AT+CSCA?\r";
 
-	if (smsc->Location==0x00 || smsc->Location!=0x01) return ERR_INVALIDLOCATION;
+	/* Only one location supported */
+	if (smsc->Location != 1) {
+		return ERR_INVALIDLOCATION;
+	}
 
 	/* We prefer normal charset */
 	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 	if (error != ERR_NONE) return error;
 
-	s->Phone.Data.SMSC=smsc;
+	/* Issue command */
+	s->Phone.Data.SMSC = smsc;
 	smprintf(s, "Getting SMSC\n");
-	ATGEN_WaitFor(s, "AT+CSCA?\r", 9, 0x00, 4, ID_GetSMSC);
+	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetSMSC);
 
 	return error;
 }
@@ -3245,11 +3250,11 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  		Memory->Entries[0].SMSList[0] = 0;
 
 		len = strlen(buffer + 1) - 1;
-		if (Priv->Charset == AT_CHARSET_HEX && (len > 10) && (len % 2 == 0) && (strchr(buffer + 1, '+') == NULL)) {
+		if (ATGEN_DetectHEX(len, buffer + 1)) {
 			/* This is probably hex encoded number */
 			DecodeHexBin(buffer2, buffer+1, len);
 			DecodeDefault(Memory->Entries[0].Text ,buffer2, strlen(buffer2), false, NULL);
-		} else if (Priv->Charset == AT_CHARSET_UCS2 && (len > 8) && (len % 4 == 0) && (strchr(buffer + 1, '+') == NULL)) {
+		} else if (ATGEN_DetectUCS2(len, buffer + 1)) {
 			/* This is probably unicode encoded number */
 			DecodeHexUnicode(Memory->Entries[0].Text, buffer + 1,len);
 		} else  {

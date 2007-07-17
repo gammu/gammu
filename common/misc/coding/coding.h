@@ -21,7 +21,7 @@ typedef		int wint_t;
 /* ---------------------------- Unicode ------------------------------------ */
 bool 		myiswspace	  		(unsigned const char *src);
 #ifndef HAVE_TOWLOWER
-int 		towlower			(wchar_t c);
+wchar_t		towlower			(wchar_t c);
 #endif
 
 int		EncodeWithUnicodeAlphabet	(const unsigned char *value, wchar_t *dest);

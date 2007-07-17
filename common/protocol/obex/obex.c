@@ -11,7 +11,7 @@
 #include "../../gsmcomon.h"
 #include "obex.h"
 
-static GSM_Error OBEX_WriteMessage (GSM_StateMachine *s, unsigned char *buffer,
+static GSM_Error OBEX_WriteMessage (GSM_StateMachine *s, unsigned const char *buffer,
 				    int length, unsigned char type)
 {
 	unsigned char	*out_buffer;
@@ -104,7 +104,7 @@ GSM_Protocol_Functions OBEXProtocol = {
 
 #endif
 
-void OBEXAddBlock(char *Buffer, int *Pos, unsigned char ID, char *AddBuffer, int AddLength)
+void OBEXAddBlock(char *Buffer, int *Pos, unsigned char ID, const char *AddBuffer, int AddLength)
 {
 	Buffer[(*Pos)++] = ID;
 	Buffer[(*Pos)++] = (AddLength+3)/256;
