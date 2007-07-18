@@ -1213,8 +1213,10 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
     	smprintf(s, "Sending simple AT command to wake up some devices\n");
 	GSM_WaitFor(s, "AT\r", 3, 0x00, 2, ID_IncomingFrame);
 
+	/* We want to see our commands to allow easy detection of reply functions */
 	smprintf(s, "Enabling echo\n");
 	error = GSM_WaitFor(s, "ATE1\r", 5, 0x00, 3, ID_EnableEcho);
+
 	/* Some modems (Sony Ericsson GC 79, GC 85) need to enable functionality
 	 * (with reset), otherwise they return ERROR on anything!
 	 */
@@ -1284,6 +1286,7 @@ GSM_Error ATGEN_ReplyGetCharset(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	switch (Priv->ReplyState) {
 		case AT_Reply_OK:
+			/* Can not use ATGEN_ParseReply safely here as we do not know charset yet */
 			line = GetLineString(msg.Buffer, Priv->Lines, 2);
 			/* First current charset: */
 			while (AT_Charsets[i].charset != 0) {
@@ -1682,12 +1685,16 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 	}
 }
 
+/**
+ * Converts location from AT internal to Gammu API. We need to ensure
+ * locations in API are sequential over all folders.
+ */
 void ATGEN_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char folderid, int location)
 {
-	sms->Folder	= 0;
+	sms->Folder	= 0; /* Flat memory */
 	sms->Location	= (folderid - 1) * AT_MAX_SMS_LOCATION + location;
 	smprintf(s, "ATGEN folder %i & location %i -> SMS folder %i & location %i\n",
-		folderid,location,sms->Folder,sms->Location);
+		folderid, location, sms->Folder, sms->Location);
 }
 
 GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
