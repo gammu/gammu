@@ -2967,36 +2967,22 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_SMSC		*SMSC = s->Phone.Data.SMSC;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	int			current;
-	unsigned char		buffer[500];
 	GSM_Error		error;
+	int number_type;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "SMSC info received\n");
 
-		current = 0;
-		while (msg.Buffer[current]!='"') current++;
-
-		/* SMSC number */
-		/* FIXME: support for all formats */
-		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
-
-		/* Decode the number */
-		error = ATGEN_DecodeText(s,
-				buffer + 1, strlen(buffer + 1) - 1,
-				SMSC->Number, sizeof(SMSC->Number),
-				true, true);
-		if (error != ERR_NONE) return error;
-
-		smprintf(s, "Number: \"%s\"\n", DecodeUnicodeString(SMSC->Number));
-
-		/* Format of SMSC number */
-		current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
-		smprintf(s, "Format %s\n",buffer);
-
+		/* Parse reply */
+		error = ATGEN_ParseReply(s, 
+					GetLineString(msg.Buffer, Priv->Lines, 2),
+					"+CSCA: @p, @i", 
+					SMSC->Number, sizeof(SMSC->Number),
+					&number_type);
+		
 		/* International number */
-		GSM_TweakInternationalNumber(SMSC->Number, atoi(buffer));
+		GSM_TweakInternationalNumber(SMSC->Number, number_type);
 
 		SMSC->Format 		= SMS_FORMAT_Text;
 		SMSC->Validity.Format = SMS_Validity_RelativeFormat;
