@@ -1922,6 +1922,7 @@ static GSM_Error ALCATEL_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_Text_WorkState:
 				case PBK_Text_WorkZip:
 				case PBK_Text_WorkCountry:
+				case PBK_Text_PictureName:
 					entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 					smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
 					break;
@@ -2102,6 +2103,7 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				case PBK_Text_WorkState:
 				case PBK_Text_WorkZip:
 				case PBK_Text_WorkCountry:
+				case PBK_Text_PictureName:
 					entry->Entries[i].AddError = ERR_NOTSUPPORTED;
 					smprintf(s,"WARNING: Ignoring entry %d, not supported by phone\n", entry->Entries[i].EntryType);
 					break;

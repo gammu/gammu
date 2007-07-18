@@ -1020,6 +1020,9 @@ static void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 	case PBK_Text_UserID:
 		printf(LISTFORMAT "%s\n", _("User ID"),DecodeUnicodeString(entry->Text));
 		return;
+	case PBK_Text_PictureName:
+		printf(LISTFORMAT "%s\n", _("Picture name"),DecodeUnicodeString(entry->Text));
+		return;
 	case PBK_PictureID	     :
 		printf(LISTFORMAT "0x%x\n", _("Picture ID"),entry->Number);
 		return;
@@ -1242,6 +1245,7 @@ static void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 			case PBK_Text_Custom3       :
 			case PBK_Text_Custom4       :
 			case PBK_Text_UserID:
+			case PBK_Text_PictureName:
 			case PBK_Caller_Group       :
 				if (mywstrstr(Entry->Entries[i].Text, Text) != NULL) {
 					fprintf(stderr,"\n");
