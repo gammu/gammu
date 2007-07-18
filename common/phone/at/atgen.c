@@ -3602,7 +3602,6 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
  	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
 	GSM_Error		error;
-	char			*pos;
 	unsigned char		buffer[500];
 	int offset, i;
 	int number_type, types[10];
@@ -3610,6 +3609,10 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
  		smprintf(s, "Phonebook entry received\n");
+		/* Check for empty entries */
+		if (strcmp("OK", GetLineString(msg.Buffer, Priv->Lines, 2)) == 0) {
+			return ERR_EMPTY;
+		}
 
 		/* Set number type */
 		Memory->Entries[0].EntryType = PBK_Number_General;
@@ -3787,109 +3790,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 		}
 
- 		Memory->EntriesNum = 0;
-		if (Priv->Lines.numbers[4]==0) return ERR_EMPTY;
-		pos = strstr(msg.Buffer, "+CPBR:");
-		if (pos == NULL) return ERR_UNKNOWN;
-		/* Go after +CPBR: */
-		pos += 6;
-
-		/* Location */
-		while (*pos && !isdigit(*pos)) pos++;
-		Memory->Location = atoi(pos) + 1 - Priv->FirstMemoryEntry;
- 		smprintf(s, "Location: %d\n", Memory->Location);
-
-		/* Number */
-		while (*pos != '"') pos++;
-		pos += ATGEN_ExtractOneParameter(pos, buffer);
- 		smprintf(s, "Number: %s\n",buffer);
- 		Memory->EntriesNum++;
- 		Memory->Entries[0].EntryType  = PBK_Number_General;
- 		Memory->Entries[0].VoiceTag   = 0;
- 		Memory->Entries[0].SMSList[0] = 0;
-
-		/* Decode number */
-		error = ATGEN_DecodeText(s,
-				buffer + 1, strlen(buffer + 1) - 1,
-				Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
-				true, true);
-		if (error != ERR_NONE) return error;
-
-		/* Number format */
-		pos += ATGEN_ExtractOneParameter(pos, buffer);
- 		smprintf(s, "Number format: %s\n",buffer);
-
-		/* International number */
-		GSM_TweakInternationalNumber(Memory->Entries[0].Text, atoi(buffer));
-
-		/* Name */
-		pos += ATGEN_ExtractOneParameter(pos, buffer);
- 		smprintf(s, "Name text: %s\n",buffer);
-
- 		/* Some phones (Motorola) don't put name iniside quotes */
- 		if (buffer[0] == '"') offset = 1;
- 		else offset = 0;
-
- 		Memory->EntriesNum++;
- 		Memory->Entries[1].EntryType=PBK_Text_Name;
-
-		/* Decode string */
-		error = ATGEN_DecodeText(s,
-				buffer + offset, strlen(buffer) - (offset * 2),
-				Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
-				false, false);
-		if (error != ERR_NONE) return error;
-
-		/* Samsung number type */
-		if (Priv->Manufacturer == AT_Samsung) {
-			int type;
-
-			pos += ATGEN_ExtractOneParameter(pos, buffer);
- 			smprintf(s, "Number type: %s\n",buffer);
-			type = strtoul(buffer, NULL, 0);
-			switch (type) {
-			case 0:
- 				Memory->Entries[0].EntryType = PBK_Number_Mobile;
-				break;
-			case 1:
- 				Memory->Entries[0].EntryType = PBK_Number_Work;
-				break;
-			case 2:
- 				Memory->Entries[0].EntryType = PBK_Number_Home;
-				break;
-			case 3:
- 				Memory->Entries[0].EntryType = PBK_Text_Email;
-				break;
-			default:
- 				Memory->Entries[0].EntryType = PBK_Number_General;
-			}
-		}
-
-		/* Optional date */
-		if (Priv->Manufacturer == AT_Ericsson) {
-			pos += ATGEN_ExtractOneParameter(pos, buffer);
-			if (strlen(buffer) > 0) {
-				smprintf(s, "Date text: %s\n",buffer);
-
-				if (buffer[0] == '"') offset = 1;
-				else offset = 0;
-
-				/* Decode text */
-				error = ATGEN_DecodeText(s,
-						buffer + offset, strlen(buffer) - (offset * 2),
-						Memory->Entries[2].Text, sizeof(Memory->Entries[1].Text),
-						true, false);
-				if (error != ERR_NONE) return error;
-
-				/* Decode date */
-				if (ATGEN_DecodeDateTime(s, &(Memory->Entries[2].Date), buffer) == ERR_NONE) {
-					Memory->Entries[2].EntryType = PBK_Date;
-					Memory->EntriesNum++;
-				}
-			}
-		}
-
-		return ERR_NONE;
+		return ERR_UNKNOWNRESPONSE;
 	case AT_Reply_CMEError:
 		return ATGEN_HandleCMEError(s);
 	case AT_Reply_Error:
