@@ -1120,7 +1120,7 @@ GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine 
 			return ERR_MOREMEMORY;
 		}
 		CopyLineString(s->Phone.Data.Version, msg.Buffer, Priv->Lines, 2);
-		/* Sometimes phone adds this before manufacturer (Sagem) */
+		/* Sometimes phone adds this before version (Sagem) */
 		if (strncmp("+CGMR: ", s->Phone.Data.Version, 7) == 0) {
 			/* Need to use memmove as strcpy does not correctly handle overlapping regions */
 			memmove(s->Phone.Data.Version, s->Phone.Data.Version + 7, strlen(s->Phone.Data.Version + 7) + 1);
