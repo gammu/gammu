@@ -864,9 +864,8 @@ GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *
 GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_USSDMessage ussd;
-	unsigned char 	buffer[2000];
-	char *pos;
 	GSM_Error error;
+	unsigned char *pos;
 
 	/*
 	 * Reply format:
@@ -875,15 +874,19 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	smprintf(s, "Incoming USSD received\n");
 
 	if (s->Phone.Data.EnableIncomingUSSD) {
-
+		/* Find start of reply */
 		pos = strstr(msg.Buffer, "+CUSD:");
 		if (pos == NULL) return ERR_UNKNOWN;
-		/* Go after +CUSD: */
-		pos += 6;
 
-		/* Status */
-		while (*pos && !isdigit(*pos)) pos++;
-		ussd.Status = atoi(pos);
+		/* Parse reply */
+		error = ATGEN_ParseReply(s, pos,
+				"+CUSD: @i, @s @0",
+				&ussd.Status,
+				ussd.Text, sizeof(ussd.Text));
+
+		if (error != ERR_NONE) return error;
+
+		/* Decode status */
 		smprintf(s, "Status: %d\n", ussd.Status);
 		switch(ussd.Status) {
 			case 0:
@@ -908,18 +911,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				ussd.Status = USSD_Unknown;
 		}
 
-		/* Text */
-		while (*pos != '"') pos++;
-		pos += ATGEN_ExtractOneParameter(pos, buffer);
-		smprintf(s, "Text: %s\n", buffer);
-
-		/* Decode text */
-		error = ATGEN_DecodeText(s,
-				buffer + 1, strlen(buffer + 1) - 1,
-				ussd.Text, sizeof(ussd.Text),
-				true, false);
-		if (error != ERR_NONE) return error;
-
+		/* Notify application */
 		if (s->User.IncomingUSSD!=NULL) {
 			s->User.IncomingUSSD(s, ussd);
 		}
