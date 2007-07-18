@@ -599,6 +599,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
  * @r - raw string, no conversion will be done, only stripped quotes, expects pointer to char and size of storage
  * @d - date, expects pointer to GSM_DateTime
  * @@ - @ literal
+ * @0 - ignore rest of input
  *
  * Special behaviour:
  * Any space is automatically treated as [[:space:]]* regexp.
@@ -731,6 +732,10 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 							error = ERR_UNKNOWNRESPONSE;
 							goto end;
 						}
+						break;
+					case '0':
+						/* Just skip the rest */
+						goto end;
 						break;
 					default:
 						smprintf(s, "Invalid format string (@%c): %s\n", *(fmt - 1), format);
@@ -4529,33 +4534,13 @@ GSM_Error ATGEN_SetIncomingCall(GSM_StateMachine *s, bool enable)
 /**
  * Extract number of incoming call from +CLIP: response.
  */
-void ATGEN_Extract_CLIP_number(GSM_StateMachine *s, char *dest, const char *buf)
+void ATGEN_Extract_CLIP_number(GSM_StateMachine *s, unsigned char *dest, size_t destsize, const char *buf)
 {
-	char *pos;
-	size_t len;
-
-	pos = strstr(buf, "+CLIP:");
-	if (pos == NULL) return;
-	/* Go after +CLIP: */
-	pos += 6;
-
-	/* Extract number */
-	while (*pos != '"') pos++;
-	pos += ATGEN_ExtractOneParameter(pos, dest);
-
-	if (dest[0] == '"') {
-		len = strlen(dest) - 2;
-		memmove(dest, dest + 1, len);
-		dest[len] = 0;
-	}
-	smprintf(s, "Incoming call number: %s\n", dest);
-
-	return;
+	ATGEN_ParseReply(s, buf, "+CLIP: @p,@0", dest, destsize);
 }
 
 GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	char 			num[128];
 	GSM_Call 		call;
 
 	memset(&call, 0, sizeof(call));
@@ -4563,7 +4548,6 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 	smprintf(s, "Incoming call info\n");
 	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL) {
 		call.CallIDAvailable 	= false;
-		num[0] 			= 0;
 		if (strstr(msg.Buffer, "RING")) {
 			smprintf(s, "Ring detected - ");
 			/* We ignore RING for most phones, see ATGEN_SetIncomingCall */
@@ -4573,23 +4557,22 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 			}
 			smprintf(s, "generating event\n");
 			call.Status = GSM_CALL_IncomingCall;
-			ATGEN_Extract_CLIP_number(s, num, msg.Buffer);
+			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
 		} else if (strstr(msg.Buffer, "CLIP:")) {
 			smprintf(s, "CLIP detected\n");
 			call.Status = GSM_CALL_IncomingCall;
-			ATGEN_Extract_CLIP_number(s,num, msg.Buffer);
+			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
 		} else if (strstr(msg.Buffer, "NO CARRIER")) {
 			smprintf(s, "Call end detected\n");
 			call.Status = GSM_CALL_CallEnd;
 		} else if (strstr(msg.Buffer, "COLP:")) {
 			smprintf(s, "CLIP detected\n");
 			call.Status = GSM_CALL_CallStart;
-			ATGEN_Extract_CLIP_number(s,num, msg.Buffer);
+			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
 		} else {
 			smprintf(s, "Incoming call error\n");
 			return ERR_NONE;
 		}
-		EncodeUnicode(call.PhoneNumber, num, strlen(num));
 
 		s->User.IncomingCall(s, call);
 	}
