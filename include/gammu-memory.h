@@ -271,6 +271,10 @@ typedef enum {
 	 * Complete work postal address. (Text)
 	 */
 	PBK_Text_WorkPostal,
+	/**
+	 * Picture name (on phone filesystem). (Text)
+	 */
+	PBK_Text_PictureName,
 } GSM_EntryType;
 
 /**

@@ -580,6 +580,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
  * @i - number, expects pointer to int
  * @l - number, expects pointer to long int
  * @s - string, will be converted from phone encoding, stripping quotes, expects pointer to unsigned char and size of storage
+ * @S - string with Samsung specials (0x02 at beginning and 0x03 at the end), otherwise same as @s
  * @r - raw string, no conversion will be done, only stripped quotes, expects pointer to char and size of storage
  * @d - date, expects pointer to GSM_DateTime
  * @@ - @ literal
@@ -640,6 +641,25 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						out_s = va_arg(ap, char *);
 						storage_size = va_arg(ap, size_t);
 						length = ATGEN_GrabString(s, inp, &buffer);
+						error = ATGEN_DecodeText(s, 
+								buffer, strlen(buffer),
+								out_s, storage_size,
+								true);
+						free(buffer);
+						if (error != ERR_NONE) {
+							goto end;
+						}
+						inp += length;
+						break;
+					case 'S':
+						out_s = va_arg(ap, char *);
+						storage_size = va_arg(ap, size_t);
+						length = ATGEN_GrabString(s, inp, &buffer);
+						if (buffer[0] == 0x02 && buffer[strlen(buffer) - 1] == 0x03) {
+							memmove(buffer, buffer + 1, strlen(buffer) - 2);
+							buffer[strlen(buffer) - 2] = 0;
+						}
+						smprintf(s, "Parsed Samsung string \"%s\"\n", buffer);
 						error = ATGEN_DecodeText(s, 
 								buffer, strlen(buffer),
 								out_s, storage_size,
@@ -3531,47 +3551,6 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
  * 3 = Home Number
  * 2 = Office Number
  * 1 = Mobile Number
- * Samsung SGH-E250:
- * +CPBR: 6,"123456789",4,"Sullivan","John","987654321",6,"123654789",7,"987456123",2,"555258741",5,"jsulli@dot.com","","Somd notes",32,65535,1,255,43,"","Fotos-0004.jpg"
- * RECEIVED frame type 0x00/length 0xC1/193
- * 41A|54T|2B+|43C|50P|42B|52R|3D=|366|0D |0D |0A |2B+|43C|50P|42 AT+CPBR=6...+CPB
- * 52R|3A:|20 |366|2C,|22"|311|322|333|344|355|366|377|388|399|22 R: 6,"123456789"
- * 2C,|344|2C,|22"|02 |53S|75u|6Cl|6Cl|69i|76v|61a|6En|03 |22"|2C ,4,".Sullivan.",
- * 22"|02 |4AJ|6Fo|68h|6En|03 |22"|2C,|22"|399|388|377|366|355|34 ".John.","987654
- * 333|322|311|22"|2C,|366|2C,|22"|311|322|333|366|355|344|377|38 321",6,"12365478
- * 399|22"|2C,|377|2C,|22"|399|388|377|344|355|366|311|322|333|22 9",7,"987456123"
- * 2C,|322|2C,|22"|355|355|355|322|355|388|377|344|311|22"|2C,|35 ,2,"555258741",5
- * 2C,|22"|6Aj|73s|75u|6Cl|6Cl|69i|40@|64d|6Fo|74t|2E.|63c|6Fo|6D ,"jsulli@dot.com
- * 22"|2C,|22"|22"|2C,|22"|02 |53S|6Fo|6Dm|64d|20 |6En|6Fo|74t|65 ","",".Somd note
- * 73s|03 |22"|2C,|333|322|2C,|366|355|355|333|355|2C,|311|2C,|32 s.",32,65535,1,2
- * 355|355|2C,|344|333|2C,|22"|22"|2C,|22"|46F|6Fo|74t|6Fo|73s|2D 55,43,"","Fotos-
- * 300|300|300|344|2E.|6Aj|70p|67g|22"|0D |0A |0D |0A |4FO|4BK|0D 0004.jpg"....OK.
- * 0A
- * Name: John
- * Sur name: Sullivan
- * cellular: 123456789
- * home phone: 987654321
- * office: 123654789
- * fax: 987456123
- * etc: 555258741
- * email: jsulli@dot.com
- * imagen: Fotos-0004.jpg
- * tone: Tono básico
- * category: Empresas
- * notes: Somd notes
- *
- * Samsung format:
- * location,"number",type,"0x02surname0x03","0x02firstname0x03","number",type,"number",type,"number",type,"number",type,"email","NA","note",category?,x,x,x,ringtone?,"NA","photo"
- *
- * NA fields were empty
- * x fields are some numbers, default is 1,65535,255,255,65535
- *
- * Samsung number types:
- * 4 - cell
- * 6 - home
- * 7 - office
- * 2 - fax
- * 5 - other
  */
 GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -3580,20 +3559,20 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_Error		error;
 	char			*pos;
 	unsigned char		buffer[500];
-	int			offset;
-	int number_type;
+	int offset, i;
+	int number_type, types[10];
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
  		smprintf(s, "Phonebook entry received\n");
 
 		/* Set number type */
-		Memory->Entries[0].EntryType  = PBK_Number_General;
-		Memory->Entries[0].VoiceTag   = 0;
+		Memory->Entries[0].EntryType = PBK_Number_General;
+		Memory->Entries[0].VoiceTag = 0;
 		Memory->Entries[0].SMSList[0] = 0;
 
 		/* Set name type */
-		Memory->Entries[1].EntryType=PBK_Text_Name;
+		Memory->Entries[1].EntryType = PBK_Text_Name;
 
 		/* Try standard reply */
 		error = ATGEN_ParseReply(s, 
@@ -3635,7 +3614,134 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			Memory->EntriesNum = 3;
 			return ERR_NONE;
 		}
-		
+
+		/**
+		 * Samsung format:
+		 * location,"number",type,"0x02surname0x03","0x02firstname0x03","number",
+		 * type,"number",type,"number",type,"number",type,"email","NA",
+		 * "0x02note0x03",category?,x,x,x,ringtone?,"NA","photo"
+		 *
+		 * NA fields were empty
+		 * x fields are some numbers, default is 1,65535,255,255,65535
+		 *
+		 * Samsung number types:
+		 * 2 - fax
+		 * 4 - cell
+		 * 5 - other
+		 * 6 - home
+		 * 7 - office
+		 */
+		if (Priv->Manufacturer == AT_Samsung) {
+			/* Parse reply */
+			error = ATGEN_ParseReply(s, 
+					GetLineString(msg.Buffer, Priv->Lines, 2),
+					"+CPBR: @i,@s,@i,@S,@S,@s,@i,@s,@i,@s,@i,@s,@i,@s,@s,@S,@i,@i,@i,@i,@i,@s,@s", 
+					&Memory->Location, 
+					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+					&types[0],
+					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text), /* surname */
+					Memory->Entries[2].Text, sizeof(Memory->Entries[2].Text), /* first name */
+					Memory->Entries[3].Text, sizeof(Memory->Entries[3].Text),
+					&types[3],
+					Memory->Entries[4].Text, sizeof(Memory->Entries[4].Text),
+					&types[4],
+					Memory->Entries[5].Text, sizeof(Memory->Entries[5].Text),
+					&types[5],
+					Memory->Entries[6].Text, sizeof(Memory->Entries[6].Text),
+					&types[6],
+					Memory->Entries[7].Text, sizeof(Memory->Entries[7].Text), /* email */
+					buffer, sizeof(buffer), /* We don't know this */
+					Memory->Entries[8].Text, sizeof(Memory->Entries[8].Text), /* note */
+					&Memory->Entries[9].Number, /* category */
+					&number_type, /* We don't know this */
+					&number_type, /* We don't know this */
+					&number_type, /* We don't know this */
+					&Memory->Entries[10].Number, /* ringtone ID */
+					buffer, sizeof(buffer), /* We don't know this */
+					Memory->Entries[11].Text, sizeof(Memory->Entries[11].Text) /* photo ID */
+					);
+
+			if (error == ERR_NONE) {
+				smprintf(s, "Samsung reply detected\n");
+				/* Set types */
+				Memory->Entries[1].EntryType = PBK_Text_LastName;
+				Memory->Entries[2].EntryType = PBK_Text_FirstName;
+				Memory->Entries[7].EntryType = PBK_Text_Email;
+				Memory->Entries[8].EntryType = PBK_Text_Note;
+				Memory->Entries[9].EntryType = PBK_Category;
+				Memory->Entries[10].EntryType = PBK_RingtoneID;
+				Memory->Entries[11].EntryType = PBK_Text_PictureName;
+
+				/* Adjust location */
+				Memory->Location = Memory->Location + 1 - Priv->FirstMemoryEntry;
+
+				/* Shift entries when needed */
+				offset = 0;
+
+#define SHIFT_ENTRIES(index) \
+	for (i = index - offset + 1; i < GSM_PHONEBOOK_ENTRIES; i++) { \
+		Memory->Entries[i - 1] = Memory->Entries[i]; \
+	} \
+	offset++;
+
+#define CHECK_TEXT(index) \
+				if (UnicodeLength(Memory->Entries[index - offset].Text) == 0) { \
+					smprintf(s, "Entry %d is empty\n", index); \
+					SHIFT_ENTRIES(index); \
+				}
+#define CHECK_NUMBER(index) \
+				if (UnicodeLength(Memory->Entries[index - offset].Text) == 0) { \
+					smprintf(s, "Entry %d is empty\n", index); \
+					SHIFT_ENTRIES(index); \
+				} else { \
+					Memory->Entries[index - offset].VoiceTag   = 0; \
+					Memory->Entries[index - offset].SMSList[0] = 0; \
+					switch (types[index]) { \
+						case 2: \
+							Memory->Entries[index - offset].EntryType  = PBK_Number_Fax; \
+							break; \
+						case 4: \
+							Memory->Entries[index - offset].EntryType  = PBK_Number_Mobile; \
+							break; \
+						case 5: \
+							Memory->Entries[index - offset].EntryType  = PBK_Number_Other; \
+							break; \
+						case 6: \
+							Memory->Entries[index - offset].EntryType  = PBK_Number_Home; \
+							break; \
+						case 7: \
+							Memory->Entries[index - offset].EntryType  = PBK_Number_Work; \
+							break; \
+						default: \
+							Memory->Entries[index - offset].EntryType  = PBK_Number_Other; \
+							smprintf(s, "WARNING: Unknown memory entry type %d\n", types[index]); \
+							break; \
+					} \
+				}
+				CHECK_NUMBER(0);
+				CHECK_TEXT(1); 
+				CHECK_TEXT(2);
+				CHECK_NUMBER(3);
+				CHECK_NUMBER(4);
+				CHECK_NUMBER(5);
+				CHECK_NUMBER(6);
+				CHECK_TEXT(7);
+				CHECK_TEXT(8);
+				if (Memory->Entries[10 - offset].Number == 65535) {
+					SHIFT_ENTRIES(10);
+				}
+				CHECK_TEXT(11);
+
+#undef CHECK_NUMBER
+#undef CHECK_TEXT
+#undef SHIFT_ENTRIES
+				/* Set number of entries */
+				Memory->EntriesNum = 12 - offset;
+				return ERR_NONE;
+			}
+
+		}
+
  		Memory->EntriesNum = 0;
 		if (Priv->Lines.numbers[4]==0) return ERR_EMPTY;
 		pos = strstr(msg.Buffer, "+CPBR:");

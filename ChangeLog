@@ -18,6 +18,7 @@ ChangeLog
 2007???? - 1.12.91
 [!] * Introduced more generic parsing of AT replies, please report any
       regressions with it!
+[+] * Improved support for Samsung phones.
 
 20070701 - 1.12.90
 [+] * Initial support for Motorola phones (bug #15 and #310).
