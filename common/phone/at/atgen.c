@@ -485,125 +485,6 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
 }
 
 /**
- * Parses AT formatted reply. 
- *
- * Format strings:
- * @i - number, expects pointer to int
- * @l - number, expects pointer to long int
- * @s - string, will be converted from phone encoding, stripping quotes, expects pointer to unsigned char
- * @r - raw string, no conversion will be done, only stripped quotes, expects pointer to char
- * @d - date, expects pointer to GSM_DateTime
- * @@ - @ literal
- *
- * Special behaviour:
- * Any space is automatically treated as [[:space:]]* regexp.
- */
-GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, const char *format, ...)
-{
-	const char *fmt = format;
-	const char *inp = input;
-	char *endptr;
-	GSM_DateTime *out_dt;
-	char *out_s;
-	unsigned char *out_us;
-	unsigned char *buffer;
-	size_t length;
-	int *out_i;
-	long int *out_l;
-	va_list ap;
-	GSM_Error error = ERR_NONE;
-
-	smprintf(s, "Parsing %s with %s\n", input, format);
-
-	va_start(ap, format);
-	while (*fmt) {
-		switch(*fmt++) {
-			case '@':
-				if (*fmt == 0) {
-					smprintf(s, "Invalid format string: %s\n", format);
-					error = ERR_BUG;
-					goto end;
-				}
-				switch(*fmt++) {
-					case 'i':
-						out_i = va_arg(ap, int *);
-						*out_i = strtol(inp, &endptr, 10);
-						smprintf(s, "Parsed int %d\n", *out_i);
-						if (endptr == inp) {
-							error = ERR_UNKNOWNRESPONSE;
-							goto end;
-						}
-						inp = endptr;
-						break;
-					case 'l':
-						out_l = va_arg(ap, long int *);
-						*out_l = strtol(inp, &endptr, 10);
-						smprintf(s, "Parsed long int %ld\n", *out_l);
-						if (endptr == inp) {
-							error = ERR_UNKNOWNRESPONSE;
-							goto end;
-						}
-						inp = endptr;
-						break;
-					case 's':
-						smprintf(s, "Should parse string\n");
-						out_s = va_arg(ap, char *);
-						length = ATGEN_GrabString(s, inp, &buffer);
-						free(buffer);
-						inp += length;
-						break;
-					case 'r':
-						smprintf(s, "Should parse raw string\n");
-						out_us = va_arg(ap, unsigned char *);
-						length = ATGEN_GrabString(s, inp, &buffer);
-						free(buffer);
-						inp += length;
-						break;
-					case 'd':
-						smprintf(s, "Should parse date\n");
-						out_dt = va_arg(ap, GSM_DateTime *);
-						length = ATGEN_GrabString(s, inp, &buffer);
-						free(buffer);
-						inp += length;
-						break;
-					case '@':
-						smprintf(s, "Should see @ [%c]\n", *inp);
-						if (*inp++ != '@') {
-							error = ERR_UNKNOWNRESPONSE;
-							goto end;
-						}
-						break;
-					default:
-						smprintf(s, "Invalid format string (@%c): %s\n", *(fmt - 1), format);
-						error = ERR_BUG;
-						goto end;
-				}
-				break;
-			case ' ':
-				smprintf(s, "Should skip spaces\n");
-				while (isspace(*inp)) inp++;
-				break;
-			default:
-				smprintf(s, "Should see %c [%c]\n", *(fmt - 1), *inp);
-				if (*inp++ != *(fmt - 1)) {
-					error = ERR_UNKNOWNRESPONSE;
-					goto end;
-				}
-				break;
-		}
-	}
-
-	if (*inp != 0) {
-		smprintf(s, "String do not end same!\n");
-		error = ERR_UNKNOWNRESPONSE;
-		goto end;
-	}
-end:
-	va_end(ap);
-	return error;
-}
-
-/**
  * This function parses datetime strings in the format:
  * [YY[YY]/MM/DD,]hh:mm[:ss[+TZ]] , [] enclosed parts are optional
  * (or the same hex/unicode encoded).
@@ -690,6 +571,145 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 		dt->Timezone = 0;
 	}
 	return ERR_NONE;
+}
+
+/**
+ * Parses AT formatted reply. 
+ *
+ * Format strings:
+ * @i - number, expects pointer to int
+ * @l - number, expects pointer to long int
+ * @s - string, will be converted from phone encoding, stripping quotes, expects pointer to unsigned char and size of storage
+ * @r - raw string, no conversion will be done, only stripped quotes, expects pointer to char and size of storage
+ * @d - date, expects pointer to GSM_DateTime
+ * @@ - @ literal
+ *
+ * Special behaviour:
+ * Any space is automatically treated as [[:space:]]* regexp.
+ */
+GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, const char *format, ...)
+{
+	const char *fmt = format;
+	const char *inp = input;
+	char *endptr;
+	GSM_DateTime *out_dt;
+	char *out_s;
+	unsigned char *out_us;
+	unsigned char *buffer;
+	size_t length;
+	size_t storage_size;
+	int *out_i;
+	long int *out_l;
+	va_list ap;
+	GSM_Error error = ERR_NONE;
+
+	smprintf(s, "Parsing %s with %s\n", input, format);
+
+	va_start(ap, format);
+	while (*fmt) {
+		switch(*fmt++) {
+			case '@':
+				if (*fmt == 0) {
+					smprintf(s, "Invalid format string: %s\n", format);
+					error = ERR_BUG;
+					goto end;
+				}
+				switch(*fmt++) {
+					case 'i':
+						out_i = va_arg(ap, int *);
+						*out_i = strtol(inp, &endptr, 10);
+						smprintf(s, "Parsed int %d\n", *out_i);
+						if (endptr == inp) {
+							error = ERR_UNKNOWNRESPONSE;
+							goto end;
+						}
+						inp = endptr;
+						break;
+					case 'l':
+						out_l = va_arg(ap, long int *);
+						*out_l = strtol(inp, &endptr, 10);
+						smprintf(s, "Parsed long int %ld\n", *out_l);
+						if (endptr == inp) {
+							error = ERR_UNKNOWNRESPONSE;
+							goto end;
+						}
+						inp = endptr;
+						break;
+					case 's':
+						smprintf(s, "Should parse string\n");
+						out_s = va_arg(ap, char *);
+						storage_size = va_arg(ap, size_t);
+						length = ATGEN_GrabString(s, inp, &buffer);
+						error = ATGEN_DecodeText(s, 
+								buffer, strlen(buffer),
+								out_s, storage_size,
+								true);
+						free(buffer);
+						if (error != ERR_NONE) {
+							goto end;
+						}
+						inp += length;
+						break;
+					case 'r':
+						smprintf(s, "Should parse raw string\n");
+						out_us = va_arg(ap, unsigned char *);
+						storage_size = va_arg(ap, size_t);
+						length = ATGEN_GrabString(s, inp, &buffer);
+						if (strlen(buffer) > storage_size) {
+							free(buffer);
+							error = ERR_MOREMEMORY;
+							goto end;
+						}
+						strcpy(out_us, buffer);
+						free(buffer);
+						inp += length;
+						break;
+					case 'd':
+						smprintf(s, "Should parse date\n");
+						out_dt = va_arg(ap, GSM_DateTime *);
+						length = ATGEN_GrabString(s, inp, &buffer);
+						error = ATGEN_DecodeDateTime(s, out_dt, buffer);
+						free(buffer);
+						if (error != ERR_NONE) {
+							goto end;
+						}
+						inp += length;
+						break;
+					case '@':
+						smprintf(s, "Should see @ [%c]\n", *inp);
+						if (*inp++ != '@') {
+							error = ERR_UNKNOWNRESPONSE;
+							goto end;
+						}
+						break;
+					default:
+						smprintf(s, "Invalid format string (@%c): %s\n", *(fmt - 1), format);
+						error = ERR_BUG;
+						goto end;
+				}
+				break;
+			case ' ':
+				smprintf(s, "Should skip spaces\n");
+				while (isspace(*inp)) inp++;
+				break;
+			default:
+				smprintf(s, "Should see %c [%c]\n", *(fmt - 1), *inp);
+				if (*inp++ != *(fmt - 1)) {
+					error = ERR_UNKNOWNRESPONSE;
+					goto end;
+				}
+				break;
+		}
+	}
+
+	if (*inp != 0) {
+		smprintf(s, "String do not end same!\n");
+		error = ERR_UNKNOWNRESPONSE;
+		goto end;
+	}
+end:
+	va_end(ap);
+	return error;
 }
 
 GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
@@ -3566,17 +3586,56 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
  		smprintf(s, "Phonebook entry received\n");
-		smprintf(s, "Parse err: %d\n", ATGEN_ParseReply(s, 
+
+		/* Set number type */
+		Memory->Entries[0].EntryType  = PBK_Number_General;
+		Memory->Entries[0].VoiceTag   = 0;
+		Memory->Entries[0].SMSList[0] = 0;
+
+		/* Set name type */
+		Memory->Entries[1].EntryType=PBK_Text_Name;
+
+		/* Try standard reply */
+		error = ATGEN_ParseReply(s, 
 					GetLineString(msg.Buffer, Priv->Lines, 2),
 					"+CPBR: @i,@s,@i,@s", 
-					&Memory->Location, Memory->Entries[0].Text,
-					&number_type,  Memory->Entries[1].Text));
-		smprintf(s, "Parse err: %d\n", ATGEN_ParseReply(s, 
+					&Memory->Location, 
+					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+					&number_type,
+					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
+		if (error == ERR_NONE) {
+			smprintf(s, "Generic AT reply detected\n");
+			/* Adjust location */
+			Memory->Location = Memory->Location + 1 - Priv->FirstMemoryEntry;
+			/* Adjust number */
+			GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
+			/* Set number of entries */
+			Memory->EntriesNum = 2;
+			return ERR_NONE;
+		}
+
+		/* Try reply with call date */
+		error = ATGEN_ParseReply(s, 
 					GetLineString(msg.Buffer, Priv->Lines, 2),
 					"+CPBR: @i,@s,@i,@s,@d", 
-					&Memory->Location, Memory->Entries[0].Text,
-					&number_type,  Memory->Entries[1].Text, 
-					&Memory->Entries[2].Date));
+					&Memory->Location, 
+					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+					&number_type,
+					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
+					&Memory->Entries[2].Date);
+		if (error == ERR_NONE) {
+			smprintf(s, "Reply with date detected\n");
+			/* Adjust location */
+			Memory->Location = Memory->Location + 1 - Priv->FirstMemoryEntry;
+			/* Adjust number */
+			GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
+			/* Set date type */
+			Memory->Entries[2].EntryType = PBK_Date;
+			/* Set number of entries */
+			Memory->EntriesNum = 3;
+			return ERR_NONE;
+		}
+
  		Memory->EntriesNum = 0;
 		if (Priv->Lines.numbers[4]==0) return ERR_EMPTY;
 		pos = strstr(msg.Buffer, "+CPBR:");
