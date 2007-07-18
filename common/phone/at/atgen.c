@@ -2739,10 +2739,18 @@ GSM_Error ATGEN_ReplyGetDateTime_Alarm(GSM_Protocol_Message msg, GSM_StateMachin
 	unsigned char		*pos, loc;
 	unsigned char		buffer[100];
 	GSM_Error		error;
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
+		if (Data->RequestID == ID_GetDateTime) {
+			return ATGEN_ParseReply(s, 
+					GetLineString(msg.Buffer, Priv->Lines, 2),
+					"+CCLK: @d",
+					Data->DateTime);
+		}
 		pos=msg.Buffer;
+
 loop:
 		pos = strchr(pos, ':');
 		if (pos == NULL) {
