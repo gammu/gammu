@@ -2984,6 +2984,7 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* International number */
 		GSM_TweakInternationalNumber(SMSC->Number, number_type);
 
+		/* Some things we can not find out */
 		SMSC->Format 		= SMS_FORMAT_Text;
 		SMSC->Validity.Format = SMS_Validity_RelativeFormat;
 		SMSC->Validity.Relative	= SMS_VALID_Max_Time;
