@@ -3523,7 +3523,7 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 }
 
 /**
- * Parses reply on AT+CPBR=n.
+ * Parses reply on AT+CPBR=n. 
  *
  * \todo Handle special replies from some phones:
  * LG C1200:
@@ -3561,7 +3561,7 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
  * notes: Somd notes
  *
  * Samsung format:
- * location,"number",type,"0x02surname0x03","number",type,"number",type,"number",type,"number",type,"email","NA","note",category?,x,x,x,ringtone?,"NA","photo"
+ * location,"number",type,"0x02surname0x03","0x02firstname0x03","number",type,"number",type,"number",type,"number",type,"email","NA","note",category?,x,x,x,ringtone?,"NA","photo"
  *
  * NA fields were empty
  * x fields are some numbers, default is 1,65535,255,255,65535
@@ -3635,7 +3635,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			Memory->EntriesNum = 3;
 			return ERR_NONE;
 		}
-
+		
  		Memory->EntriesNum = 0;
 		if (Priv->Lines.numbers[4]==0) return ERR_EMPTY;
 		pos = strstr(msg.Buffer, "+CPBR:");
