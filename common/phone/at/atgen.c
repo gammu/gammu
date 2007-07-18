@@ -5395,7 +5395,7 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					&protocol_level);
 			}
 
-			/* We found valid line */
+			/* Check for OBEX */
 			if (error == ERR_NONE && protocol_id == 0) {
 				smprintf(s, "OBEX seems to be supported, version %s, level %d!\n", protocol_version, protocol_level);
 #ifdef GSM_ENABLE_SONYERICSSON
@@ -5415,8 +5415,11 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					smprintf(s, "HINT: Please consider adding F_OBEX to your phone capabilities in common/gsmphones.c\n");
 				}
 			}
+			/* Check for Alcatel protocol */
 			if (error == ERR_NONE && protocol_id == 16) {
-				smprintf(s, "HINT: Please consider adding F_ALCATEL to your phone capabilities in common/gsmphones.c\n");
+				if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_ALCATEL)) {
+					smprintf(s, "HINT: Please consider adding F_ALCATEL to your phone capabilities in common/gsmphones.c\n");
+				}
 			}
 			line++;
 		}
