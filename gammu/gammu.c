@@ -2189,7 +2189,12 @@ static void GetSMSC(int argc, char *argv[])
 	GSM_SMSC 	smsc;
 	int 		start, stop;
 
-	GetStartStop(&start, &stop, 2, argc, argv);
+	if (argc == 2) {
+		start = 1;
+		stop = 1;
+	} else {
+		GetStartStop(&start, &stop, 2, argc, argv);
+	}
 
 	GSM_Init(true);
 
@@ -10060,7 +10065,7 @@ static GSM_Parameters Parameters[] = {
 	{"searchmemory",		1, 1, SearchMemory,		{H_Memory,0},			"text"},
 	{"listmemorycategory",	1, 1, ListMemoryCategory,	{H_Memory, H_Category,0},	"text|number"},
 	{"getfmstation",		1, 2, GetFMStation,		{H_FM,0},			"start [stop]"},
-	{"getsmsc",			1, 2, GetSMSC,			{H_SMS,0},			"start [stop]"},
+	{"getsmsc",			0, 2, GetSMSC,			{H_SMS,0},			"[start [stop]]"},
 	{"getsms",			2, 3, GetSMS,			{H_SMS,0},			"folder start [stop]"},
 	{"deletesms",			2, 3, DeleteSMS,		{H_SMS,0},			"folder start [stop]"},
 	{"deleteallsms",		1, 1, DeleteAllSMS,		{H_SMS,0},			"folder"},
