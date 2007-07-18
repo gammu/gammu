@@ -451,10 +451,14 @@ int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
  */
 size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigned char **output)
 {
-	size_t size = 0, position = 0;
+	size_t size = 4, position = 0;
 	bool inside_quotes = false;
 
-	*output = NULL;
+	*output = (unsigned char *)malloc(size);
+	if (*output == NULL) {
+		smprintf(s, "Ran out of memory!\n");
+		return 0;
+	}
 
 	while ((*input!=',' || inside_quotes) && *input!=0x0d && *input!=0x00) {
 		if (*input == '"') inside_quotes = ! inside_quotes;
@@ -2733,77 +2737,83 @@ GSM_Error ATGEN_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 	return s->Protocol.Functions->WriteMessage(s, req, strlen(req), 0x00);
 }
 
-GSM_Error ATGEN_ReplyGetDateTime_Alarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_Data *Data = &s->Phone.Data;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+		return ATGEN_ParseReply(s, 
+				GetLineString(msg.Buffer, Priv->Lines, 2),
+				"+CCLK: @d",
+				Data->DateTime);
+	case AT_Reply_Error:
+		return ERR_NOTSUPPORTED;
+	case AT_Reply_CMSError:
+		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
+	default:
+		break;
+	}
+	return ERR_UNKNOWNRESPONSE;
+}
+
+
+GSM_Error ATGEN_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data		*Data = &s->Phone.Data;
-	unsigned char		*pos, loc;
 	unsigned char		buffer[100];
 	GSM_Error		error;
-	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	int i;
+	int location;
+	char *str;
 
-	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
-		if (Data->RequestID == ID_GetDateTime) {
-			return ATGEN_ParseReply(s, 
-					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CCLK: @d",
-					Data->DateTime);
+		/* Try simple date string as alarm */
+		error = ATGEN_ParseReply(s, 
+				GetLineString(msg.Buffer, Priv->Lines, 2),
+				"+CALA: @d",
+				&(Data->Alarm->DateTime));
+		if (error == ERR_NONE) {
+			if (Data->Alarm->Location != 1) return ERR_INVALIDLOCATION;
+			return ERR_NONE;
 		}
-		pos=msg.Buffer;
 
-loop:
-		pos = strchr(pos, ':');
-		if (pos == NULL) {
-			smprintf(s, "Not set in phone\n");
-			return ERR_EMPTY;
-		}
-		pos++;
-		while (isspace(*pos)) pos++;
-		pos+=ATGEN_ExtractOneParameter(pos, buffer);
-		switch (Data->RequestID) {
-		case ID_GetDateTime:
-			return ATGEN_DecodeDateTime(s, Data->DateTime, buffer);
-		case ID_GetAlarm:
-			if (*(pos-1)!=',') {
-			/* reply only with date/time */
-				if (Data->Alarm->Location != 1) return ERR_NOTSUPPORTED;
-				Data->Alarm->Repeating = false;
-				Data->Alarm->Text[0] = 0;
-				Data->Alarm->Text[1] = 0;
-				return ATGEN_DecodeDateTime(s, &Data->Alarm->DateTime, buffer);
-			} else {
-			/* extended reply with date/time, location, text, repeating... */
-			/* based on SE K800i and SE K750i */
-        			pos += ATGEN_ExtractOneParameter(pos, buffer + 50);
-				loc = atoi(buffer + 50);
-				if (loc == Data->Alarm->Location) {
-    					error=ATGEN_DecodeDateTime(s, &Data->Alarm->DateTime, buffer);
-					if (error != ERR_NONE) {
-						return error;
-					}
-	        			pos += ATGEN_ExtractOneParameter(pos, buffer);
-					pos += ATGEN_ExtractOneParameter(pos, buffer);
-					EncodeUnicode(Data->Alarm->Text, buffer+1, strlen(buffer+1)-1);
-					pos += ATGEN_ExtractOneParameter(pos, buffer);
-					/**
-					 * @todo This is not exact, repeating
-					 * can be set for only limited
-					 * set of days (eg. "4,5,6").
-					 */
-					if (!strcmp(buffer, "\"1,2,3,4,5,6,7\"")) {
-						Data->Alarm->Repeating = true;
-					} else {
-						Data->Alarm->Repeating = false;
-					}
-					return ERR_NONE;
+		/* Ok we have something more complex, try to handle it */
+		i = 2;
+		/* Need to scan over all reply lines */
+		while (strcmp("OK", str = GetLineString(msg.Buffer, Priv->Lines, i)) != 0) {
+			i++;
+			/**
+			 * +CALA: [<time1>,<n1>,<type1>,[<text1>],[<recurr1>],<silent1>]
+			 */
+			error = ATGEN_ParseReply(s, str,
+					"+CALA: @d, @i, @s, @s, @s",
+					&(Data->Alarm->DateTime),
+					&location,
+					buffer, sizeof(buffer),
+					Data->Alarm->Text, sizeof(Data->Alarm->Text),
+					buffer, sizeof(buffer));
+			if (error == ERR_NONE && location == Data->Alarm->Location) {
+				/**
+				 * \todo This is not exact, repeating
+				 * can be set for only limited
+				 * set of days (eg. "4,5,6").
+				 */
+				if (!strcmp(buffer, "\"1,2,3,4,5,6,7\"")) {
+					Data->Alarm->Repeating = true;
 				} else {
-					goto loop;
+					Data->Alarm->Repeating = false;
 				}
+				return ERR_NONE;
 			}
-		default:
-			break;
 		}
-		return ERR_NONE;
+
+		return ERR_EMPTY;
 	case AT_Reply_Error:
 		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
@@ -5517,10 +5527,10 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_IncomingSMSReport,	"+CDS:" 	 	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_IncomingSMSCInfo,	"^SCN:"			,0x00,0x00,ID_IncomingFrame	 },
 
-{ATGEN_ReplyGetDateTime_Alarm,	"AT+CCLK?"		,0x00,0x00,ID_GetDateTime	 },
+{ATGEN_ReplyGetDateTime,	"AT+CCLK?"		,0x00,0x00,ID_GetDateTime	 },
 {ATGEN_GenericReply,		"AT+CCLK="		,0x00,0x00,ID_SetDateTime	 },
 {ATGEN_GenericReply,		"AT+CALA="		,0x00,0x00,ID_SetAlarm		 },
-{ATGEN_ReplyGetDateTime_Alarm,	"AT+CALA?"		,0x00,0x00,ID_GetAlarm		 },
+{ATGEN_ReplyGetAlarm,		"AT+CALA?"		,0x00,0x00,ID_GetAlarm		 },
 
 {ATGEN_ReplyGetNetworkLAC_CID,	"AT+CREG?"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+CREG=2"		,0x00,0x00,ID_GetNetworkInfo	 },
