@@ -3882,6 +3882,12 @@ GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, bool
 	GSM_Error		error;
 	int			step = 0;
 
+	error = ATGEN_GetManufacturer(s);
+	if (error != ERR_NONE) return error;
+
+	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
+	if (error != ERR_NONE) return error;
+
 	if (Priv->MemorySize == 0) {
 		error = ATGEN_GetMemoryInfo(s, NULL, AT_Total);
 		if (error != ERR_NONE) return error;
