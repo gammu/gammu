@@ -361,11 +361,11 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 			&& ! ATGEN_IsHex(input, length)) {
 			charset = AT_CHARSET_GSM;
 		}
-		/* For phone numbers, we can assume all unicode chars 
+		/* For phone numbers, we can assume all unicode chars
 		 * will be < 256, so they will fit one byte */
 		if  (charset == AT_CHARSET_UCS2
 			&& ! ATGEN_IsUCS2(input, length) && (
-				!phone || 
+				!phone ||
 				input[0] != '0' ||
 				input[1] != '0' ||
 				input[4] != '0' ||
@@ -456,7 +456,7 @@ int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
  * \param s State machine structure.
  * \param input Input string to parse.
  * \param output Pointer to pointer to char, buffer will be allocated.
- * 
+ *
  * \return Length of parsed string.
  */
 size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigned char **output)
@@ -588,7 +588,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 }
 
 /**
- * Parses AT formatted reply. 
+ * Parses AT formatted reply.
  *
  * Format strings:
  * @i - number, expects pointer to int
@@ -657,7 +657,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						out_s = va_arg(ap, char *);
 						storage_size = va_arg(ap, size_t);
 						length = ATGEN_GrabString(s, inp, &buffer);
-						error = ATGEN_DecodeText(s, 
+						error = ATGEN_DecodeText(s,
 								buffer, strlen(buffer),
 								out_s, storage_size,
 								true, true);
@@ -672,7 +672,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						out_s = va_arg(ap, char *);
 						storage_size = va_arg(ap, size_t);
 						length = ATGEN_GrabString(s, inp, &buffer);
-						error = ATGEN_DecodeText(s, 
+						error = ATGEN_DecodeText(s,
 								buffer, strlen(buffer),
 								out_s, storage_size,
 								true, false);
@@ -691,7 +691,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 							buffer[strlen(buffer) - 2] = 0;
 						}
 						smprintf(s, "Parsed Samsung string \"%s\"\n", buffer);
-						error = ATGEN_DecodeText(s, 
+						error = ATGEN_DecodeText(s,
 								buffer, strlen(buffer),
 								out_s, storage_size,
 								true, false);
@@ -1072,6 +1072,11 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			Priv->Manufacturer = AT_Sagem;
 		}
 		if (strstr(msg.Buffer,"Samsung")) {
+			smprintf(s, "Samsung\n");
+			strcpy(s->Phone.Data.Manufacturer,"Samsung");
+			Priv->Manufacturer = AT_Samsung;
+		}
+		if (strstr(msg.Buffer,"SAMSUNG")) {
 			smprintf(s, "Samsung\n");
 			strcpy(s->Phone.Data.Manufacturer,"Samsung");
 			Priv->Manufacturer = AT_Samsung;
@@ -2767,7 +2772,7 @@ GSM_Error ATGEN_ReplyGetDateTime(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
-		return ATGEN_ParseReply(s, 
+		return ATGEN_ParseReply(s,
 				GetLineString(msg.Buffer, Priv->Lines, 2),
 				"+CCLK: @d",
 				Data->DateTime);
@@ -2797,7 +2802,7 @@ GSM_Error ATGEN_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		/* Try simple date string as alarm */
-		error = ATGEN_ParseReply(s, 
+		error = ATGEN_ParseReply(s,
 				GetLineString(msg.Buffer, Priv->Lines, 2),
 				"+CALA: @d",
 				&(Data->Alarm->DateTime));
@@ -2975,12 +2980,12 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		smprintf(s, "SMSC info received\n");
 
 		/* Parse reply */
-		error = ATGEN_ParseReply(s, 
+		error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CSCA: @p, @i", 
+					"+CSCA: @p, @i",
 					SMSC->Number, sizeof(SMSC->Number),
 					&number_type);
-		
+
 		/* International number */
 		GSM_TweakInternationalNumber(SMSC->Number, number_type);
 
@@ -3572,7 +3577,7 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 }
 
 /**
- * Parses reply on AT+CPBR=n. 
+ * Parses reply on AT+CPBR=n.
  *
  * \todo Handle special replies from some phones:
  * LG C1200:
@@ -3607,10 +3612,10 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		Memory->Entries[1].EntryType = PBK_Text_Name;
 
 		/* Try standard reply */
-		error = ATGEN_ParseReply(s, 
+		error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPBR: @i, @p, @i, @s", 
-					&Memory->Location, 
+					"+CPBR: @i, @p, @i, @s",
+					&Memory->Location,
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					&number_type,
 					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
@@ -3626,10 +3631,10 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		}
 
 		/* Try reply with call date */
-		error = ATGEN_ParseReply(s, 
+		error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPBR: @i, @p, @i, @s, @d", 
-					&Memory->Location, 
+					"+CPBR: @i, @p, @i, @s, @d",
+					&Memory->Location,
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					&number_type,
 					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
@@ -3665,10 +3670,10 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		 */
 		if (Priv->Manufacturer == AT_Samsung) {
 			/* Parse reply */
-			error = ATGEN_ParseReply(s, 
+			error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPBR: @i,@p,@i,@S,@S,@p,@i,@p,@i,@p,@i,@p,@i,@s,@s,@S,@i,@i,@i,@i,@i,@s,@s", 
-					&Memory->Location, 
+					"+CPBR: @i,@p,@i,@S,@S,@p,@i,@p,@i,@p,@i,@p,@i,@s,@s,@S,@i,@i,@i,@i,@i,@s,@s",
+					&Memory->Location,
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					&types[0],
 					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text), /* surname */
@@ -3751,7 +3756,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					} \
 				}
 				CHECK_NUMBER(0);
-				CHECK_TEXT(1); 
+				CHECK_TEXT(1);
 				CHECK_TEXT(2);
 				CHECK_NUMBER(3);
 				CHECK_NUMBER(4);
