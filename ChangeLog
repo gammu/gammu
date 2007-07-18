@@ -19,6 +19,7 @@ ChangeLog
 [!] * Introduced more generic parsing of AT replies, please report any
       regressions with it!
 [+] * Improved support for Samsung phones.
+[+] * Support for reading network name from AT phones.
 [-] * Elson compatibility, thanks to Bernd Feige.
 
 20070701 - 1.12.90
