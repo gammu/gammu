@@ -1131,32 +1131,6 @@ GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine 
 	return ERR_NONE;
 }
 
-GSM_Error ATGEN_ReplyGetFirmwareATI(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
-{
-	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
-
-	switch (Priv->ReplyState) {
-	case AT_Reply_OK:
-//		strcpy(Data->Version,"0.00");
-//		*Data->VersionNum=0;
-//		if (Data->Priv.ATGEN.ReplyState==AT_Reply_OK) {
-//			CopyLineString(Data->Version, msg.Buffer, Priv->Lines, 2);
-//		}
-//		smprintf(s, "Received firmware version: \"%s\"\n",Data->Version);
-//		GSM_CreateFirmwareNumber(Data);
-//		return ERR_NONE;
-	case AT_Reply_Error:
-		return ERR_NOTSUPPORTED;
-	case AT_Reply_CMSError:
-		return ATGEN_HandleCMSError(s);
-	case AT_Reply_CMEError:
-		return ATGEN_HandleCMEError(s);
-	default:
-		break;
-	}
-	return ERR_UNKNOWNRESPONSE;
-}
-
 GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 {
 	GSM_Error error;
@@ -1166,12 +1140,9 @@ GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 	error=ATGEN_GetManufacturer(s);
 	if (error != ERR_NONE) return error;
 
-//	smprintf(s, "Getting firmware - method 1\n");
-//	ATGEN_WaitFor(s, "ATI\r", 4, 0x00, 3, ID_GetFirmware);
-//	if (error != ERR_NONE) {
-		smprintf(s, "Getting firmware - method 2\n");
-		ATGEN_WaitFor(s, "AT+CGMR\r", 8, 0x00, 3, ID_GetFirmware);
-//	}
+	smprintf(s, "Getting firmware versions\n");
+	ATGEN_WaitFor(s, "AT+CGMR\r", 8, 0x00, 3, ID_GetFirmware);
+
 	if (error==ERR_NONE) {
 		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
 		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
@@ -5396,7 +5367,6 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetModel,		"AT+CGMM"		,0x00,0x00,ID_GetModel           },
 {ATGEN_ReplyGetManufacturer,	"AT+CGMI"		,0x00,0x00,ID_GetManufacturer	 },
 {ATGEN_ReplyGetFirmwareCGMR,	"AT+CGMR"		,0x00,0x00,ID_GetFirmware	 },
-{ATGEN_ReplyGetFirmwareATI,	"ATI"			,0x00,0x00,ID_GetFirmware	 },
 {ATGEN_ReplyGetIMEI,		"AT+CGSN"		,0x00,0x00,ID_GetIMEI	 	 },
 
 {ATGEN_ReplySendSMS,		"AT+CMGS"		,0x00,0x00,ID_IncomingFrame	 },
