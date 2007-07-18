@@ -464,14 +464,22 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
 	size_t size = 4, position = 0;
 	bool inside_quotes = false;
 
+	/* Allocate initial buffer in case string is empty */
 	*output = (unsigned char *)malloc(size);
 	if (*output == NULL) {
 		smprintf(s, "Ran out of memory!\n");
 		return 0;
 	}
 
-	while ((*input!=',' || inside_quotes) && *input!=0x0d && *input!=0x00) {
-		if (*input == '"') inside_quotes = ! inside_quotes;
+	while (((*input != ',' && *input != ')') || inside_quotes)
+			&& *input != 0x0d
+			&& *input != 0x0a
+			&& *input != 0x00) {
+		/* Check for quotes */
+		if (*input == '"') {
+			inside_quotes = ! inside_quotes;
+		}
+
 		/* We also allocate space for traling zero */
 		if (position + 2 > size) {
 			size += 10;
@@ -481,6 +489,8 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
 				return 0;
 			}
 		}
+
+		/* Copy to output */
 		(*output)[position]=*input;
 		position++;
 		input	++;
@@ -5350,37 +5360,63 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, bool enable)
  */
 GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	int			line = 0;
-	char			*str;
-	int			cur;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	int line = 0;
+	int protocol_id;
+	char protocol_version[100];
+	int protocol_level;
+	char *string;
+	GSM_Error error;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Protocol entries received\n");
 		/* Walk through lines with +CPROT: */
-		while (Priv->Lines.numbers[line*2+1]!=0) {
-			str = GetLineString(msg.Buffer,Priv->Lines,line+1);
-			if (strncmp(str, "+CPROT: ", 7) == 0) {
-				if (sscanf(str, "+CPROT: %d,", &cur) == 1 || sscanf(str, "+CPROT: (%d,", &cur) == 1) {
-					/* OBEX has ID of 0 */
-					if (cur == 0) {
-						smprintf(s, "OBEX seems to be supported!\n");
-						if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)) {
-							/*
-							 * We do not enable this automatically, because some
-							 * phones provide less features over OBEX than AT
-							 * using AT commands.
-							 */
-							smprintf(s, "HINT: Please consider adding F_OBEX to your phone capabilities in common/gsmstate.c\n");
-						} else {
+		while (strcmp("OK", string = GetLineString(msg.Buffer,Priv->Lines,line+1)) != 0) {
+
+			/*
+			 * This is what Sony Ericsson phones usually
+			 * give.
+			 */
+			error = ATGEN_ParseReply(s, string,
+				"+CPROT: (@i), (@r), (@i)",
+				&protocol_id,
+				protocol_version, sizeof(protocol_version),
+				&protocol_level);
+
+			/*
+			 * This reply comes from Alcatel ans Samsung.
+			 */
+			if (error != ERR_NONE) {
+				error = ATGEN_ParseReply(s, string,
+					"+CPROT: @i, @r, @i",
+					&protocol_id,
+					protocol_version, sizeof(protocol_version),
+					&protocol_level);
+			}
+
+			/* We found valid line */
+			if (error == ERR_NONE && protocol_id == 0) {
+				smprintf(s, "OBEX seems to be supported, version %s, level %d!\n", protocol_version, protocol_level);
 #ifdef GSM_ENABLE_SONYERICSSON
-							/* Tell OBEX driver that AT+CPROT=0 is supported */
-							s->Phone.Data.Priv.SONYERICSSON.HasOBEX = SONYERICSSON_OBEX_CPROT0;
+				/* Tell OBEX driver that AT+CPROT=0 is supported */
+				s->Phone.Data.Priv.SONYERICSSON.HasOBEX = SONYERICSSON_OBEX_CPROT0;
 #endif
-						}
-					}
+				/*
+				 * Level 1 is almost useless, require
+				 * higher levels.
+				 */
+				if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX) && protocol_level > 1) {
+					/*
+					 * We do not enable this automatically,
+					 * because some phones provide less features
+					 * over OBEX than AT using AT commands.
+					 */
+					smprintf(s, "HINT: Please consider adding F_OBEX to your phone capabilities in common/gsmphones.c\n");
 				}
+			}
+			if (error == ERR_NONE && protocol_id == 16) {
+				smprintf(s, "HINT: Please consider adding F_ALCATEL to your phone capabilities in common/gsmphones.c\n");
 			}
 			line++;
 		}
