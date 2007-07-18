@@ -3577,7 +3577,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Try standard reply */
 		error = ATGEN_ParseReply(s, 
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPBR: @i,@s,@i,@s", 
+					"+CPBR: @i, @s, @i, @s", 
 					&Memory->Location, 
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					&number_type,
@@ -3596,7 +3596,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Try reply with call date */
 		error = ATGEN_ParseReply(s, 
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPBR: @i,@s,@i,@s,@d", 
+					"+CPBR: @i, @s, @i, @s, @d", 
 					&Memory->Location, 
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					&number_type,
