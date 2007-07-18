@@ -337,6 +337,7 @@ inline bool ATGEN_IsHex(const char *text, const size_t length)
  * \param output Storage for converted text.
  * \param outlength Size of output storage.
  * \param guess Allow guessing whether input is really encoded.
+ * \param phone Whether input is phone number, used only when guessing.
  *
  * \return Error code.
  */
@@ -345,7 +346,8 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 		const size_t length,
 		unsigned char *output,
 		const size_t outlength,
-		const bool guess)
+		const bool guess,
+		const bool phone)
 {
 	unsigned char *buffer;
 	GSM_AT_Charset charset;
@@ -360,7 +362,13 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 			charset = AT_CHARSET_GSM;
 		}
 		if  (charset == AT_CHARSET_UCS2
-			&& ! ATGEN_IsUCS2(input, length)) {
+			&& ! ATGEN_IsUCS2(input, length) && (
+				!phone || 
+				input[0] != '0' ||
+				input[1] != '0' ||
+				input[4] != '0' ||
+				input[5] != '0'
+				)) {
 			charset = AT_CHARSET_GSM;
 		}
 	}
@@ -515,7 +523,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 	error = ATGEN_DecodeText(s,
 			pos, strlen(pos),
 			buffer_unicode, sizeof(buffer_unicode),
-			true);
+			true, false);
 	if (error != ERR_NONE) return error;
 	DecodeUnicode(buffer_unicode, buffer);
 
@@ -585,6 +593,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
  * @l - number, expects pointer to long int
  * @s - string, will be converted from phone encoding, stripping quotes, expects pointer to unsigned char and size of storage
  * @S - string with Samsung specials (0x02 at beginning and 0x03 at the end), otherwise same as @s
+ * @p - phone number hint for heuristics, otherwise same as @s
  * @r - raw string, no conversion will be done, only stripped quotes, expects pointer to char and size of storage
  * @d - date, expects pointer to GSM_DateTime
  * @@ - @ literal
@@ -640,6 +649,21 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						}
 						inp = endptr;
 						break;
+					case 'p':
+						smprintf(s, "Should parse phone\n");
+						out_s = va_arg(ap, char *);
+						storage_size = va_arg(ap, size_t);
+						length = ATGEN_GrabString(s, inp, &buffer);
+						error = ATGEN_DecodeText(s, 
+								buffer, strlen(buffer),
+								out_s, storage_size,
+								true, true);
+						free(buffer);
+						if (error != ERR_NONE) {
+							goto end;
+						}
+						inp += length;
+						break;
 					case 's':
 						smprintf(s, "Should parse string\n");
 						out_s = va_arg(ap, char *);
@@ -648,7 +672,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						error = ATGEN_DecodeText(s, 
 								buffer, strlen(buffer),
 								out_s, storage_size,
-								true);
+								true, false);
 						free(buffer);
 						if (error != ERR_NONE) {
 							goto end;
@@ -667,7 +691,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						error = ATGEN_DecodeText(s, 
 								buffer, strlen(buffer),
 								out_s, storage_size,
-								true);
+								true, false);
 						free(buffer);
 						if (error != ERR_NONE) {
 							goto end;
@@ -886,7 +910,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		error = ATGEN_DecodeText(s,
 				buffer + 1, strlen(buffer + 1) - 1,
 				ussd.Text, sizeof(ussd.Text),
-				true);
+				true, false);
 		if (error != ERR_NONE) return error;
 
 		if (s->User.IncomingUSSD!=NULL) {
@@ -2963,7 +2987,7 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		error = ATGEN_DecodeText(s,
 				buffer + 1, strlen(buffer + 1) - 1,
 				SMSC->Number, sizeof(SMSC->Number),
-				true);
+				true, true);
 		if (error != ERR_NONE) return error;
 
 		smprintf(s, "Number: \"%s\"\n", DecodeUnicodeString(SMSC->Number));
@@ -3596,7 +3620,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Try standard reply */
 		error = ATGEN_ParseReply(s, 
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPBR: @i, @s, @i, @s", 
+					"+CPBR: @i, @p, @i, @s", 
 					&Memory->Location, 
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					&number_type,
@@ -3615,7 +3639,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Try reply with call date */
 		error = ATGEN_ParseReply(s, 
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPBR: @i, @s, @i, @s, @d", 
+					"+CPBR: @i, @p, @i, @s, @d", 
 					&Memory->Location, 
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					&number_type,
@@ -3654,7 +3678,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			/* Parse reply */
 			error = ATGEN_ParseReply(s, 
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPBR: @i,@s,@i,@S,@S,@s,@i,@s,@i,@s,@i,@s,@i,@s,@s,@S,@i,@i,@i,@i,@i,@s,@s", 
+					"+CPBR: @i,@p,@i,@S,@S,@p,@i,@p,@i,@p,@i,@p,@i,@s,@s,@S,@i,@i,@i,@i,@i,@s,@s", 
 					&Memory->Location, 
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					&types[0],
@@ -3786,7 +3810,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		error = ATGEN_DecodeText(s,
 				buffer + 1, strlen(buffer + 1) - 1,
 				Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
-				true);
+				true, true);
 		if (error != ERR_NONE) return error;
 
 		/* Number format */
@@ -3811,7 +3835,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		error = ATGEN_DecodeText(s,
 				buffer + offset, strlen(buffer) - (offset * 2),
 				Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
-				false);
+				false, false);
 		if (error != ERR_NONE) return error;
 
 		/* Samsung number type */
@@ -3852,7 +3876,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				error = ATGEN_DecodeText(s,
 						buffer + offset, strlen(buffer) - (offset * 2),
 						Memory->Entries[2].Text, sizeof(Memory->Entries[1].Text),
-						true);
+						true, false);
 				if (error != ERR_NONE) return error;
 
 				/* Decode date */
