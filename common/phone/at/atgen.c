@@ -3121,31 +3121,63 @@ GSM_Error ATGEN_ReplyGetNetworkCode(GSM_Protocol_Message msg, GSM_StateMachine *
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_NetworkInfo		*NetworkInfo = s->Phone.Data.NetworkInfo;
+	int i;
+	GSM_Error error;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Network code received\n");
-		if (Priv->Manufacturer == AT_Falcom) {
-			NetworkInfo->NetworkCode[0] = msg.Buffer[22];
-			NetworkInfo->NetworkCode[1] = msg.Buffer[23];
-			NetworkInfo->NetworkCode[2] = msg.Buffer[24];
-			NetworkInfo->NetworkCode[3] = ' ';
-			NetworkInfo->NetworkCode[4] = msg.Buffer[25];
-			NetworkInfo->NetworkCode[5] = msg.Buffer[26];
-		} else {
-			NetworkInfo->NetworkCode[0] = msg.Buffer[23];
-			NetworkInfo->NetworkCode[1] = msg.Buffer[24];
-			NetworkInfo->NetworkCode[2] = msg.Buffer[25];
-			NetworkInfo->NetworkCode[3] = ' ';
-			NetworkInfo->NetworkCode[4] = msg.Buffer[26];
-			NetworkInfo->NetworkCode[5] = msg.Buffer[27];
+		error = ATGEN_ParseReply(s,
+				GetLineString(msg.Buffer, Priv->Lines, 2),
+				"+COPS: @i, @i, @r",
+				&i, /* Mode, ignored for now */
+				&i, /* Format of reply, we set this */
+				NetworkInfo->NetworkCode, sizeof(NetworkInfo->NetworkCode));
+
+		if (error != ERR_NONE) {
+			return error;
 		}
-		NetworkInfo->NetworkCode[6] = 0;
-		smprintf(s, "   Network code              : %s\n", NetworkInfo->NetworkCode);
+
+		/* Split network code for country and operator */
+		if (strlen(NetworkInfo->NetworkCode) == 5) {
+			NetworkInfo->NetworkCode[6] = 0;
+			NetworkInfo->NetworkCode[5] = NetworkInfo->NetworkCode[4];
+			NetworkInfo->NetworkCode[4] = NetworkInfo->NetworkCode[3];
+			NetworkInfo->NetworkCode[3] = ' ';
+		}
+
+		smprintf(s, "   Network code              : %s\n",
+				NetworkInfo->NetworkCode);
 		smprintf(s, "   Network name for Gammu    : %s ",
-			DecodeUnicodeString(GSM_GetNetworkName(NetworkInfo->NetworkCode)));
-		smprintf(s, "(%s)\n",DecodeUnicodeString(GSM_GetCountryName(NetworkInfo->NetworkCode)));
+				DecodeUnicodeString(GSM_GetNetworkName(NetworkInfo->NetworkCode)));
+		smprintf(s, "(%s)\n",
+				DecodeUnicodeString(GSM_GetCountryName(NetworkInfo->NetworkCode)));
 		return ERR_NONE;
+	case AT_Reply_CMSError:
+		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
+	default:
+		break;
+	}
+	return ERR_UNKNOWNRESPONSE;
+}
+
+GSM_Error ATGEN_ReplyGetNetworkName(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_NetworkInfo		*NetworkInfo = s->Phone.Data.NetworkInfo;
+	int i;
+
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+		smprintf(s, "Network name received\n");
+		return ATGEN_ParseReply(s,
+				GetLineString(msg.Buffer, Priv->Lines, 2),
+				"+COPS: @i, @i, @s",
+				&i, /* Mode, ignored for now */
+				&i, /* Format of reply, we set this */
+				NetworkInfo->NetworkName, sizeof(NetworkInfo->NetworkName));
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
@@ -3177,14 +3209,24 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	if (error != ERR_NONE) return error;
 
 	if (netinfo->State == GSM_HomeNetwork || netinfo->State == GSM_RoamingNetwork) {
+		/* Set numeric format for AT+COPS? */
 		smprintf(s, "Setting short network name format\n");
 		ATGEN_WaitFor(s, "AT+COPS=3,2\r", 12, 0x00, 4, ID_GetNetworkInfo);
 
-		error=ATGEN_GetManufacturer(s);
-		if (error != ERR_NONE) return error;
-
+		/* Get operator code */
 		smprintf(s, "Getting network code\n");
-		ATGEN_WaitFor(s, "AT+COPS?\r", 9, 0x00, 4, ID_GetNetworkInfo);
+		ATGEN_WaitFor(s, "AT+COPS?\r", 9, 0x00, 4, ID_GetNetworkCode);
+
+		/* Set string format for AT+COPS? */
+		smprintf(s, "Setting long string network name format\n");
+		ATGEN_WaitFor(s, "AT+COPS=3,0\r", 12, 0x00, 4, ID_GetNetworkInfo);
+
+		/* Get operator code */
+		smprintf(s, "Getting network code\n");
+		ATGEN_WaitFor(s, "AT+COPS?\r", 9, 0x00, 4, ID_GetNetworkName);
+
+		/* All information here is optional */
+		error = ERR_NONE;
 	}
 	return error;
 }
@@ -5407,7 +5449,8 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CREG=2"		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_GetNetworkInfo	 },
 {ATGEN_GenericReply,		"AT+COPS="		,0x00,0x00,ID_SetAutoNetworkLogin},
-{ATGEN_ReplyGetNetworkCode,	"AT+COPS"		,0x00,0x00,ID_GetNetworkInfo	 },
+{ATGEN_ReplyGetNetworkCode,	"AT+COPS"		,0x00,0x00,ID_GetNetworkCode	 },
+{ATGEN_ReplyGetNetworkName,	"AT+COPS"		,0x00,0x00,ID_GetNetworkName	 },
 {ATGEN_ReplyGetSignalQuality,	"AT+CSQ"		,0x00,0x00,ID_GetSignalQuality	 },
 {ATGEN_IncomingNetworkLevel,	"_OSIGQ:"	 	,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_IncomingGPRS,		"+CGREG:"	 	,0x00,0x00,ID_IncomingFrame      },

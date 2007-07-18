@@ -415,6 +415,8 @@ typedef enum {
 	ID_GetSMSStatus,
 	ID_AddSMSFolder,
 	ID_GetNetworkInfo,
+	ID_GetNetworkCode,
+	ID_GetNetworkName,
 	ID_GetRingtone,
 	ID_DialVoice,
 	ID_GetCalendarNotesInfo,
