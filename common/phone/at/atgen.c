@@ -361,6 +361,8 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 			&& ! ATGEN_IsHex(input, length)) {
 			charset = AT_CHARSET_GSM;
 		}
+		/* For phone numbers, we can assume all unicode chars 
+		 * will be < 256, so they will fit one byte */
 		if  (charset == AT_CHARSET_UCS2
 			&& ! ATGEN_IsUCS2(input, length) && (
 				!phone || 
