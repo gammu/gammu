@@ -3534,11 +3534,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	Priv->TextLength		= 0;
 	Priv->NumberLength		= 0;
 
-	ATGEN_WaitFor(s, "AT+CPBR=?\r", 10, 0x00, 4, ID_GetMemoryStatus);
-	/* We don't get reply on first attempt on Samsung */
-	if (Priv->Manufacturer == AT_Samsung) {
-		ATGEN_WaitFor(s, "", 0, 0x00, 4, ID_GetMemoryStatus);
-	}
+	ATGEN_WaitFor(s, "AT+CPBR=?\r", 10, 0x00, 10, ID_GetMemoryStatus);
 	if (error != ERR_NONE) return error;
 	if (NeededInfo == AT_Total || NeededInfo == AT_Sizes || NeededInfo == AT_First) return ERR_NONE;
 
