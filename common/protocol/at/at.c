@@ -134,6 +134,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 				memcpy(Msg2.Buffer,d->Msg.Buffer+d->SpecialAnswerStart,d->LineEnd - d->SpecialAnswerStart + 2);
 				Msg2.Length = d->LineEnd - d->SpecialAnswerStart + 2;
 				Msg2.Buffer[Msg2.Length] = 0;
+				Msg2.Type = 0;
 
 				s->Phone.Data.RequestMsg	= &Msg2;
 				s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
