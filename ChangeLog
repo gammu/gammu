@@ -21,6 +21,7 @@ ChangeLog
 [+] * Improved support for Samsung phones.
 [+] * Support for reading network name from AT phones.
 [-] * Elson compatibility, thanks to Bernd Feige.
+[-] * Fix UCS detection, thanks to Bernd Feige.
 
 20070701 - 1.12.90
 [+] * Initial support for Motorola phones (bug #15 and #310).
