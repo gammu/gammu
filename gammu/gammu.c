@@ -218,6 +218,30 @@ void Print_Error(GSM_Error error)
  	}
 }
 
+/**
+ * Converts memory type from string.
+ *
+ * \param type String with memory type.
+ * 
+ * \return Parsed memory type or 0 on failure.
+ */
+GSM_MemoryType MemoryTypeFromString(const char *type) {
+	if (strcasecmp(type, "ME") == 0) return MEM_ME;
+	if (strcasecmp(type, "SM") == 0) return MEM_SM;
+	if (strcasecmp(type, "ON") == 0) return MEM_ON;
+	if (strcasecmp(type, "DC") == 0) return MEM_DC;
+	if (strcasecmp(type, "RC") == 0) return MEM_RC;
+	if (strcasecmp(type, "MC") == 0) return MEM_MC;
+	if (strcasecmp(type, "MT") == 0) return MEM_MT;
+	if (strcasecmp(type, "FD") == 0) return MEM_FD;
+	if (strcasecmp(type, "VM") == 0) return MEM_VM;
+	if (strcasecmp(type, "SL") == 0) return MEM_SL;
+	return 0;
+}
+
+#define ALL_MEMORY_TYPES "DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
+
+
 void GSM_Init(bool checkerror)
 {
 	GSM_File 	PhoneDB;
@@ -1086,17 +1110,8 @@ static void GetAllMemory(int argc UNUSED, char *argv[])
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
-	Entry.MemoryType = 0;
+	Entry.MemoryType = MemoryTypeFromString(argv[2]);
 
-	if (strcasecmp(argv[2],"DC") == 0) Entry.MemoryType=MEM_DC;
-	if (strcasecmp(argv[2],"ON") == 0) Entry.MemoryType=MEM_ON;
-	if (strcasecmp(argv[2],"RC") == 0) Entry.MemoryType=MEM_RC;
-	if (strcasecmp(argv[2],"MC") == 0) Entry.MemoryType=MEM_MC;
-	if (strcasecmp(argv[2],"ME") == 0) Entry.MemoryType=MEM_ME;
-	if (strcasecmp(argv[2],"SM") == 0) Entry.MemoryType=MEM_SM;
-	if (strcasecmp(argv[2],"VM") == 0) Entry.MemoryType=MEM_VM;
-	if (strcasecmp(argv[2],"FD") == 0) Entry.MemoryType=MEM_FD;
-	if (strcasecmp(argv[2],"SL") == 0) Entry.MemoryType=MEM_SL;
 	if (Entry.MemoryType==0) {
 		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
 		exit (-1);
@@ -1126,17 +1141,8 @@ static void GetMemory(int argc, char *argv[])
 	bool			empty = true;
 	double version;
 
-	entry.MemoryType=0;
+	entry.MemoryType = MemoryTypeFromString(argv[2]);
 
-	if (strcasecmp(argv[2],"DC") == 0) entry.MemoryType=MEM_DC;
-	if (strcasecmp(argv[2],"ON") == 0) entry.MemoryType=MEM_ON;
-	if (strcasecmp(argv[2],"RC") == 0) entry.MemoryType=MEM_RC;
-	if (strcasecmp(argv[2],"MC") == 0) entry.MemoryType=MEM_MC;
-	if (strcasecmp(argv[2],"ME") == 0) entry.MemoryType=MEM_ME;
-	if (strcasecmp(argv[2],"SM") == 0) entry.MemoryType=MEM_SM;
-	if (strcasecmp(argv[2],"VM") == 0) entry.MemoryType=MEM_VM;
-	if (strcasecmp(argv[2],"FD") == 0) entry.MemoryType=MEM_FD;
-	if (strcasecmp(argv[2],"SL") == 0) entry.MemoryType=MEM_SL;
 	if (entry.MemoryType==0) {
 		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
 		exit (-1);
@@ -1198,17 +1204,8 @@ static void DeleteMemory(int argc, char *argv[])
 	int			j, start, stop;
 	GSM_MemoryEntry		entry;
 
-	entry.MemoryType=0;
+	entry.MemoryType = MemoryTypeFromString(argv[2]);
 
-	if (strcasecmp(argv[2],"DC") == 0) entry.MemoryType=MEM_DC;
-	if (strcasecmp(argv[2],"ON") == 0) entry.MemoryType=MEM_ON;
-	if (strcasecmp(argv[2],"RC") == 0) entry.MemoryType=MEM_RC;
-	if (strcasecmp(argv[2],"MC") == 0) entry.MemoryType=MEM_MC;
-	if (strcasecmp(argv[2],"ME") == 0) entry.MemoryType=MEM_ME;
-	if (strcasecmp(argv[2],"SM") == 0) entry.MemoryType=MEM_SM;
-	if (strcasecmp(argv[2],"VM") == 0) entry.MemoryType=MEM_VM;
-	if (strcasecmp(argv[2],"FD") == 0) entry.MemoryType=MEM_FD;
-	if (strcasecmp(argv[2],"SL") == 0) entry.MemoryType=MEM_SL;
 	if (entry.MemoryType==0) {
 		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
 		exit (-1);
@@ -1242,6 +1239,7 @@ static void DeleteMemory(int argc, char *argv[])
 	x == MEM_ON ? "ON" :			\
 	x == MEM_RC ? "RC" :			\
 	x == MEM_MC ? "MC" :			\
+	x == MEM_MT ? "MT" :			\
 	x == MEM_ME ? "ME" :			\
 	x == MEM_SM ? "SM" :			\
 	x == MEM_SL ? "SL" :			\
@@ -10105,9 +10103,9 @@ static GSM_Parameters Parameters[] = {
 	{"getalarm",			0, 1, GetAlarm,			{H_DateTime,0},			"[start]"},
 	{"setalarm",			2, 2, SetAlarm,			{H_DateTime,0},			"hour minute"},
 	{"resetphonesettings",	1, 1, ResetPhoneSettings,	{H_Settings,0},			"PHONE|DEV|UIF|ALL|FACTORY"},
-	{"getmemory",			2, 4, GetMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL start [stop [-nonempty]]"},
-	{"deletememory",		2, 3, DeleteMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL start [stop]"},
-	{"getallmemory",		1, 2, GetAllMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL"},
+	{"getmemory",			2, 4, GetMemory,		{H_Memory,0},			ALL_MEMORY_TYPES " start [stop [-nonempty]]"},
+	{"deletememory",		2, 3, DeleteMemory,		{H_Memory,0},			ALL_MEMORY_TYPES " start [stop]"},
+	{"getallmemory",		1, 2, GetAllMemory,		{H_Memory,0},			ALL_MEMORY_TYPES},
 	{"searchmemory",		1, 1, SearchMemory,		{H_Memory,0},			"text"},
 	{"listmemorycategory",	1, 1, ListMemoryCategory,	{H_Memory, H_Category,0},	"text|number"},
 	{"getfmstation",		1, 2, GetFMStation,		{H_FM,0},			"start [stop]"},
