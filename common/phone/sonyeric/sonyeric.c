@@ -1003,33 +1003,29 @@ GSM_Error SONYERICSSON_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 
 GSM_Error SONYERICSSON_ReplyGetFileSystemStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	char *pos;
+	GSM_Error error;
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 		case AT_Reply_OK:
-			smprintf(s, "File system status received\n");
-			pos = strstr(msg.Buffer, "*EMEM:");
-			if (pos == NULL) return ERR_UNKNOWNRESPONSE;
-			pos += 7;
-			s->Phone.Data.FileSystemStatus->Free = atoi(pos);
-			pos = strchr(pos, ',');
-			if (pos == NULL) return ERR_UNKNOWNRESPONSE;
-			pos += 2;
-			s->Phone.Data.FileSystemStatus->Used = atoi(pos) - s->Phone.Data.FileSystemStatus->Free;
-			pos = strchr(pos, ',');
-			if (pos == NULL) return ERR_UNKNOWNRESPONSE;
-			pos += 2;
-			s->Phone.Data.FileSystemStatus->UsedImages = atoi(pos);
-			pos = strchr(pos, ',');
-			if (pos == NULL) return ERR_UNKNOWNRESPONSE;
-			pos += 2;
-			s->Phone.Data.FileSystemStatus->UsedSounds = atoi(pos);
-			pos = strchr(pos, ',');
-			if (pos == NULL) return ERR_UNKNOWNRESPONSE;
-			pos += 2;
-			s->Phone.Data.FileSystemStatus->UsedThemes = atoi(pos);
-			return ERR_NONE;
-		default: return ERR_NOTSUPPORTED;
+			error = ATGEN_ParseReply(s,
+					GetLineString(msg.Buffer, s->Phone.Data.Priv.ATGEN.Lines, 2),
+					"*EMEM: @i, @i, @i, @i, @i",
+					&s->Phone.Data.FileSystemStatus->Free,
+					&s->Phone.Data.FileSystemStatus->Used,
+					&s->Phone.Data.FileSystemStatus->UsedImages,
+					&s->Phone.Data.FileSystemStatus->UsedSounds,
+					&s->Phone.Data.FileSystemStatus->UsedThemes
+					);
+
+			if (error == ERR_NONE) {
+				/* This is actually total */
+				s->Phone.Data.FileSystemStatus->Used -= s->Phone.Data.FileSystemStatus->Free;
+				return ERR_NONE;
+			}
+
+			return error;
+		default:
+			return ERR_NOTSUPPORTED;
 	}
 }
 
