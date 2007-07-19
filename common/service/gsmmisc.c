@@ -346,6 +346,16 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
 	return tmp;
 }
 
+/**
+ * Reads text for vCalendar/vCard formatted line.
+ *
+ * \todo We should try to detect utf-8 and automatically use it.
+ *
+ * \param Buffer Buffer with input data.
+ * \param Start Start expression of line.
+ * \param Value Storage for value.
+ * \param UTF8 Whether string should be treated as utf-8.
+ */
 bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 {
 	unsigned char buff[200];
