@@ -280,17 +280,17 @@ void OBEXGEN_FreeVars(GSM_StateMachine *s)
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	int i;
 
-	for (i = 1; i < Priv->PbLUIDCount; i++) {
+	for (i = 1; i <= Priv->PbLUIDCount; i++) {
 		free(Priv->PbLUID[i]);
 	}
 	free(Priv->PbLUID);
 	free(Priv->PbData);
-	for (i = 1; i < Priv->CalLUIDCount; i++) {
+	for (i = 1; i <= Priv->CalLUIDCount; i++) {
 		free(Priv->CalLUID[i]);
 	}
 	free(Priv->CalLUID);
 	free(Priv->CalData);
-	for (i = 1; i < Priv->TodoLUIDCount; i++) {
+	for (i = 1; i <= Priv->TodoLUIDCount; i++) {
 		free(Priv->TodoLUID[i]);
 	}
 	free(Priv->TodoLUID);
