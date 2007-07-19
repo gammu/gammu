@@ -295,6 +295,25 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
         if (error != ERR_NONE) return error; \
         error = GSM_WaitFor(s, cmd, len, type, time, request);
 
+/**
+ * Parses AT formatted reply.
+ *
+ * Format strings:
+ * @i - number, expects pointer to int
+ * @l - number, expects pointer to long int
+ * @s - string, will be converted from phone encoding, stripping quotes, expects pointer to unsigned char and size of storage
+ * @S - string with Samsung specials (0x02 at beginning and 0x03 at the end), otherwise same as @s
+ * @p - phone number hint for heuristics, otherwise same as @s
+ * @r - raw string, no conversion will be done, only stripped quotes, expects pointer to char and size of storage
+ * @d - date, expects pointer to GSM_DateTime
+ * @@ - @ literal
+ * @0 - ignore rest of input
+ *
+ * Special behaviour:
+ * Any space is automatically treated as [[:space:]]* regexp.
+ */
+GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, const char *format, ...);
+
 #endif
 /*@}*/
 /*@}*/
