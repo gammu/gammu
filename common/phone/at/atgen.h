@@ -299,15 +299,19 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
  * Parses AT formatted reply.
  *
  * Format strings:
- * @i - number, expects pointer to int
- * @l - number, expects pointer to long int
- * @s - string, will be converted from phone encoding, stripping quotes, expects pointer to unsigned char and size of storage
- * @S - string with Samsung specials (0x02 at beginning and 0x03 at the end), otherwise same as @s
- * @p - phone number hint for heuristics, otherwise same as @s
- * @r - raw string, no conversion will be done, only stripped quotes, expects pointer to char and size of storage
- * @d - date, expects pointer to GSM_DateTime
- * @@ - @ literal
- * @0 - ignore rest of input
+ * - \b \@i - Number, expects pointer to int.
+ * - \b \@l - Number, expects pointer to long int.
+ * - \b \@s - String, will be converted from phone encoding, stripping
+ *   quotes, expects pointer to unsigned char and size of storage.
+ * - \b \@S - String with Samsung specials (0x02 at beginning and 0x03 
+ *   at the end, encoded in utf-8), otherwise same as @s.
+ * - \b \@p - String with phone number hint for heuristics, otherwise 
+ *   same as @s.
+ * - \b \@r - Raw string, no conversion will be done, only stripped 
+ *   quotes, expects pointer to char and size of storage.
+ * - \b \@d - Date, expects pointer to GSM_DateTime.
+ * - \b \@\@ - @ literal.
+ * - \b \@0 - Ignore rest of input.
  *
  * Special behaviour:
  * Any space is automatically treated as [[:space:]]* regexp.
