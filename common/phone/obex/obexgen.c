@@ -271,23 +271,36 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 
 /**
  * Frees internal OBEX variables.
+ *
+ * \todo This should be done on terminate, but not on termination from
+ * Sony-Ericsson.
  */
 void OBEXGEN_FreeVars(GSM_StateMachine *s)
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	int i;
 
+	for (i = 1; i < Priv->PbLUIDCount; i++) {
+		free(Priv->PbLUID[i]);
+	}
 	free(Priv->PbLUID);
 	free(Priv->PbData);
+	for (i = 1; i < Priv->CalLUIDCount; i++) {
+		free(Priv->CalLUID[i]);
+	}
 	free(Priv->CalLUID);
 	free(Priv->CalData);
+	for (i = 1; i < Priv->TodoLUIDCount; i++) {
+		free(Priv->TodoLUID[i]);
+	}
 	free(Priv->TodoLUID);
 	free(Priv->PbOffsets);
 	free(Priv->CalOffsets);
 	free(Priv->TodoOffsets);
 	free(Priv->OBEXCapability);
 	free(Priv->OBEXDevinfo);
-
 }
+
 /**
  * Terminates OBEX connection.
  */
@@ -1993,7 +2006,7 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 	if (error != ERR_NONE) return error;
 
 	/* Check bounds */
-	if (Entry->Location > Priv->CalLUIDCount 
+	if (Entry->Location > Priv->CalLUIDCount
 			|| Priv->CalLUID[Entry->Location] == NULL) {
 		/**
 		 * \todo We should keep location here!
