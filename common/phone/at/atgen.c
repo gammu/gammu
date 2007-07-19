@@ -364,13 +364,13 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 		/* For phone numbers, we can assume all unicode chars
 		 * will be < 256, so they will fit one byte */
 		if  (charset == AT_CHARSET_UCS2
-			&& ! ATGEN_IsUCS2(input, length) && (
-				!phone ||
-				input[0] != '0' ||
-				input[1] != '0' ||
-				input[4] != '0' ||
-				input[5] != '0'
-				)) {
+			&& (! ATGEN_IsUCS2(input, length) || 
+				(phone && 
+				(input[0] != '0' ||
+				 input[1] != '0' ||
+				 input[4] != '0' ||
+				 input[5] != '0'
+				)))) {
 			charset = AT_CHARSET_GSM;
 		}
 	}
