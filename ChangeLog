@@ -20,6 +20,7 @@ ChangeLog
       regressions with it!
 [+] * Improved support for Samsung phones.
 [+] * Support for reading network name from AT phones.
+[+] * Add deletememory command line.
 [-] * Elson compatibility, thanks to Bernd Feige.
 [-] * Fix UCS detection, thanks to Bernd Feige.
 
