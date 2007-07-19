@@ -556,7 +556,7 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle UNUSED)
 {
 	GSM_Error		error;
 	size_t			j;
@@ -1723,6 +1723,9 @@ GSM_Error OBEXGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_MemoryEntry		entry;
+
+	/* Should not happen */
+	if (MemoryType != MEM_ME) return ERR_BUG;
 
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
