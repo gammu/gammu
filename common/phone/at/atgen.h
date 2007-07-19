@@ -296,9 +296,11 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
         error = GSM_WaitFor(s, cmd, len, type, time, request);
 
 /**
- * Parses AT formatted reply.
+ * Parses AT formatted reply. This is a bit like sprintf parser, but
+ * specially focused on AT replies and can automatically convert text
+ * encoding and decode some special fields.
  *
- * Format strings:
+ * \par Parser tokens
  * - \b \@i - Number, expects pointer to int.
  * - \b \@l - Number, expects pointer to long int.
  * - \b \@s - String, will be converted from phone encoding, stripping
@@ -311,10 +313,16 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
  *   quotes, expects pointer to char and size of storage.
  * - \b \@d - Date, expects pointer to GSM_DateTime.
  * - \b \@\@ - \@ literal.
- * - \b \@0 - Ignore rest of input.
+ * - \b \@0 - Ignore rest of input, same as .* regular expression.
  *
- * Special behaviour:
- * Any space is automatically treated as [[:space:]]* regexp.
+ * \par Special behaviour
+ * Any space is automatically treated as [[:space:]]* regular 
+ * expression. So use space whenever some weird implementation in phone
+ * can insert it space.
+ *
+ * \param s State machine structure.
+ * \param input Input string to parse.
+ * \param format Format string for parser.
  */
 GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, const char *format, ...);
 
