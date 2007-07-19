@@ -281,9 +281,23 @@ typedef struct {
 	GSM_File		file;
 } GSM_Phone_ATGENData;
 
-GSM_Error ATGEN_HandleCMSError	(GSM_StateMachine *);
-GSM_Error ATGEN_HandleCMEError	(GSM_StateMachine *);
-GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
+/**
+ * Generates error code from current CMS error according to
+ * specifications.
+ *
+ * \param s State machine structure.
+ */
+GSM_Error ATGEN_HandleCMSError	(GSM_StateMachine *s);
+
+/**
+ * Generates error code from current CME error according to
+ * specifications.
+ *
+ * \param s State machine structure.
+ */
+GSM_Error ATGEN_HandleCMEError	(GSM_StateMachine *s);
+
+GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *s);
 
 /**
  * Wrapper around \ref GSM_WaitFor, which automatically sets
