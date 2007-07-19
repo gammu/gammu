@@ -304,13 +304,13 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
  * - \b \@s - String, will be converted from phone encoding, stripping
  *   quotes, expects pointer to unsigned char and size of storage.
  * - \b \@S - String with Samsung specials (0x02 at beginning and 0x03 
- *   at the end, encoded in utf-8), otherwise same as @s.
+ *   at the end, encoded in utf-8), otherwise same as \@s.
  * - \b \@p - String with phone number hint for heuristics, otherwise 
- *   same as @s.
+ *   same as \@s.
  * - \b \@r - Raw string, no conversion will be done, only stripped 
  *   quotes, expects pointer to char and size of storage.
  * - \b \@d - Date, expects pointer to GSM_DateTime.
- * - \b \@\@ - @ literal.
+ * - \b \@\@ - \@ literal.
  * - \b \@0 - Ignore rest of input.
  *
  * Special behaviour:
