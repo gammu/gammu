@@ -503,6 +503,10 @@ typedef enum {
 	 * Phone does not support UCS2 even if it reports it.
 	 */
 	F_NO_UCS2,
+	/**
+	 * Phone returns strings in utf-8 even if it reports GSM.
+	 */
+	F_FORCE_UTF8,
 } Feature;
 
 /**
