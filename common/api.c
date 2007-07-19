@@ -16,7 +16,7 @@
 }
 
 /**
- * Checks whether we are connected to phone, fails with error 
+ * Checks whether we are connected to phone, fails with error
  * otherwise.
  */
 #define CHECK_PHONE_CONNECTION() \
@@ -360,6 +360,8 @@ GSM_Error GSM_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+
+    memset(bat, 0, sizeof(GSM_BatteryCharge));
 
 	err = s->Phone.Functions->GetBatteryCharge(s, bat);
 	PRINT_LOG_ERROR(err);
