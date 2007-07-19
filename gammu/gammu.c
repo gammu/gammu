@@ -1193,6 +1193,51 @@ static void GetMemory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+static void DeleteMemory(int argc, char *argv[])
+{
+	int			j, start, stop;
+	GSM_MemoryEntry		entry;
+
+	entry.MemoryType=0;
+
+	if (strcasecmp(argv[2],"DC") == 0) entry.MemoryType=MEM_DC;
+	if (strcasecmp(argv[2],"ON") == 0) entry.MemoryType=MEM_ON;
+	if (strcasecmp(argv[2],"RC") == 0) entry.MemoryType=MEM_RC;
+	if (strcasecmp(argv[2],"MC") == 0) entry.MemoryType=MEM_MC;
+	if (strcasecmp(argv[2],"ME") == 0) entry.MemoryType=MEM_ME;
+	if (strcasecmp(argv[2],"SM") == 0) entry.MemoryType=MEM_SM;
+	if (strcasecmp(argv[2],"VM") == 0) entry.MemoryType=MEM_VM;
+	if (strcasecmp(argv[2],"FD") == 0) entry.MemoryType=MEM_FD;
+	if (strcasecmp(argv[2],"SL") == 0) entry.MemoryType=MEM_SL;
+	if (entry.MemoryType==0) {
+		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
+		exit (-1);
+	}
+
+	GetStartStop(&start, &stop, 3, argc, argv);
+
+	GSM_Init(true);
+
+	for (j=start;j<=stop;j++) {
+		printf(LISTFORMAT "%i\n", _("Location"), j);
+
+		entry.Location = j;
+
+		error = GSM_DeleteMemory(s, &entry);
+
+		if (error != ERR_EMPTY) Print_Error(error);
+
+		if (error == ERR_EMPTY) {
+			printf("%s\n", _("Entry was empty"));
+		} else {
+			printf("%s\n", _("Entry was deleted"));
+	       	}
+		printf("\n");
+	}
+
+	GSM_Terminate();
+}
+
 #define MemoryLocationToString(x) ( \
 	x == MEM_ON ? "ON" :			\
 	x == MEM_RC ? "RC" :			\
@@ -10061,6 +10106,7 @@ static GSM_Parameters Parameters[] = {
 	{"setalarm",			2, 2, SetAlarm,			{H_DateTime,0},			"hour minute"},
 	{"resetphonesettings",	1, 1, ResetPhoneSettings,	{H_Settings,0},			"PHONE|DEV|UIF|ALL|FACTORY"},
 	{"getmemory",			2, 4, GetMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL start [stop [-nonempty]]"},
+	{"deletememory",		2, 3, DeleteMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL start [stop]"},
 	{"getallmemory",		1, 2, GetAllMemory,		{H_Memory,0},			"DC|MC|RC|ON|VM|SM|ME|FD|SL"},
 	{"searchmemory",		1, 1, SearchMemory,		{H_Memory,0},			"text"},
 	{"listmemorycategory",	1, 1, ListMemoryCategory,	{H_Memory, H_Category,0},	"text|number"},
