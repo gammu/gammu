@@ -300,7 +300,7 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
  * specially focused on AT replies and can automatically convert text
  * encoding and decode some special fields.
  *
- * \par Parser tokens
+ * \par Parser tokens:
  * - \b \@i - Number, expects pointer to int.
  * - \b \@l - Number, expects pointer to long int.
  * - \b \@s - String, will be converted from phone encoding, stripping
@@ -315,7 +315,7 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
  * - \b \@\@ - \@ literal.
  * - \b \@0 - Ignore rest of input, same as .* regular expression.
  *
- * \par Special behaviour
+ * \par Special behaviour:
  * Any space is automatically treated as [[:space:]]* regular 
  * expression. So use space whenever some weird implementation in phone
  * can insert it space.
@@ -323,6 +323,7 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *);
  * \param s State machine structure.
  * \param input Input string to parse.
  * \param format Format string for parser.
+ * \param ... Pointers to various buffers as defined by format string.
  */
 GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, const char *format, ...);
 
