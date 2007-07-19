@@ -58,6 +58,10 @@ typedef enum {
 	AT_Reply_SMSEdit
 } GSM_AT_Reply_State;
 
+/**
+ * Manufacturer identification. This is usually used to enable some
+ * hacks which are specific for all phones from one manufacturer.
+ */
 typedef enum {
 	AT_Nokia = 1,
 	AT_Alcatel,
@@ -72,6 +76,9 @@ typedef enum {
 	AT_Unknown
 } GSM_AT_Manufacturer;
 
+/**
+ * Character set definitions.
+ */
 typedef enum {
 	/**
 	 * Hex encoded GSM.
@@ -89,6 +96,9 @@ typedef enum {
 	 * UTF-8.
 	 */
 	AT_CHARSET_UTF8,
+	/**
+	 * CP-437, not fully supported.
+	 */
 	AT_CHARSET_PCCP437,
 	/**
 	 * IRA, what is same as 7-bit ASCII.
@@ -120,9 +130,25 @@ typedef enum {
 	AT_CHARSET_ISO88596,
 } GSM_AT_Charset;
 
+/**
+ * Character set preference indication.
+ */
 typedef enum {
+	/**
+	 * Prefer standard GSM character set.
+	 */
 	AT_PREF_CHARSET_NORMAL = 1,
+	/**
+	 * Prefer Unicode character set to get text without any possible
+	 * garbling caused by conversion.
+	 */
 	AT_PREF_CHARSET_UNICODE,
+	/**
+	 * IRA is ASCII character set. This might be useful for some
+	 * operations where we only want to transmit ASCII characters
+	 * and we don't want to take care about encoding or encoding of
+	 * some transmitted characters is not possible to GSM.
+	 */
 	AT_PREF_CHARSET_IRA,
 } GSM_AT_Charset_Preference;
 
