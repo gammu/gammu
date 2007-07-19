@@ -701,14 +701,8 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 							buffer[strlen(buffer) - 2] = 0;
 						}
 						smprintf(s, "Parsed Samsung string \"%s\"\n", buffer);
-						error = ATGEN_DecodeText(s,
-								buffer, strlen(buffer),
-								out_s, storage_size,
-								true, false);
+						DecodeUTF8(out_s, buffer, strlen(buffer));
 						free(buffer);
-						if (error != ERR_NONE) {
-							goto end;
-						}
 						inp += length;
 						break;
 					case 'r':
