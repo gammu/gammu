@@ -1351,7 +1351,6 @@ msgstr "ID usuario"
 
 #: gammu/gammu.c:1048
 #, fuzzy
-#| msgid "Picture ID"
 msgid "Picture name"
 msgstr "ID imagen"
 

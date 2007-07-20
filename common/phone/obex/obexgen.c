@@ -207,7 +207,6 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->CalIEL = -1;
 	Priv->CalCount = -1;
 	Priv->TodoCount = -1;
-	Priv->PbOffsets = NULL;
 	Priv->CalOffsets = NULL;
 	Priv->TodoOffsets = NULL;
 	Priv->UpdateCalLUID = false;
@@ -215,6 +214,13 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->UpdateTodoLUID = false;
 	Priv->OBEXCapability = NULL;
 	Priv->OBEXDevinfo = NULL;
+	Priv->NoteLUID = NULL;
+	Priv->NoteData = NULL;
+	Priv->NoteLUIDCount = 0;
+	Priv->NoteCount = -1;
+	Priv->NoteIEL = -1;
+	Priv->NoteOffsets = NULL;
+	Priv->UpdateNoteLUID = false;
 
 	return ERR_NONE;
 }
@@ -285,6 +291,11 @@ void OBEXGEN_FreeVars(GSM_StateMachine *s)
 	}
 	free(Priv->PbLUID);
 	free(Priv->PbData);
+	for (i = 1; i <= Priv->NoteLUIDCount; i++) {
+		free(Priv->NoteLUID[i]);
+	}
+	free(Priv->NoteLUID);
+	free(Priv->NoteData);
 	for (i = 1; i <= Priv->CalLUIDCount; i++) {
 		free(Priv->CalLUID[i]);
 	}
@@ -295,6 +306,7 @@ void OBEXGEN_FreeVars(GSM_StateMachine *s)
 	}
 	free(Priv->TodoLUID);
 	free(Priv->PbOffsets);
+	free(Priv->NoteOffsets);
 	free(Priv->CalOffsets);
 	free(Priv->TodoOffsets);
 	free(Priv->OBEXCapability);
@@ -2508,6 +2520,381 @@ GSM_Error OBEXGEN_DeleteAllTodo(GSM_StateMachine *s)
 /*@}*/
 
 /**
+ * \defgroup IrMCnote IrMC note support
+ * \ingroup OBEXPhone
+ * @{
+ */
+
+/**
+ * Parses pb/info.log (note IrMC information log).
+ */
+GSM_Error OBEXGEN_GetNoteInformation(GSM_StateMachine *s, int *free_records, int *used)
+{
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	return OBEXGEN_GetInformation(s, "telecom/nt/info.log", free_records, used, &(Priv->NoteIEL));
+
+}
+
+/**
+ * Grabs note memory status
+ */
+GSM_Error OBEXGEN_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status)
+{
+	return OBEXGEN_GetNoteInformation(s, &(Status->Free), &(Status->Used));
+
+}
+
+/**
+ * Initializes note LUID database.
+ */
+GSM_Error OBEXGEN_InitNoteLUID(GSM_StateMachine *s)
+{
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We might do validation here using telecom/nt/luid/cc.log fir IEL 4, but not on each request */
+	if (Priv->NoteData != NULL) return ERR_NONE;
+
+	return OBEXGEN_InitLUID(s, "telecom/nt.vcf", false, "BEGIN:VNOTE", &(Priv->NoteData), &(Priv->NoteOffsets), &(Priv->NoteCount), &(Priv->NoteLUID), &(Priv->NoteLUIDCount));
+}
+
+/**
+ * Read memory by reading static index.
+ */
+GSM_Error OBEXGEN_GetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry)
+{
+	GSM_Error 	error;
+	char		*data;
+	char		*path;
+	int		pos = 0;
+
+	/* Calculate path */
+	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/nt/%d.vnt", Entry->Location);
+	smprintf(s, "Getting vNote %s\n", path);
+
+	/* Grab vCard */
+	error = OBEXGEN_GetTextFile(s, path, &data);
+	free(path);
+	if (error != ERR_NONE) return error;
+
+	/* Decode it */
+	error = GSM_DecodeVNOTE(data, &pos, Entry);
+	free(data);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+/**
+ * Reads memory by reading from LUID location.
+ */
+GSM_Error OBEXGEN_GetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	char		*data;
+	char		*path;
+	int		pos = 0;
+
+	error = OBEXGEN_InitNoteLUID(s);
+	if (error != ERR_NONE) return error;
+
+	/* Check bounds */
+	if (Entry->Location > Priv->NoteLUIDCount) return ERR_EMPTY; /* Maybe invalid location? */
+	if (Priv->NoteLUID[Entry->Location] == NULL) return ERR_EMPTY;
+
+	/* Calculate path */
+	path = malloc(strlen(Priv->NoteLUID[Entry->Location]) + 22); /* Length of string bellow */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/nt/luid/%s.vnt", Priv->NoteLUID[Entry->Location]);
+	smprintf(s, "Getting vNote %s\n", path);
+
+	/* Grab vCard */
+	error = OBEXGEN_GetTextFile(s, path, &data);
+	free(path);
+	if (error != ERR_NONE) return error;
+
+	/* Decode it */
+	error = GSM_DecodeVNOTE(data, &pos, Entry);
+	free(data);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+/**
+ * Reads memory by reading from full data.
+ */
+GSM_Error OBEXGEN_GetNoteFull(GSM_StateMachine *s, GSM_NoteEntry *Entry)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	int		pos = 0;
+
+	/* Read note data */
+	error = OBEXGEN_InitNoteLUID(s);
+	if (error != ERR_NONE) return error;
+
+	/* Check bounds */
+	if (Entry->Location > Priv->NoteCount) return ERR_EMPTY; /* Maybe invalid location? */
+
+	/* Decode vNote */
+	error = GSM_DecodeVNOTE(Priv->NoteData + Priv->NoteOffsets[Entry->Location], &pos, Entry);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+GSM_Error OBEXGEN_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->NoteIEL == -1) {
+		error = OBEXGEN_GetNoteInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Use correct function according to supported IEL */
+	if (Priv->NoteIEL == 0x8 || Priv->NoteIEL == 0x10) {
+		return OBEXGEN_GetNoteLUID(s, Entry);
+	} else if (Priv->NoteIEL == 0x4) {
+		return OBEXGEN_GetNoteIndex(s, Entry);
+	} else if (Priv->NoteIEL == 0x2) {
+		return OBEXGEN_GetNoteFull(s, Entry);
+	} else {
+		smprintf(s, "Can not read note from IEL 1 phone\n");
+		return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error OBEXGEN_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Entry, bool start)
+{
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	GSM_Error 	error = ERR_EMPTY;;
+
+	/* Get  location */
+	if (start) {
+		Entry->Location = 1;
+		Priv->ReadPhonebook = 0;
+	} else {
+		Entry->Location++;
+	}
+
+	/* Have we read them all? */
+	if (Priv->ReadPhonebook == Priv->NoteCount) {
+		return ERR_EMPTY;
+	}
+
+	/* Do real getting */
+	while (error == ERR_EMPTY) {
+		error = OBEXGEN_GetNote(s, Entry);
+		if (error == ERR_NONE) {
+			Priv->ReadPhonebook++;
+		} else if (error == ERR_EMPTY) {
+			Entry->Location++;
+		}
+	}
+	return error;
+}
+
+GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
+{
+	unsigned char 		req[5000];
+	int			size=0;
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->NoteIEL == -1) {
+		error = OBEXGEN_GetNoteInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Encode vCard */
+	GSM_EncodeVNTFile(req, &size, Entry);
+
+	/* Use correct function according to supported IEL */
+	if (Priv->NoteIEL == 0x8 || Priv->NoteIEL == 0x10) {
+		/* We need to grab LUID list now in order to keep position later */
+		error = OBEXGEN_InitNoteLUID(s);
+		if (error != ERR_NONE) return error;
+
+		smprintf(s,"Adding note entry %d:\n%s\n", size, req);
+		Priv->UpdateNoteLUID = true;
+		error = OBEXGEN_SetFile(s, "telecom/nt/luid/.vnt", req, size);
+		Entry->Location = Priv->NoteLUIDCount;
+		return error;
+	} else {
+		/* I don't know add command for other levels, just plain send vCard */
+		Entry->Location = 0;
+		smprintf(s,"Sending note entry\n");
+		return OBEXGEN_SetFile(s, "gammu.vnt", req, size);
+	}
+}
+
+GSM_Error OBEXGEN_SetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry, char *Data, int Size)
+{
+	GSM_Error 	error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	char		*path;
+
+	error = OBEXGEN_InitNoteLUID(s);
+	if (error != ERR_NONE) return error;
+
+	/* Check bounds */
+	if (Entry->Location > Priv->NoteLUIDCount ||
+			Priv->NoteLUID[Entry->Location] == NULL) {
+		/**
+		 * \todo We should keep location here!
+		 */
+		return OBEXGEN_AddNote(s, Entry);
+	}
+
+	/* Calculate path */
+	path = malloc(strlen(Priv->NoteLUID[Entry->Location]) + 22); /* Length of string bellow */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/nt/luid/%s.vnt", Priv->NoteLUID[Entry->Location]);
+	smprintf(s, "Seting vNote %s\n", path);
+
+	/* Forget entry if we're deleting */
+	if (Size == 0) {
+		free(Priv->NoteLUID[Entry->Location]);
+		Priv->NoteLUID[Entry->Location] = NULL;
+		Priv->NoteCount--;
+	}
+
+	/* Store vCard */
+	return OBEXGEN_SetFile(s, path, Data, Size);
+}
+
+GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, char *Data, int Size)
+{
+	char		*path;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* Forget entry if we're deleting */
+	if (Size == 0) {
+		Priv->NoteCount--;
+	}
+
+	/* Calculate path */
+	path = malloc(20 + 22); /* Length of string bellow + length of number */
+	if (path == NULL) {
+		return ERR_MOREMEMORY;
+	}
+	sprintf(path, "telecom/nt/%d.vnt", Entry->Location);
+	smprintf(s, "Seting vNote %s\n", path);
+
+	/* Store vCard */
+	return OBEXGEN_SetFile(s, path, Data, Size);
+}
+
+GSM_Error OBEXGEN_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
+{
+	unsigned char 		req[5000];
+	int			size=0;
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->NoteIEL == -1) {
+		error = OBEXGEN_GetNoteInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Encode vNote */
+	GSM_EncodeVNTFile(req, &size, Entry);
+
+	/* Use correct function according to supported IEL */
+	if (Priv->NoteIEL == 0x8 || Priv->NoteIEL == 0x10) {
+		return OBEXGEN_SetNoteLUID(s, Entry, req, size);
+	} else if (Priv->NoteIEL == 0x4) {
+		return OBEXGEN_SetNoteIndex(s, Entry, req, size);
+	} else if (Priv->NoteIEL == 0x2) {
+		/* Work on full note */
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error OBEXGEN_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
+{
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need IEL to correctly talk to phone */
+	if (Priv->NoteIEL == -1) {
+		error = OBEXGEN_GetNoteInformation(s, NULL, NULL);
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Use correct function according to supported IEL */
+	if (Priv->NoteIEL == 0x8 || Priv->NoteIEL == 0x10) {
+		return OBEXGEN_SetNoteLUID(s, Entry, "", 0);
+	} else if (Priv->NoteIEL == 0x4) {
+		return OBEXGEN_SetNoteIndex(s, Entry, "", 0);
+	} else if (Priv->NoteIEL == 0x2) {
+		/* Work on full note */
+		return ERR_NOTIMPLEMENTED;
+	} else {
+		return ERR_NOTSUPPORTED;
+	}
+}
+
+GSM_Error OBEXGEN_DeleteAllNotes(GSM_StateMachine *s)
+{
+	GSM_Error		error;
+	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	GSM_NoteEntry		entry;
+
+	/* We need IrMC service for this */
+	error = OBEXGEN_Connect(s, OBEX_IRMC);
+	if (error != ERR_NONE) return error;
+
+	/* We need count of entries */
+	error = OBEXGEN_InitNoteLUID(s);
+	if (error != ERR_NONE) return error;
+
+	/* Delete all entries */
+	entry.Location = 1;
+	while (Priv->NoteCount > 0) {
+		error = OBEXGEN_DeleteNote(s, &entry);
+		if (error != ERR_NONE && error != ERR_EMPTY) return error;
+		entry.Location++;
+	}
+	return error;
+}
+
+/*@}*/
+
+/**
  * \defgroup OBEXcap Phone information using OBEX capability XML or IrMC devinfo
  * \ingroup OBEXPhone
  * @{
@@ -2830,13 +3217,13 @@ GSM_Phone_Functions OBEXGENPhone = {
 	OBEXGEN_DeleteAllCalendar,
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTIMPLEMENTED,			/*	GetNoteStatus		*/
-	NOTIMPLEMENTED,			/*	GetNote			*/
-	NOTIMPLEMENTED,			/*	GetNextNote		*/
-	NOTIMPLEMENTED,			/*	SetNote			*/
-	NOTIMPLEMENTED,			/*	AddNote			*/
-	NOTIMPLEMENTED,			/* 	DeleteNote		*/
-	NOTIMPLEMENTED,			/*	DeleteAllNotes		*/
+	OBEXGEN_GetNoteStatus,
+	OBEXGEN_GetNote,
+	OBEXGEN_GetNextNote,
+	OBEXGEN_SetNote,
+	OBEXGEN_AddNote,
+	OBEXGEN_DeleteNote,
+	OBEXGEN_DeleteAllNotes,
 	NOTIMPLEMENTED, 		/*	GetProfile		*/
 	NOTIMPLEMENTED, 		/*	SetProfile		*/
     	NOTIMPLEMENTED,			/*  	GetFMStation        	*/
