@@ -330,7 +330,7 @@ OnePhoneModel allmodels[] = {
 	{"J200c",	"AAB-1021061-CN" ,"",				   {F_OBEX, 0}},
 	{"J210i",	"AAB-1021062-BV" ,"",				   {F_OBEX, 0}},
 	{"J210c",	"AAB-1021062-CN" ,"",				   {F_OBEX, 0}},
-	{"K300i/K300c",	"AAB-1021071-BV" ,"",				   {F_OBEX, 0}},
+	{"K300i/K300c",	"AAB-1021071-BV" ,"K300i",			   {F_OBEX, 0}},
 	{"K750i/K750c",	"AAB-1022011-BV" ,"",				   {F_OBEX, 0}},
 	{"D750i/K758c",	"AAB-1022012-BV" ,"",				   {F_OBEX, 0}},
 	{"W800i/W800c",	"AAB-1022013-BV" ,"",				   {F_OBEX, 0}},
