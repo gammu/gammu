@@ -600,6 +600,19 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length,
  *
  * \ingroup Note
  */
+GSM_Error GSM_DecodeVNOTE(unsigned char *Buffer, int *Pos, GSM_NoteEntry *Note);
+
+/**
+ * Encodes vNote to buffer.
+ *
+ * \param Buffer Storage for data.
+ * \param Length Pointer to current position in data (will be incremented).
+ * \param Note Note to encode.
+ *
+ * \return Error code.
+ *
+ * \ingroup Note
+ */
 GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length,
 			    GSM_NoteEntry * Note);
 

@@ -148,6 +148,34 @@ typedef struct {
 	 */
 	int				ReadCalendar;
 	/**
+	 * Number of entries in note
+	 */
+	int				NoteCount;
+	/**
+	 * Offsets of entries in note data
+	 */
+	int				*NoteOffsets;
+	/**
+	 * LUID - location translation map for note
+	 */
+	char				**NoteLUID;
+	/**
+	 * Number of entries in NoteLUID list.
+	 */
+	int				NoteLUIDCount;
+	/**
+	 * Whether to update NoteLUID after this request.
+	 */
+	bool				UpdateNoteLUID;
+	/**
+	 * Information Exchange Level for note.
+	 */
+	int				NoteIEL;
+	/**
+	 * Complete note data.
+	 */
+	char				*NoteData;
+	/**
 	 * Capability data.
 	 */
 	char				*OBEXCapability;

@@ -1444,7 +1444,6 @@ msgstr "Пользовательский UDH"
 
 #: gammu/gammu.c:1048
 #, fuzzy
-#| msgid "Picture Image"
 msgid "Picture name"
 msgstr "Рисунок"
 

@@ -1942,6 +1942,14 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 	return ERR_NONE;
 }
 
+/**
+ * \bug This is stub!
+ */
+GSM_Error GSM_DecodeVNOTE(unsigned char *Buffer, int *Pos, GSM_NoteEntry *Note)
+{
+	return ERR_NOTIMPLEMENTED;
+}
+
 GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *Note)
 {
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VNOTE%c%c",13,10);
