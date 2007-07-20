@@ -1737,7 +1737,7 @@ GSM_Error OBEXGEN_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType MemoryType
 	GSM_MemoryEntry		entry;
 
 	/* Should not happen */
-	if (MemoryType != MEM_ME) return ERR_BUG;
+	if (MemoryType != MEM_ME) return ERR_NOTSUPPORTED;
 
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
