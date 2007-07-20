@@ -39,6 +39,13 @@ extern GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry);
 extern GSM_Error OBEXGEN_SetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry);
 extern GSM_Error OBEXGEN_DeleteTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry);
 extern GSM_Error OBEXGEN_DeleteAllTodo(GSM_StateMachine *s);
+extern GSM_Error OBEXGEN_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status);
+extern GSM_Error OBEXGEN_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry);
+extern GSM_Error OBEXGEN_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Entry, bool start);
+extern GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry);
+extern GSM_Error OBEXGEN_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry);
+extern GSM_Error OBEXGEN_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *Entry);
+extern GSM_Error OBEXGEN_DeleteAllNotes(GSM_StateMachine *s);
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
