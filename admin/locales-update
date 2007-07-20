@@ -26,5 +26,5 @@ for loc in $LOCS ; do
 		s/PACKAGE/Gammu/;
 		s/VERSION/'$ver'/;
 		' locale/$loc/gammu.po
-    msgmerge -U locale/$loc/gammu.po locale/gammu.pot
+    msgmerge --previous  -U locale/$loc/gammu.po locale/gammu.pot
 done
