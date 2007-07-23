@@ -40,12 +40,12 @@ OUT_PATH = '/tmp/gammu.1'
 
 HEADER = '.TH "Gammu" "1" "%(date)s (%(version)s)" "Gammu team" "Cellular phones utilities"\n'
 SECTION = '\n.SH "%s"\n'
-PARAGRAPH = '.TP\n%s\n'
+PARAGRAPH = '.P\n%s\n'
 
 # Fixed parts
 
 SEE_ALSO = '''
-.LP
+.P
 README
 
 <http://www.gammu.org/>
@@ -58,12 +58,12 @@ xgnokii(2)
 '''
 
 AUTHORS = '''
-.LP 
+.P 
 \\fIMichal Cihar\\fR
 <michal@cihar.com>
 .br
 <http://cihar.com/>
-.LP 
+.P 
 \\fIMarcin Wiacek\\fR
 <marcin@mwiacek.com>
 .br
@@ -99,7 +99,7 @@ like \\fIGabriele Zappi\\fR, \\fIRalf Thelen\\fR, .... (see CREDITS from MyGnoki
 '''
 
 FILES = '''
-.LP 
+.P 
 \\fI~/.gammurc\\fP
 .br
 \\fI/usr/share/doc/gammu/*\\fP
@@ -112,7 +112,7 @@ FILES = '''
 '''
 
 EXAMPLES = '''
-.LP 
+.P 
 To check it out, edit \\fI~/.gammurc\\fP and put there something like
 
 \\fB[gammu]
@@ -124,8 +124,8 @@ connection = at
 '''
 
 NAME = '''
-.LP
-Gammu \- Does some neat things with your cellular phone or modem
+.P
+Gammu \- Does some neat things with your cellular phone or modem.
 '''
 
 # Code
@@ -166,11 +166,14 @@ def parse_section_help(lines):
 def write_section(output, name):
     output.write(SECTION % name)
 
+def write_para(output, text):
+    output.write(PARAGRAPH % text)
+
 def format_man_page(output, data):
     keys = data.keys()
     keys.sort()
     for command in keys:
-        output.write('.TP\n\\fB%(command)s\\fR\n' % {'command' : command})
+        output.write('.P\n\\fB%(command)s\\fR\n' % {'command' : command})
 
 def main():
     text = read_help('')
@@ -180,8 +183,8 @@ def main():
     syntax = text[2]
 
     syntax_help = []
-    syntax_help.append(text[3] + text[4])
-    syntax_help.append(text[6])
+    syntax_help.append(text[4] + text[5])
+    syntax_help.append(text[7])
 
     output = file(OUT_PATH, 'w')
     output.write(HEADER % {'version' : version, 'date' : build_date})
@@ -189,7 +192,13 @@ def main():
     write_section(output, 'NAME')
     output.write(NAME)
 
+    write_section(output, 'SYNTAX')
+    write_para(output, syntax.replace('[', '[\\fI').replace(']', '\\fP]'))
+
     write_section(output, 'OPTIONS')
+
+    for line in syntax_help:
+        write_para(output, line)
 
     sections, section_data = parse_sections(text[12:])
     for section in sections:
