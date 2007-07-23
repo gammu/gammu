@@ -258,11 +258,28 @@ Display info about drives available in phone/memory card.
 '''
 HELP['deletefiles'] = ''''''
 HELP['addfolder'] = ''''''
-HELP['addfile'] = ''''''
-HELP['nokiaaddfile'] = ''''''
-HELP['nokiaaddfile'] = '''\\fIExample:\\fR gammu \\-\\-nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
+HELP['addfile'] = '''Add file with specified name to folder with specified folderID.
+
+.BR
+.B \-type 
+- file type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn't need this)
+
+.BR
+.B \-readonly, \-protected, \-system, \-hidden
+- you can set readonly, protected (file can't be for example forwarded from phone menu), system and hidden (file is hidden from phone menu) file attributes
+
+.BR
+.B -newtime 
+- after using it date/time of file modification will be set to moment of uploading 
+
 '''
-HELP['nokiaaddfile'] = '''\\fIExample:\\fR gammu \\-\\-nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
+HELP['nokiaaddfile'] = '''Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You have to give the name without the jar/jad suffix, otherwise you will get the slightly confusing error message Can't open specified file. Read only ?
+
+.BR
+\\fIExample:\\fR gammu \\-\\-nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
+
+.BR
+\\fIExample:\\fR gammu \\-\\-nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 ''' 
 HELP['getdatetime'] = '''Get date and time from phone
 ''' 
