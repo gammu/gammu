@@ -39,19 +39,34 @@ OUT_PATH = '/tmp/gammu.1'
 # Man page data
 
 HEADER = '.TH "Gammu" "1" "%(date)s (%(version)s)" "Gammu team" "Cellular phones utilities"\n'
+CHAPTER_HEADER = '\n.SH "%s"\n'
+PARAGRAPH = '.TP\n%s\n'
 
 # Code
 
 import os
 import re
 
+SECTION_MATCHER = re.compile(' (.*) - (.*)')
 COMMAND_MATCHER = re.compile('--(([^ ]*)( (.*))?)')
 
-def read_man_page():
-    pipe = os.popen('%s --help all' % BIN_PATH)
+def read_help(section):
+    pipe = os.popen('%s --help %s' % (BIN_PATH, section))
     data = pipe.readlines()
     pipe.close()
     return data
+
+def parse_sections(lines):
+    sections = []
+    section_data = {}
+    for line in lines:
+        match = SECTION_MATCHER.match(line)
+        if match is None:
+            continue
+        section = match.groups(1)[0]
+        sections.append(section)
+        section_data[section] = match.groups(1)[1]
+    return sections, section_data
 
 def parse_man_page(lines):
     result = {}
@@ -69,14 +84,21 @@ def format_man_page(output, data):
         output.write('.TP\n\\fB%(command)s\\fR\n' % {'command' : command})
 
 def main():
-    text = read_man_page()
+    text = read_help('')
     result = re.match('\[Gammu version ([0-9.]*) built [0-9:]* (.*)\]', text[0])
     build_date = result.groups(1)[1]
     version = result.groups(1)[0]
     output = file(OUT_PATH, 'w')
     output.write(HEADER % {'version' : version, 'date' : build_date})
-    data = parse_man_page(text[2:])
-    format_man_page(output, data)
+
+    output.write(CHAPTER_HEADER % 'OPTIONS')
+    sections, section_data = parse_sections(text[12:])
+    for section in sections:
+        section_text = read_help(section)
+        output.write(CHAPTER_HEADER % section_data[section])
+        data = parse_man_page(section_text[4:])
+        format_man_page(output, data)
+
     output.close()
 
 if __name__ == '__main__':
