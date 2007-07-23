@@ -52,13 +52,14 @@ almost every usage. See EXAMPLES section for some hints on usage.
 
 .TP
 .BI "addsms" " folder file"
-
+Adds SMSes from file (format like backupsms uses) to
+selected folder in phone.
 .TP
 .BI "addsmsfolder" " name"
 
 .TP
 .BI "backupsms" " file"
-
+Stores all SMSes from phone to file.
 .TP
 .BI "deleteallsms" " folder"
 Delete all SMS from specified SMS folder.
@@ -110,7 +111,9 @@ Get names for SMS folders in phone
 
 .TP
 .BI "restoresms" " file"
-
+Restores SMSes from file (format like backupsms uses) to
+selected folder in phone. Please note that this overwrites existing
+messages in phone (if it supports it).
 .TP
 .BI "savesms" " VCARD10|VCARD21 file SM|ME location [\-nokia][\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 Read phonebook entry from file created by \fB\-\-backup\fR option and saves in
@@ -1072,7 +1075,8 @@ be done, when phone doesn't have set clock inside.
 .SS "Date, time and alarms"
 .TP
 .BI "getalarm" " [start]"
-Get alarm from phone
+Get alarm from phone, if no location is specified,
+1 is used.
 
 .TP
 .BI "getdatetime"
@@ -1080,7 +1084,7 @@ Get date and time from phone
 
 .TP
 .BI "setalarm" " hour minute"
-
+Sets repeating alarm in phone on selected time.
 .TP
 .BI "setdatetime" " [HH:MM[:SS]] [YYYY/MM/DD]"
 Set date and time in phone to date and time set in computer. Please 
@@ -1198,7 +1202,8 @@ file).
 
 .TP
 .BI "addsms" " folder file"
-
+Adds SMSes from file (format like backupsms uses) to
+selected folder in phone.
 .TP
 .BI "backup" " file [\-yes]"
 Backup your phone to file. It's possible to backup (depends on phone):
@@ -1261,7 +1266,7 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 
 .TP
 .BI "backupsms" " file"
-
+Stores all SMSes from phone to file.
 .TP
 .BI "restore" " file [\-yes]"
 Restore settings written in file created using \fB\-\-backup option\fR. All things
@@ -1276,7 +1281,9 @@ be done, when phone doesn't have set clock inside.
 
 .TP
 .BI "restoresms" " file"
-
+Restores SMSes from file (format like backupsms uses) to
+selected folder in phone. Please note that this overwrites existing
+messages in phone (if it supports it).
 .TP
 .BI "savefile" " VCARD10|VCARD21 target.vcf file SM|ME location"
 
