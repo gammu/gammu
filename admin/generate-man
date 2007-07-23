@@ -39,7 +39,7 @@ OUT_PATH = '/tmp/gammu.1'
 # Man page data
 
 HEADER = '.TH "Gammu" "1" "%(date)s (%(version)s)" "Gammu team" "Cellular phones utilities"\n'
-CHAPTER_HEADER = '\n.SH "%s"\n'
+SECTION = '\n.SH "%s"\n'
 PARAGRAPH = '.TP\n%s\n'
 
 # Code
@@ -68,7 +68,7 @@ def parse_sections(lines):
         section_data[section] = match.groups(1)[1]
     return sections, section_data
 
-def parse_man_page(lines):
+def parse_section_help(lines):
     result = {}
     for line in lines:
         match = COMMAND_MATCHER.match(line)
@@ -76,6 +76,9 @@ def parse_man_page(lines):
         options = match.groups(1)[3]
         result[command] = options
     return result
+
+def write_section(output, name):
+    output.write(SECTION % name)
 
 def format_man_page(output, data):
     keys = data.keys()
@@ -88,15 +91,22 @@ def main():
     result = re.match('\[Gammu version ([0-9.]*) built [0-9:]* (.*)\]', text[0])
     build_date = result.groups(1)[1]
     version = result.groups(1)[0]
+    syntax = text[2]
+
+    syntax_help = []
+    syntax_help.append(text[3] + text[4])
+    syntax_help.append(text[6])
+
     output = file(OUT_PATH, 'w')
     output.write(HEADER % {'version' : version, 'date' : build_date})
 
-    output.write(CHAPTER_HEADER % 'OPTIONS')
+    write_section(output, 'OPTIONS')
+
     sections, section_data = parse_sections(text[12:])
     for section in sections:
         section_text = read_help(section)
-        output.write(CHAPTER_HEADER % section_data[section])
-        data = parse_man_page(section_text[4:])
+        write_section(output, section_data[section])
+        data = parse_section_help(section_text[4:])
         format_man_page(output, data)
 
     output.close()
