@@ -44,6 +44,12 @@ Parameters, which allow to control debug level:
 
 
 .SS "SMS and EMS"
+.P
+
+Sending messages might look a bit complicated on first attempt to use.
+But be patient, the command line has been written in order to allow
+almost every usage. See EXAMPLES section for some hints on usage.
+
 .TP
 .BI "addsms" " folder file"
 
@@ -474,7 +480,7 @@ Get memory location from phone. Numerate locations from 1.
 .br
 \fBFD\fR = fixed dialling
 .br
-\fSLD\fR = sent SMS log
+\fBSL\fR = sent SMS log
 
 .TP
 .BI "getspeeddial" " start [stop]"
@@ -518,15 +524,12 @@ all numbers, text and name) format as SMS
 .BI "addfile" " folderID name [\-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][\-readonly][\-protected][\-system][\-hidden][\-newtime]"
 Add file with specified name to folder with specified folderID.
 
-.BR
 .B \-type 
 - file type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn't need this)
 
-.BR
 .B \-readonly, \-protected, \-system, \-hidden
 - you can set readonly, protected (file can't be for example forwarded from phone menu), system and hidden (file is hidden from phone menu) file attributes
 
-.BR
 .B -newtime 
 - after using it date/time of file modification will be set to moment of uploading 
 
@@ -550,11 +553,9 @@ Add file with specified name to folder with specified folderID.
 .BI "getfilesystem" " [\-flatall|\-flat]"
 Display info about all folders and files in phone memory/memory card. By default there is tree displayed, you can change it:
 
-.BR
 .B -flatall
 there are displayed full file/folder details like ID (first parameter in line)
 
-.BR
 .B -flat
 
 Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
@@ -578,10 +579,8 @@ Display info about drives available in phone/memory card.
 .BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name][\-protected][\-readonly][\-system][\-hidden][\-newtime]"
 Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You have to give the name without the jar/jad suffix, otherwise you will get the slightly confusing error message Can't open specified file. Read only ?
 
-.BR
 \fIExample:\fR gammu \-\-nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
 
-.BR
 \fIExample:\fR gammu \-\-nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 
 .TP
@@ -1302,10 +1301,8 @@ be done, when phone doesn't have set clock inside.
 .BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name][\-protected][\-readonly][\-system][\-hidden][\-newtime]"
 Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You have to give the name without the jar/jad suffix, otherwise you will get the slightly confusing error message Can't open specified file. Read only ?
 
-.BR
 \fIExample:\fR gammu \-\-nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
 
-.BR
 \fIExample:\fR gammu \-\-nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 
 .TP
@@ -1968,6 +1965,30 @@ port = /dev/ttyACM0
 .br
 connection = at
 \fR
+
+.TP
+Save text message up to standard 160 chars:
+
+echo "All your base are belong to us" | gammu --savesms TEXT
+
+.TP
+Save long text message:
+
+echo "All your base are belong to us" | gammu --savesms TEXT -maxlen 400
+
+gammu --savesms EMS -text "All your base are belong to us"
+
+.TP
+Save some funky message with predefined sound and animation from 2 bitmaps:
+
+gammu --savesms EMS -text "Greetings" -defsound 1 -text "from Gammu"
+-tone10 axelf.txt -animation 2 file1.bmp file2.bmp
+
+.TP
+Save protected message with ringtone:
+
+gammu --savesms EMS -protected 2 -variablebitmaplong ala.bmp
+-toneSElong axelf.txt -toneSE ring.txt
 
 .SH "AUTHORS"
 

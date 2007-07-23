@@ -124,6 +124,30 @@ port = /dev/ttyACM0
 .br
 connection = at
 \\fR
+
+.TP
+Save text message up to standard 160 chars:
+
+echo "All your base are belong to us" | gammu --savesms TEXT
+
+.TP
+Save long text message:
+
+echo "All your base are belong to us" | gammu --savesms TEXT -maxlen 400
+
+gammu --savesms EMS -text "All your base are belong to us"
+
+.TP
+Save some funky message with predefined sound and animation from 2 bitmaps:
+
+gammu --savesms EMS -text "Greetings" -defsound 1 -text "from Gammu"
+-tone10 axelf.txt -animation 2 file1.bmp file2.bmp
+
+.TP
+Save protected message with ringtone:
+
+gammu --savesms EMS -protected 2 -variablebitmaplong ala.bmp
+-toneSElong axelf.txt -toneSE ring.txt
 '''
 
 NAME = '''
@@ -239,11 +263,9 @@ HELP['getgprspoint'] = ''''''
 HELP['getfiles'] = ''''''
 HELP['getfilesystem'] = '''Display info about all folders and files in phone memory/memory card. By default there is tree displayed, you can change it:
 
-.BR
 .B -flatall
 there are displayed full file/folder details like ID (first parameter in line)
 
-.BR
 .B -flat
 
 Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
@@ -260,25 +282,20 @@ HELP['deletefiles'] = ''''''
 HELP['addfolder'] = ''''''
 HELP['addfile'] = '''Add file with specified name to folder with specified folderID.
 
-.BR
 .B \-type 
 - file type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn't need this)
 
-.BR
 .B \-readonly, \-protected, \-system, \-hidden
 - you can set readonly, protected (file can't be for example forwarded from phone menu), system and hidden (file is hidden from phone menu) file attributes
 
-.BR
 .B -newtime 
 - after using it date/time of file modification will be set to moment of uploading 
 
 '''
 HELP['nokiaaddfile'] = '''Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You have to give the name without the jar/jad suffix, otherwise you will get the slightly confusing error message Can't open specified file. Read only ?
 
-.BR
 \\fIExample:\\fR gammu \\-\\-nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
 
-.BR
 \\fIExample:\\fR gammu \\-\\-nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 ''' 
 HELP['getdatetime'] = '''Get date and time from phone
@@ -311,7 +328,7 @@ HELP['getmemory'] = '''Get memory location from phone. Numerate locations from 1
 .br
 \\fBFD\\fR = fixed dialling
 .br
-\\fSLD\\fR = sent SMS log
+\\fBSL\\fR = sent SMS log
 '''
 HELP['searchmemory'] = ''''''
 HELP['listmemorycategory'] = ''''''
@@ -756,12 +773,19 @@ this option. It's available only, if Gammu was compiled with debug.
 
 ''' 
 
+SECTION_HELP = {}
+SECTION_HELP['sms'] = '''
+Sending messages might look a bit complicated on first attempt to use.
+But be patient, the command line has been written in order to allow
+almost every usage. See EXAMPLES section for some hints on usage.
+'''
+
 # Code
 
 import os
 import re
 
-SECTION_MATCHER = re.compile(' (.*) - (.*)')
+SECTION_MATCHER = re.compile(' *([^ ]*) - (.*)')
 COMMAND_MATCHER = re.compile('--([^ \n]*) (.*)')
 COMMAND_SUBCOMMAND_MATCHER = re.compile('--([^ \n]*) ([A-Z0-9]*) (.*)')
 COMMAND_MATCHER_NOPARAM = re.compile('--([^ \n]*)')
@@ -806,7 +830,7 @@ def parse_section_help(lines):
 def get_command_help(command):
     try:
         return HELP[command]
-    except:
+    except KeyError:
         return ''
 
 def write_section(output, name):
@@ -866,6 +890,10 @@ def main():
     for section in sections:
         section_text = read_help(section)
         write_subsection(output, section_data[section])
+        try:
+            write_para(output, SECTION_HELP[section])
+        except KeyError:
+            pass
         data = parse_section_help(section_text[4:])
         format_man_page(output, data)
 
