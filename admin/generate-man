@@ -33,7 +33,7 @@ BIN_PATH = 'build/gammu/gammu'
 '''
 Output path where man page will be stored.
 '''
-OUT_PATH = '/tmp/gammu.1'
+OUT_PATH = 'docs/user/gammu.1'
 
 
 # Man page data
