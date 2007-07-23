@@ -42,6 +42,85 @@ HEADER = '.TH "Gammu" "1" "%(date)s (%(version)s)" "Gammu team" "Cellular phones
 SECTION = '\n.SH "%s"\n'
 PARAGRAPH = '.TP\n%s\n'
 
+# Fixed parts
+
+SEE_ALSO = '''
+.LP
+README
+
+<http://www.gammu.org/>
+
+cu(1)
+
+gnokii(1)
+
+xgnokii(2)
+'''
+
+AUTHORS = '''
+.LP 
+\\fIMichal Cihar\\fR
+<michal@cihar.com>
+.br
+<http://cihar.com/>
+.LP 
+\\fIMarcin Wiacek\\fR
+<marcin@mwiacek.com>
+.br
+<http://www.mwiacek.com/>
+
+Here are some people, who somehow helped in this project. Probably not
+everyone is mentioned. If you think, you're missed, please let us know:
+   
+1.all people developing Gnokii (some ideas are from it) like
+\\fIPavel Janik\\fR, \\fIPawel Kot\\fR, \\fIManfred Jonsson\\fR, ...
+(see CREDITS from Gnokii)
+
+2.all people responsible for MyGnokii (Gammu is based on it too)
+like \\fIGabriele Zappi\\fR, \\fIRalf Thelen\\fR, .... (see CREDITS from MyGnokii)
+
+3.\\fIMarcin Wiacek\\fR \\- author of all this mess ;\\-)
+
+4.\\fIMarkus Plail & Tibor Harsszegi\\fR \\- for DCT4 help
+
+5.\\fIFrederick Ros \\fR\\- 5210 help
+
+6.\\fIJan Kratochvil \\fR\\- AT commands
+
+7.\\fIWalek\\fR \\- fixes, progress in many things
+
+8.\\fIMarcel Holtmann\\fR \\- Bluetooth tests
+
+9.\\fIMichal Cihar\\fR \\- general discussions and tries into making one big and good GSM manager (many changes and suggestions), Alcatel support
+
+10.\\fIOndrej Rybin & Tomasz Motylewski & Tom Nelson & Multi-COM & GriffinTeam\\fR \\- hardware help
+
+11.\\fIJoergen Thomsen\\fR \\- SMS daemon
+'''
+
+FILES = '''
+.LP 
+\\fI~/.gammurc\\fP
+.br
+\\fI/usr/share/doc/gammu/*\\fP
+.br
+\\fI/dev/ircomm?\\fP
+.br
+\\fI/dev/ttyS?\\fP
+'''
+
+EXAMPLES = '''
+.LP 
+To check it out, edit \\fI~/.gammurc\\fP and put there something like
+
+\\fB[gammu]
+.br
+port = /dev/ttyACM0
+.br
+connection = at
+\\fR
+'''
+
 # Code
 
 import os
@@ -108,6 +187,18 @@ def main():
         write_section(output, section_data[section])
         data = parse_section_help(section_text[4:])
         format_man_page(output, data)
+
+    write_section(output, 'FILES')
+    output.write(FILES)
+
+    write_section(output, 'EXAMPLES')
+    output.write(EXAMPLES)
+
+    write_section(output, 'AUTHORS')
+    output.write(AUTHORS)
+
+    write_section(output, 'SEE ALSO')
+    output.write(SEE_ALSO)
 
     output.close()
 
