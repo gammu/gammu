@@ -516,6 +516,20 @@ all numbers, text and name) format as SMS
 .SS "Filesystem"
 .TP
 .BI "addfile" " folderID name [\-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][\-readonly][\-protected][\-system][\-hidden][\-newtime]"
+Add file with specified name to folder with specified folderID.
+
+.BR
+.B \-type 
+- file type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn't need this)
+
+.BR
+.B \-readonly, \-protected, \-system, \-hidden
+- you can set readonly, protected (file can't be for example forwarded from phone menu), system and hidden (file is hidden from phone menu) file attributes
+
+.BR
+.B -newtime 
+- after using it date/time of file modification will be set to moment of uploading 
+
 
 .TP
 .BI "addfolder" " parentfolderID name"
@@ -562,6 +576,12 @@ Display info about drives available in phone/memory card.
 
 .TP
 .BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name][\-protected][\-readonly][\-system][\-hidden][\-newtime]"
+Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You have to give the name without the jar/jad suffix, otherwise you will get the slightly confusing error message Can't open specified file. Read only ?
+
+.BR
+\fIExample:\fR gammu \-\-nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
+
+.BR
 \fIExample:\fR gammu \-\-nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 
 .TP
@@ -1276,6 +1296,12 @@ be done, when phone doesn't have set clock inside.
 .SS "Nokia specific"
 .TP
 .BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name][\-protected][\-readonly][\-system][\-hidden][\-newtime]"
+Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You have to give the name without the jar/jad suffix, otherwise you will get the slightly confusing error message Can't open specified file. Read only ?
+
+.BR
+\fIExample:\fR gammu \-\-nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
+
+.BR
 \fIExample:\fR gammu \-\-nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 
 .TP
