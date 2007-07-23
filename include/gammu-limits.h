@@ -53,7 +53,7 @@
  *
  * \ingroup Limits
  */
-#define GSM_PHONE_MAXSMSINFOLDER 600
+#define GSM_PHONE_MAXSMSINFOLDER 100000
 
 /**
  * Maximal length of phone number.
