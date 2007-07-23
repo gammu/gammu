@@ -1942,12 +1942,34 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 	return ERR_NONE;
 }
 
-/**
- * \bug This is stub!
- */
 GSM_Error GSM_DecodeVNOTE(unsigned char *Buffer, int *Pos, GSM_NoteEntry *Note)
 {
-	return ERR_NOTIMPLEMENTED;
+	unsigned char   Line[2000],Buff[2000];
+	int	     Level = 0;
+
+	Note->Text[0] = 0;
+	Note->Text[1] = 0;
+
+	while (1) {
+		MyGetLine(Buffer, Pos, Line, strlen(Buffer), true);
+		if (strlen(Line) == 0) break;
+		switch (Level) {
+		case 0:
+			if (strstr(Line,"BEGIN:VNOTE")) Level = 1;
+			break;
+		case 1:
+			if (strstr(Line,"END:VNOTE")) {
+				if (UnicodeLength(Note->Text) == 0) return ERR_EMPTY;
+				return ERR_NONE;
+			}
+			if (ReadVCALText(Line, "BODY",	      Buff, false)) {
+				CopyUnicodeString(Note->Text, Buff);
+			}
+			break;
+		}
+	}
+
+	return ERR_BUG;
 }
 
 GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *Note)
