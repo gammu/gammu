@@ -1512,11 +1512,11 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 		if (strstr(msg.Buffer, "\"ME\"") != NULL) s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_AVAILABLE;
 		else s->Phone.Data.Priv.ATGEN.PhoneSMSMemory = AT_NOTAVAILABLE;
 
-		smprintf(s, "Available SMS memories received: read: ME = %d, SM = %d, save: ME = %d, SM = %d\n",
-				s->Phone.Data.Priv.ATGEN.PhoneSMSMemory,
-				s->Phone.Data.Priv.ATGEN.SIMSMSMemory,
-				s->Phone.Data.Priv.ATGEN.PhoneSaveSMS,
-				s->Phone.Data.Priv.ATGEN.SIMSaveSMS
+		smprintf(s, "Available SMS memories received: read: ME : %s, SM : %s, save: ME : %s, SM = %s\n",
+				s->Phone.Data.Priv.ATGEN.PhoneSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
+				s->Phone.Data.Priv.ATGEN.SIMSMSMemory == AT_AVAILABLE ? "ok" : "N/A",
+				s->Phone.Data.Priv.ATGEN.PhoneSaveSMS == AT_AVAILABLE ? "ok" : "N/A",
+				s->Phone.Data.Priv.ATGEN.SIMSaveSMS == AT_AVAILABLE ? "ok" : "N/A"
 				);
 		return ERR_NONE;
 	case AT_Reply_Error:
