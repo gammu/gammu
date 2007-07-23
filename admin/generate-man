@@ -107,6 +107,8 @@ FILES = '''
 \\fI/dev/ircomm?\\fP
 .br
 \\fI/dev/ttyS?\\fP
+.br
+\\fI/dev/ttyACM?\\fP
 '''
 
 EXAMPLES = '''
