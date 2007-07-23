@@ -1,0 +1,68 @@
+#!/usr/bin/env python
+# -*- coding: UTF-8 -*-
+# vim: expandtab sw=4 ts=4 sts=4:
+'''
+Gammu man page generator
+'''
+__author__ = 'Michal Čihař'
+__email__ = 'michal@cihar.com'
+__license__ = '''
+Copyright (c) 2003 - 2007 Michal Čihař
+
+This program is free software; you can redistribute it and/or modify it
+under the terms of the GNU General Public License version 2 as published by
+the Free Software Foundation.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for
+more details.
+
+You should have received a copy of the GNU General Public License along with
+this program; if not, write to the Free Software Foundation, Inc.,
+51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+'''
+
+# Configuration
+
+'''
+Path to gammu binary.
+'''
+BIN_PATH = 'build/gammu/gammu'
+
+'''
+Output path where man page will be stored.
+'''
+OUT_PATH = '/tmp/gammu.1'
+
+
+# Man page data
+
+HEADER = '.TH "Gammu" "1" "%(date)s (%(version)s)" "Gammu team" "Cellular phones utilities"\n'
+
+# Code
+
+import os
+import re
+
+def read_man_page():
+    pipe = os.popen('%s --help all' % BIN_PATH)
+    data = pipe.readlines()
+    pipe.close()
+    return data
+
+def process_man_page(text):
+    print text
+
+def main():
+    text = read_man_page()
+    result = re.match('\[Gammu version ([0-9.]*) built [0-9:]* (.*)\]', text[0])
+    build_date = result.groups(1)[1]
+    version = result.groups(1)[0]
+    output = file(OUT_PATH, 'w')
+    output.write(HEADER % {'version' : version, 'date' : build_date})
+    #process_man_page(text)
+    output.close()
+
+if __name__ == '__main__':
+    main()
