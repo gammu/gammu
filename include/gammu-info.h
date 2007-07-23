@@ -507,6 +507,16 @@ typedef enum {
 	 * Phone returns strings in utf-8 even if it reports GSM.
 	 */
 	F_FORCE_UTF8,
+	/**
+	 * Phone supports SM storage for SMS even if it does not report
+	 * so.
+	 */
+	F_SMS_SM,
+	/**
+	 * Phone supports ME storage for SMS even if it does not report
+	 * so.
+	 */
+	F_SMS_ME,
 } Feature;
 
 /**
