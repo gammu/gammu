@@ -175,16 +175,6 @@ typedef enum {
  */
 #define AT_PBK_MAX_MEMORIES	200
 
-/**
- * Maximal location of SMS in folder.
- */
-#define AT_MAX_SMS_LOCATION 100000
-
-/* Check whether we're larger than maximal number of SMSes in folder. */
-#if GSM_PHONE_MAXSMSINFOLDER > AT_MAX_SMS_LOCATION
-#error  GSM_PHONE_MAXSMSINFOLDER needs to be smaller than AT_MAX_SMS_LOCATION!
-#endif
-
 typedef struct {
 	/**
 	 * Who is manufacturer

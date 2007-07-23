@@ -1656,10 +1656,10 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 
 	/* simulate flat SMS memory */
 	if (sms->Folder == 0x00) {
-		ifolderid = sms->Location / AT_MAX_SMS_LOCATION;
+		ifolderid = sms->Location / GSM_PHONE_MAXSMSINFOLDER;
 		if (ifolderid + 1 > maxfolder) return ERR_NOTSUPPORTED;
 		*folderid = ifolderid + 1;
-		*location = sms->Location - ifolderid * AT_MAX_SMS_LOCATION;
+		*location = sms->Location - ifolderid * GSM_PHONE_MAXSMSINFOLDER;
 	} else {
 		if (sms->Folder > 2 * maxfolder) return ERR_NOTSUPPORTED;
 		*folderid = sms->Folder <= 2 ? 1 : 2;
@@ -1688,7 +1688,7 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 void ATGEN_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char folderid, int location)
 {
 	sms->Folder	= 0; /* Flat memory */
-	sms->Location	= (folderid - 1) * AT_MAX_SMS_LOCATION + location;
+	sms->Location	= (folderid - 1) * GSM_PHONE_MAXSMSINFOLDER + location;
 	smprintf(s, "ATGEN folder %i & location %i -> SMS folder %i & location %i\n",
 		folderid, location, sms->Folder, sms->Location);
 }
@@ -2149,7 +2149,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 	}
 	while (true) {
 		sms->SMS[0].Location++;
-		if (sms->SMS[0].Location < AT_MAX_SMS_LOCATION) {
+		if (sms->SMS[0].Location < GSM_PHONE_MAXSMSINFOLDER) {
 			if (Priv->SIMSMSMemory == AT_AVAILABLE) {
 				usedsms = Priv->LastSMSStatus.SIMUsed;
 			} else {
@@ -2159,7 +2159,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 			if (Priv->LastSMSRead >= usedsms) {
 				if (Priv->PhoneSMSMemory == AT_NOTAVAILABLE || Priv->LastSMSStatus.PhoneUsed==0) return ERR_EMPTY;
 				Priv->LastSMSRead	= 0;
-				sms->SMS[0].Location 	= AT_MAX_SMS_LOCATION + 1;
+				sms->SMS[0].Location 	= GSM_PHONE_MAXSMSINFOLDER + 1;
 			}
 		} else {
 			if (Priv->PhoneSMSMemory == AT_NOTAVAILABLE) return ERR_EMPTY;
