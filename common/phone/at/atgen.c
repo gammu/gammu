@@ -1532,9 +1532,22 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 GSM_Error ATGEN_GetSMSMemories(GSM_StateMachine *s)
 {
 	GSM_Error error;
+	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	smprintf(s, "Getting available SMS memories\n");
 	ATGEN_WaitFor(s, "AT+CPMS=?\r", 10, 0x00, 4, ID_GetSMSMemories);
+
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_SM)) {
+		smprintf(s, "Forcing support for SM storage!\n");
+		Priv->SIMSaveSMS = AT_AVAILABLE;
+		Priv->SIMSMSMemory = AT_AVAILABLE;
+	}
+
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_ME)) {
+		smprintf(s, "Forcing support for ME storage!\n");
+		Priv->PhoneSMSMemory = AT_AVAILABLE;
+		Priv->PhoneSaveSMS = AT_AVAILABLE;
+	}
 
 	return error;
 }
