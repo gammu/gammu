@@ -40,7 +40,9 @@ OUT_PATH = '/tmp/gammu.1'
 
 HEADER = '.TH "Gammu" "1" "%(date)s (%(version)s)" "Gammu team" "Cellular phones utilities"\n'
 SECTION = '\n.SH "%s"\n'
+SUBSECTION = '\n.SS "%s"\n'
 PARAGRAPH = '.P\n%s\n'
+COMMAND = '.P\n%s\n'
 
 # Fixed parts
 
@@ -166,6 +168,9 @@ def parse_section_help(lines):
 def write_section(output, name):
     output.write(SECTION % name)
 
+def write_subsection(output, name):
+    output.write(SUBSECTION % name)
+
 def write_para(output, text):
     output.write(PARAGRAPH % text)
 
@@ -173,7 +178,7 @@ def format_man_page(output, data):
     keys = data.keys()
     keys.sort()
     for command in keys:
-        output.write('.P\n\\fB%(command)s\\fR\n' % {'command' : command})
+        write_para(output, '\\fB%(command)s\\fR' % {'command' : command})
 
 def main():
     text = read_help('')
@@ -203,7 +208,7 @@ def main():
     sections, section_data = parse_sections(text[12:])
     for section in sections:
         section_text = read_help(section)
-        write_section(output, section_data[section])
+        write_subsection(output, section_data[section])
         data = parse_section_help(section_text[4:])
         format_man_page(output, data)
 
