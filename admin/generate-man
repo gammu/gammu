@@ -136,6 +136,20 @@ This program is a tool for mobile phones. Many vendors and phones
 are supported, for actual listing see <http://cihar.com/gammu/phonedb/>.
 '''
 
+DEBUG_LEVELS = '''
+Parameters, which allow to control debug level:
+
+\\fBnothing\\fR - no debug level
+.br
+\\fBtext\\fR    - transmission dump in text format
+.br
+\\fBtextall\\fR - all possible info in text format
+.br
+\\fBerrors\\fR  - errors in text format
+.br
+\\fBbinary\\fR  - transmission dump in binary format
+'''
+
 # Code
 
 import os
@@ -214,6 +228,9 @@ def main():
 
     for line in syntax_help:
         write_para(output, line)
+
+    write_subsection(output, 'Debug levels')
+    write_para(output, DEBUG_LEVELS)
 
     sections, section_data = parse_sections(text[12:])
     for section in sections:
