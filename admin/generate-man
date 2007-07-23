@@ -317,9 +317,10 @@ date and time.
 \\fITIP:\\fR you can make such synchronization each time, when will connect
 your phone and use Gammu. See \\fBgammurc\\fR for details.
 ''' 
-HELP['getalarm'] = '''Get alarm from phone
+HELP['getalarm'] = '''Get alarm from phone, if no location is specified,
+1 is used.
 '''
-HELP['setalarm'] = '''''' 
+HELP['setalarm'] = '''Sets repeating alarm in phone on selected time.''' 
 HELP['getmemory'] = '''Get memory location from phone. Numerate locations from 1.
 
 \\fBDC\\fR = Dialled calls
@@ -756,7 +757,12 @@ F: Type = NumberGeneral\\\\nEntry\\\\([0\\-9][0\\-9]\\\\)Text = "\\\\+36\\\\([23
 .br
 R: Type = NumberMobile\\\\nEntry\\\\1Text = "\\\\+36\\\\2\\\\3"\\\\n
 '''
-HELP['backupsms'] = '''''' 
+HELP['backupsms'] = '''Stores all SMSes from phone to file.''' 
+HELP['addsms'] = '''Adds SMSes from file (format like backupsms uses) to
+selected folder in phone.'''
+HELP['restoresms'] = '''Restores SMSes from file (format like backupsms uses) to
+selected folder in phone. Please note that this overwrites existing
+messages in phone (if it supports it).'''
 HELP['restore'] = '''Restore settings written in file created using \\fB\\-\\-backup option\\fR. All things
 backup'ed by \\fB\\-\\-backup\\fR can be restored (when made backup to Gammu text
 file).
@@ -767,7 +773,6 @@ want only to add entries to phone, use \\-\\-addnew.
 In some phones restoring calendar notes will not show error, but won't
 be done, when phone doesn't have set clock inside.
 '''
-HELP['restoresms'] = ''''''
 HELP['addnew'] = '''Adds settings written in file created using \\fB\\-\\-backup option\\fR. All things
 backup'ed by \\fB\\-\\-backup\\fR can be restored (when made backup to Gammu text
 file).
