@@ -1285,7 +1285,7 @@ unsigned char *mywstrstr (const unsigned char *haystack, const unsigned char *ne
 {
 /* One crazy define to convert unicode used in Gammu to standard wchar_t */
 #define tolowerwchar(x) (towlower((wchar_t)( (((&(x))[0] & 0xff) << 8) | (((&(x))[1] & 0xff)) )))
-	register wchar_t a, b, c;
+	register wint_t a, b, c;
 	register const unsigned char *rhaystack, *rneedle;
 
 
@@ -1817,35 +1817,39 @@ int DecodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
 bool IconvDecode(const char *charset, const char *input, const size_t inlen, unsigned char *output, size_t outlen)
 {
 	iconv_t ic;
+	size_t rest = inlen;
 	char *in, *out;
 
 	ic = iconv_open("UCS-2BE", charset);
 	if (ic == (iconv_t)(-1)) return false;
 
-	in = input;
+	/* I know I loose const here, but it's iconv choice... */
+	in = (char *)input;
 	out = output;
-	iconv(ic, &in, &inlen, &out, &outlen);
+	iconv(ic, &in, &rest, &out, &outlen);
 
 	iconv_close(ic);
 
-	return (inlen == 0);
+	return (rest == 0);
 }
 
 bool IconvEncode(const char *charset, const unsigned char *input, const size_t inlen, char *output, size_t outlen)
 {
 	iconv_t ic;
+	size_t rest = inlen;
 	char *in, *out;
 
 	ic = iconv_open(charset, "UCS-2BE");
 	if (ic == (iconv_t)(-1)) return false;
 
-	in = input;
+	/* I know I loose const here, but it's iconv choice... */
+	in = (char *)input;
 	out = output;
-	iconv(ic, &in, &inlen, &out, &outlen);
+	iconv(ic, &in, &rest, &out, &outlen);
 
 	iconv_close(ic);
 
-	return (inlen == 0);
+	return (rest == 0);
 }
 #endif
 
