@@ -803,7 +803,7 @@ def format_man_page(output, data):
     keys = data.keys()
     keys.sort()
     for command in keys:
-        write_command(output, command, data[command], get_command_help(command))
+        write_command(output, command, data[command].replace('-', '\\-'), get_command_help(command))
 
 def main():
     text = read_help('')
@@ -832,7 +832,7 @@ def main():
     write_section(output, 'OPTIONS')
 
     for line in syntax_help:
-        write_para(output, line)
+        write_para(output, line.replace('-', '\\-'))
 
     write_subsection(output, 'Debug levels')
     write_para(output, DEBUG_LEVELS)

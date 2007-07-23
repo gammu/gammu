@@ -24,7 +24,7 @@ First parameter optionally specifies which config section to use (all are probed
 Second parameter optionally controls debug level, next one specifies actions.
 
 .P
-Commands can be specified with or without leading --.
+Commands can be specified with or without leading \-\-.
 
 
 .SS "Debug levels"
@@ -66,14 +66,14 @@ sms folders naming convention. Locations are numerated from 1.
 .BI "displaysms" " ... (options like in sendsms)"
 
 .TP
-.BI "getallsms" " -pbk"
+.BI "getallsms" " \-pbk"
 Get all SMS from phone. In some phones you will have also SMS templates
 and info about locations used to save Picture Images. With each sms you
 will see location. If you want to get such sms from phone alone, use
 \fBgammu \-\-getsms 0 location\fR
 
 .TP
-.BI "geteachsms" " -pbk"
+.BI "geteachsms" " \-pbk"
 Similiary to \fB\-\-getallsms\fR. Difference is, that links all contacenated sms
 
 .TP
@@ -106,30 +106,30 @@ Get names for SMS folders in phone
 .BI "restoresms" " file"
 
 .TP
-.BI "savesms" " VCARD10|VCARD21 file SM|ME location [-nokia][-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms" " VCARD10|VCARD21 file SM|ME location [\-nokia][\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 Read phonebook entry from file created by \fB\-\-backup\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
 all numbers, text and name) format as SMS
 
 .TP
-.BI "savesms ANIMATION" " frames file1 file2... [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms ANIMATION" " frames file1 file2... [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "savesms BOOKMARK" " file location [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms BOOKMARK" " file location [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 Read WAP bookmark from file created by \fB\-\-backup\fR option and saves in
 Nokia format as SMS
 
 .TP
-.BI "savesms CALENDAR" " file location [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms CALENDAR" " file location [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 Read calendar note from file created by \fB\-\-backup\fR option and saves in
 VCALENDAR 1.0 format as SMS
 
 .TP
-.BI "savesms CALLER" " file [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms CALLER" " file [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 Save caller logo as sms (Nokia format \- size 72x14).
 
 .TP
-.BI "savesms EMS" " [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num][-unicode][-16bit][-format lcrasbiut][-text text][-unicodefiletext file][-defsound ID][-defanimation ID][-tone10 file][-tone10long file][-tone12 file][-tone12long file][-toneSE file][-toneSElong file][-fixedbitmap file][-variablebitmap file][-variablebitmaplong file][-animation frames file1 ...][-protected number]"
+.BI "savesms EMS" " [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-unicode][\-16bit][\-format lcrasbiut][\-text text][\-unicodefiletext file][\-defsound ID][\-defanimation ID][\-tone10 file][\-tone10long file][\-tone12 file][\-tone12long file][\-toneSE file][\-toneSElong file][\-fixedbitmap file][\-variablebitmap file][\-variablebitmaplong file][\-animation frames file1 ...][\-protected number]"
 
 Saves EMS sequence. All parameters after \fB\-unread\fR (like \fB\-defsound\fR) can be used few times.
 
@@ -172,27 +172,27 @@ will create EMS sequence with text "Greetings" and default sound 1 and text "fro
 ala.bmp and axelf.txt will be "protected"
 
 .TP
-.BI "savesms MMSINDICATOR" " URL Title Sender [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms MMSINDICATOR" " URL Title Sender [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "savesms MMSSETTINGS" " file location  [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms MMSSETTINGS" " file location  [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "savesms OPERATOR" " file [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num][-netcode netcode][-biglogo]"
+.BI "savesms OPERATOR" " file [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-netcode netcode][\-biglogo]"
 Save operator logo as sms (Nokia format - size 72x14 or 78x21 after
 using \fB\-biglogo\fR).
 
 .TP
-.BI "savesms PICTURE" " file [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num][-text text][-unicode][-alcatelbmmi]"
+.BI "savesms PICTURE" " file [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-text text][\-unicode][\-alcatelbmmi]"
 Save Picture Image as sms (Nokia format \- size 72x28).
 
 .TP
-.BI "savesms PROFILE" " [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num][-name name][-bitmap bitmap][-ringtone ringtone]"
+.BI "savesms PROFILE" " [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-name name][\-bitmap bitmap][\-ringtone ringtone]"
 Read ringtone (RTTL) format and bitmap (Picture Image size) and name and save
 as Nokia profile.
 
 .TP
-.BI "savesms RINGTONE" " file [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num][-long][-scale]"
+.BI "savesms RINGTONE" " file [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-long][\-scale]"
 Read RTTL ringtone from file and save as SMS into SIM/phone memory.
 Ringtone is saved in Nokia format.
 
@@ -224,10 +224,10 @@ in 2 SMS), but decoded only by newer phones (like 33xx)
 it correctly later in phone composer (for example, in 33xx)
 
 .TP
-.BI "savesms SMSTEMPLATE" " [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num][-unicode][-text text][-unicodefiletext file][-defsound ID][-defanimation ID][-tone10 file][-tone10long file][-tone12 file][-tone12long file][-toneSE file][-toneSElong file][-variablebitmap file][-variablebitmaplong file][-animation frames file1 ...]"
+.BI "savesms SMSTEMPLATE" " [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-unicode][\-text text][\-unicodefiletext file][\-defsound ID][\-defanimation ID][\-tone10 file][\-tone10long file][\-tone12 file][\-tone12long file][\-toneSE file][\-toneSElong file][\-variablebitmap file][\-variablebitmaplong file][\-animation frames file1 ...]"
 
 .TP
-.BI "savesms TEXT" " [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num][-inputunicode][-16bit][-flash][-len len][-autolen len][-unicode][-enablevoice][-disablevoice][-enablefax][-disablefax][-enableemail][-disableemail][-voidsms][-replacemessages ID][-replacefile file]"
+.BI "savesms TEXT" " [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-inputunicode][\-16bit][\-flash][\-len len][\-autolen len][\-unicode][\-enablevoice][\-disablevoice][\-enablefax][\-disablefax][\-enableemail][\-disableemail][\-voidsms][\-replacemessages ID][\-replacefile file]"
 Take text from stdin and save as text SMS into SIM/phone memory.
 
 \fB\-folder number\fR \- save to specified folder. Numerate folders from 1.
@@ -294,65 +294,65 @@ there is example file (\fIreplace.txt\fR), which will change all "a" chars to "1
 \fIExample:\fR echo some_text | gammu \-\-savesms TEXT
 
 .TP
-.BI "savesms TODO" " file location [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms TODO" " file location [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "savesms WAPINDICATOR" " URL Title [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms WAPINDICATOR" " URL Title [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "savesms WAPSETTINGS" " file location DATA|GPRS [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms WAPSETTINGS" " file location DATA|GPRS [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 Read WAP settings from file created by \fB\-\-backup\fR option and saves in Nokia format as SMS
 
 .TP
-.BI "sendsms" " VCARD10|VCARD21 destination file SM|ME location [-nokia][-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms" " VCARD10|VCARD21 destination file SM|ME location [\-nokia][\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms ANIMATION" " destination frames file1 file2... [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms ANIMATION" " destination frames file1 file2... [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms BOOKMARK" " destination file location [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms BOOKMARK" " destination file location [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms CALENDAR" " destination file location [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms CALENDAR" " destination file location [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms CALLER" " destination file [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms CALLER" " destination file [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms EMS" " destination [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num][-unicode][-16bit][-format lcrasbiut][-text text][-unicodefiletext file][-defsound ID][-defanimation ID][-tone10 file][-tone10long file][-tone12 file][-tone12long file][-toneSE file][-toneSElong file][-fixedbitmap file][-variablebitmap file][-variablebitmaplong file][-animation frames file1 ...][-protected number]"
+.BI "sendsms EMS" " destination [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-unicode][\-16bit][\-format lcrasbiut][\-text text][\-unicodefiletext file][\-defsound ID][\-defanimation ID][\-tone10 file][\-tone10long file][\-tone12 file][\-tone12long file][\-toneSE file][\-toneSElong file][\-fixedbitmap file][\-variablebitmap file][\-variablebitmaplong file][\-animation frames file1 ...][\-protected number]"
 
 .TP
-.BI "sendsms MMSINDICATOR" " destination URL Title Sender [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms MMSINDICATOR" " destination URL Title Sender [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms MMSSETTINGS" " destination file location [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms MMSSETTINGS" " destination file location [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms OPERATOR" " destination file [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num][-netcode netcode][-biglogo]"
+.BI "sendsms OPERATOR" " destination file [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-netcode netcode][\-biglogo]"
 
 .TP
-.BI "sendsms PICTURE" " destination file [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num][-text text][-unicode][-alcatelbmmi]"
+.BI "sendsms PICTURE" " destination file [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-text text][\-unicode][\-alcatelbmmi]"
 
 .TP
-.BI "sendsms PROFILE" " destination [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num][-name name][-bitmap bitmap][-ringtone ringtone]"
+.BI "sendsms PROFILE" " destination [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-name name][\-bitmap bitmap][\-ringtone ringtone]"
 
 .TP
-.BI "sendsms RINGTONE" " destination file [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num][-long][-scale]"
+.BI "sendsms RINGTONE" " destination file [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-long][\-scale]"
 
 .TP
-.BI "sendsms SMSTEMPLATE" " destination [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num][-unicode][-text text][-unicodefiletext file][-defsound ID][-defanimation ID][-tone10 file][-tone10long file][-tone12 file][-tone12long file][-toneSE file][-toneSElong file][-variablebitmap file][-variablebitmaplong file][-animation frames file1 ...]"
+.BI "sendsms SMSTEMPLATE" " destination [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-unicode][\-text text][\-unicodefiletext file][\-defsound ID][\-defanimation ID][\-tone10 file][\-tone10long file][\-tone12 file][\-tone12long file][\-toneSE file][\-toneSElong file][\-variablebitmap file][\-variablebitmaplong file][\-animation frames file1 ...]"
 
 .TP
-.BI "sendsms TEXT" " destination [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num][-inputunicode][-16bit][-flash][-len len][-autolen len][-unicode][-enablevoice][-disablevoice][-enablefax][-disablefax][-enableemail][-disableemail][-voidsms][-replacemessages ID][-replacefile file]"
+.BI "sendsms TEXT" " destination [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-inputunicode][\-16bit][\-flash][\-len len][\-autolen len][\-unicode][\-enablevoice][\-disablevoice][\-enablefax][\-disablefax][\-enableemail][\-disableemail][\-voidsms][\-replacemessages ID][\-replacefile file]"
 
 .TP
-.BI "sendsms TODO" " destination file location [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms TODO" " destination file location [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms WAPINDICATOR" " destination URL Title [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms WAPINDICATOR" " destination URL Title [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms WAPSETTINGS" " destination file location DATA|GPRS [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms WAPSETTINGS" " destination file location DATA|GPRS [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
 .BI "sendsmsdsms" " TEXT|WAPSETTINGS|... destination FILES|MYSQL|PGSQL configfile ... (options like in sendsms)"
@@ -373,13 +373,13 @@ SMS Deaemon. See smsdrc config file for more options
 .BI "addcategory" " TODO|PHONEBOOK text"
 
 .TP
-.BI "addnew" " file [-yes]"
+.BI "addnew" " file [\-yes]"
 Adds settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
 
 .TP
-.BI "backup" " file [-yes]"
+.BI "backup" " file [\-yes]"
 Backup your phone to file. It's possible to backup (depends on phone):
 
 * phonebook from SIM and phone memory
@@ -455,7 +455,7 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 .BI "getcategory" " TODO|PHONEBOOK start [stop]"
 
 .TP
-.BI "getmemory" " DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [-nonempty]]"
+.BI "getmemory" " DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop [\-nonempty]]"
 Get memory location from phone. Numerate locations from 1.
 
 \fBDC\fR = Dialled calls
@@ -486,7 +486,7 @@ Get memory location from phone. Numerate locations from 1.
 .BI "nokiagetpbkfeatures" " memorytype"
 
 .TP
-.BI "restore" " file [-yes]"
+.BI "restore" " file [\-yes]"
 Restore settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
@@ -501,7 +501,7 @@ be done, when phone doesn't have set clock inside.
 .BI "savefile" " VCARD10|VCARD21 target.vcf file SM|ME location"
 
 .TP
-.BI "savesms" " VCARD10|VCARD21 file SM|ME location [-nokia][-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms" " VCARD10|VCARD21 file SM|ME location [\-nokia][\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 Read phonebook entry from file created by \fB\-\-backup\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
 all numbers, text and name) format as SMS
@@ -510,12 +510,12 @@ all numbers, text and name) format as SMS
 .BI "searchmemory" " text"
 
 .TP
-.BI "sendsms" " VCARD10|VCARD21 destination file SM|ME location [-nokia][-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms" " VCARD10|VCARD21 destination file SM|ME location [\-nokia][\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 
 .SS "Filesystem"
 .TP
-.BI "addfile" " folderID name [-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][-readonly][-protected][-system][-hidden][-newtime]"
+.BI "addfile" " folderID name [\-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT][\-readonly][\-protected][\-system][\-hidden][\-newtime]"
 
 .TP
 .BI "addfolder" " parentfolderID name"
@@ -533,7 +533,7 @@ all numbers, text and name) format as SMS
 .BI "getfiles" " ID1, ID2, ..."
 
 .TP
-.BI "getfilesystem" " [-flatall|-flat]"
+.BI "getfilesystem" " [\-flatall|\-flat]"
 Display info about all folders and files in phone memory/memory card. By default there is tree displayed, you can change it:
 
 .BR
@@ -561,7 +561,7 @@ Please note, that in some phones (like N6230) content of some folders (with more
 Display info about drives available in phone/memory card.
 
 .TP
-.BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"
+.BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name][\-protected][\-readonly][\-system][\-hidden][\-newtime]"
 \fIExample:\fR gammu \-\-nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 
 .TP
@@ -571,7 +571,7 @@ Display info about drives available in phone/memory card.
 .BI "sendfile" " name"
 
 .TP
-.BI "setfileattrib" " folderID [-system] [-readonly] [-hidden] [-protected]"
+.BI "setfileattrib" " folderID [\-system] [\-readonly] [\-hidden] [\-protected]"
 
 
 .SS "Logo and pictures"
@@ -605,32 +605,32 @@ Get Picture Image from phone.
 Get static startup logo from phone. Allow to save it in file.
 
 .TP
-.BI "savesms ANIMATION" " frames file1 file2... [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms ANIMATION" " frames file1 file2... [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "savesms CALLER" " file [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms CALLER" " file [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 Save caller logo as sms (Nokia format \- size 72x14).
 
 .TP
-.BI "savesms OPERATOR" " file [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num][-netcode netcode][-biglogo]"
+.BI "savesms OPERATOR" " file [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-netcode netcode][\-biglogo]"
 Save operator logo as sms (Nokia format - size 72x14 or 78x21 after
 using \fB\-biglogo\fR).
 
 .TP
-.BI "savesms PICTURE" " file [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num][-text text][-unicode][-alcatelbmmi]"
+.BI "savesms PICTURE" " file [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-text text][\-unicode][\-alcatelbmmi]"
 Save Picture Image as sms (Nokia format \- size 72x28).
 
 .TP
-.BI "sendsms ANIMATION" " destination frames file1 file2... [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms ANIMATION" " destination frames file1 file2... [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms CALLER" " destination file [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms CALLER" " destination file [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms OPERATOR" " destination file [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num][-netcode netcode][-biglogo]"
+.BI "sendsms OPERATOR" " destination file [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-netcode netcode][\-biglogo]"
 
 .TP
-.BI "sendsms PICTURE" " destination file [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num][-text text][-unicode][-alcatelbmmi]"
+.BI "sendsms PICTURE" " destination file [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-text text][\-unicode][\-alcatelbmmi]"
 
 .TP
 .BI "setbitmap CALLER" " location [file]"
@@ -670,13 +670,13 @@ supports it)
 
 .SS "Ringtones"
 .TP
-.BI "addnew" " file [-yes]"
+.BI "addnew" " file [\-yes]"
 Adds settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
 
 .TP
-.BI "backup" " file [-yes]"
+.BI "backup" " file [\-yes]"
 Backup your phone to file. It's possible to backup (depends on phone):
 
 * phonebook from SIM and phone memory
@@ -766,7 +766,7 @@ Play aproximation of ringtone over phone buzzer.
 .BI "playsavedringtone" " number"
 
 .TP
-.BI "restore" " file [-yes]"
+.BI "restore" " file [\-yes]"
 Restore settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
@@ -778,7 +778,7 @@ In some phones restoring calendar notes will not show error, but won't
 be done, when phone doesn't have set clock inside.
 
 .TP
-.BI "savesms RINGTONE" " file [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num][-long][-scale]"
+.BI "savesms RINGTONE" " file [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-long][\-scale]"
 Read RTTL ringtone from file and save as SMS into SIM/phone memory.
 Ringtone is saved in Nokia format.
 
@@ -810,10 +810,10 @@ in 2 SMS), but decoded only by newer phones (like 33xx)
 it correctly later in phone composer (for example, in 33xx)
 
 .TP
-.BI "sendsms RINGTONE" " destination file [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num][-long][-scale]"
+.BI "sendsms RINGTONE" " destination file [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-long][\-scale]"
 
 .TP
-.BI "setringtone" " file [-location location][-scale][-name name]"
+.BI "setringtone" " file [\-location location][\-scale][\-name name]"
 Set ringtone in phone. When don't give location, it will be written
 "with preview" (in phones supporting this feature like 61xx or 6210).
 When use RTTL ringtones, give location and use \fB\-scale\fR, there will be written
@@ -826,13 +826,13 @@ name will blink later in phone menus
 
 .SS "Calendar notes"
 .TP
-.BI "addnew" " file [-yes]"
+.BI "addnew" " file [\-yes]"
 Adds settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
 
 .TP
-.BI "backup" " file [-yes]"
+.BI "backup" " file [\-yes]"
 Backup your phone to file. It's possible to backup (depends on phone):
 
 * phonebook from SIM and phone memory
@@ -908,7 +908,7 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 .BI "getcalendarsettings"
 
 .TP
-.BI "restore" " file [-yes]"
+.BI "restore" " file [\-yes]"
 Restore settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
@@ -923,12 +923,12 @@ be done, when phone doesn't have set clock inside.
 .BI "savefile CALENDAR" " target.vcs file location"
 
 .TP
-.BI "savesms CALENDAR" " file location [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms CALENDAR" " file location [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 Read calendar note from file created by \fB\-\-backup\fR option and saves in
 VCALENDAR 1.0 format as SMS
 
 .TP
-.BI "sendsms CALENDAR" " destination file location [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms CALENDAR" " destination file location [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 
 .SS "To do lists"
@@ -936,13 +936,13 @@ VCALENDAR 1.0 format as SMS
 .BI "addcategory" " TODO|PHONEBOOK text"
 
 .TP
-.BI "addnew" " file [-yes]"
+.BI "addnew" " file [\-yes]"
 Adds settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
 
 .TP
-.BI "backup" " file [-yes]"
+.BI "backup" " file [\-yes]"
 Backup your phone to file. It's possible to backup (depends on phone):
 
 * phonebook from SIM and phone memory
@@ -1024,7 +1024,7 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 .BI "listtodocategory" " text|number"
 
 .TP
-.BI "restore" " file [-yes]"
+.BI "restore" " file [\-yes]"
 Restore settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
@@ -1039,10 +1039,10 @@ be done, when phone doesn't have set clock inside.
 .BI "savefile TODO" " target.vcs file location"
 
 .TP
-.BI "savesms TODO" " file location [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms TODO" " file location [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms TODO" " destination file location [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms TODO" " destination file location [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 
 .SS "Notes"
@@ -1077,13 +1077,13 @@ your phone and use Gammu. See \fBgammurc\fR for details.
 .BI "addcategory" " TODO|PHONEBOOK text"
 
 .TP
-.BI "addnew" " file [-yes]"
+.BI "addnew" " file [\-yes]"
 Adds settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
 
 .TP
-.BI "backup" " file [-yes]"
+.BI "backup" " file [\-yes]"
 Backup your phone to file. It's possible to backup (depends on phone):
 
 * phonebook from SIM and phone memory
@@ -1159,7 +1159,7 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 .BI "listtodocategory" " text|number"
 
 .TP
-.BI "restore" " file [-yes]"
+.BI "restore" " file [\-yes]"
 Restore settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
@@ -1173,7 +1173,7 @@ be done, when phone doesn't have set clock inside.
 
 .SS "Backing up and restoring"
 .TP
-.BI "addnew" " file [-yes]"
+.BI "addnew" " file [\-yes]"
 Adds settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
@@ -1182,7 +1182,7 @@ file).
 .BI "addsms" " folder file"
 
 .TP
-.BI "backup" " file [-yes]"
+.BI "backup" " file [\-yes]"
 Backup your phone to file. It's possible to backup (depends on phone):
 
 * phonebook from SIM and phone memory
@@ -1246,7 +1246,7 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 .BI "backupsms" " file"
 
 .TP
-.BI "restore" " file [-yes]"
+.BI "restore" " file [\-yes]"
 Restore settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
@@ -1275,7 +1275,7 @@ be done, when phone doesn't have set clock inside.
 
 .SS "Nokia specific"
 .TP
-.BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"
+.BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name][\-protected][\-readonly][\-system][\-hidden][\-newtime]"
 \fIExample:\fR gammu \-\-nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 
 .TP
@@ -1287,7 +1287,7 @@ Show, how to enter RTTL ringtone in composer existing in many Nokia phones
 (and how should it look like).
 
 .TP
-.BI "nokiadebug" " filename [[v11-22][,v33-44]...]"
+.BI "nokiadebug" " filename [[v11\-22][,v33\-44]...]"
 
 .TP
 .BI "nokiadisplayoutput"
@@ -1393,7 +1393,7 @@ Set vibra power to "level" (given in percent)
 
 .SS "Siemens specific"
 .TP
-.BI "siemensnetmonact" " netmon_type (1-full, 2-simple)"
+.BI "siemensnetmonact" " netmon_type (1\-full, 2\-simple)"
 
 .TP
 .BI "siemensnetmonitor" " test"
@@ -1419,7 +1419,7 @@ to break this state.
 .BI "networkinfo"
 
 .TP
-.BI "nokiadebug" " filename [[v11-22][,v33-44]...]"
+.BI "nokiadebug" " filename [[v11\-22][,v33\-44]...]"
 
 .TP
 .BI "nokiagetoperatorname"
@@ -1445,7 +1445,7 @@ reboot them to see netmonitor menu)
 .BI "setautonetworklogin"
 
 .TP
-.BI "siemensnetmonact" " netmon_type (1-full, 2-simple)"
+.BI "siemensnetmonact" " netmon_type (1\-full, 2\-simple)"
 
 .TP
 .BI "siemensnetmonitor" " test"
@@ -1456,13 +1456,13 @@ reboot them to see netmonitor menu)
 
 .SS "WAP settings and bookmarks"
 .TP
-.BI "addnew" " file [-yes]"
+.BI "addnew" " file [\-yes]"
 Adds settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
 
 .TP
-.BI "backup" " file [-yes]"
+.BI "backup" " file [\-yes]"
 Backup your phone to file. It's possible to backup (depends on phone):
 
 * phonebook from SIM and phone memory
@@ -1544,7 +1544,7 @@ Get WAP bookmark(s) from phone. Locations are numerated from 1.
 Get WAP settings from phone. Locations are numerated from 1.
 
 .TP
-.BI "restore" " file [-yes]"
+.BI "restore" " file [\-yes]"
 Restore settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
@@ -1559,33 +1559,33 @@ be done, when phone doesn't have set clock inside.
 .BI "savefile BOOKMARK" " target.url file location"
 
 .TP
-.BI "savesms BOOKMARK" " file location [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms BOOKMARK" " file location [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 Read WAP bookmark from file created by \fB\-\-backup\fR option and saves in
 Nokia format as SMS
 
 .TP
-.BI "savesms WAPINDICATOR" " URL Title [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms WAPINDICATOR" " URL Title [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "savesms WAPSETTINGS" " file location DATA|GPRS [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms WAPSETTINGS" " file location DATA|GPRS [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 Read WAP settings from file created by \fB\-\-backup\fR option and saves in Nokia format as SMS
 
 .TP
-.BI "sendsms BOOKMARK" " destination file location [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms BOOKMARK" " destination file location [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms WAPINDICATOR" " destination URL Title [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms WAPINDICATOR" " destination URL Title [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms WAPSETTINGS" " destination file location DATA|GPRS [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms WAPSETTINGS" " destination file location DATA|GPRS [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 
 .SS "MMS and MMS settings"
 .TP
-.BI "getallmms" " [-save]"
+.BI "getallmms" " [\-save]"
 
 .TP
-.BI "geteachmms" " [-save]"
+.BI "geteachmms" " [\-save]"
 
 .TP
 .BI "getmmsfolders"
@@ -1594,19 +1594,19 @@ Read WAP settings from file created by \fB\-\-backup\fR option and saves in Noki
 .BI "getmmssettings" " start [stop]"
 
 .TP
-.BI "readmmsfile" " file [-save]"
+.BI "readmmsfile" " file [\-save]"
 
 .TP
-.BI "savesms MMSINDICATOR" " URL Title Sender [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms MMSINDICATOR" " URL Title Sender [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "savesms MMSSETTINGS" " file location  [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "savesms MMSSETTINGS" " file location  [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms MMSINDICATOR" " destination URL Title Sender [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms MMSINDICATOR" " destination URL Title Sender [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 .TP
-.BI "sendsms MMSSETTINGS" " destination file location [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num]"
+.BI "sendsms MMSSETTINGS" " destination file location [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num]"
 
 
 .SS "Phone tests"
@@ -1628,13 +1628,13 @@ Read WAP settings from file created by \fB\-\-backup\fR option and saves in Noki
 
 .SS "FM radio"
 .TP
-.BI "addnew" " file [-yes]"
+.BI "addnew" " file [\-yes]"
 Adds settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
 
 .TP
-.BI "backup" " file [-yes]"
+.BI "backup" " file [\-yes]"
 Backup your phone to file. It's possible to backup (depends on phone):
 
 * phonebook from SIM and phone memory
@@ -1705,7 +1705,7 @@ Show info about FM stations in phone
 .BI "nokiatuneradio"
 
 .TP
-.BI "restore" " file [-yes]"
+.BI "restore" " file [\-yes]"
 Restore settings written in file created using \fB\-\-backup option\fR. All things
 backup'ed by \fB\-\-backup\fR can be restored (when made backup to Gammu text
 file).
@@ -1786,12 +1786,12 @@ Reset phone settings. \fIBE CAREFULL !!!!\fR
 * clear date/time
 
 .TP
-.BI "savesms PROFILE" " [-folder id][-unread][-read][-unsent][-sent][-sender number][-smsname name][-smscset number][-smscnumber number][-reply][-maxsms num][-name name][-bitmap bitmap][-ringtone ringtone]"
+.BI "savesms PROFILE" " [\-folder id][\-unread][\-read][\-unsent][\-sent][\-sender number][\-smsname name][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-name name][\-bitmap bitmap][\-ringtone ringtone]"
 Read ringtone (RTTL) format and bitmap (Picture Image size) and name and save
 as Nokia profile.
 
 .TP
-.BI "sendsms PROFILE" " destination [-report][-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][-save [-folder number]][-smscset number][-smscnumber number][-reply][-maxsms num][-name name][-bitmap bitmap][-ringtone ringtone]"
+.BI "sendsms PROFILE" " destination [\-report][\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX][\-save [\-folder number]][\-smscset number][\-smscnumber number][\-reply][\-maxsms num][\-name name][\-bitmap bitmap][\-ringtone ringtone]"
 
 
 .SS "Dumps decoding"
@@ -1866,7 +1866,7 @@ and for DCT4:
 Set vibra power to "level" (given in percent)
 
 .TP
-.BI "presskeysequence" " mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"
+.BI "presskeysequence" " mMnNpPuUdD+\-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"
 Press specified key sequence on phone keyboard
 
 \fBmM\fR - Menu
@@ -1894,7 +1894,7 @@ Make phone reset: soft (without asking for PIN) or hard (with PIN).
 \fINote:\fR some phones will make hard reset even with \fBSOFT\fR option.
 
 .TP
-.BI "searchphone" " [-debug]"
+.BI "searchphone" " [\-debug]"
 
 .TP
 .BI "sendsmsdsms" " TEXT|WAPSETTINGS|... destination FILES|MYSQL|PGSQL configfile ... (options like in sendsms)"
