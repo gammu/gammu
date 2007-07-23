@@ -123,6 +123,11 @@ connection = at
 \\fR
 '''
 
+NAME = '''
+.LP
+Gammu \- Does some neat things with your cellular phone or modem
+'''
+
 # Code
 
 import os
@@ -180,6 +185,9 @@ def main():
 
     output = file(OUT_PATH, 'w')
     output.write(HEADER % {'version' : version, 'date' : build_date})
+
+    write_section(output, 'NAME')
+    output.write(NAME)
 
     write_section(output, 'OPTIONS')
 
