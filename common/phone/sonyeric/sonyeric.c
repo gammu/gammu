@@ -854,6 +854,63 @@ GSM_Error SONYERICSSON_DeleteAllCalendar (GSM_StateMachine *s)
 	return OBEXGEN_DeleteAllCalendar(s);
 }
 
+GSM_Error SONYERICSSON_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
+{
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	return OBEXGEN_GetNoteStatus(s, status);
+}
+
+GSM_Error SONYERICSSON_GetNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
+{
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	return OBEXGEN_GetNote(s, Note);
+}
+
+GSM_Error SONYERICSSON_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start)
+{
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	return OBEXGEN_GetNextNote(s, Note, start);
+}
+
+GSM_Error SONYERICSSON_DeleteAllNotes(GSM_StateMachine *s)
+{
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	return OBEXGEN_DeleteAllNotes(s);
+}
+
+GSM_Error SONYERICSSON_AddNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
+{
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	return OBEXGEN_AddNote(s, Note);
+}
+
+GSM_Error SONYERICSSON_SetNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
+{
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	return OBEXGEN_SetNote(s, Note);
+}
+
+GSM_Error SONYERICSSON_DeleteNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
+{
+	GSM_Error 		error;
+
+	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	return OBEXGEN_DeleteNote(s, Note);
+}
+
+
 /*@}*/
 /**
  * \defgroup SENativeAT Native AT mode functions
@@ -1349,13 +1406,13 @@ GSM_Phone_Functions SONYERICSSONPhone = {
 	SONYERICSSON_DeleteAllCalendar,
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	NOTSUPPORTED,			/*	GetNoteStatus		*/
-	NOTSUPPORTED,			/*	GetNote			*/
-	NOTSUPPORTED,			/*	GetNextNote		*/
-	NOTSUPPORTED,			/*	SetNote			*/
-	NOTSUPPORTED,			/*	AddNote			*/
-	NOTSUPPORTED,			/* 	DeleteNote		*/
-	NOTSUPPORTED,			/*	DeleteAllNotes		*/
+	SONYERICSSON_GetNoteStatus,
+	SONYERICSSON_GetNote,
+	SONYERICSSON_GetNextNote,
+	SONYERICSSON_SetNote,
+	SONYERICSSON_AddNote,
+	SONYERICSSON_DeleteNote,
+	SONYERICSSON_DeleteAllNotes,
 	NOTSUPPORTED,			/* 	GetProfile		*/
 	NOTSUPPORTED,			/* 	SetProfile		*/
 	NOTSUPPORTED,			/* 	GetFMStation		*/
