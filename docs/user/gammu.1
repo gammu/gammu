@@ -405,8 +405,7 @@ Backup your phone to file. It's possible to backup (depends on phone):
 * caller logos and groups
 .br
 * user ringtones
-
-when use text backup files. List can be extended on request.
+BSLen use text backup files. List can be extended on request.
 
 \fITIP:\fR if you will backup settings to Gammu text file, it will be possible to edit
 it. It's easy: many things in this file will be written double \- once in Unicode,
@@ -715,8 +714,7 @@ Backup your phone to file. It's possible to backup (depends on phone):
 * caller logos and groups
 .br
 * user ringtones
-
-when use text backup files. List can be extended on request.
+BSLen use text backup files. List can be extended on request.
 
 \fITIP:\fR if you will backup settings to Gammu text file, it will be possible to edit
 it. It's easy: many things in this file will be written double \- once in Unicode,
@@ -875,8 +873,7 @@ Backup your phone to file. It's possible to backup (depends on phone):
 * caller logos and groups
 .br
 * user ringtones
-
-when use text backup files. List can be extended on request.
+BSLen use text backup files. List can be extended on request.
 
 \fITIP:\fR if you will backup settings to Gammu text file, it will be possible to edit
 it. It's easy: many things in this file will be written double \- once in Unicode,
@@ -985,8 +982,7 @@ Backup your phone to file. It's possible to backup (depends on phone):
 * caller logos and groups
 .br
 * user ringtones
-
-when use text backup files. List can be extended on request.
+BSLen use text backup files. List can be extended on request.
 
 \fITIP:\fR if you will backup settings to Gammu text file, it will be possible to edit
 it. It's easy: many things in this file will be written double \- once in Unicode,
@@ -1126,8 +1122,7 @@ Backup your phone to file. It's possible to backup (depends on phone):
 * caller logos and groups
 .br
 * user ringtones
-
-when use text backup files. List can be extended on request.
+BSLen use text backup files. List can be extended on request.
 
 \fITIP:\fR if you will backup settings to Gammu text file, it will be possible to edit
 it. It's easy: many things in this file will be written double \- once in Unicode,
@@ -1225,8 +1220,7 @@ Backup your phone to file. It's possible to backup (depends on phone):
 * caller logos and groups
 .br
 * user ringtones
-
-when use text backup files. List can be extended on request.
+BSLen use text backup files. List can be extended on request.
 
 \fITIP:\fR if you will backup settings to Gammu text file, it will be possible to edit
 it. It's easy: many things in this file will be written double \- once in Unicode,
@@ -1509,8 +1503,7 @@ Backup your phone to file. It's possible to backup (depends on phone):
 * caller logos and groups
 .br
 * user ringtones
-
-when use text backup files. List can be extended on request.
+BSLen use text backup files. List can be extended on request.
 
 \fITIP:\fR if you will backup settings to Gammu text file, it will be possible to edit
 it. It's easy: many things in this file will be written double \- once in Unicode,
@@ -1681,8 +1674,7 @@ Backup your phone to file. It's possible to backup (depends on phone):
 * caller logos and groups
 .br
 * user ringtones
-
-when use text backup files. List can be extended on request.
+BSLen use text backup files. List can be extended on request.
 
 \fITIP:\fR if you will backup settings to Gammu text file, it will be possible to edit
 it. It's easy: many things in this file will be written double \- once in Unicode,
@@ -1990,53 +1982,61 @@ Save protected message with ringtone:
 gammu --savesms EMS -protected 2 -variablebitmaplong ala.bmp
 -toneSElong axelf.txt -toneSE ring.txt
 
+.SH "LICENSE"
+
+This program is licensed under GNU/GPL version 2.
+
+.SH "BUGS"
+
+There are definitely many bugs, reporting to author is welcome. Please include
+some useful information when sending bug reports (especially debug logs,
+operating system, it's version and phone information are needed).
+
+.P
+To generate debug log, either enable in gammurc (alternatively you can
+do it on command line, but gammurc way allows separating debug log from
+other output):
+
+    logfile = /tmp/gammu.log
+    logformat = textall
+
+With this settings, Gammu generates /tmp/gammu.log on each connection to
+phone and stores dump of communication there. You can also find some
+hints for improving support for your phone there.
+
 .SH "AUTHORS"
+
+.P 
+You can contact authors on <gammu-users@lists.sourceforge.net>.
 
 .P 
 \fIMichal Cihar\fR
 <michal@cihar.com>
-.br
-<http://cihar.com/>
+is current project maintainer and contributor of most of AT and OBEX
+code.
+
 .P 
 \fIMarcin Wiacek\fR
 <marcin@mwiacek.com>
-.br
-<http://www.mwiacek.com/>
+is project iniciator and contributor of most Nokia code.
 
-Here are some people, who somehow helped in this project. Probably not
-everyone is mentioned. If you think, you're missed, please let us know:
-   
-1.all people developing Gnokii (some ideas are from it) like
-\fIPavel Janik\fR, \fIPawel Kot\fR, \fIManfred Jonsson\fR, ...
-(see CREDITS from Gnokii)
+.P
+As this project grew from Gnokii, we would like to thanks all Gnokii
+developers, especially \fIPavel Janik\fR, \fIPawel Kot\fR
+and \fIManfred Jonsson\fR (see CREDITS from Gnokii for all their
+contributor).
 
-2.all people responsible for MyGnokii (Gammu is based on it too)
-like \fIGabriele Zappi\fR, \fIRalf Thelen\fR, .... (see CREDITS from MyGnokii)
-
-3.\fIMarcin Wiacek\fR \- author of all this mess ;\-)
-
-4.\fIMarkus Plail & Tibor Harsszegi\fR \- for DCT4 help
-
-5.\fIFrederick Ros \fR\- 5210 help
-
-6.\fIJan Kratochvil \fR\- AT commands
-
-7.\fIWalek\fR \- fixes, progress in many things
-
-8.\fIMarcel Holtmann\fR \- Bluetooth tests
-
-9.\fIMichal Cihar\fR \- general discussions and tries into making one big and good GSM manager (many changes and suggestions), Alcatel support
-
-10.\fIOndrej Rybin & Tomasz Motylewski & Tom Nelson & Multi-COM & GriffinTeam\fR \- hardware help
-
-11.\fIJoergen Thomsen\fR \- SMS daemon
+.P
+Many other people have helped with various features, check ChangeLog for
+more details.
 
 .SH "SEE ALSO"
 
 .P
 README
 
-<http://www.gammu.org/>
+<http://www.gammu.org/> contains wiki with more user hints and further
+documentation
 
 cu(1)
 
