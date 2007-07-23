@@ -349,7 +349,15 @@ HELP['getsmsfolders'] = '''Get names for SMS folders in phone
 '''
 HELP['smsd FILES'] = '''SMS Deaemon. See smsdrc config file for more options
 '''
-HELP['getphoneringtone'] = '''''' 
+HELP['getphoneringtone'] = '''
+Get one of "default" ringtones and saves into file
+'''
+HELP['playsavedringtone'] = '''
+Play one of "built" ringtones. This option is available for DCT4 phones. For getting ringtones list use \-\-getringtoneslist.
+'''
+HELP['getringtoneslist'] = '''
+Get list of sounds 
+'''
 HELP['getringtone'] = '''Get ringtone from phone in RTTL or BINARY format. Locations are numerated from 1.
 '''
 HELP['setringtone'] = '''Set ringtone in phone. When don't give location, it will be written
@@ -363,7 +371,7 @@ name will blink later in phone menus
 '''
 HELP['copyringtone'] = '''Copy source ringtone to destination.
 '''
-HELP['playringtone'] = '''Play aproximation of ringtone over phone buzzer.
+HELP['playringtone'] = '''Play aproximation of ringtone over phone buzzer. File can be in RTTL or BINARY (Nokia DCT3) format.
 '''
 HELP['getringtoneslist'] = ''''''
 HELP['nokiacomposer'] = '''Show, how to enter RTTL ringtone in composer existing in many Nokia phones
