@@ -130,6 +130,12 @@ NAME = '''
 Gammu \- Does some neat things with your cellular phone or modem.
 '''
 
+DESCRIPTION = '''
+.P
+This program is a tool for mobile phones. Many vendors and phones
+are supported, for actual listing see <http://cihar.com/gammu/phonedb/>.
+'''
+
 # Code
 
 import os
@@ -199,6 +205,10 @@ def main():
 
     write_section(output, 'SYNTAX')
     write_para(output, syntax.replace('[', '[\\fI').replace(']', '\\fP]'))
+
+    write_section(output, 'DESCRIPTION')
+
+    write_para(output, DESCRIPTION)
 
     write_section(output, 'OPTIONS')
 
