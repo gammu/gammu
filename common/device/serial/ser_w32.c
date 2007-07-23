@@ -400,7 +400,7 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 	return Length;
 }
 
-static int serial_write(GSM_StateMachine *s, void *buf, size_t nbytes)
+static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
 	DWORD			BytesWritten,ErrorFlags,BytesSent=0;
 	COMSTAT			ComStat;
