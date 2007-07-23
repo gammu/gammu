@@ -590,11 +590,11 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length,
 			      GSM_VCalendarVersion Version);
 
 /**
- * Encodes vNote to buffer.
+ * Decodes vNote from buffer.
  *
- * \param Buffer Storage for data.
- * \param Length Pointer to current position in data (will be incremented).
- * \param Note Note to encode.
+ * \param Buffer Buffer to decode.
+ * \param Pos Current position in buffer (will be updated).
+ * \param Note Storage for note entry.
  *
  * \return Error code.
  *
