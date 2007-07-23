@@ -237,7 +237,25 @@ HELP['getfmstation'] = '''Show info about FM stations in phone
 '''
 HELP['getgprspoint'] = ''''''
 HELP['getfiles'] = ''''''
-HELP['getfilesystem'] = ''''''
+HELP['getfilesystem'] = '''Display info about all folders and files in phone memory/memory card. By default there is tree displayed, you can change it:
+
+.BR
+.B -flatall
+there are displayed full file/folder details like ID (first parameter in line)
+
+.BR
+.B -flat
+
+Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
+'''
+HELP['getfolderlisting'] = '''
+Display files and folders available in folder with given folderID. You can get ID's using \-\-getfilesystem \-flatall.
+
+Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
+'''
+HELP['getrootfolders'] = '''
+Display info about drives available in phone/memory card.
+'''
 HELP['deletefiles'] = ''''''
 HELP['addfolder'] = ''''''
 HELP['addfile'] = ''''''

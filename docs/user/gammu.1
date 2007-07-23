@@ -534,6 +534,16 @@ all numbers, text and name) format as SMS
 
 .TP
 .BI "getfilesystem" " [-flatall|-flat]"
+Display info about all folders and files in phone memory/memory card. By default there is tree displayed, you can change it:
+
+.BR
+.B -flatall
+there are displayed full file/folder details like ID (first parameter in line)
+
+.BR
+.B -flat
+
+Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
 
 .TP
 .BI "getfilesystemstatus"
@@ -541,8 +551,14 @@ all numbers, text and name) format as SMS
 .TP
 .BI "getfolderlisting" " folderID"
 
+Display files and folders available in folder with given folderID. You can get ID's using \-\-getfilesystem \-flatall.
+
+Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
+
 .TP
 .BI "getrootfolders"
+
+Display info about drives available in phone/memory card.
 
 .TP
 .BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [-name name][-protected][-readonly][-system][-hidden][-newtime]"
