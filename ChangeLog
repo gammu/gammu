@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.12.91
+20070723 - 1.12.91
 [!] * Introduced more generic parsing of AT replies, please report any
       regressions with it!
 [+] * Improved support for Samsung phones.
