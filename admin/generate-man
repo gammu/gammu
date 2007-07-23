@@ -273,6 +273,10 @@ HELP['getmemory'] = '''Get memory location from phone. Numerate locations from 1
 \\fBSM\\fR = SIM phonebook
 .br
 \\fBME\\fR = phone internal phonebook
+.br
+\\fBFD\\fR = fixed dialling
+.br
+\\fSLD\\fR = sent SMS log
 '''
 HELP['searchmemory'] = ''''''
 HELP['listmemorycategory'] = ''''''
