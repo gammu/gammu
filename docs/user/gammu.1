@@ -766,6 +766,8 @@ Copy source ringtone to destination.
 .TP
 .BI "getphoneringtone" " location [file]"
 
+Get one of "default" ringtones and saves into file
+
 .TP
 .BI "getringtone" " location [file]"
 Get ringtone from phone in RTTL or BINARY format. Locations are numerated from 1.
@@ -780,10 +782,12 @@ Show, how to enter RTTL ringtone in composer existing in many Nokia phones
 
 .TP
 .BI "playringtone" " file"
-Play aproximation of ringtone over phone buzzer.
+Play aproximation of ringtone over phone buzzer. File can be in RTTL or BINARY (Nokia DCT3) format.
 
 .TP
 .BI "playsavedringtone" " number"
+
+Play one of "built" ringtones. This option is available for DCT4 phones. For getting ringtones list use \-\-getringtoneslist.
 
 .TP
 .BI "restore" " file [\-yes]"
