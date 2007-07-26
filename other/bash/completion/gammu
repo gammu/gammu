@@ -4,7 +4,7 @@
 
 _gammu_commands() 
 {
-    gammu help all | awk '/^$/,/ENDOFFILE/ {print $1}' | sed 's/^--//'
+    gammu help all | awk '/^$/,/ENDOFFILE/ {print $1}'
 }
 
 _gammu() 

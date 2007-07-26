@@ -10510,7 +10510,7 @@ static void Help(int argc, char *argv[])
 			}
 		}
 		if (disp) {
-			printf("--%s", Parameters[j].parameter);
+			printf("%s", Parameters[j].parameter);
 			if (Parameters[j].help[0] == 0) {
 				printf("\n");
 			} else {
