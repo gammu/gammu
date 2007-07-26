@@ -1,0 +1,17 @@
+# Experimental bash completion for Gammu <http://www.gammu.org/>
+# Copyright (C) 2007 Michal Cihar <michal@cihar.com>
+# vim: expandtab sw=4 ts=4 sts=4:
+
+_gammu_commands() 
+{
+    gammu help all | awk '/^$/,/ENDOFFILE/ {print $1}' | sed 's/^--//'
+}
+
+_gammu() 
+{
+    cur=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $( compgen -W "$(_gammu_commands)" $cur ) )
+}
+
+complete -F _gammu -o default gammu
+
