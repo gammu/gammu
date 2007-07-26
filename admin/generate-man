@@ -116,31 +116,31 @@ connection = at
 .TP
 Save text message up to standard 160 chars:
 
-echo "All your base are belong to us" | gammu --savesms TEXT
+echo "All your base are belong to us" | gammu savesms TEXT
 
 .TP
 Save long text message:
 
-echo "All your base are belong to us" | gammu --savesms TEXT -maxlen 400
+echo "All your base are belong to us" | gammu savesms TEXT \\-maxlen 400
 
-gammu --savesms EMS -text "All your base are belong to us"
+gammu savesms EMS \\-text "All your base are belong to us"
 
 .TP
 Save some funky message with predefined sound and animation from 2 bitmaps:
 
-gammu --savesms EMS -text "Greetings" -defsound 1 -text "from Gammu"
--tone10 axelf.txt -animation 2 file1.bmp file2.bmp
+gammu savesms EMS \\-text "Greetings" \\-defsound 1 \\-text "from Gammu"
+\\-tone10 axelf.txt \\-animation 2 file1.bmp file2.bmp
 
 .TP
 Save protected message with ringtone:
 
-gammu --savesms EMS -protected 2 -variablebitmaplong ala.bmp
--toneSElong axelf.txt -toneSE ring.txt
+gammu savesms EMS \\-protected 2 \\-variablebitmaplong ala.bmp
+\\-toneSElong axelf.txt \\-toneSE ring.txt
 '''
 
 NAME = '''
 .P
-Gammu \- Does some neat things with your cellular phone or modem.
+Gammu - Does some neat things with your cellular phone or modem.
 '''
 
 DESCRIPTION = '''
@@ -273,15 +273,15 @@ HELP['getgprspoint'] = ''''''
 HELP['getfiles'] = ''''''
 HELP['getfilesystem'] = '''Display info about all folders and files in phone memory/memory card. By default there is tree displayed, you can change it:
 
-.B -flatall
+.B \\-flatall
 there are displayed full file/folder details like ID (first parameter in line)
 
-.B -flat
+.B \\-flat
 
 Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
 '''
 HELP['getfolderlisting'] = '''
-Display files and folders available in folder with given folderID. You can get ID's using \-\-getfilesystem \-flatall.
+Display files and folders available in folder with given folderID. You can get ID's using getfilesystem \\-flatall.
 
 Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
 '''
@@ -292,21 +292,21 @@ HELP['deletefiles'] = ''''''
 HELP['addfolder'] = ''''''
 HELP['addfile'] = '''Add file with specified name to folder with specified folderID.
 
-.B \-type 
+.B \\-type 
 - file type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn't need this)
 
-.B \-readonly, \-protected, \-system, \-hidden
+.B \\-readonly, \\-protected, \\-system, \\-hidden
 - you can set readonly, protected (file can't be for example forwarded from phone menu), system and hidden (file is hidden from phone menu) file attributes
 
-.B -newtime 
+.B \\-newtime 
 - after using it date/time of file modification will be set to moment of uploading 
 
 '''
 HELP['nokiaaddfile'] = '''Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You have to give the name without the jar/jad suffix, otherwise you will get the slightly confusing error message Can't open specified file. Read only ?
 
-\\fIExample:\\fR gammu \\-\\-nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
+\\fIExample:\\fR gammu nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
 
-\\fIExample:\\fR gammu \\-\\-nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
+\\fIExample:\\fR gammu nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 ''' 
 HELP['getdatetime'] = '''Get date and time from phone
 ''' 
@@ -357,9 +357,9 @@ and each sms has unique number in his folder. Name of folders can
 depend on your phone (the most often 1="Inbox", 2="Outbox", etc.).
 This method is not supported by all phones (for example, not supported
 by Nokia 3310, 5110, 6110). If work with your phone, use
-\\fB\\-\\-getsmsfolders\\fR to get folders list.
+\\fBgetsmsfolders\\fR to get folders list.
 ''' 
-HELP['deletesms'] = '''Delete SMS from phone. See description for \\fB\\-\\-getsms\\fR for info about
+HELP['deletesms'] = '''Delete SMS from phone. See description for \\fBgetsms\\fR for info about
 sms folders naming convention. Locations are numerated from 1.
 '''
 HELP['deleteallsms'] = '''Delete all SMS from specified SMS folder.
@@ -367,9 +367,9 @@ HELP['deleteallsms'] = '''Delete all SMS from specified SMS folder.
 HELP['getallsms'] = '''Get all SMS from phone. In some phones you will have also SMS templates
 and info about locations used to save Picture Images. With each sms you
 will see location. If you want to get such sms from phone alone, use
-\\fBgammu \\-\\-getsms 0 location\\fR
+\\fBgammu getsms 0 location\\fR
 '''
-HELP['geteachsms'] = '''Similiary to \\fB\\-\\-getallsms\\fR. Difference is, that links all contacenated sms
+HELP['geteachsms'] = '''Similiary to \\fBgetallsms\\fR. Difference is, that links all contacenated sms
 '''
 HELP['getsmsc'] = '''Get SMSC settings from SIM card. Numerate locations from 1.
 ''' 
@@ -381,7 +381,7 @@ HELP['getphoneringtone'] = '''
 Get one of "default" ringtones and saves into file
 '''
 HELP['playsavedringtone'] = '''
-Play one of "built" ringtones. This option is available for DCT4 phones. For getting ringtones list use \-\-getringtoneslist.
+Play one of "built" ringtones. This option is available for DCT4 phones. For getting ringtones list use getringtoneslist.
 '''
 HELP['getringtoneslist'] = '''
 Get list of sounds 
@@ -427,7 +427,7 @@ HELP['getwapsettings'] = '''Get WAP settings from phone. Locations are numerated
 HELP['getmmssettings'] = ''''''
 HELP['getbitmap STARTUP'] = '''Get static startup logo from phone. Allow to save it in file.
 '''
-HELP['getbitmap CALLER'] = '''Get caller group logo from phone. Locations 1\\-5.
+HELP['getbitmap CALLER'] = '''Get caller group logo from phone. Locations 1-5.
 '''
 HELP['getbitmap OPERATOR'] = '''Get operator logo (picture displayed instead of operator name) from phone.
 ''' 
@@ -435,7 +435,7 @@ HELP['getbitmap PICTURE'] = '''Get Picture Image from phone.
 '''
 HELP['getbitmap'] = '''Get startup text from phone.
 '''
-HELP['getbitmap'] = '''In some models it's possible to save dealer welcome note \\- text displayed
+HELP['getbitmap'] = '''In some models it's possible to save dealer welcome note - text displayed
 during enabling phone, which can't be edited from phone menu.  Here you can
 get it.
 '''
@@ -450,7 +450,7 @@ HELP['setbitmap CALLER'] = '''Set caller logo.
 HELP['setbitmap OPERATOR'] = '''Set operator logo in phone. When won't give file and netcode, operator logo
 will be removed from phone. When will give only filename, operator logo will
 be displayed for your current GSM operator. When give additionaly network
-code, it will be displayed for this operator: \\fBgammu \\-\\-setbitmap OPERATOR file "260 02"\\fR
+code, it will be displayed for this operator: \\fBgammu setbitmap OPERATOR file "260 02"\\fR
 '''
 HELP['setbitmap COLOUROPERATOR'] = '''''' 
 HELP['setbitmap PICTURE'] = '''''' 
@@ -466,48 +466,48 @@ HELP['savefile TODO'] = ''''''
 HELP['savefile'] = '''''' 
 HELP['savesms TEXT'] = '''Take text from stdin and save as text SMS into SIM/phone memory.
 
-\\fB\\-folder number\\fR \\- save to specified folder. Numerate folders from 1.
-The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use \\fB\\-\\-getsmsfolders\\fR to get folder list.
+\\fB\\-folder number\\fR - save to specified folder. Numerate folders from 1.
+The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use \\fBgetsmsfolders\\fR to get folder list.
 
-\\fB\\-unread\\fR \\- makes message unread. In some phones (like 6210)
+\\fB\\-unread\\fR - makes message unread. In some phones (like 6210)
 you won't see unread sms envelope after saving such
 sms. In some phones with internal SMS memory (like
 6210) after using it with folder 1 SIM SMS memory will be used
 
-\\fB\\-read\\fR \\- makes message read. In some phones with internal
+\\fB\\-read\\fR - makes message read. In some phones with internal
 SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
 
-\\fB\\-unsent\\fR \\- makes message unsent
+\\fB\\-unsent\\fR - makes message unsent
 
-\\fB\\-reply\\fR \\- reply SMSC is set
+\\fB\\-reply\\fR - reply SMSC is set
 
-\\fB\\-sender number\\fR \\- set sender number (default: "Gammu")
+\\fB\\-sender number\\fR - set sender number (default: "Gammu")
 
-\\fB\\-flash\\fR \\- Class 0 SMS
+\\fB\\-flash\\fR - Class 0 SMS
 
-\\fB\\-smscset number\\fR \\- SMSC will be taken from set \\fBnumber\\fR. Default set: 1
+\\fB\\-smscset number\\fR - SMSC will be taken from set \\fBnumber\\fR. Default set: 1
 
-\\fB\\-smscnumber number\\fR \\- SMSC number
+\\fB\\-smscnumber number\\fR - SMSC number
 
-\\fB\\-len len\\fR \\- specify, how many chars will be read. When use this
+\\fB\\-len len\\fR - specify, how many chars will be read. When use this
 option and text will be longer than 1 SMS, will be splitted into more
 linked SMS
 
-\\fB\\-autolen len\\fR \\- specify, how many chars will be read. When use this
+\\fB\\-autolen len\\fR - specify, how many chars will be read. When use this
 option and text will be longer than 1 SMS, will be splitted into more
 linked SMS.Coding type (SMS default alphabet/Unicode) is set according
 to input text
 
 \\fB\\-enablevoice\\fR | \\fB\\-disablevoice\\fR | \\fB\\-enablefax \\fR |
-\\fB\\-disablefax \\fR | \\fB\\-enableemail \\fR | \\fB\\-disableemail \\fR \\-
+\\fB\\-disablefax \\fR | \\fB\\-enableemail \\fR | \\fB\\-disableemail \\fR -
 sms will set such indicators. Text will be cut to 1 sms.
 
-\\fB\\-voidsms\\fR \\- many phones after receiving it won't display anything,
+\\fB\\-voidsms\\fR - many phones after receiving it won't display anything,
 only beep, vibrate or turn on light. Text will be cut to 1 sms.
 
-\\fB\\-unicode\\fR \\- SMS will be saved in Unicode format
+\\fB\\-unicode\\fR - SMS will be saved in Unicode format
 
-\\fB\\-inputunicode\\fR \\- input text is in Unicode.
+\\fB\\-inputunicode\\fR - input text is in Unicode.
 
 \\fITIP:\\fR
 You can create Unicode file using WordPad in Win32 (during saving select
@@ -527,57 +527,57 @@ there is example file (\\fIreplace.txt\\fR), which will change all "a" chars to 
 (Unicode coding required), text of sms after ~ char will blink in some phones
 (like N33xx)
 
-\\fIExample:\\fR echo some_text | gammu \\-\\-savesms TEXT
+\\fIExample:\\fR echo some_text | gammu savesms TEXT
 '''
 HELP['savesms RINGTONE'] = '''Read RTTL ringtone from file and save as SMS into SIM/phone memory.
 Ringtone is saved in Nokia format.
 
-\\fB\\-folder number\\fR \\- save to specified folder. Numerate forlders from 1.
+\\fB\\-folder number\\fR - save to specified folder. Numerate forlders from 1.
 The most often folder 1 = "Inbox", 2 = "Outbox", etc.
 
-\\fB\\-unread\\fR \\- makes message unread. In some phones (like 6210) you won't see 
+\\fB\\-unread\\fR - makes message unread. In some phones (like 6210) you won't see 
 unread sms envelope after saving such sms. In some phones with internal 
 SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
 
-\\fB\\-read\\fR \\- makes message read. In some phones with internal
+\\fB\\-read\\fR - makes message read. In some phones with internal
 SMS memory (like 6210) after using it with folder 1 SIM SMS memory will be used
-\\fB\\-unsent\\fR \\- makes message unsent
+\\fB\\-unsent\\fR - makes message unsent
 
-\\fB\\-reply\\fR \\- reply SMSC is set
+\\fB\\-reply\\fR - reply SMSC is set
 
-\\fB\\-sender number\\fR \\- set sender number
+\\fB\\-sender number\\fR - set sender number
 
-\\fB\\-flash\\fR \\- Class 0 SMS
+\\fB\\-flash\\fR - Class 0 SMS
 
-\\fB\\-smscset number\\fR \\- SMSC will be taken from set \\fBnumber\\fR. Default set: 1
+\\fB\\-smscset number\\fR - SMSC will be taken from set \\fBnumber\\fR. Default set: 1
 
-\\fB\\-smscnumber number\\fR \\- SMSC number
+\\fB\\-smscnumber number\\fR - SMSC number
 
-\\fB\\-long\\fR \\- ringtone is saved using Profile style. It can be longer (and saved
+\\fB\\-long\\fR - ringtone is saved using Profile style. It can be longer (and saved
 in 2 SMS), but decoded only by newer phones (like 33xx)
 
-\\fB\\-scale\\fR \\- ringtone will have Scale info for each note. It will allow to edit
+\\fB\\-scale\\fR - ringtone will have Scale info for each note. It will allow to edit
 it correctly later in phone composer (for example, in 33xx)
 '''
 HELP['savesms OPERATOR'] = '''Save operator logo as sms (Nokia format - size 72x14 or 78x21 after
 using \\fB\\-biglogo\\fR).
 '''
-HELP['savesms CALLER'] = '''Save caller logo as sms (Nokia format \\- size 72x14).
+HELP['savesms CALLER'] = '''Save caller logo as sms (Nokia format - size 72x14).
 '''
-HELP['savesms PICTURE'] = '''Save Picture Image as sms (Nokia format \\- size 72x28).
+HELP['savesms PICTURE'] = '''Save Picture Image as sms (Nokia format - size 72x28).
 '''
 HELP['savesms MMSINDICATOR'] = ''''''
-HELP['savesms BOOKMARK'] = '''Read WAP bookmark from file created by \\fB\\-\\-backup\\fR option and saves in
+HELP['savesms BOOKMARK'] = '''Read WAP bookmark from file created by \\fBbackup\\fR option and saves in
 Nokia format as SMS
 '''
-HELP['savesms WAPSETTINGS'] = '''Read WAP settings from file created by \\fB\\-\\-backup\\fR option and saves in Nokia format as SMS
+HELP['savesms WAPSETTINGS'] = '''Read WAP settings from file created by \\fBbackup\\fR option and saves in Nokia format as SMS
 '''
 HELP['savesms MMSSETTINGS'] = '''''' 
-HELP['savesms CALENDAR'] = '''Read calendar note from file created by \\fB\\-\\-backup\\fR option and saves in
+HELP['savesms CALENDAR'] = '''Read calendar note from file created by \\fBbackup\\fR option and saves in
 VCALENDAR 1.0 format as SMS
 '''
 HELP['savesms TODO'] = ''''''
-HELP['savesms'] = '''Read phonebook entry from file created by \\fB\\-\\-backup\\fR option and saves in
+HELP['savesms'] = '''Read phonebook entry from file created by \\fBbackup\\fR option and saves in
 VCARD 1.0 (only name and default number) or VCARD 2.1 (all entry details with
 all numbers, text and name) format as SMS
 '''
@@ -587,41 +587,41 @@ as Nokia profile.
 HELP['savesms EMS'] = '''
 Saves EMS sequence. All parameters after \\fB\\-unread\\fR (like \\fB\\-defsound\\fR) can be used few times.
 
-\\fB\\-text\\fR \\- adds text
+\\fB\\-text\\fR - adds text
 
-\\fB\\-unicodefiletext\\fR \\- adds text from Unicode file
+\\fB\\-unicodefiletext\\fR - adds text from Unicode file
 
-\\fB\\-defanimation\\fR \\- adds default animation with ID specified by user.ID for different phones are different.
+\\fB\\-defanimation\\fR - adds default animation with ID specified by user.ID for different phones are different.
 
-\\fB\\-animation\\fR \\- adds "frames" frames read from file1, file2, etc.
+\\fB\\-animation\\fR - adds "frames" frames read from file1, file2, etc.
 
-\\fB\\-defsound\\fR \\- adds default sound with ID specified by user. ID for different phones are different.
+\\fB\\-defsound\\fR - adds default sound with ID specified by user. ID for different phones are different.
 
-\\fB\\-tone10\\fR \\- adds IMelody version 1.0 read from RTTL or other compatible file
+\\fB\\-tone10\\fR - adds IMelody version 1.0 read from RTTL or other compatible file
 
-\\fB\\-tone10long\\fR \\- IMelody version 1.0 saved in one of few SMS with UPI. Phones compatible with UPI (like SonyEricsson phones) will read such ringtone as one
+\\fB\\-tone10long\\fR - IMelody version 1.0 saved in one of few SMS with UPI. Phones compatible with UPI (like SonyEricsson phones) will read such ringtone as one
 
-\\fB\\-tone12\\fR \\- adds IMelody version 1.2 read from RTTL or other compatible file
+\\fB\\-tone12\\fR - adds IMelody version 1.2 read from RTTL or other compatible file
 
-\\fB\\-tone12long\\fR \\- IMelody version 1.0 saved in one of few SMS with UPI. Phones compatible with UPI (like SonyEricsson phones) will read such ringtone as one
+\\fB\\-tone12long\\fR - IMelody version 1.0 saved in one of few SMS with UPI. Phones compatible with UPI (like SonyEricsson phones) will read such ringtone as one
 
-\\fB\\-toneSE\\fR \\- adds IMelody in "short" form supported by SonyEricsson phones
+\\fB\\-toneSE\\fR - adds IMelody in "short" form supported by SonyEricsson phones
 
-\\fB\\-tone10long\\fR \\- SonyEricsson IMelody saved in one or few SMS with UPI
+\\fB\\-tone10long\\fR - SonyEricsson IMelody saved in one or few SMS with UPI
 
-\\fB\\-variablebitmap\\fR \\- bitmap in any size saved in one SMS
+\\fB\\-variablebitmap\\fR - bitmap in any size saved in one SMS
 
-\\fB\\-variablebitmaplong\\fR \\- bitmap with maximal size 96x128 saved in one or few sms
+\\fB\\-variablebitmaplong\\fR - bitmap with maximal size 96x128 saved in one or few sms
 
-\\fB\\-fixedbitmap \\fR \\- bitmap 16x16 or 32x32
+\\fB\\-fixedbitmap \\fR - bitmap 16x16 or 32x32
 
-\\fB\\-protected\\fR \\- all ringtones and bitmaps after this parameter (excluding default ringtones and logos) will be "protected" (in phones compatible with ODI like SonyEricsson products it won't be possible to forward them from phone menu)
+\\fB\\-protected\\fR - all ringtones and bitmaps after this parameter (excluding default ringtones and logos) will be "protected" (in phones compatible with ODI like SonyEricsson products it won't be possible to forward them from phone menu)
 
-\\fIExample:\\fR gammu \\-\\-savesms EMS \\-text "Greetings" \\-defsound 1 \\-text "from Gammu" \\-tone10 axelf.txt \\-animation 2 file1.bmp file2.bmp
+\\fIExample:\\fR gammu savesms EMS \\-text "Greetings" \\-defsound 1 \\-text "from Gammu" \\-tone10 axelf.txt \\-animation 2 file1.bmp file2.bmp
 
 will create EMS sequence with text "Greetings" and default sound 1 and text "from Gammu" and ringtone axelf.txt and 2 frame animation read from (1'st frame) file1.bmp and (2'nd frame) file2.bmp
 
-\\fIExample:\\fR gammu \\-\\-savesms EMS \\-protected 2 \\-variablebitmaplong ala.bmp \\-toneSElong axelf.txt \\-toneSE ring.txt
+\\fIExample:\\fR gammu savesms EMS \\-protected 2 \\-variablebitmaplong ala.bmp \\-toneSElong axelf.txt \\-toneSE ring.txt
 
 ala.bmp and axelf.txt will be "protected"
 '''
@@ -690,7 +690,7 @@ HELP['nokianetmonitor'] = '''Takes output or set netmonitor for Nokia DCT3 phone
 \\fIhttp://www.mwiacek.com\\fR and read netmonitor manual.
 
 \\fITIP:\\fR test \\fB243\\fR enables all tests (after using command
-\\fBgammu \\-\\-nokianetmonitor 243\\fR in some phones like 6210 or 9210 have to
+\\fBgammu nokianetmonitor 243\\fR in some phones like 6210 or 9210 have to
 reboot them to see netmonitor menu)
 ''' 
 HELP['nokianetmonitor36'] = '''Reset counters from netmonitor test 36 in Nokia DCT3 phones.
@@ -721,11 +721,11 @@ HELP['backup'] = '''Backup your phone to file. It's possible to backup (depends 
 BSLen use text backup files. List can be extended on request.
 
 \\fITIP:\\fR if you will backup settings to Gammu text file, it will be possible to edit
-it. It's easy: many things in this file will be written double \\- once in Unicode,
+it. It's easy: many things in this file will be written double - once in Unicode,
 once in ASCII. When you will remove Unicode version Gammu will use ASCII
-on \\fB\\-\\-restore\\fR (and you can easy edit ASCII text) and will convert it
+on \\fBrestore\\fR (and you can easy edit ASCII text) and will convert it
 according to your OS locale. When will be available Unicode version of text,
-it will be used instead of ASCII (usefull with Unicode phones \\- it isn't important,
+it will be used instead of ASCII (usefull with Unicode phones - it isn't important,
 what locale is set in computer and no conversion Unicode \\-> ASCII and ASCII \\->
 Unicode is done).
 
@@ -763,18 +763,18 @@ selected folder in phone.'''
 HELP['restoresms'] = '''Restores SMSes from file (format like backupsms uses) to
 selected folder in phone. Please note that this overwrites existing
 messages in phone (if it supports it).'''
-HELP['restore'] = '''Restore settings written in file created using \\fB\\-\\-backup option\\fR. All things
-backup'ed by \\fB\\-\\-backup\\fR can be restored (when made backup to Gammu text
+HELP['restore'] = '''Restore settings written in file created using \\fBbackup option\\fR. All things
+backup'ed by \\fBbackup\\fR can be restored (when made backup to Gammu text
 file).
 
 Please note that restoring deletes all current content in phone. If you
-want only to add entries to phone, use \\-\\-addnew.
+want only to add entries to phone, use addnew.
 
 In some phones restoring calendar notes will not show error, but won't
 be done, when phone doesn't have set clock inside.
 '''
-HELP['addnew'] = '''Adds settings written in file created using \\fB\\-\\-backup option\\fR. All things
-backup'ed by \\fB\\-\\-backup\\fR can be restored (when made backup to Gammu text
+HELP['addnew'] = '''Adds settings written in file created using \\fBbackup option\\fR. All things
+backup'ed by \\fBbackup\\fR can be restored (when made backup to Gammu text
 file).
 '''
 HELP['clearall'] = '''''' 
@@ -800,12 +800,12 @@ import os
 import re
 
 SECTION_MATCHER = re.compile(' *([^ ]*) - (.*)')
-COMMAND_MATCHER = re.compile('--([^ \n]*) (.*)')
-COMMAND_SUBCOMMAND_MATCHER = re.compile('--([^ \n]*) ([A-Z0-9]*) (.*)')
-COMMAND_MATCHER_NOPARAM = re.compile('--([^ \n]*)')
+COMMAND_MATCHER = re.compile('^([^ \n]*) (.*)')
+COMMAND_SUBCOMMAND_MATCHER = re.compile('^([^ \n]*) ([A-Z0-9]*) (.*)')
+COMMAND_MATCHER_NOPARAM = re.compile('^([^ \n]*)')
 
 def read_help(section):
-    pipe = os.popen('%s --help %s' % (BIN_PATH, section))
+    pipe = os.popen('%s help %s' % (BIN_PATH, section))
     data = pipe.readlines()
     pipe.close()
     return data
