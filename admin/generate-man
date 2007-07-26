@@ -860,7 +860,9 @@ def write_command(output, name, params, help):
     if params == '':
         output.write(COMMAND_NOPARAM % (name, help))
     else: 
-        output.write(COMMAND % (name, params, help))
+        output.write(COMMAND % (name, 
+                params.replace('][', '] ['), 
+                help))
 
 def format_man_page(output, data):
     keys = data.keys()
