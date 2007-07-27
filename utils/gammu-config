@@ -110,11 +110,11 @@ mainmenu() {
 editP() {
     dialog --fselect "${PORT:-$D_PORT}" $FILE_SIZE 2>"$TEMPFILE"
     err=$?
-    if [ $err = 255 ] ; then
+    if [ $err -eq 255 ] ; then
         if ( dialog --inputbox "Enter phone port" $INPUT_SIZE "${PORT:-$D_PORT}" 2>"$TEMPFILE" ) ; then
             PORT=`cat "$TEMPFILE"`
         fi
-    elif [ $err = 0] ; then
+    elif [ $err -eq 0 ] ; then
         PORT=`cat "$TEMPFILE"`
     fi
 }
