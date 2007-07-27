@@ -38,7 +38,7 @@ OUT_PATH = 'docs/user/gammu.1'
 
 # Man page data
 
-HEADER = '.TH "Gammu" "1" "%(date)s (%(version)s)" "Gammu team" "Cellular phones utilities"\n'
+HEADER = '.TH "GAMMU" "1" "%(date)s" "Gammu %(version)s" "Gammu Documentation"\n'
 SECTION = '\n.SH "%s"\n'
 SUBSECTION = '\n.SS "%s"\n'
 PARAGRAPH = '.P\n%s\n'
