@@ -524,7 +524,7 @@ all numbers, text and name) format as SMS
 .SS "Filesystem"
 .TP
 .BI "addfile" " folderID name [\-type JAR|BMP|PNG|GIF|JPG|MIDI|WBMP|AMR|3GP|NRT] [\-readonly] [\-protected] [\-system] [\-hidden] [\-newtime]"
-Add file with specified name to folder with specified folderID.
+Add file with specified name to folder with specified folder ID.
 
 .B \-type 
 - file type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn't need this)
@@ -568,7 +568,7 @@ Please note, that in some phones (like N6230) content of some folders (with more
 .TP
 .BI "getfolderlisting" " folderID"
 
-Display files and folders available in folder with given folderID. You can get ID's using getfilesystem \-flatall.
+Display files and folders available in folder with given folder ID. You can get ID's using getfilesystem \-flatall.
 
 Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
 
@@ -1440,7 +1440,7 @@ Show names/codes of GSM networks known for Gammu
 
 .TP
 .BI "monitor" " [times]"
-Get phone status and writes continuously to stdout. Press Ctrl+C
+Get phone status and writes continuously to standard output. Press Ctrl+C
 to break this state.
 
 .TP
@@ -1757,7 +1757,7 @@ Show the most important phone data.
 
 .TP
 .BI "monitor" " [times]"
-Get phone status and writes continuously to stdout. Press Ctrl+C
+Get phone status and writes continuously to standard output. Press Ctrl+C
 to break this state.
 
 .TP
@@ -2009,7 +2009,7 @@ other output):
 
 With this settings, Gammu generates /tmp/gammu.log on each connection to
 phone and stores dump of communication there. You can also find some
-hints for improving support for your phone there.
+hints for improving support for your phone in this log.
 
 .SH "AUTHORS"
 

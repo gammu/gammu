@@ -168,7 +168,7 @@ other output):
 
 With this settings, Gammu generates /tmp/gammu.log on each connection to
 phone and stores dump of communication there. You can also find some
-hints for improving support for your phone there.
+hints for improving support for your phone in this log.
 '''
 
 DEBUG_LEVELS = '''
@@ -194,7 +194,7 @@ HELP['version'] = '''Output version information and exit.
 '''
 HELP['identify'] = '''Show the most important phone data.
 ''' 
-HELP['monitor'] = '''Get phone status and writes continuously to stdout. Press Ctrl+C
+HELP['monitor'] = '''Get phone status and writes continuously to standard output. Press Ctrl+C
 to break this state.
 '''
 HELP['reset'] = '''Make phone reset: soft (without asking for PIN) or hard (with PIN).
@@ -281,7 +281,7 @@ there are displayed full file/folder details like ID (first parameter in line)
 Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
 '''
 HELP['getfolderlisting'] = '''
-Display files and folders available in folder with given folderID. You can get ID's using getfilesystem \\-flatall.
+Display files and folders available in folder with given folder ID. You can get ID's using getfilesystem \\-flatall.
 
 Please note, that in some phones (like N6230) content of some folders (with more files) can be cut (only part of files will be displayed) for example on infrared connection. This is not Gammu issue, but phone firmware problem.
 '''
@@ -290,7 +290,7 @@ Display info about drives available in phone/memory card.
 '''
 HELP['deletefiles'] = ''''''
 HELP['addfolder'] = ''''''
-HELP['addfile'] = '''Add file with specified name to folder with specified folderID.
+HELP['addfile'] = '''Add file with specified name to folder with specified folder ID.
 
 .B \\-type 
 - file type was required for filesystem 1 in Nokia phones (current filesystem 2 doesn't need this)
