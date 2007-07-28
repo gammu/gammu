@@ -3387,7 +3387,7 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
  *
  * Some phones (eg. Motorola C350) reply is different:
  * \verbatim
- * +CPBR: (first-last),max_number_len,max_name_len
+ * +CPBR: first-last,max_number_len,max_name_len
  * \endverbatim
  *
  * Some phones do not list positions (Sharp):
