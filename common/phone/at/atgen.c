@@ -5381,7 +5381,7 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				&protocol_level);
 
 			/*
-			 * This reply comes from Alcatel ans Samsung.
+			 * This reply comes from Alcatel and Samsung.
 			 */
 			if (error != ERR_NONE) {
 				error = ATGEN_ParseReply(s, string,
