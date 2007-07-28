@@ -8,13 +8,20 @@
 #endif
 
 #include <stdlib.h>
-#ifdef HAVE_ISWSPACE
+#ifdef HAVE_WCHAR_H
+#  include <wchar.h>
+#endif
+#ifdef HAVE_WCTYPE_H
 #  include <wctype.h>
 #endif
 
 #include <gammu-unicode.h>
 
-#ifndef HAVE_ISWSPACE
+#ifndef HAVE_WCHAR_T
+typedef		int wchar_t;
+#endif
+
+#ifndef HAVE_WINT_T
 typedef		int wint_t;
 #endif
 
