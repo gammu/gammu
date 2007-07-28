@@ -3400,70 +3400,59 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
  */
 GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
- 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	char 			*pos;
-	char *tmppos;
+ 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	char *str;
+	GSM_Error error;
 
  	switch (Priv->ReplyState) {
  	case AT_Reply_OK:
 		smprintf(s, "Memory info received\n");
 
-		/* Parse first location */
-		pos = strchr(msg.Buffer, '(');
- 		if (!pos) {
- 			pos = strchr(msg.Buffer, ':');
- 			if (!pos) {
-				/* We don't get reply on first attempt on Samsung */
-				if (Priv->Manufacturer == AT_Samsung) {
-					return ERR_NONE;
-				}
-				return ERR_UNKNOWNRESPONSE;
-			}
- 			pos++;
- 			if (*pos ==  ' ') pos++;
- 			if (!isdigit(*pos)) return ERR_UNKNOWNRESPONSE;
- 		} else {
- 			pos++;
- 		}
-		Priv->FirstMemoryEntry = atoi(pos);
+		str = GetLineString(msg.Buffer, Priv->Lines, 2);
 
-		/* Parse last location*/
-		tmppos = pos;
-		pos = strchr(pos, '-');
- 		if (!pos) {
-			/* Sharp does not show locations */
-			if (*tmppos == ')') {
-				pos = tmppos + 1;
-				Priv->FirstMemoryEntry = 1;
-				Priv->MemorySize = 1000;
-				return ERR_NONE;
-			}
-			/* There might be also only one location */
-			pos = strchr(pos, ')');
-			if (pos != NULL) {
-				Priv->MemorySize = 1;
-				return ERR_NONE;
-			}
-
-			return ERR_UNKNOWNRESPONSE;
-		} else {
-			pos++;
-			Priv->MemorySize = atoi(pos) + 1 - Priv->FirstMemoryEntry;
+		/* Try standard format first */
+		error = ATGEN_ParseReply(s, str,
+					"+CPBR: (@i-@i), @i, @i",
+					&Priv->FirstMemoryEntry,
+					&Priv->MemorySize,
+					&Priv->NumberLength,
+					&Priv->TextLength);
+		if (error == ERR_NONE) {
+			/* Calculate memory size from last position we got from phone */
+			Priv->MemorySize = Priv->MemorySize + 1 - Priv->FirstMemoryEntry;
+			return ERR_NONE;
 		}
 
-		/* Parse number length*/
-		pos = strchr(pos, ',');
- 		if (!pos) return ERR_UNKNOWNRESPONSE;
-		pos++;
-		Priv->NumberLength = atoi(pos);
+		/* Try Motorola format then */
+		error = ATGEN_ParseReply(s, str,
+					"+CPBR: @i-@i, @i, @i",
+					&Priv->FirstMemoryEntry,
+					&Priv->MemorySize,
+					&Priv->NumberLength,
+					&Priv->TextLength);
+		if (error == ERR_NONE) {
+			/* Calculate memory size from last position we got from phone */
+			Priv->MemorySize = Priv->MemorySize + 1 - Priv->FirstMemoryEntry;
+			return ERR_NONE;
+		}
 
-		/* Parse text length*/
-		pos = strchr(pos, ',');
- 		if (!pos) return ERR_UNKNOWNRESPONSE;
-		pos++;
-		Priv->TextLength = atoi(pos);
+		/* Try Sharp format last */
+		error = ATGEN_ParseReply(s, str,
+					"+CPBR: (), @i, @i",
+					&Priv->NumberLength,
+					&Priv->TextLength);
+		if (error == ERR_NONE) {
+			/* Hardcode size, we have no other choice here */
+			Priv->FirstMemoryEntry = 1;
+			Priv->MemorySize = 1000;
+			return ERR_NONE;
+		}
 
-		return ERR_NONE;
+		/* We don't get reply on first attempt on some Samsung phones */
+		if (Priv->Manufacturer == AT_Samsung) {
+			return ERR_NONE;
+		}
+		return ERR_UNKNOWNRESPONSE;
 	case AT_Reply_Error:
 		return ERR_UNKNOWN;
 	case AT_Reply_CMSError:
