@@ -3477,35 +3477,41 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 
 GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	GSM_Error		error;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_MemoryStatus	*MemoryStatus = s->Phone.Data.MemoryStatus;
-	int			line=0;
+	int			line = 1;
 	char			*str;
 	int			cur, last = -1;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
-		smprintf(s, "Memory entries received\n");
+		smprintf(s, "Memory entries for status received\n");
 		/* Walk through lines with +CPBR: */
-		while (Priv->Lines.numbers[line*2+1]!=0) {
-			str = GetLineString(msg.Buffer,Priv->Lines,line+1);
-			if (strncmp(str, "+CPBR: ", 7) == 0) {
-				if (sscanf(str, "+CPBR: %d,", &cur) == 1) {
-					/* Some phones wrongly return several lines with same location,
-					 * we need to catch it here to get correct count. */
-					if (cur != last) {
-						MemoryStatus->MemoryUsed++;
-					}
-					last = cur;
-					cur -= Priv->FirstMemoryEntry - 1;
-					if (cur == Priv->NextMemoryEntry || Priv->NextMemoryEntry == 0)
-						Priv->NextMemoryEntry = cur + 1;
-				} else {
-					MemoryStatus->MemoryUsed++;
-				}
+		while (strcmp("OK", str = GetLineString(msg.Buffer, Priv->Lines, line + 1)) != 0) {
+
+			/* Parse reply */
+			error = ATGEN_ParseReply(s, str, "+CPBR: @i, @0", &cur);
+			if (error != ERR_NONE) {
+				return error;
 			}
+
+			/* Some phones wrongly return several lines with same location,
+			 * we need to catch it here to get correct count. */
+			if (cur != last) {
+				MemoryStatus->MemoryUsed++;
+			}
+			last = cur;
+			cur -= Priv->FirstMemoryEntry - 1;
+			if (cur == Priv->NextMemoryEntry || Priv->NextMemoryEntry == 0)
+				Priv->NextMemoryEntry = cur + 1;
+
+			/* Go to next line */
 			line++;
 		}
+		smprintf(s, "Memory status: Used: %d, Next: %d\n",
+				MemoryStatus->MemoryUsed,
+				Priv->NextMemoryEntry);
 		return ERR_NONE;
 	case AT_Reply_Error:
 		return ERR_UNKNOWN;
