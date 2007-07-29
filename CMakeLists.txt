@@ -7,9 +7,6 @@ project (Gammu C)
 # I didn't check older versions
 cmake_minimum_required (VERSION 2.4.2)
 
-# We want some tests
-enable_testing()
-
 # Where to lookup modules
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -113,6 +110,11 @@ else (WIN32)
   set (CPACK_SOURCE_STRIP_FILES "")
 endif (WIN32)
 include (CPack)
+
+# We want some tests if not crosscompiling
+if (NOT CROSS_MINGW)
+    include(CTest)
+endif (NOT CROSS_MINGW)
 
 # Standard packages
 include (CheckCSourceCompiles)
@@ -783,8 +785,8 @@ install (
 add_subdirectory(common)
 
 # Include tests if we're not cross compiling
-if (NOT CROSS_MINGW)
+if(BUILD_TESTING)
     add_subdirectory(tests)
-endif (NOT CROSS_MINGW)
+endif(BUILD_TESTING)
 
 add_subdirectory(gammu)
