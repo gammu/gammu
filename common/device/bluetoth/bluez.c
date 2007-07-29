@@ -64,7 +64,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	laddr.rc_channel 	= 0;
 
 	if (bind(fd, (struct sockaddr *)&laddr, sizeof(laddr)) < 0) {
-		dbgprintf("Can't bind socket\n");
+		smprintf(s, "Can't bind socket (%d, %s)\n", errno, strerror(errno));
 		close(fd);
 		return ERR_DEVICEOPENERROR;
 	}
@@ -75,7 +75,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	raddr.rc_channel 	= port;
 
 	if (connect(fd, (struct sockaddr *)&raddr, sizeof(raddr)) < 0) {
-		dbgprintf("Can't connect\n");
+		smprintf(s, "Can't connect (%d, %s)\n", errno, strerror(errno));
 		close(fd);
 		return ERR_DEVICEOPENERROR;
 	}
