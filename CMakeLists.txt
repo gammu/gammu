@@ -7,6 +7,9 @@ project (Gammu C)
 # I didn't check older versions
 cmake_minimum_required (VERSION 2.4.2)
 
+# We want some tests
+enable_testing()
+
 # Where to lookup modules
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
@@ -778,5 +781,10 @@ install (
     )
 
 add_subdirectory(common)
+
+# Include tests if we're not cross compiling
+if (NOT CROSS_MINGW)
+    add_subdirectory(tests)
+endif (NOT CROSS_MINGW)
 
 add_subdirectory(gammu)
