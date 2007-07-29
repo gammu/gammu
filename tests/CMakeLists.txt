@@ -11,3 +11,21 @@ include_directories("${Gammu_BINARY_DIR}/include")
 add_executable(statemachine-alloc statemachine-alloc.c)
 target_link_libraries(statemachine-alloc Gammu)
 add_test(statemachine-alloc ${EXECUTABLE_OUTPUT_PATH}/statemachine-alloc)
+
+# vCard parsing
+add_executable(vcard-read vcard-read.c)
+target_link_libraries(vcard-read Gammu)
+
+# List test cases
+file(GLOB VCARDS 
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards" 
+    "${Gammu_SOURCE_DIR}/tests/vcards/*.vcf")
+
+foreach(TESTVCARD ${VCARDS})
+    string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
+    string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
+    add_test("vcard-read-${TESTNAME}" 
+        "${EXECUTABLE_OUTPUT_PATH}/vcard-read" 
+        "${Gammu_SOURCE_DIR}/tests/vcards/${TESTVCARD}" 
+        "${Gammu_SOURCE_DIR}/tests/vcards/${TESTBACKUP}")
+endforeach(TESTVCARD $VCARDS)
