@@ -6,42 +6,11 @@
 #include <gammu-file.h>
 #include <gammu-info.h>
 
-/* --------------------------- resetting phone settings  ------------------- */
-
-
-/* --------------------------- security codes ------------------------------ */
-
-
-/* ---------------------------- keyboard ----------------------------------- */
-
-
-/* ------------------------------- display features ------------------------ */
-
-
-
 /**
  * Resets all members of GSM_BatteryCharge structure.
  */
 void GSM_ClearBatteryCharge(GSM_BatteryCharge *bat);
 
-/* ------------------------------ categories ------------------------------- */
-
-
-/* ------------------- radio FM stations ---------------------------------- */
-
-
-/* ----------------------- filesystem ------------------------------------- */
-
-
-
-
-
-/* ----------------------------- GPRS access points ----------------------- */
-
-
-/* ------------------------------------------------------------------------ */
-
-/* ------------------------------------------------------------------------ */
 
 bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt);
 void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start);
@@ -52,21 +21,23 @@ void SaveVCALDate(char *Buffer, int *Length, GSM_DateTime *Date, char *Start);
 /**
  * Stores text in vCalendar/vCard formatted buffer.
  *
- * @param Buffer Buffer where output will be stored.
- * @param Length Current position in output buffer (will be updated).
- * @param Text Value to be stored.
- * @param Start Name of field which is being stored.
- * @param UTF8 Whether text should be stored in UTF-8 without prefix.
+ * \param Buffer Buffer where output will be stored.
+ * \param Length Current position in output buffer (will be updated).
+ * \param Text Value to be stored.
+ * \param Start Name of field which is being stored.
+ * \param UTF8 Whether text should be stored in UTF-8 without prefix.
  */
 void SaveVCALText(char *Buffer, int *Length, unsigned char *Text, char *Start, bool UTF8);
 
 /**
- * Reads text from vCalendar/vCard formatted buffer.
+ * Reads text for vCalendar/vCard formatted line.
  *
- * @param Buffer Buffer where input is stored.
- * @param Start Name of field which is being read.
- * @param Value Storage for read value.
- * @param UTF8 Whether text should be read in UTF-8 without prefix.
+ * \todo We should try to detect utf-8 and automatically use it.
+ *
+ * \param Buffer Buffer with input data.
+ * \param Start Start expression of line.
+ * \param Value Storage for value.
+ * \param UTF8 Whether string should be treated as utf-8.
  */
 bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8);
 
