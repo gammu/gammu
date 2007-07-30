@@ -344,7 +344,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 			smprintf(s, "[Device           - \"%s\"]\n",
 					s->CurrentConfig->Device);
 			if (strlen(GetOS()) != 0) {
-				smprintf(s, "[Run on           - %s]\n",
+				smprintf(s, "[Runing on        - %s]\n",
 						GetOS());
 			}
 		}
