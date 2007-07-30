@@ -176,14 +176,14 @@ Locale=1033
 CodePage=1252
 
 [Version Info Keys]
-CompanyName=http://www.mwiacek.com
+CompanyName=http://www.gammu.org
 FileDescription=Gammu - manager for cellular modems and phones
 FileVersion=@VERSION_WIN@
 InternalName=Gammu
 LegalCopyright=Copyright © 2002-2006 Marcin Wiacek
 LegalTrademarks=
 OriginalFilename=gammu.exe
-ProductName=Gammu (GNU All Mobile Management Utilities)
+ProductName=Gammu (Gammu All Mobile Management Utilities)
 ProductVersion=@VERSION_WIN@
 Comments=
 
