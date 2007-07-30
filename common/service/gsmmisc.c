@@ -462,6 +462,10 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 
 				pos = end;
 				found = true;
+			} else if (strncmp(pos, "TYPE=PREF", 9) == 0) {
+				/* We ignore pref token */
+				pos += 9;
+				found = true;
 			} else if (strncmp(pos, "PREF", 4) == 0) {
 				/* We ignore pref token */
 				pos += 4;
