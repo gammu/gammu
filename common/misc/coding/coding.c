@@ -380,9 +380,15 @@ void EncodeBCD (unsigned char *dest, const unsigned char *src, int len, bool fil
 
 int DecodeWithHexBinAlphabet (unsigned char mychar)
 {
-	if (mychar>='A' && mychar<='F') return mychar-'A'+10;
-	if (mychar>='a' && mychar<='f') return mychar-'a'+10;
-	if (mychar>='0' && mychar<='9') return mychar-'0';
+	if (mychar >= 'A' && mychar <= 'F') 
+		return mychar - 'A' + 10;
+
+	if (mychar >= 'a' && mychar <= 'f') 
+		return mychar - 'a' + 10;
+
+	if (mychar >= '0' && mychar <= '9') 
+		return mychar - '0';
+
 	return -1;
 }
 
