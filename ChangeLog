@@ -18,6 +18,7 @@ ChangeLog
 2007???? - 1.12.92
 [+] * Added simple bash completion script.
 [+] * Added some compile time testing.
+[+] * Improved vCard parsing.
 [-] * Fix wint_t and wchar_t detection.
 
 20070723 - 1.12.91

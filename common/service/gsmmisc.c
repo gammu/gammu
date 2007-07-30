@@ -348,51 +348,178 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
 
 bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 {
-	unsigned char buff[200];
+	char *line = NULL;
+	char **tokens = NULL;
+	char *charset = NULL;
+	char *begin, *pos, *end;
+	bool quoted_printable = false;
+	size_t numtokens, token, remtokens;
+	size_t i, len;
+	bool found;
+	bool ret = false;
 
+	/* Initialize output */
 	Value[0] = 0x00;
 	Value[1] = 0x00;
 
-	strcpy(buff,Start);
-	strcat(buff,":");
-	if (!strncmp(Buffer,buff,strlen(buff))) {
-		if (UTF8) {
-			DecodeUTF8(Value, Buffer + strlen(Start) + 1, strlen(Buffer) - (strlen(Start) + 1));
-		} else {
-			DecodeISO88591(Value, Buffer + strlen(Start) + 1, strlen(Buffer) - (strlen(Start) + 1));
+	/* Count number of tokens */
+	len = strlen(Start);
+	numtokens = 1;
+	for (i = 0; i < len; i++) {
+		if (Start[i] == ';') {
+			numtokens++;
 		}
-		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
-		return true;
 	}
-	strcpy(buff,Start);
-	strcat(buff,";ENCODING=QUOTED-PRINTABLE:");
-	if (!strncmp(Buffer,buff,strlen(buff))) {
-		DecodeISO88591QuotedPrintable(Value,Buffer+strlen(Start)+27,strlen(Buffer)-(strlen(Start)+27));
-		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
-		return true;
+
+	/* Allocate memory */
+	line = strdup(Start);
+	if (line == NULL) {
+		dbgprintf("Could not alloc!\n");
+		goto fail;
 	}
-	strcpy(buff,Start);
-	strcat(buff,";CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:");
-	if (!strncmp(Buffer,buff,strlen(buff))) {
-		DecodeUTF8QuotedPrintable(Value,Buffer+strlen(Start)+41,strlen(Buffer)-(strlen(Start)+41));
-		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
-		return true;
+	tokens = (char **)malloc(sizeof(char *) * numtokens);
+	if (tokens == NULL) {
+		dbgprintf("Could not alloc!\n");
+		goto fail;
 	}
-	strcpy(buff,Start);
-	strcat(buff,";CHARSET=UTF-8:");
-	if (!strncmp(Buffer,buff,strlen(buff))) {
-		DecodeUTF8(Value,Buffer+strlen(Start)+15,strlen(Buffer)-(strlen(Start)+15));
-		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
-		return true;
+
+	/* Parse Start to vCard tokens (separated by ;) */
+	token = 0;
+	begin = line;
+	for (i = 0; i < len; i++) {
+		if (line[i] == ';') {
+			tokens[token++] = begin;
+			begin = line + i + 1;
+			line[i] = 0;
+		}
 	}
-	strcpy(buff,Start);
-	strcat(buff,";CHARSET=UTF-7:");
-	if (!strncmp(Buffer,buff,strlen(buff))) {
-		DecodeUTF7(Value,Buffer+strlen(Start)+15,strlen(Buffer)-(strlen(Start)+15));
-		dbgprintf("ReadVCalText is \"%s\"\n",DecodeUnicodeConsole(Value));
-		return true;
+	/* Store last token */
+	tokens[token++] = begin;
+
+	/* Compare first token, it must be in place */
+	pos = Buffer;
+	len = strlen(tokens[0]);
+	if (strncmp(pos, tokens[0], len) != 0) {
+		goto fail;
 	}
-	return false;
+	/* Advance position */
+	pos += len; 
+	/* No need to check this token anymore */
+	tokens[0][0] = 0;
+	/* We've already checked one token */
+	remtokens = numtokens - 1;
+
+	/* Check remaining tokens */
+	while (*pos != ':') {
+		if (*pos == ';') {
+			pos++;
+		} else {
+			dbgprintf("Cound not parse!\n");
+			goto fail;
+		}
+		found = false;
+		for (token = 0; token < numtokens; token++) {
+			len = strlen(tokens[token]);
+			/* Skip already matched tokens */
+			if (len == 0) {
+				continue;
+			}
+			if (strncmp(pos, tokens[token], len) == 0) {
+				/* Advance position */
+				pos += len; 
+				/* We need to check one token less */
+				tokens[token][0] = 0;
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			if (strncmp(pos, "ENCODING=QUOTED-PRINTABLE", 25) == 0) {
+				quoted_printable = true;
+				/* Advance position */
+				pos += 25; 
+				found = true;
+			} else if (strncmp(pos, "CHARSET=", 8) == 0) {
+				quoted_printable = true;
+				/* Advance position */
+				pos += 8;
+				/* Grab charset */
+				end = strchr(pos, ';');
+				if (end == NULL) {
+					end = strchr(pos, ':');
+				}
+				if (end == NULL) {
+					dbgprintf("Could not read charset!\n");
+					goto fail;
+				}
+				/* We basically want strndup, but it is not portable */
+				charset = strdup(pos);
+				if (charset == NULL) {
+					dbgprintf("Could not alloc!\n");
+					goto fail;
+				}
+				charset[end - pos] = 0;
+
+				pos = end;
+				found = true;
+			} else if (strncmp(pos, "PREF", 4) == 0) {
+				/* We ignore pref token */
+				pos += 4;
+				found = true;
+			}
+			if (!found) {
+				dbgprintf("Not found!\n");
+				goto fail;
+			}
+		}
+	}
+	/* Skip : */
+	pos++;
+	/* Length of rest */
+	len = strlen(pos);
+
+	/* Decode the text */
+	if (charset == NULL) {
+		if (quoted_printable) {
+			if (UTF8) {
+				DecodeUTF8QuotedPrintable(Value, pos, len);
+			} else {
+				DecodeISO88591QuotedPrintable(Value, pos, len);
+			}
+		} else {
+			if (UTF8) {
+				DecodeUTF8(Value, pos, len);
+			} else {
+				DecodeISO88591(Value, pos, len);
+			}
+		}
+	} else {
+		if (strcmp(charset, "UTF-8") == 0) {
+			if (quoted_printable) {
+				DecodeUTF8QuotedPrintable(Value, pos, len);
+			} else {
+				DecodeUTF8(Value, pos, len);
+			}
+		} else if (strcmp(charset, "UTF-7") == 0) {
+			if (quoted_printable) {
+				dbgprintf("Unsupported charset: %s\n", charset);
+				goto fail;
+			} else {
+				DecodeUTF7(Value, pos, len);
+			}
+		} else {
+			dbgprintf("Unsupported charset: %s\n", charset);
+			goto fail;
+		}
+	}
+
+	ret = true;
+	dbgprintf("ReadVCalText is \"%s\"\n", DecodeUnicodeConsole(Value));
+fail:
+	free(line);
+	free(tokens);
+	free(charset);
+	return ret;
 }
 
 bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *file)
