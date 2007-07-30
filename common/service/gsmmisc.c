@@ -354,7 +354,7 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 	char *begin, *pos, *end;
 	bool quoted_printable = false;
 	size_t numtokens, token, remtokens;
-	size_t i, len;
+	size_t i, j, len;
 	bool found;
 	bool ret = false;
 
@@ -514,6 +514,32 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 		} else {
 			dbgprintf("Unsupported charset: %s\n", charset);
 			goto fail;
+		}
+	}
+
+	/* Postprocess escaped chars */
+	len = UnicodeLength(Value);
+	for (i = 0; i < len; i++) {
+		if (Value[(2 * i)] == 0 && Value[(2 * i) + 1] == '\\') {
+			j = i + 1;
+			if (Value[(2 * j)] == 0 && (
+						Value[(2 * j) + 1] == 'n' ||
+						Value[(2 * j) + 1] == 'N')
+						) {
+				Value[(2 * i) + 1] = '\n';
+			} else if (Value[(2 * j)] == 0 && Value[(2 * j) + 1] == '\\') {
+				Value[(2 * i) + 1] = '\\';
+			} else if (Value[(2 * j)] == 0 && Value[(2 * j) + 1] == ';') {
+				Value[(2 * i) + 1] = ';';
+			} else if (Value[(2 * j)] == 0 && Value[(2 * j) + 1] == ',') {
+				Value[(2 * i) + 1] = ',';
+			} else {
+				/* We ignore unknown for now */
+				continue;
+			}
+			/* Shift the string */
+			memmove(Value + (2 * j), Value + (2 * j) + 2, 2 * (len + 1 - j));
+			len--;
 		}
 	}
 
