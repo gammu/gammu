@@ -55,7 +55,7 @@ GSM_Error NotSupportedFunction(void)
 void GSM_InitLocales(const char *path) {
 	setlocale(LC_ALL, "");
 #ifdef GETTEXTLIBS_FOUND
-	if (path == NULL) {
+	if (path == NULL || strlen(path) == 0) {
 #if defined(LOCALE_PATH)
 		bindtextdomain("gammu", LOCALE_PATH);
 #else
