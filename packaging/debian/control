@@ -10,7 +10,7 @@ Architecture: any
 Depends: ${shlibs:Depends}
 Suggests: wammu
 Description: Mobile phone management utility
- Gammu (GNU All Mobile Management Utility) is program to manage mobile phone.
+ Gammu (Gammu All Mobile Management Utility) is program to manage mobile phone.
  .
  Gammu can do such things with cellular phones as making data calls,
  updating the address book, changing calendar and ToDo entries, sending and
@@ -33,7 +33,7 @@ Section: libdevel
 Architecture: any
 Depends: libgammu1 (= ${Source-Version})
 Description: Header files for Gammu
- Gammu (GNU All Mobile Management Utility) is program to manage mobile phone.
+ Gammu (Gammu All Mobile Management Utility) is program to manage mobile phone.
  .
  Gammu can do such things with cellular phones as making data calls,
  updating the address book, changing calendar and ToDo entries, sending and
@@ -57,7 +57,7 @@ Section: libs
 Architecture: any
 Depends: ${shlibs:Depends}
 Description:  Mobile phone management library
- Gammu (GNU All Mobile Management Utility) is program to manage mobile phone.
+ Gammu (Gammu All Mobile Management Utility) is program to manage mobile phone.
  .
  Gammu can do such things with cellular phones as making data calls,
  updating the address book, changing calendar and ToDo entries, sending and

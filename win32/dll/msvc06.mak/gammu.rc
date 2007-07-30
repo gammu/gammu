@@ -71,7 +71,7 @@ BEGIN
         BLOCK "040904b0"
         BEGIN
             VALUE "Comments", "\0"
-            VALUE "CompanyName", "http://www.mwiacek.com\0"
+            VALUE "CompanyName", "http://www.gammu.org\0"
             VALUE "FileDescription", "Gammu DLL\0"
             VALUE "FileVersion", "1,12,92,0\0"
             VALUE "InternalName", "Gammu\0"
@@ -79,7 +79,7 @@ BEGIN
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "gammu.dll\0"
             VALUE "PrivateBuild", "\0"
-            VALUE "ProductName", "Gammu (GNU All Mobile Management Utilities) DLL\0"
+            VALUE "ProductName", "Gammu (Gammu All Mobile Management Utilities) DLL\0"
             VALUE "ProductVersion", "1,12,92,0\0"
             VALUE "SpecialBuild", "\0"
         END

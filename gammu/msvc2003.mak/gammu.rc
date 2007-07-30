@@ -69,13 +69,13 @@ BEGIN
     BEGIN
         BLOCK "040904b0"
         BEGIN
-            VALUE "CompanyName", "http://www.mwiacek.com"
+            VALUE "CompanyName", "http://www.gammu.org"
             VALUE "FileDescription", "Gammu - manager for cellular modems and phones"
             VALUE "FileVersion", "1,12,92,0"
             VALUE "InternalName", "Gammu"
             VALUE "LegalCopyright", "Copyright © 2002-2003 Marcin Wiacek"
             VALUE "OriginalFilename", "gammu.exe"
-            VALUE "ProductName", "Gammu (GNU All Mobile Management Utilities)"
+            VALUE "ProductName", "Gammu (Gammu All Mobile Management Utilities)"
             VALUE "ProductVersion", "1,12,92,0"
         END
     END
