@@ -20,6 +20,7 @@ target_link_libraries(vcard-read Gammu)
 file(GLOB VCARDS 
     RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards" 
     "${Gammu_SOURCE_DIR}/tests/vcards/*.vcf")
+list(SORT VCARDS)
 
 foreach(TESTVCARD ${VCARDS})
     string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
