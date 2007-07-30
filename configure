@@ -54,7 +54,7 @@ while [ "$#" -gt 0 ] ; do
             help
             ;;
         --prefix=*)
-            CMAKE_PREFIX="-DCMAKE_INSTALL_PREFIX=\"`echo $1|sed 's/^--prefix=//'`\""
+            CMAKE_PREFIX="-DCMAKE_INSTALL_PREFIX=`echo $1|sed 's/^--prefix=//'`"
             ;;
         --enable-backup)
             CMAKE_BACKUP="-DWITH_BACKUP=ON"
@@ -69,7 +69,7 @@ while [ "$#" -gt 0 ] ; do
             CMAKE_SHARED="-DENABLE_SHARED=OFF"
             ;;
         --enable-debug)
-            CMAKE_DEBUG="-DCMAKE_BUILD_TYPE=\"Debug\""
+            CMAKE_DEBUG="-DCMAKE_BUILD_TYPE=Debug"
             ;;
         --disable-debug)
             CMAKE_DEBUG=
