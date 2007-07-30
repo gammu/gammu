@@ -1381,7 +1381,8 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 				if (MergeLines) {
 					/* (Quote printable new line) Does string end with = ? */
 					if (OutBuffer[pos - 1] == '=') {
-						OutBuffer[pos - 1] = 0;
+						pos--;
+						OutBuffer[pos] = 0;
 						skip = true;
 						break;
 					}
