@@ -1562,14 +1562,14 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, in
 				break;
 			}
 			mychar[z] = 16*DecodeWithHexBinAlphabet(src[z*3+i+1])+DecodeWithHexBinAlphabet(src[z*3+i+2]);
-			/* Is it plain ASCII? */
-			if (z==0 && mychar[0]<194) break;
 			z++;
+			/* Is it plain ASCII? */
+			if (z == 1 && mychar[0] < 194) break;
 			/* Do we already have valid UTF-8 char? */
-			if (DecodeWithUTF8Alphabet(mychar,&ret,z) == z) break;
+			if (DecodeWithUTF8Alphabet(mychar, &ret, z) == z) break;
 		}
 		if (z>0) {
-			i+=z*3;
+			i += z * 3;
 			// we ignore wrong sequence
 			if (DecodeWithUTF8Alphabet(mychar,&ret,z)==0) continue;
 		} else {
