@@ -2,6 +2,7 @@ BEGIN:VCARD
 VERSION:2.1
 N;ENCODING=QUOTED-PRINTABLE:Nikdo;Nikdo=
 vic
+NOTE:This ends with equal sign=
 TEL;WORK:5555
  4444
 END:VCARD

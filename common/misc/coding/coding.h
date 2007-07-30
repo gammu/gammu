@@ -132,6 +132,16 @@ extern int strcasecmp (const char *s1, const char *s2);
 extern char *strchrnul(char *s, int find);
 #endif
 
+/**
+ * Gets line from buffer.
+ *
+ * @param MergeLines: Determine whether merge lines as vCard style 
+ * continuation or quoted printable continutaion.
+ * @param Buffer: Data source to parse.
+ * @param Pos: Current position in data.
+ * @param OutBuffer: Buffer where line will be written.
+ * @param MaxLen: Maximal length of data to write.
+ */
 void MyGetLine		(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, bool MergeLines);
 
 char *EncodeSpecialChars(unsigned char *buffer);
