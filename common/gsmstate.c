@@ -330,15 +330,22 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 
 		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTERROR ||
 	    	    s->di.dl == DL_TEXTALLDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTERRORDATE) {
-			smprintf(s,"[Gammu            - %s built %s %s",VERSION,__TIME__,__DATE__);
-			if (strlen(GetCompiler()) != 0) {
-				smprintf(s," in %s",GetCompiler());
-			}
-			smprintf(s,"]\n[Connection       - \"%s\"]\n",s->CurrentConfig->Connection);
-			smprintf(s,"[Model type       - \"%s\"]\n",s->CurrentConfig->Model);
-			smprintf(s,"[Device           - \"%s\"]\n",s->CurrentConfig->Device);
+			smprintf(s, "[Gammu            - %s built %s %s using %s]\n",
+					VERSION,
+					__TIME__,
+					__DATE__,
+					GetCompiler()
+					);
+			smprintf(s, "[Connection       - \"%s\"]\n",
+					s->CurrentConfig->Connection);
+			smprintf(s, "[Connection index - %d]\n", i);
+			smprintf(s, "[Model type       - \"%s\"]\n",
+					s->CurrentConfig->Model);
+			smprintf(s, "[Device           - \"%s\"]\n",
+					s->CurrentConfig->Device);
 			if (strlen(GetOS()) != 0) {
-				smprintf(s,"[Run on           - %s]\n",GetOS());
+				smprintf(s, "[Run on           - %s]\n",
+						GetOS());
 			}
 		}
 		if (s->di.dl==DL_BINARY) {
