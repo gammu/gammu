@@ -1353,18 +1353,10 @@ ret0:
 #undef tolowerwchar
 }
 
-/**
- * Gets line from buffer.
- *
- * @param MergeLines: determine whether merge lines ending with = (quoted printable)
- * @param Buffer: Data source to parse
- * @param Pos: Current position in data
- * @param OutBuffer: Buffer where line will be written
- * @param MaxLen: Maximal length of data to write
- */
 void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, bool MergeLines)
 {
 	bool skip = false;
+	bool quoted_printable = false;
 	size_t pos;
 	int tmp;
 
@@ -1380,7 +1372,7 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 			if (pos != 0 && !skip) {
 				if (MergeLines) {
 					/* (Quote printable new line) Does string end with = ? */
-					if (OutBuffer[pos - 1] == '=') {
+					if (OutBuffer[pos - 1] == '=' && quoted_printable) {
 						pos--;
 						OutBuffer[pos] = 0;
 						skip = true;
@@ -1399,7 +1391,12 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 				return;
 			}
 			break;
-		default  :
+		default:
+			/* Detect quoted printable for possible escaping */
+			if (Buffer[*Pos] == ':' &&
+					strstr(OutBuffer, ";ENCODING=QUOTED-PRINTABLE") != NULL) {
+				quoted_printable = true;
+			}
 			skip = false;
 			OutBuffer[pos]     = Buffer[*Pos];
 			pos++;
