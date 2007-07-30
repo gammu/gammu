@@ -1,0 +1,8 @@
+BEGIN:VCARD
+VERSION:2.1
+NOTE:text with two\nlines
+NOTE:text with\\slash
+NOTE:some escaped char with\;two\n\Nextra new lines
+NOTE:random text with slash at the end, this is probably invalid vcard\
+NOTE:let's try also some invalid escape sequence\M\N\
+END:VCARD
