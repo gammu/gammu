@@ -710,7 +710,6 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				}
 			}
 			if (ReadVCALText(Line, "EMAIL", Buff, false) ||
-			    ReadVCALText(Line, "EMAIL", Buff, false) ||
 			    ReadVCALText(Line, "EMAIL;INTERNET", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
