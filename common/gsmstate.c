@@ -858,6 +858,33 @@ void GSM_SetConfigNum(GSM_StateMachine *s, int sections)
 	s->ConfigNum = sections;
 }
 
+/**
+ * Expand path to user home.
+ */
+void GSM_ExpandUserPath(char **string)
+{
+	char *tmp, *home;
+
+	/* Is there something to expand */
+	if (*string[0] != '~') return;
+
+	/* Grab home */
+	home = getenv("HOME");
+	if (home == NULL) return;
+
+	/* Allocate memory */
+	tmp = (char *)malloc(strlen(home) + strlen(*string));
+	if (tmp == NULL) return;
+
+	/* Create final path */
+	strcpy(tmp, home);
+	strcat(tmp, *string + 1);
+
+	/* Free old storage and replace it */
+	free(*string);
+	*string = tmp;
+}
+
 
 bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 {
@@ -956,6 +983,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		cfg->DebugFile		 	 = strdup(DefaultDebugFile);
 	} else {
 		cfg->DebugFile			 = strdup(cfg->DebugFile);
+		GSM_ExpandUserPath(&cfg->DebugFile);
 	}
 
 	/* Set file locking */
