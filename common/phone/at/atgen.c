@@ -872,7 +872,16 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (s->Phone.Data.EnableIncomingUSSD) {
 		/* Find start of reply */
 		pos = strstr(msg.Buffer, "+CUSD:");
-		if (pos == NULL) return ERR_UNKNOWN;
+		if (pos == NULL) {
+			if (s->Phone.Data.RequestID != ID_IncomingFrame) {
+				/* 
+				 * We usually get reply right after AT+CUSD=, but 
+				 * if this is not the case, we should wait.
+				 */
+				return ERR_NONE;
+			}
+			return ERR_UNKNOWNRESPONSE;
+		}
 
 		/* Parse reply */
 		error = ATGEN_ParseReply(s, pos,
