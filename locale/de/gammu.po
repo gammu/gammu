@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-07-20 10:42+0200\n"
-"PO-Revision-Date: 2007-06-04 12:56+0200\n"
+"PO-Revision-Date: 2007-07-30 14:22+0200\n"
 "Last-Translator: Thorsten Gutsche <thorsten.gutsche@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 0.11\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.0.1\n"
 
 #: common/gsmcomon.c:83
 msgid "No error."
@@ -1354,9 +1354,8 @@ msgid "User ID"
 msgstr "Benutzer-ID"
 
 #: gammu/gammu.c:1048
-#, fuzzy
 msgid "Picture name"
-msgstr "Bild"
+msgstr "Name des Bildes"
 
 #: gammu/gammu.c:1051
 msgid "Picture ID"
@@ -2986,6 +2985,8 @@ msgid ""
 "Please note that restoring data will cause existing data in phone to be "
 "deleted."
 msgstr ""
+"Bitte beachten Sie, dass das Wiederherstellen von Daten die bestehenden "
+"Daten im Handy löschen wird."
 
 #: gammu/gammu.c:5756
 msgid "Restore phone caller groups and logos"
@@ -4579,9 +4580,8 @@ msgid "Error at init connection (%i)"
 msgstr "Fehler beim Verbindungsaufbau (%i)"
 
 #: gammu/smsd/smsdcore.c:606
-#, fuzzy
 msgid "Stopping Gammu smsd"
-msgstr "GAMMU smsd anhalten"
+msgstr "Gammu smsd anhalten"
 
 #: gammu/smsd/s_mysql.c:42 gammu/smsd/s_pgsql.c:45
 #, c-format
