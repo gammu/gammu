@@ -3727,7 +3727,7 @@ msgstr "Neznámé jméno země: %s."
 #: gammu/gammu.c:8066
 #, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
-msgstr "[Gammu verze %s zkompilovaná %s na %s za použití %s]"
+msgstr "[Gammu verze %s zkompilovaná v %s dne %s za použití %s]"
 
 #: gammu/gammu.c:8078
 msgid "Compiled in features:"
