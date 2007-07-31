@@ -1,3 +1,5 @@
+#include "../common/misc/locales.h"
+
 #include <gammu.h>
 #include <string.h>
 #include <unistd.h>
@@ -6,8 +8,6 @@
 #ifdef HAVE_PTHREAD
 #  include <pthread.h>
 #endif
-
-#include "../common/misc/locales.h"
 
 #include "search.h"
 #include "common.h"
