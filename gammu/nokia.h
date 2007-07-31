@@ -1,0 +1,10 @@
+extern void NokiaComposer(int argc, char *argv[]);
+extern void NokiaSecurityCode(int argc, char *argv[]);
+extern void NokiaSetPhoneMenus(int argc, char *argv[]);
+extern void NokiaSelfTests(int argc, char *argv[]);
+extern void NokiaAddPlayLists(int argc, char *argv[]);
+extern void NokiaAddFile(int argc, char *argv[]);
+extern void NokiaGetADC(int argc, char *argv[]);
+extern void NokiaDisplayTest(int argc, char *argv[]);
+extern void NokiaGetT9(int argc, char *argv[]);
+extern void NokiaVibraTest(int argc, char *argv[]);

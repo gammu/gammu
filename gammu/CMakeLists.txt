@@ -23,6 +23,7 @@ set (BINARY_SRC
     memory.c
     message.c
     search.c
+    nokia.c
     gammu.c)
 
 # Gammu program
