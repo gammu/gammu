@@ -8,17 +8,17 @@
 #include "common.h"
 #include "formats.h"
 
-GSM_StateMachine		*s;
-INI_Section		*cfg 			= NULL;
+GSM_StateMachine *s;
+INI_Section *cfg = NULL;
 
-GSM_Error			error 			= ERR_NONE;
+GSM_Error error = ERR_NONE;
 
 bool always_answer_yes = false;
-bool always_answer_no  = false;
-volatile bool 			gshutdown 		= false;
-bool 				phonedb 		= false;
-bool				batch			= false;
-bool				batchConn		= false;
+bool always_answer_no = false;
+volatile bool gshutdown = false;
+bool phonedb = false;
+bool batch = false;
+bool batchConn = false;
 
 int printf_err(const char *format, ...)
 {
@@ -60,9 +60,9 @@ void PrintSecurityStatus()
 {
 	GSM_SecurityCodeType Status;
 
-	error=GSM_GetSecurityStatus(s,&Status);
+	error = GSM_GetSecurityStatus(s, &Status);
 	Print_Error(error);
-	switch(Status) {
+	switch (Status) {
 		case SEC_SecurityCode:
 			printf("%s\n", _("Waiting for Security Code."));
 			break;
@@ -91,20 +91,47 @@ void PrintSecurityStatus()
 const char *GetMonthName(const int month)
 {
 	static char result[100];
-	switch(month) {
-		case 1 : strcpy(result, _("January")); 	break;
-		case 2 : strcpy(result, _("February")); 	break;
-		case 3 : strcpy(result, _("March"));	break;
-		case 4 : strcpy(result, _("April")); 	break;
-		case 5 : strcpy(result, _("May")); 	break;
-		case 6 : strcpy(result, _("June")); 	break;
-		case 7 : strcpy(result, _("July")); 	break;
-		case 8 : strcpy(result, _("August")); 	break;
-		case 9 : strcpy(result, _("September")); break;
-		case 10: strcpy(result, _("October")); 	break;
-		case 11: strcpy(result, _("November")); 	break;
-		case 12: strcpy(result, _("December")); 	break;
-		default: strcpy(result, _("Bad month!"));break;
+
+	switch (month) {
+		case 1:
+			strcpy(result, _("January"));
+			break;
+		case 2:
+			strcpy(result, _("February"));
+			break;
+		case 3:
+			strcpy(result, _("March"));
+			break;
+		case 4:
+			strcpy(result, _("April"));
+			break;
+		case 5:
+			strcpy(result, _("May"));
+			break;
+		case 6:
+			strcpy(result, _("June"));
+			break;
+		case 7:
+			strcpy(result, _("July"));
+			break;
+		case 8:
+			strcpy(result, _("August"));
+			break;
+		case 9:
+			strcpy(result, _("September"));
+			break;
+		case 10:
+			strcpy(result, _("October"));
+			break;
+		case 11:
+			strcpy(result, _("November"));
+			break;
+		case 12:
+			strcpy(result, _("December"));
+			break;
+		default:
+			strcpy(result, _("Bad month!"));
+			break;
 	}
 	return result;
 }
@@ -112,15 +139,32 @@ const char *GetMonthName(const int month)
 const char *GetDayName(const int day)
 {
 	static char result[100];
-	switch(day) {
-		case 1 : strcpy(result, _("Monday")); 	break;
-		case 2 : strcpy(result, _("Tuesday")); 	break;
-		case 3 : strcpy(result, _("Wednesday")); break;
-		case 4 : strcpy(result, _("Thursday")); 	break;
-		case 5 : strcpy(result, _("Friday")); 	break;
-		case 6 : strcpy(result, _("Saturday")); 	break;
-		case 7 : strcpy(result, _("Sunday")); 	break;
-		default: strcpy(result, _("Bad day!")); 	break;
+
+	switch (day) {
+		case 1:
+			strcpy(result, _("Monday"));
+			break;
+		case 2:
+			strcpy(result, _("Tuesday"));
+			break;
+		case 3:
+			strcpy(result, _("Wednesday"));
+			break;
+		case 4:
+			strcpy(result, _("Thursday"));
+			break;
+		case 5:
+			strcpy(result, _("Friday"));
+			break;
+		case 6:
+			strcpy(result, _("Saturday"));
+			break;
+		case 7:
+			strcpy(result, _("Sunday"));
+			break;
+		default:
+			strcpy(result, _("Bad day!"));
+			break;
 	}
 	return result;
 }
@@ -128,7 +172,7 @@ const char *GetDayName(const int day)
 void Print_Error(GSM_Error error)
 {
 	if (error != ERR_NONE) {
- 		printf("%s\n",GSM_ErrorString(error));
+		printf("%s\n", GSM_ErrorString(error));
 		/* Check for security error */
 		if (error == ERR_SECURITYERROR) {
 			printf(LISTFORMAT, _("Security status"));
@@ -143,8 +187,8 @@ void Print_Error(GSM_Error error)
 		/* Free state machine */
 		GSM_FreeStateMachine(s);
 
- 		exit (-1);
- 	}
+		exit(-1);
+	}
 }
 
 /**
@@ -154,31 +198,45 @@ void Print_Error(GSM_Error error)
  * 
  * \return Parsed memory type or 0 on failure.
  */
-GSM_MemoryType MemoryTypeFromString(const char *type) {
-	if (strcasecmp(type, "ME") == 0) return MEM_ME;
-	if (strcasecmp(type, "SM") == 0) return MEM_SM;
-	if (strcasecmp(type, "ON") == 0) return MEM_ON;
-	if (strcasecmp(type, "DC") == 0) return MEM_DC;
-	if (strcasecmp(type, "RC") == 0) return MEM_RC;
-	if (strcasecmp(type, "MC") == 0) return MEM_MC;
-	if (strcasecmp(type, "MT") == 0) return MEM_MT;
-	if (strcasecmp(type, "FD") == 0) return MEM_FD;
-	if (strcasecmp(type, "VM") == 0) return MEM_VM;
-	if (strcasecmp(type, "SL") == 0) return MEM_SL;
+GSM_MemoryType MemoryTypeFromString(const char *type)
+{
+	if (strcasecmp(type, "ME") == 0)
+		return MEM_ME;
+	if (strcasecmp(type, "SM") == 0)
+		return MEM_SM;
+	if (strcasecmp(type, "ON") == 0)
+		return MEM_ON;
+	if (strcasecmp(type, "DC") == 0)
+		return MEM_DC;
+	if (strcasecmp(type, "RC") == 0)
+		return MEM_RC;
+	if (strcasecmp(type, "MC") == 0)
+		return MEM_MC;
+	if (strcasecmp(type, "MT") == 0)
+		return MEM_MT;
+	if (strcasecmp(type, "FD") == 0)
+		return MEM_FD;
+	if (strcasecmp(type, "VM") == 0)
+		return MEM_VM;
+	if (strcasecmp(type, "SL") == 0)
+		return MEM_SL;
 	return 0;
 }
 
 void GSM_Init(bool checkerror)
 {
-	GSM_File 	PhoneDB;
+	GSM_File PhoneDB;
 	char model[100];
 	char version[100];
-	unsigned char 	buff[200],ver[200];
+	unsigned char buff[200], ver[200];
 	size_t pos = 0, oldpos = 0, i;
-	if (batch && batchConn) return;
 
-	error=GSM_InitConnection(s,3);
-	if (checkerror) Print_Error(error);
+	if (batch && batchConn)
+		return;
+
+	error = GSM_InitConnection(s, 3);
+	if (checkerror)
+		Print_Error(error);
 
 	/* Check for batch mode */
 	if (batch) {
@@ -188,19 +246,21 @@ void GSM_Init(bool checkerror)
 	}
 
 	/* No phonedb check? */
-	if (!phonedb) return;
+	if (!phonedb)
+		return;
 
 	/* Get model information */
-	error=GSM_GetModel(s, model);
+	error = GSM_GetModel(s, model);
 	Print_Error(error);
 
 	/* Empty string */
 	ver[0] = 0;
 
 	/* Request information from phone db */
-	sprintf(buff,"support/phones/phonedbxml.php?model=%s", model);
+	sprintf(buff, "support/phones/phonedbxml.php?model=%s", model);
 	PhoneDB.Buffer = NULL;
-	if (!GSM_ReadHTTPFile("www.gammu.org",buff,&PhoneDB)) return;
+	if (!GSM_ReadHTTPFile("www.gammu.org", buff, &PhoneDB))
+		return;
 
 	/* Parse reply */
 	while (pos < PhoneDB.Used) {
@@ -209,12 +269,12 @@ void GSM_Init(bool checkerror)
 			continue;
 		}
 		PhoneDB.Buffer[pos] = 0;
-		if (strstr(PhoneDB.Buffer+oldpos,"<firmware>")==NULL) {
+		if (strstr(PhoneDB.Buffer + oldpos, "<firmware>") == NULL) {
 			pos++;
 			oldpos = pos;
 			continue;
 		}
-		sprintf(ver,strstr(PhoneDB.Buffer+oldpos,"<version>")+9);
+		sprintf(ver, strstr(PhoneDB.Buffer + oldpos, "<version>") + 9);
 		for (i = 0; i < strlen(ver); i++) {
 			if (ver[i] == '<') {
 				ver[i] = 0;
@@ -232,28 +292,28 @@ void GSM_Init(bool checkerror)
 	}
 
 	/* Get phone firmware version */
-	error=GSM_GetFirmware(s, version, NULL, NULL);
+	error = GSM_GetFirmware(s, version, NULL, NULL);
 	Print_Error(error);
 	if (version[0] == '0') {
-		i=1;
+		i = 1;
 	} else {
-		i=0;
+		i = 0;
 	}
 
 	/* Compare firware from database to our one */
-	while(i!=strlen(ver)) {
+	for (; i < strlen(ver); i++) {
 		if (ver[i] > version[i]) {
-			printf(_("INFO: there is later phone firmware (%s instead of %s) available!\n"), ver, version);
+			printf(_("INFO: there is later phone firmware (%s instead of %s) available!\n"),
+			       ver, version);
 			return;
 		}
-		i++;
 	}
 }
 
 void GSM_Terminate(void)
 {
 	if (!batch) {
-		error=GSM_TerminateConnection(s);
+		error = GSM_TerminateConnection(s);
 		Print_Error(error);
 	}
 }
@@ -264,26 +324,29 @@ void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 
 	if (argc <= num) {
 		printf_err("%s\n", _("More parameters required!"));
-		exit (-1);
+		exit(-1);
 	}
 
-	*start=atoi(argv[num]);
-	if (*start==0) {
-		printf_err("%s\n",_("Please enumerate locations from 1"));
-		exit (-1);
+	*start = atoi(argv[num]);
+	if (*start == 0) {
+		printf_err("%s\n", _("Please enumerate locations from 1"));
+		exit(-1);
 	}
 
-	if (stop!=NULL) {
+	if (stop != NULL) {
 		*stop = *start;
-		if (argc>=num+2) *stop=atoi(argv[num+1]);
-		if (*stop==0) {
-			printf_err("%s\n", _("Please enumerate locations from 1"));
-			exit (-1);
+		if (argc >= num + 2)
+			*stop = atoi(argv[num + 1]);
+		if (*stop == 0) {
+			printf_err("%s\n",
+				   _("Please enumerate locations from 1"));
+			exit(-1);
 		}
 		if (*stop < *start) {
-			printf_warn("%s\n", _("Swapping start and end location"));
-			tmp    = *stop;
-			*stop  = *start;
+			printf_warn("%s\n",
+				    _("Swapping start and end location"));
+			tmp = *stop;
+			*stop = *start;
 			*start = tmp;
 		}
 	}
@@ -291,22 +354,23 @@ void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 
 bool answer_yes(const char *text)
 {
-    	int         len;
-    	char        ans[99];
+	int len;
+	char ans[99];
 
 	while (1) {
 		/* l10n: %s is replaced by question, answers have to match corresponding translations */
-		fprintf(stderr, _("%s (yes/no/ALL/ONLY/NONE) ? "),text);
+		fprintf(stderr, _("%s (yes/no/ALL/ONLY/NONE) ? "), text);
 		if (always_answer_yes) {
 			fprintf(stderr, "%s\n", _("YES (always)"));
 			return true;
 		}
 		if (always_answer_no) {
-			fprintf(stderr,"%s\n",  _("NO (always)"));
+			fprintf(stderr, "%s\n", _("NO (always)"));
 			return false;
 		}
-		len=GetLine(stdin, ans, 99);
-		if (len == -1) exit(-1);
+		len = GetLine(stdin, ans, 99);
+		if (len == -1)
+			exit(-1);
 		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (!strcmp(ans, _("NONE"))) {
 			always_answer_no = true;
@@ -323,9 +387,11 @@ bool answer_yes(const char *text)
 			return true;
 		}
 		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
-		if (strcasecmp(ans, _("yes")) == 0) return true;
+		if (strcasecmp(ans, _("yes")) == 0)
+			return true;
 		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
-		if (strcasecmp(ans, _("no")) == 0) return false;
+		if (strcasecmp(ans, _("no")) == 0)
+			return false;
 	}
 }
 
@@ -333,11 +399,11 @@ bool answer_yes(const char *text)
 void GSM_PhoneBeep(void)
 {
 	error = PHONE_Beep(s);
-	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) Print_Error(error);
+	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED)
+		Print_Error(error);
 }
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
-
