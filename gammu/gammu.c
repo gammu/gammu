@@ -10067,13 +10067,16 @@ static void RunBatch(int argc, char *argv[]) {
 	fclose(bf);
 }
 
+void Help(int argc, char *argv[]);
+
 static GSM_Parameters Parameters[] = {
 #ifdef DEBUG
 	{"foo",			0, 0, Foo,			{0},				""},
 #endif
+	{"help",			0, 1, Help,			{H_Gammu,0},			""},
 	{"identify",			0, 0, Identify,			{H_Info,0},			""},
-	{"version",			0, 0, Version,			{H_Other,0},			""},
-	{"features",			0, 0, Features,			{H_Other,0},			""},
+	{"version",			0, 0, Version,			{H_Gammu,0},			""},
+	{"features",			0, 0, Features,			{H_Gammu,0},			""},
 	{"getdisplaystatus",		0, 0, GetDisplayStatus,		{H_Info,0},			""},
 	{"monitor",			0, 1, Monitor,			{H_Info,H_Network,H_Call,0},	"[times]"},
 	{"setautonetworklogin",	0, 0, SetAutoNetworkLogin,	{H_Network,0},			""},
@@ -10173,13 +10176,13 @@ static GSM_Parameters Parameters[] = {
 
 	{"addsmsfolder",		1, 1, AddSMSFolder,		{H_SMS,0},			"name"},
 #ifdef HAVE_MYSQL_MYSQL_H
-	{"smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"MYSQL configfile"},
+	{"smsd",			2, 2, SMSDaemon,		{H_SMS,H_SMSD,0},		"MYSQL configfile"},
 #endif
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-	{"smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"PGSQL configfile"},
+	{"smsd",			2, 2, SMSDaemon,		{H_SMS,H_SMSD,0},		"PGSQL configfile"},
 #endif
-	{"smsd",			2, 2, SMSDaemon,		{H_SMS,H_Other,0},		"FILES configfile"},
-	{"sendsmsdsms",		2,30, SendSaveDisplaySMS,	{H_SMS,H_Other,0},		"TEXT|WAPSETTINGS|... destination FILES|MYSQL|PGSQL configfile ... (options like in sendsms)"},
+	{"smsd",			2, 2, SMSDaemon,		{H_SMS,H_SMSD,0},		"FILES configfile"},
+	{"sendsmsdsms",		2,30, SendSaveDisplaySMS,	{H_SMS,H_SMSD,0},		"TEXT|WAPSETTINGS|... destination FILES|MYSQL|PGSQL configfile ... (options like in sendsms)"},
 	{"getmmsfolders",		0, 0, GetMMSFolders,		{H_MMS,0},			""},
 	{"getallmms",			0, 1, GetEachMMS,		{H_MMS,0},			"[-save]"},
 	{"geteachmms",		0, 1, GetEachMMS,		{H_MMS,0},			"[-save]"},
@@ -10339,6 +10342,8 @@ static HelpCategoryDescriptions HelpDescriptions[] = {
 	{H_Decode,	"decode",	N_("Dumps decoding")},
 #endif
 	{H_Other,	"other",	N_("Functions that don't fit elsewhere")},
+	{H_Gammu,	"gammu",	N_("Gammu information")},
+	{H_SMSD,	"smsd",		N_("SMS daemon")},
 	{0,		NULL,		NULL}
 };
 
@@ -10348,7 +10353,7 @@ void HelpHeader(void)
 	PrintVersion();
 }
 
-static void HelpGeneral(void)
+void HelpGeneral(void)
 {
 	int	i=0;
 
@@ -10370,7 +10375,7 @@ static void HelpGeneral(void)
 	printf("\n");
 }
 
-static void HelpSplit(int cols, int len, unsigned char *buff)
+void HelpSplit(int cols, int len, unsigned char *buff)
 {
 	int		l, len2, pos, split;
 	bool		in_opt,first=true;
@@ -10423,7 +10428,7 @@ static void HelpSplit(int cols, int len, unsigned char *buff)
 	}
 }
 
-static void Help(int argc, char *argv[])
+void Help(int argc, char *argv[])
 {
 	int				i = 0, j = 0, k, cols;
 	bool				disp;
@@ -10454,7 +10459,7 @@ static void Help(int argc, char *argv[])
 			return;
 		}
 		HelpHeader();
-		printf(_("Gammu parameters, topic: %s\n\n"), HelpDescriptions[i].description);
+		printf(_("Gammu commands, topic: %s\n\n"), HelpDescriptions[i].description);
 	}
 
 #if defined(WIN32) || defined(DJGPP)

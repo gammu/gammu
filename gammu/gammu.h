@@ -34,6 +34,8 @@ typedef enum {
 #ifdef DEBUG
  	H_Decode,
 #endif
+ 	H_Gammu,
+	H_SMSD,
  	H_Other
 } HelpCategory;
 
