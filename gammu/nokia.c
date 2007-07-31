@@ -18,11 +18,7 @@
 #include "nokia.h"
 #include "common.h"
 #include "formats.h"
-
-/**
- * \todo Should be removed later.
- */
-extern void AddOneFile(GSM_File *File, char *text, bool send);
+#include "files.h"
 
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 void NokiaComposer(int argc UNUSED, char *argv[])
