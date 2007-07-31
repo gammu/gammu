@@ -25,6 +25,7 @@ set (BINARY_SRC
     search.c
     nokia.c
     backup.c
+    files.c
     gammu.c)
 
 # Gammu program
