@@ -21,6 +21,7 @@ set (BINARY_SRC
     sniff.c
     common.c
     memory.c
+    message.c
     gammu.c)
 
 # Gammu program
