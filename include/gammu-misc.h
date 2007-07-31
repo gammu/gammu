@@ -77,15 +77,18 @@ extern void GSM_InitLocales(const char *path);
 
 /* Various hints for compilers */
 #if __GNUC__ && !defined(printf)
-#define NORETURN __attribute__ ((noreturn))
 #define PRINTF_STYLE(f, a) __attribute__ ((format(printf, f, a)))
 #define SCANF_STYLE(f, a) __attribute__ ((format(scanf, f, a)))
-#define UNUSED __attribute__ ((unused))
 #else
-#define NORETURN
 #define PRINTF_STYLE(f, a)
 #define SCANF_STYLE(f, a)
+#endif
+#if __GNUC__
+#define UNUSED __attribute__ ((unused))
+#define NORETURN __attribute__ ((noreturn))
+#else
 #define UNUSED
+#define NORETURN
 #endif
 
 /**
