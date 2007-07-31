@@ -13,17 +13,13 @@
 #include "memory.h"
 #include "formats.h"
 #include "calendar.h"
+#include "misc.h"
 
 #include "smsd/smsdcore.h" /* For SMSD interaction */
 
 volatile bool 			wasincomingsms 		= false;
 
 GSM_MultiSMSMessage		IncomingSMSData;
-
-/**
- * \todo Should get rid of this.
- */
-extern GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone);
 
 void PrintSMSCNumber(unsigned char *number,GSM_Backup *Info)
 {
