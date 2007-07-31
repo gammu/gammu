@@ -1846,9 +1846,6 @@ sniffs. See \fI/docs/develop/develop.txt\fR for more details.
 Allow to enter security code from PC
 
 .TP
-.BI "features"
-
-.TP
 .BI "nokiagetscreendump"
 
 .TP
@@ -1922,6 +1919,21 @@ Make phone reset: soft (without asking for PIN) or hard (with PIN).
 .TP
 .BI "searchphone" " [\-debug]"
 
+
+.SS "Gammu information"
+.TP
+.BI "features"
+
+.TP
+.BI "help"
+Output help information and exit.
+
+.TP
+.BI "version"
+Output version information and exit.
+
+
+.SS "SMS daemon"
 .TP
 .BI "sendsmsdsms" " TEXT|WAPSETTINGS|... destination FILES|MYSQL|PGSQL configfile ... (options like in sendsms)"
 
@@ -1934,10 +1946,6 @@ SMS Deaemon. See smsdrc config file for more options
 
 .TP
 .BI "smsd PGSQL" " configfile"
-
-.TP
-.BI "version"
-Output version information and exit.
 
 
 .SH "FILES"
