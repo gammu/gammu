@@ -8209,43 +8209,12 @@ static void Features(int argc UNUSED, char *argv[] UNUSED)
 
 static void Version(int argc UNUSED, char *argv[] UNUSED)
 {
-#ifdef DEBUG
-	GSM_DateTime	dt;
-	unsigned char	bzz[4];
-	int		j,z,w;
-#endif
-
 	PrintVersion();
+
 	printf("%s\n", _("This is free software.  You may redistribute copies of it under the terms of"));
 	printf("%s\n", _("the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."));
 	printf("%s\n", _("There is NO WARRANTY, to the extent permitted by law."));
 	printf("\n\n");
-
-#ifdef DEBUG
-	for (w = 1; w < 65535; w++) {
-		j = EncodeWithUTF8Alphabet(w / 256, w % 256, bzz);
-		for (z = 0; z < j; z++) {
-			if (bzz[z] == 0x00) printf("%i\n", w);
-		}
-	}
-
-	printf("GSM_SMSMessage  - %zd\n", sizeof(GSM_SMSMessage));
-	printf("GSM_SMSC        - %zd\n", sizeof(GSM_SMSC));
-	printf("GSM_SMS_State   - %zd\n", sizeof(GSM_SMS_State));
-	printf("GSM_UDHHeader   - %zd\n", sizeof(GSM_UDHHeader));
-	printf("bool            - %zd\n", sizeof(bool));
-	printf("GSM_DateTime    - %zd\n", sizeof(GSM_DateTime));
-	printf("int             - %zd\n", sizeof(int));
-	printf("GSM_NetworkInfo - %zd\n", sizeof(GSM_NetworkInfo));
-	dt.Year = 2005;
-	dt.Month = 2;
-	dt.Day=29;
-	if (CheckDate(&dt)) printf("ok1");
-	dt.Year = 2008;
-	dt.Month = 2;
-	dt.Day=29;
-	if (CheckDate(&dt)) printf("ok2");
-#endif
 }
 
 static void GetFMStation(int argc, char *argv[])
