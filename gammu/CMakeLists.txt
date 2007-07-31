@@ -22,6 +22,7 @@ set (BINARY_SRC
     common.c
     memory.c
     message.c
+    search.c
     gammu.c)
 
 # Gammu program
