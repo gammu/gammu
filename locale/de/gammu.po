@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-07-31 11:24+0200\n"
+"POT-Creation-Date: 2007-07-31 11:25+0200\n"
 "PO-Revision-Date: 2007-07-30 14:22+0200\n"
 "Last-Translator: Thorsten Gutsche <thorsten.gutsche@googlemail.com>\n"
 "Language-Team: Language =de\n"
@@ -1954,7 +1954,6 @@ msgstr "SMS empfangen"
 
 #: gammu/gammu.c:1869
 #, fuzzy
-#| msgid "We already have one pending, ignoring!"
 msgid "We already have one pending, ignoring this one!"
 msgstr "Es wird bereits eines empfangen, wird ignoriert!"
 
@@ -4149,7 +4148,6 @@ msgstr "Verbindung \"%s\" auf Gerät \"%s\"\n"
 
 #: gammu/gammu.c:10008
 #, fuzzy
-#| msgid "Standard number"
 msgid "standard input"
 msgstr "Standardnummer "
 

@@ -872,7 +872,7 @@ def format_man_page(output, data):
 
 def main():
     text = read_help('')
-    result = re.match('\[Gammu version ([0-9.]*) built [0-9:]* (.*)\]', text[0])
+    result = re.match('\[Gammu version ([0-9.]*) built [0-9:]* on (.*) using.*\]', text[0])
     build_date = result.groups()[1]
     version = result.groups()[0]
     syntax = text[2]
