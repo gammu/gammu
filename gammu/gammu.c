@@ -2660,50 +2660,6 @@ static void ResetPhoneSettings(int argc UNUSED, char *argv[])
  	GSM_Terminate();
 }
 
-static void DeleteAllSMS(int argc, char *argv[])
-{
-	GSM_MultiSMSMessage 	sms;
-	GSM_SMSFolders		folders;
-	int			foldernum;
-	bool			start = true;
-
-	GSM_Init(true);
-
-	error=GSM_GetSMSFolders(s, &folders);
-	Print_Error(error);
-
-	GetStartStop(&foldernum, NULL, 2, argc, argv);
-	if (foldernum > folders.Number) {
-		printf(_("Too high folder number (max. %i)\n"),folders.Number);
-		GSM_Terminate();
-		exit(-1);
-	}
-
-	printf(_("Deleting SMS from \"%s\" folder: "),DecodeUnicodeConsole(folders.Folder[foldernum-1].Name));
-
-	while (error == ERR_NONE) {
-		sms.SMS[0].Folder=0x00;
-		error=GSM_GetNextSMS(s, &sms, start);
-		switch (error) {
-		case ERR_EMPTY:
-			break;
-		default:
-			Print_Error(error);
-			if (sms.SMS[0].Folder == foldernum) {
-				sms.SMS[0].Folder=0x00;
-				error=GSM_DeleteSMS(s, &sms.SMS[0]);
-				Print_Error(error);
-				printf("*");
-			}
-		}
-		start=false;
-	}
-
-	printf("\n");
-
-	GSM_Terminate();
-}
-
 static void SendDTMF(int argc UNUSED, char *argv[])
 {
 	GSM_Init(true);
