@@ -1112,7 +1112,7 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 	unsigned char 	*lpMsgBuf;
 
 	/* We don't use errno in win32 - GetLastError gives better info */
-	if (GetLastError()!=-1) {
+	if (GetLastError() != 0) {
 		if (s->di.dl == DL_TEXTERROR || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTALL ||
 		    s->di.dl == DL_TEXTERRORDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTALLDATE) {
 			FormatMessage(
