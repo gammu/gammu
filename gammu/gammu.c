@@ -2213,7 +2213,7 @@ static void GetUSSD(int argc UNUSED, char *argv[])
 	Print_Error(error);
 
 	error=GSM_DialService(s, argv[2]);
-	/* Fallback to voice call, it can work wit hsome phones */
+	/* Fallback to voice call, it can work with some phones */
 	if (error == ERR_NOTIMPLEMENTED || error == ERR_NOTSUPPORTED) {
 		error=GSM_DialVoice(s, argv[2], GSM_CALL_DefaultNumberPresence);
 	}
