@@ -134,9 +134,6 @@ find_package (PkgConfig)
 # Standard packages
 macro_optional_find_package (Doxygen)
 
-# Packages in sources
-macro_optional_find_package (Gettext)
-
 # Check for compiler flags we want to use
 check_c_compiler_flag("-Wall" HAVE_WALL)
 if (HAVE_WALL)
@@ -285,15 +282,6 @@ endif (MYSQL_FOUND)
 if (POSTGRES_FOUND)
     set (HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
 endif (POSTGRES_FOUND)
-
-set (LOCALES 
-    cs 
-    de 
-    es 
-    it 
-    pl 
-    ru 
-    )
 
 set (EXAMPLES
     docs/examples/config/smsdrc
@@ -533,15 +521,6 @@ set (LIBRARY_SRC
     common/phone/nokia/nfuncold.c
     common/phone/obex/obexgen.c
     common/phone/symbian/gnapgen.c)
-
-# Locales
-set (LOCALEFILES)
-foreach (LOCALE ${LOCALES})
-    list(APPEND LOCALEFILES "locale/${LOCALE}/gammu.po")
-endforeach (LOCALE ${LOCALES})
-if (GETTEXT_FOUND)
-    GETTEXT_CREATE_TRANSLATIONS("locale/gammu.pot" ALL ${LOCALEFILES})
-endif (GETTEXT_FOUND)
 
 if (CMAKE_USE_PTHREADS_INIT)
     set (HAVE_PTHREAD ON)
@@ -790,3 +769,5 @@ if(BUILD_TESTING)
 endif(BUILD_TESTING)
 
 add_subdirectory(gammu)
+
+add_subdirectory(locale)
