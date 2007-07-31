@@ -2513,6 +2513,19 @@ void ReadMMSFile(int argc, char *argv[])
 	free(File.Buffer);
 }
 
+void AddSMSFolder(int argc UNUSED, char *argv[])
+{
+	unsigned char buffer[200];
+
+	GSM_Init(true);
+
+	EncodeUnicode(buffer,argv[2],strlen(argv[2]));
+	error=GSM_AddSMSFolder(s,buffer);
+	Print_Error(error);
+
+	GSM_Terminate();
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
