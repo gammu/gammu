@@ -19,6 +19,7 @@ set (BINARY_SRC
     smsd/s_mysql.c
     smsd/s_pgsql.c
     sniff.c
+    common.c
     gammu.c)
 
 # Gammu program

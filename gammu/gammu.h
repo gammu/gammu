@@ -3,6 +3,9 @@
 #include <gammu-error.h>
 #include <gammu-statemachine.h>
 
+#include "common.h"
+#include "formats.h"
+
 typedef enum {
 	H_Call=1,
  	H_SMS,
@@ -53,23 +56,6 @@ typedef struct {
  	HelpCategory	help_cat[10];
  	char		*help;
 } GSM_Parameters;
-
-void	Print_Error		(GSM_Error error);
-void	GSM_Init		(bool checkerror);
-void	GSM_Terminate		(void);
-
-extern	GSM_StateMachine	*s;
-extern	GSM_Error		error;
-
-extern volatile bool 		gshutdown;
-
-int printmsgerr(char *format, ...);
-
-void interrupt(int sign);
-
-#ifdef GSM_ENABLE_BEEP
-void	GSM_PhoneBeep		(void);
-#endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
