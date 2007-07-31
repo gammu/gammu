@@ -1,5 +1,8 @@
 #define _GNU_SOURCE /* For strcasestr */
 #include <string.h>
+
+#include "../common/misc/locales.h"
+
 #include <gammu.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -16,8 +19,6 @@
 #else
 #  include <utime.h>
 #endif
-
-#include "../common/misc/locales.h"
 
 #include "files.h"
 #include "memory.h"

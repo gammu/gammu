@@ -1,10 +1,10 @@
+#include "../common/misc/locales.h"
+
 #include <gammu.h>
 #include <string.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <signal.h>
-
-#include "../common/misc/locales.h"
 
 #include "backup.h"
 #include "memory.h"

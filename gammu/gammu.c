@@ -1095,19 +1095,6 @@ static void TransferCall(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static void AddSMSFolder(int argc UNUSED, char *argv[])
-{
-	unsigned char buffer[200];
-
-	GSM_Init(true);
-
-	EncodeUnicode(buffer,argv[2],strlen(argv[2]));
-	error=GSM_AddSMSFolder(s,buffer);
-	Print_Error(error);
-
-	GSM_Terminate();
-}
-
 static void Reset(int argc UNUSED, char *argv[])
 {
 	bool hard;

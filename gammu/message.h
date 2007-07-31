@@ -19,3 +19,4 @@ extern void SendSaveDisplaySMS(int argc, char *argv[]);
 extern void GetEachMMS(int argc, char *argv[]);
 extern void GetUSSD(int argc, char *argv[]);
 extern void ReadMMSFile(int argc, char *argv[]);
+extern void AddSMSFolder(int argc, char *argv[]);
