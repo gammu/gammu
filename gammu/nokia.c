@@ -1,11 +1,12 @@
 #define _GNU_SOURCE /* For strcasestr */
 #include <string.h>
+
+#include "../common/misc/locales.h"
+
 #include <gammu.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <ctype.h>
-
-#include "../common/misc/locales.h"
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 #  include "depend/nokia/dct3.h"
