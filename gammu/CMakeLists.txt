@@ -26,6 +26,7 @@ set (BINARY_SRC
     nokia.c
     backup.c
     files.c
+    calendar.c
     gammu.c)
 
 # Gammu program

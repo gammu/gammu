@@ -12,6 +12,7 @@
 #include "message.h"
 #include "memory.h"
 #include "formats.h"
+#include "calendar.h"
 
 #include "smsd/smsdcore.h" /* For SMSD interaction */
 
@@ -23,7 +24,6 @@ GSM_MultiSMSMessage		IncomingSMSData;
  * \todo Should get rid of this.
  */
 extern GSM_Error GSM_PlayRingtone(GSM_Ringtone ringtone);
-extern void PrintCalendar(GSM_CalendarEntry *Note);
 
 void PrintSMSCNumber(unsigned char *number,GSM_Backup *Info)
 {
