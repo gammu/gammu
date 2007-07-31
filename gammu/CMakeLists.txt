@@ -27,6 +27,7 @@ set (BINARY_SRC
     backup.c
     files.c
     calendar.c
+    misc.c
     gammu.c)
 
 # Gammu program
