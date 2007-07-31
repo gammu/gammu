@@ -1,0 +1,11 @@
+extern void GetFileSystemStatus(int argc, char *argv[]);
+extern void GetFileSystem(int argc, char *argv[]);
+extern void GetFileFolder(int argc, char *argv[]);
+extern void GetFiles(int argc, char *argv[]);
+extern void AddSendFile(int argc, char *argv[]);
+extern void AddFolder(int argc, char *argv[]);
+extern void DeleteFolder(int argc, char *argv[]);
+extern void DeleteFiles(int argc, char *argv[]);
+extern void GetFolderListing(int argc, char *argv[]);
+extern void GetRootFolders(int argc, char *argv[]);
+extern void SetFileAttrib(int argc, char *argv[]);
