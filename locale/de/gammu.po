@@ -4251,13 +4251,11 @@ msgstr "Funktionen ohne Kategorie"
 
 #: gammu/gammu.c:10345
 #, fuzzy
-#| msgid "Phone information"
 msgid "Gammu information"
 msgstr "Telefoninformationen"
 
 #: gammu/gammu.c:10346
 #, fuzzy
-#| msgid "SMSC response"
 msgid "SMS daemon"
 msgstr "SMSC-Antwort"
 
@@ -4302,9 +4300,6 @@ msgstr "Unbekanntes Hilfethema angegeben!"
 
 #: gammu/gammu.c:10462
 #, fuzzy, c-format
-#| msgid ""
-#| "Gammu parameters, topic: %s\n"
-#| "\n"
 msgid ""
 "Gammu commands, topic: %s\n"
 "\n"

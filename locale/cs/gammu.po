@@ -4182,13 +4182,11 @@ msgstr "Fuknce, které se nevešly jinam"
 
 #: gammu/gammu.c:10345
 #, fuzzy
-#| msgid "Phone information"
 msgid "Gammu information"
 msgstr "Informace o telefonu"
 
 #: gammu/gammu.c:10346
 #, fuzzy
-#| msgid "SMSC response"
 msgid "SMS daemon"
 msgstr "Odpověď SMSC"
 
@@ -4228,15 +4226,12 @@ msgid "Unknown help topic specified!"
 msgstr "Zadáno neznámé téma nápovědy!"
 
 #: gammu/gammu.c:10462
-#, fuzzy, c-format
-#| msgid ""
-#| "Gammu parameters, topic: %s\n"
-#| "\n"
+#, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
 "\n"
 msgstr ""
-"Gammu, parametry pro téma: %s\n"
+"Příkazy Gammu, téma: %s\n"
 "\n"
 
 #: gammu/gammu.c:10558
