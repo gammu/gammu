@@ -6713,6 +6713,7 @@ static void RunBatch(int argc, char *argv[]) {
 void Help(int argc, char *argv[]);
 
 static GSM_Parameters Parameters[] = {
+/* *INDENT-OFF* */
 #ifdef DEBUG
 	{"foo",			0, 0, Foo,			{0},				""},
 #endif
@@ -6988,6 +6989,7 @@ static HelpCategoryDescriptions HelpDescriptions[] = {
 	{H_Gammu,	"gammu",	N_("Gammu information")},
 	{H_SMSD,	"smsd",		N_("SMS daemon")},
 	{0,		NULL,		NULL}
+/* *INDENT-ON* */
 };
 
 
