@@ -4304,9 +4304,6 @@ msgstr "Podano nieznany temat pomocy!\n"
 
 #: gammu/gammu.c:10462
 #, fuzzy, c-format
-#| msgid ""
-#| "Gammu parameters, topic: %s\n"
-#| "\n"
 msgid ""
 "Gammu commands, topic: %s\n"
 "\n"
