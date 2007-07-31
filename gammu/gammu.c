@@ -10005,11 +10005,11 @@ static void RunBatch(int argc, char *argv[]) {
 	char* argsv[20];
 	bool origbatch;
 	char *name;
-	char std_name[] = "stdin";
+	char std_name[] = N_("standard input");
 
 	if (argc == 2 || strcmp(argv[2], "-") == 0) {
 		bf = stdin;
-		name = std_name;
+		name = gettext(std_name);
 	} else {
 		bf = fopen(argv[2], "r");
 		name = argv[2];
