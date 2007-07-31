@@ -1866,7 +1866,7 @@ static void IncomingSMS(GSM_StateMachine *s UNUSED, GSM_SMSMessage sms)
 {
 	printf("%s\n", _("SMS message received"));
  	if (wasincomingsms) {
- 		printf("%s\n", _("We already have one pending, ignoring!"));
+ 		printf("%s\n", _("We already have one pending, ignoring this one!"));
  		return;
  	}
  	wasincomingsms = true;

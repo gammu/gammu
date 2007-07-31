@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-07-31 11:20+0200\n"
+"POT-Creation-Date: 2007-07-31 11:24+0200\n"
 "PO-Revision-Date: 2007-07-01 11:32+0200\n"
 "Last-Translator: Кузьменко Василий <bacek_86@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -2115,7 +2115,7 @@ msgstr "Получено SMS\n"
 
 #: gammu/gammu.c:1869
 #, fuzzy
-msgid "We already have one pending, ignoring!"
+msgid "We already have one pending, ignoring this one!"
 msgstr "Уже одно находится в очереди! Игнорируется...\n"
 
 #: gammu/gammu.c:1888 gammu/gammu.c:2325

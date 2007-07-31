@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.12.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-07-31 11:20+0200\n"
+"POT-Creation-Date: 2007-07-31 11:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1915,7 +1915,7 @@ msgid "SMS message received"
 msgstr ""
 
 #: gammu/gammu.c:1869
-msgid "We already have one pending, ignoring!"
+msgid "We already have one pending, ignoring this one!"
 msgstr ""
 
 #: gammu/gammu.c:1888 gammu/gammu.c:2325
