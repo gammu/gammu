@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-07-31 11:10+0200\n"
-"PO-Revision-Date: 2007-07-31 11:10+0200\n"
+"POT-Creation-Date: 2007-07-31 11:20+0200\n"
+"PO-Revision-Date: 2007-07-31 11:19+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -3520,9 +3520,8 @@ msgid "None"
 msgstr "Žádná"
 
 #: gammu/gammu.c:7434
-#, fuzzy
 msgid "Due time"
-msgstr "Datum a čas"
+msgstr "Poslední termín"
 
 #: gammu/gammu.c:7437
 msgid "Completed"
@@ -4079,6 +4078,12 @@ msgstr ""
 msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr ""
 
+#: gammu/gammu.c:10008
+#, fuzzy
+#| msgid "Standard number"
+msgid "standard input"
+msgstr "Standardní číslo"
+
 #: gammu/gammu.c:10019
 #, c-format
 msgid "Batch file could not be opened: %s\n"
@@ -4087,7 +4092,7 @@ msgstr ""
 #: gammu/gammu.c:10051
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s"
-msgstr ""
+msgstr "Spouštím dávku \"%s\" - příkaz %i: %s"
 
 #: gammu/gammu.c:10311
 msgid "Calls"
@@ -4095,11 +4100,11 @@ msgstr "Hovory"
 
 #: gammu/gammu.c:10312
 msgid "SMS and EMS"
-msgstr ""
+msgstr "SMS a EMS"
 
 #: gammu/gammu.c:10313
 msgid "Memory (phonebooks and calls)"
-msgstr ""
+msgstr "Paměť (kontakty a hovory)"
 
 #: gammu/gammu.c:10314
 msgid "Filesystem"
@@ -4107,7 +4112,7 @@ msgstr "Soubory"
 
 #: gammu/gammu.c:10315
 msgid "Logo and pictures"
-msgstr ""
+msgstr "Loga a obrázky"
 
 #: gammu/gammu.c:10316
 msgid "Ringtones"
@@ -4115,11 +4120,11 @@ msgstr "Zvonění"
 
 #: gammu/gammu.c:10317
 msgid "Calendar notes"
-msgstr ""
+msgstr "Kalendář"
 
 #: gammu/gammu.c:10318
 msgid "To do lists"
-msgstr ""
+msgstr "Úkoly"
 
 #: gammu/gammu.c:10319
 msgid "Notes"
@@ -4127,7 +4132,7 @@ msgstr "Poznámky"
 
 #: gammu/gammu.c:10320
 msgid "Date, time and alarms"
-msgstr ""
+msgstr "Čas, datum a budíky"
 
 #: gammu/gammu.c:10321
 msgid "Categories"
@@ -4135,23 +4140,23 @@ msgstr "Kategorie"
 
 #: gammu/gammu.c:10323
 msgid "Backing up and restoring"
-msgstr ""
+msgstr "Záloha a obnovení"
 
 #: gammu/gammu.c:10326
 msgid "Nokia specific"
-msgstr ""
+msgstr "Specifické pro Nokii"
 
 #: gammu/gammu.c:10329
 msgid "Siemens specific"
-msgstr ""
+msgstr "Specifické pro Siemens"
 
 #: gammu/gammu.c:10332
 msgid "WAP settings and bookmarks"
-msgstr ""
+msgstr "Nastavení WAPu a záložky"
 
 #: gammu/gammu.c:10333
 msgid "MMS and MMS settings"
-msgstr ""
+msgstr "MMS a jejich nastavení"
 
 #: gammu/gammu.c:10334
 msgid "Phone tests"
@@ -4171,11 +4176,11 @@ msgstr "Nastavení telefonu"
 
 #: gammu/gammu.c:10339
 msgid "Dumps decoding"
-msgstr ""
+msgstr "Dekódování výpisů"
 
 #: gammu/gammu.c:10341
 msgid "Functions that don't fit elsewhere"
-msgstr ""
+msgstr "Fuknce, které se nevešly jinam"
 
 #: gammu/gammu.c:10357
 msgid ""
@@ -4190,6 +4195,8 @@ msgid ""
 "First parameter optionally specifies which config section to use (all are "
 "probed by default)."
 msgstr ""
+"První parametr volitelně určuje kterou sekci konfiguračního souboru použít "
+"(výchozí je zkusit všechny)."
 
 #: gammu/gammu.c:10359
 msgid ""

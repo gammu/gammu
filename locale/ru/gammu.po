@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-07-31 11:10+0200\n"
+"POT-Creation-Date: 2007-07-31 11:20+0200\n"
 "PO-Revision-Date: 2007-07-01 11:32+0200\n"
 "Last-Translator: Кузьменко Василий <bacek_86@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -4523,6 +4523,11 @@ msgstr "   Задержка   : %i секунд\n"
 #, fuzzy, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr "Название соединения : %s\n"
+
+#: gammu/gammu.c:10008
+#, fuzzy
+msgid "standard input"
+msgstr "Стандартный\n"
 
 #: gammu/gammu.c:10019
 #, c-format

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-07-31 11:10+0200\n"
+"POT-Creation-Date: 2007-07-31 11:20+0200\n"
 "PO-Revision-Date: 2007-06-08 16:36+0200\n"
 "Last-Translator: Alejandro Caldito <acaldito@amena.com>\n"
 "Language-Team: Español\n"
@@ -4251,6 +4251,12 @@ msgstr "   Número     : %s\n"
 #, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr ""
+
+#: gammu/gammu.c:10008
+#, fuzzy
+#| msgid "Standard number"
+msgid "standard input"
+msgstr "Teléfono habitual"
 
 #: gammu/gammu.c:10019
 #, c-format
