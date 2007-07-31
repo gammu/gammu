@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-07-20 10:42+0200\n"
+"POT-Creation-Date: 2007-07-31 11:10+0200\n"
 "PO-Revision-Date: 2007-06-08 16:36+0200\n"
 "Last-Translator: Alejandro Caldito <acaldito@amena.com>\n"
 "Language-Team: Español\n"
@@ -3645,8 +3645,9 @@ msgid "None"
 msgstr "Pruebas del teléfono"
 
 #: gammu/gammu.c:7434
-msgid "DueTime"
-msgstr ""
+#, fuzzy
+msgid "Due time"
+msgstr "Fecha y hora"
 
 #: gammu/gammu.c:7437
 #, fuzzy
@@ -3670,12 +3671,12 @@ msgstr ""
 
 #: gammu/gammu.c:7691
 #, c-format
-msgid " (HeadSet profile)"
+msgid " (Head set profile)"
 msgstr ""
 
 #: gammu/gammu.c:7692
 #, c-format
-msgid " (CarKit profile)"
+msgid " (Car kit profile)"
 msgstr ""
 
 #: gammu/gammu.c:7703
@@ -4349,14 +4350,7 @@ msgstr ""
 msgid "Functions that don't fit elsewhere"
 msgstr "Funciones que no entran en otro apartado"
 
-#: gammu/gammu.c:10348
-#, fuzzy, c-format
-msgid ""
-"[Gammu version %s built %s %s]\n"
-"\n"
-msgstr "[Versión de Gammu %s compilación %s %s"
-
-#: gammu/gammu.c:10360
+#: gammu/gammu.c:10357
 #, fuzzy
 msgid ""
 "Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> "
@@ -4365,7 +4359,7 @@ msgstr ""
 "Uso: gammu [confign] [nada|texto|textall|binario|errores] [opciones]\n"
 "\n"
 
-#: gammu/gammu.c:10361
+#: gammu/gammu.c:10358
 #, fuzzy
 msgid ""
 "First parameter optionally specifies which config section to use (all are "
@@ -4374,7 +4368,7 @@ msgstr ""
 "El primer parámetero especifica opcionalmente  qué sección de configuración "
 "ha de utilizarse (por defecto, se sondean todas).\n"
 
-#: gammu/gammu.c:10362
+#: gammu/gammu.c:10359
 #, fuzzy
 msgid ""
 "Second parameter optionally controls debug level, next one specifies actions."
@@ -4383,11 +4377,11 @@ msgstr ""
 "problemas, el siguiente especifica acciones.\n"
 "\n"
 
-#: gammu/gammu.c:10364
+#: gammu/gammu.c:10361
 msgid "Commands can be specified with or without leading --."
 msgstr ""
 
-#: gammu/gammu.c:10367
+#: gammu/gammu.c:10364
 #, fuzzy
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
@@ -4397,12 +4391,12 @@ msgstr ""
 "Las entradas son:\n"
 "\n"
 
-#: gammu/gammu.c:10456
+#: gammu/gammu.c:10453
 #, fuzzy
 msgid "Unknown help topic specified!"
 msgstr "Tema de ayuda desconocido!\n"
 
-#: gammu/gammu.c:10460
+#: gammu/gammu.c:10457
 #, c-format
 msgid ""
 "Gammu parameters, topic: %s\n"
@@ -4411,54 +4405,54 @@ msgstr ""
 "Parámetros de Gammu, tema: %s\n"
 "\n"
 
-#: gammu/gammu.c:10556
+#: gammu/gammu.c:10553
 #, fuzzy, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "ERROR: parámetro desconocido \"%s\"\n"
 
-#: gammu/gammu.c:10558
+#: gammu/gammu.c:10555
 #, fuzzy, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "ERROR: parámetro desconocido \"%s\"\n"
 
-#: gammu/gammu.c:10561 gammu/gammu.c:10576
+#: gammu/gammu.c:10558 gammu/gammu.c:10573
 #, fuzzy
 msgid "Parameters help"
 msgstr ""
 "Parámetros de Gammu, tema: %s\n"
 "\n"
 
-#: gammu/gammu.c:10571
+#: gammu/gammu.c:10568
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "Demasiados parámetros (la función acepta %d)\n"
 
-#: gammu/gammu.c:10573
+#: gammu/gammu.c:10570
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "Demasiados parámetros (la función acepta de %d a %d)\n"
 
-#: gammu/gammu.c:10595
+#: gammu/gammu.c:10592
 msgid "Bad option!"
 msgstr "¡Opción incorrecta!"
 
-#: gammu/gammu.c:10630 gammu/gammu.c:10726
+#: gammu/gammu.c:10627 gammu/gammu.c:10723
 msgid "Too few parameters!"
 msgstr "¡Muy pocos parámetros!"
 
-#: gammu/gammu.c:10651
+#: gammu/gammu.c:10648
 msgid "Configuration could not be parsed!"
 msgstr "Advertencia: ¡El archivo de configuración es incorrecto!"
 
-#: gammu/gammu.c:10653
+#: gammu/gammu.c:10650
 msgid "No configuration file found!"
 msgstr "Advertencia: ¡No se encontró el archivo de configuración!"
 
-#: gammu/gammu.c:10656
+#: gammu/gammu.c:10653
 msgid "No configuration read!"
 msgstr "Advertencia: ¡No se encontró el archivo de configuración!"
 
-#: gammu/gammu.c:10732
+#: gammu/gammu.c:10729
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -4466,16 +4460,16 @@ msgstr ""
 "ERROR: la versión instalada de libGammu.so (%s) es diferente a la versión de "
 "Gammu (%s)\n"
 
-#: gammu/gammu.c:10762
+#: gammu/gammu.c:10759
 #, fuzzy, c-format
 msgid "INFO: there is later stable Gammu (%s instead of %s) available!\n"
 msgstr ""
 "INFO: ¡está disponible una versión estable de Gammu ( %s en lugar de %s ) "
 "más reciente!\n"
 
-#: gammu/gammu.c:10775
+#: gammu/gammu.c:10772
 #, fuzzy, c-format
-msgid "INFO: there is later test Gammu (%s instead of %s) available!\n"
+msgid "INFO: there is later testing Gammu (%s instead of %s) available!\n"
 msgstr ""
 "INFO: ¡está disponible una versión de prueba de Gammu ( %s en lugar de %s ) "
 "más reciente!\n"
@@ -4860,6 +4854,12 @@ msgstr "Error escribiendo a la base de datos (CreateOutbox): %s\n"
 #, c-format
 msgid "Error writing to database (AddSent): %s\n"
 msgstr "Error escribiendo a la base de datos (AddSent): %s\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "[Gammu version %s built %s %s]\n"
+#~ "\n"
+#~ msgstr "[Versión de Gammu %s compilación %s %s"
 
 #~ msgid "bad month!"
 #~ msgstr "Mes incorrecto!"

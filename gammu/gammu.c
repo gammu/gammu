@@ -7431,7 +7431,7 @@ static void PrintToDo(GSM_ToDoEntry *ToDo)
 	for (j=0;j<ToDo->EntriesNum;j++) {
 		switch (ToDo->Entries[j].EntryType) {
 		case TODO_END_DATETIME:
-			printf(LISTFORMAT "%s\n", _("DueTime"),OSDateTime(ToDo->Entries[j].Date,false));
+			printf(LISTFORMAT "%s\n", _("Due time"),OSDateTime(ToDo->Entries[j].Date,false));
 			break;
 		case TODO_COMPLETED:
 			printf(LISTFORMAT "%s\n", _("Completed"),ToDo->Entries[j].Number == 1 ? "Yes" : "No");
@@ -7688,8 +7688,8 @@ static void GetProfile(int argc, char *argv[])
 		printf("%i. \"%s\"",i,DecodeUnicodeConsole(Profile.Name));
 		if (Profile.Active)		printf(_(" (active)"));
 		if (Profile.DefaultName) 	printf(_(" (default name)"));
-		if (Profile.HeadSetProfile) 	printf(_(" (HeadSet profile)"));
-		if (Profile.CarKitProfile) 	printf(_(" (CarKit profile)"));
+		if (Profile.HeadSetProfile) 	printf(_(" (Head set profile)"));
+		if (Profile.CarKitProfile) 	printf(_(" (Car kit profile)"));
 		printf("\n");
 		for (j=0;j<Profile.FeaturesNumber;j++) {
 			special = false;
@@ -10345,10 +10345,7 @@ static HelpCategoryDescriptions HelpDescriptions[] = {
 
 void HelpHeader(void)
 {
-	printf(_("[Gammu version %s built %s %s]\n\n"),
-			VERSION,
-			__TIME__,
-			__DATE__);
+	PrintVersion();
 }
 
 static void HelpGeneral(void)
@@ -10772,7 +10769,7 @@ int main(int argc, char *argv[])
 						}
 					}
 					if (FoundVersion(buff) > FoundVersion(VERSION)) {
-						printf(_("INFO: there is later test Gammu (%s instead of %s) available!\n"),buff,VERSION);
+						printf(_("INFO: there is later testing Gammu (%s instead of %s) available!\n"),buff,VERSION);
 						break;
 					}
 				}

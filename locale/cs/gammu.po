@@ -8,15 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-07-20 10:42+0200\n"
-"PO-Revision-Date: 2007-06-12 16:45+0200\n"
+"POT-Creation-Date: 2007-07-31 11:10+0200\n"
+"PO-Revision-Date: 2007-07-31 11:10+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Pootle 0.11\n"
 
 #: common/gsmcomon.c:83
 msgid "No error."
@@ -1235,42 +1234,42 @@ msgstr "Formát data je "
 #: gammu/gammu.c:847
 #, c-format
 msgid "DD MM YYYY"
-msgstr ""
+msgstr "DD MM RRRR"
 
 #: gammu/gammu.c:848
 #, c-format
 msgid "MM DD YYYY"
-msgstr ""
+msgstr "MM DD RRRR"
 
 #: gammu/gammu.c:849
 #, c-format
 msgid "YYYY MM DD"
-msgstr ""
+msgstr "RRRR MM DD"
 
 #: gammu/gammu.c:850
 #, c-format
 msgid "DD MMM YY"
-msgstr ""
+msgstr "DD MMM RR"
 
 #: gammu/gammu.c:851
 #, c-format
 msgid "MM DD YY"
-msgstr ""
+msgstr "MM DD RR"
 
 #: gammu/gammu.c:852
 #, c-format
 msgid "DD MM YY"
-msgstr ""
+msgstr "DD MM RR"
 
 #: gammu/gammu.c:853
 #, c-format
 msgid "YY MM DD"
-msgstr ""
+msgstr "RR MM DD"
 
 #: gammu/gammu.c:854
 #, c-format
 msgid "OFF"
-msgstr ""
+msgstr "VYPNUTO"
 
 #: gammu/gammu.c:857
 #, c-format
@@ -1341,7 +1340,7 @@ msgstr "ID vyzvánění"
 
 #: gammu/gammu.c:1045
 msgid "User ID"
-msgstr ""
+msgstr "ID uživatele"
 
 #: gammu/gammu.c:1048
 msgid "Picture name"
@@ -1349,7 +1348,7 @@ msgstr "Jméno obrázku"
 
 #: gammu/gammu.c:1051
 msgid "Picture ID"
-msgstr ""
+msgstr "ID obrázku"
 
 #: gammu/gammu.c:1053
 msgid "General number"
@@ -1624,7 +1623,7 @@ msgstr ""
 #: gammu/gammu.c:1599 gammu/gammu.c:1615
 #, c-format
 msgid "Congestion"
-msgstr ""
+msgstr "Zahlcení"
 
 #: gammu/gammu.c:1600 gammu/gammu.c:1616
 #, c-format
@@ -1733,19 +1732,19 @@ msgstr "Kódování"
 
 #: gammu/gammu.c:1657
 msgid "Unicode (no compression)"
-msgstr ""
+msgstr "Unicode (bez komprese)"
 
 #: gammu/gammu.c:1658
 msgid "Unicode (compression)"
-msgstr ""
+msgstr "Unicode (s kompresí)"
 
 #: gammu/gammu.c:1659
 msgid "Default GSM alphabet (no compression)"
-msgstr ""
+msgstr "Výchozí abeceda GSM (bez komprese)"
 
 #: gammu/gammu.c:1660
 msgid "Default GSM alphabet (compression)"
-msgstr ""
+msgstr "Výchozí abeceda GSM (s kompresí)"
 
 #: gammu/gammu.c:1661
 msgid "8 bit"
@@ -1923,7 +1922,7 @@ msgstr ""
 
 #: gammu/gammu.c:1817
 msgid "Profile"
-msgstr ""
+msgstr "Profil"
 
 #: gammu/gammu.c:1837
 msgid "EMS sound ID"
@@ -1948,7 +1947,7 @@ msgstr "Pozice %i\n"
 
 #: gammu/gammu.c:1889 gammu/gammu.c:2326
 msgid "Empty"
-msgstr ""
+msgstr "Prázdné"
 
 #: gammu/gammu.c:1893 gammu/gammu.c:2330 gammu/gammu.c:2432 gammu/gammu.c:2566
 #, c-format
@@ -3280,7 +3279,7 @@ msgstr ""
 
 #: gammu/gammu.c:6702 gammu/gammu.c:6732
 msgid "User name"
-msgstr ""
+msgstr "Uživatelské jméno"
 
 #: gammu/gammu.c:6703 gammu/gammu.c:6733 gammu/gammu.c:6760 gammu/gammu.c:6810
 msgid "Password"
@@ -3416,12 +3415,12 @@ msgstr ""
 #: gammu/gammu.c:7020
 #, c-format
 msgid "Startup logo"
-msgstr ""
+msgstr "Úvodní logo"
 
 #: gammu/gammu.c:7021
 #, c-format
 msgid "Operator logo"
-msgstr ""
+msgstr "Logo operátora"
 
 #: gammu/gammu.c:7023
 #, c-format
@@ -3521,8 +3520,9 @@ msgid "None"
 msgstr "Žádná"
 
 #: gammu/gammu.c:7434
-msgid "DueTime"
-msgstr ""
+#, fuzzy
+msgid "Due time"
+msgstr "Datum a čas"
 
 #: gammu/gammu.c:7437
 msgid "Completed"
@@ -3544,12 +3544,12 @@ msgstr ""
 
 #: gammu/gammu.c:7691
 #, c-format
-msgid " (HeadSet profile)"
+msgid " (Head set profile)"
 msgstr ""
 
 #: gammu/gammu.c:7692
 #, c-format
-msgid " (CarKit profile)"
+msgid " (Car kit profile)"
 msgstr ""
 
 #: gammu/gammu.c:7703
@@ -3602,23 +3602,23 @@ msgstr ""
 
 #: gammu/gammu.c:7754
 msgid "Level 1"
-msgstr ""
+msgstr "Úroveň 1"
 
 #: gammu/gammu.c:7756
 msgid "Level 2"
-msgstr ""
+msgstr "Úroveň 2"
 
 #: gammu/gammu.c:7758
 msgid "Level 3"
-msgstr ""
+msgstr "Úroveň 3"
 
 #: gammu/gammu.c:7759
 msgid "Level 4"
-msgstr ""
+msgstr "Úroveň 4"
 
 #: gammu/gammu.c:7760
 msgid "Level 5"
-msgstr ""
+msgstr "Úroveň 5"
 
 #: gammu/gammu.c:7768
 msgid "Off"
@@ -3654,7 +3654,7 @@ msgstr ""
 
 #: gammu/gammu.c:7782
 msgid "On"
-msgstr ""
+msgstr "Zapnuto"
 
 #: gammu/gammu.c:7783
 msgid "Vibrate first"
@@ -3728,7 +3728,7 @@ msgstr "Neznámé jméno země: %s."
 #: gammu/gammu.c:8066
 #, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
-msgstr ""
+msgstr "[Gammu verze %s zkompilovaná %s na %s za použití %s]"
 
 #: gammu/gammu.c:8078
 msgid "Compiled in features:"
@@ -3765,7 +3765,7 @@ msgstr "Název stanice"
 
 #: gammu/gammu.c:8270
 msgid "Frequency"
-msgstr ""
+msgstr "Frekvence"
 
 #: gammu/gammu.c:8290
 #, c-format
@@ -4177,14 +4177,7 @@ msgstr ""
 msgid "Functions that don't fit elsewhere"
 msgstr ""
 
-#: gammu/gammu.c:10348
-#, c-format
-msgid ""
-"[Gammu version %s built %s %s]\n"
-"\n"
-msgstr ""
-
-#: gammu/gammu.c:10360
+#: gammu/gammu.c:10357
 msgid ""
 "Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> "
 "[options]"
@@ -4192,32 +4185,32 @@ msgstr ""
 "Použití: gammu [číslokonf] [nothing|text|textall|binary|errors] <příkaz> "
 "[parametry]"
 
-#: gammu/gammu.c:10361
+#: gammu/gammu.c:10358
 msgid ""
 "First parameter optionally specifies which config section to use (all are "
 "probed by default)."
 msgstr ""
 
-#: gammu/gammu.c:10362
+#: gammu/gammu.c:10359
 msgid ""
 "Second parameter optionally controls debug level, next one specifies actions."
 msgstr ""
 
-#: gammu/gammu.c:10364
+#: gammu/gammu.c:10361
 msgid "Commands can be specified with or without leading --."
 msgstr ""
 
-#: gammu/gammu.c:10367
+#: gammu/gammu.c:10364
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
 
-#: gammu/gammu.c:10456
+#: gammu/gammu.c:10453
 msgid "Unknown help topic specified!"
 msgstr "Zadáno neznámé téma nápovědy!"
 
-#: gammu/gammu.c:10460
+#: gammu/gammu.c:10457
 #, c-format
 msgid ""
 "Gammu parameters, topic: %s\n"
@@ -4226,64 +4219,64 @@ msgstr ""
 "Gammu, parametry pro téma: %s\n"
 "\n"
 
-#: gammu/gammu.c:10556
+#: gammu/gammu.c:10553
 #, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "Příliš málo parametrů (funkce požaduje %d)\n"
 
-#: gammu/gammu.c:10558
+#: gammu/gammu.c:10555
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "Příliš málo parametrů (funkce požaduje %d až %d)\n"
 
-#: gammu/gammu.c:10561 gammu/gammu.c:10576
+#: gammu/gammu.c:10558 gammu/gammu.c:10573
 msgid "Parameters help"
 msgstr "Nápověda pro parametry"
 
-#: gammu/gammu.c:10571
+#: gammu/gammu.c:10568
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "Příliš mnoho parametrů (funkce akceptuje %d)\n"
 
-#: gammu/gammu.c:10573
+#: gammu/gammu.c:10570
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "Příliš mnoho parametrů (funkce akceptuje %d až %d)\n"
 
-#: gammu/gammu.c:10595
+#: gammu/gammu.c:10592
 msgid "Bad option!"
 msgstr "Chybná volba!"
 
-#: gammu/gammu.c:10630 gammu/gammu.c:10726
+#: gammu/gammu.c:10627 gammu/gammu.c:10723
 msgid "Too few parameters!"
 msgstr "Příliš málo parametrů!"
 
-#: gammu/gammu.c:10651
+#: gammu/gammu.c:10648
 msgid "Configuration could not be parsed!"
-msgstr ""
+msgstr "Nastavení nemohlo být zpracováno!"
+
+#: gammu/gammu.c:10650
+msgid "No configuration file found!"
+msgstr "Nebyl nalezen konfigurační soubor!"
 
 #: gammu/gammu.c:10653
-msgid "No configuration file found!"
-msgstr ""
-
-#: gammu/gammu.c:10656
 msgid "No configuration read!"
-msgstr ""
+msgstr "Nebylo načteno žádné nastavení!"
 
-#: gammu/gammu.c:10732
+#: gammu/gammu.c:10729
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
 msgstr "Verze instalované libGammu.so (%s) se liší od verze Gammu (%s)\n"
 
-#: gammu/gammu.c:10762
+#: gammu/gammu.c:10759
 #, c-format
 msgid "INFO: there is later stable Gammu (%s instead of %s) available!\n"
 msgstr ""
 
-#: gammu/gammu.c:10775
+#: gammu/gammu.c:10772
 #, c-format
-msgid "INFO: there is later test Gammu (%s instead of %s) available!\n"
+msgid "INFO: there is later testing Gammu (%s instead of %s) available!\n"
 msgstr ""
 
 #: gammu/smsd/s_files.c:60
