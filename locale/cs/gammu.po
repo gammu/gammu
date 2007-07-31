@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-07-31 11:20+0200\n"
-"PO-Revision-Date: 2007-07-31 11:19+0200\n"
+"POT-Creation-Date: 2007-07-31 11:25+0200\n"
+"PO-Revision-Date: 2007-07-31 11:24+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -833,7 +833,7 @@ msgstr "Je potřeba více parametrů!"
 
 #: gammu/gammu.c:358
 msgid "Swapping start and end location"
-msgstr ""
+msgstr "Prohazuji začátek a konec"
 
 #. l10n: %s is replaced by question, answers have to match corresponding translations
 #: gammu/gammu.c:376
@@ -874,19 +874,19 @@ msgstr "domácí síť"
 
 #: gammu/gammu.c:414
 msgid "roaming network"
-msgstr ""
+msgstr "roamingová síť"
 
 #: gammu/gammu.c:415
 msgid "requesting network"
-msgstr ""
+msgstr "požaduje síť"
 
 #: gammu/gammu.c:416
 msgid "not logged into network"
-msgstr ""
+msgstr "není přihlášen do sítě"
 
 #: gammu/gammu.c:417
 msgid "registration to network denied"
-msgstr ""
+msgstr "registrace do sítě odmítnuta"
 
 #: gammu/gammu.c:418 gammu/gammu.c:420 gammu/gammu.c:2111 gammu/gammu.c:2133
 #, c-format
@@ -1934,11 +1934,11 @@ msgstr ""
 
 #: gammu/gammu.c:1867
 msgid "SMS message received"
-msgstr ""
+msgstr "Přijata SMS zpráva"
 
 #: gammu/gammu.c:1869
-msgid "We already have one pending, ignoring!"
-msgstr ""
+msgid "We already have one pending, ignoring this one!"
+msgstr "Již jedna čeká na zpracování, nově příchozí ignorujeme!"
 
 #: gammu/gammu.c:1888 gammu/gammu.c:2325
 #, c-format
@@ -1952,31 +1952,31 @@ msgstr "Prázdné"
 #: gammu/gammu.c:1893 gammu/gammu.c:2330 gammu/gammu.c:2432 gammu/gammu.c:2566
 #, c-format
 msgid "Location %i, folder \"%s\""
-msgstr ""
+msgstr "Umístění %s, složka \"%s\""
 
 #: gammu/gammu.c:1895 gammu/gammu.c:2332 gammu/gammu.c:2434 gammu/gammu.c:2568
 #: gammu/gammu.c:2609
 #, c-format
 msgid ", SIM memory"
-msgstr ""
+msgstr ", SIM karta"
 
 #: gammu/gammu.c:1896 gammu/gammu.c:2333 gammu/gammu.c:2435 gammu/gammu.c:2569
 #: gammu/gammu.c:2610
 #, c-format
 msgid ", phone memory"
-msgstr ""
+msgstr ", paměť telefonu"
 
 #: gammu/gammu.c:1897 gammu/gammu.c:2334 gammu/gammu.c:2436 gammu/gammu.c:2570
 #: gammu/gammu.c:2611
 #, c-format
 msgid ", phone or SIM memory"
-msgstr ""
+msgstr ", paměť telefonu nebo SIM karta"
 
 #: gammu/gammu.c:1900 gammu/gammu.c:2337 gammu/gammu.c:2439 gammu/gammu.c:2573
 #: gammu/gammu.c:2614 gammu/gammu.c:2633
 #, c-format
 msgid ", Inbox folder"
-msgstr ""
+msgstr ", příchozí zprávy"
 
 #: gammu/gammu.c:1910
 msgid "CB message received"
@@ -4079,10 +4079,8 @@ msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr ""
 
 #: gammu/gammu.c:10008
-#, fuzzy
-#| msgid "Standard number"
 msgid "standard input"
-msgstr "Standardní číslo"
+msgstr "standardní vstup"
 
 #: gammu/gammu.c:10019
 #, c-format
