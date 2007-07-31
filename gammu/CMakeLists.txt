@@ -20,6 +20,7 @@ set (BINARY_SRC
     smsd/s_pgsql.c
     sniff.c
     common.c
+    memory.c
     gammu.c)
 
 # Gammu program
