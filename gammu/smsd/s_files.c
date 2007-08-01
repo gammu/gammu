@@ -314,11 +314,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 	strcpy(ofilename, destpath);
 	strcat(ofilename, ID);
 
-#ifdef WIN32
 	if (!strncasecmp(ifilename, ofilename, strlen(ofilename) == 0)) {
-#else
-	if (strcmp(ifilename, ofilename) != 0) {
-#endif
 		iFile = fopen(ifilename, "r");
 		ilen = fread(Buffer, 1, sizeof(Buffer), iFile);
 		fclose(iFile);
