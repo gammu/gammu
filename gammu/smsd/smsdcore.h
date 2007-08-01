@@ -36,7 +36,8 @@ typedef struct {
 
 	/* private variables required for work */
 	int		relativevalidity;
-	unsigned int 	retries,	 currdeliveryreport;
+	unsigned int 	retries;
+	int		currdeliveryreport;
 	unsigned char 	SMSID[200],	 prevSMSID[200];
 	GSM_SMSC	SMSC;
 
