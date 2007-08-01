@@ -526,7 +526,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 
 	error = Service->Init(&Config);
 	if (error!=ERR_NONE) {
-		GSM_Terminate_SMSD(_("Stop GAMMU smsd (%i)"), error, true, -1);
+		GSM_Terminate_SMSD(_("Initialisation failed, stopping Gammu smsd (%i)"), error, true, -1);
 	}
 
 	signal(SIGINT, interrupt);
@@ -557,7 +557,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 					} else {
 						error = Service->InitAfterConnect(&Config);
 						if (error!=ERR_NONE) {
-							GSM_Terminate_SMSD(_("Stop GAMMU smsd (%i)"), error, true, -1);
+							GSM_Terminate_SMSD(_("Post initialisation failed, stopping Gammu smsd (%i)"), error, true, -1);
 						}
 						GSM_SetFastSMSSending(s,true);
 					}

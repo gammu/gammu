@@ -10,7 +10,7 @@ xgettext \
     --add-comments=l10n \
     --add-location \
     --copyright-holder="Michal Čihař" \
-    `find . -name '*.c' | sort`
+    `find . -name '*.c' -o -name '*.h' | sort`
 
 ver=`cat VERSION | tr , .`
 sed -i '
