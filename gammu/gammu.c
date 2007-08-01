@@ -45,11 +45,6 @@
 #  include <sys/ioctl.h>
 #endif
 
-/**
- * Hides default case in switch, to allow checking whether all cases are handled.
- */
-#undef CHECK_CASES
-
 #define ALL_MEMORY_TYPES "DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 
 

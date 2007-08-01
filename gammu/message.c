@@ -397,11 +397,40 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems, GSM_B
 		case SMS_EMSPredefinedAnimation:
 			printf("\n" LISTFORMAT "%i\n", _("EMS animation ID"),SMSInfo.Entries[i].Number);
 			break;
+		case SMS_Text:
+		case SMS_NokiaRingtoneLong:
+		case SMS_NokiaOperatorLogoLong:
+		case SMS_NokiaWAPBookmarkLong:
+		case SMS_NokiaWAPSettingsLong:
+		case SMS_NokiaMMSSettingsLong:
+		case SMS_NokiaVCARD10Long:
+		case SMS_NokiaVTODOLong:
+		case SMS_VCARD10Long:
+		case SMS_VCARD21Long:
+		case SMS_DisableVoice:
+		case SMS_DisableFax:
+		case SMS_DisableEmail:
+		case SMS_EnableVoice:
+		case SMS_EnableFax:
+		case SMS_EnableEmail:
+		case SMS_VoidSMS:
+		case SMS_EMSSound10:
+		case SMS_EMSSound12:
+		case SMS_EMSSonyEricssonSound:
+		case SMS_EMSSound10Long:
+		case SMS_EMSSound12Long:
+		case SMS_EMSSonyEricssonSoundLong:
+		case SMS_EMSVariableBitmapLong:
+		case SMS_MMSIndicatorLong:
+		case SMS_WAPIndicatorLong:
+		case SMS_AlcatelMonoBitmapLong:
+		case SMS_AlcatelMonoAnimationLong:
+		case SMS_AlcatelSMSTemplateName:
 #ifndef CHECK_CASES
 		default:
+#endif
 			printf("%s\n", _("Error"));
 			break;
-#endif
 		}
 	}
 	printf("\n");
