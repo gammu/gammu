@@ -15,6 +15,7 @@
 #ifdef GSM_ENABLE_BACKUP
 void SaveFile(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_Backup		Backup;
 	int			i,j;
 	FILE			*file;
@@ -143,6 +144,7 @@ void SaveFile(int argc, char *argv[])
 
 void Backup(int argc, char *argv[])
 {
+	GSM_Error error;
 	int			i, used;
 	GSM_MemoryStatus	MemStatus;
 	GSM_ToDoEntry		ToDo;
@@ -791,6 +793,7 @@ void Backup(int argc, char *argv[])
 
 void Restore(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_Backup		Backup;
 	GSM_FMStation		FMStation;
 	GSM_DateTime 		date_time;
@@ -1368,6 +1371,7 @@ void Restore(int argc, char *argv[])
 
 void AddNew(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_Backup		Backup;
 	GSM_DateTime 		date_time;
 	GSM_MemoryEntry		Pbk;
@@ -1521,6 +1525,7 @@ void AddNew(int argc, char *argv[])
 
 void BackupSMS(int argc UNUSED, char *argv[])
 {
+	GSM_Error error;
 	GSM_SMS_Backup		Backup;
 	GSM_MultiSMSMessage 	sms;
 	GSM_SMSFolders		folders;
@@ -1596,6 +1601,7 @@ void BackupSMS(int argc UNUSED, char *argv[])
 
 void AddSMS(int argc UNUSED, char *argv[])
 {
+	GSM_Error error;
 	GSM_MultiSMSMessage 	SMS;
 	GSM_SMS_Backup		Backup;
 	int			smsnum = 0;
@@ -1626,6 +1632,7 @@ void AddSMS(int argc UNUSED, char *argv[])
 
 void RestoreSMS(int argc UNUSED, char *argv[])
 {
+	GSM_Error error;
 	GSM_MultiSMSMessage 	SMS;
 	GSM_SMS_Backup		Backup;
 	GSM_SMSFolders		folders;

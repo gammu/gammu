@@ -300,6 +300,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems, GSM_B
 	bool			RetVal,udhinfo=true;
 	int			j,Pos,i;
 	GSM_MemoryEntry		pbk;
+	GSM_Error error;
 
 	/* GSM_DecodeMultiPartSMS returns if decoded SMS content correctly */
 	RetVal = GSM_DecodeMultiPartSMS(&SMSInfo,&sms,ems);
@@ -452,6 +453,7 @@ void IncomingSMS(GSM_StateMachine *s UNUSED, GSM_SMSMessage sms)
 void DisplayIncomingSMS()
 {
  	GSM_SMSFolders folders;
+	GSM_Error error;
 
  	if (IncomingSMSData.SMS[0].State == 0) {
  		error=GSM_GetSMSFolders(s, &folders);
@@ -528,6 +530,7 @@ void IncomingUSSD2(GSM_StateMachine *s, GSM_USSDMessage ussd)
 
 void GetUSSD(int argc UNUSED, char *argv[])
 {
+	GSM_Error error;
 	GSM_Init(true);
 
 	signal(SIGINT, interrupt);
@@ -556,6 +559,7 @@ void GetUSSD(int argc UNUSED, char *argv[])
 void GetSMSC(int argc, char *argv[])
 {
 	GSM_SMSC 	smsc;
+	GSM_Error error;
 	int 		start, stop, i;
 
 	if (argc == 2) {
@@ -630,6 +634,7 @@ void GetSMSC(int argc, char *argv[])
 
 void GetSMS(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_MultiSMSMessage	sms;
 	GSM_SMSFolders		folders;
 	int			start, stop;
@@ -671,6 +676,7 @@ void GetSMS(int argc, char *argv[])
 
 void DeleteSMS(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_SMSMessage	sms;
 	int		start, stop, i;
 
@@ -693,6 +699,7 @@ void DeleteSMS(int argc, char *argv[])
 
 void GetAllSMS(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_MultiSMSMessage 	sms;
 	GSM_SMSFolders		folders;
 	bool			start = true;
@@ -788,6 +795,7 @@ void GetAllSMS(int argc, char *argv[])
 
 void GetEachSMS(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_MultiSMSMessage	*GetSMS[GSM_PHONE_MAXSMSINFOLDER],*SortedSMS[GSM_PHONE_MAXSMSINFOLDER],sms;
 	int			GetSMSNumber = 0,i,j;
 	int			smsnum=0,smspos=0;
@@ -922,6 +930,7 @@ void GetEachSMS(int argc, char *argv[])
 
 void GetSMSFolders(int argc UNUSED, char *argv[] UNUSED)
 {
+	GSM_Error error;
 	GSM_SMSFolders folders;
 	int i;
 
@@ -948,6 +957,7 @@ void GetSMSFolders(int argc UNUSED, char *argv[] UNUSED)
 
 void GetMMSFolders(int argc UNUSED, char *argv[] UNUSED)
 {
+	GSM_Error error;
 	GSM_MMSFolders folders;
 	int i;
 
@@ -1074,6 +1084,7 @@ void GetEachMMS(int argc, char *argv[])
 	bool			start = true;
 	GSM_MMSFolders 		folders;
 	int			Handle,Size,num = -1;
+	GSM_Error error;
 
 	if (argc>2 && strcasecmp(argv[2],"-save") == 0) num=0;
 
@@ -1190,6 +1201,7 @@ void SendSMSStatus (GSM_StateMachine *s, int status, int MessageReference)
 
 void SendSaveDisplaySMS(int argc, char *argv[])
 {
+	GSM_Error error;
 #ifdef GSM_ENABLE_BACKUP
 	GSM_Backup			Backup;
 #endif
@@ -2526,6 +2538,7 @@ void ReadMMSFile(int argc, char *argv[])
 {
 	GSM_File		File;
 	int			num = -1;
+	GSM_Error error;
 
 	File.Buffer = NULL;
 	error = GSM_ReadFile(argv[2], &File);
@@ -2541,6 +2554,7 @@ void ReadMMSFile(int argc, char *argv[])
 void AddSMSFolder(int argc UNUSED, char *argv[])
 {
 	unsigned char buffer[200];
+	GSM_Error error;
 
 	GSM_Init(true);
 
@@ -2557,6 +2571,7 @@ void DeleteAllSMS(int argc, char *argv[])
 	GSM_SMSFolders		folders;
 	int			foldernum;
 	bool			start = true;
+	GSM_Error error;
 
 	GSM_Init(true);
 

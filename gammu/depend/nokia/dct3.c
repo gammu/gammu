@@ -90,6 +90,7 @@ static GSM_Error DCT3_ReplyGetT9(GSM_Protocol_Message msg, GSM_StateMachine *s)
 void DCT3GetT9(int argc, char *argv[])
 {
 	int	      i;
+	GSM_Error error;
 	unsigned char req[] = {0x00, 0x01, 0xAE, 0x02, 0x00,
 			       0x00};	/* Part number */
 
@@ -116,6 +117,7 @@ void DCT3VibraTest(int argc, char *argv[])
 	unsigned char ans[200];
 	unsigned char SetLevel[4] = {0x00, 0x01, 0xA3,
 				     0xff};	/* Level */
+	GSM_Error error;
 
 	if (CheckDCT3Only()!=ERR_NONE) return;
 
@@ -182,6 +184,7 @@ void DCT3SelfTests(int argc, char *argv[])
 	unsigned char 	buffer[3]  = {0x00,0x01,0xcf};
 	unsigned char 	buffer3[8] = {0x00,0x01,0xce,0x1d,0xfe,0x23,0x00,0x00};
 	int		i;
+	GSM_Error error;
 
 	if (CheckDCT3Only()!=ERR_NONE) return;
 
@@ -253,6 +256,7 @@ static GSM_Error DCT3_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 void DCT3GetADC(int argc, char *argv[])
 {
 	int		i = 0;
+	GSM_Error error;
 	unsigned char	GetRaw[] = {0x00, 0x01, 0x68};
 	unsigned char	GetUnit[] = {0x00, 0x01, 0x91,
 				     0x02};		/* Test number */
@@ -294,6 +298,7 @@ void DCT3GetADC(int argc, char *argv[])
 void DCT3DisplayTest(int argc, char *argv[])
 {
 	unsigned char ans[200];
+	GSM_Error error;
 	unsigned char req[] =  {0x00, 0x01, 0xD3,
 				0x03,          	/* 3=set, 2=clear */
 				0x03};	 	/* test number */
@@ -322,6 +327,7 @@ void DCT3DisplayTest(int argc, char *argv[])
 
 void DCT3netmonitor(int argc, char *argv[])
 {
+	GSM_Error error;
 	char value[100];
 
 	GSM_Init(true);
@@ -436,6 +442,7 @@ void DCT3Info(int argc, char *argv[])
 	unsigned char 		req2[]  = {0x00, 0x01, 0xb4, 0x00, 0x00}; /* Get MSID */
 	unsigned char 		req3[]  = {0x00, 0x01, 0xc8, 0x02}; 	  /* Get MCU chksum */
 	unsigned char 		req4[]  = {0x00, 0x01, 0xc8, 0x09}; 	  /* Get DSP ROM */
+	GSM_Error error;
 
         if (CheckDCT3Only()!=ERR_NONE) return;
 
@@ -468,6 +475,7 @@ static GSM_Error DCT3_ReplyResetTest36(GSM_Protocol_Message msg, GSM_StateMachin
 void DCT3ResetTest36(int argc, char *argv[])
 {
 	unsigned char req[]  = {0x00, 0x01, 0x65, 0x40, 0x00}; /* Reset test 36 in netmon */
+	GSM_Error error;
 
 	GSM_Init(true);
 
@@ -524,6 +532,7 @@ static GSM_Error DCT3_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 void DCT3SetPhoneMenus(int argc, char *argv[])
 {
 	char 		value[100];
+	GSM_Error error;
 	int 		i,j,z;
 	unsigned char 	reqGet[] = {0x00, 0x01, 0x6a};
 	unsigned char 	reqSet[] = {
@@ -616,6 +625,7 @@ void DCT3GetSecurityCode(int argc, char *argv[])
 	unsigned char req71_91[] = {N7110_FRAME_HEADER, 0xee,
 				    0x1c};	/* Setting */
 #endif
+	GSM_Error error;
 
 	if (CheckDCT3Only()!=ERR_NONE) return;
 
@@ -660,6 +670,7 @@ static GSM_Error DCT3_ReplyGetOperatorName(GSM_Protocol_Message msg, GSM_StateMa
 void DCT3GetOperatorName(int argc, char *argv[])
 {
 	unsigned char req[] = {0x00,0x01,0x8c,0x00};
+	GSM_Error error;
 
 	GSM_Init(true);
 
@@ -686,6 +697,7 @@ static GSM_Error DCT3_ReplySetOperatorName(GSM_Protocol_Message msg, GSM_StateMa
 void DCT3SetOperatorName(int argc, char *argv[])
 {
 	int 		i = 0;
+	GSM_Error error;
 	unsigned char 	req[256] = {0x00,0x01,0x8b,0x00,
 				    0x00,0x00, /* MCC */
 				    0x00};     /* MNC */
@@ -740,6 +752,7 @@ void DCT3DisplayOutput(int argc, char *argv[])
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x53,
 			       0x01}; //1 = enable, 2 = disable
+	GSM_Error error;
 
 	GSM_Init(true);
 

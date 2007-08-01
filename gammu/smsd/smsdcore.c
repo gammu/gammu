@@ -610,6 +610,7 @@ GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *s
 {
 	GSM_SMSDService		*Service;
 	GSM_SMSDConfig		Config;
+	GSM_Error error;
 
 	if (!strcasecmp(service,"FILES")) {
 		Service = &SMSDFiles;

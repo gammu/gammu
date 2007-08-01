@@ -32,6 +32,7 @@
 GSM_Error PrintFileSystemStatus()
 {
 	GSM_FileSystemStatus Status;
+	GSM_Error error;
 
 	error = GSM_GetFileSystemStatus(s, &Status);
 	if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
@@ -67,6 +68,7 @@ void GetFileSystemStatus(int argc UNUSED, char *argv[]UNUSED)
 
 void GetFileSystem(int argc, char *argv[])
 {
+	GSM_Error error;
 	bool Start = true, MemoryCard = false;
 	GSM_File Files;
 	int j;
@@ -225,6 +227,7 @@ void GetFileSystem(int argc, char *argv[])
 void SetFileAttrib(int argc, char *argv[])
 {
 	GSM_File Files;
+	GSM_Error error;
 	int i;
 
 	Files.ReadOnly = false;
@@ -279,6 +282,7 @@ void GetRootFolders(int argc UNUSED, char *argv[]UNUSED)
 
 void GetFolderListing(int argc UNUSED, char *argv[])
 {
+	GSM_Error error;
 	bool Start = true;
 	GSM_File Files;
 	char IDUTF[200];
@@ -333,6 +337,7 @@ void GetFolderListing(int argc UNUSED, char *argv[])
 
 void GetOneFile(GSM_File * File, bool newtime, int i)
 {
+	GSM_Error error;
 	FILE *file;
 	bool start;
 	unsigned char buffer[5000];
@@ -472,6 +477,7 @@ void GetFiles(int argc, char *argv[])
 
 void GetFileFolder(int argc, char *argv[])
 {
+	GSM_Error error;
 	bool Start = true;
 	GSM_File File;
 	int level = 0, allnum = 0, num = 0, filelevel = 0, i = 0;
@@ -552,6 +558,7 @@ void GetFileFolder(int argc, char *argv[])
 
 void AddOneFile(GSM_File * File, char *text, bool send)
 {
+	GSM_Error error;
 	int Pos, Handle, i, j, old1;
 	time_t t_time1, t_time2;
 	GSM_DateTime dt;
@@ -605,6 +612,7 @@ void AddOneFile(GSM_File * File, char *text, bool send)
 
 void AddSendFile(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_File File;
 	int i, nextlong;
 	char IDUTF[200];
@@ -734,6 +742,7 @@ void AddSendFile(int argc, char *argv[])
 
 void AddFolder(int argc UNUSED, char *argv[])
 {
+	GSM_Error error;
 	char IDUTF[200];
 	GSM_File File;
 
@@ -753,6 +762,7 @@ void AddFolder(int argc UNUSED, char *argv[])
 
 void DeleteFolder(int argc UNUSED, char *argv[]UNUSED)
 {
+	GSM_Error error;
 	unsigned char buffer[500];
 
 	GSM_Init(true);
@@ -767,6 +777,7 @@ void DeleteFolder(int argc UNUSED, char *argv[]UNUSED)
 
 void DeleteFiles(int argc, char *argv[])
 {
+	GSM_Error error;
 	int i;
 	unsigned char buffer[500];
 

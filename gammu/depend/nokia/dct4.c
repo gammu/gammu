@@ -260,6 +260,7 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 	unsigned char 	reqSet[200] = {
 		N7110_FRAME_HEADER,0x04,0x00,0x01,0x47,0x48,0x02,
 		0x00};		/* Number of changed features */
+	GSM_Error error;
 
 	if (CheckDCT4Only()!=ERR_NONE) return;
 
@@ -374,6 +375,7 @@ static GSM_Error DCT4_ReplyTestsStatus(GSM_Protocol_Message msg, GSM_StateMachin
 void DCT4SelfTests(int argc, char *argv[])
 {
 	int 	      j;
+	GSM_Error error;
 	unsigned char GetDoneST[6]    = {0x00, 0x08, 0x01, 0x04, 0x01, 0x00};
 	unsigned char GetDoneST2[6]   = {0x00, 0x08, 0x02, 0x04, 0x02, 0x00};
 	unsigned char GetNames[6]     = {0x00, 0x08, 0x03, 0x06, 0x03, 0x00};
@@ -433,6 +435,7 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 {
 	GSM_DateTime	Date;
 	unsigned int	i,j;
+	GSM_Error error;
 
 	/* Set vibra level */
 	unsigned char 	SetLevel[6] = {N7110_FRAME_HEADER,0x0E,
@@ -470,6 +473,7 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 void DCT4VibraTest(int argc, char *argv[])
 {
 	unsigned char ans[200];
+	GSM_Error error;
 
 	if (CheckDCT4Only()!=ERR_NONE) return;
 
@@ -502,6 +506,7 @@ static GSM_Error DCT4_ReplyResetSecurityCode(GSM_Protocol_Message msg, GSM_State
 void DCT4ResetSecurityCode(int argc, char *argv[])
 {
 	unsigned int	i;
+	GSM_Error error;
 	unsigned char 	ResetCode[30] = {0x00,0x06,0x03,0x04,0x01,
 		'1','2','3','4','5','6','7','8','9','0',	/* Old code */
 		0x00,
@@ -664,6 +669,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	unsigned int 	Location, size=0, CurrentLocation = 0, TokenLocation;
 	int		i;
 	FILE		*WAVFile;
+	GSM_Error error;
 
 	Location = atoi(argv[2]);
 	if (Location == 0x00) {
@@ -834,6 +840,7 @@ void DCT4Info(int argc, char *argv[])
 	unsigned char GetBTAddress[8] = {N6110_FRAME_HEADER, 0x09, 0x19, 0x01, 0x03, 0x06};
 	unsigned char GetSimlock[5] = {N6110_FRAME_HEADER, 0x12, 0x0D};
 	unsigned char value[10];
+	GSM_Error error;
 
         if (CheckDCT4Only()!=ERR_NONE) return;
 
@@ -881,6 +888,7 @@ void DCT4GetT9(int argc, char *argv[])
 			       0x00, 0x00,	/* Start position */
 			       0x00, 0x00,
 			       0x02, 0xBC};	/* How many bytes to read */
+	GSM_Error error;
 
 	if (CheckDCT4Only()!=ERR_NONE) return;
 
@@ -921,6 +929,7 @@ void DCT4SetLight(int argc, char *argv[])
 	int			i;
 	N6510_PHONE_LIGHTS 	type;
 	bool			enable;
+	GSM_Error error;
 
 	if (strcasecmp(argv[2],"display") == 0) { 	type = N6510_LIGHT_DISPLAY;
 	} else if (strcasecmp(argv[2],"keypad") == 0) {	type = N6510_LIGHT_KEYPAD;
@@ -1026,6 +1035,7 @@ static struct DCT4ADCInfo DCT4ADC[] = {
 void DCT4GetADC(int argc, char *argv[])
 {
 	int		i = 0;
+	GSM_Error error;
 	unsigned char 	GetRaw[]  = {N6110_FRAME_HEADER, 0x0F,
 				     0x00,		/* Test number */
 			             0x01};
@@ -1089,6 +1099,7 @@ static GSM_Error DCT4_ReplyTuneRadio(GSM_Protocol_Message msg, GSM_StateMachine 
 void DCT4TuneRadio(int argc, char *argv[])
 {
 	double		Freq, diff;
+	GSM_Error error;
  	GSM_FMStation 	FMStation[50],FMStat;
 	int		i, j, num;
 	bool		found;
@@ -1219,6 +1230,7 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 				0x0A,		//volume
 				0x00,0x00,0x00,0x00,0x00,0x00,0x00};
 	GSM_AllRingtonesInfo Info;
+	GSM_Error error;
 //	int i;
 
 	GSM_Init(true);
@@ -1263,6 +1275,7 @@ void DCT4MakeCameraShoot(int argc, char *argv[])
 		0x00, 0x02,	//master folder id
 		0x00, 0x14}; 	//length
 	unsigned char CameraOFF[] = {N6110_FRAME_HEADER, 0x04, 0x01, 0x00};
+	GSM_Error error;
 
 	GSM_Init(true);
 
@@ -1300,6 +1313,7 @@ static GSM_Error DCT4_ReplyGetScreenDump(GSM_Protocol_Message msg, GSM_StateMach
 void DCT4GetScreenDump(int argc, char *argv[])
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x07, 0x01, 0x00};
+	GSM_Error error;
 	//n6110_frameheader 06//screen info
 
 	GSM_Init(true);
@@ -1382,6 +1396,7 @@ static GSM_Error DCT4_ReplyGetPBKFeatures(GSM_Protocol_Message msg, GSM_StateMac
 void DCT4GetPBKFeatures(int argc, char *argv[])
 {
 	GSM_MemoryType	MemoryType=0;
+	GSM_Error error;
 	unsigned char 	req[] = {N6110_FRAME_HEADER, 0x25,
 				 0x05, 	// memory type
 				 0x00};

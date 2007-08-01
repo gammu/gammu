@@ -24,6 +24,7 @@
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 void NokiaComposer(int argc UNUSED, char *argv[])
 {
+	GSM_Error error;
 	GSM_Ringtone 		ringtone;
 	bool			started;
 	int 			i,j;
@@ -216,6 +217,7 @@ struct _PlayListEntry {
 
 void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDFolder)
 {
+	GSM_Error error;
 	bool 			Start = true, Available = false;
 	GSM_File	 	Files,Files2,Files3;
 	int 			j,NamesPos2=0;
@@ -395,6 +397,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 
 void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
 {
+	GSM_Error error;
 	bool 			Start = true;
 	GSM_File	 	Files;
 	unsigned char		buffer[20],buffer2[20],IDFolder[100];
@@ -505,6 +508,7 @@ struct NokiaFolderInfo Folder[] = {
 
 void NokiaAddFile(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_File		File, Files, File2;
 	FILE			*file;
 	unsigned char 		buffer[10000],JAR[500],Vendor[500],Name[500],Version[500],FileID[400];
