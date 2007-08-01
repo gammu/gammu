@@ -1166,6 +1166,7 @@ GSM_Error SONYERICSSON_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_State
 				bat->ChargeState = GSM_BatteryFull;
 				break;
 		}
+		s->Phone.Data.BatteryCharge = NULL;
 		return ERR_NONE;
 	}
 
@@ -1246,6 +1247,7 @@ GSM_Error SONYERICSSON_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_State
 		}
 		/* Calculate remaining capacity */
 		bat->BatteryCapacity = 1000 * ncapacity / bat->BatteryPercent;
+		s->Phone.Data.BatteryCharge = NULL;
 		return ERR_NONE;
 	}
 
@@ -1272,11 +1274,13 @@ GSM_Error SONYERICSSON_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *
 	}
 	/* Wait for async phone reply */
 	while (s->Phone.Data.BatteryCharge != NULL) {
-		error = GSM_WaitFor (s, "AT\r", 3, 0x00, 1, ID_GetBatteryCharge);
+		error = GSM_WaitFor (s, "AT\r", 3, 0x00, 3, ID_GetBatteryCharge);
+		smprintf(s, "Loop %d, error %d\n", i, error);
 		if (i == 20) break;
 		if (error != ERR_NONE) {
 			break;
 		}
+		i++;
 	}
 	/* Disable reading information */
 	GSM_WaitFor (s, "AT*EBCA=0\r", 10, 0x00, 3, ID_GetBatteryCharge);
