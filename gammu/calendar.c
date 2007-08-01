@@ -15,6 +15,7 @@
 
 void PrintCalendar(GSM_CalendarEntry * Note)
 {
+	GSM_Error error;
 	int i_age = 0, i;
 	GSM_DateTime Alarm, DateTime;
 	GSM_MemoryEntry entry;
@@ -364,6 +365,7 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 
 void GetDateTime(int argc UNUSED, char *argv[]UNUSED)
 {
+	GSM_Error error;
 	GSM_DateTime date_time;
 	GSM_Locale locale;
 
@@ -437,6 +439,7 @@ void SetDateTime(int argc, char *argv[])
 {
 	GSM_DateTime date_time;
 	char shift, *parse;
+	GSM_Error error;
 
 	GSM_Init(true);
 	error = ERR_NONE;
@@ -492,6 +495,7 @@ void SetDateTime(int argc, char *argv[])
 void GetAlarm(int argc, char *argv[])
 {
 	GSM_Alarm alarm;
+	GSM_Error error;
 
 	GSM_Init(true);
 
@@ -532,6 +536,7 @@ void GetAlarm(int argc, char *argv[])
 void SetAlarm(int argc UNUSED, char *argv[])
 {
 	GSM_Alarm alarm;
+	GSM_Error error;
 
 	alarm.DateTime.Hour = atoi(argv[2]);
 	alarm.DateTime.Minute = atoi(argv[3]);
@@ -551,6 +556,7 @@ void SetAlarm(int argc UNUSED, char *argv[])
 
 void GetCalendar(int argc UNUSED, char *argv[])
 {
+	GSM_Error error;
 	GSM_CalendarEntry Note;
 	int start, stop, i;
 
@@ -573,6 +579,7 @@ void GetCalendar(int argc UNUSED, char *argv[])
 
 void DeleteCalendar(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_CalendarEntry Note;
 	int start, stop, i;
 
@@ -591,6 +598,7 @@ void DeleteCalendar(int argc, char *argv[])
 
 void GetAllCalendar(int argc UNUSED, char *argv[]UNUSED)
 {
+	GSM_Error error;
 	GSM_CalendarEntry Note;
 	bool refresh = true;
 
@@ -614,6 +622,7 @@ void GetAllCalendar(int argc UNUSED, char *argv[]UNUSED)
 
 void GetCalendarSettings(int argc UNUSED, char *argv[]UNUSED)
 {
+	GSM_Error error;
 	GSM_CalendarSettings settings;
 
 	GSM_Init(true);
@@ -636,6 +645,7 @@ void GetCalendarSettings(int argc UNUSED, char *argv[]UNUSED)
 
 void DeleteToDo(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_ToDoEntry ToDo;
 	int i;
 	int start, stop;
@@ -664,6 +674,7 @@ void DeleteToDo(int argc, char *argv[])
 
 void PrintToDo(GSM_ToDoEntry * ToDo)
 {
+	GSM_Error error;
 	int j;
 	GSM_MemoryEntry entry;
 	unsigned char *name;
@@ -884,6 +895,7 @@ void PrintToDo(GSM_ToDoEntry * ToDo)
 
 void ListToDoCategoryEntries(int Category)
 {
+	GSM_Error error;
 	GSM_ToDoEntry Entry;
 	bool start = true;
 	int j;
@@ -905,6 +917,7 @@ void ListToDoCategoryEntries(int Category)
 
 void ListToDoCategory(int argc UNUSED, char *argv[])
 {
+	GSM_Error error;
 	GSM_Category Category;
 	GSM_CategoryStatus Status;
 	int j, count;
@@ -963,6 +976,7 @@ void ListToDoCategory(int argc UNUSED, char *argv[])
 
 void GetToDo(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_ToDoEntry ToDo;
 	int i;
 	int start, stop;
@@ -985,6 +999,7 @@ void GetToDo(int argc, char *argv[])
 
 void GetAllToDo(int argc UNUSED, char *argv[]UNUSED)
 {
+	GSM_Error error;
 	GSM_ToDoEntry ToDo;
 	bool start = true;
 
@@ -1007,6 +1022,7 @@ void GetAllToDo(int argc UNUSED, char *argv[]UNUSED)
 
 void GetAllNotes(int argc UNUSED, char *argv[]UNUSED)
 {
+	GSM_Error error;
 	GSM_NoteEntry Note;
 	bool start = true;
 

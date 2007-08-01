@@ -19,6 +19,7 @@ void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 {
 	GSM_Category	Category;
 	int		z;
+	GSM_Error error;
 
 	switch (entry->EntryType) {
 	case PBK_CallLength:
@@ -147,6 +148,7 @@ void GetAllMemory(int argc UNUSED, char *argv[])
 {
 	GSM_MemoryEntry		Entry;
 	bool			start = true;
+	GSM_Error error;
 
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
@@ -181,6 +183,7 @@ void GetMemory(int argc, char *argv[])
 	GSM_MemoryEntry		entry;
 	bool			empty = true;
 	double version;
+	GSM_Error error;
 
 	entry.MemoryType = MemoryTypeFromString(argv[2]);
 
@@ -244,6 +247,7 @@ void DeleteMemory(int argc, char *argv[])
 {
 	int			j, start, stop;
 	GSM_MemoryEntry		entry;
+	GSM_Error error;
 
 	entry.MemoryType = MemoryTypeFromString(argv[2]);
 
@@ -359,6 +363,7 @@ void SearchOneMemory(GSM_MemoryType MemoryType, char *Title, unsigned char *Text
 	GSM_MemoryStatus	Status;
 	int			i = 0, l = 1;
 	bool			start = true;
+	GSM_Error error;
 
 	Status.MemoryType = MemoryType;
 	Entry.MemoryType  = MemoryType;
@@ -429,6 +434,7 @@ void ListMemoryCategoryEntries(int Category)
 	GSM_MemoryEntry		Entry;
 	bool			start = true;
 	int			j;
+	GSM_Error error;
 
 	/* Category can be only for ME stored entries */
 	Entry.MemoryType  = MEM_ME;
@@ -452,6 +458,7 @@ void ListMemoryCategory(int argc UNUSED, char *argv[])
 	GSM_Category		Category;
 	GSM_CategoryStatus	Status;
 	int			j, count;
+	GSM_Error error;
 
 	unsigned char		Text[(GSM_MAX_CATEGORY_NAME_LENGTH+1)*2];
 	int			Length;

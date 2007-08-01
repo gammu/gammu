@@ -253,6 +253,7 @@ void decodesniff(int argc, char *argv[])
 	FILE			*file;
 	int			len, len2, pos, state, i;
 	unsigned char		mybyte1 = 0,mybyte2;
+	GSM_Error error;
 
 	if (!strcmp(argv[2],"MBUS2")) {
 		Protocol = GCT_MBUS2;
@@ -351,6 +352,7 @@ void decodebinarydump(int argc, char *argv[])
 	bool			sent;
 	GSM_Protocol_Message	msg;
 	GSM_Debug_Info		ldi = {DL_TEXTALL, stdout, false, NULL, true};
+	GSM_Error error;
 
 	prepareStateMachine();
 	if (argc > 3) {

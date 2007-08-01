@@ -309,6 +309,7 @@ void DCT3SetDebug(int argc, char *argv[])
 	int		x,count;
 	unsigned int y;
 	unsigned char 	reqDisable[] = {0x01, 0x01, 0x71};
+	GSM_Error error;
 //	unsigned char 	reqTest[] = {0x01, 0x01, 0x96, 0xFF, 0xFF};
 
 	/* RPC testing packets: */

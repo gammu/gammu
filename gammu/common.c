@@ -9,9 +9,6 @@
 #include "formats.h"
 
 GSM_StateMachine *s;
-INI_Section *cfg = NULL;
-
-GSM_Error error = ERR_NONE;
 
 bool always_answer_yes = false;
 bool always_answer_no = false;
@@ -59,6 +56,7 @@ void interrupt(int sign)
 void PrintSecurityStatus()
 {
 	GSM_SecurityCodeType Status;
+	GSM_Error error;
 
 	error = GSM_GetSecurityStatus(s, &Status);
 	Print_Error(error);
@@ -230,6 +228,7 @@ void GSM_Init(bool checkerror)
 	char version[100];
 	unsigned char buff[200], ver[200];
 	size_t pos = 0, oldpos = 0, i;
+	GSM_Error error;
 
 	if (batch && batchConn)
 		return;
@@ -312,6 +311,8 @@ void GSM_Init(bool checkerror)
 
 void GSM_Terminate(void)
 {
+	GSM_Error error;
+
 	if (!batch) {
 		error = GSM_TerminateConnection(s);
 		Print_Error(error);

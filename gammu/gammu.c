@@ -909,6 +909,8 @@ int main(int argc, char *argv[])
 	GSM_Config *smcfg;
 	GSM_Config *smcfg0;
 	GSM_Debug_Info *di;
+	GSM_Error error;
+	INI_Section *cfg = NULL;
 
 	s = GSM_AllocStateMachine();
 

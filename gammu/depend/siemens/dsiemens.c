@@ -287,6 +287,7 @@ void ATSIEMENSActivateNetmon(int argc, char *argv[])
 {
 	GSM_MemoryStatus status;
 	GSM_MemoryEntry	 pbk;
+	GSM_Error error;
 	int 		 netmon_type, pbk_maxlocation;
 	char 		 imsi[15], NetMonCode[32];
 
@@ -325,6 +326,7 @@ void ATSIEMENSActivateNetmon(int argc, char *argv[])
 
 void ATSIEMENSSATNetmon(int argc, char *argv[])
 {
+	GSM_Error error;
 	GSM_Init(true);
 	if (CheckSiemens()==ERR_NOTSUPPORTED) Print_Error(ERR_NOTSUPPORTED);
 	s->User.UserReplyFunctions=UserReplyFunctionsAtS;
@@ -339,6 +341,7 @@ void ATSIEMENSSATNetmon(int argc, char *argv[])
 void ATSIEMENSNetmonitor(int argc, char *argv[])
 {
 	int test_no;
+	GSM_Error error;
 
 	GSM_Init(true);
 	if (CheckSiemens()==ERR_NOTSUPPORTED) Print_Error(ERR_NOTSUPPORTED);
