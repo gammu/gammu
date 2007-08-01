@@ -30,6 +30,12 @@ set (BINARY_SRC
     misc.c
     gammu.c)
 
+
+# Hides default case in switch, to allow checking whether all cases are handled.
+if(DEBUG)
+    add_definitions(-DCHECK_CASES)
+endif(DEBUG)
+
 # Gammu program
 add_executable (gammu ${BINARY_SRC})
 if (CROSS_MINGW)
