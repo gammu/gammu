@@ -103,7 +103,9 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		if (d->Msg.Length > 0 && rx_char == 10 && d->Msg.Buffer[d->Msg.Length-2]==13) {
 			i = 0;
 			while (StartStrings[i] != NULL) {
-				if (strncmp(StartStrings[i],d->Msg.Buffer+d->LineStart,strlen(StartStrings[i])) == 0) {
+				if (strncmp(StartStrings[i],
+							d->Msg.Buffer + d->LineStart,
+							strlen(StartStrings[i])) == 0) {
 					s->Phone.Data.RequestMsg	= &d->Msg;
 					s->Phone.Data.DispatchError	= s->Phone.Functions->DispatchMessage(s);
 					d->Msg.Length			= 0;
@@ -115,9 +117,12 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 			i = 0;
 			while (SpecialAnswers[i].text != NULL) {
-				if (strncmp(SpecialAnswers[i].text,d->Msg.Buffer+d->LineStart,strlen(SpecialAnswers[i].text)) == 0) {
+				if (strncmp(SpecialAnswers[i].text,
+							d->Msg.Buffer + d->LineStart,
+							strlen(SpecialAnswers[i].text)) == 0) {
 					/* We need something better here */
-				  	if (s->Phone.Data.RequestID == ID_GetNetworkInfo && strcmp(SpecialAnswers[i].text, "+CREG:") == 0) {
+				  	if (s->Phone.Data.RequestID == ID_GetNetworkInfo && 
+							strcmp(SpecialAnswers[i].text, "+CREG:") == 0) {
 						i++;
 						continue;
 					}
