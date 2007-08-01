@@ -499,7 +499,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	return true;
 }
 
-void SMSDaemon(int argc, char *argv[])
+void SMSDaemon(int argc UNUSED, char *argv[])
 {
 	int                     errors = 255, initerrors=0;
 	GSM_SMSDService		*Service;
