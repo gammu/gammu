@@ -648,7 +648,6 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 	bool				execute;
 	bool				available = false;
 	int				i	  = 0;
-//	int 				j;
 
 	while (Reply[i].requestID!=ID_None) {
 		execute=false;
@@ -663,15 +662,7 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 				} else execute=true;
 			}
 		} else {
-//			printf("msg length %i %i\n",strlen(Reply[i].msgtype),msg->Length);
 			if ((int)strlen(Reply[i].msgtype)<msg->Length) {
-//				printf("Comparing \"%s\" and \"",Reply[i].msgtype);
-//				for (j=0;j<strlen(Reply[i].msgtype);j++) {
-//					if (msg->Buffer[j]!=13 && msg->Buffer[j]!=10) {
-//						printf("%c",msg->Buffer[j]);
-//					}
-//				}
-//				printf("\"\n");
 				if (strncmp(Reply[i].msgtype,msg->Buffer,strlen(Reply[i].msgtype))==0) {
 					execute=true;
 				}
