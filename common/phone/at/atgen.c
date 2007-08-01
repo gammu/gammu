@@ -873,7 +873,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Find start of reply */
 		pos = strstr(msg.Buffer, "+CUSD:");
 		if (pos == NULL) {
-			if (s->Phone.Data.RequestID != ID_IncomingFrame) {
+			if (s->Phone.Data.RequestID == ID_GetUSSD) {
 				/* 
 				 * We usually get reply right after AT+CUSD=, but 
 				 * if this is not the case, we should wait.
@@ -3036,7 +3036,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	char			*tmp;
 	size_t pos;
 
-  	if (s->Phone.Data.RequestID == ID_IncomingFrame) {
+  	if (s->Phone.Data.RequestID != ID_GetNetworkInfo) {
 		smprintf(s, "Incoming LAC & CID info\n");
 		return ERR_NONE;
 	}
