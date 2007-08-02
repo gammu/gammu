@@ -12,7 +12,6 @@
 #include <stdio.h>
 #include <locale.h>
 #include <sys/timeb.h>
-#include <unistd.h>
 #ifdef WIN32
 #  include <windows.h>
 #endif
