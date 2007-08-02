@@ -105,6 +105,8 @@ if (WIN32)
   set (CPACK_NSIS_URL_INFO_ABOUT "http:\\\\\\\\www.gammu.org")
   set (CPACK_NSIS_CONTACT "michal@cihar.com")
   set (CPACK_NSIS_MODIFY_PATH ON)
+  # We need winsock2 layer
+  add_definitions(-D_WIN32_WINNT=0x0400 -DWINVER=0x0400)
 else (WIN32)
   set (CPACK_STRIP_FILES "gammu")
   set (CPACK_SOURCE_STRIP_FILES "")
