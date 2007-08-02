@@ -238,7 +238,11 @@ typedef enum {
 	/**
 	 * Data were converted
 	 */
-	ERR_DATACONVERTED
+	ERR_DATACONVERTED,
+	/**
+	 * Gammu is not configured.
+	 */
+	ERR_UNCONFIGURED,
 } GSM_Error;
 
 /**
