@@ -20,7 +20,6 @@
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
 #include "atgen.h"
-#include <strings.h>
 #include <string.h>
 #include "../../misc/coding/coding.h"
 
