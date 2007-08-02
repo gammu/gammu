@@ -287,7 +287,7 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
  *
  * \return True when text does not contain non hex chars.
  */
-inline bool ATGEN_HasOnlyHexChars(const char *text, const size_t length)
+INLINE bool ATGEN_HasOnlyHexChars(const char *text, const size_t length)
 {
 	size_t i;
 
@@ -306,7 +306,7 @@ inline bool ATGEN_HasOnlyHexChars(const char *text, const size_t length)
  * \param text Text.
  * \return True when text can be UCS2.
  */
-inline bool ATGEN_IsUCS2(const char *text, const size_t length)
+INLINE bool ATGEN_IsUCS2(const char *text, const size_t length)
 {
 	return (length > 8) &&
 		(length % 4 == 0) &&
@@ -321,7 +321,7 @@ inline bool ATGEN_IsUCS2(const char *text, const size_t length)
  * \param text Text.
  * \return True when text can be HEX.
  */
-inline bool ATGEN_IsHex(const char *text, const size_t length)
+INLINE bool ATGEN_IsHex(const char *text, const size_t length)
 {
 	return (length > 4) &&
 		(length % 2 == 0) &&
