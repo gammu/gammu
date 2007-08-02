@@ -952,7 +952,7 @@ int main(int argc, char *argv[])
 			printf_warn("%s\n", _("No configuration file found!"));
 		}
 	}
- 	if (cfg == NULL) printf_warn("%s\n", _("No configuration read!"));
+ 	if (cfg == NULL) printf_warn("%s\n", _("No configuration read, using builtin defaults!"));
 
 	smcfg0 = GSM_GetConfig(s, 0);
 
@@ -961,7 +961,11 @@ int main(int argc, char *argv[])
 		if (only_config != -1) {
 			smcfg = smcfg0;
 			/* Here we get only in first for loop */
-			if (!GSM_ReadConfig(cfg, smcfg, only_config)) break;
+			if (!GSM_ReadConfig(cfg, smcfg, only_config)) {
+				printf_err(_("Failed to read [gammu%d] from gammurc!\n"), only_config);
+				printf_warn("%s\n", _("No configuration read, using builtin defaults!"));
+				GSM_ReadConfig(NULL, smcfg, 0);
+			}
 		} else {
 			if (!GSM_ReadConfig(cfg, smcfg, i) && i != 0) break;
 		}
