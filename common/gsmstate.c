@@ -500,7 +500,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		if (error != ERR_NONE) return error;
 		return ERR_NONE;
 	}
-	return ERR_UNKNOWN;
+	return ERR_UNCONFIGURED;
 }
 
 int GSM_ReadDevice (GSM_StateMachine *s, bool wait)

@@ -132,6 +132,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_GNAPPLETWRONG,		N_("Wrong GNAPPLET version in phone. Use version from currently used Gammu.")},
 	{ERR_FOLDERNOTEMPTY,		N_("Folder must be empty.")},
 	{ERR_DATACONVERTED,		N_("Data were converted.")},
+	{ERR_UNCONFIGURED,		N_("Gammu is not configured.")},
 
 	{0,				""}
 };
