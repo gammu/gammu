@@ -71,32 +71,33 @@ set (LIBRARY_SRC
     phone/symbian/gnapgen.c)
 
 # Library
-add_library (Gammu ${LIBRARY_SRC})
+add_library (libGammu ${LIBRARY_SRC})
 if (CROSS_MINGW)
     if (ENABLE_SHARED)
-        set_target_properties (Gammu PROPERTIES 
+        set_target_properties (libGammu PROPERTIES 
             PREFIX "" 
             SUFFIX ".dll"
             IMPORT_PREFIX ""
             IMPORT_SUFFIX ".lib"
             )
     else (ENABLE_SHARED)
-        set_target_properties (Gammu PROPERTIES PREFIX "" SUFFIX ".lib")
+        set_target_properties (libGammu PROPERTIES PREFIX "" SUFFIX ".lib")
     endif (ENABLE_SHARED)
 else (CROSS_MINGW)
     # -fPIC on Linux
     if (CMAKE_SYSTEM_NAME MATCHES "Linux")
-        set_target_properties (Gammu PROPERTIES COMPILE_FLAGS "-fPIC")
+        set_target_properties (libGammu PROPERTIES COMPILE_FLAGS "-fPIC")
     endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
 
 endif (CROSS_MINGW)
 
-set_target_properties (Gammu PROPERTIES VERSION 2.${VERSION} SOVERSION 2)
+set_target_properties (libGammu PROPERTIES VERSION 2.${VERSION} SOVERSION 2)
+set_target_properties(libGammu PROPERTIES OUTPUT_NAME Gammu)
 
 set (GAMMU_LIBS "")
 
 if (BLUEZ_FOUND)
-    target_link_libraries (Gammu ${BLUEZ_LIBRARIES})
+    target_link_libraries (libGammu ${BLUEZ_LIBRARIES})
     include_directories (${BLUEZ_INCLUDE_DIR})
     if (NOT "${BLUEZ_LIBRARIES}" STREQUAL "") 
         set (GAMMU_LIBS "${GAMMU_LIBS} -l${BLUEZ_LIBRARIES}")
@@ -104,7 +105,7 @@ if (BLUEZ_FOUND)
 endif (BLUEZ_FOUND)
 
 if (UNIX)
-    target_link_libraries (Gammu m)
+    target_link_libraries (libGammu m)
 endif (UNIX)
 
 # Include search path
@@ -116,15 +117,15 @@ include_directories (
 # Add libraries needed for windows build
 if (WIN32)
     # Magic needed for SHGetFolderPathA
-    target_link_libraries (Gammu shfolder shell32)
+    target_link_libraries (libGammu shfolder shell32)
     # Win sock
-    target_link_libraries (Gammu ws2_32)
+    target_link_libraries (libGammu ws2_32)
     # These libraries are needed for serial driver
-    target_link_libraries (Gammu setupapi advapi32)
+    target_link_libraries (libGammu setupapi advapi32)
 endif (WIN32)
 
 if (GETTEXTLIBS_FOUND)
-    target_link_libraries (Gammu ${GETTEXT_LIBRARY})
+    target_link_libraries (libGammu ${GETTEXT_LIBRARY})
     include_directories (${GETTEXT_INCLUDE_DIR})
     if (NOT "${GETTEXT_LIBRARIES}" STREQUAL "") 
         set (GAMMU_LIBS "${GAMMU_LIBS} -l${GETTEXT_LIBRARIES}")
@@ -139,7 +140,7 @@ else (ENABLE_SHARED)
 endif (ENABLE_SHARED)
 
 # Install instructions
-install (TARGETS Gammu
+install (TARGETS libGammu
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT "runtime"
         LIBRARY DESTINATION "${INSTALL_LIB_DIR}" COMPONENT "runtime"
         ARCHIVE DESTINATION "${INSTALL_LIB_DIR}" COMPONENT "development"

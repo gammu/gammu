@@ -9,12 +9,12 @@ include_directories("${Gammu_BINARY_DIR}/include")
 
 # Basic check for statemachine allocation
 add_executable(statemachine-alloc statemachine-alloc.c)
-target_link_libraries(statemachine-alloc Gammu)
+target_link_libraries(statemachine-alloc libGammu)
 add_test(statemachine-alloc ${EXECUTABLE_OUTPUT_PATH}/statemachine-alloc)
 
 # vCard parsing
 add_executable(vcard-read vcard-read.c)
-target_link_libraries(vcard-read Gammu)
+target_link_libraries(vcard-read libGammu)
 
 # List test cases
 file(GLOB VCARDS 
