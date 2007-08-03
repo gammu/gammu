@@ -22,6 +22,7 @@
 #ifdef GSM_ENABLE_SERIALDEVICE
 #ifdef WIN32
 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <string.h>
 #include <stdio.h>
