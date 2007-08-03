@@ -447,6 +447,10 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 			case PBK_CallLength:
 				text = false;
 				break;
+			case PBK_PushToTalkID:
+				sprintf(buffer,"Entry%02iType = PushToTalkID%c%c",j,13,10);
+				SaveBackupText(file, "", buffer, UseUnicode);
+				break;
         	}
 		if (text) {
 			sprintf(buffer,"Entry%02iText",j);
@@ -1509,6 +1513,8 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				continue;
 			} else if (strcasecmp(readvalue,"PictureName") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_PictureName;
+			} else if (strcasecmp(readvalue,"PushToTalkID") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_PushToTalkID;
 			} else if (strcasecmp(readvalue,"UserID") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_UserID;
 			}

@@ -275,6 +275,10 @@ typedef enum {
 	 * Picture name (on phone filesystem). (Text)
 	 */
 	PBK_Text_PictureName,
+ 	/**
+ 	 * Push-to-talk ID (Text)
+ 	 */
+ 	PBK_PushToTalkID,
 } GSM_EntryType;
 
 /**

@@ -279,6 +279,14 @@ int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_Mem
 			}
 			continue;
 		}
+		if (entry->Entries[i].EntryType == PBK_PushToTalkID) {
+			entry->Entries[i].AddError = ERR_NONE;
+			string[0] = UnicodeLength(entry->Entries[i].Text)*2;
+			CopyUnicodeString(string+1,entry->Entries[i].Text);
+			count += N71_65_PackPBKBlock(s, N6510_PBK_PUSHTOTALK_ID, string[0]+2, block++, string, req+count);
+			req[count-1]--;
+			continue;
+		}
 	}
 
 	*block2=block;
@@ -821,7 +829,15 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			continue;
 		}
 		if (Block[0] == N6510_PBK_PUSHTOTALK_ID) {
-			smprintf(s,"SIP Address (Push to Talk address) - ignored\n");
+			smprintf(s,"SIP Address (Push to Talk address)\n");
+			if (Block[5]/2>GSM_PHONEBOOK_TEXT_LENGTH) {
+				smprintf(s, "Too long text\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			entry->Entries[entry->EntriesNum].EntryType=PBK_PushToTalkID;
+			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
+			entry->EntriesNum ++;
 			continue;
 		}
 		if (Block[0] == N6510_PBK_GROUP2_ID) {
