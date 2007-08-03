@@ -104,7 +104,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 		if (strlen(connection) == 2) {
 			s->Speed = 19200;
 		} else {
-			s->Speed = FindSerialSpeed(connection+2);
+			s->Speed = FindSerialSpeed(connection + 2);
 		}
 		if (s->Speed != 0) {
 			s->ConnectionType = GCT_AT;

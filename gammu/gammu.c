@@ -47,30 +47,30 @@
 
 #define ALL_MEMORY_TYPES "DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 
-
 #ifdef DEBUG
 static void MakeConvertTable(int argc UNUSED, char *argv[])
 {
-	unsigned char 	InputBuffer[10000], Buffer[10000];
-	FILE		*file;
-	int		size,i,j=0;
+	unsigned char InputBuffer[10000], Buffer[10000];
+	FILE *file;
+	int size, i, j = 0;
 
 	file = fopen(argv[2], "rb");
-	if (file == NULL) Print_Error(ERR_CANTOPENFILE);
-	size=fread(InputBuffer, 1, 10000-1, file);
+	if (file == NULL)
+		Print_Error(ERR_CANTOPENFILE);
+	size = fread(InputBuffer, 1, 10000 - 1, file);
 	fclose(file);
-	InputBuffer[size]   = 0;
-	InputBuffer[size+1] = 0;
+	InputBuffer[size] = 0;
+	InputBuffer[size + 1] = 0;
 
-	ReadUnicodeFile(Buffer,InputBuffer);
+	ReadUnicodeFile(Buffer, InputBuffer);
 
-	for(i=0;i<((int)UnicodeLength(Buffer));i++) {
+	for (i = 0; i < ((int)UnicodeLength(Buffer)); i++) {
 		j++;
-		if (j==100) {
+		if (j == 100) {
 			printf("\"\\\n\"");
-			j=0;
+			j = 0;
 		}
-		printf("\\x%02x\\x%02x",Buffer[i*2],Buffer[i*2+1]);
+		printf("\\x%02x\\x%02x", Buffer[i * 2], Buffer[i * 2 + 1]);
 	}
 	printf("\\x00\\x00");
 }
@@ -78,17 +78,21 @@ static void MakeConvertTable(int argc UNUSED, char *argv[])
 
 static void ListNetworks(int argc, char *argv[])
 {
-	extern unsigned char 	*GSM_Networks[];
-	extern unsigned char 	*GSM_Countries[];
-	int 			i=0;
-	char			country[4]="";
+	extern unsigned char *GSM_Networks[];
+	extern unsigned char *GSM_Countries[];
+	int i = 0;
+	char country[4] = "";
 
-	if (argc>2) {
-		while (GSM_Countries[i*2]!=NULL) {
-			if (strncmp(GSM_Countries[i * 2 + 1], argv[2], strlen(argv[2])) == 0 ||
-				strncmp(GSM_Countries[i * 2], argv[2], strlen(argv[2])) == 0) {
-				strcpy(country,GSM_Countries[i*2]);
-				printf(_("Networks for %s:"), GSM_Countries[i * 2 + 1]);
+	if (argc > 2) {
+		while (GSM_Countries[i * 2] != NULL) {
+			if (strncmp
+			    (GSM_Countries[i * 2 + 1], argv[2],
+			     strlen(argv[2])) == 0
+			    || strncmp(GSM_Countries[i * 2], argv[2],
+				       strlen(argv[2])) == 0) {
+				strcpy(country, GSM_Countries[i * 2]);
+				printf(_("Networks for %s:"),
+				       GSM_Countries[i * 2 + 1]);
 				printf("\n\n");
 				break;
 			}
@@ -101,31 +105,30 @@ static void ListNetworks(int argc, char *argv[])
 		}
 	}
 	printf("%-10s %s\n", _("Network"), _("Name"));
-	i=0;
-	while (GSM_Networks[i*2]!=NULL) {
-		if (argc>2) {
-		        if (!strncmp(GSM_Networks[i*2],country,strlen(country))) {
-				printf("%-10s %s\n", GSM_Networks[i*2], GSM_Networks[i*2+1]);
+	i = 0;
+	while (GSM_Networks[i * 2] != NULL) {
+		if (argc > 2) {
+			if (!strncmp
+			    (GSM_Networks[i * 2], country, strlen(country))) {
+				printf("%-10s %s\n", GSM_Networks[i * 2],
+				       GSM_Networks[i * 2 + 1]);
 			}
 		} else {
-			printf("%-10s %s\n", GSM_Networks[i*2], GSM_Networks[i*2+1]);
+			printf("%-10s %s\n", GSM_Networks[i * 2],
+			       GSM_Networks[i * 2 + 1]);
 		}
 		i++;
 	}
 }
 
-
 static void PrintVersion()
 {
 	printf(_("[Gammu version %s built %s on %s using %s]"),
-		VERSION,
-		__TIME__,
-		__DATE__,
-		GetCompiler());
+	       VERSION, __TIME__, __DATE__, GetCompiler());
 	printf("\n\n");
 }
 
-static void Features(int argc UNUSED, char *argv[] UNUSED)
+static void Features(int argc UNUSED, char *argv[]UNUSED)
 {
 	PrintVersion();
 
@@ -261,13 +264,16 @@ static void Features(int argc UNUSED, char *argv[] UNUSED)
 #endif
 }
 
-static void Version(int argc UNUSED, char *argv[] UNUSED)
+static void Version(int argc UNUSED, char *argv[]UNUSED)
 {
 	PrintVersion();
 
-	printf("%s\n", _("This is free software.  You may redistribute copies of it under the terms of"));
-	printf("%s\n", _("the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."));
-	printf("%s\n", _("There is NO WARRANTY, to the extent permitted by law."));
+	printf("%s\n",
+	       ("This is free software.  You may redistribute copies of it under the terms of"));
+	printf("%s\n",
+	       ("the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."));
+	printf("%s\n",
+	       _("There is NO WARRANTY, to the extent permitted by law."));
 	printf("\n\n");
 }
 
@@ -275,7 +281,7 @@ static void Version(int argc UNUSED, char *argv[] UNUSED)
 /**
  * Function for testing purposes.
  */
-static void Foo(int argc UNUSED, char *argv[] UNUSED)
+static void Foo(int argc UNUSED, char *argv[]UNUSED)
 {
 }
 #endif
@@ -287,15 +293,17 @@ int ProcessParameters(char start, int argc, char *argv[]);
  * sequentially as if they were given on the command line. Also allows
  * recursive calling (nested batches in the batch files).
  */
-static void RunBatch(int argc, char *argv[]) {
+static void RunBatch(int argc, char *argv[])
+{
 	FILE *bf;
+
 	/**
 	 * @todo Allocate memory dynamically.
 	 */
 	char ln[2000];
 	size_t i;
-	int j,c=0,argsc;
-	char* argsv[20];
+	int j, c = 0, argsc;
+	char *argsv[20];
 	bool origbatch;
 	char *name;
 	char std_name[] = N_("standard input");
@@ -310,7 +318,7 @@ static void RunBatch(int argc, char *argv[]) {
 
 	if (bf == NULL) {
 		printf(_("Batch file could not be opened: %s\n"), argv[2]);
-		return; /* not exit(), so that any parent batch can continue */
+		return;		/* not exit(), so that any parent batch can continue */
 	}
 
 	argsv[0] = argv[0];
@@ -319,43 +327,50 @@ static void RunBatch(int argc, char *argv[]) {
 	while (!feof(bf)) {
 		ln[0] = 0;
 		fgets(ln, sizeof(ln) - 2, bf);
-		if (ln[strlen(ln) - 2] == 0x0D ) {
-		/* reduce CRLF to LF so we have the same EOL on Windows and Linux */
+		if (ln[strlen(ln) - 2] == 0x0D) {
+			/* reduce CRLF to LF so we have the same EOL on Windows and Linux */
 			ln[strlen(ln) - 2] = 0x0A;
 			ln[strlen(ln) - 1] = 0;
 		}
-		if (strlen(ln) > 1 && ln[0] != '#') {
-			/* if line is not empty and is not a comment, split words into strings in the array argsv */
-			i=0;j=0;
-			argsc=0;
-			while (i < strlen(ln)) {
-				if (ln[i]==' ' || ln[i]==0x0A) {
-					argsc++;
-					argsv[argsc] = malloc(i-j+1);
-					strncpy(argsv[argsc], ln + j, i - j);
-					argsv[argsc][i - j] = 0;
-					j = i + 1;
-				}
-				i++;
+
+		if (strlen(ln) < 1 || ln[0] == '#') {
+			/* line is empty and is not a comment */
+			continue;
+		}
+			
+		/* split words into strings in the array argsv */
+		i = 0;
+		j = 0;
+		argsc = 0;
+		while (i < strlen(ln)) {
+			if (ln[i] == ' ' || ln[i] == 0x0A) {
+				argsc++;
+				argsv[argsc] = malloc(i - j + 1);
+				strncpy(argsv[argsc], ln + j, i - j);
+				argsv[argsc][i - j] = 0;
+				j = i + 1;
 			}
-			if(argsc > 0) {
-				/* we have some usable command and parameters, send them into standard processing */
-				printf("----------------------------------------------------------------------------\n");
-				printf(_("Executing batch \"%s\" - command %i: %s"), name, ++c, ln);
-				/**
-				 * @todo Handle return value from ProcessParameters.
-				 */
-				ProcessParameters(0, argsc + 1, argsv);
-				for (j = 1; j <= argsc; j++) {
-					free(argsv[j]);
-				}
+			i++;
+		}
+		if (argsc > 0) {
+			/* we have some usable command and parameters, send them into standard processing */
+			printf ("----------------------------------------------------------------------------\n");
+			printf(_("Executing batch \"%s\" - command %i: %s"), name, ++c, ln);
+			/**
+			 * @todo Handle return value from ProcessParameters.
+			 */
+			ProcessParameters(0, argsc + 1, argsv);
+			for (j = 1; j <= argsc; j++) {
+				free(argsv[j]);
 			}
 		}
 	}
 	if (!origbatch) {
 		/* only close the batch if we are not in a nested batch */
-		batch=false;
-		if (batchConn) { GSM_Terminate(); }
+		batch = false;
+		if (batchConn) {
+			GSM_Terminate();
+		}
 	}
 	fclose(bf);
 }
@@ -642,7 +657,6 @@ static HelpCategoryDescriptions HelpDescriptions[] = {
 /* *INDENT-ON* */
 };
 
-
 void HelpHeader(void)
 {
 	PrintVersion();
@@ -650,21 +664,27 @@ void HelpHeader(void)
 
 void HelpGeneral(void)
 {
-	int	i=0;
+	int i = 0;
 
 	HelpHeader();
 
- 	printf("%s\n\n", _("Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> [options]"));
- 	printf("%s\n", _("First parameter optionally specifies which config section to use (all are probed by default)."));
- 	printf("%s\n\n", _("Second parameter optionally controls debug level, next one specifies actions."));
+	printf("%s\n\n",
+	       ("Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> [options]"));
+	printf("%s\n",
+	       ("First parameter optionally specifies which config section to use (all are probed by default)."));
+	printf("%s\n\n",
+	       ("Second parameter optionally controls debug level, next one specifies actions."));
 
- 	printf("%s\n\n", _("Commands can be specified with or without leading --."));
+	printf("%s\n\n",
+	       _("Commands can be specified with or without leading --."));
 
 	/* We might want to put here some most used commands */
-	printf("%s\n\n", _("For more details, call help on specific topic (gammu --help topic). Topics are:"));
+	printf("%s\n\n",
+	       ("For more details, call help on specific topic (gammu --help topic). Topics are:"));
 
 	while (HelpDescriptions[i].category != 0) {
-		printf("%11s - %s\n", HelpDescriptions[i].option, gettext(HelpDescriptions[i].description));
+		printf("%11s - %s\n", HelpDescriptions[i].option,
+		       gettext(HelpDescriptions[i].description));
 		i++;
 	}
 	printf("\n");
@@ -672,9 +692,9 @@ void HelpGeneral(void)
 
 void HelpSplit(int cols, int len, unsigned char *buff)
 {
-	int		l, len2, pos, split;
-	bool		in_opt,first=true;
-	char		*remain, spaces[50], buffer[500];
+	int l, len2, pos, split;
+	bool in_opt, first = true;
+	char *remain, spaces[50], buffer[500];
 
 	if (cols == 0) {
 		printf(" %s\n", buff);
@@ -685,22 +705,25 @@ void HelpSplit(int cols, int len, unsigned char *buff)
 		if (len + len2 < cols) {
 			printf("%s\n", buff);
 		} else {
-			for(l = 0; l < len; l++) strcat(spaces, " ");
+			for (l = 0; l < len; l++)
+				strcat(spaces, " ");
 
 			remain = buff;
 
 			while (strlen(remain) > 0) {
-				split	= 0;
-				pos	= 0;
-				in_opt	= false;
-				if (!first) printf(spaces);
+				split = 0;
+				pos = 0;
+				in_opt = false;
+				if (!first)
+					printf(spaces);
 				while (pos < cols - len && remain[pos] != 0) {
 					if (in_opt && remain[pos] == ']') {
 						in_opt = false;
-						split  = pos;
+						split = pos;
 					} else if (remain[pos] == '[') {
 						in_opt = true;
-					} else if (!in_opt && remain[pos] == ' ') {
+					} else if (!in_opt
+						   && remain[pos] == ' ') {
 						split = pos - 1;
 					}
 					pos++;
@@ -716,7 +739,8 @@ void HelpSplit(int cols, int len, unsigned char *buff)
 					buffer[split] = 0;
 					printf("%s\n", buffer);
 					remain += split;
-					if (remain[0] == ' ') remain++;
+					if (remain[0] == ' ')
+						remain++;
 				}
 			}
 		}
@@ -725,14 +749,15 @@ void HelpSplit(int cols, int len, unsigned char *buff)
 
 void Help(int argc, char *argv[])
 {
-	int				i = 0, j = 0, k, cols;
-	bool				disp;
+	int i = 0, j = 0, k, cols;
+	bool disp;
+
 #ifdef TIOCGWINSZ
-	struct winsize			w;
+	struct winsize w;
 #endif
 #if defined(WIN32) || defined(DJGPP)
 #else
-	char				*columns;
+	char *columns;
 #endif
 
 	/* Just --help */
@@ -741,11 +766,13 @@ void Help(int argc, char *argv[])
 		return;
 	}
 
-	if (!strcmp(argv[2],"all")) {
+	if (!strcmp(argv[2], "all")) {
 		HelpHeader();
 	} else {
 		while (HelpDescriptions[i].category != 0) {
-			if (strcasecmp(argv[2], HelpDescriptions[i].option) == 0) break;
+			if (strcasecmp(argv[2], HelpDescriptions[i].option) ==
+			    0)
+				break;
 			i++;
 		}
 		if (HelpDescriptions[i].category == 0) {
@@ -754,7 +781,8 @@ void Help(int argc, char *argv[])
 			return;
 		}
 		HelpHeader();
-		printf(_("Gammu commands, topic: %s\n\n"), HelpDescriptions[i].description);
+		printf(_("Gammu commands, topic: %s\n\n"),
+		       HelpDescriptions[i].description);
 	}
 
 #if defined(WIN32) || defined(DJGPP)
@@ -765,14 +793,16 @@ void Help(int argc, char *argv[])
 	if (isatty(1)) {
 #ifdef TIOCGWINSZ
 		if (ioctl(2, TIOCGWINSZ, &w) == 0) {
-			if (w.ws_col > 0) cols = w.ws_col;
+			if (w.ws_col > 0)
+				cols = w.ws_col;
 		}
 #endif
 		if (cols == 0) {
 			columns = getenv("COLUMNS");
 			if (columns != NULL) {
 				cols = atoi(columns);
-				if (cols <= 0) cols = 0;
+				if (cols <= 0)
+					cols = 0;
 			}
 		}
 
@@ -784,22 +814,28 @@ void Help(int argc, char *argv[])
 #endif
 
 	while (Parameters[j].Function != NULL) {
-		k 	= 0;
-		disp 	= false;
-		if (!strcmp(argv[2],"all")) {
-			if (j==0) disp = true;
-			if (j!=0) {
-				if (strcmp(Parameters[j].help,Parameters[j-1].help)) {
+		k = 0;
+		disp = false;
+		if (!strcmp(argv[2], "all")) {
+			if (j == 0)
+				disp = true;
+			if (j != 0) {
+				if (strcmp
+				    (Parameters[j].help,
+				     Parameters[j - 1].help)) {
 					disp = true;
 				} else {
-					if (strcmp(Parameters[j].parameter,Parameters[j-1].parameter)) {
+					if (strcmp
+					    (Parameters[j].parameter,
+					     Parameters[j - 1].parameter)) {
 						disp = true;
 					}
 				}
 			}
 		} else {
 			while (Parameters[j].help_cat[k] != 0) {
-				if (Parameters[j].help_cat[k] == HelpDescriptions[i].category) {
+				if (Parameters[j].help_cat[k] ==
+				    HelpDescriptions[i].category) {
 					disp = true;
 					break;
 				}
@@ -811,7 +847,9 @@ void Help(int argc, char *argv[])
 			if (Parameters[j].help[0] == 0) {
 				printf("\n");
 			} else {
-				HelpSplit(cols - 1, strlen(Parameters[j].parameter) + 1, gettext(Parameters[j].help));
+				HelpSplit(cols - 1,
+					  strlen(Parameters[j].parameter) + 1,
+					  gettext(Parameters[j].help));
 			}
 		}
 		j++;
@@ -825,63 +863,80 @@ int FoundVersion(unsigned char *Buffer)
 	retval = atoi(Buffer) * 10000;
 	while (Buffer[pos] != '.') {
 		pos++;
-		if (pos == strlen(Buffer)) return retval;
+		if (pos == strlen(Buffer))
+			return retval;
 	}
 	pos++;
-	retval += atoi(Buffer+pos) * 100;
+	retval += atoi(Buffer + pos) * 100;
 	while (Buffer[pos] != '.') {
 		pos++;
-		if (pos == strlen(Buffer)) return retval;
+		if (pos == strlen(Buffer))
+			return retval;
 	}
 	pos++;
-	return retval + atoi(Buffer+pos);
+	return retval + atoi(Buffer + pos);
 }
 
-int ProcessParameters(char start, int argc, char *argv[]) {
-	int 		z = 0;
- 	bool		count_failed = false;
+int ProcessParameters(char start, int argc, char *argv[])
+{
+	int z = 0;
+	bool count_failed = false;
 
 	/* Check parameters */
 	while (Parameters[z].Function != NULL) {
 		if (strcasecmp(Parameters[z].parameter, argv[1 + start]) == 0 ||
-			(strncmp(argv[1 + start], "--", 2) == 0 &&
-			strcasecmp(Parameters[z].parameter, argv[1 + start] + 2) == 0)
-			) {
-			if (argc-2-start < Parameters[z].min_arg) {
+		    (strncmp(argv[1 + start], "--", 2) == 0 &&
+		     strcasecmp(Parameters[z].parameter,
+				argv[1 + start] + 2) == 0)
+		    ) {
+			if (argc - 2 - start < Parameters[z].min_arg) {
 				if (!count_failed) {
-					if (Parameters[z].min_arg==Parameters[z].max_arg) {
-						printf(_("More parameters required (function requires %d)\n"), Parameters[z].min_arg);
+					if (Parameters[z].min_arg ==
+					    Parameters[z].max_arg) {
+						printf(("More parameters required (function requires %d)\n"),
+						       Parameters[z].min_arg);
 					} else {
-						printf(_("More parameters required (function requires %d to %d)\n"), Parameters[z].min_arg, Parameters[z].max_arg);
+						printf(("More parameters required (function requires %d to %d)\n"),
+						       Parameters[z].min_arg,
+						       Parameters[z].max_arg);
 					}
 					if (Parameters[z].help[0] != 0) {
-						printf("%s:\n", _("Parameters help"));
+						printf("%s:\n",
+						       _("Parameters help"));
 					}
 				}
 				if (Parameters[z].help[0] != 0) {
-					printf("%s\n", gettext(Parameters[z].help));
+					printf("%s\n",
+					       gettext(Parameters[z].help));
 				}
 				count_failed = true;
-			} else if (argc-2-start > Parameters[z].max_arg) {
+			} else if (argc - 2 - start > Parameters[z].max_arg) {
 				if (!count_failed) {
-					if (Parameters[z].min_arg==Parameters[z].max_arg) {
-						printf(_("Too many parameters (function accepts %d)\n"), Parameters[z].min_arg);
+					if (Parameters[z].min_arg ==
+					    Parameters[z].max_arg) {
+						printf(("Too many parameters (function accepts %d)\n"),
+						       Parameters[z].min_arg);
 					} else {
-						printf(_("Too many parameters (function accepts %d to %d)\n"), Parameters[z].min_arg, Parameters[z].max_arg);
+						printf(("Too many parameters (function accepts %d to %d)\n"),
+						       Parameters[z].min_arg,
+						       Parameters[z].max_arg);
 					}
 					if (Parameters[z].help[0] != 0) {
-						printf("%s:\n", _("Parameters help"));
+						printf("%s:\n",
+						       _("Parameters help"));
 					}
 				}
 				if (Parameters[z].help[0] != 0) {
-					printf("%s\n", gettext(Parameters[z].help));
+					printf("%s\n",
+					       gettext(Parameters[z].help));
 				}
 				count_failed = true;
 			} else {
-				Parameters[z].Function(argc - start, argv + start);
- 				break;
- 			}
- 		}
+				Parameters[z].Function(argc - start,
+						       argv + start);
+				break;
+			}
+		}
 		z++;
 	}
 
@@ -893,19 +948,19 @@ int ProcessParameters(char start, int argc, char *argv[]) {
 			return 2;
 		}
 		return 1;
- 	}
+	}
 	return 0;
 }
 
 int main(int argc, char *argv[])
 {
-	GSM_File	RSS;
-	int		rsslevel = 0,oldpos = 0;
+	GSM_File RSS;
+	int rsslevel = 0, oldpos = 0;
 	size_t pos = 0;
-	int 		start = 0;
-	unsigned int	i;
-	int		only_config = -1;
-	char		*cp,*rss,buff[200];
+	int start = 0;
+	unsigned int i;
+	int only_config = -1;
+	char *cp, *rss, buff[200];
 	GSM_Config *smcfg;
 	GSM_Config *smcfg0;
 	GSM_Debug_Info *di;
@@ -923,36 +978,42 @@ int main(int argc, char *argv[])
 	GSM_SetDebugLevel("textall", di);
 #endif
 
- 	/* Any parameters? */
+	/* Any parameters? */
 	if (argc == 1) {
 		HelpGeneral();
 		printf("%s\n", _("Too few parameters!"));
 		exit(1);
 	}
 
- 	/* Help? */
+	/* Help? */
 	if (strcasecmp(argv[1 + start], "--help") == 0 ||
-		strcasecmp(argv[1 + start], "-h") == 0 ||
-		strcasecmp(argv[1 + start], "help") == 0) {
+	    strcasecmp(argv[1 + start], "-h") == 0 ||
+	    strcasecmp(argv[1 + start], "help") == 0) {
 		Help(argc - start, argv + start);
 		exit(1);
 	}
 
- 	/* Is first parameter numeric? If so treat it as config that should be loaded. */
+	/* Is first parameter numeric? If so treat it as config that should be loaded. */
 	if (isdigit(argv[1][0])) {
 		only_config = atoi(argv[1]);
-		if (only_config >= 0) start++; else only_config = -1;
+		if (only_config >= 0)
+			start++;
+		else
+			only_config = -1;
 	}
 
- 	error = GSM_FindGammuRC(&cfg);
+	error = GSM_FindGammuRC(&cfg);
 	if (error != ERR_NONE) {
 		if (error == ERR_FILENOTSUPPORTED) {
-			printf_warn("%s\n", _("Configuration could not be parsed!"));
+			printf_warn("%s\n",
+				    _("Configuration could not be parsed!"));
 		} else {
 			printf_warn("%s\n", _("No configuration file found!"));
 		}
 	}
- 	if (cfg == NULL) printf_warn("%s\n", _("No configuration read, using builtin defaults!"));
+	if (cfg == NULL)
+		printf_warn("%s\n",
+			    ("No configuration read, using builtin defaults!"));
 
 	smcfg0 = GSM_GetConfig(s, 0);
 
@@ -962,120 +1023,143 @@ int main(int argc, char *argv[])
 			smcfg = smcfg0;
 			/* Here we get only in first for loop */
 			if (!GSM_ReadConfig(cfg, smcfg, only_config)) {
-				printf_err(_("Failed to read [gammu%d] from gammurc!\n"), only_config);
-				printf_warn("%s\n", _("No configuration read, using builtin defaults!"));
+				printf_err(("Failed to read [gammu%d] from gammurc!\n"),
+					   only_config);
+				printf_warn("%s\n",
+					    ("No configuration read, using builtin defaults!"));
 				GSM_ReadConfig(NULL, smcfg, 0);
 			}
 		} else {
-			if (!GSM_ReadConfig(cfg, smcfg, i) && i != 0) break;
+			if (!GSM_ReadConfig(cfg, smcfg, i) && i != 0)
+				break;
 		}
 		GSM_SetConfigNum(s, GSM_GetConfigNum(s) + 1);
 
-		if (cfg!=NULL) {
-		        cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
-        		if (cp) {
+		if (cfg != NULL) {
+			cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
+			if (cp) {
 				GSM_SetDebugCoding(cp, di);
 			}
 
-		        smcfg->Localize = INI_GetValue(cfg, "gammu", "gammuloc", false);
+			smcfg->Localize =
+			    INI_GetValue(cfg, "gammu", "gammuloc", false);
 			/* It is safe to pass NULL here */
 			GSM_InitLocales(smcfg->Localize);
 		}
 
-     		/* We want to use only one file descriptor for global and state machine debug output */
- 	    	smcfg->UseGlobalDebugFile = true;
+		/* We want to use only one file descriptor for global and state machine debug output */
+		smcfg->UseGlobalDebugFile = true;
 
 		/* It makes no sense to open several debug logs... */
 		if (i != 0) {
 			strcpy(smcfg->DebugLevel, smcfg0->DebugLevel);
 			free(smcfg->DebugFile);
 			smcfg->DebugFile = strdup(smcfg0->DebugFile);
- 		} else {
+		} else {
 			/* Just for first config */
 			/* When user gave debug level on command line */
-			if (argc > 1 + start && GSM_SetDebugLevel(argv[1 + start], di)) {
+			if (argc > 1 + start
+			    && GSM_SetDebugLevel(argv[1 + start], di)) {
 				/* Debug level from command line will be used with phone too */
-				strcpy(smcfg->DebugLevel,argv[1 + start]);
+				strcpy(smcfg->DebugLevel, argv[1 + start]);
 				start++;
 			} else {
 				/* Try to set debug level from config file */
 				GSM_SetDebugLevel(smcfg->DebugLevel, di);
 			}
 			/* If user gave debug file in gammurc, we will use it */
-			error=GSM_SetDebugFile(smcfg->DebugFile, di);
+			error = GSM_SetDebugFile(smcfg->DebugFile, di);
 			Print_Error(error);
- 		}
+		}
 
-		if (i==0) {
-		        rss = INI_GetValue(cfg, "gammu", "rsslevel", false);
-        		if (rss) {
-				if (strcasecmp(rss,"teststable") == 0) {
+		if (i == 0) {
+			rss = INI_GetValue(cfg, "gammu", "rsslevel", false);
+			if (rss) {
+				if (strcasecmp(rss, "teststable") == 0) {
 					rsslevel = 2;
-				} else if (strcasecmp(rss,"stable") == 0) {
+				} else if (strcasecmp(rss, "stable") == 0) {
 					rsslevel = 1;
 				}
 			}
-		        rss = INI_GetValue(cfg, "gammu", "usephonedb", false);
-        		if (rss && strcasecmp(rss,"yes") == 0) phonedb = true;
+			rss = INI_GetValue(cfg, "gammu", "usephonedb", false);
+			if (rss && strcasecmp(rss, "yes") == 0)
+				phonedb = true;
 		}
 
- 		/* We wanted to read just user specified configuration. */
- 		if (only_config != -1) {break;}
- 	}
+		/* We wanted to read just user specified configuration. */
+		if (only_config != -1) {
+			break;
+		}
+	}
 
 	/* Do we have enough parameters? */
- 	if (argc == 1 + start) {
- 		HelpGeneral();
- 		printf("%s\n", _("Too few parameters!"));
+	if (argc == 1 + start) {
+		HelpGeneral();
+		printf("%s\n", _("Too few parameters!"));
 		exit(-2);
 	}
 
 	/* Check used version vs. compiled */
-	if (!strcasecmp(GetGammuVersion(),VERSION) == 0) {
-		printf_err(_("Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"),
-					GetGammuVersion(),VERSION);
+	if (!strcasecmp(GetGammuVersion(), VERSION) == 0) {
+		printf_err(("Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"),
+			   GetGammuVersion(), VERSION);
 		exit(-1);
 	}
 
 	if (rsslevel > 0) {
 		RSS.Buffer = NULL;
-		if (GSM_ReadHTTPFile("blog.cihar.com","archives/gammu_releases/index-rss.xml",&RSS)) {
+		if (GSM_ReadHTTPFile("blog.cihar.com", "archives/gammu_releases/index-rss.xml", &RSS)) {
 			while (pos < RSS.Used) {
 				if (RSS.Buffer[pos] != 10) {
 					pos++;
 					continue;
 				}
 				RSS.Buffer[pos] = 0;
-				if (strstr(RSS.Buffer+oldpos,"<title>") ==NULL ||
-				    strstr(RSS.Buffer+oldpos,"</title>")==NULL ||
-				    strstr(RSS.Buffer+oldpos,"win32")   != NULL) {
+				if (strstr(RSS.Buffer + oldpos, "<title>") ==
+				    NULL
+				    || strstr(RSS.Buffer + oldpos,
+					      "</title>") == NULL
+				    || strstr(RSS.Buffer + oldpos,
+					      "win32") != NULL) {
 					pos++;
 					oldpos = pos;
 					continue;
 				}
-				if (rsslevel > 0 && strstr(RSS.Buffer+oldpos,"stable version")!=NULL) {
-					sprintf(buff,strstr(RSS.Buffer+oldpos,"stable version")+15);
-					for (i=0;i<strlen(buff);i++) {
+				if (rsslevel > 0
+				    && strstr(RSS.Buffer + oldpos,
+					      "stable version") != NULL) {
+					sprintf(buff,
+						strstr(RSS.Buffer + oldpos,
+						       "stable version") + 15);
+					for (i = 0; i < strlen(buff); i++) {
 						if (buff[i] == '<') {
 							buff[i] = 0;
 							break;
 						}
 					}
-					if (FoundVersion(buff) > FoundVersion(VERSION)) {
-						printf(_("INFO: there is later stable Gammu (%s instead of %s) available!\n"),buff,VERSION);
+					if (FoundVersion(buff) >
+					    FoundVersion(VERSION)) {
+						printf(("INFO: there is later stable Gammu (%s instead of %s) available!\n"),
+						       buff, VERSION);
 						break;
 					}
 				}
-				if (rsslevel == 2 && strstr(RSS.Buffer+oldpos,"test version")!=NULL) {
-					sprintf(buff,strstr(RSS.Buffer+oldpos,"test version")+13);
-					for (i=0;i<strlen(buff);i++) {
+				if (rsslevel == 2
+				    && strstr(RSS.Buffer + oldpos,
+					      "test version") != NULL) {
+					sprintf(buff,
+						strstr(RSS.Buffer + oldpos,
+						       "test version") + 13);
+					for (i = 0; i < strlen(buff); i++) {
 						if (buff[i] == '<') {
 							buff[i] = 0;
 							break;
 						}
 					}
-					if (FoundVersion(buff) > FoundVersion(VERSION)) {
-						printf(_("INFO: there is later testing Gammu (%s instead of %s) available!\n"),buff,VERSION);
+					if (FoundVersion(buff) >
+					    FoundVersion(VERSION)) {
+						printf(("INFO: there is later testing Gammu (%s instead of %s) available!\n"),
+						       buff, VERSION);
 						break;
 					}
 				}
@@ -1086,10 +1170,9 @@ int main(int argc, char *argv[])
 		}
 	}
 
-
 	ProcessParameters(start, argc, argv);
 
-     	/* Close debug output if opened */
+	/* Close debug output if opened */
 	GSM_SetDebugFileDescriptor(NULL, di);
 
 	GSM_FreeStateMachine(s);
@@ -1100,4 +1183,3 @@ int main(int argc, char *argv[])
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
-
