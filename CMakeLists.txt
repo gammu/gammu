@@ -136,37 +136,45 @@ find_package (PkgConfig)
 # Standard packages
 macro_optional_find_package (Doxygen)
 
-# Check for compiler flags we want to use
-check_c_compiler_flag("-Wall" HAVE_WALL)
-if (HAVE_WALL)
-    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall")
-endif (HAVE_WALL)
+if(MSVC)
+    # MSVC needs different flags at all
+    check_c_compiler_flag("/W3" HAVE_W3)
+    if (HAVE_W3)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} /W3")
+    endif (HAVE_W3)
+else(MSVC)
+    # Check for compiler flags we want to use
+    check_c_compiler_flag("-Wall" HAVE_WALL)
+    if (HAVE_WALL)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall")
+    endif (HAVE_WALL)
 
-# Not supported in MinGW
-if (NOT CROSS_MINGW)
-    check_c_compiler_flag("-Wno-pointer-sign" HAVE_WPOINTERSIGN)
-    if (HAVE_WPOINTERSIGN)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-pointer-sign")
-    endif (HAVE_WPOINTERSIGN)
-endif (NOT CROSS_MINGW)
+    # Not supported in MinGW
+    if (NOT CROSS_MINGW)
+        check_c_compiler_flag("-Wno-pointer-sign" HAVE_WPOINTERSIGN)
+        if (HAVE_WPOINTERSIGN)
+            set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-pointer-sign")
+        endif (HAVE_WPOINTERSIGN)
+    endif (NOT CROSS_MINGW)
 
-check_c_compiler_flag("-Werror-implicit-function-declaration" HAVE_WERRORDECLARATION)
-if (HAVE_WERRORDECLARATION)
-    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror-implicit-function-declaration")
-endif (HAVE_WERRORDECLARATION)
-
-check_c_compiler_flag("-Wdeclaration-after-statement" HAVE_WERRORDECLARATION)
-if (HAVE_WERRORDECLARATION)
-    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wdeclaration-after-statement")
-endif (HAVE_WERRORDECLARATION)
-
-# This is extremely noisy, use only in debug builds
-if (DEBUG)
-    check_c_compiler_flag("-Wextra" HAVE_WERRORDECLARATION)
+    check_c_compiler_flag("-Werror-implicit-function-declaration" HAVE_WERRORDECLARATION)
     if (HAVE_WERRORDECLARATION)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wextra")
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror-implicit-function-declaration")
     endif (HAVE_WERRORDECLARATION)
-endif (DEBUG)
+
+    check_c_compiler_flag("-Wdeclaration-after-statement" HAVE_WERRORDECLARATION)
+    if (HAVE_WERRORDECLARATION)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wdeclaration-after-statement")
+    endif (HAVE_WERRORDECLARATION)
+
+    # This is extremely noisy, use only in debug builds
+    if (DEBUG)
+        check_c_compiler_flag("-Wextra" HAVE_WERRORDECLARATION)
+        if (HAVE_WERRORDECLARATION)
+            set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wextra")
+        endif (HAVE_WERRORDECLARATION)
+    endif (DEBUG)
+endif(MSVC)
 
 
 # Check disabled for cross, but we have some libraries
