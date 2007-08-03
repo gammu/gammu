@@ -3036,11 +3036,11 @@ static GSM_Error N6510_ReplyGetPPM(GSM_Protocol_Message msg, GSM_StateMachine *s
 			}
 		}
 		len = pos;
-		while(1) {
+		while(len < msg.Length) {
 			if (msg.Buffer[len] == 0x00 && msg.Buffer[len+1] == 0x00) break;
 			len++;
 		}
-		while(1) {
+		while(len < msg.Length) {
 			if (msg.Buffer[len] != 0x00) break;
 			len++;
 		}
