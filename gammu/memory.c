@@ -127,6 +127,7 @@ void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 	case PBK_Text_Custom2       : printf(LISTFORMAT, _("Custom text 2")); break;
 	case PBK_Text_Custom3       : printf(LISTFORMAT, _("Custom text 3")); break;
 	case PBK_Text_Custom4       : printf(LISTFORMAT, _("Custom text 4")); break;
+	case PBK_PushToTalkID       : printf(LISTFORMAT, _("Push to talk ID")); break;
 #ifndef CHECK_CASES
 	default:
 		printf("%s\n", _("unknown field type"));
@@ -334,6 +335,7 @@ void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 			case PBK_Text_Custom4       :
 			case PBK_Text_UserID:
 			case PBK_Text_PictureName:
+			case PBK_PushToTalkID:
 			case PBK_Caller_Group       :
 				if (mywstrstr(Entry->Entries[i].Text, Text) != NULL) {
 					fprintf(stderr,"\n");
