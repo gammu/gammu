@@ -3,6 +3,7 @@
 #ifndef winserial_h
 #define winserial_h
 
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
 typedef struct {

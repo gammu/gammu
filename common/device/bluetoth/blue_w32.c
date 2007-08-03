@@ -12,6 +12,7 @@
 #include <fcntl.h>
 #include <errno.h>
 #include <string.h>
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 #include <io.h>
 

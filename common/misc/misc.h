@@ -13,9 +13,6 @@
 
 #include <stdio.h>
 #include <time.h>
-#ifdef WIN32
-#  include <windows.h>
-#endif
 
 #include <gammu-config.h>
 #include <gammu-types.h>
