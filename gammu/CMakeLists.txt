@@ -42,7 +42,7 @@ if (CROSS_MINGW)
     set_target_properties (gammu PROPERTIES PREFIX "" SUFFIX ".exe")
 endif (CROSS_MINGW)
 
-target_link_libraries (gammu Gammu)
+target_link_libraries (gammu libGammu)
 target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
 
 include_directories (
