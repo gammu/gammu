@@ -576,6 +576,10 @@ static GSM_Error N7110_GetPictureImageLocation(GSM_StateMachine *s, GSM_Bitmap *
 					 0x00,			/* Folder ID */
 					 0x0f, 0x07};
 
+	/* Just to have some defined values */
+	*folder = 0;
+	*location = 0;
+
 	error=N7110_GetSMSFolders (s, &folders);
 	if (error!=ERR_NONE) return error;
 
