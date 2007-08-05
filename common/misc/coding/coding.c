@@ -381,13 +381,13 @@ void EncodeBCD (unsigned char *dest, const unsigned char *src, int len, bool fil
 
 int DecodeWithHexBinAlphabet (unsigned char mychar)
 {
-	if (mychar >= 'A' && mychar <= 'F') 
+	if (mychar >= 'A' && mychar <= 'F')
 		return mychar - 'A' + 10;
 
-	if (mychar >= 'a' && mychar <= 'f') 
+	if (mychar >= 'a' && mychar <= 'f')
 		return mychar - 'a' + 10;
 
-	if (mychar >= '0' && mychar <= '9') 
+	if (mychar >= '0' && mychar <= '9')
 		return mychar - '0';
 
 	return -1;
@@ -1819,17 +1819,24 @@ int DecodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
 
 #include <iconv.h>
 
+#ifdef ICONV_SECOND_ARGUMENT_IS_CONST
+#  define SECOND_ICONV_ARG const char *
+#else
+#  define SECOND_ICONV_ARG char *
+#endif
+
 bool IconvDecode(const char *charset, const char *input, const size_t inlen, unsigned char *output, size_t outlen)
 {
 	iconv_t ic;
 	size_t rest = inlen;
-	char *in, *out;
+	SECOND_ICONV_ARG in;
+	char *out;
 
 	ic = iconv_open("UCS-2BE", charset);
 	if (ic == (iconv_t)(-1)) return false;
 
 	/* I know I loose const here, but it's iconv choice... */
-	in = (char *)input;
+	in = (SECOND_ICONV_ARG)input;
 	out = output;
 	iconv(ic, &in, &rest, &out, &outlen);
 
@@ -1842,13 +1849,14 @@ bool IconvEncode(const char *charset, const unsigned char *input, const size_t i
 {
 	iconv_t ic;
 	size_t rest = inlen;
-	char *in, *out;
+	SECOND_ICONV_ARG in;
+	char *out;
 
 	ic = iconv_open(charset, "UCS-2BE");
 	if (ic == (iconv_t)(-1)) return false;
 
 	/* I know I loose const here, but it's iconv choice... */
-	in = (char *)input;
+	in = (SECOND_ICONV_ARG)input;
 	out = output;
 	iconv(ic, &in, &rest, &out, &outlen);
 

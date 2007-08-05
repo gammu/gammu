@@ -165,6 +165,8 @@ else(MSVC)
         set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wdeclaration-after-statement")
     endif (HAVE_WERRORDECLARATION)
 
+    check_c_compiler_flag("-Werror" HAVE_WERROR)
+
     # This is extremely noisy, use only in debug builds
     if (DEBUG)
         check_c_compiler_flag("-Wextra" HAVE_WERRORDECLARATION)
