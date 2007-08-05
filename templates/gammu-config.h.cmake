@@ -207,6 +207,7 @@
 
 /* Iconv support */
 #cmakedefine ICONV_FOUND
+#cmakedefine ICONV_SECOND_ARGUMENT_IS_CONST
 
 /* Will be used Bluez BT stack ? */
 #cmakedefine GSM_ENABLE_BLUEZ
