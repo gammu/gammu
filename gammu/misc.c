@@ -1137,7 +1137,6 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	GSM_WAPBookmark		Bookmark;
 	GSM_FMStation 		Station;
 	bool			DoClear;
-	int			i;
 	GSM_Error error;
 
 	GSM_Init(true);
@@ -1237,7 +1236,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 		Print_Error(error);
 		fprintf(stderr, "%s\n", _("Done"));
 	}
-	Station.Location=i;
+	Station.Location = 1;
 	error=GSM_GetFMStation(s,&Station);
 	if (error == ERR_NONE || error == ERR_EMPTY) {
 	 	if (answer_yes(_("Delete all phone FM radio stations"))) {
