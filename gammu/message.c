@@ -1243,12 +1243,12 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 
 	if (strcasestr(argv[1], "savesms") != NULL) {
 		SaveSMS = true;
+	} else if (strcasestr(argv[1], "sendsmsdsms") != NULL) {
+		SendSMSDSMS = true;
 	} else if (strcasestr(argv[1], "sendsms") != NULL) {
 		SendSMS = true;
 	} else if (strcasestr(argv[1], "displaysms") != NULL) {
 		DisplaySMS = true;
-	} else if (strcasestr(argv[1], "sendsmsdsms") != NULL) {
-		SendSMSDSMS = true;
 	} else {
 		return;
 	}
@@ -1271,7 +1271,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 	}
 
 	if (SendSMSDSMS) {
-		startarg=startarg+2;
+		startarg += 2;
 		EncodeUnicode(SMSC,"1234",4);
 		SMSCSet	= 0;
 	}
