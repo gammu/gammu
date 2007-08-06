@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.12.93
+20070806 - 1.12.93
 [!] * Huge gammu/gammu.c split to smaller files.
 [+] * Lot of fixes to allow compilation using MSVC + CMake.
 [+] * Support for push to talk ids (thanks to Pavel Kostromitinov).
