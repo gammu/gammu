@@ -741,14 +741,6 @@ install (
     COMPONENT "gnapplet"
     )
 
-if(NOT WIN32)
-    install (
-        FILES other/bash/completion/gammu
-        DESTINATION "/etc/bash_completion.d"
-        COMPONENT "bash"
-        )
-endif(NOT WIN32)
-
 foreach (DOC ${DEVELDOCS})
     string (REGEX REPLACE "docs/develop(.*)/[^/]*$" "\\1" DIRNAME ${DOC})
     install (
