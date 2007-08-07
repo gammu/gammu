@@ -652,7 +652,7 @@ add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
 set (INSTALL_BIN_DIR "bin" CACHE FILEPATH "Path for binaries installation")
 mark_as_advanced (INSTALL_BIN_DIR)
 
-set (INSTALL_LIB_DIR "lib" CACHE FILEPATH "Path for libraries installation")
+set (INSTALL_LIB_DIR "lib${LIB_SUFFIX}" CACHE FILEPATH "Path for libraries installation")
 mark_as_advanced (INSTALL_LIB_DIR)
 
 set (INSTALL_INC_DIR "include/gammu" CACHE FILEPATH "Path for includes installation")
