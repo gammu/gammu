@@ -649,22 +649,22 @@ add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
     COMMENT "Generating internal documentation")
 
 # Install paths
-set (INSTALL_BIN_DIR "bin" CACHE FILEPATH "Path for binaries installation")
+set (INSTALL_BIN_DIR "bin" CACHE STRING "Path for binaries installation")
 mark_as_advanced (INSTALL_BIN_DIR)
 
-set (INSTALL_LIB_DIR "lib${LIB_SUFFIX}" CACHE FILEPATH "Path for libraries installation")
+set (INSTALL_LIB_DIR "lib${LIB_SUFFIX}" CACHE STRING "Path for libraries installation")
 mark_as_advanced (INSTALL_LIB_DIR)
 
-set (INSTALL_INC_DIR "include/gammu" CACHE FILEPATH "Path for includes installation")
+set (INSTALL_INC_DIR "include/gammu" CACHE STRING "Path for includes installation")
 mark_as_advanced (INSTALL_INC_DIR)
 
-set (INSTALL_LOC_DIR "share/gammu" CACHE FILEPATH "Path for locales installation")
+set (INSTALL_LOC_DIR "share/gammu" CACHE STRING "Path for locales installation")
 mark_as_advanced (INSTALL_LOC_DIR)
 
-set (INSTALL_DOC_DIR "share/doc/gammu" CACHE FILEPATH "Path for documentation installation")
+set (INSTALL_DOC_DIR "share/doc/gammu" CACHE STRING "Path for documentation installation")
 mark_as_advanced (INSTALL_DOC_DIR)
 
-set (INSTALL_MAN_DIR "share/man" CACHE FILEPATH "Path for man pages installation")
+set (INSTALL_MAN_DIR "share/man" CACHE STRING "Path for man pages installation")
 mark_as_advanced (INSTALL_MAN_DIR)
 
 # Generate pkgconfig file
