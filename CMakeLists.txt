@@ -437,8 +437,8 @@ set (HEADERS
     common/phone/obex/obexfunc.h
     common/phone/pfunc.h
     common/phone/symbian/gnapgen.h
-    common/phone/sonyeric/sefunc.h
-    common/phone/sonyeric/sonyeric.h
+    common/phone/atobex/atobexfunc.h
+    common/phone/atobex/atobex.h
     common/protocol/alcatel/alcabus.h
     common/protocol/at/at.h
     common/protocol/nokia/fbus2.h
@@ -468,69 +468,6 @@ set (HEADERS
     common/gsmcomon.h
     ${Gammu_BINARY_DIR}/include/gammu-config.h
     )
-
-set (LIBRARY_SRC
-    common/gsmcomon.c
-    common/gsmstate.c
-    common/misc/misc.c
-    common/misc/cfg.c
-    common/misc/coding/coding.c
-    common/misc/coding/md5.c
-    common/service/sms/gsmsms.c
-    common/service/sms/gsmems.c
-    common/service/sms/gsmmulti.c
-    common/service/gsmcal.c
-    common/service/gsmdata.c
-    common/service/gsmpbk.c
-    common/service/gsmring.c
-    common/service/gsmlogo.c
-    common/service/gsmmisc.c
-    common/service/gsmnet.c
-    common/service/backup/gsmback.c
-    common/service/backup/backldif.c
-    common/service/backup/backlmb.c
-    common/service/backup/backtext.c
-    common/service/backup/backvcs.c
-    common/service/backup/backvcf.c
-    common/service/backup/backics.c
-    common/device/bluetoth/affix.c
-    common/device/bluetoth/bluez.c
-    common/device/bluetoth/blue_w32.c
-    common/device/bluetoth/bluetoth.c
-    common/device/serial/ser_unx.c
-    common/device/serial/ser_djg.c
-    common/device/serial/ser_w32.c
-    common/device/irda/irda.c
-    common/device/devfunc.c
-    common/protocol/at/at.c
-    common/protocol/alcatel/alcabus.c
-    common/protocol/nokia/mbus2.c
-    common/protocol/nokia/fbus2.c
-    common/protocol/nokia/phonet.c
-    common/protocol/obex/obex.c
-    common/protocol/symbian/gnapbus.c
-    common/phone/pfunc.c
-    common/phone/at/atgen.c
-    common/phone/at/siemens.c
-    common/phone/at/samsung.c
-    common/phone/alcatel/alcatel.c
-    common/phone/sonyeric/sonyeric.c
-    common/phone/nokia/dct3/n0650.c
-    common/phone/nokia/dct3/n6110.c
-    common/phone/nokia/dct3/n7110.c
-    common/phone/nokia/dct3/n9210.c
-    common/phone/nokia/dct3/dct3func.c
-    common/phone/nokia/dct4s40/n3320.c
-    common/phone/nokia/dct4s40/dct4func.c
-    common/phone/nokia/dct4s40/6510/n6510.c
-    common/phone/nokia/dct4s40/6510/6510cal.c
-    common/phone/nokia/dct4s40/6510/6510file.c
-    common/phone/nokia/wd2/n3650.c
-    common/phone/nokia/nauto.c
-    common/phone/nokia/nfunc.c
-    common/phone/nokia/nfuncold.c
-    common/phone/obex/obexgen.c
-    common/phone/symbian/gnapgen.c)
 
 if (CMAKE_USE_PTHREADS_INIT)
     set (HAVE_PTHREAD ON)
@@ -597,7 +534,7 @@ macro_gammu_option (BLUEOBEX "OBEX protocol over Bluetooth" ON WITH_OBEX_SUPPORT
 macro_gammu_option (IRDAOBEX "OBEX protocol over IrDA" ON WITH_OBEX_SUPPORT IRDA_FOUND)
 
 macro_gammu_option (OBEXGEN "Generic OBEX phones support" ON WITH_OBEX_SUPPORT ON)
-macro_gammu_option (SONYERICSSON "Sony-Ericsson phones support" ON WITH_OBEX_SUPPORT WITH_AT_SUPPORT)
+macro_gammu_option (ATOBEX "AT with OBEX phones support" ON WITH_OBEX_SUPPORT WITH_AT_SUPPORT)
 
 macro_gammu_option (GNAPPLET_SUPPORT "Symbian phones support (gnapplet)" ON WITH_NOKIA_SUPPORT ON)
 macro_gammu_option (BLUEGNAPBUS "GNAPBUS protocol over Bluetooth" ON WITH_GNAPPLET_SUPPORT BLUEZ_FOUND)

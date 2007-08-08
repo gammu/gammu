@@ -1,7 +1,7 @@
 /* (c) 2006 by Michal Cihar */
 
 /**
- * \file sonyeric.c
+ * \file atobex.c
  * @author Michal Čihař
  */
 /**
@@ -19,7 +19,7 @@
 
 #include "../../gsmstate.h"
 
-#ifdef GSM_ENABLE_SONYERICSSON
+#ifdef GSM_ENABLE_ATOBEX
 #ifdef GSM_ENABLE_ATGEN
 
 #include <string.h>
@@ -31,21 +31,21 @@
 #include "../pfunc.h"
 #include "../at/atfunc.h"
 #include "../obex/obexfunc.h"
-#include "sonyeric.h"
+#include "atobex.h"
 
-extern GSM_Reply_Function SONYERICSSONReplyFunctions[];
+extern GSM_Reply_Function ATOBEXReplyFunctions[];
 
 
 /**
  * Ensures phone and Gammu protocol are switched to AT commands mode.
  */
-GSM_Error SONYERICSSON_SetATMode(GSM_StateMachine *s)
+GSM_Error ATOBEX_SetATMode(GSM_StateMachine *s)
 {
-	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 	GSM_Error		error;
 
 	/* Aren't we in OBEX mode? */
-	if (Priv->Mode == SONYERICSSON_ModeAT) return ERR_NONE;
+	if (Priv->Mode == ATOBEX_ModeAT) return ERR_NONE;
 
 	dbgprintf ("Terminating OBEX\n");
 
@@ -61,7 +61,7 @@ GSM_Error SONYERICSSON_SetATMode(GSM_StateMachine *s)
 	dbgprintf ("Changing protocol to AT\n");
 	s->Protocol.Functions			= &ATProtocol;
 	s->Phone.Functions->ReplyFunctions	= ATGENReplyFunctions;
-	Priv->Mode				= SONYERICSSON_ModeAT;
+	Priv->Mode				= ATOBEX_ModeAT;
 
 	/* Initialise AT protocol */
 	error = s->Protocol.Functions->Initialise(s);
@@ -75,23 +75,23 @@ GSM_Error SONYERICSSON_SetATMode(GSM_StateMachine *s)
  * Ensures phone and Gammu protocol are in OBEX mode, in IrMC service
  * if requrested.
  */
-GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
+GSM_Error ATOBEX_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
 {
-	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 	GSM_Error		error;
 
 	/* Is OBEX mode supported? */
-	if (Priv->HasOBEX == SONYERICSSON_OBEX_None) {
+	if (Priv->HasOBEX == ATOBEX_OBEX_None) {
 		return ERR_NOTSUPPORTED;
 	}
 
 	/* Are we already in OBEX mode? */
-	if (Priv->Mode == SONYERICSSON_ModeOBEX) {
+	if (Priv->Mode == ATOBEX_ModeOBEX) {
 		/* We can not safely switch service, we need to disconnect instead */
 		if (s->Phone.Data.Priv.OBEXGEN.Service == service) {
 			return ERR_NONE;
 		} else {
-			error = SONYERICSSON_SetATMode(s);
+			error = ATOBEX_SetATMode(s);
 		}
 		if (error != ERR_NONE) return error;
 	}
@@ -101,19 +101,19 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
 	/* Switch phone to OBEX */
 	error = ERR_NOTSUPPORTED;
 	switch (Priv->HasOBEX) {
-		case SONYERICSSON_OBEX_CPROT0:
+		case ATOBEX_OBEX_CPROT0:
 			/* 3GPP TS 27.007 standard */
 			error = GSM_WaitFor (s, "AT+CPROT=0\r", 11, 0x00, 4, ID_SetOBEX);
 			break;
-		case SONYERICSSON_OBEX_EOBEX:
+		case ATOBEX_OBEX_EOBEX:
 			/* Sony-Ericsson extension */
 			error = GSM_WaitFor (s, "AT*EOBEX\r", 9, 0x00, 4, ID_SetOBEX);
 			break;
-		case SONYERICSSON_OBEX_MODE22:
+		case ATOBEX_OBEX_MODE22:
 			/* Motorola extension */
 			error = GSM_WaitFor (s, "AT+MODE=22\r", 11, 0x00, 4, ID_SetOBEX);
 			break;
-		case SONYERICSSON_OBEX_None:
+		case ATOBEX_OBEX_None:
 			break;
 	}
 	if (error != ERR_NONE) return error;
@@ -143,7 +143,7 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
 	}
 
 	/* Remember our state */
-	Priv->Mode				= SONYERICSSON_ModeOBEX;
+	Priv->Mode				= ATOBEX_ModeOBEX;
 
 	/* Choose appropriate connection type (we need different for filesystem and for IrMC) */
 	smprintf(s, "Setting service %d\n", service);
@@ -157,13 +157,13 @@ GSM_Error SONYERICSSON_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
 /**
  * Initialises Sony-Ericsson module internals and calls AT module init.
  */
-GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
+GSM_Error ATOBEX_Initialise(GSM_StateMachine *s)
 {
-	GSM_Phone_SONYERICSSONData	*Priv = &s->Phone.Data.Priv.SONYERICSSON;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 	GSM_Phone_ATGENData	*PrivAT = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 
-	Priv->Mode				= SONYERICSSON_ModeAT;
+	Priv->Mode				= ATOBEX_ModeAT;
 
 	/* We might receive incoming event */
 	s->Phone.Data.BatteryCharge = NULL;
@@ -173,28 +173,28 @@ GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 	if (error != ERR_NONE) return error;
 
 	/* This can be filled in by AT module init */
-	Priv->HasOBEX = SONYERICSSON_OBEX_None;
+	Priv->HasOBEX = ATOBEX_OBEX_None;
 
 	/* Init AT module */
-	/* This also enables SONYERICSSON_OBEX_CPROT0 if available */
+	/* This also enables ATOBEX_OBEX_CPROT0 if available */
 	error = ATGEN_Initialise(s);
 	if (error != ERR_NONE) return error;
 
 	/* Does phone have support for AT+MODE=22 switching? */
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_MODE22)) {
-		Priv->HasOBEX = SONYERICSSON_OBEX_MODE22;
+		Priv->HasOBEX = ATOBEX_OBEX_MODE22;
 	} else {
 		if (PrivAT->Mode) {
 			smprintf(s, "Guessed mode style switching\n");
-			Priv->HasOBEX = SONYERICSSON_OBEX_MODE22;
+			Priv->HasOBEX = ATOBEX_OBEX_MODE22;
 		}
 	}
 
 	/* Do we have OBEX capability? */
-	if (Priv->HasOBEX == SONYERICSSON_OBEX_None) {
+	if (Priv->HasOBEX == ATOBEX_OBEX_None) {
 		error = GSM_WaitFor (s, "AT*EOBEX=?\r", 11, 0x00, 4, ID_SetOBEX);
 		if (error == ERR_NONE) {
-			Priv->HasOBEX = SONYERICSSON_OBEX_EOBEX;
+			Priv->HasOBEX = ATOBEX_OBEX_EOBEX;
 		}
 	}
 
@@ -204,11 +204,11 @@ GSM_Error SONYERICSSON_Initialise(GSM_StateMachine *s)
 /**
  * Switch to AT mode and calls AT module termination procedure.
  */
-GSM_Error SONYERICSSON_Terminate(GSM_StateMachine *s)
+GSM_Error ATOBEX_Terminate(GSM_StateMachine *s)
 {
 	GSM_Error 		error;
 
-	error = SONYERICSSON_SetATMode(s);
+	error = ATOBEX_SetATMode(s);
 	OBEXGEN_FreeVars(s);
 	return ATGEN_Terminate(s);
 }
@@ -217,9 +217,9 @@ GSM_Error SONYERICSSON_Terminate(GSM_StateMachine *s)
 /**
  * Dispatches message to correct dispatcher according to active protocol
  */
-GSM_Error SONYERICSSON_DispatchMessage(GSM_StateMachine *s)
+GSM_Error ATOBEX_DispatchMessage(GSM_StateMachine *s)
 {
-	if (s->Phone.Data.Priv.SONYERICSSON.Mode == SONYERICSSON_ModeOBEX) {
+	if (s->Phone.Data.Priv.ATOBEX.Mode == ATOBEX_ModeOBEX) {
 		return GSM_DispatchMessage(s);
 	} else {
 		return ATGEN_DispatchMessage(s);
@@ -230,7 +230,7 @@ GSM_Error SONYERICSSON_DispatchMessage(GSM_StateMachine *s)
 /**
  * We receive product code over AT commands, so we can easily use it
  */
-GSM_Error SONYERICSSON_GetProductCode(GSM_StateMachine *s, char *value)
+GSM_Error ATOBEX_GetProductCode(GSM_StateMachine *s, char *value)
 {
        strcpy(value, s->Phone.Data.Model);
        return ERR_NONE;
@@ -243,342 +243,342 @@ GSM_Error SONYERICSSON_GetProductCode(GSM_StateMachine *s, char *value)
  * @{
  */
 
-GSM_Error SONYERICSSON_GetIMEI (GSM_StateMachine *s)
+GSM_Error ATOBEX_GetIMEI (GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetIMEI(s);
 }
 
-GSM_Error SONYERICSSON_GetFirmware(GSM_StateMachine *s)
+GSM_Error ATOBEX_GetFirmware(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetFirmware(s);
 }
 
-GSM_Error SONYERICSSON_GetModel(GSM_StateMachine *s)
+GSM_Error ATOBEX_GetModel(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetModel(s);
 }
 
-GSM_Error SONYERICSSON_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
+GSM_Error ATOBEX_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetDateTime(s, date_time);
 }
 
-GSM_Error SONYERICSSON_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
+GSM_Error ATOBEX_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetSMS(s, sms);
 }
 
-GSM_Error SONYERICSSON_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
+GSM_Error ATOBEX_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_DeleteSMS(s, sms);
 }
 
-GSM_Error SONYERICSSON_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
+GSM_Error ATOBEX_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_AddSMS(s, sms);
 }
 
-GSM_Error SONYERICSSON_GetSignalStrength(GSM_StateMachine *s, GSM_SignalQuality *sig)
+GSM_Error ATOBEX_GetSignalStrength(GSM_StateMachine *s, GSM_SignalQuality *sig)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetSignalQuality(s, sig);
 }
 
-GSM_Error SONYERICSSON_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
+GSM_Error ATOBEX_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetSMSFolders(s, folders);
 }
 
-GSM_Error SONYERICSSON_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
+GSM_Error ATOBEX_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetNextSMS(s, sms, start);
 }
 
-GSM_Error SONYERICSSON_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
+GSM_Error ATOBEX_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetSMSStatus(s, status);
 }
 
-GSM_Error SONYERICSSON_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber)
+GSM_Error ATOBEX_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_DialVoice(s, number, ShowNumber);
 }
 
-GSM_Error SONYERICSSON_DialService(GSM_StateMachine *s, char *number)
+GSM_Error ATOBEX_DialService(GSM_StateMachine *s, char *number)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_DialService(s, number);
 }
 
-GSM_Error SONYERICSSON_AnswerCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error ATOBEX_AnswerCall(GSM_StateMachine *s, int ID, bool all)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_AnswerCall(s,ID,all);
 }
 
-GSM_Error SONYERICSSON_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
+GSM_Error ATOBEX_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetNetworkInfo(s, netinfo);
 }
 
-GSM_Error SONYERICSSON_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *features)
+GSM_Error ATOBEX_GetDisplayStatus(GSM_StateMachine *s, GSM_DisplayFeatures *features)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetDisplayStatus(s, features);
 }
 
-GSM_Error SONYERICSSON_SetAutoNetworkLogin(GSM_StateMachine *s)
+GSM_Error ATOBEX_SetAutoNetworkLogin(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SetAutoNetworkLogin(s);
 }
 
-GSM_Error SONYERICSSON_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
+GSM_Error ATOBEX_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 {
 	GSM_Error error;
 
 	/**
 	 * @todo Implement completely using AT*EKEY
 	 */
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_PressKey(s, Key, Press);
 }
 
-GSM_Error SONYERICSSON_Reset(GSM_StateMachine *s, bool hard)
+GSM_Error ATOBEX_Reset(GSM_StateMachine *s, bool hard)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_Reset(s, hard);
 }
 
-GSM_Error SONYERICSSON_CancelCall(GSM_StateMachine *s, int ID, bool all)
+GSM_Error ATOBEX_CancelCall(GSM_StateMachine *s, int ID, bool all)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_CancelCall(s,ID,all);
 }
 
-GSM_Error SONYERICSSON_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
+GSM_Error ATOBEX_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SendSavedSMS(s, Folder, Location);
 }
 
-GSM_Error SONYERICSSON_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
+GSM_Error ATOBEX_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SendSMS(s, sms);
 }
 
-GSM_Error SONYERICSSON_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
+GSM_Error ATOBEX_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SetDateTime(s, date_time);
 }
 
-GSM_Error SONYERICSSON_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
+GSM_Error ATOBEX_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SetSMSC(s, smsc);
 }
 
-GSM_Error SONYERICSSON_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
+GSM_Error ATOBEX_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetSMSC(s, smsc);
 }
 
-GSM_Error SONYERICSSON_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
+GSM_Error ATOBEX_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_EnterSecurityCode(s, Code);
 }
 
-GSM_Error SONYERICSSON_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Status)
+GSM_Error ATOBEX_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Status)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetSecurityStatus(s, Status);
 }
 
-GSM_Error SONYERICSSON_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type)
+GSM_Error ATOBEX_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_ResetPhoneSettings(s, Type);
 }
 
-GSM_Error SONYERICSSON_SendDTMF(GSM_StateMachine *s, char *sequence)
+GSM_Error ATOBEX_SendDTMF(GSM_StateMachine *s, char *sequence)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SendDTMF(s, sequence);
 }
 
-GSM_Error SONYERICSSON_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
+GSM_Error ATOBEX_GetSIMIMSI(GSM_StateMachine *s, char *IMSI)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetSIMIMSI(s, IMSI);
 }
 
-GSM_Error SONYERICSSON_SetIncomingCall (GSM_StateMachine *s, bool enable)
+GSM_Error ATOBEX_SetIncomingCall (GSM_StateMachine *s, bool enable)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SetIncomingCall(s, enable);
 }
 
-GSM_Error SONYERICSSON_SetIncomingCB (GSM_StateMachine *s, bool enable)
+GSM_Error ATOBEX_SetIncomingCB (GSM_StateMachine *s, bool enable)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SetIncomingCB(s, enable);
 }
 
-GSM_Error SONYERICSSON_SetIncomingSMS (GSM_StateMachine *s, bool enable)
+GSM_Error ATOBEX_SetIncomingSMS (GSM_StateMachine *s, bool enable)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SetIncomingSMS(s, enable);
 }
 
-GSM_Error SONYERICSSON_SetFastSMSSending(GSM_StateMachine *s, bool enable)
+GSM_Error ATOBEX_SetFastSMSSending(GSM_StateMachine *s, bool enable)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SetFastSMSSending(s, enable);
 }
 
-GSM_Error SONYERICSSON_GetManufacturer(GSM_StateMachine *s)
+GSM_Error ATOBEX_GetManufacturer(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetManufacturer(s);
 }
 
-GSM_Error SONYERICSSON_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+GSM_Error ATOBEX_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetAlarm(s, alarm);
 }
 
-GSM_Error SONYERICSSON_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+GSM_Error ATOBEX_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SetAlarm(s, alarm);
 }
 
-GSM_Error SONYERICSSON_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
+GSM_Error ATOBEX_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SetIncomingUSSD(s, enable);
 }
 
-GSM_Error SONYERICSSON_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
+GSM_Error ATOBEX_GetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, bool PhoneRingtone)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetRingtone(s, Ringtone, PhoneRingtone);
 }
 
-GSM_Error SONYERICSSON_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
+GSM_Error ATOBEX_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *maxlength)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SetRingtone(s, Ringtone, maxlength);
 }
 
-GSM_Error SONYERICSSON_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
+GSM_Error ATOBEX_GetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_GetBitmap(s, Bitmap);
 }
 
-GSM_Error SONYERICSSON_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
+GSM_Error ATOBEX_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SetBitmap(s, Bitmap);
 }
 
@@ -589,51 +589,51 @@ GSM_Error SONYERICSSON_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
  * @{
  */
 
-GSM_Error SONYERICSSON_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+GSM_Error ATOBEX_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
 	return OBEXGEN_AddFilePart(s, File, Pos, Handle);
 }
 
-GSM_Error SONYERICSSON_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+GSM_Error ATOBEX_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_None))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_None))!= ERR_NONE) return error;
 	return OBEXGEN_SendFilePart(s, File, Pos, Handle);
 }
 
-GSM_Error SONYERICSSON_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
+GSM_Error ATOBEX_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
 	return OBEXGEN_GetFilePart(s, File, Handle, Size);
 }
 
-GSM_Error SONYERICSSON_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
+GSM_Error ATOBEX_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
 	return OBEXGEN_GetNextFileFolder(s, File, start);
 }
 
-GSM_Error SONYERICSSON_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
+GSM_Error ATOBEX_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteFile(s, ID);
 }
 
-GSM_Error SONYERICSSON_AddFolder(GSM_StateMachine *s, GSM_File *File)
+GSM_Error ATOBEX_AddFolder(GSM_StateMachine *s, GSM_File *File)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_BrowsingFolders))!= ERR_NONE) return error;
 	return OBEXGEN_AddFolder(s, File);
 }
 
@@ -644,93 +644,93 @@ GSM_Error SONYERICSSON_AddFolder(GSM_StateMachine *s, GSM_File *File)
  * @{
  */
 
-GSM_Error SONYERICSSON_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
+GSM_Error ATOBEX_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 {
 	GSM_Error 		error;
 
 	if (Status->MemoryType == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_GetMemoryStatus(s, Status);
 	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 		return ATGEN_GetMemoryStatus(s, Status);
 	}
 }
 
-GSM_Error SONYERICSSON_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+GSM_Error ATOBEX_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_GetMemory(s, entry);
 	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 		return ATGEN_GetMemory(s, entry);
 	}
 }
 
-GSM_Error SONYERICSSON_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
+GSM_Error ATOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
 {
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_GetNextMemory(s, entry, start);
 	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 		return ATGEN_GetNextMemory(s, entry, start);
 	}
 }
 
-GSM_Error SONYERICSSON_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+GSM_Error ATOBEX_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_SetMemory(s, entry);
 	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 		return ATGEN_SetMemory(s, entry);
 	}
 }
 
-GSM_Error SONYERICSSON_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+GSM_Error ATOBEX_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_AddMemory(s, entry);
 	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 		return ATGEN_AddMemory(s, entry);
 	}
 }
 
-GSM_Error SONYERICSSON_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+GSM_Error ATOBEX_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_DeleteMemory(s, entry);
 	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 		return ATGEN_DeleteMemory(s, entry);
 	}
 }
 
-GSM_Error SONYERICSSON_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
+GSM_Error ATOBEX_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 {
 	GSM_Error 		error;
 
 	if (type == MEM_ME) {
-		if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 		return OBEXGEN_DeleteAllMemory(s, type);
 	} else {
-		if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+		if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 		return ATGEN_DeleteAllMemory(s, type);
 	}
 }
@@ -742,171 +742,171 @@ GSM_Error SONYERICSSON_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
  * @{
  */
 
-GSM_Error SONYERICSSON_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
+GSM_Error ATOBEX_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetTodoStatus(s, status);
 }
 
-GSM_Error SONYERICSSON_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
+GSM_Error ATOBEX_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetTodo(s, ToDo);
 }
 
-GSM_Error SONYERICSSON_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
+GSM_Error ATOBEX_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetNextTodo(s, ToDo, start);
 }
 
-GSM_Error SONYERICSSON_DeleteAllToDo (GSM_StateMachine *s)
+GSM_Error ATOBEX_DeleteAllToDo (GSM_StateMachine *s)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteAllTodo(s);
 }
 
-GSM_Error SONYERICSSON_AddToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
+GSM_Error ATOBEX_AddToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_AddTodo(s, ToDo);
 }
 
-GSM_Error SONYERICSSON_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
+GSM_Error ATOBEX_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_SetTodo(s, ToDo);
 }
 
-GSM_Error SONYERICSSON_DeleteToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
+GSM_Error ATOBEX_DeleteToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteTodo(s, ToDo);
 }
 
-GSM_Error SONYERICSSON_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *status)
+GSM_Error ATOBEX_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *status)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetCalendarStatus(s, status);
 }
 
-GSM_Error SONYERICSSON_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error ATOBEX_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetCalendar(s, Note);
 }
 
-GSM_Error SONYERICSSON_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+GSM_Error ATOBEX_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetNextCalendar(s, Note, start);
 }
 
-GSM_Error SONYERICSSON_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error ATOBEX_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteCalendar(s, Note);
 }
 
-GSM_Error SONYERICSSON_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error ATOBEX_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_AddCalendar(s, Note);
 }
 
-GSM_Error SONYERICSSON_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error ATOBEX_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_SetCalendar(s, Note);
 }
 
-GSM_Error SONYERICSSON_DeleteAllCalendar (GSM_StateMachine *s)
+GSM_Error ATOBEX_DeleteAllCalendar (GSM_StateMachine *s)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteAllCalendar(s);
 }
 
-GSM_Error SONYERICSSON_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
+GSM_Error ATOBEX_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetNoteStatus(s, status);
 }
 
-GSM_Error SONYERICSSON_GetNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
+GSM_Error ATOBEX_GetNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetNote(s, Note);
 }
 
-GSM_Error SONYERICSSON_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start)
+GSM_Error ATOBEX_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_GetNextNote(s, Note, start);
 }
 
-GSM_Error SONYERICSSON_DeleteAllNotes(GSM_StateMachine *s)
+GSM_Error ATOBEX_DeleteAllNotes(GSM_StateMachine *s)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteAllNotes(s);
 }
 
-GSM_Error SONYERICSSON_AddNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
+GSM_Error ATOBEX_AddNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_AddNote(s, Note);
 }
 
-GSM_Error SONYERICSSON_SetNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
+GSM_Error ATOBEX_SetNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_SetNote(s, Note);
 }
 
-GSM_Error SONYERICSSON_DeleteNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
+GSM_Error ATOBEX_DeleteNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
 {
 	GSM_Error 		error;
 
-	if ((error = SONYERICSSON_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) return error;
 	return OBEXGEN_DeleteNote(s, Note);
 }
 
@@ -925,7 +925,7 @@ GSM_Error SONYERICSSON_DeleteNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
  * is an easy way to obtain the source under GPL, otherwise the author's parts
  * of this function are GPL 2.0.
  */
-GSM_Error SONYERICSSON_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATOBEX_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Locale	*locale = s->Phone.Data.Locale;
 	int		format;
@@ -976,7 +976,7 @@ GSM_Error SONYERICSSON_ReplyGetDateLocale(GSM_Protocol_Message msg, GSM_StateMac
  * is an easy way to obtain the source under GPL, otherwise the author's parts
  * of this function are GPL 2.0.
  */
-GSM_Error SONYERICSSON_ReplyGetTimeLocale(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATOBEX_ReplyGetTimeLocale(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int		format;
 	char		*pos;
@@ -1004,11 +1004,11 @@ GSM_Error SONYERICSSON_ReplyGetTimeLocale(GSM_Protocol_Message msg, GSM_StateMac
  * is an easy way to obtain the source under GPL, otherwise the author's parts
  * of this function are GPL 2.0.
  */
-GSM_Error SONYERICSSON_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
+GSM_Error ATOBEX_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 
 
 	s->Phone.Data.Locale = locale;
@@ -1028,14 +1028,14 @@ GSM_Error SONYERICSSON_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
  * is an easy way to obtain the source under GPL, otherwise the author's parts
  * of this function are GPL 2.0.
  */
-GSM_Error SONYERICSSON_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
+GSM_Error ATOBEX_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 {
 	/* this is not yet supported by gammu.c */
 	int	format=0;
 	char	req[12];
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 
 	if (locale->DateFormat==GSM_Date_OFF) { format=0; } else
 	if ((locale->DateFormat==GSM_Date_DDMMMYY)&&(locale->DateSeparator=='-')) { format=1; } else
@@ -1058,7 +1058,7 @@ GSM_Error SONYERICSSON_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 	return GSM_WaitFor (s, req, strlen(req), 0x00, 3, ID_SetLocale);
 }
 
-GSM_Error SONYERICSSON_ReplyGetFileSystemStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATOBEX_ReplyGetFileSystemStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Error error;
 
@@ -1086,18 +1086,18 @@ GSM_Error SONYERICSSON_ReplyGetFileSystemStatus(GSM_Protocol_Message msg, GSM_St
 	}
 }
 
-GSM_Error SONYERICSSON_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *Status)
+GSM_Error ATOBEX_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *Status)
 {
 	GSM_Error error;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 
 	s->Phone.Data.FileSystemStatus = Status;
 
 	return GSM_WaitFor (s, "AT*EMEM\r", 8, 0x00, 3, ID_FileSystemStatus);
 }
 
-GSM_Error SONYERICSSON_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATOBEX_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int tmp, ncapacity, method, state;
 	int vbat1, vbat2, vbat3, vbat4;
@@ -1256,14 +1256,14 @@ GSM_Error SONYERICSSON_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_State
 	return ERR_NOTIMPLEMENTED;
 }
 
-GSM_Error SONYERICSSON_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
+GSM_Error ATOBEX_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 {
 	GSM_Error error;
 	int	i = 0;
 
 	s->Phone.Data.BatteryCharge = bat;
 
-	if ((error = SONYERICSSON_SetATMode(s))!= ERR_NONE) return error;
+	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 
 
 	/* Now try ericsson extended reporting */
@@ -1296,72 +1296,72 @@ GSM_Error SONYERICSSON_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *
 /*@}*/
 
 
-GSM_Phone_Functions SONYERICSSONPhone = {
+GSM_Phone_Functions ATOBEXPhone = {
 	/* There is much more SE phones which support this! */
-	"sonyericsson|ericsson|sony|k750|k750i",
+	"sonyericsson|ericsson|atobex",
 	ATGENReplyFunctions,
-	SONYERICSSON_Initialise,
-	SONYERICSSON_Terminate,
-	SONYERICSSON_DispatchMessage,
+	ATOBEX_Initialise,
+	ATOBEX_Terminate,
+	ATOBEX_DispatchMessage,
 	NOTSUPPORTED,			/* 	ShowStartInfo		*/
-	SONYERICSSON_GetManufacturer,
-	SONYERICSSON_GetModel,
-	SONYERICSSON_GetFirmware,
-	SONYERICSSON_GetIMEI,
+	ATOBEX_GetManufacturer,
+	ATOBEX_GetModel,
+	ATOBEX_GetFirmware,
+	ATOBEX_GetIMEI,
 	NOTSUPPORTED,			/* 	GetOriginalIMEI		*/
 	NOTSUPPORTED,			/* 	GetManufactureMonth	*/
-        SONYERICSSON_GetProductCode,
+        ATOBEX_GetProductCode,
 	NOTSUPPORTED,			/* 	GetHardware		*/
 	NOTSUPPORTED,			/* 	GetPPM			*/
-	SONYERICSSON_GetSIMIMSI,
-	SONYERICSSON_GetDateTime,
-	SONYERICSSON_SetDateTime,
-	SONYERICSSON_GetAlarm,
-	SONYERICSSON_SetAlarm,
-	SONYERICSSON_GetLocale,
-	SONYERICSSON_SetLocale,
-	SONYERICSSON_PressKey,
-	SONYERICSSON_Reset,
-	SONYERICSSON_ResetPhoneSettings,
-	SONYERICSSON_EnterSecurityCode,
-	SONYERICSSON_GetSecurityStatus,
-	SONYERICSSON_GetDisplayStatus,
-	SONYERICSSON_SetAutoNetworkLogin,
-	SONYERICSSON_GetBatteryCharge,
-	SONYERICSSON_GetSignalStrength,
-	SONYERICSSON_GetNetworkInfo,
+	ATOBEX_GetSIMIMSI,
+	ATOBEX_GetDateTime,
+	ATOBEX_SetDateTime,
+	ATOBEX_GetAlarm,
+	ATOBEX_SetAlarm,
+	ATOBEX_GetLocale,
+	ATOBEX_SetLocale,
+	ATOBEX_PressKey,
+	ATOBEX_Reset,
+	ATOBEX_ResetPhoneSettings,
+	ATOBEX_EnterSecurityCode,
+	ATOBEX_GetSecurityStatus,
+	ATOBEX_GetDisplayStatus,
+	ATOBEX_SetAutoNetworkLogin,
+	ATOBEX_GetBatteryCharge,
+	ATOBEX_GetSignalStrength,
+	ATOBEX_GetNetworkInfo,
  	NOTSUPPORTED,       		/*  	GetCategory 		*/
  	NOTSUPPORTED,       		/*  	AddCategory 		*/
  	NOTSUPPORTED,        		/*  	GetCategoryStatus 	*/
-	SONYERICSSON_GetMemoryStatus,
-	SONYERICSSON_GetMemory,
-	SONYERICSSON_GetNextMemory,
-	SONYERICSSON_SetMemory,
-	SONYERICSSON_AddMemory,
-	SONYERICSSON_DeleteMemory,
-	SONYERICSSON_DeleteAllMemory,
+	ATOBEX_GetMemoryStatus,
+	ATOBEX_GetMemory,
+	ATOBEX_GetNextMemory,
+	ATOBEX_SetMemory,
+	ATOBEX_AddMemory,
+	ATOBEX_DeleteMemory,
+	ATOBEX_DeleteAllMemory,
 	NOTSUPPORTED,			/* 	GetSpeedDial		*/
 	NOTSUPPORTED,			/* 	SetSpeedDial		*/
-	SONYERICSSON_GetSMSC,
-	SONYERICSSON_SetSMSC,
-	SONYERICSSON_GetSMSStatus,
-	SONYERICSSON_GetSMS,
-	SONYERICSSON_GetNextSMS,
+	ATOBEX_GetSMSC,
+	ATOBEX_SetSMSC,
+	ATOBEX_GetSMSStatus,
+	ATOBEX_GetSMS,
+	ATOBEX_GetNextSMS,
 	NOTSUPPORTED,			/*	SetSMS			*/
-	SONYERICSSON_AddSMS,
-	SONYERICSSON_DeleteSMS,
-	SONYERICSSON_SendSMS,
-	SONYERICSSON_SendSavedSMS,
-	SONYERICSSON_SetFastSMSSending,
-	SONYERICSSON_SetIncomingSMS,
-	SONYERICSSON_SetIncomingCB,
-	SONYERICSSON_GetSMSFolders,
+	ATOBEX_AddSMS,
+	ATOBEX_DeleteSMS,
+	ATOBEX_SendSMS,
+	ATOBEX_SendSavedSMS,
+	ATOBEX_SetFastSMSSending,
+	ATOBEX_SetIncomingSMS,
+	ATOBEX_SetIncomingCB,
+	ATOBEX_GetSMSFolders,
  	NOTSUPPORTED,			/* 	AddSMSFolder		*/
  	NOTSUPPORTED,			/* 	DeleteSMSFolder		*/
-	SONYERICSSON_DialVoice,
-	SONYERICSSON_DialService,
-	SONYERICSSON_AnswerCall,
-	SONYERICSSON_CancelCall,
+	ATOBEX_DialVoice,
+	ATOBEX_DialService,
+	ATOBEX_AnswerCall,
+	ATOBEX_CancelCall,
  	NOTSUPPORTED,			/* 	HoldCall 		*/
  	NOTSUPPORTED,			/* 	UnholdCall 		*/
  	NOTSUPPORTED,			/* 	ConferenceCall 		*/
@@ -1371,11 +1371,11 @@ GSM_Phone_Functions SONYERICSSONPhone = {
  	NOTSUPPORTED,			/* 	GetCallDivert		*/
  	NOTSUPPORTED,			/* 	SetCallDivert		*/
  	NOTSUPPORTED,			/* 	CancelAllDiverts	*/
-	SONYERICSSON_SetIncomingCall,
-	SONYERICSSON_SetIncomingUSSD,
-	SONYERICSSON_SendDTMF,
-	SONYERICSSON_GetRingtone,
-	SONYERICSSON_SetRingtone,
+	ATOBEX_SetIncomingCall,
+	ATOBEX_SetIncomingUSSD,
+	ATOBEX_SendDTMF,
+	ATOBEX_GetRingtone,
+	ATOBEX_SetRingtone,
 	NOTSUPPORTED,			/* 	GetRingtonesInfo	*/
 	NOTSUPPORTED,			/* 	DeleteUserRingtones	*/
 	NOTSUPPORTED,			/* 	PlayTone		*/
@@ -1392,47 +1392,47 @@ GSM_Phone_Functions SONYERICSSONPhone = {
 	NOTSUPPORTED,			/* 	SetMMSSettings		*/
 	NOTSUPPORTED,			/*	GetMMSFolders		*/
 	NOTSUPPORTED,			/*	GetNextMMSFileInfo	*/
-	SONYERICSSON_GetBitmap,
-	SONYERICSSON_SetBitmap,
-	SONYERICSSON_GetToDoStatus,
-	SONYERICSSON_GetToDo,
-	SONYERICSSON_GetNextToDo,
-	SONYERICSSON_SetToDo,
-	SONYERICSSON_AddToDo,
-	SONYERICSSON_DeleteToDo,
-	SONYERICSSON_DeleteAllToDo,
-	SONYERICSSON_GetCalendarStatus,
-	SONYERICSSON_GetCalendar,
-	SONYERICSSON_GetNextCalendar,
-	SONYERICSSON_SetCalendar,
-	SONYERICSSON_AddCalendar,
-	SONYERICSSON_DeleteCalendar,
-	SONYERICSSON_DeleteAllCalendar,
+	ATOBEX_GetBitmap,
+	ATOBEX_SetBitmap,
+	ATOBEX_GetToDoStatus,
+	ATOBEX_GetToDo,
+	ATOBEX_GetNextToDo,
+	ATOBEX_SetToDo,
+	ATOBEX_AddToDo,
+	ATOBEX_DeleteToDo,
+	ATOBEX_DeleteAllToDo,
+	ATOBEX_GetCalendarStatus,
+	ATOBEX_GetCalendar,
+	ATOBEX_GetNextCalendar,
+	ATOBEX_SetCalendar,
+	ATOBEX_AddCalendar,
+	ATOBEX_DeleteCalendar,
+	ATOBEX_DeleteAllCalendar,
 	NOTSUPPORTED,			/* 	GetCalendarSettings	*/
 	NOTSUPPORTED,			/* 	SetCalendarSettings	*/
-	SONYERICSSON_GetNoteStatus,
-	SONYERICSSON_GetNote,
-	SONYERICSSON_GetNextNote,
-	SONYERICSSON_SetNote,
-	SONYERICSSON_AddNote,
-	SONYERICSSON_DeleteNote,
-	SONYERICSSON_DeleteAllNotes,
+	ATOBEX_GetNoteStatus,
+	ATOBEX_GetNote,
+	ATOBEX_GetNextNote,
+	ATOBEX_SetNote,
+	ATOBEX_AddNote,
+	ATOBEX_DeleteNote,
+	ATOBEX_DeleteAllNotes,
 	NOTSUPPORTED,			/* 	GetProfile		*/
 	NOTSUPPORTED,			/* 	SetProfile		*/
 	NOTSUPPORTED,			/* 	GetFMStation		*/
 	NOTSUPPORTED,			/* 	SetFMStation		*/
 	NOTSUPPORTED,			/* 	ClearFMStations		*/
-	SONYERICSSON_GetNextFileFolder,
+	ATOBEX_GetNextFileFolder,
 	NOTSUPPORTED,			/*	GetFolderListing	*/
 	NOTSUPPORTED,			/*	GetNextRootFolder	*/
 	NOTSUPPORTED,			/*	SetFileAttributes	*/
-	SONYERICSSON_GetFilePart,
-	SONYERICSSON_AddFilePart,
-	SONYERICSSON_SendFilePart,
-	SONYERICSSON_GetFileSystemStatus,
-	SONYERICSSON_DeleteFile,
-	SONYERICSSON_AddFolder,
-	SONYERICSSON_DeleteFile,	/* 	DeleteFolder		*/
+	ATOBEX_GetFilePart,
+	ATOBEX_AddFilePart,
+	ATOBEX_SendFilePart,
+	ATOBEX_GetFileSystemStatus,
+	ATOBEX_DeleteFile,
+	ATOBEX_AddFolder,
+	ATOBEX_DeleteFile,	/* 	DeleteFolder		*/
 	NOTSUPPORTED,			/* 	GetGPRSAccessPoint	*/
 	NOTSUPPORTED			/* 	SetGPRSAccessPoint	*/
 };

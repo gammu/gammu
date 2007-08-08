@@ -105,8 +105,8 @@
 /* Alcatel BE5 */
 #cmakedefine GSM_ENABLE_ALCATEL
 
-/* Sony-Ericsson support */
-#cmakedefine GSM_ENABLE_SONYERICSSON
+/* AT with OBEX support */
+#cmakedefine GSM_ENABLE_ATOBEX
 
 /* OBEX generic models */
 #cmakedefine GSM_ENABLE_OBEXGEN

@@ -1,7 +1,7 @@
 /* (c) 2006 by Michal Cihar */
 
 /**
- * \file sonyeric.h
+ * \file atobex.h
  * @author Michal Čihař
  */
 /**
@@ -13,8 +13,8 @@
  * @{
  */
 
-#ifndef sonyericsson_h
-#define sonyericsson_h
+#ifndef atobex_h
+#define atobex_h
 
 #ifndef GSM_USED_AT
 # define GSM_USED_AT
@@ -30,24 +30,24 @@ typedef enum {
 	/**
 	 * Phone accepts normal AT commands.
 	 */
-	SONYERICSSON_ModeAT = 1,
+	ATOBEX_ModeAT = 1,
 	/**
 	 * OBEX mode using proprietary protocol.
 	 */
-	SONYERICSSON_ModeOBEX
-} GSM_SONYERICSSON_Mode;
+	ATOBEX_ModeOBEX
+} GSM_ATOBEX_Mode;
 
 /**
  * Do we support switch to OBEX?
  */
 typedef enum {
-	SONYERICSSON_OBEX_None = 1, /**< No OBEX switch command */
-	SONYERICSSON_OBEX_EOBEX, /**< Switch using AT*EOBEX */
-	SONYERICSSON_OBEX_CPROT0, /**< Switch using AT+CPROT=0 */
-	SONYERICSSON_OBEX_MODE22, /**< Switch using AT+MODE=22 */
-} GSM_SONYERICSSON_OBEX;
+	ATOBEX_OBEX_None = 1, /**< No OBEX switch command */
+	ATOBEX_OBEX_EOBEX, /**< Switch using AT*EOBEX */
+	ATOBEX_OBEX_CPROT0, /**< Switch using AT+CPROT=0 */
+	ATOBEX_OBEX_MODE22, /**< Switch using AT+MODE=22 */
+} GSM_ATOBEX_OBEX;
 /**
- * SONYERICSSON driver private data.
+ * ATOBEX driver private data.
  */
 typedef struct {
 	/***********************************/
@@ -56,12 +56,12 @@ typedef struct {
 	/**
 	 * Mode of current communication.
 	 */
-	GSM_SONYERICSSON_Mode	Mode;
+	GSM_ATOBEX_Mode	Mode;
 	/**
 	 * Whether phone support AT*EOBEX
 	 */
-	GSM_SONYERICSSON_OBEX	HasOBEX;
-} GSM_Phone_SONYERICSSONData;
+	GSM_ATOBEX_OBEX	HasOBEX;
+} GSM_Phone_ATOBEXData;
 #endif
 /*@}*/
 /*@}*/

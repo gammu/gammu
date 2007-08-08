@@ -57,8 +57,8 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifdef GSM_ENABLE_ALCATEL
 #  include "phone/alcatel/alcatel.h"
 #endif
-#ifdef GSM_ENABLE_SONYERICSSON
-#  include "phone/sonyeric/sonyeric.h"
+#ifdef GSM_ENABLE_ATOBEX
+#  include "phone/atobex/atobex.h"
 #endif
 #ifdef GSM_ENABLE_OBEXGEN
 #  include "phone/obex/obexgen.h"
@@ -144,7 +144,7 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifdef GSM_ENABLE_ALCABUS
 #  include "protocol/alcatel/alcabus.h"
 #endif
-#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_SONYERICSSON)
+#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_ATOBEX)
 #  include "protocol/obex/obex.h"
 #endif
 #if defined(GSM_ENABLE_BLUEGNAPBUS) || defined(GSM_ENABLE_IRDAGNAPBUS)
@@ -338,7 +338,7 @@ typedef struct {
 #ifdef GSM_ENABLE_ALCABUS
 	extern GSM_Protocol_Functions ALCABUSProtocol;
 #endif
-#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_SONYERICSSON)
+#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_ATOBEX)
 	extern GSM_Protocol_Functions OBEXProtocol;
 #endif
 #if defined(GSM_ENABLE_BLUEGNAPBUS) || defined(GSM_ENABLE_IRDAGNAPBUS)
@@ -368,7 +368,7 @@ typedef struct {
 #ifdef GSM_ENABLE_ALCABUS
 		GSM_Protocol_ALCABUSData	ALCABUS;
 #endif
-#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_SONYERICSSON)
+#if defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_ATOBEX)
 		GSM_Protocol_OBEXData		OBEX;
 #endif
 #if defined(GSM_ENABLE_BLUEGNAPBUS) || defined(GSM_ENABLE_IRDAGNAPBUS)
@@ -843,8 +843,8 @@ typedef struct {
 #ifdef GSM_ENABLE_ALCATEL
 		GSM_Phone_ALCATELData	 ALCATEL;
 #endif
-#ifdef GSM_ENABLE_SONYERICSSON
-		GSM_Phone_SONYERICSSONData	 SONYERICSSON;
+#ifdef GSM_ENABLE_ATOBEX
+		GSM_Phone_ATOBEXData	 ATOBEX;
 #endif
 #ifdef GSM_ENABLE_OBEXGEN
 		GSM_Phone_OBEXGENData	 OBEXGEN;
@@ -1484,8 +1484,8 @@ typedef struct {
 #ifdef GSM_ENABLE_ALCATEL
 	extern GSM_Phone_Functions ALCATELPhone;
 #endif
-#ifdef GSM_ENABLE_SONYERICSSON
-	extern GSM_Phone_Functions SONYERICSSONPhone;
+#ifdef GSM_ENABLE_ATOBEX
+	extern GSM_Phone_Functions ATOBEXPhone;
 #endif
 #ifdef GSM_ENABLE_OBEXGEN
 	extern GSM_Phone_Functions OBEXGENPhone;

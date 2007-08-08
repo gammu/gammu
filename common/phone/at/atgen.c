@@ -40,8 +40,8 @@
 GSM_Error ALCATEL_ProtocolVersionReply (GSM_Protocol_Message, GSM_StateMachine *);
 #endif
 
-#ifdef GSM_ENABLE_SONYERICSSON
-#include "../sonyeric/sefunc.h"
+#ifdef GSM_ENABLE_ATOBEX
+#include "../atobex/atobexfunc.h"
 #endif
 
 
@@ -5403,9 +5403,9 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			/* Check for OBEX */
 			if (error == ERR_NONE && protocol_id == 0) {
 				smprintf(s, "OBEX seems to be supported, version %s, level %d!\n", protocol_version, protocol_level);
-#ifdef GSM_ENABLE_SONYERICSSON
+#ifdef GSM_ENABLE_ATOBEX
 				/* Tell OBEX driver that AT+CPROT=0 is supported */
-				s->Phone.Data.Priv.SONYERICSSON.HasOBEX = SONYERICSSON_OBEX_CPROT0;
+				s->Phone.Data.Priv.ATOBEX.HasOBEX = ATOBEX_OBEX_CPROT0;
 #endif
 				/*
 				 * Level 1 is almost useless, require
@@ -5558,7 +5558,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {SAMSUNG_ReplyGetRingtone,	"AT+MELR="		,0x00,0x00,ID_GetRingtone	 },
 {SAMSUNG_ReplySetRingtone,	"SDNDCRC ="		,0x00,0x00,ID_SetRingtone	 },
 
-#ifdef GSM_ENABLE_SONYERICSSON
+#ifdef GSM_ENABLE_ATOBEX
 {ATGEN_GenericReply,		"AT*EOBEX=?"		,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT+CPROT=0" 	 	,0x00,0x00,ID_SetOBEX		 },
@@ -5567,11 +5567,11 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
 {ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },
 
-{SONYERICSSON_ReplyGetDateLocale,	"AT*ESDF?"	,0x00,0x00,ID_GetLocale		 },
-{SONYERICSSON_ReplyGetTimeLocale,	"AT*ESTF?"	,0x00,0x00,ID_GetLocale	 	 },
-{SONYERICSSON_ReplyGetFileSystemStatus,	"AT*EMEM"	,0x00,0x00,ID_FileSystemStatus 	 },
+{ATOBEX_ReplyGetDateLocale,	"AT*ESDF?"	,0x00,0x00,ID_GetLocale		 },
+{ATOBEX_ReplyGetTimeLocale,	"AT*ESTF?"	,0x00,0x00,ID_GetLocale	 	 },
+{ATOBEX_ReplyGetFileSystemStatus,	"AT*EMEM"	,0x00,0x00,ID_FileSystemStatus 	 },
 {ATGEN_GenericReply,			"AT*EBCA"	,0x00,0x00,ID_GetBatteryCharge 	 },
-{SONYERICSSON_ReplyGetBatteryCharge,	"*EBCA:"	,0x00,0x00,ID_IncomingFrame	 },
+{ATOBEX_ReplyGetBatteryCharge,	"*EBCA:"	,0x00,0x00,ID_IncomingFrame	 },
 #endif
 #ifdef GSM_ENABLE_ALCATEL
 /*  Why do I give Alcatel specific things here? It's simple, Alcatel needs
