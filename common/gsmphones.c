@@ -433,6 +433,9 @@ OnePhoneModel allmodels[] = {
 	{"V3",		"V3 Razr", "",					   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, 0}},
 	{"L6",		"L6", "",					   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, 0}},
 
+	/* Sharp */
+	{"GX",		"GX Series", "",				   {F_OBEX, F_XLNK, 0}},
+
 	/* Other */
 	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},
 	{"A2D"  ,	  "A2D"  ,	  "" ,				   {0}},

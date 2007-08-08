@@ -874,8 +874,8 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		pos = strstr(msg.Buffer, "+CUSD:");
 		if (pos == NULL) {
 			if (s->Phone.Data.RequestID == ID_GetUSSD) {
-				/* 
-				 * We usually get reply right after AT+CUSD=, but 
+				/*
+				 * We usually get reply right after AT+CUSD=, but
 				 * if this is not the case, we should wait.
 				 */
 				return ERR_NONE;
@@ -5563,6 +5563,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT*EOBEX"		,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT+CPROT=0" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT+MODE=22" 	 	,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_GenericReply,		"AT+XLNK" 	 	,0x00,0x00,ID_SetOBEX		 },
 
 {ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
 {ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },
