@@ -1175,9 +1175,21 @@ GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_
 	pos += strlen(IEL_text);
 	/* This might be hex */
 	if (pos[0] != 0 && pos[0] == '0' && pos[1] != 0 && pos[1] == 'x') {
+		/* Hex means IEL flag we use */
 		IEL = strtol(pos + 2, (char **)NULL, 16);
 	} else {
-		IEL = atoi(pos);
+		/* Decimal means directly IEL level, convert it to flags */
+		IEL = 1 << atoi(pos);
+		/* Adjust index to flags we use further */
+		switch (IEL) {
+			case 3:
+				IEL = 0x4;
+				break;
+			case 4:
+				IEL = 0x8;
+				/* In fact this can be also 0x10, but we can't tell */
+				break;
+		}
 	}
 	switch (IEL) {
 		case 0x1:
