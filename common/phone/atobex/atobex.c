@@ -113,6 +113,10 @@ GSM_Error ATOBEX_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
 			/* Motorola extension */
 			error = GSM_WaitFor (s, "AT+MODE=22\r", 11, 0x00, 4, ID_SetOBEX);
 			break;
+		case ATOBEX_OBEX_XLNK:
+			/* Sharp extension */
+			error = GSM_WaitFor (s, "AT+XLNK\r", 8, 0x00, 4, ID_SetOBEX);
+			break;
 		case ATOBEX_OBEX_None:
 			break;
 	}
@@ -183,6 +187,8 @@ GSM_Error ATOBEX_Initialise(GSM_StateMachine *s)
 	/* Does phone have support for AT+MODE=22 switching? */
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_MODE22)) {
 		Priv->HasOBEX = ATOBEX_OBEX_MODE22;
+	} else if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_XLNK)) {
+		Priv->HasOBEX = ATOBEX_OBEX_XLNK;
 	} else {
 		if (PrivAT->Mode) {
 			smprintf(s, "Guessed mode style switching\n");

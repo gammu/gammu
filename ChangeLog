@@ -18,6 +18,7 @@ ChangeLog
 2007???? - 1.12.94
 [!] * Sony-Ericsson module renamed to AT + OBEX as it better describes
       what it does.
+[+] * Initial support for Sharp GX Series phones.
 
 20070806 - 1.12.93
 [!] * Huge gammu/gammu.c split to smaller files.

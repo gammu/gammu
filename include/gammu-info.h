@@ -517,6 +517,10 @@ typedef enum {
 	 * so.
 	 */
 	F_SMS_ME,
+	/**
+	 * Switching to OBEX mode is done using AT+XLNK
+	 */
+	F_XLNK,
 } Feature;
 
 /**
