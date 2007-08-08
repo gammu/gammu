@@ -1633,7 +1633,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 		switch (Level) {
 		case 0:
 			if (strstr(Line,"BEGIN:VEVENT")) {
-				Calendar->Type = -1;
+				Calendar->Type = 0;
 				date_only = true;
 				dstflag = 0;
 				Text=-1; Time=-1; Alarm=-1; EndTime=-1; Location=-1;
@@ -1680,7 +1680,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 
 				/* If event type is undefined choose appropriate type. Memos carry dates only, no times.
 				   Use Meetings for events with full date+time settings. */
-				if (Calendar->Type == -1) {
+				if (Calendar->Type == 0) {
 					if (date_only)
 						Calendar->Type = GSM_CAL_MEMO;
 					else
