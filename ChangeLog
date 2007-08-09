@@ -19,6 +19,8 @@ ChangeLog
 [!] * Sony-Ericsson module renamed to AT + OBEX as it better describes
       what it does.
 [+] * Initial support for Sharp GX Series phones.
+[+] * Added deliveryreportdelay parameter to SMSD to allow later
+      received delivery reports to be correctly detected.
 [-] * Fixed timestamp receving in SMSD.
 
 20070806 - 1.12.93

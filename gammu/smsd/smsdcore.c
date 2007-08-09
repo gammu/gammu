@@ -137,6 +137,8 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 
 	str = INI_GetValue(smsdcfgfile, "smsd", "commtimeout", false);
 	if (str) Config->commtimeout=atoi(str); else Config->commtimeout = 1;
+	str = INI_GetValue(smsdcfgfile, "smsd", "deliveryreportdelay", false);
+	if (str) Config->deliveryreportdelay=atoi(str); else Config->deliveryreportdelay = 10;
 	str = INI_GetValue(smsdcfgfile, "smsd", "sendtimeout", false);
 	if (str) Config->sendtimeout=atoi(str); else Config->sendtimeout = 10;
 	str = INI_GetValue(smsdcfgfile, "smsd", "receivefrequency", false);
