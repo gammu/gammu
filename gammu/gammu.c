@@ -1062,6 +1062,8 @@ int main(int argc, char *argv[])
 			    && GSM_SetDebugLevel(argv[1 + start], di)) {
 				/* Debug level from command line will be used with phone too */
 				strcpy(smcfg->DebugLevel, argv[1 + start]);
+				/* When configured from command line, output to stdout */
+				GSM_SetDebugFileDescriptor(stdout, di);
 				start++;
 			} else {
 				/* Try to set debug level from config file */
