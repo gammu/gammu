@@ -48,6 +48,7 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 	{"fbus-nodtr", GCT_FBUS2NODTR},
 	{"fbuspl2303", GCT_FBUS2PL2303},
 	{"dlr3", GCT_FBUS2DLR3},
+	{"dlr3-nodtr", GCT_FBUS2DLR3NODTR},
 	{"fbusdlr3", GCT_FBUS2DLR3},
 	{"dku5", GCT_DKU5FBUS2},
 	{"dku5fbus", GCT_DKU5FBUS2},
