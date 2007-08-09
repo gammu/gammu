@@ -190,7 +190,6 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 	unsigned char buffer[10000], buffer2[400], buffer3[50], buffer4[800];
 	int i, j;
 	int numb_rows;
-	GSM_DateTime DT;
 	time_t t_time1, t_time2;
 	bool found;
 	long diff;
@@ -206,7 +205,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 			}
 
 			sprintf(buffer,
-				"SELECT ID, Status, SendingDateTime, DeliveryDateTime, SMSCNumber \
+				"SELECT ID, Status, EXTRACT(EPOCH FROM SendingDateTime), DeliveryDateTime, SMSCNumber \
                                         FROM sentitems WHERE \
 					DeliveryDateTime = 'epoch' AND \
 					SenderID = '%s' AND TPMR = '%i' AND DestinationNumber = '%s'",
@@ -242,41 +241,9 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 				if (!strcmp(PQgetvalue(Res, j, 1), "SendingOK")
 				    || !strcmp(PQgetvalue(Res, j, 1),
 					       "DeliveryPending")) {
-					char *time_stamp =
-					    PQgetvalue(Res, j, 2);
-					sprintf(buffer, "%c%c%c%c",
-						time_stamp[0], time_stamp[1],
-						time_stamp[2], time_stamp[3]);
-					DT.Year = atoi(buffer);
-
-					sprintf(buffer, "%c%c", time_stamp[5],
-						time_stamp[6]);
-					DT.Month = atoi(buffer);
-
-					sprintf(buffer, "%c%c", time_stamp[8],
-						time_stamp[9]);
-					DT.Day = atoi(buffer);
-
-					sprintf(buffer, "%c%c", time_stamp[11],
-						time_stamp[12]);
-					DT.Hour = atoi(buffer);
-
-					sprintf(buffer, "%c%c", time_stamp[14],
-						time_stamp[15]);
-					DT.Minute = atoi(buffer);
-
-					sprintf(buffer, "%c%c", time_stamp[17],
-						time_stamp[18]);
-					DT.Second = atoi(buffer);
-
-					t_time1 = Fill_Time_T(DT);
-					t_time2 =
-					    Fill_Time_T(sms.SMS[i].DateTime);
+					t_time1 = atoi(PQgetvalue(Res, j, 2));
+					t_time2 = Fill_Time_T(sms.SMS[i].DateTime);
 					diff = t_time2 - t_time1;
-					/*fprintf(stderr,"diff is %i, %i-%i-%i-%i-%i and %i-%i-%i-%i-%i-%i\n",diff, \
-					   DT.Year,DT.Month,DT.Day,DT.Hour,DT.Minute,DT.Second,\
-					   sms.SMS[i].DateTime.Year,sms.SMS[i].DateTime.Month,sms.SMS[i].DateTime.Day,\
-					   sms.SMS[i].DateTime.Hour,sms.SMS[i].DateTime.Minute,sms.SMS[i].DateTime.Second); */
 
 					if (diff > -10 && diff < 10) {
 						found = true;
