@@ -25,7 +25,7 @@ GSM_Error SMSDaemonSendSMS	(char *service, char *filename, GSM_MultiSMSMessage *
 typedef struct {
 	/* general options */
 	INI_Entry       *IncludeNumbers, *ExcludeNumbers;
-	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency;
+	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency, deliveryreportdelay;
 	unsigned int	resetfrequency;
 	unsigned char   *deliveryreport, *logfilename,  *PINCode;
 	unsigned char	*PhoneID;

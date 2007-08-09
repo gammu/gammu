@@ -187,7 +187,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 					t_time2 = Fill_Time_T(sms.SMS[i].DateTime);
 					diff = t_time2 - t_time1;
 
-					if (diff > -10 && diff < 10) {
+					if (diff > -Config->deliveryreportdelay && diff < Config->deliveryreportdelay) {
 						found = true;
 						break;
 					}

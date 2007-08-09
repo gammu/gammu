@@ -45,6 +45,11 @@
 #                    log: one line log entry, 
 #                    sms: store in inbox as a received SMS
 #                    Default: no
+# deliveryreportdelay - delay in seconds how long is still delivery report 
+#                       considered valid. This depends on brokeness of your 
+#                       network (delivery report should have same timestamp 
+#                       as sent message). Increase this if delivery reports 
+#                       are not paired with sent messages. Default: 10
 # phoneid - string with info about phone used for sending/receiving
 [smsd]
 PIN = 1234
@@ -55,6 +60,7 @@ sendtimeout = 10
 #resetfrequency = 0
 #deliveryreport = no
 #phoneid = MyPhone1
+#deliveryreportdelay = 10
 
 # ------------------------- SETTINGS FOR --smsd MYSQL ---------------------------
 user = root
