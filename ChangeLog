@@ -21,6 +21,8 @@ ChangeLog
 [+] * Initial support for Sharp GX Series phones.
 [+] * Added deliveryreportdelay parameter to SMSD to allow later
       received delivery reports to be correctly detected.
+[-] * Fixed calculation of OBEX file names, could lead to crash on OBEX
+      upload (Debian bug #435875).
 [-] * Fixed time stamp receiving in SMSD.
 
 20070806 - 1.12.93

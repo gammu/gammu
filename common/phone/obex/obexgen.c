@@ -639,11 +639,13 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int
 	/* Add file */
 	smprintf(s,"Adding file\n");
 	error = OBEXGEN_PrivAddFilePart(s, File, Pos, Handle);
-	if (error != ERR_NONE) return error;
 
-	/* Calculate path of added file */
-	OBEXGEN_CreateFileName(File->ID_FullName, File->ID_FullName, File->Name);
-	return ERR_NONE;
+	/* Calculate path of added file if we're done */
+	if (error == ERR_EMPTY) {
+		OBEXGEN_CreateFileName(File->ID_FullName, File->ID_FullName, File->Name);
+	}
+
+	return error;
 }
 
 GSM_Error OBEXGEN_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
