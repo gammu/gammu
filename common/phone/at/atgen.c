@@ -62,6 +62,7 @@ static GSM_AT_Charset_Info AT_Charsets[] = {
 	{AT_CHARSET_UTF8,	"UTF-8",	true},
 	{AT_CHARSET_UCS2,	"UCS2",		true},
 	{AT_CHARSET_IRA,	"IRA",		false},
+	{AT_CHARSET_IRA,	"ASCII",	false},
 #ifdef ICONV_FOUND
 	{AT_CHARSET_ISO88591,	"8859-1",	false},
 	{AT_CHARSET_ISO88592,	"8859-2",	false},
