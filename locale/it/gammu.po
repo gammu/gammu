@@ -8,12 +8,13 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-08-01 16:35+0200\n"
-"PO-Revision-Date: 2007-03-20 09:13+0100\n"
-"Last-Translator: Andrea Spadaccini\n"
+"PO-Revision-Date: 2007-08-10 13:23+0200\n"
+"Last-Translator: Angelo Giuseppe De Michele <cerebro84@gmail.com>\n"
 "Language-Team: Language =it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.0.1\n"
 
 #: common/gsmcomon.c:83
 msgid "No error."
@@ -26,48 +27,38 @@ msgstr ""
 "permessi."
 
 #: common/gsmcomon.c:85
-#, fuzzy
 msgid "Error opening device, it is locked."
-msgstr ""
-"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
-"permessi."
+msgstr "Errore durante l'apertura del dispositivo, è bloccato."
 
 #: common/gsmcomon.c:86
-#, fuzzy
 msgid "Error opening device, it doesn't exist."
-msgstr ""
-"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
-"permessi."
+msgstr "Errore durante l'apertura del dispositivo, non esiste."
 
 #: common/gsmcomon.c:87
-#, fuzzy
 msgid "Error opening device, it is already opened by other application."
 msgstr ""
-"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
-"permessi."
+"Errore durante l'apertura del dispositivo, è stato già aperto da un'altra "
+"applicazione."
 
 #: common/gsmcomon.c:88
-#, fuzzy
 msgid "Error opening device, you don't have permissions."
-msgstr ""
-"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
-"permessi."
+msgstr "Errore durante l'apertura del dispositivo, non hai i permessi."
 
 #: common/gsmcomon.c:89
-#, fuzzy
 msgid "Error opening device. No required driver in operating system."
 msgstr ""
-"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
-"permessi."
+"Errore durante l'apertura del dispositivo. Manca il driver necessario nel "
+"sistema operativo."
 
 #: common/gsmcomon.c:90
 msgid "Error opening device. Some hardware not connected/wrong configured."
 msgstr ""
+"Errore durante l'apertura del dispositivo. Una periferica non è connessa o è "
+"configurata male."
 
 #: common/gsmcomon.c:91
-#, fuzzy
 msgid "Error setting device DTR or RTS."
-msgstr "Errore durante la scrittura sul dispositivo."
+msgstr "Errore impostando DTS o RTS sulla periferica."
 
 #: common/gsmcomon.c:92
 msgid "Error setting device speed. Maybe speed not supported."
@@ -80,13 +71,12 @@ msgid "Error writing device."
 msgstr "Errore durante la scrittura sul dispositivo."
 
 #: common/gsmcomon.c:94
-#, fuzzy
 msgid "Error during reading device."
-msgstr "Errore durante la scrittura sul dispositivo."
+msgstr "Errore durante la lettura dal dispositivo."
 
 #: common/gsmcomon.c:95
 msgid "Can't set parity on device."
-msgstr ""
+msgstr "Impossibile impostare la parità sul dispositivo."
 
 #: common/gsmcomon.c:96
 msgid "No response in specified timeout. Probably phone not connected."
@@ -95,13 +85,12 @@ msgstr ""
 "connesso."
 
 #: common/gsmcomon.c:98
-#, fuzzy
 msgid ""
 "Unknown response from phone. See <http://cihar.com/gammu/report> for "
 "information how to report it."
 msgstr ""
-"Risposta sconosciuta dal telefono. Leggere readme.txt, per sapere come "
-"contattarci."
+"Risposta sconosciuta dal telefono. Vedere <http://cihar.com/gammu/report> "
+"per informazioni su come notificarlo."
 
 #: common/gsmcomon.c:100
 msgid "Unknown connection type string. Check config file."
@@ -124,14 +113,12 @@ msgstr "Funzione non supportata dal telefono."
 
 #: common/gsmcomon.c:104 gammu/memory.c:229 gammu/misc.c:1626
 #: gammu/misc.c:1966
-#, fuzzy
 msgid "Entry is empty"
-msgstr "Locazione vuota\n"
+msgstr "Locazione vuota"
 
 #: common/gsmcomon.c:105
-#, fuzzy
 msgid "Security error. Maybe no PIN?"
-msgstr "Errore sconosciuto. Forse non c'è PIN?"
+msgstr "Errore di sicurezza. Forse non c'è PIN?"
 
 #: common/gsmcomon.c:106
 #, fuzzy
