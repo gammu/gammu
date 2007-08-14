@@ -2248,13 +2248,15 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 				break;
 			}
 		}
-		DumpMessage(&s->di, FFF.Buffer, FFF.Used);
+		if (FFF.Buffer != NULL)  {
+			DumpMessage(&s->di, FFF.Buffer, FFF.Used);
 
-		//0x00 = SMS, 0x01,0x03 = MMS
-		if (FFF.Buffer[6] == 0x00) break;
+			//0x00 = SMS, 0x01,0x03 = MMS
+			if (FFF.Buffer[6] == 0x00) break;
 
-		smprintf(s,"mms file");
-		free(FFF.Buffer);
+			smprintf(s,"mms file");
+			free(FFF.Buffer);
+		}
 	}
 
 	//decode file
