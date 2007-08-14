@@ -982,7 +982,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 static GSM_Error N6510_GetFileFolderInfo2(GSM_StateMachine *s, GSM_File *File)
 {
 	int		     	Pos=6;
-	unsigned char	   	req[200] = {
+	unsigned char	   	req[900] = {
 		N7110_FRAME_HEADER,0x6C,
 		0xFF, 0xFF}; 			// name length
 
