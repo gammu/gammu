@@ -268,10 +268,8 @@ static void Version(int argc UNUSED, char *argv[]UNUSED)
 {
 	PrintVersion();
 
-	printf("%s\n",
-	       ("This is free software.  You may redistribute copies of it under the terms of"));
-	printf("%s\n",
-	       ("the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."));
+	printf("%s\n", _ _("This is free software.  You may redistribute copies of it under the terms of"));
+	printf("%s\n", _("the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."));
 	printf("%s\n",
 	       _("There is NO WARRANTY, to the extent permitted by law."));
 	printf("\n\n");
@@ -668,19 +666,14 @@ void HelpGeneral(void)
 
 	HelpHeader();
 
-	printf("%s\n\n",
-	       ("Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> [options]"));
-	printf("%s\n",
-	       ("First parameter optionally specifies which config section to use (all are probed by default)."));
-	printf("%s\n\n",
-	       ("Second parameter optionally controls debug level, next one specifies actions."));
+	printf("%s\n\n", _("Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> [options]"));
+	printf("%s\n", _("First parameter optionally specifies which config section to use (all are probed by default)."));
+	printf("%s\n\n", _("Second parameter optionally controls debug level, next one specifies actions."));
 
-	printf("%s\n\n",
-	       _("Commands can be specified with or without leading --."));
+	printf("%s\n\n", _("Commands can be specified with or without leading --."));
 
 	/* We might want to put here some most used commands */
-	printf("%s\n\n",
-	       ("For more details, call help on specific topic (gammu --help topic). Topics are:"));
+	printf("%s\n\n", _("For more details, call help on specific topic (gammu --help topic). Topics are:"));
 
 	while (HelpDescriptions[i].category != 0) {
 		printf("%11s - %s\n", HelpDescriptions[i].option,
@@ -893,10 +886,10 @@ int ProcessParameters(char start, int argc, char *argv[])
 				if (!count_failed) {
 					if (Parameters[z].min_arg ==
 					    Parameters[z].max_arg) {
-						printf(("More parameters required (function requires %d)\n"),
+						printf(_("More parameters required (function requires %d)\n"),
 						       Parameters[z].min_arg);
 					} else {
-						printf(("More parameters required (function requires %d to %d)\n"),
+						printf(_("More parameters required (function requires %d to %d)\n"),
 						       Parameters[z].min_arg,
 						       Parameters[z].max_arg);
 					}
@@ -914,10 +907,10 @@ int ProcessParameters(char start, int argc, char *argv[])
 				if (!count_failed) {
 					if (Parameters[z].min_arg ==
 					    Parameters[z].max_arg) {
-						printf(("Too many parameters (function accepts %d)\n"),
+						printf(_("Too many parameters (function accepts %d)\n"),
 						       Parameters[z].min_arg);
 					} else {
-						printf(("Too many parameters (function accepts %d to %d)\n"),
+						printf(_("Too many parameters (function accepts %d to %d)\n"),
 						       Parameters[z].min_arg,
 						       Parameters[z].max_arg);
 					}
@@ -1012,8 +1005,7 @@ int main(int argc, char *argv[])
 		}
 	}
 	if (cfg == NULL)
-		printf_warn("%s\n",
-			    ("No configuration read, using builtin defaults!"));
+		printf_warn("%s\n", _("No configuration read, using builtin defaults!"));
 
 	smcfg0 = GSM_GetConfig(s, 0);
 
@@ -1023,10 +1015,9 @@ int main(int argc, char *argv[])
 			smcfg = smcfg0;
 			/* Here we get only in first for loop */
 			if (!GSM_ReadConfig(cfg, smcfg, only_config)) {
-				printf_err(("Failed to read [gammu%d] from gammurc!\n"),
+				printf_err(_("Failed to read [gammu%d] from gammurc!\n"),
 					   only_config);
-				printf_warn("%s\n",
-					    ("No configuration read, using builtin defaults!"));
+				printf_warn("%s\n", _("No configuration read, using builtin defaults!"));
 				GSM_ReadConfig(NULL, smcfg, 0);
 			}
 		} else {
@@ -1103,7 +1094,7 @@ int main(int argc, char *argv[])
 
 	/* Check used version vs. compiled */
 	if (!strcasecmp(GetGammuVersion(), VERSION) == 0) {
-		printf_err(("Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"),
+		printf_err(_("Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"),
 			   GetGammuVersion(), VERSION);
 		exit(-1);
 	}
@@ -1141,7 +1132,7 @@ int main(int argc, char *argv[])
 					}
 					if (FoundVersion(buff) >
 					    FoundVersion(VERSION)) {
-						printf(("INFO: there is later stable Gammu (%s instead of %s) available!\n"),
+						printf(_("INFO: there is later stable Gammu (%s instead of %s) available!\n"),
 						       buff, VERSION);
 						break;
 					}
@@ -1160,7 +1151,7 @@ int main(int argc, char *argv[])
 					}
 					if (FoundVersion(buff) >
 					    FoundVersion(VERSION)) {
-						printf(("INFO: there is later testing Gammu (%s instead of %s) available!\n"),
+						printf(_("INFO: there is later testing Gammu (%s instead of %s) available!\n"),
 						       buff, VERSION);
 						break;
 					}
