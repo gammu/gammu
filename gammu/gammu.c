@@ -268,10 +268,9 @@ static void Version(int argc UNUSED, char *argv[]UNUSED)
 {
 	PrintVersion();
 
-	printf("%s\n", _ _("This is free software.  You may redistribute copies of it under the terms of"));
+	printf("%s\n", _("This is free software.  You may redistribute copies of it under the terms of"));
 	printf("%s\n", _("the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."));
-	printf("%s\n",
-	       _("There is NO WARRANTY, to the extent permitted by law."));
+	printf("%s\n", _("There is NO WARRANTY, to the extent permitted by law."));
 	printf("\n\n");
 }
 
