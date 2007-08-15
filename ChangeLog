@@ -16,6 +16,7 @@ ChangeLog
 =========
 
 2007???? - 1.12.95
+[-] * Fixed several crashes of 6510 driver.
 
 20070814 - 1.12.94
 [!] * Sony-Ericsson module renamed to AT + OBEX as it better describes
