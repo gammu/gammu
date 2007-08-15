@@ -2386,8 +2386,11 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		CopyUnicodeString(sms->SMS[0].Name,FFF.Buffer+i);
 		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
 			i+=UnicodeLength(sms->SMS[0].Name)*2+5;
-			while (true) {
-				if (FFF.Buffer[i+1]==0x00) break;
+			while (FFF.Buffer[i+1] != 0x00) {
+				if (sms->SMS[0].OtherNumbersNum == GSM_SMS_OTHER_NUMBERS - 1) {
+					smprintf(s, "WARNING: Too much recipient numbers, ignoring rest!\n");
+					break;
+				}
 				smprintf(s,"recipient number %02x %02x",FFF.Buffer[i],FFF.Buffer[i+1]);
 				if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
 					CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+i);
@@ -2445,9 +2448,12 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 			if (FFF.Buffer[176]==0x51) {
 				CopyUnicodeString(sms->SMS[0].Name,FFF.Buffer+i);
 				i+=UnicodeLength(sms->SMS[0].Name)*2+5;
-				while (true) {
-					if (FFF.Buffer[i+1]==0x00) break;
-					smprintf(s,"recipient number %02x %02x",FFF.Buffer[i],FFF.Buffer[i+1]);
+				while (FFF.Buffer[i+1] != 0x00) {
+					if (sms->SMS[0].OtherNumbersNum == GSM_SMS_OTHER_NUMBERS - 1) {
+						smprintf(s, "WARNING: Too much recipient numbers, ignoring rest!\n");
+						break;
+					}
+					smprintf(s,"recipient number 0x%02x 0x%02x ", FFF.Buffer[i],FFF.Buffer[i+1]);
 					if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
 						CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+i);
 						smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].Number));
