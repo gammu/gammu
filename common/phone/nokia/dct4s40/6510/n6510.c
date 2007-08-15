@@ -505,6 +505,9 @@ static GSM_Error N6510_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMac
 			num++;
 		}
 		return ERR_NONE;
+	case 0xf0:
+		smprintf(s, "HINT: Maybe phone needs F_SMS_FILES?\n");
+		break;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
