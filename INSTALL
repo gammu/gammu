@@ -19,10 +19,10 @@ downloaded from Microsoft:
 http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F
 
 
-From Sources - Using CMake
-==========================
+From Sources - Linux
+====================
 
-You can get CMake from <http://www.cmake.org>
+You need CMake from <http://www.cmake.org> for configuring Gammu.
 
 For now, only out of source build is supported, so you have to create
 separate directory for build.
@@ -49,8 +49,20 @@ You can also disable support for whole set of phones, e.g.:
 -DWITH_IrDA=OFF disables IrDA support
 
 
-Cross compilation for Windows
-=============================
+From Sources - Windows
+======================
+
+You need CMake from <http://www.cmake.org> for configuring Gammu. CMake
+is able to generate projects for various tools including Microsoft
+Visual Studio, Borland toolchains, Cygwin or Mingw32. Just click on
+CMakeLists.txt in project sources and configure CMake to be able to find
+optional libraries (see cross compilation section for more information
+about those). The result should be project for your compiler where you
+should be able to work with it as with any other project.
+
+
+Cross compilation for Windows on Linux
+======================================
 
 Only cross compilation using CMake has been tested. You need to install
 MinGW cross tool chain and run time. On Debian you can do it by apt-get
