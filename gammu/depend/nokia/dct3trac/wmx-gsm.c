@@ -7,6 +7,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <signal.h>
+#include <gammu.h>
 
 #include "wmx-util.h"
 #include "wmx-gsm.h"
@@ -231,7 +232,7 @@ void GSMDecoder_L2short_packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsign
 		GSMDecoder_l1xml_close(self);
 		return;
 	}
-	printf("Length : used=%zi ID=%i\n",
+	printf("Length : used=" SIZE_T_FORMAT " ID=%i\n",
 		usedlength,
 		(buffer[ptr]>>0)&3);
 	ptr++;
@@ -313,7 +314,7 @@ void GSMDecoder_L2packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsigned cha
 		case 1: /* 01 */ desc="RNR (Receive Not Ready)"; break;
 		case 2: /* 10 */ desc="REJ (Reject)"; break;
 		}
-		printf("Control: S TXSeq=%i P/F=%i S=%zi %s\n",
+		printf("Control: S TXSeq=%i P/F=%i S=" SIZE_T_FORMAT " %s\n",
 			(buffer[ptr]>>5)&7,
 			(buffer[ptr]>>4)&1,
 			x, desc);
@@ -339,7 +340,7 @@ void GSMDecoder_L2packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsigned cha
 	/* dump Length Indicator field */
 	usedlength = buffer[ptr]>>2;
 	more = (buffer[ptr]>>1)&1; /* more to go */
-	printf("Length : used=%zi M=%i EL=%i\n",
+	printf("Length : used=" SIZE_T_FORMAT " M=%i EL=%i\n",
 		usedlength, more,
 		(buffer[ptr]>>0)&1);
 	while((buffer[ptr]&1)==0) ptr++;

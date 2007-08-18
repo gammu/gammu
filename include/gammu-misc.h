@@ -90,7 +90,14 @@ extern void GSM_InitLocales(const char *path);
 #else
 #define UNUSED
 #define NORETURN
-#define INLINE 
+#define INLINE
+#endif
+
+/* Printf string for size_t */
+#ifdef WIN32
+#define SIZE_T_FORMAT "%Id"
+#else
+#define SIZE_T_FORMAT "%zd"
 #endif
 
 /**
