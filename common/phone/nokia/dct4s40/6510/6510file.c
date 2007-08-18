@@ -934,7 +934,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 					    msg.Buffer[11]*256*256+
 					    msg.Buffer[12]*256+
 					    msg.Buffer[13];
-				smprintf(s,"Size %zi bytes\n",File->Used);
+				smprintf(s,"Size " SIZE_T_FORMAT " bytes\n",File->Used);
 			}
 			File->ReadOnly = false;
 			if ((msg.Buffer[29] & 1) == 1) {

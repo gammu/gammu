@@ -445,7 +445,7 @@ static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, char *File, bool 
 	do {
 		OBEXGEN_FindNextDir(File, &Pos, req);
 		if (DirOnly && Pos == UnicodeLength(File)) break;
-		smprintf(s,"Changing path down to %s (%d, %zd)\n", DecodeUnicodeString(req), Pos, UnicodeLength(File));
+		smprintf(s,"Changing path down to %s (%d, " SIZE_T_FORMAT ")\n", DecodeUnicodeString(req), Pos, UnicodeLength(File));
 		error=OBEXGEN_ChangePath(s, req, 2);
 		if (error != ERR_NONE) return error;
 		if (Pos == UnicodeLength(File)) break;
@@ -613,7 +613,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		j = File->Used - *Pos;
 		/* End of file body block */
 		OBEXAddBlock(req, &Current, 0x49, File->Buffer+(*Pos), j);
-		smprintf(s, "Adding last file part %i %zi\n", *Pos, j);
+		smprintf(s, "Adding last file part %i " SIZE_T_FORMAT "\n", *Pos, j);
 		*Pos = *Pos + j;
 		error = GSM_WaitFor (s, req, Current, 0x82, OBEX_TIMEOUT, ID_AddFile);
 		if (error != ERR_NONE) return error;
@@ -621,7 +621,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 	} else {
 		/* File body block */
 		OBEXAddBlock(req, &Current, 0x48, File->Buffer+(*Pos), j);
-		smprintf(s, "Adding file part %i %zi\n", *Pos, j);
+		smprintf(s, "Adding file part %i " SIZE_T_FORMAT "\n", *Pos, j);
 		*Pos = *Pos + j;
 		error=GSM_WaitFor (s, req, Current, 0x02, OBEX_TIMEOUT, ID_AddFile);
 	}

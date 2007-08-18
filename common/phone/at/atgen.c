@@ -511,7 +511,7 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
 		(*output)[position - 2] = 0;
 	}
 
-	smprintf(s, "Grabbed string from reply: \"%s\" (parsed %zd bytes)\n", *output, position);
+	smprintf(s, "Grabbed string from reply: \"%s\" (parsed " SIZE_T_FORMAT " bytes)\n", *output, position);
 	return position;
 }
 
@@ -985,7 +985,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 		if (Data->ModelInfo->number[0] != 0) strcpy(Data->Model,Data->ModelInfo->number);
 	} else {
-		smprintf(s, "WARNING: Model name too long, increase GSM_MAX_MODEL_LENGTH to at least %zd\n", strlen(pos));
+		smprintf(s, "WARNING: Model name too long, increase GSM_MAX_MODEL_LENGTH to at least " SIZE_T_FORMAT "\n", strlen(pos));
 	}
 
 	return ERR_NONE;
@@ -3271,7 +3271,7 @@ GSM_Error ATGEN_ReplyGetPBKMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 	}
 
 	if (strlen(msg.Buffer) > AT_PBK_MAX_MEMORIES) {
-		smprintf(s, "ERROR: Too long phonebook memories information received! (Recevided %zd, AT_PBK_MAX_MEMORIES is %d\n", strlen(msg.Buffer), AT_PBK_MAX_MEMORIES);
+		smprintf(s, "ERROR: Too long phonebook memories information received! (Recevided " SIZE_T_FORMAT ", AT_PBK_MAX_MEMORIES is %d\n", strlen(msg.Buffer), AT_PBK_MAX_MEMORIES);
 		return ERR_MOREMEMORY;
 	}
 	strcpy(s->Phone.Data.Priv.ATGEN.PBKMemories, msg.Buffer);
