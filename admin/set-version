@@ -19,14 +19,11 @@ echo "Setting version to $version"
 do_replace packaging/rpm/gammu.spec.in gammu.spec
 do_replace packaging/slackware/description-pak.in description-pak
 
-# Include for windows
-do_replace templates/gammu-config.h.windows.in include/gammu-config.h
-
 # Windows build
 do_replace win32/dll/msvc06.mak/gammu.rc.in win32/dll/msvc06.mak/gammu.rc
 do_replace win32/dll/msvc2003.mak/gammu.rc.in win32/dll/msvc2003.mak/gammu.rc
-do_replace gammu/bcc06.mak/gammu.bpr.in gammu/bcc06.mak/gammu.bpr
-do_replace gammu/msvc06.mak/gammu.rc.in gammu/msvc06.mak/gammu.rc
-do_replace gammu/msvc2003.mak/gammu.rc.in gammu/msvc2003.mak/gammu.rc
+do_replace win32/gammu-binary/bcc06.mak/gammu.bpr.in win32/gammu-binary/bcc06.mak/gammu.bpr
+do_replace win32/gammu-binary/msvc06.mak/gammu.rc.in win32/gammu-binary/msvc06.mak/gammu.rc
+do_replace win32/gammu-binary/msvc2003.mak/gammu.rc.in win32/gammu-binary/msvc2003.mak/gammu.rc
 
 echo $version > VERSION
