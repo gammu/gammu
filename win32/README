@@ -1,9 +1,15 @@
 Gammu for Windows
 =================
 
-This directory contains some examples of using Gammu on Windows. Please
-note that Gammu itself can be compiled on Windows using CMake[1], which
-can be used to generate native MSVC projects. Examples in this directory
-are not extensively tested and might be broken.
+This directory contains some examples of using Gammu on Windows. They
+are not maintained and most likely are broken. If nobody will interest
+in maintaining them, they will be removed in future.
+
+Please note that Gammu itself can be compiled on Windows using CMake[1],
+which can be used to generate native projects for Microsoft Visual
+Studio or Borland. For more details see INSTALL file in top level
+directory.
 
 [1]: http://cmake.org
+
+# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
