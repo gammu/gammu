@@ -57,8 +57,8 @@ is able to generate projects for various tools including Microsoft
 Visual Studio, Borland toolchains, Cygwin or Mingw32. Just click on
 CMakeLists.txt in project sources and configure CMake to be able to find
 optional libraries (see cross compilation section for more information
-about those). The result should be project for your compiler where you
-should be able to work with it as with any other project.
+about getting those). The result should be project for your compiler
+where you should be able to work with it as with any other project.
 
 
 Cross compilation for Windows on Linux
