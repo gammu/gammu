@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.12.94\n"
+"Project-Id-Version: Gammu 1.13.0\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-08-14 10:53+0200\n"
+"POT-Creation-Date: 2007-08-20 10:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -252,19 +252,19 @@ msgstr ""
 msgid "My style"
 msgstr ""
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:515 gammu/message.c:2468
+#: common/phone/nokia/dct4s40/6510/n6510.c:518 gammu/message.c:2468
 msgid "SIM"
 msgstr ""
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:516 common/phone/pfunc.c:40
+#: common/phone/nokia/dct4s40/6510/n6510.c:519 common/phone/pfunc.c:40
 msgid "Inbox"
 msgstr ""
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:517
+#: common/phone/nokia/dct4s40/6510/n6510.c:520
 msgid "Sent items"
 msgstr ""
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:518
+#: common/phone/nokia/dct4s40/6510/n6510.c:521
 msgid "Saved items"
 msgstr ""
 

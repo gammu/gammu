@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-08-14 10:53+0200\n"
+"POT-Creation-Date: 2007-08-20 10:08+0200\n"
 "PO-Revision-Date: 2007-07-31 11:24+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -264,19 +264,19 @@ msgstr "Hlasité"
 msgid "My style"
 msgstr "Můj styl"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:515 gammu/message.c:2468
+#: common/phone/nokia/dct4s40/6510/n6510.c:518 gammu/message.c:2468
 msgid "SIM"
 msgstr "SIM"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:516 common/phone/pfunc.c:40
+#: common/phone/nokia/dct4s40/6510/n6510.c:519 common/phone/pfunc.c:40
 msgid "Inbox"
 msgstr "Příchozí"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:517
+#: common/phone/nokia/dct4s40/6510/n6510.c:520
 msgid "Sent items"
 msgstr "Odeslané zprávy"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:518
+#: common/phone/nokia/dct4s40/6510/n6510.c:521
 msgid "Saved items"
 msgstr "Uložené zprávy"
 
