@@ -7,6 +7,7 @@
 #ifndef __gammu_misc_h
 #define __gammu_misc_h
 
+#define WIN32_LEAN_AND_MEAN
 #include <stdio.h>
 #include <gammu-file.h>
 

@@ -19,6 +19,7 @@
 #include <string.h>
 #include <fcntl.h>
 #ifdef WIN32
+#  include <winsock2.h>
 #  include <io.h>
 #else
 #  include <errno.h>
