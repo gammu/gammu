@@ -1181,7 +1181,7 @@ GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_
 		IEL = strtol(pos + 2, (char **)NULL, 16);
 	} else {
 		/* Decimal means directly IEL level, convert it to flags */
-		IEL = 1 << atoi(pos);
+		IEL = atoi(pos);
 		/* Adjust index to flags we use further */
 		switch (IEL) {
 			case 3:
