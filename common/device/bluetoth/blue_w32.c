@@ -14,6 +14,8 @@
 #include <string.h>
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#include <winsock2.h>
+#include <ole2.h>
 #include <io.h>
 
 #include "../../misc/coding/coding.h"
