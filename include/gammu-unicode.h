@@ -1,7 +1,7 @@
 /**
  * \file gammu-unicode.h
  * \author Michal Čihař
- * 
+ *
  * Unicode manipulation functions.
  */
 #ifndef __gammu_unicode_h
@@ -141,6 +141,15 @@ bool mywstrncasecmp(unsigned const char *a, unsigned const char *b, int num);
  * \ingroup Unicode
  */
 extern char *strcasestr(const char *s, const char *find);
+#endif
+
+/* Compatibility define for some Windows compilers. */
+#ifndef HAVE_STRCASECMP
+#  ifdef WIN32
+#    define strcasecmp _stricmp
+#  else
+#    error No implementation of strcasecmp available!
+#  endif
 #endif
 
 /**
