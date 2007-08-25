@@ -376,6 +376,12 @@ static void OBEXGEN_FindNextDir(unsigned char *Path, int *Pos, unsigned char *Re
  */
 static GSM_Error OBEXGEN_ReplyChangePath(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	/* Non standard Sharp GX reply */
+	if (msg.Type == 0x80) {
+		return ERR_FILENOTEXIST;
+	}
+
+	/* Generic error codes */
 	if ((msg.Type & 0x7f) >= 0x40) {
 		return OBEXGEN_HandleError(msg, s);
 	}
