@@ -1,0 +1,39 @@
+python-gammu
+============
+
+Python bingings for Gammu library.
+
+Homepage
+========
+
+<http://cihar.com/gammu/python>
+
+License
+=======
+
+GNU GPL version 2.
+
+Documentation
+=============
+
+Please see included python documentation:
+>>> import gammu
+>>> help(gammu)
+
+Alternatively you can use epydoc to generate browsable version, which is also
+available online at <http://cihar.com/gammu/python/docs>.
+
+Bug reporting
+=============
+
+Please report found bugs to <http://bugs.cihar.com>.
+
+Version control
+===============
+
+Developers might be interested in snapshot or version control system
+(Subversion is being used), information about accessing these is
+available at <http://cihar.com/gammu/python/>.
+
+Anonymous Subversion is available using <svn://svn.cihar.com/python-gammu>,
+there is also web browser for it - <http://viewsvn.cihar.com/python-gammu>.
