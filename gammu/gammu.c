@@ -10,7 +10,6 @@
 #include <signal.h>
 #include <ctype.h>
 #include <wchar.h>
-#include <unistd.h>
 
 #include <gammu.h>
 #include <gammu-config.h>
@@ -334,7 +333,7 @@ static void RunBatch(int argc, char *argv[])
 			/* line is empty and is not a comment */
 			continue;
 		}
-			
+
 		/* split words into strings in the array argsv */
 		i = 0;
 		j = 0;

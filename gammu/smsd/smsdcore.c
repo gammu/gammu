@@ -4,7 +4,6 @@
 #include <signal.h>
 #include <stdarg.h>
 #include <time.h>
-#include <unistd.h>
 
 #include "../../common/misc/coding/coding.h"
 #include "../../common/misc/locales.h"
@@ -25,8 +24,8 @@ static GSM_Error SendingSMSStatus;
 void SMSSendingSMSStatus (GSM_StateMachine *s, int status, int mr)
 {
 	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%d\n",
-			GSM_GetConfig(s, -1)->Device, 
-			status, 
+			GSM_GetConfig(s, -1)->Device,
+			status,
 			mr);
 	TPMR = mr;
 	if (status==0) {

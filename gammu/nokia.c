@@ -4,7 +4,6 @@
 #include "../common/misc/locales.h"
 
 #include <gammu.h>
-#include <unistd.h>
 #include <stdlib.h>
 #include <ctype.h>
 

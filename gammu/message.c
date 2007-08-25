@@ -4,7 +4,11 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <unistd.h>
+#ifdef WIN32
+#  include <io.h>
+#else
+#  include <unistd.h>
+#endif
 
 #include "../common/misc/locales.h"
 
