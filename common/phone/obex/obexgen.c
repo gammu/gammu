@@ -675,6 +675,12 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 {
 	int old,Pos=0;
 
+	/* Non standard Sharp GX reply */
+	if (msg.Type == 0x80) {
+		return ERR_FILENOTEXIST;
+	}
+
+	/* Generic error codes */
 	if ((msg.Type & 0x7f) >= 0x40) {
 		return OBEXGEN_HandleError(msg, s);
 	}
@@ -3114,6 +3120,10 @@ GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	/* NOT FOUND block */
 	{OBEXGEN_ReplyGetFilePart,	"\xC4",0x00,0x00,ID_GetFile			},
 	{OBEXGEN_ReplyChangePath,	"\xC4",0x00,0x00,ID_SetPath			},
+
+	/* Non standard Sharp GX reply */
+	{OBEXGEN_ReplyGetFilePart,	"\x80",0x00,0x00,ID_GetFile			},
+	{OBEXGEN_ReplyChangePath,	"\x80",0x00,0x00,ID_SetPath			},
 
 	{NULL,				"\x00",0x00,0x00,ID_None			}
 };
