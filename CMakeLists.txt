@@ -61,10 +61,9 @@ endif ("${Gammu_BINARY_DIR}" STREQUAL "${Gammu_SOURCE_DIR}")
 
 # For debugging
 if (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set (CMAKE_VERBOSE_MAKEFILE ON)
+#    set (CMAKE_VERBOSE_MAKEFILE ON)
     set (DEBUG 1)
 else (CMAKE_BUILD_TYPE STREQUAL "Debug")
-    set (CMAKE_VERBOSE_MAKEFILE OFF)
     set (DEBUG 0)
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
