@@ -6,7 +6,6 @@
 #include <signal.h>
 #include <stdlib.h>
 #include <ctype.h>
-#include <unistd.h>
 #include <gammu.h>
 
 #include "common.h"

@@ -2,7 +2,6 @@
 
 #include <gammu.h>
 #include <string.h>
-#include <unistd.h>
 #include <stdarg.h>
 
 #ifdef HAVE_PTHREAD
@@ -33,7 +32,7 @@ typedef struct {
 	 */
 	unsigned char Device[50];
 	/**
-	 * List of connections to try 
+	 * List of connections to try
 	 */
 	OneConnectionInfo Connections[5];
 } OneDeviceInfo;

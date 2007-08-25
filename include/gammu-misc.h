@@ -69,10 +69,11 @@ extern void GSM_InitLocales(const char *path);
 /* BCC has a proper Sleep(), which takes milliseconds */
 #    define my_sleep(x) Sleep(x)
 #  else
-#include <windows.h>
+#    include <windows.h>
 #    define my_sleep(x) ((x)<1000 ? Sleep(1) : Sleep((x)/1000))
 #  endif
 #else
+#  include <unistd.h>
 #  define my_sleep(x) usleep(x*1000)
 #endif
 
