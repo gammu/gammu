@@ -1459,6 +1459,7 @@ GSM_Error OBEXGEN_GetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	/* Grab vCard */
 	error = OBEXGEN_GetTextFile(s, path, &data);
 	free(path);
+	if (error == ERR_FILENOTEXIST) return ERR_EMPTY;
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
@@ -1866,6 +1867,7 @@ GSM_Error OBEXGEN_GetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	/* Grab vCalendar */
 	error = OBEXGEN_GetTextFile(s, path, &data);
 	free(path);
+	if (error == ERR_FILENOTEXIST) return ERR_EMPTY;
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
@@ -2228,6 +2230,7 @@ GSM_Error OBEXGEN_GetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	/* Grab vTodo */
 	error = OBEXGEN_GetTextFile(s, path, &data);
 	free(path);
+	if (error == ERR_FILENOTEXIST) return ERR_EMPTY;
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
@@ -2605,6 +2608,7 @@ GSM_Error OBEXGEN_GetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	/* Grab vCard */
 	error = OBEXGEN_GetTextFile(s, path, &data);
 	free(path);
+	if (error == ERR_FILENOTEXIST) return ERR_EMPTY;
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
