@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-08-20 10:08+0200\n"
-"PO-Revision-Date: 2007-07-30 14:22+0200\n"
+"PO-Revision-Date: 2007-08-20 15:57+0200\n"
 "Last-Translator: Thorsten Gutsche <thorsten.gutsche@googlemail.com>\n"
 "Language-Team: Language =de\n"
 "MIME-Version: 1.0\n"
@@ -243,7 +243,7 @@ msgstr "Die Daten wurden umgewandelt."
 
 #: common/gsmcomon.c:136
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "Gammu ist nicht konfiguriert."
 
 #: common/phone/nokia/dct3/n6110.c:1953 gammu/misc.c:1814
 msgid "Personal"
@@ -1985,9 +1985,8 @@ msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr "There is NO WARRANTY, to the extent permitted by law."
 
 #: gammu/gammu.c:306
-#, fuzzy
 msgid "standard input"
-msgstr "Standardnummer "
+msgstr "Standardeingabe "
 
 #: gammu/gammu.c:317
 #, c-format
@@ -2088,14 +2087,12 @@ msgid "Functions that don't fit elsewhere"
 msgstr "Funktionen ohne Kategorie"
 
 #: gammu/gammu.c:651
-#, fuzzy
 msgid "Gammu information"
-msgstr "Telefoninformationen"
+msgstr "Gammu Information"
 
 #: gammu/gammu.c:652
-#, fuzzy
 msgid "SMS daemon"
-msgstr "SMSC-Antwort"
+msgstr "SMS-Daemon"
 
 #: gammu/gammu.c:668
 msgid ""
@@ -2137,12 +2134,12 @@ msgid "Unknown help topic specified!"
 msgstr "Unbekanntes Hilfethema angegeben!"
 
 #: gammu/gammu.c:776
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
 "\n"
 msgstr ""
-"Gammu-Parameter, Thema: %s\n"
+"Gammu-Befehle, Thema: %s\n"
 "\n"
 
 #: gammu/gammu.c:888
@@ -2186,14 +2183,13 @@ msgid "No configuration file found!"
 msgstr "Keine Konfigurationsdatei gefunden!"
 
 #: gammu/gammu.c:1007 gammu/gammu.c:1019
-#, fuzzy
 msgid "No configuration read, using builtin defaults!"
-msgstr "Konfigurationsdatei konnte nicht gelesen werden!"
+msgstr "Keine Konfiguration eingelesen, verwende eingebaute Standards!"
 
 #: gammu/gammu.c:1017
 #, c-format
 msgid "Failed to read [gammu%d] from gammurc!\n"
-msgstr ""
+msgstr "[gammu%d] lesen von gammurc fehlgeschlagen!\n"
 
 #: gammu/gammu.c:1096
 #, c-format
@@ -2210,11 +2206,9 @@ msgstr ""
 "INFO: Es ist eine neuere stabile Gammu-Version (%s anstatt %s) verfügbar!\n"
 
 #: gammu/gammu.c:1153
-#, fuzzy, c-format
+#, c-format
 msgid "INFO: there is later testing Gammu (%s instead of %s) available!\n"
-msgstr ""
-"INFO: Es ist eine neuere Entwicklungsversion von Gammu (%s anstatt %s) "
-"verfügbar!\n"
+msgstr "INFO: Es ist eine neuere Testversion von Gammu (%s anstatt %s) verfügbar!\n"
 
 #: gammu/memory.c:26
 #, c-format
@@ -2833,9 +2827,8 @@ msgid "SMS message received"
 msgstr "SMS empfangen"
 
 #: gammu/message.c:445
-#, fuzzy
 msgid "We already have one pending, ignoring this one!"
-msgstr "Es wird bereits eines empfangen, wird ignoriert!"
+msgstr "Es wird bereits eines empfangen, daher wird dieses ignoriert!"
 
 #: gammu/message.c:465 gammu/message.c:656
 #, c-format
@@ -3994,12 +3987,12 @@ msgid " (default name)"
 msgstr " (Standard-Name)"
 
 #: gammu/misc.c:1727
-#, fuzzy, c-format
+#, c-format
 msgid " (Head set profile)"
-msgstr " (HeadSet-Profil)"
+msgstr " (Head-Set-Profil)"
 
 #: gammu/misc.c:1728
-#, fuzzy, c-format
+#, c-format
 msgid " (Car kit profile)"
 msgstr " (Freisprechanlagen-Profil)"
 
@@ -4584,7 +4577,7 @@ msgstr "Unbekannter smsd Dienst: (\"%s\")\n"
 #: gammu/smsd/smsdcore.c:531
 #, c-format
 msgid "Initialisation failed, stopping Gammu smsd (%i)"
-msgstr ""
+msgstr "Initialisierung fehlgeschlagen, halte Gammu smsd (%i) an"
 
 #: gammu/smsd/smsdcore.c:546
 #, c-format
