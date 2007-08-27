@@ -33,14 +33,20 @@ IF(UNIX)
       EXEC_PROGRAM(${MYSQL_CONFIG}
         ARGS --libs
         OUTPUT_VARIABLE MY_TMP)
+	  string (REGEX REPLACE "-L([^ ]*)( .*)?" "\\2" MYSQL_LIBS "${MY_TMP}")
+	  set (MYSQL_ADD_LIBRARIES "")
+	  foreach(LIB ${MYSQL_LIBS})
+		string (REGEX REPLACE "[ ]*-l([^ ]*)" "\\1" LIB "${LIB}")
+		list(APPEND MYSQL_ADD_LIBRARIES "${LIB}")
+	  endforeach(LIB ${MYSQL_LIBS})
 	  string (REGEX REPLACE "-L([^ ]*)( .*)?" "\\1" MY_TMP "${MY_TMP}")
-      SET(MYSQL_ADD_LIBRARY ${MY_TMP} CACHE FILEPATH INTERNAL)
+      SET(MYSQL_ADD_LIBRARY_PATH ${MY_TMP} CACHE FILEPATH INTERNAL)
     ENDIF(MYSQL_CONFIG)
 
 ELSE(UNIX)
 
 	set(MYSQL_ADD_INCLUDE_DIR "c:/msys/local/include" CACHE FILEPATH INTERNAL)
-    set(MYSQL_ADD_LIBRARY "c:/msys/local/lib" CACHE FILEPATH INTERNAL)
+    set(MYSQL_ADD_LIBRARY_PATH "c:/msys/local/lib" CACHE FILEPATH INTERNAL)
 ENDIF(UNIX)
 
 if (NOT DEFINED MYSQL_FOUND)
@@ -53,14 +59,18 @@ if (NOT DEFINED MYSQL_FOUND)
 		${MYSQL_ADD_INCLUDE_DIR}
 	)
 
-	find_library(MYSQL_LIBRARIES NAMES mysqlclient
-	   	PATHS
-	   	/usr/lib/mysql
-	   	/usr/local/lib
-	   	/usr/local/lib/mysql
-	   	/usr/local/mysql/lib
-		${MYSQL_ADD_LIBRARY}
-	)
+	set(MYSQL_LIBRARIES "")
+  	foreach(LIB ${MYSQL_ADD_LIBRARIES})
+		find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}
+			PATHS
+			${MYSQL_ADD_LIBRARY_PATH}
+			/usr/lib/mysql
+			/usr/local/lib
+			/usr/local/lib/mysql
+			/usr/local/mysql/lib
+		)
+		list(APPEND MYSQL_LIBRARIES "${MYSQL_LIBRARIES_${LIB}}")
+  	endforeach(LIB ${MYSQL_ADD_LIBRARIES})
 
 	if(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARIES)
 	   set(MYSQL_FOUND TRUE CACHE INTERNAL "MySQL found")
