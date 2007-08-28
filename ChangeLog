@@ -17,6 +17,7 @@ ChangeLog
 
 2007???? - 1.13.90
 [-] * Fixed parsing of date/time reply from some broken AT phones.
+[-] * Added support for Option GlobeTrotter.
 
 20070820 - 1.13.0
 [-] * Fixed several crashes of 6510 driver.
