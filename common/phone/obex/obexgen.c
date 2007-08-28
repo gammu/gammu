@@ -104,6 +104,10 @@ static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine
 	case 0xC0:
 		smprintf(s, "Wrong request sent to phone!\n");
 		return ERR_BUG;
+	case 0xC1:
+	case 0xC3:
+		smprintf(s, "Connection not allowed!\n");
+		return ERR_SECURITYERROR;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
@@ -3123,6 +3127,7 @@ GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	{OBEXGEN_ReplyAddFilePart,	"\xC1",0x00,0x00,ID_AddFile			},
 
 	/* FORBIDDEN block */
+	{OBEXGEN_ReplyConnect,		"\xC3",0x00,0x00,ID_Initialise			},
 	{OBEXGEN_ReplyChangePath,	"\xC3",0x00,0x00,ID_SetPath			},
 	{OBEXGEN_ReplyGetFilePart,	"\xC3",0x00,0x00,ID_GetFile			},
 	{OBEXGEN_ReplyAddFilePart,	"\xC3",0x00,0x00,ID_AddFile			},
