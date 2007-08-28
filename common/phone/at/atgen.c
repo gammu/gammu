@@ -613,6 +613,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 	char *out_s;
 	unsigned char *out_us;
 	unsigned char *buffer;
+	unsigned char *buffer2;
 	size_t length;
 	size_t storage_size;
 	int *out_i;
@@ -718,6 +719,15 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 					case 'd':
 						out_dt = va_arg(ap, GSM_DateTime *);
 						length = ATGEN_GrabString(s, inp, &buffer);
+						/* Fix up reply from broken phones which do not put this inside quotes */
+						if (*(inp + length) == ',' && strchr(buffer, ',') == NULL) {
+							length++;
+							length += ATGEN_GrabString(s, inp + length, &buffer2);
+							buffer = realloc(buffer, length + 2);
+							strcat(buffer, ",");
+							strcat(buffer, buffer2);
+							free(buffer2);
+						}
 						smprintf(s, "Parsed string for date \"%s\"\n", buffer);
 						error = ATGEN_DecodeDateTime(s, out_dt, buffer);
 						free(buffer);
