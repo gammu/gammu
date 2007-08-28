@@ -1712,6 +1712,12 @@ void ATGEN_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned cha
 {
 	sms->Folder	= 0; /* Flat memory */
 	sms->Location	= (folderid - 1) * GSM_PHONE_MAXSMSINFOLDER + location;
+
+	/* Some phones start locations from 0, handle them here */
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_LOCATION_0)) {
+		sms->Location++;
+	}
+
 	smprintf(s, "ATGEN folder %i & location %i -> SMS folder %i & location %i\n",
 		folderid, location, sms->Folder, sms->Location);
 }
