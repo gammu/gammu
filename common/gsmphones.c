@@ -421,6 +421,9 @@ OnePhoneModel allmodels[] = {
 	/* Some cards identify a bit different */
 	{"GC79",	"FAE-1021011-BVGC79" ,"",			   {F_OBEX, F_SMS_LOCATION_0, 0}},
 
+	/* Option devices */
+	{"GlobeTrotter HSDPA Modem",	"GlobeTrotter HSDPA Modem" ,"",	   {F_SMS_LOCATION_0, 0}},
+
 	/* IrDA identifications for Sony-Ericsson */
 	/* At least my K750i reports itself as "Sony Ericss", so detect it for IrDA */
 	{"Generic SE",	"Generic SE", "Sony Ericss",			   {F_OBEX, 0}},
