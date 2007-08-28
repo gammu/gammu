@@ -76,6 +76,9 @@ void PrintSecurityStatus()
 		case SEC_Puk2:
 			printf("%s\n", _("Waiting for PUK2."));
 			break;
+		case SEC_Phone:
+			printf("%s\n", _("Waiting for phone code."));
+			break;
 		case SEC_None:
 			printf("%s\n", _("Nothing to enter."));
 			break;
@@ -193,7 +196,7 @@ void Print_Error(GSM_Error error)
  * Converts memory type from string.
  *
  * \param type String with memory type.
- * 
+ *
  * \return Parsed memory type or 0 on failure.
  */
 GSM_MemoryType MemoryTypeFromString(const char *type)

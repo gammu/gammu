@@ -4068,6 +4068,11 @@ GSM_Error ATGEN_ReplyGetSecurityStatus(GSM_Protocol_Message msg, GSM_StateMachin
 		smprintf(s, "nothing to enter\n");
 		return ERR_NONE;
 	}
+	if (strstr(msg.Buffer,"PH-SIM PIN")) {
+		*Status = SEC_Phone;
+		smprintf(s, "Phone code needed\n");
+		return ERR_NONE;
+	}
 	if (strstr(msg.Buffer,"PH_SIM PIN")) {
 		smprintf(s, "no SIM inside or other error\n");
 		return ERR_UNKNOWN;

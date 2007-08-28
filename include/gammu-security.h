@@ -1,7 +1,7 @@
 /**
  * \file gammu-security.h
  * \author Michal Čihař
- * 
+ *
  * Security functions.
  */
 #ifndef __gammu_security_h
@@ -43,7 +43,11 @@ typedef enum {
 	/**
 	 * Code not needed.
 	 */
-	SEC_None
+	SEC_None,
+	/**
+	 * Phone code needed.
+	 */
+	SEC_Phone,
 } GSM_SecurityCodeType;
 
 /**
