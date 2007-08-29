@@ -143,13 +143,13 @@ bool mywstrncasecmp(unsigned const char *a, unsigned const char *b, int num);
 extern char *strcasestr(const char *s, const char *find);
 #endif
 
-/* Compatibility define for some Windows compilers. */
 #ifndef HAVE_STRCASECMP
-#  ifdef WIN32
-#    define strcasecmp _stricmp
-#  else
-#    error No implementation of strcasecmp available!
-#  endif
+/**
+ * Case insensitive string comparing, libc compatibility.
+ *
+ * \ingroup Unicode
+ */
+extern int strcasecmp (const char *s1, const char *s2);
 #endif
 
 /**
