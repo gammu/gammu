@@ -7,6 +7,11 @@
 #include <gammu-message.h>
 #include "dct3comm.h"
 
+typedef enum {
+	N6110_Auto = 1,
+	N6110_Europe
+} N6110_Language;
+
 typedef struct {
 	unsigned char			MagicBytes[4];
 	int				LastCalendarPos;
@@ -15,13 +20,8 @@ typedef struct {
 	GSM_SMSMemoryStatus		LastSMSStatus;
 	int				LastSMSRead;
 
-	int				PhoneLanguage;
+	N6110_Language			PhoneLanguage;
 } GSM_Phone_N6110Data;
-
-typedef enum {
-	N6110_Auto = 1,
-	N6110_Europe
-} N6110_Language;
 
 #ifndef GSM_USED_MBUS2
 #  define GSM_USED_MBUS2
