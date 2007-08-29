@@ -1713,9 +1713,13 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 	smprintf(s, "SMS folder %i & location %i -> ATGEN folder %i & location %i\n",
 		sms->Folder,sms->Location,*folderid,*location);
 
-	if (Priv->SIMSMSMemory == AT_AVAILABLE && *folderid == 1) {
+	/* Set the needed memory type */
+	if (Priv->SIMSMSMemory == AT_AVAILABLE && 
+			(*folderid == 1 || *folderid == 2)) {
+		sms->Memory = MEM_SM;
 		return ATGEN_SetSMSMemory(s, true, false);
 	} else {
+		sms->Memory = MEM_ME;
 		return ATGEN_SetSMSMemory(s, false, false);
 	}
 }
@@ -2553,6 +2557,8 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	unsigned char		buffer[1000], hexreq[1000];
 	GSM_Phone_Data		*Phone = &s->Phone.Data;
 	unsigned char		*statetxt;
+	int location;
+	unsigned char folderid;
 
 	/* This phone supports only sent/unsent messages on SIM */
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSONLYSENT)) {
@@ -2562,28 +2568,34 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		}
 	}
 
-	sms->PDU = SMS_Submit;
-	switch (sms->Folder) {
-	case 1:  sms->PDU 	= SMS_Deliver;		/* Inbox SIM */
-		 sms->Memory 	= MEM_SM;
-		 error=ATGEN_SetSMSMemory(s, true, true);
-		 break;
-	case 2:  error=ATGEN_SetSMSMemory(s, true, true);	/* Outbox SIM */
-		 sms->Memory 	= MEM_SM;
-	 	 break;
-	case 3:  sms->PDU = SMS_Deliver;
-		 sms->Memory 	= MEM_ME;
-		 error=ATGEN_SetSMSMemory(s, false, true);	/* Inbox phone */
-		 break;
-	case 4:  error=ATGEN_SetSMSMemory(s, false, true);	/* Outbox phone */
-		 sms->Memory 	= MEM_ME;
-		 break;
-	default: return ERR_NOTSUPPORTED;
+	/* Check the lower bound (this is static, we do not support flat memory here */
+	if (sms->Folder <= 0) {
+		return ERR_INVALIDLOCATION;
 	}
-	if (error!=ERR_NONE) return error;
 
+	/* We don't actually need this, but let's initialise it. */
+	sms->Location = 0;
+
+	/* Get real SMS location and set correct memory type */
+	error = ATGEN_GetSMSLocation(s, sms, &folderid, &location, true);
+	if (error != ERR_NONE) {
+		return error;
+	}
+
+	/* Set message type based on folder */
+	if ((folderid % 2) == 1) {
+		/* Inbox folder */
+		sms->PDU = SMS_Deliver;
+	} else {
+		/* Outbox folder */
+		sms->PDU = SMS_Submit;
+	}
+
+	/* Format SMS frame */
 	error = ATGEN_MakeSMSFrame(s, sms, hexreq, &current, &current2);
-	if (error != ERR_NONE) return error;
+	if (error != ERR_NONE) {
+		return error;
+	}
 
 	switch (Phone->Priv.ATGEN.SMSMode) {
 	case SMS_AT_PDU:
