@@ -2416,7 +2416,11 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 		start = strstr(msg.Buffer, "+CMGW: ");
 		if (start == NULL) return ERR_UNKNOWN;
 		s->Phone.Data.SaveSMSMessage->Location = atoi(start+7);
-		smprintf(s, "Saved at location %i\n",s->Phone.Data.SaveSMSMessage->Location);
+		smprintf(s, "Saved at AT location %i\n",s->Phone.Data.SaveSMSMessage->Location);
+		/* Adjust location */
+		ATGEN_SetSMSLocation(s, s->Phone.Data.SaveSMSMessage, 
+				s->Phone.Data.SaveSMSMessage->Folder,
+				s->Phone.Data.SaveSMSMessage->Location);
 		return ERR_NONE;
 	case AT_Reply_Error:
 		smprintf(s, "Error\n");
