@@ -211,8 +211,6 @@
 
 /* Will be used Bluez BT stack ? */
 #cmakedefine GSM_ENABLE_BLUEZ
-/* Will be used Affix BT stack ? */
-#cmakedefine GSM_ENABLE_AFFIX
 
 #cmakedefine BLUETOOTH_RF_SEARCHING
 

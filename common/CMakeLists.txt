@@ -30,7 +30,6 @@ set (LIBRARY_SRC
     service/backup/backvcs.c
     service/backup/backvcf.c
     service/backup/backics.c
-    device/bluetoth/affix.c
     device/bluetoth/bluez.c
     device/bluetoth/blue_w32.c
     device/bluetoth/bluetoth.c
