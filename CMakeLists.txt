@@ -286,6 +286,7 @@ endif (WITH_BLUETOOTH_RF_SEARCHING)
 OPTION(WITH_IRDA "IrDA support" ON)
 if (WITH_IRDA)
     if (WIN32)
+        # FIXME: This is currently hardcoded here, maybe there is test?
         set (IRDA_FOUND YES)
     else (WIN32)
         check_c_source_compiles (
