@@ -1696,11 +1696,13 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 	/* simulate flat SMS memory */
 	if (sms->Folder == 0x00) {
 		ifolderid = sms->Location / GSM_PHONE_MAXSMSINFOLDER;
-		if (ifolderid + 1 > maxfolder) return ERR_NOTSUPPORTED;
+		if (ifolderid + 1 > maxfolder) 
+			return ERR_NOTSUPPORTED;
 		*folderid = ifolderid + 1;
 		*location = sms->Location - ifolderid * GSM_PHONE_MAXSMSINFOLDER;
 	} else {
-		if (sms->Folder > 2 * maxfolder) return ERR_NOTSUPPORTED;
+		if (sms->Folder > 2 * maxfolder) 
+			return ERR_NOTSUPPORTED;
 		*folderid = sms->Folder <= 2 ? 1 : 2;
 		*location = sms->Location;
 	}
@@ -1715,7 +1717,7 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 
 	/* Set the needed memory type */
 	if (Priv->SIMSMSMemory == AT_AVAILABLE && 
-			(*folderid == 1 || *folderid == 2)) {
+			*folderid == 1) {
 		sms->Memory = MEM_SM;
 		return ATGEN_SetSMSMemory(s, true, false);
 	} else {
@@ -2583,7 +2585,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	}
 
 	/* Set message type based on folder */
-	if ((folderid % 2) == 1) {
+	if ((sms->Folder % 2) == 1) {
 		/* Inbox folder */
 		sms->PDU = SMS_Deliver;
 	} else {
