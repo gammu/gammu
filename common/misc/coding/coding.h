@@ -131,9 +131,6 @@ void StringToDouble	(char *text, double *d);
 #ifndef HAVE_STRNCASECMP
 extern int strncasecmp (const char *s1, const char *s2, size_t n);
 #endif
-#ifndef HAVE_STRCASECMP
-extern int strcasecmp (const char *s1, const char *s2);
-#endif
 #ifndef HAVE_STRCHRNUL
 extern char *strchrnul(char *s, int find);
 #endif
@@ -141,7 +138,7 @@ extern char *strchrnul(char *s, int find);
 /**
  * Gets line from buffer.
  *
- * @param MergeLines: Determine whether merge lines as vCard style 
+ * @param MergeLines: Determine whether merge lines as vCard style
  * continuation or quoted printable continutaion.
  * @param Buffer: Data source to parse.
  * @param Pos: Current position in data.
