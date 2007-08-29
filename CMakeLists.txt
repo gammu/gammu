@@ -274,14 +274,20 @@ else (WITH_BLUETOOTH)
     set(BLUETOOTH_LIBRARIES)
 endif (WITH_BLUETOOTH)
 
+if (BLUETOOTH_FOUND)
+    message(STATUS "Bluetooth support enabled")
+endif (BLUETOOTH_FOUND)
+
 macro_gammu_option (BLUETOOTH_RF_SEARCHING "Searching for RF channels with Bluetooth stack" ON BLUETOOTH_FOUND ON)
 if (WITH_BLUETOOTH_RF_SEARCHING)
     set (BLUETOOTH_RF_SEARCHING ON)
 endif (WITH_BLUETOOTH_RF_SEARCHING)
 
-OPTION(WITH_IrDA "Search for IrDA package" ON)
-if (WITH_IrDA)
-    if (NOT CROSS_MINGW)
+OPTION(WITH_IRDA "IrDA support" ON)
+if (WITH_IRDA)
+    if (WIN32)
+        set (IRDA_FOUND YES)
+    else (WIN32)
         check_c_source_compiles (
             "
 #include <sys/socket.h>
@@ -294,12 +300,14 @@ if (WITH_IrDA)
             " 
             IRDA_FOUND
             )
-    else (NOT CROSS_MINGW)
-        set (IRDA_FOUND YES)
-    endif (NOT CROSS_MINGW)
-else (WITH_IrDA)
+    endif (WIN32)
+else (WITH_IRDA)
     set (IRDA_FOUND)
-endif (WITH_IrDA)
+endif (WITH_IRDA)
+
+if (IRDA_FOUND)
+    message(STATUS "IrDA support enabled")
+endif (IRDA_FOUND)
 
 if (MYSQL_FOUND)
     set (HAVE_MYSQL_MYSQL_H TRUE)
