@@ -2781,6 +2781,12 @@ GSM_Error ATGEN_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 	/* Can not send from other folder that outbox */
 	if (msms.SMS[0].Folder != 2 && msms.SMS[0].Folder != 4) return ERR_NOTSUPPORTED;
 
+	/* Set back original position as it was probably adjusted when 
+	 * reading message from phone (eg. folder was filled in). */
+	msms.SMS[0].Folder 	= Folder;
+	msms.SMS[0].Location 	= Location;
+
+	/* Adjust location to real ones */
 	error=ATGEN_GetSMSLocation(s, &msms.SMS[0], &smsfolder, &location, false);
 	if (error != ERR_NONE) return error;
 
