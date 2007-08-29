@@ -1102,6 +1102,12 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			strcpy(s->Phone.Data.Manufacturer,"Mitsubishi");
 			Priv->Manufacturer = AT_Mitsubishi;
 		}
+		if (strstr(msg.Buffer,"Option")) {
+			smprintf(s, "Option\n");
+			strcpy(s->Phone.Data.Manufacturer,"Option");
+			Priv->Manufacturer = AT_Option;
+		}
+		smprintf(s, "Manufacturer: %s\n", s->Phone.Data.Manufacturer);
 		return ERR_NONE;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
