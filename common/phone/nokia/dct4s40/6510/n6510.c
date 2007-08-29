@@ -888,7 +888,7 @@ static GSM_Error N6510_GetNextSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 {
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	unsigned char		folderid;
-	int			location;
+	unsigned int		location;
 	GSM_Error		error;
 	int			i;
 	bool			findnextfolder = false;
