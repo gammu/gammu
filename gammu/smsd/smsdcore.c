@@ -285,6 +285,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	case SEC_Pin2:
 	case SEC_Puk:
 	case SEC_Puk2:
+	case SEC_Phone:
 		GSM_Terminate_SMSD(_("ERROR: phone requires not supported code type"), 0, true, -1);
 	case SEC_None:
 		break;
