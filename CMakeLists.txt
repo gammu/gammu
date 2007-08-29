@@ -172,6 +172,12 @@ else(MSVC)
         if (HAVE_WERRORDECLARATION)
             set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wextra")
         endif (HAVE_WERRORDECLARATION)
+
+        # Just silent this for now, too much code to fix here
+        check_c_compiler_flag("-Wno-unused-parameter" HAVE_NOUNUSEDPARAMETER)
+        if (HAVE_NOUNUSEDPARAMETER)
+            set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-unused-parameter")
+        endif (HAVE_NOUNUSEDPARAMETER)
     endif (DEBUG)
 endif(MSVC)
 
