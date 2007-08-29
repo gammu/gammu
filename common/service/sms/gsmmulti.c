@@ -782,7 +782,7 @@ bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo	*Info,
 			    bool			ems)
 {
 	int 			i, Length = 0;
-	unsigned int	j;
+	unsigned int		j;
 	char			Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
 	bool 			emsexist = false;
 	GSM_SiemensOTASMSInfo	SiemensInfo;
@@ -996,7 +996,8 @@ bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo	*Info,
 GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT, bool ems)
 {
 	bool			*INPUTSorted, copyit,OtherNumbers[GSM_SMS_OTHER_NUMBERS+1],wrong=false;
-	int			i,OUTPUTNum,j,z,w,m,p;
+	int			i,OUTPUTNum,z,w,m,p;
+	unsigned int		j;
 	GSM_SiemensOTASMSInfo	SiemensOTA,SiemensOTA2;
 
 	i = 0;
@@ -1245,7 +1246,8 @@ GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT,
 			INPUTSorted[i]	= true;
 			j		= 1;
 			/* We're searching for other parts in sequence */
-			while (j!=INPUT[i]->SMS[0].UDH.AllParts) {
+			/* Typecasting to silent GCC warning, we should fit */
+			while (j != (unsigned int)INPUT[i]->SMS[0].UDH.AllParts) {
 				z=0;
 				while(INPUT[z]!=NULL) {
 					/* This was sorted earlier or is not single */
@@ -1280,9 +1282,10 @@ GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT,
 						INPUT[z]->SMS[0].UDH.PartNumber,
 						INPUT[z]->SMS[0].UDH.AllParts);
 					if (INPUT[z]->SMS[0].UDH.ID8bit      != INPUT[i]->SMS[0].UDH.ID8bit	||
-					    INPUT[z]->SMS[0].UDH.ID16bit     != INPUT[i]->SMS[0].UDH.ID16bit	||
-					    INPUT[z]->SMS[0].UDH.AllParts    != INPUT[i]->SMS[0].UDH.AllParts 	||
-					    INPUT[z]->SMS[0].UDH.PartNumber  != j+1) {
+							INPUT[z]->SMS[0].UDH.ID16bit     != INPUT[i]->SMS[0].UDH.ID16bit	||
+							INPUT[z]->SMS[0].UDH.AllParts    != INPUT[i]->SMS[0].UDH.AllParts 	||
+							/* Typecasting to silent GCC warning, we should fit */
+							(unsigned int)(INPUT[z]->SMS[0].UDH.PartNumber) != j + 1) {
 						z++;
 						continue;
 					}
