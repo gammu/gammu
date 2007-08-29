@@ -2578,7 +2578,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	/* We don't actually need this, but let's initialise it. */
 	sms->Location = 0;
 
-	/* Get real SMS location and set correct memory type */
+	/* Set correct memory type */
 	error = ATGEN_GetSMSLocation(s, sms, &folderid, &location, true);
 	if (error != ERR_NONE) {
 		return error;
