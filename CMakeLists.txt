@@ -253,6 +253,7 @@ endif (CROSS_MINGW)
 OPTION(WITH_BLUETOOTH "Bluetooth support" ON)
 if (WITH_BLUETOOTH)
     if (WIN32)
+        # FIXME: This is currently hardcoded here, maybe there is test?
         set(BLUETOOTH_FOUND ON)
         set(BLUETOOTH_INCLUDE_DIR)
         set(BLUETOOTH_INCLUDES)
