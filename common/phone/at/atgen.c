@@ -2773,6 +2773,7 @@ GSM_Error ATGEN_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 	msms.Number = 0;
 	msms.SMS[0].Folder 	= Folder;
 	msms.SMS[0].Location 	= Location;
+	msms.SMS[0].Memory	= 0;
 
 	/* By reading SMS we check if it is really inbox/outbox */
 	error = ATGEN_GetSMS(s, &msms);
@@ -2785,6 +2786,7 @@ GSM_Error ATGEN_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 	 * reading message from phone (eg. folder was filled in). */
 	msms.SMS[0].Folder 	= Folder;
 	msms.SMS[0].Location 	= Location;
+	msms.SMS[0].Memory	= 0;
 
 	/* Adjust location to real ones */
 	error=ATGEN_GetSMSLocation(s, &msms.SMS[0], &smsfolder, &location, false);
