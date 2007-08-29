@@ -193,7 +193,8 @@ GSM_Error GSM_SaveRingtoneRttl(FILE *file, GSM_Ringtone *ringtone)
 		if (ringtone->NoteTone.Commands[i].Type == RING_Note) {
 			Note = &ringtone->NoteTone.Commands[i].Note;
 			/* some durations need 2 bytes in file, some 1 */
-			if (Note->Duration >= Duration_Full && Note->Duration <= Duration_1_8) {
+			/* Typecasting to silent GCC warning, Duration is usually unsigned */
+			if ((int)Note->Duration >= Duration_Full && Note->Duration <= Duration_1_8) {
 				buffer[Note->Duration/32]++;
 			}
 			if (Note->Duration >= Duration_1_16 && Note->Duration <= Duration_1_32) {
