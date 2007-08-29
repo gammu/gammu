@@ -854,7 +854,7 @@ static GSM_Error N6510_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 {
 	GSM_Error		error;
 	unsigned char		folderid;
-	int			location;
+	unsigned int		location;
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	int			i;
 	bool			found = false;
