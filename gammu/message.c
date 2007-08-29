@@ -619,8 +619,10 @@ void GetSMSC(int argc, char *argv[])
 			case SMS_VALID_Max_Time	:
 				printf(_("Maximum time"));
 				break;
-			default           	:
-				if (smsc.Validity.Relative >= 0 && smsc.Validity.Relative <= 143) {
+			default:
+				/* Typecasting is here needed to silent GCC warning.
+				 * Validity usually fits in some unsigned type so it is always >= 0 */
+				if ((int)smsc.Validity.Relative >= 0 && smsc.Validity.Relative <= 143) {
 					PRINTMINUTES((smsc.Validity.Relative + 1) * 5);
 				} else if (smsc.Validity.Relative >= 144 && smsc.Validity.Relative <= 167) {
 					PRINTMINUTES(12 * 60 + (smsc.Validity.Relative - 143) * 30);
