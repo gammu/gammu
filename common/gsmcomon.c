@@ -134,6 +134,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_FOLDERNOTEMPTY,		N_("Folder must be empty.")},
 	{ERR_DATACONVERTED,		N_("Data were converted.")},
 	{ERR_UNCONFIGURED,		N_("Gammu is not configured.")},
+	{ERR_WRONGFOLDER,		N_("Wrong folder used.")},
 
 	{0,				""}
 };
