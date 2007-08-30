@@ -144,13 +144,19 @@ OnePhoneModel allmodels[] = {
 	{"3650" ,"NHL-8" ,"Nokia 3650", {0}},
 	{"NGAGE","NEM-4" ,"",           {F_RADIO,0}},
 #endif
-#ifdef GSM_ENABLE_NOKIA9210
+#if defined(GSM_ENABLE_NOKIA9210) || defined(GSM_ENABLE_ATGEN)
 	{"9210" ,"RAE-3" ,"",           {0}},
 	{"9210i","RAE-5" ,"",           {0}},
 #endif
 #ifdef GSM_ENABLE_ATGEN
-	{"7650" ,"NHL-2" ,"Nokia 7650", {0}},
+	/* Generic AT */
 	{"at"   ,	  "at",		  "",				   {0}},
+
+	/* Nokia AT only */
+	{"7650", "NHL-2", "Nokia 7650", {0}},
+	{"9300", "Nokia 9300", "Nokia 9300", {0}},
+	{"N70", "Nokia E70", "Nokia E70", {0}},
+
 	/* Siemens */
 	{"M20"  ,	  "M20",	  "",				   {F_M20SMS,F_SLOWWRITE,0}},
 	{"MC35" ,	  "MC35",	  "",				   {0}},
