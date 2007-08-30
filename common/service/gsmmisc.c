@@ -19,6 +19,7 @@
 #include <gammu-debug.h>
 
 #include "../misc/coding/coding.h"
+#include "../misc/misc.h"
 #include "../gsmcomon.h"
 #include "gsmmisc.h"
 
@@ -311,7 +312,7 @@ void SaveVCALText(char *Buffer, int *Length, unsigned char *Text, char *Start, b
 	char buffer[1000];
 
 	if (UnicodeLength(Text) != 0) {
-		if (UTF8) { 
+		if (UTF8) {
 			EncodeUTF8(buffer, Text);
 			*Length += sprintf(Buffer+(*Length), "%s:%s%c%c", Start, DecodeUnicodeString(Text), 13, 10);
 		} else {
@@ -403,7 +404,7 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 		goto fail;
 	}
 	/* Advance position */
-	pos += len; 
+	pos += len;
 	/* No need to check this token anymore */
 	tokens[0][0] = 0;
 	/* We've already checked one token */
@@ -426,7 +427,7 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 			}
 			if (strncmp(pos, tokens[token], len) == 0) {
 				/* Advance position */
-				pos += len; 
+				pos += len;
 				/* We need to check one token less */
 				tokens[token][0] = 0;
 				found = true;
@@ -437,7 +438,7 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 			if (strncmp(pos, "ENCODING=QUOTED-PRINTABLE", 25) == 0) {
 				quoted_printable = true;
 				/* Advance position */
-				pos += 25; 
+				pos += 25;
 				found = true;
 			} else if (strncmp(pos, "CHARSET=", 8) == 0) {
 				quoted_printable = true;
@@ -554,7 +555,8 @@ fail:
 
 bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *file)
 {
-	int			s, len;
+	socket_type s;
+	int len;
 	struct sockaddr_in 	address;
 	struct hostent 		*address2;
 	unsigned char 		buff[200];
@@ -565,11 +567,7 @@ bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *
 #endif
 
 	s = socket(AF_INET,SOCK_STREAM,0);
-#ifdef WIN32
-	if (s==INVALID_SOCKET) return false;
-#else
-	if (s==-1) return false;
-#endif
+	if (s == socket_invalid) return false;
 
 	address2 = gethostbyname(server);
 	if (address2 == NULL) return false;

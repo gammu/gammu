@@ -27,6 +27,7 @@
 #  include <sys/socket.h>
 #endif
 
+#include "devfunc.h"
 #include "../gsmstate.h"
 
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE
@@ -95,7 +96,7 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 
 #if defined (GSM_ENABLE_BLUETOOTHDEVICE) || defined (GSM_ENABLE_IRDADEVICE)
 
-int socket_read(GSM_StateMachine *s UNUSED, void *buf, size_t nbytes, int hPhone)
+int socket_read(GSM_StateMachine *s UNUSED, void *buf, size_t nbytes, socket_type hPhone)
 {
 	fd_set 		readfds;
 	int result = 0;
@@ -126,11 +127,7 @@ int socket_read(GSM_StateMachine *s UNUSED, void *buf, size_t nbytes, int hPhone
 	return result;
 }
 
-#ifdef WIN32
-int socket_write(GSM_StateMachine *s, unsigned const char *buf, size_t nbytes, int hPhone)
-#else
-int socket_write(GSM_StateMachine *s, const void *buf, size_t nbytes, int hPhone)
-#endif
+int socket_write(GSM_StateMachine *s, unsigned const char *buf, size_t nbytes, socket_type hPhone)
 {
 	int		ret;
 	size_t		actual = 0;
@@ -155,7 +152,7 @@ int socket_write(GSM_StateMachine *s, const void *buf, size_t nbytes, int hPhone
 	return actual;
 }
 
-GSM_Error socket_close(GSM_StateMachine *s UNUSED, int hPhone)
+GSM_Error socket_close(GSM_StateMachine *s UNUSED, socket_type hPhone)
 {
 	shutdown(hPhone, 0);
 #ifdef WIN32

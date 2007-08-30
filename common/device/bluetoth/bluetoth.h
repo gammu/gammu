@@ -1,10 +1,11 @@
-
 #ifndef DJGPP
 #ifndef unixbluetooth_h
 #define unixbluetooth_h
 
+#include "../../misc/misc.h"
+
 typedef struct {
-    int hPhone;
+	socket_type hPhone;
 } GSM_Device_BlueToothData;
 
 #endif

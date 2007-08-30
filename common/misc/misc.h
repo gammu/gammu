@@ -14,6 +14,12 @@
 #include <stdio.h>
 #include <time.h>
 
+#ifdef WIN32
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <winsock2.h>
+#endif
+
 #include <gammu-config.h>
 #include <gammu-types.h>
 #include <gammu-datetime.h>
@@ -51,19 +57,19 @@ void GetTimeDifference(unsigned long diff, GSM_DateTime * DT, bool Plus,
 GSM_DateTime GSM_AddTime(GSM_DateTime DT, GSM_DeltaTime delta);
 
 /**
- * 
+ *
  * \ingroup DateTime
  */
 int GetDayOfYear(int year, int month, int day);
 
 /**
- * 
+ *
  * \ingroup DateTime
  */
 int GetWeekOfMonth(int year, int month, int day);
 
 /**
- * 
+ *
  * \ingroup DateTime
  */
 int GetDayOfWeek(int year, int month, int day);
@@ -105,6 +111,16 @@ struct _DebugInfo {
 
 PRINTF_STYLE(2, 3)
 int smfprintf(GSM_Debug_Info *d, const char *format, ...);
+
+
+#ifdef WIN32
+typedef SOCKET socket_type;
+#define socket_invalid (INVALID_SOCKET)
+#else
+typedef int socket_type;
+#define socket_invalid (-1)
+#endif
+
 
 #if defined(_MSC_VER) && defined(__cplusplus)
 
