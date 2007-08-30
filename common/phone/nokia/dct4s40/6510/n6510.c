@@ -49,7 +49,16 @@ static GSM_Error N6510_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 	case 0x0f:
 		return N71_65_ReplyGetMemoryError(msg.Buffer[10], s);
 	default:
-		return N71_65_DecodePhonebook(s, s->Phone.Data.Memory, s->Phone.Data.Bitmap, s->Phone.Data.SpeedDial, msg.Buffer+22, msg.Length-22,false);
+		if (msg.Length < 22) {
+			return ERR_UNKNOWN;
+		}
+		return N71_65_DecodePhonebook(s, 
+				s->Phone.Data.Memory, 
+				s->Phone.Data.Bitmap, 
+				s->Phone.Data.SpeedDial, 
+				msg.Buffer + 22, 
+				msg.Length - 22,
+				false);
 	}
 	return ERR_UNKNOWN;
 }
