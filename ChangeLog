@@ -18,6 +18,8 @@ ChangeLog
 2007???? - 1.13.90
 [-] * Fixed parsing of date/time reply from some broken AT phones.
 [-] * Added support for Option GlobeTrotter.
+[-] * Handle correctly when phone automatically saves message to
+      different memory than we ask.
 [+] * Detect when phone is waiting for phone code.
 
 20070820 - 1.13.0

@@ -1696,12 +1696,12 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 	/* simulate flat SMS memory */
 	if (sms->Folder == 0x00) {
 		ifolderid = sms->Location / GSM_PHONE_MAXSMSINFOLDER;
-		if (ifolderid + 1 > maxfolder) 
+		if (ifolderid + 1 > maxfolder)
 			return ERR_NOTSUPPORTED;
 		*folderid = ifolderid + 1;
 		*location = sms->Location - ifolderid * GSM_PHONE_MAXSMSINFOLDER;
 	} else {
-		if (sms->Folder > 2 * maxfolder) 
+		if (sms->Folder > 2 * maxfolder)
 			return ERR_NOTSUPPORTED;
 		*folderid = sms->Folder <= 2 ? 1 : 2;
 		*location = sms->Location;
@@ -1716,7 +1716,7 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 		sms->Folder,sms->Location,*folderid,*location);
 
 	/* Set the needed memory type */
-	if (Priv->SIMSMSMemory == AT_AVAILABLE && 
+	if (Priv->SIMSMSMemory == AT_AVAILABLE &&
 			*folderid == 1) {
 		sms->Memory = MEM_SM;
 		return ATGEN_SetSMSMemory(s, true, false);
@@ -2424,7 +2424,7 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 		s->Phone.Data.SaveSMSMessage->Location = atoi(start+7);
 		smprintf(s, "Saved at AT location %i\n",s->Phone.Data.SaveSMSMessage->Location);
 		/* Adjust location */
-		ATGEN_SetSMSLocation(s, s->Phone.Data.SaveSMSMessage, 
+		ATGEN_SetSMSLocation(s, s->Phone.Data.SaveSMSMessage,
 				s->Phone.Data.SaveSMSMessage->Folder / 2, /* We care only about SIM/Phone */
 				s->Phone.Data.SaveSMSMessage->Location);
 		return ERR_NONE;
@@ -2591,6 +2591,12 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	} else {
 		/* Outbox folder */
 		sms->PDU = SMS_Submit;
+
+		if (sms->Memory == MEM_ME &&
+			GSM_IsPhoneFeatureAvailable(Phone->ModelInfo, F_SUBMIT_SIM_ONLY)) {
+			smprintf(s, "This phone do not support saving submit messages to ME location!\n");
+			return ERR_WRONGFOLDER;
+		}
 	}
 
 	/* Format SMS frame */
@@ -2796,7 +2802,7 @@ GSM_Error ATGEN_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 	/* Can not send from other folder that outbox */
 	if (msms.SMS[0].Folder != 2 && msms.SMS[0].Folder != 4) return ERR_NOTSUPPORTED;
 
-	/* Set back original position as it was probably adjusted when 
+	/* Set back original position as it was probably adjusted when
 	 * reading message from phone (eg. folder was filled in). */
 	msms.SMS[0].Folder 	= Folder;
 	msms.SMS[0].Location 	= Location;

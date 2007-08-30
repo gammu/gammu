@@ -521,6 +521,10 @@ typedef enum {
 	 * Switching to OBEX mode is done using AT+XLNK
 	 */
 	F_XLNK,
+	/**
+	 * Submit messages can be saved on SM memory only.
+	 */
+	F_SUBMIT_SIM_ONLY,
 } Feature;
 
 /**

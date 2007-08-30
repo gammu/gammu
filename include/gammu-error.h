@@ -243,6 +243,10 @@ typedef enum {
 	 * Gammu is not configured.
 	 */
 	ERR_UNCONFIGURED,
+	/**
+	 * Wrong folder selected (eg. for SMS).
+	 */
+	ERR_WRONGFOLDER,
 } GSM_Error;
 
 /**
