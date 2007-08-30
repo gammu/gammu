@@ -14,15 +14,11 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name);
 
 #if defined (GSM_ENABLE_BLUETOOTHDEVICE) || defined (GSM_ENABLE_IRDADEVICE)
 
-int socket_read(GSM_StateMachine *s, void *buf, size_t nbytes, int hPhone);
+int socket_read(GSM_StateMachine *s, void *buf, size_t nbytes, socket_type hPhone);
 
-#ifdef WIN32
-int socket_write(GSM_StateMachine *s, unsigned const char *buf, size_t nbytes, int hPhone);
-#else
-int socket_write(GSM_StateMachine *s, const void *buf, size_t nbytes, int hPhone);
-#endif
+int socket_write(GSM_StateMachine *s, unsigned const char *buf, size_t nbytes, socket_type hPhone);
 
-GSM_Error socket_close(GSM_StateMachine *s, int hPhone);
+GSM_Error socket_close(GSM_StateMachine *s, socket_type hPhone);
 
 #endif
 
