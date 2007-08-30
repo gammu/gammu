@@ -3,6 +3,14 @@
 #include <gammu.h>
 #include "gsmstate.h"
 
+#ifdef DEBUG
+#	define PRINT_FUNCTION_START
+#	define PRINT_FUNCTION_END
+#else
+#	define PRINT_FUNCTION_START smprintf(s, "Entering %s\n", __FUNCTION__);
+#	define PRINT_FUNCTION_END smprintf(s, "Leaving %s\n", __FUNCTION__);
+#endif
+
 /**
  * Prints error message (if any) to debug log.
  *
@@ -13,6 +21,7 @@
 	if (err != ERR_NONE) { \
 		smprintf(s, "%s failed with error %d: %s\n", __FUNCTION__, err, GSM_ErrorString(err)); \
 	} \
+	PRINT_FUNCTION_END \
 }
 
 /**
@@ -21,6 +30,7 @@
  */
 #define CHECK_PHONE_CONNECTION() \
 { \
+	PRINT_FUNCTION_START \
 	if ((s->Phone.Functions == NULL) || !(s->opened)) { \
 		return ERR_NOTCONNECTED; \
 	} \
@@ -1765,3 +1775,7 @@ GSM_Error GSM_SetGPRSAccessPoint(GSM_StateMachine *s, GSM_GPRSAccessPoint *point
 	PRINT_LOG_ERROR(err);
 	return err;
 }
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */
