@@ -1,7 +1,7 @@
 # - Find Bluez library
 # This module defines
 #  BLUEZ_INCLUDE_DIR, where to find bluetooth.h
-#  BLUES_LIBRARIES, the libraries needed to use Bluez.
+#  BLUEZ_LIBRARIES, the libraries needed to use Bluez.
 #  BLUEZ_FOUND, If false, do not try to use Bluez.
 #
 # Copyright (c) 2007, Michal Cihar, <michal@cihar.com>
