@@ -25,6 +25,7 @@
 #  include <errno.h>
 #  include <signal.h>
 #  include <sys/socket.h>
+#  include <sys/stat.h>
 #endif
 
 #include "devfunc.h"
