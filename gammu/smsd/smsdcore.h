@@ -30,6 +30,7 @@ typedef struct {
 	unsigned int	resetfrequency;
 	unsigned char   *deliveryreport, *logfilename,  *PINCode;
 	unsigned char	*PhoneID;
+	unsigned char   *RunOnReceive;
 
 	/* options for FILES */
 	unsigned char   *inboxpath, 	 *outboxpath, 	*sentsmspath;

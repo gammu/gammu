@@ -157,6 +157,8 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	if (Config->PhoneID == NULL) Config->PhoneID = "";
 	if (log) WriteSMSDLog("phoneid = %s", Config->PhoneID);
 
+	Config->RunOnReceive = INI_GetValue(smsdcfgfile, "smsd", "runonreceive", false);
+
 	str = INI_GetValue(smsdcfgfile, "smsd", "smsc", false);
 	if (str) {
 		Config->SMSC.Location		= 1;
@@ -293,6 +295,41 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	return true;
 }
 
+bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config)
+{
+#ifdef WIN32
+	/* Not implemented! */
+	return false;
+#else
+	int pid;
+	int i;
+
+	if (Config->RunOnReceive == NULL) {
+		return false;
+	}
+
+	pid = fork();
+
+	if (pid == -1) {
+		WriteSMSDLog("Error spawning new process");
+		return false;
+	}
+
+	if (pid != 0) {
+		/* We are the parent */
+		return true;
+	}
+
+	/* we are the child */
+	for(i = 0; i < 255; i++) {
+		close(i);
+	}
+
+	execlp(Config->RunOnReceive, Config->RunOnReceive, (char*)NULL);
+	exit(2);
+#endif
+}
+
 bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 {
 	bool			start,process;
@@ -339,6 +376,9 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 			}
 			if (process) {
 	 			Service->SaveInboxSMS(sms, Config);
+				if (Config->RunOnReceive != NULL) { 
+					SMSD_RunOnReceive(sms,Config); 
+				}
 			} else {
 				WriteSMSDLog(_("Excluded %s"), buffer);
 			}
