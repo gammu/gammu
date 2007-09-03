@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-08-20 10:08+0200\n"
+"POT-Creation-Date: 2007-09-03 13:29+0900\n"
 "PO-Revision-Date: 2007-08-10 13:23+0200\n"
 "Last-Translator: Angelo Giuseppe De Michele <cerebro84@gmail.com>\n"
 "Language-Team: Language =it\n"
@@ -111,8 +111,8 @@ msgstr ""
 msgid "Function not supported by phone."
 msgstr "Funzione non supportata dal telefono."
 
-#: common/gsmcomon.c:105 gammu/memory.c:230 gammu/misc.c:1625
-#: gammu/misc.c:1965
+#: common/gsmcomon.c:105 gammu/memory.c:230 gammu/misc.c:1624
+#: gammu/misc.c:1964
 msgid "Entry is empty"
 msgstr "Locazione vuota"
 
@@ -133,7 +133,7 @@ msgstr "Funzione non implementata. Serve aiuto."
 msgid "Memory full."
 msgstr "Memoria piena."
 
-#: common/gsmcomon.c:110 common/gsmcomon.c:153
+#: common/gsmcomon.c:110 common/gsmcomon.c:154
 msgid "Unknown error."
 msgstr "Errore sconosciuto."
 
@@ -239,7 +239,12 @@ msgstr ""
 msgid "Gammu is not configured."
 msgstr ""
 
-#: common/phone/nokia/dct3/n6110.c:1953 gammu/misc.c:1814
+#: common/gsmcomon.c:137
+#, fuzzy
+msgid "Wrong folder used."
+msgstr ", cartella Ricevuti"
+
+#: common/phone/nokia/dct3/n6110.c:1953 gammu/misc.c:1813
 #, fuzzy
 msgid "Personal"
 msgstr "Personale\n"
@@ -273,19 +278,19 @@ msgstr "Toni alti"
 msgid "My style"
 msgstr ""
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:518 gammu/message.c:2468
+#: common/phone/nokia/dct4s40/6510/n6510.c:527 gammu/message.c:2474
 msgid "SIM"
 msgstr ""
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:519 common/phone/pfunc.c:40
+#: common/phone/nokia/dct4s40/6510/n6510.c:528 common/phone/pfunc.c:40
 msgid "Inbox"
 msgstr "Ricevuti"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:520
+#: common/phone/nokia/dct4s40/6510/n6510.c:529
 msgid "Sent items"
 msgstr ""
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:521
+#: common/phone/nokia/dct4s40/6510/n6510.c:530
 msgid "Saved items"
 msgstr ""
 
@@ -309,7 +314,7 @@ msgstr "Colleghi"
 msgid "Other"
 msgstr "Altri"
 
-#: common/phone/nokia/nfunc.c:1037 gammu/calendar.c:44 gammu/calendar.c:693
+#: common/phone/nokia/nfunc.c:1037 gammu/calendar.c:43 gammu/calendar.c:692
 #, fuzzy
 msgid "Meeting"
 msgstr "Cancellazione delle vecchie stazioni FM: "
@@ -319,7 +324,7 @@ msgstr "Cancellazione delle vecchie stazioni FM: "
 msgid "Outdoor"
 msgstr "Messaggi inviati"
 
-#: common/phone/nokia/nfunc.c:1041 gammu/message.c:593
+#: common/phone/nokia/nfunc.c:1041 gammu/message.c:597
 #, c-format
 msgid "Pager"
 msgstr ""
@@ -328,978 +333,978 @@ msgstr ""
 msgid "Outbox"
 msgstr "Messaggi inviati"
 
-#: gammu/backup.c:27 gammu/backup.c:45 gammu/backup.c:63 gammu/backup.c:81
-#: gammu/message.c:1425 gammu/message.c:1448 gammu/message.c:1491
-#: gammu/message.c:1527 gammu/message.c:1549
+#: gammu/backup.c:26 gammu/backup.c:44 gammu/backup.c:62 gammu/backup.c:80
+#: gammu/message.c:1431 gammu/message.c:1454 gammu/message.c:1497
+#: gammu/message.c:1533 gammu/message.c:1555
 #, fuzzy
 msgid "Where is backup filename and location?"
 msgstr "Dov'è la posizione ed il nome file del backup ?\n"
 
-#: gammu/backup.c:38 gammu/message.c:1538
+#: gammu/backup.c:37 gammu/message.c:1544
 #, fuzzy
 msgid "Calendar note not found in file"
 msgstr "Elementi dell'agenda non trovati nel file\n"
 
-#: gammu/backup.c:56
+#: gammu/backup.c:55
 #, fuzzy
 msgid "WAP bookmark not found in file"
 msgstr "Segnalibro WAP non trovato nel file\n"
 
-#: gammu/backup.c:74
+#: gammu/backup.c:73
 #, fuzzy
 msgid "Note not found in file"
 msgstr "Nota non trovata nel file\n"
 
-#: gammu/backup.c:92 gammu/message.c:1560
+#: gammu/backup.c:91 gammu/message.c:1566
 #, fuzzy
 msgid "ToDo note not found in file"
 msgstr "Nota non trovata nel file\n"
 
-#: gammu/backup.c:99 gammu/message.c:1571
+#: gammu/backup.c:98 gammu/message.c:1577
 #, fuzzy
 msgid "Where is backup filename and location and memory type?"
 msgstr "Dove sono il nome file, posizione e tipo di memoria del backup ?\n"
 
-#: gammu/backup.c:111 gammu/backup.c:121 gammu/message.c:1583
-#: gammu/message.c:1593
+#: gammu/backup.c:110 gammu/backup.c:120 gammu/message.c:1589
+#: gammu/message.c:1599
 #, fuzzy
 msgid "Phonebook entry not found in file"
 msgstr "Nome della rubrica non trovato nel file\n"
 
-#: gammu/backup.c:126 gammu/message.c:1598
+#: gammu/backup.c:125 gammu/message.c:1604
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
 msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
 
-#: gammu/backup.c:136
+#: gammu/backup.c:135
 #, c-format
 msgid "What format of file (\"%s\") ?\n"
 msgstr "Che formato è il file (\"%s\") ?\n"
 
-#: gammu/backup.c:186 gammu/backup.c:824 gammu/backup.c:1389
-#: gammu/calendar.c:606 gammu/calendar.c:932 gammu/calendar.c:1007
-#: gammu/calendar.c:1030 gammu/memory.c:155 gammu/memory.c:410
-#: gammu/memory.c:472 gammu/message.c:537 gammu/misc.c:64 gammu/misc.c:250
+#: gammu/backup.c:185 gammu/backup.c:823 gammu/backup.c:1388
+#: gammu/calendar.c:605 gammu/calendar.c:931 gammu/calendar.c:1006
+#: gammu/calendar.c:1029 gammu/memory.c:155 gammu/memory.c:410
+#: gammu/memory.c:472 gammu/message.c:541 gammu/misc.c:63 gammu/misc.c:249
 #, fuzzy
 msgid "Press Ctrl+C to break..."
 msgstr "Premere Ctrl+C per interrompere...\n"
 
-#: gammu/backup.c:191
+#: gammu/backup.c:190
 msgid "Use Unicode subformat of backup file"
 msgstr ""
 
-#: gammu/backup.c:224
+#: gammu/backup.c:223
 #, fuzzy
 msgid "Checking phone phonebook"
 msgstr "Controllo la rubrica del telefono\n"
 
-#: gammu/backup.c:228
+#: gammu/backup.c:227
 #, fuzzy
 msgid "   Backup phone phonebook"
 msgstr "Controllo la rubrica del telefono\n"
 
-#: gammu/backup.c:245 gammu/backup.c:283 gammu/backup.c:315 gammu/backup.c:346
-#: gammu/backup.c:377 gammu/backup.c:411 gammu/backup.c:443 gammu/backup.c:505
-#: gammu/backup.c:538 gammu/backup.c:571 gammu/backup.c:604 gammu/backup.c:637
-#: gammu/backup.c:673 gammu/backup.c:712 gammu/backup.c:742 gammu/backup.c:775
-#: gammu/message.c:736 gammu/message.c:835
+#: gammu/backup.c:244 gammu/backup.c:282 gammu/backup.c:314 gammu/backup.c:345
+#: gammu/backup.c:376 gammu/backup.c:410 gammu/backup.c:442 gammu/backup.c:504
+#: gammu/backup.c:537 gammu/backup.c:570 gammu/backup.c:603 gammu/backup.c:636
+#: gammu/backup.c:672 gammu/backup.c:711 gammu/backup.c:741 gammu/backup.c:774
+#: gammu/message.c:742 gammu/message.c:841
 #, c-format
 msgid ""
 "\n"
 "   Only part of data saved - increase %s"
 msgstr ""
 
-#: gammu/backup.c:251 gammu/backup.c:289 gammu/backup.c:352
+#: gammu/backup.c:250 gammu/backup.c:288 gammu/backup.c:351
 #, fuzzy, c-format
 msgid "%c   Reading: %i percent"
 msgstr "%c   Lettura: %i%"
 
-#: gammu/backup.c:262
+#: gammu/backup.c:261
 #, fuzzy
 msgid "Checking SIM phonebook"
 msgstr "Controllo la rubrica della SIM\n"
 
-#: gammu/backup.c:266
+#: gammu/backup.c:265
 #, fuzzy
 msgid "   Backup SIM phonebook"
 msgstr "Controllo la rubrica della SIM\n"
 
-#: gammu/backup.c:300
+#: gammu/backup.c:299
 #, fuzzy
 msgid "Checking phone calendar"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:303
+#: gammu/backup.c:302
 msgid "   Backup phone calendar notes"
 msgstr ""
 
-#: gammu/backup.c:308 gammu/backup.c:370 gammu/backup.c:402 gammu/backup.c:433
-#: gammu/backup.c:498 gammu/backup.c:531 gammu/backup.c:564 gammu/backup.c:597
-#: gammu/backup.c:630 gammu/backup.c:665 gammu/backup.c:702 gammu/backup.c:733
-#: gammu/backup.c:766 gammu/message.c:856
+#: gammu/backup.c:307 gammu/backup.c:369 gammu/backup.c:401 gammu/backup.c:432
+#: gammu/backup.c:497 gammu/backup.c:530 gammu/backup.c:563 gammu/backup.c:596
+#: gammu/backup.c:629 gammu/backup.c:664 gammu/backup.c:701 gammu/backup.c:732
+#: gammu/backup.c:765 gammu/message.c:862
 #, fuzzy
 msgid "Reading"
 msgstr "Cancellazione delle vecchie stazioni FM: "
 
-#: gammu/backup.c:331
+#: gammu/backup.c:330
 #, fuzzy
 msgid "Checking phone ToDo"
 msgstr "Controllo la rubrica del telefono\n"
 
-#: gammu/backup.c:334
+#: gammu/backup.c:333
 msgid "   Backup phone ToDo"
 msgstr ""
 
-#: gammu/backup.c:362
+#: gammu/backup.c:361
 #, fuzzy
 msgid "Checking phone notes"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:365
+#: gammu/backup.c:364
 msgid "   Backup phone notes"
 msgstr ""
 
-#: gammu/backup.c:393
+#: gammu/backup.c:392
 #, fuzzy
 msgid "Checking phone caller logos"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:398
+#: gammu/backup.c:397
 msgid "   Backup phone caller groups and logos"
 msgstr ""
 
-#: gammu/backup.c:428
+#: gammu/backup.c:427
 #, fuzzy
 msgid "Checking SIM SMS profiles"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:429
+#: gammu/backup.c:428
 msgid "   Backup SIM SMS profiles"
 msgstr ""
 
-#: gammu/backup.c:454
+#: gammu/backup.c:453
 #, fuzzy
 msgid "Checking phone startup text"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:458
+#: gammu/backup.c:457
 msgid "   Backup phone startup logo/text"
 msgstr ""
 
-#: gammu/backup.c:473
+#: gammu/backup.c:472
 #, fuzzy
 msgid "Checking phone operator logo"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:478
+#: gammu/backup.c:477
 #, fuzzy
 msgid "   Backup phone operator logo"
 msgstr "Logo operatore Nokia"
 
-#: gammu/backup.c:489
+#: gammu/backup.c:488
 #, fuzzy
 msgid "Checking phone WAP bookmarks"
 msgstr "Controllo la rubrica del telefono\n"
 
-#: gammu/backup.c:493
+#: gammu/backup.c:492
 msgid "   Backup phone WAP bookmarks"
 msgstr ""
 
-#: gammu/backup.c:522
+#: gammu/backup.c:521
 #, fuzzy
 msgid "Checking phone WAP settings"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:526
+#: gammu/backup.c:525
 msgid "   Backup phone WAP settings"
 msgstr ""
 
-#: gammu/backup.c:555
+#: gammu/backup.c:554
 #, fuzzy
 msgid "Checking phone MMS settings"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:559
+#: gammu/backup.c:558
 msgid "   Backup phone MMS settings"
 msgstr ""
 
-#: gammu/backup.c:588
+#: gammu/backup.c:587
 #, fuzzy
 msgid "Checking phone Chat settings"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:592
+#: gammu/backup.c:591
 msgid "   Backup phone Chat settings"
 msgstr ""
 
-#: gammu/backup.c:621
+#: gammu/backup.c:620
 #, fuzzy
 msgid "Checking phone SyncML settings"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:625
+#: gammu/backup.c:624
 msgid "   Backup phone SyncML settings"
 msgstr ""
 
-#: gammu/backup.c:654
+#: gammu/backup.c:653
 #, fuzzy
 msgid "Checking phone user ringtones"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:659
+#: gammu/backup.c:658
 msgid "   Backup phone user ringtones"
 msgstr ""
 
-#: gammu/backup.c:693
+#: gammu/backup.c:692
 #, fuzzy
 msgid "Checking phone profiles"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:697
+#: gammu/backup.c:696
 #, fuzzy
 msgid "   Backup phone profiles"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:723
+#: gammu/backup.c:722
 #, fuzzy
 msgid "Checking phone FM radio stations"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:727
+#: gammu/backup.c:726
 msgid "   Backup phone FM radio stations"
 msgstr ""
 
-#: gammu/backup.c:756
+#: gammu/backup.c:755
 #, fuzzy
 msgid "Checking phone GPRS access points"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:760
+#: gammu/backup.c:759
 msgid "   Backup phone GPRS access points"
 msgstr ""
 
-#: gammu/backup.c:820
+#: gammu/backup.c:819
 msgid ""
 "Some data not read from file. It can be damaged or restoring some settings "
 "from this file format not implemented (maybe higher Gammu required ?)"
 msgstr ""
 
-#: gammu/backup.c:826 gammu/backup.c:1391
+#: gammu/backup.c:825 gammu/backup.c:1390
 #, fuzzy
 msgid "Time of backup"
 msgstr "Data ed ora del backup : %s\n"
 
-#: gammu/backup.c:827 gammu/backup.c:1392 gammu/calendar.c:222
-#: gammu/calendar.c:872
+#: gammu/backup.c:826 gammu/backup.c:1391 gammu/calendar.c:221
+#: gammu/calendar.c:871
 #, fuzzy
 msgid "Phone"
 msgstr ", memoria telefono"
 
-#: gammu/backup.c:828 gammu/backup.c:1393 gammu/misc.c:136
+#: gammu/backup.c:827 gammu/backup.c:1392 gammu/misc.c:135
 msgid "IMEI"
 msgstr ""
 
-#: gammu/backup.c:829
+#: gammu/backup.c:828
 #, fuzzy
 msgid "File created by"
 msgstr " creato da %s\n"
 
-#: gammu/backup.c:837
+#: gammu/backup.c:836
 msgid "Checksum in backup file do not match. Continue"
 msgstr ""
 
-#: gammu/backup.c:843
+#: gammu/backup.c:842
 msgid ""
 "Please note that restoring data will cause existing data in phone to be "
 "deleted."
 msgstr ""
 
-#: gammu/backup.c:851
+#: gammu/backup.c:850
 msgid "Restore phone caller groups and logos"
 msgstr ""
 
-#: gammu/backup.c:860 gammu/backup.c:922 gammu/backup.c:975
-#: gammu/backup.c:1029 gammu/backup.c:1075 gammu/backup.c:1113
-#: gammu/backup.c:1149 gammu/backup.c:1164 gammu/backup.c:1210
-#: gammu/backup.c:1232 gammu/backup.c:1254 gammu/backup.c:1287
-#: gammu/backup.c:1337 gammu/backup.c:1359 gammu/backup.c:1414
-#: gammu/backup.c:1439 gammu/backup.c:1468 gammu/backup.c:1489
-#: gammu/backup.c:1511
+#: gammu/backup.c:859 gammu/backup.c:921 gammu/backup.c:974
+#: gammu/backup.c:1028 gammu/backup.c:1074 gammu/backup.c:1112
+#: gammu/backup.c:1148 gammu/backup.c:1163 gammu/backup.c:1209
+#: gammu/backup.c:1231 gammu/backup.c:1253 gammu/backup.c:1286
+#: gammu/backup.c:1336 gammu/backup.c:1358 gammu/backup.c:1413
+#: gammu/backup.c:1438 gammu/backup.c:1467 gammu/backup.c:1488
+#: gammu/backup.c:1510
 #, fuzzy, c-format
 msgid "%cWriting: %i percent"
 msgstr "%cScrittura : %i%"
 
-#: gammu/backup.c:876 gammu/backup.c:941 gammu/backup.c:999
-#: gammu/backup.c:1044 gammu/backup.c:1128 gammu/backup.c:1405
-#: gammu/backup.c:1430
+#: gammu/backup.c:875 gammu/backup.c:940 gammu/backup.c:998
+#: gammu/backup.c:1043 gammu/backup.c:1127 gammu/backup.c:1404
+#: gammu/backup.c:1429
 #, c-format
 msgid "%i entries in backup file\n"
 msgstr "%i elementi nel file di backup\n"
 
-#: gammu/backup.c:877
+#: gammu/backup.c:876
 #, fuzzy
 msgid "Restore phone phonebook"
 msgstr "Controllo la rubrica del telefono\n"
 
-#: gammu/backup.c:897
+#: gammu/backup.c:896
 msgid ""
 "Error - try to (1) add enough number of/restore caller groups and (2) use --"
 "restore again"
 msgstr ""
 
-#: gammu/backup.c:907 gammu/backup.c:963
+#: gammu/backup.c:906 gammu/backup.c:962
 #, fuzzy, c-format
 msgid "Location %d"
 msgstr "Locazione %i\n"
 
-#: gammu/backup.c:942
+#: gammu/backup.c:941
 #, fuzzy
 msgid "Restore SIM phonebook"
 msgstr "Controllo la rubrica della SIM\n"
 
-#: gammu/backup.c:985 gammu/backup.c:1451
+#: gammu/backup.c:984 gammu/backup.c:1450
 msgid ""
 "Do you want to set phone date/time (NOTE: in some phones it's required to "
 "correctly restore calendar notes and other items)"
 msgstr ""
 
-#: gammu/backup.c:1000
+#: gammu/backup.c:999
 msgid "Restore phone calendar notes"
 msgstr ""
 
-#: gammu/backup.c:1001
+#: gammu/backup.c:1000
 msgid "  Restore notes from the past"
 msgstr ""
 
-#: gammu/backup.c:1007
+#: gammu/backup.c:1006
 #, c-format
 msgid "Deleting old notes: "
 msgstr "Cancello le note vecchie: "
 
-#: gammu/backup.c:1019 gammu/backup.c:1066 gammu/backup.c:1275
-#: gammu/backup.c:1330 gammu/misc.c:1124 gammu/misc.c:1168 gammu/misc.c:1191
-#: gammu/misc.c:1237
+#: gammu/backup.c:1018 gammu/backup.c:1065 gammu/backup.c:1274
+#: gammu/backup.c:1329 gammu/misc.c:1123 gammu/misc.c:1167 gammu/misc.c:1190
+#: gammu/misc.c:1236
 #, fuzzy
 msgid "Done"
 msgstr "Fatto\n"
 
-#: gammu/backup.c:1046
+#: gammu/backup.c:1045
 msgid "Restore phone ToDo"
 msgstr ""
 
-#: gammu/backup.c:1054
+#: gammu/backup.c:1053
 #, fuzzy, c-format
 msgid "Deleting old ToDo: "
 msgstr "Cancello le note vecchie: "
 
-#: gammu/backup.c:1100
+#: gammu/backup.c:1099
 #, fuzzy, c-format
 msgid "%cCleaning: %i percent"
 msgstr "%cCancellazione: %i%"
 
-#: gammu/backup.c:1130
+#: gammu/backup.c:1129
 msgid "Restore phone Notes"
 msgstr ""
 
-#: gammu/backup.c:1134
+#: gammu/backup.c:1133
 #, fuzzy, c-format
 msgid "Deleting old Notes: "
 msgstr "Cancello le note vecchie: "
 
-#: gammu/backup.c:1158
+#: gammu/backup.c:1157
 msgid "Restore SIM SMSC profiles"
 msgstr ""
 
-#: gammu/backup.c:1172
+#: gammu/backup.c:1171
 msgid "Restore phone startup logo/text"
 msgstr ""
 
-#: gammu/backup.c:1176
+#: gammu/backup.c:1175
 #, fuzzy
 msgid "Restore phone operator logo"
 msgstr "Logo operatore Nokia"
 
-#: gammu/backup.c:1185
+#: gammu/backup.c:1184
 #, fuzzy
 msgid "Restore phone WAP bookmarks"
 msgstr "Segnalibro WAP Nokia"
 
-#: gammu/backup.c:1189
+#: gammu/backup.c:1188
 #, c-format
 msgid "Deleting old bookmarks: "
 msgstr "Cancello i vecchi bookmarks: "
 
-#: gammu/backup.c:1223
+#: gammu/backup.c:1222
 msgid "Restore phone WAP settings"
 msgstr ""
 
-#: gammu/backup.c:1245
+#: gammu/backup.c:1244
 msgid "Restore phone MMS settings"
 msgstr ""
 
-#: gammu/backup.c:1268 gammu/misc.c:1233
+#: gammu/backup.c:1267 gammu/misc.c:1232
 msgid "Delete all phone user ringtones"
 msgstr ""
 
-#: gammu/backup.c:1272 gammu/misc.c:1156 gammu/misc.c:1179 gammu/misc.c:1202
-#: gammu/misc.c:1217 gammu/misc.c:1234
+#: gammu/backup.c:1271 gammu/misc.c:1155 gammu/misc.c:1178 gammu/misc.c:1201
+#: gammu/misc.c:1216 gammu/misc.c:1233
 #, fuzzy
 msgid "Deleting"
 msgstr "Cancellazione delle vecchie stazioni FM: "
 
-#: gammu/backup.c:1277
+#: gammu/backup.c:1276
 msgid "Restore user ringtones"
 msgstr ""
 
-#: gammu/backup.c:1300
+#: gammu/backup.c:1299
 #, fuzzy
 msgid "Restore phone profiles"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/backup.c:1323
+#: gammu/backup.c:1322
 msgid "Restore phone FM radio stations"
 msgstr ""
 
-#: gammu/backup.c:1327
+#: gammu/backup.c:1326
 #, fuzzy, c-format
 msgid "Deleting old FM stations: "
 msgstr "Cancello le note vecchie: "
 
-#: gammu/backup.c:1350
+#: gammu/backup.c:1349
 msgid "Restore phone GPRS Points"
 msgstr ""
 
-#: gammu/backup.c:1407 gammu/backup.c:1432
+#: gammu/backup.c:1406 gammu/backup.c:1431
 #, c-format
 msgid "Memory has only %i free locations.Exiting\n"
 msgstr "La memoria ha solo %i locazioni libere. Esco\n"
 
-#: gammu/backup.c:1408
+#: gammu/backup.c:1407
 #, fuzzy
 msgid "Add phone phonebook entries"
 msgstr "Elemento della rubrica Nokia"
 
-#: gammu/backup.c:1433
+#: gammu/backup.c:1432
 #, fuzzy
 msgid "Add SIM phonebook entries"
 msgstr "Elemento della rubrica Nokia"
 
-#: gammu/backup.c:1461
+#: gammu/backup.c:1460
 msgid "Add phone calendar notes"
 msgstr ""
 
-#: gammu/backup.c:1482
+#: gammu/backup.c:1481
 msgid "Add phone ToDo"
 msgstr ""
 
-#: gammu/backup.c:1503
+#: gammu/backup.c:1502
 #, fuzzy
 msgid "Add phone WAP bookmarks"
 msgstr "Segnalibro WAP Nokia"
 
-#: gammu/backup.c:1543
+#: gammu/backup.c:1542
 msgid "Delete each sms after backup"
 msgstr ""
 
-#: gammu/backup.c:1573
+#: gammu/backup.c:1572
 #, fuzzy, c-format
 msgid "   Increase %s\n"
 msgstr " creato da %s\n"
 
-#: gammu/backup.c:1595
+#: gammu/backup.c:1594
 #, fuzzy, c-format
 msgid "%cDeleting: %i percent"
 msgstr "%cCancellazione: %i%"
 
-#: gammu/backup.c:1623
+#: gammu/backup.c:1622
 msgid "Restore sms"
 msgstr ""
 
-#: gammu/backup.c:1646
+#: gammu/backup.c:1645
 #, c-format
 msgid "Do you want to restore binary SMS"
 msgstr ""
 
-#: gammu/backup.c:1661
+#: gammu/backup.c:1660
 #, fuzzy, c-format
 msgid "Restore %03i sms to folder \"%s\""
 msgstr "Locazione %i, cartella \"%s\""
 
-#: gammu/backup.c:1662
+#: gammu/backup.c:1661
 msgid " (SIM)"
 msgstr ""
 
-#: gammu/backup.c:1664
+#: gammu/backup.c:1663
 #, fuzzy, c-format
 msgid "saving %i SMS\n"
 msgstr "Sto salvando il messaggio %i/%i\n"
 
-#: gammu/calendar.c:35 gammu/calendar.c:684
+#: gammu/calendar.c:34 gammu/calendar.c:683
 #, fuzzy
 msgid "Note type"
 msgstr "Tipo di nota : "
 
-#: gammu/calendar.c:38 gammu/calendar.c:687
+#: gammu/calendar.c:37 gammu/calendar.c:686
 #, fuzzy
 msgid "Reminder (Date)"
 msgstr "Promemoria (Appuntamento)\n"
 
-#: gammu/calendar.c:41 gammu/calendar.c:690
+#: gammu/calendar.c:40 gammu/calendar.c:689
 #, fuzzy
 msgid "Call"
 msgstr "Chiamata\n"
 
-#: gammu/calendar.c:47 gammu/calendar.c:696
+#: gammu/calendar.c:46 gammu/calendar.c:695
 #, fuzzy
 msgid "Birthday (Anniversary)"
 msgstr "Compleanno (Anniversario)\n"
 
-#: gammu/calendar.c:50 gammu/calendar.c:699
+#: gammu/calendar.c:49 gammu/calendar.c:698
 #, fuzzy
 msgid "Memo (Miscellaneous)"
 msgstr "Memo (Varie)\n"
 
-#: gammu/calendar.c:53 gammu/calendar.c:702
+#: gammu/calendar.c:52 gammu/calendar.c:701
 #, fuzzy
 msgid "Travel"
 msgstr "Viaggio\n"
 
-#: gammu/calendar.c:56 gammu/calendar.c:705
+#: gammu/calendar.c:55 gammu/calendar.c:704
 #, fuzzy
 msgid "Vacation"
 msgstr "Vacanza\n"
 
-#: gammu/calendar.c:59 gammu/calendar.c:708 gammu/calendar.c:808
+#: gammu/calendar.c:58 gammu/calendar.c:707 gammu/calendar.c:807
 #, fuzzy
 msgid "Alarm"
 msgstr "Sveglia\n"
 
-#: gammu/calendar.c:62 gammu/calendar.c:711
+#: gammu/calendar.c:61 gammu/calendar.c:710
 #, fuzzy
 msgid "Daily alarm"
 msgstr "Sveglia giornaliera\n"
 
-#: gammu/calendar.c:65 gammu/calendar.c:714
+#: gammu/calendar.c:64 gammu/calendar.c:713
 msgid "Training/Athletism"
 msgstr ""
 
-#: gammu/calendar.c:68 gammu/calendar.c:717
+#: gammu/calendar.c:67 gammu/calendar.c:716
 msgid "Training/Ball Games"
 msgstr ""
 
-#: gammu/calendar.c:71 gammu/calendar.c:720
+#: gammu/calendar.c:70 gammu/calendar.c:719
 msgid "Training/Cycling"
 msgstr ""
 
-#: gammu/calendar.c:74 gammu/calendar.c:723
+#: gammu/calendar.c:73 gammu/calendar.c:722
 msgid "Training/Budo"
 msgstr ""
 
-#: gammu/calendar.c:77 gammu/calendar.c:726
+#: gammu/calendar.c:76 gammu/calendar.c:725
 msgid "Training/Dance"
 msgstr ""
 
-#: gammu/calendar.c:80 gammu/calendar.c:729
+#: gammu/calendar.c:79 gammu/calendar.c:728
 msgid "Training/Extreme Sports"
 msgstr ""
 
-#: gammu/calendar.c:83 gammu/calendar.c:732
+#: gammu/calendar.c:82 gammu/calendar.c:731
 msgid "Training/Football"
 msgstr ""
 
-#: gammu/calendar.c:86 gammu/calendar.c:735
+#: gammu/calendar.c:85 gammu/calendar.c:734
 msgid "Training/Golf"
 msgstr ""
 
-#: gammu/calendar.c:89 gammu/calendar.c:738
+#: gammu/calendar.c:88 gammu/calendar.c:737
 msgid "Training/Gym"
 msgstr ""
 
-#: gammu/calendar.c:92 gammu/calendar.c:741
+#: gammu/calendar.c:91 gammu/calendar.c:740
 msgid "Training/Horse Races"
 msgstr ""
 
-#: gammu/calendar.c:95 gammu/calendar.c:744
+#: gammu/calendar.c:94 gammu/calendar.c:743
 msgid "Training/Hockey"
 msgstr ""
 
-#: gammu/calendar.c:98 gammu/calendar.c:747
+#: gammu/calendar.c:97 gammu/calendar.c:746
 msgid "Training/Races"
 msgstr ""
 
-#: gammu/calendar.c:101 gammu/calendar.c:750
+#: gammu/calendar.c:100 gammu/calendar.c:749
 msgid "Training/Rugby"
 msgstr ""
 
-#: gammu/calendar.c:104 gammu/calendar.c:753
+#: gammu/calendar.c:103 gammu/calendar.c:752
 msgid "Training/Sailing"
 msgstr ""
 
-#: gammu/calendar.c:107 gammu/calendar.c:756
+#: gammu/calendar.c:106 gammu/calendar.c:755
 msgid "Training/Street Games"
 msgstr ""
 
-#: gammu/calendar.c:110 gammu/calendar.c:759
+#: gammu/calendar.c:109 gammu/calendar.c:758
 msgid "Training/Swimming"
 msgstr ""
 
-#: gammu/calendar.c:113 gammu/calendar.c:762
+#: gammu/calendar.c:112 gammu/calendar.c:761
 msgid "Training/Tennis"
 msgstr ""
 
-#: gammu/calendar.c:116 gammu/calendar.c:765
+#: gammu/calendar.c:115 gammu/calendar.c:764
 msgid "Training/Travels"
 msgstr ""
 
-#: gammu/calendar.c:119 gammu/calendar.c:768
+#: gammu/calendar.c:118 gammu/calendar.c:767
 msgid "Training/Winter Games"
 msgstr ""
 
-#: gammu/calendar.c:123
+#: gammu/calendar.c:122
 #, fuzzy
 msgid "unknown type!"
 msgstr "sconosciuto"
 
-#: gammu/calendar.c:141
+#: gammu/calendar.c:140
 #, fuzzy
 msgid "Start"
 msgstr "Normale\n"
 
-#: gammu/calendar.c:148
+#: gammu/calendar.c:147
 msgid "Stop"
 msgstr ""
 
-#: gammu/calendar.c:155 gammu/calendar.c:818 gammu/memory.c:32
+#: gammu/calendar.c:154 gammu/calendar.c:817 gammu/memory.c:32
 msgid "Last modified"
 msgstr ""
 
-#: gammu/calendar.c:161 gammu/calendar.c:173
+#: gammu/calendar.c:160 gammu/calendar.c:172
 #, fuzzy
 msgid "Tone alarm"
 msgstr "Con allarme  : %s\n"
 
-#: gammu/calendar.c:163 gammu/calendar.c:184
+#: gammu/calendar.c:162 gammu/calendar.c:183
 #, c-format
 msgid "forever on each %i. day of %s"
 msgstr ""
 
-#: gammu/calendar.c:182 gammu/calendar.c:194 gammu/calendar.c:813
+#: gammu/calendar.c:181 gammu/calendar.c:193 gammu/calendar.c:812
 #, fuzzy
 msgid "Silent alarm"
 msgstr "Senza allarme: %s\n"
 
-#: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:823
-#: gammu/calendar.c:1039 gammu/memory.c:102 gammu/message.c:372
-#: gammu/message.c:590 gammu/misc.c:873
+#: gammu/calendar.c:201 gammu/calendar.c:524 gammu/calendar.c:822
+#: gammu/calendar.c:1038 gammu/memory.c:102 gammu/message.c:376
+#: gammu/message.c:594 gammu/misc.c:872
 #, c-format
 msgid "Text"
 msgstr "Testo"
 
-#: gammu/calendar.c:207 gammu/calendar.c:877
+#: gammu/calendar.c:206 gammu/calendar.c:876
 #, fuzzy
 msgid "Description"
 msgstr "Locazione    : \"%s\"\n"
 
-#: gammu/calendar.c:212 gammu/calendar.c:887 gammu/memory.c:108
+#: gammu/calendar.c:211 gammu/calendar.c:886 gammu/memory.c:108
 msgid "LUID"
 msgstr ""
 
-#: gammu/calendar.c:217 gammu/calendar.c:573 gammu/calendar.c:615
-#: gammu/calendar.c:659 gammu/calendar.c:683 gammu/calendar.c:882
-#: gammu/memory.c:265 gammu/misc.c:1584 gammu/misc.c:1617 gammu/misc.c:1853
-#: gammu/misc.c:1962
+#: gammu/calendar.c:216 gammu/calendar.c:572 gammu/calendar.c:614
+#: gammu/calendar.c:658 gammu/calendar.c:682 gammu/calendar.c:881
+#: gammu/memory.c:265 gammu/misc.c:1583 gammu/misc.c:1616 gammu/misc.c:1852
+#: gammu/misc.c:1961
 #, fuzzy
 msgid "Location"
 msgstr "Locazione %i\n"
 
-#: gammu/calendar.c:227 gammu/calendar.c:828 gammu/memory.c:49
+#: gammu/calendar.c:226 gammu/calendar.c:827 gammu/memory.c:49
 msgid "Private"
 msgstr ""
 
-#: gammu/calendar.c:229
+#: gammu/calendar.c:228
 msgid "Yes"
 msgstr ""
 
-#: gammu/calendar.c:229
+#: gammu/calendar.c:228
 msgid "No"
 msgstr ""
 
-#: gammu/calendar.c:241 gammu/calendar.c:247 gammu/calendar.c:252
-#: gammu/calendar.c:857 gammu/calendar.c:863
+#: gammu/calendar.c:240 gammu/calendar.c:246 gammu/calendar.c:251
+#: gammu/calendar.c:856 gammu/calendar.c:862
 #, fuzzy
 msgid "Contact ID"
 msgstr "ID Contatto  : %d\n"
 
-#: gammu/calendar.c:295
+#: gammu/calendar.c:294
 #, fuzzy
 msgid "Repeating"
 msgstr "Cancellazione delle vecchie stazioni FM: "
 
-#: gammu/calendar.c:298
+#: gammu/calendar.c:297
 #, c-format
 msgid "for %d time "
 msgid_plural "for %d times "
 msgstr[0] ""
 msgstr[1] ""
 
-#: gammu/calendar.c:302
+#: gammu/calendar.c:301
 #, c-format
 msgid "forever"
 msgstr ""
 
-#: gammu/calendar.c:304
+#: gammu/calendar.c:303
 #, c-format
 msgid "till %s"
 msgstr ""
 
-#: gammu/calendar.c:306
+#: gammu/calendar.c:305
 #, fuzzy, c-format
 msgid "since %s"
 msgstr " versione %s"
 
-#: gammu/calendar.c:308
+#: gammu/calendar.c:307
 #, c-format
 msgid "since %s till %s"
 msgstr ""
 
-#: gammu/calendar.c:313
+#: gammu/calendar.c:312
 #, fuzzy, c-format
 msgid " on each "
 msgstr " ogni %d. "
 
-#: gammu/calendar.c:315
+#: gammu/calendar.c:314
 #, c-format
 msgid " on each %d. "
 msgstr " ogni %d. "
 
-#: gammu/calendar.c:320
+#: gammu/calendar.c:319
 #, c-format
 msgid " in %d. week of "
 msgstr " in %d, settimana di "
 
-#: gammu/calendar.c:323
+#: gammu/calendar.c:322
 #, c-format
 msgid " in "
 msgstr ""
 
-#: gammu/calendar.c:329 gammu/calendar.c:337
+#: gammu/calendar.c:328 gammu/calendar.c:336
 #, c-format
 msgid "each month"
 msgstr "ogni mese"
 
-#: gammu/calendar.c:332
+#: gammu/calendar.c:331
 #, c-format
 msgid "%d. day of "
 msgstr "%d, giorno "
 
-#: gammu/calendar.c:340
+#: gammu/calendar.c:339
 #, fuzzy, c-format
 msgid "%d. day of year"
 msgstr "%d, giorno "
 
-#: gammu/calendar.c:342
+#: gammu/calendar.c:341
 #, c-format
 msgid "day"
 msgstr "giorno"
 
-#: gammu/calendar.c:358
+#: gammu/calendar.c:357
 msgid "Age"
 msgstr ""
 
-#: gammu/calendar.c:377
+#: gammu/calendar.c:376
 #, fuzzy
 msgid "Date and time not set in phone"
 msgstr "Data ed ora non regolati nel telefono\n"
 
-#: gammu/calendar.c:380
+#: gammu/calendar.c:379
 #, c-format
 msgid "Phone time is %s\n"
 msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#: gammu/calendar.c:394
+#: gammu/calendar.c:393
 #, c-format
 msgid "Time format is "
 msgstr "Il formato dell'orario è "
 
 #. l10n: AM/PM time
-#: gammu/calendar.c:397
+#: gammu/calendar.c:396
 #, fuzzy
 msgid "12 hours"
 msgstr "12 ore\n"
 
 #. l10n: 24 hours time
-#: gammu/calendar.c:400
+#: gammu/calendar.c:399
 msgid "24 hours"
 msgstr "24 ore"
 
-#: gammu/calendar.c:402
+#: gammu/calendar.c:401
 #, c-format
 msgid "Date format is "
 msgstr "Il formato della data è "
 
-#: gammu/calendar.c:405
+#: gammu/calendar.c:404
 #, c-format
 msgid "DD MM YYYY"
 msgstr ""
 
-#: gammu/calendar.c:408
+#: gammu/calendar.c:407
 #, c-format
 msgid "MM DD YYYY"
 msgstr ""
 
-#: gammu/calendar.c:411
+#: gammu/calendar.c:410
 #, c-format
 msgid "YYYY MM DD"
 msgstr ""
 
-#: gammu/calendar.c:414
+#: gammu/calendar.c:413
 #, c-format
 msgid "DD MMM YY"
 msgstr ""
 
-#: gammu/calendar.c:417
+#: gammu/calendar.c:416
 #, c-format
 msgid "MM DD YY"
 msgstr ""
 
-#: gammu/calendar.c:420
+#: gammu/calendar.c:419
 #, c-format
 msgid "DD MM YY"
 msgstr ""
 
-#: gammu/calendar.c:423
+#: gammu/calendar.c:422
 #, c-format
 msgid "YY MM DD"
 msgstr ""
 
-#: gammu/calendar.c:426
+#: gammu/calendar.c:425
 #, c-format
 msgid "OFF"
 msgstr ""
 
-#: gammu/calendar.c:431
+#: gammu/calendar.c:430
 #, c-format
 msgid ", date separator is %c\n"
 msgstr ", il separatore per la data è %c\n"
 
-#: gammu/calendar.c:448
+#: gammu/calendar.c:447
 msgid "Setting time in phone to the time on PC."
 msgstr ""
 
-#: gammu/calendar.c:459
+#: gammu/calendar.c:458
 msgid "Updating specified parts of date and time in phone."
 msgstr ""
 
-#: gammu/calendar.c:510
+#: gammu/calendar.c:509
 #, fuzzy, c-format
 msgid "Alarm (%i) not set in phone\n"
 msgstr "Sveglia non impostata nel telefono\n"
 
-#: gammu/calendar.c:514
+#: gammu/calendar.c:513
 #, fuzzy, c-format
 msgid "Alarm in location %i:\n"
 msgstr "Locazione %i\n"
 
-#: gammu/calendar.c:516 gammu/calendar.c:519 gammu/message.c:1032
+#: gammu/calendar.c:515 gammu/calendar.c:518 gammu/message.c:1038
 #, fuzzy
 msgid "Date"
 msgstr "Data   : %s\n"
 
-#: gammu/calendar.c:517
+#: gammu/calendar.c:516
 msgid "Every day"
 msgstr ""
 
-#: gammu/calendar.c:522
+#: gammu/calendar.c:521
 #, fuzzy, c-format
 msgid "Time: %02d:%02d\n"
 msgstr "Orario : %s\n"
 
-#: gammu/calendar.c:634
+#: gammu/calendar.c:633
 #, c-format
 msgid "Auto deleting disabled"
 msgstr "Cancellazione automatica disabilitata"
 
-#: gammu/calendar.c:636
+#: gammu/calendar.c:635
 #, c-format
 msgid "Auto deleting notes after %i day(s)"
 msgstr "Cancellazione automatica delle note dopo %i giorni"
 
-#: gammu/calendar.c:640
+#: gammu/calendar.c:639
 #, fuzzy, c-format
 msgid "Week starts on %s"
 msgstr ""
 "\n"
 "La settimana inizia il "
 
-#: gammu/calendar.c:665 gammu/memory.c:274
+#: gammu/calendar.c:664 gammu/memory.c:274
 #, fuzzy
 msgid "Entry was empty"
 msgstr "L'elemento era vuoto\n"
 
-#: gammu/calendar.c:667 gammu/memory.c:276
+#: gammu/calendar.c:666 gammu/memory.c:276
 #, fuzzy
 msgid "Entry was deleted"
 msgstr "L'elemento è stato cancellato\n"
 
-#: gammu/calendar.c:772 gammu/calendar.c:791 gammu/message.c:518
-#: gammu/misc.c:1784 gammu/misc.c:1827
+#: gammu/calendar.c:771 gammu/calendar.c:790 gammu/message.c:522
+#: gammu/misc.c:1783 gammu/misc.c:1826
 #, fuzzy
 msgid "Unknown"
 msgstr "Sconosciuto\n"
 
-#: gammu/calendar.c:775
+#: gammu/calendar.c:774
 #, fuzzy
 msgid "Priority"
 msgstr "Priorità     : "
 
-#: gammu/calendar.c:778
+#: gammu/calendar.c:777
 #, fuzzy
 msgid "Low"
 msgstr "Bassa\n"
 
-#: gammu/calendar.c:781
+#: gammu/calendar.c:780
 #, fuzzy
 msgid "Medium"
 msgstr "Media\n"
 
-#: gammu/calendar.c:784
+#: gammu/calendar.c:783
 #, fuzzy
 msgid "High"
 msgstr "Alta\n"
 
-#: gammu/calendar.c:787
+#: gammu/calendar.c:786
 #, fuzzy
 msgid "None"
 msgstr "Fatto\n"
 
-#: gammu/calendar.c:798
+#: gammu/calendar.c:797
 #, fuzzy
 msgid "Due time"
 msgstr "Data ed ora      : %s\n"
 
-#: gammu/calendar.c:803
+#: gammu/calendar.c:802
 #, fuzzy
 msgid "Completed"
 msgstr "Completato   : %s\n"
 
-#: gammu/calendar.c:838 gammu/calendar.c:843 gammu/memory.c:36
+#: gammu/calendar.c:837 gammu/calendar.c:842 gammu/memory.c:36
 #: gammu/memory.c:42 gammu/memory.c:44
 #, fuzzy
 msgid "Category"
 msgstr "Categoria    : %i\n"
 
-#: gammu/calendar.c:867
+#: gammu/calendar.c:866
 #, fuzzy
 msgid "Contact"
 msgstr "ID Contatto  : %d\n"
 
-#: gammu/calendar.c:950 gammu/memory.c:414 gammu/memory.c:489
+#: gammu/calendar.c:949 gammu/memory.c:414 gammu/memory.c:489
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Stringa di ricerca troppo lunga, la tronco a %d caratteri!\n"
 
 #. l10n: Generic prefix for error messages
-#: gammu/common.c:26 gammu/message.c:433 gammu/message.c:1147
+#: gammu/common.c:26 gammu/message.c:437 gammu/message.c:1153
 #, fuzzy
 msgid "Error"
 msgstr "Errore\n"
@@ -1336,160 +1341,165 @@ msgstr "Aspetto il PUK2.\n"
 
 #: gammu/common.c:80
 #, fuzzy
+msgid "Waiting for phone code."
+msgstr "Aspetto il Codice di Sicurezza.\n"
+
+#: gammu/common.c:83
+#, fuzzy
 msgid "Nothing to enter."
 msgstr "Nulla da inserire.\n"
 
-#: gammu/common.c:84
+#: gammu/common.c:87
 #, fuzzy
 msgid "Unknown security status."
 msgstr "Stato di sicurezza: "
 
-#: gammu/common.c:95
+#: gammu/common.c:98
 msgid "January"
 msgstr "Gennaio"
 
-#: gammu/common.c:98
+#: gammu/common.c:101
 msgid "February"
 msgstr "Febbraio"
 
-#: gammu/common.c:101
+#: gammu/common.c:104
 msgid "March"
 msgstr "Marzo"
 
-#: gammu/common.c:104
+#: gammu/common.c:107
 msgid "April"
 msgstr "Aprile"
 
-#: gammu/common.c:107
+#: gammu/common.c:110
 msgid "May"
 msgstr "Maggio"
 
-#: gammu/common.c:110
+#: gammu/common.c:113
 msgid "June"
 msgstr "Giugno"
 
-#: gammu/common.c:113
+#: gammu/common.c:116
 msgid "July"
 msgstr "Luglio"
 
-#: gammu/common.c:116
+#: gammu/common.c:119
 msgid "August"
 msgstr "Agosto"
 
-#: gammu/common.c:119
+#: gammu/common.c:122
 msgid "September"
 msgstr "Settembre"
 
-#: gammu/common.c:122
+#: gammu/common.c:125
 msgid "October"
 msgstr "Ottobre"
 
-#: gammu/common.c:125
+#: gammu/common.c:128
 msgid "November"
 msgstr "Novembre"
 
-#: gammu/common.c:128
+#: gammu/common.c:131
 msgid "December"
 msgstr "Dicembre"
 
-#: gammu/common.c:131
+#: gammu/common.c:134
 msgid "Bad month!"
 msgstr "Mese non valido!"
 
-#: gammu/common.c:143
+#: gammu/common.c:146
 msgid "Monday"
 msgstr "Lunedì"
 
-#: gammu/common.c:146
+#: gammu/common.c:149
 msgid "Tuesday"
 msgstr "Martedì"
 
-#: gammu/common.c:149
+#: gammu/common.c:152
 msgid "Wednesday"
 msgstr "Mercoledì"
 
-#: gammu/common.c:152
+#: gammu/common.c:155
 msgid "Thursday"
 msgstr "Giovedì"
 
-#: gammu/common.c:155
+#: gammu/common.c:158
 msgid "Friday"
 msgstr "Venerdì"
 
-#: gammu/common.c:158
+#: gammu/common.c:161
 msgid "Saturday"
 msgstr "Sabato"
 
-#: gammu/common.c:161
+#: gammu/common.c:164
 msgid "Sunday"
 msgstr "Domenica"
 
-#: gammu/common.c:164
+#: gammu/common.c:167
 msgid "Bad day!"
 msgstr "Giorno non valido!"
 
-#: gammu/common.c:176
+#: gammu/common.c:179
 #, fuzzy
 msgid "Security status"
 msgstr "Stato di sicurezza: "
 
-#: gammu/common.c:305
+#: gammu/common.c:308
 #, c-format
 msgid "INFO: there is later phone firmware (%s instead of %s) available!\n"
 msgstr ""
 
-#: gammu/common.c:327 gammu/misc.c:904 gammu/misc.c:919 gammu/misc.c:926
-#: gammu/misc.c:933 gammu/misc.c:963
+#: gammu/common.c:330 gammu/misc.c:903 gammu/misc.c:918 gammu/misc.c:925
+#: gammu/misc.c:932 gammu/misc.c:962
 #, fuzzy
 msgid "More parameters required!"
 msgstr "Servono più parametri\n"
 
-#: gammu/common.c:333 gammu/common.c:343 gammu/depend/nokia/dct4.c:676
-#: gammu/misc.c:1079
+#: gammu/common.c:336 gammu/common.c:346 gammu/depend/nokia/dct4.c:676
+#: gammu/misc.c:1078
 #, fuzzy
 msgid "Please enumerate locations from 1"
 msgstr "ERRORE: numerare le locazioni da 1\n"
 
-#: gammu/common.c:348
+#: gammu/common.c:351
 msgid "Swapping start and end location"
 msgstr ""
 
 #. l10n: %s is replaced by question, answers have to match corresponding translations
-#: gammu/common.c:363
+#: gammu/common.c:366
 #, c-format
 msgid "%s (yes/no/ALL/ONLY/NONE) ? "
 msgstr ""
 
-#: gammu/common.c:365
+#: gammu/common.c:368
 msgid "YES (always)"
 msgstr ""
 
-#: gammu/common.c:369
+#: gammu/common.c:372
 msgid "NO (always)"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:376
+#: gammu/common.c:379
 msgid "NONE"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:381
+#: gammu/common.c:384
 msgid "ONLY"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:386
+#: gammu/common.c:389
 msgid "ALL"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:391 gammu/depend/nokia/dct4.c:73
+#: gammu/common.c:394 gammu/depend/nokia/dct4.c:73
 msgid "yes"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:394 gammu/depend/nokia/dct4.c:74
+#: gammu/common.c:397 gammu/depend/nokia/dct4.c:74
 msgid "no"
 msgstr ""
 
@@ -1533,7 +1543,7 @@ msgstr ""
 msgid "No signal"
 msgstr "Non ottenibile"
 
-#: gammu/depend/nokia/dct4.c:361 gammu/message.c:512
+#: gammu/depend/nokia/dct4.c:361 gammu/message.c:516
 #, c-format
 msgid "Timeout"
 msgstr ""
@@ -1819,111 +1829,111 @@ msgstr "Errore sconosciuto."
 msgid "ERROR: unknown memory type (\"%s\")\n"
 msgstr "ERRORE: tipo di memoria sconosciuto (\"%s\")\n"
 
-#: gammu/files.c:46
+#: gammu/files.c:45
 #, c-format
 msgid "Phone memory: %i bytes (free %i bytes, used %i bytes)"
 msgstr ""
 
-#: gammu/files.c:52
+#: gammu/files.c:51
 #, c-format
 msgid "Used by: Images: %i, Sounds: %i, Themes: %i"
 msgstr ""
 
 #. l10n: One char to indicate protected file
-#: gammu/files.c:113 gammu/files.c:202 gammu/files.c:323
+#: gammu/files.c:112 gammu/files.c:201 gammu/files.c:322
 #, c-format
 msgid "P"
 msgstr ""
 
 #. l10n: One char to indicate read only file
-#: gammu/files.c:119 gammu/files.c:204 gammu/files.c:325
+#: gammu/files.c:118 gammu/files.c:203 gammu/files.c:324
 #, c-format
 msgid "R"
 msgstr ""
 
 #. l10n: One char to indicate hidden file
-#: gammu/files.c:125 gammu/files.c:206 gammu/files.c:327
+#: gammu/files.c:124 gammu/files.c:205 gammu/files.c:326
 #, c-format
 msgid "H"
 msgstr ""
 
 #. l10n: One char to indicate system file
-#: gammu/files.c:131 gammu/files.c:208 gammu/files.c:329
+#: gammu/files.c:130 gammu/files.c:207 gammu/files.c:328
 #, c-format
 msgid "S"
 msgstr ""
 
-#: gammu/files.c:152 gammu/files.c:165
+#: gammu/files.c:151 gammu/files.c:164
 #, fuzzy, c-format
 msgid "Part of folder "
 msgstr ", cartella Ricevuti"
 
-#: gammu/files.c:154 gammu/files.c:167
+#: gammu/files.c:153 gammu/files.c:166
 #, c-format
 msgid "Folder "
 msgstr ""
 
-#: gammu/files.c:178 gammu/files.c:309
+#: gammu/files.c:177 gammu/files.c:308
 #, c-format
 msgid "File;"
 msgstr ""
 
-#: gammu/files.c:191
+#: gammu/files.c:190
 #, fuzzy, c-format
 msgid "Part of folder;"
 msgstr ", cartella Ricevuti"
 
-#: gammu/files.c:193
+#: gammu/files.c:192
 #, c-format
 msgid "Folder;"
 msgstr ""
 
-#: gammu/files.c:218
+#: gammu/files.c:217
 #, c-format
 msgid "Used in phone: %li bytes"
 msgstr ""
 
-#: gammu/files.c:220
+#: gammu/files.c:219
 #, c-format
 msgid ", used in card: %li bytes"
 msgstr ""
 
-#: gammu/files.c:250
+#: gammu/files.c:249
 #, fuzzy, c-format
 msgid "Unknown attribute (%s)\n"
 msgstr "Parametro sconosciuto (\"%s\")\n"
 
-#: gammu/files.c:301
+#: gammu/files.c:300
 #, fuzzy
 msgid "Part of folder only"
 msgstr ", cartella Ricevuti"
 
-#: gammu/files.c:318
+#: gammu/files.c:317
 #, c-format
 msgid "Folder"
 msgstr ""
 
-#: gammu/files.c:365
+#: gammu/files.c:364
 #, fuzzy, c-format
 msgid "Getting \"%s\"\n"
 msgstr "Testo  : %s\n"
 
-#: gammu/files.c:374
+#: gammu/files.c:373
 #, fuzzy
 msgid "it's folder. Please give only file names"
 msgstr "è una cartella. Inserire solo nomi di file\n"
 
-#: gammu/files.c:380
+#: gammu/files.c:379
 #, fuzzy, c-format
 msgid "%c  %i percent"
 msgstr "%cScrittura : %i%"
 
-#: gammu/files.c:393 gammu/files.c:597
+#: gammu/files.c:392 gammu/files.c:596
 #, c-format
 msgid " (%02i:%02i minutes left)"
 msgstr ""
 
-#: gammu/files.c:405 gammu/files.c:609
+#: gammu/files.c:404 gammu/files.c:608
 #, fuzzy
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
@@ -1932,37 +1942,37 @@ msgstr ""
 "ATTENZIONE: Il checksum calcolato dal telefono non corrisponde a quello "
 "calcolato da Gammu. File danneggiato o errore in Gammu\n"
 
-#: gammu/files.c:434
+#: gammu/files.c:433
 #, c-format
 msgid "  Saving to %s\n"
 msgstr "  Sto salvando su %s\n"
 
-#: gammu/files.c:585
+#: gammu/files.c:584
 #, fuzzy, c-format
 msgid "%3i percent"
 msgstr "%cScrittura : %i%"
 
-#: gammu/files.c:684 gammu/nokia.c:870
+#: gammu/files.c:683 gammu/nokia.c:869
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr "Parametro \"%s\" sconosciuto\n"
 
-#: gammu/files.c:719
+#: gammu/files.c:718
 #, c-format
 msgid "What file type (\"%s\") ?\n"
 msgstr "Che tipo di file (\"%s\") ?\n"
 
-#: gammu/files.c:728 gammu/message.c:2297 gammu/misc.c:1075 gammu/nokia.c:879
+#: gammu/files.c:727 gammu/message.c:2303 gammu/misc.c:1074 gammu/nokia.c:878
 #, fuzzy
 msgid "Parameter missing!"
 msgstr "Manca un parametro...\n"
 
-#: gammu/files.c:737
+#: gammu/files.c:736
 #, fuzzy, c-format
 msgid "ID of new file is \"%s\"\n"
 msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#: gammu/files.c:758
+#: gammu/files.c:757
 #, fuzzy, c-format
 msgid "ID of new folder is \"%s\"\n"
 msgstr "Il messaggio iniziale dell'operatore è \"%s\"\n"
@@ -2009,183 +2019,183 @@ msgid_plural "%d years"
 msgstr[0] "%d, giorno "
 msgstr[1] "%d, giorno "
 
-#: gammu/gammu.c:94
+#: gammu/gammu.c:93
 #, fuzzy, c-format
 msgid "Networks for %s:"
 msgstr "Stato della rete  : "
 
-#: gammu/gammu.c:102
+#: gammu/gammu.c:101
 #, fuzzy, c-format
 msgid "Unknown country name: %s."
 msgstr "Errore sconosciuto."
 
-#: gammu/gammu.c:107 gammu/gammu.c:640 gammu/misc.c:41
+#: gammu/gammu.c:106 gammu/gammu.c:639 gammu/misc.c:40
 #, fuzzy
 msgid "Network"
 msgstr "Codice rete assente\n"
 
-#: gammu/gammu.c:107 gammu/memory.c:109 gammu/message.c:211
-#: gammu/message.c:1049 gammu/misc.c:709 gammu/misc.c:876 gammu/misc.c:1588
-#: gammu/misc.c:1627 gammu/misc.c:1867
+#: gammu/gammu.c:106 gammu/memory.c:109 gammu/message.c:215
+#: gammu/message.c:1055 gammu/misc.c:708 gammu/misc.c:875 gammu/misc.c:1587
+#: gammu/misc.c:1626 gammu/misc.c:1866
 msgid "Name"
 msgstr ""
 
-#: gammu/gammu.c:126
+#: gammu/gammu.c:125
 #, fuzzy, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
 msgstr ""
 "[Gammu versione %s compilato alle %s di %s]\n"
 "\n"
 
-#: gammu/gammu.c:135
+#: gammu/gammu.c:134
 msgid "Compiled in features:"
 msgstr ""
 
-#: gammu/gammu.c:137
+#: gammu/gammu.c:136
 msgid "Protocols"
 msgstr ""
 
-#: gammu/gammu.c:202
+#: gammu/gammu.c:201
 #, fuzzy
 msgid "Phones"
 msgstr ", memoria telefono"
 
-#: gammu/gammu.c:246
+#: gammu/gammu.c:245
 #, fuzzy
 msgid "Miscellaneous"
 msgstr "Memo (Varie)\n"
 
-#: gammu/gammu.c:271
+#: gammu/gammu.c:270
 msgid ""
 "This is free software.  You may redistribute copies of it under the terms of"
 msgstr ""
 
-#: gammu/gammu.c:272
+#: gammu/gammu.c:271
 msgid "the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."
 msgstr ""
 
-#: gammu/gammu.c:273
+#: gammu/gammu.c:272
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: gammu/gammu.c:306
+#: gammu/gammu.c:305
 #, fuzzy
 msgid "standard input"
 msgstr "Normale\n"
 
-#: gammu/gammu.c:317
+#: gammu/gammu.c:316
 #, c-format
 msgid "Batch file could not be opened: %s\n"
 msgstr ""
 
-#: gammu/gammu.c:355
+#: gammu/gammu.c:354
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s"
 msgstr ""
 
-#: gammu/gammu.c:620
+#: gammu/gammu.c:619
 #, fuzzy
 msgid "Calls"
 msgstr "Chiamata\n"
 
-#: gammu/gammu.c:621
+#: gammu/gammu.c:620
 msgid "SMS and EMS"
 msgstr ""
 
-#: gammu/gammu.c:622
+#: gammu/gammu.c:621
 msgid "Memory (phonebooks and calls)"
 msgstr ""
 
-#: gammu/gammu.c:623
+#: gammu/gammu.c:622
 msgid "Filesystem"
 msgstr ""
 
-#: gammu/gammu.c:624
+#: gammu/gammu.c:623
 msgid "Logo and pictures"
 msgstr ""
 
-#: gammu/gammu.c:625
+#: gammu/gammu.c:624
 #, fuzzy
 msgid "Ringtones"
 msgstr "Suoneria \"%s\"\n"
 
-#: gammu/gammu.c:626
+#: gammu/gammu.c:625
 msgid "Calendar notes"
 msgstr ""
 
-#: gammu/gammu.c:627
+#: gammu/gammu.c:626
 msgid "To do lists"
 msgstr ""
 
-#: gammu/gammu.c:628
+#: gammu/gammu.c:627
 msgid "Notes"
 msgstr ""
 
-#: gammu/gammu.c:629
+#: gammu/gammu.c:628
 msgid "Date, time and alarms"
 msgstr ""
 
-#: gammu/gammu.c:630
+#: gammu/gammu.c:629
 msgid "Categories"
 msgstr ""
 
-#: gammu/gammu.c:632
+#: gammu/gammu.c:631
 msgid "Backing up and restoring"
 msgstr ""
 
-#: gammu/gammu.c:635
+#: gammu/gammu.c:634
 #, fuzzy
 msgid "Nokia specific"
 msgstr "Profilo Nokia"
 
-#: gammu/gammu.c:638
+#: gammu/gammu.c:637
 msgid "Siemens specific"
 msgstr ""
 
-#: gammu/gammu.c:641
+#: gammu/gammu.c:640
 #, fuzzy
 msgid "WAP settings and bookmarks"
 msgstr "Cancello i vecchi bookmarks: "
 
-#: gammu/gammu.c:642
+#: gammu/gammu.c:641
 msgid "MMS and MMS settings"
 msgstr ""
 
-#: gammu/gammu.c:643
+#: gammu/gammu.c:642
 #, fuzzy
 msgid "Phone tests"
 msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#: gammu/gammu.c:644
+#: gammu/gammu.c:643
 msgid "FM radio"
 msgstr ""
 
-#: gammu/gammu.c:645
+#: gammu/gammu.c:644
 msgid "Phone information"
 msgstr ""
 
-#: gammu/gammu.c:646
+#: gammu/gammu.c:645
 msgid "Phone settings"
 msgstr ""
 
-#: gammu/gammu.c:648
+#: gammu/gammu.c:647
 msgid "Dumps decoding"
 msgstr ""
 
-#: gammu/gammu.c:650
+#: gammu/gammu.c:649
 msgid "Functions that don't fit elsewhere"
 msgstr ""
 
-#: gammu/gammu.c:651
+#: gammu/gammu.c:650
 msgid "Gammu information"
 msgstr ""
 
-#: gammu/gammu.c:652
+#: gammu/gammu.c:651
 #, fuzzy
 msgid "SMS daemon"
 msgstr "Risposta del SMSC : \"%s\"\n"
 
-#: gammu/gammu.c:668
+#: gammu/gammu.c:667
 #, fuzzy
 msgid ""
 "Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> "
@@ -2194,33 +2204,33 @@ msgstr ""
 "Utilizzo: gammu [confign] [nothing|text|textall|binary|errors] [opzioni]\n"
 "\n"
 
-#: gammu/gammu.c:669
+#: gammu/gammu.c:668
 msgid ""
 "First parameter optionally specifies which config section to use (all are "
 "probed by default)."
 msgstr ""
 
-#: gammu/gammu.c:670
+#: gammu/gammu.c:669
 msgid ""
 "Second parameter optionally controls debug level, next one specifies actions."
 msgstr ""
 
-#: gammu/gammu.c:672
+#: gammu/gammu.c:671
 msgid "Commands can be specified with or without leading --."
 msgstr ""
 
-#: gammu/gammu.c:675
+#: gammu/gammu.c:674
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
 
-#: gammu/gammu.c:772
+#: gammu/gammu.c:771
 #, fuzzy
 msgid "Unknown help topic specified!"
 msgstr "L'argomento specificato non esiste!\n"
 
-#: gammu/gammu.c:776
+#: gammu/gammu.c:775
 #, fuzzy, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
@@ -2229,64 +2239,64 @@ msgstr ""
 "Parametri di Gammu, argomento : %s\n"
 "\n"
 
-#: gammu/gammu.c:888
+#: gammu/gammu.c:887
 #, fuzzy, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "Servono più parametri\n"
 
-#: gammu/gammu.c:891
+#: gammu/gammu.c:890
 #, fuzzy, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "Servono più parametri\n"
 
-#: gammu/gammu.c:897 gammu/gammu.c:918
+#: gammu/gammu.c:896 gammu/gammu.c:917
 #, fuzzy
 msgid "Parameters help"
 msgstr ""
 "Parametri di Gammu, argomento : %s\n"
 "\n"
 
-#: gammu/gammu.c:909
+#: gammu/gammu.c:908
 #, fuzzy, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "I parametri sono troppo pochi!\n"
 
-#: gammu/gammu.c:912
+#: gammu/gammu.c:911
 #, fuzzy, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "I parametri sono troppo pochi!\n"
 
-#: gammu/gammu.c:939
+#: gammu/gammu.c:938
 #, fuzzy
 msgid "Bad option!"
 msgstr "Mese non valido!"
 
-#: gammu/gammu.c:976 gammu/gammu.c:1090
+#: gammu/gammu.c:975 gammu/gammu.c:1089
 #, fuzzy
 msgid "Too few parameters!"
 msgstr "I parametri sono troppo pochi!\n"
 
-#: gammu/gammu.c:1001
+#: gammu/gammu.c:1000
 #, fuzzy
 msgid "Configuration could not be parsed!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/gammu.c:1003
+#: gammu/gammu.c:1002
 #, fuzzy
 msgid "No configuration file found!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/gammu.c:1007 gammu/gammu.c:1019
+#: gammu/gammu.c:1006 gammu/gammu.c:1018
 #, fuzzy
 msgid "No configuration read, using builtin defaults!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/gammu.c:1017
+#: gammu/gammu.c:1016
 #, c-format
 msgid "Failed to read [gammu%d] from gammurc!\n"
 msgstr ""
 
-#: gammu/gammu.c:1096
+#: gammu/gammu.c:1095
 #, fuzzy, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -2294,12 +2304,12 @@ msgstr ""
 "ERRORE: la versione installata di libGammu.so (%s) è diversa dalla versione "
 "di Gammu (%s)\n"
 
-#: gammu/gammu.c:1134
+#: gammu/gammu.c:1133
 #, c-format
 msgid "INFO: there is later stable Gammu (%s instead of %s) available!\n"
 msgstr ""
 
-#: gammu/gammu.c:1153
+#: gammu/gammu.c:1152
 #, c-format
 msgid "INFO: there is later testing Gammu (%s instead of %s) available!\n"
 msgstr ""
@@ -2323,13 +2333,13 @@ msgstr "Gruppi chiamante\n"
 msgid "Caller group number too high, please increase buffer in sources!"
 msgstr ""
 
-#: gammu/memory.c:78 gammu/misc.c:814 gammu/misc.c:816 gammu/misc.c:831
-#: gammu/misc.c:838
+#: gammu/memory.c:78 gammu/misc.c:813 gammu/misc.c:815 gammu/misc.c:830
+#: gammu/misc.c:837
 #, fuzzy
 msgid "Ringtone"
 msgstr "Suoneria \"%s\"\n"
 
-#: gammu/memory.c:83 gammu/misc.c:1737
+#: gammu/memory.c:83 gammu/misc.c:1736
 #, fuzzy
 msgid "Ringtone ID"
 msgstr "Suoneria \"%s\"\n"
@@ -2512,7 +2522,7 @@ msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
 msgid "Memory %s, Location %i\n"
 msgstr "Memoria %s, locazione %i\n"
 
-#: gammu/memory.c:202 gammu/message.c:2052 gammu/misc.c:504 gammu/misc.c:535
+#: gammu/memory.c:202 gammu/message.c:2058 gammu/misc.c:503 gammu/misc.c:534
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
 msgstr "Parametro sconosciuto (\"%s\")\n"
@@ -2531,382 +2541,382 @@ msgstr ""
 msgid "%i entries empty, %i entries filled\n"
 msgstr "%i elementi nel file di backup\n"
 
-#: gammu/message.c:48
+#: gammu/message.c:52
 #, fuzzy
 msgid "mobile"
 msgstr "Lavoro            "
 
-#: gammu/message.c:51
+#: gammu/message.c:55
 #, fuzzy
 msgid "work"
 msgstr "Codice rete assente\n"
 
-#: gammu/message.c:54 gammu/misc.c:2038 gammu/misc.c:2049
+#: gammu/message.c:58 gammu/misc.c:2037 gammu/misc.c:2048
 #, c-format
 msgid "fax"
 msgstr ""
 
-#: gammu/message.c:57
+#: gammu/message.c:61
 #, fuzzy
 msgid "home"
 msgstr ", memoria telefono"
 
-#: gammu/message.c:60
+#: gammu/message.c:64
 msgid "pager"
 msgstr ""
 
-#: gammu/message.c:126
+#: gammu/message.c:130
 #, fuzzy
 msgid "SMS status report"
 msgstr "Rapporto sullo stato SMS\n"
 
-#: gammu/message.c:128 gammu/message.c:234 gammu/message.c:494
+#: gammu/message.c:132 gammu/message.c:238 gammu/message.c:498
 #, fuzzy
 msgid "Status"
 msgstr "Normale\n"
 
-#: gammu/message.c:130 gammu/message.c:142 gammu/message.c:194
-#: gammu/message.c:236
+#: gammu/message.c:134 gammu/message.c:146 gammu/message.c:198
+#: gammu/message.c:240
 #, c-format
 msgid "Sent"
 msgstr "Inviato"
 
-#: gammu/message.c:131 gammu/message.c:237
+#: gammu/message.c:135 gammu/message.c:241
 #, c-format
 msgid "Read"
 msgstr "Letto"
 
-#: gammu/message.c:132 gammu/message.c:238
+#: gammu/message.c:136 gammu/message.c:242
 #, c-format
 msgid "UnRead"
 msgstr "Non letto"
 
-#: gammu/message.c:133 gammu/message.c:239
+#: gammu/message.c:137 gammu/message.c:243
 #, c-format
 msgid "UnSent"
 msgstr "Non inviato"
 
-#: gammu/message.c:137 gammu/message.c:226
+#: gammu/message.c:141 gammu/message.c:230
 #, fuzzy
 msgid "Remote number"
 msgid_plural "Remote numbers"
 msgstr[0] "Casa              "
 msgstr[1] "Casa              "
 
-#: gammu/message.c:141 gammu/message.c:207
+#: gammu/message.c:145 gammu/message.c:211
 #, fuzzy
 msgid "Reference number"
 msgstr "Numero servizio        : \"%s\"\n"
 
-#: gammu/message.c:143 gammu/message.c:191
+#: gammu/message.c:147 gammu/message.c:195
 #, fuzzy
 msgid "SMSC number"
 msgstr "Centro messaggi   : \"%s\"\n"
 
-#: gammu/message.c:144
+#: gammu/message.c:148
 #, fuzzy
 msgid "SMSC response"
 msgstr "Risposta del SMSC : \"%s\"\n"
 
-#: gammu/message.c:145
+#: gammu/message.c:149
 #, fuzzy
 msgid "Delivery status"
 msgstr "Stato spedizione  : %s\n"
 
-#: gammu/message.c:146
+#: gammu/message.c:150
 msgid "Details"
 msgstr ""
 
-#: gammu/message.c:149 gammu/message.c:154
+#: gammu/message.c:153 gammu/message.c:158
 #, c-format
 msgid "Temporary error, "
 msgstr "Errore temporaneo, "
 
-#: gammu/message.c:151
+#: gammu/message.c:155
 #, c-format
 msgid "Permanent error, "
 msgstr "Errore permanente, "
 
-#: gammu/message.c:157
+#: gammu/message.c:161
 #, c-format
 msgid "SM received by the SME"
 msgstr "Messaggio ricevuto dal SME"
 
-#: gammu/message.c:158
+#: gammu/message.c:162
 #, c-format
 msgid ""
 "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
 msgstr ""
 "SMS spedito dal SC al SME, ma il SC non è in grado di confermare la consegna"
 
-#: gammu/message.c:159
+#: gammu/message.c:163
 #, c-format
 msgid "SM replaced by the SC"
 msgstr "SM sostituito dal SC"
 
-#: gammu/message.c:160 gammu/message.c:176
+#: gammu/message.c:164 gammu/message.c:180
 #, c-format
 msgid "Congestion"
 msgstr "Congestione"
 
-#: gammu/message.c:161 gammu/message.c:177
+#: gammu/message.c:165 gammu/message.c:181
 #, c-format
 msgid "SME busy"
 msgstr "SME occupato"
 
-#: gammu/message.c:162 gammu/message.c:178
+#: gammu/message.c:166 gammu/message.c:182
 #, c-format
 msgid "No response from SME"
 msgstr "Nessuna risposta dal SME"
 
-#: gammu/message.c:163 gammu/message.c:179
+#: gammu/message.c:167 gammu/message.c:183
 #, c-format
 msgid "Service rejected"
 msgstr "Servizio rifiutato"
 
-#: gammu/message.c:164
+#: gammu/message.c:168
 #, c-format
 msgid "Quality of service not aviable"
 msgstr "Qualità del servizio non disponibile"
 
-#: gammu/message.c:165 gammu/message.c:181
+#: gammu/message.c:169 gammu/message.c:185
 #, c-format
 msgid "Error in SME"
 msgstr "Errore nel SME"
 
-#: gammu/message.c:166
+#: gammu/message.c:170
 #, c-format
 msgid "Remote procedure error"
 msgstr "Errore nella procedura remota"
 
-#: gammu/message.c:167
+#: gammu/message.c:171
 #, c-format
 msgid "Incompatibile destination"
 msgstr "Destinazione non compatibile"
 
-#: gammu/message.c:168
+#: gammu/message.c:172
 #, c-format
 msgid "Connection rejected by SME"
 msgstr "Connessione rifiutata dal SME"
 
-#: gammu/message.c:169
+#: gammu/message.c:173
 #, c-format
 msgid "Not obtainable"
 msgstr "Non ottenibile"
 
-#: gammu/message.c:170 gammu/message.c:180
+#: gammu/message.c:174 gammu/message.c:184
 #, c-format
 msgid "Quality of service not available"
 msgstr "Qualità del servizio non disponibile"
 
-#: gammu/message.c:171
+#: gammu/message.c:175
 #, c-format
 msgid "No internetworking available"
 msgstr "Nessuna connessione disponibile"
 
-#: gammu/message.c:172
+#: gammu/message.c:176
 #, c-format
 msgid "SM Validity Period Expired"
 msgstr "Periodo di validità esaurito"
 
-#: gammu/message.c:173
+#: gammu/message.c:177
 #, c-format
 msgid "SM deleted by originating SME"
 msgstr "Messaggio cancellato dal SME"
 
-#: gammu/message.c:174
+#: gammu/message.c:178
 #, c-format
 msgid "SM Deleted by SC Administration"
 msgstr "Messaggio cancellato dall'amministrazione SC"
 
-#: gammu/message.c:175
+#: gammu/message.c:179
 #, c-format
 msgid "SM does not exist"
 msgstr "Il messaggio non esiste"
 
-#: gammu/message.c:182
+#: gammu/message.c:186
 #, c-format
 msgid "Reserved/Specific to SC: %x"
 msgstr "Riservato/specifico del SC: %x"
 
-#: gammu/message.c:187 gammu/message.c:204
+#: gammu/message.c:191 gammu/message.c:208
 #, fuzzy
 msgid "SMS message"
 msgstr "Messaggio SMS\n"
 
-#: gammu/message.c:189
+#: gammu/message.c:193
 msgid "Saved"
 msgstr ""
 
-#: gammu/message.c:192
+#: gammu/message.c:196
 #, c-format
 msgid " (set for reply)"
 msgstr " (impostato per la risposta)"
 
-#: gammu/message.c:201
+#: gammu/message.c:205
 #, fuzzy
 msgid "SMS replacing ID"
 msgstr "ID sostituzione   : %i\n"
 
-#: gammu/message.c:214
+#: gammu/message.c:218
 #, fuzzy
 msgid "Class"
 msgstr "Chiamata\n"
 
-#: gammu/message.c:216
+#: gammu/message.c:220
 msgid "Coding"
 msgstr ""
 
-#: gammu/message.c:218
+#: gammu/message.c:222
 msgid "Unicode (no compression)"
 msgstr ""
 
-#: gammu/message.c:219
+#: gammu/message.c:223
 msgid "Unicode (compression)"
 msgstr ""
 
-#: gammu/message.c:220
+#: gammu/message.c:224
 msgid "Default GSM alphabet (no compression)"
 msgstr ""
 
-#: gammu/message.c:221
+#: gammu/message.c:225
 msgid "Default GSM alphabet (compression)"
 msgstr ""
 
-#: gammu/message.c:222
+#: gammu/message.c:226
 msgid "8 bit"
 msgstr ""
 
-#: gammu/message.c:242
+#: gammu/message.c:246
 #, fuzzy
 msgid "User Data Header"
 msgstr "Intestazione utente : "
 
-#: gammu/message.c:244 gammu/message.c:245
+#: gammu/message.c:248 gammu/message.c:249
 #, c-format
 msgid "Concatenated (linked) message"
 msgstr "Messaggio concatenato"
 
-#: gammu/message.c:246
+#: gammu/message.c:250
 #, c-format
 msgid "Disables voice indicator"
 msgstr "Disabilita indicatore voce"
 
-#: gammu/message.c:247
+#: gammu/message.c:251
 #, c-format
 msgid "Enables voice indicator"
 msgstr "Abilita indicatore voce"
 
-#: gammu/message.c:248
+#: gammu/message.c:252
 #, c-format
 msgid "Disables fax indicator"
 msgstr "Disabilita indicatore fax"
 
-#: gammu/message.c:249
+#: gammu/message.c:253
 #, c-format
 msgid "Enables fax indicator"
 msgstr "Abilita indicatore fax"
 
-#: gammu/message.c:250
+#: gammu/message.c:254
 #, c-format
 msgid "Disables email indicator"
 msgstr "Disabilita indicatore email"
 
-#: gammu/message.c:251
+#: gammu/message.c:255
 #, c-format
 msgid "Enables email indicator"
 msgstr "Abilita indicatore email"
 
-#: gammu/message.c:252
+#: gammu/message.c:256
 #, c-format
 msgid "Void SMS"
 msgstr "SMS Vuoto"
 
-#: gammu/message.c:253
+#: gammu/message.c:257
 #, c-format
 msgid "Nokia WAP bookmark"
 msgstr "Segnalibro WAP Nokia"
 
-#: gammu/message.c:254
+#: gammu/message.c:258
 #, c-format
 msgid "Nokia operator logo"
 msgstr "Logo operatore Nokia"
 
-#: gammu/message.c:255
+#: gammu/message.c:259
 #, c-format
 msgid "Nokia WAP bookmark or WAP/MMS settings"
 msgstr "Segnalibro WAP Nokia o settaggio WAP/MMS"
 
-#: gammu/message.c:256 gammu/message.c:257
+#: gammu/message.c:260 gammu/message.c:261
 #, c-format
 msgid "Nokia ringtone"
 msgstr "Suoneria Nokia"
 
-#: gammu/message.c:258
+#: gammu/message.c:262
 #, c-format
 msgid "Nokia GSM operator logo"
 msgstr "Logo operatore GSM Nokia"
 
-#: gammu/message.c:259
+#: gammu/message.c:263
 #, c-format
 msgid "Nokia caller logo"
 msgstr "Logo chiamante Nokia"
 
-#: gammu/message.c:260
+#: gammu/message.c:264
 #, c-format
 msgid "Nokia profile"
 msgstr "Profilo Nokia"
 
-#: gammu/message.c:261
+#: gammu/message.c:265
 #, fuzzy, c-format
 msgid "Nokia calendar note"
 msgstr "Logo chiamante Nokia"
 
-#: gammu/message.c:262
+#: gammu/message.c:266
 #, c-format
 msgid "Nokia phonebook entry"
 msgstr "Elemento della rubrica Nokia"
 
-#: gammu/message.c:263
+#: gammu/message.c:267
 #, c-format
 msgid "User UDH"
 msgstr "UDH Utente"
 
-#: gammu/message.c:264
+#: gammu/message.c:268
 #, c-format
 msgid "MMS indicator"
 msgstr "Indicatore MMS"
 
-#: gammu/message.c:268
+#: gammu/message.c:272
 #, c-format
 msgid ", ID (8 bit) %i"
 msgstr ""
 
-#: gammu/message.c:269
+#: gammu/message.c:273
 #, c-format
 msgid ", ID (16 bit) %i"
 msgstr ""
 
-#: gammu/message.c:272
+#: gammu/message.c:276
 #, c-format
 msgid ", part %i of %i"
 msgstr ", parte %i di %i"
 
-#: gammu/message.c:274
+#: gammu/message.c:278
 #, c-format
 msgid ", %i parts"
 msgstr ", %i parti"
 
-#: gammu/message.c:286
+#: gammu/message.c:290
 msgid "Siemens file"
 msgstr ""
 
-#: gammu/message.c:289
+#: gammu/message.c:293
 #, fuzzy
 msgid "8 bit SMS, cannot be displayed here"
 msgstr "SMS ad 8 bit, non può essere visualizzato qui\n"
 
-#: gammu/message.c:331
+#: gammu/message.c:335
 #, fuzzy
 msgid ""
 "Some details were ignored (unknown or not implemented in decoding functions)"
@@ -2915,32 +2925,32 @@ msgstr ""
 "implementata)\n"
 "\n"
 
-#: gammu/message.c:336
+#: gammu/message.c:340
 #, c-format
 msgid "Siemens OTA file"
 msgstr ""
 
-#: gammu/message.c:338
+#: gammu/message.c:342
 msgid " - VCARD"
 msgstr ""
 
-#: gammu/message.c:350
+#: gammu/message.c:354
 #, c-format
 msgid "Ringtone \"%s\"\n"
 msgstr "Suoneria \"%s\"\n"
 
-#: gammu/message.c:353
+#: gammu/message.c:357
 msgid "Do you want to play it"
 msgstr ""
 
-#: gammu/message.c:356
+#: gammu/message.c:360
 #, fuzzy
 msgid "Caller logo"
 msgstr ""
 "Logo chiamante\n"
 "\n"
 
-#: gammu/message.c:360
+#: gammu/message.c:364
 #, c-format
 msgid ""
 "Operator logo for %s network (%s, %s)\n"
@@ -2949,169 +2959,169 @@ msgstr ""
 "Logo operatore per %s (%s, %s)\n"
 "\n"
 
-#: gammu/message.c:367 gammu/misc.c:1779
+#: gammu/message.c:371 gammu/misc.c:1778
 #, fuzzy
 msgid "Screen saver"
 msgstr "Numero screen saver   : "
 
-#: gammu/message.c:371 gammu/misc.c:1475
+#: gammu/message.c:375 gammu/misc.c:1474
 #, c-format
 msgid "Picture Image"
 msgstr "Messaggio con disegno"
 
-#: gammu/message.c:376
+#: gammu/message.c:380
 #, fuzzy
 msgid "Profile"
 msgstr "Profilo\n"
 
-#: gammu/message.c:396
+#: gammu/message.c:400
 #, fuzzy
 msgid "EMS sound ID"
 msgstr ""
 "\n"
 "ID suono EMS; %i\n"
 
-#: gammu/message.c:399
+#: gammu/message.c:403
 #, fuzzy
 msgid "EMS animation ID"
 msgstr ""
 "\n"
 "ID animazione EMS: %i\n"
 
-#: gammu/message.c:443
+#: gammu/message.c:447
 #, fuzzy
 msgid "SMS message received"
 msgstr "SMS ricevuto\n"
 
-#: gammu/message.c:445
+#: gammu/message.c:449
 msgid "We already have one pending, ignoring this one!"
 msgstr ""
 
-#: gammu/message.c:465 gammu/message.c:656
+#: gammu/message.c:469 gammu/message.c:662
 #, c-format
 msgid "Location %i\n"
 msgstr "Locazione %i\n"
 
-#: gammu/message.c:466 gammu/message.c:657
+#: gammu/message.c:470 gammu/message.c:663
 #, fuzzy
 msgid "Empty"
 msgstr "Vuota\n"
 
-#: gammu/message.c:470 gammu/message.c:661 gammu/message.c:765
-#: gammu/message.c:900
+#: gammu/message.c:474 gammu/message.c:667 gammu/message.c:771
+#: gammu/message.c:906
 #, c-format
 msgid "Location %i, folder \"%s\""
 msgstr "Locazione %i, cartella \"%s\""
 
-#: gammu/message.c:472 gammu/message.c:663 gammu/message.c:767
-#: gammu/message.c:902 gammu/message.c:945
+#: gammu/message.c:476 gammu/message.c:669 gammu/message.c:773
+#: gammu/message.c:908 gammu/message.c:951
 #, c-format
 msgid ", SIM memory"
 msgstr ", memoria SIM"
 
-#: gammu/message.c:473 gammu/message.c:664 gammu/message.c:768
-#: gammu/message.c:903 gammu/message.c:946
+#: gammu/message.c:477 gammu/message.c:670 gammu/message.c:774
+#: gammu/message.c:909 gammu/message.c:952
 #, c-format
 msgid ", phone memory"
 msgstr ", memoria telefono"
 
-#: gammu/message.c:474 gammu/message.c:665 gammu/message.c:769
-#: gammu/message.c:904 gammu/message.c:947
+#: gammu/message.c:478 gammu/message.c:671 gammu/message.c:775
+#: gammu/message.c:910 gammu/message.c:953
 #, c-format
 msgid ", phone or SIM memory"
 msgstr ", memoria SIM o del telefono"
 
-#: gammu/message.c:477 gammu/message.c:668 gammu/message.c:772
-#: gammu/message.c:907 gammu/message.c:950 gammu/message.c:971
+#: gammu/message.c:481 gammu/message.c:674 gammu/message.c:778
+#: gammu/message.c:913 gammu/message.c:956 gammu/message.c:977
 #, c-format
 msgid ", Inbox folder"
 msgstr ", cartella Ricevuti"
 
-#: gammu/message.c:487
+#: gammu/message.c:491
 #, fuzzy
 msgid "CB message received"
 msgstr "Messaggio CB ricevuto\n"
 
-#: gammu/message.c:488
+#: gammu/message.c:492
 #, c-format
 msgid "Channel %i, text \"%s\"\n"
 msgstr "Canale %i, testo \"%s\"\n"
 
-#: gammu/message.c:493
+#: gammu/message.c:497
 #, fuzzy
 msgid "USSD received"
 msgstr "SMS ricevuto\n"
 
-#: gammu/message.c:497
+#: gammu/message.c:501
 msgid "No action needed"
 msgstr ""
 
-#: gammu/message.c:500
+#: gammu/message.c:504
 msgid "Action needed"
 msgstr ""
 
-#: gammu/message.c:503
+#: gammu/message.c:507
 msgid "Terminated"
 msgstr ""
 
-#: gammu/message.c:506
+#: gammu/message.c:510
 msgid "Another client replied"
 msgstr ""
 
-#: gammu/message.c:509
+#: gammu/message.c:513
 msgid "Not supported"
 msgstr ""
 
-#: gammu/message.c:521
+#: gammu/message.c:525
 #, fuzzy
 msgid "Service reply"
 msgstr "Risposta del servizio: \"%s\"\n"
 
-#: gammu/message.c:581
+#: gammu/message.c:585
 #, fuzzy, c-format
 msgid "%i. Set %i\n"
 msgstr "%i. Punto di accesso %i "
 
-#: gammu/message.c:585 gammu/misc.c:1868 gammu/misc.c:2057
+#: gammu/message.c:589 gammu/misc.c:1867 gammu/misc.c:2056
 #, fuzzy
 msgid "Number"
 msgstr "Novembre"
 
-#: gammu/message.c:586
+#: gammu/message.c:590
 #, fuzzy
 msgid "Default number"
 msgstr "Numero predefinito : \"%s\"\n"
 
-#: gammu/message.c:588
+#: gammu/message.c:592
 msgid "Format"
 msgstr ""
 
-#: gammu/message.c:591
+#: gammu/message.c:595
 #, c-format
 msgid "Fax"
 msgstr ""
 
-#: gammu/message.c:592
+#: gammu/message.c:596
 #, c-format
 msgid "Email"
 msgstr ""
 
-#: gammu/message.c:597
+#: gammu/message.c:601
 #, fuzzy
 msgid "Validity"
 msgstr "Validità           : "
 
-#: gammu/message.c:616
+#: gammu/message.c:620
 #, c-format
 msgid "Maximum time"
 msgstr "Tempo massimo"
 
-#: gammu/message.c:742 gammu/message.c:841
+#: gammu/message.c:748 gammu/message.c:847
 #, fuzzy, c-format
 msgid "%cReading phone phonebook: %i percent"
 msgstr "%c   Lettura: %i%"
 
-#: gammu/message.c:788
+#: gammu/message.c:794
 #, c-format
 msgid ""
 "\n"
@@ -3119,965 +3129,965 @@ msgid ""
 "%i SMS parts in %i SMS sequences\n"
 msgstr ""
 
-#: gammu/message.c:859
+#: gammu/message.c:865
 msgid "SMS counter overflow"
 msgstr ""
 
-#: gammu/message.c:926
+#: gammu/message.c:932
 #, c-format
 msgid ""
 "\n"
 "%i SMS parts in %i SMS sequences\n"
 msgstr ""
 
-#: gammu/message.c:951
+#: gammu/message.c:957
 #, fuzzy, c-format
 msgid ", Outbox folder"
 msgstr ", cartella Ricevuti"
 
-#: gammu/message.c:989
+#: gammu/message.c:995
 msgid "Do you want to save this MMS file"
 msgstr ""
 
-#: gammu/message.c:994 gammu/message.c:1072
+#: gammu/message.c:1000 gammu/message.c:1078
 #, fuzzy, c-format
 msgid "Saved to file %s\n"
 msgstr "Impossibile aprire il file \"%s\"\n"
 
-#: gammu/message.c:1002
+#: gammu/message.c:1008
 msgid "Some MMS file features unknown for Gammu decoder"
 msgstr ""
 
-#: gammu/message.c:1008 gammu/misc.c:874
+#: gammu/message.c:1014 gammu/misc.c:873
 #, fuzzy
 msgid "Sender"
 msgstr "Numero principale "
 
-#: gammu/message.c:1010 gammu/message.c:1018 gammu/message.c:1026
+#: gammu/message.c:1016 gammu/message.c:1024 gammu/message.c:1032
 #, fuzzy, c-format
 msgid "phone "
 msgstr ", memoria telefono"
 
-#: gammu/message.c:1016
+#: gammu/message.c:1022
 #, fuzzy
 msgid "Recipient"
 msgstr "Spedito il        : %s\n"
 
-#: gammu/message.c:1024
+#: gammu/message.c:1030
 msgid "CC"
 msgstr ""
 
-#: gammu/message.c:1031
+#: gammu/message.c:1037
 #, fuzzy
 msgid "Message type"
 msgstr "ID Suoneria messaggi  : "
 
-#: gammu/message.c:1034
+#: gammu/message.c:1040
 msgid "Subject"
 msgstr ""
 
-#: gammu/message.c:1037 gammu/smsd/s_files.c:103
+#: gammu/message.c:1043 gammu/smsd/s_files.c:103
 msgid "Delivery report"
 msgstr ""
 
-#: gammu/message.c:1039 gammu/misc.c:850 gammu/misc.c:1363 gammu/misc.c:1366
+#: gammu/message.c:1045 gammu/misc.c:849 gammu/misc.c:1362 gammu/misc.c:1365
 msgid "enabled"
 msgstr ""
 
-#: gammu/message.c:1041 gammu/misc.c:852 gammu/misc.c:1364 gammu/misc.c:1367
+#: gammu/message.c:1047 gammu/misc.c:851 gammu/misc.c:1363 gammu/misc.c:1366
 msgid "disabled"
 msgstr ""
 
-#: gammu/message.c:1044 gammu/message.c:1047
+#: gammu/message.c:1050 gammu/message.c:1053
 #, fuzzy
 msgid "Content type"
 msgstr "Tipo di nota : "
 
-#: gammu/message.c:1051
+#: gammu/message.c:1057
 #, c-format
 msgid " (%s in SMIL)"
 msgstr ""
 
-#: gammu/message.c:1067
+#: gammu/message.c:1073
 msgid "Do you want to save this attachment"
 msgstr ""
 
-#: gammu/message.c:1104
+#: gammu/message.c:1110
 #, c-format
 msgid "Folder %s\n"
 msgstr ""
 
-#: gammu/message.c:1105
+#: gammu/message.c:1111
 msgid "  File filesystem ID"
 msgstr ""
 
-#: gammu/message.c:1107
+#: gammu/message.c:1113
 #, c-format
 msgid "  File last changed  : %s\n"
 msgstr ""
 
-#: gammu/message.c:1118
+#: gammu/message.c:1124
 #, fuzzy, c-format
 msgid "%c  Reading: %i percent"
 msgstr "%c   Lettura: %i%"
 
-#: gammu/message.c:1162
+#: gammu/message.c:1168
 #, c-format
 msgid "msg:%s nb:%i udh:%s\n"
 msgstr ""
 
-#: gammu/message.c:1193
+#: gammu/message.c:1199
 #, c-format
 msgid "..OK"
 msgstr ""
 
-#: gammu/message.c:1196
+#: gammu/message.c:1202
 #, c-format
 msgid "..error %i"
 msgstr "..errore %i"
 
-#: gammu/message.c:1199
+#: gammu/message.c:1205
 #, fuzzy, c-format
 msgid ", message reference=%d\n"
 msgstr "Messaggio CB ricevuto\n"
 
-#: gammu/message.c:1281
+#: gammu/message.c:1287
 msgid "Enter message text and press ^D:"
 msgstr ""
 
-#: gammu/message.c:1284
+#: gammu/message.c:1290
 #, fuzzy
 msgid "0 chars read!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/message.c:1306 gammu/message.c:1320
+#: gammu/message.c:1312 gammu/message.c:1326
 #, fuzzy
 msgid "Where are parameters?"
 msgstr "I parametri sono troppo pochi!\n"
 
-#: gammu/message.c:1333
+#: gammu/message.c:1339
 #, fuzzy
 msgid "Where is ringtone filename?"
 msgstr "Dov'è il nome del file della suoneria ?\n"
 
-#: gammu/message.c:1349 gammu/message.c:1365 gammu/message.c:1405
+#: gammu/message.c:1355 gammu/message.c:1371 gammu/message.c:1411
 #, fuzzy
 msgid "Where is logo filename?"
 msgstr "Dov'è il nome del file del logo ?\n"
 
-#: gammu/message.c:1381
+#: gammu/message.c:1387
 #, fuzzy
 msgid "Where is number of frames?"
 msgstr "Dov'è il numero dei frames ?\n"
 
-#: gammu/message.c:1410
+#: gammu/message.c:1416
 #, fuzzy, c-format
 msgid "File \"%s\"\n"
 msgstr "Testo  : %s\n"
 
-#: gammu/message.c:1436
+#: gammu/message.c:1442
 #, fuzzy
 msgid "Bookmark not found in file"
 msgstr "Segnalibro non trovato nel file\n"
 
-#: gammu/message.c:1459
+#: gammu/message.c:1465
 #, fuzzy
 msgid "WAP settings not found in file"
 msgstr "Settaggi WAP non trovati nel file\n"
 
-#: gammu/message.c:1480
+#: gammu/message.c:1486
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr ""
 
-#: gammu/message.c:1502
+#: gammu/message.c:1508
 #, fuzzy
 msgid "MMS settings not found in file"
 msgstr "Settaggi MMS non trovati nel file\n"
 
-#: gammu/message.c:1516
+#: gammu/message.c:1522
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr ""
 
-#: gammu/message.c:1619
+#: gammu/message.c:1625
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
 msgstr "Che formato di sms è (\"%s\") ?\n"
 
-#: gammu/message.c:2089
+#: gammu/message.c:2095
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
 msgstr "Codice di rete GSM sconosciuto (\"%s\")\n"
 
-#: gammu/message.c:2108
+#: gammu/message.c:2114
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
 msgstr "Devi inserire un numero tra 1 e 7 (\"%s\")\n"
 
-#: gammu/message.c:2141
+#: gammu/message.c:2147
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
 msgstr "Stringa di validità sconosciuta (\"%s\")\n"
 
-#: gammu/message.c:2178
+#: gammu/message.c:2184
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr "Il numero di frames EMS dev'essere compreso tra 1 e 4 (\"%s\")\n"
 
-#: gammu/message.c:2201 gammu/smsd/smsdcore.c:114
+#: gammu/message.c:2207 gammu/smsd/smsdcore.c:113
 #, c-format
 msgid "Can't open file \"%s\"\n"
 msgstr "Impossibile aprire il file \"%s\"\n"
 
-#: gammu/message.c:2251
+#: gammu/message.c:2257
 #, fuzzy, c-format
 msgid "Unknown parameter (\"%c\")\n"
 msgstr "Parametro sconosciuto (\"%s\")\n"
 
-#: gammu/message.c:2256
+#: gammu/message.c:2262
 #, fuzzy
 msgid "Last parameter wasn't text"
 msgstr "L'ultimo parametro non era in formato testo\n"
 
-#: gammu/message.c:2288
+#: gammu/message.c:2294
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr ""
 
-#: gammu/message.c:2327
+#: gammu/message.c:2333
 #, fuzzy
 msgid "No network code"
 msgstr "Codice rete assente\n"
 
-#: gammu/message.c:2369
+#: gammu/message.c:2375
 #, fuzzy, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr "Attenzione: suoneria troppo lunga, tagliata del %i%\n"
 
-#: gammu/message.c:2378
+#: gammu/message.c:2384
 #, c-format
 msgid "There is %i SMS packed and %i limit. Exiting\n"
 msgstr "Ci sono %i SMS da inserire ed il limite è %i. Esco\n"
 
-#: gammu/message.c:2385 gammu/message.c:2408
+#: gammu/message.c:2391 gammu/message.c:2414
 #, fuzzy
 msgid "Use -smscnumber option to give SMSC number"
 msgstr "Usare l'opzione -smscnumber per specificare il numero del centro SMS\n"
 
-#: gammu/message.c:2402
+#: gammu/message.c:2408
 #, fuzzy, c-format
 msgid "Number of messages: %i"
 msgstr ""
 "\n"
 "Numero del SMS: %i\n"
 
-#: gammu/message.c:2441 gammu/message.c:2503
+#: gammu/message.c:2447 gammu/message.c:2509
 #, fuzzy
 msgid "If you want break, press Ctrl+C..."
 msgstr "Se vuoi interrompere, premi Ctrl+C...\n"
 
-#: gammu/message.c:2445
+#: gammu/message.c:2451
 #, c-format
 msgid "Saving SMS %i/%i\n"
 msgstr "Sto salvando il messaggio %i/%i\n"
 
-#: gammu/message.c:2465
+#: gammu/message.c:2471
 #, fuzzy, c-format
 msgid "Saved in folder \"%s\", location %i"
 msgstr "Sto spedendo il messaggio dalla cartella \"%s\", posizione %i\n"
 
-#: gammu/message.c:2470
+#: gammu/message.c:2476
 #, fuzzy
 msgid "SMS name ignored"
 msgstr "Messaggio SMS\n"
 
-#: gammu/message.c:2473
+#: gammu/message.c:2479
 #, fuzzy
 msgid "phone"
 msgstr ", memoria telefono"
 
-#: gammu/message.c:2477
+#: gammu/message.c:2483
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr "Sto spedendo il messaggio dalla cartella \"%s\", posizione %i\n"
 
-#: gammu/message.c:2482 gammu/message.c:2521
+#: gammu/message.c:2488 gammu/message.c:2527
 #, c-format
 msgid "....waiting for network answer"
 msgstr "....aspetto la risposta della rete"
 
-#: gammu/message.c:2508
+#: gammu/message.c:2514
 #, c-format
 msgid "Sending SMS %i/%i"
 msgstr "Sto spedendo il messaggio %i/%i"
 
-#: gammu/message.c:2583
+#: gammu/message.c:2589
 #, c-format
 msgid "Too high folder number (max. %i)\n"
 msgstr "Numero della cartella troppo alto (massimo %i)\n"
 
-#: gammu/message.c:2588
+#: gammu/message.c:2594
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
 msgstr "Cancello i messaggi dalla cartella \"%s\": "
 
-#: gammu/misc.c:28
+#: gammu/misc.c:27
 #, fuzzy
 msgid "Network state"
 msgstr "Stato della rete  : "
 
-#: gammu/misc.c:30
+#: gammu/misc.c:29
 #, fuzzy
 msgid "home network"
 msgstr "operatore di appartenenza (non in roaming)\n"
 
-#: gammu/misc.c:31
+#: gammu/misc.c:30
 #, fuzzy
 msgid "roaming network"
 msgstr "operatore in roaming\n"
 
-#: gammu/misc.c:32
+#: gammu/misc.c:31
 #, fuzzy
 msgid "requesting network"
 msgstr "richiesta in corso\n"
 
-#: gammu/misc.c:33
+#: gammu/misc.c:32
 #, fuzzy
 msgid "not logged into network"
 msgstr "non connesso alla rete\n"
 
-#: gammu/misc.c:34
+#: gammu/misc.c:33
 #, fuzzy
 msgid "registration to network denied"
 msgstr "connessione rifiutata dalla rete\n"
 
-#: gammu/misc.c:35 gammu/misc.c:37 gammu/misc.c:356 gammu/misc.c:378
+#: gammu/misc.c:34 gammu/misc.c:36 gammu/misc.c:355 gammu/misc.c:377
 #, c-format
 msgid "unknown"
 msgstr "sconosciuto"
 
-#: gammu/misc.c:51
+#: gammu/misc.c:50
 #, fuzzy
 msgid "Name in phone"
 msgstr "Nome nel telefono : \"%s\"\n"
 
-#: gammu/misc.c:109 gammu/search.c:74
+#: gammu/misc.c:108 gammu/search.c:73
 #, fuzzy
 msgid "Manufacturer"
 msgstr "Produttore         : %s\n"
 
-#: gammu/misc.c:112 gammu/search.c:78
+#: gammu/misc.c:111 gammu/search.c:77
 msgid "Model"
 msgstr ""
 
-#: gammu/misc.c:118
+#: gammu/misc.c:117
 #, fuzzy
 msgid "Firmware"
 msgstr "Firmware           : %s"
 
-#: gammu/misc.c:130
+#: gammu/misc.c:129
 msgid "Hardware"
 msgstr ""
 
-#: gammu/misc.c:141
+#: gammu/misc.c:140
 #, fuzzy
 msgid "Original IMEI"
 msgstr "IMEI Originale     : %s\n"
 
-#: gammu/misc.c:148
+#: gammu/misc.c:147
 #, fuzzy
 msgid "Manufactured"
 msgstr "Data di produzione : %s\n"
 
-#: gammu/misc.c:154
+#: gammu/misc.c:153
 #, fuzzy
 msgid "Product code"
 msgstr "Codice prodotto    : %s\n"
 
-#: gammu/misc.c:164
+#: gammu/misc.c:163
 msgid "SIM IMSI"
 msgstr ""
 
-#: gammu/misc.c:194
+#: gammu/misc.c:193
 #, fuzzy
 msgid "Call info"
 msgstr "Info chiamata : "
 
-#: gammu/misc.c:195
+#: gammu/misc.c:194
 #, c-format
 msgid "ID %i, "
 msgstr ""
 
-#: gammu/misc.c:197
+#: gammu/misc.c:196
 #, c-format
 msgid "incoming call from \"%s\"\n"
 msgstr "chiamata in arrivo da \"%s\"\n"
 
-#: gammu/misc.c:198
+#: gammu/misc.c:197
 #, c-format
 msgid "outgoing call to \"%s\"\n"
 msgstr "chiamata per \"%s\"\n"
 
-#: gammu/misc.c:199
+#: gammu/misc.c:198
 #, fuzzy
 msgid "call started"
 msgstr "chiamata avviata\n"
 
-#: gammu/misc.c:200
+#: gammu/misc.c:199
 #, fuzzy
 msgid "end of call (unknown side)"
 msgstr "fine chiamata\n"
 
-#: gammu/misc.c:201
+#: gammu/misc.c:200
 #, fuzzy
 msgid "call end from our side"
 msgstr "chiamata chiusa da parte nostra\n"
 
-#: gammu/misc.c:202
+#: gammu/misc.c:201
 #, c-format
 msgid "call end from remote side (code %i)\n"
 msgstr "chiamata chiusa dal telefono remoto (codice %i)\n"
 
-#: gammu/misc.c:203
+#: gammu/misc.c:202
 #, fuzzy
 msgid "call established. Waiting for answer"
 msgstr "chiamata inoltrata. In attesa di risposta\n"
 
-#: gammu/misc.c:204
+#: gammu/misc.c:203
 #, fuzzy
 msgid "call held"
 msgstr "chiamata sospesa\n"
 
-#: gammu/misc.c:205
+#: gammu/misc.c:204
 #, fuzzy
 msgid "call resumed"
 msgstr "chiamata ripristinata\n"
 
-#: gammu/misc.c:206
+#: gammu/misc.c:205
 #, fuzzy
 msgid "call switched"
 msgstr "chiamata cambiata\n"
 
-#: gammu/misc.c:213
+#: gammu/misc.c:212
 #, c-format
 msgid "%3d used"
 msgstr ""
 
-#: gammu/misc.c:215
+#: gammu/misc.c:214
 #, c-format
 msgid "%3d free"
 msgstr ""
 
-#: gammu/misc.c:251
+#: gammu/misc.c:250
 #, fuzzy
 msgid "Entering monitor mode..."
 msgstr ""
 "Entro in modalità monitor..\n"
 "\n"
 
-#: gammu/misc.c:261
+#: gammu/misc.c:260
 #, fuzzy
 msgid "Enabling info about incoming SMS"
 msgstr "Info sugli SMS in arrivo : %s\n"
 
-#: gammu/misc.c:263
+#: gammu/misc.c:262
 #, fuzzy
 msgid "Enabling info about incoming CB"
 msgstr "Info sui CB in arrivo    : %s\n"
 
-#: gammu/misc.c:265
+#: gammu/misc.c:264
 #, fuzzy
 msgid "Enabling info about calls"
 msgstr "Info sulle chiamate      : %s\n"
 
-#: gammu/misc.c:267
+#: gammu/misc.c:266
 #, fuzzy
 msgid "Enabling info about USSD"
 msgstr "Info su USSD             : %s\n"
 
-#: gammu/misc.c:284
+#: gammu/misc.c:283
 msgid "ToDos"
 msgstr ""
 
-#: gammu/misc.c:288
+#: gammu/misc.c:287
 #, fuzzy
 msgid "Calendar"
 msgstr "Gruppo chiamante : \"%s\"\n"
 
-#: gammu/misc.c:293
+#: gammu/misc.c:292
 #, fuzzy
 msgid "Battery level"
 msgstr "Tipo di nota : "
 
-#: gammu/misc.c:294 gammu/misc.c:393 gammu/misc.c:398
+#: gammu/misc.c:293 gammu/misc.c:392 gammu/misc.c:397
 #, fuzzy, c-format
 msgid "%i percent"
 msgstr "%cScrittura : %i%"
 
-#: gammu/misc.c:298
+#: gammu/misc.c:297
 #, fuzzy
 msgid "Battery capacity"
 msgstr "Tipo di nota : "
 
-#: gammu/misc.c:299
+#: gammu/misc.c:298
 #, c-format
 msgid "%i mAh"
 msgstr ""
 
-#: gammu/misc.c:303
+#: gammu/misc.c:302
 #, fuzzy
 msgid "Battery temperature"
 msgstr "Tipo di nota : "
 
 #. l10n: This means degrees Celsius
-#: gammu/misc.c:305 gammu/misc.c:310
+#: gammu/misc.c:304 gammu/misc.c:309
 #, c-format
 msgid "%i C"
 msgstr ""
 
-#: gammu/misc.c:309
+#: gammu/misc.c:308
 #, fuzzy
 msgid "Phone temperature"
 msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#: gammu/misc.c:314
+#: gammu/misc.c:313
 #, fuzzy
 msgid "Battery voltage"
 msgstr "Tipo di nota : "
 
-#: gammu/misc.c:315 gammu/misc.c:320
+#: gammu/misc.c:314 gammu/misc.c:319
 #, c-format
 msgid "%i mV"
 msgstr ""
 
-#: gammu/misc.c:319
+#: gammu/misc.c:318
 #, fuzzy
 msgid "Charge voltage"
 msgstr "Stato dell'alimentazione : "
 
-#: gammu/misc.c:324
+#: gammu/misc.c:323
 #, fuzzy
 msgid "Charge current"
 msgstr "Stato dell'alimentazione : "
 
-#: gammu/misc.c:325 gammu/misc.c:330
+#: gammu/misc.c:324 gammu/misc.c:329
 #, c-format
 msgid "%i mA"
 msgstr ""
 
-#: gammu/misc.c:329
+#: gammu/misc.c:328
 #, fuzzy
 msgid "Phone current"
 msgstr "Telefono     : \"%s\"\n"
 
-#: gammu/misc.c:334
+#: gammu/misc.c:333
 #, fuzzy
 msgid "Charge state"
 msgstr "Stato dell'alimentazione : "
 
-#: gammu/misc.c:337
+#: gammu/misc.c:336
 #, c-format
 msgid "powered from battery"
 msgstr "batteria"
 
-#: gammu/misc.c:340
+#: gammu/misc.c:339
 #, c-format
 msgid "battery connected, but not powered from battery"
 msgstr "batteria connessa, ma non alimenta il telefono"
 
-#: gammu/misc.c:343
+#: gammu/misc.c:342
 #, c-format
 msgid "battery connected and is being charged"
 msgstr ""
 
-#: gammu/misc.c:346
+#: gammu/misc.c:345
 #, c-format
 msgid "battery connected and is fully charged"
 msgstr ""
 
-#: gammu/misc.c:349
+#: gammu/misc.c:348
 #, c-format
 msgid "battery not connected"
 msgstr "batteria non connessa"
 
-#: gammu/misc.c:352
+#: gammu/misc.c:351
 #, c-format
 msgid "detected power failure"
 msgstr "rilevato problema di alimentazione"
 
-#: gammu/misc.c:363
+#: gammu/misc.c:362
 #, fuzzy
 msgid "Battery type"
 msgstr "Tipo di nota : "
 
-#: gammu/misc.c:366
+#: gammu/misc.c:365
 #, c-format
 msgid "Lithium Ion"
 msgstr ""
 
-#: gammu/misc.c:369
+#: gammu/misc.c:368
 #, c-format
 msgid "Lithium Polymer"
 msgstr ""
 
-#: gammu/misc.c:372
+#: gammu/misc.c:371
 #, c-format
 msgid "NiMH"
 msgstr ""
 
-#: gammu/misc.c:387
+#: gammu/misc.c:386
 #, fuzzy
 msgid "Signal strength"
 msgstr "Forza del segnale        : %i dBm\n"
 
-#: gammu/misc.c:388
+#: gammu/misc.c:387
 #, fuzzy, c-format
 msgid "%i dBm"
 msgstr "Venerdì"
 
-#: gammu/misc.c:392
+#: gammu/misc.c:391
 #, fuzzy
 msgid "Network level"
 msgstr "Codice rete assente\n"
 
-#: gammu/misc.c:397
+#: gammu/misc.c:396
 #, fuzzy
 msgid "Bit error rate"
 msgstr "Tasso di errori di bit   : %i%\n"
 
-#: gammu/misc.c:405
+#: gammu/misc.c:404
 #, fuzzy
 msgid "SIM SMS status"
 msgstr "Rapporto sullo stato SMS\n"
 
-#: gammu/misc.c:406 gammu/misc.c:416
+#: gammu/misc.c:405 gammu/misc.c:415
 #, fuzzy, c-format
 msgid "%i used"
 msgstr "5 secondi\n"
 
-#: gammu/misc.c:408 gammu/misc.c:418
+#: gammu/misc.c:407 gammu/misc.c:417
 #, c-format
 msgid "%i unread"
 msgstr ""
 
-#: gammu/misc.c:410 gammu/misc.c:420
+#: gammu/misc.c:409 gammu/misc.c:419
 #, fuzzy, c-format
 msgid "%i locations"
 msgstr "Locazione %i\n"
 
-#: gammu/misc.c:415
+#: gammu/misc.c:414
 #, fuzzy
 msgid "Phone SMS status"
 msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#: gammu/misc.c:423
+#: gammu/misc.c:422
 #, fuzzy, c-format
 msgid "%i templates"
 msgstr ", %i modelli"
 
-#: gammu/misc.c:436
+#: gammu/misc.c:435
 #, fuzzy
 msgid "Leaving monitor mode..."
 msgstr "Abbandono della modalità monitor...\n"
 
-#: gammu/misc.c:461
+#: gammu/misc.c:460
 #, c-format
 msgid "Smart Messaging"
 msgstr ""
 
-#: gammu/misc.c:462
+#: gammu/misc.c:461
 #, c-format
 msgid "Nokia binary"
 msgstr "Binario Nokia"
 
-#: gammu/misc.c:463
+#: gammu/misc.c:462
 #, c-format
 msgid "MIDI"
 msgstr ""
 
-#: gammu/misc.c:464
+#: gammu/misc.c:463
 #, c-format
 msgid "SMAF (MMF)"
 msgstr ""
 
-#: gammu/misc.c:466
+#: gammu/misc.c:465
 #, c-format
 msgid " format, ringtone \"%s\"\n"
 msgstr " formato, suoneria \"%s\"\n"
 
-#: gammu/misc.c:683
+#: gammu/misc.c:682
 #, c-format
 msgid "What type of reset do you want (\"%s\") ?\n"
 msgstr "Che tipo di reset vuoi effettuare (\"%s\") ?\n"
 
-#: gammu/misc.c:710 gammu/misc.c:757
+#: gammu/misc.c:709 gammu/misc.c:756
 #, fuzzy
 msgid "Address"
 msgstr "Indirizzo : \"%s\"\n"
 
-#: gammu/misc.c:752
+#: gammu/misc.c:751
 #, c-format
 msgid "%i. Access point %i"
 msgstr "%i. Punto di accesso %i "
 
-#: gammu/misc.c:754 gammu/misc.c:1268 gammu/misc.c:1275 gammu/misc.c:1304
-#: gammu/misc.c:1315 gammu/misc.c:1354 gammu/misc.c:1404 gammu/misc.c:1449
-#: gammu/misc.c:1725
+#: gammu/misc.c:753 gammu/misc.c:1267 gammu/misc.c:1274 gammu/misc.c:1303
+#: gammu/misc.c:1314 gammu/misc.c:1353 gammu/misc.c:1403 gammu/misc.c:1448
+#: gammu/misc.c:1724
 #, c-format
 msgid " (active)"
 msgstr " (attivo)"
 
-#: gammu/misc.c:781 gammu/misc.c:938
+#: gammu/misc.c:780 gammu/misc.c:937
 #, fuzzy
 msgid "Maximal location for caller logo can be 5"
 msgstr "La posizione massima per il logo chiamante può essere 5\n"
 
-#: gammu/misc.c:794
+#: gammu/misc.c:793
 #, c-format
 msgid "What type of logo do you want to get (\"%s\") ?\n"
 msgstr "Che tipo di logo vuoi prendere (\"%s\") ?\n"
 
-#: gammu/misc.c:810
+#: gammu/misc.c:809
 #, fuzzy
 msgid "Group name"
 msgstr "Nome gruppo : \"%s\""
 
-#: gammu/misc.c:811
+#: gammu/misc.c:810
 #, c-format
 msgid " (default)"
 msgstr " (predefinito)"
 
-#: gammu/misc.c:814
+#: gammu/misc.c:813
 #, fuzzy
 msgid "default"
 msgstr " (predefinito)"
 
-#: gammu/misc.c:832
+#: gammu/misc.c:831
 #, fuzzy, c-format
 msgid "(file with ID %i)\n"
 msgstr "Suoneria    : \"%s\" (file con ID %i)\n"
 
-#: gammu/misc.c:840
+#: gammu/misc.c:839
 #, c-format
 msgid "\"%s\" (ID %i)\n"
 msgstr ""
 
-#: gammu/misc.c:844
+#: gammu/misc.c:843
 #, c-format
 msgid "ID %i\n"
 msgstr ""
 
-#: gammu/misc.c:850 gammu/misc.c:852
+#: gammu/misc.c:849 gammu/misc.c:851
 #, fuzzy
 msgid "Bitmap"
 msgstr "Immagine    : abilitata\n"
 
-#: gammu/misc.c:855
+#: gammu/misc.c:854
 #, fuzzy
 msgid "Bitmap ID"
 msgstr "Immagine    : abilitata\n"
 
-#: gammu/misc.c:868
+#: gammu/misc.c:867
 #, fuzzy
 msgid "No operator logo in phone"
 msgstr "Nessun logo operatore nel telefono\n"
 
-#: gammu/misc.c:880
+#: gammu/misc.c:879
 #, c-format
 msgid "Welcome note text is \"%s\"\n"
 msgstr "Il messaggio iniziale è \"%s\"\n"
 
-#: gammu/misc.c:883
+#: gammu/misc.c:882
 #, c-format
 msgid "Dealer note text is \"%s\"\n"
 msgstr "Il messaggio iniziale dell'operatore è \"%s\"\n"
 
-#: gammu/misc.c:1021
+#: gammu/misc.c:1020
 #, c-format
 msgid "What type of logo do you want to set (\"%s\") ?\n"
 msgstr "Che tipo di logo vuoi impostare (\"%s\") ?\n"
 
-#: gammu/misc.c:1062
+#: gammu/misc.c:1061
 #, fuzzy, c-format
 msgid "Unknown parameter (\"%s\")"
 msgstr "Parametro sconosciuto (\"%s\")\n"
 
-#: gammu/misc.c:1115
+#: gammu/misc.c:1114
 #, fuzzy, c-format
 msgid "%cClearing: %i percent"
 msgstr "%cCancellazione: %i%"
 
-#: gammu/misc.c:1144
+#: gammu/misc.c:1143
 #, fuzzy
 msgid "Delete phone phonebook"
 msgstr "Controllo la rubrica del telefono\n"
 
-#: gammu/misc.c:1145
+#: gammu/misc.c:1144
 #, fuzzy
 msgid "Delete SIM phonebook"
 msgstr "Controllo la rubrica della SIM\n"
 
-#: gammu/misc.c:1146
+#: gammu/misc.c:1145
 msgid "Delete missed calls"
 msgstr ""
 
-#: gammu/misc.c:1147
+#: gammu/misc.c:1146
 msgid "Delete dialled calls"
 msgstr ""
 
-#: gammu/misc.c:1148
+#: gammu/misc.c:1147
 msgid "Delete received calls"
 msgstr ""
 
-#: gammu/misc.c:1153
+#: gammu/misc.c:1152
 #, fuzzy
 msgid "Delete phone calendar notes"
 msgstr "Cancello le note vecchie: "
 
-#: gammu/misc.c:1176
+#: gammu/misc.c:1175
 msgid "Delete phone ToDo"
 msgstr ""
 
-#: gammu/misc.c:1199
+#: gammu/misc.c:1198
 #, fuzzy
 msgid "Delete phone Notes"
 msgstr "Cancello le note vecchie: "
 
-#: gammu/misc.c:1216
+#: gammu/misc.c:1215
 #, fuzzy
 msgid "Delete phone WAP bookmarks"
 msgstr "Cancello i vecchi bookmarks: "
 
-#: gammu/misc.c:1242
+#: gammu/misc.c:1241
 msgid "Delete all phone FM radio stations"
 msgstr ""
 
-#: gammu/misc.c:1254
+#: gammu/misc.c:1253
 #, c-format
 msgid "Connection type     : Continuous\n"
 msgstr "Tipo di connessione    : Permanente\n"
 
-#: gammu/misc.c:1256
+#: gammu/misc.c:1255
 #, c-format
 msgid "Connection type     : Temporary\n"
 msgstr "Tipo di connessione    : Temporanea\n"
 
-#: gammu/misc.c:1259
+#: gammu/misc.c:1258
 #, c-format
 msgid "Connection security : On\n"
 msgstr "Sicurezza              : On\n"
 
-#: gammu/misc.c:1261
+#: gammu/misc.c:1260
 #, c-format
 msgid "Connection security : Off\n"
 msgstr "Sicurezza           :    Off\n"
 
-#: gammu/misc.c:1263
+#: gammu/misc.c:1262
 #, c-format
 msgid "Proxy               : address \"%s\", port %i\n"
 msgstr ""
 
-#: gammu/misc.c:1264
+#: gammu/misc.c:1263
 #, c-format
 msgid "2'nd proxy          : address \"%s\", port %i\n"
 msgstr ""
 
-#: gammu/misc.c:1267 gammu/misc.c:1274 gammu/misc.c:1303 gammu/misc.c:1314
+#: gammu/misc.c:1266 gammu/misc.c:1273 gammu/misc.c:1302 gammu/misc.c:1313
 msgid "Bearer"
 msgstr ""
 
-#: gammu/misc.c:1267
+#: gammu/misc.c:1266
 msgid "SMS"
 msgstr ""
 
-#: gammu/misc.c:1270
+#: gammu/misc.c:1269
 #, fuzzy
 msgid "Server number"
 msgstr "Numero principale "
 
-#: gammu/misc.c:1271
+#: gammu/misc.c:1270
 #, fuzzy
 msgid "Service number"
 msgstr "Numero servizio        : \"%s\"\n"
 
-#: gammu/misc.c:1274
+#: gammu/misc.c:1273
 msgid "Data (CSD)"
 msgstr ""
 
-#: gammu/misc.c:1277
+#: gammu/misc.c:1276
 #, fuzzy
 msgid "Dial-up number"
 msgstr ""
 "\n"
 "Numero Dial-Up         : \"%s\"\n"
 
-#: gammu/misc.c:1278 gammu/misc.c:1328
+#: gammu/misc.c:1277 gammu/misc.c:1327
 #, fuzzy
 msgid "IP address"
 msgstr "Indirizzo postale "
 
-#: gammu/misc.c:1280 gammu/misc.c:1318
+#: gammu/misc.c:1279 gammu/misc.c:1317
 #, c-format
 msgid "Login Type          : Manual\n"
 msgstr "Tipo di login          : Manuale\n"
 
-#: gammu/misc.c:1282 gammu/misc.c:1320
+#: gammu/misc.c:1281 gammu/misc.c:1319
 #, c-format
 msgid "Login Type          : Automatic\n"
 msgstr "Tipo di login          : Automatico\n"
 
-#: gammu/misc.c:1285 gammu/misc.c:1323
+#: gammu/misc.c:1284 gammu/misc.c:1322
 #, c-format
 msgid "Authentication type : Normal\n"
 msgstr "Tipo di autenticazione : Normale\n"
 
-#: gammu/misc.c:1287 gammu/misc.c:1325
+#: gammu/misc.c:1286 gammu/misc.c:1324
 #, c-format
 msgid "Authentication type : Secure\n"
 msgstr "Tipo di autenticazione : Sicura\n"
 
-#: gammu/misc.c:1290
+#: gammu/misc.c:1289
 #, c-format
 msgid "Data call type      : ISDN\n"
 msgstr "Tipo di chiamata dati  : ISDN\n"
 
-#: gammu/misc.c:1292
+#: gammu/misc.c:1291
 #, c-format
 msgid "Data call type      : Analogue\n"
 msgstr "Tipo di chiamata dati  : Analogica\n"
 
-#: gammu/misc.c:1295
+#: gammu/misc.c:1294
 #, fuzzy, c-format
 msgid "Data call speed     : 9600\n"
 msgstr "Velocità               : 14400\n"
 
-#: gammu/misc.c:1296
+#: gammu/misc.c:1295
 #, c-format
 msgid "Data call speed     : 14400\n"
 msgstr "Velocità               : 14400\n"
 
-#: gammu/misc.c:1297
+#: gammu/misc.c:1296
 #, c-format
 msgid "Data call speed     : Auto\n"
 msgstr "Velocità               : Automatica\n"
 
-#: gammu/misc.c:1299 gammu/misc.c:1329
+#: gammu/misc.c:1298 gammu/misc.c:1328
 msgid "User name"
 msgstr ""
 
-#: gammu/misc.c:1300 gammu/misc.c:1330 gammu/misc.c:1358 gammu/misc.c:1409
+#: gammu/misc.c:1299 gammu/misc.c:1329 gammu/misc.c:1357 gammu/misc.c:1408
 msgid "Password"
 msgstr ""
 
-#: gammu/misc.c:1303
+#: gammu/misc.c:1302
 msgid "USSD"
 msgstr ""
 
-#: gammu/misc.c:1306
+#: gammu/misc.c:1305
 #, fuzzy
 msgid "Service code"
 msgstr "Servizio rifiutato"
 
-#: gammu/misc.c:1308
+#: gammu/misc.c:1307
 #, c-format
 msgid ""
 "Address type        : IP address\n"
@@ -4086,7 +4096,7 @@ msgstr ""
 "Tipo di indirizzo      : Indirizzo IP\n"
 "Indirizzo IP           : \"%s\"\n"
 
-#: gammu/misc.c:1310
+#: gammu/misc.c:1309
 #, c-format
 msgid ""
 "Address type        : Service number\n"
@@ -4095,404 +4105,404 @@ msgstr ""
 "Tipo di indirizzo      : Numero servizio\n"
 "Numero servizio        : \"%s\"\n"
 
-#: gammu/misc.c:1314
+#: gammu/misc.c:1313
 msgid "GPRS"
 msgstr ""
 
-#: gammu/misc.c:1327
+#: gammu/misc.c:1326
 #, fuzzy
 msgid "Access point"
 msgstr "%i. Punto di accesso %i "
 
-#: gammu/misc.c:1350 gammu/misc.c:1372 gammu/misc.c:1400 gammu/misc.c:1445
+#: gammu/misc.c:1349 gammu/misc.c:1371 gammu/misc.c:1399 gammu/misc.c:1444
 #, fuzzy, c-format
 msgid "Set %i"
 msgstr "Inviato"
 
-#: gammu/misc.c:1357 gammu/misc.c:1408
+#: gammu/misc.c:1356 gammu/misc.c:1407
 #, fuzzy
 msgid "User"
 msgstr "UDH Utente"
 
-#: gammu/misc.c:1359
+#: gammu/misc.c:1358
 #, fuzzy
 msgid "Phonebook database"
 msgstr "Telefono     : \"%s\"\n"
 
-#: gammu/misc.c:1360
+#: gammu/misc.c:1359
 #, fuzzy
 msgid "Calendar database"
 msgstr "Gruppo chiamante : \"%s\"\n"
 
-#: gammu/misc.c:1361
+#: gammu/misc.c:1360
 msgid "Server"
 msgstr ""
 
-#: gammu/misc.c:1362
+#: gammu/misc.c:1361
 #, fuzzy
 msgid "Sync. phonebook"
 msgstr "Controllo la rubrica della SIM\n"
 
-#: gammu/misc.c:1365
+#: gammu/misc.c:1364
 #, fuzzy
 msgid "Sync. calendar"
 msgstr "Vibrazione            : "
 
-#: gammu/misc.c:1370
+#: gammu/misc.c:1369
 #, fuzzy
 msgid "Connection set name"
 msgstr "Sicurezza              : On\n"
 
-#: gammu/misc.c:1407
+#: gammu/misc.c:1406
 msgid "Homepage"
 msgstr ""
 
-#: gammu/misc.c:1413
+#: gammu/misc.c:1412
 #, fuzzy, c-format
 msgid "Connection set name : Set %i\n"
 msgstr "Sicurezza              : On\n"
 
-#: gammu/misc.c:1415
+#: gammu/misc.c:1414
 #, fuzzy, c-format
 msgid "Connection set name : %s\n"
 msgstr "Sicurezza              : On\n"
 
-#: gammu/misc.c:1450
+#: gammu/misc.c:1449
 #, fuzzy, c-format
 msgid ""
 "\n"
 "Read only           : yes"
 msgstr "Toni di tastiera      : "
 
-#: gammu/misc.c:1451
+#: gammu/misc.c:1450
 msgid ""
 "\n"
 "Homepage"
 msgstr ""
 
-#: gammu/misc.c:1473
+#: gammu/misc.c:1472
 #, c-format
 msgid "Startup logo"
 msgstr "Logo di accensione"
 
-#: gammu/misc.c:1474
+#: gammu/misc.c:1473
 #, c-format
 msgid "Operator logo"
 msgstr "Logo operatore"
 
-#: gammu/misc.c:1476
+#: gammu/misc.c:1475
 #, c-format
 msgid "Caller group logo"
 msgstr "Logo gruppo chiamante"
 
-#: gammu/misc.c:1479
+#: gammu/misc.c:1478
 #, c-format
 msgid ", width %i, height %i\n"
 msgstr ", larghezza %i, altezza %i\n"
 
-#: gammu/misc.c:1494
+#: gammu/misc.c:1493
 #, c-format
 msgid "What format of output file logo (\"%s\") ?\n"
 msgstr "Quale formato per usare per salvare su file il logo (\"%s\") ?\n"
 
-#: gammu/misc.c:1519
+#: gammu/misc.c:1518
 #, c-format
 msgid "What format of output ringtone file (\"%s\") ?\n"
 msgstr "Quale formato usare per salvare su file la suoneroa (\"%s\") ?\n"
 
-#: gammu/misc.c:1539
+#: gammu/misc.c:1538
 #, c-format
 msgid "Unknown key/function name: \"%c\"\n"
 msgstr "Tasto sconosciuto / nome di funzione sconosciuto: \"%c\"\n"
 
-#: gammu/misc.c:1569 gammu/misc.c:1607
+#: gammu/misc.c:1568 gammu/misc.c:1606
 #, c-format
 msgid "What type of categories do you want to get (\"%s\") ?\n"
 msgstr "Che categorie vuoi prendere (\"%s\") ?\n"
 
-#: gammu/misc.c:1645
+#: gammu/misc.c:1644
 #, fuzzy, c-format
 msgid "What type of category do you want to add (\"%s\") ?\n"
 msgstr "Che categorie vuoi prendere (\"%s\") ?\n"
 
-#: gammu/misc.c:1653
+#: gammu/misc.c:1652
 #, fuzzy, c-format
 msgid "Text too long, truncating to %d chars!\n"
 msgstr "Stringa di ricerca troppo lunga, la tronco a %d caratteri!\n"
 
-#: gammu/misc.c:1686
+#: gammu/misc.c:1685
 #, c-format
 msgid "What security code (\"%s\") ?\n"
 msgstr "Codice di sicurezza (\"%s\") ?\n"
 
-#: gammu/misc.c:1726
+#: gammu/misc.c:1725
 #, c-format
 msgid " (default name)"
 msgstr " (nome predefinito)"
 
-#: gammu/misc.c:1727
+#: gammu/misc.c:1726
 #, fuzzy, c-format
 msgid " (Head set profile)"
 msgstr "Profilo Nokia"
 
-#: gammu/misc.c:1728
+#: gammu/misc.c:1727
 #, fuzzy, c-format
 msgid " (Car kit profile)"
 msgstr "Profilo Nokia"
 
-#: gammu/misc.c:1739
+#: gammu/misc.c:1738
 #, fuzzy
 msgid "Message alert tone ID"
 msgstr "ID Suoneria messaggi  : "
 
-#: gammu/misc.c:1749
+#: gammu/misc.c:1748
 #, fuzzy
 msgid "Call alert for"
 msgstr "Vibrazione            : "
 
-#: gammu/misc.c:1770
+#: gammu/misc.c:1769
 #, fuzzy
 msgid "Screen saver number"
 msgstr "Numero screen saver   : "
 
-#: gammu/misc.c:1773
+#: gammu/misc.c:1772
 #, fuzzy
 msgid "Incoming call alert"
 msgstr "Segnale di chiamata   : "
 
-#: gammu/misc.c:1774
+#: gammu/misc.c:1773
 #, fuzzy
 msgid "Ringtone volume"
 msgstr "Volume della suoneria : "
 
-#: gammu/misc.c:1775
+#: gammu/misc.c:1774
 #, fuzzy
 msgid "Vibrating alert"
 msgstr "Vibrazione            : "
 
-#: gammu/misc.c:1776
+#: gammu/misc.c:1775
 #, fuzzy
 msgid "Message alert tone"
 msgstr "ID Suoneria messaggi  : "
 
-#: gammu/misc.c:1777
+#: gammu/misc.c:1776
 #, fuzzy
 msgid "Keypad tones"
 msgstr "Tastiera bloccata\n"
 
-#: gammu/misc.c:1778
+#: gammu/misc.c:1777
 #, fuzzy
 msgid "Warning (games) tones"
 msgstr "Toni di avviso        : "
 
-#: gammu/misc.c:1780
+#: gammu/misc.c:1779
 #, fuzzy
 msgid "Screen saver timeout"
 msgstr "Timeout screen saver  : "
 
-#: gammu/misc.c:1781
+#: gammu/misc.c:1780
 #, fuzzy
 msgid "Automatic answer"
 msgstr "Risposta automatica   : "
 
-#: gammu/misc.c:1782
+#: gammu/misc.c:1781
 #, fuzzy
 msgid "Lights"
 msgstr "Alta\n"
 
-#: gammu/misc.c:1790
+#: gammu/misc.c:1789
 #, fuzzy
 msgid "Level 1"
 msgstr "Livello 1\n"
 
-#: gammu/misc.c:1792
+#: gammu/misc.c:1791
 #, fuzzy
 msgid "Level 2"
 msgstr "Livello 2\n"
 
-#: gammu/misc.c:1794
+#: gammu/misc.c:1793
 #, fuzzy
 msgid "Level 3"
 msgstr "Livello 3\n"
 
-#: gammu/misc.c:1795
+#: gammu/misc.c:1794
 #, fuzzy
 msgid "Level 4"
 msgstr "Livello 4\n"
 
-#: gammu/misc.c:1796
+#: gammu/misc.c:1795
 #, fuzzy
 msgid "Level 5"
 msgstr "Livello 5\n"
 
-#: gammu/misc.c:1804
+#: gammu/misc.c:1803
 #, fuzzy
 msgid "Off"
 msgstr "No suoneria\n"
 
-#: gammu/misc.c:1805
+#: gammu/misc.c:1804
 #, fuzzy
 msgid "Ringing"
 msgstr "Suoneria\n"
 
-#: gammu/misc.c:1807
+#: gammu/misc.c:1806
 #, fuzzy
 msgid "Beep once"
 msgstr "Bip x 1\n"
 
-#: gammu/misc.c:1808
+#: gammu/misc.c:1807
 #, fuzzy
 msgid "Ring once"
 msgstr "Suona x 1\n"
 
-#: gammu/misc.c:1809 gammu/misc.c:1813
+#: gammu/misc.c:1808 gammu/misc.c:1812
 #, fuzzy
 msgid "Ascending"
 msgstr "Ascendente\n"
 
-#: gammu/misc.c:1810
+#: gammu/misc.c:1809
 #, fuzzy
 msgid "Caller groups"
 msgstr "Gruppi chiamante\n"
 
-#: gammu/misc.c:1811
+#: gammu/misc.c:1810
 #, fuzzy
 msgid "Standard"
 msgstr "Normale\n"
 
-#: gammu/misc.c:1812
+#: gammu/misc.c:1811
 #, fuzzy
 msgid "Special"
 msgstr "Speciale\n"
 
-#: gammu/misc.c:1818
+#: gammu/misc.c:1817
 msgid "On"
 msgstr ""
 
-#: gammu/misc.c:1819
+#: gammu/misc.c:1818
 #, fuzzy
 msgid "Vibrate first"
 msgstr "Prima vibra\n"
 
-#: gammu/misc.c:1820
+#: gammu/misc.c:1819
 #, fuzzy
 msgid "Auto"
 msgstr "Automatico\n"
 
-#: gammu/misc.c:1856
+#: gammu/misc.c:1855
 #, fuzzy
 msgid " speed dial not assigned"
 msgstr " chiamata rapida non assegnata\n"
 
-#: gammu/misc.c:1887
+#: gammu/misc.c:1886
 #, c-format
 msgid "What type of reset phone settings (\"%s\") ?\n"
 msgstr "Che tipo di reset vuoi fare (\"%s\") ?\n"
 
-#: gammu/misc.c:1921
+#: gammu/misc.c:1920
 #, fuzzy
 msgid "Current display features"
 msgstr "Caratteristiche attuali del display :\n"
 
-#: gammu/misc.c:1925
+#: gammu/misc.c:1924
 #, fuzzy
 msgid "Call active"
 msgstr "Chiamata in corso\n"
 
-#: gammu/misc.c:1926
+#: gammu/misc.c:1925
 #, fuzzy
 msgid "Unread SMS"
 msgstr "SMS non letto\n"
 
-#: gammu/misc.c:1927
+#: gammu/misc.c:1926
 #, fuzzy
 msgid "Voice call"
 msgstr "Chiamata voce\n"
 
-#: gammu/misc.c:1928
+#: gammu/misc.c:1927
 #, fuzzy
 msgid "Fax call"
 msgstr "Chiamata fax\n"
 
-#: gammu/misc.c:1929
+#: gammu/misc.c:1928
 #, fuzzy
 msgid "Data call"
 msgstr "Chiamata dati\n"
 
-#: gammu/misc.c:1930
+#: gammu/misc.c:1929
 #, fuzzy
 msgid "Keypad locked"
 msgstr "Tastiera bloccata\n"
 
-#: gammu/misc.c:1931
+#: gammu/misc.c:1930
 #, fuzzy
 msgid "SMS memory full"
 msgstr "Memoria SMS piena\n"
 
-#: gammu/misc.c:1968
+#: gammu/misc.c:1967
 #, fuzzy
 msgid "Station name"
 msgstr "Locazione    : \"%s\"\n"
 
-#: gammu/misc.c:1969
+#: gammu/misc.c:1968
 msgid "Frequency"
 msgstr ""
 
-#: gammu/misc.c:1987
+#: gammu/misc.c:1986
 #, c-format
 msgid "Unknown divert action (\"%s\")\n"
 msgstr "Azione di deviazione sconosciuta (\"%s\")\n"
 
-#: gammu/misc.c:1996
+#: gammu/misc.c:1995
 #, c-format
 msgid "Unknown divert type (\"%s\")\n"
 msgstr "Tipo di deviazione sconosciuta (\"%s\")\n"
 
-#: gammu/misc.c:2005
+#: gammu/misc.c:2004
 #, c-format
 msgid "Unknown call type (\"%s\")\n"
 msgstr "Tipo di chiamata sconosciuta (\"%s\")\n"
 
-#: gammu/misc.c:2014
+#: gammu/misc.c:2013
 #, c-format
 msgid ""
 "Query:\n"
 "   Divert type: "
 msgstr ""
 
-#: gammu/misc.c:2025
+#: gammu/misc.c:2024
 #, c-format
 msgid ""
 "Changed:\n"
 "   Divert type: "
 msgstr ""
 
-#: gammu/misc.c:2029
+#: gammu/misc.c:2028
 #, c-format
 msgid "when busy"
 msgstr "se occupato"
 
-#: gammu/misc.c:2030
+#: gammu/misc.c:2029
 #, c-format
 msgid "when not answered"
 msgstr "se non si risponde"
 
-#: gammu/misc.c:2031
+#: gammu/misc.c:2030
 #, c-format
 msgid "when phone off or no coverage"
 msgstr "a telefono spento o non raggiungibile"
 
-#: gammu/misc.c:2032
+#: gammu/misc.c:2031
 #, c-format
 msgid "all types of diverts"
 msgstr "tutti i tipi di deviazione"
 
-#: gammu/misc.c:2033 gammu/misc.c:2041 gammu/misc.c:2051
+#: gammu/misc.c:2032 gammu/misc.c:2040 gammu/misc.c:2050
 #, c-format
 msgid "unknown %i"
 msgstr "sconosiuto %i"
 
-#: gammu/misc.c:2035 gammu/misc.c:2046
+#: gammu/misc.c:2034 gammu/misc.c:2045
 #, c-format
 msgid ""
 "\n"
@@ -4501,22 +4511,22 @@ msgstr ""
 "\n"
 "   Tipi di chiamate : "
 
-#: gammu/misc.c:2037 gammu/misc.c:2048
+#: gammu/misc.c:2036 gammu/misc.c:2047
 #, c-format
 msgid "voice"
 msgstr "voce"
 
-#: gammu/misc.c:2039 gammu/misc.c:2050
+#: gammu/misc.c:2038 gammu/misc.c:2049
 #, c-format
 msgid "data"
 msgstr "dati"
 
-#: gammu/misc.c:2040
+#: gammu/misc.c:2039
 #, c-format
 msgid "data & fax & voice"
 msgstr "dati & fax & voce"
 
-#: gammu/misc.c:2043
+#: gammu/misc.c:2042
 #, c-format
 msgid ""
 "\n"
@@ -4525,17 +4535,17 @@ msgstr ""
 "\n"
 "Risposta:"
 
-#: gammu/misc.c:2054
+#: gammu/misc.c:2053
 #, fuzzy, c-format
 msgid "   Timeout    : "
 msgstr "   Timeout    : %i secondi\n"
 
-#: gammu/nokia.c:40
+#: gammu/nokia.c:39
 #, fuzzy
 msgid "It can be RTTL ringtone only used with this option"
 msgstr "Con questa opzione si può usare solo la suoneria RTTL\n"
 
-#: gammu/nokia.c:51
+#: gammu/nokia.c:50
 #, c-format
 msgid ""
 "Ringtone \"%s\" (tempo = %i Beats Per Minute)\n"
@@ -4544,12 +4554,12 @@ msgstr ""
 "Suoneria \"%s\" (tempo = %i, battiti per minuto)\n"
 "\n"
 
-#: gammu/nokia.c:58
+#: gammu/nokia.c:57
 #, c-format
 msgid "length=%i notes, but you will enter only first 50 tones."
 msgstr ""
 
-#: gammu/nokia.c:60
+#: gammu/nokia.c:59
 #, c-format
 msgid ""
 "\n"
@@ -4560,7 +4570,7 @@ msgstr ""
 "\n"
 "Questa suoneria, nel compositore del telefono, dovrebbe essere: "
 
-#: gammu/nokia.c:99
+#: gammu/nokia.c:98
 #, c-format
 msgid ""
 "\n"
@@ -4571,97 +4581,97 @@ msgstr ""
 "\n"
 "Per inserirlo, premere: "
 
-#: gammu/nokia.c:118
+#: gammu/nokia.c:117
 #, c-format
 msgid "(longer)"
 msgstr "(più a lungo)"
 
-#: gammu/nokia.c:233
+#: gammu/nokia.c:232
 #, fuzzy, c-format
 msgid "Checking %s\n"
 msgstr "Controllo i profili del telefono\n"
 
-#: gammu/nokia.c:238
+#: gammu/nokia.c:237
 msgid "  Only part handled!"
 msgstr ""
 
-#: gammu/nokia.c:317
+#: gammu/nokia.c:316
 msgid "  Problem with adding playlist"
 msgstr ""
 
-#: gammu/nokia.c:419
+#: gammu/nokia.c:418
 msgid "Your phone model is not supported. Please report"
 msgstr ""
 
-#: gammu/nokia.c:435
+#: gammu/nokia.c:434
 msgid "Problem with deleting playlist"
 msgstr ""
 
-#: gammu/nokia.c:529
+#: gammu/nokia.c:528
 #, c-format
 msgid "What folder type (\"%s\") ?\n"
 msgstr "Che tipo di cartella (\"%s\") ?\n"
 
-#: gammu/nokia.c:563 gammu/nokia.c:636
+#: gammu/nokia.c:562 gammu/nokia.c:635
 #, fuzzy
 msgid "Folder not found. Probably function not supported!"
 msgstr "Cartella non trovata. Probabilmente la funzione non è supportata !\n"
 
-#: gammu/nokia.c:586
+#: gammu/nokia.c:585
 #, c-format
 msgid "Searching for phone folder: "
 msgstr "Sto cercando le cartelle nel telefono: "
 
-#: gammu/nokia.c:662
+#: gammu/nokia.c:661
 #, fuzzy
 msgid "No vendor info in JAD file"
 msgstr "Nessuna informazione sul produttore nel file JAD\n"
 
-#: gammu/nokia.c:667
+#: gammu/nokia.c:666
 #, fuzzy
 msgid "No name info in JAD file"
 msgstr "Nessun nome specificato nel JAD\n"
 
-#: gammu/nokia.c:672
+#: gammu/nokia.c:671
 #, fuzzy
 msgid "No JAR URL info in JAD file"
 msgstr "Nessun informazione sull'URL del JAR nel file JAD\n"
 
-#: gammu/nokia.c:678
+#: gammu/nokia.c:677
 #, fuzzy
 msgid "INFO: declared JAR file size is different than real. Fixed by Gammu"
 msgstr "Nessun informazione sull'URL del JAR nel file JAD\n"
 
-#: gammu/nokia.c:702
+#: gammu/nokia.c:701
 #, fuzzy
 msgid "INFO: no JAR size info in JAD file. Added by Gammu"
 msgstr "Nessun informazione sull'URL del JAR nel file JAD\n"
 
-#: gammu/nokia.c:711
+#: gammu/nokia.c:710
 #, c-format
 msgid "Adding \"%s\""
 msgstr "Sto aggiungendo \"%s\""
 
-#: gammu/nokia.c:712
+#: gammu/nokia.c:711
 #, c-format
 msgid " version %s"
 msgstr " versione %s"
 
-#: gammu/nokia.c:713
+#: gammu/nokia.c:712
 #, c-format
 msgid " created by %s\n"
 msgstr " creato da %s\n"
 
-#: gammu/nokia.c:760
+#: gammu/nokia.c:759
 msgid "INFO: Application already exist. Deleting by Gammu"
 msgstr ""
 
-#: gammu/nokia.c:783
+#: gammu/nokia.c:782
 #, fuzzy, c-format
 msgid "  Deleting %s\n"
 msgstr "Cancellazione delle vecchie stazioni FM: "
 
-#: gammu/search.c:70 gammu/search.c:125
+#: gammu/search.c:69 gammu/search.c:124
 #, fuzzy, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr "Locazione %i, cartella \"%s\""
@@ -4685,207 +4695,207 @@ msgstr ""
 msgid "Cannot save %s (%i)"
 msgstr ""
 
-#: gammu/smsd/s_files.c:327 gammu/smsd/s_files.c:335
+#: gammu/smsd/s_files.c:336 gammu/smsd/s_files.c:344
 #, c-format
 msgid "Could not delete %s (%i)"
 msgstr ""
 
-#: gammu/smsd/s_files.c:332
+#: gammu/smsd/s_files.c:341
 #, c-format
 msgid "Error copying SMS %s -> %s"
 msgstr ""
 
-#: gammu/smsd/s_files.c:343 gammu/smsd/s_mysql.c:594 gammu/smsd/s_pgsql.c:920
+#: gammu/smsd/s_files.c:352 gammu/smsd/s_mysql.c:594 gammu/smsd/s_pgsql.c:920
 #, c-format
 msgid "Transmitted %s (%s: %i) to %s"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:44
+#: gammu/smsd/smsdcore.c:43
 msgid "Terminating communication"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:103
+#: gammu/smsd/smsdcore.c:102
 #, fuzzy, c-format
 msgid "Could not parse config file \"%s\"\n"
 msgstr "Impossibile aprire il file \"%s\"\n"
 
-#: gammu/smsd/smsdcore.c:105
+#: gammu/smsd/smsdcore.c:104
 #, fuzzy, c-format
 msgid "Can't find file \"%s\"\n"
 msgstr "Impossibile aprire il file \"%s\"\n"
 
-#: gammu/smsd/smsdcore.c:117
+#: gammu/smsd/smsdcore.c:116
 #, fuzzy, c-format
 msgid "Log filename is \"%s\"\n"
 msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#: gammu/smsd/smsdcore.c:119
+#: gammu/smsd/smsdcore.c:118
 msgid "Starting GAMMU smsd"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:132
+#: gammu/smsd/smsdcore.c:131
 #, c-format
 msgid "Warning: No PIN code in %s file"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:133
+#: gammu/smsd/smsdcore.c:132
 #, c-format
 msgid "Warning: No PIN code in %s file\n"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:135
+#: gammu/smsd/smsdcore.c:134
 #, c-format
 msgid "PIN code is \"%s\""
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:148
+#: gammu/smsd/smsdcore.c:147
 #, c-format
 msgid "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:183
+#: gammu/smsd/smsdcore.c:184
 #, c-format
 msgid "Inbox is \"%s\" with format \"%s\""
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:192
+#: gammu/smsd/smsdcore.c:193
 #, c-format
 msgid "Outbox is \"%s\" with transmission format \"%s\""
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:196
+#: gammu/smsd/smsdcore.c:197
 #, c-format
 msgid "Sent SMS moved to \"%s\""
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:200
+#: gammu/smsd/smsdcore.c:201
 #, c-format
 msgid "SMS with errors moved to \"%s\""
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:236
+#: gammu/smsd/smsdcore.c:237
 msgid "Include numbers available"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:240
+#: gammu/smsd/smsdcore.c:241
 msgid "Exclude numbers available"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:242
+#: gammu/smsd/smsdcore.c:243
 msgid "Exclude numbers available, but IGNORED"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:260
+#: gammu/smsd/smsdcore.c:261
 #, c-format
 msgid "Error getting security status (%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:270
+#: gammu/smsd/smsdcore.c:271
 msgid "Warning: no PIN in config"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:273
+#: gammu/smsd/smsdcore.c:274
 #, fuzzy
 msgid "Trying to enter PIN"
 msgstr "Nulla da inserire.\n"
 
-#: gammu/smsd/smsdcore.c:277
+#: gammu/smsd/smsdcore.c:278
 msgid "ERROR: incorrect PIN"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:280
+#: gammu/smsd/smsdcore.c:281
 #, c-format
 msgid "Error entering PIN (%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:289
+#: gammu/smsd/smsdcore.c:291
 msgid "ERROR: phone requires not supported code type"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:343
+#: gammu/smsd/smsdcore.c:383
 #, c-format
 msgid "Excluded %s"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:347
+#: gammu/smsd/smsdcore.c:387
 #, fuzzy, c-format
 msgid "Error getting SMS (%i)"
 msgstr "Errore nel SME"
 
-#: gammu/smsd/smsdcore.c:359
+#: gammu/smsd/smsdcore.c:399
 #, fuzzy, c-format
 msgid "Error deleting SMS (%i)"
 msgstr "Errore nel SME"
 
-#: gammu/smsd/smsdcore.c:377
+#: gammu/smsd/smsdcore.c:417
 #, c-format
 msgid "Error getting SMS status (%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:411
+#: gammu/smsd/smsdcore.c:451
 #, c-format
 msgid "Error in outbox on %s"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:425
+#: gammu/smsd/smsdcore.c:465
 #, c-format
 msgid "Moved to errorbox: %s"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:442
+#: gammu/smsd/smsdcore.c:482
 msgid "Error getting SMSC from phone"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:464
+#: gammu/smsd/smsdcore.c:504
 #, fuzzy, c-format
 msgid "Error sending SMS %s (%i): %s"
 msgstr "Sto spedendo il messaggio %i/%i"
 
-#: gammu/smsd/smsdcore.c:488
+#: gammu/smsd/smsdcore.c:528
 #, c-format
 msgid "Error getting send status of %s (%i): %s"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:523
+#: gammu/smsd/smsdcore.c:563
 #, fuzzy, c-format
 msgid "Unknown SMSD service type (\"%s\")\n"
 msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
 
-#: gammu/smsd/smsdcore.c:531
+#: gammu/smsd/smsdcore.c:571
 #, c-format
 msgid "Initialisation failed, stopping Gammu smsd (%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:546
+#: gammu/smsd/smsdcore.c:586
 #, c-format
 msgid "Terminating communication (%i,%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:550
+#: gammu/smsd/smsdcore.c:590
 msgid "Starting communication"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:562
+#: gammu/smsd/smsdcore.c:602
 #, c-format
 msgid "Post initialisation failed, stopping Gammu smsd (%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:571
+#: gammu/smsd/smsdcore.c:611
 #, c-format
 msgid "Reset return code: %s (%i) "
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:577
+#: gammu/smsd/smsdcore.c:617
 #, fuzzy, c-format
 msgid "Can't open device (%i)"
 msgstr "Impossibile aprire il file \"%s\"\n"
 
-#: gammu/smsd/smsdcore.c:579
+#: gammu/smsd/smsdcore.c:619
 #, c-format
 msgid "Error at init connection (%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:608
+#: gammu/smsd/smsdcore.c:648
 msgid "Stopping Gammu smsd"
 msgstr ""
 
