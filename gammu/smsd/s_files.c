@@ -53,7 +53,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 			strcat(FullName, FileName);
 			if (file) fclose(file);
 			file = fopen(FullName, "r");
-		} while ((i == 0) && (file && (++j < 100)));
+		} while ((i == 0) && file && (++j < 100));
 		if (file) {
 			fclose(file);
 			if (i == 0) {
@@ -175,6 +175,9 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	strcat(FullName, FileName);
 
   	File = fopen(FullName, "rb");
+	if (File == NULL) {
+		return ERR_CANTOPENFILE;
+	}
  	len  = fread(Buffer, 1, sizeof(Buffer)-2, File);
   	fclose(File);
 
@@ -316,9 +319,15 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 
 	if (!strncasecmp(ifilename, ofilename, strlen(ofilename) == 0)) {
 		iFile = fopen(ifilename, "r");
+		if (iFile == NULL) {
+			return ERR_CANTOPENFILE;
+		}
 		ilen = fread(Buffer, 1, sizeof(Buffer), iFile);
 		fclose(iFile);
 		oFile = fopen(ofilename, "w");
+		if (oFile == NULL) {
+			return ERR_CANTOPENFILE;
+		}
 		olen = fwrite(Buffer, 1, ilen, oFile);
 		fclose(oFile);
 	}
