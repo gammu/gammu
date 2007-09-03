@@ -622,6 +622,9 @@ mark_as_advanced (INSTALL_BIN_DIR)
 set (INSTALL_LIB_DIR "lib${LIB_SUFFIX}" CACHE STRING "Path for libraries installation")
 mark_as_advanced (INSTALL_LIB_DIR)
 
+set (INSTALL_LIBDATA_DIR "lib${LIB_SUFFIX}" CACHE STRING "Path for libraries data (eg. pkgconfig data) installation")
+mark_as_advanced (INSTALL_LIBDATA_DIR)
+
 set (INSTALL_INC_DIR "include/gammu" CACHE STRING "Path for includes installation")
 mark_as_advanced (INSTALL_INC_DIR)
 
@@ -692,7 +695,7 @@ install (
 
 install (
     FILES "${Gammu_BINARY_DIR}/cfg/gammu.pc"
-    DESTINATION "${INSTALL_LIB_DIR}/pkgconfig"
+    DESTINATION "${INSTALL_LIBDATA_DIR}/pkgconfig"
     COMPONENT "development"
     )
 
