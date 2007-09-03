@@ -1277,7 +1277,6 @@ msgstr "Esperando PUK2."
 
 #: gammu/common.c:80
 #, fuzzy
-#| msgid "Waiting for Security Code."
 msgid "Waiting for phone code."
 msgstr "Esperando código de seguridad."
 
