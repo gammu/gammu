@@ -247,7 +247,6 @@ msgstr "Gammu ist nicht konfiguriert."
 
 #: common/gsmcomon.c:137
 #, fuzzy
-#| msgid "Part of folder "
 msgid "Wrong folder used."
 msgstr "Teil des Verzeichnisses"
 
@@ -1274,7 +1273,6 @@ msgstr "Warte auf PUK2."
 
 #: gammu/common.c:80
 #, fuzzy
-#| msgid "Waiting for Security Code."
 msgid "Waiting for phone code."
 msgstr "Warte auf Sicherheitscode."
 
