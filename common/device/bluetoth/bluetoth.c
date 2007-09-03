@@ -19,9 +19,6 @@
 #ifdef GSM_ENABLE_BLUEZ
 #  include "bluez.h"
 #endif
-#ifdef GSM_ENABLE_AFFIX
-#  include "affix.h"
-#endif
 #ifdef WIN32
 #  include "blue_w32.h"
 #endif
