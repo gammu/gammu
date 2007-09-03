@@ -21,6 +21,7 @@ ChangeLog
 [-] * Handle correctly when phone automatically saves message to
       different memory than we ask.
 [+] * Detect when phone is waiting for phone code.
+[+] * Added experimental support for Bluetooth on FreeBSD.
 
 20070820 - 1.13.0
 [-] * Fixed several crashes of 6510 driver.

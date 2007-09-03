@@ -209,8 +209,11 @@
 #cmakedefine ICONV_FOUND
 #cmakedefine ICONV_SECOND_ARGUMENT_IS_CONST
 
-/* Will be used Bluez BT stack ? */
+/* Will be used Bluez stack ? */
 #cmakedefine GSM_ENABLE_BLUEZ
+
+/* Will be used FreeBSD Bluetooth stack ? */
+#cmakedefine GSM_ENABLE_FBSD_BLUE
 
 #cmakedefine BLUETOOTH_RF_SEARCHING
 
