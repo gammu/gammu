@@ -21,7 +21,7 @@ if (NOT DEFINED BLUEZ_FOUND)
     endif (NOT BLUEZ_FOUND)
 
     if (NOT BLUEZ_FOUND)
-        find_path(BLUEZ_INCLUDE_DIR NAMES bluetooth/bluetooth.h bluetooth.h
+        find_path(BLUEZ_INCLUDE_DIR NAMES bluetooth/bluetooth.h
            PATHS
            /usr/include
            /usr/local/include
