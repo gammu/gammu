@@ -93,7 +93,7 @@ CREATE TABLE inbox (
   ReceivingDateTime timestamp(0) WITHOUT time zone NOT NULL DEFAULT 'epoch',
   Text text NOT NULL,
   SenderNumber varchar(20) NOT NULL DEFAULT '',
-  Coding varchar(255) NOT NULL DEFAULT '8bit',
+  Coding varchar(255) NOT NULL DEFAULT 'Default_No_Compression',
   UDH text NOT NULL,
   SMSCNumber varchar(20) NOT NULL DEFAULT '',
   Class integer NOT NULL DEFAULT '-1',

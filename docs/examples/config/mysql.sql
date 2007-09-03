@@ -53,7 +53,7 @@ CREATE TABLE `inbox` (
   `ReceivingDateTime` timestamp NOT NULL default '0000-00-00 00:00:00',
   `Text` text NOT NULL,
   `SenderNumber` varchar(20) NOT NULL default '',
-  `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default '8bit',
+  `Coding` enum('Default_No_Compression','Unicode_No_Compression','8bit','Default_Compression','Unicode_Compression') NOT NULL default 'Default_No_Compression',
   `UDH` text NOT NULL,
   `SMSCNumber` varchar(20) NOT NULL default '',
   `Class` int(11) NOT NULL default '-1',
