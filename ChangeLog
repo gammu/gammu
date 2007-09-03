@@ -22,6 +22,7 @@ ChangeLog
       different memory than we ask.
 [+] * Detect when phone is waiting for phone code.
 [+] * Added experimental support for Bluetooth on FreeBSD.
+[+] * SMSD can execute programs on message receiving (thanks to zaf).
 
 20070820 - 1.13.0
 [-] * Fixed several crashes of 6510 driver.
