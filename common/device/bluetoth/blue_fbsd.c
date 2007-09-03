@@ -82,6 +82,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 }
 
 #ifdef BLUETOOTH_RF_SEARCHING
+#warning This code is not ported to FreeBSD stack!
 
 static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, uuid_t *group)
 {
