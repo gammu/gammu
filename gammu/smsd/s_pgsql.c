@@ -26,7 +26,7 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 	unsigned char buf[400];
 	PGresult *Res;
 
-	unsigned int port = 0;
+	unsigned int port = 5432;
 	char *pport;
 
 	pport = strstr(Config->PC, ":");
