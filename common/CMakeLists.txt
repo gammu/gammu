@@ -31,6 +31,7 @@ set (LIBRARY_SRC
     service/backup/backvcf.c
     service/backup/backics.c
     device/bluetoth/bluez.c
+    device/bluetoth/blue_fbsd.c
     device/bluetoth/blue_w32.c
     device/bluetoth/bluetoth.c
     device/serial/ser_unx.c
@@ -102,6 +103,14 @@ if (BLUEZ_FOUND)
         set (GAMMU_LIBS "${GAMMU_LIBS} -l${BLUEZ_LIBRARIES}")
     endif (NOT "${BLUEZ_LIBRARIES}" STREQUAL "") 
 endif (BLUEZ_FOUND)
+
+if (FBSD_BLUE_FOUND)
+    target_link_libraries (libGammu ${FBSD_BLUE_LIBRARIES})
+    include_directories (${FBSD_BLUE_INCLUDE_DIR})
+    if (NOT "${FBSD_BLUE_LIBRARIES}" STREQUAL "") 
+        set (GAMMU_LIBS "${GAMMU_LIBS} -l${FBSD_BLUE_LIBRARIES}")
+    endif (NOT "${FBSD_BLUE_LIBRARIES}" STREQUAL "") 
+endif (FBSD_BLUE_FOUND)
 
 if (ICONV_FOUND)
     target_link_libraries (libGammu ${ICONV_LIBRARIES})
