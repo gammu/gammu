@@ -29,29 +29,86 @@
 GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 {
 	GSM_Error error;
+	char *device;
+	char *channel;
+	int  channel_id = 0;
 
-	if (strncasecmp(s->CurrentConfig->Connection, "bluerf", 6) != 0)
+	if (strncasecmp(s->CurrentConfig->Connection, "bluerf", 6) != 0) {
 #ifdef BLUETOOTH_RF_SEARCHING
 		return bluetooth_findchannel(s);
 #else
 		return ERR_SOURCENOTAVAILABLE;
 #endif
-
-	switch (s->ConnectionType) {
-	case GCT_BLUEAT:
-		return bluetooth_connect(s,1,s->CurrentConfig->Device);
-	case GCT_BLUEOBEX:
-		return bluetooth_connect(s,9,s->CurrentConfig->Device);
-	case GCT_BLUEGNAPBUS:
-		return bluetooth_connect(s,14,s->CurrentConfig->Device);
-	case GCT_BLUEFBUS2: //fixme
-	case GCT_BLUEPHONET:
-		error = bluetooth_connect(s,14,s->CurrentConfig->Device); //older Series 40 - 8910, 6310
-		if (error == ERR_NONE) return error;
-		return bluetooth_connect(s,15,s->CurrentConfig->Device); //new Series 40 - 6310i, 6230
-	default:
-		return ERR_UNKNOWN;
 	}
+
+	/* Temporary string */
+	device = strdup(s->CurrentConfig->Device);
+	if (device == NULL) {
+		return ERR_MOREMEMORY;
+	}
+
+	/* Default channel settings */
+	switch (s->ConnectionType) {
+		case GCT_BLUEAT:
+			channel_id = 1;
+			break;
+		case GCT_BLUEOBEX:
+			channel_id = 9;
+			break;
+		case GCT_BLUEGNAPBUS:
+			channel_id = 14;
+			break;
+		case GCT_BLUEFBUS2: //fixme
+		case GCT_BLUEPHONET:
+			channel_id = 15;
+			break;
+		default:
+			channel_id = 0;
+			break;
+	}
+
+	/* Parse channel from configuration */
+	channel = strchr(device, '/');
+	if (channel != NULL) {
+		/* Zero terminate our string */
+		*channel = 0;
+		/* Grab channel number */
+		channel++;
+		channel_id = atoi(channel);
+	} else {
+		/* Notify user about hard wired default */
+		smprintf(s, "Using hard coded bluetooth channel %d.\n",
+				channel_id);
+	}
+	
+	/* Check for zero */
+	if (channel_id == 0) {
+		smprintf(s, "Please configure bluetooth channel!\n");
+		error = ERR_UNCONFIGURED;
+		goto done;
+	}
+
+	
+	/* Connect to phone */
+	error = bluetooth_connect(s, channel_id, device);
+	if (error == ERR_NONE) goto done;
+
+	/* Hack for Nokia phones, they moved channel from 14 to 15, so
+	 * we want to try both. 
+	 *
+	 * Older Series 40 (eg. 8910 and 6310) use channel 14
+	 * Newer Series 40 (eg. 6230 and 6310i) use channel 15
+	 * */
+	if (((s->ConnectionType == GCT_BLUEPHONET) || 
+			(s->ConnectionType == GCT_BLUEFBUS2)) &&
+			(channel_id == 15)) {
+		channel_id = 14;
+		error = bluetooth_connect(s, channel_id, device);
+	}
+	
+done:
+	free(device);
+	return error;
 }
 
 static int bluetooth_read(GSM_StateMachine *s, void *buf, size_t nbytes)

@@ -114,8 +114,9 @@ connection = fbusblue
 ; ----------|---------------------------------|--------------------------------
 ; irda      | ignored (can be empty)          | "/dev/ircomm*"
 ; ----------|---------------------------------|--------------------------------
-; BT        |                 Bluetooth device address
-;           |                 (example "")
+; BT        | Bluetooth device address (example "00:11:22:33:44:55").
+;           | Optionally you can also include channel after slash
+;           | (example "00:11:22:33:44:55/12"). Can be also empty.
 ; ----------|---------------------------------|--------------------------------
 ; dku2      | ignored (can be empty)          | /dev/ttyUSB* or /dev/ttyACM*
 ; ----------|---------------------------------|--------------------------------
