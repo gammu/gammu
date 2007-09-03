@@ -62,9 +62,9 @@ sendtimeout = 10
 #phoneid = MyPhone1
 #deliveryreportdelay = 10
 
-# ------------------------- SETTINGS FOR --smsd MYSQL ---------------------------
-user = root
-password =
+# ----------------- SETTINGS FOR --smsd MYSQL or --smsd PGSQL -------------------
+user = gammu
+password = gammupassword
 pc = localhost
 database = sms
 # when you send sms from some SMSC, you can have Delivery/Failed Delivery
