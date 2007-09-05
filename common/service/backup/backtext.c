@@ -903,7 +903,12 @@ static void SaveSMSCEntry(FILE *file, GSM_SMSC *SMSC, bool UseUnicode)
 
 static void SaveRingtoneEntry(FILE *file, GSM_Ringtone *ringtone, bool UseUnicode)
 {
-	unsigned char buffer[45000];
+	unsigned char *buffer;
+
+	buffer = (unsigned char *)malloc(32 > 2 * ringtone->NokiaBinary.Length ?
+			32 : 2 * ringtone->NokiaBinary.Length);
+	if (buffer == NULL)
+		return;
 
 	sprintf(buffer,"Location = %i%c%c",ringtone->Location,13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
@@ -926,6 +931,8 @@ static void SaveRingtoneEntry(FILE *file, GSM_Ringtone *ringtone, bool UseUnicod
 	}
 	sprintf(buffer,"%c%c",13,10);
 	SaveBackupText(file, "", buffer, UseUnicode);
+
+	free(buffer);
 }
 
 static void SaveOperatorEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
