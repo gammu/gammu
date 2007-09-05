@@ -49,6 +49,16 @@
 #define GSM_MAX_IMEI_LENGTH 20
 
 /**
+ * Maximal length of various phone information. Just a shorcut for
+ * functions doing whole identification and use one buffer.
+ *
+ * \ingroup Limits
+ */
+#define GSM_MAX_INFO_LENGTH MAX(MAX(MAX(GSM_MAX_VERSION_LENGTH, \
+	GSM_MAX_IMEI_LENGTH), GSM_MAX_MODEL_LENGTH), \
+	GSM_MAX_MANUFACTURER_LENGTH)
+
+/**
  * Maximal count of SMS messages in folder.
  *
  * \ingroup Limits

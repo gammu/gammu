@@ -96,8 +96,8 @@ void PlayRingtone(int argc UNUSED, char *argv[])
 
 void Identify(int argc, char *argv[])
 {
-	char buffer[100];
-	char date[100];
+	char buffer[GSM_MAX_INFO_LENGTH];
+	char date[GSM_MAX_VERSION_DATE_LENGTH];
 	double num;
 	GSM_Error error;
 

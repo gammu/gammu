@@ -20,6 +20,7 @@ ChangeLog
 [-] * Added support for Option GlobeTrotter.
 [-] * Handle correctly when phone automatically saves message to
       different memory than we ask.
+[-] * Fixed buffer overflows, thanks to Gentoo folks for noticing.
 [+] * Detect when phone is waiting for phone code.
 [+] * Added experimental support for Bluetooth on FreeBSD.
 [+] * SMSD can execute programs on message receiving (thanks to zaf).

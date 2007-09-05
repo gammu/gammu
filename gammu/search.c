@@ -59,7 +59,7 @@ int SearchPrintf(const char *format, ...)
 void SearchPrintPhoneInfo(OneDeviceInfo * Info, int index, GSM_StateMachine *sm)
 {
 	GSM_Error error;
-	char buffer[100];
+	char buffer[GSM_MAX_INFO_LENGTH];
 
 	error = GSM_GetManufacturer(sm, buffer);
 
