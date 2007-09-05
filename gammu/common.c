@@ -227,9 +227,10 @@ GSM_MemoryType MemoryTypeFromString(const char *type)
 void GSM_Init(bool checkerror)
 {
 	GSM_File PhoneDB;
-	char model[100];
-	char version[100];
-	unsigned char buff[200], ver[200];
+	char model[GSM_MAX_MODEL_LENGTH];
+	char version[GSM_MAX_VERSION_LENGTH];
+	unsigned char buff[50 + GSM_MAX_MODEL_LENGTH];
+	unsigned char ver[GSM_MAX_VERSION_LENGTH];
 	size_t pos = 0, oldpos = 0, i;
 	GSM_Error error;
 
