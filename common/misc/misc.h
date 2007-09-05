@@ -28,7 +28,7 @@
 
 /* ------------------------------------------------------------------------- */
 
-#define MAX_LINES 50
+#define MAX_LINES 512
 
 typedef struct {
 	int numbers[MAX_LINES*2];
