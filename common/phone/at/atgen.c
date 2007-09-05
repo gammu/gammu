@@ -1719,10 +1719,10 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 	if (Priv->SIMSMSMemory == AT_AVAILABLE &&
 			*folderid == 1) {
 		sms->Memory = MEM_SM;
-		return ATGEN_SetSMSMemory(s, true, false);
+		return ATGEN_SetSMSMemory(s, true, for_write);
 	} else {
 		sms->Memory = MEM_ME;
-		return ATGEN_SetSMSMemory(s, false, false);
+		return ATGEN_SetSMSMemory(s, false, for_write);
 	}
 }
 
