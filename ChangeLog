@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.13.90
+20070907 - 1.13.90
 [-] * Fixed parsing of date/time reply from some broken AT phones.
 [-] * Added support for Option GlobeTrotter.
 [-] * Handle correctly when phone automatically saves message to
