@@ -52,11 +52,11 @@ static GSM_Error N6510_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 		if (msg.Length < 22) {
 			return ERR_UNKNOWN;
 		}
-		return N71_65_DecodePhonebook(s, 
-				s->Phone.Data.Memory, 
-				s->Phone.Data.Bitmap, 
-				s->Phone.Data.SpeedDial, 
-				msg.Buffer + 22, 
+		return N71_65_DecodePhonebook(s,
+				s->Phone.Data.Memory,
+				s->Phone.Data.Bitmap,
+				s->Phone.Data.SpeedDial,
+				msg.Buffer + 22,
 				msg.Length - 22,
 				false);
 	}
@@ -939,8 +939,9 @@ static GSM_Error N6510_GetNextSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 
 static GSM_Error N6510_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
 {
-	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
-		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return N6510_GetNextFilesystemSMS(s,sms,start);
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30) &&
+			GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) {
+		return N6510_GetNextFilesystemSMS(s,sms,start);
 	}
 
 	return N6510_GetNextSMSMessageBitmap(s, sms, start, NULL);
