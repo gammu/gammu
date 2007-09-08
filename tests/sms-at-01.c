@@ -10,17 +10,6 @@
 
 GSM_StateMachine *s;
 GSM_Protocol_Message msg;
-#if 0
-unsigned char data[] = "AT+CMGR=1\x0D\x0A"
-	"+CMGR: 1,,78\x0D\x0A"
-	"0791246030500200110481643000007030427132500047D6B0BEECCE83F4E17558EF4EAFEB2CD09C5DD78BC3207519447E8FC3737719D44EB7DF20B8FC6D7FEB5D2062795D5797DB65903E0C82BFC7E837BCEC4EBB00\x0D\x0A"
-	"OK\x0D\x0A";
-#else
-unsigned char data[] = "AT+CMGR=1\x0D\x0A"
-	"+CMGR: 3,,29\x0d\x0a"
-	"0791361907001003B17A0C913619397750320000AD11CD701E340FB3C3F23CC81D0689C3BF\x0d\x0a"
-	"OK\x0d\x0a";
-#endif
 GSM_Error error;
 GSM_MultiSMSMessage sms;
 GSM_MultiPartSMSInfo	SMSInfo;
@@ -28,12 +17,38 @@ GSM_MultiPartSMSInfo	SMSInfo;
 /* This is not part of API! */
 extern GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s);
 
+#define BUFFER_SIZE 16384
+
 int main(int argc, char **argv)
 {
 	GSM_Debug_Info *di;
 	GSM_Phone_ATGENData *Priv;
 	GSM_Phone_Data *Data;
+	unsigned char buffer[BUFFER_SIZE];
+	FILE *f;
+	size_t len;
 
+	/* Check parameters */
+	if (argc != 3) {
+		printf("Not enough parameters!\nUsage: sms-at-01 comm.dump\n");
+		return 1;
+	}
+
+	/* Open file */
+	f = fopen(argv[1], "r");
+	if (f == NULL) {
+		printf("Could not open %s\n", argv[1]);
+		return 1;
+	}
+
+	/* Read data */
+	len = fread(buffer, 1, sizeof(buffer) - 1, f);
+	if (!feof(f)) {
+		printf("Could not read whole file %s\n", argv[1]);
+		return 1;
+	}
+
+	/* Configure state machine */
 	di = GSM_GetGlobalDebug();
 	GSM_SetDebugFileDescriptor(stderr, di);
 	GSM_SetDebugLevel("textall", di);
@@ -52,8 +67,8 @@ int main(int argc, char **argv)
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
 	msg.Type = 0;
-	msg.Length = strlen(data);
-	msg.Buffer = data;
+	msg.Length = len;
+	msg.Buffer = buffer;
 	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, true);
 
 	s->Phone.Data.GetSMSMessage = &sms;
