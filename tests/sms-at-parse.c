@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 
 	/* Check parameters */
 	if (argc != 3) {
-		printf("Not enough parameters!\nUsage: sms-at-01 comm.dump\n");
+		printf("Not enough parameters!\nUsage: sms-at-parse comm.dump\n");
 		return 1;
 	}
 
