@@ -494,7 +494,7 @@ static GSM_Error N6110_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMach
         return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
         GSM_Phone_Data *Data = &s->Phone.Data;
 
