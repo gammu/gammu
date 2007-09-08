@@ -745,10 +745,8 @@ install (
 
 add_subdirectory(common)
 
-# Include tests if we're not cross compiling
-if(BUILD_TESTING)
-    add_subdirectory(tests)
-endif(BUILD_TESTING)
+# Include tests, we build them also when cross compiling
+add_subdirectory(tests)
 
 add_subdirectory(gammu)
 
