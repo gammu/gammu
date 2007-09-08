@@ -47,6 +47,7 @@ int main(int argc, char **argv)
 		printf("Could not read whole file %s\n", argv[1]);
 		return 1;
 	}
+	buffer[len] = 0;
 
 	/* Configure state machine */
 	di = GSM_GetGlobalDebug();
