@@ -110,10 +110,10 @@ else (WIN32)
 endif (WIN32)
 include (CPack)
 
-# We want some tests if not crosscompiling
-if (NOT CROSS_MINGW)
-    include(CTest)
-endif (NOT CROSS_MINGW)
+# We want some tests. Even when cross compiling for Windows tests can be 
+# done in Wine. This is better than nothing, even though Wine is a bit 
+# more fault tolerant when linking DLLs.
+include(CTest)
 
 # Standard packages
 include (CheckCSourceCompiles)
