@@ -704,11 +704,17 @@ const char *GetCompiler(void)
 	}
 #  elif defined(__BORLANDC__)
 	sprintf(Buffer, "Borland C++ %i",__BORLANDC__);
+#  elif defined(__MINGW32__)
+	sprintf(Buffer, "GCC %i.%i, MinGW %i.%i", __GNUC__, __GNUC_MINOR__, __MINGW32_MAJOR_VERSION, __MINGW32_MINOR_VERSION);
+#  elif defined(__GNUC__)
+	sprintf(Buffer, "GCC %i.%i", __GNUC__, __GNUC_MINOR__);
+#  else
+	sprintf(Buffer, "unknown compiler");
 #  endif
 #elif defined(DJGPP)
-	sprintf(Buffer, "djgpp");
+	sprintf(Buffer, "djgpp %d.%d", __DJGPP, __DJGPP_MINOR);
 #elif defined(__GNUC__)
-	sprintf(Buffer, "gcc %i.%i", __GNUC__, __GNUC_MINOR__);
+	sprintf(Buffer, "GCC %i.%i", __GNUC__, __GNUC_MINOR__);
 #elif defined(__SUNPRO_CC)
 	sprintf(Buffer, "Sun C++ %x", __SUNPRO_CC);
 #elif defined(__INTEL_COMPILER)
