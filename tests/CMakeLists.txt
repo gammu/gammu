@@ -36,3 +36,7 @@ add_executable(sms-nokia-01 sms-nokia-01.c)
 target_link_libraries(sms-nokia-01 libGammu)
 add_test(sms-nokia-01 ${EXECUTABLE_OUTPUT_PATH}/sms-nokia-01)
 
+add_executable(sms-at-01 sms-at-01.c)
+target_link_libraries(sms-at-01 libGammu)
+add_test(sms-at-01 ${EXECUTABLE_OUTPUT_PATH}/sms-at-01)
+
