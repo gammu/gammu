@@ -37,8 +37,8 @@ target_link_libraries(sms-nokia-01 libGammu)
 add_test(sms-nokia-01 ${EXECUTABLE_OUTPUT_PATH}/sms-nokia-01)
 
 # AT SMS parsing
-add_executable(sms-at-01 sms-at-01.c)
-target_link_libraries(sms-at-01 libGammu)
+add_executable(sms-at-parse sms-at-parse.c)
+target_link_libraries(sms-at-parse libGammu)
 
 # List test cases
 file(GLOB VCARDS 
@@ -49,8 +49,8 @@ list(SORT VCARDS)
 foreach(TESTVCARD ${VCARDS})
     string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
     string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
-    add_test("sms-at-01-${TESTNAME}" 
-        "${EXECUTABLE_OUTPUT_PATH}/sms-at-01" 
+    add_test("sms-at-parse-${TESTNAME}" 
+        "${EXECUTABLE_OUTPUT_PATH}/sms-at-parse" 
         "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTVCARD}" 
         "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTBACKUP}")
 endforeach(TESTVCARD $VCARDS)
