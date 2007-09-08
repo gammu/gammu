@@ -29,7 +29,7 @@ int main(int argc, char **argv)
 	size_t len;
 
 	/* Check parameters */
-	if (argc != 3) {
+	if (argc != 2) {
 		printf("Not enough parameters!\nUsage: sms-at-parse comm.dump\n");
 		return 1;
 	}

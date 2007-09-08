@@ -41,16 +41,14 @@ add_executable(sms-at-parse sms-at-parse.c)
 target_link_libraries(sms-at-parse libGammu)
 
 # List test cases
-file(GLOB VCARDS 
+file(GLOB MESSAGES 
     RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms" 
     "${Gammu_SOURCE_DIR}/tests/at-sms/*.dump")
-list(SORT VCARDS)
+list(SORT MESSAGES)
 
-foreach(TESTVCARD ${VCARDS})
-    string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
-    string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
+foreach(TESTMESSAGE ${MESSAGES})
+    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
     add_test("sms-at-parse-${TESTNAME}" 
         "${EXECUTABLE_OUTPUT_PATH}/sms-at-parse" 
-        "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTVCARD}" 
-        "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTBACKUP}")
-endforeach(TESTVCARD $VCARDS)
+        "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
+endforeach(TESTMESSAGE $MESSAGES)
