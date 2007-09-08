@@ -30,3 +30,9 @@ foreach(TESTVCARD ${VCARDS})
         "${Gammu_SOURCE_DIR}/tests/vcards/${TESTVCARD}" 
         "${Gammu_SOURCE_DIR}/tests/vcards/${TESTBACKUP}")
 endforeach(TESTVCARD $VCARDS)
+
+# SMS parsing
+add_executable(sms-nokia-01 sms-nokia-01.c)
+target_link_libraries(sms-nokia-01 libGammu)
+add_test(sms-nokia-01 ${EXECUTABLE_OUTPUT_PATH}/sms-nokia-01)
+
