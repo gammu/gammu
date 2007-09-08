@@ -47,7 +47,11 @@ int main(int argc, char **argv)
 		printf("Could not read whole file %s\n", argv[1]);
 		return 1;
 	}
+	/* Zero terminate data */
 	buffer[len] = 0;
+
+	/* Close file */
+	fclose(f);
 
 	/* Configure state machine */
 	di = GSM_GetGlobalDebug();
@@ -61,17 +65,20 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	/* Init message */
+	/* Initialize AT engine */
 	Data = &s->Phone.Data;
 	Data->ModelInfo = GetModelData(NULL, "unknown", NULL);
 	Priv = &s->Phone.Data.Priv.ATGEN;
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
+
+	/* Init message */
 	msg.Type = 0;
 	msg.Length = len;
 	msg.Buffer = buffer;
 	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, true);
 
+	/* Pointer to store message */
 	s->Phone.Data.GetSMSMessage = &sms;
 
 	/* Parse it */
