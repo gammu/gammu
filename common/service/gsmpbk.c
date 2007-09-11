@@ -499,9 +499,12 @@ void GSM_TweakInternationalNumber(unsigned char *Number, const GSM_NumberType nu
 }
 
 
+/**
+ * \bug We should avoid using static buffers here.
+ */
 GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version UNUSED)
 {
-	unsigned char   Line[2000],Buff[2000];
+	unsigned char   Line[20000],Buff[20000];
 	int	     Level = 0;
 	unsigned char   *s;
 	int		pos;
