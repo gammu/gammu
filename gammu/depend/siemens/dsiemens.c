@@ -14,9 +14,9 @@
 #include "dsiemens.h"
 #include "chiffre.h"
 
-extern GSM_Error  ATGEN_GetSIMIMSI (GSM_StateMachine *s, char *IMSI);
-extern GSM_Error  ATGEN_GetMemoryStatus (GSM_StateMachine *s, GSM_MemoryStatus *status);
-extern GSM_Error  ATGEN_SetMemory (GSM_StateMachine *s, GSM_MemoryEntry *pbk);
+extern GSM_Error  ATGEN_GetSIMIMSI (GSM_StateMachine *sm, char *IMSI);
+extern GSM_Error  ATGEN_GetMemoryStatus (GSM_StateMachine *sm, GSM_MemoryStatus *status);
+extern GSM_Error  ATGEN_SetMemory (GSM_StateMachine *sm, GSM_MemoryEntry *pbk);
 extern GSM_Reply_Function UserReplyFunctionsAtS[];
 
 bool 	new_variable;
@@ -26,9 +26,9 @@ GSM_Error CheckSiemens()
 	return ERR_NONE;
 }
 
-GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
-	GSM_Phone_ATGENData		*Priv = &(s->Phone.Data.Priv.ATGEN);
+	GSM_Phone_ATGENData		*Priv = &(sm->Phone.Data.Priv.ATGEN);
 	GSM_SAT_Measure_results		MeasureResult;
 	unsigned char 			buf[256];
         int                             length,i,rep,ChNo=1,j=0,result=0,origARFCN=0;
@@ -36,7 +36,7 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *s)
    	GSM_NetworkInfo			Network;
 
     	if (Priv->ReplyState!=AT_Reply_OK) return ERR_UNKNOWN;
-    	if (s->Protocol.Data.AT.EditMode) s->Protocol.Data.AT.EditMode = false;
+    	if (sm->Protocol.Data.AT.EditMode) sm->Protocol.Data.AT.EditMode = false;
 	if (strstr(GetLineString(msg.Buffer,Priv->Lines,2),"SSTK")) {
     	    length = strlen(GetLineString(msg.Buffer,Priv->Lines,2))-7;
     	    DecodeHexBin(buf, GetLineString(msg.Buffer,Priv->Lines,2)+7,length);
@@ -215,9 +215,9 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *s)
     	return ERR_NONE;
 }
 
-GSM_Error ATSIEMENS_Reply_GetNetmon(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATSIEMENS_Reply_GetNetmon(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
-    	GSM_Phone_ATGENData	*Priv = &(s->Phone.Data.Priv.ATGEN);
+    	GSM_Phone_ATGENData	*Priv = &(sm->Phone.Data.Priv.ATGEN);
     	int 			i=2;
 
     	if (!strstr(GetLineString(msg.Buffer,Priv->Lines,1),"AT^S^MI")) return ERR_UNKNOWN;
@@ -227,9 +227,9 @@ GSM_Error ATSIEMENS_Reply_GetNetmon(GSM_Protocol_Message msg, GSM_StateMachine *
     	return ERR_NONE;
 }
 
-GSM_Error ATSIEMENS_GetSAT(GSM_StateMachine *s)
+GSM_Error ATSIEMENS_GetSAT(GSM_StateMachine *sm)
 {
-    	GSM_Phone_ATGENData	*Priv = &(s->Phone.Data.Priv.ATGEN);
+    	GSM_Phone_ATGENData	*Priv = &(sm->Phone.Data.Priv.ATGEN);
     	GSM_Error		error;
     	unsigned char		*reqSAT[]= {"D009810301260082028182",
 				    	    "D009810301260282028182",
@@ -239,39 +239,39 @@ GSM_Error ATSIEMENS_GetSAT(GSM_StateMachine *s)
     	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
         sprintf(req, "AT^SSTK=?\r");
-        error = GSM_WaitFor (s, req, strlen(req), 0x00, 3, ID_User1);
+        error = GSM_WaitFor (sm, req, strlen(req), 0x00, 3, ID_User1);
 
     	for (i=0;i<3;i++){
 		len				= strlen(reqSAT[i]);
-		s->Protocol.Data.AT.EditMode 	= true;
+		sm->Protocol.Data.AT.EditMode 	= true;
         	sprintf(req, "AT^SSTK=%i,1\r",len/2);
-        	error = GSM_WaitFor (s, req, strlen(req), 0x00, 3, ID_User1);
-		s->Phone.Data.DispatchError	= ERR_TIMEOUT;
-		s->Phone.Data.RequestID		= ID_User1;
-    		error = s->Protocol.Functions->WriteMessage(s, reqSAT[i], len, 0x00);
+        	error = GSM_WaitFor (sm, req, strlen(req), 0x00, 3, ID_User1);
+		sm->Phone.Data.DispatchError	= ERR_TIMEOUT;
+		sm->Phone.Data.RequestID		= ID_User1;
+    		error = sm->Protocol.Functions->WriteMessage(sm, reqSAT[i], len, 0x00);
     		if (error!=ERR_NONE) return error;
-    		error = s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
+    		error = sm->Protocol.Functions->WriteMessage(sm, "\x1A", 1, 0x00);
 		if (error!=ERR_NONE) return error;
-        	error = GSM_WaitForOnce (s, NULL,0x00, 0x00, 4);
+        	error = GSM_WaitForOnce (sm, NULL,0x00, 0x00, 4);
     		if (error!=ERR_NONE) return error;
     	}
     	return ERR_NONE;
 }
 
-GSM_Error ATSIEMENS_GetNetmon(GSM_StateMachine *s,int test_no)
+GSM_Error ATSIEMENS_GetNetmon(GSM_StateMachine *sm,int test_no)
 {
-	GSM_Phone_ATGENData	*Priv = &(s->Phone.Data.Priv.ATGEN);
+	GSM_Phone_ATGENData	*Priv = &(sm->Phone.Data.Priv.ATGEN);
 	unsigned char		req[32];
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 	sprintf(req, "AT^S^MI=%d\r",test_no);
 	printf ("Siemens NetMonitor test #%i\n",test_no);
-	return GSM_WaitFor(s, req, strlen(req), 0x00, 3, ID_User2);
+	return GSM_WaitFor(sm, req, strlen(req), 0x00, 3, ID_User2);
 }
 
-GSM_Error ATSIEMENS_ActivateNetmon (GSM_StateMachine *s,int netmon_type)
+GSM_Error ATSIEMENS_ActivateNetmon (GSM_StateMachine *sm,int netmon_type)
 {
-	GSM_Phone_ATGENData	*Priv = &(s->Phone.Data.Priv.ATGEN);
+	GSM_Phone_ATGENData	*Priv = &(sm->Phone.Data.Priv.ATGEN);
 	unsigned char		req[32];
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
@@ -280,7 +280,7 @@ GSM_Error ATSIEMENS_ActivateNetmon (GSM_StateMachine *s,int netmon_type)
 	printf ("Activate Siemens NetMonitor\n");
 	siemens_code (req,req,2);
 
-	return GSM_WaitFor(s, req, strlen(req), 0x00, 3, ID_User2);
+	return GSM_WaitFor(sm, req, strlen(req), 0x00, 3, ID_User2);
 }
 
 void ATSIEMENSActivateNetmon(int argc, char *argv[])

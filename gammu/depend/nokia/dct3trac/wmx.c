@@ -34,7 +34,7 @@ extern GSM_Reply_Function UserReplyFunctionsX[];
 GSMDecoder 		*gsmdec;
 struct wmx_tracestruct 	*traces;
 
-static GSM_Error DCT3_ReplySwitchDebug(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplySwitchDebug(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	switch(msg.Buffer[2]) {
 	case 0x70:
@@ -50,7 +50,7 @@ static GSM_Error DCT3_ReplySwitchDebug(GSM_Protocol_Message msg, GSM_StateMachin
 /**
  * RPC confirmation/reply
  */
-static GSM_Error DCT3_ReplyRPC(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyRPC(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	printf("RPC Reply ");
 	printf("call=%02x rettype=%02x data=", msg.Buffer[2], msg.Buffer[3]);
@@ -155,7 +155,7 @@ static void mdircv_data(unsigned char type, unsigned char *buffer, size_t length
 	}
 }
 
-static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	int 			x;
 	int 			id,timestamp,number,length;
@@ -288,7 +288,7 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 }
 
 
-static GSM_Error DCT3_ReplyMyPacket(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyMyPacket(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	int x;
 

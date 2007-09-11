@@ -240,7 +240,7 @@ static struct DCT3ADCInfo DCT3ADC[] = {
 unsigned char 	DCT3ADCBuf[200];
 int		DCT3ADCInt;
 
-static GSM_Error DCT3_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	switch (msg.Buffer[2]) {
 	case 0x68:
@@ -344,7 +344,7 @@ void DCT3netmonitor(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Error DCT3_ReplyGetMSID(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyGetMSID(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	int i;
 
@@ -354,13 +354,13 @@ static GSM_Error DCT3_ReplyGetMSID(GSM_Protocol_Message msg, GSM_StateMachine *s
 	return ERR_NONE;
 }
 
-static GSM_Error DCT3_ReplyGetDSPROM(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyGetDSPROM(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	printf("DSP ROM       : %c\n",msg.Buffer[5]);
 	return ERR_NONE;
 }
 
-static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	int	i, j;
 	char	uni[100], buffer[50];
@@ -414,7 +414,7 @@ static GSM_Error DCT3_ReplySimlockInfo(GSM_Protocol_Message msg, GSM_StateMachin
 	return ERR_NONE;
 }
 
-static GSM_Error DCT3_ReplyGetMCUchkSum(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyGetMCUchkSum(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	int i;
 
@@ -429,9 +429,9 @@ static GSM_Error DCT3_ReplyGetMCUchkSum(GSM_Protocol_Message msg, GSM_StateMachi
 
 static unsigned char MSID1;
 
-GSM_Error DCT3_ReplyEnableSecurity2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT3_ReplyEnableSecurity2(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
-	smprintf(s, "State of security commands set\n");
+	smprintf(sm, "State of security commands set\n");
 	MSID1 = msg.Buffer[5];
 	return ERR_NONE;
 }
@@ -466,7 +466,7 @@ void DCT3Info(int argc, char *argv[])
 	Print_Error(error);
 }
 
-static GSM_Error DCT3_ReplyResetTest36(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyResetTest36(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	printf("Netmonitor test 36 cleaned OK\n");
 	return ERR_NONE;
@@ -497,7 +497,7 @@ void DCT3ResetTest36(int argc, char *argv[])
 
 static unsigned char PPS[32]; /* Product Profile Settings */
 
-static GSM_Error DCT3_ReplyGetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyGetPPS(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	int i,j,z;
 
@@ -523,7 +523,7 @@ static GSM_Error DCT3_ReplyGetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-static GSM_Error DCT3_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplySetPPS(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	printf("Setting done OK\n");
 	return ERR_NONE;
@@ -603,13 +603,13 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 	Print_Error(error);
 }
 
-static GSM_Error DCT3_Reply61GetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_Reply61GetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	printf("Security Code is \"%s\"\n",msg.Buffer+5);
 	return ERR_NONE;
 }
 
-static GSM_Error DCT3_Reply7191GetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_Reply7191GetSecurityCode(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	printf("Security Code is \"%s\"\n",msg.Buffer+6);
 	return ERR_NONE;
@@ -654,7 +654,7 @@ void DCT3GetSecurityCode(int argc, char *argv[])
 
 #ifdef GSM_ENABLE_NOKIA6110
 
-static GSM_Error DCT3_ReplyGetOperatorName(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyGetOperatorName(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	unsigned char buffer[10];
 
@@ -688,7 +688,7 @@ void DCT3GetOperatorName(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Error DCT3_ReplySetOperatorName(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplySetOperatorName(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	printf("Operator name set OK\n");
 	return ERR_NONE;
@@ -729,7 +729,7 @@ void DCT3SetOperatorName(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-static GSM_Error DCT3_ReplyDisplayOutput(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyDisplayOutput(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	unsigned char buf[100];
 
