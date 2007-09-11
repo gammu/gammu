@@ -163,6 +163,16 @@ else(MSVC)
         set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wdeclaration-after-statement")
     endif (HAVE_WDECLARATIONAFTERSTATEMENT)
 
+    check_c_compiler_flag("-Wpointer-arith" HAVE_WPOINTERARITH)
+    if (HAVE_WPOINTERARITH)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wpointer-arith")
+    endif (HAVE_WPOINTERARITH)
+
+    check_c_compiler_flag("-Wshadow" HAVE_WSHADOW)
+    if (HAVE_WSHADOW)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wshadow")
+    endif (HAVE_WSHADOW)
+
     # We want this just for some tests
     check_c_compiler_flag("-Werror" HAVE_WERROR)
 
