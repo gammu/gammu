@@ -791,6 +791,34 @@ void NokiaAddFile(int argc, char *argv[])
 			}
 			CopyUnicodeString(FileID,File.ID_FullName);
 		} else {
+			if (Overwrite) {
+				Start = true;
+				CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
+
+				fprintf(stderr, "%s\n", _("INFO: Application already exist. Deleting by Gammu"));
+
+				while (true) {
+					error = GSM_GetFolderListing(s,&File2,Start);
+					if (error == ERR_EMPTY) break;
+					Print_Error(error);
+
+					strcpy(buffer,DecodeUnicodeString(File2.Name));
+
+					i = strlen(Name);
+					if (strncmp(buffer,Name,i) == 0 &&
+					    (strcmp(buffer + i,".jad") == 0 || strcmp(buffer + i,".jar") == 0)) {
+						fprintf(stderr, _("  Deleting %s\n"),DecodeUnicodeString(File2.ID_FullName));
+						error = GSM_DeleteFile(s,File2.ID_FullName);
+						Print_Error(error);
+
+						CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
+						Start = true;
+					}
+
+					Start = false;
+				}
+			}
+
 			CopyUnicodeString(FileID,Files.ID_FullName);
 			CopyUnicodeString(File.ID_FullName,Files.ID_FullName);
 		}
