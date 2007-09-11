@@ -154,24 +154,24 @@ else(MSVC)
         endif (HAVE_WPOINTERSIGN)
     endif (NOT CROSS_MINGW)
 
-    check_c_compiler_flag("-Werror-implicit-function-declaration" HAVE_WERRORDECLARATION)
-    if (HAVE_WERRORDECLARATION)
+    check_c_compiler_flag("-Werror-implicit-function-declaration" HAVE_WERRORIMPLICITDECLARATION)
+    if (HAVE_WERRORIMPLICITDECLARATION)
         set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror-implicit-function-declaration")
-    endif (HAVE_WERRORDECLARATION)
+    endif (HAVE_WERRORIMPLICITDECLARATION)
 
-    check_c_compiler_flag("-Wdeclaration-after-statement" HAVE_WERRORDECLARATION)
-    if (HAVE_WERRORDECLARATION)
+    check_c_compiler_flag("-Wdeclaration-after-statement" HAVE_DECLARATIONAFTERSTATEMENT)
+    if (HAVE_DECLARATIONAFTERSTATEMENT)
         set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wdeclaration-after-statement")
-    endif (HAVE_WERRORDECLARATION)
+    endif (HAVE_DECLARATIONAFTERSTATEMENT)
 
     check_c_compiler_flag("-Werror" HAVE_WERROR)
 
     # This is extremely noisy, use only in debug builds
     if (DEBUG)
-        check_c_compiler_flag("-Wextra" HAVE_WERRORDECLARATION)
-        if (HAVE_WERRORDECLARATION)
+        check_c_compiler_flag("-Wextra" HAVE_WEXTRA)
+        if (HAVE_WEXTRA)
             set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wextra")
-        endif (HAVE_WERRORDECLARATION)
+        endif (HAVE_WEXTRA)
 
         # Just silent this for now, too much code to fix here
         check_c_compiler_flag("-Wno-unused-parameter" HAVE_NOUNUSEDPARAMETER)
