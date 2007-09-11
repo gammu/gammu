@@ -4,7 +4,7 @@
 
 BUILD_DIR=build-configure
 
-.PHONY: all clean package package_source apidoc interndoc translations gammu install distclean
+.PHONY: all clean package package_source apidoc interndoc translations gammu install distclean test
 
 all: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR)
@@ -32,6 +32,9 @@ gammu: $(BUILD_DIR)
 
 install: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) install
+
+test: $(BUILD_DIR)
+	$(MAKE) -C $(BUILD_DIR) test
 
 TAGFILESFIND = find gammu common include -name '*.[ch]' -o -name '*.cpp'
 
