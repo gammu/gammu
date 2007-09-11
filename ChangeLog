@@ -16,6 +16,8 @@ ChangeLog
 =========
 
 2007???? - 1.13.91
+[-] * Fixed reading of empty calendar/todo/contacts/notes over OBEX
+      (thanks to Gianni Ceccarelli).
 
 20070907 - 1.13.90
 [-] * Fixed parsing of date/time reply from some broken AT phones.

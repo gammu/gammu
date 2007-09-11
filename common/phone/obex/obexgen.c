@@ -1579,13 +1579,16 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, boo
 		Entry->Location++;
 	}
 
-	/* Have we read them all? */
-	if (Priv->ReadPhonebook == Priv->PbCount) {
-		return ERR_EMPTY;
-	}
-
 	/* Do real getting */
 	while (error == ERR_EMPTY) {
+
+		/* Have we read them all? */
+		/* Needs to be inside loop as we get count after 
+		 * first invocation of get function */
+		if (Priv->ReadPhonebook == Priv->PbCount) {
+			return ERR_EMPTY;
+		}
+
 		error = OBEXGEN_GetMemory(s, Entry);
 		if (error == ERR_NONE) {
 			Priv->ReadPhonebook++;
@@ -1987,13 +1990,16 @@ GSM_Error OBEXGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 		Entry->Location++;
 	}
 
-	/* Have we read them all? */
-	if (Priv->ReadCalendar == Priv->CalCount) {
-		return ERR_EMPTY;
-	}
-
 	/* Do real getting */
 	while (error == ERR_EMPTY) {
+
+		/* Have we read them all? */
+		/* Needs to be inside loop as we get count after 
+		 * first invocation of get function */
+		if (Priv->ReadCalendar == Priv->CalCount) {
+			return ERR_EMPTY;
+		}
+
 		error = OBEXGEN_GetCalendar(s, Entry);
 		if (error == ERR_NONE) {
 			Priv->ReadCalendar++;
@@ -2350,13 +2356,16 @@ GSM_Error OBEXGEN_GetNextTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, bool st
 		Entry->Location++;
 	}
 
-	/* Have we read them all? */
-	if (Priv->ReadTodo == Priv->TodoCount) {
-		return ERR_EMPTY;
-	}
-
 	/* Do real getting */
 	while (error == ERR_EMPTY) {
+
+		/* Have we read them all? */
+		/* Needs to be inside loop as we get count after 
+		 * first invocation of get function */
+		if (Priv->ReadTodo == Priv->TodoCount) {
+			return ERR_EMPTY;
+		}
+
 		error = OBEXGEN_GetTodo(s, Entry);
 		if (error == ERR_NONE) {
 			Priv->ReadTodo++;
@@ -2726,13 +2735,16 @@ GSM_Error OBEXGEN_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Entry, bool st
 		Entry->Location++;
 	}
 
-	/* Have we read them all? */
-	if (Priv->ReadPhonebook == Priv->NoteCount) {
-		return ERR_EMPTY;
-	}
-
 	/* Do real getting */
 	while (error == ERR_EMPTY) {
+
+		/* Have we read them all? */
+		/* Needs to be inside loop as we get count after 
+		 * first invocation of get function */
+		if (Priv->ReadPhonebook == Priv->NoteCount) {
+			return ERR_EMPTY;
+		}
+
 		error = OBEXGEN_GetNote(s, Entry);
 		if (error == ERR_NONE) {
 			Priv->ReadPhonebook++;
