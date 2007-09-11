@@ -2,8 +2,6 @@
 # Copyright (c) 2007 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
-project (Gammu C)
-
 # I didn't check older versions
 cmake_minimum_required (VERSION 2.4.2)
 
@@ -16,6 +14,7 @@ if (UNIX)
 else (UNIX)
     set (CROSS_MINGW OFF)
 endif (UNIX)
+
 if (CROSS_MINGW)
     message (STATUS "Cross compilign using MinGW")
     set (CMAKE_CXX_COMPILER "i586-mingw32msvc-c++")
@@ -43,6 +42,9 @@ if (CROSS_MINGW)
     set (CPACK_TOPLEVEL_TAG "Source")
     set (CPACK_SYSTEM_NAME "Windows")
 endif (CROSS_MINGW)
+
+# We've set up compiler, now we can use it
+project (Gammu C)
 
 # Read version
 file (READ "${CMAKE_SOURCE_DIR}/VERSION" VERSION)
@@ -140,30 +142,28 @@ if(MSVC)
         set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} /W3")
     endif (HAVE_W3)
 else(MSVC)
-    # Check for compiler flags we want to use
+    # Check for extra compiler flags we want to use
     check_c_compiler_flag("-Wall" HAVE_WALL)
     if (HAVE_WALL)
         set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall")
     endif (HAVE_WALL)
 
-    # Not supported in MinGW
-    if (NOT CROSS_MINGW)
-        check_c_compiler_flag("-Wno-pointer-sign" HAVE_WPOINTERSIGN)
-        if (HAVE_WPOINTERSIGN)
-            set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-pointer-sign")
-        endif (HAVE_WPOINTERSIGN)
-    endif (NOT CROSS_MINGW)
+    check_c_compiler_flag("-Wno-pointer-sign" HAVE_WPOINTERSIGN)
+    if (HAVE_WPOINTERSIGN)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-pointer-sign")
+    endif (HAVE_WPOINTERSIGN)
 
     check_c_compiler_flag("-Werror-implicit-function-declaration" HAVE_WERRORIMPLICITDECLARATION)
     if (HAVE_WERRORIMPLICITDECLARATION)
         set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror-implicit-function-declaration")
     endif (HAVE_WERRORIMPLICITDECLARATION)
 
-    check_c_compiler_flag("-Wdeclaration-after-statement" HAVE_DECLARATIONAFTERSTATEMENT)
-    if (HAVE_DECLARATIONAFTERSTATEMENT)
+    check_c_compiler_flag("-Wdeclaration-after-statement" HAVE_WDECLARATIONAFTERSTATEMENT)
+    if (HAVE_WDECLARATIONAFTERSTATEMENT)
         set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wdeclaration-after-statement")
-    endif (HAVE_DECLARATIONAFTERSTATEMENT)
+    endif (HAVE_WDECLARATIONAFTERSTATEMENT)
 
+    # We want this just for some tests
     check_c_compiler_flag("-Werror" HAVE_WERROR)
 
     # This is extremely noisy, use only in debug builds
@@ -174,10 +174,10 @@ else(MSVC)
         endif (HAVE_WEXTRA)
 
         # Just silent this for now, too much code to fix here
-        check_c_compiler_flag("-Wno-unused-parameter" HAVE_NOUNUSEDPARAMETER)
-        if (HAVE_NOUNUSEDPARAMETER)
+        check_c_compiler_flag("-Wno-unused-parameter" HAVE_WNOUNUSEDPARAMETER)
+        if (HAVE_WNOUNUSEDPARAMETER)
             set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-unused-parameter")
-        endif (HAVE_NOUNUSEDPARAMETER)
+        endif (HAVE_WNOUNUSEDPARAMETER)
     endif (DEBUG)
 endif(MSVC)
 
