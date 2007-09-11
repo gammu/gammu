@@ -470,7 +470,7 @@ static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, char *File, bool 
 static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int Pos=0, pos2, len2;
-	char *LUID = NULL;
+	char *NewLUID = NULL;
 	char *timestamp = NULL;
 	char *CC = NULL;
 	bool UpdatePbLUID, UpdateCalLUID, UpdateTodoLUID;
@@ -502,10 +502,10 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 					if (pos2 >= len2) break;
 					switch (msg.Buffer[Pos + 3 + pos2]) {
 						case 0x01:
-							LUID = malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
-							memcpy(LUID,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
-							LUID[msg.Buffer[Pos + 3 + pos2 + 1]]=0;
-							smprintf(s, " LUID=\"%s\"", LUID);
+							NewLUID = malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
+							memcpy(NewLUID,msg.Buffer + Pos + 3 + pos2 + 2, msg.Buffer[Pos + 3 + pos2 + 1]);
+							NewLUID[msg.Buffer[Pos + 3 + pos2 + 1]]=0;
+							smprintf(s, " LUID=\"%s\"", NewLUID);
 							break;
 						case 0x02:
 							CC = malloc(msg.Buffer[Pos + 3 + pos2 + 1]+1);
@@ -529,30 +529,30 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 				if (CC != NULL) {
 					free(CC);
 				}
-				if (LUID != NULL) {
+				if (NewLUID != NULL) {
 					if (UpdatePbLUID) {
 						Priv->PbLUIDCount++;
 						Priv->PbLUID = realloc(Priv->PbLUID, (Priv->PbLUIDCount + 1) * sizeof(char *));
 						if (Priv->PbLUID == NULL) {
 							return ERR_MOREMEMORY;
 						}
-						Priv->PbLUID[Priv->PbLUIDCount] = LUID;
+						Priv->PbLUID[Priv->PbLUIDCount] = NewLUID;
 					} else if (UpdateTodoLUID) {
 						Priv->TodoLUIDCount++;
 						Priv->TodoLUID = realloc(Priv->TodoLUID, (Priv->TodoLUIDCount + 1) * sizeof(char *));
 						if (Priv->TodoLUID == NULL) {
 							return ERR_MOREMEMORY;
 						}
-						Priv->TodoLUID[Priv->TodoLUIDCount] = LUID;
+						Priv->TodoLUID[Priv->TodoLUIDCount] = NewLUID;
 					} else if (UpdateCalLUID) {
 						Priv->CalLUIDCount++;
 						Priv->CalLUID = realloc(Priv->CalLUID, (Priv->CalLUIDCount + 1) * sizeof(char *));
 						if (Priv->CalLUID == NULL) {
 							return ERR_MOREMEMORY;
 						}
-						Priv->CalLUID[Priv->CalLUIDCount] = LUID;
+						Priv->CalLUID[Priv->CalLUIDCount] = NewLUID;
 					} else {
-						free(LUID);
+						free(NewLUID);
 					}
 				}
 				Pos += len2;
@@ -1306,7 +1306,7 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 /**
  * Initialises LUID database, which is used for LUID - Location mapping.
  */
-GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const bool Recalculate, char *Header, char **Data, int **Offsets, int *Count, char ***LUID, int *LUIDCount)
+GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const bool Recalculate, char *Header, char **Data, int **Offsets, int *Count, char ***LUIDStorage, int *LUIDCount)
 {
 	GSM_Error 	error;
 	char		*pos;
@@ -1336,7 +1336,7 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const bool Rec
 	*Count = 0;
 	*Offsets = NULL;
 	*LUIDCount = 0;
-	*LUID = NULL;
+	*LUIDStorage = NULL;
 	len = strlen(*Data);
 	hlen = strlen(Header);
 
@@ -1376,15 +1376,15 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const bool Rec
 					/* Do we need to reallocate? */
 					if (*LUIDCount >= LUIDSize) {
 						LUIDSize += 20;
-						*LUID = realloc(*LUID, LUIDSize * sizeof(char *));
-						if (*LUID == NULL) {
+						*LUIDStorage = realloc(*LUIDStorage, LUIDSize * sizeof(char *));
+						if (*LUIDStorage == NULL) {
 							return ERR_MOREMEMORY;
 						}
 					}
 					/* Copy LUID text */
-					(*LUID)[*LUIDCount] = strdup(pos);
+					(*LUIDStorage)[*LUIDCount] = strdup(pos);
 #if 0
-					smprintf(s, "Added LUID %s at position %d\n", (*LUID)[*LUIDCount], *LUIDCount);
+					smprintf(s, "Added LUID %s at position %d\n", (*LUIDStorage)[*LUIDCount], *LUIDCount);
 #endif
 				}
 				break;

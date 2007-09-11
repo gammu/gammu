@@ -1555,10 +1555,10 @@ GSM_Error GSM_TerminateConnection	(GSM_StateMachine *s);
 int 	  GSM_ReadDevice		(GSM_StateMachine *s, bool wait);
 
 GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, unsigned const char *buffer,
-			  		 int length, unsigned char type, int time);
+			  		 int length, unsigned char type, int timeout);
 
 GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned const char *buffer,
-		       			 int length, unsigned char type, int time,
+		       			 int length, unsigned char type, int timeout,
 					 GSM_Phone_RequestID request);
 
 GSM_Error GSM_DispatchMessage		(GSM_StateMachine *s);
