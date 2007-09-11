@@ -325,13 +325,13 @@ GSM_Error DCT3_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_EMPTY;
 }
 
-GSM_Error DCT3_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm, unsigned char msgtype)
+GSM_Error DCT3_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm, unsigned char msgtype)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x6d};
 
-	if (alarm->Location!=1) return ERR_NOTSUPPORTED;
+	if (Alarm->Location!=1) return ERR_NOTSUPPORTED;
 
-	s->Phone.Data.Alarm=alarm;
+	s->Phone.Data.Alarm=Alarm;
 	smprintf(s, "Getting alarm\n");
 	return GSM_WaitFor (s, req, 4, msgtype, 4, ID_GetAlarm);
 }
@@ -373,7 +373,7 @@ GSM_Error DCT3_ReplySetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_UNKNOWN;
 }
 
-GSM_Error DCT3_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm, unsigned char msgtype)
+GSM_Error DCT3_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm, unsigned char msgtype)
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x6b, 0x01, 0x20, 0x03,
 			       0x02,      /* Unknown. Not for enabling/disabling */
@@ -381,10 +381,10 @@ GSM_Error DCT3_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm, unsigned char msg
 			       0x00,	  /* Minute 				 */
 			       0x00};	  /* Unknown. Not seconds 		 */
 
-	if (alarm->Location != 1) return ERR_NOTSUPPORTED;
+	if (Alarm->Location != 1) return ERR_NOTSUPPORTED;
 
-	req[8] = alarm->DateTime.Hour;
-	req[9] = alarm->DateTime.Minute;
+	req[8] = Alarm->DateTime.Hour;
+	req[9] = Alarm->DateTime.Minute;
 
 	smprintf(s, "Setting alarm\n");
 	return GSM_WaitFor (s, req, 11, msgtype, 4, ID_SetAlarm);

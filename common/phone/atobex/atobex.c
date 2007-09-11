@@ -532,20 +532,20 @@ GSM_Error ATOBEX_GetManufacturer(GSM_StateMachine *s)
 	return ATGEN_GetManufacturer(s);
 }
 
-GSM_Error ATOBEX_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+GSM_Error ATOBEX_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
 	GSM_Error error;
 
 	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
-	return ATGEN_GetAlarm(s, alarm);
+	return ATGEN_GetAlarm(s, Alarm);
 }
 
-GSM_Error ATOBEX_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+GSM_Error ATOBEX_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
 	GSM_Error error;
 
 	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
-	return ATGEN_SetAlarm(s, alarm);
+	return ATGEN_SetAlarm(s, Alarm);
 }
 
 GSM_Error ATOBEX_SetIncomingUSSD(GSM_StateMachine *s, bool enable)

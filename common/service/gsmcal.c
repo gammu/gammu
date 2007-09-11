@@ -809,7 +809,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	GSM_DateTime 	deltatime;
 	char 		dtstr[20];
 	char		category[100];
-	int		i, alarm = -1, date = -1;
+	int		i, alarm_pos = -1, date_pos = -1;
 
 	/* Write header */
 	if (header) {
@@ -832,7 +832,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 	for (i=0; i < note->EntriesNum; i++) {
 		switch (note->Entries[i].EntryType) {
 			case CAL_START_DATETIME :
-				date = i;
+				date_pos = i;
 				if (Version == Mozilla_iCalendar && (note->Type == GSM_CAL_MEMO || note->Type == GSM_CAL_BIRTHDAY)) {
 					SaveVCALDate(Buffer, Length, &note->Entries[i].Date, "DTSTART;VALUE=DATE");
 				} else {
@@ -847,14 +847,14 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 				}
 				break;
 			case CAL_TONE_ALARM_DATETIME :
-				alarm = i;
+				alarm_pos = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
 				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "AALARM");
 				}
 				break;
 			case CAL_SILENT_ALARM_DATETIME:
-				alarm = i;
+				alarm_pos = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
 				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DALARM");
@@ -917,12 +917,12 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note
 			*Length+=sprintf(Buffer+(*Length), "RRULE:YM1%c%c",13,10);
 		}
 	} else {
-		GSM_EncodeVCAL_RRULE(Buffer, Length, note, date, Version);
+		GSM_EncodeVCAL_RRULE(Buffer, Length, note, date_pos, Version);
 	}
 
 	/* Include mozilla specific alarm encoding */
-	if (Version == Mozilla_iCalendar && alarm != -1 && date != -1) {
-		deltatime = VCALTimeDiff(&note->Entries[alarm].Date, &note->Entries[date].Date);
+	if (Version == Mozilla_iCalendar && alarm_pos != -1 && date_pos != -1) {
+		deltatime = VCALTimeDiff(&note->Entries[alarm_pos].Date, &note->Entries[date_pos].Date);
 
 		dtstr[0]='\0';
 		if (deltatime.Minute !=0) {
@@ -990,10 +990,8 @@ void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, 
 
 GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version)
 {
-	GSM_DateTime 	deltatime;
-	char 		dtstr[20];
 	char		category[100];
-	int		i, alarm = -1, date = -1;
+	int		i, alarm_pos = -1;
 
 	/* Write header */
 	if (header) {
@@ -1040,14 +1038,14 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 				}
 				break;
 			case TODO_ALARM_DATETIME :
-				alarm = i;
+				alarm_pos = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
 				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "AALARM");
 				}
 				break;
 			case TODO_SILENT_ALARM_DATETIME:
-				alarm = i;
+				alarm_pos = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
 				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DALARM");
@@ -1091,35 +1089,6 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool h
 			case TODO_CATEGORY:
 				/* Not supported */
 				break;
-		}
-
-		/* Include mozilla specific alarm encoding */
-		if (Version == Mozilla_iCalendar && alarm != -1 && date != -1) {
-			deltatime = VCALTimeDiff(&note->Entries[alarm].Date, &note->Entries[date].Date);
-
-			dtstr[0]='\0';
-			if (deltatime.Minute !=0) {
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:minutes%c%c",13,10);
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
-					deltatime.Minute,13,10);
-				sprintf(dtstr,"-PT%iM",deltatime.Minute);
-			} else if (deltatime.Hour !=0) {
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:hours%c%c",13,10);
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
-					deltatime.Hour,13,10);
-				sprintf(dtstr,"-PT%iH",deltatime.Hour);
-			} else if (deltatime.Day !=0) {
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:days%c%c",13,10);
-				*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
-					deltatime.Day,13,10);
-				sprintf(dtstr,"-P%iD",deltatime.Day);
-			}
-			if (dtstr[0] != '\0') {
-				*Length+=sprintf(Buffer+(*Length), "BEGIN:VALARM%c%c",13,10);
-				*Length+=sprintf(Buffer+(*Length), "TRIGGER;VALUE=DURATION%c%c",13,10);
-				*Length+=sprintf(Buffer+(*Length), " :%s%c%c",dtstr,13,10);
-				*Length+=sprintf(Buffer+(*Length), "END:VALARM%c%c",13,10);
-			}
 		}
 	}
 
@@ -1621,7 +1590,6 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 	trigger.Timezone = -999;
 
 	if (CalVer == Mozilla_iCalendar && *Pos ==0) {
-		int error;
 		error = GSM_Make_VCAL_Lines (Buffer, &lBuffer);
 		if (error != ERR_NONE) return error;
 	}

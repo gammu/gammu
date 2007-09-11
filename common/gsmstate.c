@@ -290,7 +290,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 {
 	GSM_Error	error;
-	GSM_DateTime	time;
+	GSM_DateTime	current_time;
 	int		i;
 
 	for (i=0;i<s->ConfigNum;i++) {
@@ -487,8 +487,8 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		}
 
 		if (strcasecmp(s->CurrentConfig->SyncTime,"yes") == 0) {
-			GSM_GetCurrentDateTime (&time);
-			s->Phone.Functions->SetDateTime(s,&time);
+			GSM_GetCurrentDateTime (&current_time);
+			s->Phone.Functions->SetDateTime(s,&current_time);
 		}
 
 		/* For debug it's good to have firmware and real model version and manufacturer */
@@ -572,7 +572,7 @@ bool GSM_IsConnected(GSM_StateMachine *s) {
 }
 
 GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
-			  int length, unsigned char type, int time)
+			  int length, unsigned char type, int timeout)
 {
 	GSM_Phone_Data			*Phone = &s->Phone.Data;
 	GSM_Protocol_Message 		sentmsg;
@@ -600,13 +600,13 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 		if (Phone->RequestID==ID_None) return Phone->DispatchError;
 
 		i++;
-	} while (i<time);
+	} while (i<timeout);
 
 	return ERR_TIMEOUT;
 }
 
 GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
-		       int length, unsigned char type, int time,
+		       int length, unsigned char type, int timeout,
 		       GSM_Phone_RequestID request)
 {
 	GSM_Phone_Data		*Phone = &s->Phone.Data;
@@ -634,7 +634,7 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
 		error = s->Protocol.Functions->WriteMessage(s, buffer, length, type);
 		if (error!=ERR_NONE) return error;
 
-		error = GSM_WaitForOnce(s, buffer, length, type, time);
+		error = GSM_WaitForOnce(s, buffer, length, type, timeout);
 		if (error != ERR_TIMEOUT) return error;
         }
 

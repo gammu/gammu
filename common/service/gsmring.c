@@ -380,7 +380,7 @@ static void WriteVarLen(unsigned char* midifile, int* current, long value)
 /* FIXME: need adding tempo before each note and scale too ? */
 void GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 {
-	int 		pause 	= 0, current = 26, duration, i, note=0, length = 20;
+	int 		pause_time 	= 0, current = 26, duration, i, note=0, length = 20;
 	bool		started = false;
 	GSM_RingNote 	*Note;
 	unsigned char midifile[3000] = {
@@ -401,7 +401,7 @@ void GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 				/* readmid does not read pauses at the beginning */
 				if (Note->Note != Note_Pause) {
 					/* FIXME: we need add tempo before each note or so... */
-					long duration=60000000/Note->Tempo;
+					duration = 60000000/Note->Tempo;
 
 					midifile[current++] = (unsigned char)(duration >> 16);
 					midifile[current++] = (unsigned char)(duration >> 8);
@@ -413,10 +413,10 @@ void GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 			if (!started) continue;
 			duration = GSM_RingNoteGetFullDuration(*Note);
 			if (Note->Note == Note_Pause) {
-				pause += duration;
+				pause_time += duration;
 #ifdef singlepauses
-				WriteVarLen(midifile,&current,pause);
-				pause=0;
+				WriteVarLen(midifile,&current,pause_time);
+				pause_time=0;
 				midifile[current++]=0x00;   // pause
 				midifile[current++]=0x00;
 #endif
@@ -425,8 +425,8 @@ void GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 					note = Note->Note/16 + 12 * Note->Scale - 1;
 				}
 
-				WriteVarLen(midifile,&current,pause);
-				pause=0;
+				WriteVarLen(midifile,&current,pause_time);
+				pause_time=0;
 				midifile[current++]=0x90;   // note on
 				midifile[current++]=note;
 				midifile[current++]=0x64;   // forte
@@ -438,8 +438,8 @@ void GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 			}
 		}
 	}
-	if (pause) {
-		WriteVarLen(midifile,&current,pause);
+	if (pause_time) {
+		WriteVarLen(midifile,&current,pause_time);
 		midifile[current++]=0x00;   	// pause
 		midifile[current++]=0x00;   	//
 	}

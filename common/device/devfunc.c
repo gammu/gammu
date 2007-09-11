@@ -172,7 +172,7 @@ GSM_Error socket_close(GSM_StateMachine *s UNUSED, socket_type hPhone)
 /* Lock the device. Allocated string with a lock name is returned
  * in lock_device
  */
-GSM_Error lock_device(const char* port, char **lock_device)
+GSM_Error lock_device(const char* port, char **lock_name)
 {
 #if !defined(WIN32) && !defined(DJGPP)
 	char 		*lock_file = NULL;
@@ -272,14 +272,14 @@ GSM_Error lock_device(const char* port, char **lock_device)
 	sprintf(buffer, "%10ld gammu\n", (long)getpid());
 	write(fd, buffer, strlen(buffer));
 	close(fd);
-	*lock_device = lock_file;
+	*lock_name = lock_file;
 	return ERR_NONE;
 failed:
 	free(lock_file);
-	*lock_device = 0;
+	*lock_name = NULL;
 	return error;
 #else
-	*lock_device = 0;
+	*lock_name = NULL;
 	return ERR_NONE;
 #endif
 }

@@ -493,36 +493,36 @@ void SetDateTime(int argc, char *argv[])
 
 void GetAlarm(int argc, char *argv[])
 {
-	GSM_Alarm alarm;
+	GSM_Alarm Alarm;
 	GSM_Error error;
 
 	GSM_Init(true);
 
 	if (argc < 3) {
-		alarm.Location = 1;
+		Alarm.Location = 1;
 	} else {
-		alarm.Location = atoi(argv[2]);
+		Alarm.Location = atoi(argv[2]);
 	}
-	error = GSM_GetAlarm(s, &alarm);
+	error = GSM_GetAlarm(s, &Alarm);
 	switch (error) {
 		case ERR_EMPTY:
 			printf(_("Alarm (%i) not set in phone\n"),
-			       alarm.Location);
+			       Alarm.Location);
 			break;
 		case ERR_NONE:
-			printf(_("Alarm in location %i:\n"), alarm.Location);
-			if (alarm.Repeating) {
+			printf(_("Alarm in location %i:\n"), Alarm.Location);
+			if (Alarm.Repeating) {
 				printf(LISTFORMAT "%s\n", _("Date"),
 				       _("Every day"));
-			} else if (alarm.DateTime.Day != 0) {
+			} else if (Alarm.DateTime.Day != 0) {
 				printf(LISTFORMAT "%s\n", _("Date"),
-				       OSDate(alarm.DateTime));
+				       OSDate(Alarm.DateTime));
 			}
-			printf(_("Time: %02d:%02d\n"), alarm.DateTime.Hour,
-			       alarm.DateTime.Minute);
-			if (alarm.Text[0] != 0 || alarm.Text[1] != 0) {
+			printf(_("Time: %02d:%02d\n"), Alarm.DateTime.Hour,
+			       Alarm.DateTime.Minute);
+			if (Alarm.Text[0] != 0 || Alarm.Text[1] != 0) {
 				printf(LISTFORMAT "\"%s\"\n", _("Text"),
-				       DecodeUnicodeConsole(alarm.Text));
+				       DecodeUnicodeConsole(Alarm.Text));
 			}
 			break;
 		default:
@@ -534,20 +534,20 @@ void GetAlarm(int argc, char *argv[])
 
 void SetAlarm(int argc UNUSED, char *argv[])
 {
-	GSM_Alarm alarm;
+	GSM_Alarm Alarm;
 	GSM_Error error;
 
-	alarm.DateTime.Hour = atoi(argv[2]);
-	alarm.DateTime.Minute = atoi(argv[3]);
-	alarm.DateTime.Second = 0;
-	alarm.Location = 1;
-	alarm.Repeating = true;
-	alarm.Text[0] = 0;
-	alarm.Text[1] = 0;
+	Alarm.DateTime.Hour = atoi(argv[2]);
+	Alarm.DateTime.Minute = atoi(argv[3]);
+	Alarm.DateTime.Second = 0;
+	Alarm.Location = 1;
+	Alarm.Repeating = true;
+	Alarm.Text[0] = 0;
+	Alarm.Text[1] = 0;
 
 	GSM_Init(true);
 
-	error = GSM_SetAlarm(s, &alarm);
+	error = GSM_SetAlarm(s, &Alarm);
 	Print_Error(error);
 
 	GSM_Terminate();

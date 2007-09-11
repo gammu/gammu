@@ -31,14 +31,14 @@
 #include "n7110.h"
 #include "dct3func.h"
 
-static GSM_Error N7110_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+static GSM_Error N7110_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
-	return DCT3_GetAlarm(s, alarm, 0x19);
+	return DCT3_GetAlarm(s, Alarm, 0x19);
 }
 
-static GSM_Error N7110_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+static GSM_Error N7110_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
-	return DCT3_SetAlarm(s, alarm, 0x19);
+	return DCT3_SetAlarm(s, Alarm, 0x19);
 }
 
 static GSM_Error N7110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)

@@ -21,7 +21,7 @@ extern GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 
 int main(int argc, char **argv)
 {
-	GSM_Debug_Info *di;
+	GSM_Debug_Info *debug_info;
 	GSM_Phone_ATGENData *Priv;
 	GSM_Phone_Data *Data;
 	unsigned char buffer[BUFFER_SIZE];
@@ -54,9 +54,9 @@ int main(int argc, char **argv)
 	fclose(f);
 
 	/* Configure state machine */
-	di = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, di);
-	GSM_SetDebugLevel("textall", di);
+	debug_info = GSM_GetGlobalDebug();
+	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();

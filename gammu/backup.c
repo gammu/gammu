@@ -141,7 +141,7 @@ void SaveFile(int argc, char *argv[])
 	fclose(file);
 }
 
-void Backup(int argc, char *argv[])
+void DoBackup(int argc, char *argv[])
 {
 	GSM_Error error;
 	int			i, used;
@@ -163,7 +163,7 @@ void Backup(int argc, char *argv[])
 	GSM_Backup_Info		Info;
  	GSM_FMStation		FMStation;
  	GSM_GPRSAccessPoint	GPRSPoint;
-	bool			DoBackup;
+	bool			DoBackupPart;
 	char buffer[GSM_MAX_INFO_LENGTH];
 
 	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
@@ -218,16 +218,16 @@ void Backup(int argc, char *argv[])
 	}
 	printf("\n");
 
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.PhonePhonebook) {
 		printf("%s\n", _("Checking phone phonebook"));
 		MemStatus.MemoryType = MEM_ME;
 		error=GSM_GetMemoryStatus(s, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
-			if (answer_yes(_("   Backup phone phonebook"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone phonebook"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		Pbk.MemoryType  = MEM_ME;
 		i		= 1;
 		used 		= 0;
@@ -256,16 +256,16 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.SIMPhonebook) {
 		printf("%s\n", _("Checking SIM phonebook"));
 		MemStatus.MemoryType = MEM_SM;
 		error=GSM_GetMemoryStatus(s, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
-			if (answer_yes(_("   Backup SIM phonebook"))) DoBackup=true;
+			if (answer_yes(_("   Backup SIM phonebook"))) DoBackupPart=true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		Pbk.MemoryType 	= MEM_SM;
 		i		= 1;
 		used 		= 0;
@@ -294,15 +294,15 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.Calendar) {
 		printf("%s\n", _("Checking phone calendar"));
 		error=GSM_GetNextCalendar(s,&Calendar,true);
 		if (error==ERR_NONE) {
-			if (answer_yes(_("   Backup phone calendar notes"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone calendar notes"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used 		= 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (error == ERR_NONE) {
@@ -325,15 +325,15 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.ToDo) {
 		printf("%s\n", _("Checking phone ToDo"));
 		error=GSM_GetToDoStatus(s,&ToDoStatus);
 		if (error == ERR_NONE && ToDoStatus.Used != 0) {
-			if (answer_yes(_("   Backup phone ToDo"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone ToDo"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used = 0;
 		error=GSM_GetNextToDo(s,&ToDo,true);
 		while (error == ERR_NONE) {
@@ -356,15 +356,15 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.Note) {
 		printf("%s\n", _("Checking phone notes"));
 		error=GSM_GetNextNote(s,&Note,true);
 		if (error==ERR_NONE) {
-			if (answer_yes(_("   Backup phone notes"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone notes"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used 		= 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (error == ERR_NONE) {
@@ -387,17 +387,17 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.CallerLogos) {
 		printf("%s\n", _("Checking phone caller logos"));
 		Bitmap.Type 	= GSM_CallerGroupLogo;
 		Bitmap.Location = 1;
 		error=GSM_GetBitmap(s,&Bitmap);
 		if (error == ERR_NONE) {
-			if (answer_yes(_("   Backup phone caller groups and logos"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone caller groups and logos"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		error = ERR_NONE;
 		used  = 0;
@@ -422,12 +422,12 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.SMSC) {
 		printf("%s\n", _("Checking SIM SMS profiles"));
-		if (answer_yes(_("   Backup SIM SMS profiles"))) DoBackup = true;
+		if (answer_yes(_("   Backup SIM SMS profiles"))) DoBackupPart = true;
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (true) {
@@ -448,16 +448,16 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.StartupLogo) {
 		printf("%s\n", _("Checking phone startup text"));
 		Bitmap.Type = GSM_WelcomeNote_Text;
 		error = GSM_GetBitmap(s,&Bitmap);
 		if (error == ERR_NONE) {
-			if (answer_yes(_("   Backup phone startup logo/text"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone startup logo/text"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		Backup.StartupLogo = malloc(sizeof(GSM_Bitmap));
 	        if (Backup.StartupLogo == NULL) Print_Error(ERR_MOREMEMORY);
 		*Backup.StartupLogo = Bitmap;
@@ -467,32 +467,32 @@ void Backup(int argc, char *argv[])
 			if (error == ERR_NONE) *Backup.StartupLogo = Bitmap;
 		}
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.OperatorLogo) {
 		printf("%s\n", _("Checking phone operator logo"));
 		Bitmap.Type = GSM_OperatorLogo;
 		error=GSM_GetBitmap(s,&Bitmap);
 		if (error == ERR_NONE) {
 			if (strcmp(Bitmap.NetworkCode,"000 00")!=0) {
-				if (answer_yes(_("   Backup phone operator logo"))) DoBackup = true;
+				if (answer_yes(_("   Backup phone operator logo"))) DoBackupPart = true;
 			}
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		Backup.OperatorLogo = malloc(sizeof(GSM_Bitmap));
 	        if (Backup.OperatorLogo == NULL) Print_Error(ERR_MOREMEMORY);
 		*Backup.OperatorLogo = Bitmap;
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.WAPBookmark) {
 		printf("%s\n", _("Checking phone WAP bookmarks"));
 		Bookmark.Location = 1;
 		error=GSM_GetWAPBookmark(s,&Bookmark);
 		if (error==ERR_NONE) {
-			if (answer_yes(_("   Backup phone WAP bookmarks"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone WAP bookmarks"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (error == ERR_NONE) {
@@ -516,16 +516,16 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.WAPSettings) {
 		printf("%s\n", _("Checking phone WAP settings"));
 		Settings.Location = 1;
 		error=GSM_GetWAPSettings(s,&Settings);
 		if (error==ERR_NONE) {
-			if (answer_yes(_("   Backup phone WAP settings"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone WAP settings"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (error == ERR_NONE) {
@@ -549,16 +549,16 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.MMSSettings) {
 		printf("%s\n", _("Checking phone MMS settings"));
 		Settings.Location = 1;
 		error=GSM_GetMMSSettings(s,&Settings);
 		if (error==ERR_NONE) {
-			if (answer_yes(_("   Backup phone MMS settings"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone MMS settings"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (error == ERR_NONE) {
@@ -582,16 +582,16 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.ChatSettings) {
 		printf("%s\n", _("Checking phone Chat settings"));
 		Chat.Location = 1;
 		error=GSM_GetChatSettings(s,&Chat);
 		if (error==ERR_NONE) {
-			if (answer_yes(_("   Backup phone Chat settings"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone Chat settings"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (error == ERR_NONE) {
@@ -615,16 +615,16 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.SyncMLSettings) {
 		printf("%s\n", _("Checking phone SyncML settings"));
 		SyncML.Location = 1;
 		error=GSM_GetSyncMLSettings(s,&SyncML);
 		if (error==ERR_NONE) {
-			if (answer_yes(_("   Backup phone SyncML settings"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone SyncML settings"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (error == ERR_NONE) {
@@ -648,17 +648,17 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.Ringtone) {
 		printf("%s\n", _("Checking phone user ringtones"));
 		Ringtone.Location 	= 1;
 		Ringtone.Format		= 0;
 		error=GSM_GetRingtone(s,&Ringtone,false);
 		if (error==ERR_EMPTY || error == ERR_NONE) {
-			if (answer_yes(_("   Backup phone user ringtones"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone user ringtones"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used 	= 0;
 		i	= 1;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
@@ -687,16 +687,16 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
 	if (Info.Profiles) {
 		printf("%s\n", _("Checking phone profiles"));
 		Profile.Location = 1;
 		error = GSM_GetProfile(s,&Profile);
 	        if (error == ERR_NONE) {
-			if (answer_yes(_("   Backup phone profiles"))) DoBackup = true;
+			if (answer_yes(_("   Backup phone profiles"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used = 0;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
 		while (true) {
@@ -717,16 +717,16 @@ void Backup(int argc, char *argv[])
 		}
 		fprintf(stderr, "\n");
 	}
-	DoBackup = false;
+	DoBackupPart = false;
  	if (Info.FMStation) {
 		printf("%s\n", _("Checking phone FM radio stations"));
  		FMStation.Location = 1;
  		error = GSM_GetFMStation(s,&FMStation);
  	        if (error == ERR_NONE || error == ERR_EMPTY) {
- 			if (answer_yes(_("   Backup phone FM radio stations"))) DoBackup=true;
+ 			if (answer_yes(_("   Backup phone FM radio stations"))) DoBackupPart=true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used	= 0;
 		i	= 1;
 		fprintf(stderr, LISTFORMAT, _("Reading"));
@@ -750,16 +750,16 @@ void Backup(int argc, char *argv[])
  		}
  		fprintf(stderr, "\n");
  	}
-	DoBackup = false;
+	DoBackupPart = false;
  	if (Info.GPRSPoint) {
 		printf("%s\n", _("Checking phone GPRS access points"));
  		GPRSPoint.Location = 1;
  		error = GSM_GetGPRSAccessPoint(s,&GPRSPoint);
  	        if (error == ERR_NONE || error == ERR_EMPTY) {
- 			if (answer_yes(_("   Backup phone GPRS access points"))) DoBackup = true;
+ 			if (answer_yes(_("   Backup phone GPRS access points"))) DoBackupPart = true;
 		}
 	}
-	if (DoBackup) {
+	if (DoBackupPart) {
 		used	= 0;
 		i	= 1;
 		fprintf(stderr, LISTFORMAT, _("Reading"));

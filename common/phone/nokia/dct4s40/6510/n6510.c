@@ -2821,15 +2821,15 @@ static GSM_Error N6510_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine 
 	return ERR_UNKNOWNRESPONSE;
 }
 
-static GSM_Error N6510_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+static GSM_Error N6510_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
 	unsigned char   StateReq[] = {N6110_FRAME_HEADER, 0x1f, 0x01, 0x00};
 	unsigned char   GetReq  [] = {N6110_FRAME_HEADER, 0x19, 0x00, 0x02};
 	GSM_Error	error;
 
-	if (alarm->Location != 1) return ERR_NOTSUPPORTED;
+	if (Alarm->Location != 1) return ERR_NOTSUPPORTED;
 
-	s->Phone.Data.Alarm=alarm;
+	s->Phone.Data.Alarm=Alarm;
 	smprintf(s, "Getting alarm state\n");
 	error = GSM_WaitFor (s, StateReq, 6, 0x19, 4, ID_GetAlarm);
 	if (error != ERR_NONE) return error;
@@ -2844,7 +2844,7 @@ static GSM_Error N6510_ReplySetAlarm(GSM_Protocol_Message msg, GSM_StateMachine 
 	return ERR_NONE;
 }
 
-static GSM_Error N6510_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+static GSM_Error N6510_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
 	unsigned char req[]  = {N6110_FRAME_HEADER,
 				0x11, 0x00, 0x01, 0x01, 0x0c, 0x02,
@@ -2852,10 +2852,10 @@ static GSM_Error N6510_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 				0x00, 0x00,		/* Hours, Minutes */
 				0x00, 0x00, 0x00 };
 
-	if (alarm->Location != 1) return ERR_NOTSUPPORTED;
+	if (Alarm->Location != 1) return ERR_NOTSUPPORTED;
 
-	req[14] = alarm->DateTime.Hour;
-	req[15] = alarm->DateTime.Minute;
+	req[14] = Alarm->DateTime.Hour;
+	req[15] = Alarm->DateTime.Minute;
 
 	smprintf(s, "Setting alarm\n");
 	return GSM_WaitFor (s, req, 19, 0x19, 4, ID_SetAlarm);

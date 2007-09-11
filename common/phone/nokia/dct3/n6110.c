@@ -277,9 +277,9 @@ static GSM_Error N6110_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
         return DCT3_GetDateTime(s, date_time, 0x11);
 }
 
-static GSM_Error N6110_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+static GSM_Error N6110_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
-        return DCT3_GetAlarm(s, alarm, 0x11);
+        return DCT3_GetAlarm(s, Alarm, 0x11);
 }
 
 static GSM_Error N6110_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
@@ -287,9 +287,9 @@ static GSM_Error N6110_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
         return DCT3_SetDateTime(s, date_time, 0x11);
 }
 
-static GSM_Error N6110_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+static GSM_Error N6110_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
-        return DCT3_SetAlarm(s, alarm, 0x11);
+        return DCT3_SetAlarm(s, Alarm, 0x11);
 }
 
 static GSM_Error N6110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)

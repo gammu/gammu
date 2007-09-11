@@ -222,26 +222,26 @@ GSM_Error GSM_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 /**
  * Reads alarm set in phone.
  */
-GSM_Error GSM_GetAlarm(GSM_StateMachine *s, GSM_Alarm	*alarm)
+GSM_Error GSM_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
 
-	err = s->Phone.Functions->GetAlarm(s, alarm);
+	err = s->Phone.Functions->GetAlarm(s, Alarm);
 	PRINT_LOG_ERROR(err);
 	return err;
 }
 /**
  * Sets alarm in phone.
  */
-GSM_Error GSM_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+GSM_Error GSM_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
 
-	err = s->Phone.Functions->SetAlarm(s, alarm);
+	err = s->Phone.Functions->SetAlarm(s, Alarm);
 	PRINT_LOG_ERROR(err);
 	return err;
 }

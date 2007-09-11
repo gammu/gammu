@@ -442,7 +442,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems, GSM_B
 	GSM_FreeMultiPartSMSInfo(&SMSInfo);
 }
 
-void IncomingSMS(GSM_StateMachine *s UNUSED, GSM_SMSMessage sms)
+void IncomingSMS(GSM_StateMachine *sm UNUSED, GSM_SMSMessage sms)
 {
 	printf("%s\n", _("SMS message received"));
  	if (wasincomingsms) {
@@ -486,13 +486,13 @@ void DisplayIncomingSMS()
  	wasincomingsms = false;
 }
 
-void IncomingCB(GSM_StateMachine *s UNUSED, GSM_CBMessage CB)
+void IncomingCB(GSM_StateMachine *sm UNUSED, GSM_CBMessage CB)
 {
 	printf("%s\n", _("CB message received"));
 	printf(_("Channel %i, text \"%s\"\n"),CB.Channel,DecodeUnicodeConsole(CB.Text));
 }
 
-void IncomingUSSD(GSM_StateMachine *s UNUSED, GSM_USSDMessage ussd)
+void IncomingUSSD(GSM_StateMachine *sm UNUSED, GSM_USSDMessage ussd)
 {
 	printf("%s\n", _("USSD received"));
 	printf(LISTFORMAT, _("Status"));
@@ -525,7 +525,7 @@ void IncomingUSSD(GSM_StateMachine *s UNUSED, GSM_USSDMessage ussd)
 	printf(LISTFORMAT "\"%s\"\n", _("Service reply"), DecodeUnicodeConsole(ussd.Text));
 }
 
-void IncomingUSSD2(GSM_StateMachine *s, GSM_USSDMessage ussd)
+void IncomingUSSD2(GSM_StateMachine *sm, GSM_USSDMessage ussd)
 {
 	IncomingUSSD(s, ussd);
 
@@ -802,7 +802,7 @@ void GetAllSMS(int argc, char *argv[])
 void GetEachSMS(int argc, char *argv[])
 {
 	GSM_Error error;
-	GSM_MultiSMSMessage	*GetSMS[GSM_PHONE_MAXSMSINFOLDER],*SortedSMS[GSM_PHONE_MAXSMSINFOLDER],sms;
+	GSM_MultiSMSMessage	*GetSMSData[GSM_PHONE_MAXSMSINFOLDER],*SortedSMS[GSM_PHONE_MAXSMSINFOLDER],sms;
 	int			GetSMSNumber = 0,i,j;
 	int			smsnum=0,smspos=0;
 	GSM_SMSFolders		folders;
@@ -816,7 +816,7 @@ void GetEachSMS(int argc, char *argv[])
 	GSM_ClearBackup(&Backup);
 #endif
 
-	GetSMS[0] = NULL;
+	GetSMSData[0] = NULL;
 
 	GSM_Init(true);
 
@@ -872,10 +872,10 @@ void GetEachSMS(int argc, char *argv[])
 			break;
 		default:
 			Print_Error(error);
-			GetSMS[GetSMSNumber] = malloc(sizeof(GSM_MultiSMSMessage));
-		        if (GetSMS[GetSMSNumber] == NULL) Print_Error(ERR_MOREMEMORY);
-			GetSMS[GetSMSNumber+1] = NULL;
-			memcpy(GetSMS[GetSMSNumber],&sms,sizeof(GSM_MultiSMSMessage));
+			GetSMSData[GetSMSNumber] = malloc(sizeof(GSM_MultiSMSMessage));
+		        if (GetSMSData[GetSMSNumber] == NULL) Print_Error(ERR_MOREMEMORY);
+			GetSMSData[GetSMSNumber+1] = NULL;
+			memcpy(GetSMSData[GetSMSNumber],&sms,sizeof(GSM_MultiSMSMessage));
 			GetSMSNumber++;
 		}
 		fprintf(stderr,"*");
@@ -887,13 +887,13 @@ void GetEachSMS(int argc, char *argv[])
 	GSM_PhoneBeep();
 #endif
 
-	error = GSM_LinkSMS(GetSMS, SortedSMS, ems);
+	error = GSM_LinkSMS(GetSMSData, SortedSMS, ems);
 	Print_Error(error);
 
 	i=0;
-	while(GetSMS[i] != NULL) {
-		free(GetSMS[i]);
-		GetSMS[i] = NULL;
+	while(GetSMSData[i] != NULL) {
+		free(GetSMSData[i]);
+		GetSMSData[i] = NULL;
 		i++;
 	}
 
@@ -1192,9 +1192,9 @@ void DisplaySMSFrame(GSM_SMSMessage *SMS)
 
 GSM_Error SMSStatus;
 
-void SendSMSStatus (GSM_StateMachine *s, int status, int MessageReference)
+void SendSMSStatus (GSM_StateMachine *sm, int status, int MessageReference)
 {
-	dbgprintf("Sent SMS on device: \"%s\"\n", GSM_GetConfig(s, -1)->Device);
+	dbgprintf("Sent SMS on device: \"%s\"\n", GSM_GetConfig(sm, -1)->Device);
 	if (status==0) {
 		printf(_("..OK"));
 		SMSStatus = ERR_NONE;

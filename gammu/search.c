@@ -56,7 +56,7 @@ int SearchPrintf(const char *format, ...)
 	return ret;
 }
 
-void SearchPrintPhoneInfo(OneDeviceInfo * Info, int index, GSM_StateMachine *sm)
+void SearchPrintPhoneInfo(OneDeviceInfo * Info, int connection_index, GSM_StateMachine *sm)
 {
 	GSM_Error error;
 	char buffer[GSM_MAX_INFO_LENGTH];
@@ -67,7 +67,7 @@ void SearchPrintPhoneInfo(OneDeviceInfo * Info, int index, GSM_StateMachine *sm)
 		if (!SearchOutput)
 			printf(_
 			       ("Connection \"%s\" on device \"%s\"\n"),
-			       Info->Connections[index].Connection,
+			       Info->Connections[connection_index].Connection,
 			       Info->Device);
 		printf("\t" LISTFORMAT "%s\n",
 		       _("Manufacturer"), buffer);

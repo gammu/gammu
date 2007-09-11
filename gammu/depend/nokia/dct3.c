@@ -78,7 +78,7 @@ static bool answer_yes3(char *text)
 
 static FILE *DCT3T9File;
 
-static GSM_Error DCT3_ReplyGetT9(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyGetT9(GSM_Protocol_Message msg, GSM_StateMachine *sm UNUSED)
 {
 	int DCT3T9Size;
 
@@ -136,7 +136,7 @@ void DCT3VibraTest(int argc, char *argv[])
 	error=GSM_WaitFor (s, SetLevel, 4, 0x40, 4, ID_User3);
 }
 
-static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message msg, GSM_StateMachine *sm UNUSED)
 {
 	int i;
 
