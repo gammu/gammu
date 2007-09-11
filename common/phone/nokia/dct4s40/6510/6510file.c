@@ -2088,9 +2088,11 @@ GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, i
 			//0x00 = SMS, 0x01,0x03 = MMS
 			if (file.Buffer[6] != 0x00) {
 				free(file.Buffer);
+				file.Buffer = NULL;
 				break;
 			}
 			free(file.Buffer);
+			file.Buffer = NULL;
 		} else break;
 	}
 
@@ -2256,6 +2258,7 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 
 			smprintf(s,"mms file");
 			free(FFF.Buffer);
+			FFF.Buffer = NULL;
 		}
 	}
 
@@ -2505,6 +2508,7 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		/* Fail if we don't know message type */
 		smprintf(s,"unknown sms file %02x\n",FFF.Buffer[i]);
 		free(FFF.Buffer);
+		FFF.Buffer = NULL;
 		return ERR_UNKNOWN;
 	}
 
@@ -2536,6 +2540,7 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 	memcpy(&sms->SMS[0].DateTime,&FFF.Modified,sizeof(GSM_DateTime));
 	sms->SMS[0].DateTime.Timezone = 0;
 	free(FFF.Buffer);
+	FFF.Buffer = NULL;
 
 	folderid = 0;
 	N26510_SetSMSLocation(s, &sms->SMS[0], folderid, location);
