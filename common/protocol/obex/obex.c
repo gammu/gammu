@@ -104,13 +104,13 @@ GSM_Protocol_Functions OBEXProtocol = {
 
 #endif
 
-void OBEXAddBlock(char *Buffer, int *Pos, unsigned char ID, const char *AddBuffer, int AddLength)
+void OBEXAddBlock(char *Buffer, int *Pos, unsigned char ID, const char *AddData, int AddLength)
 {
 	Buffer[(*Pos)++] = ID;
 	Buffer[(*Pos)++] = (AddLength+3)/256;
 	Buffer[(*Pos)++] = (AddLength+3)%256;
 	if (AddBuffer != NULL) {
-		memcpy(Buffer+(*Pos),AddBuffer,AddLength);
+		memcpy(Buffer+(*Pos),AddData,AddLength);
 		(*Pos) += AddLength;
 	}
 }

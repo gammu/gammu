@@ -188,7 +188,7 @@ void NetworkInfo(int argc UNUSED, char *argv[] UNUSED)
 	GSM_Terminate();
 }
 
-void IncomingCall(GSM_StateMachine *s UNUSED, GSM_Call call)
+void IncomingCall(GSM_StateMachine *sm UNUSED, GSM_Call call)
 {
 	printf(LISTFORMAT, _("Call info"));
 	if (call.CallIDAvailable) printf(_("ID %i, "),call.CallID);
@@ -515,7 +515,7 @@ void DialVoice(int argc, char *argv[])
 
 int TerminateID = -1;
 
-void IncomingCall0(GSM_StateMachine *s UNUSED, GSM_Call call)
+void IncomingCall0(GSM_StateMachine *sm UNUSED, GSM_Call call)
 {
 	if (call.CallIDAvailable) TerminateID = call.CallID;
 }

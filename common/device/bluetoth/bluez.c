@@ -187,14 +187,14 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 	uint8_t				count = 0;
 	int				i;
 	GSM_Error			error = ERR_TIMEOUT;
-	struct hci_dev_info		di;
+	struct hci_dev_info		hci_info;
 	uuid_t group;
 
 	memset(&group, 0, sizeof(group));
 	/* We're looking only for rfcomm channels */
 	sdp_uuid16_create(&group, RFCOMM_UUID);
 
-	if (hci_devinfo(0, &di) < 0) return ERR_DEVICENOTWORK;
+	if (hci_devinfo(0, &hci_info) < 0) return ERR_DEVICENOTWORK;
 
 	if (strcmp(s->CurrentConfig->Device, "/dev/ttyS1") == 0) {
 		dbgprintf("Searching for devices\n");

@@ -209,7 +209,7 @@ void SaveVCALDate(char *Buffer, int *Length, GSM_DateTime *Date, char *Start)
 
 bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 {
-	time_t time_t;
+	time_t timestamp;
 	char year[5]="", month[3]="", day[3]="", hour[3]="", minute[3]="", second[3]="";
 
 	memset(dt,0,sizeof(GSM_DateTime));
@@ -247,8 +247,8 @@ bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 	}
 
 	if (dt->Timezone != 0) {
-		time_t = Fill_Time_T(*dt) + dt->Timezone*3600;
-		Fill_GSM_DateTime(dt, time_t);
+		timestamp = Fill_Time_T(*dt) + dt->Timezone*3600;
+		Fill_GSM_DateTime(dt, timestamp);
 		dt->Year +=1900;
 	}
 

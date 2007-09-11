@@ -1477,13 +1477,13 @@ static GSM_Error GNAPGEN_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachin
 	return ERR_NONE;
 }
 
-static GSM_Error GNAPGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+static GSM_Error GNAPGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *timedelta)
 {
 	unsigned char req[] = {0x00, 0x05};
 
-	if (alarm->Location != 1) return ERR_NOTSUPPORTED;
+	if (timedelta->Location != 1) return ERR_NOTSUPPORTED;
 
-	s->Phone.Data.Alarm=alarm;
+	s->Phone.Data.Alarm=timedelta;
 	smprintf(s, "Getting alarm\n");
 	return GSM_WaitFor (s, req, 2, 0x8, 4, ID_GetAlarm);
 }

@@ -2978,7 +2978,7 @@ GSM_Error ATGEN_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 	return ATGEN_PrivSetDateTime(s, date_time, true);
 }
 
-GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
 	GSM_Error		error;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -2989,7 +2989,7 @@ GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 		if (error != ERR_NONE) return error;
 	}
 
-	s->Phone.Data.Alarm = alarm;
+	s->Phone.Data.Alarm = Alarm;
 	smprintf(s, "Getting alarm\n");
 	ATGEN_WaitFor(s, "AT+CALA?\r", 9, 0x00, 4, ID_GetAlarm);
 
@@ -2997,13 +2997,13 @@ GSM_Error ATGEN_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 }
 
 /* R320 only takes HH:MM. Do other phones understand full date? */
-GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
 	char			req[20];
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 
-	if (alarm->Location != 1) return ERR_INVALIDLOCATION;
+	if (Alarm->Location != 1) return ERR_INVALIDLOCATION;
 
 	/* If phone encodes also values in command, we need normal charset */
 	if (Priv->EncodedCommands) {
@@ -3011,7 +3011,7 @@ GSM_Error ATGEN_SetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 		if (error != ERR_NONE) return error;
 	}
 
-	sprintf(req, "AT+CALA=\"%02i:%02i\"\r",alarm->DateTime.Hour,alarm->DateTime.Minute);
+	sprintf(req, "AT+CALA=\"%02i:%02i\"\r",Alarm->DateTime.Hour,Alarm->DateTime.Minute);
 
 	smprintf(s, "Setting Alarm\n");
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 3, ID_SetAlarm);

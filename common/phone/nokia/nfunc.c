@@ -2304,7 +2304,7 @@ GSM_Error N71_65_GetCalendarInfo1(GSM_StateMachine *s, GSM_NOKIACalToDoLocations
 /* method 1 */
 GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int 			alarm,i;
+	int 			timedelta,i;
 	GSM_CalendarEntry	*entry = s->Phone.Data.Cal;
 
 	smprintf(s, "Calendar note received method 1\n");
@@ -2326,11 +2326,11 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		smprintf(s, "Meeting\n");
 		entry->Type = GSM_CAL_MEETING;
 
-		alarm=msg.Buffer[14]*256+msg.Buffer[15];
-		if (alarm != 0xffff) {
-			smprintf(s, "  Difference : %i seconds\n", alarm);
+		timedelta=msg.Buffer[14]*256+msg.Buffer[15];
+		if (timedelta != 0xffff) {
+			smprintf(s, "  Difference : %i seconds\n", timedelta);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
-			GetTimeDifference(alarm, &entry->Entries[1].Date, false, 60);
+			GetTimeDifference(timedelta, &entry->Entries[1].Date, false, 60);
 			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			entry->EntriesNum++;
 		}
@@ -2347,11 +2347,11 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		smprintf(s, "Call\n");
 		entry->Type = GSM_CAL_CALL;
 
-		alarm=msg.Buffer[14]*256+msg.Buffer[15];
-		if (alarm != 0xffff) {
-			smprintf(s, "  Difference : %i seconds\n", alarm);
+		timedelta=msg.Buffer[14]*256+msg.Buffer[15];
+		if (timedelta != 0xffff) {
+			smprintf(s, "  Difference : %i seconds\n", timedelta);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
-			GetTimeDifference(alarm, &entry->Entries[1].Date, false, 60);
+			GetTimeDifference(timedelta, &entry->Entries[1].Date, false, 60);
 			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			entry->EntriesNum++;
 		}
@@ -2382,14 +2382,14 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		entry->Entries[0].Date.Minute	= 59;
 		entry->Entries[0].Date.Second	= 58;
 
-		alarm  = ((unsigned int)msg.Buffer[14]) << 24;
-		alarm += ((unsigned int)msg.Buffer[15]) << 16;
-		alarm += ((unsigned int)msg.Buffer[16]) << 8;
-		alarm += msg.Buffer[17];
-		if (alarm != 0xffff) {
-			smprintf(s, "  Difference : %i seconds\n", alarm);
+		timedelta  = ((unsigned int)msg.Buffer[14]) << 24;
+		timedelta += ((unsigned int)msg.Buffer[15]) << 16;
+		timedelta += ((unsigned int)msg.Buffer[16]) << 8;
+		timedelta += msg.Buffer[17];
+		if (timedelta != 0xffff) {
+			smprintf(s, "  Difference : %i seconds\n", timedelta);
 			memcpy(&entry->Entries[1].Date,&entry->Entries[0].Date,sizeof(GSM_DateTime));
-			GetTimeDifference(alarm, &entry->Entries[1].Date, false, 1);
+			GetTimeDifference(timedelta, &entry->Entries[1].Date, false, 1);
 			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			if (msg.Buffer[20]!=0x00) {
 				entry->Entries[1].EntryType = CAL_SILENT_ALARM_DATETIME;

@@ -3178,7 +3178,7 @@ static GSM_Error ALCATEL_DeleteAllCalendar (GSM_StateMachine *s)
 }
 
 
-static GSM_Error ALCATEL_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
+static GSM_Error ALCATEL_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
 	GSM_Error		error;
 	GSM_CalendarEntry	Note;
@@ -3186,7 +3186,7 @@ static GSM_Error ALCATEL_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 	int			i;
 	bool			Found = false;
 	bool			DateSet = false;
-	int			alarm_number = alarm->Location;
+	int			alarm_number = Alarm->Location;
 	static GSM_DateTime	nulldt = {0,0,0,0,0,0,0};
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
@@ -3214,31 +3214,31 @@ static GSM_Error ALCATEL_GetAlarm(GSM_StateMachine *s, GSM_Alarm *alarm)
 	if ((error = ALCATEL_GetCalendar(s, &Note))!= ERR_NONE) return error;
 
 	if (Note.Type == GSM_CAL_ALARM) {
-		alarm->Repeating = false;
+		Alarm->Repeating = false;
 	} else {
-		alarm->Repeating = true;
+		Alarm->Repeating = true;
 	}
 
-	alarm->Text[0] = 0; alarm->Text[1] = 0;
+	Alarm->Text[0] = 0; Alarm->Text[1] = 0;
 
 
 	for (i = 0; i < Note.EntriesNum; i++) {
 		if (Note.Entries[i].EntryType == CAL_TEXT) {
-			CopyUnicodeString(alarm->Text, Note.Entries[i].Text);
+			CopyUnicodeString(Alarm->Text, Note.Entries[i].Text);
 		} else if (Note.Entries[i].EntryType == CAL_TONE_ALARM_DATETIME) {
-			alarm->DateTime = Note.Entries[i].Date;
+			Alarm->DateTime = Note.Entries[i].Date;
 			DateSet = false;
 		}
 	}
 	if (!DateSet) {
-		alarm->DateTime = nulldt;
+		Alarm->DateTime = nulldt;
 	}
 
 	return ERR_NONE;
 }
 
 
-static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_Alarm *alarm)
+static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_Alarm *Alarm)
 {
 	GSM_Error		error;
 	GSM_CalendarEntry	Note;
@@ -3246,7 +3246,7 @@ static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_Alarm *alarm)
 	GSM_DateTime		dt;
 	int			i;
 	bool			Found = false;
-	int			alarm_number = alarm->Location;
+	int			alarm_number = Alarm->Location;
 
 	if ((error = ALCATEL_GoToBinaryState(s, StateSession, TypeCalendar, 0))!= ERR_NONE) return error;
 	if ((error = ALCATEL_GetAvailableIds(s, false))!= ERR_NONE) return error;
@@ -3273,9 +3273,9 @@ static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_Alarm *alarm)
 	Note.EntriesNum = 1;
 
 	Note.Entries[0].EntryType = CAL_TONE_ALARM_DATETIME;
-	Note.Entries[0].Date = alarm->DateTime;
+	Note.Entries[0].Date = Alarm->DateTime;
 
-	if (alarm->Repeating) {
+	if (Alarm->Repeating) {
 		Note.Type = GSM_CAL_DAILY_ALARM;
 		GSM_GetCurrentDateTime(&dt);
 		Note.Entries[0].Date.Day = dt.Day;
@@ -3285,10 +3285,10 @@ static GSM_Error ALCATEL_SetAlarm (GSM_StateMachine *s, GSM_Alarm *alarm)
 		Note.Type = GSM_CAL_ALARM;
 	}
 
-	if (alarm->Text[0] != 0 || alarm->Text[1] != 0) {
+	if (Alarm->Text[0] != 0 || Alarm->Text[1] != 0) {
 		Note.EntriesNum++;
 		Note.Entries[1].EntryType = CAL_TEXT;
-		CopyUnicodeString(Note.Entries[1].Text, alarm->Text);
+		CopyUnicodeString(Note.Entries[1].Text, Alarm->Text);
 	}
 
 	if (Found) {

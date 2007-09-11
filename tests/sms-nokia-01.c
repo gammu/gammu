@@ -23,11 +23,11 @@ extern GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 
 int main(int argc, char **argv)
 {
-	GSM_Debug_Info *di;
+	GSM_Debug_Info *debug_info;
 
-	di = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, di);
-	GSM_SetDebugLevel("textall", di);
+	debug_info = GSM_GetGlobalDebug();
+	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
