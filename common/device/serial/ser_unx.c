@@ -375,11 +375,12 @@ static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
     	int		     	ret;
     	size_t		  	actual = 0;
+	unsigned char *buffer = (unsigned char *)buf; /* Just to have correct type */
 
 	assert(d->hPhone >= 0);
 
     	do {
-		ret = write(d->hPhone, (unsigned char *)buf, nbytes - actual);
+		ret = write(d->hPhone, buffer, nbytes - actual);
 		if (ret < 0) {
 			if (errno == EAGAIN) {
 				my_sleep(1);
@@ -389,7 +390,7 @@ static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 	    		return actual;
 		}
 		actual  += ret;
-		buf     += ret;
+		buffer  += ret;
     		if (s->ConnectionType == GCT_FBUS2PL2303) my_sleep(1);
     	} while (actual < nbytes);
     	return actual;
