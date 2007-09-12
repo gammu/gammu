@@ -512,7 +512,7 @@ void NokiaAddFile(int argc, char *argv[])
 	FILE			*file;
 	unsigned char 		buffer[10000],JAR[500],Vendor[500],Name[500],Version[500],FileID[400];
 	bool 			Start = true, Found = false, wasclr;
-	bool			ModEmpty = false, Overwrite = false;
+	bool			ModEmpty = false, Overwrite = false, OverwriteAll = false;
 	size_t i = 0, Pos;
 	int Size, Size2;
 	int nextlong, j;
@@ -745,6 +745,10 @@ void NokiaAddFile(int argc, char *argv[])
 		if (argc > 4) {
 			for (j = 4; j < argc; j++) {
 				if (strcasecmp(argv[j],"-overwrite") == 0) Overwrite = true;
+				if (strcasecmp(argv[j],"-overwriteall") == 0) {
+					Overwrite = true;
+					OverwriteAll = true;
+				}
 			}
 		}
 
@@ -772,20 +776,33 @@ void NokiaAddFile(int argc, char *argv[])
 					Start = false;
 				}
 
-				CopyUnicodeString(buffer,File2.ID_FullName);
+				Start = true;
+				CopyUnicodeString(File.ID_FullName,File2.ID_FullName);
 				while (1) {
-					CopyUnicodeString(File2.ID_FullName,buffer);
-					error = GSM_GetFolderListing(s,&File2,true);
+					error = GSM_GetFolderListing(s,&File2,Start);
 					if (error == ERR_EMPTY) break;
 					Print_Error(error);
 
-					fprintf(stderr, _("  Deleting %s\n"),DecodeUnicodeString(File2.Name));
+					strcpy(buffer,DecodeUnicodeString(File2.Name));
 
+					i = strlen(buffer);
+					if (i < 4) continue;
+
+					i -= 4;
+
+					if (OverwriteAll ||
+					    strcmp(buffer + i,".jad") == 0 ||
+					    strcmp(buffer + i,".jar") == 0) {
+						fprintf(stderr, _("  Deleting %s\n"),buffer);
 					error = GSM_DeleteFile(s,File2.ID_FullName);
 					Print_Error(error);
-				}
 
-				CopyUnicodeString(File.ID_FullName,buffer);
+						CopyUnicodeString(File2.ID_FullName,File.ID_FullName);
+						Start = true;
+					} else {
+						Start = false;
+					}
+				}
 			} else {
 			    	Print_Error(error);
 			}
@@ -806,8 +823,10 @@ void NokiaAddFile(int argc, char *argv[])
 
 					i = strlen(Name);
 					if (strncmp(buffer,Name,i) == 0 &&
-					    (strcmp(buffer + i,".jad") == 0 || strcmp(buffer + i,".jar") == 0)) {
-						fprintf(stderr, _("  Deleting %s\n"),DecodeUnicodeString(File2.ID_FullName));
+					    (strcmp(buffer + i,".jad") == 0 ||
+					     strcmp(buffer + i,".jar") == 0 ||
+					     (strncmp(buffer + i,"\177_m_",4) == 0 && OverwriteAll))) {
+						fprintf(stderr, _("  Deleting %s\n"),buffer);
 						error = GSM_DeleteFile(s,File2.ID_FullName);
 						Print_Error(error);
 

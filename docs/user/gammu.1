@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Jul 31 2007" "Gammu 1.12.93" "Gammu Documentation"
+.TH "GAMMU" "1" "Sep 12 2007" "Gammu 1.13.91" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -580,6 +580,12 @@ Display info about drives available in phone/memory card.
 .TP
 .BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]"
 Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You have to give the name without the jar/jad suffix, otherwise you will get the slightly confusing error message Can't open specified file. Read only ?
+
+The option
+.I \-overwrite
+deletes the application's .jad and .jar files bevor installing, but doesn't delete the application data. Option
+.I \-overwriteall
+will also delete all data. Both these options work only for Application or Game upload.
 
 \fIExample:\fR gammu nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
 
@@ -1301,6 +1307,12 @@ messages in phone (if it supports it).
 .TP
 .BI "nokiaaddfile" " Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard file [\-name name] [\-protected] [\-readonly] [\-system] [\-hidden] [\-newtime]"
 Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You have to give the name without the jar/jad suffix, otherwise you will get the slightly confusing error message Can't open specified file. Read only ?
+
+The option
+.I \-overwrite
+deletes the application's .jad and .jar files bevor installing, but doesn't delete the application data. Option
+.I \-overwriteall
+will also delete all data. Both these options work only for Application or Game upload.
 
 \fIExample:\fR gammu nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
 

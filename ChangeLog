@@ -21,6 +21,8 @@ ChangeLog
 [-] * Fixed overwriting of Java applications in Nokia phones (thanks to
       Martin Thierer, bug 382).
 [-] * Fixed compilation with older PostgreSQL libraries.
+[+] * Command nokiaaddfile can now either keep or delete user data on
+      uploading new application (thanks to Martin Thierer, bug 385).
 
 20070907 - 1.13.90
 [-] * Fixed parsing of date/time reply from some broken AT phones.
