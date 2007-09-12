@@ -159,7 +159,7 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 {
 	int 			x;
 	int 			id,timestamp,number,length;
-	struct wmx_tracetype 	*minor;
+	struct wmx_tracetype 	*wmx_minor;
 	char 			*desc;
 
 	//printf("Debug Trace Received\n");
@@ -187,8 +187,8 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 	/* Query trace type name */
 	desc = "Unknown";
 	if(traces != NULL) {
-		minor = wmx_tracestruct_queryminor(traces, id);
-		if(minor != NULL) desc = minor->desc;
+		wmx_minor = wmx_tracestruct_queryminor(traces, id);
+		if(wmx_minor != NULL) desc = wmx_minor->desc;
 	}
 	printf("<%04X> %s\n", id, desc);
 	printf("t=%04x nr=%02x: ", timestamp, number);
