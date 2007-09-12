@@ -106,6 +106,16 @@ extern void GSM_InitLocales(const char *path);
  * Encodes text to hexadecimal binary representation.
  */
 void EncodeHexBin(unsigned char *dest, const unsigned char *src, int len);
+
+/**
+ * Returns true if firmware version version1 is newer than version2.
+ *
+ * \param version1 String containing version (eg. latest available).
+ * \param version2 String containing version (eg. current one).
+ *
+ * \return True if version1 > version2.
+ */
+bool GSM_IsNewerVersion(const char *version1, const char *version2);
 #endif
 
 /* Editor configuration
