@@ -47,6 +47,21 @@ int printf_warn(const char *format, ...)
 	return ret;
 }
 
+int printf_info(const char *format, ...)
+{
+	va_list ap;
+	int ret;
+
+	/* l10n: Generic prefix for informational messages */
+	printf("%s: ", _("Information"));
+
+	va_start(ap, format);
+	ret = vprintf(format, ap);
+	va_end(ap);
+
+	return ret;
+}
+
 void interrupt(int sign)
 {
 	signal(sign, SIG_IGN);
@@ -228,9 +243,9 @@ void GSM_Init(bool checkerror)
 {
 	GSM_File PhoneDB;
 	char model[GSM_MAX_MODEL_LENGTH];
-	char version[GSM_MAX_VERSION_LENGTH];
-	unsigned char buff[50 + GSM_MAX_MODEL_LENGTH];
-	unsigned char ver[GSM_MAX_VERSION_LENGTH];
+	char current_version[GSM_MAX_VERSION_LENGTH];
+	char buff[50 + GSM_MAX_MODEL_LENGTH];
+	char latest_version[GSM_MAX_VERSION_LENGTH];
 	size_t pos = 0, oldpos = 0, i;
 	GSM_Error error;
 
@@ -257,7 +272,7 @@ void GSM_Init(bool checkerror)
 	Print_Error(error);
 
 	/* Empty string */
-	ver[0] = 0;
+	latest_version[0] = 0;
 
 	/* Request information from phone db */
 	sprintf(buff, "support/phones/phonedbxml.php?model=%s", model);
@@ -277,10 +292,10 @@ void GSM_Init(bool checkerror)
 			oldpos = pos;
 			continue;
 		}
-		sprintf(ver, strstr(PhoneDB.Buffer + oldpos, "<version>") + 9);
-		for (i = 0; i < strlen(ver); i++) {
-			if (ver[i] == '<') {
-				ver[i] = 0;
+		sprintf(latest_version, strstr(PhoneDB.Buffer + oldpos, "<version>") + 9);
+		for (i = 0; i < strlen(latest_version); i++) {
+			if (latest_version[i] == '<') {
+				latest_version[i] = 0;
 				break;
 			}
 		}
@@ -290,25 +305,21 @@ void GSM_Init(bool checkerror)
 	free(PhoneDB.Buffer);
 
 	/* Did we find something? */
-	if (ver[0] == 0) {
+	if (latest_version[0] == 0) {
 		return;
 	}
 
 	/* Get phone firmware version */
-	error = GSM_GetFirmware(s, version, NULL, NULL);
+	error = GSM_GetFirmware(s, current_version, NULL, NULL);
 	Print_Error(error);
-	if (version[0] == '0') {
-		i = 1;
-	} else {
-		i = 0;
-	}
 
 	/* Compare versions */
-	if (!GSM_IsNewerVersion(ver, version))
+	if (!GSM_IsNewerVersion(latest_version, current_version))
 		return;
 
-	printf(_("INFO: there is later phone firmware (%s instead of %s) available!\n"),
-			ver, version);
+	printf_info(_("Never version of firmware is available!\n"));
+	printf_info(_("Latest version is %s and you run %s.\n"),
+			latest_version, current_version);
 }
 
 void GSM_Terminate(void)

@@ -108,14 +108,14 @@ extern void GSM_InitLocales(const char *path);
 void EncodeHexBin(unsigned char *dest, const unsigned char *src, int len);
 
 /**
- * Returns true if firmware version version1 is newer than version2.
+ * Returns true if firmware version is newer.
  *
- * \param version1 String containing version (eg. latest available).
- * \param version2 String containing version (eg. current one).
+ * \param latest_version String containing version (eg. latest available).
+ * \param current_version String containing version (eg. current one).
  *
- * \return True if version1 > version2.
+ * \return True if latest_version > current_version.
  */
-bool GSM_IsNewerVersion(const char *version1, const char *version2);
+bool GSM_IsNewerVersion(const char *latest_version, const char *current_version);
 #endif
 
 /* Editor configuration

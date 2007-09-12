@@ -726,15 +726,17 @@ const char *GetCompiler(void)
 	return Buffer;
 }
 
-bool GSM_IsNewerVersion(const char *version1, const char *version2) 
+bool GSM_IsNewerVersion(const char *latest_version, const char *current_version)
 {
 	size_t i;
-	size_t len = strlen(version1);
+	size_t len = strlen(latest_version);
+
 	for (i = 0; i < len ; i++) {
-		if (version1[i] > version2[i]) {
+		if (latest_version[i] > current_version[i]) {
 			return true;
 		}
 	}
+
 	return false;
 }
 
