@@ -369,15 +369,18 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 		sprintf(buffer + strlen(buffer), ",'%i','", sms.SMS[i].Class);
 
 		switch (sms.SMS[i].Coding) {
-				int error;
 
 			case SMS_Coding_Unicode_No_Compression:
 
 			case SMS_Coding_Default_No_Compression:
 				EncodeUTF8(buffer2, sms.SMS[i].Text);
+#ifdef HAVE_PQESCAPESTRINGCONN
 				PQescapeStringConn(Config->DBConnPgSQL, buffer4,
 						   buffer2, strlen(buffer2),
-						   &error);
+						   NULL);
+#else
+				PQescapeString(buffer4, buffer2, strlen(buffer2));
+#endif
 				memcpy(buffer + strlen(buffer), buffer4,
 				       strlen(buffer4) + 1);
 				break;
@@ -656,7 +659,6 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 	unsigned char buffer[10000], buffer2[400], buffer4[10000], buffer5[400];
 	int i, ID;
 	int numb_rows, numb_tuples;
-	int error;
 	PGresult *Res;
 
 	sprintf(buffer, "SELECT ID FROM outbox ORDER BY ID DESC LIMIT 1");
@@ -798,9 +800,13 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 			case SMS_Coding_Default_No_Compression:
 				EncodeUTF8(buffer2, sms->SMS[i].Text);
+#ifdef HAVE_PQESCAPESTRINGCONN
 				PQescapeStringConn(Config->DBConnPgSQL, buffer5,
 						   buffer2, strlen(buffer2),
-						   &error);
+						   NULL);
+#else
+				PQescapeString(buffer5, buffer2, strlen(buffer2));
+#endif
 				memcpy(buffer + strlen(buffer), buffer5,
 				       strlen(buffer5) + 1);
 				break;
@@ -914,7 +920,6 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	PGresult *Res;
 
 	unsigned char buffer[10000], buffer2[400], buff[50], buffer5[400];
-	int escape_error;
 
 	if (err == SMSD_SEND_OK) {
 		WriteSMSDLog(_("Transmitted %s (%s: %i) to %s"), Config->SMSID,
@@ -1009,9 +1014,13 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 
 		case SMS_Coding_Default_No_Compression:
 			EncodeUTF8(buffer2, sms->SMS[Part - 1].Text);
+#ifdef HAVE_PQESCAPESTRINGCONN
 			PQescapeStringConn(Config->DBConnPgSQL, buffer5,
 					   buffer2, strlen(buffer2),
-					   &escape_error);
+					   NULL);
+#else
+			PQescapeString(buffer5, buffer2, strlen(buffer2));
+#endif
 			memcpy(buffer + strlen(buffer), buffer5,
 			       strlen(buffer5) + 1);
 			break;
