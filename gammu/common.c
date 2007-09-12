@@ -303,14 +303,12 @@ void GSM_Init(bool checkerror)
 		i = 0;
 	}
 
-	/* Compare firware from database to our one */
-	for (; i < strlen(ver); i++) {
-		if (ver[i] > version[i]) {
-			printf(_("INFO: there is later phone firmware (%s instead of %s) available!\n"),
-			       ver, version);
-			return;
-		}
-	}
+	/* Compare versions */
+	if (!GSM_IsNewerVersion(ver, version))
+		return;
+
+	printf(_("INFO: there is later phone firmware (%s instead of %s) available!\n"),
+			ver, version);
 }
 
 void GSM_Terminate(void)

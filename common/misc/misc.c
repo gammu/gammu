@@ -726,6 +726,18 @@ const char *GetCompiler(void)
 	return Buffer;
 }
 
+bool GSM_IsNewerVersion(const char *version1, const char *version2) 
+{
+	size_t i;
+	size_t len = strlen(version1);
+	for (i = 0; i < len ; i++) {
+		if (version1[i] > version2[i]) {
+			return true;
+		}
+	}
+	return false;
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
