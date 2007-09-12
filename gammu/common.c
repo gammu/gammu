@@ -239,6 +239,11 @@ GSM_MemoryType MemoryTypeFromString(const char *type)
 	return 0;
 }
 
+/**
+ * Initiates connection to phone.
+ *
+ * \param checkerror Whether we should check for error.
+ */
 void GSM_Init(bool checkerror)
 {
 	GSM_File PhoneDB;
