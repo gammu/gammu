@@ -170,6 +170,9 @@
 #ifndef HAVE_POSTGRESQL_LIBPQ_FE_H
 #cmakedefine HAVE_POSTGRESQL_LIBPQ_FE_H
 #endif
+#ifndef HAVE_PQESCAPESTRINGCONN
+#cmakedefine HAVE_PQESCAPESTRINGCONN
+#endif
 #ifndef HAVE_SYS_UTSNAME_H
 #cmakedefine HAVE_SYS_UTSNAME_H
 #endif
