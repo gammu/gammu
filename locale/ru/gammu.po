@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-09-03 13:29+0900\n"
+"POT-Creation-Date: 2007-09-12 15:21+0900\n"
 "PO-Revision-Date: 2007-08-16 09:45+0200\n"
 "Last-Translator: Andy Kir <dronmbi@mail.com>\n"
 "Language-Team: Language =ru\n"
@@ -1329,196 +1329,207 @@ msgstr "Ошибка\n"
 msgid "Warning"
 msgstr "Встреча"
 
-#: gammu/common.c:65
+#. l10n: Generic prefix for informational messages
+#: gammu/common.c:56
+#, fuzzy
+msgid "Information"
+msgstr "Местонахождение %i\n"
+
+#: gammu/common.c:80
 #, fuzzy
 msgid "Waiting for Security Code."
 msgstr "Ожидается ввод кода защиты.\n"
 
-#: gammu/common.c:68
+#: gammu/common.c:83
 #, fuzzy
 msgid "Waiting for PIN."
 msgstr "Ожидается PIN.\n"
 
-#: gammu/common.c:71
+#: gammu/common.c:86
 #, fuzzy
 msgid "Waiting for PIN2."
 msgstr "Ожидается PIN2.\n"
 
-#: gammu/common.c:74
+#: gammu/common.c:89
 #, fuzzy
 msgid "Waiting for PUK."
 msgstr "Ожидается PUK.\n"
 
-#: gammu/common.c:77
+#: gammu/common.c:92
 #, fuzzy
 msgid "Waiting for PUK2."
 msgstr "Ожидается PUK2.\n"
 
-#: gammu/common.c:80
+#: gammu/common.c:95
 #, fuzzy
 msgid "Waiting for phone code."
 msgstr "Ожидается ввод кода защиты.\n"
 
-#: gammu/common.c:83
+#: gammu/common.c:98
 #, fuzzy
 msgid "Nothing to enter."
 msgstr "Нечего вводить.\n"
 
-#: gammu/common.c:87
+#: gammu/common.c:102
 #, fuzzy
 msgid "Unknown security status."
 msgstr "Состояние безопасности: "
 
-#: gammu/common.c:98
+#: gammu/common.c:113
 msgid "January"
 msgstr "января"
 
-#: gammu/common.c:101
+#: gammu/common.c:116
 msgid "February"
 msgstr "февраля"
 
-#: gammu/common.c:104
+#: gammu/common.c:119
 msgid "March"
 msgstr "марта"
 
-#: gammu/common.c:107
+#: gammu/common.c:122
 msgid "April"
 msgstr "апреля"
 
-#: gammu/common.c:110
+#: gammu/common.c:125
 msgid "May"
 msgstr "мая"
 
-#: gammu/common.c:113
+#: gammu/common.c:128
 msgid "June"
 msgstr "июня"
 
-#: gammu/common.c:116
+#: gammu/common.c:131
 msgid "July"
 msgstr "июля"
 
-#: gammu/common.c:119
+#: gammu/common.c:134
 msgid "August"
 msgstr "августа"
 
-#: gammu/common.c:122
+#: gammu/common.c:137
 msgid "September"
 msgstr "сентября"
 
-#: gammu/common.c:125
+#: gammu/common.c:140
 msgid "October"
 msgstr "октября"
 
-#: gammu/common.c:128
+#: gammu/common.c:143
 msgid "November"
 msgstr "ноября"
 
-#: gammu/common.c:131
+#: gammu/common.c:146
 msgid "December"
 msgstr "декабря"
 
-#: gammu/common.c:134
+#: gammu/common.c:149
 msgid "Bad month!"
 msgstr "Неверный месяц!"
 
-#: gammu/common.c:146
+#: gammu/common.c:161
 msgid "Monday"
 msgstr "понедельник"
 
-#: gammu/common.c:149
+#: gammu/common.c:164
 msgid "Tuesday"
 msgstr "вторник"
 
-#: gammu/common.c:152
+#: gammu/common.c:167
 msgid "Wednesday"
 msgstr "среду"
 
-#: gammu/common.c:155
+#: gammu/common.c:170
 msgid "Thursday"
 msgstr "четверг"
 
-#: gammu/common.c:158
+#: gammu/common.c:173
 msgid "Friday"
 msgstr "пятницу"
 
-#: gammu/common.c:161
+#: gammu/common.c:176
 msgid "Saturday"
 msgstr "субботу"
 
-#: gammu/common.c:164
+#: gammu/common.c:179
 msgid "Sunday"
 msgstr "воскресенье"
 
-#: gammu/common.c:167
+#: gammu/common.c:182
 msgid "Bad day!"
 msgstr "Неверный день!"
 
-#: gammu/common.c:179
+#: gammu/common.c:194
 #, fuzzy
 msgid "Security status"
 msgstr "Состояние безопасности: "
 
-#: gammu/common.c:308
-#, fuzzy, c-format
-msgid "INFO: there is later phone firmware (%s instead of %s) available!\n"
+#: gammu/common.c:320
+#, fuzzy
+msgid "Never version of firmware is available!\n"
 msgstr "ИНФО: для телефона доступна новая прошивка (%s вместо %s)!\n"
 
-#: gammu/common.c:330 gammu/misc.c:903 gammu/misc.c:918 gammu/misc.c:925
+#: gammu/common.c:321
+#, c-format
+msgid "Latest version is %s and you run %s.\n"
+msgstr ""
+
+#: gammu/common.c:340 gammu/misc.c:903 gammu/misc.c:918 gammu/misc.c:925
 #: gammu/misc.c:932 gammu/misc.c:962
 #, fuzzy
 msgid "More parameters required!"
 msgstr "ОШИБКА: требуются дополнительные параметры\n"
 
-#: gammu/common.c:336 gammu/common.c:346 gammu/depend/nokia/dct4.c:676
+#: gammu/common.c:346 gammu/common.c:356 gammu/depend/nokia/dct4.c:676
 #: gammu/misc.c:1078
 #, fuzzy
 msgid "Please enumerate locations from 1"
 msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
 
-#: gammu/common.c:351
+#: gammu/common.c:361
 #, fuzzy
 msgid "Swapping start and end location"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: меняются местами начальное и конечное положения\n"
 
 #. l10n: %s is replaced by question, answers have to match corresponding translations
-#: gammu/common.c:366
+#: gammu/common.c:376
 #, c-format
 msgid "%s (yes/no/ALL/ONLY/NONE) ? "
 msgstr "%s (yes/no/ALL/ONLY/NONE)?"
 
-#: gammu/common.c:368
+#: gammu/common.c:378
 #, fuzzy
 msgid "YES (always)"
 msgstr "ДА (для всех)\n"
 
-#: gammu/common.c:372
+#: gammu/common.c:382
 #, fuzzy
 msgid "NO (always)"
 msgstr "НЕТ (для всех)\n"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:379
+#: gammu/common.c:389
 msgid "NONE"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:384
+#: gammu/common.c:394
 msgid "ONLY"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:389
+#: gammu/common.c:399
 msgid "ALL"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:394 gammu/depend/nokia/dct4.c:73
+#: gammu/common.c:404 gammu/depend/nokia/dct4.c:73
 #, fuzzy
 msgid "yes"
 msgstr "да\n"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:397 gammu/depend/nokia/dct4.c:74
+#: gammu/common.c:407 gammu/depend/nokia/dct4.c:74
 #, fuzzy
 msgid "no"
 msgstr "нет\n"
@@ -1977,7 +1988,7 @@ msgstr "  Сохранение в %s\n"
 msgid "%3i percent"
 msgstr "%c  %i процент"
 
-#: gammu/files.c:683 gammu/nokia.c:869
+#: gammu/files.c:683 gammu/nokia.c:916
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr "Параметр \"%s\" неизвестен\n"
@@ -1987,7 +1998,7 @@ msgstr "Параметр \"%s\" неизвестен\n"
 msgid "What file type (\"%s\") ?\n"
 msgstr "Тип файла (\"%s\")?\n"
 
-#: gammu/files.c:727 gammu/message.c:2303 gammu/misc.c:1074 gammu/nokia.c:878
+#: gammu/files.c:727 gammu/message.c:2303 gammu/misc.c:1074 gammu/nokia.c:925
 #, fuzzy
 msgid "Parameter missing!"
 msgstr "Отсутствует параметр ...\n"
@@ -4738,12 +4749,12 @@ msgstr " версия %s"
 msgid " created by %s\n"
 msgstr " автор: %s\n"
 
-#: gammu/nokia.c:759
+#: gammu/nokia.c:763 gammu/nokia.c:815
 #, fuzzy
 msgid "INFO: Application already exist. Deleting by Gammu"
 msgstr "ИНФО: Приложение уже существует. Удаляется Gammu\n"
 
-#: gammu/nokia.c:782
+#: gammu/nokia.c:796 gammu/nokia.c:829
 #, c-format
 msgid "  Deleting %s\n"
 msgstr "  Удаляется %s\n"
@@ -4782,7 +4793,7 @@ msgstr ""
 msgid "Error copying SMS %s -> %s"
 msgstr ""
 
-#: gammu/smsd/s_files.c:352 gammu/smsd/s_mysql.c:594 gammu/smsd/s_pgsql.c:920
+#: gammu/smsd/s_files.c:352 gammu/smsd/s_mysql.c:594 gammu/smsd/s_pgsql.c:925
 #, c-format
 msgid "Transmitted %s (%s: %i) to %s"
 msgstr ""
@@ -5058,7 +5069,7 @@ msgid "Error writing to database (RefreshSendStatus): %d %s\n"
 msgstr ""
 
 #: gammu/smsd/s_mysql.c:315 gammu/smsd/s_mysql.c:319 gammu/smsd/s_mysql.c:351
-#: gammu/smsd/s_mysql.c:355 gammu/smsd/s_pgsql.c:461 gammu/smsd/s_pgsql.c:514
+#: gammu/smsd/s_mysql.c:355 gammu/smsd/s_pgsql.c:464 gammu/smsd/s_pgsql.c:517
 #, c-format
 msgid "Error reading from database (FindOutbox): %s\n"
 msgstr ""
@@ -5069,13 +5080,13 @@ msgid "Error deleting from database (MoveSMS): %d %s\n"
 msgstr ""
 
 #: gammu/smsd/s_mysql.c:445 gammu/smsd/s_mysql.c:449 gammu/smsd/s_mysql.c:551
-#: gammu/smsd/s_mysql.c:555 gammu/smsd/s_pgsql.c:668 gammu/smsd/s_pgsql.c:825
-#: gammu/smsd/s_pgsql.c:876
+#: gammu/smsd/s_mysql.c:555 gammu/smsd/s_pgsql.c:670 gammu/smsd/s_pgsql.c:831
+#: gammu/smsd/s_pgsql.c:882
 #, c-format
 msgid "Error reading from database (CreateOutbox): %s\n"
 msgstr ""
 
-#: gammu/smsd/s_mysql.c:565 gammu/smsd/s_pgsql.c:860
+#: gammu/smsd/s_mysql.c:565 gammu/smsd/s_pgsql.c:866
 msgid "Duplicated outgoing SMS ID\n"
 msgstr ""
 
@@ -5104,32 +5115,32 @@ msgstr ""
 msgid "Error inserting into database (Init): %s\n"
 msgstr ""
 
-#: gammu/smsd/s_pgsql.c:290 gammu/smsd/s_pgsql.c:1063
+#: gammu/smsd/s_pgsql.c:290 gammu/smsd/s_pgsql.c:1072
 #, c-format
 msgid "Error writing to database (SaveInboxSMS): %s\n"
 msgstr ""
 
-#: gammu/smsd/s_pgsql.c:398
+#: gammu/smsd/s_pgsql.c:401
 #, c-format
 msgid "Error writing to database (SaveInbox): %s\n"
 msgstr ""
 
-#: gammu/smsd/s_pgsql.c:424
+#: gammu/smsd/s_pgsql.c:427
 #, c-format
 msgid "Error writing to database (RefreshSendStatus): %s\n"
 msgstr ""
 
-#: gammu/smsd/s_pgsql.c:628 gammu/smsd/s_pgsql.c:641
+#: gammu/smsd/s_pgsql.c:631 gammu/smsd/s_pgsql.c:644
 #, c-format
 msgid "Error deleting from database (MoveSMS): %s\n"
 msgstr ""
 
-#: gammu/smsd/s_pgsql.c:847 gammu/smsd/s_pgsql.c:897
+#: gammu/smsd/s_pgsql.c:853 gammu/smsd/s_pgsql.c:903
 #, c-format
 msgid "Error writing to database (CreateOutbox): %s\n"
 msgstr ""
 
-#: gammu/smsd/s_pgsql.c:1036
+#: gammu/smsd/s_pgsql.c:1045
 #, c-format
 msgid "Error writing to database (AddSent): %s\n"
 msgstr ""
