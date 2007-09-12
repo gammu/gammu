@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-09-12 15:21+0900\n"
+"POT-Creation-Date: 2007-09-12 15:24+0900\n"
 "PO-Revision-Date: 2007-08-16 09:45+0200\n"
 "Last-Translator: Andy Kir <dronmbi@mail.com>\n"
 "Language-Team: Language =ru\n"
@@ -1464,72 +1464,72 @@ msgstr "Неверный день!"
 msgid "Security status"
 msgstr "Состояние безопасности: "
 
-#: gammu/common.c:320
+#: gammu/common.c:323
 #, fuzzy
 msgid "Never version of firmware is available!\n"
 msgstr "ИНФО: для телефона доступна новая прошивка (%s вместо %s)!\n"
 
-#: gammu/common.c:321
+#: gammu/common.c:324
 #, c-format
 msgid "Latest version is %s and you run %s.\n"
 msgstr ""
 
-#: gammu/common.c:340 gammu/misc.c:903 gammu/misc.c:918 gammu/misc.c:925
+#: gammu/common.c:343 gammu/misc.c:903 gammu/misc.c:918 gammu/misc.c:925
 #: gammu/misc.c:932 gammu/misc.c:962
 #, fuzzy
 msgid "More parameters required!"
 msgstr "ОШИБКА: требуются дополнительные параметры\n"
 
-#: gammu/common.c:346 gammu/common.c:356 gammu/depend/nokia/dct4.c:676
+#: gammu/common.c:349 gammu/common.c:359 gammu/depend/nokia/dct4.c:676
 #: gammu/misc.c:1078
 #, fuzzy
 msgid "Please enumerate locations from 1"
 msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
 
-#: gammu/common.c:361
+#: gammu/common.c:364
 #, fuzzy
 msgid "Swapping start and end location"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: меняются местами начальное и конечное положения\n"
 
 #. l10n: %s is replaced by question, answers have to match corresponding translations
-#: gammu/common.c:376
+#: gammu/common.c:379
 #, c-format
 msgid "%s (yes/no/ALL/ONLY/NONE) ? "
 msgstr "%s (yes/no/ALL/ONLY/NONE)?"
 
-#: gammu/common.c:378
+#: gammu/common.c:381
 #, fuzzy
 msgid "YES (always)"
 msgstr "ДА (для всех)\n"
 
-#: gammu/common.c:382
+#: gammu/common.c:385
 #, fuzzy
 msgid "NO (always)"
 msgstr "НЕТ (для всех)\n"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:389
+#: gammu/common.c:392
 msgid "NONE"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:394
+#: gammu/common.c:397
 msgid "ONLY"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:399
+#: gammu/common.c:402
 msgid "ALL"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:404 gammu/depend/nokia/dct4.c:73
+#: gammu/common.c:407 gammu/depend/nokia/dct4.c:73
 #, fuzzy
 msgid "yes"
 msgstr "да\n"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:407 gammu/depend/nokia/dct4.c:74
+#: gammu/common.c:410 gammu/depend/nokia/dct4.c:74
 #, fuzzy
 msgid "no"
 msgstr "нет\n"

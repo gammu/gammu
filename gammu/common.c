@@ -249,9 +249,11 @@ void GSM_Init(bool checkerror)
 	size_t pos = 0, oldpos = 0, i;
 	GSM_Error error;
 
+	/* No checks on existing batch mode */
 	if (batch && batchConn)
 		return;
 
+	/* Connect to phone */
 	error = GSM_InitConnection(s, 3);
 	if (checkerror)
 		Print_Error(error);
@@ -317,6 +319,7 @@ void GSM_Init(bool checkerror)
 	if (!GSM_IsNewerVersion(latest_version, current_version))
 		return;
 
+	/* Print information to user */
 	printf_info(_("Never version of firmware is available!\n"));
 	printf_info(_("Latest version is %s and you run %s.\n"),
 			latest_version, current_version);
