@@ -48,7 +48,9 @@ int SearchPrintf(const char *format, ...)
 	va_list ap;
 	int ret;
 
-	if (!SearchOutput) return 0;
+	if (!SearchOutput)
+		return 0;
+
 	va_start(ap, format);
 	ret = vprintf(format, ap);
 	va_end(ap);
@@ -56,33 +58,36 @@ int SearchPrintf(const char *format, ...)
 	return ret;
 }
 
-void SearchPrintPhoneInfo(OneDeviceInfo * Info, int connection_index, GSM_StateMachine *sm)
+void SearchPrintPhoneInfo(OneDeviceInfo * Info, int connection_index,
+			  GSM_StateMachine * sm)
 {
 	GSM_Error error;
 	char buffer[GSM_MAX_INFO_LENGTH];
 
+	/* Try to get phone manufacturer */
 	error = GSM_GetManufacturer(sm, buffer);
 
-	if (error == ERR_NONE) {
-		if (!SearchOutput)
-			printf(_
-			       ("Connection \"%s\" on device \"%s\"\n"),
-			       Info->Connections[connection_index].Connection,
-			       Info->Device);
-		printf("\t" LISTFORMAT "%s\n",
-		       _("Manufacturer"), buffer);
-		error = GSM_GetModel(sm, buffer);
-		if (error == ERR_NONE) {
-			printf("\t" LISTFORMAT "%s (%s)\n",
-			       _("Model"),
-			       GSM_GetModelInfo(sm)->model,
-			       buffer);
-		} else {
-			SearchPrintf("\t%s\n", GSM_ErrorString(error));
-		}
-	} else {
+	/* Bail out if we failed */
+	if (error != ERR_NONE) {
 		SearchPrintf("\t%s\n", GSM_ErrorString(error));
+		return;
 	}
+
+	/* Print basic information */
+	printf("\t" LISTFORMAT "%s\n", _("Manufacturer"), buffer);
+
+	/* Try to get phone model */
+	error = GSM_GetModel(sm, buffer);
+
+	/* Bail out if we failed */
+	if (error != ERR_NONE) {
+		SearchPrintf("\t%s\n", GSM_ErrorString(error));
+		return;
+	}
+
+	/* Print model information */
+	printf("\t" LISTFORMAT "%s (%s)\n", _("Model"),
+	       GSM_GetModelInfo(sm)->model, buffer);
 }
 
 void SearchPhoneThread(OneDeviceInfo * Info)
@@ -93,48 +98,61 @@ void SearchPhoneThread(OneDeviceInfo * Info)
 	GSM_Config *cfg;
 	GSM_Config *globalcfg;
 
-	j = 0;
-	while (strlen(Info->Connections[j].Connection) != 0) {
+	/* Iterate over all connections */
+	for (j = 0; strlen(Info->Connections[j].Connection) != 0; j++) {
+
+		/* Allocate state machine */
 		ss = GSM_AllocStateMachine();
 		if (ss == NULL)
 			return;
 
+		/* Get configuration pointers */
 		cfg = GSM_GetConfig(ss, 0);
 		globalcfg = GSM_GetConfig(s, 0);
 
+		/* We share some configuration with global one */
 		cfg->UseGlobalDebugFile = globalcfg->UseGlobalDebugFile;
+		cfg->DebugFile = strdup(globalcfg->DebugFile);
+		strcpy(cfg->DebugLevel, globalcfg->DebugLevel);
 		if (globalcfg->Localize == NULL) {
 			cfg->Localize = NULL;
 		} else {
 			cfg->Localize = strdup(globalcfg->Localize);
 		}
+
+		/* Configure the tested state machine */
 		cfg->Device = strdup(Info->Device);
 		cfg->Connection = strdup(Info->Connections[j].Connection);
 		cfg->SyncTime = strdup("no");
-		cfg->DebugFile = strdup(globalcfg->DebugFile);
 		cfg->Model[0] = 0;
-		strcpy(cfg->DebugLevel, globalcfg->DebugLevel);
 		cfg->LockDevice = strdup("no");
 		cfg->StartInfo = strdup("no");
 
+		/* We have only one configured connection */
 		GSM_SetConfigNum(ss, 1);
 
+		/* Let's connect */
 		error = GSM_InitConnection(ss, 1);
 
-		SearchPrintf(_("Connection \"%s\" on device \"%s\"\n"), Info->Connections[j].Connection, Info->Device);
+		printf(_("Connection \"%s\" on device \"%s\"\n"),
+		       Info->Connections[j].Connection, Info->Device);
 
+		/* Did we succeed? Show info */
 		if (error == ERR_NONE) {
 			SearchPrintPhoneInfo(Info, j, ss);
 		} else {
 			SearchPrintf("\t%s\n", GSM_ErrorString(error));
 		}
+
 		if (error != ERR_DEVICEOPENERROR) {
 			GSM_TerminateConnection(ss);
 			dbgprintf("Closing done\n");
 		}
+
 		if (error == ERR_DEVICEOPENERROR)
 			break;
-		j++;
+
+		/* Free allocated buffer */
 		GSM_FreeStateMachine(ss);
 	}
 	num--;
