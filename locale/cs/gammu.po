@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-09-12 15:24+0900\n"
+"POT-Creation-Date: 2007-09-12 15:38+0900\n"
 "PO-Revision-Date: 2007-07-31 11:24+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -1227,7 +1227,6 @@ msgstr "Varování"
 #. l10n: Generic prefix for informational messages
 #: gammu/common.c:56
 #, fuzzy
-#| msgid "Phone information"
 msgid "Information"
 msgstr "Informace o telefonu"
 
@@ -1352,65 +1351,65 @@ msgstr "Chybný den!"
 msgid "Security status"
 msgstr "Stav bezpečnosti"
 
-#: gammu/common.c:323
+#: gammu/common.c:328
 msgid "Never version of firmware is available!\n"
 msgstr ""
 
-#: gammu/common.c:324
+#: gammu/common.c:329
 #, c-format
 msgid "Latest version is %s and you run %s.\n"
 msgstr ""
 
-#: gammu/common.c:343 gammu/misc.c:903 gammu/misc.c:918 gammu/misc.c:925
+#: gammu/common.c:348 gammu/misc.c:903 gammu/misc.c:918 gammu/misc.c:925
 #: gammu/misc.c:932 gammu/misc.c:962
 msgid "More parameters required!"
 msgstr "Je potřeba více parametrů!"
 
-#: gammu/common.c:349 gammu/common.c:359 gammu/depend/nokia/dct4.c:676
+#: gammu/common.c:354 gammu/common.c:364 gammu/depend/nokia/dct4.c:676
 #: gammu/misc.c:1078
 msgid "Please enumerate locations from 1"
 msgstr "Prosím číslujte pozice od 1"
 
-#: gammu/common.c:364
+#: gammu/common.c:369
 msgid "Swapping start and end location"
 msgstr "Prohazuji začátek a konec"
 
 #. l10n: %s is replaced by question, answers have to match corresponding translations
-#: gammu/common.c:379
+#: gammu/common.c:384
 #, c-format
 msgid "%s (yes/no/ALL/ONLY/NONE) ? "
 msgstr "%s (ano/ne/VSE/JEDNO/NIC) ? "
 
-#: gammu/common.c:381
+#: gammu/common.c:386
 msgid "YES (always)"
 msgstr "ANO (vždy)"
 
-#: gammu/common.c:385
+#: gammu/common.c:390
 msgid "NO (always)"
 msgstr "NE (vždy)"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:392
+#: gammu/common.c:397
 msgid "NONE"
 msgstr "NIC"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:397
+#: gammu/common.c:402
 msgid "ONLY"
 msgstr "JEDNO"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:402
+#: gammu/common.c:407
 msgid "ALL"
 msgstr "VSE"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:407 gammu/depend/nokia/dct4.c:73
+#: gammu/common.c:412 gammu/depend/nokia/dct4.c:73
 msgid "yes"
 msgstr "ano"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:410 gammu/depend/nokia/dct4.c:74
+#: gammu/common.c:415 gammu/depend/nokia/dct4.c:74
 msgid "no"
 msgstr "ne"
 
@@ -3252,11 +3251,11 @@ msgstr "neznámý"
 msgid "Name in phone"
 msgstr "Název v telefonu"
 
-#: gammu/misc.c:108 gammu/search.c:73
+#: gammu/misc.c:108 gammu/search.c:77
 msgid "Manufacturer"
 msgstr "Výrobce"
 
-#: gammu/misc.c:111 gammu/search.c:77
+#: gammu/misc.c:111 gammu/search.c:89
 msgid "Model"
 msgstr "Model"
 
@@ -4332,7 +4331,7 @@ msgstr ""
 msgid "  Deleting %s\n"
 msgstr ""
 
-#: gammu/search.c:69 gammu/search.c:124
+#: gammu/search.c:137
 #, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr ""
