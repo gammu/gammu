@@ -813,9 +813,9 @@ void NokiaAddFile(int argc, char *argv[])
 
 						CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
 						Start = true;
+					} else {
+						Start = false;
 					}
-
-					Start = false;
 				}
 			}
 
