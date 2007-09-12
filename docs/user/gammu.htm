@@ -1232,13 +1232,17 @@ set to moment of uploading </li>
 <p><b>--deletefiles</b> fileID
 </p>
 <p><b>--nokiaaddfile</b>
-Application|Game file [-readonly] [-overwrite]
+Application|Game file [-readonly] [-overwrite] [-overwriteall]
 </p>
 <p>Install the *.jar/*.jad file pair of
 a midlet in the application or
 game menu of the phone. You have to give the name <i>without</i> the
 jar/jad suffix, otherwise you will get the slightly confusing error
 message <i>Can't open specified file. Read only&nbsp;?</i>
+</p>
+<p>The option <i>-overwrite</i> deletes the applications .jad and .jar files
+bevor installing, but doesn't delete the application data.
+Option <i>-overwriteall</i> will also delete the data.
 </p>
 <p><b>--nokiaaddfile</b>
 Gallery|Gallery2|Camera|Tones|Tones2|Records|Video|Playlist|MemoryCard
