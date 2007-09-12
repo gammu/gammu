@@ -304,6 +304,12 @@ HELP['addfile'] = '''Add file with specified name to folder with specified folde
 '''
 HELP['nokiaaddfile'] = '''Install the *.jar/*.jad file pair of a midlet in the application or game menu of the phone. You have to give the name without the jar/jad suffix, otherwise you will get the slightly confusing error message Can't open specified file. Read only ?
 
+The option
+.I \-overwrite
+deletes the application's .jad and .jar files bevor installing, but doesn't delete the application data. Option
+.I \-overwriteall
+will also delete all data. Both these options work only for Application or Game upload.
+
 \\fIExample:\\fR gammu nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
 
 \\fIExample:\\fR gammu nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
