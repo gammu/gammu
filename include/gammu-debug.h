@@ -52,9 +52,7 @@ int dbgprintf(const char *format, ...);
  *
  * \ingroup Debug
  */
-#if defined(__GNUC__) && !defined(printf)
-__attribute__ ((format(printf, 2, 3)))
-#endif
+PRINTF_STYLE(2, 2)
 int smprintf(GSM_StateMachine * s, const char *format, ...);
 
 /**
