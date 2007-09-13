@@ -52,8 +52,29 @@ int dbgprintf(const char *format, ...);
  *
  * \ingroup Debug
  */
-PRINTF_STYLE(2, 2)
+PRINTF_STYLE(2, 3)
 int smprintf(GSM_StateMachine * s, const char *format, ...);
+
+/**
+ * Severity of printed message.
+ */
+typedef enum {
+	D_NONE,
+	D_TEXT,
+	D_ERROR,
+} GSM_DebugSeverity;
+
+/**
+ * Prints string to defined debug log.
+ *
+ * \param s State machine, where to print.
+ * \param format Format string as for printf.
+ * \return Upon successful return, these functions return the number of characters printed (as printf).
+ *
+ * \ingroup Debug
+ */
+PRINTF_STYLE(3, 4)
+int smprintf_level(GSM_StateMachine * s, GSM_DebugSeverity severity, const char *format, ...);
 
 /**
  * Sets debug file.

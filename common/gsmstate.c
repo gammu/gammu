@@ -1077,15 +1077,48 @@ void GSM_DumpMessageLevel3(GSM_StateMachine *s, unsigned const char *message, in
 	}
 }
 
-#if defined(__GNUC__) && !defined(printf)
-__attribute__((format(printf, 2, 3)))
-#endif
+PRINTF_STYLE(2, 3)
 int smprintf(GSM_StateMachine *s, const char *format, ...)
 {
 	va_list		argp;
 	int 		result=0;
 	char		buffer[2000];
 
+	va_start(argp, format);
+
+	if ((s != NULL && s->di.df != 0) || (s == NULL && di.df != 0)) {
+		result = vsprintf(buffer, format, argp);
+		result = smfprintf((s == NULL) ? &di : &(s->di), "%s", buffer);
+	}
+
+	va_end(argp);
+	return result;
+}
+
+PRINTF_STYLE(3, 4)
+int smprintf_level(GSM_StateMachine * s, GSM_DebugSeverity severity, const char *format, ...)
+{
+	va_list		argp;
+	int 		result=0;
+	char		buffer[2000];
+
+	if (severity == D_TEXT) {
+		if (s->di.dl != DL_TEXT && 
+				s->di.dl != DL_TEXTALL &&
+				s->di.dl != DL_TEXTDATE && 
+				s->di.dl != DL_TEXTALLDATE) {
+			return 0;
+		}
+	} else if (severity == D_ERROR) {
+		if (s->di.dl != DL_TEXT && 
+				s->di.dl != DL_TEXTALL &&
+				s->di.dl != DL_TEXTDATE && 
+				s->di.dl != DL_TEXTALLDATE &&
+				s->di.dl != DL_TEXTERROR &&
+				s->di.dl != DL_TEXTERRORDATE) {
+			return 0;
+		}
+	}
 	va_start(argp, format);
 
 	if ((s != NULL && s->di.df != 0) || (s == NULL && di.df != 0)) {
