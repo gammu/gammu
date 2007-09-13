@@ -386,6 +386,8 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 
 			error=Device->DeviceSetDtrRts(s,true,true);
 			if (error!=ERR_NONE) return error;
+			my_sleep(1000);
+
 			error=Device->DeviceSetSpeed(s,19200);
 			if (error!=ERR_NONE) return error;
 		}
@@ -394,12 +396,14 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		FBUS2_WriteDLR3(s,"AT&F\r\n",		 6,10);
 		FBUS2_WriteDLR3(s,"AT*NOKIAFBUS\r\n",	14,10);
 
+		/* \todo Is this close/open step really needed? */
 		error=Device->CloseDevice(s);
 		if (error!=ERR_NONE) return error;
 		my_sleep(1000);
 
 		error=Device->OpenDevice(s);
 		if (error!=ERR_NONE) return error;
+
 		if (s->ConnectionType != GCT_ARK3116FBUS2 &&
 				s->ConnectionType != GCT_DKU5FBUS2NODTR &&
 				s->ConnectionType != GCT_FBUS2DLR3NODTR
@@ -413,7 +417,8 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		}
 
 		for (count = 0; count < 55; count ++) {
-			if (Device->WriteDevice(s,&init_char,1)!=1) return ERR_DEVICEWRITEERROR;
+			if (Device->WriteDevice(s, &init_char, 1) != 1) 
+				return ERR_DEVICEWRITEERROR;
 		}
 		break;
 #endif
