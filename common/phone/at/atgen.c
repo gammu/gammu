@@ -1010,10 +1010,7 @@ GSM_Error ATGEN_GetModel(GSM_StateMachine *s)
 	smprintf(s, "Getting model\n");
 	ATGEN_WaitFor(s, "AT+CGMM\r", 8, 0x00, 3, ID_GetModel);
 	if (error==ERR_NONE) {
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
-		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
-			smprintf(s, "[Connected model  - \"%s\"]\n",s->Phone.Data.Model);
-		}
+		smprintf_level(s, D_TEXT, "[Connected model  - \"%s\"]\n",s->Phone.Data.Model);
 	}
 	return error;
 }
@@ -1166,10 +1163,7 @@ GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 	ATGEN_WaitFor(s, "AT+CGMR\r", 8, 0x00, 3, ID_GetFirmware);
 
 	if (error==ERR_NONE) {
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
-		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
-			smprintf(s, "[Firmware version - \"%s\"]\n",s->Phone.Data.Version);
-		}
+		smprintf_level(s, D_TEXT, "[Firmware version - \"%s\"]\n",s->Phone.Data.Version);
 	}
 	return error;
 }
@@ -2655,10 +2649,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 	for (reply=0;reply<s->ReplyNum;reply++) {
 		if (reply!=0) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-			    smprintf(s, "[Retrying %i]\n", reply+1);
-			}
+			smprintf_level(s, D_ERROR, "[Retrying %i]\n", reply+1);
 		}
 		s->Protocol.Data.AT.EditMode 	= true;
 		Replies 			= s->ReplyNum;
