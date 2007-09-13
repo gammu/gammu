@@ -314,21 +314,21 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
 	dcb.DCBlength = sizeof(DCB);
 	GetCommState(d->hPhone, &dcb);
 
-	dbgprintf("Serial device:");
-	dbgprintf(" DTR is ");
+	smprintf(s, "Serial device:");
+	smprintf(s, " DTR is ");
 	switch (dcb.fDtrControl) {
-		case DTR_CONTROL_ENABLE    : dbgprintf("up");        break;
-		case DTR_CONTROL_DISABLE   : dbgprintf("down");      break;
-		case DTR_CONTROL_HANDSHAKE : dbgprintf("handshake"); break;
+		case DTR_CONTROL_ENABLE    : smprintf(s, "up");        break;
+		case DTR_CONTROL_DISABLE   : smprintf(s, "down");      break;
+		case DTR_CONTROL_HANDSHAKE : smprintf(s, "handshake"); break;
 	}
-	dbgprintf(", RTS is ");
+	smprintf(s, ", RTS is ");
 	switch (dcb.fRtsControl) {
-		case RTS_CONTROL_ENABLE    : dbgprintf("up");        break;
-		case RTS_CONTROL_DISABLE   : dbgprintf("down");      break;
-		case RTS_CONTROL_HANDSHAKE : dbgprintf("handshake"); break;
-		case RTS_CONTROL_TOGGLE    : dbgprintf("toggle");    break;
+		case RTS_CONTROL_ENABLE    : smprintf(s, "up");        break;
+		case RTS_CONTROL_DISABLE   : smprintf(s, "down");      break;
+		case RTS_CONTROL_HANDSHAKE : smprintf(s, "handshake"); break;
+		case RTS_CONTROL_TOGGLE    : smprintf(s, "toggle");    break;
 	}
-	dbgprintf("\n");
+	smprintf(s, "\n");
 	if ( dtr && dcb.fDtrControl != DTR_CONTROL_ENABLE ) return ERR_DEVICEDTRRTSERROR;
 	if (!dtr && dcb.fDtrControl != DTR_CONTROL_DISABLE) return ERR_DEVICEDTRRTSERROR;
 	if ( rts && dcb.fRtsControl != RTS_CONTROL_ENABLE ) return ERR_DEVICEDTRRTSERROR;
@@ -354,6 +354,8 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 		GSM_OSErrorInfo(s, "WriteDevice in serial_setspeed");
 		return ERR_DEVICECHANGESPEEDERROR;
 	}
+
+    	smprintf(s, "Setting speed to %d\n", speed);
 
 	return ERR_NONE;
 }
