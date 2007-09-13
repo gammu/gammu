@@ -296,13 +296,17 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
     	flags = 0;
     	ioctl(d->hPhone, TIOCMGET, &flags);
 
-    	dbgprintf("Serial device:");
-    	dbgprintf(" DTR is %s",       flags&TIOCM_DTR?"up":"down");
-    	dbgprintf(", RTS is %s",      flags&TIOCM_RTS?"up":"down");
-    	dbgprintf(", CAR is %s",      flags&TIOCM_CAR?"up":"down");
-    	dbgprintf(", CTS is %s\n",    flags&TIOCM_CTS?"up":"down");
-    	if (((flags&TIOCM_DTR)==TIOCM_DTR) != dtr) return ERR_DEVICEDTRRTSERROR;
-    	if (((flags&TIOCM_RTS)==TIOCM_RTS) != rts) return ERR_DEVICEDTRRTSERROR;
+    	smprintf(s, "Serial device:");
+    	smprintf(s, " DTR is %s",       flags & TIOCM_DTR ? "up" : "down");
+    	smprintf(s, ", RTS is %s",      flags & TIOCM_RTS ? "up" : "down");
+    	smprintf(s, ", CAR is %s",      flags & TIOCM_CAR ? "up" : "down");
+    	smprintf(s, ", CTS is %s\n",    flags & TIOCM_CTS ? "up" : "down");
+
+    	if (((flags & TIOCM_DTR) == TIOCM_DTR) != dtr) 
+		return ERR_DEVICEDTRRTSERROR;
+
+    	if (((flags & TIOCM_RTS) == TIOCM_RTS) != rts) 
+		return ERR_DEVICEDTRRTSERROR;
 
     	return ERR_NONE;
 }
