@@ -329,26 +329,24 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		error=GSM_SetDebugFile(s->CurrentConfig->DebugFile, &s->di);
 		if (error != ERR_NONE) return error;
 
-		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTERROR ||
-	    	    s->di.dl == DL_TEXTALLDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTERRORDATE) {
-			smprintf(s, "[Gammu            - %s built %s %s using %s]\n",
-					VERSION,
-					__TIME__,
-					__DATE__,
-					GetCompiler()
-					);
-			smprintf(s, "[Connection       - \"%s\"]\n",
-					s->CurrentConfig->Connection);
-			smprintf(s, "[Connection index - %d]\n", i);
-			smprintf(s, "[Model type       - \"%s\"]\n",
-					s->CurrentConfig->Model);
-			smprintf(s, "[Device           - \"%s\"]\n",
-					s->CurrentConfig->Device);
-			if (strlen(GetOS()) != 0) {
-				smprintf(s, "[Runing on        - %s]\n",
-						GetOS());
-			}
+		smprintf_level(s, D_ERROR, "[Gammu            - %s built %s %s using %s]\n",
+				VERSION,
+				__TIME__,
+				__DATE__,
+				GetCompiler()
+				);
+		smprintf_level(s, D_ERROR, "[Connection       - \"%s\"]\n",
+				s->CurrentConfig->Connection);
+		smprintf_level(s, D_ERROR, "[Connection index - %d]\n", i);
+		smprintf_level(s, D_ERROR, "[Model type       - \"%s\"]\n",
+				s->CurrentConfig->Model);
+		smprintf_level(s, D_ERROR, "[Device           - \"%s\"]\n",
+				s->CurrentConfig->Device);
+		if (strlen(GetOS()) != 0) {
+			smprintf_level(s, D_ERROR, "[Runing on        - %s]\n",
+					GetOS());
 		}
+
 		if (s->di.dl==DL_BINARY) {
 			smprintf(s,"%c",((unsigned char)strlen(VERSION)));
 			smprintf(s,"%s",VERSION);
@@ -625,11 +623,7 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
 
 	for (reply=0;reply<s->ReplyNum;reply++) {
 		if (reply!=0) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl == DL_TEXTERROR ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl == DL_TEXTERRORDATE)
-			{
-				smprintf(s, "[Retrying %i type 0x%02X]\n", reply, type);
-			}
+			smprintf_level(s, D_ERROR, "[Retrying %i type 0x%02X]\n", reply, type);
 		}
 		error = s->Protocol.Functions->WriteMessage(s, buffer, length, type);
 		if (error!=ERR_NONE) return error;
@@ -736,22 +730,19 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	}
 
 	if (strcmp(s->Phone.Functions->models,"NAUTO")) {
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-			disp = true;
-			switch (error) {
-			case ERR_UNKNOWNRESPONSE:
-				smprintf(s, "\nUNKNOWN response");
-				break;
-			case ERR_UNKNOWNFRAME:
-				smprintf(s, "\nUNKNOWN frame");
-				break;
-			case ERR_FRAMENOTREQUESTED:
-				smprintf(s, "\nFrame not request now");
-				break;
-			default:
-				disp = false;
-			}
+		disp = true;
+		switch (error) {
+		case ERR_UNKNOWNRESPONSE:
+			smprintf_level(s, D_ERROR, "\nUNKNOWN response");
+			break;
+		case ERR_UNKNOWNFRAME:
+			smprintf_level(s, D_ERROR, "\nUNKNOWN frame");
+			break;
+		case ERR_FRAMENOTREQUESTED:
+			smprintf_level(s, D_ERROR, "\nFrame not request now");
+			break;
+		default:
+			disp = false;
 		}
 
 		if (error == ERR_UNKNOWNFRAME || error == ERR_FRAMENOTREQUESTED) {

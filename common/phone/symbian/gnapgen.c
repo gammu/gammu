@@ -1653,13 +1653,9 @@ GSM_Error GNAPGEN_GetModel (GSM_StateMachine *s)
 
 	smprintf(s, "Getting model\n");
 	return GSM_WaitFor (s, req, 2, 0x01, 2, ID_GetModel);
-	if (error==ERR_NONE) {
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
-		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
-			smprintf(s, "[Connected model  - \"%s\"]\n",s->Phone.Data.Model);
-			smprintf(s, "[Firmware version - \"%s\"]\n",s->Phone.Data.Version);
-			smprintf(s, "[Firmware date    - \"%s\"]\n",s->Phone.Data.VerDate);
-		}
+	if (error == ERR_NONE) {
+		smprintf_level(s, D_TEXT, "[Connected model  - \"%s\"]\n",
+				s->Phone.Data.Model);
 	}
 	return error;
 }
@@ -1674,12 +1670,10 @@ GSM_Error GNAPGEN_GetFirmware (GSM_StateMachine *s)
 	smprintf(s, "Getting firmware version\n");
 	return GSM_WaitFor (s, req, 2, 0x01, 2, ID_GetFirmware);
 	if (error==ERR_NONE) {
-		if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
-		    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
-			smprintf(s, "[Connected model  - \"%s\"]\n",s->Phone.Data.Model);
-			smprintf(s, "[Firmware version - \"%s\"]\n",s->Phone.Data.Version);
-			smprintf(s, "[Firmware date    - \"%s\"]\n",s->Phone.Data.VerDate);
-		}
+		smprintf_level(s, D_TEXT, "[Firmware version - \"%s\"]\n",
+				s->Phone.Data.Version);
+		smprintf_level(s, D_TEXT, "[Firmware date    - \"%s\"]\n",
+				s->Phone.Data.VerDate);
 	}
 	return error;
 }
