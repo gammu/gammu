@@ -108,10 +108,8 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	}
 	if (d->MsgRXState==RX_GetSource) {
 		if (rx_char != PHONET_DEVICE_PHONE) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-				smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_char, PHONET_DEVICE_PHONE);
-			}
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", 
+					rx_char, PHONET_DEVICE_PHONE);
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
 		}
@@ -134,10 +132,7 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			break;
 		}
 		if (!correct) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-				smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_char, PHONET_DEVICE_PC);
-			}
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", rx_char, PHONET_DEVICE_PC);
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
 		}
@@ -162,10 +157,7 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			break;
 		}
 		if (!correct) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-				smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_char, PHONET_FRAME_ID);
-			}
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", rx_char, PHONET_FRAME_ID);
 			return ERR_NONE;
 		}
 		d->Msg.Count  = 0;
