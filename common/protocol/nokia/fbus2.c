@@ -344,17 +344,15 @@ static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s)
 	static const unsigned char init_char = 0x55;
 	static const unsigned char end_init_char = 0xc1;
 
-	for (count = 0; count < 55; count ++) {
+	for (count = 0; count < 32; count ++) {
 		if (s->Device.Functions->WriteDevice(s, &init_char, 1) != 1) 
 			return ERR_DEVICEWRITEERROR;
-		my_sleep(10);
 	}
 
 	if (s->Device.Functions->WriteDevice(s, &end_init_char, 1) != 1) 
 		return ERR_DEVICEWRITEERROR;
 
-	my_sleep(20);
-
+	my_sleep(1000);
 
 	return ERR_NONE;
 }
