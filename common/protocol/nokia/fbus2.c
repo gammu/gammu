@@ -342,12 +342,19 @@ static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s)
 {
 	int count;
 	static const unsigned char init_char = 0x55;
+	static const unsigned char end_init_char = 0xc1;
 
 	for (count = 0; count < 55; count ++) {
 		if (s->Device.Functions->WriteDevice(s, &init_char, 1) != 1) 
 			return ERR_DEVICEWRITEERROR;
 		my_sleep(10);
 	}
+
+	if (s->Device.Functions->WriteDevice(s, &end_init_char, 1) != 1) 
+		return ERR_DEVICEWRITEERROR;
+
+	my_sleep(20);
+
 
 	return ERR_NONE;
 }
@@ -356,7 +363,6 @@ static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s)
 static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 {
 #ifdef GSM_ENABLE_FBUS2IRDA
-	unsigned char		end_init_char	= 0xc1;
 #endif
 
 	GSM_Protocol_FBUS2Data	*d		= &s->Protocol.Data.FBUS2;
@@ -410,24 +416,11 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		error = FBUS2_ATSwitch(s);
 		if (error != ERR_NONE) return error;
 
-		/* \todo Is this close/open step really needed? */
-		error = Device->CloseDevice(s);
-		if (error != ERR_NONE) return error;
-		my_sleep(1000);
-
-		error = Device->OpenDevice(s);
-		if (error != ERR_NONE) return error;
-
 		if (s->ConnectionType != GCT_ARK3116FBUS2 &&
 				s->ConnectionType != GCT_DKU5FBUS2NODTR &&
 				s->ConnectionType != GCT_FBUS2DLR3NODTR
 				) {
-			/* \todo Gnokii does not touch partity/dtr/rts */
-			error = Device->DeviceSetParity(s,false);
-			if (error != ERR_NONE) return error;
 			error = Device->DeviceSetSpeed(s,115200);
-			if (error != ERR_NONE) return error;
-			error = Device->DeviceSetDtrRts(s,false,false);
 			if (error != ERR_NONE) return error;
 		}
 
@@ -457,10 +450,6 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 
 		error = FBUS2_InitSequence(s);
 		if (error != ERR_NONE) return error;
-
-		if (Device->WriteDevice(s, &end_init_char, 1) != 1) 
-			return ERR_DEVICEWRITEERROR;
-		my_sleep(20);
 
 		error = Device->DeviceSetSpeed(s,115200);
 		if (error != ERR_NONE) return error;
