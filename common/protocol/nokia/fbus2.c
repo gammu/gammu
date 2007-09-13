@@ -316,13 +316,13 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 }
 
 #if defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_DKU5FBUS2) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2PL2303)
-static void FBUS2_WriteDLR3(GSM_StateMachine *s, char *command, int length, int timeout)
+static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length, int timeout)
 {
 	unsigned char		buff[300];
 	int			w = 0;
 	bool			wassomething = false;
 
-	s->Device.Functions->WriteDevice(s,command,length);
+	s->Device.Functions->WriteDevice(s, command, length);
 
 	for (w=0;w<timeout;w++) {
 		if (wassomething) {
@@ -332,6 +332,24 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, char *command, int length, int 
 		}
 		my_sleep(50);
 	}
+}
+
+/**
+ * Performs switch to FBUS2 protocol using AT commands.
+ *
+ * \todo We should check return codes here.
+ */
+static GSM_Error FBUS2_ATSwitch(GSM_StateMachine *s)
+{
+	static const char init_1[] = "AT\r\n";
+	static const char init_2[] = "AT&F\r\n";
+	static const char init_3[] = "AT*NOKIAFBUS\r\n";
+
+	FBUS2_WriteDLR3(s, init_1, strlen(init_1), 10);
+	FBUS2_WriteDLR3(s, init_2, strlen(init_2), 10);
+	FBUS2_WriteDLR3(s, init_3, strlen(init_3), 10);
+
+	return ERR_NONE;
 }
 #endif
 
@@ -364,9 +382,8 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 #if defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2BLUE)
 	case GCT_FBUS2BLUE:
 	case GCT_BLUEFBUS2:
-		FBUS2_WriteDLR3(s,"AT\r\n",		 4,10);
-		FBUS2_WriteDLR3(s,"AT&F\r\n",		 6,10);
-		FBUS2_WriteDLR3(s,"AT*NOKIAFBUS\r\n",	14,10);
+		error = FBUS2_ATSwitch(s);
+		if (error != ERR_NONE) return error;
 		break;
 #endif
 #if defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_DKU5FBUS2) || defined(GSM_ENABLE_FBUS2PL2303)
@@ -392,9 +409,8 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 			if (error!=ERR_NONE) return error;
 		}
 
-		FBUS2_WriteDLR3(s,"AT\r\n",		 4,10);
-		FBUS2_WriteDLR3(s,"AT&F\r\n",		 6,10);
-		FBUS2_WriteDLR3(s,"AT*NOKIAFBUS\r\n",	14,10);
+		error = FBUS2_ATSwitch(s);
+		if (error != ERR_NONE) return error;
 
 		/* \todo Is this close/open step really needed? */
 		error=Device->CloseDevice(s);
@@ -408,6 +424,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 				s->ConnectionType != GCT_DKU5FBUS2NODTR &&
 				s->ConnectionType != GCT_FBUS2DLR3NODTR
 				) {
+			/* \todo Gnokii does not touch partity/dtr/rts */
 			error=Device->DeviceSetParity(s,false);
 			if (error!=ERR_NONE) return error;
 			error=Device->DeviceSetSpeed(s,115200);
