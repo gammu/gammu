@@ -92,8 +92,8 @@ static GSM_Error FBUS2_WriteMessage (GSM_StateMachine 	*s,
 
 		GSM_DumpMessageLevel2(s, buffer2, thislength, MsgType);
 
-		error=FBUS2_WriteFrame(s, buffer2, thislength + 2, MsgType);
-		if (error!=ERR_NONE) return error;
+		error = FBUS2_WriteFrame(s, buffer2, thislength + 2, MsgType);
+		if (error != ERR_NONE) return error;
 	}
 
 	return ERR_NONE;
@@ -108,10 +108,9 @@ static GSM_Error FBUS2_SendAck(GSM_StateMachine 	*s,
 	buffer2[0] = MsgType;
 	buffer2[1] = MsgSequence;
 
-	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
-	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
-		smprintf(s,"[Sending Ack of type %02x, seq %x]\n",buffer2[0],buffer2[1]);
-	}
+	smprintf_level(s, D_TEXT, "[Sending Ack of type %02x, seq %x]\n",
+			buffer2[0],
+			buffer2[1]);
 
 	/* Sending to phone */
 	return FBUS2_WriteFrame(s, buffer2, 2, FBUS2_ACK_BYTE);
@@ -135,10 +134,8 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		/* Checksum is incorrect */
 		if (d->Msg.CheckSum[0] != d->Msg.CheckSum[1]) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-				smprintf(s,"[ERROR: checksum]\n");
-			}
+			smprintf_level(s, D_ERROR, "[ERROR: checksum]\n");
+
 			free(d->Msg.Buffer);
 			d->Msg.Length 		= 0;
 			d->Msg.Buffer 		= NULL;
@@ -150,10 +147,9 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		seq_num = d->Msg.Buffer[d->Msg.Length-1];
 
 		if (d->Msg.Type == FBUS2_ACK_BYTE) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
-				smprintf(s, "[Received Ack of type %02x, seq %02x]\n",d->Msg.Buffer[0],seq_num);
-			}
+			smprintf_level(s, D_TEXT, "[Received Ack of type %02x, seq %02x]\n",
+					d->Msg.Buffer[0], seq_num);
+
 			free(d->Msg.Buffer);
 			d->Msg.Buffer 	= NULL;
 			d->Msg.Length 	= 0;
@@ -173,10 +169,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		}
 
 		if ((seq_num & 0x40) != 0x40 && d->FramesToGo != frm_num) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-				smprintf(s, "[ERROR: Missed part of multiframe msg]\n");
-			}
+			smprintf_level(s, D_ERROR, "[ERROR: Missed part of multiframe msg]\n");
 
 			free(d->Msg.Buffer);
 			d->Msg.Length 		= 0;
@@ -187,10 +180,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		}
 
 		if ((seq_num & 0x40) != 0x40 && d->Msg.Type != d->MultiMsg.Type) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-				smprintf(s, "[ERROR: Multiframe msg in multiframe msg]\n");
-			}
+			smprintf_level(s, D_ERROR, "[ERROR: Multiframe msg in multiframe msg]\n");
 
 			free(d->Msg.Buffer);
 			d->Msg.Length 		= 0;
@@ -245,10 +235,8 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	}
 	if (d->MsgRXState == RX_GetSource) {
 		if (rx_char != FBUS2_DEVICE_PHONE) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-				smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_char, FBUS2_DEVICE_PHONE);
-			}
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", 
+					rx_char, FBUS2_DEVICE_PHONE);
 
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
@@ -260,10 +248,8 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	}
 	if (d->MsgRXState == RX_GetDestination) {
 		if (rx_char != FBUS2_DEVICE_PC) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-				    smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_char, FBUS2_DEVICE_PC);
-			}
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", 
+					rx_char, FBUS2_DEVICE_PC);
 
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
@@ -294,14 +280,9 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 				break;
 		}
 		if (!correct) {
-			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||
-			    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE || s->di.dl==DL_TEXTERRORDATE) {
-				if (s->ConnectionType==GCT_FBUS2IRDA) {
-					smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_char, FBUS2_IRDA_FRAME_ID);
-			    	} else {
-					smprintf(s,"[ERROR: incorrect char - %02x, not %02x]\n", rx_char, FBUS2_FRAME_ID);
-			    	}
-			}
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", 
+					rx_char, 
+					(s->ConnectionType == GCT_FBUS2IRDA) ? FBUS2_IRDA_FRAME_ID : FBUS2_FRAME_ID);
 			return ERR_NONE;
 		}
 
@@ -351,11 +332,29 @@ static GSM_Error FBUS2_ATSwitch(GSM_StateMachine *s)
 
 	return ERR_NONE;
 }
+
+/**
+ * Performs switch to FBUS2 protocol using AT commands.
+ *
+ * \todo We should check return codes here.
+ */
+static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s)
+{
+	int count;
+	static const unsigned char init_char = 0x55;
+
+	for (count = 0; count < 55; count ++) {
+		if (s->Device.Functions->WriteDevice(s, &init_char, 1) != 1) 
+			return ERR_DEVICEWRITEERROR;
+		my_sleep(10);
+	}
+
+	return ERR_NONE;
+}
 #endif
 
 static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 {
-	unsigned char		init_char	= 0x55;
 #ifdef GSM_ENABLE_FBUS2IRDA
 	unsigned char		end_init_char	= 0xc1;
 #endif
@@ -363,7 +362,6 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	GSM_Protocol_FBUS2Data	*d		= &s->Protocol.Data.FBUS2;
 	GSM_Device_Functions	*Device 	= s->Device.Functions;
 	GSM_Error		error;
-	int			count;
 
 	d->Msg.Length		= 0;
 	d->Msg.Buffer		= NULL;
@@ -375,8 +373,8 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	d->FramesToGo		= 0;
 	d->MsgRXState		= RX_Sync;
 
-	error=Device->DeviceSetParity(s,false);
-	if (error!=ERR_NONE) return error;
+	error = Device->DeviceSetParity(s, false);
+	if (error != ERR_NONE) return error;
 
 	switch (s->ConnectionType) {
 #if defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2BLUE)
@@ -397,78 +395,75 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 				s->ConnectionType != GCT_DKU5FBUS2NODTR &&
 				s->ConnectionType != GCT_FBUS2DLR3NODTR
 				) {
-			error=Device->DeviceSetDtrRts(s,false,false);
-			if (error!=ERR_NONE) return error;
+			error = Device->DeviceSetDtrRts(s,false,false);
+			if (error != ERR_NONE) return error;
 			my_sleep(1000);
 
-			error=Device->DeviceSetDtrRts(s,true,true);
-			if (error!=ERR_NONE) return error;
+			error = Device->DeviceSetDtrRts(s,true,true);
+			if (error != ERR_NONE) return error;
 			my_sleep(1000);
 
-			error=Device->DeviceSetSpeed(s,19200);
-			if (error!=ERR_NONE) return error;
+			error = Device->DeviceSetSpeed(s,19200);
+			if (error != ERR_NONE) return error;
 		}
 
 		error = FBUS2_ATSwitch(s);
 		if (error != ERR_NONE) return error;
 
 		/* \todo Is this close/open step really needed? */
-		error=Device->CloseDevice(s);
-		if (error!=ERR_NONE) return error;
+		error = Device->CloseDevice(s);
+		if (error != ERR_NONE) return error;
 		my_sleep(1000);
 
-		error=Device->OpenDevice(s);
-		if (error!=ERR_NONE) return error;
+		error = Device->OpenDevice(s);
+		if (error != ERR_NONE) return error;
 
 		if (s->ConnectionType != GCT_ARK3116FBUS2 &&
 				s->ConnectionType != GCT_DKU5FBUS2NODTR &&
 				s->ConnectionType != GCT_FBUS2DLR3NODTR
 				) {
 			/* \todo Gnokii does not touch partity/dtr/rts */
-			error=Device->DeviceSetParity(s,false);
-			if (error!=ERR_NONE) return error;
-			error=Device->DeviceSetSpeed(s,115200);
-			if (error!=ERR_NONE) return error;
-			error=Device->DeviceSetDtrRts(s,false,false);
-			if (error!=ERR_NONE) return error;
+			error = Device->DeviceSetParity(s,false);
+			if (error != ERR_NONE) return error;
+			error = Device->DeviceSetSpeed(s,115200);
+			if (error != ERR_NONE) return error;
+			error = Device->DeviceSetDtrRts(s,false,false);
+			if (error != ERR_NONE) return error;
 		}
 
-		for (count = 0; count < 55; count ++) {
-			if (Device->WriteDevice(s, &init_char, 1) != 1) 
-				return ERR_DEVICEWRITEERROR;
-		}
+		error = FBUS2_InitSequence(s);
+		if (error != ERR_NONE) return error;
+		
 		break;
 #endif
 	case GCT_FBUS2:
 	case GCT_FBUS2NODTR:
 		if (s->ConnectionType != GCT_FBUS2NODTR) {
-			error=Device->DeviceSetSpeed(s,115200);
-			if (error!=ERR_NONE) return error;
+			error = Device->DeviceSetSpeed(s,115200);
+			if (error != ERR_NONE) return error;
 
-			error=Device->DeviceSetDtrRts(s,true,false); /*DTR high,RTS low*/
-			if (error!=ERR_NONE) return error;
+			error = Device->DeviceSetDtrRts(s,true,false); /*DTR high,RTS low*/
+			if (error != ERR_NONE) return error;
 		}
 
-		for (count = 0; count < 55; count ++) {
-			if (Device->WriteDevice(s,&init_char,1)!=1) return ERR_DEVICEWRITEERROR;
-			my_sleep(10);
-		}
+		error = FBUS2_InitSequence(s);
+		if (error != ERR_NONE) return error;
+
 		break;
 #ifdef GSM_ENABLE_FBUS2IRDA
 	case GCT_FBUS2IRDA:
-		error=Device->DeviceSetSpeed(s,9600);
-		if (error!=ERR_NONE) return error;
+		error = Device->DeviceSetSpeed(s,9600);
+		if (error != ERR_NONE) return error;
 
-		for (count = 0; count < 55; count ++) {
-			if (Device->WriteDevice(s,&init_char,1)!=1) return ERR_DEVICEWRITEERROR;
-			my_sleep(10);
-		}
+		error = FBUS2_InitSequence(s);
+		if (error != ERR_NONE) return error;
 
-		if (Device->WriteDevice(s,&end_init_char,1)!=1) return ERR_DEVICEWRITEERROR;
+		if (Device->WriteDevice(s, &end_init_char, 1) != 1) 
+			return ERR_DEVICEWRITEERROR;
 		my_sleep(20);
 
-		error=Device->DeviceSetSpeed(s,115200);
-		if (error!=ERR_NONE) return error;
+		error = Device->DeviceSetSpeed(s,115200);
+		if (error != ERR_NONE) return error;
 
 		break;
 #endif
@@ -484,7 +479,7 @@ static GSM_Error FBUS2_Terminate(GSM_StateMachine *s)
 	free(s->Protocol.Data.FBUS2.Msg.Buffer);
 	free(s->Protocol.Data.FBUS2.MultiMsg.Buffer);
 	s->Protocol.Data.FBUS2.Msg.Buffer 	= NULL;
-        s->Protocol.Data.FBUS2.MultiMsg.Buffer 	= NULL;
+	s->Protocol.Data.FBUS2.MultiMsg.Buffer 	= NULL;
 
 	my_sleep(200);
 	return ERR_NONE;
