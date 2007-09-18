@@ -326,6 +326,8 @@ static GSM_Error FBUS2_ATSwitch(GSM_StateMachine *s)
 	static const char init_2[] = "AT&F\r\n";
 	static const char init_3[] = "AT*NOKIAFBUS\r\n";
 
+	smprintf(s, "Switching to FBUS using AT commands\n");
+
 	FBUS2_WriteDLR3(s, init_1, strlen(init_1), 10);
 	FBUS2_WriteDLR3(s, init_2, strlen(init_2), 10);
 	FBUS2_WriteDLR3(s, init_3, strlen(init_3), 10);
@@ -366,6 +368,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	GSM_Protocol_FBUS2Data	*d		= &s->Protocol.Data.FBUS2;
 	GSM_Device_Functions	*Device 	= s->Device.Functions;
 	GSM_Error		error;
+	unsigned char		buff[300];
 
 	d->Msg.Length		= 0;
 	d->Msg.Buffer		= NULL;
@@ -457,6 +460,9 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	default:
 		break;
 	}
+
+	/* Read any possible junk on the line */
+	s->Device.Functions->ReadDevice(s, buff, 255);
 
 	return ERR_NONE;
 }
