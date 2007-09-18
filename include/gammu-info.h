@@ -518,7 +518,10 @@ typedef enum {
 	 */
 	F_SMS_ME,
 	/**
-	 * Switching to OBEX mode is done using AT+XLNK
+	 * Switching to OBEX mode is done using AT+XLNK. This is special
+	 * hacky feature because of hacky Sharp phones. You need to
+	 * specify it twice, once at first position at the list. This
+	 * feature is rewritten with F_OBEX at run time if it is supported.
 	 */
 	F_XLNK,
 	/**

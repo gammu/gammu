@@ -1281,6 +1281,19 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		error = ERR_NONE;
 	}
 
+	/* Check for AT+XLNK support on some Samsung phones */
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)) {
+		smprintf(s, "Checking for XLNK/OBEX support\n");
+		ATGEN_WaitFor(s, "AT+XLNK=?\r", 10, 0x00, 3, ID_SetOBEX);
+		if (error == ERR_NONE) {
+			smprintf(s, "XLNK seems to work, will try to use OBEX\n");
+			s->Phone.Data.ModelInfo->features[0] = F_OBEX;
+		} else {
+			smprintf(s, "XLNK seems not be supported, falling back to AT commands\n");
+		}
+		error = ERR_NONE;
+	}
+
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = true;
 	}
@@ -5498,6 +5511,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CKPD="		,0x00,0x00,ID_PressKey		 },
 {ATGEN_ReplyGetSIMIMSI,		"AT+CIMI" 	 	,0x00,0x00,ID_GetSIMIMSI	 },
 {ATGEN_ReplyCheckProt,		"AT+CPROT=?" 	 	,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_GenericReply,		"AT+XLNK=?" 	 	,0x00,0x00,ID_SetOBEX		 },
 
 {ATGEN_ReplyGetCNMIMode,	"AT+CNMI=?"		,0x00,0x00,ID_GetCNMIMode	 },
 #ifdef GSM_ENABLE_CELLBROADCAST
