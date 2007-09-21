@@ -73,6 +73,11 @@ static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message msg, GSM_StateMachine 
 		case 0x4a:
 			smprintf(s, "File not found (0x%02x)\n", msg.Type);
 			return ERR_FILENOTEXIST;
+		case 0x50: /* Internal server error */
+		case 0x51: /* Not implemented */
+		case 0x53: /* Service unavailable */
+			smprintf(s, "Internal phone error (0x%02x)\n", msg.Type);
+			return ERR_PHONE_INTERNAL;
 		/* OBEX specials */
 		case 0x60:
 			smprintf(s, "Database full\n");
@@ -108,6 +113,9 @@ static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine
 	case 0xC3:
 		smprintf(s, "Connection not allowed!\n");
 		return ERR_SECURITYERROR;
+	case 0xD0:
+		smprintf(s, "Internal phone error!\n");
+		return ERR_PHONE_INTERNAL;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
@@ -482,9 +490,11 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	Priv->UpdateCalLUID = false;
 	UpdateTodoLUID = Priv->UpdateTodoLUID;
 	Priv->UpdateTodoLUID = false;
+
 	if ((msg.Type & 0x7f) >= 0x40) {
 		return OBEXGEN_HandleError(msg, s);
 	}
+
 	switch (msg.Type) {
 	case 0x90:
 		smprintf(s,"Last part of file added OK\n");
@@ -3151,6 +3161,12 @@ GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	/* Non standard Sharp GX reply */
 	{OBEXGEN_ReplyGetFilePart,	"\x80",0x00,0x00,ID_GetFile			},
 	{OBEXGEN_ReplyChangePath,	"\x80",0x00,0x00,ID_SetPath			},
+
+	/* Internal server error */
+	{OBEXGEN_ReplyConnect,		"\xD0",0x00,0x00,ID_Initialise			},
+	{OBEXGEN_ReplyChangePath,	"\xD0",0x00,0x00,ID_SetPath			},
+	{OBEXGEN_ReplyGetFilePart,	"\xD0",0x00,0x00,ID_GetFile			},
+	{OBEXGEN_ReplyAddFilePart,	"\xD0",0x00,0x00,ID_AddFile			},
 
 	{NULL,				"\x00",0x00,0x00,ID_None			}
 };

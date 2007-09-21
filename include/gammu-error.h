@@ -247,6 +247,10 @@ typedef enum {
 	 * Wrong folder selected (eg. for SMS).
 	 */
 	ERR_WRONGFOLDER,
+	/**
+	 * Internal phone error (phone got crazy).
+	 */
+	ERR_PHONE_INTERNAL,
 } GSM_Error;
 
 /**
