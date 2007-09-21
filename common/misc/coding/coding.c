@@ -798,15 +798,18 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 	/*without leading byte with format of number*/
 	length--;
 
-	switch ((Number[1] & 112)) {
-	case (NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN & 112):
+	switch ((Number[1] & 0x70)) {
+	case (NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN & 0x70):
 		if (length > 6) length++;
 		dbgprintf("Alphanumeric number, length %i\n",length);
 		GSM_UnpackEightBitsToSeven(0, length, length, Number+2, Buffer);
 		Buffer[length]=0;
 		break;
-	case (NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN & 112):
-	case (NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN & 112):
+	case (NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN & 0x70):
+	/* This should not be generally international number, but some 
+	 * carriers treat it this way.
+	 */
+	case (NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN & 0x70): 
 		dbgprintf("International number\n");
 		Buffer[0]='+';
 		DecodeBCD(Buffer+1,Number+2, length);
