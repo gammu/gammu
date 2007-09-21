@@ -33,8 +33,8 @@ awk 'BEGIN { p = 0; }
 			models[1] = a[1]"-"a[3];
 		}
 		if (length(models) == 2 && length(ids) == 2) {
-				print "\t{\""ids[0]"\",\t\""models[0]"\" ,\"\",\t\t\t\t   {F_OBEX, 0}},"; 
-				print "\t{\""ids[1]"\",\t\""models[1]"\" ,\"\",\t\t\t\t   {F_OBEX, 0}},"; 
+				print "\t{\""ids[0]"\",\t\""models[0]"\" ,\"\",\t\t\t\t   {F_OBEX, F_SUBMIT_SIM_ONLY, 0}},"; 
+				print "\t{\""ids[1]"\",\t\""models[1]"\" ,\"\",\t\t\t\t   {F_OBEX, F_SUBMIT_SIM_ONLY, 0}},"; 
 		} else {
 			/* Restore IDs, we need to have unique model */
 			if (length(models) == 1) {
@@ -43,7 +43,7 @@ awk 'BEGIN { p = 0; }
 			}
 			for (model in models) {
 				for (id in ids) {
-					print "\t{\""ids[id]"\",\t\""models[model]"\" ,\"\",\t\t\t\t   {F_OBEX, 0}},"; 
+					print "\t{\""ids[id]"\",\t\""models[model]"\" ,\"\",\t\t\t\t   {F_OBEX, F_SUBMIT_SIM_ONLY, 0}},"; 
 				}
 			}
 		}
