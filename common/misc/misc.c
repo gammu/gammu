@@ -31,6 +31,17 @@ int RecalcDateTime(struct tm *st, const int year, const int month, const int day
 {
 	const int days[] = {31,28,31,30,31,30,31,31,30,31,30,31};
 	int i, p, q, r;
+	GSM_DateTime Date;
+
+	Date.Year	= year;
+	Date.Month	= month;
+	Date.Day	= day;
+	Date.Hour	= hour;
+	Date.Minute	= minute;
+	Date.Second	= second;
+	Date.Timezone	= 0;
+
+	if (!CheckDate(&Date) || !CheckTime(&Date)) return 0;
 
 	memset(st, 0, sizeof(*st));
 
@@ -212,11 +223,15 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 	struct tm 	timeptr;
 	static char 	retval[200],retval2[200];
 
+	if (!RecalcDateTime(&timeptr, dt.Year, dt.Month, dt.Day, 
+				dt.Hour, dt.Minute, dt.Second)) {
+		retval2[0] = 0;
+		return retval2;
+	}
+
 #ifdef WIN32
 	setlocale(LC_ALL, ".OCP");
 #endif
-
-	RecalcDateTime(&timeptr, dt.Year, dt.Month, dt.Day, dt.Hour, dt.Minute, dt.Second);
 
 	strftime(retval2, 200, "%c", &timeptr);
 	if (TimeZone) {
