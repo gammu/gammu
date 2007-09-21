@@ -77,6 +77,7 @@ msgstr "Nepodařilo se nastavit paritu na zařízení."
 msgid "No response in specified timeout. Probably phone not connected."
 msgstr "Žadná odpověď v očekaváné době. Telefon pravděpodobně není připojen."
 
+
 #: common/gsmcomon.c:98
 #, fuzzy
 #| msgid ""
@@ -96,6 +97,7 @@ msgid ""
 msgstr ""
 "Neznámá odpověď od telefonu. Přečtěte si <http://cihar.com/gammu/report> jak "
 "tuto událost nahlásit."
+
 
 #: common/gsmcomon.c:100
 #, fuzzy
