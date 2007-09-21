@@ -4800,8 +4800,9 @@ GSM_Error ATGEN_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 GSM_Error ATGEN_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_SignalQuality	*Signal = s->Phone.Data.SignalQuality;
-	int 			i;
-	char 			*pos;
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	int rssi, ber;
+	GSM_Error error;
 
 	Signal->SignalStrength 	= -1;
 	Signal->SignalPercent 	= -1;
@@ -4809,40 +4810,47 @@ GSM_Error ATGEN_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
         case AT_Reply_OK:
-            smprintf(s, "Signal quality info received\n");
-            i = atoi(msg.Buffer+15);
-            if (i != 99) {
-                /* from GSM 07.07 section 8.5 */
-                Signal->SignalStrength = 2 * i - 113;
+		smprintf(s, "Signal quality info received\n");
+		error = ATGEN_ParseReply(s,
+				GetLineString(msg.Buffer, Priv->Lines, 2),
+				"+CSQ: @i, @i",
+				&rssi,
+				&ber);
 
-                /* FIXME: this is wild guess and probably will be phone dependant */
-                Signal->SignalPercent = 15 * i;
-                if (Signal->SignalPercent > 100) Signal->SignalPercent = 100;
-            }
-            pos = strchr(msg.Buffer + 15, ',');
-            if (pos != NULL) {
-                i = atoi(pos + 1);
+		if (error != ERR_NONE) {
+			return error;
+		}
+	
+		/* 99 is Not known or not detectable. */
+		if (rssi != 99) {
+			/* from GSM 07.07 section 8.5 */
+			Signal->SignalStrength = 2 * rssi - 113;
+
+			/* FIXME: this is wild guess and probably will be phone dependant */
+			Signal->SignalPercent = 15 * rssi;
+			if (Signal->SignalPercent > 100) Signal->SignalPercent = 100;
+		}
+
                 /* from GSM 05.08 section 8.2.4 */
-                switch (i) {
-                    case 0: Signal->BitErrorRate =  0; break; /* 0.14 */
-                    case 1: Signal->BitErrorRate =  0; break; /* 0.28 */
-                    case 2: Signal->BitErrorRate =  1; break; /* 0.57 */
-                    case 3: Signal->BitErrorRate =  1; break; /* 1.13 */
-                    case 4: Signal->BitErrorRate =  2; break; /* 2.26 */
-                    case 5: Signal->BitErrorRate =  5; break; /* 4.53 */
-                    case 6: Signal->BitErrorRate =  9; break; /* 9.05 */
-                    case 7: Signal->BitErrorRate = 18; break; /* 18.10 */
+                switch (ber) {
+			case 0: Signal->BitErrorRate =  0; break; /* 0.14 */
+			case 1: Signal->BitErrorRate =  0; break; /* 0.28 */
+			case 2: Signal->BitErrorRate =  1; break; /* 0.57 */
+			case 3: Signal->BitErrorRate =  1; break; /* 1.13 */
+			case 4: Signal->BitErrorRate =  2; break; /* 2.26 */
+			case 5: Signal->BitErrorRate =  5; break; /* 4.53 */
+			case 6: Signal->BitErrorRate =  9; break; /* 9.05 */
+			case 7: Signal->BitErrorRate = 18; break; /* 18.10 */
                 }
-            }
-            return ERR_NONE;
+		return ERR_NONE;
         case AT_Reply_CMSError:
-            return ATGEN_HandleCMSError(s);
+		return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
 	        return ATGEN_HandleCMEError(s);
 	case AT_Reply_Error:
 		return ERR_NOTSUPPORTED;
         default:
-            break;
+		break;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
