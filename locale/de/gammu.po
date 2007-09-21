@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-09-12 15:38+0900\n"
+"POT-Creation-Date: 2007-09-21 14:16+0900\n"
 "PO-Revision-Date: 2007-08-20 15:57+0200\n"
 "Last-Translator: Thorsten Gutsche <thorsten.gutsche@googlemail.com>\n"
 "Language-Team: Language =de\n"
@@ -82,10 +82,34 @@ msgstr "Kann die Parität auf dem Gerät nicht setzen."
 msgid "No response in specified timeout. Probably phone not connected."
 msgstr "Keine Rückmeldung. Telefon möglicherweise nicht angeschlossen?"
 
+#: common/gsmcomon.c:98
+#, fuzzy
+#| msgid ""
+#| "Unknown response from phone. See <http://cihar.com/gammu/report> for "
+#| "information how to report it."
+msgid ""
+"Frame not requested right now. See <http://cihar.com/gammu/report> for "
+"information how to report it."
+msgstr ""
+"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
+"gammu/report> wo dieser Fehler zu melden ist."
+
 #: common/gsmcomon.c:99
 msgid ""
 "Unknown response from phone. See <http://cihar.com/gammu/report> for "
 "information how to report it."
+msgstr ""
+"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
+"gammu/report> wo dieser Fehler zu melden ist."
+
+#: common/gsmcomon.c:100
+#, fuzzy
+#| msgid ""
+#| "Unknown response from phone. See <http://cihar.com/gammu/report> for "
+#| "information how to report it."
+msgid ""
+"Unknown frame. See <http://cihar.com/gammu/report> for information how to "
+"report it."
 msgstr ""
 "Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
 "gammu/report> wo dieser Fehler zu melden ist."
@@ -135,44 +159,44 @@ msgstr "Speicher voll."
 msgid "Unknown error."
 msgstr "Unbekannter Fehler."
 
-#: common/gsmcomon.c:112
+#: common/gsmcomon.c:111
 msgid "Can't open specified file. Read only?"
 msgstr "Kann gewählte Datei nicht öffnen. Keine Schreibberechtigung?"
 
-#: common/gsmcomon.c:113
+#: common/gsmcomon.c:112
 msgid "More memory required..."
 msgstr "Mehr Speicher benötigt."
 
-#: common/gsmcomon.c:114
+#: common/gsmcomon.c:113
 msgid "Permission to file/device required..."
 msgstr "Berechtigungen für Datei/Gerät benötigt..."
 
-#: common/gsmcomon.c:115
+#: common/gsmcomon.c:114
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
 msgstr ""
 "Leere SMSC-Nummer. Setzen Sie sie im Telefon oder verwenden Sie -smscnumber."
 
-#: common/gsmcomon.c:116
+#: common/gsmcomon.c:115
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
 "Sie sind innerhalb des Telefon-Menüs (beim Bearbeiten?). Verlassen Sie es "
 "und versuchen es erneut."
 
-#: common/gsmcomon.c:117
+#: common/gsmcomon.c:116
 msgid "Function is during writing. If want help, please contact with authors."
 msgstr ""
 "Die Funktion wird gerade geschrieben. Wenden Sie sich bitte an den Autor, "
 "wenn Sie Hilfe benötigen."
 
-#: common/gsmcomon.c:118
+#: common/gsmcomon.c:117
 msgid "Phone is disabled and connected to charger."
 msgstr "Das Telefon ist deaktiviert und mit dem Ladegerät verbunden."
 
-#: common/gsmcomon.c:119
+#: common/gsmcomon.c:118
 msgid "File format not supported by Gammu."
 msgstr "Das Dateiformat wird von Gammu nicht unterstützt."
 
-#: common/gsmcomon.c:120
+#: common/gsmcomon.c:119
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
@@ -180,75 +204,85 @@ msgstr ""
 "Nobody is perfect, ein Fehler ist in der Protokollimplemetierung "
 "aufgetreten. Bitte wenden Sie sich an den Autor."
 
-#: common/gsmcomon.c:121
+#: common/gsmcomon.c:120
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
 "Die Übertragung wurde vom Telefon abgebrochen. Vielleicht haben Sie Abbruch "
 "am Handy gedrückt."
 
-#: common/gsmcomon.c:123
+#: common/gsmcomon.c:121
+msgid "Phone module need to send another answer frame."
+msgstr ""
+
+#: common/gsmcomon.c:122
 msgid "Current connection type doesn't support called function."
 msgstr ""
 "Der gegenwärtige Verbindungstyp unterstützt nicht die aufgerufenen Funktion."
 
-#: common/gsmcomon.c:124
+#: common/gsmcomon.c:123
 msgid "CRC error."
 msgstr "CRC-Fehler."
 
-#: common/gsmcomon.c:125
+#: common/gsmcomon.c:124
 msgid "Invalid date or time specified."
 msgstr "Ungültiges Datum oder Zeit angegeben."
 
-#: common/gsmcomon.c:126
+#: common/gsmcomon.c:125
 msgid "Phone memory error, maybe it is read only."
 msgstr "Telefonspeicherfehler, möglicherweise nur lesend."
 
-#: common/gsmcomon.c:127
+#: common/gsmcomon.c:126
 msgid "Invalid data given to phone."
 msgstr "Ungültige Daten an das Telefon übertragen."
 
-#: common/gsmcomon.c:128
+#: common/gsmcomon.c:127
 msgid "File with specified name already exist."
 msgstr "Der angegebene Dateiname existiert bereits."
 
-#: common/gsmcomon.c:129
+#: common/gsmcomon.c:128
 msgid "File with specified name doesn't exist."
 msgstr "Die Datei mit dem angegebenen Namen existiert nicht."
 
-#: common/gsmcomon.c:130
+#: common/gsmcomon.c:129
 msgid "You have to give folder name and not file name."
 msgstr "Sie müssen einen Verzeichnis-, keinen Dateinamen angeben."
 
-#: common/gsmcomon.c:131
+#: common/gsmcomon.c:130
 msgid "You have to give file name and not folder name."
 msgstr "Sie müssen einen Datei-, keinen Verzeichnisnamen angeben."
 
-#: common/gsmcomon.c:132
+#: common/gsmcomon.c:131
 msgid "Can not access SIM card."
 msgstr "Kein Zugriff auf die SIM-Karte."
 
-#: common/gsmcomon.c:133
+#: common/gsmcomon.c:132
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
 "Im Handy befindet sich eine falsche GNAPPLET-Version. Verwenden Sie die "
 "Version des aktuell verwendeten Gammu."
 
-#: common/gsmcomon.c:134
+#: common/gsmcomon.c:133
 msgid "Folder must be empty."
 msgstr "Das Verzeichnis muss leer sein."
 
-#: common/gsmcomon.c:135
+#: common/gsmcomon.c:134
 msgid "Data were converted."
 msgstr "Die Daten wurden umgewandelt."
 
-#: common/gsmcomon.c:136
+#: common/gsmcomon.c:135
 msgid "Gammu is not configured."
 msgstr "Gammu ist nicht konfiguriert."
 
-#: common/gsmcomon.c:137
+#: common/gsmcomon.c:136
 #, fuzzy
 msgid "Wrong folder used."
 msgstr "Teil des Verzeichnisses"
+
+#: common/gsmcomon.c:137
+#, fuzzy
+#| msgid "Unknown error."
+msgid "Internal phone error."
+msgstr "Unbekannter Fehler."
 
 #: common/phone/nokia/dct3/n6110.c:1953 gammu/misc.c:1813
 msgid "Personal"
