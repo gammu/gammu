@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.10.6\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-09-21 14:16+0900\n"
+"POT-Creation-Date: 2007-09-21 15:35+0900\n"
 "PO-Revision-Date: 2007-08-16 09:45+0200\n"
 "Last-Translator: Andy Kir <dronmbi@mail.com>\n"
 "Language-Team: Language =ru\n"
@@ -83,9 +83,6 @@ msgstr "Превышен тайм-аут ожидания ответа. Возм
 
 #: common/gsmcomon.c:98
 #, fuzzy
-#| msgid ""
-#| "Unknown response from phone. See <http://cihar.com/gammu/report> for "
-#| "information how to report it."
 msgid ""
 "Frame not requested right now. See <http://cihar.com/gammu/report> for "
 "information how to report it."
@@ -103,9 +100,6 @@ msgstr ""
 
 #: common/gsmcomon.c:100
 #, fuzzy
-#| msgid ""
-#| "Unknown response from phone. See <http://cihar.com/gammu/report> for "
-#| "information how to report it."
 msgid ""
 "Unknown frame. See <http://cihar.com/gammu/report> for information how to "
 "report it."
@@ -282,7 +276,6 @@ msgstr ", папка Входящие"
 
 #: common/gsmcomon.c:137
 #, fuzzy
-#| msgid "Unknown error."
 msgid "Internal phone error."
 msgstr "Неизвестная ошибка."
 
