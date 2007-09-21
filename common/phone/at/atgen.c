@@ -4876,6 +4876,14 @@ GSM_Error ATGEN_ReplyOK(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s UNU
 	return ERR_NONE;
 }
 
+/**
+ * Just ignores reply we got.
+ */
+GSM_Error ATGEN_ReplyIgnore(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s UNUSED)
+{
+	return ERR_NONE;
+}
+
 static GSM_Error ATGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
 {
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -5602,6 +5610,9 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyEnterSecurityCode,	"AT+CPIN2="		,0x00,0x00,ID_EnterSecurityCode	 },
 {ATGEN_ReplyGetSecurityStatus,	"AT+CPIN?"		,0x00,0x00,ID_GetSecurityStatus	 },
 {ATGEN_ReplyOK,			"OK"			,0x00,0x00,ID_IncomingFrame	 },
+
+/* No need to take care about this, we just need to ignore it */
+{ATGEN_ReplyIgnore,		"+MBAN:"		,0x00,0x00,ID_IncomingFrame	 },
 
 {ATGEN_GenericReply, 		"AT+VTS"		,0x00,0x00,ID_SendDTMF		 },
 {ATGEN_ReplyCancelCall,		"AT+CHUP"		,0x00,0x00,ID_CancelCall	 },

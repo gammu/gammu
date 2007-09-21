@@ -61,7 +61,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	/* Some info from phone can be inside "normal" answers
 	 * It starts with strings written here
 	 */
-	static SpecialAnswersStruct	SpecialAnswers[] = {
+	static const SpecialAnswersStruct SpecialAnswers[] = {
 		{"_OSIGQ:"	,1},	{"_OBS:"	,1},
 		{"^SCN:"	,1},	{"+CGREG:"	,1},
 		{"+CBM:"	,1},	{"+CMT:"	,2},
@@ -75,6 +75,8 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"*EBCA"	,1},
 
 		{"SDNDCRC ="	,1},	/* Samsung binary transfer end */
+
+		{"+MBAN:"	,1},	/* Motorola banner */
 
 		{NULL		,1}};
 
