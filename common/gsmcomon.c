@@ -95,9 +95,9 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_DEVICEREADERROR,		N_("Error during reading device.")},
 	{ERR_DEVICEPARITYERROR,		N_("Can't set parity on device.")},
 	{ERR_TIMEOUT,			N_("No response in specified timeout. Probably phone not connected.")},
-	/* Some missed */
+	{ERR_FRAMENOTREQUESTED,		N_("Frame not requested right now. See <http://cihar.com/gammu/report> for information how to report it.")},
 	{ERR_UNKNOWNRESPONSE,		N_("Unknown response from phone. See <http://cihar.com/gammu/report> for information how to report it.")},
-	/* Some missed */
+	{ERR_UNKNOWNFRAME,		N_("Unknown frame. See <http://cihar.com/gammu/report> for information how to report it.")},
 	{ERR_UNKNOWNCONNECTIONTYPESTRING,N_("Unknown connection type string. Check config file.")},
 	{ERR_UNKNOWNMODELSTRING,	N_("Unknown model type string. Check config file.")},
 	{ERR_SOURCENOTAVAILABLE,	N_("Some functions not available for your system (disabled in config or not written).")},
@@ -108,7 +108,6 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_NOTIMPLEMENTED,		N_("Function not implemented. Help required.")},
 	{ERR_FULL,			N_("Memory full.")},
 	{ERR_UNKNOWN,			N_("Unknown error.")},
-	/* Some missed */
 	{ERR_CANTOPENFILE,		N_("Can't open specified file. Read only?")},
 	{ERR_MOREMEMORY,		N_("More memory required...")},
 	{ERR_PERMISSION,		N_("Permission to file/device required...")},
@@ -119,7 +118,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_FILENOTSUPPORTED,		N_("File format not supported by Gammu.")},
 	{ERR_BUG,			N_("Nobody is perfect, some bug appeared in protocol implementation. Please contact authors.")},
 	{ERR_CANCELED,			N_("Transfer was canceled by phone, maybe you pressed cancel on phone.")},
-	/* Some missed */
+	{ERR_NEEDANOTHERANSWER,		N_("Phone module need to send another answer frame.")}, /* This should be only internal. */
 	{ERR_OTHERCONNECTIONREQUIRED,	N_("Current connection type doesn't support called function.")},
 	{ERR_WRONGCRC,			N_("CRC error.")},
 	{ERR_INVALIDDATETIME,		N_("Invalid date or time specified.")},
@@ -135,6 +134,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_DATACONVERTED,		N_("Data were converted.")},
 	{ERR_UNCONFIGURED,		N_("Gammu is not configured.")},
 	{ERR_WRONGFOLDER,		N_("Wrong folder used.")},
+	{ERR_PHONE_INTERNAL,		N_("Internal phone error.")},
 
 	{0,				""}
 };
