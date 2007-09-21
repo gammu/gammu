@@ -806,6 +806,7 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 		Buffer[length]=0;
 		break;
 	case (NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN & 112):
+	case (NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN & 112):
 		dbgprintf("International number\n");
 		Buffer[0]='+';
 		DecodeBCD(Buffer+1,Number+2, length);
