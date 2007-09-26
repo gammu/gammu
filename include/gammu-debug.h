@@ -59,8 +59,17 @@ int smprintf(GSM_StateMachine * s, const char *format, ...);
  * Severity of printed message.
  */
 typedef enum {
+	/**
+	 * Message will not be printed.
+	 */
 	D_NONE,
+	/**
+	 * Message is printed in all text log levels.
+	 */
 	D_TEXT,
+	/**
+	 * Message is printed on all text error log levels.
+	 */
 	D_ERROR,
 } GSM_DebugSeverity;
 
@@ -68,6 +77,7 @@ typedef enum {
  * Prints string to defined debug log.
  *
  * \param s State machine, where to print.
+ * \param severity Severity of printed message.
  * \param format Format string as for printf.
  * \return Upon successful return, these functions return the number of characters printed (as printf).
  *
