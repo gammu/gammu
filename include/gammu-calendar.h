@@ -687,6 +687,7 @@ GSM_Error GSM_GetToDoStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
  * Reads ToDo from phone.
  *
  * \param s State machine pointer.
+ * \param ToDo Storage for note.
  *
  * \return Error code
  *
@@ -698,6 +699,9 @@ GSM_Error GSM_GetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
  * Reads ToDo from phone.
  *
  * \param s State machine pointer.
+ * \param ToDo Storage for note, if start is false, should contain
+ * data from previous read (at least position).
+ * \param start Whether we're doing initial read or continue in reading.
  *
  * \return Error code
  *
@@ -709,6 +713,7 @@ GSM_Error GSM_GetNextToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo,
  * Sets ToDo in phone.
  *
  * \param s State machine pointer.
+ * \param ToDo ToDo to set, should contain valid location.
  *
  * \return Error code
  *
@@ -720,6 +725,7 @@ GSM_Error GSM_SetToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
  * Adds ToDo in phone.
  *
  * \param s State machine pointer.
+ * \param ToDo ToDo to add.
  *
  * \return Error code
  *
@@ -731,6 +737,7 @@ GSM_Error GSM_AddToDo(GSM_StateMachine * s, GSM_ToDoEntry * ToDo);
  * Deletes ToDo entry in phone.
  *
  * \param s State machine pointer.
+ * \param ToDo ToDo to delete, only location is actually used.
  *
  * \return Error code
  *
@@ -792,7 +799,7 @@ GSM_Error GSM_GetNextCalendar(GSM_StateMachine * s, GSM_CalendarEntry * Note,
  * Sets calendar entry
  *
  * \param s State machine pointer.
- * \param Note Storage for note, should contain position to read.
+ * \param Note New note values, needs to contain valid position.
  *
  * \return Error code
  *
@@ -875,6 +882,7 @@ GSM_Error GSM_GetNotesStatus(GSM_StateMachine * s, GSM_ToDoStatus * status);
  * Retrieves notes entry.
  *
  * \param s State machine pointer.
+ * \param Note Storage for note.
  *
  * \return Error code
  *
@@ -887,6 +895,9 @@ GSM_Error GSM_GetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
  * notes entries.
  *
  * \param s State machine pointer.
+ * \param Note Storage for note, if start is false, should contain
+ * data from previous read (at least position).
+ * \param start Whether we're doing initial read or continue in reading.
  *
  * \return Error code
  *
@@ -898,6 +909,7 @@ GSM_Error GSM_GetNextNote(GSM_StateMachine * s, GSM_NoteEntry * Note,
  * Sets note entry
  *
  * \param s State machine pointer.
+ * \param Note New note values, needs to contain valid position.
  *
  * \return Error code
  *
@@ -909,6 +921,7 @@ GSM_Error GSM_SetNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
  * Adds note entry.
  *
  * \param s State machine pointer.
+ * \param Note Note to add.
  *
  * \return Error code
  *
@@ -920,6 +933,7 @@ GSM_Error GSM_AddNote(GSM_StateMachine * s, GSM_NoteEntry * Note);
  * Deletes note entry.
  *
  * \param s State machine pointer.
+ * \param Note Note to delete, must contain position.
  *
  * \return Error code
  *
