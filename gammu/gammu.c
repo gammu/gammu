@@ -1002,8 +1002,6 @@ int main(int argc, char *argv[])
 			printf_warn("%s\n", _("No configuration file found!"));
 		}
 	}
-	if (cfg == NULL)
-		printf_warn("%s\n", _("No configuration read, using builtin defaults!"));
 
 	smcfg0 = GSM_GetConfig(s, 0);
 
@@ -1019,8 +1017,15 @@ int main(int argc, char *argv[])
 				GSM_ReadConfig(NULL, smcfg, 0);
 			}
 		} else {
-			if (!GSM_ReadConfig(cfg, smcfg, i) && i != 0)
-				break;
+			if (!GSM_ReadConfig(cfg, smcfg, i)) {
+				if (i != 0) {
+					/* We just end here */
+					break;
+				}
+				if (GSM_FallbackConfig) {
+					printf_warn("%s\n", _("No configuration read, using builtin defaults!"));
+				}
+			}
 		}
 		GSM_SetConfigNum(s, GSM_GetConfigNum(s) + 1);
 
