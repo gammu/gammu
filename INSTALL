@@ -24,14 +24,32 @@ From Sources - Linux
 
 You need CMake from <http://www.cmake.org> for configuring Gammu.
 
-For now, only out of source build is supported, so you have to create
-separate directory for build.
+For compatibility reasons, configure like wrapper is provided, if you
+don't need much specific tuning, you can use general "./configure; make;
+sudo make install" set of commands.
 
-mkdir build
-cd build
-cmake ..
-make
-make install
+If you need/want to tweak build a bit more than configure wrapper
+provides, you have to use CMake directly. For now, only out of source
+build is supported, so you have to create separate directory for build:
+
+> mkdir build
+> cd build
+
+Then just configure project:
+
+> cmake ..
+
+Build it:
+
+> make
+
+Test that everything is okay:
+
+> make test
+
+And finally install it:
+
+> sudo make install
 
 You can configure build parameters either by command line (see
 parameters bellow), or using TUI - ccmake.
