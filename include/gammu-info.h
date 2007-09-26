@@ -1,5 +1,5 @@
 /**
- * \info gammu-info.h
+ * \file gammu-info.h
  * \author Michal Čihař
  *
  * Phone information.

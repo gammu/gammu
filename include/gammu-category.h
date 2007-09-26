@@ -1,5 +1,5 @@
 /**
- * \info gammu-category.h
+ * \file gammu-category.h
  * \author Michal Čihař
  *
  * Categories handling.
