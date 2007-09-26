@@ -868,6 +868,7 @@ void GSM_ExpandUserPath(char **string)
 	*string = tmp;
 }
 
+bool GSM_FallbackConfig = false;
 
 bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 {
@@ -1039,6 +1040,8 @@ fail:
 		strcpy(cfg->TextCall,"Call");
 		strcpy(cfg->TextBirthday,"Birthday");
 		strcpy(cfg->TextMemo,"Memo");
+		/* Indicate that we used defaults */
+		GSM_FallbackConfig = true;
 	}
 	return false;
 }

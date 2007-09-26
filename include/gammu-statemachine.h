@@ -186,8 +186,19 @@ GSM_Error GSM_FindGammuRC(INI_Section ** result);
  * \return Whether we got valid configuration.
  *
  * \ingroup StateMachine
+ *
+ * \see GSM_FallbackConfig
  */
 bool GSM_ReadConfig(INI_Section * cfg_info, GSM_Config * cfg, int num);
+
+/**
+ * Indication that GSM_ReadConfig felt back to using default builtin
+ * configuration.
+ *
+ * \todo This should be rather return value of GSM_ReadConfig, but we
+ * don't want to break ABI right now.
+ */
+extern bool GSM_FallbackConfig;
 
 /**
  * Gets gammu configuration from state machine.
