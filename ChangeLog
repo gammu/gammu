@@ -22,6 +22,7 @@ ChangeLog
       Martin Thierer, bug 382).
 [-] * Fixed compilation with older PostgreSQL libraries.
 [-] * Handle correcly internal phone errors in OBEX module.
+[-] * Fixed crash on invalid config file (Debian bug #444046).
 [+] * Command nokiaaddfile can now either keep or delete user data on
       uploading new application (thanks to Martin Thierer, bug 385).
 

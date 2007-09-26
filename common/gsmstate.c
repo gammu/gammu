@@ -895,26 +895,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	cfg->UseGlobalDebugFile	 = DefaultUseGlobalDebugFile;
 
 	/* If we don't have valid config, bail out */
-	if (cfg_info==NULL) {
-
-		/* Special case, this config needs to be somehow valid */
-		if (num == 0) {
-			cfg->Device		 	 = strdup(DefaultPort);
-			cfg->Connection	 		 = strdup(DefaultConnection);
-			cfg->SyncTime		 	 = strdup(DefaultSynchronizeTime);
-			cfg->DebugFile		 	 = strdup(DefaultDebugFile);
-			cfg->LockDevice	 		 = strdup(DefaultLockDevice);
-			strcpy(cfg->Model,DefaultModel);
-			strcpy(cfg->DebugLevel,DefaultDebugLevel);
-			cfg->StartInfo	 		 = strdup(DefaultStartInfo);
-			strcpy(cfg->TextReminder,"Reminder");
-			strcpy(cfg->TextMeeting,"Meeting");
-			strcpy(cfg->TextCall,"Call");
-			strcpy(cfg->TextBirthday,"Birthday");
-			strcpy(cfg->TextMemo,"Memo");
-		}
-		return false;
-	}
+	if (cfg_info==NULL) goto fail;
 
 	/* Which section should we read? */
 	if (num == 0) {
@@ -930,7 +911,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 			break;
 		}
         }
-	if (!found) return false;
+	if (!found) goto fail;
 
 	/* Set device name */
 	free(cfg->Device);
@@ -1041,6 +1022,25 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 	}
 
 	return true;
+
+fail:
+	/* Special case, this config needs to be somehow valid */
+	if (num == 0) {
+		cfg->Device		 	 = strdup(DefaultPort);
+		cfg->Connection	 		 = strdup(DefaultConnection);
+		cfg->SyncTime		 	 = strdup(DefaultSynchronizeTime);
+		cfg->DebugFile		 	 = strdup(DefaultDebugFile);
+		cfg->LockDevice	 		 = strdup(DefaultLockDevice);
+		strcpy(cfg->Model,DefaultModel);
+		strcpy(cfg->DebugLevel,DefaultDebugLevel);
+		cfg->StartInfo	 		 = strdup(DefaultStartInfo);
+		strcpy(cfg->TextReminder,"Reminder");
+		strcpy(cfg->TextMeeting,"Meeting");
+		strcpy(cfg->TextCall,"Call");
+		strcpy(cfg->TextBirthday,"Birthday");
+		strcpy(cfg->TextMemo,"Memo");
+	}
+	return false;
 }
 
 void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
