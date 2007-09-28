@@ -255,6 +255,20 @@
  */
 #define GSM_MAX_MULTI_BITMAP 6
 
+/**
+ * Maximal length of file name.
+ *
+ * \ingroup Limits
+ */
+#define GSM_MAX_FILENAME_LENGTH 149
+
+/**
+ * Maximal length of full file name (including path).
+ *
+ * \ingroup Limits
+ */
+#define GSM_MAX_FILENAME_ID_LENGTH 399
+
 #endif
 
 /* Editor configuration
