@@ -6,17 +6,14 @@
 #include "../common/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 
-GSM_StateMachine *s;
-GSM_Protocol_Message msg;
+#include "sms-printing.h"
+
 unsigned char data[] = {
 	0x01, 0x08, 0x00, 0x08, 0x01, 0x02, 0x01, 0x00, 0x05, 0x91, 0x26, 0x18, 0x16, 0x42, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x08, 0x0D, 0x91, 0x26, 0x58, 0x26, 0x84, 0x88, 0x65,
 	0xF8, 0x00, 0x00, 0x00, 0x70, 0x90, 0x30, 0x10, 0x61, 0x63, 0x82, 0xD4, 0xF2, 0x9C, 0x0E, 0x9A,
 	0xB7, 0xE7
 	};
-GSM_Error error;
-GSM_MultiSMSMessage sms;
-GSM_MultiPartSMSInfo	SMSInfo;
 
 /* This is not part of API! */
 extern GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s);
@@ -24,6 +21,10 @@ extern GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 int main(int argc, char **argv)
 {
 	GSM_Debug_Info *debug_info;
+	GSM_StateMachine *s;
+	GSM_Protocol_Message msg;
+	GSM_Error error;
+	GSM_MultiSMSMessage sms;
 
 	debug_info = GSM_GetGlobalDebug();
 	GSM_SetDebugFileDescriptor(stderr, debug_info);
@@ -45,6 +46,9 @@ int main(int argc, char **argv)
 
 	/* Parse it */
 	error = N6110_ReplyGetSMSMessage(msg, s);
+
+	/* Display message */
+	DisplayTestSMS(sms);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
