@@ -124,12 +124,15 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #endif
 #ifdef GSM_ENABLE_FBUS2
 	GSM_RegisterConnection(s, GCT_FBUS2,	  &SerialDevice,  &FBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_FBUS2NODTR, &SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2DLR3
 	GSM_RegisterConnection(s, GCT_FBUS2DLR3,  &SerialDevice,  &FBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_FBUS2DLR3NODTR, &SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_DKU5FBUS2
 	GSM_RegisterConnection(s, GCT_DKU5FBUS2,  &SerialDevice,  &FBUS2Protocol);
+	GSM_RegisterConnection(s, GCT_DKU5FBUS2NODTR,  &SerialDevice,  &FBUS2Protocol);
 	GSM_RegisterConnection(s, GCT_ARK3116FBUS2,  &SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2PL2303
