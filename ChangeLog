@@ -26,6 +26,8 @@ ChangeLog
 [-] * Better report errors when using default configuration.
 [-] * Fix several buffer overflows in 6510 (thanks to Tobias Sunderdiek
       for debugging this).
+[-] * Fixed crash on decoding messages with special numbering plans with
+      long numbers (bug 281).
 [+] * Command nokiaaddfile can now either keep or delete user data on
       uploading new application (thanks to Martin Thierer, bug 385).
 

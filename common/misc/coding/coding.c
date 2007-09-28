@@ -786,13 +786,22 @@ int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *ou
 
 void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, bool semioctet)
 {
-	unsigned char	Buffer[50]	= "";
+	unsigned char	Buffer[GSM_MAX_NUMBER_LENGTH + 1];
 	int		length		= Number[0];
+
+	/* Default ouput on error */
+	strcpy(Buffer, "<NOT DECODED>");
 
 	if (semioctet) {
 		/* Convert number of semioctets to number of chars */
 		if (length % 2) length++;
 		length=length / 2 + 1;
+	}
+
+	/* Check length */
+	if (length > GSM_MAX_NUMBER_LENGTH) {
+		dbgprintf("Number too big, not decoding!\n");
+		goto out;
 	}
 
 	/*without leading byte with format of number*/
@@ -811,12 +820,22 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 		DecodeBCD(Buffer+1,Number+2, length);
 		break;
 	default:
-		dbgprintf("Default number %02x\n",Number[1]);
+		dbgprintf("Default number %02x (%d %d %d %d|%d %d %d %d)\n",Number[1], 
+				Number[1] & 0x80 ? 1 : 0,
+				Number[1] & 0x40 ? 1 : 0,
+				Number[1] & 0x20 ? 1 : 0,
+				Number[1] & 0x10 ? 1 : 0,
+				Number[1] & 0x08 ? 1 : 0,
+				Number[1] & 0x04 ? 1 : 0,
+				Number[1] & 0x02 ? 1 : 0,
+				Number[1] & 0x01 ? 1 : 0
+				);
 		DecodeBCD (Buffer, Number+2, length);
 		break;
 	}
 
 	dbgprintf("Len %i\n",length);
+out:
 	EncodeUnicode(retval,Buffer,strlen(Buffer));
 }
 
