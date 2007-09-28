@@ -68,6 +68,8 @@
 /**
  * Maximal length of phone number.
  *
+ * \todo Should be increased on API change, see tests/at-sms/01.dump.
+ *
  * \ingroup Limits
  */
 #define GSM_MAX_NUMBER_LENGTH 50
