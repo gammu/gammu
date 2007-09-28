@@ -51,7 +51,7 @@ foreach(TESTVCARD ${VCARDS})
 endforeach(TESTVCARD $VCARDS)
 
 # SMS parsing
-add_executable(sms-nokia-01 sms-nokia-01.c)
+add_executable(sms-nokia-01 sms-nokia-01.c sms-printing.c)
 if (CROSS_MINGW)
     set_target_properties (sms-nokia-01 PROPERTIES PREFIX "" SUFFIX ".exe")
 endif (CROSS_MINGW)
@@ -59,7 +59,7 @@ target_link_libraries(sms-nokia-01 libGammu)
 add_test(sms-nokia-01 "${GAMMU_TEST_PATH}/sms-nokia-01${GAMMU_TEST_SUFFIX}")
 
 # AT SMS parsing
-add_executable(sms-at-parse sms-at-parse.c)
+add_executable(sms-at-parse sms-at-parse.c sms-printing.c)
 if (CROSS_MINGW)
     set_target_properties (sms-at-parse PROPERTIES PREFIX "" SUFFIX ".exe")
 endif (CROSS_MINGW)
