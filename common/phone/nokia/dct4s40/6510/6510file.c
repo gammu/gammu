@@ -487,7 +487,7 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 	GSM_File		File2;
 	GSM_Error	       	error;
 	int		     	j;
-	unsigned char	   	Header[400] = {
+	unsigned char	   	Header[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))] = {
 		N7110_FRAME_HEADER, 0x02, 0x00, 0x00, 0x00, 0x01,
 		0x00, 0x0C,	     /* parent folder ID */
 		0x00, 0x00, 0x00, 0xE8};
@@ -567,6 +567,7 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 	*Pos = *Pos + j;
 
 	if (j < 1000) {
+		/* FIXME: This looks strange */
 		end[8] = atoi(DecodeUnicodeString(File->ID_FullName)) / 256;
 		end[9] = atoi(DecodeUnicodeString(File->ID_FullName)) % 256;
 		smprintf(s, "Frame for ending adding file\n");
@@ -685,6 +686,7 @@ static GSM_Error N6510_PrivDeleteFileFolder1(GSM_StateMachine *s, unsigned char 
 	error = N6510_SetReadOnly1(s, ID, false);
 	if (error != ERR_NONE) return error;
 
+	/* FIXME: This looks wrong */
 	Delete[8] = atoi(DecodeUnicodeString(ID)) / 256;
 	Delete[9] = atoi(DecodeUnicodeString(ID)) % 256;
 
@@ -714,7 +716,7 @@ static GSM_Error N6510_AddFolder1(GSM_StateMachine *s, GSM_File *File)
 {
 	GSM_File	File2;
 	GSM_Error       error;
-	unsigned char   Header[400] = {
+	unsigned char   Header[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))] = {
 		N7110_FRAME_HEADER, 0x04, 0x00, 0x00, 0x00, 0x01,
 		0x00, 0x0C,	     /* parent folder ID */
 		0x00, 0x00, 0x00, 0xE8};
@@ -813,7 +815,8 @@ GSM_Error N6510_ReplyOpenFile2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 static GSM_Error N6510_OpenFile2(GSM_StateMachine *s, char *Name, int *Handle, bool Create)
 {
-	unsigned char	 req[200] = {N6110_FRAME_HEADER, 0x72,
+	unsigned char	 req[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))] =
+		{N6110_FRAME_HEADER, 0x72,
 				     0x00,	  // mode 0 - open read only, 0x11 - read write create
 				     0x02,
 				     0xFF, 0xFF}; // name length
@@ -982,7 +985,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 static GSM_Error N6510_GetFileFolderInfo2(GSM_StateMachine *s, GSM_File *File)
 {
 	int		     	Pos=6;
-	unsigned char	   	req[900] = {
+	unsigned char	   	req[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))] = {
 		N7110_FRAME_HEADER,0x6C,
 		0xFF, 0xFF}; 			// name length
 
@@ -1005,7 +1008,8 @@ static GSM_Error N6510_PrivGetFolderListing2(GSM_StateMachine *s, GSM_File *File
 {
 	GSM_Error		error;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
-	unsigned char	   	req[200] = {N6110_FRAME_HEADER, 0x68,
+	unsigned char	   	req[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))] = {
+		N6110_FRAME_HEADER, 0x68,
 					    0xFF, 0xFF}; // name length
 	int			Pos = 6, i = 0;
 
@@ -1184,7 +1188,7 @@ static GSM_Error N6510_SetFileAttributes2(GSM_StateMachine *s, GSM_File *File)
 	int		P = 10;
 	GSM_Error	error;
 	GSM_File	File2;
-	unsigned char	Header2[1500] = {
+	unsigned char	Header2[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))] = {
 		N7110_FRAME_HEADER, 0x6E,
 		0x00, 0x0c};			//name len
 
@@ -1239,7 +1243,7 @@ static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, int *Po
 		N7110_FRAME_HEADER, 0x58, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 	// handle
 		0x00, 0x00, 0x04, 0x00};	// buffer len
-	unsigned char	   	Header[1500] = {
+	unsigned char	   	Header[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))] = {
 		N7110_FRAME_HEADER, 0x86,
 		0x00, 0x0c};			//name len
 
@@ -1396,7 +1400,8 @@ GSM_Error N6510_ReplyDeleteFile2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 static GSM_Error N6510_DeleteFile2(GSM_StateMachine *s, unsigned char *ID)
 {
-	unsigned char   req[1000] = {N7110_FRAME_HEADER, 0x62};
+	unsigned char   req[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))] = {
+		N7110_FRAME_HEADER, 0x62};
 	int		Pos = 6;
 	GSM_File	file;
 	GSM_Error	error;
@@ -1441,7 +1446,8 @@ GSM_Error N6510_ReplyAddFolder2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 static GSM_Error N6510_AddFolder2(GSM_StateMachine *s, GSM_File *File)
 {
 	GSM_Error	error;
-	unsigned char   req[1000] = {N7110_FRAME_HEADER, 0x64};
+	unsigned char   req[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))] = {
+		N7110_FRAME_HEADER, 0x64};
 	int		Pos = 6;
 	int		Len = 0;
 
@@ -1488,7 +1494,8 @@ static GSM_Error N6510_DeleteFolder2(GSM_StateMachine *s, unsigned char *ID)
 {
 	GSM_File	File2;
 	GSM_Error	error;
-	unsigned char   req[1000] = {N7110_FRAME_HEADER, 0x6A};
+	unsigned char   req[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))] = {
+		N7110_FRAME_HEADER, 0x6A};
 	int		Pos = 6;
 
 	//we don't want to allow deleting non empty folders
@@ -1553,7 +1560,7 @@ GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool star
 {
 	GSM_Error	       	error;
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
-	char		    	buf[200];
+	char		    	buf[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))];
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
 
@@ -1598,7 +1605,7 @@ GSM_Error N6510_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool star
 GSM_Error N6510_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
 {
 	GSM_File	File2;
-	char	    	buf[200];
+	char	    	buf[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))];
 	GSM_Error       error;
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;
@@ -1745,7 +1752,7 @@ GSM_Error N6510_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *s
 GSM_Error N6510_SetFileAttributes(GSM_StateMachine *s, GSM_File *File)
 {
 	GSM_File	File2;
-	char	    	buf[200];
+	char	    	buf[20 + (2 * (GSM_MAX_FILENAME_ID_LENGTH + 1))];
 	GSM_Error       error;
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NOFILESYSTEM)) return ERR_NOTSUPPORTED;

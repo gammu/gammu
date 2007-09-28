@@ -14,6 +14,7 @@
 
 #include <gammu-types.h>
 #include <gammu-datetime.h>
+#include <gammu-limits.h>
 
 /**
  * Status of filesystem.
@@ -64,7 +65,7 @@ typedef struct {
 	/**
 	 * Name in Unicode
 	 */
-	unsigned char Name[300];
+	unsigned char Name[2 * (GSM_MAX_FILENAME_LENGTH + 1)];
 	/**
 	 * True, when folder
 	 */
@@ -80,7 +81,7 @@ typedef struct {
 	/**
 	 * ID in Unicode
 	 */
-	unsigned char ID_FullName[800];
+	unsigned char ID_FullName[2 * (GSM_MAX_FILENAME_ID_LENGTH + 1)];
 	/**
 	 * Pointer to file data.
 	 */

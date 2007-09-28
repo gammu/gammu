@@ -24,6 +24,8 @@ ChangeLog
 [-] * Handle correcly internal phone errors in OBEX module.
 [-] * Fixed crash on invalid config file (Debian bug #444046).
 [-] * Better report errors when using default configuration.
+[-] * Fix several buffer overflows in 6510 (thanks to Tobias Sunderdiek
+      for debugging this).
 [+] * Command nokiaaddfile can now either keep or delete user data on
       uploading new application (thanks to Martin Thierer, bug 385).
 
