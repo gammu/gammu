@@ -1102,8 +1102,8 @@ void GetEachMMS(int argc, char *argv[])
 	File.Buffer = NULL;
 
 	while (1) {
-		error=GSM_GetNextMMSFileInfo(s,File.ID_FullName,&FileFolder,start);
-		if (error==ERR_EMPTY) break;
+		error = GSM_GetNextMMSFileInfo(s,File.ID_FullName,&FileFolder,start);
+		if (error == ERR_EMPTY) break;
 		Print_Error(error);
 		start = false;
 
