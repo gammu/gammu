@@ -449,7 +449,7 @@ int ATGEN_ExtractOneParameter(unsigned char *input, unsigned char *output)
 
 	while ((*input!=',' || inside_quotes) && *input!=0x0d && *input!=0x00) {
 		if (*input == '"') inside_quotes = ! inside_quotes;
-		*output=*input;
+		*output = *input;
 		input	++;
 		output	++;
 		position++;
@@ -500,7 +500,7 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
 		}
 
 		/* Copy to output */
-		(*output)[position]=*input;
+		(*output)[position] = *input;
 		position++;
 		input	++;
 	}
