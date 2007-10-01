@@ -1534,6 +1534,10 @@ struct _GSM_StateMachine {
 	 * Skip lowlevel serial handling, cable is known to be broken.
 	 */
 	bool			SkipDtrRts;
+	/**
+	 * Do not give power supply to cable on DTR/RTS signals.
+	 */
+	bool			NoPowerCable;
 	char			*LockFile;				/**< Lock file name for Unix 			*/
 	GSM_Debug_Info		di;					/**< Debug information				*/
 	bool			opened;					/**< Is connection opened ?			*/

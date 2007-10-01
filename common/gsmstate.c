@@ -87,7 +87,7 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *connection)
 {
 	size_t i;
-	char *buff, *pos;
+	char *buff, *nodtr_pos, *nopower_pos;
 
 	/* Copy connection name, so that we can play with it */
 	buff = strdup(connection);
@@ -99,13 +99,22 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 	 * OS. If not, we return with error, that string is incorrect at all
 	 */
 	s->ConnectionType = 0;
-	s->SkipDtrRts = 0;
+	s->SkipDtrRts = false;
+	s->NoPowerCable = false;
 
 	/* Are we asked for connection using stupid cable? */
-	pos = strcasestr(buff, "-nodtr");
-	if (pos != NULL) {
-		*pos = 0;
+	nodtr_pos = strcasestr(buff, "-nodtr");
+	if (nodtr_pos != NULL) {
+		*nodtr_pos = 0;
 
+	}
+
+	/* Are we asked for connection using cable which does not
+	 * use DTR/RTS as power supply? */
+	nopower_pos = strcasestr(buff, "-nopower");
+	if (nopower_pos != NULL) {
+		*nopower_pos = 0;
+		s->NoPowerCable = true;
 	}
 
 	for (i = 0; i < sizeof(GSM_Connections) / sizeof(GSM_Connections[0]); i++) {
@@ -119,7 +128,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 
 
 	/* If we were forced, set this flag */
-	if (pos != NULL) {
+	if (nodtr_pos != NULL) {
 		s->SkipDtrRts = true;
 	}
 
