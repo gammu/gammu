@@ -53,7 +53,13 @@ connection = fbusblue
 ;    Connection "fbuspl2303", port type usb
 ; Old Nokia protocol for MBUS/DAU9P
 ;    Connection "mbus", port type serial
-; If you're using ARK3116 cable, you might need -nodtr variant of connection.
+; Variants: 
+; You can modify a bit behaviour of connection using additional flags
+; specified just after connection name like connection-variant.
+; If you're using ARK3116 cable (or any other which does not like dtr 
+; handling), you might need -nodtr variant of connection, eg. dlr3-nodtr.
+; If cable you use is not powered over DTR/RTS, try using -nopower variant of 
+; connection, eg. fbus-nopower.
 ; -----------------------------------------------------------------------------
 ; AT commands for DLR3, DKU5 or other AT compatible cable (8 bits, None
 ; parity, no flow control, 1 stop bit). Used with Nokia, Alcatel, Siemens, etc.

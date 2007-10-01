@@ -395,9 +395,11 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		if (error != ERR_NONE) return error;
 		my_sleep(1000);
 
-		error = Device->DeviceSetDtrRts(s,true,true);
-		if (error != ERR_NONE) return error;
-		my_sleep(1000);
+		if (! s->NoPowerCable) {
+			error = Device->DeviceSetDtrRts(s,true,true);
+			if (error != ERR_NONE) return error;
+			my_sleep(1000);
+		}
 
 		error = Device->DeviceSetSpeed(s,19200);
 		if (error != ERR_NONE) return error;
@@ -417,7 +419,8 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		error = Device->DeviceSetSpeed(s,115200);
 		if (error != ERR_NONE) return error;
 
-		error = Device->DeviceSetDtrRts(s,true,false); /*DTR high,RTS low*/
+		/* Set DTR as power supply if needed, RTS is always low */
+		error = Device->DeviceSetDtrRts(s, !(s->NoPowerCable), false);
 		if (error != ERR_NONE) return error;
 
 		error = FBUS2_InitSequence(s);
