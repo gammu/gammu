@@ -4440,23 +4440,27 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	if (Name != -1) {
 		len = UnicodeLength(entry->Entries[Name].Text);
 
-		/* Compare if we would loose some information when not using
-		 * unicode */
-		EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
-		DecodeDefault(uname, name, len, true, NULL);
-		if (!mywstrncmp(uname, entry->Entries[Name].Text, len)) {
-			/* Get maximal text length */
-			if (Priv->TextLength == 0) {
-				ATGEN_GetMemoryInfo(s, NULL, AT_Sizes);
-			}
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK_UCS2)) {
+			Prefer = AT_PREF_CHARSET_UNICODE;
+		} else {
+			/* Compare if we would loose some information when not using
+			 * unicode */
+			EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
+			DecodeDefault(uname, name, len, true, NULL);
+			if (!mywstrncmp(uname, entry->Entries[Name].Text, len)) {
+				/* Get maximal text length */
+				if (Priv->TextLength == 0) {
+					ATGEN_GetMemoryInfo(s, NULL, AT_Sizes);
+				}
 
-			/* I char stored in GSM alphabet takes 7 bits, one
-			 * unicode 16, if storing in unicode would truncate
-			 * text, do not use it, otherwise we will use it */
-			if ((Priv->TextLength != 0) && ((Priv->TextLength * 7 / 16) <= len)) {
-				Prefer = AT_PREF_CHARSET_NORMAL;
-			} else {
-				Prefer = AT_PREF_CHARSET_UNICODE;
+				/* I char stored in GSM alphabet takes 7 bits, one
+				 * unicode 16, if storing in unicode would truncate
+				 * text, do not use it, otherwise we will use it */
+				if ((Priv->TextLength != 0) && ((Priv->TextLength * 7 / 16) <= len)) {
+					Prefer = AT_PREF_CHARSET_NORMAL;
+				} else {
+					Prefer = AT_PREF_CHARSET_UNICODE;
+				}
 			}
 		}
 

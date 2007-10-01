@@ -528,6 +528,10 @@ typedef enum {
 	 * Submit messages can be saved on SM memory only.
 	 */
 	F_SUBMIT_SIM_ONLY,
+	/**
+	 * Prefer UCS-2 for phone book manipulations.
+	 */
+	F_PBK_UCS2,
 } Feature;
 
 /**
