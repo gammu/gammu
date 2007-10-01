@@ -168,6 +168,7 @@ GSM_Error ATOBEX_Initialise(GSM_StateMachine *s)
 	GSM_Error		error;
 
 	Priv->Mode				= ATOBEX_ModeAT;
+	Priv->EBCAFailed = false;
 
 	/* We might receive incoming event */
 	s->Phone.Data.BatteryCharge = NULL;
@@ -1266,15 +1267,21 @@ GSM_Error ATOBEX_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 {
 	GSM_Error error;
 	int	i = 0;
+	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
 	s->Phone.Data.BatteryCharge = bat;
 
 	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 
+	/* Go to AT if EBCA does not work */
+	if (Priv->EBCAFailed) {
+		return ATGEN_GetBatteryCharge(s, bat);
+	}
 
 	/* Now try ericsson extended reporting */
 	error = GSM_WaitFor (s, "AT*EBCA=1\r", 10, 0x00, 3, ID_GetBatteryCharge);
 	if (error != ERR_NONE) {
+		Priv->EBCAFailed = true;
 		/* Ty ATGEN state */
 		return ATGEN_GetBatteryCharge(s, bat);
 	}
