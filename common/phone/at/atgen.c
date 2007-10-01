@@ -2681,8 +2681,8 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 			my_sleep(500);
 			/* CTRL+Z ends entering */
 			error = s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
-			if (error!=ERR_NONE) return error;
-			GSM_WaitForOnce(s, NULL, 0x00, 0x00, 4);
+			if (error != ERR_NONE) return error;
+			error = GSM_WaitForOnce(s, NULL, 0x00, 0x00, 4);
 			if (error != ERR_TIMEOUT) return error;
 		} else {
 			smprintf(s, "Escaping SMS mode\n");
