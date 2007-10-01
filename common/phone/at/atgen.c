@@ -1284,7 +1284,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	}
 
 	/* Check for AT+XLNK support on some Samsung phones */
-	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)) {
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_XLNK)) {
 		smprintf(s, "Checking for XLNK/OBEX support\n");
 		ATGEN_WaitFor(s, "AT+XLNK=?\r", 10, 0x00, 3, ID_SetOBEX);
 		if (error == ERR_NONE) {
