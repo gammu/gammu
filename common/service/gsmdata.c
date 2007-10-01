@@ -411,7 +411,7 @@ GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo *info)
 	return ERR_NONE;
 }
 
-void GSM_AddWAPMIMEType(int type, unsigned char *buffer)
+void GSM_AddWAPMIMEType(int type, char *buffer)
 {
 	switch (type) {
 	case  3:sprintf(buffer,"%stext/plain",buffer);					break;
