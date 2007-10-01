@@ -881,7 +881,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 			smprintf(s,"Probably no MMC card\n");
 			Priv->filesystem2error  = ERR_MEMORY;
 			Priv->FilesEnd 		= true;
-			return ERR_NONE;
+			return ERR_MEMORY;
 		case 0x00:
 		case 0x0D:
 			switch (msg.Buffer[5]) {
@@ -902,9 +902,9 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 			if (msg.Buffer[3] == 0x69) {
 				if (Priv->FilesLocationsUsed==1000) {
 					smprintf(s,"Too small buffer for folder data\n");
-					Priv->filesystem2error  = ERR_UNKNOWN;
+					Priv->filesystem2error  = ERR_MOREMEMORY;
 					Priv->FilesEnd 		= true;
-					return ERR_NONE;
+					return ERR_MOREMEMORY;
 				}
 
 				for (i=Priv->FilesLocationsUsed+1;i>0;i--) {
@@ -972,7 +972,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 			smprintf(s,"File or folder details received - not available ?\n");
 			Priv->filesystem2error  = ERR_FILENOTEXIST;
 			Priv->FilesEnd 		= true;
-			return ERR_NONE;
+			return ERR_FILENOTEXIST;
 		case 0x0E:
 			smprintf(s,"File or folder details received - empty\n");
 			Priv->FilesEnd = true;
@@ -1083,12 +1083,6 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, b
 
 	error = N6510_PrivGetFolderListing2(s, &Priv->Files[0]);
 	if (error != ERR_NONE) return error;
-
-	if (Priv->filesystem2error == ERR_UNKNOWN) return ERR_UNKNOWN;
-	//no mmc in phone in this moment
-	if (Priv->filesystem2error == ERR_MEMORY) return ERR_EMPTY;
-	//mmc not supported at all
-	if (Priv->filesystem2error == ERR_FILENOTEXIST) return ERR_EMPTY;
 
 	memcpy(File,&Priv->Files[0],sizeof(GSM_File));
 	for (i=0;i<Priv->FilesLocationsUsed-1;i++) {
@@ -1356,13 +1350,6 @@ static GSM_Error N6510_GetFolderListing2(GSM_StateMachine *s, GSM_File *File, bo
 
 		error = N6510_PrivGetFolderListing2(s, File);
 		if (error != ERR_NONE) return error;
-
-		if (Priv->filesystem2error == ERR_UNKNOWN) return ERR_UNKNOWN;
-
-		//no mmc
-		if (Priv->filesystem2error == ERR_MEMORY) return ERR_MEMORY;
-
-		if (Priv->filesystem2error == ERR_FILENOTEXIST) return ERR_FILENOTEXIST;
 
 		memcpy(File,&Priv->Files[0],sizeof(GSM_File));
 		for (i=0;i<Priv->FilesLocationsUsed-1;i++) {
