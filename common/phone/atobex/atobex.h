@@ -62,6 +62,10 @@ typedef struct {
 	 * Whether phone support AT*EOBEX
 	 */
 	GSM_ATOBEX_OBEX	HasOBEX;
+	/***
+	 * Whether AT*EBCA failed.
+	 */
+	bool EBCAFailed;
 } GSM_Phone_ATOBEXData;
 #endif
 /*@}*/
