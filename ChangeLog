@@ -16,6 +16,8 @@ ChangeLog
 =========
 
 2007???? - 1.13.92
+[+] * Added flag -nopower to connection to handle cables with different
+      handling of DTR/RTS signals.
 
 20070928 - 1.13.91
 [-] * Fixed reading of empty calendar/todo/contacts/notes over OBEX
