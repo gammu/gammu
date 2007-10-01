@@ -1530,6 +1530,10 @@ struct _GSM_User {
 
 struct _GSM_StateMachine {
 	GSM_ConnectionType 	ConnectionType;				/**< Type of connection as int			*/
+	/**
+	 * Skip lowlevel serial handling, cable is known to be broken.
+	 */
+	bool			SkipDtrRts;
 	char			*LockFile;				/**< Lock file name for Unix 			*/
 	GSM_Debug_Info		di;					/**< Debug information				*/
 	bool			opened;					/**< Is connection opened ?			*/

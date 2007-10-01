@@ -261,6 +261,8 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
     	struct termios	  	t;
     	unsigned int	    	flags;
 
+	if (s->SkipDtrRts) return ERR_NONE;
+
 	assert(d->hPhone >= 0);
 
     	if (tcgetattr(d->hPhone, &t)) {
@@ -317,6 +319,7 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
     	struct termios  	t;
 	baud_record		*curr = baud_table;
 
+	if (s->SkipDtrRts) return ERR_NONE;
 
 	assert(d->hPhone >= 0);
 

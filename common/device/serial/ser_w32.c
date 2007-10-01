@@ -287,6 +287,8 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
 	DCB        		dcb;
 	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
 
+	if (s->SkipDtrRts) return ERR_NONE;
+
 	dcb.DCBlength = sizeof(DCB);
 	if (GetCommState(d->hPhone, &dcb)==0) {
 		GSM_OSErrorInfo(s, "ReadDevice in serial_setdtrrts");
@@ -341,6 +343,8 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 {
 	DCB			dcb;
 	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
+
+	if (s->SkipDtrRts) return ERR_NONE;
 
 	dcb.DCBlength = sizeof(DCB);
 	if (GetCommState(d->hPhone, &dcb)==0) {

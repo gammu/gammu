@@ -303,7 +303,7 @@ bool unlock_device(char **lock_file)
 #endif
 }
 
-int FindSerialSpeed(char *buffer)
+int FindSerialSpeed(const char *buffer)
 {
 	switch (atoi(buffer)) {
 		case 50		: return 50;

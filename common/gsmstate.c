@@ -2,11 +2,13 @@
 /* Phones ID (c) partially by Walek */
 
 #include <stdarg.h>
+#define _GNU_SOURCE /* For strcasestr */
 #include <string.h>
 #include <errno.h>
 
 #include <gammu-call.h>
 #include <gammu-settings.h>
+#include <gammu-unicode.h>
 
 #include "gsmcomon.h"
 #include "gsmphones.h"
@@ -34,69 +36,91 @@ static void GSM_RegisterConnection(GSM_StateMachine *s, unsigned int connection,
 typedef struct {
 	const char *Name;
 	const GSM_ConnectionType Connection;
+	bool SkipDtrRts;
 } GSM_ConnectionInfo;
 
 /**
  * Mapping of connection names to internal identifications.
  */
 static const GSM_ConnectionInfo GSM_Connections[] = {
-	{"at", GCT_AT},
+	{"at", GCT_AT, false},
 
 	// cables
-	{"mbus", GCT_MBUS2},
-	{"fbus", GCT_FBUS2},
-	{"fbus-nodtr", GCT_FBUS2NODTR},
-	{"fbuspl2303", GCT_FBUS2PL2303},
-	{"dlr3", GCT_FBUS2DLR3},
-	{"dlr3-nodtr", GCT_FBUS2DLR3NODTR},
-	{"fbusdlr3", GCT_FBUS2DLR3},
-	{"dku5", GCT_DKU5FBUS2},
-	{"dku5fbus", GCT_DKU5FBUS2},
-	{"dku5fbus-nodtr", GCT_DKU5FBUS2NODTR},
-	{"ark3116fbus", GCT_ARK3116FBUS2},
-	{"dku2", GCT_DKU2PHONET},
-	{"dku2phonet", GCT_DKU2PHONET},
-	{"dku2at", GCT_DKU2AT},
+	{"mbus", GCT_MBUS2, false},
+	{"fbus", GCT_FBUS2, false},
+	{"fbuspl2303", GCT_FBUS2PL2303, false},
+	{"dlr3", GCT_FBUS2DLR3, false},
+	{"fbusdlr3", GCT_FBUS2DLR3, false},
+	{"dku5", GCT_DKU5FBUS2, false},
+	{"dku5fbus", GCT_DKU5FBUS2, false},
+	{"ark3116fbus", GCT_DKU5FBUS2, true},
+	{"dku2", GCT_DKU2PHONET, false},
+	{"dku2phonet", GCT_DKU2PHONET, false},
+	{"dku2at", GCT_DKU2AT, false},
 
         // for serial ports assigned by bt stack
-	{"fbusblue", GCT_FBUS2BLUE},
-	{"phonetblue", GCT_PHONETBLUE},
+	{"fbusblue", GCT_FBUS2BLUE, false},
+	{"phonetblue", GCT_PHONETBLUE, false},
 
 	// bt
-	{"blueobex", GCT_BLUEOBEX},
-	{"bluephonet", GCT_BLUEPHONET},
-	{"blueat", GCT_BLUEAT},
-	{"bluerfobex", GCT_BLUEOBEX},
-	{"bluerffbus", GCT_BLUEFBUS2},
-	{"bluerfphonet", GCT_BLUEPHONET},
-	{"bluerfat", GCT_BLUEAT},
-	{"bluerfgnapbus", GCT_BLUEGNAPBUS},
+	{"blueobex", GCT_BLUEOBEX, false},
+	{"bluephonet", GCT_BLUEPHONET, false},
+	{"blueat", GCT_BLUEAT, false},
+	{"bluerfobex", GCT_BLUEOBEX, false},
+	{"bluerffbus", GCT_BLUEFBUS2, false},
+	{"bluerfphonet", GCT_BLUEPHONET, false},
+	{"bluerfat", GCT_BLUEAT, false},
+	{"bluerfgnapbus", GCT_BLUEGNAPBUS, false},
 
 	// old "serial" irda
-	{"infrared", GCT_FBUS2IRDA},
-	{"fbusirda", GCT_FBUS2IRDA},
+	{"infrared", GCT_FBUS2IRDA, false},
+	{"fbusirda", GCT_FBUS2IRDA, false},
 
 	// socket irda
-	{"irda", GCT_IRDAPHONET},
-	{"irdaphonet", GCT_IRDAPHONET},
-	{"irdaat", GCT_IRDAAT},
-	{"irdaobex", GCT_IRDAOBEX},
-	{"irdagnapbus", GCT_IRDAGNAPBUS},
+	{"irda", GCT_IRDAPHONET, false},
+	{"irdaphonet", GCT_IRDAPHONET, false},
+	{"irdaat", GCT_IRDAAT, false},
+	{"irdaobex", GCT_IRDAOBEX, false},
+	{"irdagnapbus", GCT_IRDAGNAPBUS, false},
 };
 
-static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connection)
+static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *connection)
 {
 	size_t i;
+	char *buff, *pos;
+
+	/* Copy connection name, so that we can play with it */
+	buff = strdup(connection);
+	if (buff == NULL) {
+		return ERR_MOREMEMORY;
+	}
+
 	/* We check here is used connection string type is correct for ANY
 	 * OS. If not, we return with error, that string is incorrect at all
 	 */
 	s->ConnectionType = 0;
+	s->SkipDtrRts = 0;
+
+	/* Are we asked for connection using stupid cable? */
+	pos = strcasestr(buff, "-nodtr");
+	if (pos != NULL) {
+		*pos = 0;
+
+	}
 
 	for (i = 0; i < sizeof(GSM_Connections) / sizeof(GSM_Connections[0]); i++) {
-		if (strcasecmp(GSM_Connections[i].Name, connection) == 0) {
+		/* Check connection name */
+		if (strcasecmp(GSM_Connections[i].Name, buff) == 0) {
 			s->ConnectionType = GSM_Connections[i].Connection;
+			s->SkipDtrRts = GSM_Connections[i].SkipDtrRts;
 			break;
 		}
+	}
+
+
+	/* If we were forced, set this flag */
+	if (pos != NULL) {
+		s->SkipDtrRts = true;
 	}
 
 	/* Special case - at can contains speed */
@@ -112,7 +136,9 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 		}
 	}
 
-	if (s->ConnectionType==0) return ERR_UNKNOWNCONNECTIONTYPESTRING;
+	if (s->ConnectionType==0) {
+		return ERR_UNKNOWNCONNECTIONTYPESTRING;
+	}
 
 	/* We check now if user gave connection type compiled & available
 	 * for used OS (if not, we return, that source not available)
@@ -124,16 +150,12 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, char *connectio
 #endif
 #ifdef GSM_ENABLE_FBUS2
 	GSM_RegisterConnection(s, GCT_FBUS2,	  &SerialDevice,  &FBUS2Protocol);
-	GSM_RegisterConnection(s, GCT_FBUS2NODTR, &SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2DLR3
 	GSM_RegisterConnection(s, GCT_FBUS2DLR3,  &SerialDevice,  &FBUS2Protocol);
-	GSM_RegisterConnection(s, GCT_FBUS2DLR3NODTR, &SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_DKU5FBUS2
 	GSM_RegisterConnection(s, GCT_DKU5FBUS2,  &SerialDevice,  &FBUS2Protocol);
-	GSM_RegisterConnection(s, GCT_DKU5FBUS2NODTR,  &SerialDevice,  &FBUS2Protocol);
-	GSM_RegisterConnection(s, GCT_ARK3116FBUS2,  &SerialDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2PL2303
 	GSM_RegisterConnection(s, GCT_FBUS2PL2303,&SerialDevice,  &FBUS2Protocol);
@@ -419,7 +441,6 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 					case GCT_FBUS2BLUE:
 					case GCT_FBUS2IRDA:
 					case GCT_DKU5FBUS2:
-					case GCT_ARK3116FBUS2:
 					case GCT_DKU2PHONET:
 					case GCT_PHONETBLUE:
 					case GCT_IRDAPHONET:
