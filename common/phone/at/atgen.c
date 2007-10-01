@@ -257,29 +257,29 @@ GSM_Error ATGEN_HandleCMSError(GSM_StateMachine *s)
 	}
 	/* For error codes descriptions see table a bit above */
 	switch (Priv->ErrorCode) {
-	case 0xD3:
-		return ERR_FULL;
-	case 304:
-            	return ERR_NOTSUPPORTED;
-        case 305:
-            	return ERR_BUG;
-        case 311:
-        case 312:
-        case 316:
-        case 317:
-        case 318:
-            	return ERR_SECURITYERROR;
-	case 313:
-	case 314:
-	case 315:
-		return ERR_NOSIM;
-        case 322:
-            	return ERR_FULL;
-        case 321:
-        case 516:
-            	return ERR_INVALIDLOCATION;
-        default:
-		return ERR_UNKNOWN;
+		case 0xD3:
+			return ERR_FULL;
+		case 304:
+			return ERR_NOTSUPPORTED;
+		case 305:
+			return ERR_BUG;
+		case 311:
+		case 312:
+		case 316:
+		case 317:
+		case 318:
+			return ERR_SECURITYERROR;
+		case 313:
+		case 314:
+		case 315:
+			return ERR_NOSIM;
+		case 322:
+			return ERR_FULL;
+		case 321:
+		case 516:
+			return ERR_INVALIDLOCATION;
+		default:
+			return ERR_UNKNOWN;
 	}
 }
 
