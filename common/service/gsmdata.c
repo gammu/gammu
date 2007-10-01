@@ -413,15 +413,33 @@ GSM_Error GSM_ClearMMSMultiPart(GSM_EncodedMultiPartMMSInfo *info)
 
 void GSM_AddWAPMIMEType(int type, char *buffer)
 {
+	char tmpbuf[100];
 	switch (type) {
-	case  3:sprintf(buffer,"%stext/plain",buffer);					break;
-	case  6:sprintf(buffer,"%stext/x-vCalendar",buffer);				break;
-	case  7:sprintf(buffer,"%stext/x-vCard",buffer);				break;
-	case 29:sprintf(buffer,"%simage/gif",buffer);					break;
-	case 30:sprintf(buffer,"%simage/jpeg",buffer);					break;
-	case 35:sprintf(buffer,"%sapplication/vnd.wap.multipart.mixed",buffer);		break;
-	case 51:sprintf(buffer,"%sapplication/vnd.wap.multipart.related",buffer); 	break;
-	default:sprintf(buffer,"%sMIME %i",buffer,type);				break;
+		case  3:
+			strcat(buffer, "text/plain");					
+			break;
+		case  6:
+			strcat(buffer, "text/x-vCalendar");				
+			break;
+		case  7:
+			strcat(buffer, "text/x-vCard");					
+			break;
+		case 29:
+			strcat(buffer, "image/gif");					
+			break;
+		case 30:
+			strcat(buffer, "image/jpeg");					
+			break;
+		case 35:
+			strcat(buffer, "application/vnd.wap.multipart.mixed");		
+			break;
+		case 51:
+			strcat(buffer, "application/vnd.wap.multipart.related"); 	
+			break;
+		default:
+			sprintf(tmpbuf, "application/x-%d", type);
+			strcat(buffer, tmpbuf);
+			break;
 	}
 }
 
@@ -475,7 +493,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				while (i<len2) {
 					switch (file->Buffer[pos+i]) {
 					case 0x89:
-						sprintf(buff,"%s; type=",buff);
+						strcat(buff, "; type=");
 						i++;
 						while (file->Buffer[pos+i]!=0x00) {
 							buff[strlen(buff)+1] = 0;
@@ -485,7 +503,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 						i++;
 						break;
 					case 0x8A:
-						sprintf(buff,"%s; start=",buff);
+						strcat(buff, "; start=");
 						i++;
 						while (file->Buffer[pos+i]!=0x00) {
 							buff[strlen(buff)+1] = 0;
@@ -510,7 +528,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				while (i<len2) {
 					switch (file->Buffer[pos+i]) {
 					case 0x89:
-						sprintf(buff,"%s; type=",buff);
+						strcat(buff, "; type=");
 						i++;
 						while (file->Buffer[pos+i]!=0x00) {
 							buff[strlen(buff)+1] = 0;
@@ -520,7 +538,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 						i++;
 						break;
 					case 0x8A:
-						sprintf(buff,"%s; start=",buff);
+						strcat(buff, "; start=");
 						i++;
 						while (file->Buffer[pos+i]!=0x00) {
 							buff[strlen(buff)+1] = 0;
