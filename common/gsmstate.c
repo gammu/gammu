@@ -136,6 +136,9 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 		}
 	}
 
+	/* Free allocated memory */
+	free(buff);
+
 	if (s->ConnectionType==0) {
 		return ERR_UNKNOWNCONNECTIONTYPESTRING;
 	}
