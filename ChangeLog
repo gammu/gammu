@@ -17,6 +17,7 @@ ChangeLog
 
 2007???? - 1.13.92
 [-] * Fixed handling of errors when saving SMS (bug #396).
+[-] * Fixed number type detection.
 [+] * Added support for Nokia 6070, thanks to Lúcio Corrêa.
 [+] * Added flag -nopower to connection to handle cables with different
       handling of DTR/RTS signals.
