@@ -856,21 +856,23 @@ out:
  */
 int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool semioctet)
 {
-	unsigned char	format, buffer[50];
+	unsigned char	format, buffer[GSM_MAX_NUMBER_LENGTH + 1];
 	int		length, i;
 
-	length=UnicodeLength(Number);
-	memcpy(buffer,DecodeUnicodeString(Number),length+1);
+	length = UnicodeLength(Number);
+	memcpy(buffer, DecodeUnicodeString(Number), length + 1);
 
 	/* Checking for format number */
-	format = NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN;
-	for (i=0;i<length;i++) {
-		/* first byte is '+'. Number can be international */
-		if (i==0 && buffer[i]=='+') {
-			format=NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN;
-		} else {
-			/*char is not number. It must be alphanumeric*/
-			if (!isdigit(buffer[i])) format=NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN;
+	if (buffer[0] == '+') {
+		format = NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN;
+	} else {
+		format = NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN;
+	}
+	for (i = 0; i < length; i++) {
+		/* If there is something which can not be in normal 
+		 * number, mark it as alphanumberic */
+		if (strchr("0123456789*#pP", buffer[i]) == NULL) {
+			format = NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN;
 		}
 	}
 
