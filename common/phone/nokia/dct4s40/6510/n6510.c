@@ -3302,6 +3302,24 @@ static GSM_Error N6510_SetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 	return GSM_WaitFor (s, req, length, 0x39, 4, ID_SetProfile);
 }
 
+static GSM_Error N6510_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	switch (msg.Buffer[3]) {
+		case 0x21:
+			smprintf(s, "Ignoring cell broadcast ok event\n");
+			break;
+		case 0x22:
+			smprintf(s, "Ignoring cell broadcast fail event\n");
+			break;
+		case 0x23:
+			smprintf(s, "Ignoring cell broadcast read event\n");
+			break;
+		default:
+			smprintf(s, "Ignoring cell broadcast event 0x%02x\n", msg.Buffer[3]);
+			break;
+	}
+	return ERR_NONE;
+}
 static GSM_Error N6510_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_SMSMessage 	sms;
@@ -3948,6 +3966,9 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyIncomingSMS,	  "\x02",0x03,0x04,ID_IncomingFrame	  },
 	{N6510_ReplySetSMSC,		  "\x02",0x03,0x13,ID_SetSMSC		  },
 	{N6510_ReplyGetSMSC,		  "\x02",0x03,0x15,ID_GetSMSC		  },
+	{N6510_ReplyIncomingCB,		  "\x02",0x03,0x21,ID_IncomingFrame	  },
+	{N6510_ReplyIncomingCB,		  "\x02",0x03,0x22,ID_IncomingFrame	  },
+	{N6510_ReplyIncomingCB,		  "\x02",0x03,0x23,ID_IncomingFrame	  },
 
 	{N6510_ReplyGetMemoryStatus,	  "\x03",0x03,0x04,ID_GetMemoryStatus	  },
 	{N6510_ReplyGetMemory,		  "\x03",0x03,0x08,ID_GetMemory		  },
