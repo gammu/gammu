@@ -863,7 +863,7 @@ int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool s
 	memcpy(buffer, DecodeUnicodeString(Number), length + 1);
 
 	/* Checking for format number */
-	if (buffer[0] == '+') {
+	if (buffer[0] == '+' || (buffer[0] == '0' && buffer[1] == '0')) {
 		format = NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN;
 	} else {
 		format = NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN;
