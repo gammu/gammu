@@ -1087,13 +1087,23 @@ static GSM_Error N6510_GetSignalQuality(GSM_StateMachine *s, GSM_SignalQuality *
 	return GSM_WaitFor (s, req, 9, 0x0a, 4, ID_GetSignalQuality);
 }
 
+static GSM_Error N6510_IncomingBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	smprintf(s, "Incoming battery level received???: %i\n",
+			msg.Buffer[9]*100/7);
+	return ERR_NONE;
+}
+
 static GSM_Error N6510_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
-	smprintf(s, "Battery level received: %i\n",msg.Buffer[9]*100/7);
     	Data->BatteryCharge->BatteryPercent 	= ((int)(msg.Buffer[9]*100/7));
     	Data->BatteryCharge->ChargeState 	= 0;
+
+	smprintf(s, "Battery level received: %i\n",
+			Data->BatteryCharge->BatteryPercent);
+
 	return ERR_NONE;
 }
 
@@ -4044,6 +4054,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{NoneReply,		  	  "\x15",0x03,0x68,ID_Reset		  },
 
 	{N6510_ReplyGetBatteryCharge,	  "\x17",0x03,0x0B,ID_GetBatteryCharge	  },
+	{N6510_IncomingBatteryCharge,	  "\x17",0x03,0x2c,ID_IncomingFrame	  },
 
 	{N6510_ReplySetDateTime,	  "\x19",0x03,0x02,ID_SetDateTime	  },
 	{N6510_ReplyGetDateTime,	  "\x19",0x03,0x0B,ID_GetDateTime	  },
