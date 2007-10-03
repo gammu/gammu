@@ -77,3 +77,12 @@ foreach(TESTMESSAGE ${MESSAGES})
         "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}" 
         "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
 endforeach(TESTMESSAGE $MESSAGES)
+
+# SMS encoding
+add_executable(sms-encode-decode sms-encode-decode.c sms-printing.c)
+if (CROSS_MINGW)
+    set_target_properties (sms-encode-decode PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+target_link_libraries(sms-encode-decode libGammu)
+add_test(sms-encode-decode "${GAMMU_TEST_PATH}/sms-encode-decode${GAMMU_TEST_SUFFIX}")
+
