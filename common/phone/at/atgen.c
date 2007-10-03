@@ -680,7 +680,23 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 								buffer, strlen(buffer),
 								out_s, storage_size,
 								true, false);
-						smprintf(s, "Phone string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						smprintf(s, "Generic string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						free(buffer);
+						if (error != ERR_NONE) {
+							goto end;
+						}
+						inp += length;
+						break;
+					case 'e':
+						out_s = va_arg(ap, char *);
+						storage_size = va_arg(ap, size_t);
+						length = ATGEN_GrabString(s, inp, &buffer);
+						smprintf(s, "Parsed generic string \"%s\"\n", buffer);
+						error = ATGEN_DecodeText(s,
+								buffer, strlen(buffer),
+								out_s, storage_size,
+								false, false);
+						smprintf(s, "Generic string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						free(buffer);
 						if (error != ERR_NONE) {
 							goto end;
@@ -700,6 +716,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 								buffer, strlen(buffer),
 								out_s, storage_size,
 								true, false);
+						smprintf(s, "Samsung string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						free(buffer);
 						if (error != ERR_NONE) {
 							goto end;
@@ -3711,7 +3728,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Try standard reply */
 		error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPBR: @i, @p, @i, @s",
+					"+CPBR: @i, @p, @i, @e",
 					&Memory->Location,
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					&number_type,
