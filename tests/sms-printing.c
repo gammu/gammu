@@ -389,6 +389,7 @@ void DisplayTestSMS(GSM_MultiSMSMessage sms)
 			default:
 #endif
 				printf("%s\n", _("Error"));
+				exit(2);
 				break;
 			}
 		}
