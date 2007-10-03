@@ -1109,9 +1109,6 @@ void GetEachMMS(int argc, char *argv[])
 
 		printf(_("Folder %s\n"),DecodeUnicodeConsole(folders.Folder[FileFolder-1].Name));
 		printf(LISTFORMAT "\"%s\"\n", _("  File filesystem ID"),DecodeUnicodeConsole(File.ID_FullName));
-		if (!File.ModifiedEmpty) {
-			printf(_("  File last changed  : %s\n"),OSDateTime(File.Modified,0));
-		}
 		if (File.Buffer != NULL) {
 			free(File.Buffer);
 			File.Buffer = NULL;
