@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.13.92
+20071003 - 1.13.92
 [-] * Fixed handling of errors when saving SMS (bug #396).
 [-] * Fixed number type detection.
 [+] * Added support for Nokia 6070, thanks to Lúcio Corrêa.
