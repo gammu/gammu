@@ -367,43 +367,49 @@ static GSM_Error serial_setspeed(GSM_StateMachine *s, int speed)
 static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
 	COMSTAT			ComStat;
-	DWORD			ErrorFlags, Length;
+	DWORD			ErrorFlags, Length, Error;
 	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
+	BOOL			ReadStatus;
 
-	if (s->ConnectionType != GCT_DKU2PHONET && s->ConnectionType != GCT_DKU2AT) {
-		/* Gets information about a communications error and
-		 * current status of device
-		 */
-		ClearCommError(d->hPhone, &ErrorFlags, &ComStat);
-		Length = ComStat.cbInQue;
+	/* Gets information about a communications error and
+	 * current status of device
+	 */
+	ClearCommError(d->hPhone, &ErrorFlags, &ComStat);
 
-		/* Nothing to read */
-		if (Length <= 0) return Length;
+	/* How much we can read? */
+	Length = min(nbytes, ComStat.cbInQue);
 
-		if (Length > nbytes) Length = nbytes;
-	} else {
-		Length = 5;
-	}
+	/* Nothing to read */
+	if (Length <= 0) goto end;
 
 	/* Read without problems */
-	if (ReadFile(d->hPhone, buf, Length, &Length, &d->osRead)) return Length;
+	ReadStatus = ReadFile(d->hPhone, buf, Length, &Length, &d->osRead);
 
-	if (GetLastError() != ERROR_IO_PENDING) {
-		GSM_OSErrorInfo(s, "serial_read1");
-		Length = 0;
-		ClearCommError(d->hPhone, &ErrorFlags, &ComStat);
-		return Length;
-	}
-
-	while(1) {
-		if (GetOverlappedResult(d->hPhone,&d->osRead, &Length, TRUE)) break;
-		if (GetLastError() != ERROR_IO_INCOMPLETE) {
-			GSM_OSErrorInfo(s, "serial_read2");
-			/* an error occurred, try to recover */
+	if (!ReadStatus) {
+		if (GetLastError() != ERROR_IO_PENDING) {
+			Length = 0;
 			ClearCommError(d->hPhone, &ErrorFlags, &ComStat);
-			break;
+			goto end;
+		}
+
+		/* Operation did not complete */
+		GSM_OSErrorInfo(s, "win_serial_read-pending");
+
+		/* Wait for completing */
+		while (!GetOverlappedResult(d->hPhone, &d->osRead, &Length, TRUE)) {
+			Error = GetLastError();
+			if (Error == ERROR_IO_INCOMPLETE) {
+				/* Just go on */
+				continue;
+			} else {
+				/* Something went wrong, bail out */
+				GSM_OSErrorInfo(s, "win_serial_read-overlapped");
+				ClearCommError(d->hPhone, &ErrorFlags, &ComStat);
+				break;
+			}
 		}
 	}
+end:
 	return Length;
 }
 
