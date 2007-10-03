@@ -1572,6 +1572,7 @@ GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned const char *buffer,
 GSM_Error GSM_DispatchMessage		(GSM_StateMachine *s);
 
 void 	  GSM_DumpMessageLevel2		(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type);
+void 	  GSM_DumpMessageLevel2Recv	(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type);
 void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type);
 
 

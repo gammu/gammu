@@ -1082,16 +1082,29 @@ fail:
 	return false;
 }
 
-void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
+void GSM_DumpMessageLevel2_Text(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type, const char *text)
 {
 	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
 	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
-		smprintf(s,"SENDING frame ");
-		smprintf(s,"type 0x%02X/length 0x%02X/%i", type, messagesize, messagesize);
+		smprintf(s, "%s", text);
+		smprintf(s, "type 0x%02X/length 0x%02X/%i", 
+				type, messagesize, messagesize);
 		DumpMessage(&s->di, message, messagesize);
-		if (messagesize == 0) smprintf(s,"\n");
-		if (s->di.df) fflush(s->di.df);
+		if (messagesize == 0) 
+			smprintf(s,"\n");
+		if (s->di.df) 
+			fflush(s->di.df);
 	}
+}
+
+void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
+{
+	return GSM_DumpMessageLevel2_Text(s, message, messagesize, type, "SENDING frame");
+}
+
+void GSM_DumpMessageLevel2Recv(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
+{
+	return GSM_DumpMessageLevel2_Text(s, message, messagesize, type, "RECEIVED frame");
 }
 
 void GSM_DumpMessageLevel3(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
