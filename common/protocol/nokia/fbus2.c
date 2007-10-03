@@ -293,19 +293,29 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 }
 
 #if defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_DKU5FBUS2) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2PL2303)
+/**
+ * Writes (AT) command to device and reads reply. 
+ *
+ * \todo This makes no reply parsing or error detection.
+ */
 static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length, int timeout)
 {
 	unsigned char		buff[300];
 	int			w = 0;
 	bool			wassomething = false;
+	int recvlen;
 
+	
+	GSM_DumpMessageLevel2(s, command, length, 0xff);
 	s->Device.Functions->WriteDevice(s, command, length);
 
-	for (w=0;w<timeout;w++) {
-		if (wassomething) {
-			if (s->Device.Functions->ReadDevice(s, buff, 255)==0) return;
-		} else {
-			if (s->Device.Functions->ReadDevice(s, buff, 255)>0) wassomething = true;
+	for (w = 0; w < timeout; w++) {
+		recvlen = s->Device.Functions->ReadDevice(s, buff, sizeof(buff) - 1);
+		if (wassomething && recvlen == 0) {
+			return;
+		} else if (recvlen > 0) {
+			GSM_DumpMessageLevel2(s, buff, recvlen, 0xff);
+			wassomething = true;
 		}
 		my_sleep(50);
 	}
@@ -324,9 +334,9 @@ static GSM_Error FBUS2_ATSwitch(GSM_StateMachine *s)
 
 	smprintf(s, "Switching to FBUS using AT commands\n");
 
-	FBUS2_WriteDLR3(s, init_1, strlen(init_1), 10);
-	FBUS2_WriteDLR3(s, init_2, strlen(init_2), 10);
-	FBUS2_WriteDLR3(s, init_3, strlen(init_3), 10);
+	FBUS2_WriteDLR3(s, init_1, strlen(init_1), 1000);
+	FBUS2_WriteDLR3(s, init_2, strlen(init_2), 1000);
+	FBUS2_WriteDLR3(s, init_3, strlen(init_3), 1000);
 
 	return ERR_NONE;
 }
