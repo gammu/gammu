@@ -235,7 +235,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	}
 	if (d->MsgRXState == RX_GetSource) {
 		if (rx_char != FBUS2_DEVICE_PHONE) {
-			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", 
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n",
 					rx_char, FBUS2_DEVICE_PHONE);
 
 			d->MsgRXState = RX_Sync;
@@ -248,7 +248,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	}
 	if (d->MsgRXState == RX_GetDestination) {
 		if (rx_char != FBUS2_DEVICE_PC) {
-			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", 
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n",
 					rx_char, FBUS2_DEVICE_PC);
 
 			d->MsgRXState = RX_Sync;
@@ -276,8 +276,8 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 				break;
 		}
 		if (!correct) {
-			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", 
-					rx_char, 
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n",
+					rx_char,
 					(s->ConnectionType == GCT_FBUS2IRDA) ? FBUS2_IRDA_FRAME_ID : FBUS2_FRAME_ID);
 			return ERR_NONE;
 		}
@@ -294,7 +294,7 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 #if defined(GSM_ENABLE_FBUS2DLR3) || defined(GSM_ENABLE_DKU5FBUS2) || defined(GSM_ENABLE_FBUS2BLUE) || defined(GSM_ENABLE_BLUEFBUS2) || defined(GSM_ENABLE_FBUS2PL2303)
 /**
- * Writes (AT) command to device and reads reply. 
+ * Writes (AT) command to device and reads reply.
  *
  * \todo This makes no reply parsing or error detection.
  */
@@ -305,7 +305,7 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length
 	bool			wassomething = false;
 	int recvlen;
 
-	
+
 	GSM_DumpMessageLevel2(s, command, length, 0xff);
 	s->Device.Functions->WriteDevice(s, command, length);
 
@@ -314,7 +314,7 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length
 		if (wassomething && recvlen == 0) {
 			return;
 		} else if (recvlen > 0) {
-			GSM_DumpMessageLevel2(s, buff, recvlen, 0xff);
+			GSM_DumpMessageLevel2Recv(s, buff, recvlen, 0xff);
 			wassomething = true;
 		}
 		my_sleep(50);
@@ -329,14 +329,16 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length
 static GSM_Error FBUS2_ATSwitch(GSM_StateMachine *s)
 {
 	static const char init_1[] = "AT\r\n";
-	static const char init_2[] = "AT&F\r\n";
-	static const char init_3[] = "AT*NOKIAFBUS\r\n";
+	static const char init_2[] = "ATE\r\n";
+	static const char init_3[] = "AT&F\r\n";
+	static const char init_4[] = "AT*NOKIAFBUS\r\n";
 
 	smprintf(s, "Switching to FBUS using AT commands\n");
 
-	FBUS2_WriteDLR3(s, init_1, strlen(init_1), 1000);
-	FBUS2_WriteDLR3(s, init_2, strlen(init_2), 1000);
-	FBUS2_WriteDLR3(s, init_3, strlen(init_3), 1000);
+	FBUS2_WriteDLR3(s, init_1, strlen(init_1), 10);
+	FBUS2_WriteDLR3(s, init_2, strlen(init_2), 10);
+	FBUS2_WriteDLR3(s, init_3, strlen(init_3), 10);
+	FBUS2_WriteDLR3(s, init_4, strlen(init_4), 10);
 
 	return ERR_NONE;
 }
@@ -353,11 +355,11 @@ static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s)
 	static const unsigned char end_init_char = 0xc1;
 
 	for (count = 0; count < 32; count ++) {
-		if (s->Device.Functions->WriteDevice(s, &init_char, 1) != 1) 
+		if (s->Device.Functions->WriteDevice(s, &init_char, 1) != 1)
 			return ERR_DEVICEWRITEERROR;
 	}
 
-	if (s->Device.Functions->WriteDevice(s, &end_init_char, 1) != 1) 
+	if (s->Device.Functions->WriteDevice(s, &end_init_char, 1) != 1)
 		return ERR_DEVICEWRITEERROR;
 
 	my_sleep(1000);
@@ -422,7 +424,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 
 		error = FBUS2_InitSequence(s);
 		if (error != ERR_NONE) return error;
-		
+
 		break;
 #endif
 	case GCT_FBUS2:
