@@ -726,25 +726,10 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	GSM_Phone_Data 		*Phone	= &s->Phone.Data;
 	bool			disp    = false;
 	GSM_Reply_Function	*Reply;
-	int			reply, i;
+	int			reply;
 
-	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
-	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
-		smprintf(s, "RECEIVED frame ");
-		smprintf(s, "type 0x%02X/length 0x%02X/%i", msg->Type, msg->Length, msg->Length);
-		DumpMessage(&s->di, msg->Buffer, msg->Length);
-		if (msg->Length == 0) smprintf(s, "\n");
-		fflush(s->di.df);
-	}
-	if (s->di.dl==DL_BINARY) {
-		smprintf(s,"%c",0x02);	/* Receiving */
-		smprintf(s,"%c",msg->Type);
-		smprintf(s,"%c",msg->Length/256);
-		smprintf(s,"%c",msg->Length%256);
-		for (i=0;i<msg->Length;i++) {
-			smprintf(s,"%c",msg->Buffer[i]);
-		}
-	}
+	GSM_DumpMessageLevel2Recv(s, msg->Buffer, msg->Length, msg->Type);
+	GSM_DumpMessageLevel3Recv(s, msg->Buffer, msg->Length, msg->Type);
 
 	Reply=s->User.UserReplyFunctions;
 	if (Reply!=NULL) error=CheckReplyFunctions(s,Reply,&reply);
@@ -1107,17 +1092,26 @@ void GSM_DumpMessageLevel2Recv(GSM_StateMachine *s, unsigned const char *message
 	return GSM_DumpMessageLevel2_Text(s, message, messagesize, type, "RECEIVED frame");
 }
 
-void GSM_DumpMessageLevel3(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
+void GSM_DumpMessageLevel3_Custom(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type, int direction)
 {
 	int i;
 
 	if (s->di.dl==DL_BINARY) {
-		smprintf(s,"%c",0x01);	/* Sending */
+		smprintf(s,"%c", direction);
 		smprintf(s,"%c",type);
 		smprintf(s,"%c",messagesize/256);
 		smprintf(s,"%c",messagesize%256);
 		for (i=0;i<messagesize;i++) smprintf(s,"%c",message[i]);
 	}
+}
+void GSM_DumpMessageLevel3(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
+{
+	return GSM_DumpMessageLevel3_Custom(s, message, messagesize, type, 0x01);
+}
+
+void GSM_DumpMessageLevel3Recv(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
+{
+	return GSM_DumpMessageLevel3_Custom(s, message, messagesize, type, 0x02);
 }
 
 PRINTF_STYLE(2, 3)
