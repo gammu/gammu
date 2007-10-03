@@ -1307,19 +1307,6 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		error = ERR_NONE;
 	}
 
-	/* Check for AT+XLNK support on some Samsung phones */
-	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_XLNK)) {
-		smprintf(s, "Checking for XLNK/OBEX support\n");
-		ATGEN_WaitFor(s, "AT+XLNK=?\r", 10, 0x00, 3, ID_SetOBEX);
-		if (error == ERR_NONE) {
-			smprintf(s, "XLNK seems to work, will try to use OBEX\n");
-			s->Phone.Data.ModelInfo->features[0] = F_OBEX;
-		} else {
-			smprintf(s, "XLNK seems not be supported, falling back to AT commands\n");
-		}
-		error = ERR_NONE;
-	}
-
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = true;
 	}
@@ -4850,7 +4837,7 @@ GSM_Error ATGEN_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine
 		if (error != ERR_NONE) {
 			return error;
 		}
-	
+
 		/* 99 is Not known or not detectable. */
 		if (rssi != 99) {
 			/* from GSM 07.07 section 8.5 */
