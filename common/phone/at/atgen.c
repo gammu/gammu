@@ -4566,7 +4566,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	 *         entry->Location, number, NumberType, name);
 	 * because name can contain 0 when using GSM alphabet.
 	 */
-	sprintf(req, "AT+CPBW=%d, \"%s\", %i, \"", entry->Location + Priv->FirstMemoryEntry - 1, number, NumberType);
+	sprintf(req, "AT+CPBW=%d,\"%s\",%i,\"", entry->Location + Priv->FirstMemoryEntry - 1, number, NumberType);
 	reqlen = strlen(req);
 	if (reqlen + len > REQUEST_SIZE - 2) {
 		smprintf(s, "WARNING: Text truncated to fit in buffer!\n");
