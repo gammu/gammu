@@ -51,7 +51,7 @@
 #                       as sent message). Increase this if delivery reports 
 #                       are not paired with sent messages. Default: 10
 # phoneid - string with info about phone used for sending/receiving
-# runonreceive - executes program after receiving message (not on Windows)
+# runonreceive - executes program after receiving message
 [smsd]
 PIN = 1234
 logfile = smsdlog
