@@ -4,6 +4,10 @@
 
 project (gammu-binary C)
 
+if (HAVE_WNOUNUSEDPARAMETER)
+    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-unused-parameter")
+endif (HAVE_WNOUNUSEDPARAMETER)
+
 set (BINARY_SRC
     depend/nokia/dct3.c
     depend/nokia/dct3trac/wmx.c
