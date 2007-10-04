@@ -1185,12 +1185,16 @@ GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
  *  * Number of free records
  *  * Number of used records
  */
-GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_records, int *used, int *IEL_save)
+GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_out, int *used_out, int *IEL_save)
 {
 	char *pos;
 	int IEL;
+	int maximum_records = -1;
+	int used_records = -1;
+	int free_records = -1;
 	char free_text[] = "Free-Records:";
 	char used_text[] = "Total-Records:";
+	char maximum_text[] = "Maximum-Records:";
 	char IEL_text[] = "IEL:";
 
 	smprintf(s, "OBEX info data:\n---\n%s\n---\n", data);
@@ -1244,26 +1248,55 @@ GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_
 		*IEL_save = IEL;
 	}
 
-	if (free_records != NULL) {
-		*free_records = 0;
-		pos = strstr(data, free_text);
-		if (pos == NULL) {
+	pos = strstr(data, free_text);
+	if (pos == NULL) {
+		smprintf(s, "Could not grab number of free records\n");
+	} else {
+		pos += strlen(free_text);
+		free_records = atoi(pos);
+		smprintf(s, "Number of free records: %d\n", free_records);
+	}
+
+	pos = strstr(data, used_text);
+	if (pos == NULL) {
+		smprintf(s, "Could not grab number of used records\n");
+	} else {
+		pos += strlen(used_text);
+		used_records = atoi(pos);
+		smprintf(s, "Number of used records: %d\n", used_records);
+	}
+
+	pos = strstr(data, maximum_text);
+	if (pos == NULL) {
+		smprintf(s, "Could not grab number of maximum records\n");
+	} else {
+		pos += strlen(maximum_text);
+		maximum_records = atoi(pos);
+		smprintf(s, "Number of maximum records: %d\n", maximum_records);
+	}
+
+	if (free_out != NULL) {
+		if (free_records != -1) {
+			*free_out = free_records;
+		} else if (maximum_records != -1 && used_records != -1) {
+			*free_out = maximum_records - used_records;
+		} else {
+			*free_out = 0;
 			smprintf(s, "Could not grab number of free records\n");
 			return ERR_INVALIDDATA;
 		}
-		pos += strlen(free_text);
-		*free_records = atoi(pos);
 	}
 
-	if (used != NULL) {
-		*used = 0;
-		pos = strstr(data, used_text);
-		if (pos == NULL) {
-			smprintf(s, "Could not grab used\n");
+	if (used_out != NULL) {
+		if (used_records != -1) {
+			*used_out = used_records;
+		} else if (maximum_records != -1 && free_records != -1) {
+			*used_out = maximum_records - free_records;
+		} else {
+			*used_out = 0;
+			smprintf(s, "Could not grab number of used records\n");
 			return ERR_INVALIDDATA;
 		}
-		pos += strlen(used_text);
-		*used = atoi(pos);
 	}
 
 	return ERR_NONE;
