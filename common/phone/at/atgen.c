@@ -393,17 +393,21 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 				return ERR_MOREMEMORY;
 			}
  			DecodeHexBin(buffer, input, length);
+			if (2 * strlen(buffer) >= outlength) return ERR_MOREMEMORY;
    			DecodeDefault(output, buffer, strlen(buffer), false, NULL);
 			free(buffer);
   			break;
   		case AT_CHARSET_GSM:
+			if (2 * length >= outlength) return ERR_MOREMEMORY;
   			DecodeDefault(output, input, length, false, NULL);
   			break;
   		case AT_CHARSET_UCS2:
+			if (2 * length >= outlength) return ERR_MOREMEMORY;
  			DecodeHexUnicode(output, input, length);
   			break;
   		case AT_CHARSET_IRA: /* IRA is ASCII only, so it's safe to treat is as UTF-8 */
   		case AT_CHARSET_UTF8:
+			if (2 * length >= outlength) return ERR_MOREMEMORY;
  			DecodeUTF8(output, input, length);
   			break;
 #ifdef ICONV_FOUND
@@ -431,6 +435,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 #else
   		case AT_CHARSET_PCCP437:
   			/* FIXME: correctly decode PCCP437 */
+			if (2 * length >= outlength) return ERR_MOREMEMORY;
   			DecodeDefault(output, input, length, false, NULL);
 			break;
 #endif
