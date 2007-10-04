@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-keys.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-keys.h>
 #include <gammu-keys.h>
 

@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-bitmap.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-bitmap.h>
 #include <gammu-bitmap.h>
 

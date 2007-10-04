@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-datetime.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-datetime.h>
 #include <gammu-datetime.h>
 

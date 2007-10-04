@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-wap.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-wap.h>
 #include <gammu-wap.h>
 

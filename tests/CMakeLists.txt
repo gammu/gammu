@@ -87,6 +87,7 @@ target_link_libraries(sms-encode-decode libGammu)
 add_test(sms-encode-decode "${GAMMU_TEST_PATH}/sms-encode-decode${GAMMU_TEST_SUFFIX}")
 
 # Auto generated include tests begin
+# Do not modify this section, change gen-include-test.sh instead
 
 # Test for header gammu-backup.h
 add_executable(include-backup include-backup.c)

@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-statemachine.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-statemachine.h>
 #include <gammu-statemachine.h>
 
