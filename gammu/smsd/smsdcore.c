@@ -298,7 +298,8 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 #ifdef WIN32
 bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config UNUSED)
 {
-#warning RunOnReceive for Windows is not implemented!
+	/* Not implemented! */
+	WriteSMSDLog("RunOnReceise is not implemented for Windows");
 	return false;
 }
 #else
