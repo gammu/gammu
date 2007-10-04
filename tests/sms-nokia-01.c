@@ -18,7 +18,7 @@ unsigned char data[] = {
 /* This is not part of API! */
 extern GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s);
 
-int main(int argc, char **argv)
+int main(int argc UNUSED, char **argv UNUSED)
 {
 	GSM_Debug_Info *debug_info;
 	GSM_StateMachine *s;
