@@ -207,15 +207,21 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->Service = 0;
 	Priv->InitialService = 0;
 	Priv->PbLUID = NULL;
-	Priv->PbData = NULL;
 	Priv->PbLUIDCount = 0;
+	Priv->PbIndex = NULL;
+	Priv->PbIndexCount = 0;
+	Priv->PbData = NULL;
 	Priv->PbCount = -1;
 	Priv->PbIEL = -1;
 	Priv->CalLUID = NULL;
-	Priv->CalData = NULL;
 	Priv->CalLUIDCount = 0;
+	Priv->CalIndex = NULL;
+	Priv->CalIndexCount = 0;
+	Priv->CalData = NULL;
 	Priv->TodoLUID = NULL;
 	Priv->TodoLUIDCount = 0;
+	Priv->TodoIndex = NULL;
+	Priv->TodoIndexCount = 0;
 	Priv->CalIEL = -1;
 	Priv->CalCount = -1;
 	Priv->TodoCount = -1;
@@ -224,15 +230,17 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->UpdateCalLUID = false;
 	Priv->UpdatePbLUID = false;
 	Priv->UpdateTodoLUID = false;
+	Priv->UpdateNoteLUID = false;
 	Priv->OBEXCapability = NULL;
 	Priv->OBEXDevinfo = NULL;
 	Priv->NoteLUID = NULL;
-	Priv->NoteData = NULL;
 	Priv->NoteLUIDCount = 0;
+	Priv->NoteIndex = NULL;
+	Priv->NoteIndexCount = 0;
+	Priv->NoteData = NULL;
 	Priv->NoteCount = -1;
 	Priv->NoteIEL = -1;
 	Priv->NoteOffsets = NULL;
-	Priv->UpdateNoteLUID = false;
 
 	return ERR_NONE;
 }
@@ -317,6 +325,25 @@ void OBEXGEN_FreeVars(GSM_StateMachine *s)
 		free(Priv->TodoLUID[i]);
 	}
 	free(Priv->TodoLUID);
+	for (i = 1; i <= Priv->PbIndexCount; i++) {
+		free(Priv->PbIndex[i]);
+	}
+	free(Priv->PbIndex);
+	free(Priv->PbData);
+	for (i = 1; i <= Priv->NoteIndexCount; i++) {
+		free(Priv->NoteIndex[i]);
+	}
+	free(Priv->NoteIndex);
+	free(Priv->NoteData);
+	for (i = 1; i <= Priv->CalIndexCount; i++) {
+		free(Priv->CalIndex[i]);
+	}
+	free(Priv->CalIndex);
+	free(Priv->CalData);
+	for (i = 1; i <= Priv->TodoIndexCount; i++) {
+		free(Priv->TodoIndex[i]);
+	}
+	free(Priv->TodoIndex);
 	free(Priv->PbOffsets);
 	free(Priv->NoteOffsets);
 	free(Priv->CalOffsets);
@@ -1349,11 +1376,17 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 /**
  * Initialises LUID database, which is used for LUID - Location mapping.
  */
-GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const bool Recalculate, char *Header, char **Data, int **Offsets, int *Count, char ***LUIDStorage, int *LUIDCount)
+GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, 
+		const bool Recalculate, 
+		char *Header, 
+		char **Data, int **Offsets, int *Count, 
+		char ***LUIDStorage, int *LUIDCount,
+		char ***IndexStorage, int *IndexCount)
 {
 	GSM_Error 	error;
 	char		*pos;
 	int		LUIDSize = 0;
+	int		IndexSize = 0;
 	int		Size = 0;
 	int		linepos = 0;
 	int		prevpos;
@@ -1380,6 +1413,8 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const bool Rec
 	*Offsets = NULL;
 	*LUIDCount = 0;
 	*LUIDStorage = NULL;
+	*IndexCount = 0;
+	*IndexStorage = NULL;
 	len = strlen(*Data);
 	hlen = strlen(Header);
 
@@ -1429,6 +1464,22 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const bool Rec
 #if 0
 					smprintf(s, "Added LUID %s at position %d\n", (*LUIDStorage)[*LUIDCount], *LUIDCount);
 #endif
+				} else if (strncmp(line, "X-INDEX:", 8) == 0) {
+					pos = line + 8; /* Length of X-INDEX: */
+					(*IndexCount)++;
+					/* Do we need to reallocate? */
+					if (*IndexCount >= IndexSize) {
+						IndexSize += 20;
+						*IndexStorage = realloc(*IndexStorage, IndexSize * sizeof(char *));
+						if (*IndexStorage == NULL) {
+							return ERR_MOREMEMORY;
+						}
+					}
+					/* Copy Index text */
+					(*IndexStorage)[*IndexCount] = strdup(pos);
+#if 0
+					smprintf(s, "Added Index %s at position %d\n", (*IndexStorage)[*IndexCount], *IndexCount);
+#endif
 				}
 				break;
 			case 2:
@@ -1437,7 +1488,7 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, const bool Rec
 		}
 	}
 
-	smprintf(s, "Data parsed, found %d entries and %d LUIDs\n", *Count, *LUIDCount);
+	smprintf(s, "Data parsed, found %d entries, %d indexes and %d LUIDs\n", *Count, *IndexCount, *LUIDCount);
 
 	return ERR_NONE;
 }
@@ -1482,7 +1533,10 @@ GSM_Error OBEXGEN_InitPbLUID(GSM_StateMachine *s)
 	/* We might do validation here using telecom/pb/luid/cc.log fir IEL 4, but not on each request */
 	if (Priv->PbData != NULL) return ERR_NONE;
 
-	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", false, "BEGIN:VCARD", &(Priv->PbData), &(Priv->PbOffsets), &(Priv->PbCount), &(Priv->PbLUID), &(Priv->PbLUIDCount));
+	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", false, "BEGIN:VCARD", 
+			&(Priv->PbData), &(Priv->PbOffsets), &(Priv->PbCount), 
+			&(Priv->PbLUID), &(Priv->PbLUIDCount),
+			&(Priv->PbIndex), &(Priv->PbIndexCount));
 }
 
 /**
@@ -1494,6 +1548,9 @@ GSM_Error OBEXGEN_GetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	char		*data;
 	char		*path;
 	int		pos = 0;
+
+	error = OBEXGEN_InitPbLUID(s);
+	if (error != ERR_NONE) return error;
 
 	/* Calculate path */
 	path = malloc(20 + 22); /* Length of string bellow + length of number */
@@ -1865,9 +1922,15 @@ GSM_Error OBEXGEN_InitCalLUID(GSM_StateMachine *s)
 	/* We might do validation here using telecom/cal/luid/cc.log fir IEL 4, but not on each request */
 	if (Priv->CalData != NULL) return ERR_NONE;
 
-	error = OBEXGEN_InitLUID(s, "telecom/cal.vcs", false, "BEGIN:VEVENT", &(Priv->CalData), &(Priv->CalOffsets), &(Priv->CalCount), &(Priv->CalLUID), &(Priv->CalLUIDCount));
+	error = OBEXGEN_InitLUID(s, "telecom/cal.vcs", false, "BEGIN:VEVENT", 
+			&(Priv->CalData), &(Priv->CalOffsets), &(Priv->CalCount), 
+			&(Priv->CalLUID), &(Priv->CalLUIDCount),
+			&(Priv->CalIndex), &(Priv->CalIndexCount));
 	if (error != ERR_NONE) return error;
-	return OBEXGEN_InitLUID(s, "telecom/cal.vcs", true, "BEGIN:VTODO", &(Priv->CalData), &(Priv->TodoOffsets), &(Priv->TodoCount), &(Priv->TodoLUID), &(Priv->TodoLUIDCount));
+	return OBEXGEN_InitLUID(s, "telecom/cal.vcs", true, "BEGIN:VTODO", 
+			&(Priv->CalData), &(Priv->TodoOffsets), &(Priv->TodoCount), 
+			&(Priv->TodoLUID), &(Priv->TodoLUIDCount),
+			&(Priv->TodoIndex), &(Priv->TodoIndexCount));
 }
 
 /*@}*/
@@ -1905,6 +1968,9 @@ GSM_Error OBEXGEN_GetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	char		*path;
 	int		pos = 0;
 	GSM_ToDoEntry	ToDo;
+
+	error = OBEXGEN_InitCalLUID(s);
+	if (error != ERR_NONE) return error;
 
 	/* Calculate path */
 	path = malloc(20 + 22); /* Length of string bellow + length of number */
@@ -2640,7 +2706,10 @@ GSM_Error OBEXGEN_InitNoteLUID(GSM_StateMachine *s)
 	/* We might do validation here using telecom/nt/luid/cc.log fir IEL 4, but not on each request */
 	if (Priv->NoteData != NULL) return ERR_NONE;
 
-	return OBEXGEN_InitLUID(s, "telecom/nt.vcf", false, "BEGIN:VNOTE", &(Priv->NoteData), &(Priv->NoteOffsets), &(Priv->NoteCount), &(Priv->NoteLUID), &(Priv->NoteLUIDCount));
+	return OBEXGEN_InitLUID(s, "telecom/nt.vcf", false, "BEGIN:VNOTE", 
+			&(Priv->NoteData), &(Priv->NoteOffsets), &(Priv->NoteCount), 
+			&(Priv->NoteLUID), &(Priv->NoteLUIDCount),
+			&(Priv->NoteIndex), &(Priv->NoteIndexCount));
 }
 
 /**
@@ -2652,6 +2721,9 @@ GSM_Error OBEXGEN_GetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	char		*data;
 	char		*path;
 	int		pos = 0;
+
+	error = OBEXGEN_InitNoteLUID(s);
+	if (error != ERR_NONE) return error;
 
 	/* Calculate path */
 	path = malloc(20 + 22); /* Length of string bellow + length of number */

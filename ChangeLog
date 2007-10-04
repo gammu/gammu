@@ -17,6 +17,7 @@ ChangeLog
 
 2007???? - 1.13.93
 [+] * Automatically fall back to AT commands when OBEX does not work.
+[+] * Initial support for IrMC index access.
 
 20071003 - 1.13.92
 [-] * Fixed handling of errors when saving SMS (bug #396).
