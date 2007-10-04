@@ -325,24 +325,12 @@ void OBEXGEN_FreeVars(GSM_StateMachine *s)
 		free(Priv->TodoLUID[i]);
 	}
 	free(Priv->TodoLUID);
-	for (i = 1; i <= Priv->PbIndexCount; i++) {
-		free(Priv->PbIndex[i]);
-	}
 	free(Priv->PbIndex);
 	free(Priv->PbData);
-	for (i = 1; i <= Priv->NoteIndexCount; i++) {
-		free(Priv->NoteIndex[i]);
-	}
 	free(Priv->NoteIndex);
 	free(Priv->NoteData);
-	for (i = 1; i <= Priv->CalIndexCount; i++) {
-		free(Priv->CalIndex[i]);
-	}
 	free(Priv->CalIndex);
 	free(Priv->CalData);
-	for (i = 1; i <= Priv->TodoIndexCount; i++) {
-		free(Priv->TodoIndex[i]);
-	}
 	free(Priv->TodoIndex);
 	free(Priv->PbOffsets);
 	free(Priv->NoteOffsets);
@@ -1374,6 +1362,31 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 }
 
 /**
+ * Finds first empty location in index list and appends it.
+ */
+int OBEXGEN_GetFirstFreeLocation(int **IndexStorage, int *IndexCount) {
+	int i;
+	int max = -1;
+
+	/* Find maximal used location */
+	for (i = 0; i < *IndexCount; i++) {
+		if (*IndexStorage[i] > max) {
+			max = (*IndexStorage)[i];
+		}
+	}
+
+	/* Next behind maximum is empty */
+	max++;
+
+	/* Update internal list */
+	(*IndexCount)++;
+	*IndexStorage = realloc(*IndexStorage, (*IndexCount) * sizeof(int));
+	(*IndexStorage)[*IndexCount] = max;
+
+	return max;
+}
+
+/**
  * Initialises LUID database, which is used for LUID - Location mapping.
  */
 GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, 
@@ -1381,7 +1394,7 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
 		char *Header, 
 		char **Data, int **Offsets, int *Count, 
 		char ***LUIDStorage, int *LUIDCount,
-		char ***IndexStorage, int *IndexCount)
+		int **IndexStorage, int *IndexCount)
 {
 	GSM_Error 	error;
 	char		*pos;
@@ -1470,15 +1483,15 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
 					/* Do we need to reallocate? */
 					if (*IndexCount >= IndexSize) {
 						IndexSize += 20;
-						*IndexStorage = realloc(*IndexStorage, IndexSize * sizeof(char *));
+						*IndexStorage = realloc(*IndexStorage, IndexSize * sizeof(int));
 						if (*IndexStorage == NULL) {
 							return ERR_MOREMEMORY;
 						}
 					}
 					/* Copy Index text */
-					(*IndexStorage)[*IndexCount] = strdup(pos);
+					(*IndexStorage)[*IndexCount] = atoi(pos);
 #if 0
-					smprintf(s, "Added Index %s at position %d\n", (*IndexStorage)[*IndexCount], *IndexCount);
+					smprintf(s, "Added Index %d at position %d\n", (*IndexStorage)[*IndexCount], *IndexCount);
 #endif
 				}
 				break;
@@ -1702,6 +1715,7 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, boo
 GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 {
 	unsigned char 		req[5000];
+	char			path[100];
 	int			size=0;
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -1731,6 +1745,16 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		Priv->UpdatePbLUID = true;
 		error = OBEXGEN_SetFile(s, "telecom/pb/luid/.vcf", req, size);
 		Entry->Location = Priv->PbLUIDCount;
+		return error;
+	} else if (Priv->PbIEL == 0x4) {
+		/* We need to grab LUID/Index list now in order to keep position later */
+		error = OBEXGEN_InitPbLUID(s);
+		if (error != ERR_NONE) return error;
+
+		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->PbIndex, &Priv->PbIndexCount);
+		smprintf(s,"Adding phonebook entry %d at location %d:\n%s\n", size, Entry->Location, req);
+		sprintf(path, "telecom/pb/%d.vcf", Entry->Location);
+		error = OBEXGEN_SetFile(s, path, req, size);
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCard */
@@ -2122,6 +2146,7 @@ GSM_Error OBEXGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 {
 	unsigned char 		req[5000];
+	char			path[100];
 	int			size=0;
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -2149,6 +2174,16 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 		Priv->UpdateCalLUID = true;
 		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size);
 		Entry->Location = Priv->CalLUIDCount;
+		return error;
+	} else if (Priv->CalIEL == 0x4) {
+		/* We need to grab LUID/Index list now in order to keep position later */
+		error = OBEXGEN_InitCalLUID(s);
+		if (error != ERR_NONE) return error;
+
+		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->CalIndex, &Priv->CalIndexCount);
+		smprintf(s,"Adding calendar entry %d at location %d:\n%s\n", size, Entry->Location, req);
+		sprintf(path, "telecom/cal/%d.vcf", Entry->Location);
+		error = OBEXGEN_SetFile(s, path, req, size);
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCalendar */
@@ -2488,6 +2523,7 @@ GSM_Error OBEXGEN_GetNextTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, bool st
 GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 {
 	unsigned char 		req[5000];
+	char			path[100];
 	int			size=0;
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -2515,6 +2551,16 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 		Priv->UpdateTodoLUID = true;
 		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size);
 		Entry->Location = Priv->TodoLUIDCount;
+		return error;
+	} else if (Priv->CalIEL == 0x4) {
+		/* We need to grab LUID/Index list now in order to keep position later */
+		error = OBEXGEN_InitCalLUID(s);
+		if (error != ERR_NONE) return error;
+
+		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->TodoIndex, &Priv->TodoIndexCount);
+		smprintf(s,"Adding todo entry %d at location %d:\n%s\n", size, Entry->Location, req);
+		sprintf(path, "telecom/cal/%d.vcf", Entry->Location);
+		error = OBEXGEN_SetFile(s, path, req, size);
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vTodo */
@@ -2873,6 +2919,7 @@ GSM_Error OBEXGEN_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Entry, bool st
 GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 {
 	unsigned char 		req[5000];
+	char			path[100];
 	int			size=0;
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -2900,6 +2947,16 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 		Priv->UpdateNoteLUID = true;
 		error = OBEXGEN_SetFile(s, "telecom/nt/luid/.vnt", req, size);
 		Entry->Location = Priv->NoteLUIDCount;
+		return error;
+	} else if (Priv->NoteIEL == 0x4) {
+		/* We need to grab LUID/Index list now in order to keep position later */
+		error = OBEXGEN_InitNoteLUID(s);
+		if (error != ERR_NONE) return error;
+
+		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->NoteIndex, &Priv->NoteIndexCount);
+		smprintf(s,"Adding note entry %d at location %d:\n%s\n", size, Entry->Location, req);
+		sprintf(path, "telecom/nt/%d.vcf", Entry->Location);
+		error = OBEXGEN_SetFile(s, path, req, size);
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCard */
