@@ -527,7 +527,7 @@ void IncomingUSSD(GSM_StateMachine *sm UNUSED, GSM_USSDMessage ussd)
 
 void IncomingUSSD2(GSM_StateMachine *sm, GSM_USSDMessage ussd)
 {
-	IncomingUSSD(s, ussd);
+	IncomingUSSD(sm, ussd);
 
 	gshutdown = true;
 }
