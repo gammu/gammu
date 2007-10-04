@@ -342,6 +342,39 @@ if (POSTGRES_FOUND)
     set (HAVE_POSTGRESQL_LIBPQ_FE_H TRUE)
 endif (POSTGRES_FOUND)
 
+set (GAMMU_LIBS "")
+
+if (BLUEZ_FOUND)
+    if (NOT "${BLUEZ_LIBRARIES}" STREQUAL "") 
+        set (GAMMU_LIBS "${GAMMU_LIBS} -l${BLUEZ_LIBRARIES}")
+    endif (NOT "${BLUEZ_LIBRARIES}" STREQUAL "") 
+endif (BLUEZ_FOUND)
+
+if (FBSD_BLUE_FOUND)
+    if (NOT "${FBSD_BLUE_LIBRARIES}" STREQUAL "") 
+        set (GAMMU_LIBS "${GAMMU_LIBS} -l${FBSD_BLUE_LIBRARIES}")
+    endif (NOT "${FBSD_BLUE_LIBRARIES}" STREQUAL "") 
+endif (FBSD_BLUE_FOUND)
+
+if (ICONV_FOUND)
+    if (NOT "${ICONV_LIBRARIES}" STREQUAL "") 
+        set (GAMMU_LIBS "${GAMMU_LIBS} -l${ICONV_LIBRARIES}")
+    endif (NOT "${ICONV_LIBRARIES}" STREQUAL "") 
+endif (ICONV_FOUND)
+
+if (GETTEXTLIBS_FOUND)
+    if (NOT "${GETTEXT_LIBRARIES}" STREQUAL "") 
+        set (GAMMU_LIBS "${GAMMU_LIBS} -l${GETTEXT_LIBRARIES}")
+    endif (NOT "${GETTEXT_LIBRARIES}" STREQUAL "") 
+endif (GETTEXTLIBS_FOUND)
+
+# Define required libraries for gammu library if it is static
+if (ENABLE_SHARED)
+    set (GAMMU_PRIVATE_LIBS "" CACHE INTERNAL "Private libraries for gammu library")
+else (ENABLE_SHARED)
+    set (GAMMU_PRIVATE_LIBS "${GAMMU_LIBS}" CACHE INTERNAL "Private libraries for gammu library")
+endif (ENABLE_SHARED)
+
 set (EXAMPLES
     docs/examples/config/smsdrc
     docs/examples/config/gammurc

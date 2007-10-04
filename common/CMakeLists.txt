@@ -94,30 +94,19 @@ endif (CROSS_MINGW)
 set_target_properties (libGammu PROPERTIES VERSION 2.${VERSION} SOVERSION 2)
 set_target_properties(libGammu PROPERTIES OUTPUT_NAME Gammu)
 
-set (GAMMU_LIBS "")
-
 if (BLUEZ_FOUND)
     target_link_libraries (libGammu ${BLUEZ_LIBRARIES})
     include_directories (${BLUEZ_INCLUDE_DIR})
-    if (NOT "${BLUEZ_LIBRARIES}" STREQUAL "") 
-        set (GAMMU_LIBS "${GAMMU_LIBS} -l${BLUEZ_LIBRARIES}")
-    endif (NOT "${BLUEZ_LIBRARIES}" STREQUAL "") 
 endif (BLUEZ_FOUND)
 
 if (FBSD_BLUE_FOUND)
     target_link_libraries (libGammu ${FBSD_BLUE_LIBRARIES})
     include_directories (${FBSD_BLUE_INCLUDE_DIR})
-    if (NOT "${FBSD_BLUE_LIBRARIES}" STREQUAL "") 
-        set (GAMMU_LIBS "${GAMMU_LIBS} -l${FBSD_BLUE_LIBRARIES}")
-    endif (NOT "${FBSD_BLUE_LIBRARIES}" STREQUAL "") 
 endif (FBSD_BLUE_FOUND)
 
 if (ICONV_FOUND)
     target_link_libraries (libGammu ${ICONV_LIBRARIES})
     include_directories (${ICONV_INCLUDE_DIR})
-    if (NOT "${ICONV_LIBRARIES}" STREQUAL "") 
-        set (GAMMU_LIBS "${GAMMU_LIBS} -l${ICONV_LIBRARIES}")
-    endif (NOT "${ICONV_LIBRARIES}" STREQUAL "") 
 endif (ICONV_FOUND)
 
 if (UNIX)
@@ -143,17 +132,7 @@ endif (WIN32)
 if (GETTEXTLIBS_FOUND)
     target_link_libraries (libGammu ${GETTEXT_LIBRARY})
     include_directories (${GETTEXT_INCLUDE_DIR})
-    if (NOT "${GETTEXT_LIBRARIES}" STREQUAL "") 
-        set (GAMMU_LIBS "${GAMMU_LIBS} -l${GETTEXT_LIBRARIES}")
-    endif (NOT "${GETTEXT_LIBRARIES}" STREQUAL "") 
 endif (GETTEXTLIBS_FOUND)
-
-# Define required libraries for gammu library if it is static
-if (ENABLE_SHARED)
-    set (GAMMU_PRIVATE_LIBS "" CACHE INTERNAL "Private libraries for gammu library")
-else (ENABLE_SHARED)
-    set (GAMMU_PRIVATE_LIBS "${GAMMU_LIBS}" CACHE INTERNAL "Private libraries for gammu library")
-endif (ENABLE_SHARED)
 
 # Install instructions
 install (TARGETS libGammu
