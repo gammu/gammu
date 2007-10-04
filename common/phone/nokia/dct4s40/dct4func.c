@@ -30,7 +30,7 @@ GSM_Error DCT4_GetPhoneMode(GSM_StateMachine *s)
 	return GSM_WaitFor (s, req, 6, 0x15, 4, ID_Reset);
 }
 
-GSM_Error DCT4_ReplySetPhoneMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error DCT4_ReplySetPhoneMode(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s UNUSED)
 {
 	return ERR_NONE;
 }

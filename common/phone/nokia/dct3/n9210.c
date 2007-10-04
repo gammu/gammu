@@ -169,11 +169,9 @@ static GSM_Error N9210_ReplySetIncomingSMS(GSM_Protocol_Message msg, GSM_StateMa
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
-#endif
 
 static GSM_Error N9210_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 {
-#ifdef GSM_ENABLE_N71_92INCOMINGINFO
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x0d, 0x00, 0x00, 0x02};
 
 	if (enable!=s->Phone.Data.EnableIncomingSMS) {
@@ -186,10 +184,13 @@ static GSM_Error N9210_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 		}
 	}
 	return ERR_NONE;
-#else
-	return ERR_SOURCENOTAVAILABLE;
-#endif
 }
+#else
+static GSM_Error N9210_SetIncomingSMS(GSM_StateMachine *s UNUSED, bool enable UNUSED)
+{
+	return ERR_SOURCENOTAVAILABLE;
+}
+#endif
 
 static GSM_Error N9210_Initialise (GSM_StateMachine *s)
 {

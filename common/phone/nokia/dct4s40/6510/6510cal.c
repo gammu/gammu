@@ -421,7 +421,7 @@ static GSM_Error N6510_FindCalendarIconID3(GSM_StateMachine *s, GSM_CalendarEntr
 }
 
 /* method 3 */
-GSM_Error N6510_ReplyAddCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyAddCalendar3(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Calendar note added\n");
 	return ERR_NONE;
@@ -712,7 +712,7 @@ GSM_Error N6510_ReplyGetNoteFirstLoc(GSM_Protocol_Message msg, GSM_StateMachine 
 	return ERR_NONE;
 }
 
-GSM_Error N6510_ReplyAddNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyAddNote(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "ToDo added\n");
 	return ERR_NONE;
@@ -1027,7 +1027,7 @@ GSM_Error N6510_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool refre
 }
 
 /* ToDo support - 6310 style */
-GSM_Error N6510_ReplyDeleteAllToDo1(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyDeleteAllToDo1(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "All TODO deleted\n");
 	return ERR_NONE;
@@ -1076,7 +1076,7 @@ GSM_Error N6510_ReplyGetToDoFirstLoc1(GSM_Protocol_Message msg, GSM_StateMachine
 }
 
 /* ToDo support - 6310 style */
-GSM_Error N6510_ReplyAddToDo1(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyAddToDo1(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "TODO set OK\n");
 	return ERR_NONE;
@@ -1121,7 +1121,7 @@ static GSM_Error N6510_AddToDo1(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	return GSM_WaitFor (s, reqSet, 12+ulen*2, 0x55, 4, ID_SetToDo);
 }
 
-GSM_Error N6510_ReplyAddToDo2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyAddToDo2(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "ToDo added method 2\n");
 	return ERR_NONE;
