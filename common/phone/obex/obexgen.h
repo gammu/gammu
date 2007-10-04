@@ -70,7 +70,7 @@ typedef struct {
 	/**
 	 * Index - location translation map for phonebook
 	 */
-	char				**PbIndex;
+	int				*PbIndex;
 	/**
 	 * Number of entries in PbIndex list.
 	 */
@@ -110,7 +110,7 @@ typedef struct {
 	/**
 	 * Index - location translation map for todo
 	 */
-	char				**TodoIndex;
+	int				*TodoIndex;
 	/**
 	 * Number of entries in TodoIndex list.
 	 */
@@ -142,7 +142,7 @@ typedef struct {
 	/**
 	 * Index - location translation map for calendar
 	 */
-	char				**CalIndex;
+	int				*CalIndex;
 	/**
 	 * Number of entries in CalIndex list.
 	 */
@@ -182,7 +182,7 @@ typedef struct {
 	/**
 	 * Index - location translation map for note
 	 */
-	char				**NoteIndex;
+	int				*NoteIndex;
 	/**
 	 * Number of entries in NoteIndex list.
 	 */
