@@ -296,14 +296,37 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 }
 
 #ifdef WIN32
-bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config UNUSED)
+bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config)
 {
-	/* Not implemented! */
-	WriteSMSDLog("RunOnReceive is not implemented for Windows");
-	return false;
+	BOOL ret;
+	STARTUPINFO si;
+	PROCESS_INFORMATION pi;
+
+	ZeroMemory(&si, sizeof(si));
+	si.cb = sizeof(si);
+	ZeroMemory(&pi, sizeof(pi));
+
+	ret = CreateProcess(NULL,     /* No module name (use command line) */
+			Config->RunOnReceive, /* Command line */
+			NULL,           /* Process handle not inheritable*/
+			NULL,           /* Thread handle not inheritable*/
+			FALSE,          /* Set handle inheritance to FALSE*/
+			0,              /* No creation flags*/
+			NULL,           /* Use parent's environment block*/
+			NULL,           /* Use parent's starting directory */
+			&si,            /* Pointer to STARTUPINFO structure*/
+			&pi );           /* Pointer to PROCESS_INFORMATION structure*/
+	if (! ret) {
+		WriteSMSDLog("CreateProcess failed (%d)\n", (int)GetLastError());
+	} else {
+		/* We don't need handles at all */
+		CloseHandle(pi.hProcess);
+		CloseHandle(pi.hThread);
+	}
+	return ret;
 }
 #else
-bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config)
+bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config)
 {
 	int pid;
 	int i;
