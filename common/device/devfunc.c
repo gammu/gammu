@@ -172,9 +172,9 @@ GSM_Error socket_close(GSM_StateMachine *s UNUSED, socket_type hPhone)
 /* Lock the device. Allocated string with a lock name is returned
  * in lock_device
  */
+#if !defined(WIN32) && !defined(DJGPP)
 GSM_Error lock_device(const char* port, char **lock_name)
 {
-#if !defined(WIN32) && !defined(DJGPP)
 	char 		*lock_file = NULL;
 	char 		buffer[max_buf_len];
 	const char 	*aux;
@@ -278,16 +278,19 @@ failed:
 	free(lock_file);
 	*lock_name = NULL;
 	return error;
+}
 #else
+GSM_Error lock_device(const char* port UNUSED, char **lock_name)
+{
 	*lock_name = NULL;
 	return ERR_NONE;
-#endif
 }
+#endif
 
 /* Removes lock and frees memory */
+#if !defined(WIN32) && !defined(DJGPP)
 bool unlock_device(char **lock_file)
 {
-#if !defined(WIN32) && !defined(DJGPP)
 	int err;
 
 	if (!lock_file) {
@@ -298,10 +301,13 @@ bool unlock_device(char **lock_file)
 	free(*lock_file);
 	*lock_file = NULL;
 	return (err + 1);
-#else
-	return true;
-#endif
 }
+#else
+bool unlock_device(char **lock_file UNUSED)
+{
+	return true;
+}
+#endif
 
 int FindSerialSpeed(const char *buffer)
 {
