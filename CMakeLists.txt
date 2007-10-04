@@ -185,9 +185,6 @@ else(MSVC)
 
         # Just silent this for now, too much code to fix here
         check_c_compiler_flag("-Wno-unused-parameter" HAVE_WNOUNUSEDPARAMETER)
-        if (HAVE_WNOUNUSEDPARAMETER)
-            set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-unused-parameter")
-        endif (HAVE_WNOUNUSEDPARAMETER)
     endif (DEBUG)
 endif(MSVC)
 
