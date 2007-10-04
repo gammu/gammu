@@ -334,9 +334,9 @@ static GSM_Error FBUS2_ATSwitch(GSM_StateMachine *s)
 
 	smprintf(s, "Switching to FBUS using AT commands\n");
 
-	FBUS2_WriteDLR3(s, init_1, strlen(init_1), 10);
-	FBUS2_WriteDLR3(s, init_2, strlen(init_2), 10);
-	FBUS2_WriteDLR3(s, init_3, strlen(init_3), 10);
+	FBUS2_WriteDLR3(s, init_1, strlen(init_1), 100);
+	FBUS2_WriteDLR3(s, init_2, strlen(init_2), 100);
+	FBUS2_WriteDLR3(s, init_3, strlen(init_3), 100);
 
 	return ERR_NONE;
 }
