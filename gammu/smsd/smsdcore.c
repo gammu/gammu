@@ -299,7 +299,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config UNUSED)
 {
 	/* Not implemented! */
-	WriteSMSDLog("RunOnReceise is not implemented for Windows");
+	WriteSMSDLog("RunOnReceive is not implemented for Windows");
 	return false;
 }
 #else
