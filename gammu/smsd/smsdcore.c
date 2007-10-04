@@ -295,12 +295,15 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	return true;
 }
 
+#ifdef WIN32
+bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config UNUSED)
+{
+#warning RunOnReceive for Windows is not implemented!
+	return false;
+}
+#else
 bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config)
 {
-#ifdef WIN32
-	/* Not implemented! */
-	return false;
-#else
 	int pid;
 	int i;
 
@@ -327,8 +330,8 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config)
 
 	execlp(Config->RunOnReceive, Config->RunOnReceive, (char*)NULL);
 	exit(2);
-#endif
 }
+#endif
 
 bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 {

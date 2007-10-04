@@ -298,7 +298,9 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 }
 
 /* After sending SMS is moved to Sent Items or Error Items. */
-static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, bool alwaysDelete, bool sent)
+static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED, 
+		GSM_SMSDConfig *Config, unsigned char *ID, 
+		bool alwaysDelete, bool sent)
 {
 	FILE 	*oFile,*iFile;
 	int 	ilen = 0, olen = 0;
@@ -347,7 +349,9 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Con
 	}
 }
 
-static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, int Part, GSM_SMSDSendingError err, int TPMR)
+static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms UNUSED, 
+		GSM_SMSDConfig *Config, unsigned char *ID UNUSED, 
+		int Part, GSM_SMSDSendingError err, int TPMR UNUSED)
 {
 	if (err == SMSD_SEND_OK) WriteSMSDLog(_("Transmitted %s (%s: %i) to %s"), Config->SMSID, (Part == sms->Number?"total":"part"),Part,DecodeUnicodeString(sms->SMS[0].Number));
 

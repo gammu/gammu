@@ -616,9 +616,9 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 }
 
 /* After sending SMS is moved to Sent Items or Error Items. */
-static GSM_Error SMSDPgSQL_MoveSMS(GSM_MultiSMSMessage * sms,
+static GSM_Error SMSDPgSQL_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 				   GSM_SMSDConfig * Config, unsigned char *ID,
-				   bool alwaysDelete, bool sent)
+				   bool alwaysDelete UNUSED, bool sent UNUSED)
 {
 	unsigned char buffer[10000];
 	PGresult *Res;
