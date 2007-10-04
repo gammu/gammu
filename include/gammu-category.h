@@ -13,6 +13,8 @@
  */
 
 #include <gammu-limits.h>
+#include <gammu-error.h>
+#include <gammu-statemachine.h>
 
 /**
  * Type of category
