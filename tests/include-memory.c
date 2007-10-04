@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-memory.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-memory.h>
 #include <gammu-memory.h>
 

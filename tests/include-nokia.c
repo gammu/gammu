@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-nokia.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-nokia.h>
 #include <gammu-nokia.h>
 

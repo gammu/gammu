@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-calendar.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-calendar.h>
 #include <gammu-calendar.h>
 

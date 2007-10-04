@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-unicode.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-unicode.h>
 #include <gammu-unicode.h>
 

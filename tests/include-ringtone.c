@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-ringtone.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-ringtone.h>
 #include <gammu-ringtone.h>
 

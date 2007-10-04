@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-callback.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-callback.h>
 #include <gammu-callback.h>
 

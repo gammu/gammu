@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-misc.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-misc.h>
 #include <gammu-misc.h>
 

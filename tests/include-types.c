@@ -1,4 +1,6 @@
 /* Automatically generated test for validating header file gammu-types.h */
+/* See gen-include-test.sh for details */
+
 #include <gammu-types.h>
 #include <gammu-types.h>
 

@@ -5,7 +5,16 @@
 #  - header completeness
 #  - header reneterability
 
-echo "# Auto generated include tests begin"
+tmpcmake=`mktemp`
+start='# Auto generated include tests begin'
+end='# Auto generated include tests end'
+
+cecho() {
+	echo "$@" >> $tmpcmake
+}
+
+cecho "$start"
+cecho "# Do not modify this section, change gen-include-test.sh instead"
 
 for x in `ls ../include/ | grep -v gammu.h` ; do 
 	noext=${x%.h}
@@ -14,6 +23,8 @@ for x in `ls ../include/ | grep -v gammu.h` ; do
 	executable=include-$base
 	( 
 		echo "/* Automatically generated test for validating header file $x */"
+		echo "/* See gen-include-test.sh for details */"
+		echo 
 		echo "#include <$x>"
 		echo "#include <$x>"
 		echo
@@ -32,16 +43,25 @@ for x in `ls ../include/ | grep -v gammu.h` ; do
 	) >  $filename
 
 
-	echo
-	echo "# Test for header $x"
-	echo "add_executable($executable $filename)"
-	echo "if (CROSS_MINGW)"
-    echo "    set_target_properties ($executable PROPERTIES PREFIX \"\" SUFFIX \".exe\")"
-	echo "endif (CROSS_MINGW)"
-	echo "target_link_libraries($executable libGammu)"
-	echo "add_test($executable \"\${GAMMU_TEST_PATH}/$executable\${GAMMU_TEST_SUFFIX}\")"
+	cecho
+	cecho "# Test for header $x"
+	cecho "add_executable($executable $filename)"
+	cecho "if (CROSS_MINGW)"
+    cecho "    set_target_properties ($executable PROPERTIES PREFIX \"\" SUFFIX \".exe\")"
+	cecho "endif (CROSS_MINGW)"
+	cecho "target_link_libraries($executable libGammu)"
+	cecho "add_test($executable \"\${GAMMU_TEST_PATH}/$executable\${GAMMU_TEST_SUFFIX}\")"
 
 done
 
-echo
-echo "# Auto generated include tests end"
+cecho
+cecho "$end"
+
+umask 077
+sed -e "/^$start/,/^$end/{
+	/^$start/r $tmpcmake
+	d
+	}
+	" CMakeLists.txt > CMakeLists.txt.new
+cat CMakeLists.txt.new > CMakeLists.txt
+rm -f $tmpcmake CMakeLists.txt.new
