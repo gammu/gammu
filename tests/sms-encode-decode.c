@@ -1,7 +1,7 @@
 #include <gammu.h>
 #include "sms-printing.h"
 
-int main(int argc, char** argv) {
+int main(int argc UNUSED, char** argv UNUSED) {
 	GSM_MultiSMSMessage		sms;
     GSM_Error               error;
 	GSM_MultiPartSMSInfo	SMSInfo;
