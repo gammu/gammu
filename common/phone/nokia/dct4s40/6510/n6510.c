@@ -521,7 +521,7 @@ static GSM_Error N6510_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMac
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error N6510_GetSMSFoldersS40_30(GSM_StateMachine *s, GSM_SMSFolders *folders)
+GSM_Error N6510_GetSMSFoldersS40_30(GSM_StateMachine *s UNUSED, GSM_SMSFolders *folders)
 {
 	folders->Number=4;
 	EncodeUnicode(folders->Folder[0].Name,_("SIM"),strlen(_("SIM")));
@@ -1136,7 +1136,7 @@ static GSM_Error N6510_ReplyGetOperatorLogo(GSM_Protocol_Message msg, GSM_StateM
 	return ERR_NONE;
 }
 
-GSM_Error N6510_ReplyDeleteMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyDeleteMemory(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Phonebook entry deleted\n");
 	return ERR_NONE;
@@ -1186,7 +1186,7 @@ static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	return GSM_WaitFor (s, req, count, 0x03, 4, ID_SetMemory);
 }
 
-static GSM_Error N6510_ReplySetOperatorLogo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N6510_ReplySetOperatorLogo(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Operator logo set OK\n");
 	return ERR_NONE;
@@ -1260,7 +1260,7 @@ static GSM_Error N6510_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 
 static GSM_Error N6510_ReplySetPicture(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-//	smprintf(s, "Picture Image written OK, folder %i, location %i\n",msg.Buffer[4],msg.Buffer[5]*256+msg.Buffer[6]);
+	smprintf(s, "Picture Image written OK, folder %i, location %i\n",msg.Buffer[4],msg.Buffer[5]*256+msg.Buffer[6]);
 	return ERR_NONE;
 }
 
@@ -1426,7 +1426,7 @@ static GSM_Error N6510_ReplyGetRingtoneID(GSM_Protocol_Message msg, GSM_StateMac
 	return ERR_NONE;
 }
 
-static GSM_Error N6510_ReplySetBinRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N6510_ReplySetBinRingtone(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Binary ringtone set\n");
 	return ERR_NONE;
@@ -1494,7 +1494,7 @@ static GSM_Error N6510_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 	return ERR_NOTSUPPORTED;
 }
 
-static GSM_Error N6510_ReplyDeleteRingtones(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N6510_ReplyDeleteRingtones(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Ringtones deleted\n");
 	return ERR_NONE;
@@ -1510,12 +1510,11 @@ static GSM_Error N6510_DeleteUserRingtones(GSM_StateMachine *s)
 
 static GSM_Error N6510_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 {
-#ifdef DEVELOP
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x11, 0x00, 0x01, 0x00, 0x00,
 			       0x00,		/* Event */
 			       0x01};		/* Number of presses */
 
-//	req[7] = Key;
+	req[7] = Key;
 	if (Press) {
 		req[8] = NOKIA_PRESSPHONEKEY;
 		s->Phone.Data.PressKey = true;
@@ -1526,9 +1525,6 @@ static GSM_Error N6510_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press
 		smprintf(s, "Releasing key\n");
 	}
 	return GSM_WaitFor (s, req, 10, 0x0c, 4, ID_PressKey);
-#else
-	return ERR_NOTSUPPORTED;
-#endif
 }
 
 static GSM_Error N6510_EnableConnectionFunctions(GSM_StateMachine *s, N6510_Connection_Settings Type)
@@ -2759,7 +2755,7 @@ static GSM_Error N6510_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 	return GSM_WaitFor (s, req, 6, 0x19, 4, ID_GetDateTime);
 }
 
-static GSM_Error N6510_ReplySetDateTime(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N6510_ReplySetDateTime(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Date & time set\n");
 	return ERR_NONE;
@@ -2848,7 +2844,7 @@ static GSM_Error N6510_GetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm)
 	return GSM_WaitFor (s, GetReq, 6, 0x19, 4, ID_GetAlarm);
 }
 
-static GSM_Error N6510_ReplySetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N6510_ReplySetAlarm(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Alarm set\n");
 	return ERR_NONE;
@@ -3407,7 +3403,7 @@ static GSM_Error N6510_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShow
 	return error;
 }
 
-static GSM_Error N6510_ReplyLogIntoNetwork(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N6510_ReplyLogIntoNetwork(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Probably phone says: I log into network\n");
 	return ERR_NONE;
@@ -3576,7 +3572,7 @@ static GSM_Error N6510_SetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
  	return GSM_WaitFor (s, req, 0x13+len*2, 0x3E, 2, ID_SetFMStation);
 }
 
-static GSM_Error N6510_ReplySetLight(GSM_Protocol_Message msg, GSM_StateMachine *s)
+static GSM_Error N6510_ReplySetLight(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	smprintf(s, "Light set\n");
 	return ERR_NONE;
