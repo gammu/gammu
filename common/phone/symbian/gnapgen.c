@@ -507,7 +507,7 @@ static GSM_Error GNAPGEN_SendSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms
 	return s->Protocol.Functions->WriteMessage(s, req, length + 2, 0x06);
 }
 
-GSM_Error GNAPGEN_ReplySetSMS (GSM_Protocol_Message msg, GSM_StateMachine *s) {
+GSM_Error GNAPGEN_ReplySetSMS (GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s) {
 	/// @todo do something useful here ;)
 	smprintf(s, "SetSMS: got reply\n");
 	return ERR_NONE;
@@ -1028,7 +1028,7 @@ static GSM_Error GNAPGEN_SetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	return GSM_WaitFor(s, req, currentByte, 0x02, 4, ID_SetMemory);
 }
 
-GSM_Error GNAPGEN_ReplyDeleteMemory ( GSM_Protocol_Message msg, GSM_StateMachine *s ) {
+GSM_Error GNAPGEN_ReplyDeleteMemory ( GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s ) {
 	/// @todo implement error handling
 	smprintf(s, "Deleted\n");
 	return ERR_NONE;
@@ -1504,12 +1504,12 @@ static GSM_Error GNAPGEN_GetDateTime(GSM_StateMachine *s, GSM_DateTime *date_tim
 	return GSM_WaitFor (s, req, 2, 0x08, 4, ID_GetDateTime);
 }
 
-GSM_Error GNAPGEN_ReplyDialVoice( GSM_Protocol_Message msg, GSM_StateMachine *s ) {
+GSM_Error GNAPGEN_ReplyDialVoice( GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s ) {
 	smprintf(s, "Dialed voice number\n");
 	return ERR_NONE;
 }
 
-static GSM_Error GNAPGEN_DialVoice ( GSM_StateMachine *s, char *Number, GSM_CallShowNumber ShowNumber ) {
+static GSM_Error GNAPGEN_DialVoice ( GSM_StateMachine *s, char *Number, GSM_CallShowNumber ShowNumber UNUSED) {
 	/// @todo implement ShowNumber
 	unsigned char req[100] = {0x00,0x09};
 
@@ -1616,7 +1616,7 @@ GSM_Error GNAPGEN_GetIMEI(GSM_StateMachine *s)
 	return GSM_WaitFor (s, req, 2, 0x01, 2, ID_GetIMEI);
 }
 
-GSM_Error GNAPGEN_ReplyGetID(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error GNAPGEN_ReplyGetID(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s UNUSED)
 {
 	return ERR_NONE;
 }

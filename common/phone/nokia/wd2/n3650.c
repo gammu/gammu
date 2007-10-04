@@ -43,7 +43,7 @@ static GSM_Error N3650_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachi
 	return ERR_NONE;
 }
 
-static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
+static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Handle UNUSED, int *Size)
 {
 	unsigned int 		len=10,i;
 	GSM_Error		error;

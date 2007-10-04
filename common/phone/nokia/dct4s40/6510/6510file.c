@@ -323,7 +323,7 @@ static GSM_Error N6510_GetFileSystemStatus1(GSM_StateMachine *s, GSM_FileSystemS
 	return GSM_WaitFor (s, req, 10, 0x6D, 4, ID_FileSystemStatus);
 }
 
-static GSM_Error N6510_GetFilePart1(GSM_StateMachine *s, GSM_File *File, int *Handle, int *Size)
+static GSM_Error N6510_GetFilePart1(GSM_StateMachine *s, GSM_File *File, int *Handle UNUSED, int *Size)
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	int		     	old;
@@ -476,12 +476,12 @@ GSM_Error N6510_ReplyAddFileHeader1(GSM_Protocol_Message msg, GSM_StateMachine *
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error N6510_ReplyAddFilePart1(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyAddFilePart1(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s UNUSED)
 {
 	return ERR_NONE;
 }
 
-static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
+static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle UNUSED)
 {
 	GSM_Phone_N6510Data     *Priv = &s->Phone.Data.Priv.N6510;
 	GSM_File		File2;
@@ -650,7 +650,7 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 	return ERR_NONE;
 }
 
-GSM_Error N6510_ReplyDeleteFileFolder1(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyDeleteFileFolder1(GSM_Protocol_Message msg, GSM_StateMachine *s UNUSED)
 {
 	if (msg.Buffer[4] == 0x01) {
 		return ERR_NONE;
@@ -1162,12 +1162,12 @@ static GSM_Error N6510_GetFilePart2(GSM_StateMachine *s, GSM_File *File, int *Ha
 	return ERR_NONE;
 }
 
-GSM_Error N6510_ReplySetFileDate2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplySetFileDate2(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s UNUSED)
 {
 	return ERR_NONE;
 }
 
-GSM_Error N6510_ReplySetAttrib2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplySetAttrib2(GSM_Protocol_Message msg, GSM_StateMachine *s UNUSED)
 {
 	if (msg.Buffer[4] == 0x00) {
 		return ERR_NONE;
@@ -1371,7 +1371,7 @@ static GSM_Error N6510_GetFolderListing2(GSM_StateMachine *s, GSM_File *File, bo
 	return ERR_NONE;
 }
 
-GSM_Error N6510_ReplyDeleteFile2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyDeleteFile2(GSM_Protocol_Message msg, GSM_StateMachine *s UNUSED)
 {
 	if (msg.Buffer[4] == 0x00) {
 		return ERR_NONE;
@@ -1416,7 +1416,7 @@ static GSM_Error N6510_DeleteFile2(GSM_StateMachine *s, unsigned char *ID)
 	return GSM_WaitFor (s, req, Pos, 0x6D, 4, ID_DeleteFile);
 }
 
-GSM_Error N6510_ReplyAddFolder2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyAddFolder2(GSM_Protocol_Message msg, GSM_StateMachine *s UNUSED)
 {
 	if (msg.Buffer[4] == 0x00) {
 		return ERR_NONE;
@@ -1463,7 +1463,7 @@ static GSM_Error N6510_AddFolder2(GSM_StateMachine *s, GSM_File *File)
 	return error;
 }
 
-GSM_Error N6510_ReplyDeleteFolder2(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6510_ReplyDeleteFolder2(GSM_Protocol_Message msg, GSM_StateMachine *s UNUSED)
 {
 	if (msg.Buffer[4] == 0x00) {
 		return ERR_NONE;
