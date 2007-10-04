@@ -68,6 +68,14 @@ typedef struct {
 	 */
 	int				*PbOffsets;
 	/**
+	 * Index - location translation map for phonebook
+	 */
+	char				**PbIndex;
+	/**
+	 * Number of entries in PbIndex list.
+	 */
+	int				PbIndexCount;
+	/**
 	 * LUID - location translation map for phonebook
 	 */
 	char				**PbLUID;
@@ -100,6 +108,14 @@ typedef struct {
 	 */
 	int				*TodoOffsets;
 	/**
+	 * Index - location translation map for todo
+	 */
+	char				**TodoIndex;
+	/**
+	 * Number of entries in TodoIndex list.
+	 */
+	int				TodoIndexCount;
+	/**
 	 * LUID - location translation map for todo
 	 */
 	char				**TodoLUID;
@@ -123,6 +139,14 @@ typedef struct {
 	 * Offsets of calendar entries in calendar data
 	 */
 	int				*CalOffsets;
+	/**
+	 * Index - location translation map for calendar
+	 */
+	char				**CalIndex;
+	/**
+	 * Number of entries in CalIndex list.
+	 */
+	int				CalIndexCount;
 	/**
 	 * LUID - location translation map for calendar
 	 */
@@ -155,6 +179,14 @@ typedef struct {
 	 * Offsets of entries in note data
 	 */
 	int				*NoteOffsets;
+	/**
+	 * Index - location translation map for note
+	 */
+	char				**NoteIndex;
+	/**
+	 * Number of entries in NoteIndex list.
+	 */
+	int				NoteIndexCount;
 	/**
 	 * LUID - location translation map for note
 	 */
