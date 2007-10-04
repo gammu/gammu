@@ -58,8 +58,7 @@ int SearchPrintf(const char *format, ...)
 	return ret;
 }
 
-void SearchPrintPhoneInfo(OneDeviceInfo * Info, int connection_index,
-			  GSM_StateMachine * sm)
+void SearchPrintPhoneInfo(GSM_StateMachine * sm)
 {
 	GSM_Error error;
 	char buffer[GSM_MAX_INFO_LENGTH];
@@ -139,7 +138,7 @@ void SearchPhoneThread(OneDeviceInfo * Info)
 
 		/* Did we succeed? Show info */
 		if (error == ERR_NONE) {
-			SearchPrintPhoneInfo(Info, j, ss);
+			SearchPrintPhoneInfo(ss);
 		} else {
 			SearchPrintf("\t%s\n", GSM_ErrorString(error));
 		}
