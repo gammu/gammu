@@ -3058,6 +3058,7 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					"+CSCA: @p, @i",
 					SMSC->Number, sizeof(SMSC->Number),
 					&number_type);
+		if (error != ERR_NONE) return error;
 
 		/* International number */
 		GSM_TweakInternationalNumber(SMSC->Number, number_type);
