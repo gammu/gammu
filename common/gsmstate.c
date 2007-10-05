@@ -1077,8 +1077,6 @@ void GSM_DumpMessageLevel2_Text(GSM_StateMachine *s, unsigned const char *messag
 		DumpMessage(&s->di, message, messagesize);
 		if (messagesize == 0) 
 			smprintf(s,"\n");
-		if (s->di.df) 
-			fflush(s->di.df);
 	}
 }
 
