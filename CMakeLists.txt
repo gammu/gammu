@@ -112,8 +112,8 @@ else (WIN32)
 endif (WIN32)
 include (CPack)
 
-# We want some tests. Even when cross compiling for Windows tests can be 
-# done in Wine. This is better than nothing, even though Wine is a bit 
+# We want some tests. Even when cross compiling for Windows tests can be
+# done in Wine. This is better than nothing, even though Wine is a bit
 # more fault tolerant when linking DLLs.
 include(CTest)
 
@@ -195,40 +195,40 @@ endif(MSVC)
 if (CROSS_MINGW)
 
     set (MYSQL_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/mysql" CACHE FILEPATH "Path to MySQL for cross compilation")
-    find_library (MYSQL_LIBRARIES 
-        mysql "${MYSQL_CROSS_PATH}/lib/opt" 
+    find_library (MYSQL_LIBRARIES
+        mysql "${MYSQL_CROSS_PATH}/lib/opt"
         NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
-    if (MYSQL_LIBRARIES) 
+    if (MYSQL_LIBRARIES)
         set (MYSQL_FOUND ON)
         set (MYSQL_INCLUDE_DIR "${MYSQL_CROSS_PATH}/include")
         message (STATUS "Cross MySQL found, libs: ${MYSQL_LIBRARIES}, incs: ${MYSQL_INCLUDE_DIR}")
-    else (MYSQL_LIBRARIES) 
+    else (MYSQL_LIBRARIES)
         message (STATUS "Cross MySQL not found")
-    endif (MYSQL_LIBRARIES) 
+    endif (MYSQL_LIBRARIES)
 
     set (POSTGRES_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/pgsql" CACHE FILEPATH "Path to PostgreSQL for cross compilation")
-    find_library (POSTGRES_LIBRARY 
+    find_library (POSTGRES_LIBRARY
         pq "${POSTGRES_CROSS_PATH}/lib"
         NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
-    if (POSTGRES_LIBRARY) 
+    if (POSTGRES_LIBRARY)
         set (POSTGRES_FOUND ON)
         set (POSTGRES_INCLUDE_DIR "${POSTGRES_CROSS_PATH}/include")
         message (STATUS "Cross PostgreSQL found, libs: ${POSTGRES_LIBRARY}, incs: ${POSTGRES_INCLUDE_DIR}")
-    else (POSTGRES_LIBRARY) 
+    else (POSTGRES_LIBRARY)
         message (STATUS "Cross PostgreSQL not found")
-    endif (POSTGRES_LIBRARY) 
+    endif (POSTGRES_LIBRARY)
 
     set (GETTEXT_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/gettext" CACHE FILEPATH "Path to Gettext for cross compilation")
-    find_library (GETTEXT_LIBRARY 
+    find_library (GETTEXT_LIBRARY
         intl "${GETTEXT_CROSS_PATH}/lib"
         NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
-    if (GETTEXT_LIBRARY) 
+    if (GETTEXT_LIBRARY)
         set (GETTEXTLIBS_FOUND ON)
         set (GETTEXT_INCLUDE_DIR "${GETTEXT_CROSS_PATH}/include")
         message (STATUS "Cross Gettext found, libs: ${GETTEXT_LIBRARY}, incs: ${GETTEXT_INCLUDE_DIR}")
-    else (GETTEXT_LIBRARY) 
+    else (GETTEXT_LIBRARY)
         message (STATUS "Cross Gettext not found")
-    endif (GETTEXT_LIBRARY) 
+    endif (GETTEXT_LIBRARY)
 
 else (CROSS_MINGW)
     # Standard packages
@@ -277,17 +277,17 @@ if (WITH_BLUETOOTH)
         set(BLUETOOTH_SEARCH TRUE)
     else (WIN32)
         find_package (Bluez)
-        if (BLUEZ_FOUND) 
+        if (BLUEZ_FOUND)
             set(BLUETOOTH_FOUND ON)
             set (GSM_ENABLE_BLUEZ TRUE)
             set(BLUETOOTH_SEARCH TRUE)
-        endif (BLUEZ_FOUND) 
+        endif (BLUEZ_FOUND)
         find_package (FBSDBluetooth)
-        if (FBSD_BLUE_FOUND) 
+        if (FBSD_BLUE_FOUND)
             set(BLUETOOTH_FOUND ON)
             set (GSM_ENABLE_FBSD_BLUE TRUE)
             set(BLUETOOTH_SEARCH FALSE)
-        endif (FBSD_BLUE_FOUND) 
+        endif (FBSD_BLUE_FOUND)
     endif (WIN32)
 else (WITH_BLUETOOTH)
     set(BLUETOOTH_FOUND)
@@ -318,10 +318,10 @@ if (WITH_IRDA)
 #include <linux/types.h>
 #include <sys/ioctl.h>
 #include <linux/irda.h>
-    int main(int argc, char **argv) { 
-        return 0; 
+    int main(int argc, char **argv) {
+        return 0;
     }
-            " 
+            "
             IRDA_FOUND
             )
     endif (WIN32)
@@ -344,27 +344,27 @@ endif (POSTGRES_FOUND)
 set (GAMMU_LIBS "")
 
 if (BLUEZ_FOUND)
-    if (NOT "${BLUEZ_LIBRARIES}" STREQUAL "") 
+    if (NOT "${BLUEZ_LIBRARIES}" STREQUAL "")
         set (GAMMU_LIBS "${GAMMU_LIBS} -l${BLUEZ_LIBRARIES}")
-    endif (NOT "${BLUEZ_LIBRARIES}" STREQUAL "") 
+    endif (NOT "${BLUEZ_LIBRARIES}" STREQUAL "")
 endif (BLUEZ_FOUND)
 
 if (FBSD_BLUE_FOUND)
-    if (NOT "${FBSD_BLUE_LIBRARIES}" STREQUAL "") 
+    if (NOT "${FBSD_BLUE_LIBRARIES}" STREQUAL "")
         set (GAMMU_LIBS "${GAMMU_LIBS} -l${FBSD_BLUE_LIBRARIES}")
-    endif (NOT "${FBSD_BLUE_LIBRARIES}" STREQUAL "") 
+    endif (NOT "${FBSD_BLUE_LIBRARIES}" STREQUAL "")
 endif (FBSD_BLUE_FOUND)
 
 if (ICONV_FOUND)
-    if (NOT "${ICONV_LIBRARIES}" STREQUAL "") 
+    if (NOT "${ICONV_LIBRARIES}" STREQUAL "")
         set (GAMMU_LIBS "${GAMMU_LIBS} -l${ICONV_LIBRARIES}")
-    endif (NOT "${ICONV_LIBRARIES}" STREQUAL "") 
+    endif (NOT "${ICONV_LIBRARIES}" STREQUAL "")
 endif (ICONV_FOUND)
 
 if (GETTEXTLIBS_FOUND)
-    if (NOT "${GETTEXT_LIBRARIES}" STREQUAL "") 
+    if (NOT "${GETTEXT_LIBRARIES}" STREQUAL "" AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib/libc.so")
         set (GAMMU_LIBS "${GAMMU_LIBS} -l${GETTEXT_LIBRARIES}")
-    endif (NOT "${GETTEXT_LIBRARIES}" STREQUAL "") 
+    endif (NOT "${GETTEXT_LIBRARIES}" STREQUAL "" AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib/libc.so")
 endif (GETTEXTLIBS_FOUND)
 
 # Define required libraries for gammu library if it is static
@@ -422,9 +422,9 @@ set (DEVELDOCS
     )
 
 set (DOCS
-    README 
+    README
     SUPPORTERS
-    ChangeLog 
+    ChangeLog
     COPYING
     docs/user/replace.txt
     docs/user/readme.htm
@@ -445,7 +445,7 @@ set (SYMBIAN_FILES
 
 set (MAN1_PAGES
     docs/user/gammu.1
-    docs/user/gammu-config.1    
+    docs/user/gammu-config.1
     )
 
 set (PUBLIC_HEADERS
@@ -553,7 +553,7 @@ if (CMAKE_USE_PTHREADS_INIT)
     set (HAVE_PTHREAD ON)
 endif (CMAKE_USE_PTHREADS_INIT)
 
-# Phone and protocol configuration 
+# Phone and protocol configuration
 
 # Nokia phones
 macro_gammu_option (NOKIA_SUPPORT "Nokia support" ON ON ON)
@@ -655,12 +655,12 @@ configure_file (templates/api.desc.cmake doxygen/api.desc)
 configure_file (templates/internals.desc.cmake doxygen/internals.desc)
 
 # Target for generating API documentation
-add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile 
+add_custom_target (apidoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile
     COMMAND find ${DOXYGEN_OUTPUT}/html -name '*.html' -print0 | xargs -0 sed -i 's@text/html\;charset=iso-8859-1@text/html\;charset=utf-8@'
     DEPENDS ${PUBLIC_HEADERS}
     COMMENT "Generating API documentation")
 
-add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal 
+add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
     COMMAND find ${DOXYGEN_INTERNAL_OUTPUT}/html -name '*.html' -print0 | xargs -0 sed -i 's@text/html\;charset=iso-8859-1@text/html\;charset=utf-8@'
     DEPENDS ${LIBRARY_SRC} ${HEADERS}
     COMMENT "Generating internal documentation")
@@ -704,7 +704,7 @@ if (CROSS_MINGW)
 
     # PostgreSQL and dependencies
     if (POSTGRES_FOUND)
-        install (FILES 
+        install (FILES
                 "${POSTGRES_CROSS_PATH}/lib/libpq.dll"
                 "${POSTGRES_CROSS_PATH}/bin/comerr32.dll"
                 "${POSTGRES_CROSS_PATH}/bin/libeay32.dll"
@@ -719,7 +719,7 @@ if (CROSS_MINGW)
 
     # Gettext and dependencies
     if (GETTEXTLIBS_FOUND)
-        install (FILES 
+        install (FILES
                 "${GETTEXT_CROSS_PATH}/bin/libintl3.dll"
                 "${GETTEXT_CROSS_PATH}/bin/libiconv2.dll"
                 DESTINATION "${INSTALL_BIN_DIR}" COMPONENT "runtime"
@@ -731,8 +731,8 @@ foreach (HEADER ${PUBLIC_HEADERS})
     string (REPLACE "${Gammu_BINARY_DIR}" "" DIRNAME ${HEADER})
     string (REGEX REPLACE "(include)(.*)/[^/]*$" "\\2" DIRNAME ${DIRNAME})
     install (
-        FILES ${HEADER} 
-        DESTINATION "${INSTALL_INC_DIR}/${DIRNAME}" 
+        FILES ${HEADER}
+        DESTINATION "${INSTALL_INC_DIR}/${DIRNAME}"
         COMPONENT "development"
         )
 endforeach (HEADER)
