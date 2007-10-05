@@ -402,7 +402,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
   			DecodeDefault(output, input, length, false, NULL);
   			break;
   		case AT_CHARSET_UCS2:
-			if (2 * length >= outlength) return ERR_MOREMEMORY;
+			if (length / 2 >= outlength) return ERR_MOREMEMORY;
  			DecodeHexUnicode(output, input, length);
   			break;
   		case AT_CHARSET_IRA: /* IRA is ASCII only, so it's safe to treat is as UTF-8 */
