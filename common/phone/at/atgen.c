@@ -669,7 +669,9 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 								buffer, strlen(buffer),
 								out_s, storage_size,
 								true, true);
-						smprintf(s, "Phone string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						if (error == ERR_NONE) {
+							smprintf(s, "Phone string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						}
 						free(buffer);
 						if (error != ERR_NONE) {
 							goto end;
@@ -685,7 +687,9 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 								buffer, strlen(buffer),
 								out_s, storage_size,
 								true, false);
-						smprintf(s, "Generic string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						if (error == ERR_NONE) {
+							smprintf(s, "Generic string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						}
 						free(buffer);
 						if (error != ERR_NONE) {
 							goto end;
@@ -701,7 +705,9 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 								buffer, strlen(buffer),
 								out_s, storage_size,
 								false, false);
-						smprintf(s, "Generic string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						if (error == ERR_NONE) {
+							smprintf(s, "Generic string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						}
 						free(buffer);
 						if (error != ERR_NONE) {
 							goto end;
@@ -721,7 +727,9 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 								buffer, strlen(buffer),
 								out_s, storage_size,
 								true, false);
-						smprintf(s, "Samsung string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						if (error == ERR_NONE) {
+							smprintf(s, "Samsung string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						}
 						free(buffer);
 						if (error != ERR_NONE) {
 							goto end;
