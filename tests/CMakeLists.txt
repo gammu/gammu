@@ -36,17 +36,17 @@ endif (CROSS_MINGW)
 target_link_libraries(vcard-read libGammu)
 
 # List test cases
-file(GLOB VCARDS 
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards" 
+file(GLOB VCARDS
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards"
     "${Gammu_SOURCE_DIR}/tests/vcards/*.vcf")
 list(SORT VCARDS)
 
 foreach(TESTVCARD ${VCARDS})
     string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
     string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
-    add_test("vcard-read-${TESTNAME}" 
-        "${GAMMU_TEST_PATH}/vcard-read${GAMMU_TEST_SUFFIX}" 
-        "${Gammu_SOURCE_DIR}/tests/vcards/${TESTVCARD}" 
+    add_test("vcard-read-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/vcard-read${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/vcards/${TESTVCARD}"
         "${Gammu_SOURCE_DIR}/tests/vcards/${TESTBACKUP}")
 endforeach(TESTVCARD $VCARDS)
 
@@ -66,16 +66,36 @@ endif (CROSS_MINGW)
 target_link_libraries(sms-at-parse libGammu)
 
 # List test cases
-file(GLOB MESSAGES 
-    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms" 
+file(GLOB MESSAGES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms"
     "${Gammu_SOURCE_DIR}/tests/at-sms/*.dump")
 list(SORT MESSAGES)
 
 foreach(TESTMESSAGE ${MESSAGES})
     string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
-    add_test("sms-at-parse-${TESTNAME}" 
-        "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}" 
+    add_test("sms-at-parse-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
         "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
+endforeach(TESTMESSAGE $MESSAGES)
+
+# AT SMS parsing
+add_executable(get-smsc-at get-smsc-at.c)
+if (CROSS_MINGW)
+    set_target_properties (get-smsc-at PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+target_link_libraries(get-smsc-at libGammu)
+
+# List test cases
+file(GLOB MESSAGES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-smsc"
+    "${Gammu_SOURCE_DIR}/tests/at-smsc/*.dump")
+list(SORT MESSAGES)
+
+foreach(TESTMESSAGE ${MESSAGES})
+    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+    add_test("get-smsc-at-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/get-smsc-at${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-smsc/${TESTMESSAGE}")
 endforeach(TESTMESSAGE $MESSAGES)
 
 # SMS encoding
