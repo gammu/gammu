@@ -1,4 +1,4 @@
-/* Test for decoding SMS on AT driver */
+/* Test for reading SMSC on AT driver */
 
 #include <gammu.h>
 #include <stdlib.h>
@@ -8,9 +8,9 @@
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 #include "../common/gsmphones.h" /* Phone data */
 
-#include "sms-printing.h"
-
 #define BUFFER_SIZE 16384
+
+extern GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s);
 
 int main(int argc, char **argv)
 {
@@ -23,7 +23,7 @@ int main(int argc, char **argv)
 	GSM_StateMachine *s;
 	GSM_Protocol_Message msg;
 	GSM_Error error;
-	GSM_MultiSMSMessage sms;
+	GSM_SMSC SMSC;
 
 	/* Check parameters */
 	if (argc != 2) {
@@ -72,6 +72,7 @@ int main(int argc, char **argv)
 	Priv = &s->Phone.Data.Priv.ATGEN;
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
+	Priv->Charset = AT_CHARSET_UCS2;
 
 	/* Init message */
 	msg.Type = 0;
@@ -80,13 +81,10 @@ int main(int argc, char **argv)
 	SplitLines(msg.Buffer, msg.Length, &Priv->Lines, "\x0D\x0A", 2, true);
 
 	/* Pointer to store message */
-	s->Phone.Data.GetSMSMessage = &sms;
+	s->Phone.Data.SMSC = &SMSC;
 
 	/* Parse it */
-	error = ATGEN_ReplyGetSMSMessage(msg, s);
-
-	/* Display message */
-	DisplayTestSMS(sms);
+	error = ATGEN_ReplyGetSMSC(msg, s);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
@@ -99,3 +97,4 @@ int main(int argc, char **argv)
 /* Editor configuration
  * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
  */
+
