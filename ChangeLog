@@ -19,6 +19,7 @@ ChangeLog
 [+] * Automatically fall back to AT commands when OBEX does not work.
 [+] * Initial support for IrMC index access.
 [+] * RunOnReceive is now also supported on Windows.
+[-] * Handle correctly case when memory is full (OBEX) (bug #404).
 
 20071003 - 1.13.92
 [-] * Fixed handling of errors when saving SMS (bug #396).
