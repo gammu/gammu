@@ -113,9 +113,10 @@ static GSM_Error OBEXGEN_ReplyConnect(GSM_Protocol_Message msg, GSM_StateMachine
 	case 0xC3:
 		smprintf(s, "Connection not allowed!\n");
 		return ERR_SECURITYERROR;
-	case 0xD0:
-		smprintf(s, "Internal phone error!\n");
-		return ERR_PHONE_INTERNAL;
+	}
+	/* Generic error codes */
+	if ((msg.Type & 0x7f) >= 0x40) {
+		return OBEXGEN_HandleError(msg, s);
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
@@ -1389,10 +1390,10 @@ int OBEXGEN_GetFirstFreeLocation(int **IndexStorage, int *IndexCount) {
 /**
  * Initialises LUID database, which is used for LUID - Location mapping.
  */
-GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name, 
-		const bool Recalculate, 
-		char *Header, 
-		char **Data, int **Offsets, int *Count, 
+GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
+		const bool Recalculate,
+		char *Header,
+		char **Data, int **Offsets, int *Count,
 		char ***LUIDStorage, int *LUIDCount,
 		int **IndexStorage, int *IndexCount)
 {
@@ -1546,8 +1547,8 @@ GSM_Error OBEXGEN_InitPbLUID(GSM_StateMachine *s)
 	/* We might do validation here using telecom/pb/luid/cc.log fir IEL 4, but not on each request */
 	if (Priv->PbData != NULL) return ERR_NONE;
 
-	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", false, "BEGIN:VCARD", 
-			&(Priv->PbData), &(Priv->PbOffsets), &(Priv->PbCount), 
+	return OBEXGEN_InitLUID(s, "telecom/pb.vcf", false, "BEGIN:VCARD",
+			&(Priv->PbData), &(Priv->PbOffsets), &(Priv->PbCount),
 			&(Priv->PbLUID), &(Priv->PbLUIDCount),
 			&(Priv->PbIndex), &(Priv->PbIndexCount));
 }
@@ -1696,7 +1697,7 @@ GSM_Error OBEXGEN_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry, boo
 	while (error == ERR_EMPTY) {
 
 		/* Have we read them all? */
-		/* Needs to be inside loop as we get count after 
+		/* Needs to be inside loop as we get count after
 		 * first invocation of get function */
 		if (Priv->ReadPhonebook == Priv->PbCount) {
 			return ERR_EMPTY;
@@ -1946,13 +1947,13 @@ GSM_Error OBEXGEN_InitCalLUID(GSM_StateMachine *s)
 	/* We might do validation here using telecom/cal/luid/cc.log fir IEL 4, but not on each request */
 	if (Priv->CalData != NULL) return ERR_NONE;
 
-	error = OBEXGEN_InitLUID(s, "telecom/cal.vcs", false, "BEGIN:VEVENT", 
-			&(Priv->CalData), &(Priv->CalOffsets), &(Priv->CalCount), 
+	error = OBEXGEN_InitLUID(s, "telecom/cal.vcs", false, "BEGIN:VEVENT",
+			&(Priv->CalData), &(Priv->CalOffsets), &(Priv->CalCount),
 			&(Priv->CalLUID), &(Priv->CalLUIDCount),
 			&(Priv->CalIndex), &(Priv->CalIndexCount));
 	if (error != ERR_NONE) return error;
-	return OBEXGEN_InitLUID(s, "telecom/cal.vcs", true, "BEGIN:VTODO", 
-			&(Priv->CalData), &(Priv->TodoOffsets), &(Priv->TodoCount), 
+	return OBEXGEN_InitLUID(s, "telecom/cal.vcs", true, "BEGIN:VTODO",
+			&(Priv->CalData), &(Priv->TodoOffsets), &(Priv->TodoCount),
 			&(Priv->TodoLUID), &(Priv->TodoLUIDCount),
 			&(Priv->TodoIndex), &(Priv->TodoIndexCount));
 }
@@ -2127,7 +2128,7 @@ GSM_Error OBEXGEN_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 	while (error == ERR_EMPTY) {
 
 		/* Have we read them all? */
-		/* Needs to be inside loop as we get count after 
+		/* Needs to be inside loop as we get count after
 		 * first invocation of get function */
 		if (Priv->ReadCalendar == Priv->CalCount) {
 			return ERR_EMPTY;
@@ -2504,7 +2505,7 @@ GSM_Error OBEXGEN_GetNextTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry, bool st
 	while (error == ERR_EMPTY) {
 
 		/* Have we read them all? */
-		/* Needs to be inside loop as we get count after 
+		/* Needs to be inside loop as we get count after
 		 * first invocation of get function */
 		if (Priv->ReadTodo == Priv->TodoCount) {
 			return ERR_EMPTY;
@@ -2752,8 +2753,8 @@ GSM_Error OBEXGEN_InitNoteLUID(GSM_StateMachine *s)
 	/* We might do validation here using telecom/nt/luid/cc.log fir IEL 4, but not on each request */
 	if (Priv->NoteData != NULL) return ERR_NONE;
 
-	return OBEXGEN_InitLUID(s, "telecom/nt.vcf", false, "BEGIN:VNOTE", 
-			&(Priv->NoteData), &(Priv->NoteOffsets), &(Priv->NoteCount), 
+	return OBEXGEN_InitLUID(s, "telecom/nt.vcf", false, "BEGIN:VNOTE",
+			&(Priv->NoteData), &(Priv->NoteOffsets), &(Priv->NoteCount),
 			&(Priv->NoteLUID), &(Priv->NoteLUIDCount),
 			&(Priv->NoteIndex), &(Priv->NoteIndexCount));
 }
@@ -2900,7 +2901,7 @@ GSM_Error OBEXGEN_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Entry, bool st
 	while (error == ERR_EMPTY) {
 
 		/* Have we read them all? */
-		/* Needs to be inside loop as we get count after 
+		/* Needs to be inside loop as we get count after
 		 * first invocation of get function */
 		if (Priv->ReadPhonebook == Priv->NoteCount) {
 			return ERR_EMPTY;
@@ -3329,6 +3330,30 @@ GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	{OBEXGEN_ReplyChangePath,	"\xD0",0x00,0x00,ID_SetPath			},
 	{OBEXGEN_ReplyGetFilePart,	"\xD0",0x00,0x00,ID_GetFile			},
 	{OBEXGEN_ReplyAddFilePart,	"\xD0",0x00,0x00,ID_AddFile			},
+
+	/* Not implemented */
+	{OBEXGEN_ReplyConnect,		"\xD1",0x00,0x00,ID_Initialise			},
+	{OBEXGEN_ReplyChangePath,	"\xD1",0x00,0x00,ID_SetPath			},
+	{OBEXGEN_ReplyGetFilePart,	"\xD1",0x00,0x00,ID_GetFile			},
+	{OBEXGEN_ReplyAddFilePart,	"\xD1",0x00,0x00,ID_AddFile			},
+
+	/* Service not available */
+	{OBEXGEN_ReplyConnect,		"\xD3",0x00,0x00,ID_Initialise			},
+	{OBEXGEN_ReplyChangePath,	"\xD3",0x00,0x00,ID_SetPath			},
+	{OBEXGEN_ReplyGetFilePart,	"\xD3",0x00,0x00,ID_GetFile			},
+	{OBEXGEN_ReplyAddFilePart,	"\xD3",0x00,0x00,ID_AddFile			},
+
+	/* Database full */
+	{OBEXGEN_ReplyConnect,		"\xE0",0x00,0x00,ID_Initialise			},
+	{OBEXGEN_ReplyChangePath,	"\xE0",0x00,0x00,ID_SetPath			},
+	{OBEXGEN_ReplyGetFilePart,	"\xE0",0x00,0x00,ID_GetFile			},
+	{OBEXGEN_ReplyAddFilePart,	"\xE0",0x00,0x00,ID_AddFile			},
+
+	/* Database locked */
+	{OBEXGEN_ReplyConnect,		"\xE1",0x00,0x00,ID_Initialise			},
+	{OBEXGEN_ReplyChangePath,	"\xE1",0x00,0x00,ID_SetPath			},
+	{OBEXGEN_ReplyGetFilePart,	"\xE1",0x00,0x00,ID_GetFile			},
+	{OBEXGEN_ReplyAddFilePart,	"\xE1",0x00,0x00,ID_AddFile			},
 
 	{NULL,				"\x00",0x00,0x00,ID_None			}
 };
