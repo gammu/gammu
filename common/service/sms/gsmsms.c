@@ -192,6 +192,24 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 	int 		w,i,tmp=0;
 	unsigned char	output[161];
 
+	SMS->UDH.Type 			= UDH_NoUDH;
+	SMS->Coding 			= SMS_Coding_8bit;
+	SMS->Length			= 0;
+	SMS->SMSC.Location		= 0;
+	SMS->SMSC.DefaultNumber[0]	= 0;
+	SMS->SMSC.DefaultNumber[1]	= 0;
+	SMS->SMSC.Number[0]		= 0;
+	SMS->SMSC.Number[1]		= 0;
+	SMS->SMSC.Name[0]		= 0;
+	SMS->SMSC.Name[1]		= 0;
+	SMS->SMSC.Validity.Format	= SMS_Validity_NotAvailable;
+	SMS->SMSC.Format		= SMS_FORMAT_Text;
+	SMS->Number[0]			= 0;
+	SMS->Number[1]			= 0;
+	SMS->OtherNumbersNum		= 0;
+	SMS->Name[0]			= 0;
+	SMS->Name[1]			= 0;
+	SMS->ReplyViaSameSMSC		= false;
 	SMS->UDH.Length = 0;
 	/* UDH header available */
 	if (buffer[Layout.firstbyte] & 64) {

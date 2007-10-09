@@ -2038,7 +2038,7 @@ GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, i
 
 	if (start) {
 		error = N6510_GetMMSFolders(s, &folders);
-		if (error != ERR_NONE) 
+		if (error != ERR_NONE)
 			return error;
 
 		Priv->MMSFolderNum 	= 0;
@@ -2048,22 +2048,22 @@ GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, i
 	while(true) {
 		if (Priv->MMSFolderError == ERR_NONE) {
 			Priv->MMSFolderError = N6510_GetFolderListing(s,&Priv->MMSFile,false);
-			if (Priv->MMSFolderError != ERR_EMPTY && Priv->MMSFolderError != ERR_NONE) 
+			if (Priv->MMSFolderError != ERR_EMPTY && Priv->MMSFolderError != ERR_NONE)
 				return Priv->MMSFolderError;
 		}
 
 		if (Priv->MMSFolderError == ERR_EMPTY) {
 			while (1) {
-				if (UnicodeLength(Priv->MMSFoldersID2[Priv->MMSFolderNum]) == 0) 
+				if (UnicodeLength(Priv->MMSFoldersID2[Priv->MMSFolderNum]) == 0)
 					return ERR_EMPTY;
 
 				CopyUnicodeString(Priv->MMSFile.ID_FullName,Priv->MMSFoldersID2[Priv->MMSFolderNum]);
 				Priv->MMSFolderNum++;
 
 				Priv->MMSFolderError = N6510_GetFolderListing(s,&Priv->MMSFile,true);
-				if (Priv->MMSFolderError == ERR_EMPTY) 
+				if (Priv->MMSFolderError == ERR_EMPTY)
 					continue;
-				if (Priv->MMSFolderError != ERR_NONE) 
+				if (Priv->MMSFolderError != ERR_NONE)
 					return Priv->MMSFolderError;
 				break;
 			}
@@ -2078,7 +2078,7 @@ GSM_Error N6510_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, i
 			error = N6510_GetFilePart2(s, &file, &Handle, &Size);
 			if (error == ERR_NONE) {
 				error = N6510_CloseFile2(s, &Handle);
-				if (error != ERR_NONE) 
+				if (error != ERR_NONE)
 					return error;
 			} else if (error != ERR_EMPTY) {
 				return error;
@@ -2301,7 +2301,6 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 			i+=FFF.Buffer[i];
 		}
 		i+=11;
-		EncodeUnicode(sms->SMS[0].SMSC.Number,FFF.Buffer+i,strlen(FFF.Buffer+i));
 		sms->SMS[0].UDH.Type = UDH_NoUDH;
 		sms->SMS[0].PDU = SMS_Deliver;
 		sms->SMS[0].Class = -1;
@@ -2336,7 +2335,11 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 			i+=FFF.Buffer[i];
 		}
 		i+=11;
-		EncodeUnicode(sms->SMS[0].SMSC.Number,FFF.Buffer+i,strlen(FFF.Buffer+i));
+		if (strlen(FFF.Buffer+i) > GSM_MAX_NUMBER_LENGTH) {
+			smprintf(s, "WARNING: Too long SMS number, ignoring!\n");
+		} else {
+			EncodeUnicode(sms->SMS[0].SMSC.Number,FFF.Buffer+i,strlen(FFF.Buffer+i));
+		}
 		sms->SMS[0].UDH.Type = UDH_NoUDH;
 		sms->SMS[0].PDU = SMS_Deliver;
 		sms->SMS[0].Class = -1;
