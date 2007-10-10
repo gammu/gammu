@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.13.93
+20071010 - 1.13.93
 [+] * Automatically fall back to AT commands when OBEX does not work.
 [+] * Initial support for IrMC index access.
 [+] * RunOnReceive is now also supported on Windows.
