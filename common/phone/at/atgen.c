@@ -4203,12 +4203,14 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg UNUSED, GSM_StateMachin
 
 	switch(s->Phone.Data.Priv.ATGEN.ReplyState) {
         case AT_Reply_OK:
-     	    smprintf(s, "Calls canceled\n");
-            call.CallIDAvailable = false;
-            call.Status 	 = GSM_CALL_CallLocalEnd;
-            if (s->User.IncomingCall) s->User.IncomingCall(s, call);
+		smprintf(s, "Calls canceled\n");
+		call.CallIDAvailable = false;
+		call.Status 	 = GSM_CALL_CallLocalEnd;
+		if (s->User.IncomingCall) {
+			s->User.IncomingCall(s, call);
+		}
 
-            return ERR_NONE;
+		return ERR_NONE;
     	case AT_Reply_CMSError:
             return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
