@@ -542,7 +542,7 @@ unsigned char *GSM_Networks[] = {
 	"437 01", "Bitel",
 	"438 01", "BCTI",
 	"440 10", "NTT DoCoMo, Inc",
-	"440 20", "J-Phone",
+	"440 20", "SoftBank",
 	"450 02", "KT ICOM",
 	"452 01", "MOBIFONE",
 	"452 02", "Vinaphone",
