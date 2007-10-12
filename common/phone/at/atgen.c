@@ -4220,15 +4220,15 @@ GSM_Error ATGEN_ReplyCancelCall(GSM_Protocol_Message msg UNUSED, GSM_StateMachin
 
 GSM_Error ATGEN_CancelCall(GSM_StateMachine *s, int ID UNUSED, bool all)
 {
-	GSM_Error error;
+	GSM_Error error, error_ath;
 
 	if (all) {
 		smprintf(s, "Dropping all calls\n");
 		ATGEN_WaitFor(s, "ATH\r", 4, 0x00, 4, ID_CancelCall);
-		if (error == ERR_UNKNOWN) {
-			ATGEN_WaitFor(s, "AT+CHUP\r", 8, 0x00, 4, ID_CancelCall);
-			return error;
-		}
+		error_ath = error;
+		ATGEN_WaitFor(s, "AT+CHUP\r", 8, 0x00, 4, ID_CancelCall);
+		if (error_ath == ERR_NONE || error == ERR_NONE)
+			return ERR_NONE;
 		return error;
 	}
 	return ERR_NOTSUPPORTED;
