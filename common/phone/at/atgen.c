@@ -5200,6 +5200,19 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	char			*buffer;
 	int			*range;
 
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+		break;
+	case AT_Reply_Error:
+		return ERR_UNKNOWN;
+	case AT_Reply_CMSError:
+	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
+	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+
 	/* Sample resposne we get here:
 	AT+CNMI=?
 	+CNMI: (0-2),(0,1,3),(0),(0,1),(0,1)
