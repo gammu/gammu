@@ -5204,7 +5204,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case AT_Reply_OK:
 		break;
 	case AT_Reply_Error:
-		return ERR_UNKNOWN;
+		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
