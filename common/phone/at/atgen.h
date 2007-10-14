@@ -256,6 +256,10 @@ typedef struct {
 	 */
 	GSM_AT_SMSMemory	PhoneSMSMemory;
 	/**
+	 * Whether to use Motorola like SMS folders.
+	 */
+	bool			MotorolaSMS;
+	/**
 	 * Is SIM SMS memory available ?
 	 */
 	GSM_AT_SMSMemory	SIMSMSMemory;
@@ -335,23 +339,23 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *s);
  * - \b \@i - Number, expects pointer to int.
  * - \b \@l - Number, expects pointer to long int.
  * - \b \@s - String, will be converted from phone encoding, stripping
- *   quotes, expects pointer to unsigned char and size of storage. 
+ *   quotes, expects pointer to unsigned char and size of storage.
  *   Encoding is somehow guessed.
  * - \b \@e - String, will be converted from phone encoding, stripping
  *   quotes, expects pointer to unsigned char and size of storage.
  *   No encoding guessing.
- * - \b \@S - String with Samsung specials (0x02 at beginning and 0x03 
+ * - \b \@S - String with Samsung specials (0x02 at beginning and 0x03
  *   at the end, encoded in utf-8), otherwise same as \@s.
- * - \b \@p - String with phone number hint for heuristics, otherwise 
+ * - \b \@p - String with phone number hint for heuristics, otherwise
  *   same as \@s.
- * - \b \@r - Raw string, no conversion will be done, only stripped 
+ * - \b \@r - Raw string, no conversion will be done, only stripped
  *   quotes, expects pointer to char and size of storage.
  * - \b \@d - Date, expects pointer to GSM_DateTime.
  * - \b \@\@ - \@ literal.
  * - \b \@0 - Ignore rest of input, same as .* regular expression.
  *
  * \par Special behaviour:
- * Any space is automatically treated as [[:space:]]* regular 
+ * Any space is automatically treated as [[:space:]]* regular
  * expression. So use space whenever some weird implementation in phone
  * can insert it space.
  *
