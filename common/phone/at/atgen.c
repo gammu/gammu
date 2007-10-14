@@ -1677,14 +1677,15 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, bool SIM, bool for_write, bool
 		if (Priv->SMSMemory == MEM_ME) return ERR_NONE;
 		if (Priv->PhoneSMSMemory == AT_NOTAVAILABLE) return ERR_NOTSUPPORTED;
 
-		req[9]  = 'M'; req[10] = 'E';
 		if (Priv->MotorolaSMS) {
+			req[9]  = 'M'; req[10] = 'T';
 			if (outbox) {
 				req[14] = 'O'; req[15] = 'M';
 			} else {
 				req[14] = 'I'; req[15] = 'M';
 			}
 		} else {
+			req[9]  = 'M'; req[10] = 'E';
 			req[14] = 'M'; req[15] = 'E';
 		}
 
