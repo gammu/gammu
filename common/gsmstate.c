@@ -333,6 +333,12 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	for (i=0;i<s->ConfigNum;i++) {
 		s->CurrentConfig		  = &s->Config[i];
 
+		/* Skip non configured sections */
+		if (s->CurrentConfig->Connection == NULL) {
+			smprintf_level(s, D_ERROR, "[Empty section    - %d]\n", i);
+			continue;
+		}
+
 		s->Speed			  = 0;
 		s->ReplyNum			  = ReplyNum;
 		s->Phone.Data.ModelInfo		  = GetModelData("unknown",NULL,NULL);
@@ -1072,10 +1078,10 @@ void GSM_DumpMessageLevel2_Text(GSM_StateMachine *s, unsigned const char *messag
 	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
 	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
 		smprintf(s, "%s", text);
-		smprintf(s, "type 0x%02X/length 0x%02X/%i", 
+		smprintf(s, "type 0x%02X/length 0x%02X/%i",
 				type, messagesize, messagesize);
 		DumpMessage(&s->di, message, messagesize);
-		if (messagesize == 0) 
+		if (messagesize == 0)
 			smprintf(s,"\n");
 	}
 }
@@ -1138,16 +1144,16 @@ int smprintf_level(GSM_StateMachine * s, GSM_DebugSeverity severity, const char 
 	char		buffer[2000];
 
 	if (severity == D_TEXT) {
-		if (s->di.dl != DL_TEXT && 
+		if (s->di.dl != DL_TEXT &&
 				s->di.dl != DL_TEXTALL &&
-				s->di.dl != DL_TEXTDATE && 
+				s->di.dl != DL_TEXTDATE &&
 				s->di.dl != DL_TEXTALLDATE) {
 			return 0;
 		}
 	} else if (severity == D_ERROR) {
-		if (s->di.dl != DL_TEXT && 
+		if (s->di.dl != DL_TEXT &&
 				s->di.dl != DL_TEXTALL &&
-				s->di.dl != DL_TEXTDATE && 
+				s->di.dl != DL_TEXTDATE &&
 				s->di.dl != DL_TEXTALLDATE &&
 				s->di.dl != DL_TEXTERROR &&
 				s->di.dl != DL_TEXTERRORDATE) {
