@@ -327,11 +327,8 @@ void OBEXGEN_FreeVars(GSM_StateMachine *s)
 	}
 	free(Priv->TodoLUID);
 	free(Priv->PbIndex);
-	free(Priv->PbData);
 	free(Priv->NoteIndex);
-	free(Priv->NoteData);
 	free(Priv->CalIndex);
-	free(Priv->CalData);
 	free(Priv->TodoIndex);
 	free(Priv->PbOffsets);
 	free(Priv->NoteOffsets);
