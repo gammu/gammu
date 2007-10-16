@@ -27,3 +27,8 @@ do_replace win32/gammu-binary/msvc06.mak/gammu.rc.in win32/gammu-binary/msvc06.m
 do_replace win32/gammu-binary/msvc2003.mak/gammu.rc.in win32/gammu-binary/msvc2003.mak/gammu.rc
 
 echo $version > VERSION
+
+sed -i -e '/^=========$/ a\
+' -e '/^=========$/ a\
+2007???? - '"$version"'
+' ChangeLog
