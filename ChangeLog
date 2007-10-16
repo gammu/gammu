@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.13.94
+20071016 - 1.13.94
 [-] * Fixed crash in wrong config handling (Debian bug #446781).
 [+] * Initial support for Motorola SMS implementation (bug #408).
 
