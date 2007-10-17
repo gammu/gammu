@@ -6,17 +6,17 @@
 #include <gammu-wap.h>
 #include <gammu-message.h>
 
-void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, int *Length, GSM_WAPSettings *settings, bool MMS);
+void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, size_t *Length, GSM_WAPSettings *settings, bool MMS);
 
 /* -------------------------------- WAP Bookmark --------------------------- */
 
-void 		NOKIA_EncodeWAPBookmarkSMSText	(unsigned char *Buffer, int *Length, GSM_WAPBookmark *bookmark);
+void 		NOKIA_EncodeWAPBookmarkSMSText	(unsigned char *Buffer, size_t *Length, GSM_WAPBookmark *bookmark);
 
 /* ------------------------------ MMS Indicator ---------------------------- */
 
-void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, int *Length, GSM_MMSIndicator Indicator);
+void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MMSIndicator Indicator);
 
-void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, int *Length, char *Text, char *URL);
+void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, size_t *Length, char *Text, char *URL);
 
 #endif
 

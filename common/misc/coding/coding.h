@@ -76,7 +76,7 @@ int 		DecodeBASE64			(const unsigned char *Input, unsigned char *Output, int Len
 /* ---------------------- DefaultAlphabet for SMS -------------------------- */
 void 		EncodeDefault			(unsigned char *dest, const unsigned char *src, int *len, bool UseExtensions, unsigned char *ExtraAlphabet);
 void		DecodeDefault			(unsigned char *dest, const unsigned char *src, int len, bool UseExtensions,  unsigned char *ExtraAlphabet);
-void 		FindDefaultAlphabetLen		(const unsigned char *src, int *srclen, int *smslen, int maxlen);
+void 		FindDefaultAlphabetLen		(const unsigned char *src, size_t *srclen, size_t *smslen, size_t maxlen);
 
 int GSM_PackSevenBitsToEight	(int offset, unsigned char *input, unsigned char *output, int length);
 int GSM_UnpackEightBitsToSeven	(int offset, int in_length, int out_length,

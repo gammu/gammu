@@ -569,7 +569,7 @@ typedef enum {
  *
  * \ingroup Todo
  */
-GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry * note,
+GSM_Error GSM_EncodeVTODO(char *Buffer, size_t *Length, GSM_ToDoEntry * note,
 			  bool header, GSM_VToDoVersion Version);
 
 /**
@@ -585,7 +585,7 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry * note,
  *
  * \ingroup Calendar
  */
-GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length,
+GSM_Error GSM_EncodeVCALENDAR(char *Buffer, size_t *Length,
 			      GSM_CalendarEntry * note, bool header,
 			      GSM_VCalendarVersion Version);
 

@@ -102,7 +102,7 @@ void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, 
 	}
 }
 
-void GSM_EncodeVCARD(char *Buffer, int *Length, GSM_MemoryEntry *pbk, bool header, GSM_VCardVersion Version)
+void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry *pbk, bool header, GSM_VCardVersion Version)
 {
 	int Name, Number, Group, i;
 	int firstname = -1, lastname = -1;

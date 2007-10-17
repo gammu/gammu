@@ -670,9 +670,9 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len, bool
 }
 
 /* You don't have to use ConvertTable here - 1 char is replaced there by 1 char */
-void FindDefaultAlphabetLen(const unsigned char *src, int *srclen, int *smslen, int maxlen)
+void FindDefaultAlphabetLen(const unsigned char *src, size_t *srclen, size_t *smslen, size_t maxlen)
 {
-	int 	current=0,j,i;
+	size_t 	current=0,j,i;
 	bool	FoundSpecial;
 
 	i = 0;
@@ -820,7 +820,7 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 		DecodeBCD(Buffer+1,Number+2, length);
 		break;
 	default:
-		dbgprintf("Default number %02x (%d %d %d %d|%d %d %d %d)\n",Number[1], 
+		dbgprintf("Default number %02x (%d %d %d %d|%d %d %d %d)\n",Number[1],
 				Number[1] & 0x80 ? 1 : 0,
 				Number[1] & 0x40 ? 1 : 0,
 				Number[1] & 0x20 ? 1 : 0,
@@ -869,7 +869,7 @@ int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool s
 		format = NUMBER_UNKNOWN_NUMBERING_PLAN_ISDN;
 	}
 	for (i = 0; i < length; i++) {
-		/* If there is something which can not be in normal 
+		/* If there is something which can not be in normal
 		 * number, mark it as alphanumberic */
 		if (strchr("0123456789*#pP", buffer[i]) == NULL) {
 			format = NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN;
