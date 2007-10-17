@@ -42,7 +42,7 @@ typedef struct {
 	/* Outgoing packets ID counter */
 	int			out_counter;
 	/* Expected size of incoming packet */
-	int			expected_size;
+	size_t			expected_size;
 	/* What is type of frame we expect next */
 	unsigned char		next_frame;
 	/* State of mobile, if we expect something (generally some ack) we set

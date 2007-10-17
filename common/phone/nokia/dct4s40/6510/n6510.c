@@ -465,7 +465,8 @@ static GSM_Error N6510_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 
 static GSM_Error N6510_ReplyGetSMSFolders(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int 			j, num = 0, pos;
+	int 			j, num = 0;
+	size_t pos;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	switch (msg.Buffer[3]) {
@@ -709,7 +710,7 @@ static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 
 static GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int			i,j;
+	size_t			i,j;
 	int			Width, Height;
 	unsigned char		output[500]; //output2[500];
 	GSM_Phone_Data		*Data = &s->Phone.Data;
@@ -2920,7 +2921,7 @@ static GSM_Error N6510_GetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtonesInf
 
 static GSM_Error N6510_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int 			tmp,i;
+	size_t 			tmp,i;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	smprintf(s, "Ringtone received\n");
@@ -3043,7 +3044,7 @@ static GSM_Error N6510_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Vol
 static GSM_Error N6510_ReplyGetPPM(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_Data 	*Data = &s->Phone.Data;
-	int		pos = 6,len;
+	size_t		pos = 6,len;
 
 	smprintf(s, "Received phone info\n");
 

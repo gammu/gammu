@@ -2240,7 +2240,7 @@ GSM_Error N71_65_DelCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 /* method 1 */
 GSM_Error N71_65_ReplyGetCalendarInfo1(GSM_Protocol_Message msg, GSM_StateMachine *s, GSM_NOKIACalToDoLocations *LastCalendar)
 {
-	int i,j=0;
+	size_t i,j=0;
 
 	smprintf(s, "Info with calendar notes locations received method 1\n");
 	while (LastCalendar->Location[j] != 0x00) j++;

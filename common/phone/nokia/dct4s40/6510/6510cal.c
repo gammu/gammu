@@ -19,7 +19,7 @@
 /* method 3 */
 GSM_Error N6510_ReplyGetCalendarInfo3(GSM_Protocol_Message msg, GSM_StateMachine *s, GSM_NOKIACalToDoLocations *Last)
 {
-	int i=0,j=0;
+	size_t i=0,j=0;
 
 	while (Last->Location[j] != 0x00) j++;
 	if (j >= GSM_MAXCALENDARTODONOTES) {

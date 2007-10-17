@@ -490,7 +490,7 @@ static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, char *File, bool 
  */
 static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int Pos=0, pos2, len2;
+	size_t Pos=0, pos2, len2;
 	char *NewLUID = NULL;
 	char *timestamp = NULL;
 	char *CC = NULL;
@@ -706,7 +706,7 @@ GSM_Error OBEXGEN_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, in
  */
 static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int old,Pos=0;
+	size_t old,Pos=0;
 
 	/* Non standard Sharp GX reply */
 	if (msg.Type == 0x80) {

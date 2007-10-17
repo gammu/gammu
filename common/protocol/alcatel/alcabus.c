@@ -97,7 +97,7 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 {
 	GSM_Protocol_ALCABUSData 	*d = &s->Protocol.Data.ALCABUS;
-	int				i;
+	size_t				i;
 	int				checksum = 0;
 
 	if (d->Msg.BufferUsed < d->Msg.Length + 1) {
