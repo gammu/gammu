@@ -14,9 +14,15 @@
 
 #ifdef GSM_ENABLE_BACKUP
 
-static void SaveLMBStartupEntry(FILE *file, GSM_Bitmap bitmap)
+/**
+ * Helper define to check error code from fwrite.
+ */
+#define chk_fwrite(data, size, count, file) \
+	if (fwrite(data, size, count, file) != count) goto fail;
+
+static GSM_Error SaveLMBStartupEntry(FILE *file, GSM_Bitmap bitmap)
 {
-	int 			count=13;
+	size_t count = 13;
 	GSM_Phone_Bitmap_Types 	Type;
 	/* Welcome note and logo header block */
 	char req[1000] = {
@@ -51,12 +57,15 @@ static void SaveLMBStartupEntry(FILE *file, GSM_Bitmap bitmap)
 	req[4]=(count-12)%256;
 	req[5]=(count-12)/256;
 
-	fwrite(req, 1, count, file);
+	chk_fwrite(req, 1, count, file);
+	return ERR_NONE;
+fail:
+	return ERR_WRITING_FILE;
 }
 
-static void SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
+static GSM_Error SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
 {
-	int count=12, textlen;
+	size_t count = 12, textlen;
 	char req[500] = {
 		'C','G','R',' ',    /*block identifier*/
 		00,00,              /*block data size*/
@@ -93,13 +102,16 @@ static void SaveLMBCallerEntry(FILE *file, GSM_Bitmap bitmap)
 	req[5]=(count-12)/256;
 	req[8]=bitmap.Location;
 
-	fwrite(req, 1, count, file);
+	chk_fwrite(req, 1, count, file);
+	return ERR_NONE;
+fail:
+	return ERR_WRITING_FILE;
 }
 
-void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
+GSM_Error SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 {
 	GSM_StateMachine 	fake_sm;
-	int 			count = 16, blocks;
+	size_t			count = 16, blocks;
 	char 			req[500] = {
 		'P','B','E','2', /*block identifier*/
 		00,00,           /*block data size*/
@@ -123,7 +135,10 @@ void SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 	req[9]=req[13] = (entry->Location >> 8);
 	if (entry->MemoryType==MEM_ME) req[10]=req[14]=2;
 
-	fwrite(req, 1, count, file);
+	chk_fwrite(req, 1, count, file);
+	return ERR_NONE;
+fail:
+	return ERR_WRITING_FILE;
 }
 
 GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
@@ -140,22 +155,24 @@ GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
 			00,00,           	 /*size of phonebook*/
 			14,              	 /*max length of each position*/
 			00,00,00,00,00};
+	GSM_Error error;
 
 
 	file = fopen(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	/* Write the header of the file. */
-	fwrite(LMBHeader, 1, sizeof(LMBHeader), file);
+	chk_fwrite(LMBHeader, 1, sizeof(LMBHeader), file);
 
 	if (backup->PhonePhonebook[0]!=NULL) {
 		PBKHeader[8]	= 2;		/* memory type=MEM_ME */
 		PBKHeader[12] 	= (unsigned char)(500 % 256);
 		PBKHeader[13] 	= 500 / 256;
-		fwrite(PBKHeader, 1, sizeof(PBKHeader), file);
+		chk_fwrite(PBKHeader, 1, sizeof(PBKHeader), file);
 		i=0;
 		while (backup->PhonePhonebook[i]!=NULL) {
-			SaveLMBPBKEntry(file, backup->PhonePhonebook[i]);
+			error = SaveLMBPBKEntry(file, backup->PhonePhonebook[i]);
+			if (error != ERR_NONE) return error;
 			i++;
 		}
 	}
@@ -164,24 +181,30 @@ GSM_Error SaveLMB(char *FileName, GSM_Backup *backup)
 		PBKHeader[12] 	= (unsigned char)(250 % 256);
 		PBKHeader[13] 	= 250 / 256;
 		PBKHeader[14]	= 0x16;		/* max size of one entry */
-		fwrite(PBKHeader, 1, sizeof(PBKHeader), file);
+		chk_fwrite(PBKHeader, 1, sizeof(PBKHeader), file);
 		i=0;
 		while (backup->SIMPhonebook[i]!=NULL) {
-			SaveLMBPBKEntry(file, backup->SIMPhonebook[i]);
+			error = SaveLMBPBKEntry(file, backup->SIMPhonebook[i]);
+			if (error != ERR_NONE) return error;
 			i++;
 		}
 	}
 	i=0;
 	while (backup->CallerLogos[i]!=NULL) {
-		SaveLMBCallerEntry(file, *backup->CallerLogos[i]);
+		error = SaveLMBCallerEntry(file, *backup->CallerLogos[i]);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	if (backup->StartupLogo!=NULL) {
-		SaveLMBStartupEntry(file, *backup->StartupLogo);
+		error = SaveLMBStartupEntry(file, *backup->StartupLogo);
+		if (error != ERR_NONE) return error;
 	}
 
 	fclose(file);
 	return ERR_NONE;
+fail:
+	fclose(file);
+	return ERR_WRITING_FILE;
 }
 
 static GSM_Error LoadLMBCallerEntry(unsigned char *buffer UNUSED, unsigned char *buffer2, GSM_Backup *backup)
@@ -353,15 +376,16 @@ GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
 	unsigned char 	buffer[12], buffer2[1000];
 	FILE		*file;
 	GSM_Error	error;
+	size_t blocksize;
 
 	file = fopen(FileName, "rb");
 	if (file == NULL) return(ERR_CANTOPENFILE);
 
 	/* Read the header of the file. */
-	fread(buffer, 1, 4, file);
+	if (fread(buffer, 1, 4, file) != 4) return ERR_FILENOTSUPPORTED;
 
 	/* while we have something to read */
-	while (fread(buffer, 1, 12, file)==12) {
+	while (fread(buffer, 1, 12, file) == 12) {
 #ifdef DEBUG
 		/* Info about block in the file */
 		dbgprintf("Block \"");
@@ -378,7 +402,8 @@ GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
 		dbgprintf(") - length %i\n", buffer[4]+buffer[5]*256);
 #endif
       		/* reading block data */
-		fread(buffer2, 1, buffer[4]+buffer[5]*256, file);
+		blocksize = buffer[4] + buffer[5] * 256;
+		if (fread(buffer2, 1, blocksize, file) != blocksize) return ERR_FILENOTSUPPORTED;
 
 #ifdef DEBUG
 		if (memcmp(buffer, "PBK ",4)==0) {

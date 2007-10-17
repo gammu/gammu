@@ -19,6 +19,12 @@
 
 #ifdef GSM_ENABLE_BACKUP
 
+/**
+ * Helper define to check error code from fwrite.
+ */
+#define chk_fwrite(data, size, count, file) \
+	if (fwrite(data, size, count, file) != count) goto fail;
+
 GSM_Error FindBackupChecksum(char *FileName, bool UseUnicode, char *checksum)
 {
 	INI_Section		*file_info, *h;
@@ -98,7 +104,7 @@ static unsigned char *ReadCFGText(INI_Section *cfg, unsigned char *section, unsi
 	}
 }
 
-static void SaveLinkedBackupText(FILE *file, char *myname, char *myvalue, bool UseUnicode)
+static GSM_Error SaveLinkedBackupText(FILE *file, char *myname, char *myvalue, bool UseUnicode)
 {
 	int 		w,current;
 	unsigned char 	buffer2[1000],buffer3[1000];
@@ -117,13 +123,16 @@ static void SaveLinkedBackupText(FILE *file, char *myname, char *myvalue, bool U
 		if (UseUnicode) {
 			sprintf(buffer3,"%s%02i = %s%c%c",myname,w,buffer2,13,10);
 			EncodeUnicode(buffer2,buffer3,strlen(buffer3));
-			fwrite(buffer2,1,strlen(buffer3)*2,file);
+			chk_fwrite(buffer2,1,strlen(buffer3)*2,file);
 		} else {
 			fprintf(file,"%s%02i = %s%c%c",myname,w,buffer2,13,10);
 		}
 		if (current == 0) break;
 		w++;
 	}
+	return ERR_NONE;
+fail:
+	return ERR_WRITING_FILE;
 }
 
 static void ReadLinkedBackupText(INI_Section *file_info, char *section, char *myname, char *myvalue, bool UseUnicode)
@@ -145,26 +154,26 @@ static void ReadLinkedBackupText(INI_Section *file_info, char *section, char *my
 	}
 }
 
-static void SaveBackupText(FILE *file, char *myname, char *myvalue, bool UseUnicode)
+static GSM_Error SaveBackupText(FILE *file, char *myname, char *myvalue, bool UseUnicode)
 {
 	unsigned char buffer[10000], buffer2[10000];
 
 	if (myname[0] == 0x00) {
 		if (UseUnicode) {
 			EncodeUnicode(buffer,myvalue,strlen(myvalue));
-			fwrite(buffer,1,strlen(myvalue)*2,file);
+			chk_fwrite(buffer,1,strlen(myvalue)*2,file);
 		} else fprintf(file,"%s",myvalue);
 	} else {
 		if (UseUnicode) {
 			sprintf(buffer,"%s = \"",myname);
 			EncodeUnicode(buffer2,buffer,strlen(buffer));
-			fwrite(buffer2,1,strlen(buffer)*2,file);
+			chk_fwrite(buffer2,1,strlen(buffer)*2,file);
 
-			fwrite(EncodeUnicodeSpecialChars(myvalue),1,UnicodeLength(EncodeUnicodeSpecialChars(myvalue))*2,file);
+			chk_fwrite(EncodeUnicodeSpecialChars(myvalue),1,UnicodeLength(EncodeUnicodeSpecialChars(myvalue))*2,file);
 
 			sprintf(buffer,"\"%c%c",13,10);
 			EncodeUnicode(buffer2,buffer,strlen(buffer));
-			fwrite(buffer2,1,strlen(buffer)*2,file);
+			chk_fwrite(buffer2,1,strlen(buffer)*2,file);
 		} else {
 			sprintf(buffer,"%s = \"%s\"%c%c",myname,EncodeSpecialChars(DecodeUnicodeString(myvalue)),13,10);
 			fprintf(file,"%s",buffer);
@@ -173,6 +182,9 @@ static void SaveBackupText(FILE *file, char *myname, char *myvalue, bool UseUnic
 			fprintf(file,"%sUnicode = %s%c%c",myname,buffer,13,10);
 		}
 	}
+	return ERR_NONE;
+fail:
+	return ERR_WRITING_FILE;
 }
 
 static bool ReadBackupText(INI_Section *file_info, char *section, char *myname, char *myvalue, bool UseUnicode)
@@ -218,230 +230,283 @@ static bool ReadBackupText(INI_Section *file_info, char *section, char *myname, 
 	return true;
 }
 
-static void SaveVCalDateTime(FILE *file, GSM_DateTime *dt, bool UseUnicode)
+static GSM_Error SaveVCalDateTime(FILE *file, GSM_DateTime *dt, bool UseUnicode)
 {
 	unsigned char 	buffer[100];
 	int		Length = 3;
 
 	sprintf(buffer, " = ");
 	SaveVCALDateTime(buffer, &Length, dt, NULL);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	return SaveBackupText(file, "", buffer, UseUnicode);
 }
 
-static void SaveVCalDate(FILE *file, GSM_DateTime *dt, bool UseUnicode)
+static GSM_Error SaveVCalDate(FILE *file, GSM_DateTime *dt, bool UseUnicode)
 {
 	unsigned char buffer[100];
 
 	sprintf(buffer, " = %04d%02d%02d%c%c", dt->Year, dt->Month, dt->Day,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	return SaveBackupText(file, "", buffer, UseUnicode);
 }
 
 /* ---------------------- backup files ------------------------------------- */
 
-static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
+static GSM_Error SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 {
 	bool	text;
 	char	buffer[1000];
 	int	j, i;
+	GSM_Error error;
 
 	sprintf(buffer,"Location = %03i%c%c",Pbk->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	for (j=0;j<Pbk->EntriesNum;j++) {
 		text = true;
 		switch (Pbk->Entries[j].EntryType) {
 			case PBK_Number_General:
 				sprintf(buffer,"Entry%02iType = NumberGeneral%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Number_Mobile:
 				sprintf(buffer,"Entry%02iType = NumberMobile%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Number_Work:
 				sprintf(buffer,"Entry%02iType = NumberWork%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Number_Fax:
 				sprintf(buffer,"Entry%02iType = NumberFax%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Number_Home:
 				sprintf(buffer,"Entry%02iType = NumberHome%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Number_Pager:
 				sprintf(buffer,"Entry%02iType = NumberPager%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Number_Other:
 				sprintf(buffer,"Entry%02iType = NumberOther%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_Note:
 				sprintf(buffer,"Entry%02iType = Note%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_Postal:
 				sprintf(buffer,"Entry%02iType = Postal%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_WorkPostal:
 				sprintf(buffer,"Entry%02iType = WorkPostal%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_Email:
 				sprintf(buffer,"Entry%02iType = Email%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_Email2:
 				sprintf(buffer,"Entry%02iType = Email2%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_URL:
 				sprintf(buffer,"Entry%02iType = URL%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_Name:
 				sprintf(buffer,"Entry%02iType = Name%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Caller_Group:
 				sprintf(buffer,"Entry%02iType = CallerGroup%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				text = false;
 				break;
 			case PBK_RingtoneID:
 				sprintf(buffer,"Entry%02iType = RingtoneID%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				text = false;
 				break;
 			case PBK_PictureID:
 				sprintf(buffer,"Entry%02iType = PictureID%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				text = false;
 				break;
 			case PBK_Text_PictureName:
 				sprintf(buffer,"Entry%02iType = PictureName%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_UserID:
 				sprintf(buffer,"Entry%02iType = UserID%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Category:
 				sprintf(buffer,"Entry%02iType = Category%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				text = false;
 				break;
 			case PBK_Private:
 				sprintf(buffer,"Entry%02iType = Private%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				text = false;
 				break;
 			case PBK_Text_LastName:
 				sprintf(buffer,"Entry%02iType = LastName%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_FirstName:
 				sprintf(buffer,"Entry%02iType = FirstName%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_NickName:
 				sprintf(buffer,"Entry%02iType = NickName%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_FormalName:
 				sprintf(buffer,"Entry%02iType = FormalName%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_Company:
 				sprintf(buffer,"Entry%02iType = Company%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_JobTitle:
 				sprintf(buffer,"Entry%02iType = JobTitle%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_StreetAddress:
 				sprintf(buffer,"Entry%02iType = Address%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_City:
 				sprintf(buffer,"Entry%02iType = City%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_State:
 				sprintf(buffer,"Entry%02iType = State%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_Zip:
 				sprintf(buffer,"Entry%02iType = Zip%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_Country:
 				sprintf(buffer,"Entry%02iType = Country%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_WorkStreetAddress:
 				sprintf(buffer,"Entry%02iType = WorkAddress%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_WorkCity:
 				sprintf(buffer,"Entry%02iType = WorkCity%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_WorkState:
 				sprintf(buffer,"Entry%02iType = WorkState%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_WorkZip:
 				sprintf(buffer,"Entry%02iType = WorkZip%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_WorkCountry:
 				sprintf(buffer,"Entry%02iType = WorkCountry%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_Custom1:
 				sprintf(buffer,"Entry%02iType = Custom1%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_Custom2:
 				sprintf(buffer,"Entry%02iType = Custom2%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_Custom3:
 				sprintf(buffer,"Entry%02iType = Custom3%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_Custom4:
 				sprintf(buffer,"Entry%02iType = Custom4%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Text_LUID:
 				sprintf(buffer,"Entry%02iType = LUID%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case PBK_Date:
 				sprintf(buffer,"Entry%02iType = Date%c%cEntry%02iText",j,13,10, j);
-				SaveBackupText(file, "", buffer, UseUnicode);
-				SaveVCalDate(file, &Pbk->Entries[j].Date, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
+				error = SaveVCalDate(file, &Pbk->Entries[j].Date, UseUnicode);
+				if (error != ERR_NONE) return error;
 				text = false;
 				break;
 			case PBK_LastModified:
 				sprintf(buffer,"Entry%02iType = LastModified%c%cEntry%02iText",j,13,10, j);
-				SaveBackupText(file, "", buffer, UseUnicode);
-				SaveVCalDateTime(file, &Pbk->Entries[j].Date, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
+				error = SaveVCalDateTime(file, &Pbk->Entries[j].Date, UseUnicode);
+				if (error != ERR_NONE) return error;
 				text = false;
 				break;
 			case PBK_CallLength:
@@ -449,12 +514,14 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				break;
 			case PBK_PushToTalkID:
 				sprintf(buffer,"Entry%02iType = PushToTalkID%c%c",j,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
         	}
 		if (text) {
 			sprintf(buffer,"Entry%02iText",j);
-			SaveBackupText(file,buffer,Pbk->Entries[j].Text, UseUnicode);
+			error = SaveBackupText(file,buffer,Pbk->Entries[j].Text, UseUnicode);
+			if (error != ERR_NONE) return error;
 		}
 		switch (Pbk->Entries[j].EntryType) {
 			case PBK_Number_General:
@@ -466,12 +533,14 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 			case PBK_Number_Pager:
 				if (Pbk->Entries[j].VoiceTag!=0) {
 					sprintf(buffer,"Entry%02iVoiceTag = %i%c%c",j,Pbk->Entries[j].VoiceTag,13,10);
-					SaveBackupText(file, "", buffer, UseUnicode);
+					error = SaveBackupText(file, "", buffer, UseUnicode);
+					if (error != ERR_NONE) return error;
 				}
 				i = 0;
 				while (Pbk->Entries[j].SMSList[i]!=0) {
 					sprintf(buffer,"Entry%02iSMSList%02i = %i%c%c",j,i,Pbk->Entries[j].SMSList[i],13,10);
-					SaveBackupText(file, "", buffer, UseUnicode);
+					error = SaveBackupText(file, "", buffer, UseUnicode);
+					if (error != ERR_NONE) return error;
 					i++;
 				}
 				break;
@@ -480,25 +549,36 @@ static void SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 		}
 	}
 	sprintf(buffer,"%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
 }
 
-static void SaveNoteEntry(FILE *file, GSM_NoteEntry *Note, bool UseUnicode)
+static GSM_Error SaveNoteEntry(FILE *file, GSM_NoteEntry *Note, bool UseUnicode)
 {
 	char buffer[1000];
+	GSM_Error error;
 
 	sprintf(buffer,"Location = %d%c%c", Note->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
-	SaveBackupText(file, "Text", Note->Text, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveBackupText(file, "Text", Note->Text, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer, "%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
 }
 
-static void SaveCalendarType(FILE *file, GSM_CalendarNoteType Type, bool UseUnicode)
+static GSM_Error SaveCalendarType(FILE *file, GSM_CalendarNoteType Type, bool UseUnicode)
 {
 	char	buffer[1000];
+	GSM_Error error;
 
-	SaveBackupText(file, "", "Type = ", UseUnicode);
+	error = SaveBackupText(file, "", "Type = ", UseUnicode);
+	if (error != ERR_NONE) return error;
 	switch (Type) {
 		case GSM_CAL_REMINDER 	: sprintf(buffer,"Reminder%c%c", 		13,10); break;
 		case GSM_CAL_CALL     	: sprintf(buffer,"Call%c%c", 			13,10); break;
@@ -529,116 +609,157 @@ static void SaveCalendarType(FILE *file, GSM_CalendarNoteType Type, bool UseUnic
                 case GSM_CAL_T_TRAV   	: sprintf(buffer,"Training/Travels%c%c", 	13,10); break;
                 case GSM_CAL_T_WINT   	: sprintf(buffer,"Training/WinterGames%c%c", 	13,10); break;
 	}
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
 }
 
-static void SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnicode)
+static GSM_Error SaveCalendarEntry(FILE *file, GSM_CalendarEntry *Note, bool UseUnicode)
 {
 	int 	i;
 	char	buffer[1000];
+	GSM_Error error;
 
 	sprintf(buffer,"Location = %d%c%c", Note->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
-	SaveCalendarType(file, Note->Type, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveCalendarType(file, Note->Type, UseUnicode);
+	if (error != ERR_NONE) return error;
 	for (i=0;i<Note->EntriesNum;i++) {
 		switch (Note->Entries[i].EntryType) {
 		case CAL_START_DATETIME:
-			SaveBackupText(file, "", "StartTime", UseUnicode);
-			SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			error = SaveBackupText(file, "", "StartTime", UseUnicode);
+			if (error != ERR_NONE) return error;
+			error = SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_END_DATETIME:
-			SaveBackupText(file, "", "StopTime", UseUnicode);
-			SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			error = SaveBackupText(file, "", "StopTime", UseUnicode);
+			if (error != ERR_NONE) return error;
+			error = SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_TONE_ALARM_DATETIME:
-			SaveBackupText(file, "", "Alarm", UseUnicode);
-			SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			error = SaveBackupText(file, "", "Alarm", UseUnicode);
+			if (error != ERR_NONE) return error;
+			error = SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			if (error != ERR_NONE) return error;
 			sprintf(buffer,"AlarmType = Tone%c%c",13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_SILENT_ALARM_DATETIME:
-			SaveBackupText(file, "", "Alarm", UseUnicode);
-			SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			error = SaveBackupText(file, "", "Alarm", UseUnicode);
+			if (error != ERR_NONE) return error;
+			error = SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			if (error != ERR_NONE) return error;
 			sprintf(buffer,"AlarmType = Silent%c%c",13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_LAST_MODIFIED:
-			SaveBackupText(file, "", "LastModified", UseUnicode);
-			SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			error = SaveBackupText(file, "", "LastModified", UseUnicode);
+			if (error != ERR_NONE) return error;
+			error = SaveVCalDateTime(file, &Note->Entries[i].Date, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_PRIVATE:
 			sprintf(buffer, "Private = %d%c%c",Note->Entries[i].Number,13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_LOCATION:
-			SaveBackupText(file, "EventLocation", Note->Entries[i].Text, UseUnicode);
+			error = SaveBackupText(file, "EventLocation", Note->Entries[i].Text, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_CONTACTID:
 			sprintf(buffer, "ContactID = %d%c%c",Note->Entries[i].Number,13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_TEXT:
-			SaveBackupText(file, "Text", Note->Entries[i].Text, UseUnicode);
+			error = SaveBackupText(file, "Text", Note->Entries[i].Text, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_DESCRIPTION:
-			SaveBackupText(file, "Description", Note->Entries[i].Text, UseUnicode);
+			error = SaveBackupText(file, "Description", Note->Entries[i].Text, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_LUID:
-			SaveBackupText(file, "LUID", Note->Entries[i].Text, UseUnicode);
+			error = SaveBackupText(file, "LUID", Note->Entries[i].Text, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_PHONE:
-			SaveBackupText(file, "Phone", Note->Entries[i].Text, UseUnicode);
+			error = SaveBackupText(file, "Phone", Note->Entries[i].Text, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_REPEAT_STOPDATE:
-			SaveBackupText(file, "", "RepeatStopDate", UseUnicode);
-			SaveVCalDate(file, &Note->Entries[i].Date, UseUnicode);
+			error = SaveBackupText(file, "", "RepeatStopDate", UseUnicode);
+			if (error != ERR_NONE) return error;
+			error = SaveVCalDate(file, &Note->Entries[i].Date, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_REPEAT_STARTDATE:
-			SaveBackupText(file, "", "RepeatStartDate", UseUnicode);
-			SaveVCalDate(file, &Note->Entries[i].Date, UseUnicode);
+			error = SaveBackupText(file, "", "RepeatStartDate", UseUnicode);
+			if (error != ERR_NONE) return error;
+			error = SaveVCalDate(file, &Note->Entries[i].Date, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_REPEAT_DAYOFWEEK:
 			sprintf(buffer, "RepeatDayOfWeek = %d%c%c",Note->Entries[i].Number,13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_REPEAT_DAY:
 			sprintf(buffer, "RepeatDay = %d%c%c",Note->Entries[i].Number,13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_REPEAT_WEEKOFMONTH:
 			sprintf(buffer, "RepeatWeekOfMonth = %d%c%c",Note->Entries[i].Number,13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_REPEAT_MONTH:
 			sprintf(buffer, "RepeatMonth = %d%c%c",Note->Entries[i].Number,13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_REPEAT_FREQUENCY:
 			sprintf(buffer, "RepeatFrequency = %d%c%c",Note->Entries[i].Number,13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_REPEAT_COUNT:
 			sprintf(buffer, "RepeatCount = %d%c%c",Note->Entries[i].Number,13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case CAL_REPEAT_DAYOFYEAR:
 			sprintf(buffer, "RepeatDayOfYear = %d%c%c",Note->Entries[i].Number,13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		}
 	}
 	sprintf(buffer, "%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
 }
 
-static void SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, bool UseUnicode)
+static GSM_Error SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, bool UseUnicode)
 {
 	int 	i;
 	char 	buffer[10000];
+	GSM_Error error;
 
 	if (settings->Active) {
 		sprintf(buffer,"Active = Yes%c%c",13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 	switch (settings->ActiveBearer) {
 		case WAPSETTINGS_BEARER_SMS : sprintf(buffer,"Bearer = SMS%c%c",13,10);  break;
@@ -646,79 +767,101 @@ static void SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, boo
 		case WAPSETTINGS_BEARER_DATA: sprintf(buffer,"Bearer = Data%c%c",13,10); break;
 		case WAPSETTINGS_BEARER_USSD: sprintf(buffer,"Bearer = USSD%c%c",13,10);
 	}
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	if (settings->ReadOnly) {
 		sprintf(buffer,"ReadOnly = Yes%c%c",13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 	sprintf(buffer,"Proxy");
-	SaveBackupText(file, buffer, settings->Proxy, UseUnicode);
+	error = SaveBackupText(file, buffer, settings->Proxy, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"ProxyPort = %i%c%c",settings->ProxyPort,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"Proxy2");
-	SaveBackupText(file, buffer, settings->Proxy2, UseUnicode);
+	error = SaveBackupText(file, buffer, settings->Proxy2, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"Proxy2Port = %i%c%c",settings->Proxy2Port,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	for (i=0;i<settings->Number;i++) {
 		sprintf(buffer,"Title%02i",i);
-		SaveBackupText(file, buffer, settings->Settings[i].Title, UseUnicode);
+		error = SaveBackupText(file, buffer, settings->Settings[i].Title, UseUnicode);
+		if (error != ERR_NONE) return error;
 		sprintf(buffer,"HomePage%02i",i);
-		SaveBackupText(file, buffer, settings->Settings[i].HomePage, UseUnicode);
+		error = SaveBackupText(file, buffer, settings->Settings[i].HomePage, UseUnicode);
+		if (error != ERR_NONE) return error;
 		if (settings->Settings[i].IsContinuous) {
 			sprintf(buffer,"Type%02i = Continuous%c%c",i,13,10);
 		} else {
 			sprintf(buffer,"Type%02i = Temporary%c%c",i,13,10);
 		}
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
 		if (settings->Settings[i].IsSecurity) {
 			sprintf(buffer,"Security%02i = On%c%c",i,13,10);
 		} else {
 			sprintf(buffer,"Security%02i = Off%c%c",i,13,10);
 		}
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
 		switch (settings->Settings[i].Bearer) {
 			case WAPSETTINGS_BEARER_SMS:
 				sprintf(buffer,"Bearer%02i = SMS%c%c",i,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				sprintf(buffer,"Server%02i",i);
-				SaveBackupText(file, buffer, settings->Settings[i].Server, UseUnicode);
+				error = SaveBackupText(file, buffer, settings->Settings[i].Server, UseUnicode);
+				if (error != ERR_NONE) return error;
 				sprintf(buffer,"Service%02i",i);
-				SaveBackupText(file, buffer, settings->Settings[i].Service, UseUnicode);
+				error = SaveBackupText(file, buffer, settings->Settings[i].Service, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case WAPSETTINGS_BEARER_GPRS:
 				sprintf(buffer,"Bearer%02i = GPRS%c%c",i,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				sprintf(buffer,"IP%02i",i);
-				SaveBackupText(file, buffer, settings->Settings[i].IPAddress, UseUnicode);
+				error = SaveBackupText(file, buffer, settings->Settings[i].IPAddress, UseUnicode);
+				if (error != ERR_NONE) return error;
 			case WAPSETTINGS_BEARER_DATA:
 				if (settings->Settings[i].Bearer == WAPSETTINGS_BEARER_DATA) {
 					sprintf(buffer,"Bearer%02i = Data%c%c",i,13,10);
-					SaveBackupText(file, "", buffer, UseUnicode);
+					error = SaveBackupText(file, "", buffer, UseUnicode);
+					if (error != ERR_NONE) return error;
 					if (settings->Settings[i].IsISDNCall) {
 						sprintf(buffer,"CallType%02i = ISDN%c%c",i,13,10);
 					} else {
 						sprintf(buffer,"CallType%02i = Analogue%c%c",i,13,10);
 					}
-					SaveBackupText(file, "", buffer, UseUnicode);
+					error = SaveBackupText(file, "", buffer, UseUnicode);
+					if (error != ERR_NONE) return error;
 					sprintf(buffer,"IP%02i",i);
-					SaveBackupText(file, buffer, settings->Settings[i].IPAddress, UseUnicode);
+					error = SaveBackupText(file, buffer, settings->Settings[i].IPAddress, UseUnicode);
+					if (error != ERR_NONE) return error;
 				}
 				sprintf(buffer,"Number%02i",i);
-				SaveBackupText(file, buffer, settings->Settings[i].DialUp, UseUnicode);
+				error = SaveBackupText(file, buffer, settings->Settings[i].DialUp, UseUnicode);
+				if (error != ERR_NONE) return error;
 				if (settings->Settings[i].ManualLogin) {
 					sprintf(buffer,"Login%02i = Manual%c%c",i,13,10);
 				} else {
 					sprintf(buffer,"Login%02i = Automatic%c%c",i,13,10);
 				}
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				if (settings->Settings[i].IsNormalAuthentication) {
 					sprintf(buffer,"Authentication%02i = Normal%c%c",i,13,10);
 				} else {
 					sprintf(buffer,"Authentication%02i = Secure%c%c",i,13,10);
 				}
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				switch (settings->Settings[i].Speed) {
 					case WAPSETTINGS_SPEED_9600 : sprintf(buffer,"CallSpeed%02i = 9600%c%c" ,i,13,10); break;
 					case WAPSETTINGS_SPEED_14400: sprintf(buffer,"CallSpeed%02i = 14400%c%c",i,13,10); break;
@@ -728,83 +871,110 @@ static void SaveWAPSettingsEntry(FILE *file, GSM_MultiWAPSettings *settings, boo
 					case WAPSETTINGS_SPEED_9600 :
 					case WAPSETTINGS_SPEED_14400:
 					case WAPSETTINGS_SPEED_AUTO :
-						SaveBackupText(file, "", buffer, UseUnicode);
+						error = SaveBackupText(file, "", buffer, UseUnicode);
+						if (error != ERR_NONE) return error;
 					default:
 						break;
 				}
 				sprintf(buffer,"User%02i",i);
-				SaveBackupText(file, buffer, settings->Settings[i].User, UseUnicode);
+				error = SaveBackupText(file, buffer, settings->Settings[i].User, UseUnicode);
+				if (error != ERR_NONE) return error;
 				sprintf(buffer,"Password%02i",i);
-				SaveBackupText(file, buffer, settings->Settings[i].Password, UseUnicode);
+				error = SaveBackupText(file, buffer, settings->Settings[i].Password, UseUnicode);
+				if (error != ERR_NONE) return error;
 				break;
 			case WAPSETTINGS_BEARER_USSD:
 				sprintf(buffer,"Bearer%02i = USSD%c%c",i,13,10);
-				SaveBackupText(file, "", buffer, UseUnicode);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 				sprintf(buffer,"ServiceCode%02i",i);
-				SaveBackupText(file, buffer, settings->Settings[i].Code, UseUnicode);
+				error = SaveBackupText(file, buffer, settings->Settings[i].Code, UseUnicode);
+				if (error != ERR_NONE) return error;
 				if (settings->Settings[i].IsIP) {
 					sprintf(buffer,"IP%02i",i);
 				} else {
 					sprintf(buffer,"Number%02i",i);
 				}
-				SaveBackupText(file, buffer, settings->Settings[i].Service, UseUnicode);
+				error = SaveBackupText(file, buffer, settings->Settings[i].Service, UseUnicode);
+				if (error != ERR_NONE) return error;
 		}
 		sprintf(buffer,"%c%c",13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
+	return ERR_NONE;
 }
 
-static void SaveChatSettingsEntry(FILE *file, GSM_ChatSettings *settings, bool UseUnicode)
+static GSM_Error SaveChatSettingsEntry(FILE *file, GSM_ChatSettings *settings, bool UseUnicode)
 {
 	char buffer[10000];
+	GSM_Error error;
 
 	sprintf(buffer,"HomePage");
-	SaveBackupText(file, buffer, settings->HomePage, UseUnicode);
+	error = SaveBackupText(file, buffer, settings->HomePage, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"User");
-	SaveBackupText(file, buffer, settings->User, UseUnicode);
+	error = SaveBackupText(file, buffer, settings->User, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"Password");
-	SaveBackupText(file, buffer, settings->Password, UseUnicode);
-	SaveWAPSettingsEntry(file, &settings->Connection, UseUnicode);
+	error = SaveBackupText(file, buffer, settings->Password, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveWAPSettingsEntry(file, &settings->Connection, UseUnicode);
+	if (error != ERR_NONE) return error;
+	return ERR_NONE;
 }
 
-static void SaveSyncMLSettingsEntry(FILE *file, GSM_SyncMLSettings *settings, bool UseUnicode)
+static GSM_Error SaveSyncMLSettingsEntry(FILE *file, GSM_SyncMLSettings *settings, bool UseUnicode)
 {
 	char buffer[10000];
+	GSM_Error error;
 
 	sprintf(buffer,"User");
-	SaveBackupText(file, buffer, settings->User, UseUnicode);
+	error = SaveBackupText(file, buffer, settings->User, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"Password");
-	SaveBackupText(file, buffer, settings->Password, UseUnicode);
+	error = SaveBackupText(file, buffer, settings->Password, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"PhonebookDB");
-	SaveBackupText(file, buffer, settings->PhonebookDataBase, UseUnicode);
+	error = SaveBackupText(file, buffer, settings->PhonebookDataBase, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"CalendarDB");
-	SaveBackupText(file, buffer, settings->CalendarDataBase, UseUnicode);
+	error = SaveBackupText(file, buffer, settings->CalendarDataBase, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"Server");
-	SaveBackupText(file, buffer, settings->Server, UseUnicode);
+	error = SaveBackupText(file, buffer, settings->Server, UseUnicode);
+	if (error != ERR_NONE) return error;
 	if (settings->SyncPhonebook) {
 		sprintf(buffer,"SyncPhonebook = True%c%c",13,10);
 	} else {
 		sprintf(buffer,"SyncPhonebook = False%c%c",13,10);
 	}
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	if (settings->SyncCalendar) {
 		sprintf(buffer,"SyncCalendar = True%c%c",13,10);
 	} else {
 		sprintf(buffer,"SyncCalendar = False%c%c",13,10);
 	}
-	SaveBackupText(file, "", buffer, UseUnicode);
-	SaveWAPSettingsEntry(file, &settings->Connection, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveWAPSettingsEntry(file, &settings->Connection, UseUnicode);
+	if (error != ERR_NONE) return error;
+	return ERR_NONE;
 }
 
-static void SaveBitmapEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
+static GSM_Error SaveBitmapEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
 {
 	unsigned char 	buffer[10000],buffer2[10000];
 	int		x,y;
+	GSM_Error error;
 
 	sprintf(buffer,"Width = %i%c%c",bitmap->BitmapWidth,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"Height = %i%c%c",bitmap->BitmapHeight,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	for (y=0;y<bitmap->BitmapHeight;y++) {
 		for (x=0;x<bitmap->BitmapWidth;x++) {
 			buffer[x] = ' ';
@@ -812,81 +982,117 @@ static void SaveBitmapEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
 		}
 		buffer[bitmap->BitmapWidth] = 0;
 		sprintf(buffer2,"Bitmap%02i = \"%s\"%c%c",y,buffer,13,10);
-		SaveBackupText(file, "", buffer2, UseUnicode);
+		error = SaveBackupText(file, "", buffer2, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
+	return ERR_NONE;
 }
 
-static void SaveCallerEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
+static GSM_Error SaveCallerEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
 {
 	unsigned char buffer[1000];
+	GSM_Error error;
 
 	sprintf(buffer,"Location = %03i%c%c",bitmap->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
-	if (!bitmap->DefaultName) SaveBackupText(file, "Name", bitmap->Text, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+	if (!bitmap->DefaultName) {
+		error = SaveBackupText(file, "Name", bitmap->Text, UseUnicode);
+		if (error != ERR_NONE) return error;
+	}
 	if (!bitmap->DefaultRingtone) 	{
 		if (bitmap->FileSystemRingtone) {
 			sprintf(buffer,"FileRingtone = %02x%c%c",bitmap->RingtoneID,13,10);
 		} else {
 			sprintf(buffer,"Ringtone = %02x%c%c",bitmap->RingtoneID,13,10);
 		}
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 	if (bitmap->BitmapEnabled) {
 		sprintf(buffer,"Enabled = True%c%c",13,10);
 	} else {
 		sprintf(buffer,"Enabled = False%c%c",13,10);
 	}
-	SaveBackupText(file, "", buffer, UseUnicode);
-	if (!bitmap->DefaultBitmap) SaveBitmapEntry(file, bitmap, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+	if (!bitmap->DefaultBitmap) {
+		error = SaveBitmapEntry(file, bitmap, UseUnicode);
+		if (error != ERR_NONE) return error;
+	}
 	sprintf(buffer,"%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
 }
 
-static void SaveWAPBookmarkEntry(FILE *file, GSM_WAPBookmark *bookmark, bool UseUnicode)
+static GSM_Error SaveWAPBookmarkEntry(FILE *file, GSM_WAPBookmark *bookmark, bool UseUnicode)
 {
 	unsigned char buffer[1000];
+	GSM_Error error;
 
-	SaveBackupText(file, "URL", bookmark->Address, UseUnicode);
-	SaveBackupText(file, "Title", bookmark->Title, UseUnicode);
+	error = SaveBackupText(file, "URL", bookmark->Address, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveBackupText(file, "Title", bookmark->Title, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
 }
 
-static void SaveStartupEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
+static GSM_Error SaveStartupEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
 {
 	unsigned char buffer[1000];
+	GSM_Error error;
 
 	sprintf(buffer,"[Startup]%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	if (bitmap->Type == GSM_WelcomeNote_Text) {
-		SaveBackupText(file, "Text", bitmap->Text, UseUnicode);
+		error = SaveBackupText(file, "Text", bitmap->Text, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 	if (bitmap->Type == GSM_StartupLogo) {
-		SaveBitmapEntry(file, bitmap, UseUnicode);
+		error = SaveBitmapEntry(file, bitmap, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 	sprintf(buffer,"%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
 }
 
-static void SaveSMSCEntry(FILE *file, GSM_SMSC *SMSC, bool UseUnicode)
+static GSM_Error SaveSMSCEntry(FILE *file, GSM_SMSC *SMSC, bool UseUnicode)
 {
 	unsigned char buffer[1000];
+	GSM_Error error;
 
 	sprintf(buffer,"Location = %03i%c%c",SMSC->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
-	SaveBackupText(file, "Name", SMSC->Name, UseUnicode);
-	SaveBackupText(file, "Number", SMSC->Number, UseUnicode);
-	SaveBackupText(file, "DefaultNumber", SMSC->DefaultNumber, UseUnicode);
-	SaveBackupText(file, "", "Format = ", UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveBackupText(file, "Name", SMSC->Name, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveBackupText(file, "Number", SMSC->Number, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveBackupText(file, "DefaultNumber", SMSC->DefaultNumber, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveBackupText(file, "", "Format = ", UseUnicode);
+	if (error != ERR_NONE) return error;
 	switch (SMSC->Format) {
 		case SMS_FORMAT_Text	: sprintf(buffer,"Text");  break;
 		case SMS_FORMAT_Fax	: sprintf(buffer,"Fax");   break;
 		case SMS_FORMAT_Email	: sprintf(buffer,"Email"); break;
 		case SMS_FORMAT_Pager	: sprintf(buffer,"Pager"); break;
 	}
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"%c%cValidity = ",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	switch (SMSC->Validity.Relative) {
 		case SMS_VALID_1_Hour	: sprintf(buffer, "1hour"	); break;
 		case SMS_VALID_6_Hours 	: sprintf(buffer, "6hours"	); break;
@@ -896,23 +1102,30 @@ static void SaveSMSCEntry(FILE *file, GSM_SMSC *SMSC, bool UseUnicode)
 		case SMS_VALID_Max_Time	:
 		default			: sprintf(buffer,"MaximumTime"	); break;
 	}
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"%c%c%c%c",13,10,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
 }
 
-static void SaveRingtoneEntry(FILE *file, GSM_Ringtone *ringtone, bool UseUnicode)
+static GSM_Error SaveRingtoneEntry(FILE *file, GSM_Ringtone *ringtone, bool UseUnicode)
 {
 	unsigned char *buffer;
+	GSM_Error error;
 
 	buffer = (unsigned char *)malloc(32 > 2 * ringtone->NokiaBinary.Length ?
 			32 : 2 * ringtone->NokiaBinary.Length);
 	if (buffer == NULL)
-		return;
+		return ERR_MOREMEMORY;
 
 	sprintf(buffer,"Location = %i%c%c",ringtone->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
-	SaveBackupText(file, "Name", ringtone->Name, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveBackupText(file, "Name", ringtone->Name, UseUnicode);
+	if (error != ERR_NONE) return error;
 	switch (ringtone->Format) {
 	case RING_NOKIABINARY:
 		EncodeHexBin(buffer,ringtone->NokiaBinary.Frame,ringtone->NokiaBinary.Length);
@@ -930,32 +1143,45 @@ static void SaveRingtoneEntry(FILE *file, GSM_Ringtone *ringtone, bool UseUnicod
 		break;
 	}
 	sprintf(buffer,"%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 
 	free(buffer);
+
+	return ERR_NONE;
 }
 
-static void SaveOperatorEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
+static GSM_Error SaveOperatorEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
 {
 	unsigned char buffer[1000];
+	GSM_Error error;
 
 	sprintf(buffer,"[Operator]%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"Network = \"%s\"%c%c", bitmap->NetworkCode,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
-	SaveBitmapEntry(file, bitmap, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveBitmapEntry(file, bitmap, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
 }
 
-static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
+static GSM_Error SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
 {
 	unsigned char 	buffer[1000];
     	int 		j;
+	GSM_Error error;
 
 	sprintf(buffer,"Location = %i%c%c",ToDo->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
-	SaveCalendarType(file, ToDo->Type, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveCalendarType(file, ToDo->Type, UseUnicode);
+	if (error != ERR_NONE) return error;
 	switch (ToDo->Priority) {
 	case GSM_Priority_High:
 		sprintf(buffer,"Priority = High%c%c",13,10);
@@ -969,89 +1195,117 @@ static void SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
 	default:
 		break;
 	}
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 
 	for (j=0;j<ToDo->EntriesNum;j++) {
         switch (ToDo->Entries[j].EntryType) {
 	    case TODO_END_DATETIME:
-		SaveBackupText(file, "", "DueTime", UseUnicode);
-                SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
+		error = SaveBackupText(file, "", "DueTime", UseUnicode);
+		if (error != ERR_NONE) return error;
+                error = SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
+		if (error != ERR_NONE) return error;
                 break;
             case TODO_COMPLETED:
 	        sprintf(buffer,"Completed = %s%c%c",ToDo->Entries[j].Number == 1 ? "yes" : "no" ,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
                 break;
             case TODO_ALARM_DATETIME:
-		SaveBackupText(file, "", "Alarm", UseUnicode);
-                SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
+		error = SaveBackupText(file, "", "Alarm", UseUnicode);
+		if (error != ERR_NONE) return error;
+                error = SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
+		if (error != ERR_NONE) return error;
                 break;
             case TODO_SILENT_ALARM_DATETIME:
-		SaveBackupText(file, "", "SilentAlarm", UseUnicode);
-                SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
+		error = SaveBackupText(file, "", "SilentAlarm", UseUnicode);
+		if (error != ERR_NONE) return error;
+                error = SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
+		if (error != ERR_NONE) return error;
                 break;
 	    case TODO_LAST_MODIFIED:
-		SaveBackupText(file, "", "LastModified", UseUnicode);
-		SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
+		error = SaveBackupText(file, "", "LastModified", UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
+		if (error != ERR_NONE) return error;
 		break;
             case TODO_TEXT:
-	        SaveBackupText(file, "Text", ToDo->Entries[j].Text, UseUnicode);
+	        error = SaveBackupText(file, "Text", ToDo->Entries[j].Text, UseUnicode);
+		if (error != ERR_NONE) return error;
                 break;
             case TODO_PRIVATE:
 	        sprintf(buffer,"Private = %i%c%c",ToDo->Entries[j].Number,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
                 break;
             case TODO_CATEGORY:
 	        sprintf(buffer,"Category = %i%c%c",ToDo->Entries[j].Number,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
                 break;
             case TODO_CONTACTID:
 	        sprintf(buffer,"ContactID = %i%c%c",ToDo->Entries[j].Number,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
                 break;
             case TODO_PHONE:
-	        SaveBackupText(file, "Phone", ToDo->Entries[j].Text, UseUnicode);
+	        error = SaveBackupText(file, "Phone", ToDo->Entries[j].Text, UseUnicode);
+		if (error != ERR_NONE) return error;
                 break;
             case TODO_DESCRIPTION:
-	        SaveBackupText(file, "Description", ToDo->Entries[j].Text, UseUnicode);
+	        error = SaveBackupText(file, "Description", ToDo->Entries[j].Text, UseUnicode);
+		if (error != ERR_NONE) return error;
                 break;
             case TODO_LOCATION:
-	        SaveBackupText(file, "Location", ToDo->Entries[j].Text, UseUnicode);
+	        error = SaveBackupText(file, "Location", ToDo->Entries[j].Text, UseUnicode);
+		if (error != ERR_NONE) return error;
                 break;
 	    case TODO_LUID:
-		SaveBackupText(file, "LUID", ToDo->Entries[j].Text, UseUnicode);
+		error = SaveBackupText(file, "LUID", ToDo->Entries[j].Text, UseUnicode);
+		if (error != ERR_NONE) return error;
 		break;
         }
     }
     sprintf(buffer,"%c%c",13,10);
-    SaveBackupText(file, "", buffer, UseUnicode);
+    error = SaveBackupText(file, "", buffer, UseUnicode);
+    if (error != ERR_NONE) return error;
+
+    return ERR_NONE;
 }
 
-static void SaveProfileEntry(FILE *file, GSM_Profile *Profile, bool UseUnicode)
+static GSM_Error SaveProfileEntry(FILE *file, GSM_Profile *Profile, bool UseUnicode)
 {
 	int			j,k;
 	bool			special;
 	unsigned char 		buffer[1000];
+	GSM_Error error;
 
 	sprintf(buffer,"Location = %i%c%c",Profile->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
-	SaveBackupText(file, "Name",Profile->Name, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+	error = SaveBackupText(file, "Name",Profile->Name, UseUnicode);
+	if (error != ERR_NONE) return error;
 
 	if (Profile->DefaultName) {
 		sprintf(buffer,"DefaultName = true%c%c",13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 	if (Profile->HeadSetProfile) {
 		sprintf(buffer,"HeadSetProfile = true%c%c",13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 	if (Profile->CarKitProfile) {
 		sprintf(buffer,"CarKitProfile = true%c%c",13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 
 	for (j=0;j<Profile->FeaturesNumber;j++) {
 		sprintf(buffer,"Feature%02i = ",j);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
 		special = false;
 		switch (Profile->FeatureID[j]) {
 		case Profile_MessageToneID:
@@ -1062,31 +1316,39 @@ static void SaveProfileEntry(FILE *file, GSM_Profile *Profile, bool UseUnicode)
 			} else {
 				sprintf(buffer,"MessageToneID%c%c",13,10);
 			}
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			sprintf(buffer,"Value%02i = %i%c%c",j,Profile->FeatureValue[j],13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
-			break;
-		case Profile_CallerGroups:
-			special = true;
-			sprintf(buffer,"CallerGroups%c%c",13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
+				break;
+			case Profile_CallerGroups:
+				special = true;
+				sprintf(buffer,"CallerGroups%c%c",13,10);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
 			sprintf(buffer,"Value%02i = ",j);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			for (k=0;k<5;k++) {
 				if (Profile->CallerGroups[k]) {
 					sprintf(buffer,"%i",k);
-					SaveBackupText(file, "", buffer, UseUnicode);
+					error = SaveBackupText(file, "", buffer, UseUnicode);
+					if (error != ERR_NONE) return error;
 				}
 			}
 			sprintf(buffer,"%c%c",13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case Profile_ScreenSaverNumber:
 			special = true;
 			sprintf(buffer,"ScreenSaverNumber%c%c",13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			sprintf(buffer,"Value%02i = %i%c%c",j,Profile->FeatureValue[j],13,10);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			break;
 		case Profile_CallAlert  	: sprintf(buffer,"IncomingCallAlert%c%c",13,10); 		break;
 		case Profile_RingtoneVolume 	: sprintf(buffer,"RingtoneVolume%c%c",13,10); 			break;
@@ -1101,9 +1363,11 @@ static void SaveProfileEntry(FILE *file, GSM_Profile *Profile, bool UseUnicode)
 		default				: special = true;
 		}
 		if (!special) {
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			sprintf(buffer,"Value%02i = ",j);
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 			switch (Profile->FeatureValue[j]) {
 			case PROFILE_VOLUME_LEVEL1 		:
 			case PROFILE_KEYPAD_LEVEL1 		: sprintf(buffer,"Level1%c%c",13,10); 		break;
@@ -1145,40 +1409,59 @@ static void SaveProfileEntry(FILE *file, GSM_Profile *Profile, bool UseUnicode)
 			case PROFILE_SAVER_TIMEOUT_10MIN 	: sprintf(buffer,"10Minutes%c%c",13,10);	break;
 			default					: sprintf(buffer,"UNKNOWN%c%c",13,10);
 			}
-			SaveBackupText(file, "", buffer, UseUnicode);
+			error = SaveBackupText(file, "", buffer, UseUnicode);
+			if (error != ERR_NONE) return error;
 		}
 	}
 	sprintf(buffer,"%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
 }
 
-static void SaveFMStationEntry(FILE *file, GSM_FMStation *FMStation, bool UseUnicode)
+static GSM_Error SaveFMStationEntry(FILE *file, GSM_FMStation *FMStation, bool UseUnicode)
 {
 	unsigned char buffer[1000];
+	GSM_Error error;
 
  	sprintf(buffer,"Location = %i%c%c",FMStation->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
-        SaveBackupText(file, "StationName", FMStation->StationName, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+        error = SaveBackupText(file, "StationName", FMStation->StationName, UseUnicode);
+	if (error != ERR_NONE) return error;
         sprintf(buffer,"Frequency = %f%c%c",FMStation->Frequency,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
 }
 
-static void SaveGPRSPointEntry(FILE *file, GSM_GPRSAccessPoint *GPRSPoint, bool UseUnicode)
+static GSM_Error SaveGPRSPointEntry(FILE *file, GSM_GPRSAccessPoint *GPRSPoint, bool UseUnicode)
 {
 	unsigned char buffer[1000];
+	GSM_Error error;
 
  	sprintf(buffer,"Location = %i%c%c",GPRSPoint->Location,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
-        SaveBackupText(file, "Name", GPRSPoint->Name, UseUnicode);
-        SaveBackupText(file, "URL", GPRSPoint->URL, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+        error = SaveBackupText(file, "Name", GPRSPoint->Name, UseUnicode);
+	if (error != ERR_NONE) return error;
+        error = SaveBackupText(file, "URL", GPRSPoint->URL, UseUnicode);
+	if (error != ERR_NONE) return error;
 	if (GPRSPoint->Active) {
 		sprintf(buffer,"Active = Yes%c%c",13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 	sprintf(buffer,"%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
+
+	return ERR_NONE;
 }
 
 GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
@@ -1186,156 +1469,202 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	int 		i;
 	unsigned char 	buffer[1000],checksum[200];
 	FILE 		*file;
+	GSM_Error error;
 
 	file = fopen(FileName, "wb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	if (UseUnicode) {
 		sprintf(buffer,"%c%c", 0xFE, 0xFF);
-		SaveBackupText(file, "", buffer, false);
+		error = SaveBackupText(file, "", buffer, false);
+		if (error != ERR_NONE) return error;
 	}
 
 	sprintf(buffer, BACKUP_MAIN_HEADER "%c%c", 13, 10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer, BACKUP_INFO_HEADER "%c%c", 13, 10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"[Backup]%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"IMEI = \"%s\"%c%c",backup->IMEI,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"Phone = \"%s\"%c%c",backup->Model,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	if (backup->Creator[0] != 0) {
 		sprintf(buffer,"Creator = \"%s\"%c%c",backup->Creator,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 	if (backup->DateTimeAvailable) {
-		SaveBackupText(file, "", "DateTime", UseUnicode);
-		SaveVCalDateTime(file, &backup->DateTime, UseUnicode);
+		error = SaveBackupText(file, "", "DateTime", UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveVCalDateTime(file, &backup->DateTime, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 	sprintf(buffer,"Format = 1.04%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 
 	i=0;
 	while (backup->PhonePhonebook[i]!=NULL) {
 		sprintf(buffer,"[PhonePBK%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SavePbkEntry(file, backup->PhonePhonebook[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SavePbkEntry(file, backup->PhonePhonebook[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->SIMPhonebook[i]!=NULL) {
 		sprintf(buffer,"[SIMPBK%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SavePbkEntry(file, backup->SIMPhonebook[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SavePbkEntry(file, backup->SIMPhonebook[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->Calendar[i]!=NULL) {
 		sprintf(buffer,"[Calendar%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SaveCalendarEntry(file, backup->Calendar[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveCalendarEntry(file, backup->Calendar[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->Note[i]!=NULL) {
 		sprintf(buffer,"[Note%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SaveNoteEntry(file, backup->Note[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveNoteEntry(file, backup->Note[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->CallerLogos[i]!=NULL) {
 		sprintf(buffer,"[Caller%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SaveCallerEntry(file, backup->CallerLogos[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveCallerEntry(file, backup->CallerLogos[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->SMSC[i]!=NULL) {
 		sprintf(buffer,"[SMSC%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SaveSMSCEntry(file, backup->SMSC[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveSMSCEntry(file, backup->SMSC[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->WAPBookmark[i]!=NULL) {
 		sprintf(buffer,"[WAPBookmark%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SaveWAPBookmarkEntry(file, backup->WAPBookmark[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveWAPBookmarkEntry(file, backup->WAPBookmark[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->WAPSettings[i]!=NULL) {
 		sprintf(buffer,"[WAPSettings%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SaveWAPSettingsEntry(file, backup->WAPSettings[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveWAPSettingsEntry(file, backup->WAPSettings[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->MMSSettings[i]!=NULL) {
 		sprintf(buffer,"[MMSSettings%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SaveWAPSettingsEntry(file, backup->MMSSettings[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveWAPSettingsEntry(file, backup->MMSSettings[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->SyncMLSettings[i]!=NULL) {
 		sprintf(buffer,"[SyncMLSettings%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SaveSyncMLSettingsEntry(file, backup->SyncMLSettings[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error =  SaveSyncMLSettingsEntry(file, backup->SyncMLSettings[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->ChatSettings[i]!=NULL) {
 		sprintf(buffer,"[ChatSettings%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SaveChatSettingsEntry(file, backup->ChatSettings[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveChatSettingsEntry(file, backup->ChatSettings[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->Ringtone[i]!=NULL) {
 		sprintf(buffer,"[Ringtone%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SaveRingtoneEntry(file, backup->Ringtone[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveRingtoneEntry(file, backup->Ringtone[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->ToDo[i]!=NULL) {
 		sprintf(buffer,"[TODO%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SaveToDoEntry(file, backup->ToDo[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveToDoEntry(file, backup->ToDo[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
 	i=0;
 	while (backup->Profiles[i]!=NULL) {
 		sprintf(buffer,"[Profile%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
-		SaveProfileEntry(file, backup->Profiles[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+		error = SaveProfileEntry(file, backup->Profiles[i], UseUnicode);
+		if (error != ERR_NONE) return error;
 		i++;
 	}
  	i=0;
  	while (backup->FMStation[i]!=NULL) {
  		sprintf(buffer,"[FMStation%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
- 		SaveFMStationEntry(file, backup->FMStation[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+ 		error = SaveFMStationEntry(file, backup->FMStation[i], UseUnicode);
+		if (error != ERR_NONE) return error;
  		i++;
  	}
  	i=0;
  	while (backup->GPRSPoint[i]!=NULL) {
  		sprintf(buffer,"[GPRSPoint%03i]%c%c",i+1,13,10);
-		SaveBackupText(file, "", buffer, UseUnicode);
- 		SaveGPRSPointEntry(file, backup->GPRSPoint[i], UseUnicode);
+		error = SaveBackupText(file, "", buffer, UseUnicode);
+		if (error != ERR_NONE) return error;
+ 		error = SaveGPRSPointEntry(file, backup->GPRSPoint[i], UseUnicode);
+		if (error != ERR_NONE) return error;
  		i++;
  	}
 
 	if (backup->StartupLogo!=NULL) {
-		SaveStartupEntry(file, backup->StartupLogo, UseUnicode);
+		error = SaveStartupEntry(file, backup->StartupLogo, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 	if (backup->OperatorLogo!=NULL) {
-		SaveOperatorEntry(file, backup->OperatorLogo, UseUnicode);
+		error = SaveOperatorEntry(file, backup->OperatorLogo, UseUnicode);
+		if (error != ERR_NONE) return error;
 	}
 
 	fclose(file);
@@ -1345,9 +1674,11 @@ GSM_Error SaveBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	file = fopen(FileName, "ab");
 	if (file == NULL) return ERR_CANTOPENFILE;
 	sprintf(buffer,"[Checksum]%c%c",13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	sprintf(buffer,"MD5=%s%c%c",checksum,13,10);
-	SaveBackupText(file, "", buffer, UseUnicode);
+	error = SaveBackupText(file, "", buffer, UseUnicode);
+	if (error != ERR_NONE) return error;
 	fclose(file);
 
 	return ERR_NONE;
@@ -3241,6 +3572,7 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 	int 		i,w,current;
 	unsigned char 	buffer[10000];
 	GSM_DateTime	DT;
+	GSM_Error error;
 
 	fprintf(file, BACKUP_MAIN_HEADER "\n");
 	fprintf(file, BACKUP_INFO_HEADER "\n");
@@ -3285,10 +3617,12 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 				break;
 		}
 		if (backup->SMS[i]->PDU == SMS_Deliver) {
-			SaveBackupText(file, "SMSC", backup->SMS[i]->SMSC.Number, false);
+			error = SaveBackupText(file, "SMSC", backup->SMS[i]->SMSC.Number, false);
+			if (error != ERR_NONE) return error;
 			if (backup->SMS[i]->ReplyViaSameSMSC) fprintf(file,"SMSCReply = true\n");
 			fprintf(file,"Sent");
-			SaveVCalDateTime(file,&backup->SMS[i]->DateTime, false);
+			error = SaveVCalDateTime(file,&backup->SMS[i]->DateTime, false);
+			if (error != ERR_NONE) return error;
 		}
 		fprintf(file,"State = ");
 		switch (backup->SMS[i]->State) {
@@ -3297,8 +3631,10 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 			case SMS_Sent	: fprintf(file,"Sent\n");	break;
 			case SMS_UnSent	: fprintf(file,"UnSent\n");	break;
 		}
-		SaveBackupText(file, "Number", backup->SMS[i]->Number, false);
-		SaveBackupText(file, "Name", backup->SMS[i]->Name, false);
+		error = SaveBackupText(file, "Number", backup->SMS[i]->Number, false);
+		if (error != ERR_NONE) return error;
+		error = SaveBackupText(file, "Name", backup->SMS[i]->Name, false);
+		if (error != ERR_NONE) return error;
 		if (backup->SMS[i]->UDH.Type != UDH_NoUDH) {
 			EncodeHexBin(buffer,backup->SMS[i]->UDH.Text,backup->SMS[i]->UDH.Length);
 			fprintf(file,"UDH = %s\n",buffer);
