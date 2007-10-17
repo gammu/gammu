@@ -68,11 +68,9 @@
 /**
  * Maximal length of phone number.
  *
- * \todo Should be increased on API change, see tests/at-sms/01.dump.
- *
  * \ingroup Limits
  */
-#define GSM_MAX_NUMBER_LENGTH 50
+#define GSM_MAX_NUMBER_LENGTH 150
 
 /**
  * Maximal count of todo and calendar notes.
