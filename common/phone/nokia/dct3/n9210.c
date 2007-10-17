@@ -47,7 +47,7 @@ static GSM_Error N9210_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	GSM_Error		error;
 	GSM_Phone_Bitmap_Types	Type;
-	int			Width, Height, i,count=3;
+	size_t			Width, Height, i,count=3;
 	unsigned char		req[600] = { N7110_FRAME_HEADER };
 	unsigned char 		reqStartup[1000] = {
 		N6110_FRAME_HEADER, 0xec,
