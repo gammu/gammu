@@ -135,67 +135,6 @@ find_package (PkgConfig)
 # Standard packages
 macro_optional_find_package (Doxygen)
 
-if(MSVC)
-    # MSVC needs different flags at all
-    check_c_compiler_flag("/W3" HAVE_W3)
-    if (HAVE_W3)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} /W3")
-    endif (HAVE_W3)
-else(MSVC)
-    # Check for extra compiler flags we want to use
-    check_c_compiler_flag("-Wall" HAVE_WALL)
-    if (HAVE_WALL)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall")
-    endif (HAVE_WALL)
-
-    check_c_compiler_flag("-Wno-pointer-sign" HAVE_WPOINTERSIGN)
-    if (HAVE_WPOINTERSIGN)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-pointer-sign")
-    endif (HAVE_WPOINTERSIGN)
-
-    check_c_compiler_flag("-Werror-implicit-function-declaration" HAVE_WERRORIMPLICITDECLARATION)
-    if (HAVE_WERRORIMPLICITDECLARATION)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror-implicit-function-declaration")
-    endif (HAVE_WERRORIMPLICITDECLARATION)
-
-    check_c_compiler_flag("-Wdeclaration-after-statement" HAVE_WDECLARATIONAFTERSTATEMENT)
-    if (HAVE_WDECLARATIONAFTERSTATEMENT)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wdeclaration-after-statement")
-    endif (HAVE_WDECLARATIONAFTERSTATEMENT)
-
-    check_c_compiler_flag("-Wpointer-arith" HAVE_WPOINTERARITH)
-    if (HAVE_WPOINTERARITH)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wpointer-arith")
-    endif (HAVE_WPOINTERARITH)
-
-    check_c_compiler_flag("-Wshadow" HAVE_WSHADOW)
-    if (HAVE_WSHADOW)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wshadow")
-    endif (HAVE_WSHADOW)
-
-    check_c_compiler_flag("-Werror" HAVE_WERROR)
-    if (HAVE_WERROR)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror")
-    endif (HAVE_WERROR)
-
-    add_definitions()
-    check_c_compiler_flag("-Wp,-D_FORTIFY_SOURCE=2" HAVE_FORTIFY_SOURCE)
-    if (HAVE_FORTIFY_SOURCE)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wp,-D_FORTIFY_SOURCE=2")
-    endif (HAVE_FORTIFY_SOURCE)
-
-    # This is extremely noisy, use only in debug builds
-    if (DEBUG)
-        check_c_compiler_flag("-Wextra" HAVE_WEXTRA)
-        if (HAVE_WEXTRA)
-            set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wextra")
-        endif (HAVE_WEXTRA)
-
-        # Just silent this for now, too much code to fix here
-        check_c_compiler_flag("-Wno-unused-parameter" HAVE_WNOUNUSEDPARAMETER)
-    endif (DEBUG)
-endif(MSVC)
-
 
 # Check disabled for cross, but we have some libraries
 if (CROSS_MINGW)
@@ -372,6 +311,68 @@ if (GETTEXTLIBS_FOUND)
         set (GAMMU_LIBS "${GAMMU_LIBS} -l${GETTEXT_LIBRARIES}")
     endif (NOT "${GETTEXT_LIBRARIES}" STREQUAL "" AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib/libc.so")
 endif (GETTEXTLIBS_FOUND)
+
+# Tweak compiler flags
+if(MSVC)
+    # MSVC needs different flags at all
+    check_c_compiler_flag("/W3" HAVE_W3)
+    if (HAVE_W3)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} /W3")
+    endif (HAVE_W3)
+else(MSVC)
+    # Check for extra compiler flags we want to use
+    check_c_compiler_flag("-Wall" HAVE_WALL)
+    if (HAVE_WALL)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall")
+    endif (HAVE_WALL)
+
+    check_c_compiler_flag("-Wno-pointer-sign" HAVE_WPOINTERSIGN)
+    if (HAVE_WPOINTERSIGN)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-pointer-sign")
+    endif (HAVE_WPOINTERSIGN)
+
+    check_c_compiler_flag("-Werror-implicit-function-declaration" HAVE_WERRORIMPLICITDECLARATION)
+    if (HAVE_WERRORIMPLICITDECLARATION)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror-implicit-function-declaration")
+    endif (HAVE_WERRORIMPLICITDECLARATION)
+
+    check_c_compiler_flag("-Wdeclaration-after-statement" HAVE_WDECLARATIONAFTERSTATEMENT)
+    if (HAVE_WDECLARATIONAFTERSTATEMENT)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wdeclaration-after-statement")
+    endif (HAVE_WDECLARATIONAFTERSTATEMENT)
+
+    check_c_compiler_flag("-Wpointer-arith" HAVE_WPOINTERARITH)
+    if (HAVE_WPOINTERARITH)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wpointer-arith")
+    endif (HAVE_WPOINTERARITH)
+
+    check_c_compiler_flag("-Wshadow" HAVE_WSHADOW)
+    if (HAVE_WSHADOW)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wshadow")
+    endif (HAVE_WSHADOW)
+
+    check_c_compiler_flag("-Werror" HAVE_WERROR)
+    if (HAVE_WERROR)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror")
+    endif (HAVE_WERROR)
+
+    add_definitions()
+    check_c_compiler_flag("-Wp,-D_FORTIFY_SOURCE=2" HAVE_FORTIFY_SOURCE)
+    if (HAVE_FORTIFY_SOURCE)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wp,-D_FORTIFY_SOURCE=2")
+    endif (HAVE_FORTIFY_SOURCE)
+
+    # This is extremely noisy, use only in debug builds
+    if (DEBUG)
+        check_c_compiler_flag("-Wextra" HAVE_WEXTRA)
+        if (HAVE_WEXTRA)
+            set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wextra")
+        endif (HAVE_WEXTRA)
+
+        # Just silent this for now, too much code to fix here
+        check_c_compiler_flag("-Wno-unused-parameter" HAVE_WNOUNUSEDPARAMETER)
+    endif (DEBUG)
+endif(MSVC)
 
 # Define required libraries for gammu library if it is static
 if (ENABLE_SHARED)
