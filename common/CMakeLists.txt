@@ -74,8 +74,8 @@ set (LIBRARY_SRC
 add_library (libGammu ${LIBRARY_SRC})
 if (CROSS_MINGW)
     if (ENABLE_SHARED)
-        set_target_properties (libGammu PROPERTIES 
-            PREFIX "" 
+        set_target_properties (libGammu PROPERTIES
+            PREFIX ""
             SUFFIX ".dll"
             IMPORT_PREFIX ""
             IMPORT_SUFFIX ".lib"
@@ -91,7 +91,7 @@ else (CROSS_MINGW)
 
 endif (CROSS_MINGW)
 
-set_target_properties (libGammu PROPERTIES VERSION 2.${VERSION} SOVERSION 2)
+set_target_properties (libGammu PROPERTIES VERSION 3.${VERSION} SOVERSION 3)
 set_target_properties(libGammu PROPERTIES OUTPUT_NAME Gammu)
 
 if (BLUEZ_FOUND)
