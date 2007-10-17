@@ -711,7 +711,7 @@ static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 static GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	size_t			i,j;
-	int			Width, Height;
+	size_t			Width, Height;
 	unsigned char		output[500]; //output2[500];
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 	GSM_Error		error;
@@ -1164,7 +1164,8 @@ GSM_Error N6510_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-	int 		count = 22, blocks;
+	int 		count = 22;
+	size_t blocks;
 	unsigned char 	req[5000] = {
 		N7110_FRAME_HEADER, 0x0b, 0x00, 0x01, 0x01, 0x00, 0x00, 0x10, 0x02,
 		0x00,  			/* memory type */
@@ -3330,7 +3331,7 @@ static GSM_Error N6510_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachin
 static GSM_Error N6510_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_SMSMessage 	sms;
-	int 		i;
+	size_t 		i;
 
 #ifdef DEBUG
 	smprintf(s, "SMS message received\n");
