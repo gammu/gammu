@@ -210,7 +210,7 @@ void GSM_SMSCounter(int 		MessageLength,
 static void GSM_EncodeSMS30MultiPartSMS(GSM_MultiPartSMSInfo *Info,
 					char *Buffer, int *Length)
 {
-	int len;
+	size_t len;
 
 	/*SM version. Here 3.0*/
 	Buffer[(*Length)++] = 0x30;
@@ -337,7 +337,8 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 {
 	unsigned char	Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
 	unsigned char	Buffer2[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
-	int		Length = 0,smslen,i, Class = -1, j,p;
+	int		smslen,i, Class = -1, j,p;
+	size_t Length = 0;
 	GSM_Error	error;
 	GSM_Coding_Type Coding 	= SMS_Coding_8bit;
 	GSM_UDH		UDH	= UDH_NoUDH;
@@ -652,7 +653,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 		if (Info->UnicodeCoding) {
 			Coding = SMS_Coding_Unicode_No_Compression;
 			Length = UnicodeLength(Info->Entries[0].Buffer);
-			if (Length>(140-UDHHeader.Length)/2) Length = (140-UDHHeader.Length)/2;
+			if ((ssize_t)Length> (140 - UDHHeader.Length)/2) {
+				Length = (140-UDHHeader.Length)/2;
+			}
 		} else {
 			Coding = SMS_Coding_Default_No_Compression;
 			FindDefaultAlphabetLen(Info->Entries[0].Buffer,&Length,&smslen,(GSM_MAX_8BIT_SMS_LENGTH-UDHHeader.Length)*8/7);
