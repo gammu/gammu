@@ -233,7 +233,7 @@ static bool ReadBackupText(INI_Section *file_info, char *section, char *myname, 
 static GSM_Error SaveVCalDateTime(FILE *file, GSM_DateTime *dt, bool UseUnicode)
 {
 	unsigned char 	buffer[100];
-	int		Length = 3;
+	size_t		Length = 3;
 
 	sprintf(buffer, " = ");
 	SaveVCALDateTime(buffer, &Length, dt, NULL);
