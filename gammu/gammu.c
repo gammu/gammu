@@ -322,7 +322,10 @@ static void RunBatch(int argc, char *argv[])
 	batch = true;
 	while (!feof(bf)) {
 		ln[0] = 0;
-		fgets(ln, sizeof(ln) - 2, bf);
+		if (fgets(ln, sizeof(ln) - 2, bf) == NULL) {
+			printf_err(_("Error reading batch! Terminating.\n"));
+			break;
+		}
 		if (ln[strlen(ln) - 2] == 0x0D) {
 			/* reduce CRLF to LF so we have the same EOL on Windows and Linux */
 			ln[strlen(ln) - 2] = 0x0A;
