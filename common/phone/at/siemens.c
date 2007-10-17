@@ -296,7 +296,7 @@ GSM_Error SIEMENS_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 	unsigned char 		req[500];
-	int			size=0;
+	size_t			size=0;
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 //	if (Note->Location==0x00) return ERR_INVALIDLOCATION;
@@ -312,7 +312,8 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 	unsigned char 		req[500], req1[32];
-	int			size=0, Location;
+	size_t			size=0;
+	int Location;
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 //	if (Note->Location==0x00) return ERR_INVALIDLOCATION;
