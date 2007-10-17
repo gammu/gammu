@@ -178,6 +178,12 @@ else(MSVC)
         set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror")
     endif (HAVE_WERROR)
 
+    add_definitions()
+    check_c_compiler_flag("-Wp,-D_FORTIFY_SOURCE=2" HAVE_FORTIFY_SOURCE)
+    if (HAVE_FORTIFY_SOURCE)
+        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wp,-D_FORTIFY_SOURCE=2")
+    endif (HAVE_FORTIFY_SOURCE)
+
     # This is extremely noisy, use only in debug builds
     if (DEBUG)
         check_c_compiler_flag("-Wextra" HAVE_WEXTRA)
