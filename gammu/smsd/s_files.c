@@ -22,6 +22,12 @@
 /* mywstrstr */
 #include "../../common/misc/coding/coding.h"
 
+/**
+ * Helper define to check error code from fwrite.
+ */
+#define chk_fwrite(data, size, count, file) \
+	if (fwrite(data, size, count, file) != count) goto fail;
+
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
 static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config)
 {
@@ -85,14 +91,14 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 					    if (strcasecmp(Config->inboxformat, "unicode") == 0) {
 						buffer[0] = 0xFE;
 	    					buffer[1] = 0xFF;
-						fwrite(buffer,1,2,file);
-						fwrite(sms.SMS[i].Text,1,strlen(buffer2)*2,file);
+						chk_fwrite(buffer,1,2,file);
+						chk_fwrite(sms.SMS[i].Text,1,strlen(buffer2)*2,file);
 					    } else {
-						fwrite(buffer2,1,strlen(buffer2),file);
+						chk_fwrite(buffer2,1,strlen(buffer2),file);
 					    }
 					    break;
 					case SMS_Coding_8bit:
-					    fwrite(sms.SMS[i].Text,1,sms.SMS[i].Length,file);
+					    chk_fwrite(sms.SMS[i].Text,1,(size_t)sms.SMS[i].Length,file);
 					default:
 					    break;
 					}
@@ -108,6 +114,8 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 		}
 	}
 	return ERR_NONE;
+fail:
+	return ERR_WRITING_FILE;
 }
 
 /* Find one multi SMS to sending and return it (or return ERR_EMPTY)
@@ -298,8 +306,8 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 }
 
 /* After sending SMS is moved to Sent Items or Error Items. */
-static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED, 
-		GSM_SMSDConfig *Config, unsigned char *ID, 
+static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
+		GSM_SMSDConfig *Config, unsigned char *ID,
 		bool alwaysDelete, bool sent)
 {
 	FILE 	*oFile,*iFile;
@@ -349,8 +357,8 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 	}
 }
 
-static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms UNUSED, 
-		GSM_SMSDConfig *Config, unsigned char *ID UNUSED, 
+static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms UNUSED,
+		GSM_SMSDConfig *Config, unsigned char *ID UNUSED,
 		int Part, GSM_SMSDSendingError err, int TPMR UNUSED)
 {
 	if (err == SMSD_SEND_OK) WriteSMSDLog(_("Transmitted %s (%s: %i) to %s"), Config->SMSID, (Part == sms->Number?"total":"part"),Part,DecodeUnicodeString(sms->SMS[0].Number));
