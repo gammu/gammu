@@ -191,7 +191,7 @@ void PHONE_ClearBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, size_t width, 
 
 void PHONE_EncodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *Bitmap)
 {
-	int		width, height, x, y;
+	size_t		width, height, x, y;
 	GSM_Bitmap	dest;
 
 	PHONE_GetBitmapWidthHeight(Type, &width, &height);
@@ -1082,7 +1082,7 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 
 void NOKIA_CopyBitmap(GSM_Phone_Bitmap_Types Type, GSM_Bitmap *Bitmap, char *Buffer, size_t *Length)
 {
-	int Width, Height;
+	size_t Width, Height;
 
 	Buffer[(*Length)++] = 0x00;
 	PHONE_GetBitmapWidthHeight(Type, &Width, &Height);
