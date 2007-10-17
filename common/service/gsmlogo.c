@@ -17,7 +17,7 @@
 #define chk_fwrite(data, size, count, file) \
 	if (fwrite(data, size, count, file) != count) goto fail;
 
-void PHONE_GetBitmapWidthHeight(GSM_Phone_Bitmap_Types Type, int *width, int *height)
+void PHONE_GetBitmapWidthHeight(GSM_Phone_Bitmap_Types Type, size_t *width, size_t *height)
 {
 	*width  = 0;
 	*height	= 0;
@@ -38,9 +38,9 @@ void PHONE_GetBitmapWidthHeight(GSM_Phone_Bitmap_Types Type, int *width, int *he
 	}
 }
 
-size_t PHONE_GetBitmapSize(GSM_Phone_Bitmap_Types Type, int Width, int Height)
+size_t PHONE_GetBitmapSize(GSM_Phone_Bitmap_Types Type, size_t Width, size_t Height)
 {
-	int width, height, x;
+	size_t width, height, x;
 
 	PHONE_GetBitmapWidthHeight(Type, &width, &height);
 	if (width == 0 && height == 0) {
@@ -137,7 +137,7 @@ static void PHONE_SetPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int 
 
 void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *Bitmap)
 {
-	int width, height, x,y;
+	size_t width, height, x,y;
 
 	PHONE_GetBitmapWidthHeight(Type, &width, &height);
 	if (Type != GSM_Nokia6510OperatorLogo && Type != GSM_Nokia7110OperatorLogo && Type != GSM_EMSVariablePicture) {
@@ -184,7 +184,7 @@ void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 	}
 }
 
-void PHONE_ClearBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int width, int height)
+void PHONE_ClearBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, size_t width, size_t height)
 {
 	memset(buffer,0,PHONE_GetBitmapSize(Type,width,height));
 }
