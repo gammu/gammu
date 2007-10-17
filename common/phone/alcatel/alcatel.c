@@ -856,8 +856,8 @@ static void ALCATEL_DecodeString(GSM_StateMachine *s, unsigned const char *buffe
 static GSM_Error ALCATEL_EncodeString(GSM_StateMachine *s, unsigned const char *buffer, unsigned char *target, GSM_Alcatel_FieldType type)
 {
 	GSM_Phone_ALCATELData 	*Priv = &s->Phone.Data.Priv.ALCATEL;
-	int			len;
-	int			maxlen = 0;
+	size_t			len;
+	size_t			maxlen = 0;
 	bool			unicode = false;
 	unsigned char		text[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 	unsigned char		utext[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
