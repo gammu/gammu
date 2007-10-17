@@ -80,11 +80,13 @@ static FILE *DCT3T9File;
 
 static GSM_Error DCT3_ReplyGetT9(GSM_Protocol_Message msg, GSM_StateMachine *sm UNUSED)
 {
-	int DCT3T9Size;
+	size_t DCT3T9Size;
+	size_t written;
 
 	DCT3T9Size = msg.Length - 6;
-	fwrite(msg.Buffer+6,1,DCT3T9Size,DCT3T9File);
-	return ERR_NONE;
+	written = fwrite(msg.Buffer+6,1,DCT3T9Size,DCT3T9File);
+	if (written == DCT3T9Size) return ERR_NONE;
+	return ERR_UNKNOWN;
 }
 
 void DCT3GetT9(int argc, char *argv[])
