@@ -273,7 +273,6 @@ msgstr "Errore sconosciuto."
 
 #: common/gsmcomon.c:142
 #, fuzzy
-#| msgid "Error writing device."
 msgid "Error writing file to disk."
 msgstr "Errore durante la scrittura sul dispositivo."
 
@@ -283,7 +282,6 @@ msgstr ""
 
 #: common/gsmcomon.c:144
 #, fuzzy
-#| msgid " (default name)"
 msgid "Using default values."
 msgstr " (nome predefinito)"
 
@@ -426,7 +424,6 @@ msgstr "Che formato è il file (\"%s\") ?\n"
 
 #: gammu/backup.c:142 gammu/files.c:437 gammu/message.c:2127
 #, fuzzy
-#| msgid "Error writing device."
 msgid "Error while writing file!\n"
 msgstr "Errore durante la scrittura sul dispositivo."
 
@@ -3214,7 +3211,6 @@ msgstr ""
 
 #: gammu/message.c:999 gammu/message.c:1080
 #, fuzzy, c-format
-#| msgid "  Saving to %s\n"
 msgid "Error while saving to file %s!\n"
 msgstr "  Sto salvando su %s\n"
 

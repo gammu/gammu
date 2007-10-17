@@ -265,7 +265,6 @@ msgstr "Neznámá chyba."
 
 #: common/gsmcomon.c:142
 #, fuzzy
-#| msgid "Error writing device."
 msgid "Error writing file to disk."
 msgstr "Chyba při zápisu."
 
@@ -405,7 +404,6 @@ msgstr ""
 
 #: gammu/backup.c:142 gammu/files.c:437 gammu/message.c:2127
 #, fuzzy
-#| msgid "Error writing device."
 msgid "Error while writing file!\n"
 msgstr "Chyba při zápisu."
 

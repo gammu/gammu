@@ -276,7 +276,6 @@ msgstr "Error desconocido."
 
 #: common/gsmcomon.c:142
 #, fuzzy
-#| msgid "Error writing device."
 msgid "Error writing file to disk."
 msgstr "Error escribiendo en el dispositivo."
 
@@ -416,7 +415,6 @@ msgstr "¿Qué tipo de reseteo quieres (\"%s\") ?\n"
 
 #: gammu/backup.c:142 gammu/files.c:437 gammu/message.c:2127
 #, fuzzy
-#| msgid "Error writing device."
 msgid "Error while writing file!\n"
 msgstr "Error escribiendo en el dispositivo."
 
@@ -3112,7 +3110,6 @@ msgstr ""
 
 #: gammu/message.c:999 gammu/message.c:1080
 #, fuzzy, c-format
-#| msgid "  Saving to %s\n"
 msgid "Error while saving to file %s!\n"
 msgstr "  Guardando en %s\n"
 

@@ -282,7 +282,6 @@ msgstr "Nieznany błąd."
 
 #: common/gsmcomon.c:142
 #, fuzzy
-#| msgid "Error writing device."
 msgid "Error writing file to disk."
 msgstr "Błąd zapisu do urządzenia."
 
@@ -428,7 +427,6 @@ msgstr ""
 
 #: gammu/backup.c:142 gammu/files.c:437 gammu/message.c:2127
 #, fuzzy
-#| msgid "Error writing device."
 msgid "Error while writing file!\n"
 msgstr "Błąd zapisu do urządzenia."
 
