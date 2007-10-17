@@ -14,7 +14,7 @@ typedef enum {
 } GSM_Protocol_RXState;
 
 typedef struct {
-	int 		Length;
+	size_t 		Length;
 	int 		Count;
 	unsigned char 	Type;
 	unsigned char 	Source;
