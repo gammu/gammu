@@ -29,10 +29,10 @@
 /* ------ end of Smart Messaging Specification 2.0 & 3.0 definitions ------- */
 
 
-unsigned char	GSM_EncodeNokiaRTTLRingtone	(GSM_Ringtone ringtone, unsigned char *package, int *maxlength);
-unsigned char 	GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *package, int *maxlength, double version, bool start);
+unsigned char	GSM_EncodeNokiaRTTLRingtone	(GSM_Ringtone ringtone, unsigned char *package, size_t *maxlength);
+unsigned char 	GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *package, size_t *maxlength, double version, bool start);
 
-GSM_Error	GSM_DecodeNokiaRTTLRingtone	(GSM_Ringtone *ringtone, unsigned char *package, int maxlength);
+GSM_Error	GSM_DecodeNokiaRTTLRingtone	(GSM_Ringtone *ringtone, unsigned char *package, size_t maxlength);
 
 
 int GSM_RingNoteGetFrequency	(GSM_RingNote Note);

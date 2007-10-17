@@ -126,12 +126,12 @@ typedef struct {
 /* Structure to hold Nokia binary ringtones. */
 typedef struct {
 	unsigned char Frame[50000];
-	int Length;
+	size_t Length;
 } GSM_NokiaBinaryRingtone;
 
 typedef struct {
 	unsigned char *Buffer;
-	int Length;
+	size_t Length;
 } GSM_BinaryTone;
 
 typedef enum {
@@ -218,9 +218,9 @@ GSM_Error GSM_RingtoneConvert(GSM_Ringtone * dest, GSM_Ringtone * src,
 GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone * ringtone);
 GSM_Error GSM_SaveRingtoneFile(char *FileName, GSM_Ringtone * ringtone);
 
-void GSM_SaveRingtoneOtt(FILE * file, GSM_Ringtone * ringtone);
-void GSM_SaveRingtoneMidi(FILE * file, GSM_Ringtone * ringtone);
-void GSM_SaveRingtoneIMelody(FILE * file, GSM_Ringtone * ringtone);
+GSM_Error GSM_SaveRingtoneOtt(FILE * file, GSM_Ringtone * ringtone);
+GSM_Error GSM_SaveRingtoneMidi(FILE * file, GSM_Ringtone * ringtone);
+GSM_Error GSM_SaveRingtoneIMelody(FILE * file, GSM_Ringtone * ringtone);
 GSM_Error GSM_SaveRingtoneWav(FILE * file, GSM_Ringtone * ringtone);
 GSM_Error GSM_SaveRingtoneRttl(FILE * file, GSM_Ringtone * ringtone);
 

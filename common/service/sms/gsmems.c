@@ -21,7 +21,8 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				    GSM_UDH			UDHType)
 {
 	unsigned char		Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
-	int 			i,UsedText,j,Length,Width,Height,z,x,y;
+	int 			i,UsedText,j,Width,Height,z,x,y;
+	ssize_t			Length;
 	unsigned int		Len;
 	int 			Used,FreeText,FreeBytes,Width2,CopiedText,CopiedSMSText;
 	unsigned char		UDHID;
@@ -384,7 +385,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			while (FreeBytes != Width) {
 				Width2 = 8;
 				while (FreeBytes + Width2 != Width) {
-					if (PHONE_GetBitmapSize(BitmapType,Width2+8,Height) > Length) break;
+					if (PHONE_GetBitmapSize(BitmapType,Width2+8,Height) > (size_t)Length) break;
 
 					Width2 = Width2 + 8;
 				}
@@ -423,7 +424,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			while (FreeBytes != Width) {
 				Width2 = 8;
 				while (FreeBytes + Width2 != Width) {
-					if (PHONE_GetBitmapSize(BitmapType,Width2+8,Height) > Length) break;
+					if (PHONE_GetBitmapSize(BitmapType,Width2+8,Height) > (size_t)Length) break;
 
 					Width2 = Width2 + 8;
 				}
@@ -578,7 +579,8 @@ static bool AddEMSText(GSM_SMSMessage *SMS, GSM_MultiPartSMSInfo *Info, int *Pos
 bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			       GSM_MultiSMSMessage 	*SMS)
 {
-	int  			i, w, Pos, z, UPI = 1, width, height;
+	int  			i, w, Pos, UPI = 1, width, height;
+	size_t			z;
  	bool 			RetVal = false, NewPicture = true;
 	GSM_Phone_Bitmap_Types 	BitmapType;
 	GSM_Bitmap		Bitmap,Bitmap2;
