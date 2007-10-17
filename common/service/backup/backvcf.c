@@ -13,9 +13,16 @@
 
 #ifdef GSM_ENABLE_BACKUP
 
+/**
+ * Helper define to check error code from fwrite.
+ */
+#define chk_fwrite(data, size, count, file) \
+	if (fwrite(data, size, count, file) != count) goto fail;
+
 GSM_Error SaveVCard(char *FileName, GSM_Backup *backup)
 {
-	int 		i, Length = 0;
+	int 		i;
+	size_t Length = 0;
 	unsigned char 	Buffer[1000];
 	FILE 		*file;
 
@@ -25,15 +32,18 @@ GSM_Error SaveVCard(char *FileName, GSM_Backup *backup)
 	i=0;
 	while (backup->PhonePhonebook[i]!=NULL) {
 		sprintf(Buffer, "%c%c",13,10);
-		fwrite(Buffer,1,2,file);
+		chk_fwrite(Buffer,1,2,file);
 		Length = 0;
 		GSM_EncodeVCARD(Buffer,&Length,backup->PhonePhonebook[i],true,Nokia_VCard21);
-		fwrite(Buffer,1,Length,file);
+		chk_fwrite(Buffer,1,Length,file);
 		i++;
 	}
 
 	fclose(file);
 	return ERR_NONE;
+fail:
+	fclose(file);
+	return ERR_WRITING_FILE;
 }
 
 GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
