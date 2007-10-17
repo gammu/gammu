@@ -18,6 +18,7 @@ ChangeLog
 2007???? - 1.13.95
 [-] * Fixes OBEX crash (Debian bug #446923).
 [-] * Correctly check various return values (bug #409).
+[-] * Fixed several bugs in vCard decoder.
 [!] * GSM_ReadConfig now returns GSM_Error instead of just bool.
 [!] * Many functions now use size_t for passing size values.
 [!] * Increased soname due to API/ABI changes.
