@@ -1020,12 +1020,13 @@ int main(int argc, char *argv[])
 				GSM_ReadConfig(NULL, smcfg, 0);
 			}
 		} else {
-			if (!GSM_ReadConfig(cfg, smcfg, i)) {
+			error = GSM_ReadConfig(cfg, smcfg, i);
+			if (error != ERR_NONE) {
 				if (i != 0) {
-					/* We just end here */
+					/* We just end here, we already have some valid config */
 					break;
 				}
-				if (GSM_FallbackConfig) {
+				if (error == ERR_USING_DEFAULTS) {
 					printf_warn("%s\n", _("No configuration read, using builtin defaults!"));
 				}
 			}

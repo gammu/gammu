@@ -895,9 +895,7 @@ void GSM_ExpandUserPath(char **string)
 	*string = tmp;
 }
 
-bool GSM_FallbackConfig = false;
-
-bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
+GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 {
 	INI_Section 	*h;
 	unsigned char 	section[50];
@@ -919,11 +917,15 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* By default all debug output will go to one filedescriptor */
 	static const bool DefaultUseGlobalDebugFile 	= true;
+	GSM_Error error = ERR_UNKNOWN;
 
 	cfg->UseGlobalDebugFile	 = DefaultUseGlobalDebugFile;
 
 	/* If we don't have valid config, bail out */
-	if (cfg_info==NULL) goto fail;
+	if (cfg_info==NULL) {
+		error = ERR_UNCONFIGURED;
+		goto fail;
+	}
 
 	/* Which section should we read? */
 	if (num == 0) {
@@ -939,7 +941,10 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 			break;
 		}
         }
-	if (!found) goto fail;
+	if (!found) {
+		error = ERR_NONE_SECTION;
+		goto fail;
+	}
 
 	/* Set device name */
 	free(cfg->Device);
@@ -1049,7 +1054,7 @@ bool GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		strcpy(cfg->TextMemo,Temp);
 	}
 
-	return true;
+	return ERR_NONE;
 
 fail:
 	/* Special case, this config needs to be somehow valid */
@@ -1068,9 +1073,9 @@ fail:
 		strcpy(cfg->TextBirthday,"Birthday");
 		strcpy(cfg->TextMemo,"Memo");
 		/* Indicate that we used defaults */
-		GSM_FallbackConfig = true;
+		return ERR_USING_DEFAULTS;
 	}
-	return false;
+	return error;
 }
 
 void GSM_DumpMessageLevel2_Text(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type, const char *text)

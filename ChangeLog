@@ -18,6 +18,9 @@ ChangeLog
 2007???? - 1.13.95
 [-] * Fixes OBEX crash (Debian bug #446923).
 [-] * Correctly check various return values (bug #409).
+[!] * GSM_ReadConfig now returns GSM_Error instead of just bool.
+[!] * Many functions now use size_t for passing size values.
+[!] * Increased soname due to API/ABI changes.
 
 20071016 - 1.13.94
 [-] * Fixed crash in wrong config handling (Debian bug #446781).
