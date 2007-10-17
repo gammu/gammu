@@ -11,7 +11,7 @@ char buffer[100];
 void error_handler()
 {
 	if (error != ERR_NONE) {
-		printf("%s\n", GSM_ErrorString(error));
+		printf("ERROR: %s\n", GSM_ErrorString(error));
 		if (GSM_IsConnected(s))
 			GSM_TerminateConnection(s);
 		exit(error);
@@ -37,12 +37,13 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SetConfigNum(s, 1);
 
 	/* Connect to phone */
-	error = GSM_InitConnection(s, 3);	/* 3 means number of replies you want to wait for */
+	/* 3 means number of replies you want to wait for */
+	error = GSM_InitConnection(s, 3);
 	error_handler();
 
 	/* Here you can do some stuff with phone... */
 
-	/* As example we read some information about phone: */
+	/* As an example we read some information about phone: */
 
 	/* Manufacturer name */
 	error = GSM_GetManufacturer(s, buffer);
@@ -52,7 +53,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Model name */
 	error = GSM_GetModel(s, buffer);
 	error_handler();
-	printf("Model         : %s (%s)\n", GSM_GetModelInfo(s)->model, buffer);
+	printf("Model         : %s (%s)\n",
+		GSM_GetModelInfo(s)->model,
+		buffer);
 
 	/* Terminate connection */
 	error = GSM_TerminateConnection(s);
