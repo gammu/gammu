@@ -1197,7 +1197,8 @@ static GSM_Error N6510_ReplySetOperatorLogo(GSM_Protocol_Message msg UNUSED, GSM
 static GSM_Error N6510_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 {
 	char		string[500];
-	int		block=0, i, Width, Height;
+	int		block=0, i;
+	size_t Width, Height;
 	unsigned int 	count = 22;
 	unsigned char 	req[500] = {
 		N6110_FRAME_HEADER, 0x0b, 0x00, 0x01, 0x01, 0x00, 0x00, 0x10,
@@ -1270,7 +1271,7 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	GSM_SMSMessage		sms;
 	GSM_Phone_Bitmap_Types	Type;
-	int			Width, Height, i, count;
+	size_t			Width, Height, i, count;
 	unsigned char		folderid;
 	int			location;
 	GSM_NetworkInfo 	NetInfo;
