@@ -785,7 +785,7 @@ static GSM_Error N6110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 {
         GSM_NetworkInfo NetInfo;
         GSM_Error       error;
-        int             size=200,current=8;
+        size_t             size=200,current=8;
         GSM_UDHHeader   UDHHeader;
         unsigned char   req[1000] = {N6110_FRAME_HEADER, 0x36,
                                      0x00,              /* Location */
@@ -1099,7 +1099,7 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
         unsigned char   reqPreview[1000]  = {0x0c,0x01};
         unsigned char   req[600]          = {N6110_FRAME_HEADER};
         GSM_UDH         UDHType           = UDH_NokiaOperatorLogo;
-        int             count = 0, textlen, Width, Height;
+        size_t          count = 0, textlen, Width, Height;
         GSM_UDHHeader   UDHHeader;
         GSM_NetworkInfo NetInfo;
         GSM_Error       error;
