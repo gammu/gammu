@@ -18,7 +18,7 @@ void error_handler()
 	}
 }
 
-int main(int argc, char **argv)
+int main(int argc UNUSED, char **argv UNUSED)
 {
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
