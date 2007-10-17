@@ -499,7 +499,8 @@ static GSM_Error GSM_EncodeSMSDateTime(GSM_DateTime *DT, unsigned char *req)
 static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
 {
 	int	off = 0;	// length of the User Data Header
-	int	size = 0, size2 = 0, w,p;
+	int	size = 0, size2 = 0, w;
+	size_t p;
 	char	buff[200];
 
 	if (SMS->UDH.Type!=UDH_NoUDH) {

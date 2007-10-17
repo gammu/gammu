@@ -457,7 +457,7 @@ GSM_Error GSM_Calendar_GetValue(const GSM_CalendarEntry *note, int *start, const
  * Converts Gammu recurrence to vCal format. See GSM_DecodeVCAL_RRULE
  * for grammar description.
  */
-GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, int *Length, GSM_CalendarEntry *note, int TimePos UNUSED, GSM_VCalendarVersion Version)
+GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, size_t *Length, GSM_CalendarEntry *note, int TimePos UNUSED, GSM_VCalendarVersion Version)
 {
 	int i;
 	int j;
@@ -1940,7 +1940,7 @@ GSM_Error GSM_DecodeVNOTE(unsigned char *Buffer, int *Pos, GSM_NoteEntry *Note)
 	return ERR_BUG;
 }
 
-GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length, GSM_NoteEntry *Note)
+GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, size_t *Length, GSM_NoteEntry *Note)
 {
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VNOTE%c%c",13,10);
 	*Length+=sprintf(Buffer+(*Length), "VERSION:1.1%c%c",13,10);

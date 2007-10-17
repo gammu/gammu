@@ -54,7 +54,7 @@ static struct keys_table_position Keys[] = {
 	{' ',0}
 };
 
-GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, int *Length)
+GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, size_t *Length)
 {
 	int 		i,j;
 	unsigned char 	key;
@@ -186,7 +186,7 @@ void GSM_IdentifyFileFormat(GSM_File *File)
 	}
 }
 
-void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start)
+void SaveVCALDateTime(char *Buffer, size_t *Length, GSM_DateTime *Date, char *Start)
 {
 	if (Start != NULL) {
 		*Length+=sprintf(Buffer+(*Length), "%s:",Start);
@@ -198,7 +198,7 @@ void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start
 			13,10);
 }
 
-void SaveVCALDate(char *Buffer, int *Length, GSM_DateTime *Date, char *Start)
+void SaveVCALDate(char *Buffer, size_t *Length, GSM_DateTime *Date, char *Start)
 {
 	if (Start != NULL) {
 		*Length+=sprintf(Buffer+(*Length), "%s:",Start);
@@ -307,7 +307,7 @@ bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_o
 }
 
 
-void SaveVCALText(char *Buffer, int *Length, unsigned char *Text, char *Start, bool UTF8)
+void SaveVCALText(char *Buffer, size_t *Length, unsigned char *Text, char *Start, bool UTF8)
 {
 	char buffer[1000];
 

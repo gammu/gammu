@@ -372,7 +372,7 @@ fail:
 	return ERR_WRITING_FILE;
 }
 
-static void WriteVarLen(unsigned char* midifile, int* current, long value)
+static void WriteVarLen(unsigned char* midifile, size_t* current, long value)
 {
 	long buffer;
 
@@ -964,7 +964,7 @@ unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone ringtone, unsigned char *
 	unsigned char		Loop		= 0x15;	/* Infinite */
 
 	unsigned char		Buffer[200];
-	int			StartBit=0, OldStartBit;
+	size_t			StartBit=0, OldStartBit;
 	int			StartBitHowManyCommands;
 	int			HowManyCommands	= 0;	/* How many instructions packed */
 	int			HowManyNotes	= 0;
@@ -1096,7 +1096,8 @@ unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone ringtone, unsigned char *
 
 GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *package, size_t maxlength UNUSED)
 {
-	int 			StartBit=0, HowMany, l, q, i, spec;
+	size_t 			StartBit=0;
+	int l, q, i, spec, HowMany;
 	char 			Buffer[100];
 	GSM_RingNote 		*Note;
 
