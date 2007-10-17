@@ -785,7 +785,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 			DumpMessage(&s->di, Phone->SentMsg->Buffer, Phone->SentMsg->Length);
 		}
 		smprintf(s, "RECEIVED frame ");
-		smprintf(s, "type 0x%02X/length 0x%02X/%zd", msg->Type, msg->Length, msg->Length);
+		smprintf(s, "type 0x%02X/length 0x%02zX/%zd", msg->Type, msg->Length, msg->Length);
 		DumpMessage(&s->di, msg->Buffer, msg->Length);
 		smprintf(s, "\n");
 	}
