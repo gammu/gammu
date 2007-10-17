@@ -1529,7 +1529,7 @@ void CopyRingtone(int argc, char *argv[])
 
 void PressKeySequence(int argc UNUSED, char *argv[])
 {
-	int 		i,Length;
+	size_t i,Length;
 	GSM_KeyCode	KeyCode[500];
 	GSM_Error error;
 
