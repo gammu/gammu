@@ -1012,8 +1012,9 @@ int main(int argc, char *argv[])
 		/* Wanted user specific configuration? */
 		if (only_config != -1) {
 			smcfg = smcfg0;
+			error = GSM_ReadConfig(cfg, smcfg, only_config);
 			/* Here we get only in first for loop */
-			if (!GSM_ReadConfig(cfg, smcfg, only_config)) {
+			if (error != ERR_NONE) {
 				printf_err(_("Failed to read [gammu%d] from gammurc!\n"),
 					   only_config);
 				printf_warn("%s\n", _("No configuration read, using builtin defaults!"));
