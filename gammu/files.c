@@ -433,7 +433,9 @@ void GetOneFile(GSM_File * File, bool newtime, int i)
 			printf(_("  Saving to %s\n"), buffer);
 			if (!file)
 				Print_Error(ERR_CANTOPENFILE);
-			fwrite(File->Buffer, 1, File->Used, file);
+			if (fwrite(File->Buffer, 1, File->Used, file) != File->Used) {
+				printf_err(_("Error while writing file!\n"));
+			}
 			fclose(file);
 			if (!newtime && !File->ModifiedEmpty) {
 				/* access time */
