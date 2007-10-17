@@ -26,25 +26,25 @@
 #define ALCATELTDD_ANIMATION   5
 #define ALCATELTDD_SMSTEMPLATE 6
 
-void GSM_SMSCounter(int		 	MessageLength,
+void GSM_SMSCounter(size_t	 	MessageLength,
 		    unsigned char       *MessageBuffer,
 		    GSM_UDH	     	UDHType,
 		    GSM_Coding_Type     Coding,
 		    int		 	*SMSNum,
-		    int		 	*CharsLeft);
+		    size_t	 	*CharsLeft);
 
 GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage       *SMS,
 				GSM_Coding_Type	 	Coding,
 				char		    	*Buffer,
-				int		     	BufferLen,
+				size_t		     	BufferLen,
 				bool		    	UDH,
-				int		     	*UsedText,
-				int		     	*CopiedText,
-				int		     	*CopiedSMSText);
+				size_t		     	*UsedText,
+				size_t		     	*CopiedText,
+				size_t		     	*CopiedSMSText);
 
 void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage   *SMS,
 			  unsigned char	 	*MessageBuffer,
-			  int		   	MessageLength,
+			  size_t	   	MessageLength,
 			  GSM_UDH	       	UDHType,
 			  GSM_Coding_Type       Coding,
 			  int		   	Class,
