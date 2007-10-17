@@ -16,6 +16,12 @@
 
 extern GSM_Reply_Function UserReplyFunctions4[];
 
+/**
+ * Helper define to check error code from fwrite.
+ */
+#define chk_fwrite(data, size, count, file) \
+	if (fwrite(data, size, count, file) != count) goto fail;
+
 /* ------- some usefull functions ----------------------------------------- */
 
 GSM_Error CheckDCT4Only()
@@ -700,9 +706,9 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 
 	WAVFile = fopen(FileName, "wb");
 
-	fwrite(&WAV_Header,	1, sizeof(WAV_Header),	WAVFile);
-	fwrite(&FMT_Header,	1, sizeof(FMT_Header),	WAVFile);
-	fwrite(&DATA_Header,	1, sizeof(DATA_Header),	WAVFile);
+	chk_fwrite(&WAV_Header,	1, sizeof(WAV_Header),	WAVFile);
+	chk_fwrite(&FMT_Header,	1, sizeof(FMT_Header),	WAVFile);
+	chk_fwrite(&DATA_Header,	1, sizeof(DATA_Header),	WAVFile);
 
 	s->Phone.Data.VoiceRecord 	= &size;
 	s->Phone.Data.PhoneString 	= Buffer;
@@ -714,7 +720,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		error=GSM_WaitFor (s, ReqGet, 18, 0x23, 4, ID_User4);
 		if (error == ERR_NONE) {
 			wavfilesize += size;
-			fwrite(Buffer,1,size,WAVFile);
+			chk_fwrite(Buffer,1,size,WAVFile);
 		}
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
@@ -731,7 +737,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		error=GSM_WaitFor (s, ReqGet, 18, 0x23, 4, ID_User4);
 		if (error == ERR_NONE) {
 			wavfilesize += size;
-			fwrite(Buffer,1,size,WAVFile);
+			chk_fwrite(Buffer,1,size,WAVFile);
 			break;
 		}
 		if (error != ERR_EMPTY) Print_Error(error);
@@ -745,7 +751,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		error=GSM_WaitFor (s, ReqGet, 18, 0x23, 4, ID_User4);
 		if (error == ERR_NONE) {
 			wavfilesize += size;
-			fwrite(Buffer,1,size,WAVFile);
+			chk_fwrite(Buffer,1,size,WAVFile);
 		}
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
@@ -771,10 +777,11 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	DATA_Header[7] 	= (unsigned char)(wavfilesize / (256*256*256));
 
 	fseek( WAVFile, 0, SEEK_SET);
-	fwrite(&WAV_Header,	1, sizeof(WAV_Header),	WAVFile);
-	fwrite(&FMT_Header,	1, sizeof(FMT_Header),	WAVFile);
-	fwrite(&DATA_Header,	1, sizeof(DATA_Header),	WAVFile);
+	chk_fwrite(&WAV_Header,	1, sizeof(WAV_Header),	WAVFile);
+	chk_fwrite(&FMT_Header,	1, sizeof(FMT_Header),	WAVFile);
+	chk_fwrite(&DATA_Header,	1, sizeof(DATA_Header),	WAVFile);
 
+fail:
 	fclose(WAVFile);
 
 	GSM_Terminate();
@@ -868,16 +875,18 @@ void DCT4Info(int argc, char *argv[])
 	printf(_("UEM           : %s\n"),value);
 }
 
-static FILE 	*T9File;
-int 		T9Size;
-int 		T9FullSize;
+static FILE *T9File;
+size_t T9Size;
+size_t T9FullSize;
 
 static GSM_Error DCT4_ReplyGetT9(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 	T9FullSize 	= msg.Buffer[18] * 256 + msg.Buffer[19];
 	T9Size 		= msg.Length - 18;
-	fwrite(msg.Buffer+18,1,T9Size,T9File);
+	chk_fwrite(msg.Buffer+18,1,T9Size,T9File);
 	return ERR_NONE;
+fail:
+	return ERR_WRITING_FILE;
 }
 
 void DCT4GetT9(int argc, char *argv[])
