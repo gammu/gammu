@@ -50,7 +50,7 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage   *SMS,
 			  int		   	Class,
 			  unsigned char	 	RejectDuplicates);
 
-void GSM_Find_Free_Used_SMS2(GSM_Coding_Type Coding,GSM_SMSMessage SMS, int *UsedText, int *FreeText, int *FreeBytes);
+void GSM_Find_Free_Used_SMS2(GSM_Coding_Type Coding,GSM_SMSMessage SMS, size_t *UsedText, size_t *FreeText, size_t *FreeBytes);
 
 unsigned char GSM_MakeSMSIDFromTime(void);
 
