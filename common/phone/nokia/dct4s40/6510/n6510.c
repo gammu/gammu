@@ -627,7 +627,7 @@ static void N6510_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsig
 		folderid,location,sms->Folder,sms->Location);
 }
 
-static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *buffer, int *current2)
+static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *buffer, size_t *current2)
 {
 	int 			i, current, blocks=0, SMSTemplateDateTime = 0;
 	GSM_SMSMessageLayout 	Layout;
