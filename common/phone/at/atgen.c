@@ -4473,7 +4473,8 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	 * correctly, especially with unicode entries */
 #define REQUEST_SIZE	((4 * GSM_PHONEBOOK_TEXT_LENGTH) + 30)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
-	int			Group, Name, Number,NumberType=0, len;
+	int			Group, Name, Number,NumberType=0;
+	size_t len;
 	GSM_Error 		error;
 	unsigned char		req[REQUEST_SIZE + 1];
 	unsigned char		name[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
@@ -5147,7 +5148,7 @@ GSM_Error ATGEN_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	CB.Channel = Buffer[4];
 
 	for (j=0;j<msg.Length;j++) {
-		smprintf(s, "j=%i\n",j);
+		smprintf(s, "j=%zi\n",j);
 		i=GSM_UnpackEightBitsToSeven(0, msg.Buffer[6], msg.Buffer[6], msg.Buffer+j, Buffer2);
 #if 0
 		i = msg.Buffer[6] - 1;
