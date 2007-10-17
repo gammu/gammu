@@ -31,7 +31,8 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 	GSM_Phone_ATGENData		*Priv = &(sm->Phone.Data.Priv.ATGEN);
 	GSM_SAT_Measure_results		MeasureResult;
 	unsigned char 			buf[256];
-        int                             length,i,rep,ChNo=1,j=0,result=0,origARFCN=0;
+        int                             length,i,rep,ChNo=1,result=0,origARFCN=0;
+	size_t j=0;
     	int				freq_tmp,frequency[24];
    	GSM_NetworkInfo			Network;
 
