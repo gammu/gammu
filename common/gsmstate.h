@@ -661,7 +661,7 @@ typedef struct {
 	/**
 	 * Used internally by phone drivers.
 	 */
-	int                 	*VoiceRecord;
+	size_t                 	*VoiceRecord;
 	/**
 	 * Used internally by phone drivers.
 	 */
