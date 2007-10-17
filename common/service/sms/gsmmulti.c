@@ -208,7 +208,7 @@ void GSM_SMSCounter(int 		MessageLength,
 
 /* Nokia Smart Messaging 3.0 */
 static void GSM_EncodeSMS30MultiPartSMS(GSM_MultiPartSMSInfo *Info,
-					char *Buffer, int *Length)
+					char *Buffer, size_t *Length)
 {
 	size_t len;
 

@@ -804,7 +804,7 @@ void GSM_ToDo_AdjustDate(GSM_ToDoEntry *note, GSM_DeltaTime *delta)
 	}
 }
 
-GSM_Error GSM_EncodeVCALENDAR(char *Buffer, int *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version)
+GSM_Error GSM_EncodeVCALENDAR(char *Buffer, size_t *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version)
 {
 	GSM_DateTime 	deltatime;
 	char 		dtstr[20];
@@ -988,7 +988,7 @@ void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, 
 	}
 }
 
-GSM_Error GSM_EncodeVTODO(char *Buffer, int *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version)
+GSM_Error GSM_EncodeVTODO(char *Buffer, size_t *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version)
 {
 	char		category[100];
 	int		i, alarm_pos = -1;

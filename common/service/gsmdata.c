@@ -37,7 +37,7 @@ static void AddWAPSMSParameterInt(unsigned char *Buffer, int *Length, unsigned c
 /* http://forum.nokia.com  : OTA MMS Settings 1.0, OTA Settings 7.0
  * http://www.wapforum.org : Wireless Datagram Protocol
  */
-void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, int *Length, GSM_WAPSettings *settings, bool MMS)
+void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, size_t *Length, GSM_WAPSettings *settings, bool MMS)
 {
 	int 		i;
 	unsigned char 	buffer[400];
@@ -206,7 +206,7 @@ void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, int *Length, GSM_W
 /* http://forum.nokia.com: OTA Settings 7.0 */
 /* first it used default/ISO coding */
 /* Joergen Thomsen changed to UTF8 */
-void NOKIA_EncodeWAPBookmarkSMSText(unsigned char *Buffer, int *Length, GSM_WAPBookmark *bookmark)
+void NOKIA_EncodeWAPBookmarkSMSText(unsigned char *Buffer, size_t *Length, GSM_WAPBookmark *bookmark)
 {
 	unsigned char	buffer[100];
 
@@ -273,7 +273,7 @@ void NOKIA_EncodeWAPBookmarkSMSText(unsigned char *Buffer, int *Length, GSM_WAPB
 	Buffer[(*Length)++] = 0x01;			//END (CHARACTERISTIC-LIST)
 }
 
-void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, int *Length, char *Text, char *URL)
+void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, size_t *Length, char *Text, char *URL)
 {
 	int i;
 
@@ -350,7 +350,7 @@ GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, int *Length, GSM_WAPBookmark 
 /* -------------------------------- MMS ------------------------------------ */
 
 /* SNIFFS, specs somewhere in http://www.wapforum.org */
-void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, int *Length, GSM_MMSIndicator Indicator)
+void GSM_EncodeMMSIndicatorSMSText(unsigned char *Buffer, size_t *Length, GSM_MMSIndicator Indicator)
 {
 	unsigned char 	buffer[200];
 	int		i;
@@ -416,25 +416,25 @@ void GSM_AddWAPMIMEType(int type, char *buffer)
 	char tmpbuf[100];
 	switch (type) {
 		case  3:
-			strcat(buffer, "text/plain");					
+			strcat(buffer, "text/plain");
 			break;
 		case  6:
-			strcat(buffer, "text/x-vCalendar");				
+			strcat(buffer, "text/x-vCalendar");
 			break;
 		case  7:
-			strcat(buffer, "text/x-vCard");					
+			strcat(buffer, "text/x-vCard");
 			break;
 		case 29:
-			strcat(buffer, "image/gif");					
+			strcat(buffer, "image/gif");
 			break;
 		case 30:
-			strcat(buffer, "image/jpeg");					
+			strcat(buffer, "image/jpeg");
 			break;
 		case 35:
-			strcat(buffer, "application/vnd.wap.multipart.mixed");		
+			strcat(buffer, "application/vnd.wap.multipart.mixed");
 			break;
 		case 51:
-			strcat(buffer, "application/vnd.wap.multipart.related"); 	
+			strcat(buffer, "application/vnd.wap.multipart.related");
 			break;
 		default:
 			sprintf(tmpbuf, "application/x-%d", type);
