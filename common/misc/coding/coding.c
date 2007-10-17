@@ -1385,6 +1385,7 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 {
 	bool skip = false;
 	bool quoted_printable = false;
+	bool was_cr = false, was_lf = false;
 	size_t pos;
 	int tmp;
 
@@ -1397,6 +1398,15 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 			return;
 		case 0x0A:
 		case 0x0D:
+			if (skip) {
+				if (Buffer[*Pos] == 0x0d) {
+					if (was_cr && skip) return;
+					was_cr = true;
+				} else {
+					if (was_lf && skip) return;
+					was_lf = true;
+				}
+			}
 			if (pos != 0 && !skip) {
 				if (MergeLines) {
 					/* (Quote printable new line) Does string end with = ? */
@@ -1404,6 +1414,8 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 						pos--;
 						OutBuffer[pos] = 0;
 						skip = true;
+						was_cr = (Buffer[*Pos] == 0x0d);
+						was_lf = (Buffer[*Pos] == 0x0a);
 						break;
 					}
 					/* (vCard continuation) Next line start with space? */
