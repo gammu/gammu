@@ -1714,7 +1714,7 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 {
 	unsigned char 		req[5000];
 	char			path[100];
-	int			size=0;
+	size_t			size=0;
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
@@ -1824,7 +1824,7 @@ GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, ch
 GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 {
 	unsigned char 		req[5000];
-	int			size=0;
+	size_t			size=0;
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
@@ -2145,7 +2145,7 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 {
 	unsigned char 		req[5000];
 	char			path[100];
-	int			size=0;
+	size_t			size=0;
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
@@ -2253,7 +2253,7 @@ GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 {
 	unsigned char 		req[5000];
-	int			size=0;
+	size_t			size=0;
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
@@ -2522,7 +2522,7 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 {
 	unsigned char 		req[5000];
 	char			path[100];
-	int			size=0;
+	size_t			size=0;
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
@@ -2630,7 +2630,7 @@ GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *
 GSM_Error OBEXGEN_SetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 {
 	unsigned char 		req[5000];
-	int			size=0;
+	size_t			size=0;
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
@@ -2918,7 +2918,7 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 {
 	unsigned char 		req[5000];
 	char			path[100];
-	int			size=0;
+	size_t			size=0;
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
@@ -3026,7 +3026,7 @@ GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, char *
 GSM_Error OBEXGEN_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 {
 	unsigned char 		req[5000];
-	int			size=0;
+	size_t			size=0;
 	GSM_Error		error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
