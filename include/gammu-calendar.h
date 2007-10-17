@@ -613,7 +613,7 @@ GSM_Error GSM_DecodeVNOTE(unsigned char *Buffer, int *Pos, GSM_NoteEntry *Note);
  *
  * \ingroup Note
  */
-GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, int *Length,
+GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, size_t *Length,
 			    GSM_NoteEntry * Note);
 
 /**

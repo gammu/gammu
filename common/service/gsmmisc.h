@@ -13,10 +13,10 @@ void GSM_ClearBatteryCharge(GSM_BatteryCharge *bat);
 
 
 bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt);
-void SaveVCALDateTime(char *Buffer, int *Length, GSM_DateTime *Date, char *Start);
+void SaveVCALDateTime(char *Buffer, size_t *Length, GSM_DateTime *Date, char *Start);
 
 bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_only);
-void SaveVCALDate(char *Buffer, int *Length, GSM_DateTime *Date, char *Start);
+void SaveVCALDate(char *Buffer, size_t *Length, GSM_DateTime *Date, char *Start);
 
 /**
  * Stores text in vCalendar/vCard formatted buffer.
@@ -27,7 +27,7 @@ void SaveVCALDate(char *Buffer, int *Length, GSM_DateTime *Date, char *Start);
  * \param Start Name of field which is being stored.
  * \param UTF8 Whether text should be stored in UTF-8 without prefix.
  */
-void SaveVCALText(char *Buffer, int *Length, unsigned char *Text, char *Start, bool UTF8);
+void SaveVCALText(char *Buffer, size_t *Length, unsigned char *Text, char *Start, bool UTF8);
 
 /**
  * Reads text for vCalendar/vCard formatted line.

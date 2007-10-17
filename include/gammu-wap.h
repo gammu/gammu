@@ -1,7 +1,7 @@
 /**
  * \file gammu-wap.h
  * \author Michal Čihař
- * 
+ *
  * WAP data and functions.
  */
 #ifndef __gammu_wap_h
@@ -205,7 +205,7 @@ typedef struct {
  *
  * \ingroup WAP
  */
-GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, int *Length,
+GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, size_t *Length,
 			    GSM_WAPBookmark * bookmark);
 
 /**

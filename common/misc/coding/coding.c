@@ -524,7 +524,7 @@ static unsigned char GSM_DefaultAlphabetCharsExtension[][4] =
 	{0x00,0x00,0x00,0x00}
 };
 
-void DecodeDefault (unsigned char *dest, const unsigned char *src, int len, bool UseExtensions, unsigned char *ExtraAlphabet)
+void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, bool UseExtensions, unsigned char *ExtraAlphabet)
 {
 	int 	i,current=0,j;
 	bool	FoundSpecial = false;
@@ -588,7 +588,7 @@ static unsigned char ConvertTable[] =
 "\x00\x74\x01\x66\x00\x54\x01\x67\x00\x74\x00\xd9\x00\x55\x00\xda\x00\x55\x00\xfa\x00\x75\x00\xdb\x00\x55\x00\xfb\x00\x75\x01\x68\x00\x55\x01\x69\x00\x75\x01\x6a\x00\x55\x01\x6b\x00\x75\x01\x6c\x00\x55\x01\x6d\x00\x75\x01\x6e\x00\x55\x01\x6f\x00\x75\x01\x70\x00\x55\x01\x71\x00\x75\x01\x72\x00\x55\x01\x73\x00\x75\x01\xaf\x00\x55\x01\xb0\x00\x75\x01\xd3\x00\x55\x01\xd4\x00\x75\x01\xd5\x00\x55\x01\xd6\x00\x75\x01\xd7\x00\x55\x01\xd8\x00\x75\x01\xd9\x00\x55\x01\xda\x00\x75\x01\xdb\x00\x55\x01\xdc\x00\x75\x1e\xe4\x00\x55\x1e\xe5\x00\x75\x1e\xe6\x00\x55\x1e\xe7\x00\x75\x1e\xe8\x00\x55\x1e\xe9\x00\x75\x1e\xea\x00\x55\x1e\xeb\x00\x75\x1e\xec\x00\x55\x1e\xed\x00\x75\x1e\xee\x00\x55\x1e\xef\x00\x75\x1e\xf0\x00\x55\x1e\xf1\x00\x75\x01\x74\x00\x57\x01\x75\x00\x77\x1e\x80\x00\x57\x1e\x81\x00\x77\x1e\x82"\
 "\x00\x57\x1e\x83\x00\x77\x1e\x84\x00\x57\x1e\x85\x00\x77\x00\xdd\x00\x59\x00\xfd\x00\x79\x00\xff\x00\x79\x01\x76\x00\x59\x01\x77\x00\x79\x01\x78\x00\x59\x1e\xf2\x00\x59\x1e\xf3\x00\x75\x1e\xf4\x00\x59\x1e\xf5\x00\x79\x1e\xf6\x00\x59\x1e\xf7\x00\x79\x1e\xf8\x00\x59\x1e\xf9\x00\x79\x01\x79\x00\x5a\x01\x7a\x00\x7a\x01\x7b\x00\x5a\x01\x7c\x00\x7a\x01\x7d\x00\x5a\x01\x7e\x00\x7a\x01\xfc\x00\xc6\x01\xfd\x00\xe6\x01\xfe\x00\xd8\x01\xff\x00\xf8\x00\x00";
 
-void EncodeDefault(unsigned char *dest, const unsigned char *src, int *len, bool UseExtensions, unsigned char *ExtraAlphabet)
+void EncodeDefault(unsigned char *dest, const unsigned char *src, size_t *len, bool UseExtensions, unsigned char *ExtraAlphabet)
 {
 	int 	i,current=0,j,z;
 	char 	ret;
@@ -960,22 +960,22 @@ void ReadUnicodeFile(unsigned char *Dest, const unsigned char *Source)
 	Dest[current++]	= 0;
 }
 
-INLINE int GetBit(unsigned char *Buffer, int BitNum)
+INLINE int GetBit(unsigned char *Buffer, size_t BitNum)
 {
 	return Buffer[BitNum/8] & 1<<(7-(BitNum%8));
 }
 
-INLINE int SetBit(unsigned char *Buffer, int BitNum)
+INLINE int SetBit(unsigned char *Buffer, size_t BitNum)
 {
 	return Buffer[BitNum/8] |= 1<<(7-(BitNum%8));
 }
 
-int ClearBit(unsigned char *Buffer, int BitNum)
+int ClearBit(unsigned char *Buffer, size_t BitNum)
 {
 	return Buffer[BitNum/8] &= 255 - (1 << (7-(BitNum%8)));
 }
 
-void BufferAlign(unsigned char *Destination, int *CurrentBit)
+void BufferAlign(unsigned char *Destination, size_t *CurrentBit)
 {
 	int i=0;
 
@@ -987,7 +987,7 @@ void BufferAlign(unsigned char *Destination, int *CurrentBit)
 	(*CurrentBit) = (*CurrentBit) + i;
 }
 
-void BufferAlignNumber(int *CurrentBit)
+void BufferAlignNumber(size_t *CurrentBit)
 {
 	int i=0;
 
@@ -999,9 +999,9 @@ void BufferAlignNumber(int *CurrentBit)
 }
 
 void AddBuffer(unsigned char 	*Destination,
-	       int 		*CurrentBit,
+	       size_t		*CurrentBit,
 	       unsigned char 	*Source,
-	       int 		BitsToProcess)
+	       size_t 		BitsToProcess)
 {
 	int i=0;
 
@@ -1017,9 +1017,9 @@ void AddBuffer(unsigned char 	*Destination,
 }
 
 void AddBufferByte(unsigned char *Destination,
-		   int 		 *CurrentBit,
+		   size_t		 *CurrentBit,
 		   unsigned char Source,
-		   int 		 BitsToProcess)
+		   size_t		 BitsToProcess)
 {
 	unsigned char Byte;
 
@@ -1029,9 +1029,9 @@ void AddBufferByte(unsigned char *Destination,
 }
 
 void GetBuffer(unsigned char *Source,
-	       int 	     *CurrentBit,
+	       size_t	     *CurrentBit,
 	       unsigned char *Destination,
-	       int 	     BitsToProcess)
+	       size_t	     BitsToProcess)
 {
 	int i=0;
 
@@ -1047,9 +1047,9 @@ void GetBuffer(unsigned char *Source,
 }
 
 void GetBufferInt(unsigned char *Source,
-		  int 		*CurrentBit,
+		  size_t	*CurrentBit,
 		  int 		*integer,
-		  int 		BitsToProcess)
+		  size_t	BitsToProcess)
 {
 	int l=0,z=128,i=0;
 
@@ -1063,9 +1063,9 @@ void GetBufferInt(unsigned char *Source,
 }
 
 void GetBufferI(unsigned char 	*Source,
-		int 		*CurrentBit,
+		size_t 		*CurrentBit,
 		int 		*result,
-		int 		BitsToProcess)
+		size_t 		BitsToProcess)
 {
 	int l=0,z,i=0;
 
@@ -1762,7 +1762,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-static void EncodeBASE64Block(unsigned char in[3], unsigned char out[4], int len)
+static void EncodeBASE64Block(unsigned char in[3], unsigned char out[4], size_t len)
 {
 	/* BASE64 translation Table as described in RFC1113 */
 	unsigned char cb64[]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -1773,7 +1773,7 @@ static void EncodeBASE64Block(unsigned char in[3], unsigned char out[4], int len
 	out[3] = (unsigned char) (len > 2 ? cb64[ in[2] & 0x3f ] : '=');
 }
 
-void EncodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
+void EncodeBASE64(const unsigned char *Input, unsigned char *Output, size_t Length)
 {
 	unsigned char 	in[3], out[4];
 	int 		i, pos = 0, len, outpos = 0;
@@ -1804,7 +1804,7 @@ static void DecodeBASE64Block(unsigned char in[4], unsigned char out[3])
 	out[2] = (unsigned char) (((in[2] << 6) & 0xc0) | in[3]);
 }
 
-int DecodeBASE64(const unsigned char *Input, unsigned char *Output, int Length)
+int DecodeBASE64(const unsigned char *Input, unsigned char *Output, size_t Length)
 {
 	unsigned char 	cd64[]="|$$$}rstuvwxyz{$$$$$$$>?@ABCDEFGHIJKLMNOPQRSTUVW$$$$$$XYZ[\\]^_`abcdefghijklmnopq";
 	unsigned char 	in[4], out[3], v;

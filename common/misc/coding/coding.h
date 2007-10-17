@@ -70,12 +70,12 @@ void		DecodeISO88591QuotedPrintable	(unsigned char *dest, const unsigned char *s
 void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len);
 
 /* ------------------------------- BASE64 ---------------------------------- */
-void 		EncodeBASE64			(const unsigned char *Input, unsigned char *Output, int Length);
-int 		DecodeBASE64			(const unsigned char *Input, unsigned char *Output, int Length);
+void 		EncodeBASE64			(const unsigned char *Input, unsigned char *Output, size_t Length);
+int 		DecodeBASE64			(const unsigned char *Input, unsigned char *Output, size_t Length);
 
 /* ---------------------- DefaultAlphabet for SMS -------------------------- */
-void 		EncodeDefault			(unsigned char *dest, const unsigned char *src, int *len, bool UseExtensions, unsigned char *ExtraAlphabet);
-void		DecodeDefault			(unsigned char *dest, const unsigned char *src, int len, bool UseExtensions,  unsigned char *ExtraAlphabet);
+void 		EncodeDefault			(unsigned char *dest, const unsigned char *src, size_t *len, bool UseExtensions, unsigned char *ExtraAlphabet);
+void		DecodeDefault			(unsigned char *dest, const unsigned char *src, size_t len, bool UseExtensions,  unsigned char *ExtraAlphabet);
 void 		FindDefaultAlphabetLen		(const unsigned char *src, size_t *srclen, size_t *smslen, size_t maxlen);
 
 int GSM_PackSevenBitsToEight	(int offset, unsigned char *input, unsigned char *output, int length);
@@ -110,19 +110,19 @@ int		GSM_PackSemiOctetNumber		(unsigned char *Number, unsigned char *Output, boo
 
 /* ---------------------------- Bits --------------------------------------- */
 
-void BufferAlign      (unsigned char *Destination, int *CurrentBit);
-void BufferAlignNumber(int *CurrentBit);
+void BufferAlign      (unsigned char *Destination, size_t *CurrentBit);
+void BufferAlignNumber(size_t *CurrentBit);
 
-void AddBuffer	  (unsigned char *Destination, int *CurrentBit, unsigned char *Source, int BitsToProcess);
-void AddBufferByte(unsigned char *Destination, int *CurrentBit, unsigned char Source, int BitsToProcess);
+void AddBuffer	  (unsigned char *Destination, size_t *CurrentBit, unsigned char *Source, size_t BitsToProcess);
+void AddBufferByte(unsigned char *Destination, size_t *CurrentBit, unsigned char Source, size_t BitsToProcess);
 
-void GetBuffer    (unsigned char *Source, int *CurrentBit, unsigned char *Destination, int BitsToProcess);
-void GetBufferInt (unsigned char *Source, int *CurrentBit, int *integer, int BitsToProcess);
-void GetBufferI   (unsigned char *Source, int *CurrentBit, int *result, int BitsToProcess);
+void GetBuffer    (unsigned char *Source, size_t *CurrentBit, unsigned char *Destination, size_t BitsToProcess);
+void GetBufferInt (unsigned char *Source, size_t *CurrentBit, int *integer, size_t BitsToProcess);
+void GetBufferI   (unsigned char *Source, size_t *CurrentBit, int *result, size_t BitsToProcess);
 
-int GetBit   (unsigned char *Buffer, int BitNum);
-int SetBit   (unsigned char *Buffer, int BitNum);
-int ClearBit (unsigned char *Buffer, int BitNum);
+int GetBit   (unsigned char *Buffer, size_t BitNum);
+int SetBit   (unsigned char *Buffer, size_t BitNum);
+int ClearBit (unsigned char *Buffer, size_t BitNum);
 
 /* ---------------------------- Other -------------------------------------- */
 

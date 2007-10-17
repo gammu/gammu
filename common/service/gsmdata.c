@@ -10,7 +10,7 @@
 #include "../misc/coding/coding.h"
 
 /* http://forum.nokia.com: OTA MMS Settings 1.0, OTA Settings 7.0 */
-static void AddWAPSMSParameterText(unsigned char *Buffer, int *Length, unsigned char ID, char *Text, int Len)
+static void AddWAPSMSParameterText(unsigned char *Buffer, size_t *Length, unsigned char ID, char *Text, int Len)
 {
 	int i;
 
@@ -26,7 +26,7 @@ static void AddWAPSMSParameterText(unsigned char *Buffer, int *Length, unsigned 
 }
 
 /* http://forum.nokia.com: OTA MMS Settings 1.0, OTA Settings 7.0 */
-static void AddWAPSMSParameterInt(unsigned char *Buffer, int *Length, unsigned char ID, unsigned char Value)
+static void AddWAPSMSParameterInt(unsigned char *Buffer, size_t *Length, unsigned char ID, unsigned char Value)
 {
 	Buffer[(*Length)++] = 0x87; 			//PARM with attributes
 	Buffer[(*Length)++] = ID;
@@ -331,7 +331,7 @@ void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, size_t *Length, char *
 	Buffer[(*Length)++] = 0x01;			// END (SI)
 }
 
-GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, int *Length, GSM_WAPBookmark *bookmark)
+GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, size_t *Length, GSM_WAPBookmark *bookmark)
 {
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VBKM%c%c",13,10);
 	*Length+=sprintf(Buffer+(*Length), "VERSION:1.0%c%c",13,10);

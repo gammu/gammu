@@ -197,7 +197,7 @@ void GSM_SMSCounter(size_t 		MessageLength,
 		    int 		*SMSNum,
 		    size_t 		*CharsLeft)
 {
-	int			UsedText,FreeBytes;
+	size_t			UsedText,FreeBytes;
 	GSM_MultiSMSMessage 	MultiSMS;
 
 	MultiSMS.Number = 0;
@@ -277,7 +277,8 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 					int			Type)
 {
 	unsigned char 	buff[100],UDHID;
-	int 		p,i;
+	int 		i;
+	size_t p;
 	GSM_UDHHeader	MyUDH;
 
 	for (i=0;i<GSM_MAX_MULTI_SMS;i++) {
@@ -337,8 +338,9 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 {
 	unsigned char	Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
 	unsigned char	Buffer2[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
-	int		smslen,i, Class = -1, j,p;
-	size_t Length = 0;
+	int		i, Class = -1, j;
+	size_t p;
+	size_t Length = 0, smslen;
 	GSM_Error	error;
 	GSM_Coding_Type Coding 	= SMS_Coding_8bit;
 	GSM_UDH		UDH	= UDH_NoUDH;
