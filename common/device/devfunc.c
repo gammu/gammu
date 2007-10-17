@@ -180,6 +180,7 @@ GSM_Error lock_device(const char* port, char **lock_name)
 	const char 	*aux;
 	int 		fd, len;
 	GSM_Error	error = ERR_NONE;
+	size_t wrotebytes;
 
 	dbgprintf("Locking device\n");
 
@@ -270,7 +271,10 @@ GSM_Error lock_device(const char* port, char **lock_name)
 		goto failed;
 	}
 	sprintf(buffer, "%10ld gammu\n", (long)getpid());
-	write(fd, buffer, strlen(buffer));
+	wrotebytes = write(fd, buffer, strlen(buffer));
+	if (wrotebytes != strlen(buffer)) {
+		return ERR_WRITING_FILE;
+	}
 	close(fd);
 	*lock_name = lock_file;
 	return ERR_NONE;
