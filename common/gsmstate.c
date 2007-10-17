@@ -781,11 +781,11 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 		smprintf(s,". If you can, please report it (see <http://cihar.com/gammu/report>). Thank you\n");
 		if (Phone->SentMsg != NULL) {
 			smprintf(s,"LAST SENT frame ");
-			smprintf(s, "type 0x%02X/length %i", Phone->SentMsg->Type, Phone->SentMsg->Length);
+			smprintf(s, "type 0x%02X/length %zd", Phone->SentMsg->Type, Phone->SentMsg->Length);
 			DumpMessage(&s->di, Phone->SentMsg->Buffer, Phone->SentMsg->Length);
 		}
 		smprintf(s, "RECEIVED frame ");
-		smprintf(s, "type 0x%02X/length 0x%02X/%i", msg->Type, msg->Length, msg->Length);
+		smprintf(s, "type 0x%02X/length 0x%02X/%zd", msg->Type, msg->Length, msg->Length);
 		DumpMessage(&s->di, msg->Buffer, msg->Length);
 		smprintf(s, "\n");
 	}
