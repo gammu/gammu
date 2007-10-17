@@ -1440,7 +1440,7 @@ static GSM_Error N6510_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 	GSM_Error		error;
 	GSM_Phone_N6510Data 	*Priv = &s->Phone.Data.Priv.N6510;
 	GSM_NetworkInfo		NetInfo;
-	int			size=200, current;
+	size_t			size=200, current;
 	unsigned char 		GetIDReq[] = {
 		N7110_FRAME_HEADER, 0x01, 0x00, 0x00,
 		0x00, 0xFF, 0x06, 0xE1, 0x00,
