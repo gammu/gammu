@@ -249,7 +249,7 @@ static GSM_SMSMessageLayout N7110_SMSTemplate = {
 static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int			i;
-	int			Width, Height;
+	size_t			Width, Height;
 	unsigned char		output[500], output2[500];
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
@@ -665,7 +665,7 @@ static GSM_Error N7110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 	GSM_Ringtone	dest;
 	GSM_Error	error;
 	GSM_NetworkInfo	NetInfo;
-	int		size=200;
+	size_t		size=200;
 	unsigned char	req[1000] = {0x7C, 0x01, 0x00, 0x0D, 0x00,
 				     0x00, 0x00, 0x00, 0x00, 0x00,
 				     0x00};	  	/*Length*/
@@ -857,7 +857,8 @@ static GSM_Error N7110_ReplySetOperatorLogo(GSM_Protocol_Message msg UNUSED, GSM
 
 static GSM_Error N7110_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 {
-	int		block=0, i, Width, Height;
+	int		block=0, i;
+	size_t Width, Height;
 	unsigned int 	count = 18;
 	char		string[500];
 	unsigned char   req[500] = {N6110_FRAME_HEADER, 0x0b, 0x00,
@@ -928,7 +929,8 @@ static GSM_Error N7110_SetPictureImage(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	unsigned char		folder;
 	GSM_Error		error;
-	int			location, i, count, Width, Height;
+	int			location, i, count;
+	size_t Width, Height;
 	GSM_Phone_Bitmap_Types	Type = GSM_NokiaPictureImage;
 	unsigned char 		req[500] = {N6110_FRAME_HEADER, 0x50, 0x07,
 					    0x00,	/* location	*/
@@ -1001,7 +1003,7 @@ static GSM_Error N7110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 {
 	GSM_Error		error;
 	GSM_Phone_Bitmap_Types	Type;
-	int			Width, Height, i;
+	size_t			Width, Height, i;
 	unsigned char reqStartup[1000] = {N7110_FRAME_HEADER, 0xec,
 		0x15,			/* Startup Logo setting */
 		0x00, 0x00, 0x00, 0x04, 0xc0, 0x02, 0x00,
