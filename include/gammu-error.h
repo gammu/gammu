@@ -251,6 +251,10 @@ typedef enum {
 	 * Internal phone error (phone got crazy).
 	 */
 	ERR_PHONE_INTERNAL,
+	/**
+	 * Could not write to a file (on local filesystem).
+	 */
+	ERR_WRITING_FILE,
 } GSM_Error;
 
 /**
