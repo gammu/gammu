@@ -47,7 +47,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 {
 	GSM_Protocol_Message 	Msg2;
 	GSM_Protocol_ATData 	*d = &s->Protocol.Data.AT;
-	int			i;
+	size_t			i;
 
 	/* These are lines with end of "normal" answers */
 	static char 		*StartStrings[] = {
@@ -123,7 +123,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 							d->Msg.Buffer + d->LineStart,
 							strlen(SpecialAnswers[i].text)) == 0) {
 					/* We need something better here */
-				  	if (s->Phone.Data.RequestID == ID_GetNetworkInfo && 
+				  	if (s->Phone.Data.RequestID == ID_GetNetworkInfo &&
 							strcmp(SpecialAnswers[i].text, "+CREG:") == 0) {
 						i++;
 						continue;

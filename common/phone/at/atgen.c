@@ -2466,7 +2466,7 @@ GSM_Error ATGEN_GetIMEI (GSM_StateMachine *s)
 GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	char 	*start;
-	int	i;
+	size_t	i;
 
 	if (s->Protocol.Data.AT.EditMode) {
 		if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_SMSEdit) {
@@ -5134,7 +5134,8 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 GSM_Error ATGEN_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_CBMessage 	CB;
-	int		i,j;
+	int		i;
+	size_t j;
 	char		Buffer[300],Buffer2[300];
 
 	smprintf(s, "CB received\n");
@@ -5146,14 +5147,16 @@ GSM_Error ATGEN_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	CB.Channel = Buffer[4];
 
 	for (j=0;j<msg.Length;j++) {
-	smprintf(s, "j=%i\n",j);
-	i=GSM_UnpackEightBitsToSeven(0, msg.Buffer[6], msg.Buffer[6], msg.Buffer+j, Buffer2);
-//	i = msg.Buffer[6] - 1;
-//	while (i!=0) {
-//		if (Buffer[i] == 13) i = i - 1; else break;
-//	}
-	DecodeDefault(CB.Text, Buffer2, msg.Buffer[6], false, NULL);
-	smprintf(s, "Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
+		smprintf(s, "j=%i\n",j);
+		i=GSM_UnpackEightBitsToSeven(0, msg.Buffer[6], msg.Buffer[6], msg.Buffer+j, Buffer2);
+#if 0
+		i = msg.Buffer[6] - 1;
+		while (i!=0) {
+			if (Buffer[i] == 13) i = i - 1; else break;
+		}
+#endif
+		DecodeDefault(CB.Text, Buffer2, msg.Buffer[6], false, NULL);
+		smprintf(s, "Channel %i, text \"%s\"\n",CB.Channel,DecodeUnicodeString(CB.Text));
 	}
 	if (s->Phone.Data.EnableIncomingCB && s->User.IncomingCB!=NULL) {
 		s->User.IncomingCB(s,CB);

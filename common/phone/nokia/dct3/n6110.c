@@ -1500,7 +1500,7 @@ static GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachi
         GSM_Phone_Data  *Data = &s->Phone.Data;
         char            buffer[2000];
         GSM_Error       error;
-        int             i,end,start;
+        size_t          i,end,start;
 
         smprintf(s, "Ringtone received\n");
         switch (msg.Buffer[4]) {

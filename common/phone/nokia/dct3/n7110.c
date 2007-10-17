@@ -489,7 +489,8 @@ static int N7110_ReturnBinaryRingtoneLocation(char *model)
 
 static GSM_Error N7110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	int			tmp,i;
+	int			tmp;
+	size_t i;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 
 	smprintf(s, "Ringtone received\n");
