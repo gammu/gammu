@@ -30,8 +30,8 @@ int main(int argc, char **argv)
 	error_handler();
 
 	/* Read it */
-	if (GSM_ReadConfig(cfg, GSM_GetConfig(s, 0), 0) != ERR_NONE)
-		return 2;
+	error = GSM_ReadConfig(cfg, GSM_GetConfig(s, 0), 0);
+	error_handler();
 
 	/* We have one valid configuration */
 	GSM_SetConfigNum(s, 1);
