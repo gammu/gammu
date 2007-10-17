@@ -30,7 +30,7 @@ unsigned char N71_65_MEMORY_TYPES[] = {
 	  0x00,		 0x00
 };
 
-int N71_65_PackPBKBlock(GSM_StateMachine *s, int id, int size, int no, unsigned char *buf, unsigned char *block)
+size_t N71_65_PackPBKBlock(GSM_StateMachine *s, int id, size_t size, int no, unsigned char *buf, unsigned char *block)
 {
 	smprintf(s, "Packing phonebook block with ID = %i, block number = %i, block length = %i\n",id,no+1,size+6);
 
@@ -45,7 +45,7 @@ int N71_65_PackPBKBlock(GSM_StateMachine *s, int id, int size, int no, unsigned 
 	return (size + 6);
 }
 
-int N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry *entry, int *block2, bool DCT4, bool VoiceTag)
+size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_MemoryEntry *entry, size_t *block2, bool DCT4, bool VoiceTag)
 {
 	int		count=0, len, i, block=0, j;
 	unsigned char	string[500];
