@@ -526,7 +526,7 @@ static unsigned char GSM_DefaultAlphabetCharsExtension[][4] =
 
 void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, bool UseExtensions, unsigned char *ExtraAlphabet)
 {
-	int 	i,current=0,j;
+	size_t 	i,current=0,j;
 	bool	FoundSpecial = false;
 
 #ifdef DEBUG
@@ -590,7 +590,7 @@ static unsigned char ConvertTable[] =
 
 void EncodeDefault(unsigned char *dest, const unsigned char *src, size_t *len, bool UseExtensions, unsigned char *ExtraAlphabet)
 {
-	int 	i,current=0,j,z;
+	size_t 	i,current=0,j,z;
 	char 	ret;
 	bool	FoundSpecial,FoundNormal;
 
@@ -1003,7 +1003,7 @@ void AddBuffer(unsigned char 	*Destination,
 	       unsigned char 	*Source,
 	       size_t 		BitsToProcess)
 {
-	int i=0;
+	size_t i=0;
 
 	while (i!=BitsToProcess) {
 		if (GetBit(Source, i)) {
@@ -1033,7 +1033,7 @@ void GetBuffer(unsigned char *Source,
 	       unsigned char *Destination,
 	       size_t	     BitsToProcess)
 {
-	int i=0;
+	size_t i=0;
 
 	while (i!=BitsToProcess) {
 		if (GetBit(Source, (*CurrentBit)+i)) {
@@ -1051,7 +1051,7 @@ void GetBufferInt(unsigned char *Source,
 		  int 		*integer,
 		  size_t	BitsToProcess)
 {
-	int l=0,z=128,i=0;
+	size_t l=0,z=128,i=0;
 
 	while (i!=BitsToProcess) {
 		if (GetBit(Source, (*CurrentBit)+i)) l=l+z;
@@ -1067,7 +1067,7 @@ void GetBufferI(unsigned char 	*Source,
 		int 		*result,
 		size_t 		BitsToProcess)
 {
-	int l=0,z,i=0;
+	size_t l=0,z,i=0;
 
 	z = 1<<(BitsToProcess-1);
 
@@ -1776,7 +1776,7 @@ static void EncodeBASE64Block(unsigned char in[3], unsigned char out[4], size_t 
 void EncodeBASE64(const unsigned char *Input, unsigned char *Output, size_t Length)
 {
 	unsigned char 	in[3], out[4];
-	int 		i, pos = 0, len, outpos = 0;
+	size_t 		i, pos = 0, len, outpos = 0;
 
 	while (pos < Length) {
 		len = 0;
@@ -1808,7 +1808,7 @@ int DecodeBASE64(const unsigned char *Input, unsigned char *Output, size_t Lengt
 {
 	unsigned char 	cd64[]="|$$$}rstuvwxyz{$$$$$$$>?@ABCDEFGHIJKLMNOPQRSTUVW$$$$$$XYZ[\\]^_`abcdefghijklmnopq";
 	unsigned char 	in[4], out[3], v;
-	int 		i, len, pos = 0, outpos = 0;
+	size_t 		i, len, pos = 0, outpos = 0;
 
 	while (pos < Length) {
 		len = 0;

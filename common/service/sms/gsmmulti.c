@@ -272,12 +272,12 @@ static void GSM_EncodeSMS30MultiPartSMS(GSM_MultiPartSMSInfo *Info,
 /* Alcatel docs from www.alcatel.com/wap/ahead */
 GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 					unsigned char 		*Data,
-					int			Len,
+					size_t			Len,
 					unsigned char		*Name,
-					int			Type)
+					size_t			Type)
 {
 	unsigned char 	buff[100],UDHID;
-	int 		i;
+	size_t 		i;
 	size_t p;
 	GSM_UDHHeader	MyUDH;
 
@@ -295,7 +295,7 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 		SMS->SMS[i].UDH.Text[0] = 6 + SMS->SMS[i].UDH.Text[3];
 		SMS->SMS[i].UDH.Length  = SMS->SMS[i].UDH.Text[0] + 1;
 
-		if (Len > 140 - SMS->SMS[i].UDH.Length) {
+		if (Len > (size_t)(140 - SMS->SMS[i].UDH.Length)) {
 			MyUDH.Type = UDH_ConcatenatedMessages;
 			GSM_EncodeUDHHeader(&MyUDH);
 
@@ -678,7 +678,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 		}
 #endif
 		Info->UnicodeCoding = false;
-		for (smslen=0;smslen<(int)(UnicodeLength(Info->Entries[0].Buffer)*2);smslen++) {
+		for (smslen = 0; smslen < UnicodeLength(Info->Entries[0].Buffer) * 2; smslen++) {
 			if (Info->Entries[0].Buffer[smslen] != Buffer[smslen]) {
 				Info->UnicodeCoding = true;
 				dbgprintf("Setting to Unicode %i\n",smslen);

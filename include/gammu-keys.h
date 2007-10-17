@@ -14,6 +14,7 @@
 
 #include <gammu-error.h>
 #include <gammu-statemachine.h>
+#include <string.h>
 
 /**
  * Key event identifiers.
@@ -128,7 +129,7 @@ typedef enum {
  *
  * \ingroup Keys
  */
-GSM_Error MakeKeySequence(char *text, GSM_KeyCode * KeyCode, int *Length);
+GSM_Error MakeKeySequence(char *text, GSM_KeyCode * KeyCode, size_t *Length);
 
 /**
  * Emulates key press or key release.
