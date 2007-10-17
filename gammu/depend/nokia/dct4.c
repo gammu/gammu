@@ -672,7 +672,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 
 	long		wavfilesize=0;
 	unsigned char	FileName[100], Buffer[10000], Token;
-	unsigned int 	Location, size=0, CurrentLocation = 0, TokenLocation;
+	size_t 	Location, size=0, CurrentLocation = 0, TokenLocation;
 	int		i;
 	FILE		*WAVFile;
 	GSM_Error error;
