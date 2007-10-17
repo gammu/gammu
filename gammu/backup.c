@@ -16,7 +16,8 @@ void SaveFile(int argc, char *argv[])
 {
 	GSM_Error error;
 	GSM_Backup		Backup;
-	int			i,j;
+	int			i;
+	size_t j;
 	FILE			*file;
 	unsigned char		Buffer[10000];
 	GSM_MemoryEntry		*pbk;
@@ -137,7 +138,9 @@ void SaveFile(int argc, char *argv[])
 	}
 
 	file = fopen(argv[3],"wb");
-	fwrite(Buffer,1,j,file);
+	if (j != fwrite(Buffer,1,j,file)) {
+		printf_err(_("Error while writing file!\n"));
+	}
 	fclose(file);
 }
 

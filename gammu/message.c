@@ -995,9 +995,12 @@ void DecodeMMSFile(GSM_File *file, int num)
 	if (num != -1 && answer_yes(_("Do you want to save this MMS file"))) {
 		sprintf(buff,"%i_0",num);
 		file2 = fopen(buff,"wb");
-		fwrite(file->Buffer, 1, file->Used, file2);
+		if (fwrite(file->Buffer, 1, file->Used, file2) != file->Used) {
+			printf_err(_("Error while saving to file %s!\n"), buff);
+		} else {
+			printf(_("Saved to file %s\n"),buff);
+		}
 		fclose(file2);
-		printf(_("Saved to file %s\n"),buff);
 	}
 
 	for (i=0;i<GSM_MAX_MULTI_MMS;i++) info.Entries[i].File.Buffer = NULL;
@@ -1073,9 +1076,12 @@ void DecodeMMSFile(GSM_File *file, int num)
 		if (num != -1 && answer_yes(_("Do you want to save this attachment"))) {
 			sprintf(buff,"%i_%i_%s",num,i+1,DecodeUnicodeString(info.Entries[i].File.Name));
 			file2 = fopen(buff,"wb");
-			fwrite(info.Entries[i].File.Buffer, 1, info.Entries[i].File.Used, file2);
+			if (fwrite(info.Entries[i].File.Buffer, 1, info.Entries[i].File.Used, file2) != info.Entries[i].File.Used) {
+				printf_err(_("Error while saving to file %s!\n"), buff);
+			} else {
+				printf(_("Saved to file %s\n"),buff);
+			}
 			fclose(file2);
-			printf(_("Saved to file %s\n"),buff);
 		}
 
 	}
@@ -2117,7 +2123,9 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			ReplaceFile = fopen(argv[i], "rb");
 			if (ReplaceFile == NULL) Print_Error(ERR_CANTOPENFILE);
 			memset(ReplaceBuffer,0,sizeof(ReplaceBuffer));
-			fread(ReplaceBuffer,1,sizeof(ReplaceBuffer),ReplaceFile);
+			if (fread(ReplaceBuffer,1,sizeof(ReplaceBuffer),ReplaceFile) != sizeof(ReplaceBuffer)) {
+				printf_err(_("Error while writing file!\n"));
+			}
 			fclose(ReplaceFile);
 			ReadUnicodeFile(ReplaceBuffer2,ReplaceBuffer);
 			for(j=0;j<(int)(UnicodeLength(Buffer[0]));j++) {
