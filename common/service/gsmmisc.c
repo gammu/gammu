@@ -354,7 +354,7 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 	char *charset = NULL;
 	char *begin, *pos, *end;
 	bool quoted_printable = false;
-	size_t numtokens, token, remtokens;
+	size_t numtokens, token;
 	size_t i, j, len;
 	bool found;
 	bool ret = false;
@@ -407,8 +407,6 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 	pos += len;
 	/* No need to check this token anymore */
 	tokens[0][0] = 0;
-	/* We've already checked one token */
-	remtokens = numtokens - 1;
 
 	/* Check remaining tokens */
 	while (*pos != ':') {
@@ -426,6 +424,7 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 				continue;
 			}
 			if (strncmp(pos, tokens[token], len) == 0) {
+				dbgprintf("Found %s\n", tokens[token]);
 				/* Advance position */
 				pos += len;
 				/* We need to check one token less */
@@ -482,6 +481,14 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 	pos++;
 	/* Length of rest */
 	len = strlen(pos);
+
+	/* Did we match all our tokens? */
+	for (token = 0; token < numtokens; token++) {
+		if (strlen(tokens[token]) > 0) {
+			dbgprintf("All tokens did not match!\n");
+			goto fail;
+		}
+	}
 
 	/* Decode the text */
 	if (charset == NULL) {
@@ -545,7 +552,7 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 	}
 
 	ret = true;
-	dbgprintf("ReadVCalText is \"%s\"\n", DecodeUnicodeConsole(Value));
+	dbgprintf("ReadVCalText(%s) is \"%s\"\n", Start, DecodeUnicodeConsole(Value));
 fail:
 	free(line);
 	free(tokens);
