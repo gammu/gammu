@@ -15,6 +15,7 @@
 #include <gammu-types.h>
 #include <gammu-error.h>
 #include <gammu-statemachine.h>
+#include <string.h>
 
 /**
  * WAP bookmark data.
