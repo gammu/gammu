@@ -5038,7 +5038,7 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 	GSM_Error	error;
 	unsigned char 	frame[40];
 	char key[20];
-	int len;
+	size_t len;
 	unsigned char unicode_key[20];
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
