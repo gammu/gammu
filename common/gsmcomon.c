@@ -139,6 +139,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_UNCONFIGURED,		N_("Gammu is not configured.")},
 	{ERR_WRONGFOLDER,		N_("Wrong folder used.")},
 	{ERR_PHONE_INTERNAL,		N_("Internal phone error.")},
+	{ERR_WRITING_FILE,		N_("Error writing file to disk.")},
 
 	{0,				""}
 };
