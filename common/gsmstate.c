@@ -699,7 +699,7 @@ static GSM_Error CheckReplyFunctions(GSM_StateMachine *s, GSM_Reply_Function *Re
 				} else execute=true;
 			}
 		} else {
-			if ((int)strlen(Reply[i].msgtype)<msg->Length) {
+			if (strlen(Reply[i].msgtype) < msg->Length) {
 				if (strncmp(Reply[i].msgtype,msg->Buffer,strlen(Reply[i].msgtype))==0) {
 					execute=true;
 				}

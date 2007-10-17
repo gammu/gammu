@@ -879,7 +879,7 @@ struct _GSM_Reply_Function {
 	 * Which character of message should be checked as subtype. Zero to
 	 * disable subtype checking.
 	 */
-	int			subtypechar;
+	size_t			subtypechar;
 	/**
 	 * Subtype to be checked.
 	 */
