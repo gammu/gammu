@@ -23,6 +23,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 	unsigned char		Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
 	int 			i,UsedText,j,Width,Height,z,x,y;
 	ssize_t			Length;
+	size_t EncodeLength;
 	unsigned int		Len;
 	int 			Used,FreeText,FreeBytes,Width2,CopiedText,CopiedSMSText;
 	unsigned char		UDHID;
@@ -119,26 +120,26 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,4,true,&UsedText,&CopiedText,&CopiedSMSText);
 			}
 
-			Length = 128; /* 128 bytes is maximal length from specs */
+			EncodeLength = 128; /* 128 bytes is maximal length from specs */
 			switch (Entry->ID) {
 			case SMS_EMSSound10:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &Length, 1.0, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, 1.0, true);
 				break;
 			case SMS_EMSSound12:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &Length, 1.2, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, 1.2, true);
 				break;
 			case SMS_EMSSonyEricssonSound:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &Length, 0, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, 0, true);
 				break;
 			default:
 				break;
 			}
 
 			Buffer[0] = 0x0C;	/* ID for EMS sound 	*/
-			Buffer[1] = Length+1;	/* Length of rest 	*/
+			Buffer[1] = EncodeLength+1;	/* Length of rest 	*/
 			Buffer[2] = 0x00; 	/* Position in EMS msg 	*/
-			GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,Length+3,true,&UsedText,&CopiedText,&CopiedSMSText);
-			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-Length-1] = UsedText;
+			GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,EncodeLength+3,true,&UsedText,&CopiedText,&CopiedSMSText);
+			SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-EncodeLength-1] = UsedText;
 			break;
 		case SMS_EMSSonyEricssonSoundLong:
 		case SMS_EMSSound10Long:
@@ -146,16 +147,16 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			Ring = *Entry->Ringtone;
 
 			/* First check if we can use classic format */
-			Length = 128; /* 128 bytes is maximal length from specs */
+			EncodeLength = 128; /* 128 bytes is maximal length from specs */
 			switch (Entry->ID) {
 			case SMS_EMSSound10Long:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.0, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 1.0, true);
 				break;
 			case SMS_EMSSound12Long:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.2, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 1.2, true);
 				break;
 			case SMS_EMSSonyEricssonSoundLong:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 0, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 0, true);
 				break;
 			default:
 				break;
@@ -170,10 +171,10 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				}
 
 				Buffer[0] = 0x0C;	/* ID for EMS sound 	*/
-				Buffer[1] = Length+1;	/* Length of rest 	*/
+				Buffer[1] = EncodeLength+1;	/* Length of rest 	*/
 				Buffer[2] = 0x00; 	/* Position in EMS msg 	*/
-				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,Length+3,true,&UsedText,&CopiedText,&CopiedSMSText);
-				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-Length-1] = UsedText;
+				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,EncodeLength+3,true,&UsedText,&CopiedText,&CopiedSMSText);
+				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-EncodeLength-1] = UsedText;
 				break;
 			}
 
@@ -190,6 +191,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			Used 		= 0;
 			FreeBytes 	= 0;
 			start		= true;
+			EncodeLength = Length;
 			while (1) {
 				if (FreeBytes != 0) {
 					z = 0;
@@ -199,17 +201,17 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 					}
 					Ring.NoteTone.NrCommands -= FreeBytes;
 					if (Ring.NoteTone.NrCommands == 0) break;
-					Length = 128; /* 128 bytes is maximal length from specs */
+					EncodeLength = 128; /* 128 bytes is maximal length from specs */
 				}
 				switch (Entry->ID) {
 				case SMS_EMSSound10Long:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.0, start);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 1.0, start);
 					break;
 				case SMS_EMSSound12Long:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.2, start);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 1.2, start);
 					break;
 				case SMS_EMSSonyEricssonSoundLong:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 0, start);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 0, start);
 					break;
 				default:
 					break;
@@ -244,6 +246,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			/* Saving */
 			FreeBytes = 0;
 			start	  = true;
+			EncodeLength = Length;
 			while (1) {
 				if (FreeBytes != 0) {
 					z = 0;
@@ -253,26 +256,26 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 					}
 					Ring.NoteTone.NrCommands -= FreeBytes;
 					if (Ring.NoteTone.NrCommands == 0) break;
-					Length = 128; /* 128 bytes is maximal length from specs */
+					EncodeLength = 128; /* 128 bytes is maximal length from specs */
 				}
 				switch (Entry->ID) {
 				case SMS_EMSSound10Long:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.0, start);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 1.0, start);
 					break;
 				case SMS_EMSSound12Long:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 1.2, start);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 1.2, start);
 					break;
 				case SMS_EMSSonyEricssonSoundLong:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &Length, 0, start);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 0, start);
 					break;
 				default:
 					break;
 				}
 				Buffer[0] = 0x0C;	/* ID for EMS sound 	*/
-				Buffer[1] = Length+1;	/* Length of rest 	*/
+				Buffer[1] = EncodeLength+1;	/* Length of rest 	*/
 				Buffer[2] = 0x00; 	/* Position in EMS msg 	*/
-				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,Length+3,true,&UsedText,&CopiedText,&CopiedSMSText);
-				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-Length-1] = UsedText;
+				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,EncodeLength+3,true,&UsedText,&CopiedText,&CopiedSMSText);
+				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-EncodeLength-1] = UsedText;
 				start = false;
 			}
 
