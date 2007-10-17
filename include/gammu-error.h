@@ -255,6 +255,14 @@ typedef enum {
 	 * Could not write to a file (on local filesystem).
 	 */
 	ERR_WRITING_FILE,
+	/**
+	 * No such section exists.
+	 */
+	ERR_NONE_SECTION,
+	/**
+	 * Using default values.
+	 */
+	ERR_USING_DEFAULTS,
 } GSM_Error;
 
 /**
