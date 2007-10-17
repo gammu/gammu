@@ -358,7 +358,7 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 	char *line = NULL;
 	char **tokens = NULL;
 	char *charset = NULL;
-	char *begin, *pos, *end;
+	char *begin, *pos, *end, *end2;
 	bool quoted_printable = false;
 	size_t numtokens, token;
 	size_t i, j, len;
@@ -446,17 +446,18 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 				pos += 25;
 				found = true;
 			} else if (strncmp(pos, "CHARSET=", 8) == 0) {
-				quoted_printable = true;
 				/* Advance position */
 				pos += 8;
 				/* Grab charset */
-				end = strchr(pos, ';');
-				if (end == NULL) {
-					end = strchr(pos, ':');
-				}
-				if (end == NULL) {
+				end = strchr(pos, ':');
+				end2 = strchr(pos, ';');
+				if (end == NULL && end2 == NULL) {
 					dbgprintf("Could not read charset!\n");
 					goto fail;
+				} else if (end == NULL) {
+					end = end2;
+				} else if (end2 != NULL && end2 < end) {
+					end = end2;
 				}
 				/* We basically want strndup, but it is not portable */
 				charset = strdup(pos);
