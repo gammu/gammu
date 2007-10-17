@@ -347,6 +347,12 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
 	return tmp;
 }
 
+/**
+ * We separate matching text (Start) to tokens and then try to find all
+ * tokens in Buffer. We also accept tokens like PREF, CHARSET or ENCODING.
+ *
+ * When all tokens are matched we found matching line.
+ */
 bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 {
 	char *line = NULL;
