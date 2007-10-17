@@ -235,8 +235,8 @@ typedef struct {
 	 */
 	GSM_AT_Charset		IRACharset;
 	GSM_AT_SBNR		PBKSBNR;
-	int			NumberLength;
-	int			TextLength;
+	size_t			NumberLength;
+	size_t			TextLength;
 	int			MemorySize;
 
 	GSM_SMSMemoryStatus	LastSMSStatus;
