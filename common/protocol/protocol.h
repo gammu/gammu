@@ -20,7 +20,7 @@ typedef struct {
 	unsigned char 	Source;
 	unsigned char 	Destination;
 	unsigned char	*Buffer;
-	int		BufferUsed;
+	size_t		BufferUsed;
 	unsigned char 	CheckSum[2];
 } GSM_Protocol_Message;
 
