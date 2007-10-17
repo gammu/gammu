@@ -539,7 +539,7 @@ static GSM_Error DCT4_ReplyGetSecurityCode(GSM_Protocol_Message msg, GSM_StateMa
 {
 	if (msg.Length > 12) {
 		SecLength = msg.Buffer[13];
-		if ((msg.Buffer[17]+18) == msg.Length) {
+		if ((size_t)(msg.Buffer[17]+18) == msg.Length) {
 			printf(_("Security code is %s\n"),msg.Buffer+18);
 //			DumpMessage(stdout, msg.Buffer, msg.Length);
 		}
@@ -577,7 +577,7 @@ void DCT4GetSecurityCode(int argc, char *argv[])
 
 static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
-	int 		i=18,j;
+	size_t i=18,j;
 	unsigned char	Buffer[100];
 
 	switch (msg.Buffer[3]) {
@@ -614,7 +614,7 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMac
  				sprintf(sm->Phone.Data.PhoneString,"%s->wav",DecodeUnicodeString(Buffer));
 				return ERR_NONE;
 			}
-			if (i != msg.Buffer[9] - 1) {
+			if (i != (size_t)msg.Buffer[9] - 1) {
 				j+=msg.Buffer[j] + 1;
 				if (msg.Buffer[j] == 0x00 && msg.Buffer[j+1]==0x00) j+=2;
 				j+=23;
