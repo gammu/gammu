@@ -66,13 +66,13 @@ void GSM_Find_Free_Used_SMS2(GSM_Coding_Type Coding,GSM_SMSMessage SMS, size_t *
 GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
 		      		GSM_Coding_Type		Coding,
 		      		char 			*Buffer,
-		      		int			BufferLen,
+		      		size_t			BufferLen,
 		      		bool 			UDH,
-		      		int 			*UsedText,
-		      		int			*CopiedText,
-		      		int			*CopiedSMSText)
+		      		size_t 			*UsedText,
+		      		size_t			*CopiedText,
+		      		size_t			*CopiedSMSText)
 {
-	int FreeText,FreeBytes,Copy,i,j;
+	size_t FreeText,FreeBytes,Copy,i,j;
 
 	dbgprintf("Checking used\n");
 	GSM_Find_Free_Used_SMS2(Coding,SMS->SMS[SMS->Number], UsedText, &FreeText, &FreeBytes);
@@ -143,13 +143,13 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
 
 void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 			  unsigned char		*MessageBuffer,
-			  int			MessageLength,
+			  size_t		MessageLength,
 			  GSM_UDH		UDHType,
 			  GSM_Coding_Type	Coding,
 			  int			Class,
 			  unsigned char		ReplaceMessage)
 {
-	int 		j,Len,UsedText,CopiedText,CopiedSMSText;
+	size_t 		j,Len,UsedText,CopiedText,CopiedSMSText;
 	unsigned char 	UDHID;
 	GSM_DateTime 	Date;
 
@@ -190,12 +190,12 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 }
 
 /* Calculates number of SMS and number of left chars in SMS */
-void GSM_SMSCounter(int 		MessageLength,
+void GSM_SMSCounter(size_t 		MessageLength,
 		    unsigned char 	*MessageBuffer,
 		    GSM_UDH	 	UDHType,
 		    GSM_Coding_Type 	Coding,
 		    int 		*SMSNum,
-		    int 		*CharsLeft)
+		    size_t 		*CharsLeft)
 {
 	int			UsedText,FreeBytes;
 	GSM_MultiSMSMessage 	MultiSMS;
