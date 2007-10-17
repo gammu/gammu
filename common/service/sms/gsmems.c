@@ -21,12 +21,12 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				    GSM_UDH			UDHType)
 {
 	unsigned char		Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
-	int 			i,j,Height,z,x,y;
+	size_t			i,j,Height,z,x,y;
 	ssize_t			Length;
 	size_t EncodeLength;
 	unsigned int		Len;
 	size_t FreeText,FreeBytes,UsedText,Width;
-	int 			Used,Width2,CopiedText,CopiedSMSText;
+	size_t 			Used,Width2,CopiedText,CopiedSMSText;
 	unsigned char		UDHID;
 	GSM_Bitmap		Bitmap,Bitmap2;
 	GSM_Ringtone		Ring;
