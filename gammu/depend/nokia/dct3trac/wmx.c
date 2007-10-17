@@ -157,7 +157,7 @@ static void mdircv_data(unsigned char type, unsigned char *buffer, size_t length
 
 static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
-	int 			x;
+	size_t 			x;
 	int 			id,timestamp,number,length;
 	struct wmx_tracetype 	*wmx_minor;
 	char 			*desc;
@@ -290,7 +290,7 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 
 static GSM_Error DCT3_ReplyMyPacket(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
-	int x;
+	size_t x;
 
 	printf("MyPacket ");
 	for(x=0; x<msg.Length; x++) {
