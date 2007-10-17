@@ -150,11 +150,12 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode
 GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 {
 	FILE		*file;
-	unsigned char	buffer[300];
+	unsigned char buffer[10];
+	size_t readbytes;
 
 	file = fopen(FileName, "rb");
 	if (file == NULL) return ERR_CANTOPENFILE;
-	fread(buffer, 1, 9, file); /* Read the header of the file. */
+	readbytes = fread(buffer, 1, 9, file); /* Read the header of the file. */
 	fclose(file);
 
 	GSM_ClearBackup(backup);
@@ -170,9 +171,9 @@ GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
 		return LoadICS(FileName,backup);
 	} else if (memcmp(buffer, "LMB ",4)==0) {
 		return LoadLMB(FileName,backup);
-	} else if (buffer[0] == 0xFE && buffer[1] == 0xFF) {
+	} else if (readbytes >= 2 && buffer[0] == 0xFE && buffer[1] == 0xFF) {
 		return LoadBackup(FileName,backup,true);
-	} else if (buffer[0] == 0xFF && buffer[1] == 0xFE) {
+	} else if (readbytes >= 2 && buffer[0] == 0xFF && buffer[1] == 0xFE) {
 		return LoadBackup(FileName,backup,true);
 	} else {
 		return LoadBackup(FileName,backup,false);
