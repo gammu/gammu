@@ -1267,7 +1267,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
      	 * wake up the phone and does nothing.
      	 */
     	smprintf(s, "Sending simple AT command to wake up some devices\n");
-	GSM_WaitFor(s, "AT\r", 3, 0x00, 2, ID_IncomingFrame);
+	error = GSM_WaitFor(s, "AT\r", 3, 0x00, 2, ID_IncomingFrame);
 
 	/* We want to see our commands to allow easy detection of reply functions */
 	smprintf(s, "Enabling echo\n");
@@ -1285,7 +1285,8 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	/* Try whether phone supports mode switching as Motorola phones. */
 	smprintf(s, "Trying Motorola mode switch\n");
-	if (GSM_WaitFor(s, "AT+MODE=2\r", 10, 0x00, 3, ID_ModeSwitch) != ERR_NONE) {
+	error = GSM_WaitFor(s, "AT+MODE=2\r", 10, 0x00, 3, ID_ModeSwitch);
+	if (error != ERR_NONE) {
 		smprintf(s, "Seems not to be supported\n");
 		Priv->Mode = false;
 	} else {

@@ -447,7 +447,8 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
 		if (error != ERR_NONE) return error;
 
 		dbgprintf ("Detaching binary mode\n");
-		GSM_WaitFor (s, detach_buffer, 4, 0x02, ALCATEL_TIMEOUT, ID_AlcatelDetach);
+		error = GSM_WaitFor (s, detach_buffer, 4, 0x02, ALCATEL_TIMEOUT, ID_AlcatelDetach);
+		if (error != ERR_NONE) return error;
 
 		Priv->BinaryState = StateAttached;
 		Priv->BinaryType = 0;
@@ -543,7 +544,7 @@ static GSM_Error ALCATEL_SetATMode(GSM_StateMachine *s)
 	 * phone takes VERY long to react next time. The error code in
 	 * intetionally ignored.
 	 */
-	GSM_WaitFor (s, "AT\r", 3, 0x00, 0, ID_IncomingFrame);
+	error = GSM_WaitFor (s, "AT\r", 3, 0x00, 0, ID_IncomingFrame);
 
 	return ERR_NONE;
 }

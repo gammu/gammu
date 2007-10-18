@@ -88,10 +88,12 @@ extern void GSM_InitLocales(const char *path);
 #if __GNUC__
 #define UNUSED __attribute__ ((unused))
 #define NORETURN __attribute__ ((noreturn))
+#define WARNUNUSED __attribute__ ((__warn_unused_result__))
 #define INLINE inline
 #else
 #define UNUSED
 #define NORETURN
+#define WARNUNUSED
 #define INLINE
 #endif
 
