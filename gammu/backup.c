@@ -27,7 +27,7 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[4],&Backup);
+		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], false));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.Calendar[i]!=NULL) {
@@ -45,7 +45,7 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[4],&Backup);
+		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], false));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.WAPBookmark[i]!=NULL) {
@@ -63,7 +63,7 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[4],&Backup);
+		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], false));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.Note[i]!=NULL) {
@@ -81,7 +81,7 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[4],&Backup);
+		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], false));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.ToDo[i]!=NULL) {
@@ -99,7 +99,7 @@ void SaveFile(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location and memory type?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[4],&Backup);
+		error=GSM_ReadBackupFile(argv[4],&Backup,GSM_GuessBackupFormat(argv[4], false));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		if (strcasecmp(argv[5],"SM") == 0) {
@@ -172,7 +172,7 @@ void DoBackup(int argc, char *argv[])
 	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
 
 	GSM_ClearBackup(&Backup);
-	GSM_GetBackupFormatFeatures(argv[2],&Info);
+	GSM_GetBackupFormatFeatures(GSM_GuessBackupFormat(argv[2], false),&Info);
 
 	sprintf(Backup.Creator,"Gammu %s",VERSION);
 	if (strlen(GetOS()) != 0) {
@@ -789,7 +789,7 @@ void DoBackup(int argc, char *argv[])
 
 	GSM_Terminate();
 
-	GSM_SaveBackupFile(argv[2],&Backup, Info.UseUnicode);
+	GSM_SaveBackupFile(argv[2], &Backup, GSM_GuessBackupFormat(argv[2], Info.UseUnicode));
     	GSM_FreeBackup(&Backup);
 }
 
@@ -815,7 +815,7 @@ void Restore(int argc, char *argv[])
 	bool			Past = true, First;
 	bool			Found, DoRestore;
 
-	error=GSM_ReadBackupFile(argv[2],&Backup);
+	error=GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], false));
 	if (error!=ERR_NOTIMPLEMENTED) {
 		Print_Error(error);
 	} else {
@@ -1384,7 +1384,7 @@ void AddNew(int argc, char *argv[])
 	GSM_WAPBookmark		Bookmark;
 	int			i, max;
 
-	error=GSM_ReadBackupFile(argv[2],&Backup);
+	error=GSM_ReadBackupFile(argv[2],&Backup,GSM_GuessBackupFormat(argv[2], false));
 	if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 
 	signal(SIGINT, interrupt);

@@ -21,6 +21,7 @@ ChangeLog
 [-] * Fixed several bugs in vCard decoder.
 [!] * GSM_ReadConfig now returns GSM_Error instead of just bool.
 [!] * Many functions now use size_t for passing size values.
+[!] * Backups API now rather accepts format than guessing by filename.
 [!] * Increased soname due to API/ABI changes.
 
 20071016 - 1.13.94

@@ -76,7 +76,7 @@ int main(int argc, char **argv)
 
 	/* Read file content */
 	GSM_ClearBackup(&backup);
-	if (GSM_ReadBackupFile(argv[2], &backup) != ERR_NONE) {
+	if (GSM_ReadBackupFile(argv[2], &backup, GSM_Backup_GammuUCS2) != ERR_NONE) {
 		printf("Error reading backup from %s\n", argv[2]);
 		return 1;
 	}

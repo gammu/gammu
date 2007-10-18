@@ -1434,7 +1434,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
+		error=GSM_ReadBackupFile(argv[3+startarg],&Backup,GSM_GuessBackupFormat(argv[3+startarg], false));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.WAPBookmark[i]!=NULL) {
@@ -1457,7 +1457,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
+		error=GSM_ReadBackupFile(argv[3+startarg],&Backup,GSM_GuessBackupFormat(argv[3+startarg], false));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.WAPSettings[i]!=NULL) {
@@ -1500,7 +1500,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
+		error=GSM_ReadBackupFile(argv[3+startarg],&Backup,GSM_GuessBackupFormat(argv[3+startarg], false));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.MMSSettings[i]!=NULL) {
@@ -1536,7 +1536,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
+		error=GSM_ReadBackupFile(argv[3+startarg],&Backup,GSM_GuessBackupFormat(argv[3+startarg], false));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.Calendar[i]!=NULL) {
@@ -1558,7 +1558,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
+		error=GSM_ReadBackupFile(argv[3+startarg],&Backup,GSM_GuessBackupFormat(argv[3+startarg], false));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		while (Backup.ToDo[i]!=NULL) {
@@ -1580,7 +1580,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			printf("%s\n", _("Where is backup filename and location and memory type?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[3+startarg],&Backup);
+		error=GSM_ReadBackupFile(argv[3+startarg],&Backup,GSM_GuessBackupFormat(argv[3+startarg], false));
 		if (error!=ERR_NOTIMPLEMENTED) Print_Error(error);
 		i = 0;
 		if (strcasecmp(argv[4+startarg],"SM") == 0) {

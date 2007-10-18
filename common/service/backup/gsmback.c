@@ -130,27 +130,35 @@ void GSM_FreeBackup(GSM_Backup *backup)
 	}
 }
 
+GSM_BackupFormat GSM_GuessBackupFormat(const char *FileName, const bool UseUnicode) {
+	GSM_BackupFormat Format = -1;
+
+	if (strcasestr(FileName,".lmb")) {
+		Format = GSM_Backup_LMB;
+	} else if (strcasestr(FileName,".vcs")) {
+		Format = GSM_Backup_VCalendar;
+	} else if (strcasestr(FileName,".vcf")) {
+		Format = GSM_Backup_VCard;
+	} else if (strcasestr(FileName,".ldif")) {
+		Format = GSM_Backup_LDIF;
+	} else if (strcasestr(FileName,".ics")) {
+		Format = GSM_Backup_ICS;
+	} else {
+		if (UseUnicode) {
+			Format = GSM_Backup_GammuUCS2;
+		} else {
+			Format = GSM_Backup_Gammu;
+		}
+	}
+	return Format;
+}
+
 GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, GSM_BackupFormat Format)
 {
 	if (Format == GSM_Backup_Auto || Format == GSM_Backup_AutoUnicode) {
-		if (strcasestr(FileName,".lmb")) {
-			Format = GSM_Backup_LMB;
-		} else if (strcasestr(FileName,".vcs")) {
-			Format = GSM_Backup_VCalendar;
-		} else if (strcasestr(FileName,".vcf")) {
-			Format = GSM_Backup_VCard;
-		} else if (strcasestr(FileName,".ldif")) {
-			Format = GSM_Backup_LDIF;
-		} else if (strcasestr(FileName,".ics")) {
-			Format = GSM_Backup_ICS;
-		} else {
-			if (Format == GSM_Backup_Auto) {
-				Format = GSM_Backup_Gammu;
-			} else {
-				Format = GSM_Backup_GammuUCS2;
-			}
-		}
+		Format = GSM_GuessBackupFormat(FileName, Format == GSM_Backup_AutoUnicode);
 	}
+
 	switch (Format) {
 		case GSM_Backup_LMB:
 			return SaveLMB(FileName,backup);
@@ -171,36 +179,31 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, GSM_BackupForma
 	}
 }
 
-GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup)
+GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup *backup, GSM_BackupFormat Format)
 {
-	FILE		*file;
-	unsigned char buffer[10];
-	size_t readbytes;
-
-	file = fopen(FileName, "rb");
-	if (file == NULL) return ERR_CANTOPENFILE;
-	readbytes = fread(buffer, 1, 9, file); /* Read the header of the file. */
-	fclose(file);
-
 	GSM_ClearBackup(backup);
 
-	/* Attempt to identify filetype */
-	if (strcasestr(FileName,".vcs")) {
-		return LoadVCalendar(FileName,backup);
-	} else if (strcasestr(FileName,".vcf")) {
-		return LoadVCard(FileName,backup);
-	} else if (strcasestr(FileName,".ldif")) {
-		return LoadLDIF(FileName,backup);
-	} else if (strcasestr(FileName,".ics")) {
-		return LoadICS(FileName,backup);
-	} else if (memcmp(buffer, "LMB ",4)==0) {
-		return LoadLMB(FileName,backup);
-	} else if (readbytes >= 2 && buffer[0] == 0xFE && buffer[1] == 0xFF) {
-		return LoadBackup(FileName,backup,true);
-	} else if (readbytes >= 2 && buffer[0] == 0xFF && buffer[1] == 0xFE) {
-		return LoadBackup(FileName,backup,true);
-	} else {
-		return LoadBackup(FileName,backup,false);
+	if (Format == GSM_Backup_Auto || Format == GSM_Backup_AutoUnicode) {
+		Format = GSM_GuessBackupFormat(FileName, Format == GSM_Backup_AutoUnicode);
+	}
+
+	switch (Format) {
+		case GSM_Backup_LMB:
+			return LoadLMB(FileName,backup);
+		case GSM_Backup_VCalendar:
+			return LoadVCalendar(FileName,backup);
+		case GSM_Backup_VCard:
+			return LoadVCard(FileName,backup);
+		case GSM_Backup_LDIF:
+			return LoadLDIF(FileName,backup);
+		case GSM_Backup_ICS:
+			return LoadICS(FileName,backup);
+		case GSM_Backup_Gammu:
+			return LoadBackup(FileName,backup);
+		case GSM_Backup_GammuUCS2:
+			return LoadBackup(FileName,backup);
+		default:
+			return ERR_FILENOTSUPPORTED;
 	}
 }
 
@@ -233,7 +236,7 @@ void GSM_ClearBackup(GSM_Backup *backup)
 	backup->MD5Calculated	[0] = 0;
 }
 
-void GSM_GetBackupFormatFeatures(char *FileName, GSM_Backup_Info *info)
+void GSM_GetBackupFormatFeatures(GSM_BackupFormat Format, GSM_Backup_Info *info)
 {
 	info->UseUnicode	= false;
 	info->IMEI 		= false;
@@ -258,50 +261,60 @@ void GSM_GetBackupFormatFeatures(char *FileName, GSM_Backup_Info *info)
 	info->GPRSPoint		= false;
 	info->Note		= false;
 
-	if (strstr(FileName,".lmb")) {
-		info->PhonePhonebook 	= true;
-		info->SIMPhonebook 	= true;
-		info->CallerLogos 	= true;
-		info->StartupLogo 	= true;
-	} else if (strstr(FileName,".vcs")) {
-		info->ToDo		= true;
-		info->Calendar 		= true;
-	} else if (strstr(FileName,".vcf")) {
-		info->PhonePhonebook	= true;
-	} else if (strstr(FileName,".ics")) {
-		info->ToDo		= true;
-		info->Calendar 		= true;
-	} else if (strstr(FileName,".ldif")) {
-		info->PhonePhonebook	= true;
-	} else {
-		info->UseUnicode	= true;
-		info->IMEI 		= true;
-		info->Model 		= true;
-		info->DateTime 		= true;
-		info->PhonePhonebook 	= true;
-		info->SIMPhonebook 	= true;
-		info->ToDo		= true;
-		info->Calendar 		= true;
-		info->CallerLogos 	= true;
-		info->SMSC 		= true;
-		info->WAPBookmark 	= true;
-		info->WAPSettings 	= true;
-		info->MMSSettings 	= true;
-		info->SyncMLSettings 	= true;
-		info->ChatSettings 	= true;
-		info->Ringtone 		= true;
-		info->StartupLogo 	= true;
-		info->OperatorLogo 	= true;
-		info->Profiles 		= true;
- 		info->FMStation 	= true;
-		info->GPRSPoint		= true;
-		info->Note		= true;
+	switch (Format) {
+		case GSM_Backup_LMB:
+			info->PhonePhonebook 	= true;
+			info->SIMPhonebook 	= true;
+			info->CallerLogos 	= true;
+			info->StartupLogo 	= true;
+			break;
+		case GSM_Backup_VCalendar:
+			info->ToDo		= true;
+			info->Calendar 		= true;
+			break;
+		case GSM_Backup_VCard:
+			info->PhonePhonebook	= true;
+			break;
+		case GSM_Backup_LDIF:
+			info->PhonePhonebook	= true;
+			break;
+		case GSM_Backup_ICS:
+			info->ToDo		= true;
+			info->Calendar 		= true;
+			break;
+		case GSM_Backup_Gammu:
+		case GSM_Backup_GammuUCS2:
+			info->UseUnicode	= true;
+			info->IMEI 		= true;
+			info->Model 		= true;
+			info->DateTime 		= true;
+			info->PhonePhonebook 	= true;
+			info->SIMPhonebook 	= true;
+			info->ToDo		= true;
+			info->Calendar 		= true;
+			info->CallerLogos 	= true;
+			info->SMSC 		= true;
+			info->WAPBookmark 	= true;
+			info->WAPSettings 	= true;
+			info->MMSSettings 	= true;
+			info->SyncMLSettings 	= true;
+			info->ChatSettings 	= true;
+			info->Ringtone 		= true;
+			info->StartupLogo 	= true;
+			info->OperatorLogo 	= true;
+			info->Profiles 		= true;
+			info->FMStation 	= true;
+			info->GPRSPoint		= true;
+			info->Note		= true;
+			break;
+		default:
+			break;
 	}
 }
 
-void GSM_GetBackupFileFeatures(char *FileName, GSM_Backup_Info *info, GSM_Backup *backup)
+void GSM_GetBackupFileFeatures(GSM_BackupFormat Format, GSM_Backup_Info *info, GSM_Backup *backup)
 {
-	GSM_GetBackupFormatFeatures(FileName, info);
+	GSM_GetBackupFormatFeatures(Format, info);
 
 	if (info->PhonePhonebook && backup->PhonePhonebook[0] == NULL) info->PhonePhonebook = false;
 	if (info->SIMPhonebook   && backup->SIMPhonebook[0]   == NULL) info->SIMPhonebook   = false;
