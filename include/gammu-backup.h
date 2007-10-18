@@ -330,7 +330,7 @@ typedef enum {
 	 * Gammu own format can store almost anything from phone.
 	 *
 	 * This is ASCII version of the format, Unicode strings are HEX
-	 * encoded.
+	 * encoded. Use GSM_Backup_GammuUCS2 instead if possible.
 	 */
 	GSM_Backup_Gammu,
 	/**
