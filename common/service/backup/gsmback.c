@@ -130,20 +130,44 @@ void GSM_FreeBackup(GSM_Backup *backup)
 	}
 }
 
-GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, bool UseUnicode)
+GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup *backup, GSM_BackupFormat Format)
 {
-	if (strcasestr(FileName,".lmb")) {
-		return SaveLMB(FileName,backup);
-	} else if (strcasestr(FileName,".vcs")) {
-		return SaveVCalendar(FileName,backup);
-	} else if (strcasestr(FileName,".vcf")) {
-		return SaveVCard(FileName,backup);
-	} else if (strcasestr(FileName,".ldif")) {
-		return SaveLDIF(FileName,backup);
-	} else if (strcasestr(FileName,".ics")) {
-		return SaveICS(FileName,backup);
-	} else {
-		return SaveBackup(FileName,backup, UseUnicode);
+	if (Format == GSM_Backup_Auto || Format == GSM_Backup_AutoUnicode) {
+		if (strcasestr(FileName,".lmb")) {
+			Format = GSM_Backup_LMB;
+		} else if (strcasestr(FileName,".vcs")) {
+			Format = GSM_Backup_VCalendar;
+		} else if (strcasestr(FileName,".vcf")) {
+			Format = GSM_Backup_VCard;
+		} else if (strcasestr(FileName,".ldif")) {
+			Format = GSM_Backup_LDIF;
+		} else if (strcasestr(FileName,".ics")) {
+			Format = GSM_Backup_ICS;
+		} else {
+			if (Format == GSM_Backup_Auto) {
+				Format = GSM_Backup_Gammu;
+			} else {
+				Format = GSM_Backup_GammuUCS2;
+			}
+		}
+	}
+	switch (Format) {
+		case GSM_Backup_LMB:
+			return SaveLMB(FileName,backup);
+		case GSM_Backup_VCalendar:
+			return SaveVCalendar(FileName,backup);
+		case GSM_Backup_VCard:
+			return SaveVCard(FileName,backup);
+		case GSM_Backup_LDIF:
+			return SaveLDIF(FileName,backup);
+		case GSM_Backup_ICS:
+			return SaveICS(FileName,backup);
+		case GSM_Backup_Gammu:
+			return SaveBackup(FileName,backup, false);
+		case GSM_Backup_GammuUCS2:
+			return SaveBackup(FileName,backup, true);
+		default:
+			return ERR_FILENOTSUPPORTED;
 	}
 }
 
