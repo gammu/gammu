@@ -412,7 +412,7 @@ msgstr "¿Qué formato de archivo (\"%s\") ?\n"
 
 #: gammu/backup.c:142 gammu/files.c:437 gammu/message.c:2127
 msgid "Error while writing file!\n"
-msgstr "¡Error escribiendo en el archivo!"
+msgstr "¡Error escribiendo en el archivo!\n"
 
 #: gammu/backup.c:188 gammu/backup.c:826 gammu/backup.c:1391
 #: gammu/calendar.c:605 gammu/calendar.c:931 gammu/calendar.c:1006
