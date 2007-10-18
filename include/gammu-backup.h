@@ -25,7 +25,7 @@
  *
  * \todo This should not be hardcoded.
  */
-#define GSM_BACKUP_MAX_SMS 10000
+#define GSM_BACKUP_MAX_SMS 100000
 
 /**
  * SMS backup data.
