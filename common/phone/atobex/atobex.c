@@ -656,7 +656,7 @@ GSM_Error ATOBEX_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 	GSM_Error 		error;
 
 	if (Status->MemoryType == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) 
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_GetMemoryStatus(s, Status);
 	}
@@ -671,7 +671,7 @@ GSM_Error ATOBEX_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) 
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_GetMemory(s, entry);
 	}
@@ -686,7 +686,7 @@ GSM_Error ATOBEX_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) 
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_GetNextMemory(s, entry, start);
 	}
@@ -701,11 +701,11 @@ GSM_Error ATOBEX_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) 
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_SetMemory(s, entry);
-	} 
-	
+	}
+
 atgen:
 	if ((error = ATOBEX_SetATMode(s))!= ERR_NONE) return error;
 	return ATGEN_SetMemory(s, entry);
@@ -716,7 +716,7 @@ GSM_Error ATOBEX_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) 
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_AddMemory(s, entry);
 	}
@@ -731,7 +731,7 @@ GSM_Error ATOBEX_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error 		error;
 
 	if (entry->MemoryType == MEM_ME) {
-		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE) 
+		if ((error = ATOBEX_SetOBEXMode(s, OBEX_IRMC))!= ERR_NONE)
 			goto atgen;
 		return OBEXGEN_DeleteMemory(s, entry);
 	}
@@ -1279,7 +1279,7 @@ GSM_Error ATOBEX_ReplyGetBatteryCharge(GSM_Protocol_Message msg, GSM_StateMachin
 
 GSM_Error ATOBEX_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 {
-	GSM_Error error;
+	GSM_Error error, error2;
 	int	i = 0;
 	GSM_Phone_ATOBEXData	*Priv = &s->Phone.Data.Priv.ATOBEX;
 
@@ -1310,7 +1310,10 @@ GSM_Error ATOBEX_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
 		i++;
 	}
 	/* Disable reading information */
-	GSM_WaitFor (s, "AT*EBCA=0\r", 10, 0x00, 3, ID_GetBatteryCharge);
+	error2 = GSM_WaitFor (s, "AT*EBCA=0\r", 10, 0x00, 3, ID_GetBatteryCharge);
+	if (error2 != ERR_NONE) {
+		return error;
+	}
 	/* If something failed, do AT way */
 	if (error != ERR_NONE) {
 		return ATGEN_GetBatteryCharge(s, bat);

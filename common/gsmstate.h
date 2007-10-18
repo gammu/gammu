@@ -26,6 +26,7 @@
 #include <gammu-security.h>
 #include <gammu-callback.h>
 #include <gammu-settings.h>
+#include <gammu-misc.h>
 
 typedef struct _GSM_User	 	GSM_User;
 typedef struct _GSM_Reply_Function	GSM_Reply_Function;
@@ -1567,7 +1568,7 @@ GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, unsigned const char *buffer,
 
 GSM_Error GSM_WaitFor			(GSM_StateMachine *s, unsigned const char *buffer,
 		       			 int length, unsigned char type, int timeout,
-					 GSM_Phone_RequestID request);
+					 GSM_Phone_RequestID request) WARNUNUSED;
 
 GSM_Error GSM_DispatchMessage		(GSM_StateMachine *s);
 
