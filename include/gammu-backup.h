@@ -356,16 +356,32 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup * Backup,
 			     GSM_BackupFormat Format);
 
 /**
+ * Guesses backup format based on filename.
+ *
+ * \ingroup Backup
+ *
+ * \param Filename Name of backup filename.
+ * \param UseUnicode Whether to prefer unicode variant when guessing.
+ *
+ * \return Backup format on success -1 on error.
+ */
+GSM_BackupFormat GSM_GuessBackupFormat(const char *FileName,
+		const bool UseUnicode);
+
+/**
  * Reads data from backup file.
  *
  * \ingroup Backup
  *
  * \param FileName Name of file (format is detected from it).
  * \param backup structure where backup data will be stored
+ * \param Format Format of backup. For Gammu backups, unicode subformats
+ * are ignored.
  *
  * \return Error code
  */
-GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup * backup);
+GSM_Error GSM_ReadBackupFile(char *FileName, GSM_Backup * backup,
+		GSM_BackupFormat Format);
 
 /**
  * Clears backup structure
@@ -423,7 +439,7 @@ typedef struct {
  *
  * \ingroup Backup
  */
-void GSM_GetBackupFormatFeatures(char *FileName, GSM_Backup_Info * info);
+void GSM_GetBackupFormatFeatures(GSM_BackupFormat Format, GSM_Backup_Info * info);
 
 /**
  * Gets information about backup data features (resp. which data it contains).
@@ -434,7 +450,7 @@ void GSM_GetBackupFormatFeatures(char *FileName, GSM_Backup_Info * info);
  *
  * \ingroup Backup
  */
-void GSM_GetBackupFileFeatures(char *FileName, GSM_Backup_Info * info,
+void GSM_GetBackupFileFeatures(GSM_BackupFormat Format, GSM_Backup_Info * info,
 			       GSM_Backup * backup);
 #endif
 

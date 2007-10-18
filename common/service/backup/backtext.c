@@ -2844,7 +2844,7 @@ static void ReadNoteEntry(INI_Section *file_info, char *section, GSM_NoteEntry *
 	ReadBackupText(file_info, section, buffer, Note->Text,UseUnicode);
 }
 
-GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
+GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 {
 	INI_Section		*file_info, *h;
 	char			buffer[100], *readvalue;
@@ -2852,6 +2852,20 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup, bool UseUnicode)
 	GSM_MemoryEntry 	PBK;
 	bool			found;
 	GSM_Error		error;
+	bool UseUnicode = false;
+	FILE		*file;
+	unsigned char guessbuffer[10];
+	size_t readbytes;
+
+	file = fopen(FileName, "rb");
+	if (file == NULL) return ERR_CANTOPENFILE;
+	readbytes = fread(guessbuffer, 1, 9, file); /* Read the header of the file. */
+	fclose(file);
+	if ((guessbuffer[0] == 0xFE && guessbuffer[1] == 0xFF) ||
+			(guessbuffer[0] == 0xFF && guessbuffer[1] == 0xFE)) {
+		UseUnicode = true;
+	}
+
 
 	error = INI_ReadFile(FileName, UseUnicode, &file_info);
 	if (error != ERR_NONE) {
