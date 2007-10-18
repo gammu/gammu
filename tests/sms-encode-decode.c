@@ -19,6 +19,11 @@ int main(int argc UNUSED, char** argv UNUSED) {
     SMSInfo.Entries[0].ID			= SMS_ConcatenatedTextLong;
     SMSInfo.UnicodeCoding   		= false;
     error = GSM_EncodeMultiPartSMS(&SMSInfo,&sms);
+
+    /* Just set some values to sender so that we don't print mess */
+    EncodeUnicode(sms.SMS[0].Number, "321", GSM_MAX_NUMBER_LENGTH);
+    EncodeUnicode(sms.SMS[1].Number, "321", GSM_MAX_NUMBER_LENGTH);
+
     if (error != ERR_NONE) {
         printf("GSM_EncodeMultiPartSMS failed!\n");
         return 1;
