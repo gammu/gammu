@@ -7,9 +7,7 @@
  */
 
 /**
- * @defgroup StateMachine State machine data
- *
- * This module implements core of state machine.
+ * \addtogroup StateMachine
  *
  * @{
  */
