@@ -1277,9 +1277,9 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	 * (with reset), otherwise they return ERROR on anything!
 	 */
 	if (error == ERR_UNKNOWN) {
-		GSM_WaitFor(s, "AT+CFUN=1,1\r", 12, 0x00, 3, ID_Reset);
+		error = GSM_WaitFor(s, "AT+CFUN=1,1\r", 12, 0x00, 3, ID_Reset);
 		if (error != ERR_NONE) return error;
-		GSM_WaitFor(s, "ATE1\r", 5, 0x00, 3, ID_EnableEcho);
+		error = GSM_WaitFor(s, "ATE1\r", 5, 0x00, 3, ID_EnableEcho);
 	}
 	if (error != ERR_NONE) return error;
 
