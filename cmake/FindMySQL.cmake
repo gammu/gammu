@@ -58,7 +58,9 @@ if (NOT DEFINED MYSQL_FOUND)
 		/usr/local/include
 		/usr/local/include/mysql 
 		/usr/local/mysql/include
+		/usr/local/mysql/include/mysql
 		/usr/include 
+		/usr/include/mysql
 		${MYSQL_ADD_INCLUDE_DIR}
 	)
 
