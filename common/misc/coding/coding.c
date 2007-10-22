@@ -800,7 +800,7 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 
 	/* Check length */
 	if (length > GSM_MAX_NUMBER_LENGTH) {
-		dbgprintf("Number too big, not decoding!\n");
+		dbgprintf("Number too big, not decoding! (Length=%d, MAX=%d)\n", length, GSM_MAX_NUMBER_LENGTH);
 		goto out;
 	}
 
