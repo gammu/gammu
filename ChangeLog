@@ -20,6 +20,7 @@ ChangeLog
 [-] * Correctly check various return values (bug #409).
 [-] * Fixed several bugs in vCard decoder.
 [+] * SMSD now logs also error descriptions.
+[+] * SMSD can be configured not to check for security status.
 [!] * GSM_ReadConfig now returns GSM_Error instead of just bool.
 [!] * Many functions now use size_t for passing size values.
 [!] * Backups API now rather accepts format than guessing by filename.

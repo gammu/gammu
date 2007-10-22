@@ -142,10 +142,12 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	if (str) Config->sendtimeout=atoi(str); else Config->sendtimeout = 10;
 	str = INI_GetValue(smsdcfgfile, "smsd", "receivefrequency", false);
 	if (str) Config->receivefrequency=atoi(str); else Config->receivefrequency = 0;
+	str = INI_GetValue(smsdcfgfile, "smsd", "checksecurity", false);
+	if (str) Config->checksecurity=atoi(str); else Config->checksecurity = 1;
 	str = INI_GetValue(smsdcfgfile, "smsd", "resetfrequency", false);
 	if (str) Config->resetfrequency=atoi(str); else Config->resetfrequency = 0;
-	if (log) WriteSMSDLog(_("commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"),
-			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency);
+	if (log) WriteSMSDLog("commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i, checksecurity=%i",
+			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency, Config->checksecurity);
 
 	Config->deliveryreport = INI_GetValue(smsdcfgfile, "smsd", "deliveryreport", false);
 	if (Config->deliveryreport == NULL || (strncasecmp(Config->deliveryreport, "log", 3) != 0 && strncasecmp(Config->deliveryreport, "sms", 3) != 0)) {
@@ -651,11 +653,14 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 		if ((difftime(time(NULL), lastreceive) >= Config.receivefrequency) || (SendingSMSStatus != ERR_NONE)) {
 	 		lastreceive = time(NULL);
 
-			if (!SMSD_CheckSecurity(&Config)) {
+
+			if (Config.checksecurity && !SMSD_CheckSecurity(&Config)) {
 				errors++;
 				initerrors++;
 				continue;
-			} else errors=0;
+			} else {
+				errors=0;
+			}
 
 			initerrors = 0;
 
