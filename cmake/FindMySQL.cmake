@@ -38,17 +38,21 @@ if(UNIX)
             ARGS --libs
             OUTPUT_VARIABLE MY_TMP)
 
-        string(REGEX REPLACE "-L([^ ]*)( .*)?" "\\1 " MYSQL_LIBS "${MY_TMP}")
         set(MYSQL_ADD_LIBRARIES "")
 
-        foreach(LIB ${MYSQL_LIBS})
+        string(REGEX MATCHALL "-l[^ ]*" MYSQL_LIB_LIST "${MY_TMP}")
+        foreach(LIB ${MYSQL_LIB_LIST})
             string(REGEX REPLACE "[ ]*-l([^ ]*)" "\\1" LIB "${LIB}")
             list(APPEND MYSQL_ADD_LIBRARIES "${LIB}")
         endforeach(LIB ${MYSQL_LIBS})
 
-        string(REGEX REPLACE "-L([^ ]*)( .*)?" "\\1" MY_TMP "${MY_TMP}")
+        set(MYSQL_ADD_LIBRARY_PATH "")
 
-        set(MYSQL_ADD_LIBRARY_PATH ${MY_TMP} CACHE FILEPATH INTERNAL)
+        string(REGEX MATCHALL "-L[^ ]*" MYSQL_LIBDIR_LIST "${MY_TMP}")
+        foreach(LIB ${MYSQL_LIBDIR_LIST})
+            string(REGEX REPLACE "[ ]*-L([^ ]*)" "\\1" LIB "${LIB}")
+            list(APPEND MYSQL_ADD_LIBRARY_PATH "${LIB}")
+        endforeach(LIB ${MYSQL_LIBS})
 
     else(MYSQL_CONFIG)
         set(MYSQL_ADD_LIBRARIES "")
@@ -59,7 +63,7 @@ else(UNIX)
     set(MYSQL_ADD_LIBRARY_PATH "c:/msys/local/lib" CACHE FILEPATH INTERNAL)
 ENDIF(UNIX)
 
-if (NOT DEFINED MYSQL_FOUND)
+if(NOT DEFINED MYSQL_FOUND)
 
     find_path(MYSQL_INCLUDE_DIR mysql.h
         /usr/local/include
