@@ -149,10 +149,10 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine * s);
  * \ingroup StateMachine
  *
  * \param s State machine data
- * \param wait Whether to wait for some event
+ * \param waitforreply Whether to wait for some event
  * \return Number of read bytes
  */
-int GSM_ReadDevice(GSM_StateMachine * s, bool wait);
+int GSM_ReadDevice(GSM_StateMachine * s, bool waitforreply);
 
 /**
  * Detects whether state machine is connected.
