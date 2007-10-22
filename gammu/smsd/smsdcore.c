@@ -258,7 +258,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	error=GSM_GetSecurityStatus(s,&SecurityCode.Type);
 	/* Unknown error */
 	if (error != ERR_NOTSUPPORTED && error != ERR_NONE) {
-		WriteSMSDLog(_("Error getting security status (%i)"), error);
+		WriteSMSDLog(_("Error getting security status (%s:%i)"), GSM_ErrorString(error), error);
 		return false;
 	}
 	/* No supported - do not check more */
@@ -275,10 +275,10 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 			strcpy(SecurityCode.Code,Config->PINCode);
 			error=GSM_EnterSecurityCode(s,SecurityCode);
 			if (error == ERR_SECURITYERROR) {
-				GSM_Terminate_SMSD(_("ERROR: incorrect PIN"), error, true, -1);
+				GSM_Terminate_SMSD(_("ERROR: incorrect PIN (%s:%i)"), error, true, -1);
 			}
 			if (error != ERR_NONE) {
-				WriteSMSDLog(_("Error entering PIN (%i)"), error);
+				WriteSMSDLog(_("Error entering PIN (%s:%i)"), GSM_ErrorString(error), error);
 				return false;
 		  	}
 		}
@@ -288,7 +288,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	case SEC_Puk:
 	case SEC_Puk2:
 	case SEC_Phone:
-		GSM_Terminate_SMSD(_("ERROR: phone requires not supported code type"), 0, true, -1);
+		GSM_Terminate_SMSD(_("ERROR: phone requires not supported code type (%s:%i)"), ERR_UNKNOWN, true, -1);
 	case SEC_None:
 		break;
 	}
@@ -403,15 +403,15 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 			}
 			if (process) {
 	 			Service->SaveInboxSMS(sms, Config);
-				if (Config->RunOnReceive != NULL) { 
-					SMSD_RunOnReceive(sms,Config); 
+				if (Config->RunOnReceive != NULL) {
+					SMSD_RunOnReceive(sms,Config);
 				}
 			} else {
 				WriteSMSDLog(_("Excluded %s"), buffer);
 			}
 			break;
 		default:
-	 		WriteSMSDLog(_("Error getting SMS (%i)"), error);
+	 		WriteSMSDLog(_("Error getting SMS (%s:%i)"), GSM_ErrorString(error), error);
 			return false;
 		}
 		if (error == ERR_NONE && sms.SMS[0].InboxFolder) {
@@ -423,7 +423,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				case ERR_EMPTY:
 					break;
 				default:
-					WriteSMSDLog(_("Error deleting SMS (%i)"), error);
+					WriteSMSDLog(_("Error deleting SMS (%s:%i)"), GSM_ErrorString(error), error);
 					return false;
 				}
 			}
@@ -441,7 +441,7 @@ bool SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	/* Do we have any SMS in phone ? */
 	error=GSM_GetSMSStatus(s,&SMSStatus);
 	if (error != ERR_NONE) {
-		WriteSMSDLog(_("Error getting SMS status (%i)"), error);
+		WriteSMSDLog(_("Error getting SMS status (%s:%i)"), GSM_ErrorString(error), error);
 		return false;
 	}
 	/* Yes. We have SMS in phone */
@@ -595,7 +595,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 
 	error = Service->Init(&Config);
 	if (error!=ERR_NONE) {
-		GSM_Terminate_SMSD(_("Initialisation failed, stopping Gammu smsd (%i)"), error, true, -1);
+		GSM_Terminate_SMSD(_("Initialisation failed, stopping Gammu smsd (%s:%i)"), error, true, -1);
 	}
 
 	signal(SIGINT, interrupt);
@@ -626,7 +626,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 					} else {
 						error = Service->InitAfterConnect(&Config);
 						if (error!=ERR_NONE) {
-							GSM_Terminate_SMSD(_("Post initialisation failed, stopping Gammu smsd (%i)"), error, true, -1);
+							GSM_Terminate_SMSD(_("Post initialisation failed, stopping Gammu smsd (%s:%i)"), error, true, -1);
 						}
 						GSM_SetFastSMSSending(s,true);
 					}
@@ -641,9 +641,9 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 				}
 				break;
 			case ERR_DEVICEOPENERROR:
-				GSM_Terminate_SMSD(_("Can't open device (%i)"), error, true, -1);
+				GSM_Terminate_SMSD(_("Can't open device (%s:%i)"), error, true, -1);
 			default:
-				WriteSMSDLog(_("Error at init connection (%i)"), error);
+				WriteSMSDLog(_("Error at init connection (%s:%i)"), GSM_ErrorString(error), error);
 				errors = 250;
 			}
 			continue;
