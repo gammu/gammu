@@ -6,9 +6,11 @@
 #  MYSQL_FOUND, If false, do not try to use MySQL.
 #
 # Copyright (c) 2006, Jaroslaw Staniek, <js@iidea.pl>
+# Lot of adustmens by Michal Cihar <michal@cihar.com>
+#
+# vim: expandtab sw=4 ts=4 sts=4:
 #
 # Redistribution and use is allowed according to the terms of the BSD license.
-# For details see the accompanying COPYING-CMAKE-SCRIPTS file.
 
 
 IF(UNIX) 
