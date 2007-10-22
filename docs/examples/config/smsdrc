@@ -37,6 +37,7 @@
 # receivefrequency - the number of seconds between testing for received SMSes, when the phone
 #                    is busy sending SMSes. Normally a test for received SMSes is done every commtimeout
 #                    seconds and after each sent SMS. Default: 0 (not used)
+# checksecurity - whether to check if phone wants to enter PIN, default is 1 (enabled)
 # resetfrequency - the number of seconds between performing a preventive soft reset in order
 #                  to minimize the cases of hanging phones e.g. Nokia 5110 will sometimes
 #                  freeze to a state when only after unmounting the battery the phone will be functional again.
@@ -58,6 +59,7 @@ logfile = smsdlog
 commtimeout = 1
 sendtimeout = 10
 #receivefrequency = 0
+#checksecurity = 1
 #resetfrequency = 0
 #deliveryreport = no
 #phoneid = MyPhone1

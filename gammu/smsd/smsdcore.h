@@ -31,6 +31,7 @@ typedef struct {
 	unsigned char   *deliveryreport, *logfilename,  *PINCode;
 	unsigned char	*PhoneID;
 	unsigned char   *RunOnReceive;
+	bool checksecurity;
 
 	/* options for FILES */
 	unsigned char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
