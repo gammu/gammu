@@ -544,7 +544,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 	return ERR_UNCONFIGURED;
 }
 
-int GSM_ReadDevice (GSM_StateMachine *s, bool wait)
+int GSM_ReadDevice (GSM_StateMachine *s, bool waitforreply)
 {
 	unsigned char	buff[255];
 	int		res = 0, count;
@@ -556,7 +556,7 @@ int GSM_ReadDevice (GSM_StateMachine *s, bool wait)
 	i=Date.Second;
 	while (i==Date.Second) {
 		res = s->Device.Functions->ReadDevice(s, buff, 255);
-		if (!wait) break;
+		if (!waitforreply) break;
 		if (res > 0) break;
 		my_sleep(5);
 		GSM_GetCurrentDateTime(&Date);
