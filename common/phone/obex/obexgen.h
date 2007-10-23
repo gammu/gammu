@@ -46,6 +46,20 @@ typedef enum {
 	OBEX_BrowsingFolders,
 } OBEX_Service;
 
+/**
+ * Description of what is IrMC end point able to do.
+ */
+typedef struct {
+	/**
+	 * Information Exchange Level.
+	 */
+	int IEL;
+	/**
+	 * Support for hard deletes?
+	 */
+	bool HD;
+} IRMC_Capability;
+
 typedef struct {
 	int				FilesLocationsUsed;
 	int				FilesLocationsCurrent;
@@ -88,9 +102,9 @@ typedef struct {
 	 */
 	bool				UpdatePbLUID;
 	/**
-	 * Information Exchange Level for phonebook.
+	 * Capabilities for phonebook.
 	 */
-	int				PbIEL;
+	IRMC_Capability			PbCap;
 	/**
 	 * Complete phonebook data.
 	 */
@@ -160,9 +174,9 @@ typedef struct {
 	 */
 	bool				UpdateCalLUID;
 	/**
-	 * Information Exchange Level for calendar.
+	 * Capabilities for calendar.
 	 */
-	int				CalIEL;
+	IRMC_Capability			CalCap;
 	/**
 	 * Complete calendar data.
 	 */
@@ -200,9 +214,9 @@ typedef struct {
 	 */
 	bool				UpdateNoteLUID;
 	/**
-	 * Information Exchange Level for note.
+	 * Capabilities for note.
 	 */
-	int				NoteIEL;
+	IRMC_Capability			NoteCap;
 	/**
 	 * Complete note data.
 	 */

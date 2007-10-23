@@ -198,6 +198,15 @@ GSM_Error OBEXGEN_Connect(GSM_StateMachine *s, OBEX_Service service)
 }
 
 /**
+ * Clears any flags in IrMC capabilities structure.
+ */
+void IRMC_InitCapabilities(IRMC_Capability *Cap)
+{
+	Cap->IEL = -1;
+	Cap->HD = false;
+}
+
+/**
  * Initializes OBEX internal variables. To be used by other who need
  * OBEX protocol, but don't need it's init.
  */
@@ -213,7 +222,6 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->PbIndexCount = 0;
 	Priv->PbData = NULL;
 	Priv->PbCount = -1;
-	Priv->PbIEL = -1;
 	Priv->CalLUID = NULL;
 	Priv->CalLUIDCount = 0;
 	Priv->CalIndex = NULL;
@@ -223,7 +231,6 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->TodoLUIDCount = 0;
 	Priv->TodoIndex = NULL;
 	Priv->TodoIndexCount = 0;
-	Priv->CalIEL = -1;
 	Priv->CalCount = -1;
 	Priv->TodoCount = -1;
 	Priv->CalOffsets = NULL;
@@ -240,8 +247,11 @@ GSM_Error OBEXGEN_InitialiseVars(GSM_StateMachine *s)
 	Priv->NoteIndexCount = 0;
 	Priv->NoteData = NULL;
 	Priv->NoteCount = -1;
-	Priv->NoteIEL = -1;
 	Priv->NoteOffsets = NULL;
+
+	IRMC_InitCapabilities(&(Priv->NoteCap));
+	IRMC_InitCapabilities(&(Priv->PbCap));
+	IRMC_InitCapabilities(&(Priv->CalCap));
 
 	return ERR_NONE;
 }
@@ -601,12 +611,13 @@ static GSM_Error OBEXGEN_ReplyAddFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle UNUSED)
+GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle UNUSED, bool HardDelete)
 {
 	GSM_Error		error;
 	size_t			j;
 	unsigned int		Current = 0;
 	unsigned char 		req[2000];
+	unsigned char		hard_delete_header[2] = {'\x12', '\x0'};
 
 	s->Phone.Data.File = File;
 
@@ -630,6 +641,11 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		req[Current++] = (File->Used >> 16) & 0xff;
 		req[Current++] = (File->Used >> 8) & 0xff;
 		req[Current++] = File->Used & 0xff;
+
+		/* Application data block for hard delete */
+		if (HardDelete) {
+			OBEXAddBlock(req, &Current, 0x4c, hard_delete_header, 2);
+		}
 	}
 
 	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
@@ -671,7 +687,7 @@ GSM_Error OBEXGEN_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int
 
 	/* Add file */
 	smprintf(s,"Adding file\n");
-	error = OBEXGEN_PrivAddFilePart(s, File, Pos, Handle);
+	error = OBEXGEN_PrivAddFilePart(s, File, Pos, Handle, false);
 
 	/* Calculate path of added file if we're done */
 	if (error == ERR_EMPTY) {
@@ -693,7 +709,7 @@ GSM_Error OBEXGEN_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, in
 	smprintf(s,"Sending file\n");
 	File->ID_FullName[0] = 0;
 	File->ID_FullName[1] = 0;
-	error = OBEXGEN_PrivAddFilePart(s, File, Pos, Handle);
+	error = OBEXGEN_PrivAddFilePart(s, File, Pos, Handle, false);
 	if (error != ERR_NONE) return error;
 
 	/* Calculate path of added file */
@@ -1163,7 +1179,7 @@ GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char **
 /**
  * Sets single file on filesystem, file can be created or updated.
  */
-GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned char *Buffer, size_t Length)
+GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned char *Buffer, size_t Length, bool HardDelete)
 {
 	GSM_Error	error = ERR_NONE;
 	GSM_File 	File;
@@ -1177,7 +1193,7 @@ GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 
 	/* Send file */
 	while (error == ERR_NONE) {
-		error = OBEXGEN_PrivAddFilePart(s, &File, &Pos, &Handle);
+		error = OBEXGEN_PrivAddFilePart(s, &File, &Pos, &Handle, HardDelete);
 	}
 	if (error != ERR_EMPTY) return error;
 
@@ -1198,7 +1214,7 @@ GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
  *  * Number of free records
  *  * Number of used records
  */
-GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_out, int *used_out, int *IEL_save)
+GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_out, int *used_out, IRMC_Capability *Cap)
 {
 	char *pos;
 	int IEL;
@@ -1209,6 +1225,7 @@ GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_
 	char used_text[] = "Total-Records:";
 	char maximum_text[] = "Maximum-Records:";
 	char IEL_text[] = "IEL:";
+	char HD_text[] = "HD:";
 
 	smprintf(s, "OBEX info data:\n---\n%s\n---\n", data);
 
@@ -1257,8 +1274,25 @@ GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_
 			return ERR_INVALIDDATA;
 	}
 
-	if (IEL_save != NULL) {
-		*IEL_save = IEL;
+	if (Cap != NULL) {
+		Cap->IEL = IEL;
+	}
+
+	pos = strstr(data, HD_text);
+	if (pos == NULL) {
+		smprintf(s, "Could not grab HD support\n");
+	} else {
+		pos += strlen(free_text);
+		if (strncasecmp("YES", pos, 3) == 0) {
+			smprintf(s, "HD is supported\n");
+			if (Cap != NULL) {
+				Cap->HD = true;
+			}
+		} else if (strncasecmp("NO", pos, 2) == 0) {
+			smprintf(s, "HD is not supported\n");
+		} else {
+			smprintf(s, "WARNING: Could not parse HD support\n");
+		}
 	}
 
 	pos = strstr(data, free_text);
@@ -1318,13 +1352,13 @@ GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_
 /**
  * Grabs information from defined OBEX IrMC information log into variables.
  */
-GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *free_records, int *used_records, int *IEL)
+GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *free_records, int *used_records, IRMC_Capability *Cap)
 {
 	GSM_Error 	error;
 	char		*data;
 
 	/* IEL by default - support adding */
-	*IEL = 1;
+	Cap->IEL = 1;
 
 	/* We need IrMC service for this */
 	error = OBEXGEN_Connect(s, OBEX_IRMC);
@@ -1337,7 +1371,7 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 	if (error == ERR_BUG || error == ERR_FILENOTEXIST || error == ERR_PERMISSION) {
 		/* Some phones do not follow IrMC specs and do not provide info.log for level 2 */
 		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_IRMC_LEVEL_2)) {
-			*IEL = 2;
+			Cap->IEL = 2;
 		}
 		if (free_records == NULL) {
 			/* We were asked only for IEL, so don't bail out */
@@ -1352,7 +1386,7 @@ GSM_Error OBEXGEN_GetInformation(GSM_StateMachine *s, const char *path, int *fre
 	}
 
 	/* Parse it */
-	error = OBEXGEN_ParseInfoLog(s, data, free_records, used_records, IEL);
+	error = OBEXGEN_ParseInfoLog(s, data, free_records, used_records, Cap);
 
 	free(data);
 
@@ -1519,7 +1553,7 @@ GSM_Error OBEXGEN_GetPbInformation(GSM_StateMachine *s, int *free_records, int *
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
-	return OBEXGEN_GetInformation(s, "telecom/pb/info.log", free_records, used, &(Priv->PbIEL));
+	return OBEXGEN_GetInformation(s, "telecom/pb/info.log", free_records, used, &(Priv->PbCap));
 
 }
 
@@ -1659,17 +1693,17 @@ GSM_Error OBEXGEN_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->PbIEL == -1) {
+	if (Priv->PbCap.IEL == -1) {
 		error = OBEXGEN_GetPbInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
 
 	/* Use correct function according to supported IEL */
-	if (Priv->PbIEL == 0x8 || Priv->PbIEL == 0x10) {
+	if (Priv->PbCap.IEL == 0x8 || Priv->PbCap.IEL == 0x10) {
 		return OBEXGEN_GetMemoryLUID(s, Entry);
-	} else if (Priv->PbIEL == 0x4) {
+	} else if (Priv->PbCap.IEL == 0x4) {
 		return OBEXGEN_GetMemoryIndex(s, Entry);
-	} else if (Priv->PbIEL == 0x2) {
+	} else if (Priv->PbCap.IEL == 0x2) {
 		return OBEXGEN_GetMemoryFull(s, Entry);
 	} else {
 		smprintf(s, "Can not read phonebook from IEL 1 phone\n");
@@ -1725,7 +1759,7 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->PbIEL == -1) {
+	if (Priv->PbCap.IEL == -1) {
 		error = OBEXGEN_GetPbInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
@@ -1734,17 +1768,17 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	GSM_EncodeVCARD(req, &size, Entry, true, SonyEricsson_VCard21);
 
 	/* Use correct function according to supported IEL */
-	if (Priv->PbIEL == 0x8 || Priv->PbIEL == 0x10) {
+	if (Priv->PbCap.IEL == 0x8 || Priv->PbCap.IEL == 0x10) {
 		/* We need to grab LUID list now in order to keep position later */
 		error = OBEXGEN_InitPbLUID(s);
 		if (error != ERR_NONE) return error;
 
 		smprintf(s,"Adding phonebook entry %zd:\n%s\n", size, req);
 		Priv->UpdatePbLUID = true;
-		error = OBEXGEN_SetFile(s, "telecom/pb/luid/.vcf", req, size);
+		error = OBEXGEN_SetFile(s, "telecom/pb/luid/.vcf", req, size, false);
 		Entry->Location = Priv->PbLUIDCount;
 		return error;
-	} else if (Priv->PbIEL == 0x4) {
+	} else if (Priv->PbCap.IEL == 0x4) {
 		/* We need to grab LUID/Index list now in order to keep position later */
 		error = OBEXGEN_InitPbLUID(s);
 		if (error != ERR_NONE) return error;
@@ -1752,13 +1786,13 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->PbIndex, &Priv->PbIndexCount);
 		smprintf(s,"Adding phonebook entry %zd at location %d:\n%s\n", size, Entry->Location, req);
 		sprintf(path, "telecom/pb/%d.vcf", Entry->Location);
-		error = OBEXGEN_SetFile(s, path, req, size);
+		error = OBEXGEN_SetFile(s, path, req, size, false);
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCard */
 		Entry->Location = 0;
 		smprintf(s,"Sending phonebook entry\n");
-		return OBEXGEN_SetFile(s, "gammu.vcf", req, size);
+		return OBEXGEN_SetFile(s, "gammu.vcf", req, size, false);
 	}
 }
 
@@ -1796,7 +1830,7 @@ GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, cha
 	}
 
 	/* Store vCard */
-	return OBEXGEN_SetFile(s, path, Data, Size);
+	return OBEXGEN_SetFile(s, path, Data, Size, Priv->PbCap.HD);
 }
 
 GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, char *Data, int Size)
@@ -1818,7 +1852,7 @@ GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, ch
 	smprintf(s, "Seting vCard %s\n", path);
 
 	/* Store vCard */
-	return OBEXGEN_SetFile(s, path, Data, Size);
+	return OBEXGEN_SetFile(s, path, Data, Size, false);
 }
 
 GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
@@ -1835,7 +1869,7 @@ GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->PbIEL == -1) {
+	if (Priv->PbCap.IEL == -1) {
 		error = OBEXGEN_GetPbInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
@@ -1844,11 +1878,11 @@ GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	GSM_EncodeVCARD(req, &size, Entry, true, SonyEricsson_VCard21);
 
 	/* Use correct function according to supported IEL */
-	if (Priv->PbIEL == 0x8 || Priv->PbIEL == 0x10) {
+	if (Priv->PbCap.IEL == 0x8 || Priv->PbCap.IEL == 0x10) {
 		return OBEXGEN_SetMemoryLUID(s, Entry, req, size);
-	} else if (Priv->PbIEL == 0x4) {
+	} else if (Priv->PbCap.IEL == 0x4) {
 		return OBEXGEN_SetMemoryIndex(s, Entry, req, size);
-	} else if (Priv->PbIEL == 0x2) {
+	} else if (Priv->PbCap.IEL == 0x2) {
 		/* Work on full phonebook */
 		return ERR_NOTIMPLEMENTED;
 	} else {
@@ -1868,17 +1902,17 @@ GSM_Error OBEXGEN_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->PbIEL == -1) {
+	if (Priv->PbCap.IEL == -1) {
 		error = OBEXGEN_GetPbInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
 
 	/* Use correct function according to supported IEL */
-	if (Priv->PbIEL == 0x8 || Priv->PbIEL == 0x10) {
+	if (Priv->PbCap.IEL == 0x8 || Priv->PbCap.IEL == 0x10) {
 		return OBEXGEN_SetMemoryLUID(s, Entry, "", 0);
-	} else if (Priv->PbIEL == 0x4) {
+	} else if (Priv->PbCap.IEL == 0x4) {
 		return OBEXGEN_SetMemoryIndex(s, Entry, "", 0);
-	} else if (Priv->PbIEL == 0x2) {
+	} else if (Priv->PbCap.IEL == 0x2) {
 		/* Work on full phonebook */
 		return ERR_NOTIMPLEMENTED;
 	} else {
@@ -1929,7 +1963,7 @@ GSM_Error OBEXGEN_GetCalInformation(GSM_StateMachine *s, int *free_records, int 
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
-	return OBEXGEN_GetInformation(s, "telecom/cal/info.log", free_records, used, &(Priv->CalIEL));
+	return OBEXGEN_GetInformation(s, "telecom/cal/info.log", free_records, used, &(Priv->CalCap));
 
 }
 
@@ -2090,17 +2124,17 @@ GSM_Error OBEXGEN_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->CalIEL == -1) {
+	if (Priv->CalCap.IEL == -1) {
 		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
 
 	/* Use correct function according to supported IEL */
-	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
 		return OBEXGEN_GetCalendarLUID(s, Entry);
-	} else if (Priv->CalIEL == 0x4) {
+	} else if (Priv->CalCap.IEL == 0x4) {
 		return OBEXGEN_GetCalendarIndex(s, Entry);
-	} else if (Priv->CalIEL == 0x2) {
+	} else if (Priv->CalCap.IEL == 0x2) {
 		return OBEXGEN_GetCalendarFull(s, Entry);
 	} else {
 		smprintf(s, "Can not read calendar from IEL 1 phone\n");
@@ -2154,7 +2188,7 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->CalIEL == -1) {
+	if (Priv->CalCap.IEL == -1) {
 		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
@@ -2163,17 +2197,17 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	GSM_EncodeVCALENDAR(req, &size, Entry, true, SonyEricsson_VCalendar);
 
 	/* Use correct function according to supported IEL */
-	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
 		/* We need to grab LUID list now in order to keep position later */
 		error = OBEXGEN_InitCalLUID(s);
 		if (error != ERR_NONE) return error;
 
 		smprintf(s,"Adding calendar entry %zd:\n%s\n", size, req);
 		Priv->UpdateCalLUID = true;
-		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size);
+		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size, false);
 		Entry->Location = Priv->CalLUIDCount;
 		return error;
-	} else if (Priv->CalIEL == 0x4) {
+	} else if (Priv->CalCap.IEL == 0x4) {
 		/* We need to grab LUID/Index list now in order to keep position later */
 		error = OBEXGEN_InitCalLUID(s);
 		if (error != ERR_NONE) return error;
@@ -2181,13 +2215,13 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->CalIndex, &Priv->CalIndexCount);
 		smprintf(s,"Adding calendar entry %zd at location %d:\n%s\n", size, Entry->Location, req);
 		sprintf(path, "telecom/cal/%d.vcf", Entry->Location);
-		error = OBEXGEN_SetFile(s, path, req, size);
+		error = OBEXGEN_SetFile(s, path, req, size, false);
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCalendar */
 		Entry->Location = 0;
 		smprintf(s,"Sending calendar entry\n");
-		return OBEXGEN_SetFile(s, "gammu.vcs", req, size);
+		return OBEXGEN_SetFile(s, "gammu.vcs", req, size, false);
 	}
 }
 
@@ -2225,7 +2259,7 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 	}
 
 	/* Store vCalendar */
-	return OBEXGEN_SetFile(s, path, Data, Size);
+	return OBEXGEN_SetFile(s, path, Data, Size, Priv->CalCap.HD);
 }
 
 GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry, char *Data, int Size)
@@ -2247,7 +2281,7 @@ GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	smprintf(s, "Seting vCalendar %s\n", path);
 
 	/* Store vCalendar */
-	return OBEXGEN_SetFile(s, path, Data, Size);
+	return OBEXGEN_SetFile(s, path, Data, Size, false);
 }
 
 GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
@@ -2262,7 +2296,7 @@ GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->CalIEL == -1) {
+	if (Priv->CalCap.IEL == -1) {
 		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
@@ -2271,11 +2305,11 @@ GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	GSM_EncodeVCALENDAR(req, &size, Entry, true, SonyEricsson_VCalendar);
 
 	/* Use correct function according to supported IEL */
-	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
 		return OBEXGEN_SetCalendarLUID(s, Entry, req, size);
-	} else if (Priv->CalIEL == 0x4) {
+	} else if (Priv->CalCap.IEL == 0x4) {
 		return OBEXGEN_SetCalendarIndex(s, Entry, req, size);
-	} else if (Priv->CalIEL == 0x2) {
+	} else if (Priv->CalCap.IEL == 0x2) {
 		/* Work on full calendar */
 		return ERR_NOTIMPLEMENTED;
 	} else {
@@ -2293,17 +2327,17 @@ GSM_Error OBEXGEN_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->CalIEL == -1) {
+	if (Priv->CalCap.IEL == -1) {
 		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
 
 	/* Use correct function according to supported IEL */
-	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
 		return OBEXGEN_SetCalendarLUID(s, Entry, "", 0);
-	} else if (Priv->CalIEL == 0x4) {
+	} else if (Priv->CalCap.IEL == 0x4) {
 		return OBEXGEN_SetCalendarIndex(s, Entry, "", 0);
-	} else if (Priv->CalIEL == 0x2) {
+	} else if (Priv->CalCap.IEL == 0x2) {
 		/* Work on full calendar */
 		return ERR_NOTIMPLEMENTED;
 	} else {
@@ -2467,17 +2501,17 @@ GSM_Error OBEXGEN_GetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->CalIEL == -1) {
+	if (Priv->CalCap.IEL == -1) {
 		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
 
 	/* Use correct function according to supported IEL */
-	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
 		return OBEXGEN_GetTodoLUID(s, Entry);
-	} else if (Priv->CalIEL == 0x4) {
+	} else if (Priv->CalCap.IEL == 0x4) {
 		return OBEXGEN_GetTodoIndex(s, Entry);
-	} else if (Priv->CalIEL == 0x2) {
+	} else if (Priv->CalCap.IEL == 0x2) {
 		return OBEXGEN_GetTodoFull(s, Entry);
 	} else {
 		smprintf(s, "Can not read todo from IEL 1 phone\n");
@@ -2531,7 +2565,7 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->CalIEL == -1) {
+	if (Priv->CalCap.IEL == -1) {
 		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
@@ -2540,17 +2574,17 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	GSM_EncodeVTODO(req, &size, Entry, true, SonyEricsson_VToDo);
 
 	/* Use correct function according to supported IEL */
-	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
 		/* We need to grab LUID list now in order to keep position later */
 		error = OBEXGEN_InitCalLUID(s);
 		if (error != ERR_NONE) return error;
 
 		smprintf(s,"Adding todo entry %zd:\n%s\n", size, req);
 		Priv->UpdateTodoLUID = true;
-		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size);
+		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size, false);
 		Entry->Location = Priv->TodoLUIDCount;
 		return error;
-	} else if (Priv->CalIEL == 0x4) {
+	} else if (Priv->CalCap.IEL == 0x4) {
 		/* We need to grab LUID/Index list now in order to keep position later */
 		error = OBEXGEN_InitCalLUID(s);
 		if (error != ERR_NONE) return error;
@@ -2558,13 +2592,13 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->TodoIndex, &Priv->TodoIndexCount);
 		smprintf(s,"Adding todo entry %zd at location %d:\n%s\n", size, Entry->Location, req);
 		sprintf(path, "telecom/cal/%d.vcf", Entry->Location);
-		error = OBEXGEN_SetFile(s, path, req, size);
+		error = OBEXGEN_SetFile(s, path, req, size, false);
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vTodo */
 		Entry->Location = 0;
 		smprintf(s,"Sending todo entry\n");
-		return OBEXGEN_SetFile(s, "gammu.vcs", req, size);
+		return OBEXGEN_SetFile(s, "gammu.vcs", req, size, false);
 	}
 }
 
@@ -2602,7 +2636,7 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *D
 	}
 
 	/* Store vTodo */
-	return OBEXGEN_SetFile(s, path, Data, Size);
+	return OBEXGEN_SetFile(s, path, Data, Size, Priv->CalCap.HD);
 }
 
 GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *Data, int Size)
@@ -2624,7 +2658,7 @@ GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *
 	smprintf(s, "Seting vTodo %s\n", path);
 
 	/* Store vTodo */
-	return OBEXGEN_SetFile(s, path, Data, Size);
+	return OBEXGEN_SetFile(s, path, Data, Size, false);
 }
 
 GSM_Error OBEXGEN_SetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
@@ -2639,7 +2673,7 @@ GSM_Error OBEXGEN_SetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->CalIEL == -1) {
+	if (Priv->CalCap.IEL == -1) {
 		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
@@ -2648,11 +2682,11 @@ GSM_Error OBEXGEN_SetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	GSM_EncodeVTODO(req, &size, Entry, true, SonyEricsson_VToDo);
 
 	/* Use correct function according to supported IEL */
-	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
 		return OBEXGEN_SetTodoLUID(s, Entry, req, size);
-	} else if (Priv->CalIEL == 0x4) {
+	} else if (Priv->CalCap.IEL == 0x4) {
 		return OBEXGEN_SetTodoIndex(s, Entry, req, size);
-	} else if (Priv->CalIEL == 0x2) {
+	} else if (Priv->CalCap.IEL == 0x2) {
 		/* Work on full todo */
 		return ERR_NOTIMPLEMENTED;
 	} else {
@@ -2670,17 +2704,17 @@ GSM_Error OBEXGEN_DeleteTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->CalIEL == -1) {
+	if (Priv->CalCap.IEL == -1) {
 		error = OBEXGEN_GetCalInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
 
 	/* Use correct function according to supported IEL */
-	if (Priv->CalIEL == 0x8 || Priv->CalIEL == 0x10) {
+	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
 		return OBEXGEN_SetTodoLUID(s, Entry, "", 0);
-	} else if (Priv->CalIEL == 0x4) {
+	} else if (Priv->CalCap.IEL == 0x4) {
 		return OBEXGEN_SetTodoIndex(s, Entry, "", 0);
-	} else if (Priv->CalIEL == 0x2) {
+	} else if (Priv->CalCap.IEL == 0x2) {
 		/* Work on full todo */
 		return ERR_NOTIMPLEMENTED;
 	} else {
@@ -2727,7 +2761,7 @@ GSM_Error OBEXGEN_GetNoteInformation(GSM_StateMachine *s, int *free_records, int
 {
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
-	return OBEXGEN_GetInformation(s, "telecom/nt/info.log", free_records, used, &(Priv->NoteIEL));
+	return OBEXGEN_GetInformation(s, "telecom/nt/info.log", free_records, used, &(Priv->NoteCap));
 
 }
 
@@ -2863,17 +2897,17 @@ GSM_Error OBEXGEN_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->NoteIEL == -1) {
+	if (Priv->NoteCap.IEL == -1) {
 		error = OBEXGEN_GetNoteInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
 
 	/* Use correct function according to supported IEL */
-	if (Priv->NoteIEL == 0x8 || Priv->NoteIEL == 0x10) {
+	if (Priv->NoteCap.IEL == 0x8 || Priv->NoteCap.IEL == 0x10) {
 		return OBEXGEN_GetNoteLUID(s, Entry);
-	} else if (Priv->NoteIEL == 0x4) {
+	} else if (Priv->NoteCap.IEL == 0x4) {
 		return OBEXGEN_GetNoteIndex(s, Entry);
-	} else if (Priv->NoteIEL == 0x2) {
+	} else if (Priv->NoteCap.IEL == 0x2) {
 		return OBEXGEN_GetNoteFull(s, Entry);
 	} else {
 		smprintf(s, "Can not read note from IEL 1 phone\n");
@@ -2927,7 +2961,7 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->NoteIEL == -1) {
+	if (Priv->NoteCap.IEL == -1) {
 		error = OBEXGEN_GetNoteInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
@@ -2936,17 +2970,17 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	GSM_EncodeVNTFile(req, &size, Entry);
 
 	/* Use correct function according to supported IEL */
-	if (Priv->NoteIEL == 0x8 || Priv->NoteIEL == 0x10) {
+	if (Priv->NoteCap.IEL == 0x8 || Priv->NoteCap.IEL == 0x10) {
 		/* We need to grab LUID list now in order to keep position later */
 		error = OBEXGEN_InitNoteLUID(s);
 		if (error != ERR_NONE) return error;
 
 		smprintf(s,"Adding note entry %zd:\n%s\n", size, req);
 		Priv->UpdateNoteLUID = true;
-		error = OBEXGEN_SetFile(s, "telecom/nt/luid/.vnt", req, size);
+		error = OBEXGEN_SetFile(s, "telecom/nt/luid/.vnt", req, size, false);
 		Entry->Location = Priv->NoteLUIDCount;
 		return error;
-	} else if (Priv->NoteIEL == 0x4) {
+	} else if (Priv->NoteCap.IEL == 0x4) {
 		/* We need to grab LUID/Index list now in order to keep position later */
 		error = OBEXGEN_InitNoteLUID(s);
 		if (error != ERR_NONE) return error;
@@ -2954,13 +2988,13 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->NoteIndex, &Priv->NoteIndexCount);
 		smprintf(s,"Adding note entry %zd at location %d:\n%s\n", size, Entry->Location, req);
 		sprintf(path, "telecom/nt/%d.vcf", Entry->Location);
-		error = OBEXGEN_SetFile(s, path, req, size);
+		error = OBEXGEN_SetFile(s, path, req, size, false);
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCard */
 		Entry->Location = 0;
 		smprintf(s,"Sending note entry\n");
-		return OBEXGEN_SetFile(s, "gammu.vnt", req, size);
+		return OBEXGEN_SetFile(s, "gammu.vnt", req, size, false);
 	}
 }
 
@@ -2998,7 +3032,7 @@ GSM_Error OBEXGEN_SetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry, char *D
 	}
 
 	/* Store vCard */
-	return OBEXGEN_SetFile(s, path, Data, Size);
+	return OBEXGEN_SetFile(s, path, Data, Size, Priv->NoteCap.HD);
 }
 
 GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, char *Data, int Size)
@@ -3020,7 +3054,7 @@ GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, char *
 	smprintf(s, "Seting vNote %s\n", path);
 
 	/* Store vCard */
-	return OBEXGEN_SetFile(s, path, Data, Size);
+	return OBEXGEN_SetFile(s, path, Data, Size, false);
 }
 
 GSM_Error OBEXGEN_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
@@ -3035,7 +3069,7 @@ GSM_Error OBEXGEN_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->NoteIEL == -1) {
+	if (Priv->NoteCap.IEL == -1) {
 		error = OBEXGEN_GetNoteInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
@@ -3044,11 +3078,11 @@ GSM_Error OBEXGEN_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	GSM_EncodeVNTFile(req, &size, Entry);
 
 	/* Use correct function according to supported IEL */
-	if (Priv->NoteIEL == 0x8 || Priv->NoteIEL == 0x10) {
+	if (Priv->NoteCap.IEL == 0x8 || Priv->NoteCap.IEL == 0x10) {
 		return OBEXGEN_SetNoteLUID(s, Entry, req, size);
-	} else if (Priv->NoteIEL == 0x4) {
+	} else if (Priv->NoteCap.IEL == 0x4) {
 		return OBEXGEN_SetNoteIndex(s, Entry, req, size);
-	} else if (Priv->NoteIEL == 0x2) {
+	} else if (Priv->NoteCap.IEL == 0x2) {
 		/* Work on full note */
 		return ERR_NOTIMPLEMENTED;
 	} else {
@@ -3066,17 +3100,17 @@ GSM_Error OBEXGEN_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* We need IEL to correctly talk to phone */
-	if (Priv->NoteIEL == -1) {
+	if (Priv->NoteCap.IEL == -1) {
 		error = OBEXGEN_GetNoteInformation(s, NULL, NULL);
 		if (error != ERR_NONE) return error;
 	}
 
 	/* Use correct function according to supported IEL */
-	if (Priv->NoteIEL == 0x8 || Priv->NoteIEL == 0x10) {
+	if (Priv->NoteCap.IEL == 0x8 || Priv->NoteCap.IEL == 0x10) {
 		return OBEXGEN_SetNoteLUID(s, Entry, "", 0);
-	} else if (Priv->NoteIEL == 0x4) {
+	} else if (Priv->NoteCap.IEL == 0x4) {
 		return OBEXGEN_SetNoteIndex(s, Entry, "", 0);
-	} else if (Priv->NoteIEL == 0x2) {
+	} else if (Priv->NoteCap.IEL == 0x2) {
 		/* Work on full note */
 		return ERR_NOTIMPLEMENTED;
 	} else {
