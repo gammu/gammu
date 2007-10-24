@@ -1282,7 +1282,7 @@ GSM_Error OBEXGEN_ParseInfoLog(GSM_StateMachine *s, const char *data, int *free_
 	if (pos == NULL) {
 		smprintf(s, "Could not grab HD support\n");
 	} else {
-		pos += strlen(free_text);
+		pos += strlen(HD_text);
 		if (strncasecmp("YES", pos, 3) == 0) {
 			smprintf(s, "HD is supported\n");
 			if (Cap != NULL) {
