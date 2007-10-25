@@ -103,14 +103,14 @@ int DecodeWithUTF8Alphabet(unsigned char *src, wchar_t * dest, int len);
  *
  * \ingroup Unicode
  */
-void DecodeHexUnicode(unsigned char *dest, const unsigned char *src, int len);
+void DecodeHexUnicode(unsigned char *dest, const char *src, size_t len);
 
 /**
  * Encodes string to hex quoted unicode.
  *
  * \ingroup Unicode
  */
-void EncodeHexUnicode(unsigned char *dest, const unsigned char *src, int len);
+void EncodeHexUnicode(char *dest, const unsigned char *src, size_t len);
 
 /**
  * Compares two unicode strings.

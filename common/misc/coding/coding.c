@@ -400,43 +400,30 @@ unsigned char EncodeWithHexBinAlphabet (int digit)
 	return 0;
 }
 
-void DecodeHexUnicode (unsigned char *dest, const unsigned char *src, int len)
+void DecodeHexUnicode (unsigned char *dest, const char *src, size_t len)
 {
-	int 	i,current=0;
-	bool 	first = false;
+	size_t i, current = 0;
 
-	if (len != 0 && src[0] == '0' && src[1] == '0') {
-		first = true;
-	} else if (len != 0 && src[2] == '0' && src[3] == '0') {
-		first = false;
-	} else {
-		first = (10 * (src[0] - '0') + (src[1] - '0')) < (10 * (src[2] - '0')+ (src[3] - '0'));
-	}
-	for (i = 0; i < len/4 ; i++) {
-		if (first) {
-			dest[current++] = DecodeWithHexBinAlphabet(src[i*4+0])*16+
-					  DecodeWithHexBinAlphabet(src[i*4+1]);
-			dest[current++] = DecodeWithHexBinAlphabet(src[i*4+2])*16+
-					  DecodeWithHexBinAlphabet(src[i*4+3]);
-		} else {
-			dest[current++] = DecodeWithHexBinAlphabet(src[i*4+2])*16+
-					  DecodeWithHexBinAlphabet(src[i*4+3]);
-			dest[current++] = DecodeWithHexBinAlphabet(src[i*4+0])*16+
-					  DecodeWithHexBinAlphabet(src[i*4+1]);
-		}
+	for (i = 0; i < len ; i += 4) {
+		dest[current++] = 
+			(DecodeWithHexBinAlphabet(src[i + 0]) << 4) +
+			DecodeWithHexBinAlphabet(src[i + 1]);
+		dest[current++] = 
+			(DecodeWithHexBinAlphabet(src[i + 2]) << 4) +
+			DecodeWithHexBinAlphabet(src[i + 3]);
 	}
 	dest[current++] = 0;
 	dest[current++] = 0;
 }
 
-void EncodeHexUnicode (unsigned char *dest, const unsigned char *src, int len)
+void EncodeHexUnicode (char *dest, const unsigned char *src, size_t len)
 {
-	int i,current=0;
+	size_t i, current = 0;
 
 	for (i = 0; i < len; i++) {
-		dest[current++] = EncodeWithHexBinAlphabet(src[2*i] >> 0x04);
+		dest[current++] = EncodeWithHexBinAlphabet(src[2*i] >> 4);
 		dest[current++] = EncodeWithHexBinAlphabet(src[2*i] & 0x0f);
-		dest[current++] = EncodeWithHexBinAlphabet(src[2*i+1] >> 0x04);
+		dest[current++] = EncodeWithHexBinAlphabet(src[2*i+1] >> 4);
 		dest[current++] = EncodeWithHexBinAlphabet(src[2*i+1] & 0x0f);
 	}
 	dest[current++] = 0;
