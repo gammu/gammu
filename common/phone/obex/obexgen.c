@@ -1777,6 +1777,7 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		Priv->UpdatePbLUID = true;
 		error = OBEXGEN_SetFile(s, "telecom/pb/luid/.vcf", req, size, false);
 		Entry->Location = Priv->PbLUIDCount;
+		if (error == ERR_NONE) Priv->PbCount++;
 		return error;
 	} else if (Priv->PbCap.IEL == 0x4) {
 		/* We need to grab LUID/Index list now in order to keep position later */
@@ -1787,6 +1788,7 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		smprintf(s,"Adding phonebook entry %zd at location %d:\n%s\n", size, Entry->Location, req);
 		sprintf(path, "telecom/pb/%d.vcf", Entry->Location);
 		error = OBEXGEN_SetFile(s, path, req, size, false);
+		if (error == ERR_NONE) Priv->PbCount++;
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCard */
@@ -2206,6 +2208,7 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 		Priv->UpdateCalLUID = true;
 		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size, false);
 		Entry->Location = Priv->CalLUIDCount;
+		if (error == ERR_NONE) Priv->CalCount++;
 		return error;
 	} else if (Priv->CalCap.IEL == 0x4) {
 		/* We need to grab LUID/Index list now in order to keep position later */
@@ -2216,6 +2219,7 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 		smprintf(s,"Adding calendar entry %zd at location %d:\n%s\n", size, Entry->Location, req);
 		sprintf(path, "telecom/cal/%d.vcf", Entry->Location);
 		error = OBEXGEN_SetFile(s, path, req, size, false);
+		if (error == ERR_NONE) Priv->CalCount++;
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCalendar */
@@ -2583,6 +2587,7 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 		Priv->UpdateTodoLUID = true;
 		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size, false);
 		Entry->Location = Priv->TodoLUIDCount;
+		if (error == ERR_NONE) Priv->TodoCount++;
 		return error;
 	} else if (Priv->CalCap.IEL == 0x4) {
 		/* We need to grab LUID/Index list now in order to keep position later */
@@ -2593,6 +2598,7 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 		smprintf(s,"Adding todo entry %zd at location %d:\n%s\n", size, Entry->Location, req);
 		sprintf(path, "telecom/cal/%d.vcf", Entry->Location);
 		error = OBEXGEN_SetFile(s, path, req, size, false);
+		if (error == ERR_NONE) Priv->TodoCount++;
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vTodo */
@@ -2979,6 +2985,7 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 		Priv->UpdateNoteLUID = true;
 		error = OBEXGEN_SetFile(s, "telecom/nt/luid/.vnt", req, size, false);
 		Entry->Location = Priv->NoteLUIDCount;
+		if (error == ERR_NONE) Priv->NoteCount++;
 		return error;
 	} else if (Priv->NoteCap.IEL == 0x4) {
 		/* We need to grab LUID/Index list now in order to keep position later */
@@ -2989,6 +2996,7 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 		smprintf(s,"Adding note entry %zd at location %d:\n%s\n", size, Entry->Location, req);
 		sprintf(path, "telecom/nt/%d.vcf", Entry->Location);
 		error = OBEXGEN_SetFile(s, path, req, size, false);
+		if (error == ERR_NONE) Priv->NoteCount++;
 		return error;
 	} else {
 		/* I don't know add command for other levels, just plain send vCard */
