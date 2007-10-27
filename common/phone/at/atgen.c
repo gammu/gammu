@@ -1043,9 +1043,14 @@ GSM_Error ATGEN_GetModel(GSM_StateMachine *s)
 
 	smprintf(s, "Getting model\n");
 	ATGEN_WaitFor(s, "AT+CGMM\r", 8, 0x00, 3, ID_GetModel);
-	if (error==ERR_NONE) {
-		smprintf_level(s, D_TEXT, "[Connected model  - \"%s\"]\n",s->Phone.Data.Model);
+	if (error != ERR_NONE) {
+		ATGEN_WaitFor(s, "ATI4\r", 5, 0x00, 3, ID_GetModel);
 	}
+	if (error == ERR_NONE) {
+		smprintf_level(s, D_TEXT, "[Connected model  - \"%s\"]\n",
+				s->Phone.Data.Model);
+	}
+
 	return error;
 }
 
@@ -1144,6 +1149,8 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 		return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
 		return ATGEN_HandleCMEError(s);
+	case AT_Reply_Error:
+		return ERR_NOTSUPPORTED;
 	default:
 		break;
 	}
@@ -1157,15 +1164,20 @@ GSM_Error ATGEN_GetManufacturer(GSM_StateMachine *s)
 	if (s->Phone.Data.Manufacturer[0] != 0) return ERR_NONE;
 
 	ATGEN_WaitFor(s, "AT+CGMI\r", 8, 0x00, 4, ID_GetManufacturer);
+	if (error != ERR_NONE) {
+		ATGEN_WaitFor(s, "ATI3\r", 5, 0x00, 4, ID_GetManufacturer);
+	}
 	return error;
 }
 
-GSM_Error ATGEN_ReplyGetFirmwareCGMR(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error ATGEN_ReplyGetFirmware(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	strcpy(s->Phone.Data.Version, "Unknown");
+	if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_OK) return ERR_NOTSUPPORTED;
+
 	s->Phone.Data.VerNum = 0;
 	if (Priv->ReplyState == AT_Reply_OK) {
 		if (GetLineLength(msg.Buffer, Priv->Lines, 2) > GSM_MAX_VERSION_LENGTH - 1) {
@@ -1201,8 +1213,13 @@ GSM_Error ATGEN_GetFirmware(GSM_StateMachine *s)
 	smprintf(s, "Getting firmware versions\n");
 	ATGEN_WaitFor(s, "AT+CGMR\r", 8, 0x00, 3, ID_GetFirmware);
 
-	if (error==ERR_NONE) {
-		smprintf_level(s, D_TEXT, "[Firmware version - \"%s\"]\n",s->Phone.Data.Version);
+	if (error != ERR_NONE) {
+		ATGEN_WaitFor(s, "ATI5\r", 5, 0x00, 3, ID_GetFirmware);
+	}
+
+	if (error == ERR_NONE) {
+		smprintf_level(s, D_TEXT, "[Firmware version - \"%s\"]\n",
+				s->Phone.Data.Version);
 	}
 	return error;
 }
@@ -1429,7 +1446,14 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			}
 			return ERR_NONE;
 		case AT_Reply_Error:
-			return ERR_NOTSUPPORTED;
+			/* Phone does not support charsets, everything should
+			 * be in GSM. */
+			smprintf(s, "INFO: assuming GSM charset\n");
+			Priv->IRACharset = AT_CHARSET_GSM;
+			Priv->UnicodeCharset = AT_CHARSET_GSM;
+			Priv->NormalCharset = AT_CHARSET_GSM;
+			Priv->Charset = AT_CHARSET_GSM;
+			return ERR_NONE;
 		case AT_Reply_CMSError:
 			return ATGEN_HandleCMSError(s);
 		case AT_Reply_CMEError:
@@ -5642,8 +5666,11 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetBatteryCharge,	"AT+CBC"		,0x00,0x00,ID_GetBatteryCharge	 },
 
 {ATGEN_ReplyGetModel,		"AT+CGMM"		,0x00,0x00,ID_GetModel           },
+{ATGEN_ReplyGetModel,		"ATI4"			,0x00,0x00,ID_GetModel           },
 {ATGEN_ReplyGetManufacturer,	"AT+CGMI"		,0x00,0x00,ID_GetManufacturer	 },
-{ATGEN_ReplyGetFirmwareCGMR,	"AT+CGMR"		,0x00,0x00,ID_GetFirmware	 },
+{ATGEN_ReplyGetManufacturer,	"ATI3"			,0x00,0x00,ID_GetManufacturer	 },
+{ATGEN_ReplyGetFirmware,	"AT+CGMR"		,0x00,0x00,ID_GetFirmware	 },
+{ATGEN_ReplyGetFirmware,	"ATI5"			,0x00,0x00,ID_GetFirmware	 },
 {ATGEN_ReplyGetIMEI,		"AT+CGSN"		,0x00,0x00,ID_GetIMEI	 	 },
 
 {ATGEN_ReplySendSMS,		"AT+CMGS"		,0x00,0x00,ID_IncomingFrame	 },
