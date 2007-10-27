@@ -907,13 +907,6 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, size_t *Length, GSM_CalendarEntry *n
 		}
 	}
 
-#if 0
-	/* Tell Sony Ericsson phones that we do not use DST */
-	if (Version == SonyEricsson_VCalendar) {
-		*Length+=sprintf(Buffer+(*Length), "X-SONYERICSSON-DST:0%c%c",13,10);
-	}
-#endif
-
 	/* Handle recurrance */
 	if (note->Type == GSM_CAL_BIRTHDAY) {
 		if (Version == Mozilla_iCalendar) {
