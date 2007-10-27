@@ -5272,6 +5272,9 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	/* Sample resposne we get here:
 	AT+CNMI=?
 	+CNMI: (0-2),(0,1,3),(0),(0,1),(0,1)
+
+	Or:
+	+CNMI:(0-3),(0-3),(0-3),(0,1),(0,1)
 	*/
 	Priv->CNMIMode			= 0;
 	Priv->CNMIProcedure		= 0;
@@ -5284,7 +5287,7 @@ GSM_Error ATGEN_ReplyGetCNMIMode(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (buffer == NULL) return  ERR_UNKNOWNRESPONSE;
 	while (isspace(*buffer)) buffer++;
 
-	if (strncmp(buffer, "+CNMI: ", 7) != 0) return ERR_UNKNOWNRESPONSE;
+	if (strncmp(buffer, "+CNMI:", 6) != 0) return ERR_UNKNOWNRESPONSE;
 	buffer += 7;
 
 	buffer = strchr(buffer, '(');
