@@ -3419,7 +3419,7 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 		if (error != ERR_NONE) {
 			/*
 			 * We weren't able to read available memories, let's
-			 * guess that phone supports all. This is tru at least
+			 * guess that phone supports all. This is true at least
 			 * for Samsung.
 			 */
 			strcpy(s->Phone.Data.Priv.ATGEN.PBKMemories, "\"ME\",\"SM\",\"DC\",\"ON\",\"LD\",\"FD\",\"MC\",\"RC\"");
