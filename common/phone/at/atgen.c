@@ -3521,6 +3521,9 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
  * +CPBR: (),max_number_len,max_name_len
  * \endverbatim
  *
+ * Samsung phones sometimes have additional number after standard format.
+ * I currently have no idea what does this number mean.
+ *
  * \todo
  * We currently guess memory size for Sharp to 1000.
  */
@@ -3529,6 +3532,7 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
  	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	char *str;
 	GSM_Error error;
+	int ignore;
 
  	switch (Priv->ReplyState) {
  	case AT_Reply_OK:
@@ -3573,6 +3577,21 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 			Priv->MemorySize = 1000;
 			return ERR_NONE;
 		}
+
+		/* Try Samsung format at the end */
+		error = ATGEN_ParseReply(s, str,
+					"+CPBR: (@i-@i), @i, @i, @i",
+					&Priv->FirstMemoryEntry,
+					&Priv->MemorySize,
+					&Priv->NumberLength,
+					&Priv->TextLength,
+					&ignore);
+		if (error == ERR_NONE) {
+			/* Calculate memory size from last position we got from phone */
+			Priv->MemorySize = Priv->MemorySize + 1 - Priv->FirstMemoryEntry;
+			return ERR_NONE;
+		}
+
 
 		/* We don't get reply on first attempt on some Samsung phones */
 		if (Priv->Manufacturer == AT_Samsung) {
