@@ -15,6 +15,8 @@ or inspired me to make it.
 ChangeLog
 =========
 
+2007???? - 1.13.96
+
 20071028 - 1.13.95
 [-] * Fixes OBEX crash (Debian bug #446923).
 [-] * Correctly check various return values (bug #409).
