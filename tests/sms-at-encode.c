@@ -92,6 +92,8 @@ int main(int argc, char **argv)
 	Priv = &s->Phone.Data.Priv.ATGEN;
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
+	Priv->PhoneSMSMemory = AT_AVAILABLE;
+	Priv->SIMSMSMemory = AT_AVAILABLE;
 
 	/* Format SMS frame */
 	error = ATGEN_MakeSMSFrame(s, Backup.SMS[0], hexreq, &current, &current2);
