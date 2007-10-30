@@ -1,0 +1,8 @@
+
+[SMSBackup000]
+SMSC = "+41761234567"
+State = Read
+Number = "1234"
+Coding = Unicode
+Folder = 1
+Text00 = 005a006b006f00750161006b0061002000730069007200e9006e

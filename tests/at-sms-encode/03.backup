@@ -3,6 +3,6 @@
 SMSC = "1234"
 State = Read
 Number = "1234"
-Coding = Default
+Coding = Unicode
 Folder = 1
-Text00 = 005a006b006f00750161006b0061002000730069007200e9006e
+Text00 = 003100320033003400350036
