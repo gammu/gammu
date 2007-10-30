@@ -3510,6 +3510,10 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 		}
 	}
 	ReadLinkedBackupText(file_info, section, "Text", buffer, false);
+	if (strlen(buffer) > GSM_MAX_SMS_LENGTH) {
+		dbgprintf("Message text too long, truncating!\n");
+		buffer[GSM_MAX_SMS_LENGTH] = 0;
+	}
 	DecodeHexBin (SMS->Text, buffer, strlen(buffer));
 	SMS->Text[strlen(buffer)/2]	= 0;
 	SMS->Text[strlen(buffer)/2+1] 	= 0;
