@@ -78,7 +78,7 @@ foreach(TESTMESSAGE ${MESSAGES})
         "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
 endforeach(TESTMESSAGE $MESSAGES)
 
-# AT SMS parsing
+# AT SMSC parsing
 add_executable(get-smsc-at get-smsc-at.c)
 if (CROSS_MINGW)
     set_target_properties (get-smsc-at PROPERTIES PREFIX "" SUFFIX ".exe")
