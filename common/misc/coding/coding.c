@@ -858,7 +858,7 @@ int GSM_PackSemiOctetNumber(unsigned char *Number, unsigned char *Output, bool s
 	for (i = 0; i < length; i++) {
 		/* If there is something which can not be in normal
 		 * number, mark it as alphanumberic */
-		if (strchr("0123456789*#pP", buffer[i]) == NULL) {
+		if (strchr("+0123456789*#pP", buffer[i]) == NULL) {
 			format = NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN;
 		}
 	}
