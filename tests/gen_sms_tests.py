@@ -51,7 +51,7 @@ TEMPLATE = '''
 SMSC = "%s"
 State = %s
 Number = "%s"
-Coding = Default
+Coding = %s
 Folder = %d
 '''
 
@@ -60,6 +60,10 @@ STATES = [
         'Read',
         'Sent',
         ]
+CODINGS = [
+    'Default',
+    'Unicode',
+    ]
 
 def write_text(f, text):
     '''
@@ -72,7 +76,7 @@ def write_text(f, text):
         encoded = encoded[200:]
         line = line + 1
 
-def generate_message(index, folder, smscnum, num, text):
+def generate_message(index, folder, coding, smscnum, num, text):
     '''
     Generates single message file.
     '''
@@ -81,6 +85,7 @@ def generate_message(index, folder, smscnum, num, text):
         NUMBERS[smscnum],
         STATES[folder],
         NUMBERS[num],
+        CODINGS[coding],
         folder
         ))
     if folder > 1:
@@ -97,13 +102,15 @@ def generate():
     for smscnum in range(len(NUMBERS)):
         for num in range(len(NUMBERS)):
             for text in range(len(TEXTS)):
-                for folder in [1, 2]:
-                    generate_message(index,
-                            folder,
-                            smscnum,
-                            num,
-                            text)
-                    index = index + 1
+                for coding in range(len(CODINGS)):
+                    for folder in [1, 2]:
+                        generate_message(index,
+                                folder,
+                                coding,
+                                smscnum,
+                                num,
+                                text)
+                        index = index + 1
 
 if __name__ == '__main__':
     generate()

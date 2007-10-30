@@ -1,6 +1,6 @@
 
 [SMSBackup000]
-SMSC = "+420800123456"
+SMSC = "800123456"
 State = Sent
 Number = "1234"
 Coding = Default

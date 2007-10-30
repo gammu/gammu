@@ -1,0 +1,9 @@
+
+[SMSBackup000]
+SMSC = "+420800123456"
+State = Sent
+Number = "+420800123456"
+Coding = Default
+Folder = 2
+Sent = 20070605T135630
+Text00 = 003100320033003400350036
