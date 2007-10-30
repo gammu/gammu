@@ -1629,6 +1629,9 @@ void AddSMS(int argc UNUSED, char *argv[])
 		smsnum++;
 	}
 
+	/* We don't need this anymore */
+	GSM_FreeSMSBackup(&Backup);
+
 	GSM_Terminate();
 }
 
@@ -1670,6 +1673,9 @@ void RestoreSMS(int argc UNUSED, char *argv[])
 		}
 		smsnum++;
 	}
+
+	/* We don't need this anymore */
+	GSM_FreeSMSBackup(&Backup);
 
 	GSM_Terminate();
 }
