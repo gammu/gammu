@@ -2430,7 +2430,8 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			CopyUnicodeString(sms.SMS[i].SMSC.Number, SMSC);
 			if (Validity.Format != 0) memcpy(&sms.SMS[i].SMSC.Validity,&Validity,sizeof(GSM_SMSValidity));
 		}
-		SMSDaemonSendSMS(argv[4],argv[5],&sms);
+		error = SMSDaemonSendSMS(argv[4],argv[5],&sms);
+		Print_Error(error);
 		exit(0);
 	}
 	if (SaveSMS || SendSaved) {
