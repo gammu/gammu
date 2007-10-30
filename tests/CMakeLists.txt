@@ -98,6 +98,28 @@ foreach(TESTMESSAGE ${MESSAGES})
         "${Gammu_SOURCE_DIR}/tests/at-smsc/${TESTMESSAGE}")
 endforeach(TESTMESSAGE $MESSAGES)
 
+# AT SMS encoding
+add_executable(sms-at-encode sms-at-encode.c sms-printing.c)
+if (CROSS_MINGW)
+    set_target_properties (sms-at-encode PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+target_link_libraries(sms-at-encode libGammu)
+
+# List test cases
+file(GLOB MESSAGES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-encode"
+    "${Gammu_SOURCE_DIR}/tests/at-sms-encode/*.backup")
+list(SORT MESSAGES)
+
+foreach(TESTMESSAGE ${MESSAGES})
+    string(REPLACE .backup "" TESTNAME ${TESTMESSAGE})
+    string(REPLACE backup dump TESTDUMP ${TESTMESSAGE})
+    add_test("sms-at-encode-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/sms-at-encode${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-sms-encode/${TESTMESSAGE}"
+        "${Gammu_SOURCE_DIR}/tests/at-sms-encode/${TESTDUMP}")
+endforeach(TESTMESSAGE $MESSAGES)
+
 # SMS encoding
 add_executable(sms-encode-decode sms-encode-decode.c sms-printing.c)
 if (CROSS_MINGW)
