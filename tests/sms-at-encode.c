@@ -103,6 +103,9 @@ int main(int argc, char **argv)
 		return error;
 	}
 
+	/* We don't need this anymore */
+	GSM_FreeSMSBackup(&Backup);
+
 	/* Display message */
 	if (generate) {
 		/* Open file */

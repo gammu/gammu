@@ -17,6 +17,7 @@ ChangeLog
 
 2007???? - 1.13.96
 [-] * Fixed wrong PDU encoding (bug #412).
+[+] * Provide API for cleaning SMS backup structure.
 [+] * Added testing of SMS PDU encoding.
 
 20071028 - 1.13.95

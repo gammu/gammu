@@ -3575,7 +3575,7 @@ GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 {
 	FILE *file;
 
-	backup->SMS[0] = NULL;
+	GSM_ClearSMSBackup(backup);
 
 	file = fopen(FileName, "rb");
 	if (file ==  NULL) return(ERR_CANTOPENFILE);
@@ -3702,6 +3702,23 @@ GSM_Error GSM_AddSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 	return ERR_NONE;
 }
 
+void GSM_ClearSMSBackup(GSM_SMS_Backup *backup)
+{
+	int i;
+	for (i = 0; i <= GSM_BACKUP_MAX_SMS; i++) {
+		backup->SMS[i] = NULL;
+	}
+}
+
+void GSM_FreeSMSBackup(GSM_SMS_Backup *backup)
+{
+	int i;
+	for (i = 0; i <= GSM_BACKUP_MAX_SMS; i++) {
+		if (backup->SMS[i] == NULL) break;
+		free(backup->SMS[i]);
+		backup->SMS[i] = NULL;
+	}
+}
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

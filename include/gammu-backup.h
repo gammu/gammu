@@ -64,6 +64,24 @@ extern GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup * backup);
 extern GSM_Error GSM_AddSMSBackupFile(char *FileName, GSM_SMS_Backup * backup);
 
 /**
+ * Clears SMS backup structure
+ *
+ * \ingroup Backup
+ *
+ * \param backup structure where backup data will be stored
+ */
+void GSM_ClearSMSBackup(GSM_SMS_Backup * backup);
+
+/**
+ * Deallocates all members of SMS backup structure
+ *
+ * \ingroup Backup
+ *
+ * \param backup structure where backup data will be stored
+ */
+void GSM_FreeSMSBackup(GSM_SMS_Backup * backup);
+
+/**
  * Maximal number of phonebook entries in backup.
  *
  * \ingroup Backup
