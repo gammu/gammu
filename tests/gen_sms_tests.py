@@ -33,6 +33,7 @@ except OSError:
 
 # Numbers we're going to test
 NUMBERS = [
+    '1234',
     '800123456',
     '+420800123456',
     '+41761234567',
@@ -47,12 +48,18 @@ TEXTS = [
 
 TEMPLATE = '''
 [SMSBackup000]
-SMSC = "+420603052000"
-Sent = 20070605T135630
-State = Read
+SMSC = "%s"
+State = %s
 Number = "%s"
 Coding = Default
+Folder = %d
 '''
+
+STATES = [
+        'Read',
+        'Read',
+        'Sent',
+        ]
 
 def write_text(f, text):
     '''
@@ -65,18 +72,38 @@ def write_text(f, text):
         encoded = encoded[200:]
         line = line + 1
 
+def generate_message(index, folder, smscnum, num, text):
+    '''
+    Generates single message file.
+    '''
+    f = file('%02d.backup' % index, 'w')
+    f.write(TEMPLATE % (
+        NUMBERS[smscnum],
+        STATES[folder],
+        NUMBERS[num],
+        folder
+        ))
+    if folder > 1:
+        f.write('Sent = 20070605T135630\n')
+    write_text(f, TEXTS[text])
+    f.close()
+
 def generate():
     '''
     Generates test data based on NUMBERS and TEXTS variables.
     '''
     index = 1
-    for num in range(len(NUMBERS)):
-        for text in range(len(TEXTS)):
-            f = file('%02d.backup' % index, 'w')
-            f.write(TEMPLATE % NUMBERS[num])
-            write_text(f, TEXTS[text])
-            f.close()
-            index = index + 1
+
+    for smscnum in range(len(NUMBERS)):
+        for num in range(len(NUMBERS)):
+            for text in range(len(TEXTS)):
+                for folder in [1, 2]:
+                    generate_message(index,
+                            folder,
+                            smscnum,
+                            num,
+                            text)
+                    index = index + 1
 
 if __name__ == '__main__':
     generate()
