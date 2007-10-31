@@ -36,7 +36,7 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 
 		if (d->Msg.CheckSum[0] != rx_byte) {
 			printf("[ERROR: checksum]\n");
-			printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
+			printf(" 0x%02x / 0x%04zx", d->Msg.Type, d->Msg.Length);
 			DumpMessage(&ldi, d->Msg.Buffer, d->Msg.Length);
 			d->MsgRXState = RX_Sync;
 			return;
@@ -47,7 +47,7 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 		} else {
 			printf("Sending frame");
 		}
-		printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
+		printf(" 0x%02x / 0x%04zx", d->Msg.Type, d->Msg.Length);
 		DumpMessage(&ldi, d->Msg.Buffer, d->Msg.Length);
 		if (d->Msg.Destination != MBUS2_DEVICE_PHONE) {
 			if (s->Phone.Functions != NULL) {
@@ -128,7 +128,7 @@ static void DecodeInputIRDA(unsigned char rx_byte)
 		} else {
 			printf("Sending frame");
 		}
-		printf(" 0x%02x / 0x%04x", d->Msg.Type, d->Msg.Length);
+		printf(" 0x%02x / 0x%04zx", d->Msg.Type, d->Msg.Length);
 		DumpMessage(&ldi, d->Msg.Buffer, d->Msg.Length);
 		if (d->Msg.Destination != PHONET_DEVICE_PHONE) {
 			if (s->Phone.Functions != NULL) {
