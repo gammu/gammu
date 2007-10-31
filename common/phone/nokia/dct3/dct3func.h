@@ -10,6 +10,7 @@ GSM_Error DCT3_ReplyPlayTone		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3_ReplyEnableSecurity	(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3_ReplyGetIMEI		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3_ReplyGetSMSC		(GSM_Protocol_Message msg, GSM_StateMachine *s);
+GSM_Error DCT3_ReplyWaitSMSC		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3_ReplySIMLogin		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3_ReplySIMLogout		(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error DCT3_ReplyGetDateTime		(GSM_Protocol_Message msg, GSM_StateMachine *s);
