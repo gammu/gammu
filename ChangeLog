@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.13.96
+20071031 - 1.13.96
 [-] * Fixed wrong PDU encoding (bug #412).
 [+] * Provide API for cleaning SMS backup structure.
 [+] * Added testing of SMS PDU encoding.
