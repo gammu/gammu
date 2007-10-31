@@ -390,6 +390,12 @@ GSM_Error DCT3_SetAlarm(GSM_StateMachine *s, GSM_Alarm *Alarm, unsigned char msg
 	return GSM_WaitFor (s, req, 11, msgtype, 4, ID_SetAlarm);
 }
 
+GSM_Error DCT3_ReplyWaitSMSC(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+{
+	smprintf(s, "Waiting for SMSC reply\n");
+	return ERR_NONE;
+}
+
 GSM_Error DCT3_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int 		i;

@@ -2655,6 +2655,7 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
         {DCT3_ReplySetSMSC,               "\x02",0x03,0x31,ID_SetSMSC            },
         {DCT3_ReplyGetSMSC,               "\x02",0x03,0x34,ID_GetSMSC            },
         {DCT3_ReplyGetSMSC,               "\x02",0x03,0x35,ID_GetSMSC            },
+        {DCT3_ReplyWaitSMSC,              "\x02",0x03,0xc9,ID_IncomingFrame      },
 
         {N6110_ReplyGetMemory,            "\x03",0x03,0x02,ID_GetMemory          },
         {N6110_ReplyGetMemory,            "\x03",0x03,0x03,ID_GetMemory          },
