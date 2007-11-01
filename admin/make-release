@@ -27,8 +27,12 @@ if [ "x$1" = "xbranch" ] ; then
 else
     svn export svn+ssh://mort/home/svn/$repo/trunk $repo-$version
 fi
+
+echo 'Creating source tarballs...'
 tar cfz $repo-$version.tar.gz $repo-$version
 tar cfj $repo-$version.tar.bz2 $repo-$version
+
+echo 'Building static Windows version...'
 mkdir build-win-static
 cd build-win-static
 cmake ../$repo-$version \
@@ -37,9 +41,12 @@ cmake ../$repo-$version \
     -DMYSQL_CROSS_PATH=$srcdir/../../win-cross/mysql \
     -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
 
-make
+make -j 2
 cpack
 mv Gammu-*-Windows-static.* ../
+cd ..
+
+echo 'Building DLL Windows version...'
 mkdir build-win-shared
 cd build-win-shared
 cmake ../$repo-$version \
@@ -49,7 +56,7 @@ cmake ../$repo-$version \
     -DMYSQL_CROSS_PATH=$srcdir/../../win-cross/mysql \
     -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
 
-make
+make -j 2
 cpack
 mv Gammu-*-Windows-DLL.* ../
 
