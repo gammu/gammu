@@ -170,7 +170,6 @@ msgstr "Jste v menu telefonu (upravujete záznam?). Opusťte ho a zkuste znovu."
 
 #: common/gsmcomon.c:120
 #, fuzzy
-#| msgid "battery not connected"
 msgid "Phone is not connected."
 msgstr "baterie není připojena"
 
@@ -288,7 +287,6 @@ msgstr ""
 
 #: common/gsmcomon.c:163
 #, fuzzy
-#| msgid "Unknown error."
 msgid "Unknown error description."
 msgstr "Neznámá chyba."
 
@@ -4520,7 +4518,6 @@ msgstr "Pokouším se zadat PIN"
 
 #: gammu/smsd/smsdcore.c:280
 #, fuzzy, c-format
-#| msgid "ERROR: incorrect PIN"
 msgid "ERROR: incorrect PIN (%s:%i)"
 msgstr "CHYBA: Špatný PIN"
 

@@ -183,7 +183,6 @@ msgstr ""
 
 #: common/gsmcomon.c:120
 #, fuzzy
-#| msgid "Phone is disabled and connected to charger."
 msgid "Phone is not connected."
 msgstr "Telefon jest zablokowany i podłączony do ładowarki."
 
@@ -305,7 +304,6 @@ msgstr ""
 
 #: common/gsmcomon.c:163
 #, fuzzy
-#| msgid "Unknown error."
 msgid "Unknown error description."
 msgstr "Nieznany błąd."
 

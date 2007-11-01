@@ -184,7 +184,6 @@ msgstr ""
 
 #: common/gsmcomon.c:120
 #, fuzzy
-#| msgid "battery not connected"
 msgid "Phone is not connected."
 msgstr "аккумулятор не подключён"
 
@@ -305,7 +304,6 @@ msgstr " (имя по умолчанию)"
 
 #: common/gsmcomon.c:163
 #, fuzzy
-#| msgid "Unknown error."
 msgid "Unknown error description."
 msgstr "Неизвестная ошибка."
 
@@ -5037,7 +5035,6 @@ msgstr ""
 
 #: gammu/smsd/smsdcore.c:646
 #, fuzzy, c-format
-#| msgid "Can't open device (%i)"
 msgid "Can't open device (%s:%i)"
 msgstr "Не удаётся открыть устройство (%i)"
 

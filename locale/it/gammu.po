@@ -179,7 +179,6 @@ msgstr "Siete dentro il menu del telefono. Uscite e riprovate."
 
 #: common/gsmcomon.c:120
 #, fuzzy
-#| msgid "battery not connected"
 msgid "Phone is not connected."
 msgstr "batteria non connessa"
 
@@ -297,7 +296,6 @@ msgstr " (nome predefinito)"
 
 #: common/gsmcomon.c:163
 #, fuzzy
-#| msgid "Unknown error."
 msgid "Unknown error description."
 msgstr "Errore sconosciuto."
 

@@ -176,7 +176,6 @@ msgstr ""
 
 #: common/gsmcomon.c:120
 #, fuzzy
-#| msgid "Phone is disabled and connected to charger."
 msgid "Phone is not connected."
 msgstr "El teléfono está desactivado y conectado al cargador."
 
@@ -296,7 +295,6 @@ msgstr "Usando valores por defecto."
 
 #: common/gsmcomon.c:163
 #, fuzzy
-#| msgid "Unknown error."
 msgid "Unknown error description."
 msgstr "Error desconocido."
 
@@ -4701,7 +4699,6 @@ msgstr "Disponible excluir números, pero IGNORADO"
 
 #: gammu/smsd/smsdcore.c:263
 #, fuzzy, c-format
-#| msgid "Error getting security status (%i)"
 msgid "Error getting security status (%s:%i)"
 msgstr "Error obteniendo el estado de seguridad (%i)"
 
@@ -4715,19 +4712,16 @@ msgstr "Intentando introducir el PIN"
 
 #: gammu/smsd/smsdcore.c:280
 #, fuzzy, c-format
-#| msgid "ERROR: incorrect PIN"
 msgid "ERROR: incorrect PIN (%s:%i)"
 msgstr "ERROR: PIN incorrecto"
 
 #: gammu/smsd/smsdcore.c:283
 #, fuzzy, c-format
-#| msgid "Error entering PIN (%i)"
 msgid "Error entering PIN (%s:%i)"
 msgstr "Error introduciendo PIN (%i)"
 
 #: gammu/smsd/smsdcore.c:293
 #, fuzzy, c-format
-#| msgid "ERROR: phone requires not supported code type"
 msgid "ERROR: phone requires not supported code type (%s:%i)"
 msgstr "ERROR: el teléfono precisa de un código no soportado"
 
@@ -4738,19 +4732,16 @@ msgstr "Exluido %s"
 
 #: gammu/smsd/smsdcore.c:416
 #, fuzzy, c-format
-#| msgid "Error getting SMS (%i)"
 msgid "Error getting SMS (%s:%i)"
 msgstr "Error obteniendo SMS (%i)"
 
 #: gammu/smsd/smsdcore.c:428
 #, fuzzy, c-format
-#| msgid "Error deleting SMS (%i)"
 msgid "Error deleting SMS (%s:%i)"
 msgstr "Error borrando SMS (%i)"
 
 #: gammu/smsd/smsdcore.c:446
 #, fuzzy, c-format
-#| msgid "Error getting SMS status (%i)"
 msgid "Error getting SMS status (%s:%i)"
 msgstr "Error obteniendo estado SMS (%i)"
 
@@ -4809,13 +4800,11 @@ msgstr "Código de retorno de reinicio: %s (%i)"
 
 #: gammu/smsd/smsdcore.c:646
 #, fuzzy, c-format
-#| msgid "Can't open device (%i)"
 msgid "Can't open device (%s:%i)"
 msgstr "No se puede abrir el dispositivo (%i)"
 
 #: gammu/smsd/smsdcore.c:648
 #, fuzzy, c-format
-#| msgid "Error at init connection (%i)"
 msgid "Error at init connection (%s:%i)"
 msgstr "Error de conexión inicial (%i)"
 
