@@ -117,6 +117,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_PERMISSION,		N_("Permission to file/device required...")},
 	{ERR_EMPTYSMSC,			N_("Empty SMSC number. Set in phone or use -smscnumber.")},
 	{ERR_INSIDEPHONEMENU,		N_("You're inside phone menu (maybe editing?). Leave it and try again.")},
+	{ERR_NOTCONNECTED,		N_("Phone is not connected.")},
 	{ERR_WORKINPROGRESS,		N_("Function is during writing. If want help, please contact with authors.")},
 	{ERR_PHONEOFF,			N_("Phone is disabled and connected to charger.")},
 	{ERR_FILENOTSUPPORTED,		N_("File format not supported by Gammu.")},
@@ -134,6 +135,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_SHOULDBEFILE,		N_("You have to give file name and not folder name.")},
 	{ERR_NOSIM,			N_("Can not access SIM card.")},
 	{ERR_GNAPPLETWRONG,		N_("Wrong GNAPPLET version in phone. Use version from currently used Gammu.")},
+	{ERR_FOLDERPART,		N_("Only part of folder has been listed.")},
 	{ERR_FOLDERNOTEMPTY,		N_("Folder must be empty.")},
 	{ERR_DATACONVERTED,		N_("Data were converted.")},
 	{ERR_UNCONFIGURED,		N_("Gammu is not configured.")},
@@ -158,7 +160,7 @@ const char *GSM_ErrorString(GSM_Error e)
 		}
 		i++;
 	}
-	if (def == NULL) def = N_("Unknown error.");
+	if (def == NULL) def = N_("Unknown error description.");
 
 	return gettext(def);
 }
