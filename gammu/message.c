@@ -806,6 +806,7 @@ void GetEachSMS(int argc, char *argv[])
 	int			smsnum=0,smspos=0;
 	GSM_SMSFolders		folders;
 	bool			start = true, ems = true;
+	GSM_Backup		*BackupPtr = NULL;
 #ifdef GSM_ENABLE_BACKUP
 	GSM_MemoryStatus	MemStatus;
 	GSM_MemoryEntry		Pbk;
@@ -851,6 +852,7 @@ void GetEachSMS(int argc, char *argv[])
 				}
 			}
 			fprintf(stderr, "\n");
+			BackupPtr = &Backup;
 		}
 	}
 #endif
@@ -913,15 +915,7 @@ void GetEachSMS(int argc, char *argv[])
 				printf("\n");
 			}
 		}
-#ifdef GSM_ENABLE_BACKUP
-		if (Backup.PhonePhonebook[0]!=NULL) {
-			DisplayMultiSMSInfo(*SortedSMS[i],true,ems,&Backup);
-		} else {
-#endif
-			DisplayMultiSMSInfo(*SortedSMS[i],true,ems,NULL);
-#ifdef GSM_ENABLE_BACKUP
-		}
-#endif
+		DisplayMultiSMSInfo(*SortedSMS[i], true, ems, BackupPtr);
 
 		free(SortedSMS[i]);
 		SortedSMS[i] = NULL;
