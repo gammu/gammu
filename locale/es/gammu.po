@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-10-17 21:21+0900\n"
+"POT-Creation-Date: 2007-11-01 11:49+0900\n"
 "PO-Revision-Date: 2007-10-17 22:18+0200\n"
 "Last-Translator: Alejandro Caldito <acaldito@amena.com>\n"
 "Language-Team: Español\n"
@@ -148,7 +148,7 @@ msgstr "Función no implementada. Ayudanos a implementarla."
 msgid "Memory full."
 msgstr "Memoria llena."
 
-#: common/gsmcomon.c:114 common/gsmcomon.c:161
+#: common/gsmcomon.c:114
 msgid "Unknown error."
 msgstr "Error desconocido."
 
@@ -175,20 +175,26 @@ msgstr ""
 "inténtelo de nuevo."
 
 #: common/gsmcomon.c:120
+#, fuzzy
+#| msgid "Phone is disabled and connected to charger."
+msgid "Phone is not connected."
+msgstr "El teléfono está desactivado y conectado al cargador."
+
+#: common/gsmcomon.c:121
 msgid "Function is during writing. If want help, please contact with authors."
 msgstr ""
 "La función está escribiendo, si necesita ayuda, por favor, contácte con los "
 "Autores."
 
-#: common/gsmcomon.c:121
+#: common/gsmcomon.c:122
 msgid "Phone is disabled and connected to charger."
 msgstr "El teléfono está desactivado y conectado al cargador."
 
-#: common/gsmcomon.c:122
+#: common/gsmcomon.c:123
 msgid "File format not supported by Gammu."
 msgstr "Formato de archivo no soportado por Gammu."
 
-#: common/gsmcomon.c:123
+#: common/gsmcomon.c:124
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
@@ -196,93 +202,103 @@ msgstr ""
 "Nadie es perfecto, hay algunos bugs en la implementación del protocolo. Por "
 "favor, contacte con los autores."
 
-#: common/gsmcomon.c:124
+#: common/gsmcomon.c:125
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
 "La transferencia fue cancelada por el teléfono.¿ Ha pulsado la tecla "
 "cancelar en el teléfono?"
 
-#: common/gsmcomon.c:125
+#: common/gsmcomon.c:126
 msgid "Phone module need to send another answer frame."
 msgstr ""
 
-#: common/gsmcomon.c:126
+#: common/gsmcomon.c:127
 msgid "Current connection type doesn't support called function."
 msgstr "El tipo de conexión actual no soporta esta función."
 
-#: common/gsmcomon.c:127
+#: common/gsmcomon.c:128
 msgid "CRC error."
 msgstr "Error de CRC."
 
-#: common/gsmcomon.c:128
+#: common/gsmcomon.c:129
 msgid "Invalid date or time specified."
 msgstr "La hora o fecha especificada no es válida."
 
-#: common/gsmcomon.c:129
+#: common/gsmcomon.c:130
 msgid "Phone memory error, maybe it is read only."
 msgstr "Error en la memoria del teléfono, maybe es sólo lectura."
 
-#: common/gsmcomon.c:130
+#: common/gsmcomon.c:131
 msgid "Invalid data given to phone."
 msgstr "Datos inválidos proporcionados al teléfono."
 
-#: common/gsmcomon.c:131
+#: common/gsmcomon.c:132
 msgid "File with specified name already exist."
 msgstr "Un archivo con el nombre especificado ya existe."
 
-#: common/gsmcomon.c:132
+#: common/gsmcomon.c:133
 msgid "File with specified name doesn't exist."
 msgstr "El archivo con el nombre especificado no existe."
 
-#: common/gsmcomon.c:133
+#: common/gsmcomon.c:134
 msgid "You have to give folder name and not file name."
 msgstr "Debe proporcionar un nombre de carpeta, no de archivo."
 
-#: common/gsmcomon.c:134
+#: common/gsmcomon.c:135
 msgid "You have to give file name and not folder name."
 msgstr "Debe proporcionar un nombre de archivo, no de carpeta."
 
-#: common/gsmcomon.c:135
+#: common/gsmcomon.c:136
 msgid "Can not access SIM card."
 msgstr "No es posible acceder a la tarjeta SIM."
 
-#: common/gsmcomon.c:136
+#: common/gsmcomon.c:137
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
 "Versión de GNAPPLET incorrecta en el teléfono. Utilice la versión utilizada "
 "por Gammu."
 
-#: common/gsmcomon.c:137
+#: common/gsmcomon.c:138
+msgid "Only part of folder has been listed."
+msgstr ""
+
+#: common/gsmcomon.c:139
 msgid "Folder must be empty."
 msgstr "La carpeta debe estar vacía."
 
-#: common/gsmcomon.c:138
+#: common/gsmcomon.c:140
 msgid "Data were converted."
 msgstr "Los datos se han convertido."
 
-#: common/gsmcomon.c:139
+#: common/gsmcomon.c:141
 msgid "Gammu is not configured."
 msgstr "Gammu no está configurado."
 
-#: common/gsmcomon.c:140
+#: common/gsmcomon.c:142
 msgid "Wrong folder used."
 msgstr "La carpeta usada no es válida."
 
-#: common/gsmcomon.c:141
+#: common/gsmcomon.c:143
 msgid "Internal phone error."
 msgstr "Error interno del teléfono."
 
-#: common/gsmcomon.c:142
+#: common/gsmcomon.c:144
 msgid "Error writing file to disk."
 msgstr "Error escribiendo el archivo en el disco."
 
-#: common/gsmcomon.c:143
+#: common/gsmcomon.c:145
 msgid "No such section exists."
 msgstr "No existe dicha sección."
 
-#: common/gsmcomon.c:144
+#: common/gsmcomon.c:146
 msgid "Using default values."
 msgstr "Usando valores por defecto."
+
+#: common/gsmcomon.c:163
+#, fuzzy
+#| msgid "Unknown error."
+msgid "Unknown error description."
+msgstr "Error desconocido."
 
 #: common/phone/nokia/dct3/n6110.c:1953 gammu/misc.c:1813
 msgid "Personal"
@@ -316,7 +332,7 @@ msgstr "Alto"
 msgid "My style"
 msgstr "Mis estilos"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:528 gammu/message.c:2479
+#: common/phone/nokia/dct4s40/6510/n6510.c:528 gammu/message.c:2480
 msgid "SIM"
 msgstr "SIM"
 
@@ -827,21 +843,21 @@ msgstr "%cBorrado: %i porciento"
 msgid "Restore sms"
 msgstr ""
 
-#: gammu/backup.c:1648
+#: gammu/backup.c:1651
 #, c-format
 msgid "Do you want to restore binary SMS"
 msgstr ""
 
-#: gammu/backup.c:1663
+#: gammu/backup.c:1666
 #, c-format
 msgid "Restore %03i sms to folder \"%s\""
 msgstr ""
 
-#: gammu/backup.c:1664
+#: gammu/backup.c:1667
 msgid " (SIM)"
 msgstr ""
 
-#: gammu/backup.c:1666
+#: gammu/backup.c:1669
 #, c-format
 msgid "saving %i SMS\n"
 msgstr ""
@@ -3329,50 +3345,50 @@ msgstr ""
 msgid "Number of messages: %i"
 msgstr "   Número     : %s\n"
 
-#: gammu/message.c:2452 gammu/message.c:2514
+#: gammu/message.c:2453 gammu/message.c:2515
 msgid "If you want break, press Ctrl+C..."
 msgstr ""
 
-#: gammu/message.c:2456
+#: gammu/message.c:2457
 #, fuzzy, c-format
 msgid "Saving SMS %i/%i\n"
 msgstr "  Guardando en %s\n"
 
-#: gammu/message.c:2476
+#: gammu/message.c:2477
 #, fuzzy, c-format
 msgid "Saved in folder \"%s\", location %i"
 msgstr "Memoria %s, Location %i\n"
 
-#: gammu/message.c:2481
+#: gammu/message.c:2482
 msgid "SMS name ignored"
 msgstr ""
 
-#: gammu/message.c:2484
+#: gammu/message.c:2485
 #, fuzzy
 msgid "phone"
 msgstr "Pruebas del teléfono"
 
-#: gammu/message.c:2488
+#: gammu/message.c:2489
 #, fuzzy, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr "Memoria %s, Location %i\n"
 
-#: gammu/message.c:2493 gammu/message.c:2532
+#: gammu/message.c:2494 gammu/message.c:2533
 #, c-format
 msgid "....waiting for network answer"
 msgstr ""
 
-#: gammu/message.c:2519
+#: gammu/message.c:2520
 #, c-format
 msgid "Sending SMS %i/%i"
 msgstr ""
 
-#: gammu/message.c:2594
+#: gammu/message.c:2595
 #, c-format
 msgid "Too high folder number (max. %i)\n"
 msgstr ""
 
-#: gammu/message.c:2599
+#: gammu/message.c:2600
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
 msgstr "Borrando SMS de la carpeta \"%s\": "
@@ -4651,153 +4667,159 @@ msgstr "Aviso: El archivo %s file no contiene el código PIN\n"
 msgid "PIN code is \"%s\""
 msgstr "El código PIN es \"%s\""
 
-#: gammu/smsd/smsdcore.c:147
-#, c-format
-msgid "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"
-msgstr "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"
-
-#: gammu/smsd/smsdcore.c:184
+#: gammu/smsd/smsdcore.c:186
 #, c-format
 msgid "Inbox is \"%s\" with format \"%s\""
 msgstr "La carpeta de entrada es \"%s\" con formato \"%s\""
 
-#: gammu/smsd/smsdcore.c:193
+#: gammu/smsd/smsdcore.c:195
 #, c-format
 msgid "Outbox is \"%s\" with transmission format \"%s\""
 msgstr "La carpeta de salida es \"%s\" con formato \"%s\""
 
-#: gammu/smsd/smsdcore.c:197
+#: gammu/smsd/smsdcore.c:199
 #, c-format
 msgid "Sent SMS moved to \"%s\""
 msgstr "Los SMS enviados se han movido a \"%s\""
 
-#: gammu/smsd/smsdcore.c:201
+#: gammu/smsd/smsdcore.c:203
 #, c-format
 msgid "SMS with errors moved to \"%s\""
 msgstr "Los SMS con errores se han movido a \"%s\""
 
-#: gammu/smsd/smsdcore.c:237
+#: gammu/smsd/smsdcore.c:239
 msgid "Include numbers available"
 msgstr "Disponible incluir números"
 
-#: gammu/smsd/smsdcore.c:241
+#: gammu/smsd/smsdcore.c:243
 msgid "Exclude numbers available"
 msgstr "Disponible excluir números"
 
-#: gammu/smsd/smsdcore.c:243
+#: gammu/smsd/smsdcore.c:245
 msgid "Exclude numbers available, but IGNORED"
 msgstr "Disponible excluir números, pero IGNORADO"
 
-#: gammu/smsd/smsdcore.c:261
-#, c-format
-msgid "Error getting security status (%i)"
+#: gammu/smsd/smsdcore.c:263
+#, fuzzy, c-format
+#| msgid "Error getting security status (%i)"
+msgid "Error getting security status (%s:%i)"
 msgstr "Error obteniendo el estado de seguridad (%i)"
 
-#: gammu/smsd/smsdcore.c:271
+#: gammu/smsd/smsdcore.c:273
 msgid "Warning: no PIN in config"
 msgstr "Aviso: sin PIN en configuración"
 
-#: gammu/smsd/smsdcore.c:274
+#: gammu/smsd/smsdcore.c:276
 msgid "Trying to enter PIN"
 msgstr "Intentando introducir el PIN"
 
-#: gammu/smsd/smsdcore.c:278
-msgid "ERROR: incorrect PIN"
+#: gammu/smsd/smsdcore.c:280
+#, fuzzy, c-format
+#| msgid "ERROR: incorrect PIN"
+msgid "ERROR: incorrect PIN (%s:%i)"
 msgstr "ERROR: PIN incorrecto"
 
-#: gammu/smsd/smsdcore.c:281
-#, c-format
-msgid "Error entering PIN (%i)"
+#: gammu/smsd/smsdcore.c:283
+#, fuzzy, c-format
+#| msgid "Error entering PIN (%i)"
+msgid "Error entering PIN (%s:%i)"
 msgstr "Error introduciendo PIN (%i)"
 
-#: gammu/smsd/smsdcore.c:291
-msgid "ERROR: phone requires not supported code type"
+#: gammu/smsd/smsdcore.c:293
+#, fuzzy, c-format
+#| msgid "ERROR: phone requires not supported code type"
+msgid "ERROR: phone requires not supported code type (%s:%i)"
 msgstr "ERROR: el teléfono precisa de un código no soportado"
 
-#: gammu/smsd/smsdcore.c:410
+#: gammu/smsd/smsdcore.c:412
 #, c-format
 msgid "Excluded %s"
 msgstr "Exluido %s"
 
-#: gammu/smsd/smsdcore.c:414
-#, c-format
-msgid "Error getting SMS (%i)"
+#: gammu/smsd/smsdcore.c:416
+#, fuzzy, c-format
+#| msgid "Error getting SMS (%i)"
+msgid "Error getting SMS (%s:%i)"
 msgstr "Error obteniendo SMS (%i)"
 
-#: gammu/smsd/smsdcore.c:426
-#, c-format
-msgid "Error deleting SMS (%i)"
+#: gammu/smsd/smsdcore.c:428
+#, fuzzy, c-format
+#| msgid "Error deleting SMS (%i)"
+msgid "Error deleting SMS (%s:%i)"
 msgstr "Error borrando SMS (%i)"
 
-#: gammu/smsd/smsdcore.c:444
-#, c-format
-msgid "Error getting SMS status (%i)"
+#: gammu/smsd/smsdcore.c:446
+#, fuzzy, c-format
+#| msgid "Error getting SMS status (%i)"
+msgid "Error getting SMS status (%s:%i)"
 msgstr "Error obteniendo estado SMS (%i)"
 
-#: gammu/smsd/smsdcore.c:478
+#: gammu/smsd/smsdcore.c:480
 #, c-format
 msgid "Error in outbox on %s"
 msgstr "Error en carpeta de salida en %s"
 
-#: gammu/smsd/smsdcore.c:492
+#: gammu/smsd/smsdcore.c:494
 #, c-format
 msgid "Moved to errorbox: %s"
 msgstr "Movido a la bandeja de error: %s"
 
-#: gammu/smsd/smsdcore.c:509
+#: gammu/smsd/smsdcore.c:511
 msgid "Error getting SMSC from phone"
 msgstr "Error obteniendo \"Número de Centro de Mensajes\" del teléfono"
 
-#: gammu/smsd/smsdcore.c:531
+#: gammu/smsd/smsdcore.c:533
 #, c-format
 msgid "Error sending SMS %s (%i): %s"
 msgstr "Error enviando SMS %s (%i): %s"
 
-#: gammu/smsd/smsdcore.c:555
+#: gammu/smsd/smsdcore.c:557
 #, c-format
 msgid "Error getting send status of %s (%i): %s"
 msgstr "Error obteniendo estado de envío de %s (%i): %s"
 
-#: gammu/smsd/smsdcore.c:590
+#: gammu/smsd/smsdcore.c:592
 #, c-format
 msgid "Unknown SMSD service type (\"%s\")\n"
 msgstr "Tipo de servicio SMSD desconocido (\"%s\")\n"
 
-#: gammu/smsd/smsdcore.c:598
+#: gammu/smsd/smsdcore.c:600
 #, c-format
-msgid "Initialisation failed, stopping Gammu smsd (%i)"
+msgid "Initialisation failed, stopping Gammu smsd (%s:%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:613
+#: gammu/smsd/smsdcore.c:615
 #, c-format
 msgid "Terminating communication (%i,%i)"
 msgstr "Terminando comunicación (%i,%i)"
 
-#: gammu/smsd/smsdcore.c:617
+#: gammu/smsd/smsdcore.c:619
 msgid "Starting communication"
 msgstr "Iniciando comunicación"
 
-#: gammu/smsd/smsdcore.c:629
+#: gammu/smsd/smsdcore.c:631
 #, c-format
-msgid "Post initialisation failed, stopping Gammu smsd (%i)"
+msgid "Post initialisation failed, stopping Gammu smsd (%s:%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:638
+#: gammu/smsd/smsdcore.c:640
 #, c-format
 msgid "Reset return code: %s (%i) "
 msgstr "Código de retorno de reinicio: %s (%i)"
 
-#: gammu/smsd/smsdcore.c:644
-#, c-format
-msgid "Can't open device (%i)"
+#: gammu/smsd/smsdcore.c:646
+#, fuzzy, c-format
+#| msgid "Can't open device (%i)"
+msgid "Can't open device (%s:%i)"
 msgstr "No se puede abrir el dispositivo (%i)"
 
-#: gammu/smsd/smsdcore.c:646
-#, c-format
-msgid "Error at init connection (%i)"
+#: gammu/smsd/smsdcore.c:648
+#, fuzzy, c-format
+#| msgid "Error at init connection (%i)"
+msgid "Error at init connection (%s:%i)"
 msgstr "Error de conexión inicial (%i)"
 
-#: gammu/smsd/smsdcore.c:675
+#: gammu/smsd/smsdcore.c:680
 #, fuzzy
 msgid "Stopping Gammu smsd"
 msgstr "Detener servicio smsd"
@@ -4964,6 +4986,11 @@ msgstr "Error escribiendo a la base de datos (CreateOutbox): %s\n"
 #, c-format
 msgid "Error writing to database (AddSent): %s\n"
 msgstr "Error escribiendo a la base de datos (AddSent): %s\n"
+
+#~ msgid ""
+#~ "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"
+#~ msgstr ""
+#~ "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"
 
 #~ msgid "Stop GAMMU smsd (%i)"
 #~ msgstr "Detener servicio smsd (%i)"
