@@ -32,21 +32,7 @@ echo 'Creating source tarballs...'
 tar cfz $repo-$version.tar.gz $repo-$version
 tar cfj $repo-$version.tar.bz2 $repo-$version
 
-echo 'Building static Windows version...'
-mkdir build-win-static
-cd build-win-static
-cmake ../$repo-$version \
-    -DCROSS_MINGW=ON \
-    -DGETTEXT_CROSS_PATH=$srcdir/../../win-cross/gettext \
-    -DMYSQL_CROSS_PATH=$srcdir/../../win-cross/mysql \
-    -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
-
-make -j 2
-cpack
-mv Gammu-*-Windows.* ../
-cd ..
-
-echo 'Building DLL Windows version...'
+echo 'Building Windows version...'
 mkdir build-win-shared
 cd build-win-shared
 cmake ../$repo-$version \
@@ -58,7 +44,7 @@ cmake ../$repo-$version \
 
 make -j 2
 cpack
-mv Gammu-*-Windows-DLL.* ../
+mv Gammu-*-Windows.* ../
 
 echo "Release is in $tmp directory:"
 ls -lh $tmp
