@@ -27,9 +27,12 @@ int main(int argc UNUSED, char **argv UNUSED)
 	char message_text[] = "Sample Gammu message";
 
 	/* Prepare message */
+	/* Cleanup the structure */
 	memset(&sms, 0, sizeof(sms));
+	/* Encode message text */
 	EncodeUnicode(sms.Text, message_text, strlen(message_text));
-	EncodeUnicode(sms.Number,recipient_number,strlen(recipient_number));
+	/* Encode recipient number */
+	EncodeUnicode(sms.Number, recipient_number, strlen(recipient_number));
 	/* We want to submit message */
 	sms.PDU = SMS_Submit;
 	/* We used default coding for text */
