@@ -60,7 +60,7 @@ void GSM_Find_Free_Used_SMS2(GSM_Coding_Type Coding,GSM_SMSMessage SMS, size_t *
 	default:
 		break;
 	}
-	dbgprintf("UDH len %i, UsedBytes %i, FreeText %i, UsedText %i, FreeBytes %i\n",SMS.UDH.Length,UsedBytes,*FreeText,*UsedText,*FreeBytes);
+	dbgprintf("UDH len %i, UsedBytes %zi, FreeText %zi, UsedText %zi, FreeBytes %zi\n",SMS.UDH.Length,UsedBytes,*FreeText,*UsedText,*FreeBytes);
 }
 
 GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
@@ -92,7 +92,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
 		SMS->SMS[SMS->Number].UDH.Length  	+= BufferLen;
 		SMS->SMS[SMS->Number].UDH.Text[0] 	+= BufferLen;
 		SMS->SMS[SMS->Number].UDH.Type 		=  UDH_UserUDH;
-		dbgprintf("UDH added %i\n",BufferLen);
+		dbgprintf("UDH added %zi\n",BufferLen);
 	} else {
 		dbgprintf("Adding text\n");
 		if (FreeText == 0) {
@@ -102,14 +102,14 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage 	*SMS,
 		}
 
 		Copy = FreeText;
-		dbgprintf("copy %i\n",Copy);
+		dbgprintf("copy %zi\n",Copy);
 		if (BufferLen < Copy) Copy = BufferLen;
-		dbgprintf("copy %i\n",Copy);
+		dbgprintf("copy %zi\n",Copy);
 
 		switch (Coding) {
 		case SMS_Coding_Default_No_Compression:
 			FindDefaultAlphabetLen(Buffer,&i,&j,FreeText);
-			dbgprintf("def length %i %i\n",i,j);
+			dbgprintf("def length %zi %zi\n",i,j);
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+i*2]   = 0;
 			SMS->SMS[SMS->Number].Text[UnicodeLength(SMS->SMS[SMS->Number].Text)*2+i*2+1] = 0;
 			memcpy(SMS->SMS[SMS->Number].Text+UnicodeLength(SMS->SMS[SMS->Number].Text)*2,Buffer,i*2);
@@ -168,7 +168,7 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 			GSM_AddSMS_Text_UDH(SMS,Coding,MessageBuffer+Len*2,MessageLength - Len,false,&UsedText,&CopiedText,&CopiedSMSText);
 		}
 		Len += CopiedText;
-		dbgprintf("%i %i\n",Len,MessageLength);
+		dbgprintf("%zi %zi\n",Len,MessageLength);
 		if (Len == MessageLength) break;
 		if (SMS->Number == GSM_MAX_MULTI_SMS) break;
 		SMS->Number++;
@@ -681,7 +681,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 		for (smslen = 0; smslen < UnicodeLength(Info->Entries[0].Buffer) * 2; smslen++) {
 			if (Info->Entries[0].Buffer[smslen] != Buffer[smslen]) {
 				Info->UnicodeCoding = true;
-				dbgprintf("Setting to Unicode %i\n",smslen);
+				dbgprintf("Setting to Unicode %zi\n",smslen);
 				break;
 			}
 		}
