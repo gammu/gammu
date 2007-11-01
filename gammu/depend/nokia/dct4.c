@@ -615,7 +615,7 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMac
 			memcpy(Buffer,msg.Buffer+(j+1),msg.Buffer[j]);
 			Buffer[msg.Buffer[j]] 	= 0;
 			Buffer[msg.Buffer[j]+1] = 0;
-			dbgprintf("%i. \"%s\"\n",i+1,DecodeUnicodeString(Buffer));
+			dbgprintf("%zi. \"%s\"\n",i+1,DecodeUnicodeString(Buffer));
  			if (i==*sm->Phone.Data.VoiceRecord) {
  				sprintf(sm->Phone.Data.PhoneString,"%s->wav",DecodeUnicodeString(Buffer));
 				return ERR_NONE;
