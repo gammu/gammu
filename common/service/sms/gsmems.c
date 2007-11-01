@@ -220,7 +220,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				start = false;
 				Used++;
 			}
-			dbgprintf("Used SMS: %i\n",Used);
+			dbgprintf("Used SMS: %zi\n",Used);
 
 			if (Entry->Protected) {
 				Buffer[0] = 0x17;   /* ID for ODI 		   */
@@ -397,7 +397,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				Length 		= 128;
 				Used ++;
 			}
-			dbgprintf("Used SMS: %i\n",Used);
+			dbgprintf("Used SMS: %zi\n",Used);
 
 			if (Entry->Protected) {
 				Buffer[0] = 0x17;   /* ID for ODI 		   */
