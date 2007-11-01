@@ -29,8 +29,8 @@ else
 fi
 tar cfz $repo-$version.tar.gz $repo-$version
 tar cfj $repo-$version.tar.bz2 $repo-$version
-mkdir build-win
-cd build-win
+mkdir build-win-static
+cd build-win-static
 cmake ../$repo-$version \
     -DCROSS_MINGW=ON \
     -DGETTEXT_CROSS_PATH=$srcdir/../../win-cross/gettext \
@@ -39,7 +39,19 @@ cmake ../$repo-$version \
 
 make
 cpack
-mv Gammu-*-Windows.* ../
+mv Gammu-*-Windows-static.* ../
+mkdir build-win-shared
+cd build-win-shared
+cmake ../$repo-$version \
+    -DCROSS_MINGW=ON \
+    -DENABLE_SHARED=ON \
+    -DGETTEXT_CROSS_PATH=$srcdir/../../win-cross/gettext \
+    -DMYSQL_CROSS_PATH=$srcdir/../../win-cross/mysql \
+    -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
+
+make
+cpack
+mv Gammu-*-Windows-DLL.* ../
 
 echo "Release is in $tmp directory:"
 ls -lh $tmp
