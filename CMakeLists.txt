@@ -8,6 +8,11 @@ cmake_minimum_required (VERSION 2.4.2)
 # Where to lookup modules
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 
+# Static library by default
+set (ENABLE_SHARED FALSE CACHE BOOL "Build shared library")
+
+set (BUILD_SHARED_LIBS ${ENABLE_SHARED} CACHE INTERNAL "Shared build")
+
 # Support for cross compilation
 if (UNIX)
     option (CROSS_MINGW "Cross compile using MinGW on linux" OFF)
@@ -40,7 +45,11 @@ if (CROSS_MINGW)
     set (CPACK_GENERATOR "ZIP;NSIS")
     set (CPACK_SOURCE_GENERATOR "ZIP")
     set (CPACK_TOPLEVEL_TAG "Source")
-    set (CPACK_SYSTEM_NAME "Windows")
+    if (BUILD_SHARED_LIBS)
+        set (CPACK_SYSTEM_NAME "Windows-DLL")
+    else (BUILD_SHARED_LIBS)
+        set (CPACK_SYSTEM_NAME "Windows-static")
+    endif (BUILD_SHARED_LIBS)
 endif (CROSS_MINGW)
 
 # We've set up compiler, now we can use it
@@ -78,12 +87,6 @@ if (WITH_RPATH)
 else (WITH_RPATH)
     set (CMAKE_SKIP_RPATH ON)
 endif (WITH_RPATH)
-
-# Static library by default
-set (ENABLE_SHARED FALSE CACHE BOOL "Build shared library")
-
-set (BUILD_SHARED_LIBS ${ENABLE_SHARED} CACHE INTERNAL "Shared build")
-
 
 # Packaging support
 set (CPACK_PACKAGE_NAME "Gammu")
