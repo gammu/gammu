@@ -37,8 +37,6 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Class 1 message (normal) */
 	sms.Class = 1;
 
-	sms.SMSC.Location = 1;
-
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
 	if (s == NULL)
