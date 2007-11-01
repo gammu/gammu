@@ -518,8 +518,7 @@ GSM_Error N6110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
                 default:
                         return ERR_UNKNOWNRESPONSE;
                 }
-                DCT3_DecodeSMSFrame(s, &Data->GetSMSMessage->SMS[0],msg.Buffer+8);
-                return ERR_NONE;
+                return DCT3_DecodeSMSFrame(s, &Data->GetSMSMessage->SMS[0],msg.Buffer+8);
         case 0x09:
                 switch (msg.Buffer[4]) {
                 case 0x00:
