@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.13.95\n"
+"Project-Id-Version: Gammu 1.13.97\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-10-17 21:21+0900\n"
+"POT-Creation-Date: 2007-11-01 11:49+0900\n"
 "PO-Revision-Date: 2007-08-16 09:45+0200\n"
 "Last-Translator: Andy Kir <dronmbi@mail.com>\n"
 "Language-Team: Language =ru\n"
@@ -152,7 +152,7 @@ msgstr "Функция не реализована. Требуется помо�
 msgid "Memory full."
 msgstr "Память заполнена."
 
-#: common/gsmcomon.c:114 common/gsmcomon.c:161
+#: common/gsmcomon.c:114
 msgid "Unknown error."
 msgstr "Неизвестная ошибка."
 
@@ -183,18 +183,24 @@ msgstr ""
 "из него и попробуйте ещё раз."
 
 #: common/gsmcomon.c:120
+#, fuzzy
+#| msgid "battery not connected"
+msgid "Phone is not connected."
+msgstr "аккумулятор не подключён"
+
+#: common/gsmcomon.c:121
 msgid "Function is during writing. If want help, please contact with authors."
 msgstr "Функция ещё не написана. Если хотите помочь, то свяжитесь с авторами."
 
-#: common/gsmcomon.c:121
+#: common/gsmcomon.c:122
 msgid "Phone is disabled and connected to charger."
 msgstr "Телефон недоступен и подключён к зарядному устройству."
 
-#: common/gsmcomon.c:122
+#: common/gsmcomon.c:123
 msgid "File format not supported by Gammu."
 msgstr "Данный формат файлов не поддерживается в Gammu."
 
-#: common/gsmcomon.c:123
+#: common/gsmcomon.c:124
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
@@ -202,96 +208,106 @@ msgstr ""
 "Никто не совершенен - в реализации протокола обнаружилась ошибка. "
 "Пожалуйста, свяжитесь с авторами."
 
-#: common/gsmcomon.c:124
+#: common/gsmcomon.c:125
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr "Передача прервана телефоном. Возможно, вы нажали клавишу \"отмена\"?"
 
-#: common/gsmcomon.c:125
+#: common/gsmcomon.c:126
 msgid "Phone module need to send another answer frame."
 msgstr ""
 
-#: common/gsmcomon.c:126
+#: common/gsmcomon.c:127
 msgid "Current connection type doesn't support called function."
 msgstr "В текущем типе соединения не поддерживается вызванная функция."
 
-#: common/gsmcomon.c:127
+#: common/gsmcomon.c:128
 msgid "CRC error."
 msgstr "Ошибка CRC."
 
-#: common/gsmcomon.c:128
+#: common/gsmcomon.c:129
 msgid "Invalid date or time specified."
 msgstr "Указано неправильное время или дата."
 
-#: common/gsmcomon.c:129
+#: common/gsmcomon.c:130
 msgid "Phone memory error, maybe it is read only."
 msgstr "Ошибка памяти телефона. Возможно, она доступна только для чтения."
 
-#: common/gsmcomon.c:130
+#: common/gsmcomon.c:131
 msgid "Invalid data given to phone."
 msgstr "Телефону переданы неверные данные."
 
-#: common/gsmcomon.c:131
+#: common/gsmcomon.c:132
 msgid "File with specified name already exist."
 msgstr "Файл с указанным именем уже существует."
 
-#: common/gsmcomon.c:132
+#: common/gsmcomon.c:133
 msgid "File with specified name doesn't exist."
 msgstr "Файл с указанным именем не существует."
 
-#: common/gsmcomon.c:133
+#: common/gsmcomon.c:134
 #, fuzzy
 msgid "You have to give folder name and not file name."
 msgstr "Необходимо указать имя каталога, а не файла."
 
-#: common/gsmcomon.c:134
+#: common/gsmcomon.c:135
 #, fuzzy
 msgid "You have to give file name and not folder name."
 msgstr "Необходимо указать имя файла, а не каталога."
 
-#: common/gsmcomon.c:135
+#: common/gsmcomon.c:136
 msgid "Can not access SIM card."
 msgstr "Нет доступа к SIM-карте."
 
-#: common/gsmcomon.c:136
+#: common/gsmcomon.c:137
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
 "В телефоне неверная версия GNAPPLET. Воспользуйтесь версией из пакета Gammu."
 
-#: common/gsmcomon.c:137
+#: common/gsmcomon.c:138
+msgid "Only part of folder has been listed."
+msgstr ""
+
+#: common/gsmcomon.c:139
 msgid "Folder must be empty."
 msgstr "Каталог пуст."
 
-#: common/gsmcomon.c:138
+#: common/gsmcomon.c:140
 msgid "Data were converted."
 msgstr "Данные были преобразованы."
 
-#: common/gsmcomon.c:139
+#: common/gsmcomon.c:141
 msgid "Gammu is not configured."
 msgstr "Gammu не настроена."
 
-#: common/gsmcomon.c:140
+#: common/gsmcomon.c:142
 #, fuzzy
 msgid "Wrong folder used."
 msgstr ", папка Входящие"
 
-#: common/gsmcomon.c:141
+#: common/gsmcomon.c:143
 #, fuzzy
 msgid "Internal phone error."
 msgstr "Неизвестная ошибка."
 
-#: common/gsmcomon.c:142
+#: common/gsmcomon.c:144
 #, fuzzy
 msgid "Error writing file to disk."
 msgstr "Ошибка записи в устройство."
 
-#: common/gsmcomon.c:143
+#: common/gsmcomon.c:145
 msgid "No such section exists."
 msgstr ""
 
-#: common/gsmcomon.c:144
+#: common/gsmcomon.c:146
 #, fuzzy
 msgid "Using default values."
 msgstr " (имя по умолчанию)"
+
+#: common/gsmcomon.c:163
+#, fuzzy
+#| msgid "Unknown error."
+msgid "Unknown error description."
+msgstr "Неизвестная ошибка."
 
 #: common/phone/nokia/dct3/n6110.c:1953 gammu/misc.c:1813
 msgid "Personal"
@@ -325,7 +341,7 @@ msgstr "Громко"
 msgid "My style"
 msgstr "Мой стиль"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:528 gammu/message.c:2479
+#: common/phone/nokia/dct4s40/6510/n6510.c:528 gammu/message.c:2480
 msgid "SIM"
 msgstr "SIM"
 
@@ -858,21 +874,21 @@ msgstr "%cУдаление: %i процентов"
 msgid "Restore sms"
 msgstr ""
 
-#: gammu/backup.c:1648
+#: gammu/backup.c:1651
 #, c-format
 msgid "Do you want to restore binary SMS"
 msgstr ""
 
-#: gammu/backup.c:1663
+#: gammu/backup.c:1666
 #, fuzzy, c-format
 msgid "Restore %03i sms to folder \"%s\""
 msgstr "Размещение %i, каталог \"%s\""
 
-#: gammu/backup.c:1664
+#: gammu/backup.c:1667
 msgid " (SIM)"
 msgstr ""
 
-#: gammu/backup.c:1666
+#: gammu/backup.c:1669
 #, fuzzy, c-format
 msgid "saving %i SMS\n"
 msgstr "Сохранение SMS %i/%i\n"
@@ -3503,52 +3519,52 @@ msgstr ""
 "\n"
 "Количество SMS: %i\n"
 
-#: gammu/message.c:2452 gammu/message.c:2514
+#: gammu/message.c:2453 gammu/message.c:2515
 #, fuzzy
 msgid "If you want break, press Ctrl+C..."
 msgstr "Чтобы прервать, нажмите Ctrl+C...\n"
 
-#: gammu/message.c:2456
+#: gammu/message.c:2457
 #, c-format
 msgid "Saving SMS %i/%i\n"
 msgstr "Сохранение SMS %i/%i\n"
 
-#: gammu/message.c:2476
+#: gammu/message.c:2477
 #, c-format
 msgid "Saved in folder \"%s\", location %i"
 msgstr "Сохранено в папке \"%s\", размещение %i"
 
-#: gammu/message.c:2481
+#: gammu/message.c:2482
 #, fuzzy
 msgid "SMS name ignored"
 msgstr "Имя SMS проигнорировано\n"
 
-#: gammu/message.c:2484
+#: gammu/message.c:2485
 #, fuzzy
 msgid "phone"
 msgstr ", телефон\n"
 
-#: gammu/message.c:2488
+#: gammu/message.c:2489
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr "Отправляется SMS из папки \"%s\", размещение %i\n"
 
-#: gammu/message.c:2493 gammu/message.c:2532
+#: gammu/message.c:2494 gammu/message.c:2533
 #, c-format
 msgid "....waiting for network answer"
 msgstr "...ожидается ответ сети"
 
-#: gammu/message.c:2519
+#: gammu/message.c:2520
 #, c-format
 msgid "Sending SMS %i/%i"
 msgstr "Отправляется SMS %i/%i"
 
-#: gammu/message.c:2594
+#: gammu/message.c:2595
 #, c-format
 msgid "Too high folder number (max. %i)\n"
 msgstr "Слишком много каталогов (макс. %i)\n"
 
-#: gammu/message.c:2599
+#: gammu/message.c:2600
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
 msgstr "Удаление SMS из каталога \"%s\": "
@@ -4886,153 +4902,151 @@ msgstr "Предупреждение: не найден конфигурацио
 msgid "PIN code is \"%s\""
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:147
-#, c-format
-msgid "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"
-msgstr ""
-
-#: gammu/smsd/smsdcore.c:184
+#: gammu/smsd/smsdcore.c:186
 #, c-format
 msgid "Inbox is \"%s\" with format \"%s\""
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:193
+#: gammu/smsd/smsdcore.c:195
 #, c-format
 msgid "Outbox is \"%s\" with transmission format \"%s\""
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:197
+#: gammu/smsd/smsdcore.c:199
 #, c-format
 msgid "Sent SMS moved to \"%s\""
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:201
+#: gammu/smsd/smsdcore.c:203
 #, c-format
 msgid "SMS with errors moved to \"%s\""
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:237
+#: gammu/smsd/smsdcore.c:239
 msgid "Include numbers available"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:241
+#: gammu/smsd/smsdcore.c:243
 msgid "Exclude numbers available"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:243
+#: gammu/smsd/smsdcore.c:245
 msgid "Exclude numbers available, but IGNORED"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:261
-#, c-format
-msgid "Error getting security status (%i)"
-msgstr ""
+#: gammu/smsd/smsdcore.c:263
+#, fuzzy, c-format
+msgid "Error getting security status (%s:%i)"
+msgstr "Ошибка в SME"
 
-#: gammu/smsd/smsdcore.c:271
+#: gammu/smsd/smsdcore.c:273
 msgid "Warning: no PIN in config"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:274
+#: gammu/smsd/smsdcore.c:276
 msgid "Trying to enter PIN"
 msgstr "Попытка ввода PIN-кода"
 
-#: gammu/smsd/smsdcore.c:278
-msgid "ERROR: incorrect PIN"
-msgstr ""
-
-#: gammu/smsd/smsdcore.c:281
+#: gammu/smsd/smsdcore.c:280
 #, c-format
-msgid "Error entering PIN (%i)"
+msgid "ERROR: incorrect PIN (%s:%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:291
-msgid "ERROR: phone requires not supported code type"
+#: gammu/smsd/smsdcore.c:283
+#, fuzzy, c-format
+msgid "Error entering PIN (%s:%i)"
+msgstr "Ошибка в SME"
+
+#: gammu/smsd/smsdcore.c:293
+#, c-format
+msgid "ERROR: phone requires not supported code type (%s:%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:410
+#: gammu/smsd/smsdcore.c:412
 #, c-format
 msgid "Excluded %s"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:414
+#: gammu/smsd/smsdcore.c:416
 #, fuzzy, c-format
-msgid "Error getting SMS (%i)"
+msgid "Error getting SMS (%s:%i)"
 msgstr "Ошибка в SME"
 
-#: gammu/smsd/smsdcore.c:426
+#: gammu/smsd/smsdcore.c:428
 #, fuzzy, c-format
-msgid "Error deleting SMS (%i)"
+msgid "Error deleting SMS (%s:%i)"
 msgstr "Ошибка в SME"
 
-#: gammu/smsd/smsdcore.c:444
-#, c-format
-msgid "Error getting SMS status (%i)"
-msgstr ""
+#: gammu/smsd/smsdcore.c:446
+#, fuzzy, c-format
+msgid "Error getting SMS status (%s:%i)"
+msgstr "Ошибка в SME"
 
-#: gammu/smsd/smsdcore.c:478
+#: gammu/smsd/smsdcore.c:480
 #, c-format
 msgid "Error in outbox on %s"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:492
+#: gammu/smsd/smsdcore.c:494
 #, c-format
 msgid "Moved to errorbox: %s"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:509
+#: gammu/smsd/smsdcore.c:511
 msgid "Error getting SMSC from phone"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:531
+#: gammu/smsd/smsdcore.c:533
 #, fuzzy, c-format
 msgid "Error sending SMS %s (%i): %s"
 msgstr "Отправляется SMS %i/%i"
 
-#: gammu/smsd/smsdcore.c:555
+#: gammu/smsd/smsdcore.c:557
 #, c-format
 msgid "Error getting send status of %s (%i): %s"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:590
+#: gammu/smsd/smsdcore.c:592
 #, fuzzy, c-format
 msgid "Unknown SMSD service type (\"%s\")\n"
 msgstr "Неизвестный тип памяти: \"%s\"\n"
 
-#: gammu/smsd/smsdcore.c:598
+#: gammu/smsd/smsdcore.c:600
 #, c-format
-msgid "Initialisation failed, stopping Gammu smsd (%i)"
+msgid "Initialisation failed, stopping Gammu smsd (%s:%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:613
+#: gammu/smsd/smsdcore.c:615
 #, c-format
 msgid "Terminating communication (%i,%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:617
+#: gammu/smsd/smsdcore.c:619
 msgid "Starting communication"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:629
+#: gammu/smsd/smsdcore.c:631
 #, c-format
-msgid "Post initialisation failed, stopping Gammu smsd (%i)"
+msgid "Post initialisation failed, stopping Gammu smsd (%s:%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:638
+#: gammu/smsd/smsdcore.c:640
 #, c-format
 msgid "Reset return code: %s (%i) "
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:644
-#, c-format
-msgid "Can't open device (%i)"
+#: gammu/smsd/smsdcore.c:646
+#, fuzzy, c-format
+#| msgid "Can't open device (%i)"
+msgid "Can't open device (%s:%i)"
 msgstr "Не удаётся открыть устройство (%i)"
 
-#: gammu/smsd/smsdcore.c:646
+#: gammu/smsd/smsdcore.c:648
 #, c-format
-msgid "Error at init connection (%i)"
+msgid "Error at init connection (%s:%i)"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:675
+#: gammu/smsd/smsdcore.c:680
 msgid "Stopping Gammu smsd"
 msgstr ""
 
