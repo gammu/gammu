@@ -48,7 +48,7 @@ if (CROSS_MINGW)
     if (BUILD_SHARED_LIBS)
         set (CPACK_SYSTEM_NAME "Windows-DLL")
     else (BUILD_SHARED_LIBS)
-        set (CPACK_SYSTEM_NAME "Windows-static")
+        set (CPACK_SYSTEM_NAME "Windows")
     endif (BUILD_SHARED_LIBS)
 endif (CROSS_MINGW)
 
