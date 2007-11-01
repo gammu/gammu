@@ -263,6 +263,10 @@ typedef enum {
 	 * Using default values.
 	 */
 	ERR_USING_DEFAULTS,
+	/**
+	 * Just marker of highest error code, should not be used.
+	 */
+	ERR_LAST_VALUE,
 } GSM_Error;
 
 /**
