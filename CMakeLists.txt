@@ -28,7 +28,6 @@ if (CROSS_MINGW)
     set (CMAKE_C_COMPILER "i586-mingw32msvc-gcc")
     set (CMAKE_AR "i586-mingw32msvc-ar")
     set (CMAKE_RANLIB "i586-mingw32msvc-ranlib")
-    set (CMAKE_SHARED_LIBRARY_LINK_C_FLAGS "l")
     set (WIN32 ON)
     set (MINGW ON)
 
@@ -55,6 +54,10 @@ endif (CROSS_MINGW)
 
 # We've set up compiler, now we can use it
 project (Gammu C)
+
+if (CROSS_MINGW)
+    include (WindowsCross)
+endif (CROSS_MINGW)
 
 # Read version
 file (READ "${CMAKE_SOURCE_DIR}/VERSION" VERSION)
