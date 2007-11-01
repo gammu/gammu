@@ -44,11 +44,7 @@ if (CROSS_MINGW)
     set (CPACK_GENERATOR "ZIP;NSIS")
     set (CPACK_SOURCE_GENERATOR "ZIP")
     set (CPACK_TOPLEVEL_TAG "Source")
-    if (BUILD_SHARED_LIBS)
-        set (CPACK_SYSTEM_NAME "Windows-DLL")
-    else (BUILD_SHARED_LIBS)
-        set (CPACK_SYSTEM_NAME "Windows")
-    endif (BUILD_SHARED_LIBS)
+    set (CPACK_SYSTEM_NAME "Windows")
 endif (CROSS_MINGW)
 
 # We've set up compiler, now we can use it
