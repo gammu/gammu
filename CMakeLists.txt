@@ -712,7 +712,7 @@ if (CROSS_MINGW)
     # MySQL
     if (MYSQL_FOUND)
         install (FILES "${MYSQL_CROSS_PATH}/lib/opt/libmysql.dll"
-                DESTINATION "${INSTALL_BIN_DIR}" COMPONENT "runtime"
+                DESTINATION "${INSTALL_BIN_DIR}"
                 )
     endif (MYSQL_FOUND)
 
@@ -727,7 +727,7 @@ if (CROSS_MINGW)
                 "${POSTGRES_CROSS_PATH}/bin/krb5_32.dll"
                 "${POSTGRES_CROSS_PATH}/bin/ssleay32.dll"
                 "${POSTGRES_CROSS_PATH}/bin/wldap32.dll"
-                DESTINATION ${INSTALL_BIN_DIR} COMPONENT "runtime"
+                DESTINATION ${INSTALL_BIN_DIR}
                 )
     endif (POSTGRES_FOUND)
 
@@ -736,7 +736,7 @@ if (CROSS_MINGW)
         install (FILES
                 "${GETTEXT_CROSS_PATH}/bin/libintl3.dll"
                 "${GETTEXT_CROSS_PATH}/bin/libiconv2.dll"
-                DESTINATION "${INSTALL_BIN_DIR}" COMPONENT "runtime"
+                DESTINATION "${INSTALL_BIN_DIR}"
                 )
     endif (GETTEXTLIBS_FOUND)
 endif (CROSS_MINGW)
@@ -747,32 +747,27 @@ foreach (HEADER ${PUBLIC_HEADERS})
     install (
         FILES ${HEADER}
         DESTINATION "${INSTALL_INC_DIR}/${DIRNAME}"
-        COMPONENT "development"
         )
 endforeach (HEADER)
 
 install (
     PROGRAMS ${UTILS}
     DESTINATION "${INSTALL_BIN_DIR}"
-    COMPONENT "Utilities"
     )
 
 install (
     FILES "${Gammu_BINARY_DIR}/cfg/gammu.pc"
     DESTINATION "${INSTALL_LIBDATA_DIR}/pkgconfig"
-    COMPONENT "development"
     )
 
 install (
     FILES ${DOCS}
     DESTINATION "${INSTALL_DOC_DIR}"
-    COMPONENT "basic-documentation"
     )
 
 install (
     FILES ${SYMBIAN_FILES}
     DESTINATION "${INSTALL_DOC_DIR}/symbian"
-    COMPONENT "gnapplet"
     )
 
 foreach (DOC ${DEVELDOCS})
@@ -780,7 +775,6 @@ foreach (DOC ${DEVELDOCS})
     install (
         FILES ${DOC}
         DESTINATION "${INSTALL_DOC_DIR}/devel/${DIRNAME}"
-        COMPONENT "developer-documentation"
         )
 endforeach (DOC)
 
@@ -789,14 +783,12 @@ foreach (EXAMPLE ${EXAMPLES})
     install (
         FILES ${EXAMPLE}
         DESTINATION "${INSTALL_DOC_DIR}/examples/${DIRNAME}"
-        COMPONENT "developer-documentation"
         )
 endforeach (EXAMPLE)
 
 install (
     FILES ${MAN1_PAGES}
     DESTINATION "${INSTALL_MAN_DIR}/man1"
-    COMPONENT "basic-documentation"
     )
 
 add_subdirectory(common)
