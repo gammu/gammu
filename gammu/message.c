@@ -294,6 +294,11 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 			}
 		}
 		break;
+#ifndef CHECK_CASES
+	default:
+		printf(_("Unknown PDU type: 0x%x\n"), sms.PDU);
+		break;
+#endif
 	}
 }
 
