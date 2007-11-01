@@ -134,6 +134,12 @@ if (CROSS_MINGW)
     set_target_properties (phone-info PROPERTIES PREFIX "" SUFFIX ".exe")
 endif (CROSS_MINGW)
 target_link_libraries(phone-info libGammu)
+add_executable(sms-send "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-send.c")
+if (CROSS_MINGW)
+    set_target_properties (sms-send PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+target_link_libraries(sms-send libGammu)
+
 
 # Auto generated include tests begin
 # Do not modify this section, change gen-include-test.sh instead
