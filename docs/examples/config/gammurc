@@ -76,7 +76,7 @@ connection = fbusblue
 ;    Connection "irdaat", port type irda
 ; -----------------------------------------------------------------------------
 ; OBEX for infrared
-;    Connection "irdaobex", port type irda. Must be used with model "obex"
+;    Connection "irdaobex", port type irda.
 ; ============================================================= Bluetooth =====
 ; Nokia protocol with serial port set in BT stack (WidComm, other) from
 ; adequate service and Nokia 6210
@@ -104,7 +104,7 @@ connection = fbusblue
 ; BT services correctly (6310, 6310i with firmware lower than 5.50, 8910,...)
 ;    Connection "bluerfobex", port type BT
 ; OBEX for Bluetooth stack with other phones (Siemens, other Nokia, etc.)
-;    Connection "blueobex", port type BT. Must be used with model "obex"
+;    Connection "blueobex", port type BT.
 ; -----------------------------------------------------------------------------
 ;    Connection "bluerfgnapbus", port type BT, model "gnap"
 ;    Connection "irdagnapbus", port type irda, model "gnap"
@@ -135,8 +135,9 @@ connection = fbusblue
 ; -----------------------------------------------------------------------------
 ; Parameter name  | Description
 ; ----------------|------------------------------------------------------------
-; Model           | use only, when Gammu doesn't recognize your phone model.
-;                 | Put it here. Example values: "6110", "6150", "6210", "8210"
+; Model           | Should not be used unless you have a good reason to do so.
+;                 | If Gammu doesn't recognize your phone model, put it here. 
+;                 | Example values: "6110", "6150", "6210", "8210"
 ; SynchronizeTime | if you want to set time from computer to phone during
 ;                 | starting connection. Do not rather use this option when
 ;                 | when to reset phone during connection (in some phones need
@@ -183,3 +184,5 @@ connection = fbusblue
 ;                 | No private data are sent to server, Internet connection
 ;                 | to www.gammu.org on port 80 required
 ;                 | By default option not active
+
+; vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
