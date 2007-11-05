@@ -70,6 +70,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	EncodeUnicode(sms.Number, recipient_number, strlen(recipient_number));
 	/* We want to submit message */
 	sms.PDU = SMS_Submit;
+	/* No UDH, just a plain message */
+	sms.UDH.Type = UDH_NoUDH;
 	/* We used default coding for text */
 	sms.Coding = SMS_Coding_Default_No_Compression;
 	/* Class 1 message (normal) */
