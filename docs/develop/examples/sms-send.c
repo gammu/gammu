@@ -25,6 +25,12 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SMSC PhoneSMSC;
 	char recipient_number[] = "+1234567890";
 	char message_text[] = "Sample Gammu message";
+	GSM_Debug_Info *debug_info;
+
+	/* Enable global debugging to stderr */
+	debug_info = GSM_GetGlobalDebug();
+	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Prepare message */
 	/* Cleanup the structure */
@@ -44,6 +50,12 @@ int main(int argc UNUSED, char **argv UNUSED)
 	s = GSM_AllocStateMachine();
 	if (s == NULL)
 		return 3;
+
+	/* Enable state machine debugging to stderr */
+	debug_info = GSM_GetDebug(s);
+	GSM_SetDebugGlobal(false, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Find configuration file */
 	error = GSM_FindGammuRC(&cfg);
