@@ -106,7 +106,6 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 	nodtr_pos = strcasestr(buff, "-nodtr");
 	if (nodtr_pos != NULL) {
 		*nodtr_pos = 0;
-
 	}
 
 	/* Are we asked for connection using cable which does not
