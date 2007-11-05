@@ -134,12 +134,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 
 	/* Special case - at can contains speed */
 	if (s->ConnectionType == 0 && strncasecmp("at", buff, 2) == 0) {
-		/* Use some resonable default, when no speed defined */
-		if (strlen(buff) == 2) {
-			s->Speed = 19200;
-		} else {
-			s->Speed = FindSerialSpeed(buff + 2);
-		}
+		s->Speed = FindSerialSpeed(buff + 2);
 		if (s->Speed != 0) {
 			s->ConnectionType = GCT_AT;
 		}
