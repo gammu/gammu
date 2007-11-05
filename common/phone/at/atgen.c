@@ -1231,6 +1231,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
     	char                    buff[2];
 
 	Priv->SMSMode			= 0;
+	Priv->SMSTextDetails		= false;
 	Priv->Manufacturer		= 0;
 	Priv->MotorolaSMS		= false;
 	Priv->PhoneSMSMemory		= 0;
@@ -1740,10 +1741,15 @@ GSM_Error ATGEN_GetSMSMode(GSM_StateMachine *s)
 
 	smprintf(s, "Trying SMS text mode\n");
 	ATGEN_WaitFor(s, "AT+CMGF=1\r", 10, 0x00, 3, ID_GetSMSMode);
-	if (error==ERR_NONE) {
+	if (error == ERR_NONE) {
+		Priv->SMSMode = SMS_AT_TXT;
 		smprintf(s, "Enabling displaying all parameters in text mode\n");
 		ATGEN_WaitFor(s, "AT+CSDH=1\r", 10, 0x00, 3, ID_GetSMSMode);
-		if (error == ERR_NONE) Priv->SMSMode = SMS_AT_TXT;
+		if (error == ERR_NONE) {
+			Priv->SMSTextDetails = true;
+		} else {
+			error = ERR_NONE;
+		}
 	}
 
 	return error;
@@ -2235,6 +2241,12 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 
 	error=ATGEN_GetSMSMode(s);
 	if (error != ERR_NONE) return error;
+
+	/* Not implemented right now */
+	if (!Priv->SMSTextDetails) {
+		smprintf(s, "Reading of messages in simple text mode is not implemented.\n");
+		return ERR_NOTIMPLEMENTED;
+	}
 
 	/* There is possibility that date will be encoded in text mode */
 	if (Priv->SMSMode == SMS_AT_TXT) {

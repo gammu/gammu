@@ -271,6 +271,11 @@ typedef struct {
 	 * PDU or TEXT mode for SMS ?
 	 */
 	GSM_AT_SMS_Modes	SMSMode;
+	/**
+	 * Does phone provide enhanced text mode readout of SMS flags 
+	 * in text mode?
+	 */
+	bool			SMSTextDetails;
 
 	/**
 	 * Mode used for incoming message notification.
