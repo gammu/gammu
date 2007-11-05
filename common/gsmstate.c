@@ -116,6 +116,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 		s->NoPowerCable = true;
 	}
 
+	/* Compare known connections to what we got */
 	for (i = 0; i < sizeof(GSM_Connections) / sizeof(GSM_Connections[0]); i++) {
 		/* Check connection name */
 		if (strcasecmp(GSM_Connections[i].Name, buff) == 0) {
@@ -124,7 +125,6 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 			break;
 		}
 	}
-
 
 	/* If we were forced, set this flag */
 	if (nodtr_pos != NULL) {
