@@ -9,6 +9,7 @@
 #include <gammu-call.h>
 #include <gammu-settings.h>
 #include <gammu-unicode.h>
+#include <gammu-config.h>
 
 #include "gsmcomon.h"
 #include "gsmphones.h"
@@ -232,7 +233,7 @@ static void GSM_RegisterModule(GSM_StateMachine *s,GSM_Phone_Functions *phone)
 	}
 }
 
-GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
+GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s, const bool recurse)
 {
 	OnePhoneModel *model;
 
@@ -314,7 +315,15 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #ifdef GSM_ENABLE_ATOBEX
 	GSM_RegisterModule(s,&ATOBEXPhone);
 #endif
-	if (s->Phone.Functions==NULL) return ERR_UNKNOWNMODELSTRING;
+	if (s->Phone.Functions == NULL) {
+		/* Retry with empty model */
+		if (recurse) {
+			smprintf(s, "Could not find suitable driver for model \"%s\", retrying without model specification\n", s->CurrentConfig->Model);
+			s->CurrentConfig->Model[0] = 0;
+			return GSM_RegisterAllPhoneModules(s, false);
+		}
+		return ERR_UNKNOWNMODELSTRING;
+	}
 	return ERR_NONE;
 }
 
@@ -480,7 +489,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		}
 
 		/* Switching to "correct" module */
-		error=GSM_RegisterAllPhoneModules(s);
+		error = GSM_RegisterAllPhoneModules(s, true);
 		if (error!=ERR_NONE) return error;
 
 		/* We didn't open device earlier ? Make it now */
