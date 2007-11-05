@@ -271,7 +271,7 @@ void decodesniff(int argc, char *argv[])
 	prepareStateMachine();
 	if (argc > 4) {
 		strcpy(s->CurrentConfig->Model,argv[4]);
-		error=GSM_RegisterAllPhoneModules(s);
+		error = GSM_RegisterAllPhoneModules(s, false);
 		if (error!=ERR_NONE) Print_Error(error);
 	}
 	/* Irda uses simple "raw" format */
@@ -357,7 +357,7 @@ void decodebinarydump(int argc, char *argv[])
 	prepareStateMachine();
 	if (argc > 3) {
 		strcpy(s->CurrentConfig->Model,argv[3]);
-		error=GSM_RegisterAllPhoneModules(s);
+		error = GSM_RegisterAllPhoneModules(s, false);
 		if (error!=ERR_NONE) Print_Error(error);
 	}
 	file = fopen(argv[2], "rb");
