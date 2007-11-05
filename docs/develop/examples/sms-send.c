@@ -86,9 +86,6 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SetDebugFileDescriptor(stderr, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
-	/* Set callback for message sending */
-	GSM_SetSendSMSStatusCallback(s, send_sms_callback);
-
 	/* Find configuration file */
 	error = GSM_FindGammuRC(&cfg);
 	error_handler();
@@ -105,6 +102,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = GSM_InitConnection(s, 3);
 	error_handler();
 
+	/* Set callback for message sending */
+	GSM_SetSendSMSStatusCallback(s, send_sms_callback);
+
 	/* We need to know SMSC number */
 	PhoneSMSC.Location = 1;
 	error = GSM_GetSMSC(s, &PhoneSMSC);
@@ -120,7 +120,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Wait for network reply */
 	sms_send_status = ERR_TIMEOUT;
 	while (!gshutdown) {
-		GSM_ReadDevice(s,true);
+		GSM_ReadDevice(s, true);
 		if (sms_send_status == ERR_NONE) {
 			/* Message sent OK */
 			return_value = 0;
