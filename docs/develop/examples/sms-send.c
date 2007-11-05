@@ -103,6 +103,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error_handler();
 
 	/* Set callback for message sending */
+	/* This needs to be done after initiating connection */
 	GSM_SetSendSMSStatusCallback(s, send_sms_callback);
 
 	/* We need to know SMSC number */
