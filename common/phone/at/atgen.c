@@ -3578,6 +3578,11 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 
 		str = GetLineString(msg.Buffer, Priv->Lines, 2);
 
+		/* Check for empty reply */
+		if (strcmp("OK", str) == 0) {
+			return ERR_UNKNOWN;
+		}
+
 		/* Try standard format first */
 		error = ATGEN_ParseReply(s, str,
 					"+CPBR: (@i-@i), @i, @i",
