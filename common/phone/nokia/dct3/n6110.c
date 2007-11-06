@@ -1855,6 +1855,7 @@ static GSM_Error N6110_ReplyGetProfileFeature(GSM_Protocol_Message msg, GSM_Stat
         GSM_Phone_Data *Data = &s->Phone.Data;
 
         switch (msg.Buffer[3]) {
+        case 0x0d: /* Maybe this is handled completely wrong */
         case 0x14:
                 smprintf(s, "Profile feature %02x with value %02x\n",msg.Buffer[6],msg.Buffer[8]);
                 if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES33)) {
@@ -2673,6 +2674,7 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
         {N6110_ReplyGetStatus,            "\x04",0x03,0x02,ID_GetSignalQuality   },
         {N6110_ReplyGetStatus,            "\x04",0x03,0x02,ID_GetBatteryCharge   },
 
+        {N6110_ReplyGetProfileFeature,    "\x05",0x03,0x0d,ID_GetProfile         },
         {N6110_ReplySetProfileFeature,    "\x05",0x03,0x11,ID_SetProfile         },
         {N6110_ReplySetProfileFeature,    "\x05",0x03,0x12,ID_SetProfile         },
         {N6110_ReplyGetProfileFeature,    "\x05",0x03,0x14,ID_GetProfile         },
