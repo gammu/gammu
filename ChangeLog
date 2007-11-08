@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.13.97
+20071108 - 1.14.0
 [-] * Fallback to empty model if user specifies wrong.
 
 20071031 - 1.13.96
