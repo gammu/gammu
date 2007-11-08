@@ -17,11 +17,11 @@ int main(int argc, char **argv)
 	}
 
 	for (error = ERR_NONE; error < ERR_LAST_VALUE; error++) {
+		errorstring = GSM_ErrorString(error);
 		if (strcmp("Unknown error description.", errorstring) == 0) {
 			fprintf(stderr, "Unknown error message for %d!\n", error);
 			rc = 1;
 		}
-		errorstring = GSM_ErrorString(error);
 		if (numeric) {
 			printf("%d. %s\n", error, errorstring);
 		} else {
