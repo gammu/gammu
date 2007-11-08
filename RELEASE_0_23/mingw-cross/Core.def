@@ -1,0 +1,3 @@
+LIBRARY Core.pyd
+EXPORTS
+	initCore
