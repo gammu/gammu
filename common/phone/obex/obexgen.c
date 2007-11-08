@@ -58,7 +58,6 @@ static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message msg, GSM_StateMachine 
 		case 0x47:
 		case 0x48:
 		case 0x49:
-		case 0x4c:
 		case 0x4d:
 		case 0x4e:
 		case 0x4f:
@@ -85,6 +84,9 @@ static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message msg, GSM_StateMachine 
 		case 0x61:
 			smprintf(s, "Database locked\n");
 			return ERR_FULL;
+		case 0x4c:
+			smprintf(s, "Precondition failed\n");
+			return ERR_NOTSUPPORTED;
 	}
 	smprintf(s, "Unknown OBEX error (0x%02x)\n", msg.Type);
 	return ERR_UNKNOWN;
@@ -3359,6 +3361,12 @@ GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	/* NOT FOUND block */
 	{OBEXGEN_ReplyGetFilePart,	"\xC4",0x00,0x00,ID_GetFile			},
 	{OBEXGEN_ReplyChangePath,	"\xC4",0x00,0x00,ID_SetPath			},
+
+	/* Failed block */
+	{OBEXGEN_ReplyConnect,		"\xCC",0x00,0x00,ID_Initialise			},
+	{OBEXGEN_ReplyChangePath,	"\xCC",0x00,0x00,ID_SetPath			},
+	{OBEXGEN_ReplyGetFilePart,	"\xCC",0x00,0x00,ID_GetFile			},
+	{OBEXGEN_ReplyAddFilePart,	"\xCC",0x00,0x00,ID_AddFile			},
 
 	/* Non standard Sharp GX reply */
 	{OBEXGEN_ReplyGetFilePart,	"\x80",0x00,0x00,ID_GetFile			},
