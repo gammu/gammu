@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 
-int main(int argc UNUSED, char **argv UNUSED)
+int main(int argc, char **argv)
 {
 	GSM_Error error;
 	bool numeric = false;
