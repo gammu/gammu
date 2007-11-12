@@ -3044,6 +3044,7 @@ GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, bo
 	smprintf(s, "Setting date & time\n");
 
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_SetDateTime);
+	if (error == ERR_UNKNOWN) error = ERR_NOTSUPPORTED;
 
 	if (set_timezone && (
 		(error == ERR_INVALIDDATA
