@@ -70,6 +70,7 @@ sendtimeout = 10
 user = gammu
 password = gammupassword
 pc = localhost
+# pc can also contain port or socket path after colon (eg. localhost:/path/to/socket)
 database = sms
 # when you send sms from some SMSC, you can have Delivery/Failed Delivery
 # Reports from other SMSC number. You can set here number of this "buggy"

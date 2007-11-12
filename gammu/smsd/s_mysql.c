@@ -30,15 +30,29 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 
 	unsigned int port = 0;
 	char * pport;
+	char * socket = NULL;
 
 	pport = strstr( Config->PC, ":" );
 	if (pport) {
 		*pport ++ = '\0';
-		port = atoi( pport );
+		/* Is it port or socket? */
+		if (strchr("0123456798", *pport) != NULL) {
+			port = atoi( pport );
+		} else {
+			socket = pport;
+		}
 	}
 
 	mysql_init(&Config->DBConnMySQL);
-	if (!mysql_real_connect(&Config->DBConnMySQL,Config->PC,Config->user,Config->password,Config->database,port,NULL,0)) {
+	if (!mysql_real_connect(
+				&Config->DBConnMySQL,
+				Config->PC,
+				Config->user,
+				Config->password,
+				Config->database,
+				port,
+				socket,
+				0)) {
 	    	WriteSMSDLog(_("Error connecting to database: %s\n"), mysql_error(&Config->DBConnMySQL));
 	    	return ERR_UNKNOWN;
 	}
