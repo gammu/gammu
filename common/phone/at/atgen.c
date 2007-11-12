@@ -2242,14 +2242,14 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	error=ATGEN_GetSMSMode(s);
 	if (error != ERR_NONE) return error;
 
-	/* Not implemented right now */
-	if (!Priv->SMSTextDetails) {
-		smprintf(s, "Reading of messages in simple text mode is not implemented.\n");
-		return ERR_NOTIMPLEMENTED;
-	}
-
 	/* There is possibility that date will be encoded in text mode */
 	if (Priv->SMSMode == SMS_AT_TXT) {
+		/* Not implemented right now */
+		if (!Priv->SMSTextDetails) {
+			smprintf(s, "Reading of messages in simple text mode is not implemented.\n");
+			return ERR_NOTIMPLEMENTED;
+		}
+
 		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
