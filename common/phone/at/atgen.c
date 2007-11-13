@@ -2438,8 +2438,8 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		if (error == ERR_NONE) {
 			smprintf(s, "Used : %i\n", used);
 			smprintf(s, "Size : %i\n", size);
-			if ((strstr(msg.Buffer, "ME") != NULL) ||
-				(Priv->MotorolaSMS && strstr(msg.Buffer, "MT") != NULL)) {
+			if ((strstr(msg.Buffer, "CPMS=\"ME") != NULL) ||
+				(Priv->MotorolaSMS && strstr(msg.Buffer, "CPMS=\"MT") != NULL)) {
 				SMSStatus->PhoneUsed 	= used;
 				SMSStatus->PhoneSize	= size;
 			} else {
