@@ -206,6 +206,11 @@ int pdu_decode(const char *buffer) {
 		ret = pdu_get_timestamp(buffer + pos);
 		if (ret < 0) return ret;
 		pos += ret;
+
+		/* SMSC timestamp */
+		ret = pdu_get_timestamp(buffer + pos);
+		if (ret < 0) return ret;
+		pos += ret;
 	}
 
 
