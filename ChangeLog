@@ -18,6 +18,7 @@ ChangeLog
 2007???? - 1.14.90
 
 [+] * Configurable MySQL socket path.
+[+] * More extensive SMS PDU parser tests.
 [-] * Handle more OBEX error codes.
 
 20071108 - 1.14.0

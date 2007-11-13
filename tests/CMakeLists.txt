@@ -80,7 +80,13 @@ if (CROSS_MINGW)
 endif (CROSS_MINGW)
 target_link_libraries(sms-at-parse libGammu)
 
-# List test cases
+# AT SMS parsing - simple PDU decoder
+add_executable(pdu-decode pdu-decode.c)
+if (CROSS_MINGW)
+    set_target_properties (pdu-decode PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+
+# List test cases for success
 file(GLOB MESSAGES
     RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms"
     "${Gammu_SOURCE_DIR}/tests/at-sms/*.dump")
@@ -91,6 +97,39 @@ foreach(TESTMESSAGE ${MESSAGES})
     add_test("sms-at-parse-${TESTNAME}"
         "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
         "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
+    add_test("pdu-decode-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/pdu-decode${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-sms/${TESTMESSAGE}")
+endforeach(TESTMESSAGE $MESSAGES)
+
+# List test cases for failure
+file(GLOB MESSAGES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms-failing"
+    "${Gammu_SOURCE_DIR}/tests/at-sms-failing/*.dump")
+list(SORT MESSAGES)
+
+foreach(TESTMESSAGE ${MESSAGES})
+    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+    add_test("sms-at-parse-fail-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/sms-at-parse${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-sms-failing/${TESTMESSAGE}")
+    add_test("pdu-decode-fail-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/pdu-decode${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-sms-failing/${TESTMESSAGE}")
+    set_tests_properties(
+        "pdu-decode-fail-${TESTNAME}"
+        "sms-at-parse-fail-${TESTNAME}"
+        PROPERTIES WILL_FAIL TRUE)
+endforeach(TESTMESSAGE $MESSAGES)
+
+# List test cases
+file(GLOB MESSAGES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-sms"
+    "${Gammu_SOURCE_DIR}/tests/at-sms/*.dump")
+list(SORT MESSAGES)
+
+foreach(TESTMESSAGE ${MESSAGES})
+    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
 endforeach(TESTMESSAGE $MESSAGES)
 
 # AT SMSC parsing
