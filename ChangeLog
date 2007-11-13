@@ -19,6 +19,7 @@ ChangeLog
 
 [+] * Configurable MySQL socket path.
 [+] * More extensive SMS PDU parser tests.
+[-] * Fix buffer overflows in PDU decoder.
 [-] * Properly catch invalid PDU data received from phone.
 [-] * Handle more OBEX error codes.
 
