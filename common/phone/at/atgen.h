@@ -305,6 +305,14 @@ typedef struct {
 	 */
 	int			CurrentMode;
 	GSM_File		file;
+	/**
+	 * Number of entries in SMSLocations.
+	 */
+	int			SMSCount;
+	/**
+	 * Locations of non empty SMSes.
+	 */
+	int			*SMSLocations;
 } GSM_Phone_ATGENData;
 
 /**
