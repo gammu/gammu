@@ -1,0 +1,12 @@
+Test cases for AT SMS engine
+============================
+
+All test data here was collected from randomly available sources on the
+Internet. I just entered 'gammu "AT+CMGR"' to Google and picked some
+random results. If you think that some included message breaks your
+copyright or other rights, just drop me a note.
+
+Tests in this directory collect invalid messages and Gammu is supposed
+to fail correctly on parsing those.
+
+# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
