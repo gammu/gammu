@@ -1267,6 +1267,9 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 	Priv->ErrorText			= NULL;
 
+	Priv->SMSCount			= 0;
+	Priv->SMSLocations		= NULL;
+
 	if (s->ConnectionType != GCT_IRDAAT && s->ConnectionType != GCT_BLUEAT) {
 		/* We try to escape AT+CMGS mode, at least Siemens M20
 		 * then needs to get some rest
@@ -2376,6 +2379,11 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 		if (error!=ERR_NONE) return error;
 		Priv->LastSMSRead		= 0;
 		sms->SMS[0].Location 		= 0;
+
+		Priv->SMSCount			= 0;
+		if (Priv->SMSLocations != NULL) 
+			free(Priv->SMSLocations);
+		Priv->SMSLocations		= NULL;
 	}
 	while (true) {
 		sms->SMS[0].Location++;
@@ -5082,6 +5090,7 @@ GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
 	free(Priv->file.Buffer);
+	free(Priv->SMSLocations);
 	return ERR_NONE;
 }
 
