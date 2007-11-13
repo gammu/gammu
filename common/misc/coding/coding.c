@@ -429,15 +429,18 @@ void EncodeHexUnicode (char *dest, const unsigned char *src, size_t len)
 	dest[current++] = 0;
 }
 
-void DecodeHexBin (unsigned char *dest, const unsigned char *src, int len)
+bool DecodeHexBin (unsigned char *dest, const unsigned char *src, int len)
 {
-	int i,current=0;
+	int i,current=0, low, high;
 
 	for (i = 0; i < len/2 ; i++) {
-		dest[current++] = DecodeWithHexBinAlphabet(src[i*2])*16+
-				  DecodeWithHexBinAlphabet(src[i*2+1]);
+		low = DecodeWithHexBinAlphabet(src[i*2+1]);
+		high = DecodeWithHexBinAlphabet(src[i*2]);
+		if (low < 0 || high < 0) return false;
+		dest[current++] = (high << 4) | low;
 	}
 	dest[current++] = 0;
+	return true;
 }
 
 void EncodeHexBin (unsigned char *dest, const unsigned char *src, int len)

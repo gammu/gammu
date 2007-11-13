@@ -144,6 +144,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_WRITING_FILE,		N_("Error writing file to disk.")},
 	{ERR_NONE_SECTION,		N_("No such section exists.")},
 	{ERR_USING_DEFAULTS,		N_("Using default values.")},
+	{ERR_CORRUPTED,			N_("Corrupted data returned by phone.")},
 
 	{0,				""}
 };

@@ -263,6 +263,12 @@ typedef enum {
 	 * Using default values.
 	 */
 	ERR_USING_DEFAULTS,
+
+	/** 60 **/
+	/**
+	 * Corrupted data returned by phone.
+	 */
+	ERR_CORRUPTED,
 	/**
 	 * Just marker of highest error code, should not be used.
 	 */

@@ -1857,7 +1857,12 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				case '2': sms->State = SMS_UnSent;	break;
 				default : sms->State = SMS_Sent;	break;//case '3'
 			}
-			DecodeHexBin (buffer, GetLineString(msg.Buffer,Priv->Lines,3), GetLineLength(msg.Buffer,Priv->Lines,3));
+			if (!DecodeHexBin (
+						buffer, 
+						GetLineString(msg.Buffer,Priv->Lines,3), 
+						GetLineLength(msg.Buffer,Priv->Lines,3))) {
+				return ERR_CORRUPTED;
+			}
 			/* Siemens MC35 (only ?) */
 			if (strstr(msg.Buffer,"+CMGR: 0,,0")!=NULL) return ERR_EMPTY;
 			/* Siemens M20 */
