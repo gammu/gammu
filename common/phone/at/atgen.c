@@ -2410,79 +2410,44 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_SMSMemoryStatus	*SMSStatus = s->Phone.Data.SMSStatus;
-	char 			*start;
-	int			current = 0;
 	unsigned char		buffer[50];
+	GSM_Error		error;
+	int			used, size;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "SMS status received\n");
+
 		/* Check for +CPMS: 0,30,0,30,8,330, this is according to ETSI */
-		start = strstr(msg.Buffer, "+CPMS: ");
-		/*
-		 * Samsung formats this different way, sample response:
-		 * 1 "AT+CPMS="SM","SM""
-		 * 2 "+CPMS:"SM",3,30,"SM",3,30,"SM",3,30"
-		 * 3 "OK"
-		 */
-		if (start == NULL) {
-			start = strstr(msg.Buffer, "+CPMS:\"");
-			if (start == NULL) {
-				/* Check for +CPMS:0,30,0,30,8,330 */
-				start = strstr(msg.Buffer, "+CPMS:");
-				if (start == NULL) {
-					return ERR_UNKNOWNRESPONSE;
-				}
-				start += 6;
-				goto parse_sizes;
-			}
-			start += 6;
-			current+=ATGEN_ExtractOneParameter(start+current, buffer);
-			if (strcmp(buffer, "\"ME\"") == 0) {
-				current+=ATGEN_ExtractOneParameter(start+current, buffer);
-				SMSStatus->PhoneUsed = atoi(buffer);
-				current+=ATGEN_ExtractOneParameter(start+current, buffer);
-				SMSStatus->PhoneSize = atoi(buffer);
-				smprintf(s, "Used : %i\n",SMSStatus->PhoneUsed);
-				smprintf(s, "Size : %i\n",SMSStatus->PhoneSize);
-				return ERR_NONE;
-			} else if (strcmp(buffer, "\"SM\"") == 0) {
-				current+=ATGEN_ExtractOneParameter(start+current, buffer);
-				SMSStatus->SIMUsed = atoi(buffer);
-				current+=ATGEN_ExtractOneParameter(start+current, buffer);
-				SMSStatus->SIMSize = atoi(buffer);
-				smprintf(s, "Used : %i\n",SMSStatus->SIMUsed);
-				smprintf(s, "Size : %i\n",SMSStatus->SIMSize);
-				return ERR_NONE;
+		error = ATGEN_ParseReply(s,
+				GetLineString(msg.Buffer, Priv->Lines, 2),
+				"+CPMS: @d, @d, @0",
+				&used, &size);
+		if (error != ERR_NONE) {
+			/*
+			 * Samsung formats this different way, sample response:
+			 * 1 "AT+CPMS="SM","SM""
+			 * 2 "+CPMS:"SM",3,30,"SM",3,30,"SM",3,30"
+			 * 3 "OK"
+			 */
+			error = ATGEN_ParseReply(s,
+					GetLineString(msg.Buffer, Priv->Lines, 2),
+					"+CPMS: @s, @d, @d, @0",
+					&buffer, sizeof(buffer), &used, &size);
+		}
+		if (error == ERR_NONE) {
+			smprintf(s, "Used : %i\n", used);
+			smprintf(s, "Size : %i\n", size);
+			if ((strstr(msg.Buffer, "ME") != NULL) ||
+				(Priv->MotorolaSMS && strstr(msg.Buffer, "MT") != NULL)) {
+				SMSStatus->PhoneUsed 	= used;
+				SMSStatus->PhoneSize	= size;
 			} else {
-				smprintf(s, "Unknown memory: %s\n", buffer);
-				return ERR_UNKNOWNRESPONSE;
+				SMSStatus->SIMUsed 	= used;
+				SMSStatus->SIMSize	= size;
 			}
 		}
-		/* Skip +CPMS: */
-		start += 7;
-parse_sizes:
-		if ((strstr(msg.Buffer, "ME") != NULL) ||
-			(Priv->MotorolaSMS && strstr(msg.Buffer, "MT") != NULL)) {
-			SMSStatus->PhoneUsed 	= atoi(start);
-			current+=ATGEN_ExtractOneParameter(start+current, buffer);
-			current+=ATGEN_ExtractOneParameter(start+current, buffer);
-			SMSStatus->PhoneSize	= atoi(buffer);
-			smprintf(s, "Used : %i\n",SMSStatus->PhoneUsed);
-			smprintf(s, "Size : %i\n",SMSStatus->PhoneSize);
-		} else {
-			SMSStatus->SIMUsed 	= atoi(start);
-			current+=ATGEN_ExtractOneParameter(start+current, buffer);
-			current+=ATGEN_ExtractOneParameter(start+current, buffer);
-			SMSStatus->SIMSize	= atoi(buffer);
-			smprintf(s, "Used : %i\n",SMSStatus->SIMUsed);
-			smprintf(s, "Size : %i\n",SMSStatus->SIMSize);
-			if (SMSStatus->SIMSize == 0) {
-				smprintf(s, "Can't access SIM card\n");
-				return ERR_SECURITYERROR;
-			}
-		}
-		return ERR_NONE;
+		return error;
 	case AT_Reply_Error:
 		if (strstr(msg.Buffer,"SM")!=NULL) {
 			smprintf(s, "Can't access SIM card\n");
