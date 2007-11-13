@@ -171,7 +171,7 @@ void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len);
  *
  * \ingroup Unicode
  */
-void DecodeHexBin(unsigned char *dest, const unsigned char *src, int len);
+bool DecodeHexBin(unsigned char *dest, const unsigned char *src, int len);
 
 #endif
 
