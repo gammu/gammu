@@ -773,6 +773,9 @@ void GetAllSMS(int argc, char *argv[])
 		switch (error) {
 		case ERR_EMPTY:
 			break;
+		case ERR_CORRUPTED:
+			fprintf(stderr, "\n%s\n", _("Corrupted message, skipping"));
+			continue;
 		default:
 			Print_Error(error);
 			printf(_("Location %i, folder \"%s\""),sms.SMS[0].Location,DecodeUnicodeConsole(folders.Folder[sms.SMS[0].Folder-1].Name));
@@ -871,6 +874,9 @@ void GetEachSMS(int argc, char *argv[])
 		switch (error) {
 		case ERR_EMPTY:
 			break;
+		case ERR_CORRUPTED:
+			fprintf(stderr, "\n%s\n", _("Corrupted message, skipping"));
+			continue;
 		default:
 			Print_Error(error);
 			GetSMSData[GetSMSNumber] = malloc(sizeof(GSM_MultiSMSMessage));
@@ -2598,6 +2604,9 @@ void DeleteAllSMS(int argc, char *argv[])
 		switch (error) {
 		case ERR_EMPTY:
 			break;
+		case ERR_CORRUPTED:
+			fprintf(stderr, "\n%s\n", _("Corrupted message, skipping"));
+			continue;
 		default:
 			Print_Error(error);
 			if (sms.SMS[0].Folder == foldernum) {
