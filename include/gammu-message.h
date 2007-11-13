@@ -552,6 +552,12 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage * SMS, unsigned char *buffer,
 			     GSM_SMSMessageLayout Layout);
 
 /**
+ * Finds out coding type based on TPDCS header byte as defined by GSM
+ * 03.38.
+ */
+GSM_Coding_Type GSM_GetMessageCoding(const char TPDCS);
+
+/**
  * Encodes SMS frame.
  *
  * \ingroup SMS
