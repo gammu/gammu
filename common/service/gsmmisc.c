@@ -513,13 +513,17 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 			}
 		}
 	} else {
-		if (strcasecmp(charset, "UTF-8") == 0) {
+		if (strcasecmp(charset, "UTF-8") == 0||
+				strcasecmp(charset, "\"UTF-8\"") == 0
+				) {
 			if (quoted_printable) {
 				DecodeUTF8QuotedPrintable(Value, pos, len);
 			} else {
 				DecodeUTF8(Value, pos, len);
 			}
-		} else if (strcasecmp(charset, "UTF-7") == 0) {
+		} else if (strcasecmp(charset, "UTF-7") == 0||
+				strcasecmp(charset, "\"UTF-7\"") == 0
+				) {
 			if (quoted_printable) {
 				dbgprintf("Unsupported charset: %s\n", charset);
 				goto fail;
