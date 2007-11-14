@@ -209,6 +209,7 @@ void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry *pbk, bool he
 					}
 					*Length+=sprintf(Buffer+(*Length),"TEL");
 					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
+					*Length+=sprintf(Buffer+(*Length),";OTHER");
 					break;
 				case PBK_Number_Pager:
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
@@ -549,7 +550,8 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				}
 			}
 			if (ReadVCALText(Line, "TEL",		   Buff, false) ||
-			    ReadVCALText(Line, "TEL;VOICE",	     Buff, false)) {
+			    ReadVCALText(Line, "TEL;VOICE",	     Buff, false) ||
+			    ReadVCALText(Line, "TEL;TYPE=VOICE",	     Buff, false)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -562,6 +564,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 			if (ReadVCALText(Line, "TEL;CELL",	      Buff, false) ||
 			    ReadVCALText(Line, "TEL;CELL;VOICE",	Buff, false) ||
 			    ReadVCALText(Line, "TEL;TYPE=CELL",	 Buff, false) ||
+			    ReadVCALText(Line, "TEL;TYPE=CELL,VOICE",   Buff, false) ||
 			    ReadVCALText(Line, "TEL;TYPE=CELL;VOICE",   Buff, false)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
@@ -575,7 +578,8 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 			if (ReadVCALText(Line, "TEL;WORK",	      Buff, false) ||
 			    ReadVCALText(Line, "TEL;TYPE=WORK",	 Buff, false) ||
 			    ReadVCALText(Line, "TEL;WORK;VOICE",	Buff, false) ||
-			    ReadVCALText(Line, "TEL;TYPE=WORK;VOICE",   Buff, false)) {
+			    ReadVCALText(Line, "TEL;TYPE=WORK;VOICE",   Buff, false) ||
+			    ReadVCALText(Line, "TEL;TYPE=WORK,VOICE",   Buff, false)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -585,10 +589,25 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
 			}
+			if (ReadVCALText(Line, "TEL;OTHER",	      Buff, false) ||
+			    ReadVCALText(Line, "TEL;TYPE=OTHER",	 Buff, false) ||
+			    ReadVCALText(Line, "TEL;OTHER;VOICE",	Buff, false) ||
+			    ReadVCALText(Line, "TEL;TYPE=OTHER;VOICE",   Buff, false) ||
+			    ReadVCALText(Line, "TEL;TYPE=OTHER,VOICE",   Buff, false)) {
+				if (Buff[1] == '+') {
+					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
+				}
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Other;
+				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
+				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
+				Pbk->EntriesNum++;
+			}
 			if (ReadVCALText(Line, "TEL;FAX",	       Buff, false) ||
 			    ReadVCALText(Line, "TEL;TYPE=FAX",	  Buff, false) ||
 			    ReadVCALText(Line, "TEL;FAX;VOICE",	 Buff, false) ||
-			    ReadVCALText(Line, "TEL;TYPE=FAX;VOICE",    Buff, false)) {
+			    ReadVCALText(Line, "TEL;TYPE=FAX;VOICE",    Buff, false) ||
+			    ReadVCALText(Line, "TEL;TYPE=FAX,VOICE",    Buff, false)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
 				}
@@ -601,6 +620,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 			if (ReadVCALText(Line, "TEL;HOME",	      Buff, false) ||
 			    ReadVCALText(Line, "TEL;TYPE=HOME",	 Buff, false) ||
 			    ReadVCALText(Line, "TEL;HOME;VOICE",	Buff, false) ||
+			    ReadVCALText(Line, "TEL;TYPE=HOME,VOICE",   Buff, false) ||
 			    ReadVCALText(Line, "TEL;TYPE=HOME;VOICE",   Buff, false)) {
 				if (Buff[1] == '+') {
 					GSM_TweakInternationalNumber(Buff, NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN);
