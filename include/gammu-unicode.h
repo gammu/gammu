@@ -2,17 +2,17 @@
  * \file gammu-unicode.h
  * \author Michal Čihař
  *
- * Unicode manipulation functions. Please note that most of functions
- * here rely on initialised libc char conversions, what is usually done
- * by locales initialisation. Recommended way for doing this is calling
- * \ref GSM_InitLocales.
+ * Unicode manipulation functions.
  */
 #ifndef __gammu_unicode_h
 #define __gammu_unicode_h
 
 /**
  * \defgroup Unicode Unicode
- * Unicode manipulation functions.
+ * Unicode manipulation functions. Please note that most of functions
+ * here rely on initialised libc char conversions, what is usually done
+ * by locales initialisation. Recommended way for doing this is calling
+ * \ref GSM_InitLocales.
  */
 
 #include <wchar.h>
