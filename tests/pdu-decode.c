@@ -1,4 +1,4 @@
-/* 
+/*
  * Very simple PDU decoder, just parses header and is independent to
  * Gammu library. It is used for verification of Gammu test - anything
  * this fails to process should also fail in Gammu.
@@ -24,6 +24,7 @@ int hexdigit2number(const char digit) {
 	if (digit >= 'A' && digit <= 'F') {
 		return 0xa + digit - 'A';
 	}
+	printf("%c is not a digit!\n", digit);
 	return -1;
 }
 
@@ -47,13 +48,17 @@ int hex2number(const char *buffer, const size_t len) {
 /**
  * Reads single number encoded in PDU.
  */
-int pdu_get_number(const char *buffer) {
+int pdu_get_number(const char *buffer, const int semioctet) {
 	int length;
 	int type;
 	char *out;
 	int i;
 
 	length = hex2number(buffer, 2);
+	if (semioctet) {
+		if (length % 2) length++;
+		length = length / 2 + 1;
+	}
 	printf("Number length = %d\n", length);
 
 	if (length == 0) return 2;
@@ -61,29 +66,30 @@ int pdu_get_number(const char *buffer) {
 	type = hex2number(buffer + 2, 2);
 	printf("Number type = %d\n", type);
 
-	out = (char *)malloc(2 * length);
+	out = (char *)malloc((2 * length) + 1);
 	if (out == NULL) return -1;
-	memset(out, 0, (2 * length) - 1);
+	memset(out, 0, 2 * length);
 
-	for (i = 0; i < length - 1; i++) {
-		if (!isxdigit(buffer[4 + (2 * i) + 1]) || !isxdigit(buffer[4 + (2 * i)])) {
+	for (i = 0; i < (length - 1) * 2; i++) {
+		if (!isxdigit(buffer[4 + i])) {
 			printf("Non hex digit in PDU (%s)!\n",
-					buffer + 4 + (2 * i)
-					);
+					buffer + 4 +  i);
 			return -1;
 		}
 
-		out[2 * i] = buffer[4 + (2 * i) + 1];
-		if (buffer[4 + (2 * i)] == 'F') {
-			out[(2 * i) + 1] = '\0';
+		if (i % 2 == 0) {
+			out[i + 1] = buffer[4 + i];
+			if (out[i + 1] == 'F') {
+				out[i + 1] = '\0';
+			}
 		} else {
-			out[(2 * i) + 1] = buffer[4 + (2 * i)];
+			out[i - 1] = buffer[4 + i];
 		}
 	}
 	printf("Number = %s\n", out);
+	free(out);
 
-
-	return (2 * length) + 2;
+	return (length * 2) + 2;
 }
 
 /**
@@ -126,9 +132,15 @@ int pdu_decode(const char *buffer) {
 	int vpf = 0;
 	int rp = 0;
 	int udh = 0;
+	int pid = 0;
+	int dcs = 0;
+	int vp = 0;
+	int udhl = 0;
+	int ud;
+	int i;
 
 	/* SMSC number */
-	ret = pdu_get_number(buffer + pos);
+	ret = pdu_get_number(buffer + pos, 0);
 	if (ret < 0) return ret;
 	pos += ret;
 
@@ -197,7 +209,7 @@ int pdu_decode(const char *buffer) {
 
 	/* Address (sender for deliver, receiver for submit, recipient
 	 * for report) */
-	ret = pdu_get_number(buffer + pos);
+	ret = pdu_get_number(buffer + pos, 1);
 	if (ret < 0) return ret;
 	pos += ret;
 
@@ -211,6 +223,68 @@ int pdu_decode(const char *buffer) {
 		ret = pdu_get_timestamp(buffer + pos);
 		if (ret < 0) return ret;
 		pos += ret;
+	}
+	if (submit || deliver) {
+		/* PID */
+		pid = hex2number(buffer + pos, 2);
+		if (pid < 0) return pid;
+		pos += 2;
+		printf("PID = 0x%02X\n", pid);
+
+		/* DCS */
+		dcs = hex2number(buffer + pos, 2);
+		if (dcs < 0) return dcs;
+		pos += 2;
+		printf("DCS = 0x%02X\n", dcs);
+	}
+	if (submit) {
+		/* Validity */
+		if (vpf == 2 || vpf == 0) {
+			vp = hex2number(buffer + pos, 2);
+			if (vp < 0) return vp;
+			pos += 2;
+			printf("DCS = 0x%02X\n", vp);
+		} else if (vpf == 3) {
+			ret = pdu_get_timestamp(buffer + pos);
+			if (ret < 0) return ret;
+			pos += ret;
+		}
+	}
+	if (deliver) {
+		/* SMSC timestamp */
+		ret = pdu_get_timestamp(buffer + pos);
+		if (ret < 0) return ret;
+		pos += ret;
+	}
+	if (submit || deliver) {
+		/* UD */
+		udhl = hex2number(buffer + pos, 2);
+		if (udhl < 0) return udhl;
+		pos += 2;
+		printf("UDL = 0x%02X\n", udhl);
+		if ((dcs == 0) ||
+			(((dcs & 0xC0) == 0xc0) && ((dcs & 4) != 4)) ||
+			(((dcs & 0xf0) == 0xd0) && ((dcs & 4) != 4)) ||
+			(((dcs & 0xf0) == 0xe0) && ((dcs & 4) != 4)) ||
+			(((dcs & 0xf0) == 0xf0) && ((dcs & 4) != 4))
+			) {
+			udhl = (udhl * 7) / 8;
+			if ((udhl * 7) % 8 > 0) {
+				udhl++;
+			}
+			printf("UDL[adjusted] = 0x%02X\n", udhl);
+		}
+		printf("data = ");
+		for (i = 0; i < udhl; i++) {
+			ud = hex2number(buffer + pos, 2);
+			if (ud < 0) {
+				printf("\nData too short!\n");
+				return ud;
+			}
+			pos += 2;
+			printf("%02X", ud);
+		}
+		printf("\n");
 	}
 
 
