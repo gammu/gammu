@@ -2455,6 +2455,9 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 	GSM_Error 		error;
 	int			usedsms;
 	int			i, found = -1;
+	unsigned char		folderid;
+	int			location;
+
 
 	if (Priv->PhoneSMSMemory == 0) {
 		error = ATGEN_SetSMSMemory(s, false, false, false);
@@ -2471,6 +2474,11 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 		error=s->Phone.Functions->GetSMSStatus(s,&Priv->LastSMSStatus);
 		if (error!=ERR_NONE) return error;
 		Priv->LastSMSRead		= 0;
+		/* We need to set up folder here */
+		sms->SMS[0].Location 		= 1;
+		error=ATGEN_GetSMSLocation(s, &sms->SMS[0], &folderid, &location, false);
+
+		/* Start from beginning */
 		sms->SMS[0].Location 		= 0;
 
 		Priv->SMSCount			= 0;
@@ -2478,7 +2486,10 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 			free(Priv->SMSLocations);
 		Priv->SMSLocations		= NULL;
 		smprintf(s, "Getting SMS locations\n");
-		ATGEN_WaitFor(s, "AT+CMGL\r", 8, 0x00, 5, ID_GetSMSMessage);
+		ATGEN_WaitFor(s, "AT+CMGL=4\r", 10, 0x00, 5, ID_GetSMSMessage);
+		if (error == ERR_NOTSUPPORTED) {
+			ATGEN_WaitFor(s, "AT+CMGL\r", 8, 0x00, 5, ID_GetSMSMessage);
+		}
 	}
 
 	/* Use listed locations if we have them */
@@ -2501,6 +2512,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 			return ERR_EMPTY;
 		}
 		sms->SMS[0].Location = Priv->SMSLocations[found];
+		smprintf(s, "Reading next message on location %d\n", sms->SMS[0].Location);
 		return ATGEN_GetSMS(s, sms);
 	}
 
