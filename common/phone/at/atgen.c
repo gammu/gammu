@@ -2391,11 +2391,64 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	return error;
 }
 
+GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error		error;
+	int			line = 1;
+	int			cur;
+	int			allocsize = 0;
+	char			*str;
+
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+		break;
+	case AT_Reply_Error:
+		return ERR_NOTSUPPORTED;
+ 	case AT_Reply_CMSError:
+		return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+		return ATGEN_HandleCMEError(s);
+	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+
+	smprintf(s, "SMS listing received\n");
+	Priv->SMSCount = 0;
+	Priv->SMSLocations = NULL;
+
+	/* Walk through lines with +CMGL: */
+	/* First line is our command so we can skip it */
+	for (line = 2; strcmp("OK", str = GetLineString(msg.Buffer, Priv->Lines, line)) != 0; line++) {
+		/* Skip odd lines, they should contain PDU data */
+		if (line % 2 == 1) continue;
+		/* Parse reply */
+		error = ATGEN_ParseReply(s, str, "+CMGL: @i, @0", &cur);
+		if (error != ERR_NONE) {
+			return error;
+		}
+		Priv->SMSCount++;
+		/* Reallocate buffer if needed */
+		if (allocsize < Priv->SMSCount) {
+			allocsize += 20;
+			Priv->SMSLocations = (int *)realloc(Priv->SMSLocations, allocsize);
+			if (Priv->SMSLocations == NULL) {
+				return ERR_MOREMEMORY;
+			}
+		}
+		Priv->SMSLocations[Priv->SMSCount - 1] = cur;
+
+	}
+	smprintf(s, "Read %d SMS locations\n", Priv->SMSCount);
+	return ERR_NONE;
+}
+
 GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error 		error;
 	int			usedsms;
+	int			i, found = -1;
 
 	if (Priv->PhoneSMSMemory == 0) {
 		error = ATGEN_SetSMSMemory(s, false, false, false);
@@ -2407,6 +2460,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 	}
 	if (Priv->SIMSMSMemory == AT_NOTAVAILABLE && Priv->PhoneSMSMemory == AT_NOTAVAILABLE) return ERR_NOTSUPPORTED;
 
+	/* On start we need to init everything */
 	if (start) {
 		error=s->Phone.Functions->GetSMSStatus(s,&Priv->LastSMSStatus);
 		if (error!=ERR_NONE) return error;
@@ -2417,7 +2471,34 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 		if (Priv->SMSLocations != NULL) 
 			free(Priv->SMSLocations);
 		Priv->SMSLocations		= NULL;
+		smprintf(s, "Getting SMS locations\n");
+		ATGEN_WaitFor(s, "AT+CMGL\r", 8, 0x00, 5, ID_GetSMSMessage);
 	}
+
+	/* Use listed locations if we have them */
+	if (Priv->SMSLocations != NULL) {
+		if (start) {
+			found = 0;
+		} else {
+			for (i = 0; i < Priv->SMSCount; i++) {
+				if (Priv->SMSLocations[i] == sms->SMS[0].Location) {
+					found = i + 1;
+					break;
+				}
+			}
+		}
+		if (found == -1) {
+			smprintf(s, "Invalid location passed to %s!\n", __FUNCTION__);
+			return ERR_INVALIDLOCATION;
+		}
+		if (found >= Priv->SMSCount) {
+			return ERR_EMPTY;
+		}
+		sms->SMS[0].Location = Priv->SMSLocations[found];
+		return ATGEN_GetSMS(s, sms);
+	}
+
+	/* Use brute force if listing does not work */
 	while (true) {
 		sms->SMS[0].Location++;
 		if (sms->SMS[0].Location < GSM_PHONE_MAXSMSINFOLDER) {
@@ -5790,6 +5871,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CMGF"		,0x00,0x00,ID_GetSMSMode	 },
 {ATGEN_GenericReply,		"AT+CSDH"		,0x00,0x00,ID_GetSMSMode	 },
 {ATGEN_ReplyGetSMSMessage,	"AT+CMGR"		,0x00,0x00,ID_GetSMSMessage	 },
+{ATGEN_ReplyGetMessageList,	"AT+CMGL"		,0x00,0x00,ID_GetSMSMessage	 },
 {ATGEN_GenericReply,		"AT+CPMS"		,0x00,0x00,ID_SetMemoryType	 },
 {ATGEN_ReplyGetSMSStatus,	"AT+CPMS"		,0x00,0x00,ID_GetSMSStatus	 },
 {ATGEN_ReplyGetSMSMemories,	"AT+CPMS=?"		,0x00,0x00,ID_GetSMSMemories	 },
