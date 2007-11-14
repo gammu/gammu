@@ -46,6 +46,7 @@ typedef enum {
 	ATOBEX_OBEX_CPROT0, /**< Switch using AT+CPROT=0 */
 	ATOBEX_OBEX_MODE22, /**< Switch using AT+MODE=22 */
 	ATOBEX_OBEX_XLNK, /**< Switch using AT+XLNK */
+	ATOBEX_OBEX_SQWE, /**< Switch using AT^SQWE */
 } GSM_ATOBEX_OBEX;
 /**
  * ATOBEX driver private data.

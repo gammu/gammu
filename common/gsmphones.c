@@ -522,6 +522,22 @@ bool GSM_IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature)
 	return false;
 }
 
+bool GSM_AddPhoneFeature(OnePhoneModel *model, Feature feature)
+{
+	int	i	= 0;
+
+	while (model->features[i] != 0) {
+		if (model->features[i] == feature) {
+			return true;
+		}
+		i++;
+	}
+	if (i == GSM_MAX_PHONE_FEATURES) return false;
+	model->features[i++] = feature;
+	model->features[i++] = 0;
+	return true;
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

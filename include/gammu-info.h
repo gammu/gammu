@@ -14,6 +14,7 @@
 
 #include <gammu-types.h>
 #include <gammu-error.h>
+#include <gammu-limits.h>
 #include <gammu-statemachine.h>
 
 /**
@@ -529,6 +530,10 @@ typedef enum {
 	 * Prefer UCS-2 for phone book manipulations.
 	 */
 	F_PBK_UCS2,
+	/**
+	 * Switching to OBEX mode using AT^SQWE=3.
+	 */
+	F_SQWE,
 } Feature;
 
 /**
@@ -552,7 +557,7 @@ typedef struct {
 	/**
 	 * List of supported features
 	 */
-	Feature features[14];
+	Feature features[GSM_MAX_PHONE_FEATURES + 1];
 } OnePhoneModel;
 
 /**
@@ -566,6 +571,18 @@ typedef struct {
  * \ingroup Info
  */
 bool GSM_IsPhoneFeatureAvailable(OnePhoneModel * model, Feature feature);
+
+/**
+ * Adds feature to phone configuration.
+ *
+ * \param model Model information (you can get it using \ref GSM_GetModelInfo).
+ * \param feature Feature to check for.
+ *
+ * \return True if phone has defined this feature.
+ *
+ * \ingroup Info
+ */
+bool GSM_AddPhoneFeature(OnePhoneModel *model, Feature feature);
 
 /**
  * Reads manufacturer from phone.

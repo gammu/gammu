@@ -117,6 +117,10 @@ GSM_Error ATOBEX_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
 			/* Sharp extension */
 			error = GSM_WaitFor (s, "AT+XLNK\r", 8, 0x00, 4, ID_SetOBEX);
 			break;
+		case ATOBEX_OBEX_SQWE:
+			/* Siemens extension */
+			error = GSM_WaitFor (s, "AT^SQWE=3\r", 10, 0x00, 4, ID_SetOBEX);
+			break;
 		case ATOBEX_OBEX_None:
 			break;
 	}
@@ -190,6 +194,8 @@ GSM_Error ATOBEX_Initialise(GSM_StateMachine *s)
 		Priv->HasOBEX = ATOBEX_OBEX_MODE22;
 	} else if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_XLNK)) {
 		Priv->HasOBEX = ATOBEX_OBEX_XLNK;
+	} else if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SQWE)) {
+		Priv->HasOBEX = ATOBEX_OBEX_SQWE;
 	} else {
 		if (PrivAT->Mode) {
 			smprintf(s, "Guessed mode style switching\n");

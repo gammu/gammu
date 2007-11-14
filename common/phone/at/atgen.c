@@ -902,6 +902,24 @@ GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *
 	return ERR_UNKNOWNRESPONSE;
 }
 
+GSM_Error ATGEN_SQWEReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+{
+	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+		case AT_Reply_OK:
+		case AT_Reply_Connect:
+			return ERR_NONE;
+		case AT_Reply_Error:
+			return ERR_UNKNOWN;
+		case AT_Reply_CMSError:
+			return ATGEN_HandleCMSError(s);
+		case AT_Reply_CMEError:
+			return ATGEN_HandleCMEError(s);
+		default:
+			break;
+	}
+	return ERR_UNKNOWNRESPONSE;
+}
+
 GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_USSDMessage ussd;
@@ -1143,7 +1161,7 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			strcpy(s->Phone.Data.Manufacturer,"Option");
 			Priv->Manufacturer = AT_Option;
 		}
-		smprintf(s, "Manufacturer: %s\n", s->Phone.Data.Manufacturer);
+		smprintf(s, "[Manufacturer: %s]\n", s->Phone.Data.Manufacturer);
 		return ERR_NONE;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
@@ -1335,6 +1353,10 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	error = ATGEN_GetModel(s);
 	if (error != ERR_NONE) return error;
 
+	/* Get manufacturer, needed for some detection */
+	error=ATGEN_GetManufacturer(s);
+	if (error != ERR_NONE) return error;
+
 	/* Mode switching cabaple phones can switch using AT+MODE */
 	if (!Priv->Mode) {
 		smprintf(s, "Checking for OBEX support\n");
@@ -1342,6 +1364,17 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		ATGEN_WaitFor(s, "AT+CPROT=?\r", 11, 0x00, 3, ID_SetOBEX);
 		error = ERR_NONE;
 	}
+
+#ifdef GSM_ENABLE_ATOBEX
+	if (Priv->Manufacturer == AT_Siemens) {
+		ATGEN_WaitFor(s, "AT^SQWE?\r", 9, 0x00, 3, ID_GetProtocol);
+		if (error == ERR_NONE) {
+			smprintf(s, "Phone seems to support Siemens like mode switching, adding OBEX feature.\n");
+			GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_OBEX);
+			GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_SQWE);
+		}
+	}
+#endif
 
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = true;
@@ -5856,6 +5889,8 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CPROT=0" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT+MODE=22" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT+XLNK" 	 	,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_GenericReply,		"AT^SQWE=3" 	 	,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_SQWEReply,		"AT^SQWE?" 	 	,0x00,0x00,ID_GetProtocol	 },
 
 {ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
 {ATGEN_GenericReply,		"AT*ESTF="		,0x00,0x00,ID_SetLocale		 },
