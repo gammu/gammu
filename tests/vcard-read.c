@@ -23,6 +23,12 @@ int main(int argc, char **argv)
 	bool generate = false;
 	GSM_Backup backup;
 	int i;
+	GSM_Debug_Info *debug_info;
+
+	/* Configure debugging */
+	debug_info = GSM_GetGlobalDebug();
+	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Check parameters */
 	if (argc != 3 && argc != 4) {
