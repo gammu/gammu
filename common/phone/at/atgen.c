@@ -1958,7 +1958,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					sms->Folder = 3; /*INBOX ME*/
 				}
 				sms->InboxFolder = true;
-				current2=((buffer[current])+1)/2+1;
+				current2 = buffer[current];
+				if (current2 % 2) current2++;
+				current2 = current2 / 2 + 1;
 				if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
 					if (buffer[current+1]==NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN) {
 						smprintf(s, "Trying to read alphanumeric number\n");
@@ -1995,7 +1997,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				datalength = smsframe[PHONE_SMSDeliver.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSDeliver.TPDCS]) == SMS_Coding_Default_No_Compression) {
 					datalength = (datalength * 7) / 8;
-					if ((datalength * 7) % 8 > 0) {
+					if ((datalength * 7) % 8 != 0) {
 						datalength++;
 					}
 				}
@@ -2017,7 +2019,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				if (current >= length) return ERR_CORRUPTED;
 				smsframe[PHONE_SMSSubmit.TPMR] = buffer[current++];
 				if (current >= length) return ERR_CORRUPTED;
-				current2=((buffer[current])+1)/2+1;
+				current2 = buffer[current];
+				if (current2 % 2) current2++;
+				current2 = current2 / 2 + 1;
 				if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
 					if (buffer[current+1]==NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN) {
 						smprintf(s, "Trying to read alphanumeric number\n");
@@ -2054,7 +2058,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				datalength = smsframe[PHONE_SMSSubmit.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSSubmit.TPDCS]) == SMS_Coding_Default_No_Compression) {
 					datalength = (datalength * 7) / 8;
-					if ((datalength * 7) % 8 > 0) {
+					if ((datalength * 7) % 8 != 0) {
 						datalength++;
 					}
 				}
