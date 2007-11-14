@@ -20,7 +20,7 @@ ChangeLog
 [+] * Configurable MySQL socket path.
 [+] * More extensive SMS PDU parser tests.
 [+] * Experimental support for OBEX in Siemens.
-[+] * Experimental support for listing messages using CMGL (bug #408).
+[+] * Support for listing messages using CMGL (bug #408).
 [-] * Parse T630 reply on CPBR (bug #420).
 [-] * Fix buffer overflows in PDU decoder.
 [-] * Properly catch invalid PDU data received from phone.
