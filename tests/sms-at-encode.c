@@ -29,6 +29,11 @@ int main(int argc, char **argv)
 	GSM_SMS_Backup		Backup;
 	bool generate = false;
 
+	/* Enable debugging */
+	debug_info = GSM_GetGlobalDebug();
+	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugLevel("textall", debug_info);
+
 	/* Check parameters */
 	if (argc != 3 && argc != 4) {
 		printf("Not enough parameters!\nUsage: sms-at-encode message.backup message.dump\n");
@@ -69,11 +74,6 @@ int main(int argc, char **argv)
 		/* Close file */
 		fclose(f);
 	}
-
-	/* Configure state machine */
-	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
-	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
