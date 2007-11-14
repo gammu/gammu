@@ -47,10 +47,10 @@ int main(int argc UNUSED, char **argv UNUSED)
 	Priv->Charset = AT_CHARSET_GSM;
 
 	/* Perform real tests */
-	error = ATGEN_ParseReply(s, 
-			"+CPBR: 1,,\"+31234657899\",145,\"Mama GSM\",\"2007/11/02,09:27\"", 
+	error = ATGEN_ParseReply(s,
+			"+CPBR: 1,,\"+31234657899\",145,\"Mama GSM\",\"2007/11/02,09:27\"",
 			"+CPBR: @i, @s, @p, @i, @s, @d",
-			i, buffer, BUFFER_SIZE, buffer, BUFFER_SIZE, i, buffer, BUFFER_SIZE, &dt
+			&i, buffer, BUFFER_SIZE, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE, &dt
 			);
 	if (error != ERR_NONE) {
 		printf("%s\n", GSM_ErrorString(error));
@@ -59,7 +59,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
-	
+
 	return 0;
 }
 
