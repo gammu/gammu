@@ -4032,6 +4032,34 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			return ERR_NONE;
 		}
 
+		/* 
+		 * Try reply with call date and some additional string.
+		 * I have no idea what should be stored there.
+		 * We store it in Entry 3, but do not use it for now.
+		 * Seen on T630.
+		 */
+		error = ATGEN_ParseReply(s,
+					GetLineString(msg.Buffer, Priv->Lines, 2),
+					"+CPBR: @i, @s, @p, @i, @s, @d",
+					&Memory->Location,
+					Memory->Entries[3].Text, sizeof(Memory->Entries[3].Text),
+					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+					&number_type,
+					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
+					&Memory->Entries[2].Date);
+		if (error == ERR_NONE) {
+			smprintf(s, "Reply with date detected\n");
+			/* Adjust location */
+			Memory->Location = Memory->Location + 1 - Priv->FirstMemoryEntry;
+			/* Adjust number */
+			GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
+			/* Set date type */
+			Memory->Entries[2].EntryType = PBK_Date;
+			/* Set number of entries */
+			Memory->EntriesNum = 3;
+			return ERR_NONE;
+		}
+
 		/**
 		 * Samsung format:
 		 * location,"number",type,"0x02surname0x03","0x02firstname0x03","number",
