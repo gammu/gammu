@@ -775,6 +775,7 @@ void GetAllSMS(int argc, char *argv[])
 			break;
 		case ERR_CORRUPTED:
 			fprintf(stderr, "\n%s\n", _("Corrupted message, skipping"));
+			error = ERR_NONE;
 			continue;
 		default:
 			Print_Error(error);
@@ -876,6 +877,7 @@ void GetEachSMS(int argc, char *argv[])
 			break;
 		case ERR_CORRUPTED:
 			fprintf(stderr, "\n%s\n", _("Corrupted message, skipping"));
+			error = ERR_NONE;
 			continue;
 		default:
 			Print_Error(error);
@@ -2606,6 +2608,7 @@ void DeleteAllSMS(int argc, char *argv[])
 			break;
 		case ERR_CORRUPTED:
 			fprintf(stderr, "\n%s\n", _("Corrupted message, skipping"));
+			error = ERR_NONE;
 			continue;
 		default:
 			Print_Error(error);
