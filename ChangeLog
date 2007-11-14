@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.14.90
+20071114 - 1.14.90
 
 [+] * Configurable MySQL socket path.
 [+] * More extensive SMS PDU parser tests.
@@ -25,7 +25,7 @@ ChangeLog
 [-] * Fix buffer overflows in PDU decoder.
 [-] * Properly catch invalid PDU data received from phone.
 [-] * Handle more OBEX error codes.
-[-] * Handle vCards from Yahoo (bug #424).
+[-] * Handle vCards from Yahoo and Evolution (bug #424).
 
 20071108 - 1.14.0
 
