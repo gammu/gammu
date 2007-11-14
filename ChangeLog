@@ -25,6 +25,7 @@ ChangeLog
 [-] * Fix buffer overflows in PDU decoder.
 [-] * Properly catch invalid PDU data received from phone.
 [-] * Handle more OBEX error codes.
+[-] * Handle vCards from Yahoo (bug #424).
 
 20071108 - 1.14.0
 
