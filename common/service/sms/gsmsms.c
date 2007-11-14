@@ -250,9 +250,6 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 		GSM_DecodeUDHHeader(&SMS->UDH);
 	}
 
-	/* Get message coding */
-	SMS->Coding = GSM_GetMessageCoding(buffer[Layout.TPDCS]);
-
 	switch (SMS->Coding) {
 		case SMS_Coding_Default_No_Compression:
 			i = 0;
@@ -371,7 +368,9 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	if (Layout.TPPID     != 255) dbgprintf("TPPID     : %02x %i\n",buffer[Layout.TPPID]    ,buffer[Layout.TPPID]);
 	if (Layout.TPUDL     != 255) dbgprintf("TPUDL     : %02x %i\n",buffer[Layout.TPUDL]    ,buffer[Layout.TPUDL]);
 	if (Layout.firstbyte != 255) dbgprintf("FirstByte : %02x %i\n",buffer[Layout.firstbyte],buffer[Layout.firstbyte]);
-	if (Layout.Text      != 255) dbgprintf("Text      : %02x %i\n",buffer[Layout.Text]     ,buffer[Layout.Text]);
+	if (Layout.Text      != 255 && Layout.TPUDL     != 255 && buffer[Layout.TPUDL] > 0) {
+		dbgprintf("Text      : %02x %i\n",buffer[Layout.Text]     ,buffer[Layout.Text]);
+	}
 #endif
 
 	SMS->UDH.Type 			= UDH_NoUDH;
@@ -404,7 +403,11 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 		GSM_UnpackSemiOctetNumber(SMS->Number,buffer+Layout.Number,true);
 		dbgprintf("Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	}
-	if (Layout.Text != 255 && Layout.TPDCS!=255 && Layout.TPUDL!=255) {
+	if (Layout.TPDCS != 255) {
+		/* Get message coding */
+		SMS->Coding = GSM_GetMessageCoding(buffer[Layout.TPDCS]);
+	}
+	if (Layout.Text != 255 && Layout.TPDCS!=255 && Layout.TPUDL!=255 && buffer[Layout.TPUDL] > 0) {
 		GSM_DecodeSMSFrameText(SMS, buffer, Layout);
 	}
 	if (Layout.DateTime != 255) {
