@@ -1994,7 +1994,10 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				if (current >= length) return ERR_CORRUPTED;
 				datalength = smsframe[PHONE_SMSDeliver.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSDeliver.TPDCS]) == SMS_Coding_Default_No_Compression) {
-					datalength = (datalength * 6) / 8;
+					datalength = (datalength * 7) / 8;
+					if ((datalength * 7) % 8 > 1) {
+						datalength++;
+					}
 				}
 				for (i = 0; i < datalength; i++) {
 					if (current >= length) return ERR_CORRUPTED;
@@ -2051,7 +2054,10 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				if (current >= length) return ERR_CORRUPTED;
 				datalength = smsframe[PHONE_SMSSubmit.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSSubmit.TPDCS]) == SMS_Coding_Default_No_Compression) {
-					datalength = (datalength * 6) / 8;
+					datalength = (datalength * 7) / 8;
+					if ((datalength * 7) % 8 > 1) {
+						datalength++;
+					}
 				}
 				for (i = 0; i < datalength; i++) {
 					if (current >= length) return ERR_CORRUPTED;
