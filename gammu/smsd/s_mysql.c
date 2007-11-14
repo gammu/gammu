@@ -30,7 +30,7 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 
 	unsigned int port = 0;
 	char * pport;
-	char * socket = NULL;
+	char * socketname = NULL;
 
 	pport = strstr( Config->PC, ":" );
 	if (pport) {
@@ -39,7 +39,7 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 		if (strchr("0123456798", *pport) != NULL) {
 			port = atoi( pport );
 		} else {
-			socket = pport;
+			socketname = pport;
 		}
 	}
 
@@ -51,7 +51,7 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 				Config->password,
 				Config->database,
 				port,
-				socket,
+				socketname,
 				0)) {
 	    	WriteSMSDLog(_("Error connecting to database: %s\n"), mysql_error(&Config->DBConnMySQL));
 	    	return ERR_UNKNOWN;
@@ -429,8 +429,8 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 }
 
 /* After sending SMS is moved to Sent Items or Error Items. */
-static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms UNUSED, 
-		GSM_SMSDConfig *Config, unsigned char *ID, 
+static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
+		GSM_SMSDConfig *Config, unsigned char *ID,
 		bool alwaysDelete UNUSED, bool sent UNUSED)
 {
 	unsigned char buffer[10000];
