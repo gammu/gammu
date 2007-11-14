@@ -1900,6 +1900,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 						GetLineString(msg.Buffer,Priv->Lines,3),
 						length
 						)) {
+				smprintf(s, "Failed to decode hex string!\n");
 				return ERR_CORRUPTED;
 			}
 			length /= 2; /* We decoded hex -> binary */
@@ -1995,7 +1996,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				datalength = smsframe[PHONE_SMSDeliver.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSDeliver.TPDCS]) == SMS_Coding_Default_No_Compression) {
 					datalength = (datalength * 7) / 8;
-					if ((datalength * 7) % 8 > 1) {
+					if ((datalength * 7) % 8 > 0) {
 						datalength++;
 					}
 				}
@@ -2055,7 +2056,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				datalength = smsframe[PHONE_SMSSubmit.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSSubmit.TPDCS]) == SMS_Coding_Default_No_Compression) {
 					datalength = (datalength * 7) / 8;
-					if ((datalength * 7) % 8 > 1) {
+					if ((datalength * 7) % 8 > 0) {
 						datalength++;
 					}
 				}
