@@ -378,7 +378,7 @@ GSM_Error GSM_SaveBackupFile(char *FileName, GSM_Backup * Backup,
  *
  * \ingroup Backup
  *
- * \param Filename Name of backup filename.
+ * \param FileName Name of backup filename.
  * \param UseUnicode Whether to prefer unicode variant when guessing.
  *
  * \return Backup format on success -1 on error.
