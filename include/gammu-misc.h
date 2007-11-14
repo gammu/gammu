@@ -55,7 +55,12 @@ const char *GetOS(void);
 const char *GetGammuLocalePath(void);
 
 /**
- * Initializes locales.
+ * Initializes locales. This sets up things needed for proper string
+ * conversion from local charset as well as initializes gettext based
+ * translation.
+ *
+ * \param path Path to gettext translation. If NULL compiled in default
+ * is used.
  */
 extern void GSM_InitLocales(const char *path);
 
