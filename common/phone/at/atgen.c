@@ -1896,8 +1896,8 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 			}
 			length = GetLineLength(msg.Buffer,Priv->Lines,3);
 			if (!DecodeHexBin (
-						buffer, 
-						GetLineString(msg.Buffer,Priv->Lines,3), 
+						buffer,
+						GetLineString(msg.Buffer,Priv->Lines,3),
 						length
 						)) {
 				return ERR_CORRUPTED;
@@ -2474,7 +2474,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 		sms->SMS[0].Location 		= 0;
 
 		Priv->SMSCount			= 0;
-		if (Priv->SMSLocations != NULL) 
+		if (Priv->SMSLocations != NULL)
 			free(Priv->SMSLocations);
 		Priv->SMSLocations		= NULL;
 		smprintf(s, "Getting SMS locations\n");
@@ -2549,7 +2549,7 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Check for +CPMS: 0,30,0,30,8,330, this is according to ETSI */
 		error = ATGEN_ParseReply(s,
 				GetLineString(msg.Buffer, Priv->Lines, 2),
-				"+CPMS: @d, @d, @0",
+				"+CPMS: @i, @i, @0",
 				&used, &size);
 		if (error != ERR_NONE) {
 			/*
@@ -2560,7 +2560,7 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			 */
 			error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPMS: @s, @d, @d, @0",
+					"+CPMS: @s, @i, @i, @0",
 					&buffer, sizeof(buffer), &used, &size);
 		}
 		if (error == ERR_NONE) {
@@ -4038,7 +4038,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			return ERR_NONE;
 		}
 
-		/* 
+		/*
 		 * Try reply with call date and some additional string.
 		 * I have no idea what should be stored there.
 		 * We store it in Entry 3, but do not use it for now.
