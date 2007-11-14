@@ -512,6 +512,7 @@ typedef enum {
 	ID_DeleteFolder,
 	ID_DeleteFile,
 	ID_ModeSwitch,
+	ID_GetProtocol,
 #ifdef GSM_ENABLE_ALCATEL
     	/* AT mode */
     	ID_SetFlowControl,

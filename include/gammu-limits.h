@@ -269,6 +269,13 @@
  */
 #define GSM_MAX_FILENAME_ID_LENGTH 399
 
+/**
+ * Maximal number of features per phone.
+ *
+ * \ingroup Limits
+ */
+#define GSM_MAX_PHONE_FEATURES 20
+
 #endif
 
 /* Editor configuration
