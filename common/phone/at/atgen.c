@@ -1986,7 +1986,6 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				smsframe[PHONE_SMSDeliver.TPPID] = buffer[current++];
 				if (current >= length) return ERR_CORRUPTED;
 				smsframe[PHONE_SMSDeliver.TPDCS] = buffer[current++];
-				if (current >= length) return ERR_CORRUPTED;
 				for (i = 0; i < 7; i++) {
 					if (current >= length) return ERR_CORRUPTED;
 					smsframe[PHONE_SMSDeliver.DateTime+i]=buffer[current++];
@@ -2004,8 +2003,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					if (current >= length) return ERR_CORRUPTED;
 					smsframe[i+PHONE_SMSDeliver.Text]=buffer[current++];
 				}
-				GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSDeliver);
-				return ERR_NONE;
+				return GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSDeliver);
 			case 0x01:
 				smprintf(s, "SMS type - submit\n");
 				sms->PDU 	 = SMS_Submit;
@@ -2016,6 +2014,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					sms->Folder = 4; /*OUTBOX ME*/
 				}
 				sms->InboxFolder = false;
+				if (current >= length) return ERR_CORRUPTED;
 				smsframe[PHONE_SMSSubmit.TPMR] = buffer[current++];
 				if (current >= length) return ERR_CORRUPTED;
 				current2=((buffer[current])+1)/2+1;
@@ -2052,7 +2051,6 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				if ((smsframe[12] & 0x18)!=0) current++; //TPVP is ignored now
 				if (current >= length) return ERR_CORRUPTED;
 				smsframe[PHONE_SMSSubmit.TPUDL] = buffer[current++];
-				if (current >= length) return ERR_CORRUPTED;
 				datalength = smsframe[PHONE_SMSSubmit.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSSubmit.TPDCS]) == SMS_Coding_Default_No_Compression) {
 					datalength = (datalength * 7) / 8;
@@ -2064,8 +2062,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					if (current >= length) return ERR_CORRUPTED;
 					smsframe[i+PHONE_SMSSubmit.Text]=buffer[current++];
 				}
-				GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSSubmit);
-				return ERR_NONE;
+				return GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSSubmit);
 			case 0x02:
 				smprintf(s, "SMS type - status report\n");
 				sms->PDU 	 = SMS_Status_Report;
@@ -2088,8 +2085,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					smsframe[PHONE_SMSStatusReport.SMSCTime+i]=buffer[current++];
 				}
 				smsframe[PHONE_SMSStatusReport.TPStatus]=buffer[current];
-				GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSStatusReport);
-				return ERR_NONE;
+				return GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSStatusReport);
 			}
 			break;
 		case SMS_AT_TXT:
