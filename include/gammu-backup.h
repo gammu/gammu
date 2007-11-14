@@ -452,7 +452,7 @@ typedef struct {
 /**
  * Gets information about format features.
  *
- * \param FileName Name of file (format is detected from it).
+ * \param Format Format of backup.
  * \param info Output information about backup features.
  *
  * \ingroup Backup
@@ -462,7 +462,7 @@ void GSM_GetBackupFormatFeatures(GSM_BackupFormat Format, GSM_Backup_Info * info
 /**
  * Gets information about backup data features (resp. which data it contains).
  *
- * \param FileName Name of file (format is detected from it).
+ * \param Format Format of backup.
  * \param info Output information about backup features.
  * \param backup Backup data to chech.
  *
