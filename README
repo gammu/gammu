@@ -69,7 +69,7 @@ Problems
 ========
 
 Use <http://bugs.cihar.com/> or mailing list for reporting problems.  It
-useful to send logs of gammu executed with enabled debugging. You can to
+useful to send logs of Gammu executed with enabled debugging. You can to
 it by adding "textall" as first parameter, e.g.:
 
    gammu textall --identify
