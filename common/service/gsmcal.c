@@ -1616,7 +1616,10 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			break;
 		case 1: /* Calendar note */
 			if (strstr(Line,"END:VEVENT")) {
-				if (Time == -1) return ERR_UNKNOWN;
+				if (Time == -1) {
+					dbgprintf("vCalendar without date!\n");
+					return ERR_UNKNOWN;
+				}
 				if (rrule != NULL) {
 					error = GSM_DecodeVCAL_RRULE(rrule, Calendar, Time);
 					free(rrule);
