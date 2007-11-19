@@ -479,7 +479,7 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 				found = true;
 			}
 			if (!found) {
-				dbgprintf("Not found!\n");
+				dbgprintf("%s not found!\n", Start);
 				goto fail;
 			}
 		}

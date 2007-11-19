@@ -17,6 +17,8 @@ ChangeLog
 
 2007???? - 1.14.91
 
+[+] * Better parse vCard version 3 (bug #434).
+
 20071114 - 1.14.90
 
 [+] * Configurable MySQL socket path.
