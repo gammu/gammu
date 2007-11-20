@@ -534,6 +534,10 @@ typedef enum {
 	 * Switching to OBEX mode using AT^SQWE=3.
 	 */
 	F_SQWE,
+	/**
+	 * Do not use OBEX/AT switching even if available.
+	 */
+	F_NO_ATOBEX,
 } Feature;
 
 /**
