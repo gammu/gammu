@@ -354,9 +354,9 @@ else(MSVC)
     endif (HAVE_WSHADOW)
 
     check_c_compiler_flag("-Werror" HAVE_WERROR)
-    if (HAVE_WERROR)
+    if (NOT VERSION_PATCH EQUAL 0 AND HAVE_WERROR)
         set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror")
-    endif (HAVE_WERROR)
+    endif (NOT VERSION_PATCH EQUAL 0 AND HAVE_WERROR)
 
     add_definitions()
     check_c_compiler_flag("-Wp,-D_FORTIFY_SOURCE=2" HAVE_FORTIFY_SOURCE)
