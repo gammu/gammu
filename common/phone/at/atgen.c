@@ -5857,13 +5857,13 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				 * Level 1 is almost useless, require
 				 * higher levels.
 				 */
-				if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX) && protocol_level > 1) {
-					/*
-					 * We do not enable this automatically,
-					 * because some phones provide less features
-					 * over OBEX than AT using AT commands.
-					 */
-					smprintf(s, "HINT: Please consider adding F_OBEX to your phone capabilities in common/gsmphones.c\n");
+				if (protocol_level > 1 &&
+						!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_ATOBEX) &&
+						!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)
+						) {
+					/* As AT+OBEX has automatic fallback we can try to enable OBEX here. */
+					smprintf(s, "Automatically enabling F_OBEX, please report bug if it causes problems\n");
+					GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_OBEX);
 				}
 			}
 			/* Check for Alcatel protocol */

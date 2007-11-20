@@ -17,6 +17,9 @@ ChangeLog
 
 2007???? - 1.15.90
 
+[!] * Phones capable of switching to OBEX mode from AT have it now
+      automatically enabled. Please report problems with this.
+
 20071120 - 1.15.0
 
 [+] * Better parse vCard version 3 (bug #434).
