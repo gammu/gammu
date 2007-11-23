@@ -3917,7 +3917,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	Status->MemoryUsed		= 0;
 	Status->MemoryFree		= 0;
 	start				= Priv->FirstMemoryEntry;
-	Priv->NextMemoryEntry		= 0;
+	Priv->NextMemoryEntry		= Priv->FirstMemoryEntry;
 	memory_end = Priv->MemorySize + Priv->FirstMemoryEntry - 1;
 	while (1) {
 		/* Calculate end of next request */
@@ -3932,7 +3932,6 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 
 		/* Do we already have first empty record? */
 		if (NeededInfo == AT_NextEmpty &&
-				Priv->NextMemoryEntry != 0 &&
 				Priv->NextMemoryEntry != end + 1)
 			return ERR_NONE;
 
