@@ -17,6 +17,8 @@ ChangeLog
 
 2007???? - 1.15.90
 
+[-] * Fixed detection of first free memory location if memory is empty 
+      (bug #434).
 [!] * Phones capable of switching to OBEX mode from AT have it now
       automatically enabled. Please report problems with this.
 
