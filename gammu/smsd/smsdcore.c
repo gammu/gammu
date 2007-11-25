@@ -630,22 +630,26 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 						if (error!=ERR_NONE) {
 							GSM_Terminate_SMSD(_("Post initialisation failed, stopping Gammu smsd (%s:%i)"), error, true, -1);
 						}
-						GSM_SetFastSMSSending(s,true);
+						GSM_SetFastSMSSending(s, true);
 					}
 				} else {
 					errors = 0;
 				}
 				if (initerrors > 3 || initerrors < 0) {
-					error=GSM_Reset(s, false); /* soft reset */
-					WriteSMSDLog(_("Reset return code: %s (%i) "), error == ERR_NONE? "OK":"ERROR", error);
+					error = GSM_Reset(s, false); /* soft reset */
+					WriteSMSDLog(_("Reset return code: %s (%i) "),
+							GSM_ErrorString(error),
+							error);
 					lastreset = time(NULL);
 					my_sleep(5000);
 				}
 				break;
 			case ERR_DEVICEOPENERROR:
-				GSM_Terminate_SMSD(_("Can't open device (%s:%i)"), error, true, -1);
+				GSM_Terminate_SMSD(_("Can't open device (%s:%i)"),
+						error, true, -1);
 			default:
-				WriteSMSDLog(_("Error at init connection (%s:%i)"), GSM_ErrorString(error), error);
+				WriteSMSDLog(_("Error at init connection (%s:%i)"),
+						GSM_ErrorString(error), error);
 				errors = 250;
 			}
 			continue;
@@ -664,17 +668,24 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 
 			initerrors = 0;
 
-			if (!SMSD_CheckSMSStatus(&Config,Service)) { /* read all incoming SMS */
+			/* read all incoming SMS */
+			if (!SMSD_CheckSMSStatus(&Config,Service)) {
 				errors++;
 				continue;
-			} else errors=0;
+			} else {
+				errors=0;
+			}
 
-			if (Config.resetfrequency > 0 && difftime(time(NULL), lastreset) >= Config.resetfrequency) { /* time for preventive reset */
-				errors = 254; initerrors = -2;
+			/* time for preventive reset */
+			if (Config.resetfrequency > 0 && difftime(time(NULL), lastreset) >= Config.resetfrequency) {
+				errors = 254;
+				initerrors = -2;
 				continue;
 			}
 		}
-		if (!SMSD_SendSMS(&Config,Service)) continue;
+		if (!SMSD_SendSMS(&Config,Service)) {
+			continue;
+		}
 	}
 	GSM_SetFastSMSSending(s,false);
 	GSM_Terminate_SMSD(_("Stopping Gammu smsd"), 0, false, 0);
