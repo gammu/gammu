@@ -572,7 +572,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 
 void SMSDaemon(int argc UNUSED, char *argv[])
 {
-	int                     errors = 255, initerrors=0;
+	int                     errors = -1, initerrors=0;
 	GSM_SMSDService		*Service;
 	GSM_Error		error;
  	time_t			lastreceive, lastreset = 0;
@@ -611,7 +611,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 	while (!gshutdown) {
 		/* There were errors in communication - try to recover */
 		if (errors > 2) {
-			if (errors != 255) {
+			if (errors != -1) {
 				WriteSMSDLog(_("Terminating communication (%i,%i)"), error, errors);
 				error=GSM_TerminateConnection(s);
 			}
@@ -621,7 +621,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 			switch (error) {
 			case ERR_NONE:
 				GSM_SetSendSMSStatusCallback(s, SMSSendingSMSStatus);
-				if (errors == 255) {
+				if (errors == -1) {
 					errors = 0;
 					if (GSM_GetIMEI(s, NULL) != ERR_NONE) {
 						errors++;
