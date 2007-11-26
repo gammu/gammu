@@ -610,7 +610,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 
 	while (!gshutdown) {
 		/* There were errors in communication - try to recover */
-		if (errors > 2) {
+		if (errors > 2 || errors == -1) {
 			if (errors != -1) {
 				WriteSMSDLog(_("Terminating communication (%i,%i)"), error, errors);
 				error=GSM_TerminateConnection(s);
@@ -647,10 +647,12 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 			case ERR_DEVICEOPENERROR:
 				GSM_Terminate_SMSD(_("Can't open device (%s:%i)"),
 						error, true, -1);
+				break;
 			default:
 				WriteSMSDLog(_("Error at init connection (%s:%i)"),
 						GSM_ErrorString(error), error);
 				errors = 250;
+				break;
 			}
 			continue;
 		}
