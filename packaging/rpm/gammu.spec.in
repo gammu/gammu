@@ -42,7 +42,7 @@ Group:              Applications/Communications
 BuildRequires:      bluez-libs >= 2.0 gettext cmake
 %else
 
-%if 0%{?mandriva_version} >= 2006
+%if 0%{?mandriva_version} > 2006
 BuildRequires:      libbluez2 libbluez2-devel gettext cmake
 %else
 
