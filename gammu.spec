@@ -153,6 +153,9 @@ cmake ../ \
     -DINSTALL_LIB_DIR=%_lib \
     -DINSTALL_LIBDATA_DIR=%_lib
 make
+# Test needs to use currently built library
+LD_LIBRARY_PATH=`pwd`/common \
+make test
 
 %install
 rm -rf %buildroot
