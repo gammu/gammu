@@ -3,14 +3,16 @@
 %define relnum      1
 # Set to 0 to disable bluetooth support
 %define bluetooth   1
+# What extension does tarball have
+%define extension   gz
 
-%if %_vendor == "suse"
+%if 0%{?suse_version}
 %define rel         %{relnum}suse
 %else
-%if %_vendor == "redhat"
+%if 0%{?fedora_version}
 %define rel         %{relnum}rh
 %else
-%if %_vendor == "MandrakeSoft"
+%if 0%{?mandriva_version}
 %define rel         %{relnum}mdk
 %else
 %define rel         %{relnum}
@@ -18,35 +20,45 @@
 %endif
 %endif
 
-%if %_vendor == "redhat"
+%if 0%{?fedora_version}
 %define gammu_docdir %_docdir/%name-%ver
 %else
 %define gammu_docdir %_docdir/%name
 %endif
 
-Summary:            Mobile phones tools for Unix (Linux) and Win32
+Summary:            Mobile phone management utility
 Name:               %name
 Version:            %ver
 Release:            %rel
 License:            GPL
-%if %_vendor == "suse"
+%if 0%{?suse_version}
 Group:              Hardware/Mobile
 %else
 Group:              Applications/Communications
 %endif
 %if %bluetooth
-%if %_vendor == "suse"
+
+%if 0%{?suse_version}
 BuildRequires:      bluez-libs >= 2.0 gettext cmake
 %else
-%if %_vendor == "MandrakeSoft"
-BuildRequires:      libbluez1 >= 2.0 libbluez1-devel >= 2.0 gettext cmake
+
+%if 0%{?mandriva_version} >= 2006
+BuildRequires:      libbluez2 libbluez2-devel gettext cmake
+%else
+
+%if 0%{?mandriva_version}
+BuildRequires:      libbluez2 >= 2.0 libbluez2-devel >= 2.0 gettext cmake
 %else
 BuildRequires:      bluez-libs >= 2.0 bluez-libs-devel >= 2.0 gettext cmake
 %endif
+
 %endif
+
+%endif
+
 %endif
 Vendor:             Michal Cihar <michal@cihar.com>
-Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.gz
+Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.%{extension}
 URL:                http://cihar.com/gammu/
 Buildroot:          %{_tmppath}/%name-%version-root
 
@@ -58,9 +70,17 @@ contacts, messages (SMS, EMS and MMS), calendar, todos, filesystem,
 integrated radio, camera, etc. It also supports daemon mode to send and
 receive SMSes.
 
+Currently supported phones include:
+
+* Many Nokia models.
+* Alcatel BE5 (501/701), BF5 (715), BH4 (535/735).
+* AT capable phones (Siemens, Nokia, Alcatel, IPAQ).
+* OBEX and IrMC capable phones (Sony-Ericsson, Motorola).
+* Symbian phones through gnapplet.
+
 %package devel
 Summary:      Development files for Gammu
-%if %_vendor == "suse"
+%if 0%{?suse_version}
 Group:              Development/Libraries/C and C++
 %else
 Group:              Development/Libraries
@@ -76,6 +96,14 @@ contacts, messages (SMS, EMS and MMS), calendar, todos, filesystem,
 integrated radio, camera, etc. It also supports daemon mode to send and
 receive SMSes.
 
+Currently supported phones include:
+
+* Many Nokia models.
+* Alcatel BE5 (501/701), BF5 (715), BH4 (535/735).
+* AT capable phones (Siemens, Nokia, Alcatel, IPAQ).
+* OBEX and IrMC capable phones (Sony-Ericsson, Motorola).
+* Symbian phones through gnapplet.
+
 This package contain files needed for development.
 
 %prep
@@ -84,7 +112,12 @@ This package contain files needed for development.
 %build
 mkdir build-dir
 cd build-dir
-cmake ../ -DENABLE_SHARED=ON -DCMAKE_INSTALL_PREFIX=%_prefix -DINSTALL_DOC_DIR=%gammu_docdir
+cmake ../ \
+    -DENABLE_SHARED=ON \
+    -DCMAKE_INSTALL_PREFIX=%_prefix \
+    -DINSTALL_DOC_DIR=%gammu_docdir \
+    -DINSTALL_LIB_DIR=%_lib \
+    -DINSTALL_LIBDATA_DIR=%_lib
 make
 
 %install
