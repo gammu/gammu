@@ -1,24 +1,14 @@
 %define ver         1.15.90
 %define name        gammu
-%define relnum      1
+%define rel         1
 # Set to 0 to disable bluetooth support
 %define bluetooth   1
-# What extension does tarball have
-%define extension   gz
-
-%if 0%{?suse_version}
-%define rel         %{relnum}suse
-%else
-%if 0%{?fedora_version}
-%define rel         %{relnum}rh
-%else
-%if 0%{?mandriva_version}
-%define rel         %{relnum}mdk
-%else
-%define rel         %{relnum}
-%endif
-%endif
-%endif
+# Set to 0 to disable PostgreSQL support
+%define pqsql	    1
+# Set to 0 to disable MySQLSQL support
+%define mysql	    1
+# Change if using tar.gz sources
+%define extension   bz2
 
 %if 0%{?fedora_version}
 %define gammu_docdir %_docdir/%name-%ver
@@ -36,27 +26,71 @@ Group:              Hardware/Mobile
 %else
 Group:              Applications/Communications
 %endif
-%if %bluetooth
 
+# Detect build requires
+# I hate this crap
 %if 0%{?suse_version}
-BuildRequires:      bluez-libs >= 2.0 gettext cmake
-%else
 
-%if 0%{?mandriva_version} > 2006
-BuildRequires:      libbluez2 libbluez2-devel gettext cmake
+# SUSE
+%define dist_bluez_libs	bluez-libs >= 2.0
+%if 0%{?suse_version} >= 1030
+%define dist_pkgconfig pkg-config
+%define dist_mysql_libs libmysqlclient-devel 
+%else 
+%define dist_pkgconfig pkgconfig
+%define dist_mysql_libs mysql-devel 
+%endif
+
 %else
 
 %if 0%{?mandriva_version}
-BuildRequires:      libbluez2 >= 2.0 libbluez2-devel >= 2.0 gettext cmake
+
+# Mandriva
+%define dist_pkgconfig pkgconfig
+%define dist_mysql_libs libmysql15-devel
+%if 0%{?mandriva_version} > 2006
+%define dist_bluez_libs	libbluez2 libbluez2-devel
 %else
-BuildRequires:      bluez-libs >= 2.0 bluez-libs-devel >= 2.0 gettext cmake
+%define dist_bluez_libs	libbluez1 >= 2.0 libbluez1-devel >= 2.0
 %endif
 
+%else
+
+# Fedora
+%if 0%{?fedora_version}
+%define dist_pkgconfig pkgconfig
+%if 0%{?fedora_version} >= 8
+%define dist_mysql_libs mysql-devel 
+%else
+%define dist_mysql_libs mysqlclient14-devel
 %endif
+%define dist_bluez_libs	bluez-libs >= 2.0 bluez-libs-devel >= 2.0
+
+%else
+
+#Defaults
+%define dist_pkgconfig pkg-config
+%define dist_mysql_libs libmysqlclient-devel 
+%define dist_bluez_libs	bluez-libs >= 2.0 bluez-libs-devel >= 2.0
 
 %endif
-
 %endif
+%endif
+
+%if %bluetooth
+BuildRequires: %{dist_bluez_libs}
+%endif
+
+%if pqsql
+BuildRequires: postgresql-devel
+%endif
+
+%if %mysql
+BuildRequires: %{dist_mysql_libs}
+%endif
+
+BuildRequires: gettext cmake %{dist_pkgconfig}
+
 Vendor:             Michal Cihar <michal@cihar.com>
 Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.%{extension}
 URL:                http://cihar.com/gammu/
@@ -86,7 +120,7 @@ Group:              Development/Libraries/C and C++
 Group:              Development/Libraries
 %endif
 Autoreqprov:  on
-Requires:           %name = %ver-%rel
+Requires:           %name = %ver-%release %{dist_pkgconfig}
 
 %description devel
 Gammu is command line utility and library to work with mobile phones
