@@ -28,7 +28,9 @@ do_replace win32/gammu-binary/msvc2003.mak/gammu.rc.in win32/gammu-binary/msvc20
 
 echo $version > VERSION
 
-sed -i -e '/^=========$/ a\
-' -e '/^=========$/ a\
-2007???? - '"$version"'
-' ChangeLog
+if ! grep -q " - $version" ChangeLog ; then
+    sed -i -e '/^=========$/ a\
+    ' -e '/^=========$/ a\
+    2007???? - '"$version"'
+    ' ChangeLog
+fi
