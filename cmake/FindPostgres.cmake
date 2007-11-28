@@ -32,13 +32,28 @@ ELSE(WIN32)
       EXEC_PROGRAM(${POSTGRES_CONFIG}
         ARGS --includedir
         OUTPUT_VARIABLE PG_TMP)
-      SET(POSTGRES_INCLUDE_DIR ${PG_TMP} CACHE FILEPATH INTERNAL)
+      find_path(POSTGRES_INCLUDE_DIR libpq-fe.h
+            /usr/local/include
+            /usr/local/include/postgresql 
+            /usr/local/postgresql/include
+            /usr/local/postgresql/include/postgresql
+            /usr/include 
+            /usr/include/postgresql
+            ${PG_TMP}
+      )
 
       # set LIBRARY_DIR
       EXEC_PROGRAM(${POSTGRES_CONFIG}
         ARGS --libdir
         OUTPUT_VARIABLE PG_TMP)
-      SET(POSTGRES_LIBRARY ${PG_TMP}/libpq.so CACHE FILEPATH INTERNAL)
+      find_library(POSTGRES_LIBRARY NAMES libpq.so
+        PATHS
+        ${PG_TMP}
+        /usr/lib/postgresql
+        /usr/local/lib
+        /usr/local/lib/postgresql
+        /usr/local/postgresql/lib
+      )
     ENDIF(POSTGRES_CONFIG)
 
   ENDIF(UNIX)
