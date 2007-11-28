@@ -236,9 +236,9 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 	strftime(retval2, 200, "%c", &timeptr);
 	if (TimeZone) {
 		if (dt.Timezone >= 0) {
-			sprintf(retval," +%02i00",dt.Timezone);
+			snprintf(retval, sizeof(retval) - 1, " +%02i00",dt.Timezone);
 		} else {
-			sprintf(retval," -%02i00",dt.Timezone);
+			snprintf(retval, sizeof(retval) - 1, " -%02i00",dt.Timezone);
 		}
 		strcat(retval2,retval);
 	}
@@ -551,7 +551,7 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesiz
 	buffer[len*5-1]=0;
 
 	for (i = 0; i < messagesize; i++) {
-		sprintf(buffer+j*4,"%02X",message[i]);
+		snprintf(buffer+j*4, sizeof(buffer) - j*4 - 1, "%02X",message[i]);
 		buffer[j*4+2] = 0x20;
 		// 9 = tab
 		if (isprint(message[i]) && message[i]!=0x09
@@ -602,7 +602,7 @@ const char *GetOS(void)
 //			Ver.dwMinorVersion = _winminor;
 //			Ver.dwBuildNumber  = _osver;
 //#else
-			sprintf(Buffer, "Windows");
+			snprintf(Buffer, sizeof(Buffer) - 1, "Windows");
 			return Buffer;
 //#endif
 		}
@@ -612,90 +612,90 @@ const char *GetOS(void)
 
 	/* no info about Win95 SP1, Win95 OSR2.1, Win95 OSR2.5.... */
 	if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 0 && Ver.dwBuildNumber == 950) {
-		sprintf(Buffer,"Windows 95");
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows 95");
 	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 0 && Ver.dwBuildNumber == 1111) {
-		sprintf(Buffer,"Windows 95 OSR2.x");
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows 95 OSR2.x");
 
 	/* no info about Win98 SP1.... */
 	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 10 && Ver.dwBuildNumber == 1998) {
-		sprintf(Buffer,"Windows 98");
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows 98");
 	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 10 && Ver.dwBuildNumber == 2222) {
-		sprintf(Buffer,"Windows 98 SE");
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows 98 SE");
 
 	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 90 && Ver.dwBuildNumber == 3000) {
-		sprintf(Buffer,"Windows ME");
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows ME");
 
 	/* ---------------- NT family ------------------- */
 
 	} else if (Ver.dwMajorVersion == 4 && Ver.dwMinorVersion == 0 && Ver.dwBuildNumber == 1381) {
-		sprintf(Buffer,"Windows NT 4.0");
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows NT 4.0");
 
 	} else if (Ver.dwMajorVersion == 5 && Ver.dwMinorVersion == 0 && Ver.dwBuildNumber == 2195) {
-		sprintf(Buffer,"Windows 2000");
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows 2000");
 
 	} else if (Ver.dwMajorVersion == 5 && Ver.dwMinorVersion == 1 && Ver.dwBuildNumber == 2600) {
-		sprintf(Buffer,"Windows XP");
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows XP");
 #if _MSC_VER > 1200 //6.0 has it undeclared
 		if (Extended) {
 			if (Ver.wSuiteMask & VER_SUITE_PERSONAL) {
-				sprintf(Buffer+strlen(Buffer)," Home");
+				snprintf(Buffer+strlen(Buffer), sizeof(Buffer) - 1 - strlen(Buffer)," Home");
 			} else {
-				sprintf(Buffer+strlen(Buffer)," Pro");
+				snprintf(Buffer+strlen(Buffer), sizeof(Buffer) - 1 - strlen(Buffer)," Pro");
 			}
 		}
 #endif
 
 	} else if (Ver.dwMajorVersion == 5 && Ver.dwMinorVersion == 2) {
-		sprintf(Buffer,"Windows 2003");
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows 2003");
 
 	} else if (Ver.dwMajorVersion == 6 && Ver.dwMinorVersion == 0) {
-		sprintf(Buffer,"Windows Vista");
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows Vista");
 
 	} else if (Ver.dwMajorVersion == 6 && Ver.dwMinorVersion > 0) {
-		sprintf(Buffer,"Windows Server 2007");
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows Server 2007");
 
 	} else {
-		sprintf(Buffer, "Windows %i.%i.%i",(int)Ver.dwMajorVersion,(int)Ver.dwMinorVersion,(int)Ver.dwBuildNumber);
+		snprintf(Buffer, sizeof(Buffer) - 1, "Windows %i.%i.%i",(int)Ver.dwMajorVersion,(int)Ver.dwMinorVersion,(int)Ver.dwBuildNumber);
 	}
 
 	if (Extended && Ver.wServicePackMajor != 0) {
-		sprintf(Buffer+strlen(Buffer)," SP%i",Ver.wServicePackMajor);
+		snprintf(Buffer+strlen(Buffer), sizeof(Buffer) - 1 - strlen(Buffer)," SP%i",Ver.wServicePackMajor);
 	}
 #elif defined(HAVE_SYS_UTSNAME_H)
 	uname(&Ver);
-	sprintf(Buffer, "%s, kernel %s (%s)", Ver.sysname, Ver.release, Ver.version);
+	snprintf(Buffer, sizeof(Buffer) - 1, "%s, kernel %s (%s)", Ver.sysname, Ver.release, Ver.version);
 #elif defined(__FreeBSD__)
-	sprintf(Buffer, "FreeBSD");
+	snprintf(Buffer, sizeof(Buffer) - 1, "FreeBSD");
 #elif defined(__NetBSD__)
-	sprintf(Buffer, "NetBSD");
+	snprintf(Buffer, sizeof(Buffer) - 1, "NetBSD");
 #elif defined(__OpenBSD__)
-	sprintf(Buffer, "OpenBSD");
+	snprintf(Buffer, sizeof(Buffer) - 1, "OpenBSD");
 #elif defined(__GNU__)
-	sprintf(Buffer, "GNU/Hurd");
+	snprintf(Buffer, sizeof(Buffer) - 1, "GNU/Hurd");
 #elif defined(sun) || defined(__sun) || defined(__sun__)
 #  ifdef __SVR4
-	sprintf(Buffer, "Sun Solaris");
+	snprintf(Buffer, sizeof(Buffer) - 1, "Sun Solaris");
 #  else
-	sprintf(Buffer, "SunOS");
+	snprintf(Buffer, sizeof(Buffer) - 1, "SunOS");
 #  endif
 #elif defined(hpux) || defined(__hpux) || defined(__hpux__)
-	sprintf(Buffer, "HP-UX");
+	snprintf(Buffer, sizeof(Buffer) - 1, "HP-UX");
 #elif defined(ultrix) || defined(__ultrix) || defined(__ultrix__)
-	sprintf(Buffer, "DEC Ultrix");
+	snprintf(Buffer, sizeof(Buffer) - 1, "DEC Ultrix");
 #elif defined(sgi) || defined(__sgi)
-	sprintf(Buffer, "SGI Irix");
+	snprintf(Buffer, sizeof(Buffer) - 1, "SGI Irix");
 #elif defined(__osf__)
-	sprintf(Buffer, "OSF Unix");
+	snprintf(Buffer, sizeof(Buffer) - 1, "OSF Unix");
 #elif defined(bsdi) || defined(__bsdi__)
-	sprintf(Buffer, "BSDI Unix");
+	snprintf(Buffer, sizeof(Buffer) - 1, "BSDI Unix");
 #elif defined(_AIX)
-	sprintf(Buffer, "AIX Unix");
+	snprintf(Buffer, sizeof(Buffer) - 1, "AIX Unix");
 #elif defined(_UNIXWARE)
-	sprintf(Buffer, "SCO Unixware");
+	snprintf(Buffer, sizeof(Buffer) - 1, "SCO Unixware");
 #elif defined(DGUX)
-	sprintf(Buffer, "DG Unix");
+	snprintf(Buffer, sizeof(Buffer) - 1, "DG Unix");
 #elif defined(__QNX__)
-	sprintf(Buffer, "QNX");
+	snprintf(Buffer, sizeof(Buffer) - 1, "QNX");
 #endif
 	return Buffer;
 }
@@ -707,35 +707,35 @@ const char *GetCompiler(void)
 #ifdef WIN32
 #  ifdef _MSC_VER
 	if (_MSC_VER == 1200) { //?
-		sprintf(Buffer, "MS VC 6.0");
+		snprintf(Buffer, sizeof(Buffer) - 1, "MS VC 6.0");
 	} else if (_MSC_VER == 1300) {
-		sprintf(Buffer, "MS VC .NET 2002");
+		snprintf(Buffer, sizeof(Buffer) - 1, "MS VC .NET 2002");
 	} else if (_MSC_VER == 1310) {
-		sprintf(Buffer, "MS VC .NET 2003");
+		snprintf(Buffer, sizeof(Buffer) - 1, "MS VC .NET 2003");
 	} else if (_MSC_VER == 1400) {
-		sprintf(Buffer, "MS VC .NET 2005");
+		snprintf(Buffer, sizeof(Buffer) - 1, "MS VC .NET 2005");
 	} else {
-		sprintf(Buffer, "MS VC %i",_MSC_VER);
+		snprintf(Buffer, sizeof(Buffer) - 1, "MS VC %i",_MSC_VER);
 	}
 #  elif defined(__BORLANDC__)
-	sprintf(Buffer, "Borland C++ %i",__BORLANDC__);
+	snprintf(Buffer, sizeof(Buffer) - 1, "Borland C++ %i",__BORLANDC__);
 #  elif defined(__MINGW32__)
-	sprintf(Buffer, "GCC %i.%i, MinGW %i.%i", __GNUC__, __GNUC_MINOR__, __MINGW32_MAJOR_VERSION, __MINGW32_MINOR_VERSION);
+	snprintf(Buffer, sizeof(Buffer) - 1, "GCC %i.%i, MinGW %i.%i", __GNUC__, __GNUC_MINOR__, __MINGW32_MAJOR_VERSION, __MINGW32_MINOR_VERSION);
 #  elif defined(__GNUC__)
-	sprintf(Buffer, "GCC %i.%i", __GNUC__, __GNUC_MINOR__);
+	snprintf(Buffer, sizeof(Buffer) - 1, "GCC %i.%i", __GNUC__, __GNUC_MINOR__);
 #  else
-	sprintf(Buffer, "unknown compiler");
+	snprintf(Buffer, sizeof(Buffer) - 1, "unknown compiler");
 #  endif
 #elif defined(DJGPP)
-	sprintf(Buffer, "djgpp %d.%d", __DJGPP, __DJGPP_MINOR);
+	snprintf(Buffer, sizeof(Buffer) - 1, "djgpp %d.%d", __DJGPP, __DJGPP_MINOR);
 #elif defined(__GNUC__)
-	sprintf(Buffer, "GCC %i.%i", __GNUC__, __GNUC_MINOR__);
+	snprintf(Buffer, sizeof(Buffer) - 1, "GCC %i.%i", __GNUC__, __GNUC_MINOR__);
 #elif defined(__SUNPRO_CC)
-	sprintf(Buffer, "Sun C++ %x", __SUNPRO_CC);
+	snprintf(Buffer, sizeof(Buffer) - 1, "Sun C++ %x", __SUNPRO_CC);
 #elif defined(__INTEL_COMPILER)
-	sprintf(Buffer, "Intel Compiler %ld", __INTEL_COMPILER);
+	snprintf(Buffer, sizeof(Buffer) - 1, "Intel Compiler %ld", __INTEL_COMPILER);
 #else
-	sprintf(Buffer, "unknown compiler");
+	snprintf(Buffer, sizeof(Buffer) - 1, "unknown compiler");
 #endif
 
 	return Buffer;
