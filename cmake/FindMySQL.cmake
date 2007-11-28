@@ -24,6 +24,7 @@ if(UNIX)
         )
     
     if(MYSQL_CONFIG) 
+        message(STATUS "Using mysql-config: ${MYSQL_CONFIG}")
         # set INCLUDE_DIR
         exec_program(${MYSQL_CONFIG}
             ARGS --include
@@ -63,42 +64,38 @@ else(UNIX)
     set(MYSQL_ADD_LIBRARY_PATH "c:/msys/local/lib" CACHE FILEPATH INTERNAL)
 ENDIF(UNIX)
 
-if(NOT DEFINED MYSQL_FOUND)
+find_path(MYSQL_INCLUDE_DIR mysql.h
+    /usr/local/include
+    /usr/local/include/mysql 
+    /usr/local/mysql/include
+    /usr/local/mysql/include/mysql
+    /usr/include 
+    /usr/include/mysql
+    ${MYSQL_ADD_INCLUDE_DIR}
+)
 
-    find_path(MYSQL_INCLUDE_DIR mysql.h
-        /usr/local/include
-        /usr/local/include/mysql 
-        /usr/local/mysql/include
-        /usr/local/mysql/include/mysql
-        /usr/include 
-        /usr/include/mysql
-        ${MYSQL_ADD_INCLUDE_DIR}
+set(TMP_MYSQL_LIBRARIES "")
+
+foreach(LIB ${MYSQL_ADD_LIBRARIES})
+    find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}
+        PATHS
+        ${MYSQL_ADD_LIBRARY_PATH}
+        /usr/lib/mysql
+        /usr/local/lib
+        /usr/local/lib/mysql
+        /usr/local/mysql/lib
     )
+    list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_${LIB}}")
+endforeach(LIB ${MYSQL_ADD_LIBRARIES})
 
-    set(TMP_MYSQL_LIBRARIES "")
+set(MYSQL_LIBRARIES ${TMP_MYSQL_LIBRARIES} CACHE FILEPATH INTERNAL)
 
-    foreach(LIB ${MYSQL_ADD_LIBRARIES})
-        find_library("MYSQL_LIBRARIES_${LIB}" NAMES ${LIB}
-            PATHS
-            ${MYSQL_ADD_LIBRARY_PATH}
-            /usr/lib/mysql
-            /usr/local/lib
-            /usr/local/lib/mysql
-            /usr/local/mysql/lib
-        )
-        list(APPEND TMP_MYSQL_LIBRARIES "${MYSQL_LIBRARIES_${LIB}}")
-    endforeach(LIB ${MYSQL_ADD_LIBRARIES})
+if(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARIES)
+    set(MYSQL_FOUND TRUE CACHE INTERNAL "MySQL found")
+    message(STATUS "Found MySQL: ${MYSQL_INCLUDE_DIR}, ${MYSQL_LIBRARIES}")
+else(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARIES)
+    set(MYSQL_FOUND FALSE CACHE INTERNAL "MySQL found")
+    message(STATUS "MySQL not found.")
+endif(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARIES)
 
-    set(MYSQL_LIBRARIES ${TMP_MYSQL_LIBRARIES} CACHE FILEPATH INTERNAL)
-
-    if(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARIES)
-        set(MYSQL_FOUND TRUE CACHE INTERNAL "MySQL found")
-        message(STATUS "Found MySQL: ${MYSQL_INCLUDE_DIR}, ${MYSQL_LIBRARIES}")
-    else(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARIES)
-        set(MYSQL_FOUND FALSE CACHE INTERNAL "MySQL found")
-        message(STATUS "MySQL not found.")
-    endif(MYSQL_INCLUDE_DIR AND MYSQL_LIBRARIES)
-
-    mark_as_advanced(MYSQL_INCLUDE_DIR MYSQL_LIBRARIES)
-
-endif(NOT DEFINED MYSQL_FOUND)
+mark_as_advanced(MYSQL_INCLUDE_DIR MYSQL_LIBRARIES)
