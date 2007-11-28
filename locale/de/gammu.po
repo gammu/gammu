@@ -2489,9 +2489,6 @@ msgstr ""
 
 #: gammu/memory.c:218
 #, fuzzy
-#| msgid ""
-#| "You will have null names in entries. Upgrade firmware in phone to higher "
-#| "than 4.06"
 msgid ""
 "You will have null names in entries. Upgrade firmware in phone to higher "
 "than 6.00"
@@ -2867,7 +2864,6 @@ msgstr "8-Bit-SMS, kann hier nicht dargestellt werden"
 
 #: gammu/message.c:299
 #, fuzzy, c-format
-#| msgid "Unknown memory type: \"%s\"\n"
 msgid "Unknown PDU type: 0x%x\n"
 msgstr "Unbekannter Speichertyp: \"%s\"\n"
 

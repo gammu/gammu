@@ -2915,7 +2915,6 @@ msgstr ""
 
 #: gammu/message.c:299
 #, fuzzy, c-format
-#| msgid "Unknown memory type: \"%s\"\n"
 msgid "Unknown PDU type: 0x%x\n"
 msgstr "\"%s\" es un tipo de memoria desconocido\n"
 
