@@ -657,7 +657,7 @@ bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry * note);
  *
  * \ingroup Calendar
  */
-GSM_Error GSM_GetAlarm(GSM_StateMachine * s, GSM_Alarm * alarm);
+GSM_Error GSM_GetAlarm(GSM_StateMachine * s, GSM_Alarm * Alarm);
 
 /**
  * Sets alarm in phone.
@@ -669,7 +669,7 @@ GSM_Error GSM_GetAlarm(GSM_StateMachine * s, GSM_Alarm * alarm);
  *
  * \ingroup Calendar
  */
-GSM_Error GSM_SetAlarm(GSM_StateMachine * s, GSM_Alarm * alarm);
+GSM_Error GSM_SetAlarm(GSM_StateMachine * s, GSM_Alarm * Alarm);
 
 /**
  * Gets status of ToDos (count of used entries).
