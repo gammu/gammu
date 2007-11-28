@@ -5,12 +5,9 @@
 #ifdef HAVE_MYSQL_MYSQL_H
 #ifdef WIN32
 #  include <winsock2.h>
-#  include <mysql.h>
-#  include <mysqld_error.h>
-#else
-#  include <mysql/mysql.h>
-#  include <mysql/mysqld_error.h>
 #endif
+#include <mysql.h>
+#include <mysqld_error.h>
 #endif
 
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H

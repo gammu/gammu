@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Fixed detection of first free memory location if memory is empty 
       (bug #434).
+[-] * Fixed mysql.h include path (bug #441).
 [!] * Phones capable of switching to OBEX mode from AT have it now
       automatically enabled. Please report problems with this.
 
