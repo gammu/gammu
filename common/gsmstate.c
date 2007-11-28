@@ -932,9 +932,9 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* Which section should we read? */
 	if (num == 0) {
-		sprintf(section,"gammu");
+		snprintf(section, sizeof(section) - 1, "gammu");
 	} else {
-		sprintf(section,"gammu%i",num);
+		snprintf(section, sizeof(section) - 1, "gammu%i", num);
 	}
 
 	/* Scan for section */
