@@ -82,23 +82,40 @@ extern void GSM_InitLocales(const char *path);
 #  define my_sleep(x) usleep(x*1000)
 #endif
 
+/* Easy check for GCC */
+#if defined __GNUC__ && defined __GNUC_MINOR__
+# define GSM_GNUC_PREREQ(maj, min) \
+        ((__GNUC__ << 16) + __GNUC_MINOR__ >= ((maj) << 16) + (min))
+#else
+# define GSM_GNUC_PREREQ(maj, min) 0
+#endif
+
 /* Various hints for compilers */
-#if __GNUC__ && !defined(printf)
+#if GSM_GNUC_PREREQ (2,8) && !defined(printf)
 #define PRINTF_STYLE(f, a) __attribute__ ((format(printf, f, a)))
 #define SCANF_STYLE(f, a) __attribute__ ((format(scanf, f, a)))
 #else
 #define PRINTF_STYLE(f, a)
 #define SCANF_STYLE(f, a)
 #endif
-#if __GNUC__
-#define UNUSED __attribute__ ((unused))
-#define NORETURN __attribute__ ((noreturn))
+
+#if GSM_GNUC_PREREQ (3,4)
 #define WARNUNUSED __attribute__ ((__warn_unused_result__))
-#define INLINE inline
+#else
+#define WARNUNUSED
+#endif
+
+#if GSM_GNUC_PREREQ (3,1)
+#define UNUSED __attribute__ ((unused))
 #else
 #define UNUSED
+#endif
+
+#if __GNUC__
+#define NORETURN __attribute__ ((noreturn))
+#define INLINE inline
+#else
 #define NORETURN
-#define WARNUNUSED
 #define INLINE
 #endif
 
