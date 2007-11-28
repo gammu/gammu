@@ -3005,7 +3005,6 @@ msgstr "SMS ad 8 bit, non può essere visualizzato qui\n"
 
 #: gammu/message.c:299
 #, fuzzy, c-format
-#| msgid "Unknown memory type: \"%s\"\n"
 msgid "Unknown PDU type: 0x%x\n"
 msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
 
