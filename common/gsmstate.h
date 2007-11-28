@@ -974,11 +974,11 @@ typedef struct {
 	/**
 	 * Reads alarm set in phone.
 	 */
-	GSM_Error (*GetAlarm)	   	(GSM_StateMachine *s, GSM_Alarm	*alarm);
+	GSM_Error (*GetAlarm)	   	(GSM_StateMachine *s, GSM_Alarm	*Alarm);
 	/**
 	 * Sets alarm in phone.
 	 */
-	GSM_Error (*SetAlarm)	   	(GSM_StateMachine *s, GSM_Alarm *alarm);
+	GSM_Error (*SetAlarm)	   	(GSM_StateMachine *s, GSM_Alarm *Alarm);
 	/**
 	 * Gets locale from phone.
 	 */

@@ -85,7 +85,7 @@ void WriteSMSDLog(char *format, ...)
 	}
 }
 
-void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *service)
+void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, char *service)
 {
 	INI_Section 		*smsdcfgfile = NULL;
 	GSM_Config 		smsdcfg;
@@ -115,7 +115,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 		}
 		fprintf(stderr, _("Log filename is \"%s\"\n"),Config->logfilename);
 	}
-	if (log) WriteSMSDLog(_("Starting GAMMU smsd"));
+	if (uselog) WriteSMSDLog(_("Starting GAMMU smsd"));
 
 	/* Include Numbers used, because we don't want create new variable */
 	Config->IncludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "gammu", false);
@@ -128,10 +128,10 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 
 	Config->PINCode=INI_GetValue(smsdcfgfile, "smsd", "PIN", false);
 	if (Config->PINCode == NULL) {
- 		if (log) WriteSMSDLog(_("Warning: No PIN code in %s file"),filename);
+ 		if (uselog) WriteSMSDLog(_("Warning: No PIN code in %s file"),filename);
  		fprintf(stderr, _("Warning: No PIN code in %s file\n"),filename);
 	} else {
-		if (log) WriteSMSDLog(_("PIN code is \"%s\""),Config->PINCode);
+		if (uselog) WriteSMSDLog(_("PIN code is \"%s\""),Config->PINCode);
 	}
 
 	str = INI_GetValue(smsdcfgfile, "smsd", "commtimeout", false);
@@ -146,18 +146,18 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	if (str) Config->checksecurity=atoi(str); else Config->checksecurity = 1;
 	str = INI_GetValue(smsdcfgfile, "smsd", "resetfrequency", false);
 	if (str) Config->resetfrequency=atoi(str); else Config->resetfrequency = 0;
-	if (log) WriteSMSDLog("commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i, checksecurity=%i",
+	if (uselog) WriteSMSDLog("commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i, checksecurity=%i",
 			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency, Config->checksecurity);
 
 	Config->deliveryreport = INI_GetValue(smsdcfgfile, "smsd", "deliveryreport", false);
 	if (Config->deliveryreport == NULL || (strncasecmp(Config->deliveryreport, "log", 3) != 0 && strncasecmp(Config->deliveryreport, "sms", 3) != 0)) {
 		Config->deliveryreport = "no";
 	}
-	if (log) WriteSMSDLog("deliveryreport = %s", Config->deliveryreport);
+	if (uselog) WriteSMSDLog("deliveryreport = %s", Config->deliveryreport);
 
 	Config->PhoneID = INI_GetValue(smsdcfgfile, "smsd", "phoneid", false);
 	if (Config->PhoneID == NULL) Config->PhoneID = "";
-	if (log) WriteSMSDLog("phoneid = %s", Config->PhoneID);
+	if (uselog) WriteSMSDLog("phoneid = %s", Config->PhoneID);
 
 	Config->RunOnReceive = INI_GetValue(smsdcfgfile, "smsd", "runonreceive", false);
 
@@ -183,7 +183,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 		if (Config->inboxformat == NULL || (strncasecmp(Config->inboxformat, "detail", 6) != 0 && strncasecmp(Config->inboxformat, "unicode", 7) != 0)) {
 			Config->inboxformat = "standard";
 		}
-		if (log) WriteSMSDLog(_("Inbox is \"%s\" with format \"%s\""), Config->inboxpath, Config->inboxformat);
+		if (uselog) WriteSMSDLog(_("Inbox is \"%s\" with format \"%s\""), Config->inboxpath, Config->inboxformat);
 
 		Config->outboxpath=INI_GetValue(smsdcfgfile, "smsd", "outboxpath", false);
 		if (Config->outboxpath == NULL) Config->outboxpath = emptyPath;
@@ -192,15 +192,15 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 		if (Config->transmitformat == NULL || (strncasecmp(Config->transmitformat, "auto", 4) != 0 && strncasecmp(Config->transmitformat, "unicode", 7) != 0)) {
 			Config->transmitformat = "7bit";
 		}
-		if (log) WriteSMSDLog(_("Outbox is \"%s\" with transmission format \"%s\""), Config->outboxpath, Config->transmitformat);
+		if (uselog) WriteSMSDLog(_("Outbox is \"%s\" with transmission format \"%s\""), Config->outboxpath, Config->transmitformat);
 
 		Config->sentsmspath=INI_GetValue(smsdcfgfile, "smsd", "sentsmspath", false);
 		if (Config->sentsmspath == NULL) Config->sentsmspath = Config->outboxpath;
-		if (log) WriteSMSDLog(_("Sent SMS moved to \"%s\""),Config->sentsmspath);
+		if (uselog) WriteSMSDLog(_("Sent SMS moved to \"%s\""),Config->sentsmspath);
 
 		Config->errorsmspath=INI_GetValue(smsdcfgfile, "smsd", "errorsmspath", false);
 		if (Config->errorsmspath == NULL) Config->errorsmspath = Config->sentsmspath;
-		if (log) WriteSMSDLog(_("SMS with errors moved to \"%s\""),Config->errorsmspath);
+		if (uselog) WriteSMSDLog(_("SMS with errors moved to \"%s\""),Config->errorsmspath);
 	}
 
 #ifdef HAVE_MYSQL_MYSQL_H
@@ -236,13 +236,13 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool log, char *ser
 	Config->IncludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "include_numbers", false);
 	Config->ExcludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "exclude_numbers", false);
 	if (Config->IncludeNumbers != NULL) {
-		if (log) WriteSMSDLog(_("Include numbers available"));
+		if (uselog) WriteSMSDLog(_("Include numbers available"));
 	}
 	if (Config->ExcludeNumbers != NULL) {
 		if (Config->IncludeNumbers == NULL) {
-			if (log) WriteSMSDLog(_("Exclude numbers available"));
+			if (uselog) WriteSMSDLog(_("Exclude numbers available"));
 		} else {
-			if (log) WriteSMSDLog(_("Exclude numbers available, but IGNORED"));
+			if (uselog) WriteSMSDLog(_("Exclude numbers available, but IGNORED"));
 		}
 	}
 
