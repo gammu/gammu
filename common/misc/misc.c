@@ -223,7 +223,7 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 	struct tm 	timeptr;
 	static char 	retval[200],retval2[200];
 
-	if (!RecalcDateTime(&timeptr, dt.Year, dt.Month, dt.Day, 
+	if (!RecalcDateTime(&timeptr, dt.Year, dt.Month, dt.Day,
 				dt.Hour, dt.Minute, dt.Second)) {
 		retval2[0] = 0;
 		return retval2;
@@ -407,7 +407,7 @@ int dbgprintf(const char *format, ...)
 	GSM_DateTime 		date_time;
 
 	va_start(argp, format);
-	result = vsprintf(buffer, format, argp);
+	result = vsnprintf(buffer, sizeof(buffer) - 1, format, argp);
 	va_end(argp);
 
 	if (di.df != NULL && (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE)) {
@@ -455,7 +455,7 @@ int smfprintf(GSM_Debug_Info *d, const char *format, ...)
 	if (l == DL_NONE || f == NULL) return 0;
 
 	va_start(argp, format);
-	result = vsprintf(buffer, format, argp);
+	result = vsnprintf(buffer, sizeof(buffer) - 1, format, argp);
 	va_end(argp);
 	pos = buffer;
 

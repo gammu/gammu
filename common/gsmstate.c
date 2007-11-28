@@ -1136,7 +1136,7 @@ int smprintf(GSM_StateMachine *s, const char *format, ...)
 	va_start(argp, format);
 
 	if ((s != NULL && s->di.df != 0) || (s == NULL && di.df != 0)) {
-		result = vsprintf(buffer, format, argp);
+		result = vsnprintf(buffer, sizeof(buffer) - 1, format, argp);
 		result = smfprintf((s == NULL) ? &di : &(s->di), "%s", buffer);
 	}
 
@@ -1171,7 +1171,7 @@ int smprintf_level(GSM_StateMachine * s, GSM_DebugSeverity severity, const char 
 	va_start(argp, format);
 
 	if ((s != NULL && s->di.df != 0) || (s == NULL && di.df != 0)) {
-		result = vsprintf(buffer, format, argp);
+		result = vsnprintf(buffer, sizeof(buffer) - 1, format, argp);
 		result = smfprintf((s == NULL) ? &di : &(s->di), "%s", buffer);
 	}
 
