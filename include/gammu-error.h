@@ -269,6 +269,7 @@ typedef enum {
 	 * Corrupted data returned by phone.
 	 */
 	ERR_CORRUPTED,
+
 	/**
 	 * Just marker of highest error code, should not be used.
 	 */
