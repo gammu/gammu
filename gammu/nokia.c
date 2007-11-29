@@ -232,7 +232,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 	printf(_("Checking %s\n"),DecodeUnicodeString(Name));
 	//looking into folder content (searching for mp3 and similiar)
 	while (1) {
-		error = GSM_GetFolderListing(s,&Files,Start);
+		error = GSM_GetFolderListing(gsm,&Files,Start);
 		if (error == ERR_FOLDERPART) {
 			printf("%s\n", _("  Only part handled!"));
 			break;
@@ -311,7 +311,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 			Start = true;
 			Available = false;
 			while (1) {
-				error = GSM_GetFolderListing(s,&Files3,Start);
+				error = GSM_GetFolderListing(gsm,&Files3,Start);
 				if (error == ERR_FOLDERPART) {
 					printf("%s\n", _("  Problem with adding playlist"));
 					break;
@@ -406,11 +406,11 @@ void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
 	//delete old playlists
 	EncodeUnicode(IDFolder,"d:\\predefplaylist",17);
 	CopyUnicodeString(Files.ID_FullName,IDFolder);
-	error = GSM_GetFolderListing(s,&Files,Start);
+	error = GSM_GetFolderListing(gsm,&Files,Start);
 	if (error == ERR_FILENOTEXIST) {
 		EncodeUnicode(IDFolder,"d:\\predefgallery\\predefplaylist",17+14);
 		CopyUnicodeString(Files.ID_FullName,IDFolder);
-		error = GSM_GetFolderListing(s,&Files,Start);
+		error = GSM_GetFolderListing(gsm,&Files,Start);
 	} else if (error != ERR_EMPTY) {
 	    	Print_Error(error);
 	}
@@ -424,12 +424,12 @@ void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
 	while (1) {
 		if (!Files.Folder) {
 			if (strstr(DecodeUnicodeConsole(Files.Name),".m3u")!=NULL) {
-				error = GSM_DeleteFile(s,Files.ID_FullName);
+				error = GSM_DeleteFile(gsm,Files.ID_FullName);
 			    	Print_Error(error);
 			}
 		}
 		Start = false;
-		error = GSM_GetFolderListing(s,&Files,Start);
+		error = GSM_GetFolderListing(gsm,&Files,Start);
 		if (error == ERR_FOLDERPART) {
 			printf("%s\n", _("Problem with deleting playlist"));
 			break;
@@ -547,7 +547,7 @@ void NokiaAddFile(int argc, char *argv[])
 	GSM_Init(true);
 
 	Found = false;
-    	if (GSM_GetUsedConnection(s) == GCT_IRDAOBEX || GSM_GetUsedConnection(s) == GCT_BLUEOBEX) {
+    	if (GSM_GetUsedConnection(gsm) == GCT_IRDAOBEX || GSM_GetUsedConnection(gsm) == GCT_BLUEOBEX) {
 		i = 0;
 		while (Folder[i].parameter[0] != 0) {
 			if (!strcmp("obex",Folder[i].model) &&
@@ -563,14 +563,14 @@ void NokiaAddFile(int argc, char *argv[])
 			GSM_Terminate();
 			exit(-1);
 		}
-	} else if (GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_FILES2)) {
+	} else if (GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_FILES2)) {
 		i = 0;
 		while (Folder[i].parameter[0] != 0) {
 			if ((Folder[i].folder[0] == 'a' || Folder[i].folder[0] == 'd') &&
 			    Folder[i].level[0] == 0x00 &&
 			    strcasecmp(argv[2],Folder[i].parameter) == 0) {
 				if (strstr(Folder[i].folder,"d:/predefjava/")!= NULL &&
-				    !GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_SERIES40_30)) {
+				    !GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_SERIES40_30)) {
 					i++;
 					continue;
 				}
@@ -584,7 +584,7 @@ void NokiaAddFile(int argc, char *argv[])
 	if (!Found) {
 		fprintf(stderr, _("Searching for phone folder: "));
 		while (1) {
-			error = GSM_GetNextFileFolder(s,&Files,Start);
+			error = GSM_GetNextFileFolder(gsm,&Files,Start);
 			if (error == ERR_EMPTY) break;
 		    	Print_Error(error);
 
@@ -594,7 +594,7 @@ void NokiaAddFile(int argc, char *argv[])
 				i 	= 0;
 				while (Folder[i].parameter[0] != 0) {
 					EncodeUnicode(buffer,Folder[i].folder,strlen(Folder[i].folder));
-					dbgprintf("comparing \"%s\" \"%s\" \"%s\"\n",GSM_GetModelInfo(s)->model,DecodeUnicodeString(Files.ID_FullName),Folder[i].level);
+					dbgprintf("comparing \"%s\" \"%s\" \"%s\"\n",GSM_GetModelInfo(gsm)->model,DecodeUnicodeString(Files.ID_FullName),Folder[i].level);
 					if (strcasecmp(argv[2],Folder[i].parameter) == 0  &&
 					    mywstrncasecmp(Files.Name,buffer,0) &&
 					    Files.Level == atoi(Folder[i].level)) {
@@ -758,14 +758,14 @@ void NokiaAddFile(int argc, char *argv[])
 			strcat(buffer,Name);
 			EncodeUnicode(File.Name,buffer,strlen(buffer));
 			CopyUnicodeString(File.ID_FullName,Files.ID_FullName);
-			error = GSM_AddFolder(s,&File);
+			error = GSM_AddFolder(gsm,&File);
 			if (Overwrite && (error == ERR_FILEALREADYEXIST)) {
 				fprintf(stderr, "%s\n", _("INFO: Application already exist. Deleting by Gammu"));
 
 				Start = true;
 				CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
 				while (1) {
-					error = GSM_GetFolderListing(s,&File2,Start);
+					error = GSM_GetFolderListing(gsm,&File2,Start);
 					if (error == ERR_EMPTY) break;
 					Print_Error(error);
 
@@ -779,7 +779,7 @@ void NokiaAddFile(int argc, char *argv[])
 				Start = true;
 				CopyUnicodeString(File.ID_FullName,File2.ID_FullName);
 				while (1) {
-					error = GSM_GetFolderListing(s,&File2,Start);
+					error = GSM_GetFolderListing(gsm,&File2,Start);
 					if (error == ERR_EMPTY) break;
 					Print_Error(error);
 
@@ -794,7 +794,7 @@ void NokiaAddFile(int argc, char *argv[])
 					    strcmp(buffer + i,".jad") == 0 ||
 					    strcmp(buffer + i,".jar") == 0) {
 						fprintf(stderr, _("  Deleting %s\n"),buffer);
-					error = GSM_DeleteFile(s,File2.ID_FullName);
+					error = GSM_DeleteFile(gsm,File2.ID_FullName);
 					Print_Error(error);
 
 						CopyUnicodeString(File2.ID_FullName,File.ID_FullName);
@@ -815,7 +815,7 @@ void NokiaAddFile(int argc, char *argv[])
 				fprintf(stderr, "%s\n", _("INFO: Application already exist. Deleting by Gammu"));
 
 				while (true) {
-					error = GSM_GetFolderListing(s,&File2,Start);
+					error = GSM_GetFolderListing(gsm,&File2,Start);
 					if (error == ERR_EMPTY) break;
 					Print_Error(error);
 
@@ -827,7 +827,7 @@ void NokiaAddFile(int argc, char *argv[])
 					     strcmp(buffer + i,".jar") == 0 ||
 					     (strncmp(buffer + i,"\177_m_",4) == 0 && OverwriteAll))) {
 						fprintf(stderr, _("  Deleting %s\n"),buffer);
-						error = GSM_DeleteFile(s,File2.ID_FullName);
+						error = GSM_DeleteFile(gsm,File2.ID_FullName);
 						Print_Error(error);
 
 						CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);

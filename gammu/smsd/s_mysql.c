@@ -131,7 +131,7 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 {
 	unsigned char buf[400],buf2[200],imei[100];
 
-	GSM_GetIMEI(s, imei);
+	GSM_GetIMEI(gsm, imei);
 	sprintf(buf,"DELETE FROM `phones` WHERE `IMEI` = '%s'", imei);
 	dbgprintf("%s\n",buf);
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
@@ -686,7 +686,7 @@ static GSM_Error SMSDMySQL_RefreshPhoneStatus(GSM_SMSDConfig *Config)
 {
 	unsigned char buffer[500],imei[100];
 
-	GSM_GetIMEI(s, imei);
+	GSM_GetIMEI(gsm, imei);
 
 	sprintf(buffer,"UPDATE `phones` SET `TimeOut`= (NOW() + INTERVAL 10 SECOND)+0");
 	sprintf(buffer+strlen(buffer)," WHERE `IMEI` = '%s'",imei);

@@ -961,7 +961,7 @@ int main(int argc, char *argv[])
 	GSM_Error error;
 	INI_Section *cfg = NULL;
 
-	s = GSM_AllocStateMachine();
+	gsm = GSM_AllocStateMachine();
 
 	GSM_InitLocales(NULL);
 
@@ -1006,9 +1006,9 @@ int main(int argc, char *argv[])
 		}
 	}
 
-	smcfg0 = GSM_GetConfig(s, 0);
+	smcfg0 = GSM_GetConfig(gsm, 0);
 
-	for (i = 0; (smcfg = GSM_GetConfig(s, i)) != NULL; i++) {
+	for (i = 0; (smcfg = GSM_GetConfig(gsm, i)) != NULL; i++) {
 		/* Wanted user specific configuration? */
 		if (only_config != -1) {
 			smcfg = smcfg0;
@@ -1032,7 +1032,7 @@ int main(int argc, char *argv[])
 				}
 			}
 		}
-		GSM_SetConfigNum(s, GSM_GetConfigNum(s) + 1);
+		GSM_SetConfigNum(gsm, GSM_GetConfigNum(gsm) + 1);
 
 		if (cfg != NULL) {
 			cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
@@ -1176,7 +1176,7 @@ int main(int argc, char *argv[])
 	/* Close debug output if opened */
 	GSM_SetDebugFileDescriptor(NULL, di);
 
-	GSM_FreeStateMachine(s);
+	GSM_FreeStateMachine(gsm);
 
 	exit(0);
 }

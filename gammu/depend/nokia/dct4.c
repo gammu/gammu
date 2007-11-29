@@ -30,20 +30,20 @@ GSM_Error CheckDCT4Only()
 
 	/* Checking if phone is DCT4 */
 #ifdef GSM_ENABLE_NOKIA3650
- 	if (strstr(N3650Phone.models, s->Phone.Data.ModelInfo->model) != NULL) found = true;
+ 	if (strstr(N3650Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
 #ifdef GSM_ENABLE_NOKIA6510
- 	if (strstr(N6510Phone.models, s->Phone.Data.ModelInfo->model) != NULL) found = true;
+ 	if (strstr(N6510Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
 #ifdef GSM_ENABLE_NOKIA3320
- 	if (strstr(N3320Phone.models, s->Phone.Data.ModelInfo->model) != NULL) found = true;
+ 	if (strstr(N3320Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
 	if (!found) return ERR_NOTSUPPORTED;
 
-	if (s->ConnectionType!=GCT_MBUS2	     && s->ConnectionType!=GCT_FBUS2      &&
-	    s->ConnectionType!=GCT_FBUS2DLR3  && s->ConnectionType!=GCT_PHONETBLUE &&
-	    s->ConnectionType!=GCT_IRDAPHONET && s->ConnectionType!=GCT_BLUEPHONET &&
-	    s->ConnectionType!=GCT_DKU5FBUS2  && s->ConnectionType!=GCT_DKU2PHONET) {
+	if (gsm->ConnectionType!=GCT_MBUS2	     && gsm->ConnectionType!=GCT_FBUS2      &&
+	    gsm->ConnectionType!=GCT_FBUS2DLR3  && gsm->ConnectionType!=GCT_PHONETBLUE &&
+	    gsm->ConnectionType!=GCT_IRDAPHONET && gsm->ConnectionType!=GCT_BLUEPHONET &&
+	    gsm->ConnectionType!=GCT_DKU5FBUS2  && gsm->ConnectionType!=GCT_DKU2PHONET) {
 		return ERR_OTHERCONNECTIONREQUIRED;
 	}
 	return ERR_NONE;
@@ -60,7 +60,7 @@ static void CheckDCT4()
 		break;
 	case ERR_OTHERCONNECTIONREQUIRED:
 		printf("%s\n", _("Can't do it with current phone protocol"));
-		GSM_TerminateConnection(s);
+		GSM_TerminateConnection(gsm);
 		exit(-1);
 	default:
 		break;
@@ -270,10 +270,10 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 
 	if (CheckDCT4Only()!=ERR_NONE) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
 	while (DCT4PhoneFeatures[i].Model[0] != 0x00) {
-		if (!strcmp(DCT4PhoneFeatures[i].Model,s->Phone.Data.Model)) {
+		if (!strcmp(DCT4PhoneFeatures[i].Model,gsm->Phone.Data.Model)) {
 			j = 0;
 			while (DCT4PhoneFeatures[i].Features[j].Name != 0x00) {
 				z = 0;
@@ -301,7 +301,7 @@ void DCT4SetPhoneMenus(int argc, char *argv[])
 	reqSet[current++] = 0x00;
 	reqSet[current++] = 0x00;
 
-	error=GSM_WaitFor (s, reqSet, current, 0x1b, 4, ID_User1);
+	error=GSM_WaitFor (gsm, reqSet, current, 0x1b, 4, ID_User1);
 	Print_Error(error);
 }
 
@@ -393,25 +393,25 @@ void DCT4SelfTests(int argc, char *argv[])
 
 	if (CheckDCT4Only()!=ERR_NONE) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
 	if (answer_yes2("Run all tests now ?")) {
-		error=GSM_WaitFor (s, RunALL, 6, 0x35, 4, ID_User1);
+		error=GSM_WaitFor (gsm, RunALL, 6, 0x35, 4, ID_User1);
 		Print_Error(error);
 	}
 
-	error=GSM_WaitFor (s, GetNames, 6, 0x35, 4, ID_User1);
+	error=GSM_WaitFor (gsm, GetNames, 6, 0x35, 4, ID_User1);
 	Print_Error(error);
 
 	for (j=0;j<DCT4Tests.Num;j++) DCT4Tests.Tests[j].Startup = false;
 
-	error=GSM_WaitFor (s, GetDoneST, 6, 0x35, 4, ID_User3);
+	error=GSM_WaitFor (gsm, GetDoneST, 6, 0x35, 4, ID_User3);
 	Print_Error(error);
 
-	error=GSM_WaitFor (s, GetDoneST2, 6, 0x35, 4, ID_User3);
+	error=GSM_WaitFor (gsm, GetDoneST2, 6, 0x35, 4, ID_User3);
 	Print_Error(error);
 
-	error=GSM_WaitFor (s, GetStatus, 6, 0x35, 4, ID_User2);
+	error=GSM_WaitFor (gsm, GetStatus, 6, 0x35, 4, ID_User2);
 	Print_Error(error);
 }
 
@@ -452,13 +452,13 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 
         CheckDCT4();
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
 	SetLevel[4] = atoi(argv[2]);
-	error=GSM_WaitFor (s, SetLevel, 6, 0x1C, 4, ID_User3);
+	error=GSM_WaitFor (gsm, SetLevel, 6, 0x1C, 4, ID_User3);
 	Print_Error(error);
 
-	error=DCT4EnableVibra(s, true);
+	error=DCT4EnableVibra(gsm, true);
 	Print_Error(error);
 
 	for (i=0;i<3;i++) {
@@ -470,7 +470,7 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 		}
 	}
 
-	error=DCT4EnableVibra(s, false);
+	error=DCT4EnableVibra(gsm, false);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -483,15 +483,15 @@ void DCT4VibraTest(int argc, char *argv[])
 
 	if (CheckDCT4Only()!=ERR_NONE) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
-	error=DCT4EnableVibra(s, true);
+	error=DCT4EnableVibra(gsm, true);
 	Print_Error(error);
 
 	printf("%s\n", _("Press any key to continue..."));
 	GetLine(stdin, ans, 99);
 
-	error=DCT4EnableVibra(s, false);
+	error=DCT4EnableVibra(gsm, false);
 	Print_Error(error);
 }
 
@@ -521,9 +521,9 @@ void DCT4ResetSecurityCode(int argc, char *argv[])
 
 	if (CheckDCT4Only()!=ERR_NONE) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
-	error=GSM_WaitFor (s, ResetCode, 27, 0x08, 4, ID_User2);
+	error=GSM_WaitFor (gsm, ResetCode, 27, 0x08, 4, ID_User2);
 	if (error == ERR_UNKNOWN) {
 		if (answer_yes2("Try brutal force ?")) {
 			for (i=10000;i<9999999;i++) {
@@ -531,7 +531,7 @@ void DCT4ResetSecurityCode(int argc, char *argv[])
 				memset(ResetCode+6,0,22);
 				sprintf(ResetCode+5,"%i",i);
 				sprintf(ResetCode+16,"12345");
-				error=GSM_WaitFor (s, ResetCode, 27, 0x08, 4, ID_User2);
+				error=GSM_WaitFor (gsm, ResetCode, 27, 0x08, 4, ID_User2);
 				if (error == ERR_NONE) break;
 			}
 		}
@@ -569,14 +569,14 @@ void DCT4GetSecurityCode(int argc, char *argv[])
 
 	if (CheckDCT4Only()!=ERR_NONE) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
 	SecLength = 0;
-	error=GSM_WaitFor (s, getlen, sizeof(getlen), 0x23, 1, ID_User1);
+	error=GSM_WaitFor (gsm, getlen, sizeof(getlen), 0x23, 1, ID_User1);
 	Print_Error(error);
 	if (SecLength != 0) {
 		readcode[17] = SecLength;
-		error=GSM_WaitFor (s, readcode, sizeof(readcode), 0x23, 5, ID_User1);
+		error=GSM_WaitFor (gsm, readcode, sizeof(readcode), 0x23, 5, ID_User1);
 		Print_Error(error);
 	}
 }
@@ -688,18 +688,18 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 
         CheckDCT4();
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
-	s->Phone.Data.VoiceRecord 	= &Location;
-	s->Phone.Data.PhoneString 	= FileName;
+	gsm->Phone.Data.VoiceRecord 	= &Location;
+	gsm->Phone.Data.PhoneString 	= FileName;
 	dbgprintf("Getting voice record name\n");
-	error=GSM_WaitFor (s, ReqNames, 14, 0x4A, 4, ID_User4);
+	error=GSM_WaitFor (gsm, ReqNames, 14, 0x4A, 4, ID_User4);
 	Print_Error(error);
 
-	s->Phone.Data.PhoneString 	= Buffer;
+	gsm->Phone.Data.PhoneString 	= Buffer;
 	ReqToken[7] 			= Location;
 	dbgprintf("Getting voice record token\n");
-	error=GSM_WaitFor (s, ReqToken, 10, 0x23, 4, ID_User4);
+	error=GSM_WaitFor (gsm, ReqToken, 10, 0x23, 4, ID_User4);
 	Print_Error(error);
 	TokenLocation 			= Buffer[0] * 256 + Buffer[1];
 	Token				= Buffer[2];
@@ -710,14 +710,14 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	chk_fwrite(&FMT_Header,	1, sizeof(FMT_Header),	WAVFile);
 	chk_fwrite(&DATA_Header,	1, sizeof(DATA_Header),	WAVFile);
 
-	s->Phone.Data.VoiceRecord 	= &size;
-	s->Phone.Data.PhoneString 	= Buffer;
+	gsm->Phone.Data.VoiceRecord 	= &size;
+	gsm->Phone.Data.PhoneString 	= Buffer;
 	ReqGet[7]			= Location;
 	fprintf(stderr,"Getting voice record and saving to \"%s\": ",FileName);
 	while (1) {
 		dbgprintf("Getting next part of voice record\n");
 		fprintf(stderr,".");
-		error=GSM_WaitFor (s, ReqGet, 18, 0x23, 4, ID_User4);
+		error=GSM_WaitFor (gsm, ReqGet, 18, 0x23, 4, ID_User4);
 		if (error == ERR_NONE) {
 			wavfilesize += size;
 			chk_fwrite(Buffer,1,size,WAVFile);
@@ -734,7 +734,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		ReqGet[16] = i;
 		ReqGet[17] = Token;
 		fprintf(stderr,".");
-		error=GSM_WaitFor (s, ReqGet, 18, 0x23, 4, ID_User4);
+		error=GSM_WaitFor (gsm, ReqGet, 18, 0x23, 4, ID_User4);
 		if (error == ERR_NONE) {
 			wavfilesize += size;
 			chk_fwrite(Buffer,1,size,WAVFile);
@@ -748,7 +748,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		ReqGet[11] = CurrentLocation / 256;
 		ReqGet[12] = CurrentLocation % 256;
 		fprintf(stderr,".");
-		error=GSM_WaitFor (s, ReqGet, 18, 0x23, 4, ID_User4);
+		error=GSM_WaitFor (gsm, ReqGet, 18, 0x23, 4, ID_User4);
 		if (error == ERR_NONE) {
 			wavfilesize += size;
 			chk_fwrite(Buffer,1,size,WAVFile);
@@ -851,26 +851,26 @@ void DCT4Info(int argc, char *argv[])
 
         if (CheckDCT4Only()!=ERR_NONE) return;
 
-	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return;
+	if (GSM_IsPhoneFeatureAvailable(gsm->Phone.Data.ModelInfo, F_SERIES40_30)) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
-	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BLUETOOTH)) {
+	if (GSM_IsPhoneFeatureAvailable(gsm->Phone.Data.ModelInfo, F_BLUETOOTH)) {
 		printf(_("Bluetooth     : "));
 
-		error=GSM_WaitFor (s, GetBTAddress, 8, 0xD7, 4, ID_User6);
+		error=GSM_WaitFor (gsm, GetBTAddress, 8, 0xD7, 4, ID_User6);
 		Print_Error(error);
 	}
 
-	error=GSM_WaitFor (s, GetSimlock, 5, 0x53, 4, ID_User6);
+	error=GSM_WaitFor (gsm, GetSimlock, 5, 0x53, 4, ID_User6);
 	Print_Error(error);
 	GetSimlock[4] = 0x0E;
-	error=GSM_WaitFor (s, GetSimlock, 5, 0x53, 4, ID_User6);
+	error=GSM_WaitFor (gsm, GetSimlock, 5, 0x53, 4, ID_User6);
 	Print_Error(error);
 	GetSimlock[3] = 0x0C;
-	error=GSM_WaitFor (s, GetSimlock, 4, 0x53, 4, ID_User6);
+	error=GSM_WaitFor (gsm, GetSimlock, 4, 0x53, 4, ID_User6);
 	Print_Error(error);
-	error=NOKIA_GetPhoneString(s,"\x00\x03\x02\x07\x00\x08",6,0x1b,value,ID_User6,10);
+	error=NOKIA_GetPhoneString(gsm,"\x00\x03\x02\x07\x00\x08",6,0x1b,value,ID_User6,10);
 	Print_Error(error);
 	printf(_("UEM           : %s\n"),value);
 }
@@ -904,7 +904,7 @@ void DCT4GetT9(int argc, char *argv[])
 	T9File = fopen("T9", "w");
 	if (T9File == NULL) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
 	i = 0;
 	while (1) {
@@ -917,7 +917,7 @@ void DCT4GetT9(int argc, char *argv[])
 			}
 			if (T9Dictionary - i == 0) break;
 		}
-		error=GSM_WaitFor (s, req, 18, 0x23, 4, ID_User3);
+		error=GSM_WaitFor (gsm, req, 18, 0x23, 4, ID_User3);
 		Print_Error(error);
 		if (i==0) {
 			T9Dictionary = T9FullSize;
@@ -955,16 +955,16 @@ void DCT4SetLight(int argc, char *argv[])
 		exit(-1);
 	}
 
-	for (i=0;i<s->ConfigNum;i++) {
-		free(s->Config[i].StartInfo);
-		s->Config[i].StartInfo = strdup("false");
+	for (i=0;i<gsm->ConfigNum;i++) {
+		free(gsm->Config[i].StartInfo);
+		gsm->Config[i].StartInfo = strdup("false");
 	}
 
 	GSM_Init(true);
 
         CheckDCT4();
 
-	error=N6510_SetLight(s, type, enable);
+	error=N6510_SetLight(gsm, type, enable);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -981,19 +981,19 @@ void DCT4DisplayTest(int argc, char *argv[])
 
 	if (CheckDCT4Only()!=ERR_NONE) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
-	DCT4_SetPhoneMode(s, DCT4_MODE_TEST);
+	DCT4_SetPhoneMode(gsm, DCT4_MODE_TEST);
 
-	s->Protocol.Functions->WriteMessage(s, req0, 6, 0x40);
+	gsm->Protocol.Functions->WriteMessage(gsm, req0, 6, 0x40);
 
 	req[8] = atoi(argv[2]);
-	s->Protocol.Functions->WriteMessage(s, req, 10, 0x40);
+	gsm->Protocol.Functions->WriteMessage(gsm, req, 10, 0x40);
 
 	printf("%s\n", _("Press any key to continue..."));
 	GetLine(stdin, ans, 99);
 
-	DCT4_SetPhoneMode(s, DCT4_MODE_NORMAL);
+	DCT4_SetPhoneMode(gsm, DCT4_MODE_NORMAL);
 }
 
 int ADC;
@@ -1054,16 +1054,16 @@ void DCT4GetADC(int argc, char *argv[])
 
 	if (CheckDCT4Only()!=ERR_NONE) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
 	while (1) {
 		printf(" %30s ",DCT4ADC[i].name);
 		GetRaw[4] = i;
-		error=GSM_WaitFor (s, GetRaw, 6, 0x17, 4, ID_User3);
+		error=GSM_WaitFor (gsm, GetRaw, 6, 0x17, 4, ID_User3);
 		Print_Error(error);
 		GetUnit[4] 	= i;
 		ADC		= DCT4ADC[i].x;
-		error=GSM_WaitFor (s, GetUnit, 6, 0x17, 4, ID_User3);
+		error=GSM_WaitFor (gsm, GetUnit, 6, 0x17, 4, ID_User3);
 		Print_Error(error);
 		printf("%s\n",DCT4ADC[i].unit);
 		i++;
@@ -1137,17 +1137,17 @@ void DCT4TuneRadio(int argc, char *argv[])
 
         CheckDCT4();
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
 	FMStat.Location = 1;
-	error = GSM_GetFMStation(s,&FMStat);
+	error = GSM_GetFMStation(gsm,&FMStat);
 	if (error != ERR_NONE && error != ERR_EMPTY) {
 		printf("%s\n", _("Phone seems not to support radio"));
 		GSM_Terminate();
 		exit(-1);
 	}
 
-	error=GSM_WaitFor (s, Enable, 6, 0x3E, 4, ID_User3);
+	error=GSM_WaitFor (gsm, Enable, 6, 0x3E, 4, ID_User3);
 	if (error == ERR_PERMISSION) {
 		printf("%s\n", _("Please connect headset. Required as antenna"));
 		GSM_Terminate();
@@ -1160,10 +1160,10 @@ void DCT4TuneRadio(int argc, char *argv[])
 		fprintf(stderr,"%cSearching: %i percent",13,(i-88)*100/(108-88));
 		Freq = i;
 		N6510_EncodeFMFrequency(Freq, SetFreq+8);
-		error=GSM_WaitFor (s, SetFreq, 10, 0x3E, 4, ID_User3);
+		error=GSM_WaitFor (gsm, SetFreq, 10, 0x3E, 4, ID_User3);
 		Print_Error(error);
 
-		error=GSM_WaitFor (s, Find2, 10, 0x3E, 4, ID_User3);
+		error=GSM_WaitFor (gsm, Find2, 10, 0x3E, 4, ID_User3);
 		Print_Error(error);
 		found = false;
 		for (j=0;j<num;j++) {
@@ -1210,19 +1210,19 @@ void DCT4TuneRadio(int argc, char *argv[])
 
 	if (answer_yes2("Do you want to save found stations")) {
 		fprintf(stderr,"Deleting old FM stations: ");
-		error=GSM_ClearFMStations(s);
+		error=GSM_ClearFMStations(gsm);
 		Print_Error(error);
 		fprintf(stderr,"Done\n");
 		for (i=0;i<num;i++) {
 			FMStation[i].Location = i+1;
-			error=GSM_SetFMStation(s,&FMStation[i]);
+			error=GSM_SetFMStation(gsm,&FMStation[i]);
 			Print_Error(error);
 			fprintf(stderr,"%cWriting: %i percent",13,(i+1)*100/num);
 		}
 		fprintf(stderr,"\n");
 	}
 
-	error=GSM_WaitFor (s, Disable, 6, 0x3E, 4, ID_User3);
+	error=GSM_WaitFor (gsm, Disable, 6, 0x3E, 4, ID_User3);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -1246,9 +1246,9 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 
         CheckDCT4();
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
-	error=GSM_GetRingtonesInfo(s,&Info);
+	error=GSM_GetRingtonesInfo(gsm,&Info);
 	Print_Error(error);
 
 	if (atoi(argv[2]) > Info.Number-1) {
@@ -1259,7 +1259,7 @@ void DCT4PlaySavedRingtone(int argc, char *argv[])
 	req[5] = Info.Ringtone[atoi(argv[2])-1].ID % 256;
 	req[6] = Info.Ringtone[atoi(argv[2])-1].Group;
 
-	error=GSM_WaitFor (s, req, 18, 0x1F, 4, ID_User3);
+	error=GSM_WaitFor (gsm, req, 18, 0x1F, 4, ID_User3);
 	Print_Error(error);
 
 //	for (i=0;i<Info.Number;i++) printf(_("%i. \")%s\"\n",i,DecodeUnicodeConsole(Info.Ringtone[i].Name));
@@ -1290,22 +1290,22 @@ void DCT4MakeCameraShoot(int argc, char *argv[])
 
         CheckDCT4();
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
-	error=GSM_WaitFor (s, SetCamera, 6, 0x61, 4, ID_User3);
+	error=GSM_WaitFor (gsm, SetCamera, 6, 0x61, 4, ID_User3);
 	Print_Error(error);
-	error=GSM_WaitFor (s, CameraON, 10, 0x61, 4, ID_User3);
+	error=GSM_WaitFor (gsm, CameraON, 10, 0x61, 4, ID_User3);
 	Print_Error(error);
-	error=GSM_WaitFor (s, CameraON2, 6, 0x61, 4, ID_User3);
+	error=GSM_WaitFor (gsm, CameraON2, 6, 0x61, 4, ID_User3);
 	Print_Error(error);
 	EncodeUnicode(MakeShot+24,"GammuShot",9);
 	MakeShot[15] = 9+9*2;
 	MakeShot[23] = 9*2;
-	error=GSM_WaitFor (s, MakeShot, 24+MakeShot[23], 0x61, 4, ID_User3);
+	error=GSM_WaitFor (gsm, MakeShot, 24+MakeShot[23], 0x61, 4, ID_User3);
 	Print_Error(error);
-	error=GSM_WaitFor (s, SetCamera, 6, 0x61, 4, ID_User3);
+	error=GSM_WaitFor (gsm, SetCamera, 6, 0x61, 4, ID_User3);
 	Print_Error(error);
-	error=GSM_WaitFor (s, CameraOFF, 6, 0x61, 4, ID_User3);
+	error=GSM_WaitFor (gsm, CameraOFF, 6, 0x61, 4, ID_User3);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -1329,12 +1329,12 @@ void DCT4GetScreenDump(int argc, char *argv[])
 
         CheckDCT4();
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
-	error=GSM_WaitFor (s, req, 6, 0x0E, 4, ID_User3);
+	error=GSM_WaitFor (gsm, req, 6, 0x0E, 4, ID_User3);
 	Print_Error(error);
 	len = 2000;
-	while (len >= 200) GSM_ReadDevice(s,true);
+	while (len >= 200) GSM_ReadDevice(gsm,true);
 
 	GSM_Terminate();
 }
@@ -1423,16 +1423,16 @@ void DCT4GetPBKFeatures(int argc, char *argv[])
 		exit (-1);
 	}
 
-	req[4] = NOKIA_GetMemoryType(s, MemoryType,N71_65_MEMORY_TYPES);
+	req[4] = NOKIA_GetMemoryType(gsm, MemoryType,N71_65_MEMORY_TYPES);
 	if (req[4]==0xff) exit(-1);
 
 	GSM_Init(true);
 
         CheckDCT4();
 
-	s->User.UserReplyFunctions=UserReplyFunctions4;
+	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
-	error=GSM_WaitFor (s, req, 6, 0x03, 4, ID_User3);
+	error=GSM_WaitFor (gsm, req, 6, 0x03, 4, ID_User3);
 	Print_Error(error);
 
 	GSM_Terminate();

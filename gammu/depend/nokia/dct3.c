@@ -19,24 +19,24 @@ extern GSM_Reply_Function UserReplyFunctions3[];
 
 GSM_Error CheckDCT3Only()
 {
-	bool found = false;
+bool found = false;
 
-	/* Checking if phone is DCT3 */
+/* Checking if phone is DCT3 */
 #ifdef GSM_ENABLE_NOKIA6110
-	if (strstr(N6110Phone.models, s->Phone.Data.ModelInfo->model) != NULL) found = true;
+if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
 #ifdef GSM_ENABLE_NOKIA7110
-	if (strstr(N7110Phone.models, s->Phone.Data.ModelInfo->model) != NULL) found = true;
+	if (strstr(N7110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
 #ifdef GSM_ENABLE_NOKIA9210
-	if (strstr(N9210Phone.models, s->Phone.Data.ModelInfo->model) != NULL) found = true;
+	if (strstr(N9210Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found = true;
 #endif
 	if (!found) return ERR_NOTSUPPORTED;
 
-	if (s->ConnectionType!=GCT_MBUS2	    && s->ConnectionType!=GCT_FBUS2      &&
-	    s->ConnectionType!=GCT_FBUS2DLR3 && s->ConnectionType!=GCT_FBUS2BLUE  &&
-	    s->ConnectionType!=GCT_FBUS2IRDA && s->ConnectionType!=GCT_IRDAPHONET &&
-	    s->ConnectionType!=GCT_BLUEFBUS2) {
+	if (gsm->ConnectionType!=GCT_MBUS2	    && gsm->ConnectionType!=GCT_FBUS2      &&
+	    gsm->ConnectionType!=GCT_FBUS2DLR3 && gsm->ConnectionType!=GCT_FBUS2BLUE  &&
+	    gsm->ConnectionType!=GCT_FBUS2IRDA && gsm->ConnectionType!=GCT_IRDAPHONET &&
+	    gsm->ConnectionType!=GCT_BLUEFBUS2) {
 		return ERR_OTHERCONNECTIONREQUIRED;
 	}
 	return ERR_NONE;
@@ -53,7 +53,7 @@ static void CheckDCT3()
 		break;
 	case ERR_OTHERCONNECTIONREQUIRED:
 		printf("Can't do it with current phone protocol\n");
-		GSM_TerminateConnection(s);
+		GSM_TerminateConnection(gsm);
 		exit(-1);
 	default:
 		break;
@@ -103,11 +103,11 @@ void DCT3GetT9(int argc, char *argv[])
 	DCT3T9File = fopen("T9", "w");
 	if (DCT3T9File == NULL) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions3;
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
 	for (i=0;i<5;i++) {
 		req[5] = i;
-		error=GSM_WaitFor (s, req, 6, 0x40, 4, ID_User3);
+		error=GSM_WaitFor (gsm, req, 6, 0x40, 4, ID_User3);
 		Print_Error(error);
 	}
 
@@ -123,19 +123,19 @@ void DCT3VibraTest(int argc, char *argv[])
 
 	if (CheckDCT3Only()!=ERR_NONE) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions3;
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
-	error=DCT3_EnableSecurity (s, 0x01);
+	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);
 
-	error=GSM_WaitFor (s, SetLevel, 4, 0x40, 4, ID_User3);
+	error=GSM_WaitFor (gsm, SetLevel, 4, 0x40, 4, ID_User3);
 	Print_Error(error);
 
 	printf("Press any key to continue...\n");
 	GetLine(stdin, ans, 99);
 
 	SetLevel[3] = 0x00;
-	error=GSM_WaitFor (s, SetLevel, 4, 0x40, 4, ID_User3);
+	error=GSM_WaitFor (gsm, SetLevel, 4, 0x40, 4, ID_User3);
 }
 
 static GSM_Error DCT3_ReplyPhoneTests(GSM_Protocol_Message msg, GSM_StateMachine *sm UNUSED)
@@ -190,12 +190,12 @@ void DCT3SelfTests(int argc, char *argv[])
 
 	if (CheckDCT3Only()!=ERR_NONE) return;
 
-	error=DCT3_EnableSecurity (s, 0x01);
+	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);
 
 	if (answer_yes3("Run all tests now ?")) {
 		/* make almost all tests */
-		error = s->Protocol.Functions->WriteMessage(s, buffer3, 8, 0x40);
+		error = gsm->Protocol.Functions->WriteMessage(gsm, buffer3, 8, 0x40);
 		Print_Error(error);
 
 		GSM_Terminate();
@@ -209,10 +209,10 @@ void DCT3SelfTests(int argc, char *argv[])
 		my_sleep(400);
 	}
 
-	s->User.UserReplyFunctions=UserReplyFunctions3;
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
 	for (i=0;i<10;i++) {
-		error=GSM_WaitFor (s, buffer, 3, 0x40, 4, ID_User1);
+		error=GSM_WaitFor (gsm, buffer, 3, 0x40, 4, ID_User1);
 		if (error == ERR_NONE) break;
 	}
 }
@@ -265,12 +265,12 @@ void DCT3GetADC(int argc, char *argv[])
 
 	if (CheckDCT3Only()!=ERR_NONE) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions3;
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
-	error=DCT3_EnableSecurity (s, 0x02);
+	error=DCT3_EnableSecurity (gsm, 0x02);
 	Print_Error(error);
 
-	error=GSM_WaitFor (s, GetRaw, 3, 0x40, 6, ID_User3);
+	error=GSM_WaitFor (gsm, GetRaw, 3, 0x40, 6, ID_User3);
 	Print_Error(error);
 
 	while (1) {
@@ -284,7 +284,7 @@ void DCT3GetADC(int argc, char *argv[])
 		if (DCT3ADC[i].pos2 != -1) {
 			printf("unit result ");
 			GetUnit[3] = DCT3ADC[i].pos2;
-			error=GSM_WaitFor (s, GetUnit, 6, 0x40, 4, ID_User3);
+			error=GSM_WaitFor (gsm, GetUnit, 6, 0x40, 4, ID_User3);
 			Print_Error(error);
 			printf("%10i ",DCT3ADCInt*DCT3ADC[i].x);
 			printf("%s\n",DCT3ADC[i].unit);
@@ -293,7 +293,7 @@ void DCT3GetADC(int argc, char *argv[])
 		if (DCT3ADC[i].name[0] == 0x00) break;
 	}
 
-	error=DCT3_EnableSecurity (s, 0x01);
+	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);
 }
 
@@ -311,19 +311,19 @@ void DCT3DisplayTest(int argc, char *argv[])
 		printf("Give 1 or 2 as test number\n");
 	}
 
-	s->User.UserReplyFunctions=UserReplyFunctions3;
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
 	req[4] = atoi(argv[2]);
-	s->Protocol.Functions->WriteMessage(s, req, 5, 0x40);
+	gsm->Protocol.Functions->WriteMessage(gsm, req, 5, 0x40);
 
 	printf("Press any key to continue...\n");
 	GetLine(stdin, ans, 99);
 
 	req[3] = 0x02;
 	req[4] = 0x03;
-	s->Protocol.Functions->WriteMessage(s, req, 5, 0x40);
+	gsm->Protocol.Functions->WriteMessage(gsm, req, 5, 0x40);
 
-	error=DCT3_EnableSecurity (s, 0x03);
+	error=DCT3_EnableSecurity (gsm, 0x03);
 	Print_Error(error);
 }
 
@@ -336,7 +336,7 @@ void DCT3netmonitor(int argc, char *argv[])
 
         CheckDCT3();
 
-	error=DCT3_Netmonitor(s, atoi(argv[2]), value);
+	error=DCT3_Netmonitor(gsm, atoi(argv[2]), value);
 	Print_Error(error);
 
 	printf("%s\n",value);
@@ -448,23 +448,23 @@ void DCT3Info(int argc, char *argv[])
 
         if (CheckDCT3Only()!=ERR_NONE) return;
 
-	s->User.UserReplyFunctions=UserReplyFunctions3;
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
-	error=DCT3_EnableSecurity (s, 0x01);
+	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);
 
-	error=GSM_WaitFor (s, req, 4, 0x40, 4, ID_User3);
+	error=GSM_WaitFor (gsm, req, 4, 0x40, 4, ID_User3);
 	Print_Error(error);
 
 	req2[3] = MSID1;
 	req2[4] = req2[2] + req2[3];
- 	error=GSM_WaitFor (s, req2, 5, 0x40, 4, ID_User8);
+ 	error=GSM_WaitFor (gsm, req2, 5, 0x40, 4, ID_User8);
 	Print_Error(error);
 
-	error=GSM_WaitFor (s, req3, 4, 0x40, 4, ID_User9);
+	error=GSM_WaitFor (gsm, req3, 4, 0x40, 4, ID_User9);
 	Print_Error(error);
 
-	error=GSM_WaitFor (s, req4, 4, 0x40, 4, ID_User10);
+	error=GSM_WaitFor (gsm, req4, 4, 0x40, 4, ID_User10);
 	Print_Error(error);
 }
 
@@ -483,12 +483,12 @@ void DCT3ResetTest36(int argc, char *argv[])
 
         CheckDCT3();
 
-	error=DCT3_EnableSecurity (s, 0x01);
+	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);
 
-	s->User.UserReplyFunctions=UserReplyFunctions3;
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
-	error=GSM_WaitFor (s, req, 5, 0x40, 4, ID_User2);
+	error=GSM_WaitFor (gsm, req, 5, 0x40, 4, ID_User2);
 	Print_Error(error);
 
 #ifdef GSM_ENABLE_BEEP
@@ -543,36 +543,36 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 
 	if (CheckDCT3Only()!=ERR_NONE) return;
 
-	error=DCT3_EnableSecurity (s, 0x01);
+	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);
 
-	s->User.UserReplyFunctions=UserReplyFunctions3;
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
-	error=GSM_WaitFor (s, reqGet, 3, 0x40, 4, ID_User4);
+	error=GSM_WaitFor (gsm, reqGet, 3, 0x40, 4, ID_User4);
 	Print_Error(error);
 
 	printf("ALS : enabling menu\n");
 	PPS[10] = '1';
 
-	if (!strcmp(s->Phone.Data.ModelInfo->model,"3310") && s->Phone.Data.VerNum>5.87) {
+	if (!strcmp(gsm->Phone.Data.ModelInfo->model,"3310") && gsm->Phone.Data.VerNum>5.87) {
 		printf("3310: enabling control of SMS charsets\n");
 		PPS[11] = '0';//0 = ON, 1 = OFF
 	}
-	if (!strcmp(s->Phone.Data.ModelInfo->model,"6150")) {
+	if (!strcmp(gsm->Phone.Data.ModelInfo->model,"6150")) {
 		printf("6150: enabling WellMate menu\n");
 		PPS[18] = '1';
 	}
 	/* FIXME */
-	if (!strcmp(s->Phone.Data.ModelInfo->model,"3210")) {
+	if (!strcmp(gsm->Phone.Data.ModelInfo->model,"3210")) {
 		printf("3210: enabling vibra menu\n");
 		PPS[24] = '1';
 	}
-	if (!strcmp(s->Phone.Data.ModelInfo->model,"3310") && s->Phone.Data.VerNum>5.13) {
+	if (!strcmp(gsm->Phone.Data.ModelInfo->model,"3310") && gsm->Phone.Data.VerNum>5.13) {
 		printf("3310: enabling 3315 features\n");
 		PPS[25] = '1';
 	}
 	/* FIXME */
-	if (!strcmp(s->Phone.Data.ModelInfo->model,"3210") && s->Phone.Data.VerNum>=5.31) {
+	if (!strcmp(gsm->Phone.Data.ModelInfo->model,"3210") && gsm->Phone.Data.VerNum>=5.31) {
 		printf("3210: enabling React and Logic game\n");
 		PPS[26] = '1';
 	}
@@ -597,11 +597,11 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 //	reqSet[5]=0x00;
 //	reqSet[6]=0xe0;
 
-	error=GSM_WaitFor (s, reqSet, 7, 0x40, 4, ID_User4);
+	error=GSM_WaitFor (gsm, reqSet, 7, 0x40, 4, ID_User4);
 	Print_Error(error);
 
 	printf("Enabling netmonitor\n");
-	error=DCT3_Netmonitor(s, 243, value);
+	error=DCT3_Netmonitor(gsm, 243, value);
 	Print_Error(error);
 }
 
@@ -631,24 +631,24 @@ void DCT3GetSecurityCode(int argc, char *argv[])
 
 	if (CheckDCT3Only()!=ERR_NONE) return;
 
-	error=DCT3_EnableSecurity (s, 0x01);
+	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);
 
-	s->User.UserReplyFunctions=UserReplyFunctions3;
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
 #ifdef GSM_ENABLE_NOKIA6110
-	if (strstr(N6110Phone.models, s->Phone.Data.ModelInfo->model) != NULL) {
-		error=GSM_WaitFor (s, req6110, 4, 0x40, 4, ID_User6);
+	if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) {
+		error=GSM_WaitFor (gsm, req6110, 4, 0x40, 4, ID_User6);
 	}
 #endif
 #ifdef GSM_ENABLE_NOKIA7110
-	if (strstr(N7110Phone.models, s->Phone.Data.ModelInfo->model) != NULL) {
-		error=GSM_WaitFor (s, req71_91, 5, 0x7a, 4, ID_User6);
+	if (strstr(N7110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) {
+		error=GSM_WaitFor (gsm, req71_91, 5, 0x7a, 4, ID_User6);
 	}
 #endif
 #ifdef GSM_ENABLE_NOKIA9210
-	if (strstr(N9210Phone.models, s->Phone.Data.ModelInfo->model) != NULL) {
-		error=GSM_WaitFor (s, req71_91, 5, 0x7a, 4, ID_User6);
+	if (strstr(N9210Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) {
+		error=GSM_WaitFor (gsm, req71_91, 5, 0x7a, 4, ID_User6);
 	}
 #endif
 	Print_Error(error);
@@ -676,15 +676,15 @@ void DCT3GetOperatorName(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (strstr(N6110Phone.models, s->Phone.Data.ModelInfo->model) == NULL) Print_Error(ERR_NOTSUPPORTED);
+	if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) == NULL) Print_Error(ERR_NOTSUPPORTED);
 	CheckDCT3();
 
-	error=DCT3_EnableSecurity (s, 0x01);
+	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);
 
-	s->User.UserReplyFunctions=UserReplyFunctions3;
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
-	error=GSM_WaitFor (s, req, 4, 0x40, 4, ID_User5);
+	error=GSM_WaitFor (gsm, req, 4, 0x40, 4, ID_User5);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -706,13 +706,13 @@ void DCT3SetOperatorName(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (strstr(N6110Phone.models, s->Phone.Data.ModelInfo->model) == NULL) Print_Error(ERR_NOTSUPPORTED);
+	if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) == NULL) Print_Error(ERR_NOTSUPPORTED);
 	CheckDCT3();
 
-	error=DCT3_EnableSecurity (s, 0x01);
+	error=DCT3_EnableSecurity (gsm, 0x01);
 	Print_Error(error);
 
-	s->User.UserReplyFunctions=UserReplyFunctions3;
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
 	switch (argc) {
 	case 2:
@@ -725,7 +725,7 @@ void DCT3SetOperatorName(int argc, char *argv[])
 		i = strlen(argv[3]);
 	}
 
-	error=GSM_WaitFor (s, req, 8+i, 0x40, 4, ID_User7);
+	error=GSM_WaitFor (gsm, req, 8+i, 0x40, 4, ID_User7);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -758,12 +758,12 @@ void DCT3DisplayOutput(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (strstr(N6110Phone.models, s->Phone.Data.ModelInfo->model) == NULL) Print_Error(ERR_NOTSUPPORTED);
+	if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) == NULL) Print_Error(ERR_NOTSUPPORTED);
 	CheckDCT3();
 
-	s->User.UserReplyFunctions=UserReplyFunctions3;
+	gsm->User.UserReplyFunctions=UserReplyFunctions3;
 
-	error=GSM_WaitFor (s, req, 5, 0x0d, 4, ID_User7);
+	error=GSM_WaitFor (gsm, req, 5, 0x0d, 4, ID_User7);
 	Print_Error(error);
 
 	signal(SIGINT, interrupt);
@@ -771,12 +771,12 @@ void DCT3DisplayOutput(int argc, char *argv[])
 	printf("Entering monitor mode...\n\n");
 
 	while (!gshutdown) {
-		GSM_ReadDevice(s,true);
+		GSM_ReadDevice(gsm,true);
 		my_sleep(10);
 	}
 
 	req[4] = 0x02;
-	error=GSM_WaitFor (s, req, 5, 0x0d, 4, ID_User7);
+	error=GSM_WaitFor (gsm, req, 5, 0x0d, 4, ID_User7);
 	Print_Error(error);
 
 	GSM_Terminate();

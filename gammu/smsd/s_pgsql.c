@@ -140,7 +140,7 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 
 	PGresult *Res;
 
-	GSM_GetIMEI(s, imei);
+	GSM_GetIMEI(gsm, imei);
 
 	sprintf(buf, "DELETE FROM phones WHERE IMEI = '%s'", imei);
 	dbgprintf("%s\n", buf);
@@ -1059,7 +1059,7 @@ static GSM_Error SMSDPgSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 
 	unsigned char buffer[500], imei[100];
 
-	GSM_GetIMEI(s, imei);
+	GSM_GetIMEI(gsm, imei);
 
 	sprintf(buffer,
 		"UPDATE phones SET TimeOut= now() + INTERVAL '10 seconds'");

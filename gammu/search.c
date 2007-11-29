@@ -93,7 +93,7 @@ void SearchPhoneThread(OneDeviceInfo * Info)
 {
 	int j;
 	GSM_Error error;
-	GSM_StateMachine *ss;
+	GSM_StateMachine *search_gsm;
 	GSM_Config *cfg;
 	GSM_Config *globalcfg;
 
@@ -101,13 +101,13 @@ void SearchPhoneThread(OneDeviceInfo * Info)
 	for (j = 0; strlen(Info->Connections[j].Connection) != 0; j++) {
 
 		/* Allocate state machine */
-		ss = GSM_AllocStateMachine();
-		if (ss == NULL)
+		search_gsm = GSM_AllocStateMachine();
+		if (search_gsm == NULL)
 			return;
 
 		/* Get configuration pointers */
-		cfg = GSM_GetConfig(ss, 0);
-		globalcfg = GSM_GetConfig(s, 0);
+		cfg = GSM_GetConfig(search_gsm, 0);
+		globalcfg = GSM_GetConfig(gsm, 0);
 
 		/* We share some configuration with global one */
 		cfg->UseGlobalDebugFile = globalcfg->UseGlobalDebugFile;
@@ -128,23 +128,23 @@ void SearchPhoneThread(OneDeviceInfo * Info)
 		cfg->StartInfo = strdup("no");
 
 		/* We have only one configured connection */
-		GSM_SetConfigNum(ss, 1);
+		GSM_SetConfigNum(search_gsm, 1);
 
 		/* Let's connect */
-		error = GSM_InitConnection(ss, 1);
+		error = GSM_InitConnection(search_gsm, 1);
 
 		printf(_("Connection \"%s\" on device \"%s\"\n"),
 		       Info->Connections[j].Connection, Info->Device);
 
 		/* Did we succeed? Show info */
 		if (error == ERR_NONE) {
-			SearchPrintPhoneInfo(ss);
+			SearchPrintPhoneInfo(search_gsm);
 		} else {
 			SearchPrintf("\t%s\n", GSM_ErrorString(error));
 		}
 
 		if (error != ERR_DEVICEOPENERROR) {
-			GSM_TerminateConnection(ss);
+			GSM_TerminateConnection(search_gsm);
 			dbgprintf("Closing done\n");
 		}
 
@@ -152,7 +152,7 @@ void SearchPhoneThread(OneDeviceInfo * Info)
 			break;
 
 		/* Free allocated buffer */
-		GSM_FreeStateMachine(ss);
+		GSM_FreeStateMachine(search_gsm);
 	}
 	num--;
 }

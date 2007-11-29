@@ -230,7 +230,7 @@ void PrintCalendar(GSM_CalendarEntry * Note)
 			case CAL_CONTACTID:
 				entry.Location = Note->Entries[i].Number;
 				entry.MemoryType = MEM_ME;
-				error = GSM_GetMemory(s, &entry);
+				error = GSM_GetMemory(gsm, &entry);
 				if (error == ERR_NONE) {
 					name =
 					    GSM_PhonebookGetEntryName(&entry);
@@ -370,7 +370,7 @@ void GetDateTime(int argc UNUSED, char *argv[]UNUSED)
 
 	GSM_Init(true);
 
-	error = GSM_GetDateTime(s, &date_time);
+	error = GSM_GetDateTime(gsm, &date_time);
 	switch (error) {
 		case ERR_EMPTY:
 			printf("%s\n", _("Date and time not set in phone"));
@@ -383,7 +383,7 @@ void GetDateTime(int argc UNUSED, char *argv[]UNUSED)
 			Print_Error(error);
 	}
 
-	error = GSM_GetLocale(s, &locale);
+	error = GSM_GetLocale(gsm, &locale);
 	switch (error) {
 		case ERR_NOTSUPPORTED:
 		case ERR_NOTIMPLEMENTED:
@@ -449,7 +449,7 @@ void SetDateTime(int argc, char *argv[])
 	} else {
 		/* update only parts the user specified,
 		   leave the rest in the phone as is */
-		error = GSM_GetDateTime(s, &date_time);
+		error = GSM_GetDateTime(gsm, &date_time);
 		Print_Error(error);
 
 		if (error == ERR_NONE) {
@@ -484,7 +484,7 @@ void SetDateTime(int argc, char *argv[])
 		}
 	}
 	if (error == ERR_NONE) {
-		error = GSM_SetDateTime(s, &date_time);
+		error = GSM_SetDateTime(gsm, &date_time);
 	}
 	Print_Error(error);
 
@@ -503,7 +503,7 @@ void GetAlarm(int argc, char *argv[])
 	} else {
 		Alarm.Location = atoi(argv[2]);
 	}
-	error = GSM_GetAlarm(s, &Alarm);
+	error = GSM_GetAlarm(gsm, &Alarm);
 	switch (error) {
 		case ERR_EMPTY:
 			printf(_("Alarm (%i) not set in phone\n"),
@@ -547,7 +547,7 @@ void SetAlarm(int argc UNUSED, char *argv[])
 
 	GSM_Init(true);
 
-	error = GSM_SetAlarm(s, &Alarm);
+	error = GSM_SetAlarm(gsm, &Alarm);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -565,7 +565,7 @@ void GetCalendar(int argc UNUSED, char *argv[])
 
 	for (i = start; i <= stop; i++) {
 		Note.Location = i;
-		error = GSM_GetCalendar(s, &Note);
+		error = GSM_GetCalendar(gsm, &Note);
 		if (error == ERR_EMPTY)
 			continue;
 		Print_Error(error);
@@ -588,7 +588,7 @@ void DeleteCalendar(int argc, char *argv[])
 
 	for (i = start; i <= stop; i++) {
 		Note.Location = i;
-		error = GSM_DeleteCalendar(s, &Note);
+		error = GSM_DeleteCalendar(gsm, &Note);
 		Print_Error(error);
 	}
 
@@ -607,7 +607,7 @@ void GetAllCalendar(int argc UNUSED, char *argv[]UNUSED)
 	GSM_Init(true);
 
 	while (!gshutdown) {
-		error = GSM_GetNextCalendar(s, &Note, refresh);
+		error = GSM_GetNextCalendar(gsm, &Note, refresh);
 		if (error == ERR_EMPTY)
 			break;
 		Print_Error(error);
@@ -626,13 +626,13 @@ void GetCalendarSettings(int argc UNUSED, char *argv[]UNUSED)
 
 	GSM_Init(true);
 
-	error = GSM_GetCalendarSettings(s, &settings);
+	error = GSM_GetCalendarSettings(gsm, &settings);
 	Print_Error(error);
 
 	if (settings.AutoDelete == 0) {
 		printf(_("Auto deleting disabled"));
 	} else {
-		printf(_("Auto deleting notes after %i day(s)"),
+		printf(_("Auto deleting notes after %i day(gsm)"),
 		       settings.AutoDelete);
 	}
 	printf("\n");
@@ -656,7 +656,7 @@ void DeleteToDo(int argc, char *argv[])
 	for (i = start; i <= stop; i++) {
 		ToDo.Location = i;
 		printf(LISTFORMAT "%i\n", _("Location"), i);
-		error = GSM_DeleteToDo(s, &ToDo);
+		error = GSM_DeleteToDo(gsm, &ToDo);
 		if (error != ERR_EMPTY)
 			Print_Error(error);
 
@@ -831,7 +831,7 @@ void PrintToDo(GSM_ToDoEntry * ToDo)
 			case TODO_CATEGORY:
 				Category.Location = ToDo->Entries[j].Number;
 				Category.Type = Category_ToDo;
-				error = GSM_GetCategory(s, &Category);
+				error = GSM_GetCategory(gsm, &Category);
 				if (error == ERR_NONE) {
 					printf(LISTFORMAT "\"%s\" (%i)\n",
 					       _("Category"),
@@ -846,7 +846,7 @@ void PrintToDo(GSM_ToDoEntry * ToDo)
 			case TODO_CONTACTID:
 				entry.Location = ToDo->Entries[j].Number;
 				entry.MemoryType = MEM_ME;
-				error = GSM_GetMemory(s, &entry);
+				error = GSM_GetMemory(gsm, &entry);
 				if (error == ERR_NONE) {
 					name =
 					    GSM_PhonebookGetEntryName(&entry);
@@ -900,7 +900,7 @@ void ListToDoCategoryEntries(int Category)
 	int j;
 
 	while (!gshutdown) {
-		error = GSM_GetNextToDo(s, &Entry, start);
+		error = GSM_GetNextToDo(gsm, &Entry, start);
 		if (error == ERR_EMPTY)
 			break;
 		Print_Error(error);
@@ -955,10 +955,10 @@ void ListToDoCategory(int argc UNUSED, char *argv[])
 		Category.Type = Category_ToDo;
 		Status.Type = Category_ToDo;
 
-		if (GSM_GetCategoryStatus(s, &Status) == ERR_NONE) {
+		if (GSM_GetCategoryStatus(gsm, &Status) == ERR_NONE) {
 			for (count = 0, j = 1; count < Status.Used; j++) {
 				Category.Location = j;
-				error = GSM_GetCategory(s, &Category);
+				error = GSM_GetCategory(gsm, &Category);
 
 				if (error != ERR_EMPTY) {
 					count++;
@@ -986,7 +986,7 @@ void GetToDo(int argc, char *argv[])
 
 	for (i = start; i <= stop; i++) {
 		ToDo.Location = i;
-		error = GSM_GetToDo(s, &ToDo);
+		error = GSM_GetToDo(gsm, &ToDo);
 		if (error == ERR_EMPTY)
 			continue;
 		Print_Error(error);
@@ -1008,7 +1008,7 @@ void GetAllToDo(int argc UNUSED, char *argv[]UNUSED)
 	GSM_Init(true);
 
 	while (!gshutdown) {
-		error = GSM_GetNextToDo(s, &ToDo, start);
+		error = GSM_GetNextToDo(gsm, &ToDo, start);
 		if (error == ERR_EMPTY)
 			break;
 		Print_Error(error);
@@ -1031,7 +1031,7 @@ void GetAllNotes(int argc UNUSED, char *argv[]UNUSED)
 	GSM_Init(true);
 
 	while (!gshutdown) {
-		error = GSM_GetNextNote(s, &Note, start);
+		error = GSM_GetNextNote(gsm, &Note, start);
 		if (error == ERR_EMPTY)
 			break;
 		Print_Error(error);
