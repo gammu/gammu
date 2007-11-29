@@ -22,7 +22,7 @@ extern GSM_Reply_Function UserReplyFunctionsAtS[];
 bool 	new_variable;
 GSM_Error CheckSiemens()
 {
-	if (s->Phone.Data.Priv.ATGEN.Manufacturer != AT_Siemens) return ERR_NOTSUPPORTED;
+	if (gsm->Phone.Data.Priv.ATGEN.Manufacturer != AT_Siemens) return ERR_NOTSUPPORTED;
 	return ERR_NONE;
 }
 
@@ -294,18 +294,18 @@ void ATSIEMENSActivateNetmon(int argc, char *argv[])
 
 	GSM_Init(true);
 	if (CheckSiemens()==ERR_NOTSUPPORTED) Print_Error(ERR_NOTSUPPORTED);
-	s->User.UserReplyFunctions=UserReplyFunctionsAtS;
+	gsm->User.UserReplyFunctions=UserReplyFunctionsAtS;
 
 	printf ("Activate NetMonitor...\n");
 	netmon_type = atoi(argv[2]);
 
 	if ((netmon_type==1) || (netmon_type==2)) {
-	    error   = ATGEN_GetSIMIMSI (s,imsi);
+	    error   = ATGEN_GetSIMIMSI (gsm,imsi);
 	    Print_Error(error);
 	    siemens_code(imsi,NetMonCode,netmon_type);
 
 	    status.MemoryType = MEM_SM;
-	    error = ATGEN_GetMemoryStatus (s,&status);
+	    error = ATGEN_GetMemoryStatus (gsm,&status);
 	    Print_Error(error);
 
 	    pbk_maxlocation = status.MemoryUsed+status.MemoryFree;
@@ -317,7 +317,7 @@ void ATSIEMENSActivateNetmon(int argc, char *argv[])
 	    pbk.Entries[1].EntryType = PBK_Text_Name;
 	    sprintf (NetMonCode,"Net Monitor");
 	    EncodeUnicode (pbk.Entries[1].Text,NetMonCode,strlen(NetMonCode));
-	    error = ATGEN_SetMemory (s, &pbk);
+	    error = ATGEN_SetMemory (gsm, &pbk);
 	    Print_Error(error);
 	}
 	else printf ("NetMonitor type should be:\n1 - full Netmon\n2 - simple NetMon\n");
@@ -330,11 +330,11 @@ void ATSIEMENSSATNetmon(int argc, char *argv[])
 	GSM_Error error;
 	GSM_Init(true);
 	if (CheckSiemens()==ERR_NOTSUPPORTED) Print_Error(ERR_NOTSUPPORTED);
-	s->User.UserReplyFunctions=UserReplyFunctionsAtS;
+	gsm->User.UserReplyFunctions=UserReplyFunctionsAtS;
 
 	printf ("Getting Siemens Sim Aplication Toolkit NetMonitor...\n");
 
-	error=ATSIEMENS_GetSAT(s);
+	error=ATSIEMENS_GetSAT(gsm);
 	Print_Error(error);
 	GSM_Terminate();
 }
@@ -346,11 +346,11 @@ void ATSIEMENSNetmonitor(int argc, char *argv[])
 
 	GSM_Init(true);
 	if (CheckSiemens()==ERR_NOTSUPPORTED) Print_Error(ERR_NOTSUPPORTED);
-	s->User.UserReplyFunctions=UserReplyFunctionsAtS;
+	gsm->User.UserReplyFunctions=UserReplyFunctionsAtS;
 
 	printf ("Getting Siemens NetMonitor...\n");
 	test_no = atoi(argv[2]);
-	error   = ATSIEMENS_GetNetmon (s,test_no+1);
+	error   = ATSIEMENS_GetNetmon (gsm,test_no+1);
 	Print_Error(error);
 	GSM_Terminate();
 }

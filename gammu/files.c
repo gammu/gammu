@@ -33,7 +33,7 @@ GSM_Error PrintFileSystemStatus()
 	GSM_FileSystemStatus Status;
 	GSM_Error error;
 
-	error = GSM_GetFileSystemStatus(s, &Status);
+	error = GSM_GetFileSystemStatus(gsm, &Status);
 	if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
 		return error;
 	}
@@ -77,7 +77,7 @@ void GetFileSystem(int argc, char *argv[])
 	GSM_Init(true);
 
 	while (1) {
-		error = GSM_GetNextFileFolder(s, &Files, Start);
+		error = GSM_GetNextFileFolder(gsm, &Files, Start);
 		if (error == ERR_EMPTY)
 			break;
 		if (error != ERR_FOLDERPART)
@@ -85,7 +85,7 @@ void GetFileSystem(int argc, char *argv[])
 
 		if (!Files.Folder) {
 			if (GSM_IsPhoneFeatureAvailable
-			    (GSM_GetModelInfo(s), F_FILES2)) {
+			    (GSM_GetModelInfo(gsm), F_FILES2)) {
 				if (DecodeUnicodeString(Files.ID_FullName)[0] ==
 				    'a') {
 					MemoryCard = true;
@@ -252,7 +252,7 @@ void SetFileAttrib(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error = GSM_SetFileAttributes(s, &Files);
+	error = GSM_SetFileAttributes(gsm, &Files);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -269,7 +269,7 @@ void GetRootFolders(int argc UNUSED, char *argv[]UNUSED)
 	File.ID_FullName[1] = 0;
 
 	while (1) {
-		if (GSM_GetNextRootFolder(s, &File) != ERR_NONE)
+		if (GSM_GetNextRootFolder(gsm, &File) != ERR_NONE)
 			break;
 		EncodeUTF8QuotedPrintable(IDUTF, File.ID_FullName);
 		printf("%s ", IDUTF);
@@ -291,7 +291,7 @@ void GetFolderListing(int argc UNUSED, char *argv[])
 	DecodeUTF8QuotedPrintable(Files.ID_FullName, argv[2], strlen(argv[2]));
 
 	while (1) {
-		error = GSM_GetFolderListing(s, &Files, Start);
+		error = GSM_GetFolderListing(gsm, &Files, Start);
 		if (error == ERR_EMPTY)
 			break;
 		if (error != ERR_FOLDERPART) {
@@ -357,7 +357,7 @@ void GetOneFile(GSM_File * File, bool newtime, int i)
 
 	error = ERR_NONE;
 	while (error == ERR_NONE) {
-		error = GSM_GetFilePart(s, File, &Handle, &Size);
+		error = GSM_GetFilePart(gsm, File, &Handle, &Size);
 		if (error == ERR_NONE || error == ERR_EMPTY
 		    || error == ERR_WRONGCRC) {
 			if (start) {
@@ -498,7 +498,7 @@ void GetFileFolder(int argc, char *argv[])
 	}
 
 	while (allnum != num) {
-		error = GSM_GetNextFileFolder(s, &File, Start);
+		error = GSM_GetNextFileFolder(gsm, &File, Start);
 		if (error == ERR_EMPTY)
 			break;
 		Print_Error(error);
@@ -574,9 +574,9 @@ void AddOneFile(GSM_File * File, char *text, bool send)
 	Pos = 0;
 	while (error == ERR_NONE) {
 		if (send) {
-			error = GSM_SendFilePart(s, File, &Pos, &Handle);
+			error = GSM_SendFilePart(gsm, File, &Pos, &Handle);
 		} else {
-			error = GSM_AddFilePart(s, File, &Pos, &Handle);
+			error = GSM_AddFilePart(gsm, File, &Pos, &Handle);
 		}
 		if (error != ERR_EMPTY && error != ERR_WRONGCRC)
 			Print_Error(error);
@@ -753,7 +753,7 @@ void AddFolder(int argc UNUSED, char *argv[])
 
 	GSM_Init(true);
 
-	error = GSM_AddFolder(s, &File);
+	error = GSM_AddFolder(gsm, &File);
 	Print_Error(error);
 	EncodeUTF8QuotedPrintable(IDUTF, File.ID_FullName);
 	printf(_("ID of new folder is \"%s\"\n"), IDUTF);
@@ -770,7 +770,7 @@ void DeleteFolder(int argc UNUSED, char *argv[]UNUSED)
 
 	DecodeUTF8QuotedPrintable(buffer, argv[2], strlen(argv[2]));
 
-	error = GSM_DeleteFolder(s, buffer);
+	error = GSM_DeleteFolder(gsm, buffer);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -786,7 +786,7 @@ void DeleteFiles(int argc, char *argv[])
 
 	for (i = 2; i < argc; i++) {
 		DecodeUTF8QuotedPrintable(buffer, argv[i], strlen(argv[i]));
-		error = GSM_DeleteFile(s, buffer);
+		error = GSM_DeleteFile(gsm, buffer);
 		Print_Error(error);
 	}
 

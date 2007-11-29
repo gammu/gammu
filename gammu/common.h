@@ -1,7 +1,7 @@
 #include <gammu.h>
 
 extern volatile bool gshutdown;
-extern GSM_StateMachine *s;
+extern GSM_StateMachine *gsm;
 extern bool phonedb;
 extern bool batch;
 extern bool batchConn;

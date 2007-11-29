@@ -465,10 +465,10 @@ void DisplayIncomingSMS()
 	GSM_Error error;
 
  	if (IncomingSMSData.SMS[0].State == 0) {
- 		error=GSM_GetSMSFolders(s, &folders);
+ 		error=GSM_GetSMSFolders(gsm, &folders);
  		Print_Error(error);
 
- 		error=GSM_GetSMS(s, &IncomingSMSData);
+ 		error=GSM_GetSMS(gsm, &IncomingSMSData);
  		switch (error) {
  		case ERR_EMPTY:
  			printf(_("Location %i\n"),IncomingSMSData.SMS[0].Location);
@@ -545,21 +545,21 @@ void GetUSSD(int argc UNUSED, char *argv[])
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
-	GSM_SetIncomingUSSDCallback(s, IncomingUSSD2);
+	GSM_SetIncomingUSSDCallback(gsm, IncomingUSSD2);
 
-	error=GSM_SetIncomingUSSD(s,true);
+	error=GSM_SetIncomingUSSD(gsm,true);
 	Print_Error(error);
 
-	error=GSM_DialService(s, argv[2]);
+	error=GSM_DialService(gsm, argv[2]);
 	/* Fallback to voice call, it can work with some phones */
 	if (error == ERR_NOTIMPLEMENTED || error == ERR_NOTSUPPORTED) {
-		error=GSM_DialVoice(s, argv[2], GSM_CALL_DefaultNumberPresence);
+		error=GSM_DialVoice(gsm, argv[2], GSM_CALL_DefaultNumberPresence);
 	}
 	Print_Error(error);
 
-	while (!gshutdown) GSM_ReadDevice(s, false);
+	while (!gshutdown) GSM_ReadDevice(gsm, false);
 
-	error=GSM_SetIncomingUSSD(s, false);
+	error=GSM_SetIncomingUSSD(gsm, false);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -583,7 +583,7 @@ void GetSMSC(int argc, char *argv[])
 	for (i=start;i<=stop;i++) {
 		smsc.Location=i;
 
-		error=GSM_GetSMSC(s, &smsc);
+		error=GSM_GetSMSC(gsm, &smsc);
 		Print_Error(error);
 
 		if (!strcmp(DecodeUnicodeConsole(smsc.Name),"")) {
@@ -655,13 +655,13 @@ void GetSMS(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GSM_GetSMSFolders(s, &folders);
+	error=GSM_GetSMSFolders(gsm, &folders);
 	Print_Error(error);
 
 	for (j = start; j <= stop; j++) {
 		sms.SMS[0].Folder	= atoi(argv[2]);
 		sms.SMS[0].Location	= j;
-		error=GSM_GetSMS(s, &sms);
+		error=GSM_GetSMS(gsm, &sms);
 		switch (error) {
 		case ERR_EMPTY:
 			printf(_("Location %i\n"),sms.SMS[0].Location);
@@ -699,7 +699,7 @@ void DeleteSMS(int argc, char *argv[])
 
 	for (i=start;i<=stop;i++) {
 		sms.Location	= i;
-		error=GSM_DeleteSMS(s, &sms);
+		error=GSM_DeleteSMS(gsm, &sms);
 		Print_Error(error);
 	}
 #ifdef GSM_ENABLE_BEEP
@@ -730,14 +730,14 @@ void GetAllSMS(int argc, char *argv[])
 #ifdef GSM_ENABLE_BACKUP
 	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
 		MemStatus.MemoryType = MEM_ME;
-		error=GSM_GetMemoryStatus(s, &MemStatus);
+		error=GSM_GetMemoryStatus(gsm, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
 			Pbk.MemoryType  = MEM_ME;
 			i		= 1;
 			used 		= 0;
 			while (used != MemStatus.MemoryUsed) {
 				Pbk.Location = i;
-				error=GSM_GetMemory(s, &Pbk);
+				error=GSM_GetMemory(gsm, &Pbk);
 				if (error != ERR_EMPTY) {
 					Print_Error(error);
 					if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
@@ -764,12 +764,12 @@ void GetAllSMS(int argc, char *argv[])
 	}
 #endif
 
-	error=GSM_GetSMSFolders(s, &folders);
+	error=GSM_GetSMSFolders(gsm, &folders);
 	Print_Error(error);
 
 	while (error == ERR_NONE) {
 		sms.SMS[0].Folder=0x00;
-		error=GSM_GetNextSMS(s, &sms, start);
+		error=GSM_GetNextSMS(gsm, &sms, start);
 		switch (error) {
 		case ERR_EMPTY:
 			break;
@@ -827,14 +827,14 @@ void GetEachSMS(int argc, char *argv[])
 #ifdef GSM_ENABLE_BACKUP
 	if (argc == 3 && strcasecmp(argv[2],"-pbk") == 0) {
 		MemStatus.MemoryType = MEM_ME;
-		error=GSM_GetMemoryStatus(s, &MemStatus);
+		error=GSM_GetMemoryStatus(gsm, &MemStatus);
 		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
 			Pbk.MemoryType  = MEM_ME;
 			i		= 1;
 			used 		= 0;
 			while (used != MemStatus.MemoryUsed) {
 				Pbk.Location = i;
-				error=GSM_GetMemory(s, &Pbk);
+				error=GSM_GetMemory(gsm, &Pbk);
 				if (error != ERR_EMPTY) {
 					Print_Error(error);
 					if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
@@ -861,7 +861,7 @@ void GetEachSMS(int argc, char *argv[])
 	}
 #endif
 
-	error=GSM_GetSMSFolders(s, &folders);
+	error=GSM_GetSMSFolders(gsm, &folders);
 	Print_Error(error);
 
 	fprintf(stderr, LISTFORMAT, _("Reading"));
@@ -871,7 +871,7 @@ void GetEachSMS(int argc, char *argv[])
 			break;
 		}
 		sms.SMS[0].Folder=0x00;
-		error=GSM_GetNextSMS(s, &sms, start);
+		error=GSM_GetNextSMS(gsm, &sms, start);
 		switch (error) {
 		case ERR_EMPTY:
 			break;
@@ -943,7 +943,7 @@ void GetSMSFolders(int argc UNUSED, char *argv[] UNUSED)
 
 	GSM_Init(true);
 
-	error=GSM_GetSMSFolders(s,&folders);
+	error=GSM_GetSMSFolders(gsm,&folders);
 	Print_Error(error);
 
 	for (i=0;i<folders.Number;i++) {
@@ -970,7 +970,7 @@ void GetMMSFolders(int argc UNUSED, char *argv[] UNUSED)
 
 	GSM_Init(true);
 
-	error=GSM_GetMMSFolders(s,&folders);
+	error=GSM_GetMMSFolders(gsm,&folders);
 	Print_Error(error);
 
 	for (i=0;i<folders.Number;i++) {
@@ -1103,13 +1103,13 @@ void GetEachMMS(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GSM_GetMMSFolders(s,&folders);
+	error=GSM_GetMMSFolders(gsm,&folders);
 	Print_Error(error);
 
 	File.Buffer = NULL;
 
 	while (1) {
-		error = GSM_GetNextMMSFileInfo(s,File.ID_FullName,&FileFolder,start);
+		error = GSM_GetNextMMSFileInfo(gsm,File.ID_FullName,&FileFolder,start);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
 		start = false;
@@ -1122,14 +1122,14 @@ void GetEachMMS(int argc, char *argv[])
 		}
 		File.Used = 0;
 		while (true) {
-			error = GSM_GetFilePart(s,&File,&Handle,&Size);
+			error = GSM_GetFilePart(gsm,&File,&Handle,&Size);
 			if (error == ERR_EMPTY) break;
 			Print_Error(error);
 			fprintf(stderr, _("%c  Reading: %i percent"),13, (int)(File.Used*100/Size));
 		}
 		fprintf(stderr, "%c",13);
 
-		if (GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(s), F_SERIES40_30)) {
+		if (GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_SERIES40_30)) {
 			memcpy(File.Buffer,File.Buffer+176,File.Used-176);
 			File.Used-=176;
 			File.Buffer = realloc(File.Buffer,File.Used);
@@ -1152,7 +1152,7 @@ void DisplaySMSFrame(GSM_SMSMessage *SMS)
 #ifdef OSCAR
         unsigned char           hexmsg[1000], hexudh[1000];
 #endif
-	error=PHONE_EncodeSMSFrame(s,SMS,buffer,PHONE_SMSSubmit,&length,true);
+	error=PHONE_EncodeSMSFrame(gsm,SMS,buffer,PHONE_SMSSubmit,&length,true);
 	if (error != ERR_NONE) {
 		printf("%s\n", _("Error"));
 		exit(-1);
@@ -2345,7 +2345,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 
 		if (strcasecmp(argv[2],"OPERATOR") == 0) {
 			if (bitmap[0].Bitmap[0].Type==GSM_OperatorLogo && strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0) {
-				error=GSM_GetNetworkInfo(s,&NetInfo);
+				error=GSM_GetNetworkInfo(gsm,&NetInfo);
 				Print_Error(error);
 				strcpy(bitmap[0].Bitmap[0].NetworkCode,NetInfo.NetworkCode);
 				if (SaveSMS) {
@@ -2436,19 +2436,19 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 		exit(0);
 	}
 	if (SaveSMS || SendSaved) {
-		error=GSM_GetSMSFolders(s, &folders);
+		error=GSM_GetSMSFolders(gsm, &folders);
 		Print_Error(error);
 
 		if (SendSaved)	{
 			if (Validity.Format != 0 && SMSCSet != 0) {
 				PhoneSMSC.Location = SMSCSet;
-				error=GSM_GetSMSC(s,&PhoneSMSC);
+				error=GSM_GetSMSC(gsm,&PhoneSMSC);
 				Print_Error(error);
 				CopyUnicodeString(SMSC,PhoneSMSC.Number);
 				SMSCSet = 0;
 			}
 
-			GSM_SetSendSMSStatusCallback(s, SendSMSStatus);
+			GSM_SetSendSMSStatusCallback(gsm, SendSMSStatus);
 
 			signal(SIGINT, interrupt);
 			fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C..."));
@@ -2473,7 +2473,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			CopyUnicodeString(sms.SMS[i].Number, Sender);
 			CopyUnicodeString(sms.SMS[i].Name, Name);
 			if (SMSCSet==0) CopyUnicodeString(sms.SMS[i].SMSC.Number, SMSC);
-			error=GSM_AddSMS(s, &sms.SMS[i]);
+			error=GSM_AddSMS(gsm, &sms.SMS[i]);
 			Print_Error(error);
 			printf(_("Saved in folder \"%s\", location %i"),
 				DecodeUnicodeConsole(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
@@ -2490,11 +2490,11 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 				printf(_("Sending sms from folder \"%s\", location %i\n"),
 					DecodeUnicodeString(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
 				SMSStatus = ERR_TIMEOUT;
-				error=GSM_SendSavedSMS(s, 0, sms.SMS[i].Location);
+				error=GSM_SendSavedSMS(gsm, 0, sms.SMS[i].Location);
 				Print_Error(error);
 				printf(_("....waiting for network answer"));
 				while (!gshutdown) {
-					GSM_ReadDevice(s,true);
+					GSM_ReadDevice(gsm,true);
 					if (SMSStatus == ERR_UNKNOWN) {
 						GSM_Terminate();
 						exit(-1);
@@ -2506,7 +2506,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 	} else {
 		if (Validity.Format != 0 && SMSCSet != 0) {
 			PhoneSMSC.Location = SMSCSet;
-			error=GSM_GetSMSC(s,&PhoneSMSC);
+			error=GSM_GetSMSC(gsm,&PhoneSMSC);
 			Print_Error(error);
 			CopyUnicodeString(SMSC,PhoneSMSC.Number);
 			SMSCSet = 0;
@@ -2515,7 +2515,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 		signal(SIGINT, interrupt);
 		fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C..."));
 
-		GSM_SetSendSMSStatusCallback(s, SendSMSStatus);
+		GSM_SetSendSMSStatusCallback(gsm, SendSMSStatus);
 
 		for (i=0;i<sms.Number;i++) {
 			printf(_("Sending SMS %i/%i"),i+1,sms.Number);
@@ -2529,12 +2529,12 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			if (SMSCSet==0) CopyUnicodeString(sms.SMS[i].SMSC.Number, SMSC);
 			if (Validity.Format != 0) memcpy(&sms.SMS[i].SMSC.Validity,&Validity,sizeof(GSM_SMSValidity));
 			SMSStatus = ERR_TIMEOUT;
-			error=GSM_SendSMS(s, &sms.SMS[i]);
+			error=GSM_SendSMS(gsm, &sms.SMS[i]);
 			Print_Error(error);
 			printf(_("....waiting for network answer"));
 			fflush(stdout);
 			while (!gshutdown) {
-				GSM_ReadDevice(s,true);
+				GSM_ReadDevice(gsm,true);
 				if (SMSStatus == ERR_UNKNOWN) {
 					GSM_Terminate();
 					exit(-1);
@@ -2572,7 +2572,7 @@ void AddSMSFolder(int argc UNUSED, char *argv[])
 	GSM_Init(true);
 
 	EncodeUnicode(buffer,argv[2],strlen(argv[2]));
-	error=GSM_AddSMSFolder(s,buffer);
+	error=GSM_AddSMSFolder(gsm,buffer);
 	Print_Error(error);
 
 	GSM_Terminate();
@@ -2588,7 +2588,7 @@ void DeleteAllSMS(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	error=GSM_GetSMSFolders(s, &folders);
+	error=GSM_GetSMSFolders(gsm, &folders);
 	Print_Error(error);
 
 	GetStartStop(&foldernum, NULL, 2, argc, argv);
@@ -2602,7 +2602,7 @@ void DeleteAllSMS(int argc, char *argv[])
 
 	while (error == ERR_NONE) {
 		sms.SMS[0].Folder=0x00;
-		error=GSM_GetNextSMS(s, &sms, start);
+		error=GSM_GetNextSMS(gsm, &sms, start);
 		switch (error) {
 		case ERR_EMPTY:
 			break;
@@ -2614,7 +2614,7 @@ void DeleteAllSMS(int argc, char *argv[])
 			Print_Error(error);
 			if (sms.SMS[0].Folder == foldernum) {
 				sms.SMS[0].Folder=0x00;
-				error=GSM_DeleteSMS(s, &sms.SMS[0]);
+				error=GSM_DeleteSMS(gsm, &sms.SMS[0]);
 				Print_Error(error);
 				printf("*");
 			}

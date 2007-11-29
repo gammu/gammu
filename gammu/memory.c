@@ -37,7 +37,7 @@ void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 		} else {
 			Category.Location = entry->Number;
 			Category.Type = Category_Phonebook;
-			error=GSM_GetCategory(s, &Category);
+			error=GSM_GetCategory(gsm, &Category);
 			if (error == ERR_NONE) {
 				printf(LISTFORMAT "\"%s\" (%i)\n", _("Category"), DecodeUnicodeConsole(Category.Name), entry->Number);
 			} else {
@@ -57,7 +57,7 @@ void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 		if (!callerinit[entry->Number-1]) {
 			caller[entry->Number-1].Type	    = GSM_CallerGroupLogo;
 			caller[entry->Number-1].Location = entry->Number;
-			error=GSM_GetBitmap(s,&caller[entry->Number-1]);
+			error=GSM_GetBitmap(gsm,&caller[entry->Number-1]);
 			Print_Error(error);
 			if (caller[entry->Number-1].DefaultName) {
 				NOKIA_GetDefaultCallerGroupName(&caller[entry->Number-1]);
@@ -68,7 +68,7 @@ void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 		return;
 	case PBK_RingtoneID	     :
 		if (!ringinit) {
-			error=GSM_GetRingtonesInfo(s,&Info);
+			error=GSM_GetRingtonesInfo(gsm,&Info);
 			if (error != ERR_NOTSUPPORTED) Print_Error(error);
 			if (error == ERR_NONE) ringinit = true;
 		}
@@ -164,7 +164,7 @@ void GetAllMemory(int argc UNUSED, char *argv[])
 	GSM_Init(true);
 
 	while (!gshutdown) {
-		error = GSM_GetNextMemory(s, &Entry, start);
+		error = GSM_GetNextMemory(gsm, &Entry, start);
 		if (error == ERR_EMPTY) break;
 		if (error != ERR_NONE && Info.Ringtone) free(Info.Ringtone);
 		Print_Error(error);
@@ -206,14 +206,14 @@ void GetMemory(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	if (strcmp(GSM_GetModelInfo(s)->model, "3310") == 0) {
-		GSM_GetFirmware(s, NULL, NULL, &version);
+	if (strcmp(GSM_GetModelInfo(gsm)->model, "3310") == 0) {
+		GSM_GetFirmware(gsm, NULL, NULL, &version);
 		if (version <= 4.06) {
 			printf_warn("%s\n", _("You will have null names in entries. Upgrade firmware in phone to higher than 4.06"));
 		}
 	}
-	if (strcmp(GSM_GetModelInfo(s)->model, "3210") == 0) {
-		GSM_GetFirmware(s, NULL, NULL, &version);
+	if (strcmp(GSM_GetModelInfo(gsm)->model, "3210") == 0) {
+		GSM_GetFirmware(gsm, NULL, NULL, &version);
 		if (version <= 6.00) {
 			printf_warn("%s\n", _("You will have null names in entries. Upgrade firmware in phone to higher than 6.00"));
 		}
@@ -224,7 +224,7 @@ void GetMemory(int argc, char *argv[])
 
 		entry.Location=j;
 
-		error=GSM_GetMemory(s, &entry);
+		error=GSM_GetMemory(gsm, &entry);
 		if (error != ERR_EMPTY) {
 			if (Info.Ringtone) free(Info.Ringtone);
 			Print_Error(error);
@@ -272,7 +272,7 @@ void DeleteMemory(int argc, char *argv[])
 
 		entry.Location = j;
 
-		error = GSM_DeleteMemory(s, &entry);
+		error = GSM_DeleteMemory(gsm, &entry);
 
 		if (error != ERR_EMPTY) Print_Error(error);
 
@@ -376,15 +376,15 @@ void SearchOneMemory(GSM_MemoryType MemoryType, char *Title, unsigned char *Text
 	Status.MemoryType = MemoryType;
 	Entry.MemoryType  = MemoryType;
 
-	if (GSM_GetMemoryStatus(s, &Status) == ERR_NONE) {
+	if (GSM_GetMemoryStatus(gsm, &Status) == ERR_NONE) {
 		fprintf(stderr,"%c%s: %i%%", 13, Title, (i+1)*100/(Status.MemoryUsed+1));
-		error = GSM_GetNextMemory(s, &Entry, true);
+		error = GSM_GetNextMemory(gsm, &Entry, true);
 		if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED) {
 			while (i < Status.MemoryUsed) {
 				if (gshutdown) return;
 				i++;
 				fprintf(stderr,"\r%s: %i%%", Title, (i+1)*100/(Status.MemoryUsed+1));
-				error = GSM_GetNextMemory(s, &Entry, start);
+				error = GSM_GetNextMemory(gsm, &Entry, start);
 				if (error == ERR_EMPTY) break;
 				Print_Error(error);
 				SearchOneEntry(&Entry, Text);
@@ -393,7 +393,7 @@ void SearchOneMemory(GSM_MemoryType MemoryType, char *Title, unsigned char *Text
 		} else {
 			while (i < Status.MemoryUsed) {
 				Entry.Location = l;
-				error = GSM_GetMemory(s, &Entry);
+				error = GSM_GetMemory(gsm, &Entry);
 				if (error != ERR_EMPTY) {
 					Print_Error(error);
 					i++;
@@ -448,7 +448,7 @@ void ListMemoryCategoryEntries(int Category)
 	Entry.MemoryType  = MEM_ME;
 
 	while (!gshutdown) {
-		error = GSM_GetNextMemory(s, &Entry, start);
+		error = GSM_GetNextMemory(gsm, &Entry, start);
 		if (error == ERR_EMPTY) break;
 		Print_Error(error);
 		for (j=0;j<Entry.EntriesNum;j++) {
@@ -500,10 +500,10 @@ void ListMemoryCategory(int argc UNUSED, char *argv[])
 		Category.Type 	= Category_Phonebook;
 		Status.Type 	= Category_Phonebook;
 
-		if (GSM_GetCategoryStatus(s, &Status) == ERR_NONE) {
+		if (GSM_GetCategoryStatus(gsm, &Status) == ERR_NONE) {
 			for (count=0,j=1;count<Status.Used;j++) {
 				Category.Location=j;
-				error=GSM_GetCategory(s, &Category);
+				error=GSM_GetCategory(gsm, &Category);
 
 				if (error != ERR_EMPTY) {
 					count++;

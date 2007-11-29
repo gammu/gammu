@@ -8,7 +8,7 @@
 #include "common.h"
 #include "formats.h"
 
-GSM_StateMachine *s;
+GSM_StateMachine *gsm;
 
 bool always_answer_yes = false;
 bool always_answer_no = false;
@@ -73,7 +73,7 @@ void PrintSecurityStatus()
 	GSM_SecurityCodeType Status;
 	GSM_Error error;
 
-	error = GSM_GetSecurityStatus(s, &Status);
+	error = GSM_GetSecurityStatus(gsm, &Status);
 	Print_Error(error);
 	switch (Status) {
 		case SEC_SecurityCode:
@@ -196,12 +196,12 @@ void Print_Error(GSM_Error error)
 		}
 
 		/* Disconnect from phone */
-		if (GSM_IsConnected(s)) {
-			GSM_TerminateConnection(s);
+		if (GSM_IsConnected(gsm)) {
+			GSM_TerminateConnection(gsm);
 		}
 
 		/* Free state machine */
-		GSM_FreeStateMachine(s);
+		GSM_FreeStateMachine(gsm);
 
 		exit(-1);
 	}
@@ -259,7 +259,7 @@ void GSM_Init(bool checkerror)
 		return;
 
 	/* Connect to phone */
-	error = GSM_InitConnection(s, 3);
+	error = GSM_InitConnection(gsm, 3);
 	if (checkerror)
 		Print_Error(error);
 
@@ -275,7 +275,7 @@ void GSM_Init(bool checkerror)
 		return;
 
 	/* Get model information */
-	error = GSM_GetModel(s, model);
+	error = GSM_GetModel(gsm, model);
 	Print_Error(error);
 
 	/* Empty string */
@@ -317,7 +317,7 @@ void GSM_Init(bool checkerror)
 	}
 
 	/* Get phone firmware version */
-	error = GSM_GetFirmware(s, current_version, NULL, NULL);
+	error = GSM_GetFirmware(gsm, current_version, NULL, NULL);
 	Print_Error(error);
 
 	/* Compare versions */
@@ -335,7 +335,7 @@ void GSM_Terminate(void)
 	GSM_Error error;
 
 	if (!batch) {
-		error = GSM_TerminateConnection(s);
+		error = GSM_TerminateConnection(gsm);
 		Print_Error(error);
 	}
 }
@@ -420,7 +420,7 @@ bool answer_yes(const char *text)
 #ifdef GSM_ENABLE_BEEP
 void GSM_PhoneBeep(void)
 {
-	error = PHONE_Beep(s);
+	error = PHONE_Beep(gsm);
 	if (error != ERR_NOTSUPPORTED && error != ERR_NOTIMPLEMENTED)
 		Print_Error(error);
 }
