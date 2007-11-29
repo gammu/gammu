@@ -268,9 +268,11 @@ int pdu_decode(const char *buffer) {
 			(((dcs & 0xf0) == 0xe0) && ((dcs & 4) != 4)) ||
 			(((dcs & 0xf0) == 0xf0) && ((dcs & 4) != 4))
 			) {
-			udhl = (udhl * 7) / 8;
-			if ((udhl * 7) % 8 > 0) {
+			if (udhl > 0) {
+				udhl = (udhl * 7) / 8;
 				udhl++;
+			} else {
+				udhl = (udhl * 7) / 8;
 			}
 			printf("UDL[adjusted] = 0x%02X\n", udhl);
 		}
@@ -285,6 +287,11 @@ int pdu_decode(const char *buffer) {
 			printf("%02X", ud);
 		}
 		printf("\n");
+	}
+
+	if (buffer[pos] != '\r' && buffer[pos] != '\n' && buffer[pos] != '\0') {
+		printf("Did not reach end: %s\n", buffer + pos);
+		return 1;
 	}
 
 
