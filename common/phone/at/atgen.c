@@ -1997,7 +1997,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				datalength = smsframe[PHONE_SMSDeliver.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSDeliver.TPDCS]) == SMS_Coding_Default_No_Compression) {
 					datalength = (datalength * 7) / 8;
-					if ((datalength * 7) % 8 != 0) {
+					if (smsframe[PHONE_SMSDeliver.TPUDL] != 0) {
 						datalength++;
 					}
 				}
@@ -2058,7 +2058,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				datalength = smsframe[PHONE_SMSSubmit.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSSubmit.TPDCS]) == SMS_Coding_Default_No_Compression) {
 					datalength = (datalength * 7) / 8;
-					if ((datalength * 7) % 8 != 0) {
+					if (smsframe[PHONE_SMSSubmit.TPUDL] != 0) {
 						datalength++;
 					}
 				}
