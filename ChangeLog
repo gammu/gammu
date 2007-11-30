@@ -22,6 +22,7 @@ ChangeLog
 [-] * Fixed mysql.h include path (bug #441).
 [-] * Fixed decoding of one char SMS (bug #442).
 [-] * Detect Nokia 3109c (thanks to David Meier).
+[-] * Automatically find MinGW compiler and allow overrides (bug #438).
 [!] * Phones capable of switching to OBEX mode from AT have it now
       automatically enabled. Please report problems with this.
 

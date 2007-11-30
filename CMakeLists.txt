@@ -21,12 +21,37 @@ else (UNIX)
 endif (UNIX)
 
 if (CROSS_MINGW)
-    message (STATUS "Cross compilign using MinGW")
-    set (CMAKE_CXX_COMPILER "i586-mingw32msvc-c++")
+    message (STATUS "Cross compiling using MinGW")
     set (CMAKE_COMPILER_IS_GNUCXX 1)
-    set (CMAKE_C_COMPILER "i586-mingw32msvc-gcc")
-    set (CMAKE_AR "i586-mingw32msvc-ar")
-    set (CMAKE_RANLIB "i586-mingw32msvc-ranlib")
+
+    find_program(MINGW_CXX_COMPILER
+        NAMES i586-mingw32msvc-c++ i386-mingw32-c++ i686-pc-mingw32-c++
+        PATHS
+            /usr/local/bin/
+            /usr/bin/
+        DOC "MinGW C++ compiler binary")
+    find_program(MINGW_C_COMPILER
+        NAMES i586-mingw32msvc-gcc i386-mingw32-gcc i686-pc-mingw32-gcc
+        PATHS
+            /usr/local/bin/
+            /usr/bin/
+        DOC "MinGW C compiler binary")
+    find_program(MINGW_AR
+        NAMES i586-mingw32msvc-ar i386-mingw32-ar i686-pc-mingw32-ar
+        PATHS
+            /usr/local/bin/
+            /usr/bin/
+        DOC "MinGW ar binary")
+    find_program(MINGW_RANLIB
+        NAMES i586-mingw32msvc-ranlib i386-mingw32-ranlib i686-pc-mingw32-ranlib
+        PATHS
+            /usr/local/bin/
+            /usr/bin/
+        DOC "MinGW ranlib binary")
+    set (CMAKE_CXX_COMPILER "${MINGW_CXX_COMPILER}")
+    set (CMAKE_C_COMPILER "${MINGW_C_COMPILER}")
+    set (CMAKE_AR "${MINGW_AR}")
+    set (CMAKE_RANLIB "${MINGW_RANLIB}")
     set (WIN32 ON)
     set (MINGW ON)
 

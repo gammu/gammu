@@ -93,6 +93,14 @@ cd build-win32
 cmake .. -DCROSS_MINGW=ON
 make
 
+If your MinGW cross compiler binaries are not found automatically, you
+can specify their different names:
+
+cmake .. -DCROSS_MINGW=ON \
+    -DMINGW_C_COMPILER=/usr/local/bin/i386-mingw32-gcc \
+    -DMINGW_AR=/usr/local/bin/i386-mingw32-ar \
+    -DMINGW_RANLIB=/usr/local/bin/i386-mingw32-ranlib
+
 
 MySQL
 -----
