@@ -101,6 +101,13 @@ cmake .. -DCROSS_MINGW=ON \
     -DMINGW_AR=/usr/local/bin/i386-mingw32-ar \
     -DMINGW_RANLIB=/usr/local/bin/i386-mingw32-ranlib
 
+To build just bare static library without any dependencies, use:
+
+cmake .. -DCROSS_MINGW=ON \
+    -DENABLE_SHARED=OFF \
+    -DMYSQL_CROSS_PATH= \
+    -DPOSTGRES_CROSS_PATH= \
+    -DGETTEXT_CROSS_PATH=
 
 MySQL
 -----
