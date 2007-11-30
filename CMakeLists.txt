@@ -91,7 +91,7 @@ set (VERSION_WIN "${VERSION_WIN},0")
 message (STATUS "Configuring ${CMAKE_PROJECT_NAME} ${VERSION}")
 
 if ("${Gammu_BINARY_DIR}" STREQUAL "${Gammu_SOURCE_DIR}")
-    message ("Warning: In tree build is not recoomended way to build Gammu.")
+    message ("Warning: In tree build is not recommended way to build Gammu.")
 endif ("${Gammu_BINARY_DIR}" STREQUAL "${Gammu_SOURCE_DIR}")
 
 # For debugging
