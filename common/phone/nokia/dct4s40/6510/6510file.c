@@ -2501,7 +2501,9 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
 		if (FFF.Buffer[176]!=0x64) {
 			i+=FFF.Buffer[Layout.TPUDL];
-			EncodeUnicode(sms->SMS[0].SMSC.Number,FFF.Buffer+i+2,FFF.Buffer[i+1]);
+			if (FFF.Buffer[i+2] != 0xff && FFF.Buffer[i+1] != 0xff && FFF.Buffer[i+1] < GSM_MAX_NUMBER_LENGTH) {
+				EncodeUnicode(sms->SMS[0].SMSC.Number,FFF.Buffer+i+2,FFF.Buffer[i+1]);
+			}
 		}
 		sms->SMS[0].PDU = SMS_Deliver;
 		sms->SMS[0].Class = -1;//fixme
