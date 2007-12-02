@@ -88,7 +88,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 
 static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, uuid_t *group)
 {
-	sdp_session_t			*sess;
+	sdp_session_t			*sess = 0;
 	sdp_record_t 			*rec;
 	sdp_list_t			*attrid, *search, *seq, *next, *proto;
 	sdp_data_t			*d;
@@ -99,6 +99,7 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, uu
 	char 				name[1000];
 	int				score, bestscore = 0;
 	int				found = -1;
+	int retries = 0;
 	uuid_t subgroup;
 
 	bacpy(&interface,BDADDR_ANY);
@@ -120,10 +121,21 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, uu
 	 * Need to sleep for some slow devices, otherwise we get
 	 * "Operation already in progress" error.
 	 */
-	sleep(1);
+	while (!sess) {
+		/* Try to connect to device */
+		sess = sdp_connect(&interface, bdaddr, SDP_RETRY_IF_BUSY);
+		if (sess) break;
 
-	/* Connect to device */
-	sess = sdp_connect(&interface, bdaddr, SDP_RETRY_IF_BUSY);
+		if (errno == EALREADY && retries < 5) {
+			smprintf(s, "Operation already in progress, retrying.\n");
+			sleep(1);
+			continue;
+		}
+		/* Failure */
+		break;
+	}
+
+	/* Did we connect? */
 	if (!sess) {
 		smprintf(s, "Failed to connect to SDP server on %s: %s\n", str, strerror(errno));
 		return ERR_TIMEOUT;
