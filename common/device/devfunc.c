@@ -80,6 +80,7 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 		if (strstr(name, "Serial Port 1") != NULL) return 3;
 		if (strstr(name, "Serial Port") != NULL) return 2;
 		/* Motorola */
+		if (strstr(name, "Dial-up networking Gateway") != NULL) return 3;
 		if (strstr(name, "Serial port") != NULL) return 2;
 		/* Siemens, Thomas Eitzenberger */
 		if (strstr(name, "SerialPort1") != NULL) return 3;
