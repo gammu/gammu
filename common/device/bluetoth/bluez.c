@@ -116,6 +116,12 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, uu
 	close(dd);
 	smprintf(s,"\n");
 
+	/*
+	 * Need to sleep for some slow devices, otherwise we get
+	 * "Operation already in progress" error.
+	 */
+	sleep(1);
+
 	/* Connect to device */
 	sess = sdp_connect(&interface, bdaddr, SDP_RETRY_IF_BUSY);
 	if (!sess) {
