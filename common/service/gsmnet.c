@@ -768,14 +768,22 @@ char *GSM_GetNetworkName(char *NetworkCode)
 {
 	int		i = 0;
 	static char	retval[200];
-
+	char		NetworkCodeFull[7]="      ";
+	
 	EncodeUnicode(retval,"unknown",7);
-	while (GSM_Networks[i*2] != NULL) {
-		if (!strncmp(GSM_Networks[i*2],NetworkCode,6)) {
-			EncodeUnicode(retval, GSM_Networks[i*2+1], strlen(GSM_Networks[i*2+1]));
-			break;
+	if ((strlen(NetworkCode) == 5) || 
+			(strlen(NetworkCode) == 6)) {
+		strncpy(NetworkCodeFull, NetworkCode, 3);
+		strncpy(NetworkCodeFull + 4, NetworkCode + strlen(NetworkCode) - 2, 2);
+		while (GSM_Networks[i * 2] != NULL) {
+			if (strncmp(GSM_Networks[i * 2], NetworkCodeFull, 6) == 0) {
+				EncodeUnicode(retval, 
+						GSM_Networks[i * 2 + 1], 
+						strlen(GSM_Networks[i * 2 + 1]));
+				break;
+			}
+			i++;
 		}
-		i++;
 	}
 	return retval;
 }
