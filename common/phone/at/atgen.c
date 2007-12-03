@@ -5814,7 +5814,7 @@ GSM_Error ATGEN_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
-	int line = 0;
+	int line = 1;
 	int protocol_id;
 	char protocol_version[100];
 	int protocol_level;
