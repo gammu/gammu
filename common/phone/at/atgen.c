@@ -3498,7 +3498,22 @@ GSM_Error ATGEN_ReplyGetNetworkCode(GSM_Protocol_Message msg, GSM_StateMachine *
 				&i, /* Format of reply, we set this */
 				NetworkInfo->NetworkCode, sizeof(NetworkInfo->NetworkCode));
 
+		/* Some Sony-Ericsson phones use this */
+		if (error == ERR_UNKNOWNRESPONSE) {
+			error = ATGEN_ParseReply(s,
+					GetLineString(msg.Buffer, Priv->Lines, 2),
+					"+COPS: @i, @i, @r, @i",
+					&i, /* Mode, ignored for now */
+					&i, /* Format of reply, we set this */
+					NetworkInfo->NetworkCode, sizeof(NetworkInfo->NetworkCode),
+					&i);
+		}
+
 		if (error != ERR_NONE) {
+			/* Cleanup if something went wrong */
+			NetworkInfo->NetworkCode[0] = 0;
+			NetworkInfo->NetworkCode[1] = 0;
+
 			return error;
 		}
 
@@ -3532,16 +3547,36 @@ GSM_Error ATGEN_ReplyGetNetworkName(GSM_Protocol_Message msg, GSM_StateMachine *
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_NetworkInfo		*NetworkInfo = s->Phone.Data.NetworkInfo;
 	int i;
+	GSM_Error error;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Network name received\n");
-		return ATGEN_ParseReply(s,
+		error = ATGEN_ParseReply(s,
 				GetLineString(msg.Buffer, Priv->Lines, 2),
 				"+COPS: @i, @i, @s",
 				&i, /* Mode, ignored for now */
 				&i, /* Format of reply, we set this */
 				NetworkInfo->NetworkName, sizeof(NetworkInfo->NetworkName));
+
+		/* Some Sony-Ericsson phones use this */
+		if (error == ERR_UNKNOWNRESPONSE) {
+			error = ATGEN_ParseReply(s,
+					GetLineString(msg.Buffer, Priv->Lines, 2),
+					"+COPS: @i, @i, @s, @i",
+					&i, /* Mode, ignored for now */
+					&i, /* Format of reply, we set this */
+					NetworkInfo->NetworkName, sizeof(NetworkInfo->NetworkName),
+					&i);
+		}
+
+		/* Cleanup if something went wrong */
+		if (error != ERR_NONE) {
+			NetworkInfo->NetworkName[0] = 0;
+			NetworkInfo->NetworkName[1] = 0;
+		}
+
+		return error;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
