@@ -8,15 +8,15 @@ msgstr ""
 "Project-Id-Version: Gammu 1.15.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-11-27 10:41+0900\n"
-"PO-Revision-Date: 2007-08-01 13:14+0200\n"
-"Last-Translator: Konrad Bielak <vandut@o2.pl>\n"
+"PO-Revision-Date: 2007-11-30 17:33+0100\n"
+"Last-Translator: Wojciech Sobczak <wsobczak@gmail.com>\n"
 "Language-Team: Language =pl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 1.0.1\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
-"|| n%100>=20) ? 1 : 2)\n"
+"|| n%100>=20) ? 1 : 2);\n"
+"X-Generator: Pootle 1.0.2\n"
 
 #: common/gsmcomon.c:88
 msgid "No error."
@@ -134,9 +134,8 @@ msgstr "Funkcja nie obsługiwana przez telefon."
 
 #: common/gsmcomon.c:109 gammu/memory.c:236 gammu/misc.c:1624
 #: gammu/misc.c:1964
-#, fuzzy
 msgid "Entry is empty"
-msgstr "Pozycja jest pusta."
+msgstr "Pozycja jest pusta"
 
 #: common/gsmcomon.c:110
 msgid "Security error. Maybe no PIN?"
