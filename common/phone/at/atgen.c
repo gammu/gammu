@@ -4795,7 +4795,10 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				/* I char stored in GSM alphabet takes 7 bits, one
 				 * unicode 16, if storing in unicode would truncate
 				 * text, do not use it, otherwise we will use it */
-				if ((Priv->TextLength != 0) && ((Priv->TextLength * 7 / 16) <= len)) {
+				if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_LENGTH_BYTES) &&
+						(Priv->TextLength != 0) && 
+						((Priv->TextLength * 7 / 16) <= len)
+						) {
 					Prefer = AT_PREF_CHARSET_NORMAL;
 				} else {
 					Prefer = AT_PREF_CHARSET_UNICODE;

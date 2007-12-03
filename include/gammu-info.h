@@ -538,6 +538,10 @@ typedef enum {
 	 * Do not use OBEX/AT switching even if available.
 	 */
 	F_NO_ATOBEX,
+	/**
+	 * Length of text for contact is in bytes and not chars.
+	 */
+	F_LENGTH_BYTES,
 } Feature;
 
 /**
