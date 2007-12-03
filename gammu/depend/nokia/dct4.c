@@ -813,7 +813,10 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 		buff[4] = buff[3];
 		buff[3] = ' ';
 		if (strcmp(DecodeUnicodeString(GSM_GetNetworkName(buff)),"unknown")) {
-			printf(_("Old simlock   : %s (%s)\n"),DecodeUnicodeString(GSM_GetNetworkName(buff)),buff);
+			printf(LISTFORMAT, _("Old simlock"));
+			printf("%s (%s)\n",
+				DecodeUnicodeString(GSM_GetNetworkName(buff)),
+				buff);
 		}
 
 		dbgprintf("\n");
@@ -831,7 +834,7 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 				dbgprintf("%02x",msg.Buffer[i]);
 			}
 			dbgprintf("\n");
-			printf(_("Simlock data  : "));
+			printf(LISTFORMAT, _("Simlock data"));
 			for (i=60;i<63;i++) {
 				printf("%02x",msg.Buffer[i]);
 			}
@@ -856,7 +859,7 @@ void DCT4Info(int argc, char *argv[])
 	gsm->User.UserReplyFunctions=UserReplyFunctions4;
 
 	if (GSM_IsPhoneFeatureAvailable(gsm->Phone.Data.ModelInfo, F_BLUETOOTH)) {
-		printf(_("Bluetooth     : "));
+		printf(LISTFORMAT, _("Bluetooth"));
 
 		error=GSM_WaitFor (gsm, GetBTAddress, 8, 0xD7, 4, ID_User6);
 		Print_Error(error);
@@ -872,7 +875,7 @@ void DCT4Info(int argc, char *argv[])
 	Print_Error(error);
 	error=NOKIA_GetPhoneString(gsm,"\x00\x03\x02\x07\x00\x08",6,0x1b,value,ID_User6,10);
 	Print_Error(error);
-	printf(_("UEM           : %s\n"),value);
+	printf(LISTFORMAT "%s\n", _("UEM"), value);
 }
 
 static FILE *T9File;
