@@ -632,7 +632,7 @@ void GetCalendarSettings(int argc UNUSED, char *argv[]UNUSED)
 	if (settings.AutoDelete == 0) {
 		printf(_("Auto deleting disabled"));
 	} else {
-		printf(_("Auto deleting notes after %i day(gsm)"),
+		printf(_("Auto deleting notes after %i day(s)"),
 		       settings.AutoDelete);
 	}
 	printf("\n");
