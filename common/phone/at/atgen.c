@@ -2013,13 +2013,16 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				datalength = smsframe[PHONE_SMSDeliver.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSDeliver.TPDCS]) == SMS_Coding_Default_No_Compression) {
 					datalength = (datalength * 7) / 8;
-					if (smsframe[PHONE_SMSDeliver.TPUDL] != 0) {
+					if ((smsframe[PHONE_SMSDeliver.TPUDL] * 7) % 8 != 0) {
 						datalength++;
 					}
 				}
 				for (i = 0; i < datalength; i++) {
 					if (current >= length) return ERR_CORRUPTED;
 					smsframe[i+PHONE_SMSDeliver.Text]=buffer[current++];
+				}
+				if (current != length) {
+					smprintf(s, "Did not reach message end! (current = %d, length = %d)\n", current, length);
 				}
 				return GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSDeliver);
 			case 0x01:
@@ -2074,13 +2077,16 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				datalength = smsframe[PHONE_SMSSubmit.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSSubmit.TPDCS]) == SMS_Coding_Default_No_Compression) {
 					datalength = (datalength * 7) / 8;
-					if (smsframe[PHONE_SMSSubmit.TPUDL] != 0) {
+					if ((smsframe[PHONE_SMSSubmit.TPUDL] * 7) % 8 != 0) {
 						datalength++;
 					}
 				}
 				for (i = 0; i < datalength; i++) {
 					if (current >= length) return ERR_CORRUPTED;
 					smsframe[i+PHONE_SMSSubmit.Text]=buffer[current++];
+				}
+				if (current != length) {
+					smprintf(s, "Did not reach message end! (current = %d, length = %d)\n", current, length);
 				}
 				return GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSSubmit);
 			case 0x02:
