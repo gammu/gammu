@@ -644,21 +644,32 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 					case 'i':
 						out_i = va_arg(ap, int *);
 						*out_i = strtol(inp, &endptr, 10);
-						smprintf(s, "Parsed int %d\n", *out_i);
 						if (endptr == inp) {
 							error = ERR_UNKNOWNRESPONSE;
 							goto end;
 						}
+						smprintf(s, "Parsed int %d\n", *out_i);
 						inp = endptr;
+						break;
+					case 'I':
+						out_i = va_arg(ap, int *);
+						*out_i = strtol(inp, &endptr, 10);
+						if (endptr == inp) {
+							smprintf(s, "Number empty\n");
+							*out_i = 0;
+						} else {
+							smprintf(s, "Parsed int %d\n", *out_i);
+							inp = endptr;
+						}
 						break;
 					case 'l':
 						out_l = va_arg(ap, long int *);
 						*out_l = strtol(inp, &endptr, 10);
-						smprintf(s, "Parsed long int %ld\n", *out_l);
 						if (endptr == inp) {
 							error = ERR_UNKNOWNRESPONSE;
 							goto end;
 						}
+						smprintf(s, "Parsed long int %ld\n", *out_l);
 						inp = endptr;
 						break;
 					case 'p':
@@ -757,7 +768,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 						/* Fix up reply from broken phones which do not put this inside quotes */
 						tmp = strchr(inp, '"');
 						if ((tmp == NULL || tmp > (inp + length)) &&
-								*(inp + length) == ',' && 
+								*(inp + length) == ',' &&
 								strchr(buffer, ',') == NULL
 								) {
 							length++;
@@ -4052,7 +4063,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Try standard reply */
 		error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPBR: @i, @p, @i, @e",
+					"+CPBR: @i, @p, @I, @e",
 					&Memory->Location,
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					&number_type,
@@ -4071,7 +4082,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		/* Try reply with call date */
 		error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPBR: @i, @p, @i, @s, @d",
+					"+CPBR: @i, @p, @I, @s, @d",
 					&Memory->Location,
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
 					&number_type,
@@ -4098,7 +4109,7 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		 */
 		error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, Priv->Lines, 2),
-					"+CPBR: @i, @s, @p, @i, @s, @d",
+					"+CPBR: @i, @s, @p, @I, @s, @d",
 					&Memory->Location,
 					Memory->Entries[3].Text, sizeof(Memory->Entries[3].Text),
 					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
@@ -4836,7 +4847,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				 * unicode 16, if storing in unicode would truncate
 				 * text, do not use it, otherwise we will use it */
 				if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_LENGTH_BYTES) &&
-						(Priv->TextLength != 0) && 
+						(Priv->TextLength != 0) &&
 						((Priv->TextLength * 7 / 16) <= len)
 						) {
 					Prefer = AT_PREF_CHARSET_NORMAL;
