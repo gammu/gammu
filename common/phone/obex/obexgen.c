@@ -1775,7 +1775,7 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		error = OBEXGEN_InitPbLUID(s);
 		if (error != ERR_NONE) return error;
 
-		smprintf(s,"Adding phonebook entry %zd:\n%s\n", size, req);
+		smprintf(s,"Adding phonebook entry " SIZE_T_FORMAT ":\n%s\n", size, req);
 		Priv->UpdatePbLUID = true;
 		error = OBEXGEN_SetFile(s, "telecom/pb/luid/.vcf", req, size, false);
 		Entry->Location = Priv->PbLUIDCount;
@@ -1787,7 +1787,7 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 		if (error != ERR_NONE) return error;
 
 		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->PbIndex, &Priv->PbIndexCount);
-		smprintf(s,"Adding phonebook entry %zd at location %d:\n%s\n", size, Entry->Location, req);
+		smprintf(s,"Adding phonebook entry " SIZE_T_FORMAT " at location %d:\n%s\n", size, Entry->Location, req);
 		sprintf(path, "telecom/pb/%d.vcf", Entry->Location);
 		error = OBEXGEN_SetFile(s, path, req, size, false);
 		if (error == ERR_NONE) Priv->PbCount++;
@@ -2206,7 +2206,7 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 		error = OBEXGEN_InitCalLUID(s);
 		if (error != ERR_NONE) return error;
 
-		smprintf(s,"Adding calendar entry %zd:\n%s\n", size, req);
+		smprintf(s,"Adding calendar entry " SIZE_T_FORMAT ":\n%s\n", size, req);
 		Priv->UpdateCalLUID = true;
 		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size, false);
 		Entry->Location = Priv->CalLUIDCount;
@@ -2218,7 +2218,7 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 		if (error != ERR_NONE) return error;
 
 		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->CalIndex, &Priv->CalIndexCount);
-		smprintf(s,"Adding calendar entry %zd at location %d:\n%s\n", size, Entry->Location, req);
+		smprintf(s,"Adding calendar entry " SIZE_T_FORMAT " at location %d:\n%s\n", size, Entry->Location, req);
 		sprintf(path, "telecom/cal/%d.vcf", Entry->Location);
 		error = OBEXGEN_SetFile(s, path, req, size, false);
 		if (error == ERR_NONE) Priv->CalCount++;
@@ -2585,7 +2585,7 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 		error = OBEXGEN_InitCalLUID(s);
 		if (error != ERR_NONE) return error;
 
-		smprintf(s,"Adding todo entry %zd:\n%s\n", size, req);
+		smprintf(s,"Adding todo entry " SIZE_T_FORMAT ":\n%s\n", size, req);
 		Priv->UpdateTodoLUID = true;
 		error = OBEXGEN_SetFile(s, "telecom/cal/luid/.vcs", req, size, false);
 		Entry->Location = Priv->TodoLUIDCount;
@@ -2597,7 +2597,7 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 		if (error != ERR_NONE) return error;
 
 		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->TodoIndex, &Priv->TodoIndexCount);
-		smprintf(s,"Adding todo entry %zd at location %d:\n%s\n", size, Entry->Location, req);
+		smprintf(s,"Adding todo entry " SIZE_T_FORMAT " at location %d:\n%s\n", size, Entry->Location, req);
 		sprintf(path, "telecom/cal/%d.vcf", Entry->Location);
 		error = OBEXGEN_SetFile(s, path, req, size, false);
 		if (error == ERR_NONE) Priv->TodoCount++;
@@ -2983,7 +2983,7 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 		error = OBEXGEN_InitNoteLUID(s);
 		if (error != ERR_NONE) return error;
 
-		smprintf(s,"Adding note entry %zd:\n%s\n", size, req);
+		smprintf(s,"Adding note entry " SIZE_T_FORMAT ":\n%s\n", size, req);
 		Priv->UpdateNoteLUID = true;
 		error = OBEXGEN_SetFile(s, "telecom/nt/luid/.vnt", req, size, false);
 		Entry->Location = Priv->NoteLUIDCount;
@@ -2995,7 +2995,7 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 		if (error != ERR_NONE) return error;
 
 		Entry->Location = OBEXGEN_GetFirstFreeLocation(&Priv->NoteIndex, &Priv->NoteIndexCount);
-		smprintf(s,"Adding note entry %zd at location %d:\n%s\n", size, Entry->Location, req);
+		smprintf(s,"Adding note entry " SIZE_T_FORMAT " at location %d:\n%s\n", size, Entry->Location, req);
 		sprintf(path, "telecom/nt/%d.vcf", Entry->Location);
 		error = OBEXGEN_SetFile(s, path, req, size, false);
 		if (error == ERR_NONE) Priv->NoteCount++;

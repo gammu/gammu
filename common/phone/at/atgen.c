@@ -5490,7 +5490,7 @@ GSM_Error ATGEN_ReplyIncomingCB(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	CB.Channel = Buffer[4];
 
 	for (j=0;j<msg.Length;j++) {
-		smprintf(s, "j=%zi\n",j);
+		smprintf(s, "j=" SIZE_T_FORMAT "\n",j);
 		i=GSM_UnpackEightBitsToSeven(0, msg.Buffer[6], msg.Buffer[6], msg.Buffer+j, Buffer2);
 #if 0
 		i = msg.Buffer[6] - 1;
