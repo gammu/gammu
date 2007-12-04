@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.15.90
+20071204 - 1.15.90
 
 [-] * Fixed detection of first free memory location if memory is empty 
       (bug #434).
