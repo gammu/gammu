@@ -1783,8 +1783,8 @@ static GSM_Error N6510_ReplyGetConnectionSettings(GSM_Protocol_Message msg, GSM_
 		}
 
 		return ERR_NONE;
-	case 0x0f: 
-		/* 
+	case 0xf0:
+		/*
 		 * Don't know exactly what 0x0f means, but the message is too short
 		 * to contain information:
 		 *
@@ -4116,7 +4116,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplySetConnectionSettings,"\x3f",0x03,0x2B,ID_SetConnectSet	  },
 	{N6510_ReplyGetChatSettings,	  "\x3f",0x03,0x3B,ID_GetChatSettings	  },
 	{N6510_ReplyGetChatSettings,	  "\x3f",0x03,0x3C,ID_GetChatSettings	  },
-	{N6510_ReplyGetConnectionSettings,"\x3f",0x03,0x0f,ID_GetConnectSet	  },
+	{N6510_ReplyGetConnectionSettings,"\x3f",0x03,0xf0,ID_GetConnectSet	  },
 
 	{N6510_ReplyGetOriginalIMEI,	  "\x42",0x07,0x00,ID_GetOriginalIMEI	  },
 	{N6510_ReplyGetManufactureMonth,  "\x42",0x07,0x00,ID_GetManufactureMonth },
