@@ -31,6 +31,6 @@ echo $version > VERSION
 if ! grep -q " - $version" ChangeLog ; then
     sed -i -e '/^=========$/ a\
     ' -e '/^=========$/ a\
-    2007???? - '"$version"'
+2007???? - '"$version"'
     ' ChangeLog
 fi
