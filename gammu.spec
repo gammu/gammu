@@ -2,7 +2,11 @@
 %define name        gammu
 %define rel         1
 # Set to 0 to disable bluetooth support
+%if 0%{?opensuse_bs} && 0%{?sles_version} == 9
+%define bluetooth   0
+%else
 %define bluetooth   1
+%endif
 # Set to 0 to disable PostgreSQL support
 %define pqsql	    1
 # Set to 0 to disable MySQLSQL support
