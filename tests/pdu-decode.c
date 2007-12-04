@@ -99,7 +99,6 @@ int pdu_get_timestamp(const char *buffer) {
 	int i;
 
 
-	printf("d: %s\n", buffer);
 	for (i = 0; i < 14; i++) {
 		if (!isxdigit(buffer[i])) return -1;
 	}
