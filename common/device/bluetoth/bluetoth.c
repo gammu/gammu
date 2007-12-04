@@ -33,18 +33,22 @@ GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 	char *channel;
 	int  channel_id = 0;
 
-	if (strncasecmp(s->CurrentConfig->Connection, "bluerf", 6) != 0) {
+	/* Temporary string */
+	device = strdup(s->CurrentConfig->Device);
+	if (device == NULL) {
+		return ERR_MOREMEMORY;
+	}
+
+	/* Does the string contain channel information? */
+	channel = strchr(device, '/');
+	if (channel == NULL &&
+			strncasecmp(s->CurrentConfig->Connection, "bluerf", 6) != 0) {
+		free(device);
 #ifdef BLUETOOTH_RF_SEARCHING
 		return bluetooth_findchannel(s);
 #else
 		return ERR_SOURCENOTAVAILABLE;
 #endif
-	}
-
-	/* Temporary string */
-	device = strdup(s->CurrentConfig->Device);
-	if (device == NULL) {
-		return ERR_MOREMEMORY;
 	}
 
 	/* Default channel settings */
@@ -68,7 +72,6 @@ GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 	}
 
 	/* Parse channel from configuration */
-	channel = strchr(device, '/');
 	if (channel != NULL) {
 		/* Zero terminate our string */
 		*channel = 0;
@@ -80,7 +83,7 @@ GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 		smprintf(s, "Using hard coded bluetooth channel %d.\n",
 				channel_id);
 	}
-	
+
 	/* Check for zero */
 	if (channel_id == 0) {
 		smprintf(s, "Please configure bluetooth channel!\n");
@@ -88,24 +91,24 @@ GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 		goto done;
 	}
 
-	
+
 	/* Connect to phone */
 	error = bluetooth_connect(s, channel_id, device);
 	if (error == ERR_NONE) goto done;
 
 	/* Hack for Nokia phones, they moved channel from 14 to 15, so
-	 * we want to try both. 
+	 * we want to try both.
 	 *
 	 * Older Series 40 (eg. 8910 and 6310) use channel 14
 	 * Newer Series 40 (eg. 6230 and 6310i) use channel 15
 	 * */
-	if (((s->ConnectionType == GCT_BLUEPHONET) || 
+	if (((s->ConnectionType == GCT_BLUEPHONET) ||
 			(s->ConnectionType == GCT_BLUEFBUS2)) &&
 			(channel_id == 15)) {
 		channel_id = 14;
 		error = bluetooth_connect(s, channel_id, device);
 	}
-	
+
 done:
 	free(device);
 	return error;
