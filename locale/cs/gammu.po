@@ -1568,7 +1568,6 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:862
 #, fuzzy
-#| msgid "Bluetooth     : "
 msgid "Bluetooth"
 msgstr "Bluetooth     : "
 

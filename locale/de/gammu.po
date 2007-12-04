@@ -1592,19 +1592,16 @@ msgstr "Geräteadresse %02x%02x%02x%02x%02x%02x\n"
 
 #: gammu/depend/nokia/dct4.c:816
 #, fuzzy
-#| msgid "Old simlock   : %s (%s)\n"
 msgid "Old simlock"
 msgstr "Alte SIM-Sperre: %s (%s)\n"
 
 #: gammu/depend/nokia/dct4.c:837
 #, fuzzy
-#| msgid "Simlock data  : "
 msgid "Simlock data"
 msgstr "Daten zur SIM-Sperre:"
 
 #: gammu/depend/nokia/dct4.c:862
 #, fuzzy
-#| msgid "Bluetooth     : "
 msgid "Bluetooth"
 msgstr "Bluetooth: "
 
