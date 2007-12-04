@@ -267,7 +267,7 @@ int pdu_decode(const char *buffer) {
 			(((dcs & 0xf0) == 0xe0) && ((dcs & 4) != 4)) ||
 			(((dcs & 0xf0) == 0xf0) && ((dcs & 4) != 4))
 			) {
-			if (udhl > 0) {
+			if ((udhl * 7) % 8 != 0) {
 				udhl = (udhl * 7) / 8;
 				udhl++;
 			} else {

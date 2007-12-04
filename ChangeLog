@@ -24,6 +24,7 @@ ChangeLog
 [-] * Detect Nokia 3109c (thanks to David Meier).
 [-] * Automatically find MinGW compiler and allow overrides (bug #438).
 [-] * Fixed parsing of some memory entries (bug #450).
+[-] * Fixed decoding of some corner case SMS (bug #447).
 [!] * Phones capable of switching to OBEX mode from AT have it now
       automatically enabled. Please report problems with this.
 
