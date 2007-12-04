@@ -56,6 +56,14 @@ int main(int argc UNUSED, char **argv UNUSED)
 		printf("%s\n", GSM_ErrorString(error));
 		return 1;
 	}
+	error = ATGEN_ParseReply(s,
+			"+CPBR: 6,\"\",,\"005300740061006E006C006500790020005000610075006C\"",
+			"+CPBR: @i, @p, @I, @s",
+			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE);
+	if (error != ERR_NONE) {
+		printf("%s\n", GSM_ErrorString(error));
+		return 1;
+	}
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
