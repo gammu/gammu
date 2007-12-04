@@ -94,7 +94,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				}
 				Len += CopiedText;
 				if (Len == UnicodeLength(Entry->Buffer)) break;
-				dbgprintf("%u %zu\n",Len,UnicodeLength(Entry->Buffer));
+				dbgprintf("%u " SIZE_T_FORMAT "\n",Len,UnicodeLength(Entry->Buffer));
 			}
 			break;
 		case SMS_EMSPredefinedSound:
@@ -220,7 +220,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				start = false;
 				Used++;
 			}
-			dbgprintf("Used SMS: %zi\n",Used);
+			dbgprintf("Used SMS: " SIZE_T_FORMAT "\n",Used);
 
 			if (Entry->Protected) {
 				Buffer[0] = 0x17;   /* ID for ODI 		   */
@@ -397,7 +397,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				Length 		= 128;
 				Used ++;
 			}
-			dbgprintf("Used SMS: %zi\n",Used);
+			dbgprintf("Used SMS: " SIZE_T_FORMAT "\n",Used);
 
 			if (Entry->Protected) {
 				Buffer[0] = 0x17;   /* ID for ODI 		   */
@@ -533,7 +533,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 	for (i=0;i<SMS->Number;i++) {
 		dbgprintf("UDH length %i\n",SMS->SMS[i].UDH.Length);
 		DumpMessage(&di, SMS->SMS[i].UDH.Text, SMS->SMS[i].UDH.Length);
-		dbgprintf("SMS length %zu\n",UnicodeLength(SMS->SMS[i].Text)*2);
+		dbgprintf("SMS length " SIZE_T_FORMAT "\n",UnicodeLength(SMS->SMS[i].Text)*2);
 		DumpMessage(&di, SMS->SMS[i].Text, UnicodeLength(SMS->SMS[i].Text)*2);
 	}
 #endif

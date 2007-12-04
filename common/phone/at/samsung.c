@@ -433,7 +433,7 @@ GSM_Error SAMSUNG_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *
 	if ((dot = strrchr(name, '.')) != NULL) *dot = 0;
 
 	crc = GetCRC(Ringtone->BinaryTone.Buffer, Ringtone->BinaryTone.Length);
-	sprintf(req, "AT+MELW=0,\"%s\",4,%zd,%u\r", name,
+	sprintf(req, "AT+MELW=0,\"%s\",4," SIZE_T_FORMAT ",%u\r", name,
 		Ringtone->BinaryTone.Length, (unsigned int)crc);
 
 	error = s->Protocol.Functions->WriteMessage(s, req, strlen(req), 0x00);
