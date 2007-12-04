@@ -22,6 +22,7 @@ endif (UNIX)
 
 if (CROSS_MINGW)
     message (STATUS "Cross compiling using MinGW")
+    set (CMAKE_COMPILER_IS_GNUCC 1)
     set (CMAKE_COMPILER_IS_GNUCXX 1)
 
     find_program(MINGW_CXX_COMPILER
