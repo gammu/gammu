@@ -2204,7 +2204,6 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 	GSM_File		FFF;
 	bool			start2=start;
 	GSM_SMSMessageLayout 	Layout;
-	double			g;
 
 	while (true) {
 		if (start2) {
@@ -2290,9 +2289,7 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			//we need to find, if part of byte was used or not
-			g = ((double)FFF.Buffer[i]*7/8);
-			g -= (unsigned int)((FFF.Buffer[i]*7/8));
-			if (g != 0.0) {
+			if (FFF.Buffer[i] * 7 % 8 != 0) {
 				i+=(FFF.Buffer[i]*7/8)+1;
 			} else {
 				i+=(FFF.Buffer[i]*7/8);
@@ -2324,9 +2321,7 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			//we need to find, if part of byte was used or not
-			g = ((double)FFF.Buffer[i]*7/8);
-			g -= (unsigned int)((FFF.Buffer[i]*7/8));
-			if (g != 0.0) {
+			if (FFF.Buffer[i] * 7 % 8 != 0) {
 				i+=(FFF.Buffer[i]*7/8)+1;
 			} else {
 				i+=(FFF.Buffer[i]*7/8);
@@ -2374,9 +2369,7 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			//we need to find, if part of byte was used or not
-			g = ((double)FFF.Buffer[i]*7/8);
-			g -= (unsigned int)((FFF.Buffer[i]*7/8));
-			if (g != 0.0) {
+			if (FFF.Buffer[i] * 7 % 8 != 0) {
 				i+=(FFF.Buffer[i]*7/8)+1;
 			} else {
 				i+=(FFF.Buffer[i]*7/8);
@@ -2440,9 +2433,7 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			//we need to find, if part of byte was used or not
-			g = ((double)FFF.Buffer[i]*7/8);
-			g -= (unsigned int)((FFF.Buffer[i]*7/8));
-			if (g != 0.0) {
+			if (FFF.Buffer[i] * 7 % 8 != 0) {
 				i+=(FFF.Buffer[i]*7/8)+1;
 			} else {
 				i+=(FFF.Buffer[i]*7/8);
