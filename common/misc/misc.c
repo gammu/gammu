@@ -233,6 +233,7 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 	setlocale(LC_ALL, ".OCP");
 #endif
 
+	/* This is not Y2K safe */
 	strftime(retval2, 200, "%c", &timeptr);
 	if (TimeZone) {
 		if (dt.Timezone >= 0) {
@@ -283,6 +284,7 @@ char *OSDate (GSM_DateTime dt)
 	timeptr.tm_zone		= NULL;
 #endif
 
+	/* This is not Y2K safe */
 	strftime(retval2, 200, "%x", &timeptr);
 
 	/* If don't have weekday name, include it */
