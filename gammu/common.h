@@ -1,3 +1,6 @@
+#ifndef _gammu_common_h
+#define _gammu_common_h
+
 #include <gammu.h>
 
 extern volatile bool gshutdown;
@@ -50,6 +53,7 @@ void interrupt(int sign);
 
 #ifdef GSM_ENABLE_BEEP
 void GSM_PhoneBeep(void);
+#endif
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

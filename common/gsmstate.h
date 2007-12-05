@@ -1566,11 +1566,6 @@ struct _GSM_StateMachine {
  */
 GSM_Error GSM_RegisterAllPhoneModules	(GSM_StateMachine *s, const bool recurse);
 
-GSM_Error GSM_InitConnection		(GSM_StateMachine *s, int ReplyNum);
-GSM_Error GSM_TerminateConnection	(GSM_StateMachine *s);
-
-int 	  GSM_ReadDevice		(GSM_StateMachine *s, bool wait);
-
 GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, unsigned const char *buffer,
 			  		 int length, unsigned char type, int timeout);
 
