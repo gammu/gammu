@@ -50,9 +50,8 @@ void GSM_Terminate_SMSD(char *msg, int error, bool exitprogram, int rc)
 		}
 	}
 	if (error != 0) {
-		WriteSMSDLog(msg, error, GSM_ErrorString(error));
-		fprintf(stderr, msg, error, GSM_ErrorString(error));
-		fprintf(stderr, "\n");
+		WriteSMSDLog("%s (%s:%i)", msg, GSM_ErrorString(error), error);
+		fprintf(stderr, "%s (%s:%i)\n", msg, GSM_ErrorString(error), error);
 	}
 	if (exitprogram) {
 		if (smsd_log_file!=NULL) fclose(smsd_log_file);
@@ -277,7 +276,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 			strcpy(SecurityCode.Code,Config->PINCode);
 			error=GSM_EnterSecurityCode(gsm,SecurityCode);
 			if (error == ERR_SECURITYERROR) {
-				GSM_Terminate_SMSD(_("ERROR: incorrect PIN (%s:%i)"), error, true, -1);
+				GSM_Terminate_SMSD(_("ERROR: incorrect PIN"), error, true, -1);
 			}
 			if (error != ERR_NONE) {
 				WriteSMSDLog(_("Error entering PIN (%s:%i)"), GSM_ErrorString(error), error);
@@ -290,7 +289,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	case SEC_Puk:
 	case SEC_Puk2:
 	case SEC_Phone:
-		GSM_Terminate_SMSD(_("ERROR: phone requires not supported code type (%s:%i)"), ERR_UNKNOWN, true, -1);
+		GSM_Terminate_SMSD(_("ERROR: phone requires not supported code type"), ERR_UNKNOWN, true, -1);
 	case SEC_None:
 		break;
 	}
@@ -597,7 +596,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 
 	error = Service->Init(&Config);
 	if (error!=ERR_NONE) {
-		GSM_Terminate_SMSD(_("Initialisation failed, stopping Gammu smsd (%s:%i)"), error, true, -1);
+		GSM_Terminate_SMSD(_("Initialisation failed, stopping Gammu smsd"), error, true, -1);
 	}
 
 	signal(SIGINT, interrupt);
@@ -628,7 +627,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 					} else {
 						error = Service->InitAfterConnect(&Config);
 						if (error!=ERR_NONE) {
-							GSM_Terminate_SMSD(_("Post initialisation failed, stopping Gammu smsd (%s:%i)"), error, true, -1);
+							GSM_Terminate_SMSD(_("Post initialisation failed, stopping Gammu smsd"), error, true, -1);
 						}
 						GSM_SetFastSMSSending(gsm, true);
 					}
@@ -645,7 +644,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 				}
 				break;
 			case ERR_DEVICEOPENERROR:
-				GSM_Terminate_SMSD(_("Can't open device (%s:%i)"),
+				GSM_Terminate_SMSD(_("Can't open device"),
 						error, true, -1);
 				break;
 			default:
