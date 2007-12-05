@@ -33,7 +33,6 @@ typedef struct {
 
 	bool				LastContactArrived;
 
-	//GSM_OneSMSFolder		CurrentSMSFolder;
 	GSM_SMSFolders			CurrentSMSFolders;
 	int				SMSFolderID[100];
 	int				CurrentFolderNumber;
@@ -46,7 +45,7 @@ typedef struct {
 
 	GSM_NOKIACalToDoLocations	LastNote;
 
-	double				GNAPPLETVer;
+	int				GNAPPLETVer;
 } GSM_Phone_GNAPGENData;
 
 #endif
