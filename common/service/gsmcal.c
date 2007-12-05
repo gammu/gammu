@@ -48,7 +48,7 @@ void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 
 	if (frequency != -1 && dow == -1 && day == -1 && month == -1) {
 		if (entry->Entries[frequency].Number == 1) {
-			//each day
+			/* each day */
 			Recurrance = 24;
 		}
 	}
@@ -67,21 +67,21 @@ void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 	if (frequency != -1 && dow != -1 && day == -1 && month == -1) {
 		if (entry->Entries[frequency].Number == 1 &&
 		    entry->Entries[dow].Number == i) {
-			//one week
+			/* one week */
 			Recurrance = 24*7;
 		}
 	}
 	if (frequency != -1 && dow != -1 && day == -1 && month == -1) {
 		if (entry->Entries[frequency].Number == 2 &&
 		    entry->Entries[dow].Number == i) {
-			//two weeks
+			/* two weeks */
 			Recurrance = 24*14;
 		}
 	}
 	if (frequency != -1 && dow == -1 && day != -1 && month == -1) {
 		if (entry->Entries[frequency].Number == 1 &&
 		    entry->Entries[day].Number == entry->Entries[start].Date.Day) {
-			//month
+			/* month */
 			Recurrance = 0xffff-1;
 		}
 	}
@@ -89,7 +89,7 @@ void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 		if (entry->Entries[frequency].Number == 1 &&
 		    entry->Entries[day].Number == entry->Entries[start].Date.Day &&
 		    entry->Entries[month].Number == entry->Entries[start].Date.Month) {
-			//year
+			/* year */
 			Recurrance = 0xffff;
 		}
 	}
@@ -384,9 +384,9 @@ GSM_Error GSM_Translate_Category (GSM_CatTranslation direction, char *string, GS
 	case TRANSL_TO_GSM:
 		if (strstr(string,"MEETING")) 			*Type = GSM_CAL_MEETING;
 		else if (strstr(string,"REMINDER")) 		*Type = GSM_CAL_REMINDER;
-		else if (strstr(string,"DATE"))	 		*Type = GSM_CAL_REMINDER; //SE
-		else if (strstr(string,"TRAVEL"))	 	*Type = GSM_CAL_TRAVEL;   //SE
-		else if (strstr(string,"VACATION"))	 	*Type = GSM_CAL_VACATION; //SE
+		else if (strstr(string,"DATE"))	 		*Type = GSM_CAL_REMINDER; /* SE */
+		else if (strstr(string,"TRAVEL"))	 	*Type = GSM_CAL_TRAVEL;   /* SE */
+		else if (strstr(string,"VACATION"))	 	*Type = GSM_CAL_VACATION; /* SE */
 		else if (strstr(string,"MISCELLANEOUS"))	*Type = GSM_CAL_MEMO;
 		else if (strstr(string,"PHONE CALL")) 		*Type = GSM_CAL_CALL;
 		else if (strstr(string,"SPECIAL OCCASION")) 	*Type = GSM_CAL_BIRTHDAY;
@@ -1665,7 +1665,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			   can defined in several ways. We will use the trigger value only since this is the value
 			   Mozilla calendar uses when importing ics-files. */
 			if (strncmp(Line, "UID:", 4) == 0) {
-				ReadVCALText(Line, "UID", Buff, CalVer == Mozilla_iCalendar);  // Any use for UIDs?
+				ReadVCALText(Line, "UID", Buff, CalVer == Mozilla_iCalendar);  /*  Any use for UIDs? */
 				break;
 			}
 			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-UNITS:")) {
@@ -1808,7 +1808,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			}
 
 			if (strncmp(Line, "UID:", 4) == 0) {
-				ReadVCALText(Line, "UID", Buff, ToDoVer == Mozilla_iCalendar);  // Any use for UIDs?
+				ReadVCALText(Line, "UID", Buff, ToDoVer == Mozilla_iCalendar);  /*  Any use for UIDs? */
 				break;
 			}
 			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-UNITS:")) {

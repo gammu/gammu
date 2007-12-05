@@ -171,7 +171,7 @@ void NokiaSecurityCode(int argc, char *argv[])
 	DCT3GetSecurityCode(argc,argv);
 #endif
 #ifdef GSM_ENABLE_NOKIA_DCT4
-//	DCT4ResetSecurityCode(argc, argv);
+/* 	DCT4ResetSecurityCode(argc, argv); */
 	DCT4GetSecurityCode(argc,argv);
 #endif
 
@@ -230,7 +230,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 	CopyUnicodeString(Files.ID_FullName,ID);
 
 	printf(_("Checking %s\n"),DecodeUnicodeString(Name));
-	//looking into folder content (searching for mp3 and similiar)
+	/* looking into folder content (searching for mp3 and similiar) */
 	while (1) {
 		error = GSM_GetFolderListing(gsm,&Files,Start);
 		if (error == ERR_FOLDERPART) {
@@ -254,7 +254,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 				Entry->Next = NULL;
 				Entry->Name = malloc(strlen(DecodeUnicodeString(Files.ID_FullName))+1);
 				sprintf(Entry->Name,"%s",DecodeUnicodeString(Files.ID_FullName));
-				//converting Gammu drives to phone drives
+				/* converting Gammu drives to phone drives */
 				if (Entry->Name[0]=='a' || Entry->Name[0]=='A') {
 					Entry->Name[0]='b';
 				} else if (Entry->Name[0]=='d' || Entry->Name[0]=='D') {
@@ -279,7 +279,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 		Start = false;
 	}
 	if (First!=NULL) {
-		//sorting songs names
+		/* sorting songs names */
 		Entry=First;
 		while (Entry->Next!=NULL) {
 			if (strcmp(Entry->NameUP,Entry->Next->NameUP)>0) {
@@ -296,7 +296,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 			}
 			Entry=Entry->Next;
 		}
-		//we checking, if file already exist.if yes, we look for another...
+		/* we checking, if file already exist.if yes, we look for another... */
 		i 		= 0;
 		Files3.Buffer 	= NULL;
 		while (1) {
@@ -331,7 +331,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 			i++;
 		}
 
-		//preparing new playlist file date
+		/* preparing new playlist file date */
 		Files2.System	 = false;
 		Files2.Folder 	 = false;
 		Files2.ReadOnly	 = false;
@@ -342,7 +342,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 		CopyUnicodeString(Files2.ID_FullName,IDFolder);
 	        CopyUnicodeString(Files2.Name,Buffer2);
 
-		//preparing new playlist file content
+		/* preparing new playlist file content */
 		Files2.Buffer=NULL;
 		Files2.Buffer = (unsigned char *)realloc(Files2.Buffer,10);
 		sprintf(Files2.Buffer,"#EXTM3U%c%c",13,10);
@@ -359,11 +359,11 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 			if (Files2.Buffer[i]=='/') Files2.Buffer[i]='\\';
 		}
 
-		//adding new playlist file
+		/* adding new playlist file */
 		sprintf(Buffer2,"  Writing %s: ",DecodeUnicodeString(Files2.Name));
 		AddOneFile(&Files2, Buffer2, false);
 
-		//cleaning buffers
+		/* cleaning buffers */
 		free(Files2.Buffer);
 		Files2.Buffer=NULL;
 		while (Entry!=NULL) {
@@ -381,7 +381,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 		}
 	}
 
-	//going into subfolders
+	/* going into subfolders */
 	if (NamesPos != 0) {
 		i = 0; j = 0;
 		while (i != NamesPos) {
@@ -403,7 +403,7 @@ void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
 
 	GSM_Init(true);
 
-	//delete old playlists
+	/* delete old playlists */
 	EncodeUnicode(IDFolder,"d:\\predefplaylist",17);
 	CopyUnicodeString(Files.ID_FullName,IDFolder);
 	error = GSM_GetFolderListing(gsm,&Files,Start);
@@ -438,11 +438,11 @@ void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
 	    	Print_Error(error);
 	}
 
-	//go over phone memory and add new one playlists
+	/* go over phone memory and add new one playlists */
 	EncodeUnicode(buffer,"d:",2);
 	EncodeUnicode(buffer2,"root",4);
 	NokiaAddPlayLists2(buffer,buffer2,IDFolder);
-	//go over memory card and add new one playlists
+	/* go over memory card and add new one playlists */
 	EncodeUnicode(buffer,"a:",2);
 	EncodeUnicode(buffer2,"root",4);
 	NokiaAddPlayLists2(buffer,buffer2,IDFolder);
@@ -471,24 +471,24 @@ struct NokiaFolderInfo Folder[] = {
 	{"", 	 "Video",	   "d:/predefgallery/predefvideos",			""},
 	{"", 	 "Playlist",	   "d:/predefplaylist",					""},
 	{"", 	 "MemoryCard",	   "a:",						""},
-	    //now values first seen in S40 3.0
+	    /* now values first seen in S40 3.0 */
 	{"",	 "Application",	   "d:/predefjava/predefcollections",			""},
 	{"",	 "Game",	   "d:/predefjava/predefgames",				""},
 
 	/* Language depedent in DCT4 filesystem 1 */
 	{"",	 "Gallery",	   "Clip-arts",					"3"},
-	{"",	 "Gallery",	   "004F006200720061007A006B0069",		"3"},//obrazki PL 6220
-	{"",	 "Gallery",	   "Pictures",					"2"},//3510
+	{"",	 "Gallery",	   "004F006200720061007A006B0069",		"3"},/* obrazki PL 6220 */
+	{"",	 "Gallery",	   "Pictures",					"2"},/* 3510 */
 	{"",	 "Gallery2",	   "Graphics",					"3"},
-	{"",	 "Gallery2",	   "00470072006100660069006B0061",		"3"},//grafika PL 6220
+	{"",	 "Gallery2",	   "00470072006100660069006B0061",		"3"},/* grafika PL 6220 */
 	{"",	 "Camera",	   "Images",					"3"},
-	{"",	 "Camera",	   "005A0064006A0119006300690061",		"3"},//zdjecia PL 6220
+	{"",	 "Camera",	   "005A0064006A0119006300690061",		"3"},/* zdjecia PL 6220 */
 	{"",	 "Tones",	   "Tones",					"3"},
-	{"",	 "Tones",	   "0044017A007700690119006B0069",		"3"},//dzwieki pl 6220
+	{"",	 "Tones",	   "0044017A007700690119006B0069",		"3"},/* dzwieki pl 6220 */
 	{"",	 "Records",	   "Recordings",				"3"},
-	{"",	 "Records",	   "004E0061006700720061006E00690061",		"3"},//nagrania pl 6220
+	{"",	 "Records",	   "004E0061006700720061006E00690061",		"3"},/* nagrania pl 6220 */
 	{"",	 "Video",	   "Video clips",				"3"},
-	{"",	 "Video",	   "0057006900640065006F006B006C006900700079",	"3"},//wideoklipy pl 6220
+	{"",	 "Video",	   "0057006900640065006F006B006C006900700079",	"3"},/* wideoklipy pl 6220 */
 
 	/* Language indepedent in OBEX */
 	{"obex", "MMSUnreadInbox", "predefMessages\\predefINBOX", 		""},
@@ -496,8 +496,8 @@ struct NokiaFolderInfo Folder[] = {
 	{"obex", "MMSOutbox",	   "predefMessages\\predefOUTBOX", 		""},
 	{"obex", "MMSSent",	   "predefMessages\\predefSENT", 		""},
 	{"obex", "MMSDrafts",	   "predefMessages\\predefDRAFTS", 		""},
-//	{"obex", "Application,	   "predefjava\\predefapplications", 		""},
-//	{"obex", "Game",	   "predefjava\\predefgames", 			""},
+/* 	{"obex", "Application,	   "predefjava\\predefapplications", 		""}, */
+/* 	{"obex", "Game",	   "predefjava\\predefgames", 			""}, */
 	{"obex", "Gallery",	   "predefgallery\\predefgraphics", 		""},
 	{"obex", "Tones",	   "predefgallery\\predeftones", 		""},
 

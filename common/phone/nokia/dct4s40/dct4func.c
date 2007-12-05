@@ -93,14 +93,14 @@ GSM_Error DCT4_Reset(GSM_StateMachine *s, bool hard)
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x05,
 			       0x80,		/* 0x80 - reset, 0x00 - off */
 			       0x00};
-//	unsigned char TimeReq[] = {N6110_FRAME_HEADER, 0x0E, 0x00, 0x00};
+/* 	unsigned char TimeReq[] = {N6110_FRAME_HEADER, 0x0E, 0x00, 0x00}; */
 
 	if (hard) return ERR_NOTSUPPORTED;
 
-//	error = DCT4_SetPhoneMode(s, DCT4_MODE_TEST);
-//	if (error != ERR_NONE) return error;
-//	error = DCT4_SetPhoneMode(s, DCT4_MODE_NORMAL);
-//	if (error != ERR_NONE) return error;
+/* 	error = DCT4_SetPhoneMode(s, DCT4_MODE_TEST); */
+/* 	if (error != ERR_NONE) return error; */
+/* 	error = DCT4_SetPhoneMode(s, DCT4_MODE_NORMAL); */
+/* 	if (error != ERR_NONE) return error; */
 
 	s->Phone.Data.EnableIncomingSMS = false;
 	s->Phone.Data.EnableIncomingCB  = false;

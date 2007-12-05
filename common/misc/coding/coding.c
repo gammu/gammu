@@ -1461,13 +1461,13 @@ int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsigne
 {
 	int src = mychar1*256+mychar2;
 
-	//Unicode 0080-07FF -> UTF8 110xxxxx 10xxxxxx
+	/* Unicode 0080-07FF -> UTF8 110xxxxx 10xxxxxx */
 	if (src >=128 && src <=2047) {
 		ret[0] = 192 + (src / 64);
 		ret[1] = 128 + (src % 64);
 		return 2;
 	}
-	//Unicode 0800-FFFF -> UTF8 1110xxxx 10xxxxxx 10xxxxxx
+	/* Unicode 0800-FFFF -> UTF8 1110xxxx 10xxxxxx 10xxxxxx */
 	if (src >2047) {
 		ret[0] = 224 + (src / 4096);
 		ret[1] = 128 + ((src / 64) % 64);
@@ -1475,7 +1475,7 @@ int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2, unsigne
 		return 3;
 	}
 
-	//Unicode 0000-007F -> UTF8 0xxxxxxx
+	/* Unicode 0000-007F -> UTF8 0xxxxxxx */
 	ret[0] = mychar2;
 	return 1;
 }
@@ -1600,7 +1600,7 @@ void DecodeUTF8QuotedPrintable(unsigned char *dest, const unsigned char *src, in
 		}
 		if (z>0) {
 			i += z * 3;
-			// we ignore wrong sequence
+			/*  we ignore wrong sequence */
 			if (DecodeWithUTF8Alphabet(mychar,&ret,z)==0) continue;
 		} else {
 			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);

@@ -99,7 +99,7 @@ void GetFileSystem(int argc, char *argv[])
 		}
 
 		if (argc <= 2 || !strcasecmp(argv[2], "-flatall") == 0) {
-			//Nokia filesystem 1
+			/* Nokia filesystem 1 */
 			if (UnicodeLength(Files.ID_FullName) != 0 &&
 			    (DecodeUnicodeString(Files.ID_FullName)[0] == 'C' ||
 			     DecodeUnicodeString(Files.ID_FullName)[0] ==

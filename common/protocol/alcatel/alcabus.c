@@ -83,7 +83,6 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 
 	if (type == ALCATEL_CONNECT || type == ALCATEL_DISCONNECT) {
 		/* For connect and disconnect we need a bit larger delay */
-//		my_sleep(10);
 		while (d->busy) {
 			GSM_ReadDevice(s,true);
 			my_sleep(1);

@@ -2117,8 +2117,9 @@ static GSM_Error ALCATEL_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				entry->Entries[NamePosition].AddError = ERR_NOTSUPPORTED;
 				smprintf(s,"WARNING: Ignoring name, not supported by phone\n");
 			} else {
-				//mw: fixme ?
-				UpdatedFields[1] = true; if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 1, entry->Entries[i].Text)) != ERR_NONE) return error;
+				/* mw: fixme ? */
+				UpdatedFields[1] = true;
+				if ((error = ALCATEL_UpdateField(s, Alcatel_string, entry->Location, 1, entry->Entries[i].Text)) != ERR_NONE) return error;
 			}
 		}
 		/* If we didn't update some field, we have to delete it... */

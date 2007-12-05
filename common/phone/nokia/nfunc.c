@@ -328,8 +328,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	while (true) {
 		if (bs != 0) {
 			length = length + bs;
-//			if (length == MessageLength) break;
-			//bb5
+			/* bb5 */
 			if (length >= MessageLength-1) break;
 			Block = &Block[bs];
 		}
@@ -369,8 +368,6 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	while (true) {
 		if (bs != 0) {
 			length = length + bs;
-//			if (length == MessageLength) break;
-			//bb5
 			if (length >= MessageLength-1) break;
 			Block = &Block[bs];
 		}
@@ -428,7 +425,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		if (Block[0] == N7110_PBK_DATETIME) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
 			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date);
-			//some phones reverse it
+			/* some phones reverse it */
 			if (entry->Entries[entry->EntriesNum].Date.Year > 3000) {
 				entry->Entries[entry->EntriesNum].Date.Year = Block[7]*256+Block[6];
 			}
@@ -505,7 +502,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->EntriesNum ++;
 			continue;
 		}
-		//to checking
+		/* to checking */
 		if (Block[0] == S4030_PBK_CALLLENGTH) {
 			entry->Entries[entry->EntriesNum].CallLength = Block[9]*256*256+Block[10]*256+Block[11];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_CallLength;
@@ -675,9 +672,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		if (Block[0] == S4030_PBK_BIRTHDAY) {
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
 			NOKIA_DecodeDateTime(s, Block+6, &entry->Entries[entry->EntriesNum].Date);
-			// We don't have seconds available here
+			/* We don't have seconds available here */
 			entry->Entries[entry->EntriesNum].Date.Second = 0;
-			//some phones reverse it
+			/* some phones reverse it */
 			if (entry->Entries[entry->EntriesNum].Date.Year > 3000) {
 				entry->Entries[entry->EntriesNum].Date.Year = Block[7]*256+Block[6];
 			}
@@ -795,12 +792,11 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				bitmap->RingtoneID		= Block[10]*256+Block[11];
 				bitmap->DefaultRingtone 	= false;
 			} else {
-				//series 40 3.0
+				/* series 40 3.0 */
 				smprintf(s, "Filesystem ringtone ID: %02x\n",Block[10]*256+Block[11]);
 				entry->Entries[entry->EntriesNum].EntryType=PBK_RingtoneID;
 				entry->Entries[entry->EntriesNum].Number=Block[10]*256+Block[11];
 				entry->EntriesNum ++;
-//				return ERR_UNKNOWNRESPONSE;
 			}
 			continue;
 		}
@@ -1501,7 +1497,7 @@ GSM_Error N71_65_ReplyGetMemoryError(unsigned char error, GSM_StateMachine *s)
 	case 0x34:
 		smprintf(s, "Too high location ?\n");
 		return ERR_INVALIDLOCATION;
-	case 0x3B: //Tim Dreessen, 6230
+	case 0x3B: /* Tim Dreessen, 6230 */
 		smprintf(s, "Empty location\n");
 		s->Phone.Data.Memory->EntriesNum = 0;
 		return ERR_EMPTY;
@@ -1741,7 +1737,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		break;
 	case 0x03:
 		smprintf(s, "Call started\n");
-		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);//such interpretation is in gnokii
+		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);/* such interpretation is in gnokii */
 		tmp = 6;
 		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,false);
 		smprintf(s, "Number     : \"%s\"\n",DecodeUnicodeString(buffer));
@@ -1751,7 +1747,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		break;
 	case 0x04:
 		smprintf(s, "Remote end hang up\n");
-		smprintf(s, "Cause Type : %i\n",msg.Buffer[5]);//such interpretation is in gnokii
+		smprintf(s, "Cause Type : %i\n",msg.Buffer[5]);/* such interpretation is in gnokii */
 		smprintf(s, "CC         : %i\n",msg.Buffer[6]);
 		smprintf(s, "MM(?)      : %i\n",msg.Buffer[7]);
 		smprintf(s, "RR(?)      : %i\n",msg.Buffer[8]);
@@ -1760,7 +1756,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		break;
 	case 0x05:
 		smprintf(s, "Incoming call\n");
-		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);//such interpretation is in gnokii
+		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);/* such interpretation is in gnokii */
 		tmp = 6;
 		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,false);
 		smprintf(s, "Number     : \"%s\"\n",DecodeUnicodeString(buffer));
@@ -1789,7 +1785,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				      else smprintf(s, "Audio disabled\n");
 		call.CallIDAvailable = false;
 		break;
-	case 0x0f: //6111
+	case 0x0f: /* 6111 */
 		if (msg.Buffer[8]==0x01) {
 			smprintf(s, "Calling from phone keypad ?\n");
 			if (msg.Buffer[14]==0x03) {
@@ -1832,7 +1828,7 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		break;
 	case 0x53:
 		smprintf(s, "Outgoing call\n");
-		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);//such interpretation is in gnokii
+		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);/* such interpretation is in gnokii */
 		tmp = 6;
 		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,false);
 		smprintf(s, "Number     : \"%s\"\n",DecodeUnicodeString(buffer));

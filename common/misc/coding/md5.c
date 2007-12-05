@@ -62,7 +62,7 @@
 #include <stdlib.h>
 
 #include "md5.h"
-#include "gammu.h" //include added bacause of MS VC 2005
+#include "gammu.h" /* include added because of MS VC 2005 */
 
 /* Typedef a 32 bit type */
 #ifndef UINT4
@@ -208,7 +208,7 @@ static void MD5_Transform (UINT4 *buf, UINT4 *in)
 	buf[3] += d;
 }
 
-// Set pseudoRandomNumber to zero for RFC MD5 implementation
+/* Set pseudoRandomNumber to zero for RFC MD5 implementation */
 void MD5Init (MD5_CTX *mdContext, unsigned long pseudoRandomNumber)
 {
 	mdContext->i[0] = mdContext->i[1] = (UINT4)0;

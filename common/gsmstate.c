@@ -46,7 +46,7 @@ typedef struct {
 static const GSM_ConnectionInfo GSM_Connections[] = {
 	{"at", GCT_AT, false},
 
-	// cables
+	/* cables */
 	{"mbus", GCT_MBUS2, false},
 	{"fbus", GCT_FBUS2, false},
 	{"fbuspl2303", GCT_FBUS2PL2303, false},
@@ -59,11 +59,11 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 	{"dku2phonet", GCT_DKU2PHONET, false},
 	{"dku2at", GCT_DKU2AT, false},
 
-        // for serial ports assigned by bt stack
+        /* for serial ports assigned by bt stack */
 	{"fbusblue", GCT_FBUS2BLUE, false},
 	{"phonetblue", GCT_PHONETBLUE, false},
 
-	// bt
+	/* bt */
 	{"blueobex", GCT_BLUEOBEX, false},
 	{"bluephonet", GCT_BLUEPHONET, false},
 	{"blueat", GCT_BLUEAT, false},
@@ -73,11 +73,11 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 	{"bluerfat", GCT_BLUEAT, false},
 	{"bluerfgnapbus", GCT_BLUEGNAPBUS, false},
 
-	// old "serial" irda
+	/* old "serial" irda */
 	{"infrared", GCT_FBUS2IRDA, false},
 	{"fbusirda", GCT_FBUS2IRDA, false},
 
-	// socket irda
+	/* socket irda */
 	{"irda", GCT_IRDAPHONET, false},
 	{"irdaphonet", GCT_IRDAPHONET, false},
 	{"irdaat", GCT_IRDAAT, false},
@@ -677,7 +677,6 @@ GSM_Error GSM_WaitFor (GSM_StateMachine *s, unsigned const char *buffer,
 		if (error != ERR_TIMEOUT) return error;
         }
 
-//	return Phone->DispatchError;
 	return ERR_TIMEOUT;
 }
 
@@ -1195,7 +1194,7 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 				FORMAT_MESSAGE_IGNORE_INSERTS,
 				NULL,
 				GetLastError(),
-				MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), // Default language
+				MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /* Default language */
 				(LPTSTR) &lpMsgBuf,
 				0,
 				NULL
@@ -1232,7 +1231,6 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
 	GSM_MultiWAPSettings	WAPSettings;
  	GSM_FMStation		FMStation;
  	GSM_GPRSAccessPoint	GPRSPoint;
-//	GSM_Profile		Profile;
 
 	if (info->PhonePhonebook) {
 		MemStatus.MemoryType = MEM_ME;

@@ -106,7 +106,7 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 	if (stat(FileName,&fileinfo) == 0) {
 		File->ModifiedEmpty = false;
 		dbgprintf("File info read correctly\n");
-		//st_mtime is time of last modification of file
+		/* st_mtime is time of last modification of file */
 		Fill_GSM_DateTime(&File->Modified, fileinfo.st_mtime);
 		File->Modified.Year = File->Modified.Year + 1900;
 		dbgprintf("FileTime: %02i-%02i-%04i %02i:%02i:%02i\n",

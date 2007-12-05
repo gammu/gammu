@@ -996,8 +996,14 @@ typedef enum {
  */
 typedef struct {
 	GSM_File File;
-	unsigned char ContentType[400];	// CT in Unicode
-	unsigned char SMIL[400];	// Smil ID in Unicode
+	/**
+	 * CT in Unicode
+	 */
+	unsigned char ContentType[400];
+	/**
+	 * Smil ID in Unicode
+	 */
+	unsigned char SMIL[400];
 } GSM_EncodedMultiPartMMSEntry;
 
 /**
@@ -1008,16 +1014,34 @@ typedef struct {
 typedef struct {
 	int EntriesNum;
 
-	unsigned char Source[200];	// in Unicode
+	/**
+	 * in Unicode
+	 */
+	unsigned char Source[200];
 	MMSAddressType SourceType;
-	unsigned char Destination[200];	// in Unicode
+	/**
+	 * in Unicode
+	 */
+	unsigned char Destination[200];
 	MMSAddressType DestinationType;
-	unsigned char CC[200];	// in Unicode
+	/**
+	 * in Unicode
+	 */
+	unsigned char CC[200];
 	MMSAddressType CCType;
 
-	unsigned char Subject[200];	// in Unicode
-	unsigned char ContentType[400];	// CT in Unicode
-	unsigned char MSGType[50];	// no Unicode
+	/**
+	 * in Unicode
+	 */
+	unsigned char Subject[200];
+	/**
+	 * CT in Unicode
+	 */
+	unsigned char ContentType[400];
+	/**
+	 * no Unicode
+	 */
+	unsigned char MSGType[50];
 
 	bool DateTimeAvailable;
 	GSM_DateTime DateTime;

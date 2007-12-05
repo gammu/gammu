@@ -50,7 +50,7 @@ static GSM_Error N6110_ReplyGetPhoneLanguage(GSM_Protocol_Message msg, GSM_State
 
         smprintf(s, "Phone language is %02x\n",msg.Buffer[6]);
         switch (msg.Buffer[6]) {
-                case 0x21: lang = N6110_Europe; break; //Polish
+                case 0x21: lang = N6110_Europe; break; /* Polish */
         }
         s->Phone.Data.Priv.N6110.PhoneLanguage = lang;
         return ERR_NONE;
@@ -82,25 +82,25 @@ struct N6110_Lang_Char {
 };
 
 static struct N6110_Lang_Char N6110_Lang_Table[] = {
-{N6110_Europe,0x13,0x01,0x04},//Latin capital letter a with ogonek
-{N6110_Europe,0x14,0x01,0x05},//Latin small   letter a with ogonek
-{N6110_Europe,0x15,0x01,0x06},//Latin capital letter c with acute
-{N6110_Europe,0x17,0x01,0x07},//Latin small   letter c with acute
-{N6110_Europe,0x1D,0x01,0x18},//Latin capital letter e with ogonek
-{N6110_Europe,0x1E,0x01,0x19},//Latin small   letter e with ogonek
-{N6110_Europe,0x83,0x00,0xD3},//Latin capital letter o with acute
-{N6110_Europe,0x8E,0x01,0x41},//Latin capital letter l with stroke
-{N6110_Europe,0x90,0x01,0x42},//Latin small   letter l with stroke
-{N6110_Europe,0x92,0x01,0x43},//Latin capital letter n with acute
-{N6110_Europe,0x93,0x01,0x44},//Latin small   letter n with acute
-{N6110_Europe,0x9A,0x00,0xF3},//Latin small   letter o with acute
-{N6110_Europe,0xB2,0x20,0xAC},//euro
-{N6110_Europe,0xB5,0x01,0x5A},//Latin capital letter s with acute
-{N6110_Europe,0xB6,0x01,0x5B},//Latin small   letter s with acute
-{N6110_Europe,0xE7,0x01,0x79},//Latin capital letter z with acute
-{N6110_Europe,0xEE,0x01,0x7A},//Latin small   letter z with acute
-{N6110_Europe,0xF4,0x01,0x7C},//Latin small   letter z with dot above
-{N6110_Europe,0xF0,0x01,0x7B},//Latin capital letter z with dot above
+{N6110_Europe,0x13,0x01,0x04},/* Latin capital letter a with ogonek */
+{N6110_Europe,0x14,0x01,0x05},/* Latin small   letter a with ogonek */
+{N6110_Europe,0x15,0x01,0x06},/* Latin capital letter c with acute */
+{N6110_Europe,0x17,0x01,0x07},/* Latin small   letter c with acute */
+{N6110_Europe,0x1D,0x01,0x18},/* Latin capital letter e with ogonek */
+{N6110_Europe,0x1E,0x01,0x19},/* Latin small   letter e with ogonek */
+{N6110_Europe,0x83,0x00,0xD3},/* Latin capital letter o with acute */
+{N6110_Europe,0x8E,0x01,0x41},/* Latin capital letter l with stroke */
+{N6110_Europe,0x90,0x01,0x42},/* Latin small   letter l with stroke */
+{N6110_Europe,0x92,0x01,0x43},/* Latin capital letter n with acute */
+{N6110_Europe,0x93,0x01,0x44},/* Latin small   letter n with acute */
+{N6110_Europe,0x9A,0x00,0xF3},/* Latin small   letter o with acute */
+{N6110_Europe,0xB2,0x20,0xAC},/* euro */
+{N6110_Europe,0xB5,0x01,0x5A},/* Latin capital letter s with acute */
+{N6110_Europe,0xB6,0x01,0x5B},/* Latin small   letter s with acute */
+{N6110_Europe,0xE7,0x01,0x79},/* Latin capital letter z with acute */
+{N6110_Europe,0xEE,0x01,0x7A},/* Latin small   letter z with acute */
+{N6110_Europe,0xF4,0x01,0x7C},/* Latin small   letter z with dot above */
+{N6110_Europe,0xF0,0x01,0x7B},/* Latin capital letter z with dot above */
 {0,0,0,0}
 };
 
@@ -1987,7 +1987,7 @@ static GSM_Error N6110_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
                 if (Profile->Location == 3) Profile->HeadSetProfile = true;
         }
         if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES33)) {
-                Profile->HeadSetProfile         = false; //fixme
+                Profile->HeadSetProfile         = false; /* fixme */
                 Profile->CarKitProfile          = false;
         }
 
@@ -2585,7 +2585,7 @@ GSM_Error N6110_SplitCall(GSM_StateMachine *s, int ID)
 /* This probably need more investigation */
 GSM_Error N6110_SwitchCall(GSM_StateMachine *s, int ID, bool next)
 {
-//      unsigned char req[] = {N6110_FRAME_HEADER, 0x20};  calls info
+/*       unsigned char req[] = {N6110_FRAME_HEADER, 0x20};  calls info */
         unsigned char req[] = {N6110_FRAME_HEADER, 0x26, 0x00};
 
         s->Phone.Data.CallID = ID;
@@ -2693,7 +2693,7 @@ static GSM_Reply_Function N6110ReplyFunctions[] = {
         {DCT3DCT4_ReplyCallDivert,        "\x06",0x03,0x02,ID_Divert             },
         {DCT3DCT4_ReplyCallDivert,        "\x06",0x03,0x03,ID_Divert             },
         {N6110_ReplyUSSDInfo,             "\x06",0x03,0x05,ID_IncomingFrame      },
-        {NoneReply,		          "\x06",0x03,0x06,ID_IncomingFrame      },//incoming call divert info
+        {NoneReply,		          "\x06",0x03,0x06,ID_IncomingFrame      },/* incoming call divert info */
 
         {N6110_ReplyGetSecurityStatus,    "\x08",0x03,0x08,ID_GetSecurityStatus  },
         {N6110_ReplyEnterSecurityCode,    "\x08",0x03,0x0b,ID_EnterSecurityCode  },

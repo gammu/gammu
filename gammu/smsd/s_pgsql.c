@@ -117,7 +117,6 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 		return ERR_UNKNOWN;
 	}
 	if (atoi(PQgetvalue(Res, 0, 0)) < 7) {
-		//    if (atoi(Row[0]) < 7) {
 		WriteSMSDLog(_
 			     ("DataBase structures are from older Gammu version"));
 		WriteSMSDLog(_

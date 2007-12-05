@@ -46,7 +46,6 @@ GSM_Error FindBackupChecksum(char *FileName, bool UseUnicode, char *checksum)
 			buffer = (unsigned char *)realloc(buffer,len+UnicodeLength(h->SectionName)*2+2);
 			CopyUnicodeString(buffer+len,h->SectionName);
 			len+=UnicodeLength(h->SectionName)*2;
-//			dbgprintf("[%s]\n",DecodeUnicodeConsole(h->SectionName));
 
 		        for (e = h->SubEntries; e != NULL; e = e->Next) {
 				buffer = (unsigned char *)realloc(buffer,len+UnicodeLength(e->EntryName)*2+2);
@@ -55,8 +54,6 @@ GSM_Error FindBackupChecksum(char *FileName, bool UseUnicode, char *checksum)
 				buffer = (unsigned char *)realloc(buffer,len+UnicodeLength(e->EntryValue)*2+2);
 				CopyUnicodeString(buffer+len,e->EntryValue);
 				len+=UnicodeLength(e->EntryValue)*2;
-//				dbgprintf("\"%s\"",DecodeUnicodeConsole(e->EntryName));
-//				dbgprintf("=\"%s\"\n",DecodeUnicodeConsole(e->EntryValue));
 			}
 		}
 	} else {
@@ -68,7 +65,6 @@ GSM_Error FindBackupChecksum(char *FileName, bool UseUnicode, char *checksum)
 			len+=strlen(h->SectionName);
 
 		        for (e = h->SubEntries; e != NULL; e = e->Next) {
-//				dbgprintf("%s=%s\n",e->EntryName,e->EntryValue);
 				buffer = (unsigned char *)realloc(buffer,len+strlen(e->EntryName)+1);
 				strcpy(buffer+len,e->EntryName);
 				len+=strlen(e->EntryName);
@@ -79,7 +75,6 @@ GSM_Error FindBackupChecksum(char *FileName, bool UseUnicode, char *checksum)
 		}
 	}
 
-	//for (i=0;i<len;i++) printf("%02x",buffer[i]);
 	CalculateMD5(buffer, len, checksum);
 	free(buffer);
 
@@ -1997,7 +1992,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		note->Entries[note->EntriesNum].EntryType = CAL_CONTACTID;
 		note->EntriesNum++;
 	}
-	// StartTime must be before Recurrance
+	/* StartTime must be before Recurrance */
 	sprintf(buffer,"StartTime");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {

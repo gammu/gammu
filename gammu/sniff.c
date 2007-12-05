@@ -365,11 +365,6 @@ void decodebinarydump(int argc, char *argv[])
 		printf("Can not open file \"%s\"\n",argv[2]);
 		exit(-1);
 	}
-//	len2=fread(Buffer, 1, 1, file);
-//	len2=Buffer[0];
-//	len =fread(Buffer, 1, len2, file);
-//	Buffer[len2]=0;
-//	dbgprintf("[Gammu            - version %s]\n",Buffer);
 	len2=30000;
 	msg.Buffer = NULL;
 	while (len2==30000) {

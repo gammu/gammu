@@ -88,11 +88,13 @@ static GSM_Error N3650_GetFilePart(GSM_StateMachine *s, GSM_File *File, int *Han
 	s->Phone.Data.File = File;
 	error = GSM_WaitFor (s, ContinueReq, 14, 0x58, 4, ID_GetFile);
 
-//	if (error == GE_EMPTY) {
-//		error = DCT4_SetPhoneMode(s, DCT4_MODE_NORMAL);
-//		if (error != ERR_NONE) return error;
-//		return GE_EMPTY;
-//	}
+#if 0
+	if (error == GE_EMPTY) {
+		error = DCT4_SetPhoneMode(s, DCT4_MODE_NORMAL);
+		if (error != ERR_NONE) return error;
+		return GE_EMPTY;
+	}
+#endif
 
 	return error;
 }
@@ -191,8 +193,10 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bo
 	}
 
 	if (Priv->FilesLocationsCurrent == Priv->FilesLocationsUsed) {
-//		error = DCT4_SetPhoneMode(s, DCT4_MODE_NORMAL);
-//		if (error != ERR_NONE) return error;
+#if 0
+		error = DCT4_SetPhoneMode(s, DCT4_MODE_NORMAL);
+		if (error != ERR_NONE) return error;
+#endif
 
 		return ERR_EMPTY;
 	}
@@ -215,7 +219,9 @@ static GSM_Error N3650_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bo
 				error = DCT4_SetPhoneMode(s, DCT4_MODE_LOCAL);
 				error = DCT4_SetPhoneMode(s, DCT4_MODE_LOCAL);
 			}
-//		if (error != ERR_NONE) return error;
+#if 0
+		if (error != ERR_NONE) return error;
+#endif
 		}
 	}
 

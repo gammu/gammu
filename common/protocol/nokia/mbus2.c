@@ -25,8 +25,8 @@ static GSM_Error MBUS2_WriteMessage (GSM_StateMachine 	*s,
 	buffer2 = (unsigned char *)malloc(MsgLength + 8);
 
 	buffer2[0] = MBUS2_FRAME_ID;
-	buffer2[1] = MBUS2_DEVICE_PHONE;		// destination
-	buffer2[2] = MBUS2_DEVICE_PC;    		// source
+	buffer2[1] = MBUS2_DEVICE_PHONE;		/*  destination */
+	buffer2[2] = MBUS2_DEVICE_PC;    		/*  source */
 	buffer2[3] = MsgType;
 	buffer2[4] = MsgLength / 256;
 	buffer2[5] = MsgLength % 256;
@@ -73,8 +73,8 @@ static GSM_Error MBUS2_SendAck(GSM_StateMachine 	*s,
 	int 			i;
 
 	buffer2[0] = MBUS2_FRAME_ID;
-	buffer2[1] = MBUS2_DEVICE_PHONE;	//destination
-	buffer2[2] = MBUS2_DEVICE_PC;		//source
+	buffer2[1] = MBUS2_DEVICE_PHONE;	/* destination */
+	buffer2[2] = MBUS2_DEVICE_PC;		/* source */
 	buffer2[3] = MBUS2_ACK_BYTE;
 	buffer2[4] = sequence;
 	buffer2[5] = 0;
