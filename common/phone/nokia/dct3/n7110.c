@@ -46,13 +46,11 @@ static GSM_Error N7110_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
 	smprintf(s, "Phonebook entry received\n");
-	switch (msg.Buffer[6]) {
-	case 0x0f:
+
+	if (msg.Buffer[6] == 0x0f)
 		return N71_65_ReplyGetMemoryError(msg.Buffer[10], s);
-	default:
-		return N71_65_DecodePhonebook(s, Data->Memory,Data->Bitmap,Data->SpeedDial,msg.Buffer+18,msg.Length-18,false);
-	}
-	return ERR_UNKNOWN;
+
+	return N71_65_DecodePhonebook(s, Data->Memory,Data->Bitmap,Data->SpeedDial,msg.Buffer+18,msg.Length-18,false);
 }
 
 static GSM_Error N7110_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
@@ -1419,24 +1417,27 @@ static GSM_Error N7110_SetIncomingCall(GSM_StateMachine *s, bool enable)
 {
 #ifndef GSM_ENABLE_N71_92INCOMINGINFO
 	return ERR_SOURCENOTAVAILABLE;
-#endif
+#else
 	return NOKIA_SetIncomingCall(s,enable);
+#endif
 }
 
 static GSM_Error N7110_SetIncomingUSSD(GSM_StateMachine *s, bool enable)
 {
 #ifndef GSM_ENABLE_N71_92INCOMINGINFO
 	return ERR_SOURCENOTAVAILABLE;
-#endif
+#else
 	return NOKIA_SetIncomingUSSD(s,enable);
+#endif
 }
 
 static GSM_Error N7110_SetIncomingSMS(GSM_StateMachine *s, bool enable)
 {
 #ifndef GSM_ENABLE_N71_92INCOMINGINFO
 	return ERR_SOURCENOTAVAILABLE;
-#endif
+#else
 	return NOKIA_SetIncomingSMS(s,enable);
+#endif
 }
 
 GSM_Error N7110_AnswerCall(GSM_StateMachine *s, int ID, bool all)

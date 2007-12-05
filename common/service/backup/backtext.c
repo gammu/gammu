@@ -2950,20 +2950,6 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
                 }
         }
 	num = 0;
-	while (0) {
-		if (backup->PhonePhonebook[num] == NULL) break;
-		if (backup->PhonePhonebook[num+1] != NULL) {
-			if (backup->PhonePhonebook[num+1]->Location < backup->PhonePhonebook[num]->Location) {
-				memcpy(&PBK,backup->PhonePhonebook[num+1],sizeof(GSM_MemoryEntry));
-				memcpy(backup->PhonePhonebook[num+1],backup->PhonePhonebook[num],sizeof(GSM_MemoryEntry));
-				memcpy(backup->PhonePhonebook[num],&PBK,sizeof(GSM_MemoryEntry));
-				num = 0;
-				continue;
-			}
-		}
-		num++;
-	}
-	num = 0;
         for (h = file_info; h != NULL; h = h->Next) {
 		found = false;
 		if (UseUnicode) {

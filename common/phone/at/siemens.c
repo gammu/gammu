@@ -236,10 +236,17 @@ GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 		Location++;
 		sprintf(req, "AT^SBNR=\"vcs\",%i\r",Location);
 		error = GSM_WaitFor (s, req, strlen(req), 0x00, 4, ID_GetCalendarNote);
-		if ((error!=ERR_NONE) && (error!=ERR_EMPTY)) return ERR_INVALIDLOCATION;
+		if ((error!=ERR_NONE) && (error!=ERR_EMPTY)) {
+			error = ERR_INVALIDLOCATION;
+			break;
+		}
 		Note->Location 		= Location;
-		if (Location > MAX_VCALENDAR_LOCATION) return ERR_EMPTY;
-		if (error==ERR_NONE) return error;
+		if (Location > MAX_VCALENDAR_LOCATION) {
+			error = ERR_EMPTY;
+			break;
+		}
+		if (error==ERR_NONE) 
+			break;
 	}
 	return error;
 }

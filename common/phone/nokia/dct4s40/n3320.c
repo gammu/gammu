@@ -18,13 +18,10 @@
 static GSM_Error N3320_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Phonebook entry received\n");
-	switch (msg.Buffer[6]) {
-	case 0x0f:
+	if (msg.Buffer[6] == 0x0f)
 		return N71_65_ReplyGetMemoryError(msg.Buffer[10], s);
-	default:
-		return N71_65_DecodePhonebook(s, s->Phone.Data.Memory, s->Phone.Data.Bitmap, s->Phone.Data.SpeedDial, msg.Buffer+22, msg.Length-22,true);
-	}
-	return ERR_UNKNOWN;
+
+	return N71_65_DecodePhonebook(s, s->Phone.Data.Memory, s->Phone.Data.Bitmap, s->Phone.Data.SpeedDial, msg.Buffer+22, msg.Length-22,true);
 }
 
 static GSM_Error N3320_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)

@@ -27,6 +27,7 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 	unsigned char	*buffer2 = NULL, *buffer1 = NULL, buff[1000];
         INI_Section 	*INI_info = NULL, *INI_head = NULL, *heading;
         INI_Entry 	*entry;
+	GSM_Error	error = ERR_NONE;
 
 	*result = NULL;
 
@@ -42,11 +43,8 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 				buffused = fread(buff,1,1000,f);
 				buffread = 0;
 				if (buffused == 0) {
-					free(buffer); free(buffer1); free(buffer2);
-					fclose(f);
-					*result = INI_head;
-					if (INI_head == NULL) return ERR_FILENOTSUPPORTED;
-					return ERR_NONE;
+					error = ERR_NONE;
+					goto done;
 				}
 			}
 			if (Unicode) {
@@ -115,9 +113,8 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 					}
 					heading = (INI_Section *)malloc(sizeof(*heading));
 		                        if (heading == NULL) {
-						free(buffer); free(buffer1); free(buffer2);
-						fclose(f);
-						return ERR_MOREMEMORY;
+						error = ERR_MOREMEMORY;
+						goto done;
 		                        }
 					heading->SectionName = (char *)malloc(buffer1used);
 					memcpy(heading->SectionName,buffer1,buffer1used);
@@ -212,9 +209,8 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 
 			entry = (INI_Entry *)malloc(sizeof(*entry));
                         if (entry == NULL) {
-				free(buffer); free(buffer1); free(buffer2);
-				fclose(f);
-                                return ERR_MOREMEMORY;
+                                error = ERR_MOREMEMORY;
+				goto done;
                         }
 			if (Unicode) {
 				buffer1 		= realloc(buffer1,buffer1used+2);
@@ -249,11 +245,16 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
                         INI_info->SubEntries = entry;
 		}
 	}
+done:
 	free(buffer); free(buffer1); free(buffer2);
 	fclose(f);
-	*result = INI_head;
-	if (INI_head == NULL) return ERR_FILENOTSUPPORTED;
-	return ERR_NONE;
+	if (error == ERR_NONE) {
+		*result = INI_head;
+		if (INI_head == NULL) {
+			error = ERR_FILENOTSUPPORTED;
+		}
+	}
+	return error;
 }
 
 /*

@@ -45,22 +45,19 @@ static GSM_Error N6510_Initialise (GSM_StateMachine *s)
 static GSM_Error N6510_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	smprintf(s, "Phonebook entry received\n");
-	switch (msg.Buffer[6]) {
-	case 0x0f:
+	if (msg.Buffer[6] == 0x0f)
 		return N71_65_ReplyGetMemoryError(msg.Buffer[10], s);
-	default:
-		if (msg.Length < 22) {
-			return ERR_UNKNOWN;
-		}
-		return N71_65_DecodePhonebook(s,
-				s->Phone.Data.Memory,
-				s->Phone.Data.Bitmap,
-				s->Phone.Data.SpeedDial,
-				msg.Buffer + 22,
-				msg.Length - 22,
-				false);
+
+	if (msg.Length < 22) {
+		return ERR_UNKNOWN;
 	}
-	return ERR_UNKNOWN;
+	return N71_65_DecodePhonebook(s,
+			s->Phone.Data.Memory,
+			s->Phone.Data.Bitmap,
+			s->Phone.Data.SpeedDial,
+			msg.Buffer + 22,
+			msg.Length - 22,
+			false);
 }
 
 static GSM_Error N6510_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
@@ -218,7 +215,6 @@ static GSM_Error N6510_ReplySetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *
 			smprintf(s, "Unknown SMSC state: %02x\n",msg.Buffer[4]);
 			return ERR_UNKNOWNRESPONSE;
 	}
-	return ERR_UNKNOWNRESPONSE;
 }
 
 static GSM_Error N6510_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
