@@ -13,6 +13,8 @@
  * @{
  */
 
+#ifndef atgen_motorola_h
+#define atgen_motorola_h
 #include <gammu-config.h>
 
 #ifdef GSM_ENABLE_ATGEN
@@ -27,6 +29,7 @@
  */
 GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command);
 
+#endif
 #endif
 
 /*@}*/

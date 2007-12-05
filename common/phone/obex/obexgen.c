@@ -36,7 +36,6 @@
 #ifdef GSM_ENABLE_OBEXGEN
 
 /* Forward definitions */
-GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start);
 GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char ** Buffer);
 GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s);
 
