@@ -140,7 +140,8 @@ static GSM_Error N3650_GetFolderInfo(GSM_StateMachine *s, GSM_File *File)
 		0x00,
 		0x00};		/* folder name 			*/
 
-	sprintf(req+10,File->ID_FullName);
+	/* FIXME: I doubt this works */
+	sprintf(req+10,"%s", File->ID_FullName);
 	len		+=strlen(File->ID_FullName);
 	req[7] 		= strlen(File->ID_FullName) + 6;
 	req[8] 		= strlen(File->ID_FullName);

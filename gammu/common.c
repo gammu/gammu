@@ -299,7 +299,7 @@ void GSM_Init(bool checkerror)
 			oldpos = pos;
 			continue;
 		}
-		sprintf(latest_version, strstr(PhoneDB.Buffer + oldpos, "<version>") + 9);
+		sprintf(latest_version, "%s", strstr(PhoneDB.Buffer + oldpos, "<version>") + 9);
 		for (i = 0; i < strlen(latest_version); i++) {
 			if (latest_version[i] == '<') {
 				latest_version[i] = 0;

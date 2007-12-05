@@ -709,7 +709,7 @@ void HelpSplit(int cols, int len, unsigned char *buff)
 				pos = 0;
 				in_opt = false;
 				if (!first)
-					printf(spaces);
+					printf("%s", spaces);
 				while (pos < cols - len && remain[pos] != 0) {
 					if (in_opt && remain[pos] == ']') {
 						in_opt = false;
@@ -1129,7 +1129,7 @@ int main(int argc, char *argv[])
 				if (rsslevel > 0
 				    && strstr(RSS.Buffer + oldpos,
 					      "stable version") != NULL) {
-					sprintf(buff,
+					sprintf(buff, "%s", 
 						strstr(RSS.Buffer + oldpos,
 						       "stable version") + 15);
 					for (i = 0; i < strlen(buff); i++) {
@@ -1148,7 +1148,7 @@ int main(int argc, char *argv[])
 				if (rsslevel == 2
 				    && strstr(RSS.Buffer + oldpos,
 					      "test version") != NULL) {
-					sprintf(buff,
+					sprintf(buff, "%s",
 						strstr(RSS.Buffer + oldpos,
 						       "test version") + 13);
 					for (i = 0; i < strlen(buff); i++) {
