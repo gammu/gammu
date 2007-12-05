@@ -1571,7 +1571,7 @@ GSM_Error GNAPGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachin
 	GSM_Phone_GNAPGENData           *Priv = &s->Phone.Data.Priv.GNAPGEN;
 
 	smprintf(s, "gnapplet %i. %i\n",msg.Buffer[4]*256+msg.Buffer[5],msg.Buffer[6]*256+msg.Buffer[7]);
-	Priv->GNAPPLETVer = msg.Buffer[4]*256+msg.Buffer[5] + 0.01*(msg.Buffer[6]*256+msg.Buffer[7]);
+	Priv->GNAPPLETVer = msg.Buffer[4]*256+msg.Buffer[5] * 100 + msg.Buffer[6]*256+msg.Buffer[7];
 
 	len=msg.Buffer[pos]*256+msg.Buffer[pos+1];
 	memset(buff,0,sizeof(buff));
@@ -1652,7 +1652,7 @@ GSM_Error GNAPGEN_GetModel (GSM_StateMachine *s)
 	if (strlen(s->Phone.Data.Model)>0) return ERR_NONE;
 
 	smprintf(s, "Getting model\n");
-	return GSM_WaitFor (s, req, 2, 0x01, 2, ID_GetModel);
+	error = GSM_WaitFor (s, req, 2, 0x01, 2, ID_GetModel);
 	if (error == ERR_NONE) {
 		smprintf_level(s, D_TEXT, "[Connected model  - \"%s\"]\n",
 				s->Phone.Data.Model);
@@ -1668,7 +1668,7 @@ GSM_Error GNAPGEN_GetFirmware (GSM_StateMachine *s)
 	if (strlen(s->Phone.Data.Version)>0) return ERR_NONE;
 
 	smprintf(s, "Getting firmware version\n");
-	return GSM_WaitFor (s, req, 2, 0x01, 2, ID_GetFirmware);
+	error = GSM_WaitFor (s, req, 2, 0x01, 2, ID_GetFirmware);
 	if (error==ERR_NONE) {
 		smprintf_level(s, D_TEXT, "[Firmware version - \"%s\"]\n",
 				s->Phone.Data.Version);
@@ -1686,7 +1686,7 @@ static GSM_Error GNAPGEN_Initialise (GSM_StateMachine *s)
 	error = GNAPGEN_GetManufacturer(s);
 	if (error != ERR_NONE) return error;
 
-	if (Priv->GNAPPLETVer==0.18) return ERR_NONE;
+	if (Priv->GNAPPLETVer == 18) return ERR_NONE;
 	return ERR_GNAPPLETWRONG;
 }
 
