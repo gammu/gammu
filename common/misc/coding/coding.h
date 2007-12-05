@@ -128,9 +128,6 @@ int ClearBit (unsigned char *Buffer, size_t BitNum);
 
 void StringToDouble	(char *text, double *d);
 
-#ifndef HAVE_STRNCASECMP
-extern int strncasecmp (const char *s1, const char *s2, size_t n);
-#endif
 #ifndef HAVE_STRCHRNUL
 extern char *strchrnul(char *s, int find);
 #endif
