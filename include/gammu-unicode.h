@@ -99,7 +99,7 @@ int EncodeWithUTF8Alphabet(unsigned char mychar1, unsigned char mychar2,
  *
  * \ingroup Unicode
  */
-int DecodeWithUTF8Alphabet(unsigned char *src, wchar_t * dest, int len);
+int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t * dest, int len);
 
 /**
  * Decodes string from hex quoted unicode.

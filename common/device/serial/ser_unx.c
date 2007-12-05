@@ -385,7 +385,7 @@ static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
     	GSM_Device_SerialData   *d = &s->Device.Data.Serial;
     	int		     	ret;
     	size_t		  	actual = 0;
-	unsigned char *buffer = (unsigned char *)buf; /* Just to have correct type */
+	const unsigned char *buffer = (const unsigned char *)buf; /* Just to have correct type */
 
 	assert(d->hPhone >= 0);
 

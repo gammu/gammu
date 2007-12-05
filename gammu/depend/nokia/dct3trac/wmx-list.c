@@ -47,8 +47,8 @@ static void wmx_tracelist_free(struct wmx_tracelist *tl)
 /** Comparision function for bsearch */
 static int compar(const void *a, const void *b)
 {
-	int typea = ((struct wmx_tracetype*)a)->type;
-	int typeb = ((struct wmx_tracetype*)b)->type;
+	const int typea = ((const struct wmx_tracetype*)a)->type;
+	const int typeb = ((const struct wmx_tracetype*)b)->type;
 	if(typea < typeb) return -1;
 	if(typea > typeb) return 1;
 	return 0;
