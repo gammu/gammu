@@ -156,6 +156,7 @@ include (CheckTypeSize)
 # Packages in our sources (mostly taken from KDE)
 include (MacroOptionalFindPackage)
 include (MacroGammuOption)
+include (MacroTuneCompiler)
 
 # WE use pkgconfig later
 find_package (PkgConfig)
@@ -349,56 +350,38 @@ if(MSVC)
     endif (HAVE_W3)
 else(MSVC)
     # Check for extra compiler flags we want to use
-    check_c_compiler_flag("-Wall" HAVE_WALL)
-    if (HAVE_WALL)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wall")
-    endif (HAVE_WALL)
+    if (NOT VERSION_PATCH EQUAL 0)
+        MACRO_TUNE_COMPILER("-Werror")
+    endif (NOT VERSION_PATCH EQUAL 0)
+    MACRO_TUNE_COMPILER("-Wall")
+    MACRO_TUNE_COMPILER("-Werror-implicit-function-declaration")
+    MACRO_TUNE_COMPILER("-Wdeclaration-after-statement")
+    MACRO_TUNE_COMPILER("-Wpointer-arith")
+    MACRO_TUNE_COMPILER("-Wfloat-equal")
+    MACRO_TUNE_COMPILER("-Wbad-function-cast")
+    MACRO_TUNE_COMPILER("-Wmissing-format-attribute")
+    MACRO_TUNE_COMPILER("-Wmissing-noreturn")
+    MACRO_TUNE_COMPILER("-Wpointer-arith")
+    # Does not work well
+    #MACRO_TUNE_COMPILER("-Wunreachable-code")
 
-    check_c_compiler_flag("-Wno-pointer-sign" HAVE_WPOINTERSIGN)
-    if (HAVE_WPOINTERSIGN)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-pointer-sign")
-    endif (HAVE_WPOINTERSIGN)
+    MACRO_TUNE_COMPILER("-Wp,-D_FORTIFY_SOURCE=2")
 
-    check_c_compiler_flag("-Werror-implicit-function-declaration" HAVE_WERRORIMPLICITDECLARATION)
-    if (HAVE_WERRORIMPLICITDECLARATION)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror-implicit-function-declaration")
-    endif (HAVE_WERRORIMPLICITDECLARATION)
+    # Just silent this for now, too much code to fix here
+    MACRO_TUNE_COMPILER("-Wno-pointer-sign")
 
-    check_c_compiler_flag("-Wdeclaration-after-statement" HAVE_WDECLARATIONAFTERSTATEMENT)
-    if (HAVE_WDECLARATIONAFTERSTATEMENT)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wdeclaration-after-statement")
-    endif (HAVE_WDECLARATIONAFTERSTATEMENT)
-
-    check_c_compiler_flag("-Wpointer-arith" HAVE_WPOINTERARITH)
-    if (HAVE_WPOINTERARITH)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wpointer-arith")
-    endif (HAVE_WPOINTERARITH)
-
-    check_c_compiler_flag("-Wshadow" HAVE_WSHADOW)
-    if (HAVE_WSHADOW)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wshadow")
-    endif (HAVE_WSHADOW)
-
-    check_c_compiler_flag("-Werror" HAVE_WERROR)
-    if (NOT VERSION_PATCH EQUAL 0 AND HAVE_WERROR)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Werror")
-    endif (NOT VERSION_PATCH EQUAL 0 AND HAVE_WERROR)
-
-    add_definitions()
-    check_c_compiler_flag("-Wp,-D_FORTIFY_SOURCE=2" HAVE_FORTIFY_SOURCE)
-    if (HAVE_FORTIFY_SOURCE)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wp,-D_FORTIFY_SOURCE=2")
-    endif (HAVE_FORTIFY_SOURCE)
+    # Win32 implementation of gettext does not allow us to use so strict warnings
+    if (NOT WIN32)
+        MACRO_TUNE_COMPILER("-Wshadow")
+        MACRO_TUNE_COMPILER("-Wformat=2")
+        MACRO_TUNE_COMPILER("-Wno-format-y2k")
+    endif (NOT WIN32)
 
     # This is extremely noisy, use only in debug builds
     if (DEBUG)
-        check_c_compiler_flag("-Wextra" HAVE_WEXTRA)
-        if (HAVE_WEXTRA)
-            set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wextra")
-        endif (HAVE_WEXTRA)
-
+        MACRO_TUNE_COMPILER("-Wextra")
         # Just silent this for now, too much code to fix here
-        check_c_compiler_flag("-Wno-unused-parameter" HAVE_WNOUNUSEDPARAMETER)
+        MACRO_TUNE_COMPILER("-Wno-unused-parameter")
     endif (DEBUG)
 endif(MSVC)
 
