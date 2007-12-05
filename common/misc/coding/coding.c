@@ -1532,7 +1532,7 @@ bool EncodeUTF8(unsigned char *dest, const unsigned char *src)
 }
 
 /* Decode UTF8 char to Unicode char */
-int DecodeWithUTF8Alphabet(unsigned char *src, wchar_t *dest, int len)
+int DecodeWithUTF8Alphabet(const unsigned char *src, wchar_t *dest, int len)
 {
 	if (len < 1) return 0;
 	if (src[0] < 128) {
@@ -1618,7 +1618,7 @@ void DecodeUTF8(unsigned char *dest, const unsigned char *src, int len)
 	wchar_t		ret;
 
 	while (i < len) {
-		z = DecodeWithUTF8Alphabet((unsigned char *)src+i,&ret,len-i);
+		z = DecodeWithUTF8Alphabet(src+i,&ret,len-i);
 		if (z<2) {
 			i+=EncodeWithUnicodeAlphabet(&src[i], &ret);
 		} else {
