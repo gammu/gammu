@@ -124,13 +124,13 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			EncodeLength = 128; /* 128 bytes is maximal length from specs */
 			switch (Entry->ID) {
 			case SMS_EMSSound10:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, 1.0, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, true);
 				break;
 			case SMS_EMSSound12:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, 1.2, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, GSM_Ring_IMelody12, true);
 				break;
 			case SMS_EMSSonyEricssonSound:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, 0, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(*Entry->Ringtone, Buffer+3, &EncodeLength, GSM_Ring_NoHeader, true);
 				break;
 			default:
 				break;
@@ -151,13 +151,13 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			EncodeLength = 128; /* 128 bytes is maximal length from specs */
 			switch (Entry->ID) {
 			case SMS_EMSSound10Long:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 1.0, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, true);
 				break;
 			case SMS_EMSSound12Long:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 1.2, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody12, true);
 				break;
 			case SMS_EMSSonyEricssonSoundLong:
-				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 0, true);
+				Entry->RingtoneNotes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_NoHeader, true);
 				break;
 			default:
 				break;
@@ -206,13 +206,13 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				}
 				switch (Entry->ID) {
 				case SMS_EMSSound10Long:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 1.0, start);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, true);
 					break;
 				case SMS_EMSSound12Long:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 1.2, start);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody12, true);
 					break;
 				case SMS_EMSSonyEricssonSoundLong:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 0, start);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_NoHeader, true);
 					break;
 				default:
 					break;
@@ -261,13 +261,13 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				}
 				switch (Entry->ID) {
 				case SMS_EMSSound10Long:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 1.0, start);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody10, true);
 					break;
 				case SMS_EMSSound12Long:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 1.2, start);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_IMelody12, true);
 					break;
 				case SMS_EMSSonyEricssonSoundLong:
-					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, 0, start);
+					FreeBytes = GSM_EncodeEMSSound(Ring, Buffer+3, &EncodeLength, GSM_Ring_NoHeader, true);
 					break;
 				default:
 					break;

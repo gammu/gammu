@@ -28,9 +28,28 @@
 
 /* ------ end of Smart Messaging Specification 2.0 & 3.0 definitions ------- */
 
+typedef enum {
+	/**
+	 * No header and footer.
+	 */
+	GSM_Ring_NoHeader = 1,
+	/**
+	 * Partial header and footer.
+	 */
+	GSM_Ring_PartialHeader,
+	/**
+	 * IMelody 1.0.
+	 */
+	GSM_Ring_IMelody10,
+	/**
+	 * IMelody 1.2.
+	 */
+	GSM_Ring_IMelody12,
+} GSM_RingtoneVersion;
+
 
 unsigned char	GSM_EncodeNokiaRTTLRingtone	(GSM_Ringtone ringtone, unsigned char *package, size_t *maxlength);
-unsigned char 	GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *package, size_t *maxlength, double version, bool start);
+unsigned char 	GSM_EncodeEMSSound		(GSM_Ringtone ringtone, unsigned char *package, size_t *maxlength, GSM_RingtoneVersion version, bool start);
 
 GSM_Error	GSM_DecodeNokiaRTTLRingtone	(GSM_Ringtone *ringtone, unsigned char *package, size_t maxlength);
 
