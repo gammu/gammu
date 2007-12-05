@@ -38,6 +38,12 @@ PRINTF_STYLE(1, 2)
 int printf_warn(const char *format, ...);
 
 /**
+ * Write information to user.
+ */
+PRINTF_STYLE(1, 2)
+int printf_info(const char *format, ...);
+
+/**
  * Interrupt handler, sets shutdown flag.
  */
 void interrupt(int sign);

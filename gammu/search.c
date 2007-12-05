@@ -43,6 +43,7 @@ bool SearchOutput;
 /**
  * Like printf, but only when output from searching is enabled.
  */
+PRINTF_STYLE(1, 2)
 int SearchPrintf(const char *format, ...)
 {
 	va_list ap;
