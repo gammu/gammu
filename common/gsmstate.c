@@ -1095,12 +1095,12 @@ void GSM_DumpMessageLevel2_Text(GSM_StateMachine *s, unsigned const char *messag
 
 void GSM_DumpMessageLevel2(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
 {
-	return GSM_DumpMessageLevel2_Text(s, message, messagesize, type, "SENDING frame");
+	GSM_DumpMessageLevel2_Text(s, message, messagesize, type, "SENDING frame");
 }
 
 void GSM_DumpMessageLevel2Recv(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
 {
-	return GSM_DumpMessageLevel2_Text(s, message, messagesize, type, "RECEIVED frame");
+	GSM_DumpMessageLevel2_Text(s, message, messagesize, type, "RECEIVED frame");
 }
 
 void GSM_DumpMessageLevel3_Custom(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type, int direction)
@@ -1117,12 +1117,12 @@ void GSM_DumpMessageLevel3_Custom(GSM_StateMachine *s, unsigned const char *mess
 }
 void GSM_DumpMessageLevel3(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
 {
-	return GSM_DumpMessageLevel3_Custom(s, message, messagesize, type, 0x01);
+	GSM_DumpMessageLevel3_Custom(s, message, messagesize, type, 0x01);
 }
 
 void GSM_DumpMessageLevel3Recv(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type)
 {
-	return GSM_DumpMessageLevel3_Custom(s, message, messagesize, type, 0x02);
+	GSM_DumpMessageLevel3_Custom(s, message, messagesize, type, 0x02);
 }
 
 PRINTF_STYLE(2, 3)
