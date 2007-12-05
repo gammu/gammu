@@ -59,12 +59,12 @@ if (CROSS_MINGW)
     include (WindowsCross)
 
     # Detection not supported for cross compiling
-    set (HAVE_ISWSPACE ON CACHE INTERNAL "")
-    set (HAVE_TOWLOWER ON CACHE INTERNAL "")
-    set (HAVE_WINT_T ON CACHE INTERNAL "")
-    set (HAVE_WCHAR_T ON CACHE INTERNAL "")
-    set (HAVE_WCTYPE_H ON CACHE INTERNAL "")
-    set (HAVE_WCHAR_H ON CACHE INTERNAL "")
+    #    set (HAVE_ISWSPACE ON CACHE INTERNAL "")
+    #    set (HAVE_TOWLOWER ON CACHE INTERNAL "")
+    #    set (HAVE_WINT_T ON CACHE INTERNAL "")
+    #    set (HAVE_WCHAR_T ON CACHE INTERNAL "")
+    #    set (HAVE_WCTYPE_H ON CACHE INTERNAL "")
+    #    set (HAVE_WCHAR_H ON CACHE INTERNAL "")
 
     # CPack configuration
     set (CPACK_GENERATOR "ZIP;NSIS")
@@ -164,6 +164,20 @@ find_package (PkgConfig)
 # Standard packages
 macro_optional_find_package (Doxygen)
 
+# Configuration checks
+check_symbol_exists (strncasecmp "string.h" HAVE_STRNCASECMP)
+check_symbol_exists (strcasecmp "string.h" HAVE_STRCASECMP)
+check_function_exists (strcasestr HAVE_STRCASESTR)
+check_function_exists (strchrnul HAVE_STRCHRNUL)
+check_include_file (dirent.h HAVE_DIRENT_H)
+check_include_file (sys/ioctl.h HAVE_SYS_IOCTL_H)
+check_include_file (sys/utsname.h HAVE_SYS_UTSNAME_H)
+check_include_file (wchar.h HAVE_WCHAR_H)
+check_include_file (wctype.h HAVE_WCTYPE_H)
+check_function_exists (scandir HAVE_SCANDIR)
+check_function_exists (alphasort HAVE_ALPHASORT)
+check_symbol_exists (iswspace "wctype.h" HAVE_ISWSPACE)
+check_symbol_exists (towlower "wctype.h" HAVE_TOWLOWER)
 
 # Check disabled for cross, but we have some libraries
 if (CROSS_MINGW)
@@ -204,6 +218,8 @@ if (CROSS_MINGW)
         message (STATUS "Cross Gettext not found")
     endif (GETTEXT_LIBRARY)
 
+    set (HAVE_WINT_T 4 CACHE INTERNAL "")
+    set (HAVE_WCHAR_T 4 CACHE INTERNAL "")
 else (CROSS_MINGW)
     # Standard packages
     macro_optional_find_package (Threads)
@@ -215,19 +231,6 @@ else (CROSS_MINGW)
     macro_optional_find_package (Iconv)
 
     # Search for needed includes and functions
-    check_include_file (dirent.h HAVE_DIRENT_H)
-    check_include_file (sys/ioctl.h HAVE_SYS_IOCTL_H)
-    check_include_file (sys/utsname.h HAVE_SYS_UTSNAME_H)
-    check_include_file (wchar.h HAVE_WCHAR_H)
-    check_include_file (wctype.h HAVE_WCTYPE_H)
-    check_function_exists (scandir HAVE_SCANDIR)
-    check_function_exists (alphasort HAVE_ALPHASORT)
-    check_symbol_exists (iswspace "wctype.h" HAVE_ISWSPACE)
-    check_symbol_exists (towlower "wctype.h" HAVE_TOWLOWER)
-    check_symbol_exists (strncasecmp "strings.h" HAVE_STRNCASECMP)
-    check_symbol_exists (strcasecmp "strings.h" HAVE_STRCASECMP)
-    check_function_exists (strcasestr HAVE_STRCASESTR)
-    check_function_exists (strchrnul HAVE_STRCHRNUL)
     if (HAVE_WCHAR_H)
         set (CMAKE_EXTRA_INCLUDE_FILES wchar.h)
         check_type_size (wchar_t HAVE_WCHAR_T)
