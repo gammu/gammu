@@ -39,60 +39,6 @@ typedef struct _SOCKADDR_BTH {
 #  define NS_BTH  16
 #endif
 
-#define LUP_CONTAINERS          0x0002
-#define LUP_RETURN_NAME         0x0010
-#define LUP_RETURN_TYPE         0x0020
-#define LUP_RETURN_COMMENT      0x0080
-#define LUP_RETURN_ADDR         0x0100
-#define LUP_RETURN_BLOB         0x0200
-#define LUP_FLUSHCACHE       	0x1000
-#define LUP_RES_SERVICE         0x8000
-
-#ifndef WINSOCK_API_LINKAGE
-#ifdef DECLSPEC_IMPORT
-#define WINSOCK_API_LINKAGE DECLSPEC_IMPORT
-#else
-#define WINSOCK_API_LINKAGE
-#endif
-#endif
-
-WINSOCK_API_LINKAGE INT WSAAPI
-WSALookupServiceBeginA(
-    IN  LPWSAQUERYSETA lpqsRestrictions,
-    IN  DWORD          dwControlFlags,
-    OUT LPHANDLE       lphLookup
-    );
-
-#define WSALookupServiceBegin  WSALookupServiceBeginA
-
-WINSOCK_API_LINKAGE INT WSAAPI
-WSALookupServiceNextA(
-    IN     HANDLE           hLookup,
-    IN     DWORD            dwControlFlags,
-    IN OUT LPDWORD          lpdwBufferLength,
-    OUT    LPWSAQUERYSETA   lpqsResults
-    );
-
-#define WSALookupServiceNext  WSALookupServiceNextA
-
-WINSOCK_API_LINKAGE INT WSAAPI WSALookupServiceEnd(IN HANDLE hLookup);
-
-#define MAX_PROTOCOL_CHAIN 7
-
-#define SO_PROTOCOL_INFOA 0x2004      /* WSAPROTOCOL_INFOA structure */
-#define SO_PROTOCOL_INFO  SO_PROTOCOL_INFOA
-
-WINSOCK_API_LINKAGE INT WSAAPI
-WSAAddressToStringA(
-    IN     LPSOCKADDR          	lpsaAddress,
-    IN     DWORD               	dwAddressLength,
-    IN     LPWSAPROTOCOL_INFOA 	lpProtocolInfo,
-    IN OUT LPSTR             	lpszAddressString,
-    IN OUT LPDWORD             	lpdwAddressStringLength
-    );
-
-#define WSAAddressToString  WSAAddressToStringA
-
 #endif
 #endif
 
