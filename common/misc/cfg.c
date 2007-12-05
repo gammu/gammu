@@ -81,7 +81,6 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 			buffer[bufferused+1] 	= ch[1];
 			bufferused		= bufferused + 2;
 		}
-//		printf("line \"%s\"\n",DecodeUnicodeConsole(buffer));
 
 		buffer1used = 0;
 		buffer2used = 0;
@@ -92,13 +91,13 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 		for (i=0;i<bufferused/2;i++) {
 			ch[0] = buffer[i*2];
 			ch[1] = buffer[i*2+1];
-			if (level == 0) { //search for name of section
+			if (level == 0) { /* search for name of section */
 				if (ch[0] == 0 && ch[1] == '[') level = 1;
 				if (ch[0] == 0 && ch[1] == ';') break;
 				if (ch[0] == 0 && ch[1] == '#') break;
 				continue;
 			}
-			if (level == 1) { //section name
+			if (level == 1) { /* section name */
 				if (ch[0] == 0 && ch[1] == ']') {
 					if (buffer1used == 0) break;
 					if (Unicode) {
@@ -128,7 +127,6 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 		                        INI_info 		= heading;
 					INI_info->SubEntries 	= NULL;
 					level 	 		= 2;
-//					printf("[%s]\n",DecodeUnicodeConsole(buffer1));
 					break;
 				}
 				if (Unicode) {
@@ -143,7 +141,7 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 				}
 				continue;
 			}
-			if (level == 2) { //search for key name
+			if (level == 2) { /* search for key name */
 				if (ch[0] == 0 && ch[1] == ';') break;
 				if (ch[0] == 0 && ch[1] == '#') break;
 				if (ch[0] == 0 && ch[1] == '[') {
@@ -157,7 +155,7 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 				}
 				level = 3;
 			}
-			if (level == 3) { //key name
+			if (level == 3) { /* key name */
 				if (ch[0] == 0 && ch[1] == '=') {
 					if (buffer1used == 0) break;
 					while(1) {
@@ -183,7 +181,7 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 					buffer1used		= buffer1used + 1;
 				}
 			}
-			if (level == 4) { //search for key value
+			if (level == 4) { /* search for key value */
 				if (Unicode) {
 			                if (myiswspace(ch)) continue;
 				} else {
@@ -191,7 +189,7 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 				}
 				level = 5;
 			}
-			if (level == 5) { //key value
+			if (level == 5) { /* key value */
 				if (Unicode) {
 					buffer2 		= realloc(buffer2,buffer2used+2);
 					buffer2[buffer2used] 	= ch[0];
@@ -229,9 +227,6 @@ GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
 				buffer2[buffer2used] 	= 0x00;
 				buffer2used		= buffer2used + 1;
 			}
-//			printf("\"%s\"=\"%s\"\n",buffer1,buffer2);
-//			printf("\"%s\"=",DecodeUnicodeConsole(buffer1));
-//			printf("\"%s\"\n",DecodeUnicodeConsole(buffer2));
 
 			entry->EntryName = (char *)malloc(buffer1used);
 			memcpy(entry->EntryName,buffer1,buffer1used);

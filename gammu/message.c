@@ -2456,7 +2456,6 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 
 		for (i=0;i<sms.Number;i++) {
 			printf(_("Saving SMS %i/%i\n"),i+1,sms.Number);
-//			sms.SMS[i].Location		= 0;
 			sms.SMS[i].Folder		= Folder;
 			sms.SMS[i].State		= State;
 			sms.SMS[i].ReplyViaSameSMSC	= ReplyViaSameSMSC;

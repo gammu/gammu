@@ -524,8 +524,6 @@ void MakeTerminatedCall(int argc, char *argv[])
 {
 	GSM_CallShowNumber 	ShowNumber = GSM_CALL_DefaultNumberPresence;
 	GSM_Error error;
-//	GSM_DateTime		DT;
-//	time_t			one,two;
 
 	if (argc > 4) {
 		if (strcasecmp(argv[4],"show") == 0) {		ShowNumber = GSM_CALL_ShowNumber;
@@ -547,16 +545,8 @@ void MakeTerminatedCall(int argc, char *argv[])
 	error=GSM_DialVoice(gsm, argv[2], ShowNumber);
 	Print_Error(error);
 
-//	GSM_GetCurrentDateTime (&DT);
-//	one = Fill_Time_T(DT);
-
-//	while (true) {
-		my_sleep(atoi(argv[3]));
-//		GSM_GetCurrentDateTime (&DT);
-//		two = Fill_Time_T(DT);
-//		if (two - one > atoi(argv[3])) break;
-		GSM_ReadDevice(gsm,true);
-//	}
+	my_sleep(atoi(argv[3]));
+	GSM_ReadDevice(gsm,true);
 
 	if (TerminateID != -1) {
 		error=GSM_CancelCall(gsm,TerminateID,false);
@@ -820,10 +810,8 @@ void GetBitmap(int argc, char *argv[])
 			File.Buffer 	= NULL;
 			File.Used 	= 0;
 
-			error = ERR_NONE;
-//			while (error == ERR_NONE) {
-				error = GSM_GetFilePart(gsm,&File,&Handle,&Size);
-//			}
+			error = GSM_GetFilePart(gsm,&File,&Handle,&Size);
+
 		    	if (error != ERR_EMPTY && error != ERR_WRONGCRC) Print_Error(error);
 			error = ERR_NONE;
 
@@ -1351,7 +1339,6 @@ void GetSyncMLSettings(int argc, char *argv[])
 			printf("%s", DecodeUnicodeConsole(settings.Name));
 		}
 		if (settings.Active) printf(_(" (active)"));
-//		if (settings.ReadOnly) printf(_("\nRead only           : yes"));
 		printf("\n");
 		printf(LISTFORMAT "\"%s\"\n", _("User"),DecodeUnicodeConsole(settings.User));
 		printf(LISTFORMAT "\"%s\"\n", _("Password"),DecodeUnicodeConsole(settings.Password));
@@ -1401,7 +1388,6 @@ void GetChatSettings(int argc, char *argv[])
 			printf("%s", DecodeUnicodeConsole(settings.Name));
 		}
 		if (settings.Active) printf(_(" (active)"));
-//		if (settings.ReadOnly) printf(_("\nRead only           : yes"));
 		printf("\n");
 		printf(LISTFORMAT "\"%s\"\n", _("Homepage"),DecodeUnicodeConsole(settings.HomePage));
 		printf(LISTFORMAT "\"%s\"\n", _("User"),DecodeUnicodeConsole(settings.User));

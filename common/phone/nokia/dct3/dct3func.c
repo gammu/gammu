@@ -679,7 +679,7 @@ GSM_Error DCT3_SetWAPBookmark(GSM_StateMachine *s, GSM_WAPBookmark *bookmark)
 GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	int 			tmp,Number;
-//	int			tmp2;
+/* 	int			tmp2; */
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 #ifdef GSM_ENABLE_NOKIA6110
 	GSM_Phone_N6110Data 	*Priv6110 = &s->Phone.Data.Priv.N6110;
@@ -719,9 +719,9 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 		if (msg.Buffer[tmp+13] == 0x01) Data->WAPSettings->Settings[0].IsSecurity = true;
 
 		/* I'm not sure here. Experimental values from 6210 5.56 */
-//		tmp2 = DecodeUnicodeLength(Data->WAPSettings->Settings[0].Title);
-//		if (tmp2 != 0) tmp2 --;
-//		tmp2 += tmp;
+/* 		tmp2 = DecodeUnicodeLength(Data->WAPSettings->Settings[0].Title); */
+/* 		if (tmp2 != 0) tmp2 --; */
+/* 		tmp2 += tmp; */
 		if (!(UnicodeLength(Data->WAPSettings->Settings[0].Title)) % 2) tmp++;
 		if (UnicodeLength(Data->WAPSettings->Settings[0].HomePage)!=0) tmp++;
 
@@ -742,11 +742,11 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 			Priv7110->WAPLocations.Locations[2] 	= msg.Buffer[tmp+10];
 			Priv7110->WAPLocations.Locations[3] 	= msg.Buffer[tmp+11];
 
-//			Priv7110->WAPLocations.CurrentLocation	= msg.Buffer[tmp2+1];
-//			Priv7110->WAPLocations.Locations[0] 	= msg.Buffer[tmp2+3];
-//			Priv7110->WAPLocations.Locations[1] 	= msg.Buffer[tmp2+4];
-//			Priv7110->WAPLocations.Locations[2] 	= msg.Buffer[tmp2+5];
-//			Priv7110->WAPLocations.Locations[3] 	= msg.Buffer[tmp2+6];
+/* 			Priv7110->WAPLocations.CurrentLocation	= msg.Buffer[tmp2+1]; */
+/* 			Priv7110->WAPLocations.Locations[0] 	= msg.Buffer[tmp2+3]; */
+/* 			Priv7110->WAPLocations.Locations[1] 	= msg.Buffer[tmp2+4]; */
+/* 			Priv7110->WAPLocations.Locations[2] 	= msg.Buffer[tmp2+5]; */
+/* 			Priv7110->WAPLocations.Locations[3] 	= msg.Buffer[tmp2+6]; */
 		}
 #endif
 #ifdef GSM_ENABLE_NOKIA6110

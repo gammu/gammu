@@ -1908,7 +1908,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				case '0': sms->State = SMS_UnRead; 	break;
 				case '1': sms->State = SMS_Read;	break;
 				case '2': sms->State = SMS_UnSent;	break;
-				default : sms->State = SMS_Sent;	break;//case '3'
+				default : sms->State = SMS_Sent;	break;/* case '3' */
 			}
 			length = GetLineLength(msg.Buffer,Priv->Lines,3);
 			if (!DecodeHexBin (
@@ -2071,7 +2071,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				smsframe[PHONE_SMSSubmit.TPDCS] = buffer[current++];
 				if (current >= length) return ERR_CORRUPTED;
 				/* See GSM 03.40 9.2.3.3 - TPVP can not exist in frame */
-				if ((smsframe[12] & 0x18)!=0) current++; //TPVP is ignored now
+				if ((smsframe[12] & 0x18)!=0) current++; /* TPVP is ignored now */
 				if (current >= length) return ERR_CORRUPTED;
 				smsframe[PHONE_SMSSubmit.TPUDL] = buffer[current++];
 				datalength = smsframe[PHONE_SMSSubmit.TPUDL];
@@ -2411,7 +2411,7 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 5, ID_GetSMSMessage);
 	if (error==ERR_NONE) {
 		getfolder = sms->SMS[0].Folder;
-//		if (getfolder != 0 && getfolder != sms->SMS[0].Folder) return ERR_EMPTY;
+/* 		if (getfolder != 0 && getfolder != sms->SMS[0].Folder) return ERR_EMPTY; */
 		ATGEN_SetSMSLocation(s, &sms->SMS[0], folderid, location);
 		sms->SMS[0].Folder = getfolder;
 		sms->SMS[0].Memory = MEM_SM;
@@ -6013,7 +6013,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyGetPBKMemories,	"AT+CPBS=?"		,0x00,0x00,ID_SetMemoryType	 },
 {ATGEN_GenericReply,		"AT+CPBS="		,0x00,0x00,ID_SetMemoryType	 },
 {ATGEN_ReplyGetCPBSMemoryStatus,"AT+CPBS?"		,0x00,0x00,ID_GetMemoryStatus	 },
-// /* Samsung phones reply +CPBR: after OK --claudio*/
+/* Samsung phones reply +CPBR: after OK --claudio */
 {ATGEN_ReplyGetCPBRMemoryInfo,	"AT+CPBR=?"		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_ReplyGetCPBRMemoryInfo,	"+CPBR:"		,0x00,0x00,ID_GetMemoryStatus	 },
 {ATGEN_ReplyGetCPBRMemoryStatus,"AT+CPBR="		,0x00,0x00,ID_GetMemoryStatus	 },

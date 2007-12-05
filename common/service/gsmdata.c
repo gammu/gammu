@@ -14,24 +14,24 @@ static void AddWAPSMSParameterText(unsigned char *Buffer, size_t *Length, unsign
 {
 	int i;
 
-	Buffer[(*Length)++] = 0x87; 			//PARM with attributes
+	Buffer[(*Length)++] = 0x87; 			/* PARM with attributes */
 	Buffer[(*Length)++] = ID;
-	Buffer[(*Length)++] = 0x11; 			//VALUE
-	Buffer[(*Length)++] = 0x03; 			//Inline string
+	Buffer[(*Length)++] = 0x11; 			/* VALUE */
+	Buffer[(*Length)++] = 0x03; 			/* Inline string */
 	for (i=0;i<Len;i++) {
-		Buffer[(*Length)++] = Text[i];		//Text
+		Buffer[(*Length)++] = Text[i];		/* Text */
 	}
-	Buffer[(*Length)++] = 0x00; 			//END Inline string
-	Buffer[(*Length)++] = 0x01; 			//END PARMeter
+	Buffer[(*Length)++] = 0x00; 			/* END Inline string */
+	Buffer[(*Length)++] = 0x01; 			/* END PARMeter */
 }
 
 /* http://forum.nokia.com: OTA MMS Settings 1.0, OTA Settings 7.0 */
 static void AddWAPSMSParameterInt(unsigned char *Buffer, size_t *Length, unsigned char ID, unsigned char Value)
 {
-	Buffer[(*Length)++] = 0x87; 			//PARM with attributes
+	Buffer[(*Length)++] = 0x87; 			/* PARM with attributes */
 	Buffer[(*Length)++] = ID;
 	Buffer[(*Length)++] = Value;
-	Buffer[(*Length)++] = 0x01; 			//END PARMeter
+	Buffer[(*Length)++] = 0x01; 			/* END PARMeter */
 }
 
 /* http://forum.nokia.com  : OTA MMS Settings 1.0, OTA Settings 7.0
@@ -42,25 +42,25 @@ void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, size_t *Length, GS
 	int 		i;
 	unsigned char 	buffer[400];
 
-	Buffer[(*Length)++] = 0x01; 			//Push ID
-	Buffer[(*Length)++] = 0x06; 			//PDU Type (push)
-	Buffer[(*Length)++] = 0x2C; 			//Headers length (content type + headers)
+	Buffer[(*Length)++] = 0x01; 			/* Push ID */
+	Buffer[(*Length)++] = 0x06; 			/* PDU Type (push) */
+	Buffer[(*Length)++] = 0x2C; 			/* Headers length (content type + headers) */
 	strcpy(Buffer+(*Length),"\x1F\x2A");
-	(*Length)=(*Length)+2;				//Value length
+	(*Length)=(*Length)+2;				/* Value length */
 	strcpy(Buffer+(*Length),"application/x-wap-prov.browser-settings");
-	(*Length)=(*Length)+39;				//MIME-Type
-	Buffer[(*Length)++] = 0x00; 			//end inline string
+	(*Length)=(*Length)+39;				/* MIME-Type */
+	Buffer[(*Length)++] = 0x00; 			/* end inline string */
 	strcpy(Buffer+(*Length),"\x81\xEA");
-	(*Length)=(*Length)+2;				//charset UTF-8 short int.
+	(*Length)=(*Length)+2;				/* charset UTF-8 short int. */
 	strcpy(Buffer+(*Length),"\x01\x01");
-	(*Length)=(*Length)+2;				//version WBXML 1.1
-	Buffer[(*Length)++] = 0x6A; 			//charset UTF-8
-	Buffer[(*Length)++] = 0x00; 			//string table length
+	(*Length)=(*Length)+2;				/* version WBXML 1.1 */
+	Buffer[(*Length)++] = 0x6A; 			/* charset UTF-8 */
+	Buffer[(*Length)++] = 0x00; 			/* string table length */
 
-	Buffer[(*Length)++] = 0x45; 			//CHARACTERISTIC-LIST with content
-		Buffer[(*Length)++] = 0xC6; 		//CHARACTERISTIC with content and attributes
-		Buffer[(*Length)++] = 0x06; 		//TYPE=ADDRESS
-		Buffer[(*Length)++] = 0x01; 		//END PARMeter
+	Buffer[(*Length)++] = 0x45; 			/* CHARACTERISTIC-LIST with content */
+		Buffer[(*Length)++] = 0xC6; 		/* CHARACTERISTIC with content and attributes */
+		Buffer[(*Length)++] = 0x06; 		/* TYPE=ADDRESS */
+		Buffer[(*Length)++] = 0x01; 		/* END PARMeter */
 			switch (settings->Bearer) {
 			case WAPSETTINGS_BEARER_GPRS:
 				/* Bearer */
@@ -140,7 +140,7 @@ void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, size_t *Length, GS
 				/* PROXY */
 				AddWAPSMSParameterText(Buffer, Length, 0x13, DecodeUnicodeString(settings->Server), UnicodeLength(settings->Server));
 				/* SMS_SMSC_ADDRESS */
-				// .....
+				/*  ..... */
 				break;
 			case WAPSETTINGS_BEARER_USSD:
 				/* FIXME */
@@ -175,32 +175,32 @@ void NOKIA_EncodeWAPMMSSettingsSMSText(unsigned char *Buffer, size_t *Length, GS
 					AddWAPSMSParameterInt(Buffer, Length, 0x14, 0x60);
 				}
 			}
-		Buffer[(*Length)++] = 0x01; 		//END PARMeter
+		Buffer[(*Length)++] = 0x01; 		/* END PARMeter */
 
 		/* URL */
-		Buffer[(*Length)++] = 0x86; 		//CHARACTERISTIC-LIST with attributes
+		Buffer[(*Length)++] = 0x86; 		/* CHARACTERISTIC-LIST with attributes */
 		if (MMS) {
-			Buffer[(*Length)++] = 0x7C; 	//TYPE = MMSURL
+			Buffer[(*Length)++] = 0x7C; 	/* TYPE = MMSURL */
 		} else {
-			Buffer[(*Length)++] = 0x07; 	//TYPE = URL
+			Buffer[(*Length)++] = 0x07; 	/* TYPE = URL */
 		}
-		Buffer[(*Length)++] = 0x11; 		//VALUE
-		Buffer[(*Length)++] = 0x03; 		//Inline string
+		Buffer[(*Length)++] = 0x11; 		/* VALUE */
+		Buffer[(*Length)++] = 0x03; 		/* Inline string */
 		sprintf(buffer,"%s",DecodeUnicodeString(settings->HomePage));
 		for (i=0;i<(int)strlen(buffer);i++) {
-			Buffer[(*Length)++] = buffer[i];//Text
+			Buffer[(*Length)++] = buffer[i];/* Text */
 		}
-		Buffer[(*Length)++] = 0x00; 		//END Inline string
-		Buffer[(*Length)++] = 0x01; 		//END PARMeter
+		Buffer[(*Length)++] = 0x00; 		/* END Inline string */
+		Buffer[(*Length)++] = 0x01; 		/* END PARMeter */
 
 		/* ISP_NAME (name) */
-		Buffer[(*Length)++] = 0xC6; 		//CHARACTERISTIC with content and attributes
-		Buffer[(*Length)++] = 0x08; 		//TYPE=NAME
-		Buffer[(*Length)++] = 0x01; 		//END PARMeter
+		Buffer[(*Length)++] = 0xC6; 		/* CHARACTERISTIC with content and attributes */
+		Buffer[(*Length)++] = 0x08; 		/* TYPE=NAME */
+		Buffer[(*Length)++] = 0x01; 		/* END PARMeter */
 			/* Settings name */
 			AddWAPSMSParameterText(Buffer, Length, 0x15, DecodeUnicodeString(settings->Title), UnicodeLength(settings->Title));
-		Buffer[(*Length)++] = 0x01; 		//END PARMeter
-	Buffer[(*Length)++] = 0x01;			//END PARMeter
+		Buffer[(*Length)++] = 0x01; 		/* END PARMeter */
+	Buffer[(*Length)++] = 0x01;			/* END PARMeter */
 }
 
 /* http://forum.nokia.com: OTA Settings 7.0 */
@@ -210,58 +210,29 @@ void NOKIA_EncodeWAPBookmarkSMSText(unsigned char *Buffer, size_t *Length, GSM_W
 {
 	unsigned char	buffer[100];
 
-//	bool		UnicodeCoding = false;
-//	EncodeUTF8QuotedPrintable(buffer,bookmark->Title);
-//	if (UnicodeLength(bookmark->Title)!=strlen(buffer)) UnicodeCoding = true;
-
-	Buffer[(*Length)++] = 0x01; 			//Push ID
-	Buffer[(*Length)++] = 0x06; 			//PDU Type (push)
-	Buffer[(*Length)++] = 0x2D; 			//Headers length (content type + headers)
+	Buffer[(*Length)++] = 0x01; 			/* Push ID */
+	Buffer[(*Length)++] = 0x06; 			/* PDU Type (push) */
+	Buffer[(*Length)++] = 0x2D; 			/* Headers length (content type + headers) */
 	strcpy(Buffer+(*Length),"\x1F\x2B");
-	(*Length)=(*Length)+2;				//Value length
+	(*Length)=(*Length)+2;				/* Value length */
 	strcpy(Buffer+(*Length),"application/x-wap-prov.browser-bookmarks");
-	(*Length)=(*Length)+40;				//MIME-Type
-	Buffer[(*Length)++] = 0x00; 			//end inline string
+	(*Length)=(*Length)+40;				/* MIME-Type */
+	Buffer[(*Length)++] = 0x00; 			/* end inline string */
 	strcpy(Buffer+(*Length),"\x81\xEA");
-	(*Length)=(*Length)+2;				//charset UTF-8 short int.
-
-	/* removed by Joergen Thomsen */
-	/* Block from sniffs. UNKNOWN */
-//	if (!UnicodeCoding) {
-//		Buffer[(*Length)++] = 0x00;
-//		Buffer[(*Length)++] = 0x01;
-//	} else {
-//		strcpy(Buffer+(*Length),"\x01\x01\x87\x68");
-//		(*Length)=(*Length)+4;
-//	}
-//	Buffer[(*Length)++] = 0x00;
+	(*Length)=(*Length)+2;				/* charset UTF-8 short int. */
 
 	/* added by Joergen Thomsen */
-	Buffer[(*Length)++] = 0x01;			// Version WBXML 1.1
-	Buffer[(*Length)++] = 0x01;			// Unknown public identifier
-	Buffer[(*Length)++] = 0x6A;			// charset UTF-8
-	Buffer[(*Length)++] = 0x00;			// string table length
+	Buffer[(*Length)++] = 0x01;			/*  Version WBXML 1.1 */
+	Buffer[(*Length)++] = 0x01;			/*  Unknown public identifier */
+	Buffer[(*Length)++] = 0x6A;			/*  charset UTF-8 */
+	Buffer[(*Length)++] = 0x00;			/*  string table length */
 
-	Buffer[(*Length)++] = 0x45; 			//CHARACTERISTIC-LIST with content
+	Buffer[(*Length)++] = 0x45; 			/* CHARACTERISTIC-LIST with content */
 		/* URL */
-		Buffer[(*Length)++] = 0xC6; 		//CHARACTERISTIC with content and attributes
-		Buffer[(*Length)++] = 0x7F;             //TYPE = BOOKMARK
-		Buffer[(*Length)++] = 0x01; 		//END PARMeter
+		Buffer[(*Length)++] = 0xC6; 		/* CHARACTERISTIC with content and attributes */
+		Buffer[(*Length)++] = 0x7F;             /* TYPE = BOOKMARK */
+		Buffer[(*Length)++] = 0x01; 		/* END PARMeter */
 
-			/* removed by Joergen Thomsen */
-//			if (!UnicodeCoding) {
-//				/* TITLE */
-//				AddWAPSMSParameterText(Buffer, Length, 0x15, DecodeUnicodeString(bookmark->Title), UnicodeLength(bookmark->Title));
-//				/* URL */
-//				AddWAPSMSParameterText(Buffer, Length, 0x17, DecodeUnicodeString(bookmark->Address), UnicodeLength(bookmark->Address));
-//			} else {
-//				/* TITLE */
-//				AddWAPSMSParameterText(Buffer, Length, 0x15, bookmark->Title, UnicodeLength(bookmark->Title)*2+1);
-//				/* URL */
-//				AddWAPSMSParameterText(Buffer, Length, 0x17, bookmark->Address, UnicodeLength(bookmark->Address)*2+1);
-//			}
-
-			/* added by Joergen Thomsen */
 			/* TITLE */
 			EncodeUTF8(buffer, bookmark->Title);
 			AddWAPSMSParameterText(Buffer, Length, 0x15, buffer, strlen(buffer));
@@ -269,66 +240,66 @@ void NOKIA_EncodeWAPBookmarkSMSText(unsigned char *Buffer, size_t *Length, GSM_W
 			EncodeUTF8(buffer, bookmark->Address);
 			AddWAPSMSParameterText(Buffer, Length, 0x17, buffer, strlen(buffer));
 
-		Buffer[(*Length)++] = 0x01;		//END (CHARACTERISTIC)
-	Buffer[(*Length)++] = 0x01;			//END (CHARACTERISTIC-LIST)
+		Buffer[(*Length)++] = 0x01;		/* END (CHARACTERISTIC) */
+	Buffer[(*Length)++] = 0x01;			/* END (CHARACTERISTIC-LIST) */
 }
 
 void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, size_t *Length, char *Text, char *URL)
 {
 	int i;
 
-	Buffer[(*Length)++] = 0x01; 			//Push ID
-	Buffer[(*Length)++] = 0x06; 			//PDU Type (push)
-	Buffer[(*Length)++] = 28; 			//Headers length (content type + headers)
+	Buffer[(*Length)++] = 0x01; 			/* Push ID */
+	Buffer[(*Length)++] = 0x06; 			/* PDU Type (push) */
+	Buffer[(*Length)++] = 28; 			/* Headers length (content type + headers) */
 	strcpy(Buffer+(*Length),"\x1F\x23");
-	(*Length)=(*Length)+2;				//Value length
+	(*Length)=(*Length)+2;				/* Value length */
 	strcpy(Buffer+(*Length),"application/vnd.wap.sic");
-	(*Length)=(*Length)+23;				//MIME-Type
-	Buffer[(*Length)++] = 0x00; 			//end inline string
+	(*Length)=(*Length)+23;				/* MIME-Type */
+	Buffer[(*Length)++] = 0x00; 			/* end inline string */
 	strcpy(Buffer+(*Length),"\x81\xEA");
-	(*Length)=(*Length)+2;				//charset UTF-8 short int.
+	(*Length)=(*Length)+2;				/* charset UTF-8 short int. */
 
-	Buffer[(*Length)++] = 0x02; 			// WBXML 1.2
-	Buffer[(*Length)++] = 0x05; 			// SI 1.0 Public Identifier
-	Buffer[(*Length)++] = 0x6A;			// charset UTF-8
-	Buffer[(*Length)++] = 0x00;			// string table length
-	Buffer[(*Length)++] = 0x45;			// SI with content
-		Buffer[(*Length)++] = 0xC6;		// indication with content and attributes
-			Buffer[(*Length)++] = 0x0B;	// address
-			Buffer[(*Length)++] = 0x03; 	// Inline string
+	Buffer[(*Length)++] = 0x02; 			/*  WBXML 1.2 */
+	Buffer[(*Length)++] = 0x05; 			/*  SI 1.0 Public Identifier */
+	Buffer[(*Length)++] = 0x6A;			/*  charset UTF-8 */
+	Buffer[(*Length)++] = 0x00;			/*  string table length */
+	Buffer[(*Length)++] = 0x45;			/*  SI with content */
+		Buffer[(*Length)++] = 0xC6;		/*  indication with content and attributes */
+			Buffer[(*Length)++] = 0x0B;	/*  address */
+			Buffer[(*Length)++] = 0x03; 	/*  Inline string */
 			for (i=0;i<(int)strlen(URL);i++) {
-				Buffer[(*Length)++] = URL[i];//Text
+				Buffer[(*Length)++] = URL[i];/* Text */
 			}
-			Buffer[(*Length)++] = 0x00; 	// END Inline string
+			Buffer[(*Length)++] = 0x00; 	/*  END Inline string */
 
 #ifdef XXX
-			Buffer[(*Length)++] = 0x0A;	// created...
-			Buffer[(*Length)++] = 0xC3;	// OPAQUE
-			Buffer[(*Length)++] = 0x07;	// length
-			Buffer[(*Length)++] = 0x19;	// year
-			Buffer[(*Length)++] = 0x80;	// year
-			Buffer[(*Length)++] = 0x21;	// month
-			Buffer[(*Length)++] = 0x12;	// ..
-			Buffer[(*Length)++] = 0x00;	// ..
-			Buffer[(*Length)++] = 0x00;	// ..
-			Buffer[(*Length)++] = 0x00;	// ..
-			Buffer[(*Length)++] = 0x10;	// expires
-			Buffer[(*Length)++] = 0xC3;	// OPAQUE
-			Buffer[(*Length)++] = 0x04;	// length
-			Buffer[(*Length)++] = 0x20;	// year
-			Buffer[(*Length)++] = 0x10;	// year
-			Buffer[(*Length)++] = 0x06;	// month
-			Buffer[(*Length)++] = 0x25;	// day
+			Buffer[(*Length)++] = 0x0A;	/*  created... */
+			Buffer[(*Length)++] = 0xC3;	/*  OPAQUE */
+			Buffer[(*Length)++] = 0x07;	/*  length */
+			Buffer[(*Length)++] = 0x19;	/*  year */
+			Buffer[(*Length)++] = 0x80;	/*  year */
+			Buffer[(*Length)++] = 0x21;	/*  month */
+			Buffer[(*Length)++] = 0x12;	/*  .. */
+			Buffer[(*Length)++] = 0x00;	/*  .. */
+			Buffer[(*Length)++] = 0x00;	/*  .. */
+			Buffer[(*Length)++] = 0x00;	/*  .. */
+			Buffer[(*Length)++] = 0x10;	/*  expires */
+			Buffer[(*Length)++] = 0xC3;	/*  OPAQUE */
+			Buffer[(*Length)++] = 0x04;	/*  length */
+			Buffer[(*Length)++] = 0x20;	/*  year */
+			Buffer[(*Length)++] = 0x10;	/*  year */
+			Buffer[(*Length)++] = 0x06;	/*  month */
+			Buffer[(*Length)++] = 0x25;	/*  day */
 #endif
 
-		Buffer[(*Length)++] = 0x01;		// END (indication)
-		Buffer[(*Length)++] = 0x03; 		// Inline string
+		Buffer[(*Length)++] = 0x01;		/*  END (indication) */
+		Buffer[(*Length)++] = 0x03; 		/*  Inline string */
 		for (i=0;i<(int)strlen(Text);i++) {
-			Buffer[(*Length)++] = Text[i];	//Text
+			Buffer[(*Length)++] = Text[i];	/* Text */
 		}
-		Buffer[(*Length)++] = 0x00; 		// END Inline string
-		Buffer[(*Length)++] = 0x01;		// END (indication)
-	Buffer[(*Length)++] = 0x01;			// END (SI)
+		Buffer[(*Length)++] = 0x00; 		/*  END Inline string */
+		Buffer[(*Length)++] = 0x01;		/*  END (indication) */
+	Buffer[(*Length)++] = 0x01;			/*  END (SI) */
 }
 
 GSM_Error GSM_EncodeURLFile(unsigned char *Buffer, size_t *Length, GSM_WAPBookmark *bookmark)
@@ -453,7 +424,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 	GSM_DateTime 	Date;
 	char		buff[200],buff2[200];
 
-	//header
+	/* header */
 	while(1) {
 		if (pos > file->Used) break;
 		if (!(file->Buffer[pos] & 0x80)) break;
@@ -519,7 +490,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				}
 				pos+=len2-1;
 			} else if (file->Buffer[pos] == 0x1F) {
-				//hack from coded files
+				/* hack from coded files */
 				len2 = file->Buffer[pos++];
 				type = file->Buffer[pos++] & 0x7f;
 				type +=2;
@@ -597,17 +568,17 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			break;
 		case 0x08:
 			dbgprintf("  Expiry            : ");
-			pos++; //length?
+			pos++; /* length? */
 			switch (file->Buffer[pos]) {
 				case 0x80: dbgprintf("date - ignored\n");	 	 break;
 				case 0x81: dbgprintf("seconds - ignored\n");	 break;
 				default  : dbgprintf("unknown %02x\n",file->Buffer[pos]);	 break;
 			}
 			pos++;
-			pos++; //expiry
-			pos++; //expiry
-			pos++; //expiry
-			pos++; //expiry
+			pos++; /* expiry */
+			pos++; /* expiry */
+			pos++; /* expiry */
+			pos++; /* expiry */
 			break;
 		case 0x09:
 			pos++;
@@ -760,7 +731,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 		}
 	}
 
-	//if we don't have any parts, we exit
+	/* if we don't have any parts, we exit */
 	if (type != 35 && type != 51) return ERR_NONE;
 
 	value = 0;
@@ -795,7 +766,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 		dbgprintf(", data len: %li\n",value);
 		len3 = value;
 
-		//content type
+		/* content type */
 		i 	= 0;
 		buff[0] = 0;
 		dbgprintf("    Content type    : ");
@@ -848,7 +819,6 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 
 		i=0;
 		while (i<len2) {
-//			dbgprintf("%02x\n",file->Buffer[pos+i]);
 			switch (file->Buffer[pos+i]) {
 			case 0x81:
 				i++;
@@ -856,7 +826,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			case 0x83:
 				break;
 			case 0x85:
-				//mms 1.0 file from GSM operator
+				/* mms 1.0 file from GSM operator */
 				buff2[0] = 0;
 				i++;
 				while (file->Buffer[pos+i]!=0x00) {
@@ -865,7 +835,6 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 					i++;
 				}
 				EncodeUnicode(info->Entries[info->EntriesNum].File.Name,buff2,strlen(buff2));
-//				i++;
 				break;
 			case 0x86:
 				while (file->Buffer[pos+i]!=0x00) i++;
@@ -927,7 +896,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 		}
 		pos+=i;
 
-		//data
+		/* data */
 		info->Entries[info->EntriesNum].File.Buffer = realloc(info->Entries[info->EntriesNum].File.Buffer,len3);
 		info->Entries[info->EntriesNum].File.Used   = len3;
 		memcpy(info->Entries[info->EntriesNum].File.Buffer,file->Buffer+pos,len3);

@@ -351,7 +351,7 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 	SMS->Number = 0;
 
 	if (Info->Entries[0].ID == SMS_AlcatelSMSTemplateName) {
-		Buffer[Length++] = 0x00; //number of elements
+		Buffer[Length++] = 0x00; /* number of elements */
 		for (i=1;i<Info->EntriesNum;i++) {
 		switch (Info->Entries[i].ID) {
 		case SMS_EMSSound10:
@@ -366,27 +366,27 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 			break;
 		case SMS_EMSPredefinedSound:
 			Buffer[0]++;
-			Buffer[Length++] 	= 0x01; 	//type of data
-			Buffer[Length++] 	= 1 % 256;	//len
-			Buffer[Length++] 	= 1 / 256;      //len
+			Buffer[Length++] 	= 0x01; 	/* type of data */
+			Buffer[Length++] 	= 1 % 256;	/* len */
+			Buffer[Length++] 	= 1 / 256;      /* len */
 			Buffer[Length++] 	= Info->Entries[i].Number;
 			break;
 		case SMS_EMSPredefinedAnimation:
 			Buffer[0]++;
-			Buffer[Length++] 	= 0x02; 	//type of data
-			Buffer[Length++] 	= 1 % 256;	//len
-			Buffer[Length++] 	= 1 / 256;      //len
+			Buffer[Length++] 	= 0x02; 	/* type of data */
+			Buffer[Length++] 	= 1 % 256;	/* len */
+			Buffer[Length++] 	= 1 / 256;      /* len */
 			Buffer[Length++] 	= Info->Entries[i].Number;
 			break;
 		case SMS_ConcatenatedTextLong:
 			Buffer[0]++;
 			p 	= UnicodeLength(Info->Entries[i].Buffer);
 			EncodeDefault(Buffer2, Info->Entries[i].Buffer, &p, true, NULL);
-			Buffer[Length++]   	= 0x00; 	//type of data
+			Buffer[Length++]   	= 0x00; 	/* type of data */
 			Length 			= Length + 2;
 			smslen			= GSM_PackSevenBitsToEight(0, Buffer2, Buffer+Length, p);
-			Buffer[Length-2] 	= smslen % 256; //len
-			Buffer[Length-1] 	= smslen / 256; //len
+			Buffer[Length-2] 	= smslen % 256; /* len */
+			Buffer[Length-1] 	= smslen / 256; /* len */
 			Length 			= Length + smslen;
 			break;
 		default:

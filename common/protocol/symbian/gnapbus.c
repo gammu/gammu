@@ -33,7 +33,7 @@ static GSM_Error GNAPBUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 
 	if (MsgLength & 1) buffer2[len++] = 0x00;
 	/* Odd messages require additional 0x00 byte */
-//	if (MsgLength % 2) buffer2[len++] = 0x00;
+/* 	if (MsgLength % 2) buffer2[len++] = 0x00; */
 
 	checksum 	= 0;
 	for (i = 0; i < len; i+=2) checksum ^= buffer2[i];
@@ -43,7 +43,7 @@ static GSM_Error GNAPBUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 	for (i = 1; i < len; i+=2) checksum ^= buffer2[i];
 	buffer2[len++] 	= checksum;
 
-//	GSM_DumpMessageLevel2(s, buffer2, len, MsgType);
+/* 	GSM_DumpMessageLevel2(s, buffer2, len, MsgType); */
 	GSM_DumpMessageLevel2(s, MsgBuffer, MsgLength, MsgType);
 
 	/* Sending to phone */
@@ -59,8 +59,8 @@ static GSM_Error GNAPBUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char
 {
 	GSM_Protocol_GNAPBUSData *d = &s->Protocol.Data.GNAPBUS;
 
-//printf("%02x ",rx_char);
-//fflush(stdout);
+/* printf("%02x ",rx_char); */
+/* fflush(stdout); */
 	/* XOR the byte with the earlier checksum */
 	d->Msg.CheckSum[d->Msg.Count & 1] ^= rx_char;
 
@@ -99,8 +99,8 @@ static GSM_Error GNAPBUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char
 
 		if (d->Msg.Count != ((d->Msg.Length+3)& ~1)) return ERR_NONE;
 
-//	GSM_DumpMessageLevel2(s, d->Msg.Buffer, d->Msg.Count, d->Msg.Type);
-//printf("\n%02x %02x\n",d->Msg.CheckSum[0],d->Msg.CheckSum[1]);
+/* 	GSM_DumpMessageLevel2(s, d->Msg.Buffer, d->Msg.Count, d->Msg.Type); */
+/* printf("\n%02x %02x\n",d->Msg.CheckSum[0],d->Msg.CheckSum[1]); */
 		/* Checksum is incorrect */
 		if (d->Msg.CheckSum[0] != d->Msg.CheckSum[1]) {
 			if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL || s->di.dl==DL_TEXTERROR ||

@@ -135,12 +135,12 @@
 /* Bu default commented: some parts of source are not ready or not tested
  * at all (or aren't good tested). Uncomment, if you want them
  */
-//#define DEVELOP
+/*#define DEVELOP*/
 
 /* By default disabled. It allows to make short beep after such things
  * like changing logo in phone (like in Logo Manager)
  */
-//#define GSM_ENABLE_BEEP
+/*#define GSM_ENABLE_BEEP*/
 
 /* ---------------------- C language specific --------------------------- */
 
@@ -220,7 +220,7 @@
 
 #cmakedefine BLUETOOTH_RF_SEARCHING
 
-//MS Visual C++ Express 2005 warnings
+/* MS Visual C++ Express 2005 warnings */
 #if _MSC_VER == 1400
 #  pragma warning( disable : 4996 4244 4333)
 #  ifndef _CRT_SECURE_CPP_OVERLOAD_STANDARD_NAMES

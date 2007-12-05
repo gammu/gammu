@@ -166,7 +166,10 @@ typedef struct {
 } GSM_Ringtone;
 
 typedef struct {
-	int Group;		//Nokia specific
+	/**
+	 * Nokia specific
+	 */
+	int Group;
 	int ID;
 	char Name[30 * 2];
 } GSM_RingtoneInfo;

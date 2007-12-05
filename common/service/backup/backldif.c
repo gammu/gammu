@@ -18,7 +18,6 @@ static void SaveLDIFText(FILE *file, unsigned char *Name, unsigned char *Value)
 	unsigned char Buffer[1000],Buffer2[1000];
 
 	if (EncodeUTF8(Buffer, Value)) {
-//		dbgprintf("%s\n",Buffer);
 		EncodeBASE64(Buffer, Buffer2, strlen(Buffer));
 		fprintf(file,"%s:: %s%c%c",Name,Buffer2,13,10);
 	} else {
@@ -69,7 +68,8 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 				SaveLDIFText(file, "Description", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			case PBK_Number_Work:
-				SaveLDIFText(file, "workPhone", backup->PhonePhonebook[i]->Entries[j].Text);//not exist in Mozilla 1.4 win32
+				/* not exist in Mozilla 1.4 win32 */
+				SaveLDIFText(file, "workPhone", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			case PBK_Number_Mobile:
 				SaveLDIFText(file, "mobile", backup->PhonePhonebook[i]->Entries[j].Text);
@@ -78,13 +78,15 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 				SaveLDIFText(file, "pager", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			case PBK_Number_Fax:
-				SaveLDIFText(file, "fax", backup->PhonePhonebook[i]->Entries[j].Text);//facsimileTelephoneNumber
+				/* facsimileTelephoneNumber */
+				SaveLDIFText(file, "fax", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			case PBK_Number_Home:
 				SaveLDIFText(file, "homePhone", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			case PBK_Number_General:
-				SaveLDIFText(file, "telephoneNumber", backup->PhonePhonebook[i]->Entries[j].Text);//work in Mozilla 1.4 win32
+				/* work in Mozilla 1.4 win32 */
+				SaveLDIFText(file, "telephoneNumber", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
 			case PBK_Text_Email:
 				SaveLDIFText(file, "mail", backup->PhonePhonebook[i]->Entries[j].Text);

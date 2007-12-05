@@ -555,11 +555,11 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesiz
 	for (i = 0; i < messagesize; i++) {
 		snprintf(buffer+j*4, sizeof(buffer) - j*4 - 1, "%02X",message[i]);
 		buffer[j*4+2] = 0x20;
-		// 9 = tab
+		/* 9 = tab */
 		if (isprint(message[i]) && message[i]!=0x09
-			// 0x01 = beep in windows xp
+			/* 0x01 = beep in windows xp */
 			&& message[i]!=0x01
-			// these are empty in windows xp
+			/* these are empty in windows xp */
 			&& message[i]!=0x85 && message[i]!=0x95
   			&& message[i]!=0xA6 && message[i]!=0xB7) {
 			if (j != len-1) buffer[j*4+2] 	= message[i];
@@ -599,14 +599,8 @@ const char *GetOS(void)
 		Extended 		= false;
 	      	Ver.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 	        if (!GetVersionEx((OSVERSIONINFO *)&Ver)) {
-//#ifdef _MSC_VER
-//			Ver.dwMajorVersion = _winmajor;
-//			Ver.dwMinorVersion = _winminor;
-//			Ver.dwBuildNumber  = _osver;
-//#else
 			snprintf(Buffer, sizeof(Buffer) - 1, "Windows");
 			return Buffer;
-//#endif
 		}
 	}
 
@@ -637,7 +631,7 @@ const char *GetOS(void)
 
 	} else if (Ver.dwMajorVersion == 5 && Ver.dwMinorVersion == 1 && Ver.dwBuildNumber == 2600) {
 		snprintf(Buffer, sizeof(Buffer) - 1, "Windows XP");
-#if _MSC_VER > 1200 //6.0 has it undeclared
+#if _MSC_VER > 1200 /* 6.0 has it undeclared */
 		if (Extended) {
 			if (Ver.wSuiteMask & VER_SUITE_PERSONAL) {
 				snprintf(Buffer+strlen(Buffer), sizeof(Buffer) - 1 - strlen(Buffer)," Home");
@@ -708,7 +702,7 @@ const char *GetCompiler(void)
 
 #ifdef WIN32
 #  ifdef _MSC_VER
-	if (_MSC_VER == 1200) { //?
+	if (_MSC_VER == 1200) { /* ? */
 		snprintf(Buffer, sizeof(Buffer) - 1, "MS VC 6.0");
 	} else if (_MSC_VER == 1300) {
 		snprintf(Buffer, sizeof(Buffer) - 1, "MS VC .NET 2002");

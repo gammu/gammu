@@ -869,7 +869,7 @@ static GSM_Error N7110_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 
 	/* Enabling/disabling logo */
 	if (bitmap->DefaultBitmap) {
-		string[0] = 0; //disabling
+		string[0] = 0; /* disabling */
 	} else {
 		string[0] = bitmap->BitmapEnabled?1:0;
 	}
@@ -1380,7 +1380,7 @@ static GSM_Error N7110_ReplyGetCalendarNotePos(GSM_Protocol_Message msg, GSM_Sta
 static GSM_Error N7110_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, bool start)
 {
 	return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N7110.LastCalendar,&s->Phone.Data.Priv.N7110.LastCalendarYear,&s->Phone.Data.Priv.N7110.LastCalendarPos);
-//	return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N7110.LastCalendarYear,&s->Phone.Data.Priv.N7110.LastCalendarPos);
+/* 	return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N7110.LastCalendarYear,&s->Phone.Data.Priv.N7110.LastCalendarPos); */
 }
 
 static GSM_Error N7110_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
@@ -1398,12 +1398,12 @@ static GSM_Error N7110_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus
 	return ERR_NONE;
 
     	/* Method 2 */
-//	return GE_NOTSUPPORTED;
+/* 	return GE_NOTSUPPORTED; */
 }
 
 static GSM_Error N7110_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 {
-//	return N71_65_AddCalendar1(s, Note, NULL);
+/* 	return N71_65_AddCalendar1(s, Note, NULL); */
 	return N71_65_AddCalendar2(s,Note);
 }
 

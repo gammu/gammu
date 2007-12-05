@@ -374,7 +374,7 @@ static GSM_Error N6510_FindCalendarIconID3(GSM_StateMachine *s, GSM_CalendarEntr
                  * Please note, that method 1 is the oldest one and in some
                  * moment Nokia can remove it from firmware
                  */
-//		if (Entry->Type == GSM_CAL_MEETING) {
+/* 		if (Entry->Type == GSM_CAL_MEETING) { */
 		if (Entry->Type == GSM_CAL_MEETING || Entry->Type == GSM_CAL_CALL || Entry->Type == GSM_CAL_MEMO) {
 			error=N71_65_AddCalendar1(s, Entry, &s->Phone.Data.Priv.N6510.FirstCalendarPos);
 		} else {
@@ -593,7 +593,7 @@ GSM_Error N6510_GetNextCalendar(GSM_StateMachine *s,  GSM_CalendarEntry *Note, b
 		return N71_65_GetNextCalendar1(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
 
 	    	/* Method 2. In known phones texts of notes cut to 50 chars. Some features missed */
-//		return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
+/* 		return N71_65_GetNextCalendar2(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos); */
 	} else {
 	    	/* Method 3. All DCT4 features supported. Not supported by 8910 */
 	    	return N6510_GetNextCalendar3(s,Note,start,&s->Phone.Data.Priv.N6510.LastCalendar,&s->Phone.Data.Priv.N6510.LastCalendarYear,&s->Phone.Data.Priv.N6510.LastCalendarPos);
@@ -625,7 +625,7 @@ GSM_Error N6510_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Statu
 		return ERR_NONE;
 
 	    	/* Method 2 */
-//		return ERR_NOTSUPPORTED;
+/* 		return ERR_NOTSUPPORTED; */
 	} else {
 		/* Method 3 */
 		error=N6510_GetCalendarInfo3(s,&s->Phone.Data.Priv.N6510.LastCalendar,0);
@@ -643,7 +643,7 @@ GSM_Error N6510_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CAL62)) {
 		return N71_65_AddCalendar2(s,Note);
-//		return N71_65_AddCalendar1(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos);
+/* 		return N71_65_AddCalendar1(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos); */
 	} else {
 		/* Method 3. All DCT4 features supported. Not supported by 8910 */
 		return N6510_AddCalendar3(s, Note, &s->Phone.Data.Priv.N6510.FirstCalendarPos);

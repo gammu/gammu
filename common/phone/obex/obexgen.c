@@ -453,7 +453,7 @@ static GSM_Error OBEXGEN_ChangePath(GSM_StateMachine *s, char *Name, unsigned ch
 	}
 
 	/* connection ID block */
-	req[Current++] = 0xCB; // ID
+	req[Current++] = 0xCB; /* ID */
 	req[Current++] = 0x00; req[Current++] = 0x00;
 	req[Current++] = 0x00; req[Current++] = 0x01;
 
@@ -638,7 +638,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 		OBEXAddBlock(req, &Current, 0x01, File->Name, UnicodeLength(File->Name)*2+2);
 
 		/* File size block */
-		req[Current++] = 0xC3; // ID
+		req[Current++] = 0xC3; /* ID */
 		req[Current++] = (File->Used >> 24) & 0xff;
 		req[Current++] = (File->Used >> 16) & 0xff;
 		req[Current++] = (File->Used >> 8) & 0xff;
@@ -652,7 +652,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 
 	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
 		/* connection ID block */
-		req[Current++] = 0xCB; // ID
+		req[Current++] = 0xCB; /* ID */
 		req[Current++] = 0x00; req[Current++] = 0x00;
 		req[Current++] = 0x00; req[Current++] = 0x01;
 	}
@@ -841,7 +841,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 
 	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
 		/* connection ID block */
-		req[Current++] = 0xCB; // ID
+		req[Current++] = 0xCB; /* ID */
 		req[Current++] = 0x00; req[Current++] = 0x00;
 		req[Current++] = 0x00; req[Current++] = 0x01;
 	}
@@ -854,7 +854,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 		Current = 0;
  	    	if (s->Phone.Data.Priv.OBEXGEN.Service == OBEX_BrowsingFolders) {
 			/* connection ID block */
-			req[Current++] = 0xCB; // ID
+			req[Current++] = 0xCB; /* ID */
 			req[Current++] = 0x00; req[Current++] = 0x00;
 			req[Current++] = 0x00; req[Current++] = 0x01;
 		}
@@ -1082,7 +1082,7 @@ GSM_Error OBEXGEN_DeleteFile(GSM_StateMachine *s, unsigned char *ID)
 	OBEXAddBlock(req, &Current, 0x01, req2, UnicodeLength(req2)*2+2);
 
 	/* connection ID block */
-	req[Current++] = 0xCB; // ID
+	req[Current++] = 0xCB; /* ID */
 	req[Current++] = 0x00; req[Current++] = 0x00;
 	req[Current++] = 0x00; req[Current++] = 0x01;
 

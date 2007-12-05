@@ -84,11 +84,11 @@ static GSM_Error GSM_DecodeSMSDateTime(GSM_DateTime *DT, unsigned char *req)
 
 GSM_Error GNAPGEN_PrivSetSMSLayout( GSM_SMSMessage *sms, unsigned char *buffer, GSM_SMSMessageLayout *Layout ) {
 	int position = 0;
-	// setting sms layout
+	/*  setting sms layout */
 	*Layout = PHONE_SMSDeliver;
 	Layout->SMSCNumber = 0;
 
-	// the pdu type is always behind the smsc number
+	/*  the pdu type is always behind the smsc number */
 	if( (buffer[0] % 2) == 0 )
 		position = (buffer[0] / 2) + 1;
 	else
@@ -97,9 +97,9 @@ GSM_Error GNAPGEN_PrivSetSMSLayout( GSM_SMSMessage *sms, unsigned char *buffer, 
 	position++;
 	Layout->firstbyte = position;
 
-	// determine whether the sms was received or sent
+	/*  determine whether the sms was received or sent */
 	switch( buffer[position] & 1 ) {
-		// SMS-DELIVER (incoming message, received)
+		/*  SMS-DELIVER (incoming message, received) */
 		case 0:
 			dbgprintf("Message type: SMS-DELIVER\n");
 			sms->PDU = SMS_Deliver;
@@ -134,7 +134,7 @@ GSM_Error GNAPGEN_PrivSetSMSLayout( GSM_SMSMessage *sms, unsigned char *buffer, 
 
 			break;
 
-		// SMS-SUBMIT (outgoing message, to be sent)
+		/*  SMS-SUBMIT (outgoing message, to be sent) */
 		case 1:
 			dbgprintf("Message type: SMS-SUBMIT\n");
 			sms->PDU = SMS_Submit;
@@ -159,12 +159,12 @@ GSM_Error GNAPGEN_PrivSetSMSLayout( GSM_SMSMessage *sms, unsigned char *buffer, 
 			position++;
 			/* the validity period field length depends on the VP flag set in the pdu-type */
 			if( buffer[position] & 0x16 ) {
-				// VP is integer represented
+				/*  VP is integer represented */
 				Layout->TPVP = position;
 			} else if ( buffer[position] & 0x08 ) {
 				position += 6;
 				Layout->TPVP = position;
-				// VP is semi-octet represented
+				/*  VP is semi-octet represented */
 			}
 
 			position++;
@@ -340,11 +340,11 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	GSM_Phone_GNAPGENData           *Priv = &s->Phone.Data.Priv.GNAPGEN;
 	GSM_Phone_Data			*Data = &s->Phone.Data;
 
-	/// @todo remove the folder attribute from the request header since it's not used on the phone
+	/* @todo remove the folder attribute from the request header since it's not used on the phone */
 
 	unsigned char req [8] = {0,11,
-				 0x00,0x0c, 		//folder
-				 0x00,0x10,0x00,0x3F};	//location
+				 0x00,0x0c, 		/* folder */
+				 0x00,0x10,0x00,0x3F};	/* location */
 	int i;
 	bool skipfolder;
 	GSM_Error error;
@@ -354,14 +354,14 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		Priv->CurrentSMSNumber = 0;
 	}
 
-	// retrieve the sms IDs for the given folder
+	/*  retrieve the sms IDs for the given folder */
 	if( Priv->CurrentSMSNumber == 0 )
 		GNAPGEN_PrivGetSMSFolderStatus(s,Priv->SMSFolderID[Priv->CurrentFolderNumber]);
 
 	for( i=0; i<5; i++ )
 		GSM_SetDefaultSMSData(&sms->SMS[i]);
 
-	// if there are no SMS in current folder, just skip it
+	/*  if there are no SMS in current folder, just skip it */
 	do {
 		if( Priv->SMSCount == 0 ) {
 			if( (Data->SMSFolders->Number - 1) == Priv->CurrentFolderNumber )
@@ -376,7 +376,7 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 			skipfolder = false;
 	} while( skipfolder );
 
-	// set location
+	/*  set location */
 	req[4] = Priv->SMSIDs[Priv->CurrentSMSNumber].byte1;
 	req[5] = Priv->SMSIDs[Priv->CurrentSMSNumber].byte2;
 	req[6] = Priv->SMSIDs[Priv->CurrentSMSNumber].byte3;
@@ -397,7 +397,7 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		return error;
 
 	if( Priv->CurrentSMSNumber == ( Priv->SMSCount - 1 ) ) {
-		// last sms in current folder reached, check if there are folders left to checkout
+		/*  last sms in current folder reached, check if there are folders left to checkout */
 		if( Priv->CurrentFolderNumber == (Data->SMSFolders->Number - 1) )
 			return ERR_UNKNOWN;
 		else {
@@ -423,7 +423,7 @@ static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms
 
 	*Layout = PHONE_SMSSubmit;
 
-	// smsc number is semi-octet
+	/*  smsc number is semi-octet */
 	Layout->SMSCNumber 	 = count;
 	smprintf(s, "SMSCNumber: %d\n", count );
 	if( UnicodeLength(sms->SMSC.Number) == 0 )
@@ -431,7 +431,7 @@ static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms
 	else
 		count += ((UnicodeLength(sms->SMSC.Number) + 1 ) / 2) + 1;
 
-	// firstbyte set in SMS Layout
+	/*  firstbyte set in SMS Layout */
 	Layout->firstbyte 	 = count;
 	smprintf(s, "firstbyte: %d\n", count);
 	count++;
@@ -442,7 +442,7 @@ static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms
 		count++;
 	}
 
-	// Phone number
+	/*  Phone number */
 	Layout->Number 		 = count;
 	smprintf(s, "Number: %d\n", count);
 
@@ -502,13 +502,13 @@ static GSM_Error GNAPGEN_SendSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms
 	error=GNAPGEN_EncodeSMSFrame(s, sms, req + 2, &Layout, &length);
 	if (error != ERR_NONE) return error;
 	DumpMessage(&s->di, req, length+1);
-	//return ERR_NONE;
+	/* return ERR_NONE; */
 	smprintf(s, "Sending sms\n");
 	return s->Protocol.Functions->WriteMessage(s, req, length + 2, 0x06);
 }
 
 GSM_Error GNAPGEN_ReplySetSMS (GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s) {
-	/// @todo do something useful here ;)
+	/* @todo do something useful here ;) */
 	smprintf(s, "SetSMS: got reply\n");
 	return ERR_NONE;
 }
@@ -521,13 +521,13 @@ static GSM_Error GNAPGEN_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *
 
 
 	unsigned char req [300] = {0,13,
-				0x00,0x0c, //folder
-				0x00,0x10,0x00,0x3F}; //location
+				0x00,0x0c, /* folder */
+				0x00,0x10,0x00,0x3F}; /* location */
 
 
 	req[3] = sms->Folder;
 
-	/// @todo allow existing messages to be edited (not implemented in gnapplet)
+	/* @todo allow existing messages to be edited (not implemented in gnapplet) */
 
 	if (sms->PDU == SMS_Deliver)
 		sms->PDU = SMS_Submit;
@@ -543,13 +543,13 @@ static GSM_Error GNAPGEN_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *
 
 static GSM_Error GNAPGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-//	N6510_GetSMSLocation(s, sms, &folderid, &location);
-//	location = 0;
-//	N6510_SetSMSLocation(s, sms, folderid, location);
+/* 	N6510_GetSMSLocation(s, sms, &folderid, &location); */
+/* 	location = 0; */
+/* 	N6510_SetSMSLocation(s, sms, folderid, location); */
 	return GNAPGEN_PrivSetSMSMessage(s, sms);
 }
 
-//-----------------------------------------------------------------------------
+/* ----------------------------------------------------------------------------- */
 
 static GSM_Error GNAPGEN_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -679,7 +679,7 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
         GSM_MemoryEntry         *entry = s->Phone.Data.Memory;
 	GSM_Phone_GNAPGENData	*Priv = &s->Phone.Data.Priv.GNAPGEN;
 
-	// 17 == GN_ERR_INVALIDMEMORYTYPE
+	/*  17 == GN_ERR_INVALIDMEMORYTYPE */
 	if( msg.Buffer[3] == 17 ) {
 		smprintf(s, "unknown memory type\n");
 		return ERR_UNKNOWN;
@@ -693,7 +693,7 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 		subtype = msg.Buffer[pos+2]*256+msg.Buffer[pos+3];
 		pos+=4;
 		switch (type) {
-                // name
+                /*  name */
 		case 0x07:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			if (len!=0) {
@@ -705,7 +705,7 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 			}
 			pos+=2+len*2;
 			break;
-                // email
+                /*  email */
                 case 0x08:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Email;
@@ -715,26 +715,26 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 			entry->EntriesNum++;
 			pos+=2+len*2;
 			break;
-                // 0x0b is a general identifier for a number
+                /*  0x0b is a general identifier for a number */
 		case 0x0B:
 			switch(subtype) {
-				// fax
+				/*  fax */
 				case 0x04:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Fax;
 					break;
-				// work
+				/*  work */
 				case 0x06:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Work;
 					break;
-				// mobile
+				/*  mobile */
 				case 0x03:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Mobile;
 					break;
-				// home
+				/*  home */
 				case 0x02:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Home;
 					break;
-				// general
+				/*  general */
 				case 0x0a: default:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_General;
 					break;
@@ -746,14 +746,14 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 			entry->EntriesNum++;
 			pos+=2+len*2;
 			break;
-                // date
+                /*  date */
 		case 0x13:
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
 			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date);
 			entry->EntriesNum++;
 			pos+=2+7;
 			break;
-		// note
+		/*  note */
 		case 0x0a:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Note;
@@ -763,7 +763,7 @@ GSM_Error GNAPGEN_ReplyGetNextMemory( GSM_Protocol_Message msg, GSM_StateMachine
 			entry->EntriesNum++;
 			pos+=2+len*2;
 			break;
-		// url
+		/*  url */
 		case 0x2c:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_URL;
@@ -822,7 +822,7 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 		subtype = msg.Buffer[pos+2]*256+msg.Buffer[pos+3];
 		pos+=4;
 		switch (type) {
-                // name
+                /*  name */
 		case 0x07:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			if (len!=0) {
@@ -834,7 +834,7 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 			}
 			pos+=2+len*2;
 			break;
-                // email
+                /*  email */
                 case 0x08:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Email;
@@ -844,26 +844,26 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 			entry->EntriesNum++;
 			pos+=2+len*2;
 			break;
-                // 0x0b is a general identifier for a number
+                /*  0x0b is a general identifier for a number */
 		case 0x0B:
 			switch(subtype) {
-				// fax
+				/*  fax */
 				case 0x04:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Fax;
 					break;
-				// work
+				/*  work */
 				case 0x06:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Work;
 					break;
-				// mobile
+				/*  mobile */
 				case 0x03:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Mobile;
 					break;
-				// home
+				/*  home */
 				case 0x02:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Home;
 					break;
-				// general
+				/*  general */
 				case 0x0a: default:
 					entry->Entries[entry->EntriesNum].EntryType=PBK_Number_General;
 					break;
@@ -875,14 +875,14 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 			entry->EntriesNum++;
 			pos+=2+len*2;
 			break;
-                // date
+                /*  date */
 		case 0x13:
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Date;
 			NOKIA_DecodeDateTime(s, msg.Buffer+pos, &entry->Entries[entry->EntriesNum].Date);
 			entry->EntriesNum++;
 			pos+=2+7;
 			break;
-		// note
+		/*  note */
 		case 0x0a:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_Note;
@@ -892,7 +892,7 @@ static GSM_Error GNAPGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachi
 			entry->EntriesNum++;
 			pos+=2+len*2;
 			break;
-		// url
+		/*  url */
 		case 0x2c:
 			len = msg.Buffer[pos]*256+msg.Buffer[pos+1];
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Text_URL;
@@ -946,8 +946,8 @@ static GSM_Error GNAPGEN_SetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 				   0x00, 0x00, 		/* memory type */
 				   0x00, 0x00, 0x00, 0x00, /* location */
 				   0x00, 0x00 };	/* number of entries to read */
-	// for each entry, 2 bytes are reserved for the entry type,
-	// 2 bytes for the entry sub-type if available and 64 byte for the actual entry
+	/*  for each entry, 2 bytes are reserved for the entry type, */
+	/*  2 bytes for the entry sub-type if available and 64 byte for the actual entry */
 	int currentByte = 10;
 	int i = 0;
 	int entryCount = 0;
@@ -1029,7 +1029,7 @@ static GSM_Error GNAPGEN_SetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 }
 
 GSM_Error GNAPGEN_ReplyDeleteMemory ( GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s ) {
-	/// @todo implement error handling
+	/* @todo implement error handling */
 	smprintf(s, "Deleted\n");
 	return ERR_NONE;
 }
@@ -1058,7 +1058,7 @@ static GSM_Error GNAPGEN_AddMemory ( GSM_StateMachine *s, GSM_MemoryEntry *entry
 }
 
 static GSM_Error GNAPGEN_ReplyDeleteSMSMessage ( GSM_Protocol_Message msg, GSM_StateMachine *s ) {
-	// 17 == GN_ERR_INVALIDMEMORYTYPE
+	/*  17 == GN_ERR_INVALIDMEMORYTYPE */
 	switch( msg.Buffer[3] ) {
 		case 16:
 			smprintf(s, "invalid location\n");
@@ -1510,7 +1510,7 @@ GSM_Error GNAPGEN_ReplyDialVoice( GSM_Protocol_Message msg UNUSED, GSM_StateMach
 }
 
 static GSM_Error GNAPGEN_DialVoice ( GSM_StateMachine *s, char *Number, GSM_CallShowNumber ShowNumber UNUSED) {
-	/// @todo implement ShowNumber
+	/* @todo implement ShowNumber */
 	unsigned char req[100] = {0x00,0x09};
 
 	int currentByte = 2;
@@ -1691,7 +1691,7 @@ static GSM_Error GNAPGEN_Initialise (GSM_StateMachine *s)
 }
 
 static GSM_Reply_Function GNAPGENReplyFunctions[] = {
-	//informations
+	/* informations */
 	{GNAPGEN_ReplyGetIMEI,		"\x01",0x01,0x02,ID_GetIMEI			},
 	{GNAPGEN_ReplyGetHW,		"\x01",0x01,0x02,ID_GetHardware			},
 	{GNAPGEN_ReplyGetManufacturer,	"\x01",0x01,0x02,ID_GetManufacturer		},
@@ -1710,10 +1710,10 @@ static GSM_Reply_Function GNAPGENReplyFunctions[] = {
 
 	{GNAPGEN_ReplyGetBatteryCharge,	"\x04",0x01,0x02,ID_GetBatteryCharge		},
 
-	//type 5 is DEBUG
+	/* type 5 is DEBUG */
 	{GNAPGEN_ReplyGetModelFirmware,	"\x05",0x01,0x02,ID_IncomingFrame		},
 
-	//type 6 is SMS
+	/* type 6 is SMS */
 	{GNAPGEN_ReplyGetSMSFolders,	"\x06",0x01,0x02,ID_GetSMSFolders		},
 	{GNAPGEN_ReplyGetSMSStatus,	"\x06",0x01,0x0A,ID_GetSMSStatus		},
 	{GNAPGEN_ReplyGetSMSC,		"\x06",0x01,0x16,ID_GetSMSC			},
@@ -1722,12 +1722,12 @@ static GSM_Reply_Function GNAPGENReplyFunctions[] = {
 	{GNAPGEN_ReplyGetSMS,		"\x06",0x01,12,ID_GetSMSMessage			},
 	{GNAPGEN_ReplySetSMS,		"\x06",0x01,14,ID_SaveSMSMessage		},
 
-	//calendar
+	/* calendar */
 	{GNAPGEN_ReplyGetNextCalendar,	"\x07",0x01,0x02,ID_GetCalendarNote		},
 	{NONEFUNCTION,			"\x07",0x01,0x06,ID_DeleteCalendarNote		},
 	{GNAPGEN_ReplyGetToDo,		"\x07",0x01,0x08,ID_GetToDo			},
 
-	//time
+	/* time */
 	{GNAPGEN_ReplyGetDateTime,	"\x08",0x01,0x02,ID_GetDateTime			},
 	{GNAPGEN_ReplyGetAlarm,		"\x08",0x01,0x06,ID_GetAlarm			},
 

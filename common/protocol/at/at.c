@@ -80,8 +80,6 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 
 		{NULL		,1}};
 
-//printf("%c",rx_char);
-
     	/* Ignore leading CR, LF and ESC */
     	if (d->Msg.Length == 0) {
 		if (rx_char == 10 || rx_char == 13 || rx_char == 27) return ERR_NONE;

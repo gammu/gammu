@@ -73,9 +73,9 @@ static GSM_Error serial_close(GSM_StateMachine *s)
 }
 
 #if defined(GSM_ENABLE_DKU2PHONET) || defined(GSM_ENABLE_DKU2AT)
-  DEFINE_GUID(DKU2AT,    0x4F919104, 0x4adf, 0x11d5, 0x88, 0x2d, 0x0, 0xb0, 0xd0, 0x2f, 0xe3, 0x81); //"4F919104-4ADF-11D5-882D-00B0D02FE381"
-  DEFINE_GUID(DKU2FBUS2, 0x4F919102, 0x4adf, 0x11d5, 0x88, 0x2d, 0x0, 0xb0, 0xd0, 0x2f, 0xe3, 0x81); //"4F919102-4ADF-11D5-882D-00B0D02FE381"
-  DEFINE_GUID(DKU2OBEX,  0x4F919100, 0x4adf, 0x11d5, 0x88, 0x2d, 0x0, 0xb0, 0xd0, 0x2f, 0xe3, 0x81); //"4F919100-4ADF-11D5-882D-00B0D02FE381"
+  DEFINE_GUID(DKU2AT,    0x4F919104, 0x4adf, 0x11d5, 0x88, 0x2d, 0x0, 0xb0, 0xd0, 0x2f, 0xe3, 0x81); /* "4F919104-4ADF-11D5-882D-00B0D02FE381" */
+  DEFINE_GUID(DKU2FBUS2, 0x4F919102, 0x4adf, 0x11d5, 0x88, 0x2d, 0x0, 0xb0, 0xd0, 0x2f, 0xe3, 0x81); /* "4F919102-4ADF-11D5-882D-00B0D02FE381" */
+  DEFINE_GUID(DKU2OBEX,  0x4F919100, 0x4adf, 0x11d5, 0x88, 0x2d, 0x0, 0xb0, 0xd0, 0x2f, 0xe3, 0x81); /* "4F919100-4ADF-11D5-882D-00B0D02FE381" */
 #endif
 
 static GSM_Error serial_open (GSM_StateMachine *s)
@@ -146,7 +146,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 #ifdef GSM_ENABLE_DKU5FBUS2
 	if (s->ConnectionType == GCT_DKU5FBUS2) {
 		smprintf(s,"Reading DKU5 device\n");
-		//win xp
+		/* win xp */
 		DeviceName2[0] = 0;
 		if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, "HARDWARE\\DEVICEMAP\\SERIALCOMM", 0, KEY_QUERY_VALUE, &hKey) != ERROR_SUCCESS) {
 			smprintf(s,"Error opening key\n");
@@ -163,7 +163,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		}
 		RegCloseKey(hKey);
 		if (strlen(DeviceName2) == 0) {
-			// win 98
+			/*  win 98 */
 			if (RegOpenKeyEx(HKEY_LOCAL_MACHINE, "Enum\\USBVSP\\ATMELPORT\\0000", 0, KEY_QUERY_VALUE, &hKey) != ERROR_SUCCESS) {
 				smprintf(s,"Error opening key\n");
 				return ERR_DEVICENOTWORK;
@@ -205,9 +205,9 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	if (d->hPhone == INVALID_HANDLE_VALUE) {
 		i = GetLastError();
 		GSM_OSErrorInfo(s, "CreateFile in serial_open");
-		if (i == 2)   return ERR_DEVICENOTWORK; //can't find specified file
-		if (i == 5)   return ERR_DEVICEBUSY;    //access denied
-		if (i == 31)  return ERR_DEVICENOTWORK; //attached device not working
+		if (i == 2)   return ERR_DEVICENOTWORK; /* can't find specified file */
+		if (i == 5)   return ERR_DEVICEBUSY;    /* access denied */
+		if (i == 31)  return ERR_DEVICENOTWORK; /* attached device not working */
 		if (i == 123) return ERR_DEVICENOTEXIST;
 		return ERR_DEVICEOPENERROR;
 	}
@@ -238,14 +238,14 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 		dcb.StopBits 	 = ONESTOPBIT;
 
 		/* No Xon/Xof flow control */
-	//	dcb.fOutX 	 = false;
-	//	dcb.fInX 	 = false;
+	/* 	dcb.fOutX 	 = false; */
+	/* 	dcb.fInX 	 = false; */
 
 		/* Hardware flow control */
-	//	dcb.fOutxDsrFlow = true;
-	//	dcb.fOutxCtsFlow = true;
-	//	dcb.fDtrControl  = DTR_CONTROL_HANDSHAKE;
-	//	dcb.fRtsControl  = RTS_CONTROL_HANDSHAKE;
+	/* 	dcb.fOutxDsrFlow = true; */
+	/* 	dcb.fOutxCtsFlow = true; */
+	/* 	dcb.fDtrControl  = DTR_CONTROL_HANDSHAKE; */
+	/* 	dcb.fRtsControl  = RTS_CONTROL_HANDSHAKE; */
 
 	    	/* Initialise the port settings */
 		if (SetCommState(d->hPhone, &dcb)==0) {

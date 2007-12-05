@@ -96,7 +96,7 @@ void DCT3GetT9(int argc, char *argv[])
 	unsigned char req[] = {0x00, 0x01, 0xAE, 0x02, 0x00,
 			       0x00};	/* Part number */
 
-//"00 01 AE 00" gets some control values
+/* "00 01 AE 00" gets some control values */
 
 	if (CheckDCT3Only()!=ERR_NONE) return;
 
@@ -227,14 +227,14 @@ struct DCT3ADCInfo {
 
 static struct DCT3ADCInfo DCT3ADC[] = {
 	{"Battery voltage:",			"mV",  1,  3,  2},
-//	{"Charger voltage:",			"mV",  1, -1,  7},
-//	{"Charger current:",			"mA",  1, -1,  5},
+/* 	{"Charger voltage:",			"mV",  1, -1,  7}, */
+/* 	{"Charger current:",			"mA",  1, -1,  5}, */
 	{"Battery type:",			"mAh", 1,  4,  3},
 	{"Battery temperature:",		"mK", 10,  5,  4},
-//	{"Accessory detection:",		"mV",  1, -1, -1},
+/* 	{"Accessory detection:",		"mV",  1, -1, -1}, */
 	{"RSSI:",				"",    1,  2, -1},
-//	{"VCXO temperature:",			"mV",  1, -1, -1},
-//	{"Hook information:",			"mV",  1, -1, -1},
+/* 	{"VCXO temperature:",			"mV",  1, -1, -1}, */
+/* 	{"Hook information:",			"mV",  1, -1, -1}, */
 
 	{"", "", 1, -1, -1}
 };
@@ -556,7 +556,7 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 
 	if (!strcmp(gsm->Phone.Data.ModelInfo->model,"3310") && gsm->Phone.Data.VerNum>5.87) {
 		printf("3310: enabling control of SMS charsets\n");
-		PPS[11] = '0';//0 = ON, 1 = OFF
+		PPS[11] = '0';/* 0 = ON, 1 = OFF */
 	}
 	if (!strcmp(gsm->Phone.Data.ModelInfo->model,"6150")) {
 		printf("6150: enabling WellMate menu\n");
@@ -592,10 +592,10 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 		} else j=j/2;
 	}
 
-//	reqSet[3]=0xe7;
-//	reqSet[4]=0x25;
-//	reqSet[5]=0x00;
-//	reqSet[6]=0xe0;
+/* 	reqSet[3]=0xe7; */
+/* 	reqSet[4]=0x25; */
+/* 	reqSet[5]=0x00; */
+/* 	reqSet[6]=0xe0; */
 
 	error=GSM_WaitFor (gsm, reqSet, 7, 0x40, 4, ID_User4);
 	Print_Error(error);
@@ -753,7 +753,7 @@ static GSM_Error DCT3_ReplyDisplayOutput(GSM_Protocol_Message msg, GSM_StateMach
 void DCT3DisplayOutput(int argc, char *argv[])
 {
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x53,
-			       0x01}; //1 = enable, 2 = disable
+			       0x01}; /* 1 = enable, 2 = disable */
 	GSM_Error error;
 
 	GSM_Init(true);

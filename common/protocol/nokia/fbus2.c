@@ -36,8 +36,8 @@ static GSM_Error FBUS2_WriteFrame(GSM_StateMachine 	*s,
 	buffer2[0] 	= FBUS2_FRAME_ID;
 	if (s->ConnectionType==GCT_FBUS2IRDA) buffer2[0] = FBUS2_IRDA_FRAME_ID;
 
-	buffer2[1] 	= FBUS2_DEVICE_PHONE;		//destination
-	buffer2[2]	= FBUS2_DEVICE_PC;		//source
+	buffer2[1] 	= FBUS2_DEVICE_PHONE;		/* destination */
+	buffer2[2]	= FBUS2_DEVICE_PC;		/* source */
 	buffer2[3]	= MsgType;
 	buffer2[4]	= MsgLength / 256;
 	buffer2[5]	= MsgLength % 256;

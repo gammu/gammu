@@ -81,7 +81,7 @@ static GSM_Error N6510_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	smprintf(s, "Getting phonebook entry\n");
 	error = GSM_WaitFor (s, req, 19, 0x03, 4, ID_GetMemory);
 	if (entry->MemoryType == MEM_DC || entry->MemoryType == MEM_RC || entry->MemoryType == MEM_MC) {
-		//6111
+		/* 6111 */
 		if (error == ERR_NOTSUPPORTED) return ERR_EMPTY;
 	}
 	return error;
@@ -605,11 +605,11 @@ static void N6510_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsig
 		ifolderid = sms->Location / GSM_PHONE_MAXSMSINFOLDER;
 		*folderid = ifolderid + 0x01;
 		*location = sms->Location - ifolderid * GSM_PHONE_MAXSMSINFOLDER;
-		if (*folderid == 0x1B) (*folderid)=0x99; //0x1A is Outbox in 6230i
+		if (*folderid == 0x1B) (*folderid)=0x99; /* 0x1A is Outbox in 6230i */
 	} else {
 		*folderid = sms->Folder;
 		*location = sms->Location;
-		if (*folderid == 0x1A) (*folderid)=0x99; //0x1A is Outbox in 6230i
+		if (*folderid == 0x1A) (*folderid)=0x99; /* 0x1A is Outbox in 6230i */
 	}
 	smprintf(s, "SMS folder %i & location %i -> 6510 folder %i & location %i\n",
 		sms->Folder,sms->Location,*folderid,*location);
@@ -708,7 +708,7 @@ static GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 {
 	size_t			i,j;
 	size_t			Width, Height;
-	unsigned char		output[500]; //output2[500];
+	unsigned char		output[500]; /* output2[500]; */
 	GSM_Phone_Data		*Data = &s->Phone.Data;
 	GSM_Error		error;
 
@@ -751,15 +751,17 @@ static GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 			output[i++] = 0x01;
 			memcpy(output+i,msg.Buffer+30,PHONE_GetBitmapSize(GSM_NokiaPictureImage,0,0));
 			i = i + PHONE_GetBitmapSize(GSM_NokiaPictureImage,0,0);
-//			if (msg.Length!=282) {
-//				output[i++] = SM30_UNICODETEXT;
-//				output[i++] = 0;
-//				output[i++] = 0; /* Length - later changed */
-//				GSM_UnpackEightBitsToSeven(0, msg.Length-282, msg.Length-304, msg.Buffer+282,output2);
-//				DecodeDefault(output+i, output2, msg.Length - 282, true);
-//				output[i - 1] = UnicodeLength(output+i) * 2;
-//				i = i + output[i-1];
-//			}
+#if 0
+ 			if (msg.Length!=282) {
+ 				output[i++] = SM30_UNICODETEXT;
+ 				output[i++] = 0;
+ 				output[i++] = 0; /* Length - later changed */
+ 				GSM_UnpackEightBitsToSeven(0, msg.Length-282, msg.Length-304, msg.Buffer+282,output2);
+ 				DecodeDefault(output+i, output2, msg.Length - 282, true);
+ 				output[i - 1] = UnicodeLength(output+i) * 2;
+ 				i = i + output[i-1];
+ 			}
+#endif
 			GSM_MakeMultiPartSMS(Data->GetSMSMessage,output,i,UDH_NokiaProfileLong,SMS_Coding_8bit,1,0);
 			for (i=0;i<3;i++) {
                 		Data->GetSMSMessage->SMS[i].Number[0]=0;
@@ -1898,15 +1900,15 @@ static GSM_Error N6510_ReplyGetSyncMLName(GSM_Protocol_Message msg, GSM_StateMac
 static GSM_Error N6510_GetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings *settings)
 {
 	GSM_Error 	error;
-//	unsigned char 	NameReq[] = {N6110_FRAME_HEADER, 0x05,
-//				 0x00, 0x00, 0x00, 0x31, 0x00,
-//				 0x06, 0x00, 0x00, 0x00, 0xDE, 0x00, 0x00};
-//	unsigned char 	GetActive[] = {N6110_FRAME_HEADER, 0x05,
-//				 0x00, 0x00, 0x00, 0x31, 0x00,
-//				 0x05, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00};
+/* 	unsigned char 	NameReq[] = {N6110_FRAME_HEADER, 0x05, */
+/* 				 0x00, 0x00, 0x00, 0x31, 0x00, */
+/* 				 0x06, 0x00, 0x00, 0x00, 0xDE, 0x00, 0x00}; */
+/* 	unsigned char 	GetActive[] = {N6110_FRAME_HEADER, 0x05, */
+/* 				 0x00, 0x00, 0x00, 0x31, 0x00, */
+/* 				 0x05, 0x00, 0x00, 0x00, 0x01, 0x00, 0x00}; */
 	unsigned char 	req[] = {N6110_FRAME_HEADER, 0x05,
 				 0x00, 0x00, 0x00, 0x31, 0x00,
-				 0x01, //location
+				 0x01, /* location */
 				 0x00, 0x00, 0x02, 0x46, 0x00, 0x00};
 
 	settings->Connection.Location = settings->Location;
@@ -1919,9 +1921,9 @@ static GSM_Error N6510_GetSyncMLSettings(GSM_StateMachine *s, GSM_SyncMLSettings
 	settings->Name[1] = 0;
 	s->Phone.Data.SyncMLSettings  = settings;
 
-//	smprintf(s, "Getting SyncML settings name\n");
-//	error = GSM_WaitFor (s, NameReq, 16, 0x43, 4, ID_GetSyncMLName);
-//	if (error != ERR_NONE) return error;
+/* 	smprintf(s, "Getting SyncML settings name\n"); */
+/* 	error = GSM_WaitFor (s, NameReq, 16, 0x43, 4, ID_GetSyncMLName); */
+/* 	if (error != ERR_NONE) return error; */
 
 	req[9] = settings->Location - 1;
 	smprintf(s, "Getting additional SyncML settings\n");
@@ -1970,7 +1972,7 @@ static GSM_Error N6510_GetChatSettings(GSM_StateMachine *s, GSM_ChatSettings *se
 {
 	GSM_Error 	error;
 	unsigned char 	req[] = {N6110_FRAME_HEADER, 0x3a,
-				 0x09,			// location
+				 0x09,			/*  location */
 				 0x01, 0x0e};
 
 	settings->Connection.Location = settings->Location;
@@ -2080,12 +2082,12 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 	}
 
 	if (Type == N6510_MMS_SETTINGS || Type == N6510_CHAT_SETTINGS) {
-		req[pos++] = 0x03; //active bearer: GPRS
+		req[pos++] = 0x03; /* active bearer: GPRS */
 	} else {
 		if (settings->ActiveBearer == WAPSETTINGS_BEARER_GPRS && loc2 != -1) {
-			req[pos++] = 0x03; //active bearer: GPRS
+			req[pos++] = 0x03; /* active bearer: GPRS */
 		} else {
-			req[pos++] = 0x01; //active bearer: data set
+			req[pos++] = 0x01; /* active bearer: data set */
 		}
 	}
 
@@ -2204,11 +2206,11 @@ static GSM_Error N6510_SetConnectionSettings(GSM_StateMachine *s, GSM_MultiWAPSe
 			req[pos++] = 0x00;
 		}
 		req[pos++] = 0x00; req[pos++] = 0x00;
-		req[pos++] = 0x07; //unknown
+		req[pos++] = 0x07; /* unknown */
 		req[pos++] = 0x00; req[pos++] = 0x00;
-		req[pos++] = 0x80; //unknown
-		req[pos++] = 0x01; //unknown
-		req[pos++] = 0x05; //unknown
+		req[pos++] = 0x80; /* unknown */
+		req[pos++] = 0x01; /* unknown */
+		req[pos++] = 0x05; /* unknown */
 		req[pos++] = 0x00; req[pos++] = 0x00;
 
 		/* Proxy data blocks */
@@ -2579,7 +2581,7 @@ static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 			folder = msg.Buffer[8];
 		} else {
 			folder = msg.Buffer[8] + 1;
-			//inbox,outbox
+			/* inbox,outbox */
 			if (msg.Buffer[8] == 0x02 || msg.Buffer[8] == 0x03) {
 				if (msg.Buffer[5] == 0x01) {
 					folder = msg.Buffer[8] - 1;
@@ -2624,10 +2626,10 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 	if (folderid == 0x99) return ERR_INVALIDLOCATION;
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 		switch (folderid) {
-			case 0x02: req[4] = 0x02; req[5] = 0x02; break; //inbox
-			//sms saved to sent items make problems later during reading
-			//case 0x03: req[4] = 0x02; req[5] = 0x03; break; //sent items
-			default	 : return ERR_NOTSUPPORTED; //at least 6111 doesn't support saving to other
+			case 0x02: req[4] = 0x02; req[5] = 0x02; break; /* inbox */
+			/* sms saved to sent items make problems later during reading */
+			/* case 0x03: req[4] = 0x02; req[5] = 0x03; break; //sent items */
+			default	 : return ERR_NOTSUPPORTED; /* at least 6111 doesn't support saving to other */
 		}
 	} else {
 		switch (folderid) {
@@ -2641,7 +2643,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 		switch (sms->PDU) {
-		case SMS_Status_Report: //this is SMS submit with delivery report request
+		case SMS_Status_Report: /* this is SMS submit with delivery report request */
 		case SMS_Submit:
 			break;
 		case SMS_Deliver:
@@ -2653,7 +2655,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 		}
 	} else {
 		switch (sms->PDU) {
-		case SMS_Status_Report: //this is SMS submit with delivery report request
+		case SMS_Status_Report: /* this is SMS submit with delivery report request */
 		case SMS_Submit:
 			/* Inbox */
 			if (folderid == 0x01 || folderid == 0x03) sms->PDU = SMS_Deliver;
@@ -2690,7 +2692,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 	error=GSM_WaitFor (s, req, length+9, 0x14, 4, ID_SaveSMSMessage);
 	if (error != ERR_NONE) return error;
 
-	//no adding to SIM SMS
+	/* no adding to SIM SMS */
 	if (UnicodeLength(sms->Name)==0 || sms->Folder < 3) return ERR_NONE;
 
 	folder = sms->Folder;
@@ -2699,9 +2701,9 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 		switch (folderid) {
-			case 0x03: NameReq[4] = 0x02; NameReq[5] = 0x02; break; //sent items
-			case 0x02: NameReq[4] = 0x02; NameReq[5] = 0x03; break; //inbox
-			default	 : return ERR_NOTSUPPORTED; //at least 6111 doesn't support saving to other
+			case 0x03: NameReq[4] = 0x02; NameReq[5] = 0x02; break; /* sent items */
+			case 0x02: NameReq[4] = 0x02; NameReq[5] = 0x03; break; /* inbox */
+			default	 : return ERR_NOTSUPPORTED; /* at least 6111 doesn't support saving to other */
 		}
 	} else {
 		switch (folderid) {
@@ -2799,14 +2801,14 @@ static GSM_Error N6510_ReplyGetManufactureMonth(GSM_Protocol_Message msg, GSM_St
 static GSM_Error N6510_GetManufactureMonth(GSM_StateMachine *s, char *value)
 {
 	unsigned char req[6] = {0x00, 0x05, 0x02, 0x01, 0x00, 0x02};
-//	unsigned char req[6] = {0x00, 0x03, 0x04, 0x0B, 0x01, 0x00};
+/* 	unsigned char req[6] = {0x00, 0x03, 0x04, 0x0B, 0x01, 0x00}; */
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) return ERR_NOTSUPPORTED;
 
 	s->Phone.Data.PhoneString=value;
 	smprintf(s, "Getting manufacture month\n");
 	return GSM_WaitFor (s, req, 6, 0x42, 2, ID_GetManufactureMonth);
-//	return GSM_WaitFor (s, req, 6, 0x1B, 2, ID_GetManufactureMonth);
+/* 	return GSM_WaitFor (s, req, 6, 0x1B, 2, ID_GetManufactureMonth); */
 }
 
 static GSM_Error N6510_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -2884,7 +2886,7 @@ static GSM_Error N6510_ReplyGetRingtonesInfo(GSM_Protocol_Message msg, GSM_State
 	memset(Data->RingtonesInfo,0,sizeof(GSM_AllRingtonesInfo));
 	if (msg.Buffer[4] * 256 + msg.Buffer[5] == 0x00) return ERR_EMPTY;
 	Data->RingtonesInfo->Number = msg.Buffer[4] * 256 + msg.Buffer[5];
-	// allocate array of ringtones based on number
+	/*  allocate array of ringtones based on number */
 	Data->RingtonesInfo->Ringtone = calloc(Data->RingtonesInfo->Number, sizeof(GSM_RingtoneInfo));
 	tmp = 6;
 	for (i=0;i<Data->RingtonesInfo->Number;i++) {
@@ -2904,13 +2906,13 @@ static GSM_Error N6510_PrivGetRingtonesInfo(GSM_StateMachine *s, GSM_AllRingtone
 {
 	GSM_Error	error;
 	unsigned char 	UserReq[8] = {N7110_FRAME_HEADER, 0x07, 0x00, 0x00, 0x00, 0x02};
-//	unsigned char 	All_Req[9] = {N7110_FRAME_HEADER, 0x07, 0x00, 0x00, 0xFE, 0x00, 0x7D};
+/* 	unsigned char 	All_Req[9] = {N7110_FRAME_HEADER, 0x07, 0x00, 0x00, 0xFE, 0x00, 0x7D}; */
 	unsigned char 	All_Req[8] = {N7110_FRAME_HEADER, 0x07, 0x00, 0x00, 0x00, 0x00};
 
 	s->Phone.Data.RingtonesInfo=Info;
 	smprintf(s, "Getting binary ringtones ID\n");
 	if (AllRingtones) {
-//		error = GSM_WaitFor (s, All_Req, 9, 0x1f, 4, ID_GetRingtonesInfo);
+/* 		error = GSM_WaitFor (s, All_Req, 9, 0x1f, 4, ID_GetRingtonesInfo); */
 		error = GSM_WaitFor (s, All_Req, 8, 0x1f, 4, ID_GetRingtonesInfo);
 		if (error == ERR_EMPTY && Info->Number == 0) return ERR_NOTSUPPORTED;
 		return error;
@@ -3012,10 +3014,10 @@ static GSM_Error N6510_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Vol
 		0x00,0x06,0x01,0x14,0x05,0x05,
 		0x00,0x00,0x00,0x01,0x03,0x08,
 		0x05,0x00,0x00,0x08,0x00,0x00};
-//	unsigned char 	reqOff2[] = {
-//		0x00,0x06,0x01,0x14,0x05,0x04,
-//		0x00,0x00,0x00,0x01,0x03,0x08,
-//		0x00,0x00,0x00,0x00,0x00,0x00};
+/* 	unsigned char 	reqOff2[] = { */
+/* 		0x00,0x06,0x01,0x14,0x05,0x04, */
+/* 		0x00,0x00,0x00,0x01,0x03,0x08, */
+/* 		0x00,0x00,0x00,0x00,0x00,0x00}; */
 
 	if (start) {
 		smprintf(s, "Enabling sound - part 1\n");
@@ -3040,11 +3042,11 @@ static GSM_Error N6510_PlayTone(GSM_StateMachine *s, int Herz, unsigned char Vol
 		smprintf(s, "Playing silent sound\n");
 		return GSM_WaitFor (s, reqPlay, 34, 0x0b, 4, ID_PlayTone);
 
-//		smprintf(s, "Disabling sound - part 1\n");
-//		error=GSM_WaitFor (s, reqOff, 18, 0x0b, 4, ID_PlayTone);
-//		if (error!=ERR_NONE) return error;
-//		smprintf(s, "Disabling sound - part 2\n");
-//		return GSM_WaitFor (s, reqOff2, 18, 0x0b, 4, ID_PlayTone);
+/* 		smprintf(s, "Disabling sound - part 1\n"); */
+/* 		error=GSM_WaitFor (s, reqOff, 18, 0x0b, 4, ID_PlayTone); */
+/* 		if (error!=ERR_NONE) return error; */
+/* 		smprintf(s, "Disabling sound - part 2\n"); */
+/* 		return GSM_WaitFor (s, reqOff2, 18, 0x0b, 4, ID_PlayTone); */
 	}
 }
 
@@ -3097,7 +3099,7 @@ static GSM_Error N6510_ReplyGetPPM(GSM_Protocol_Message msg, GSM_StateMachine *s
 
 static GSM_Error N6510_GetPPM(GSM_StateMachine *s,char *value)
 {
-//	unsigned char req[6] = {N6110_FRAME_HEADER, 0x07, 0x01, 0xff};
+/* 	unsigned char req[6] = {N6110_FRAME_HEADER, 0x07, 0x01, 0xff}; */
 	unsigned char req[6] = {N6110_FRAME_HEADER, 0x07, 0x01, 0x00};
 
 	s->Phone.Data.PhoneString=value;
@@ -3200,13 +3202,13 @@ static GSM_Error N6510_GetProfile(GSM_StateMachine *s, GSM_Profile *Profile)
 
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PROFILES)) return ERR_NOTSUPPORTED;
 
-//	if (!strcmp(s->Phone.Data.ModelInfo->model,"3510")) {
-//		if (s->Phone.Data.VerNum>3.37) return ERR_NOTSUPPORTED;
-//	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230")) {
-//	if (!strcmp(s->Phone.Data.ModelInfo->model,"6220")) {
-//	if (!strcmp(s->Phone.Data.ModelInfo->model,"5140")) {
-//	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230i")) {
-//	if (!strcmp(s->Phone.Data.ModelInfo->model,"6020")) {
+/* 	if (!strcmp(s->Phone.Data.ModelInfo->model,"3510")) { */
+/* 		if (s->Phone.Data.VerNum>3.37) return ERR_NOTSUPPORTED; */
+/* 	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230")) { */
+/* 	if (!strcmp(s->Phone.Data.ModelInfo->model,"6220")) { */
+/* 	if (!strcmp(s->Phone.Data.ModelInfo->model,"5140")) { */
+/* 	if (!strcmp(s->Phone.Data.ModelInfo->model,"6230i")) { */
+/* 	if (!strcmp(s->Phone.Data.ModelInfo->model,"6020")) { */
 
 	if (Profile->Location>5) return ERR_INVALIDLOCATION;
 
@@ -3361,9 +3363,9 @@ static GSM_Error N6510_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShow
 	unsigned int	pos = 4;
 	unsigned char 	req2[100] = {N6110_FRAME_HEADER,0x01,
 				    0x00,0x02,0x07,0x04,
-				    0x01,  // 1 - voice, 2 - data
+				    0x01,  /*  1 - voice, 2 - data */
 				    0x00,0x03,
-				    0x18,  // length of rest + 1
+				    0x18,  /*  length of rest + 1 */
 				    0x00,0x00,0x00};
 	unsigned char 	req[100] = {N6110_FRAME_HEADER,0x01,
 				    0x0c};	/* Number length */
@@ -3490,7 +3492,7 @@ static GSM_Error N6510_GetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
  	GSM_Error 		error;
  	int			location;
   	unsigned char 		req[7] = {N6110_FRAME_HEADER, 0x05,
- 					  0x00, 		// location
+ 					  0x00, 		/*  location */
 	    				  0x00,0x01};
 
   	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return ERR_NOTSUPPORTED;
@@ -3541,13 +3543,13 @@ static GSM_Error N6510_SetFMStation (GSM_StateMachine *s, GSM_FMStation *FMStati
  				0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
  				0xff,0xff,0xff,0xff,0xff,0x01};
  	unsigned char req[64] = {N6110_FRAME_HEADER, 0x12,0x00,0x01,0x00,
- 				0x00, 			// 0x0e + (strlen(name) * 2)
- 				0x00,			// strlen(name)
+ 				0x00, 			/*  0x0e + (strlen(name) * 2) */
+ 				0x00,			/*  strlen(name) */
  				0x14,0x09,0x00,
- 				0x00, 			// location
+ 				0x00, 			/*  location */
  				0x00,0x00,0x01,
- 				0x00, 			// freqHi
- 				0x00, 			// freqLo
+ 				0x00, 			/*  freqHi */
+ 				0x00, 			/*  freqLo */
  				0x01};
 
  	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_RADIO)) return ERR_NOTSUPPORTED;
@@ -4141,7 +4143,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 
 	{N6510_ReplyAddFileHeader1,	  "\x6D",0x03,0x03,ID_AddFile		  },
 	{N6510_ReplyAddFolder1,		  "\x6D",0x03,0x05,ID_AddFolder		  },
-	{N6510_ReplyGetFilePart12,	  "\x6D",0x03,0x0F,ID_GetFile		  },//filesystem1&2
+	{N6510_ReplyGetFilePart12,	  "\x6D",0x03,0x0F,ID_GetFile		  },/* filesystem1&2 */
 	{N6510_ReplyAddFileHeader1,	  "\x6D",0x03,0x13,ID_AddFile		  },
 	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x15,ID_GetFileInfo	  },
 	{NoneReply,			  "\x6D",0x03,0x19,ID_SetAttrib		  },
@@ -4152,18 +4154,18 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetFileFolderInfo1,	  "\x6D",0x03,0x33,ID_GetFileInfo	  },
 	{N6510_ReplyAddFilePart1,	  "\x6D",0x03,0x41,ID_AddFile		  },
 	{N6510_ReplyGetFileCRC12,	  "\x6D",0x03,0x43,ID_GetCRC		  },
-	{NoneReply,			  "\x6D",0x03,0x59,ID_AddFile		  },//filesystem2
-	{N6510_ReplyGetFilePart12,	  "\x6D",0x03,0x5F,ID_GetFile		  },//filesystem2
-	{N6510_ReplyDeleteFile2,	  "\x6D",0x03,0x63,ID_DeleteFile	  },//filesystem2
-	{N6510_ReplyAddFolder2,		  "\x6D",0x03,0x65,ID_AddFolder		  },//filesystem2
-	{N6510_ReplyGetFileCRC12,   	  "\x6D",0x03,0x67,ID_GetCRC		  },//filesystem2
-	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x69,ID_IncomingFrame	  },//filesystem2
-	{N6510_ReplyDeleteFolder2,	  "\x6D",0x03,0x6B,ID_DeleteFolder	  },//filesystem2
-	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x6D,ID_GetFileInfo	  },//filesystem2
-	{N6510_ReplySetAttrib2,		  "\x6D",0x03,0x6F,ID_SetAttrib		  },//filesystem2
-	{N6510_ReplyOpenFile2,		  "\x6D",0x03,0x73,ID_OpenFile		  },//filesystem2
-	{NoneReply,			  "\x6D",0x03,0x75,ID_CloseFile		  },//filesystem2
-	{N6510_ReplySetFileDate2,	  "\x6D",0x03,0x87,ID_AddFile		  },//filesystem2
+	{NoneReply,			  "\x6D",0x03,0x59,ID_AddFile		  },/* filesystem2 */
+	{N6510_ReplyGetFilePart12,	  "\x6D",0x03,0x5F,ID_GetFile		  },/* filesystem2 */
+	{N6510_ReplyDeleteFile2,	  "\x6D",0x03,0x63,ID_DeleteFile	  },/* filesystem2 */
+	{N6510_ReplyAddFolder2,		  "\x6D",0x03,0x65,ID_AddFolder		  },/* filesystem2 */
+	{N6510_ReplyGetFileCRC12,   	  "\x6D",0x03,0x67,ID_GetCRC		  },/* filesystem2 */
+	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x69,ID_IncomingFrame	  },/* filesystem2 */
+	{N6510_ReplyDeleteFolder2,	  "\x6D",0x03,0x6B,ID_DeleteFolder	  },/* filesystem2 */
+	{N6510_ReplyGetFileFolderInfo2,   "\x6D",0x03,0x6D,ID_GetFileInfo	  },/* filesystem2 */
+	{N6510_ReplySetAttrib2,		  "\x6D",0x03,0x6F,ID_SetAttrib		  },/* filesystem2 */
+	{N6510_ReplyOpenFile2,		  "\x6D",0x03,0x73,ID_OpenFile		  },/* filesystem2 */
+	{NoneReply,			  "\x6D",0x03,0x75,ID_CloseFile		  },/* filesystem2 */
+	{N6510_ReplySetFileDate2,	  "\x6D",0x03,0x87,ID_AddFile		  },/* filesystem2 */
 
 	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x01,ID_GetBitmap		  },
 	{N6510_ReplyStartupNoteLogo,	  "\x7A",0x04,0x01,ID_SetBitmap		  },

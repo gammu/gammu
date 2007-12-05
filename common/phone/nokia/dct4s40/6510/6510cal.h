@@ -1,5 +1,5 @@
 
-//calendar
+/* calendar */
 
 GSM_Error N6510_ReplyGetCalendarInfo(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s);
@@ -11,7 +11,7 @@ GSM_Error N6510_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 
 GSM_Error N6510_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status);
 
-//notes
+/* notes */
 
 GSM_Error N6510_ReplyGetNoteInfo(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N6510_ReplyGetNote(GSM_Protocol_Message msg, GSM_StateMachine *s);
@@ -25,7 +25,7 @@ GSM_Error N6510_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Not);
 
 GSM_Error N6510_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *status);
 
-//todo
+/* todo */
 
 GSM_Error N6510_ReplyGetToDoStatus2(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N6510_ReplyGetToDoStatus1(GSM_Protocol_Message msg, GSM_StateMachine *s);
@@ -45,7 +45,7 @@ GSM_Error N6510_ReplyAddToDo1(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N6510_ReplyAddToDo2(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N6510_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo);
 
-//calendar settings
+/* calendar settings */
 
 GSM_Error N6510_ReplyGetCalendarSettings(GSM_Protocol_Message msg, GSM_StateMachine *s);
 GSM_Error N6510_GetCalendarSettings(GSM_StateMachine *s, GSM_CalendarSettings *settings);

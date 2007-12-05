@@ -36,13 +36,13 @@ static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
 	buffer2 = (unsigned char *)malloc(MsgLength + 6);
 
 	buffer2[0] = PHONET_FRAME_ID,
-	buffer2[1] = PHONET_DEVICE_PHONE; 		//destination
-	buffer2[2] = PHONET_DEVICE_PC;    		//source
+	buffer2[1] = PHONET_DEVICE_PHONE; 		/* destination */
+	buffer2[2] = PHONET_DEVICE_PC;    		/* source */
 
 	if (s->ConnectionType==GCT_PHONETBLUE || s->ConnectionType==GCT_BLUEPHONET) {
 		buffer2[0] = PHONET_BLUE_FRAME_ID;
-		buffer2[1] = PHONET_DEVICE_PHONE;	//destination
-		buffer2[2] = PHONET_BLUE_DEVICE_PC;	//source
+		buffer2[1] = PHONET_DEVICE_PHONE;	/* destination */
+		buffer2[2] = PHONET_BLUE_DEVICE_PC;	/* source */
 	}
 	if (s->ConnectionType==GCT_DKU2PHONET) {
 		buffer2[0] = PHONET_DKU2_FRAME_ID;

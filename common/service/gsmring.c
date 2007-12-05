@@ -404,15 +404,15 @@ GSM_Error GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 	bool		started = false;
 	GSM_RingNote 	*Note;
 	unsigned char midifile[3000] = {
-		0x4D, 0x54, 0x68, 0x64, // MThd
-		0x00, 0x00, 0x00, 0x06, // chunk length
-		0x00, 0x00,             // format 0
-		0x00, 0x01,             // one track
-		0x00, 0x20,             // 32 per quarter note
-		0x4D, 0x54, 0x72, 0x6B, // MTrk
-		0x00, 0x00, 0x00, 0x00, // chunk length
-		0x00, 0xFF, 0x51, 0x03, // tempo meta event
-		0x00, 0x00, 0x00};      // 3 bytes for us for a quarter note
+		0x4D, 0x54, 0x68, 0x64, /*  MThd */
+		0x00, 0x00, 0x00, 0x06, /*  chunk length */
+		0x00, 0x00,             /*  format 0 */
+		0x00, 0x01,             /*  one track */
+		0x00, 0x20,             /*  32 per quarter note */
+		0x4D, 0x54, 0x72, 0x6B, /*  MTrk */
+		0x00, 0x00, 0x00, 0x00, /*  chunk length */
+		0x00, 0xFF, 0x51, 0x03, /*  tempo meta event */
+		0x00, 0x00, 0x00};      /*  3 bytes for us for a quarter note */
 
 	for (i = 0; i < ringtone->NoteTone.NrCommands; i++) {
 		if (ringtone->NoteTone.Commands[i].Type == RING_Note) {
@@ -437,7 +437,7 @@ GSM_Error GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 #ifdef singlepauses
 				WriteVarLen(midifile,&current,pause_time);
 				pause_time=0;
-				midifile[current++]=0x00;   // pause
+				midifile[current++]=0x00;   /*  pause */
 				midifile[current++]=0x00;
 #endif
 			} else {
@@ -447,12 +447,12 @@ GSM_Error GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 
 				WriteVarLen(midifile,&current,pause_time);
 				pause_time=0;
-				midifile[current++]=0x90;   // note on
+				midifile[current++]=0x90;   /*  note on */
 				midifile[current++]=note;
-				midifile[current++]=0x64;   // forte
+				midifile[current++]=0x64;   /*  forte */
 
 				WriteVarLen(midifile,&current,duration);
-				midifile[current++]=0x80;   // note off
+				midifile[current++]=0x80;   /*  note off */
 				midifile[current++]=note;
 				midifile[current++]=0x64;
 			}
@@ -460,11 +460,11 @@ GSM_Error GSM_SaveRingtoneMidi(FILE* file, GSM_Ringtone *ringtone)
 	}
 	if (pause_time) {
 		WriteVarLen(midifile,&current,pause_time);
-		midifile[current++]=0x00;   	// pause
-		midifile[current++]=0x00;   	//
+		midifile[current++]=0x00;   	/*  pause */
+		midifile[current++]=0x00;   	/*  */
 	}
 	midifile[current++] = 0x00;
-	midifile[current++] = 0xFF;   		// track end
+	midifile[current++] = 0xFF;   		/*  track end */
 	midifile[current++] = 0x2F;
 	midifile[current++] = 0x00;
 	midifile[length++] = (current-22) >> 8;
@@ -992,7 +992,7 @@ unsigned char GSM_EncodeNokiaRTTLRingtone(GSM_Ringtone ringtone, unsigned char *
 	AddBuffer(package, &StartBit, DecodeUnicodeString(Buffer), 8*UnicodeLength(Buffer));
 
 	/* Packing info about song pattern */
-	AddBufferByte(package, &StartBit, 0x01, 8); //one pattern
+	AddBufferByte(package, &StartBit, 0x01, 8); /* one pattern */
 	AddBufferByte(package, &StartBit, SM_InstructionID_PatternHeaderId, 3);
 	AddBufferByte(package, &StartBit, SM_PatternID_A_part, 2);
 	AddBufferByte(package, &StartBit, ((unsigned char)(Loop<<4)), 4);

@@ -232,7 +232,7 @@ GSM_Coding_Type GSM_GetMessageCoding(const char TPDCS) {
 
 GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
 {
-	int		off=0;	 	// length of the User Data Header
+	int		off=0;	 	/* length of the User Data Header */
 	int 		w,i,tmp=0;
 	unsigned char	output[161];
 
@@ -490,7 +490,7 @@ static GSM_Error GSM_EncodeSMSDateTime(GSM_DateTime *DT, unsigned char *req)
 
 static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
 {
-	int	off = 0;	// length of the User Data Header
+	int	off = 0;	/*  length of the User Data Header */
 	int	size = 0, size2 = 0, w;
 	size_t p;
 	char	buff[200];
@@ -637,7 +637,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 
 	/* size is the length of the data in octets including UDH */
 	*length=GSM_EncodeSMSFrameText(SMS,buffer,Layout);
-//	if (*length == 0) return GE_UNKNOWN;
+/* 	if (*length == 0) return GE_UNKNOWN; */
 	*length += Layout.Text;
 
 	return ERR_NONE;
@@ -757,8 +757,8 @@ bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo	*Info,
 	if (SMS->UDH.Type != UDH_NoUDH) 	return false;
 	if (SMS->Length < 22) 			return false;
 
-	if (strncmp(SMS->Text,"//SEO",5)!=0) return false; //Siemens Exchange Object
-	if (SMS->Text[5]!=1) return false; //version 1
+	if (strncmp(SMS->Text,"//SEO",5)!=0) return false; /* Siemens Exchange Object */
+	if (SMS->Text[5]!=1) return false; /* version 1 */
 	Info->DataLen = SMS->Text[6] + SMS->Text[7]*256;
 	Info->SequenceID = SMS->Text[8] + SMS->Text[9]*256 +
 			 SMS->Text[10]*256*256 + SMS->Text[11]*256*256*256;

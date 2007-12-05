@@ -648,9 +648,11 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				Info->Entries[Info->EntriesNum].ID 	= SMS_EMSPredefinedSound;
 				RetVal = true;
 				break;
-//			case 0x0C:
-//				dbgprintf("UDH part - EMS sound\n");
-//				break;
+#if 0
+			case 0x0C:
+				dbgprintf("UDH part - EMS sound\n");
+				break;
+#endif
 			case 0x0D:
 				dbgprintf("UDH part - default EMS animation\n");
 				if (SMS->SMS[i].UDH.Text[w+2] > Pos) {
