@@ -1271,6 +1271,9 @@ GSM_Error N6510_ReplyGetCalendarSettings(GSM_Protocol_Message msg, GSM_StateMach
 	case 0x8E:
 		smprintf(s, "Start day for calendar received\n");
 		switch(msg.Buffer[4]) {
+		case 0x04:
+			sett->StartDay = 1;
+			return ERR_NONE;
 		case 0x03:
 			sett->StartDay = 6;
 			return ERR_NONE;
