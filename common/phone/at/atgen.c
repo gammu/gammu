@@ -2409,7 +2409,7 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	s->Phone.Data.GetSMSMessage=sms;
 	smprintf(s, "Getting SMS\n");
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 5, ID_GetSMSMessage);
-	if (error==ERR_NONE) {
+	if (error == ERR_NONE || error == ERR_CORRUPTED) {
 		getfolder = sms->SMS[0].Folder;
 /* 		if (getfolder != 0 && getfolder != sms->SMS[0].Folder) return ERR_EMPTY; */
 		ATGEN_SetSMSLocation(s, &sms->SMS[0], folderid, location);
