@@ -10,9 +10,11 @@
 #include "memory.h"
 #include "formats.h"
 
-GSM_Bitmap		caller[5];
+#define GAMMU_CALLER_GROUPS	20
+
+GSM_Bitmap		caller[GAMMU_CALLER_GROUPS];
 GSM_AllRingtonesInfo 	Info = {0, NULL};
-bool			callerinit[5] = {false, false, false, false, false};
+bool			callerinit[GAMMU_CALLER_GROUPS] = {false, false, false, false, false};
 bool			ringinit = false;
 
 void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
@@ -49,7 +51,7 @@ void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 		printf(LISTFORMAT "%s\n", _("Private"), entry->Number == 1 ? "Yes" : "No");
 		return;
 	case PBK_Caller_Group       :
-		if (entry->Number > 5) {
+		if (entry->Number >= GAMMU_CALLER_GROUPS) {
 			printf(LISTFORMAT "\"%d\"\n", _("Caller group"),entry->Number);
 			fprintf(stderr, "%s\n", _("Caller group number too high, please increase buffer in sources!"));
 			break;
