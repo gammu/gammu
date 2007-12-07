@@ -91,7 +91,7 @@
  *
  * \ingroup Limits
  */
-#define GSM_PHONEBOOK_ENTRIES 26
+#define GSM_PHONEBOOK_ENTRIES 40
 
 /**
  * Maximal number of calendar entries.
