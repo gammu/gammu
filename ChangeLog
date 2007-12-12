@@ -15,11 +15,12 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.15.91
+20071212 - 1.15.91
 
 [-] * Increased maximal number of entries per contact.
 [-] * Fixed various compile time warnings.
 [-] * Improved MinGW crosscompilation.
+[-] * Localizations update.
 
 20071204 - 1.15.90
 
