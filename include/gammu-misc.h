@@ -97,7 +97,6 @@ extern void GSM_InitLocales(const char *path);
 #else
 #define PRINTF_STYLE(f, a)
 #define SCANF_STYLE(f, a)
-#warning gooo
 #endif
 
 #if GSM_GNUC_PREREQ (3,4)
