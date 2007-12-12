@@ -133,7 +133,7 @@ void SaveFile(int argc, char *argv[])
 			GSM_EncodeVCARD(Buffer,&j,pbk,true,Nokia_VCard21);
 		}
 	} else {
-		printf(_("What format of file (\"%s\") ?\n"),argv[2]);
+		printf(_("Unknown backup format: \"%s\"\n"), argv[2]);
 		exit(-1);
 	}
 
