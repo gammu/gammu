@@ -9,13 +9,14 @@ msgstr ""
 "Project-Id-Version: Gammu 1.15.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2007-12-03 21:05+0900\n"
-"PO-Revision-Date: 2007-07-31 11:24+0200\n"
+"PO-Revision-Date: 2007-12-12 04:23+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Pootle 1.0.2\n"
 
 #: common/gsmcomon.c:88
 msgid "No error."
@@ -78,30 +79,28 @@ msgid "No response in specified timeout. Probably phone not connected."
 msgstr "Žadná odpověď v očekaváné době. Telefon pravděpodobně není připojen."
 
 #: common/gsmcomon.c:102
-#, fuzzy
 msgid ""
 "Frame not requested right now. See <http://cihar.com/gammu/report> for "
 "information how to report it."
 msgstr ""
-"Neznámá odpověď od telefonu. Přečtěte si <http://cihar.com/gammu/report> jak "
-"tuto událost nahlásit."
+"Tato odpověď od telefonu nebyla očekávána. Podívejte se na stránku "
+"<http://cihar.com/gammu/report> pro informace jak tuto událost nahlásit."
 
 #: common/gsmcomon.c:103
 msgid ""
 "Unknown response from phone. See <http://cihar.com/gammu/report> for "
 "information how to report it."
 msgstr ""
-"Neznámá odpověď od telefonu. Přečtěte si <http://cihar.com/gammu/report> jak "
-"tuto událost nahlásit."
+"Neznámá odpověď od telefonu.  Podívejte se na stránku "
+"<http://cihar.com/gammu/report> pro informace jak tuto událost nahlásit."
 
 #: common/gsmcomon.c:104
-#, fuzzy
 msgid ""
 "Unknown frame. See <http://cihar.com/gammu/report> for information how to "
 "report it."
 msgstr ""
-"Neznámá odpověď od telefonu. Přečtěte si <http://cihar.com/gammu/report> jak "
-"tuto událost nahlásit."
+"Neznámý rámec.  Podívejte se na stránku <http://cihar.com/gammu/report> pro "
+"informace jak tuto událost nahlásit."
 
 #: common/gsmcomon.c:105
 msgid "Unknown connection type string. Check config file."
@@ -169,9 +168,8 @@ msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr "Jste v menu telefonu (upravujete záznam?). Opusťte ho a zkuste znovu."
 
 #: common/gsmcomon.c:120
-#, fuzzy
 msgid "Phone is not connected."
-msgstr "baterie není připojena"
+msgstr "Telefon není připojen."
 
 #: common/gsmcomon.c:121
 msgid "Function is during writing. If want help, please contact with authors."
@@ -199,7 +197,7 @@ msgstr "Přenos zrušen telefonem, možná jste zadali zrušení přenosu v tele
 
 #: common/gsmcomon.c:126
 msgid "Phone module need to send another answer frame."
-msgstr ""
+msgstr "Ovladač telefonu potřebuje odeslat ještě jeden rámec."
 
 #: common/gsmcomon.c:127
 msgid "Current connection type doesn't support called function."
@@ -249,7 +247,7 @@ msgstr ""
 
 #: common/gsmcomon.c:138
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "Byla vypsána jen část složky."
 
 #: common/gsmcomon.c:139
 msgid "Folder must be empty."
@@ -261,38 +259,35 @@ msgstr "Data byla převedena."
 
 #: common/gsmcomon.c:141
 msgid "Gammu is not configured."
-msgstr ""
+msgstr "Gammu není nastaveno."
 
 #: common/gsmcomon.c:142
 msgid "Wrong folder used."
-msgstr ""
+msgstr "Byla použita chybná složka."
 
 #: common/gsmcomon.c:143
-#, fuzzy
 msgid "Internal phone error."
-msgstr "Neznámá chyba."
+msgstr "Interní chyba telefonu."
 
 #: common/gsmcomon.c:144
-#, fuzzy
 msgid "Error writing file to disk."
-msgstr "Chyba při zápisu."
+msgstr "Chyba při zápisu souboru na disk."
 
 #: common/gsmcomon.c:145
 msgid "No such section exists."
-msgstr ""
+msgstr "Požadovaná sekce neexistuje."
 
 #: common/gsmcomon.c:146
 msgid "Using default values."
-msgstr ""
+msgstr "Používám výchozí hodnoty."
 
 #: common/gsmcomon.c:147
 msgid "Corrupted data returned by phone."
-msgstr ""
+msgstr "Telefon vrátil poškozená data."
 
 #: common/gsmcomon.c:164
-#, fuzzy
 msgid "Unknown error description."
-msgstr "Neznámá chyba."
+msgstr "Neznámý popis chyby."
 
 #: common/phone/nokia/dct3/n6110.c:1953 gammu/misc.c:1813
 msgid "Personal"
@@ -387,19 +382,19 @@ msgstr "Kde je jméno souboru zálohy a umístění?"
 
 #: gammu/backup.c:38 gammu/message.c:1548
 msgid "Calendar note not found in file"
-msgstr ""
+msgstr "V souboru nebyl nalezen žádný záznam kalendáře"
 
 #: gammu/backup.c:56
 msgid "WAP bookmark not found in file"
-msgstr ""
+msgstr "V souboru nebyla nalezena žádná záložka pro WAP"
 
 #: gammu/backup.c:74
 msgid "Note not found in file"
-msgstr ""
+msgstr "V souboru nebyla nalezena žádná poznámka"
 
 #: gammu/backup.c:92 gammu/message.c:1570
 msgid "ToDo note not found in file"
-msgstr ""
+msgstr "V souboru nebyl nalezen žádný úkol"
 
 #: gammu/backup.c:99 gammu/message.c:1581
 msgid "Where is backup filename and location and memory type?"
@@ -408,7 +403,7 @@ msgstr "Kde je jméno souboru zálohy, umístění a typ paměti?"
 #: gammu/backup.c:111 gammu/backup.c:121 gammu/message.c:1593
 #: gammu/message.c:1603
 msgid "Phonebook entry not found in file"
-msgstr ""
+msgstr "V souboru nebyl nalezen žádný kontakt"
 
 #: gammu/backup.c:126 gammu/message.c:1608
 #, c-format
