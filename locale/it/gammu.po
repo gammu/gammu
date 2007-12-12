@@ -437,7 +437,6 @@ msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
 
 #: gammu/backup.c:136
 #, fuzzy, c-format
-#| msgid "Unknown parameter \"%s\""
 msgid "Unknown backup format: \"%s\"\n"
 msgstr "Parametro sconosciuto \"%s\""
 

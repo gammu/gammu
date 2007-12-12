@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: common/gsmcomon.c:88
 msgid "No error."
@@ -411,7 +411,6 @@ msgstr "Neznámý typ paměti: \"%s\"\n"
 
 #: gammu/backup.c:136
 #, c-format
-#| msgid "Unknown parameter \"%s\""
 msgid "Unknown backup format: \"%s\"\n"
 msgstr "Neznámý formát zálohy: \"%s\"\n"
 
@@ -4607,7 +4606,6 @@ msgid "Reset return code: %s (%i) "
 msgstr ""
 
 #: gammu/smsd/smsdcore.c:647
-#| msgid "Can't set parity on device."
 msgid "Can't open device"
 msgstr "Nepodařilo se otevřít zařízení"
 
