@@ -17,6 +17,10 @@ ChangeLog
 
 2007???? - 1.15.91
 
+[-] * Increased maximal number of entries per contact.
+[-] * Fixed various compile time warnings.
+[-] * Improved MinGW crosscompilation.
+
 20071204 - 1.15.90
 
 [-] * Fixed detection of first free memory location if memory is empty 
