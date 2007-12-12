@@ -59,9 +59,7 @@ void GSM_Terminate_SMSD(char *msg, int error, bool exitprogram, int rc)
 	}
 }
 
-#if defined(__GNUC__) && !defined(printf)
-__attribute__((format(printf, 1, 2)))
-#endif
+PRINTF_STYLE(1, 2)
 void WriteSMSDLog(char *format, ...)
 {
 	GSM_DateTime 	date_time;
