@@ -4714,7 +4714,6 @@ msgstr ""
 
 #: gammu/smsd/smsdcore.c:647
 #, fuzzy
-#| msgid "Can't set parity on device."
 msgid "Can't open device"
 msgstr "Nie można ustawić parzystości w urządzeniu."
 
