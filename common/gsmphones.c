@@ -465,6 +465,7 @@ OnePhoneModel allmodels[] = {
 
 	/* Sharp */
 	{"GX",		"GX Series", "",				   {F_OBEX, F_XLNK, 0}},
+	{"903SH/703SH",	"903SH_703SH", "",				   {F_OBEX, F_XLNK, 0}}, /* Guess */
 
 	/* Other */
 	{"iPAQ" ,	  "iPAQ"  ,	  "" ,				   {0}},
