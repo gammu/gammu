@@ -996,7 +996,7 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 
 	/* Set model */
 	Temp		 = INI_GetValue(cfg_info, section, "model", 		false);
-	if (!Temp) {
+	if (!Temp || strcmp(Temp, "auto") == 0) {
 		strcpy(cfg->Model,DefaultModel);
 	} else {
 		strcpy(cfg->Model,Temp);
