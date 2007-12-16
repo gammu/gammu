@@ -1,0 +1,11 @@
+include AUTHORS
+include COPYING
+include INSTALL
+include NEWS
+include README
+include Makefile
+include *.h
+recursive-include examples *.py
+include examples/data/*.jpg
+include python-gammu.spec
+include MakeFakeWin.sh
