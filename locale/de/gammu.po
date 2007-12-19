@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.15.91\n"
+"Project-Id-Version: Gammu 1.16.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-12-12 12:30+0900\n"
+"POT-Creation-Date: 2007-12-19 21:31+0900\n"
 "PO-Revision-Date: 2007-11-21 11:57+0100\n"
 "Last-Translator: Michael <michinix@icqmail.com>\n"
 "Language-Team: Language =de\n"
@@ -3260,7 +3260,7 @@ msgstr "Unbekannte Gültigkeitszeichenkette(\"%s\")\n"
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr "Geben Sie die Anzahl der EMS-Frames zwischen 1 und 4 an (\"%s\")\n"
 
-#: gammu/message.c:2213 gammu/smsd/smsdcore.c:112
+#: gammu/message.c:2213 gammu/smsd/smsdcore.c:110
 #, c-format
 msgid "Can't open file \"%s\"\n"
 msgstr "Die Datei \"%s\" kann nicht geöffnet werden\n"
@@ -4533,184 +4533,184 @@ msgstr "Übermittelt %s (%s: %i) an %s"
 msgid "Terminating communication"
 msgstr "Verbindung wird beendet"
 
-#: gammu/smsd/smsdcore.c:101
+#: gammu/smsd/smsdcore.c:99
 #, c-format
 msgid "Could not parse config file \"%s\"\n"
 msgstr "Die Konfigurationsdatei \"%s\" konnte nicht ausgelesen werden\n"
 
-#: gammu/smsd/smsdcore.c:103
+#: gammu/smsd/smsdcore.c:101
 #, c-format
 msgid "Can't find file \"%s\"\n"
 msgstr "Die Datei \"%s\" wurde nicht gefunden\n"
 
-#: gammu/smsd/smsdcore.c:115
+#: gammu/smsd/smsdcore.c:113
 #, c-format
 msgid "Log filename is \"%s\"\n"
 msgstr "Der Name der Log-Datei lautet \"%s\"\n"
 
-#: gammu/smsd/smsdcore.c:117
+#: gammu/smsd/smsdcore.c:115
 msgid "Starting GAMMU smsd"
 msgstr "GAMMU smsd wird gestartet"
 
-#: gammu/smsd/smsdcore.c:130
+#: gammu/smsd/smsdcore.c:128
 #, c-format
 msgid "Warning: No PIN code in %s file"
 msgstr "Warnung: Es befindet sich kein PIN-Code in der Datei %s"
 
-#: gammu/smsd/smsdcore.c:131
+#: gammu/smsd/smsdcore.c:129
 #, c-format
 msgid "Warning: No PIN code in %s file\n"
 msgstr "Warnung: Es befindet sich kein PIN-Code in der Datei %s\n"
 
-#: gammu/smsd/smsdcore.c:133
+#: gammu/smsd/smsdcore.c:131
 #, c-format
 msgid "PIN code is \"%s\""
 msgstr "Der PIN-Code lautet \"%s\""
 
-#: gammu/smsd/smsdcore.c:185
+#: gammu/smsd/smsdcore.c:183
 #, c-format
 msgid "Inbox is \"%s\" with format \"%s\""
 msgstr "Die Inbox \"%s\" hat das Format \"%s\""
 
-#: gammu/smsd/smsdcore.c:194
+#: gammu/smsd/smsdcore.c:192
 #, c-format
 msgid "Outbox is \"%s\" with transmission format \"%s\""
 msgstr "Die Outbox \"%s\" hat das Format \"%s\""
 
-#: gammu/smsd/smsdcore.c:198
+#: gammu/smsd/smsdcore.c:196
 #, c-format
 msgid "Sent SMS moved to \"%s\""
 msgstr "Gesendete SMS nach \"%s\" verschoben"
 
-#: gammu/smsd/smsdcore.c:202
+#: gammu/smsd/smsdcore.c:200
 #, c-format
 msgid "SMS with errors moved to \"%s\""
 msgstr "Fehlerhafte SMS nach \"%s\" verschoben"
 
-#: gammu/smsd/smsdcore.c:238
+#: gammu/smsd/smsdcore.c:236
 msgid "Include numbers available"
 msgstr "Schließe verfügbare Nummern ein"
 
-#: gammu/smsd/smsdcore.c:242
+#: gammu/smsd/smsdcore.c:240
 msgid "Exclude numbers available"
 msgstr "Schließe verfügbare Nummern aus"
 
-#: gammu/smsd/smsdcore.c:244
+#: gammu/smsd/smsdcore.c:242
 msgid "Exclude numbers available, but IGNORED"
 msgstr "Schließe verfügbare, aber IGNORIERTE Nummern aus"
 
-#: gammu/smsd/smsdcore.c:262
+#: gammu/smsd/smsdcore.c:260
 #, fuzzy, c-format
 msgid "Error getting security status (%s:%i)"
 msgstr "Fehler während des Abrufs des Sicherheitsstatus (%i)"
 
-#: gammu/smsd/smsdcore.c:272
+#: gammu/smsd/smsdcore.c:270
 msgid "Warning: no PIN in config"
 msgstr "Warnung: keine PIN in der Konfiguration"
 
-#: gammu/smsd/smsdcore.c:275
+#: gammu/smsd/smsdcore.c:273
 msgid "Trying to enter PIN"
 msgstr "Versuche die PIN einzugeben"
 
-#: gammu/smsd/smsdcore.c:279
+#: gammu/smsd/smsdcore.c:277
 #, fuzzy
 msgid "ERROR: incorrect PIN"
 msgstr "FEHLER: ungültige PIN"
 
-#: gammu/smsd/smsdcore.c:282
+#: gammu/smsd/smsdcore.c:280
 #, fuzzy, c-format
 msgid "Error entering PIN (%s:%i)"
 msgstr "Fehler bei der Eingabe der PIN (%i)"
 
-#: gammu/smsd/smsdcore.c:292
+#: gammu/smsd/smsdcore.c:290
 #, fuzzy
 msgid "ERROR: phone requires not supported code type"
 msgstr "FEHLER: Handy benötigt nicht unterstützte Codetype"
 
-#: gammu/smsd/smsdcore.c:411
+#: gammu/smsd/smsdcore.c:409
 #, c-format
 msgid "Excluded %s"
 msgstr "Ausgeschlossene %s"
 
-#: gammu/smsd/smsdcore.c:415
+#: gammu/smsd/smsdcore.c:413
 #, fuzzy, c-format
 msgid "Error getting SMS (%s:%i)"
 msgstr "Fehler beim abrufen der SMS (%i)"
 
-#: gammu/smsd/smsdcore.c:427
+#: gammu/smsd/smsdcore.c:425
 #, fuzzy, c-format
 msgid "Error deleting SMS (%s:%i)"
 msgstr "Fehler beim löschen der SMS (%i)"
 
-#: gammu/smsd/smsdcore.c:445
+#: gammu/smsd/smsdcore.c:443
 #, fuzzy, c-format
 msgid "Error getting SMS status (%s:%i)"
 msgstr "Fehler beim abrufen des SMS-Status (%i)"
 
-#: gammu/smsd/smsdcore.c:479
+#: gammu/smsd/smsdcore.c:477
 #, c-format
 msgid "Error in outbox on %s"
 msgstr "Fehler in der Outbox an Stelle %s"
 
-#: gammu/smsd/smsdcore.c:493
+#: gammu/smsd/smsdcore.c:491
 #, c-format
 msgid "Moved to errorbox: %s"
 msgstr "Zu den fehlerhaften SMS verschoben: %s"
 
-#: gammu/smsd/smsdcore.c:510
+#: gammu/smsd/smsdcore.c:508
 msgid "Error getting SMSC from phone"
 msgstr "Fehler beim Abrufen der SMSC vom Handy"
 
-#: gammu/smsd/smsdcore.c:532
+#: gammu/smsd/smsdcore.c:530
 #, c-format
 msgid "Error sending SMS %s (%i): %s"
 msgstr "Fehler beim Versand der SMS %s (%i): %s"
 
-#: gammu/smsd/smsdcore.c:556
+#: gammu/smsd/smsdcore.c:554
 #, c-format
 msgid "Error getting send status of %s (%i): %s"
 msgstr "Fehler beim Abrufen des Versandstatus von %s (%i): %s"
 
-#: gammu/smsd/smsdcore.c:591
+#: gammu/smsd/smsdcore.c:589
 #, c-format
 msgid "Unknown SMSD service type (\"%s\")\n"
 msgstr "Unbekannter smsd Dienst: (\"%s\")\n"
 
-#: gammu/smsd/smsdcore.c:599
+#: gammu/smsd/smsdcore.c:597
 #, fuzzy
 msgid "Initialisation failed, stopping Gammu smsd"
 msgstr "Initialisierung fehlgeschlagen, halte Gammu smsd (%i) an"
 
-#: gammu/smsd/smsdcore.c:614
+#: gammu/smsd/smsdcore.c:612
 #, c-format
 msgid "Terminating communication (%i,%i)"
 msgstr "Kommunikation beenden (%i,%i)"
 
-#: gammu/smsd/smsdcore.c:618
+#: gammu/smsd/smsdcore.c:616
 msgid "Starting communication"
 msgstr "Kommunikation beginnen"
 
-#: gammu/smsd/smsdcore.c:630
+#: gammu/smsd/smsdcore.c:628
 #, fuzzy
 msgid "Post initialisation failed, stopping Gammu smsd"
 msgstr "Initialisierung fehlgeschlagen, halte Gammu smsd (%i) an"
 
-#: gammu/smsd/smsdcore.c:639
+#: gammu/smsd/smsdcore.c:637
 #, c-format
 msgid "Reset return code: %s (%i) "
 msgstr "Rückmeldung zurücksetzen: %s (%i)"
 
-#: gammu/smsd/smsdcore.c:647
+#: gammu/smsd/smsdcore.c:645
 #, fuzzy
 msgid "Can't open device"
 msgstr "Gerät kann nicht geöffnet werden (%i)"
 
-#: gammu/smsd/smsdcore.c:651
+#: gammu/smsd/smsdcore.c:649
 #, fuzzy, c-format
 msgid "Error at init connection (%s:%i)"
 msgstr "Fehler beim Verbindungsaufbau (%i)"
 
-#: gammu/smsd/smsdcore.c:692
+#: gammu/smsd/smsdcore.c:690
 msgid "Stopping Gammu smsd"
 msgstr "Gammu smsd anhalten"
 
