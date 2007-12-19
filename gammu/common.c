@@ -374,14 +374,21 @@ void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 	}
 }
 
-bool answer_yes(const char *text)
+bool answer_yes(const char *format, ...)
 {
 	int len;
 	char ans[99];
+	char buffer[1000];
+	va_list ap;
+
+	va_start(ap, format);
+	vsnprintf(buffer, sizeof(buffer) - 1, format, ap);
+	va_end(ap);
 
 	while (1) {
-		/* l10n: %s is replaced by question, answers have to match corresponding translations */
-		fprintf(stderr, _("%s (yes/no/ALL/ONLY/NONE) ? "), text);
+		fprintf(stderr, "%s _(%s/%s/%s/%s/%s)", buffer,
+			_("yes"), _("no"),
+			_("ALL"), _("ONLY"), _("NONE"));
 		if (always_answer_yes) {
 			fprintf(stderr, "%s\n", _("YES (always)"));
 			return true;

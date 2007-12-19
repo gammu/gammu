@@ -16,7 +16,12 @@ void Print_Error(GSM_Error error);
 void GSM_Init(bool checkerror);
 void GSM_Terminate(void);
 void GetStartStop(int *start, int *stop, int num, int argc, char *argv[]);
-bool answer_yes(const char *text);
+
+/**
+ * Requests response from user on single question.
+ */
+PRINTF_STYLE(1, 2)
+bool answer_yes(const char *format, ...);
 
 /**
  * Prints information about security status.
