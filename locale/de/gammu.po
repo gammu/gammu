@@ -449,7 +449,6 @@ msgstr "Strg+C drücken, um zu unterbrechen..."
 
 #: gammu/backup.c:193
 #, fuzzy
-#| msgid "Use Unicode subformat of backup file"
 msgid "Use Unicode subformat of backup file?"
 msgstr "Benutze das Unicode-Format für die Backupdatei"
 
@@ -459,7 +458,6 @@ msgstr "Überprüfe das Telefonbuch des Telefons"
 
 #: gammu/backup.c:230
 #, fuzzy
-#| msgid "   Backup phone phonebook"
 msgid "Backup phone phonebook?"
 msgstr "   Sichere das Telefonbuch des Telefons"
 
@@ -487,7 +485,6 @@ msgstr "Überprüfe SIM-Telefonbuch"
 
 #: gammu/backup.c:268
 #, fuzzy
-#| msgid "   Backup SIM phonebook"
 msgid "Backup SIM phonebook?"
 msgstr "    Sichere das SIM-Telefonbuch"
 
@@ -497,7 +494,6 @@ msgstr "Überprüfe Telefon-Kalender"
 
 #: gammu/backup.c:305
 #, fuzzy
-#| msgid "   Backup phone calendar notes"
 msgid "Backup phone calendar notes?"
 msgstr "    Sichere Telefon-Kalender"
 
@@ -514,7 +510,6 @@ msgstr "Überprüfe Telefon-Aufgaben"
 
 #: gammu/backup.c:336
 #, fuzzy
-#| msgid "   Backup phone ToDo"
 msgid "Backup phone ToDo?"
 msgstr "    Sichere Telefon-Aufgaben"
 
@@ -524,7 +519,6 @@ msgstr "Überprüfe Telefon-Notizen"
 
 #: gammu/backup.c:367
 #, fuzzy
-#| msgid "   Backup phone notes"
 msgid "Backup phone notes?"
 msgstr "    Sichere Telefon-Notizen"
 
@@ -534,7 +528,6 @@ msgstr "Überprüfe Telefon-Betreiberlogos"
 
 #: gammu/backup.c:400
 #, fuzzy
-#| msgid "   Backup phone caller groups and logos"
 msgid "Backup phone caller groups and logos?"
 msgstr "    Sichere Telefon-Betreiberlogos"
 
@@ -544,7 +537,6 @@ msgstr "Überprüfe SIM-SMS-Profile"
 
 #: gammu/backup.c:431
 #, fuzzy
-#| msgid "   Backup SIM SMS profiles"
 msgid "Backup SIM SMS profiles?"
 msgstr "    Sichere SIM-SMS-Profile"
 
@@ -554,7 +546,6 @@ msgstr "Überprüfe Telefon-Willkommenstext"
 
 #: gammu/backup.c:460
 #, fuzzy
-#| msgid "   Backup phone startup logo/text"
 msgid "Backup phone startup logo/text?"
 msgstr "    Sichere Telefon-Willkommenstext"
 
@@ -564,7 +555,6 @@ msgstr "Überprüfe Telefon-Betreiberlogo"
 
 #: gammu/backup.c:480
 #, fuzzy
-#| msgid "   Backup phone operator logo"
 msgid "Backup phone operator logo?"
 msgstr "    Sichere Telefon-Betreiberlogo"
 
@@ -574,7 +564,6 @@ msgstr "Überprüfe Telefon-WAP-Lesezeichen"
 
 #: gammu/backup.c:495
 #, fuzzy
-#| msgid "   Backup phone WAP bookmarks"
 msgid "Backup phone WAP bookmarks?"
 msgstr "    Sichere Telefon-WAP-Lesezeichen"
 
@@ -584,7 +573,6 @@ msgstr "Überprüfe Telefon-WAP-Einstellungen"
 
 #: gammu/backup.c:528
 #, fuzzy
-#| msgid "   Backup phone WAP settings"
 msgid "Backup phone WAP settings?"
 msgstr "    Sichere Telefon-WAP-Einstellungen"
 
@@ -594,7 +582,6 @@ msgstr "Überprüfe Telefon-MMS-Einstellungen"
 
 #: gammu/backup.c:561
 #, fuzzy
-#| msgid "   Backup phone MMS settings"
 msgid "Backup phone MMS settings?"
 msgstr "    Sichere Telefon-MMS-Einstellungen"
 
@@ -604,7 +591,6 @@ msgstr "Überprüfe Telefon-Chat-Einstellungen"
 
 #: gammu/backup.c:594
 #, fuzzy
-#| msgid "   Backup phone Chat settings"
 msgid "Backup phone Chat settings?"
 msgstr "    Sichere Telefon-Chat-Einstellungen"
 
@@ -614,7 +600,6 @@ msgstr "Überprüfe Telefon-SyncML-Einstellungen"
 
 #: gammu/backup.c:627
 #, fuzzy
-#| msgid "   Backup phone SyncML settings"
 msgid "Backup phone SyncML settings?"
 msgstr "    Sichere Telefon-SyncML-Einstellungen"
 
@@ -624,7 +609,6 @@ msgstr "Überprüfe Telefon-Benutzer-Klingeltöne"
 
 #: gammu/backup.c:661
 #, fuzzy
-#| msgid "   Backup phone user ringtones"
 msgid "Backup phone user ringtones?"
 msgstr "    Sichere Telefon-Benutzer-Klingeltöne"
 
@@ -634,7 +618,6 @@ msgstr "Überprüfe Telefon-Profile"
 
 #: gammu/backup.c:699
 #, fuzzy
-#| msgid "   Backup phone profiles"
 msgid "Backup phone profiles?"
 msgstr "    Sichere Telefon-Profile"
 
@@ -644,7 +627,6 @@ msgstr "Überprüfe Telefon-UKW-Radiosender"
 
 #: gammu/backup.c:729
 #, fuzzy
-#| msgid "   Backup phone FM radio stations"
 msgid "Backup phone FM radio stations?"
 msgstr "    Sichere Telefon-UKW-Radiosender"
 
@@ -654,7 +636,6 @@ msgstr "Überprüfe Telefon-GPRS-Zugangsknoten"
 
 #: gammu/backup.c:762
 #, fuzzy
-#| msgid "   Backup phone GPRS access points"
 msgid "Backup phone GPRS access points?"
 msgstr "    Sichere Telefon-GPRS-Zugangsknoten"
 
@@ -686,7 +667,6 @@ msgstr "Datei erstellt vo"
 
 #: gammu/backup.c:839
 #, fuzzy
-#| msgid "Checksum in backup file do not match. Continue"
 msgid "Checksum in backup file do not match. Continue?"
 msgstr "Die Checksumme in der Backupdatei ist falsch. Fahre fort"
 
@@ -700,7 +680,6 @@ msgstr ""
 
 #: gammu/backup.c:853
 #, fuzzy
-#| msgid "Restore phone caller groups and logos"
 msgid "Restore phone caller groups and logos?"
 msgstr "Stelle Telefon-Betreiberlogos wieder her"
 
@@ -724,7 +703,6 @@ msgstr "%i Eintäge in Backup-Datei\n"
 
 #: gammu/backup.c:879
 #, fuzzy
-#| msgid "Restore phone phonebook"
 msgid "Restore phone phonebook?"
 msgstr "Stelle das Telefonbuch des Telefons wieder her"
 
@@ -743,15 +721,11 @@ msgstr "Ort %d"
 
 #: gammu/backup.c:944
 #, fuzzy
-#| msgid "Restore SIM phonebook"
 msgid "Restore SIM phonebook?"
 msgstr "Stelle SIM-Telefonbuch wieder her"
 
 #: gammu/backup.c:987 gammu/backup.c:1453
 #, fuzzy
-#| msgid ""
-#| "Do you want to set phone date/time (NOTE: in some phones it's required to "
-#| "correctly restore calendar notes and other items)"
 msgid ""
 "Do you want to set phone date/time? (NOTE: in some phones it's required to "
 "correctly restore calendar notes and other items)"
@@ -762,13 +736,11 @@ msgstr ""
 
 #: gammu/backup.c:1002
 #, fuzzy
-#| msgid "Restore phone calendar notes"
 msgid "Restore phone calendar notes?"
 msgstr "Stelle Kalendereinträge wieder her"
 
 #: gammu/backup.c:1003
 #, fuzzy
-#| msgid "  Restore notes from the past"
 msgid "Restore notes from the past?"
 msgstr "    Stelle in der Vergangenheit liegende Kalendereinträge wieder her"
 
@@ -785,7 +757,6 @@ msgstr "Fertig"
 
 #: gammu/backup.c:1048
 #, fuzzy
-#| msgid "Restore phone ToDo"
 msgid "Restore phone ToDo?"
 msgstr "Stelle Telefon-Aufgaben wieder her"
 
@@ -801,7 +772,6 @@ msgstr "%cBereinigung: %i Prozent"
 
 #: gammu/backup.c:1132
 #, fuzzy
-#| msgid "Restore phone Notes"
 msgid "Restore phone Notes?"
 msgstr "Stelle Telefon-Notizen wieder her"
 
@@ -812,25 +782,21 @@ msgstr "Lösche alte Notizen:"
 
 #: gammu/backup.c:1160
 #, fuzzy
-#| msgid "Restore SIM SMSC profiles"
 msgid "Restore SIM SMSC profiles?"
 msgstr "Stelle SIM-SMS-Profile wieder her"
 
 #: gammu/backup.c:1174
 #, fuzzy
-#| msgid "Restore phone startup logo/text"
 msgid "Restore phone startup logo/text?"
 msgstr "Stelle Telefon-Willkommenstext wieder her"
 
 #: gammu/backup.c:1178
 #, fuzzy
-#| msgid "Restore phone operator logo"
 msgid "Restore phone operator logo?"
 msgstr "Stelle Telefon-Betreiberlogo wieder her"
 
 #: gammu/backup.c:1187
 #, fuzzy
-#| msgid "Restore phone WAP bookmarks"
 msgid "Restore phone WAP bookmarks?"
 msgstr "Stelle Telefon-WAP-Lesezeichen wieder her"
 
@@ -841,19 +807,16 @@ msgstr "Lösche alte Lesezeichen: "
 
 #: gammu/backup.c:1225
 #, fuzzy
-#| msgid "Restore phone WAP settings"
 msgid "Restore phone WAP settings?"
 msgstr "Stelle Telefon-WAP-Einstellungen wieder her"
 
 #: gammu/backup.c:1247
 #, fuzzy
-#| msgid "Restore phone MMS settings"
 msgid "Restore phone MMS settings?"
 msgstr "Stelle Telefon-MMS-Einstellungen wieder her"
 
 #: gammu/backup.c:1270 gammu/misc.c:1221
 #, fuzzy
-#| msgid "Delete all phone user ringtones"
 msgid "Delete all phone user ringtones?"
 msgstr "Lösche alle Telefon-Benutzer-Klingeltöne"
 
@@ -864,19 +827,16 @@ msgstr "Lösche"
 
 #: gammu/backup.c:1279
 #, fuzzy
-#| msgid "Restore user ringtones"
 msgid "Restore user ringtones?"
 msgstr "Stelle Telefon-Benutzer-Klingeltöne wieder her"
 
 #: gammu/backup.c:1302
 #, fuzzy
-#| msgid "Restore phone profiles"
 msgid "Restore phone profiles?"
 msgstr "Stelle Telefon-Profile wieder her"
 
 #: gammu/backup.c:1325
 #, fuzzy
-#| msgid "Restore phone FM radio stations"
 msgid "Restore phone FM radio stations?"
 msgstr "Stelle Telefon-UKW-Radiosender wieder her"
 
@@ -887,7 +847,6 @@ msgstr "Lösche alte UKW-Radiosender: "
 
 #: gammu/backup.c:1352
 #, fuzzy
-#| msgid "Restore phone GPRS Points"
 msgid "Restore phone GPRS Points?"
 msgstr "Stelle Telefon-GPRS-Zugangsknoten wieder her"
 
@@ -898,43 +857,36 @@ msgstr "Der Speicher hat nur %i freie Speicherplätze. Verlassen\n"
 
 #: gammu/backup.c:1410
 #, fuzzy
-#| msgid "Add phone phonebook entries"
 msgid "Add phone phonebook entries?"
 msgstr "Telefonbucheintrag im Telefonspeicher hinzufügen"
 
 #: gammu/backup.c:1435
 #, fuzzy
-#| msgid "Add SIM phonebook entries"
 msgid "Add SIM phonebook entries?"
 msgstr "Telefonbucheintrag auf der SIM-Karte hunzufügen"
 
 #: gammu/backup.c:1463
 #, fuzzy
-#| msgid "Add phone calendar notes"
 msgid "Add phone calendar notes?"
 msgstr "Kalendernotiz hinzufügen"
 
 #: gammu/backup.c:1484
 #, fuzzy
-#| msgid "Add phone ToDo"
 msgid "Add phone ToDo?"
 msgstr "Aufgaben hinzufügen"
 
 #: gammu/backup.c:1505
 #, fuzzy
-#| msgid "Add phone WAP bookmarks"
 msgid "Add phone WAP bookmarks?"
 msgstr "WAP-Lesezeichen hinzufügen"
 
 #: gammu/backup.c:1545
 #, fuzzy
-#| msgid "Delete each sms after backup"
 msgid "Delete each sms after backup?"
 msgstr "Lösche jedes SMS im Telefon nach dem Sichern in eine Datei"
 
 #: gammu/backup.c:1550
 #, fuzzy, c-format
-#| msgid "Sending sms from folder \"%s\", location %i\n"
 msgid "Backup sms from folder \"%s\"%s?"
 msgstr "Sende SMS aus dem Ordner \"%s\", Speicherplatz %i\n"
 
@@ -954,19 +906,16 @@ msgstr "%cLösche: %i Prozent"
 
 #: gammu/backup.c:1628
 #, fuzzy
-#| msgid "Restore sms"
 msgid "Restore sms?"
 msgstr "Stelle SMS wieder her"
 
 #: gammu/backup.c:1653
 #, fuzzy
-#| msgid "Do you want to restore binary SMS"
 msgid "Do you want to restore binary SMS?"
 msgstr "Möchten Sie binär codierte SMS wiederherstellen"
 
 #: gammu/backup.c:1667
 #, fuzzy, c-format
-#| msgid "Restore %03i sms to folder \"%s\""
 msgid "Restore %03i sms to folder \"%s\"%s?"
 msgstr "Stelle %03i SMS im Ordner \"%s\" wieder her"
 
@@ -2985,7 +2934,6 @@ msgstr "Klingelton \"%s\"\n"
 
 #: gammu/message.c:362
 #, fuzzy
-#| msgid "Do you want to play it"
 msgid "Do you want to play it?"
 msgstr "Möchten Sie ihn abspielen"
 
@@ -3183,7 +3131,6 @@ msgstr ", Postausgangsordner"
 
 #: gammu/message.c:997
 #, fuzzy
-#| msgid "Do you want to save this MMS file"
 msgid "Do you want to save this MMS file?"
 msgstr "Möchten Sie dieses MMS in einer Datei speichern"
 
@@ -3249,7 +3196,6 @@ msgstr "(%s in SMIL)"
 
 #: gammu/message.c:1078
 #, fuzzy
-#| msgid "Do you want to save this attachment"
 msgid "Do you want to save this attachment?"
 msgstr "Möchten Sie diesen Anhang speichern"
 
@@ -3888,61 +3834,51 @@ msgstr "%cBereinigung: %i Prozent"
 
 #: gammu/misc.c:1132
 #, fuzzy
-#| msgid "Delete phone phonebook"
 msgid "Delete phone phonebook?"
 msgstr "Lösche das Telefonbuch des Telefons"
 
 #: gammu/misc.c:1133
 #, fuzzy
-#| msgid "Delete SIM phonebook"
 msgid "Delete SIM phonebook?"
 msgstr "Lösche das Telefonbuch auf der SIM-Karte"
 
 #: gammu/misc.c:1134
 #, fuzzy
-#| msgid "Delete missed calls"
 msgid "Delete missed calls?"
 msgstr "Lösche verpasste Anrufe"
 
 #: gammu/misc.c:1135
 #, fuzzy
-#| msgid "Delete dialled calls"
 msgid "Delete dialled calls?"
 msgstr "Lösche gewählte Rufnummern"
 
 #: gammu/misc.c:1136
 #, fuzzy
-#| msgid "Delete received calls"
 msgid "Delete received calls?"
 msgstr "Lösche erhaltene Anrufe"
 
 #: gammu/misc.c:1141
 #, fuzzy
-#| msgid "Delete phone calendar notes"
 msgid "Delete phone calendar notes?"
 msgstr "Lösche Kalendernotiz"
 
 #: gammu/misc.c:1164
 #, fuzzy
-#| msgid "Delete phone ToDo"
 msgid "Delete phone ToDo?"
 msgstr "Lösche Aufgaben"
 
 #: gammu/misc.c:1187
 #, fuzzy
-#| msgid "Delete phone Notes"
 msgid "Delete phone Notes?"
 msgstr "Lösche Notizen"
 
 #: gammu/misc.c:1204
 #, fuzzy
-#| msgid "Delete phone WAP bookmarks"
 msgid "Delete phone WAP bookmarks?"
 msgstr "Lösche WAP-Lesezeichen"
 
 #: gammu/misc.c:1230
 #, fuzzy
-#| msgid "Delete all phone FM radio stations"
 msgid "Delete all phone FM radio stations?"
 msgstr "Lösche UKW-Radiosender"
 

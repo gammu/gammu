@@ -452,7 +452,6 @@ msgstr "Чтобы прервать, нажмите Ctrl+C..."
 
 #: gammu/backup.c:193
 #, fuzzy
-#| msgid "Use Unicode subformat of backup file"
 msgid "Use Unicode subformat of backup file?"
 msgstr "Используйте юникодовый формат файла с резервной копией"
 
@@ -462,7 +461,6 @@ msgstr "Проверяется телефонная книга телефона"
 
 #: gammu/backup.c:230
 #, fuzzy
-#| msgid "   Backup phone phonebook"
 msgid "Backup phone phonebook?"
 msgstr "   Выполняется резервное копирование телефонной книги телефона"
 
@@ -490,7 +488,6 @@ msgstr "Проверяется телефонная книга SIM-карты"
 
 #: gammu/backup.c:268
 #, fuzzy
-#| msgid "   Backup SIM phonebook"
 msgid "Backup SIM phonebook?"
 msgstr "   Выполняется резервное копирование телефонной книги SIM-карты"
 
@@ -500,7 +497,6 @@ msgstr "Проверяется календарь телефона"
 
 #: gammu/backup.c:305
 #, fuzzy
-#| msgid "   Backup phone calendar notes"
 msgid "Backup phone calendar notes?"
 msgstr "   Выполняется резервное копирование заметок из календаря телефона"
 
@@ -517,7 +513,6 @@ msgstr "Проверяется список заданий телефона"
 
 #: gammu/backup.c:336
 #, fuzzy
-#| msgid "   Backup phone ToDo"
 msgid "Backup phone ToDo?"
 msgstr "   Выполняется резервное копирование списка заданий телефона"
 
@@ -527,7 +522,6 @@ msgstr "Проверяются заметки телефона"
 
 #: gammu/backup.c:367
 #, fuzzy
-#| msgid "   Backup phone notes"
 msgid "Backup phone notes?"
 msgstr "   Выполняется резервное копирование заметок телефона"
 
@@ -537,7 +531,6 @@ msgstr "Проверяются логотипы абонентов в телеф
 
 #: gammu/backup.c:400
 #, fuzzy
-#| msgid "   Backup phone caller groups and logos"
 msgid "Backup phone caller groups and logos?"
 msgstr ""
 "   Выполняется резервное копирование групп и логотипов абонентов в телефоне"
@@ -548,7 +541,6 @@ msgstr "Проверяются SMS-профили SIM-карты"
 
 #: gammu/backup.c:431
 #, fuzzy
-#| msgid "   Backup SIM SMS profiles"
 msgid "Backup SIM SMS profiles?"
 msgstr "   Выполняется резервное копирование SMS-профилей SIM-карты"
 
@@ -558,7 +550,6 @@ msgstr "Проверяется текст приветствия телефон�
 
 #: gammu/backup.c:460
 #, fuzzy
-#| msgid "   Backup phone startup logo/text"
 msgid "Backup phone startup logo/text?"
 msgstr "Выполняется резервное копирование текста приветствия телефона"
 
@@ -568,7 +559,6 @@ msgstr "Проверяется логотип оператора телефон�
 
 #: gammu/backup.c:480
 #, fuzzy
-#| msgid "   Backup phone operator logo"
 msgid "Backup phone operator logo?"
 msgstr "   Выполняется резервное копирование логотипа оператора телефона"
 
@@ -578,7 +568,6 @@ msgstr "Проверяются WAP-закладки телефона"
 
 #: gammu/backup.c:495
 #, fuzzy
-#| msgid "   Backup phone WAP bookmarks"
 msgid "Backup phone WAP bookmarks?"
 msgstr "   Выполняется резервное копирование WAP-закладок телефона"
 
@@ -588,7 +577,6 @@ msgstr "Проверяются настройки WAP телефона"
 
 #: gammu/backup.c:528
 #, fuzzy
-#| msgid "   Backup phone WAP settings"
 msgid "Backup phone WAP settings?"
 msgstr "   Выполняется резервное копирование настроек WAP телефона"
 
@@ -598,7 +586,6 @@ msgstr "Проверяются настройки MMS телефона"
 
 #: gammu/backup.c:561
 #, fuzzy
-#| msgid "   Backup phone MMS settings"
 msgid "Backup phone MMS settings?"
 msgstr "   Выполняется резервное копирование настроек MMS телефона"
 
@@ -608,7 +595,6 @@ msgstr "Проверяются настройки чата телефона"
 
 #: gammu/backup.c:594
 #, fuzzy
-#| msgid "   Backup phone Chat settings"
 msgid "Backup phone Chat settings?"
 msgstr "Выполняется резервное копирование настроек чата телефона"
 
@@ -618,7 +604,6 @@ msgstr "Проверяются настройки синхронизации т�
 
 #: gammu/backup.c:627
 #, fuzzy
-#| msgid "   Backup phone SyncML settings"
 msgid "Backup phone SyncML settings?"
 msgstr "   Выполняется резервное копирование настроек синхронизации телефона"
 
@@ -628,7 +613,6 @@ msgstr "Проверяются пользовательские мелодии �
 
 #: gammu/backup.c:661
 #, fuzzy
-#| msgid "   Backup phone user ringtones"
 msgid "Backup phone user ringtones?"
 msgstr ""
 "   Выполняется резервное копирование пользовательских мелодий звонков "
@@ -640,7 +624,6 @@ msgstr "Проверяются режимы телефона"
 
 #: gammu/backup.c:699
 #, fuzzy
-#| msgid "   Backup phone profiles"
 msgid "Backup phone profiles?"
 msgstr "   Выполняется резервное копирование режимов телефона"
 
@@ -650,7 +633,6 @@ msgstr "Проверяются FM-радиостанции телефона"
 
 #: gammu/backup.c:729
 #, fuzzy
-#| msgid "   Backup phone FM radio stations"
 msgid "Backup phone FM radio stations?"
 msgstr "   Выполняется резервное копирование FM-радиостанций телефона"
 
@@ -660,7 +642,6 @@ msgstr "Проверяются точки доступа GPRS телефона"
 
 #: gammu/backup.c:762
 #, fuzzy
-#| msgid "   Backup phone GPRS access points"
 msgid "Backup phone GPRS access points?"
 msgstr "   Выполняется резервное копирование точек доступа GPRS телефона"
 
@@ -692,7 +673,6 @@ msgstr "Файл создан"
 
 #: gammu/backup.c:839
 #, fuzzy
-#| msgid "Checksum in backup file do not match. Continue"
 msgid "Checksum in backup file do not match. Continue?"
 msgstr "Неверная контрольная сумма файла резервной копии. Продолжить"
 
@@ -706,7 +686,6 @@ msgstr ""
 
 #: gammu/backup.c:853
 #, fuzzy
-#| msgid "Restore phone caller groups and logos"
 msgid "Restore phone caller groups and logos?"
 msgstr "Восстановление групп и логотипов абонентов"
 
@@ -730,7 +709,6 @@ msgstr "%i записей в резервном файле\n"
 
 #: gammu/backup.c:879
 #, fuzzy
-#| msgid "Restore phone phonebook"
 msgid "Restore phone phonebook?"
 msgstr "Восстановление телефонной книги телефона"
 
@@ -747,7 +725,6 @@ msgstr "Местонахождение %i\n"
 
 #: gammu/backup.c:944
 #, fuzzy
-#| msgid "Restore SIM phonebook"
 msgid "Restore SIM phonebook?"
 msgstr "Восстановление телефонной книги SIM-карты"
 
@@ -911,7 +888,6 @@ msgstr ""
 
 #: gammu/backup.c:1550
 #, fuzzy, c-format
-#| msgid "Sending sms from folder \"%s\", location %i\n"
 msgid "Backup sms from folder \"%s\"%s?"
 msgstr "Отправляется SMS из папки \"%s\", размещение %i\n"
 

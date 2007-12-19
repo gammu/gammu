@@ -484,7 +484,6 @@ msgstr ""
 
 #: gammu/backup.c:305
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "Backup phone calendar notes?"
 msgstr "Notas de calendario"
 
@@ -841,7 +840,6 @@ msgstr ""
 
 #: gammu/backup.c:1463
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "Add phone calendar notes?"
 msgstr "Notas de calendario"
 
@@ -3909,7 +3907,6 @@ msgstr "Sinc. agenda        : "
 
 #: gammu/misc.c:1134
 #, fuzzy
-#| msgid " (Call register: with missed calls)"
 msgid "Delete missed calls?"
 msgstr " (Archivo de llamadas: llamadas perdidas)"
 
@@ -3923,7 +3920,6 @@ msgstr ""
 
 #: gammu/misc.c:1141
 #, fuzzy
-#| msgid "Calendar notes"
 msgid "Delete phone calendar notes?"
 msgstr "Notas de calendario"
 
