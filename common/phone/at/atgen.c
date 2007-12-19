@@ -2428,6 +2428,7 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 	int			cur;
 	int			allocsize = 0;
 	char			*str;
+	GSM_SMSMessage		sms;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -2465,11 +2466,57 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 				return ERR_MOREMEMORY;
 			}
 		}
-		Priv->SMSLocations[Priv->SMSCount - 1] = cur;
+		ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, cur);
+		Priv->SMSLocations[Priv->SMSCount - 1] = sms.Location;
 
 	}
 	smprintf(s, "Read %d SMS locations\n", Priv->SMSCount);
 	return ERR_NONE;
+}
+
+GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
+{
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error		error;
+
+	if (first) {
+		Priv->SMSReadFolder = 1;
+		if (Priv->SIMSMSMemory == AT_AVAILABLE) {
+			error = ATGEN_SetSMSMemory(s, true, false, false);
+			if (error != ERR_NONE) return error;
+		} else if (Priv->PhoneSMSMemory == AT_AVAILABLE) {
+			error = ATGEN_SetSMSMemory(s, false, false, false);
+			if (error != ERR_NONE) return error;
+		} else {
+			return ERR_NOTSUPPORTED;
+		}
+	} else {
+		Priv->SMSReadFolder = 2;
+		if (Priv->PhoneSMSMemory == AT_AVAILABLE) {
+			error = ATGEN_SetSMSMemory(s, false, false, false);
+			if (error != ERR_NONE) return error;
+		} else {
+			return ERR_NOTSUPPORTED;
+		}
+	}
+
+	error = ATGEN_GetSMSStatus(s,&Priv->LastSMSStatus);
+	if (error!=ERR_NONE) return error;
+
+	Priv->LastSMSRead		= 0;
+	Priv->SMSCount			= 0;
+
+	if (Priv->SMSLocations != NULL)
+		free(Priv->SMSLocations);
+
+	Priv->SMSLocations		= NULL;
+
+	smprintf(s, "Getting SMS locations\n");
+	ATGEN_WaitFor(s, "AT+CMGL=4\r", 10, 0x00, 5, ID_GetSMSMessage);
+	if (error == ERR_NOTSUPPORTED) {
+		ATGEN_WaitFor(s, "AT+CMGL\r", 8, 0x00, 5, ID_GetSMSMessage);
+	}
+	return error;
 }
 
 GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
@@ -2478,8 +2525,6 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 	GSM_Error 		error;
 	int			usedsms;
 	int			i, found = -1;
-	unsigned char		folderid;
-	int			location;
 
 
 	if (Priv->PhoneSMSMemory == 0) {
@@ -2494,25 +2539,11 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 
 	/* On start we need to init everything */
 	if (start) {
-		error=s->Phone.Functions->GetSMSStatus(s,&Priv->LastSMSStatus);
-		if (error!=ERR_NONE) return error;
-		Priv->LastSMSRead		= 0;
-		/* We need to set up folder here */
-		sms->SMS[0].Location 		= 1;
-		error=ATGEN_GetSMSLocation(s, &sms->SMS[0], &folderid, &location, false);
-
 		/* Start from beginning */
 		sms->SMS[0].Location 		= 0;
 
-		Priv->SMSCount			= 0;
-		if (Priv->SMSLocations != NULL)
-			free(Priv->SMSLocations);
-		Priv->SMSLocations		= NULL;
-		smprintf(s, "Getting SMS locations\n");
-		ATGEN_WaitFor(s, "AT+CMGL=4\r", 10, 0x00, 5, ID_GetSMSMessage);
-		if (error == ERR_NOTSUPPORTED) {
-			ATGEN_WaitFor(s, "AT+CMGL\r", 8, 0x00, 5, ID_GetSMSMessage);
-		}
+		/* Get list of messages */
+		error = ATGEN_GetSMSList(s, true);
 	}
 
 	/* Use listed locations if we have them */
@@ -2532,7 +2563,15 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 			return ERR_INVALIDLOCATION;
 		}
 		if (found >= Priv->SMSCount) {
-			return ERR_EMPTY;
+			/* Did we already read second folder? */
+			if (Priv->SMSReadFolder == 2) return ERR_EMPTY;
+
+			/* Get list of messages */
+			error = ATGEN_GetSMSList(s, false);
+			if (error != ERR_NONE) return error;
+
+			/* Start again */
+			found = 0;
 		}
 		sms->SMS[0].Location = Priv->SMSLocations[found];
 		smprintf(s, "Reading next message on location %d\n", sms->SMS[0].Location);
@@ -2550,17 +2589,22 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 			}
 
 			if (Priv->LastSMSRead >= usedsms) {
-				if (Priv->PhoneSMSMemory == AT_NOTAVAILABLE || Priv->LastSMSStatus.PhoneUsed==0) return ERR_EMPTY;
+				if (Priv->PhoneSMSMemory == AT_NOTAVAILABLE || Priv->LastSMSStatus.PhoneUsed == 0) {
+					smprintf(s, "No more messages to read\n");
+					return ERR_EMPTY;
+				}
 				Priv->LastSMSRead	= 0;
+
+				/* Start on next folder */
 				sms->SMS[0].Location 	= GSM_PHONE_MAXSMSINFOLDER + 1;
 			}
 		} else {
 			if (Priv->PhoneSMSMemory == AT_NOTAVAILABLE) return ERR_EMPTY;
-			if (Priv->LastSMSRead>=Priv->LastSMSStatus.PhoneUsed) return ERR_EMPTY;
+			if (Priv->LastSMSRead >= Priv->LastSMSStatus.PhoneUsed) return ERR_EMPTY;
 		}
 		sms->SMS[0].Folder = 0;
-		error=s->Phone.Functions->GetSMS(s, sms);
-		if (error==ERR_NONE) {
+		error = ATGEN_GetSMS(s, sms);
+		if (error == ERR_NONE) {
 			Priv->LastSMSRead++;
 			break;
 		}
