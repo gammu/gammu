@@ -1076,6 +1076,7 @@ void SetRingtone(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+PRINTF_STYLE(2, 0)
 void ClearMemory(GSM_MemoryType type, const char *question)
 {
 	GSM_Error error;
@@ -1088,7 +1089,7 @@ void ClearMemory(GSM_MemoryType type, const char *question)
 	MemStatus.MemoryType = type;
 	error = GSM_GetMemoryStatus(gsm, &MemStatus);
 	if (error == ERR_NONE && MemStatus.MemoryUsed !=0) {
-		if (answer_yes(question)) DoClear = true;
+		if (answer_yes("%s", question)) DoClear = true;
 	}
 	if (DoClear) {
 		error = GSM_DeleteAllMemory(gsm, type);
@@ -1128,16 +1129,16 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 
 	GSM_Init(true);
 
-	ClearMemory(MEM_ME, _("Delete phone phonebook"));
-	ClearMemory(MEM_SM, _("Delete SIM phonebook"));
-	ClearMemory(MEM_MC, _("Delete missed calls"));
-	ClearMemory(MEM_DC, _("Delete dialled calls"));
-	ClearMemory(MEM_RC, _("Delete received calls"));
+	ClearMemory(MEM_ME, _("Delete phone phonebook?"));
+	ClearMemory(MEM_SM, _("Delete SIM phonebook?"));
+	ClearMemory(MEM_MC, _("Delete missed calls?"));
+	ClearMemory(MEM_DC, _("Delete dialled calls?"));
+	ClearMemory(MEM_RC, _("Delete received calls?"));
 
 	DoClear = false;
 	error = GSM_GetNextCalendar(gsm,&Calendar,true);
 	if (error == ERR_NONE) {
- 		if (answer_yes(_("Delete phone calendar notes"))) DoClear = true;
+ 		if (answer_yes(_("Delete phone calendar notes?"))) DoClear = true;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
@@ -1160,7 +1161,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	DoClear = false;
 	error = GSM_GetToDoStatus(gsm,&ToDoStatus);
 	if (error == ERR_NONE && ToDoStatus.Used != 0) {
-		if (answer_yes(_("Delete phone ToDo"))) DoClear = true;
+		if (answer_yes(_("Delete phone ToDo?"))) DoClear = true;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
@@ -1183,7 +1184,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	DoClear = false;
 	error = GSM_GetNotesStatus(gsm,&ToDoStatus);
 	if (error == ERR_NONE && ToDoStatus.Used != 0) {
-		if (answer_yes(_("Delete phone Notes"))) DoClear = true;
+		if (answer_yes(_("Delete phone Notes?"))) DoClear = true;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
@@ -1200,7 +1201,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	Bookmark.Location = 1;
 	error = GSM_GetWAPBookmark(gsm,&Bookmark);
 	if (error == ERR_NONE || error == ERR_INVALIDLOCATION) {
-		if (answer_yes(_("Delete phone WAP bookmarks"))) {
+		if (answer_yes(_("Delete phone WAP bookmarks?"))) {
 			fprintf(stderr, LISTFORMAT, _("Deleting"));
 			/* One thing to explain: DCT4 phones seems to have bug here.
 			 * When delete for example first bookmark, phone change
@@ -1217,7 +1218,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 			fprintf(stderr, "\n");
 		}
 	}
-	if (answer_yes(_("Delete all phone user ringtones"))) {
+	if (answer_yes(_("Delete all phone user ringtones?"))) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
 		error=GSM_DeleteUserRingtones(gsm);
 		Print_Error(error);
@@ -1226,7 +1227,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	Station.Location = 1;
 	error=GSM_GetFMStation(gsm,&Station);
 	if (error == ERR_NONE || error == ERR_EMPTY) {
-	 	if (answer_yes(_("Delete all phone FM radio stations"))) {
+	 	if (answer_yes(_("Delete all phone FM radio stations?"))) {
  			error=GSM_ClearFMStations(gsm);
  			Print_Error(error);
 		}
