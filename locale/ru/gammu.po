@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.16.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-12-19 21:59+0900\n"
+"POT-Creation-Date: 2007-12-20 00:36+0900\n"
 "PO-Revision-Date: 2007-08-16 09:45+0200\n"
 "Last-Translator: Andy Kir <dronmbi@mail.com>\n"
 "Language-Team: Language =ru\n"
@@ -128,8 +128,8 @@ msgstr ""
 msgid "Function not supported by phone."
 msgstr "Функция не поддерживается телефоном."
 
-#: common/gsmcomon.c:109 gammu/memory.c:238 gammu/misc.c:1611
-#: gammu/misc.c:1951
+#: common/gsmcomon.c:109 gammu/memory.c:238 gammu/misc.c:1610
+#: gammu/misc.c:1950
 #, fuzzy
 msgid "Entry is empty"
 msgstr "Запись пуста."
@@ -311,7 +311,7 @@ msgstr ""
 msgid "Unknown error description."
 msgstr "Неизвестная ошибка."
 
-#: common/phone/nokia/dct3/n6110.c:1953 gammu/misc.c:1800
+#: common/phone/nokia/dct3/n6110.c:1953 gammu/misc.c:1799
 msgid "Personal"
 msgstr "Личный"
 
@@ -750,8 +750,8 @@ msgid "Deleting old notes: "
 msgstr "Удаление старых заметок: "
 
 #: gammu/backup.c:1021 gammu/backup.c:1068 gammu/backup.c:1277
-#: gammu/backup.c:1332 gammu/misc.c:1112 gammu/misc.c:1156 gammu/misc.c:1179
-#: gammu/misc.c:1225
+#: gammu/backup.c:1332 gammu/misc.c:1111 gammu/misc.c:1155 gammu/misc.c:1178
+#: gammu/misc.c:1224
 #, fuzzy
 msgid "Done"
 msgstr "Готово\n"
@@ -816,13 +816,13 @@ msgstr "Проверяются настройки WAP телефона\n"
 msgid "Restore phone MMS settings?"
 msgstr "Проверяются настройки MMS телефона\n"
 
-#: gammu/backup.c:1270 gammu/misc.c:1221
+#: gammu/backup.c:1270 gammu/misc.c:1220
 #, fuzzy
 msgid "Delete all phone user ringtones?"
 msgstr "Проверяются пользовательские рингтоны телефона\n"
 
-#: gammu/backup.c:1274 gammu/misc.c:1144 gammu/misc.c:1167 gammu/misc.c:1190
-#: gammu/misc.c:1205 gammu/misc.c:1222
+#: gammu/backup.c:1274 gammu/misc.c:1143 gammu/misc.c:1166 gammu/misc.c:1189
+#: gammu/misc.c:1204 gammu/misc.c:1221
 #, fuzzy
 msgid "Deleting"
 msgstr "Идёт удаление: "
@@ -1114,8 +1114,8 @@ msgstr ""
 
 #: gammu/calendar.c:216 gammu/calendar.c:572 gammu/calendar.c:614
 #: gammu/calendar.c:658 gammu/calendar.c:682 gammu/calendar.c:881
-#: gammu/memory.c:273 gammu/misc.c:1570 gammu/misc.c:1603 gammu/misc.c:1839
-#: gammu/misc.c:1948
+#: gammu/memory.c:273 gammu/misc.c:1569 gammu/misc.c:1602 gammu/misc.c:1838
+#: gammu/misc.c:1947
 #, fuzzy
 msgid "Location"
 msgstr "Местонахождение %i\n"
@@ -1353,7 +1353,7 @@ msgid "Entry was deleted"
 msgstr "Запись удалена\n"
 
 #: gammu/calendar.c:771 gammu/calendar.c:790 gammu/message.c:528
-#: gammu/misc.c:1770 gammu/misc.c:1813
+#: gammu/misc.c:1769 gammu/misc.c:1812
 #, fuzzy
 msgid "Unknown"
 msgstr "Неизвестно\n"
@@ -2157,8 +2157,8 @@ msgid "Network"
 msgstr "Название сети\n"
 
 #: gammu/gammu.c:106 gammu/memory.c:111 gammu/message.c:215
-#: gammu/message.c:1060 gammu/misc.c:698 gammu/misc.c:863 gammu/misc.c:1574
-#: gammu/misc.c:1613 gammu/misc.c:1853
+#: gammu/message.c:1060 gammu/misc.c:698 gammu/misc.c:863 gammu/misc.c:1573
+#: gammu/misc.c:1612 gammu/misc.c:1852
 msgid "Name"
 msgstr ""
 
@@ -2482,7 +2482,7 @@ msgstr ""
 msgid "Ringtone"
 msgstr "Рингтон \"%s\"\n"
 
-#: gammu/memory.c:85 gammu/misc.c:1723
+#: gammu/memory.c:85 gammu/misc.c:1722
 #, fuzzy
 msgid "Ringtone ID"
 msgstr "Рингтон \"%s\"\n"
@@ -2703,7 +2703,7 @@ msgstr "Должность       "
 msgid "work"
 msgstr "Название сети\n"
 
-#: gammu/message.c:58 gammu/misc.c:2024 gammu/misc.c:2035
+#: gammu/message.c:58 gammu/misc.c:2023 gammu/misc.c:2034
 #, c-format
 msgid "fax"
 msgstr "факс"
@@ -3127,12 +3127,12 @@ msgstr ""
 "Логотип оператора для сети %s (%s, %s)\n"
 "\n"
 
-#: gammu/message.c:377 gammu/misc.c:1765
+#: gammu/message.c:377 gammu/misc.c:1764
 #, fuzzy
 msgid "Screen saver"
 msgstr "Хранитель экрана\n"
 
-#: gammu/message.c:381 gammu/misc.c:1461
+#: gammu/message.c:381 gammu/misc.c:1460
 #, c-format
 msgid "Picture Image"
 msgstr "Рисунок"
@@ -3251,7 +3251,7 @@ msgstr "Сервисный ответ: \"%s\"\n"
 msgid "%i. Set %i\n"
 msgstr "%i. Установлено %i\n"
 
-#: gammu/message.c:595 gammu/misc.c:1854 gammu/misc.c:2043
+#: gammu/message.c:595 gammu/misc.c:1853 gammu/misc.c:2042
 #, fuzzy
 msgid "Number"
 msgstr "ноября"
@@ -3368,11 +3368,11 @@ msgstr ""
 msgid "Delivery report"
 msgstr ""
 
-#: gammu/message.c:1050 gammu/misc.c:837 gammu/misc.c:1350 gammu/misc.c:1353
+#: gammu/message.c:1050 gammu/misc.c:837 gammu/misc.c:1349 gammu/misc.c:1352
 msgid "enabled"
 msgstr ""
 
-#: gammu/message.c:1052 gammu/misc.c:839 gammu/misc.c:1351 gammu/misc.c:1354
+#: gammu/message.c:1052 gammu/misc.c:839 gammu/misc.c:1350 gammu/misc.c:1353
 msgid "disabled"
 msgstr ""
 
@@ -4010,9 +4010,9 @@ msgstr "Адрес   : \"%s\"\n"
 msgid "%i. Access point %i"
 msgstr "%i. Точка доступа %i"
 
-#: gammu/misc.c:743 gammu/misc.c:1256 gammu/misc.c:1263 gammu/misc.c:1292
-#: gammu/misc.c:1303 gammu/misc.c:1342 gammu/misc.c:1391 gammu/misc.c:1435
-#: gammu/misc.c:1711
+#: gammu/misc.c:743 gammu/misc.c:1255 gammu/misc.c:1262 gammu/misc.c:1291
+#: gammu/misc.c:1302 gammu/misc.c:1341 gammu/misc.c:1390 gammu/misc.c:1434
+#: gammu/misc.c:1710
 #, c-format
 msgid " (active)"
 msgstr " (активный)"
@@ -4092,185 +4092,185 @@ msgstr "Логотип какого типа установить (\"%s\")?\n"
 msgid "Unknown parameter (\"%s\")"
 msgstr "Неизвестный параметр (\"%s\")\n"
 
-#: gammu/misc.c:1103
+#: gammu/misc.c:1102
 #, fuzzy, c-format
 msgid "%cClearing: %i percent"
 msgstr "%cИдёт очистка: %i процентов"
 
-#: gammu/misc.c:1132
+#: gammu/misc.c:1131
 #, fuzzy
 msgid "Delete phone phonebook?"
 msgstr "Проверяется телефонная книга телефона\n"
 
-#: gammu/misc.c:1133
+#: gammu/misc.c:1132
 #, fuzzy
 msgid "Delete SIM phonebook?"
 msgstr "Проверяется телефонная книга SIM\n"
 
-#: gammu/misc.c:1134
+#: gammu/misc.c:1133
 msgid "Delete missed calls?"
 msgstr ""
 
-#: gammu/misc.c:1135
+#: gammu/misc.c:1134
 msgid "Delete dialled calls?"
 msgstr ""
 
-#: gammu/misc.c:1136
+#: gammu/misc.c:1135
 msgid "Delete received calls?"
 msgstr ""
 
-#: gammu/misc.c:1141
+#: gammu/misc.c:1140
 #, fuzzy
 msgid "Delete phone calendar notes?"
 msgstr "Nokia: заметка в календаре"
 
-#: gammu/misc.c:1164
+#: gammu/misc.c:1163
 #, fuzzy
 msgid "Delete phone ToDo?"
 msgstr "Удаление старых заданий: "
 
-#: gammu/misc.c:1187
+#: gammu/misc.c:1186
 #, fuzzy
 msgid "Delete phone Notes?"
 msgstr "Удаление старых заметок: "
 
-#: gammu/misc.c:1204
+#: gammu/misc.c:1203
 #, fuzzy
 msgid "Delete phone WAP bookmarks?"
 msgstr "Проверяются WAP-закладки телефона\n"
 
-#: gammu/misc.c:1230
+#: gammu/misc.c:1229
 #, fuzzy
 msgid "Delete all phone FM radio stations?"
 msgstr "Проверяются FM-радиостанции телефона\n"
 
-#: gammu/misc.c:1242
+#: gammu/misc.c:1241
 #, c-format
 msgid "Connection type     : Continuous\n"
 msgstr "Тип соединения      : постоянное\n"
 
-#: gammu/misc.c:1244
+#: gammu/misc.c:1243
 #, c-format
 msgid "Connection type     : Temporary\n"
 msgstr "Тип соединения      : временное\n"
 
-#: gammu/misc.c:1247
+#: gammu/misc.c:1246
 #, c-format
 msgid "Connection security : On\n"
 msgstr "Защита соединения   : вкл\n"
 
-#: gammu/misc.c:1249
+#: gammu/misc.c:1248
 #, c-format
 msgid "Connection security : Off\n"
 msgstr "Защита соединения   : выкл\n"
 
-#: gammu/misc.c:1251
+#: gammu/misc.c:1250
 #, c-format
 msgid "Proxy               : address \"%s\", port %i\n"
 msgstr "Прокси              : адрес \"%s\", порт %i\n"
 
-#: gammu/misc.c:1252
+#: gammu/misc.c:1251
 #, c-format
 msgid "2'nd proxy          : address \"%s\", port %i\n"
 msgstr "2-й прокси          : адрес \"%s\", порт %i\n"
 
-#: gammu/misc.c:1255 gammu/misc.c:1262 gammu/misc.c:1291 gammu/misc.c:1302
+#: gammu/misc.c:1254 gammu/misc.c:1261 gammu/misc.c:1290 gammu/misc.c:1301
 msgid "Bearer"
 msgstr ""
 
-#: gammu/misc.c:1255
+#: gammu/misc.c:1254
 msgid "SMS"
 msgstr ""
 
-#: gammu/misc.c:1258
+#: gammu/misc.c:1257
 #, fuzzy
 msgid "Server number"
 msgstr "Основной        "
 
-#: gammu/misc.c:1259
+#: gammu/misc.c:1258
 #, fuzzy
 msgid "Service number"
 msgstr "Номер службы        : \"%s\"\n"
 
-#: gammu/misc.c:1262
+#: gammu/misc.c:1261
 msgid "Data (CSD)"
 msgstr ""
 
-#: gammu/misc.c:1265
+#: gammu/misc.c:1264
 #, fuzzy
 msgid "Dial-up number"
 msgstr ""
 "\n"
 "Номер дозвона     : \"%s\"\n"
 
-#: gammu/misc.c:1266 gammu/misc.c:1316
+#: gammu/misc.c:1265 gammu/misc.c:1315
 #, fuzzy
 msgid "IP address"
 msgstr "Адрес Snail     "
 
-#: gammu/misc.c:1268 gammu/misc.c:1306
+#: gammu/misc.c:1267 gammu/misc.c:1305
 #, c-format
 msgid "Login Type          : Manual\n"
 msgstr "Вход в систему      : вручную\n"
 
-#: gammu/misc.c:1270 gammu/misc.c:1308
+#: gammu/misc.c:1269 gammu/misc.c:1307
 #, c-format
 msgid "Login Type          : Automatic\n"
 msgstr "Вход в систему      : автоматический\n"
 
-#: gammu/misc.c:1273 gammu/misc.c:1311
+#: gammu/misc.c:1272 gammu/misc.c:1310
 #, c-format
 msgid "Authentication type : Normal\n"
 msgstr "Тип аутентификации  : обычная\n"
 
-#: gammu/misc.c:1275 gammu/misc.c:1313
+#: gammu/misc.c:1274 gammu/misc.c:1312
 #, c-format
 msgid "Authentication type : Secure\n"
 msgstr "Тип аутентификации  : защищённая\n"
 
-#: gammu/misc.c:1278
+#: gammu/misc.c:1277
 #, c-format
 msgid "Data call type      : ISDN\n"
 msgstr "Тип информационного вызова      : ISDN\n"
 
-#: gammu/misc.c:1280
+#: gammu/misc.c:1279
 #, c-format
 msgid "Data call type      : Analogue\n"
 msgstr "Тип информационного вызова      : аналоговый\n"
 
-#: gammu/misc.c:1283
+#: gammu/misc.c:1282
 #, c-format
 msgid "Data call speed     : 9600\n"
 msgstr "Скорость информационного вызова : 9600\n"
 
-#: gammu/misc.c:1284
+#: gammu/misc.c:1283
 #, c-format
 msgid "Data call speed     : 14400\n"
 msgstr "Скорость информационного вызова : 14440\n"
 
-#: gammu/misc.c:1285
+#: gammu/misc.c:1284
 #, c-format
 msgid "Data call speed     : Auto\n"
 msgstr "Скорость информационного вызова : авто\n"
 
-#: gammu/misc.c:1287 gammu/misc.c:1317
+#: gammu/misc.c:1286 gammu/misc.c:1316
 msgid "User name"
 msgstr ""
 
-#: gammu/misc.c:1288 gammu/misc.c:1318 gammu/misc.c:1345 gammu/misc.c:1395
+#: gammu/misc.c:1287 gammu/misc.c:1317 gammu/misc.c:1344 gammu/misc.c:1394
 msgid "Password"
 msgstr ""
 
-#: gammu/misc.c:1291
+#: gammu/misc.c:1290
 msgid "USSD"
 msgstr ""
 
-#: gammu/misc.c:1294
+#: gammu/misc.c:1293
 #, fuzzy
 msgid "Service code"
 msgstr "В услуге отказано"
 
-#: gammu/misc.c:1296
+#: gammu/misc.c:1295
 #, c-format
 msgid ""
 "Address type        : IP address\n"
@@ -4279,7 +4279,7 @@ msgstr ""
 "Тип адреса          : IP-адрес\n"
 "IP-адрес              : \"%s\"\n"
 
-#: gammu/misc.c:1298
+#: gammu/misc.c:1297
 #, c-format
 msgid ""
 "Address type        : Service number\n"
@@ -4288,70 +4288,70 @@ msgstr ""
 "Тип адреса          : Номер службы\n"
 "Номер службы          : \"%s\"\n"
 
-#: gammu/misc.c:1302
+#: gammu/misc.c:1301
 msgid "GPRS"
 msgstr ""
 
-#: gammu/misc.c:1315
+#: gammu/misc.c:1314
 #, fuzzy
 msgid "Access point"
 msgstr "%i. Точка доступа %i"
 
-#: gammu/misc.c:1338 gammu/misc.c:1359 gammu/misc.c:1387 gammu/misc.c:1431
+#: gammu/misc.c:1337 gammu/misc.c:1358 gammu/misc.c:1386 gammu/misc.c:1430
 #, c-format
 msgid "Set %i"
 msgstr "Установлено %i"
 
-#: gammu/misc.c:1344 gammu/misc.c:1394
+#: gammu/misc.c:1343 gammu/misc.c:1393
 #, fuzzy
 msgid "User"
 msgstr "Пользовательский UDH"
 
-#: gammu/misc.c:1346
+#: gammu/misc.c:1345
 #, fuzzy
 msgid "Phonebook database"
 msgstr "БД телефонной книги : \"%s\"\n"
 
-#: gammu/misc.c:1347
+#: gammu/misc.c:1346
 #, fuzzy
 msgid "Calendar database"
 msgstr "БД календаря        : \"%s\"\n"
 
-#: gammu/misc.c:1348
+#: gammu/misc.c:1347
 #, fuzzy
 msgid "Server"
 msgstr "постоянно"
 
-#: gammu/misc.c:1349
+#: gammu/misc.c:1348
 #, fuzzy
 msgid "Sync. phonebook"
 msgstr "Синхр. тел. книги   : "
 
-#: gammu/misc.c:1352
+#: gammu/misc.c:1351
 #, fuzzy
 msgid "Sync. calendar"
 msgstr "Синхр. календаря    : "
 
-#: gammu/misc.c:1357
+#: gammu/misc.c:1356
 #, fuzzy
 msgid "Connection set name"
 msgstr "Название соединения : %s\n"
 
-#: gammu/misc.c:1393
+#: gammu/misc.c:1392
 msgid "Homepage"
 msgstr ""
 
-#: gammu/misc.c:1399
+#: gammu/misc.c:1398
 #, c-format
 msgid "Connection set name : Set %i\n"
 msgstr "Название соединения : Установить %i\n"
 
-#: gammu/misc.c:1401
+#: gammu/misc.c:1400
 #, c-format
 msgid "Connection set name : %s\n"
 msgstr "Название соединения : %s\n"
 
-#: gammu/misc.c:1436
+#: gammu/misc.c:1435
 #, c-format
 msgid ""
 "\n"
@@ -4360,297 +4360,297 @@ msgstr ""
 "\n"
 "Только для чтения   : да"
 
-#: gammu/misc.c:1437
+#: gammu/misc.c:1436
 msgid ""
 "\n"
 "Homepage"
 msgstr ""
 
-#: gammu/misc.c:1459
+#: gammu/misc.c:1458
 #, c-format
 msgid "Startup logo"
 msgstr "Заставка"
 
-#: gammu/misc.c:1460
+#: gammu/misc.c:1459
 #, c-format
 msgid "Operator logo"
 msgstr "Логотип оператора"
 
-#: gammu/misc.c:1462
+#: gammu/misc.c:1461
 #, c-format
 msgid "Caller group logo"
 msgstr "Логотип группы абонентов"
 
-#: gammu/misc.c:1465
+#: gammu/misc.c:1464
 #, c-format
 msgid ", width %i, height %i\n"
 msgstr ", ширина %i, высота %i\n"
 
-#: gammu/misc.c:1480
+#: gammu/misc.c:1479
 #, c-format
 msgid "What format of output file logo (\"%s\") ?\n"
 msgstr "Какой формат выходного файла логотипа (\"%s\")?\n"
 
-#: gammu/misc.c:1505
+#: gammu/misc.c:1504
 #, c-format
 msgid "What format of output ringtone file (\"%s\") ?\n"
 msgstr "Какой формат выходного файла рингтона (\"%s\")?\n"
 
-#: gammu/misc.c:1525
+#: gammu/misc.c:1524
 #, c-format
 msgid "Unknown key/function name: \"%c\"\n"
 msgstr "Неизвестный ключ/имя функции: \"%c\"\n"
 
-#: gammu/misc.c:1555 gammu/misc.c:1593
+#: gammu/misc.c:1554 gammu/misc.c:1592
 #, c-format
 msgid "What type of categories do you want to get (\"%s\") ?\n"
 msgstr "Категорию какого типа нужно получить (\"%s\")?\n"
 
-#: gammu/misc.c:1631
+#: gammu/misc.c:1630
 #, c-format
 msgid "What type of category do you want to add (\"%s\") ?\n"
 msgstr "Категорию какого типа нужно добавить (\"%s\")?\n"
 
-#: gammu/misc.c:1639
+#: gammu/misc.c:1638
 #, c-format
 msgid "Text too long, truncating to %d chars!\n"
 msgstr "Текст слишком длинный. Обрезается до %d символов.\n"
 
-#: gammu/misc.c:1672
+#: gammu/misc.c:1671
 #, c-format
 msgid "What security code (\"%s\") ?\n"
 msgstr "Код защиты (\"%s\")?\n"
 
-#: gammu/misc.c:1712
+#: gammu/misc.c:1711
 #, c-format
 msgid " (default name)"
 msgstr " (имя по умолчанию)"
 
-#: gammu/misc.c:1713
+#: gammu/misc.c:1712
 #, fuzzy, c-format
 msgid " (Head set profile)"
 msgstr " (профиль для гарнитуры)"
 
-#: gammu/misc.c:1714
+#: gammu/misc.c:1713
 #, fuzzy, c-format
 msgid " (Car kit profile)"
 msgstr " (профиль для автомобиля)"
 
-#: gammu/misc.c:1725
+#: gammu/misc.c:1724
 #, fuzzy
 msgid "Message alert tone ID"
 msgstr "ID сигнала о сообщении: "
 
-#: gammu/misc.c:1735
+#: gammu/misc.c:1734
 #, fuzzy
 msgid "Call alert for"
 msgstr "Сигнал вызова для     :"
 
-#: gammu/misc.c:1756
+#: gammu/misc.c:1755
 #, fuzzy
 msgid "Screen saver number"
 msgstr "Номер хранителя экрана: "
 
-#: gammu/misc.c:1759
+#: gammu/misc.c:1758
 #, fuzzy
 msgid "Incoming call alert"
 msgstr "Сигнал входящего вызова : "
 
-#: gammu/misc.c:1760
+#: gammu/misc.c:1759
 #, fuzzy
 msgid "Ringtone volume"
 msgstr "Громкость рингтона    : "
 
-#: gammu/misc.c:1761
+#: gammu/misc.c:1760
 #, fuzzy
 msgid "Vibrating alert"
 msgstr "Вибровызов            : "
 
-#: gammu/misc.c:1762
+#: gammu/misc.c:1761
 #, fuzzy
 msgid "Message alert tone"
 msgstr "ID сигнала о сообщении: "
 
-#: gammu/misc.c:1763
+#: gammu/misc.c:1762
 #, fuzzy
 msgid "Keypad tones"
 msgstr "Клавиатура заблокирована\n"
 
-#: gammu/misc.c:1764
+#: gammu/misc.c:1763
 #, fuzzy
 msgid "Warning (games) tones"
 msgstr "Предупреждающие (игровые) звуки : "
 
-#: gammu/misc.c:1766
+#: gammu/misc.c:1765
 #, fuzzy
 msgid "Screen saver timeout"
 msgstr "Тайм-аут хранителя экрана : "
 
-#: gammu/misc.c:1767
+#: gammu/misc.c:1766
 #, fuzzy
 msgid "Automatic answer"
 msgstr "Автоматический ответ  : "
 
-#: gammu/misc.c:1768
+#: gammu/misc.c:1767
 #, fuzzy
 msgid "Lights"
 msgstr "Высокий\n"
 
-#: gammu/misc.c:1776
+#: gammu/misc.c:1775
 #, fuzzy
 msgid "Level 1"
 msgstr "Уровень 1\n"
 
-#: gammu/misc.c:1778
+#: gammu/misc.c:1777
 #, fuzzy
 msgid "Level 2"
 msgstr "Уровень 2\n"
 
-#: gammu/misc.c:1780
+#: gammu/misc.c:1779
 #, fuzzy
 msgid "Level 3"
 msgstr "Уровень 3\n"
 
-#: gammu/misc.c:1781
+#: gammu/misc.c:1780
 #, fuzzy
 msgid "Level 4"
 msgstr "Уровень 4\n"
 
-#: gammu/misc.c:1782
+#: gammu/misc.c:1781
 #, fuzzy
 msgid "Level 5"
 msgstr "Уровень 5\n"
 
-#: gammu/misc.c:1790
+#: gammu/misc.c:1789
 #, fuzzy
 msgid "Off"
 msgstr "Выкл\n"
 
-#: gammu/misc.c:1791
+#: gammu/misc.c:1790
 #, fuzzy
 msgid "Ringing"
 msgstr "Звонит\n"
 
-#: gammu/misc.c:1793
+#: gammu/misc.c:1792
 #, fuzzy
 msgid "Beep once"
 msgstr "Один гудок\n"
 
-#: gammu/misc.c:1794
+#: gammu/misc.c:1793
 #, fuzzy
 msgid "Ring once"
 msgstr "Один звонок\n"
 
-#: gammu/misc.c:1795 gammu/misc.c:1799
+#: gammu/misc.c:1794 gammu/misc.c:1798
 #, fuzzy
 msgid "Ascending"
 msgstr "Нарастающий\n"
 
-#: gammu/misc.c:1796
+#: gammu/misc.c:1795
 #, fuzzy
 msgid "Caller groups"
 msgstr "Группы абонентов\n"
 
-#: gammu/misc.c:1797
+#: gammu/misc.c:1796
 #, fuzzy
 msgid "Standard"
 msgstr "Стандартный\n"
 
-#: gammu/misc.c:1798
+#: gammu/misc.c:1797
 #, fuzzy
 msgid "Special"
 msgstr "Специальный\n"
 
-#: gammu/misc.c:1804
+#: gammu/misc.c:1803
 #, fuzzy
 msgid "On"
 msgstr "Вкл\n"
 
-#: gammu/misc.c:1805
+#: gammu/misc.c:1804
 #, fuzzy
 msgid "Vibrate first"
 msgstr "Сначала вибровызов\n"
 
-#: gammu/misc.c:1806
+#: gammu/misc.c:1805
 #, fuzzy
 msgid "Auto"
 msgstr "Авто\n"
 
-#: gammu/misc.c:1842
+#: gammu/misc.c:1841
 #, fuzzy
 msgid " speed dial not assigned"
 msgstr " быстрый набор не назначен\n"
 
-#: gammu/misc.c:1873
+#: gammu/misc.c:1872
 #, c-format
 msgid "What type of reset phone settings (\"%s\") ?\n"
 msgstr "Какой тип сброса установок телефона (\"%s\")?\n"
 
-#: gammu/misc.c:1907
+#: gammu/misc.c:1906
 #, fuzzy
 msgid "Current display features"
 msgstr "Текущие параметры дисплея :\n"
 
-#: gammu/misc.c:1911
+#: gammu/misc.c:1910
 #, fuzzy
 msgid "Call active"
 msgstr "Вызов активен\n"
 
-#: gammu/misc.c:1912
+#: gammu/misc.c:1911
 #, fuzzy
 msgid "Unread SMS"
 msgstr "Непрочитанное SMS\n"
 
-#: gammu/misc.c:1913
+#: gammu/misc.c:1912
 #, fuzzy
 msgid "Voice call"
 msgstr "Голосовой вызов\n"
 
-#: gammu/misc.c:1914
+#: gammu/misc.c:1913
 #, fuzzy
 msgid "Fax call"
 msgstr "Вызов факса\n"
 
-#: gammu/misc.c:1915
+#: gammu/misc.c:1914
 #, fuzzy
 msgid "Data call"
 msgstr "Вызов данных\n"
 
-#: gammu/misc.c:1916
+#: gammu/misc.c:1915
 #, fuzzy
 msgid "Keypad locked"
 msgstr "Клавиатура заблокирована\n"
 
-#: gammu/misc.c:1917
+#: gammu/misc.c:1916
 #, fuzzy
 msgid "SMS memory full"
 msgstr "Память SMS заполнена\n"
 
-#: gammu/misc.c:1954
+#: gammu/misc.c:1953
 #, fuzzy
 msgid "Station name"
 msgstr "Местонахождение  : %s\n"
 
-#: gammu/misc.c:1955
+#: gammu/misc.c:1954
 msgid "Frequency"
 msgstr ""
 
-#: gammu/misc.c:1973
+#: gammu/misc.c:1972
 #, c-format
 msgid "Unknown divert action (\"%s\")\n"
 msgstr "Неизвестное отклонение действия (\"%s\")\n"
 
-#: gammu/misc.c:1982
+#: gammu/misc.c:1981
 #, c-format
 msgid "Unknown divert type (\"%s\")\n"
 msgstr "Неизвестный тип отклонения (\"%s\")\n"
 
-#: gammu/misc.c:1991
+#: gammu/misc.c:1990
 #, c-format
 msgid "Unknown call type (\"%s\")\n"
 msgstr "Неизвестный тип вызова (\"%s\")\n"
 
-#: gammu/misc.c:2000
+#: gammu/misc.c:1999
 #, c-format
 msgid ""
 "Query:\n"
@@ -4659,7 +4659,7 @@ msgstr ""
 "Запрос:\n"
 "   Тип отклонения: "
 
-#: gammu/misc.c:2011
+#: gammu/misc.c:2010
 #, c-format
 msgid ""
 "Changed:\n"
@@ -4668,32 +4668,32 @@ msgstr ""
 "Изменён:\n"
 "   Тип отклонения: "
 
-#: gammu/misc.c:2015
+#: gammu/misc.c:2014
 #, c-format
 msgid "when busy"
 msgstr "когда занято"
 
-#: gammu/misc.c:2016
+#: gammu/misc.c:2015
 #, c-format
 msgid "when not answered"
 msgstr "когда нет ответа"
 
-#: gammu/misc.c:2017
+#: gammu/misc.c:2016
 #, c-format
 msgid "when phone off or no coverage"
 msgstr "когда телефон выключен или вне зоны действия сети"
 
-#: gammu/misc.c:2018
+#: gammu/misc.c:2017
 #, c-format
 msgid "all types of diverts"
 msgstr "все типы отклонений"
 
-#: gammu/misc.c:2019 gammu/misc.c:2027 gammu/misc.c:2037
+#: gammu/misc.c:2018 gammu/misc.c:2026 gammu/misc.c:2036
 #, c-format
 msgid "unknown %i"
 msgstr "неизвестный %i"
 
-#: gammu/misc.c:2021 gammu/misc.c:2032
+#: gammu/misc.c:2020 gammu/misc.c:2031
 #, c-format
 msgid ""
 "\n"
@@ -4702,22 +4702,22 @@ msgstr ""
 "\n"
 "   Типы вызовов : "
 
-#: gammu/misc.c:2023 gammu/misc.c:2034
+#: gammu/misc.c:2022 gammu/misc.c:2033
 #, c-format
 msgid "voice"
 msgstr "голос"
 
-#: gammu/misc.c:2025 gammu/misc.c:2036
+#: gammu/misc.c:2024 gammu/misc.c:2035
 #, c-format
 msgid "data"
 msgstr "данные"
 
-#: gammu/misc.c:2026
+#: gammu/misc.c:2025
 #, c-format
 msgid "data & fax & voice"
 msgstr "данные, факс и голос"
 
-#: gammu/misc.c:2029
+#: gammu/misc.c:2028
 #, c-format
 msgid ""
 "\n"
@@ -4726,7 +4726,7 @@ msgstr ""
 "\n"
 "Ответ:"
 
-#: gammu/misc.c:2040
+#: gammu/misc.c:2039
 #, fuzzy, c-format
 msgid "   Timeout    : "
 msgstr "   Задержка   : %i секунд\n"
