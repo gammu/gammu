@@ -2459,9 +2459,9 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 		}
 		Priv->SMSCount++;
 		/* Reallocate buffer if needed */
-		if (allocsize < Priv->SMSCount) {
+		if (allocsize <= Priv->SMSCount) {
 			allocsize += 20;
-			Priv->SMSLocations = (int *)realloc(Priv->SMSLocations, allocsize);
+			Priv->SMSLocations = (int *)realloc(Priv->SMSLocations, allocsize * sizeof(int));
 			if (Priv->SMSLocations == NULL) {
 				return ERR_MOREMEMORY;
 			}
