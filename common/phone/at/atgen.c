@@ -2479,6 +2479,9 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 
+	error = ATGEN_GetSMSStatus(s,&Priv->LastSMSStatus);
+	if (error!=ERR_NONE) return error;
+
 	if (first) {
 		Priv->SMSReadFolder = 1;
 		if (Priv->SIMSMSMemory == AT_AVAILABLE) {
@@ -2499,9 +2502,6 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 			return ERR_NOTSUPPORTED;
 		}
 	}
-
-	error = ATGEN_GetSMSStatus(s,&Priv->LastSMSStatus);
-	if (error!=ERR_NONE) return error;
 
 	Priv->LastSMSRead		= 0;
 	Priv->SMSCount			= 0;
