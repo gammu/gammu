@@ -901,7 +901,6 @@ msgstr ""
 
 #: gammu/backup.c:1550
 #, fuzzy, c-format
-#| msgid "Sending sms from folder \"%s\", location %i\n"
 msgid "Backup sms from folder \"%s\"%s?"
 msgstr "Sto spedendo il messaggio dalla cartella \"%s\", posizione %i\n"
 
