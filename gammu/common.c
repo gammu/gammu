@@ -386,7 +386,7 @@ bool answer_yes(const char *format, ...)
 	va_end(ap);
 
 	while (1) {
-		fprintf(stderr, "%s _(%s/%s/%s/%s/%s)", buffer,
+		fprintf(stderr, "%s (%s/%s/%s/%s/%s) ", buffer,
 			_("yes"), _("no"),
 			_("ALL"), _("ONLY"), _("NONE"));
 		if (always_answer_yes) {
