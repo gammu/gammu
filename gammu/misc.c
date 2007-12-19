@@ -1076,7 +1076,6 @@ void SetRingtone(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-PRINTF_STYLE(2, 0)
 void ClearMemory(GSM_MemoryType type, const char *question)
 {
 	GSM_Error error;
