@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2007???? - 1.16.90
+
+[-] * Fixed reading of messages from AT phones using CMGL.
     
 20071215 - 1.16.0
     

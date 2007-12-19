@@ -313,6 +313,10 @@ typedef struct {
 	 * Locations of non empty SMSes.
 	 */
 	int			*SMSLocations;
+	/**
+	 * Which folder do we read SMS from.
+	 */
+	int			SMSReadFolder;
 } GSM_Phone_ATGENData;
 
 /**
