@@ -70,7 +70,8 @@ if (CROSS_MINGW)
     set (CPACK_GENERATOR "ZIP;NSIS")
     set (CPACK_SOURCE_GENERATOR "ZIP")
     set (CPACK_TOPLEVEL_TAG "Source")
-    set (CPACK_SYSTEM_NAME "Windows")
+    set (PACKAGE_NAME "Windows" CACHE STRING "Windows package name")
+    set (CPACK_SYSTEM_NAME "${PACKAGE_NAME}")
 endif (CROSS_MINGW)
 
 # We've set up compiler, now we can use it

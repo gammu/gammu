@@ -45,6 +45,23 @@ cmake ../$repo-$version \
 make -j 2
 cpack
 mv Gammu-*-Windows.* ../
+cd ..
+
+echo 'Building minimal Windows version...'
+mkdir build-win-minimal
+cd build-win*minimal
+cmake ../$repo-$version \
+    -DCROSS_MINGW=ON \
+    -DENABLE_SHARED=OFF \
+    -DPACKAGE_NAME=Windows-Minimal \
+    -DMYSQL_CROSS_PATH= \
+    -DPOSTGRES_CROSS_PATH= \
+    -DGETTEXT_CROSS_PATH= \
+
+make -j 2
+cpack
+mv Gammu-*-Windows-Minimal.* ../
+cd ..
 
 echo "Release is in $tmp directory:"
 ls -lh $tmp
