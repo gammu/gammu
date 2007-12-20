@@ -91,9 +91,9 @@ extern void GSM_InitLocales(const char *path);
 #endif
 
 /* Various hints for compilers */
-#if GSM_GNUC_PREREQ (2,8) && ( !defined(WIN32) || !defined(printf) )
-#define PRINTF_STYLE(f, a) __attribute__ ((format(printf, f, a)))
-#define SCANF_STYLE(f, a) __attribute__ ((format(scanf, f, a)))
+#if GSM_GNUC_PREREQ (2,8)
+#define PRINTF_STYLE(f, a) __attribute__ ((format(__printf__, f, a)))
+#define SCANF_STYLE(f, a) __attribute__ ((format(__scanf__, f, a)))
 #else
 #define PRINTF_STYLE(f, a)
 #define SCANF_STYLE(f, a)
