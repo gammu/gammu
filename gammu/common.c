@@ -17,6 +17,7 @@ bool phonedb = false;
 bool batch = false;
 bool batchConn = false;
 
+PRINTF_STYLE(1, 2)
 int printf_err(const char *format, ...)
 {
 	va_list ap;
@@ -32,6 +33,7 @@ int printf_err(const char *format, ...)
 	return ret;
 }
 
+PRINTF_STYLE(1, 2)
 int printf_warn(const char *format, ...)
 {
 	va_list ap;
@@ -47,6 +49,7 @@ int printf_warn(const char *format, ...)
 	return ret;
 }
 
+PRINTF_STYLE(1, 2)
 int printf_info(const char *format, ...)
 {
 	va_list ap;
@@ -374,6 +377,7 @@ void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 	}
 }
 
+PRINTF_STYLE(1, 2)
 bool answer_yes(const char *format, ...)
 {
 	int len;
