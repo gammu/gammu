@@ -1037,8 +1037,13 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 #define COMPARE(num, text) \
 	if (strcmp(GetLineString(input, &lines, num), text) != 0) { \
-		printf("DIFFERENT:\n-------\n%s\n-------\n%s\n-------\n", GetLineString(input, &lines, num), text); \
+		printf("DIFFERENT[%d]:\n-------\n%s\n-------\n%s\n-------\n", num, GetLineString(input, &lines, num), text); \
 		ret = 1; \
+		goto end; \
+	} \
+	if (strlen(GetLineString(input, &lines, num)) != (size_t)GetLineLength(input, &lines, num)) { \
+		printf("DIFFERENT LENGTH[%d]: %d %d\n", num, strlen(GetLineString(input, &lines, num)), GetLineLength(input, &lines, num)); \
+		ret = 2; \
 		goto end; \
 	}
 
