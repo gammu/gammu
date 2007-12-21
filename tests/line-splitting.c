@@ -1,4 +1,4 @@
-/* Test for decoding SMS on AT driver */
+/* Test for line splitting code */
 
 #include <gammu.h>
 #include <stdlib.h>
