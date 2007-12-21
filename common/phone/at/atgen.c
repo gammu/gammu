@@ -1264,6 +1264,8 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	GSM_Error               error;
     	char                    buff[2];
 
+	InitLines(&Priv->Lines);
+
 	Priv->SMSMode			= 0;
 	Priv->SMSTextDetails		= false;
 	Priv->Manufacturer		= 0;
@@ -3441,7 +3443,7 @@ GSM_Error ATGEN_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_NetworkInfo		*NetworkInfo = s->Phone.Data.NetworkInfo;
-	GSM_Lines		Lines;
+	GSM_CutLines		Lines;
 	int			i=0;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	char			*answer;
@@ -3464,6 +3466,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 		return ERR_UNKNOWNRESPONSE;
 	}
 
+	InitLines(&Lines);
 	SplitLines(GetLineString(msg.Buffer,&Priv->Lines,2),
 		GetLineLength(msg.Buffer,&Priv->Lines,2),
 		&Lines, ",", 1, true);
@@ -3507,7 +3510,10 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 		NetworkInfo->LAC[0] = 0;
 		NetworkInfo->CID[0] = 0;
 
-		if (Lines.numbers[3*2+1]==0) return ERR_NONE;
+		if (Lines.numbers[3*2+1]==0) {
+			FreeLines(&Lines);
+			return ERR_NONE;
+		}
 
  		tmp = strdup(GetLineString(msg.Buffer,&Priv->Lines,2));
  		answer = GetLineString(tmp,&Lines,3);
@@ -3520,6 +3526,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 			answer++;
 			if (pos >= sizeof(NetworkInfo->LAC)) {
 				smprintf(s, "LAC too big!\n");
+				FreeLines(&Lines);
 				return ERR_MOREMEMORY;
 			}
 		}
@@ -3536,6 +3543,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 			answer++;
 			if (pos >= sizeof(NetworkInfo->CID)) {
 				smprintf(s, "CID too big!\n");
+				FreeLines(&Lines);
 				return ERR_MOREMEMORY;
 			}
 		}
@@ -3544,6 +3552,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 		smprintf(s, "LAC   : %s\n",NetworkInfo->LAC);
 		smprintf(s, "CID   : %s\n",NetworkInfo->CID);
 	}
+	FreeLines(&Lines);
 	return ERR_NONE;
 }
 
@@ -5353,6 +5362,7 @@ GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 
+	FreeLines(&Priv->Lines);
 	free(Priv->file.Buffer);
 	free(Priv->SMSLocations);
 	return ERR_NONE;

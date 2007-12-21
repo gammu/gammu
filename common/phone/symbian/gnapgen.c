@@ -1623,11 +1623,12 @@ GSM_Error GNAPGEN_ReplyGetID(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *
 
 GSM_Error GNAPGEN_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Lines	lines;
+	GSM_CutLines	lines;
 	GSM_Phone_Data	*Data = &s->Phone.Data;
 
 	if (Data->RequestID!=ID_GetManufacturer && Data->RequestID!=ID_GetModel) return ERR_NONE;
 
+	InitLines(&lines);
 	SplitLines(DecodeUnicodeString(msg.Buffer+6), msg.Length-6, &lines, "\x0A", 1, false);
 
 	strcpy(Data->Model,GetLineString(DecodeUnicodeString(msg.Buffer+6), &lines, 4));
@@ -1640,6 +1641,8 @@ GSM_Error GNAPGEN_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMachi
 	strcpy(Data->Version,GetLineString(DecodeUnicodeString(msg.Buffer+6), &lines, 2));
 	smprintf(s, "Received firmware version %s\n",Data->Version);
 	GSM_CreateFirmwareNumber(s);
+
+	FreeLines(&lines);
 
 	return ERR_NONE;
 }
