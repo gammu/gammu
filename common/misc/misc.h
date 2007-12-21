@@ -45,7 +45,7 @@ typedef struct {
 /**
  * Calculates string cut points to split it to lines.
  */
-void SplitLines(unsigned char *message, int messagesize, GSM_CutLines *lines, unsigned char *whitespaces, int spaceslen, bool eot);
+void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, unsigned char *whitespaces, int spaceslen, bool eot);
 
 /**
  * Returns pointer to static buffer containing line.
@@ -54,7 +54,7 @@ void SplitLines(unsigned char *message, int messagesize, GSM_CutLines *lines, un
  * @param lines Parsed lines information.
  * @param start Which line we want.
  */
-char *GetLineString(unsigned char *message, const GSM_CutLines *lines, int start);
+char *GetLineString(const char *message, const GSM_CutLines *lines, int start);
 
 /**
  * Returns line length.
@@ -62,7 +62,7 @@ char *GetLineString(unsigned char *message, const GSM_CutLines *lines, int start
  * @param lines Parsed lines information.
  * @param start Which line we want.
  */
-int GetLineLength(unsigned char *message, const GSM_CutLines * lines, int start);
+int GetLineLength(const char *message, const GSM_CutLines * lines, int start);
 
 /**
  * Initializes line cut structure.
@@ -77,7 +77,7 @@ void FreeLines(GSM_CutLines *lines);
 /**
  * Copies line to variable.
  */
-void CopyLineString(unsigned char *dest, unsigned char *src, const GSM_CutLines * lines, int start);
+void CopyLineString(char *dest, const char *src, const GSM_CutLines * lines, int start);
 
 void GetTimeDifference(unsigned long diff, GSM_DateTime * DT, bool Plus,
 		       int multi);

@@ -356,7 +356,7 @@ void FreeLines(GSM_CutLines *lines)
 	lines->allocated = 0;
 }
 
-void SplitLines(unsigned char *message, int messagesize, GSM_CutLines *lines, unsigned char *whitespaces, int spaceslen, bool eot)
+void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, unsigned char *whitespaces, int spaceslen, bool eot)
 {
 	int 	i,number=0,j;
 	bool 	whitespace=true, nowwhite;
@@ -364,18 +364,18 @@ void SplitLines(unsigned char *message, int messagesize, GSM_CutLines *lines, un
 	for (i = 0; i < lines->allocated; i++) 
 		lines->numbers[i]=0;
 
-	for (i=0;i<messagesize;i++) {
+	for (i = 0; i < messagesize; i++) {
 		/* Reallocate buffer if needed */
-		if (number >= lines->allocated) {
+		if (number >= lines->allocated - 1) {
 			lines->allocated += 20;
-			lines->numbers = realloc(lines->numbers, lines->allocated);
+			lines->numbers = realloc(lines->numbers, lines->allocated * sizeof(int));
 			if (lines->numbers == NULL) return;
 			for (i = lines->allocated - 20; i < lines->allocated; i++) 
-				lines->numbers[i]=0;
+				lines->numbers[i] = 0;
 		}
 
 		nowwhite = false;
-		for (j=0;j<spaceslen;j++) {
+		for (j = 0; j < spaceslen; j++) {
 			if (whitespaces[j] == message[i]) {
 				nowwhite = true;
 				break;
@@ -400,13 +400,13 @@ void SplitLines(unsigned char *message, int messagesize, GSM_CutLines *lines, un
 		lines->numbers[number] = messagesize;
 }
 
-char *GetLineString(unsigned char *message, const GSM_CutLines *lines, int start)
+char *GetLineString(const char *message, const GSM_CutLines *lines, int start)
 {
 	static char *retval = NULL;
 	int len;
 
 	len = lines->numbers[start * 2 - 1] - lines->numbers[start * 2 - 2];
-	retval = realloc(retval, len);
+	retval = realloc(retval, len + 1);
 	if (retval == NULL) return NULL;
 
 	memcpy(retval, message + lines->numbers[start * 2 - 2], len);
@@ -416,12 +416,12 @@ char *GetLineString(unsigned char *message, const GSM_CutLines *lines, int start
 	return retval;
 }
 
-int GetLineLength(unsigned char *message UNUSED, const GSM_CutLines *lines, int start)
+int GetLineLength(const char *message UNUSED, const GSM_CutLines *lines, int start)
 {
 	return lines->numbers[start*2-2+1] - lines->numbers[start*2-2];
 }
 
-void CopyLineString(unsigned char *dest, unsigned char *src, const GSM_CutLines *lines, int start)
+void CopyLineString(char *dest, const char *src, const GSM_CutLines *lines, int start)
 {
 	memcpy(dest,GetLineString(src, lines, start),strlen(GetLineString(src, lines, start)));
 	dest[strlen(GetLineString(src, lines, start))] = 0;
