@@ -1630,14 +1630,14 @@ GSM_Error GNAPGEN_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMachi
 
 	SplitLines(DecodeUnicodeString(msg.Buffer+6), msg.Length-6, &lines, "\x0A", 1, false);
 
-	strcpy(Data->Model,GetLineString(DecodeUnicodeString(msg.Buffer+6), lines, 4));
+	strcpy(Data->Model,GetLineString(DecodeUnicodeString(msg.Buffer+6), &lines, 4));
 	smprintf(s, "Received model %s\n",Data->Model);
 	Data->ModelInfo = GetModelData(NULL,Data->Model,NULL);
 
-	strcpy(Data->VerDate,GetLineString(DecodeUnicodeString(msg.Buffer+6), lines, 3));
+	strcpy(Data->VerDate,GetLineString(DecodeUnicodeString(msg.Buffer+6), &lines, 3));
 	smprintf(s, "Received firmware date %s\n",Data->VerDate);
 
-	strcpy(Data->Version,GetLineString(DecodeUnicodeString(msg.Buffer+6), lines, 2));
+	strcpy(Data->Version,GetLineString(DecodeUnicodeString(msg.Buffer+6), &lines, 2));
 	smprintf(s, "Received firmware version %s\n",Data->Version);
 	GSM_CreateFirmwareNumber(s);
 

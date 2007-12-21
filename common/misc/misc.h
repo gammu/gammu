@@ -28,10 +28,16 @@
 
 /* ------------------------------------------------------------------------- */
 
-#define MAX_LINES 512
+/**
+ * Maximal number of parsed lines. Actually the longest reply we can 
+ * get is for CMGL, so it should be bounded to maximal message count.
+ * However this means spending 800 KB on the lines counting buffer and
+ * I'm really not convinded this is a good idea.
+ */
+#define MAX_LINES (2 * GSM_PHONE_MAXSMSINFOLDER)
 
 typedef struct {
-	int numbers[MAX_LINES*2];
+	int numbers[MAX_LINES * 2];
 } GSM_Lines;
 
 void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsigned char *whitespaces, int spaceslen, bool eot);
@@ -41,15 +47,15 @@ void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsig
  * @param lines Parsed lines information.
  * @param start Which line we want.
  */
-char *GetLineString(unsigned char *message, GSM_Lines lines, int start);
+char *GetLineString(unsigned char *message, const GSM_Lines *lines, int start);
 /**
  * Returns line length.
  * @param message Parsed message.
  * @param lines Parsed lines information.
  * @param start Which line we want.
  */
-int GetLineLength(unsigned char *message, GSM_Lines lines, int start);
-void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, int start);
+int GetLineLength(unsigned char *message, const GSM_Lines * lines, int start);
+void CopyLineString(unsigned char *dest, unsigned char *src, const GSM_Lines * lines, int start);
 
 void GetTimeDifference(unsigned long diff, GSM_DateTime * DT, bool Plus,
 		       int multi);

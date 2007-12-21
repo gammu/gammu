@@ -1092,7 +1092,7 @@ GSM_Error ATOBEX_ReplyGetFileSystemStatus(GSM_Protocol_Message msg, GSM_StateMac
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 		case AT_Reply_OK:
 			error = ATGEN_ParseReply(s,
-					GetLineString(msg.Buffer, s->Phone.Data.Priv.ATGEN.Lines, 2),
+					GetLineString(msg.Buffer, &s->Phone.Data.Priv.ATGEN.Lines, 2),
 					"*EMEM: @i, @i, @i, @i, @i",
 					&s->Phone.Data.FileSystemStatus->Free,
 					&s->Phone.Data.FileSystemStatus->Used,
