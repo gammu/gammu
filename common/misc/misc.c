@@ -11,6 +11,7 @@
 #include <stdarg.h>
 #include <stdio.h>
 #include <locale.h>
+#include <stdlib.h>
 #include <sys/timeb.h>
 #ifdef WIN32
 #  define WIN32_LEAN_AND_MEAN
@@ -342,14 +343,37 @@ int GetLine(FILE *File, char *Line, int count)
 	return -1;
 }
 
-void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsigned char *whitespaces, int spaceslen, bool eot)
+void InitLines(GSM_CutLines *lines)
+{
+	lines->numbers = NULL;
+	lines->allocated = 0;
+}
+
+void FreeLines(GSM_CutLines *lines)
+{
+	free(lines->numbers);
+	lines->numbers = NULL;
+	lines->allocated = 0;
+}
+
+void SplitLines(unsigned char *message, int messagesize, GSM_CutLines *lines, unsigned char *whitespaces, int spaceslen, bool eot)
 {
 	int 	i,number=0,j;
 	bool 	whitespace=true, nowwhite;
 
-	for (i = 0; i < MAX_LINES * 2; i++) lines->numbers[i]=0;
+	for (i = 0; i < lines->allocated; i++) 
+		lines->numbers[i]=0;
 
 	for (i=0;i<messagesize;i++) {
+		/* Reallocate buffer if needed */
+		if (number >= lines->allocated) {
+			lines->allocated += 20;
+			lines->numbers = realloc(lines->numbers, lines->allocated);
+			if (lines->numbers == NULL) return;
+			for (i = lines->allocated - 20; i < lines->allocated; i++) 
+				lines->numbers[i]=0;
+		}
+
 		nowwhite = false;
 		for (j=0;j<spaceslen;j++) {
 			if (whitespaces[j] == message[i]) {
@@ -362,21 +386,12 @@ void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsig
 				lines->numbers[number]=i;
 				number++;
 				whitespace=false;
-				if (number >= MAX_LINES * 2) {
-					eot = true;
-					dbgprintf("ERROR: Too much lines from phone!\n");
-					break;
-				}
 			}
 		} else {
 			if (nowwhite) {
 				lines->numbers[number]=i;
 				number++;
 				whitespace=true;
-				if (number >= MAX_LINES * 2) {
-					dbgprintf("ERROR: Too much lines from phone!\n");
-					break;
-				}
 			}
 
 		}
@@ -385,7 +400,7 @@ void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsig
 		lines->numbers[number] = messagesize;
 }
 
-char *GetLineString(unsigned char *message, const GSM_Lines *lines, int start)
+char *GetLineString(unsigned char *message, const GSM_CutLines *lines, int start)
 {
 	static char retval[800];
 
@@ -397,12 +412,12 @@ char *GetLineString(unsigned char *message, const GSM_Lines *lines, int start)
 	return retval;
 }
 
-int GetLineLength(unsigned char *message UNUSED, const GSM_Lines *lines, int start)
+int GetLineLength(unsigned char *message UNUSED, const GSM_CutLines *lines, int start)
 {
 	return lines->numbers[start*2-2+1] - lines->numbers[start*2-2];
 }
 
-void CopyLineString(unsigned char *dest, unsigned char *src, const GSM_Lines *lines, int start)
+void CopyLineString(unsigned char *dest, unsigned char *src, const GSM_CutLines *lines, int start)
 {
 	memcpy(dest,GetLineString(src, lines, start),strlen(GetLineString(src, lines, start)));
 	dest[strlen(GetLineString(src, lines, start))] = 0;

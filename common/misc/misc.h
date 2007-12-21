@@ -29,33 +29,39 @@
 /* ------------------------------------------------------------------------- */
 
 /**
- * Maximal number of parsed lines. Actually the longest reply we can 
- * get is for CMGL, so it should be bounded to maximal message count.
- * However this means spending 800 KB on the lines counting buffer and
- * I'm really not convinded this is a good idea.
+ * Listing of cut points for text lines.
  */
-#define MAX_LINES (2 * GSM_PHONE_MAXSMSINFOLDER)
-
 typedef struct {
-	int numbers[MAX_LINES * 2];
-} GSM_Lines;
+	/**
+	 * Cut points.
+	 */
+	int *numbers;
+	/**
+	 * Number of currently allocated entries.
+	 */
+	int allocated;
+} GSM_CutLines;
 
-void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsigned char *whitespaces, int spaceslen, bool eot);
+void SplitLines(unsigned char *message, int messagesize, GSM_CutLines *lines, unsigned char *whitespaces, int spaceslen, bool eot);
 /**
  * Returns pointer to static buffer containing line.
  * @param message Parsed message.
  * @param lines Parsed lines information.
  * @param start Which line we want.
  */
-char *GetLineString(unsigned char *message, const GSM_Lines *lines, int start);
+char *GetLineString(unsigned char *message, const GSM_CutLines *lines, int start);
 /**
  * Returns line length.
  * @param message Parsed message.
  * @param lines Parsed lines information.
  * @param start Which line we want.
  */
-int GetLineLength(unsigned char *message, const GSM_Lines * lines, int start);
-void CopyLineString(unsigned char *dest, unsigned char *src, const GSM_Lines * lines, int start);
+int GetLineLength(unsigned char *message, const GSM_CutLines * lines, int start);
+
+void InitLines(GSM_CutLines *lines);
+void FreeLines(GSM_CutLines *lines);
+
+void CopyLineString(unsigned char *dest, unsigned char *src, const GSM_CutLines * lines, int start);
 
 void GetTimeDifference(unsigned long diff, GSM_DateTime * DT, bool Plus,
 		       int multi);

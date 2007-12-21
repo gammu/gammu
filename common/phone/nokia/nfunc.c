@@ -1414,8 +1414,10 @@ GSM_Error DCT3DCT4_AnswerCall(GSM_StateMachine *s, int ID)
 
 GSM_Error DCT3DCT4_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_Lines	lines;
+	GSM_CutLines	lines;
 	GSM_Phone_Data	*Data = &s->Phone.Data;
+
+	InitLines(&lines);
 
 	SplitLines(msg.Buffer, msg.Length, &lines, "\x20\x0A", 2, false);
 
@@ -1429,6 +1431,8 @@ GSM_Error DCT3DCT4_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMach
 	strcpy(Data->Version,GetLineString(msg.Buffer, &lines, 2));
 	smprintf(s, "Received firmware version %s\n",Data->Version);
 	GSM_CreateFirmwareNumber(s);
+
+	FreeLines(&lines);
 
 	return ERR_NONE;
 }

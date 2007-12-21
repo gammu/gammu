@@ -27,7 +27,7 @@
 #include <gammu-error.h>
 #include <gammu-statemachine.h>
 
-#include "../../misc/misc.h" /* For GSM_Lines */
+#include "../../misc/misc.h" /* For GSM_CutLines */
 
 #include "motorola.h"
 
@@ -184,7 +184,7 @@ typedef struct {
 	/**
 	 * Allow to simply get each line in response
 	 */
-	GSM_Lines		Lines;
+	GSM_CutLines		Lines;
 	/**
 	 * What response type - error, OK, etc.
 	 */
