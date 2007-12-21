@@ -1,0 +1,9 @@
+Gammu All Mobile Management Utilities
+=====================================
+
+Known design bugs, which would be really good to fix:
+
+- Using of own unicode implementation instead of wchar_t.
+- Hardcoded limits for almost all fields.
+
+# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
