@@ -405,9 +405,12 @@ char *GetLineString(const char *message, const GSM_CutLines *lines, int start)
 	static char *retval = NULL;
 	int len;
 
-	len = lines->numbers[start * 2 - 1] - lines->numbers[start * 2 - 2];
+	len = GetLineLength(message, lines, start);
 	retval = realloc(retval, len + 1);
-	if (retval == NULL) return NULL;
+	if (retval == NULL) {
+		dbgprintf("Allocation failed!\n");
+		return NULL;
+	}
 
 	memcpy(retval, message + lines->numbers[start * 2 - 2], len);
 
@@ -423,8 +426,9 @@ int GetLineLength(const char *message UNUSED, const GSM_CutLines *lines, int sta
 
 void CopyLineString(char *dest, const char *src, const GSM_CutLines *lines, int start)
 {
-	memcpy(dest,GetLineString(src, lines, start),strlen(GetLineString(src, lines, start)));
-	dest[strlen(GetLineString(src, lines, start))] = 0;
+	int len = GetLineLength(src, lines, start);
+	memcpy(dest, GetLineString(src, lines, start), len);
+	dest[len] = 0;
 }
 
 GSM_Debug_Info di = {0,NULL,false,"",false};
