@@ -1,9 +1,18 @@
 Gammu All Mobile Management Utilities
 =====================================
 
-Known design bugs, which would be really good to fix:
+This text lists known issues (mostly the design ones), which would be
+really good to fix:
 
 - Using of own unicode implementation instead of wchar_t.
+
 - Hardcoded limits for almost all fields.
+
+- Messing up with unsigned char in many places.
+
+- Possibility from extend libGammu by applications is really bad
+  designed.
+
+- AT module should have common AT command generator.
 
 # vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
