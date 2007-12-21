@@ -190,6 +190,14 @@ endif (CROSS_MINGW)
 target_link_libraries(at-parser libGammu)
 add_test(at-parser "${GAMMU_TEST_PATH}/at-parser${GAMMU_TEST_SUFFIX}")
 
+# Line parser tests
+add_executable(line-splitting line-splitting.c)
+if (CROSS_MINGW)
+    set_target_properties (line-splitting PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+target_link_libraries(line-splitting libGammu)
+add_test(line-splitting "${GAMMU_TEST_PATH}/line-splitting${GAMMU_TEST_SUFFIX}")
+
 # Just try to compile example whether it is still correct
 add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.c")
 if (CROSS_MINGW)
