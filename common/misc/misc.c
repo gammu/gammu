@@ -347,7 +347,7 @@ void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsig
 	int 	i,number=0,j;
 	bool 	whitespace=true, nowwhite;
 
-	for (i=0;i<MAX_LINES*2;i++) lines->numbers[i]=0;
+	for (i = 0; i < MAX_LINES * 2; i++) lines->numbers[i]=0;
 
 	for (i=0;i<messagesize;i++) {
 		nowwhite = false;
@@ -362,35 +362,47 @@ void SplitLines(unsigned char *message, int messagesize, GSM_Lines *lines, unsig
 				lines->numbers[number]=i;
 				number++;
 				whitespace=false;
+				if (number >= MAX_LINES * 2) {
+					eot = true;
+					dbgprintf("ERROR: Too much lines from phone!\n");
+					break;
+				}
 			}
 		} else {
 			if (nowwhite) {
 				lines->numbers[number]=i;
 				number++;
 				whitespace=true;
+				if (number >= MAX_LINES * 2) {
+					dbgprintf("ERROR: Too much lines from phone!\n");
+					break;
+				}
 			}
 
 		}
 	}
-    	if (eot && !whitespace) lines->numbers[number]=messagesize;
+    	if (eot && !whitespace) 
+		lines->numbers[number] = messagesize;
 }
 
-char *GetLineString(unsigned char *message, GSM_Lines lines, int start)
+char *GetLineString(unsigned char *message, const GSM_Lines *lines, int start)
 {
 	static char retval[800];
 
-	memcpy(retval,message + lines.numbers[start*2-2],lines.numbers[start*2-2+1]-lines.numbers[start*2-2]);
-	retval[lines.numbers[start*2-2+1]-lines.numbers[start*2-2]]=0;
+	memcpy(retval,
+		message + lines->numbers[start*2-2],
+		lines->numbers[start*2-2+1]-lines->numbers[start*2-2]);
+	retval[lines->numbers[start*2-2+1]-lines->numbers[start*2-2]]=0;
 
 	return retval;
 }
 
-int GetLineLength(unsigned char *message UNUSED, GSM_Lines lines, int start)
+int GetLineLength(unsigned char *message UNUSED, const GSM_Lines *lines, int start)
 {
-	return lines.numbers[start*2-2+1]-lines.numbers[start*2-2];
+	return lines->numbers[start*2-2+1] - lines->numbers[start*2-2];
 }
 
-void CopyLineString(unsigned char *dest, unsigned char *src, GSM_Lines lines, int start)
+void CopyLineString(unsigned char *dest, unsigned char *src, const GSM_Lines *lines, int start)
 {
 	memcpy(dest,GetLineString(src, lines, start),strlen(GetLineString(src, lines, start)));
 	dest[strlen(GetLineString(src, lines, start))] = 0;

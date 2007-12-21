@@ -38,19 +38,19 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 
     	if (Priv->ReplyState!=AT_Reply_OK) return ERR_UNKNOWN;
     	if (sm->Protocol.Data.AT.EditMode) sm->Protocol.Data.AT.EditMode = false;
-	if (strstr(GetLineString(msg.Buffer,Priv->Lines,2),"SSTK")) {
-    	    length = strlen(GetLineString(msg.Buffer,Priv->Lines,2))-7;
-    	    DecodeHexBin(buf, GetLineString(msg.Buffer,Priv->Lines,2)+7,length);
+	if (strstr(GetLineString(msg.Buffer,&Priv->Lines,2),"SSTK")) {
+    	    length = strlen(GetLineString(msg.Buffer,&Priv->Lines,2))-7;
+    	    DecodeHexBin(buf, GetLineString(msg.Buffer,&Priv->Lines,2)+7,length);
 	    if (buf[0]==0x7f) {
 		new_variable=true;
 		return ERR_NONE;
 	    }
 	    else return ERR_UNKNOWN;
 	}
-    	if (!strstr(GetLineString(msg.Buffer,Priv->Lines,3),"SSTK")) return ERR_UNKNOWN;
+    	if (!strstr(GetLineString(msg.Buffer,&Priv->Lines,3),"SSTK")) return ERR_UNKNOWN;
 
-    	length = strlen(GetLineString(msg.Buffer,Priv->Lines,3))-7;
-    	DecodeHexBin(buf, GetLineString(msg.Buffer,Priv->Lines,3)+7,length);
+    	length = strlen(GetLineString(msg.Buffer,&Priv->Lines,3))-7;
+    	DecodeHexBin(buf, GetLineString(msg.Buffer,&Priv->Lines,3)+7,length);
 
     	if (buf[3]!=0x26) return ERR_UNKNOWN;
 
@@ -221,9 +221,9 @@ GSM_Error ATSIEMENS_Reply_GetNetmon(GSM_Protocol_Message msg, GSM_StateMachine *
     	GSM_Phone_ATGENData	*Priv = &(sm->Phone.Data.Priv.ATGEN);
     	int 			i=2;
 
-    	if (!strstr(GetLineString(msg.Buffer,Priv->Lines,1),"AT^S^MI")) return ERR_UNKNOWN;
-    	while (strlen(GetLineString(msg.Buffer,Priv->Lines,i+1)))
-		printf("%s\n",GetLineString(msg.Buffer,Priv->Lines,i++));
+    	if (!strstr(GetLineString(msg.Buffer,&Priv->Lines,1),"AT^S^MI")) return ERR_UNKNOWN;
+    	while (strlen(GetLineString(msg.Buffer,&Priv->Lines,i+1)))
+		printf("%s\n",GetLineString(msg.Buffer,&Priv->Lines,i++));
     	printf("\n");
     	return ERR_NONE;
 }

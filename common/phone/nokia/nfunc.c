@@ -1419,14 +1419,14 @@ GSM_Error DCT3DCT4_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMach
 
 	SplitLines(msg.Buffer, msg.Length, &lines, "\x20\x0A", 2, false);
 
-	strcpy(Data->Model,GetLineString(msg.Buffer, lines, 4));
+	strcpy(Data->Model,GetLineString(msg.Buffer, &lines, 4));
 	smprintf(s, "Received model %s\n",Data->Model);
 	Data->ModelInfo = GetModelData(NULL,Data->Model,NULL);
 
-	strcpy(Data->VerDate,GetLineString(msg.Buffer, lines, 3));
+	strcpy(Data->VerDate,GetLineString(msg.Buffer, &lines, 3));
 	smprintf(s, "Received firmware date %s\n",Data->VerDate);
 
-	strcpy(Data->Version,GetLineString(msg.Buffer, lines, 2));
+	strcpy(Data->Version,GetLineString(msg.Buffer, &lines, 2));
 	smprintf(s, "Received firmware version %s\n",Data->Version);
 	GSM_CreateFirmwareNumber(s);
 
