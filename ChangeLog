@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2007???? - 1.17.90
+
+[-] * Fixed crash when there are too many messages (bug #466).
     
 20071220 - 1.17.0
 
