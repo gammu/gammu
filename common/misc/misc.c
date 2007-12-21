@@ -402,12 +402,16 @@ void SplitLines(unsigned char *message, int messagesize, GSM_CutLines *lines, un
 
 char *GetLineString(unsigned char *message, const GSM_CutLines *lines, int start)
 {
-	static char retval[800];
+	static char *retval = NULL;
+	int len;
 
-	memcpy(retval,
-		message + lines->numbers[start*2-2],
-		lines->numbers[start*2-2+1]-lines->numbers[start*2-2]);
-	retval[lines->numbers[start*2-2+1]-lines->numbers[start*2-2]]=0;
+	len = lines->numbers[start * 2 - 1] - lines->numbers[start * 2 - 2];
+	retval = realloc(retval, len);
+	if (retval == NULL) return NULL;
+
+	memcpy(retval, message + lines->numbers[start * 2 - 2], len);
+
+	retval[len] = 0;
 
 	return retval;
 }
