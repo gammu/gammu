@@ -1,4 +1,4 @@
-/* (c) 2002-2005 by Marcin Wiacek and Michal Cihar */
+/* (c) 2002-2008 by Marcin Wiacek and Michal Cihar */
 
 /**
  * @file atgen.c
@@ -2643,6 +2643,13 @@ GSM_Error ATGEN_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					GetLineString(msg.Buffer, &Priv->Lines, 2),
 					"+CPMS: @s, @i, @i, @0",
 					&buffer, sizeof(buffer), &used, &size);
+		}
+		if (error != ERR_NONE) {
+			/* For phones with single memory */
+			error = ATGEN_ParseReply(s,
+					GetLineString(msg.Buffer, &Priv->Lines, 2),
+					"+CPMS: @i, @i",
+					&used, &size);
 		}
 		if (error == ERR_NONE) {
 			smprintf(s, "Used : %i\n", used);
