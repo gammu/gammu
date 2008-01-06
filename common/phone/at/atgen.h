@@ -74,6 +74,7 @@ typedef enum {
 	AT_Mitsubishi,
 	AT_Sharp,
 	AT_Option,
+	AT_Motorola,
 	AT_Unknown
 } GSM_AT_Manufacturer;
 
