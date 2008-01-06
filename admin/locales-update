@@ -17,7 +17,7 @@ ver=`cat VERSION | tr , .`
 sed -i '
     s/SOME DESCRIPTIVE TITLE/Gammu translation/;
     s/PACKAGE/Gammu/;
-    s/(C) YEAR/(C) 2003 - 2007/;
+    s/(C) YEAR/(C) 2003 - '`date +%Y`'/;
     s/VERSION/'$ver'/;
     ' locale/gammu.pot
 

@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.16.90\n"
+"Project-Id-Version: Gammu 1.17.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2007-12-20 00:36+0900\n"
+"POT-Creation-Date: 2008-01-06 14:08+0900\n"
 "PO-Revision-Date: 2007-12-20 16:33+0100\n"
 "Last-Translator: Jochen Kemnade <jochenkemnade@web.de>\n"
 "Language-Team: Language =de\n"
@@ -1320,196 +1320,196 @@ msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Der Suchtext ist zu lang, schneide ihn auf %d Zeichen ab!\n"
 
 #. l10n: Generic prefix for error messages
-#: gammu/common.c:26 gammu/message.c:443 gammu/message.c:1158
+#: gammu/common.c:27 gammu/message.c:443 gammu/message.c:1158
 msgid "Error"
 msgstr "Fehler"
 
 #. l10n: Generic prefix for warning messages
-#: gammu/common.c:41
+#: gammu/common.c:43
 msgid "Warning"
 msgstr "Warnung"
 
 #. l10n: Generic prefix for informational messages
-#: gammu/common.c:56
+#: gammu/common.c:59
 #, fuzzy
 msgid "Information"
 msgstr "Telefoninformationen"
 
-#: gammu/common.c:80
+#: gammu/common.c:83
 msgid "Waiting for Security Code."
 msgstr "Warte auf Sicherheitscode."
 
-#: gammu/common.c:83
+#: gammu/common.c:86
 msgid "Waiting for PIN."
 msgstr "Warte auf PIN."
 
-#: gammu/common.c:86
+#: gammu/common.c:89
 msgid "Waiting for PIN2."
 msgstr "Warte auf PIN2."
 
-#: gammu/common.c:89
+#: gammu/common.c:92
 msgid "Waiting for PUK."
 msgstr "Warte auf PUK."
 
-#: gammu/common.c:92
+#: gammu/common.c:95
 msgid "Waiting for PUK2."
 msgstr "Warte auf PUK2."
 
-#: gammu/common.c:95
+#: gammu/common.c:98
 #, fuzzy
 msgid "Waiting for phone code."
 msgstr "Warte auf Sicherheitscode."
 
-#: gammu/common.c:98
+#: gammu/common.c:101
 msgid "Nothing to enter."
 msgstr "Keine Eingabe erforderlich."
 
-#: gammu/common.c:102
+#: gammu/common.c:105
 msgid "Unknown security status."
 msgstr "Sicherheitsstatus unbekannt."
 
-#: gammu/common.c:113
+#: gammu/common.c:116
 msgid "January"
 msgstr "Januar"
 
-#: gammu/common.c:116
+#: gammu/common.c:119
 msgid "February"
 msgstr "Februar"
 
-#: gammu/common.c:119
+#: gammu/common.c:122
 msgid "March"
 msgstr "März"
 
-#: gammu/common.c:122
+#: gammu/common.c:125
 msgid "April"
 msgstr "April"
 
-#: gammu/common.c:125
+#: gammu/common.c:128
 msgid "May"
 msgstr "Mai"
 
-#: gammu/common.c:128
+#: gammu/common.c:131
 msgid "June"
 msgstr "Juni"
 
-#: gammu/common.c:131
+#: gammu/common.c:134
 msgid "July"
 msgstr "Juli"
 
-#: gammu/common.c:134
+#: gammu/common.c:137
 msgid "August"
 msgstr "August"
 
-#: gammu/common.c:137
+#: gammu/common.c:140
 msgid "September"
 msgstr "September"
 
-#: gammu/common.c:140
+#: gammu/common.c:143
 msgid "October"
 msgstr "Oktober"
 
-#: gammu/common.c:143
+#: gammu/common.c:146
 msgid "November"
 msgstr "November"
 
-#: gammu/common.c:146
+#: gammu/common.c:149
 msgid "December"
 msgstr "Dezember"
 
-#: gammu/common.c:149
+#: gammu/common.c:152
 msgid "Bad month!"
 msgstr "Ungültiger Monat!"
 
-#: gammu/common.c:161
+#: gammu/common.c:164
 msgid "Monday"
 msgstr "Montag"
 
-#: gammu/common.c:164
+#: gammu/common.c:167
 msgid "Tuesday"
 msgstr "Dienstag"
 
-#: gammu/common.c:167
+#: gammu/common.c:170
 msgid "Wednesday"
 msgstr "Mittwoch"
 
-#: gammu/common.c:170
+#: gammu/common.c:173
 msgid "Thursday"
 msgstr "Donnerstag"
 
-#: gammu/common.c:173
+#: gammu/common.c:176
 msgid "Friday"
 msgstr "Freitag"
 
-#: gammu/common.c:176
+#: gammu/common.c:179
 msgid "Saturday"
 msgstr "Samstag"
 
-#: gammu/common.c:179
+#: gammu/common.c:182
 msgid "Sunday"
 msgstr "Sonntag"
 
-#: gammu/common.c:182
+#: gammu/common.c:185
 msgid "Bad day!"
 msgstr "Ungültiger Tag!"
 
-#: gammu/common.c:194
+#: gammu/common.c:197
 msgid "Security status"
 msgstr "Sicherheitsstatus:"
 
-#: gammu/common.c:328
+#: gammu/common.c:331
 #, fuzzy
 msgid "Never version of firmware is available!\n"
 msgstr "INFO: Es ist eine neuere Handy-Firmware (%s anstatt %s) verfügbar!\n"
 
-#: gammu/common.c:329
+#: gammu/common.c:332
 #, c-format
 msgid "Latest version is %s and you run %s.\n"
 msgstr ""
 
-#: gammu/common.c:348 gammu/misc.c:891 gammu/misc.c:906 gammu/misc.c:913
+#: gammu/common.c:351 gammu/misc.c:891 gammu/misc.c:906 gammu/misc.c:913
 #: gammu/misc.c:920 gammu/misc.c:950
 msgid "More parameters required!"
 msgstr "Mehr Parameter benötigt!"
 
-#: gammu/common.c:354 gammu/common.c:364 gammu/depend/nokia/dct4.c:682
+#: gammu/common.c:357 gammu/common.c:367 gammu/depend/nokia/dct4.c:682
 #: gammu/misc.c:1066
 msgid "Please enumerate locations from 1"
 msgstr "Nummeriere Speicherplätze beginnend mit 1"
 
-#: gammu/common.c:369
+#: gammu/common.c:372
 msgid "Swapping start and end location"
 msgstr "Vertausche ersten und letzten Speicherplatz"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:390 gammu/common.c:419 gammu/depend/nokia/dct4.c:79
+#: gammu/common.c:394 gammu/common.c:423 gammu/depend/nokia/dct4.c:79
 msgid "yes"
 msgstr "ja"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:390 gammu/common.c:422 gammu/depend/nokia/dct4.c:80
+#: gammu/common.c:394 gammu/common.c:426 gammu/depend/nokia/dct4.c:80
 msgid "no"
 msgstr "nein"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:391 gammu/common.c:414
+#: gammu/common.c:395 gammu/common.c:418
 msgid "ALL"
 msgstr "IMMER"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:391 gammu/common.c:409
+#: gammu/common.c:395 gammu/common.c:413
 msgid "ONLY"
 msgstr "EINMAL"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:391 gammu/common.c:404
+#: gammu/common.c:395 gammu/common.c:408
 msgid "NONE"
 msgstr "NIE"
 
-#: gammu/common.c:393
+#: gammu/common.c:397
 msgid "YES (always)"
 msgstr "JA (immer)"
 
-#: gammu/common.c:397
+#: gammu/common.c:401
 msgid "NO (always)"
 msgstr "NEIN (immer)"
 
