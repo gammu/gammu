@@ -185,6 +185,7 @@ OnePhoneModel allmodels[] = {
 	/* Samsung */
 	{"E250",	  "SAMSUNG SGH-E250" , "",			   {F_FORCE_UTF8, F_SMS_SM, F_SMS_ME, 0}},
 	{"E700" ,	  "SGH-E700" ,    "",				   {0}},
+	{"P900" ,	  "SGH-P900" ,    "",				   {0}},
 	{"S100" ,	  "SGH-S100" ,    "",				   {0}},
 	{"S200" ,	  "SGH-S200" ,    "",				   {0}},
 	{"S300" ,	  "SGH-S300" ,    "",				   {0}},
