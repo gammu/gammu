@@ -1056,13 +1056,11 @@ static GSM_Error SMSDPgSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 {
 	PGresult *Res;
 
-	unsigned char buffer[500], imei[100];
-
-	GSM_GetIMEI(gsm, imei);
+	unsigned char buffer[500];
 
 	sprintf(buffer,
 		"UPDATE phones SET TimeOut= now() + INTERVAL '10 seconds'");
-	sprintf(buffer + strlen(buffer), " WHERE IMEI = '%s'", imei);
+	sprintf(buffer + strlen(buffer), " WHERE IMEI = '%s'", Config->IMEI);
 	dbgprintf("%s\n", buffer);
 
 	Res = PQexec(Config->DBConnPgSQL, buffer);

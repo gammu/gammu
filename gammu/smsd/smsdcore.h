@@ -40,6 +40,7 @@ typedef struct {
 	int		currdeliveryreport;
 	unsigned char 	SMSID[200],	 prevSMSID[200];
 	GSM_SMSC	SMSC;
+	char		IMEI[GSM_MAX_IMEI_LENGTH];
 
 #if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H)
 	/* options for SQL database */
