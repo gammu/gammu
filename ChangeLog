@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Fixed crash when there are too many messages (bug #466).
 [-] * Fixed crash when printing messages on Windows (bug #476).
+[-] * Do not ask phone for IMEI so often (bug #480).
 [-] * No need to set LD_LIBRARY_PATH for tests.
     
 20071220 - 1.17.0
