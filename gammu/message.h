@@ -6,7 +6,7 @@ extern void IncomingCB(GSM_StateMachine * s, GSM_CBMessage CB);
 extern void IncomingUSSD(GSM_StateMachine * s, GSM_USSDMessage ussd);
 extern void IncomingUSSD2(GSM_StateMachine * s, GSM_USSDMessage ussd);
 extern void DisplayIncomingSMS();
-extern void DisplayMultiSMSInfo(GSM_MultiSMSMessage sms, bool eachsms, bool ems,
+extern void DisplayMultiSMSInfo(GSM_MultiSMSMessage *sms, bool eachsms, bool ems,
 				const GSM_Backup * Info);
 extern void GetSMSC(int argc, char *argv[]);
 extern void GetSMS(int argc, char *argv[]);
