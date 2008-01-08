@@ -2474,6 +2474,7 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 	case 0x44:
 	case 0x40:/* 40 without name */
 	case 0x64:/* 64 without name */
+	case 0x60:/* don't know */
 		smprintf(s,"sms with udh and number\n");
 
 		Layout.firstbyte = i;
