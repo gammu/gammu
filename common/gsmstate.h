@@ -25,6 +25,7 @@
 #include <gammu-callback.h>
 #include <gammu-settings.h>
 #include <gammu-misc.h>
+#include <gammu-category.h>
 
 typedef struct _GSM_User	 	GSM_User;
 typedef struct _GSM_Reply_Function	GSM_Reply_Function;
