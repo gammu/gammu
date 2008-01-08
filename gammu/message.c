@@ -25,7 +25,7 @@ volatile bool 			wasincomingsms 		= false;
 
 GSM_MultiSMSMessage		IncomingSMSData;
 
-void PrintSMSCNumber(unsigned char *number,GSM_Backup *Info)
+void PrintSMSCNumber(unsigned char *number, const GSM_Backup *Info)
 {
 	bool 	found=false,found2=false;
 	int 	i,j,z;
@@ -120,7 +120,7 @@ void PrintSMSCNumber(unsigned char *number,GSM_Backup *Info)
 	}
 }
 
-void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh, GSM_Backup *Info)
+void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh, const GSM_Backup *Info)
 {
 	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	int			i;
@@ -302,7 +302,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 	}
 }
 
-void DisplayMultiSMSInfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems, GSM_Backup *Info)
+void DisplayMultiSMSInfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems, const GSM_Backup *Info)
 {
 	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	GSM_MultiPartSMSInfo	SMSInfo;
