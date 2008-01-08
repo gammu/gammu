@@ -542,6 +542,11 @@ typedef enum {
 	 * Length of text for contact is in bytes and not chars.
 	 */
 	F_LENGTH_BYTES,
+	/**
+	 * CMGL does not list real locations for CMGR, these should be
+	 * sequential.
+	 */
+	F_BROKEN_CMGL,
 } Feature;
 
 /**
