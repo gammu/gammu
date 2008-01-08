@@ -56,7 +56,10 @@ void PrintSMSLocation(const GSM_SMSMessage *sms, const GSM_SMSFolders *folders)
 	printf("\n");
 }
 
-void PrintSMSCNumber(unsigned char *number, const GSM_Backup *Info)
+/**
+ * Prints single phone number optionally showing name of contact from backup data.
+ */
+void PrintPhoneNumber(unsigned char *number, const GSM_Backup *Info)
 {
 	bool 	found=false,found2=false;
 	int 	i,j,z;
@@ -170,7 +173,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 		printf("\n");
 
 		printf(LISTFORMAT, _("Remote number"));
-		PrintSMSCNumber(sms.Number, Info);
+		PrintPhoneNumber(sms.Number, Info);
 		printf("\n");
 
 		printf(LISTFORMAT "%d\n", _("Reference number"),sms.MessageReference);
@@ -259,10 +262,10 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 		if (sms.State==SMS_UnSent && sms.Memory==MEM_ME) {
 		} else {
 			printf(LISTFORMAT, ngettext("Remote number", "Remote numbers", sms.OtherNumbersNum + 1));
-			PrintSMSCNumber(sms.Number, Info);
+			PrintPhoneNumber(sms.Number, Info);
 			for (i=0;i<sms.OtherNumbersNum;i++) {
 				printf(", ");
-				PrintSMSCNumber(sms.OtherNumbers[i], Info);
+				PrintPhoneNumber(sms.OtherNumbers[i], Info);
 			}
 			printf("\n");
 		}
