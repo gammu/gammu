@@ -25,6 +25,34 @@ volatile bool 			wasincomingsms 		= false;
 
 GSM_MultiSMSMessage		IncomingSMSData;
 
+void PrintSMSLocation(const GSM_SMSMessage *sms, const GSM_SMSFolders *folders) 
+{
+	printf(_("Location %i, folder \"%s\""),
+			sms->Location,
+			DecodeUnicodeConsole(folders->Folder[sms->Folder - 1].Name)
+			);
+
+	switch (sms->Memory) {
+		case MEM_SM: 
+			printf(", %s", _("SIM memory"));
+			break;
+		case MEM_ME: 
+			printf(", %s", _("phone memory"));
+			break;
+		case MEM_MT: 
+			printf(", %s", _("phone or SIM memory")); 
+			break;
+		default: 
+			break;
+	}
+
+	if (sms->InboxFolder) {
+		printf(", %s", _("Inbox folder"));
+	}
+
+	printf("\n");
+}
+
 void PrintSMSCNumber(unsigned char *number, const GSM_Backup *Info)
 {
 	bool 	found=false,found2=false;
@@ -477,15 +505,7 @@ void DisplayIncomingSMS()
  			break;
  		default:
  			Print_Error(error);
- 			printf(_("Location %i, folder \"%s\""),IncomingSMSData.SMS[0].Location,DecodeUnicodeConsole(folders.Folder[IncomingSMSData.SMS[0].Folder-1].Name));
- 			switch(IncomingSMSData.SMS[0].Memory) {
- 				case MEM_SM: printf(_(", SIM memory")); 		break;
- 				case MEM_ME: printf(_(", phone memory")); 	break;
- 				case MEM_MT: printf(_(", phone or SIM memory")); break;
- 				default    : break;
- 			}
- 			if (IncomingSMSData.SMS[0].InboxFolder) printf(_(", Inbox folder"));
- 			printf("\n");
+			PrintSMSLocation(&IncomingSMSData.SMS[0], &folders);
  		}
  	}
  	DisplayMultiSMSInfo(IncomingSMSData,false,false,NULL);
@@ -670,15 +690,7 @@ void GetSMS(int argc, char *argv[])
 			break;
 		default:
 			Print_Error(error);
-			printf(_("Location %i, folder \"%s\""),sms.SMS[0].Location,DecodeUnicodeConsole(folders.Folder[sms.SMS[0].Folder-1].Name));
-			switch(sms.SMS[0].Memory) {
-				case MEM_SM: printf(_(", SIM memory")); 		break;
-				case MEM_ME: printf(_(", phone memory")); 	break;
-				case MEM_MT: printf(_(", phone or SIM memory")); break;
-				default    : break;
-			}
-			if (sms.SMS[0].InboxFolder) printf(_(", Inbox folder"));
-			printf("\n");
+			PrintSMSLocation(&sms.SMS[0], &folders);
 			DisplayMultiSMSInfo(sms,false,false,NULL);
 		}
 	}
@@ -780,15 +792,7 @@ void GetAllSMS(int argc, char *argv[])
 			continue;
 		default:
 			Print_Error(error);
-			printf(_("Location %i, folder \"%s\""),sms.SMS[0].Location,DecodeUnicodeConsole(folders.Folder[sms.SMS[0].Folder-1].Name));
-			switch(sms.SMS[0].Memory) {
-				case MEM_SM: printf(_(", SIM memory")); 		break;
-				case MEM_ME: printf(_(", phone memory")); 	break;
-				case MEM_MT: printf(_(", phone or SIM memory")); break;
-				default    : break;
-			}
-			if (sms.SMS[0].InboxFolder) printf(_(", Inbox folder"));
-			printf("\n");
+			PrintSMSLocation(&sms.SMS[0], &folders);
 			smspos++;
 			smsnum+=sms.Number;
 			DisplayMultiSMSInfo(sms, false, false, BackupPtr);
@@ -913,15 +917,7 @@ void GetEachSMS(int argc, char *argv[])
 		for (j=0;j<SortedSMS[i]->Number;j++) {
 			smsnum++;
 			if ((j==0) || (j!=0 && SortedSMS[i]->SMS[j].Location != SortedSMS[i]->SMS[j-1].Location)) {
-				printf(_("Location %i, folder \"%s\""),SortedSMS[i]->SMS[j].Location,DecodeUnicodeConsole(folders.Folder[SortedSMS[i]->SMS[j].Folder-1].Name));
-				switch(SortedSMS[i]->SMS[j].Memory) {
-					case MEM_SM: printf(_(", SIM memory")); 		break;
-					case MEM_ME: printf(_(", phone memory")); 	break;
-					case MEM_MT: printf(_(", phone or SIM memory")); break;
-					default    : break;
-				}
-				if (SortedSMS[i]->SMS[j].InboxFolder) printf(_(", Inbox folder"));
-				printf("\n");
+				PrintSMSLocation(&SortedSMS[i]->SMS[j], &folders);
 			}
 		}
 		DisplayMultiSMSInfo(*SortedSMS[i], true, ems, BackupPtr);
