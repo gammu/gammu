@@ -4640,10 +4640,12 @@ GSM_Error ATGEN_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Sta
 
 	smprintf(s, "Getting security code status\n");
 	/* Please note, that A2D doesn't return OK on the end.
- 	 * Because of it ReplyGetSecurityStatus is called after receiving line
-	 * with +CPIN:
+ 	 * Because of it we try to read another reply after reading
+	 * status.
 	 */
 	ATGEN_WaitFor(s, "AT+CPIN?\r", 9, 0x00, 4, ID_GetSecurityStatus);
+	/* Read the possible left over OK */
+	GSM_WaitForOnce(s, NULL, 0x00, 0x00, 4);
 	return error;
 }
 
