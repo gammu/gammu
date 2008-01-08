@@ -620,9 +620,10 @@ const char *GetOS(void)
 #ifdef WIN32
 	OSVERSIONINFOEX Ver;
 	bool		Extended = true;
-#endif
-#ifdef HAVE_SYS_UTSNAME_H
+#else
+#  ifdef HAVE_SYS_UTSNAME_H
 	struct utsname	Ver;
+#  endif
 #endif
 	static char 	Buffer[100] = {0x00};
 
