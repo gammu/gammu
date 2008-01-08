@@ -336,7 +336,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 	}
 }
 
-void DisplayMultiSMSInfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems, const GSM_Backup *Info)
+void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, const GSM_Backup *Info)
 {
 	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	GSM_MultiPartSMSInfo	SMSInfo;
@@ -346,23 +346,23 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage sms, bool eachsms, bool ems, const
 	GSM_Error error;
 
 	/* GSM_DecodeMultiPartSMS returns if decoded SMS content correctly */
-	RetVal = GSM_DecodeMultiPartSMS(&SMSInfo,&sms,ems);
+	RetVal = GSM_DecodeMultiPartSMS(&SMSInfo,sms,ems);
 
 	if (eachsms) {
-		if (GSM_DecodeSiemensOTASMS(&SiemensOTA,&sms.SMS[0])) udhinfo = false;
-		if (sms.SMS[0].UDH.Type != UDH_NoUDH && sms.SMS[0].UDH.AllParts == sms.Number) udhinfo = false;
+		if (GSM_DecodeSiemensOTASMS(&SiemensOTA,&sms->SMS[0])) udhinfo = false;
+		if (sms->SMS[0].UDH.Type != UDH_NoUDH && sms->SMS[0].UDH.AllParts == sms->Number) udhinfo = false;
 		if (RetVal && !udhinfo) {
-			DisplaySingleSMSInfo(sms.SMS[0],false,false,Info);
+			DisplaySingleSMSInfo(sms->SMS[0],false,false,Info);
 			printf("\n");
 		} else {
-			for (j=0;j<sms.Number;j++) {
-				DisplaySingleSMSInfo(sms.SMS[j],!RetVal,udhinfo,Info);
+			for (j=0;j<sms->Number;j++) {
+				DisplaySingleSMSInfo(sms->SMS[j],!RetVal,udhinfo,Info);
 				printf("\n");
 			}
 		}
 	} else {
-		for (j=0;j<sms.Number;j++) {
-			DisplaySingleSMSInfo(sms.SMS[j],!RetVal,true,Info);
+		for (j=0;j<sms->Number;j++) {
+			DisplaySingleSMSInfo(sms->SMS[j],!RetVal,true,Info);
 			printf("\n");
 		}
 	}
@@ -514,7 +514,7 @@ void DisplayIncomingSMS()
 			PrintSMSLocation(&IncomingSMSData.SMS[0], &folders);
  		}
  	}
- 	DisplayMultiSMSInfo(IncomingSMSData,false,false,NULL);
+ 	DisplayMultiSMSInfo(&IncomingSMSData,false,false,NULL);
  	wasincomingsms = false;
 }
 
@@ -697,7 +697,7 @@ void GetSMS(int argc, char *argv[])
 		default:
 			Print_Error(error);
 			PrintSMSLocation(&sms.SMS[0], &folders);
-			DisplayMultiSMSInfo(sms,false,false,NULL);
+			DisplayMultiSMSInfo(&sms,false,false,NULL);
 		}
 	}
 
@@ -801,7 +801,7 @@ void GetAllSMS(int argc, char *argv[])
 			PrintSMSLocation(&sms.SMS[0], &folders);
 			smspos++;
 			smsnum+=sms.Number;
-			DisplayMultiSMSInfo(sms, false, false, BackupPtr);
+			DisplayMultiSMSInfo(&sms, false, false, BackupPtr);
 		}
 		start=false;
 	}
@@ -926,7 +926,7 @@ void GetEachSMS(int argc, char *argv[])
 				PrintSMSLocation(&SortedSMS[i]->SMS[j], &folders);
 			}
 		}
-		DisplayMultiSMSInfo(*SortedSMS[i], true, ems, BackupPtr);
+		DisplayMultiSMSInfo(SortedSMS[i], true, ems, BackupPtr);
 
 		free(SortedSMS[i]);
 		SortedSMS[i] = NULL;

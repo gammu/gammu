@@ -1624,7 +1624,7 @@ void AddSMS(int argc UNUSED, char *argv[])
 		Backup.SMS[smsnum]->SMSC.Location = 1;
 		SMS.Number = 1;
 		SMS.SMS[0] = *Backup.SMS[smsnum];
-		DisplayMultiSMSInfo(SMS,false,false,NULL);
+		DisplayMultiSMSInfo(&SMS,false,false,NULL);
 		if (answer_yes(_("Restore sms?"))) {
 			error=GSM_AddSMS(gsm, Backup.SMS[smsnum]);
 			Print_Error(error);
@@ -1663,7 +1663,7 @@ void RestoreSMS(int argc UNUSED, char *argv[])
 		if (doit) {
 			SMS.Number = 1;
 			memcpy(&SMS.SMS[0],Backup.SMS[smsnum],sizeof(GSM_SMSMessage));
-			DisplayMultiSMSInfo(SMS,false,false,NULL);
+			DisplayMultiSMSInfo(&SMS,false,false,NULL);
 			if (answer_yes(_("Restore %03i sms to folder \"%s\"%s?"),
 				smsnum+1,DecodeUnicodeConsole(folders.Folder[Backup.SMS[smsnum]->Folder-1].Name),
 				folders.Folder[Backup.SMS[smsnum]->Folder-1].Memory == MEM_SM ? _(" (SIM)") : "")) {
