@@ -25,6 +25,9 @@ volatile bool 			wasincomingsms 		= false;
 
 GSM_MultiSMSMessage		IncomingSMSData;
 
+/**
+ * Prints location information about message.
+ */
 void PrintSMSLocation(const GSM_SMSMessage *sms, const GSM_SMSFolders *folders) 
 {
 	printf(_("Location %i, folder \"%s\""),
