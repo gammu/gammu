@@ -32,7 +32,7 @@ void PrintSMSCNumber(unsigned char *number,GSM_Backup *Info)
 
 	printf("\"%s\"",DecodeUnicodeConsole(number));
 
-	if (Info==NULL) return;
+	if (Info == NULL) return;
 
 	i=0;
 	while (Info->PhonePhonebook[i]!=NULL) {
@@ -724,6 +724,7 @@ void GetAllSMS(int argc, char *argv[])
 	GSM_Backup		Backup;
 
 	GSM_ClearBackup(&Backup);
+	BackupPtr = &Backup;
 #endif
 
 	GSM_Init(true);
@@ -760,7 +761,6 @@ void GetAllSMS(int argc, char *argv[])
 				}
 			}
 			fprintf(stderr, "\n");
-			BackupPtr = &Backup;
 		}
 	}
 #endif
@@ -819,6 +819,7 @@ void GetEachSMS(int argc, char *argv[])
 	GSM_Backup		Backup;
 
 	GSM_ClearBackup(&Backup);
+	BackupPtr = &Backup;
 #endif
 
 	GetSMSData[0] = NULL;
@@ -857,7 +858,6 @@ void GetEachSMS(int argc, char *argv[])
 				}
 			}
 			fprintf(stderr, "\n");
-			BackupPtr = &Backup;
 		}
 	}
 #endif
