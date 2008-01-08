@@ -2515,25 +2515,21 @@ msgstr "Speicherplatz %i, Ordner \"%s\""
 
 #: gammu/message.c:40
 #, fuzzy
-#| msgid ", SIM memory"
 msgid "SIM memory"
 msgstr ", SIM-Speicher"
 
 #: gammu/message.c:43
 #, fuzzy
-#| msgid ", phone memory"
 msgid "phone memory"
 msgstr ", Telefonspeicher"
 
 #: gammu/message.c:46
 #, fuzzy
-#| msgid ", phone or SIM memory"
 msgid "phone or SIM memory"
 msgstr ", Telefon- oder SIM-Speicher"
 
 #: gammu/message.c:53
 #, fuzzy
-#| msgid ", Inbox folder"
 msgid "Inbox folder"
 msgstr ", Posteingangsordner"
 

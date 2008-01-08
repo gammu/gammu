@@ -2660,25 +2660,21 @@ msgstr "Locazione %i, cartella \"%s\""
 
 #: gammu/message.c:40
 #, fuzzy
-#| msgid ", SIM memory"
 msgid "SIM memory"
 msgstr ", memoria SIM"
 
 #: gammu/message.c:43
 #, fuzzy
-#| msgid ", phone memory"
 msgid "phone memory"
 msgstr ", memoria telefono"
 
 #: gammu/message.c:46
 #, fuzzy
-#| msgid ", phone or SIM memory"
 msgid "phone or SIM memory"
 msgstr ", memoria SIM o del telefono"
 
 #: gammu/message.c:53
 #, fuzzy
-#| msgid ", Inbox folder"
 msgid "Inbox folder"
 msgstr ", cartella Ricevuti"
 
