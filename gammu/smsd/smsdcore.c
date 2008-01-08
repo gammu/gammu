@@ -620,7 +620,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 				GSM_SetSendSMSStatusCallback(gsm, SMSSendingSMSStatus);
 				if (errors == -1) {
 					errors = 0;
-					if (GSM_GetIMEI(gsm, NULL) != ERR_NONE) {
+					if (GSM_GetIMEI(gsm, Config.IMEI) != ERR_NONE) {
 						errors++;
 					} else {
 						error = Service->InitAfterConnect(&Config);

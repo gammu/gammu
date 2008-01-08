@@ -684,12 +684,10 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 
 static GSM_Error SMSDMySQL_RefreshPhoneStatus(GSM_SMSDConfig *Config)
 {
-	unsigned char buffer[500],imei[100];
-
-	GSM_GetIMEI(gsm, imei);
+	unsigned char buffer[500];
 
 	sprintf(buffer,"UPDATE `phones` SET `TimeOut`= (NOW() + INTERVAL 10 SECOND)+0");
-	sprintf(buffer+strlen(buffer)," WHERE `IMEI` = '%s'",imei);
+	sprintf(buffer + strlen(buffer), " WHERE `IMEI` = '%s'", Config->IMEI);
 	dbgprintf("%s\n",buffer);
 	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
 		WriteSMSDLog(_("Error writing to database (SaveInboxSMS): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
