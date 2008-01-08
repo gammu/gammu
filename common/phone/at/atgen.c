@@ -2473,7 +2473,12 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 				return ERR_MOREMEMORY;
 			}
 		}
-		ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, cur);
+		/* Should we use index instead of location? Samsung P900 needs this hack. */
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKEN_CMGL)) {
+			ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, Priv->SMSCount);
+		} else {
+			ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, cur);
+		}
 		Priv->SMSLocations[Priv->SMSCount - 1] = sms.Location;
 
 	}
