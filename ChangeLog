@@ -18,6 +18,7 @@ ChangeLog
 2007???? - 1.17.90
 
 [-] * Fixed crash when there are too many messages (bug #466).
+[-] * Fixed crash when printing messages on Windows (bug #476).
     
 20071220 - 1.17.0
 
