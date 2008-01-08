@@ -2700,25 +2700,21 @@ msgstr "Размещение %i, каталог \"%s\""
 
 #: gammu/message.c:40
 #, fuzzy
-#| msgid ", SIM memory"
 msgid "SIM memory"
 msgstr ", память SIM"
 
 #: gammu/message.c:43
 #, fuzzy
-#| msgid ", phone memory"
 msgid "phone memory"
 msgstr ", память телефона"
 
 #: gammu/message.c:46
 #, fuzzy
-#| msgid ", phone or SIM memory"
 msgid "phone or SIM memory"
 msgstr ", память телефона или SIM"
 
 #: gammu/message.c:53
 #, fuzzy
-#| msgid ", Inbox folder"
 msgid "Inbox folder"
 msgstr ", папка Входящие"
 

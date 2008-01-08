@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: common/gsmcomon.c:88
 msgid "No error."
@@ -2452,22 +2452,18 @@ msgid "Location %i, folder \"%s\""
 msgstr "Umístění %i, složka \"%s\""
 
 #: gammu/message.c:40
-#| msgid ", SIM memory"
 msgid "SIM memory"
 msgstr "SIM karta"
 
 #: gammu/message.c:43
-#| msgid ", phone memory"
 msgid "phone memory"
 msgstr "paměť telefonu"
 
 #: gammu/message.c:46
-#| msgid ", phone or SIM memory"
 msgid "phone or SIM memory"
 msgstr "paměť telefonu nebo SIM karta"
 
 #: gammu/message.c:53
-#| msgid ", Inbox folder"
 msgid "Inbox folder"
 msgstr "příchozí zprávy"
 
