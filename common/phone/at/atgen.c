@@ -4105,6 +4105,9 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
  * 3 = Home Number
  * 2 = Office Number
  * 1 = Mobile Number
+ *
+ * Samsung SGH-P900 reply:
+ * +CPBR: 81,"#121#",129,"My Tempo",0
  */
 GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
@@ -4141,6 +4144,27 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text));
 		if (error == ERR_NONE) {
 			smprintf(s, "Generic AT reply detected\n");
+			/* Adjust location */
+			Memory->Location = Memory->Location + 1 - Priv->FirstMemoryEntry;
+			/* Adjust number */
+			GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
+			/* Set number of entries */
+			Memory->EntriesNum = 2;
+			return ERR_NONE;
+		}
+
+		/* Try reply with extra unknown number (maybe group?), seen on Samsung SGH-P900 */
+		error = ATGEN_ParseReply(s,
+					GetLineString(msg.Buffer, &Priv->Lines, 2),
+					"+CPBR: @i, @p, @I, @e, @i",
+					&Memory->Location,
+					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+					&number_type,
+					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
+					&i /* Don't know what this means */
+					);
+		if (error == ERR_NONE) {
+			smprintf(s, "AT reply with extra number detected\n");
 			/* Adjust location */
 			Memory->Location = Memory->Location + 1 - Priv->FirstMemoryEntry;
 			/* Adjust number */
