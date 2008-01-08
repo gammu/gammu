@@ -47,11 +47,6 @@ Test that everything is okay:
 
 > make test
 
-If you are building shared library, you need to add path to newly built
-library to LD_LIBRARY_PATH, for example:
-
-> LD_LIBRARY_PATH=`pwd`/common make test
-
 And finally install it:
 
 > sudo make install

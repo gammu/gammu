@@ -104,16 +104,6 @@ else (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set (DEBUG 0)
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
-# No rpath by default
-set (WITH_RPATH FALSE CACHE BOOL "Enable rpath in resulting libraries")
-mark_as_advanced (WITH_RPATH)
-
-if (WITH_RPATH)
-    set (CMAKE_SKIP_RPATH OFF)
-else (WITH_RPATH)
-    set (CMAKE_SKIP_RPATH ON)
-endif (WITH_RPATH)
-
 # Packaging support
 set (CPACK_PACKAGE_NAME "Gammu")
 set (CPACK_PACKAGE_VERSION "${VERSION}")
