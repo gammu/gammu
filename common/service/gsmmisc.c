@@ -279,30 +279,26 @@ bool ReadVCALInt(char *Buffer, char *Start, int *Value)
 
 bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_only)
 {
-	unsigned char buff[200];
-	int lstart, lvalue;
+	char fullstart[200];
+	unsigned char datestring[200];
 
-	strcpy(buff,Start);
-	strcat(buff,":");
-	*is_date_only = false;
-	if (strncmp(Buffer,buff,strlen(buff))) {
-		strcpy(buff,Start);
-		strcat(buff,";VALUE=DATE:");
-		if (strncmp(Buffer,buff,strlen(buff)))
+	if (!ReadVCALText(Buffer, Start, datestring, false)) {
+		fullstart[0] = 0;
+		strcat(fullstart, Start);
+		strcat(fullstart, ";VALUE=DATE:");
+		if (!ReadVCALText(Buffer, fullstart, datestring, false)) {
 			return false;
+		}
 		*is_date_only = true;
 	}
 
-	lstart = strlen(buff);
-	lvalue = strlen(Buffer)-lstart;
-	strncpy(buff,Buffer+lstart,lvalue);
-	strncpy(buff+lvalue,"\0",1);
-	if (ReadVCALDateTime(buff,Date)) {
+	if (ReadVCALDateTime(DecodeUnicodeString(datestring), Date)) {
 		dbgprintf("ReadVCALDateTime is \"%04d.%02d.%02d %02d:%02d:%02d\"\n",
 			Date->Year, Date->Month, Date->Day,
 			Date->Hour, Date->Minute, Date->Second);
 		return true;
 	}
+
 	return false;
 }
 
@@ -467,6 +463,23 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 				}
 				charset[end - pos] = 0;
 
+				pos = end;
+				found = true;
+			} else if (strncmp(pos, "TZID=", 5) == 0) {
+				/* @todo: We ignore time zone for now */
+				/* Advance position */
+				pos += 5;
+				/* Go behind value */
+				end = strchr(pos, ':');
+				end2 = strchr(pos, ';');
+				if (end == NULL && end2 == NULL) {
+					dbgprintf("Could not read timezone!\n");
+					goto fail;
+				} else if (end == NULL) {
+					end = end2;
+				} else if (end2 != NULL && end2 < end) {
+					end = end2;
+				}
 				pos = end;
 				found = true;
 			} else if (strncmp(pos, "TYPE=PREF", 9) == 0) {
