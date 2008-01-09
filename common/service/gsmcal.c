@@ -1622,7 +1622,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				}
 				if (rrule != NULL) {
 					if (CalVer == Mozilla_iCalendar) {
-						/* We don't have parser for this right now */
+						/* @todo: We don't have parser for this right now */
 						error = ERR_NONE;
 					} else { 
 						error = GSM_DecodeVCAL_RRULE(rrule, Calendar, Time);
