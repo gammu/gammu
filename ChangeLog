@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2007???? - 1.17.90
+20080110 - 1.17.90
 
 [-] * Fixed crash when there are too many messages (bug #466).
 [-] * Fixed crash when printing messages on Windows (bug #476).
