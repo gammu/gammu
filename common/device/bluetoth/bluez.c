@@ -196,6 +196,7 @@ next_seq:
 		return bluetooth_connect(s, found, str);
 	}
 
+	smprinf(s, "No suitable bluetooth channel found!\n");
 	return ERR_NOTSUPPORTED;
 }
 
