@@ -4,6 +4,10 @@
 #include <signal.h>
 #include <stdarg.h>
 #include <time.h>
+#ifndef WIN32
+#include <sys/types.h>
+#include <sys/wait.h>
+#endif
 
 #include "../../common/misc/coding/coding.h"
 #include "../../common/misc/locales.h"
@@ -329,6 +333,8 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config)
 {
 	int pid;
 	int i;
+	pid_t w;
+	int status;
 
 	if (Config->RunOnReceive == NULL) {
 		return false;
@@ -342,7 +348,33 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config)
 	}
 
 	if (pid != 0) {
-		/* We are the parent */
+		/* We are the parent, wait for child */
+		i = 0;
+		do {
+			w = waitpid(pid, &status, WUNTRACED | WCONTINUED);
+			if (w == -1) {
+				WriteSMSDLog("Failed to wait for process");
+				return false;
+			}
+
+			if (WIFEXITED(status)) {
+				WriteSMSDLog("Process exited, status=%d\n", WEXITSTATUS(status));
+				return (WEXITSTATUS(status) == 0);
+			} else if (WIFSIGNALED(status)) {
+				WriteSMSDLog("Process killed by signal %d\n", WTERMSIG(status));
+				return false;
+			} else if (WIFSTOPPED(status)) {
+				WriteSMSDLog("Process stopped by signal %d\n", WSTOPSIG(status));
+			} else if (WIFCONTINUED(status)) {
+				WriteSMSDLog("Process continued\n");
+			}
+			my_sleep(100);
+			if (i++ > 1200) {
+				WriteSMSDLog("Waited two minutes for child process, giving up\n");
+				return true;
+			}
+		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
+
 		return true;
 	}
 
