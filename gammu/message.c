@@ -83,19 +83,19 @@ void PrintPhoneNumber(unsigned char *number, const GSM_Backup *Info)
 					found2=true;
 					switch (Info->PhonePhonebook[i]->Entries[j].EntryType) {
 					case PBK_Number_Mobile:
-						printf("(%s", _("mobile"));
+						printf(" (%s", _("mobile"));
 						break;
 					case PBK_Number_Work:
-						printf("(%s", _("work"));
+						printf(" (%s", _("work"));
 						break;
 					case PBK_Number_Fax:
-						printf("(%s", _("fax"));
+						printf(" (%s", _("fax"));
 						break;
 					case PBK_Number_Home:
-						printf("(%s", _("home"));
+						printf(" (%s", _("home"));
 						break;
 					case PBK_Number_Pager:
-						printf("(%s", _("pager"));
+						printf(" (%s", _("pager"));
 						break;
 					default:
 						found2=false;
