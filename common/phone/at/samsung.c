@@ -251,7 +251,7 @@ GSM_Error SAMSUNG_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 		return ERR_NONE;
 	case AT_Reply_Error:
-		return ERR_UNKNOWN;
+		return ERR_NOTSUPPORTED;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
