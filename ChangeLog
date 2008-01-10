@@ -21,6 +21,7 @@ ChangeLog
 [-] * Fixed crash when printing messages on Windows (bug #476).
 [-] * Do not ask phone for IMEI so often (bug #480).
 [-] * No need to set LD_LIBRARY_PATH for tests.
+[-] * Properly wait for SMSD child processes (bug #486).
     
 20071220 - 1.17.0
 
