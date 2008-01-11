@@ -249,6 +249,8 @@ typedef struct {
  * be determined on run time.
  *
  * \ingroup Info
+ *
+ * \todo API change: should contain GSM prefix.
  */
 typedef enum {
 	/* n6110.c */
@@ -547,12 +549,42 @@ typedef enum {
 	 * sequential.
 	 */
 	F_BROKEN_CMGL,
+
+	/**
+	 * Just marker of highest feature code, should not be used.
+	 */
+	F_LAST_VALUE,
 } Feature;
+
+/**
+ * Converts feature value to string.
+ *
+ * \ingroup Info
+ *
+ * \param feature Feature to convert.
+ *
+ * \return Pointer to static string with string for specified feature,
+ * NULL on failure.
+ */
+const char *GSM_FeatureToString(Feature feature);
+
+/**
+ * Converts feature string to value.
+ *
+ * \ingroup Info
+ *
+ * \param feature Feature string to convert.
+ *
+ * \return Feature value, 0 on failure.
+ */
+Feature GSM_FeatureFromString(const char * feature);
 
 /**
  * Model identification, used for finding phone features.
  *
  * \ingroup Info
+ *
+ * \todo API change: should contain GSM prefix.
  */
 typedef struct {
 	/**
