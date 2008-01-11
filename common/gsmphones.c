@@ -12,6 +12,109 @@
 
 #include <string.h>
 
+#define MAX_FEATURE_NAME_LEN 20
+
+typedef struct {
+	char	name[MAX_FEATURE_NAME_LEN + 1];
+	Feature feature;
+} GSM_FeatureName;
+
+GSM_FeatureName AllFeatureNames[] = {
+	{"CAL33", F_CAL33},
+	{"CAL52", F_CAL52},
+	{"CAL82", F_CAL82},
+	{"RING_SM", F_RING_SM},
+	{"NORING", F_NORING},
+	{"NOPBKUNICODE", F_NOPBKUNICODE},
+	{"NOWAP", F_NOWAP},
+	{"NOCALLER", F_NOCALLER},
+	{"NOPICTURE", F_NOPICTURE},
+	{"NOPICTUREUNI", F_NOPICTUREUNI},
+	{"NOSTARTUP", F_NOSTARTUP},
+	{"NOCALENDAR", F_NOCALENDAR},
+	{"NOSTARTANI", F_NOSTARTANI},
+	{"POWER_BATT", F_POWER_BATT},
+	{"PROFILES33", F_PROFILES33},
+	{"PROFILES51", F_PROFILES51},
+	{"MAGICBYTES", F_MAGICBYTES},
+	{"NODTMF", F_NODTMF},
+	{"DISPSTATUS", F_DISPSTATUS},
+	{"NOCALLINFO", F_NOCALLINFO},
+	{"DAYMONTH", F_DAYMONTH},
+	{"PBK35", F_PBK35},
+	{"PBKIMG", F_PBKIMG},
+	{"PBKTONEGAL", F_PBKTONEGAL},
+	{"PBKSMSLIST", F_PBKSMSLIST},
+	{"PBKUSER", F_PBKUSER},
+	{"6230iCALLER", F_6230iCALLER},
+	{"RADIO", F_RADIO},
+	{"TODO63", F_TODO63},
+	{"TODO66", F_TODO66},
+	{"NOMIDI", F_NOMIDI},
+	{"BLUETOOTH", F_BLUETOOTH},
+	{"NOFILESYSTEM", F_NOFILESYSTEM},
+	{"NOMMS", F_NOMMS},
+	{"NOGPRSPOINT", F_NOGPRSPOINT},
+	{"CAL35", F_CAL35},
+	{"CAL65", F_CAL65},
+	{"WAPMMSPROXY", F_WAPMMSPROXY},
+	{"CHAT", F_CHAT},
+	{"SYNCML", F_SYNCML},
+	{"FILES2", F_FILES2},
+	{"NOFILE1", F_NOFILE1},
+	{"6230iWAP", F_6230iWAP},
+	{"PROFILES", F_PROFILES},
+	{"SERIES40_30", F_SERIES40_30},
+	{"SMS_FILES", F_SMS_FILES},
+	{"3220_MMS", F_3220_MMS},
+	{"VOICETAGS", F_VOICETAGS},
+	{"CAL62", F_CAL62},
+	{"NOTES", F_NOTES},
+	{"SMSONLYSENT", F_SMSONLYSENT},
+	{"BROKENCPBS", F_BROKENCPBS},
+	{"M20SMS", F_M20SMS},
+	{"SLOWWRITE", F_SLOWWRITE},
+	{"SMSME900", F_SMSME900},
+	{"ALCATEL", F_ALCATEL},
+	{"OBEX", F_OBEX},
+	{"IRMC_LEVEL_2", F_IRMC_LEVEL_2},
+	{"MODE22", F_MODE22},
+	{"SMS_LOCATION_0", F_SMS_LOCATION_0},
+	{"NO_UCS2", F_NO_UCS2},
+	{"FORCE_UTF8", F_FORCE_UTF8},
+	{"SMS_SM", F_SMS_SM},
+	{"SMS_ME", F_SMS_ME},
+	{"XLNK", F_XLNK},
+	{"SUBMIT_SIM_ONLY", F_SUBMIT_SIM_ONLY},
+	{"PBK_UCS2", F_PBK_UCS2},
+	{"SQWE", F_SQWE},
+	{"NO_ATOBEX", F_NO_ATOBEX},
+	{"LENGTH_BYTES", F_LENGTH_BYTES},
+	{"BROKEN_CMGL", F_BROKEN_CMGL},
+	{"LAST_VALUE", F_LAST_VALUE},
+	{"", 0},
+};
+
+const char *GSM_FeatureToString(Feature feature)
+{
+	GSM_FeatureName *current;
+	for (current = AllFeatureNames; current->feature != 0; current++) {
+		if (current->feature == feature)
+			return current->name;
+	}
+	return NULL;
+}
+
+Feature GSM_FeatureFromString(const char * feature) 
+{
+	GSM_FeatureName *current;
+	for (current = AllFeatureNames; current->feature != 0; current++) {
+		if (strcasecmp(current->name, feature) == 0)
+			return current->feature;
+	}
+	return 0;
+}
+
 /**
  * Flags needed for various phone models.
  */

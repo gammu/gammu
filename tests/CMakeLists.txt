@@ -28,7 +28,7 @@ endif (CROSS_MINGW)
 target_link_libraries(statemachine-alloc libGammu)
 add_test(statemachine-alloc "${GAMMU_TEST_PATH}/statemachine-alloc${GAMMU_TEST_SUFFIX}")
 
-# Basic check for statemachine allocation
+# Check error code  descriptions
 add_executable(dump-error-codes dump-error-codes.c)
 if (CROSS_MINGW)
     set_target_properties (dump-error-codes PROPERTIES PREFIX "" SUFFIX ".exe")
@@ -36,6 +36,15 @@ endif (CROSS_MINGW)
 
 target_link_libraries(dump-error-codes libGammu)
 add_test(dump-error-codes "${GAMMU_TEST_PATH}/dump-error-codes${GAMMU_TEST_SUFFIX}" "-n")
+
+# Check feature code names
+add_executable(dump-features dump-features.c)
+if (CROSS_MINGW)
+    set_target_properties (dump-features PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+
+target_link_libraries(dump-features libGammu)
+add_test(dump-features "${GAMMU_TEST_PATH}/dump-features${GAMMU_TEST_SUFFIX}" "-n")
 
 # vCard parsing
 add_executable(vcard-read vcard-read.c)
