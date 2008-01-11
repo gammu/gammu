@@ -11,6 +11,7 @@ int main(int argc, char **argv)
 	bool numeric = false;
 	int rc = 0;
 	const char *errorstring;
+	const char *errorname;
 
 	if (argc >= 2 && strcmp(argv[1], "-n") == 0) {
 		numeric = true;
@@ -18,14 +19,19 @@ int main(int argc, char **argv)
 
 	for (error = ERR_NONE; error < ERR_LAST_VALUE; error++) {
 		errorstring = GSM_ErrorString(error);
+		errorname = GSM_ErrorName(error);
 		if (strcmp("Unknown error description.", errorstring) == 0) {
 			fprintf(stderr, "Unknown error message for %d!\n", error);
 			rc = 1;
 		}
+		if (errorname == NULL) {
+			fprintf(stderr, "Unknown error name for %d!\n", error);
+			rc = 1;
+		}
 		if (numeric) {
-			printf("%d. %s\n", error, errorstring);
+			printf("%d. %s - %s\n", error, errorname, errorstring);
 		} else {
-			printf("# %s\n", errorstring);
+			printf("# %s - %s\n", errorname, errorstring);
 		}
 	}
 
