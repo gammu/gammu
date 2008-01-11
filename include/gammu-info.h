@@ -15,7 +15,6 @@
 #include <gammu-types.h>
 #include <gammu-error.h>
 #include <gammu-limits.h>
-#include <gammu-statemachine.h>
 
 /**
  * Find network name from given network code.
@@ -628,6 +627,8 @@ bool GSM_IsPhoneFeatureAvailable(OnePhoneModel * model, Feature feature);
  * \ingroup Info
  */
 bool GSM_AddPhoneFeature(OnePhoneModel *model, Feature feature);
+
+#include <gammu-statemachine.h>
 
 /**
  * Reads manufacturer from phone.

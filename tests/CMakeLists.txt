@@ -46,6 +46,15 @@ endif (CROSS_MINGW)
 target_link_libraries(dump-features libGammu)
 add_test(dump-features "${GAMMU_TEST_PATH}/dump-features${GAMMU_TEST_SUFFIX}" "-n")
 
+# Check feature parsing
+add_executable(features-parsing features-parsing.c)
+if (CROSS_MINGW)
+    set_target_properties (features-parsing PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+
+target_link_libraries(features-parsing libGammu)
+add_test(features-parsing "${GAMMU_TEST_PATH}/features-parsing${GAMMU_TEST_SUFFIX}" "-n")
+
 # vCard parsing
 add_executable(vcard-read vcard-read.c)
 if (CROSS_MINGW)

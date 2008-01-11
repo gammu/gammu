@@ -25,6 +25,8 @@
  */
 typedef struct _GSM_StateMachine GSM_StateMachine;
 
+#include <gammu-info.h>
+
 /**
  * Configuration of state machine.
  *
@@ -91,6 +93,10 @@ typedef struct {
 	 * Text for memo calendar entry category in local language
 	 */
 	char TextMemo[32];
+	/**
+	 * Phone features override.
+	 */
+	Feature PhoneFeatures[GSM_MAX_PHONE_FEATURES + 1];
 } GSM_Config;
 
 /**

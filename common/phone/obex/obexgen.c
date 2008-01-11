@@ -3280,18 +3280,18 @@ GSM_Error OBEXGEN_GetModel(GSM_StateMachine *s)
 	if (Data->Model[0] != 0) return ERR_NONE;
 
 	error = OBEXGEN_GetCapabilityField(s, "Model", s->Phone.Data.Model);
-	if (error == ERR_NONE) {
-		Data->ModelInfo = GetModelData(NULL,Data->Model,NULL);
-		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(NULL,NULL,Data->Model);
-		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(Data->Model,NULL,NULL);
-		return ERR_NONE;
+
+	/* Retry with MOD if we failed */
+	if (error != ERR_NONE) {
+		error = OBEXGEN_GetDevinfoField(s, "MOD", s->Phone.Data.Model);
 	}
 
-	error = OBEXGEN_GetDevinfoField(s, "MOD", s->Phone.Data.Model);
 	if (error == ERR_NONE) {
-		Data->ModelInfo = GetModelData(NULL,Data->Model,NULL);
-		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(NULL,NULL,Data->Model);
-		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(Data->Model,NULL,NULL);
+		Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
+		if (Data->ModelInfo->number[0] == 0) 
+			Data->ModelInfo = GetModelData(s, NULL, NULL, Data->Model);
+		if (Data->ModelInfo->number[0] == 0) 
+			Data->ModelInfo = GetModelData(s, Data->Model, NULL, NULL);
 		return ERR_NONE;
 	}
 	return error;

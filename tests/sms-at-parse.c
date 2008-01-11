@@ -68,7 +68,7 @@ int main(int argc, char **argv)
 
 	/* Initialize AT engine */
 	Data = &s->Phone.Data;
-	Data->ModelInfo = GetModelData(NULL, "unknown", NULL);
+	Data->ModelInfo = GetModelData(NULL, NULL, "unknown", NULL);
 	Priv = &s->Phone.Data.Priv.ATGEN;
 	Priv->ReplyState = AT_Reply_OK;
 	Priv->SMSMode = SMS_AT_PDU;
