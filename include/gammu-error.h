@@ -289,6 +289,16 @@ typedef enum {
  * \ingroup Error
  */
 const char *GSM_ErrorString(GSM_Error e);
+
+/**
+ * Returns name for error.
+ *
+ * \param e Error code.
+ * \return Text with error name
+ *
+ * \ingroup Error
+ */
+const char *GSM_ErrorName(GSM_Error e);
 #endif
 
 /* Editor configuration
