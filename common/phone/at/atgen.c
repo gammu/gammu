@@ -1065,9 +1065,11 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (strlen(pos) <= GSM_MAX_MODEL_LENGTH) {
 		strcpy(Data->Model, pos);
 
-		Data->ModelInfo = GetModelData(NULL,Data->Model,NULL);
-		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(NULL,NULL,Data->Model);
-		if (Data->ModelInfo->number[0] == 0) Data->ModelInfo = GetModelData(Data->Model,NULL,NULL);
+		Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
+		if (Data->ModelInfo->number[0] == 0) 
+			Data->ModelInfo = GetModelData(s, NULL, NULL, Data->Model);
+		if (Data->ModelInfo->number[0] == 0) 
+			Data->ModelInfo = GetModelData(s, Data->Model, NULL, NULL);
 
 		if (Data->ModelInfo->number[0] != 0) strcpy(Data->Model,Data->ModelInfo->number);
 	} else {
@@ -1120,7 +1122,7 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			Priv->Manufacturer = AT_Falcom;
 			if (strstr(msg.Buffer,"A2D")) {
 				strcpy(s->Phone.Data.Model,"A2D");
-				s->Phone.Data.ModelInfo = GetModelData(NULL,s->Phone.Data.Model,NULL);
+				s->Phone.Data.ModelInfo = GetModelData(s, NULL, s->Phone.Data.Model, NULL);
 				smprintf(s, "Model A2D\n");
 			}
 		}

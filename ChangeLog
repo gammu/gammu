@@ -16,6 +16,9 @@ ChangeLog
 =========
     
 2007???? - 1.17.91
+
+[+] * Phone features now can be defined in configuration, so there is no
+      need to modify common/gsmphones.c for testing different settings.
     
 20080110 - 1.17.90
 

@@ -7,10 +7,14 @@
 /* Phones ID (c) partially by Walek */
 
 #include <gammu-config.h>
+#include <gammu-debug.h>
+#include <gammu-info.h>
 
 #include "gsmphones.h"
+#include "gsmstate.h"
 
 #include <string.h>
+#include <stdlib.h>
 
 #define MAX_FEATURE_NAME_LEN 20
 
@@ -113,6 +117,56 @@ Feature GSM_FeatureFromString(const char * feature)
 			return current->feature;
 	}
 	return 0;
+}
+
+GSM_Error GSM_SetFeatureString(Feature *list, const char *string)
+{
+	char *buffer, *pos, *end, *tmp;
+	int out = 0;
+	GSM_Error error = ERR_UNKNOWN;
+
+	/* Working copy */
+	buffer = strdup(string);
+	if (buffer == NULL)
+		return ERR_MOREMEMORY;
+
+	pos = buffer;
+	while (strlen(pos) > 0) {
+		end = strchr(pos, ',');
+		if (end != NULL) {
+			*end = 0;
+		}
+
+		while (iswspace(*pos))
+			pos++;
+
+		while ((tmp = strchr(pos, ' ')) != NULL)
+			*tmp = 0;
+
+		list[out] = GSM_FeatureFromString(pos);
+		if (list[out] == 0) {
+			dbgprintf("Bad feature string: %s\n", pos);
+			error = ERR_BADFEATURE;
+			break;
+		}
+		out++;
+		if (out >= GSM_MAX_PHONE_FEATURES) {
+			dbgprintf("Too much features: %s\n", pos);
+			error = ERR_BADFEATURE;
+			break;
+		}
+		if (end != NULL) {
+			pos = end + 1;
+		} else {
+			/* We're done */
+			error = ERR_NONE;
+			break;
+		}
+	}
+
+
+	free(buffer);
+	return error;
 }
 
 /**
@@ -600,28 +654,27 @@ OnePhoneModel allmodels[] = {
 	{"unknown",	  ""      ,"",           {0}}
 };
 
-OnePhoneModel *GetModelData(char *model, char *number, char *irdamodel)
+OnePhoneModel *GetModelData(GSM_StateMachine *s, char *model, char *number, char *irdamodel)
 {
-	int i = 0;
+	int i, j;
 
-	while (strcmp(allmodels[i].number,"") != 0) {
-		if (model !=NULL) {
-			if (strcmp (model, allmodels[i].model) == 0) {
-				return (&allmodels[i]);
-			}
-		}
-		if (number !=NULL) {
-			if (strcmp (number, allmodels[i].number) == 0) {
-				return (&allmodels[i]);
-			}
-		}
-		if (irdamodel !=NULL) {
-			if (strcmp (irdamodel, allmodels[i].irdamodel) == 0) {
-				return (&allmodels[i]);
-			}
-		}
-		i++;
+	/* Find model record if we have one */
+	for (i = 0; strcmp(allmodels[i].number, "") != 0; i++) {
+		if (model !=NULL && strcmp (model, allmodels[i].model) == 0)
+			break;
+		if (number !=NULL && strcmp (number, allmodels[i].number) == 0)
+			break;
+		if (irdamodel !=NULL && strcmp (irdamodel, allmodels[i].irdamodel) == 0)
+			break;
 	}
+
+	/* Force user configured features */
+	if (s != NULL && s->CurrentConfig != NULL && s->CurrentConfig->PhoneFeatures[0] != 0) {
+		for (j = 0; j <= GSM_MAX_PHONE_FEATURES && s->CurrentConfig->PhoneFeatures[j] != 0; j++) {
+			allmodels[i].features[j] = s->CurrentConfig->PhoneFeatures[j];
+		}
+	}
+
 	return (&allmodels[i]);
 }
 

@@ -1633,7 +1633,7 @@ GSM_Error GNAPGEN_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMachi
 
 	strcpy(Data->Model,GetLineString(DecodeUnicodeString(msg.Buffer+6), &lines, 4));
 	smprintf(s, "Received model %s\n",Data->Model);
-	Data->ModelInfo = GetModelData(NULL,Data->Model,NULL);
+	Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
 
 	strcpy(Data->VerDate,GetLineString(DecodeUnicodeString(msg.Buffer+6), &lines, 3));
 	smprintf(s, "Received firmware date %s\n",Data->VerDate);

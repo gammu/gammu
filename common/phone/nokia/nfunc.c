@@ -1423,7 +1423,7 @@ GSM_Error DCT3DCT4_ReplyGetModelFirmware(GSM_Protocol_Message msg, GSM_StateMach
 
 	strcpy(Data->Model,GetLineString(msg.Buffer, &lines, 4));
 	smprintf(s, "Received model %s\n",Data->Model);
-	Data->ModelInfo = GetModelData(NULL,Data->Model,NULL);
+	Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
 
 	strcpy(Data->VerDate,GetLineString(msg.Buffer, &lines, 3));
 	smprintf(s, "Received firmware date %s\n",Data->VerDate);

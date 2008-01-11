@@ -221,7 +221,7 @@ static void GSM_RegisterModule(GSM_StateMachine *s,GSM_Phone_Functions *phone)
 {
 	/* Auto model */
 	if (s->CurrentConfig->Model[0] == 0) {
-		if (strstr(phone->models,GetModelData(NULL,s->Phone.Data.Model,NULL)->model) != NULL) {
+		if (strstr(phone->models,GetModelData(s, NULL, s->Phone.Data.Model, NULL)->model) != NULL) {
 			smprintf(s,"[Module           - \"%s\"]\n",phone->models);
 			s->Phone.Functions = phone;
 		}
@@ -239,7 +239,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s, const bool recurse)
 
 	/* Auto model */
 	if (s->CurrentConfig->Model[0] == 0) {
-		model = GetModelData(NULL,s->Phone.Data.Model,NULL);
+		model = GetModelData(s, NULL, s->Phone.Data.Model, NULL);
 #ifdef GSM_ENABLE_ATGEN
 		/* With ATgen and auto model we can work with unknown models too */
 		if (s->ConnectionType==GCT_AT || s->ConnectionType==GCT_BLUEAT || s->ConnectionType==GCT_IRDAAT || s->ConnectionType==GCT_DKU2AT) {
@@ -344,7 +344,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 
 		s->Speed			  = 0;
 		s->ReplyNum			  = ReplyNum;
-		s->Phone.Data.ModelInfo		  = GetModelData("unknown",NULL,NULL);
+		s->Phone.Data.ModelInfo		  = GetModelData(s, "unknown", NULL, NULL);
 		s->Phone.Data.Manufacturer[0]	  = 0;
 		s->Phone.Data.Model[0]		  = 0;
 		s->Phone.Data.Version[0]	  = 0;
@@ -1056,6 +1056,14 @@ GSM_Error GSM_ReadConfig(INI_Section *cfg_info, GSM_Config *cfg, int num)
 		strcpy(cfg->TextMemo,Temp);
 	}
 
+	/* Phone features */
+	Temp		 = INI_GetValue(cfg_info, section, "features", 		false);
+	if (!Temp) {
+		cfg->PhoneFeatures[0] = 0;
+	} else {
+		error = GSM_SetFeatureString(cfg->PhoneFeatures, Temp);
+		if (error != ERR_NONE) goto fail;
+	}
 	return ERR_NONE;
 
 fail:
@@ -1074,6 +1082,7 @@ fail:
 		strcpy(cfg->TextCall,"Call");
 		strcpy(cfg->TextBirthday,"Birthday");
 		strcpy(cfg->TextMemo,"Memo");
+		cfg->PhoneFeatures[0] = 0;
 		/* Indicate that we used defaults */
 		return ERR_USING_DEFAULTS;
 	}
