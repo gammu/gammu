@@ -20,9 +20,9 @@ int single_test(const char *string, GSM_Error expected)
 				string,
 				GSM_ErrorString(real),
 				GSM_ErrorString(expected));
-		return 0;
+		return 1;
 	}
-	return 1;
+	return 0;
 }
 
 int main(int argc, char **argv)
