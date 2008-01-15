@@ -5,6 +5,7 @@
 #define _GNU_SOURCE /* For strcasestr */
 #include <string.h>
 #include <errno.h>
+#include <limits.h>
 
 #include <gammu-call.h>
 #include <gammu-settings.h>
@@ -18,11 +19,20 @@
 #include "device/devfunc.h"
 
 #if defined(WIN32) || defined(DJGPP)
+/* Needed for SHGFP_TYPE_CURRENT */
+#define _WIN32_IE 0x0500
 #include <shlobj.h>
 
 #define FALLBACK_GAMMURC "gammurc"
+#define GAMMURC_NAME "\\gammurc"
 #else
 #define FALLBACK_GAMMURC "/etc/gammurc"
+#define GAMMURC_NAME "/.gammurc"
+#endif
+
+/* Win32 compatibility */
+#ifndef PATH_MAX
+#define PATH_MAX (MAX_PATH)
 #endif
 
 static void GSM_RegisterConnection(GSM_StateMachine *s, unsigned int connection,
@@ -795,57 +805,62 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 	return error;
 }
 
+GSM_Error GSM_TryReadGammuRC (const char *path, INI_Section **result)
+{
+	dbgprintf("Open config: \"%s\"\n", path);
+	return  INI_ReadFile(path, false, result);
+}
+
 GSM_Error GSM_FindGammuRC (INI_Section **result)
 {
-        char		*HomeDrive,*HomePath,*FileName=malloc(1);
-	int		FileNameUsed=1;
-	GSM_Error	error;
-	GSM_Error	error2;
-
+	char configfile[PATH_MAX + 1];
+	char *envpath;
+	GSM_Error error;
+		
 	*result = NULL;
 
-	FileName[0] = 0;
-#if defined(WIN32) || defined(DJGPP)
-	FileName = (char *)realloc(FileName, MAX_PATH);
+#ifdef WIN32
+	/* Get Windows application data path */
+	if (SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, SHGFP_TYPE_CURRENT, configfile))) {
+		strcat(configfile, GAMMURC_NAME);
 
-	if (!SUCCEEDED(SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, FileName))) {
-		HomeDrive = getenv("HOMEDRIVE");
-		if (HomeDrive) {
-			FileName 	=  realloc(FileName,FileNameUsed+strlen(HomeDrive)+1);
-			FileName 	=  strcat(FileName, HomeDrive);
-			FileNameUsed	+= strlen(HomeDrive)+1;
-		}
-		HomePath = getenv("HOMEPATH");
-		if (HomePath) {
-			FileName 	=  realloc(FileName,FileNameUsed+strlen(HomePath)+1);
-			FileName 	=  strcat(FileName, HomePath);
-			FileNameUsed	+= strlen(HomePath)+1;
-		}
-		FileName = (char *)realloc(FileName,FileNameUsed+8+1);
+		error = GSM_TryReadGammuRC(configfile, result);
+		if (error == ERR_NONE) return ERR_NONE;
 	}
-        strcat(FileName, "\\gammurc");
-#else
-	HomeDrive = NULL;
-        HomePath  = getenv("HOME");
-        if (HomePath) {
-		FileName 	=  realloc(FileName,FileNameUsed+strlen(HomePath)+1);
-		FileName 	=  strcat(FileName, HomePath);
-		FileNameUsed	+= strlen(HomePath)+1;
-	}
-	FileName = realloc(FileName,FileNameUsed+9+1);
-        strcat(FileName, "/.gammurc");
 #endif
-	dbgprintf("Open config: \"%s\"\n", FileName);
 
-	error = INI_ReadFile(FileName, false, result);
-	free(FileName);
-        if (error != ERR_NONE) {
-		dbgprintf("Open fallback config: \"%s\"\n", FALLBACK_GAMMURC);
-		error2 = INI_ReadFile(FALLBACK_GAMMURC, false, result);
-		if (error2 == ERR_NONE) error = ERR_NONE;
-        }
+	/* Reset as we're using strcat */
+	configfile[0] = 0;
 
-	return error;
+	/* Try user home */
+	envpath  = getenv("HOME");
+	if (envpath) {
+		strcat(configfile, envpath);
+		strcat(configfile, GAMMURC_NAME);
+
+		error = GSM_TryReadGammuRC(configfile, result);
+		if (error == ERR_NONE) return ERR_NONE;
+	} 
+
+#if defined(WIN32)
+	/* This makes sense only on Windows */
+	envpath = getenv("HOMEDRIVE");
+	if (envpath) {
+		strcat(configfile, envpath);
+	}
+
+	envpath = getenv("HOMEPATH");
+	if (envpath) {
+		strcat(configfile, envpath);
+		strcat(configfile, GAMMURC_NAME);
+
+		error = GSM_TryReadGammuRC(configfile, result);
+		if (error == ERR_NONE) return ERR_NONE;
+	}
+#endif
+
+	/* Try fallback config as last */
+	return GSM_TryReadGammuRC(FALLBACK_GAMMURC, result);
 }
 
 GSM_Config *GSM_GetConfig(GSM_StateMachine *s, int num)

@@ -19,6 +19,8 @@ ChangeLog
 
 [+] * Phone features now can be defined in configuration, so there is no
       need to modify common/gsmphones.c for testing different settings.
+[+] * Config file loading behaves more consistent in lookup. In some
+      cases it can now find different configuration file.
     
 20080110 - 1.17.90
 

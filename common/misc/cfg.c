@@ -17,7 +17,7 @@
 /**
  * Read information from file in Windows INI format style
  */
-GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section **result)
+GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section **result)
 {
 	FILE		*f;
 	bool		FFEEUnicode=false;

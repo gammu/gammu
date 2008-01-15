@@ -71,7 +71,7 @@ void INI_Free(INI_Section * head);
  *
  * \return Error code
  */
-GSM_Error INI_ReadFile(char *FileName, bool Unicode, INI_Section ** result);
+GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section ** result);
 
 /**
  * Returns pointer to last INI entry of given section.
