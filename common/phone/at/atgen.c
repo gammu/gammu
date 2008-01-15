@@ -1840,7 +1840,7 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 	}
 
 	if (Priv->SIMSMSMemory != AT_AVAILABLE && Priv->PhoneSMSMemory != AT_AVAILABLE) {
-		/* No SMS memory at all */
+		smprintf(s, "No SMS memory at all!\n");
 		return ERR_NOTSUPPORTED;
 	}
 	if (Priv->SIMSMSMemory == AT_AVAILABLE && Priv->PhoneSMSMemory == AT_AVAILABLE) {
@@ -1854,13 +1854,22 @@ GSM_Error ATGEN_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigne
 	/* simulate flat SMS memory */
 	if (sms->Folder == 0x00) {
 		ifolderid = sms->Location / GSM_PHONE_MAXSMSINFOLDER;
-		if (ifolderid + 1 > maxfolder)
+		if (ifolderid + 1 > maxfolder) {
+			smprintf(s, "Too high location for flat folder: %d (folder=%d, maxfolder=%d)\n",
+					sms->Location,
+					ifolderid + 1,
+					maxfolder);
 			return ERR_NOTSUPPORTED;
+		}
 		*folderid = ifolderid + 1;
 		*location = sms->Location - ifolderid * GSM_PHONE_MAXSMSINFOLDER;
 	} else {
-		if (sms->Folder > 2 * maxfolder)
+		if (sms->Folder > 2 * maxfolder) {
+			smprintf(s, "Too high folder: folder=%d, maxfolder=%d\n",
+					sms->Folder,
+					maxfolder);
 			return ERR_NOTSUPPORTED;
+		}
 		*folderid = sms->Folder <= 2 ? 1 : 2;
 		*location = sms->Location;
 	}
@@ -2595,6 +2604,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 			/* Start again */
 			found = 0;
 		}
+		sms->SMS[0].Folder = 0;
 		sms->SMS[0].Location = Priv->SMSLocations[found];
 		smprintf(s, "Reading next message on location %d\n", sms->SMS[0].Location);
 		return ATGEN_GetSMS(s, sms);
