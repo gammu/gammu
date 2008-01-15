@@ -171,7 +171,10 @@ int GSM_ReadDevice(GSM_StateMachine * s, bool waitforreply);
 bool GSM_IsConnected(GSM_StateMachine * s);
 
 /**
- * Reads gammu configuration file.
+ * Finds and reads gammu configuration file. The search order depends on
+ * platform. On POSIX systems it looks for ~/.gammurc and then for
+ * /etc/gammurc, on Windows for gammurc in Application data folder, then
+ * in home and last fallback is in current driectory.
  *
  * \param result Ini file representation
  * \return Error code
