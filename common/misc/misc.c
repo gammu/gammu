@@ -361,7 +361,7 @@ void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, unsig
 	int 	i,number=0,j;
 	bool 	whitespace=true, nowwhite;
 
-	for (i = 0; i < lines->allocated; i++) 
+	for (i = 0; i < lines->allocated; i++)
 		lines->numbers[i]=0;
 
 	for (i = 0; i < messagesize; i++) {
@@ -370,7 +370,7 @@ void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, unsig
 			lines->allocated += 20;
 			lines->numbers = realloc(lines->numbers, lines->allocated * sizeof(int));
 			if (lines->numbers == NULL) return;
-			for (j = lines->allocated - 20; j < lines->allocated; j++) 
+			for (j = lines->allocated - 20; j < lines->allocated; j++)
 				lines->numbers[j] = 0;
 		}
 
@@ -396,7 +396,7 @@ void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, unsig
 
 		}
 	}
-    	if (eot && !whitespace) 
+    	if (eot && !whitespace)
 		lines->numbers[number] = messagesize;
 }
 

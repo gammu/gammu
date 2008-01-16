@@ -11,6 +11,7 @@
 #include <gammu-settings.h>
 #include <gammu-unicode.h>
 #include <gammu-config.h>
+#include <gammu-misc.h>
 
 #include "gsmcomon.h"
 #include "gsmphones.h"
@@ -816,7 +817,7 @@ GSM_Error GSM_FindGammuRC (INI_Section **result)
 	char configfile[PATH_MAX + 1];
 	char *envpath;
 	GSM_Error error;
-		
+
 	*result = NULL;
 
 #ifdef WIN32
@@ -840,7 +841,7 @@ GSM_Error GSM_FindGammuRC (INI_Section **result)
 
 		error = GSM_TryReadGammuRC(configfile, result);
 		if (error == ERR_NONE) return ERR_NONE;
-	} 
+	}
 
 #if defined(WIN32)
 	/* This makes sense only on Windows */
