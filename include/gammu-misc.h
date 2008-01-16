@@ -130,6 +130,11 @@ extern void GSM_InitLocales(const char *path);
 #define SIZE_T_HEX4_FORMAT "%04zX"
 #endif
 
+/* Working snprintf on MSVC */
+#ifdef MSVC
+#define snprintf _snprintf
+#endif
+
 /**
  * Encodes text to hexadecimal binary representation.
  */
