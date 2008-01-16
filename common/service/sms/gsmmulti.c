@@ -655,8 +655,8 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo		*Info,
 		if (Info->UnicodeCoding) {
 			Coding = SMS_Coding_Unicode_No_Compression;
 			Length = UnicodeLength(Info->Entries[0].Buffer);
-			if ((ssize_t)Length> (140 - UDHHeader.Length)/2) {
-				Length = (140-UDHHeader.Length)/2;
+			if (Length > (size_t)(140 - UDHHeader.Length) / 2) {
+				Length = (140 - UDHHeader.Length) / 2;
 			}
 		} else {
 			Coding = SMS_Coding_Default_No_Compression;
