@@ -355,7 +355,13 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				smprintf(s, "Too long text\n");
 				return ERR_UNKNOWNRESPONSE;
 			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			/* No text? */
+			if (Block[5] < 2) {
+				entry->Entries[entry->EntriesNum].Text[0] = 0;
+				entry->Entries[entry->EntriesNum].Text[1] = 0;
+			} else {
+				memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			}
 			entry->Entries[entry->EntriesNum].EntryType=Type;
 			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
@@ -408,15 +414,24 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				smprintf(s, "Too long text\n");
 				return ERR_UNKNOWNRESPONSE;
 			}
-			memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			/* No text? */
+			if (Block[5] < 2) {
+				entry->Entries[entry->EntriesNum].Text[0] = 0;
+				entry->Entries[entry->EntriesNum].Text[1] = 0;
+			} else {
+				memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+			}
 			entry->Entries[entry->EntriesNum].EntryType=Type;
 			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			if (Block[0] == N7110_PBK_NAME) {
-				if (entry->MemoryType==MEM7110_CG) {
-					memcpy(bitmap->Text,Block+6,Block[5]);
-				}
-				if (entry->MemoryType==MEM6510_CG2) {
-					memcpy(bitmap->Text,Block+6,Block[5]);
+				if (entry->MemoryType == MEM7110_CG || entry->MemoryType == MEM6510_CG2) {
+					/* No text? */
+					if (Block[5] < 2) {
+						bitmap->Text[0] = 0;
+						bitmap->Text[1] = 0;
+					} else {
+						memcpy(bitmap->Text,Block+6,Block[5]);
+					}
 				}
 			}
 			entry->EntriesNum ++;
