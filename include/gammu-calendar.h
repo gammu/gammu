@@ -651,7 +651,7 @@ bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry * note);
  * Reads alarm set in phone.
  *
  * \param s State machine pointer.
- * \param alarm Storage for alarm.
+ * \param Alarm Storage for alarm.
  *
  * \return Error code
  *
@@ -663,7 +663,7 @@ GSM_Error GSM_GetAlarm(GSM_StateMachine * s, GSM_Alarm * Alarm);
  * Sets alarm in phone.
  *
  * \param s State machine pointer.
- * \param alarm Alarm to set.
+ * \param Alarm Alarm to set.
  *
  * \return Error code
  *
