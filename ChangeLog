@@ -16,6 +16,9 @@ ChangeLog
 =========
     
 2007???? - 1.17.92
+
+[-] * Fixed some mistakes in API documentation.
+[-] * Fixed compilation under MS Visual C++ Express.
     
 20070116 - 1.17.91
 
