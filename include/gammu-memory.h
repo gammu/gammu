@@ -369,6 +369,8 @@ typedef struct {
  * free entries).
  *
  * \param s State machine pointer.
+ * \param status Storage for status information, MemoryType has to be
+ * set.
  *
  * \return Error code.
  *
@@ -381,6 +383,8 @@ GSM_Error GSM_GetMemoryStatus(GSM_StateMachine * s, GSM_MemoryStatus * status);
  * be read is defined in entry.
  *
  * \param s State machine pointer.
+ * \param entry Storage for retrieved entry, MemoryType and Location has
+ * to be set.
  *
  * \return Error code.
  *
@@ -393,6 +397,10 @@ GSM_Error GSM_GetMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
  * be read is defined in entry. This can be easily used for reading all entries.
  *
  * \param s State machine pointer.
+ * \param entry Storage for retrieved entry. MemoryType has to be set
+ * for first call (with start set to true), for subsequent calls
+ * Location has to stay intact from previous reading.
+ * \param start Whether we should start from beginning.
  *
  * \return Error code.
  *
@@ -405,6 +413,7 @@ GSM_Error GSM_GetNextMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry,
  * Sets memory (phonebooks or calls) entry.
  *
  * \param s State machine pointer.
+ * \param entry Entry to set, Location and MemoryType has to be set.
  *
  * \return Error code.
  *
@@ -416,6 +425,8 @@ GSM_Error GSM_SetMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
  * Deletes memory (phonebooks or calls) entry.
  *
  * \param s State machine pointer.
+ * \param entry Entry to add, Location is ignored, MemoryType has to be
+ * set.
  *
  * \return Error code.
  *
@@ -427,6 +438,7 @@ GSM_Error GSM_AddMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
  * Deletes memory (phonebooks or calls) entry.
  *
  * \param s State machine pointer.
+ * \param entry Entry to delete, Location and MemoryType has to be set.
  *
  * \return Error code.
  *
@@ -438,6 +450,7 @@ GSM_Error GSM_DeleteMemory(GSM_StateMachine * s, GSM_MemoryEntry * entry);
  * Deletes all memory (phonebooks or calls) entries of specified type.
  *
  * \param s State machine pointer.
+ * \param MemoryType Where to delete all entries.
  *
  * \return Error code.
  *
@@ -449,6 +462,7 @@ GSM_Error GSM_DeleteAllMemory(GSM_StateMachine * s, GSM_MemoryType MemoryType);
  * Gets speed dial.
  *
  * \param s State machine pointer.
+ * \param Speed Storage for speed dial, Location has to be set.
  *
  * \return Error code.
  *
@@ -460,6 +474,7 @@ GSM_Error GSM_GetSpeedDial(GSM_StateMachine * s, GSM_SpeedDial * Speed);
  * Sets speed dial.
  *
  * \param s State machine pointer.
+ * \param Speed Sspeed dial to set.
  *
  * \return Error code.
  *
