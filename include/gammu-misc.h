@@ -131,7 +131,7 @@ extern void GSM_InitLocales(const char *path);
 #endif
 
 /* Working snprintf on MSVC */
-#ifdef MSVC
+#ifdef _MSC_VER
 #define snprintf _snprintf
 #endif
 
