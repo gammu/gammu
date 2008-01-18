@@ -448,6 +448,7 @@ set (DOCS
 
 set (UTILS
     utils/gammu-config
+    utils/jadmaker
     )
 
 set (SYMBIAN_FILES
@@ -459,6 +460,7 @@ set (SYMBIAN_FILES
 set (MAN1_PAGES
     docs/user/gammu.1
     docs/user/gammu-config.1
+    docs/user/jadmaker.1
     )
 
 set (PUBLIC_HEADERS
