@@ -5072,14 +5072,24 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	 */
 	sprintf(req, "AT+CPBW=%d,\"%s\",%i,\"", entry->Location + Priv->FirstMemoryEntry - 1, number, NumberType);
 	reqlen = strlen(req);
-	if (reqlen + len > REQUEST_SIZE - 2) {
+	if (reqlen + len > REQUEST_SIZE - 4) {
 		smprintf(s, "WARNING: Text truncated to fit in buffer!\n");
-		len = REQUEST_SIZE - 2 - reqlen;
+		len = REQUEST_SIZE - 4 - reqlen;
 	}
+	/* Add name */
 	memcpy(req + reqlen, name, len);
 	reqlen += len;
-	memcpy(req + reqlen, "\"\r", 2);
-	reqlen += 2;
+	/* Terminate quotes */
+	memcpy(req + reqlen, "\"", 1);
+	reqlen += 1;
+	/* Some phones need ,0 at the end, whatever this number means */
+	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_EXTRA_PBK_FIELD)) {
+		memcpy(req + reqlen, ",0", 2);
+		reqlen += 2;
+	}
+	/* Terminate request */
+	memcpy(req + reqlen, "\r", 1);
+	reqlen += 1;
 
 	smprintf(s, "Writing phonebook entry\n");
 	ATGEN_WaitFor(s, req, reqlen, 0x00, 4, ID_SetMemory);
