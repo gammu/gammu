@@ -61,6 +61,7 @@ static GSM_AT_Charset_Info AT_Charsets[] = {
 	{AT_CHARSET_PCCP437,	"PCCP437",	false},
 	{AT_CHARSET_UTF8,	"UTF-8",	true},
 	{AT_CHARSET_UTF8,	"UTF8",		true},
+	{AT_CHARSET_UCS2,	"UCS-2",	true},
 	{AT_CHARSET_UCS2,	"UCS2",		true},
 	{AT_CHARSET_IRA,	"IRA",		false},
 	{AT_CHARSET_IRA,	"ASCII",	false},
