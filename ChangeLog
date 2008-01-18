@@ -14,20 +14,20 @@ or inspired me to make it.
 
 ChangeLog
 =========
-    
+
 2007???? - 1.17.92
 
 [-] * Fixed some mistakes in API documentation.
 [-] * Fixed compilation under MS Visual C++ Express.
 [+] * Add simple shell script to generate JAD file from JAR.
-    
+
 20070116 - 1.17.91
 
 [+] * Phone features now can be defined in configuration, so there is no
       need to modify common/gsmphones.c for testing different settings.
 [+] * Config file loading behaves more consistent in lookup. In some
       cases it can now find different configuration file.
-    
+
 20080110 - 1.17.90
 
 [-] * Fixed crash when there are too many messages (bug #466).
@@ -35,13 +35,13 @@ ChangeLog
 [-] * Do not ask phone for IMEI so often (bug #480).
 [-] * No need to set LD_LIBRARY_PATH for tests.
 [-] * Properly wait for SMSD child processes (bug #486).
-    
+
 20071220 - 1.17.0
 
 [-] * Fixed reading of messages from AT phones using CMGL.
-    
+
 20071215 - 1.16.0
-    
+
 [+] * Added identification of some Sony-Ericsson and Sharp phones.
 
 20071212 - 1.15.91
@@ -991,7 +991,7 @@ NOTES: This release is available too long after previous. Big shame, but I will
 * new functionality:
   * new script helping with importing KAddressBook entries   (Frederick Emmott)
     in other/bash/other
-  
+
 * fixes and improvements:
   * workaround for some error for pbk for 6230                   (Tim Dreessen)
   * gammu correctly removes readonly attrib
@@ -1413,7 +1413,7 @@ Note: * BT checked with final version of Win XP SP2 (both with virtual COM
       can manage SMS saved in DB (view, delete) and send text
       sms from www. See other/php
     * new function - resetting phone from time to time        (Joergen Thomsen)
-  
+
 * fixes and improvements:
   * AT source cleanups                                       (Claudio Matsuoka)
   * better FreeBSD 5.2.1 compatibility                         (Roar Pettersen)
@@ -1516,7 +1516,7 @@ NOTE: waiting in queue:
   * changed checking for Bluez in configure
   * support for proxy blocks really complete
   * started work on making docs/help much more usefull
-      
+
 NOTE: * sometimes discovering phone services is not done correctly with Bluez
         and 6310i. It's during investigation. It maybe depends on phone
         firmware. If it happens for you, please report and use configure option
@@ -1629,18 +1629,18 @@ INFO: Many planned things still stay in queue. But you know: exams (I'm still
     * no problems with --backup and user ringtones
   * n6110: when you make call and have diverts, phone informs  (Mel van Rooyen)
     about it. Current module doesn't handle it as unknown
-  
+
 NOTES: well, good developing need some funds for research. Because of it I have
        to work on other projects too and have less time for Gammu. Happily some
        of them need somehow Gammu and this development will be continued. In
        this moment I will concentrate especially on some TDMA phones (like
        3320) and more win9x support. 
-       
+
        What will be next ? I quess, that it will depend mainly on people, who 
        donate project. This is not excellent solution, but after quarrels with 
        people, who had rights/though, that have rights to some things in source
        only possible.
-       
+
        Generally it's not bad, but it's not very good too. If you like Gammu 
        and want to help in development, please contact - project needs help
        a lot (testing, coding, donating, sponsoring, hosting, etc.). I quess, 
@@ -1745,9 +1745,9 @@ NOTE: Many exams (happily passed), a lot of work and no time for anything.
       Also many speeches with various people about sponsoring Gammu work
       (happily probably it will end with success - backup/restore for win32
       will be probably first sponsored Gammu app).
-      
+
       Please test this version. It should fix probably all found problems.
-      
+
 20040103 - 0.92.0
 * new functionality:
   * support for TPMR in SMS is complete
@@ -1898,7 +1898,7 @@ NOTE: I decided, that Gammu at least for now will be GPL.
 
       There is officialy started also Gammu+ with own license. First version
       of Gammu+ should be available after Christmas.
-  
+
 20031214 - 0.90.9
 * new functionality:
   * config matrix added for 3100, 3200 (3200 both European
@@ -2051,7 +2051,7 @@ NOTE: Changed license of project. Before saying something see copying file for
       phones with it
 
       Please expect big progress in AT commands in 0.91 version
-      
+
 20031109 - 0.89.0.0
 * new functionality:
   * encoder for VCARDS can save info about default number
@@ -2332,7 +2332,7 @@ NEWS: CVS available, Michal Cihar added md5 checksums and bzip2 files
   * config matrix added for 3300/6800/7250/7250i
   * when use "make installlib", there is created directory with
     Gammu include files
-    
+
 * fixes and improvements:
   * getting files in DCT4                                           (Christian)
   * getallsms and geteachsms output fixes                            (Jomin Yu)
@@ -2384,7 +2384,7 @@ NEWS: CVS available, Michal Cihar added md5 checksums and bzip2 files
     for checking, which features should be enabled, what disabled.
   * can reset security code in DCT4 using brutal force method
   * getting UEM from DCT4
-  
+
 * fixes and improvements:
   * --geteachsms without overflow possibility          (Carl-Daniel Hailfinger)
   * removed segfault in some specific situations
@@ -2887,7 +2887,7 @@ NOTE: for 5100, 6100, 6610, 7210, 7250 I need testing FM & ToDo (and probably
   * no more segfaults during locking device in some situations   (Michal Cihar)
   * RTTL files can have "." before note                                (ReGGiD)
   * when use --setringtone, can add ringtone name
-  
+
 * other
   * default Nokia images and sound moved to separate file on my www.
     See Download subpage. File contains things from 3510i, 6100, 6610, 7210
@@ -3189,7 +3189,7 @@ NOTE: Summary for 2002
   * localisation strings can contains \n
   * when make restore, backup info (IMEI, date, etc.) is showed again
   * fixed "make makelib" and "make makerpm" on some OS
-  
+
 20021124 - 0.63
 * new functionality:
   * Delphi project updated to version 7
