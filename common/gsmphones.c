@@ -95,6 +95,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"NO_ATOBEX", F_NO_ATOBEX},
 	{"LENGTH_BYTES", F_LENGTH_BYTES},
 	{"BROKEN_CMGL", F_BROKEN_CMGL},
+	{"EXTRA_PBK_FIELD", F_EXTRA_PBK_FIELD},
 	{"LAST_VALUE", F_LAST_VALUE},
 	{"", 0},
 };
@@ -352,6 +353,7 @@ OnePhoneModel allmodels[] = {
 	{"T100" ,	  "SGH-T100" ,    "",				   {0}},
 	{"V200" ,	  "SGH-V200" ,    "",				   {0}},
 	{"X461",	  "SGH-X461" ,    "",				   {0}},
+	{"D357",	  "SGH-D357" ,	  "",				   {F_EXTRA_PBK_FIELD, 0}},
 
 	/* Ericsson/Sony Ericsson */
 	{"T28s",	"1101101-BVT28s","",				   {F_OBEX, 0}},

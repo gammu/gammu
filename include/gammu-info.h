@@ -548,6 +548,10 @@ typedef enum {
 	 * sequential.
 	 */
 	F_BROKEN_CMGL,
+	/**
+	 * Phonebook has extra numeric field at the end.
+	 */
+	F_EXTRA_PBK_FIELD,
 
 	/**
 	 * Just marker of highest feature code, should not be used.
