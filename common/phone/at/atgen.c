@@ -1487,7 +1487,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				i++;
 			}
 			/* Use IRA charset if we support it */
-			if (strstr(line, "IRA") != NULL) {
+			if (strstr(line, "IRA") != NULL || strstr(line, "ASCII") != NULL) {
 				Priv->IRACharset = AT_CHARSET_IRA;
 			}
 			if (Priv->NormalCharset == 0) {
