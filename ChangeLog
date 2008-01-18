@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Fixed some mistakes in API documentation.
 [-] * Fixed compilation under MS Visual C++ Express.
+[-] * Various small fixes if AT driver.
 [+] * Add simple shell script to generate JAD file from JAR.
 
 20070116 - 1.17.91
