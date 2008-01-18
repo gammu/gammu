@@ -77,6 +77,7 @@ MOTOROLA_CommandInfo Commands[] = {
 	{"+CBC", 2},
 	{"+CRTT", 2},
 	{"+CMEE", 2},
+	{"+CKPD", 2},
 
 	{"+CHV", 0},
 	{"+CDV", 0},
