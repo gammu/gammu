@@ -552,6 +552,10 @@ typedef enum {
 	 * Phonebook has extra numeric field at the end.
 	 */
 	F_EXTRA_PBK_FIELD,
+	/**
+	 * Key presses can not be in unicode.
+	 */
+	F_CKPD_NO_UNICODE,
 
 	/**
 	 * Just marker of highest feature code, should not be used.
