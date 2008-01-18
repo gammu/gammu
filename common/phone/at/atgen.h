@@ -95,9 +95,17 @@ typedef enum {
 	 */
 	AT_CHARSET_UCS2,
 	/**
+	 * Hex encoded UCS2.
+	 */
+	AT_CHARSET_UCS_2,
+	/**
 	 * UTF-8.
 	 */
 	AT_CHARSET_UTF8,
+	/**
+	 * UTF-8.
+	 */
+	AT_CHARSET_UTF_8,
 	/**
 	 * CP-437, not fully supported.
 	 */
@@ -106,6 +114,10 @@ typedef enum {
 	 * IRA, what is same as 7-bit ASCII.
 	 */
 	AT_CHARSET_IRA,
+	/**
+	 * 7-bit ASCII.
+	 */
+	AT_CHARSET_ASCII,
 	/**
 	 * ISO-8859-1, supported only with iconv.
 	 */

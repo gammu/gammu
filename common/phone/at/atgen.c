@@ -49,6 +49,7 @@ typedef struct {
 	GSM_AT_Charset	charset;
 	char		*text;
 	bool		unicode;
+	bool		ira;
 } GSM_AT_Charset_Info;
 
 /**
@@ -56,24 +57,24 @@ typedef struct {
  * defines their preferences, so if first is found it is used.
  */
 static GSM_AT_Charset_Info AT_Charsets[] = {
-	{AT_CHARSET_HEX,	"HEX",		false},
-	{AT_CHARSET_GSM,	"GSM",		false},
-	{AT_CHARSET_PCCP437,	"PCCP437",	false},
-	{AT_CHARSET_UTF8,	"UTF-8",	true},
-	{AT_CHARSET_UTF8,	"UTF8",		true},
-	{AT_CHARSET_UCS2,	"UCS-2",	true},
-	{AT_CHARSET_UCS2,	"UCS2",		true},
-	{AT_CHARSET_IRA,	"IRA",		false},
-	{AT_CHARSET_IRA,	"ASCII",	false},
+	{AT_CHARSET_HEX,	"HEX",		false,	false},
+	{AT_CHARSET_GSM,	"GSM",		false,	false},
+	{AT_CHARSET_PCCP437,	"PCCP437",	false,	false},
+	{AT_CHARSET_UTF_8,	"UTF-8",	true,	false},
+	{AT_CHARSET_UTF8,	"UTF8",		true,	false},
+	{AT_CHARSET_UCS_2,	"UCS-2",	true,	false},
+	{AT_CHARSET_UCS2,	"UCS2",		true,	false},
+	{AT_CHARSET_IRA,	"IRA",		false,	true},
+	{AT_CHARSET_ASCII,	"ASCII",	false,	true},
 #ifdef ICONV_FOUND
-	{AT_CHARSET_ISO88591,	"8859-1",	false},
-	{AT_CHARSET_ISO88592,	"8859-2",	false},
-	{AT_CHARSET_ISO88593,	"8859-3",	false},
-	{AT_CHARSET_ISO88594,	"8859-4",	false},
-	{AT_CHARSET_ISO88595,	"8859-5",	false},
-	{AT_CHARSET_ISO88596,	"8859-6",	false},
+	{AT_CHARSET_ISO88591,	"8859-1",	false,	false},
+	{AT_CHARSET_ISO88592,	"8859-2",	false,	false},
+	{AT_CHARSET_ISO88593,	"8859-3",	false,	false},
+	{AT_CHARSET_ISO88594,	"8859-4",	false,	false},
+	{AT_CHARSET_ISO88595,	"8859-5",	false,	false},
+	{AT_CHARSET_ISO88596,	"8859-6",	false,	false},
 #endif
-	{0,			NULL, false}
+	{0,			NULL,		false,	false}
 };
 
 typedef struct {
@@ -408,6 +409,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
  			DecodeHexUnicode(output, input, length);
   			break;
   		case AT_CHARSET_IRA: /* IRA is ASCII only, so it's safe to treat is as UTF-8 */
+		case AT_CHARSET_ASCII:
   		case AT_CHARSET_UTF8:
 			if (2 * length >= outlength) return ERR_MOREMEMORY;
  			DecodeUTF8(output, input, length);
@@ -1488,15 +1490,12 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				}
 				i++;
 			}
-			/* Use IRA charset if we support it */
-			if (strstr(line, "IRA") != NULL || strstr(line, "ASCII") != NULL) {
-				Priv->IRACharset = AT_CHARSET_IRA;
-			}
+			/* Check if we have proper normal charset */
 			if (Priv->NormalCharset == 0) {
 				smprintf(s, "Could not find supported charset in list returned by phone!\n");
 				return ERR_UNKNOWNRESPONSE;
 			}
-			/* Then find good charset for unicode: */
+			/* Then find good charset for unicode and IRA */
 			Priv->UnicodeCharset = 0;
 			while (AT_Charsets[i].charset != 0) {
 				if (AT_Charsets[i].unicode && (strstr(line, AT_Charsets[i].text) != NULL)) {
@@ -1505,6 +1504,9 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 						Priv->UnicodeCharset = AT_Charsets[i].charset;
 						break;
 					}
+				}
+				if (AT_Charsets[i].ira && (strstr(line, AT_Charsets[i].text) != NULL)) {
+					Priv->IRACharset = AT_Charsets[i].charset;
 				}
 				i++;
 			}
@@ -5020,12 +5022,15 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 			EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
 			break;
 		case AT_CHARSET_UCS2:
+		case AT_CHARSET_UCS_2:
 			EncodeHexUnicode(name, entry->Entries[Name].Text, UnicodeLength(entry->Entries[Name].Text));
 			len = strlen(name);
 			break;
   		case AT_CHARSET_IRA:
+  		case AT_CHARSET_ASCII:
 			return ERR_NOTSUPPORTED;
   		case AT_CHARSET_UTF8:
+  		case AT_CHARSET_UTF_8:
 			EncodeUTF8(name, entry->Entries[Name].Text);
 			len = strlen(name);
   			break;
@@ -5607,11 +5612,14 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 			}
 			break;
 		case AT_CHARSET_IRA:
+		case AT_CHARSET_ASCII:
 		case AT_CHARSET_UTF8:
+		case AT_CHARSET_UTF_8:
 		case AT_CHARSET_ISO88591:
 			/* Nothing to do here */
 			break;
 		case AT_CHARSET_UCS2:
+		case AT_CHARSET_UCS_2:
 			EncodeHexUnicode(key, unicode_key, len);
 			break;
 		default:
