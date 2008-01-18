@@ -1,0 +1,85 @@
+#!/bin/bash
+# JAD file generator
+# Copyright (C) 2008 Michal Cihar <michal@cihar.com>
+# vim: expandtab sw=4 ts=4 sts=4:
+
+# Defaults
+DEFURL=http://www.gammu.org/
+
+# Parameters
+FORCE=0
+URL="$DEFURL"
+
+usage() {
+    echo "Usage: jadmaker [-f] <filename.jar>..."
+}
+
+
+help() {
+    usage
+    echo
+    echo "-h / --help	    Show this help"
+    echo "-f / --force	    Force rewriting JAD file"
+    echo "-u / --url URL    URL to include in JAR (default=$DEFULR)"
+    echo
+}
+
+makejad() {
+    if [ ! -f "$1" ] ; then
+	echo "File $1 does not exist!"
+	exit 1
+    fi
+    JAD="${1%.*}.jad"
+    if [ "$FORCE" -eq 0 -a -f "$JAD" ] ; then
+	read -p "File $JAD already exists, overwrite? (y/N)" res
+	case "$res" in
+	    y|Y|yes|YES)
+		rm -f "$JAD"
+		;;
+	    *)
+		echo "Not overwriting $JAD"
+		exit
+		;;
+	esac
+    fi
+
+    # Extract manifest as text file (convert end of lines) and delete empty lines
+    unzip -aa -p "$1" "META-INF/MANIFEST.MF" \
+	| sed '/^[[:space:]]*$/d' \
+	> "$JAD"
+
+    # Some needed variables
+    echo "MIDlet-Jar-Size: $(stat -c%s "$1")" >> "$JAD"
+    echo "MIDlet-Jar-URL: $(basename $1)" >> "$JAD"
+    echo "MIDlet-Info-URL: $URL" >> "$JAD"
+
+    echo "File $JAD created"
+}
+
+
+while [ "$#" -gt 0 ] ; do
+    case "$1" in 
+	-?|-h|--help)
+	    help
+	    exit
+	    ;;
+	-f|--force)
+	    FORCE=1
+	    ;;
+	-u|--url)
+	    if [ $# -lt 2 ] ; then
+		echo "Missing parameter for URL!"
+		exit 1
+	    fi
+	    shift
+	    URL="$1"
+	    ;;
+	*)
+	    makejad "$1"
+	    if [ $? -ne 0 ] ; then
+		exit 1
+	    fi
+	    ;;
+    esac
+    shift
+done
