@@ -96,6 +96,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"LENGTH_BYTES", F_LENGTH_BYTES},
 	{"BROKEN_CMGL", F_BROKEN_CMGL},
 	{"EXTRA_PBK_FIELD", F_EXTRA_PBK_FIELD},
+	{"CKPD_NO_UNICODE", F_CKPD_NO_UNICODE},
 	{"LAST_VALUE", F_LAST_VALUE},
 	{"", 0},
 };
@@ -631,7 +632,7 @@ OnePhoneModel allmodels[] = {
 	{"V3",		"V3 Razr", "",					   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, 0}},
 	{"L6",		"L6", "",					   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, 0}},
 	{"Serias E",	"Serias E",	"",				   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, 0}},
-	{"L7",		"L7", "",					   {0}},
+	{"L7",		"L7", "",					   {F_CKPD_NO_UNICODE, 0}},
 
 	/* Sharp */
 	{"GX",		"GX Series", "",				   {F_OBEX, F_XLNK, 0}},

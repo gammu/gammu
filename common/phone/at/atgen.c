@@ -1572,7 +1572,12 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 	} else if (Prefer == AT_PREF_CHARSET_NORMAL) {
 		cset = Priv->NormalCharset;
 	} else if (Prefer == AT_PREF_CHARSET_IRA) {
-		cset = Priv->IRACharset;
+		if (Priv->IRACharset == Priv->UnicodeCharset &&
+				GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CKPD_NO_UNICODE)) {
+			cset = Priv->NormalCharset;
+		} else {
+			cset = Priv->IRACharset;
+		}
 	} else {
 		return ERR_BUG;
 	}
@@ -5529,6 +5534,7 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 	size_t len;
 	unsigned char unicode_key[20];
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+	GSM_Error error;
 
 	/* We do nothing on release event */
 	if (!Press) {
@@ -5536,7 +5542,13 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 	}
 
 	/* Prefer IRA charaset to avoid tricky conversions */
-	ATGEN_SetCharset(s, AT_PREF_CHARSET_IRA);
+	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_IRA);
+
+	/* Check error */
+	if (error != ERR_NONE) {
+		return error;
+	}
+			
 
 	frame[0] = 0;
 
