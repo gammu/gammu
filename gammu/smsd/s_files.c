@@ -29,7 +29,7 @@
 	if (fwrite(data, size, count, file) != count) goto fail;
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
-static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config)
+static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config)
 {
 	GSM_Error	error = ERR_NONE;
 	int 		i,j;
@@ -42,18 +42,18 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 
 	j 	= 0;
 	done 	= false;
-	for (i=0;i<sms.Number && !done;i++) {
+	for (i=0;i<sms->Number && !done;i++) {
 		strcpy(ext, "txt");
-		if (sms.SMS[i].Coding == SMS_Coding_8bit) strcpy(ext, "bin");
-		DecodeUnicode(sms.SMS[i].Number,buffer2);
+		if (sms->SMS[i].Coding == SMS_Coding_8bit) strcpy(ext, "bin");
+		DecodeUnicode(sms->SMS[i].Number,buffer2);
 		/* we loop on yy for the first SMS assuming that if xxxx_yy_00.ext is absent,
 		   any xxxx_yy_01,02, must be garbage, that can be overwritten */
 		file = NULL;
 		do {
 			sprintf(FileName,
 				"IN%02d%02d%02d_%02d%02d%02d_%02i_%s_%02i.%s",
-				sms.SMS[i].DateTime.Year, sms.SMS[i].DateTime.Month,  sms.SMS[i].DateTime.Day,
-				sms.SMS[i].DateTime.Hour, sms.SMS[i].DateTime.Minute, sms.SMS[i].DateTime.Second,
+				sms->SMS[i].DateTime.Year, sms->SMS[i].DateTime.Month,  sms->SMS[i].DateTime.Day,
+				sms->SMS[i].DateTime.Hour, sms->SMS[i].DateTime.Minute, sms->SMS[i].DateTime.Second,
 				j, buffer2, i, ext);
 			strcpy(FullName, Config->inboxpath);
 			strcat(FullName, FileName);
@@ -69,14 +69,14 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 		}
 		errno = 0;
 
-		if ((sms.SMS[i].PDU == SMS_Status_Report) && strncasecmp(Config->deliveryreport, "log", 3) == 0) {
-			strcpy(buffer, DecodeUnicodeString(sms.SMS[i].Number));
-			WriteSMSDLog(_("Delivery report: %s to %s"), DecodeUnicodeString(sms.SMS[i].Text), buffer);
+		if ((sms->SMS[i].PDU == SMS_Status_Report) && strncasecmp(Config->deliveryreport, "log", 3) == 0) {
+			strcpy(buffer, DecodeUnicodeString(sms->SMS[i].Number));
+			WriteSMSDLog(_("Delivery report: %s to %s"), DecodeUnicodeString(sms->SMS[i].Text), buffer);
 		} else {
 #ifdef GSM_ENABLE_BACKUP
 			if (strcasecmp(Config->inboxformat, "detail") == 0) {
-				for (j=0;j<sms.Number;j++) backup.SMS[j] = &sms.SMS[j];
-				backup.SMS[sms.Number] = NULL;
+				for (j=0;j<sms->Number;j++) backup.SMS[j] = &sms->SMS[j];
+				backup.SMS[sms->Number] = NULL;
 				error = GSM_AddSMSBackupFile(FullName, &backup);
 				done = true;
 			}
@@ -84,21 +84,21 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 			if (!strcasecmp(Config->inboxformat, "detail") == 0) {
 				file = fopen(FullName, "wb");
 				if (file) {
-					switch (sms.SMS[i].Coding) {
+					switch (sms->SMS[i].Coding) {
 					case SMS_Coding_Unicode_No_Compression:
 	    				case SMS_Coding_Default_No_Compression:
-					    DecodeUnicode(sms.SMS[i].Text,buffer2);
+					    DecodeUnicode(sms->SMS[i].Text,buffer2);
 					    if (strcasecmp(Config->inboxformat, "unicode") == 0) {
 						buffer[0] = 0xFE;
 	    					buffer[1] = 0xFF;
 						chk_fwrite(buffer,1,2,file);
-						chk_fwrite(sms.SMS[i].Text,1,strlen(buffer2)*2,file);
+						chk_fwrite(sms->SMS[i].Text,1,strlen(buffer2)*2,file);
 					    } else {
 						chk_fwrite(buffer2,1,strlen(buffer2),file);
 					    }
 					    break;
 					case SMS_Coding_8bit:
-					    chk_fwrite(sms.SMS[i].Text,1,(size_t)sms.SMS[i].Length,file);
+					    chk_fwrite(sms->SMS[i].Text,1,(size_t)sms->SMS[i].Length,file);
 					default:
 					    break;
 					}
@@ -106,7 +106,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 				} else error = ERR_CANTOPENFILE;
 			}
 			if (error == ERR_NONE) {
-				WriteSMSDLog("%s %s", (sms.SMS[i].PDU == SMS_Status_Report ? _("Delivery report"): _("Received")), FileName);
+				WriteSMSDLog("%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? _("Delivery report"): _("Received")), FileName);
 			} else {
 				WriteSMSDLog(_("Cannot save %s (%i)"), FileName, errno);
 				return ERR_CANTOPENFILE;
