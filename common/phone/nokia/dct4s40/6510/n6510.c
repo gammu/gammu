@@ -1125,6 +1125,8 @@ static GSM_Error N6510_ReplyGetOperatorLogo(GSM_Protocol_Message msg, GSM_StateM
 {
 	GSM_Phone_Data *Data = &s->Phone.Data;
 
+	if (msg.Buffer[3] == 0xf0) return ERR_NOTSUPPORTED;
+
 	smprintf(s, "Operator logo received\n");
 	if (msg.Length == 18) return ERR_EMPTY;
 	NOKIA_DecodeNetworkCode(msg.Buffer+12,Data->Bitmap->NetworkCode);
@@ -4009,6 +4011,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{N6510_ReplyGetIncSignalQuality,  "\x0A",0x03,0x1E,ID_IncomingFrame	  },
 	{NoneReply,			  "\x0A",0x03,0x20,ID_IncomingFrame	  },
 	{N6510_ReplyGetOperatorLogo,	  "\x0A",0x03,0x24,ID_GetBitmap		  },
+	{N6510_ReplyGetOperatorLogo,	  "\x0A",0x03,0xf0,ID_GetBitmap		  },
 	{N6510_ReplySetOperatorLogo,	  "\x0A",0x03,0x26,ID_SetBitmap		  },
 
 	{NoneReply,			  "\x0B",0x03,0x01,ID_PlayTone		  },
