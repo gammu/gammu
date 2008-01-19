@@ -433,7 +433,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				}
 			}
 			if (process) {
-	 			Service->SaveInboxSMS(sms, Config);
+	 			Service->SaveInboxSMS(&sms, Config);
 				if (Config->RunOnReceive != NULL) {
 					SMSD_RunOnReceive(sms,Config);
 				}

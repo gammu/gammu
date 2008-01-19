@@ -160,7 +160,7 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 }
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
-static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig *Config)
+static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config)
 {
 	MYSQL_RES 		*Res;
 	MYSQL_ROW 		Row;
@@ -170,17 +170,17 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 	bool			found;
 	long 			diff;
 
-	for (i=0;i<sms.Number;i++) {
-		if (sms.SMS[i].PDU == SMS_Status_Report) {
-			strcpy(buffer2, DecodeUnicodeString(sms.SMS[i].Number));
+	for (i=0;i<sms->Number;i++) {
+		if (sms->SMS[i].PDU == SMS_Status_Report) {
+			strcpy(buffer2, DecodeUnicodeString(sms->SMS[i].Number));
 			if (strncasecmp(Config->deliveryreport, "log", 3) == 0) {
-				WriteSMSDLog(_("Delivery report: %s to %s"), DecodeUnicodeString(sms.SMS[i].Text), buffer2);
+				WriteSMSDLog(_("Delivery report: %s to %s"), DecodeUnicodeString(sms->SMS[i].Text), buffer2);
 			}
 
 			sprintf(buffer, "SELECT ID,Status,UNIX_TIMESTAMP(SendingDateTime),DeliveryDateTime,SMSCNumber FROM `sentitems` WHERE \
 					DeliveryDateTime='0000-00-00 00:00:00' AND \
 					SenderID='%s' AND TPMR='%i' AND DestinationNumber='%s'",
-					Config->PhoneID, sms.SMS[i].MessageReference, buffer2);
+					Config->PhoneID, sms->SMS[i].MessageReference, buffer2);
 			dbgprintf("%s\n",buffer);
 			if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
 				WriteSMSDLog(_("Error reading from database (SaveInbox): %s %s\n"), buffer, mysql_error(&Config->DBConnMySQL));
@@ -192,13 +192,13 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 			}
 			found = false;
 			while ((Row = mysql_fetch_row(Res))) {
-				if (strcmp(Row[4],DecodeUnicodeString(sms.SMS[i].SMSC.Number))) {
+				if (strcmp(Row[4],DecodeUnicodeString(sms->SMS[i].SMSC.Number))) {
 					if (Config->skipsmscnumber[0] == 0) continue;
 					if (strcmp(Config->skipsmscnumber,Row[4])) continue;
 				}
 				if (!strcmp(Row[1],"SendingOK") || !strcmp(Row[1],"DeliveryPending")) {
 					t_time1 = atoi(Row[2]);
-					t_time2 = Fill_Time_T(sms.SMS[i].DateTime);
+					t_time2 = Fill_Time_T(sms->SMS[i].DateTime);
 					diff = t_time2 - t_time1;
 
 					if (diff > -Config->deliveryreportdelay && diff < Config->deliveryreportdelay) {
@@ -209,9 +209,9 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 			}
 			if (found) {
 				sprintf(buffer,"UPDATE `sentitems` SET `DeliveryDateTime`='%04i-%02i-%02i %02i:%02i:%02i', `Status`='",
-					sms.SMS[i].SMSCTime.Year,sms.SMS[i].SMSCTime.Month,sms.SMS[i].SMSCTime.Day,
-					sms.SMS[i].SMSCTime.Hour,sms.SMS[i].SMSCTime.Minute,sms.SMS[i].SMSCTime.Second);
-				sprintf(buffer3,"%s",DecodeUnicodeString(sms.SMS[i].Text));
+					sms->SMS[i].SMSCTime.Year,sms->SMS[i].SMSCTime.Month,sms->SMS[i].SMSCTime.Day,
+					sms->SMS[i].SMSCTime.Hour,sms->SMS[i].SMSCTime.Minute,sms->SMS[i].SMSCTime.Second);
+				sprintf(buffer3,"%s",DecodeUnicodeString(sms->SMS[i].Text));
 				if (!strcmp(buffer3,"Delivered")) {
 					sprintf(buffer+strlen(buffer),"DeliveryOK");
 				} else if (!strcmp(buffer3,"Failed")) {
@@ -221,8 +221,8 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 				} else if (!strcmp(buffer3,"Unknown")) {
 					sprintf(buffer+strlen(buffer),"DeliveryUnknown");
 				}
-				sprintf(buffer+strlen(buffer),"', `StatusError` = '%i'",sms.SMS[i].DeliveryStatus);
-				sprintf(buffer+strlen(buffer)," WHERE `ID` = '%s' AND `TPMR` = '%i'",Row[0],sms.SMS[i].MessageReference);
+				sprintf(buffer+strlen(buffer),"', `StatusError` = '%i'",sms->SMS[i].DeliveryStatus);
+				sprintf(buffer+strlen(buffer)," WHERE `ID` = '%s' AND `TPMR` = '%i'",Row[0],sms->SMS[i].MessageReference);
 				dbgprintf("%s\n",buffer);
 				if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
 					WriteSMSDLog(_("Error writing to database (SaveInboxSMS): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
@@ -232,25 +232,25 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 			mysql_free_result(Res);
 			continue;
 		}
-		if (sms.SMS[i].PDU != SMS_Deliver) continue;
+		if (sms->SMS[i].PDU != SMS_Deliver) continue;
 		buffer[0]=0;
 		sprintf(buffer+strlen(buffer),"INSERT INTO `inbox` \
 			(`ReceivingDateTime`,`Text`,`SenderNumber`,`Coding`,`SMSCNumber`,`UDH`, \
 			`Class`,`TextDecoded`,`RecipientID`) VALUES ('%04d%02d%02d%02d%02d%02d','",
-			sms.SMS[i].DateTime.Year,sms.SMS[i].DateTime.Month,sms.SMS[i].DateTime.Day,
-			sms.SMS[i].DateTime.Hour,sms.SMS[i].DateTime.Minute,sms.SMS[i].DateTime.Second);
-		switch (sms.SMS[i].Coding) {
+			sms->SMS[i].DateTime.Year,sms->SMS[i].DateTime.Month,sms->SMS[i].DateTime.Day,
+			sms->SMS[i].DateTime.Hour,sms->SMS[i].DateTime.Minute,sms->SMS[i].DateTime.Second);
+		switch (sms->SMS[i].Coding) {
 		case SMS_Coding_Unicode_No_Compression:
 	    	case SMS_Coding_Default_No_Compression:
-			EncodeHexUnicode(buffer+strlen(buffer),sms.SMS[i].Text,UnicodeLength(sms.SMS[i].Text));
+			EncodeHexUnicode(buffer+strlen(buffer),sms->SMS[i].Text,UnicodeLength(sms->SMS[i].Text));
 			break;
 		case SMS_Coding_8bit:
-			EncodeHexBin(buffer+strlen(buffer),sms.SMS[i].Text,sms.SMS[i].Length);
+			EncodeHexBin(buffer+strlen(buffer),sms->SMS[i].Text,sms->SMS[i].Length);
 		default:
 			break;
 		}
-		sprintf(buffer+strlen(buffer),"','%s','",DecodeUnicodeString(sms.SMS[i].Number));
-		switch (sms.SMS[i].Coding) {
+		sprintf(buffer+strlen(buffer),"','%s','",DecodeUnicodeString(sms->SMS[i].Number));
+		switch (sms->SMS[i].Coding) {
 		case SMS_Coding_Unicode_No_Compression:
 			sprintf(buffer+strlen(buffer),"Unicode_No_Compression");
 			break;
@@ -267,19 +267,19 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage sms, GSM_SMSDConfig 
 			sprintf(buffer+strlen(buffer),"8bit");
 			break;
 		}
-		sprintf(buffer+strlen(buffer),"','%s'",DecodeUnicodeString(sms.SMS[i].SMSC.Number));
-		if (sms.SMS[i].UDH.Type == UDH_NoUDH) {
+		sprintf(buffer+strlen(buffer),"','%s'",DecodeUnicodeString(sms->SMS[i].SMSC.Number));
+		if (sms->SMS[i].UDH.Type == UDH_NoUDH) {
 			sprintf(buffer+strlen(buffer),",''");
 		} else {
 			sprintf(buffer+strlen(buffer),",'");
-			EncodeHexBin(buffer+strlen(buffer),sms.SMS[i].UDH.Text,sms.SMS[i].UDH.Length);
+			EncodeHexBin(buffer+strlen(buffer),sms->SMS[i].UDH.Text,sms->SMS[i].UDH.Length);
 			sprintf(buffer+strlen(buffer),"'");
 		}
-		sprintf(buffer+strlen(buffer),",'%i','",sms.SMS[i].Class);
-		switch (sms.SMS[i].Coding) {
+		sprintf(buffer+strlen(buffer),",'%i','",sms->SMS[i].Class);
+		switch (sms->SMS[i].Coding) {
 		case SMS_Coding_Unicode_No_Compression:
 	    	case SMS_Coding_Default_No_Compression:
-			EncodeUTF8(buffer2, sms.SMS[i].Text);
+			EncodeUTF8(buffer2, sms->SMS[i].Text);
 			mysql_real_escape_string(&Config->DBConnMySQL,buffer4,buffer2,strlen(buffer2));
 			memcpy(buffer+strlen(buffer),buffer4,strlen(buffer4)+1);
 			break;

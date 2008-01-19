@@ -181,7 +181,7 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 }
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
-static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
+static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					GSM_SMSDConfig * Config)
 {
 	PGresult *Res = NULL;
@@ -193,12 +193,12 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 	bool found;
 	long diff;
 
-	for (i = 0; i < sms.Number; i++) {
-		if (sms.SMS[i].PDU == SMS_Status_Report) {
-			strcpy(buffer2, DecodeUnicodeString(sms.SMS[i].Number));
+	for (i = 0; i < sms->Number; i++) {
+		if (sms->SMS[i].PDU == SMS_Status_Report) {
+			strcpy(buffer2, DecodeUnicodeString(sms->SMS[i].Number));
 			if (strncasecmp(Config->deliveryreport, "log", 3) == 0) {
 				WriteSMSDLog(_("Delivery report: %s to %s"),
-					     DecodeUnicodeString(sms.SMS[i].
+					     DecodeUnicodeString(sms->SMS[i].
 								 Text),
 					     buffer2);
 			}
@@ -208,7 +208,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
                                         FROM sentitems WHERE \
 					DeliveryDateTime = 'epoch' AND \
 					SenderID = '%s' AND TPMR = '%i' AND DestinationNumber = '%s'",
-				Config->PhoneID, sms.SMS[i].MessageReference, buffer2);
+				Config->PhoneID, sms->SMS[i].MessageReference, buffer2);
 			dbgprintf("%s\n", buffer);
 
 			Res = PQexec(Config->DBConnPgSQL, buffer);
@@ -227,7 +227,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 
 				if (strcmp
 				    (PQgetvalue(Res, j, 4),
-				     DecodeUnicodeString(sms.SMS[i].SMSC.
+				     DecodeUnicodeString(sms->SMS[i].SMSC.
 							 Number))) {
 					if (Config->skipsmscnumber[0] == 0)
 						continue;
@@ -241,7 +241,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 				    || !strcmp(PQgetvalue(Res, j, 1),
 					       "DeliveryPending")) {
 					t_time1 = atoi(PQgetvalue(Res, j, 2));
-					t_time2 = Fill_Time_T(sms.SMS[i].DateTime);
+					t_time2 = Fill_Time_T(sms->SMS[i].DateTime);
 					diff = t_time2 - t_time1;
 
 					if (diff > -Config->deliveryreportdelay && diff < Config->deliveryreportdelay) {
@@ -254,11 +254,11 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 			if (found) {
 				sprintf(buffer, "UPDATE sentitems SET DeliveryDateTime = '%04i%02i%02i%02i%02i%02i', \
                                           Status = '",
-					sms.SMS[i].SMSCTime.Year, sms.SMS[i].SMSCTime.Month, sms.SMS[i].SMSCTime.Day, sms.SMS[i].SMSCTime.Hour, sms.SMS[i].SMSCTime.Minute,
-					sms.SMS[i].SMSCTime.Second);
+					sms->SMS[i].SMSCTime.Year, sms->SMS[i].SMSCTime.Month, sms->SMS[i].SMSCTime.Day, sms->SMS[i].SMSCTime.Hour, sms->SMS[i].SMSCTime.Minute,
+					sms->SMS[i].SMSCTime.Second);
 
 				sprintf(buffer3, "%s",
-					DecodeUnicodeString(sms.SMS[i].Text));
+					DecodeUnicodeString(sms->SMS[i].Text));
 				if (!strcmp(buffer3, "Delivered")) {
 					sprintf(buffer + strlen(buffer),
 						"DeliveryOK");
@@ -275,11 +275,11 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 
 				sprintf(buffer + strlen(buffer),
 					"', StatusError = '%i'",
-					sms.SMS[i].DeliveryStatus);
+					sms->SMS[i].DeliveryStatus);
 				sprintf(buffer + strlen(buffer),
 					" WHERE ID = '%s' AND `TPMR` = '%i'",
 					PQgetvalue(Res, j, 0),
-					sms.SMS[i].MessageReference);
+					sms->SMS[i].MessageReference);
 				dbgprintf("%s\n", buffer);
 
 				Res = PQexec(Config->DBConnPgSQL, buffer);
@@ -297,36 +297,36 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 			continue;
 		}
 
-		if (sms.SMS[i].PDU != SMS_Deliver)
+		if (sms->SMS[i].PDU != SMS_Deliver)
 			continue;
 		buffer[0] = 0;
 		sprintf(buffer + strlen(buffer), "INSERT INTO inbox \
 			(ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH, \
-			Class, TextDecoded, RecipientID) VALUES ('%04d-%02d-%02d %02d:%02d:%02d', '", sms.SMS[i].DateTime.Year, sms.SMS[i].DateTime.Month, sms.SMS[i].DateTime.Day, sms.SMS[i].DateTime.Hour, sms.SMS[i].DateTime.Minute, sms.SMS[i].DateTime.Second);
+			Class, TextDecoded, RecipientID) VALUES ('%04d-%02d-%02d %02d:%02d:%02d', '", sms->SMS[i].DateTime.Year, sms->SMS[i].DateTime.Month, sms->SMS[i].DateTime.Day, sms->SMS[i].DateTime.Hour, sms->SMS[i].DateTime.Minute, sms->SMS[i].DateTime.Second);
 
-		switch (sms.SMS[i].Coding) {
+		switch (sms->SMS[i].Coding) {
 			case SMS_Coding_Unicode_No_Compression:
 
 			case SMS_Coding_Default_No_Compression:
 				EncodeHexUnicode(buffer + strlen(buffer),
-						 sms.SMS[i].Text,
-						 UnicodeLength(sms.SMS[i].
+						 sms->SMS[i].Text,
+						 UnicodeLength(sms->SMS[i].
 							       Text));
 				break;
 
 			case SMS_Coding_8bit:
 				EncodeHexBin(buffer + strlen(buffer),
-					     sms.SMS[i].Text,
-					     sms.SMS[i].Length);
+					     sms->SMS[i].Text,
+					     sms->SMS[i].Length);
 
 			default:
 				break;
 		}
 
 		sprintf(buffer + strlen(buffer), "','%s','",
-			DecodeUnicodeString(sms.SMS[i].Number));
+			DecodeUnicodeString(sms->SMS[i].Number));
 
-		switch (sms.SMS[i].Coding) {
+		switch (sms->SMS[i].Coding) {
 			case SMS_Coding_Unicode_No_Compression:
 				sprintf(buffer + strlen(buffer),
 					"Unicode_No_Compression");
@@ -353,26 +353,26 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage sms,
 		}
 
 		sprintf(buffer + strlen(buffer), "','%s'",
-			DecodeUnicodeString(sms.SMS[i].SMSC.Number));
+			DecodeUnicodeString(sms->SMS[i].SMSC.Number));
 
-		if (sms.SMS[i].UDH.Type == UDH_NoUDH) {
+		if (sms->SMS[i].UDH.Type == UDH_NoUDH) {
 			sprintf(buffer + strlen(buffer), ",''");
 		} else {
 			sprintf(buffer + strlen(buffer), ",'");
 			EncodeHexBin(buffer + strlen(buffer),
-				     sms.SMS[i].UDH.Text,
-				     sms.SMS[i].UDH.Length);
+				     sms->SMS[i].UDH.Text,
+				     sms->SMS[i].UDH.Length);
 			sprintf(buffer + strlen(buffer), "'");
 		}
 
-		sprintf(buffer + strlen(buffer), ",'%i','", sms.SMS[i].Class);
+		sprintf(buffer + strlen(buffer), ",'%i','", sms->SMS[i].Class);
 
-		switch (sms.SMS[i].Coding) {
+		switch (sms->SMS[i].Coding) {
 
 			case SMS_Coding_Unicode_No_Compression:
 
 			case SMS_Coding_Default_No_Compression:
-				EncodeUTF8(buffer2, sms.SMS[i].Text);
+				EncodeUTF8(buffer2, sms->SMS[i].Text);
 #ifdef HAVE_PQESCAPESTRINGCONN
 				PQescapeStringConn(Config->DBConnPgSQL, buffer4,
 						   buffer2, strlen(buffer2),
