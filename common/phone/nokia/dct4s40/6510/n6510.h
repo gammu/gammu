@@ -63,6 +63,19 @@ typedef struct {
 	GSM_File			MMSFile;
 	int				MMSFolderNum;
 	GSM_Error			MMSFolderError;
+
+	/**
+	 * Last location we used for adding memory entry.
+	 */
+	int				LastFreeMemoryLocation;
+	/**
+	 * Last type of memory used for LastFreeMemoryLocation.
+	 */
+	GSM_MemoryType			LastFreeMemoryType;
+	/**
+	 * Size of memory when starting last free memory lookup.
+	 */
+	int				LastFreeMemorySize;
 } GSM_Phone_N6510Data;
 
 void N6510_EncodeFMFrequency(double freq, unsigned char *buff);
