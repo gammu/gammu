@@ -21,6 +21,7 @@ ChangeLog
 [-] * Fixed compilation under MS Visual C++ Express.
 [-] * Various small fixes if AT driver.
 [+] * Add simple shell script to generate JAD file from JAR.
+[+] * Added support for adding memory entries to 6510.
 
 20070116 - 1.17.91
 

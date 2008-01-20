@@ -37,6 +37,8 @@
 static GSM_Error N6510_Initialise (GSM_StateMachine *s)
 {
 	s->Phone.Data.Priv.N6510.CalendarIconsNum  = 0;
+	s->Phone.Data.Priv.N6510.LastFreeMemoryLocation = 0;
+	s->Phone.Data.Priv.N6510.LastFreeMemoryType = 0;
 
 	/* Enables various things like incoming SMS, call info, etc. */
 	return N71_65_EnableFunctions (s, "\x01\x02\x06\x0A\x14\x17\x39", 7);
@@ -1172,8 +1174,44 @@ static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		0x00, 0x00,  		/* location */
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00};			/* Number of blocks */
+	GSM_Error error;
+	GSM_MemoryEntry tmp;
+	GSM_MemoryStatus status;
+	GSM_Phone_N6510Data *Priv = &s->Phone.Data.Priv.N6510;
 
-	if (entry->Location == 0) return ERR_NOTSUPPORTED;
+	if (entry->Location == 0) {
+		/*
+		 * We want to remember last location so that we don't check the
+		 * same place again and again.
+		 */
+		if (Priv->LastFreeMemoryType != entry->MemoryType) {
+			Priv->LastFreeMemoryLocation = 0;
+			Priv->LastFreeMemoryType = entry->MemoryType;
+			status.MemoryType = entry->MemoryType;
+			error = N6510_GetMemoryStatus(s, &status);
+			if (error != ERR_NONE) return error;
+			Priv->LastFreeMemorySize = status.MemoryUsed + status.MemoryFree;
+		}
+
+		/* Advance beyond last used location */
+		tmp.MemoryType = entry->MemoryType;
+		error = ERR_NONE;
+		for (tmp.Location = Priv->LastFreeMemoryLocation + 1;
+			tmp.Location < Priv->LastFreeMemorySize;
+			tmp.Location++) {
+			error = N6510_GetMemory(s, &tmp);
+			if (error != ERR_NONE) break;
+		}
+		if (error == ERR_NONE) {
+			/* Memory full */
+			return ERR_FULL;
+		} else if (error != ERR_EMPTY) {
+			/* Other failure */
+			return error;
+		}
+		/* We've got the location */
+		entry->Location = tmp.Location;
+	}
 
 	req[11] = NOKIA_GetMemoryType(s, entry->MemoryType,N71_65_MEMORY_TYPES);
 	if (req[11]==0xff) return ERR_NOTSUPPORTED;
@@ -1186,6 +1224,12 @@ static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 	smprintf(s, "Writing phonebook entry\n");
 	return GSM_WaitFor (s, req, count, 0x03, 4, ID_SetMemory);
+}
+
+static GSM_Error N6510_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	entry->Location = 0;
+	return N6510_SetMemory(s, entry);
 }
 
 static GSM_Error N6510_ReplySetOperatorLogo(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
@@ -4228,7 +4272,7 @@ GSM_Phone_Functions N6510Phone = {
 	N6510_GetMemory,
 	NOTIMPLEMENTED,			/*	GetNextMemory		*/
 	N6510_SetMemory,
-	NOTIMPLEMENTED,			/*	AddMemory		*/
+	N6510_AddMemory,
 	N6510_DeleteMemory,
 	NOTIMPLEMENTED,			/*	DeleteAllMemory		*/
 	N6510_GetSpeedDial,
