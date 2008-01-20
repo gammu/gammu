@@ -1501,9 +1501,12 @@ GSM_Error N71_65_ReplyGetMemoryError(unsigned char error, GSM_StateMachine *s)
 		smprintf(s, "No PIN\n");
 		return ERR_SECURITYERROR;
 	case 0x30:
+		if (s->Phone.Data.Memory->MemoryType == MEM_ME ||
+				s->Phone.Data.Memory->MemoryType == MEM_SM) {
+			smprintf(s, "Empty entry\n");
+			return ERR_EMPTY;
+		}
 		smprintf(s, "Invalid memory type\n");
-		if (s->Phone.Data.Memory->MemoryType == MEM_ME) return ERR_EMPTY;
-		if (s->Phone.Data.Memory->MemoryType == MEM_SM) return ERR_EMPTY;
 		return ERR_NOTSUPPORTED;
 	case 0x31:
 		smprintf(s, "Invalid memory type?\n");
