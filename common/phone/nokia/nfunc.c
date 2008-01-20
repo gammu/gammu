@@ -1531,10 +1531,9 @@ GSM_Error N71_65_ReplyGetMemoryError(unsigned char error, GSM_StateMachine *s)
 
 GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	smprintf(s, "Phonebook entry written ");
 	switch (msg.Buffer[6]) {
 	case 0x0f:
-		smprintf(s, " - error\n");
+		smprintf(s, "Phonebook entry writing failed\n");
 		switch (msg.Buffer[10]) {
 		case 0x25:
 			smprintf(s, "when you try to save into entry with caller group assigment in phone with caller groups standard 2 (like in 6230i)\n");
@@ -1562,7 +1561,7 @@ GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine 
 			return ERR_UNKNOWNRESPONSE;
 		}
 	default:
-		smprintf(s, " - OK\n");
+		smprintf(s, "Phonebook entry written\n");
 		return ERR_NONE;
 	}
 }
