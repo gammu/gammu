@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
 
-2007???? - 1.17.92
+20070123 - 1.17.92
 
 [-] * Fixed some mistakes in API documentation.
 [-] * Fixed compilation under MS Visual C++ Express.
