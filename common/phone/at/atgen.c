@@ -1070,9 +1070,9 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		strcpy(Data->Model, pos);
 
 		Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
-		if (Data->ModelInfo->number[0] == 0) 
+		if (Data->ModelInfo->number[0] == 0)
 			Data->ModelInfo = GetModelData(s, NULL, NULL, Data->Model);
-		if (Data->ModelInfo->number[0] == 0) 
+		if (Data->ModelInfo->number[0] == 0)
 			Data->ModelInfo = GetModelData(s, Data->Model, NULL, NULL);
 
 		if (Data->ModelInfo->number[0] != 0) strcpy(Data->Model,Data->ModelInfo->number);
@@ -2044,7 +2044,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					smsframe[PHONE_SMSDeliver.DateTime+i]=buffer[current++];
 				}
 				smsframe[PHONE_SMSDeliver.TPUDL] = buffer[current++];
-				if (current >= length) return ERR_CORRUPTED;
+				if (current > length) return ERR_CORRUPTED;
 				datalength = smsframe[PHONE_SMSDeliver.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSDeliver.TPDCS]) == SMS_Coding_Default_No_Compression) {
 					datalength = (datalength * 7) / 8;
@@ -2107,7 +2107,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				if (current >= length) return ERR_CORRUPTED;
 				/* See GSM 03.40 9.2.3.3 - TPVP can not exist in frame */
 				if ((smsframe[12] & 0x18)!=0) current++; /* TPVP is ignored now */
-				if (current >= length) return ERR_CORRUPTED;
+				if (current > length) return ERR_CORRUPTED;
 				smsframe[PHONE_SMSSubmit.TPUDL] = buffer[current++];
 				datalength = smsframe[PHONE_SMSSubmit.TPUDL];
 				if (GSM_GetMessageCoding(smsframe[PHONE_SMSSubmit.TPDCS]) == SMS_Coding_Default_No_Compression) {
@@ -5554,7 +5554,7 @@ GSM_Error ATGEN_PressKey(GSM_StateMachine *s, GSM_KeyCode Key, bool Press)
 	if (error != ERR_NONE) {
 		return error;
 	}
-			
+
 
 	frame[0] = 0;
 
