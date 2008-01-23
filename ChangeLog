@@ -17,6 +17,8 @@ ChangeLog
     
 2007???? - 1.17.93
 
+[-] * Fixed decoding of an empty SMS.
+
 20070123 - 1.17.92
 
 [-] * Fixed some mistakes in API documentation.
