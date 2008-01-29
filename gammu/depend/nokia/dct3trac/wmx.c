@@ -350,6 +350,7 @@ void DCT3SetDebug(int argc, char *argv[])
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
 		};
+	FILE *xout;
 
 	#define ENABLE_BIT(bit,verbose) reqEnable[3 + (bit>>3)] |= 1<<(7-(bit&7)); if(verbose){reqEnable[3 + 32 + (bit>>3)] |= 1<<(7-(bit&7));}
 
@@ -362,10 +363,12 @@ void DCT3SetDebug(int argc, char *argv[])
 
 	gsmdec = GSMDecoder_new();
 	/* Open XML file .. needs to be argument */
-	{
-		FILE *xout = fopen("out.xml", "w");
-		GSMDecoder_xmlout(gsmdec, xout);
+	xout = fopen("out.xml", "w");
+	if (xout == NULL) {
+		return;
 	}
+	GSMDecoder_xmlout(gsmdec, xout);
+
 	printf("Debug Trace Mode -- wumpus 2003\n");
 	traces = wmx_tracestruct_load(argv[2]);
 	if(traces == NULL)

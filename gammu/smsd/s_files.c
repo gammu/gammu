@@ -59,7 +59,8 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 			strcat(FullName, FileName);
 			if (file) fclose(file);
 			file = fopen(FullName, "r");
-		} while ((i == 0) && file && (++j < 100));
+		} while ((i == 0) && file != NULL && (++j < 100));
+
 		if (file) {
 			fclose(file);
 			if (i == 0) {
@@ -83,7 +84,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 #endif
 			if (!strcasecmp(Config->inboxformat, "detail") == 0) {
 				file = fopen(FullName, "wb");
-				if (file) {
+				if (file != NULL) {
 					switch (sms->SMS[i].Coding) {
 					case SMS_Coding_Unicode_No_Compression:
 	    				case SMS_Coding_Default_No_Compression:

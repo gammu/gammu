@@ -138,6 +138,10 @@ void SaveFile(int argc, char *argv[])
 	}
 
 	file = fopen(argv[3],"wb");
+	if (file == NULL) {
+		printf_err(_("Error while opening file for writing!\n"));
+		exit(-1);
+	}
 	if (j != fwrite(Buffer,1,j,file)) {
 		printf_err(_("Error while writing file!\n"));
 	}

@@ -430,9 +430,9 @@ void GetOneFile(GSM_File * File, bool newtime, int i)
 				sprintf(buffer, "file%i", i);
 				file = fopen(buffer, "wb");
 			}
-			printf(_("  Saving to %s\n"), buffer);
-			if (!file)
+			if (file == NULL)
 				Print_Error(ERR_CANTOPENFILE);
+			printf(_("  Saving to %s\n"), buffer);
 			if (fwrite(File->Buffer, 1, File->Used, file) != File->Used) {
 				printf_err(_("Error while writing file!\n"));
 			}

@@ -264,7 +264,7 @@ void decodesniff(int argc, char *argv[])
 		exit(-1);
 	}
 	file = fopen(argv[3], "rb");
-	if (!file) {
+	if (file == NULL) {
 		printf("Can not open file \"%s\"\n",argv[3]);
 		exit(-1);
 	}
@@ -361,7 +361,7 @@ void decodebinarydump(int argc, char *argv[])
 		if (error!=ERR_NONE) Print_Error(error);
 	}
 	file = fopen(argv[2], "rb");
-	if (!file) {
+	if (file == NULL) {
 		printf("Can not open file \"%s\"\n",argv[2]);
 		exit(-1);
 	}
