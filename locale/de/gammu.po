@@ -436,7 +436,6 @@ msgstr "Unbekanntes Backupformat: \"%s\"\n"
 
 #: gammu/backup.c:142
 #, fuzzy
-#| msgid "Error while writing file!\n"
 msgid "Error while opening file for writing!\n"
 msgstr "Fehler beim Schreiben der Datei!\n"
 
