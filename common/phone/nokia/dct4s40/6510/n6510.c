@@ -3393,6 +3393,8 @@ static GSM_Error N6510_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachi
 #endif
 
 	if (s->Phone.Data.EnableIncomingSMS && s->User.IncomingSMS!=NULL) {
+		GSM_SetDefaultSMSData(&sms);
+
 		sms.State 	 = SMS_UnRead;
 		sms.InboxFolder  = true;
 
