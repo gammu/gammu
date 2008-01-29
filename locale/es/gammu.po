@@ -434,7 +434,6 @@ msgstr "Parámetro desconocido (\"%s\")\n"
 
 #: gammu/backup.c:142
 #, fuzzy
-#| msgid "Error while writing file!\n"
 msgid "Error while opening file for writing!\n"
 msgstr "¡Error escribiendo en el archivo!\n"
 
