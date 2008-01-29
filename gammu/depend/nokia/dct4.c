@@ -705,6 +705,9 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	Token				= Buffer[2];
 
 	WAVFile = fopen(FileName, "wb");
+	if (WAVFile == NULL) {
+		goto failnofile;
+	}
 
 	chk_fwrite(&WAV_Header,	1, sizeof(WAV_Header),	WAVFile);
 	chk_fwrite(&FMT_Header,	1, sizeof(FMT_Header),	WAVFile);
@@ -783,7 +786,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 
 fail:
 	fclose(WAVFile);
-
+failnofile:
 	GSM_Terminate();
 }
 

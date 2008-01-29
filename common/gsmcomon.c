@@ -267,7 +267,7 @@ GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
 		default:
 			testfile = fopen(info,"w" COMMIT_FLAG);
 		}
-		if (!testfile) {
+		if (testfile == NULL) {
 			dbgprintf("Can't open debug file\n");
 			return ERR_CANTOPENFILE;
 		} else {
