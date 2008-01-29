@@ -9,13 +9,13 @@ msgstr ""
 "Project-Id-Version: Gammu 1.17.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2008-01-29 11:24+0900\n"
-"PO-Revision-Date: 2008-01-08 15:50+0900\n"
+"PO-Revision-Date: 2008-01-29 11:26+0900\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
 
 #: common/gsmcomon.c:98
 msgid "No error."
@@ -419,10 +419,9 @@ msgid "Unknown backup format: \"%s\"\n"
 msgstr "Neznámý formát zálohy: \"%s\"\n"
 
 #: gammu/backup.c:142
-#, fuzzy
 #| msgid "Error while writing file!\n"
 msgid "Error while opening file for writing!\n"
-msgstr "Chyba při zápisu do souboru!\n"
+msgstr "Chyba při otevírání souboru pro zápis!\n"
 
 #: gammu/backup.c:146 gammu/files.c:437 gammu/message.c:2131
 msgid "Error while writing file!\n"
