@@ -359,8 +359,10 @@ else(MSVC)
     MACRO_TUNE_COMPILER("-Wredundant-decls")
     # Stack protector
     MACRO_TUNE_COMPILER("-fstack-protector")
-    # Mark code read only
-    MACRO_TUNE_LINKER("-Wl,-zrelro")
+    # Mark code read only, not on Windows right now
+    if (NOT WIN32)
+        MACRO_TUNE_LINKER("-Wl,-zrelro")
+    endif (NOT WIN32)
     # Text address randomisation
     MACRO_TUNE_COMPILER("-fPIE")
     MACRO_TUNE_LINKER("-pie")
