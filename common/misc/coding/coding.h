@@ -131,6 +131,17 @@ void StringToDouble	(char *text, double *d);
 #ifndef HAVE_STRCHRNUL
 extern char *strchrnul(char *s, int find);
 #endif
+#ifndef HAVE_STRNCASECMP
+#define TOLOWER(Ch) (isupper (Ch) ? tolower (Ch) : (Ch))
+extern int strncasecmp (const char *s1, const char *s2, size_t n);
+#endif
+#ifndef HAVE_STRCASECMP
+extern int strcasecmp (const char *s1, const char *s2);
+#endif
+#ifndef HAVE_STRCASESTR
+extern char *strcasestr(const char *s, const char *find);
+#endif
+
 
 /**
  * Gets line from buffer.
