@@ -2205,6 +2205,8 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 	bool			start2=start;
 	GSM_SMSMessageLayout 	Layout;
 
+	GSM_SetDefaultReceivedSMSData(&sms->SMS[0]);
+
 	while (true) {
 		if (start2) {
 			Priv->SMSFileError = ERR_EMPTY;

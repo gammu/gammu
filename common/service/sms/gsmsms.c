@@ -373,24 +373,8 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	}
 #endif
 
-	SMS->UDH.Type 			= UDH_NoUDH;
-	SMS->Coding 			= SMS_Coding_8bit;
-	SMS->Length			= 0;
-	SMS->SMSC.Location		= 0;
-	SMS->SMSC.DefaultNumber[0]	= 0;
-	SMS->SMSC.DefaultNumber[1]	= 0;
-	SMS->SMSC.Number[0]		= 0;
-	SMS->SMSC.Number[1]		= 0;
-	SMS->SMSC.Name[0]		= 0;
-	SMS->SMSC.Name[1]		= 0;
-	SMS->SMSC.Validity.Format	= SMS_Validity_NotAvailable;
-	SMS->SMSC.Format		= SMS_FORMAT_Text;
-	SMS->Number[0]			= 0;
-	SMS->Number[1]			= 0;
-	SMS->OtherNumbersNum		= 0;
-	SMS->Name[0]			= 0;
-	SMS->Name[1]			= 0;
-	SMS->ReplyViaSameSMSC		= false;
+	GSM_SetDefaultReceivedSMSData(SMS);
+
 	if (Layout.SMSCNumber!=255) {
 		GSM_UnpackSemiOctetNumber(SMS->SMSC.Number,buffer+Layout.SMSCNumber,false);
 		dbgprintf("SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
@@ -645,40 +629,49 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 
 /* ----------------- Some help functions ----------------------------------- */
 
-void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
+void GSM_SetDefaultReceivedSMSData(GSM_SMSMessage *SMS)
 {
-	SMS->Class			= -1;
-	SMS->SMSC.Location		= 1;
-	SMS->SMSC.Name[0]		= 0;
-	SMS->SMSC.Name[1]		= 0;
-	SMS->SMSC.Number[0]		= 0;
-	SMS->SMSC.Number[1]		= 0;
-	SMS->SMSC.DefaultNumber[0]	= 0;
-	SMS->SMSC.DefaultNumber[1]	= 0;
-	SMS->SMSC.Format		= SMS_FORMAT_Text;
-	SMS->SMSC.Validity.Format	= SMS_Validity_RelativeFormat;
-	SMS->SMSC.Validity.Relative	= SMS_VALID_Max_Time;
-	SMS->ReplyViaSameSMSC		= false;
-	SMS->UDH.Type			= UDH_NoUDH;
+	SMS->UDH.Type 			= UDH_NoUDH;
 	SMS->UDH.Length			= 0;
 	SMS->UDH.Text[0] 		= 0;
 	SMS->UDH.ID8bit			= 0;
 	SMS->UDH.ID16bit		= 0;
 	SMS->UDH.PartNumber		= 0;
 	SMS->UDH.AllParts		= 0;
-	SMS->Coding			= SMS_Coding_8bit;
+	SMS->Coding 			= SMS_Coding_8bit;
+	SMS->Length			= 0;
+	SMS->SMSC.Location		= 0;
+	SMS->SMSC.DefaultNumber[0]	= 0;
+	SMS->SMSC.DefaultNumber[1]	= 0;
+	SMS->SMSC.Number[0]		= 0;
+	SMS->SMSC.Number[1]		= 0;
+	SMS->SMSC.Name[0]		= 0;
+	SMS->SMSC.Name[1]		= 0;
+	SMS->SMSC.Validity.Format	= SMS_Validity_NotAvailable;
+	SMS->SMSC.Validity.Relative	= SMS_VALID_Max_Time;
+	SMS->SMSC.Format		= SMS_FORMAT_Text;
+	SMS->Number[0]			= 0;
+	SMS->Number[1]			= 0;
+	SMS->OtherNumbersNum		= 0;
+	SMS->Name[0]			= 0;
+	SMS->Name[1]			= 0;
+	SMS->ReplyViaSameSMSC		= false;
+	SMS->Class			= 0;
 	SMS->Text[0] 			= 0;
 	SMS->Text[1] 			= 0;
 	SMS->PDU			= SMS_Submit;
 	SMS->RejectDuplicates		= false;
 	SMS->MessageReference		= 0;
 	SMS->ReplaceMessage		= 0;
-	SMS->Length			= 0;
 	SMS->DeliveryStatus		= 0;
-	SMS->ReplyViaSameSMSC		= 0;
-	SMS->Class			= 0;
-	SMS->MessageReference		= 0;
-	SMS->OtherNumbersNum		= 0;
+}
+
+void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
+{
+	GSM_SetDefaultReceivedSMSData(SMS);
+
+	SMS->SMSC.Validity.Format	= SMS_Validity_RelativeFormat;
+	SMS->SMSC.Validity.Relative	= SMS_VALID_Max_Time;
 
 	/* This part is required to save SMS */
 	SMS->State			= SMS_UnSent;
@@ -688,8 +681,6 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 	SMS->InboxFolder		= false;
 	GSM_GetCurrentDateTime (&SMS->DateTime);
 	GSM_GetCurrentDateTime (&SMS->SMSCTime);
-	SMS->Name[0]			= 0;
-	SMS->Name[1]			= 0;
 }
 
 /**

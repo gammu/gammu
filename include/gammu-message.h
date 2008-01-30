@@ -598,6 +598,17 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader * UDH);
 void GSM_EncodeUDHHeader(GSM_UDHHeader * UDH);
 
 /**
+ * Sets default content for SMS except for changing locations. 
+ * Use this for clearing structure while keeping location of message.
+ *
+ * \param SMS Pointer to structure which should be cleaned up.
+ *
+ * \ingroup SMS
+ */
+void GSM_SetDefaultReceivedSMSData(GSM_SMSMessage * SMS);
+
+
+/**
  * Sets default content for SMS. Use this for clearing structure.
  *
  * \param SMS Pointer to structure which should be cleaned up.
