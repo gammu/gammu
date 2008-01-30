@@ -15,11 +15,11 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2007???? - 1.17.93
+20080130 - 1.18.0
 
 [-] * Fixed decoding of an empty SMS.
 
-20070123 - 1.17.92
+20080123 - 1.17.92
 
 [-] * Fixed some mistakes in API documentation.
 [-] * Fixed compilation under MS Visual C++ Express.
@@ -27,7 +27,7 @@ ChangeLog
 [+] * Add simple shell script to generate JAD file from JAR.
 [+] * Added support for adding memory entries to 6510.
 
-20070116 - 1.17.91
+20080116 - 1.17.91
 
 [+] * Phone features now can be defined in configuration, so there is no
       need to modify common/gsmphones.c for testing different settings.
