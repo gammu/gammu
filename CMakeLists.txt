@@ -358,6 +358,7 @@ else(MSVC)
     MACRO_TUNE_COMPILER("-Wpointer-arith")
     MACRO_TUNE_COMPILER("-Wredundant-decls")
     MACRO_TUNE_COMPILER("-fstack-protector")
+    MACRO_TUNE_LINKER("-Wl,-zrelro")
     # Does not work well
     #MACRO_TUNE_COMPILER("-Wunreachable-code")
 
