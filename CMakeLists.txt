@@ -361,6 +361,9 @@ else(MSVC)
     MACRO_TUNE_COMPILER("-fstack-protector")
     # Mark code read only
     MACRO_TUNE_LINKER("-Wl,-zrelro")
+    # Text address randomisation
+    MACRO_TUNE_COMPILER("-fPIE")
+    MACRO_TUNE_LINKER("-pie")
     # Does not work well
     #MACRO_TUNE_COMPILER("-Wunreachable-code")
 
