@@ -374,12 +374,15 @@ else(MSVC)
     # Just silent this for now, too much code to fix here
     MACRO_TUNE_COMPILER("-Wno-pointer-sign")
 
+    # Check format strings
+    MACRO_TUNE_COMPILER("-Wshadow")
+    MACRO_TUNE_COMPILER("-Wformat=2")
+    MACRO_TUNE_COMPILER("-Wno-format-y2k")
     # Win32 implementation of gettext does not allow us to use so strict warnings
-    if (NOT WIN32)
-        MACRO_TUNE_COMPILER("-Wshadow")
-        MACRO_TUNE_COMPILER("-Wformat=2")
-        MACRO_TUNE_COMPILER("-Wno-format-y2k")
-    endif (NOT WIN32)
+    if (WIN32)
+        MACRO_TUNE_COMPILER("-Wno-format-nonliteral")
+        MACRO_TUNE_COMPILER("-Wno-format-security")
+    endif (WIN32)
 
     # This is extremely noisy, use only in debug builds
     if (DEBUG)
