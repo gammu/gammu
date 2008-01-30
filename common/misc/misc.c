@@ -4,6 +4,7 @@
 #include <gammu-config.h>
 #include <gammu-misc.h>
 #include "misc.h"
+#include "coding/coding.h"
 
 #include <string.h>
 #include <ctype.h>
