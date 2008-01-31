@@ -851,6 +851,10 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->EntriesNum ++;
 			continue;
 		}
+		if (Block[0] == N6510_PBK_UNKNOWN5) {
+			smprintf(s,"Unknown entry\n");
+			continue;
+		}
 		if (Block[0] == N6510_PBK_GROUP2_ID) {
 			smprintf(s,"Group ID (6230i or later)\n");
 
