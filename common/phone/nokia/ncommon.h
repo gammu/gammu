@@ -42,6 +42,7 @@ typedef enum {
 	N6510_PBK_UNKNOWN3	 = 0x3C, /* Instant Messaging service list ID ?	*/
 	N6510_PBK_UNKNOWN4	 = 0x3D, /* presence list ID ? 			*/
 	N6510_PBK_PUSHTOTALK_ID	 = 0x3F, /* SIP Address (Push to Talk address)	*/
+	N6510_PBK_UNKNOWN5	 = 0x42, /* Unknown so far			*/
 	N6510_PBK_GROUP2_ID	 = 0x43, /* Caller group type 2 ID (6230i,later)*/
 
 	/* Series 40 3.0 */
