@@ -81,15 +81,9 @@ if (CROSS_MINGW)
     include (WindowsCross)
 endif (CROSS_MINGW)
 
-# Read version
-file (READ "${CMAKE_SOURCE_DIR}/VERSION" VERSION)
-string (REPLACE "\n" "" VERSION ${VERSION})
-string (REPLACE "\r" "" VERSION ${VERSION})
-string (REPLACE "." "," VERSION_WIN ${VERSION})
-string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)" "\\1" VERSION_MAJOR ${VERSION})
-string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)" "\\2" VERSION_MINOR ${VERSION})
-string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)" "\\3" VERSION_PATCH ${VERSION})
-set (VERSION_WIN "${VERSION_WIN},0")
+# Set version
+set (VERSION "1.18.90")
+set (VERSION_WIN "1,18,90,0")
 message (STATUS "Configuring ${CMAKE_PROJECT_NAME} ${VERSION}")
 
 if ("${Gammu_BINARY_DIR}" STREQUAL "${Gammu_SOURCE_DIR}")
