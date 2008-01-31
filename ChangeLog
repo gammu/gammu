@@ -16,6 +16,9 @@ ChangeLog
 =========
     
 2008???? - 1.18.90
+
+[-] * Do not link with irprops.lib on Windows.
+[-] * Various MSVC compilation fixes.
     
 20080130 - 1.18.0
 
