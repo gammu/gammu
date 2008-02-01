@@ -556,6 +556,11 @@ typedef enum {
 	 * Key presses can not be in unicode.
 	 */
 	F_CKPD_NO_UNICODE,
+	/**
+	 * OBEX switching using AT+CPROT even if phone does not report
+	 * it properly.
+	 */
+	F_CPROT,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

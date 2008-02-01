@@ -98,6 +98,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"EXTRA_PBK_FIELD", F_EXTRA_PBK_FIELD},
 	{"CKPD_NO_UNICODE", F_CKPD_NO_UNICODE},
 	{"LAST_VALUE", F_LAST_VALUE},
+	{"CPROT", F_CPROT},
 	{"", 0},
 };
 
@@ -646,7 +647,7 @@ OnePhoneModel allmodels[] = {
 
 	/* Sagem */
 	{"myV-65",	"myV-65 GPRS",	  "",				   {F_SMSME900,0}},
-	{"myX-7",	"myX-7 GPRS",	  "",				   {F_OBEX, 0}}, /* Guessed */
+	{"myX-7",	"myX-7 GPRS",	  "",				   {F_OBEX, F_CPROT, 0}}, /* Guessed */
 
 	/* LG */
 	{"KG800", "KG800", "", {F_NO_UCS2, 0}},
