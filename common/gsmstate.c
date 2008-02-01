@@ -328,6 +328,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s, const bool recurse)
 #endif
 	if (s->Phone.Functions == NULL) {
 		/* Retry with empty model */
+		/* @todo We should read model using protocol here! */
 		if (recurse) {
 			smprintf(s, "Could not find suitable driver for model \"%s\", retrying without model specification\n", s->CurrentConfig->Model);
 			s->CurrentConfig->Model[0] = 0;
