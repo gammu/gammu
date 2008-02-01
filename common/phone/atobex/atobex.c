@@ -196,6 +196,8 @@ GSM_Error ATOBEX_Initialise(GSM_StateMachine *s)
 		Priv->HasOBEX = ATOBEX_OBEX_XLNK;
 	} else if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SQWE)) {
 		Priv->HasOBEX = ATOBEX_OBEX_SQWE;
+	} else if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_CPROT)) {
+		Priv->HasOBEX = ATOBEX_OBEX_CPROT0;
 	} else {
 		if (PrivAT->Mode) {
 			smprintf(s, "Guessed mode style switching\n");
