@@ -646,6 +646,7 @@ OnePhoneModel allmodels[] = {
 
 	/* Sagem */
 	{"myV-65",	"myV-65 GPRS",	  "",				   {F_SMSME900,0}},
+	{"myX-7",	"myX-7 GPRS",	  "",				   {F_OBEX, 0}}, /* Guessed */
 
 	/* LG */
 	{"KG800", "KG800", "", {F_NO_UCS2, 0}},
