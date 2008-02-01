@@ -5086,6 +5086,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		NumberType = number[0];
 		sprintf(number,"%s",DecodeUnicodeString(entry->Entries[Number].Text));
 		entry->Entries[Number].AddError = ERR_NONE;
+		/* @todo: Should encode here to proper charset */
 	} else {
 		smprintf(s, "WARNING: No usable number found!\n");
 		number[0] = 0;
