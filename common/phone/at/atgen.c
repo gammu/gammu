@@ -1053,7 +1053,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			*pos2 = 0;
 		}
 	/* Sometimes phone adds this before manufacturer (Motorola) */
-	} else if (strncmp("+CGMM: \"", Data->Model, 8) == 0) {
+	} else if (strncmp("+CGMM: \"", line, 8) == 0) {
 		pos += 8; /* Skip above string */
 		pos2 = strchr(pos, '"'); /* Find end quote */
 		if (pos2 != NULL) {
@@ -1061,7 +1061,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			*pos2 = 0;
 		}
 	/* Sometimes phone adds this before manufacturer (Sagem) */
-	} else if (strncmp("+CGMM: ", Data->Model, 7) == 0) {
+	} else if (strncmp("+CGMM: ", line, 7) == 0) {
 		pos += 7; /* Skip above string */
 	}
 
