@@ -574,15 +574,15 @@ typedef struct {
 	/**
 	 * Phone IMEI (or serial number).
 	 */
-	char			IMEI[GSM_MAX_IMEI_LENGTH];
+	char			IMEI[GSM_MAX_IMEI_LENGTH + 1];
 	/**
 	 * Phone manufacturer as reported by phone.
 	 */
-	char			Manufacturer[GSM_MAX_MANUFACTURER_LENGTH];
+	char			Manufacturer[GSM_MAX_MANUFACTURER_LENGTH + 1];
 	/**
 	 * Phone model as reported by phone.
 	 */
-	char			Model[GSM_MAX_MODEL_LENGTH];
+	char			Model[GSM_MAX_MODEL_LENGTH + 1];
 	/**
 	 * Model information, pointer to static @ref allmodels array.
 	 */
@@ -591,11 +591,11 @@ typedef struct {
 	 * Phone version as reported by phone. It doesn't have to be numerical
 	 * at all.
 	 */
-	char			Version[GSM_MAX_VERSION_LENGTH];
+	char			Version[GSM_MAX_VERSION_LENGTH + 1];
 	/**
 	 * Phone version date, might be empty for some models.
 	 */
-	char			VerDate[GSM_MAX_VERSION_DATE_LENGTH];
+	char			VerDate[GSM_MAX_VERSION_DATE_LENGTH + 1];
 	/**
 	 * Phone version as number, if applicable.
 	 */
@@ -1560,7 +1560,7 @@ struct _GSM_StateMachine {
  * Tries to register all modules to find one matching current configuration.
  *
  * \param s State machine pointer.
- * \param recurse Whether function is allowed to recursively call itself with 
+ * \param recurse Whether function is allowed to recursively call itself with
  * guessed (or empty) model configuration.
  *
  * \return Error code, ERR_NONE on success.
