@@ -19,6 +19,8 @@ ChangeLog
 
 [-] * Do not link with irprops.lib on Windows.
 [-] * Various MSVC compilation fixes.
+[-] * Improved AT model parsing and added tests.
+[-] * Fixed possible crash in reading SMS from AT phones (bug #515).
     
 20080130 - 1.18.0
 
