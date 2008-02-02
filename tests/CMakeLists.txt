@@ -150,6 +150,26 @@ foreach(TESTMESSAGE ${MESSAGES})
     string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
 endforeach(TESTMESSAGE $MESSAGES)
 
+# AT model parsing
+add_executable(get-model-at get-model-at.c)
+if (CROSS_MINGW)
+    set_target_properties (get-model-at PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+target_link_libraries(get-model-at libGammu)
+
+# List test cases
+file(GLOB MESSAGES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-model"
+    "${Gammu_SOURCE_DIR}/tests/at-model/*.dump")
+list(SORT MESSAGES)
+
+foreach(TESTMESSAGE ${MESSAGES})
+    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+    add_test("get-model-at-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/get-model-at${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-model/${TESTMESSAGE}")
+endforeach(TESTMESSAGE $MESSAGES)
+
 # AT SMSC parsing
 add_executable(get-smsc-at get-smsc-at.c)
 if (CROSS_MINGW)
