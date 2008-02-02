@@ -27,7 +27,7 @@ int main(int argc, char **argv)
 
 	/* Check parameters */
 	if (argc != 2) {
-		printf("Not enough parameters!\nUsage: sms-at-parse comm.dump\n");
+		printf("Not enough parameters!\nUsage: get-smsc-at comm.dump\n");
 		return 1;
 	}
 
