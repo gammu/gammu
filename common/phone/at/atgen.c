@@ -1121,7 +1121,6 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			memmove(s->Phone.Data.Manufacturer, s->Phone.Data.Manufacturer + 7, strlen(s->Phone.Data.Manufacturer + 7) + 1);
 		}
 		if (strstr(msg.Buffer,"Falcom")) {
-			smprintf(s, "Falcom\n");
 			strcpy(s->Phone.Data.Manufacturer,"Falcom");
 			Priv->Manufacturer = AT_Falcom;
 			if (strstr(msg.Buffer,"A2D")) {
@@ -1131,70 +1130,61 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			}
 		}
 		if (strstr(msg.Buffer,"Nokia")) {
-			smprintf(s, "Nokia\n");
 			strcpy(s->Phone.Data.Manufacturer,"Nokia");
 			smprintf(s, "HINT: Consider using Nokia specific protocol instead of generic AT.\n");
 			Priv->Manufacturer = AT_Nokia;
 		}
 		if (strstr(msg.Buffer,"SIEMENS")) {
-			smprintf(s, "Siemens\n");
 			strcpy(s->Phone.Data.Manufacturer,"Siemens");
 			Priv->Manufacturer = AT_Siemens;
 		}
 		if (strstr(msg.Buffer,"SHARP")) {
-			smprintf(s, "Sharp\n");
 			strcpy(s->Phone.Data.Manufacturer,"Sharp");
 			Priv->Manufacturer = AT_Sharp;
 		}
 		if (strstr(msg.Buffer,"ERICSSON")) {
-			smprintf(s, "Ericsson\n");
 			strcpy(s->Phone.Data.Manufacturer,"Ericsson");
 			Priv->Manufacturer = AT_Ericsson;
 		}
 		if (strstr(msg.Buffer,"Sony Ericsson")) {
-			smprintf(s, "Sony Ericsson\n");
 			strcpy(s->Phone.Data.Manufacturer,"Sony Ericsson");
 			Priv->Manufacturer = AT_Ericsson;
 		}
 		if (strstr(msg.Buffer,"iPAQ")) {
-			smprintf(s, "iPAQ\n");
 			strcpy(s->Phone.Data.Manufacturer,"HP");
 			Priv->Manufacturer = AT_HP;
 		}
 		if (strstr(msg.Buffer,"ALCATEL")) {
-			smprintf(s, "Alcatel\n");
 			strcpy(s->Phone.Data.Manufacturer,"Alcatel");
 			Priv->Manufacturer = AT_Alcatel;
 		}
 		if (strstr(msg.Buffer,"SAGEM")) {
-			smprintf(s, "Sagem\n");
 			strcpy(s->Phone.Data.Manufacturer,"Sagem");
 			Priv->Manufacturer = AT_Sagem;
 		}
 		if (strstr(msg.Buffer,"Samsung")) {
-			smprintf(s, "Samsung\n");
 			strcpy(s->Phone.Data.Manufacturer,"Samsung");
 			Priv->Manufacturer = AT_Samsung;
 		}
 		if (strstr(msg.Buffer,"SAMSUNG")) {
-			smprintf(s, "Samsung\n");
 			strcpy(s->Phone.Data.Manufacturer,"Samsung");
 			Priv->Manufacturer = AT_Samsung;
 		}
 		if (strstr(msg.Buffer,"Mitsubishi")) {
-			smprintf(s, "Mitsubishi\n");
 			strcpy(s->Phone.Data.Manufacturer,"Mitsubishi");
 			Priv->Manufacturer = AT_Mitsubishi;
 		}
 		if (strstr(msg.Buffer,"Motorola")) {
-			smprintf(s, "Motorola\n");
 			strcpy(s->Phone.Data.Manufacturer,"Motorola");
 			Priv->Manufacturer = AT_Motorola;
 		}
 		if (strstr(msg.Buffer,"Option")) {
-			smprintf(s, "Option\n");
 			strcpy(s->Phone.Data.Manufacturer,"Option");
 			Priv->Manufacturer = AT_Option;
+		}
+		if (strstr(msg.Buffer, "WAVECOM")) {
+			strcpy(s->Phone.Data.Manufacturer, "Wavecom");
+			Priv->Manufacturer = AT_Wavecom;
 		}
 		smprintf(s, "[Manufacturer: %s]\n", s->Phone.Data.Manufacturer);
 		return ERR_NONE;
