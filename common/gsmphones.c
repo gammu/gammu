@@ -632,6 +632,7 @@ OnePhoneModel allmodels[] = {
 	{"M341i",	"M7", "MT170",					   {F_OBEX, F_IRMC_LEVEL_2, 0}},
 
 	/* Motorola */
+	{"W5",		"W5", "",					   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, 0}},
 	{"V3",		"V3 Razr", "",					   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, 0}},
 	{"L6",		"L6", "",					   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, 0}},
 	{"Serias E",	"Serias E",	"",				   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, 0}},
