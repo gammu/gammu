@@ -2619,10 +2619,15 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 			/* Start again */
 			found = 0;
 		}
-		sms->SMS[0].Folder = 0;
-		sms->SMS[0].Location = Priv->SMSLocations[found];
-		smprintf(s, "Reading next message on location %d\n", sms->SMS[0].Location);
-		return ATGEN_GetSMS(s, sms);
+
+		/* We might get no messages in listing above */
+		if (Priv->SMSLocations != NULL) {
+			/* Finally read the message */
+			sms->SMS[0].Folder = 0;
+			sms->SMS[0].Location = Priv->SMSLocations[found];
+			smprintf(s, "Reading next message on location %d\n", sms->SMS[0].Location);
+			return ATGEN_GetSMS(s, sms);
+		}
 	}
 
 	/* Use brute force if listing does not work */
