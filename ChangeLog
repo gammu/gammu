@@ -21,6 +21,7 @@ ChangeLog
 [-] * Various MSVC compilation fixes.
 [-] * Improved AT model parsing and added tests.
 [-] * Fixed possible crash in reading SMS from AT phones (bug #515).
+[-] * Proper fall back to automatic model when user enters wrong one.
     
 20080130 - 1.18.0
 

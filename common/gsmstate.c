@@ -244,7 +244,14 @@ static void GSM_RegisterModule(GSM_StateMachine *s,GSM_Phone_Functions *phone)
 	}
 }
 
-GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s, const bool recurse)
+/**
+ * Tries to register all modules to find one matching current configuration.
+ *
+ * \param s State machine pointer.
+ *
+ * \return Error code, ERR_NONE on success.
+ */
+GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 {
 	OnePhoneModel *model;
 
@@ -327,14 +334,104 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s, const bool recurse)
 	GSM_RegisterModule(s,&ATOBEXPhone);
 #endif
 	if (s->Phone.Functions == NULL) {
-		/* Retry with empty model */
-		/* @todo We should read model using protocol here! */
-		if (recurse) {
-			smprintf(s, "Could not find suitable driver for model \"%s\", retrying without model specification\n", s->CurrentConfig->Model);
-			s->CurrentConfig->Model[0] = 0;
-			return GSM_RegisterAllPhoneModules(s, false);
-		}
 		return ERR_UNKNOWNMODELSTRING;
+	}
+	return ERR_NONE;
+}
+
+
+/**
+ * Opens connection to device and initiates protocol layer.
+ */
+GSM_Error GSM_OpenConnection(GSM_StateMachine *s)
+{
+	GSM_Error error;
+
+	if (strcasecmp(s->CurrentConfig->LockDevice,"yes") == 0) {
+		error = lock_device(s->CurrentConfig->Device, &(s->LockFile));
+		if (error != ERR_NONE) return error;
+	}
+
+	/* Irda devices can set now model to some specific and
+	 * we don't have to make auto detection later */
+	error=s->Device.Functions->OpenDevice(s);
+	if (error!=ERR_NONE) {
+		if (s->LockFile != NULL)
+			unlock_device(&(s->LockFile));
+		return error;
+	}
+
+	s->opened = true;
+
+	error=s->Protocol.Functions->Initialise(s);
+	if (error!=ERR_NONE) return error;
+
+	return ERR_NONE;
+}
+
+/**
+ * Tries to read model using configured phone connection.
+ */
+GSM_Error GSM_TryGetModel(GSM_StateMachine *s)
+{
+	GSM_Error error;
+
+	error = GSM_OpenConnection(s);
+	if (error != ERR_NONE) return error;
+
+	/* If still auto model, try to get model by asking phone for it */
+	if (s->Phone.Data.Model[0]==0) {
+		smprintf(s,"[Module           - \"auto\"]\n");
+		switch (s->ConnectionType) {
+#ifdef GSM_ENABLE_ATGEN
+			case GCT_AT:
+			case GCT_BLUEAT:
+			case GCT_IRDAAT:
+			case GCT_DKU2AT:
+				s->Phone.Functions = &ATGENPhone;
+				break;
+#endif
+#ifdef GSM_ENABLE_OBEXGEN
+			case GCT_IRDAOBEX:
+			case GCT_BLUEOBEX:
+				s->Phone.Functions = &OBEXGENPhone;
+				break;
+#endif
+#ifdef GSM_ENABLE_GNAPGEN
+			case GCT_BLUEGNAPBUS:
+			case GCT_IRDAGNAPBUS:
+				s->Phone.Functions = &GNAPGENPhone;
+				break;
+#endif
+#if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
+			case GCT_MBUS2:
+			case GCT_FBUS2:
+			case GCT_FBUS2DLR3:
+			case GCT_FBUS2PL2303:
+			case GCT_FBUS2BLUE:
+			case GCT_FBUS2IRDA:
+			case GCT_DKU5FBUS2:
+			case GCT_DKU2PHONET:
+			case GCT_PHONETBLUE:
+			case GCT_IRDAPHONET:
+			case GCT_BLUEFBUS2:
+			case GCT_BLUEPHONET:
+				s->Phone.Functions = &NAUTOPhone;
+				break;
+#endif
+			default:
+				s->Phone.Functions = NULL;
+		}
+		if (s->Phone.Functions == NULL) return ERR_UNKNOWN;
+
+		/* Please note, that AT module need to send first
+		 * command for enabling echo
+		 */
+		error=s->Phone.Functions->Initialise(s);
+		if (error != ERR_NONE) return error;
+
+		error=s->Phone.Functions->GetModel(s);
+		if (error != ERR_NONE) return error;
 	}
 	return ERR_NONE;
 }
@@ -413,16 +510,10 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		error=GSM_RegisterAllConnections(s, s->CurrentConfig->Connection);
 		if (error!=ERR_NONE) return error;
 
+autodetect:
 		/* Model auto */
-		if (s->CurrentConfig->Model[0]==0) {
-			if (strcasecmp(s->CurrentConfig->LockDevice,"yes") == 0) {
-				error = lock_device(s->CurrentConfig->Device, &(s->LockFile));
-				if (error != ERR_NONE) return error;
-			}
-
-			/* Irda devices can set now model to some specific and
-			 * we don't have to make auto detection later */
-			error=s->Device.Functions->OpenDevice(s);
+		if (s->CurrentConfig->Model[0] == 0) {
+			error = GSM_TryGetModel(s);
 			if (i != s->ConfigNum - 1) {
 				if (error == ERR_DEVICEOPENERROR) 	continue;
 				if (error == ERR_DEVICELOCKED) 	 	continue;
@@ -431,87 +522,25 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 				if (error == ERR_DEVICENOPERMISSION) 	continue;
 				if (error == ERR_DEVICENODRIVER) 	continue;
 				if (error == ERR_DEVICENOTWORK) 	continue;
+				if (error == ERR_TIMEOUT)	 	continue;
 			}
- 			if (error!=ERR_NONE) {
- 				if (s->LockFile!=NULL) unlock_device(&(s->LockFile));
- 				return error;
- 			}
-
-			s->opened = true;
-
-			error=s->Protocol.Functions->Initialise(s);
-			if (error!=ERR_NONE) return error;
-
-			/* If still auto model, try to get model by asking phone for it */
-			if (s->Phone.Data.Model[0]==0) {
-				smprintf(s,"[Module           - \"auto\"]\n");
-				switch (s->ConnectionType) {
-#ifdef GSM_ENABLE_ATGEN
-					case GCT_AT:
-					case GCT_BLUEAT:
-					case GCT_IRDAAT:
-					case GCT_DKU2AT:
-						s->Phone.Functions = &ATGENPhone;
-						break;
-#endif
-#ifdef GSM_ENABLE_OBEXGEN
-					case GCT_IRDAOBEX:
-					case GCT_BLUEOBEX:
-						s->Phone.Functions = &OBEXGENPhone;
-						break;
-#endif
-#ifdef GSM_ENABLE_GNAPGEN
-					case GCT_BLUEGNAPBUS:
-					case GCT_IRDAGNAPBUS:
-						s->Phone.Functions = &GNAPGENPhone;
-						break;
-#endif
-#if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
-					case GCT_MBUS2:
-					case GCT_FBUS2:
-					case GCT_FBUS2DLR3:
-					case GCT_FBUS2PL2303:
-					case GCT_FBUS2BLUE:
-					case GCT_FBUS2IRDA:
-					case GCT_DKU5FBUS2:
-					case GCT_DKU2PHONET:
-					case GCT_PHONETBLUE:
-					case GCT_IRDAPHONET:
-					case GCT_BLUEFBUS2:
-					case GCT_BLUEPHONET:
-						s->Phone.Functions = &NAUTOPhone;
-						break;
-#endif
-					default:
-						s->Phone.Functions = NULL;
-				}
-				if (s->Phone.Functions == NULL) return ERR_UNKNOWN;
-
-				/* Please note, that AT module need to send first
-				 * command for enabling echo
-				 */
-				error=s->Phone.Functions->Initialise(s);
-				if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
-				if (error != ERR_NONE) return error;
-
-				error=s->Phone.Functions->GetModel(s);
-				if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
-				if (error != ERR_NONE) return error;
-			}
+			if (error != ERR_NONE) return error;
 		}
 
 		/* Switching to "correct" module */
-		error = GSM_RegisterAllPhoneModules(s, true);
-		if (error!=ERR_NONE) return error;
+		error = GSM_RegisterAllPhoneModules(s);
+		/* If user selected soemthing which is not supported, try autodetection */
+		if (s->CurrentConfig->Model[0] != 0 && error == ERR_UNKNOWNMODELSTRING) {
+			smprintf(s, "Configured model %s is not known, retrying with autodetection!\n",
+					s->CurrentConfig->Model);
+			s->CurrentConfig->Model[0] = 0;
+			goto autodetect;
+		}
+		if (error != ERR_NONE) return error;
 
 		/* We didn't open device earlier ? Make it now */
 		if (!s->opened) {
-			if (strcasecmp(s->CurrentConfig->LockDevice,"yes") == 0) {
-				error = lock_device(s->CurrentConfig->Device, &(s->LockFile));
-				if (error != ERR_NONE) return error;
-			}
-
-			error=s->Device.Functions->OpenDevice(s);
+			error = GSM_OpenConnection(s);
 			if (i != s->ConfigNum - 1) {
 				if (error == ERR_DEVICEOPENERROR) 	continue;
 				if (error == ERR_DEVICELOCKED) 	 	continue;
@@ -521,17 +550,10 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 				if (error == ERR_DEVICENODRIVER) 	continue;
 				if (error == ERR_DEVICENOTWORK) 	continue;
 			}
-			if (error!=ERR_NONE) {
-				if (s->LockFile!=NULL) unlock_device(&(s->LockFile));
-				return error;
-			}
-
-			s->opened = true;
-
-			error=s->Protocol.Functions->Initialise(s);
-			if (error!=ERR_NONE) return error;
+			if (error != ERR_NONE) return error;
 		}
 
+		/* Initialize phone layer */
 		error=s->Phone.Functions->Initialise(s);
 		if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
 		if (error != ERR_NONE) return error;
@@ -550,10 +572,13 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		error=s->Phone.Functions->GetManufacturer(s);
 		if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
 		if (error != ERR_NONE) return error;
+
 		error=s->Phone.Functions->GetModel(s);
 		if (error != ERR_NONE) return error;
+
 		error=s->Phone.Functions->GetFirmware(s);
 		if (error != ERR_NONE) return error;
+
 		return ERR_NONE;
 	}
 	return ERR_UNCONFIGURED;
