@@ -1560,12 +1560,10 @@ struct _GSM_StateMachine {
  * Tries to register all modules to find one matching current configuration.
  *
  * \param s State machine pointer.
- * \param recurse Whether function is allowed to recursively call itself with
- * guessed (or empty) model configuration.
  *
  * \return Error code, ERR_NONE on success.
  */
-GSM_Error GSM_RegisterAllPhoneModules	(GSM_StateMachine *s, const bool recurse);
+GSM_Error GSM_RegisterAllPhoneModules	(GSM_StateMachine *s);
 
 GSM_Error GSM_WaitForOnce		(GSM_StateMachine *s, unsigned const char *buffer,
 			  		 int length, unsigned char type, int timeout);
