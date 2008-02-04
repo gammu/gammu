@@ -23,6 +23,7 @@ ChangeLog
 [-] * Fixed possible crash in reading SMS from AT phones (bug #515).
 [-] * Proper fall back to automatic model when user enters wrong one.
 [-] * Added identification of several phones.
+[-] * Fixed reading of messages from AT phones without ME memory.
     
 20080130 - 1.18.0
 
