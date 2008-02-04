@@ -2614,6 +2614,8 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 
 			/* Get list of messages */
 			error = ATGEN_GetSMSList(s, false);
+			/* Not supported folder? We're done then. */
+			if (error == ERR_NOTSUPPORTED) return ERR_EMPTY;
 			if (error != ERR_NONE) return error;
 
 			/* Start again */
