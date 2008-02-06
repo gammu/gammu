@@ -79,6 +79,7 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 	{"bluephonet", GCT_BLUEPHONET, false},
 	{"blueat", GCT_BLUEAT, false},
 	{"bluerfobex", GCT_BLUEOBEX, false},
+	{"bluefbus", GCT_BLUEFBUS2, false},
 	{"bluerffbus", GCT_BLUEFBUS2, false},
 	{"bluerfphonet", GCT_BLUEPHONET, false},
 	{"bluerfat", GCT_BLUEAT, false},
