@@ -30,6 +30,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
     	WSADATA				wsaData;
 	SOCKADDR_BTH 			sab;
 	int				i;
+	DWORD				err;
 
 	smprintf(s, "Connecting to RF channel %i\n",port);
 
@@ -37,9 +38,10 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 
     	d->hPhone = socket(AF_BTH, SOCK_STREAM, BTHPROTO_RFCOMM);
 	if (d->hPhone == INVALID_SOCKET) {
-		i = GetLastError();
+		err = GetLastError();
 		GSM_OSErrorInfo(s, "Socket in bluetooth_open");
-		if (i == 10041) return ERR_DEVICENODRIVER;/* unknown socket type */
+		if (err == WSAEPROTOTYPE) 
+			return ERR_DEVICENODRIVER;/* unknown socket type */
 		return ERR_UNKNOWN;
 	}
 
@@ -65,10 +67,12 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	  		GET_NAP(sab.btAddr), GET_SAP(sab.btAddr));
 
 	if (connect (d->hPhone, (struct sockaddr *)&sab, sizeof(sab)) != 0) {
-		i = GetLastError();
+		err = GetLastError();
 		GSM_OSErrorInfo(s, "Connect in bluetooth_open");
-		if (i == 10060) return ERR_TIMEOUT;	 /* remote device failed to respond */
-		if (i == 10050) return ERR_DEVICENOTWORK; /* socket operation connected with dead network */
+		if (err == WSAETIMEDOUT) 
+			return ERR_TIMEOUT;	 /* remote device failed to respond */
+		if (err == WSAENETDOWN) 
+			return ERR_DEVICENOTWORK; /* socket operation connected with dead network */
 		/* noauth */
 		close(d->hPhone);
 		return ERR_UNKNOWN;
@@ -146,7 +150,7 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 {
 	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
     	WSADATA				wsaData;
-	int				i, protocolInfoSize, result;
+	int				protocolInfoSize, result;
 	WSAPROTOCOL_INFO 		protocolInfo;
 	HANDLE 				handle;
 	DWORD				flags;
@@ -156,14 +160,16 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 	DWORD 				bufferLength, addressSize;
 	WSAQUERYSET 			*pResults = (WSAQUERYSET*)&buffer;
 	GSM_Error			error;
+	DWORD				err;
 
     	if (WSAStartup(MAKEWORD(2,2), &wsaData)!=0x00) return ERR_DEVICENODRIVER;
 
     	d->hPhone = socket(AF_BTH, SOCK_STREAM, BTHPROTO_RFCOMM);
 	if (d->hPhone == INVALID_SOCKET) {
-		i = GetLastError();
+		err = GetLastError();
 		GSM_OSErrorInfo(s, "Socket in bluetooth_open");
-		if (i == 10041) return ERR_DEVICENODRIVER;/* unknown socket type */
+		if (err == WSAEPROTOTYPE) 
+			return ERR_DEVICENODRIVER;/* unknown socket type */
 		return ERR_UNKNOWN;
 	}
 
