@@ -24,6 +24,7 @@ ChangeLog
 [-] * Proper fall back to automatic model when user enters wrong one.
 [-] * Added identification of several phones.
 [-] * Fixed reading of messages from AT phones without ME memory.
+[-] * Improve charset detection on Motorola phones (bug #522).
     
 20080130 - 1.18.0
 
