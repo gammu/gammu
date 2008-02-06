@@ -3,6 +3,8 @@
 
 # Usage: make-release [branch]
 
+set -e
+
 repo=gammu
 srcdir=`pwd`
 
