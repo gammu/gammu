@@ -361,9 +361,9 @@ else(MSVC)
         # Mark code read only
         MACRO_TUNE_LINKER("-Wl,-zrelro")
     endif (NOT WIN32)
-    # Text address randomisation
-    MACRO_TUNE_COMPILER("-fPIE")
-    MACRO_TUNE_LINKER("-pie")
+    # Text address randomisation, disabled for now, seems to cause problems
+    #    MACRO_TUNE_COMPILER("-fPIE")
+    #    MACRO_TUNE_LINKER("-pie")
     if (WIN32 AND ENABLE_SHARED)
         MACRO_TUNE_LINKER("-Wl,--enable-auto-import")
     endif (WIN32 AND ENABLE_SHARED)
