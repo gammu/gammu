@@ -351,10 +351,11 @@ else(MSVC)
     MACRO_TUNE_COMPILER("-Wmissing-noreturn")
     MACRO_TUNE_COMPILER("-Wpointer-arith")
     MACRO_TUNE_COMPILER("-Wredundant-decls")
-    # Stack protector
-    MACRO_TUNE_COMPILER("-fstack-protector")
-    # Mark code read only, not on Windows right now
+    # These do not work on Windows right now
     if (NOT WIN32)
+        # Stack protector
+        MACRO_TUNE_COMPILER("-fstack-protector")
+        # Mark code read only
         MACRO_TUNE_LINKER("-Wl,-zrelro")
     endif (NOT WIN32)
     # Text address randomisation
