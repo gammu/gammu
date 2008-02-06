@@ -138,9 +138,6 @@ extern int strncasecmp (const char *s1, const char *s2, size_t n);
 #ifndef HAVE_STRCASECMP
 extern int strcasecmp (const char *s1, const char *s2);
 #endif
-#ifndef HAVE_STRCASESTR
-extern char *strcasestr(const char *s, const char *find);
-#endif
 
 
 /**
