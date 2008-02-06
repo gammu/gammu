@@ -84,6 +84,7 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	DCB 				 dcb;
 	unsigned char 			 DeviceName[256],DeviceName2[256];
 	int				 i;
+	DWORD				 err;
 #if defined(GSM_ENABLE_DKU2PHONET) || defined(GSM_ENABLE_DKU2AT)
 	UCHAR				 bu[sizeof(SP_DEVICE_INTERFACE_DETAIL_DATA) +(sizeof(TCHAR)*1000)];
 	DWORD				 reqsize;
@@ -203,12 +204,12 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 			       NULL);
 
 	if (d->hPhone == INVALID_HANDLE_VALUE) {
-		i = GetLastError();
+		err = GetLastError();
 		GSM_OSErrorInfo(s, "CreateFile in serial_open");
-		if (i == 2)   return ERR_DEVICENOTWORK; /* can't find specified file */
-		if (i == 5)   return ERR_DEVICEBUSY;    /* access denied */
-		if (i == 31)  return ERR_DEVICENOTWORK; /* attached device not working */
-		if (i == 123) return ERR_DEVICENOTEXIST;
+		if (err == ERROR_FILE_NOT_FOUND)   return ERR_DEVICENOTWORK; /* can't find specified file */
+		if (err == ERROR_ACCESS_DENIED)   return ERR_DEVICEBUSY;    /* access denied */
+		if (err == ERROR_GEN_FAILURE)  return ERR_DEVICENOTWORK; /* attached device not working */
+		if (err == ERROR_INVALID_NAME) return ERR_DEVICENOTEXIST;
 		return ERR_DEVICEOPENERROR;
 	}
 
