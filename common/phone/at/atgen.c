@@ -1492,6 +1492,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				if (strstr(line, AT_Charsets[i].text) != NULL) {
 					Priv->NormalCharset = AT_Charsets[i].charset;
 					Priv->IRACharset = AT_Charsets[i].charset;
+					smprintf(s, "Chosen %s as normal charset\n", AT_Charsets[i].text);
 					break;
 				}
 				i++;
@@ -1508,6 +1509,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					if (AT_Charsets[i].charset != AT_CHARSET_UCS2 ||
 							!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_UCS2)) {
 						Priv->UnicodeCharset = AT_Charsets[i].charset;
+						smprintf(s, "Chosen %s as unicode charset\n", AT_Charsets[i].text);
 						break;
 					}
 				}
