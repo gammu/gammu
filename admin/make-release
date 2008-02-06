@@ -6,7 +6,7 @@
 repo=gammu
 srcdir=`pwd`
 
-version=`sed -n 's/set (VERSION "\(.*\)")/\1/p' CMakeLists.txt`
+version=`sed -n 's/set (VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
 
 # Pre release checks
 if [ "x$1" = "xbranch" ] ; then

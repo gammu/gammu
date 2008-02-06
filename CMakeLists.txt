@@ -82,8 +82,11 @@ if (CROSS_MINGW)
 endif (CROSS_MINGW)
 
 # Set version
-set (VERSION "1.18.90")
-set (VERSION_WIN "1,18,90,0")
+set (VERSION "1.18.90" CACHE INTERNAL "")
+set (VERSION_WIN "1,18,90,0" CACHE INTERNAL "")
+string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\1" "VERSION_MAJOR" "${VERSION}")
+string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\2" "VERSION_MINOR" "${VERSION}")
+string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\3" "VERSION_PATCH" "${VERSION}")
 message (STATUS "Configuring ${CMAKE_PROJECT_NAME} ${VERSION}")
 
 if ("${Gammu_BINARY_DIR}" STREQUAL "${Gammu_SOURCE_DIR}")
@@ -114,7 +117,7 @@ if (WIN32)
   # sure there is at least one set of four (4) backlasshes.
   #set (CPACK_PACKAGE_ICON "${CMake_SOURCE_DIR}/Utilities/Release\\\\InstallIcon.bmp")
   #set (CPACK_NSIS_INSTALLED_ICON_NAME "bin\\\\MyExecutable.exe")
-  set (CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY} Gammu")
+  set (CPACK_NSIS_DISPLAY_NAME "${CPACK_PACKAGE_INSTALL_DIRECTORY}")
   set (CPACK_NSIS_HELP_LINK "http://www.gammu.org")
   set (CPACK_NSIS_URL_INFO_ABOUT "http://www.gammu.org")
   set (CPACK_NSIS_CONTACT "michal@cihar.com")
