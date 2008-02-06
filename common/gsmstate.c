@@ -580,6 +580,7 @@ autodetect:
 		error=s->Phone.Functions->GetFirmware(s);
 		if (error != ERR_NONE) return error;
 
+		smprintf(s,"[Connected]\n");
 		return ERR_NONE;
 	}
 	return ERR_UNCONFIGURED;
