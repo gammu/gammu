@@ -1483,6 +1483,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	char			*line;
 	int			i = 0;
+	bool			IgnoredUTF8 = false;
 
 	switch (Priv->ReplyState) {
 		case AT_Reply_OK:
@@ -1506,7 +1507,11 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			Priv->UnicodeCharset = 0;
 			while (AT_Charsets[i].charset != 0) {
 				if (AT_Charsets[i].unicode && (strstr(line, AT_Charsets[i].text) != NULL)) {
-					if (AT_Charsets[i].charset != AT_CHARSET_UCS2 ||
+					if (AT_Charsets[i].charset == AT_CHARSET_UTF8 &&
+							Priv->Manufacturer != AT_Motorola) {
+						IgnoredUTF8 = true;
+						smprintf(s, "Skipped %s because it is usually wrongly implemented on Motorola phones\n", AT_Charsets[i].text);
+					} else if (AT_Charsets[i].charset != AT_CHARSET_UCS2 ||
 							!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_UCS2)) {
 						Priv->UnicodeCharset = AT_Charsets[i].charset;
 						smprintf(s, "Chosen %s as unicode charset\n", AT_Charsets[i].text);
@@ -1520,7 +1525,12 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			}
 			/* Fallback for unicode charset */
 			if (Priv->UnicodeCharset == 0) {
-				Priv->UnicodeCharset = Priv->NormalCharset;
+				if (IgnoredUTF8) {
+					Priv->UnicodeCharset = AT_CHARSET_UTF8;
+					smprintf(s, "Switched back to UTF8 charset, expect problems\n");
+				} else {
+					Priv->UnicodeCharset = Priv->NormalCharset;
+				}
 			}
 			/* If we have unicode charset, it's better than GSM for IRA */
 			if (Priv->IRACharset == AT_CHARSET_GSM) {
@@ -1573,6 +1583,10 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 				Priv->Charset = AT_CHARSET_GSM;
 			}
 		}
+		/* We need to know manufacturer */
+		error = ATGEN_GetManufacturer(s);
+		if (error != ERR_NONE) return error;
+
 		/* Get available charsets */
 		ATGEN_WaitFor(s, "AT+CSCS=?\r", 10, 0x00, 3, ID_GetMemoryCharset);
 		if (error != ERR_NONE) return error;
