@@ -277,6 +277,14 @@ GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
 	return ERR_NONE;
 }
 
+void GSM_LogError(GSM_StateMachine * s, const char * message, const GSM_Error err) {
+	if (err != ERR_NONE) {
+		smprintf(s, "%s failed with error %s[%d]: %s\n", message, 
+				GSM_ErrorName(err), err, 
+				GSM_ErrorString(err));
+	}
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

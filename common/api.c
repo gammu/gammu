@@ -18,9 +18,7 @@
  */
 #define PRINT_LOG_ERROR(err) \
 { \
-	if (err != ERR_NONE) { \
-		smprintf(s, "%s failed with error %d: %s\n", __FUNCTION__, err, GSM_ErrorString(err)); \
-	} \
+	GSM_LogError(s, __FUNCTION__, err); \
 	PRINT_FUNCTION_END \
 }
 

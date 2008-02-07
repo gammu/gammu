@@ -161,6 +161,17 @@ bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info * privdi);
  */
 bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info * privdi);
 
+/**
+ * Logs error to debug log with additional message.
+ *
+ * \param s State machine structure pointer.
+ * \param message String to be show in message.
+ * \param err Error code.
+ *
+ * \ingroup Debug
+ */
+void GSM_LogError(GSM_StateMachine * s, const char * message, const GSM_Error err);
+
 #endif
 
 /* Editor configuration
