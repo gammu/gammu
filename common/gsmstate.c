@@ -371,6 +371,34 @@ GSM_Error GSM_OpenConnection(GSM_StateMachine *s)
 }
 
 /**
+ * Internal function which just closes connection and cleans up structures.
+ */
+GSM_Error GSM_CloseConnection(GSM_StateMachine *s)
+{
+	GSM_Error error;
+
+	smprintf(s,"[Closing]\n");
+
+	error=s->Protocol.Functions->Terminate(s);
+	if (error!=ERR_NONE) return error;
+
+	error = s->Device.Functions->CloseDevice(s);
+	if (error!=ERR_NONE) return error;
+
+	if (s->LockFile!=NULL) unlock_device(&(s->LockFile));
+
+	s->Phone.Data.ModelInfo		  = NULL;
+	s->Phone.Data.Manufacturer[0]	  = 0;
+	s->Phone.Data.Model[0]		  = 0;
+	s->Phone.Data.Version[0]	  = 0;
+	s->Phone.Data.VerDate[0]	  = 0;
+	s->Phone.Data.VerNum		  = 0;
+
+	return ERR_NONE;
+}
+
+
+/**
  * Tries to read model using configured phone connection.
  */
 GSM_Error GSM_TryGetModel(GSM_StateMachine *s)
@@ -515,15 +543,16 @@ autodetect:
 		/* Model auto */
 		if (s->CurrentConfig->Model[0] == 0) {
 			error = GSM_TryGetModel(s);
-			if (i != s->ConfigNum - 1) {
-				if (error == ERR_DEVICEOPENERROR) 	continue;
-				if (error == ERR_DEVICELOCKED) 	 	continue;
-				if (error == ERR_DEVICENOTEXIST)  	continue;
-				if (error == ERR_DEVICEBUSY) 		continue;
-				if (error == ERR_DEVICENOPERMISSION) 	continue;
-				if (error == ERR_DEVICENODRIVER) 	continue;
-				if (error == ERR_DEVICENOTWORK) 	continue;
-				if (error == ERR_TIMEOUT)	 	continue;
+			if ((i != s->ConfigNum - 1) && (
+				(error == ERR_DEVICEOPENERROR) ||
+				(error == ERR_DEVICELOCKED) ||
+				(error == ERR_DEVICENOTEXIST) ||
+				(error == ERR_DEVICEBUSY) ||
+				(error == ERR_DEVICENOPERMISSION) ||
+				(error == ERR_DEVICENODRIVER) ||
+				(error == ERR_DEVICENOTWORK))) {
+				GSM_CloseConnection(s);
+				continue;
 			}
 			if (error != ERR_NONE) return error;
 		}
@@ -542,21 +571,26 @@ autodetect:
 		/* We didn't open device earlier ? Make it now */
 		if (!s->opened) {
 			error = GSM_OpenConnection(s);
-			if (i != s->ConfigNum - 1) {
-				if (error == ERR_DEVICEOPENERROR) 	continue;
-				if (error == ERR_DEVICELOCKED) 	 	continue;
-				if (error == ERR_DEVICENOTEXIST)  	continue;
-				if (error == ERR_DEVICEBUSY) 		continue;
-				if (error == ERR_DEVICENOPERMISSION) 	continue;
-				if (error == ERR_DEVICENODRIVER) 	continue;
-				if (error == ERR_DEVICENOTWORK) 	continue;
+			if ((i != s->ConfigNum - 1) && (
+				(error == ERR_DEVICEOPENERROR) ||
+				(error == ERR_DEVICELOCKED) ||
+				(error == ERR_DEVICENOTEXIST) ||
+				(error == ERR_DEVICEBUSY) ||
+				(error == ERR_DEVICENOPERMISSION) ||
+				(error == ERR_DEVICENODRIVER) ||
+				(error == ERR_DEVICENOTWORK))) {
+				GSM_CloseConnection(s);
+				continue;
 			}
 			if (error != ERR_NONE) return error;
 		}
 
 		/* Initialize phone layer */
 		error=s->Phone.Functions->Initialise(s);
-		if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
+		if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) {
+			GSM_CloseConnection(s);
+			continue;
+		}
 		if (error != ERR_NONE) return error;
 
 		if (strcasecmp(s->CurrentConfig->StartInfo,"yes") == 0) {
@@ -571,7 +605,10 @@ autodetect:
 
 		/* For debug it's good to have firmware and real model version and manufacturer */
 		error=s->Phone.Functions->GetManufacturer(s);
-		if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) continue;
+		if (error == ERR_TIMEOUT && i != s->ConfigNum - 1) {
+			GSM_CloseConnection(s);
+			continue;
+		}
 		if (error != ERR_NONE) return error;
 
 		error=s->Phone.Functions->GetModel(s);
@@ -616,7 +653,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 
 	if (!s->opened) return ERR_UNKNOWN;
 
-	smprintf(s,"[Closing]\n");
+	smprintf(s,"[Terminating]\n");
 
 	if (strcasecmp(s->CurrentConfig->StartInfo,"yes") == 0) {
 		if (s->Phone.Data.StartInfoCounter > 0) s->Phone.Functions->ShowStartInfo(s,false);
@@ -627,20 +664,8 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 		if (error!=ERR_NONE) return error;
 	}
 
-	error=s->Protocol.Functions->Terminate(s);
-	if (error!=ERR_NONE) return error;
-
-	error = s->Device.Functions->CloseDevice(s);
-	if (error!=ERR_NONE) return error;
-
-	s->Phone.Data.ModelInfo		  = NULL;
-	s->Phone.Data.Manufacturer[0]	  = 0;
-	s->Phone.Data.Model[0]		  = 0;
-	s->Phone.Data.Version[0]	  = 0;
-	s->Phone.Data.VerDate[0]	  = 0;
-	s->Phone.Data.VerNum		  = 0;
-
-	if (s->LockFile!=NULL) unlock_device(&(s->LockFile));
+	error = GSM_CloseConnection(s);
+	if (error != ERR_NONE) return error;
 
 	if (!s->di.use_global && s->di.dl!=0 && fileno(s->di.df) != 1 && fileno(s->di.df) != 2) fclose(s->di.df);
 
