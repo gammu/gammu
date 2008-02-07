@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2008???? - 1.18.91
+
+[-] * Improve debug messages when connecting to phone (bug #508).
     
 20080206 - 1.18.90
 

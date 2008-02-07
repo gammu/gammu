@@ -510,8 +510,11 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		s->di 				  = di;
 		s->di.use_global 		  = s->CurrentConfig->UseGlobalDebugFile;
 		GSM_SetDebugLevel(s->CurrentConfig->DebugLevel, &s->di);
-		error=GSM_SetDebugFile(s->CurrentConfig->DebugFile, &s->di);
-		if (error != ERR_NONE) return error;
+		error = GSM_SetDebugFile(s->CurrentConfig->DebugFile, &s->di);
+		if (error != ERR_NONE) {
+			GSM_LogError(s, "Init:GSM_SetDebugFile" , error);
+			return error;
+		}
 
 		smprintf_level(s, D_ERROR, "[Gammu            - %s built %s %s using %s]\n",
 				VERSION,
@@ -536,8 +539,11 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 			smprintf(s,"%s",VERSION);
 		}
 
-		error=GSM_RegisterAllConnections(s, s->CurrentConfig->Connection);
-		if (error!=ERR_NONE) return error;
+		error = GSM_RegisterAllConnections(s, s->CurrentConfig->Connection);
+		if (error != ERR_NONE) {
+			GSM_LogError(s, "Init:GSM_RegisterAllConnections" , error);
+			return error;
+		}
 
 autodetect:
 		/* Model auto */
@@ -554,7 +560,10 @@ autodetect:
 				GSM_CloseConnection(s);
 				continue;
 			}
-			if (error != ERR_NONE) return error;
+			if (error != ERR_NONE) {
+				GSM_LogError(s, "Init:GSM_TryGetModel" , error);
+				return error;
+			}
 		}
 
 		/* Switching to "correct" module */
@@ -566,7 +575,10 @@ autodetect:
 			s->CurrentConfig->Model[0] = 0;
 			goto autodetect;
 		}
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			GSM_LogError(s, "Init:GSM_RegisterAllPhoneModules" , error);
+			return error;
+		}
 
 		/* We didn't open device earlier ? Make it now */
 		if (!s->opened) {
@@ -582,7 +594,10 @@ autodetect:
 				GSM_CloseConnection(s);
 				continue;
 			}
-			if (error != ERR_NONE) return error;
+			if (error != ERR_NONE) {
+				GSM_LogError(s, "Init:GSM_OpenConnection" , error);
+				return error;
+			}
 		}
 
 		/* Initialize phone layer */
@@ -591,7 +606,10 @@ autodetect:
 			GSM_CloseConnection(s);
 			continue;
 		}
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			GSM_LogError(s, "Init:Phone->Initialise" , error);
+			return error;
+		}
 
 		if (strcasecmp(s->CurrentConfig->StartInfo,"yes") == 0) {
 			s->Phone.Functions->ShowStartInfo(s,true);
@@ -609,13 +627,22 @@ autodetect:
 			GSM_CloseConnection(s);
 			continue;
 		}
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			GSM_LogError(s, "Init:Phone->GetManufacturer" , error);
+			return error;
+		}
 
 		error=s->Phone.Functions->GetModel(s);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			GSM_LogError(s, "Init:Phone->GetModel" , error);
+			return error;
+		}
 
 		error=s->Phone.Functions->GetFirmware(s);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			GSM_LogError(s, "Init:Phone->GetFirmware" , error);
+			return error;
+		}
 
 		smprintf(s,"[Connected]\n");
 		return ERR_NONE;
