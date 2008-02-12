@@ -405,12 +405,14 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
   			DecodeDefault(output, input, length, false, NULL);
   			break;
   		case AT_CHARSET_UCS2:
+  		case AT_CHARSET_UCS_2:
 			if (length / 2 >= outlength) return ERR_MOREMEMORY;
  			DecodeHexUnicode(output, input, length);
   			break;
   		case AT_CHARSET_IRA: /* IRA is ASCII only, so it's safe to treat is as UTF-8 */
 		case AT_CHARSET_ASCII:
   		case AT_CHARSET_UTF8:
+  		case AT_CHARSET_UTF_8:
 			if (2 * length >= outlength) return ERR_MOREMEMORY;
  			DecodeUTF8(output, input, length);
   			break;
