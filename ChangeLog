@@ -18,6 +18,7 @@ ChangeLog
 2008???? - 1.18.91
 
 [-] * Improve debug messages when connecting to phone (bug #508).
+[-] * Fixed handling of some charsets in AT engine (bug #525).
     
 20080206 - 1.18.90
 
