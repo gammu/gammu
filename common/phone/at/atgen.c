@@ -5011,7 +5011,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	if (Name != -1) {
 		len = UnicodeLength(entry->Entries[Name].Text);
 
-		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK_UCS2)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK_UNICODE)) {
 			Prefer = AT_PREF_CHARSET_UNICODE;
 		} else {
 			/* Compare if we would loose some information when not using
