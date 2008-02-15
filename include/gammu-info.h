@@ -528,9 +528,9 @@ typedef enum {
 	 */
 	F_SUBMIT_SIM_ONLY,
 	/**
-	 * Prefer UCS-2 for phone book manipulations.
+	 * Prefer Unicode for phone book manipulations.
 	 */
-	F_PBK_UCS2,
+	F_PBK_UNICODE,
 	/**
 	 * Switching to OBEX mode using AT^SQWE=3.
 	 */
