@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Improve debug messages when connecting to phone (bug #508).
 [-] * Fixed handling of some charsets in AT engine (bug #525).
+[-] * Identify more Nokia phones (thanks to Iván Gabriel).
     
 20080206 - 1.18.90
 
