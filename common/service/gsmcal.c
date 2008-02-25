@@ -1609,6 +1609,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			}
 			if (strstr(Line,"BEGIN:VTODO")) {
 				ToDo->Priority 	= GSM_Priority_None;
+				ToDo->Type = GSM_CAL_MEMO;
 				dstflag = 0;
 				Text=-1; Time=-1; Alarm=-1; EndTime=-1; Location=-1;
 				Level 		= 2;
@@ -1624,7 +1625,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 					if (CalVer == Mozilla_iCalendar) {
 						/* @todo: We don't have parser for this right now */
 						error = ERR_NONE;
-					} else { 
+					} else {
 						error = GSM_DecodeVCAL_RRULE(rrule, Calendar, Time);
 					}
 					free(rrule);
