@@ -372,16 +372,23 @@ static int serial_read(GSM_StateMachine *s, void *buf, size_t nbytes)
 	GSM_Device_SerialData 	*d = &s->Device.Data.Serial;
 	BOOL			ReadStatus;
 
-	/* Gets information about a communications error and
-	 * current status of device
-	 */
-	ClearCommError(d->hPhone, &ErrorFlags, &ComStat);
+	if (s->ConnectionType != GCT_DKU2PHONET && s->ConnectionType != GCT_DKU2AT) {
+		/* Gets information about a communications error and
+		 * current status of device
+		 */
+		ClearCommError(d->hPhone, &ErrorFlags, &ComStat);
 
-	/* How much we can read? */
-	Length = min(nbytes, ComStat.cbInQue);
+		/* How much we can read? */
+		Length = min(nbytes, ComStat.cbInQue);
+	} else {
+		Length = 5;
+	}
 
 	/* Nothing to read */
 	if (Length <= 0) goto end;
+
+	/* Isn't that to much? */
+	if (Length > nbytes) Length = nbytes;
 
 	/* Read without problems */
 	ReadStatus = ReadFile(d->hPhone, buf, Length, &Length, &d->osRead);
