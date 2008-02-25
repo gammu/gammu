@@ -574,6 +574,7 @@ static GSM_Error SaveCalendarType(FILE *file, GSM_CalendarNoteType Type, bool Us
 
 	error = SaveBackupText(file, "", "Type = ", UseUnicode);
 	if (error != ERR_NONE) return error;
+	sprintf(buffer,"0%c%c",13,10);
 	switch (Type) {
 		case GSM_CAL_REMINDER 	: sprintf(buffer,"Reminder%c%c", 		13,10); break;
 		case GSM_CAL_CALL     	: sprintf(buffer,"Call%c%c", 			13,10); break;
@@ -1937,6 +1938,8 @@ static void ReadCalendarType(INI_Section *file_info, char *section, GSM_Calendar
 			*type = GSM_CAL_T_TRAV;
 		} else if (strcasecmp(readvalue,"Training/WinterGames") == 0) {
 			*type = GSM_CAL_T_WINT;
+		} else if (strcasecmp(readvalue,"0") == 0) {
+			*type = 0;
 		}
 	}
 }
