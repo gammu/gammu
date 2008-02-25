@@ -688,7 +688,7 @@ and for DCT4:
 .br
 3. GPRS Always Online
 .br
-...
+ ...
 '''
 HELP['nokianetmonitor'] = '''Takes output or set netmonitor for Nokia DCT3 phones.
 
