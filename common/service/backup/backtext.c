@@ -2152,6 +2152,13 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 		}
 	}
 
+	sprintf(buffer,"StartTime");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
+        	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_START_DATETIME;
+        	ToDo->EntriesNum++;
+   	}
+
 	sprintf(buffer,"Text");
 	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
   	      	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
@@ -2222,13 +2229,6 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_END_DATETIME;
-        	ToDo->EntriesNum++;
-   	}
-
-	sprintf(buffer,"StartTime");
-	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
-        	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_START_DATETIME;
         	ToDo->EntriesNum++;
    	}
 
