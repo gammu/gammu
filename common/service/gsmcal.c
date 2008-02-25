@@ -787,6 +787,7 @@ void GSM_ToDo_AdjustDate(GSM_ToDoEntry *note, GSM_DeltaTime *delta)
 			case TODO_ALARM_DATETIME :
 			case TODO_SILENT_ALARM_DATETIME:
 			case TODO_LAST_MODIFIED:
+			case TODO_START_DATETIME:
 				note->Entries[i].Date = GSM_AddTime(note->Entries[i].Date, *delta);
 				break;
 			case TODO_TEXT:
@@ -1050,6 +1051,9 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, size_t *Length, GSM_ToDoEntry *note, boo
 				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
 					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DALARM");
 				}
+				break;
+			case TODO_START_DATETIME:
+				SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DTSTART");
 				break;
 			case TODO_LAST_MODIFIED:
 				SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "LAST-MODIFIED");
@@ -1845,6 +1849,11 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 					EndTime = Calendar->EntriesNum;
 					ToDo->EntriesNum++;
 				}
+			}
+			if (ReadVCALDate(Line, "DTSTART", &Date, &is_date_only)) {
+				ToDo->Entries[ToDo->EntriesNum].Date = Date;
+				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_START_DATETIME;
+				ToDo->EntriesNum++;
 			}
 			if (ReadVCALDate(Line, "DALARM", &Date, &is_date_only)) {
 				ToDo->Entries[ToDo->EntriesNum].Date = Date;

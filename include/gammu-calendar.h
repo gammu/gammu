@@ -406,6 +406,10 @@ typedef enum {
 	 * Date and time of last modification.
 	 */
 	TODO_LAST_MODIFIED,
+	/**
+	 * Start date. (Date)
+	 */
+	TODO_START_DATETIME,
 } GSM_ToDoType;
 
 /**
