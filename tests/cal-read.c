@@ -133,7 +133,7 @@ int main(int argc, char **argv)
 						cal.Entries[i].Text,
 						backup.Calendar[0]->Entries[i].Text,
 						0)) {
-						printf("Field %d is not the same!\n", i);
+						printf("Calendar field %d is not the same!\n", i);
 						return 1;
 					}
 					break;
@@ -159,6 +159,7 @@ int main(int argc, char **argv)
 	}
 	if (!skiptodo) {
 		for (i = 0; i < todo.EntriesNum; i++) {
+			printf("%d,%d\n", todo.Entries[i].EntryType, backup.ToDo[0]->Entries[i].EntryType);
 			switch (todo.Entries[i].EntryType) {
 				case TODO_TEXT:
 				case TODO_DESCRIPTION:
@@ -169,7 +170,7 @@ int main(int argc, char **argv)
 						todo.Entries[i].Text,
 						backup.ToDo[0]->Entries[i].Text,
 						0)) {
-						printf("Field %d is not the same!\n", i);
+						printf("Todo field %d is not the same!\n", i);
 						return 1;
 					}
 					break;
