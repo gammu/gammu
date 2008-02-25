@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2008???? - 1.18.91
+20080225 - 1.18.91
 
 [-] * Improve debug messages when connecting to phone (bug #508).
 [-] * Fixed handling of some charsets in AT engine (bug #525).
