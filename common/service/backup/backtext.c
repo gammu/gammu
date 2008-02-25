@@ -1202,6 +1202,12 @@ static GSM_Error SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
                 error = SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
 		if (error != ERR_NONE) return error;
                 break;
+	    case TODO_START_DATETIME:
+		error = SaveBackupText(file, "", "StartTime", UseUnicode);
+		if (error != ERR_NONE) return error;
+                error = SaveVCalDateTime(file, &ToDo->Entries[j].Date, UseUnicode);
+		if (error != ERR_NONE) return error;
+                break;
             case TODO_COMPLETED:
 	        sprintf(buffer,"Completed = %s%c%c",ToDo->Entries[j].Number == 1 ? "yes" : "no" ,13,10);
 		error = SaveBackupText(file, "", buffer, UseUnicode);
@@ -2216,6 +2222,13 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_END_DATETIME;
+        	ToDo->EntriesNum++;
+   	}
+
+	sprintf(buffer,"StartTime");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
+        	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_START_DATETIME;
         	ToDo->EntriesNum++;
    	}
 

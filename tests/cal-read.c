@@ -174,6 +174,7 @@ int main(int argc, char **argv)
 					}
 					break;
 				case TODO_END_DATETIME:
+				case TODO_START_DATETIME:
 				case TODO_ALARM_DATETIME:
 				case TODO_SILENT_ALARM_DATETIME:
 				case TODO_PRIVATE:
