@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.17.93\n"
+"Project-Id-Version: Gammu 1.18.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2008-01-29 11:24+0900\n"
+"POT-Creation-Date: 2008-02-25 11:34+0100\n"
 "PO-Revision-Date: 2007-08-10 13:23+0200\n"
 "Last-Translator: Angelo Giuseppe De Michele <cerebro84@gmail.com>\n"
 "Language-Team: Language =it\n"
@@ -312,20 +312,20 @@ msgstr "Errore sconosciuto."
 msgid "Personal"
 msgstr "Personale\n"
 
-#: common/phone/nokia/dct3/n6110.c:1955 common/phone/nokia/nfunc.c:1054
+#: common/phone/nokia/dct3/n6110.c:1955 common/phone/nokia/nfunc.c:1058
 msgid "Car"
 msgstr ""
 
-#: common/phone/nokia/dct3/n6110.c:1957 common/phone/nokia/nfunc.c:1056
+#: common/phone/nokia/dct3/n6110.c:1957 common/phone/nokia/nfunc.c:1060
 msgid "Headset"
 msgstr ""
 
-#: common/phone/nokia/dct3/n6110.c:1963 common/phone/nokia/nfunc.c:1044
+#: common/phone/nokia/dct3/n6110.c:1963 common/phone/nokia/nfunc.c:1048
 #, fuzzy
 msgid "General"
 msgstr "Numero principale "
 
-#: common/phone/nokia/dct3/n6110.c:1965 common/phone/nokia/nfunc.c:1046
+#: common/phone/nokia/dct3/n6110.c:1965 common/phone/nokia/nfunc.c:1050
 msgid "Silent"
 msgstr "Silenzioso"
 
@@ -357,37 +357,37 @@ msgstr ""
 msgid "Saved items"
 msgstr ""
 
-#: common/phone/nokia/nfunc.c:878
+#: common/phone/nokia/nfunc.c:882
 msgid "Family"
 msgstr "Famiglia"
 
-#: common/phone/nokia/nfunc.c:880
+#: common/phone/nokia/nfunc.c:884
 msgid "VIP"
 msgstr ""
 
-#: common/phone/nokia/nfunc.c:882
+#: common/phone/nokia/nfunc.c:886
 msgid "Friends"
 msgstr "Amici"
 
-#: common/phone/nokia/nfunc.c:884
+#: common/phone/nokia/nfunc.c:888
 msgid "Colleagues"
 msgstr "Colleghi"
 
-#: common/phone/nokia/nfunc.c:886
+#: common/phone/nokia/nfunc.c:890
 msgid "Other"
 msgstr "Altri"
 
-#: common/phone/nokia/nfunc.c:1048 gammu/calendar.c:43 gammu/calendar.c:692
+#: common/phone/nokia/nfunc.c:1052 gammu/calendar.c:43 gammu/calendar.c:692
 #, fuzzy
 msgid "Meeting"
 msgstr "Cancellazione delle vecchie stazioni FM: "
 
-#: common/phone/nokia/nfunc.c:1050
+#: common/phone/nokia/nfunc.c:1054
 #, fuzzy
 msgid "Outdoor"
 msgstr "Messaggi inviati"
 
-#: common/phone/nokia/nfunc.c:1052 gammu/message.c:629
+#: common/phone/nokia/nfunc.c:1056 gammu/message.c:629
 #, c-format
 msgid "Pager"
 msgstr ""
@@ -455,8 +455,8 @@ msgid "Error while writing file!\n"
 msgstr "Errore durante la scrittura sul dispositivo."
 
 #: gammu/backup.c:192 gammu/backup.c:830 gammu/backup.c:1395
-#: gammu/calendar.c:605 gammu/calendar.c:931 gammu/calendar.c:1006
-#: gammu/calendar.c:1029 gammu/memory.c:157 gammu/memory.c:418
+#: gammu/calendar.c:605 gammu/calendar.c:936 gammu/calendar.c:1011
+#: gammu/calendar.c:1034 gammu/memory.c:157 gammu/memory.c:418
 #: gammu/memory.c:480 gammu/message.c:573 gammu/misc.c:63 gammu/misc.c:249
 #, fuzzy
 msgid "Press Ctrl+C to break..."
@@ -682,7 +682,7 @@ msgid "Time of backup"
 msgstr "Data ed ora del backup : %s\n"
 
 #: gammu/backup.c:833 gammu/backup.c:1398 gammu/calendar.c:221
-#: gammu/calendar.c:871
+#: gammu/calendar.c:876
 #, fuzzy
 msgid "Phone"
 msgstr ", memoria telefono"
@@ -980,7 +980,7 @@ msgstr "Viaggio\n"
 msgid "Vacation"
 msgstr "Vacanza\n"
 
-#: gammu/calendar.c:58 gammu/calendar.c:707 gammu/calendar.c:807
+#: gammu/calendar.c:58 gammu/calendar.c:707 gammu/calendar.c:812
 #, fuzzy
 msgid "Alarm"
 msgstr "Sveglia\n"
@@ -1080,7 +1080,7 @@ msgstr "Normale\n"
 msgid "Stop"
 msgstr ""
 
-#: gammu/calendar.c:154 gammu/calendar.c:817 gammu/memory.c:34
+#: gammu/calendar.c:154 gammu/calendar.c:822 gammu/memory.c:34
 msgid "Last modified"
 msgstr ""
 
@@ -1094,36 +1094,36 @@ msgstr "Con allarme  : %s\n"
 msgid "forever on each %i. day of %s"
 msgstr ""
 
-#: gammu/calendar.c:181 gammu/calendar.c:193 gammu/calendar.c:812
+#: gammu/calendar.c:181 gammu/calendar.c:193 gammu/calendar.c:817
 #, fuzzy
 msgid "Silent alarm"
 msgstr "Senza allarme: %s\n"
 
-#: gammu/calendar.c:201 gammu/calendar.c:524 gammu/calendar.c:822
-#: gammu/calendar.c:1038 gammu/memory.c:104 gammu/message.c:416
+#: gammu/calendar.c:201 gammu/calendar.c:524 gammu/calendar.c:827
+#: gammu/calendar.c:1043 gammu/memory.c:104 gammu/message.c:416
 #: gammu/message.c:626 gammu/misc.c:860
 #, c-format
 msgid "Text"
 msgstr "Testo"
 
-#: gammu/calendar.c:206 gammu/calendar.c:876
+#: gammu/calendar.c:206 gammu/calendar.c:881
 #, fuzzy
 msgid "Description"
 msgstr "Locazione    : \"%s\"\n"
 
-#: gammu/calendar.c:211 gammu/calendar.c:886 gammu/memory.c:110
+#: gammu/calendar.c:211 gammu/calendar.c:891 gammu/memory.c:110
 msgid "LUID"
 msgstr ""
 
 #: gammu/calendar.c:216 gammu/calendar.c:572 gammu/calendar.c:614
-#: gammu/calendar.c:658 gammu/calendar.c:682 gammu/calendar.c:881
+#: gammu/calendar.c:658 gammu/calendar.c:682 gammu/calendar.c:886
 #: gammu/memory.c:273 gammu/misc.c:1569 gammu/misc.c:1602 gammu/misc.c:1838
 #: gammu/misc.c:1947
 #, fuzzy
 msgid "Location"
 msgstr "Locazione %i\n"
 
-#: gammu/calendar.c:226 gammu/calendar.c:827 gammu/memory.c:51
+#: gammu/calendar.c:226 gammu/calendar.c:832 gammu/memory.c:51
 msgid "Private"
 msgstr ""
 
@@ -1136,7 +1136,7 @@ msgid "No"
 msgstr ""
 
 #: gammu/calendar.c:240 gammu/calendar.c:246 gammu/calendar.c:251
-#: gammu/calendar.c:856 gammu/calendar.c:862
+#: gammu/calendar.c:861 gammu/calendar.c:867
 #, fuzzy
 msgid "Contact ID"
 msgstr "ID Contatto  : %d\n"
@@ -1390,21 +1390,26 @@ msgstr "Data ed ora      : %s\n"
 
 #: gammu/calendar.c:802
 #, fuzzy
+msgid "Start time"
+msgstr "Normale\n"
+
+#: gammu/calendar.c:807
+#, fuzzy
 msgid "Completed"
 msgstr "Completato   : %s\n"
 
-#: gammu/calendar.c:837 gammu/calendar.c:842 gammu/memory.c:38
+#: gammu/calendar.c:842 gammu/calendar.c:847 gammu/memory.c:38
 #: gammu/memory.c:44 gammu/memory.c:46
 #, fuzzy
 msgid "Category"
 msgstr "Categoria    : %i\n"
 
-#: gammu/calendar.c:866
+#: gammu/calendar.c:871
 #, fuzzy
 msgid "Contact"
 msgstr "ID Contatto  : %d\n"
 
-#: gammu/calendar.c:949 gammu/memory.c:422 gammu/memory.c:497
+#: gammu/calendar.c:954 gammu/memory.c:422 gammu/memory.c:497
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Stringa di ricerca troppo lunga, la tronco a %d caratteri!\n"
