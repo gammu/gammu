@@ -77,6 +77,43 @@ foreach(TESTVCARD ${VCARDS})
         "${Gammu_SOURCE_DIR}/tests/vcards/${TESTBACKUP}")
 endforeach(TESTVCARD $VCARDS)
 
+# [iv]Calendar parsing
+add_executable(cal-read cal-read.c)
+if (CROSS_MINGW)
+    set_target_properties (cal-read PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+target_link_libraries(cal-read libGammu)
+
+# List test cases
+file(GLOB VCALS
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcal"
+    "${Gammu_SOURCE_DIR}/tests/vcal/*.vcs")
+list(SORT VCALS)
+
+foreach(TESTVCAL ${VCALS})
+    string(REPLACE vcs backup TESTBACKUP ${TESTVCAL})
+    string(REPLACE .vcs "" TESTNAME ${TESTVCAL})
+    add_test("cal-read-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/cal-read${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/vcal/${TESTVCAL}"
+        "${Gammu_SOURCE_DIR}/tests/vcal/${TESTBACKUP}")
+endforeach(TESTVCAL $VCALS)
+
+# List test cases
+file(GLOB VCALS
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcal"
+    "${Gammu_SOURCE_DIR}/tests/vcal/*.ics")
+list(SORT VCALS)
+
+foreach(TESTVCAL ${VCALS})
+    string(REPLACE ics backup TESTBACKUP ${TESTVCAL})
+    string(REPLACE .ics "" TESTNAME ${TESTVCAL})
+    add_test("cal-read-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/cal-read${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/vcal/${TESTVCAL}"
+        "${Gammu_SOURCE_DIR}/tests/vcal/${TESTBACKUP}")
+endforeach(TESTVCAL $VCALS)
+
 # SMS parsing
 add_executable(sms-nokia-01 sms-nokia-01.c sms-printing.c)
 if (CROSS_MINGW)
