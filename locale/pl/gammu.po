@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.17.93\n"
+"Project-Id-Version: Gammu 1.18.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2008-01-29 11:24+0900\n"
+"POT-Creation-Date: 2008-02-25 11:34+0100\n"
 "PO-Revision-Date: 2007-11-30 17:33+0100\n"
 "Last-Translator: Wojciech Sobczak <wsobczak@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -318,19 +318,19 @@ msgstr "Nieznany błąd."
 msgid "Personal"
 msgstr "Osobiste"
 
-#: common/phone/nokia/dct3/n6110.c:1955 common/phone/nokia/nfunc.c:1054
+#: common/phone/nokia/dct3/n6110.c:1955 common/phone/nokia/nfunc.c:1058
 msgid "Car"
 msgstr "Samochód"
 
-#: common/phone/nokia/dct3/n6110.c:1957 common/phone/nokia/nfunc.c:1056
+#: common/phone/nokia/dct3/n6110.c:1957 common/phone/nokia/nfunc.c:1060
 msgid "Headset"
 msgstr "Zestaw słuchawkowy"
 
-#: common/phone/nokia/dct3/n6110.c:1963 common/phone/nokia/nfunc.c:1044
+#: common/phone/nokia/dct3/n6110.c:1963 common/phone/nokia/nfunc.c:1048
 msgid "General"
 msgstr "Ogólny"
 
-#: common/phone/nokia/dct3/n6110.c:1965 common/phone/nokia/nfunc.c:1046
+#: common/phone/nokia/dct3/n6110.c:1965 common/phone/nokia/nfunc.c:1050
 msgid "Silent"
 msgstr "Milczy"
 
@@ -362,36 +362,36 @@ msgstr "Wysłane"
 msgid "Saved items"
 msgstr "Zapisane"
 
-#: common/phone/nokia/nfunc.c:878
+#: common/phone/nokia/nfunc.c:882
 msgid "Family"
 msgstr "Rodzina"
 
-#: common/phone/nokia/nfunc.c:880
+#: common/phone/nokia/nfunc.c:884
 msgid "VIP"
 msgstr "VIP"
 
-#: common/phone/nokia/nfunc.c:882
+#: common/phone/nokia/nfunc.c:886
 msgid "Friends"
 msgstr "Przyjaciele"
 
-#: common/phone/nokia/nfunc.c:884
+#: common/phone/nokia/nfunc.c:888
 msgid "Colleagues"
 msgstr "Koledzy"
 
-#: common/phone/nokia/nfunc.c:886
+#: common/phone/nokia/nfunc.c:890
 msgid "Other"
 msgstr "Inni"
 
-#: common/phone/nokia/nfunc.c:1048 gammu/calendar.c:43 gammu/calendar.c:692
+#: common/phone/nokia/nfunc.c:1052 gammu/calendar.c:43 gammu/calendar.c:692
 msgid "Meeting"
 msgstr "Spotkanie"
 
-#: common/phone/nokia/nfunc.c:1050
+#: common/phone/nokia/nfunc.c:1054
 #, fuzzy
 msgid "Outdoor"
 msgstr "Skrzynka nadawcza"
 
-#: common/phone/nokia/nfunc.c:1052 gammu/message.c:629
+#: common/phone/nokia/nfunc.c:1056 gammu/message.c:629
 #, c-format
 msgid "Pager"
 msgstr "Pager"
@@ -457,8 +457,8 @@ msgid "Error while writing file!\n"
 msgstr "Błąd zapisu do urządzenia."
 
 #: gammu/backup.c:192 gammu/backup.c:830 gammu/backup.c:1395
-#: gammu/calendar.c:605 gammu/calendar.c:931 gammu/calendar.c:1006
-#: gammu/calendar.c:1029 gammu/memory.c:157 gammu/memory.c:418
+#: gammu/calendar.c:605 gammu/calendar.c:936 gammu/calendar.c:1011
+#: gammu/calendar.c:1034 gammu/memory.c:157 gammu/memory.c:418
 #: gammu/memory.c:480 gammu/message.c:573 gammu/misc.c:63 gammu/misc.c:249
 msgid "Press Ctrl+C to break..."
 msgstr ""
@@ -648,7 +648,7 @@ msgid "Time of backup"
 msgstr ""
 
 #: gammu/backup.c:833 gammu/backup.c:1398 gammu/calendar.c:221
-#: gammu/calendar.c:871
+#: gammu/calendar.c:876
 msgid "Phone"
 msgstr "Telefon"
 
@@ -916,7 +916,7 @@ msgstr "Podróż"
 msgid "Vacation"
 msgstr "Wakacje"
 
-#: gammu/calendar.c:58 gammu/calendar.c:707 gammu/calendar.c:807
+#: gammu/calendar.c:58 gammu/calendar.c:707 gammu/calendar.c:812
 msgid "Alarm"
 msgstr "Alarm"
 
@@ -1012,7 +1012,7 @@ msgstr "Start"
 msgid "Stop"
 msgstr "Stop"
 
-#: gammu/calendar.c:154 gammu/calendar.c:817 gammu/memory.c:34
+#: gammu/calendar.c:154 gammu/calendar.c:822 gammu/memory.c:34
 msgid "Last modified"
 msgstr "Ostatnio zmodyfikowany"
 
@@ -1025,33 +1025,33 @@ msgstr "Alarm tonowy"
 msgid "forever on each %i. day of %s"
 msgstr ""
 
-#: gammu/calendar.c:181 gammu/calendar.c:193 gammu/calendar.c:812
+#: gammu/calendar.c:181 gammu/calendar.c:193 gammu/calendar.c:817
 msgid "Silent alarm"
 msgstr "Cichy alarm"
 
-#: gammu/calendar.c:201 gammu/calendar.c:524 gammu/calendar.c:822
-#: gammu/calendar.c:1038 gammu/memory.c:104 gammu/message.c:416
+#: gammu/calendar.c:201 gammu/calendar.c:524 gammu/calendar.c:827
+#: gammu/calendar.c:1043 gammu/memory.c:104 gammu/message.c:416
 #: gammu/message.c:626 gammu/misc.c:860
 #, c-format
 msgid "Text"
 msgstr "Tekst"
 
-#: gammu/calendar.c:206 gammu/calendar.c:876
+#: gammu/calendar.c:206 gammu/calendar.c:881
 msgid "Description"
 msgstr "Opis"
 
-#: gammu/calendar.c:211 gammu/calendar.c:886 gammu/memory.c:110
+#: gammu/calendar.c:211 gammu/calendar.c:891 gammu/memory.c:110
 msgid "LUID"
 msgstr "LUID"
 
 #: gammu/calendar.c:216 gammu/calendar.c:572 gammu/calendar.c:614
-#: gammu/calendar.c:658 gammu/calendar.c:682 gammu/calendar.c:881
+#: gammu/calendar.c:658 gammu/calendar.c:682 gammu/calendar.c:886
 #: gammu/memory.c:273 gammu/misc.c:1569 gammu/misc.c:1602 gammu/misc.c:1838
 #: gammu/misc.c:1947
 msgid "Location"
 msgstr "Lokalizacja"
 
-#: gammu/calendar.c:226 gammu/calendar.c:827 gammu/memory.c:51
+#: gammu/calendar.c:226 gammu/calendar.c:832 gammu/memory.c:51
 msgid "Private"
 msgstr "Prywatne"
 
@@ -1064,7 +1064,7 @@ msgid "No"
 msgstr "Nie"
 
 #: gammu/calendar.c:240 gammu/calendar.c:246 gammu/calendar.c:251
-#: gammu/calendar.c:856 gammu/calendar.c:862
+#: gammu/calendar.c:861 gammu/calendar.c:867
 msgid "Contact ID"
 msgstr "Identyfikator kontaktu"
 
@@ -1306,19 +1306,25 @@ msgid "Due time"
 msgstr "   Numer      : %s\n"
 
 #: gammu/calendar.c:802
+#, fuzzy
+#| msgid "Start"
+msgid "Start time"
+msgstr "Start"
+
+#: gammu/calendar.c:807
 msgid "Completed"
 msgstr ""
 
-#: gammu/calendar.c:837 gammu/calendar.c:842 gammu/memory.c:38
+#: gammu/calendar.c:842 gammu/calendar.c:847 gammu/memory.c:38
 #: gammu/memory.c:44 gammu/memory.c:46
 msgid "Category"
 msgstr ""
 
-#: gammu/calendar.c:866
+#: gammu/calendar.c:871
 msgid "Contact"
 msgstr ""
 
-#: gammu/calendar.c:949 gammu/memory.c:422 gammu/memory.c:497
+#: gammu/calendar.c:954 gammu/memory.c:422 gammu/memory.c:497
 #, c-format
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr ""
