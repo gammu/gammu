@@ -80,15 +80,15 @@ typedef struct {
 	/**
 	 * Error code.
 	 */
-	GSM_Error		ErrorNum;
+	GSM_Error ErrorNum;
 	/**
 	 * Name of error.
 	 */
-	unsigned char		*ErrorName; 
+	char *ErrorName;
 	/**
 	 * Textual representation, not localised, use gettext to get localised string.
 	 */
-	unsigned char		*ErrorText;
+	char *ErrorText;
 } PrintErrorEntry;
 
 /**
@@ -279,8 +279,8 @@ GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
 
 void GSM_LogError(GSM_StateMachine * s, const char * message, const GSM_Error err) {
 	if (err != ERR_NONE) {
-		smprintf(s, "%s failed with error %s[%d]: %s\n", message, 
-				GSM_ErrorName(err), err, 
+		smprintf(s, "%s failed with error %s[%d]: %s\n", message,
+				GSM_ErrorName(err), err,
 				GSM_ErrorString(err));
 	}
 }
