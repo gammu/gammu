@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2008-02-25 11:34+0100\n"
+"POT-Creation-Date: 2008-02-25 11:35+0100\n"
 "PO-Revision-Date: 2007-12-26 12:59+0100\n"
 "Last-Translator: Alberto Sanchez Molero <frikifeldes@gmail.com>\n"
 "Language-Team: Español\n"
@@ -1323,7 +1323,6 @@ msgstr "Fecha y hora"
 
 #: gammu/calendar.c:802
 #, fuzzy
-#| msgid "Start"
 msgid "Start time"
 msgstr "Empezar"
 
