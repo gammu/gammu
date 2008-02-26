@@ -29,6 +29,7 @@ Usage: ./configure [options]
 --enable-debug      enables debug build
 --enable-backup     enable backup support
 --enable-win32      enable mingw crosscomilation
+--enable-protection enable compile time protections
 
 All enable params have their disable counterparts.
 
@@ -48,6 +49,7 @@ CMAKE_SHARED=
 CMAKE_DEBUG=
 CMAKE_BACKUP=
 CMAKE_CROSS=
+CMAKE_PROTECTION=
 
 # process command line
 while [ "$#" -gt 0 ] ; do
@@ -76,6 +78,12 @@ while [ "$#" -gt 0 ] ; do
         --disable-shared)
             CMAKE_SHARED="-DENABLE_SHARED=OFF"
             ;;
+        --enable-protection)
+            CMAKE_PROTECTION="-DENABLE_PROTECTION=ON"
+            ;;
+        --disable-protection)
+            CMAKE_PROTECTION="-DENABLE_PROTECTION=OFF"
+            ;;
         --enable-debug)
             CMAKE_DEBUG="-DCMAKE_BUILD_TYPE=Debug"
             ;;
@@ -100,4 +108,4 @@ fi
 cd "$BUILD_DIR"
 
 # invoke cmake to do configuration
-cmake $SOURCE_DIR $CMAKE_PREFIX $CMAKE_SHARED $CMAKE_DEBUG $CMAKE_BACKUP $CMAKE_CROSS
+cmake $SOURCE_DIR $CMAKE_PREFIX $CMAKE_SHARED $CMAKE_DEBUG $CMAKE_BACKUP $CMAKE_CROSS $CMAKE_PROTECTION

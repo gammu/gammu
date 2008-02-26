@@ -385,19 +385,21 @@ else(MSVC)
     #
     # Security related flags
     #
+    set (ENABLE_PROTECTION ON CACHE BOOL "Enable compile time protections (stack, read only code, fortify in libc...)")
+    if (ENABLE_PROTECTION)
+        MACRO_TUNE_COMPILER("-Wp,-D_FORTIFY_SOURCE=2")
 
-    MACRO_TUNE_COMPILER("-Wp,-D_FORTIFY_SOURCE=2")
-
-    # Text address randomisation, disabled for now, seems to cause problems
-    #    MACRO_TUNE_COMPILER("-fPIE")
-    #    MACRO_TUNE_LINKER("-pie")
-    # These do not work on Windows right now
-    if (NOT WIN32)
-        # Stack protector
-        MACRO_TUNE_COMPILER("-fstack-protector")
-        # Mark code read only
-        MACRO_TUNE_LINKER("-Wl,-zrelro")
-    endif (NOT WIN32)
+        # Text address randomisation, disabled for now, seems to cause problems
+        #    MACRO_TUNE_COMPILER("-fPIE")
+        #    MACRO_TUNE_LINKER("-pie")
+        # These do not work on Windows right now
+        if (NOT WIN32)
+            # Stack protector
+            MACRO_TUNE_COMPILER("-fstack-protector")
+            # Mark code read only
+            MACRO_TUNE_LINKER("-Wl,-zrelro")
+        endif (NOT WIN32)
+    endif (ENABLE_PROTECTION)
 
     #
     # Other flags

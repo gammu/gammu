@@ -59,6 +59,8 @@ Useful cmake parameters:
 -DENABLE_SHARED=ON enables shared library
 -DCMAKE_BUILD_TYPE="Debug" enables debug build
 -DCMAKE_INSTALL_PREFIX="/usr" change installation prefix
+-DENABLE_PROTECTION=OFF disables various compile time protections
+against buffer overflows and similar attacks
 
 You can also disable support for whole set of phones, e.g.:
 
