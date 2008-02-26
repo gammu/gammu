@@ -162,8 +162,8 @@ static PrintErrorEntry PrintErrorEntries[] = {
 
 const char *GSM_ErrorName(GSM_Error e)
 {
-	unsigned char 	*def 	= NULL;
-	int 		i	= 0;
+	char	*def 	= NULL;
+	int	i	= 0;
 
 	while (PrintErrorEntries[i].ErrorNum != 0) {
 		if (PrintErrorEntries[i].ErrorNum == e) {
@@ -178,8 +178,8 @@ const char *GSM_ErrorName(GSM_Error e)
 
 const char *GSM_ErrorString(GSM_Error e)
 {
-	unsigned char 	*def 	= NULL;
-	int 		i	= 0;
+	char	*def 	= NULL;
+	int	i	= 0;
 
 	while (PrintErrorEntries[i].ErrorNum != 0) {
 		if (PrintErrorEntries[i].ErrorNum == e) {
