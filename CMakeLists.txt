@@ -344,6 +344,10 @@ else(MSVC)
     if (NOT VERSION_PATCH EQUAL 0)
         MACRO_TUNE_COMPILER("-Werror")
     endif (NOT VERSION_PATCH EQUAL 0)
+
+    #
+    # Warnings related flags
+    #
     MACRO_TUNE_COMPILER("-Wall")
     MACRO_TUNE_COMPILER("-Werror-implicit-function-declaration")
     MACRO_TUNE_COMPILER("-Wdeclaration-after-statement")
@@ -354,24 +358,9 @@ else(MSVC)
     MACRO_TUNE_COMPILER("-Wmissing-noreturn")
     MACRO_TUNE_COMPILER("-Wpointer-arith")
     MACRO_TUNE_COMPILER("-Wredundant-decls")
-    # These do not work on Windows right now
-    if (NOT WIN32)
-        # Stack protector
-        MACRO_TUNE_COMPILER("-fstack-protector")
-        # Mark code read only
-        MACRO_TUNE_LINKER("-Wl,-zrelro")
-    endif (NOT WIN32)
-    # Text address randomisation, disabled for now, seems to cause problems
-    #    MACRO_TUNE_COMPILER("-fPIE")
-    #    MACRO_TUNE_LINKER("-pie")
-    if (WIN32 AND ENABLE_SHARED)
-        MACRO_TUNE_LINKER("-Wl,--enable-auto-import")
-    endif (WIN32 AND ENABLE_SHARED)
 
     # Does not work well
     #MACRO_TUNE_COMPILER("-Wunreachable-code")
-
-    MACRO_TUNE_COMPILER("-Wp,-D_FORTIFY_SOURCE=2")
 
     # Just silent this for now, too much code to fix here
     MACRO_TUNE_COMPILER("-Wno-pointer-sign")
@@ -392,6 +381,31 @@ else(MSVC)
         # Just silent this for now, too much code to fix here
         MACRO_TUNE_COMPILER("-Wno-unused-parameter")
     endif (DEBUG)
+
+    #
+    # Security related flags
+    #
+
+    MACRO_TUNE_COMPILER("-Wp,-D_FORTIFY_SOURCE=2")
+
+    # Text address randomisation, disabled for now, seems to cause problems
+    #    MACRO_TUNE_COMPILER("-fPIE")
+    #    MACRO_TUNE_LINKER("-pie")
+    # These do not work on Windows right now
+    if (NOT WIN32)
+        # Stack protector
+        MACRO_TUNE_COMPILER("-fstack-protector")
+        # Mark code read only
+        MACRO_TUNE_LINKER("-Wl,-zrelro")
+    endif (NOT WIN32)
+
+    #
+    # Other flags
+    #
+
+    if (WIN32 AND ENABLE_SHARED)
+        MACRO_TUNE_LINKER("-Wl,--enable-auto-import")
+    endif (WIN32 AND ENABLE_SHARED)
 endif(MSVC)
 
 # Define required libraries for gammu library if it is static
