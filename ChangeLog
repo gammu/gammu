@@ -18,6 +18,7 @@ ChangeLog
 2008???? - 1.18.92
 
 [+] * Add option to disable compiled in protection.
+[-] * Fixed detection of PostgreSQL.
     
 20080225 - 1.18.91
 
