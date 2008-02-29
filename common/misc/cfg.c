@@ -24,10 +24,11 @@ GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section **result)
 	int		level = -1, buffer1used, buffer2used;
 	int		bufferused, i, buffused=1000,buffread=1000, num;
 	unsigned char	ch[3], *buffer = NULL;
-	unsigned char	*buffer2 = NULL, *buffer1 = NULL, buff[1000];
+	unsigned char	*buffer2 = NULL, *buffer1 = NULL, buff[1001];
         INI_Section 	*INI_info = NULL, *INI_head = NULL, *heading;
         INI_Entry 	*entry;
 	GSM_Error	error = ERR_NONE;
+
 
 	*result = NULL;
 
@@ -77,6 +78,10 @@ GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section **result)
 				break;
 			}
 			buffer 			= realloc(buffer,bufferused+2);
+                        if (buffer == NULL) {
+                                error = ERR_MOREMEMORY;
+				goto done;
+                        }
 			buffer[bufferused] 	= ch[0];
 			buffer[bufferused+1] 	= ch[1];
 			bufferused		= bufferused + 2;
@@ -229,9 +234,17 @@ GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section **result)
 			}
 
 			entry->EntryName = (char *)malloc(buffer1used);
+			if (entry->EntryName == NULL) {
+                                error = ERR_MOREMEMORY;
+				goto done;
+                        }
 			memcpy(entry->EntryName,buffer1,buffer1used);
 
 			entry->EntryValue = (char *)malloc(buffer2used);
+			if (entry->EntryValue == NULL) {
+                                error = ERR_MOREMEMORY;
+				goto done;
+                        }
 			memcpy(entry->EntryValue,buffer2,buffer2used);
 
 			entry->Prev = NULL;
