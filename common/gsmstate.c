@@ -924,6 +924,9 @@ GSM_Error GSM_FindGammuRC (INI_Section **result)
 	}
 
 #if defined(WIN32)
+	/* Reset as we're using strcat */
+	configfile[0] = 0;
+
 	/* This makes sense only on Windows */
 	envpath = getenv("HOMEDRIVE");
 	if (envpath) {
