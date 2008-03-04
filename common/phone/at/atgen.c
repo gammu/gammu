@@ -4107,6 +4107,10 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	int			memory_end;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
+	/* For reading we prefer unicode */
+	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE);
+	if (error != ERR_NONE) return error;
+
 	smprintf(s, "Getting memory information\n");
 
 	Priv->MemorySize		= 0;
@@ -4479,14 +4483,14 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 	error=ATGEN_SetPBKMemory(s, entry->MemoryType);
 	if (error != ERR_NONE) return error;
 
+	/* For reading we prefer unicode */
+	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE);
+	if (error != ERR_NONE) return error;
+
 	if (Priv->FirstMemoryEntry == -1) {
 		error = ATGEN_GetMemoryInfo(s, NULL, AT_First);
 		if (error != ERR_NONE) return error;
 	}
-
-
-	error=ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE); /* For reading we prefer unicode */
-	if (error != ERR_NONE) return error;
 
 	if (endlocation == 0) {
 		sprintf(req, "AT+CPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
