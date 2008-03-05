@@ -46,7 +46,7 @@ ELSE(WIN32)
       EXEC_PROGRAM(${POSTGRES_CONFIG}
         ARGS --libdir
         OUTPUT_VARIABLE PG_TMP)
-      find_library(POSTGRES_LIBRARY NAMES libpq.so
+      find_library(POSTGRES_LIBRARY pq
         PATHS
         ${PG_TMP}
         /usr/lib/postgresql
