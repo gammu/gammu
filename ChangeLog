@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2008???? - 1.18.92
+20080305 - 1.19.0
 
 [+] * Add option to disable compiled in protection.
 [-] * Fixed detection of PostgreSQL.
