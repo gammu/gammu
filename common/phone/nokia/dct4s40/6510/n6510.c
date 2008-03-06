@@ -1836,6 +1836,7 @@ static GSM_Error N6510_ReplyGetConnectionSettings(GSM_Protocol_Message msg, GSM_
 		 */
 		smprintf(s, "Connection settings receiving error, assuming empty\n");
 		return ERR_EMPTY;
+	case 0x11:
 	case 0x17:
 		smprintf(s, "Connection settings receiving error\n");
 		switch (msg.Buffer[4]) {
@@ -4155,6 +4156,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
 	{DCT3DCT4_ReplyDelWAPBookmark,	  "\x3f",0x03,0x0E,ID_DeleteWAPBookmark	  },
 	{DCT3DCT4_ReplyGetActiveConnectSet,"\x3f",0x03,0x10,ID_GetConnectSet	  },
 	{DCT3DCT4_ReplySetActiveConnectSet,"\x3f",0x03,0x13,ID_SetConnectSet	  },
+	{N6510_ReplyGetConnectionSettings,"\x3f",0x03,0x11,ID_GetConnectSet	  },
 	{N6510_ReplyGetConnectionSettings,"\x3f",0x03,0x16,ID_GetConnectSet	  },
 	{N6510_ReplyGetConnectionSettings,"\x3f",0x03,0x17,ID_GetConnectSet	  },
 	{N6510_ReplySetConnectionSettings,"\x3f",0x03,0x19,ID_SetConnectSet	  },
