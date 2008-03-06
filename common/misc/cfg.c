@@ -22,13 +22,12 @@ GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section **result)
 	FILE		*f;
 	bool		FFEEUnicode=false;
 	int		level = -1, buffer1used, buffer2used;
-	int		bufferused, i, buffused=1000,buffread=1000, num;
+	size_t		bufferused, i, buffused=1000,buffread=1000, num;
 	unsigned char	ch[3], *buffer = NULL;
 	unsigned char	*buffer2 = NULL, *buffer1 = NULL, buff[1001];
         INI_Section 	*INI_info = NULL, *INI_head = NULL, *heading;
         INI_Entry 	*entry;
 	GSM_Error	error = ERR_NONE;
-
 
 	*result = NULL;
 
