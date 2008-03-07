@@ -245,7 +245,7 @@ GSM_Error SIEMENS_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 			error = ERR_EMPTY;
 			break;
 		}
-		if (error==ERR_NONE) 
+		if (error==ERR_NONE)
 			break;
 	}
 	return error;
@@ -414,6 +414,8 @@ GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 		return ERR_NONE;
 	case AT_Reply_CMSError:
 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
  	default:
 		return ERR_UNKNOWNRESPONSE;
 	}
