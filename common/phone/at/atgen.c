@@ -1411,6 +1411,19 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		/* We don't care about error here */
 		ATGEN_WaitFor(s, "AT+CPROT=?\r", 11, 0x00, 3, ID_SetOBEX);
 		error = ERR_NONE;
+	} else {
+		/*
+		 * Enable OBEX for Motorolas, they usually support this and
+		 * AT+OBEX can fallback to pure AT.
+		 */
+		if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_ATOBEX) &&
+				!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)
+				) {
+			smprintf(s, "Automatically enabling F_OBEX, please report bug if it causes problems\n");
+			GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_OBEX);
+			GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_MODE22);
+			GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_IRMC_LEVEL_2);
+		}
 	}
 
 #ifdef GSM_ENABLE_ATOBEX
