@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Fix handling of UTF8 charset with some Motorola phones.
 [-] * Identify Motorola V635.
+[-] * Set again charset in Motorola phones after changing AT mode.
     
 20080305 - 1.19.0
 

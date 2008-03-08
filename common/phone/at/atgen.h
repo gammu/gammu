@@ -165,6 +165,11 @@ typedef enum {
 	 * some transmitted characters is not possible to GSM.
 	 */
 	AT_PREF_CHARSET_IRA,
+	/**
+	 * This option just sets again charset in phone. Useful after
+	 * something what resets this information in phone.
+	 */
+	AT_PREF_CHARSET_RESET,
 } GSM_AT_Charset_Preference;
 
 typedef enum {
@@ -397,6 +402,16 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *s);
  * \param ... Pointers to various buffers as defined by format string.
  */
 GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, const char *format, ...);
+
+/**
+ * Sets charset in phone according to preference.
+ *
+ * \param s State machine structure.
+ * \param Prefer What charset setting is prefered.
+ *
+ * \return Error code.
+ */
+GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer);
 
 #endif
 /*@}*/

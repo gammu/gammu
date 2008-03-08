@@ -135,6 +135,10 @@ GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command)
 	/* On succes we remember it */
 	if (error == ERR_NONE) {
 		Priv->CurrentMode = cmd->Mode;
+		/* We might need to restore charset as phone resets it */
+		if (cmd->Mode == 2) {
+			error = ATGEN_SetCharset(s, AT_PREF_CHARSET_RESET);
+		}
 	}
 
 	return error;
