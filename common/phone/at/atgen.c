@@ -1608,6 +1608,9 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 		} else {
 			cset = Priv->IRACharset;
 		}
+	} else if (Prefer == AT_PREF_CHARSET_RESET) {
+		cset = Priv->Charset;
+		Priv->Charset = 0;
 	} else {
 		return ERR_BUG;
 	}
@@ -1625,7 +1628,8 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 
 	/* Should not happen! */
 	if (AT_Charsets[i].charset == 0) {
-		smprintf(s, "Could not find string representation for charset!\n");
+		smprintf(s, "Could not find string representation for charset (%d)!\n",
+				cset);
 		return ERR_BUG;
 	}
 
