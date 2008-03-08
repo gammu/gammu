@@ -18,6 +18,7 @@ ChangeLog
 2008???? - 1.19.90
 
 [-] * Fix handling of UTF8 charset with some Motorola phones.
+[-] * Identify Motorola V635.
     
 20080305 - 1.19.0
 
