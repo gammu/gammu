@@ -1094,9 +1094,12 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if (Data->ModelInfo->number[0] == 0)
 		Data->ModelInfo = GetModelData(s, Data->Model, NULL, NULL);
 
-	if (Data->ModelInfo->number[0] != 0) strcpy(Data->Model,Data->ModelInfo->number);
+	if (Data->ModelInfo->number[0] != 0) {
+		smprintf(s, "Unknown model, but it should still work\n");
+		strcpy(Data->Model,Data->ModelInfo->number);
+	}
 
-	smprintf(s, "[Model: %s]\n", s->Phone.Data.Model);
+	smprintf(s, "[Model data: %s]\n", Data->ModelInfo->number);
 
 	return ERR_NONE;
 }
@@ -1511,7 +1514,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				if (AT_Charsets[i].unicode && (strstr(line, AT_Charsets[i].text) != NULL)) {
 					if ((AT_Charsets[i].charset == AT_CHARSET_UTF8 ||
 						AT_Charsets[i].charset == AT_CHARSET_UTF_8) &&
-							Priv->Manufacturer != AT_Motorola) {
+							Priv->Manufacturer == AT_Motorola) {
 						IgnoredUTF8 = true;
 						smprintf(s, "Skipped %s because it is usually wrongly implemented on Motorola phones\n", AT_Charsets[i].text);
 					} else if ((AT_Charsets[i].charset != AT_CHARSET_UCS2 &&
