@@ -26,9 +26,17 @@ if [ "x$1" = "xbranch" ] ; then
     rel=RELEASE_`echo -n $version|tr . _`
     svn cp -m "Tag release $version" svn+ssh://mort/home/svn/$repo/trunk svn+ssh://mort/home/svn/$repo/tags/$rel
     svn export svn+ssh://mort/home/svn/$repo/tags/$rel $repo-$version
-else
+elif [ "x$1" = "x" ] ; then
+    rel=trunk
     svn export svn+ssh://mort/home/svn/$repo/trunk $repo-$version
+else
+    version="$1"
+    rel=RELEASE_`echo -n $version|tr . _`
+    svn export svn+ssh://mort/home/svn/$repo/tags/$rel $repo-$version
 fi
+
+echo "Creating release $version from $rel"
+
 
 echo 'Creating source tarballs...'
 tar cfz $repo-$version.tar.gz $repo-$version
@@ -65,5 +73,6 @@ cpack
 mv Gammu-*-Windows-Minimal.* ../
 cd ..
 
-echo "Release is in $tmp directory:"
+# We're done
+echo "Release is in $tmp directory"
 ls -lh $tmp
