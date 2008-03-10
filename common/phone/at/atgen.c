@@ -1415,8 +1415,13 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		/*
 		 * Enable OBEX for Motorolas, they usually support this and
 		 * AT+OBEX can fallback to pure AT.
+		 *
+		 * This usually does not work on Bluetooth and IrDA, as there
+		 * you can access OBEX another way.
 		 */
-		if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_ATOBEX) &&
+		if (s->ConnectionType != GCT_IRDAAT &&
+				s->ConnectionType != GCT_BLUEAT &&
+				!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_ATOBEX) &&
 				!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)
 				) {
 			smprintf(s, "Automatically enabling F_OBEX, please report bug if it causes problems\n");
