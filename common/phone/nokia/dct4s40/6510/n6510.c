@@ -1844,6 +1844,7 @@ static GSM_Error N6510_ReplyGetConnectionSettings(GSM_Protocol_Message msg, GSM_
 			smprintf(s, "Security error. Inside phone settings menu\n");
 			return ERR_INSIDEPHONEMENU;
 		case 0x02:
+		case 0x03: /* Guess */
 			smprintf(s, "Invalid or empty\n");
 			return ERR_INVALIDLOCATION;
 		default:
