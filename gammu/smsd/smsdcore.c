@@ -641,7 +641,8 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 		/* There were errors in communication - try to recover */
 		if (errors > 2 || errors == -1) {
 			if (errors != -1) {
-				WriteSMSDLog(_("Terminating communication (%i,%i)"), error, errors);
+				WriteSMSDLog(_("Terminating communication %s, (%i, %i times)"),
+						GSM_ErrorString(error), error, errors);
 				error=GSM_TerminateConnection(gsm);
 			}
 			if (initerrors++ > 3) my_sleep(30000);
@@ -678,7 +679,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 						error, true, -1);
 				break;
 			default:
-				WriteSMSDLog(_("Error at init connection (%s:%i)"),
+				WriteSMSDLog(_("Error at init connection %s (%i)"),
 						GSM_ErrorString(error), error);
 				errors = 250;
 				break;
