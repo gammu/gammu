@@ -21,14 +21,14 @@
  *
  * \ingroup Info
  */
-char *GSM_GetNetworkName(char *NetworkCode);
+const unsigned char *GSM_GetNetworkName(const char *NetworkCode);
 
 /**
  * Find country name from given country code.
  *
  * \ingroup Info
  */
-char *GSM_GetCountryName(char *CountryCode);
+const unsigned char *GSM_GetCountryName(const char *CountryCode);
 
 /**
  * Status of network logging
