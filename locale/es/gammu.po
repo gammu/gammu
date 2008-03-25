@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2008-02-25 11:35+0100\n"
+"POT-Creation-Date: 2008-03-25 18:06+0100\n"
 "PO-Revision-Date: 2007-12-26 12:59+0100\n"
 "Last-Translator: Alberto Sanchez Molero <frikifeldes@gmail.com>\n"
 "Language-Team: Español\n"
@@ -4853,34 +4853,35 @@ msgid "Initialisation failed, stopping Gammu smsd"
 msgstr ""
 
 #: gammu/smsd/smsdcore.c:644
-#, c-format
-msgid "Terminating communication (%i,%i)"
+#, fuzzy, c-format
+#| msgid "Terminating communication (%i,%i)"
+msgid "Terminating communication %s, (%i, %i times)"
 msgstr "Terminando comunicación (%i,%i)"
 
-#: gammu/smsd/smsdcore.c:648
+#: gammu/smsd/smsdcore.c:649
 msgid "Starting communication"
 msgstr "Iniciando comunicación"
 
-#: gammu/smsd/smsdcore.c:660
+#: gammu/smsd/smsdcore.c:661
 msgid "Post initialisation failed, stopping Gammu smsd"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:669
+#: gammu/smsd/smsdcore.c:670
 #, c-format
 msgid "Reset return code: %s (%i) "
 msgstr "Código de retorno de reinicio: %s (%i)"
 
-#: gammu/smsd/smsdcore.c:677
+#: gammu/smsd/smsdcore.c:678
 #, fuzzy
 msgid "Can't open device"
 msgstr "No se puede abrir el dispositivo (%i)"
 
-#: gammu/smsd/smsdcore.c:681
+#: gammu/smsd/smsdcore.c:682
 #, fuzzy, c-format
-msgid "Error at init connection (%s:%i)"
+msgid "Error at init connection %s (%i)"
 msgstr "Error de conexión inicial (%i)"
 
-#: gammu/smsd/smsdcore.c:722
+#: gammu/smsd/smsdcore.c:723
 #, fuzzy
 msgid "Stopping Gammu smsd"
 msgstr "Detener servicio smsd"
