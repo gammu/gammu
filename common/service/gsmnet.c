@@ -2,6 +2,8 @@
 
 #include <string.h>
 
+#include <gammu-info.h>
+
 #include "gsmnet.h"
 #include "../misc/coding/coding.h"
 
@@ -764,21 +766,21 @@ unsigned char *GSM_Networks[] = {
 	NULL
 };
 
-char *GSM_GetNetworkName(char *NetworkCode)
+const unsigned char *GSM_GetNetworkName(const char *NetworkCode)
 {
 	int		i = 0;
 	static char	retval[200];
-	char		NetworkCodeFull[7]="      ";
-	
-	EncodeUnicode(retval,"unknown",7);
-	if ((strlen(NetworkCode) == 5) || 
+	char		NetworkCodeFull[7] = "      ";
+
+	EncodeUnicode(retval, "unknown", 7);
+	if ((strlen(NetworkCode) == 5) ||
 			(strlen(NetworkCode) == 6)) {
 		strncpy(NetworkCodeFull, NetworkCode, 3);
 		strncpy(NetworkCodeFull + 4, NetworkCode + strlen(NetworkCode) - 2, 2);
 		while (GSM_Networks[i * 2] != NULL) {
 			if (strncmp(GSM_Networks[i * 2], NetworkCodeFull, 6) == 0) {
-				EncodeUnicode(retval, 
-						GSM_Networks[i * 2 + 1], 
+				EncodeUnicode(retval,
+						GSM_Networks[i * 2 + 1],
 						strlen(GSM_Networks[i * 2 + 1]));
 				break;
 			}
@@ -788,7 +790,7 @@ char *GSM_GetNetworkName(char *NetworkCode)
 	return retval;
 }
 
-char *GSM_GetCountryName(char *CountryCode)
+const unsigned char *GSM_GetCountryName(const char *CountryCode)
 {
 	int		i = 0;
 	static char	retval[200];

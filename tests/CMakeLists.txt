@@ -55,6 +55,15 @@ endif (CROSS_MINGW)
 target_link_libraries(features-parsing libGammu)
 add_test(features-parsing "${GAMMU_TEST_PATH}/features-parsing${GAMMU_TEST_SUFFIX}" "-n")
 
+# Check network codes decoding
+add_executable(network-codes network-codes.c)
+if (CROSS_MINGW)
+    set_target_properties (network-codes PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+
+target_link_libraries(network-codes libGammu)
+add_test(network-codes "${GAMMU_TEST_PATH}/network-codes${GAMMU_TEST_SUFFIX}" "-n")
+
 # vCard parsing
 add_executable(vcard-read vcard-read.c)
 if (CROSS_MINGW)
