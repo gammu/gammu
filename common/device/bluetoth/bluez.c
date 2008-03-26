@@ -172,6 +172,7 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, uu
 			smprintf(s," - \"%s\" (score=%d)\n", d->val.str, score);
 			if (score > bestscore) {
 				found = channel;
+				bestscore = score;
 			}
 		} else {
 			smprintf(s,"\n");

@@ -40,7 +40,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	if (d->hPhone == INVALID_SOCKET) {
 		err = GetLastError();
 		GSM_OSErrorInfo(s, "Socket in bluetooth_open");
-		if (err == WSAEPROTOTYPE) 
+		if (err == WSAEPROTOTYPE)
 			return ERR_DEVICENODRIVER;/* unknown socket type */
 		return ERR_UNKNOWN;
 	}
@@ -69,9 +69,9 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	if (connect (d->hPhone, (struct sockaddr *)&sab, sizeof(sab)) != 0) {
 		err = GetLastError();
 		GSM_OSErrorInfo(s, "Connect in bluetooth_open");
-		if (err == WSAETIMEDOUT) 
+		if (err == WSAETIMEDOUT)
 			return ERR_TIMEOUT;	 /* remote device failed to respond */
-		if (err == WSAENETDOWN) 
+		if (err == WSAENETDOWN)
 			return ERR_DEVICENOTWORK; /* socket operation connected with dead network */
 		/* noauth */
 		close(d->hPhone);
@@ -136,6 +136,7 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, char *address, WSAPR
 			}
 			if (score > bestscore) {
 				found = atoi(addressAsString+i+1);
+				bestscore = score;
 			}
 		}
 	}
@@ -168,7 +169,7 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 	if (d->hPhone == INVALID_SOCKET) {
 		err = GetLastError();
 		GSM_OSErrorInfo(s, "Socket in bluetooth_open");
-		if (err == WSAEPROTOTYPE) 
+		if (err == WSAEPROTOTYPE)
 			return ERR_DEVICENODRIVER;/* unknown socket type */
 		return ERR_UNKNOWN;
 	}

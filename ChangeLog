@@ -21,6 +21,7 @@ ChangeLog
 [-] * Identify Motorola V635.
 [-] * Set again charset in Motorola phones after changing AT mode.
 [-] * Automatically enable OBEX for Motorola phones.
+[-] * Fix searching of correct Bluetooth channel.
     
 20080305 - 1.19.0
 
