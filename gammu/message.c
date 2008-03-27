@@ -28,7 +28,7 @@ GSM_MultiSMSMessage		IncomingSMSData;
 /**
  * Prints location information about message.
  */
-void PrintSMSLocation(const GSM_SMSMessage *sms, const GSM_SMSFolders *folders) 
+void PrintSMSLocation(const GSM_SMSMessage *sms, const GSM_SMSFolders *folders)
 {
 	printf(_("Location %i, folder \"%s\""),
 			sms->Location,
@@ -36,16 +36,16 @@ void PrintSMSLocation(const GSM_SMSMessage *sms, const GSM_SMSFolders *folders)
 			);
 
 	switch (sms->Memory) {
-		case MEM_SM: 
+		case MEM_SM:
 			printf(", %s", _("SIM memory"));
 			break;
-		case MEM_ME: 
+		case MEM_ME:
 			printf(", %s", _("phone memory"));
 			break;
-		case MEM_MT: 
-			printf(", %s", _("phone or SIM memory")); 
+		case MEM_MT:
+			printf(", %s", _("phone or SIM memory"));
 			break;
-		default: 
+		default:
 			break;
 	}
 
@@ -765,7 +765,8 @@ void GetAllSMS(int argc, char *argv[])
 					        if (Backup.PhonePhonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
 						Backup.PhonePhonebook[used+1] = NULL;
 					} else {
-						printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
+						printf("\n   ");
+						printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
 						break;
 					}
 					*Backup.PhonePhonebook[used]=Pbk;
@@ -854,7 +855,8 @@ void GetEachSMS(int argc, char *argv[])
 					        if (Backup.PhonePhonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
 						Backup.PhonePhonebook[used+1] = NULL;
 					} else {
-						printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
+						printf("\n   ");
+						printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
 						break;
 					}
 					*Backup.PhonePhonebook[used]=Pbk;

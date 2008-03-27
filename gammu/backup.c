@@ -248,7 +248,8 @@ void DoBackup(int argc, char *argv[])
 				        if (Backup.PhonePhonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
 					Backup.PhonePhonebook[used+1] = NULL;
 				} else {
-					printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
+					printf("\n   ");
+					printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
 					break;
 				}
 				*Backup.PhonePhonebook[used]=Pbk;
@@ -286,7 +287,8 @@ void DoBackup(int argc, char *argv[])
 				        if (Backup.SIMPhonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
 					Backup.SIMPhonebook[used + 1] = NULL;
 				} else {
-					printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_SIMPHONEBOOK");
+					printf("\n   ");
+					printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_SIMPHONEBOOK");
 					break;
 				}
 				*Backup.SIMPhonebook[used]=Pbk;
@@ -318,7 +320,8 @@ void DoBackup(int argc, char *argv[])
 			        if (Backup.Calendar[used] == NULL) Print_Error(ERR_MOREMEMORY);
 				Backup.Calendar[used+1] = NULL;
 			} else {
-				printf(_("\n   Only part of data saved - increase %s") , "GSM_MAXCALENDARTODONOTES");
+				printf("\n   ");
+				printf(_("Only part of data saved, please increase %s") , "GSM_MAXCALENDARTODONOTES");
 				break;
 			}
 			*Backup.Calendar[used]=Calendar;
@@ -349,7 +352,8 @@ void DoBackup(int argc, char *argv[])
 				if (Backup.ToDo[used] == NULL) Print_Error(ERR_MOREMEMORY);
 				Backup.ToDo[used+1] = NULL;
 			} else {
-				printf(_("\n   Only part of data saved - increase %s") , "GSM_MAXCALENDARTODONOTES");
+				printf("\n   ");
+				printf(_("Only part of data saved, please increase %s") , "GSM_MAXCALENDARTODONOTES");
 				break;
 			}
 			*Backup.ToDo[used]=ToDo;
@@ -380,7 +384,8 @@ void DoBackup(int argc, char *argv[])
 			        if (Backup.Note[used] == NULL) Print_Error(ERR_MOREMEMORY);
 				Backup.Note[used+1] = NULL;
 			} else {
-				printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_NOTE");
+				printf("\n   ");
+				printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_NOTE");
 				break;
 			}
 			*Backup.Note[used]=Note;
@@ -414,7 +419,8 @@ void DoBackup(int argc, char *argv[])
 			        if (Backup.CallerLogos[used] == NULL) Print_Error(ERR_MOREMEMORY);
 				Backup.CallerLogos[used+1] = NULL;
 			} else {
-				printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_CALLER");
+				printf("\n   ");
+				printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_CALLER");
 				break;
 			}
 			*Backup.CallerLogos[used] = Bitmap;
@@ -446,7 +452,8 @@ void DoBackup(int argc, char *argv[])
 			        if (Backup.SMSC[used] == NULL) Print_Error(ERR_MOREMEMORY);
 				Backup.SMSC[used + 1] = NULL;
 			} else {
-				printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_SMSC");
+				printf("\n   ");
+				printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_SMSC");
 				break;
 			}
 			*Backup.SMSC[used]=SMSC;
@@ -508,7 +515,8 @@ void DoBackup(int argc, char *argv[])
 			        if (Backup.WAPBookmark[used] == NULL) Print_Error(ERR_MOREMEMORY);
 				Backup.WAPBookmark[used+1] = NULL;
 			} else {
-				printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_WAPBOOKMARK");
+				printf("\n   ");
+				printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_WAPBOOKMARK");
 				break;
 			}
 			*Backup.WAPBookmark[used]=Bookmark;
@@ -541,7 +549,8 @@ void DoBackup(int argc, char *argv[])
 			        if (Backup.WAPSettings[used] == NULL) Print_Error(ERR_MOREMEMORY);
 				Backup.WAPSettings[used+1] = NULL;
 			} else {
-				printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_WAPSETTINGS");
+				printf("\n   ");
+				printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_WAPSETTINGS");
 				break;
 			}
 			*Backup.WAPSettings[used]=Settings;
@@ -574,7 +583,8 @@ void DoBackup(int argc, char *argv[])
 			        if (Backup.MMSSettings[used] == NULL) Print_Error(ERR_MOREMEMORY);
 				Backup.MMSSettings[used+1] = NULL;
 			} else {
-				printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_MMSSETTINGS");
+				printf("\n   ");
+				printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_MMSSETTINGS");
 				break;
 			}
 			*Backup.MMSSettings[used]=Settings;
@@ -607,7 +617,8 @@ void DoBackup(int argc, char *argv[])
 			        if (Backup.ChatSettings[used] == NULL) Print_Error(ERR_MOREMEMORY);
 				Backup.ChatSettings[used+1] = NULL;
 			} else {
-				printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_CHATSETTINGS");
+				printf("\n   ");
+				printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_CHATSETTINGS");
 				break;
 			}
 			*Backup.ChatSettings[used]=Chat;
@@ -640,7 +651,8 @@ void DoBackup(int argc, char *argv[])
 			        if (Backup.SyncMLSettings[used] == NULL) Print_Error(ERR_MOREMEMORY);
 				Backup.SyncMLSettings[used+1] = NULL;
 			} else {
-				printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_SYNCMLSETTINGS");
+				printf("\n   ");
+				printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_SYNCMLSETTINGS");
 				break;
 			}
 			*Backup.SyncMLSettings[used]=SyncML;
@@ -676,7 +688,8 @@ void DoBackup(int argc, char *argv[])
 				        if (Backup.Ringtone[used] == NULL) Print_Error(ERR_MOREMEMORY);
 					Backup.Ringtone[used+1] = NULL;
 				} else {
-					printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_RINGTONES");
+					printf("\n   ");
+					printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_RINGTONES");
 					break;
 				}
 				*Backup.Ringtone[used]=Ringtone;
@@ -715,7 +728,8 @@ void DoBackup(int argc, char *argv[])
 				if (Backup.Profiles[used] == NULL) Print_Error(ERR_MOREMEMORY);
 				Backup.Profiles[used + 1] = NULL;
 			} else {
-				printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_PROFILES");
+				printf("\n   ");
+				printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_PROFILES");
 				break;
 			}
 			*Backup.Profiles[used]=Profile;
@@ -745,7 +759,8 @@ void DoBackup(int argc, char *argv[])
 					if (Backup.FMStation[used] == NULL) Print_Error(ERR_MOREMEMORY);
  					Backup.FMStation[used + 1] = NULL;
  				} else {
-					printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_FMSTATIONS");
+					printf("\n   ");
+					printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_FMSTATIONS");
 					break;
  				}
  				*Backup.FMStation[used]=FMStation;
@@ -778,7 +793,8 @@ void DoBackup(int argc, char *argv[])
 					if (Backup.GPRSPoint[used] == NULL) Print_Error(ERR_MOREMEMORY);
  					Backup.GPRSPoint[used + 1] = NULL;
  				} else {
-					printf(_("\n   Only part of data saved - increase %s") , "GSM_BACKUP_MAX_GPRSPOINT");
+					printf("\n   ");
+					printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_GPRSPOINT");
 					break;
  				}
  				*Backup.GPRSPoint[used]=GPRSPoint;
