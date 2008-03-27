@@ -766,7 +766,8 @@ void GetAllSMS(int argc, char *argv[])
 						Backup.PhonePhonebook[used+1] = NULL;
 					} else {
 						printf("\n   ");
-						printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
+						printf(_("Only part of data saved, please increase %s.") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
+						printf("\n");
 						break;
 					}
 					*Backup.PhonePhonebook[used]=Pbk;
@@ -856,7 +857,8 @@ void GetEachSMS(int argc, char *argv[])
 						Backup.PhonePhonebook[used+1] = NULL;
 					} else {
 						printf("\n   ");
-						printf(_("Only part of data saved, please increase %s") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
+						printf(_("Only part of data saved, please increase %s.") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
+						printf("\n");
 						break;
 					}
 					*Backup.PhonePhonebook[used]=Pbk;
