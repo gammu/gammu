@@ -135,7 +135,7 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 	sprintf(buf,"DELETE FROM `phones` WHERE `IMEI` = '%s'", imei);
 	dbgprintf("%s\n",buf);
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
-		WriteSMSDLog(_("Error deleting from database (Init): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
+		WriteSMSDLog(_("Error deleting from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 
@@ -152,7 +152,7 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 	sprintf(buf,"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0,'%s')",imei,Config->PhoneID,buf2);
 	dbgprintf("%s\n",buf);
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
-		WriteSMSDLog(_("Error inserting into database (Init): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
+		WriteSMSDLog(_("Error inserting into database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 
@@ -183,11 +183,12 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 					Config->PhoneID, sms->SMS[i].MessageReference, buffer2);
 			dbgprintf("%s\n",buffer);
 			if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
-				WriteSMSDLog(_("Error reading from database (SaveInbox): %s %s\n"), buffer, mysql_error(&Config->DBConnMySQL));
+				WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+				WriteSMSDLog(_("Failed query: %s\n"), buffer);
 				return ERR_UNKNOWN;
 			}
 			if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
-				WriteSMSDLog(_("Error reading from database (SaveInbox): %s\n"), mysql_error(&Config->DBConnMySQL));
+				WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 				return ERR_UNKNOWN;
 			}
 			found = false;
@@ -225,7 +226,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				sprintf(buffer+strlen(buffer)," WHERE `ID` = '%s' AND `TPMR` = '%i'",Row[0],sms->SMS[i].MessageReference);
 				dbgprintf("%s\n",buffer);
 				if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
-					WriteSMSDLog(_("Error writing to database (SaveInboxSMS): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
+					WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 					return ERR_UNKNOWN;
 				}
 			}
@@ -291,7 +292,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 		sprintf(buffer+strlen(buffer),"','%s')",Config->PhoneID);
 		dbgprintf("%s\n",buffer);
 		if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
-			WriteSMSDLog(_("Error writing to database (SaveInbox): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
+			WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 			return ERR_UNKNOWN;
 		}
 	}
@@ -305,7 +306,7 @@ static GSM_Error SMSDMySQL_RefreshSendStatus(GSM_SMSDConfig *Config, unsigned ch
 
 	sprintf(buffer,"UPDATE `outbox` SET `SendingTimeOut`=(now() + INTERVAL 15 SECOND)+0 WHERE `ID` = '%s' AND `SendingTimeOut` < now()",ID);
 	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
-		WriteSMSDLog(_("Error writing to database (RefreshSendStatus): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
+		WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	dbgprintf("%s\n",buffer);
@@ -326,11 +327,11 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 
 	sprintf(buf, "SELECT ID,InsertIntoDB,SendingDateTime,SenderID FROM `outbox` WHERE SendingDateTime < NOW() AND SendingTimeOut < NOW()");
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
-		WriteSMSDLog(_("Error reading from database (FindOutbox): %s\n"), mysql_error(&Config->DBConnMySQL));
+		WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
-		WriteSMSDLog(_("Error reading from database (FindOutbox): %s\n"), mysql_error(&Config->DBConnMySQL));
+		WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	while ((Row = mysql_fetch_row(Res))) {
@@ -362,11 +363,11 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		}
 		dbgprintf("%s\n",buf);
     		if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
-			WriteSMSDLog(_("Error reading from database (FindOutbox): %s\n"), mysql_error(&Config->DBConnMySQL));
+			WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 			return ERR_UNKNOWN;
 		}
 		if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
-			WriteSMSDLog(_("Error reading from database (FindOutbox): %s\n"), mysql_error(&Config->DBConnMySQL));
+			WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 			return ERR_UNKNOWN;
 		}
 		if (!(Row = mysql_fetch_row(Res))) {
@@ -437,12 +438,12 @@ static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 
 	sprintf(buffer,"DELETE FROM `outbox` WHERE `ID` = '%s'",ID);
 	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
-		WriteSMSDLog(_("Error deleting from database (MoveSMS): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
+		WriteSMSDLog(_("Error deleting from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	sprintf(buffer,"DELETE FROM `outbox_multipart` WHERE `ID` = '%s'",ID);
 	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
-		WriteSMSDLog(_("Error deleting from database (MoveSMS): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
+		WriteSMSDLog(_("Error deleting from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
   	return ERR_NONE;
@@ -451,18 +452,18 @@ static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 /* Adds SMS to Outbox */
 static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config)
 {
-	unsigned char		buffer[10000],buffer2[400],buffer4[10000],buffer5[400];
+	char			buffer[10000],buffer2[400],buffer4[10000],buffer5[400];
 	int 			i,ID;
 	MYSQL_RES 		*Res;
 	MYSQL_ROW 		Row;
 
 	sprintf(buffer,"SELECT ID FROM outbox ORDER BY ID DESC LIMIT 1");
 	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
-		WriteSMSDLog(_("Error reading from database (CreateOutbox): %s\n"), mysql_error(&Config->DBConnMySQL));
+		WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
-		WriteSMSDLog(_("Error reading from database (CreateOutbox): %s\n"), mysql_error(&Config->DBConnMySQL));
+		WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	if ((Row = mysql_fetch_row(Res))) {
@@ -564,11 +565,11 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 				sprintf(buffer4,"SELECT ID FROM sentitems WHERE ID='%i'",ID);
 				dbgprintf("%s\n",buffer4);
 				if (mysql_real_query(&Config->DBConnMySQL,buffer4,strlen(buffer4))) {
-					WriteSMSDLog(_("Error reading from database (CreateOutbox): %s\n"), mysql_error(&Config->DBConnMySQL));
+					WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 					return ERR_UNKNOWN;
 				}
 				if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
-					WriteSMSDLog(_("Error reading from database (CreateOutbox): %s\n"), mysql_error(&Config->DBConnMySQL));
+					WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 					return ERR_UNKNOWN;
 				}
 				if (!(Row = mysql_fetch_row(Res))) {
@@ -581,7 +582,8 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 							WriteSMSDLog(_("Duplicated outgoing SMS ID\n"));
 							continue;
 						}
-						WriteSMSDLog(_("Error writing to database (CreateOutbox): %d %s %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL),buffer4);
+						WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+						WriteSMSDLog(_("Failed query: %s\n"), buffer4);
 						return ERR_UNKNOWN;
 					}
 					mysql_free_result(Res);
@@ -594,7 +596,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			sprintf(buffer4+strlen(buffer4),"%i')",ID);
 			dbgprintf("%s\n",buffer4);
 			if (mysql_real_query(&Config->DBConnMySQL,buffer4,strlen(buffer4))) {
-				WriteSMSDLog(_("Error writing to database (CreateOutbox): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
+				WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 				return ERR_UNKNOWN;
 			}
 		}
@@ -676,7 +678,7 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 	}
 	dbgprintf("%s\n",buffer);
 	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
-		WriteSMSDLog(_("Error writing to database (AddSent): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
+		WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
   	return ERR_NONE;
@@ -690,7 +692,7 @@ static GSM_Error SMSDMySQL_RefreshPhoneStatus(GSM_SMSDConfig *Config)
 	sprintf(buffer + strlen(buffer), " WHERE `IMEI` = '%s'", Config->IMEI);
 	dbgprintf("%s\n",buffer);
 	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
-		WriteSMSDLog(_("Error writing to database (SaveInboxSMS): %d %s\n"), mysql_errno(&Config->DBConnMySQL), mysql_error(&Config->DBConnMySQL));
+		WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
 	return ERR_NONE;

@@ -145,7 +145,7 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 	dbgprintf("%s\n", buf);
 	Res = PQexec(Config->DBConnPgSQL, buf);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_COMMAND_OK)) {
-		WriteSMSDLog(_("Error deleting from database (Init): %s\n"),
+		WriteSMSDLog(_("Error deleting from database (%s): %s\n"), __FUNCTION__,
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
@@ -169,7 +169,7 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 	dbgprintf("%s\n", buf);
 	Res = PQexec(Config->DBConnPgSQL, buf);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_COMMAND_OK)) {
-		WriteSMSDLog(_("Error inserting into database (Init): %s\n"),
+		WriteSMSDLog(_("Error inserting into database (%s): %s\n"), __FUNCTION__,
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
@@ -213,9 +213,9 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 
 			Res = PQexec(Config->DBConnPgSQL, buffer);
 			if ((!Res) || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
-				WriteSMSDLog(_
-					     ("Error reading from database (SaveInbox): %s %s\n"),
-					     buffer, PQresultErrorMessage(Res));
+				WriteSMSDLog(_("Error reading from database (%s): %s\n"),
+						__FUNCTION__, PQresultErrorMessage(Res));
+				WriteSMSDLog(_("Failed query: %s\n"), buffer);
 				PQclear(Res);
 				PQfinish(Config->DBConnPgSQL);
 				return ERR_UNKNOWN;
@@ -286,7 +286,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 				if ((!Res)
 				    || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
 					WriteSMSDLog(_
-						     ("Error writing to database (SaveInboxSMS): %s\n"),
+						     ("Error writing to database (%s): %s\n"), __FUNCTION__,
 						     PQresultErrorMessage(Res));
 					PQclear(Res);
 					PQfinish(Config->DBConnPgSQL);
@@ -397,7 +397,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 		Res = PQexec(Config->DBConnPgSQL, buffer);
 		if ((!Res) || (PQresultStatus(Res) != PGRES_COMMAND_OK)) {
 			WriteSMSDLog(_
-				     ("Error writing to database (SaveInbox): %s\n"),
+				     ("Error writing to database (%s): %s\n"), __FUNCTION__,
 				     PQresultErrorMessage(Res));
 			PQclear(Res);
 			PQfinish(Config->DBConnPgSQL);
@@ -423,7 +423,7 @@ static GSM_Error SMSDPgSQL_RefreshSendStatus(GSM_SMSDConfig * Config,
 	Res = PQexec(Config->DBConnPgSQL, buffer);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_COMMAND_OK)) {
 		WriteSMSDLog(_
-			     ("Error writing to database (RefreshSendStatus): %s\n"),
+			     ("Error writing to database (%s): %s\n"), __FUNCTION__,
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
@@ -460,7 +460,7 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 	Res = PQexec(Config->DBConnPgSQL, buf);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
 		WriteSMSDLog(_
-			     ("Error reading from database (FindOutbox): %s\n"),
+			     ("Error reading from database (%s): %s\n"), __FUNCTION__,
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
@@ -513,7 +513,7 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 		Res = PQexec(Config->DBConnPgSQL, buf);
 		if ((!Res) || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
 			WriteSMSDLog(_
-				     ("Error reading from database (FindOutbox): %s\n"),
+				     ("Error reading from database (%s): %s\n"), __FUNCTION__,
 				     PQresultErrorMessage(Res));
 			PQclear(Res);
 			PQfinish(Config->DBConnPgSQL);
@@ -627,7 +627,7 @@ static GSM_Error SMSDPgSQL_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 
 	Res = PQexec(Config->DBConnPgSQL, buffer);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_COMMAND_OK)) {
-		WriteSMSDLog(_("Error deleting from database (MoveSMS): %s\n"),
+		WriteSMSDLog(_("Error deleting from database (%s): %s\n"), __FUNCTION__,
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
@@ -640,7 +640,7 @@ static GSM_Error SMSDPgSQL_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 
 	Res = PQexec(Config->DBConnPgSQL, buffer);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_COMMAND_OK)) {
-		WriteSMSDLog(_("Error deleting from database (MoveSMS): %s\n"),
+		WriteSMSDLog(_("Error deleting from database (%s): %s\n"), __FUNCTION__,
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
@@ -666,7 +666,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 	Res = PQexec(Config->DBConnPgSQL, buffer);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
 		WriteSMSDLog(_
-			     ("Error reading from database (CreateOutbox): %s\n"),
+			     ("Error reading from database (%s): %s\n"), __FUNCTION__,
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
@@ -827,7 +827,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 				if ((!Res)
 				    || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
 					WriteSMSDLog(_
-						     ("Error reading from database (CreateOutbox): %s\n"),
+						     ("Error reading from database (%s): %s\n"), __FUNCTION__,
 						     PQresultErrorMessage(Res));
 					PQclear(Res);
 					PQfinish(Config->DBConnPgSQL);
@@ -849,7 +849,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 					    || (PQresultStatus(Res) !=
 						PGRES_TUPLES_OK)) {
 						WriteSMSDLog(_
-							     ("Error writing to database (CreateOutbox): %s\n"),
+							     ("Error writing to database (%s): %s\n"), __FUNCTION__,
 							     PQresultErrorMessage
 							     (Res));
 						PQclear(Res);
@@ -878,7 +878,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 						    || (PQresultStatus(Res) !=
 							PGRES_COMMAND_OK)) {
 							WriteSMSDLog(_
-								     ("Error reading from database (CreateOutbox): %s\n"),
+								     ("Error reading from database (%s): %s\n"), __FUNCTION__,
 								     PQresultErrorMessage
 								     (Res));
 							PQclear(Res);
@@ -899,7 +899,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 			Res = PQexec(Config->DBConnPgSQL, buffer4);
 			if ((!Res) || (PQresultStatus(Res) != PGRES_COMMAND_OK)) {
 				WriteSMSDLog(_
-					     ("Error writing to database (CreateOutbox): %s\n"),
+					     ("Error writing to database (%s): %s\n"), __FUNCTION__,
 					     PQresultErrorMessage(Res));
 				PQclear(Res);
 				PQfinish(Config->DBConnPgSQL);
@@ -1041,7 +1041,7 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 
 	Res = PQexec(Config->DBConnPgSQL, buffer);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_COMMAND_OK)) {
-		WriteSMSDLog(_("Error writing to database (AddSent): %s\n"),
+		WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__,
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
@@ -1066,7 +1066,7 @@ static GSM_Error SMSDPgSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 	Res = PQexec(Config->DBConnPgSQL, buffer);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_COMMAND_OK)) {
 		WriteSMSDLog(_
-			     ("Error writing to database (SaveInboxSMS): %s\n"),
+			     ("Error writing to database (%s): %s\n"), __FUNCTION__,
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
