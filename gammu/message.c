@@ -1132,7 +1132,8 @@ void GetEachMMS(int argc, char *argv[])
 			error = GSM_GetFilePart(gsm,&File,&Handle,&Size);
 			if (error == ERR_EMPTY) break;
 			Print_Error(error);
-			fprintf(stderr, _("%c  Reading: %i percent"),13, (int)(File.Used*100/Size));
+			fprintf(stderr, "\r   ");
+			fprintf(stderr, _("Reading: %i percent"), (int)(File.Used*100/Size));
 		}
 		fprintf(stderr, "%c",13);
 
