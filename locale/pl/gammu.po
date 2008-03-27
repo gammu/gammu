@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.19.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2008-03-27 13:26+0100\n"
+"POT-Creation-Date: 2008-03-27 13:43+0100\n"
 "PO-Revision-Date: 2007-11-30 17:33+0100\n"
 "Last-Translator: Wojciech Sobczak <wsobczak@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -4562,7 +4562,7 @@ msgstr ""
 msgid "Error copying SMS %s -> %s"
 msgstr ""
 
-#: gammu/smsd/s_files.c:365 gammu/smsd/s_mysql.c:610 gammu/smsd/s_pgsql.c:924
+#: gammu/smsd/s_files.c:365 gammu/smsd/s_mysql.c:612 gammu/smsd/s_pgsql.c:924
 #, c-format
 msgid "Transmitted %s (%s: %i) to %s"
 msgstr ""
@@ -4795,117 +4795,53 @@ msgstr ""
 msgid "Please update DataBase, if you want to use this client application"
 msgstr ""
 
-#: gammu/smsd/s_mysql.c:138
+#: gammu/smsd/s_mysql.c:138 gammu/smsd/s_mysql.c:441 gammu/smsd/s_mysql.c:446
+#: gammu/smsd/s_pgsql.c:148 gammu/smsd/s_pgsql.c:630 gammu/smsd/s_pgsql.c:643
 #, c-format
-msgid "Error deleting from database (Init): %d %s\n"
+msgid "Error deleting from database (%s): %s\n"
 msgstr ""
 
-#: gammu/smsd/s_mysql.c:155
+#: gammu/smsd/s_mysql.c:155 gammu/smsd/s_pgsql.c:172
 #, c-format
-msgid "Error inserting into database (Init): %d %s\n"
+msgid "Error inserting into database (%s): %s\n"
 msgstr ""
 
-#: gammu/smsd/s_mysql.c:186 gammu/smsd/s_pgsql.c:217
-#, c-format
-msgid "Error reading from database (SaveInbox): %s %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:190
-#, c-format
-msgid "Error reading from database (SaveInbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:228 gammu/smsd/s_mysql.c:693
-#, c-format
-msgid "Error writing to database (SaveInboxSMS): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:294
-#, c-format
-msgid "Error writing to database (SaveInbox): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:308
-#, c-format
-msgid "Error writing to database (RefreshSendStatus): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:329 gammu/smsd/s_mysql.c:333 gammu/smsd/s_mysql.c:365
-#: gammu/smsd/s_mysql.c:369 gammu/smsd/s_pgsql.c:463 gammu/smsd/s_pgsql.c:516
-#, c-format
-msgid "Error reading from database (FindOutbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:440 gammu/smsd/s_mysql.c:445
-#, c-format
-msgid "Error deleting from database (MoveSMS): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:461 gammu/smsd/s_mysql.c:465 gammu/smsd/s_mysql.c:567
-#: gammu/smsd/s_mysql.c:571 gammu/smsd/s_pgsql.c:669 gammu/smsd/s_pgsql.c:830
+#: gammu/smsd/s_mysql.c:186 gammu/smsd/s_mysql.c:191 gammu/smsd/s_mysql.c:330
+#: gammu/smsd/s_mysql.c:334 gammu/smsd/s_mysql.c:366 gammu/smsd/s_mysql.c:370
+#: gammu/smsd/s_mysql.c:462 gammu/smsd/s_mysql.c:466 gammu/smsd/s_mysql.c:568
+#: gammu/smsd/s_mysql.c:572 gammu/smsd/s_pgsql.c:216 gammu/smsd/s_pgsql.c:463
+#: gammu/smsd/s_pgsql.c:516 gammu/smsd/s_pgsql.c:669 gammu/smsd/s_pgsql.c:830
 #: gammu/smsd/s_pgsql.c:881
 #, c-format
-msgid "Error reading from database (CreateOutbox): %s\n"
+msgid "Error reading from database (%s): %s\n"
 msgstr ""
 
-#: gammu/smsd/s_mysql.c:581 gammu/smsd/s_pgsql.c:865
+#: gammu/smsd/s_mysql.c:187 gammu/smsd/s_pgsql.c:218
+#, c-format
+msgid "Failed query: %s\n"
+msgstr ""
+
+#: gammu/smsd/s_mysql.c:229 gammu/smsd/s_mysql.c:295 gammu/smsd/s_mysql.c:309
+#: gammu/smsd/s_mysql.c:585 gammu/smsd/s_mysql.c:599 gammu/smsd/s_mysql.c:681
+#: gammu/smsd/s_mysql.c:695 gammu/smsd/s_pgsql.c:289 gammu/smsd/s_pgsql.c:400
+#: gammu/smsd/s_pgsql.c:426 gammu/smsd/s_pgsql.c:852 gammu/smsd/s_pgsql.c:902
+#: gammu/smsd/s_pgsql.c:1044 gammu/smsd/s_pgsql.c:1069
+#, fuzzy, c-format
+msgid "Error writing to database (%s): %s\n"
+msgstr "Błąd zapisu do urządzenia."
+
+#: gammu/smsd/s_mysql.c:582 gammu/smsd/s_pgsql.c:865
 msgid "Duplicated outgoing SMS ID\n"
 msgstr ""
 
-#: gammu/smsd/s_mysql.c:584
+#: gammu/smsd/s_mysql.c:586
 #, c-format
-msgid "Error writing to database (CreateOutbox): %d %s %s\n"
+msgid "Failed query: %d\n"
 msgstr ""
 
-#: gammu/smsd/s_mysql.c:597
-#, c-format
-msgid "Error writing to database (CreateOutbox): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:679
-#, c-format
-msgid "Error writing to database (AddSent): %d %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:148
-#, c-format
-msgid "Error deleting from database (Init): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:172
-#, c-format
-msgid "Error inserting into database (Init): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:289 gammu/smsd/s_pgsql.c:1069
-#, c-format
-msgid "Error writing to database (SaveInboxSMS): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:400
-#, c-format
-msgid "Error writing to database (SaveInbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:426
-#, c-format
-msgid "Error writing to database (RefreshSendStatus): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:630 gammu/smsd/s_pgsql.c:643
-#, c-format
-msgid "Error deleting from database (MoveSMS): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:852 gammu/smsd/s_pgsql.c:902
-#, c-format
-msgid "Error writing to database (CreateOutbox): %s\n"
-msgstr ""
-
-#: gammu/smsd/s_pgsql.c:1044
-#, c-format
-msgid "Error writing to database (AddSent): %s\n"
-msgstr ""
+#, fuzzy
+#~ msgid "Error writing to database (%s): %s %s\n"
+#~ msgstr "Błąd zapisu do urządzenia."
 
 #~ msgid "%s (yes/no/ALL/ONLY/NONE) ? "
 #~ msgstr "%s (tak/nie/WSZYSTKIE/TYLKO/ŻADNE)? "
