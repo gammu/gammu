@@ -256,7 +256,8 @@ void DoBackup(int argc, char *argv[])
 				*Backup.PhonePhonebook[used]=Pbk;
 				used++;
 			}
-			fprintf(stderr, _("%c   Reading: %i percent"),13,used*100/MemStatus.MemoryUsed);
+			fprintf(stderr, "\r   ");
+			fprintf(stderr, _("Reading: %i percent"), used*100/MemStatus.MemoryUsed);
 			i++;
 			if (gshutdown) {
 				GSM_Terminate();
@@ -296,7 +297,8 @@ void DoBackup(int argc, char *argv[])
 				*Backup.SIMPhonebook[used]=Pbk;
 				used++;
 			}
-			fprintf(stderr, _("%c   Reading: %i percent"),13,used*100/MemStatus.MemoryUsed);
+			fprintf(stderr, "\r   ");
+			fprintf(stderr, _("Reading: %i percent"), used*100/MemStatus.MemoryUsed);
 			i++;
 			if (gshutdown) {
 				GSM_Terminate();
@@ -363,7 +365,8 @@ void DoBackup(int argc, char *argv[])
 			*Backup.ToDo[used]=ToDo;
 			used ++;
 			error=GSM_GetNextToDo(gsm,&ToDo,false);
-			fprintf(stderr, _("%c   Reading: %i percent"),13,used*100/ToDoStatus.Used);
+			fprintf(stderr, "\r   ");
+			fprintf(stderr, _("Reading: %i percent"), used*100/ToDoStatus.Used);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
