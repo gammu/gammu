@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.19.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2008-03-27 13:43+0100\n"
+"POT-Creation-Date: 2008-03-31 16:43+0200\n"
 "PO-Revision-Date: 2007-12-20 16:33+0100\n"
 "Last-Translator: Jochen Kemnade <jochenkemnade@web.de>\n"
 "Language-Team: Language =de\n"
@@ -340,7 +340,7 @@ msgstr "Laut"
 msgid "My style"
 msgstr "Mein Stil"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:526 gammu/message.c:2488
+#: common/phone/nokia/dct4s40/6510/n6510.c:526 gammu/message.c:2489
 msgid "SIM"
 msgstr "SIM"
 
@@ -394,12 +394,12 @@ msgid "Outbox"
 msgstr "Ausgang"
 
 #: gammu/backup.c:27 gammu/backup.c:45 gammu/backup.c:63 gammu/backup.c:81
-#: gammu/message.c:1443 gammu/message.c:1466 gammu/message.c:1509
-#: gammu/message.c:1545 gammu/message.c:1567
+#: gammu/message.c:1444 gammu/message.c:1467 gammu/message.c:1510
+#: gammu/message.c:1546 gammu/message.c:1568
 msgid "Where is backup filename and location?"
 msgstr "Wie lautet der Backupdateiname und der Speicherplatz?"
 
-#: gammu/backup.c:38 gammu/message.c:1556
+#: gammu/backup.c:38 gammu/message.c:1557
 msgid "Calendar note not found in file"
 msgstr "Kalendernotizen nicht in der Datei gefunden"
 
@@ -411,20 +411,20 @@ msgstr "WAP-Lesezeichen nicht in Datei gefunden"
 msgid "Note not found in file"
 msgstr "Notiz nicht in Datei gefunden"
 
-#: gammu/backup.c:92 gammu/message.c:1578
+#: gammu/backup.c:92 gammu/message.c:1579
 msgid "ToDo note not found in file"
 msgstr "Aufgaben nicht in der Datei gefunden"
 
-#: gammu/backup.c:99 gammu/message.c:1589
+#: gammu/backup.c:99 gammu/message.c:1590
 msgid "Where is backup filename and location and memory type?"
 msgstr "Wie lautet der Backupdateiname, der Speicherplatz und der Speichertyp?"
 
-#: gammu/backup.c:111 gammu/backup.c:121 gammu/message.c:1601
-#: gammu/message.c:1611
+#: gammu/backup.c:111 gammu/backup.c:121 gammu/message.c:1602
+#: gammu/message.c:1612
 msgid "Phonebook entry not found in file"
 msgstr "Kein Telefonbucheintrag in der Datei gefunden"
 
-#: gammu/backup.c:126 gammu/message.c:1616
+#: gammu/backup.c:126 gammu/message.c:1617
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
 msgstr "Unbekannter Speichertyp: \"%s\"\n"
@@ -439,7 +439,7 @@ msgstr "Unbekanntes Backupformat: \"%s\"\n"
 msgid "Error while opening file for writing!\n"
 msgstr "Fehler beim Schreiben der Datei!\n"
 
-#: gammu/backup.c:146 gammu/files.c:437 gammu/message.c:2136
+#: gammu/backup.c:146 gammu/files.c:437 gammu/message.c:2137
 msgid "Error while writing file!\n"
 msgstr "Fehler beim Schreiben der Datei!\n"
 
@@ -1978,7 +1978,7 @@ msgstr "Der Parameter \"%s\" ist unbekannt\n"
 msgid "What file type (\"%s\") ?\n"
 msgstr "Welcher Dateityp (\"%s\")?\n"
 
-#: gammu/files.c:729 gammu/message.c:2317 gammu/misc.c:1062 gammu/nokia.c:925
+#: gammu/files.c:729 gammu/message.c:2318 gammu/misc.c:1062 gammu/nokia.c:925
 msgid "Parameter missing!"
 msgstr "Parameter fehlt!"
 
@@ -2494,7 +2494,7 @@ msgstr "Unbekannter Speichertyp: (\"%s\")\n"
 msgid "Memory %s, Location %i\n"
 msgstr "Speicher %s, Speicherplatz %i\n"
 
-#: gammu/memory.c:204 gammu/message.c:2070 gammu/misc.c:503 gammu/misc.c:532
+#: gammu/memory.c:204 gammu/message.c:2071 gammu/misc.c:503 gammu/misc.c:532
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
 msgstr "Unbekannter Parameter (\"%s\")\n"
@@ -3067,7 +3067,7 @@ msgstr "Maximale Zeit"
 msgid "%cReading phone phonebook: %i percent"
 msgstr "%c  Lese: %i Prozent"
 
-#: gammu/message.c:798 gammu/message.c:894 gammu/message.c:2617
+#: gammu/message.c:798 gammu/message.c:894 gammu/message.c:2618
 msgid "Corrupted message, skipping"
 msgstr ""
 
@@ -3219,166 +3219,166 @@ msgstr "..Fehler %i"
 msgid ", message reference=%d\n"
 msgstr ", Nachricht-Referenz=%d\n"
 
-#: gammu/message.c:1299
+#: gammu/message.c:1300
 msgid "Enter message text and press ^D:"
 msgstr "Nachricht eingeben und Strg-D drücken zum Abschliessen:"
 
-#: gammu/message.c:1302
+#: gammu/message.c:1303
 msgid "0 chars read!"
 msgstr "0 Zeichen gelesen!"
 
-#: gammu/message.c:1324 gammu/message.c:1338
+#: gammu/message.c:1325 gammu/message.c:1339
 msgid "Where are parameters?"
 msgstr "Wie lauten die Parameter?"
 
-#: gammu/message.c:1351
+#: gammu/message.c:1352
 msgid "Where is ringtone filename?"
 msgstr "Wie lautet der Klingetondateiname?"
 
-#: gammu/message.c:1367 gammu/message.c:1383 gammu/message.c:1423
+#: gammu/message.c:1368 gammu/message.c:1384 gammu/message.c:1424
 msgid "Where is logo filename?"
 msgstr "Wie lautet der Logodateiname?"
 
-#: gammu/message.c:1399
+#: gammu/message.c:1400
 msgid "Where is number of frames?"
 msgstr "Wie lautet die Anzahl der Frames?"
 
-#: gammu/message.c:1428
+#: gammu/message.c:1429
 #, c-format
 msgid "File \"%s\"\n"
 msgstr "Datei \"%s\"\n"
 
-#: gammu/message.c:1454
+#: gammu/message.c:1455
 msgid "Bookmark not found in file"
 msgstr "Lesezeichen in Datei nicht gefunden"
 
-#: gammu/message.c:1477
+#: gammu/message.c:1478
 msgid "WAP settings not found in file"
 msgstr "WAP-Einstellungen nicht in der Datei gefunden"
 
-#: gammu/message.c:1498
+#: gammu/message.c:1499
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr ""
 "Leider werden im Moment nur GPRS- oder DATA-Träger unterstützt. Beende."
 
-#: gammu/message.c:1520
+#: gammu/message.c:1521
 msgid "MMS settings not found in file"
 msgstr "MMS-Einstellungen nicht in der Datei gefunden"
 
-#: gammu/message.c:1534
+#: gammu/message.c:1535
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr "Sorry. Kein GPRS-Träger in den MMS-Einstellungen gefunden"
 
-#: gammu/message.c:1637
+#: gammu/message.c:1638
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
 msgstr "Welches SMS-Format(\"%s\")?\n"
 
-#: gammu/message.c:2107
+#: gammu/message.c:2108
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
 msgstr "Unbekannter GSM-Netz-Code (\"%s\")\n"
 
-#: gammu/message.c:2126
+#: gammu/message.c:2127
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
 msgstr "Geben Sie eine Nummer zwischen 1 und 7 an (\"%s\")\n"
 
-#: gammu/message.c:2161
+#: gammu/message.c:2162
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
 msgstr "Unbekannte Gültigkeitszeichenkette(\"%s\")\n"
 
-#: gammu/message.c:2198
+#: gammu/message.c:2199
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr "Geben Sie die Anzahl der EMS-Frames zwischen 1 und 4 an (\"%s\")\n"
 
-#: gammu/message.c:2221 gammu/smsd/smsdcore.c:114
+#: gammu/message.c:2222 gammu/smsd/smsdcore.c:114
 #, c-format
 msgid "Can't open file \"%s\"\n"
 msgstr "Die Datei \"%s\" kann nicht geöffnet werden\n"
 
-#: gammu/message.c:2271
+#: gammu/message.c:2272
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
 msgstr "Unbekannter Parameter (\"%c\")\n"
 
-#: gammu/message.c:2276
+#: gammu/message.c:2277
 msgid "Last parameter wasn't text"
 msgstr "Der letzte Parameter war kein Text"
 
-#: gammu/message.c:2308
+#: gammu/message.c:2309
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr "Zu langer SMS-Name (\"%s\"), ignoriert\n"
 
-#: gammu/message.c:2347
+#: gammu/message.c:2348
 msgid "No network code"
 msgstr "Kein Netz-Code"
 
-#: gammu/message.c:2389
+#: gammu/message.c:2390
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr "Warnung: der Klingelton ist zu lang. %i Prozent werden abgeschnitten\n"
 
-#: gammu/message.c:2398
+#: gammu/message.c:2399
 #, c-format
 msgid "There is %i SMS packed and %i limit. Exiting\n"
 msgstr "Es gibt %i gepackte SMS, Obergrenze ist %i. Abbruch\n"
 
-#: gammu/message.c:2405 gammu/message.c:2428
+#: gammu/message.c:2406 gammu/message.c:2429
 msgid "Use -smscnumber option to give SMSC number"
 msgstr "Verwenden Sie die -smscnumber Option, um die SMSC-Nummer anzugeben"
 
-#: gammu/message.c:2422
+#: gammu/message.c:2423
 #, c-format
 msgid "Number of messages: %i"
 msgstr "Anzahl der SMS: %i"
 
-#: gammu/message.c:2462 gammu/message.c:2523
+#: gammu/message.c:2463 gammu/message.c:2524
 msgid "If you want break, press Ctrl+C..."
 msgstr "Drücken Sie Strg-C, wenn Sie unterbrechen möchten..."
 
-#: gammu/message.c:2466
+#: gammu/message.c:2467
 #, c-format
 msgid "Saving SMS %i/%i\n"
 msgstr "Speichere SMS %i/%i\n"
 
-#: gammu/message.c:2485
+#: gammu/message.c:2486
 #, c-format
 msgid "Saved in folder \"%s\", location %i"
 msgstr "Gespeichert im Ordner \"%s\", Speicherplatz %i"
 
-#: gammu/message.c:2490
+#: gammu/message.c:2491
 msgid "SMS name ignored"
 msgstr "SMS-Name ignoriert"
 
-#: gammu/message.c:2493
+#: gammu/message.c:2494
 msgid "phone"
 msgstr "Telefon"
 
-#: gammu/message.c:2497
+#: gammu/message.c:2498
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr "Sende SMS aus dem Ordner \"%s\", Speicherplatz %i\n"
 
-#: gammu/message.c:2502 gammu/message.c:2541
+#: gammu/message.c:2503 gammu/message.c:2542
 #, c-format
 msgid "....waiting for network answer"
 msgstr "....warte auf Netz-Bestätiung"
 
-#: gammu/message.c:2528
+#: gammu/message.c:2529
 #, c-format
 msgid "Sending SMS %i/%i"
 msgstr "Sende SMS %i/%i"
 
-#: gammu/message.c:2603
+#: gammu/message.c:2604
 #, c-format
 msgid "Too high folder number (max. %i)\n"
 msgstr "Zu hohe Ordnernummer (max. %i)\n"
 
-#: gammu/message.c:2608
+#: gammu/message.c:2609
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
 msgstr "Lösche SMS von Ordner \"%s\": "
@@ -4827,7 +4827,7 @@ msgstr "Fehler beim Einfügen in die Datenbank (Init): %s\n"
 msgid "Error reading from database (%s): %s\n"
 msgstr "Fehler beim Lesen aus der Datenbank (SaveInbox): %s\n"
 
-#: gammu/smsd/s_mysql.c:187 gammu/smsd/s_pgsql.c:218
+#: gammu/smsd/s_mysql.c:187 gammu/smsd/s_mysql.c:586 gammu/smsd/s_pgsql.c:218
 #, fuzzy, c-format
 msgid "Failed query: %s\n"
 msgstr "Verzeichnis \"%s\"\n"
@@ -4845,10 +4845,9 @@ msgstr "Fehler beim Schreiben in die Datenbank (AddSent): %s\n"
 msgid "Duplicated outgoing SMS ID\n"
 msgstr "Doppelte ID für ausgehendes SMS\n"
 
-#: gammu/smsd/s_mysql.c:586
-#, fuzzy, c-format
-msgid "Failed query: %d\n"
-msgstr "Verzeichnis \"%s\"\n"
+#, fuzzy
+#~ msgid "Failed query: %d\n"
+#~ msgstr "Verzeichnis \"%s\"\n"
 
 #, fuzzy
 #~| msgid "Error writing to database (AddSent): %d %s\n"

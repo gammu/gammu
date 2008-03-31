@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.19.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2008-03-27 13:43+0100\n"
+"POT-Creation-Date: 2008-03-31 16:43+0200\n"
 "PO-Revision-Date: 2007-11-30 17:33+0100\n"
 "Last-Translator: Wojciech Sobczak <wsobczak@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -346,7 +346,7 @@ msgstr "Głośny"
 msgid "My style"
 msgstr "Mój styl"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:526 gammu/message.c:2488
+#: common/phone/nokia/dct4s40/6510/n6510.c:526 gammu/message.c:2489
 msgid "SIM"
 msgstr "SIM"
 
@@ -401,12 +401,12 @@ msgid "Outbox"
 msgstr "Skrzynka nadawcza"
 
 #: gammu/backup.c:27 gammu/backup.c:45 gammu/backup.c:63 gammu/backup.c:81
-#: gammu/message.c:1443 gammu/message.c:1466 gammu/message.c:1509
-#: gammu/message.c:1545 gammu/message.c:1567
+#: gammu/message.c:1444 gammu/message.c:1467 gammu/message.c:1510
+#: gammu/message.c:1546 gammu/message.c:1568
 msgid "Where is backup filename and location?"
 msgstr ""
 
-#: gammu/backup.c:38 gammu/message.c:1556
+#: gammu/backup.c:38 gammu/message.c:1557
 #, fuzzy
 msgid "Calendar note not found in file"
 msgstr "Brak informacji o nazwie w pliku JAD\n"
@@ -421,22 +421,22 @@ msgstr "Brak informacji o producencie w pliku JAD\n"
 msgid "Note not found in file"
 msgstr "Brak informacji o producencie w pliku JAD\n"
 
-#: gammu/backup.c:92 gammu/message.c:1578
+#: gammu/backup.c:92 gammu/message.c:1579
 #, fuzzy
 msgid "ToDo note not found in file"
 msgstr "Brak informacji o nazwie w pliku JAD\n"
 
-#: gammu/backup.c:99 gammu/message.c:1589
+#: gammu/backup.c:99 gammu/message.c:1590
 msgid "Where is backup filename and location and memory type?"
 msgstr ""
 
-#: gammu/backup.c:111 gammu/backup.c:121 gammu/message.c:1601
-#: gammu/message.c:1611
+#: gammu/backup.c:111 gammu/backup.c:121 gammu/message.c:1602
+#: gammu/message.c:1612
 #, fuzzy
 msgid "Phonebook entry not found in file"
 msgstr "Brak informacji o nazwie w pliku JAD\n"
 
-#: gammu/backup.c:126 gammu/message.c:1616
+#: gammu/backup.c:126 gammu/message.c:1617
 #, fuzzy, c-format
 msgid "Unknown memory type: \"%s\"\n"
 msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
@@ -451,7 +451,7 @@ msgstr "Za mało parametrów!\n"
 msgid "Error while opening file for writing!\n"
 msgstr "Błąd zapisu do urządzenia."
 
-#: gammu/backup.c:146 gammu/files.c:437 gammu/message.c:2136
+#: gammu/backup.c:146 gammu/files.c:437 gammu/message.c:2137
 #, fuzzy
 msgid "Error while writing file!\n"
 msgstr "Błąd zapisu do urządzenia."
@@ -1966,7 +1966,7 @@ msgstr ""
 msgid "What file type (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/files.c:729 gammu/message.c:2317 gammu/misc.c:1062 gammu/nokia.c:925
+#: gammu/files.c:729 gammu/message.c:2318 gammu/misc.c:1062 gammu/nokia.c:925
 msgid "Parameter missing!"
 msgstr ""
 
@@ -2515,7 +2515,7 @@ msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
 msgid "Memory %s, Location %i\n"
 msgstr ""
 
-#: gammu/memory.c:204 gammu/message.c:2070 gammu/misc.c:503 gammu/misc.c:532
+#: gammu/memory.c:204 gammu/message.c:2071 gammu/misc.c:503 gammu/misc.c:532
 #, fuzzy, c-format
 msgid "Unknown parameter (\"%s\")\n"
 msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
@@ -3076,7 +3076,7 @@ msgstr ""
 msgid "%cReading phone phonebook: %i percent"
 msgstr ""
 
-#: gammu/message.c:798 gammu/message.c:894 gammu/message.c:2617
+#: gammu/message.c:798 gammu/message.c:894 gammu/message.c:2618
 msgid "Corrupted message, skipping"
 msgstr ""
 
@@ -3223,174 +3223,174 @@ msgstr ""
 msgid ", message reference=%d\n"
 msgstr ""
 
-#: gammu/message.c:1299
+#: gammu/message.c:1300
 msgid "Enter message text and press ^D:"
 msgstr ""
 
-#: gammu/message.c:1302
+#: gammu/message.c:1303
 #, fuzzy
 msgid "0 chars read!"
 msgstr "Ostrzeżenie: Nie znaleziono pliku konfiguracji!\n"
 
-#: gammu/message.c:1324 gammu/message.c:1338
+#: gammu/message.c:1325 gammu/message.c:1339
 #, fuzzy
 msgid "Where are parameters?"
 msgstr "Za mało parametrów!\n"
 
-#: gammu/message.c:1351
+#: gammu/message.c:1352
 #, fuzzy
 msgid "Where is ringtone filename?"
 msgstr "Za mało parametrów!\n"
 
-#: gammu/message.c:1367 gammu/message.c:1383 gammu/message.c:1423
+#: gammu/message.c:1368 gammu/message.c:1384 gammu/message.c:1424
 #, fuzzy
 msgid "Where is logo filename?"
 msgstr "Za mało parametrów!\n"
 
-#: gammu/message.c:1399
+#: gammu/message.c:1400
 #, fuzzy
 msgid "Where is number of frames?"
 msgstr "Za mało parametrów!\n"
 
-#: gammu/message.c:1428
+#: gammu/message.c:1429
 #, c-format
 msgid "File \"%s\"\n"
 msgstr ""
 
-#: gammu/message.c:1454
+#: gammu/message.c:1455
 #, fuzzy
 msgid "Bookmark not found in file"
 msgstr "Brak informacji o producencie w pliku JAD\n"
 
-#: gammu/message.c:1477
+#: gammu/message.c:1478
 #, fuzzy
 msgid "WAP settings not found in file"
 msgstr "Brak informacji o producencie w pliku JAD\n"
 
-#: gammu/message.c:1498
+#: gammu/message.c:1499
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr ""
 
-#: gammu/message.c:1520
+#: gammu/message.c:1521
 #, fuzzy
 msgid "MMS settings not found in file"
 msgstr "Brak informacji o producencie w pliku JAD\n"
 
-#: gammu/message.c:1534
+#: gammu/message.c:1535
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr ""
 
-#: gammu/message.c:1637
+#: gammu/message.c:1638
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/message.c:2107
+#: gammu/message.c:2108
 #, fuzzy, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
 msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
 
-#: gammu/message.c:2126
+#: gammu/message.c:2127
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
 msgstr ""
 
-#: gammu/message.c:2161
+#: gammu/message.c:2162
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
 msgstr ""
 
-#: gammu/message.c:2198
+#: gammu/message.c:2199
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr ""
 
-#: gammu/message.c:2221 gammu/smsd/smsdcore.c:114
+#: gammu/message.c:2222 gammu/smsd/smsdcore.c:114
 #, c-format
 msgid "Can't open file \"%s\"\n"
 msgstr ""
 
-#: gammu/message.c:2271
+#: gammu/message.c:2272
 #, fuzzy, c-format
 msgid "Unknown parameter (\"%c\")\n"
 msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
 
-#: gammu/message.c:2276
+#: gammu/message.c:2277
 msgid "Last parameter wasn't text"
 msgstr ""
 
-#: gammu/message.c:2308
+#: gammu/message.c:2309
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr ""
 
-#: gammu/message.c:2347
+#: gammu/message.c:2348
 msgid "No network code"
 msgstr ""
 
-#: gammu/message.c:2389
+#: gammu/message.c:2390
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr ""
 
-#: gammu/message.c:2398
+#: gammu/message.c:2399
 #, c-format
 msgid "There is %i SMS packed and %i limit. Exiting\n"
 msgstr ""
 
-#: gammu/message.c:2405 gammu/message.c:2428
+#: gammu/message.c:2406 gammu/message.c:2429
 msgid "Use -smscnumber option to give SMSC number"
 msgstr ""
 
-#: gammu/message.c:2422
+#: gammu/message.c:2423
 #, fuzzy, c-format
 msgid "Number of messages: %i"
 msgstr "   Numer      : %s\n"
 
-#: gammu/message.c:2462 gammu/message.c:2523
+#: gammu/message.c:2463 gammu/message.c:2524
 #, fuzzy
 msgid "If you want break, press Ctrl+C..."
 msgstr "Jeśli chcesz przerwać, wciśnij Ctrl+C...\n"
 
-#: gammu/message.c:2466
+#: gammu/message.c:2467
 #, c-format
 msgid "Saving SMS %i/%i\n"
 msgstr ""
 
-#: gammu/message.c:2485
+#: gammu/message.c:2486
 #, c-format
 msgid "Saved in folder \"%s\", location %i"
 msgstr ""
 
-#: gammu/message.c:2490
+#: gammu/message.c:2491
 msgid "SMS name ignored"
 msgstr ""
 
-#: gammu/message.c:2493
+#: gammu/message.c:2494
 msgid "phone"
 msgstr ""
 
-#: gammu/message.c:2497
+#: gammu/message.c:2498
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr ""
 
-#: gammu/message.c:2502 gammu/message.c:2541
+#: gammu/message.c:2503 gammu/message.c:2542
 #, c-format
 msgid "....waiting for network answer"
 msgstr ""
 
-#: gammu/message.c:2528
+#: gammu/message.c:2529
 #, c-format
 msgid "Sending SMS %i/%i"
 msgstr ""
 
-#: gammu/message.c:2603
+#: gammu/message.c:2604
 #, c-format
 msgid "Too high folder number (max. %i)\n"
 msgstr ""
 
-#: gammu/message.c:2608
+#: gammu/message.c:2609
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
 msgstr ""
@@ -4816,7 +4816,7 @@ msgstr ""
 msgid "Error reading from database (%s): %s\n"
 msgstr ""
 
-#: gammu/smsd/s_mysql.c:187 gammu/smsd/s_pgsql.c:218
+#: gammu/smsd/s_mysql.c:187 gammu/smsd/s_mysql.c:586 gammu/smsd/s_pgsql.c:218
 #, c-format
 msgid "Failed query: %s\n"
 msgstr ""
@@ -4832,11 +4832,6 @@ msgstr "Błąd zapisu do urządzenia."
 
 #: gammu/smsd/s_mysql.c:582 gammu/smsd/s_pgsql.c:865
 msgid "Duplicated outgoing SMS ID\n"
-msgstr ""
-
-#: gammu/smsd/s_mysql.c:586
-#, c-format
-msgid "Failed query: %d\n"
 msgstr ""
 
 #, fuzzy
