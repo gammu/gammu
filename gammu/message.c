@@ -1276,6 +1276,8 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 	GSM_ClearMultiPartSMSInfo(&SMSInfo);
 	SMSInfo.ReplaceMessage		= 0;
 	SMSInfo.EntriesNum		= 1;
+	Validity.Format = 0;
+	Validity.Relative = 0;
 
 	if (SaveSMS) {
 		EncodeUnicode(Sender,"Gammu",5);
@@ -1285,7 +1287,6 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 	} else {
 		EncodeUnicode(Sender,argv[3],strlen(argv[3]));
 		startarg 	= 1;
-		Validity.Format = 0;
 	}
 
 	if (SendSMSDSMS) {
