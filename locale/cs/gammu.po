@@ -9,13 +9,14 @@ msgstr ""
 "Project-Id-Version: Gammu 1.19.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2008-03-27 13:43+0100\n"
-"PO-Revision-Date: 2008-01-29 11:26+0900\n"
+"PO-Revision-Date: 2008-03-27 13:28+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Pootle 1.1.0\n"
 
 #: common/gsmcomon.c:98
 msgid "No error."
@@ -286,7 +287,7 @@ msgstr "Telefon vrátil poškozená data."
 
 #: common/gsmcomon.c:158
 msgid "Bad feature string in configuration."
-msgstr ""
+msgstr "Chybný název vlastnosti v konfiguraci."
 
 #: common/gsmcomon.c:191
 msgid "Unknown error description."
@@ -450,15 +451,15 @@ msgstr "Zálohovat telefonní seznam?"
 #: gammu/backup.c:564 gammu/backup.c:599 gammu/backup.c:634 gammu/backup.c:669
 #: gammu/backup.c:707 gammu/backup.c:748 gammu/backup.c:780 gammu/backup.c:815
 #: gammu/message.c:769 gammu/message.c:860
-#, fuzzy, c-format
+#, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr "Byla vypsána jen část složky."
+msgstr "Byla uložena jen část dat, prosím zvětšete %s."
 
 #: gammu/backup.c:260 gammu/backup.c:301 gammu/backup.c:369
 #: gammu/message.c:1136
-#, fuzzy, c-format
+#, c-format
 msgid "Reading: %i percent"
-msgstr "%i procent"
+msgstr "Načítám: %i procent"
 
 #: gammu/backup.c:271
 msgid "Checking SIM phonebook"
