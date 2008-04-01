@@ -23,6 +23,8 @@ ChangeLog
 [-] * Automatically enable OBEX for Motorola phones.
 [-] * Fix searching of correct Bluetooth channel.
 [-] * Improved SMSD error messages.
+[+] * Added smscgi daemon by "Kamanashis Roy Shuva" 
+      <kamanashisroy@gmail.com>.
     
 20080305 - 1.19.0
 

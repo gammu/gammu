@@ -1,0 +1,15 @@
+[gammu]
+;port = /dev/ttyACM0
+port = /dev/ttyUSB0
+;model = 6110
+connection = at
+;synchronizetime = yes
+logfile = gammulog
+logformat = textall
+use_locking = yes
+gammuloc = locfile
+startinfo = yes
+gammucoding = utf8
+;rsslevel = teststable
+;usephonedb = yes
+cgi-bin = /data/projects/smscgi/src/scripts

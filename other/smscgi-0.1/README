@@ -1,0 +1,26 @@
+
+Please install gammu-1.17 or upper.
+And then execute make in the shell, like,
+
+shell#> make 
+
+This will create "smscgi" executable file.
+To make it work please edit the gammu config file
+and add a config like,
+
+cgi-bin = /your/script/path
+
+Now run the server. When the user sends sms like,
+
+==================
+echo I am fine
+==================
+
+The server will find executable file named "echo" at
+cgi-bin path. If "echo" does not exist then the it will
+execute "error" script.
+
+
+Enjoy !
+
+
