@@ -4525,7 +4525,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
+	ATGEN_WaitFor(s, req, strlen(req), 0x00, 20, ID_GetMemory);
 
 	return error;
 }
