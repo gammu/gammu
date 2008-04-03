@@ -24,6 +24,7 @@ ChangeLog
 [-] * Fix searching of correct Bluetooth channel.
 [-] * Improved SMSD error messages.
 [-] * Fix SMS listing when phone was in text mode (bug #584).
+[-] * Fix compilation when WCONTINUED/WIFCONTINUED is not defined.
 [+] * Added smscgi daemon by "Kamanashis Roy Shuva" 
       <kamanashisroy@gmail.com>.
     
