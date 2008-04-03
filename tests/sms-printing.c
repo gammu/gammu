@@ -174,8 +174,8 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 		printf("\n");
 		break;
 	case SMS_Deliver:
-		printf("%s\n", _("SMS message"));
-		if (sms.State==SMS_UnSent && sms.Memory==MEM_ME) {
+		printf("%s\n", _("SMS deliver message"));
+		if (sms.State == SMS_UnSent && sms.Memory==MEM_ME) {
 			printf(LISTFORMAT "%s\n", _("Saved"), OSDateTime(sms.DateTime,true));
 		} else {
 			printf(LISTFORMAT "\"%s\"", _("SMSC number"), DecodeUnicodeConsole(sms.SMSC.Number));
@@ -190,8 +190,8 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 	case SMS_Submit:
 		if (sms.ReplaceMessage != 0) printf(LISTFORMAT "%i\n", _("SMS replacing ID"),sms.ReplaceMessage);
 		/* If we went here from "case SMS_Deliver", we don't write "SMS Message" */
-		if (sms.PDU==SMS_Submit) {
-			printf("%s\n", _("SMS message"));
+		if (sms.PDU == SMS_Submit) {
+			printf("%s\n", _("SMS submit message"));
 			if (sms.State==SMS_UnSent && sms.Memory==MEM_ME) {
 			} else {
 				printf(LISTFORMAT "%d\n", _("Reference number"),sms.MessageReference);
