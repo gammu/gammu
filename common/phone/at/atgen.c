@@ -879,7 +879,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	if (Priv->ReplyState == AT_Reply_CMEError || Priv->ReplyState == AT_Reply_CMSError) {
 	        j = 0;
 		/* One char behind +CM[SE] ERROR */
-		err = line + 12;
+		err = line + 11;
 		while (err[j] && !isalnum(err[j])) j++;
 		if (isdigit(err[j])) {
 			Priv->ErrorCode = atoi(&(err[j]));
