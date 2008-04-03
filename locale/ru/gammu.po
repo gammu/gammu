@@ -5199,27 +5199,22 @@ msgstr ""
 #~ msgstr "Файл \"%s\"\n"
 
 #, fuzzy
-#~| msgid "Error connecting to database: %s\n"
 #~ msgid "Error writing to database (%s): %s %s\n"
 #~ msgstr "Ошибка подключения к базе данных: %s\n"
 
 #, fuzzy
-#~| msgid "Error connecting to database: %s\n"
 #~ msgid "Error deleting from database (%s): %d %s\n"
 #~ msgstr "Ошибка подключения к базе данных: %s\n"
 
 #, fuzzy
-#~| msgid "Error connecting to database: %s\n"
 #~ msgid "Error inserting into database (%s): %d %s\n"
 #~ msgstr "Ошибка подключения к базе данных: %s\n"
 
 #, fuzzy
-#~| msgid "Error connecting to database: %s\n"
 #~ msgid "Error writing to database (%s): %d %s %s\n"
 #~ msgstr "Ошибка подключения к базе данных: %s\n"
 
 #, fuzzy
-#~| msgid "Error connecting to database: %s\n"
 #~ msgid "Error reading from database (%s): %s %s\n"
 #~ msgstr "Ошибка подключения к базе данных: %s\n"
 
