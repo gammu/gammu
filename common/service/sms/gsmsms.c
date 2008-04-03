@@ -659,7 +659,6 @@ void GSM_SetDefaultReceivedSMSData(GSM_SMSMessage *SMS)
 	SMS->Class			= 0;
 	SMS->Text[0] 			= 0;
 	SMS->Text[1] 			= 0;
-	SMS->PDU			= SMS_Submit;
 	SMS->RejectDuplicates		= false;
 	SMS->MessageReference		= 0;
 	SMS->ReplaceMessage		= 0;
@@ -675,10 +674,12 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 
 	/* This part is required to save SMS */
 	SMS->State			= SMS_UnSent;
+	SMS->PDU			= SMS_Submit;
 	SMS->Location			= 0;
 	SMS->Memory			= 0;
 	SMS->Folder			= 0x02;	/*Outbox*/
 	SMS->InboxFolder		= false;
+	SMS->SMSC.Location		= 1;
 	GSM_GetCurrentDateTime (&SMS->DateTime);
 	GSM_GetCurrentDateTime (&SMS->SMSCTime);
 }
