@@ -4970,27 +4970,22 @@ msgid "Duplicated outgoing SMS ID\n"
 msgstr "ID de SMS saliente duplicado\n"
 
 #, fuzzy
-#~| msgid "Error writing to database (AddSent): %d %s\n"
 #~ msgid "Error writing to database (%s): %s %s\n"
 #~ msgstr "Error escribiendo a la base de datos (AddSent): %d %s\n"
 
 #, fuzzy
-#~| msgid "Error deleting from database (Init): %d %s\n"
 #~ msgid "Error deleting from database (%s): %d %s\n"
 #~ msgstr "Error borrando de la base de datos (Init): %d %s\n"
 
 #, fuzzy
-#~| msgid "Error inserting into database (Init): %d %s\n"
 #~ msgid "Error inserting into database (%s): %d %s\n"
 #~ msgstr "Error insertando a la base de datos (Init): %d %s\n"
 
 #, fuzzy
-#~| msgid "Error writing to database (AddSent): %d %s\n"
 #~ msgid "Error writing to database (%s): %d %s %s\n"
 #~ msgstr "Error escribiendo a la base de datos (AddSent): %d %s\n"
 
 #, fuzzy
-#~| msgid "Error reading from database (SaveInbox): %s %s\n"
 #~ msgid "Error reading from database (%s): %s %s\n"
 #~ msgstr "Error leyendo de la base de datos (SaveInbox): %s %s\n"
 
