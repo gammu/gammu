@@ -868,18 +868,13 @@ static GSM_Error N6510_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	int			i;
 	bool			found = false;
-	int			back_folder, back_location;
 
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SERIES40_30)) {
 		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMS_FILES)) return ERR_NOTSUPPORTED;
 	}
 
 	/* Clear SMS structure of any possible junk */
-	back_folder = sms->SMS[0].Folder;
-	back_location = sms->SMS[0].Location;
-	GSM_SetDefaultSMSData(&sms->SMS[0]);
-	sms->SMS[0].Folder = back_folder;
-	sms->SMS[0].Location = back_location;
+	GSM_SetDefaultReceivedSMSData(&sms->SMS[0]);
 
 	N6510_GetSMSLocation(s, &sms->SMS[0], &folderid, &location);
 	error=N6510_GetSMSFolderStatus(s, folderid);
