@@ -2866,6 +2866,7 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 {
 	char 	*start;
 	size_t	i;
+	GSM_Error error;
 
 	if (s->Protocol.Data.AT.EditMode) {
 		if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_SMSEdit) {
@@ -2881,10 +2882,14 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 		for(i=0;i<msg.Length;i++) {
 			if (msg.Buffer[i] == 0x00) msg.Buffer[i] = 0x20;
 		}
-		start = strstr(msg.Buffer, "+CMGW: ");
-		if (start == NULL) return ERR_UNKNOWN;
-		s->Phone.Data.SaveSMSMessage->Location = atoi(start+7);
-		smprintf(s, "Saved at AT location %i\n",s->Phone.Data.SaveSMSMessage->Location);
+		start = strstr(msg.Buffer, "+CMGW:");
+		if (start == NULL) return ERR_UNKNOWNRESPONSE;
+		error = ATGEN_ParseReply(s,
+				start,
+				"+CMGW: @i",
+				&s->Phone.Data.SaveSMSMessage->Location);
+		smprintf(s, "Saved at AT location %i\n",
+				s->Phone.Data.SaveSMSMessage->Location);
 		/* Adjust location */
 		ATGEN_SetSMSLocation(s, s->Phone.Data.SaveSMSMessage,
 				s->Phone.Data.SaveSMSMessage->Folder / 2, /* We care only about SIM/Phone */
