@@ -171,6 +171,7 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 		GSM_OSErrorInfo(s, "Socket in bluetooth_open");
 		if (err == WSAEPROTOTYPE)
 			return ERR_DEVICENODRIVER;/* unknown socket type */
+		smprintf(s, "Failed to socket in bluetooth_open\n");
 		return ERR_UNKNOWN;
 	}
 
@@ -178,7 +179,9 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
       	if (getsockopt(d->hPhone, SOL_SOCKET, SO_PROTOCOL_INFO,
 		(char*)&protocolInfo, &protocolInfoSize) != 0)
 	{
+		GSM_OSErrorInfo(s, "getsockopt in bluetooth_open");
 		close(d->hPhone);
+		smprintf(s, "Failed to getsockopt in bluetooth_open\n");
 		return ERR_UNKNOWN;
 	}
 	close(d->hPhone);
@@ -195,7 +198,11 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
       		querySet.dwNameSpace 	= NS_BTH;
 
 	        result = WSALookupServiceBegin(&querySet, flags, &handle);
-		if (result != 0) return ERR_UNKNOWN;
+		GSM_OSErrorInfo(s, "WSALookupServiceBegin in bluetooth_open");
+		if (result != 0) {
+			smprintf(s, "Failed to WSALookupServiceBegin in bluetooth_open\n");
+			return ERR_UNKNOWN;
+		}
 
 		while (1) {
 			result = WSALookupServiceNext(handle, flags, &bufferLength, pResults);
