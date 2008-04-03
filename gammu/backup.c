@@ -1684,30 +1684,29 @@ void RestoreSMS(int argc UNUSED, char *argv[])
 	GSM_SMS_Backup		Backup;
 	GSM_SMSFolders		folders;
 	int			smsnum = 0;
-	bool			restore8bit,doit;
+	bool			restore8bit;
 
-	error=GSM_ReadSMSBackupFile(argv[2], &Backup);
+	error = GSM_ReadSMSBackupFile(argv[2], &Backup);
 	Print_Error(error);
 
 	restore8bit = answer_yes(_("Do you want to restore binary SMS?"));
 
 	GSM_Init(true);
 
-	error=GSM_GetSMSFolders(gsm, &folders);
+	error = GSM_GetSMSFolders(gsm, &folders);
 	Print_Error(error);
 
 	while (Backup.SMS[smsnum] != NULL) {
-		doit = true;
-		if (!restore8bit && Backup.SMS[smsnum]->Coding == SMS_Coding_8bit) doit = false;
-		if (doit) {
+		if (restore8bit || Backup.SMS[smsnum]->Coding != SMS_Coding_8bit) {
 			SMS.Number = 1;
 			memcpy(&SMS.SMS[0],Backup.SMS[smsnum],sizeof(GSM_SMSMessage));
 			DisplayMultiSMSInfo(&SMS,false,false,NULL);
 			if (answer_yes(_("Restore %03i sms to folder \"%s\"%s?"),
-				smsnum+1,DecodeUnicodeConsole(folders.Folder[Backup.SMS[smsnum]->Folder-1].Name),
-				folders.Folder[Backup.SMS[smsnum]->Folder-1].Memory == MEM_SM ? _(" (SIM)") : "")) {
+					smsnum + 1,
+					DecodeUnicodeConsole(folders.Folder[Backup.SMS[smsnum]->Folder - 1].Name),
+					folders.Folder[Backup.SMS[smsnum]->Folder - 1].Memory == MEM_SM ? _(" (SIM)") : "")) {
 				smprintf(gsm, _("saving %i SMS\n"),smsnum);
-				error=GSM_AddSMS(gsm, Backup.SMS[smsnum]);
+				error = GSM_AddSMS(gsm, Backup.SMS[smsnum]);
 				Print_Error(error);
 			}
 		}
