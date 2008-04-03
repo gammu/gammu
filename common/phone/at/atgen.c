@@ -2573,6 +2573,9 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 	error = ATGEN_GetSMSStatus(s,&Priv->LastSMSStatus);
 	if (error!=ERR_NONE) return error;
 
+	error=ATGEN_GetSMSMode(s);
+	if (error != ERR_NONE) return error;
+
 	if (first) {
 		Priv->SMSReadFolder = 1;
 		if (Priv->SIMSMSMemory == AT_AVAILABLE) {
