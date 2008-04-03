@@ -27,7 +27,7 @@ static GSM_Error SendingSMSStatus;
 
 void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr)
 {
-	dbgprintf("Incoming SMS device: \"%s\" status=%d, reference=%d\n",
+	WriteSMSDLog("Incoming SMS device: \"%s\" status=%d, reference=%d\n",
 			GSM_GetConfig(sm, -1)->Device,
 			status,
 			mr);
