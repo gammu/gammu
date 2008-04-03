@@ -9,6 +9,14 @@
 #include <sys/wait.h>
 #endif
 
+/* Some systems let waitpid(2) tell callers about stopped children. */
+#if !defined (WCONTINUED)
+#  define WCONTINUED 0
+#endif
+#if !defined (WIFCONTINUED)
+#  define WIFCONTINUED(s)	(0)
+#endif
+
 #include "../../common/misc/coding/coding.h"
 #include "../../common/misc/locales.h"
 #include "../gammu.h"
