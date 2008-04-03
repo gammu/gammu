@@ -5015,7 +5015,9 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	 * correctly, especially with unicode entries */
 #define REQUEST_SIZE	((4 * GSM_PHONEBOOK_TEXT_LENGTH) + 30)
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
-	int			Group, Name, Number,NumberType=0;
+	int			Group, Name, Number;
+	/* 129 seems to be safer option for empty number */
+	int			NumberType = 129;
 	size_t len;
 	GSM_Error 		error;
 	unsigned char		req[REQUEST_SIZE + 1];
