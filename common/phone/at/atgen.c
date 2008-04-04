@@ -2570,6 +2570,7 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 					&cur,
 					&Priv->SMSCache[Priv->SMSCount - 1].State);
 			if (error != ERR_NONE) {
+				smprintf(s, "Failed to parse reply, not using cache!\n");
 				Priv->SMSCache[Priv->SMSCount - 1].State = -1;
 			}
 			/* Get next line (PDU data) */
