@@ -28,6 +28,7 @@ ChangeLog
 [-] * Fixed listing SMS messages from AT phones in text mode (bug #584).
 [+] * Added smscgi daemon by "Kamanashis Roy Shuva" 
       <kamanashisroy@gmail.com>.
+[+] * Cache once read messages to avoid reading them again (bug #481).
     
 20080305 - 1.19.0
 
