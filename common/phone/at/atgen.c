@@ -1334,7 +1334,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->ErrorText			= NULL;
 
 	Priv->SMSCount			= 0;
-	Priv->SMSLocations		= NULL;
+	Priv->SMSCache			= NULL;
 
 	if (s->ConnectionType != GCT_IRDAAT && s->ConnectionType != GCT_BLUEAT) {
 		/* We try to escape AT+CMGS mode, at least Siemens M20
@@ -2527,7 +2527,7 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 
 	smprintf(s, "SMS listing received\n");
 	Priv->SMSCount = 0;
-	Priv->SMSLocations = NULL;
+	Priv->SMSCache = NULL;
 
 	/* Walk through lines with +CMGL: */
 	/* First line is our command so we can skip it */
@@ -2543,8 +2543,8 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 		/* Reallocate buffer if needed */
 		if (allocsize <= Priv->SMSCount) {
 			allocsize += 20;
-			Priv->SMSLocations = (int *)realloc(Priv->SMSLocations, allocsize * sizeof(int));
-			if (Priv->SMSLocations == NULL) {
+			Priv->SMSCache = (GSM_AT_SMS_Cache *)realloc(Priv->SMSCache, allocsize * sizeof(GSM_AT_SMS_Cache));
+			if (Priv->SMSCache == NULL) {
 				return ERR_MOREMEMORY;
 			}
 		}
@@ -2554,7 +2554,8 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 		} else {
 			ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, cur);
 		}
-		Priv->SMSLocations[Priv->SMSCount - 1] = sms.Location;
+		Priv->SMSCache[Priv->SMSCount - 1].Location = sms.Location;
+		// TODO
 
 	}
 	smprintf(s, "Read %d SMS locations\n", Priv->SMSCount);
@@ -2598,10 +2599,10 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 	Priv->LastSMSRead		= 0;
 	Priv->SMSCount			= 0;
 
-	if (Priv->SMSLocations != NULL)
-		free(Priv->SMSLocations);
+	if (Priv->SMSCache != NULL)
+		free(Priv->SMSCache);
 
-	Priv->SMSLocations		= NULL;
+	Priv->SMSCache		= NULL;
 
 	smprintf(s, "Getting SMS locations\n");
 	if (Priv->SMSMode == SMS_AT_TXT) {
@@ -2643,12 +2644,12 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 	}
 
 	/* Use listed locations if we have them */
-	if (Priv->SMSLocations != NULL) {
+	if (Priv->SMSCache != NULL) {
 		if (start) {
 			found = 0;
 		} else {
 			for (i = 0; i < Priv->SMSCount; i++) {
-				if (Priv->SMSLocations[i] == sms->SMS[0].Location) {
+				if (Priv->SMSCache[i].Location == sms->SMS[0].Location) {
 					found = i + 1;
 					break;
 				}
@@ -2673,10 +2674,10 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 		}
 
 		/* We might get no messages in listing above */
-		if (Priv->SMSLocations != NULL) {
+		if (Priv->SMSCache != NULL) {
 			/* Finally read the message */
 			sms->SMS[0].Folder = 0;
-			sms->SMS[0].Location = Priv->SMSLocations[found];
+			sms->SMS[0].Location = Priv->SMSCache[found].Location;
 			smprintf(s, "Reading next message on location %d\n", sms->SMS[0].Location);
 			return ATGEN_GetSMS(s, sms);
 		}
@@ -5544,7 +5545,7 @@ GSM_Error ATGEN_Terminate(GSM_StateMachine *s)
 
 	FreeLines(&Priv->Lines);
 	free(Priv->file.Buffer);
-	free(Priv->SMSLocations);
+	free(Priv->SMSCache);
 	return ERR_NONE;
 }
 

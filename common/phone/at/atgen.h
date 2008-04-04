@@ -190,6 +190,26 @@ typedef enum {
 	AT_Sizes
 } GSM_AT_NeededMemoryInfo;
 
+#define GSM_AT_MAXPDULEN 200
+
+/**
+ * Structure for SMS cache.
+ */
+typedef struct {
+	/**
+	 * Location of SMS (translated).
+	 */
+	int Location;
+	/**
+	 * State of message.
+	 */
+	int State;
+	/**
+	 * PDU data.
+	 */
+	char PDU[GSM_AT_MAXPDULEN];
+} GSM_AT_SMS_Cache;
+
 /**
  * Maximal length of phonebook memories list.
  */
@@ -325,13 +345,13 @@ typedef struct {
 	int			CurrentMode;
 	GSM_File		file;
 	/**
-	 * Number of entries in SMSLocations.
+	 * Number of entries in SMSCache.
 	 */
 	int			SMSCount;
 	/**
 	 * Locations of non empty SMSes.
 	 */
-	int			*SMSLocations;
+	GSM_AT_SMS_Cache	*SMSCache;
 	/**
 	 * Which folder do we read SMS from.
 	 */
