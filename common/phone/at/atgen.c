@@ -1862,14 +1862,14 @@ GSM_Error ATGEN_GetSMSMode(GSM_StateMachine *s)
 	if (Priv->SMSMode != 0) return ERR_NONE;
 
 	smprintf(s, "Trying SMS PDU mode\n");
-	ATGEN_WaitFor(s, "AT+CMGF=0\r", 10, 0x00, 3, ID_GetSMSMode);
+	ATGEN_WaitFor(s, "AT+CMGF=0\r", 10, 0x00, 9, ID_GetSMSMode);
 	if (error==ERR_NONE) {
 		Priv->SMSMode = SMS_AT_PDU;
 		return ERR_NONE;
 	}
 
 	smprintf(s, "Trying SMS text mode\n");
-	ATGEN_WaitFor(s, "AT+CMGF=1\r", 10, 0x00, 3, ID_GetSMSMode);
+	ATGEN_WaitFor(s, "AT+CMGF=1\r", 10, 0x00, 9, ID_GetSMSMode);
 	if (error == ERR_NONE) {
 		Priv->SMSMode = SMS_AT_TXT;
 		smprintf(s, "Enabling displaying all parameters in text mode\n");
@@ -2461,6 +2461,10 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	int			location, getfolder, add = 0;
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 
+	/* Set mode of SMS */
+	error = ATGEN_GetSMSMode(s);
+	if (error != ERR_NONE) return error;
+
 	/* Clear SMS structure of any possible junk */
 	GSM_SetDefaultReceivedSMSData(&sms->SMS[0]);
 
@@ -2468,9 +2472,6 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	if (error!=ERR_NONE) return error;
 	if (Priv->SMSMemory == MEM_ME && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSME900)) add = 899;
 	sprintf(req, "AT+CMGR=%i\r", location + add);
-
-	error=ATGEN_GetSMSMode(s);
-	if (error != ERR_NONE) return error;
 
 	/* There is possibility that date will be encoded in text mode */
 	if (Priv->SMSMode == SMS_AT_TXT) {
@@ -2565,11 +2566,13 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
 
+	/* Set mode of SMS */
+	error = ATGEN_GetSMSMode(s);
+	if (error != ERR_NONE) return error;
+
+	/* Get number of messages */
 	error = ATGEN_GetSMSStatus(s,&Priv->LastSMSStatus);
 	if (error!=ERR_NONE) return error;
-
-	error=ATGEN_GetSMSMode(s);
-	if (error != ERR_NONE) return error;
 
 	if (first) {
 		Priv->SMSReadFolder = 1;
@@ -2917,7 +2920,8 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_SMSC	 	SMSC;
 
-	error=ATGEN_GetSMSMode(s);
+	/* Set mode of SMS */
+	error = ATGEN_GetSMSMode(s);
 	if (error != ERR_NONE) return error;
 
 	length 	 = 0;
