@@ -2701,16 +2701,18 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 
 		/* We might get no messages in listing above */
 		if (Priv->SMSCache != NULL) {
+			sms->SMS[0].Folder = 0;
+			sms->SMS[0].Location = Priv->SMSCache[found].Location;
 			if (Priv->SMSCache[found].State != -1) {
 				/* Get message from cache */
+				GSM_SetDefaultReceivedSMSData(&sms->SMS[0]);
+				s->Phone.Data.GetSMSMessage = sms;
 				smprintf(s, "Getting message from cache\n");
 				return ATGEN_DecodePDUMessage(s,
 						Priv->SMSCache[found].PDU,
 						Priv->SMSCache[found].State);
 			} else {
 				/* Finally read the message */
-				sms->SMS[0].Folder = 0;
-				sms->SMS[0].Location = Priv->SMSCache[found].Location;
 				smprintf(s, "Reading next message on location %d\n", sms->SMS[0].Location);
 				return ATGEN_GetSMS(s, sms);
 			}
