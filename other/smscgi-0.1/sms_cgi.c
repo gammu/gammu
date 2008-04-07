@@ -32,16 +32,12 @@ GSM_Error error;
 char cgi_path[200];
 static char buffer[400]; /**<                                   decode buffer */
 static char buffer2[400]; /**<                                  decode buffer */
+static char buffer3[400]; /**<                                  decode buffer */
 static GSM_MultiSMSMessage smsQ; /**<                    SMS Processing queue */
 static GSM_SMSMessage smsSendBuffer; /**<       memory to keep sms to be sent */
-// static int child_alive;
 
 #define CGI_ENGINE " --== CGI Engine ==-- :: "
 
-
-// static int cgi_child_end() {
-//	child_alive = 0;
-// }
 
 #define ERR_SUFFIX ".err"
 static int cgi_get_error_fd(GSM_StateMachine *s, const char*script_name) {
@@ -61,6 +57,7 @@ static int cgi_get_error_fd(GSM_StateMachine *s, const char*script_name) {
 	errfd = fileno(fopen(err_file, "a"));
 	if(errfd == -1) {
 		smprintf_level(s, D_ERROR, CGI_ENGINE "could not open error log file %s : %s\n", err_file, strerror(errno));
+		smprintf_level(s, D_ERROR, CGI_ENGINE "May be you did not set the right path in cgi-bin. Please check your gammurc file.\n");
 		return -1;
 	}
 	return errfd;
@@ -81,8 +78,6 @@ static void cgi_child(GSM_StateMachine *s) {
 		/* we have found the script name */
 		strncat(script_name, buffer, data - buffer);
 	}
-	
-	
 	
 	/* ---------------------------------------------------- open error log file */
 	errfd = cgi_get_error_fd(s, script_name);
@@ -125,7 +120,7 @@ static void cgi_child(GSM_StateMachine *s) {
 	close(STDERR_FILENO);
 	close(errfd);
 	strcpy(script_name, cgi_path); /**<                     prepend script path */
-	strcat(script_name, "error");
+	strcat(script_name, "default");
 	
 	/* ---------------------------------------------------- open error log file */
 	errfd = cgi_get_error_fd(s, script_name);
@@ -147,7 +142,7 @@ static void cgi_child(GSM_StateMachine *s) {
 	_exit(1);
 }
 
-static int cgi_process_each_helper(GSM_StateMachine *s, int fd, char*data, int size) {
+static int cgi_write_helper(GSM_StateMachine *s, int fd, char*data, int size) {
 	int ret,offset = 0;
 	while(size > offset) {
 		if((ret = write(fd, data+offset, size - offset) ) <= 0) {
@@ -157,6 +152,14 @@ static int cgi_process_each_helper(GSM_StateMachine *s, int fd, char*data, int s
 		offset += ret;
 	}
 	return 0;
+}
+
+static int cgi_write_header(GSM_StateMachine *s, int fd, char*key, char*value) {
+	strcpy(buffer3, key);
+	strcat(buffer3, ":");
+	strcat(buffer3, value);
+	strcat(buffer3, "\r\n");
+	return cgi_write_helper(s, fd, buffer3, strlen(buffer3));
 }
 
 static void cgi_process_each(GSM_StateMachine *s, GSM_SMSMessage*sms) {
@@ -215,26 +218,17 @@ static void cgi_process_each(GSM_StateMachine *s, GSM_SMSMessage*sms) {
 	smprintf_level(s, D_TEXT, CGI_ENGINE "Launched CGI script\n");
 	
 	/* ----------------------------------------------------------- send headers */
-	strcpy(buffer2, "SMS_FROM=");
-	DecodeUnicode(sms->Number, buffer2 + sizeof("SMS_FROM=") - 1);
-	strcat(buffer2, "\r\n");
-	cgi_process_each_helper(s, child_in[1], buffer2, strlen(buffer2));
-
-	strcpy(buffer2, "SMS_NAME=");
-	DecodeUnicode(sms->Name, buffer2 + sizeof("SMS_NAME=") - 1);
-	strcat(buffer2, "\r\n");
-	cgi_process_each_helper(s, child_in[1], buffer2, strlen(buffer2));
-
-	strcpy(buffer2, "SMS_TIME=");
-	strcat(buffer2, OSDate(sms->DateTime));
-	strcat(buffer2, "\r\n");
-	cgi_process_each_helper(s, child_in[1], buffer2, strlen(buffer2));
+	DecodeUnicode(sms->Number, buffer2);
+	cgi_write_header(s, child_in[1], "SMS_FROM", buffer2);
+	DecodeUnicode(sms->Name, buffer2);
+	cgi_write_header(s, child_in[1], "SMS_NAME", buffer2);
+	cgi_write_header(s, child_in[1], "SMS_TIME", OSDate(sms->DateTime));
 
 	/* -------------------------------------------- End headers with empty line */
-	cgi_process_each_helper(s, child_in[1], "\r\n", sizeof("\r\n"));
+	cgi_write_helper(s, child_in[1], "\r\n", sizeof("\r\n") - 1);
 
 	/* ----------------------------------------------- now we write the command */
-	cgi_process_each_helper(s, child_in[1], buffer, strlen(buffer));
+	cgi_write_helper(s, child_in[1], buffer, strlen(buffer));
 	
 	close(child_in[1]);                                             /* send EOF */
 	
@@ -272,13 +266,14 @@ static void cgi_process_each(GSM_StateMachine *s, GSM_SMSMessage*sms) {
 
 	if(buffer[0] != '\0') {
 		/* ----------------------------------------------- prepare response */
-		GSM_SetDefaultSMSData(&smsSendBuffer);              /* reset memory */
-		smsSendBuffer.Location = 0;
+		memset(&smsSendBuffer, 0, sizeof(smsSendBuffer));   /* reset memory */
+		GSM_SetDefaultSMSData(&smsSendBuffer);
+		smsSendBuffer.Location = 1;
+		smsSendBuffer.Class = 1;
 		smsSendBuffer.PDU = SMS_Submit;
+		smsSendBuffer.Coding = SMS_Coding_Default_No_Compression;
 		CopyUnicodeString(smsSendBuffer.Number, sms->Number);
-		smsSendBuffer.Coding = sms->Coding;
 		EncodeUnicode(smsSendBuffer.Text, buffer, strlen(buffer));
-
 		/* -------------------------------------------------- send response */
 		error = GSM_SendSMS(s, &smsSendBuffer);
 	}
@@ -289,7 +284,6 @@ static void cgi_process_each(GSM_StateMachine *s, GSM_SMSMessage*sms) {
 		close(child_out[0]);
 		close(child_out[1]);
 	
-	/* delete the sms when we are done */
 	GSM_DeleteSMS(s, sms);
 	return;
 }
@@ -319,11 +313,23 @@ void cgi_enqueue(GSM_StateMachine *s, GSM_SMSMessage sms) {
 	}
 }
 
+static void cgi_signal_handler(int signal) {
+	if(signal == SIGPIPE) {
+		printf("Cought SIGPIPE!\n");
+	} else if(signal == SIGCHLD) {
+		printf("Child exited!\n");
+	} else {
+		printf("issued %d", signal);
+	}
+}
+
 void cgi_reset() {
 	int i = 0;
 	for(i = 0; i<GSM_MAX_MULTI_SMS ; i++) {
 		smsQ.SMS[i].Location = -1;
 	}
+	signal(SIGCHLD, cgi_signal_handler);
+	signal(SIGPIPE, cgi_signal_handler);
 }
 
 void cgi_process(GSM_StateMachine *s) {
