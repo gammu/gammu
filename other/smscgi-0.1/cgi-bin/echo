@@ -12,6 +12,5 @@ $request = "";
 while($data = fgets(STDIN, 4096)) {
 	$request .= $data;
 }
-
 echo $request;
 

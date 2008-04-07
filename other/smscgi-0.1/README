@@ -18,7 +18,7 @@ echo I am fine
 
 The server will find executable file named "echo" at
 cgi-bin path. If "echo" does not exist then the it will
-execute "error" script.
+execute "default" script.
 
 
 Enjoy !
