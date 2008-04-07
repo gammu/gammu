@@ -1,26 +1,97 @@
+Here is the work-flow to install and use,
 
-Please install gammu-1.17 or upper.
-And then execute make in the shell, like,
-
-shell#> make 
-
+ 1. Attach an appropriate phone to your system where you want to execute the server application.
+ 2. Install gammu-1.17 or upper(Not sure if lower version will work too, I did not tried with lower versions). 
+ 3. Get the smscgi from the link above, uncompress and make.
 This will create "smscgi" executable file.
-To make it work please edit the gammu config file
+
+ 4. To make it work please edit the gammu config file
 and add a config like,
 
 cgi-bin = /your/script/path
 
-Now run the server. When the user sends sms like,
+ 5. Now write a script and keep it in the cgi-bin directory, Here is an example script,
 
-==================
+<code>
+<?php
+# filename echo
+#
+# 
+
+$_HEADER = array();
+while($data = fgets(STDIN, 4096)) {
+        $data = trim($data);
+        if($data == "") {
+                /* empty line means from next line we shall get the sms body */
+                break;
+        }
+        $matches = array();
+        if(preg_match("/^(.*)\:(.*)/", $data, $matches)) {
+                $_HEADER[$matches[1]] = $matches[2];
+        }
+}
+$_REQUEST = "";
+while($data = fgets(STDIN, 4096)) {
+        $_REQUEST .= $data;
+}
+
+/**
+ * SO, 
+ * $_REQUEST      is the sms data.
+ * $_HEADER       is the header array. For example $_HEADER["SMS_FROM"] is the sender number.
+ */
+
+unset($data);
+unset($matches);
+
+/* Now echo the message .. */
+echo $_REQUEST;
+
+</code>
+
+ Note, you can use the above script as include file to your new script . Be sure to remove the
+echo() in that case.
+
+ 6. You can test your script running it in shell like,
+
+<code>
+shell#> ./echo
+</code>
+
+ It will wait for your input. You can write the headers like,
+<code>
+SMS_FROM: +1234567
+</code>
+
+ The headers are key value pairs. Currently it gives the number from, and date of receiving the message.
+
+ The you put two new lines(or one blank line), this will indicate that there is no more headers. It will then treat the further data as sms message. Finally you can press EOF( in unix systems it is Ctrl-D).
+
+<code>
+SMS_FROM: +1234567
+(note blank line here)
+I am fine
+</code>
+ 
+ The above input will output "I am fine" and exit.
+
+
+ 6. Now run the server. When the user sends sms like,
+<code>
 echo I am fine
-==================
+</code>
 
 The server will find executable file named "echo" at
 cgi-bin path. If "echo" does not exist then the it will
 execute "default" script.
 
+  7. If your script has any error or if you do any output to stderr
+it will be logged to cgi-bin/yourfilename.err . This may help you debug your
+script.
 
-Enjoy !
+  8. Now write your own scripts and enjoy !
+
+You can get more information on mobile setup for gammu at http://www.gammu.org/ .
+Finally all we are using is opensource .. it is under GPL-3 :)
 
 
