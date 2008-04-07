@@ -9,7 +9,7 @@
 CFLAGS=$(shell pkg-config --cflags gammu) -Wall
 LIBS=$(shell pkg-config --libs gammu)
 
-ALL=smscgi
+ALL=smscgid
 OBJS=$(foreach FILE, $(wildcard *.c), $(basename $(FILE)).o)
 
 .PHONY: all clean
@@ -19,7 +19,7 @@ all: $(ALL)
 clean: 
 	rm -f $(ALL) $(OBJS)
 
-smscgi:$(OBJS)
+smscgid:$(OBJS)
 	$(CC) $(CFLAGS) $^ $(LIBS) -o $@
 
 %.o:%.c
