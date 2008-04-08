@@ -2035,6 +2035,7 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 	case 0x00:
 		smprintf(s, "SMS type - deliver\n");
 		sms->PDU 	 = SMS_Deliver;
+		/* @bug Broken when MEM_SM is not available */
 		if (Priv->SMSMemory == MEM_SM) {
 			sms->Folder = 1; /*INBOX SIM*/
 		} else {
@@ -2095,6 +2096,7 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 	case 0x01:
 		smprintf(s, "SMS type - submit\n");
 		sms->PDU 	 = SMS_Submit;
+		/* @bug Broken when MEM_SM is not available */
 		if (Priv->SMSMemory == MEM_SM) {
 			sms->Folder = 2; /*OUTBOX SIM*/
 			smprintf(s, "Outbox SIM\n");
