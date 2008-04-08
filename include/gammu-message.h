@@ -598,7 +598,7 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader * UDH);
 void GSM_EncodeUDHHeader(GSM_UDHHeader * UDH);
 
 /**
- * Sets default content for SMS except for changing locations. 
+ * Sets default content for SMS except for changing locations.
  * Use this for clearing structure while keeping location of message.
  *
  * \param SMS Pointer to structure which should be cleaned up.
@@ -1128,6 +1128,9 @@ GSM_Error GSM_GetSMS(GSM_StateMachine * s, GSM_MultiSMSMessage * sms);
 /**
  * Reads next (or first if start set) SMS message. This might be
  * faster for some phones than using \ref GSM_GetSMS for each message.
+ *
+ * Please note that this commend does not have to mark message as read
+ * in phone. To do so, you have to call \ref GSM_GetSMS.
  *
  * \param s State machine pointer.
  *
