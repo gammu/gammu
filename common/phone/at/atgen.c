@@ -2476,8 +2476,8 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	/* Clear SMS structure of any possible junk */
 	GSM_SetDefaultReceivedSMSData(&sms->SMS[0]);
 
-	error=ATGEN_GetSMSLocation(s, &sms->SMS[0], &folderid, &location, false);
-	if (error!=ERR_NONE) return error;
+	error = ATGEN_GetSMSLocation(s, &sms->SMS[0], &folderid, &location, false);
+	if (error != ERR_NONE) return error;
 	if (Priv->SMSMemory == MEM_ME && GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SMSME900)) add = 899;
 	sprintf(req, "AT+CMGR=%i\r", location + add);
 
@@ -2493,10 +2493,10 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 		if (error != ERR_NONE) return error;
 	}
 
-	error=ATGEN_GetManufacturer(s);
+	error = ATGEN_GetManufacturer(s);
 	if (error != ERR_NONE) return error;
 
-	s->Phone.Data.GetSMSMessage=sms;
+	s->Phone.Data.GetSMSMessage = sms;
 	smprintf(s, "Getting SMS\n");
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 20, ID_GetSMSMessage);
 	if (error == ERR_NONE || error == ERR_CORRUPTED) {
@@ -2649,7 +2649,6 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 	int			usedsms;
 	int			i, found = -1;
 
-
 	if (Priv->PhoneSMSMemory == 0) {
 		error = ATGEN_SetSMSMemory(s, false, false, false);
 		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) return error;
@@ -2702,6 +2701,8 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 		/* We might get no messages in listing above */
 		if (Priv->SMSCache != NULL) {
 			sms->SMS[0].Folder = 0;
+			sms->Number = 1;
+			sms->SMS[0].Memory = Priv->SMSMemory;
 			sms->SMS[0].Location = Priv->SMSCache[found].Location;
 			if (Priv->SMSCache[found].State != -1) {
 				/* Get message from cache */

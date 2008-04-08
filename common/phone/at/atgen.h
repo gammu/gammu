@@ -190,7 +190,12 @@ typedef enum {
 	AT_Sizes
 } GSM_AT_NeededMemoryInfo;
 
-#define GSM_AT_MAXPDULEN 200
+/**
+ * Maximal length of PDU cache line. It has to be at least
+ * 160 * 2 (message can be 160 bytes and hex representation needs
+ * twice more space).
+ */
+#define GSM_AT_MAXPDULEN 400
 
 /**
  * Structure for SMS cache.
