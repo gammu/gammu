@@ -2576,7 +2576,7 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 			/* Get next line (PDU data) */
 			str = GetLineString(msg.Buffer, &Priv->Lines, line + 1);
 			if (strlen(str) >= GSM_AT_MAXPDULEN) {
-				smprintf(s, "PDU too long for cache, skipping!\n");
+				smprintf(s, "PDU (%s) too long for cache, skipping!\n", str);
 				Priv->SMSCache[Priv->SMSCount - 1].State = -1;
 			} else {
 				strcpy(Priv->SMSCache[Priv->SMSCount - 1].PDU, str);
