@@ -362,7 +362,13 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms UNUSED,
 		GSM_SMSDConfig *Config, unsigned char *ID UNUSED,
 		int Part, GSM_SMSDSendingError err, int TPMR UNUSED)
 {
-	if (err == SMSD_SEND_OK) WriteSMSDLog(_("Transmitted %s (%s: %i) to %s"), Config->SMSID, (Part == sms->Number?"total":"part"),Part,DecodeUnicodeString(sms->SMS[0].Number));
+	if (err == SMSD_SEND_OK) {
+		WriteSMSDLog(_("Transmitted %s (%s: %i) to %s"),
+				Config->SMSID,
+				(Part == sms->Number ? "total" : "part"),
+				Part,
+				DecodeUnicodeString(sms->SMS[0].Number));
+	}
 
   	return ERR_NONE;
 }
