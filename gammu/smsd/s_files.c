@@ -135,7 +135,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	GSM_Error			error = ERR_NOTSUPPORTED;
   	GSM_MultiPartSMSInfo		SMSInfo;
 	GSM_WAPBookmark			Bookmark;
- 	unsigned char 			FileName[100],FullName[400];
+ 	char 			FileName[100],FullName[400];
 	unsigned char			Buffer[(GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS+1)*2];
  	unsigned char			Buffer2[(GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS+1)*2];
   	FILE				*File;
