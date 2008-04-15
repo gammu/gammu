@@ -497,6 +497,11 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	GSM_Error            	error;
 	unsigned int         	i, j, z;
 
+	/* Clean structure before use */
+	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
+		GSM_SetDefaultSMSData(&sms.SMS[i]);
+	}
+
 	error = Service->FindOutboxSMS(&sms, Config, Config->SMSID);
 
 	if (error == ERR_EMPTY || error == ERR_NOTSUPPORTED) {
