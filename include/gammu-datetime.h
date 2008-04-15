@@ -1,7 +1,7 @@
 /**
  * \file gammu-datetime.h
  * \author Michal Čihař
- * 
+ *
  * Date and time manipulations.
  */
 #ifndef __gammu_datetime_h
@@ -99,16 +99,16 @@ typedef struct {
  * \param day Day.
  *
  * \return Pointer to static buffer containing day of week string.
- * 
+ *
  * \ingroup DateTime
  */
-char *DayOfWeek(int year, int month, int day);
+char *DayOfWeek(unsigned int year, unsigned int month, unsigned int day);
 
 /**
  * Returns current timestamp.
  *
  * \param Date Storage for date time structure.
- * 
+ *
  * \ingroup DateTime
  */
 void GSM_GetCurrentDateTime(GSM_DateTime * Date);
@@ -119,7 +119,7 @@ void GSM_GetCurrentDateTime(GSM_DateTime * Date);
  * \param DT Input timestamp.
  *
  * \return time_t value.
- * 
+ *
  * \ingroup DateTime
  */
 time_t Fill_Time_T(GSM_DateTime DT);
@@ -141,7 +141,7 @@ void Fill_GSM_DateTime(GSM_DateTime * Date, time_t timet);
  * \param TimeZone Whether to include time zone.
  *
  * \return Pointer to static buffer containing string.
- * 
+ *
  * \ingroup DateTime
  */
 char *OSDateTime(GSM_DateTime dt, bool TimeZone);
@@ -152,31 +152,31 @@ char *OSDateTime(GSM_DateTime dt, bool TimeZone);
  * \param dt Input timestamp.
  *
  * \return Pointer to static buffer containing string.
- * 
+ *
  * \ingroup DateTime
  */
 char *OSDate(GSM_DateTime dt);
 
 /**
- * Checks whether date is valid. This does not check time, see 
+ * Checks whether date is valid. This does not check time, see
  * \ref CheckTime for this.
  *
  * \param date Structure where to check date.
  *
  * \return True if date is correct.
- * 
+ *
  * \ingroup DateTime
  */
 bool CheckDate(GSM_DateTime * date);
 
 /**
- * Checks whether time is valid. This does not check date, see 
+ * Checks whether time is valid. This does not check date, see
  * \ref CheckDate for this.
  *
  * \param date Structure where to check time.
  *
  * \return True if time is correct.
- * 
+ *
  * \ingroup DateTime
  */
 bool CheckTime(GSM_DateTime * date);
