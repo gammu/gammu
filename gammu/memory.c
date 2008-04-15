@@ -209,14 +209,14 @@ void GetMemory(int argc, char *argv[])
 	GSM_Init(true);
 
 	if (strcmp(GSM_GetModelInfo(gsm)->model, "3310") == 0) {
-		GSM_GetFirmware(gsm, NULL, NULL, &version);
-		if (version <= 4.06) {
+		error = GSM_GetFirmware(gsm, NULL, NULL, &version);
+		if (error == ERR_NONE && version <= 4.06) {
 			printf_warn("%s\n", _("You will have null names in entries. Upgrade firmware in phone to higher than 4.06"));
 		}
 	}
 	if (strcmp(GSM_GetModelInfo(gsm)->model, "3210") == 0) {
-		GSM_GetFirmware(gsm, NULL, NULL, &version);
-		if (version <= 6.00) {
+		error = GSM_GetFirmware(gsm, NULL, NULL, &version);
+		if (error == ERR_NONE && version <= 6.00) {
 			printf_warn("%s\n", _("You will have null names in entries. Upgrade firmware in phone to higher than 6.00"));
 		}
 	}

@@ -589,7 +589,7 @@ const char *GSM_FeatureToString(Feature feature);
  *
  * \return Feature value, 0 on failure.
  */
-Feature GSM_FeatureFromString(const char * feature);
+Feature GSM_FeatureFromString(const char *feature);
 
 /**
  * Model identification, used for finding phone features.
@@ -639,7 +639,7 @@ bool GSM_IsPhoneFeatureAvailable(OnePhoneModel * model, Feature feature);
  *
  * \ingroup Info
  */
-bool GSM_AddPhoneFeature(OnePhoneModel *model, Feature feature);
+bool GSM_AddPhoneFeature(OnePhoneModel * model, Feature feature);
 
 #include <gammu-statemachine.h>
 
@@ -671,6 +671,7 @@ OnePhoneModel *GSM_GetModelInfo(GSM_StateMachine * s);
  */
 GSM_Error GSM_GetFirmware(GSM_StateMachine * s, char *value, char *date,
 			  double *num);
+
 /**
  * Reads IMEI/serial number from phone.
  *
