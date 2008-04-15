@@ -689,7 +689,9 @@ bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo * Info,
  */
 typedef struct {
 	/**
-	 * Sender or recipient number.
+	 * Number of messages.
+	 *
+	 * @bug: Should be changed to unsigned int on API change.
 	 */
 	unsigned char Number;
 	/**
