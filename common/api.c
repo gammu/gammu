@@ -43,7 +43,7 @@ GSM_Error GSM_GetManufacturer(GSM_StateMachine *s, char *value)
 
 	CHECK_PHONE_CONNECTION();
 
-	s->Phone.Data.Manufacturer[0] = 0;
+	s->Phone.Data.Manufacturer[0] = '\0';
 	err = s->Phone.Functions->GetManufacturer(s);
 	if (value != NULL) {
 		strcpy(value, s->Phone.Data.Manufacturer);
@@ -61,7 +61,7 @@ GSM_Error GSM_GetModel(GSM_StateMachine *s, char *value)
 
 	CHECK_PHONE_CONNECTION();
 
-	s->Phone.Data.Model[0] = 0;
+	s->Phone.Data.Model[0] = '\0';
 	err = s->Phone.Functions->GetModel(s);
 	if (value != NULL) {
 		strcpy(value, s->Phone.Data.Model);
@@ -79,7 +79,7 @@ GSM_Error GSM_GetFirmware(GSM_StateMachine *s, char *value, char *date, double *
 
 	CHECK_PHONE_CONNECTION();
 
-	s->Phone.Data.Version[0] = 0;
+	s->Phone.Data.Version[0] = '\0';
 	err = s->Phone.Functions->GetFirmware(s);
 	if (value != NULL) {
 		strcpy(value, s->Phone.Data.Version);
@@ -103,7 +103,7 @@ GSM_Error GSM_GetIMEI(GSM_StateMachine *s, char *value)
 
 	CHECK_PHONE_CONNECTION();
 
-	s->Phone.Data.IMEI[0] = 0;
+	s->Phone.Data.IMEI[0] = '\0';
 	err = s->Phone.Functions->GetIMEI(s);
 	if (value != NULL) {
 		strcpy(value, s->Phone.Data.IMEI);
