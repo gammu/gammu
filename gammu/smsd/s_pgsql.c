@@ -410,7 +410,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 }
 
 static GSM_Error SMSDPgSQL_RefreshSendStatus(GSM_SMSDConfig * Config,
-					     unsigned char *ID)
+					     char *ID)
 {
 	unsigned char buffer[10000];
 	PGresult *Res;
@@ -444,7 +444,7 @@ static GSM_Error SMSDPgSQL_RefreshSendStatus(GSM_SMSDConfig * Config,
  */
 static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 					 GSM_SMSDConfig * Config,
-					 unsigned char *ID)
+					 char *ID)
 {
 	unsigned char buf[400];
 	PGresult *Res;
@@ -616,7 +616,7 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 
 /* After sending SMS is moved to Sent Items or Error Items. */
 static GSM_Error SMSDPgSQL_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
-				   GSM_SMSDConfig * Config, unsigned char *ID,
+				   GSM_SMSDConfig * Config, char *ID,
 				   bool alwaysDelete UNUSED, bool sent UNUSED)
 {
 	unsigned char buffer[10000];
@@ -913,7 +913,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 					  GSM_SMSDConfig * Config,
-					  unsigned char *ID, int Part,
+					  char *ID, int Part,
 					  GSM_SMSDSendingError err, int TPMR)
 {
 	PGresult *Res;

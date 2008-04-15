@@ -300,7 +300,7 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 	return ERR_NONE;
 }
 
-static GSM_Error SMSDMySQL_RefreshSendStatus(GSM_SMSDConfig *Config, unsigned char *ID)
+static GSM_Error SMSDMySQL_RefreshSendStatus(GSM_SMSDConfig *Config, char *ID)
 {
 	unsigned char buffer[10000];
 
@@ -317,7 +317,7 @@ static GSM_Error SMSDMySQL_RefreshSendStatus(GSM_SMSDConfig *Config, unsigned ch
 /* Find one multi SMS to sending and return it (or return ERR_EMPTY)
  * There is also set ID for SMS
  */
-static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID)
+static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID)
 {
 	unsigned char 		buf[400];
 	MYSQL_RES 		*Res;
@@ -431,7 +431,7 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 
 /* After sending SMS is moved to Sent Items or Error Items. */
 static GSM_Error SMSDMySQL_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
-		GSM_SMSDConfig *Config, unsigned char *ID,
+		GSM_SMSDConfig *Config, char *ID,
 		bool alwaysDelete UNUSED, bool sent UNUSED)
 {
 	unsigned char buffer[10000];
@@ -605,7 +605,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 }
 
 
-static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, int Part, GSM_SMSDSendingError err, int TPMR)
+static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, int Part, GSM_SMSDSendingError err, int TPMR)
 {
 	unsigned char	buffer[10000],buffer2[400],buff[50],buffer5[400];
 
