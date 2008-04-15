@@ -25,14 +25,14 @@ typedef struct {
 	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency;
 	int deliveryreportdelay;
 	unsigned int	resetfrequency;
-	unsigned char   *deliveryreport, *logfilename,  *PINCode;
-	unsigned char	*PhoneID;
-	unsigned char   *RunOnReceive;
+	char   *deliveryreport, *logfilename,  *PINCode;
+	char	*PhoneID;
+	char   *RunOnReceive;
 	bool checksecurity;
 
 	/* options for FILES */
-	unsigned char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
-	unsigned char   *errorsmspath, 	 *inboxformat,  *transmitformat;
+	char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
+	char   *errorsmspath, 	 *inboxformat,  *transmitformat;
 
 	/* private variables required for work */
 	int		relativevalidity;
