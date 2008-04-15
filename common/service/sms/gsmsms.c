@@ -671,6 +671,7 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 
 	SMS->SMSC.Validity.Format	= SMS_Validity_RelativeFormat;
 	SMS->SMSC.Validity.Relative	= SMS_VALID_Max_Time;
+	SMS->SMSC.Location		= 1;
 
 	/* This part is required to save SMS */
 	SMS->State			= SMS_UnSent;
@@ -679,7 +680,6 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 	SMS->Memory			= 0;
 	SMS->Folder			= 0x02;	/*Outbox*/
 	SMS->InboxFolder		= false;
-	SMS->SMSC.Location		= 1;
 	GSM_GetCurrentDateTime (&SMS->DateTime);
 	GSM_GetCurrentDateTime (&SMS->SMSCTime);
 }
