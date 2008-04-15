@@ -88,19 +88,19 @@ GSM_DateTime GSM_AddTime(GSM_DateTime DT, GSM_DeltaTime delta);
  *
  * \ingroup DateTime
  */
-int GetDayOfYear(int year, int month, int day);
+int GetDayOfYear(unsigned int year, unsigned int month, unsigned int day);
 
 /**
  *
  * \ingroup DateTime
  */
-int GetWeekOfMonth(int year, int month, int day);
+int GetWeekOfMonth(unsigned int year, unsigned int month, unsigned int day);
 
 /**
  *
  * \ingroup DateTime
  */
-int GetDayOfWeek(int year, int month, int day);
+int GetDayOfWeek(unsigned int year, unsigned int month, unsigned int day);
 
 
 /* ------------------------------------------------------------------------- */

@@ -82,7 +82,7 @@ int RecalcDate(struct tm *st, const int year, const int month, const int day)
 /**
  * Return day of year index.
  */
-int GetDayOfYear(int year, int month, int day)
+int GetDayOfYear(unsigned int year, unsigned int month, unsigned int day)
 {
 	struct tm st;
 
@@ -94,7 +94,7 @@ int GetDayOfYear(int year, int month, int day)
 /**
  * Return day of week index.
  */
-int GetWeekOfMonth(int year, int month, int day)
+int GetWeekOfMonth(unsigned int year, unsigned int month, unsigned int day)
 {
 	struct tm st;
 
@@ -106,7 +106,7 @@ int GetWeekOfMonth(int year, int month, int day)
 /**
  * Return day of week index.
  */
-int GetDayOfWeek(int year, int month, int day)
+int GetDayOfWeek(unsigned int year, unsigned int month, unsigned int day)
 {
 	struct tm st;
 
@@ -118,7 +118,7 @@ int GetDayOfWeek(int year, int month, int day)
 /**
  * Return textual representation of day of week;
  */
-char *DayOfWeek (int year, int month, int day)
+char *DayOfWeek (unsigned int year, unsigned int month, unsigned int day)
 {
 	static char 	DayOfWeekChar[10];
 
