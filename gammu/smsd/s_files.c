@@ -312,7 +312,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 		bool alwaysDelete, bool sent)
 {
 	FILE 	*oFile,*iFile;
-	int 	ilen = 0, olen = 0;
+	size_t	ilen = 0, olen = 0;
 	char 	Buffer[(GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS+1)*2],ifilename[400],ofilename[400];
 	char	*sourcepath, *destpath;
 
