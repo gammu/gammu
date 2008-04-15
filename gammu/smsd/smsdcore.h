@@ -75,11 +75,11 @@ typedef struct {
 	GSM_Error	(*Init) 	      (GSM_SMSDConfig *Config);
 	GSM_Error	(*InitAfterConnect)   (GSM_SMSDConfig *Config);
 	GSM_Error	(*SaveInboxSMS)       (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config);
-	GSM_Error	(*FindOutboxSMS)      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID);
-	GSM_Error	(*MoveSMS)  	      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, bool alwaysDelete, bool sent);
+	GSM_Error	(*FindOutboxSMS)      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID);
+	GSM_Error	(*MoveSMS)  	      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, bool alwaysDelete, bool sent);
 	GSM_Error	(*CreateOutboxSMS)    (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config);
-	GSM_Error	(*AddSentSMSInfo)     (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID, int Part, GSM_SMSDSendingError err, int TPMR);
-	GSM_Error	(*RefreshSendStatus)  (GSM_SMSDConfig *Config, unsigned char *ID);
+	GSM_Error	(*AddSentSMSInfo)     (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, int Part, GSM_SMSDSendingError err, int TPMR);
+	GSM_Error	(*RefreshSendStatus)  (GSM_SMSDConfig *Config, char *ID);
 	GSM_Error	(*RefreshPhoneStatus) (GSM_SMSDConfig *Config);
 } GSM_SMSDService;
 

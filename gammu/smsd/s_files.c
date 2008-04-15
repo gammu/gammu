@@ -130,7 +130,7 @@ fail:
  * e.g. OUTG20040620_193810_123_+4512345678_xpq.txtdf
  * is a flash text SMS requesting delivery reports
  */
-static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, unsigned char *ID)
+static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID)
 {
   	GSM_Error			error = ERR_NOTSUPPORTED;
   	GSM_MultiPartSMSInfo		SMSInfo;
@@ -308,7 +308,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 
 /* After sending SMS is moved to Sent Items or Error Items. */
 static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
-		GSM_SMSDConfig *Config, unsigned char *ID,
+		GSM_SMSDConfig *Config, char *ID,
 		bool alwaysDelete, bool sent)
 {
 	FILE 	*oFile,*iFile;
@@ -359,7 +359,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 }
 
 static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms UNUSED,
-		GSM_SMSDConfig *Config, unsigned char *ID UNUSED,
+		GSM_SMSDConfig *Config, char *ID UNUSED,
 		int Part, GSM_SMSDSendingError err, int TPMR UNUSED)
 {
 	if (err == SMSD_SEND_OK) {
