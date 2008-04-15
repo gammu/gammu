@@ -12,10 +12,10 @@
 
 #define GAMMU_CALLER_GROUPS	20
 
-GSM_Bitmap		caller[GAMMU_CALLER_GROUPS];
-GSM_AllRingtonesInfo 	Info = {0, NULL};
-bool			callerinit[GAMMU_CALLER_GROUPS] = {false, false, false, false, false};
-bool			ringinit = false;
+static GSM_Bitmap		caller[GAMMU_CALLER_GROUPS];
+static GSM_AllRingtonesInfo 	Info = {0, NULL};
+static bool			callerinit[GAMMU_CALLER_GROUPS] = {false, false, false, false, false};
+static bool			ringinit = false;
 
 void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 {
