@@ -285,7 +285,7 @@ bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_o
 	if (!ReadVCALText(Buffer, Start, datestring, false)) {
 		fullstart[0] = 0;
 		strcat(fullstart, Start);
-		strcat(fullstart, ";VALUE=DATE:");
+		strcat(fullstart, ";VALUE=DATE");
 		if (!ReadVCALText(Buffer, fullstart, datestring, false)) {
 			return false;
 		}
