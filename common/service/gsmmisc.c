@@ -415,7 +415,7 @@ bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
 		if (*pos == ';') {
 			pos++;
 		} else {
-			dbgprintf("Cound not parse!\n");
+			dbgprintf("Could not parse!\n");
 			goto fail;
 		}
 		found = false;
