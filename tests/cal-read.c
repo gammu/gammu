@@ -83,10 +83,18 @@ int main(int argc, char **argv)
 	if (generate) {
 		GSM_ClearBackup(&backup);
 		strcpy(backup.Creator, "[iv]Calendar tester");
-		backup.Calendar[0] = &cal;
-		backup.Calendar[1] = NULL;
-		backup.ToDo[0] = &todo;
-		backup.ToDo[1] = NULL;
+		if (cal.EntriesNum != 0) {
+			backup.Calendar[0] = &cal;
+			backup.Calendar[1] = NULL;
+		} else {
+			backup.Calendar[0] = NULL;
+		}
+		if (todo.EntriesNum != 0) {
+			backup.ToDo[0] = &todo;
+			backup.ToDo[1] = NULL;
+		} else {
+			backup.ToDo[0] = NULL;
+		}
 		if (GSM_SaveBackupFile(argv[2], &backup, true) != ERR_NONE) {
 			printf("Error saving backup to %s\n", argv[2]);
 			return 1;
