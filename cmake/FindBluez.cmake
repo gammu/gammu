@@ -8,7 +8,7 @@
 #
 # vim: expandtab sw=4 ts=4 sts=4:
 
-if (NOT DEFINED BLUEZ_FOUND)
+if (NOT BLUEZ_FOUND)
     if (CROSS_MINGW)
        set(BLUEZ_FOUND TRUE CACHE INTERNAL "Bluez found")
        set(BLUEZ_INCLUDE_DIR)
@@ -43,4 +43,4 @@ if (NOT DEFINED BLUEZ_FOUND)
 
         mark_as_advanced(BLUEZ_INCLUDE_DIR BLUEZ_LIBRARIES)
     endif (NOT BLUEZ_FOUND)
-endif (NOT DEFINED BLUEZ_FOUND)
+endif (NOT BLUEZ_FOUND)
