@@ -116,10 +116,8 @@ if (UNIX)
 endif (UNIX)
 
 # Include search path
-include_directories (
-    "${Gammu_BINARY_DIR}/include"
-	"${Gammu_SOURCE_DIR}/common"
-    )
+include_directories ("${Gammu_BINARY_DIR}/include")
+include_directories ("${Gammu_SOURCE_DIR}/common")
 
 # Add libraries needed for windows build
 if (WIN32)
