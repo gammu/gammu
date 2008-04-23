@@ -1845,7 +1845,7 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, bool SIM, bool for_write, bool
 		}
 
 		smprintf(s, "Setting SMS memory type to ME\n");
-		ATGEN_WaitFor(s, req, reqlen, 0x00, 3, ID_SetMemoryType);
+		ATGEN_WaitFor(s, req, reqlen, 0x00, 20, ID_SetMemoryType);
 		if (Priv->PhoneSMSMemory == 0 && error == ERR_NONE) {
 			Priv->PhoneSMSMemory = AT_AVAILABLE;
 		}
