@@ -1,4 +1,4 @@
-%define ver         1.19.90
+%define ver         1.19.91
 %define name        gammu
 %define rel         1
 # Set to 0 to disable bluetooth support
@@ -14,7 +14,7 @@
 # Change if using tar.gz sources
 %define extension   bz2
 
-%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version}
+%if 0%{?fedora_version}
 %define gammu_docdir %_docdir/%name-%ver
 %else
 %define gammu_docdir %_docdir/%name
@@ -61,9 +61,9 @@ Group:              Applications/Communications
 %else
 
 # Fedora
-%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version}
+%if 0%{?fedora_version}
 %define dist_pkgconfig pkgconfig
-%if 0%{?fedora_version} >= 8 || 0%{?centos_version} || 0%{?rhel_version}
+%if 0%{?fedora_version} >= 8
 %define dist_mysql_libs mysql-devel 
 %else
 %define dist_mysql_libs mysqlclient14-devel
