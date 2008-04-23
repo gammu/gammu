@@ -291,6 +291,15 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 			return ERR_NONE;
 		}
 #endif
+
+		/* With GNAPgen and auto model we can work with unknown models too */
+#ifdef GSM_ENABLE_GNAPGEN
+		if (s->ConnectionType == GCT_BLUEGNAPBUS || s->ConnectionType == GCT_IRDAGNAPBUS) {
+			smprintf(s,"[Module           - \"%s\"]\n",GNAPGENPhone.models);
+			s->Phone.Functions = &GNAPGENPhone;
+			return ERR_NONE;
+		}
+#endif
 		if (model->model[0] == 0) return ERR_UNKNOWNMODELSTRING;
 	}
 	s->Phone.Functions=NULL;
