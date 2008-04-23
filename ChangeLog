@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2008???? - 1.19.90
+20080423 - 1.19.90
 
 [-] * Fix handling of UTF8 charset with some Motorola phones.
 [-] * Identify Motorola V635.
