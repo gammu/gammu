@@ -2641,6 +2641,13 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 	if (error == ERR_NOTSUPPORTED) {
 		ATGEN_WaitFor(s, "AT+CMGL\r", 8, 0x00, 5, ID_GetSMSMessage);
 	}
+	/*
+	 * We did not read anything, but it is correct, indicate that
+	 * cache should be used (even if it is empty).
+	 */
+	if (error == ERR_NONE && Priv->SMSCache) {
+		Priv->SMSCache = (GSM_AT_SMS_Cache *)realloc(Priv->SMSCache, sizeof(GSM_AT_SMS_Cache));
+	}
 	return error;
 }
 
