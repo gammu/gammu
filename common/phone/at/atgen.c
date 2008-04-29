@@ -4215,7 +4215,7 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 
 		/* Read next interval */
 		sprintf(req, "AT+CPBR=%i,%i\r", start, end);
-		ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemoryStatus);
+		ATGEN_WaitFor(s, req, strlen(req), 0x00, 20, ID_GetMemoryStatus);
 		if (error != ERR_NONE) return error;
 
 		/* Do we already have first empty record? */
@@ -4578,7 +4578,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 20, ID_GetMemory);
+	ATGEN_WaitFor(s, req, strlen(req), 0x00, 30, ID_GetMemory);
 
 	return error;
 }
