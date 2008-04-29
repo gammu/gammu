@@ -405,10 +405,10 @@ void DecodeHexUnicode (unsigned char *dest, const char *src, size_t len)
 	size_t i, current = 0;
 
 	for (i = 0; i < len ; i += 4) {
-		dest[current++] = 
+		dest[current++] =
 			(DecodeWithHexBinAlphabet(src[i + 0]) << 4) +
 			DecodeWithHexBinAlphabet(src[i + 1]);
-		dest[current++] = 
+		dest[current++] =
 			(DecodeWithHexBinAlphabet(src[i + 2]) << 4) +
 			DecodeWithHexBinAlphabet(src[i + 3]);
 	}
