@@ -6324,7 +6324,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyOK,			"OK"			,0x00,0x00,ID_IncomingFrame	 },
 
 /* No need to take care about this, we just need to ignore it */
-{ATGEN_ReplyIgnore,		"+MBAN:"		,0x00,0x00,ID_IncomingFrame	 },
+{MOTOROLA_Banner,		"+MBAN:"		,0x00,0x00,ID_IncomingFrame	 },
 
 {ATGEN_GenericReply, 		"AT+VTS"		,0x00,0x00,ID_SendDTMF		 },
 {ATGEN_ReplyCancelCall,		"AT+CHUP"		,0x00,0x00,ID_CancelCall	 },
