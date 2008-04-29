@@ -2853,9 +2853,9 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 	if (Priv->SIMSMSMemory == AT_AVAILABLE) {
 		smprintf(s, "Getting SIM SMS status\n");
 		if (Priv->SIMSaveSMS == AT_AVAILABLE) {
-			ATGEN_WaitFor(s, "AT+CPMS=\"SM\",\"SM\"\r", 18, 0x00, 4, ID_GetSMSStatus);
+			ATGEN_WaitFor(s, "AT+CPMS=\"SM\",\"SM\"\r", 18, 0x00, 20, ID_GetSMSStatus);
 		} else {
-			ATGEN_WaitFor(s, "AT+CPMS=\"SM\"\r", 13, 0x00, 4, ID_GetSMSStatus);
+			ATGEN_WaitFor(s, "AT+CPMS=\"SM\"\r", 13, 0x00, 20, ID_GetSMSStatus);
 		}
 		if (error!=ERR_NONE) return error;
 		Priv->SMSMemory = MEM_SM;
@@ -2869,12 +2869,12 @@ GSM_Error ATGEN_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 		smprintf(s, "Getting phone SMS status\n");
 		if (Priv->PhoneSaveSMS == AT_AVAILABLE) {
 			if (Priv->MotorolaSMS) {
-				ATGEN_WaitFor(s, "AT+CPMS=\"MT\"\r", 13, 0x00, 4, ID_GetSMSStatus);
+				ATGEN_WaitFor(s, "AT+CPMS=\"MT\"\r", 13, 0x00, 20, ID_GetSMSStatus);
 			} else {
-				ATGEN_WaitFor(s, "AT+CPMS=\"ME\",\"ME\"\r", 18, 0x00, 4, ID_GetSMSStatus);
+				ATGEN_WaitFor(s, "AT+CPMS=\"ME\",\"ME\"\r", 18, 0x00, 20, ID_GetSMSStatus);
 			}
 		} else {
-			ATGEN_WaitFor(s, "AT+CPMS=\"ME\"\r", 13, 0x00, 4, ID_GetSMSStatus);
+			ATGEN_WaitFor(s, "AT+CPMS=\"ME\"\r", 13, 0x00, 20, ID_GetSMSStatus);
 		}
 		if (error!=ERR_NONE) return error;
 		Priv->SMSMemory = MEM_ME;
