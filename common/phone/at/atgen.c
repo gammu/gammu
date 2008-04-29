@@ -2634,9 +2634,9 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 
 	smprintf(s, "Getting SMS locations\n");
 	if (Priv->SMSMode == SMS_AT_TXT) {
-		ATGEN_WaitFor(s, "AT+CMGL=\"ALL\"\r", 14, 0x00, 20, ID_GetSMSMessage);
+		ATGEN_WaitFor(s, "AT+CMGL=\"ALL\"\r", 14, 0x00, 50, ID_GetSMSMessage);
 	} else {
-		ATGEN_WaitFor(s, "AT+CMGL=4\r", 10, 0x00, 5, ID_GetSMSMessage);
+		ATGEN_WaitFor(s, "AT+CMGL=4\r", 10, 0x00, 20, ID_GetSMSMessage);
 	}
 	if (error == ERR_NOTSUPPORTED) {
 		ATGEN_WaitFor(s, "AT+CMGL\r", 8, 0x00, 5, ID_GetSMSMessage);
