@@ -126,6 +126,11 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 						i++;
 						continue;
 					}
+				  	if (s->Phone.Data.RequestID == ID_SetOBEX &&
+							strcmp(SpecialAnswers[i].text, "NO CARRIER") == 0) {
+						i++;
+						continue;
+					}
 					d->SpecialAnswerStart 	= d->LineStart;
 					d->SpecialAnswerLines	= SpecialAnswers[i].lines;
 				}
