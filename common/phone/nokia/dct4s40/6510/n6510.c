@@ -3484,12 +3484,7 @@ void N6510_EncodeFMFrequency(double freq, unsigned char *buff)
 
 void N6510_DecodeFMFrequency(double *freq, unsigned char *buff)
 {
-	unsigned char buffer[20];
-
-	sprintf(buffer,"%i.%i",(0xffff + buff[0] * 0x100 + buff[1])/1000,
-			       (0xffff + buff[0] * 0x100 + buff[1])%1000);
-	dbgprintf("Frequency: %s\n",buffer);
-	StringToDouble(buffer, freq);
+	*freq = (double)(0xffff + buff[0] * 0x100 + buff[1])/1000.0;
 }
 
 static GSM_Error N6510_ReplyGetFMStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
