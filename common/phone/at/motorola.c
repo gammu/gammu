@@ -134,14 +134,37 @@ GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command)
 
 	/* On succes we remember it */
 	if (error == ERR_NONE) {
-		Priv->CurrentMode = cmd->Mode;
 		/* We might need to restore charset as phone resets it */
 		if (cmd->Mode == 2) {
+			smprintf(s, "Waiting for banner...\n");
+
+			/* Wait for banner */
+			error = GSM_WaitForOnce(s, NULL, 0x00, 0x00, 40);
+			if (error != ERR_NONE) return error;
+
+			/* Check for banner result */
+			if (Priv->CurrentMode != 2) {
+				smprintf(s, "Failed to set mode 2!\n");
+				return ERR_BUG;
+			}
+
+			/* Now we can work with phone */
 			error = ATGEN_SetCharset(s, AT_PREF_CHARSET_RESET);
+		} else {
+			Priv->CurrentMode = cmd->Mode;
 		}
 	}
 
 	return error;
+}
+
+/**
+ * Catches +MBAN: reply.
+ */
+GSM_Error MOTOROLA_Banner(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
+{
+	s->Phone.Data.Priv.ATGEN.CurrentMode = 2;
+	return ERR_NONE;
 }
 
 #endif
