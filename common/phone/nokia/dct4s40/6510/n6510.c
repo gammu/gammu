@@ -3466,17 +3466,9 @@ static GSM_Error N6510_ReplyLogIntoNetwork(GSM_Protocol_Message msg UNUSED, GSM_
 
 void N6510_EncodeFMFrequency(double freq, unsigned char *buff)
 {
-	double			freq0;
-	unsigned char		buffer[20];
-	unsigned int		i,freq2;
+	unsigned int		freq2;
 
-	sprintf(buffer,"%.3f",freq);
-	for (i=0;i<strlen(buffer);i++) {
-		if (buffer[i] == ',' || buffer[i] == '.') buffer[i] = ' ';
-	}
-	StringToDouble(buffer, &freq0);
- 	freq2 = (unsigned int)freq0;
-	dbgprintf("Frequency: %s %i\n",buffer,freq2);
+ 	freq2 = (unsigned int)(freq * 100);
  	freq2	= freq2 - 0xffff;
  	buff[0] = freq2 / 0x100;
  	buff[1] = freq2 % 0x100;
