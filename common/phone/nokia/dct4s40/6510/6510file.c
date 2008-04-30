@@ -2225,29 +2225,33 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		Layout.TPDCS = i + 3;
 		i += 11;
 		Layout.TPUDL = i;
-		Layout.Text = i+1;
+		Layout.Text = i + 1;
 		sms->SMS[0].Coding = GSM_GetMessageCoding(FFF->Buffer[Layout.TPDCS]);
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			/* we need to find, if part of byte was used or not */
+			i += (FFF->Buffer[i] * 7 / 8);
 			if (FFF->Buffer[i] * 7 % 8 != 0) {
-				i+=(FFF->Buffer[i]*7/8)+1;
-			} else {
-				i+=(FFF->Buffer[i]*7/8);
+				i++;
 			}
 		} else {
-			i+=FFF->Buffer[i];
+			i += FFF->Buffer[i];
 		}
-		i+=11;
+		i += 11;
+		if (strlen(FFF->Buffer+i) > GSM_MAX_NUMBER_LENGTH) {
+			smprintf(s, "WARNING: Too long SMS number, ignoring!\n");
+		} else {
+			EncodeUnicode(sms->SMS[0].SMSC.Number, FFF->Buffer + i, strlen(FFF->Buffer + i));
+		}
 		sms->SMS[0].UDH.Type = UDH_NoUDH;
 		sms->SMS[0].PDU = SMS_Deliver;
 		sms->SMS[0].Class = -1;
 		sms->SMS[0].State = SMS_Read;/* fixme */
 		sms->Number = 1;
-		CopyUnicodeString(sms->SMS[0].Number,FFF->Buffer+94);
-		i+=UnicodeLength(sms->SMS[0].SMSC.Number);
+		CopyUnicodeString(sms->SMS[0].Number, FFF->Buffer + 94);
+		i += UnicodeLength(sms->SMS[0].SMSC.Number);
 		/* if(FFF->Buffer[176]!=0x20) */
-		i+=4;
+		i += 4;
 		CopyUnicodeString(sms->SMS[0].Name,FFF->Buffer+i);
 		break;
 	case 0x11:
