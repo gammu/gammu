@@ -84,6 +84,13 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Parse it */
 	error = N6510_DecodeFilesystemSMS(s, &sms, &file);
 
+	/* Check expected text */
+	if (strcmp("Vodafone Messenger. Para conectarte desde el Cliente PC tu ID de Messenger es: es02012053 y tu clave es: 36079.",
+				DecodeUnicodeConsole(sms.SMS[0].Text)) != 0) {
+		printf("Messages do not match!\n");
+		return 1;
+	}
+
 	/* Display message */
 	DisplayTestSMS(sms);
 
