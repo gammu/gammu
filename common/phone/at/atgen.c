@@ -2362,48 +2362,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
 				TPUDL=atoi(buffer);
 				current++;
-				sms->Coding = SMS_Coding_8bit;
-				/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme)
-				 * and GSM 03.38 section 4
-				 */
-				if ((TPDCS & 0xC0) == 0) {
-					/* bits 7..4 set to 00xx */
-					if ((TPDCS & 0xC) == 0xC) {
-						smprintf(s, "WARNING: reserved alphabet value in TPDCS\n");
-					} else {
-						if (TPDCS == 0) 		sms->Coding=SMS_Coding_Default_No_Compression;
-						if ((TPDCS & 0x2C) == 0x00) 	sms->Coding=SMS_Coding_Default_No_Compression;
-						if ((TPDCS & 0x2C) == 0x20) 	sms->Coding=SMS_Coding_Default_Compression;
-						if ((TPDCS & 0x2C) == 0x08) 	sms->Coding=SMS_Coding_Unicode_No_Compression;
-						if ((TPDCS & 0x2C) == 0x28) 	sms->Coding=SMS_Coding_Unicode_Compression;
-					}
-				} else if ((TPDCS & 0xF0) >= 0x40 &&
-					   (TPDCS & 0xF0) <= 0xB0) {
-					/* bits 7..4 set to 0100 ... 1011 */
-					smprintf(s, "WARNING: reserved coding group in TPDCS\n");
-				} else if (((TPDCS & 0xF0) == 0xC0) ||
-				      	   ((TPDCS & 0xF0) == 0xD0)) {
-					/* bits 7..4 set to 1100 or 1101 */
-					if ((TPDCS & 4) == 4) {
-						smprintf(s, "WARNING: set reserved bit 2 in TPDCS\n");
-					} else {
-						sms->Coding=SMS_Coding_Default_No_Compression;
-					}
-				} else if ((TPDCS & 0xF0) == 0xE0) {
-					/* bits 7..4 set to 1110 */
-					if ((TPDCS & 4) == 4) {
-						smprintf(s, "WARNING: set reserved bit 2 in TPDCS\n");
-					} else {
-						sms->Coding=SMS_Coding_Unicode_No_Compression;
-					}
-				} else if ((TPDCS & 0xF0) == 0xF0) {
-					/* bits 7..4 set to 1111 */
-					if ((TPDCS & 8) == 8) {
-						smprintf(s, "WARNING: set reserved bit 3 in TPDCS\n");
-					} else {
-						if ((TPDCS & 4) == 0) sms->Coding=SMS_Coding_Default_No_Compression;
-					}
-				}
+				sms->Coding = GSM_GetMessageCoding(TPDCS);
 				sms->Class = -1;
 				if ((TPDCS & 0xD0) == 0x10) {
 					/* bits 7..4 set to 00x1 */
