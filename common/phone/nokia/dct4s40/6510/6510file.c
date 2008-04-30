@@ -2222,10 +2222,11 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		FFF->Buffer[i+1]=FFF->Buffer[i+1] / 2 + 1;
 		i+=FFF->Buffer[i+1];
 
-		Layout.TPDCS=i+3;
-		i+=11;
+		Layout.TPDCS = i + 3;
+		i += 11;
 		Layout.TPUDL = i;
 		Layout.Text = i+1;
+		sms->SMS[0].Coding = GSM_GetMessageCoding(FFF->Buffer[Layout.TPDCS]);
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			/* we need to find, if part of byte was used or not */
@@ -2258,6 +2259,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		i+=2;
 		Layout.TPUDL = i;
 		Layout.Text = i+1;
+		sms->SMS[0].Coding = GSM_GetMessageCoding(FFF->Buffer[Layout.TPDCS]);
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			/* we need to find, if part of byte was used or not */
@@ -2306,6 +2308,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		smprintf(s,"TPUDL %02x %02x\n",FFF->Buffer[i-1],FFF->Buffer[i]);
 		Layout.TPUDL = i;
 		Layout.Text = i+1;
+		sms->SMS[0].Coding = GSM_GetMessageCoding(FFF->Buffer[Layout.TPDCS]);
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			/* we need to find, if part of byte was used or not */
@@ -2370,6 +2373,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		smprintf(s,"TPUDL %02x %02x\n",FFF->Buffer[i-1],FFF->Buffer[i]);
 		Layout.TPUDL = i;
 		Layout.Text = i+1;
+		sms->SMS[0].Coding = GSM_GetMessageCoding(FFF->Buffer[Layout.TPDCS]);
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			/* we need to find, if part of byte was used or not */
@@ -2432,6 +2436,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		smprintf(s,"TPUDL %02x\n",FFF->Buffer[i+11]);
 		Layout.TPUDL = i+11;
 		Layout.Text = i+12;
+		sms->SMS[0].Coding = GSM_GetMessageCoding(FFF->Buffer[Layout.TPDCS]);
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
 		if (FFF->Buffer[176]!=0x64) {
 			i+=FFF->Buffer[Layout.TPUDL];

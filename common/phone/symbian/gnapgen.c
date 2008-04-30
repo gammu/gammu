@@ -235,6 +235,7 @@ GSM_Error GNAPGEN_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 		dbgprintf("Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	}
 	if (Layout->Text != 255 && Layout->TPDCS!=255 && Layout->TPUDL!=255) {
+		SMS->Coding = GSM_GetMessageCoding(buffer[Layout->TPDCS]);
 		GSM_DecodeSMSFrameText(SMS, buffer, *Layout);
 	}
 	if (Layout->DateTime != 255) {
