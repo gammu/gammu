@@ -2195,15 +2195,309 @@ static void N26510_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsi
 }
 
 /* Series 40 3.0 */
+GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF)
+{
+	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
+	unsigned char		folderid;
+	int			location, i;
+	GSM_SMSMessageLayout 	Layout;
+
+	/* decode file */
+	sms->Number = 0;
+	i = 176;
+	GSM_SetDefaultSMSData(&sms->SMS[0]);
+	Layout.TPDCS = 255;
+	smprintf(s,"file type %02x\n",FFF->Buffer[i]);
+	switch (FFF->Buffer[i]) {
+	case 0x00:
+	case 0x04:
+	case 0x20:
+	case 0x24:
+		smprintf(s,"sms received with number\n");
+
+		Layout.firstbyte = FFF->Buffer[i];
+
+		/* semioctets to chars in phone number */
+		if (FFF->Buffer[i+1] % 2) FFF->Buffer[i+1]++;
+		FFF->Buffer[i+1]=FFF->Buffer[i+1] / 2 + 1;
+		i+=FFF->Buffer[i+1];
+
+		Layout.TPDCS=i+3;
+		i+=11;
+		Layout.TPUDL = i;
+		Layout.Text = i+1;
+		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
+		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
+			/* we need to find, if part of byte was used or not */
+			if (FFF->Buffer[i] * 7 % 8 != 0) {
+				i+=(FFF->Buffer[i]*7/8)+1;
+			} else {
+				i+=(FFF->Buffer[i]*7/8);
+			}
+		} else {
+			i+=FFF->Buffer[i];
+		}
+		i+=11;
+		sms->SMS[0].UDH.Type = UDH_NoUDH;
+		sms->SMS[0].PDU = SMS_Deliver;
+		sms->SMS[0].Class = -1;
+		sms->SMS[0].State = SMS_Read;/* fixme */
+		sms->Number = 1;
+		CopyUnicodeString(sms->SMS[0].Number,FFF->Buffer+94);
+		i+=UnicodeLength(sms->SMS[0].SMSC.Number);
+		/* if(FFF->Buffer[176]!=0x20) */
+		i+=4;
+		CopyUnicodeString(sms->SMS[0].Name,FFF->Buffer+i);
+		break;
+	case 0x11:
+		smprintf(s,"sms received and edited ?\n");
+
+		i+=15;
+		Layout.firstbyte = 1; /* fixme */
+		Layout.TPDCS=i;
+		i+=2;
+		Layout.TPUDL = i;
+		Layout.Text = i+1;
+		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
+		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
+			/* we need to find, if part of byte was used or not */
+			if (FFF->Buffer[i] * 7 % 8 != 0) {
+				i+=(FFF->Buffer[i]*7/8)+1;
+			} else {
+				i+=(FFF->Buffer[i]*7/8);
+			}
+		} else {
+			i+=FFF->Buffer[i];
+		}
+		i+=11;
+		if (strlen(FFF->Buffer+i) > GSM_MAX_NUMBER_LENGTH) {
+			smprintf(s, "WARNING: Too long SMS number, ignoring!\n");
+		} else {
+			EncodeUnicode(sms->SMS[0].SMSC.Number,FFF->Buffer+i,strlen(FFF->Buffer+i));
+		}
+		sms->SMS[0].UDH.Type = UDH_NoUDH;
+		sms->SMS[0].PDU = SMS_Deliver;
+		sms->SMS[0].Class = -1;
+		sms->SMS[0].State = SMS_Read;/* fixme */
+		sms->Number = 1;
+		CopyUnicodeString(sms->SMS[0].Number,FFF->Buffer+94);
+		if (UnicodeLength(sms->SMS[0].SMSC.Number)!=0) {
+			i+=4+UnicodeLength(sms->SMS[0].SMSC.Number);
+		}
+		CopyUnicodeString(sms->SMS[0].Name,FFF->Buffer+i);
+		break;
+	case 0x31:
+		smprintf(s,"sms sent\n");
+		CopyUnicodeString(sms->SMS[0].Number,FFF->Buffer+94);
+		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
+			smprintf(s,"%02x\n",FFF->Buffer[i+2]);
+			/* semioctets to chars in phone number */
+			if (FFF->Buffer[i+2] % 2) FFF->Buffer[i+2]++;
+			FFF->Buffer[i+2]=FFF->Buffer[i+2] / 2 + 1;
+			smprintf(s,"number avail. %i\n",FFF->Buffer[i+2]+2);
+			i+=FFF->Buffer[i+2]+4;
+		} else {
+			i+=15;
+		}
+		Layout.firstbyte = 1; /* fixme */
+		smprintf(s,"TPDCS %02x\n",FFF->Buffer[i]);
+		Layout.TPDCS=i;
+		i+=2;
+		smprintf(s,"TPUDL %02x %02x\n",FFF->Buffer[i-1],FFF->Buffer[i]);
+		Layout.TPUDL = i;
+		Layout.Text = i+1;
+		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
+		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
+			/* we need to find, if part of byte was used or not */
+			if (FFF->Buffer[i] * 7 % 8 != 0) {
+				i+=(FFF->Buffer[i]*7/8)+1;
+			} else {
+				i+=(FFF->Buffer[i]*7/8);
+			}
+		} else {
+			i+=FFF->Buffer[i];
+		}
+		i+=11;
+		sms->SMS[0].UDH.Type = UDH_NoUDH;
+		sms->SMS[0].PDU = SMS_Deliver;
+		sms->SMS[0].Class = -1;/* fixme */
+		sms->SMS[0].State = SMS_Sent;
+		sms->Number = 1;
+		CopyUnicodeString(sms->SMS[0].Name,FFF->Buffer+i);
+		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
+			i+=UnicodeLength(sms->SMS[0].Name)*2+5;
+			while (FFF->Buffer[i+1] != 0x00) {
+				if (sms->SMS[0].OtherNumbersNum == GSM_SMS_OTHER_NUMBERS - 1) {
+					smprintf(s, "WARNING: Too much recipient numbers, ignoring rest!\n");
+					break;
+				}
+				smprintf(s,"recipient number %02x %02x",FFF->Buffer[i],FFF->Buffer[i+1]);
+				if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
+					CopyUnicodeString(sms->SMS[0].Number,FFF->Buffer+i);
+					smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].Number));
+					i+=UnicodeLength(sms->SMS[0].Number)*2+13;
+				} else {
+					CopyUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum],FFF->Buffer+i);
+					smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum]));
+					i+=UnicodeLength(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum])*2+13;
+					sms->SMS[0].OtherNumbersNum++;
+				}
+			}
+		}
+		break;
+	case 0x51:
+	case 0x71:
+		smprintf(s,"sms sent with udh\n");
+		Layout.firstbyte = i;
+		CopyUnicodeString(sms->SMS[0].Number,FFF->Buffer+94);
+		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
+			smprintf(s,"%02x\n",FFF->Buffer[i+2]);
+			if (FFF->Buffer[176]==0x71) {
+				GSM_UnpackSemiOctetNumber(sms->SMS[0].Number,FFF->Buffer+i+2 , true);
+			}
+			/* semioctets to chars in phone number */
+			if (FFF->Buffer[i+2] % 2) FFF->Buffer[i+2]++;
+			FFF->Buffer[i+2]=FFF->Buffer[i+2] / 2 + 1;
+			smprintf(s,"number avail. %i\n",FFF->Buffer[i+2]+2);
+			i+=FFF->Buffer[i+2]+4;
+		} else {
+			i+=15;
+		}
+
+		smprintf(s,"TPDCS %02x\n",FFF->Buffer[i]);
+		Layout.TPDCS=i;
+		i+=2;
+		smprintf(s,"TPUDL %02x %02x\n",FFF->Buffer[i-1],FFF->Buffer[i]);
+		Layout.TPUDL = i;
+		Layout.Text = i+1;
+		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
+		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
+			/* we need to find, if part of byte was used or not */
+			if (FFF->Buffer[i] * 7 % 8 != 0) {
+				i+=(FFF->Buffer[i]*7/8)+1;
+			} else {
+				i+=(FFF->Buffer[i]*7/8);
+			}
+		} else {
+			i+=FFF->Buffer[i];
+		}
+		i+=11;
+		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
+			if (FFF->Buffer[176]==0x51) {
+				CopyUnicodeString(sms->SMS[0].Name,FFF->Buffer+i);
+				i+=UnicodeLength(sms->SMS[0].Name)*2+5;
+				while (FFF->Buffer[i+1] != 0x00) {
+					if (sms->SMS[0].OtherNumbersNum == GSM_SMS_OTHER_NUMBERS - 1) {
+						smprintf(s, "WARNING: Too much recipient numbers, ignoring rest!\n");
+						break;
+					}
+					smprintf(s,"recipient number 0x%02x 0x%02x ", FFF->Buffer[i],FFF->Buffer[i+1]);
+					if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
+						CopyUnicodeString(sms->SMS[0].Number,FFF->Buffer+i);
+						smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].Number));
+						i+=UnicodeLength(sms->SMS[0].Number)*2+13;
+					} else {
+						CopyUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum],FFF->Buffer+i);
+						smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum]));
+						i+=UnicodeLength(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum])*2+13;
+						sms->SMS[0].OtherNumbersNum++;
+					}
+				}
+			}
+		}
+
+		sms->SMS[0].PDU = SMS_Deliver;
+		sms->SMS[0].Class = -1;/* fixme */
+		sms->SMS[0].State = SMS_Sent;
+		sms->Number = 1;
+		break;
+	case 0x44:
+	case 0x40:/* 40 without name */
+	case 0x64:/* 64 without name */
+	case 0x60:/* don't know */
+	case 0xa0:/* don't know */
+	case 0xa4:/* don't know */
+		smprintf(s,"sms with udh and number\n");
+
+		Layout.firstbyte = i;
+
+		/* semioctets to chars in phone number */
+		if (FFF->Buffer[i+1] % 2) FFF->Buffer[i+1]++;
+		FFF->Buffer[i+1]=FFF->Buffer[i+1] / 2 + 1;
+		i+=FFF->Buffer[i+1];
+
+		CopyUnicodeString(sms->SMS[0].Number,FFF->Buffer+94);
+		Layout.TPDCS=i+2;
+		smprintf(s,"TPDCS %02x\n",FFF->Buffer[i+2]);
+		smprintf(s,"TPUDL %02x\n",FFF->Buffer[i+11]);
+		Layout.TPUDL = i+11;
+		Layout.Text = i+12;
+		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
+		if (FFF->Buffer[176]!=0x64) {
+			i+=FFF->Buffer[Layout.TPUDL];
+			if (FFF->Buffer[i+2] != 0xff && FFF->Buffer[i+1] != 0xff && FFF->Buffer[i+1] < GSM_MAX_NUMBER_LENGTH) {
+				EncodeUnicode(sms->SMS[0].SMSC.Number,FFF->Buffer+i+2,FFF->Buffer[i+1]);
+			}
+		}
+		sms->SMS[0].PDU = SMS_Deliver;
+		sms->SMS[0].Class = -1;/* fixme */
+		sms->SMS[0].State = SMS_Sent;
+		sms->Number = 1;
+		break;
+	default:
+		/* Fail if we don't know message type */
+		smprintf(s,"unknown sms file %02x\n",FFF->Buffer[i]);
+		free(FFF->Buffer);
+		FFF->Buffer = NULL;
+		return ERR_UNKNOWN;
+	}
+
+	sms->SMS[0].Memory = MEM_ME;
+
+	/* from gsmsms.c - it should be shared */
+	sms->SMS[0].Class = -1;
+	if (Layout.TPDCS != 255) {
+		/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
+		if ((FFF->Buffer[Layout.TPDCS] & 0xD0) == 0x10) {
+			/* bits 7..4 set to 00x1 */
+			if ((FFF->Buffer[Layout.TPDCS] & 0xC) == 0xC) {
+				dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
+			} else {
+				sms->SMS[0].Class = (FFF->Buffer[Layout.TPDCS] & 3);
+			}
+		} else if ((FFF->Buffer[Layout.TPDCS] & 0xF0) == 0xF0) {
+			/* bits 7..4 set to 1111 */
+			if ((FFF->Buffer[Layout.TPDCS] & 8) == 8) {
+				dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
+			} else {
+				sms->SMS[0].Class = (FFF->Buffer[Layout.TPDCS] & 3);
+			}
+		}
+	} else {
+		smprintf(s,"unknown TPDCS\n");
+	}
+
+	memcpy(&sms->SMS[0].DateTime,&FFF->Modified,sizeof(GSM_DateTime));
+	sms->SMS[0].DateTime.Timezone = 0;
+	free(FFF->Buffer);
+	FFF->Buffer = NULL;
+
+	folderid = 0;
+	N26510_SetSMSLocation(s, &sms->SMS[0], folderid, location);
+	sms->SMS[0].Folder = Priv->SMSFileFolder;
+	sms->SMS[0].Location = 0; /* fixme */
+
+	return ERR_NONE;
+}
+
 GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
 {
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	unsigned char		folderid;
-	int			location,Size,Handle,i;
+	int			location,Size,Handle;
 	GSM_Error		error;
 	GSM_File		FFF;
 	bool			start2=start;
-	GSM_SMSMessageLayout 	Layout;
 
 	GSM_SetDefaultReceivedSMSData(&sms->SMS[0]);
 
@@ -2264,294 +2558,8 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		}
 	}
 
-	/* decode file */
-	sms->Number = 0;
-	i = 176;
-	GSM_SetDefaultSMSData(&sms->SMS[0]);
-	Layout.TPDCS = 255;
-	smprintf(s,"file type %02x\n",FFF.Buffer[i]);
-	switch (FFF.Buffer[i]) {
-	case 0x00:
-	case 0x04:
-	case 0x20:
-	case 0x24:
-		smprintf(s,"sms received with number\n");
-
-		Layout.firstbyte = FFF.Buffer[i];
-
-		/* semioctets to chars in phone number */
-		if (FFF.Buffer[i+1] % 2) FFF.Buffer[i+1]++;
-		FFF.Buffer[i+1]=FFF.Buffer[i+1] / 2 + 1;
-		i+=FFF.Buffer[i+1];
-
-		Layout.TPDCS=i+3;
-		i+=11;
-		Layout.TPUDL = i;
-		Layout.Text = i+1;
-		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
-		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
-			/* we need to find, if part of byte was used or not */
-			if (FFF.Buffer[i] * 7 % 8 != 0) {
-				i+=(FFF.Buffer[i]*7/8)+1;
-			} else {
-				i+=(FFF.Buffer[i]*7/8);
-			}
-		} else {
-			i+=FFF.Buffer[i];
-		}
-		i+=11;
-		sms->SMS[0].UDH.Type = UDH_NoUDH;
-		sms->SMS[0].PDU = SMS_Deliver;
-		sms->SMS[0].Class = -1;
-		sms->SMS[0].State = SMS_Read;/* fixme */
-		sms->Number = 1;
-		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
-		i+=UnicodeLength(sms->SMS[0].SMSC.Number);
-		/* if(FFF.Buffer[176]!=0x20) */
-		i+=4;
-		CopyUnicodeString(sms->SMS[0].Name,FFF.Buffer+i);
-		break;
-	case 0x11:
-		smprintf(s,"sms received and edited ?\n");
-
-		i+=15;
-		Layout.firstbyte = 1; /* fixme */
-		Layout.TPDCS=i;
-		i+=2;
-		Layout.TPUDL = i;
-		Layout.Text = i+1;
-		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
-		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
-			/* we need to find, if part of byte was used or not */
-			if (FFF.Buffer[i] * 7 % 8 != 0) {
-				i+=(FFF.Buffer[i]*7/8)+1;
-			} else {
-				i+=(FFF.Buffer[i]*7/8);
-			}
-		} else {
-			i+=FFF.Buffer[i];
-		}
-		i+=11;
-		if (strlen(FFF.Buffer+i) > GSM_MAX_NUMBER_LENGTH) {
-			smprintf(s, "WARNING: Too long SMS number, ignoring!\n");
-		} else {
-			EncodeUnicode(sms->SMS[0].SMSC.Number,FFF.Buffer+i,strlen(FFF.Buffer+i));
-		}
-		sms->SMS[0].UDH.Type = UDH_NoUDH;
-		sms->SMS[0].PDU = SMS_Deliver;
-		sms->SMS[0].Class = -1;
-		sms->SMS[0].State = SMS_Read;/* fixme */
-		sms->Number = 1;
-		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
-		if (UnicodeLength(sms->SMS[0].SMSC.Number)!=0) {
-			i+=4+UnicodeLength(sms->SMS[0].SMSC.Number);
-		}
-		CopyUnicodeString(sms->SMS[0].Name,FFF.Buffer+i);
-		break;
-	case 0x31:
-		smprintf(s,"sms sent\n");
-		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
-		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
-			smprintf(s,"%02x\n",FFF.Buffer[i+2]);
-			/* semioctets to chars in phone number */
-			if (FFF.Buffer[i+2] % 2) FFF.Buffer[i+2]++;
-			FFF.Buffer[i+2]=FFF.Buffer[i+2] / 2 + 1;
-			smprintf(s,"number avail. %i\n",FFF.Buffer[i+2]+2);
-			i+=FFF.Buffer[i+2]+4;
-		} else {
-			i+=15;
-		}
-		Layout.firstbyte = 1; /* fixme */
-		smprintf(s,"TPDCS %02x\n",FFF.Buffer[i]);
-		Layout.TPDCS=i;
-		i+=2;
-		smprintf(s,"TPUDL %02x %02x\n",FFF.Buffer[i-1],FFF.Buffer[i]);
-		Layout.TPUDL = i;
-		Layout.Text = i+1;
-		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
-		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
-			/* we need to find, if part of byte was used or not */
-			if (FFF.Buffer[i] * 7 % 8 != 0) {
-				i+=(FFF.Buffer[i]*7/8)+1;
-			} else {
-				i+=(FFF.Buffer[i]*7/8);
-			}
-		} else {
-			i+=FFF.Buffer[i];
-		}
-		i+=11;
-		sms->SMS[0].UDH.Type = UDH_NoUDH;
-		sms->SMS[0].PDU = SMS_Deliver;
-		sms->SMS[0].Class = -1;/* fixme */
-		sms->SMS[0].State = SMS_Sent;
-		sms->Number = 1;
-		CopyUnicodeString(sms->SMS[0].Name,FFF.Buffer+i);
-		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
-			i+=UnicodeLength(sms->SMS[0].Name)*2+5;
-			while (FFF.Buffer[i+1] != 0x00) {
-				if (sms->SMS[0].OtherNumbersNum == GSM_SMS_OTHER_NUMBERS - 1) {
-					smprintf(s, "WARNING: Too much recipient numbers, ignoring rest!\n");
-					break;
-				}
-				smprintf(s,"recipient number %02x %02x",FFF.Buffer[i],FFF.Buffer[i+1]);
-				if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
-					CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+i);
-					smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].Number));
-					i+=UnicodeLength(sms->SMS[0].Number)*2+13;
-				} else {
-					CopyUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum],FFF.Buffer+i);
-					smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum]));
-					i+=UnicodeLength(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum])*2+13;
-					sms->SMS[0].OtherNumbersNum++;
-				}
-			}
-		}
-		break;
-	case 0x51:
-	case 0x71:
-		smprintf(s,"sms sent with udh\n");
-		Layout.firstbyte = i;
-		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
-		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
-			smprintf(s,"%02x\n",FFF.Buffer[i+2]);
-			if (FFF.Buffer[176]==0x71) {
-				GSM_UnpackSemiOctetNumber(sms->SMS[0].Number,FFF.Buffer+i+2 , true);
-			}
-			/* semioctets to chars in phone number */
-			if (FFF.Buffer[i+2] % 2) FFF.Buffer[i+2]++;
-			FFF.Buffer[i+2]=FFF.Buffer[i+2] / 2 + 1;
-			smprintf(s,"number avail. %i\n",FFF.Buffer[i+2]+2);
-			i+=FFF.Buffer[i+2]+4;
-		} else {
-			i+=15;
-		}
-
-		smprintf(s,"TPDCS %02x\n",FFF.Buffer[i]);
-		Layout.TPDCS=i;
-		i+=2;
-		smprintf(s,"TPUDL %02x %02x\n",FFF.Buffer[i-1],FFF.Buffer[i]);
-		Layout.TPUDL = i;
-		Layout.Text = i+1;
-		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
-		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
-			/* we need to find, if part of byte was used or not */
-			if (FFF.Buffer[i] * 7 % 8 != 0) {
-				i+=(FFF.Buffer[i]*7/8)+1;
-			} else {
-				i+=(FFF.Buffer[i]*7/8);
-			}
-		} else {
-			i+=FFF.Buffer[i];
-		}
-		i+=11;
-		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
-			if (FFF.Buffer[176]==0x51) {
-				CopyUnicodeString(sms->SMS[0].Name,FFF.Buffer+i);
-				i+=UnicodeLength(sms->SMS[0].Name)*2+5;
-				while (FFF.Buffer[i+1] != 0x00) {
-					if (sms->SMS[0].OtherNumbersNum == GSM_SMS_OTHER_NUMBERS - 1) {
-						smprintf(s, "WARNING: Too much recipient numbers, ignoring rest!\n");
-						break;
-					}
-					smprintf(s,"recipient number 0x%02x 0x%02x ", FFF.Buffer[i],FFF.Buffer[i+1]);
-					if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
-						CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+i);
-						smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].Number));
-						i+=UnicodeLength(sms->SMS[0].Number)*2+13;
-					} else {
-						CopyUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum],FFF.Buffer+i);
-						smprintf(s,"%s\n",DecodeUnicodeString(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum]));
-						i+=UnicodeLength(sms->SMS[0].OtherNumbers[sms->SMS[0].OtherNumbersNum])*2+13;
-						sms->SMS[0].OtherNumbersNum++;
-					}
-				}
-			}
-		}
-
-		sms->SMS[0].PDU = SMS_Deliver;
-		sms->SMS[0].Class = -1;/* fixme */
-		sms->SMS[0].State = SMS_Sent;
-		sms->Number = 1;
-		break;
-	case 0x44:
-	case 0x40:/* 40 without name */
-	case 0x64:/* 64 without name */
-	case 0x60:/* don't know */
-	case 0xa0:/* don't know */
-	case 0xa4:/* don't know */
-		smprintf(s,"sms with udh and number\n");
-
-		Layout.firstbyte = i;
-
-		/* semioctets to chars in phone number */
-		if (FFF.Buffer[i+1] % 2) FFF.Buffer[i+1]++;
-		FFF.Buffer[i+1]=FFF.Buffer[i+1] / 2 + 1;
-		i+=FFF.Buffer[i+1];
-
-		CopyUnicodeString(sms->SMS[0].Number,FFF.Buffer+94);
-		Layout.TPDCS=i+2;
-		smprintf(s,"TPDCS %02x\n",FFF.Buffer[i+2]);
-		smprintf(s,"TPUDL %02x\n",FFF.Buffer[i+11]);
-		Layout.TPUDL = i+11;
-		Layout.Text = i+12;
-		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF.Buffer, Layout);
-		if (FFF.Buffer[176]!=0x64) {
-			i+=FFF.Buffer[Layout.TPUDL];
-			if (FFF.Buffer[i+2] != 0xff && FFF.Buffer[i+1] != 0xff && FFF.Buffer[i+1] < GSM_MAX_NUMBER_LENGTH) {
-				EncodeUnicode(sms->SMS[0].SMSC.Number,FFF.Buffer+i+2,FFF.Buffer[i+1]);
-			}
-		}
-		sms->SMS[0].PDU = SMS_Deliver;
-		sms->SMS[0].Class = -1;/* fixme */
-		sms->SMS[0].State = SMS_Sent;
-		sms->Number = 1;
-		break;
-	default:
-		/* Fail if we don't know message type */
-		smprintf(s,"unknown sms file %02x\n",FFF.Buffer[i]);
-		free(FFF.Buffer);
-		FFF.Buffer = NULL;
-		return ERR_UNKNOWN;
-	}
-
-	sms->SMS[0].Memory = MEM_ME;
-
-	/* from gsmsms.c - it should be shared */
-	sms->SMS[0].Class = -1;
-	if (Layout.TPDCS != 255) {
-		/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
-		if ((FFF.Buffer[Layout.TPDCS] & 0xD0) == 0x10) {
-			/* bits 7..4 set to 00x1 */
-			if ((FFF.Buffer[Layout.TPDCS] & 0xC) == 0xC) {
-				dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
-			} else {
-				sms->SMS[0].Class = (FFF.Buffer[Layout.TPDCS] & 3);
-			}
-		} else if ((FFF.Buffer[Layout.TPDCS] & 0xF0) == 0xF0) {
-			/* bits 7..4 set to 1111 */
-			if ((FFF.Buffer[Layout.TPDCS] & 8) == 8) {
-				dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
-			} else {
-				sms->SMS[0].Class = (FFF.Buffer[Layout.TPDCS] & 3);
-			}
-		}
-	} else {
-		smprintf(s,"unknown TPDCS\n");
-	}
-
-	memcpy(&sms->SMS[0].DateTime,&FFF.Modified,sizeof(GSM_DateTime));
-	sms->SMS[0].DateTime.Timezone = 0;
-	free(FFF.Buffer);
-	FFF.Buffer = NULL;
-
-	folderid = 0;
-	N26510_SetSMSLocation(s, &sms->SMS[0], folderid, location);
-	sms->SMS[0].Folder = Priv->SMSFileFolder;
-	sms->SMS[0].Location = 0; /* fixme */
-
-	return ERR_NONE;
+	return N6510_DecodeFilesystemSMS(s, sms, &FFF);
 }
-
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.
