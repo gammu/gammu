@@ -39,7 +39,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Init message */
 	msg.Type = 0x14;
-	msg.Length = 0x32;
+	msg.Length = sizeof(data);
 	msg.Buffer = data;
 
 	s->Phone.Data.GetSMSMessage = &sms;
