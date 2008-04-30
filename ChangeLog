@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2008???? - 1.19.91
+
+[-] * Fixed decoding of Nokia messages (bug #527).
     
 20080423 - 1.19.90
 
