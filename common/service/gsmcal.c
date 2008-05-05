@@ -134,7 +134,6 @@ void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 void GSM_GetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)
 {
 	int 	Recurrance,num=-1,i;
-	char 	Buf[20];
 
 	Recurrance = rec[0]*256 + rec[1];
 	if (Recurrance == 0) return;
@@ -151,9 +150,6 @@ void GSM_GetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 		}
 	}
 	if (num == -1) return;
-	sprintf(Buf,"%s",DayOfWeek(entry->Entries[num].Date.Year,
-			entry->Entries[num].Date.Month,
-			entry->Entries[num].Date.Day));
 
 	if (Recurrance == 24    || Recurrance == 24*7 ||
 	    Recurrance == 24*30 || Recurrance == 24*365) {
@@ -168,21 +164,9 @@ void GSM_GetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 	}
 	if (Recurrance == 24*7 || Recurrance == 24*14) {
 		entry->Entries[entry->EntriesNum].EntryType	 = CAL_REPEAT_DAYOFWEEK;
-		if (!strcmp(Buf,"Mon")) {
-			entry->Entries[entry->EntriesNum].Number = 1;
-		} else if (!strcmp(Buf,"Tue")) {
-			entry->Entries[entry->EntriesNum].Number = 2;
-		} else if (!strcmp(Buf,"Wed")) {
-			entry->Entries[entry->EntriesNum].Number = 3;
-		} else if (!strcmp(Buf,"Thu")) {
-			entry->Entries[entry->EntriesNum].Number = 4;
-		} else if (!strcmp(Buf,"Fri")) {
-			entry->Entries[entry->EntriesNum].Number = 5;
-		} else if (!strcmp(Buf,"Sat")) {
-			entry->Entries[entry->EntriesNum].Number = 6;
-		} else if (!strcmp(Buf,"Sun")) {
-			entry->Entries[entry->EntriesNum].Number = 7;
-		}
+		entry->Entries[entry->EntriesNum].Number = GetDayOfWeek(entry->Entries[num].Date.Year,
+			entry->Entries[num].Date.Month,
+			entry->Entries[num].Date.Day);
 		entry->EntriesNum++;
 	}
 	if (Recurrance == 24*30) {
