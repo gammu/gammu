@@ -49,7 +49,7 @@ unsigned char data[] = {
 	};
 
 /* This is not part of API! */
-extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF);
+extern GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF, int location);
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
@@ -82,7 +82,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	file.ID_FullName[1] = 0;
 
 	/* Parse it */
-	error = N6510_DecodeFilesystemSMS(s, &sms, &file);
+	error = N6510_DecodeFilesystemSMS(s, &sms, &file, 0);
 
 	/* Check expected text */
 	if (strcmp("Vodafone Messenger. Para conectarte desde el Cliente PC tu ID de Messenger es: es02012053 y tu clave es: 36079.",

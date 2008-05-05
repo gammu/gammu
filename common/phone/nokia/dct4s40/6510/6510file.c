@@ -2195,11 +2195,10 @@ static void N26510_SetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsi
 }
 
 /* Series 40 3.0 */
-GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF)
+GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, GSM_File *FFF, int location)
 {
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
-	unsigned char		folderid;
-	int			location, i;
+	int			i;
 	GSM_SMSMessageLayout 	Layout;
 
 	/* decode file */
@@ -2491,8 +2490,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	free(FFF->Buffer);
 	FFF->Buffer = NULL;
 
-	folderid = 0;
-	N26510_SetSMSLocation(s, &sms->SMS[0], folderid, location);
+	N26510_SetSMSLocation(s, &sms->SMS[0], 0, location);
 	sms->SMS[0].Folder = Priv->SMSFileFolder;
 	sms->SMS[0].Location = 0; /* fixme */
 
@@ -2567,7 +2565,7 @@ GSM_Error N6510_GetNextFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 		}
 	}
 
-	return N6510_DecodeFilesystemSMS(s, sms, &FFF);
+	return N6510_DecodeFilesystemSMS(s, sms, &FFF, location);
 }
 #endif
 
