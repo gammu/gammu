@@ -29,7 +29,6 @@ void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 {
 	unsigned int i;
 	int start=-1,frequency=-1,dow=-1,day=-1,month=-1,end=-1,Recurrance = 0, Repeat=0, j;
-	char 		Buf[20];
 	GSM_DateTime	DT;
 	time_t		t_time1,t_time2;
 
@@ -53,16 +52,9 @@ void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 		}
 	}
 
-	sprintf(Buf,"%s",DayOfWeek(entry->Entries[start].Date.Year,
+	i = GetDayOfWeek(entry->Entries[start].Date.Year,
 			entry->Entries[start].Date.Month,
-			entry->Entries[start].Date.Day));
-	if (!strcmp(Buf,"Mon")) i = 1;
-	if (!strcmp(Buf,"Tue")) i = 2;
-	if (!strcmp(Buf,"Wed")) i = 3;
-	if (!strcmp(Buf,"Thu")) i = 4;
-	if (!strcmp(Buf,"Fri")) i = 5;
-	if (!strcmp(Buf,"Sat")) i = 6;
-	if (!strcmp(Buf,"Sun")) i = 7;
+			entry->Entries[start].Date.Day);
 
 	if (frequency != -1 && dow != -1 && day == -1 && month == -1) {
 		if (entry->Entries[frequency].Number == 1 &&
