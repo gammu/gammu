@@ -111,7 +111,7 @@ editP() {
     dialog --fselect "${PORT:-$D_PORT}" $FILE_SIZE 2>"$TEMPFILE"
     err=$?
     if [ $err -eq 255 ] ; then
-        if ( dialog --inputbox "Enter phone port" $INPUT_SIZE "${PORT:-$D_PORT}" 2>"$TEMPFILE" ) ; then
+        if dialog --inputbox "Enter phone port" $INPUT_SIZE "${PORT:-$D_PORT}" 2>"$TEMPFILE" ; then
             PORT=`cat "$TEMPFILE"`
         fi
     elif [ $err -eq 0 ] ; then
@@ -310,8 +310,8 @@ if [ $BUTTON -eq 3 ] ; then
 [gammu]
 
 port = ${PORT:-$D_PORT}
-model = ${CONNECTION:-$D_CONNECTION}
-connection = ${MODEL:-$D_MODEL}
+model = ${MODEL:-$D_MODEL}
+connection = ${CONNECTION:-$D_CONNECTION}
 synchronizetime = ${SYNCHRONIZETIME:-$D_SYNCHRONIZETIME}
 logfile = ${LOGFILE:-$D_LOGFILE}
 logformat = ${LOGFORMAT:-$D_LOGFORMAT}
