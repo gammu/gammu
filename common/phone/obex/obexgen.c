@@ -739,7 +739,8 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 	case 0xA0:
 		smprintf(s,"Last file part received\n");
 		s->Phone.Data.Priv.OBEXGEN.FileLastPart = true;
-		return ERR_NONE;
+		if (msg.Length == 0) return ERR_NONE;
+		/* Fallthrough */
 	case 0x90:
 		while(1) {
 			if (Pos >= msg.Length) break;
