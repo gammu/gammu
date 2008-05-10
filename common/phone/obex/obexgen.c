@@ -781,6 +781,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 	unsigned int 		Current = 0;
 	GSM_Error		error;
 	unsigned char 		req[2000], req2[200];
+	int			retries;
 
 	s->Phone.Data.File 	= File;
 	File->ReadOnly 		= false;
@@ -847,7 +848,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 		req[Current++] = 0x00; req[Current++] = 0x01;
 	}
 
-	smprintf(s, "Getting first file part from filesystem\n");
+	smprintf(s, "Getting first file part\n");
 	error=GSM_WaitFor (s, req, Current, 0x83, OBEX_TIMEOUT, ID_GetFile);
 	if (error != ERR_NONE) return error;
 
@@ -859,8 +860,18 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 			req[Current++] = 0x00; req[Current++] = 0x00;
 			req[Current++] = 0x00; req[Current++] = 0x01;
 		}
-		smprintf(s, "Getting file part from filesystem\n");
-		error=GSM_WaitFor (s, req, Current, 0x83, OBEX_TIMEOUT, ID_GetFile);
+		smprintf(s, "Getting next file part\n");
+		/* We retry for ERR_PERMISSION, because it can be caused by database locked error */
+		retries = 0;
+		while (retries < 5) {
+			if (retries > 0) {
+				smprintf(s, "Retry %d\n", retries);
+			}
+			error = GSM_WaitFor (s, req, Current, 0x83, OBEX_TIMEOUT, ID_GetFile);
+			if (error != ERR_PERMISSION) break;
+			my_sleep(200);
+			retries++;
+		}
 		if (error != ERR_NONE) return error;
 	}
 	return ERR_EMPTY;
