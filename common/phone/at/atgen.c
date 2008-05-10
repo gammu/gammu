@@ -3990,6 +3990,9 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
  * \verbatim
  * +CPBR: (first-last),max_number_len,max_name_len
  * \endverbatim
+ * \verbatim
+ * +CPBR: (location),max_number_len,max_name_len
+ * \endverbatim
  *
  * Some phones (eg. Motorola C350) reply is different:
  * \verbatim
@@ -4051,7 +4054,7 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 			return ERR_NONE;
 		}
 
-		/* Try Sharp format last */
+		/* Try Sharp format */
 		error = ATGEN_ParseReply(s, str,
 					"+CPBR: (), @i, @i",
 					&Priv->NumberLength,
@@ -4060,6 +4063,18 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 			/* Hardcode size, we have no other choice here */
 			Priv->FirstMemoryEntry = 1;
 			Priv->MemorySize = 1000;
+			return ERR_NONE;
+		}
+
+		/* Try single entry format */
+		error = ATGEN_ParseReply(s, str,
+					"+CPBR: (@i), @i, @i",
+					&Priv->FirstMemoryEntry,
+					&Priv->NumberLength,
+					&Priv->TextLength);
+		if (error == ERR_NONE) {
+			/* Hardcode size, we have no other choice here */
+			Priv->MemorySize = 1;
 			return ERR_NONE;
 		}
 
