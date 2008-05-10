@@ -15,6 +15,8 @@ or inspired me to make it.
 ChangeLog
 =========
     
+2008???? - 1.20.90
+    
 20080510 - 1.20.0
 
 [-] * Do not crash on EMS messages with no text (bug #612).
