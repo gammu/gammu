@@ -142,6 +142,12 @@ if (CROSS_MINGW)
 endif (CROSS_MINGW)
 target_link_libraries(sms-nokia-03 libGammu)
 add_test(sms-nokia-03 "${GAMMU_TEST_PATH}/sms-nokia-03${GAMMU_TEST_SUFFIX}")
+add_executable(sms-nokia-04 sms-nokia-04.c sms-printing.c)
+if (CROSS_MINGW)
+    set_target_properties (sms-nokia-04 PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+target_link_libraries(sms-nokia-04 libGammu)
+add_test(sms-nokia-04 "${GAMMU_TEST_PATH}/sms-nokia-04${GAMMU_TEST_SUFFIX}")
 
 # AT SMS parsing
 add_executable(sms-at-parse sms-at-parse.c sms-printing.c)
