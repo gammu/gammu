@@ -258,6 +258,11 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 				w=(i-off)%i;
 			} while (w<0);
 			SMS->Length=buffer[Layout.TPUDL] - (off*8 + w) / 7;
+			if (SMS->Length < 0) {
+				dbgprintf("No SMS text!\n");
+				SMS->Length = 0;
+				break;
+			}
 			tmp=GSM_UnpackEightBitsToSeven(w, buffer[Layout.TPUDL]-off, SMS->Length, buffer+(Layout.Text+off), output);
 			dbgprintf("7 bit SMS, length %i\n",SMS->Length);
 			DecodeDefault (SMS->Text, output, SMS->Length, true, NULL);
