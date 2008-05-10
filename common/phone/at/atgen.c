@@ -1989,6 +1989,20 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 		smprintf(s, "Failed to decode hex string!\n");
 		return ERR_CORRUPTED;
 	}
+	switch (state) {
+		case 0:
+			sms->State = SMS_UnRead;
+			break;
+		case 1:
+			sms->State = SMS_Read;
+			break;
+		case 2:
+			sms->State = SMS_UnSent;
+			break;
+		default:
+			sms->State = SMS_Sent;
+			break;
+	}
 	length /= 2; /* We decoded hex -> binary */
 	/* Siemens M20 */
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_M20SMS)) {
@@ -2653,6 +2667,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 			smprintf(s, "Invalid location passed to %s!\n", __FUNCTION__);
 			return ERR_INVALIDLOCATION;
 		}
+		smprintf(s, "F: %d, c: %d\n", found, Priv->SMSCount);
 		if (found >= Priv->SMSCount) {
 			/* Did we already read second folder? */
 			if (Priv->SMSReadFolder == 2) return ERR_EMPTY;
@@ -2678,6 +2693,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 				GSM_SetDefaultReceivedSMSData(&sms->SMS[0]);
 				s->Phone.Data.GetSMSMessage = sms;
 				smprintf(s, "Getting message from cache\n");
+				smprintf(s, "%s\n", Priv->SMSCache[found].PDU);
 				return ATGEN_DecodePDUMessage(s,
 						Priv->SMSCache[found].PDU,
 						Priv->SMSCache[found].State);
