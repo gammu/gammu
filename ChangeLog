@@ -18,6 +18,7 @@ ChangeLog
 2008???? - 1.19.92
 
 [-] * Do not crash on EMS messages with no text (bug #612).
+[-] * Fixed reading of OBEX files (bug #614).
     
 20080505 - 1.19.91
 
