@@ -732,7 +732,11 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 		}
 
 		/* Some data received. Reset timer */
-		if (GSM_ReadDevice(s,true)!=0) i=0;
+		if (GSM_ReadDevice(s,true)!=0) {
+			i = 0;
+		} else {
+			my_sleep(10);
+		}
 
 		if (length != 0) {
 			free (sentmsg.Buffer);
