@@ -714,7 +714,7 @@ GSM_Error N6510_ReplyGetNoteFirstLoc(GSM_Protocol_Message msg, GSM_StateMachine 
 
 GSM_Error N6510_ReplyAddNote(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
-	smprintf(s, "ToDo added\n");
+	smprintf(s, "Note added\n");
 	return ERR_NONE;
 }
 
