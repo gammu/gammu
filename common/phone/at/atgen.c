@@ -2619,7 +2619,7 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 	 * We did not read anything, but it is correct, indicate that
 	 * cache should be used (even if it is empty).
 	 */
-	if (error == ERR_NONE && Priv->SMSCache) {
+	if (error == ERR_NONE && Priv->SMSCache == NULL) {
 		Priv->SMSCache = (GSM_AT_SMS_Cache *)realloc(Priv->SMSCache, sizeof(GSM_AT_SMS_Cache));
 	}
 	return error;
