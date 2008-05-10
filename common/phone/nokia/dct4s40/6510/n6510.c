@@ -663,6 +663,9 @@ static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 	current = blocks + 1;
 	for (i=0;i<buffer[blocks];i++) {
 		switch (buffer[current]) {
+		case 0x08:
+			smprintf(s, "SMSC timestamp (ignored)\n");
+			break;
 		case 0x80:
 			smprintf(s, "SMS text\n");
 			if (buffer[current + 2] > buffer[current + 3]) {
@@ -696,7 +699,7 @@ static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 		}
 		current = current + buffer[current + 1];
 	}
-	error=GSM_DecodeSMSFrame(sms,buffer,Layout);
+	error = GSM_DecodeSMSFrame(sms,buffer,Layout);
 	if (SMSTemplateDateTime != 0) {
 		sms->PDU = SMS_Deliver;
 		NOKIA_DecodeDateTime(s, buffer+SMSTemplateDateTime, &sms->DateTime);
