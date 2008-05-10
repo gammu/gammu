@@ -1,4 +1,4 @@
-/* Test for decoding SMS on Nokia 6110 driver */
+/* Test for decoding SMS on Nokia 6510 driver */
 
 #include <gammu.h>
 #include <stdlib.h>
