@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 
 	/* Check parameters */
 	if (argc != 3 && argc != 4) {
-		printf("Not enough parameters!\nUsage: vcard-read file.vcf file.backup\n");
+		printf("Not enough parameters!\nUsage: cal-read file.[vi]cs file.backup\n");
 		return 1;
 	}
 
