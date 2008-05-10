@@ -82,7 +82,7 @@ static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message msg, GSM_StateMachine 
 			return ERR_FULL;
 		case 0x61:
 			smprintf(s, "Database locked\n");
-			return ERR_FULL;
+			return ERR_PERMISSION;
 		case 0x4c:
 			smprintf(s, "Precondition failed\n");
 			return ERR_NOTSUPPORTED;
