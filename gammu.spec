@@ -61,7 +61,7 @@ Group:              Applications/Communications
 %else
 
 # Fedora
-%if 0%{?fedora_version}
+%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version}
 %define dist_pkgconfig pkgconfig
 %if 0%{?fedora_version} >= 8 || 0%{?centos_version} || 0%{?rhel_version}
 %define dist_mysql_libs mysql-devel 
