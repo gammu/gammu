@@ -56,7 +56,6 @@ static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message msg, GSM_StateMachine 
 		case 0x46:
 		case 0x47:
 		case 0x48:
-		case 0x49:
 		case 0x4d:
 		case 0x4e:
 		case 0x4f:
@@ -65,6 +64,7 @@ static GSM_Error OBEXGEN_HandleError(GSM_Protocol_Message msg, GSM_StateMachine 
 		case 0x41:
 		case 0x42:
 		case 0x43:
+		case 0x49: /* Conflict */
 			smprintf(s, "Security error (0x%02x)\n", msg.Type);
 			return ERR_PERMISSION;
 		case 0x44:
@@ -3369,6 +3369,12 @@ GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	{OBEXGEN_ReplyChangePath,	"\xC3",0x00,0x00,ID_SetPath			},
 	{OBEXGEN_ReplyGetFilePart,	"\xC3",0x00,0x00,ID_GetFile			},
 	{OBEXGEN_ReplyAddFilePart,	"\xC3",0x00,0x00,ID_AddFile			},
+
+	/* CONFLICT block */
+	{OBEXGEN_ReplyConnect,		"\xC9",0x00,0x00,ID_Initialise			},
+	{OBEXGEN_ReplyChangePath,	"\xC9",0x00,0x00,ID_SetPath			},
+	{OBEXGEN_ReplyGetFilePart,	"\xC9",0x00,0x00,ID_GetFile			},
+	{OBEXGEN_ReplyAddFilePart,	"\xC9",0x00,0x00,ID_AddFile			},
 
 	/* NOT FOUND block */
 	{OBEXGEN_ReplyGetFilePart,	"\xC4",0x00,0x00,ID_GetFile			},
