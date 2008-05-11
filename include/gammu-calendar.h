@@ -489,7 +489,7 @@ typedef struct {
 	/**
 	 * Text of note.
 	 */
-	char Text[3000 * 2];
+	char Text[(GSM_MAX_NOTE_TEXT_LENGTH + 1) * 2];
 } GSM_NoteEntry;
 
 /**
