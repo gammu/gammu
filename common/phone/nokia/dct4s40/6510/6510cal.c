@@ -105,6 +105,7 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	int				i;
 	bool				found = false;
 	GSM_Phone_N6510Data		*Priv = &s->Phone.Data.Priv.N6510;
+	int len;
 
 	smprintf(s, "Calendar note received method 3\n");
 
@@ -200,10 +201,17 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		}
 	}
 
-	memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+54, msg.Buffer[51]*2);
-	entry->Entries[entry->EntriesNum].Text[msg.Buffer[51]*2]   = 0;
-	entry->Entries[entry->EntriesNum].Text[msg.Buffer[51]*2+1] = 0;
-	entry->Entries[entry->EntriesNum].EntryType		   = CAL_TEXT;
+	len = msg.Buffer[50] * 256 + msg.Buffer[51];
+	if (len > GSM_MAX_CALENDAR_TEXT_LENGTH) {
+		smprintf(s, "Calendar text too long (%d), truncating to %d\n", len, GSM_MAX_CALENDAR_TEXT_LENGTH);
+		len = GSM_MAX_CALENDAR_TEXT_LENGTH;
+	}
+	memcpy(entry->Entries[entry->EntriesNum].Text,
+		msg.Buffer + 54,
+		len * 2);
+	entry->Entries[entry->EntriesNum].Text[len * 2]  = 0;
+	entry->Entries[entry->EntriesNum].Text[len * 2 + 1] = 0;
+	entry->Entries[entry->EntriesNum].EntryType = CAL_TEXT;
 	entry->EntriesNum++;
 	smprintf(s, "Note text: \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum-1].Text));
 
@@ -553,9 +561,10 @@ static GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note
 	}
 
 	if (Text != -1) {
-		req[49] = UnicodeLength(Note->Entries[Text].Text);
-		CopyUnicodeString(req+54,Note->Entries[Text].Text);
-		count+= req[49]*2;
+		req[48] = UnicodeLength(Note->Entries[Text].Text) / 256;
+		req[49] = UnicodeLength(Note->Entries[Text].Text) % 256;
+		CopyUnicodeString(req + 54, Note->Entries[Text].Text);
+		count += req[49] * 2 + (req[48] * 256) * 2;
 	}
 
 	if (Phone != -1 && NoteType == GSM_CAL_CALL) {
