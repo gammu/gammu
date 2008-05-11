@@ -108,6 +108,13 @@
 #define GSM_MAX_CALENDAR_TEXT_LENGTH 256
 
 /**
+ * Maximal length of text in calendar.
+ *
+ * \ingroup Limits
+ */
+#define GSM_MAX_NOTE_TEXT_LENGTH 4096
+
+/**
  * Maximal number of todo entries.
  *
  * \ingroup Limits
