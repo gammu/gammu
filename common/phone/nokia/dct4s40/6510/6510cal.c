@@ -733,7 +733,7 @@ GSM_Error N6510_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Not)
 	int 			count=54;
 	unsigned char 		reqLoc[] = {N6110_FRAME_HEADER, 0x95,
 					    0x02};	/* 1 = todo, 2 = note */
-	unsigned char 		req[5000] = {
+	unsigned char 		req[GSM_MAX_NOTE_TEXT_LENGTH + 500] = {
 		N6110_FRAME_HEADER, 0x65,
 		0x02,					/* 0 = calendar, 1 = todo, 2 = note 	*/
 		0x00, 0x00, 0x00,
@@ -767,7 +767,7 @@ GSM_Error N6510_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Not)
 	req[48] = UnicodeLength(Not->Text) / 256;
 	req[49] = UnicodeLength(Not->Text) % 256;
 	CopyUnicodeString(req + 54, Not->Text);
-	count += req[49] * 2 + (req[48] << 8) * 2;
+	count += req[49] * 2 + (req[48] * 256) * 2;
 
 	req[count++] = 0x00;
 
@@ -922,6 +922,7 @@ GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_ToDoEntry 		*Last = s->Phone.Data.ToDo;
 	GSM_DateTime		Date;
 	unsigned long		diff;
+	int len;
 
 	smprintf(s, "ToDo received method 2\n");
 
@@ -937,9 +938,16 @@ GSM_Error N6510_ReplyGetToDo2(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		default	 : return ERR_UNKNOWN;
 	}
 
-	memcpy(Last->Entries[0].Text,msg.Buffer+54,msg.Buffer[51]*2);
-	Last->Entries[0].Text[msg.Buffer[51]*2]   = 0;
-	Last->Entries[0].Text[msg.Buffer[51]*2+1] = 0;
+	len = msg.Buffer[50] * 256 + msg.Buffer[51];
+	if (len > GSM_MAX_TODO_TEXT_LENGTH) {
+		smprintf(s, "Todo text too long (%d), truncating to %d\n", len, GSM_MAX_TODO_TEXT_LENGTH);
+		len = GSM_MAX_TODO_TEXT_LENGTH;
+	}
+	memcpy(Last->Entries[0].Text,
+		msg.Buffer + 54,
+		len * 2);
+	Last->Entries[0].Text[len * 2] = 0;
+	Last->Entries[0].Text[(len * 2) + 1] = 0;
     	Last->Entries[0].EntryType = TODO_TEXT;
 	smprintf(s, "Text: \"%s\"\n",DecodeUnicodeString(Last->Entries[0].Text));
 
@@ -1154,7 +1162,7 @@ static GSM_Error N6510_AddToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
  	int 			Text, Alarm, EndTime, Completed, count=54, Phone;
 	unsigned char 		reqLoc[] = {N6110_FRAME_HEADER, 0x95,
 					    0x01};	/* 1 = todo, 2 = note */
-	unsigned char 		req[5000] = {
+	unsigned char 		req[GSM_MAX_TODO_TEXT_LENGTH + 500] = {
 		N6110_FRAME_HEADER, 0x65,
 		0x01,					/* 0 = calendar, 1 = todo 		*/
 		0x00, 0x00, 0x00,
@@ -1247,9 +1255,10 @@ static GSM_Error N6510_AddToDo2(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	}
 
 	if (Text != -1) {
-		req[49] = UnicodeLength(ToDo->Entries[Text].Text);
-		CopyUnicodeString(req+54,ToDo->Entries[Text].Text);
-		count+= req[49]*2;
+		req[48] = UnicodeLength(ToDo->Entries[Text].Text) / 256;
+		req[49] = UnicodeLength(ToDo->Entries[Text].Text) % 256;
+		CopyUnicodeString(req + 54, ToDo->Entries[Text].Text);
+		count += req[49] * 2 + (req[48] * 256) * 2;
 	}
 
 	req[count++] = 0x00;
