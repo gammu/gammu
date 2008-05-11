@@ -657,10 +657,19 @@ GSM_Error N6510_ReplyGetNoteInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 GSM_Error N6510_ReplyGetNote(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	int len;
+
 	smprintf(s, "Note received\n");
-	memcpy(s->Phone.Data.Note->Text,msg.Buffer+54,(msg.Buffer[50]*256+msg.Buffer[51])*2);
-	s->Phone.Data.Note->Text[(msg.Buffer[50]*256+msg.Buffer[51])*2] = 0;
-	s->Phone.Data.Note->Text[(msg.Buffer[50]*256+msg.Buffer[51])*2+1] = 0;
+	len = msg.Buffer[50] * 256 + msg.Buffer[51];
+	if (len > GSM_MAX_NOTE_TEXT_LENGTH) {
+		smprintf(s, "Note too long (%d), truncating to %d\n", len, GSM_MAX_NOTE_TEXT_LENGTH);
+		len = GSM_MAX_NOTE_TEXT_LENGTH;
+	}
+	memcpy(s->Phone.Data.Note->Text,
+		msg.Buffer + 54,
+		len * 2);
+	s->Phone.Data.Note->Text[len * 2] = 0;
+	s->Phone.Data.Note->Text[(len * 2) + 1] = 0;
 	return ERR_NONE;
 }
 
@@ -752,12 +761,13 @@ GSM_Error N6510_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Not)
 	smprintf(s, "Getting first free Note location\n");
 	error = GSM_WaitFor (s, reqLoc, 5, 0x13, 4, ID_SetNote);
 	if (error!=ERR_NONE) return error;
-	req[8] = Not->Location/256;
-	req[9] = Not->Location%256;
+	req[8] = Not->Location / 256;
+	req[9] = Not->Location % 256;
 
-	req[49] = UnicodeLength(Not->Text);
-	CopyUnicodeString(req+54,Not->Text);
-	count+= req[49]*2;
+	req[48] = UnicodeLength(Not->Text) / 256;
+	req[49] = UnicodeLength(Not->Text) % 256;
+	CopyUnicodeString(req + 54, Not->Text);
+	count += req[49] * 2 + (req[48] << 8) * 2;
 
 	req[count++] = 0x00;
 
