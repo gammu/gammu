@@ -34,6 +34,7 @@ static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
 	GSM_DumpMessageLevel3(s, MsgBuffer, MsgLength, MsgType);
 
 	buffer2 = (unsigned char *)malloc(MsgLength + 6);
+	if (buffer2 == NULL) return ERR_MOREMEMORY;
 
 	buffer2[0] = PHONET_FRAME_ID,
 	buffer2[1] = PHONET_DEVICE_PHONE; 		/* destination */
@@ -108,7 +109,7 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	}
 	if (d->MsgRXState==RX_GetSource) {
 		if (rx_char != PHONET_DEVICE_PHONE) {
-			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", 
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n",
 					rx_char, PHONET_DEVICE_PHONE);
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
