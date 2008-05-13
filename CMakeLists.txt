@@ -753,11 +753,11 @@ if (CROSS_MINGW)
                 "${POSTGRES_CROSS_PATH}/lib/libpq.dll"
                 "${POSTGRES_CROSS_PATH}/bin/comerr32.dll"
                 "${POSTGRES_CROSS_PATH}/bin/libeay32.dll"
-                "${POSTGRES_CROSS_PATH}/bin/libiconv-2.dll"
-                "${POSTGRES_CROSS_PATH}/bin/libintl-2.dll"
+                "${POSTGRES_CROSS_PATH}/bin/libiconv2.dll"
+                "${POSTGRES_CROSS_PATH}/bin/libintl3.dll"
                 "${POSTGRES_CROSS_PATH}/bin/krb5_32.dll"
                 "${POSTGRES_CROSS_PATH}/bin/ssleay32.dll"
-                "${POSTGRES_CROSS_PATH}/bin/wldap32.dll"
+                "${POSTGRES_CROSS_PATH}/bin/gssapi32.dll"
                 DESTINATION ${INSTALL_BIN_DIR}
                 )
     endif (POSTGRES_FOUND)
