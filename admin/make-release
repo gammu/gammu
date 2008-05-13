@@ -20,9 +20,16 @@ fi
 
 tmp=`mktemp -dt $repo-build-XXXXXX`
 
+CMAKE_EXTRA=""
+if [ "x$1" = "x--debug" ] ; then
+    shift
+    CMAKE_EXTRA="$CMAKE_EXTRA -DCMAKE_BUILD_TYPE=Debug"
+fi
+
 cd $tmp
 echo Working in $tmp
 if [ "x$1" = "xbranch" ] ; then
+    shift
     rel=RELEASE_`echo -n $version|tr . _`
     svn cp -m "Tag release $version" svn+ssh://mort/home/svn/$repo/trunk svn+ssh://mort/home/svn/$repo/tags/$rel
     svn export svn+ssh://mort/home/svn/$repo/tags/$rel $repo-$version
@@ -31,6 +38,7 @@ elif [ "x$1" = "x" ] ; then
     svn export svn+ssh://mort/home/svn/$repo/trunk $repo-$version
 else
     version="$1"
+    shift
     rel=RELEASE_`echo -n $version|tr . _`
     svn export svn+ssh://mort/home/svn/$repo/tags/$rel $repo-$version
 fi
@@ -48,6 +56,7 @@ cd build-win-shared
 cmake ../$repo-$version \
     -DCROSS_MINGW=ON \
     -DENABLE_SHARED=ON \
+    $CMAKE_EXTRA \
     -DGETTEXT_CROSS_PATH=$srcdir/../../win-cross/gettext \
     -DMYSQL_CROSS_PATH=$srcdir/../../win-cross/mysql \
     -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
@@ -63,6 +72,7 @@ cd build-win*minimal
 cmake ../$repo-$version \
     -DCROSS_MINGW=ON \
     -DENABLE_SHARED=OFF \
+    $CMAKE_EXTRA \
     -DPACKAGE_NAME=Windows-Minimal \
     -DMYSQL_CROSS_PATH= \
     -DPOSTGRES_CROSS_PATH= \
