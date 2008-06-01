@@ -670,6 +670,10 @@ OnePhoneModel allmodels[] = {
 
 	/* LG */
 	{"KG800", "KG800", "", {F_NO_UCS2, 0}},
+
+	/* Huawei */
+	{"E220",	"E220",		"",		{0}},
+
 #endif
 #if defined(GSM_ENABLE_ATGEN) || defined(GSM_ENABLE_ALCATEL)
 	/* Alcatel */
