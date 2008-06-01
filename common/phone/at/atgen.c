@@ -866,6 +866,11 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 		ErrorCodes = CMSErrorCodes;
 	}
 
+	/* Huawei E220 returns COMMAND NOT SUPPORT on AT+MODE=2 */
+	if (!strncmp(line, "COMMAND NOT SUPPORT", 19)) {
+		Priv->ReplyState = AT_Reply_Error;
+	}
+
 	/* FIXME: Samsung phones can answer +CME ERROR:-1 meaning empty location */
 	if (Priv->ReplyState == AT_Reply_CMEError && Priv->Manufacturer == AT_Samsung) {
 		err = line + 11;

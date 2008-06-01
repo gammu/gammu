@@ -55,6 +55,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		"+CME ERROR:"	,	"+CMS ERROR:"	,
 
 		"+CPIN: "	,	/*A2D issue*/
+		"COMMAND NOT SUPPORT" /* HUAWEI */	,
 
 		NULL};
 
