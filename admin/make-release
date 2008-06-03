@@ -58,8 +58,9 @@ cmake ../$repo-$version \
     -DENABLE_SHARED=ON \
     $CMAKE_EXTRA \
     -DGETTEXT_CROSS_PATH=$srcdir/../../win-cross/gettext \
-    -DMYSQL_CROSS_PATH=$srcdir/../../win-cross/mysql \
-    -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
+    -DMYSQL_CROSS_PATH=$srcdir/../../win-cross/mysql
+# Disabled, it seems to use different msvc:
+#    -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
 
 make -j 2
 cpack
