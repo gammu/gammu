@@ -86,6 +86,23 @@ foreach(TESTVCARD ${VCARDS})
         "${Gammu_SOURCE_DIR}/tests/vcards/${TESTBACKUP}")
 endforeach(TESTVCARD $VCARDS)
 
+file(GLOB VCARDS
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/vcards-failing"
+    "${Gammu_SOURCE_DIR}/tests/vcards-failing/*.vcf")
+list(SORT VCARDS)
+
+foreach(TESTVCARD ${VCARDS})
+    string(REPLACE vcf backup TESTBACKUP ${TESTVCARD})
+    string(REPLACE .vcf "" TESTNAME ${TESTVCARD})
+    add_test("vcard-read-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/vcard-read${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/vcards-failing/${TESTVCARD}"
+        "${Gammu_SOURCE_DIR}/tests/vcards-failing/${TESTBACKUP}")
+    set_tests_properties(
+        "vcard-read-${TESTNAME}"
+        PROPERTIES WILL_FAIL TRUE)
+endforeach(TESTVCARD $VCARDS)
+
 # [iv]Calendar parsing
 add_executable(cal-read cal-read.c)
 if (CROSS_MINGW)
