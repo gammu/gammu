@@ -505,7 +505,7 @@ void GSM_TweakInternationalNumber(unsigned char *Number, const GSM_NumberType nu
  */
 GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version UNUSED)
 {
-	unsigned char   Line[20000],Buff[20000];
+	unsigned char   Line[20000], Buff[20000];
 	int	     Level = 0;
 	unsigned char   *s;
 	int		pos;
@@ -514,7 +514,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 	Pbk->EntriesNum = 0;
 
 	while (1) {
-		MyGetLine(Buffer, Pos, Line, strlen(Buffer), true);
+		MyGetLine(Buffer, Pos, Line, sizeof(Line), true);
 		if (strlen(Line) == 0) break;
 		switch (Level) {
 		case 0:
