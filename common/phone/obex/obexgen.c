@@ -955,7 +955,8 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 			Pos = 0;
 			/* Calculate number of files */
 			while (1) {
-				MyGetLine(File->Buffer, &Pos, Line, File->Used, false);
+				error = MyGetLine(File->Buffer, &Pos, Line, File->Used, sizeof(Line), false);
+				if (error != ERR_NONE) return error;
 				if (strlen(Line) == 0) break;
 				name = strstr(Line,"folder name=\"");
 				if (name != NULL) {
@@ -986,7 +987,8 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 			Pos 	= 0;
 			pos2 	= 0;
 			while (1) {
-				MyGetLine(File->Buffer, &Pos, Line, File->Used, false);
+				error = MyGetLine(File->Buffer, &Pos, Line, File->Used, sizeof(Line), false);
+				if (error != ERR_NONE) return error;
 				if (strlen(Line) == 0) break;
 				strcpy(Line2,Line);
 				name = strstr(Line2,"folder name=\"");
@@ -1480,7 +1482,8 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
         while (1) {
 		/* Remember line start position */
 		prevpos = linepos;
-                MyGetLine(*Data, &linepos, line, len, false);
+                error = MyGetLine(*Data, &linepos, line, len, sizeof(line), false);
+		if (error != ERR_NONE) return error;
                 if (strlen(line) == 0) break;
                 switch (level) {
 			case 0:

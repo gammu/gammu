@@ -1371,7 +1371,7 @@ ret0:
 #undef tolowerwchar
 }
 
-void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, bool MergeLines)
+GSM_Error MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, size_t MaxOutLen, bool MergeLines)
 {
 	bool skip = false;
 	bool quoted_printable = false;
@@ -1381,19 +1381,19 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 
 	OutBuffer[0] = 0;
 	pos = 0;
-	if (Buffer == NULL) return;
+	if (Buffer == NULL) return ERR_NONE;
 	while ((*Pos) < MaxLen) {
 		switch (Buffer[*Pos]) {
 		case 0x00:
-			return;
+			return ERR_NONE;
 		case 0x0A:
 		case 0x0D:
 			if (skip) {
 				if (Buffer[*Pos] == 0x0d) {
-					if (was_cr && skip) return;
+					if (was_cr && skip) return ERR_NONE;
 					was_cr = true;
 				} else {
-					if (was_lf && skip) return;
+					if (was_lf && skip) return ERR_NONE;
 					was_lf = true;
 				}
 			}
@@ -1418,7 +1418,7 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 						break;
 					}
 				}
-				return;
+				return ERR_NONE;
 			}
 			break;
 		default:
@@ -1431,9 +1431,11 @@ void MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int Ma
 			OutBuffer[pos]     = Buffer[*Pos];
 			pos++;
 			OutBuffer[pos] = 0;
+			if (pos + 1 >= MaxOutLen) return ERR_MOREMEMORY;
 		}
 		(*Pos)++;
 	}
+	return ERR_NONE;
 }
 
 void StringToDouble(char *text, double *d)

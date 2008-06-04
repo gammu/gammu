@@ -509,12 +509,14 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 	int	     Level = 0;
 	unsigned char   *s;
 	int		pos;
+	GSM_Error	error;
 
 	Buff[0]	 = 0;
 	Pbk->EntriesNum = 0;
 
 	while (1) {
-		MyGetLine(Buffer, Pos, Line, sizeof(Line), true);
+		error = MyGetLine(Buffer, Pos, Line, strlen(Buffer), sizeof(Line), true);
+		if (error != ERR_NONE) return error;
 		if (strlen(Line) == 0) break;
 		switch (Level) {
 		case 0:
