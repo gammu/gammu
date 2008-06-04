@@ -72,6 +72,7 @@ int main(int argc, char **argv)
 	if (generate) {
 		GSM_ClearBackup(&backup);
 		strcpy(backup.Creator, "vCard tester");
+		pbk.Location = 0;
 		backup.PhonePhonebook[0] = &pbk;
 		backup.PhonePhonebook[1] = NULL;
 		if (GSM_SaveBackupFile(argv[2], &backup, true) != ERR_NONE) {
