@@ -17,18 +17,18 @@ if (NOT BLUEZ_FOUND)
     endif (CROSS_MINGW)
 
     if (NOT BLUEZ_FOUND)
-        pkg_check_modules (BLUEZ bluez)
-    endif (NOT BLUEZ_FOUND)
+        pkg_check_modules (BLUEZ_PKG bluez)
 
-    if (NOT BLUEZ_FOUND)
         find_path(BLUEZ_INCLUDE_DIR NAMES bluetooth/bluetooth.h
            PATHS
+           ${BLUEZ_PKG_INCLUDEDIR}
            /usr/include
            /usr/local/include
         )
 
         find_library(BLUEZ_LIBRARIES NAMES bluetooth
            PATHS
+           ${BLUEZ_PKG_LIBDIR}
            /usr/lib
            /usr/local/lib
         )
