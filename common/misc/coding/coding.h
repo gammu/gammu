@@ -16,6 +16,7 @@
 #endif
 
 #include <gammu-unicode.h>
+#include <gammu-error.h>
 
 #ifndef HAVE_WCHAR_T
 typedef		int wchar_t;
@@ -148,9 +149,12 @@ extern int strcasecmp (const char *s1, const char *s2);
  * @param Buffer: Data source to parse.
  * @param Pos: Current position in data.
  * @param OutBuffer: Buffer where line will be written.
- * @param MaxLen: Maximal length of data to write.
+ * @param MaxLen: Maximal length of data to process.
+ * @param MaxOutLen: Size of output buffer.
+ *
+ * \return ERR_NONE on success, ERR_MOREMEMORY if buffer is too small.
  */
-void MyGetLine		(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, bool MergeLines);
+GSM_Error MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, size_t MaxOutLen, bool MergeLines);
 
 char *EncodeSpecialChars(unsigned char *buffer);
 char *DecodeSpecialChars(unsigned char *buffer);

@@ -210,12 +210,14 @@ static GSM_Error GSM_DecodeLDIFEntry(unsigned char *Buffer, int *Pos, GSM_Memory
 {
 	unsigned char 	Line[2000],Buff[2000],Buff2[2000];
 	int		Level = 0;
+	GSM_Error	error;
 
 	Buff[0] 	= 0;
 	Pbk->EntriesNum = 0;
 
 	while (1) {
-		MyGetLine(Buffer, Pos, Line, strlen(Buffer), false);
+		error = MyGetLine(Buffer, Pos, Line, strlen(Buffer), sizeof(Line), false);
+		if (error != ERR_NONE) return error;
 		if (strlen(Line) == 0) break;
 		switch (Level) {
 		case 0:

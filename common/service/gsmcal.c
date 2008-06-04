@@ -1575,7 +1575,8 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 	}
 
 	while (1) {
-		MyGetLine(Buffer, Pos, Line, lBuffer, true);
+		error = MyGetLine(Buffer, Pos, Line, lBuffer, sizeof(Line), true);
+		if (error != ERR_NONE) return error;
 		if (strlen(Line) == 0) break;
 
 		switch (Level) {
@@ -1667,7 +1668,8 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 			}
 
 			if (strstr(Line,"BEGIN:VALARM")) {
-				MyGetLine(Buffer, Pos, Line, lBuffer, true);
+				error = MyGetLine(Buffer, Pos, Line, lBuffer, sizeof(Line), true);
+				if (error != ERR_NONE) return error;
 				if (strlen(Line) == 0) break;
 				if (ReadVCALText(Line, "TRIGGER;VALUE=DURATION", Buff, CalVer == Mozilla_iCalendar)) {
 					trigger = ReadVCALTriggerTime(DecodeUnicodeString(Buff));
@@ -1908,12 +1910,14 @@ GSM_Error GSM_DecodeVNOTE(unsigned char *Buffer, int *Pos, GSM_NoteEntry *Note)
 {
 	unsigned char   Line[2000],Buff[2000];
 	int	     Level = 0;
+	GSM_Error	error;
 
 	Note->Text[0] = 0;
 	Note->Text[1] = 0;
 
 	while (1) {
-		MyGetLine(Buffer, Pos, Line, strlen(Buffer), true);
+		error = MyGetLine(Buffer, Pos, Line, strlen(Buffer), sizeof(Line), true);
+		if (error != ERR_NONE) return error;
 		if (strlen(Line) == 0) break;
 		switch (Level) {
 		case 0:
