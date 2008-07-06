@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.19.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2008-04-07 16:49+0200\n"
-"PO-Revision-Date: 2008-03-27 13:28+0100\n"
+"PO-Revision-Date: 2008-06-11 11:32+0200\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -91,15 +91,15 @@ msgid ""
 "Unknown response from phone. See <http://cihar.com/gammu/report> for "
 "information how to report it."
 msgstr ""
-"Neznámá odpověď od telefonu.  Podívejte se na stránku <http://cihar.com/"
-"gammu/report> pro informace jak tuto událost nahlásit."
+"Neznámá odpověď od telefonu. Podívejte se na stránku "
+"<http://cihar.com/gammu/report> pro informace jak tuto událost nahlásit."
 
 #: common/gsmcomon.c:114
 msgid ""
 "Unknown frame. See <http://cihar.com/gammu/report> for information how to "
 "report it."
 msgstr ""
-"Neznámý rámec.  Podívejte se na stránku <http://cihar.com/gammu/report> pro "
+"Neznámý rámec. Podívejte se na stránku <http://cihar.com/gammu/report> pro "
 "informace jak tuto událost nahlásit."
 
 #: common/gsmcomon.c:115
@@ -1265,7 +1265,6 @@ msgid "Due time"
 msgstr "Poslední termín"
 
 #: gammu/calendar.c:802
-#, fuzzy
 msgid "Start time"
 msgstr "Začátek"
 
@@ -4713,9 +4712,9 @@ msgstr ""
 #: gammu/smsd/s_mysql.c:695 gammu/smsd/s_pgsql.c:289 gammu/smsd/s_pgsql.c:400
 #: gammu/smsd/s_pgsql.c:426 gammu/smsd/s_pgsql.c:852 gammu/smsd/s_pgsql.c:902
 #: gammu/smsd/s_pgsql.c:1044 gammu/smsd/s_pgsql.c:1069
-#, fuzzy, c-format
+#, c-format
 msgid "Error writing to database (%s): %s\n"
-msgstr "Chyba při zápisu souboru na disk."
+msgstr "Chyba při zápisu do databáze (%s): %s\n"
 
 #: gammu/smsd/s_mysql.c:582 gammu/smsd/s_pgsql.c:865
 msgid "Duplicated outgoing SMS ID\n"
