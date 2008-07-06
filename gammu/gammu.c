@@ -669,6 +669,7 @@ void HelpGeneral(void)
 
 	printf("%s\n\n", _("Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> [options]"));
 	printf("%s\n", _("First parameter optionally specifies which config section to use (all are probed by default)."));
+	printf("%s\n", _("Use only number of config section, so if config section is [gammu42], use 42."));
 	printf("%s\n\n", _("Second parameter optionally controls debug level, next one specifies actions."));
 
 	printf("%s\n\n", _("Commands can be specified with or without leading --."));
@@ -1129,7 +1130,7 @@ int main(int argc, char *argv[])
 				if (rsslevel > 0
 				    && strstr(RSS.Buffer + oldpos,
 					      "stable version") != NULL) {
-					sprintf(buff, "%s", 
+					sprintf(buff, "%s",
 						strstr(RSS.Buffer + oldpos,
 						       "stable version") + 15);
 					for (i = 0; i < strlen(buff); i++) {
