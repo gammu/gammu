@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2008-04-07 16:49+0200\n"
+"POT-Creation-Date: 2008-07-06 23:49+0200\n"
 "PO-Revision-Date: 2007-12-26 12:59+0100\n"
 "Last-Translator: Alberto Sanchez Molero <frikifeldes@gmail.com>\n"
 "Language-Team: Español\n"
@@ -2244,6 +2244,11 @@ msgstr ""
 "ha de utilizarse (por defecto, se sondean todas).\n"
 
 #: gammu/gammu.c:672
+msgid ""
+"Use only number of config section, so if config section is [gammu42], use 42."
+msgstr ""
+
+#: gammu/gammu.c:673
 #, fuzzy
 msgid ""
 "Second parameter optionally controls debug level, next one specifies actions."
@@ -2252,11 +2257,11 @@ msgstr ""
 "problemas, el siguiente especifica acciones.\n"
 "\n"
 
-#: gammu/gammu.c:674
+#: gammu/gammu.c:675
 msgid "Commands can be specified with or without leading --."
 msgstr ""
 
-#: gammu/gammu.c:677
+#: gammu/gammu.c:678
 #, fuzzy
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
@@ -2266,12 +2271,12 @@ msgstr ""
 "Las entradas son:\n"
 "\n"
 
-#: gammu/gammu.c:774
+#: gammu/gammu.c:775
 #, fuzzy
 msgid "Unknown help topic specified!"
 msgstr "Tema de ayuda desconocido!\n"
 
-#: gammu/gammu.c:778
+#: gammu/gammu.c:779
 #, fuzzy, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
@@ -2280,60 +2285,60 @@ msgstr ""
 "Parámetros de Gammu, tema: %s\n"
 "\n"
 
-#: gammu/gammu.c:890
+#: gammu/gammu.c:891
 #, fuzzy, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "ERROR: parámetro desconocido \"%s\"\n"
 
-#: gammu/gammu.c:893
+#: gammu/gammu.c:894
 #, fuzzy, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "ERROR: parámetro desconocido \"%s\"\n"
 
-#: gammu/gammu.c:899 gammu/gammu.c:920
+#: gammu/gammu.c:900 gammu/gammu.c:921
 #, fuzzy
 msgid "Parameters help"
 msgstr ""
 "Parámetros de Gammu, tema: %s\n"
 "\n"
 
-#: gammu/gammu.c:911
+#: gammu/gammu.c:912
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "Demasiados parámetros (la función acepta %d)\n"
 
-#: gammu/gammu.c:914
+#: gammu/gammu.c:915
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "Demasiados parámetros (la función acepta de %d a %d)\n"
 
-#: gammu/gammu.c:941
+#: gammu/gammu.c:942
 msgid "Bad option!"
 msgstr "¡Opción incorrecta!"
 
-#: gammu/gammu.c:978 gammu/gammu.c:1099
+#: gammu/gammu.c:979 gammu/gammu.c:1100
 msgid "Too few parameters!"
 msgstr "¡Muy pocos parámetros!"
 
-#: gammu/gammu.c:1003
+#: gammu/gammu.c:1004
 msgid "Configuration could not be parsed!"
 msgstr "Advertencia: ¡El archivo de configuración es incorrecto!"
 
-#: gammu/gammu.c:1005
+#: gammu/gammu.c:1006
 msgid "No configuration file found!"
 msgstr "Advertencia: ¡No se encontró el archivo de configuración!"
 
-#: gammu/gammu.c:1018
+#: gammu/gammu.c:1019
 #, c-format
 msgid "Failed to read [gammu%d] from gammurc!\n"
 msgstr ""
 
-#: gammu/gammu.c:1020 gammu/gammu.c:1031
+#: gammu/gammu.c:1021 gammu/gammu.c:1032
 #, fuzzy
 msgid "No configuration read, using builtin defaults!"
 msgstr "Advertencia: ¡No se encontró el archivo de configuración!"
 
-#: gammu/gammu.c:1105
+#: gammu/gammu.c:1106
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -2341,14 +2346,14 @@ msgstr ""
 "ERROR: la versión instalada de libGammu.so (%s) es diferente a la versión de "
 "Gammu (%s)\n"
 
-#: gammu/gammu.c:1143
+#: gammu/gammu.c:1144
 #, fuzzy, c-format
 msgid "INFO: there is later stable Gammu (%s instead of %s) available!\n"
 msgstr ""
 "INFO: ¡está disponible una versión estable de Gammu ( %s en lugar de %s ) "
 "más reciente!\n"
 
-#: gammu/gammu.c:1162
+#: gammu/gammu.c:1163
 #, fuzzy, c-format
 msgid "INFO: there is later testing Gammu (%s instead of %s) available!\n"
 msgstr ""
@@ -4690,7 +4695,7 @@ msgstr "No es posible borrar %s (%i)"
 msgid "Error copying SMS %s -> %s"
 msgstr "Error copiando SMS %s -> %s"
 
-#: gammu/smsd/s_files.c:365 gammu/smsd/s_mysql.c:612 gammu/smsd/s_pgsql.c:924
+#: gammu/smsd/s_files.c:366 gammu/smsd/s_mysql.c:612 gammu/smsd/s_pgsql.c:924
 #, c-format
 msgid "Transmitted %s (%s: %i) to %s"
 msgstr "Transmitido desde %s (%s: %i) hasta %s"
@@ -4813,68 +4818,68 @@ msgstr "Error borrando SMS (%i)"
 msgid "Error getting SMS status (%s:%i)"
 msgstr "Error obteniendo estado SMS (%i)"
 
-#: gammu/smsd/smsdcore.c:517
+#: gammu/smsd/smsdcore.c:522
 #, c-format
 msgid "Error in outbox on %s"
 msgstr "Error en carpeta de salida en %s"
 
-#: gammu/smsd/smsdcore.c:531
+#: gammu/smsd/smsdcore.c:536
 #, c-format
 msgid "Moved to errorbox: %s"
 msgstr "Movido a la bandeja de error: %s"
 
-#: gammu/smsd/smsdcore.c:548
+#: gammu/smsd/smsdcore.c:553
 msgid "Error getting SMSC from phone"
 msgstr "Error obteniendo \"Número de Centro de Mensajes\" del teléfono"
 
-#: gammu/smsd/smsdcore.c:570
+#: gammu/smsd/smsdcore.c:575
 #, c-format
 msgid "Error sending SMS %s (%i): %s"
 msgstr "Error enviando SMS %s (%i): %s"
 
-#: gammu/smsd/smsdcore.c:594
+#: gammu/smsd/smsdcore.c:599
 #, c-format
 msgid "Error getting send status of %s (%i): %s"
 msgstr "Error obteniendo estado de envío de %s (%i): %s"
 
-#: gammu/smsd/smsdcore.c:629
+#: gammu/smsd/smsdcore.c:634
 #, c-format
 msgid "Unknown SMSD service type (\"%s\")\n"
 msgstr "Tipo de servicio SMSD desconocido (\"%s\")\n"
 
-#: gammu/smsd/smsdcore.c:637
+#: gammu/smsd/smsdcore.c:642
 msgid "Initialisation failed, stopping Gammu smsd"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:652
+#: gammu/smsd/smsdcore.c:657
 #, fuzzy, c-format
 msgid "Terminating communication %s, (%i, %i times)"
 msgstr "Terminando comunicación (%i,%i)"
 
-#: gammu/smsd/smsdcore.c:657
+#: gammu/smsd/smsdcore.c:662
 msgid "Starting communication"
 msgstr "Iniciando comunicación"
 
-#: gammu/smsd/smsdcore.c:669
+#: gammu/smsd/smsdcore.c:674
 msgid "Post initialisation failed, stopping Gammu smsd"
 msgstr ""
 
-#: gammu/smsd/smsdcore.c:678
+#: gammu/smsd/smsdcore.c:683
 #, c-format
 msgid "Reset return code: %s (%i) "
 msgstr "Código de retorno de reinicio: %s (%i)"
 
-#: gammu/smsd/smsdcore.c:686
+#: gammu/smsd/smsdcore.c:691
 #, fuzzy
 msgid "Can't open device"
 msgstr "No se puede abrir el dispositivo (%i)"
 
-#: gammu/smsd/smsdcore.c:690
+#: gammu/smsd/smsdcore.c:695
 #, fuzzy, c-format
 msgid "Error at init connection %s (%i)"
 msgstr "Error de conexión inicial (%i)"
 
-#: gammu/smsd/smsdcore.c:731
+#: gammu/smsd/smsdcore.c:736
 #, fuzzy
 msgid "Stopping Gammu smsd"
 msgstr "Detener servicio smsd"
