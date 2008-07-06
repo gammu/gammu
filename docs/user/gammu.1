@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Sep 12 2007" "Gammu 1.13.91" "Gammu Documentation"
+.TH "GAMMU" "1" "Jul  6 2008" "Gammu 1.20.90" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -21,6 +21,7 @@ are supported, for actual listing see <http://cihar.com/gammu/phonedb/>.
 .SH "OPTIONS"
 .P
 First parameter optionally specifies which config section to use (all are probed by default).
+Use only number of config section, so if config section is [gammu42], use 42.
 Second parameter optionally controls debug level, next one specifies actions.
 
 .P
@@ -41,6 +42,62 @@ Parameters, which allow to control debug level:
 \fBerrors\fR  - errors in text format
 .br
 \fBbinary\fR  - transmission dump in binary format
+
+
+.SS "Calls"
+.TP
+.BI "answercall" " [ID]"
+Answer incoming call.
+
+.TP
+.BI "cancelcall" " [ID]"
+Cancel incoming call
+
+.TP
+.BI "canceldiverts"
+
+.TP
+.BI "conferencecall" " ID"
+
+.TP
+.BI "dialvoice" " number [show|hide]"
+Make voice call from SIM card line set in phone.
+
+.TP
+.BI "divert" " get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]"
+
+.TP
+.BI "getspeeddial" " start [stop]"
+
+.TP
+.BI "getussd" " code"
+
+.TP
+.BI "holdcall" " ID"
+
+.TP
+.BI "maketerminatedcall" " number length [show|hide]"
+
+.TP
+.BI "monitor" " [times]"
+Get phone status and writes continuously to standard output. Press Ctrl+C
+to break this state.
+
+.TP
+.BI "senddtmf" " sequence"
+Plays DTMF sequence. In some phones available only during calls
+
+.TP
+.BI "splitcall" " ID"
+
+.TP
+.BI "switchcall" " [ID]"
+
+.TP
+.BI "transfercall" " [ID]"
+
+.TP
+.BI "unholdcall" " ID"
 
 
 .SS "SMS and EMS"
