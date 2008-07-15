@@ -1706,6 +1706,8 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 		 * each memory is in quotes,
 		 * Example: ("SM"), ("SM"), ("SM")
 		 *
+		 * TODO: Reply can be also "SM", "SM", "SM"
+		 *
 		 * We need to get from this supported memories. For this case
 		 * we assume, that just appearence of memory makes it
 		 * available for everything. Then we need to find out whether
@@ -1811,8 +1813,14 @@ GSM_Error ATGEN_SetSMSMemory(GSM_StateMachine *s, bool SIM, bool for_write, bool
 
 	/* If phone can not save SMS, don't try to set memory for saving */
 	if (for_write) {
-		if (SIM && Priv->SIMSaveSMS == AT_NOTAVAILABLE) return ERR_NOTSUPPORTED;
-		if (!SIM && Priv->PhoneSaveSMS == AT_NOTAVAILABLE) return ERR_NOTSUPPORTED;
+		if (SIM && Priv->SIMSaveSMS == AT_NOTAVAILABLE) {
+			smprintf(s, "Saving SMS not supported!\n");
+			return ERR_NOTSUPPORTED;
+		}
+		if (!SIM && Priv->PhoneSaveSMS == AT_NOTAVAILABLE) {
+			smprintf(s, "Saving SMS not supported!\n");
+			return ERR_NOTSUPPORTED;
+		}
 	} else {
 		/* No need to set memory for writing */
 		req[12] = '\r';
