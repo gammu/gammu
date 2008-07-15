@@ -820,6 +820,9 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 		}
 	}
 
+	/* Ignore trailing spaces */
+	while (isspace(*inp)) inp++;
+
 	if (*inp != 0) {
 		smprintf(s, "String do not end same!\n");
 		error = ERR_UNKNOWNRESPONSE;
