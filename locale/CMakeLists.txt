@@ -8,13 +8,14 @@ project(Gammu-Locales C)
 macro_optional_find_package(Gettext)
 
 # List of locales
-set(LOCALES 
-    cs 
-    de 
-    es 
-    it 
-    pl 
-    ru 
+set(LOCALES
+    cs
+    de
+    es
+    id
+    it
+    pl
+    ru
     )
 
 # Locales files
