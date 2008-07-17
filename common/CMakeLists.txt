@@ -92,7 +92,7 @@ else (CROSS_MINGW)
 endif (CROSS_MINGW)
 
 if (NOT CROSS_MINGW)
-    set_target_properties (libGammu PROPERTIES VERSION 3.${VERSION} SOVERSION 3)
+    set_target_properties (libGammu PROPERTIES VERSION ${SOVERSION}.${VERSION} SOVERSION ${SOVERSION})
 endif (NOT CROSS_MINGW)
 set_target_properties(libGammu PROPERTIES OUTPUT_NAME Gammu)
 

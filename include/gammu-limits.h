@@ -148,7 +148,7 @@
 /**
  * Maximal length of SMS folder name.
  */
-#define GSM_MAX_SMS_FOLDER_NAME_LEN 20
+#define GSM_MAX_SMS_FOLDER_NAME_LEN 100
 
 /**
  * Maximal count of SMSes in multi SMS.

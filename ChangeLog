@@ -17,6 +17,7 @@ ChangeLog
     
 2008???? - 1.20.90
 
+[!] * ABI change, because of increasing some limits.
 [+] * Support for longer notes on Nokia phones (bug #607).
 [-] * Ignore trailing spaces in AT commands.
 [-] * Fix crash on long lines in vCards.
@@ -24,6 +25,7 @@ ChangeLog
 [-] * Do not use hard delete flag for updating entries (bug #634).
 [-] * Identify Nokia 1200 (bug #649).
 [-] * Fix parsing of date/time reply on Sony Ericsson G900 (bug #647).
+[-] * Increased limit for folder name (bug #646).
     
 20080510 - 1.20.0
 
