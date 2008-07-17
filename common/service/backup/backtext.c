@@ -1949,7 +1949,7 @@ static void ReadCalendarType(INI_Section *file_info, char *section, GSM_Calendar
 		}
 	}
 }
-static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_CalendarEntry *note, bool UseUnicode)
+static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_CalendarEntry *note, bool UseUnicode)
 {
 	unsigned char		buffer[10000],buf[20];
 	char			*readvalue;
@@ -1966,21 +1966,25 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_TEXT;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"Description");
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_DESCRIPTION;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"LUID");
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_LUID;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"Phone");
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_PHONE;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"Private");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -1988,11 +1992,13 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_PRIVATE;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"EventLocation");
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_LOCATION;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"ContactID");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2000,6 +2006,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_CONTACTID;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	/* StartTime must be before Recurrance */
 	sprintf(buffer,"StartTime");
@@ -2007,6 +2014,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_START_DATETIME;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"Recurrance");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2042,6 +2050,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_END_DATETIME;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"Alarm");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2056,12 +2065,14 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 			}
 		}
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"LastModified");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
         	note->Entries[note->EntriesNum].EntryType = CAL_LAST_MODIFIED;
         	note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
    	}
 
 	sprintf(buffer,"RepeatStartDate");
@@ -2069,12 +2080,14 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STARTDATE;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"RepeatStopDate");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"RepeatDayOfWeek");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2082,6 +2095,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_DAYOFWEEK;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"RepeatDay");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2089,6 +2103,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_DAY;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"RepeatWeekOfMonth");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2096,6 +2111,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_WEEKOFMONTH;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"RepeatMonth");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2103,6 +2119,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_MONTH;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"RepeatFrequency");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2110,6 +2127,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"RepeatCount");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2117,6 +2135,7 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_COUNT;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"RepeatDayOfYear");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2124,10 +2143,13 @@ static void ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Calenda
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_DAYOFYEAR;
 		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
+
+	return ERR_NONE;
 }
 
-static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *ToDo, bool UseUnicode)
+static GSM_Error ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *ToDo, bool UseUnicode)
 {
 	unsigned char		buffer[10000];
 	char			*readvalue;
@@ -2157,36 +2179,42 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_START_DATETIME;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
    	}
 
 	sprintf(buffer,"Text");
 	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
   	      	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
     	}
 
 	sprintf(buffer,"Description");
 	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_DESCRIPTION;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
     	}
 
 	sprintf(buffer,"Location");
 	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LOCATION;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
     	}
 
 	sprintf(buffer,"LUID");
 	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LUID;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
     	}
 
 	sprintf(buffer,"Phone");
 	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_PHONE;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
     	}
 
 	sprintf(buffer,"Private");
@@ -2195,6 +2223,7 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
         	ToDo->Entries[ToDo->EntriesNum].Number 		= atoi(readvalue);
         	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_PRIVATE;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
     	}
 
 	sprintf(buffer,"Completed");
@@ -2207,6 +2236,7 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 		}
         	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_COMPLETED;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
     	}
 
 	sprintf(buffer,"Category");
@@ -2215,6 +2245,7 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
         	ToDo->Entries[ToDo->EntriesNum].Number		= atoi(readvalue);
         	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_CATEGORY;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
     	}
 
 	sprintf(buffer,"ContactID");
@@ -2223,6 +2254,7 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
        	 	ToDo->Entries[ToDo->EntriesNum].Number 		= atoi(readvalue);
         	ToDo->Entries[ToDo->EntriesNum].EntryType 	= TODO_CONTACTID;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
     	}
 
 	sprintf(buffer,"DueTime");
@@ -2230,6 +2262,7 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_END_DATETIME;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
    	}
 
 	sprintf(buffer,"LastModified");
@@ -2237,6 +2270,7 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LAST_MODIFIED;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
    	}
 
 	sprintf(buffer,"Alarm");
@@ -2244,6 +2278,7 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_ALARM_DATETIME;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
     	}
 
 	sprintf(buffer,"SilentAlarm");
@@ -2251,7 +2286,9 @@ static void ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEntry *
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &ToDo->Entries[ToDo->EntriesNum].Date)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_SILENT_ALARM_DATETIME;
         	ToDo->EntriesNum++;
+		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
     	}
+	return ERR_NONE;
 }
 
 static bool ReadBitmapEntry(INI_Section *file_info, char *section, GSM_Bitmap *bitmap, bool UseUnicode)
@@ -3021,7 +3058,8 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 				return ERR_MOREMEMORY;
 			}
 			backup->Calendar[num]->Location = num + 1;
-			ReadCalendarEntry(file_info, h->SectionName, backup->Calendar[num],UseUnicode);
+			error = ReadCalendarEntry(file_info, h->SectionName, backup->Calendar[num],UseUnicode);
+			if (error != ERR_NONE) return error;
 			num++;
                 }
         }
@@ -3211,7 +3249,8 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 				return ERR_MOREMEMORY;
 			}
 			backup->ToDo[num]->Location = num + 1;
-			ReadToDoEntry(file_info, h->SectionName, backup->ToDo[num],UseUnicode);
+			error = ReadToDoEntry(file_info, h->SectionName, backup->ToDo[num],UseUnicode);
+			if (error != ERR_NONE) return error;
 			num++;
                 }
         }
