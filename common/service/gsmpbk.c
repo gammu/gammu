@@ -528,6 +528,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 				if (Pbk->EntriesNum == 0) return ERR_EMPTY;
 				return ERR_NONE;
 			}
+			Pbk->Entries[Pbk->EntriesNum].AddError = ERR_NONE;
 			if (ReadVCALText(Line, "N", Buff, false)) {
 				pos = 0;
 				s = VCALGetTextPart(Buff, &pos);
