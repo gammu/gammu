@@ -156,7 +156,7 @@ static GSM_Error serial_close(GSM_StateMachine *s)
 {
 	GSM_Device_SerialData *d = &s->Device.Data.Serial;
 
-	assert(d->hPhone >= 0);
+	if (d->hPhone < 0) return ERR_NONE;
 
 	/* Restores old settings */
 	tcsetattr(d->hPhone, TCSANOW, &d->old_settings);
