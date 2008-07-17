@@ -13,6 +13,11 @@ set (ENABLE_SHARED FALSE CACHE BOOL "Build shared library")
 
 set (BUILD_SHARED_LIBS ${ENABLE_SHARED} CACHE INTERNAL "Shared build")
 
+# Silent some warnings from CMake 2.6
+if(COMMAND cmake_policy)
+    cmake_policy(SET CMP0003 NEW)
+endif(COMMAND cmake_policy)
+
 # Support for cross compilation
 if (UNIX)
     option (CROSS_MINGW "Cross compile using MinGW on linux" OFF)
