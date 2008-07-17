@@ -419,7 +419,7 @@ endif(MSVC)
 if (ENABLE_SHARED)
     set (GAMMU_PRIVATE_LIBS "" CACHE INTERNAL "Private libraries for gammu library")
 else (ENABLE_SHARED)
-    string(REGEX REPLACE "-l(/usr)?/lib/([^ ]*).so" "-l\\2" G_LIB "${GAMMU_LIBS}")
+    string(REGEX REPLACE "-l(/usr)?/lib/lib([^ ]*).so" "-l\\2" G_LIB "${GAMMU_LIBS}")
     set (GAMMU_PRIVATE_LIBS "${G_LIB}" CACHE INTERNAL "Private libraries for gammu library")
 endif (ENABLE_SHARED)
 
