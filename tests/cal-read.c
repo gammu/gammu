@@ -65,6 +65,8 @@ int main(int argc, char **argv)
 
 	todo.Type = 0;
 	cal.Type = 0;
+	todo.Location = 0;
+	cal.Location = 0;
 
 	/* Parse [iv]Calendar */
 	if (strstr(argv[1], ".ics") != NULL) {
