@@ -1717,8 +1717,14 @@ GSM_Error ATGEN_ReplyGetSMSMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 		s->Phone.Data.Priv.ATGEN.PhoneSaveSMS = AT_NOTAVAILABLE;
 		s->Phone.Data.Priv.ATGEN.SIMSaveSMS = AT_NOTAVAILABLE;
 
-		pos_start = strstr(msg.Buffer, "), (");
-		if (pos_start == NULL) pos_start = strstr(msg.Buffer, "),(");
+		if (strchr(msg.Buffer, '(') == NULL) {
+			smprintf(s, "Assuming broken iWOW style response, no lists!\n");
+			pos_start = strstr(msg.Buffer, "\", \"");
+			if (pos_start == NULL) pos_start = strstr(msg.Buffer, "\",\"");
+		} else {
+			pos_start = strstr(msg.Buffer, "), (");
+			if (pos_start == NULL) pos_start = strstr(msg.Buffer, "),(");
+		}
 		if (pos_start != NULL) {
 			/* Detect which memories we can use for saving */
 			pos_end = strchrnul(pos_start + 1, ')');
