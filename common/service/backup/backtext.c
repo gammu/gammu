@@ -1259,7 +1259,7 @@ static GSM_Error SaveToDoEntry(FILE *file, GSM_ToDoEntry *ToDo, bool UseUnicode)
 		if (error != ERR_NONE) return error;
                 break;
             case TODO_LOCATION:
-	        error = SaveBackupText(file, "Location", ToDo->Entries[j].Text, UseUnicode);
+	        error = SaveBackupText(file, "EventLocation", ToDo->Entries[j].Text, UseUnicode);
 		if (error != ERR_NONE) return error;
                 break;
 	    case TODO_LUID:
@@ -2196,7 +2196,7 @@ static GSM_Error ReadToDoEntry(INI_Section *file_info, char *section, GSM_ToDoEn
 		if (ToDo->EntriesNum >= GSM_TODO_ENTRIES) return ERR_MOREMEMORY;
     	}
 
-	sprintf(buffer,"Location");
+	sprintf(buffer,"EventLocation");
 	if (ReadBackupText(file_info, section, buffer, ToDo->Entries[ToDo->EntriesNum].Text,UseUnicode)) {
         	ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LOCATION;
         	ToDo->EntriesNum++;
