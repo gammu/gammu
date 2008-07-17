@@ -65,6 +65,15 @@ int main(int argc UNUSED, char **argv UNUSED)
 		return 1;
 	}
 
+	error = ATGEN_ParseReply(s,
+			"+CPBR: 1,\"+60122256476\",145,\"\",\"08/07/04\",\"17:24:55\"",
+			"+CPBR: @i, @p, @I, @s, @d",
+			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE);
+	if (error != ERR_NONE) {
+		printf("%s\n", GSM_ErrorString(error));
+		return 1;
+	}
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
