@@ -849,7 +849,16 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 	}
 
 	smprintf(s, "Getting first file part\n");
-	error=GSM_WaitFor (s, req, Current, 0x83, OBEX_TIMEOUT, ID_GetFile);
+	retries = 0;
+	while (retries < 5) {
+		if (retries > 0) {
+			smprintf(s, "Retry %d\n", retries);
+		}
+		error=GSM_WaitFor (s, req, Current, 0x83, OBEX_TIMEOUT, ID_GetFile);
+		if (error != ERR_PERMISSION) break;
+		my_sleep(200);
+		retries++;
+	}
 	if (error != ERR_NONE) return error;
 
 	while (!s->Phone.Data.Priv.OBEXGEN.FileLastPart) {
