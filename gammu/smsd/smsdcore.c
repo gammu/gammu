@@ -495,7 +495,9 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	GSM_MultiSMSMessage  	sms;
 	GSM_DateTime         	Date;
 	GSM_Error            	error;
-	unsigned int         	i, j, z;
+	unsigned int         	j, z;
+	int			i;
+	unsigned int		second;
 
 	/* Clean structure before use */
 	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
@@ -508,8 +510,8 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		/* No outbox sms - wait few seconds and escape */
 		for (j=0;j<Config->commtimeout && !gshutdown;j++) {
 			GSM_GetCurrentDateTime (&Date);
-			i=Date.Second;
-	 		while (i==Date.Second && !gshutdown) {
+			second = Date.Second;
+	 		while (second == Date.Second && !gshutdown) {
 				my_sleep(10);
 				GSM_GetCurrentDateTime(&Date);
 			}

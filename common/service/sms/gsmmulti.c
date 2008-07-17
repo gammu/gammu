@@ -149,7 +149,8 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage	*SMS,
 			  int			Class,
 			  unsigned char		ReplaceMessage)
 {
-	size_t 		j,Len,UsedText,CopiedText,CopiedSMSText;
+	size_t 		Len,UsedText,CopiedText,CopiedSMSText;
+	int		j;
 	unsigned char 	UDHID;
 	GSM_DateTime 	Date;
 
@@ -277,8 +278,8 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 					size_t			Type)
 {
 	unsigned char 	buff[100],UDHID;
-	size_t 		i;
-	size_t p;
+	int 		i;
+	int		p;
 	GSM_UDHHeader	MyUDH;
 
 	for (i=0;i<GSM_MAX_MULTI_SMS;i++) {
@@ -309,9 +310,9 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 	}
 
 	p = 0;
-	while (p != Len) {
+	while (p != (int)Len) {
 		i = 140-SMS->SMS[SMS->Number].UDH.Length;
-		if (Len - p < i) i = Len - p;
+		if ((int)Len - p < i) i = Len - p;
 		memcpy(SMS->SMS[SMS->Number].Text,Data+p,i);
 		p += i;
 		SMS->SMS[SMS->Number].Length = i;
@@ -1002,7 +1003,7 @@ GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT,
 {
 	bool			*INPUTSorted, copyit,OtherNumbers[GSM_SMS_OTHER_NUMBERS+1],wrong=false;
 	int			i,OUTPUTNum,z,w,m,p;
-	unsigned int		j;
+	int			j;
 	GSM_SiemensOTASMSInfo	SiemensOTA,SiemensOTA2;
 
 	i = 0;
@@ -1074,7 +1075,7 @@ GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT,
 			INPUTSorted[i]	= true;
 			j		= 1;
 			/* We're searching for other parts in sequence */
-			while (j!=SiemensOTA.PacketsNum) {
+			while (j!=(int)SiemensOTA.PacketsNum) {
 				z=0;
 				while(INPUT[z]!=NULL) {
 					/* This was sorted earlier or is not single */
@@ -1087,7 +1088,7 @@ GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT,
 						continue;
 					}
 					if (SiemensOTA2.SequenceID != SiemensOTA.SequenceID ||
-					    SiemensOTA2.PacketNum != j+1 ||
+					    (int)SiemensOTA2.PacketNum != j+1 ||
 					    SiemensOTA2.PacketsNum != SiemensOTA.PacketsNum ||
 					    strcmp(SiemensOTA2.DataType,SiemensOTA.DataType) ||
 					    strcmp(SiemensOTA2.DataName,SiemensOTA.DataName)) {
@@ -1251,8 +1252,7 @@ GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT,
 			INPUTSorted[i]	= true;
 			j		= 1;
 			/* We're searching for other parts in sequence */
-			/* Typecasting to silent GCC warning, we should fit */
-			while (j != (unsigned int)INPUT[i]->SMS[0].UDH.AllParts) {
+			while (j != INPUT[i]->SMS[0].UDH.AllParts) {
 				z=0;
 				while(INPUT[z]!=NULL) {
 					/* This was sorted earlier or is not single */
@@ -1289,8 +1289,7 @@ GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage **INPUT, GSM_MultiSMSMessage **OUTPUT,
 					if (INPUT[z]->SMS[0].UDH.ID8bit      != INPUT[i]->SMS[0].UDH.ID8bit	||
 							INPUT[z]->SMS[0].UDH.ID16bit     != INPUT[i]->SMS[0].UDH.ID16bit	||
 							INPUT[z]->SMS[0].UDH.AllParts    != INPUT[i]->SMS[0].UDH.AllParts 	||
-							/* Typecasting to silent GCC warning, we should fit */
-							(unsigned int)(INPUT[z]->SMS[0].UDH.PartNumber) != j + 1) {
+							(INPUT[z]->SMS[0].UDH.PartNumber) != j + 1) {
 						z++;
 						continue;
 					}
