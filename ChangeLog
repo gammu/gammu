@@ -23,6 +23,7 @@ ChangeLog
 [-] * Compatibility with broken iWOW responses (bug #650).
 [-] * Do not use hard delete flag for updating entries (bug #634).
 [-] * Identify Nokia 1200 (bug #649).
+[-] * Fix parsing of date/time reply on Sony Ericsson G900 (bug #647).
     
 20080510 - 1.20.0
 
