@@ -119,7 +119,7 @@
  *
  * \ingroup Limits
  */
-#define GSM_TODO_ENTRIES 7
+#define GSM_TODO_ENTRIES 16
 
 /**
  * Maximal length of text in todo.
