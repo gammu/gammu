@@ -214,6 +214,8 @@ bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 
 	memset(dt,0,sizeof(GSM_DateTime));
 
+	if (strlen(Buffer) < 8) return false;
+
 	strncpy(year, 	Buffer, 	4);
 	strncpy(month, 	Buffer+4, 	2);
 	strncpy(day, 	Buffer+6, 	2);
@@ -222,6 +224,8 @@ bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 	dt->Day		= atoi(day);
 
 	if (Buffer[8] == 'T') {
+		if (strlen(Buffer + 9) < 6) return false;
+
 		strncpy(hour, 	Buffer+9,	2);
 		strncpy(minute, Buffer+11,	2);
 		strncpy(second, Buffer+13,	2);
