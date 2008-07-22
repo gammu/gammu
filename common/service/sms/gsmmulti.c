@@ -278,8 +278,7 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 					size_t			Type)
 {
 	unsigned char 	buff[100],UDHID;
-	int 		i;
-	int		p;
+	size_t		i, p;
 	GSM_UDHHeader	MyUDH;
 
 	for (i=0;i<GSM_MAX_MULTI_SMS;i++) {
@@ -310,9 +309,9 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 	}
 
 	p = 0;
-	while (p != (int)Len) {
+	while (p != Len) {
 		i = 140-SMS->SMS[SMS->Number].UDH.Length;
-		if ((int)Len - p < i) i = Len - p;
+		if (Len - p < i) i = Len - p;
 		memcpy(SMS->SMS[SMS->Number].Text,Data+p,i);
 		p += i;
 		SMS->SMS[SMS->Number].Length = i;
@@ -323,7 +322,7 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 	/* Linked sms UDH */
 	if (SMS->Number != 1) {
 		UDHID = GSM_MakeSMSIDFromTime();
-		for (i=0;i<SMS->Number;i++) {
+		for (i=0;i< (size_t)SMS->Number;i++) {
 			SMS->SMS[i].UDH.Text[SMS->SMS[i].UDH.Length-3] = UDHID;
 			SMS->SMS[i].UDH.Text[SMS->SMS[i].UDH.Length-2] = SMS->Number;
 			SMS->SMS[i].UDH.Text[SMS->SMS[i].UDH.Length-1] = i+1;
