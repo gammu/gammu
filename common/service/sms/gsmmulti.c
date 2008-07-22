@@ -322,7 +322,7 @@ GSM_Error GSM_EncodeAlcatelMultiPartSMS(GSM_MultiSMSMessage 	*SMS,
 	/* Linked sms UDH */
 	if (SMS->Number != 1) {
 		UDHID = GSM_MakeSMSIDFromTime();
-		for (i=0;i< (size_t)SMS->Number;i++) {
+		for (i = 0; i < (size_t)SMS->Number; i++) {
 			SMS->SMS[i].UDH.Text[SMS->SMS[i].UDH.Length-3] = UDHID;
 			SMS->SMS[i].UDH.Text[SMS->SMS[i].UDH.Length-2] = SMS->Number;
 			SMS->SMS[i].UDH.Text[SMS->SMS[i].UDH.Length-1] = i+1;
