@@ -51,11 +51,19 @@ Group:              Applications/Communications
 
 # Mandriva
 %define dist_pkgconfig pkgconfig
+%if 0%{?mandriva_version} > 2007
+%define dist_mysql_libs libmysql-devel
+%else
 %define dist_mysql_libs libmysql15-devel
+%endif
+%if 0%{?mandriva_version} > 2007
+%define dist_bluez_libs	libbluez2 libbluez-devel
+%else
 %if 0%{?mandriva_version} > 2006
 %define dist_bluez_libs	libbluez2 libbluez2-devel
 %else
 %define dist_bluez_libs	libbluez1 >= 2.0 libbluez1-devel >= 2.0
+%endif
 %endif
 
 %else
