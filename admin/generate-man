@@ -348,6 +348,8 @@ HELP['getmemory'] = '''Get memory location from phone. Numerate locations from 1
 \\fBSL\\fR = sent SMS log
 '''
 HELP['searchmemory'] = ''''''
+HELP['deleteallmemory'] = '''Deletes all entries from specified memory type.'''
+HELP['deletememory'] = '''Deletes entries in specified from specified memory type.'''
 HELP['listmemorycategory'] = ''''''
 HELP['senddtmf'] = '''Plays DTMF sequence. In some phones available only during calls
 '''
