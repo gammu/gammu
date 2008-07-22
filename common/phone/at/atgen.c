@@ -5248,6 +5248,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		 *  - no encoding is needed for most charsets
 		 */
 		if (Priv->Charset == AT_CHARSET_HEX) {
+			len = UnicodeLength(entry->Entries[Number].Text);
 			EncodeDefault(unumber, entry->Entries[Number].Text, &len, true, NULL);
 			EncodeHexBin(number, unumber, len);
 		} else {
