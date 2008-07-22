@@ -28,6 +28,7 @@ ChangeLog
 [-] * Increased limit for folder name (bug #646).
 [-] * Fix parsing of empty date (bug #643).
 [-] * Recognize general number on Nokia 6230i (bug #655).
+[-] * Fix writing of phone number using HEX charset (bug #512).
     
 20080510 - 1.20.0
 

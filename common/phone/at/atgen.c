@@ -5095,6 +5095,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	unsigned char		name[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 	unsigned char		uname[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 	unsigned char		number[GSM_PHONEBOOK_TEXT_LENGTH + 1];
+	unsigned char		unumber[2*(GSM_PHONEBOOK_TEXT_LENGTH + 1)];
 	int			reqlen, i;
 	GSM_AT_Charset_Preference	Prefer = AT_PREF_CHARSET_NORMAL;
 
@@ -5217,9 +5218,17 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	if (Number != -1) {
 		GSM_PackSemiOctetNumber(entry->Entries[Number].Text, number, false);
 		NumberType = number[0];
-		sprintf(number,"%s",DecodeUnicodeString(entry->Entries[Number].Text));
+		/* We need to encode number, however
+		 *  - it is not encoded in UCS2
+		 *  - no encoding is needed for most charsets
+		 */
+		if (Priv->Charset == AT_CHARSET_HEX) {
+			EncodeDefault(unumber, entry->Entries[Number].Text, &len, true, NULL);
+			EncodeHexBin(number, unumber, len);
+		} else {
+			sprintf(number, "%s", DecodeUnicodeString(entry->Entries[Number].Text));
+		}
 		entry->Entries[Number].AddError = ERR_NONE;
-		/* @todo: Should encode here to proper charset */
 	} else {
 		smprintf(s, "WARNING: No usable number found!\n");
 		number[0] = 0;
