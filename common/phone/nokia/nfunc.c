@@ -482,6 +482,10 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			if (Block[5] == 0x55) {
 				Type = PBK_Number_General;    smprintf(s,"General number ");
 			}
+			/* Yet another unknown General number */
+			if (Block[5] == 0x08) {
+				Type = PBK_Number_General;    smprintf(s,"General number ");
+			}
 			if (Block[5] == N7110_PBK_NUMBER_GENERAL) {
 				Type = PBK_Number_General;    smprintf(s,"General number ");
 			}
