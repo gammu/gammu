@@ -192,7 +192,32 @@ static ATErrorCode CMEErrorCodes[] = {
 	{27,  "invalid characters in dial string"},
 	{30,  "no network service"},
 	{31,  "network timeout"},
+	/* 3GPP TS 27.007 /2/ */
+	{32,  "Network not allowed - emergency calls only."},
+	{40,  "Network personalization PIN required."},
+	{41,  "Network personalization PUK required."},
+	{42,  "Network subset personalization PIN required."},
+	{43,  "Network subset personalization PUK required."},
+	{44,  "Service provider personalization PIN required."},
+	{45,  "Service provider personalization PUK required."},
+	{46,  "Corporate personalization PIN required."},
+	{47,  "Corporate personalization PUK required."},
 	{100, "unknown"},
+	/* GPRS-related errors - (#X = GSM 04.08 cause codes) */
+	{103,  "Illegal MS (#3)."},
+	{106,  "Illegal ME (#6)."},
+	{107,  "GPRS services not allowed (#7)."},
+	{111,  "Public Land Mobile Network (PLMN) not allowed (#11)."},
+	{112,  "Location area not allowed (#12)."},
+	{113,  "Roaming not allowed in this location area (#13)."},
+	/* Errors related to a failure in Activating a Context and
+	   Other GPRS errors */
+	{132,  "Service option not supported (#32)."},
+	{133,  "Requested service option not subscribed (#33)."},
+	{134,  "Service option temporarily out of order (#34)."},
+	{148,  "Unspecified GPRS error."},
+	{149,  "PDP authentication failure."},
+	{150,  "Invalid mobile class."},
 };
 
 static char samsung_location_error[] = "[Samsung] Empty location";
