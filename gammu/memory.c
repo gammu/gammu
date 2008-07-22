@@ -289,6 +289,27 @@ void DeleteMemory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
+void DeleteAllMemory(int argc, char *argv[])
+{
+	GSM_MemoryType MemoryType;
+	GSM_Error error;
+
+	MemoryType = MemoryTypeFromString(argv[2]);
+
+	if (MemoryType == 0) {
+		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
+		exit (-1);
+	}
+
+	GSM_Init(true);
+
+	error = GSM_DeleteAllMemory(gsm, MemoryType);
+
+	if (error != ERR_NONE) Print_Error(error);
+
+	GSM_Terminate();
+}
+
 #define MemoryLocationToString(x) ( \
 	x == MEM_ON ? "ON" :			\
 	x == MEM_RC ? "RC" :			\

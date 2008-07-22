@@ -19,6 +19,7 @@ ChangeLog
 
 [!] * ABI change, because of increasing some limits.
 [+] * Support for longer notes on Nokia phones (bug #607).
+[+] * Add deleteallmemory command.
 [-] * Ignore trailing spaces in AT commands.
 [-] * Fix crash on long lines in vCards.
 [-] * Compatibility with broken iWOW responses (bug #650).
