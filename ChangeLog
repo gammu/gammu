@@ -27,6 +27,7 @@ ChangeLog
 [-] * Fix parsing of date/time reply on Sony Ericsson G900 (bug #647).
 [-] * Increased limit for folder name (bug #646).
 [-] * Fix parsing of empty date (bug #643).
+[-] * Recognize general number on Nokia 6230i (bug #655).
     
 20080510 - 1.20.0
 
