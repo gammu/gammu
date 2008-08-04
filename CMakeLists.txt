@@ -342,10 +342,7 @@ endif (GETTEXTLIBS_FOUND)
 # Tweak compiler flags
 if(MSVC)
     # MSVC needs different flags at all
-    check_c_compiler_flag("/W3" HAVE_W3)
-    if (HAVE_W3)
-        set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} /W3")
-    endif (HAVE_W3)
+    MACRO_TUNE_COMPILER("/W3")
 else(MSVC)
     # Check for extra compiler flags we want to use
     if (NOT VERSION_PATCH EQUAL 0)
