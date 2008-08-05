@@ -23,18 +23,6 @@
 int GetLine(FILE * File, char *Line, int count);
 
 /**
- * Reads file over HTTP.
- *
- * \param server Server to connect.
- * \param filename File to grab on that server.
- * \param file Storage for resulting file.
- *
- * \return True on success.
- */
-bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename,
-		      GSM_File * file);
-
-/**
  * Gets Gammu library version.
  */
 const char *GetGammuVersion(void);

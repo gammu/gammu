@@ -8,6 +8,10 @@
 #include "common.h"
 #include "formats.h"
 
+#ifdef CURL_FOUND
+#include <curl/curl.h>
+#endif
+
 GSM_StateMachine *gsm;
 
 bool always_answer_yes = false;
@@ -188,6 +192,28 @@ const char *GetDayName(const int day)
 	return result;
 }
 
+void Cleanup(void)
+{
+	GSM_Debug_Info *di;
+
+	/* Disconnect from phone */
+	if (GSM_IsConnected(gsm)) {
+		GSM_TerminateConnection(gsm);
+	}
+
+	/* Free state machine */
+	GSM_FreeStateMachine(gsm);
+
+	/* Close debug output if opened */
+	di = GSM_GetGlobalDebug();
+	GSM_SetDebugFileDescriptor(NULL, di);
+
+#ifdef CURL_FOUND
+	/* Free CURL memory */
+	curl_global_cleanup();
+#endif
+}
+
 void Print_Error(GSM_Error error)
 {
 	if (error != ERR_NONE) {
@@ -198,13 +224,7 @@ void Print_Error(GSM_Error error)
 			PrintSecurityStatus();
 		}
 
-		/* Disconnect from phone */
-		if (GSM_IsConnected(gsm)) {
-			GSM_TerminateConnection(gsm);
-		}
-
-		/* Free state machine */
-		GSM_FreeStateMachine(gsm);
+		Cleanup();
 
 		exit(-1);
 	}
@@ -243,6 +263,62 @@ GSM_MemoryType MemoryTypeFromString(const char *type)
 }
 
 /**
+ * Callback from CURL to get data.
+ */
+size_t write_mem(void *ptr, size_t size, size_t nmemb, void *data) {
+	size_t realsize = size * nmemb;
+	GSM_File *file = (GSM_File *)data;
+
+	file->Buffer = realloc(file->Buffer,file->Used + realsize + 1);
+
+	if (file->Buffer) {
+		memcpy(file->Buffer + file->Used, ptr, realsize);
+		file->Used += realsize;
+		file->Buffer[file->Used] = 0;
+		return realsize;
+	}
+	return 0;
+}
+
+/**
+ * Downloads file from arbitrary URL.
+ *
+ * \param url URL to download.
+ * \param file Storage for data.
+ *
+ * \returns True on success.
+ */
+bool GSM_ReadHTTPFile(const char *url, GSM_File *file)
+{
+#ifdef CURL_FOUND
+	CURL *dl_handle = NULL;
+	CURLcode result;
+
+	dl_handle = curl_easy_init();
+	if (dl_handle == NULL) return false;
+
+	curl_easy_setopt(dl_handle, CURLOPT_URL, url);
+	curl_easy_setopt(dl_handle, CURLOPT_USERAGENT, "Gammu/" VERSION);
+	curl_easy_setopt(dl_handle, CURLOPT_WRITEFUNCTION, write_mem);
+	curl_easy_setopt(dl_handle, CURLOPT_WRITEDATA, file);
+	curl_easy_setopt(dl_handle, CURLOPT_FOLLOWLOCATION, 1);
+	curl_easy_setopt(dl_handle, CURLOPT_MAXREDIRS, 10);
+#if 0
+	/* Enable verbose outpuf from CURL */
+	curl_easy_setopt(dl_handle, CURLOPT_VERBOSE, 1);
+#endif
+
+	result = curl_easy_perform(dl_handle);
+
+	curl_easy_cleanup(dl_handle);
+
+	return (result == 0) ? true : false;
+#else
+	return false;
+#endif
+}
+
+/**
  * Initiates connection to phone.
  *
  * \param checkerror Whether we should check for error.
@@ -252,7 +328,7 @@ void GSM_Init(bool checkerror)
 	GSM_File PhoneDB;
 	char model[GSM_MAX_MODEL_LENGTH];
 	char current_version[GSM_MAX_VERSION_LENGTH];
-	char buff[50 + GSM_MAX_MODEL_LENGTH];
+	char url[70 + GSM_MAX_MODEL_LENGTH];
 	char latest_version[GSM_MAX_VERSION_LENGTH];
 	size_t pos = 0, oldpos = 0, i;
 	GSM_Error error;
@@ -285,9 +361,10 @@ void GSM_Init(bool checkerror)
 	latest_version[0] = 0;
 
 	/* Request information from phone db */
-	sprintf(buff, "support/phones/phonedbxml.php?model=%s", model);
+	sprintf(url, "http://www.gammu.org/support/phones/phonedbxml.php?model=%s", model);
 	PhoneDB.Buffer = NULL;
-	if (!GSM_ReadHTTPFile("www.gammu.org", buff, &PhoneDB))
+	PhoneDB.Used = 0;
+	if (!GSM_ReadHTTPFile(url, &PhoneDB))
 		return;
 
 	/* Parse reply */

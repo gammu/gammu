@@ -56,6 +56,21 @@ int printf_info(const char *format, ...);
  */
 void interrupt(int sign);
 
+/**
+ * Downloads file from arbitrary URL.
+ *
+ * \param url URL to download.
+ * \param file Storage for data.
+ *
+ * \returns true on success.
+ */
+bool GSM_ReadHTTPFile(const char *url, GSM_File *file);
+
+/**
+ * Cleanup performed at program termination.
+ */
+void Cleanup(void);
+
 #ifdef GSM_ENABLE_BEEP
 void GSM_PhoneBeep(void);
 #endif
