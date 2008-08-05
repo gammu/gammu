@@ -18,7 +18,6 @@ connection = irdaphonet
 ;gammuloc = locfile
 ;startinfo = yes
 ;gammucoding = utf8
-;rsslevel = teststable
 ;usephonedb = yes
 
 [gammu1]
