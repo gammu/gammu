@@ -213,6 +213,18 @@ if (CROSS_MINGW)
         message (STATUS "Cross Gettext not found")
     endif (GETTEXT_LIBRARY)
 
+    set (CURL_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/curl" CACHE FILEPATH "Path to CURL for cross compilation")
+    find_library (CURL_LIBRARIES
+        curl "${CURL_CROSS_PATH}"
+        NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
+    if (CURL_LIBRARIES)
+        set (CURL_FOUND ON)
+        set (CURL_INCLUDE_DIR "${CURL_CROSS_PATH}/include")
+        message (STATUS "Cross CURL found, libs: ${CURL_LIBRARIES}, incs: ${CURL_INCLUDE_DIR}")
+    else (CURL_LIBRARIES)
+        message (STATUS "Cross CURL not found")
+    endif (CURL_LIBRARIES)
+
     set (HAVE_WINT_T 4 CACHE INTERNAL "")
     set (HAVE_WCHAR_T 4 CACHE INTERNAL "")
 else (CROSS_MINGW)
