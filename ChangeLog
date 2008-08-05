@@ -18,6 +18,8 @@ ChangeLog
 2008???? - 1.20.90
 
 [!] * ABI change, because of increasing some limits.
+[!] * Config file option rsslevel no longer works, superseded by
+      'gammu checkversion'.
 [*] * Dropped GSM_ReadHTTPFile from API, gammu now uses CURL instead.
 [+] * Support for longer notes on Nokia phones (bug #607).
 [+] * Add deleteallmemory command.

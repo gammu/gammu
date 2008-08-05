@@ -192,6 +192,10 @@ HELP['help'] = '''Output help information and exit.
 ''' 
 HELP['version'] = '''Output version information and exit.
 '''
+HELP['checkversion'] = '''Checks whether there is newer Gammu version available online 
+(if Gammu has been compiled with CURL). If you pass additional parameter stable, only
+stable versions will be checked.
+'''
 HELP['identify'] = '''Show the most important phone data.
 ''' 
 HELP['monitor'] = '''Get phone status and writes continuously to standard output. Press Ctrl+C

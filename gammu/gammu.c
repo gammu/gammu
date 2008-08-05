@@ -50,6 +50,10 @@
 
 #define ALL_MEMORY_TYPES "DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 
+#define RSS_URL "http://blog.cihar.com/archives/gammu_releases/index-rss.xml"
+#define RSS_STABLE_STRING "Gammu stable version "
+#define RSS_TESTING_STRING "Gammu test version "
+
 #ifdef DEBUG
 static void MakeConvertTable(int argc UNUSED, char *argv[])
 {
@@ -270,6 +274,93 @@ static void Features(int argc UNUSED, char *argv[]UNUSED)
 #endif
 }
 
+/**
+ * Converts version string to integer to allow comparing.
+ */
+int VersionToInt(const char *Buffer)
+{
+	size_t retval = 0, pos = 0;
+
+	retval = atoi(Buffer) * 10000;
+	while (Buffer[pos] != '.') {
+		pos++;
+		if (pos == strlen(Buffer))
+			return retval;
+	}
+	pos++;
+	retval += atoi(Buffer + pos) * 100;
+	while (Buffer[pos] != '.') {
+		pos++;
+		if (pos == strlen(Buffer))
+			return retval;
+	}
+	pos++;
+	return retval + atoi(Buffer + pos);
+}
+
+/**
+ * Check whether there is not newer version available online.
+ */
+static void CheckVersion(int argc, char *argv[])
+{
+	GSM_File RSS;
+	bool checkstable = true;
+	bool checktest = true;
+	const char *pos;
+	char new_version[20];
+	size_t i;
+
+	if (argc >= 3) {
+		if (strcasecmp(argv[2], "stable") == 0) {
+			checktest = false;
+		}
+	}
+
+	/* Read file */
+	RSS.Buffer = NULL;
+	RSS.Used = 0;
+	if (!GSM_ReadHTTPFile(RSS_URL, &RSS))
+		return;
+
+	if (checkstable) {
+		pos = strstr(RSS.Buffer, RSS_STABLE_STRING);
+		if (pos != NULL) {
+			pos += strlen(RSS_STABLE_STRING);
+
+			for (i = 0; i < sizeof(new_version) - 1 && (isdigit(pos[i]) || pos[i] == '.'); i++) {
+				new_version[i] = pos[i];
+			}
+
+			new_version[i] = 0;
+
+			if (VersionToInt(new_version) > VersionToInt(VERSION)) {
+				printf_info(_("There is newer stable Gammu version available! (%s instead of %s)\n"),
+				       new_version, VERSION);
+			}
+		}
+	}
+
+	if (checktest) {
+		pos = strstr(RSS.Buffer, RSS_TESTING_STRING);
+		if (pos != NULL) {
+			pos += strlen(RSS_TESTING_STRING);
+
+			for (i = 0; i < sizeof(new_version) - 1 && (isdigit(pos[i]) || pos[i] == '.'); i++) {
+				new_version[i] = pos[i];
+			}
+
+			new_version[i] = 0;
+
+			if (VersionToInt(new_version) > VersionToInt(VERSION)) {
+				printf_info(_("There is newer testing Gammu version available! (%s instead of %s)\n"),
+				       new_version, VERSION);
+			}
+		}
+	}
+
+	free(RSS.Buffer);
+}
+
 static void Version(int argc UNUSED, char *argv[]UNUSED)
 {
 	PrintVersion();
@@ -392,6 +483,7 @@ static GSM_Parameters Parameters[] = {
 	{"identify",			0, 0, Identify,			{H_Info,0},			""},
 	{"version",			0, 0, Version,			{H_Gammu,0},			""},
 	{"features",			0, 0, Features,			{H_Gammu,0},			""},
+	{"checkversion",		0, 1, CheckVersion,		{H_Gammu,0},			"[stable]"},
 	{"getdisplaystatus",		0, 0, GetDisplayStatus,		{H_Info,0},			""},
 	{"monitor",			0, 1, Monitor,			{H_Info,H_Network,H_Call,0},	"[times]"},
 	{"setautonetworklogin",	0, 0, SetAutoNetworkLogin,	{H_Network,0},			""},
@@ -859,27 +951,6 @@ void Help(int argc, char *argv[])
 	}
 }
 
-int FoundVersion(unsigned char *Buffer)
-{
-	size_t retval = 0, pos = 0;
-
-	retval = atoi(Buffer) * 10000;
-	while (Buffer[pos] != '.') {
-		pos++;
-		if (pos == strlen(Buffer))
-			return retval;
-	}
-	pos++;
-	retval += atoi(Buffer + pos) * 100;
-	while (Buffer[pos] != '.') {
-		pos++;
-		if (pos == strlen(Buffer))
-			return retval;
-	}
-	pos++;
-	return retval + atoi(Buffer + pos);
-}
-
 int ProcessParameters(char start, int argc, char *argv[])
 {
 	int z = 0;
@@ -957,13 +1028,10 @@ int ProcessParameters(char start, int argc, char *argv[])
 
 int main(int argc, char *argv[])
 {
-	GSM_File RSS;
-	int rsslevel = 0, oldpos = 0;
-	size_t pos = 0;
 	int start = 0;
 	unsigned int i;
 	int only_config = -1;
-	char *cp, *rss, buff[200];
+	char *cp, *rss;
 	GSM_Config *smcfg;
 	GSM_Config *smcfg0;
 	GSM_Debug_Info *di;
@@ -1089,11 +1157,7 @@ int main(int argc, char *argv[])
 		if (i == 0) {
 			rss = INI_GetValue(cfg, "gammu", "rsslevel", false);
 			if (rss) {
-				if (strcasecmp(rss, "teststable") == 0) {
-					rsslevel = 2;
-				} else if (strcasecmp(rss, "stable") == 0) {
-					rsslevel = 1;
-				}
+				printf_warn("Configuration option rsslevel is ignored, use '%s' instead\n", "gammu checkversion");
 			}
 			rss = INI_GetValue(cfg, "gammu", "usephonedb", false);
 			if (rss && strcasecmp(rss, "yes") == 0)
@@ -1118,71 +1182,6 @@ int main(int argc, char *argv[])
 		printf_err(_("Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"),
 			   GetGammuVersion(), VERSION);
 		exit(-1);
-	}
-
-	if (rsslevel > 0) {
-		RSS.Buffer = NULL;
-		RSS.Used = 0;
-		if (GSM_ReadHTTPFile("http://blog.cihar.com/archives/gammu_releases/index-rss.xml", &RSS)) {
-			while (pos < RSS.Used) {
-				if (RSS.Buffer[pos] != 10) {
-					pos++;
-					continue;
-				}
-				RSS.Buffer[pos] = 0;
-				if (strstr(RSS.Buffer + oldpos, "<title>") ==
-				    NULL
-				    || strstr(RSS.Buffer + oldpos,
-					      "</title>") == NULL
-				    || strstr(RSS.Buffer + oldpos,
-					      "win32") != NULL) {
-					pos++;
-					oldpos = pos;
-					continue;
-				}
-				if (rsslevel > 0
-				    && strstr(RSS.Buffer + oldpos,
-					      "stable version") != NULL) {
-					sprintf(buff, "%s",
-						strstr(RSS.Buffer + oldpos,
-						       "stable version") + 15);
-					for (i = 0; i < strlen(buff); i++) {
-						if (buff[i] == '<') {
-							buff[i] = 0;
-							break;
-						}
-					}
-					if (FoundVersion(buff) >
-					    FoundVersion(VERSION)) {
-						printf(_("INFO: there is later stable Gammu (%s instead of %s) available!\n"),
-						       buff, VERSION);
-						break;
-					}
-				}
-				if (rsslevel == 2
-				    && strstr(RSS.Buffer + oldpos,
-					      "test version") != NULL) {
-					sprintf(buff, "%s",
-						strstr(RSS.Buffer + oldpos,
-						       "test version") + 13);
-					for (i = 0; i < strlen(buff); i++) {
-						if (buff[i] == '<') {
-							buff[i] = 0;
-							break;
-						}
-					}
-					if (FoundVersion(buff) >
-					    FoundVersion(VERSION)) {
-						printf(_("INFO: there is later testing Gammu (%s instead of %s) available!\n"),
-						       buff, VERSION);
-						break;
-					}
-				}
-				pos++;
-				oldpos = pos;
-			}
-			free(RSS.Buffer);
-		}
 	}
 
 	ProcessParameters(start, argc, argv);
