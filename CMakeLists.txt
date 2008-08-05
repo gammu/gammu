@@ -771,6 +771,8 @@ if (CROSS_MINGW)
                 "${POSTGRES_CROSS_PATH}/bin/krb5_32.dll"
                 "${POSTGRES_CROSS_PATH}/bin/ssleay32.dll"
                 "${POSTGRES_CROSS_PATH}/bin/gssapi32.dll"
+                "${POSTGRES_CROSS_PATH}/bin/k5sprt32.dll"
+                "${POSTGRES_CROSS_PATH}/bin/zlib1.dll"
                 DESTINATION ${INSTALL_BIN_DIR}
                 )
     endif (POSTGRES_FOUND)
@@ -783,6 +785,15 @@ if (CROSS_MINGW)
                 DESTINATION "${INSTALL_BIN_DIR}"
                 )
     endif (GETTEXTLIBS_FOUND)
+
+    # Gettext and dependencies
+    if (CURL_FOUND)
+        install (FILES
+                "${CURL_CROSS_PATH}/libcurl.dll"
+                "${CURL_CROSS_PATH}/zlib1.dll"
+                DESTINATION "${INSTALL_BIN_DIR}"
+                )
+    endif (CURL_FOUND)
 endif (CROSS_MINGW)
 
 foreach (HEADER ${PUBLIC_HEADERS})
