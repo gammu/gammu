@@ -19,6 +19,37 @@ downloaded from Microsoft:
 http://www.microsoft.com/downloads/details.aspx?displaylang=en&FamilyID=6AE02498-07E9-48F1-A5D6-DBFA18D37E0F
 
 
+From Sources - Requirements
+===========================
+
+Gammu does not require anything at all to build, but you might miss some
+features. Optional dependencies include:
+
+Bluez-libs 
+    - http://www.bluez.org/
+    - Bluetooth support on Linux.
+
+libCURL
+    - http://curl.haxx.se/libcurl/
+    - New versions notification and phonedb access.
+
+libiconv
+    - http://www.gnu.org/software/libiconv/
+    - Support for more charsets in AT engine.
+
+Gettext
+    - http://www.gnu.org/software/gettext/
+    - Localization of strings.
+
+MySQL
+    - http://mysql.com/
+    - MySQL support in SMSD.
+
+PostgreSQL
+    - http://www.postgresql.org/
+    - PostgreSQL support in SMSD.
+
+
 From Sources - Linux
 ====================
 
