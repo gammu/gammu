@@ -216,10 +216,10 @@
 #cmakedefine CURL_FOUND
 
 /* Will be used Bluez stack ? */
-#cmakedefine GSM_ENABLE_BLUEZ
+#cmakedefine BLUEZ_FOUND
 
 /* Will be used FreeBSD Bluetooth stack ? */
-#cmakedefine GSM_ENABLE_FBSD_BLUE
+#cmakedefine FBSD_BLUE_FOUND
 
 #cmakedefine BLUETOOTH_RF_SEARCHING
 

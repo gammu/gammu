@@ -2077,14 +2077,12 @@ msgstr "Verschiedenes"
 
 #: gammu/gammu.c:337
 #, fuzzy, c-format
-#| msgid "INFO: there is later stable Gammu (%s instead of %s) available!\n"
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
 msgstr ""
 "INFO: Es ist eine neuere stabile Gammu-Version (%s anstatt %s) verfügbar!\n"
 
 #: gammu/gammu.c:355
 #, fuzzy, c-format
-#| msgid "INFO: there is later testing Gammu (%s instead of %s) available!\n"
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr ""
 "INFO: Es ist eine neuere Testversion von Gammu (%s anstatt %s) verfügbar!\n"

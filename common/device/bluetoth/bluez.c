@@ -21,7 +21,7 @@
 #include "../../gsmstate.h"
 
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE
-#ifdef GSM_ENABLE_BLUEZ
+#ifdef BLUEZ_FOUND
 
 #include <stdlib.h>
 #include <stdio.h>

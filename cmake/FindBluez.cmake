@@ -9,13 +9,6 @@
 # vim: expandtab sw=4 ts=4 sts=4:
 
 if (NOT BLUEZ_FOUND)
-    if (CROSS_MINGW)
-       set(BLUEZ_FOUND TRUE CACHE INTERNAL "Bluez found")
-       set(BLUEZ_INCLUDE_DIR)
-       set(BLUEZ_LIBRARIES ws2_32)
-       message(STATUS "Using Windows native Bluetooth: ${BLUEZ_INCLUDE_DIR}, ${BLUEZ_LIBRARIES}")
-    endif (CROSS_MINGW)
-
     if (NOT BLUEZ_FOUND)
         pkg_check_modules (BLUEZ_PKG bluez)
 

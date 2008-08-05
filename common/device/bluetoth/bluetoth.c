@@ -16,10 +16,10 @@
 #include "../devfunc.h"
 #include "bluetoth.h"
 
-#ifdef GSM_ENABLE_BLUEZ
+#ifdef BLUEZ_FOUND
 #  include "bluez.h"
 #endif
-#ifdef GSM_ENABLE_FBSD_BLUE
+#ifdef FBSD_BLUE_FOUND
 #  include "blue_fbsd.h"
 #endif
 #ifdef WIN32

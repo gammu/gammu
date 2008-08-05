@@ -22,7 +22,7 @@
 #include "../../gsmstate.h"
 
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE
-#ifdef GSM_ENABLE_FBSD_BLUE
+#ifdef FBSD_BLUE_FOUND
 
 #include <stdlib.h>
 #include <stdio.h>
