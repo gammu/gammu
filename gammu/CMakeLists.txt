@@ -68,6 +68,11 @@ if (GETTEXTLIBS_FOUND)
     include_directories (${GETTEXT_INCLUDE_DIR})
 endif (GETTEXTLIBS_FOUND)
 
+if (CURL_FOUND)
+    target_link_libraries (gammu ${CURL_LIBRARIES})
+    include_directories (${CURL_INCLUDE_DIR})
+endif (CURL_FOUND)
+
 # Add libraries needed for windows build
 if (WIN32)
     # Magic needed for SHGetFolderPathA

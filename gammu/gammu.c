@@ -44,6 +44,10 @@
 #  include <sys/ioctl.h>
 #endif
 
+#ifdef CURL_FOUND
+#include <curl/curl.h>
+#endif
+
 #define ALL_MEMORY_TYPES "DC|MC|RC|ON|VM|SM|ME|MT|FD|SL"
 
 #ifdef DEBUG
@@ -967,6 +971,10 @@ int main(int argc, char *argv[])
 
 	GSM_InitLocales(NULL);
 
+#ifdef CURL_FOUND
+	curl_global_init(CURL_GLOBAL_ALL);
+#endif
+
 	di = GSM_GetGlobalDebug();
 
 #ifdef DEBUG
@@ -1111,7 +1119,8 @@ int main(int argc, char *argv[])
 
 	if (rsslevel > 0) {
 		RSS.Buffer = NULL;
-		if (GSM_ReadHTTPFile("blog.cihar.com", "archives/gammu_releases/index-rss.xml", &RSS)) {
+		RSS.Used = 0;
+		if (GSM_ReadHTTPFile("http://blog.cihar.com/archives/gammu_releases/index-rss.xml", &RSS)) {
 			while (pos < RSS.Used) {
 				if (RSS.Buffer[pos] != 10) {
 					pos++;
@@ -1175,10 +1184,7 @@ int main(int argc, char *argv[])
 
 	ProcessParameters(start, argc, argv);
 
-	/* Close debug output if opened */
-	GSM_SetDebugFileDescriptor(NULL, di);
-
-	GSM_FreeStateMachine(gsm);
+	Cleanup();
 
 	exit(0);
 }

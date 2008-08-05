@@ -224,6 +224,7 @@ else (CROSS_MINGW)
     macro_optional_find_package (Postgres)
     macro_optional_find_package (GettextLibs)
     macro_optional_find_package (Iconv)
+    macro_optional_find_package (CURL)
 
     # Search for needed includes and functions
     if (HAVE_WCHAR_H)

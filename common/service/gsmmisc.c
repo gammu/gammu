@@ -588,65 +588,6 @@ fail:
 	return ret;
 }
 
-bool GSM_ReadHTTPFile(unsigned char *server, unsigned char *filename, GSM_File *file)
-{
-	socket_type s;
-	int len;
-	struct sockaddr_in 	address;
-	struct hostent 		*address2;
-	unsigned char 		buff[200];
-#ifdef WIN32
-	WSADATA			wsaData;
-
-	if (WSAStartup(MAKEWORD(1, 1), &wsaData) != 0) return false;
-#endif
-
-	s = socket(AF_INET,SOCK_STREAM,0);
-	if (s == socket_invalid) return false;
-
-	address2 = gethostbyname(server);
-	if (address2 == NULL) return false;
-
-	memset((char *) &address, 0, sizeof(address));
-	address.sin_family 	= AF_INET;
-	address.sin_port 	= htons(80);
-	address.sin_addr.s_addr = *(u_long *) *(address2->h_addr_list);
-
-	if (connect(s,(struct sockaddr *)&address,sizeof(address))<0) return false;
-
-	sprintf(buff,"GET /%s HTTP/1.1\x0d\x0aHost: %s\x0d\x0aUser-Agent: Gammu/%s\x0d\x0a\x0d\x0a", filename, server, VERSION);
-	if (send(s,buff,strlen(buff),0)<0) return false;
-
-	free(file->Buffer);
-	file->Buffer 	= NULL;
-	file->Used 	= 0;
-
-#ifdef WIN32
-	while ((len=recv(s,buff,200,0))>0) {
-#else
-	while ((len=read(s,buff,200))>0) {
-#endif
-		file->Buffer = realloc(file->Buffer,file->Used + len);
-		memcpy(file->Buffer+file->Used,buff,len);
-		file->Used += len;
-	}
-#ifdef WIN32
-	closesocket(s);
-#else
-	close(s);
-#endif
-
-	if (file->Buffer == NULL) return false;
-	if (strstr(file->Buffer,"HTTP/1.1 200 OK")==NULL) {
-		free(file->Buffer);
-		file->Buffer = NULL;
-		file->Used   = 0;
-		return false;
-	}
-
-	return true;
-}
-
 void GSM_ClearBatteryCharge(GSM_BatteryCharge *bat)
 {
     bat->BatteryPercent = -1;

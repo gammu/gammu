@@ -212,6 +212,9 @@
 #cmakedefine ICONV_FOUND
 #cmakedefine ICONV_SECOND_ARGUMENT_IS_CONST
 
+/* CURL support */
+#cmakedefine CURL_FOUND
+
 /* Will be used Bluez stack ? */
 #cmakedefine GSM_ENABLE_BLUEZ
 
