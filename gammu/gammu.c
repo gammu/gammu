@@ -259,6 +259,9 @@ static void Features(int argc UNUSED, char *argv[]UNUSED)
 #ifdef ICONV_FOUND
 	printf("  - %s\n", "ICONV");
 #endif
+#ifdef CURL_FOUND
+	printf("  - %s\n", "CURL");
+#endif
 #ifdef HAVE_MYSQL_MYSQL_H
 	printf("  - %s\n", "MYSQL");
 #endif
