@@ -143,16 +143,17 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  	char				*pos1, *pos2, *options;
 #ifdef WIN32
   	struct _finddata_t 		c_file;
-  	long 				hFile;
+  	intptr_t			hFile;
 
   	strcpy(FullName, Config->outboxpath);
   	strcat(FullName, "OUT*.txt*");
-  	if((hFile = _findfirst( FullName, &c_file )) == -1L ) {
+	hFile = _findfirst(FullName, &c_file);
+  	if (hFile == -1 ) {
   		return ERR_EMPTY;
   	} else {
-  		strcpy(FileName,c_file.name);
+  		strcpy(FileName, c_file.name);
   	}
-  	_findclose( hFile );
+  	_findclose(hFile);
 	error = ERR_NONE;
 #else
 #if defined HAVE_DIRENT_H && defined HAVE_SCANDIR && defined HAVE_ALPHASORT
