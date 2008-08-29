@@ -273,6 +273,10 @@ typedef enum {
 	 * Bad feature string.
 	 */
 	ERR_BADFEATURE,
+	/**
+	 * Some functions not compiled in your OS
+	 */
+	ERR_DISABLED,
 
 	/**
 	 * Just marker of highest error code, should not be used.

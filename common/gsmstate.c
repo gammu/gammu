@@ -155,7 +155,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 	/* Free allocated memory */
 	free(buff);
 
-	if (s->ConnectionType==0) {
+	if (s->ConnectionType == 0) {
 		return ERR_UNKNOWNCONNECTIONTYPESTRING;
 	}
 
@@ -224,8 +224,11 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 #ifdef GSM_ENABLE_BLUEOBEX
 	GSM_RegisterConnection(s, GCT_BLUEOBEX,   &BlueToothDevice,&OBEXProtocol);
 #endif
-	if (s->Device.Functions==NULL || s->Protocol.Functions==NULL)
-			return ERR_SOURCENOTAVAILABLE;
+	if (s->Device.Functions == NULL || s->Protocol.Functions == NULL) {
+		smprintf(s, "Connection %s is know but was disabled on compile time\n", connection);
+		return ERR_DISABLED;
+	}
+
 	return ERR_NONE;
 }
 
