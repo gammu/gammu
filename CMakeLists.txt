@@ -279,6 +279,10 @@ endif (WITH_BLUETOOTH)
 
 if (BLUETOOTH_FOUND)
     message(STATUS "Bluetooth support enabled")
+else (BLUETOOTH_FOUND)
+    if (WITH_BLUETOOTH)
+        message("Bluetooth support disabled, please install libbluetooth-dev or equivalent to enable Bluetooth.")
+    endif (WITH_BLUETOOTH)
 endif (BLUETOOTH_FOUND)
 
 macro_gammu_option (BLUETOOTH_RF_SEARCHING "Searching for RF channels with Bluetooth stack" ON BLUETOOTH_FOUND BLUETOOTH_SEARCH)
