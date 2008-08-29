@@ -156,6 +156,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_USING_DEFAULTS, "USING_DEFAULTS",		N_("Using default values.")},
 	{ERR_CORRUPTED, "CORRUPTED",			N_("Corrupted data returned by phone.")},
 	{ERR_BADFEATURE, "BADFEATURE",		N_("Bad feature string in configuration.")},
+	{ERR_DISABLED, "DISABLED",		N_("Desired functionality has been disabled on compile time.")},
 
 	{0,	"",				""}
 };
