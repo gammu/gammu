@@ -20,6 +20,7 @@ ChangeLog
 [+] * Report more verbosely that some feature has been disabled on
       compile time.
 [-] * Add ID for Nokia 5200 (thanks to Andreas Metzler).
+[-] * Add ID for Nokia 2600 (bug #659).
     
 20080805 - 1.20.90
 
