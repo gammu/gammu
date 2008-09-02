@@ -4015,25 +4015,30 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 
 GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_MemoryStatus	*MemoryStatus = s->Phone.Data.MemoryStatus;
-	char 			*start;
+	GSM_MemoryStatus *MemoryStatus = s->Phone.Data.MemoryStatus;
+ 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
+	unsigned char tmp[200];
+	GSM_Error error;
+	char *str;
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Memory status received\n");
+		str = GetLineString(msg.Buffer, &Priv->Lines, 2);
   		MemoryStatus->MemoryUsed = 0;
 		MemoryStatus->MemoryFree = 0;
-		start = strchr(msg.Buffer, ',');
-		if (start) {
-			start++;
-			MemoryStatus->MemoryUsed = atoi(start);
-			start = strchr(start, ',');
-			if (start) {
-				start++;
-				MemoryStatus->MemoryFree = atoi(start) - MemoryStatus->MemoryUsed;
-				return ERR_NONE;
-			} else return ERR_UNKNOWN;
-		} else return ERR_UNKNOWN;
+
+		error = ATGEN_ParseReply(s, str,
+					"+CPBS: @s, @i, @i",
+					tmp, sizeof(tmp) / 2,
+					&MemoryStatus->MemoryUsed,
+					&MemoryStatus->MemoryFree);
+		if (error == ERR_NONE) {
+			/* We have total memory currently */
+			MemoryStatus->MemoryFree = MemoryStatus->MemoryFree - MemoryStatus->MemoryUsed;
+			return ERR_NONE;
+		}
+		return error;
 	case AT_Reply_CMSError:
 		return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
