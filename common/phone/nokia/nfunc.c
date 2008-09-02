@@ -1547,6 +1547,12 @@ GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine 
 	case 0x0f:
 		smprintf(s, "Phonebook entry writing failed\n");
 		switch (msg.Buffer[10]) {
+		case 0xf:
+			smprintf(s, "Invalid block sent\n");
+			return ERR_BUG;
+		case 0x23:
+			smprintf(s, "Block size does not match a definition\n");
+			return ERR_BUG;
 		case 0x25:
 			smprintf(s, "when you try to save into entry with caller group assigment in phone with caller groups standard 2 (like in 6230i)\n");
 			return ERR_PERMISSION;
@@ -1567,6 +1573,9 @@ GSM_Error N71_65_ReplyWritePhonebook(GSM_Protocol_Message msg, GSM_StateMachine 
 			return ERR_NOTSUPPORTED;
 		case 0x3e:
 			smprintf(s, "Too much entries\n");
+			return ERR_NOTSUPPORTED;
+		case 0x43:
+			smprintf(s, "Incorrect characters\n");
 			return ERR_NOTSUPPORTED;
 		default:
 			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[10]);

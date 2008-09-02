@@ -24,6 +24,7 @@ ChangeLog
 [-] * Add ID for lot's of Sony Ericsson phones.
 [-] * Use AT parser for AT+CPBS? reply.
 [-] * Use all possible ways to get memory status (bug #687).
+[-] * Detect more error codes from Nokia phones (bug #659).
     
 20080805 - 1.20.90
 
