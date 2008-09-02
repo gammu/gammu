@@ -1353,6 +1353,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->file.Buffer 		= NULL;
 	Priv->Mode			= false;
 	Priv->MemorySize		= 0;
+	Priv->MemoryUsed		= 0;
 	Priv->TextLength		= 0;
 	Priv->NumberLength		= 0;
 
@@ -3946,6 +3947,7 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 
 	/* Zero values that are for actual memory */
 	Priv->MemorySize		= 0;
+	Priv->MemoryUsed		= 0;
 	Priv->FirstMemoryEntry		= -1;
 	Priv->NextMemoryEntry		= 0;
 	Priv->TextLength		= 0;
@@ -4015,33 +4017,22 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 
 GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	GSM_MemoryStatus *MemoryStatus = s->Phone.Data.MemoryStatus;
  	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char tmp[200];
 	GSM_Error error;
 	char *str;
-	int used;
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Memory status received\n");
 		str = GetLineString(msg.Buffer, &Priv->Lines, 2);
 
-		if (MemoryStatus != NULL) {
-			MemoryStatus->MemoryUsed = 0;
-			MemoryStatus->MemoryFree = 0;
-		}
-
 		error = ATGEN_ParseReply(s, str,
 					"+CPBS: @s, @i, @i",
 					tmp, sizeof(tmp) / 2,
-					&used,
+					&Priv->MemoryUsed,
 					&Priv->MemorySize);
 		if (error == ERR_NONE) {
-			if (MemoryStatus != NULL) {
-				MemoryStatus->MemoryFree = Priv->MemorySize - used;
-				MemoryStatus->MemoryUsed = used;
-			}
 			return ERR_NONE;
 		}
 		return error;
@@ -4185,7 +4176,6 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 {
 	GSM_Error		error;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	GSM_MemoryStatus	*MemoryStatus = s->Phone.Data.MemoryStatus;
 	int			line = 1;
 	char			*str;
 	int			cur, last = -1;
@@ -4205,7 +4195,7 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 			/* Some phones wrongly return several lines with same location,
 			 * we need to catch it here to get correct count. */
 			if (cur != last) {
-				MemoryStatus->MemoryUsed++;
+				Priv->MemoryUsed++;
 			}
 			last = cur;
 			cur -= Priv->FirstMemoryEntry - 1;
@@ -4216,7 +4206,7 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 			line++;
 		}
 		smprintf(s, "Memory status: Used: %d, Next: %d\n",
-				MemoryStatus->MemoryUsed,
+				Priv->MemoryUsed,
 				Priv->NextMemoryEntry);
 		return ERR_NONE;
 	case AT_Reply_Error:
@@ -4238,24 +4228,57 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 	int			end;
 	int			memory_end;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	bool			free_read = false;
+
+	/* This can be NULL at this point */
+	if (Status != NULL) {
+		Status->MemoryUsed = 0;
+		Status->MemoryFree = 0;
+	}
 
 	/* For reading we prefer unicode */
 	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_UNICODE);
 	if (error != ERR_NONE) return error;
 
-	smprintf(s, "Getting memory information\n");
-
 	Priv->MemorySize		= 0;
-	Priv->TextLength		= 0;
-	Priv->NumberLength		= 0;
+	Priv->MemoryUsed		= 0;
+	/* Safe default values */
+	Priv->TextLength		= 20;
+	Priv->NumberLength		= 20;
+	Priv->FirstMemoryEntry		= 1;
 
+	/*
+	 * First we try AT+CPBS?. It should return size of memory and
+	 * number of used entries, but some vendors do not support this
+	 * (SE).
+	 */
+	/*
+	 * Some workaround for buggy mobile, that hangs after "AT+CPBS?" for other
+	 * memory than SM.
+	 */
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKENCPBS) || (Priv->PBKMemory == MEM_SM)) {
+		smprintf(s, "Getting memory status\n");
+		ATGEN_WaitFor(s, "AT+CPBS?\r", 9, 0x00, 4, ID_GetMemoryStatus);
+		if (error == ERR_NONE) free_read = true;
+	}
+
+	/**
+	 * Try to get memory size, first entry and length of entries
+	 * this way.
+	 */
+	smprintf(s, "Getting memory information\n");
 	ATGEN_WaitFor(s, "AT+CPBR=?\r", 10, 0x00, 10, ID_GetMemoryStatus);
-	if (error != ERR_NONE) return error;
-	if (NeededInfo == AT_Total || NeededInfo == AT_Sizes || NeededInfo == AT_First) return ERR_NONE;
+	/* Did we fail to get size in either way? */
+	if (error != ERR_NONE && Priv->MemorySize == 0) return error;
+	/* Fill in Status structure if we were asked for it */
+	if (Priv->MemorySize != 0 && Status != NULL) {
+		Status->MemoryUsed = Priv->MemoryUsed;
+		Status->MemoryFree = Priv->MemorySize - Priv->MemoryUsed;
+	}
+	if (NeededInfo == AT_Total || NeededInfo == AT_Sizes || NeededInfo == AT_First || free_read) return ERR_NONE;
 
 	smprintf(s, "Getting memory status by reading values\n");
 
-	s->Phone.Data.MemoryStatus	= Status;
 	Status->MemoryUsed		= 0;
 	Status->MemoryFree		= 0;
 	start				= Priv->FirstMemoryEntry;
@@ -4279,7 +4302,8 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 
 		/* Did we hit memory end? */
 		if (end == memory_end) {
-			Status->MemoryFree = Priv->MemorySize - Status->MemoryUsed;
+			Status->MemoryUsed = Priv->MemoryUsed;
+			Status->MemoryFree = Priv->MemorySize - Priv->MemoryUsed;
 			return ERR_NONE;
 		}
 
@@ -4295,18 +4319,6 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 
 	error = ATGEN_SetPBKMemory(s, Status->MemoryType);
 	if (error != ERR_NONE) return error;
-
-	s->Phone.Data.MemoryStatus=Status;
-
-	/* in some phones doesn't work or doesn't return memory status inside */
-	/* Some workaround for buggy mobile, that hangs after "AT+CPBS?" for other
-	 * memory than SM.
-	 */
-	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKENCPBS) || (Status->MemoryType == MEM_SM)) {
-		smprintf(s, "Getting memory status\n");
-		ATGEN_WaitFor(s, "AT+CPBS?\r", 9, 0x00, 4, ID_GetMemoryStatus);
-		if (error == ERR_NONE) return ERR_NONE;
-	}
 
 	/* Catch errorneous 0 returned by some Siemens phones for ME. There is
 	 * probably no way to get status there. */
