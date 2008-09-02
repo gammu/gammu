@@ -4020,22 +4020,28 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 	unsigned char tmp[200];
 	GSM_Error error;
 	char *str;
+	int used;
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "Memory status received\n");
 		str = GetLineString(msg.Buffer, &Priv->Lines, 2);
-  		MemoryStatus->MemoryUsed = 0;
-		MemoryStatus->MemoryFree = 0;
+
+		if (MemoryStatus != NULL) {
+			MemoryStatus->MemoryUsed = 0;
+			MemoryStatus->MemoryFree = 0;
+		}
 
 		error = ATGEN_ParseReply(s, str,
 					"+CPBS: @s, @i, @i",
 					tmp, sizeof(tmp) / 2,
-					&MemoryStatus->MemoryUsed,
-					&MemoryStatus->MemoryFree);
+					&used,
+					&Priv->MemorySize);
 		if (error == ERR_NONE) {
-			/* We have total memory currently */
-			MemoryStatus->MemoryFree = MemoryStatus->MemoryFree - MemoryStatus->MemoryUsed;
+			if (MemoryStatus != NULL) {
+				MemoryStatus->MemoryFree = Priv->MemorySize - used;
+				MemoryStatus->MemoryUsed = used;
+			}
 			return ERR_NONE;
 		}
 		return error;
