@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.20.90\n"
+"Project-Id-Version: Gammu 1.20.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2008-08-05 08:52+0200\n"
+"POT-Creation-Date: 2008-09-02 16:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -272,7 +272,11 @@ msgstr ""
 msgid "Bad feature string in configuration."
 msgstr ""
 
-#: common/gsmcomon.c:191
+#: common/gsmcomon.c:159
+msgid "Desired functionality has been disabled on compile time."
+msgstr ""
+
+#: common/gsmcomon.c:192
 msgid "Unknown error description."
 msgstr ""
 
@@ -4407,17 +4411,17 @@ msgstr ""
 msgid "Cannot save %s (%i)"
 msgstr ""
 
-#: gammu/smsd/s_files.c:347 gammu/smsd/s_files.c:355
+#: gammu/smsd/s_files.c:348 gammu/smsd/s_files.c:356
 #, c-format
 msgid "Could not delete %s (%i)"
 msgstr ""
 
-#: gammu/smsd/s_files.c:352
+#: gammu/smsd/s_files.c:353
 #, c-format
 msgid "Error copying SMS %s -> %s"
 msgstr ""
 
-#: gammu/smsd/s_files.c:366 gammu/smsd/s_mysql.c:612 gammu/smsd/s_pgsql.c:924
+#: gammu/smsd/s_files.c:367 gammu/smsd/s_mysql.c:612 gammu/smsd/s_pgsql.c:924
 #, c-format
 msgid "Transmitted %s (%s: %i) to %s"
 msgstr ""
