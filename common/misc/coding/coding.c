@@ -1853,7 +1853,9 @@ int DecodeBASE64(const unsigned char *Input, unsigned char *Output, size_t Lengt
 bool IconvDecode(const char *charset, const char *input, const size_t inlen, unsigned char *output, size_t outlen)
 {
 	iconv_t ic;
-	size_t rest = inlen;
+	/* Add one to convert also trailing zero, this is broken for
+	 * multibyte input, but we don't use iconv for this so far */
+	size_t rest = inlen + 1;
 	SECOND_ICONV_ARG in;
 	char *out;
 

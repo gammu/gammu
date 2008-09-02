@@ -25,6 +25,7 @@ ChangeLog
 [-] * Use AT parser for AT+CPBS? reply.
 [-] * Use all possible ways to get memory status (bug #687).
 [-] * Detect more error codes from Nokia phones (bug #659).
+[-] * Fix decoding of text using iconv (bug #687).
     
 20080805 - 1.20.90
 
