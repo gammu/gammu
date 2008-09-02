@@ -282,6 +282,7 @@ typedef struct {
 	size_t			NumberLength;
 	size_t			TextLength;
 	int			MemorySize;
+	int			MemoryUsed;
 
 	GSM_SMSMemoryStatus	LastSMSStatus;
 	int			LastSMSRead;
