@@ -8,13 +8,13 @@ msgstr ""
 "Project-Id-Version: Gammu 1.20.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2008-08-05 08:52+0200\n"
-"PO-Revision-Date: 2007-08-10 13:23+0200\n"
-"Last-Translator: Angelo Giuseppe De Michele <cerebro84@gmail.com>\n"
+"PO-Revision-Date: 2008-08-13 11:41+0200\n"
+"Last-Translator: Alessio Gaeta <alga777@libero.it>\n"
 "Language-Team: Language =it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Pootle 1.0.1\n"
+"X-Generator: Pootle 1.1.0\n"
 
 #: common/gsmcomon.c:98
 msgid "No error."
@@ -124,6 +124,8 @@ msgid ""
 "Some functions not available for your system (disabled in config or not "
 "written)."
 msgstr ""
+"Alcune funzioni non sono disponibili per il tuo sistema (disabilitate nel "
+"file di configurazione o non specificate)."
 
 #: common/gsmcomon.c:118
 msgid "Function not supported by phone."
@@ -141,7 +143,7 @@ msgstr "Errore di sicurezza. Forse non c'è PIN?"
 #: common/gsmcomon.c:121
 #, fuzzy
 msgid "Invalid location. Maybe too high?"
-msgstr "Locazione non valita. Forse troppo alta?"
+msgstr "Locazione non valida. Forse troppo alta?"
 
 #: common/gsmcomon.c:122
 msgid "Function not implemented. Help required."
@@ -180,7 +182,7 @@ msgstr "Siete dentro il menu del telefono. Uscite e riprovate."
 #: common/gsmcomon.c:130
 #, fuzzy
 msgid "Phone is not connected."
-msgstr "batteria non connessa"
+msgstr "Telefono non connesso"
 
 #: common/gsmcomon.c:131
 msgid "Function is during writing. If want help, please contact with authors."
@@ -188,22 +190,26 @@ msgstr ""
 
 #: common/gsmcomon.c:132
 msgid "Phone is disabled and connected to charger."
-msgstr ""
+msgstr "Il telefono è disabilitato e connesso al caricabatterie."
 
 #: common/gsmcomon.c:133
 #, fuzzy
 msgid "File format not supported by Gammu."
-msgstr "Funzione non supportata dal telefono."
+msgstr "Formato del file non supportato da Gammu."
 
 #: common/gsmcomon.c:134
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
 msgstr ""
+"Nessuno è perfetto! Qualche bug si è manifestato nel protocollo di "
+"comunicazione. Contattare gli sviluppatori."
 
 #: common/gsmcomon.c:135
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
+"Trasferimento annullato dal telefono. Potrebbe essere stato premuto il tasto "
+"Annulla del telefono."
 
 #: common/gsmcomon.c:136
 msgid "Phone module need to send another answer frame."
@@ -211,7 +217,7 @@ msgstr ""
 
 #: common/gsmcomon.c:137
 msgid "Current connection type doesn't support called function."
-msgstr ""
+msgstr "La connessione corrente non supporta la funzione richiesta."
 
 #: common/gsmcomon.c:138
 #, fuzzy
@@ -220,35 +226,35 @@ msgstr "Nessun errore."
 
 #: common/gsmcomon.c:139
 msgid "Invalid date or time specified."
-msgstr ""
+msgstr "Data o ora non validi."
 
 #: common/gsmcomon.c:140
 msgid "Phone memory error, maybe it is read only."
-msgstr ""
+msgstr "Errore nella memoria del telefono, forse è a sola lettura."
 
 #: common/gsmcomon.c:141
 msgid "Invalid data given to phone."
-msgstr ""
+msgstr "Dati non validi inviati al telefono."
 
 #: common/gsmcomon.c:142
 msgid "File with specified name already exist."
-msgstr ""
+msgstr "Esiste già un file col nome specificato."
 
 #: common/gsmcomon.c:143
 msgid "File with specified name doesn't exist."
-msgstr ""
+msgstr "Non esiste un file col nome specificato."
 
 #: common/gsmcomon.c:144
 msgid "You have to give folder name and not file name."
-msgstr ""
+msgstr "Occorre inserire il nome di una cartella, non di un file."
 
 #: common/gsmcomon.c:145
 msgid "You have to give file name and not folder name."
-msgstr ""
+msgstr "Occorre inserire il nome di un file, non di una cartella."
 
 #: common/gsmcomon.c:146
 msgid "Can not access SIM card."
-msgstr ""
+msgstr "Impossibile accedere alla carta SIM."
 
 #: common/gsmcomon.c:147
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
