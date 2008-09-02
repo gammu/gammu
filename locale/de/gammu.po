@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.20.90\n"
+"Project-Id-Version: Gammu 1.20.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2008-08-05 08:52+0200\n"
+"POT-Creation-Date: 2008-09-02 16:52+0200\n"
 "PO-Revision-Date: 2007-12-20 16:33+0100\n"
 "Last-Translator: Jochen Kemnade <jochenkemnade@web.de>\n"
 "Language-Team: Language =de\n"
@@ -304,7 +304,11 @@ msgstr "Fehlerhafte Daten vom Telefon empfangen."
 msgid "Bad feature string in configuration."
 msgstr ""
 
-#: common/gsmcomon.c:191
+#: common/gsmcomon.c:159
+msgid "Desired functionality has been disabled on compile time."
+msgstr ""
+
+#: common/gsmcomon.c:192
 msgid "Unknown error description."
 msgstr "Unbekannte Fehlerbeschreibung."
 
@@ -4563,17 +4567,17 @@ msgstr "Empfangen"
 msgid "Cannot save %s (%i)"
 msgstr "Speichern von %s (%i) nicht möglich"
 
-#: gammu/smsd/s_files.c:347 gammu/smsd/s_files.c:355
+#: gammu/smsd/s_files.c:348 gammu/smsd/s_files.c:356
 #, c-format
 msgid "Could not delete %s (%i)"
 msgstr "Löschen von %s (%i) nicht möglich"
 
-#: gammu/smsd/s_files.c:352
+#: gammu/smsd/s_files.c:353
 #, c-format
 msgid "Error copying SMS %s -> %s"
 msgstr "Fehler beim kopieren der SMS %s -> %s"
 
-#: gammu/smsd/s_files.c:366 gammu/smsd/s_mysql.c:612 gammu/smsd/s_pgsql.c:924
+#: gammu/smsd/s_files.c:367 gammu/smsd/s_mysql.c:612 gammu/smsd/s_pgsql.c:924
 #, c-format
 msgid "Transmitted %s (%s: %i) to %s"
 msgstr "Übermittelt %s (%s: %i) an %s"
