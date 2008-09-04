@@ -26,6 +26,7 @@ ChangeLog
 [-] * Use all possible ways to get memory status (bug #687).
 [-] * Detect more error codes from Nokia phones (bug #659).
 [-] * Fix decoding of text using iconv (bug #687).
+[-] * Fix linker flags check, caused failures on MacOS X.
     
 20080805 - 1.20.90
 
