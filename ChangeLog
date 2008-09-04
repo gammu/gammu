@@ -27,6 +27,7 @@ ChangeLog
 [-] * Detect more error codes from Nokia phones (bug #659).
 [-] * Fix decoding of text using iconv (bug #687).
 [-] * Fix linker flags check, caused failures on MacOS X.
+[-] * Add second ID for Nokia 2610 (thanks to Nicolas Forget).
     
 20080805 - 1.20.90
 
