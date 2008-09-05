@@ -6,6 +6,7 @@
 
 typedef struct {
 	socket_type hPhone;
+	void *Data;
 } GSM_Device_BlueToothData;
 
 #endif
