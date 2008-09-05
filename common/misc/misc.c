@@ -598,16 +598,16 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesiz
 			/* these are empty in windows xp */
 			&& message[i]!=0x85 && message[i]!=0x95
   			&& message[i]!=0xA6 && message[i]!=0xB7) {
-			if (j != len-1) buffer[j*4+2] 	= message[i];
-			buffer[(len-1)*4+j+3]		= message[i];
+			buffer[j*4+2]			= message[i];
+			buffer[(len-1)*4+j+4]		= message[i];
 		} else {
-			buffer[(len-1)*4+j+3]		= '.';
+			buffer[(len-1)*4+j+4]		= '.';
 		}
 		if (j != len-1 && i != messagesize-1) buffer[j*4+3] = '|';
 		if (j == len-1) {
 			smfprintf(d, "%s\n", buffer);
 			memset(buffer,0x20,sizeof(buffer));
-			buffer[len*5-1]=0;
+			buffer[len*5]=0;
 			j = 0;
 		} else {
 			j++;
