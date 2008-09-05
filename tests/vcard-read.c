@@ -135,6 +135,7 @@ int main(int argc, char **argv)
 			case PBK_Text_UserID:
 			case PBK_Text_PictureName:
 			case PBK_PushToTalkID:
+			case PBK_FavoriteMessagingNum:
 			case PBK_Caller_Group       :
 				if (!mywstrncmp(
 					pbk.Entries[i].Text,

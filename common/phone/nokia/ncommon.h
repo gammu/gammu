@@ -56,6 +56,9 @@ typedef enum {
 	S4030_PBK_COMPANY         = 0x55,
 	S4030_PBK_NICKNAME        = 0x56,
 	S4030_PBK_BIRTHDAY        = 0x57,
+
+	/* Unknown series */
+	N2630_PBK_FAVMESSAGING	 = 0x65,
 } GSM_71_65_Phonebook_Entries_Types;
 
 typedef enum {
