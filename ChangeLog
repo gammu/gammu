@@ -32,6 +32,7 @@ ChangeLog
 [-] * Try to use OPP and PBAP Bluetooth profiles also (not tested!).
 [-] * DumpMessage is not printing last char (bug #692).
 [+] * Support for favorite messaging number (bug #693).
+[-] * Add ID for Nokia 2630 (bug #693).
     
 20080805 - 1.20.90
 

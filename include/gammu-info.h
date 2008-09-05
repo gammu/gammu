@@ -561,6 +561,10 @@ typedef enum {
 	 * it properly.
 	 */
 	F_CPROT,
+	/**
+	 * Phonebook with favorite messaging number
+	 */
+	F_PBKFAVORITEMESSAGE,
 
 	/**
 	 * Just marker of highest feature code, should not be used.
