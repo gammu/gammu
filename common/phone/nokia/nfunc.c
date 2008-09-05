@@ -287,6 +287,9 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 			req[count-1]--;
 			continue;
 		}
+		if (entry->Entries[i].EntryType == PBK_FavoriteMessagingNum) {
+			/* FIXME, write 65|00|00|08|<PBK#>|<Number>|00|00 */
+		}
 	}
 
 	*block2=block;
@@ -865,6 +868,13 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			entry->Entries[entry->EntriesNum].EntryType=PBK_Caller_Group;
 			smprintf(s, "Caller group \"%i\"\n",Block[7]);
 			entry->Entries[entry->EntriesNum].Number=Block[7];
+			entry->EntriesNum ++;
+			continue;
+		}
+		if (Block[0] == N2630_PBK_FAVMESSAGING) {
+			entry->Entries[entry->EntriesNum].EntryType=PBK_FavoriteMessagingNum;
+			smprintf(s,"Marked phone number #%i as favorite messaging number\n",Block[5]);
+			entry->Entries[entry->EntriesNum].Number=Block[5];
 			entry->EntriesNum ++;
 			continue;
 		}

@@ -331,6 +331,7 @@ void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry *pbk, bool he
 				case PBK_Text_Custom4:
 				case PBK_Text_PictureName:
 				case PBK_PushToTalkID:
+				case PBK_FavoriteMessagingNum:
 					pbk->Entries[i].AddError = ERR_NOTSUPPORTED;
 					ignore = true;
 					break;

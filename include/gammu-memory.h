@@ -279,6 +279,10 @@ typedef enum {
  	 * Push-to-talk ID (Text)
  	 */
  	PBK_PushToTalkID,
+	/**
+	 * Favorite messaging user (1-based telephone number index) (Number)
+	 */
+	PBK_FavoriteMessagingNum,
 } GSM_EntryType;
 
 /**
