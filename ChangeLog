@@ -30,6 +30,7 @@ ChangeLog
 [-] * Add second ID for Nokia 2610 (thanks to Nicolas Forget).
 [-] * Add ID for Nokia 6060.
 [-] * Try to use OPP and PBAP Bluetooth profiles also (not tested!).
+[-] * DumpMessage is not printing last char (bug #692).
     
 20080805 - 1.20.90
 
