@@ -288,7 +288,16 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 			continue;
 		}
 		if (entry->Entries[i].EntryType == PBK_FavoriteMessagingNum) {
-			/* FIXME, write 65|00|00|08|<PBK#>|<Number>|00|00 */
+			if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKFAVORITEMESSAGE)) {
+				entry->Entries[i].AddError = ERR_NONE;
+				string[0] = entry->Entries[i].Number;
+				string[1] = 0x00;
+				string[2] = 0x00;
+				count += N71_65_PackPBKBlock(s, N2630_PBK_FAVMESSAGING, 3, block++, string, req + count);
+				count --;
+				req[count-5] = 8;
+			}
+			continue;
 		}
 	}
 
