@@ -578,36 +578,47 @@ bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info *privdi)
 #define CHARS_PER_LINE (16)
 
 /* Dumps a message */
-void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesize)
+void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const int messagesize)
 {
-	int 		i,j=0;
-	unsigned char	buffer[(CHARS_PER_LINE * 5) + 1];
+	int i, j = 0;
+	char buffer[(CHARS_PER_LINE * 5) + 1];
 
 	if (d->df == NULL || messagesize == 0) return;
 
 	smfprintf(d, "\n");
 
-	memset(buffer, 0x20, CHARS_PER_LINE * 5);
-	buffer[CHARS_PER_LINE * 5]=0;
+	memset(buffer, ' ', CHARS_PER_LINE * 5);
+	buffer[CHARS_PER_LINE * 5] = 0;
 
 	for (i = 0; i < messagesize; i++) {
-		snprintf(buffer + (j * 4), sizeof(buffer) - (j * 4) - 1, "%02X", message[i]);
-		buffer[(j * 4) + 2] = 0x20;
-		/* 9 = tab */
-		if (isprint(message[i]) && message[i]!=0x09
-			/* 0x01 = beep in windows xp */
-			&& message[i]!=0x01
-			/* these are empty in windows xp */
-			&& message[i]!=0x85 && message[i]!=0x95
-  			&& message[i]!=0xA6 && message[i]!=0xB7) {
-			buffer[j * 4 + 2] = message[i];
+		/* Write hex number */
+		snprintf(buffer + (j * 4),
+			sizeof(buffer) - (j * 4) - 1,
+			"%02X", message[i]);
+
+		/* Write char if possible */
+		if (isprint(message[i])
+				/* 0x09 = tab */
+				&& message[i] != 0x09
+				/* 0x01 = beep in windows xp */
+				&& message[i] != 0x01
+				/* these are empty in windows xp */
+				&& message[i] != 0x85
+				&& message[i] != 0x95
+				&& message[i] != 0xA6
+				&& message[i] != 0xB7) {
+			buffer[(j * 4) + 2] = message[i];
 			buffer[(CHARS_PER_LINE - 1) * 4 + j + 4] = message[i];
 		} else {
 			buffer[(CHARS_PER_LINE - 1) * 4 + j + 4] = '.';
 		}
+
+		/* Write char separator */
 		if (j != CHARS_PER_LINE - 1 && i != messagesize - 1) {
 			buffer[j * 4 + 3] = '|';
 		}
+
+		/* Print out buffer */
 		if (j == CHARS_PER_LINE-1) {
 			smfprintf(d, "%s\n", buffer);
 			memset(buffer, 0x20, CHARS_PER_LINE * 5);
@@ -616,7 +627,11 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesiz
 			j++;
 		}
 	}
-	if (j != 0) smfprintf(d, "%s\n", buffer);
+
+	/* Anything remains to be printed? */
+	if (j != 0) {
+		smfprintf(d, "%s\n", buffer);
+	}
 }
 
 #undef CHARS_PER_LINE
