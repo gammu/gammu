@@ -72,14 +72,14 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 			return 2;
 		}
 		/* Phone Book Access Profile is subset of IrMC */
-		if (strstr(name, "PBAP server") != NULL) {
+		if (strstr(name, "PBAP") != NULL) {
 			if (strcmp(s->CurrentConfig->Model, "obexirmc") == 0) {
 				return 3;
 			}
 			return 2;
 		}
 		/* Object Push Profile */
-		if (strstr(name, "OPP server") != NULL) {
+		if (strstr(name, "OPP") != NULL) {
 			if (strcmp(s->CurrentConfig->Model, "obexnone") == 0) {
 				return 3;
 			}
