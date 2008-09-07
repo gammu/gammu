@@ -16,11 +16,26 @@ if (NOT DEFINED OSX_BLUE_FOUND)
            /usr/local/include
         )
 
-        find_library(OSX_BLUE_LIBRARIES NAMES IOBluetooth
+        find_library(OSX_COREFOUNDATION_LIB NAMES CoreFoundation
            PATHS
            /usr/lib
            /usr/local/lib
         )
+        find_library(OSX_BLUETOOTH_LIB NAMES IOBluetooth
+           PATHS
+           /usr/lib
+           /usr/local/lib
+        )
+        find_library(OSX_FOUNDATION_LIB NAMES Foundation
+           PATHS
+           /usr/lib
+           /usr/local/lib
+        )
+
+        if (OSX_BLUETOOTH_LIB AND OSX_COREFOUNDATION_LIB AND OSX_FOUNDATION_LIB) 
+            set (OSX_BLUE_LIBRARIES "${OSX_BLUETOOTH_LIB} ${OSX_COREFOUNDATION_LIB} ${OSX_FOUNDATION_LIB}" CACHE INTERNAL "OS X Bluetooth libraries")
+        endif (OSX_BLUETOOTH_LIB AND OSX_COREFOUNDATION_LIB AND OSX_FOUNDATION_LIB) 
+
 
         if(OSX_BLUE_INCLUDE_DIR AND OSX_BLUE_LIBRARIES)
            set(OSX_BLUE_FOUND TRUE CACHE INTERNAL "OS X Bluetooth found")
