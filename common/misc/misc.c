@@ -575,22 +575,24 @@ bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info *privdi)
 	return true;
 }
 
+#define CHARS_PER_LINE (16)
+
 /* Dumps a message */
 void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesize)
 {
-	int 		i,j=0,len=16;
-	unsigned char	buffer[200];
+	int 		i,j=0;
+	unsigned char	buffer[(CHARS_PER_LINE * 5) + 1];
 
 	if (d->df == NULL || messagesize == 0) return;
 
 	smfprintf(d, "\n");
 
-	memset(buffer,0x20,sizeof(buffer));
-	buffer[len*5-1]=0;
+	memset(buffer, 0x20, CHARS_PER_LINE * 5);
+	buffer[CHARS_PER_LINE * 5]=0;
 
 	for (i = 0; i < messagesize; i++) {
-		snprintf(buffer+j*4, sizeof(buffer) - j*4 - 1, "%02X",message[i]);
-		buffer[j*4+2] = 0x20;
+		snprintf(buffer + (j * 4), sizeof(buffer) - (j * 4) - 1, "%02X", message[i]);
+		buffer[(j * 4) + 2] = 0x20;
 		/* 9 = tab */
 		if (isprint(message[i]) && message[i]!=0x09
 			/* 0x01 = beep in windows xp */
@@ -598,16 +600,17 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesiz
 			/* these are empty in windows xp */
 			&& message[i]!=0x85 && message[i]!=0x95
   			&& message[i]!=0xA6 && message[i]!=0xB7) {
-			buffer[j*4+2]			= message[i];
-			buffer[(len-1)*4+j+4]		= message[i];
+			buffer[j * 4 + 2] = message[i];
+			buffer[(CHARS_PER_LINE - 1) * 4 + j + 4] = message[i];
 		} else {
-			buffer[(len-1)*4+j+4]		= '.';
+			buffer[(CHARS_PER_LINE - 1) * 4 + j + 4] = '.';
 		}
-		if (j != len-1 && i != messagesize-1) buffer[j*4+3] = '|';
-		if (j == len-1) {
+		if (j != CHARS_PER_LINE - 1 && i != messagesize - 1) {
+			buffer[j * 4 + 3] = '|';
+		}
+		if (j == CHARS_PER_LINE-1) {
 			smfprintf(d, "%s\n", buffer);
-			memset(buffer,0x20,sizeof(buffer));
-			buffer[len*5]=0;
+			memset(buffer, 0x20, CHARS_PER_LINE * 5);
 			j = 0;
 		} else {
 			j++;
@@ -615,6 +618,8 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, int messagesiz
 	}
 	if (j != 0) smfprintf(d, "%s\n", buffer);
 }
+
+#undef CHARS_PER_LINE
 
 const char *GetOS(void)
 {
