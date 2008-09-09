@@ -434,45 +434,9 @@ void CopyLineString(char *dest, const char *src, const GSM_CutLines *lines, int 
 
 GSM_Debug_Info di = {0,NULL,false,"",false};
 
-#ifdef DEBUG
-PRINTF_STYLE(1, 2)
-int dbgprintf(const char *format, ...)
+PRINTF_STYLE(2, 0)
+static int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)
 {
-	va_list			argp;
-	int 			result;
-	static unsigned char 	nextline[2000]="";
-	unsigned char		buffer[2000];
-	GSM_DateTime 		date_time;
-
-	va_start(argp, format);
-	result = vsnprintf(buffer, sizeof(buffer) - 1, format, argp);
-	va_end(argp);
-
-	if (di.df != NULL && (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE)) {
-		strcat(nextline, buffer);
-
-		if (strstr(buffer, "\n") != NULL) {
-			if (di.dl == DL_TEXTALLDATE) {
-				GSM_GetCurrentDateTime(&date_time);
-				fprintf(di.df,"%s %4d/%02d/%02d %02d:%02d:%02d: ",
-		                	DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
-		                	date_time.Year, date_time.Month, date_time.Day,
-		                	date_time.Hour, date_time.Minute, date_time.Second);
-			}
-			fprintf(di.df, "%s", nextline);
-			strcpy(nextline, "");
-		}
-
-		return result;
-	}
-	return 0;
-}
-#endif
-
-PRINTF_STYLE(2, 3)
-int smfprintf(GSM_Debug_Info *d, const char *format, ...)
-{
-        va_list 		argp;
 	int 			result=0;
 	char			buffer[3000];
 	char			*pos, *end;
@@ -481,19 +445,12 @@ int smfprintf(GSM_Debug_Info *d, const char *format, ...)
 	FILE			*f;
 	Debug_Level		l;
 
-	if (d->use_global) {
-		f = di.df;
-		l = di.dl;
-	} else {
-		f = d->df;
-		l = d->dl;
-	}
+	f = d->df;
+	l = d->dl;
 
 	if (l == DL_NONE || f == NULL) return 0;
 
-	va_start(argp, format);
 	result = vsnprintf(buffer, sizeof(buffer) - 1, format, argp);
-	va_end(argp);
 	pos = buffer;
 
 	while (*pos != 0) {
@@ -541,6 +498,41 @@ int smfprintf(GSM_Debug_Info *d, const char *format, ...)
 
 	/* Flush buffers, this might be configurable, but it could cause drop of last log messages */
 	fflush(f);
+
+	return result;
+}
+
+#ifdef DEBUG
+PRINTF_STYLE(1, 2)
+int dbgprintf(const char *format, ...)
+{
+        va_list 		argp;
+	int 			result;
+
+	va_start(argp, format);
+	result = dbg_vprintf(&di, format, argp);
+	va_end(argp);
+
+	return result;
+}
+#endif
+
+PRINTF_STYLE(2, 3)
+int smfprintf(GSM_Debug_Info *d, const char *format, ...)
+{
+        va_list 		argp;
+	int 			result;
+	GSM_Debug_Info		*tmpdi;
+
+	if (d->use_global) {
+		tmpdi = &di;
+	} else {
+		tmpdi = d;
+	}
+
+	va_start(argp, format);
+	result = dbg_vprintf(tmpdi, format, argp);
+	va_end(argp);
 
 	return result;
 }
