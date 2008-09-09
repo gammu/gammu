@@ -31,11 +31,11 @@ GSM_Error SaveVCard(char *FileName, GSM_Backup *backup)
 
 	i=0;
 	while (backup->PhonePhonebook[i]!=NULL) {
-		sprintf(Buffer, "%c%c",13,10);
-		chk_fwrite(Buffer,1,2,file);
 		Length = 0;
 		GSM_EncodeVCARD(Buffer,&Length,backup->PhonePhonebook[i],true,Nokia_VCard21);
 		chk_fwrite(Buffer,1,Length,file);
+		sprintf(Buffer, "%c%c",13,10);
+		chk_fwrite(Buffer,1,2,file);
 		i++;
 	}
 
