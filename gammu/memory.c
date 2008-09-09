@@ -311,18 +311,6 @@ void DeleteAllMemory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-#define MemoryLocationToString(x) ( \
-	x == MEM_ON ? "ON" :			\
-	x == MEM_DC ? "DC" :			\
-	x == MEM_RC ? "RC" :			\
-	x == MEM_MC ? "MC" :			\
-	x == MEM_MT ? "MT" :			\
-	x == MEM_ME ? "ME" :			\
-	x == MEM_SM ? "SM" :			\
-	x == MEM_SL ? "SL" :			\
-	x == MEM_VM ? "VM" :			\
-	x == MEM_FD ? "FD" : "XX")
-
 void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 {
 	int i;
@@ -371,7 +359,7 @@ void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 			case PBK_Caller_Group       :
 				if (mywstrstr(Entry->Entries[i].Text, Text) != NULL) {
 					fprintf(stderr,"\n");
-					printf(_("Memory %s, Location %i\n"),MemoryLocationToString(Entry->MemoryType),Entry->Location);
+					printf(_("Memory %s, Location %i\n"),GSM_MemoryTypeToString(Entry->MemoryType),Entry->Location);
 					PrintMemoryEntry(Entry);
 					return;
 				}
@@ -479,7 +467,7 @@ void ListMemoryCategoryEntries(int Category)
 		Print_Error(error);
 		for (j=0;j<Entry.EntriesNum;j++) {
 			if (Entry.Entries[j].EntryType == PBK_Category && Entry.Entries[j].Number == Category) {
-				printf(_("Memory %s, Location %i\n"),MemoryLocationToString(Entry.MemoryType),Entry.Location);
+				printf(_("Memory %s, Location %i\n"),GSM_MemoryTypeToString(Entry.MemoryType),Entry.Location);
 				PrintMemoryEntry(&Entry);
 			}
 		}
