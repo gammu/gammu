@@ -97,6 +97,8 @@ static GSM_Error N6510_ReplyGetMemoryStatus(GSM_Protocol_Message msg, GSM_StateM
 	/* Quess ;-)) */
 	if (msg.Buffer[14]==0x10) {
 		Data->MemoryStatus->MemoryFree = msg.Buffer[18]*256 + msg.Buffer[19];
+	} else if (msg.Buffer[14]==0x02) {
+		Data->MemoryStatus->MemoryFree = msg.Buffer[22];
 	} else {
 		Data->MemoryStatus->MemoryFree = msg.Buffer[17];
 	}

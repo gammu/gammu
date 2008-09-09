@@ -37,6 +37,7 @@ ChangeLog
 [-] * Do not open debug file for second time when using global debug.
 [-] * Fix DC memory name printing (bug #698).
 [-] * Add API function GSM_MemoryTypeToString.
+[-] * Report correct size of DC/RC/MC memory on DCT4 phones (bug #699).
     
 20080805 - 1.20.90
 
