@@ -454,13 +454,12 @@ int dbgprintf(const char *format, ...)
 		if (strstr(buffer, "\n") != NULL) {
 			if (di.dl == DL_TEXTALLDATE) {
 				GSM_GetCurrentDateTime(&date_time);
-				fprintf(di.df,"%s %4d/%02d/%02d %02d:%02d:%02d: %s",
+				fprintf(di.df,"%s %4d/%02d/%02d %02d:%02d:%02d: ",
 		                	DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
 		                	date_time.Year, date_time.Month, date_time.Day,
-		                	date_time.Hour, date_time.Minute, date_time.Second,nextline);
-			} else {
-				fprintf(di.df, "%s", nextline);
+		                	date_time.Hour, date_time.Minute, date_time.Second);
 			}
+			fprintf(di.df, "%s", nextline);
 			strcpy(nextline, "");
 		}
 
@@ -592,9 +591,8 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const int mess
 
 	for (i = 0; i < messagesize; i++) {
 		/* Write hex number */
-		snprintf(buffer + (j * 4),
-			sizeof(buffer) - (j * 4) - 1,
-			"%02X", message[i]);
+		snprintf(buffer + (j * 4), 3, "%02X", message[i]);
+		buffer[(j * 4) + 2] = ' '; /* wipe snprintf's \0 */
 
 		/* Write char if possible */
 		if (isprint(message[i])
@@ -619,9 +617,9 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const int mess
 		}
 
 		/* Print out buffer */
-		if (j == CHARS_PER_LINE-1) {
+		if (j == CHARS_PER_LINE - 1) {
 			smfprintf(d, "%s\n", buffer);
-			memset(buffer, 0x20, CHARS_PER_LINE * 5);
+			memset(buffer, ' ', CHARS_PER_LINE * 5);
 			j = 0;
 		} else {
 			j++;
