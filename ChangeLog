@@ -35,6 +35,7 @@ ChangeLog
 [-] * Add ID for Nokia 2630 (bug #693).
 [+] * First attempt for Bluetooth support on OS X.
 [-] * Do not open debug file for second time when using global debug.
+[-] * Fix DC memory name printing (bug #698).
     
 20080805 - 1.20.90
 

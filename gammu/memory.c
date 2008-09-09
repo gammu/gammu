@@ -313,6 +313,7 @@ void DeleteAllMemory(int argc, char *argv[])
 
 #define MemoryLocationToString(x) ( \
 	x == MEM_ON ? "ON" :			\
+	x == MEM_DC ? "DC" :			\
 	x == MEM_RC ? "RC" :			\
 	x == MEM_MC ? "MC" :			\
 	x == MEM_MT ? "MT" :			\
