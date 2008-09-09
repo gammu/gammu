@@ -69,6 +69,12 @@ typedef enum {
 
 /**
  * Returns string representation of a memory type.
+ *
+ * \param x Memory type to convert
+ *
+ * \return Static string.
+ *
+ * \ingroup Memory
  */
 #define GSM_MemoryTypeToString(x) ( \
 	(x) == MEM_ME ? "ME" :			\
