@@ -38,6 +38,7 @@ ChangeLog
 [-] * Fix DC memory name printing (bug #698).
 [-] * Add API function GSM_MemoryTypeToString.
 [-] * Report correct size of DC/RC/MC memory on DCT4 phones (bug #699).
+[-] * Store favorite messaging as phone number, not only as ID (bug #693).
     
 20080805 - 1.20.90
 
