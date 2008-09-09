@@ -521,11 +521,13 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 
 		s->di 				  = di;
 		s->di.use_global 		  = s->CurrentConfig->UseGlobalDebugFile;
-		GSM_SetDebugLevel(s->CurrentConfig->DebugLevel, &s->di);
-		error = GSM_SetDebugFile(s->CurrentConfig->DebugFile, &s->di);
-		if (error != ERR_NONE) {
-			GSM_LogError(s, "Init:GSM_SetDebugFile" , error);
-			return error;
+		if (!s->di.use_global) {
+			GSM_SetDebugLevel(s->CurrentConfig->DebugLevel, &s->di);
+			error = GSM_SetDebugFile(s->CurrentConfig->DebugFile, &s->di);
+			if (error != ERR_NONE) {
+				GSM_LogError(s, "Init:GSM_SetDebugFile" , error);
+				return error;
+			}
 		}
 
 		smprintf_level(s, D_ERROR, "[Gammu            - %s built %s %s using %s]\n",

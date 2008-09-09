@@ -34,6 +34,7 @@ ChangeLog
 [+] * Support for favorite messaging number (bug #693).
 [-] * Add ID for Nokia 2630 (bug #693).
 [+] * First attempt for Bluetooth support on OS X.
+[-] * Do not open debug file for second time when using global debug.
     
 20080805 - 1.20.90
 
