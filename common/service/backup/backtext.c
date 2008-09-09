@@ -293,6 +293,11 @@ static GSM_Error SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				error = SaveBackupText(file, "", buffer, UseUnicode);
 				if (error != ERR_NONE) return error;
 				break;
+			case PBK_Number_Messaging:
+				sprintf(buffer,"Entry%02iType = NumberMessaging%c%c",j,13,10);
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
+				break;
 			case PBK_Text_Note:
 				sprintf(buffer,"Entry%02iType = Note%c%c",j,13,10);
 				error = SaveBackupText(file, "", buffer, UseUnicode);
@@ -511,15 +516,6 @@ static GSM_Error SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				sprintf(buffer,"Entry%02iType = PushToTalkID%c%c",j,13,10);
 				error = SaveBackupText(file, "", buffer, UseUnicode);
 				if (error != ERR_NONE) return error;
-				break;
-			case PBK_FavoriteMessagingNum:
-				sprintf(buffer,"Entry%02iType = FavoriteMessagingNum%c%c",j,13,10);
-				error = SaveBackupText(file, "", buffer, UseUnicode);
-				if (error != ERR_NONE) return error;
-				sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
-				error = SaveBackupText(file, "", buffer, UseUnicode);
-				if (error != ERR_NONE) return error;
-				text = false;
 				break;
         	}
 		if (text) {
@@ -1734,6 +1730,8 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Home;
 			} else if (strcasecmp(readvalue,"NumberOther") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Other;
+			} else if (strcasecmp(readvalue,"NumberMessaging") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Messaging;
 			} else if (strcasecmp(readvalue,"NumberPager") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Pager;
 			} else if (strcasecmp(readvalue,"Note") == 0) {
@@ -1834,16 +1832,6 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				continue;
 			} else if (strcasecmp(readvalue,"PictureID") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_PictureID;
-				Pbk->Entries[Pbk->EntriesNum].Number = 0;
-				sprintf(buffer,"Entry%02iNumber",num);
-				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-				if (readvalue!=NULL) {
-					Pbk->Entries[Pbk->EntriesNum].Number = atoi(readvalue);
-				}
-				Pbk->EntriesNum ++;
-				continue;
-			} else if (strcasecmp(readvalue,"FavoriteMessagingNum") == 0) {
-				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_FavoriteMessagingNum;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
 				sprintf(buffer,"Entry%02iNumber",num);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);

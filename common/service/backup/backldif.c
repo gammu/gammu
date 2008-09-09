@@ -77,6 +77,9 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 			case PBK_Number_Pager:
 				SaveLDIFText(file, "pager", backup->PhonePhonebook[i]->Entries[j].Text);
 				break;
+			case PBK_Number_Messaging:
+				SaveLDIFText(file, "messaging", backup->PhonePhonebook[i]->Entries[j].Text);
+				break;
 			case PBK_Number_Fax:
 				/* facsimileTelephoneNumber */
 				SaveLDIFText(file, "fax", backup->PhonePhonebook[i]->Entries[j].Text);
@@ -169,7 +172,6 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 			case PBK_CallLength:
 			case PBK_Text_PictureName:
 			case PBK_PushToTalkID:
-			case PBK_FavoriteMessagingNum:
 				dbgprintf("Feature missed\n");
 				break;
 			}
@@ -249,6 +251,16 @@ static GSM_Error GSM_DecodeLDIFEntry(unsigned char *Buffer, int *Pos, GSM_Memory
 			if (ReadLDIFText(Line, "mobile", Buff)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Mobile;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "pager", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Pager;
+				Pbk->EntriesNum++;
+			}
+			if (ReadLDIFText(Line, "messaging", Buff)) {
+				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Number_Messaging;
 				Pbk->EntriesNum++;
 			}
 			if (ReadLDIFText(Line, "workPhone", Buff)) {

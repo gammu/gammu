@@ -562,7 +562,7 @@ typedef enum {
 	 */
 	F_CPROT,
 	/**
-	 * Phonebook with favorite messaging number
+	 * Phonebook with favorite messaging numbers
 	 */
 	F_PBKFAVORITEMESSAGE,
 

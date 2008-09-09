@@ -287,15 +287,26 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 			req[count-1]--;
 			continue;
 		}
-		if (entry->Entries[i].EntryType == PBK_FavoriteMessagingNum) {
+		if (entry->Entries[i].EntryType == PBK_Number_Messaging) {
 			if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKFAVORITEMESSAGE)) {
-				entry->Entries[i].AddError = ERR_NONE;
-				string[0] = entry->Entries[i].Number;
-				string[1] = 0x00;
-				string[2] = 0x00;
-				count += N71_65_PackPBKBlock(s, N2630_PBK_FAVMESSAGING, 3, block++, string, req + count);
-				count --;
-				req[count-5] = 8;
+				entry->Entries[i].AddError = ERR_INVALIDDATA;
+				/* The favorite messaging number is stored as a phone number,
+				 * the phone wants an id to a previously supplied entry, so we search for that.
+				 * In case there was an error in the previous entries, we stop.
+				 * Otherwise we would point past the supplied entries. */
+				for (j = 0; j < i && entry->Entries[j].AddError == ERR_NONE; j++) {
+					if (mywstrncmp(entry->Entries[i].Text, entry->Entries[j].Text, -1)) {
+						string[0] = j + 1;
+						string[1] = 0x00;
+						string[2] = 0x00;
+						count += N71_65_PackPBKBlock(s, N2630_PBK_FAVMESSAGING, 3, block++, string, req + count);
+						count --;
+						req[count-5] = 8;
+						entry->Entries[i].AddError = ERR_NONE;
+						break;
+					}
+
+				}
 			}
 			continue;
 		}
@@ -881,9 +892,17 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			continue;
 		}
 		if (Block[0] == N2630_PBK_FAVMESSAGING) {
-			entry->Entries[entry->EntriesNum].EntryType=PBK_FavoriteMessagingNum;
-			smprintf(s,"Marked phone number #%i as favorite messaging number\n",Block[5]);
-			entry->Entries[entry->EntriesNum].Number=Block[5];
+			/* The phone sends an entry id. We store it as phone number because
+			 * entry->Entries doesn't retain order. */
+			int num = (int)Block[5];
+			entry->Entries[entry->EntriesNum].EntryType=PBK_Number_Messaging;
+			if (num >= entry->EntriesNum) {
+				smprintf(s, "ERROR: Number_Messaging references future entry\n");
+				return ERR_UNKNOWNRESPONSE;
+			}
+			CopyUnicodeString(entry->Entries[entry->EntriesNum].Text,entry->Entries[num-1].Text);
+			smprintf(s,"Marked entry #%i (%s) as favorite messaging number\n",
+				num,DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
 			entry->EntriesNum ++;
 			continue;
 		}
