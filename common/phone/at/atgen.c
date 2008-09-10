@@ -406,8 +406,10 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 			) {
 			charset = AT_CHARSET_HEX;
 		}
-		/* For phone numbers, we can assume all unicode chars
-		 * will be < 256, so they will fit one byte */
+		/*
+		 * For phone numbers, we can assume all unicode chars
+		 * will be < 256, so they will fit one byte.
+		 */
 		if  (charset == AT_CHARSET_UCS2
 			&& (! ATGEN_IsUCS2(input, length) ||
 				(phone &&
@@ -417,6 +419,15 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 				 input[5] != '0'
 				)))) {
 			charset = AT_CHARSET_GSM;
+		}
+		/*
+		 * Phone number can also contain email, catch it by @.
+		 */
+		if  (charset == AT_CHARSET_GSM
+			&& phone
+			&& (! ATGEN_IsUCS2(input, length))
+			&& strchr(input, '@') != NULL) {
+			charset = AT_CHARSET_UTF8;
 		}
 	}
 
