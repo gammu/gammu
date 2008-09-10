@@ -62,7 +62,7 @@ cmake ../$repo-$version \
 # Disabled, it seems to use different msvc:
 #    -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
 
-make -j 2
+make
 cpack
 mv Gammu-*-Windows.* ../
 cd ..
@@ -79,7 +79,7 @@ cmake ../$repo-$version \
     -DPOSTGRES_CROSS_PATH= \
     -DGETTEXT_CROSS_PATH= \
 
-make -j 2
+make
 cpack
 mv Gammu-*-Windows-Minimal.* ../
 cd ..
