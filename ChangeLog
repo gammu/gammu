@@ -42,6 +42,7 @@ ChangeLog
 [-] * Avoid empty line at beginning of vCard backup (bug #701).
 [-] * Add ID for Nokia 2760.
 [-] * Catch not acceptable errors in OBEX (bug #702).
+[-] * Operation not allowed is not an unknown problem (bug #678).
     
 20080805 - 1.20.90
 
