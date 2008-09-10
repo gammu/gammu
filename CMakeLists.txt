@@ -77,6 +77,7 @@ if (CROSS_MINGW)
     set (CPACK_TOPLEVEL_TAG "Source")
     set (PACKAGE_NAME "Windows" CACHE STRING "Windows package name")
     set (CPACK_SYSTEM_NAME "${PACKAGE_NAME}")
+    add_definitions(-D_MSVCRT_VERSION__=0x070)
 endif (CROSS_MINGW)
 
 # We've set up compiler, now we can use it
