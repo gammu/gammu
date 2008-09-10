@@ -179,6 +179,12 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 				memcpy(&Priv->Files[i+(msg.Buffer[8]*256+msg.Buffer[9])],&Priv->Files[i],sizeof(GSM_File));
 				i--;
 			}
+			if (Priv->FilesLocationsUsed + (msg.Buffer[8]*256+msg.Buffer[9]) >= GSM_PHONE_MAXSMSINFOLDER) {
+				smprintf(s,"Too small buffer for folder data\n");
+				Priv->filesystem2error  = ERR_MOREMEMORY;
+				Priv->FilesEnd 		= true;
+				return ERR_MOREMEMORY;
+			}
 			Priv->FilesLocationsUsed += (msg.Buffer[8]*256+msg.Buffer[9]);
 			for (i=0;i<(msg.Buffer[8]*256+msg.Buffer[9]);i++) {
 				sprintf(buffer,"%i",msg.Buffer[13+i*4-1]*256 + msg.Buffer[13+i*4]);
@@ -900,7 +906,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo2(GSM_Protocol_Message msg, GSM_StateMachi
 			smprintf(s,"File or folder details received\n");
 
 			if (msg.Buffer[3] == 0x69) {
-				if (Priv->FilesLocationsUsed==1000) {
+				if (Priv->FilesLocationsUsed + 1 >= GSM_PHONE_MAXSMSINFOLDER) {
 					smprintf(s,"Too small buffer for folder data\n");
 					Priv->filesystem2error  = ERR_MOREMEMORY;
 					Priv->FilesEnd 		= true;
