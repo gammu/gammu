@@ -20,7 +20,7 @@ ChangeLog
 [+] * Report more verbosely that some feature has been disabled on
       compile time.
 [-] * Add ID for Nokia 5200 (thanks to Andreas Metzler).
-[-] * Add ID for Nokia 2600 (bug #659).
+[-] * Add two IDs for Nokia 2600 (bug #659).
 [-] * Add ID for lot's of Sony Ericsson phones.
 [-] * Use AT parser for AT+CPBS? reply.
 [-] * Use all possible ways to get memory status (bug #687).
