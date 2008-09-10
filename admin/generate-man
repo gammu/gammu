@@ -267,7 +267,7 @@ HELP['getprofile'] = ''''''
 HELP['setautonetworklogin'] = ''''''
 HELP['getsecuritystatus'] = '''Show, if phone wait for security code (like PIN, PUK, etc.) or not
 '''
-HELP['entersecuritycode'] = '''Allow to enter security code from PC
+HELP['entersecuritycode'] = '''Allow to enter security code from PC. When code is \\-, it is read from stdin.
 '''
 HELP['listnetworks'] = '''Show names/codes of GSM networks known for Gammu
 '''
