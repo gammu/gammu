@@ -383,6 +383,7 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 {
 	unsigned char *buffer;
 	GSM_AT_Charset charset;
+	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 
 	/* Default to charset from state machine */
 	charset = s->Phone.Data.Priv.ATGEN.Charset;
@@ -392,6 +393,18 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 		if  (charset == AT_CHARSET_HEX
 			&& ! ATGEN_IsHex(input, length)) {
 			charset = AT_CHARSET_GSM;
+		}
+		/*
+		 * Motorola sometimes criples HEX reply while UCS-2 is chosen.
+		 * It seems to be identified by trailing zero.
+		 */
+		if  (charset == AT_CHARSET_UCS2
+			&& ATGEN_IsHex(input, length)
+			&& Priv->Manufacturer == AT_Motorola
+			&& input[length - 1] == '0'
+			&& input[length - 2] == '0'
+			) {
+			charset = AT_CHARSET_HEX;
 		}
 		/* For phone numbers, we can assume all unicode chars
 		 * will be < 256, so they will fit one byte */
