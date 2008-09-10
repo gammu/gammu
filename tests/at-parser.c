@@ -68,6 +68,17 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = ATGEN_ParseReply(s,
 			"+CPBR: 1,\"+60122256476\",145,\"\",\"08/07/04\",\"17:24:55\"",
 			"+CPBR: @i, @p, @I, @s, @d",
+			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE, &dt);
+	if (error != ERR_NONE) {
+		printf("%s\n", GSM_ErrorString(error));
+		return 1;
+	}
+
+	Priv->Charset = AT_CHARSET_UCS2;
+	Priv->Manufacturer = AT_Motorola;
+	error = ATGEN_ParseReply(s,
+			"+CPBR: 419,\"030450566735\",129,56697263686F77204B6C696E696B756D2053742E20333100",
+			"+CPBR: @i, @p, @I, @s",
 			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE);
 	if (error != ERR_NONE) {
 		printf("%s\n", GSM_ErrorString(error));
