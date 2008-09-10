@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <gammu.h>
+#include <unistd.h>
 
 #include "common.h"
 #include "misc.h"
