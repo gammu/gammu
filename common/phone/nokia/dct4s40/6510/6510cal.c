@@ -764,6 +764,7 @@ GSM_Error N6510_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Not)
 		0x00,					/* note text length 			*/
 		0x00,					/* phone length/meeting place		*/
 		0x00, 0x00, 0x00};
+	size_t length;
 
 	s->Phone.Data.Note = Not;
 
@@ -773,10 +774,11 @@ GSM_Error N6510_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Not)
 	req[8] = Not->Location / 256;
 	req[9] = Not->Location % 256;
 
-	req[48] = UnicodeLength(Not->Text) / 256;
-	req[49] = UnicodeLength(Not->Text) % 256;
+	length = UnicodeLength(Not->Text);
+	req[48] = length / 256;
+	req[49] = length % 256;
 	CopyUnicodeString(req + 54, Not->Text);
-	count += req[49] * 2 + (req[48] * 256) * 2;
+	count += length * 2;
 
 	req[count++] = 0x00;
 
