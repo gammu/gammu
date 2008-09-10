@@ -1668,11 +1668,22 @@ void EnterSecurityCode(int argc UNUSED, char *argv[])
 	} else if (strcasecmp(argv[2],"PIN2") == 0) {	Code.Type = SEC_Pin2;
 	} else if (strcasecmp(argv[2],"PUK2") == 0) {	Code.Type = SEC_Puk2;
 	} else {
-		printf(_("What security code (\"%s\") ?\n"),argv[2]);
+		printf_err("%s: %s\n", _("Invalid security code type"), argv[2]);
 		exit(-1);
 	}
 
-	strcpy(Code.Code,argv[3]);
+	if (strcmp(argv[3], "-") == 0) {
+		/* Read code from stdin */
+		if (isatty(fileno(stdin))) {
+			printf(_("Enter %s code: "), argv[2]);
+		}
+		if (fscanf(stdin, "%15s", Code.Code) != 1) {
+			printf_err("%s\n", _("No PIN code entered!"));
+			exit(-1);
+		}
+	} else {
+		strcpy(Code.Code,argv[3]);
+	}
 
 	GSM_Init(true);
 
