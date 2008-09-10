@@ -41,6 +41,7 @@ ChangeLog
 [-] * Store favorite messaging as phone number, not only as ID (bug #693).
 [-] * Avoid empty line at beginning of vCard backup (bug #701).
 [-] * Add ID for Nokia 2760.
+[-] * Catch not acceptable errors in OBEX (bug #702).
     
 20080805 - 1.20.90
 
