@@ -140,6 +140,7 @@ cmake .. -DCROSS_MINGW=ON \
     -DENABLE_SHARED=OFF \
     -DMYSQL_CROSS_PATH= \
     -DPOSTGRES_CROSS_PATH= \
+    -DCURL_CROSS_PATH= \
     -DGETTEXT_CROSS_PATH=
 
 To be compatible with current Python on Windows, we need to build
