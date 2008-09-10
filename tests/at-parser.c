@@ -85,6 +85,17 @@ int main(int argc UNUSED, char **argv UNUSED)
 		return 1;
 	}
 
+	Priv->Charset = AT_CHARSET_UCS2;
+	Priv->Manufacturer = AT_Motorola;
+	error = ATGEN_ParseReply(s,
+			"+CPBR: 212,\"mlaubner@web.de\",128,004D0061006E00660072006500640020004C006100750062006E00650072",
+			"+CPBR: @i, @p, @I, @s",
+			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE);
+	if (error != ERR_NONE) {
+		printf("%s\n", GSM_ErrorString(error));
+		return 1;
+	}
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 

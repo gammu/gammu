@@ -47,6 +47,7 @@ ChangeLog
 [-] * Increase limit of files for DCT4 and check array size (bug #676).
 [+] * Allow to enter PIN code from stdin (bug #633).
 [-] * Handle HEX reply instead of UCS-2 from Motorola (bug #697).
+[-] * Avoid decoding of @ in email address (bug #697).
     
 20080805 - 1.20.90
 
