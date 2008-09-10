@@ -43,6 +43,7 @@ ChangeLog
 [-] * Add ID for Nokia 2760.
 [-] * Catch not acceptable errors in OBEX (bug #702).
 [-] * Operation not allowed is not an unknown problem (bug #678).
+[-] * Add ID for Nokia 5000 (bug #677).
     
 20080805 - 1.20.90
 
