@@ -212,7 +212,7 @@ and point build
 CURL
 ----
 
-For CURL support, you need libcurl-7.18.0-win32-msvc.zip from
+For CURL support, you need curl-7.19.0-devel-mingw32.zip from
 <http://curl.haxx.se/>. Unpack it to some directory and point build
 
 -DCURL_CROSS_PATH=/path/to/curl
