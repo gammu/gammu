@@ -57,9 +57,10 @@ cmake ../$repo-$version \
     -DCROSS_MINGW=ON \
     -DENABLE_SHARED=ON \
     $CMAKE_EXTRA \
-    -DGETTEXT_CROSS_PATH=$srcdir/../../win-cross/gettext \
+    -DCURL_CROSS_PATH=$srcdir/../../win-cross/curl \
     -DMYSQL_CROSS_PATH=$srcdir/../../win-cross/mysql
-# Disabled, it seems to use different msvc:
+# Disabled, it seems to cause crashes:
+#    -DGETTEXT_CROSS_PATH=$srcdir/../../win-cross/gettext \
 #    -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
 
 make

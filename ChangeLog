@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Fixed Windows binary (define properly MSVCRT to use) (bug #683).
 [-] * Fixed compilation with CURL on Windows.
+[-] * Windows binary now has only MySQL and CURL support (bug #683).
     
 20080910 - 1.20.91
 
