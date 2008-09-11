@@ -56,7 +56,7 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 			}
 			return 3;
 		}
-		/* Ususally this name also contains OBEX, preffered for irmc */
+		/* Ususally this name also contains OBEX, prefered for irmc */
 		if (strstr(name, "IrMC Sync") != NULL || strstr(name, "OBEX Synchronisation")) {
 			if (strcmp(s->CurrentConfig->Model, "obexirmc") == 0 ||
 				strcmp(s->CurrentConfig->Model, "seobex") == 0) {

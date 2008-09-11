@@ -1693,7 +1693,7 @@ GSM_Error ATGEN_SetCharset(GSM_StateMachine *s, GSM_AT_Charset_Preference Prefer
 		return ERR_BUG;
 	}
 
-	/* If we already have set our preffered charset there is nothing to do*/
+	/* If we already have set our prefered charset there is nothing to do*/
 	if (Priv->Charset == cset) return ERR_NONE;
 
 	/* Find text representation */
