@@ -102,11 +102,11 @@ if (isset($db_pass) && isset($db_user) && isset($db_serv)) {
 	}
 }
 
-if (isset($dbpass) && isset($dbconnect) && isset($_GET['op']) && 
-    isset($_GET['year']) && isset($_GET['month']) && isset($_GET['day']) && 
-    isset($_GET['hour']) && isset($_GET['minute']) && isset($_GET['second']) && 
-    isset($_GET['number']) && isset($_GET['tresc']) && isset($_GET['validity']) && 
-    isset($_GET['report']) && isset($_GET['phone'])) 
+if (isset($dbpass) && isset($dbconnect) && isset($_GET['op']) &&
+    isset($_GET['year']) && isset($_GET['month']) && isset($_GET['day']) &&
+    isset($_GET['hour']) && isset($_GET['minute']) && isset($_GET['second']) &&
+    isset($_GET['number']) && isset($_GET['tresc']) && isset($_GET['validity']) &&
+    isset($_GET['report']) && isset($_GET['phone']))
 {
 	if ($_GET['op']=="addsms") {
 		$year = $_GET['year'];
@@ -133,7 +133,7 @@ if (isset($dbpass) && isset($dbconnect) && isset($_GET['op']) &&
 //				$newid = 0;
 //			} else {
 //				$newid = $rekord2[0];
-//			}			
+//			}
 //			mysql_free_result($result2);
 //			$pos = 0;
 //			$text = "";
@@ -309,7 +309,7 @@ while ($row0 = mysql_fetch_object($result0)) {
 		}
 		mysql_free_result($result);
 	}
-	
+
 	echo "&nbsp <a href=$dokument$arg"."db=$row0->Database&op=outbox>OUTBOX</a><br>\n";
 	if (isset($_GET['op']) && $_GET['op']=="outbox") {
 		$result = mysql_db_query("$db_name","select substring(SendingDateTime,1,10) from outbox group by substring(SendingDateTime,1,10) order by substring(SendingDateTime,1,10) desc");
@@ -404,7 +404,7 @@ if (isset($_GET['op'])) {
 				$d2 = dispdatetime($rekord[1]);
 				echo "Insert into DB: $d2<br>";
 				dispsmsinfo($rekord[7],$rekord[5],$rekord[2],$rekord[8],$rekord[4]);
-				echo "</td></tr>\n";				
+				echo "</td></tr>\n";
 			}
 		}
 		mysql_free_result($result);
@@ -531,7 +531,7 @@ if (isset($_GET['op'])) {
 			$d = $_GET['date'];
 			$d2 = dispdate($d);
 			echo " $d2";
-		}		
+		}
 		echo "</b><br><br>\n";
 		echo "<table width=620 cellspacing=1 border=1>";
 		echo "<tr bgcolor=gold><td>ID</td>\n";
@@ -623,7 +623,7 @@ if (isset($_GET['op'])) {
 		mysql_free_result($result);
 		echo "</table>";
 		echo "<br>$sentnum SMS sequences sent";
-  	} 
+  	}
 	if ($_GET['op']=="newsms") {
 		$result2 = mysql_db_query("$db_name","select now()+0;");
 		$rekord2 = mysql_fetch_row($result2);
@@ -723,7 +723,7 @@ if (isset($_GET['op'])) {
 		echo "<td>CLIENT</td></tr>\n";
 		$result = mysql_db_query("$db_name","select $phones from phones where TimeOut>NOW()");
 		while($rekord = mysql_fetch_row($result)) {
-			$counter++;			
+			$counter++;
 			echo "<td>$rekord[5]</td>\n";
 			echo "<td>$rekord[0]</td>\n";
 			echo "<td>$rekord[3]</td>\n";
