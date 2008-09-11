@@ -34,6 +34,7 @@ ChangeLog
 [+] * SMSD reconnects to MySQL (thanks to Wouter D'Haeseleer).
 [+] * SMSD stores signal and battery state in MySQL (thanks to Wouter
       D'Haeseleer).
+[+] * Initial support for reading messages in simple text mode.
     
 20080910 - 1.20.91
 
