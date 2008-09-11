@@ -2266,6 +2266,8 @@ GSM_Error ATGEN_DecodePDUMessage(GSM_StateMachine *s, const char *PDU, const int
 		}
 		smsframe[PHONE_SMSStatusReport.TPStatus]=buffer[current];
 		return GSM_DecodeSMSFrame(sms,smsframe,PHONE_SMSStatusReport);
+	case 0x03:
+		smprintf(s, "SMS type - reserved, don't know what to do\n");
 	}
 	return ERR_UNKNOWN;
 }

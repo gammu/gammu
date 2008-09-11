@@ -21,6 +21,7 @@ ChangeLog
 [-] * Fixed compilation with CURL on Windows.
 [-] * Windows binary now has only MySQL and CURL support (bug #683).
 [-] * Fill in timezone information (bug #696).
+[-] * Detect reserver message type (bug #691).
     
 20080910 - 1.20.91
 
