@@ -24,6 +24,7 @@ ChangeLog
 [-] * Detect reserver message type (bug #691).
 [-] * Increase timeout for switching to OBEX (bug #690).
 [-] * Disable postal address for Nokia 2600 (bug #659).
+[-] * Encode phone number only with phones which need it (bug #654).
     
 20080910 - 1.20.91
 
