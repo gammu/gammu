@@ -2735,7 +2735,6 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 				}
 				if (Priv->SMSCache[i].Location == sms->SMS[0].Location - 1) {
 					tmpfound = i + 1;
-					break;
 				}
 			}
 		}
@@ -2745,6 +2744,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 				return ERR_INVALIDLOCATION;
 			} else {
 				smprintf(s, "Attempting to skip to next location!\n");
+				found = tmpfound;
 			}
 		}
 		smprintf(s, "F: %d, c: %d\n", found, Priv->SMSCount);
