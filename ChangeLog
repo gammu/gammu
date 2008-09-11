@@ -30,6 +30,7 @@ ChangeLog
 [+] * Initial support for waiting calls in AT engine (bug #551).
 [-] * Fixed dialing on some AT phones (bug #471).
 [-] * Support for skipping location when reading (bug #467).
+[-] * Improved detection of serial port Bluetooth channel.
     
 20080910 - 1.20.91
 
