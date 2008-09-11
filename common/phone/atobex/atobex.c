@@ -136,7 +136,7 @@ GSM_Error ATOBEX_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
 	if (error != ERR_NONE) return error;
 
 	/* Need some sleep before starting talk in OBEX */
-	my_sleep(100);
+	my_sleep(1000);
 
 	/* Switch to OBEX protocol and initialise it */
 	s->Protocol.Functions = &OBEXProtocol;
