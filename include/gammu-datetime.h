@@ -22,7 +22,7 @@
  */
 typedef struct {
 	/**
-	 * The difference between local time and GMT in hours
+	 * The difference between local time and GMT in seconds
 	 */
 	int Timezone;
 
@@ -60,7 +60,7 @@ typedef struct {
  */
 typedef struct {
 	/**
-	 * The difference of timezones.
+	 * The difference of timezones in seconds
 	 */
 	int Timezone;
 
@@ -123,6 +123,16 @@ void GSM_GetCurrentDateTime(GSM_DateTime * Date);
  * \ingroup DateTime
  */
 time_t Fill_Time_T(GSM_DateTime DT);
+
+/**
+ * Returns the local timezone offset in seconds.
+ * For example 7200 for CEST.
+ *
+ * \return Timezone offset seconds.
+ *
+ * \ingroup DateTime
+ */
+int GetLocalTimezoneOffset();
 
 /**
  * Converts time_t to gammu \ref GSM_DateTime structure.

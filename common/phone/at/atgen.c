@@ -659,8 +659,7 @@ GSM_Error ATGEN_DecodeDateTime(GSM_StateMachine *s, GSM_DateTime *dt, unsigned c
 
 	if ((pos != NULL) && (*pos == '+' || *pos == '-')) {
 		/* timezone present */
-		dt->Timezone = (*pos == '+' ? 1 : -1);
-		dt->Timezone = dt->Timezone*atoi(pos);
+		dt->Timezone = (*pos == '+' ? 1 : -1) * atoi(pos+1) * 3600;
 	} else {
 		dt->Timezone = 0;
 	}
@@ -3496,7 +3495,7 @@ GSM_Error ATGEN_PrivSetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time, bo
 	GSM_Error		error;
 
 	if (set_timezone) {
-		sprintf(tz, "+%02i", date_time->Timezone);
+		sprintf(tz, "%+03i", date_time->Timezone / 3600);
 	}
 
 	sprintf(req, "AT+CCLK=\"%02i/%02i/%02i,%02i:%02i:%02i%s\"\r",

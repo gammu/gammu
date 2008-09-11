@@ -97,14 +97,15 @@ static GSM_Error GSM_DecodeSMSDateTime(GSM_DateTime *DT, unsigned char *req)
 	DT->Second  = DecodeWithBCDAlphabet(req[5]);
 
 	/* Base for timezone is GMT. It's in quarters */
-	DT->Timezone=(10*(req[6]&0x07)+(req[6]>>4))/4;
+	DT->Timezone=(10*(req[6]&0x07)+(req[6]>>4))*3600/4;
 
 	if (req[6]&0x08) DT->Timezone = -DT->Timezone;
 
 	dbgprintf("Decoding date & time: ");
 	dbgprintf("%s %4d/%02d/%02d ", DayOfWeek(DT->Year, DT->Month, DT->Day),
 		DT->Year, DT->Month, DT->Day);
-	dbgprintf("%02d:%02d:%02d %02d00\n", DT->Hour, DT->Minute, DT->Second, DT->Timezone);
+	dbgprintf("%02d:%02d:%02d%+03i%02i\n", DT->Hour, DT->Minute, DT->Second,
+		DT->Timezone / 3600, abs((DT->Timezone % 3600) / 60));
 
 	return ERR_NONE;
 }

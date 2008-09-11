@@ -1567,7 +1567,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 	Calendar->EntriesNum 	= 0;
 	ToDo->EntriesNum 	= 0;
 	lBuffer = strlen(Buffer);
-	trigger.Timezone = -999;
+	trigger.Timezone = -999 * 3600;
 
 	if (CalVer == Mozilla_iCalendar && *Pos ==0) {
 		error = GSM_Make_VCAL_Lines (Buffer, &lBuffer);
@@ -1616,7 +1616,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 				}
 				if (Calendar->EntriesNum == 0) return ERR_EMPTY;
 
-				if (trigger.Timezone != -999) {
+				if (trigger.Timezone != -999 * 3600) {
 					Alarm = Calendar->EntriesNum;
 					Calendar->Entries[Alarm].Date = GSM_AddTime (Calendar->Entries[Time].Date, trigger);
 					Calendar->Entries[Alarm].EntryType = CAL_TONE_ALARM_DATETIME;
