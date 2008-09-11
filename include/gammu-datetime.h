@@ -132,7 +132,7 @@ time_t Fill_Time_T(GSM_DateTime DT);
  *
  * \ingroup DateTime
  */
-int GetLocalTimezoneOffset(void);
+int GSM_GetLocalTimezoneOffset(void);
 
 /**
  * Converts time_t to gammu \ref GSM_DateTime structure.
