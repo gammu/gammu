@@ -135,7 +135,7 @@ char *DayOfWeek (unsigned int year, unsigned int month, unsigned int day)
 	return DayOfWeekChar;
 }
 
-int GetLocalTimezoneOffset() {
+int GSM_GetLocalTimezoneOffset() {
 	struct tm *tg, *tl;
 	time_t now = time(NULL);
 	tg = gmtime(&now);
@@ -155,7 +155,7 @@ void Fill_GSM_DateTime(GSM_DateTime *Date, time_t timet)
 	Date->Hour	= now->tm_hour;
 	Date->Minute	= now->tm_min;
 	Date->Second	= now->tm_sec;
-	Date->Timezone	= GetLocalTimezoneOffset();
+	Date->Timezone	= GSM_GetLocalTimezoneOffset();
 }
 
 void GSM_GetCurrentDateTime (GSM_DateTime *Date)
