@@ -4786,17 +4786,22 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 
 GSM_Error ATGEN_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber)
 {
-	char req[39] = "ATDT";
+	char buffer[GSM_MAX_NUMBER_LENGTH + 6];
+	size_t len;
 	GSM_Error error;
 
 	if (ShowNumber != GSM_CALL_DefaultNumberPresence) return ERR_NOTSUPPORTED;
-	if (strlen(number) > 32) return (ERR_UNKNOWN);
-
-	strcat(req, number);
-	strcat(req, ";\r");
+	if (strlen(number) > GSM_MAX_NUMBER_LENGTH) return ERR_MOREMEMORY;
 
 	smprintf(s, "Making voice call\n");
-	ATGEN_WaitFor(s, req, 4+2+strlen(number), 0x00, 5, ID_DialVoice);
+	len = sprintf(buffer, "ATDT%s;\r", number);
+	ATGEN_WaitFor(s, buffer, len, 0x00, 5, ID_DialVoice);
+
+	if (error == ERR_INVALIDLOCATION) {
+		smprintf(s, "Making voice call without forcing to tone dial\n");
+		len = sprintf(buffer, "ATD%s;\r", number);
+		ATGEN_WaitFor(s, buffer, len, 0x00, 5, ID_DialVoice);
+	}
 
 	return error;
 }
@@ -6449,7 +6454,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 
 {ATGEN_GenericReply, 		"AT+VTS"		,0x00,0x00,ID_SendDTMF		 },
 {ATGEN_ReplyCancelCall,		"AT+CHUP"		,0x00,0x00,ID_CancelCall	 },
-{ATGEN_ReplyDialVoice,		"ATDT"			,0x00,0x00,ID_DialVoice		 },
+{ATGEN_ReplyDialVoice,		"ATD"			,0x00,0x00,ID_DialVoice		 },
 {ATGEN_ReplyCancelCall,		"ATH"			,0x00,0x00,ID_CancelCall	 },
 {ATGEN_GenericReply, 		"AT+CRC"		,0x00,0x00,ID_SetIncomingCall	 },
 {ATGEN_GenericReply, 		"AT+CLIP"		,0x00,0x00,ID_SetIncomingCall	 },

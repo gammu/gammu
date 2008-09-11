@@ -28,6 +28,7 @@ ChangeLog
 [-] * Increase timeout for writing memory entry (bug #654).
 [-] * Handle properly when phoned does not tell SMSC (bug #616).
 [+] * Initial support for waiting calls in AT engine (bug #551).
+[-] * Fixed dialing on some AT phones (bug #471).
     
 20080910 - 1.20.91
 
