@@ -3622,6 +3622,8 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
 		return ATGEN_HandleCMEError(s);
+	case AT_Reply_Error:
+		return ERR_NOTSUPPORTED;
 	default:
 		break;
 	}
