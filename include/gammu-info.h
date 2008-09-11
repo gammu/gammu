@@ -569,6 +569,10 @@ typedef enum {
 	 * No support for postal entry in phonebook.
 	 */
 	F_PBKNOPOSTAL,
+	/**
+	 * Encode number in HEX charset.
+	 */
+	F_PBK_ENCODENUMBER,
 
 	/**
 	 * Just marker of highest feature code, should not be used.

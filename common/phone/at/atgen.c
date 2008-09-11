@@ -5296,7 +5296,8 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		 *  - it is not encoded in UCS2
 		 *  - no encoding is needed for most charsets
 		 */
-		if (Priv->Charset == AT_CHARSET_HEX) {
+		if (Priv->Charset == AT_CHARSET_HEX &&
+				GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBK_ENCODENUMBER)) {
 			len = UnicodeLength(entry->Entries[Number].Text);
 			EncodeDefault(unumber, entry->Entries[Number].Text, &len, true, NULL);
 			EncodeHexBin(number, unumber, len);
