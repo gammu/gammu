@@ -135,6 +135,15 @@ char *DayOfWeek (unsigned int year, unsigned int month, unsigned int day)
 	return DayOfWeekChar;
 }
 
+int GetLocalTimezoneOffset() {
+	struct tm *tg, *tl;
+	time_t now = time(NULL);
+	tg = gmtime(&now);
+	tl = localtime(&now);
+	// Returns offset including daylight saving (found as boolean in tl.tm_isdst).
+	return (tl->tm_hour - tg->tm_hour) * 3600 + (tl->tm_min - tg->tm_min) * 60 + (tl->tm_sec - tg->tm_sec);
+}
+
 void Fill_GSM_DateTime(GSM_DateTime *Date, time_t timet)
 {
 	struct tm *now;
@@ -146,7 +155,7 @@ void Fill_GSM_DateTime(GSM_DateTime *Date, time_t timet)
 	Date->Hour	= now->tm_hour;
 	Date->Minute	= now->tm_min;
 	Date->Second	= now->tm_sec;
-	Date->Timezone	= 0; /* FIXME: can we get it from the OS? */
+	Date->Timezone	= GetLocalTimezoneOffset();
 }
 
 void GSM_GetCurrentDateTime (GSM_DateTime *Date)
@@ -238,11 +247,8 @@ char *OSDateTime (GSM_DateTime dt, bool TimeZone)
 	/* This is not Y2K safe */
 	strftime(retval2, 200, "%c", &timeptr);
 	if (TimeZone) {
-		if (dt.Timezone >= 0) {
-			snprintf(retval, sizeof(retval) - 1, " +%02i00",dt.Timezone);
-		} else {
-			snprintf(retval, sizeof(retval) - 1, " -%02i00",dt.Timezone);
-		}
+		snprintf(retval, sizeof(retval) - 1, " %+03i%02i",
+			dt.Timezone / 3600, abs((dt.Timezone % 3600) / 60));
 		strcat(retval2,retval);
 	}
 	/* If don't have weekday name, include it */

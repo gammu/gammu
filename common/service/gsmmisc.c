@@ -251,7 +251,7 @@ bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 	}
 
 	if (dt->Timezone != 0) {
-		timestamp = Fill_Time_T(*dt) + dt->Timezone*3600;
+		timestamp = Fill_Time_T(*dt) + dt->Timezone;
 		Fill_GSM_DateTime(dt, timestamp);
 		dt->Year +=1900;
 	}
