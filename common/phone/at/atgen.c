@@ -2352,6 +2352,9 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				sms->Coding = SMS_Coding_Default_No_Compression;
 				sms->UDH.Type	= UDH_NoUDH;
 				sms->Length	= GetLineLength(msg.Buffer, &Priv->Lines, 3);
+				sms->SMSC.Number[0]=0;
+				sms->SMSC.Number[1]=0;
+				sms->ReplyViaSameSMSC=false;
 				return ATGEN_DecodeText(s, GetLineString(msg.Buffer, &Priv->Lines, 3), sms->Length,
 					sms->Text, sizeof(sms->Text), false, false);
 			}
