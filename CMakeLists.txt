@@ -216,7 +216,7 @@ if (CROSS_MINGW)
 
     set (CURL_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/curl" CACHE FILEPATH "Path to CURL for cross compilation")
     find_library (CURL_LIBRARIES
-        curl "${CURL_CROSS_PATH}"
+        curldll "${CURL_CROSS_PATH}/lib"
         NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
     if (CURL_LIBRARIES)
         set (CURL_FOUND ON)
@@ -799,8 +799,11 @@ if (CROSS_MINGW)
     # Gettext and dependencies
     if (CURL_FOUND)
         install (FILES
-                "${CURL_CROSS_PATH}/libcurl.dll"
-                "${CURL_CROSS_PATH}/zlib1.dll"
+                "${CURL_CROSS_PATH}/bin/libcurl.dll"
+                "${CURL_CROSS_PATH}/bin/zlib1.dll"
+                "${CURL_CROSS_PATH}/bin/libeay32.dll"
+                "${CURL_CROSS_PATH}/bin/libssh2.dll"
+                "${CURL_CROSS_PATH}/bin/libssl32.dll"
                 DESTINATION "${INSTALL_BIN_DIR}"
                 )
     endif (CURL_FOUND)
