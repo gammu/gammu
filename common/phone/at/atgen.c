@@ -5390,7 +5390,11 @@ GSM_Error ATGEN_SetIncomingCall(GSM_StateMachine *s, bool enable)
 			ATGEN_WaitFor(s, "AT+CRC=0\r", 9, 0x00, 3, ID_SetIncomingCall);
 			if (error != ERR_NONE) return error;
 		}
+		ATGEN_WaitFor(s, "AT+CCWA=1\r", 10, 0x00, 3, ID_SetIncomingCall);
+		/* We don't care if phone does not support this */
 	} else {
+		ATGEN_WaitFor(s, "AT+CCWA=0\r", 10, 0x00, 3, ID_SetIncomingCall);
+		/* We don't care if phone does not support this */
 		smprintf(s, "Disabling incoming call\n");
 	}
 	s->Phone.Data.EnableIncomingCall = enable;
@@ -5403,6 +5407,14 @@ GSM_Error ATGEN_SetIncomingCall(GSM_StateMachine *s, bool enable)
 void ATGEN_Extract_CLIP_number(GSM_StateMachine *s, unsigned char *dest, size_t destsize, const char *buf)
 {
 	ATGEN_ParseReply(s, buf, "+CLIP: @p,@0", dest, destsize);
+}
+
+/**
+ * Extract number of incoming call from +CLIP: response.
+ */
+void ATGEN_Extract_CCWA_number(GSM_StateMachine *s, unsigned char *dest, size_t destsize, const char *buf)
+{
+	ATGEN_ParseReply(s, buf, "+CCWA: @p,@0", dest, destsize);
 }
 
 GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
@@ -5428,6 +5440,10 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 			smprintf(s, "CLIP detected\n");
 			call.Status = GSM_CALL_IncomingCall;
 			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
+		} else if (strstr(msg.Buffer, "CCWA:")) {
+			smprintf(s, "CCWA detected\n");
+			call.Status = GSM_CALL_IncomingCall;
+			ATGEN_Extract_CCWA_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
 		} else if (strstr(msg.Buffer, "NO CARRIER")) {
 			smprintf(s, "Call end detected\n");
 			call.Status = GSM_CALL_CallEnd;
@@ -6437,11 +6453,13 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_ReplyCancelCall,		"ATH"			,0x00,0x00,ID_CancelCall	 },
 {ATGEN_GenericReply, 		"AT+CRC"		,0x00,0x00,ID_SetIncomingCall	 },
 {ATGEN_GenericReply, 		"AT+CLIP"		,0x00,0x00,ID_SetIncomingCall	 },
+{ATGEN_GenericReply, 		"AT+CCWA"		,0x00,0x00,ID_SetIncomingCall	 },
 {ATGEN_GenericReply, 		"AT+CUSD"		,0x00,0x00,ID_SetUSSD		 },
 {ATGEN_ReplyGetUSSD, 		"AT+CUSD"		,0x00,0x00,ID_GetUSSD		 },
 {ATGEN_ReplyGetUSSD, 		"+CUSD"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_GenericReply,            "AT+CLIP=1"      	,0x00,0x00,ID_IncomingFrame      },
 {ATGEN_ReplyIncomingCallInfo,	"+CLIP"			,0x00,0x00,ID_IncomingFrame	 },
+{ATGEN_ReplyIncomingCallInfo,	"+CCWA"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_ReplyIncomingCallInfo,	"+COLP"    		,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_ReplyIncomingCallInfo,	"RING"			,0x00,0x00,ID_IncomingFrame	 },
 {ATGEN_ReplyIncomingCallInfo,	"+CRING"		,0x00,0x00,ID_IncomingFrame	 },
