@@ -1,4 +1,4 @@
-<?
+<?php
 # CONFIGURATION
 //they can be defined or not. if not, interface will give login form
 //$db_serv="127.0.0.1";
@@ -18,7 +18,7 @@ $inbox="UpdatedInDB,ReceivingDateTime,Text,SenderNumber,Coding,UDH,SMSCNumber,Cl
 $outbox="UpdatedInDB,InsertIntoDB,Text,DestinationNumber,Coding,UDH,Class,TextDecoded,ID,MultiPart,RelativeValidity,SendingDateTime,SenderID,SendingTimeOut,DeliveryReport";
 $outbox_multipart="Text,Coding,UDH,Class,TextDecoded,ID,SequencePosition";
 $sentitems="UpdatedInDB,InsertIntoDB,SendingDateTime,DeliveryDateTime,Text,DestinationNumber,Coding,UDH,SMSCNumber,Class,TextDecoded,ID,SenderID,SequencePosition,Status,StatusError,TPMR,RelativeValidity";
-$phones="ID,InsertIntoDB,TimeOut,Send,Receive,IMEI,Client";
+$phones="ID,InsertIntoDB,TimeOut,Send,Receive,IMEI,Client,Battery,Signal";
 $daemons="Start,Info";
 
 function dispdatetime($dt)
@@ -714,13 +714,15 @@ if (isset($_GET['op'])) {
   	if ($_GET['op']=="phones") {
 		$counter = 0;
 		echo "<b>DATABASE $db_name, PHONES</b><p>\n";
-		echo "<table width=620 cellspacing=1 border=1>";
+		echo "<table width=1024 cellspacing=1 border=1>";
 		echo "<tr bgcolor=gold><td>IMEI</td>\n";
 		echo "<td>ID</td>\n";
 		echo "<td>SEND SMS</td>\n";
 		echo "<td>RECEIVE SMS</td>\n";
 		echo "<td>LOGGED</td>\n";
-		echo "<td>CLIENT</td></tr>\n";
+		echo "<td>CLIENT</td>\n";
+		echo "<td>BATTERY</td>\n";
+		echo "<td>SIGNAL</td></tr>\n";
 		$result = mysql_db_query("$db_name","select $phones from phones where TimeOut>NOW()");
 		while($rekord = mysql_fetch_row($result)) {
 			$counter++;
@@ -731,6 +733,8 @@ if (isset($_GET['op'])) {
 			$d2 = dispdatetime($rekord[1]);
 			echo "<td>$d2</td>\n";
 			echo "<td>$rekord[6]</td>\n";
+			echo "<td>$rekord[7]</td>\n";
+			echo "<td>$rekord[8]</td></tr>\n";
 		}
 		mysql_free_result($result);
 		echo "</table>";

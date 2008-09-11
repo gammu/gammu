@@ -110,13 +110,13 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 		WriteSMSDLog(_("No version info in Gammu table: %s\n"), mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) > 7) {
+	if (atoi(Row[0]) > 8) {
 		mysql_free_result(Res);
 		WriteSMSDLog(_("DataBase structures are from higher Gammu version"));
 		WriteSMSDLog(_("Please update this client application"));
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) < 7) {
+	if (atoi(Row[0]) < 8) {
 		mysql_free_result(Res);
 		WriteSMSDLog(_("DataBase structures are from older Gammu version"));
 		WriteSMSDLog(_("Please update DataBase, if you want to use this client application"));
@@ -779,7 +779,14 @@ static GSM_Error SMSDMySQL_RefreshPhoneStatus(GSM_SMSDConfig *Config)
 {
 	unsigned char buffer[500];
 
-	sprintf(buffer,"UPDATE `phones` SET `TimeOut`= (NOW() + INTERVAL 10 SECOND)+0");
+	GSM_BatteryCharge  charge;
+	GSM_SignalQuality  network;
+
+	GSM_GetBatteryCharge(gsm,&charge);
+	GSM_GetSignalQuality(gsm,&network);
+
+
+	sprintf(buffer,"UPDATE `phones` SET `TimeOut`= (NOW() + INTERVAL 10 SECOND)+0, `Battery`= '%i', `Signal`= '%i'", charge.BatteryPercent,network.SignalPercent);
 	sprintf(buffer + strlen(buffer), " WHERE `IMEI` = '%s'", Config->IMEI);
 	dbgprintf("%s\n",buffer);
 	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
