@@ -2702,7 +2702,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error 		error;
 	int			usedsms;
-	int			i, found = -1;
+	int			i, found = -1, tmpfound = -1;
 
 	if (Priv->PhoneSMSMemory == 0) {
 		error = ATGEN_SetSMSMemory(s, false, false, false);
@@ -2733,11 +2733,19 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 					found = i + 1;
 					break;
 				}
+				if (Priv->SMSCache[i].Location == sms->SMS[0].Location - 1) {
+					tmpfound = i + 1;
+					break;
+				}
 			}
 		}
 		if (found == -1) {
 			smprintf(s, "Invalid location passed to %s!\n", __FUNCTION__);
-			return ERR_INVALIDLOCATION;
+			if (tmpfound == -1) {
+				return ERR_INVALIDLOCATION;
+			} else {
+				smprintf(s, "Attempting to skip to next location!\n");
+			}
 		}
 		smprintf(s, "F: %d, c: %d\n", found, Priv->SMSCount);
 		if (found >= Priv->SMSCount) {
