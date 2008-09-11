@@ -2298,10 +2298,13 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					atoi(buffer + 7));
 			break;
 		case SMS_AT_TXT:
-			current = 0;
-			while (msg.Buffer[current]!='"') current++;
-			current+=ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
-			if (!strcmp(buffer,"\"0\"") || !strcmp(buffer,"\"REC UNREAD\"")) {
+			error = ATGEN_ParseReply(s,
+					GetLineString(msg.Buffer, &Priv->Lines, 2),
+					"+CMGL: @i, @r, @p, @0",
+					&current, buffer, sizeof(buffer), sms->Number, sizeof(sms->Number));
+			if (error != ERR_NONE) return error;
+
+			if (!strcmp(buffer,"0") || !strcmp(buffer,"REC UNREAD")) {
 				smprintf(s, "SMS type - deliver\n");
 				sms->State 	 = SMS_UnRead;
 				sms->PDU 	 = SMS_Deliver;
@@ -2311,7 +2314,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					sms->Folder = 3; /*INBOX ME*/
 				}
 				sms->InboxFolder = true;
-			} else if (!strcmp(buffer,"\"1\"") || !strcmp(buffer,"\"REC READ\"")) {
+			} else if (!strcmp(buffer,"1") || !strcmp(buffer,"REC READ")) {
 				smprintf(s, "SMS type - deliver\n");
 				sms->State 	 = SMS_Read;
 				sms->PDU 	 = SMS_Deliver;
@@ -2321,7 +2324,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					sms->Folder = 3; /*INBOX ME*/
 				}
 				sms->InboxFolder = true;
-			} else if (!strcmp(buffer,"\"2\"") || !strcmp(buffer,"\"STO UNSENT\"")) {
+			} else if (!strcmp(buffer,"2") || !strcmp(buffer,"STO UNSENT")) {
 				smprintf(s, "SMS type - submit\n");
 				sms->State 	 = SMS_UnSent;
 				sms->PDU 	 = SMS_Submit;
@@ -2331,7 +2334,7 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 					sms->Folder = 4; /*OUTBOX ME*/
 				}
 				sms->InboxFolder = false;
-			} else if (!strcmp(buffer,"\"3\"") || !strcmp(buffer,"\"STO SENT\"")) {
+			} else if (!strcmp(buffer,"3") || !strcmp(buffer,"STO SENT")) {
 				smprintf(s, "SMS type - submit\n");
 				sms->State 	 = SMS_Sent;
 				sms->PDU 	 = SMS_Submit;
@@ -2342,6 +2345,25 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				}
 				sms->InboxFolder = false;
 			}
+
+
+			if (Priv->SMSTextDetails == false) {
+				sms->Class = 1;
+				sms->Coding = SMS_Coding_Default_No_Compression;
+				sms->UDH.Type	= UDH_NoUDH;
+				sms->Length	= GetLineLength(msg.Buffer, &Priv->Lines, 3);
+				return ATGEN_DecodeText(s, GetLineString(msg.Buffer, &Priv->Lines, 3), sms->Length,
+					sms->Text, sizeof(sms->Text), false, false);
+			}
+
+			/*
+			 * This is just a hack until proper parsing of text mode is done.
+			 * It uses old style of manual parsing, to skip entries parsed above.
+			 */
+			current = 0;
+			while (msg.Buffer[current]!='"') current++;
+			current += ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
+
 			current += ATGEN_ExtractOneParameter(msg.Buffer+current, buffer);
 			/* It's delivery report according to Nokia AT standards */
 			if (sms->Folder==1 && buffer[0]!=0 && buffer[0]!='"') {
@@ -2531,12 +2553,6 @@ GSM_Error ATGEN_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 
 	/* There is possibility that date will be encoded in text mode */
 	if (Priv->SMSMode == SMS_AT_TXT) {
-		/* Not implemented right now */
-		if (!Priv->SMSTextDetails) {
-			smprintf(s, "Reading of messages in simple text mode is not implemented.\n");
-			return ERR_NOTIMPLEMENTED;
-		}
-
 		error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
 		if (error != ERR_NONE) return error;
 	}
