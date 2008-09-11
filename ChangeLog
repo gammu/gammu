@@ -26,6 +26,7 @@ ChangeLog
 [-] * Disable postal address for Nokia 2600 (bug #659).
 [-] * Encode phone number only with phones which need it (bug #654).
 [-] * Increase timeout for writing memory entry (bug #654).
+[-] * Handle properly when phoned does not tell SMSC (bug #616).
     
 20080910 - 1.20.91
 
