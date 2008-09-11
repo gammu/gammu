@@ -565,6 +565,10 @@ typedef enum {
 	 * Phonebook with favorite messaging numbers
 	 */
 	F_PBKFAVORITEMESSAGE,
+	/**
+	 * No support for postal entry in phonebook.
+	 */
+	F_PBKNOPOSTAL,
 
 	/**
 	 * Just marker of highest feature code, should not be used.
