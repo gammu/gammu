@@ -182,7 +182,12 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 		}
 		dbgprintf("entry num %i %i\n",i,entry->EntriesNum);
 		if (entry->Entries[i].EntryType == PBK_Text_Note)   type = N7110_PBK_NOTE;
-		if (entry->Entries[i].EntryType == PBK_Text_Postal) type = N7110_PBK_POSTAL;
+		if (entry->Entries[i].EntryType == PBK_Text_Postal) {
+			if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKNOPOSTAL)) {
+				continue;
+			}
+			type = N7110_PBK_POSTAL;
+		}
 		if (entry->Entries[i].EntryType == PBK_Text_Email)  type = N7110_PBK_EMAIL;
 		if (entry->Entries[i].EntryType == PBK_Text_Email2) type = N7110_PBK_EMAIL;
 		if (entry->Entries[i].EntryType == PBK_Text_URL) {
