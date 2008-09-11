@@ -72,6 +72,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		{"RING"		,1},	{"NO CARRIER"	,1},
 		{"NO ANSWER"	,1},	{"+COLP"	,1},
 		{"+CLIP"	,1},	{"+CRING"	,1},
+		{"+CCWA"	,1},
 
 		{"*EBCA"	,1},
 
