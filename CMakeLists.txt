@@ -77,6 +77,7 @@ if (CROSS_MINGW)
     set (CPACK_TOPLEVEL_TAG "Source")
     set (PACKAGE_NAME "Windows" CACHE STRING "Windows package name")
     set (CPACK_SYSTEM_NAME "${PACKAGE_NAME}")
+    # My MinGW is hacked to use msvcr70.dll, to work with Python
     add_definitions(-D_MSVCRT_VERSION__=0x070)
 endif (CROSS_MINGW)
 
