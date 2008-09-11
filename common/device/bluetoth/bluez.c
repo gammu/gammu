@@ -102,6 +102,14 @@ static GSM_Error bluetooth_checkdevice(GSM_StateMachine *s, bdaddr_t *bdaddr, uu
 	int retries = 0;
 	uuid_t subgroup;
 
+	if (s->ConnectionType == GCT_BLUEPHONET) {
+		smprintf(s, "Looking for suitable channel for PHONET\n");
+	} else if (s->ConnectionType == GCT_BLUEOBEX) {
+		smprintf(s, "Looking for suitable channel for OBEX\n");
+	} else if (s->ConnectionType == GCT_BLUEAT) {
+		smprintf(s, "Looking for suitable channel for AT\n");
+	}
+
 	bacpy(&interface,BDADDR_ANY);
 
 	ba2str(bdaddr, str);
