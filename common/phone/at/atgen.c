@@ -5342,7 +5342,7 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	reqlen += 1;
 
 	smprintf(s, "Writing phonebook entry\n");
-	ATGEN_WaitFor(s, req, reqlen, 0x00, 4, ID_SetMemory);
+	ATGEN_WaitFor(s, req, reqlen, 0x00, 40, ID_SetMemory);
 
 	return error;
 #undef REQUEST_SIZE
