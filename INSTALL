@@ -213,7 +213,7 @@ CURL
 ----
 
 For CURL support, you need libcurl-7.18.0-win32-msvc.zip from
-<http://curl.haxx.se/>. Unpack ip to some directory and point builb
+<http://curl.haxx.se/>. Unpack it to some directory and point build
 
 -DCURL_CROSS_PATH=/path/to/curl
 
