@@ -724,17 +724,12 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 					z = Pos;
 					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return false;
 				}
-				if (NewPicture) {
-					(Info->EntriesNum)++;
-					Info->Entries[Info->EntriesNum].Bitmap->Number = 0;
-					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].BitmapWidth  = 0;
-					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].BitmapHeight = 0;
-				}
 				Bitmap.BitmapWidth  = SMS->SMS[i].UDH.Text[w+3]*8;
 				Bitmap.BitmapHeight = SMS->SMS[i].UDH.Text[w+4];
 				Info->Entries[Info->EntriesNum].Bitmap = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap));
 				if (Info->Entries[Info->EntriesNum].Bitmap == NULL) return false;
 				if (NewPicture) {
+					Info->Entries[Info->EntriesNum].Bitmap->Number = 0;
 					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].BitmapWidth  = Bitmap.BitmapWidth;
 					Info->Entries[Info->EntriesNum].Bitmap->Bitmap[0].BitmapHeight = Bitmap.BitmapHeight;
 					PHONE_DecodeBitmap(GSM_EMSVariablePicture,
