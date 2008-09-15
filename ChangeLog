@@ -35,6 +35,7 @@ ChangeLog
 [+] * SMSD stores signal and battery state in MySQL (thanks to Wouter
       D'Haeseleer).
 [+] * Initial support for reading messages in simple text mode.
+[-] * Report if monitor failed because of an error.
     
 20080910 - 1.20.91
 

@@ -435,6 +435,9 @@ void Monitor(int argc, char *argv[])
 
 	printf("%s\n", _("Leaving monitor mode..."));
 
+	/* Report if we failed because of an error */
+	Print_Error(error);
+
 	GSM_Terminate();
 }
 
