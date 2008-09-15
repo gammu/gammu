@@ -3395,6 +3395,8 @@ GSM_Reply_Function OBEXGENReplyFunctions[] = {
 	{OBEXGEN_ReplyAddFilePart,	"\xC9",0x00,0x00,ID_AddFile			},
 
 	/* NOT FOUND block */
+	{OBEXGEN_ReplyConnect,		"\xC4",0x00,0x00,ID_Initialise			},
+	{OBEXGEN_ReplyChangePath,	"\xC4",0x00,0x00,ID_SetPath			},
 	{OBEXGEN_ReplyGetFilePart,	"\xC4",0x00,0x00,ID_GetFile			},
 	{OBEXGEN_ReplyChangePath,	"\xC4",0x00,0x00,ID_SetPath			},
 
