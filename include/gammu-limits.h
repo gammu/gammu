@@ -155,7 +155,7 @@
  *
  * \ingroup Limits
  */
-#define GSM_MAX_MULTI_SMS 10
+#define GSM_MAX_MULTI_SMS 50
 
 /**
  * Maximal length of UDH in SMS.
