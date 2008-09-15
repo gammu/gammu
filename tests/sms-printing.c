@@ -203,13 +203,15 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 		if (sms.Class != -1) {
 			printf(LISTFORMAT "%i\n", _("Class"),sms.Class);
 		}
-		printf(LISTFORMAT, _("Coding"));
-		switch (sms.Coding) {
-			case SMS_Coding_Unicode_No_Compression 	: printf("%s\n", _("Unicode (no compression)"));		break;
-			case SMS_Coding_Unicode_Compression 	: printf("%s\n", _("Unicode (compression)"));			break;
-			case SMS_Coding_Default_No_Compression 	: printf("%s\n", _("Default GSM alphabet (no compression)"));	break;
-			case SMS_Coding_Default_Compression 	: printf("%s\n", _("Default GSM alphabet (compression)"));	break;
-			case SMS_Coding_8bit			: printf("%s\n", _("8 bit"));					break;
+		if (sms.Coding != 0) {
+			printf(LISTFORMAT, _("Coding"));
+			switch (sms.Coding) {
+				case SMS_Coding_Unicode_No_Compression 	: printf("%s\n", _("Unicode (no compression)"));		break;
+				case SMS_Coding_Unicode_Compression 	: printf("%s\n", _("Unicode (compression)"));			break;
+				case SMS_Coding_Default_No_Compression 	: printf("%s\n", _("Default GSM alphabet (no compression)"));	break;
+				case SMS_Coding_Default_Compression 	: printf("%s\n", _("Default GSM alphabet (compression)"));	break;
+				case SMS_Coding_8bit			: printf("%s\n", _("8 bit"));					break;
+			}
 		}
 		if (sms.State==SMS_UnSent && sms.Memory==MEM_ME) {
 		} else {
@@ -385,10 +387,12 @@ void DisplayTestSMS(GSM_MultiSMSMessage sms)
 			case SMS_AlcatelMonoBitmapLong:
 			case SMS_AlcatelMonoAnimationLong:
 			case SMS_AlcatelSMSTemplateName:
+				printf("%s\n", _("Not supported printing"));
+				break;
 #ifndef CHECK_CASES
 			default:
 #endif
-				printf("%s\n", _("Error"));
+				printf("%s: %d\n", _("Error"), SMSInfo.Entries[i].ID);
 				exit(2);
 				break;
 			}
