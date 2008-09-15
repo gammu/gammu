@@ -15,6 +15,8 @@ or inspired me to make it.
 ChangeLog
 =========
     
+2008???? - 1.20.93
+    
 20080915 - 1.20.92
 
 [-] * Fixed Windows binary (define properly MSVCRT to use) (bug #683).
