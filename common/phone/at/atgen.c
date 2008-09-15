@@ -2766,7 +2766,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 				found = tmpfound;
 			}
 		}
-		smprintf(s, "F: %d, c: %d\n", found, Priv->SMSCount);
+		smprintf(s, "Cache status: Found: %d, count: %d\n", found, Priv->SMSCount);
 		if (found >= Priv->SMSCount) {
 			/* Did we already read second folder? */
 			if (Priv->SMSReadFolder == 2) return ERR_EMPTY;
