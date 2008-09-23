@@ -340,6 +340,7 @@ static GSM_Error FBUS2_ATSwitch(GSM_StateMachine *s)
 
 	return ERR_NONE;
 }
+#endif
 
 /**
  * Performs switch to FBUS2 protocol using AT commands.
@@ -364,7 +365,6 @@ static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s)
 
 	return ERR_NONE;
 }
-#endif
 
 static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 {
