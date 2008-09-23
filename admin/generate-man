@@ -420,7 +420,7 @@ HELP['nokiacomposer'] = '''Show, how to enter RTTL ringtone in composer existing
 HELP['dialvoice'] = '''Make voice call from SIM card line set in phone.
 ''' 
 HELP['maketerminatedcall'] = '''Make voice call from SIM card line set in phone which will 
-be terminated after \\fB\\length\\fR seconds.
+be terminated after \\fBlength\\fR seconds.
 ''' 
 HELP['answercall'] = '''Answer incoming call.
 '''
