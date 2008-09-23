@@ -390,9 +390,23 @@ GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
 
 	/* Can we do guesses? */
 	if (guess) {
+		/* Are there HEX only chars? */
 		if  (charset == AT_CHARSET_HEX
 			&& ! ATGEN_IsHex(input, length)) {
 			charset = AT_CHARSET_GSM;
+		}
+		/*
+		 * Motorola sometimes replies in UCS2 while there is HEX chosen.
+		 * If string starts with two zeroes, it is definitely not HEX.
+		 */
+		if  (charset == AT_CHARSET_HEX
+			&& ATGEN_IsUCS2(input, length)
+			&& input[0] == '0'
+			&& input[1] == '0'
+			&& input[4] == '0'
+			&& input[5] == '0'
+			) {
+			charset = AT_CHARSET_UCS2;
 		}
 		/*
 		 * Motorola sometimes criples HEX reply while UCS-2 is chosen.

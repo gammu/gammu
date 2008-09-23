@@ -96,6 +96,17 @@ int main(int argc UNUSED, char **argv UNUSED)
 		return 1;
 	}
 
+	Priv->Charset = AT_CHARSET_HEX;
+	Priv->Manufacturer = AT_Motorola;
+	error = ATGEN_ParseReply(s,
+			"+CSCA: 002B003300380030003600330039003000310030003000300030,145",
+			"+CSCA: @p, @i",
+			buffer, BUFFER_SIZE, &i);
+	if (error != ERR_NONE) {
+		printf("%s\n", GSM_ErrorString(error));
+		return 1;
+	}
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
