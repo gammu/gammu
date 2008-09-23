@@ -7,11 +7,14 @@
 #ifndef __gammu_misc_h
 #define __gammu_misc_h
 
-#define WIN32_LEAN_AND_MEAN
+#ifdef WIN32
+#  define WIN32_LEAN_AND_MEAN
+#  include <windows.h>
+#endif
 #include <stdio.h>
 #include <gammu-file.h>
 #if defined(HAVE_UNISTD_H)
-#include <unistd.h>
+#  include <unistd.h>
 #endif
 
 /**
