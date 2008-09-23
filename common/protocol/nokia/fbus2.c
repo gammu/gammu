@@ -345,19 +345,26 @@ static GSM_Error FBUS2_ATSwitch(GSM_StateMachine *s)
 /**
  * Performs initial synchronisation of FBUS2.
  */
-static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s)
+static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s, const int repeats, const int delays, const bool terminate)
 {
 	int count;
 	static const unsigned char init_char = 0x55;
 	static const unsigned char end_init_char = 0xc1;
 
-	for (count = 0; count < 32; count ++) {
-		if (s->Device.Functions->WriteDevice(s, &init_char, 1) != 1)
+	for (count = 0; count < repeats; count ++) {
+		if (s->Device.Functions->WriteDevice(s, &init_char, 1) != 1) {
 			return ERR_DEVICEWRITEERROR;
+		}
+		if (delays > 0) {
+			usleep(delays);
+		}
 	}
 
-	if (s->Device.Functions->WriteDevice(s, &end_init_char, 1) != 1)
-		return ERR_DEVICEWRITEERROR;
+	if (terminate) {
+		if (s->Device.Functions->WriteDevice(s, &end_init_char, 1) != 1) {
+			return ERR_DEVICEWRITEERROR;
+		}
+	}
 
 	sleep(1);
 
@@ -415,7 +422,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		error = Device->DeviceSetSpeed(s,115200);
 		if (error != ERR_NONE) return error;
 
-		error = FBUS2_InitSequence(s);
+		error = FBUS2_InitSequence(s, 32, 0, true);
 		if (error != ERR_NONE) return error;
 
 		break;
@@ -428,7 +435,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		error = Device->DeviceSetDtrRts(s, !(s->NoPowerCable), false);
 		if (error != ERR_NONE) return error;
 
-		error = FBUS2_InitSequence(s);
+		error = FBUS2_InitSequence(s, 32, 0, true);
 		if (error != ERR_NONE) return error;
 
 		break;
@@ -437,7 +444,7 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		error = Device->DeviceSetSpeed(s,9600);
 		if (error != ERR_NONE) return error;
 
-		error = FBUS2_InitSequence(s);
+		error = FBUS2_InitSequence(s, 32, 0, true);
 		if (error != ERR_NONE) return error;
 
 		error = Device->DeviceSetSpeed(s,115200);
@@ -447,6 +454,12 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 #endif
 	default:
 		break;
+	}
+
+	/* A bit more of synchronisation could be needed here */
+	if (s->ConnectionType != GCT_FBUS2BLUE && s->ConnectionType != GCT_BLUEFBUS2) {
+		error = FBUS2_InitSequence(s, 250, 100, false);
+		if (error != ERR_NONE) return error;
 	}
 
 	/* Read any possible junk on the line */
