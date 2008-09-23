@@ -368,9 +368,6 @@ static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s)
 
 static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 {
-#ifdef GSM_ENABLE_FBUS2IRDA
-#endif
-
 	GSM_Protocol_FBUS2Data	*d		= &s->Protocol.Data.FBUS2;
 	GSM_Device_Functions	*Device 	= s->Device.Functions;
 	GSM_Error		error;
