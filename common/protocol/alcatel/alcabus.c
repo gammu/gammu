@@ -85,7 +85,7 @@ static GSM_Error ALCABUS_WriteMessage (GSM_StateMachine *s, unsigned const char 
 		/* For connect and disconnect we need a bit larger delay */
 		while (d->busy) {
 			GSM_ReadDevice(s,true);
-			my_sleep(1);
+			usleep(1000);
 			i++;
 			if (i == 10) return ERR_TIMEOUT;
 		}

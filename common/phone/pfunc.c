@@ -102,19 +102,19 @@ GSM_Error PHONE_RTTLPlayOneNote(GSM_StateMachine *s, GSM_RingNote note, bool fir
 	/* Is it correct ? Experimental values here */
 	switch (note.Style) {
 		case StaccatoStyle:
-			my_sleep (7500);
+			usleep(7500000);
 			error=s->Phone.Functions->PlayTone(s,0,0,false);
 			if (error != ERR_NONE) return error;
-			my_sleep ((1400000/note.Tempo*duration)-(7500));
+			usleep ((1400000000L/note.Tempo*duration)-(7500000));
 			break;
 		case ContinuousStyle:
-			my_sleep  (1400000/note.Tempo*duration);
+			usleep(1400000000L/note.Tempo*duration);
 			break;
 		case NaturalStyle:
-			my_sleep  (1400000/note.Tempo*duration-50);
+			usleep(1400000000L/note.Tempo*duration-50000);
 			error=s->Phone.Functions->PlayTone(s,0,0,false);
 			if (error != ERR_NONE) return error;
-			my_sleep (50);
+			usleep(50000);
 			break;
 	}
 	return ERR_NONE;
@@ -127,7 +127,7 @@ GSM_Error PHONE_Beep(GSM_StateMachine *s)
 	error=s->Phone.Functions->PlayTone(s, 4000, 5,true);
 	if (error!=ERR_NONE) return error;
 
-	my_sleep(500);
+	usleep(500000);
 
 	return s->Phone.Functions->PlayTone(s,255*255,0,false);
 }

@@ -135,7 +135,7 @@ static GSM_Error WaitFor(GSM_StateMachine *s, char *t, int ttl)
 	n = s->Device.Functions->ReadDevice(s, readbuf, 80);
 	readbuf[n] = 0;
 	while (strstr(readbuf, t) == NULL && (sec + ttl) >= Date.Second) {
-		my_sleep(5000);
+		usleep(500000);
 		n = s->Device.Functions->ReadDevice(s, readbuf, 80);
 		readbuf[n] = 0;
         	GSM_GetCurrentDateTime (&Date);

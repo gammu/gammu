@@ -258,11 +258,11 @@ void SearchPhone(int argc, char *argv[])
 	for (i = 0; i < dev; i++)
 		MakeSearchThread(i);
 	while (num != 0)
-		my_sleep(5);
+		usleep(5000);
 	for (i = dev; i < dev2; i++)
 		MakeSearchThread(i);
 	while (num != 0)
-		my_sleep(5);
+		usleep(5000);
 }
 #endif				/*Support for threads */
 

@@ -317,7 +317,7 @@ static void FBUS2_WriteDLR3(GSM_StateMachine *s, const char *command, int length
 			GSM_DumpMessageLevel2Recv(s, buff, recvlen, 0xff);
 			wassomething = true;
 		}
-		my_sleep(50);
+		usleep(50000);
 	}
 }
 
@@ -361,7 +361,7 @@ static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s)
 	if (s->Device.Functions->WriteDevice(s, &end_init_char, 1) != 1)
 		return ERR_DEVICEWRITEERROR;
 
-	my_sleep(1000);
+	sleep(1);
 
 	return ERR_NONE;
 }
@@ -400,12 +400,12 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	case GCT_FBUS2DLR3:
 		error = Device->DeviceSetDtrRts(s,false,false);
 		if (error != ERR_NONE) return error;
-		my_sleep(1000);
+		sleep(1);
 
 		if (! s->NoPowerCable) {
 			error = Device->DeviceSetDtrRts(s,true,true);
 			if (error != ERR_NONE) return error;
-			my_sleep(1000);
+			sleep(1);
 		}
 
 		error = Device->DeviceSetSpeed(s,19200);
@@ -464,7 +464,7 @@ static GSM_Error FBUS2_Terminate(GSM_StateMachine *s)
 	s->Protocol.Data.FBUS2.Msg.Buffer 	= NULL;
 	s->Protocol.Data.FBUS2.MultiMsg.Buffer 	= NULL;
 
-	my_sleep(200);
+	sleep(2);
 	return ERR_NONE;
 }
 

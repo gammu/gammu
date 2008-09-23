@@ -809,7 +809,7 @@ static GSM_Error N6110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
                                 *maxlength=GSM_EncodeNokiaRTTLRingtone(*Ringtone, req+2+UDHHeader.Length, &size);
                                 error = s->Protocol.Functions->WriteMessage(s, req, 2+UDHHeader.Length+size, 0x12);
                                 if (error!=ERR_NONE) return error;
-                                my_sleep(1000);
+                                sleep(1);
                                 /* We have to make something (not important, what) now */
                                 /* no answer from phone*/
                                 return DCT3_GetNetworkInfo(s,&NetInfo);
@@ -1130,7 +1130,7 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
                                 reqPreview[count]=0x00;
                                 error = s->Protocol.Functions->WriteMessage(s, reqPreview, count + 1, 0x12);
                                 if (error!=ERR_NONE) return error;
-                                my_sleep(1000);
+                                sleep(1);
                                 /* We have to make something (not important, what) now */
                                 /* no answer from phone*/
                                 return DCT3_GetNetworkInfo(s,&NetInfo);

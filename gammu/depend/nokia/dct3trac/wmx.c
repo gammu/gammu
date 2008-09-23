@@ -456,7 +456,7 @@ void DCT3SetDebug(int argc, char *argv[])
 	/* todo: wait and dump for some time */
 	while (!gshutdown) {
 		GSM_ReadDevice(gsm,true);
-		my_sleep(10);
+		usleep(10000);
 	}
 	signal(SIGINT, SIG_DFL);
 	printf("Disabling\n");

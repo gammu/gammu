@@ -856,7 +856,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 		}
 		error=GSM_WaitFor (s, req, Current, 0x83, OBEX_TIMEOUT, ID_GetFile);
 		if (error != ERR_PERMISSION) break;
-		my_sleep(200);
+		usleep(200000);
 		retries++;
 	}
 	if (error != ERR_NONE) return error;
@@ -878,7 +878,7 @@ static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bo
 			}
 			error = GSM_WaitFor (s, req, Current, 0x83, OBEX_TIMEOUT, ID_GetFile);
 			if (error != ERR_PERMISSION) break;
-			my_sleep(200);
+			usleep(200000);
 			retries++;
 		}
 		if (error != ERR_NONE) return error;

@@ -538,7 +538,7 @@ static GSM_Error ALCATEL_SetATMode(GSM_StateMachine *s)
 	s->Phone.Data.Priv.ATGEN.Charset	= 0;
 	s->Phone.Data.Priv.ATGEN.PBKMemory	= 0;
 
-	my_sleep(100);
+	usleep(100000);
 
 	/* In case we don't send AT command short after closing binary mode,
 	 * phone takes VERY long to react next time. The error code in

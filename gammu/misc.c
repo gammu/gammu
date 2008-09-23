@@ -549,7 +549,7 @@ void MakeTerminatedCall(int argc, char *argv[])
 	error=GSM_DialVoice(gsm, argv[2], ShowNumber);
 	Print_Error(error);
 
-	my_sleep(atoi(argv[3]));
+	sleep(atoi(argv[3]));
 	GSM_ReadDevice(gsm,true);
 
 	if (TerminateID != -1) {

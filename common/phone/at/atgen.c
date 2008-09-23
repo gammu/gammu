@@ -1416,7 +1416,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 		if (error!=ERR_NONE) return error;
 
 	    	/* Grab any possible garbage */
-	    	while (s->Device.Functions->ReadDevice(s, buff, 2) > 0) my_sleep(10);
+	    	while (s->Device.Functions->ReadDevice(s, buff, 2) > 0) usleep(10000);
 	}
 
     	/* When some phones (Alcatel BE5) is first time connected, it needs extra
@@ -3280,7 +3280,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 			smprintf(s, "Saving SMS\n");
 			error = s->Protocol.Functions->WriteMessage(s, hexreq, current2, 0x00);
 			if (error!=ERR_NONE) return error;
-			my_sleep(500);
+			usleep(500000);
 			/* CTRL+Z ends entering */
 			error = s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
 			if (error != ERR_NONE) return error;
@@ -3377,10 +3377,10 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		smprintf(s, "Sending SMS\n");
 		error = s->Protocol.Functions->WriteMessage(s, hexreq, current2, 0x00);
 		if (error!=ERR_NONE) return error;
-		my_sleep(500);
+		usleep(500000);
 		/* CTRL+Z ends entering */
 		error=s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
-		my_sleep(100);
+		usleep(100000);
 		return error;
 	} else {
 		smprintf(s, "Escaping SMS mode\n");

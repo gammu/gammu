@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Fix crash when decoding EMS pictures (bug #549).
 [-] * Motorola phones sometimes reply in UCS2 instead of HEX (bug #712).
+[-] * Use native functions sleep/usleep if available.
     
 20080915 - 1.20.92
 

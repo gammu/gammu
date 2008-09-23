@@ -684,7 +684,7 @@ static GSM_Error N7110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 			req[10] = size;
 			error = s->Protocol.Functions->WriteMessage(s, req, size+11, 0x00);
 			if (error!=ERR_NONE) return error;
-			my_sleep(1000);
+			sleep(1);
 			/* We have to make something (not important, what) now */
 			/* no answer from phone*/
 			return DCT3_GetNetworkInfo(s,&NetInfo);
@@ -702,7 +702,7 @@ static GSM_Error N7110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 	memcpy(req2+37,dest.NokiaBinary.Frame,dest.NokiaBinary.Length);
 	error = s->Protocol.Functions->WriteMessage(s, req2, 37+dest.NokiaBinary.Length, 0x1F);
 	if (error!=ERR_NONE) return error;
-	my_sleep(1000);
+	sleep(1);
 	/* We have to make something (not important, what) now */
 	/* no answer from phone*/
 	return DCT3_GetNetworkInfo(s,&NetInfo);

@@ -465,7 +465,7 @@ void DCT4SetVibraLevel(int argc, char *argv[])
 		GSM_GetCurrentDateTime (&Date);
 		j=Date.Second;
 		while (j==Date.Second) {
-			my_sleep(10);
+			usleep(10000);
 			GSM_GetCurrentDateTime(&Date);
 		}
 	}

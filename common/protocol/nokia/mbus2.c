@@ -55,7 +55,7 @@ static GSM_Error MBUS2_WriteMessage (GSM_StateMachine 	*s,
 	GSM_DumpMessageLevel2(s, buffer2+6, MsgLength, MsgType);
 
 	/* Sending to phone */
-	my_sleep(10);
+	usleep(10000);
 	sent=s->Device.Functions->WriteDevice(s,buffer2,len);
 
 	free(buffer2);
@@ -85,7 +85,7 @@ static GSM_Error MBUS2_SendAck(GSM_StateMachine 	*s,
 	smprintf_level(s, D_TEXT, "[Sending Ack of type %02x, seq: %x]\n",type,sequence);
 
 	/* Sending to phone */
-	my_sleep(10);
+	usleep(10000);
 	if (Device->WriteDevice(s,buffer2,6)!=6) return ERR_DEVICEWRITEERROR;
 
 	return ERR_NONE;
@@ -154,7 +154,7 @@ static GSM_Error MBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	}
 	if (d->MsgRXState == RX_GetSource) {
 		if (rx_char != MBUS2_DEVICE_PHONE && rx_char != MBUS2_DEVICE_PC) {
-			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x and %02x]\n", 
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x and %02x]\n",
 					rx_char, MBUS2_DEVICE_PHONE, MBUS2_DEVICE_PC);
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
@@ -166,7 +166,7 @@ static GSM_Error MBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	}
 	if (d->MsgRXState == RX_GetDestination) {
 		if (rx_char != MBUS2_DEVICE_PC && rx_char != MBUS2_DEVICE_PHONE) {
-			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x and %02x]\n", 
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x and %02x]\n",
 					rx_char, MBUS2_DEVICE_PHONE, MBUS2_DEVICE_PC);
 			d->MsgRXState = RX_Sync;
 			return ERR_NONE;
@@ -178,7 +178,7 @@ static GSM_Error MBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	}
 	if (d->MsgRXState == RX_Sync) {
 		if (rx_char != MBUS2_FRAME_ID) {
-			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n", 
+			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n",
 					rx_char, MBUS2_FRAME_ID);
 			return ERR_NONE;
 		}
@@ -212,7 +212,7 @@ static GSM_Error MBUS2_Initialise(GSM_StateMachine *s)
 
 	error=Device->DeviceSetDtrRts(s,false,true); /*DTR low,RTS high*/
 	if (error!=ERR_NONE) return error;
-        my_sleep(200);
+        usleep(200000);
 
 	return ERR_NONE;
 }

@@ -678,7 +678,7 @@ int GSM_ReadDevice (GSM_StateMachine *s, bool waitforreply)
 		res = s->Device.Functions->ReadDevice(s, buff, 255);
 		if (!waitforreply) break;
 		if (res > 0) break;
-		my_sleep(5);
+		usleep(5000);
 		GSM_GetCurrentDateTime(&Date);
 	}
 
@@ -740,7 +740,7 @@ GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,
 		if (GSM_ReadDevice(s, true) != 0) {
 			i = 0;
 		} else {
-			my_sleep(10);
+			usleep(10000);
 		}
 
 		if (length != 0) {
