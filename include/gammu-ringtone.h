@@ -158,7 +158,7 @@ typedef struct {
 	/**
 	 * Ringtone name
 	 */
-	unsigned char Name[20 * 2];
+	unsigned char Name[(GSM_MAX_RINGTONE_NAME_LENGTH + 1) * 2];
 	/**
 	 * Ringtone location
 	 */

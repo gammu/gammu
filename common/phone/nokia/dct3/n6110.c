@@ -1517,7 +1517,13 @@ GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
                         i=8;
                         while (msg.Buffer[i]!=0) {
                                 i++;
-                                if (i>msg.Length) return ERR_EMPTY;
+				if (i >= GSM_MAX_RINGTONE_NAME_LENGTH) {
+					smprintf(s, "Ringtone name too long!\n");
+					return ERR_MOREMEMORY;
+				}
+                                if (i > msg.Length) {
+					return ERR_EMPTY;
+				}
                         }
                         EncodeUnicode(Data->Ringtone->Name,msg.Buffer+8,i-8);
                         smprintf(s, "Name \"%s\"\n",DecodeUnicodeString(Data->Ringtone->Name));
