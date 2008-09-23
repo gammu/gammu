@@ -343,9 +343,7 @@ static GSM_Error FBUS2_ATSwitch(GSM_StateMachine *s)
 #endif
 
 /**
- * Performs switch to FBUS2 protocol using AT commands.
- *
- * \todo We should check return codes here.
+ * Performs initial synchronisation of FBUS2.
  */
 static GSM_Error FBUS2_InitSequence(GSM_StateMachine *s)
 {
