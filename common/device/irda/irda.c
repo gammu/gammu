@@ -92,7 +92,7 @@ static bool irda_discover_device(GSM_StateMachine *state, int *fd)
 					if (strcmp(GetModelData(state, NULL,NULL,list->Device[i].irdaDeviceName)->number,"") != 0) {
 						founddevice = true;
 						/* Model AUTO */
-						if (state->CurrentConfig->Model[0]==0) 
+						if (state->CurrentConfig->Model[0]==0)
 							strcpy(state->Phone.Data.Model,GetModelData(state, NULL,NULL,list->Device[i].irdaDeviceName)->number);
 						state->Phone.Data.ModelInfo = GetModelData(state, NULL,state->Phone.Data.Model,NULL);
 					}
@@ -110,7 +110,7 @@ static bool irda_discover_device(GSM_StateMachine *state, int *fd)
 		    		}
 			}
 			if (founddevice) break;
-			my_sleep(10);
+			usleep(10000);
 			GSM_GetCurrentDateTime(&Date);
 	    	}
 		if (founddevice) break;

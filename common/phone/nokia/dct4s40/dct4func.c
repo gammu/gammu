@@ -57,7 +57,7 @@ GSM_Error DCT4_SetPhoneMode(GSM_StateMachine *s, DCT4_PHONE_MODE mode)
 			error=DCT4_GetPhoneMode(s);
 			if (error != ERR_NONE) return error;
 			if (PhoneMode[0] == mode) break;
-			my_sleep(500);
+			usleep(500000);
 		}
 	}
 	return ERR_NONE;

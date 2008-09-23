@@ -1041,7 +1041,7 @@ static GSM_Error N6510_PrivGetFolderListing2(GSM_StateMachine *s, GSM_File *File
 	if (error!=ERR_NONE) return error;
 
 	while (!Priv->FilesEnd) {
-		my_sleep(100);
+		usleep(100000);
 		if (GSM_ReadDevice(s,true)==0) i++; else i=0;
 		if (i==3) {
 			smprintf(s,"Connection broken or WELL KNOWN phone firmware problem (which makes, that not all files are reported)\n");

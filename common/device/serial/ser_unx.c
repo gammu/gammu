@@ -393,7 +393,7 @@ static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 		ret = write(d->hPhone, buffer, nbytes - actual);
 		if (ret < 0) {
 			if (errno == EAGAIN) {
-				my_sleep(1);
+				usleep(1000);
 				continue;
 			}
 	    		if (actual != nbytes) GSM_OSErrorInfo(s, "serial_write");
@@ -401,7 +401,7 @@ static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 		}
 		actual  += ret;
 		buffer  += ret;
-    		if (s->ConnectionType == GCT_FBUS2PL2303) my_sleep(1);
+    		if (s->ConnectionType == GCT_FBUS2PL2303) usleep(1000);
     	} while (actual < nbytes);
     	return actual;
 }

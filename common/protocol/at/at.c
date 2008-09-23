@@ -30,9 +30,9 @@ static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned const char *buff
 			/* For some phones like Siemens M20 we need to wait a little
 			 * after writing each char. Possible reason: these phones
 			 * can't receive so fast chars or there is bug here in Gammu */
-			my_sleep(1);
+			usleep(1000);
 		}
-		my_sleep(400);
+		usleep(400000);
 	}
 
 	return ERR_NONE;

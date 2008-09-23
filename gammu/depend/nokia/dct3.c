@@ -206,7 +206,7 @@ void DCT3SelfTests(int argc, char *argv[])
 			GSM_Terminate();
 		}
 
-		my_sleep(400);
+		usleep(400000);
 	}
 
 	gsm->User.UserReplyFunctions=UserReplyFunctions3;
@@ -772,7 +772,7 @@ void DCT3DisplayOutput(int argc, char *argv[])
 
 	while (!gshutdown) {
 		GSM_ReadDevice(gsm,true);
-		my_sleep(10);
+		usleep(10000);
 	}
 
 	req[4] = 0x02;

@@ -376,7 +376,7 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config)
 			} else if (WIFCONTINUED(status)) {
 				WriteSMSDLog("Process continued\n");
 			}
-			my_sleep(100);
+			usleep(100000);
 			if (i++ > 1200) {
 				WriteSMSDLog("Waited two minutes for child process, giving up\n");
 				return true;
@@ -512,7 +512,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			GSM_GetCurrentDateTime (&Date);
 			second = Date.Second;
 	 		while (second == Date.Second && !gshutdown) {
-				my_sleep(10);
+				usleep(10000);
 				GSM_GetCurrentDateTime(&Date);
 			}
 			Service->RefreshPhoneStatus(Config);
@@ -585,7 +585,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				GSM_GetCurrentDateTime (&Date);
 				z=Date.Second;
 				while (z==Date.Second) {
-					my_sleep(10);
+					usleep(10000);
 					GSM_GetCurrentDateTime(&Date);
 					GSM_ReadDevice(gsm,true);
 					if (SendingSMSStatus != ERR_TIMEOUT) break;
@@ -660,7 +660,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 						GSM_ErrorString(error), error, errors);
 				error=GSM_TerminateConnection(gsm);
 			}
-			if (initerrors++ > 3) my_sleep(30000);
+			if (initerrors++ > 3) sleep(30);
 			WriteSMSDLog(_("Starting communication"));
 			error=GSM_InitConnection(gsm,2);
 			switch (error) {
@@ -686,7 +686,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 							GSM_ErrorString(error),
 							error);
 					lastreset = time(NULL);
-					my_sleep(5000);
+					sleep(5);
 				}
 				break;
 			case ERR_DEVICEOPENERROR:

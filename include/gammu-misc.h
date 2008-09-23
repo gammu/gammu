@@ -10,6 +10,9 @@
 #define WIN32_LEAN_AND_MEAN
 #include <stdio.h>
 #include <gammu-file.h>
+#if defined(HAVE_UNISTD_H)
+#include <unistd.h>
+#endif
 
 /**
  * Reads single line from file.
@@ -58,16 +61,10 @@ extern void GSM_InitLocales(const char *path);
 #define MIN(a,b) ((a)<(b) ? (a) : (b))
 
 #ifdef WIN32
-#  ifdef __BORLANDC__
-/* BCC has a proper Sleep(), which takes milliseconds */
-#    define my_sleep(x) Sleep(x)
-#  else
-#    include <windows.h>
-#    define my_sleep(x) ((x)<1000 ? Sleep(1) : Sleep((x)/1000))
-#  endif
-#else
-#  include <unistd.h>
-#  define my_sleep(x) usleep(x*1000)
+#  if !defined(HAVE_UNISTD_H) || defined(__MINGW32__)
+#    define sleep(x) Sleep((x) * 1000)
+#    define usleep(x) Sleep(((x) < 1000) ? 1 : ((x) / 1000))
+#  endif /* HAVE_UNISTD_H */
 #endif
 
 /* Easy check for GCC */

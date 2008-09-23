@@ -208,6 +208,10 @@
 #cmakedefine HAVE_WCTYPE_H
 #endif
 
+#ifndef HAVE_UNISTD_H
+#cmakedefine HAVE_UNISTD_H
+#endif
+
 /* Iconv support */
 #cmakedefine ICONV_FOUND
 #cmakedefine ICONV_SECOND_ARGUMENT_IS_CONST

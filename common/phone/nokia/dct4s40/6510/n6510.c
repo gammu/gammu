@@ -1508,7 +1508,7 @@ static GSM_Error N6510_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
 		smprintf(s, "Setting ringtone\n");
 		error = s->Protocol.Functions->WriteMessage(s, SetPreviewReq, size+11, 0x00);
 		if (error!=ERR_NONE) return error;
-		my_sleep(1000);
+		sleep(1);
 		/* We have to make something (not important, what) now */
 		/* no answer from phone*/
 		return s->Phone.Functions->GetNetworkInfo(s,&NetInfo);
