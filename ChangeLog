@@ -23,6 +23,7 @@ ChangeLog
 [-] * Improve FBUS initialization sequence.
 [-] * Fixed reading for ringtones from Nokia 5510 (bug #529).
 [-] * Do not crash if ringtone name is too long (bug #529).
+[-] * Fix possible crash while reading of messages using AT.
     
 20080915 - 1.20.92
 
