@@ -214,6 +214,13 @@
 #define GSM_MAX_RINGTONE_NOTES 255
 
 /**
+ * Maximal length of ringtone name.
+ *
+ * \ingroup Limits
+ */
+#define GSM_MAX_RINGTONE_NAME_LENGTH 20
+
+/**
  * Maximal length of FM station name.
  *
  * \ingroup Limits
