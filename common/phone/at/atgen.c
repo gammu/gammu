@@ -2790,6 +2790,8 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 			/* Not supported folder? We're done then. */
 			if (error == ERR_NOTSUPPORTED) return ERR_EMPTY;
 			if (error != ERR_NONE) return error;
+			/* Did we read anything? */
+			if (Priv->SMSCount == 0) return ERR_EMPTY;
 
 			/* Start again */
 			found = 0;
