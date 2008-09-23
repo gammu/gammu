@@ -114,34 +114,32 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 
 #if defined (GSM_ENABLE_BLUETOOTHDEVICE) || defined (GSM_ENABLE_IRDADEVICE)
 
+/* Windows do not have this, but we don't seem to need it there */
+#ifndef MSG_DONTWAIT
+#define MSG_DONTWAIT 0
+#endif
+
 int socket_read(GSM_StateMachine *s UNUSED, void *buf, size_t nbytes, socket_type hPhone)
 {
 	fd_set 		readfds;
 	int result = 0;
-#ifdef WIN32
 	struct timeval 	timer;
-#else
-	int flags;
-#endif
 
 	FD_ZERO(&readfds);
 	FD_SET(hPhone, &readfds);
+
+	timer.tv_sec = 0;
+	timer.tv_usec = 0;
+
+	if (select(hPhone + 1, &readfds, NULL, NULL, &timer) > 0) {
+		result = recv(hPhone, buf, nbytes, MSG_DONTWAIT);
 #ifndef WIN32
-	if (select(hPhone+1, &readfds, NULL, NULL, 0) > 0) {
-		flags = fcntl(hPhone, F_GETFL);
-		fcntl(hPhone, F_SETFL, flags | O_NONBLOCK);
-		result = read(hPhone, buf, nbytes);
 		if (result < 0 && errno != EINTR) {
-			return 0;
-		}
-		fcntl(hPhone, F_SETFL, flags);
-	}
-#else
-	memset(&timer,0,sizeof(timer));
-	if (select(0, &readfds, NULL, NULL, &timer) > 0) {
-		result = recv(hPhone, buf, nbytes, 0);
-	}
+ 			return 0;
+ 		}
 #endif
+	}
+
 	return result;
 }
 

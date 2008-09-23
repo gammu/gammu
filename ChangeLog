@@ -25,6 +25,7 @@ ChangeLog
 [-] * Do not crash if ringtone name is too long (bug #529).
 [-] * Fix possible crash while reading of messages using AT.
 [-] * Increase timeout when writing SMS message (bug #596).
+[-] * Cleaned up issues with reading from Bluez (bug #670).
     
 20080915 - 1.20.92
 
