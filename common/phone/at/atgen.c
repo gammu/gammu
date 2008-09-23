@@ -4103,8 +4103,8 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 					tmp, sizeof(tmp) / 2,
 					&Priv->MemoryUsed,
 					&Priv->MemorySize);
-		if (error == ERR_NONE) {
-			return ERR_NONE;
+		if (error == ERR_UNKNOWNRESPONSE) {
+			return ERR_NOTSUPPORTED;
 		}
 		return error;
 	case AT_Reply_CMSError:
