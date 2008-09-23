@@ -450,7 +450,9 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 	}
 
 	/* Read any possible junk on the line */
-	s->Device.Functions->ReadDevice(s, buff, 255);
+	while (s->Device.Functions->ReadDevice(s, buff, sizeof(buff)) > 0) {
+		usleep(1000);
+	}
 
 	return ERR_NONE;
 }
