@@ -21,6 +21,7 @@ ChangeLog
 [-] * Motorola phones sometimes reply in UCS2 instead of HEX (bug #712).
 [-] * Use native functions sleep/usleep if available.
 [-] * Improve FBUS initialization sequence.
+[-] * Fixed reading for ringtones from Nokia 5510 (bug #529).
     
 20080915 - 1.20.92
 
