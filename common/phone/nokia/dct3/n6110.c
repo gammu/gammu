@@ -1494,7 +1494,7 @@ static GSM_Error N6110_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
         return N6110_SetMemory(s, &dwa);
 }
 
-static GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
+GSM_Error N6110_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
         GSM_Phone_Data  *Data = &s->Phone.Data;
         char            buffer[2000];
