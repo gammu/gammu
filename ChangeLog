@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Automatically switch to nodtr connection if DTR/RTS setting fails.
 [-] * More verbose debug messages in API.
+[-] * Free phone data after testing model to avoid memory leaks.
     
 20080923 - 1.20.93
 
