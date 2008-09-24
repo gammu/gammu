@@ -305,13 +305,13 @@ static GSM_Error serial_setdtrrts(GSM_StateMachine *s, bool dtr, bool rts)
     	smprintf(s, ", CTS is %s\n",    flags & TIOCM_CTS ? "up" : "down");
 
     	if (((flags & TIOCM_DTR) == TIOCM_DTR) != dtr) {
-		smprintf(s, "HINT: Setting DTR failed, maybe adding -nodtr to connection will help you.\n");
-		return ERR_DEVICEDTRRTSERROR;
+		smprintf(s, "Setting DTR failed, disabling setting of DTR/RTS signals.\n");
+		s->SkipDtrRts = true;
 	}
 
     	if (((flags & TIOCM_RTS) == TIOCM_RTS) != rts) {
-		smprintf(s, "HINT: Setting RTS failed, maybe adding -nodtr to connection will help you.\n");
-		return ERR_DEVICEDTRRTSERROR;
+		smprintf(s, "Setting RTS failed, disabling setting of DTR/RTS signals.\n");
+		s->SkipDtrRts = true;
 	}
 
     	return ERR_NONE;
