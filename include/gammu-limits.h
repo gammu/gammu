@@ -46,7 +46,7 @@
  *
  * \ingroup Limits
  */
-#define GSM_MAX_IMEI_LENGTH 20
+#define GSM_MAX_IMEI_LENGTH 35
 
 /**
  * Maximal length of various phone information. Just a shorcut for
