@@ -18,6 +18,7 @@ ChangeLog
 2008???? - 1.20.94
 
 [-] * Automatically switch to nodtr connection if DTR/RTS setting fails.
+[-] * More verbose debug messages in API.
     
 20080923 - 1.20.93
 

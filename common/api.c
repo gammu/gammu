@@ -3,13 +3,15 @@
 #include <gammu.h>
 #include "gsmstate.h"
 
-#ifdef DEBUG
-#	define PRINT_FUNCTION_START
-#	define PRINT_FUNCTION_END
-#else
-#	define PRINT_FUNCTION_START smprintf(s, "Entering %s\n", __FUNCTION__);
-#	define PRINT_FUNCTION_END smprintf(s, "Leaving %s\n", __FUNCTION__);
-#endif
+#define PRINT_FUNCTION_START smprintf(s, "Entering %s\n", __FUNCTION__);
+#define PRINT_FUNCTION_END smprintf(s, "Leaving %s\n", __FUNCTION__);
+#define PRINT_MEMORY_INFO() smprintf(s, "Location = %d, Memory type = %s\n", entry->Location, GSM_MemoryTypeToString(entry->MemoryType));
+#define PRINT_TODO_INFO() smprintf(s, "Location = %d\n", ToDo->Location);
+#define PRINT_CALENDAR_INFO() smprintf(s, "Location = %d\n", Note->Location);
+#define PRINT_NOTE_INFO() smprintf(s, "Location = %d\n", Note->Location);
+#define PRINT_MSMS_INFO() smprintf(s, "Number = %d, Location = %d, Folder = %d\n", sms->Number, sms->SMS[0].Location, sms->SMS[0].Folder);
+#define PRINT_SMS_INFO() smprintf(s, "Location = %d, Folder = %d\n", sms->Location, sms->Folder);
+#define PRINT_START() if (start) smprintf(s, "Starting reading!\n");
 
 /**
  * Prints error message (if any) to debug log.
@@ -463,6 +465,7 @@ GSM_Error GSM_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_MEMORY_INFO();
 
 	err = s->Phone.Functions->GetMemory(s, entry);
 	PRINT_LOG_ERROR(err);
@@ -477,6 +480,8 @@ GSM_Error GSM_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool st
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_START();
+	PRINT_MEMORY_INFO();
 
 	err = s->Phone.Functions->GetNextMemory(s, entry, start);
 	PRINT_LOG_ERROR(err);
@@ -490,6 +495,7 @@ GSM_Error GSM_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_MEMORY_INFO();
 
 	err = s->Phone.Functions->SetMemory(s, entry);
 	PRINT_LOG_ERROR(err);
@@ -503,6 +509,7 @@ GSM_Error GSM_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_MEMORY_INFO();
 
 	err = s->Phone.Functions->AddMemory(s, entry);
 	PRINT_LOG_ERROR(err);
@@ -516,6 +523,7 @@ GSM_Error GSM_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_MEMORY_INFO();
 
 	err = s->Phone.Functions->DeleteMemory(s, entry);
 	PRINT_LOG_ERROR(err);
@@ -608,6 +616,7 @@ GSM_Error GSM_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_MSMS_INFO();
 
 	err = s->Phone.Functions->GetSMS(s, sms);
 	PRINT_LOG_ERROR(err);
@@ -622,6 +631,8 @@ GSM_Error GSM_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool sta
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_START();
+	PRINT_MSMS_INFO();
 
 	err = s->Phone.Functions->GetNextSMS(s, sms, start);
 	PRINT_LOG_ERROR(err);
@@ -635,6 +646,7 @@ GSM_Error GSM_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_SMS_INFO();
 
 	err = s->Phone.Functions->SetSMS(s, sms);
 	PRINT_LOG_ERROR(err);
@@ -648,6 +660,7 @@ GSM_Error GSM_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_SMS_INFO();
 
 	err = s->Phone.Functions->AddSMS(s, sms);
 	PRINT_LOG_ERROR(err);
@@ -661,6 +674,7 @@ GSM_Error GSM_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_SMS_INFO();
 
 	err = s->Phone.Functions->DeleteSMS(s, sms);
 	PRINT_LOG_ERROR(err);
@@ -687,6 +701,7 @@ GSM_Error GSM_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	smprintf(s, "Location = %d, Folder = %d\n", Location, Folder);
 
 	err = s->Phone.Functions->SendSavedSMS(s, Folder, Location);
 	PRINT_LOG_ERROR(err);
@@ -1207,6 +1222,7 @@ GSM_Error GSM_GetNextMMSFileInfo(GSM_StateMachine *s, unsigned char *FileID, int
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_START();
 
 	err = s->Phone.Functions->GetNextMMSFileInfo(s, FileID, MMSFolder, start);
 	PRINT_LOG_ERROR(err);
@@ -1259,6 +1275,7 @@ GSM_Error GSM_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_TODO_INFO();
 
 	err = s->Phone.Functions->GetToDo(s, ToDo);
 	PRINT_LOG_ERROR(err);
@@ -1272,6 +1289,8 @@ GSM_Error GSM_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_START();
+	PRINT_TODO_INFO();
 
 	err = s->Phone.Functions->GetNextToDo(s, ToDo, start);
 	PRINT_LOG_ERROR(err);
@@ -1285,6 +1304,7 @@ GSM_Error GSM_SetToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_TODO_INFO();
 
 	err = s->Phone.Functions->SetToDo(s, ToDo);
 	PRINT_LOG_ERROR(err);
@@ -1298,6 +1318,7 @@ GSM_Error GSM_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_TODO_INFO();
 
 	err = s->Phone.Functions->AddToDo(s, ToDo);
 	PRINT_LOG_ERROR(err);
@@ -1311,6 +1332,7 @@ GSM_Error GSM_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_TODO_INFO();
 
 	err = s->Phone.Functions->DeleteToDo(s, ToDo);
 	PRINT_LOG_ERROR(err);
@@ -1350,6 +1372,7 @@ GSM_Error GSM_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_CALENDAR_INFO();
 
 	err = s->Phone.Functions->GetCalendar(s, Note);
 	PRINT_LOG_ERROR(err);
@@ -1364,6 +1387,8 @@ GSM_Error GSM_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_START();
+	PRINT_CALENDAR_INFO();
 
 	err = s->Phone.Functions->GetNextCalendar(s, Note, start);
 	PRINT_LOG_ERROR(err);
@@ -1377,6 +1402,7 @@ GSM_Error GSM_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_CALENDAR_INFO();
 
 	err = s->Phone.Functions->SetCalendar(s, Note);
 	PRINT_LOG_ERROR(err);
@@ -1390,6 +1416,7 @@ GSM_Error GSM_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_CALENDAR_INFO();
 
 	err = s->Phone.Functions->AddCalendar(s, Note);
 	PRINT_LOG_ERROR(err);
@@ -1403,6 +1430,7 @@ GSM_Error GSM_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_CALENDAR_INFO();
 
 	err = s->Phone.Functions->DeleteCalendar(s, Note);
 	PRINT_LOG_ERROR(err);
@@ -1468,6 +1496,7 @@ GSM_Error GSM_GetNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_NOTE_INFO();
 
 	err = s->Phone.Functions->GetNote(s, Note);
 	PRINT_LOG_ERROR(err);
@@ -1482,6 +1511,8 @@ GSM_Error GSM_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_START();
+	PRINT_NOTE_INFO();
 
 	err = s->Phone.Functions->GetNextNote(s, Note, start);
 	PRINT_LOG_ERROR(err);
@@ -1495,6 +1526,7 @@ GSM_Error GSM_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_NOTE_INFO();
 
 	err = s->Phone.Functions->SetNote(s, Note);
 	PRINT_LOG_ERROR(err);
@@ -1508,6 +1540,7 @@ GSM_Error GSM_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_NOTE_INFO();
 
 	err = s->Phone.Functions->AddNote(s, Note);
 	PRINT_LOG_ERROR(err);
@@ -1521,6 +1554,7 @@ GSM_Error GSM_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *Note)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_NOTE_INFO();
 
 	err = s->Phone.Functions->DeleteNote(s, Note);
 	PRINT_LOG_ERROR(err);
@@ -1612,6 +1646,7 @@ GSM_Error GSM_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool start)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_START();
 
 	err = s->Phone.Functions->GetNextFileFolder(s, File, start);
 	PRINT_LOG_ERROR(err);
@@ -1625,6 +1660,7 @@ GSM_Error GSM_GetFolderListing(GSM_StateMachine *s, GSM_File *File, bool start)
 	GSM_Error err;
 
 	CHECK_PHONE_CONNECTION();
+	PRINT_START();
 
 	err = s->Phone.Functions->GetFolderListing(s, File, start);
 	PRINT_LOG_ERROR(err);
