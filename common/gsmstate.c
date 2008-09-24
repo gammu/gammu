@@ -473,6 +473,9 @@ GSM_Error GSM_TryGetModel(GSM_StateMachine *s)
 
 		error=s->Phone.Functions->GetModel(s);
 		if (error != ERR_NONE) return error;
+
+		error=s->Phone.Functions->Terminate(s);
+		if (error != ERR_NONE) return error;
 	}
 	return ERR_NONE;
 }
