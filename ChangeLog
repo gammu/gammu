@@ -21,6 +21,7 @@ ChangeLog
 [-] * More verbose debug messages in API.
 [-] * Free phone data after testing model to avoid memory leaks.
 [-] * Properly handle if IMEI is too long (bug #709).
+[-] * Try to handle situation when CMGL does not list all messages.
     
 20080923 - 1.20.93
 
