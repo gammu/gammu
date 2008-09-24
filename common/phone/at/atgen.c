@@ -2731,7 +2731,7 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 	if (error == ERR_NONE && Priv->SMSCache == NULL) {
 		Priv->SMSCache = (GSM_AT_SMS_Cache *)realloc(Priv->SMSCache, sizeof(GSM_AT_SMS_Cache));
 	}
-	if (used != Priv->SMSCount) {
+	if (used != Priv->SMSCount && error == ERR_NONE) {
 		smprintf(s, "Used messages %d, but CMGL returned %d, invalidating cache!\n", used, Priv->SMSCount);
 		free(Priv->SMSCache);
 		Priv->SMSCache = NULL;
@@ -2801,7 +2801,7 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 			if (error == ERR_NOTSUPPORTED) return ERR_EMPTY;
 			if (error != ERR_NONE) return error;
 			/* Did we read anything? */
-			if (Priv->SMSCount == 0) return ERR_EMPTY;
+			if (Priv->SMSCache != NULL && Priv->SMSCount == 0) return ERR_EMPTY;
 
 			/* Start again */
 			found = 0;
