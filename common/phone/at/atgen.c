@@ -2673,6 +2673,7 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Error		error;
+	int			used;
 
 	/* Set mode of SMS */
 	error = ATGEN_GetSMSMode(s);
@@ -2687,9 +2688,11 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 		if (Priv->SIMSMSMemory == AT_AVAILABLE) {
 			error = ATGEN_SetSMSMemory(s, true, false, false);
 			if (error != ERR_NONE) return error;
+			used = Priv->LastSMSStatus.SIMUsed;
 		} else if (Priv->PhoneSMSMemory == AT_AVAILABLE) {
 			error = ATGEN_SetSMSMemory(s, false, false, false);
 			if (error != ERR_NONE) return error;
+			used = Priv->LastSMSStatus.PhoneUsed;
 		} else {
 			return ERR_NOTSUPPORTED;
 		}
@@ -2698,6 +2701,7 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 		if (Priv->PhoneSMSMemory == AT_AVAILABLE) {
 			error = ATGEN_SetSMSMemory(s, false, false, false);
 			if (error != ERR_NONE) return error;
+			used = Priv->LastSMSStatus.PhoneUsed;
 		} else {
 			return ERR_NOTSUPPORTED;
 		}
@@ -2726,6 +2730,12 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 	 */
 	if (error == ERR_NONE && Priv->SMSCache == NULL) {
 		Priv->SMSCache = (GSM_AT_SMS_Cache *)realloc(Priv->SMSCache, sizeof(GSM_AT_SMS_Cache));
+	}
+	if (used != Priv->SMSCount) {
+		smprintf(s, "Used messages %d, but CMGL returned %d, invalidating cache!\n", used, Priv->SMSCount);
+		free(Priv->SMSCache);
+		Priv->SMSCache = NULL;
+		Priv->SMSCount = 0;
 	}
 	return error;
 }
