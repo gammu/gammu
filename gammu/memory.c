@@ -158,8 +158,9 @@ void GetAllMemory(int argc UNUSED, char *argv[])
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	Entry.MemoryType = MemoryTypeFromString(argv[2]);
+	Entry.Location = 0;
 
-	if (Entry.MemoryType==0) {
+	if (Entry.MemoryType == 0) {
 		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
 		exit (-1);
 	}
