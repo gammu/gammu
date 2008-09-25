@@ -27,16 +27,18 @@ GSM_Error N6510_ReplyGetCalendarInfo3(GSM_Protocol_Message msg, GSM_StateMachine
 		return ERR_MOREMEMORY;
 	}
 	if (j == 0) {
-		Last->Number=msg.Buffer[8]*256+msg.Buffer[9];
-		smprintf(s, "Number of Entries: %i\n",Last->Number);
+		Last->Number = msg.Buffer[8]*256 + msg.Buffer[9];
+		smprintf(s, "Number of Entries: %i\n", Last->Number);
 	}
 	smprintf(s, "Locations: ");
 	while (14+(i*4) <= msg.Length) {
-		Last->Location[j++]=msg.Buffer[12+i*4]*256+msg.Buffer[13+i*4];
-		smprintf(s, "%i ",Last->Location[j-1]);
+		Last->Location[j] = msg.Buffer[12+i*4]*256 + msg.Buffer[13+i*4];
+		smprintf(s, "%i ", Last->Location[j]);
 		i++;
+		j++
 	}
 	smprintf(s, "\nNumber of Entries in frame: " SIZE_T_FORMAT "\n",i);
+	Last->Number = j;
 	Last->Location[j] = 0;
 	smprintf(s, "\n");
 	if (i == 1 && msg.Buffer[12+0*4]*256+msg.Buffer[13+0*4] == 0) return ERR_EMPTY;
