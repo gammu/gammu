@@ -2183,7 +2183,10 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 
 	GSM_CalendarFindDefaultTextTimeAlarmPhone(Note, &Text, &Time, &Alarm, &Phone, &EndTime, &Location);
 
-	if (Time == -1) return ERR_UNKNOWN;
+	if (Time == -1) {
+		smprintf(s, "Can not save entry without time!\n");
+		return ERR_UNKNOWN;
+	}
 	memcpy(&DT,&Note->Entries[Time].Date,sizeof(GSM_DateTime));
 	req[8]	= DT.Year / 256;
 	req[9]	= DT.Year % 256;
