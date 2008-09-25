@@ -171,7 +171,7 @@ CREATE TABLE `phones` (
   `IMEI` text NOT NULL,
   `Client` text NOT NULL,
   `Battery` int(2) NOT NULL,
-  `Signal` varchar(2) NOT NULL
+  `Signal` int(2) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 

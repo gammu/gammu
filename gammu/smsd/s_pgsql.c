@@ -20,6 +20,8 @@
 #include "smsdcore.h"
 #include "../../common/misc/locales.h"
 
+#define SMSD_PGSQL_DB_VERSION (8)
+
 /* Connects to database */
 static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 {
@@ -108,7 +110,7 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 		PQfinish(Config->DBConnPgSQL);
 		return ERR_UNKNOWN;
 	}
-	if (atoi(PQgetvalue(Res, 0, 0)) > 7) {
+	if (atoi(PQgetvalue(Res, 0, 0)) > SMSD_PGSQL_DB_VERSION) {
 		WriteSMSDLog(_
 			     ("DataBase structures are from higher Gammu version"));
 		WriteSMSDLog(_("Please update this client application"));
@@ -116,7 +118,7 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 		PQfinish(Config->DBConnPgSQL);
 		return ERR_UNKNOWN;
 	}
-	if (atoi(PQgetvalue(Res, 0, 0)) < 7) {
+	if (atoi(PQgetvalue(Res, 0, 0)) < SMSD_PGSQL_DB_VERSION) {
 		WriteSMSDLog(_
 			     ("DataBase structures are from older Gammu version"));
 		WriteSMSDLog(_
@@ -1052,15 +1054,15 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	return ERR_NONE;
 }
 
-static GSM_Error SMSDPgSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config)
+static GSM_Error SMSDPgSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config, GSM_BatteryCharge *Battery, GSM_SignalQuality *Signal)
 {
 	PGresult *Res;
 
 	unsigned char buffer[500];
 
 	sprintf(buffer,
-		"UPDATE phones SET TimeOut= now() + INTERVAL '10 seconds'");
-	sprintf(buffer + strlen(buffer), " WHERE IMEI = '%s'", Config->IMEI);
+		"UPDATE phones SET TimeOut= now() + INTERVAL '10 seconds', Battery = %d, Signal = %d WHERE IMEI = '%s'",
+		Battery->BatteryPercent, Signal->SignalPercent, Config->IMEI);
 	dbgprintf("%s\n", buffer);
 
 	Res = PQexec(Config->DBConnPgSQL, buffer);

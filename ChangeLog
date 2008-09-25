@@ -27,6 +27,8 @@ ChangeLog
 [-] * Properly restore caller groups on Nokia 2630 (bug #706).
 [-] * Fix listing of used calendar locations on Nokia (bug #710).
 [-] * Properly encode class and coding to SMS (bug #714).
+[-] * SMSD for MySQL no longer fails when sending message (bug #715).
+[+] * SMSD stores signal and battery state in PostgreSQL.
     
 20080923 - 1.20.93
 

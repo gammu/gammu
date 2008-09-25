@@ -80,7 +80,11 @@ typedef struct {
 	GSM_Error	(*CreateOutboxSMS)    (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config);
 	GSM_Error	(*AddSentSMSInfo)     (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, int Part, GSM_SMSDSendingError err, int TPMR);
 	GSM_Error	(*RefreshSendStatus)  (GSM_SMSDConfig *Config, char *ID);
-	GSM_Error	(*RefreshPhoneStatus) (GSM_SMSDConfig *Config);
+	/**
+	 * Updates phone status in service backend. Please note that
+	 * this can not talk to the phone.
+	 */
+	GSM_Error	(*RefreshPhoneStatus) (GSM_SMSDConfig *Config, GSM_BatteryCharge *Battery, GSM_SignalQuality *Signal);
 } GSM_SMSDService;
 
 #if defined(__GNUC__) && !defined(printf)
