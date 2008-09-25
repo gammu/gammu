@@ -499,7 +499,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			/* the mask for the 8-bit data */
 			/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme)
 			 * and GSM 03.38 section 4 */
-			buffer[Layout.TPDCS] |= 0xf4;
+			buffer[Layout.TPDCS] |= (1 << 2);
 			memcpy(buffer+(Layout.Text+off), SMS->Text, SMS->Length);
 			size2 = size = SMS->Length+off;
 #ifdef DEBUG
@@ -527,7 +527,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 		case SMS_Coding_Unicode_No_Compression:
 			/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme)
 			 * and GSM 03.38 section 4 */
-			buffer[Layout.TPDCS] |= 0x08;
+			buffer[Layout.TPDCS] |= (1 << 3);
 			EncodeUnicodeSpecialNOKIAChars(buffer+(Layout.Text+off), SMS->Text, UnicodeLength(SMS->Text));
 			size=size2=UnicodeLength(buffer+(Layout.Text+off))*2+off;
 #ifdef DEBUG
@@ -592,7 +592,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	/* Message Class*/
 	/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
 	if (Layout.TPDCS != 255) {
-		if (SMS->Class>=0 && SMS->Class<5) buffer[Layout.TPDCS] |= (240+SMS->Class);
+		if (SMS->Class>=0 && SMS->Class<5) buffer[Layout.TPDCS] |= SMS->Class | (1 << 4);
 		dbgprintf("SMS class %i\n",SMS->Class);
 	}
 
