@@ -35,7 +35,7 @@ GSM_Error N6510_ReplyGetCalendarInfo3(GSM_Protocol_Message msg, GSM_StateMachine
 		Last->Location[j] = msg.Buffer[12+i*4]*256 + msg.Buffer[13+i*4];
 		smprintf(s, "%i ", Last->Location[j]);
 		i++;
-		j++
+		j++;
 	}
 	smprintf(s, "\nNumber of Entries in frame: " SIZE_T_FORMAT "\n",i);
 	Last->Number = j;
