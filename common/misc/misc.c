@@ -66,6 +66,8 @@ int RecalcDateTime(struct tm *st, const int year, const int month, const int day
 	st->tm_mon = month - 1;
 	st->tm_mday = day;
 
+	st->tm_isdst = -1; /* FIXME */
+
 	return 1;
 }
 

@@ -24,6 +24,7 @@ ChangeLog
 [-] * Try to handle situation when CMGL does not list all messages.
 [-] * Fix typo in MySQL file (bug #716).
 [-] * Better parsing of USSD replies (bug #718).
+[-] * Properly restore caller groups on Nokia 2630 (bug #706).
     
 20080923 - 1.20.93
 
