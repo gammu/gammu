@@ -25,6 +25,7 @@ ChangeLog
 [-] * Fix typo in MySQL file (bug #716).
 [-] * Better parsing of USSD replies (bug #718).
 [-] * Properly restore caller groups on Nokia 2630 (bug #706).
+[-] * Fix listing of used calendar locations on Nokia (bug #710).
     
 20080923 - 1.20.93
 
