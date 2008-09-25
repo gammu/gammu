@@ -22,6 +22,7 @@ ChangeLog
 [-] * Free phone data after testing model to avoid memory leaks.
 [-] * Properly handle if IMEI is too long (bug #709).
 [-] * Try to handle situation when CMGL does not list all messages.
+[-] * Fix typo in MySQL file (bug #716).
     
 20080923 - 1.20.93
 
