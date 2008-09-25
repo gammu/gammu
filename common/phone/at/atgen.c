@@ -555,10 +555,12 @@ size_t ATGEN_GrabString(GSM_StateMachine *s, const unsigned char *input, unsigne
 		return 0;
 	}
 
-	while (((*input != ',' && *input != ')') || inside_quotes)
+	while (inside_quotes ||
+			(  *input != ','
+			&& *input != ')'
 			&& *input != 0x0d
 			&& *input != 0x0a
-			&& *input != 0x00) {
+			&& *input != 0x00)) {
 		/* Check for quotes */
 		if (*input == '"') {
 			inside_quotes = ! inside_quotes;
@@ -1017,6 +1019,7 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_USSDMessage ussd;
 	GSM_Error error;
 	unsigned char *pos;
+	int code;
 
 	/*
 	 * Reply format:
@@ -1038,17 +1041,16 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			return ERR_UNKNOWNRESPONSE;
 		}
 
-		/* Parse reply */
+		/* Parse reply code */
 		error = ATGEN_ParseReply(s, pos,
-				"+CUSD: @i, @s @0",
-				&ussd.Status,
-				ussd.Text, sizeof(ussd.Text));
+				"+CUSD: @i @0",
+				&code);
 
 		if (error != ERR_NONE) return error;
 
 		/* Decode status */
-		smprintf(s, "Status: %d\n", ussd.Status);
-		switch(ussd.Status) {
+		smprintf(s, "Status: %d\n", code);
+		switch(code) {
 			case 0:
 				ussd.Status = USSD_NoActionNeeded;
 				break;
@@ -1070,6 +1072,14 @@ GSM_Error ATGEN_ReplyGetUSSD(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			default:
 				ussd.Status = USSD_Unknown;
 		}
+
+		/* Try to parse text here, we ignore error code intentionally */
+		ussd.Text[0] = 0;
+		ussd.Text[1] = 0;
+		ATGEN_ParseReply(s, pos,
+				"+CUSD: @i, @s @0",
+				&code,
+				ussd.Text, sizeof(ussd.Text));
 
 		/* Notify application */
 		if (s->User.IncomingUSSD!=NULL) {

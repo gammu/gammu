@@ -23,6 +23,7 @@ ChangeLog
 [-] * Properly handle if IMEI is too long (bug #709).
 [-] * Try to handle situation when CMGL does not list all messages.
 [-] * Fix typo in MySQL file (bug #716).
+[-] * Better parsing of USSD replies (bug #718).
     
 20080923 - 1.20.93
 
