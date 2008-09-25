@@ -26,6 +26,7 @@ ChangeLog
 [-] * Better parsing of USSD replies (bug #718).
 [-] * Properly restore caller groups on Nokia 2630 (bug #706).
 [-] * Fix listing of used calendar locations on Nokia (bug #710).
+[-] * Properly encode class and coding to SMS (bug #714).
     
 20080923 - 1.20.93
 
