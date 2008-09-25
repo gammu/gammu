@@ -2008,7 +2008,10 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	GSM_CalendarFindDefaultTextTimeAlarmPhone(Note, &Text, &Time, &Alarm, &Phone, &EndTime, &Location);
 
-	if (Time == -1) return ERR_UNKNOWN;
+	if (Time == -1) {
+		smprintf(s, "Can not save entry without time!\n");
+		return ERR_UNKNOWN;
+	}
 	if (NoteType != GSM_CAL_BIRTHDAY) {
 		Date.Year 	= 2030;	Date.Month 	= 01; Date.Day    = 01;
 		Date.Hour 	= 00;	Date.Minute 	= 00; Date.Second = 00;
