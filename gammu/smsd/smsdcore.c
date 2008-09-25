@@ -498,6 +498,8 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	unsigned int         	j, z;
 	int			i;
 	unsigned int		second;
+	GSM_BatteryCharge  charge;
+	GSM_SignalQuality  network;
 
 	/* Clean structure before use */
 	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
@@ -515,7 +517,9 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				usleep(10000);
 				GSM_GetCurrentDateTime(&Date);
 			}
-			Service->RefreshPhoneStatus(Config);
+			GSM_GetBatteryCharge(gsm, &charge);
+			GSM_GetSignalQuality(gsm, &network);
+			Service->RefreshPhoneStatus(Config, &charge, &network);
 		}
 		return true;
 	}
@@ -571,13 +575,15 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				if ((strcmp(Config->deliveryreport, "no") != 0 && (Config->currdeliveryreport == -1))) sms.SMS[i].PDU = SMS_Status_Report;
 			}
 
+			GSM_GetBatteryCharge(gsm, &charge);
+			GSM_GetSignalQuality(gsm, &network);
 			error=GSM_SendSMS(gsm, &sms.SMS[i]);
 			if (error!=ERR_NONE) {
 				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, -1);
 				WriteSMSDLog(_("Error sending SMS %s (%i): %s"), Config->SMSID, error,GSM_ErrorString(error));
 				return false;
 			}
-			Service->RefreshPhoneStatus(Config);
+			Service->RefreshPhoneStatus(Config, &charge, &network);
 			j    = 0;
 			TPMR = -1;
 			SendingSMSStatus = ERR_TIMEOUT;
@@ -591,7 +597,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 					if (SendingSMSStatus != ERR_TIMEOUT) break;
 				}
 				Service->RefreshSendStatus(Config, Config->SMSID);
-				Service->RefreshPhoneStatus(Config);
+				Service->RefreshPhoneStatus(Config, &charge, &network);
 				if (SendingSMSStatus != ERR_TIMEOUT) break;
 				j++;
 				if (j>Config->sendtimeout) break;
