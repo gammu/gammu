@@ -2732,10 +2732,7 @@ GSM_Error ATGEN_GetSMSList(GSM_StateMachine *s, bool first)
 		Priv->SMSCache = (GSM_AT_SMS_Cache *)realloc(Priv->SMSCache, sizeof(GSM_AT_SMS_Cache));
 	}
 	if (used != Priv->SMSCount && error == ERR_NONE) {
-		smprintf(s, "Used messages %d, but CMGL returned %d, invalidating cache!\n", used, Priv->SMSCount);
-		free(Priv->SMSCache);
-		Priv->SMSCache = NULL;
-		Priv->SMSCount = 0;
+		smprintf(s, "Used messages according to CPMS %d, but CMGL returned %d. Expect problems!\n", used, Priv->SMSCount);
 	}
 	return error;
 }
