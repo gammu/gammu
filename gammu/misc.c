@@ -226,7 +226,7 @@ void IncomingCall(GSM_StateMachine *sm UNUSED, GSM_Call call)
 #define CHECK_EXIT \
 { \
 	if (gshutdown) break; \
-	if (error != ERR_NONE && error != ERR_UNKNOWN && error != ERR_NOTSUPPORTED && error != ERR_EMPTY && error != ERR_SOURCENOTAVAILABLE && error != ERR_NOTIMPLEMENTED) break; \
+	if (error != ERR_NONE && error != ERR_UNKNOWN && error != ERR_NOTSUPPORTED && error != ERR_MEMORY && error != ERR_EMPTY && error != ERR_SOURCENOTAVAILABLE && error != ERR_NOTIMPLEMENTED) break; \
 }
 
 void Monitor(int argc, char *argv[])
