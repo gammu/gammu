@@ -3996,7 +3996,9 @@ GSM_Error ATGEN_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
  */
 GSM_Error ATGEN_ReplyGetPBKMemories(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
+	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
+
+	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
 		break;
 	case AT_Reply_Error:
@@ -4009,11 +4011,12 @@ GSM_Error ATGEN_ReplyGetPBKMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 		return ERR_UNKNOWNRESPONSE;
 	}
 
-	if (strlen(msg.Buffer) > AT_PBK_MAX_MEMORIES) {
-		smprintf(s, "ERROR: Too long phonebook memories information received! (Recevided " SIZE_T_FORMAT ", AT_PBK_MAX_MEMORIES is %d\n", strlen(msg.Buffer), AT_PBK_MAX_MEMORIES);
+	if (GetLineLength(msg.Buffer, &Priv->Lines, 2) >= AT_PBK_MAX_MEMORIES) {
+		smprintf(s, "ERROR: Too long phonebook memories information received! (Recevided " SIZE_T_FORMAT ", AT_PBK_MAX_MEMORIES is %d\n",
+			GetLineLength(msg.Buffer, &Priv->Lines, 2), AT_PBK_MAX_MEMORIES);
 		return ERR_MOREMEMORY;
 	}
-	strcpy(s->Phone.Data.Priv.ATGEN.PBKMemories, msg.Buffer);
+	CopyLineString(Priv->PBKMemories, msg.Buffer, &Priv->Lines, 2);
 	smprintf(s, "PBK memories received: %s\n", s->Phone.Data.Priv.ATGEN.PBKMemories);
 	return ERR_NONE;
 }
