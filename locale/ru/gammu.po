@@ -2526,7 +2526,6 @@ msgstr "Рисунок"
 
 #: gammu/memory.c:97
 #, fuzzy
-#| msgid "Smart Messaging"
 msgid "Favorite messaging number"
 msgstr "Интеллектуальное сообщение"
 
@@ -5180,7 +5179,6 @@ msgstr ""
 
 #: gammu/smsd/s_mysql.c:129
 #, fuzzy, c-format
-#| msgid "Error connecting to database: %s\n"
 msgid "Conntected to Database: %s on %s"
 msgstr "Ошибка подключения к базе данных: %s\n"
 

@@ -1339,6 +1339,13 @@ GSM_Error ATGEN_ReplyGetFirmware(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			/* Need to use memmove as strcpy does not correctly handle overlapping regions */
 			memmove(s->Phone.Data.Version, s->Phone.Data.Version + 10, strlen(s->Phone.Data.Version + 10) + 1);
 		}
+		/* Add second line if it also contains version information */
+		if (strcmp(GetLineString(msg.Buffer, &Priv->Lines, 3), "OK") != 0) {
+			if (GetLineLength(msg.Buffer, &Priv->Lines, 3) + 1 + strlen(s->Phone.Data.Version) < GSM_MAX_VERSION_LENGTH - 1) {
+				strcat(s->Phone.Data.Version, ",");
+				CopyLineString(s->Phone.Data.Version + strlen(s->Phone.Data.Version), msg.Buffer, &Priv->Lines, 3);
+			}
+		}
 	}
 	smprintf(s, "Received firmware version: \"%s\"\n",s->Phone.Data.Version);
 	GSM_CreateFirmwareNumber(s);

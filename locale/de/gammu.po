@@ -2370,7 +2370,6 @@ msgstr "Bild-ID"
 
 #: gammu/memory.c:97
 #, fuzzy
-#| msgid "Smart Messaging"
 msgid "Favorite messaging number"
 msgstr "Intelligente Nachrichten"
 
@@ -4831,7 +4830,6 @@ msgstr ""
 
 #: gammu/smsd/s_mysql.c:129
 #, fuzzy, c-format
-#| msgid "Error connecting to database: %s\n"
 msgid "Conntected to Database: %s on %s"
 msgstr "Fehler beim Verbinden mit der Datenbank: %s\n"
 
