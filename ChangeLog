@@ -29,6 +29,7 @@ ChangeLog
 [-] * Properly encode class and coding to SMS (bug #714).
 [-] * SMSD for MySQL no longer fails when sending message (bug #715).
 [+] * SMSD stores signal and battery state in PostgreSQL.
+[-] * Properly handle multiline firmware information.
     
 20080923 - 1.20.93
 

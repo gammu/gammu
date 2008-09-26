@@ -4953,7 +4953,6 @@ msgstr ""
 
 #: gammu/smsd/s_mysql.c:129
 #, fuzzy, c-format
-#| msgid "Error connecting to database: %s\n"
 msgid "Conntected to Database: %s on %s"
 msgstr "Error de conexión la base de datos: %s\n"
 
