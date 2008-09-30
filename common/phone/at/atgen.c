@@ -4012,7 +4012,7 @@ GSM_Error ATGEN_ReplyGetPBKMemories(GSM_Protocol_Message msg, GSM_StateMachine *
 	}
 
 	if (GetLineLength(msg.Buffer, &Priv->Lines, 2) >= AT_PBK_MAX_MEMORIES) {
-		smprintf(s, "ERROR: Too long phonebook memories information received! (Recevided " SIZE_T_FORMAT ", AT_PBK_MAX_MEMORIES is %d\n",
+		smprintf(s, "ERROR: Too long phonebook memories information received! (Recevided %d, AT_PBK_MAX_MEMORIES is %d\n",
 			GetLineLength(msg.Buffer, &Priv->Lines, 2), AT_PBK_MAX_MEMORIES);
 		return ERR_MOREMEMORY;
 	}
