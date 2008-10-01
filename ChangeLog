@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2008???? - 1.20.95
+
+[-] * Handle properly empty SMSC (bug #722).
     
 20080926 - 1.20.94
 

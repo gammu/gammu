@@ -3676,7 +3676,14 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 					"+CSCA: @p, @i",
 					SMSC->Number, sizeof(SMSC->Number),
 					&number_type);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) {
+			error = ATGEN_ParseReply(s,
+						GetLineString(msg.Buffer, &Priv->Lines, 2),
+						"+CSCA: @p, @0",
+						SMSC->Number, sizeof(SMSC->Number));
+			if (UnicodeLength(SMSC->Number) == 0) return ERR_EMPTY;
+			return error;
+		}
 
 		/* International number */
 		GSM_TweakInternationalNumber(SMSC->Number, number_type);
