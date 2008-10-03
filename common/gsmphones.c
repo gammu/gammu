@@ -706,6 +706,7 @@ OnePhoneModel allmodels[] = {
 	{"E815m",	"E815m",	"",				   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, F_PBK_UNICODE, 0}},
 	{"V635",	"V635",	"",					   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, F_PBK_UNICODE, 0}},
 	{"L7",		"L7", "",					   {F_CKPD_NO_UNICODE, 0}},
+	{"K1v",		"K1v", "",					   {F_NO_ATOBEX, F_PBK_UNICODE, 0}},
 	{"RAZRV3x",	"RAZRV3x",	"",				   {F_OBEX, F_IRMC_LEVEL_2, F_MODE22, F_PBK_UNICODE, 0}},
 
 	/* Sharp */
