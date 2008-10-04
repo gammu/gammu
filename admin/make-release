@@ -31,6 +31,13 @@ signexe() {
     rm "$1.bak"
 }
 
+checkexe() {
+    if i586-mingw32msvc-objdump -x "$1" | grep -qi 'DLL Name.*msvcrt.dll' ; then
+        echo "Program $1 is linked to msvcrt.dll!"
+        exit 1
+    fi
+}
+
 # Pre release checks
 if [ "x$1" = "xbranch" ] ; then
     if grep -q '^200[0-9]???? - ' ChangeLog ; then
@@ -85,6 +92,7 @@ cmake ../$repo-$version \
 #    -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
 
 make
+checkexe gammu/gammu.exe
 signexe gammu/gammu.exe "Gammu"
 cpack
 mv Gammu-*-Windows.* ../
@@ -103,6 +111,7 @@ cmake ../$repo-$version \
     -DGETTEXT_CROSS_PATH= \
 
 make
+checkexe gammu/gammu.exe
 signexe gammu/gammu.exe "Gammu"
 cpack
 mv Gammu-*-Windows-Minimal.* ../
