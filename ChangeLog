@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2008???? - 1.21.90
+
+[-] * Sign Windows binaries during build.
     
 20081003 - 1.21.0
     
