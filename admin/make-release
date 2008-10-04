@@ -6,9 +6,30 @@
 set -e
 
 repo=gammu
-srcdir=`pwd`
 
 version=`sed -n 's/set (VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
+
+srcdir=`pwd`
+
+signexe() {
+    if [ ! -f ~/.id/codesigning.spc ] ; then 
+        echo 'Skipping signing, no certificates!'
+        return 0
+    fi
+    if [ "x$NO_SIGN" != "x" ] ; then
+        echo 'Skipping signing, disabled!'
+        return 0
+    fi
+    signcode \
+        -spc ~/.id/codesigning.spc \
+        -v ~/.id/codesigning.pvk \
+        -$ individual \
+        -n "$2" \
+        -t http://timestamp.verisign.com/scripts/timstamp.dll \
+        -i http://cihar.com/ \
+        "$1"
+    rm "$1.bak"
+}
 
 # Pre release checks
 if [ "x$1" = "xbranch" ] ; then
@@ -64,6 +85,7 @@ cmake ../$repo-$version \
 #    -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
 
 make
+signexe gammu/gammu.exe "Gammu"
 cpack
 mv Gammu-*-Windows.* ../
 cd ..
@@ -81,9 +103,15 @@ cmake ../$repo-$version \
     -DGETTEXT_CROSS_PATH= \
 
 make
+signexe gammu/gammu.exe "Gammu"
 cpack
 mv Gammu-*-Windows-Minimal.* ../
 cd ..
+
+# Sign binaries
+for bin in $tmp/*.exe ; do
+    signexe $bin "Gammu installer"
+done
 
 # We're done
 echo "Release is in $tmp directory"
