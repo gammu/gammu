@@ -116,8 +116,10 @@ connection = fbusblue
 ; serial    | "com*:"                         | "/dev/ttyS*"
 ;           | (example "com1:")               | (example "/dev/ttyS1")
 ;           |                                 | or "/dev/tts/**" (with DevFS)
+;           |                                 | virtual serial ports like
+;           |                                 | "/dev/ircomm*" or "/dev/rfcomm*"
 ; ----------|---------------------------------|--------------------------------
-; irda      | ignored (can be empty)          | "/dev/ircomm*"
+; irda      | ignored (can be empty)          | ignored (can be empty)
 ; ----------|---------------------------------|--------------------------------
 ; BT        | Bluetooth device address (example "00:11:22:33:44:55").
 ;           | Optionally you can also include channel after slash
