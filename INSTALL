@@ -162,8 +162,9 @@ Information taken from <http://www.pygame.org/wiki/PreparingMinGW>.
 
 Furthermore you need to change specs definition for GCC, on Debian you
 can do this by editing /usr/bin/i586-mingw32msvc-gcc and changing line
-where you can find -lmoldname. Be careful not to change length of
-string! There are enough spaces to remove.
+where you can find -lmoldname (change -lmoldname to -lmoldname71 and
+-lmsvcrt to -lmsvcrt71). Be careful not to change length of string!
+There are enough spaces to remove.
 
 
 MySQL
