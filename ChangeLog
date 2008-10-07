@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Sign Windows binaries during build.
 [-] * Detect long FM station names (bug #727).
+[-] * Add ID for Nokia 2630b.
     
 20081003 - 1.21.0
     
