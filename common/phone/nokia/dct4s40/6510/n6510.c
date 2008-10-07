@@ -3510,6 +3510,10 @@ static GSM_Error N6510_ReplyGetFMStation(GSM_Protocol_Message msg, GSM_StateMach
 	case 0x06:
 	  	smprintf(s, "Received FM station\n");
  		length = msg.Buffer[8];
+		if (length > GSM_MAX_FMSTATION_LENGTH) {
+			smprintf(s, "FM station name too long (%d), truncating!\n", length);
+			length = GSM_MAX_FMSTATION_LENGTH;
+		}
  		memcpy(name,msg.Buffer+18,length*2);
  		name[length*2]	 = 0x00;
  		name[length*2+1] = 0x00;
