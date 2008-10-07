@@ -173,6 +173,7 @@ make test
 %install
 rm -rf %buildroot
 make -C build-dir install DESTDIR=%buildroot
+%find_lang %{name}
 
 %post
 if test -f /etc/ld.so.conf ; then
@@ -184,12 +185,10 @@ if test -f /etc/ld.so.conf ; then
     /sbin/ldconfig
 fi
 
-%files
+%files -f %name.lang
 %defattr(-,root,root)
 %_bindir/*
 %_libdir/*.so.*
-#localisations:
-/usr/share/locale
 %doc %_mandir/man1/*
 %doc %gammu_docdir
 
@@ -203,6 +202,9 @@ fi
 rm -rf %buildroot
 
 %changelog
+* Tue Oct  7 2008  Michal Cihar <michal@cihar.com>
+- use find_lang macro
+
 * Thu Mar 28 2007  Michal Cihar <michal@cihar.com>
 - update to current code status
 
