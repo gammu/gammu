@@ -384,9 +384,9 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
     s get profile feature   { 0x0101, 0x01, 0x01, 0x01, number1, number2}
                             where number1: from 0x00 to 0x07 (for each profile ?)
                                   number2: 0x00 - 0x09, 0x0A, 0x16 - 0x19, 0x1a - 0x1f, 0x20 - 0x29, 0x2a - 0x2c, 0xff
-                                     where 0x09: keypad tones                                           0x02: incoming call alert                                           0x03: ringtone number
+                                     where 0x09: keypad tones                                           0x02: incoming call alert                                           0x03: ringtone number
                                            0x04: ringing volume
-                                           0x05: message alert tone                                           0x06: vibra                                           0x07: warning tones                                           0x08: caller groups alert for					   0x09: automatic answer
+                                           0x05: message alert tone                                           0x06: vibra                                           0x07: warning tones                                           0x08: caller groups alert for					   0x09: automatic answer
                                            0xff: name
     r get profile feature   { 0x0102, 0x01, 0x02, number2, block...}
                             for number2==0xff: (Profile Name)
