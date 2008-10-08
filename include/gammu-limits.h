@@ -218,21 +218,21 @@
  *
  * \ingroup Limits
  */
-#define GSM_MAX_RINGTONE_NAME_LENGTH 20
+#define GSM_MAX_RINGTONE_NAME_LENGTH 30
 
 /**
  * Maximal length of FM station name.
  *
  * \ingroup Limits
  */
-#define GSM_MAX_FMSTATION_LENGTH 18
+#define GSM_MAX_FMSTATION_LENGTH 30
 
 /**
  * Maximal count of FM stations.
  *
  * \ingroup Limits
  */
-#define GSM_MAX_FM_STATION 20
+#define GSM_MAX_FM_STATION 30
 
 /**
  * Maximal length of security code.
