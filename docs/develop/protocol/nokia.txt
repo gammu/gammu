@@ -175,7 +175,7 @@ notify us via e-mail.  Thank you.
     { FrameID, DestDEV, SrcDEV, 0x7f, Id_SeqNo, ChkSum }
 	
 	 where Id_SeqNo:        Is the sequence number that you are
-	                        acknowleging (from the other part).
+	                        acknowleging (from the other part).
 
  Frame format for Infrared:
 
