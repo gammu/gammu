@@ -168,10 +168,11 @@ cmake ../ \
     -DINSTALL_LIB_DIR=%_lib \
     -DINSTALL_LIBDATA_DIR=%_lib
 make
+
+%check
 make test
 
 %install
-rm -rf %buildroot
 make -C build-dir install DESTDIR=%buildroot
 %find_lang %{name}
 
@@ -202,6 +203,10 @@ fi
 rm -rf %buildroot
 
 %changelog
+* Wed Oct  8 2008  Michal Cihar <michal@cihar.com>
+- do not remove build root in %install
+- move make test to %check
+
 * Tue Oct  7 2008  Michal Cihar <michal@cihar.com>
 - use find_lang macro
 
