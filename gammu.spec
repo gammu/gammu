@@ -108,7 +108,6 @@ BuildRequires: %{dist_mysql_libs}
 
 BuildRequires: gettext cmake %{dist_pkgconfig}
 
-Vendor:             Michal Cihar <michal@cihar.com>
 Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.%{extension}
 URL:                http://cihar.com/gammu/
 Buildroot:          %{_tmppath}/%name-%version-root
