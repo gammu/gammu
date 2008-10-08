@@ -30,6 +30,8 @@ Group:              Hardware/Mobile
 %else
 Group:              Applications/Communications
 %endif
+Packager:       Michal Cihar <michal@cihar.com>
+Vendor:         Michal Cihar <michal@cihar.com>
 
 # Detect build requires
 # I hate this crap
