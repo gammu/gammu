@@ -170,7 +170,7 @@ cmake ../ \
 make
 
 %check
-make test
+make -C build-dir test
 
 %install
 make -C build-dir install DESTDIR=%buildroot
