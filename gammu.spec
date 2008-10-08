@@ -204,8 +204,8 @@ rm -rf %buildroot
 
 %changelog
 * Wed Oct  8 2008  Michal Cihar <michal@cihar.com>
-- do not remove build root in %install
-- move make test to %check
+- do not remove build root in %%install
+- move make test to %%check
 
 * Tue Oct  7 2008  Michal Cihar <michal@cihar.com>
 - use find_lang macro
