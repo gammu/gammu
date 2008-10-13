@@ -171,6 +171,7 @@ void DoBackup(int argc, char *argv[])
  	GSM_FMStation		FMStation;
  	GSM_GPRSAccessPoint	GPRSPoint;
 	bool			DoBackupPart;
+	bool			UseNext;
 	char buffer[GSM_MAX_INFO_LENGTH];
 
 	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
@@ -229,23 +230,35 @@ void DoBackup(int argc, char *argv[])
 	if (Info.PhonePhonebook) {
 		printf("%s\n", _("Checking phone phonebook"));
 		MemStatus.MemoryType = MEM_ME;
-		error=GSM_GetMemoryStatus(gsm, &MemStatus);
-		if (error==ERR_NONE && MemStatus.MemoryUsed != 0) {
+		Pbk.MemoryType  = MEM_ME;
+		Pbk.Location = 0;
+		UseNext = false;
+		error = GSM_GetMemoryStatus(gsm, &MemStatus);
+		if (error == ERR_NONE) {
+			if (MemStatus.MemoryUsed != 0) {
+				DoBackupPart = true;
+			}
+		} else {
+			UseNext = true;
+			error = GSM_GetNextMemory(gsm, &Pbk, true);
+			if (error == ERR_NONE) {
+				DoBackupPart = true;
+			}
+
+		}
+		if (DoBackupPart) {
 			if (answer_yes("   %s", _("Backup phone phonebook?"))) DoBackupPart = true;
+			else DoBackupPart = false;
 		}
 	}
 	if (DoBackupPart) {
-		Pbk.MemoryType  = MEM_ME;
-		i		= 1;
-		used 		= 0;
-		while (used != MemStatus.MemoryUsed) {
-			Pbk.Location = i;
-			error=GSM_GetMemory(gsm, &Pbk);
-			if (error != ERR_EMPTY) {
-				Print_Error(error);
+		if (UseNext) {
+			used 		= 0;
+			fprintf(stderr, LISTFORMAT, _("Reading"));
+			while (error == ERR_NONE) {
 				if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
 					Backup.PhonePhonebook[used] = malloc(sizeof(GSM_MemoryEntry));
-				        if (Backup.PhonePhonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
+					if (Backup.PhonePhonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
 					Backup.PhonePhonebook[used+1] = NULL;
 				} else {
 					printf("\n   ");
@@ -255,16 +268,46 @@ void DoBackup(int argc, char *argv[])
 				}
 				*Backup.PhonePhonebook[used]=Pbk;
 				used++;
+				error = GSM_GetNextMemory(gsm, &Pbk, false);
+				fprintf(stderr, "*");
+				if (gshutdown) {
+					GSM_Terminate();
+					exit(0);
+				}
 			}
-			fprintf(stderr, "\r   ");
-			fprintf(stderr, _("Reading: %i percent"), used*100/MemStatus.MemoryUsed);
-			i++;
-			if (gshutdown) {
-				GSM_Terminate();
-				exit(0);
+			fprintf(stderr, "\n");
+		} else {
+			Pbk.MemoryType  = MEM_ME;
+			i		= 1;
+			used 		= 0;
+			while (used != MemStatus.MemoryUsed) {
+				Pbk.Location = i;
+				error=GSM_GetMemory(gsm, &Pbk);
+				if (error != ERR_EMPTY) {
+					Print_Error(error);
+					if (used < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
+						Backup.PhonePhonebook[used] = malloc(sizeof(GSM_MemoryEntry));
+						if (Backup.PhonePhonebook[used] == NULL) Print_Error(ERR_MOREMEMORY);
+						Backup.PhonePhonebook[used+1] = NULL;
+					} else {
+						printf("\n   ");
+						printf(_("Only part of data saved, please increase %s.") , "GSM_BACKUP_MAX_PHONEPHONEBOOK");
+						printf("\n");
+						break;
+					}
+					*Backup.PhonePhonebook[used]=Pbk;
+					used++;
+				}
+				fprintf(stderr, "\r   ");
+				fprintf(stderr, _("Reading: %i percent"), used*100/MemStatus.MemoryUsed);
+				i++;
+				if (gshutdown) {
+					GSM_Terminate();
+					exit(0);
+				}
 			}
+			fprintf(stderr, "\n");
 		}
-		fprintf(stderr, "\n");
 	}
 	DoBackupPart = false;
 	if (Info.SIMPhonebook) {
