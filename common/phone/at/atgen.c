@@ -3214,7 +3214,8 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 	/* Check the lower bound (this is static, we do not support flat memory here */
 	if (sms->Folder <= 0) {
-		return ERR_INVALIDLOCATION;
+		smprintf(s, "Flat memory not supported for adding!\n");
+		return ERR_WRONGFOLDER;
 	}
 
 	/* We don't actually need this, but let's initialise it. */
