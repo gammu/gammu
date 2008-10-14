@@ -4707,19 +4707,28 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_UNKNOWNRESPONSE;
 }
 
+GSM_Error ATGEN_CheckSBNR(GSM_StateMachine *s)
+{
+	GSM_Error 	error;
+	char		req[20];
+
+	sprintf(req, "AT^SBNR=?\r");
+	smprintf(s, "Checking availablity of SBNR\n");
+	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
+	return error;
+}
+
 GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int endlocation)
 {
 	GSM_Error 		error;
-	unsigned char		req[20];
+	char		req[20];
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (entry->Location==0x00) return ERR_INVALIDLOCATION;
 
 	if (entry->MemoryType == MEM_ME) {
 		if (Priv->PBKSBNR == 0) {
-			sprintf(req, "AT^SBNR=?\r");
-			smprintf(s, "Checking availablity of SBNR\n");
-			ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
+			ATGEN_CheckSBNR(s);
 		}
 		if (Priv->PBKSBNR == AT_SBNR_AVAILABLE) {
 			sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location + Priv->FirstMemoryEntry - 1);
@@ -4773,12 +4782,20 @@ GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, bool
 	error = ATGEN_GetManufacturer(s);
 	if (error != ERR_NONE) return error;
 
-	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
-	if (error != ERR_NONE) return error;
-
-	if (Priv->MemorySize == 0) {
-		error = ATGEN_GetMemoryInfo(s, NULL, AT_Total);
+	if (entry->MemoryType == MEM_ME) {
+		if (Priv->PBKSBNR == 0) {
+			ATGEN_CheckSBNR(s);
+		}
+	}
+	/* There are no status functions for SBNR */
+	if (entry->MemoryType != MEM_ME || Priv->PBKSBNR != AT_SBNR_AVAILABLE) {
+		error = ATGEN_SetPBKMemory(s, entry->MemoryType);
 		if (error != ERR_NONE) return error;
+
+		if (Priv->MemorySize == 0) {
+			error = ATGEN_GetMemoryInfo(s, NULL, AT_Total);
+			if (error != ERR_NONE) return error;
+		}
 	}
 
 	if (start) {
