@@ -21,6 +21,7 @@ ChangeLog
 [-] * Detect long FM station names (bug #727).
 [-] * Add ID for Nokia 2630b.
 [+] * Support backup of phone phonebook from Siemens (bug #732).
+[+] * Properly handle GetNextMemory on Siemens (bug #732).
     
 20081003 - 1.21.0
     
