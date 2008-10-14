@@ -374,10 +374,12 @@ static GSM_Error SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				sprintf(buffer,"Entry%02iType = Category%c%c",j,13,10);
 				error = SaveBackupText(file, "", buffer, UseUnicode);
 				if (error != ERR_NONE) return error;
-				sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
-				error = SaveBackupText(file, "", buffer, UseUnicode);
-				if (error != ERR_NONE) return error;
-				text = false;
+				if (Pbk->Entries[j].Number == -1) {
+					sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
+					error = SaveBackupText(file, "", buffer, UseUnicode);
+					if (error != ERR_NONE) return error;
+					text = false;
+				}
 				break;
 			case PBK_Private:
 				sprintf(buffer,"Entry%02iType = Private%c%c",j,13,10);
@@ -1792,14 +1794,14 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Name;
 			} else if (strcasecmp(readvalue,"Category") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Category;
-				Pbk->Entries[Pbk->EntriesNum].Number = 0;
+				Pbk->Entries[Pbk->EntriesNum].Number = -1;
 				sprintf(buffer,"Entry%02iNumber",num);
 				readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 				if (readvalue!=NULL) {
 					Pbk->Entries[Pbk->EntriesNum].Number = atoi(readvalue);
+					Pbk->EntriesNum ++;
+					continue;
 				}
-				Pbk->EntriesNum ++;
-				continue;
 			} else if (strcasecmp(readvalue,"Private") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Private;
 				Pbk->Entries[Pbk->EntriesNum].Number = 0;
