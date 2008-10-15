@@ -80,6 +80,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	file.Used = sizeof(data);
 	file.ID_FullName[0] = 0;
 	file.ID_FullName[1] = 0;
+	GSM_GetCurrentDateTime(&(file.Modified));
 
 	/* Parse it */
 	error = N6510_DecodeFilesystemSMS(s, &sms, &file, 0);

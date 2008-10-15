@@ -49,6 +49,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	msg.Buffer = data;
 
 	s->Phone.Data.GetSMSMessage = &sms;
+	sms.SMS[0].Memory	= MEM_ME;
 
 	/* Parse it */
 	error = N6510_ReplyGetSMSMessage(msg, s);
