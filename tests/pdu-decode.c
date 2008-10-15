@@ -74,6 +74,7 @@ int pdu_get_number(const char *buffer, const int semioctet) {
 		if (!isxdigit(buffer[4 + i])) {
 			printf("Non hex digit in PDU (%s)!\n",
 					buffer + 4 +  i);
+			free(out);
 			return -1;
 		}
 
