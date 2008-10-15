@@ -86,6 +86,10 @@ int main(int argc, char **argv)
 	/* Parse it */
 	error = ATGEN_ReplyGetSMSC(msg, s);
 
+	/* This is normally done by ATGEN_Terminate */
+	FreeLines(&Priv->Lines);
+	GetLineString(NULL, NULL, 0);
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 

@@ -1052,6 +1052,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 end:
 	FreeLines(&lines);
+	GetLineString(NULL, NULL, 0);
+
 
 	return ret;
 }
