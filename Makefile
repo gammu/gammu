@@ -4,7 +4,7 @@
 
 BUILD_DIR=build-configure
 
-.PHONY: all clean package package_source apidoc interndoc translations gammu install distclean test
+.PHONY: all clean package package_source apidoc interndoc translations gammu install distclean test NightlyMemoryCheck Nightly
 
 all: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR)
