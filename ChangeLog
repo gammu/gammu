@@ -22,6 +22,7 @@ ChangeLog
 [-] * Add ID for Nokia 2630b.
 [-] * Handle properly very long lines in vcards (bug #728).
 [-] * Do not build and install locales if gettext is not compiled.
+[-] * Increase number of calendar entries (bug #725).
 [+] * Support backup of phone phonebook from Siemens (bug #732).
 [+] * Properly handle GetNextMemory on Siemens (bug #732).
 [+] * Save textual category to backup (bug #737).
