@@ -27,6 +27,7 @@ ChangeLog
 [+] * Support backup of phone phonebook from Siemens (bug #732).
 [+] * Properly handle GetNextMemory on Siemens (bug #732).
 [+] * Save textual category to backup (bug #737).
+[+] * Enable dashboard testing using CTest/CDash.
     
 20081003 - 1.21.0
     
