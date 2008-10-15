@@ -869,3 +869,7 @@ add_subdirectory(tests)
 add_subdirectory(gammu)
 
 add_subdirectory(locale)
+
+enable_testing()
+include(Dart)
+
