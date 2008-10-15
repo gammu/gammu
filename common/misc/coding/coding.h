@@ -142,6 +142,20 @@ extern int strcasecmp (const char *s1, const char *s2);
 
 
 /**
+ * Gets VCS line from buffer.
+ *
+ * @param MergeLines: Determine whether merge lines as vCard style
+ * continuation or quoted printable continutaion.
+ * @param Buffer: Data source to parse.
+ * @param Pos: Current position in data.
+ * @param OutBuffer: Pointer to buffer pointer, which will be allocated.
+ * @param MaxLen: Maximal length of data to process.
+ *
+ * \return ERR_NONE on success, ERR_MOREMEMORY if buffer is too small.
+ */
+GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t MaxLen, bool MergeLines);
+
+/**
  * Gets line from buffer.
  *
  * @param MergeLines: Determine whether merge lines as vCard style
@@ -154,7 +168,7 @@ extern int strcasecmp (const char *s1, const char *s2);
  *
  * \return ERR_NONE on success, ERR_MOREMEMORY if buffer is too small.
  */
-GSM_Error MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, size_t MaxOutLen, bool MergeLines);
+GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, size_t MaxOutLen, bool MergeLines);
 
 char *EncodeSpecialChars(unsigned char *buffer);
 char *DecodeSpecialChars(unsigned char *buffer);

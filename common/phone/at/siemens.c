@@ -17,7 +17,7 @@
 
 
 static GSM_Error GetSiemensFrame(GSM_Protocol_Message msg, GSM_StateMachine *s, char *templ,
-			    unsigned char *buffer, int *len)
+			    unsigned char *buffer, size_t *len)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	int			i=2, pos=0, length=0;
@@ -78,12 +78,12 @@ static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, char
 GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	unsigned char 		buffer[4096];
-	int			length;
+	size_t			length;
 	GSM_Error		error;
 
 	error = GetSiemensFrame(msg,s,"bmp",buffer,&length);
 	if (error!=ERR_NONE) return error;
-	dbgprintf ("Operator logo received lenght=%i\n",length);
+	dbgprintf ("Operator logo received lenght=" SIZE_T_FORMAT "\n",length);
 	error = BMP2Bitmap (buffer,NULL,s->Phone.Data.Bitmap);
 	if (error==ERR_NONE) return error;
 	else return ERR_UNKNOWN;
@@ -143,7 +143,7 @@ GSM_Error SIEMENS_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 GSM_Error SIEMENS_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	unsigned char 		buffer[32];
-	int			length;
+	size_t			length;
 	GSM_Error		error;
 
         error = GetSiemensFrame(msg,s,"mid",s->Phone.Data.Ringtone->NokiaBinary.Frame,&length);
@@ -193,7 +193,8 @@ GSM_Error SIEMENS_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateMachin
 	GSM_ToDoEntry		ToDo;
 	GSM_Error		error;
 	unsigned char 		buffer[354];
-	int			len, pos=0;
+	size_t			pos=0;
+	size_t			len;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -350,8 +351,8 @@ GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
  	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
-	unsigned char		buffer[4096];
-	int			length;
+	char			buffer[4096];
+	size_t			length = 0;
 	GSM_Error		error;
 
 	switch (Priv->ReplyState) {
@@ -360,7 +361,7 @@ GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		error = GetSiemensFrame(msg,s,"vcf", buffer, &length);
 		if (error != ERR_NONE) return error;
  		Memory->EntriesNum = 0;
- 		length = 0;
+		length = 0;
  		return GSM_DecodeVCARD(buffer, &length, Memory, 0);
 	case AT_Reply_Error:
                 smprintf(s, "Error - too high location ?\n");

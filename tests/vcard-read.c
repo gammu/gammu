@@ -14,7 +14,7 @@
 
 int main(int argc, char **argv)
 {
-	int pos = 0;
+	size_t pos = 0;
 	GSM_MemoryEntry pbk;
 	GSM_Error error;
 	char buffer[65536];

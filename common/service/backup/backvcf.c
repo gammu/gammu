@@ -51,13 +51,13 @@ GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
 	GSM_File 		File;
 	GSM_Error		error;
 	GSM_MemoryEntry		Pbk;
-	int			numPbk = 0, Pos;
+	int			numPbk = 0;
+	size_t Pos = 0;
 
 	File.Buffer = NULL;
 	error = GSM_ReadFile(FileName, &File);
 	if (error != ERR_NONE) return error;
 
-	Pos = 0;
 	while (1) {
 		error = GSM_DecodeVCARD(File.Buffer, &Pos, &Pbk, Nokia_VCard21);
 		if (error == ERR_EMPTY) break;

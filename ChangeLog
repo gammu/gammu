@@ -20,6 +20,7 @@ ChangeLog
 [-] * Sign Windows binaries during build.
 [-] * Detect long FM station names (bug #727).
 [-] * Add ID for Nokia 2630b.
+[-] * Handle properly very long lines in vcards (bug #728).
 [+] * Support backup of phone phonebook from Siemens (bug #732).
 [+] * Properly handle GetNextMemory on Siemens (bug #732).
 [+] * Save textual category to backup (bug #737).

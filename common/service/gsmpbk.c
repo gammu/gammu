@@ -509,33 +509,37 @@ void GSM_TweakInternationalNumber(unsigned char *Number, const GSM_NumberType nu
 }
 
 
+#define CHECK_NUM_ENTRIES if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) { error = ERR_MOREMEMORY; goto vcard_done; }
+
 /**
  * \bug We should avoid using static buffers here.
  */
-GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version UNUSED)
+GSM_Error GSM_DecodeVCARD(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version UNUSED)
 {
-	unsigned char   Line[20000], Buff[20000];
+	char   Buff[20000];
 	int	     Level = 0;
-	unsigned char   *s;
+	char   *s;
 	int		pos;
 	GSM_Error	error;
+	char	*Line = NULL;
 
 	Buff[0]	 = 0;
 	Pbk->EntriesNum = 0;
 
 	while (1) {
-		error = MyGetLine(Buffer, Pos, Line, strlen(Buffer), sizeof(Line), true);
-		if (error != ERR_NONE) return error;
+		free(Line);
+		Line = NULL;
+		error = GSM_GetVCSLine(&Line, Buffer, Pos, strlen(Buffer), true);
+		if (error != ERR_NONE) goto vcard_done;
 		if (strlen(Line) == 0) break;
 		switch (Level) {
 		case 0:
 			if (strstr(Line,"BEGIN:VCARD")) Level = 1;
 			break;
 		case 1:
-			if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+			CHECK_NUM_ENTRIES;
 			if (strstr(Line,"END:VCARD")) {
-				if (Pbk->EntriesNum == 0) return ERR_EMPTY;
-				return ERR_NONE;
+				goto vcard_complete;
 			}
 			Pbk->Entries[Pbk->EntriesNum].AddError = ERR_NONE;
 			if (ReadVCALText(Line, "N", Buff, false)) {
@@ -555,7 +559,7 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
-					if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+					CHECK_NUM_ENTRIES;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FirstName;
 					Pbk->EntriesNum++;
@@ -706,28 +710,28 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_StreetAddress;
 					Pbk->EntriesNum++;
-					if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+					CHECK_NUM_ENTRIES;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_City;
 					Pbk->EntriesNum++;
-					if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+					CHECK_NUM_ENTRIES;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_State;
 					Pbk->EntriesNum++;
-					if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+					CHECK_NUM_ENTRIES;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Zip;
 					Pbk->EntriesNum++;
-					if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+					CHECK_NUM_ENTRIES;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
@@ -751,28 +755,28 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkStreetAddress;
 					Pbk->EntriesNum++;
-					if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+					CHECK_NUM_ENTRIES;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkCity;
 					Pbk->EntriesNum++;
-					if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+					CHECK_NUM_ENTRIES;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkState;
 					Pbk->EntriesNum++;
-					if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+					CHECK_NUM_ENTRIES;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkZip;
 					Pbk->EntriesNum++;
-					if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) return ERR_MOREMEMORY;
+					CHECK_NUM_ENTRIES;
 
 					s = VCALGetTextPart(Buff, &pos);
 					if (s == NULL) continue;
@@ -835,8 +839,13 @@ GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk,
 		}
 	}
 
-	if (Pbk->EntriesNum == 0) return ERR_EMPTY;
-	return ERR_NONE;
+vcard_complete:
+	if (Pbk->EntriesNum == 0) error = ERR_EMPTY;
+	else error = ERR_NONE;
+
+vcard_done:
+	free(Line);
+	return error;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

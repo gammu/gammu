@@ -209,7 +209,7 @@ static bool ReadLDIFText(char *Buffer, char *Start, char *Value)
 	return false;
 }
 
-static GSM_Error GSM_DecodeLDIFEntry(unsigned char *Buffer, int *Pos, GSM_MemoryEntry *Pbk)
+static GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk)
 {
 	unsigned char 	Line[2000],Buff[2000],Buff2[2000];
 	int		Level = 0;
@@ -323,13 +323,13 @@ GSM_Error LoadLDIF(char *FileName, GSM_Backup *backup)
 	GSM_File 		File;
 	GSM_Error		error;
 	GSM_MemoryEntry	Pbk;
-	int			numPbk = 0, Pos;
+	int			numPbk = 0;
+	size_t Pos = 0;
 
 	File.Buffer = NULL;
 	error = GSM_ReadFile(FileName, &File);
 	if (error != ERR_NONE) return error;
 
-	Pos = 0;
 	while (1) {
 		error = GSM_DecodeLDIFEntry(File.Buffer, &Pos, &Pbk);
 		if (error == ERR_EMPTY) break;

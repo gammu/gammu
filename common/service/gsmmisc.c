@@ -120,7 +120,7 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 static void GSM_JADFindLine(GSM_File File, char *Name, char *Value)
 {
 	unsigned char 	Line[2000];
-	int		Pos = 0;
+	size_t		Pos = 0;
 
 	Value[0] = 0;
 

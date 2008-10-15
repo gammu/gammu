@@ -341,7 +341,8 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, cons
 	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	GSM_MultiPartSMSInfo	SMSInfo;
 	bool			RetVal,udhinfo=true;
-	int			j,Pos,i;
+	int			j,i;
+	size_t Pos;
 	GSM_MemoryEntry		pbk;
 	GSM_Error error;
 
@@ -991,7 +992,8 @@ void GetMMSFolders(int argc UNUSED, char *argv[] UNUSED)
 
 void DecodeMMSFile(GSM_File *file, int num)
 {
-	int				i,Pos;
+	int				i;
+	size_t Pos;
 	char				buff[200];
 	GSM_EncodedMultiPartMMSInfo 	info;
 	GSM_Error			error;
