@@ -87,7 +87,12 @@ int main(int argc, char **argv)
 	sms.SMS[0].Memory = MEM_SM;
 
 	/* Display message */
-	DisplayTestSMS(sms);
+	if (error == ERR_NONE) {
+		DisplayTestSMS(sms);
+	}
+
+	/* This is normally done by ATGEN_Terminate */
+	FreeLines(&Priv->Lines);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
