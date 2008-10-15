@@ -9,7 +9,7 @@
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 #include "../common/gsmphones.h" /* Phone data */
 
-#define BUFFER_SIZE 16384
+#define BUFFER_SIZE ((size_t)16384)
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
