@@ -2333,7 +2333,7 @@ GSM_Error N71_65_ReplyGetCalendarInfo1(GSM_Protocol_Message msg, GSM_StateMachin
 	while (LastCalendar->Location[j] != 0x00) j++;
 	if (j >= GSM_MAXCALENDARTODONOTES) {
 		smprintf(s, "Increase GSM_MAXCALENDARNOTES\n");
-		return ERR_UNKNOWN;
+		return ERR_MOREMEMORY;
 	}
 	if (j == 0) {
 		LastCalendar->Number=msg.Buffer[4]*256+msg.Buffer[5];
