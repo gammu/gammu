@@ -36,6 +36,12 @@ install: $(BUILD_DIR)
 test: $(BUILD_DIR)
 	$(MAKE) -C $(BUILD_DIR) test
 
+Nightly: $(BUILD_DIR)
+	$(MAKE) -C $(BUILD_DIR) Nightly
+
+NightlyMemoryCheck: $(BUILD_DIR)
+	$(MAKE) -C $(BUILD_DIR) NightlyMemoryCheck
+
 TAGFILESFIND = find gammu common include -name '*.[ch]' -o -name '*.cpp'
 
 tags: $(shell $(TAGFILESFIND))
