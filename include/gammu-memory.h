@@ -570,7 +570,7 @@ void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry * pbk,
  *
  * \ingroup Memory
  */
-GSM_Error GSM_DecodeVCARD(unsigned char *Buffer, int *Pos,
+GSM_Error GSM_DecodeVCARD(char *Buffer, size_t *Pos,
 			  GSM_MemoryEntry * Pbk, GSM_VCardVersion Version);
 
 #endif

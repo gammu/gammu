@@ -68,13 +68,13 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 	GSM_Error		error;
 	GSM_CalendarEntry	Calendar;
 	GSM_ToDoEntry		ToDo;
-	int			numCal = 0, numToDo = 0, Pos;
+	int			numCal = 0, numToDo = 0;
+	size_t Pos = 0;
 
 	File.Buffer = NULL;
 	error = GSM_ReadFile(FileName, &File);
 	if (error != ERR_NONE) return error;
 
-	Pos = 0;
 	while (1) {
 		error = GSM_DecodeVCALENDAR_VTODO(File.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
 		if (error == ERR_EMPTY) break;

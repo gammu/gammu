@@ -912,7 +912,8 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error		error;
 	unsigned char		Line[500],Line2[500],*name,*size;
-	int			Pos,i,j,num,pos2,Current,z;
+	int			i,j,num,pos2,Current,z;
+	size_t			Pos;
 
 	/* Go to default service */
 	error = OBEXGEN_Connect(s, 0);
@@ -1458,7 +1459,7 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
 	int		LUIDSize = 0;
 	int		IndexSize = 0;
 	int		Size = 0;
-	int		linepos = 0;
+	size_t		linepos = 0;
 	int		prevpos;
 	char		line[2000];
 	size_t		len;
@@ -1618,7 +1619,7 @@ GSM_Error OBEXGEN_GetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	GSM_Error 	error;
 	char		*data;
 	char		*path;
-	int		pos = 0;
+	size_t		pos = 0;
 
 	error = OBEXGEN_InitPbLUID(s);
 	if (error != ERR_NONE) return error;
@@ -1654,7 +1655,7 @@ GSM_Error OBEXGEN_GetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	char		*data;
 	char		*path;
-	int		pos = 0;
+	size_t		pos = 0;
 
 	error = OBEXGEN_InitPbLUID(s);
 	if (error != ERR_NONE) return error;
@@ -1691,7 +1692,7 @@ GSM_Error OBEXGEN_GetMemoryFull(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	int		pos = 0;
+	size_t		pos = 0;
 
 	/* Read phonebook data */
 	error = OBEXGEN_InitPbLUID(s);
@@ -2050,7 +2051,7 @@ GSM_Error OBEXGEN_GetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	GSM_Error 	error;
 	char		*data;
 	char		*path;
-	int		pos = 0;
+	size_t		pos = 0;
 	GSM_ToDoEntry	ToDo;
 
 	error = OBEXGEN_InitCalLUID(s);
@@ -2087,7 +2088,7 @@ GSM_Error OBEXGEN_GetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	char		*data;
 	char		*path;
-	int		pos = 0;
+	size_t		pos = 0;
 	GSM_ToDoEntry	ToDo;
 
 	error = OBEXGEN_InitCalLUID(s);
@@ -2125,7 +2126,7 @@ GSM_Error OBEXGEN_GetCalendarFull(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	int		pos = 0;
+	size_t		pos = 0;
 	GSM_ToDoEntry	ToDo;
 
 	/* Read calendar data */
@@ -2432,7 +2433,7 @@ GSM_Error OBEXGEN_GetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	GSM_Error 	error;
 	char		*data;
 	char		*path;
-	int		pos = 0;
+	size_t		pos = 0;
 	GSM_CalendarEntry	Cal;
 
 	/* Todoculate path */
@@ -2466,7 +2467,7 @@ GSM_Error OBEXGEN_GetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	char		*data;
 	char		*path;
-	int		pos = 0;
+	size_t		pos = 0;
 	GSM_CalendarEntry	Cal;
 
 	error = OBEXGEN_InitCalLUID(s);
@@ -2504,7 +2505,7 @@ GSM_Error OBEXGEN_GetTodoFull(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	int		pos = 0;
+	size_t		pos = 0;
 	GSM_CalendarEntry	Cal;
 
 	/* Read todo data */
@@ -2830,7 +2831,7 @@ GSM_Error OBEXGEN_GetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	GSM_Error 	error;
 	char		*data;
 	char		*path;
-	int		pos = 0;
+	size_t		pos = 0;
 
 	error = OBEXGEN_InitNoteLUID(s);
 	if (error != ERR_NONE) return error;
@@ -2866,7 +2867,7 @@ GSM_Error OBEXGEN_GetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	char		*data;
 	char		*path;
-	int		pos = 0;
+	size_t		pos = 0;
 
 	error = OBEXGEN_InitNoteLUID(s);
 	if (error != ERR_NONE) return error;
@@ -2903,7 +2904,7 @@ GSM_Error OBEXGEN_GetNoteFull(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
-	int		pos = 0;
+	size_t		pos = 0;
 
 	/* Read note data */
 	error = OBEXGEN_InitNoteLUID(s);

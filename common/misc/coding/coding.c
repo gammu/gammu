@@ -1371,7 +1371,7 @@ ret0:
 #undef tolowerwchar
 }
 
-GSM_Error MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, int MaxLen, size_t MaxOutLen, bool MergeLines)
+GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, size_t MaxOutLen, bool MergeLines)
 {
 	bool skip = false;
 	bool quoted_printable = false;
@@ -1437,6 +1437,81 @@ GSM_Error MyGetLine(unsigned char *Buffer, int *Pos, unsigned char *OutBuffer, i
 	}
 	return ERR_NONE;
 }
+
+GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t MaxLen, bool MergeLines)
+{
+	bool skip = false;
+	bool quoted_printable = false;
+	bool was_cr = false, was_lf = false;
+	size_t pos;
+	int tmp;
+	size_t OutLen = 200;
+
+	*OutBuffer = malloc(OutLen);
+	if (*OutBuffer == NULL) return ERR_MOREMEMORY;
+	(*OutBuffer)[0] = 0;
+	pos = 0;
+	if (Buffer == NULL) return ERR_NONE;
+	while ((*Pos) < MaxLen) {
+		switch (Buffer[*Pos]) {
+		case 0x00:
+			return ERR_NONE;
+		case 0x0A:
+		case 0x0D:
+			if (skip) {
+				if (Buffer[*Pos] == 0x0d) {
+					if (was_cr && skip) return ERR_NONE;
+					was_cr = true;
+				} else {
+					if (was_lf && skip) return ERR_NONE;
+					was_lf = true;
+				}
+			}
+			if (pos != 0 && !skip) {
+				if (MergeLines) {
+					/* (Quote printable new line) Does string end with = ? */
+					if ((*OutBuffer)[pos - 1] == '=' && quoted_printable) {
+						pos--;
+						(*OutBuffer)[pos] = 0;
+						skip = true;
+						was_cr = (Buffer[*Pos] == 0x0d);
+						was_lf = (Buffer[*Pos] == 0x0a);
+						break;
+					}
+					/* (vCard continuation) Next line start with space? */
+					tmp = *Pos + 1;
+					if (Buffer[*Pos + 1] == 0x0a || Buffer[*Pos + 1] == 0x0d) {
+						tmp += 1;
+					}
+					if (Buffer[tmp] == ' ') {
+						*Pos = tmp;
+						break;
+					}
+				}
+				return ERR_NONE;
+			}
+			break;
+		default:
+			/* Detect quoted printable for possible escaping */
+			if (Buffer[*Pos] == ':' &&
+					strstr(*OutBuffer, ";ENCODING=QUOTED-PRINTABLE") != NULL) {
+				quoted_printable = true;
+			}
+			skip = false;
+			(*OutBuffer)[pos]     = Buffer[*Pos];
+			pos++;
+			(*OutBuffer)[pos] = 0;
+			if (pos + 2 >= OutLen) {
+				OutLen += 100;
+				*OutBuffer = realloc(*OutBuffer, OutLen);
+				if (*OutBuffer == NULL) return ERR_MOREMEMORY;
+			}
+		}
+		(*Pos)++;
+	}
+	return ERR_NONE;
+}
+
 
 void StringToDouble(char *text, double *d)
 {

@@ -1544,7 +1544,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 	return ERR_NONE;
 }
 
-GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_CalendarEntry *Calendar,
+GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry *Calendar,
 					GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer)
 {
 	unsigned char 	Line[2000],Buff[2000];
@@ -1906,7 +1906,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos, GSM_Calenda
 	return ERR_NONE;
 }
 
-GSM_Error GSM_DecodeVNOTE(unsigned char *Buffer, int *Pos, GSM_NoteEntry *Note)
+GSM_Error GSM_DecodeVNOTE(char *Buffer, size_t *Pos, GSM_NoteEntry *Note)
 {
 	unsigned char   Line[2000],Buff[2000];
 	int	     Level = 0;
@@ -1938,7 +1938,7 @@ GSM_Error GSM_DecodeVNOTE(unsigned char *Buffer, int *Pos, GSM_NoteEntry *Note)
 	return ERR_BUG;
 }
 
-GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, size_t *Length, GSM_NoteEntry *Note)
+GSM_Error GSM_EncodeVNTFile(char *Buffer, size_t *Length, GSM_NoteEntry *Note)
 {
 	*Length+=sprintf(Buffer+(*Length), "BEGIN:VNOTE%c%c",13,10);
 	*Length+=sprintf(Buffer+(*Length), "VERSION:1.1%c%c",13,10);

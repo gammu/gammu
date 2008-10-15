@@ -604,7 +604,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, size_t *Length,
  *
  * \ingroup Note
  */
-GSM_Error GSM_DecodeVNOTE(unsigned char *Buffer, int *Pos, GSM_NoteEntry *Note);
+GSM_Error GSM_DecodeVNOTE(char *Buffer, size_t *Pos, GSM_NoteEntry *Note);
 
 /**
  * Encodes vNote to buffer.
@@ -617,7 +617,7 @@ GSM_Error GSM_DecodeVNOTE(unsigned char *Buffer, int *Pos, GSM_NoteEntry *Note);
  *
  * \ingroup Note
  */
-GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, size_t *Length,
+GSM_Error GSM_EncodeVNTFile(char *Buffer, size_t *Length,
 			    GSM_NoteEntry * Note);
 
 /**
@@ -634,7 +634,7 @@ GSM_Error GSM_EncodeVNTFile(unsigned char *Buffer, size_t *Length,
  *
  * \ingroup Calendar
  */
-GSM_Error GSM_DecodeVCALENDAR_VTODO(unsigned char *Buffer, int *Pos,
+GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos,
 				    GSM_CalendarEntry * Calendar,
 				    GSM_ToDoEntry * ToDo,
 				    GSM_VCalendarVersion CalVer,

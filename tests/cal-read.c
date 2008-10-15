@@ -14,7 +14,7 @@
 
 int main(int argc, char **argv)
 {
-	int pos = 0;
+	size_t pos = 0;
 	GSM_ToDoEntry todo;
 	GSM_CalendarEntry cal;
 	GSM_Error error;
