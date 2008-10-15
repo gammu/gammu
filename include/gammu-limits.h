@@ -77,7 +77,7 @@
  *
  * \ingroup Limits
  */
-#define GSM_MAXCALENDARTODONOTES 550
+#define GSM_MAXCALENDARTODONOTES 1000
 
 /**
  * Maximal length of text in phonebook.
