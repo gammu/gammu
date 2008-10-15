@@ -93,6 +93,7 @@ int main(int argc, char **argv)
 
 	/* This is normally done by ATGEN_Terminate */
 	FreeLines(&Priv->Lines);
+	GetLineString(NULL, NULL, 0);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
