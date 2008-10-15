@@ -414,6 +414,12 @@ char *GetLineString(const char *message, const GSM_CutLines *lines, int start)
 	static char *retval = NULL;
 	int len;
 
+	if (message == NULL) {
+		free(retval);
+		retval = NULL;
+		return NULL;
+	}
+
 	len = GetLineLength(message, lines, start);
 	retval = realloc(retval, len + 1);
 	if (retval == NULL) {
