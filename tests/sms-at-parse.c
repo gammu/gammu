@@ -84,6 +84,7 @@ int main(int argc, char **argv)
 
 	/* Parse it */
 	error = ATGEN_ReplyGetSMSMessage(msg, s);
+	sms.SMS[0].Memory = MEM_SM;
 
 	/* Display message */
 	DisplayTestSMS(sms);
