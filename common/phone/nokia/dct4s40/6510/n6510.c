@@ -723,7 +723,7 @@ GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 	case 0x03:
 		smprintf(s, "SMS Message received\n");
 		Data->GetSMSMessage->Number=1;
-		NOKIA_DecodeSMSState(s, msg.Buffer[5], &Data->GetSMSMessage->SMS[0]);
+		NOKIA_DecodeSMSState(s, msg.Buffer[5], &(Data->GetSMSMessage->SMS[0]));
 		switch (msg.Buffer[14]) {
 		case 0x00:
 		case 0x01:
