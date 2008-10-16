@@ -174,6 +174,12 @@ if (CROSS_MINGW)
 endif (CROSS_MINGW)
 target_link_libraries(sms-nokia-04 libGammu)
 add_test(sms-nokia-04 "${GAMMU_TEST_PATH}/sms-nokia-04${GAMMU_TEST_SUFFIX}")
+add_executable(sms-nokia-05 sms-nokia-05.c sms-printing.c)
+if (CROSS_MINGW)
+    set_target_properties (sms-nokia-05 PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+target_link_libraries(sms-nokia-05 libGammu)
+add_test(sms-nokia-05 "${GAMMU_TEST_PATH}/sms-nokia-05${GAMMU_TEST_SUFFIX}")
 
 # Nokia ringtone
 add_executable(nokia-6110-ringtone nokia-6110-ringtone.c)

@@ -31,6 +31,7 @@ ChangeLog
 [+] * Add option to do coverage analysis.
 [-] * Properly handle debug file closing.
 [-] * Add test case for debug logging.
+[-] * Fix decoding of some SMS messages from Nokia phones (bug #735).
     
 20081003 - 1.21.0
     
