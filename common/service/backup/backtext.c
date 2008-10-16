@@ -374,7 +374,7 @@ static GSM_Error SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				sprintf(buffer,"Entry%02iType = Category%c%c",j,13,10);
 				error = SaveBackupText(file, "", buffer, UseUnicode);
 				if (error != ERR_NONE) return error;
-				if (Pbk->Entries[j].Number == -1) {
+				if (Pbk->Entries[j].Number != -1) {
 					sprintf(buffer,"Entry%02iNumber = %i%c%c",j,Pbk->Entries[j].Number,13,10);
 					error = SaveBackupText(file, "", buffer, UseUnicode);
 					if (error != ERR_NONE) return error;
