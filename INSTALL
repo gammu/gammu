@@ -229,4 +229,33 @@ For CURL support, you need curl-7.19.0-devel-mingw32.zip from
 -DCURL_CROSS_PATH=/path/to/curl
 
 
+Testing
+=======
+
+Gammu comes with testsuite which should be run after build. You can do
+this using 'make test'. CMake build system also includes option to
+connect to dashboard and submit test results there, so that they can be
+reviewed and fixed by others. To participate in this testing, you need
+just to run 'make Experimental'. It will compile current version, run
+tests and submit data to dashboard:
+
+http://www.cdash.org/CDashPublic/index.php?project=Gammu
+
+There are some more options for testing:
+
+- make ExperimentalMemCheck
+    This checks memory accesses using valgrind during tests and submits
+    report.
+- coverage reports
+    To get test coverage reports, you need to configure project using 
+    'cmake -DCOVERAGE=ON'
+- nightly testing
+    Currently several machines do compile and test Gammu every night. If
+    you want to tak part of this, just ensure that your machine executes
+    test suite every night (preferably after 3:00 CET). You can select
+    either 'make Nightly' to do regullar testing or 'make
+    NightlyMemoryCheck' to test with valgrind. Also you can enable
+    coverage tests as described above.
+
+
 # vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
