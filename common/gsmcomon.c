@@ -224,16 +224,19 @@ GSM_Error GSM_SetDebugFileDescriptor(FILE *fd, GSM_Debug_Info *privdi)
 		/* Aren't we the changing the global di? */
 		if (privdi != &di) {
 			if (privdi->df != di.df &&
-					privdi->dl!=0 &&
+					privdi->df != NULL &&
 					fileno(privdi->df) != 1 &&
-					fileno(privdi->df) != 2)
+					fileno(privdi->df) != 2) {
 				fclose(privdi->df);
+			}
 			privdi->df = di.df;
 			return ERR_NONE;
         	}
     	} else {
         	/* If we should not use global file descriptor, don't even try use it */
-        	if (privdi->df == di.df) privdi->df = stdout;
+        	if (privdi != &di && privdi->df == di.df) {
+			privdi->df = stdout;
+		}
     	}
 
 	if (privdi->df && privdi->df != stdout) {
