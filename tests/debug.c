@@ -71,7 +71,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 		printf("Could not create temporary file!\n");
 		fail(2);
 	}
-	debug_file = fdopen(debug_fd, "w+");
+	close(debug_fd);
 
 	/* Get debug handles */
 	di_sm = GSM_GetDebug(s);
@@ -80,6 +80,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/*
 	 * Test 1 - setting debug level.
 	 */
+	debug_file = fopen(debug_filename, "w+");
 	if (GSM_SetDebugLevel("NONSENSE", di_sm)) {
 		printf("Failed to not set debug level!\n");
 		fail(3);
@@ -219,6 +220,145 @@ int main(int argc UNUSED, char **argv UNUSED)
 		fail(6);
 	}
 	check_log(debug_file, false, "TEMP,NULL,FALSE");
+	if (!GSM_SetDebugGlobal(false, di_sm)) {
+		printf("Failed to set global flag!\n");
+		fail(6);
+	}
+	if (GSM_SetDebugFileDescriptor(NULL, di_sm) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(7);
+	}
+	if (GSM_SetDebugFileDescriptor(NULL, di_global) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(8);
+	}
+
+	/*
+	 * Test 6 - global /dev/null, local tempfile, do not use global
+	 */
+	debug_file = fopen(debug_filename, "w+");
+	if (!GSM_SetDebugGlobal(true, di_sm)) {
+		printf("Failed to set global flag!\n");
+		fail(6);
+	}
+	if (GSM_SetDebugFile(NUL, di_global) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(7);
+	}
+	if (GSM_SetDebugFileDescriptor(debug_file, di_sm) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(8);
+	}
+	if (!GSM_SetDebugGlobal(false, di_sm)) {
+		printf("Failed to set global flag!\n");
+		fail(6);
+	}
+	check_log(debug_file, true, "2:NULL,TEMP,FALSE");
+	if (!GSM_SetDebugGlobal(false, di_sm)) {
+		printf("Failed to set global flag!\n");
+		fail(6);
+	}
+	if (GSM_SetDebugFileDescriptor(NULL, di_sm) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(7);
+	}
+	if (GSM_SetDebugFileDescriptor(NULL, di_global) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(8);
+	}
+
+
+	/*
+	 * Test 7 - global /dev/null, local tempfile, use global
+	 */
+	debug_file = fopen(debug_filename, "w+");
+	if (!GSM_SetDebugGlobal(true, di_sm)) {
+		printf("Failed to set global flag!\n");
+		fail(6);
+	}
+	if (GSM_SetDebugFile(NUL, di_global) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(7);
+	}
+	if (GSM_SetDebugFileDescriptor(debug_file, di_sm) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(8);
+	}
+	if (!GSM_SetDebugGlobal(true, di_sm)) {
+		printf("Failed to set global flag!\n");
+		fail(6);
+	}
+	check_log(debug_file, false, "2:NULL,TEMP,TRUE");
+	if (!GSM_SetDebugGlobal(false, di_sm)) {
+		printf("Failed to set global flag!\n");
+		fail(6);
+	}
+	if (GSM_SetDebugFileDescriptor(NULL, di_sm) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(7);
+	}
+	if (GSM_SetDebugFileDescriptor(NULL, di_global) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(8);
+	}
+
+
+	/*
+	 * Test 8 - global tempfile, local /dev/null, use global
+	 */
+	debug_file = fopen(debug_filename, "w+");
+	if (!GSM_SetDebugGlobal(true, di_sm)) {
+		printf("Failed to set global flag!\n");
+		fail(6);
+	}
+	if (GSM_SetDebugFile(NUL, di_sm) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(7);
+	}
+	if (GSM_SetDebugFileDescriptor(debug_file, di_global) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(8);
+	}
+	if (!GSM_SetDebugGlobal(true, di_sm)) {
+		printf("Failed to set global flag!\n");
+		fail(6);
+	}
+	check_log(debug_file, true, "2:TEMP,NULL,TRUE");
+	if (!GSM_SetDebugGlobal(false, di_sm)) {
+		printf("Failed to set global flag!\n");
+		fail(6);
+	}
+	if (GSM_SetDebugFileDescriptor(NULL, di_sm) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(7);
+	}
+	if (GSM_SetDebugFileDescriptor(NULL, di_global) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(8);
+	}
+
+
+	/*
+	 * Test 9 - global tempfile, local /dev/null, do not use global
+	 */
+	debug_file = fopen(debug_filename, "w+");
+	if (!GSM_SetDebugGlobal(true, di_sm)) {
+		printf("Failed to set global flag!\n");
+		fail(6);
+	}
+	if (GSM_SetDebugFile(NUL, di_sm) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(7);
+	}
+	if (GSM_SetDebugFileDescriptor(debug_file, di_global) != ERR_NONE) {
+		printf("Failed to set debug file!\n");
+		fail(8);
+	}
+	if (!GSM_SetDebugGlobal(false, di_sm)) {
+		printf("Failed to set global flag!\n");
+		fail(6);
+	}
+	check_log(debug_file, false, "2:TEMP,NULL,FALSE");
 	if (!GSM_SetDebugGlobal(false, di_sm)) {
 		printf("Failed to set global flag!\n");
 		fail(6);
