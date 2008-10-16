@@ -29,6 +29,7 @@ ChangeLog
 [+] * Save textual category to backup (bug #737).
 [+] * Enable dashboard testing using CTest/CDash.
 [+] * Add option to do coverage analysis.
+[-] * Properly handle debug file closing.
     
 20081003 - 1.21.0
     
