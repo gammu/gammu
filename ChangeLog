@@ -30,6 +30,7 @@ ChangeLog
 [+] * Enable dashboard testing using CTest/CDash.
 [+] * Add option to do coverage analysis.
 [-] * Properly handle debug file closing.
+[-] * Add test case for debug logging.
     
 20081003 - 1.21.0
     
