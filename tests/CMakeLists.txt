@@ -35,7 +35,7 @@ if (CROSS_MINGW)
 endif (CROSS_MINGW)
 
 target_link_libraries(debug libGammu)
-add_test(statemachine-alloc "${GAMMU_TEST_PATH}/statemachine-alloc${GAMMU_TEST_SUFFIX}")
+add_test(debug "${GAMMU_TEST_PATH}/debug${GAMMU_TEST_SUFFIX}")
 
 # Check error code  descriptions
 add_executable(dump-error-codes dump-error-codes.c)
