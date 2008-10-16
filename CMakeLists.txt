@@ -18,6 +18,8 @@ if(COMMAND cmake_policy)
     cmake_policy(SET CMP0003 NEW)
 endif(COMMAND cmake_policy)
 
+option (COVERAGE "Add flags for Coverage analysis" OFF)
+
 # Support for cross compilation
 if (UNIX)
     option (CROSS_MINGW "Cross compile using MinGW on linux" OFF)
@@ -398,6 +400,11 @@ else(MSVC)
         MACRO_TUNE_COMPILER("-Wno-format-nonliteral")
         MACRO_TUNE_COMPILER("-Wno-format-security")
     endif (WIN32)
+
+    # Win32 implementation of gettext does not allow us to use so strict warnings
+    if (COVERAGE)
+        MACRO_TUNE_COMPILER_LINKER("-fprofile-arcs -ftest-coverage")
+    endif (COVERAGE)
 
     # This is extremely noisy, use only in debug builds
     if (DEBUG)
