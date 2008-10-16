@@ -233,11 +233,11 @@ Testing
 =======
 
 Gammu comes with testsuite which should be run after build. You can do
-this using 'make test'. CMake build system also includes option to
-connect to dashboard and submit test results there, so that they can be
-reviewed and fixed by others. To participate in this testing, you need
-just to run 'make Experimental'. It will compile current version, run
-tests and submit data to dashboard:
+this using 'make test'. CMake build system uses for testing CTest, which
+also includes option to connect to dashboard and submit test results
+there, so that they can be reviewed and fixed by others. To participate
+in this testing, you need just to run 'make Experimental'. It will
+compile current version, run tests and submit data to dashboard:
 
 http://www.cdash.org/CDashPublic/index.php?project=Gammu
 
@@ -245,7 +245,8 @@ There are some more options for testing:
 
 - make ExperimentalMemCheck
     This checks memory accesses using valgrind during tests and submits
-    report.
+    report. You need to do this after 'make Experimental' and you can
+    submit results using 'make ExperimentalSubmit'.
 - coverage reports
     To get test coverage reports, you need to configure project using 
     'cmake -DCOVERAGE=ON'
