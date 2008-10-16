@@ -56,7 +56,9 @@ done:
 int main(int argc UNUSED, char **argv UNUSED)
 {
 	FILE *debug_file;
+#ifndef WIN32
 	int debug_fd;
+#endif
 	GSM_Debug_Info *di_sm, *di_global;
 
 	/* Allocates state machine */
@@ -66,6 +68,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 		fail(1);
 	}
 
+#ifndef WIN32
 	/* Create file for logs */
 	debug_fd = mkstemp(debug_filename);
 	if (debug_fd == -1) {
@@ -73,6 +76,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 		fail(2);
 	}
 	close(debug_fd);
+#endif
 
 	/* Get debug handles */
 	di_sm = GSM_GetDebug(s);
