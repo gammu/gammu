@@ -2440,10 +2440,10 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		i+=FFF->Buffer[i+1];
 
 		CopyUnicodeString(sms->SMS[0].Number,FFF->Buffer+94);
-		Layout.TPDCS=i+2;
-		smprintf(s,"TPDCS %02x\n",FFF->Buffer[i+2]);
-		smprintf(s,"TPUDL %02x\n",FFF->Buffer[i+11]);
+		Layout.TPDCS=i+3;
 		Layout.TPUDL = i+11;
+		smprintf(s,"TPDCS %02x\n",FFF->Buffer[Layout.TPDCS]);
+		smprintf(s,"TPUDL %02x\n",FFF->Buffer[Layout.TPUDL]);
 		Layout.Text = i+12;
 		sms->SMS[0].Coding = GSM_GetMessageCoding(FFF->Buffer[Layout.TPDCS]);
 		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
