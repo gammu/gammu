@@ -16,7 +16,7 @@ int single_test(const char *string, GSM_Error expected)
 	real = GSM_SetFeatureString(features, string);
 
 	if (real != expected) {
-		printf("Failed parsing of %s (got %s, expected %s)\n", 
+		printf("Failed parsing of %s (got %s, expected %s)\n",
 				string,
 				GSM_ErrorString(real),
 				GSM_ErrorString(expected));
@@ -28,10 +28,16 @@ int single_test(const char *string, GSM_Error expected)
 int main(int argc, char **argv)
 {
 	int rc = 0;
+	GSM_Debug_Info *debug_info;
+
+	debug_info = GSM_GetGlobalDebug();
+	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugLevel("textall", debug_info);
 
 	rc |= single_test("CAL33, CAL52,SQWE", ERR_NONE);
 	rc |= single_test("CAL33, FOO,SQWE", ERR_BADFEATURE);
 	rc |= single_test("CAL33, NO_ATOBEX ,SQWE", ERR_NONE);
+	rc |= single_test("CAL33, NO_ATOBEX ,SQWE, CAL33, NO_ATOBEX ,SQWE, CAL52,CAL33, NO_ATOBEX ,SQWE, CAL33, NO_ATOBEX ,SQWE, CAL52,CAL33, NO_ATOBEX ,SQWE, CAL33, NO_ATOBEX ,SQWE, CAL52", ERR_MOREMEMORY);
 
 	return rc;
 }
