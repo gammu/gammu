@@ -1,0 +1,60 @@
+#include <gammu.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
+
+#ifdef WIN32
+# define NUL "NUL"
+#else
+# define NUL "/dev/null"
+#endif
+
+GSM_StateMachine *s;
+
+void single_check(const char *device, const char *connection, GSM_Error expected)
+{
+	GSM_Config *smcfg;
+	GSM_Error error;
+	GSM_Debug_Info *debug_info;
+
+	/* Allocates state machine */
+	s = GSM_AllocStateMachine();
+	assert(s != NULL);
+
+	debug_info = GSM_GetDebug(s);
+	GSM_SetDebugGlobal(true, debug_info);
+
+	smcfg = GSM_GetConfig(s, 0);
+	smcfg->Model[0] = 0;
+	strcpy(smcfg->DebugLevel, "textall");
+	smcfg->Device = strdup(device);
+	smcfg->UseGlobalDebugFile = true;
+	smcfg->Connection = strdup(connection);
+	smcfg->PhoneFeatures[0] = F_PBK_ENCODENUMBER;
+	smcfg->PhoneFeatures[1] = 0;
+	GSM_SetConfigNum(s, 1);
+
+	error = GSM_InitConnection(s, 3);
+	assert(error == expected);
+
+	/* Free state machine */
+	GSM_FreeStateMachine(s);
+}
+
+int main(int argc UNUSED, char **argv UNUSED)
+{
+	GSM_Debug_Info *debug_info;
+
+	debug_info = GSM_GetGlobalDebug();
+	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugLevel("textall", debug_info);
+
+	single_check("/NONEXISTING/DEVICE/NODE", "at", ERR_DEVICENOTEXIST);
+	single_check(NUL, "at", ERR_DEVICEREADERROR);
+
+	return 0;
+}
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */

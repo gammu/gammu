@@ -28,6 +28,15 @@ endif (CROSS_MINGW)
 target_link_libraries(statemachine-alloc libGammu)
 add_test(statemachine-alloc "${GAMMU_TEST_PATH}/statemachine-alloc${GAMMU_TEST_SUFFIX}")
 
+# Basic check for statemachine functionality
+add_executable(statemachine-init statemachine-init.c)
+if (CROSS_MINGW)
+    set_target_properties (statemachine-init PROPERTIES PREFIX "" SUFFIX ".exe")
+endif (CROSS_MINGW)
+
+target_link_libraries(statemachine-init libGammu)
+add_test(statemachine-init "${GAMMU_TEST_PATH}/statemachine-init${GAMMU_TEST_SUFFIX}")
+
 # Debug testing
 add_executable(debug debug.c)
 if (CROSS_MINGW)
