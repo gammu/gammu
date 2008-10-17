@@ -48,8 +48,12 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SetDebugFileDescriptor(stderr, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
+	single_check("/NONEXISTING/DEVICE/NODE", "NONSENSE", "", ERR_UNKNOWNCONNECTIONTYPESTRING);
 	single_check("/NONEXISTING/DEVICE/NODE", "at", "", ERR_DEVICENOTEXIST);
+	single_check("/NONEXISTING/DEVICE/NODE", "at-nodtr", "", ERR_DEVICENOTEXIST);
+	single_check("/NONEXISTING/DEVICE/NODE", "at19200-nopower", "", ERR_DEVICENOTEXIST);
 	single_check("/NONEXISTING/DEVICE/NODE", "at", "at", ERR_DEVICENOTEXIST);
+	single_check("/NONEXISTING/DEVICE/NODE", "at", "atobex", ERR_DEVICENOTEXIST);
 	single_check(NUL, "at", "", ERR_DEVICEREADERROR);
 
 	return 0;
