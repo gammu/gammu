@@ -360,7 +360,7 @@ GSM_Error GSM_OpenConnection(GSM_StateMachine *s)
 {
 	GSM_Error error;
 
-	if (strcasecmp(s->CurrentConfig->LockDevice,"yes") == 0) {
+	if (s->CurrentConfig->LockDevice != NULL && strcasecmp(s->CurrentConfig->LockDevice,"yes") == 0) {
 		error = lock_device(s->CurrentConfig->Device, &(s->LockFile));
 		if (error != ERR_NONE) return error;
 	}
@@ -1277,31 +1277,33 @@ int smprintf_level(GSM_StateMachine * s, GSM_DebugSeverity severity, const char 
 {
 	va_list		argp;
 	int 		result=0;
-	char		buffer[2000];
+	GSM_Debug_Info *curdi;
+
+	curdi = &di;
+	if (s != NULL && s->di.use_global == false) {
+		curdi = &(s->di);
+	}
 
 	if (severity == D_TEXT) {
-		if (s->di.dl != DL_TEXT &&
-				s->di.dl != DL_TEXTALL &&
-				s->di.dl != DL_TEXTDATE &&
-				s->di.dl != DL_TEXTALLDATE) {
+		if (curdi->dl != DL_TEXT &&
+				curdi->dl != DL_TEXTALL &&
+				curdi->dl != DL_TEXTDATE &&
+				curdi->dl != DL_TEXTALLDATE) {
 			return 0;
 		}
 	} else if (severity == D_ERROR) {
-		if (s->di.dl != DL_TEXT &&
-				s->di.dl != DL_TEXTALL &&
-				s->di.dl != DL_TEXTDATE &&
-				s->di.dl != DL_TEXTALLDATE &&
-				s->di.dl != DL_TEXTERROR &&
-				s->di.dl != DL_TEXTERRORDATE) {
+		if (curdi->dl != DL_TEXT &&
+				curdi->dl != DL_TEXTALL &&
+				curdi->dl != DL_TEXTDATE &&
+				curdi->dl != DL_TEXTALLDATE &&
+				curdi->dl != DL_TEXTERROR &&
+				curdi->dl != DL_TEXTERRORDATE) {
 			return 0;
 		}
 	}
 	va_start(argp, format);
 
-	if ((s != NULL && s->di.df != 0) || (s == NULL && di.df != 0)) {
-		result = vsnprintf(buffer, sizeof(buffer) - 1, format, argp);
-		result = smfprintf((s == NULL) ? &di : &(s->di), "%s", buffer);
-	}
+	result = dbg_vprintf(curdi, format, argp);
 
 	va_end(argp);
 	return result;
