@@ -18,6 +18,7 @@ int main(int argc, char **argv)
 	GSM_MemoryEntry pbk;
 	GSM_Error error;
 	char buffer[65536];
+	char vcard_buffer[65536];
 	FILE *f;
 	size_t len;
 	bool generate = false;
@@ -67,6 +68,16 @@ int main(int argc, char **argv)
 		printf("Parsing failed: %s\n", GSM_ErrorString(error));
 		return 1;
 	}
+
+	/* Encode vCard back */
+	pos = 0;
+	GSM_EncodeVCARD(vcard_buffer, &pos, &pbk, true, SonyEricsson_VCard21);
+
+	/*
+	 * Best would be to compare here, but we never can get
+	 * absolutely same as original.
+	 */
+	printf("ORIGINAL:\n%s\n----\nENCODED:\n%s\n", buffer, vcard_buffer);
 
 	/* Generate file if we should */
 	if (generate) {
