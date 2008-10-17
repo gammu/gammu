@@ -13,6 +13,7 @@
 
 #include <stdio.h>
 #include <time.h>
+#include <stdarg.h>
 
 #ifdef WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -140,6 +141,8 @@ struct _DebugInfo {
 PRINTF_STYLE(2, 3)
 int smfprintf(GSM_Debug_Info *d, const char *format, ...);
 
+PRINTF_STYLE(2, 0)
+int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp);
 
 #ifdef WIN32
 typedef SOCKET socket_type;
