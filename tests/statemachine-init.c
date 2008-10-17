@@ -11,7 +11,7 @@
 
 GSM_StateMachine *s;
 
-void single_check(const char *device, const char *connection, GSM_Error expected)
+void single_check(const char *device, const char *connection, const char *model, GSM_Error expected)
 {
 	GSM_Config *smcfg;
 	GSM_Error error;
@@ -25,8 +25,7 @@ void single_check(const char *device, const char *connection, GSM_Error expected
 	GSM_SetDebugGlobal(true, debug_info);
 
 	smcfg = GSM_GetConfig(s, 0);
-	smcfg->Model[0] = 0;
-	strcpy(smcfg->DebugLevel, "textall");
+	strcpy(smcfg->Model, model);
 	smcfg->Device = strdup(device);
 	smcfg->UseGlobalDebugFile = true;
 	smcfg->Connection = strdup(connection);
@@ -49,8 +48,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SetDebugFileDescriptor(stderr, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
-	single_check("/NONEXISTING/DEVICE/NODE", "at", ERR_DEVICENOTEXIST);
-	single_check(NUL, "at", ERR_DEVICEREADERROR);
+	single_check("/NONEXISTING/DEVICE/NODE", "at", "", ERR_DEVICENOTEXIST);
+	single_check("/NONEXISTING/DEVICE/NODE", "at", "at", ERR_DEVICENOTEXIST);
+	single_check(NUL, "at", "", ERR_DEVICEREADERROR);
 
 	return 0;
 }
