@@ -32,6 +32,7 @@ ChangeLog
 [-] * Properly handle debug file closing.
 [-] * Add test case for debug logging.
 [-] * Fix decoding of some SMS messages from Nokia phones (bug #735).
+[-] * Hack for (still) unknown error code (bug #733).
     
 20081003 - 1.21.0
     

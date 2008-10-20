@@ -1548,6 +1548,9 @@ GSM_Error DCT3DCT4_GetFirmware (GSM_StateMachine *s)
 GSM_Error N71_65_ReplyGetMemoryError(unsigned char error, GSM_StateMachine *s)
 {
 	switch (error) {
+	case 0x21:
+		smprintf(s, "Wait for synchronisation???\n");
+		return ERR_WORKINPROGRESS;
 	case 0x27:
 		smprintf(s, "No PIN\n");
 		return ERR_SECURITYERROR;
@@ -1579,7 +1582,7 @@ GSM_Error N71_65_ReplyGetMemoryError(unsigned char error, GSM_StateMachine *s)
 		 */
 		return ERR_NONE;
 	default:
-		smprintf(s, "ERROR: unknown %i\n",error);
+		smprintf(s, "ERROR: unknown status code 0x%x\n", error);
 		return ERR_UNKNOWNRESPONSE;
 	}
 }
