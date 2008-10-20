@@ -239,7 +239,7 @@ there, so that they can be reviewed and fixed by others. To participate
 in this testing, you need just to run 'make Experimental'. It will
 compile current version, run tests and submit data to dashboard:
 
-http://www.cdash.org/CDashPublic/index.php?project=Gammu
+http://cdash.cihar.com/index.php?project=Gammu
 
 There are some more options for testing:
 
