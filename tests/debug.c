@@ -48,7 +48,8 @@ void check_log(FILE *f, bool match, const char *test_name)
 	}
 done:
 	rewind(f);
-	fwrite(cleaner, 1, sizeof(cleaner), f);
+	result = fwrite(cleaner, 1, sizeof(cleaner), f);
+	assert(result == sizeof(cleaner));
 	rewind(f);
 }
 
