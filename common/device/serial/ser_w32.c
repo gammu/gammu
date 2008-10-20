@@ -206,10 +206,11 @@ static GSM_Error serial_open (GSM_StateMachine *s)
 	if (d->hPhone == INVALID_HANDLE_VALUE) {
 		err = GetLastError();
 		GSM_OSErrorInfo(s, "CreateFile in serial_open");
-		if (err == ERROR_FILE_NOT_FOUND)   return ERR_DEVICENOTWORK; /* can't find specified file */
+		if (err == ERROR_FILE_NOT_FOUND)   return ERR_DEVICENOTEXIST; /* can't find specified file */
 		if (err == ERROR_ACCESS_DENIED)   return ERR_DEVICEBUSY;    /* access denied */
 		if (err == ERROR_GEN_FAILURE)  return ERR_DEVICENOTWORK; /* attached device not working */
 		if (err == ERROR_INVALID_NAME) return ERR_DEVICENOTEXIST;
+		if (err == ERROR_PATH_NOT_FOUND)   return ERR_DEVICENOTEXIST; /* can't find specified file */
 		return ERR_DEVICEOPENERROR;
 	}
 
