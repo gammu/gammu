@@ -1,4 +1,4 @@
-%define ver         1.21.90
+%define ver         1.21.91
 %define name        gammu
 %define rel         1
 # Set to 0 to disable bluetooth support
@@ -30,8 +30,6 @@ Group:              Hardware/Mobile
 %else
 Group:              Applications/Communications
 %endif
-Packager:       Michal Cihar <michal@cihar.com>
-Vendor:         Michal Cihar <michal@cihar.com>
 
 # Detect build requires
 # I hate this crap
@@ -108,6 +106,7 @@ BuildRequires: %{dist_mysql_libs}
 
 BuildRequires: gettext cmake %{dist_pkgconfig}
 
+Vendor:             Michal Cihar <michal@cihar.com>
 Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.%{extension}
 URL:                http://cihar.com/gammu/
 Buildroot:          %{_tmppath}/%name-%version-root
@@ -169,13 +168,11 @@ cmake ../ \
     -DINSTALL_LIB_DIR=%_lib \
     -DINSTALL_LIBDATA_DIR=%_lib
 make
-
-%check
-make -C build-dir test
+make test
 
 %install
+rm -rf %buildroot
 make -C build-dir install DESTDIR=%buildroot
-%find_lang %{name}
 
 %post
 if test -f /etc/ld.so.conf ; then
@@ -187,10 +184,12 @@ if test -f /etc/ld.so.conf ; then
     /sbin/ldconfig
 fi
 
-%files -f %name.lang
+%files
 %defattr(-,root,root)
 %_bindir/*
 %_libdir/*.so.*
+#localisations:
+/usr/share/locale
 %doc %_mandir/man1/*
 %doc %gammu_docdir
 
@@ -204,13 +203,6 @@ fi
 rm -rf %buildroot
 
 %changelog
-* Wed Oct  8 2008  Michal Cihar <michal@cihar.com>
-- do not remove build root in %%install
-- move make test to %%check
-
-* Tue Oct  7 2008  Michal Cihar <michal@cihar.com>
-- use find_lang macro
-
 * Thu Mar 28 2007  Michal Cihar <michal@cihar.com>
 - update to current code status
 
