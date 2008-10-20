@@ -82,6 +82,11 @@ static GSM_Error N6510_GetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry)
 	s->Phone.Data.Memory=entry;
 	smprintf(s, "Getting phonebook entry\n");
 	error = GSM_WaitFor (s, req, 19, 0x03, 4, ID_GetMemory);
+	if (error == ERR_WORKINPROGRESS) {
+		sleep(2);
+		smprintf(s, "Retrying to get phonebook entry\n");
+		error = GSM_WaitFor (s, req, 19, 0x03, 4, ID_GetMemory);
+	}
 	if (entry->MemoryType == MEM_DC || entry->MemoryType == MEM_RC || entry->MemoryType == MEM_MC) {
 		/* 6111 */
 		if (error == ERR_NOTSUPPORTED) return ERR_EMPTY;
@@ -1211,6 +1216,7 @@ static GSM_Error N6510_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		}
 		/* We've got the location */
 		entry->Location = tmp.Location;
+		smprintf(s, "Found empty location: %d\n", entry->Location);
 	}
 
 	req[11] = NOKIA_GetMemoryType(s, entry->MemoryType,N71_65_MEMORY_TYPES);
