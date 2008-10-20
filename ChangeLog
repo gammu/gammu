@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2008???? - 1.21.90
+20081020 - 1.21.90
 
 [-] * Sign Windows binaries during build.
 [-] * Detect long FM station names (bug #727).
