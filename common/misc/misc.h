@@ -152,6 +152,11 @@ typedef int socket_type;
 #define socket_invalid (-1)
 #endif
 
+/**
+ * Strips spaces from string.
+ *
+ * \param[in,out] buff String where to strip buffers.
+ */
 void StripSpaces(char *buff);
 
 #if defined(_MSC_VER) && defined(__cplusplus)
