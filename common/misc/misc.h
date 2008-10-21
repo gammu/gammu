@@ -152,6 +152,7 @@ typedef int socket_type;
 #define socket_invalid (-1)
 #endif
 
+void StripSpaces(char *buff);
 
 #if defined(_MSC_VER) && defined(__cplusplus)
 
