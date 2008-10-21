@@ -3,7 +3,7 @@
 # Copyright (C) 2003 - 2007 Michal Cihar <michal@cihar.com>
 # vim: expandtab sw=4 ts=4 sts=4:
 
-DIALOG_SIZE="7 70"
+DIALOG_SIZE="8 70"
 MENU_SIZE="0 0 0"
 INPUT_SIZE="0 0"
 FILE_SIZE="20 60"
@@ -23,7 +23,6 @@ D_LOGFILE=
 D_LOGFORMAT=nothing
 D_LOCKING=
 D_GAMMULOC=
-
 
 TEMPFILE=`mktemp /tmp/gammu-config.XXXXXXXXXX`
 
@@ -46,7 +45,7 @@ while [ "$#" -ge 1 ] ; do
             FORCE=1
             ;;
         -c|--config)
-            if [ "$2x" != "x" ] ; then
+            if [ "x$2" != "x" ] ; then
                 CONFIG="$2"
                 shift
             else
@@ -60,26 +59,29 @@ while [ "$#" -ge 1 ] ; do
     shift
 done
 
-dialog 2> /dev/null
-if [ $? -eq 127 ] ; then
-    echo "You need dialog installed to make this work"
+if type dialog > /dev/null 2>&1 ; then
+    DIALOG=dialog
+elif type whiptail > /dev/null 2>&1 ; then
+    DIALOG=whiptail
+else
+    echo "You need dialog or whiptail installed to make this work"
     exit 1
 fi
 
 if [ -f "$CONFIG" ] ; then
     if [ ! -w "$CONFIG" ] ; then
-        dialog --msgbox "Configuration file \"$CONFIG\" is not writable!" $DIALOG_SIZE
+        $DIALOG --msgbox "Configuration file \"$CONFIG\" is not writable!" $DIALOG_SIZE
         exit 2
     fi
 
     if [ $FORCE -ne 1 ] ; then
-        dialog --yesno "Configuration file \"$CONFIG\" exists, do you still wish to configure Gammu?" $DIALOG_SIZE
+        $DIALOG --yesno "Configuration file \"$CONFIG\" exists.\nDo you still wish to configure Gammu?" $DIALOG_SIZE
         if [ $? -eq 1 ] ; then
             exit 0
         fi
     fi
 
-    dialog --yesno "Configuration file \"$CONFIG\" exists, do you wish to read defaults from it?" $DIALOG_SIZE
+    $DIALOG --yesno "Configuration file \"$CONFIG\" exists.\nDo you wish to read defaults from it?" $DIALOG_SIZE
     if [ $? -eq 0 ] ; then
         echo "Parsing current Gammu configuration form \"$CONFIG\""
         PORT=`cfgread port`
@@ -94,7 +96,14 @@ if [ -f "$CONFIG" ] ; then
 fi
 
 mainmenu() {
-     dialog --help-button --ok-label Edit --cancel-label Exit --extra-button --extra-label Save --menu "Current Gammu configuration" $MENU_SIZE \
+    if [ $DIALOG = dialog ] ; then
+        EXTRA="--help-button --ok-label Edit --cancel-label Exit --extra-button --extra-label Save"
+        EXTRA_MENU=""
+    else
+        EXTRA=""
+        EXTRA_MENU="H Help S Save"
+    fi
+    $DIALOG $EXTRA --menu "Current Gammu configuration" $MENU_SIZE \
         P "Port                 (${PORT:-$D_PORT})" \
         C "Connection           (${CONNECTION:-$D_CONNECTION})" \
         M "Model                (${MODEL:-$D_MODEL})" \
@@ -102,16 +111,29 @@ mainmenu() {
         F "Log file             (${LOGFILE:-$D_LOGFILE})" \
         O "Log format           (${LOGFORMAT:-$D_LOGFORMAT})" \
         L "Use locking          (${LOCKING:-$D_LOCKING})" \
-        G "Gammu localisation   (${GAMMULOC:-$D_GAMMULOC})" 2>"$TEMPFILE"
+        G "Gammu localisation   (${GAMMULOC:-$D_GAMMULOC})" \
+        $EXTRA_MENU \
+        2>"$TEMPFILE"
     BUTTON=$?
     ITEM=`cat "$TEMPFILE"`
+    if [ "$DIALOG" = whiptail -a "$BUTTON" = 0 ] ; then
+        if [ "$ITEM" = H ] ; then
+            BUTTON=2
+        elif [ "$ITEM" = S ] ; then
+            BUTTON=3
+        fi
+    fi
 }
 
 editP() {
-    dialog --fselect "${PORT:-$D_PORT}" $FILE_SIZE 2>"$TEMPFILE"
-    err=$?
+    if [ $DIALOG = dialog ] ; then
+        $DIALOG --fselect "${PORT:-$D_PORT}" $FILE_SIZE 2>"$TEMPFILE"
+        err=$?
+    else
+        err=255
+    fi
     if [ $err -eq 255 ] ; then
-        if dialog --inputbox "Enter phone port" $INPUT_SIZE "${PORT:-$D_PORT}" 2>"$TEMPFILE" ; then
+        if $DIALOG --inputbox "Enter phone port" $INPUT_SIZE "${PORT:-$D_PORT}" 2>"$TEMPFILE" ; then
             PORT=`cat "$TEMPFILE"`
         fi
     elif [ $err -eq 0 ] ; then
@@ -120,7 +142,7 @@ editP() {
 }
 
 helpwin() {
-    dialog --textbox /proc/self/fd/5 0 0 5<< EOT
+    $DIALOG --textbox /proc/self/fd/5 0 0 5<< EOT
 # Port           : in Windows/DOS: "com*:",
 #                  (instead of "*" please put "1", "2", etc.)
 #                  in other (Linux/Unix) "/dev/ttyS%"
@@ -157,7 +179,7 @@ editgeneral() {
     shift
     shift
 
-    if ( dialog --menu "$TITLE" $MENU_SIZE "$@" 2>"$TEMPFILE" ) ; then
+    if ( $DIALOG --menu "$TITLE" $MENU_SIZE "$@" 2>"$TEMPFILE" ) ; then
         VALUE=`cat "$TEMPFILE"`
         eval "$VAR='$VALUE'"
     fi
@@ -165,6 +187,7 @@ editgeneral() {
 
 editC() {
     editgeneral "Select your phone connection" CONNECTION \
+        at "" \
         at19200 "" \
         at115200 "" \
         fbus "" \
@@ -209,10 +232,14 @@ editD() {
 }
 
 editF() {
-    dialog --fselect "${LOGFILE:-$D_LOGFILE}" $FILE_SIZE 2>"$TEMPFILE"
-    err=$?
+    if [ $DIALOG = dialog ] ; then
+        $DIALOG --fselect "${LOGFILE:-$D_LOGFILE}" $FILE_SIZE 2>"$TEMPFILE"
+        err=$?
+    else
+        err=255
+    fi
     if [ $err = 255 ] ; then
-        if ( dialog --inputbox "Enter log file" $INPUT_SIZE "${LOGFILE:-$D_LOG_FILE}" 2>"$TEMPFILE" ) ; then
+        if ( $DIALOG --inputbox "Enter log file" $INPUT_SIZE "${LOGFILE:-$D_LOG_FILE}" 2>"$TEMPFILE" ) ; then
             LOGFILE=`cat "$TEMPFILE"`
         fi
     elif [ $err = 0] ; then
@@ -239,10 +266,14 @@ editL() {
 }
 
 editG() {
-    dialog --fselect "${GAMMULOC:-${D_GAMMULOC:-/}}" $FILE_SIZE 2>"$TEMPFILE"
-    err=$?
+    if [ $DIALOG = dialog ] ; then
+        $DIALOG --fselect "${GAMMULOC:-${D_GAMMULOC:-/}}" $FILE_SIZE 2>"$TEMPFILE"
+        err=$?
+    else
+        err=255
+    fi
     if [ $err = 255 ] ; then
-        if ( dialog --inputbox "Enter localisation file" $INPUT_SIZE "${GAMMULOC:-${D_GAMMULOC:-/}}" 2>"$TEMPFILE" ) ; then
+        if ( $DIALOG --inputbox "Enter localisation file" $INPUT_SIZE "${GAMMULOC:-${D_GAMMULOC:-/}}" 2>"$TEMPFILE" ) ; then
             LOGFILE=`cat "$TEMPFILE"`
         fi
     elif [ $err = 0] ; then
@@ -265,7 +296,7 @@ done
 
 if [ $BUTTON -eq 3 ] ; then
     if [ -f "$CONFIG" -a $FORCE -ne 1 ] ; then
-        dialog --yesno "Do you really wish to overwrite file \"$CONFIG\", with selected Gammu configuration?" $DIALOG_SIZE
+        $DIALOG --yesno "Do you really wish to overwrite file \"$CONFIG\", with selected Gammu configuration?" $DIALOG_SIZE
         if [ $? -eq 1 ] ; then
             exit 0
         fi
@@ -318,7 +349,7 @@ logformat = ${LOGFORMAT:-$D_LOGFORMAT}
 use_locking = ${LOCKING:-$D_LOCKING}
 gammuloc = ${GAMMULOC:-$D_GAMMULOC}
 EOT
-    dialog --msgbox "Configuration saved to \"$CONFIG\"" $DIALOG_SIZE
+    $DIALOG --msgbox "Configuration saved to \"$CONFIG\"" $DIALOG_SIZE
 fi
 
 rm -f "$TEMPFILE"

@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2008???? - 1.21.91
+
+[+] * Script gammu-config can now also work with whiptail.
     
 20081020 - 1.21.90
 
