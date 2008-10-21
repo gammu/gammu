@@ -539,6 +539,9 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 				__DATE__,
 				GetCompiler()
 				);
+		StripSpaces(s->CurrentConfig->Connection);
+		StripSpaces(s->CurrentConfig->Model);
+		StripSpaces(s->CurrentConfig->Device);
 		smprintf_level(s, D_ERROR, "[Connection       - \"%s\"]\n",
 				s->CurrentConfig->Connection);
 		smprintf_level(s, D_ERROR, "[Connection index - %d]\n", i);

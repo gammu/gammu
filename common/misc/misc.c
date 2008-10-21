@@ -809,6 +809,25 @@ bool GSM_IsNewerVersion(const char *latest_version, const char *current_version)
 	return false;
 }
 
+void StripSpaces(char *buff)
+{
+	ssize_t i;
+
+	i = 0;
+	while(iswspace(buff[i])) {
+		i++;
+	}
+	if (i > 0) {
+		memmove(buff, buff + i, strlen(buff + i));
+	}
+	i = strlen(buff) - 1;
+	while(iswspace(buff[i]) && i >= 0) {
+		buff[i] = 0;
+		i--;
+	}
+
+}
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */
