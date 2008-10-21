@@ -9,8 +9,8 @@ INPUT_SIZE="0 0"
 FILE_SIZE="20 60"
 CONFIG=~/.gammurc
 NAME="Gammu configurator"
-VERSION="0.3"
-COPYRIGHT="Copyright (C) 2003 - 2007 Michal Cihar <michal@cihar.com>"
+VERSION="0.4"
+COPYRIGHT="Copyright (C) 2003 - 2008 Michal Cihar <michal@cihar.com>"
 FORCE=0
 
 # Some defaults:
