@@ -189,7 +189,6 @@ static GSM_Error ALCABUS_StateMachine(GSM_StateMachine *s, unsigned char rx_char
 						"BUG");
 				smprintf(s, "0x%02x / 0x" SIZE_T_HEX4_FORMAT, d->Msg.Type, d->Msg.Length);
 				DumpMessage(&s->di, d->Msg.Buffer, d->Msg.Length);
-				fflush(s->di.df);
 			}
 			if (s->di.dl==DL_BINARY) {
 				smprintf(s,"%c",0x02);	/* Receiving */
