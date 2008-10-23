@@ -24,6 +24,8 @@
 #include "../../gsmcomon.h"
 #include "fbus2.h"
 
+static GSM_Error FBUS2_Initialise(GSM_StateMachine *s);
+
 static GSM_Error FBUS2_WriteFrame(GSM_StateMachine 	*s,
 				  unsigned const char 	*MsgBuffer,
 				  int 			MsgLength,
@@ -279,6 +281,11 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			smprintf_level(s, D_ERROR, "[ERROR: incorrect char - %02x, not %02x]\n",
 					rx_char,
 					(s->ConnectionType == GCT_FBUS2IRDA) ? FBUS2_IRDA_FRAME_ID : FBUS2_FRAME_ID);
+			if (rx_char == 0x20) {
+				smprintf(s, "0x20 reply detected...\n");
+				smprintf(s, "Trying to reinit connection...\n");
+				FBUS2_Initialise(s);
+			}
 			return ERR_NONE;
 		}
 
