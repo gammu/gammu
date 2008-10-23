@@ -8,9 +8,9 @@
 %define bluetooth   1
 %endif
 # Set to 0 to disable PostgreSQL support
-%define pqsql	    1
+%define pqsql     1
 # Set to 0 to disable MySQLSQL support
-%define mysql	    1
+%define mysql     1
 # Change if using tar.gz sources
 %define extension   bz2
 
@@ -36,7 +36,7 @@ Group:              Applications/Communications
 %if 0%{?suse_version}
 
 # SUSE
-%define dist_bluez_libs	bluez-libs >= 2.0
+%define dist_bluez_libs bluez-libs >= 2.0
 %if 0%{?suse_version} >= 1030
 %define dist_pkgconfig pkg-config
 %define dist_mysql_libs libmysqlclient-devel 
@@ -60,12 +60,12 @@ Group:              Applications/Communications
 %define dist_mysql_libs lib%{?mandriva_hack}mysql15-devel
 %endif
 %if 0%{?mandriva_version} > 2007
-%define dist_bluez_libs	lib%{?mandriva_hack}bluez2 lib%{?mandriva_hack}bluez-devel
+%define dist_bluez_libs lib%{?mandriva_hack}bluez2 lib%{?mandriva_hack}bluez-devel
 %else
 %if 0%{?mandriva_version} > 2006
-%define dist_bluez_libs	lib%{?mandriva_hack}bluez2 lib%{?mandriva_hack}bluez2-devel
+%define dist_bluez_libs lib%{?mandriva_hack}bluez2 lib%{?mandriva_hack}bluez2-devel
 %else
-%define dist_bluez_libs	libbluez1 >= 2.0 libbluez1-devel >= 2.0
+%define dist_bluez_libs libbluez1 >= 2.0 libbluez1-devel >= 2.0
 %endif
 %endif
 
@@ -79,14 +79,14 @@ Group:              Applications/Communications
 %else
 %define dist_mysql_libs mysqlclient14-devel
 %endif
-%define dist_bluez_libs	bluez-libs >= 2.0 bluez-libs-devel >= 2.0
+%define dist_bluez_libs bluez-libs >= 2.0 bluez-libs-devel >= 2.0
 
 %else
 
 #Defaults
 %define dist_pkgconfig pkg-config
 %define dist_mysql_libs libmysqlclient-devel 
-%define dist_bluez_libs	bluez-libs >= 2.0 bluez-libs-devel >= 2.0
+%define dist_bluez_libs bluez-libs >= 2.0 bluez-libs-devel >= 2.0
 
 %endif
 %endif
