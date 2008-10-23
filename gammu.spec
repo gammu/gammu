@@ -24,7 +24,7 @@ Summary:            Mobile phone management utility
 Name:               %name
 Version:            %ver
 Release:            %rel
-License:            GPL
+License:            GPLv2
 %if 0%{?suse_version}
 Group:              Hardware/Mobile
 %else
@@ -173,6 +173,8 @@ make
 make -C build-dir test
 
 %install
+rm -rf %buildroot
+mkdir %buildroot
 make -C build-dir install DESTDIR=%buildroot
 %find_lang %{name}
 
