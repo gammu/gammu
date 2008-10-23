@@ -20,6 +20,7 @@ ChangeLog
 [+] * Script gammu-config can now also work with whiptail.
 [-] * Minor fixes in gammu-config script.
 [-] * Extra spaces from connection or device name are now stripped.
+[-] * Automatically reinitialize FBUS connection if it is dropped.
     
 20081020 - 1.21.90
 
