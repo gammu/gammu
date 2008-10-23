@@ -31,6 +31,7 @@ Group:              Hardware/Mobile
 Group:              Applications/Communications
 %endif
 Vendor:         Michal Cihar <michal@cihar.com>
+Packager:       Michal Cihar <michal@cihar.com>
 
 # Detect build requires
 # I hate this crap
