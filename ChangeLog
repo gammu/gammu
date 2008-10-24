@@ -21,6 +21,7 @@ ChangeLog
 [-] * Minor fixes in gammu-config script.
 [-] * Extra spaces from connection or device name are now stripped.
 [-] * Automatically reinitialize FBUS connection if it is dropped.
+[-] * Disable OBEX with Motorola Z6c, it is broken (bug #746).
     
 20081020 - 1.21.90
 
