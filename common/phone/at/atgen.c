@@ -1304,8 +1304,9 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 GSM_Error ATGEN_GetManufacturer(GSM_StateMachine *s)
 {
 	GSM_Error error;
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
-	if (s->Phone.Data.Manufacturer[0] != 0) return ERR_NONE;
+	if (Priv->Manufacturer != 0 && s->Phone.Data.Manufacturer[0] != 0) return ERR_NONE;
 
 	ATGEN_WaitFor(s, "AT+CGMI\r", 8, 0x00, 4, ID_GetManufacturer);
 	if (error != ERR_NONE) {
@@ -1490,7 +1491,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	if (error != ERR_NONE) return error;
 
 	/* Get manufacturer, needed for some detection */
-	error=ATGEN_GetManufacturer(s);
+	error = ATGEN_GetManufacturer(s);
 	if (error != ERR_NONE) return error;
 
 	/* Mode switching cabaple phones can switch using AT+MODE */
@@ -3143,10 +3144,9 @@ GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsig
 		}
 		break;
 	case SMS_AT_TXT:
-		if (Priv->Manufacturer == 0) {
-			error=ATGEN_GetManufacturer(s);
-			if (error != ERR_NONE) return error;
-		}
+		error = ATGEN_GetManufacturer(s);
+		if (error != ERR_NONE) return error;
+
 		if (Priv->Manufacturer != AT_Nokia) {
 			if (message->Coding != SMS_Coding_Default_No_Compression) return ERR_NOTSUPPORTED;
 		}
@@ -4741,7 +4741,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 		}
 	}
 
-	error=ATGEN_GetManufacturer(s);
+	error = ATGEN_GetManufacturer(s);
 	if (error != ERR_NONE) return error;
 
 	error=ATGEN_SetPBKMemory(s, entry->MemoryType);
