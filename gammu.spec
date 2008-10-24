@@ -110,7 +110,7 @@ BuildRequires: gettext cmake %{dist_pkgconfig}
 
 Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.%{extension}
 URL:                http://cihar.com/gammu/
-Buildroot:          %{_tmppath}/%name-%version-root
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Gammu is command line utility and library to work with mobile phones
@@ -168,7 +168,7 @@ cmake ../ \
     -DINSTALL_DOC_DIR=%gammu_docdir \
     -DINSTALL_LIB_DIR=%_lib \
     -DINSTALL_LIBDATA_DIR=%_lib
-make
+make %{?_smp_mflags} %{!?_smp_mflags:%{?jobs:-j %jobs}}
 
 %check
 make -C build-dir test
@@ -179,15 +179,9 @@ mkdir %buildroot
 make -C build-dir install DESTDIR=%buildroot
 %find_lang %{name}
 
-%post
-if test -f /etc/ld.so.conf ; then
-    /sbin/ldconfig
-fi
+%post -p /sbin/ldconfig
 
-%postun
-if test -f /etc/ld.so.conf ; then
-    /sbin/ldconfig
-fi
+%postun -p /sbin/ldconfig
 
 %files -f %name.lang
 %defattr(-,root,root)
@@ -206,6 +200,9 @@ fi
 rm -rf %buildroot
 
 %changelog
+* Fri Oct 24 2008 Michal Čihař <michal@cihar.com> - 1.21.0-1
+- fixed according to Fedora policy
+
 * Wed Oct  8 2008  Michal Cihar <michal@cihar.com>
 - do not remove build root in %%install
 - move make test to %%check
