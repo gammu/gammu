@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.21.90\n"
+"Project-Id-Version: Gammu 1.21.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2008-10-15 14:42+0200\n"
+"POT-Creation-Date: 2008-10-29 12:07+0100\n"
 "PO-Revision-Date: 2007-12-20 16:33+0100\n"
 "Last-Translator: Jochen Kemnade <jochenkemnade@web.de>\n"
 "Language-Team: Language =de\n"
@@ -344,19 +344,19 @@ msgstr "Laut"
 msgid "My style"
 msgstr "Mein Stil"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:528 gammu/message.c:2491
+#: common/phone/nokia/dct4s40/6510/n6510.c:533 gammu/message.c:2491
 msgid "SIM"
 msgstr "SIM"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:529 common/phone/pfunc.c:40
+#: common/phone/nokia/dct4s40/6510/n6510.c:534 common/phone/pfunc.c:40
 msgid "Inbox"
 msgstr "Eingang"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:530
+#: common/phone/nokia/dct4s40/6510/n6510.c:535
 msgid "Sent items"
 msgstr "Versandte Mitteilungen"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:531
+#: common/phone/nokia/dct4s40/6510/n6510.c:536
 msgid "Saved items"
 msgstr "Gespeicherte Mitteilungen"
 

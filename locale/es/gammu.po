@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2008-10-15 14:42+0200\n"
+"POT-Creation-Date: 2008-10-29 12:07+0100\n"
 "PO-Revision-Date: 2008-10-27 23:36+0100\n"
 "Last-Translator: Sergio Martín <ser.martin@wanadoo.es>\n"
 "Language-Team: Español\n"
@@ -87,16 +87,16 @@ msgid ""
 "Frame not requested right now. See <http://cihar.com/gammu/report> for "
 "information how to report it."
 msgstr ""
-"El teléfono devolvió una respuesta desconocida. Visite la página "
-"<http://cihar.com/gammu/report> para saber cómo informar del error."
+"El teléfono devolvió una respuesta desconocida. Visite la página <http://"
+"cihar.com/gammu/report> para saber cómo informar del error."
 
 #: common/gsmcomon.c:113
 msgid ""
 "Unknown response from phone. See <http://cihar.com/gammu/report> for "
 "information how to report it."
 msgstr ""
-"El teléfono devolvió una respuesta desconocida. Visite la página "
-"<http://cihar.com/gammu/report> para saber cómo informar del error."
+"El teléfono devolvió una respuesta desconocida. Visite la página <http://"
+"cihar.com/gammu/report> para saber cómo informar del error."
 
 #: common/gsmcomon.c:114
 msgid ""
@@ -339,19 +339,19 @@ msgstr "Alto"
 msgid "My style"
 msgstr "Mis estilos"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:528 gammu/message.c:2491
+#: common/phone/nokia/dct4s40/6510/n6510.c:533 gammu/message.c:2491
 msgid "SIM"
 msgstr "SIM"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:529 common/phone/pfunc.c:40
+#: common/phone/nokia/dct4s40/6510/n6510.c:534 common/phone/pfunc.c:40
 msgid "Inbox"
 msgstr "Bandeja de entrada"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:530
+#: common/phone/nokia/dct4s40/6510/n6510.c:535
 msgid "Sent items"
 msgstr "Elementos enviados"
 
-#: common/phone/nokia/dct4s40/6510/n6510.c:531
+#: common/phone/nokia/dct4s40/6510/n6510.c:536
 msgid "Saved items"
 msgstr "Elementos guardados"
 
@@ -2042,7 +2042,7 @@ msgstr "Nombre"
 #: gammu/gammu.c:133
 #, c-format
 msgid "[Gammu version %s built %s on %s using %s]"
-msgstr "[Versión de Gammu %s compilación %s utilizada %s]"
+msgstr "[Versión de Gammu %s compilación %s/%s utilizada %s]"
 
 #: gammu/gammu.c:142
 msgid "Compiled in features:"
@@ -2265,7 +2265,7 @@ msgstr ""
 #: gammu/gammu.c:970
 #, c-format
 msgid "More parameters required (function requires %d)\n"
-msgstr "Se requieren más parámetros (requiere función %)\n"
+msgstr "Se requieren más parámetros (requiere función %d)\n"
 
 #: gammu/gammu.c:973
 #, c-format
