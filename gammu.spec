@@ -31,7 +31,6 @@ Group:              Hardware/Mobile
 Group:              Applications/Communications
 %endif
 Vendor:         Michal Čihař <michal@cihar.com>
-Packager:       Michal Čihař <michal@cihar.com>
 
 # Detect build requires
 # I hate this crap
@@ -108,8 +107,8 @@ BuildRequires: %{dist_mysql_libs}
 
 BuildRequires: gettext cmake %{dist_pkgconfig}
 
-Source:             http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.%{extension}
-URL:                http://cihar.com/gammu/
+Source:         http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.%{extension}
+URL:            http://cihar.com/gammu/
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
