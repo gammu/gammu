@@ -592,7 +592,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	/* Message Class*/
 	/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
 	if (Layout.TPDCS != 255) {
-		if (SMS->Class>=0 && SMS->Class<5) buffer[Layout.TPDCS] |= SMS->Class | (1 << 4);
+		if (SMS->Class >= 0 && SMS->Class <= 3) buffer[Layout.TPDCS] |= SMS->Class | (1 << 4);
 		dbgprintf("SMS class %i\n",SMS->Class);
 	}
 
