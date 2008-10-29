@@ -14,7 +14,7 @@
 # Change if using tar.gz sources
 %define extension   bz2
 
-%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora:%fedora} || 0%{?rhel:%rhel}
+%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
 %define gammu_docdir %_docdir/%name-%ver
 %else
 %define gammu_docdir %_docdir/%name
@@ -73,9 +73,9 @@ Vendor:         Michal Čihař <michal@cihar.com>
 %else
 
 # Fedora
-%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora:%fedora} || 0%{?rhel:%rhel}
+%if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
 %define dist_pkgconfig pkgconfig
-%if 0%{?fedora_version} >= 8 || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora:%fedora} >= 8 || 0%{?rhel:%rhel}
+%if 0%{?fedora_version} >= 8 || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} >= 8 || 0%{?rhel}
 %define dist_mysql_libs mysql-devel 
 %else
 %define dist_mysql_libs mysqlclient14-devel
