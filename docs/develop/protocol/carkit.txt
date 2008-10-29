@@ -73,7 +73,7 @@ Nokia 6210
 1F0004 78 0003 0201 0308 68		Status confirm from PC
 1F0400 7F 086C			Ack from phone
 
-The phone enters the profile îhandsfreeî when the frame carkit enable is sent. It sends out an unknown status frame 0x08, 0x01.
+The phone enters the profile ‚Äùhandsfree‚Äù when the frame carkit enable is sent. It sends out an unknown status frame 0x08, 0x01.
 4.1.2. Incoming call
 1F0400 78 0004 0102 0701 197B		Status 0x07, 0x01 from phone
 1F0400 78 0004 0102 0701 197B
@@ -83,7 +83,7 @@ The phone enters the profile îhandsfreeî when the frame carkit enable is sent. I
 1F0400 78 0004 0102 0E03 1A73
 Status type 0x07 with status 0x01 means mute external audio equipment. Status type 0x0E with status 0x03 means audio amplifier on.
 4.1.3. Connected
-The phone doesnít send out anything when a call has been set up.
+The phone doesn‚Äôt send out anything when a call has been set up.
 4.1.4. Initiation with connected phone
 1F0004 D0 0001 04 00CE			Power up from PC
 1F0400 D0 0001 05 1BD4			Power up from phone
@@ -151,7 +151,7 @@ F0F0F0F0
 1F0004 78 0003 0201 03 0868		Status confirm from HFU-2
 1F0400 7F 086C			Ack from phone
 4.2.3. Connected
-The phone doesnít send out anything when a call has been set up.
+The phone doesn‚Äôt send out anything when a call has been set up.
 4.2.4. Initiation with connected phone
 1F0004 D0 0001 04 00CE			Power up from HFU-2
 1F0400 D0 0001 05 1AD5			Power up from phone
@@ -238,7 +238,7 @@ An unknown status frame (0x0B) is sent by the phone.
 
 Byte 8 in the status frames is some kind of ID number. 0x28 is the ID for 6310. Status 0x0A, 0x09 is unknown.
 5.1.3. Connected
-The phone doesnít send out anything when a call has been set up. This might be because the profile ìhandsfreeî is lost when ack isnít sent.
+The phone doesn‚Äôt send out anything when a call has been set up. This might be because the profile ‚Äúhandsfree‚Äù is lost when ack isn‚Äôt sent.
 5.1.4. Initiation with connected phone
 1F0004 79 0012 0201 0206 0056 2030 372E 3030 0A48 4655 3200 1C57  HFU-2 version from PC
 1F0400 7F 1C78			Ack from phone
@@ -284,7 +284,7 @@ The phone doesnít send out anything when a call has been set up. This might be b
 1F0004 78 0003 2801 03 064C		Status confirm from HFU-2
 1F0400 7F 0662			Ack from phone
 5.1.5. Disconnected
-No response. Probably because phone has lost the profile ìhandsfreeî.
+No response. Probably because phone has lost the profile ‚Äúhandsfree‚Äù.
 5.1.6. Incoming SMS
 1F0400 78 0004 0128 0E01 0849		Status 0x0E, 0x01
 1F0400 78 0004 0128 0A00 094D		Status 0x0A, 0x00
@@ -393,7 +393,7 @@ No response. Probably because phone has lost the profile ìhandsfreeî.
 Important things to consider when designing a program for Com.n.sense that is to work with 6310.
 
 * 6310 sends out status 0x0E, 0x01 when speaker should be enabled
-* HFU-2 version has to be sent in order for 6310 to switch to profile îHandsfreeî.
+* HFU-2 version has to be sent in order for 6310 to switch to profile ‚ÄùHandsfree‚Äù.
 * Status 0x0A might say weather the phone is ringing or connected. Only 6310 send this status.
 * Status confirm should be sent when status 0x0E is received.
 

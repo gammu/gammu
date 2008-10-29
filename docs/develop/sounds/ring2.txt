@@ -744,7 +744,7 @@ http://www.gsmcity.de/cgi-bin/ultimatebb.cgi?ubb=get_topic&f=1&t=001084&counterh
   Rate Member  posted 19 July 2001 14:37      
 
   How does it works with a Nokia 3310?
-  I think there are other HexValues, but I´m not able to find 
+  I think there are other HexValues, but IÂ´m not able to find 
   them! Please help me! 
 
   Posts: 8 | From: Germany | Registered: Jul 2001  |  IP:  
@@ -761,7 +761,7 @@ http://www.gsmcity.de/cgi-bin/ultimatebb.cgi?ubb=get_topic&f=1&t=001084&counterh
 
     Originally posted by Rayborg:
     How does it works with a Nokia 3310?
-    I think there are other HexValues, but I´m not able to find 
+    I think there are other HexValues, but IÂ´m not able to find 
     them! Please help me!
 
 

@@ -278,7 +278,7 @@ Correct format is FBUS version 2/Infrared/MBUS version 2
                                 Templates entries in my Nokias 6210 (NPE-3 (c) NMP V05.36
                                 14-11-01, NPE-3 (c) NMP V05.27 01-08-01).
                                 I can't remove any of Templates entries in my phone.
-                                Marcin Wi¥cek: Rather not ! I don't agree.
+                                Marcin WiÄ…cek: Rather not ! I don't agree.
                                 I have 0x00, 0x0f and 10 templates and 3 SMS
                                 and 10 Picture Images.
                               b - Number of used messages in phone memory. These
