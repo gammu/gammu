@@ -1531,6 +1531,10 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	}
 #endif
 
+	/* Get charset information and set normal charset */
+	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
+	if (error != ERR_NONE) return error;
+
 	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_SLOWWRITE)) {
 		s->Protocol.Data.AT.FastWrite = true;
 	}
