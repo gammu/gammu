@@ -23,6 +23,7 @@ ChangeLog
 [-] * Automatically reinitialize FBUS connection if it is dropped.
 [-] * Disable OBEX with Motorola Z6c, it is broken (bug #746).
 [-] * Refresh manufacturer information on second init of AT (bug #746).
+[-] * Always get charset information on AT phone initialization.
     
 20081020 - 1.21.90
 
