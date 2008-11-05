@@ -63,6 +63,12 @@ GSM_Error ATOBEX_SetATMode(GSM_StateMachine *s)
 	s->Phone.Functions->ReplyFunctions	= ATGENReplyFunctions;
 	Priv->Mode				= ATOBEX_ModeAT;
 
+	/* Terminate SQWE Obex mode */
+	if (Priv->HasOBEX == ATOBEX_OBEX_SQWE) {
+		error = s->Protocol.Functions->WriteMessage(s, "+++", 3, 0x00);
+		if (error != ERR_NONE) return error;
+	}
+
 	/* Initialise AT protocol */
 	error = s->Protocol.Functions->Initialise(s);
 	if (error != ERR_NONE) return error;

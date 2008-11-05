@@ -362,6 +362,10 @@ typedef struct {
 	 * Which folder do we read SMS from.
 	 */
 	int			SMSReadFolder;
+	/**
+	 * Mode of SQWE (Siemens phones and switching to OBEX).
+	 */
+	int			SQWEMode;
 } GSM_Phone_ATGENData;
 
 /**

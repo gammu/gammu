@@ -998,8 +998,15 @@ GSM_Error ATGEN_GenericReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *
 
 GSM_Error ATGEN_SQWEReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 		case AT_Reply_OK:
+			/* Parse reply code */
+			return ATGEN_ParseReply(s,
+					GetLineString(msg.Buffer, &Priv->Lines, 2),
+					"^SQWE: @i",
+					&Priv->SQWEMode);
 		case AT_Reply_Connect:
 			return ERR_NONE;
 		case AT_Reply_Error:
@@ -1385,6 +1392,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	InitLines(&Priv->Lines);
 
 	Priv->SMSMode			= 0;
+	Priv->SQWEMode			= -1;
 	Priv->SMSTextDetails		= false;
 	Priv->Manufacturer		= 0;
 	Priv->MotorolaSMS		= false;
@@ -1527,6 +1535,12 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 			smprintf(s, "Phone seems to support Siemens like mode switching, adding OBEX feature.\n");
 			GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_OBEX);
 			GSM_AddPhoneFeature(s->Phone.Data.ModelInfo, F_SQWE);
+			/* Switch to mode 0 if we're in different mode */
+			if (Priv->SQWEMode != 0) {
+				ATGEN_WaitFor(s, "AT^SQWE=0\r", 10, 0x00, 3, ID_SetOBEX);
+				if (error != ERR_NONE) return error;
+				Priv->SQWEMode = 0;
+			}
 		}
 	}
 #endif
@@ -6595,6 +6609,7 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+MODE=22" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT+XLNK" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_GenericReply,		"AT^SQWE=3" 	 	,0x00,0x00,ID_SetOBEX		 },
+{ATGEN_GenericReply,		"AT^SQWE=0" 	 	,0x00,0x00,ID_SetOBEX		 },
 {ATGEN_SQWEReply,		"AT^SQWE?" 	 	,0x00,0x00,ID_GetProtocol	 },
 
 {ATGEN_GenericReply,		"AT*ESDF="		,0x00,0x00,ID_SetLocale		 },
