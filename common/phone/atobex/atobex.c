@@ -67,6 +67,8 @@ GSM_Error ATOBEX_SetATMode(GSM_StateMachine *s)
 	if (Priv->HasOBEX == ATOBEX_OBEX_SQWE) {
 		error = s->Protocol.Functions->WriteMessage(s, "+++", 3, 0x00);
 		if (error != ERR_NONE) return error;
+		error = s->Device.Functions->DeviceSetDtrRts(s, false, false);
+		if (error != ERR_NONE) return error;
 	}
 
 	/* Initialise AT protocol */
