@@ -65,9 +65,8 @@ GSM_Error ATOBEX_SetATMode(GSM_StateMachine *s)
 
 	/* Terminate SQWE Obex mode */
 	if (Priv->HasOBEX == ATOBEX_OBEX_SQWE) {
-		error = s->Protocol.Functions->WriteMessage(s, "+++", 3, 0x00);
-		if (error != ERR_NONE) return error;
-		error = s->Device.Functions->DeviceSetDtrRts(s, false, false);
+		sleep(1);
+		error = GSM_WaitFor (s, "+++", 3, 0x00, 100, ID_IncomingFrame);
 		if (error != ERR_NONE) return error;
 	}
 
