@@ -26,6 +26,7 @@ ChangeLog
 [-] * Always get charset information on AT phone initialization.
 [-] * Better handling of OBEX switching for Siemens phones.
 [-] * Fix flags for 2630 and 3109c (bug #752).
+[-] * Fix handling of caller groups and picture IDs (bug #752).
     
 20081020 - 1.21.90
 
