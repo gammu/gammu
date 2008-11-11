@@ -1252,24 +1252,43 @@ static GSM_Error N6510_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 	unsigned int 	count = 22;
 	unsigned char 	req[500] = {
 		N6110_FRAME_HEADER, 0x0b, 0x00, 0x01, 0x01, 0x00, 0x00, 0x10,
-		0xfe, 0x10,		/* memory type */
+		0xfe, 0x00,		/* memory type */
 		0x00, 0x00,		/* location */
 		0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 
+	/* Set memory type */
 	if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
-		return ERR_NOTSUPPORTED;
+		req[11] = MEM6510_CG2;
+	} else {
+		req[11] = MEM7110_CG;
 	}
 
 	req[13] = bitmap->Location;
 
 	/* Enabling/disabling logo */
-	string[0] = bitmap->BitmapEnabled?1:0;
-	string[1] = 0;
-	count += N71_65_PackPBKBlock(s, N7110_PBK_LOGOON, 2, block++, string, req + count);
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
+		string[0] = bitmap->BitmapEnabled?1:0;
+		string[1] = 0;
+		count += N71_65_PackPBKBlock(s, N7110_PBK_LOGOON, 2, block++, string, req + count);
+	}
 
 	/* Ringtone */
 	if (!bitmap->DefaultRingtone) {
-		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKTONEGAL)) {
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
+			string[0] = 0x00;
+			string[1] = 0x00;
+			string[2] = 0x00;
+			string[3] = 0x10;
+			string[4] = 0x00;
+			string[5] = 0x00;
+			string[6] = bitmap->RingtoneID;
+			string[7] = 0x00;
+			string[8] = 0x00;
+			string[9] = 0x00;
+			count += N71_65_PackPBKBlock(s, N6510_PBK_RINGTONEFILE_ID, 10, block++, string, req + count);
+			req[count - 1] = 0x01;
+		} else if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKTONEGAL)) {
+			/* do nothing ? */
 		} else {
 			string[0] = 0x00;
 			string[1] = 0x00;
@@ -1281,9 +1300,11 @@ static GSM_Error N6510_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 	}
 
 	/* Number of group */
-	string[0] = bitmap->Location;
-	string[1] = 0;
-	count += N71_65_PackPBKBlock(s, N7110_PBK_GROUP, 2, block++, string, req + count);
+	if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
+		string[0] = bitmap->Location;
+		string[1] = 0;
+		count += N71_65_PackPBKBlock(s, N7110_PBK_GROUP, 2, block++, string, req + count);
+	}
 
 	/* Name */
 	if (!bitmap->DefaultName) {
@@ -1296,14 +1317,18 @@ static GSM_Error N6510_SetCallerLogo(GSM_StateMachine *s, GSM_Bitmap *bitmap)
 
 	/* Logo */
 	if (!bitmap->DefaultBitmap) {
-		PHONE_GetBitmapWidthHeight(GSM_NokiaCallerLogo, &Width, &Height);
-		string[0] = Width;
-		string[1] = Height;
-		string[2] = 0;
-		string[3] = 0;
-		string[4] = PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0);
-		PHONE_EncodeBitmap(GSM_NokiaCallerLogo, string + 5, bitmap);
-		count += N71_65_PackPBKBlock(s, N7110_PBK_GROUPLOGO, PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0) + 5, block++, string, req + count);
+		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_6230iCALLER)) {
+			/* write N6510_PBK_PICTURE_ID ? */
+		} else {
+			PHONE_GetBitmapWidthHeight(GSM_NokiaCallerLogo, &Width, &Height);
+			string[0] = Width;
+			string[1] = Height;
+			string[2] = 0;
+			string[3] = 0;
+			string[4] = PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0);
+			PHONE_EncodeBitmap(GSM_NokiaCallerLogo, string + 5, bitmap);
+			count += N71_65_PackPBKBlock(s, N7110_PBK_GROUPLOGO, PHONE_GetBitmapSize(GSM_NokiaCallerLogo,0,0) + 5, block++, string, req + count);
+		}
 	}
 
 	req[21] = block;
