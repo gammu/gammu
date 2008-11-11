@@ -20,7 +20,7 @@ signexe() {
         echo 'Skipping signing, disabled!'
         return 0
     fi
-    signcode \
+    gk-get --user=nijel --object=codesign | signcode \
         -spc ~/.id/codesigning.spc \
         -v ~/.id/codesigning.pvk \
         -$ individual \
@@ -91,7 +91,7 @@ cmake ../$repo-$version \
 #    -DGETTEXT_CROSS_PATH=$srcdir/../../win-cross/gettext \
 #    -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
 
-make
+make -j2
 checkexe gammu/gammu.exe
 signexe gammu/gammu.exe "Gammu"
 cpack
@@ -110,7 +110,7 @@ cmake ../$repo-$version \
     -DPOSTGRES_CROSS_PATH= \
     -DGETTEXT_CROSS_PATH= \
 
-make
+make -j2
 checkexe gammu/gammu.exe
 signexe gammu/gammu.exe "Gammu"
 cpack
