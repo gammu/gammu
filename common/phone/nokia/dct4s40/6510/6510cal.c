@@ -471,6 +471,7 @@ static GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note
 
 	error=N6510_GetCalendarNotePos3(s);
 	if (error!=ERR_NONE) return error;
+	Note->Location = *FirstCalendarPos;
 	req[8] = *FirstCalendarPos/256;
 	req[9] = *FirstCalendarPos%256;
 

@@ -2175,6 +2175,7 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 	error=N71_65_GetCalendarNotePos1(s);
 	if (error!=ERR_NONE) return error;
 	if (FirstCalendarPos != NULL) {
+		Note->Location = *FirstCalendarPos;
 		req[4] = *FirstCalendarPos/256;
 		req[5] = *FirstCalendarPos%256;
 	}
