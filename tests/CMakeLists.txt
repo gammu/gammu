@@ -559,4 +559,19 @@ endif (CROSS_MINGW)
 target_link_libraries(include-wap libGammu)
 add_test(include-wap "${GAMMU_TEST_PATH}/include-wap${GAMMU_TEST_SUFFIX}")
 
+# Test for locking, only on !WIN32 and if we can write to lock dir
+if (NOT WIN32)
+    execute_process(COMMAND test -w /var/lock/ RESULT_VARIABLE VAR_LOCK_WRITABLE)
+    if (VAR_LOCK_WRITABLE EQUAL 0)
+        add_executable(locking locking.c)
+        if (CROSS_MINGW)
+            set_target_properties (locking PROPERTIES PREFIX "" SUFFIX ".exe")
+        endif (CROSS_MINGW)
+        target_link_libraries(locking libGammu)
+        add_test(locking "${GAMMU_TEST_PATH}/locking${GAMMU_TEST_SUFFIX}")
+    else (VAR_LOCK_WRITABLE EQUAL 0)
+        message("/var/lock is not writable, skipping locking tests!")
+    endif (VAR_LOCK_WRITABLE EQUAL 0)
+endif (NOT WIN32)
+
 # Auto generated include tests end

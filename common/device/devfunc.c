@@ -23,6 +23,7 @@
 #  include <io.h>
 #else
 #  include <errno.h>
+#  include <ctype.h>
 #  include <signal.h>
 #  include <sys/socket.h>
 #  include <sys/stat.h>
@@ -196,6 +197,9 @@ GSM_Error lock_device(const char* port, char **lock_name)
 	int 		fd, len;
 	GSM_Error	error = ERR_NONE;
 	size_t wrotebytes;
+	char 	buf[max_buf_len];
+	int 	pid, n = 0;
+
 
 	dbgprintf("Locking device\n");
 
@@ -224,45 +228,46 @@ GSM_Error lock_device(const char* port, char **lock_name)
 	/* Check for the stale lockfile.
 	 * The code taken from minicom by Miquel van Smoorenburg */
 	if ((fd = open(lock_file, O_RDONLY)) >= 0) {
-		char 	buf[max_buf_len];
-		int 	pid, n = 0;
-
 		n = read(fd, buf, sizeof(buf) - 1);
-		close(fd);
-		if (n > 0) {
-			pid = -1;
-			if (n == 4)
-				/* Kermit-style lockfile. */
-				pid = *(int *)buf;
-			else {
-				/* Ascii lockfile. */
-				buf[n] = 0;
-				sscanf(buf, "%d", &pid);
+		if (n <= 0) {
+			goto failread;
+		}
+		if (n == 4 && 4 == sizeof(int) &&
+			! (
+				isdigit(buf[0]) &&
+				isdigit(buf[1]) &&
+				isdigit(buf[2]) &&
+				isdigit(buf[3])
+				)) {
+			/* Rewind */
+			lseek(fd, 0, SEEK_SET);
+			/* Read PID */
+			/* We could make it from buf, but we would have to care about endians. */
+			n = read(fd, &pid, sizeof(int));
+			if (n != 4) {
+				dbgprintf("Reading lock for second time failed\n");
+				goto failread;
+
 			}
-			if (pid > 0 && kill((pid_t)pid, 0) < 0 && errno == ESRCH) {
-				dbgprintf("Lockfile %s is stale. Overriding it..\n", lock_file);
-				sleep(1);
-				if (unlink(lock_file) == -1) {
-					dbgprintf("Overriding failed, please check the permissions\n");
-					dbgprintf("Cannot lock device\n");
-					error = ERR_PERMISSION;
-					goto failed;
-				}
-			} else {
-				dbgprintf("Device already locked by PID %d.\n", pid);
-				error = ERR_DEVICELOCKED;
+		} else {
+			/* Ascii lockfile. */
+			buf[n] = 0;
+			sscanf(buf, "%d", &pid);
+		}
+
+
+		if (pid > 0 && kill((pid_t)pid, 0) < 0 && errno == ESRCH) {
+			dbgprintf("Lockfile %s is stale. Overriding it..\n", lock_file);
+			sleep(1);
+			if (unlink(lock_file) == -1) {
+				dbgprintf("Overriding failed, please check the permissions\n");
+				dbgprintf("Cannot lock device\n");
+				error = ERR_PERMISSION;
 				goto failed;
 			}
-		}
-		/* this must not happen. because we could open the file   */
-		/* no wrong permissions are set. only reason could be     */
-		/* flock/lockf or a empty lockfile due to a broken binary */
-		/* which is more likely					  */
-		if (n == 0) {
-			dbgprintf("Unable to read lockfile %s.\n", lock_file);
-			dbgprintf("Please check for reason and remove the lockfile by hand.\n");
-			dbgprintf("Cannot lock device\n");
-			error = ERR_UNKNOWN;
+		} else {
+			dbgprintf("Device already locked by PID %d.\n", pid);
+			error = ERR_DEVICELOCKED;
 			goto failed;
 		}
 	}
@@ -293,6 +298,11 @@ GSM_Error lock_device(const char* port, char **lock_name)
 	close(fd);
 	*lock_name = lock_file;
 	return ERR_NONE;
+failread:
+	dbgprintf("Unable to read lockfile %s.\n", lock_file);
+	dbgprintf("Please check for reason and remove the lockfile by hand.\n");
+	dbgprintf("Cannot lock device\n");
+	error = ERR_UNKNOWN;
 failed:
 	free(lock_file);
 	*lock_name = NULL;
