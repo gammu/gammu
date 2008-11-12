@@ -225,6 +225,9 @@
 /* Will be used FreeBSD Bluetooth stack ? */
 #cmakedefine FBSD_BLUE_FOUND
 
+/* Will be used OSX Bluetooth stack ? */
+#cmakedefine OSX_BLUE_FOUND
+
 #cmakedefine BLUETOOTH_RF_SEARCHING
 
 /* MS Visual C++ Express 2005 warnings */
