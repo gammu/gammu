@@ -58,7 +58,7 @@ while [ "$#" -gt 0 ] ; do
             help
             ;;
         --prefix=*)
-            CMAKE_PREFIX="-DCMAKE_INSTALL_PREFIX=`echo $1|sed 's/^--prefix=//'`"
+            CMAKE_PREFIX="-DCMAKE_INSTALL_PREFIX=${1##--prefix=}"
             ;;
         --enable-backup)
             CMAKE_BACKUP="-DWITH_BACKUP=ON"
@@ -89,6 +89,24 @@ while [ "$#" -gt 0 ] ; do
             ;;
         --disable-debug)
             CMAKE_DEBUG=
+            ;;
+        --build=*)
+            ;;
+        --disable-dependency-tracking)
+            ;;
+        --disable-maintainer-mode)
+            ;;
+        --includedir=*)
+            ;;
+        --mandir=*)
+            ;;
+        --infodir=*)
+            ;;
+        --sysconfdir=*)
+            ;;
+        --localstatedir=*)
+            ;;
+        --libexecdir=*)
             ;;
         *)
             echo "Unknown parameter: $1"
