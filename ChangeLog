@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2008???? - 1.21.92
+
+[-] * Reimplement locking and add tests for it.
     
 20081111 - 1.21.91
 
