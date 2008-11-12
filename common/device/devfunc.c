@@ -2,10 +2,6 @@
  * (C) 1999-2000 Hugh Blemings & Pavel Janik ml. (C) 2001-2004 Pawel Kot
  * GNU GPL version 2 or later
  */
-/* Some source from Minicom (http://alioth.debian.org/projects/minicom)
- * (C) 1991,1992,1993,1994,1995,1996 by Miquel van Smoorenburg
- * GNU GPL version 2
- */
 /* Due to a problem in the source code management, the names of some of
  * the authors have unfortunately been lost. We do not mean to belittle
  * their efforts and hope they will contact us to see their names
@@ -258,8 +254,7 @@ GSM_Error lock_device(const char* port, char **lock_name)
 
 		if (pid > 0 && kill((pid_t)pid, 0) < 0 && errno == ESRCH) {
 			dbgprintf("Lockfile %s is stale. Overriding it..\n", lock_file);
-			sleep(1);
-			if (unlink(lock_file) == -1) {
+			if (unlink(lock_file) != 0) {
 				dbgprintf("Overriding failed, please check the permissions\n");
 				dbgprintf("Cannot lock device\n");
 				error = ERR_PERMISSION;
