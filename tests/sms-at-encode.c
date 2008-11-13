@@ -31,7 +31,7 @@ int main(int argc, char **argv)
 
 	/* Enable debugging */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Check parameters */
@@ -83,7 +83,7 @@ int main(int argc, char **argv)
 	}
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(true, debug_info);
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Initialize AT engine */

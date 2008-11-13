@@ -52,7 +52,7 @@ int main(int argc, char **argv)
 
 	/* Configure state machine */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Allocates state machine */
@@ -63,7 +63,7 @@ int main(int argc, char **argv)
 	}
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(true, debug_info);
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Initialize AT engine */

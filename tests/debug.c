@@ -97,10 +97,10 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	assert(GSM_SetDebugGlobal(false, di_sm) == true);
 	assert(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
 	check_log(debug_file, true, "NULL,TEMP,FALSE");
-	assert(GSM_SetDebugFileDescriptor(NULL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/*
@@ -109,10 +109,10 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	assert(GSM_SetDebugGlobal(true, di_sm) == true);
 	assert(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
 	check_log(debug_file, false, "NULL,TEMP,TRUE");
-	assert(GSM_SetDebugFileDescriptor(NULL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/*
@@ -121,10 +121,10 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	assert(GSM_SetDebugGlobal(true, di_sm) == true);
 	assert(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	check_log(debug_file, true, "TEMP,NULL,TRUE");
-	assert(GSM_SetDebugFileDescriptor(NULL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/*
@@ -133,10 +133,10 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	assert(GSM_SetDebugGlobal(false, di_sm) == true);
 	assert(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	check_log(debug_file, false, "TEMP,NULL,FALSE");
-	assert(GSM_SetDebugFileDescriptor(NULL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 	/*
 	 * Test 6 - global /dev/null, local tempfile, do not use global
@@ -144,11 +144,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	assert(GSM_SetDebugGlobal(true, di_sm) == true);
 	assert(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
 	assert(GSM_SetDebugGlobal(false, di_sm) == true);
 	check_log(debug_file, true, "2:NULL,TEMP,FALSE");
-	assert(GSM_SetDebugFileDescriptor(NULL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/*
@@ -157,11 +157,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	assert(GSM_SetDebugGlobal(false, di_sm) == true);
 	assert(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
 	assert(GSM_SetDebugGlobal(true, di_sm) == true);
 	check_log(debug_file, false, "2:NULL,TEMP,TRUE");
-	assert(GSM_SetDebugFileDescriptor(NULL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/*
@@ -170,11 +170,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	assert(GSM_SetDebugGlobal(false, di_sm) == true);
 	assert(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	assert(GSM_SetDebugGlobal(true, di_sm) == true);
 	check_log(debug_file, true, "2:TEMP,NULL,TRUE");
-	assert(GSM_SetDebugFileDescriptor(NULL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/*
@@ -183,11 +183,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 	debug_file = fopen(debug_filename, "w+");
 	assert(GSM_SetDebugGlobal(true, di_sm) == true);
 	assert(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	assert(GSM_SetDebugGlobal(false, di_sm) == true);
 	check_log(debug_file, false, "2:TEMP,NULL,FALSE");
-	assert(GSM_SetDebugFileDescriptor(NULL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/* Free state machine */

@@ -60,7 +60,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_MultiSMSMessage sms;
 
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Allocates state machine */
@@ -71,7 +71,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	}
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(true, debug_info);
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Init file */

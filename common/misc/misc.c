@@ -446,7 +446,7 @@ void CopyLineString(char *dest, const char *src, const GSM_CutLines *lines, int 
 	dest[len] = 0;
 }
 
-GSM_Debug_Info di = {0,NULL,false,"",false};
+GSM_Debug_Info di = {0,NULL,false,"",false, false};
 
 PRINTF_STYLE(2, 0)
 int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)

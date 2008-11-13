@@ -28,7 +28,7 @@ int main(int argc, char **argv)
 
 	/* Configure debugging */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Check parameters */

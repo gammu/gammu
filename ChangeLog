@@ -18,6 +18,7 @@ ChangeLog
 2008???? - 1.21.92
 
 [-] * Reimplement locking and add tests for it.
+[!] * GSM_SetDebugFileDescriptor now accepts flag whether file descriptor can be closed (bug #749).
     
 20081111 - 1.21.91
 

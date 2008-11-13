@@ -206,7 +206,7 @@ void Cleanup(void)
 
 	/* Close debug output if opened */
 	di = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(NULL, di);
+	GSM_SetDebugFileDescriptor(NULL, false, di);
 
 #ifdef CURL_FOUND
 	/* Free CURL memory */

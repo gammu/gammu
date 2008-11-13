@@ -215,17 +215,19 @@ GSM_Debug_Info *GSM_GetGlobalDebug()
 	return &di;
 }
 
-GSM_Error GSM_SetDebugFileDescriptor(FILE *fd, GSM_Debug_Info *privdi)
+GSM_Error GSM_SetDebugFileDescriptor(FILE *fd, bool closable, GSM_Debug_Info *privdi)
 {
 	privdi->was_lf = true;
 
 	if (privdi->df != NULL
 			&& fileno(privdi->df) != fileno(stderr)
-			&& fileno(privdi->df) != fileno(stdout)) {
+			&& fileno(privdi->df) != fileno(stdout)
+			&& privdi->closable) {
 		fclose(privdi->df);
 	}
 
 	privdi->df = fd;
+	privdi->closable = closable;
 
 	return ERR_NONE;
 }
@@ -235,7 +237,7 @@ GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
 	FILE *testfile;
 
 	if (info == NULL || strlen(info) == 0) {
-		return GSM_SetDebugFileDescriptor(NULL, privdi);
+		return GSM_SetDebugFileDescriptor(NULL, false, privdi);
 	}
 
 	switch (privdi->dl) {
@@ -263,7 +265,7 @@ GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
 		dbgprintf("Can't open debug file\n");
 		return ERR_CANTOPENFILE;
 	} else {
-		return GSM_SetDebugFileDescriptor(testfile, privdi);
+		return GSM_SetDebugFileDescriptor(testfile, true, privdi);
 	}
 }
 

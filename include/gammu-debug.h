@@ -1,7 +1,7 @@
 /**
  * \file gammu-debug.h
  * \author Michal Čihař
- * 
+ *
  * Debuging handling.
  */
 #ifndef __gammu_debug_h
@@ -102,11 +102,14 @@ GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info * privdi);
  *
  * \param fd File descriptor.
  * \param privdi Pointert to debug information data.
+ * \param closable Whether Gammu can close the file when it is no longer
+ * needed for debug output. Please note that stderr or stdout are never
+ * closed.
  * \return Error code.
  *
  * \ingroup Debug
  */
-GSM_Error GSM_SetDebugFileDescriptor(FILE * fd, GSM_Debug_Info * privdi);
+GSM_Error GSM_SetDebugFileDescriptor(FILE * fd, bool closable, GSM_Debug_Info * privdi);
 
 /**
  * Returns global debug settings.
@@ -150,7 +153,7 @@ bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info * privdi);
 bool GSM_SetDebugCoding(const char *info, GSM_Debug_Info * privdi);
 
 /**
- * Enables using of global debugging configuration. Makes no effect on 
+ * Enables using of global debugging configuration. Makes no effect on
  * global debug configuration.
  *
  * \param info Enable global debug usage..

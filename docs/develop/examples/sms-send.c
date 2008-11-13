@@ -58,7 +58,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Enable global debugging to stderr */
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, true, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Prepare message */
@@ -82,10 +82,13 @@ int main(int argc UNUSED, char **argv UNUSED)
 	if (s == NULL)
 		return 3;
 
-	/* Enable state machine debugging to stderr */
+	/*
+	 * Enable state machine debugging to stderr
+	 * Same could be achieved by just using global debug config.
+	 */
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(false, debug_info);
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, true, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Find configuration file */
