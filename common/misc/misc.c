@@ -446,7 +446,7 @@ void CopyLineString(char *dest, const char *src, const GSM_CutLines *lines, int 
 	dest[len] = 0;
 }
 
-GSM_Debug_Info di = {0,NULL,false,"",false, false};
+GSM_Debug_Info GSM_global_debug = {0,NULL,false,"",false, false};
 
 PRINTF_STYLE(2, 0)
 int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)
@@ -524,7 +524,7 @@ int dbgprintf(const char *format, ...)
 	int 			result;
 
 	va_start(argp, format);
-	result = dbg_vprintf(&di, format, argp);
+	result = dbg_vprintf(&GSM_global_debug, format, argp);
 	va_end(argp);
 
 	return result;
@@ -539,7 +539,7 @@ int smfprintf(GSM_Debug_Info *d, const char *format, ...)
 	GSM_Debug_Info		*tmpdi;
 
 	if (d->use_global) {
-		tmpdi = &di;
+		tmpdi = &GSM_global_debug;
 	} else {
 		tmpdi = d;
 	}
@@ -636,6 +636,13 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const int mess
 }
 
 #undef CHARS_PER_LINE
+
+void DumpMessageText(GSM_Debug_Info *d, const unsigned char *message, const int messagesize)
+{
+	if (d->dl != DL_TEXTALL && d->dl == DL_TEXTALLDATE) return;
+	DumpMessage(d, message, messagesize);
+
+}
 
 const char *GetOS(void)
 {

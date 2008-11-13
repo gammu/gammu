@@ -107,9 +107,10 @@ int GetDayOfWeek(unsigned int year, unsigned int month, unsigned int day);
 /* ------------------------------------------------------------------------- */
 
 
-extern GSM_Debug_Info	di;
+extern GSM_Debug_Info	GSM_global_debug;
 
 void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const int messagesize);
+void DumpMessageText(GSM_Debug_Info *d, const unsigned char *message, const int messagesize);
 
 
 /* ------------------------------------------------------------------------- */

@@ -522,7 +522,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		s->opened			  = false;
 		s->Phone.Functions		  = NULL;
 
-		s->di 				  = di;
+		s->di 				  = GSM_global_debug;
 		s->di.use_global 		  = s->CurrentConfig->UseGlobalDebugFile;
 		if (!s->di.use_global) {
 			GSM_SetDebugLevel(s->CurrentConfig->DebugLevel, &s->di);
@@ -714,7 +714,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 	error = GSM_CloseConnection(s);
 	if (error != ERR_NONE) return error;
 
-	if (!s->di.use_global && s->di.dl!=0 && fileno(s->di.df) != 1 && fileno(s->di.df) != 2) fclose(s->di.df);
+	GSM_SetDebugFileDescriptor(NULL, false, &(s->di));
 
 	s->opened = false;
 
@@ -1262,14 +1262,16 @@ int smprintf(GSM_StateMachine *s, const char *format, ...)
 {
 	va_list		argp;
 	int 		result=0;
-	char		buffer[2000];
+	GSM_Debug_Info *curdi;
+
+	curdi = &GSM_global_debug;
+	if (s != NULL) {
+		curdi = &(s->di);
+	}
 
 	va_start(argp, format);
 
-	if ((s != NULL && s->di.df != 0) || (s == NULL && di.df != 0)) {
-		result = vsnprintf(buffer, sizeof(buffer) - 1, format, argp);
-		result = smfprintf((s == NULL) ? &di : &(s->di), "%s", buffer);
-	}
+	result = dbg_vprintf(curdi, format, argp);
 
 	va_end(argp);
 	return result;
@@ -1282,7 +1284,7 @@ int smprintf_level(GSM_StateMachine * s, GSM_DebugSeverity severity, const char 
 	int 		result=0;
 	GSM_Debug_Info *curdi;
 
-	curdi = &di;
+	curdi = &GSM_global_debug;
 	if (s != NULL && s->di.use_global == false) {
 		curdi = &(s->di);
 	}

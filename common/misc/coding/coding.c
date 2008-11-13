@@ -279,12 +279,12 @@ char *DecodeUnicodeConsole(const unsigned char *src)
 {
  	static char dest[500];
 
-	if (di.coding[0] != 0) {
-		if (!strcmp(di.coding,"utf8")) {
+	if (GSM_global_debug.coding[0] != 0) {
+		if (!strcmp(GSM_global_debug.coding,"utf8")) {
 			EncodeUTF8(dest, src);
 		} else {
 #ifdef WIN32
-			setlocale(LC_ALL, di.coding);
+			setlocale(LC_ALL, GSM_global_debug.coding);
 #endif
 			DecodeUnicode(src,dest);
 		}
@@ -520,7 +520,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, b
 	bool	FoundSpecial = false;
 
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, src, len);
+	DumpMessageText(&GSM_global_debug, src, len);
 #endif
 
 	for (i = 0; i < len; i++) {
@@ -559,7 +559,7 @@ void DecodeDefault (unsigned char *dest, const unsigned char *src, size_t len, b
 	dest[current++]=0;
 	dest[current++]=0;
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, dest, UnicodeLength(dest)*2);
+	DumpMessageText(&GSM_global_debug, dest, UnicodeLength(dest)*2);
 #endif
 }
 
@@ -585,7 +585,7 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, size_t *len, b
 	bool	FoundSpecial,FoundNormal;
 
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, src, (*len)*2);
+	DumpMessageText(&GSM_global_debug, src, (*len)*2);
 #endif
 
 	for (i = 0; i < *len; i++) {
@@ -653,7 +653,7 @@ void EncodeDefault(unsigned char *dest, const unsigned char *src, size_t *len, b
 	}
 	dest[current]=0;
 #ifdef DEBUG
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, dest, current);
+	DumpMessageText(&GSM_global_debug, dest, current);
 #endif
 
 	*len = current;

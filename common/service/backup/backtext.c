@@ -2386,7 +2386,8 @@ static void ReadStartupEntry(INI_Section *file_info, char *section, GSM_Bitmap *
 		bitmap->Location = 1;
 		ReadBitmapEntry(file_info, section, bitmap, UseUnicode);
 #ifdef DEBUG
-		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,bitmap);
+		if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
+			GSM_PrintBitmap(GSM_global_debug.df,bitmap);
 #endif
 	}
 }

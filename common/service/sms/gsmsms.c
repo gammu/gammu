@@ -183,7 +183,7 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 		dbgprintf(", part %i of %i",UDH->PartNumber,UDH->AllParts);
 	}
 	dbgprintf("\n");
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, UDH->Text, UDH->Length);
+	DumpMessageText(&GSM_global_debug, UDH->Text, UDH->Length);
 #endif
 }
 
@@ -274,7 +274,7 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 			memcpy(SMS->Text,buffer+(Layout.Text+off),SMS->Length);
 #ifdef DEBUG
 			dbgprintf("8 bit SMS, length %i\n",SMS->Length);
-			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, SMS->Text, SMS->Length);
+			DumpMessageText(&GSM_global_debug, SMS->Text, SMS->Length);
 #endif
 			break;
 		case SMS_Coding_Unicode_No_Compression:
@@ -282,7 +282,7 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 			DecodeUnicodeSpecialNOKIAChars(SMS->Text,buffer+(Layout.Text+off), SMS->Length);
 #ifdef DEBUG
 			dbgprintf("Unicode SMS, length %i\n",SMS->Length);
-			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, buffer+(Layout.Text+off), SMS->Length*2);
+			DumpMessageText(&GSM_global_debug, buffer+(Layout.Text+off), SMS->Length*2);
 			dbgprintf("%s\n",DecodeUnicodeString(SMS->Text));
 #endif
 			break;
@@ -491,7 +491,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 		memcpy(buffer+Layout.Text, SMS->UDH.Text, off);		/* we copy the udh */
 #ifdef DEBUG
 		dbgprintf("UDH, length %i\n",off);
-		if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, SMS->UDH.Text, off);
+		DumpMessageText(&GSM_global_debug, SMS->UDH.Text, off);
 #endif
 	}
 	switch (SMS->Coding) {
@@ -504,7 +504,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			size2 = size = SMS->Length+off;
 #ifdef DEBUG
 			dbgprintf("8 bit SMS, length %i\n",SMS->Length);
-			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, SMS->Text, SMS->Length);
+			DumpMessageText(&GSM_global_debug, SMS->Text, SMS->Length);
 #endif
 			break;
 		case SMS_Coding_Default_No_Compression:
@@ -532,7 +532,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			size=size2=UnicodeLength(buffer+(Layout.Text+off))*2+off;
 #ifdef DEBUG
 			dbgprintf("Unicode SMS, length %i\n",(size2-off)/2);
-			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) DumpMessage(&di, buffer+(Layout.Text+off), size2-off);
+			DumpMessageText(&GSM_global_debug, buffer+(Layout.Text+off), size2-off);
 			dbgprintf("%s\n",DecodeUnicodeString(buffer+(Layout.Text+off)));
 #endif
 			break;

@@ -993,7 +993,8 @@ static GSM_Error N6110_ReplyGetSetPicture(GSM_Protocol_Message msg, GSM_StateMac
                 Data->Bitmap->BitmapHeight      = msg.Buffer[count++];
                 PHONE_DecodeBitmap(GSM_NokiaPictureImage, msg.Buffer + count + 2, Data->Bitmap);
 #ifdef DEBUG
-                if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,Data->Bitmap);
+                if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
+			GSM_PrintBitmap(GSM_global_debug.df,Data->Bitmap);
 #endif
                 return ERR_NONE;
                 break;
