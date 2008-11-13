@@ -98,7 +98,7 @@ string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\2" "VERSION_MINOR" "
 string (REGEX REPLACE "^([0-9]*)\\.([0-9]*)\\.([0-9]*)$" "\\3" "VERSION_PATCH" "${VERSION}")
 message (STATUS "Configuring ${CMAKE_PROJECT_NAME} ${VERSION}")
 
-set (SOVERSION "4" CACHE INTERNAL "")
+set (SOVERSION "5" CACHE INTERNAL "")
 
 if ("${Gammu_BINARY_DIR}" STREQUAL "${Gammu_SOURCE_DIR}")
     message ("Warning: In tree build is not recommended way to build Gammu.")
