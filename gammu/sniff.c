@@ -23,7 +23,7 @@ static GSM_Protocol_PHONETData	PHONETData;
 static void DecodeInputMBUS2(unsigned char rx_byte)
 {
 	GSM_Protocol_MBUS2Data *d = &MBUS2Data;
-	GSM_Debug_Info	ldi = {DL_TEXTALL, stdout, false, NULL, true};
+	GSM_Debug_Info	ldi = {DL_TEXTALL, stdout, false, NULL, true, false};
 
 	d->Msg.CheckSum[0] = d->Msg.CheckSum[1];
 	d->Msg.CheckSum[1] ^= rx_byte;
@@ -115,7 +115,7 @@ static void DecodeInputMBUS2(unsigned char rx_byte)
 static void DecodeInputIRDA(unsigned char rx_byte)
 {
 	GSM_Protocol_PHONETData *d = &PHONETData;
-	GSM_Debug_Info		ldi = {DL_TEXTALL, stdout, false, NULL, true};
+	GSM_Debug_Info		ldi = {DL_TEXTALL, stdout, false, NULL, true, false};
 
 	if (d->MsgRXState == RX_GetMessage) {
 		d->Msg.Buffer[d->Msg.Count] = rx_byte;
@@ -351,7 +351,7 @@ void decodebinarydump(int argc, char *argv[])
 	unsigned char		type;
 	bool			sent;
 	GSM_Protocol_Message	msg;
-	GSM_Debug_Info		ldi = {DL_TEXTALL, stdout, false, NULL, true};
+	GSM_Debug_Info		ldi = {DL_TEXTALL, stdout, false, NULL, true, false};
 	GSM_Error error;
 
 	prepareStateMachine();

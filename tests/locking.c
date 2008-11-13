@@ -31,7 +31,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	sprintf(pids, "%d", pid);
 
 	debug_info = GSM_GetGlobalDebug();
-	GSM_SetDebugFileDescriptor(stderr, debug_info);
+	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Non existing PID, ASCII */
