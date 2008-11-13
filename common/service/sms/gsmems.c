@@ -368,7 +368,8 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 
 				GSM_ResizeBitmap(&Bitmap, &Entry->Bitmap->Bitmap[0], Width, Height);
 #ifdef DEBUG
-				if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Bitmap);
+				if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
+					GSM_PrintBitmap(GSM_global_debug.df,&Bitmap);
 #endif
 				PHONE_EncodeBitmap(BitmapType,Buffer+5, &Bitmap);
 				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,5+Length,true,&UsedText,&CopiedText,&CopiedSMSText);
@@ -420,7 +421,8 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			if (Length > 128) 	Length = 128;
 
 #ifdef DEBUG
-			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Bitmap);
+			if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
+				GSM_PrintBitmap(GSM_global_debug.df,&Bitmap);
 #endif
 
 			/* Saving SMS */
@@ -445,7 +447,8 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 					}
 				}
 #ifdef DEBUG
-				if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Bitmap2);
+				if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
+					GSM_PrintBitmap(GSM_global_debug.df,&Bitmap2);
 #endif
 
 				/* Adding new bitmap to SMS */
@@ -496,7 +499,8 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 
 			GSM_ResizeBitmap(&Bitmap, &Entry->Bitmap->Bitmap[0], Width, Height);
 #ifdef DEBUG
-			if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&Bitmap);
+			if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
+				GSM_PrintBitmap(GSM_global_debug.df,&Bitmap);
 #endif
 			PHONE_EncodeBitmap(BitmapType,Buffer+5, &Bitmap);
 			GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,5+Length,true,&UsedText,&CopiedText,&CopiedSMSText);
@@ -532,9 +536,9 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 	dbgprintf("SMS number is %i\n",SMS->Number);
 	for (i=0;i<SMS->Number;i++) {
 		dbgprintf("UDH length %i\n",SMS->SMS[i].UDH.Length);
-		DumpMessage(&di, SMS->SMS[i].UDH.Text, SMS->SMS[i].UDH.Length);
+		DumpMessage(&GSM_global_debug, SMS->SMS[i].UDH.Text, SMS->SMS[i].UDH.Length);
 		dbgprintf("SMS length " SIZE_T_FORMAT "\n",UnicodeLength(SMS->SMS[i].Text)*2);
-		DumpMessage(&di, SMS->SMS[i].Text, UnicodeLength(SMS->SMS[i].Text)*2);
+		DumpMessage(&GSM_global_debug, SMS->SMS[i].Text, UnicodeLength(SMS->SMS[i].Text)*2);
 	}
 #endif
 	return ERR_NONE;

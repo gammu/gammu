@@ -212,7 +212,7 @@ const char *GetGammuVersion(void)
 
 GSM_Debug_Info *GSM_GetGlobalDebug()
 {
-	return &di;
+	return &GSM_global_debug;
 }
 
 GSM_Error GSM_SetDebugFileDescriptor(FILE *fd, bool closable, GSM_Debug_Info *privdi)

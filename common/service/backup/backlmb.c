@@ -123,7 +123,7 @@ GSM_Error SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 		03,              /*memory type. ME=02;SM=03*/
 		00};
 
-	fake_sm.di = di;
+	fake_sm.di = GSM_global_debug;
 	fake_sm.di.use_global = true;
 	fake_sm.Phone.Data.ModelInfo = GetModelData(NULL, "unknown", NULL, NULL);
 
@@ -244,7 +244,8 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer UNUSED, unsigned char 
 
 #ifdef DEBUG
 	dbgprintf("Caller logo\n");
-	if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,&bitmap);
+	if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
+		GSM_PrintBitmap(GSM_global_debug.df,&bitmap);
 #endif
 
 	num = 0;
@@ -287,7 +288,8 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer UNUSED, unsigned char
 				}
 				PHONE_DecodeBitmap(Type, buffer2+j, backup->StartupLogo);
 #ifdef DEBUG
-				if (di.dl == DL_TEXTALL || di.dl == DL_TEXTALLDATE) GSM_PrintBitmap(di.df,backup->StartupLogo);
+				if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
+					GSM_PrintBitmap(GSM_global_debug.df,backup->StartupLogo);
 #endif
 				j = j + PHONE_GetBitmapSize(Type,0,0);
 				break;
@@ -319,7 +321,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	int			num;
 	GSM_StateMachine fake_sm;
 
-	fake_sm.di = di;
+	fake_sm.di = GSM_global_debug;
 	fake_sm.di.use_global = true;
 	fake_sm.Phone.Data.ModelInfo = GetModelData(NULL, "unknown", NULL, NULL);
 
