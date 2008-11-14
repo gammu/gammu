@@ -99,7 +99,6 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
 	/* create the thread context and start the thread */
 	CFStringRef strDevice;
-	pthread_t threadID;
 	threadContext *pContext = (threadContext *)malloc(sizeof(threadContext));
 
 	strDevice = CFStringCreateWithCString(kCFAllocatorDefault, device, kCFStringEncodingMacRomanLatin1);
@@ -129,14 +128,14 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	}
 }
 
-GSMErrror bluetooth_close(GSM_StateMachine *s)
+GSM_Error bluetooth_close(GSM_StateMachine *s)
 {
 	threadContext *pContext = (threadContext *)s->Device.Data.BlueTooth.Data;
         IOBluetoothDeviceRef device;
 
 	sleep(2);
 
-	if (fd != -1 && pContext->rfcommChannel > 0) {
+	if (s->Device.Data.BlueTooth.Data != -1 && pContext->rfcommChannel > 0) {
 		/* de-register the callback */
 		IOBluetoothRFCOMMChannelRegisterIncomingDataListener(pContext->rfcommChannel, NULL, NULL);
 
@@ -155,13 +154,13 @@ int bluetooth_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
 	threadContext *pContext = (threadContext *)s->Device.Data.BlueTooth.Data;
 
-	if (IOBluetoothRFCOMMChannelWrite(pContext->rfcommChannel, buf, nbytes, TRUE) != kIOReturnSuccess)
+	if (IOBluetoothRFCOMMChannelWrite(pContext->rfcommChannel, (void *)buf, nbytes, TRUE) != kIOReturnSuccess)
 		return -1;
 
-	return size;
+	return nbytes;
 }
 
-int bluetooth_read(GSM_StateMachine *s, void *bytes, size_t size)
+int bluetooth_read(GSM_StateMachine *s, void *buffer, size_t size)
 {
 	threadContext *pContext = (threadContext *)s->Device.Data.BlueTooth.Data;
 	int nOffset = 0;
@@ -179,7 +178,7 @@ int bluetooth_read(GSM_StateMachine *s, void *bytes, size_t size)
 
 		if (pDataBlock->nSize == size) {
 			/* copy data and remove block */
-			memcpy(bytes + nOffset, pDataBlock->pData, size);
+			memcpy(((char *)buffer) + nOffset, pDataBlock->pData, size);
 
 			pthread_mutex_lock(&(pContext->mutexWait));
 			CFArrayRemoveValueAtIndex(pContext->arrDataReceived, 0);
@@ -191,13 +190,13 @@ int bluetooth_read(GSM_StateMachine *s, void *bytes, size_t size)
 			return nBytes + size;
 		} else if (pDataBlock->nSize > size) {
 			/* copy data and update block contents */
-			memcpy(bytes + nOffset, pDataBlock->pData, size);
+			memcpy(((char *)buffer) + nOffset, pDataBlock->pData, size);
 			memmove(pDataBlock->pData, pDataBlock->pData + size, pDataBlock->nSize - size);
 			pDataBlock->nSize -= size;
 			return nBytes + size;
 		} else { /* pDataBlock->nSize < size */
 			/* copy data and remove block */
-			memcpy(bytes + nOffset, pDataBlock->pData, pDataBlock->nSize);
+			memcpy(((char *)buffer) + nOffset, pDataBlock->pData, pDataBlock->nSize);
 
 			size -= pDataBlock->nSize;
 			nOffset += pDataBlock->nSize;
