@@ -558,6 +558,8 @@ set (PUBLIC_HEADERS
     )
 
 set (HEADERS
+    common/device/bluetoth/blue_fbsd.h
+    common/device/bluetoth/blue_osx.h
     common/device/bluetoth/blue_w32.h
     common/device/bluetoth/bluetoth.h
     common/device/bluetoth/bluez.h
