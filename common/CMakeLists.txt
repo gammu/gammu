@@ -32,6 +32,7 @@ set (LIBRARY_SRC
     service/backup/backics.c
     device/bluetoth/bluez.c
     device/bluetoth/blue_fbsd.c
+    device/bluetoth/blue_osx.c
     device/bluetoth/blue_w32.c
     device/bluetoth/bluetoth.c
     device/serial/ser_unx.c
