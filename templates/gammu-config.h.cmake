@@ -227,7 +227,10 @@
 
 /* Will be used OSX Bluetooth stack ? */
 #cmakedefine OSX_BLUE_FOUND
+/* 2.0 OSX Bluetooth API? */
+#cmakedefine OSX_BLUE_2_0
 
+/* Enable Bluetooth channnel searching? */
 #cmakedefine BLUETOOTH_RF_SEARCHING
 
 /* MS Visual C++ Express 2005 warnings */

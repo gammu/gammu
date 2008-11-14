@@ -73,6 +73,12 @@ static void *thread_main(void *pArg)
 	IOBluetoothDeviceRef device = IOBluetoothDeviceCreateWithAddress(&(pContext->deviceAddress));
 	IOBluetoothRFCOMMChannelRef rfcommChannel;
 
+#ifdef OSX_BLUE_2_0
+	if (IOBluetoothDeviceOpenRFCOMMChannelSync(device, &rfcommChannel, pContext->nChannel,
+			thread_rfcommDataListener, pArg) != kIOReturnSuccess) {
+		rfcommChannel = 0;
+	}
+#else
 	if (IOBluetoothDeviceOpenRFCOMMChannel(device, pContext->nChannel,
 				      &rfcommChannel) != kIOReturnSuccess) {
 		rfcommChannel = 0;
@@ -83,6 +89,7 @@ static void *thread_main(void *pArg)
 		    rfcommChannel = 0;
 		}
 	}
+#endif
 
 	pContext->rfcommChannel = rfcommChannel;
 
@@ -136,14 +143,16 @@ GSM_Error bluetooth_close(GSM_StateMachine *s)
 	sleep(2);
 
 	if (s->Device.Data.BlueTooth.Data != -1 && pContext->rfcommChannel > 0) {
+#ifndef OSX_BLUE_2_0
 		/* de-register the callback */
 		IOBluetoothRFCOMMChannelRegisterIncomingDataListener(pContext->rfcommChannel, NULL, NULL);
+#endif
 
 		/* close channel and device connection */
 		IOBluetoothRFCOMMChannelCloseChannel(pContext->rfcommChannel);
 		device = IOBluetoothRFCOMMChannelGetDevice(pContext->rfcommChannel);
 		IOBluetoothDeviceCloseConnection(device);
-		/* IOBluetoothObjectRelease(pContext->rfcommChannel); */
+		IOBluetoothObjectRelease(pContext->rfcommChannel);
 		IOBluetoothObjectRelease(device);
 	}
 
@@ -154,8 +163,13 @@ int bluetooth_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
 	threadContext *pContext = (threadContext *)s->Device.Data.BlueTooth.Data;
 
+#ifdef OSX_BLUE_2_0
 	if (IOBluetoothRFCOMMChannelWrite(pContext->rfcommChannel, (void *)buf, nbytes, TRUE) != kIOReturnSuccess)
 		return -1;
+#else
+	if (IOBluetoothRFCOMMChannelWriteSync(pContext->rfcommChannel, (void *)buf, nbytes) != kIOReturnSuccess)
+		return -1;
+#endif
 
 	return nbytes;
 }
