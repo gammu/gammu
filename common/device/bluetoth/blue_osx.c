@@ -102,7 +102,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	threadContext *pContext = (threadContext *)malloc(sizeof(threadContext));
 
 	strDevice = CFStringCreateWithCString(kCFAllocatorDefault, device, kCFStringEncodingMacRomanLatin1);
-	IOBluetoothNSStringToDeviceAddress(strDevice, &pContext->deviceAddress);
+	IOBluetoothCFStringToDeviceAddress(strDevice, &pContext->deviceAddress);
 	CFRelease(strDevice);
 
 	pContext->arrDataReceived = CFArrayCreateMutable(kCFAllocatorDefault, 0, NULL);
