@@ -107,6 +107,11 @@ if (FBSD_BLUE_FOUND)
     include_directories (${FBSD_BLUE_INCLUDE_DIR})
 endif (FBSD_BLUE_FOUND)
 
+if (OSX_BLUE_FOUND)
+    target_link_libraries (libGammu ${OSX_BLUE_LIBRARIES})
+    include_directories (${OSX_BLUE_INCLUDE_DIR})
+endif (OSX_BLUE_FOUND)
+
 if (ICONV_FOUND)
     target_link_libraries (libGammu ${ICONV_LIBRARIES})
     include_directories (${ICONV_INCLUDE_DIR})
