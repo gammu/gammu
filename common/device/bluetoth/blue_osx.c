@@ -67,6 +67,35 @@ static void thread_rfcommDataListener(IOBluetoothRFCOMMChannelRef rfcommChannel,
 	pthread_mutex_unlock(&(pContext->mutexWait));
 }
 
+#ifdef OSX_BLUE_2_0
+void thread_rfcommEventListener (IOBluetoothRFCOMMChannelRef rfcommChannel,
+			void *refCon, IOBluetoothRFCOMMChannelEvent *event)
+{
+        switch (event->eventType)
+        {
+                case kIOBluetoothRFCOMMNewDataEvent:
+		thread_rfcommDataListener(rfcommChannel, event->u.newData.dataPtr, event->u.newData.dataSize , refCon);
+                    // In thise case:
+                    // event->u.newData.dataPtr  is a pointer to the block of data received.
+                    // event->u.newData.dataSize is the size of the block of data.
+                break;
+
+                case kIOBluetoothRFCOMMFlowControlChangedEvent:
+                    // In thise case:
+                    // event->u.flowStatus       is the status of flow control (see IOBluetoothRFCOMMFlowControlStatus for current restrictions)
+                break;
+
+                case kIOBluetoothRFCOMMChannelTerminatedEvent:
+                    // In this case:
+                    // event->u.terminatedChannel is the channel that was terminated. It can be converted in an IOBluetoothRFCOMMChannel
+                    // object with [IOBluetoothRFCOMMChannel withRFCOMMChannelRef:]. (see below).
+                break;
+        }
+}
+#endif
+
+
+
 static void *thread_main(void *pArg)
 {
 	threadContext* pContext = (threadContext *)pArg;
@@ -75,7 +104,7 @@ static void *thread_main(void *pArg)
 
 #ifdef OSX_BLUE_2_0
 	if (IOBluetoothDeviceOpenRFCOMMChannelSync(device, &rfcommChannel, pContext->nChannel,
-			thread_rfcommDataListener, pArg) != kIOReturnSuccess) {
+			thread_rfcommEventListener, pArg) != kIOReturnSuccess) {
 		rfcommChannel = 0;
 	}
 #else
