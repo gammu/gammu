@@ -196,10 +196,10 @@ int bluetooth_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 	threadContext *pContext = (threadContext *)d->Data;
 
 #ifdef OSX_BLUE_2_0
-	if (IOBluetoothRFCOMMChannelWrite(pContext->rfcommChannel, (void *)buf, nbytes, TRUE) != kIOReturnSuccess)
+	if (IOBluetoothRFCOMMChannelWriteSync(pContext->rfcommChannel, (void *)buf, nbytes) != kIOReturnSuccess)
 		return -1;
 #else
-	if (IOBluetoothRFCOMMChannelWriteSync(pContext->rfcommChannel, (void *)buf, nbytes) != kIOReturnSuccess)
+	if (IOBluetoothRFCOMMChannelWrite(pContext->rfcommChannel, (void *)buf, nbytes, TRUE) != kIOReturnSuccess)
 		return -1;
 #endif
 
