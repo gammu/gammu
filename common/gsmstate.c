@@ -1265,7 +1265,7 @@ int smprintf(GSM_StateMachine *s, const char *format, ...)
 	GSM_Debug_Info *curdi;
 
 	curdi = &GSM_global_debug;
-	if (s != NULL) {
+	if (s != NULL && s->di.use_global == false) {
 		curdi = &(s->di);
 	}
 
