@@ -136,6 +136,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	/* create the thread context and start the thread */
 	CFStringRef strDevice;
 	threadContext *pContext = (threadContext *)malloc(sizeof(threadContext));
+	if (pContext == NULL) return ERR_MOREMEMORY;
 
 	strDevice = CFStringCreateWithCString(kCFAllocatorDefault, device, kCFStringEncodingMacRomanLatin1);
 	IOBluetoothCFStringToDeviceAddress(strDevice, &pContext->deviceAddress);
@@ -166,12 +167,13 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 
 GSM_Error bluetooth_close(GSM_StateMachine *s)
 {
-	threadContext *pContext = (threadContext *)s->Device.Data.BlueTooth.Data;
+	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
+	threadContext *pContext = (threadContext *)d->Data;
         IOBluetoothDeviceRef device;
 
 	sleep(2);
 
-	if (s->Device.Data.BlueTooth.Data != -1 && pContext->rfcommChannel > 0) {
+	if (d->Data != NULL && pContext->rfcommChannel > 0) {
 #ifndef OSX_BLUE_2_0
 		/* de-register the callback */
 		IOBluetoothRFCOMMChannelRegisterIncomingDataListener(pContext->rfcommChannel, NULL, NULL);
@@ -190,7 +192,8 @@ GSM_Error bluetooth_close(GSM_StateMachine *s)
 
 int bluetooth_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
-	threadContext *pContext = (threadContext *)s->Device.Data.BlueTooth.Data;
+	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
+	threadContext *pContext = (threadContext *)d->Data;
 
 #ifdef OSX_BLUE_2_0
 	if (IOBluetoothRFCOMMChannelWrite(pContext->rfcommChannel, (void *)buf, nbytes, TRUE) != kIOReturnSuccess)
@@ -205,7 +208,8 @@ int bluetooth_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 
 int bluetooth_read(GSM_StateMachine *s, void *buffer, size_t size)
 {
-	threadContext *pContext = (threadContext *)s->Device.Data.BlueTooth.Data;
+	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
+	threadContext *pContext = (threadContext *)d->Data;
 	int nOffset = 0;
 	int nBytes = 0;
         dataBlock* pDataBlock;
