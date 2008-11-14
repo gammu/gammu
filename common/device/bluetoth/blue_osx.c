@@ -74,21 +74,27 @@ void thread_rfcommEventListener (IOBluetoothRFCOMMChannelRef rfcommChannel,
         switch (event->eventType)
         {
                 case kIOBluetoothRFCOMMNewDataEvent:
-		thread_rfcommDataListener(rfcommChannel, event->u.newData.dataPtr, event->u.newData.dataSize , refCon);
-                    // In thise case:
-                    // event->u.newData.dataPtr  is a pointer to the block of data received.
-                    // event->u.newData.dataSize is the size of the block of data.
+			/*
+			 * In thise case:
+			 * event->u.newData.dataPtr  is a pointer to the block of data received.
+			 * event->u.newData.dataSize is the size of the block of data.
+			 */
+			thread_rfcommDataListener(rfcommChannel, event->u.newData.dataPtr, event->u.newData.dataSize , refCon);
                 break;
 
                 case kIOBluetoothRFCOMMFlowControlChangedEvent:
-                    // In thise case:
-                    // event->u.flowStatus       is the status of flow control (see IOBluetoothRFCOMMFlowControlStatus for current restrictions)
+			/*
+			 * In thise case:
+			 * event->u.flowStatus       is the status of flow control (see IOBluetoothRFCOMMFlowControlStatus for current restrictions)
+			 */
                 break;
 
                 case kIOBluetoothRFCOMMChannelTerminatedEvent:
-                    // In this case:
-                    // event->u.terminatedChannel is the channel that was terminated. It can be converted in an IOBluetoothRFCOMMChannel
-                    // object with [IOBluetoothRFCOMMChannel withRFCOMMChannelRef:]. (see below).
+			/*
+			 * In this case:
+			 * event->u.terminatedChannel is the channel that was terminated. It can be converted in an IOBluetoothRFCOMMChannel
+			 * object with [IOBluetoothRFCOMMChannel withRFCOMMChannelRef:]. (see below).
+			 */
                 break;
         }
 }
