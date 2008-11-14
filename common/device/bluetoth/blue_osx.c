@@ -28,6 +28,7 @@
 
 #include <CoreFoundation/CoreFoundation.h>
 #include <IOBluetooth/Bluetooth.h>
+#include <IOBluetooth/IOBluetoothUtilities.h>
 #include <IOBluetooth/IOBluetoothUserLib.h>
 #include <pthread.h>
 
@@ -101,13 +102,13 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	pthread_t threadID;
 	threadContext *pContext = (threadContext *)malloc(sizeof(threadContext));
 
-	strDevice = CFStringCreateWithCString(kCFAllocatorDefault, addr, kCFStringEncodingMacRomanLatin1);
+	strDevice = CFStringCreateWithCString(kCFAllocatorDefault, device, kCFStringEncodingMacRomanLatin1);
 	IOBluetoothNSStringToDeviceAddress(strDevice, &pContext->deviceAddress);
 	CFRelease(strDevice);
 
 	pContext->arrDataReceived = CFArrayCreateMutable(kCFAllocatorDefault, 0, NULL);
 	pContext->rfcommChannel = 0;
-	pContext->nChannel = channel;
+	pContext->nChannel = port;
 
 	pthread_mutex_init(&(pContext->mutexWait), NULL);
 	pthread_mutex_lock(&(pContext->mutexWait));	/* lock */
@@ -124,7 +125,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 	} else {
 		/* return the thread context as the file descriptor */
 		d->Data = pContext;
-		return ERR_NONEl
+		return ERR_NONE;
 	}
 }
 
