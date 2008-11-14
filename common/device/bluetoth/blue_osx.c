@@ -109,6 +109,8 @@ static void *thread_main(void *pArg)
 
 	/* start the runloop */
 	CFRunLoopRun();
+
+	return NULL;
 }
 
 /* ---- bluetooth io thread ---- */
@@ -221,7 +223,7 @@ int bluetooth_read(GSM_StateMachine *s, void *buffer, size_t size)
 		} else if (pDataBlock->nSize > size) {
 			/* copy data and update block contents */
 			memcpy(((char *)buffer) + nOffset, pDataBlock->pData, size);
-			memmove(pDataBlock->pData, pDataBlock->pData + size, pDataBlock->nSize - size);
+			memmove(pDataBlock->pData, ((char *)pDataBlock->pData) + size, pDataBlock->nSize - size);
 			pDataBlock->nSize -= size;
 			return nBytes + size;
 		} else { /* pDataBlock->nSize < size */
