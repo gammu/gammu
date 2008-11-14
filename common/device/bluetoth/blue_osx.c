@@ -173,7 +173,7 @@ GSM_Error bluetooth_close(GSM_StateMachine *s)
 
 	sleep(2);
 
-	if (d->Data != NULL && pContext->rfcommChannel > 0) {
+	if (pContext != NULL && pContext->rfcommChannel > 0) {
 #ifndef OSX_BLUE_2_0
 		/* de-register the callback */
 		IOBluetoothRFCOMMChannelRegisterIncomingDataListener(pContext->rfcommChannel, NULL, NULL);
