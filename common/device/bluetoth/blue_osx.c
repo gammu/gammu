@@ -93,7 +93,6 @@ static void *thread_main(void *pArg)
 
 /* ---- bluetooth io thread ---- */
 
-GSM_Error bluetooth_connect(const char* addr, uint8_t channel, struct gn_statemachine* state)
 GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 {
 	GSM_Device_BlueToothData 	*d = &s->Device.Data.BlueTooth;
