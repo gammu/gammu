@@ -24,7 +24,7 @@
 #include "../../gsmstate.h"
 
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE
-#ifdef FBSD_BLUE_FOUND
+#ifdef OSX_BLUE_FOUND
 
 #include <CoreFoundation/CoreFoundation.h>
 #include <IOBluetooth/Bluetooth.h>
