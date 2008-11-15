@@ -21,6 +21,7 @@ ChangeLog
 [!] * GSM_SetDebugFileDescriptor now accepts flag whether file
       descriptor can be closed (bug #749).
 [!] * Soname change due to API breakage (see above).
+[-] * Fixed compilation on Mac OS X.
     
 20081111 - 1.21.91
 
