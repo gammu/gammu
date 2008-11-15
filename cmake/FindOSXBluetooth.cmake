@@ -10,32 +10,34 @@
 
 if (NOT DEFINED OSX_BLUE_FOUND)
     if (NOT CROSS_MINGW)
-        find_path(OSX_BLUE_INCLUDE_DIR NAMES IOBluetooth/IOBluetoothUserLib.h
-           PATHS
-           /usr/include
-           /usr/local/include
-        )
+        find_path(OSX_BLUE_INCLUDE_DIR NAMES IOBluetooth/IOBluetoothUserLib.h)
 
-        find_library(OSX_COREFOUNDATION_LIB NAMES CoreFoundation
-           PATHS
-           /usr/lib
-           /usr/local/lib
-        )
-        find_library(OSX_BLUETOOTH_LIB NAMES IOBluetooth
-           PATHS
-           /usr/lib
-           /usr/local/lib
-        )
-        find_library(OSX_FOUNDATION_LIB NAMES Foundation
-           PATHS
-           /usr/lib
-           /usr/local/lib
-        )
+        find_library(OSX_BLUETOOTH_LIB NAMES IOBluetooth)
 
-        if (OSX_BLUETOOTH_LIB AND OSX_COREFOUNDATION_LIB AND OSX_FOUNDATION_LIB) 
-            set (OSX_BLUE_LIBRARIES "${OSX_BLUETOOTH_LIB} ${OSX_COREFOUNDATION_LIB} ${OSX_FOUNDATION_LIB}" CACHE INTERNAL "OS X Bluetooth libraries")
-        endif (OSX_BLUETOOTH_LIB AND OSX_COREFOUNDATION_LIB AND OSX_FOUNDATION_LIB) 
+        INCLUDE(CMakeFindFrameworks)
 
+        CMAKE_FIND_FRAMEWORKS(CoreFoundation)
+        CMAKE_FIND_FRAMEWORKS(IOBluetooth)
+        CMAKE_FIND_FRAMEWORKS(Foundation)
+
+        if (CoreFoundation_FRAMEWORKS)
+           set(OSX_COREFOUNDATION_LIB "-framework CoreFoundation" CACHE FILEPATH "CoreFoundation framework" FORCE)
+           set(OSX_COREFOUNDATION_FOUND 1)
+        endif (CoreFoundation_FRAMEWORKS)
+
+        if (Foundation_FRAMEWORKS)
+           set(OSX_FOUNDATION_LIB "-framework Foundation" CACHE FILEPATH "Foundation framework" FORCE)
+           set(OSX_FOUNDATION_FOUND 1)
+        endif (Foundation_FRAMEWORKS)
+
+        if (IOBluetooth_FRAMEWORKS)
+           set(OSX_IOBLUETOOTH_LIB "-framework IOBluetooth" CACHE FILEPATH "IOBluetooth framework" FORCE)
+           set(OSX_IOBLUETOOTH_FOUND 1)
+        endif (IOBluetooth_FRAMEWORKS)
+
+        if (CoreFoundation_FRAMEWORKS AND Foundation_FRAMEWORKS AND IOBluetooth_FRAMEWORKS)
+            set (OSX_BLUE_LIBRARIES "${OSX_IOBLUETOOTH_LIB} ${OSX_COREFOUNDATION_LIB} ${OSX_FOUNDATION_LIB}" CACHE INTERNAL "OS X Bluetooth libraries")
+        endif (CoreFoundation_FRAMEWORKS AND Foundation_FRAMEWORKS AND IOBluetooth_FRAMEWORKS)
 
         if(OSX_BLUE_INCLUDE_DIR AND OSX_BLUE_LIBRARIES)
            set(OSX_BLUE_FOUND TRUE CACHE INTERNAL "OS X Bluetooth found")
