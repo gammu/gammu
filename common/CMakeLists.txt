@@ -108,7 +108,7 @@ if (FBSD_BLUE_FOUND)
 endif (FBSD_BLUE_FOUND)
 
 if (OSX_BLUE_FOUND)
-    target_link_libraries (libGammu ${OSX_BLUE_LIBRARIES})
+    target_link_libraries (libGammu ${OSX_BLUE_LIBS})
     include_directories (${OSX_BLUE_INCLUDE_DIR})
 endif (OSX_BLUE_FOUND)
 
