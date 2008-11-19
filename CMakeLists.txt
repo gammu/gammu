@@ -20,8 +20,7 @@ endif(COMMAND cmake_policy)
 option (COVERAGE "Add flags for Coverage analysis" OFF)
 
 if (WIN32)
-    set (PACKAGE_NAME "Windows" CACHE STRING "Windows package name")
-    set (CPACK_SYSTEM_NAME "${PACKAGE_NAME}")
+    set (CPACK_SYSTEM_NAME "Windows" CACHE STRING "Windows package name")
 endif (WIN32)
 
 if (MINGW)

@@ -105,7 +105,7 @@ cmake ../$repo-$version \
     -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32.cmake \
     -DBUILD_SHARED_LIBS=OFF \
     $CMAKE_EXTRA \
-    -DPACKAGE_NAME=Windows-Minimal \
+    -DCPACK_SYSTEM_NAME=Windows-Minimal \
     -DMYSQL_CROSS_PATH= \
     -DPOSTGRES_CROSS_PATH= \
     -DGETTEXT_CROSS_PATH= \
