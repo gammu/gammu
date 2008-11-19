@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2008???? - 1.21.92
+20081119 - 1.21.92
 
 [-] * Reimplement locking and add tests for it.
 [!] * GSM_SetDebugFileDescriptor now accepts flag whether file
