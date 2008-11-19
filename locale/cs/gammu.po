@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.21.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2008-10-29 12:07+0100\n"
-"PO-Revision-Date: 2008-06-11 11:32+0200\n"
+"PO-Revision-Date: 2008-11-18 15:24+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -291,7 +291,7 @@ msgstr "Chybný název vlastnosti v konfiguraci."
 
 #: common/gsmcomon.c:159
 msgid "Desired functionality has been disabled on compile time."
-msgstr ""
+msgstr "Požadovaná funkce byla vypnuta při kompilaci."
 
 #: common/gsmcomon.c:192
 msgid "Unknown error description."
@@ -474,11 +474,11 @@ msgstr "Načítám: %i procent"
 
 #: gammu/backup.c:314
 msgid "Checking SIM phonebook"
-msgstr ""
+msgstr "Kontroluji adresář na SIM kartě"
 
 #: gammu/backup.c:318
 msgid "Backup SIM phonebook?"
-msgstr ""
+msgstr "Zazálohovat adresář na SIM kartě?"
 
 #: gammu/backup.c:355
 msgid "Checking phone calendar"
