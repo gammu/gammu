@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2008???? - 1.21.93
+
+[!] * Drop own crosscompilation support, rely on CMake one.
     
 20081119 - 1.21.92
 

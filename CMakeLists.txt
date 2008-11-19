@@ -3,15 +3,14 @@
 # vim: expandtab sw=4 ts=4 sts=4:
 
 # I didn't check older versions
+# However 2.6 is needed for crosscompiling
 cmake_minimum_required (VERSION 2.4.2)
+
+# We've set up compiler, now we can use it
+project (Gammu C)
 
 # Where to lookup modules
 set (CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
-
-# Static library by default
-set (ENABLE_SHARED FALSE CACHE BOOL "Build shared library")
-
-set (BUILD_SHARED_LIBS ${ENABLE_SHARED} CACHE INTERNAL "Shared build")
 
 # Silent some warnings from CMake 2.6
 if(COMMAND cmake_policy)
@@ -20,75 +19,15 @@ endif(COMMAND cmake_policy)
 
 option (COVERAGE "Add flags for Coverage analysis" OFF)
 
-# Support for cross compilation
-if (UNIX)
-    option (CROSS_MINGW "Cross compile using MinGW on linux" OFF)
-else (UNIX)
-    set (CROSS_MINGW OFF)
-endif (UNIX)
-
-if (CROSS_MINGW)
-    message (STATUS "Cross compiling using MinGW")
-    set (CMAKE_COMPILER_IS_GNUCC 1)
-    set (CMAKE_COMPILER_IS_GNUCXX 1)
-
-    find_program(MINGW_CXX_COMPILER
-        NAMES i586-mingw32msvc-c++ i386-mingw32-c++ i686-pc-mingw32-c++
-        PATHS
-            /usr/local/bin/
-            /usr/bin/
-        DOC "MinGW C++ compiler binary")
-    find_program(MINGW_C_COMPILER
-        NAMES i586-mingw32msvc-gcc i386-mingw32-gcc i686-pc-mingw32-gcc
-        PATHS
-            /usr/local/bin/
-            /usr/bin/
-        DOC "MinGW C compiler binary")
-    find_program(MINGW_AR
-        NAMES i586-mingw32msvc-ar i386-mingw32-ar i686-pc-mingw32-ar
-        PATHS
-            /usr/local/bin/
-            /usr/bin/
-        DOC "MinGW ar binary")
-    find_program(MINGW_RANLIB
-        NAMES i586-mingw32msvc-ranlib i386-mingw32-ranlib i686-pc-mingw32-ranlib
-        PATHS
-            /usr/local/bin/
-            /usr/bin/
-        DOC "MinGW ranlib binary")
-    set (CMAKE_CXX_COMPILER "${MINGW_CXX_COMPILER}")
-    set (CMAKE_C_COMPILER "${MINGW_C_COMPILER}")
-    set (CMAKE_AR "${MINGW_AR}")
-    set (CMAKE_RANLIB "${MINGW_RANLIB}")
-    set (WIN32 ON CACHE BOOL "Win32 environment")
-    set (MINGW ON CACHE BOOL "MinGW environment")
-
-    include (WindowsCross)
-
-    # Detection not supported for cross compiling
-    #    set (HAVE_ISWSPACE ON CACHE INTERNAL "")
-    #    set (HAVE_TOWLOWER ON CACHE INTERNAL "")
-    #    set (HAVE_WINT_T ON CACHE INTERNAL "")
-    #    set (HAVE_WCHAR_T ON CACHE INTERNAL "")
-    #    set (HAVE_WCTYPE_H ON CACHE INTERNAL "")
-    #    set (HAVE_WCHAR_H ON CACHE INTERNAL "")
-
-    # CPack configuration
-    set (CPACK_GENERATOR "ZIP;NSIS")
-    set (CPACK_SOURCE_GENERATOR "ZIP")
-    set (CPACK_TOPLEVEL_TAG "Source")
+if (WIN32)
     set (PACKAGE_NAME "Windows" CACHE STRING "Windows package name")
     set (CPACK_SYSTEM_NAME "${PACKAGE_NAME}")
+endif (WIN32)
+
+if (MINGW)
     # My MinGW is hacked to use msvcr70.dll, to work with Python
     add_definitions(-D_MSVCRT_VERSION__=0x070)
-endif (CROSS_MINGW)
-
-# We've set up compiler, now we can use it
-project (Gammu C)
-
-if (CROSS_MINGW)
-    include (WindowsCross)
-endif (CROSS_MINGW)
+endif (MINGW)
 
 # Set version
 set (VERSION "1.21.93" CACHE INTERNAL "")
@@ -180,7 +119,8 @@ check_symbol_exists (iswspace "wctype.h" HAVE_ISWSPACE)
 check_symbol_exists (towlower "wctype.h" HAVE_TOWLOWER)
 
 # Check disabled for cross, but we have some libraries
-if (CROSS_MINGW)
+if (CMAKE_CROSSCOMPILING AND MINGW)
+
 
     set (MYSQL_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/mysql" CACHE FILEPATH "Path to MySQL for cross compilation")
     find_library (MYSQL_LIBRARIES
@@ -232,7 +172,7 @@ if (CROSS_MINGW)
 
     set (HAVE_WINT_T 4 CACHE INTERNAL "")
     set (HAVE_WCHAR_T 4 CACHE INTERNAL "")
-else (CROSS_MINGW)
+else (CMAKE_CROSSCOMPILING AND MINGW)
     # Standard packages
     macro_optional_find_package (Threads)
 
@@ -253,7 +193,7 @@ else (CROSS_MINGW)
         check_type_size (wint_t  HAVE_WINT_T)
     endif (HAVE_WCTYPE_H)
     set (CMAKE_EXTRA_INCLUDE_FILES)
-endif (CROSS_MINGW)
+endif (CMAKE_CROSSCOMPILING AND MINGW)
 
 OPTION(WITH_BLUETOOTH "Bluetooth support" ON)
 if (WITH_BLUETOOTH)
@@ -438,18 +378,18 @@ else(MSVC)
     # Other flags
     #
 
-    if (WIN32 AND ENABLE_SHARED)
+    if (WIN32 AND BUILD_SHARED_LIBS)
         MACRO_TUNE_LINKER("-Wl,--enable-auto-import")
-    endif (WIN32 AND ENABLE_SHARED)
+    endif (WIN32 AND BUILD_SHARED_LIBS)
 endif(MSVC)
 
 # Define required libraries for gammu library if it is static
-if (ENABLE_SHARED)
+if (BUILD_SHARED_LIBS)
     set (GAMMU_PRIVATE_LIBS "" CACHE INTERNAL "Private libraries for gammu library")
-else (ENABLE_SHARED)
+else (BUILD_SHARED_LIBS)
     string(REGEX REPLACE "-l(/usr)?/lib/lib([^ ]*).so" "-l\\2" G_LIB "${GAMMU_LIBS}")
     set (GAMMU_PRIVATE_LIBS "${G_LIB}" CACHE INTERNAL "Private libraries for gammu library")
-endif (ENABLE_SHARED)
+endif (BUILD_SHARED_LIBS)
 
 set (EXAMPLES
     docs/examples/config/smsdrc
@@ -775,7 +715,7 @@ configure_file (templates/gammu-uninstalled.pc.cmake pkgconfig/gammu.pc @ONLY)
 # Install instructions
 
 # Install Windows libraries
-if (CROSS_MINGW)
+if (WIN32)
     # MySQL
     if (MYSQL_FOUND)
         install (FILES "${MYSQL_CROSS_PATH}/lib/opt/libmysql.dll"
@@ -820,7 +760,7 @@ if (CROSS_MINGW)
                 DESTINATION "${INSTALL_BIN_DIR}"
                 )
     endif (CURL_FOUND)
-endif (CROSS_MINGW)
+endif (WIN32)
 
 foreach (HEADER ${PUBLIC_HEADERS})
     string (REPLACE "${Gammu_BINARY_DIR}" "" DIRNAME ${HEADER})

@@ -87,7 +87,7 @@ parameters bellow), or using TUI - ccmake.
 
 Useful cmake parameters:
 
--DENABLE_SHARED=ON enables shared library
+-DBUILD_SHARED_LIBS=ON enables shared library
 -DCMAKE_BUILD_TYPE="Debug" enables debug build
 -DCMAKE_INSTALL_PREFIX="/usr" change installation prefix
 -DENABLE_PROTECTION=OFF disables various compile time protections
@@ -133,21 +133,21 @@ install mingw32. Build is then quite simple:
 
 mkdir build-win32
 cd build-win32
-cmake .. -DCROSS_MINGW=ON
+cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake
 make
 
 If your MinGW cross compiler binaries are not found automatically, you
 can specify their different names:
 
-cmake .. -DCROSS_MINGW=ON \
+cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \
     -DMINGW_C_COMPILER=/usr/local/bin/i386-mingw32-gcc \
     -DMINGW_AR=/usr/local/bin/i386-mingw32-ar \
     -DMINGW_RANLIB=/usr/local/bin/i386-mingw32-ranlib
 
 To build just bare static library without any dependencies, use:
 
-cmake .. -DCROSS_MINGW=ON \
-    -DENABLE_SHARED=OFF \
+cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \
+    -DBUILD_SHARED_LIBS=OFF \
     -DMYSQL_CROSS_PATH= \
     -DPOSTGRES_CROSS_PATH= \
     -DCURL_CROSS_PATH= \

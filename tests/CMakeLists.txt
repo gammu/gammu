@@ -10,83 +10,47 @@ if (EXECUTABLE_OUTPUT_PATH)
 else (EXECUTABLE_OUTPUT_PATH)
     set (GAMMU_TEST_PATH "${CMAKE_CURRENT_BINARY_DIR}/")
 endif (EXECUTABLE_OUTPUT_PATH)
-if (CROSS_MINGW)
-    set (GAMMU_TEST_SUFFIX ".exe")
-else (CROSS_MINGW)
-    set (GAMMU_TEST_SUFFIX "")
-endif (CROSS_MINGW)
 
 # We use Gammu
 include_directories("${Gammu_BINARY_DIR}/include")
 
 # Basic check for statemachine allocation
 add_executable(statemachine-alloc statemachine-alloc.c)
-if (CROSS_MINGW)
-    set_target_properties (statemachine-alloc PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
-
 target_link_libraries(statemachine-alloc libGammu)
 add_test(statemachine-alloc "${GAMMU_TEST_PATH}/statemachine-alloc${GAMMU_TEST_SUFFIX}")
 
 # Basic check for statemachine functionality
 add_executable(statemachine-init statemachine-init.c)
-if (CROSS_MINGW)
-    set_target_properties (statemachine-init PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
-
 target_link_libraries(statemachine-init libGammu)
 add_test(statemachine-init "${GAMMU_TEST_PATH}/statemachine-init${GAMMU_TEST_SUFFIX}")
 
 # Debug testing
 add_executable(debug debug.c)
-if (CROSS_MINGW)
-    set_target_properties (debug PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
-
 target_link_libraries(debug libGammu)
 add_test(debug "${GAMMU_TEST_PATH}/debug${GAMMU_TEST_SUFFIX}")
 
 # Check error code  descriptions
 add_executable(dump-error-codes dump-error-codes.c)
-if (CROSS_MINGW)
-    set_target_properties (dump-error-codes PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
-
 target_link_libraries(dump-error-codes libGammu)
 add_test(dump-error-codes "${GAMMU_TEST_PATH}/dump-error-codes${GAMMU_TEST_SUFFIX}" "-n")
 
 # Check feature code names
 add_executable(dump-features dump-features.c)
-if (CROSS_MINGW)
-    set_target_properties (dump-features PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
-
 target_link_libraries(dump-features libGammu)
 add_test(dump-features "${GAMMU_TEST_PATH}/dump-features${GAMMU_TEST_SUFFIX}" "-n")
 
 # Check feature parsing
 add_executable(features-parsing features-parsing.c)
-if (CROSS_MINGW)
-    set_target_properties (features-parsing PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
-
 target_link_libraries(features-parsing libGammu)
 add_test(features-parsing "${GAMMU_TEST_PATH}/features-parsing${GAMMU_TEST_SUFFIX}" "-n")
 
 # Check network codes decoding
 add_executable(network-codes network-codes.c)
-if (CROSS_MINGW)
-    set_target_properties (network-codes PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
-
 target_link_libraries(network-codes libGammu)
 add_test(network-codes "${GAMMU_TEST_PATH}/network-codes${GAMMU_TEST_SUFFIX}" "-n")
 
 # vCard parsing
 add_executable(vcard-read vcard-read.c)
-if (CROSS_MINGW)
-    set_target_properties (vcard-read PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(vcard-read libGammu)
 
 # List test cases
@@ -123,9 +87,6 @@ endforeach(TESTVCARD $VCARDS)
 
 # [iv]Calendar parsing
 add_executable(cal-read cal-read.c)
-if (CROSS_MINGW)
-    set_target_properties (cal-read PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(cal-read libGammu)
 
 # List test cases
@@ -160,56 +121,36 @@ endforeach(TESTVCAL $VCALS)
 
 # SMS parsing
 add_executable(sms-nokia-01 sms-nokia-01.c sms-printing.c)
-if (CROSS_MINGW)
-    set_target_properties (sms-nokia-01 PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(sms-nokia-01 libGammu)
 add_test(sms-nokia-01 "${GAMMU_TEST_PATH}/sms-nokia-01${GAMMU_TEST_SUFFIX}")
+
 add_executable(sms-nokia-02 sms-nokia-02.c sms-printing.c)
-if (CROSS_MINGW)
-    set_target_properties (sms-nokia-02 PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(sms-nokia-02 libGammu)
 add_test(sms-nokia-02 "${GAMMU_TEST_PATH}/sms-nokia-02${GAMMU_TEST_SUFFIX}")
+
 add_executable(sms-nokia-03 sms-nokia-03.c sms-printing.c)
-if (CROSS_MINGW)
-    set_target_properties (sms-nokia-03 PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(sms-nokia-03 libGammu)
 add_test(sms-nokia-03 "${GAMMU_TEST_PATH}/sms-nokia-03${GAMMU_TEST_SUFFIX}")
+
 add_executable(sms-nokia-04 sms-nokia-04.c sms-printing.c)
-if (CROSS_MINGW)
-    set_target_properties (sms-nokia-04 PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(sms-nokia-04 libGammu)
 add_test(sms-nokia-04 "${GAMMU_TEST_PATH}/sms-nokia-04${GAMMU_TEST_SUFFIX}")
+
 add_executable(sms-nokia-05 sms-nokia-05.c sms-printing.c)
-if (CROSS_MINGW)
-    set_target_properties (sms-nokia-05 PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(sms-nokia-05 libGammu)
 add_test(sms-nokia-05 "${GAMMU_TEST_PATH}/sms-nokia-05${GAMMU_TEST_SUFFIX}")
 
 # Nokia ringtone
 add_executable(nokia-6110-ringtone nokia-6110-ringtone.c)
-if (CROSS_MINGW)
-    set_target_properties (nokia-6110-ringtone PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(nokia-6110-ringtone libGammu)
 add_test(nokia-6110-ringtone "${GAMMU_TEST_PATH}/nokia-6110-ringtone${GAMMU_TEST_SUFFIX}")
 
 # AT SMS parsing
 add_executable(sms-at-parse sms-at-parse.c sms-printing.c)
-if (CROSS_MINGW)
-    set_target_properties (sms-at-parse PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(sms-at-parse libGammu)
 
 # AT SMS parsing - simple PDU decoder
 add_executable(pdu-decode pdu-decode.c)
-if (CROSS_MINGW)
-    set_target_properties (pdu-decode PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 
 # List test cases for success
 file(GLOB MESSAGES
@@ -259,9 +200,6 @@ endforeach(TESTMESSAGE $MESSAGES)
 
 # AT model parsing
 add_executable(get-model-at get-model-at.c)
-if (CROSS_MINGW)
-    set_target_properties (get-model-at PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(get-model-at libGammu)
 
 # List test cases
@@ -279,9 +217,6 @@ endforeach(TESTMESSAGE $MESSAGES)
 
 # AT SMSC parsing
 add_executable(get-smsc-at get-smsc-at.c)
-if (CROSS_MINGW)
-    set_target_properties (get-smsc-at PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(get-smsc-at libGammu)
 
 # List test cases
@@ -299,9 +234,6 @@ endforeach(TESTMESSAGE $MESSAGES)
 
 # AT SMS encoding
 add_executable(sms-at-encode sms-at-encode.c sms-printing.c)
-if (CROSS_MINGW)
-    set_target_properties (sms-at-encode PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(sms-at-encode libGammu)
 
 # List test cases
@@ -321,38 +253,23 @@ endforeach(TESTMESSAGE $MESSAGES)
 
 # SMS encoding
 add_executable(sms-encode-decode sms-encode-decode.c sms-printing.c)
-if (CROSS_MINGW)
-    set_target_properties (sms-encode-decode PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(sms-encode-decode libGammu)
 add_test(sms-encode-decode "${GAMMU_TEST_PATH}/sms-encode-decode${GAMMU_TEST_SUFFIX}")
 
 # AT parser tests
 add_executable(at-parser at-parser.c)
-if (CROSS_MINGW)
-    set_target_properties (at-parser PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(at-parser libGammu)
 add_test(at-parser "${GAMMU_TEST_PATH}/at-parser${GAMMU_TEST_SUFFIX}")
 
 # Line parser tests
 add_executable(line-splitting line-splitting.c)
-if (CROSS_MINGW)
-    set_target_properties (line-splitting PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(line-splitting libGammu)
 add_test(line-splitting "${GAMMU_TEST_PATH}/line-splitting${GAMMU_TEST_SUFFIX}")
 
 # Just try to compile example whether it is still correct
 add_executable(phone-info "${Gammu_SOURCE_DIR}/docs/develop/examples/phone-info.c")
-if (CROSS_MINGW)
-    set_target_properties (phone-info PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(phone-info libGammu)
 add_executable(sms-send "${Gammu_SOURCE_DIR}/docs/develop/examples/sms-send.c")
-if (CROSS_MINGW)
-    set_target_properties (sms-send PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(sms-send libGammu)
 
 
@@ -361,201 +278,126 @@ target_link_libraries(sms-send libGammu)
 
 # Test for header gammu-backup.h
 add_executable(include-backup include-backup.c)
-if (CROSS_MINGW)
-    set_target_properties (include-backup PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-backup libGammu)
 add_test(include-backup "${GAMMU_TEST_PATH}/include-backup${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-bitmap.h
 add_executable(include-bitmap include-bitmap.c)
-if (CROSS_MINGW)
-    set_target_properties (include-bitmap PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-bitmap libGammu)
 add_test(include-bitmap "${GAMMU_TEST_PATH}/include-bitmap${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-calendar.h
 add_executable(include-calendar include-calendar.c)
-if (CROSS_MINGW)
-    set_target_properties (include-calendar PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-calendar libGammu)
 add_test(include-calendar "${GAMMU_TEST_PATH}/include-calendar${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-callback.h
 add_executable(include-callback include-callback.c)
-if (CROSS_MINGW)
-    set_target_properties (include-callback PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-callback libGammu)
 add_test(include-callback "${GAMMU_TEST_PATH}/include-callback${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-call.h
 add_executable(include-call include-call.c)
-if (CROSS_MINGW)
-    set_target_properties (include-call PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-call libGammu)
 add_test(include-call "${GAMMU_TEST_PATH}/include-call${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-category.h
 add_executable(include-category include-category.c)
-if (CROSS_MINGW)
-    set_target_properties (include-category PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-category libGammu)
 add_test(include-category "${GAMMU_TEST_PATH}/include-category${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-datetime.h
 add_executable(include-datetime include-datetime.c)
-if (CROSS_MINGW)
-    set_target_properties (include-datetime PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-datetime libGammu)
 add_test(include-datetime "${GAMMU_TEST_PATH}/include-datetime${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-debug.h
 add_executable(include-debug include-debug.c)
-if (CROSS_MINGW)
-    set_target_properties (include-debug PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-debug libGammu)
 add_test(include-debug "${GAMMU_TEST_PATH}/include-debug${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-error.h
 add_executable(include-error include-error.c)
-if (CROSS_MINGW)
-    set_target_properties (include-error PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-error libGammu)
 add_test(include-error "${GAMMU_TEST_PATH}/include-error${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-file.h
 add_executable(include-file include-file.c)
-if (CROSS_MINGW)
-    set_target_properties (include-file PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-file libGammu)
 add_test(include-file "${GAMMU_TEST_PATH}/include-file${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-info.h
 add_executable(include-info include-info.c)
-if (CROSS_MINGW)
-    set_target_properties (include-info PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-info libGammu)
 add_test(include-info "${GAMMU_TEST_PATH}/include-info${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-inifile.h
 add_executable(include-inifile include-inifile.c)
-if (CROSS_MINGW)
-    set_target_properties (include-inifile PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-inifile libGammu)
 add_test(include-inifile "${GAMMU_TEST_PATH}/include-inifile${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-keys.h
 add_executable(include-keys include-keys.c)
-if (CROSS_MINGW)
-    set_target_properties (include-keys PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-keys libGammu)
 add_test(include-keys "${GAMMU_TEST_PATH}/include-keys${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-limits.h
 add_executable(include-limits include-limits.c)
-if (CROSS_MINGW)
-    set_target_properties (include-limits PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-limits libGammu)
 add_test(include-limits "${GAMMU_TEST_PATH}/include-limits${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-memory.h
 add_executable(include-memory include-memory.c)
-if (CROSS_MINGW)
-    set_target_properties (include-memory PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-memory libGammu)
 add_test(include-memory "${GAMMU_TEST_PATH}/include-memory${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-message.h
 add_executable(include-message include-message.c)
-if (CROSS_MINGW)
-    set_target_properties (include-message PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-message libGammu)
 add_test(include-message "${GAMMU_TEST_PATH}/include-message${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-misc.h
 add_executable(include-misc include-misc.c)
-if (CROSS_MINGW)
-    set_target_properties (include-misc PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-misc libGammu)
 add_test(include-misc "${GAMMU_TEST_PATH}/include-misc${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-nokia.h
 add_executable(include-nokia include-nokia.c)
-if (CROSS_MINGW)
-    set_target_properties (include-nokia PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-nokia libGammu)
 add_test(include-nokia "${GAMMU_TEST_PATH}/include-nokia${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-ringtone.h
 add_executable(include-ringtone include-ringtone.c)
-if (CROSS_MINGW)
-    set_target_properties (include-ringtone PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-ringtone libGammu)
 add_test(include-ringtone "${GAMMU_TEST_PATH}/include-ringtone${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-security.h
 add_executable(include-security include-security.c)
-if (CROSS_MINGW)
-    set_target_properties (include-security PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-security libGammu)
 add_test(include-security "${GAMMU_TEST_PATH}/include-security${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-settings.h
 add_executable(include-settings include-settings.c)
-if (CROSS_MINGW)
-    set_target_properties (include-settings PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-settings libGammu)
 add_test(include-settings "${GAMMU_TEST_PATH}/include-settings${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-statemachine.h
 add_executable(include-statemachine include-statemachine.c)
-if (CROSS_MINGW)
-    set_target_properties (include-statemachine PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-statemachine libGammu)
 add_test(include-statemachine "${GAMMU_TEST_PATH}/include-statemachine${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-types.h
 add_executable(include-types include-types.c)
-if (CROSS_MINGW)
-    set_target_properties (include-types PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-types libGammu)
 add_test(include-types "${GAMMU_TEST_PATH}/include-types${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-unicode.h
 add_executable(include-unicode include-unicode.c)
-if (CROSS_MINGW)
-    set_target_properties (include-unicode PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-unicode libGammu)
 add_test(include-unicode "${GAMMU_TEST_PATH}/include-unicode${GAMMU_TEST_SUFFIX}")
 
 # Test for header gammu-wap.h
 add_executable(include-wap include-wap.c)
-if (CROSS_MINGW)
-    set_target_properties (include-wap PROPERTIES PREFIX "" SUFFIX ".exe")
-endif (CROSS_MINGW)
 target_link_libraries(include-wap libGammu)
 add_test(include-wap "${GAMMU_TEST_PATH}/include-wap${GAMMU_TEST_SUFFIX}")
 
@@ -564,9 +406,6 @@ if (NOT WIN32)
     execute_process(COMMAND test -w /var/lock/ RESULT_VARIABLE VAR_LOCK_WRITABLE)
     if (VAR_LOCK_WRITABLE EQUAL 0)
         add_executable(locking locking.c)
-        if (CROSS_MINGW)
-            set_target_properties (locking PROPERTIES PREFIX "" SUFFIX ".exe")
-        endif (CROSS_MINGW)
         target_link_libraries(locking libGammu)
         add_test(locking "${GAMMU_TEST_PATH}/locking${GAMMU_TEST_SUFFIX}")
     else (VAR_LOCK_WRITABLE EQUAL 0)
