@@ -47,7 +47,9 @@ if (NOT DEFINED OSX_BLUE_FOUND)
            message(STATUS "OS X Bluetooth not found.")
         endif(OSX_BLUE_INCLUDE_DIR AND OSX_BLUE_LIBRARIES)
 
-        CHECK_LIBRARY_EXISTS(${OSX_BLUETOOTH_LIB} "IOBluetoothDeviceOpenRFCOMMChannelSync" "" OSX_BLUE_2_0)
+        if(OSX_BLUETOOTH_LIB)
+            CHECK_LIBRARY_EXISTS(${OSX_BLUETOOTH_LIB} "IOBluetoothDeviceOpenRFCOMMChannelSync" "" OSX_BLUE_2_0)
+        endif(OSX_BLUETOOTH_LIB)
 
         mark_as_advanced(OSX_BLUE_INCLUDE_DIR OSX_BLUE_LIBRARIES)
     endif (NOT CROSS_MINGW)
