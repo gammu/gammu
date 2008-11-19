@@ -73,29 +73,10 @@ set (LIBRARY_SRC
 
 # Library
 add_library (libGammu ${LIBRARY_SRC})
-if (CROSS_MINGW)
-    if (ENABLE_SHARED)
-        set_target_properties (libGammu PROPERTIES
-            PREFIX ""
-            SUFFIX ".dll"
-            IMPORT_PREFIX ""
-            IMPORT_SUFFIX ".lib"
-            )
-    else (ENABLE_SHARED)
-        set_target_properties (libGammu PROPERTIES PREFIX "" SUFFIX ".lib")
-    endif (ENABLE_SHARED)
-else (CROSS_MINGW)
-    # -fPIC on Linux
-    if (CMAKE_SYSTEM_NAME MATCHES "Linux")
-        set_target_properties (libGammu PROPERTIES COMPILE_FLAGS "-fPIC")
-    endif (CMAKE_SYSTEM_NAME MATCHES "Linux")
-
-endif (CROSS_MINGW)
-
-if (NOT CROSS_MINGW)
-    set_target_properties (libGammu PROPERTIES VERSION ${SOVERSION}.${VERSION} SOVERSION ${SOVERSION})
-endif (NOT CROSS_MINGW)
-set_target_properties(libGammu PROPERTIES OUTPUT_NAME Gammu)
+set_target_properties (libGammu PROPERTIES
+    VERSION ${SOVERSION}.${VERSION}
+    SOVERSION ${SOVERSION}
+    OUTPUT_NAME Gammu)
 
 if (BLUEZ_FOUND)
     target_link_libraries (libGammu ${BLUEZ_LIBRARIES})
@@ -122,6 +103,11 @@ if (UNIX)
     target_link_libraries (libGammu ${MATH_LIBRARIES})
 endif (UNIX)
 
+if (GETTEXTLIBS_FOUND)
+    target_link_libraries (libGammu ${GETTEXT_LIBRARY})
+    include_directories (${GETTEXT_INCLUDE_DIR})
+endif (GETTEXTLIBS_FOUND)
+
 # Include search path
 include_directories ("${Gammu_BINARY_DIR}/include")
 include_directories ("${Gammu_SOURCE_DIR}/common")
@@ -135,11 +121,6 @@ if (WIN32)
     # These libraries are needed for serial driver
     target_link_libraries (libGammu setupapi advapi32)
 endif (WIN32)
-
-if (GETTEXTLIBS_FOUND)
-    target_link_libraries (libGammu ${GETTEXT_LIBRARY})
-    include_directories (${GETTEXT_INCLUDE_DIR})
-endif (GETTEXTLIBS_FOUND)
 
 # Install instructions
 install (TARGETS libGammu

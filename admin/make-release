@@ -82,8 +82,8 @@ echo 'Building Windows version...'
 mkdir build-win-shared
 cd build-win-shared
 cmake ../$repo-$version \
-    -DCROSS_MINGW=ON \
-    -DENABLE_SHARED=ON \
+    -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32.cmake \
+    -DBUILD_SHARED_LIBS=ON \
     $CMAKE_EXTRA \
     -DCURL_CROSS_PATH=$srcdir/../../win-cross/curl \
     -DMYSQL_CROSS_PATH=$srcdir/../../win-cross/mysql
@@ -102,8 +102,8 @@ echo 'Building minimal Windows version...'
 mkdir build-win-minimal
 cd build-win*minimal
 cmake ../$repo-$version \
-    -DCROSS_MINGW=ON \
-    -DENABLE_SHARED=OFF \
+    -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32.cmake \
+    -DBUILD_SHARED_LIBS=OFF \
     $CMAKE_EXTRA \
     -DPACKAGE_NAME=Windows-Minimal \
     -DMYSQL_CROSS_PATH= \
