@@ -1805,6 +1805,9 @@ static GSM_Error N6510_ReplyGetConnectionSettings(GSM_Protocol_Message msg, GSM_
 		Data->WAPSettings->Settings[num].IsNormalAuthentication=true;
 		if (msg.Buffer[tmp]==0x01) Data->WAPSettings->Settings[num].IsNormalAuthentication=false;
 
+		Data->WAPSettings->Settings[num].IsISDNCall=false;
+		Data->WAPSettings->Settings[num].Speed = WAPSETTINGS_SPEED_AUTO;
+
 		Data->WAPSettings->Settings[num].IsContinuous = true;
 		if (msg.Buffer[tmp+1] == 0x01) Data->WAPSettings->Settings[num].IsContinuous = false;
 
