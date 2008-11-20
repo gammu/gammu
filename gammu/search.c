@@ -9,10 +9,14 @@
 #  include <sys/types.h>
 #  include <sys/stat.h>
 #  include <unistd.h>
+#  define THREAD_RETURN void *
+#  define THREAD_RETURN_VAL NULL
 #endif
 #ifdef WIN32
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
+#  define THREAD_RETURN DWORD
+#  define THREAD_RETURN_VAL 0
 #endif
 
 #include "search.h"
@@ -97,9 +101,10 @@ void SearchPrintPhoneInfo(GSM_StateMachine * sm)
 	       GSM_GetModelInfo(sm)->model, buffer);
 }
 
-void SearchPhoneThread(OneDeviceInfo * Info)
+THREAD_RETURN SearchPhoneThread(void * arg)
 {
 	int j;
+	OneDeviceInfo *Info = arg;
 	GSM_Error error;
 	GSM_StateMachine *search_gsm;
 	GSM_Config *cfg;
@@ -111,7 +116,7 @@ void SearchPhoneThread(OneDeviceInfo * Info)
 		/* Allocate state machine */
 		search_gsm = GSM_AllocStateMachine();
 		if (search_gsm == NULL)
-			return;
+			return THREAD_RETURN_VAL;
 
 		/* Get configuration pointers */
 		cfg = GSM_GetConfig(search_gsm, 0);
@@ -164,6 +169,7 @@ void SearchPhoneThread(OneDeviceInfo * Info)
 	}
 	/* This is racy */
 	num--;
+	return THREAD_RETURN_VAL;
 }
 
 #ifdef HAVE_PTHREAD
@@ -177,7 +183,7 @@ void MakeSearchThread(int i)
 	num++;
 #ifdef HAVE_PTHREAD
 	if (pthread_create
-	    (&Thread[i], NULL, (void *)SearchPhoneThread,
+	    (&Thread[i], NULL, SearchPhoneThread,
 	     &SearchDevices[i]) != 0) {
 		dbgprintf("Error creating thread\n");
 	}
