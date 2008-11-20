@@ -20,7 +20,8 @@ ChangeLog
 [!] * Drop own crosscompilation support, rely on CMake one.
 [-] * Search does not create thread for non existing devices.
 [-] * Fixed possible crash when backing up ringtones.
-    
+[-] * Fix possible race condition in searching.
+
 20081119 - 1.21.92
 
 [-] * Reimplement locking and add tests for it.

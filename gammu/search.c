@@ -48,7 +48,6 @@ typedef struct {
 	OneConnectionInfo Connections[5];
 } OneDeviceInfo;
 
-int num;
 bool SearchOutput;
 
 /**
@@ -167,30 +166,30 @@ THREAD_RETURN SearchPhoneThread(void * arg)
 		/* Free allocated buffer */
 		GSM_FreeStateMachine(search_gsm);
 	}
-	/* This is racy */
-	num--;
 	return THREAD_RETURN_VAL;
 }
 
 #ifdef HAVE_PTHREAD
-pthread_t Thread[100];
+pthread_t Threads[100];
+#else
+HANDLE Threads[100];
 #endif
 
 OneDeviceInfo SearchDevices[60];
 
 void MakeSearchThread(int i)
 {
-	num++;
 #ifdef HAVE_PTHREAD
 	if (pthread_create
-	    (&Thread[i], NULL, SearchPhoneThread,
+	    (&Threads[i], NULL, SearchPhoneThread,
 	     &SearchDevices[i]) != 0) {
 		dbgprintf("Error creating thread\n");
 	}
 #else
-	if (CreateThread((LPSECURITY_ATTRIBUTES) NULL, 0,
+	Threads[i] = CreateThread((LPSECURITY_ATTRIBUTES) NULL, 0,
 			 (LPTHREAD_START_ROUTINE) SearchPhoneThread,
-			 &SearchDevices[i], 0, NULL) == NULL) {
+			 &SearchDevices[i], 0, NULL);
+	if (Threads[i] 	== NULL) {
 		dbgprintf("Error creating thread\n");
 	}
 #endif
@@ -198,9 +197,10 @@ void MakeSearchThread(int i)
 
 void SearchPhone(int argc, char *argv[])
 {
-	int i, dev = 0, dev2 = 0;
+	int i, dev = 0;
 #ifdef HAVE_PTHREAD
 	struct stat buf;
+	void *ret;
 #endif
 
 
@@ -208,27 +208,24 @@ void SearchPhone(int argc, char *argv[])
 	if (argc == 3 && strcasecmp(argv[2], "-debug") == 0)
 		SearchOutput = true;
 
-	num = 0;
 #ifdef WIN32
 	SearchDevices[dev].Device[0] = 0;
 	sprintf(SearchDevices[dev].Connections[0].Connection, "irdaphonet");
 	sprintf(SearchDevices[dev].Connections[1].Connection, "irdaat");
 	SearchDevices[dev].Connections[2].Connection[0] = 0;
 	dev++;
-	dev2 = dev;
 	for (i = 0; i < 20; i++) {
-		sprintf(SearchDevices[dev2].Device, "com%i:", i + 1);
-		sprintf(SearchDevices[dev2].Connections[0].Connection,
+		sprintf(SearchDevices[dev].Device, "com%i:", i + 1);
+		sprintf(SearchDevices[dev].Connections[0].Connection,
 			"fbusdlr3");
-		sprintf(SearchDevices[dev2].Connections[1].Connection, "fbus");
-		sprintf(SearchDevices[dev2].Connections[2].Connection,
+		sprintf(SearchDevices[dev].Connections[1].Connection, "fbus");
+		sprintf(SearchDevices[dev].Connections[2].Connection,
 			"at19200");
-		sprintf(SearchDevices[dev2].Connections[3].Connection, "mbus");
-		SearchDevices[dev2].Connections[4].Connection[0] = 0;
-		dev2++;
+		sprintf(SearchDevices[dev].Connections[3].Connection, "mbus");
+		SearchDevices[dev].Connections[4].Connection[0] = 0;
+		dev++;
 	}
-#endif
-#ifdef HAVE_PTHREAD
+#else
 	for (i = 0; i < 6; i++) {
 		sprintf(SearchDevices[dev].Device, "/dev/ircomm%i", i);
 		if (stat(SearchDevices[dev].Device, &buf) != 0) continue;
@@ -239,52 +236,51 @@ void SearchPhone(int argc, char *argv[])
 		SearchDevices[dev].Connections[2].Connection[0] = 0;
 		dev++;
 	}
-	dev2 = dev;
 	for (i = 0; i < 10; i++) {
-		sprintf(SearchDevices[dev2].Device, "/dev/ttyS%i", i);
-		if (stat(SearchDevices[dev2].Device, &buf) != 0) continue;
-		sprintf(SearchDevices[dev2].Connections[0].Connection,
+		sprintf(SearchDevices[dev].Device, "/dev/ttyS%i", i);
+		if (stat(SearchDevices[dev].Device, &buf) != 0) continue;
+		sprintf(SearchDevices[dev].Connections[0].Connection,
 			"fbusdlr3");
-		sprintf(SearchDevices[dev2].Connections[1].Connection, "fbus");
-		sprintf(SearchDevices[dev2].Connections[2].Connection,
+		sprintf(SearchDevices[dev].Connections[1].Connection, "fbus");
+		sprintf(SearchDevices[dev].Connections[2].Connection,
 			"at19200");
-		sprintf(SearchDevices[dev2].Connections[3].Connection, "mbus");
-		SearchDevices[dev2].Connections[4].Connection[0] = 0;
-		dev2++;
+		sprintf(SearchDevices[dev].Connections[3].Connection, "mbus");
+		SearchDevices[dev].Connections[4].Connection[0] = 0;
+		dev++;
 	}
 	for (i = 0; i < 8; i++) {
-		sprintf(SearchDevices[dev2].Device, "/dev/ttyD00%i", i);
-		if (stat(SearchDevices[dev2].Device, &buf) != 0) continue;
-		sprintf(SearchDevices[dev2].Connections[0].Connection,
+		sprintf(SearchDevices[dev].Device, "/dev/ttyD00%i", i);
+		if (stat(SearchDevices[dev].Device, &buf) != 0) continue;
+		sprintf(SearchDevices[dev].Connections[0].Connection,
 			"fbusdlr3");
-		sprintf(SearchDevices[dev2].Connections[1].Connection, "fbus");
-		sprintf(SearchDevices[dev2].Connections[2].Connection,
+		sprintf(SearchDevices[dev].Connections[1].Connection, "fbus");
+		sprintf(SearchDevices[dev].Connections[2].Connection,
 			"at19200");
-		sprintf(SearchDevices[dev2].Connections[3].Connection, "mbus");
-		SearchDevices[dev2].Connections[4].Connection[0] = 0;
-		dev2++;
+		sprintf(SearchDevices[dev].Connections[3].Connection, "mbus");
+		SearchDevices[dev].Connections[4].Connection[0] = 0;
+		dev++;
 	}
 	for (i = 0; i < 4; i++) {
-		sprintf(SearchDevices[dev2].Device, "/dev/usb/tts/%i", i);
-		if (stat(SearchDevices[dev2].Device, &buf) != 0) continue;
-		sprintf(SearchDevices[dev2].Connections[0].Connection,
+		sprintf(SearchDevices[dev].Device, "/dev/usb/tts/%i", i);
+		if (stat(SearchDevices[dev].Device, &buf) != 0) continue;
+		sprintf(SearchDevices[dev].Connections[0].Connection,
 			"fbusdlr3");
-		sprintf(SearchDevices[dev2].Connections[1].Connection, "fbus");
-		sprintf(SearchDevices[dev2].Connections[2].Connection,
+		sprintf(SearchDevices[dev].Connections[1].Connection, "fbus");
+		sprintf(SearchDevices[dev].Connections[2].Connection,
 			"at19200");
-		sprintf(SearchDevices[dev2].Connections[3].Connection, "mbus");
-		SearchDevices[dev2].Connections[4].Connection[0] = 0;
-		dev2++;
+		sprintf(SearchDevices[dev].Connections[3].Connection, "mbus");
+		SearchDevices[dev].Connections[4].Connection[0] = 0;
+		dev++;
 	}
 #endif
 	for (i = 0; i < dev; i++)
 		MakeSearchThread(i);
-	while (num != 0)
-		usleep(5000);
-	for (i = dev; i < dev2; i++)
-		MakeSearchThread(i);
-	while (num != 0)
-		usleep(5000);
+#ifdef WIN32
+	WaitForMultipleObjects(dev, Threads, TRUE, INFINITE);
+#else
+	for (i = 0; i < dev; i++)
+		pthread_join(Threads[i], &ret);
+#endif
 }
 #endif				/*Support for threads */
 
