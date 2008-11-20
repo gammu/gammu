@@ -101,7 +101,6 @@ GSM_Error N6510_GetCalendarInfo3(GSM_StateMachine *s, GSM_NOKIACalToDoLocations 
 GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_CalendarEntry 		*entry = s->Phone.Data.Cal;
-	GSM_DateTime			Date;
 	unsigned long			diff;
 	int				i;
 	bool				found = false;
@@ -124,20 +123,24 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		msg.Buffer[28]*256+msg.Buffer[29],
 		msg.Buffer[30],msg.Buffer[31],msg.Buffer[32],
 		msg.Buffer[33]);
-	Date.Year 	= msg.Buffer[28]*256+msg.Buffer[29];
+	GSM_GetCurrentDateTime(&entry->Entries[0].Date);
+	entry->Entries[0].Date.Year 	= msg.Buffer[28]*256+msg.Buffer[29];
 	if (entry->Type == GSM_CAL_BIRTHDAY) {
-		Date.Year = entry->Entries[0].Date.Year;
-		smprintf(s,"%i\n",Date.Year);
+		entry->Entries[0].Date.Year = entry->Entries[0].Date.Year;
+		smprintf(s,"%i\n",entry->Entries[0].Date.Year);
 	}
-	Date.Month 	= msg.Buffer[30];
-	Date.Day 	= msg.Buffer[31];
-	Date.Hour 	= msg.Buffer[32];
-	Date.Minute 	= msg.Buffer[33];
+	entry->Entries[0].Date.Month 	= msg.Buffer[30];
+	entry->Entries[0].Date.Day 	= msg.Buffer[31];
+	entry->Entries[0].Date.Hour 	= msg.Buffer[32];
+	entry->Entries[0].Date.Minute 	= msg.Buffer[33];
 	/* Garbage seen with 3510i 3.51 */
-	if (Date.Month == 0 && Date.Day == 0 && Date.Hour == 0 && Date.Minute == 0) return ERR_EMPTY;
-	Date.Second	= 0;
+	if (entry->Entries[0].Date.Month == 0 &&
+			entry->Entries[0].Date.Day == 0 &&
+			entry->Entries[0].Date.Hour == 0 &&
+			entry->Entries[0].Date.Minute == 0)
+		return ERR_EMPTY;
+	entry->Entries[0].Date.Second	= 0;
 	entry->Entries[0].EntryType = CAL_START_DATETIME;
-	memcpy(&entry->Entries[0].Date,&Date,sizeof(GSM_DateTime));
 	entry->EntriesNum++;
 
 	GSM_GetCalendarRecurranceRepeat(msg.Buffer+40, msg.Buffer+46, entry);
@@ -147,14 +150,13 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			msg.Buffer[34]*256+msg.Buffer[35],
 			msg.Buffer[36],msg.Buffer[37],msg.Buffer[38],
 			msg.Buffer[39]);
-		Date.Year 	= msg.Buffer[34]*256+msg.Buffer[35];
-		Date.Month 	= msg.Buffer[36];
-		Date.Day 	= msg.Buffer[37];
-		Date.Hour 	= msg.Buffer[38];
-		Date.Minute 	= msg.Buffer[39];
-		Date.Second	= 0;
+		entry->Entries[entry->EntriesNum].Date.Year 	= msg.Buffer[34]*256+msg.Buffer[35];
+		entry->Entries[entry->EntriesNum].Date.Month 	= msg.Buffer[36];
+		entry->Entries[entry->EntriesNum].Date.Day 	= msg.Buffer[37];
+		entry->Entries[entry->EntriesNum].Date.Hour 	= msg.Buffer[38];
+		entry->Entries[entry->EntriesNum].Date.Minute 	= msg.Buffer[39];
+		entry->Entries[entry->EntriesNum].Date.Second	= 0;
 		entry->Entries[entry->EntriesNum].EntryType = CAL_END_DATETIME;
-		memcpy(&entry->Entries[entry->EntriesNum].Date,&Date,sizeof(GSM_DateTime));
 		entry->EntriesNum++;
 	}
 
