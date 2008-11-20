@@ -85,11 +85,8 @@ cmake ../$repo-$version \
     -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32.cmake \
     -DBUILD_SHARED_LIBS=ON \
     $CMAKE_EXTRA \
-    -DCURL_CROSS_PATH=$srcdir/../../win-cross/curl \
-    -DMYSQL_CROSS_PATH=$srcdir/../../win-cross/mysql
-# Disabled, it seems to cause crashes:
-#    -DGETTEXT_CROSS_PATH=$srcdir/../../win-cross/gettext \
-#    -DPOSTGRES_CROSS_PATH=$srcdir/../../win-cross/pgsql \
+    -DWITH_Postgres=OFF \
+    -DWITH_GettextLibs=OFF \
 
 make -j2
 checkexe gammu/gammu.exe
@@ -106,9 +103,11 @@ cmake ../$repo-$version \
     -DBUILD_SHARED_LIBS=OFF \
     $CMAKE_EXTRA \
     -DCPACK_SYSTEM_NAME=Windows-Minimal \
-    -DMYSQL_CROSS_PATH= \
-    -DPOSTGRES_CROSS_PATH= \
-    -DGETTEXT_CROSS_PATH= \
+    -DWITH_MySQL=OFF \
+    -DWITH_Postgres=OFF \
+    -DWITH_GettextLibs=OFF \
+    -DWITH_Iconv=OFF \
+    -DWITH_CURL=OFF \
 
 make -j2
 checkexe gammu/gammu.exe
