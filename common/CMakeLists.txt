@@ -104,7 +104,7 @@ if (UNIX)
 endif (UNIX)
 
 if (GETTEXTLIBS_FOUND)
-    target_link_libraries (libGammu ${GETTEXT_LIBRARY})
+    target_link_libraries (libGammu ${GETTEXT_LIBRARIES})
     include_directories (${GETTEXT_INCLUDE_DIR})
 endif (GETTEXTLIBS_FOUND)
 
