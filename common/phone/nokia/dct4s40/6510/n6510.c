@@ -1749,6 +1749,10 @@ static GSM_Error N6510_ReplyGetConnectionSettings(GSM_Protocol_Message msg, GSM_
 				case 0x00: Data->WAPSettings->Settings[0].Speed=WAPSETTINGS_SPEED_AUTO;  break;
 				case 0x01: Data->WAPSettings->Settings[0].Speed=WAPSETTINGS_SPEED_9600;	 break;
 				case 0x02: Data->WAPSettings->Settings[0].Speed=WAPSETTINGS_SPEED_14400; break;
+				default:
+					smprintf(s, "Unknown speed settings: 0x%0x\n", msg.Buffer[tmp+2]);
+					Data->WAPSettings->Settings[0].Speed=WAPSETTINGS_SPEED_AUTO;
+					break;
 			}
 
 			Data->WAPSettings->Settings[0].ManualLogin=false;
