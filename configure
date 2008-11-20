@@ -73,10 +73,10 @@ while [ "$#" -gt 0 ] ; do
             CMAKE_CROSS="-DCROSS_MINGW=OFF"
             ;;
         --enable-shared)
-            CMAKE_SHARED="-DENABLE_SHARED=ON"
+            CMAKE_SHARED="-DBUILD_SHARED_LIBS=ON"
             ;;
         --disable-shared)
-            CMAKE_SHARED="-DENABLE_SHARED=OFF"
+            CMAKE_SHARED="-DBUILD_SHARED_LIBS=OFF"
             ;;
         --enable-protection)
             CMAKE_PROTECTION="-DENABLE_PROTECTION=ON"
