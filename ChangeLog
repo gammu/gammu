@@ -18,6 +18,7 @@ ChangeLog
 2008???? - 1.21.93
 
 [!] * Drop own crosscompilation support, rely on CMake one.
+[-] * Search does not create thread for non existing devices.
     
 20081119 - 1.21.92
 
