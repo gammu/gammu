@@ -8,7 +8,7 @@
 #  include <pthread.h>
 #  include <sys/types.h>
 #  include <sys/stat.h>
-#  include <unistd.h>
+#  include <fcntl.h>
 #  define THREAD_RETURN void *
 #  define THREAD_RETURN_VAL NULL
 #endif
@@ -199,7 +199,7 @@ void SearchPhone(int argc, char *argv[])
 {
 	int i, dev = 0;
 #ifdef HAVE_PTHREAD
-	struct stat buf;
+	int fd;
 	void *ret;
 #endif
 
@@ -228,7 +228,9 @@ void SearchPhone(int argc, char *argv[])
 #else
 	for (i = 0; i < 6; i++) {
 		sprintf(SearchDevices[dev].Device, "/dev/ircomm%i", i);
-		if (stat(SearchDevices[dev].Device, &buf) != 0) continue;
+		fd = open(SearchDevices[dev].Device, O_RDWR);
+		if (fd < 0) continue;
+		close(fd);
 		sprintf(SearchDevices[dev].Connections[0].Connection,
 			"irdaphonet");
 		sprintf(SearchDevices[dev].Connections[1].Connection,
@@ -238,7 +240,9 @@ void SearchPhone(int argc, char *argv[])
 	}
 	for (i = 0; i < 10; i++) {
 		sprintf(SearchDevices[dev].Device, "/dev/ttyS%i", i);
-		if (stat(SearchDevices[dev].Device, &buf) != 0) continue;
+		fd = open(SearchDevices[dev].Device, O_RDWR);
+		if (fd < 0) continue;
+		close(fd);
 		sprintf(SearchDevices[dev].Connections[0].Connection,
 			"fbusdlr3");
 		sprintf(SearchDevices[dev].Connections[1].Connection, "fbus");
@@ -250,7 +254,9 @@ void SearchPhone(int argc, char *argv[])
 	}
 	for (i = 0; i < 8; i++) {
 		sprintf(SearchDevices[dev].Device, "/dev/ttyD00%i", i);
-		if (stat(SearchDevices[dev].Device, &buf) != 0) continue;
+		fd = open(SearchDevices[dev].Device, O_RDWR);
+		if (fd < 0) continue;
+		close(fd);
 		sprintf(SearchDevices[dev].Connections[0].Connection,
 			"fbusdlr3");
 		sprintf(SearchDevices[dev].Connections[1].Connection, "fbus");
@@ -262,7 +268,9 @@ void SearchPhone(int argc, char *argv[])
 	}
 	for (i = 0; i < 4; i++) {
 		sprintf(SearchDevices[dev].Device, "/dev/usb/tts/%i", i);
-		if (stat(SearchDevices[dev].Device, &buf) != 0) continue;
+		fd = open(SearchDevices[dev].Device, O_RDWR);
+		if (fd < 0) continue;
+		close(fd);
 		sprintf(SearchDevices[dev].Connections[0].Connection,
 			"fbusdlr3");
 		sprintf(SearchDevices[dev].Connections[1].Connection, "fbus");
