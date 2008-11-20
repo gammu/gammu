@@ -137,21 +137,17 @@ cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake
 make
 
 If your MinGW cross compiler binaries are not found automatically, you
-can specify their different names:
-
-cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \
-    -DMINGW_C_COMPILER=/usr/local/bin/i386-mingw32-gcc \
-    -DMINGW_AR=/usr/local/bin/i386-mingw32-ar \
-    -DMINGW_RANLIB=/usr/local/bin/i386-mingw32-ranlib
+can specify their different names in cmake/Toolchain-mingw32.cmake.
 
 To build just bare static library without any dependencies, use:
 
 cmake .. -DCMAKE_TOOLCHAIN_FILE=../cmake/Toolchain-mingw32.cmake \
     -DBUILD_SHARED_LIBS=OFF \
-    -DMYSQL_CROSS_PATH= \
-    -DPOSTGRES_CROSS_PATH= \
-    -DCURL_CROSS_PATH= \
-    -DGETTEXT_CROSS_PATH=
+    -DWITH_MySQL=OFF \
+    -DWITH_Postgres=OFF \
+    -DWITH_GettextLibs=OFF \
+    -DWITH_Iconv=OFF \
+    -DWITH_CURL=OFF \
 
 To be compatible with current Python on Windows, we need to build
 against MSVCR71, to achieve this, libmoldname71 library is needed. It
@@ -177,13 +173,16 @@ where you can find -lmoldname (change -lmoldname to -lmoldname71 and
 There are enough spaces to remove.
 
 
+Third party libraries
+---------------------
+
+The easies way to link with third party libraries is to add path to
+their installation to cmake/Toolchain-mingw32.cmake or to list these
+paths in CMAKE_FIND_ROOT_PATH when invoking cmake.
+
+
 MySQL
 -----
-
-If you want MySQL support in Win32 build, add path to MySQL binaries in
-MYSQL_CROSS_PATH variable:
-
--DMYSQL_CROSS_PATH=/path/to/mysql
 
 You can download MySQL binaries from <http://dev.mysql.com/>, but then
 need some tweaks:
@@ -200,11 +199,6 @@ try to compile native binary from it.
 PostgreSQL
 ----------
 
-If you want PostgreSQL support in Win32 build, add path to MySQL
-binaries in POSTGRE_CROSS_PATH variable:
-
--DPOSTGRES_CROSS_PATH=/path/to/pgsql
-
 You can download PostgreSQL binaries from <http://www.postgresql.org/>,
 but then you need to add wldap32.dll library to bin.
 
@@ -214,19 +208,14 @@ Gettext
 
 For Gettext (internationalization support), you need
 gettext-0.14.4-bin.zip, gettext-0.14.4-dep.zip, gettext-0.14.4-lib.zip
-from <http://gnuwin32.sourceforge.net/>. Unpack these to some directory
-and point build 
-
--DGETTEXT_CROSS_PATH=/path/to/gettext
+from <http://gnuwin32.sourceforge.net/>. Unpack these to same directory.
 
 
 CURL
 ----
 
 For CURL support, you need curl-7.19.0-devel-mingw32.zip from
-<http://curl.haxx.se/>. Unpack it to some directory and point build
-
--DCURL_CROSS_PATH=/path/to/curl
+<http://curl.haxx.se/>.
 
 
 Testing
