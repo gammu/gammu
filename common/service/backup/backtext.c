@@ -1146,9 +1146,9 @@ static GSM_Error SaveRingtoneEntry(FILE *file, GSM_Ringtone *ringtone, bool UseU
 	}
 	sprintf(buffer,"%c%c",13,10);
 	error = SaveBackupText(file, "", buffer, UseUnicode);
-	if (error != ERR_NONE) return error;
-
 	free(buffer);
+
+	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
 }
