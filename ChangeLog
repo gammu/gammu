@@ -18,6 +18,8 @@ ChangeLog
 2008???? - 1.21.93
 
 [!] * Drop own crosscompilation support, rely on CMake one.
+[!] * Also standard CMake parameters used when possible (eg.
+      BUILD_SHARED_LIBS).
 [-] * Search does not create thread for non existing devices.
 [-] * Fixed possible crash when backing up ringtones.
 [-] * Fix possible race condition in searching.
