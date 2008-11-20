@@ -6,6 +6,9 @@
 
 #ifdef HAVE_PTHREAD
 #  include <pthread.h>
+#  include <sys/types.h>
+#  include <sys/stat.h>
+#  include <unistd.h>
 #endif
 #ifdef WIN32
 #  define WIN32_LEAN_AND_MEAN
@@ -159,6 +162,7 @@ void SearchPhoneThread(OneDeviceInfo * Info)
 		/* Free allocated buffer */
 		GSM_FreeStateMachine(search_gsm);
 	}
+	/* This is racy */
 	num--;
 }
 
@@ -189,6 +193,10 @@ void MakeSearchThread(int i)
 void SearchPhone(int argc, char *argv[])
 {
 	int i, dev = 0, dev2 = 0;
+#ifdef HAVE_PTHREAD
+	struct stat buf;
+#endif
+
 
 	SearchOutput = false;
 	if (argc == 3 && strcasecmp(argv[2], "-debug") == 0)
@@ -214,9 +222,10 @@ void SearchPhone(int argc, char *argv[])
 		dev2++;
 	}
 #endif
-#ifdef __linux__
+#ifdef HAVE_PTHREAD
 	for (i = 0; i < 6; i++) {
 		sprintf(SearchDevices[dev].Device, "/dev/ircomm%i", i);
+		if (stat(SearchDevices[dev].Device, &buf) != 0) continue;
 		sprintf(SearchDevices[dev].Connections[0].Connection,
 			"irdaphonet");
 		sprintf(SearchDevices[dev].Connections[1].Connection,
@@ -227,6 +236,7 @@ void SearchPhone(int argc, char *argv[])
 	dev2 = dev;
 	for (i = 0; i < 10; i++) {
 		sprintf(SearchDevices[dev2].Device, "/dev/ttyS%i", i);
+		if (stat(SearchDevices[dev2].Device, &buf) != 0) continue;
 		sprintf(SearchDevices[dev2].Connections[0].Connection,
 			"fbusdlr3");
 		sprintf(SearchDevices[dev2].Connections[1].Connection, "fbus");
@@ -238,6 +248,7 @@ void SearchPhone(int argc, char *argv[])
 	}
 	for (i = 0; i < 8; i++) {
 		sprintf(SearchDevices[dev2].Device, "/dev/ttyD00%i", i);
+		if (stat(SearchDevices[dev2].Device, &buf) != 0) continue;
 		sprintf(SearchDevices[dev2].Connections[0].Connection,
 			"fbusdlr3");
 		sprintf(SearchDevices[dev2].Connections[1].Connection, "fbus");
@@ -249,6 +260,7 @@ void SearchPhone(int argc, char *argv[])
 	}
 	for (i = 0; i < 4; i++) {
 		sprintf(SearchDevices[dev2].Device, "/dev/usb/tts/%i", i);
+		if (stat(SearchDevices[dev2].Device, &buf) != 0) continue;
 		sprintf(SearchDevices[dev2].Connections[0].Connection,
 			"fbusdlr3");
 		sprintf(SearchDevices[dev2].Connections[1].Connection, "fbus");
