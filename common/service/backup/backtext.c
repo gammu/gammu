@@ -1119,8 +1119,7 @@ static GSM_Error SaveRingtoneEntry(FILE *file, GSM_Ringtone *ringtone, bool UseU
 	unsigned char *buffer;
 	GSM_Error error;
 
-	buffer = (unsigned char *)malloc(32 > 2 * ringtone->NokiaBinary.Length ?
-			32 : 2 * ringtone->NokiaBinary.Length);
+	buffer = (unsigned char *)malloc(MAX(32, 2 * ringtone->NokiaBinary.Length) + 1);
 	if (buffer == NULL)
 		return ERR_MOREMEMORY;
 
