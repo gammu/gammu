@@ -89,6 +89,7 @@ include (CheckIncludeFile)
 include (CheckFunctionExists)
 include (CheckSymbolExists)
 include (CheckTypeSize)
+include (CheckLibraryExists)
 
 # Packages in our sources (mostly taken from KDE)
 include (MacroOptionalFindPackage)
@@ -117,71 +118,20 @@ check_function_exists (alphasort HAVE_ALPHASORT)
 check_symbol_exists (iswspace "wctype.h" HAVE_ISWSPACE)
 check_symbol_exists (towlower "wctype.h" HAVE_TOWLOWER)
 
-# Check disabled for cross, but we have some libraries
+# Standard packages
+macro_optional_find_package (Threads)
+
+# Packages in sources
+macro_optional_find_package (MySQL)
+macro_optional_find_package (Postgres)
+macro_optional_find_package (GettextLibs)
+macro_optional_find_package (Iconv)
+macro_optional_find_package (CURL)
+
 if (CMAKE_CROSSCOMPILING AND MINGW)
-
-
-    set (MYSQL_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/mysql" CACHE FILEPATH "Path to MySQL for cross compilation")
-    find_library (MYSQL_LIBRARIES
-        mysql "${MYSQL_CROSS_PATH}/lib/opt"
-        NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
-    if (MYSQL_LIBRARIES)
-        set (MYSQL_FOUND ON)
-        set (MYSQL_INCLUDE_DIR "${MYSQL_CROSS_PATH}/include")
-        message (STATUS "Cross MySQL found, libs: ${MYSQL_LIBRARIES}, incs: ${MYSQL_INCLUDE_DIR}")
-    else (MYSQL_LIBRARIES)
-        message (STATUS "Cross MySQL not found")
-    endif (MYSQL_LIBRARIES)
-
-    set (POSTGRES_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/pgsql" CACHE FILEPATH "Path to PostgreSQL for cross compilation")
-    find_library (POSTGRES_LIBRARY
-        pq "${POSTGRES_CROSS_PATH}/lib"
-        NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
-    if (POSTGRES_LIBRARY)
-        set (POSTGRES_FOUND ON)
-        set (POSTGRES_INCLUDE_DIR "${POSTGRES_CROSS_PATH}/include")
-        message (STATUS "Cross PostgreSQL found, libs: ${POSTGRES_LIBRARY}, incs: ${POSTGRES_INCLUDE_DIR}")
-    else (POSTGRES_LIBRARY)
-        message (STATUS "Cross PostgreSQL not found")
-    endif (POSTGRES_LIBRARY)
-
-    set (GETTEXT_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/gettext" CACHE FILEPATH "Path to Gettext for cross compilation")
-    find_library (GETTEXT_LIBRARY
-        intl "${GETTEXT_CROSS_PATH}/lib"
-        NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
-    if (GETTEXT_LIBRARY)
-        set (GETTEXTLIBS_FOUND ON)
-        set (GETTEXT_INCLUDE_DIR "${GETTEXT_CROSS_PATH}/include")
-        message (STATUS "Cross Gettext found, libs: ${GETTEXT_LIBRARY}, incs: ${GETTEXT_INCLUDE_DIR}")
-    else (GETTEXT_LIBRARY)
-        message (STATUS "Cross Gettext not found")
-    endif (GETTEXT_LIBRARY)
-
-    set (CURL_CROSS_PATH "${Gammu_SOURCE_DIR}/../../win-cross/curl" CACHE FILEPATH "Path to CURL for cross compilation")
-    find_library (CURL_LIBRARIES
-        curldll "${CURL_CROSS_PATH}/lib"
-        NO_DEFAULT_PATH NO_CMAKE_PATH NO_CMAKE_ENVIRONMENT_PATH NO_SYSTEM_ENVIRONMENT_PATH NO_CMAKE_SYSTEM_PATH)
-    if (CURL_LIBRARIES)
-        set (CURL_FOUND ON)
-        set (CURL_INCLUDE_DIR "${CURL_CROSS_PATH}/include")
-        message (STATUS "Cross CURL found, libs: ${CURL_LIBRARIES}, incs: ${CURL_INCLUDE_DIR}")
-    else (CURL_LIBRARIES)
-        message (STATUS "Cross CURL not found")
-    endif (CURL_LIBRARIES)
-
     set (HAVE_WINT_T 4 CACHE INTERNAL "")
     set (HAVE_WCHAR_T 4 CACHE INTERNAL "")
 else (CMAKE_CROSSCOMPILING AND MINGW)
-    # Standard packages
-    macro_optional_find_package (Threads)
-
-    # Packages in sources
-    macro_optional_find_package (MySQL)
-    macro_optional_find_package (Postgres)
-    macro_optional_find_package (GettextLibs)
-    macro_optional_find_package (Iconv)
-    macro_optional_find_package (CURL)
-
     # Search for needed includes and functions
     if (HAVE_WCHAR_H)
         set (CMAKE_EXTRA_INCLUDE_FILES wchar.h)

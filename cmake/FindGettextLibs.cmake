@@ -18,8 +18,8 @@
 
 if (LIBC_HAS_DGETTEXT OR LIBINTL_HAS_DGETTEXT)
 
-  # in cache already
-  SET(GETTEXTLIBS_FOUND TRUE)
+    # in cache already
+    set(GETTEXTLIBS_FOUND TRUE CACHE INTERNAL "")
 
 else (LIBC_HAS_DGETTEXT OR LIBINTL_HAS_DGETTEXT)
 
@@ -27,16 +27,26 @@ else (LIBC_HAS_DGETTEXT OR LIBINTL_HAS_DGETTEXT)
   include(CheckLibraryExists)
   include(CheckFunctionExists)
   
-  check_include_files(libintl.h HAVE_LIBINTL_H)
+  find_path(GETTEXT_INCLUDE_DIR libintl.h
+        /usr/local/include
+        /usr/local/include/postgresql 
+        /usr/local/postgresql/include
+        /usr/local/postgresql/include/postgresql
+        /usr/include 
+        /usr/include/postgresql
+        ${PG_TMP}
+  )
+  list(APPEND CMAKE_REQUIRED_INCLUDES ${GETTEXT_INCLUDE_DIR})
+      check_include_files(libintl.h HAVE_LIBINTL_H)
+  set(CMAKE_REQUIRED_INCLUDES)
   
-  set(GETTEXT_INCLUDE_DIR)
   set(GETTEXT_LIBRARIES)
   
   if (HAVE_LIBINTL_H)
      check_function_exists(dgettext LIBC_HAS_DGETTEXT)
      if (LIBC_HAS_DGETTEXT)
         set(GETTEXT_SOURCE "built in libc")
-        set(GETTEXTLIBS_FOUND TRUE)
+        set(GETTEXTLIBS_FOUND TRUE CACHE INTERNAL "")
      else (LIBC_HAS_DGETTEXT)
         FIND_LIBRARY(LIBINTL_LIBRARY NAMES intl libintl c
            PATHS
@@ -47,7 +57,7 @@ else (LIBC_HAS_DGETTEXT OR LIBINTL_HAS_DGETTEXT)
         if (LIBINTL_HAS_DGETTEXT)
            set(GETTEXT_SOURCE "in ${LIBINTL_LIBRARY}")
            set(GETTEXT_LIBRARIES ${LIBINTL_LIBRARY} CACHE FILEPATH "path to libintl library, used for gettext")
-           set(GETTEXTLIBS_FOUND TRUE)
+           set(GETTEXTLIBS_FOUND TRUE CACHE INTERNAL "")
         endif (LIBINTL_HAS_DGETTEXT)
      endif (LIBC_HAS_DGETTEXT)
   endif (HAVE_LIBINTL_H)
