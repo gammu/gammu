@@ -1188,6 +1188,8 @@ int main(int argc, char *argv[])
 
 	Cleanup();
 
+	INI_Free(cfg);
+
 	exit(0);
 }
 
