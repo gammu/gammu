@@ -153,6 +153,7 @@ else (CMAKE_CROSSCOMPILING AND MINGW)
 endif (CMAKE_CROSSCOMPILING AND MINGW)
 
 check_type_size (ssize_t HAVE_SSIZE_T)
+check_type_size(intptr_t HAVE_INTPTR_T)
 
 OPTION(WITH_BLUETOOTH "Bluetooth support" ON)
 if (WITH_BLUETOOTH)
