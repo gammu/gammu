@@ -13,6 +13,7 @@
 #endif
 #include <stdio.h>
 #include <gammu-file.h>
+#include <gammu-config.h>
 #if defined(HAVE_UNISTD_H)
 #  include <unistd.h>
 #endif
