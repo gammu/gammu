@@ -117,6 +117,13 @@ check_function_exists (scandir HAVE_SCANDIR)
 check_function_exists (alphasort HAVE_ALPHASORT)
 check_symbol_exists (iswspace "wctype.h" HAVE_ISWSPACE)
 check_symbol_exists (towlower "wctype.h" HAVE_TOWLOWER)
+# Some compilers (eg. BCC) have this in ctype.h
+if (NOT HAVE_TOWLOWER)
+    check_symbol_exists (towlower "ctype.h" HAVE_TOWLOWER_CTYPE)
+    if (HAVE_TOWLOWER_CTYPE)
+        set (HAVE_TOWLOWER ${HAVE_TOWLOWER_CTYPE} CACHE INTERNAL "")
+    endif (HAVE_TOWLOWER_CTYPE)
+endif (NOT HAVE_TOWLOWER)
 
 # Standard packages
 macro_optional_find_package (Threads)
