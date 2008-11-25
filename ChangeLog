@@ -26,6 +26,7 @@ ChangeLog
 [-] * Fixed invoking of CMake with output to custom directory.
 [-] * Compile on platforms where ssize_t does not exist.
 [-] * Fix detection of towlower on some compilers.
+[-] * Make Bluetooth compile using BCC.
 
 20081119 - 1.21.92
 
