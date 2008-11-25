@@ -23,6 +23,7 @@ ChangeLog
 [-] * Search does not create thread for non existing devices.
 [-] * Fixed possible crash when backing up ringtones.
 [-] * Fix possible race condition in searching.
+[-] * Fixed invoking of CMake with output to custom directory.
 
 20081119 - 1.21.92
 
