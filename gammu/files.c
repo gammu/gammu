@@ -142,7 +142,7 @@ void GetFileSystem(int argc, char *argv[])
 									  false));
 						} else
 							printf(" %30c", 0x20);
-						printf(" %9lli", (long long)Files.Used);
+						printf(" %9li", (long)Files.Used);
 						printf(" ");
 					} else
 						printf("|-- ");
