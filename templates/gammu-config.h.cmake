@@ -218,6 +218,9 @@
 #ifndef HAVE_SSIZE_T
 #cmakedefine HAVE_SSIZE_T
 #endif
+#ifndef HAVE_INTPTR_T
+#cmakedefine HAVE_INTPTR_T
+#endif
 
 /* Iconv support */
 #cmakedefine ICONV_FOUND

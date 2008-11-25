@@ -28,6 +28,7 @@ ChangeLog
 [-] * Fix detection of towlower on some compilers.
 [-] * Make Bluetooth compile using BCC.
 [-] * Fix compilation if strtoull does not exist.
+[-] * Compile on platforms where intptr_t does not exist.
 
 20081119 - 1.21.92
 
