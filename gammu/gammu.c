@@ -128,7 +128,7 @@ static void ListNetworks(int argc, char *argv[])
 	}
 }
 
-static void PrintVersion()
+static void PrintVersion(void)
 {
 	printf(_("[Gammu version %s built %s on %s using %s]"),
 	       VERSION, __TIME__, __DATE__, GetCompiler());
@@ -1190,7 +1190,7 @@ int main(int argc, char *argv[])
 
 	INI_Free(cfg);
 
-	exit(0);
+	return 0;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.
