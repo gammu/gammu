@@ -212,6 +212,10 @@
 #cmakedefine HAVE_UNISTD_H
 #endif
 
+#ifndef HAVE_SSIZE_T
+#cmakedefine HAVE_SSIZE_T
+#endif
+
 /* Iconv support */
 #cmakedefine ICONV_FOUND
 #cmakedefine ICONV_SECOND_ARGUMENT_IS_CONST
