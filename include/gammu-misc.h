@@ -130,6 +130,11 @@ extern void GSM_InitLocales(const char *path);
  #endif
 #endif
 
+/* ssize_t for compilers where it does not exist */
+#ifndef HAVE_SSIZE_T
+typedef long ssize_t;
+#endif
+
 /**
  * Encodes text to hexadecimal binary representation.
  */
