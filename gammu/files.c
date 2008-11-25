@@ -28,7 +28,7 @@
 /**
  * Displays status of filesystem (if available).
  */
-GSM_Error PrintFileSystemStatus()
+GSM_Error PrintFileSystemStatus(void)
 {
 	GSM_FileSystemStatus Status;
 	GSM_Error error;
