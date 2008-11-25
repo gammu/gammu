@@ -123,6 +123,13 @@ extern void GSM_InitLocales(const char *path);
 #define snprintf _snprintf
 #endif
 
+/* Working __FUNCTION__ on BCC */
+#ifdef __BORLANDC__
+ #ifndef __FUNCTION__
+  #define __FUNCTION__ __FUNC__
+ #endif
+#endif
+
 /**
  * Encodes text to hexadecimal binary representation.
  */
