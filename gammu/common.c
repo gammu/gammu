@@ -75,7 +75,7 @@ void interrupt(int sign)
 	gshutdown = true;
 }
 
-void PrintSecurityStatus()
+void PrintSecurityStatus(void)
 {
 	GSM_SecurityCodeType Status;
 	GSM_Error error;

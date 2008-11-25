@@ -495,7 +495,7 @@ void IncomingSMS(GSM_StateMachine *sm UNUSED, GSM_SMSMessage sms)
  	IncomingSMSData.Number = 1;
 }
 
-void DisplayIncomingSMS()
+void DisplayIncomingSMS(void)
 {
  	GSM_SMSFolders folders;
 	GSM_Error error;

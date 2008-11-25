@@ -26,7 +26,7 @@ bool answer_yes(const char *format, ...);
 /**
  * Prints information about security status.
  */
-void PrintSecurityStatus();
+void PrintSecurityStatus(void);
 
 /**
  * Converts string to memory type.
