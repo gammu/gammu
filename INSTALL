@@ -117,8 +117,9 @@ http://www.gammu.org/wiki/index.php?title=Gammu:Compiling/installing_in_Windows
 Borland toolchain - you can download compiler at
 <http://www.codegear.com/downloads/free/cppbuilder>. You need to add
 c:/Borland/BCC55/Bin to system path (or manually set it when running
-CMake) and add -Lc:/Borland/BCC55/Lib -Ic:/Borland/BCC55/Include to
-CMAKE_C_FLAGS in CMake (otherwise compilation fails).
+CMake) and add -Lc:/Borland/BCC55/Lib -Ic:/Borland/BCC55/Include
+-Lc:/Borland/BCC55/Lib/PSDK to CMAKE_C_FLAGS in CMake (otherwise
+compilation fails).
 
 From Sources - Mac OS X
 =======================
