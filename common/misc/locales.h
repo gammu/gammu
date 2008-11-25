@@ -23,6 +23,6 @@
 #define ngettext(singular, plural, number) (number == 1 ? singular : plural)
 #endif
 
-#define N_(x) (x)
+#define N_(x) x
 
 #endif
