@@ -8,7 +8,9 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <gammu.h>
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
+#endif
 
 #include "common.h"
 #include "misc.h"
@@ -1678,9 +1680,11 @@ void EnterSecurityCode(int argc UNUSED, char *argv[])
 
 	if (strcmp(argv[3], "-") == 0) {
 		/* Read code from stdin */
+#ifdef HAVE_UNISTD_H
 		if (isatty(fileno(stdin))) {
 			printf(_("Enter %s code: "), argv[2]);
 		}
+#endif
 		if (fscanf(stdin, "%15s", Code.Code) != 1) {
 			printf_err("%s\n", _("No PIN code entered!"));
 			exit(-1);
