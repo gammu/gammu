@@ -22,7 +22,7 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 {
 	unsigned char		Buffer[GSM_MAX_SMS_LENGTH*2*GSM_MAX_MULTI_SMS];
 	int			i,j,z;
-	long long			Length;
+	ssize_t			Length;
 	size_t EncodeLength;
 	unsigned int		Len;
 	size_t FreeText,FreeBytes,UsedText,Width,Height,x,y,Width2;
