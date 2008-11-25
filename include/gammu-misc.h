@@ -130,6 +130,11 @@ extern void GSM_InitLocales(const char *path);
  #endif
 #endif
 
+/* strtoull for BCC (and maybe others) */
+#ifndef HAVE_STRTOULL
+#define strtoull(A,B,C) strtoul((A),(B),(C))
+#endif
+
 /* ssize_t for compilers where it does not exist */
 #ifndef HAVE_SSIZE_T
 typedef long ssize_t;

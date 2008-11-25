@@ -195,6 +195,9 @@
 #ifndef HAVE_STRCHRNUL
 #cmakedefine HAVE_STRCHRNUL 
 #endif
+#ifndef HAVE_STRTOULL
+#cmakedefine HAVE_STRTOULL
+#endif
 #ifndef HAVE_WCHAR_T
 #cmakedefine HAVE_WCHAR_T
 #endif
