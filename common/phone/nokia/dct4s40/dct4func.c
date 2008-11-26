@@ -49,6 +49,9 @@ GSM_Error DCT4_SetPhoneMode(GSM_StateMachine *s, DCT4_PHONE_MODE mode)
 	s->Phone.Data.PhoneString 	= PhoneMode;
 	req[4] 				= mode;
 
+	/**
+	 * @todo This can loop forever!
+	 */
 	while (1) {
 		smprintf(s,"Going to phone mode %i\n",mode);
 		error = GSM_WaitFor (s, req, 6, 0x15, 4, ID_Reset);
