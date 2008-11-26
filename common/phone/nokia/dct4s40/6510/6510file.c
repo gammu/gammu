@@ -2006,6 +2006,9 @@ GSM_Error N6510_GetMMSFolders(GSM_StateMachine *s, GSM_MMSFolders *folders)
 		EncodeUnicode(Files.ID_FullName,"d:/predefmessages",17);
 		folders->Number = 0;
 		Start 		= true;
+		/**
+		 * @todo This seems to loop forever!
+		 */
 		while (1) {
 			error = N6510_GetFolderListing(s,&Files,Start);
 			if (error == ERR_EMPTY) return ERR_NONE;
