@@ -105,7 +105,7 @@ static GSM_Error N7110_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *St
 	return GSM_WaitFor (s, req, 6, 0x03, 4, ID_GetMemoryStatus);
 }
 
-static void N7110_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *folderid, int *location)
+static void N7110_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *folderid, unsigned int *location)
 {
 	int ifolderid;
 
@@ -415,7 +415,7 @@ static GSM_Error N7110_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 {
 	GSM_Error		error;
 	unsigned char		folderid;
-	int		location;
+	unsigned int		location;
 	GSM_Phone_N7110Data	*Priv = &s->Phone.Data.Priv.N7110;
 	int			i;
 	bool			found = false;
@@ -437,7 +437,7 @@ static GSM_Error N7110_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 {
 	GSM_Phone_N7110Data	*Priv = &s->Phone.Data.Priv.N7110;
 	unsigned char		folderid;
-	int		location;
+	unsigned int		location;
 	GSM_Error		error;
 	int			i;
 	bool			findnextfolder = false;

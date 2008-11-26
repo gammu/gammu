@@ -388,7 +388,7 @@ void OBEXGEN_CreateFileName(unsigned char *Dest, unsigned char *Path, unsigned c
 /**
  * Grabs path part from complete path
  */
-static void OBEXGEN_FindNextDir(unsigned char *Path, int *Pos, unsigned char *Return)
+static void OBEXGEN_FindNextDir(unsigned char *Path, size_t *Pos, unsigned char *Return)
 {
 	int Retlen = 0;
 
