@@ -17,7 +17,7 @@ extern GSM_Reply_Function UserReplyFunctions3[];
 
 /* ------- some usefull functions ----------------------------------------- */
 
-GSM_Error CheckDCT3Only()
+GSM_Error CheckDCT3Only(void)
 {
 bool found = false;
 
@@ -42,7 +42,7 @@ if (strstr(N6110Phone.models, gsm->Phone.Data.ModelInfo->model) != NULL) found =
 	return ERR_NONE;
 }
 
-static void CheckDCT3()
+static void CheckDCT3(void)
 {
 	GSM_Error error;
 
