@@ -535,6 +535,7 @@ static GSM_Error GNAPGEN_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *
 	memset(req+8,0x00,300-8);
 
 	error = GNAPGEN_EncodeSMSFrame( s, sms, req + 10, &Layout, &length );
+	if (error != ERR_NONE) return error;
 	req[9] = length;
 
 	s->Phone.Data.SaveSMSMessage=sms;
