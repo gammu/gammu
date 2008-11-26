@@ -616,7 +616,7 @@ GSM_Error OBEXGEN_PrivAddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos,
 {
 	GSM_Error		error;
 	size_t			j;
-	unsigned int		Current = 0;
+	int		Current = 0;
 	unsigned char 		req[2000];
 	unsigned char		hard_delete_header[2] = {'\x12', '\x0'};
 
@@ -778,7 +778,7 @@ static GSM_Error OBEXGEN_ReplyGetFilePart(GSM_Protocol_Message msg, GSM_StateMac
 
 static GSM_Error OBEXGEN_PrivGetFilePart(GSM_StateMachine *s, GSM_File *File, bool FolderList)
 {
-	unsigned int 		Current = 0;
+	int 		Current = 0;
 	GSM_Error		error;
 	unsigned char 		req[2000], req2[200];
 	int			retries;
