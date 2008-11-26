@@ -415,7 +415,7 @@ static GSM_Error N7110_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 {
 	GSM_Error		error;
 	unsigned char		folderid;
-	unsigned int		location;
+	int		location;
 	GSM_Phone_N7110Data	*Priv = &s->Phone.Data.Priv.N7110;
 	int			i;
 	bool			found = false;
@@ -437,7 +437,7 @@ static GSM_Error N7110_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 {
 	GSM_Phone_N7110Data	*Priv = &s->Phone.Data.Priv.N7110;
 	unsigned char		folderid;
-	unsigned int		location;
+	int		location;
 	GSM_Error		error;
 	int			i;
 	bool			findnextfolder = false;
