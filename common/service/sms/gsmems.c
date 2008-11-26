@@ -33,7 +33,6 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 	GSM_Coding_Type 	Coding 	= SMS_Coding_Default_No_Compression;
 	GSM_Phone_Bitmap_Types	BitmapType;
 	GSM_MultiPartSMSEntry 	*Entry;
-	bool			start;
 	GSM_DateTime		Date;
 
 #ifdef DEBUG
@@ -191,7 +190,6 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			/* Checking number of SMS */
 			Used 		= 0;
 			FreeBytes 	= 0;
-			start		= true;
 			EncodeLength = Length;
 			while (1) {
 				if (FreeBytes != 0) {
@@ -217,7 +215,6 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				default:
 					break;
 				}
-				start = false;
 				Used++;
 			}
 			dbgprintf("Used SMS: " SIZE_T_FORMAT "\n",Used);
@@ -246,7 +243,6 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 
 			/* Saving */
 			FreeBytes = 0;
-			start	  = true;
 			EncodeLength = Length;
 			while (1) {
 				if (FreeBytes != 0) {
@@ -277,7 +273,6 @@ GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 				Buffer[2] = 0x00; 	/* Position in EMS msg 	*/
 				GSM_AddSMS_Text_UDH(SMS,Coding,Buffer,EncodeLength+3,true,&UsedText,&CopiedText,&CopiedSMSText);
 				SMS->SMS[SMS->Number].UDH.Text[SMS->SMS[SMS->Number].UDH.Length-EncodeLength-1] = UsedText;
-				start = false;
 			}
 
 			Entry->RingtoneNotes = Entry->Ringtone->NoteTone.NrCommands;
