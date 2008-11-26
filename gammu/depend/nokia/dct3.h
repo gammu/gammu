@@ -11,7 +11,7 @@ void DCT3DisplayTest	 (int argc, char *argv[]);
 void DCT3VibraTest	 (int argc, char *argv[]);
 void DCT3GetT9		 (int argc, char *argv[]);
 
-GSM_Error CheckDCT3Only();
+GSM_Error CheckDCT3Only(void);
 
 #ifdef GSM_ENABLE_NOKIA6110
 void DCT3GetOperatorName (int argc, char *argv[]);
