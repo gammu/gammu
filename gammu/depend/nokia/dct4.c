@@ -24,7 +24,7 @@ extern GSM_Reply_Function UserReplyFunctions4[];
 
 /* ------- some usefull functions ----------------------------------------- */
 
-GSM_Error CheckDCT4Only()
+GSM_Error CheckDCT4Only(void)
 {
 	bool found = false;
 
@@ -49,7 +49,7 @@ GSM_Error CheckDCT4Only()
 	return ERR_NONE;
 }
 
-static void CheckDCT4()
+static void CheckDCT4(void)
 {
 	GSM_Error error;
 
