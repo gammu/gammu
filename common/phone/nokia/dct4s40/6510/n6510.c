@@ -808,7 +808,7 @@ static GSM_Error N6510_PrivGetSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 {
 	GSM_Error		error;
 	unsigned char		folderid,namebuffer[200];
-	int			location;
+	unsigned int		location;
 	int			i;
 	unsigned char req[] = {
 		N6110_FRAME_HEADER,
@@ -1348,7 +1348,7 @@ static GSM_Error N6510_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	GSM_Phone_Bitmap_Types	Type;
 	size_t			Width, Height, i, count;
 	unsigned char		folderid;
-	int			location;
+	unsigned int		location;
 	GSM_NetworkInfo 	NetInfo;
 	GSM_Error		error;
 	unsigned char reqStartup[1000] = {
@@ -2687,7 +2687,8 @@ static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 
 static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	int			location, length = 11;
+	int			length = 11;
+	unsigned int		location;
 	unsigned char		folderid, folder;
 	GSM_SMSMessageLayout 	Layout;
 	GSM_Error		error;
@@ -2811,7 +2812,7 @@ static GSM_Error N6510_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 
 static GSM_Error N6510_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	int			location;
+	unsigned int		location;
 	unsigned char		folderid;
 
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
@@ -2821,7 +2822,7 @@ static GSM_Error N6510_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 static GSM_Error N6510_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	int			location;
+	unsigned int		location;
 	unsigned char		folderid;
 
 	N6510_GetSMSLocation(s, sms, &folderid, &location);
