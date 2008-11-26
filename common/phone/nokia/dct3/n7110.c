@@ -358,7 +358,7 @@ static GSM_Error N7110_PrivGetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 {
 	GSM_Error		error;
 	unsigned char		folderid;
-	int			location;
+	unsigned int		location;
 	int			i;
         unsigned char 		req[] = {N6110_FRAME_HEADER, 0x07,
 					 0x08,			/* folder ID */
@@ -751,7 +751,8 @@ static GSM_Error N7110_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 
 static GSM_Error N7110_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	int			length, location;
+	int			length;
+	unsigned int		location;
 	unsigned char		folderid, folder;
 	GSM_Error		error;
 	unsigned char 		req[256] = {N6110_FRAME_HEADER, 0x04,
@@ -822,7 +823,7 @@ static GSM_Error N7110_PrivSetSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sm
 
 static GSM_Error N7110_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	int			location;
+	unsigned int		location;
 	unsigned char		folderid;
 
 	N7110_GetSMSLocation(s, sms, &folderid, &location);
@@ -832,7 +833,7 @@ static GSM_Error N7110_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 static GSM_Error N7110_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	int			location;
+	unsigned int		location;
 	unsigned char		folderid;
 
 	N7110_GetSMSLocation(s, sms, &folderid, &location);
@@ -1131,7 +1132,7 @@ static GSM_Error N7110_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 static GSM_Error N7110_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	unsigned char		folderid;
-	int			location;
+	unsigned int		location;
 	unsigned char 		req[] = {N7110_FRAME_HEADER, 0x0a,
 			       		 0x00, 		/* folder   */
 			       		 0x00, 0x00, 	/* location */
