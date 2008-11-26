@@ -8,7 +8,7 @@ GSM_Error error;
 char buffer[100];
 
 /* Function to handle errors */
-void error_handler()
+void error_handler(void)
 {
 	if (error != ERR_NONE) {
 		printf("ERROR: %s\n", GSM_ErrorString(error));
