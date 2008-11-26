@@ -1154,7 +1154,6 @@ GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message msg, GSM_StateMachine *s
 				/* 6310i */
 				cd->Response.EntriesNum = 0;
 				return ERR_NONE;
-				break;
 	    		}
 		    	smprintf(s,"\n");
 			j = pos + 2;
@@ -1329,7 +1328,6 @@ GSM_Error DCT3DCT4_ReplyGetWAPBookmark(GSM_Protocol_Message msg, GSM_StateMachin
 			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 			return ERR_UNKNOWNRESPONSE;
 		}
-		break;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
