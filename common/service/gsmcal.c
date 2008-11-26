@@ -1143,7 +1143,7 @@ int GSM_Make_VCAL_Lines (unsigned char *Buffer, int *lBuffer)
 /**
  * Decode day of week to gammu enumeration (1 = Monday...7 = Sunday).
  */
-GSM_Error GSM_DecodeVCAL_DOW(const char *Buffer, int *Output)
+GSM_Error GSM_DecodeVCAL_DOW(const char *Buffer, unsigned int *Output)
 {
 	if (toupper(Buffer[0])== 'M' && toupper(Buffer[1]) == 'O') {
 		*Output = 1;
