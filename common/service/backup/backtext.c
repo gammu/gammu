@@ -969,7 +969,7 @@ static GSM_Error SaveSyncMLSettingsEntry(FILE *file, GSM_SyncMLSettings *setting
 static GSM_Error SaveBitmapEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode)
 {
 	unsigned char 	buffer[10000],buffer2[10000];
-	int		x,y;
+	size_t		x,y;
 	GSM_Error error;
 
 	sprintf(buffer,"Width = " SIZE_T_FORMAT "%c%c",bitmap->BitmapWidth,13,10);
@@ -2304,7 +2304,7 @@ static bool ReadBitmapEntry(INI_Section *file_info, char *section, GSM_Bitmap *b
 	char		*readvalue;
 	unsigned char	buffer[10000];
 	size_t 	Width, Height;
-	int 		x, y;
+	size_t		x, y;
 
 	GSM_GetMaxBitmapWidthHeight(bitmap->Type, &Width, &Height);
 	sprintf(buffer,"Width");
