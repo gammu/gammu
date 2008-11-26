@@ -773,7 +773,6 @@ GSM_Error DCT3_ReplyGetWAPSettings(GSM_Protocol_Message msg, GSM_StateMachine *s
 			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 			return ERR_UNKNOWNRESPONSE;
 		}
-		break;
 	case 0x1c:
 		smprintf(s, "WAP settings part 2 received OK\n");
 		Number = Data->WAPSettings->Number;
