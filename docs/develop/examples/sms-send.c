@@ -26,7 +26,7 @@ void send_sms_callback (GSM_StateMachine *sm, int status, int MessageReference)
 }
 
 /* Function to handle errors */
-void error_handler()
+void error_handler(void)
 {
 	if (error != ERR_NONE) {
 		printf("ERROR: %s\n", GSM_ErrorString(error));
