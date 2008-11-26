@@ -23,8 +23,8 @@
 
 struct ModelRes {
 	char *model;
-	int width;
-	int height;
+	size_t width;
+	size_t height;
 };
 
 static struct ModelRes modres[] = {
@@ -306,7 +306,7 @@ GSM_Error SAMSUNG_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 		if (!strcmp(model, modres[i].model)) {
 			if (Bitmap->BitmapWidth != modres[i].width ||
 			    Bitmap->BitmapHeight != modres[i].height) {
-				smprintf(s, "Model %s must use %d x %d picture size\n",
+				smprintf(s, "Model %s must use " SIZE_T_FORMAT " x " SIZE_T_FORMAT " picture size\n",
 					modres[i].model, modres[i].width,
 					modres[i].height);
 				return ERR_INVALIDDATA;

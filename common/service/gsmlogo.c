@@ -378,12 +378,12 @@ GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 			}
 		}
 	}
-	dbgprintf("Data size in BMP file: %i\n",sizeimage);
+	dbgprintf("Data size in BMP file: " SIZE_T_FORMAT "\n",sizeimage);
 	division=div(sizeimage,256);
 	header[35]=division.quot;
 	header[34]=sizeimage-(division.quot*256);
   	sizeimage=sizeimage+sizeof(header);
-	dbgprintf("Size of BMP file: %i\n",sizeimage);
+	dbgprintf("Size of BMP file: " SIZE_T_FORMAT "\n",sizeimage);
 	division=div(sizeimage,256);
 	header[3]=division.quot;
 	header[2]=sizeimage-(division.quot*256);
@@ -709,12 +709,12 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 	/* height and width of image in the file */
 	h=buff[22]+256*buff[21];
 	w=buff[18]+256*buff[17];
-	dbgprintf("Image Size in BMP file: %dx%d\n",w,h);
+	dbgprintf("Image Size in BMP file: " SIZE_T_FORMAT "x" SIZE_T_FORMAT "\n",w,h);
 
 	GSM_GetMaxBitmapWidthHeight(bitmap->Type, &bitmap->BitmapWidth, &bitmap->BitmapHeight);
 	if (h<bitmap->BitmapHeight)	bitmap->BitmapHeight=h;
 	if (w<bitmap->BitmapWidth)	bitmap->BitmapWidth=w;
-	dbgprintf("Height %i %i, width %i %i\n",h,bitmap->BitmapHeight,w,bitmap->BitmapWidth);
+	dbgprintf("Height " SIZE_T_FORMAT " " SIZE_T_FORMAT ", width " SIZE_T_FORMAT " " SIZE_T_FORMAT "\n",h,bitmap->BitmapHeight,w,bitmap->BitmapWidth);
 
 	GSM_ClearBitmap(bitmap);
 
