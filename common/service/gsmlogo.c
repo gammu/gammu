@@ -909,7 +909,7 @@ static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 static GSM_Error loadnolngg(FILE *file, GSM_MultiBitmap *bitmap, bool nolformat)
 {
 	unsigned char 	buffer[2000];
-	int		i,h,w,x,y;
+	size_t		i,h,w,x,y;
 	size_t		readbytes;
 
 	readbytes = fread(buffer, 1, 6, file);
