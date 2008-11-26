@@ -1064,11 +1064,9 @@ static GSM_Error GNAPGEN_ReplyDeleteSMSMessage ( GSM_Protocol_Message msg, GSM_S
 		case 16:
 			smprintf(s, "invalid location\n");
 			return ERR_UNKNOWN;
-			break;
 		case 17:
 			smprintf(s, "unknown memory type\n");
 			return ERR_UNKNOWN;
-			break;
 		case 0:
 			smprintf(s, "deleted");
 	}
