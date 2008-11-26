@@ -25,7 +25,7 @@ typedef struct GSMDecoder_l1l2data_struct {
 	int 		err;		/* error flag */
 } GSMDecoder_l1l2data;
 
-GSMDecoder *GSMDecoder_new();
+GSMDecoder *GSMDecoder_new(void);
 
 void GSMDecoder_free		(GSMDecoder *self);
 void GSMDecoder_xmlout		(GSMDecoder *self, FILE *f);
