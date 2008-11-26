@@ -322,6 +322,7 @@ static GSM_Error N6510_GetFileSystemStatus1(GSM_StateMachine *s, GSM_FileSystemS
 	req[4] = 0x01;
 	smprintf(s, "Getting used/total memory in filesystem\n");
 	error = GSM_WaitFor (s, req, 10, 0x6D, 4, ID_FileSystemStatus);
+	if (error != ERR_NONE) return error;
 
 	req[3] = 0x22;
 	req[4] = 0x01;
