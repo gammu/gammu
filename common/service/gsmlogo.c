@@ -458,7 +458,8 @@ static GSM_Error savebmp(FILE *file, GSM_MultiBitmap *bitmap)
 static GSM_Error PrivSaveNLMWBMP(FILE *file, GSM_Bitmap *Bitmap)
 {
 	unsigned char	buffer[1000];
-	size_t		x,y,pos,pos2;
+	size_t		x,y,pos;
+	ssize_t		pos2;
 	div_t		division;
 
 	pos=0;pos2=7;
@@ -689,7 +690,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 {
 	bool		first_white,isfile=false;
 	unsigned char 	buff[34];
-	int		w,h,y,x,i,pos,buffpos=0;
+	size_t		w,h,y,x,i,pos,buffpos=0;
 	size_t		readbytes;
 #ifdef DEBUG
 	int		sizeimage=0;
@@ -840,7 +841,7 @@ static GSM_Error loadbmp(FILE *file, GSM_MultiBitmap *bitmap)
 static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 {
 	unsigned char 	buffer[1000];
-	int 		pos,pos2,x,y,h,w,i,number;
+	size_t 		pos,pos2,x,y,h,w,i,number;
 	div_t		division;
 	size_t		readbytes;
 
