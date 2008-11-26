@@ -2918,8 +2918,8 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	if (file == NULL) return ERR_CANTOPENFILE;
 	readbytes = fread(guessbuffer, 1, 9, file); /* Read the header of the file. */
 	fclose(file);
-	if ((guessbuffer[0] == 0xFE && guessbuffer[1] == 0xFF) ||
-			(guessbuffer[0] == 0xFF && guessbuffer[1] == 0xFE)) {
+	if (readbytes >= 2 && ((guessbuffer[0] == 0xFE && guessbuffer[1] == 0xFF) ||
+			(guessbuffer[0] == 0xFF && guessbuffer[1] == 0xFE))) {
 		UseUnicode = true;
 	}
 
@@ -3032,6 +3032,9 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			num++;
                 }
         }
+	/**
+	 * @todo Why do we sort here?
+	 */
 	num = 0;
 	while (0) {
 		if (backup->SIMPhonebook[num] == NULL) break;
