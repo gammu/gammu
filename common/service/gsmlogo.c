@@ -251,7 +251,7 @@ size_t GSM_GetBitmapSize(GSM_Bitmap *bmp)
 
 void GSM_PrintBitmap(FILE *file, GSM_Bitmap *bitmap)
 {
-	int x,y;
+	size_t x,y;
 
 	for (y=0;y<bitmap->BitmapHeight;y++) {
 		for (x=0;x<bitmap->BitmapWidth;x++) {
@@ -267,7 +267,7 @@ void GSM_PrintBitmap(FILE *file, GSM_Bitmap *bitmap)
 
 void GSM_ReverseBitmap(GSM_Bitmap *Bitmap)
 {
-	int x, y;
+	size_t x, y;
 
 	for (x=0;x<Bitmap->BitmapWidth;x++) {
 		for (y=0;y<Bitmap->BitmapHeight;y++) {
@@ -315,7 +315,8 @@ void GSM_ResizeBitmap(GSM_Bitmap *dest, GSM_Bitmap *src, size_t width, size_t he
 
 GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 {
-	int		x,y,pos,i,sizeimage,buffpos=0;
+	size_t		x,pos,i,sizeimage,buffpos=0;
+	ssize_t		y;
 	unsigned char	buff[1];
 	div_t		division;
 	bool		isfile=false;
@@ -352,7 +353,7 @@ GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 	pos	  = 7;
 	sizeimage = 0;
 	/*lines are written from the last to the first*/
-	for (y=bitmap->BitmapHeight-1;y>=0;y--) {
+	for (y = bitmap->BitmapHeight - 1; y >= 0; y--) {
 		i=1;
 		for (x=0;x<bitmap->BitmapWidth;x++) {
 			/*new byte !*/
@@ -523,7 +524,7 @@ fail:
 static GSM_Error PrivSaveNGGNOL(FILE *file, GSM_MultiBitmap *bitmap)
 {
 	char 	buffer[GSM_BITMAP_SIZE];
-	int	x,y;
+	size_t	x,y;
 	size_t	current=0;
 
 	for (y=0;y<bitmap->Bitmap[0].BitmapHeight;y++) {
@@ -594,7 +595,7 @@ fail:
 
 static GSM_Error savexpm(FILE *file, GSM_MultiBitmap *bitmap)
 {
-	int x,y;
+	size_t x,y;
 
 	fprintf(file,"/* XPM */\n");
 	fprintf(file,"static char * ala_xpm[] = {\n");
