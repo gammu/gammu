@@ -1467,7 +1467,9 @@ void CopyBitmap(int argc, char *argv[])
 				case GSM_CallerGroupLogo  :	printf(_("Caller group logo")); 	break;
 				default		     : 					break;
 			}
-			printf(_(", width %i, height %i\n"),Bitmap.Bitmap[i].BitmapWidth,Bitmap.Bitmap[i].BitmapHeight);
+			printf(_(", width %i, height %i\n"),
+				(int)Bitmap.Bitmap[i].BitmapWidth,
+				(int)Bitmap.Bitmap[i].BitmapHeight);
 			GSM_PrintBitmap(stdout,&Bitmap.Bitmap[i]);
 		}
 	} else {

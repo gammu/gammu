@@ -209,7 +209,7 @@ void PHONE_EncodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 	}
 }
 
-void GSM_GetMaxBitmapWidthHeight(GSM_Bitmap_Types Type, unsigned char *width, unsigned char *height)
+void GSM_GetMaxBitmapWidthHeight(GSM_Bitmap_Types Type, size_t *width, size_t *height)
 {
 	switch (Type) {
 		case GSM_CallerGroupLogo: *width=72; *height=14; break;
@@ -280,9 +280,9 @@ void GSM_ReverseBitmap(GSM_Bitmap *Bitmap)
 	}
 }
 
-void GSM_ResizeBitmap(GSM_Bitmap *dest, GSM_Bitmap *src, int width, int height)
+void GSM_ResizeBitmap(GSM_Bitmap *dest, GSM_Bitmap *src, size_t width, size_t height)
 {
-	int startx=0,endx=0,setx=0, starty=0,endy=0,sety=0, x, y;
+	size_t startx=0,endx=0,setx=0, starty=0,endy=0,sety=0, x, y;
 
 	if (src->BitmapWidth<=width) {
 		startx	= 0;
@@ -598,7 +598,9 @@ static GSM_Error savexpm(FILE *file, GSM_MultiBitmap *bitmap)
 
 	fprintf(file,"/* XPM */\n");
 	fprintf(file,"static char * ala_xpm[] = {\n");
-	fprintf(file,"\"%i %i 2 1\",\n",bitmap->Bitmap[0].BitmapWidth,bitmap->Bitmap[0].BitmapHeight);
+	fprintf(file,"\"" SIZE_T_FORMAT " " SIZE_T_FORMAT " 2 1\",\n",
+		bitmap->Bitmap[0].BitmapWidth,
+		bitmap->Bitmap[0].BitmapHeight);
 	fprintf(file,"\".	s c	m #000000	g4 #000000	g #000000	c #000000\",\n");
 	fprintf(file,"\"#	s c	m #ffffff	g4 #ffffff	g #ffffff	c #ffffff\",\n");
 

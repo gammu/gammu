@@ -972,10 +972,10 @@ static GSM_Error SaveBitmapEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode
 	int		x,y;
 	GSM_Error error;
 
-	sprintf(buffer,"Width = %i%c%c",bitmap->BitmapWidth,13,10);
+	sprintf(buffer,"Width = " SIZE_T_FORMAT "%c%c",bitmap->BitmapWidth,13,10);
 	error = SaveBackupText(file, "", buffer, UseUnicode);
 	if (error != ERR_NONE) return error;
-	sprintf(buffer,"Height = %i%c%c",bitmap->BitmapHeight,13,10);
+	sprintf(buffer,"Height = " SIZE_T_FORMAT "%c%c",bitmap->BitmapHeight,13,10);
 	error = SaveBackupText(file, "", buffer, UseUnicode);
 	if (error != ERR_NONE) return error;
 	for (y=0;y<bitmap->BitmapHeight;y++) {
@@ -2303,7 +2303,7 @@ static bool ReadBitmapEntry(INI_Section *file_info, char *section, GSM_Bitmap *b
 {
 	char		*readvalue;
 	unsigned char	buffer[10000];
-	unsigned char 	Width, Height;
+	size_t 	Width, Height;
 	int 		x, y;
 
 	GSM_GetMaxBitmapWidthHeight(bitmap->Type, &Width, &Height);

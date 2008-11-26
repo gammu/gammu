@@ -1310,7 +1310,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 
 #define GET_DOW(type, terminate) \
 	Calendar->Entries[Calendar->EntriesNum].EntryType = type; \
-	if (GSM_DecodeVCAL_DOW(pos, &Calendar->Entries[Calendar->EntriesNum].Number) != ERR_NONE) return ERR_UNKNOWN; \
+	if (GSM_DecodeVCAL_DOW(pos, &(Calendar->Entries[Calendar->EntriesNum].Number)) != ERR_NONE) return ERR_UNKNOWN; \
 	Calendar->EntriesNum++; \
 	NEXT_CHAR(1); \
 	NEXT_CHAR_NOERR(terminate);
