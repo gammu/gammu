@@ -966,7 +966,7 @@ static GSM_Error loadnsl(FILE *file, GSM_MultiBitmap *bitmap)
 
 	while (fread(block,1,6,file)==6) {
 		block_size = block[4]*256 + block[5];
-		dbgprintf("Block %c%c%c%c, size %i\n",block[0],block[1],block[2],block[3],block_size);
+		dbgprintf("Block %c%c%c%c, size " SIZE_T_FORMAT "\n",block[0],block[1],block[2],block[3],block_size);
 		if (!strncmp(block, "FORM", 4)) {
 			dbgprintf("File ID\n");
 		} else {
@@ -987,7 +987,7 @@ static GSM_Error loadnsl(FILE *file, GSM_MultiBitmap *bitmap)
 					OldType = bitmap->Bitmap[0].Type;
 					PHONE_DecodeBitmap(GSM_NokiaStartupLogo, buffer, &bitmap->Bitmap[0]);
 					if (OldType != GSM_None) bitmap->Bitmap[0].Type = OldType;
-					dbgprintf("Startup logo (size %i)\n",block_size);
+					dbgprintf("Startup logo (size " SIZE_T_FORMAT  ")\n",block_size);
 				}
 			}
 		}
@@ -1031,7 +1031,7 @@ static GSM_Error loadgif(FILE *file, GSM_MultiBitmap *bitmap)
 
 	readbytes = fread(buffer, 1, length, file);
 	if (readbytes != length) return ERR_FILENOTSUPPORTED;
-        dbgprintf("Length %i name \"%s\"\n", length,
+        dbgprintf("Length " SIZE_T_FORMAT  " name \"%s\"\n", length,
 		DecodeUnicodeString(bmap->Name));
 
 	bmap->Type = GSM_PictureBinary;
