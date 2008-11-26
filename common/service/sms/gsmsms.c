@@ -234,7 +234,7 @@ GSM_Coding_Type GSM_GetMessageCoding(const char TPDCS) {
 GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
 {
 	int		off=0;	 	/* length of the User Data Header */
-	int 		w,i,tmp=0;
+	int 		w,i;
 	unsigned char	output[161];
 
 	SMS->UDH.Length = 0;
@@ -264,7 +264,7 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 				SMS->Length = 0;
 				break;
 			}
-			tmp=GSM_UnpackEightBitsToSeven(w, buffer[Layout.TPUDL]-off, SMS->Length, buffer+(Layout.Text+off), output);
+			GSM_UnpackEightBitsToSeven(w, buffer[Layout.TPUDL]-off, SMS->Length, buffer+(Layout.Text+off), output);
 			dbgprintf("7 bit SMS, length %i\n",SMS->Length);
 			DecodeDefault (SMS->Text, output, SMS->Length, true, NULL);
 			dbgprintf("%s\n",DecodeUnicodeString(SMS->Text));
