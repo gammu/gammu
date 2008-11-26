@@ -13,7 +13,7 @@
 #include "wmx-gsm.h"
 
 /* Administrative */
-GSMDecoder *GSMDecoder_new()
+GSMDecoder *GSMDecoder_new(void)
 {
 	GSMDecoder *self;
 
