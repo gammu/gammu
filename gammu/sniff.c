@@ -204,7 +204,7 @@ static char				Model[50];
 static char				Version[50];
 static double				VersionNum;
 
-static void prepareStateMachine()
+static void prepareStateMachine(void)
 {
 	GSM_Phone_Data	*Phone = &(gsm->Phone.Data);
 
