@@ -487,7 +487,7 @@ static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, char *File, bool 
 	do {
 		OBEXGEN_FindNextDir(File, &Pos, req);
 		if (DirOnly && Pos == UnicodeLength(File)) break;
-		smprintf(s,"Changing path down to %s (%d, " SIZE_T_FORMAT ")\n", DecodeUnicodeString(req), Pos, UnicodeLength(File));
+		smprintf(s,"Changing path down to %s (" SIZE_T_FORMAT ", " SIZE_T_FORMAT ")\n", DecodeUnicodeString(req), Pos, UnicodeLength(File));
 		error=OBEXGEN_ChangePath(s, req, 2);
 		if (error != ERR_NONE) return error;
 		if (Pos == UnicodeLength(File)) break;
