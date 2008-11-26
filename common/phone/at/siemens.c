@@ -310,6 +310,7 @@ GSM_Error SIEMENS_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	s->Phone.Data.Cal = Note;
 	error=GSM_EncodeVCALENDAR(req,&size,Note,true,Siemens_VCalendar);
+	if (error != ERR_NONE) return error;
 
 	return SetSiemensFrame (s,req,"vcs",Note->Location,ID_SetCalendarNote,size);
 }
