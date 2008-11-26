@@ -414,14 +414,12 @@ static GSM_Error GNAPGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 
 static GSM_Error GNAPGEN_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *req, GSM_SMSMessageLayout *Layout, int *length)
 {
-	int			start, count = 0;
+	int			count = 0;
 	GSM_Error		error;
 
 	memset(Layout,255,sizeof(GSM_SMSMessageLayout));
 
 	sms->Class = -1;
-
-	start = *length;
 
 	*Layout = PHONE_SMSSubmit;
 
