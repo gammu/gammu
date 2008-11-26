@@ -420,7 +420,7 @@ static GSM_Error N7110_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 	int			i;
 	bool			found = false;
 
-	N7110_GetSMSLocation(s, &sms->SMS[0], &folderid, &location);
+	N7110_GetSMSLocation(s, &(sms->SMS[0]), &folderid, &location);
 	error=N7110_GetSMSFolderStatus(s, folderid);
 	if (error!=ERR_NONE) return error;
 	for (i=0;i<Priv->LastSMSFolder.Number;i++) {
@@ -448,7 +448,7 @@ static GSM_Error N7110_GetNextSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessag
 		error=N7110_GetSMSFolders(s,&Priv->LastSMSFolders);
 		if (error!=ERR_NONE) return error;
 	} else {
-		N7110_GetSMSLocation(s, &sms->SMS[0], &folderid, &location);
+		N7110_GetSMSLocation(s, &(sms->SMS[0]), &folderid, &location);
 		for (i=0;i<Priv->LastSMSFolder.Number;i++) {
 			if (Priv->LastSMSFolder.Location[i]==location) break;
 		}
