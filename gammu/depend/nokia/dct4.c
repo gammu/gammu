@@ -607,7 +607,6 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMac
  		sm->Phone.Data.PhoneString[1] = msg.Buffer[12];
  		sm->Phone.Data.PhoneString[2] = msg.Buffer[13];
 		return ERR_NONE;
-		break;
 	case 0x31:
 		dbgprintf("Names of voice records received\n");
 		j = 33;
