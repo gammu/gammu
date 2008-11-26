@@ -602,6 +602,7 @@ static GSM_Error ALCATEL_Terminate(GSM_StateMachine *s)
 	free(Priv->ContactsItems);
 	free(Priv->ToDoItems);
 	error = ALCATEL_SetATMode(s);
+	if (error != ERR_NONE) return error;
 	return ATGEN_Terminate(s);
 }
 
