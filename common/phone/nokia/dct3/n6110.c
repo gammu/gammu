@@ -449,6 +449,7 @@ static GSM_Error N6110_ReplyGetMemoryStatus(GSM_Protocol_Message msg, GSM_StateM
                         return ERR_SECURITYERROR;
                 default:
                         smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
+			return ERR_UNKNOWNRESPONSE;
                 }
         default:
                 return ERR_UNKNOWNRESPONSE;
