@@ -436,7 +436,6 @@ static GSM_Error N6110_ReplyGetMemoryStatus(GSM_Protocol_Message msg, GSM_StateM
                 Data->MemoryStatus->MemoryUsed=msg.Buffer[6];
 
                 return ERR_NONE;
-                break;
         case 0x09:
                 switch (msg.Buffer[4]) {
                 case 0x6f:
@@ -754,7 +753,6 @@ static GSM_Error N6110_ReplySetRingtone(GSM_Protocol_Message msg, GSM_StateMachi
         case 0x37:
                 smprintf(s, "Ringtone set OK\n");
                 return ERR_NONE;
-                break;
         case 0x38:
                 smprintf(s, "Error setting ringtone\n");
                 switch (msg.Buffer[4]) {
@@ -901,7 +899,6 @@ static GSM_Error N6110_ReplyGetStartup(GSM_Protocol_Message msg, GSM_StateMachin
         default:
                 smprintf(s, "Unknown block\n");
                 return ERR_UNKNOWNRESPONSE;
-                break;
         }
         }
         return ERR_NONE;
@@ -997,18 +994,15 @@ static GSM_Error N6110_ReplyGetSetPicture(GSM_Protocol_Message msg, GSM_StateMac
 			GSM_PrintBitmap(GSM_global_debug.df,Data->Bitmap);
 #endif
                 return ERR_NONE;
-                break;
         case 0x04:
                 smprintf(s, "Picture Image set OK\n");
                 return ERR_NONE;
         case 0x05:
                 smprintf(s, "Can't set Picture Image - invalid location ?\n");
                 return ERR_INVALIDLOCATION;
-                break;
         case 0x06:
                 smprintf(s, "Can't get Picture Image - invalid location ?\n");
                 return ERR_INVALIDLOCATION;
-                break;
         }
         return ERR_UNKNOWNRESPONSE;
 }
