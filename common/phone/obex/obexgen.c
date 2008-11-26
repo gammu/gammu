@@ -912,7 +912,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 	GSM_Error		error;
 	unsigned char		Line[500],Line2[500],*name,*size;
-	int			i,j,num,pos2,Current;
+	int			i,j,num,pos2;
 	size_t			Pos;
 
 	/* Go to default service */
@@ -934,8 +934,6 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 
 		Priv->FilesLocationsUsed 	= 1;
 		Priv->FilesLocationsCurrent 	= 0;
-
-		Current = 0;
 	}
 
 	while (1) {
