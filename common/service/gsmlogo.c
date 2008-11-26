@@ -690,7 +690,8 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 {
 	bool		first_white,isfile=false;
 	unsigned char 	buff[34];
-	size_t		w,h,y,x,i,pos,buffpos=0;
+	size_t		w,h,x,i,pos,buffpos=0;
+	ssize_t		y;
 	size_t		readbytes;
 #ifdef DEBUG
 	int		sizeimage=0;
@@ -841,7 +842,8 @@ static GSM_Error loadbmp(FILE *file, GSM_MultiBitmap *bitmap)
 static GSM_Error loadnlm (FILE *file, GSM_MultiBitmap *bitmap)
 {
 	unsigned char 	buffer[1000];
-	size_t 		pos,pos2,x,y,h,w,i,number;
+	size_t 		pos,x,y,h,w,i,number;
+	ssize_t		pos2;
 	div_t		division;
 	size_t		readbytes;
 
