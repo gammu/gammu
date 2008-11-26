@@ -20,7 +20,7 @@ extern GSM_Error  ATGEN_SetMemory (GSM_StateMachine *sm, GSM_MemoryEntry *pbk);
 extern GSM_Reply_Function UserReplyFunctionsAtS[];
 
 bool 	new_variable;
-GSM_Error CheckSiemens()
+GSM_Error CheckSiemens(void)
 {
 	if (gsm->Phone.Data.Priv.ATGEN.Manufacturer != AT_Siemens) return ERR_NOTSUPPORTED;
 	return ERR_NONE;
