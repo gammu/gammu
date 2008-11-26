@@ -803,7 +803,7 @@ static GSM_Error loadbin(FILE *file, GSM_Ringtone *ringtone)
 	}
 	ringtone->NokiaBinary.Length=ringtone->NokiaBinary.Length-i;
 	memcpy(ringtone->NokiaBinary.Frame,buffer+i,ringtone->NokiaBinary.Length);
-	dbgprintf("Length %i name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
+	dbgprintf("Length " SIZE_T_FORMAT  " name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
 	return ERR_NONE;
 }
 
@@ -815,7 +815,7 @@ static GSM_Error loadpuremidi(FILE *file, GSM_Ringtone *ringtone)
 	EncodeUnicode(ringtone->Name,"MIDI",4);
 	ringtone->NokiaBinary.Length = fread(buffer, 1, 30000, file);
 	memcpy(ringtone->NokiaBinary.Frame,buffer,ringtone->NokiaBinary.Length);
-	dbgprintf("Length %i name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
+	dbgprintf("Length " SIZE_T_FORMAT  " name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
 	return ERR_NONE;
 }
 
@@ -838,7 +838,7 @@ static GSM_Error loadmmf(FILE *file, GSM_Ringtone *ringtone)
 		return ERR_MOREMEMORY;
 	}
 
-	dbgprintf("Length %i name \"%s\"\n", length,
+	dbgprintf("Length " SIZE_T_FORMAT  " name \"%s\"\n", length,
 		DecodeUnicodeString(ringtone->Name));
 
 	return ERR_NONE;
@@ -1436,7 +1436,7 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 			for (j=0;j<6;j++) Lengths[18+j] = Lengths[j] * 2/3;
 
 #ifdef DEBUG
-			dbgprintf("Length matrix (%i) : ",i);
+			dbgprintf("Length matrix (" SIZE_T_FORMAT  ") : ",i);
 			for (j=0;j<6*4;j++) dbgprintf("%i ",Lengths[j]);
 			dbgprintf("\n");
 #endif
@@ -1551,7 +1551,7 @@ unsigned char GSM_EncodeEMSSound(GSM_Ringtone ringtone, unsigned char *package, 
 	*maxlength = 0;
 
 	if (start) {
-		if (version != GSM_Ring_NoHeader)   
+		if (version != GSM_Ring_NoHeader)
 			*maxlength+=sprintf(package,"BEGIN:IMELODY%c%c",13,10);
 		if (version == GSM_Ring_IMelody10)
 			*maxlength+=sprintf(package+(*maxlength),"VERSION:1.0%c%c",13,10);
