@@ -2502,7 +2502,7 @@ static GSM_Error N6510_ReplyDeleteSMSMessage(GSM_Protocol_Message msg, GSM_State
 static GSM_Error N6510_DeleteSMSMessage(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	unsigned char		folderid;
-	int			location;
+	unsigned int		location;
 	unsigned char 		req[] = {N6110_FRAME_HEADER, 0x04,
 					 0x01, 		/* 0x01=SM, 0x02=ME */
 					 0x00, 		/* FolderID */
