@@ -4132,7 +4132,6 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 				break;
 			}
 			return ERR_NOTSUPPORTED;
-			break;
 		default:
 			return ERR_NOTSUPPORTED;
 	}
