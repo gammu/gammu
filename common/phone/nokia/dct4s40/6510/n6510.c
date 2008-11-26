@@ -605,7 +605,7 @@ static GSM_Error N6510_GetSMSFolderStatus(GSM_StateMachine *s, int folderid)
 	return GSM_WaitFor (s, req, 10, 0x14, 4, ID_GetSMSFolderStatus);
 }
 
-static void N6510_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *folderid, int *location)
+static void N6510_GetSMSLocation(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *folderid, unsigned int *location)
 {
 	int ifolderid;
 
@@ -874,7 +874,7 @@ static GSM_Error N6510_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 {
 	GSM_Error		error;
 	unsigned char		folderid;
-	int		location;
+	unsigned int		location;
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	int			i;
 	bool			found = false;
@@ -903,7 +903,7 @@ static GSM_Error N6510_GetNextSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 {
 	GSM_Phone_N6510Data	*Priv = &s->Phone.Data.Priv.N6510;
 	unsigned char		folderid;
-	int		location;
+	unsigned int		location;
 	GSM_Error		error;
 	int			i;
 	bool			findnextfolder = false;
