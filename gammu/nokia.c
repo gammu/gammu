@@ -34,6 +34,7 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 
 	ringtone.Format	= 0;
 	error=GSM_ReadRingtoneFile(argv[2],&ringtone);
+	Print_Error(error);
 
 	if (ringtone.Format != RING_NOTETONE) {
 		printf("%s\n", _("It can be RTTL ringtone only used with this option"));
