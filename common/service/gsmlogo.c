@@ -315,8 +315,8 @@ void GSM_ResizeBitmap(GSM_Bitmap *dest, GSM_Bitmap *src, size_t width, size_t he
 
 GSM_Error Bitmap2BMP(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 {
-	size_t		x,pos,i,sizeimage,buffpos=0;
-	ssize_t		y;
+	size_t		x,i,sizeimage,buffpos=0;
+	ssize_t		y, pos;
 	unsigned char	buff[1];
 	div_t		division;
 	bool		isfile=false;
@@ -458,7 +458,7 @@ static GSM_Error savebmp(FILE *file, GSM_MultiBitmap *bitmap)
 static GSM_Error PrivSaveNLMWBMP(FILE *file, GSM_Bitmap *Bitmap)
 {
 	unsigned char	buffer[1000];
-	int		x,y,pos,pos2;
+	size_t		x,y,pos,pos2;
 	div_t		division;
 
 	pos=0;pos2=7;
