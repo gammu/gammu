@@ -984,7 +984,7 @@ static GSM_Error SaveBitmapEntry(FILE *file, GSM_Bitmap *bitmap, bool UseUnicode
 			if (GSM_IsPointBitmap(bitmap,x,y)) buffer[x]='#';
 		}
 		buffer[bitmap->BitmapWidth] = 0;
-		sprintf(buffer2,"Bitmap%02i = \"%s\"%c%c",y,buffer,13,10);
+		sprintf(buffer2,"Bitmap%02i = \"%s\"%c%c",(int)y,buffer,13,10);
 		error = SaveBackupText(file, "", buffer2, UseUnicode);
 		if (error != ERR_NONE) return error;
 	}
@@ -2315,7 +2315,7 @@ static bool ReadBitmapEntry(INI_Section *file_info, char *section, GSM_Bitmap *b
 	if (readvalue==NULL) bitmap->BitmapHeight = Height; else bitmap->BitmapHeight = atoi(readvalue);
 	GSM_ClearBitmap(bitmap);
 	for (y=0;y<bitmap->BitmapHeight;y++) {
-		sprintf(buffer,"Bitmap%02i",y);
+		sprintf(buffer,"Bitmap%02i",(int)y);
 		readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 		if (readvalue!=NULL) {
 			for (x=0;x<bitmap->BitmapWidth;x++) {
