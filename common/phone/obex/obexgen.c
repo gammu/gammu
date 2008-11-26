@@ -1494,7 +1494,7 @@ GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
                 if (strlen(line) == 0) break;
                 switch (level) {
 			case 0:
-				if (strncmp(line, Header, strlen(Header)) == 0) {
+				if (strncmp(line, Header, hlen) == 0) {
 					level = 1;
 					(*Count)++;
 					/* Do we need to reallocate? */
