@@ -864,7 +864,6 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 					case '0':
 						/* Just skip the rest */
 						goto end;
-						break;
 					default:
 						smprintf(s, "Invalid format string (@%c): %s\n", *(fmt - 1), format);
 						error = ERR_BUG;
@@ -2346,7 +2345,6 @@ GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 			return ATGEN_DecodePDUMessage(s,
 					GetLineString(msg.Buffer,&Priv->Lines,3),
 					atoi(buffer + 7));
-			break;
 		case SMS_AT_TXT:
 			error = ATGEN_ParseReply(s,
 					GetLineString(msg.Buffer, &Priv->Lines, 2),
@@ -3081,6 +3079,7 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 				start,
 				"+CMGW: @i",
 				&s->Phone.Data.SaveSMSMessage->Location);
+		if (error != ERR_NONE) return error;
 		smprintf(s, "Saved at AT location %i\n",
 				s->Phone.Data.SaveSMSMessage->Location);
 		/* Adjust location */
