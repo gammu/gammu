@@ -231,6 +231,7 @@ GSM_Error ATOBEX_Terminate(GSM_StateMachine *s)
 	GSM_Error 		error;
 
 	error = ATOBEX_SetATMode(s);
+	if (error != ERR_NONE) return error;
 	OBEXGEN_FreeVars(s);
 	return ATGEN_Terminate(s);
 }
