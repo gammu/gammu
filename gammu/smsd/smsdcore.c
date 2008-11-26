@@ -77,11 +77,10 @@ void WriteSMSDLog(char *format, ...)
 	GSM_DateTime 	date_time;
 	char 		Buffer[2000];
 	va_list		argp;
-	int 		result;
 
 	if (smsd_log_file != NULL) {
 		va_start(argp, format);
-		result = vsprintf(Buffer,format,argp);
+		vsprintf(Buffer,format,argp);
 		va_end(argp);
 
 		GSM_GetCurrentDateTime(&date_time);
