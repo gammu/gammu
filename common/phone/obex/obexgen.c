@@ -470,7 +470,7 @@ static GSM_Error OBEXGEN_ChangePath(GSM_StateMachine *s, char *Name, unsigned ch
 static GSM_Error OBEXGEN_ChangeToFilePath(GSM_StateMachine *s, char *File, bool DirOnly, unsigned char *Buffer)
 {
 	GSM_Error		error;
-	unsigned int		Pos;
+	int			Pos;
 	unsigned char		*req, req2[200];
 
 	if (Buffer == NULL) {
