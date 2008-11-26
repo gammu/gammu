@@ -582,7 +582,8 @@ static bool AddEMSText(GSM_SMSMessage *SMS, GSM_MultiPartSMSInfo *Info, int *Pos
 bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
 			       GSM_MultiSMSMessage 	*SMS)
 {
-	int  			i, w, Pos, UPI = 1, width, height;
+	int  			i, w, Pos, UPI = 1;
+	size_t			width, height;
 	size_t			z;
  	bool 			RetVal = false, NewPicture = true;
 	GSM_Phone_Bitmap_Types 	BitmapType;
