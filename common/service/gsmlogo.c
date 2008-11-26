@@ -690,8 +690,8 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 {
 	bool		first_white,isfile=false;
 	unsigned char 	buff[34];
-	size_t		w,h,x,i,pos,buffpos=0;
-	ssize_t		y;
+	size_t		w,h,x,i,buffpos=0;
+	ssize_t		y, pos;
 	size_t		readbytes;
 #ifdef DEBUG
 	int		sizeimage=0;
@@ -794,7 +794,7 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 				if(i==5) i=1;
 			}
 			/* we have top left corner ! */
-			if (x<=bitmap->BitmapWidth && y<=bitmap->BitmapHeight) {
+			if (x<=bitmap->BitmapWidth && (size_t)y<=bitmap->BitmapHeight) {
 				if (first_white) {
 					if ((buff[0]&(1<<pos))<=0) GSM_SetPointBitmap(bitmap,x,y);
 				} else {
