@@ -884,9 +884,9 @@ static GSM_Error N6510_GetSMSMessage(GSM_StateMachine *s, GSM_MultiSMSMessage *s
 	}
 
 	/* Clear SMS structure of any possible junk */
-	GSM_SetDefaultReceivedSMSData(&sms->SMS[0]);
+	GSM_SetDefaultReceivedSMSData(&(sms->SMS[0]));
 
-	N6510_GetSMSLocation(s, &sms->SMS[0], &folderid, &location);
+	N6510_GetSMSLocation(s, &(sms->SMS[0]), &folderid, &location);
 	error=N6510_GetSMSFolderStatus(s, folderid);
 	if (error!=ERR_NONE) return error;
 	for (i=0;i<Priv->LastSMSFolder.Number;i++) {
@@ -914,7 +914,7 @@ static GSM_Error N6510_GetNextSMSMessageBitmap(GSM_StateMachine *s, GSM_MultiSMS
 		error=N6510_GetSMSFolders(s,&Priv->LastSMSFolders);
 		if (error!=ERR_NONE) return error;
 	} else {
-		N6510_GetSMSLocation(s, &sms->SMS[0], &folderid, &location);
+		N6510_GetSMSLocation(s, &(sms->SMS[0]), &folderid, &location);
 		for (i=0;i<Priv->LastSMSFolder.Number;i++) {
 			if (Priv->LastSMSFolder.Location[i]==location) break;
 		}
@@ -1889,7 +1889,6 @@ static GSM_Error N6510_ReplyGetConnectionSettings(GSM_Protocol_Message msg, GSM_
 			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
 			return ERR_UNKNOWNRESPONSE;
 		}
-		break;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
