@@ -1,7 +1,7 @@
 /**
  * \file gammu-bitmap.h
  * \author Michal Čihař
- * 
+ *
  * Bitmap data and functions.
  */
 #ifndef __gammu_bitmap_h
@@ -145,11 +145,11 @@ typedef struct {
 	/**
 	 * For mono bitmaps: height specified in pixels
 	 */
-	unsigned char BitmapHeight;
+	size_t BitmapHeight;
 	/**
 	 * For mono bitmaps: width specified in pixels
 	 */
-	unsigned char BitmapWidth;
+	size_t BitmapWidth;
 	/**
 	 * For operator logos: Network operator code
 	 */
@@ -238,7 +238,7 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap * bitmap);
 
 /**
  * Checks whether point is set in bitmap.
- * 
+ *
  * \param bmp Bitmap
  * \param x Horizontal coordinate.
  * \param y Vertical coordinate.
@@ -250,7 +250,7 @@ bool GSM_IsPointBitmap(GSM_Bitmap * bmp, int x, int y);
 
 /**
  * Sets point in bitmap.
- * 
+ *
  * \param bmp Bitmap
  * \param x Horizontal coordinate.
  * \param y Vertical coordinate.
@@ -261,7 +261,7 @@ void GSM_SetPointBitmap(GSM_Bitmap * bmp, int x, int y);
 
 /**
  * Clears point in bitmap.
- * 
+ *
  * \param bmp Bitmap
  * \param x Horizontal coordinate.
  * \param y Vertical coordinate.
@@ -272,7 +272,7 @@ void GSM_ClearPointBitmap(GSM_Bitmap * bmp, int x, int y);
 
 /**
  * Clears bitmap.
- * 
+ *
  * \param bmp Bitmap
  *
  * \ingroup Bitmap
