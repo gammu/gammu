@@ -341,6 +341,15 @@ else(MSVC)
     if (WIN32 AND BUILD_SHARED_LIBS)
         MACRO_TUNE_LINKER("-Wl,--enable-auto-import")
     endif (WIN32 AND BUILD_SHARED_LIBS)
+
+    # Borland
+    # Suggests parenthesis
+    MACRO_TUNE_COMPILER("-wprc")
+    # Do not warn about unused params
+    MACRO_TUNE_COMPILER("-w-par")
+    # Warn about unused vars
+    MACRO_TUNE_COMPILER("-wuse")
+
 endif(MSVC)
 
 # Define required libraries for gammu library if it is static
