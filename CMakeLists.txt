@@ -265,7 +265,9 @@ endif (GETTEXTLIBS_FOUND)
 if(MSVC)
     # MSVC needs different flags at all
     MACRO_TUNE_COMPILER("/W3")
-else(MSVC)
+endif(MSVC)
+
+if(GCC)
     # Check for extra compiler flags we want to use
     if (NOT VERSION_PATCH EQUAL 0)
         MACRO_TUNE_COMPILER("-Werror")
@@ -341,7 +343,9 @@ else(MSVC)
     if (WIN32 AND BUILD_SHARED_LIBS)
         MACRO_TUNE_LINKER("-Wl,--enable-auto-import")
     endif (WIN32 AND BUILD_SHARED_LIBS)
+endif(GCC)
 
+if(BORLAND)
     # Borland
     # Suggests parenthesis
     MACRO_TUNE_COMPILER("-wprc")
@@ -349,8 +353,8 @@ else(MSVC)
     MACRO_TUNE_COMPILER("-w-par")
     # Warn about unused vars
     MACRO_TUNE_COMPILER("-wuse")
+endif(BORLAND)
 
-endif(MSVC)
 
 # Define required libraries for gammu library if it is static
 if (BUILD_SHARED_LIBS)
