@@ -952,17 +952,17 @@ void ReadUnicodeFile(unsigned char *Dest, const unsigned char *Source)
 
 INLINE int GetBit(unsigned char *Buffer, size_t BitNum)
 {
-	return Buffer[BitNum/8] & 1<<(7-(BitNum%8));
+	return Buffer[BitNum / 8] & (1 << (7 - (BitNum % 8)));
 }
 
 INLINE int SetBit(unsigned char *Buffer, size_t BitNum)
 {
-	return Buffer[BitNum/8] |= 1<<(7-(BitNum%8));
+	return Buffer[BitNum / 8] |= 1 << (7 - (BitNum % 8));
 }
 
 int ClearBit(unsigned char *Buffer, size_t BitNum)
 {
-	return Buffer[BitNum/8] &= 255 - (1 << (7-(BitNum%8)));
+	return Buffer[BitNum / 8] &= 255 - (1 << (7 - (BitNum % 8)));
 }
 
 void BufferAlign(unsigned char *Destination, size_t *CurrentBit)
@@ -1878,8 +1878,8 @@ void EncodeBASE64(const unsigned char *Input, unsigned char *Output, size_t Leng
 
 static void DecodeBASE64Block(unsigned char in[4], unsigned char out[3])
 {
-	out[0] = (unsigned char) (in[0] << 2 | in[1] >> 4);
-	out[1] = (unsigned char) (in[1] << 4 | in[2] >> 2);
+	out[0] = (unsigned char) ((in[0] << 2) | (in[1] >> 4));
+	out[1] = (unsigned char) ((in[1] << 4) | (in[2] >> 2));
 	out[2] = (unsigned char) (((in[2] << 6) & 0xc0) | in[3]);
 }
 
