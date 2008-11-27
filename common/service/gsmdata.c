@@ -418,7 +418,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 {
 	size_t pos = 0;
 	int type=0,parts,j;
-	int		i,len2,len3,len4,value2;
+	int		i,len2,len3,value2;
 	long 		value;
 	time_t 		timet;
 	GSM_DateTime 	Date;
@@ -776,7 +776,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 		} else if (file->Buffer[pos+i] == 0x1F) {
 			i++;
 			buff[0] = 0;
-			len4 	= file->Buffer[pos+i];
+			/* len4 	= file->Buffer[pos+i]; */
 			i++;
 			if (!(file->Buffer[pos+i] & 0x80)) {
 				while (file->Buffer[pos+i]!=0x00) {
