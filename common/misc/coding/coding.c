@@ -1166,13 +1166,7 @@ int strncasecmp (const char *s1, const char *s2, size_t n)
 		++p2;
 	} while (c1 == c2);
 
-	if (UCHAR_MAX <= INT_MAX)
-		return c1 - c2;
-	else
-	/* On machines where 'char' and 'int' are types of the same size, the
-	difference of two 'unsigned char' values - including the sign bit -
-	doesn't fit in an 'int'.  */
-		return (c1 > c2 ? 1 : c1 < c2 ? -1 : 0);
+	return (c1 > c2 ? 1 : c1 < c2 ? -1 : 0);
 }
 #undef TOLOWER
 #endif
