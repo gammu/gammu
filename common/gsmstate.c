@@ -1344,8 +1344,7 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 			LocalFree(lpMsgBuf);
 		}
 	}
-	return;
-#endif
+#else
 
 	if (errno!=-1) {
 		if (s->di.dl == DL_TEXTERROR || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTALL ||
@@ -1353,6 +1352,7 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 			smprintf(s,"[System error     - %s, %i, \"%s\"]\n",description,errno,strerror(errno));
 		}
 	}
+#endif
 }
 
 #ifdef GSM_ENABLE_BACKUP
