@@ -1110,13 +1110,13 @@ GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *pac
 	ringtone->NoteTone.NrCommands 	= 0;
 
 	GetBufferInt(package,&StartBit,&l,8);
-	if (l!=0x02) {
+	if (l != 0x02) {
 		dbgprintf("Not header\n");
 		return ERR_NOTSUPPORTED;
 	}
 
 	GetBufferInt(package,&StartBit,&l,7);
-	if (l!=SM_Command_RingingToneProgramming) {
+	if (l != SM_Command_RingingToneProgramming) {
 		dbgprintf("Not RingingToneProgramming\n");
 		return ERR_NOTSUPPORTED;
 	}
@@ -1125,13 +1125,13 @@ GSM_Error GSM_DecodeNokiaRTTLRingtone(GSM_Ringtone *ringtone, unsigned char *pac
 	BufferAlignNumber(&StartBit);
 
 	GetBufferInt(package,&StartBit,&l,7);
-	if (l!=SM_Command_Sound) {
+	if (l != SM_Command_Sound) {
 		dbgprintf("Not Sound\n");
 		return ERR_NOTSUPPORTED;
 	}
 
 	GetBufferInt(package,&StartBit,&l,3);
-	if (l!=SM_Song_BasicSongType) {
+	if (l != SM_Song_BasicSongType) {
 		dbgprintf("Not BasicSongType\n");
 		return ERR_NOTSUPPORTED;
 	}

@@ -610,7 +610,7 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMac
 	case 0x31:
 		dbgprintf("Names of voice records received\n");
 		j = 33;
-		for (i=0;i<msg.Buffer[9];i++) {
+		for (i = 0; i < (size_t)msg.Buffer[9]; i++) {
 			memcpy(Buffer,msg.Buffer+(j+1),msg.Buffer[j]);
 			Buffer[msg.Buffer[j]] 	= 0;
 			Buffer[msg.Buffer[j]+1] = 0;

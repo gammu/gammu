@@ -82,7 +82,7 @@ static bool PHONE_IsPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x
 	case GSM_Nokia6210StartupLogo:
 	case GSM_Nokia7110StartupLogo:
 	case GSM_Nokia6510OperatorLogo:
-		i=(buffer[(y/8*width) + x] & 1<<(y%8));
+		i=(buffer[(y / 8 * width) + x] & (1 << (y % 8)));
 		break;
 	case GSM_NokiaOperatorLogo:
 	case GSM_Nokia7110OperatorLogo:
@@ -92,10 +92,10 @@ static bool PHONE_IsPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int x
 	case GSM_EMSMediumPicture:
 	case GSM_EMSBigPicture:
 		pixel=width*y + x;
-		i=(buffer[pixel/8] & 1<<(7-(pixel%8)));
+		i=(buffer[pixel / 8] & (1 << (7 - (pixel % 8))));
 		break;
 	case GSM_NokiaPictureImage:
-		i=(buffer[9*y + x/8] & 1<<(7-(x%8)));
+		i=(buffer[(9 * y) + (x / 8)] & (1 << (7 - (x % 8))));
 		break;
 	case GSM_AlcatelBMMIPicture:
 		break;
@@ -112,7 +112,7 @@ static void PHONE_SetPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int 
 	case GSM_Nokia6210StartupLogo:
 	case GSM_Nokia7110StartupLogo:
 	case GSM_Nokia6510OperatorLogo:
-		buffer[(y/8*width)+x] |= 1 << (y%8);
+		buffer[(y / 8 * width)+x] |= 1 << (y % 8);
 		break;
 	case GSM_NokiaOperatorLogo:
 	case GSM_Nokia7110OperatorLogo:
@@ -122,15 +122,15 @@ static void PHONE_SetPointBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, int 
 	case GSM_EMSBigPicture:
 	case GSM_EMSVariablePicture:
 		pixel = width*y + x;
-		buffer[pixel/8] |= 1 << (7-(pixel%8));
+		buffer[pixel / 8] |= 1 << (7 - (pixel % 8));
 		break;
 	case GSM_NokiaPictureImage:
-		buffer[9*y + x/8] |= 1 << (7-(x%8));
+		buffer[(9 * y) + (x / 8)] |= 1 << (7 - (x % 8));
 		break;
 	case GSM_AlcatelBMMIPicture:
 		pixel = height / 8;
 		if ((height % 8) != 0) pixel++;
-		buffer[pixel*x + y/8] |= 1 << (7 - (y%8));
+		buffer[(pixel * x) + (y / 8)] |= 1 << (7 - (y % 8));
 		break;
 	}
 }

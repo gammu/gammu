@@ -34,7 +34,14 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 
 	smprintf(s, "Connecting to RF channel %i\n",port);
 
+	/* BCC comes with broken MAKEWORD, which emmits warnings */
+#ifdef __BORLANDC__
+#    pragma warn -8084
+#endif
     	WSAStartup(MAKEWORD(1,1), &wsaData);
+#ifdef __BORLANDC__
+#    pragma warn +8084
+#endif
 
     	d->hPhone = socket(AF_BTH, SOCK_STREAM, BTHPROTO_RFCOMM);
 	if (d->hPhone == INVALID_SOCKET) {
@@ -164,7 +171,14 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 	GSM_Error			error;
 	DWORD				err;
 
-    	if (WSAStartup(MAKEWORD(2,2), &wsaData)!=0x00) return ERR_DEVICENODRIVER;
+	/* BCC comes with broken MAKEWORD, which emmits warnings */
+#ifdef __BORLANDC__
+#    pragma warn -8084
+#endif
+    	if (WSAStartup(MAKEWORD(2,2), &wsaData) != 0x00) return ERR_DEVICENODRIVER;
+#ifdef __BORLANDC__
+#    pragma warn +8084
+#endif
 
     	d->hPhone = socket(AF_BTH, SOCK_STREAM, BTHPROTO_RFCOMM);
 	if (d->hPhone == INVALID_SOCKET) {

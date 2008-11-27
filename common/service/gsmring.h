@@ -9,22 +9,22 @@
 #define SM_CommandEnd_CommandEnd 		0x00
 
 /* specification gives also other */
-#define SM_Command_RingingToneProgramming 	0x25<<1
-#define SM_Command_Sound                  	0x1d<<1
+#define SM_Command_RingingToneProgramming 	(0x25 << 1)
+#define SM_Command_Sound                  	(0x1d << 1)
 /* specification gives also other */
 
-#define SM_Song_BasicSongType			0x01<<5
+#define SM_Song_BasicSongType			(0x01 << 5)
 /* specification gives also other */
 
-#define SM_PatternID_A_part 			0x00<<6
+#define SM_PatternID_A_part 			(0x00 << 6)
 /* specification gives also other */
 
-#define SM_InstructionID_PatternHeaderId      	0x00<<5
-#define SM_InstructionID_NoteInstructionId    	0x01<<5
-#define SM_InstructionID_ScaleInstructionId   	0x02<<5
-#define SM_InstructionID_StyleInstructionId   	0x03<<5
-#define SM_InstructionID_TempoInstructionId   	0x04<<5
-#define SM_InstructionID_VolumeInstructionId  	0x05<<5
+#define SM_InstructionID_PatternHeaderId      	(0x00 << 5)
+#define SM_InstructionID_NoteInstructionId    	(0x01 << 5)
+#define SM_InstructionID_ScaleInstructionId   	(0x02 << 5)
+#define SM_InstructionID_StyleInstructionId   	(0x03 << 5)
+#define SM_InstructionID_TempoInstructionId   	(0x04 << 5)
+#define SM_InstructionID_VolumeInstructionId  	(0x05 << 5)
 
 /* ------ end of Smart Messaging Specification 2.0 & 3.0 definitions ------- */
 
