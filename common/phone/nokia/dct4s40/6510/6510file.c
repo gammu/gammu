@@ -27,7 +27,7 @@ static int N6510_FindFileCheckSum12(unsigned char *ptr, int len)
 	acc  = 0xffff;
 	while (len--) {
 		accx = (accx & 0xffff00ff) | (acc & 0xff00);
-		acc  = (acc  & 0xffff00ff) | *ptr++ << 8;
+		acc  = (acc  & 0xffff00ff) | (*ptr++ << 8);
 		for (i = 0; i < 8; i++) {
 			acc <<= 1;
 			if (acc & 0x10000)     acc ^= 0x1021;

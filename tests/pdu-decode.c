@@ -166,17 +166,20 @@ int pdu_decode(const char *buffer) {
 		case 3:
 			printf("Reserverd\n");
 			return -1;
-			break;
 	}
 	if (submit || deliver) {
 		if (type & (1 << 7)) {
-			printf(", Reply path set");
 			rp = 1;
 		}
 		if (type & (1 << 6)) {
-			printf(", UDH included");
 			udh = 1;
 		}
+	}
+	if (rp) {
+		printf(", Reply path set");
+	}
+	if (udh) {
+		printf(", UDH included");
 	}
 	if (submit) {
 		switch (type & (0x3 << 3)) {
@@ -186,7 +189,6 @@ int pdu_decode(const char *buffer) {
 			case 1:
 				printf(", Reserved VP!\n");
 				return -1;
-				break;
 			case 2:
 				printf(", Relative VP");
 				vpf = 2;

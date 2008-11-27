@@ -134,8 +134,14 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 #ifdef WIN32
     	int 			Enable9WireMode = 1;
     	WSADATA			wsaData;
-
+	/* BCC comes with broken MAKEWORD, which emmits warnings */
+#ifdef __BORLANDC__
+#    pragma warn -8084
+#endif
     	WSAStartup(MAKEWORD(1,1), &wsaData);
+#ifdef __BORLANDC__
+#    pragma warn +8084
+#endif
 #else
     	if (s->ConnectionType == GCT_IRDAAT) return ERR_SOURCENOTAVAILABLE;
 #endif
