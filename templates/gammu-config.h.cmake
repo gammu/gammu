@@ -222,6 +222,16 @@
 #cmakedefine HAVE_INTPTR_T
 #endif
 
+/**
+ * __FUNCTION__ support
+ */
+#cmakedefine HAVE_MACRO_FUNCTION
+
+/**
+ * __FUNC__ support
+ */
+#cmakedefine HAVE_MACRO_FUNC
+
 /* Iconv support */
 #cmakedefine ICONV_FOUND
 #cmakedefine ICONV_SECOND_ARGUMENT_IS_CONST

@@ -3,8 +3,13 @@
 #include <gammu.h>
 #include "gsmstate.h"
 
+#ifdef __FUNCTION__WORKING
 #define PRINT_FUNCTION_START smprintf(s, "Entering %s\n", __FUNCTION__);
 #define PRINT_FUNCTION_END smprintf(s, "Leaving %s\n", __FUNCTION__);
+#else
+#define PRINT_FUNCTION_START smprintf(s, "Entering %s:%d\n", __FILE__, __LINE__);
+#define PRINT_FUNCTION_END smprintf(s, "Leaving %s:%d\n", __FILE__, __LINE__);
+#endif
 #define PRINT_MEMORY_INFO() smprintf(s, "Location = %d, Memory type = %s\n", entry->Location, GSM_MemoryTypeToString(entry->MemoryType));
 #define PRINT_TODO_INFO() smprintf(s, "Location = %d\n", ToDo->Location);
 #define PRINT_CALENDAR_INFO() smprintf(s, "Location = %d\n", Note->Location);
