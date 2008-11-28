@@ -155,6 +155,24 @@ endif (CMAKE_CROSSCOMPILING AND MINGW)
 check_type_size (ssize_t HAVE_SSIZE_T)
 check_type_size(intptr_t HAVE_INTPTR_T)
 
+check_c_source_compiles ("
+#include <stdio.h>
+
+int main(void) {
+    printf( __FUNCTION__);
+    return 0;
+}
+"  HAVE_MACRO_FUNCTION)
+
+check_c_source_compiles ("
+#include <stdio.h>
+
+int main(void) {
+    printf( __FUNC__);
+    return 0;
+}
+"  HAVE_MACRO_FUNC)
+
 OPTION(WITH_BLUETOOTH "Bluetooth support" ON)
 if (WITH_BLUETOOTH)
     if (WIN32)

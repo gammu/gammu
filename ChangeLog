@@ -30,6 +30,7 @@ ChangeLog
 [-] * Fix compilation if strtoull does not exist.
 [-] * Compile on platforms where intptr_t does not exist.
 [-] * Fixed compilation in BCC (see changes above).
+[-] * Check whether compiler supports __FUNCTION__.
 
 20081119 - 1.21.92
 

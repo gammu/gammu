@@ -125,10 +125,15 @@ extern void GSM_InitLocales(const char *path);
 #endif
 
 /* Working __FUNCTION__ on BCC */
-#ifdef __BORLANDC__
- #ifndef __FUNCTION__
-  #define __FUNCTION__ __FUNC__
- #endif
+#ifndef HAVE_MACRO_FUNCTION
+# ifdef HAVE_MACRO_FUNC
+#  define __FUNCTION__ __FUNC__
+#  define __FUNCTION__WORKING
+# else
+#  define __FUNCTION__ "unknown"
+# endif
+#else
+# define __FUNCTION__WORKING
 #endif
 
 /* strtoull for BCC (and maybe others) */
