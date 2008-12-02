@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2008???? - 1.21.93
+20081202 - 1.21.93
 
 [!] * Drop own crosscompilation support, rely on CMake one.
 [!] * Also standard CMake parameters used when possible (eg.
