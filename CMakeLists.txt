@@ -93,6 +93,7 @@ include (CheckLibraryExists)
 
 # Packages in our sources (mostly taken from KDE)
 include (MacroOptionalFindPackage)
+include (MacroAddDLL)
 include (MacroGammuOption)
 include (MacroTuneCompiler)
 
@@ -709,48 +710,33 @@ configure_file ("${Gammu_SOURCE_DIR}/templates/gammu-uninstalled.pc.cmake" "${Ga
 if (WIN32)
     # MySQL
     if (MYSQL_FOUND)
-        install (FILES "${MYSQL_CROSS_PATH}/lib/opt/libmysql.dll"
-                DESTINATION "${INSTALL_BIN_DIR}"
-                )
+        ADD_DLL("libmysql.dll" "${MYSQL_LIBRARIES}")
     endif (MYSQL_FOUND)
 
     # PostgreSQL and dependencies
     if (POSTGRES_FOUND)
-        install (FILES
-                "${POSTGRES_CROSS_PATH}/lib/libpq.dll"
-                "${POSTGRES_CROSS_PATH}/bin/comerr32.dll"
-                "${POSTGRES_CROSS_PATH}/bin/libeay32.dll"
-                "${POSTGRES_CROSS_PATH}/bin/libiconv2.dll"
-                "${POSTGRES_CROSS_PATH}/bin/libintl3.dll"
-                "${POSTGRES_CROSS_PATH}/bin/krb5_32.dll"
-                "${POSTGRES_CROSS_PATH}/bin/ssleay32.dll"
-                "${POSTGRES_CROSS_PATH}/bin/gssapi32.dll"
-                "${POSTGRES_CROSS_PATH}/bin/k5sprt32.dll"
-                "${POSTGRES_CROSS_PATH}/bin/zlib1.dll"
-                DESTINATION ${INSTALL_BIN_DIR}
-                )
+        ADD_DLL("libpq.dll" "${POSTGRES_LIBRARY}")
     endif (POSTGRES_FOUND)
+
+    # iconv and dependencies
+    if (ICONV_FOUND)
+       ADD_DLL("libiconv-2.dll" "${ICONV_LIBRARIES}")
+    endif (ICONV_FOUND)
 
     # Gettext and dependencies
     if (GETTEXTLIBS_FOUND)
-        install (FILES
-                "${GETTEXT_CROSS_PATH}/bin/libintl3.dll"
-                "${GETTEXT_CROSS_PATH}/bin/libiconv2.dll"
-                DESTINATION "${INSTALL_BIN_DIR}"
-                )
+        ADD_DLL("libintl-8.dll" "${LIBINTL_LIBRARY}")
     endif (GETTEXTLIBS_FOUND)
 
     # Gettext and dependencies
     if (CURL_FOUND)
-        install (FILES
-                "${CURL_CROSS_PATH}/bin/libcurl.dll"
-                "${CURL_CROSS_PATH}/bin/zlib1.dll"
-                "${CURL_CROSS_PATH}/bin/libeay32.dll"
-                "${CURL_CROSS_PATH}/bin/libssh2.dll"
-                "${CURL_CROSS_PATH}/bin/libssl32.dll"
-                DESTINATION "${INSTALL_BIN_DIR}"
-                )
+        ADD_DLL("libcurl-4.dll" "${CURL_LIBRARIES}")
+        ADD_DLL("mgwz.dll" "${CURL_LIBRARIES}")
     endif (CURL_FOUND)
+
+    install (FILES ${WIN32_INSTALL_DLL}
+            DESTINATION "${INSTALL_BIN_DIR}"
+            )
 endif (WIN32)
 
 foreach (HEADER ${PUBLIC_HEADERS})
