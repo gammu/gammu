@@ -1,4 +1,4 @@
-%define ver         1.21.93
+%define ver         1.21.94
 %define name        gammu
 %define rel         1
 # Set to 0 to disable bluetooth support
