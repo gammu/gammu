@@ -285,7 +285,7 @@ if(MSVC)
     MACRO_TUNE_COMPILER("/W3")
 endif(MSVC)
 
-if(GCC)
+if(GCC OR MINGW)
     # Check for extra compiler flags we want to use
     if (NOT VERSION_PATCH EQUAL 0)
         MACRO_TUNE_COMPILER("-Werror")
@@ -361,7 +361,7 @@ if(GCC)
     if (WIN32 AND BUILD_SHARED_LIBS)
         MACRO_TUNE_LINKER("-Wl,--enable-auto-import")
     endif (WIN32 AND BUILD_SHARED_LIBS)
-endif(GCC)
+endif(GCC OR MINGW)
 
 if(BORLAND)
     # Borland
