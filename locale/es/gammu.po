@@ -3002,7 +3002,7 @@ msgstr "Respuesta de servicio"
 #: gammu/message.c:618
 #, c-format
 msgid "%i. Set %i\n"
-msgstr "&i. Establece %i\n"
+msgstr "%i. Establece %i\n"
 
 #: gammu/message.c:622 gammu/misc.c:1868 gammu/misc.c:2057
 msgid "Number"
