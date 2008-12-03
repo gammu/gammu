@@ -396,7 +396,11 @@ static int serial_write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 				usleep(1000);
 				continue;
 			}
-	    		if (actual != nbytes) GSM_OSErrorInfo(s, "serial_write");
+	    		if (actual != nbytes) {
+				GSM_OSErrorInfo(s, "serial_write");
+				smprintf(s, "Wanted to write " SIZE_T_FORMAT " bytes, but " SIZE_T_FORMAT " were written\n",
+					nbytes, actual);
+			}
 	    		return actual;
 		}
 		actual  += ret;
