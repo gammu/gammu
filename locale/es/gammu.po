@@ -873,9 +873,7 @@ msgstr "¿Restaurar el sms %03i a la carpeta \"%s\"%s?"
 #: gammu/backup.c:1751
 #, c-format
 msgid "saving %i SMS\n"
-msgstr ""
-"Guardando e, SMS %i\n"
-" "
+msgstr "Guardando e, SMS %i\n"
 
 #: gammu/calendar.c:34 gammu/calendar.c:683
 msgid "Note type"
@@ -1909,7 +1907,7 @@ msgstr "Obteniendo: \"%s\"\n"
 
 #: gammu/files.c:373
 msgid "it's folder. Please give only file names"
-msgstr "es una carpeta. Por favor, indique solamente nombres de fichero\n"
+msgstr "es una carpeta. Por favor, indique solamente nombres de fichero"
 
 #: gammu/files.c:379
 #, c-format
@@ -2079,9 +2077,7 @@ msgstr "Entrada estándar"
 #: gammu/gammu.c:414
 #, c-format
 msgid "Batch file could not be opened: %s\n"
-msgstr ""
-"El archivo de proceso por lotes no pudo ser abierto: %s\n"
-" "
+msgstr "El archivo de proceso por lotes no pudo ser abierto: %s\n"
 
 #: gammu/gammu.c:424
 msgid "Error reading batch! Terminating.\n"
@@ -2227,11 +2223,11 @@ msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr "Para mas detalles, pida ayuda específica del tema (gammu --help entrada). "
-"Las entradas son:\n"
+"Las entradas son:"
 
 #: gammu/gammu.c:875
 msgid "Unknown help topic specified!"
-msgstr "Tema de ayuda desconocido\n"
+msgstr "Tema de ayuda desconocido!"
 
 #: gammu/gammu.c:879
 #, c-format
