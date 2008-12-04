@@ -1131,11 +1131,7 @@ int main(int argc, char *argv[])
 		smcfg->UseGlobalDebugFile = true;
 
 		/* It makes no sense to open several debug logs... */
-		if (i != 0) {
-			strcpy(smcfg->DebugLevel, smcfg0->DebugLevel);
-			free(smcfg->DebugFile);
-			smcfg->DebugFile = strdup(smcfg0->DebugFile);
-		} else {
+		if (i == 0) {
 			/* Just for first config */
 			/* When user gave debug level on command line */
 			if (argc > 1 + start
