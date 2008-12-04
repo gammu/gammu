@@ -90,7 +90,7 @@ GSM_Error bluetooth_findrfchannel(GSM_StateMachine *s)
 	/* Check for zero */
 	if (channel_id == 0) {
 		smprintf(s, "Please configure bluetooth channel!\n");
-		error = ERR_UNCONFIGURED;
+		error = ERR_SPECIFYCHANNEL;
 		goto done;
 	}
 

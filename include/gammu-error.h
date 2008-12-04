@@ -277,6 +277,10 @@ typedef enum {
 	 * Some functions not compiled in your OS
 	 */
 	ERR_DISABLED,
+	/**
+	 * Bluetooth configuration requires channel option.
+	 */
+	ERR_SPECIFYCHANNEL,
 
 	/**
 	 * Just marker of highest error code, should not be used.
