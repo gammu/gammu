@@ -2807,11 +2807,16 @@ GSM_Error ATGEN_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 					found = i + 1;
 					break;
 				}
-				if (Priv->SMSCache[i].Location == sms->SMS[0].Location - 1) {
+				if ((Priv->SMSCache[i].Location < sms->SMS[0].Location)
+					&& ((tmpfound == -1) ||
+						(sms->SMS[0].Location - Priv->SMSCache[i].Location <
+						sms->SMS[0].Location - Priv->SMSCache[tmpfound - 1].Location))
+					) {
 					tmpfound = i + 1;
 				}
 			}
 		}
+
 		if (found == -1) {
 			smprintf(s, "Invalid location passed to %s!\n", __FUNCTION__);
 			if (tmpfound == -1) {
