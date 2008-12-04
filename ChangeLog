@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2008???? - 1.21.94
+
+[-] * Better skipping of currupted messages in AT (bug #768).
     
 20081202 - 1.21.93
 
