@@ -446,6 +446,15 @@ void CopyLineString(char *dest, const char *src, const GSM_CutLines *lines, int 
 	dest[len] = 0;
 }
 
+GSM_Debug_Info GSM_none_debug = {
+	0,
+	NULL,
+	false,
+	"",
+	false,
+	false
+	};
+
 GSM_Debug_Info GSM_global_debug = {
 	0,
 	NULL,

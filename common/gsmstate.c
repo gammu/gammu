@@ -522,7 +522,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		s->opened			  = false;
 		s->Phone.Functions		  = NULL;
 
-		s->di 				  = GSM_global_debug;
+		s->di 				  = GSM_none_debug;
 		s->di.use_global 		  = s->CurrentConfig->UseGlobalDebugFile;
 		if (!s->di.use_global) {
 			GSM_SetDebugLevel(s->CurrentConfig->DebugLevel, &s->di);
