@@ -305,7 +305,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #endif
 
 		/* If phone is S40, use 6510 */
-#ifdef GSM_ENABLE_NOKIA650
+#ifdef GSM_ENABLE_NOKIA6510
 		if (GSM_IsPhoneFeatureAvailable(model, F_SERIES40_30) && (
 				s->ConnectionType ==  GCT_MBUS2 ||
 				s->ConnectionType ==  GCT_FBUS2 ||
@@ -319,8 +319,8 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 				s->ConnectionType ==  GCT_IRDAPHONET ||
 				s->ConnectionType ==  GCT_BLUEFBUS2 ||
 				s->ConnectionType ==  GCT_BLUEPHONET)) {
-			smprintf(s,"[Module           - \"%s\"]\n", N650Phone.models);
-			s->Phone.Functions = &N650Phone;
+			smprintf(s,"[Module           - \"%s\"]\n", N6510Phone.models);
+			s->Phone.Functions = &N6510Phone;
 			return ERR_NONE;
 		}
 #endif
