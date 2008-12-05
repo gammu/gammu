@@ -229,9 +229,11 @@ static GSM_Error SaveVCalDateTime(FILE *file, GSM_DateTime *dt, bool UseUnicode)
 {
 	unsigned char 	buffer[100];
 	size_t		Length = 3;
+	GSM_Error error;
 
 	sprintf(buffer, " = ");
-	SaveVCALDateTime(buffer, &Length, dt, NULL);
+	error = VC_StoreDateTime(buffer, sizeof(buffer), &Length, dt, NULL);
+	if (error != ERR_NONE) return error;
 	return SaveBackupText(file, "", buffer, UseUnicode);
 }
 

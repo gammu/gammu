@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
 
 int main(int argc, char **argv)
 {
@@ -71,7 +72,8 @@ int main(int argc, char **argv)
 
 	/* Encode vCard back */
 	pos = 0;
-	GSM_EncodeVCARD(vcard_buffer, &pos, &pbk, true, SonyEricsson_VCard21);
+	error = GSM_EncodeVCARD(vcard_buffer, sizeof(vcard_buffer), &pos, &pbk, true, SonyEricsson_VCard21);
+	assert(error == ERR_NONE);
 
 	/*
 	 * Best would be to compare here, but we never can get

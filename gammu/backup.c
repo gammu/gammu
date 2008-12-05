@@ -39,7 +39,8 @@ void SaveFile(int argc, char *argv[])
 			exit(-1);
 		}
 		j = 0;
-		GSM_EncodeVCALENDAR(Buffer, &j, Backup.Calendar[i],true,Nokia_VCalendar);
+		error = GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer), &j, Backup.Calendar[i],true,Nokia_VCalendar);
+		Print_Error(error);
 	} else if (strcasecmp(argv[2],"BOOKMARK") == 0) {
 		if (argc<5) {
 			printf("%s\n", _("Where is backup filename and location?"));
@@ -75,7 +76,8 @@ void SaveFile(int argc, char *argv[])
 			exit(-1);
 		}
 		j = 0;
-		GSM_EncodeVNTFile(Buffer, &j, Backup.Note[i]);
+		error = GSM_EncodeVNTFile(Buffer, sizeof(Buffer), &j, Backup.Note[i]);
+		Print_Error(error);
 	} else if (strcasecmp(argv[2],"TODO") == 0) {
 		if (argc<5) {
 			printf("%s\n", _("Where is backup filename and location?"));
@@ -93,7 +95,8 @@ void SaveFile(int argc, char *argv[])
 			exit(-1);
 		}
 		j = 0;
-		GSM_EncodeVTODO(Buffer, &j, Backup.ToDo[i], true, Nokia_VToDo);
+		error = GSM_EncodeVTODO(Buffer, sizeof(Buffer), &j, Backup.ToDo[i], true, Nokia_VToDo);
+		Print_Error(error);
 	} else if (strcasecmp(argv[2],"VCARD10") == 0 || strcasecmp(argv[2],"VCARD21") == 0) {
 		if (argc<6) {
 			printf("%s\n", _("Where is backup filename and location and memory type?"));
@@ -128,9 +131,11 @@ void SaveFile(int argc, char *argv[])
 		}
 		j = 0;
 		if (strcasecmp(argv[2],"VCARD10") == 0) {
-			GSM_EncodeVCARD(Buffer,&j,pbk,true,Nokia_VCard10);
+			error = GSM_EncodeVCARD(Buffer, sizeof(Buffer), &j, pbk, true, Nokia_VCard10);
+			Print_Error(error);
 		} else {
-			GSM_EncodeVCARD(Buffer,&j,pbk,true,Nokia_VCard21);
+			error = GSM_EncodeVCARD(Buffer, sizeof(Buffer), &j, pbk, true, Nokia_VCard21);
+			Print_Error(error);
 		}
 	} else {
 		printf(_("Unknown backup format: \"%s\"\n"), argv[2]);

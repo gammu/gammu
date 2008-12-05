@@ -2,6 +2,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdarg.h>
 
 #include <gammu-misc.h>
 
@@ -9,7 +10,7 @@
 #include "gsmpbk.h"
 #include "gsmmisc.h"
 
-unsigned char *GSM_PhonebookGetEntryName (GSM_MemoryEntry *entry)
+unsigned char *GSM_PhonebookGetEntryName (const GSM_MemoryEntry *entry)
 {
 	/* We possibly store here "LastName, FirstName" so allocate enough memory */
 	static char     dest[(GSM_PHONEBOOK_TEXT_LENGTH*2+2+1)*2];
@@ -54,7 +55,7 @@ unsigned char *GSM_PhonebookGetEntryName (GSM_MemoryEntry *entry)
 	return dest;
 }
 
-void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, int *Number, int *Group)
+void GSM_PhonebookFindDefaultNameNumberGroup(const GSM_MemoryEntry *entry, int *Name, int *Number, int *Group)
 {
 	int i;
 
@@ -102,7 +103,8 @@ void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry *entry, int *Name, 
 	}
 }
 
-void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry *pbk, bool header, GSM_VCardVersion Version)
+
+GSM_Error GSM_EncodeVCARD(char *Buffer, const size_t buff_len, size_t *Length, GSM_MemoryEntry *pbk, const bool header, const GSM_VCardVersion Version)
 {
 	int Name, Number, Group, i;
 	int firstname = -1, lastname = -1;
@@ -111,32 +113,45 @@ void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry *pbk, bool he
 	unsigned char buffer[1024];
 	int pos;
 	bool ignore;
+	GSM_Error error;
 
 	GSM_PhonebookFindDefaultNameNumberGroup(pbk, &Name, &Number, &Group);
 
-	if (Version == Nokia_VCard10) {
-		if (header) *Length+=sprintf(Buffer+(*Length),"BEGIN:VCARD%c%c",13,10);
+	if (header) {
+		error = VC_StoreLine(Buffer, buff_len, Length, "BEGIN:VCARD");
+		if (error != ERR_NONE) return error;
+	}
+	if (Version == Nokia_VCard10 || Version == SonyEricsson_VCard10) {
 		if (Name != -1) {
-			*Length+=sprintf(Buffer+(*Length),"N:%s%c%c",DecodeUnicodeString(pbk->Entries[Name].Text),13,10);
+			error = VC_StoreLine(Buffer, buff_len, Length, "N:%s",
+				DecodeUnicodeString(pbk->Entries[Name].Text));
+			if (error != ERR_NONE) return error;
 		}
 		if (Number != -1) {
-			*Length +=sprintf(Buffer+(*Length),"TEL:%s%c%c",DecodeUnicodeString(pbk->Entries[Number].Text),13,10);
+			error = VC_StoreLine(Buffer, buff_len, Length, "TEL:%s",
+				DecodeUnicodeString(pbk->Entries[Number].Text));
+			if (error != ERR_NONE) return error;
 		}
-		if (header) *Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
 	} else if (Version == Nokia_VCard21 || Version == SonyEricsson_VCard21) {
-		if (header) *Length+=sprintf(Buffer+(*Length),"BEGIN:VCARD%c%cVERSION:2.1%c%c",13,10,13,10);
+		if (header) {
+			error = VC_StoreLine(Buffer, buff_len, Length, "VERSION:2.1");
+			if (error != ERR_NONE) return error;
+		}
 		for (i=0; i < pbk->EntriesNum; i++) {
 			ignore = false;
 			pbk->Entries[i].AddError = ERR_NONE;
 			switch(pbk->Entries[i].EntryType) {
 				case PBK_Text_Name:
-					*Length+=sprintf(Buffer+(*Length),"N");
+					error = VC_Store(Buffer, buff_len, Length, "N");
+					if (error != ERR_NONE) return error;
 					break;
 				case PBK_Text_NickName:
-					*Length+=sprintf(Buffer+(*Length),"NICKNAME");
+					error = VC_Store(Buffer, buff_len, Length, "NICKNAME");
+					if (error != ERR_NONE) return error;
 					break;
 				case PBK_Text_FormalName:
-					*Length+=sprintf(Buffer+(*Length),"FN");
+					error = VC_Store(Buffer, buff_len, Length, "FN");
+					if (error != ERR_NONE) return error;
 					break;
 				case PBK_Text_FirstName:
 					firstname = i;
@@ -187,90 +202,74 @@ void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry *pbk, bool he
 					ignore = true;
 					break;
 				case PBK_Date:
-					SaveVCALDate(Buffer, Length, &(pbk->Entries[i].Date), "BDAY");
+					error = VC_StoreDate(Buffer, buff_len, Length, &(pbk->Entries[i].Date), "BDAY");
+					if (error != ERR_NONE) return error;
 					ignore = true;
 					break;
 				case PBK_LastModified:
-					SaveVCALDateTime(Buffer, Length, &(pbk->Entries[i].Date), "LAST-MODIFIED");
+					error = VC_StoreDateTime(Buffer, buff_len, Length, &(pbk->Entries[i].Date), "LAST-MODIFIED");
+					if (error != ERR_NONE) return error;
 					ignore = true;
 					break;
 				case PBK_Number_General:
-					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
-						ignore = true;
-						break;
-					}
-					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-					break;
 				case PBK_Number_Other:
-					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
-						ignore = true;
-						break;
-					}
-					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-					*Length+=sprintf(Buffer+(*Length),";OTHER");
-					break;
 				case PBK_Number_Pager:
-					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
-						ignore = true;
-						break;
-					}
-					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-					*Length+=sprintf(Buffer+(*Length),";PAGER");
-					break;
 				case PBK_Number_Mobile  :
-					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
-						ignore = true;
-						break;
-					}
-					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-					*Length+=sprintf(Buffer+(*Length),";CELL");
-					break;
 				case PBK_Number_Work    :
-					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
-						ignore = true;
-						break;
-					}
-					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-					*Length+=sprintf(Buffer+(*Length),";WORK");
-					break;
 				case PBK_Number_Fax     :
-					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
-						ignore = true;
-						break;
-					}
-					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-					*Length+=sprintf(Buffer+(*Length),";FAX");
-					break;
 				case PBK_Number_Home    :
-					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
-						ignore = true;
-						break;
-					}
-					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-					*Length+=sprintf(Buffer+(*Length),";HOME");
-					break;
 				case PBK_Number_Messaging    :
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
 						ignore = true;
 						break;
 					}
-					*Length+=sprintf(Buffer+(*Length),"TEL");
-					if (Version != SonyEricsson_VCard21 && Number == i) (*Length)+=sprintf(Buffer+(*Length),";PREF");
-					*Length+=sprintf(Buffer+(*Length),";MSG");
+					error = VC_Store(Buffer, buff_len, Length, "TEL");
+					if (error != ERR_NONE) return error;
+
+					if (Version != SonyEricsson_VCard21 && Number == i) {
+						error = VC_Store(Buffer, buff_len, Length, ";PREF");
+						if (error != ERR_NONE) return error;
+					}
+					switch (pbk->Entries[i].EntryType) {
+						case PBK_Number_Other:
+							error = VC_Store(Buffer, buff_len, Length, ";OTHER");
+							if (error != ERR_NONE) return error;
+							break;
+						case PBK_Number_Pager:
+							error = VC_Store(Buffer, buff_len, Length, ";PAGER");
+							if (error != ERR_NONE) return error;
+							break;
+						case PBK_Number_Mobile:
+							error = VC_Store(Buffer, buff_len, Length, ";CELL");
+							if (error != ERR_NONE) return error;
+							break;
+						case PBK_Number_Work:
+							error = VC_Store(Buffer, buff_len, Length, ";WORK");
+							if (error != ERR_NONE) return error;
+							break;
+						case PBK_Number_Fax:
+							error = VC_Store(Buffer, buff_len, Length, ";FAX");
+							if (error != ERR_NONE) return error;
+							break;
+						case PBK_Number_Home:
+							error = VC_Store(Buffer, buff_len, Length, ";HOME");
+							if (error != ERR_NONE) return error;
+							break;
+						case PBK_Number_Messaging:
+							error = VC_Store(Buffer, buff_len, Length, ";MSG");
+							if (error != ERR_NONE) return error;
+							break;
+						default:
+							break;
+					}
 					break;
 				case PBK_Text_Note      :
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
 						ignore = true;
 						break;
 					}
-					*Length+=sprintf(Buffer+(*Length),"NOTE");
+					error = VC_Store(Buffer, buff_len, Length, "NOTE");
+					if (error != ERR_NONE) return error;
 					break;
 				case PBK_Text_Postal    :
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
@@ -280,15 +279,18 @@ void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry *pbk, bool he
 					/* Don't ask why. Nokia phones save postal address
 					 * double - once like LABEL, second like ADR
 					 */
-					SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "LABEL", false);
-					*Length+=sprintf(Buffer+(*Length),"ADR;HOME");
+					error = VC_StoreText(Buffer, buff_len, Length, pbk->Entries[i].Text, "LABEL", false);
+					if (error != ERR_NONE) return error;
+					error = VC_Store(Buffer, buff_len, Length, "ADR;HOME");
+					if (error != ERR_NONE) return error;
 					break;
 				case PBK_Text_WorkPostal    :
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
 						ignore = true;
 						break;
 					}
-					*Length+=sprintf(Buffer+(*Length),"ADR;WORK");
+					error = VC_Store(Buffer, buff_len, Length, "ADR;WORK");
+					if (error != ERR_NONE) return error;
 					break;
 				case PBK_Text_Email     :
 				case PBK_Text_Email2    :
@@ -296,35 +298,40 @@ void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry *pbk, bool he
 						ignore = true;
 						break;
 					}
-					*Length+=sprintf(Buffer+(*Length),"EMAIL");
+					error = VC_Store(Buffer, buff_len, Length, "EMAIL");
+					if (error != ERR_NONE) return error;
 					break;
 				case PBK_Text_URL       :
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
 						ignore = true;
 						break;
 					}
-					*Length+=sprintf(Buffer+(*Length),"URL");
+					error = VC_Store(Buffer, buff_len, Length, "URL");
+					if (error != ERR_NONE) return error;
 					break;
 				case PBK_Text_LUID      :
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
 						ignore = true;
 						break;
 					}
-					*Length+=sprintf(Buffer+(*Length),"X-IRMC-LUID");
+					error = VC_Store(Buffer, buff_len, Length, "X-IRMC-LUID");
+					if (error != ERR_NONE) return error;
 					break;
 				case PBK_Text_JobTitle:
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
 						ignore = true;
 						break;
 					}
-					*Length+=sprintf(Buffer+(*Length),"TITLE");
+					error = VC_Store(Buffer, buff_len, Length, "TITLE");
+					if (error != ERR_NONE) return error;
 					break;
 				case PBK_Text_Company:
 					if (UnicodeLength(pbk->Entries[i].Text) == 0) {
 						ignore = true;
 						break;
 					}
-					*Length+=sprintf(Buffer+(*Length),"ORG");
+					error = VC_Store(Buffer, buff_len, Length, "ORG");
+					if (error != ERR_NONE) return error;
 					break;
 				/* Not supported fields */
 				case PBK_Caller_Group:
@@ -345,7 +352,8 @@ void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry *pbk, bool he
 					break;
 			}
 			if (!ignore) {
-				SaveVCALText(Buffer, Length, pbk->Entries[i].Text, "", false);
+				error = VC_StoreText(Buffer, buff_len, Length, pbk->Entries[i].Text, "", false);
+				if (error != ERR_NONE) return error;
 			}
 		}
 		/* Save name if it is composed from parts */
@@ -364,7 +372,8 @@ void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry *pbk, bool he
 			}
 			buffer[2*pos] = 0;
 			buffer[2*pos + 1] = 0;
-			SaveVCALText(Buffer, Length, buffer, "N", false);
+			error = VC_StoreText(Buffer, buff_len, Length, buffer, "N", false);
+			if (error != ERR_NONE) return error;
 		}
 		/* Save workaddress if it is composed from parts */
 		if (workaddress != -1 || workcity != -1 || workstate != -1 || workzip != -1 || workcountry != -1) {
@@ -409,7 +418,8 @@ void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry *pbk, bool he
 			}
 			buffer[2*pos] = 0;
 			buffer[2*pos + 1] = 0;
-			SaveVCALText(Buffer, Length, buffer, "ADR;WORK", false);
+			error = VC_StoreText(Buffer, buff_len, Length, buffer, "ADR;WORK", false);
+			if (error != ERR_NONE) return error;
 		}
 		/* Save address if it is composed from parts */
 		if (address != -1 || city != -1 || state != -1 || zip != -1 || country != -1) {
@@ -454,10 +464,17 @@ void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry *pbk, bool he
 			}
 			buffer[2*pos] = 0;
 			buffer[2*pos + 1] = 0;
-			SaveVCALText(Buffer, Length, buffer, "ADR;HOME", false);
+			error = VC_StoreText(Buffer, buff_len, Length, buffer, "ADR;HOME", false);
+			if (error != ERR_NONE) return error;
 		}
-		if (header) *Length+=sprintf(Buffer+(*Length),"END:VCARD%c%c",13,10);
+	} else {
+		return ERR_NOTSUPPORTED;
 	}
+	if (header) {
+		error = VC_StoreLine(Buffer, buff_len, Length, "END:VCARD");
+		if (error != ERR_NONE) return error;
+	}
+	return ERR_NONE;
 }
 
 void GSM_TweakInternationalNumber(unsigned char *Number, const GSM_NumberType numType)
@@ -849,5 +866,5 @@ vcard_done:
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.
- * vim: noexpandtab sw=8 ts=8 sts=8:
+ * vim: noexpandtab sw=4 ts=4 sts=4 tw=79:
  */
