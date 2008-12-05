@@ -1789,7 +1789,8 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	}
 
 	/* Encode vCard */
-	GSM_EncodeVCARD(req, &size, Entry, true, SonyEricsson_VCard21);
+	error = GSM_EncodeVCARD(req, sizeof(req), &size, Entry, true, SonyEricsson_VCard21);
+	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->PbCap.IEL == 0x8 || Priv->PbCap.IEL == 0x10) {
@@ -1901,7 +1902,8 @@ GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	}
 
 	/* Encode vCard */
-	GSM_EncodeVCARD(req, &size, Entry, true, SonyEricsson_VCard21);
+	error = GSM_EncodeVCARD(req, sizeof(req), &size, Entry, true, SonyEricsson_VCard21);
+	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->PbCap.IEL == 0x8 || Priv->PbCap.IEL == 0x10) {
@@ -2220,7 +2222,8 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	}
 
 	/* Encode vCalendar */
-	GSM_EncodeVCALENDAR(req, &size, Entry, true, SonyEricsson_VCalendar);
+	error = GSM_EncodeVCALENDAR(req, sizeof(req), &size, Entry, true, SonyEricsson_VCalendar);
+	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
@@ -2330,7 +2333,8 @@ GSM_Error OBEXGEN_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	}
 
 	/* Encode vCalendar */
-	GSM_EncodeVCALENDAR(req, &size, Entry, true, SonyEricsson_VCalendar);
+	error = GSM_EncodeVCALENDAR(req, sizeof(req), &size, Entry, true, SonyEricsson_VCalendar);
+	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
@@ -2599,7 +2603,8 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	}
 
 	/* Encode vTodo */
-	GSM_EncodeVTODO(req, &size, Entry, true, SonyEricsson_VToDo);
+	error = GSM_EncodeVTODO(req, sizeof(req), &size, Entry, true, SonyEricsson_VToDo);
+	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
@@ -2709,7 +2714,8 @@ GSM_Error OBEXGEN_SetTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	}
 
 	/* Encode vTodo */
-	GSM_EncodeVTODO(req, &size, Entry, true, SonyEricsson_VToDo);
+	error = GSM_EncodeVTODO(req, sizeof(req), &size, Entry, true, SonyEricsson_VToDo);
+	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->CalCap.IEL == 0x8 || Priv->CalCap.IEL == 0x10) {
@@ -2996,8 +3002,9 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 		if (error != ERR_NONE) return error;
 	}
 
-	/* Encode vCard */
-	GSM_EncodeVNTFile(req, &size, Entry);
+	/* Encode vNote */
+	error = GSM_EncodeVNTFile(req, sizeof(req), &size, Entry);
+	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->NoteCap.IEL == 0x8 || Priv->NoteCap.IEL == 0x10) {
@@ -3107,7 +3114,8 @@ GSM_Error OBEXGEN_SetNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	}
 
 	/* Encode vNote */
-	GSM_EncodeVNTFile(req, &size, Entry);
+	error = GSM_EncodeVNTFile(req, sizeof(req), &size, Entry);
+	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
 	if (Priv->NoteCap.IEL == 0x8 || Priv->NoteCap.IEL == 0x10) {

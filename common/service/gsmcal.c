@@ -433,7 +433,7 @@ GSM_Error GSM_Calendar_GetValue(const GSM_CalendarEntry *note, int *start, const
  * Converts Gammu recurrence to vCal format. See GSM_DecodeVCAL_RRULE
  * for grammar description.
  */
-GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, size_t *Length, GSM_CalendarEntry *note, int TimePos UNUSED, GSM_VCalendarVersion Version)
+GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, const size_t buff_len, size_t *Length, GSM_CalendarEntry *note, int TimePos UNUSED, GSM_VCalendarVersion Version)
 {
 	int i;
 	int j;
@@ -449,6 +449,7 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, size_t *Length, GSM_CalendarEntry *
 	bool header;
 	GSM_DateTime repeat_startdate = {0,0,0,0,0,0,0};
 	GSM_DateTime repeat_stopdate = {0,0,0,0,0,0,0};
+	GSM_Error error;
 
 	/* First scan for entry, whether there is  recurrence at all */
 	for (i = 0; i < note->EntriesNum; i++) {
@@ -507,7 +508,8 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, size_t *Length, GSM_CalendarEntry *
 	}
 	/* Did we found something? */
 	if (repeating) {
-		*Length += sprintf(Buffer + (*Length), "RRULE:");
+		error = VC_Store(Buffer, buff_len, Length,  "RRULE:");
+		if (error != ERR_NONE) return error;
 
 		/* Safe fallback */
 		if (repeat_frequency == -1) {
@@ -517,9 +519,11 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, size_t *Length, GSM_CalendarEntry *
 		if ((repeat_dayofyear != -1) || (Version == Siemens_VCalendar && repeat_day != -1 && repeat_month != -1)) {
 			/* Yearly by day */
 			if (Version == Mozilla_iCalendar) {
-				*Length += sprintf(Buffer + (*Length), "FREQ=YEARLY");
+				error = VC_Store(Buffer, buff_len, Length,  "FREQ=YEARLY");
+				if (error != ERR_NONE) return error;
 			} else {
-				*Length += sprintf(Buffer + (*Length), "YD%d", repeat_frequency);
+				error = VC_Store(Buffer, buff_len, Length,  "YD%d", repeat_frequency);
+				if (error != ERR_NONE) return error;
 			}
 
 			/* Store month numbers */
@@ -528,25 +532,27 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, size_t *Length, GSM_CalendarEntry *
 				if (note->Entries[i].EntryType == CAL_REPEAT_DAYOFYEAR) {
 					if (Version == Mozilla_iCalendar) {
 						if (!header) {
-							*Length += sprintf(Buffer + (*Length), ";BYYEARDAY=%d",
-								note->Entries[i].Number);
+							error = VC_Store(Buffer, buff_len, Length,  ";BYYEARDAY=%d", note->Entries[i].Number);
+							if (error != ERR_NONE) return error;
 							header = true;
 						} else {
-							*Length += sprintf(Buffer + (*Length), ",%d",
-								note->Entries[i].Number);
+							error = VC_Store(Buffer, buff_len, Length,  ",%d", note->Entries[i].Number);
+							if (error != ERR_NONE) return error;
 						}
 					} else {
-						*Length += sprintf(Buffer + (*Length), " %d",
-							note->Entries[i].Number);
+						error = VC_Store(Buffer, buff_len, Length,  " %d", note->Entries[i].Number);
+						if (error != ERR_NONE) return error;
 					}
 				}
 			}
 		} else if (repeat_day != -1 && repeat_month != -1) {
 			/* Yearly by month and day */
 			if (Version == Mozilla_iCalendar) {
-				*Length += sprintf(Buffer + (*Length), "FREQ=YEARLY");
+				error = VC_Store(Buffer, buff_len, Length,  "FREQ=YEARLY");
+				if (error != ERR_NONE) return error;
 			} else {
-				*Length += sprintf(Buffer + (*Length), "YM%d", repeat_frequency);
+				error = VC_Store(Buffer, buff_len, Length,  "YM%d", repeat_frequency);
+				if (error != ERR_NONE) return error;
 			}
 
 			/* Store month numbers */
@@ -555,25 +561,27 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, size_t *Length, GSM_CalendarEntry *
 				if (note->Entries[i].EntryType == CAL_REPEAT_MONTH) {
 					if (Version == Mozilla_iCalendar) {
 						if (!header) {
-							*Length += sprintf(Buffer + (*Length), ";BYMONTH=%d",
-								note->Entries[i].Number);
+							error = VC_Store(Buffer, buff_len, Length,  ";BYMONTH=%d", note->Entries[i].Number);
+							if (error != ERR_NONE) return error;
 							header = true;
 						} else {
-							*Length += sprintf(Buffer + (*Length), ",%d",
-								note->Entries[i].Number);
+							error = VC_Store(Buffer, buff_len, Length,  ",%d", note->Entries[i].Number);
+							if (error != ERR_NONE) return error;
 						}
 					} else {
-						*Length += sprintf(Buffer + (*Length), " %d",
-							note->Entries[i].Number);
+						error = VC_Store(Buffer, buff_len, Length,  " %d", note->Entries[i].Number);
+						if (error != ERR_NONE) return error;
 					}
 				}
 			}
 		} else if (repeat_day != -1) {
 			/* Monthly by day */
 			if (Version == Mozilla_iCalendar) {
-				*Length += sprintf(Buffer + (*Length), "FREQ=MONTHLY");
+				error = VC_Store(Buffer, buff_len, Length,  "FREQ=MONTHLY");
+				if (error != ERR_NONE) return error;
 			} else {
-				*Length += sprintf(Buffer + (*Length), "MD%d", repeat_frequency);
+				error = VC_Store(Buffer, buff_len, Length,  "MD%d", repeat_frequency);
+				if (error != ERR_NONE) return error;
 			}
 
 			/* Store day numbers */
@@ -582,37 +590,39 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, size_t *Length, GSM_CalendarEntry *
 				if (note->Entries[i].EntryType == CAL_REPEAT_DAY) {
 					if (Version == Mozilla_iCalendar) {
 						if (!header) {
-							*Length += sprintf(Buffer + (*Length), ";BYMONTHDAY=%d",
-								note->Entries[i].Number);
+							error = VC_Store(Buffer, buff_len, Length,  ";BYMONTHDAY=%d", note->Entries[i].Number);
+							if (error != ERR_NONE) return error;
 							header = true;
 						} else {
-							*Length += sprintf(Buffer + (*Length), ",%d",
-								note->Entries[i].Number);
+							error = VC_Store(Buffer, buff_len, Length,  ",%d", note->Entries[i].Number);
+							if (error != ERR_NONE) return error;
 						}
 					} else {
-						*Length += sprintf(Buffer + (*Length), " %d",
-							note->Entries[i].Number);
+						error = VC_Store(Buffer, buff_len, Length,  " %d", note->Entries[i].Number);
+						if (error != ERR_NONE) return error;
 					}
 				}
 			}
 		} else if (repeat_dayofweek != -1 && repeat_weekofmonth != -1) {
 			/* Monthly by day and week */
 			if (Version == Mozilla_iCalendar) {
-				*Length += sprintf(Buffer + (*Length), "FREQ=MONTHLY");
+				error = VC_Store(Buffer, buff_len, Length,  "FREQ=MONTHLY");
+				if (error != ERR_NONE) return error;
 			} else {
-				*Length += sprintf(Buffer + (*Length), "MP%d", repeat_frequency);
+				error = VC_Store(Buffer, buff_len, Length,  "MP%d", repeat_frequency);
+				if (error != ERR_NONE) return error;
 			}
 
 			/* Store week numbers and week days */
 			if (Version != Mozilla_iCalendar) {
 				for (i = 0; i < note->EntriesNum; i++) {
 					if (note->Entries[i].EntryType == CAL_REPEAT_WEEKOFMONTH) {
-						*Length += sprintf(Buffer + (*Length), " %d+",
-							note->Entries[i].Number);
+						error = VC_Store(Buffer, buff_len, Length,  " %d+", note->Entries[i].Number);
+						if (error != ERR_NONE) return error;
 						for (j = 0; j < note->EntriesNum; j++) {
 							if (note->Entries[j].EntryType == CAL_REPEAT_DAYOFWEEK) {
-								*Length += sprintf(Buffer + (*Length), " %s",
-									DaysOfWeek[note->Entries[j].Number]);
+								error = VC_Store(Buffer, buff_len, Length,  " %s", DaysOfWeek[note->Entries[j].Number]);
+								if (error != ERR_NONE) return error;
 							}
 						}
 					}
@@ -622,12 +632,12 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, size_t *Length, GSM_CalendarEntry *
 				for (i = 0; i < note->EntriesNum; i++) {
 					if (note->Entries[i].EntryType == CAL_REPEAT_WEEKOFMONTH) {
 						if (!header) {
-							*Length += sprintf(Buffer + (*Length), ";BYSETPOS=%d",
-								note->Entries[i].Number);
+							error = VC_Store(Buffer, buff_len, Length,  ";BYSETPOS=%d", note->Entries[i].Number);
+							if (error != ERR_NONE) return error;
 							header = true;
 						} else {
-							*Length += sprintf(Buffer + (*Length), ",%d",
-								note->Entries[i].Number);
+							error = VC_Store(Buffer, buff_len, Length,  ",%d", note->Entries[i].Number);
+							if (error != ERR_NONE) return error;
 						}
 					}
 				}
@@ -635,12 +645,12 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, size_t *Length, GSM_CalendarEntry *
 				for (j = 0; j < note->EntriesNum; j++) {
 					if (note->Entries[j].EntryType == CAL_REPEAT_DAYOFWEEK) {
 						if (!header) {
-							*Length += sprintf(Buffer + (*Length), ";BYDAY=%s",
-								DaysOfWeek[note->Entries[j].Number]);
+							error = VC_Store(Buffer, buff_len, Length,  ";BYDAY=%s", DaysOfWeek[note->Entries[j].Number]);
+							if (error != ERR_NONE) return error;
 							header = true;
 						} else {
-							*Length += sprintf(Buffer + (*Length), ",%s",
-								DaysOfWeek[note->Entries[j].Number]);
+							error = VC_Store(Buffer, buff_len, Length,  ",%s", DaysOfWeek[note->Entries[j].Number]);
+							if (error != ERR_NONE) return error;
 						}
 					}
 				}
@@ -648,9 +658,11 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, size_t *Length, GSM_CalendarEntry *
 		} else if (repeat_dayofweek != -1) {
 			/* Weekly by day */
 			if (Version == Mozilla_iCalendar) {
-				*Length += sprintf(Buffer + (*Length), "FREQ=WEEKLY");
+				error = VC_Store(Buffer, buff_len, Length,  "FREQ=WEEKLY");
+				if (error != ERR_NONE) return error;
 			} else {
-				*Length += sprintf(Buffer + (*Length), "W%d", repeat_frequency);
+				error = VC_Store(Buffer, buff_len, Length,  "W%d", repeat_frequency);
+				if (error != ERR_NONE) return error;
 			}
 
 			/* Store week days */
@@ -659,53 +671,61 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, size_t *Length, GSM_CalendarEntry *
 				if (note->Entries[i].EntryType == CAL_REPEAT_DAYOFWEEK) {
 					if (Version == Mozilla_iCalendar) {
 						if (!header) {
-							*Length += sprintf(Buffer + (*Length), ";BYDAY=%s",
-								DaysOfWeek[note->Entries[i].Number]);
+							error = VC_Store(Buffer, buff_len, Length,  ";BYDAY=%s", DaysOfWeek[note->Entries[i].Number]);
+							if (error != ERR_NONE) return error;
 							header = true;
 						} else {
-							*Length += sprintf(Buffer + (*Length), ",%s",
-								DaysOfWeek[note->Entries[i].Number]);
+							error = VC_Store(Buffer, buff_len, Length,  ",%s", DaysOfWeek[note->Entries[i].Number]);
+							if (error != ERR_NONE) return error;
 						}
 					} else {
-						*Length += sprintf(Buffer + (*Length), " %s",
-							DaysOfWeek[note->Entries[i].Number]);
+						error = VC_Store(Buffer, buff_len, Length,  " %s", DaysOfWeek[note->Entries[i].Number]);
+						if (error != ERR_NONE) return error;
 					}
 				}
 			}
 		} else {
 			/* Daily */
 			if (Version == Mozilla_iCalendar) {
-				*Length += sprintf(Buffer + (*Length), "FREQ=DAILY");
+				error = VC_Store(Buffer, buff_len, Length,  "FREQ=DAILY");
+				if (error != ERR_NONE) return error;
 			} else {
-				*Length += sprintf(Buffer + (*Length), "D%d", repeat_frequency);
+				error = VC_Store(Buffer, buff_len, Length,  "D%d", repeat_frequency);
+				if (error != ERR_NONE) return error;
 			}
 		}
 
 		/* Store frequency */
 		if (Version == Mozilla_iCalendar && repeat_frequency > 1) {
-			*Length += sprintf(Buffer + (*Length), ";INTERVAL=%d", repeat_frequency);
+			error = VC_Store(Buffer, buff_len, Length,  ";INTERVAL=%d", repeat_frequency);
+			if (error != ERR_NONE) return error;
 		}
 
 		/* Store number of repetitions if available */
 		if (repeat_count != -1) {
 			if (Version == Mozilla_iCalendar) {
 				if (repeat_count > 0) {
-					*Length += sprintf(Buffer + (*Length), ";COUNT=%d", repeat_count);
+					error = VC_Store(Buffer, buff_len, Length,  ";COUNT=%d", repeat_count);
+					if (error != ERR_NONE) return error;
 				}
 			} else {
-				*Length += sprintf(Buffer + (*Length), " #%d", repeat_count);
+				error = VC_Store(Buffer, buff_len, Length,  " #%d", repeat_count);
+				if (error != ERR_NONE) return error;
 			}
 		}
 
 		/* Store end of repetition date if available */
 		if (repeat_stopdate.Day != 0) {
 			if (Version == Mozilla_iCalendar) {
-				*Length += sprintf(Buffer + (*Length), ";UNTIL=");
+				error = VC_Store(Buffer, buff_len, Length,  ";UNTIL=");
+				if (error != ERR_NONE) return error;
 			}
-			SaveVCALDate(Buffer, Length, &repeat_stopdate, NULL);
+			error = VC_StoreDate(Buffer, buff_len, Length, &repeat_stopdate, NULL);
+			if (error != ERR_NONE) return error;
 		} else {
 			/* Add EOL */
-			*Length += sprintf(Buffer + (*Length), "%c%c", 13, 10);
+			error = VC_StoreLine(Buffer, buff_len, Length,  "");
+			if (error != ERR_NONE) return error;
 		}
 
 		return ERR_NONE;
@@ -781,29 +801,36 @@ void GSM_ToDo_AdjustDate(GSM_ToDoEntry *note, GSM_DeltaTime *delta)
 	}
 }
 
-GSM_Error GSM_EncodeVCALENDAR(char *Buffer, size_t *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version)
+GSM_Error GSM_EncodeVCALENDAR(char *Buffer, const size_t buff_len, size_t *Length, GSM_CalendarEntry *note, bool header, GSM_VCalendarVersion Version)
 {
 	GSM_DateTime 	deltatime;
 	char 		dtstr[20];
 	char		category[100];
 	int		i, alarm_pos = -1, date_pos = -1;
+	GSM_Error error;
 
 	/* Write header */
 	if (header) {
-		*Length+=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
-		*Length+=sprintf(Buffer+(*Length), "VERSION:%s%c%c", Version == Mozilla_iCalendar ? "2.0" : "1.0", 13, 10);
+		error = VC_StoreLine(Buffer, buff_len, Length,  "BEGIN:VCALENDAR");
+		if (error != ERR_NONE) return error;
+		error = VC_StoreLine(Buffer, buff_len, Length,  "VERSION:%s", Version == Mozilla_iCalendar ? "2.0" : "1.0");
+		if (error != ERR_NONE) return error;
 	}
-	*Length+=sprintf(Buffer+(*Length), "BEGIN:VEVENT%c%c",13,10);
+	error = VC_StoreLine(Buffer, buff_len, Length,  "BEGIN:VEVENT");
+	if (error != ERR_NONE) return error;
 
 	if (Version == Mozilla_iCalendar) {
 		/* Mozilla Calendar needs UIDs. http://www.innerjoin.org/iCalendar/events-and-uids.html */
-		*Length+=sprintf(Buffer+(*Length), "UID:calendar-%i%c%c",note->Location,13,10);
-		*Length+=sprintf(Buffer+(*Length), "STATUS:CONFIRMED%c%c",13,10);
+		error = VC_StoreLine(Buffer, buff_len, Length,  "UID:calendar-%i",note->Location);
+		if (error != ERR_NONE) return error;
+		error = VC_StoreLine(Buffer, buff_len, Length,  "STATUS:CONFIRMED");
+		if (error != ERR_NONE) return error;
 	}
 
 	/* Store category */
 	GSM_Translate_Category(TRANSL_TO_VCAL, category, &note->Type);
-	*Length += sprintf(Buffer+(*Length), "CATEGORIES:%s%c%c", category, 13, 10);
+	error = VC_StoreLine(Buffer, buff_len, Length,  "CATEGORIES:%s", category);
+	if (error != ERR_NONE) return error;
 
 	/* Loop over entries */
 	for (i=0; i < note->EntriesNum; i++) {
@@ -811,54 +838,67 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, size_t *Length, GSM_CalendarEntry *n
 			case CAL_START_DATETIME :
 				date_pos = i;
 				if (Version == Mozilla_iCalendar && (note->Type == GSM_CAL_MEMO || note->Type == GSM_CAL_BIRTHDAY)) {
-					SaveVCALDate(Buffer, Length, &note->Entries[i].Date, "DTSTART;VALUE=DATE");
+					error = VC_StoreDate(Buffer, buff_len, Length, &note->Entries[i].Date, "DTSTART;VALUE=DATE");
+					if (error != ERR_NONE) return error;
 				} else {
-					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DTSTART");
+					error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "DTSTART");
+					if (error != ERR_NONE) return error;
 				}
 				break;
 			case CAL_END_DATETIME :
 				if (Version == Mozilla_iCalendar && (note->Type == GSM_CAL_MEMO || note->Type == GSM_CAL_BIRTHDAY)) {
-					SaveVCALDate(Buffer, Length, &note->Entries[i].Date, "DTEND;VALUE=DATE");
+					error = VC_StoreDate(Buffer, buff_len, Length, &note->Entries[i].Date, "DTEND;VALUE=DATE");
+					if (error != ERR_NONE) return error;
 				} else {
-					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DTEND");
+					error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "DTEND");
+					if (error != ERR_NONE) return error;
 				}
 				break;
 			case CAL_TONE_ALARM_DATETIME :
 				alarm_pos = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
 				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
-					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "AALARM");
+					error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "AALARM");
+					if (error != ERR_NONE) return error;
 				}
 				break;
 			case CAL_SILENT_ALARM_DATETIME:
 				alarm_pos = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
 				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
-					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DALARM");
+					error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "DALARM");
+					if (error != ERR_NONE) return error;
 				}
 				break;
 			case CAL_LAST_MODIFIED:
 				if (Version == Mozilla_iCalendar && (note->Type == GSM_CAL_MEMO || note->Type == GSM_CAL_BIRTHDAY)) {
-					SaveVCALDate(Buffer, Length, &note->Entries[i].Date, "LAST-MODIFIED;VALUE=DATE");
+					error = VC_StoreDate(Buffer, buff_len, Length, &note->Entries[i].Date, "LAST-MODIFIED;VALUE=DATE");
+					if (error != ERR_NONE) return error;
 				} else {
-					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "LAST-MODIFIED");
+					error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "LAST-MODIFIED");
+					if (error != ERR_NONE) return error;
 				}
 				break;
 			case CAL_TEXT:
-				SaveVCALText(Buffer, Length, note->Entries[i].Text, "SUMMARY", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "SUMMARY", Version == Mozilla_iCalendar);
+				if (error != ERR_NONE) return error;
 				break;
 			case CAL_DESCRIPTION:
-				SaveVCALText(Buffer, Length, note->Entries[i].Text, "DESCRIPTION", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "DESCRIPTION", Version == Mozilla_iCalendar);
+				if (error != ERR_NONE) return error;
 				break;
 			case CAL_PHONE:
 				/* There is no specific field for phone number, use description */
-				SaveVCALText(Buffer, Length, note->Entries[i].Text, "DESCRIPTION", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "DESCRIPTION", Version == Mozilla_iCalendar);
+				if (error != ERR_NONE) return error;
 				break;
 			case CAL_LOCATION:
-				SaveVCALText(Buffer, Length, note->Entries[i].Text, "LOCATION", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "LOCATION", Version == Mozilla_iCalendar);
+				if (error != ERR_NONE) return error;
 				break;
 			case CAL_LUID:
-				SaveVCALText(Buffer, Length, note->Entries[i].Text, "X-IRMC-LUID", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "X-IRMC-LUID", Version == Mozilla_iCalendar);
+				if (error != ERR_NONE) return error;
 				break;
 			case CAL_REPEAT_DAYOFWEEK:
 			case CAL_REPEAT_DAY:
@@ -873,9 +913,11 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, size_t *Length, GSM_CalendarEntry *n
 				break;
 			case CAL_PRIVATE:
 				if (note->Entries[i].Number == 0) {
-					*Length+=sprintf(Buffer+(*Length), "CLASS:PUBLIC%c%c",13,10);
+					error = VC_StoreLine(Buffer, buff_len, Length,  "CLASS:PUBLIC");
+					if (error != ERR_NONE) return error;
 				} else {
-					*Length+=sprintf(Buffer+(*Length), "CLASS:PRIVATE%c%c",13,10);
+					error = VC_StoreLine(Buffer, buff_len, Length,  "CLASS:PRIVATE");
+					if (error != ERR_NONE) return error;
 				}
 				break;
 			case CAL_CONTACTID:
@@ -887,14 +929,18 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, size_t *Length, GSM_CalendarEntry *n
 	/* Handle recurrance */
 	if (note->Type == GSM_CAL_BIRTHDAY) {
 		if (Version == Mozilla_iCalendar) {
-			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-RECUR-DEFAULT-UNITS:years%c%c",13,10);
+			error = VC_StoreLine(Buffer, buff_len, Length,  "X-MOZILLA-RECUR-DEFAULT-UNITS:years");
+			if (error != ERR_NONE) return error;
 		} else if (Version == Siemens_VCalendar) {
-			*Length+=sprintf(Buffer+(*Length), "RRULE:YD1%c%c",13,10);
+			error = VC_StoreLine(Buffer, buff_len, Length,  "RRULE:YD1");
+			if (error != ERR_NONE) return error;
 		} else {
-			*Length+=sprintf(Buffer+(*Length), "RRULE:YM1%c%c",13,10);
+			error = VC_StoreLine(Buffer, buff_len, Length,  "RRULE:YM1");
+			if (error != ERR_NONE) return error;
 		}
 	} else {
-		GSM_EncodeVCAL_RRULE(Buffer, Length, note, date_pos, Version);
+		error = GSM_EncodeVCAL_RRULE(Buffer, buff_len, Length, note, date_pos, Version);
+		if (error != ERR_NONE) return error;
 	}
 
 	/* Include mozilla specific alarm encoding */
@@ -903,31 +949,45 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, size_t *Length, GSM_CalendarEntry *n
 
 		dtstr[0]='\0';
 		if (deltatime.Minute !=0) {
-			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:minutes%c%c",13,10);
-			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
-				deltatime.Minute,13,10);
+			error = VC_StoreLine(Buffer, buff_len, Length,  "X-MOZILLA-ALARM-DEFAULT-UNITS:minutes");
+			if (error != ERR_NONE) return error;
+			error = VC_StoreLine(Buffer, buff_len, Length,  "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i", deltatime.Minute);
+			if (error != ERR_NONE) return error;
 			sprintf(dtstr,"-PT%iM",deltatime.Minute);
 		} else if (deltatime.Hour !=0) {
-			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:hours%c%c",13,10);
-			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
-				deltatime.Hour,13,10);
+			error = VC_StoreLine(Buffer, buff_len, Length,  "X-MOZILLA-ALARM-DEFAULT-UNITS:hours");
+			if (error != ERR_NONE) return error;
+			error = VC_StoreLine(Buffer, buff_len, Length,  "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i", deltatime.Hour);
+			if (error != ERR_NONE) return error;
 			sprintf(dtstr,"-PT%iH",deltatime.Hour);
 		} else if (deltatime.Day !=0) {
-			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-UNITS:days%c%c",13,10);
-			*Length+=sprintf(Buffer+(*Length), "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i%c%c",
-				deltatime.Day,13,10);
+			error = VC_StoreLine(Buffer, buff_len, Length,  "X-MOZILLA-ALARM-DEFAULT-UNITS:days");
+			if (error != ERR_NONE) return error;
+			error = VC_StoreLine(Buffer, buff_len, Length,  "X-MOZILLA-ALARM-DEFAULT-LENGTH:%i", deltatime.Day);
+			if (error != ERR_NONE) return error;
 			sprintf(dtstr,"-P%iD",deltatime.Day);
 		}
 		if (dtstr[0] != '\0') {
-			*Length+=sprintf(Buffer+(*Length), "BEGIN:VALARM%c%c",13,10);
-			*Length+=sprintf(Buffer+(*Length), "TRIGGER;VALUE=DURATION%c%c",13,10);
-			*Length+=sprintf(Buffer+(*Length), " :%s%c%c",dtstr,13,10);
-			*Length+=sprintf(Buffer+(*Length), "END:VALARM%c%c",13,10);
+			error = VC_StoreLine(Buffer, buff_len, Length,  "BEGIN:VALARM");
+			if (error != ERR_NONE) return error;
+			error = VC_StoreLine(Buffer, buff_len, Length,  "TRIGGER;VALUE=DURATION");
+			if (error != ERR_NONE) return error;
+			/**
+			 * @todo this looks wrong!
+			 */
+			error = VC_StoreLine(Buffer, buff_len, Length,  " :%s",dtstr);
+			if (error != ERR_NONE) return error;
+			error = VC_StoreLine(Buffer, buff_len, Length,  "END:VALARM");
+			if (error != ERR_NONE) return error;
 		}
 	}
 
-	*Length+=sprintf(Buffer+(*Length), "END:VEVENT%c%c",13,10);
-	if (header) *Length+=sprintf(Buffer+(*Length), "END:VCALENDAR%c%c",13,10);
+	error = VC_StoreLine(Buffer, buff_len, Length,  "END:VEVENT");
+	if (error != ERR_NONE) return error;
+	if (header) {
+		error = VC_StoreLine(Buffer, buff_len, Length,  "END:VCALENDAR");
+		if (error != ERR_NONE) return error;
+	}
 
 	return ERR_NONE;
 }
@@ -965,42 +1025,73 @@ void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, 
 	}
 }
 
-GSM_Error GSM_EncodeVTODO(char *Buffer, size_t *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version)
+GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version)
 {
 	char		category[100];
 	int		i, alarm_pos = -1;
+	GSM_Error error;
 
 	/* Write header */
 	if (header) {
-		*Length+=sprintf(Buffer, "BEGIN:VCALENDAR%c%c",13,10);
-		*Length+=sprintf(Buffer+(*Length), "VERSION:%s%c%c", Version == Mozilla_VToDo ? "2.0" : "1.0", 13, 10);
+		error = VC_StoreLine(Buffer, buff_len, Length,  "BEGIN:VCALENDAR");
+		if (error != ERR_NONE) return error;
+		error = VC_StoreLine(Buffer, buff_len, Length,  "VERSION:%s", Version == Mozilla_VToDo ? "2.0" : "1.0");
+		if (error != ERR_NONE) return error;
 	}
-	*Length+=sprintf(Buffer+(*Length), "BEGIN:VTODO%c%c",13,10);
+	error = VC_StoreLine(Buffer, buff_len, Length,  "BEGIN:VTODO");
+	if (error != ERR_NONE) return error;
 
 	if (Version == Mozilla_iCalendar) {
 		/* Mozilla Calendar needs UIDs. http://www.innerjoin.org/iCalendar/events-and-uids.html */
-		*Length+=sprintf(Buffer+(*Length), "UID:calendar-%i%c%c",note->Location,13,10);
-		*Length+=sprintf(Buffer+(*Length), "STATUS:CONFIRMED%c%c",13,10);
+		error = VC_StoreLine(Buffer, buff_len, Length,  "UID:calendar-%i",note->Location);
+		if (error != ERR_NONE) return error;
+		error = VC_StoreLine(Buffer, buff_len, Length,  "STATUS:CONFIRMED");
+		if (error != ERR_NONE) return error;
 	}
 
 	if (Version == Mozilla_VToDo) {
 		switch (note->Priority) {
-			case GSM_Priority_None	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:0%c%c",13,10); break;
-			case GSM_Priority_Low	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:1%c%c",13,10); break;
-			case GSM_Priority_Medium: *Length+=sprintf(Buffer+(*Length), "PRIORITY:5%c%c",13,10); break;
-			case GSM_Priority_High	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:9%c%c",13,10); break;
+			case GSM_Priority_None	:
+				error = VC_StoreLine(Buffer, buff_len, Length,  "PRIORITY:0");
+				if (error != ERR_NONE) return error;
+				break;
+			case GSM_Priority_Low	:
+				error = VC_StoreLine(Buffer, buff_len, Length,  "PRIORITY:1");
+				if (error != ERR_NONE) return error;
+				break;
+			case GSM_Priority_Medium:
+				error = VC_StoreLine(Buffer, buff_len, Length,  "PRIORITY:5");
+				if (error != ERR_NONE) return error;
+				break;
+			case GSM_Priority_High	:
+				error = VC_StoreLine(Buffer, buff_len, Length,  "PRIORITY:9");
+				if (error != ERR_NONE) return error;
+				break;
 		}
 	} else {
 		switch (note->Priority) {
-			case GSM_Priority_None	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:0%c%c",13,10); break;
-			case GSM_Priority_Low	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:1%c%c",13,10); break;
-			case GSM_Priority_Medium: *Length+=sprintf(Buffer+(*Length), "PRIORITY:2%c%c",13,10); break;
-			case GSM_Priority_High	: *Length+=sprintf(Buffer+(*Length), "PRIORITY:3%c%c",13,10); break;
+			case GSM_Priority_None	:
+				error = VC_StoreLine(Buffer, buff_len, Length,  "PRIORITY:0");
+				if (error != ERR_NONE) return error;
+				break;
+			case GSM_Priority_Low	:
+				error = VC_StoreLine(Buffer, buff_len, Length,  "PRIORITY:1");
+				if (error != ERR_NONE) return error;
+				break;
+			case GSM_Priority_Medium:
+				error = VC_StoreLine(Buffer, buff_len, Length,  "PRIORITY:2");
+				if (error != ERR_NONE) return error;
+				break;
+			case GSM_Priority_High	:
+				error = VC_StoreLine(Buffer, buff_len, Length,  "PRIORITY:3");
+				if (error != ERR_NONE) return error;
+				break;
 		}
 	}
 	/* Store category */
 	GSM_Translate_Category(TRANSL_TO_VCAL, category, &note->Type);
-	*Length += sprintf(Buffer+(*Length), "CATEGORIES:%s%c%c", category, 13, 10);
+	error = VC_StoreLine(Buffer, buff_len, Length,  "CATEGORIES:%s", category);
+	if (error != ERR_NONE) return error;
 
 	/* Loop over entries */
 	for (i=0; i < note->EntriesNum; i++) {
@@ -1011,58 +1102,73 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, size_t *Length, GSM_ToDoEntry *note, boo
 				    note->Entries[i].Date.Day    != 31	&&
 				    note->Entries[i].Date.Hour   != 23	&&
 				    note->Entries[i].Date.Minute != 59 ) {
-					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DUE");
+					error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "DUE");
+					if (error != ERR_NONE) return error;
 				}
 				break;
 			case TODO_ALARM_DATETIME :
 				alarm_pos = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
 				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
-					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "AALARM");
+					error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "AALARM");
+					if (error != ERR_NONE) return error;
 				}
 				break;
 			case TODO_SILENT_ALARM_DATETIME:
 				alarm_pos = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
 				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
-					SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DALARM");
+					error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "DALARM");
+					if (error != ERR_NONE) return error;
 				}
 				break;
 			case TODO_START_DATETIME:
-				SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "DTSTART");
+				error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "DTSTART");
+				if (error != ERR_NONE) return error;
 				break;
 			case TODO_LAST_MODIFIED:
-				SaveVCALDateTime(Buffer, Length, &note->Entries[i].Date, "LAST-MODIFIED");
+				error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "LAST-MODIFIED");
+				if (error != ERR_NONE) return error;
 				break;
 			case TODO_TEXT:
-				SaveVCALText(Buffer, Length, note->Entries[i].Text, "SUMMARY", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "SUMMARY", Version == Mozilla_iCalendar);
+				if (error != ERR_NONE) return error;
 				break;
 			case TODO_DESCRIPTION:
-				SaveVCALText(Buffer, Length, note->Entries[i].Text, "DESCRIPTION", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "DESCRIPTION", Version == Mozilla_iCalendar);
+				if (error != ERR_NONE) return error;
 				break;
 			case TODO_PHONE:
 				/* There is no specific field for phone number, use description */
-				SaveVCALText(Buffer, Length, note->Entries[i].Text, "DESCRIPTION", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "DESCRIPTION", Version == Mozilla_iCalendar);
+				if (error != ERR_NONE) return error;
 				break;
 			case TODO_LOCATION:
-				SaveVCALText(Buffer, Length, note->Entries[i].Text, "LOCATION", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "LOCATION", Version == Mozilla_iCalendar);
+				if (error != ERR_NONE) return error;
 				break;
 			case TODO_LUID:
-				SaveVCALText(Buffer, Length, note->Entries[i].Text, "X-IRMC-LUID", Version == Mozilla_iCalendar);
+				error = VC_StoreText(Buffer, buff_len, Length, note->Entries[i].Text, "X-IRMC-LUID", Version == Mozilla_iCalendar);
+				if (error != ERR_NONE) return error;
 				break;
 			case TODO_PRIVATE:
 				if (note->Entries[i].Number == 0) {
-					*Length+=sprintf(Buffer+(*Length), "CLASS:PUBLIC%c%c",13,10);
+					error = VC_StoreLine(Buffer, buff_len, Length,  "CLASS:PUBLIC");
+					if (error != ERR_NONE) return error;
 				} else {
-					*Length+=sprintf(Buffer+(*Length), "CLASS:PRIVATE%c%c",13,10);
+					error = VC_StoreLine(Buffer, buff_len, Length,  "CLASS:PRIVATE");
+					if (error != ERR_NONE) return error;
 				}
 				break;
 			case TODO_COMPLETED:
 				if (note->Entries[i].Number == 1) {
-					*Length+=sprintf(Buffer+(*Length), "STATUS:COMPLETED%c%c",13,10);
-					*Length+=sprintf(Buffer+(*Length), "PERCENT-COMPLETE:100%c%c",13,10);
+					error = VC_StoreLine(Buffer, buff_len, Length,  "STATUS:COMPLETED");
+					if (error != ERR_NONE) return error;
+					error = VC_StoreLine(Buffer, buff_len, Length,  "PERCENT-COMPLETE:100");
+					if (error != ERR_NONE) return error;
 				} else {
-					*Length+=sprintf(Buffer+(*Length), "STATUS:NEEDS ACTION%c%c",13,10);
+					error = VC_StoreLine(Buffer, buff_len, Length,  "STATUS:NEEDS ACTION");
+					if (error != ERR_NONE) return error;
 				}
 				break;
 			case TODO_CONTACTID:
@@ -1072,8 +1178,12 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, size_t *Length, GSM_ToDoEntry *note, boo
 		}
 	}
 
-	*Length+=sprintf(Buffer+(*Length), "END:VTODO%c%c",13,10);
-	if (header) *Length+=sprintf(Buffer+(*Length), "END:VCALENDAR%c%c",13,10);
+	error = VC_StoreLine(Buffer, buff_len, Length,  "END:VTODO");
+	if (error != ERR_NONE) return error;
+	if (header) {
+		error = VC_StoreLine(Buffer, buff_len, Length,  "END:VCALENDAR");
+		if (error != ERR_NONE) return error;
+	}
 
 	return ERR_NONE;
 }
@@ -1938,12 +2048,18 @@ GSM_Error GSM_DecodeVNOTE(char *Buffer, size_t *Pos, GSM_NoteEntry *Note)
 	return ERR_BUG;
 }
 
-GSM_Error GSM_EncodeVNTFile(char *Buffer, size_t *Length, GSM_NoteEntry *Note)
+GSM_Error GSM_EncodeVNTFile(char *Buffer, const size_t buff_len, size_t *Length, GSM_NoteEntry *Note)
 {
-	*Length+=sprintf(Buffer+(*Length), "BEGIN:VNOTE%c%c",13,10);
-	*Length+=sprintf(Buffer+(*Length), "VERSION:1.1%c%c",13,10);
-	SaveVCALText(Buffer, Length, Note->Text, "BODY", false);
-	*Length+=sprintf(Buffer+(*Length), "END:VNOTE%c%c",13,10);
+	GSM_Error error;
+
+	error = VC_StoreLine(Buffer, buff_len, Length,  "BEGIN:VNOTE");
+	if (error != ERR_NONE) return error;
+	error = VC_StoreLine(Buffer, buff_len, Length,  "VERSION:1.1");
+	if (error != ERR_NONE) return error;
+	error = VC_StoreText(Buffer, buff_len, Length, Note->Text, "BODY", false);
+	if (error != ERR_NONE) return error;
+	error = VC_StoreLine(Buffer, buff_len, Length,  "END:VNOTE");
+	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
 }

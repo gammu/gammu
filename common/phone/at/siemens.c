@@ -309,7 +309,7 @@ GSM_Error SIEMENS_SetCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
 	s->Phone.Data.Cal = Note;
-	error=GSM_EncodeVCALENDAR(req,&size,Note,true,Siemens_VCalendar);
+	error=GSM_EncodeVCALENDAR(req, sizeof(req) ,&size,Note,true,Siemens_VCalendar);
 	if (error != ERR_NONE) return error;
 
 	return SetSiemensFrame (s,req,"vcs",Note->Location,ID_SetCalendarNote,size);
@@ -325,7 +325,7 @@ GSM_Error SIEMENS_AddCalendarNote(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 
 	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;
 
-	error=GSM_EncodeVCALENDAR(req,&size,Note,true,Siemens_VCalendar);
+	error=GSM_EncodeVCALENDAR(req, sizeof(req),&size,Note,true,Siemens_VCalendar);
 
 	Note->Location		= Priv->FirstFreeCalendarPos;
 	s->Phone.Data.Cal 	= Note;

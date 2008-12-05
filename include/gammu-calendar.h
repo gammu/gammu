@@ -564,6 +564,7 @@ typedef enum {
  * Encodes vTodo to buffer.
  *
  * \param Buffer Storage for data.
+ * \param[in] buff_len Size of output buffer.
  * \param Length Pointer to current position in data (will be incremented).
  * \param note Note to encode.
  * \param header Whether to include vCalendar header.
@@ -573,13 +574,14 @@ typedef enum {
  *
  * \ingroup Todo
  */
-GSM_Error GSM_EncodeVTODO(char *Buffer, size_t *Length, GSM_ToDoEntry * note,
-			  bool header, GSM_VToDoVersion Version);
+GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, GSM_ToDoEntry * note,
+			  const bool header, const GSM_VToDoVersion Version);
 
 /**
  * Encodes vCalendar to buffer.
  *
  * \param Buffer Storage for data.
+ * \param[in] buff_len Size of output buffer.
  * \param Length Pointer to current position in data (will be incremented).
  * \param note Note to encode.
  * \param header Whether to include vCalendar header.
@@ -589,9 +591,9 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, size_t *Length, GSM_ToDoEntry * note,
  *
  * \ingroup Calendar
  */
-GSM_Error GSM_EncodeVCALENDAR(char *Buffer, size_t *Length,
-			      GSM_CalendarEntry * note, bool header,
-			      GSM_VCalendarVersion Version);
+GSM_Error GSM_EncodeVCALENDAR(char *Buffer, const size_t buff_len, size_t *Length,
+			      GSM_CalendarEntry * note, const bool header,
+			      const GSM_VCalendarVersion Version);
 
 /**
  * Decodes vNote from buffer.
@@ -610,6 +612,7 @@ GSM_Error GSM_DecodeVNOTE(char *Buffer, size_t *Pos, GSM_NoteEntry *Note);
  * Encodes vNote to buffer.
  *
  * \param Buffer Storage for data.
+ * \param[in] buff_len Size of output buffer.
  * \param Length Pointer to current position in data (will be incremented).
  * \param Note Note to encode.
  *
@@ -617,7 +620,7 @@ GSM_Error GSM_DecodeVNOTE(char *Buffer, size_t *Pos, GSM_NoteEntry *Note);
  *
  * \ingroup Note
  */
-GSM_Error GSM_EncodeVNTFile(char *Buffer, size_t *Length,
+GSM_Error GSM_EncodeVNTFile(char *Buffer, const size_t buff_len, size_t *Length,
 			    GSM_NoteEntry * Note);
 
 /**

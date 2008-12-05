@@ -186,25 +186,72 @@ void GSM_IdentifyFileFormat(GSM_File *File)
 	}
 }
 
-void SaveVCALDateTime(char *Buffer, size_t *Length, GSM_DateTime *Date, char *Start)
+PRINTF_STYLE(4, 5)
+GSM_Error VC_StoreLine(char *Buffer, const size_t buff_len, size_t *Pos, const char *format, ...)
 {
-	if (Start != NULL) {
-		*Length+=sprintf(Buffer+(*Length), "%s:",Start);
-	}
-	*Length+=sprintf(Buffer+(*Length), "%04d%02d%02dT%02d%02d%02d%s%c%c",
-			Date->Year, Date->Month, Date->Day,
-			Date->Hour, Date->Minute, Date->Second,
-			Date->Timezone == 0 ? "Z" : "",
-			13,10);
+        va_list 		argp;
+	int 			result;
+
+	va_start(argp, format);
+	result = vsnprintf(Buffer + (*Pos), buff_len - *Pos - 1, format, argp);
+	va_end(argp);
+
+	*Pos += result;
+	if (*Pos >= buff_len - 1) return ERR_MOREMEMORY;
+
+	result = snprintf(Buffer + (*Pos), buff_len - *Pos - 1, "%c%c", 13, 10);
+
+	*Pos += result;
+	if (*Pos >= buff_len - 1) return ERR_MOREMEMORY;
+
+	return ERR_NONE;
 }
 
-void SaveVCALDate(char *Buffer, size_t *Length, GSM_DateTime *Date, char *Start)
+PRINTF_STYLE(4, 5)
+GSM_Error VC_Store(char *Buffer, const size_t buff_len, size_t *Pos, const char *format, ...)
 {
+        va_list 		argp;
+	int 			result;
+
+	va_start(argp, format);
+	result = vsnprintf(Buffer + (*Pos), buff_len - *Pos - 1, format, argp);
+	va_end(argp);
+
+	*Pos += result;
+	if (*Pos >= buff_len - 1) return ERR_MOREMEMORY;
+
+	return ERR_NONE;
+}
+
+
+GSM_Error VC_StoreDateTime(char *Buffer, const size_t buff_len, size_t *Pos, GSM_DateTime *Date, char *Start)
+{
+	GSM_Error error;
+
 	if (Start != NULL) {
-		*Length+=sprintf(Buffer+(*Length), "%s:",Start);
+		error = VC_Store(Buffer, buff_len, Pos, "%s:", Start);
+		if (error != ERR_NONE) return error;
 	}
-	*Length+=sprintf(Buffer+(*Length), "%04d%02d%02d%C%C",
-			Date->Year, Date->Month, Date->Day,13,10);
+	error = VC_StoreLine(Buffer, buff_len, Pos,
+		"%04d%02d%02dT%02d%02d%02d%s",
+			Date->Year, Date->Month, Date->Day,
+			Date->Hour, Date->Minute, Date->Second,
+			Date->Timezone == 0 ? "Z" : "");
+	return error;
+}
+
+GSM_Error VC_StoreDate(char *Buffer, const size_t buff_len, size_t *Pos, GSM_DateTime *Date, char *Start)
+{
+	GSM_Error error;
+
+	if (Start != NULL) {
+		error = VC_Store(Buffer, buff_len, Pos, "%s:", Start);
+		if (error != ERR_NONE) return error;
+	}
+	error = VC_StoreLine(Buffer, buff_len, Pos,
+		"%04d%02d%02d",
+			Date->Year, Date->Month, Date->Day);
+	return error;
 }
 
 bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
@@ -307,23 +354,35 @@ bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_o
 }
 
 
-void SaveVCALText(char *Buffer, size_t *Length, unsigned char *Text, char *Start, bool UTF8)
+GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Pos, unsigned char *Text, char *Start, bool UTF8)
 {
-	char buffer[1000];
+	char *buffer;
+	size_t len;
+	GSM_Error error;
 
-	if (UnicodeLength(Text) != 0) {
-		if (UTF8) {
-			EncodeUTF8(buffer, Text);
-			*Length += sprintf(Buffer+(*Length), "%s:%s%c%c", Start, DecodeUnicodeString(Text), 13, 10);
+	len = UnicodeLength(Text);
+
+	if (len == 0) return ERR_NONE;
+
+	/* Need to be big enough to store quoted printable */
+	buffer = (char *)malloc(len * 8);
+	if (buffer == NULL) return ERR_MOREMEMORY;
+
+	if (UTF8) {
+		EncodeUTF8(buffer, Text);
+		error =  VC_StoreLine(Buffer, buff_len, Pos, "%s:%s", Start, buffer);
+	} else {
+		EncodeUTF8QuotedPrintable(buffer,Text);
+		if (UnicodeLength(Text) == strlen(buffer)) {
+			/* Text is plain ASCII */
+			error =  VC_StoreLine(Buffer, buff_len, Pos, "%s:%s", Start, buffer);
 		} else {
-			EncodeUTF8QuotedPrintable(buffer,Text);
-			if (UnicodeLength(Text)==strlen(buffer)) {
-				*Length+=sprintf(Buffer+(*Length), "%s:%s%c%c",Start,DecodeUnicodeString(Text),13,10);
-			} else {
-				*Length+=sprintf(Buffer+(*Length), "%s;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s%c%c",Start,buffer,13,10);
-			}
+			error =  VC_StoreLine(Buffer, buff_len, Pos, "%s;CHARSET=UTF-8;ENCODING=QUOTED-PRINTABLE:%s", Start, buffer);
 		}
 	}
+
+	free(buffer);
+	return error;
 }
 
 unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)

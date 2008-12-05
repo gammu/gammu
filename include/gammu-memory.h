@@ -517,7 +517,7 @@ GSM_Error GSM_SetSpeedDial(GSM_StateMachine * s, GSM_SpeedDial * Speed);
  *
  * \ingroup Memory
  */
-unsigned char *GSM_PhonebookGetEntryName(GSM_MemoryEntry * entry);
+unsigned char *GSM_PhonebookGetEntryName(const GSM_MemoryEntry * entry);
 
 /**
  * Finds default name, number and group for entry.
@@ -529,7 +529,7 @@ unsigned char *GSM_PhonebookGetEntryName(GSM_MemoryEntry * entry);
  *
  * \ingroup Memory
  */
-void GSM_PhonebookFindDefaultNameNumberGroup(GSM_MemoryEntry * entry, int *Name,
+void GSM_PhonebookFindDefaultNameNumberGroup(const GSM_MemoryEntry * entry, int *Name,
 					     int *Number, int *Group);
 /**
  * Types of vCard.
@@ -554,16 +554,27 @@ typedef enum {
 	 * vCard 2.1 hacked for Sony-Ericsson (should be standard
 	 * vCard).
 	 */
-	SonyEricsson_VCard21
+	SonyEricsson_VCard21,
 } GSM_VCardVersion;
 
 /**
  * Encodes memory entry to vCard.
  *
+ * \param[out] Buffer Buffer to store vCard text.
+ * \param[in] buff_len Size of output buffer.
+ * \param[in,out] Pos Position in output buffer.
+ * \param[in,out] pbk Phonebook data, AddError will be set on non
+ * converted entries.
+ * \param[in] header Whether to include vCard header in output.
+ * \param[in] Version What vCard version to create.
+ *
+ * \return Error code.
+ *
  * \ingroup Memory
  */
-void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry * pbk,
-		     bool header, GSM_VCardVersion Version);
+GSM_Error GSM_EncodeVCARD(char *Buffer, const size_t buff_len, size_t *Pos,
+			GSM_MemoryEntry * pbk, const bool header,
+			const GSM_VCardVersion Version);
 
 /**
  * Decodes memory entry from vCard.
@@ -571,7 +582,7 @@ void GSM_EncodeVCARD(char *Buffer, size_t *Length, GSM_MemoryEntry * pbk,
  * \ingroup Memory
  */
 GSM_Error GSM_DecodeVCARD(char *Buffer, size_t *Pos,
-			  GSM_MemoryEntry * Pbk, GSM_VCardVersion Version);
+			  GSM_MemoryEntry * Pbk, const GSM_VCardVersion Version);
 
 #endif
 

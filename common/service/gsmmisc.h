@@ -11,12 +11,21 @@
  */
 void GSM_ClearBatteryCharge(GSM_BatteryCharge *bat);
 
+/**
+ * Prints a line (terminated with CRLF) to a buffer with error checking.
+ */
+GSM_Error VC_StoreLine(char *Buffer, const size_t buff_len, size_t *Pos, const char *format, ...);
+
+/**
+ * Prints a string to a buffer with error checking.
+ */
+GSM_Error VC_Store(char *Buffer, const size_t buff_len, size_t *Pos, const char *format, ...);
 
 bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt);
-void SaveVCALDateTime(char *Buffer, size_t *Length, GSM_DateTime *Date, char *Start);
+GSM_Error VC_StoreDateTime(char *Buffer, const size_t buff_len, size_t *Length, GSM_DateTime *Date, char *Start);
 
 bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_only);
-void SaveVCALDate(char *Buffer, size_t *Length, GSM_DateTime *Date, char *Start);
+GSM_Error VC_StoreDate(char *Buffer, const size_t buff_len, size_t *Length, GSM_DateTime *Date, char *Start);
 
 /**
  * Stores text in vCalendar/vCard formatted buffer.
@@ -27,7 +36,7 @@ void SaveVCALDate(char *Buffer, size_t *Length, GSM_DateTime *Date, char *Start)
  * \param Start Name of field which is being stored.
  * \param UTF8 Whether text should be stored in UTF-8 without prefix.
  */
-void SaveVCALText(char *Buffer, size_t *Length, unsigned char *Text, char *Start, bool UTF8);
+GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Length, unsigned char *Text, char *Start, bool UTF8);
 
 /**
  * Reads text for vCalendar/vCard formatted line.
