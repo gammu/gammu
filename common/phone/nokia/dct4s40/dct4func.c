@@ -43,26 +43,23 @@ GSM_Error DCT4_SetPhoneMode(GSM_StateMachine *s, DCT4_PHONE_MODE mode)
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x01,
 			       0x04,		/* phone mode */
 			       0x00};
+	int loops;
 
 	if (s->ConnectionType != GCT_FBUS2) return ERR_OTHERCONNECTIONREQUIRED;
 
 	s->Phone.Data.PhoneString 	= PhoneMode;
 	req[4] 				= mode;
 
-	/**
-	 * @todo This can loop forever!
-	 */
-	while (1) {
-		smprintf(s,"Going to phone mode %i\n",mode);
-		error = GSM_WaitFor (s, req, 6, 0x15, 4, ID_Reset);
+	smprintf(s,"Going to phone mode %i\n",mode);
+	error = GSM_WaitFor (s, req, 6, 0x15, 4, ID_Reset);
+	if (error != ERR_NONE) return error;
+	for (i=0;i<20;i++) {
+		error=DCT4_GetPhoneMode(s);
 		if (error != ERR_NONE) return error;
-		for (i=0;i<20;i++) {
-			error=DCT4_GetPhoneMode(s);
-			if (error != ERR_NONE) return error;
-			if (PhoneMode[0] == mode) break;
-			usleep(500000);
-		}
+		if (PhoneMode[0] == mode) break;
+		usleep(500000);
 	}
+
 	return ERR_NONE;
 }
 
