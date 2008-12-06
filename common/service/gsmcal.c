@@ -1032,7 +1032,7 @@ void GSM_ToDoFindDefaultTextTimeAlarmCompleted(GSM_ToDoEntry *entry, int *Text, 
 GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, GSM_ToDoEntry *note, bool header, GSM_VToDoVersion Version)
 {
 	char		category[100];
-	int		i, alarm_pos = -1;
+	int		i;
 	GSM_Error error;
 
 	/* Write header */
@@ -1111,7 +1111,6 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, G
 				}
 				break;
 			case TODO_ALARM_DATETIME :
-				alarm_pos = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
 				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
 					error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "AALARM");
@@ -1119,7 +1118,6 @@ GSM_Error GSM_EncodeVTODO(char *Buffer, const size_t buff_len, size_t *Length, G
 				}
 				break;
 			case TODO_SILENT_ALARM_DATETIME:
-				alarm_pos = i;
 				/* Disable alarm for birthday entries. Mozilla would generate an alarm before birth! */
 				if (Version != Mozilla_iCalendar || note->Type != GSM_CAL_BIRTHDAY) {
 					error = VC_StoreDateTime(Buffer, buff_len, Length, &note->Entries[i].Date, "DALARM");
