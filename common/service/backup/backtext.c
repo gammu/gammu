@@ -3034,23 +3034,6 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			num++;
                 }
         }
-	/**
-	 * @todo Why do we sort here?
-	 */
-	num = 0;
-	while (0) {
-		if (backup->SIMPhonebook[num] == NULL) break;
-		if (backup->SIMPhonebook[num+1] != NULL) {
-			if (backup->SIMPhonebook[num+1]->Location < backup->SIMPhonebook[num]->Location) {
-				memcpy(&PBK,backup->SIMPhonebook[num+1],sizeof(GSM_MemoryEntry));
-				memcpy(backup->SIMPhonebook[num+1],backup->SIMPhonebook[num],sizeof(GSM_MemoryEntry));
-				memcpy(backup->SIMPhonebook[num],&PBK,sizeof(GSM_MemoryEntry));
-				num = 0;
-				continue;
-			}
-		}
-		num++;
-	}
 	num = 0;
         for (h = file_info; h != NULL; h = h->Next) {
 		found = false;
