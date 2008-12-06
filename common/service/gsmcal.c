@@ -1663,7 +1663,6 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 	int		Level = 0;
 	GSM_DateTime	Date;
 	GSM_DeltaTime	OneHour = {0, 0, 0, 1, 0, 0, 0};
-	GSM_TimeUnit	unit = GSM_TimeUnit_Unknown;
 	GSM_DeltaTime	trigger;
 	GSM_Error	error;
 	int		deltatime = 0;
@@ -1767,12 +1766,14 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 				ReadVCALText(Line, "UID", Buff, CalVer == Mozilla_iCalendar);  /*  Any use for UIDs? */
 				break;
 			}
+#if 0
 			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-UNITS:")) {
 				if (ReadVCALText(Line, "X-MOZILLA-ALARM-DEFAULT-UNITS", Buff, CalVer == Mozilla_iCalendar)) {
 					unit = ReadVCALTimeUnits(DecodeUnicodeString(Buff));
 					break;
 				}
 			}
+#endif
 			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-LENGTH:")) {
 				if (ReadVCALInt(Line, "X-MOZILLA-ALARM-DEFAULT-LENGTH", &deltatime)) {
 					break;
@@ -1908,12 +1909,14 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 				ReadVCALText(Line, "UID", Buff, ToDoVer == Mozilla_iCalendar);  /*  Any use for UIDs? */
 				break;
 			}
+#if 0
 			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-UNITS:")) {
 				if (ReadVCALText(Line, "X-MOZILLA-ALARM-DEFAULT-UNITS", Buff, ToDoVer == Mozilla_iCalendar)) {
 					unit = ReadVCALTimeUnits(DecodeUnicodeString(Buff));
 					break;
 				}
 			}
+#endif
 			if (strstr(Line,"X-MOZILLA-ALARM-DEFAULT-LENGTH:")) {
 				if (ReadVCALInt(Line, "X-MOZILLA-ALARM-DEFAULT-LENGTH", &deltatime)) {
 					break;
