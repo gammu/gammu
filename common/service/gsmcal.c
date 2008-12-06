@@ -1671,7 +1671,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 	bool		is_date_only;
 	bool		date_only = false;
 	int		lBuffer;
- 	int 		Text=-1, Time=-1, Alarm=-1, EndTime=-1;
+ 	int 		Text=-1, Time=-1, Alarm=-1;
 	char		*rrule = NULL;
 
 	if (!Buffer) return ERR_EMPTY;
@@ -1697,14 +1697,14 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 				Calendar->Type = 0;
 				date_only = true;
 				dstflag = 0;
-				Text=-1; Time=-1; Alarm=-1; EndTime=-1;
+				Text=-1; Time=-1; Alarm=-1;
 				Level 		= 1;
 			}
 			if (strstr(Line,"BEGIN:VTODO")) {
 				ToDo->Priority 	= GSM_Priority_None;
 				ToDo->Type = GSM_CAL_MEMO;
 				dstflag = 0;
-				Text=-1; Time=-1; Alarm=-1; EndTime=-1;
+				Text=-1; Time=-1; Alarm=-1;
 				Level 		= 2;
 			}
 			break;
@@ -1850,7 +1850,6 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 			if (ReadVCALDate(Line, "DTEND", &Date, &is_date_only)) {
 				Calendar->Entries[Calendar->EntriesNum].Date = Date;
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_END_DATETIME;
-				EndTime = Calendar->EntriesNum;
 				Calendar->EntriesNum++;
 				if (!is_date_only) date_only = false;
 			}
@@ -1935,7 +1934,6 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 				    ToDo->Entries[ToDo->EntriesNum].Date.Minute != 59 ) {
 					ToDo->Entries[ToDo->EntriesNum].Date = Date;
 					ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_END_DATETIME;
-					EndTime = Calendar->EntriesNum;
 					ToDo->EntriesNum++;
 				}
 			}
