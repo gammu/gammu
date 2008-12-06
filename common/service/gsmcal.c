@@ -1671,7 +1671,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 	bool		is_date_only;
 	bool		date_only = false;
 	int		lBuffer;
- 	int 		Text=-1, Time=-1, Alarm=-1;
+ 	int 		Time=-1, Alarm=-1;
 	char		*rrule = NULL;
 
 	if (!Buffer) return ERR_EMPTY;
@@ -1697,14 +1697,14 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 				Calendar->Type = 0;
 				date_only = true;
 				dstflag = 0;
-				Text=-1; Time=-1; Alarm=-1;
+				Time=-1; Alarm=-1;
 				Level 		= 1;
 			}
 			if (strstr(Line,"BEGIN:VTODO")) {
 				ToDo->Priority 	= GSM_Priority_None;
 				ToDo->Type = GSM_CAL_MEMO;
 				dstflag = 0;
-				Text=-1; Time=-1; Alarm=-1;
+				Time=-1; Alarm=-1;
 				Level 		= 2;
 			}
 			break;
@@ -1809,7 +1809,6 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TEXT;
 				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
-				Text = Calendar->EntriesNum;
 				Calendar->EntriesNum++;
 			}
 			if ((ReadVCALText(Line, "DESCRIPTION", Buff, CalVer == Mozilla_iCalendar))) {
@@ -1964,21 +1963,18 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_TEXT;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
-				Text = ToDo->EntriesNum;
 				ToDo->EntriesNum++;
 			}
 			if ((ReadVCALText(Line, "DESCRIPTION", Buff, ToDoVer == Mozilla_iCalendar))) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_DESCRIPTION;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
-				Text = ToDo->EntriesNum;
 				ToDo->EntriesNum++;
 			}
 			if ((ReadVCALText(Line, "LOCATION", Buff, ToDoVer == Mozilla_iCalendar))) {
 				ToDo->Entries[ToDo->EntriesNum].EntryType = TODO_LOCATION;
 				CopyUnicodeString(ToDo->Entries[ToDo->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
-				Text = ToDo->EntriesNum;
 				ToDo->EntriesNum++;
 			}
 			if (ReadVCALText(Line, "PRIORITY", Buff, ToDoVer == Mozilla_iCalendar)) {
