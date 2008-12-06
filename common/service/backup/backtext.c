@@ -2908,7 +2908,6 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 	INI_Section		*file_info, *h;
 	char			buffer[100], *readvalue;
 	int			num;
-	GSM_MemoryEntry 	PBK;
 	bool			found;
 	GSM_Error		error;
 	bool UseUnicode = false;
