@@ -447,7 +447,9 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, const size_t buff_len, size_t *Leng
 	int repeat_count = -1;
 	int repeat_frequency = -1;
 	bool header;
+#if 0
 	GSM_DateTime repeat_startdate = {0,0,0,0,0,0,0};
+#endif
 	GSM_DateTime repeat_stopdate = {0,0,0,0,0,0,0};
 	GSM_Error error;
 
@@ -497,8 +499,10 @@ GSM_Error GSM_EncodeVCAL_RRULE(char *Buffer, const size_t buff_len, size_t *Leng
 				repeating 		= true;
 				break;
 			case CAL_REPEAT_STARTDATE:
+#if 0
 				repeat_startdate 	= note->Entries[i].Date;
 				repeating 		= true;
+#endif
 				break;
 			case CAL_REPEAT_STOPDATE:
 				repeat_stopdate 	= note->Entries[i].Date;
