@@ -43,7 +43,6 @@ GSM_Error DCT4_SetPhoneMode(GSM_StateMachine *s, DCT4_PHONE_MODE mode)
 	unsigned char req[] = {N6110_FRAME_HEADER, 0x01,
 			       0x04,		/* phone mode */
 			       0x00};
-	int loops;
 
 	if (s->ConnectionType != GCT_FBUS2) return ERR_OTHERCONNECTIONREQUIRED;
 
