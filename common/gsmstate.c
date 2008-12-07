@@ -304,10 +304,8 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 		}
 #endif
 
-		/* If phone is S40, use 6510 */
 #ifdef GSM_ENABLE_NOKIA6510
-		if (GSM_IsPhoneFeatureAvailable(model, F_SERIES40_30) && (
-				s->ConnectionType ==  GCT_MBUS2 ||
+		if ( s->ConnectionType ==  GCT_MBUS2 ||
 				s->ConnectionType ==  GCT_FBUS2 ||
 				s->ConnectionType ==  GCT_FBUS2DLR3 ||
 				s->ConnectionType ==  GCT_FBUS2PL2303 ||
@@ -318,10 +316,30 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 				s->ConnectionType ==  GCT_PHONETBLUE ||
 				s->ConnectionType ==  GCT_IRDAPHONET ||
 				s->ConnectionType ==  GCT_BLUEFBUS2 ||
-				s->ConnectionType ==  GCT_BLUEPHONET)) {
-			smprintf(s,"[Module           - \"%s\"]\n", N6510Phone.models);
-			s->Phone.Functions = &N6510Phone;
-			return ERR_NONE;
+				s->ConnectionType ==  GCT_BLUEPHONET) {
+			/* Try to detect phone type */
+			if (strcmp(model->model, "unknown") == 0 && model->features[0] == 0) {
+				smprintf(s, "WARNING: phone not known, please report it to authors (see <http://cihar.com/gammu/report>). Thank you\n");
+				if (strncmp(s->Phone.Data.Model, "RM-", 3) == 0) {
+					/* 167 is really a wild guess */
+					if (atoi(s->Phone.Data.Model + 3) > 167) {
+						smprintf(s, "WARNING: Guessed phone as S40/30 compatible!\n");
+						GSM_AddPhoneFeature(model, F_SERIES40_30);
+						GSM_AddPhoneFeature(model, F_FILES2);
+						GSM_AddPhoneFeature(model, F_TODO66);
+						GSM_AddPhoneFeature(model, F_RADIO);
+						GSM_AddPhoneFeature(model, F_NOTES);
+						GSM_AddPhoneFeature(model, F_SMS_FILES);
+					}
+				}
+			}
+
+			/* If phone is S40, use 6510 */
+			if (GSM_IsPhoneFeatureAvailable(model, F_SERIES40_30)) {
+				smprintf(s,"[Module           - \"%s\"]\n", N6510Phone.models);
+				s->Phone.Functions = &N6510Phone;
+				return ERR_NONE;
+			}
 		}
 #endif
 		if (model->model[0] == 0) return ERR_UNKNOWNMODELSTRING;
