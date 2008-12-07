@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Better skipping of currupted messages in AT (bug #768).
 [-] * Autoload 6510 module if phone is S40 (bug #767).
+[-] * Add ID for Nokia 6500s (bug #770).
 [!] * vC* saving now protects against buffer overflows.
     
 20081202 - 1.21.93
