@@ -36,6 +36,21 @@
 #define PATH_MAX (MAX_PATH)
 #endif
 
+
+/**
+ * Returns debug information active for state machine.
+ */
+GSM_Debug_Info *GSM_GetDI(GSM_StateMachine *s)
+{
+	GSM_Debug_Info *curdi;
+
+	curdi = &GSM_global_debug;
+	if (s != NULL && s->di.use_global == false) {
+		curdi = &(s->di);
+	}
+	return curdi;
+}
+
 static void GSM_RegisterConnection(GSM_StateMachine *s, unsigned int connection,
 		GSM_Device_Functions *device, GSM_Protocol_Functions *protocol)
 {
@@ -593,7 +608,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 					GetOS());
 		}
 
-		if (s->di.dl==DL_BINARY) {
+		if (GSM_GetDI(s)->dl == DL_BINARY) {
 			smprintf(s,"%c",((unsigned char)strlen(VERSION)));
 			smprintf(s,"%s",VERSION);
 		}
@@ -1253,12 +1268,18 @@ fail:
 
 void GSM_DumpMessageLevel2_Text(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type, const char *text)
 {
-	if (s->di.dl==DL_TEXT || s->di.dl==DL_TEXTALL ||
-	    s->di.dl==DL_TEXTDATE || s->di.dl==DL_TEXTALLDATE) {
+	GSM_Debug_Info *curdi;
+
+	curdi = GSM_GetDI(s);
+
+	if (curdi->dl == DL_TEXT ||
+			curdi->dl == DL_TEXTALL ||
+			curdi->dl == DL_TEXTDATE ||
+			curdi->dl == DL_TEXTALLDATE) {
 		smprintf(s, "%s", text);
 		smprintf(s, "type 0x%02X/length 0x%02X/%i",
 				type, messagesize, messagesize);
-		DumpMessage(&s->di, message, messagesize);
+		DumpMessage(curdi, message, messagesize);
 		if (messagesize == 0)
 			smprintf(s,"\n");
 	}
@@ -1277,8 +1298,11 @@ void GSM_DumpMessageLevel2Recv(GSM_StateMachine *s, unsigned const char *message
 void GSM_DumpMessageLevel3_Custom(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type, int direction)
 {
 	int i;
+	GSM_Debug_Info *curdi;
 
-	if (s->di.dl==DL_BINARY) {
+	curdi = GSM_GetDI(s);
+
+	if (curdi->dl == DL_BINARY) {
 		smprintf(s,"%c", direction);
 		smprintf(s,"%c",type);
 		smprintf(s,"%c",messagesize/256);
@@ -1323,10 +1347,7 @@ int smprintf_level(GSM_StateMachine * s, GSM_DebugSeverity severity, const char 
 	int 		result=0;
 	GSM_Debug_Info *curdi;
 
-	curdi = &GSM_global_debug;
-	if (s != NULL && s->di.use_global == false) {
-		curdi = &(s->di);
-	}
+	curdi = GSM_GetDI(s);
 
 	if (severity == D_TEXT) {
 		if (curdi->dl != DL_TEXT &&
@@ -1358,11 +1379,20 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 #ifdef WIN32
 	int 		i;
 	unsigned char 	*lpMsgBuf;
+#endif
+	GSM_Debug_Info *curdi;
 
+	curdi = GSM_GetDI(s);
+
+#ifdef WIN32
 	/* We don't use errno in win32 - GetLastError gives better info */
 	if (GetLastError() != 0) {
-		if (s->di.dl == DL_TEXTERROR || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTALL ||
-		    s->di.dl == DL_TEXTERRORDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTALLDATE) {
+		if (curdi->dl == DL_TEXTERROR ||
+				curdi->dl == DL_TEXT ||
+				curdi->dl == DL_TEXTALL ||
+				curdi->dl == DL_TEXTERRORDATE ||
+				curdi->dl == DL_TEXTDATE ||
+				curdi->dl == DL_TEXTALLDATE) {
 			FormatMessage(
 				FORMAT_MESSAGE_ALLOCATE_BUFFER |
 				FORMAT_MESSAGE_FROM_SYSTEM |
@@ -1386,8 +1416,12 @@ void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
 #else
 
 	if (errno!=-1) {
-		if (s->di.dl == DL_TEXTERROR || s->di.dl == DL_TEXT || s->di.dl == DL_TEXTALL ||
-		    s->di.dl == DL_TEXTERRORDATE || s->di.dl == DL_TEXTDATE || s->di.dl == DL_TEXTALLDATE) {
+		if (curdi->dl == DL_TEXTERROR ||
+				curdi->dl == DL_TEXT ||
+				curdi->dl == DL_TEXTALL ||
+				curdi->dl == DL_TEXTERRORDATE ||
+				curdi->dl == DL_TEXTDATE ||
+				curdi->dl == DL_TEXTALLDATE) {
 			smprintf(s,"[System error     - %s, %i, \"%s\"]\n",description,errno,strerror(errno));
 		}
 	}
