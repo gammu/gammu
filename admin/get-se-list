@@ -38,6 +38,9 @@ awk 'BEGIN { p = 0; }
         } else {
             sms = "";
         }
+        if (models[0] == "FAE-1021011-BV") {
+            sms = sms", F_SMS_LOCATION_0";
+        }
 		if (length(models) == 2 && length(ids) == 2) {
 				print "\t{\""ids[0]"\",\t\""models[0]"\" ,\"\",\t\t\t\t   {F_OBEX"sms", 0}},"; 
 				print "\t{\""ids[1]"\",\t\""models[1]"\" ,\"\",\t\t\t\t   {F_OBEX"sms", 0}},"; 
