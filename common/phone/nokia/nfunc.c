@@ -2310,6 +2310,8 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 
 GSM_Error N71_65_ReplyDelCalendar(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
+	if (msg.Buffer[3] == 0xf0) return ERR_NOTSUPPORTED;
+
 	smprintf(s, "Deleted calendar note on location %d\n",msg.Buffer[4]*256+msg.Buffer[5]);
 	return ERR_NONE;
 }
