@@ -12,7 +12,7 @@ awk 'BEGIN { p = 0; }
 /Type code orderin/ { p = 1; }
 /<tr><th>.*<\/th><td>.*<\/td>(<\/tr>)?/ { if (p) print $0; }
 /<\/table>/ { p = 0;}' < "$tmp" | \
-	sed 's@</td></tr><tr><th>@\n@; s@<tr><th>@@; s@</th><td>@;@g; s@</td></tr>@@; s@</td>@@' | \
+	sed 's@</td></tr><tr><th>@\n@; s@<tr><th>@@; s@</th><td>@;@g; s@</td></tr>@@; s@</td>@@; s@<!-- @@; s@ -->@@;' | \
 	grep -Ev '&nbsp;|Cancelled' | \
 	gawk -F \; '{ 
 		delete models;
