@@ -14,7 +14,7 @@ awk 'BEGIN { p = 0; }
 /<\/table>/ { p = 0;}' < "$tmp" | \
 	sed 's@</td></tr><tr><th>@\n@; s@<tr><th>@@; s@</th><td>@;@g; s@</td></tr>@@' | \
 	grep -Ev '&nbsp;|Cancelled' | \
-	awk -F \; '{ 
+	gawk -F \; '{ 
 		delete models;
 		delete ids;
 		models[0] = $1;
