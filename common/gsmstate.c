@@ -953,11 +953,11 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 		if (Phone->SentMsg != NULL) {
 			smprintf(s,"LAST SENT frame ");
 			smprintf(s, "type 0x%02X/length " SIZE_T_FORMAT, Phone->SentMsg->Type, Phone->SentMsg->Length);
-			DumpMessage(&s->di, Phone->SentMsg->Buffer, Phone->SentMsg->Length);
+			DumpMessage(GSM_GetDI(s), Phone->SentMsg->Buffer, Phone->SentMsg->Length);
 		}
 		smprintf(s, "RECEIVED frame ");
 		smprintf(s, "type 0x%02X/length 0x" SIZE_T_HEX_FORMAT "/" SIZE_T_FORMAT, msg->Type, msg->Length, msg->Length);
-		DumpMessage(&s->di, msg->Buffer, msg->Length);
+		DumpMessage(GSM_GetDI(s), msg->Buffer, msg->Length);
 		smprintf(s, "\n");
 	}
 
