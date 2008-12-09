@@ -385,6 +385,48 @@ GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Pos, unsigne
 	return error;
 }
 
+GSM_Error VC_StoreBase64(char *Buffer, const size_t buff_len, size_t *Pos, const unsigned char *data, const size_t length)
+{
+	char *buffer, *pos, linebuffer[80];
+	size_t len, current;
+	char spacer[2];
+	GSM_Error error;
+
+	/*
+	 * Need to be big enough to store base64 (what is *4/3, but *2 is safer
+	 * and we don't have to care about rounding and padding).
+	 */
+	buffer = (char *)malloc(length * 2);
+	if (buffer == NULL) return ERR_MOREMEMORY;
+
+	spacer[0] = 0;
+	spacer[1] = 0;
+
+
+	EncodeBASE64(data, buffer, length);
+
+	len = strlen(buffer);
+	pos = buffer;
+
+	/* Write at most 76 chars per line */
+	while (len > 0) {
+		current = MIN(len, 76);
+		strncpy(linebuffer, pos, current);
+		linebuffer[current] = 0;
+		error =  VC_StoreLine(Buffer, buff_len, Pos, "%s%s", spacer, linebuffer);
+		if (error != ERR_NONE) {
+			free(buffer);
+			return error;
+		}
+		spacer[0] = ' ';
+		len -= current;
+		pos += current;
+	}
+
+	free(buffer);
+	return ERR_NONE;
+}
+
 unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
 {
 	static unsigned char	tmp[1000];

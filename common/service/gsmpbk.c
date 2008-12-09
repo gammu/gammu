@@ -3,10 +3,13 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdarg.h>
+#include <ctype.h>
 
 #include <gammu-misc.h>
+#include <gammu-bitmap.h>
 
 #include "../misc/coding/coding.h"
+#include "../misc/misc.h"
 #include "gsmpbk.h"
 #include "gsmmisc.h"
 
@@ -114,6 +117,7 @@ GSM_Error GSM_EncodeVCARD(char *Buffer, const size_t buff_len, size_t *Length, G
 	int pos;
 	bool ignore;
 	GSM_Error error;
+	GSM_BinaryPicture *bitmap;
 
 	GSM_PhonebookFindDefaultNameNumberGroup(pbk, &Name, &Number, &Group);
 
@@ -332,6 +336,38 @@ GSM_Error GSM_EncodeVCARD(char *Buffer, const size_t buff_len, size_t *Length, G
 					}
 					error = VC_Store(Buffer, buff_len, Length, "ORG");
 					if (error != ERR_NONE) return error;
+					break;
+				case PBK_Photo:
+					bitmap = &(pbk->Entries[i].Picture);
+					error = VC_Store(Buffer, buff_len, Length, "PHOTO;TYPE=");
+					if (error != ERR_NONE) return error;
+					switch (bitmap->Type) {
+						case PICTURE_BMP:
+							error = VC_Store(Buffer, buff_len, Length, "BMP;");
+							break;
+						case PICTURE_GIF:
+							error = VC_Store(Buffer, buff_len, Length, "GIF;");
+							break;
+						case PICTURE_JPG:
+							error = VC_Store(Buffer, buff_len, Length, "JPEG;");
+							break;
+						case PICTURE_ICN:
+							error = VC_Store(Buffer, buff_len, Length, "ICO;");
+							break;
+						case PICTURE_PNG:
+							error = VC_Store(Buffer, buff_len, Length, "PNG;");
+							break;
+						default:
+							dbgprintf("Unknown picture format: %d\n", bitmap->Type);
+							error = VC_Store(Buffer, buff_len, Length, "UNKNOWN;");
+							break;
+					}
+					if (error != ERR_NONE) return error;
+					error = VC_Store(Buffer, buff_len, Length, "ENCODING=BASE64:");
+					if (error != ERR_NONE) return error;
+					error = VC_StoreBase64(Buffer, buff_len, Length, bitmap->Buffer, bitmap->Length);
+					if (error != ERR_NONE) return error;
+					ignore = true;
 					break;
 				/* Not supported fields */
 				case PBK_Caller_Group:
@@ -582,6 +618,33 @@ GSM_Error GSM_DecodeVCARD(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk, GSM_V
 					Pbk->EntriesNum++;
 				}
 			}
+			if (strncmp(Line, "PHOTO;JPEG;BASE64:", 18) == 0 ||
+				strncmp(Line, "PHOTO;BASE64;JPEG:", 18) == 0 ||
+				strncmp(Line, "PHOTO;TYPE=JPEG;BASE64:", 23) == 0 ||
+				strncmp(Line, "PHOTO;BASE64;TYPE=JPEG:", 23) == 0 ||
+				strncmp(Line, "PHOTO;TYPE=JPEG;ENCODING=BASE64:", 32) == 0 ||
+				strncmp(Line, "PHOTO;ENCODING=BASE64;TYPE=JPEG:", 32) == 0 ||
+				strncmp(Line, "PHOTO;JPEG;ENCODING=BASE64:", 27) == 0 ||
+				strncmp(Line, "PHOTO;ENCODING=BASE64;JPEG:", 27) == 0) {
+				/* Find : (it should be there we matched it above) */
+				s = strchr(Line, ':');
+				s++;
+				/* Skip whitespace */
+				while (isspace(*s) && *s) s++;
+
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Photo;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Type = PICTURE_JPG;
+
+				/* We allocate here more memory than is actually required */
+				Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = malloc(strlen(s));
+				if (Pbk->Entries[Pbk->EntriesNum].Picture.Buffer == NULL)
+					return ERR_MOREMEMORY;
+
+				Pbk->Entries[Pbk->EntriesNum].Picture.Length =
+					DecodeBASE64(s, Pbk->Entries[Pbk->EntriesNum].Picture.Buffer, strlen(s));
+				Pbk->EntriesNum++;
+			}
+
 			if (ReadVCALText(Line, "TEL",		   Buff, false) ||
 			    ReadVCALText(Line, "TEL;VOICE",	     Buff, false) ||
 			    ReadVCALText(Line, "TEL;TYPE=VOICE",	     Buff, false)) {

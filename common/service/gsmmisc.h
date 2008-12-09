@@ -28,6 +28,11 @@ bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_o
 GSM_Error VC_StoreDate(char *Buffer, const size_t buff_len, size_t *Length, GSM_DateTime *Date, char *Start);
 
 /**
+ * Store base64 encoded string to buffer.
+ */
+GSM_Error VC_StoreBase64(char *Buffer, const size_t buff_len, size_t *Pos, const unsigned char *data, const size_t length);
+
+/**
  * Stores text in vCalendar/vCard formatted buffer.
  *
  * \param Buffer Buffer where output will be stored.

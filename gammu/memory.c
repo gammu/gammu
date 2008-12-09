@@ -94,6 +94,9 @@ void PrintMemorySubEntry(GSM_SubMemoryEntry *entry)
 	case PBK_PictureID	     :
 		printf(LISTFORMAT "0x%x\n", _("Picture ID"),entry->Number);
 		return;
+	case PBK_Photo:
+		printf(LISTFORMAT "%s\n", _("Photo"), _("Displaying not supported"));
+		return;
 	case PBK_Number_Messaging   : printf(LISTFORMAT, _("Favorite messaging number")); break;
 	case PBK_Number_General     : printf(LISTFORMAT, _("General number")); break;
 	case PBK_Number_Mobile      : printf(LISTFORMAT, _("Mobile number")); break;
@@ -372,6 +375,7 @@ void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 			case PBK_PictureID:
 			case PBK_CallLength:
 			case PBK_LastModified:
+			case PBK_Photo:
 #ifndef CHECK_CASES
 			default:
 #endif

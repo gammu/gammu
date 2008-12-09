@@ -25,6 +25,7 @@ ChangeLog
 [-] * Better documentation of addnew (bug #734).
 [-] * Fix detection of OBEX capability on older Siemens phones.
 [-] * Try to detect wrongly formatted CMGL reply (bug #771);
+[+] * Support for photos in vCard (bug #227).
 [!] * vC* saving now protects against buffer overflows.
     
 20081202 - 1.21.93

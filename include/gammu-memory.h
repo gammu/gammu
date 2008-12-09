@@ -14,6 +14,7 @@
 
 #include <gammu-datetime.h>
 #include <gammu-limits.h>
+#include <gammu-bitmap.h>
 
 /**
  * Enum defines ID for various phone and SIM memories.
@@ -304,6 +305,10 @@ typedef enum {
 	 * Favorite messaging number. (Text)
 	 */
 	PBK_Number_Messaging,
+	/**
+	 * Photo (Picture).
+	 */
+	PBK_Photo,
 } GSM_EntryType;
 
 /**
@@ -339,6 +344,10 @@ typedef struct {
 	 * Text of entry (if applicable, see @ref GSM_EntryType).
 	 */
 	unsigned char Text[(GSM_PHONEBOOK_TEXT_LENGTH + 1) * 2];
+	/**
+	 * Picture data.
+	 */
+	GSM_BinaryPicture Picture;
 } GSM_SubMemoryEntry;
 
 /**
