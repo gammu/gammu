@@ -172,7 +172,6 @@ static GSM_Error SaveBackupText(FILE *file, char *myname, char *myvalue, bool Us
 		} else {
 			sprintf(buffer,"%s = \"%s\"%c%c",myname,EncodeSpecialChars(DecodeUnicodeString(myvalue)),13,10);
 			fprintf(file,"%s",buffer);
-
 			EncodeHexBin(buffer,myvalue,UnicodeLength(myvalue)*2);
 			fprintf(file,"%sUnicode = %s%c%c",myname,buffer,13,10);
 		}
@@ -180,6 +179,32 @@ static GSM_Error SaveBackupText(FILE *file, char *myname, char *myvalue, bool Us
 	return ERR_NONE;
 fail:
 	return ERR_WRITING_FILE;
+}
+
+static GSM_Error SaveBackupBase64(FILE *file, char *myname, unsigned char *data, size_t length, bool UseUnicode)
+{
+	char *buffer;
+	unsigned char *unicode_buffer;
+	GSM_Error error;
+
+	/*
+	 * Need to be big enough to store base64 (what is *4/3, but *2 is safer
+	 * and we don't have to care about rounding and padding).
+	 */
+	buffer = (char *)malloc(length * 2);
+	if (buffer == NULL) return ERR_MOREMEMORY;
+	unicode_buffer = (unsigned char *)malloc(length * 4);
+	if (unicode_buffer == NULL) return ERR_MOREMEMORY;
+
+	EncodeBASE64(data, buffer, length);
+	EncodeUnicode(unicode_buffer, buffer, strlen(buffer));
+
+	error = SaveBackupText(file, myname, unicode_buffer, UseUnicode);
+
+	free(buffer);
+	free(unicode_buffer);
+
+	return error;
 }
 
 static bool ReadBackupText(INI_Section *file_info, char *section, char *myname, char *myvalue, bool UseUnicode)
@@ -520,6 +545,35 @@ static GSM_Error SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 				sprintf(buffer,"Entry%02iType = PushToTalkID%c%c",j,13,10);
 				error = SaveBackupText(file, "", buffer, UseUnicode);
 				if (error != ERR_NONE) return error;
+				break;
+			case PBK_Photo:
+				switch (Pbk->Entries[j].Picture.Type) {
+					case PICTURE_BMP:
+						sprintf(buffer,"Entry%02iType = BMPPhoto%c%c",j,13,10);
+						break;
+					case PICTURE_GIF:
+						sprintf(buffer,"Entry%02iType = GIFPhoto%c%c",j,13,10);
+						break;
+					case PICTURE_JPG:
+						sprintf(buffer,"Entry%02iType = JPEGPhoto%c%c",j,13,10);
+						break;
+					case PICTURE_ICN:
+						sprintf(buffer,"Entry%02iType = ICOPhoto%c%c",j,13,10);
+						break;
+					case PICTURE_PNG:
+						sprintf(buffer,"Entry%02iType = PNGPhoto%c%c",j,13,10);
+						break;
+					default:
+						dbgprintf("Unknown picture format: %d\n", Pbk->Entries[j].Picture.Type);
+						sprintf(buffer,"Entry%02iType = Photo%c%c",j,13,10);
+						break;
+				}
+				error = SaveBackupText(file, "", buffer, UseUnicode);
+				if (error != ERR_NONE) return error;
+				sprintf(buffer, "Entry%02iData", j);
+				error = SaveBackupBase64(file, buffer, Pbk->Entries[j].Picture.Buffer, Pbk->Entries[j].Picture.Length, UseUnicode);
+				if (error != ERR_NONE) return error;
+				text = false;
 				break;
         	}
 		if (text) {
@@ -1861,13 +1915,59 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				}
 				Pbk->EntriesNum++;
 				continue;
-			} else if (strcasecmp(readvalue,"PictureName") == 0) {
-				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_PictureName;
+			} else if (strcasecmp(readvalue,"BMPPhoto") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Photo;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Type = PICTURE_BMP;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Length = 0;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = NULL;
+				goto loadpicture;
+			} else if (strcasecmp(readvalue,"GIFPhoto") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Photo;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Type = PICTURE_GIF;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Length = 0;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = NULL;
+				goto loadpicture;
+			} else if (strcasecmp(readvalue,"JPEGPhoto") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Photo;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Type = PICTURE_JPG;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Length = 0;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = NULL;
+				goto loadpicture;
+			} else if (strcasecmp(readvalue,"ICOPhoto") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Photo;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Type = PICTURE_ICN;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Length = 0;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = NULL;
+				goto loadpicture;
+			} else if (strcasecmp(readvalue,"PNGPhoto") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Photo;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Type = PICTURE_PNG;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Length = 0;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = NULL;
+				goto loadpicture;
 			} else if (strcasecmp(readvalue,"PushToTalkID") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_PushToTalkID;
 			} else if (strcasecmp(readvalue,"UserID") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_UserID;
 			}
+			goto loadtext;
+loadpicture:
+			sprintf(buffer,"Entry%02iData",num);
+			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+			/* Strip out quotes */
+			readvalue++;
+			readvalue[strlen(readvalue) - 1] = 0;
+
+			/* We allocate here more memory than is actually required */
+			Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = malloc(strlen(readvalue));
+			if (Pbk->Entries[Pbk->EntriesNum].Picture.Buffer == NULL)
+				break;
+
+			Pbk->Entries[Pbk->EntriesNum].Picture.Length =
+				DecodeBASE64(readvalue, Pbk->Entries[Pbk->EntriesNum].Picture.Buffer, strlen(readvalue));
+
+			goto loaddone;
+loadtext:
 			sprintf(buffer,"Entry%02iText",num);
 			ReadBackupText(file_info, section, buffer, Pbk->Entries[Pbk->EntriesNum].Text,UseUnicode);
 			dbgprintf("text \"%s\", type %i\n",DecodeUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text),Pbk->Entries[Pbk->EntriesNum].EntryType);
@@ -1886,6 +1986,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].SMSList[i] = atoi(readvalue);
 				i++;
 			}
+loaddone:
 			Pbk->EntriesNum ++;
 		}
 	}

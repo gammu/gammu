@@ -172,6 +172,7 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 			case PBK_CallLength:
 			case PBK_Text_PictureName:
 			case PBK_PushToTalkID:
+			case PBK_Photo:
 				dbgprintf("Feature missed\n");
 				break;
 			}
