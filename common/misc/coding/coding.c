@@ -1829,7 +1829,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-static void EncodeBASE64Block(unsigned char in[3], unsigned char out[4], size_t len)
+static void EncodeBASE64Block(const unsigned char in[3], unsigned out[4], const size_t len)
 {
 	/* BASE64 translation Table as described in RFC1113 */
 	unsigned char cb64[]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
@@ -1840,7 +1840,7 @@ static void EncodeBASE64Block(unsigned char in[3], unsigned char out[4], size_t 
 	out[3] = (unsigned char) (len > 2 ? cb64[ in[2] & 0x3f ] : '=');
 }
 
-void EncodeBASE64(const unsigned char *Input, unsigned char *Output, size_t Length)
+void EncodeBASE64(const unsigned char *Input, char *Output, const size_t Length)
 {
 	unsigned char 	in[3], out[4];
 	size_t 		i, pos = 0, len, outpos = 0;
@@ -1864,14 +1864,14 @@ void EncodeBASE64(const unsigned char *Input, unsigned char *Output, size_t Leng
 	Output[outpos++] = 0;
 }
 
-static void DecodeBASE64Block(unsigned char in[4], unsigned char out[3])
+static void DecodeBASE64Block(const char in[4], unsigned char out[3])
 {
 	out[0] = (unsigned char) ((in[0] << 2) | (in[1] >> 4));
 	out[1] = (unsigned char) ((in[1] << 4) | (in[2] >> 2));
 	out[2] = (unsigned char) (((in[2] << 6) & 0xc0) | in[3]);
 }
 
-int DecodeBASE64(const unsigned char *Input, unsigned char *Output, size_t Length)
+int DecodeBASE64(const char *Input, unsigned char *Output, const size_t Length)
 {
 	unsigned char 	cd64[]="|$$$}rstuvwxyz{$$$$$$$>?@ABCDEFGHIJKLMNOPQRSTUVW$$$$$$XYZ[\\]^_`abcdefghijklmnopq";
 	unsigned char 	in[4], out[3], v;
