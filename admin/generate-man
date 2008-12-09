@@ -788,9 +788,13 @@ want only to add entries to phone, use addnew.
 In some phones restoring calendar notes will not show error, but won't
 be done, when phone doesn't have set clock inside.
 '''
-HELP['addnew'] = '''Adds settings written in file created using \\fBbackup option\\fR. All things
+HELP['addnew'] = '''Adds data written in file created using \\fBbackup option\\fR. All things
 backup'ed by \\fBbackup\\fR can be restored (when made backup to Gammu text
 file).
+
+Please note that this adds all content of backup file to phone and
+does not care about current data in the phone (no duplicates are 
+detected).
 '''
 HELP['clearall'] = '''''' 
 HELP['decodesniff'] = '''Option available only, if Gammu was compiled with debug. Allows to decode
