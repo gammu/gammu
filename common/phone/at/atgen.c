@@ -5252,6 +5252,9 @@ GSM_Error ATGEN_ReplySetMemory(GSM_Protocol_Message msg UNUSED, GSM_StateMachine
 			smprintf(s, "CME Error %i, probably means empty entry\n", s->Phone.Data.Priv.ATGEN.ErrorCode);
 			return ERR_EMPTY;
 		}
+		if (s->Phone.Data.Priv.ATGEN.ErrorCode == 100) {
+			return ERR_NOTSUPPORTED;
+		}
 	        return ATGEN_HandleCMEError(s);
 	case AT_Reply_Error:
 		return ERR_INVALIDDATA;
