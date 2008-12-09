@@ -1829,7 +1829,7 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-static void EncodeBASE64Block(const unsigned char in[3], unsigned out[4], const size_t len)
+static void EncodeBASE64Block(const unsigned char in[3], out[4], const size_t len)
 {
 	/* BASE64 translation Table as described in RFC1113 */
 	unsigned char cb64[]="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
