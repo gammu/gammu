@@ -2635,6 +2635,7 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 	int			cur;
 	int			allocsize = 0;
 	char			*str;
+	char			*tmp = NULL;
 	GSM_SMSMessage		sms;
 
 	switch (Priv->ReplyState) {
@@ -2657,14 +2658,23 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 	/* Walk through lines with +CMGL: */
 	/* First line is our command so we can skip it */
 	for (line = 2; strcmp("OK", str = GetLineString(msg.Buffer, &Priv->Lines, line)) != 0; line++) {
-		/* Skip odd lines, they should contain PDU data */
-		if (line % 2 == 1) continue;
+		/*
+		 * Find +CMGL, it should be on beginning, but it does not have to (see
+		 * corruption mentioned at the end of loop.
+		 */
+		str = strstr(str, "+CMGL:");
+		if (str == NULL) {
+			smprintf(s, "Can not find +CMGL:!\n");
+			return ERR_UNKNOWN;
+		}
+
 		/* Parse reply */
 		error = ATGEN_ParseReply(s, str, "+CMGL: @i, @0", &cur);
 		if (error != ERR_NONE) {
 			return error;
 		}
 		Priv->SMSCount++;
+
 		/* Reallocate buffer if needed */
 		if (allocsize <= Priv->SMSCount) {
 			allocsize += 20;
@@ -2673,6 +2683,7 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 				return ERR_MOREMEMORY;
 			}
 		}
+
 		/* Should we use index instead of location? Samsung P900 needs this hack. */
 		if (GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_BROKEN_CMGL)) {
 			ATGEN_SetSMSLocation(s, &sms, Priv->SMSReadFolder, Priv->SMSCount);
@@ -2681,7 +2692,11 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 		}
 		Priv->SMSCache[Priv->SMSCount - 1].Location = sms.Location;
 		Priv->SMSCache[Priv->SMSCount - 1].State = -1;
-		/* Fill in cache */
+
+		/* Go to PDU/Text data */
+		line++;
+
+		/* Fill in cache of PDU data */
 		if (Priv->SMSMode == SMS_AT_PDU) {
 			error = ATGEN_ParseReply(s, str, "+CMGL: @i, @i, @0",
 					&cur,
@@ -2691,12 +2706,20 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 				Priv->SMSCache[Priv->SMSCount - 1].State = -1;
 			}
 			/* Get next line (PDU data) */
-			str = GetLineString(msg.Buffer, &Priv->Lines, line + 1);
+			str = GetLineString(msg.Buffer, &Priv->Lines, line);
 			if (strlen(str) >= GSM_AT_MAXPDULEN) {
 				smprintf(s, "PDU (%s) too long for cache, skipping!\n", str);
 				Priv->SMSCache[Priv->SMSCount - 1].State = -1;
 			} else {
 				strcpy(Priv->SMSCache[Priv->SMSCount - 1].PDU, str);
+				/* Some phones corrupt output and do not put new line before +CMGL occassionally */
+				tmp = strstr(Priv->SMSCache[Priv->SMSCount - 1].PDU, "+CMGL:");
+				if (tmp != NULL) {
+					smprintf(s, "WARNING: Line should contain PDU data, but contains +CMGL, stripping it!\n");
+					*tmp = 0;
+					/* Go line back, because we have to process this line again */
+					line--;
+				}
 			}
 		}
 
