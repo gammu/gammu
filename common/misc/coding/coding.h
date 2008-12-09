@@ -71,8 +71,8 @@ void		DecodeISO88591QuotedPrintable	(unsigned char *dest, const unsigned char *s
 void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len);
 
 /* ------------------------------- BASE64 ---------------------------------- */
-void 		EncodeBASE64			(const unsigned char *Input, unsigned char *Output, size_t Length);
-int 		DecodeBASE64			(const unsigned char *Input, unsigned char *Output, size_t Length);
+void 		EncodeBASE64			(const unsigned char *Input, char *Output, const size_t Length);
+int 		DecodeBASE64			(const char *Input, unsigned char *Output, const size_t Length);
 
 /* ---------------------- DefaultAlphabet for SMS -------------------------- */
 void 		EncodeDefault			(unsigned char *dest, const unsigned char *src, size_t *len, bool UseExtensions, unsigned char *ExtraAlphabet);
