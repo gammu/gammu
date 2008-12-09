@@ -1009,7 +1009,7 @@ GSM_Error ATGEN_SQWEReply(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 		case AT_Reply_Connect:
 			return ERR_NONE;
 		case AT_Reply_Error:
-			return ERR_UNKNOWN;
+			return ERR_NOTSUPPORTED;
 		case AT_Reply_CMSError:
 			return ATGEN_HandleCMSError(s);
 		case AT_Reply_CMEError:
@@ -1541,6 +1541,8 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 				Priv->SQWEMode = 0;
 			}
 		}
+		/* Clear error flag */
+		error = ERR_NONE;
 	}
 #endif
 
