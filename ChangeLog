@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2008???? - 1.21.94
+20081210 - 1.21.94
 
 [-] * Better skipping of currupted messages in AT (bug #768).
 [-] * Autoload 6510 module if phone is S40 (bug #767).
