@@ -160,10 +160,10 @@ int main(int argc, char **argv)
 			case PBK_Photo       :
 				if ((pbk.Entries[i].Picture.Length !=
 					backup.PhonePhonebook[0]->Entries[i].Picture.Length) ||
-					!memcmp(
+					memcmp(
 					pbk.Entries[i].Picture.Buffer,
 					backup.PhonePhonebook[0]->Entries[i].Picture.Buffer,
-					pbk.Entries[i].Picture.Length)) {
+					pbk.Entries[i].Picture.Length) != 0) {
 					printf("Field %d is not the same!\n", i);
 					return 1;
 				}
