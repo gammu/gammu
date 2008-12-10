@@ -1293,6 +1293,14 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 			strcpy(s->Phone.Data.Manufacturer, "Wavecom");
 			Priv->Manufacturer = AT_Wavecom;
 		}
+		/*
+		 * IAXmodem can not currently reasonably work with Gammu,
+		 * but we can try to fixup at least something.
+		 */
+		if (strstr(msg.Buffer, "www.soft-switch.org")) {
+			/* It replies OK to anything, but this just clutters output */
+			Priv->Mode = false;
+		}
 		smprintf(s, "[Manufacturer: %s]\n", s->Phone.Data.Manufacturer);
 		return ERR_NONE;
 	case AT_Reply_CMSError:
