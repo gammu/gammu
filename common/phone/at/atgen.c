@@ -1559,11 +1559,17 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 
 GSM_Error ATGEN_ReplyGetCharset(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	/* Reply we get here:
-		AT+CSCS?
-		+CSCS: "GSM"
-
-		OK
+	/*
+	 * Reply we get here:
+	 * AT+CSCS?
+	 * +CSCS: "GSM"
+	 * OK
+	 *
+	 * Or
+	 *
+	 * AT+CSCS?
+	 * +CSCS:0
+	 * OK
 	 */
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
 	char			*line;
@@ -1573,6 +1579,10 @@ GSM_Error ATGEN_ReplyGetCharset(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		case AT_Reply_OK:
 			/* Can not use ATGEN_ParseReply safely here as we do not know charset yet */
 			line = GetLineString(msg.Buffer, &Priv->Lines, 2);
+			if (strcmp(line, "+CSCS:0") == 0) {
+				smprintf(s, "WARNING: Charsets support broken! Assuming GSM as default!\n");
+				Priv->Charset = AT_CHARSET_GSM;
+			}
 			/* First current charset: */
 			while (AT_Charsets[i].charset != 0) {
 				if (strstr(line, AT_Charsets[i].text) != NULL) {
@@ -1619,6 +1629,13 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (Priv->ReplyState) {
 		case AT_Reply_OK:
 			line = GetLineString(msg.Buffer, &Priv->Lines, 2);
+			if (strcmp(line, "+CSCS:") == 0) {
+				smprintf(s, "WARNING: Charsets support broken! Assuming that only GSM is supported!\n");
+				Priv->NormalCharset = AT_CHARSET_GSM;
+				Priv->IRACharset = AT_CHARSET_GSM;
+				Priv->UnicodeCharset = AT_CHARSET_GSM;
+				return ERR_NONE;
+			}
 			/* First find good charset for non-unicode: */
 			while (AT_Charsets[i].charset != 0) {
 				if (strstr(line, AT_Charsets[i].text) != NULL) {
