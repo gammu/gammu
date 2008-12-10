@@ -130,23 +130,34 @@ fail:
 	return ERR_WRITING_FILE;
 }
 
-static void ReadLinkedBackupText(INI_Section *file_info, char *section, char *myname, char *myvalue, bool UseUnicode)
+char *ReadLinkedBackupText(INI_Section *file_info, char *section, char *myname, bool UseUnicode)
 {
-	unsigned char		buffer2[300];
+	char		buffer2[300];
 	char			*readvalue;
 	int			i;
+	char *result = NULL;
+	size_t len, cursize = 0, pos = 0;
 
 	i=0;
-	myvalue[0] = 0;
 	while (true) {
-		sprintf(buffer2,"%s%02i",myname,i);
+		sprintf(buffer2, "%s%02i", myname, i);
 		readvalue = ReadCFGText(file_info, section, buffer2, UseUnicode);
-		if (readvalue!=NULL) {
-			myvalue[strlen(myvalue)+strlen(readvalue)]=0;
-			memcpy(myvalue+strlen(myvalue),readvalue,strlen(readvalue));
-		} else break;
+		if (readvalue == NULL) {
+			break;
+		}
+		len = strlen(readvalue);
+		if (pos + len + 1 >= cursize) {
+			cursize += len + 100;
+			result = (char *)realloc(result, cursize);
+			if (result == NULL) return NULL;
+		}
+
+		strcpy(result + pos, readvalue);
+		pos += len;
+
 		i++;
 	}
+	return result;
 }
 
 static GSM_Error SaveBackupText(FILE *file, char *myname, char *myvalue, bool UseUnicode)
@@ -197,9 +208,8 @@ static GSM_Error SaveBackupBase64(FILE *file, char *myname, unsigned char *data,
 	if (unicode_buffer == NULL) return ERR_MOREMEMORY;
 
 	EncodeBASE64(data, buffer, length);
-	EncodeUnicode(unicode_buffer, buffer, strlen(buffer));
 
-	error = SaveBackupText(file, myname, unicode_buffer, UseUnicode);
+	error = SaveLinkedBackupText(file, myname, buffer, UseUnicode);
 
 	free(buffer);
 	free(unicode_buffer);
@@ -1953,18 +1963,18 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 			goto loadtext;
 loadpicture:
 			sprintf(buffer,"Entry%02iData",num);
-			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-			/* Strip out quotes */
-			readvalue++;
-			readvalue[strlen(readvalue) - 1] = 0;
+			readvalue = ReadLinkedBackupText(file_info, section, buffer, UseUnicode);
+			if (readvalue != NULL) {
+				/* We allocate here more memory than is actually required */
+				Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = malloc(strlen(readvalue));
+				if (Pbk->Entries[Pbk->EntriesNum].Picture.Buffer == NULL)
+					break;
 
-			/* We allocate here more memory than is actually required */
-			Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = malloc(strlen(readvalue));
-			if (Pbk->Entries[Pbk->EntriesNum].Picture.Buffer == NULL)
-				break;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Length =
+					DecodeBASE64(readvalue, Pbk->Entries[Pbk->EntriesNum].Picture.Buffer, strlen(readvalue));
 
-			Pbk->Entries[Pbk->EntriesNum].Picture.Length =
-				DecodeBASE64(readvalue, Pbk->Entries[Pbk->EntriesNum].Picture.Buffer, strlen(readvalue));
+				free(readvalue);
+			}
 
 			goto loaddone;
 loadtext:
@@ -2708,7 +2718,8 @@ static void ReadWAPSettingsEntry(INI_Section *file_info, char *section, GSM_Mult
 
 static void ReadRingtoneEntry(INI_Section *file_info, char *section, GSM_Ringtone *ringtone, bool UseUnicode)
 {
-	unsigned char buffer[10000], buffer2[10000], *readvalue;
+	unsigned char buffer[10000], *readvalue;
+	char *buffer2;
 
 	sprintf(buffer,"Name");
 	ReadBackupText(file_info, section, buffer, ringtone->Name,UseUnicode);
@@ -2720,17 +2731,19 @@ static void ReadRingtoneEntry(INI_Section *file_info, char *section, GSM_Rington
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		ringtone->Format = RING_NOKIABINARY;
-		ReadLinkedBackupText(file_info, section, "NokiaBinary", buffer2, UseUnicode);
+		buffer2 = ReadLinkedBackupText(file_info, section, "NokiaBinary", UseUnicode);
 		DecodeHexBin (ringtone->NokiaBinary.Frame, buffer2, strlen(buffer2));
 		ringtone->NokiaBinary.Length = strlen(buffer2)/2;
+		free(buffer2);
 	}
 	sprintf(buffer,"Pure Midi00");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
 		ringtone->Format = RING_MIDI;
-		ReadLinkedBackupText(file_info, section, "Pure Midi", buffer2, UseUnicode);
+		buffer2 = ReadLinkedBackupText(file_info, section, "Pure Midi", UseUnicode);
 		DecodeHexBin (ringtone->NokiaBinary.Frame, buffer2, strlen(buffer2));
 		ringtone->NokiaBinary.Length = strlen(buffer2)/2;
+		free(buffer2);
 	}
 
 }
@@ -3579,7 +3592,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 
 static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMessage *SMS)
 {
-	unsigned char buffer[10000], *readvalue;
+	unsigned char buffer[10000], *readvalue, *readbuffer;
 
 	GSM_SetDefaultSMSData(SMS);
 
@@ -3642,13 +3655,13 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 			SMS->Coding = SMS_Coding_Default_No_Compression;
 		}
 	}
-	ReadLinkedBackupText(file_info, section, "Text", buffer, false);
+	readbuffer = ReadLinkedBackupText(file_info, section, "Text", false);
 	/* This is hex encoded unicode, need to multiply by 4 */
-	if (strlen(buffer) > 4 * GSM_MAX_SMS_LENGTH) {
+	if (strlen(readbuffer) > 4 * GSM_MAX_SMS_LENGTH) {
 		dbgprintf("Message text too long, truncating!\n");
-		buffer[4 * GSM_MAX_SMS_LENGTH] = 0;
+		readbuffer[4 * GSM_MAX_SMS_LENGTH] = 0;
 	}
-	if (!DecodeHexBin (SMS->Text, buffer, strlen(buffer))) {
+	if (!DecodeHexBin (SMS->Text, readbuffer, strlen(readbuffer))) {
 		dbgprintf("Failed decoding binary field!\n");
 	}
 	SMS->Text[strlen(buffer)/2]	= 0;
