@@ -244,20 +244,19 @@ void NOKIA_EncodeWAPBookmarkSMSText(unsigned char *Buffer, size_t *Length, GSM_W
 	Buffer[(*Length)++] = 0x01;			/* END (CHARACTERISTIC-LIST) */
 }
 
+/**
+ * Encodes WAP indicator message.
+ *
+ * Produced output is WBXML, as defined in WAP-167.
+ */
 void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, size_t *Length, char *Text, char *URL)
 {
-	int i;
+	size_t i, len;
 
 	Buffer[(*Length)++] = 0x01; 			/* Push ID */
 	Buffer[(*Length)++] = 0x06; 			/* PDU Type (push) */
-	Buffer[(*Length)++] = 28; 			/* Headers length (content type + headers) */
-	strcpy(Buffer+(*Length),"\x1F\x23");
-	(*Length)=(*Length)+2;				/* Value length */
-	strcpy(Buffer+(*Length),"application/vnd.wap.sic");
-	(*Length)=(*Length)+23;				/* MIME-Type */
-	Buffer[(*Length)++] = 0x00; 			/* end inline string */
-	strcpy(Buffer+(*Length),"\x81\xEA");
-	(*Length)=(*Length)+2;				/* charset UTF-8 short int. */
+	Buffer[(*Length)++] = 0x01; 			/* Headers length */
+	Buffer[(*Length)++] = 0xAE; 			/* MIME-Type: application/vnd.wap.sic */
 
 	Buffer[(*Length)++] = 0x02; 			/*  WBXML 1.2 */
 	Buffer[(*Length)++] = 0x05; 			/*  SI 1.0 Public Identifier */
@@ -267,22 +266,24 @@ void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, size_t *Length, char *
 		Buffer[(*Length)++] = 0xC6;		/*  indication with content and attributes */
 			Buffer[(*Length)++] = 0x0B;	/*  address */
 			Buffer[(*Length)++] = 0x03; 	/*  Inline string */
-			for (i=0;i<(int)strlen(URL);i++) {
+			len = strlen(URL);
+			for (i = 0; i < len; i++) {
 				Buffer[(*Length)++] = URL[i];/* Text */
 			}
 			Buffer[(*Length)++] = 0x00; 	/*  END Inline string */
 
-#ifdef XXX
+#if 0
 			Buffer[(*Length)++] = 0x0A;	/*  created... */
 			Buffer[(*Length)++] = 0xC3;	/*  OPAQUE */
 			Buffer[(*Length)++] = 0x07;	/*  length */
-			Buffer[(*Length)++] = 0x19;	/*  year */
-			Buffer[(*Length)++] = 0x80;	/*  year */
-			Buffer[(*Length)++] = 0x21;	/*  month */
-			Buffer[(*Length)++] = 0x12;	/*  .. */
-			Buffer[(*Length)++] = 0x00;	/*  .. */
-			Buffer[(*Length)++] = 0x00;	/*  .. */
-			Buffer[(*Length)++] = 0x00;	/*  .. */
+			Buffer[(*Length)++] = 0x20;	/*  year */
+			Buffer[(*Length)++] = 0x08;	/*  year */
+			Buffer[(*Length)++] = 0x12;	/*  month */
+			Buffer[(*Length)++] = 0x10;	/*  day */
+			Buffer[(*Length)++] = 0x00;	/*  hour */
+			Buffer[(*Length)++] = 0x00;	/*  minute */
+			Buffer[(*Length)++] = 0x00;	/*  second */
+
 			Buffer[(*Length)++] = 0x10;	/*  expires */
 			Buffer[(*Length)++] = 0xC3;	/*  OPAQUE */
 			Buffer[(*Length)++] = 0x04;	/*  length */
@@ -294,7 +295,8 @@ void GSM_EncodeWAPIndicatorSMSText(unsigned char *Buffer, size_t *Length, char *
 
 		Buffer[(*Length)++] = 0x01;		/*  END (indication) */
 		Buffer[(*Length)++] = 0x03; 		/*  Inline string */
-		for (i=0;i<(int)strlen(Text);i++) {
+		len = strlen(Text);
+		for (i = 0; i < len; i++) {
 			Buffer[(*Length)++] = Text[i];	/* Text */
 		}
 		Buffer[(*Length)++] = 0x00; 		/*  END Inline string */

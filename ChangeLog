@@ -26,6 +26,7 @@ ChangeLog
 [-] * Fix detection of OBEX capability on older Siemens phones.
 [-] * Try to detect wrongly formatted CMGL reply (bug #771);
 [-] * Handle phones which fail to report supported charsets.
+[-] * Fixed encoding of WAP indicator messages.
 [+] * Support for photos in vCard (bug #227).
 [!] * vC* saving now protects against buffer overflows.
     
