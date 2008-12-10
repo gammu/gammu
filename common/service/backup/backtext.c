@@ -3666,6 +3666,7 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 	}
 	SMS->Text[strlen(readbuffer)/2]	= 0;
 	SMS->Text[strlen(readbuffer)/2+1] 	= 0;
+	free(readbuffer);
 	sprintf(buffer,"Folder");
 	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->Folder = atoi(readvalue);
