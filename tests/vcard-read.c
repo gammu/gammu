@@ -167,6 +167,8 @@ int main(int argc, char **argv)
 					printf("Field %d is not the same!\n", i);
 					return 1;
 				}
+				free(pbk.Entries[i].Picture.Buffer);
+				free(backup.PhonePhonebook[0]->Entries[i].Picture.Buffer);
 				break;
 			case PBK_Date:
 			case PBK_Category:
