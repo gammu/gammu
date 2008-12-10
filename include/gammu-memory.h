@@ -136,7 +136,7 @@ typedef enum {
 	/**
 	 * Home number. (Text)
 	 */
-	PBK_Number_Home,
+	PBK_Number_Home, /* 5 */
 	/**
 	 * Pager number. (Text)
 	 */
@@ -156,8 +156,8 @@ typedef enum {
 	/**
 	 * Email. (Text)
 	 */
-	PBK_Text_Email,
-	/**
+	PBK_Text_Email, /* 10 */
+	/*
 	 * Second email. (Text)
 	 */
 	PBK_Text_Email2,
@@ -176,7 +176,7 @@ typedef enum {
 	/**
 	 * Name (Text)
 	 */
-	PBK_Text_Name,
+	PBK_Text_Name, /* 15 */
 	/**
 	 * Last name. (Text)
 	 */
@@ -196,7 +196,7 @@ typedef enum {
 	/**
 	 * Category. (Number, if -1 then text)
 	 */
-	PBK_Category,
+	PBK_Category, /* 20 */
 	/**
 	 * Whether entry is private. (Number)
 	 */
@@ -216,7 +216,7 @@ typedef enum {
 	/**
 	 * Zip code. (Text)
 	 */
-	PBK_Text_Zip,
+	PBK_Text_Zip, /* 25 */
 	/**
 	 * Country. (Text)
 	 */
@@ -236,7 +236,7 @@ typedef enum {
 	/**
 	 * Custom information 4. (Text)
 	 */
-	PBK_Text_Custom4,
+	PBK_Text_Custom4, /* 30 */
 	/**
 	 * Ringtone ID. (Number)
 	 */
@@ -256,7 +256,7 @@ typedef enum {
 	/**
 	 * LUID - Unique Identifier used for synchronisation
 	 */
-	PBK_Text_LUID,
+	PBK_Text_LUID, /* 35 */
 	/**
 	 * Date of last modification
 	 */
@@ -276,7 +276,7 @@ typedef enum {
 	/**
 	 * Work city. (Text)
 	 */
-	PBK_Text_WorkCity,
+	PBK_Text_WorkCity, /* 40 */
 	/**
 	 * Work state. (Text)
 	 */
@@ -296,7 +296,7 @@ typedef enum {
 	/**
 	 * Picture name (on phone filesystem). (Text)
 	 */
-	PBK_Text_PictureName,
+	PBK_Text_PictureName, /* 45 */
  	/**
  	 * Push-to-talk ID (Text)
  	 */
