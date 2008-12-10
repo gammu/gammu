@@ -109,6 +109,12 @@ int main(int argc, char **argv)
 
 	/* Compare content */
 	for (i = 0; i < pbk.EntriesNum; i++) {
+		if (pbk.Entries[i].EntryType != backup.PhonePhonebook[0]->Entries[i].EntryType) {
+			printf("Field %d is not the same type (%d/%d)!\n", i,
+				pbk.Entries[i].EntryType,
+				backup.PhonePhonebook[0]->Entries[i].EntryType);
+			return 1;
+		}
 		switch (pbk.Entries[i].EntryType) {
 			case PBK_Number_General     :
 			case PBK_Number_Mobile      :
@@ -117,6 +123,7 @@ int main(int argc, char **argv)
 			case PBK_Number_Home        :
 			case PBK_Number_Pager       :
 			case PBK_Number_Other       :
+			case PBK_Number_Messaging:
 			case PBK_Text_Note          :
 			case PBK_Text_Postal        :
 			case PBK_Text_WorkPostal:
@@ -171,13 +178,17 @@ int main(int argc, char **argv)
 				free(backup.PhonePhonebook[0]->Entries[i].Picture.Buffer);
 				break;
 			case PBK_Date:
+			case PBK_LastModified:
+				break;
 			case PBK_Category:
 			case PBK_Private:
 			case PBK_RingtoneID:
 			case PBK_PictureID:
 			case PBK_CallLength:
-			case PBK_LastModified:
-			case PBK_Number_Messaging:
+				if (pbk.Entries[i].Number != backup.PhonePhonebook[0]->Entries[i].Number) {
+					printf("Field %d is not the same!\n", i);
+					return 1;
+				}
 				break;
 		}
 	}

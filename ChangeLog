@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2008???? - 1.21.95
+
+[-] * vCard can now store caller group and private flag (bug #269).
     
 20081210 - 1.21.94
 

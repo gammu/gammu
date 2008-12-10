@@ -369,10 +369,16 @@ GSM_Error GSM_EncodeVCARD(char *Buffer, const size_t buff_len, size_t *Length, G
 					if (error != ERR_NONE) return error;
 					ignore = true;
 					break;
-				/* Not supported fields */
 				case PBK_Caller_Group:
-				case PBK_Category:
+					error = VC_StoreLine(Buffer, buff_len, Length, "X-CALLER-GROUP:%d", pbk->Entries[i].Number);
+					if (error != ERR_NONE) return error;
+					break;
 				case PBK_Private:
+					error = VC_StoreLine(Buffer, buff_len, Length, "X-PRIVATE:%d", pbk->Entries[i].Number);
+					if (error != ERR_NONE) return error;
+					break;
+				/* Not supported fields */
+				case PBK_Category:
 				case PBK_RingtoneID:
 				case PBK_PictureID:
 				case PBK_Text_UserID:
@@ -914,6 +920,16 @@ GSM_Error GSM_DecodeVCARD(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk, GSM_V
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_LastModified;
 					Pbk->EntriesNum++;
 				}
+			}
+			if (ReadVCALText(Line, "X-PRIVATE", Buff, false)) {
+				Pbk->Entries[Pbk->EntriesNum].Number = atoi(DecodeUnicodeString(Buff));
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Private;
+				Pbk->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "X-CALLER-GROUP", Buff, false)) {
+				Pbk->Entries[Pbk->EntriesNum].Number = atoi(DecodeUnicodeString(Buff));
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Caller_Group;
+				Pbk->EntriesNum++;
 			}
 			break;
 		}
