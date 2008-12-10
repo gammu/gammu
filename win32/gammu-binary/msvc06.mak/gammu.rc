@@ -54,8 +54,8 @@ END
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 1,21,94,0
- PRODUCTVERSION 1,21,94,0
+ FILEVERSION 1,21,95,0
+ PRODUCTVERSION 1,21,95,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -73,14 +73,14 @@ BEGIN
             VALUE "Comments", "\0"
             VALUE "CompanyName", "http://www.gammu.org\0"
             VALUE "FileDescription", "Gammu - manager for cellular modems and phones\0"
-            VALUE "FileVersion", "1,21,94,0\0"
+            VALUE "FileVersion", "1,21,95,0\0"
             VALUE "InternalName", "Gammu\0"
             VALUE "LegalCopyright", "Copyright © 2002-2003 Marcin Wiacek\0"
             VALUE "LegalTrademarks", "\0"
             VALUE "OriginalFilename", "gammu.exe\0"
             VALUE "PrivateBuild", "\0"
             VALUE "ProductName", "Gammu (Gammu All Mobile Management Utilities)\0"
-            VALUE "ProductVersion", "1,21,94,0\0"
+            VALUE "ProductVersion", "1,21,95,0\0"
             VALUE "SpecialBuild", "\0"
         END
     END

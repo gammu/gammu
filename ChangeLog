@@ -15,6 +15,8 @@ or inspired me to make it.
 ChangeLog
 =========
     
+2008???? - 1.21.95
+    
 20081210 - 1.21.94
 
 [-] * Better skipping of currupted messages in AT (bug #768).
