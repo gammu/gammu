@@ -3729,18 +3729,18 @@ GSM_Error ATGEN_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 						GetLineString(msg.Buffer, &Priv->Lines, 2),
 						"+CSCA: @p, @0",
 						SMSC->Number, sizeof(SMSC->Number));
-			if (UnicodeLength(SMSC->Number) == 0) return ERR_EMPTY;
-			return error;
 		}
 		if (error != ERR_NONE) {
 			error = ATGEN_ParseReply(s,
 						GetLineString(msg.Buffer, &Priv->Lines, 2),
 						"+CSCA: @p",
 						SMSC->Number, sizeof(SMSC->Number));
-			if (UnicodeLength(SMSC->Number) == 0) return ERR_EMPTY;
 			number_type = NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN;
+		}
+		if (error != ERR_NONE) {
 			return error;
 		}
+		if (UnicodeLength(SMSC->Number) == 0) return ERR_EMPTY;
 
 		/* International number */
 		GSM_TweakInternationalNumber(SMSC->Number, number_type);
