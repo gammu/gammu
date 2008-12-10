@@ -238,7 +238,7 @@ typedef enum {
 	/**
 	 * Related contact id.
 	 */
-	CAL_CONTACTID,
+	CAL_CONTACTID, /* 10 */
 	/**
 	 * Repeat each x'th day of week.
 	 */
@@ -278,7 +278,7 @@ typedef enum {
 	/**
 	 * IrMC LUID which can be used for synchronisation.
 	 */
-	CAL_LUID,
+	CAL_LUID, /* 20 */
 	/**
 	 * Date and time of last modification.
 	 */
