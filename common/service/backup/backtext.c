@@ -3664,8 +3664,8 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 	if (!DecodeHexBin (SMS->Text, readbuffer, strlen(readbuffer))) {
 		dbgprintf("Failed decoding binary field!\n");
 	}
-	SMS->Text[strlen(buffer)/2]	= 0;
-	SMS->Text[strlen(buffer)/2+1] 	= 0;
+	SMS->Text[strlen(readbuffer)/2]	= 0;
+	SMS->Text[strlen(readbuffer)/2+1] 	= 0;
 	sprintf(buffer,"Folder");
 	readvalue = ReadCFGText(file_info, section, buffer, false);
 	if (readvalue!=NULL) SMS->Folder = atoi(readvalue);
