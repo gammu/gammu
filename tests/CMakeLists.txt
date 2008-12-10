@@ -238,6 +238,21 @@ foreach(TESTMESSAGE ${MESSAGES})
         "${Gammu_SOURCE_DIR}/tests/at-smsc/${TESTMESSAGE}")
 endforeach(TESTMESSAGE $MESSAGES)
 
+file(GLOB MESSAGES
+    RELATIVE "${Gammu_SOURCE_DIR}/tests/at-smsc-failing"
+    "${Gammu_SOURCE_DIR}/tests/at-smsc-failing/*.dump")
+list(SORT MESSAGES)
+
+foreach(TESTMESSAGE ${MESSAGES})
+    string(REPLACE .dump "" TESTNAME ${TESTMESSAGE})
+    add_test("get-smsc-at-${TESTNAME}"
+        "${GAMMU_TEST_PATH}/get-smsc-at${GAMMU_TEST_SUFFIX}"
+        "${Gammu_SOURCE_DIR}/tests/at-smsc-failing/${TESTMESSAGE}")
+    set_tests_properties(
+        "get-smsc-at-${TESTNAME}"
+        PROPERTIES WILL_FAIL TRUE)
+endforeach(TESTMESSAGE $MESSAGES)
+
 # AT SMS encoding
 add_executable(sms-at-encode sms-at-encode.c sms-printing.c)
 target_link_libraries(sms-at-encode libGammu)
