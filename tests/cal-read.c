@@ -11,6 +11,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <assert.h>
 
 int main(int argc, char **argv)
 {
@@ -45,17 +46,11 @@ int main(int argc, char **argv)
 
 	/* Open file */
 	f = fopen(argv[1], "r");
-	if (f == NULL) {
-		printf("Could not open %s\n", argv[1]);
-		return 1;
-	}
+	assert(f != NULL);
 
 	/* Read data */
 	len = fread(buffer, 1, sizeof(buffer) - 1, f);
-	if (!feof(f)) {
-		printf("Could not read whole file %s\n", argv[1]);
-		return 1;
-	}
+	assert(feof(f));
 
 	/* Zero terminate string */
 	buffer[len] = 0;
