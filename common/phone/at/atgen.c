@@ -3110,9 +3110,9 @@ GSM_Error ATGEN_GetIMEI (GSM_StateMachine *s)
 
 GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
-	char 	*start;
 	size_t	i;
 	GSM_Error error;
+	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
 	if (s->Protocol.Data.AT.EditMode) {
 		if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_SMSEdit) {
@@ -3125,13 +3125,14 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
 		smprintf(s, "SMS saved OK\n");
-		for(i=0;i<msg.Length;i++) {
-			if (msg.Buffer[i] == 0x00) msg.Buffer[i] = 0x20;
+		/* Number of lines */
+		i = 0;
+		while (Priv->Lines.numbers[i*2+1] != 0) {
+			i++;
 		}
-		start = strstr(msg.Buffer, "+CMGW:");
-		if (start == NULL) return ERR_UNKNOWNRESPONSE;
+
 		error = ATGEN_ParseReply(s,
-				start,
+				GetLineString(msg.Buffer, &Priv->Lines, i - 1),
 				"+CMGW: @i",
 				&s->Phone.Data.SaveSMSMessage->Location);
 		if (error != ERR_NONE) return error;
@@ -3404,7 +3405,9 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	char			*start;
+	int i;
+	int reference;
+	GSM_Error error;
 
 	if (s->Protocol.Data.AT.EditMode) {
 		if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_SMSEdit) {
@@ -3417,14 +3420,20 @@ GSM_Error ATGEN_ReplySendSMS(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
  		smprintf(s, "SMS sent OK\n");
- 		if (s->User.SendSMSStatus!=NULL) {
-			start = strstr(msg.Buffer, "+CMGS: ");
-			if (start != NULL) {
-				s->User.SendSMSStatus(s,0,atoi(start+7));
-			} else {
-				s->User.SendSMSStatus(s,0,-1);
-			}
+		/* Number of lines */
+		i = 0;
+		while (Priv->Lines.numbers[i*2+1] != 0) {
+			i++;
 		}
+
+		error = ATGEN_ParseReply(s,
+				GetLineString(msg.Buffer, &Priv->Lines, i - 1),
+				"+CMGS: @i",
+				&reference);
+		if (error != ERR_NONE) {
+			reference = -1;
+		}
+		s->User.SendSMSStatus(s, 0, reference);
 		return ERR_NONE;
 	case AT_Reply_CMSError:
  		smprintf(s, "Error %i\n",Priv->ErrorCode);
