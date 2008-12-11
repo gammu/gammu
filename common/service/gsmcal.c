@@ -944,7 +944,7 @@ GSM_Error GSM_EncodeVCALENDAR(char *Buffer, const size_t buff_len, size_t *Lengt
 		}
 	} else {
 		error = GSM_EncodeVCAL_RRULE(Buffer, buff_len, Length, note, date_pos, Version);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE && error != ERR_EMPTY) return error;
 	}
 
 	/* Include mozilla specific alarm encoding */
