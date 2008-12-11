@@ -210,6 +210,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 static GSM_Error AT_Initialise(GSM_StateMachine *s)
 {
 	GSM_Protocol_ATData *d = &s->Protocol.Data.AT;
+	GSM_Error		error;
 
 	d->Msg.Buffer 		= NULL;
 	d->Msg.BufferUsed	= 0;
@@ -223,7 +224,11 @@ static GSM_Error AT_Initialise(GSM_StateMachine *s)
 	d->EditMode		= false;
 	d->FastWrite		= false;
 
-	s->Device.Functions->DeviceSetDtrRts(s,true,true);
+	error = s->Device.Functions->DeviceSetParity(s, false);
+	if (error != ERR_NONE) return error;
+
+	error = s->Device.Functions->DeviceSetDtrRts(s,true,true);
+	if (error != ERR_NONE) return error;
 
 	return s->Device.Functions->DeviceSetSpeed(s,s->Speed);
 }
