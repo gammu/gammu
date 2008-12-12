@@ -17,6 +17,7 @@ ChangeLog
     
 2008???? - 1.21.95
 
+[-] * Disable ATOBEX for Motorola V180.
 [-] * vCard can now store caller group and private flag (bug #269).
 [-] * vCard now stores location and memory type.
     
