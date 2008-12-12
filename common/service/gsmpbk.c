@@ -395,10 +395,12 @@ GSM_Error GSM_EncodeVCARD(char *Buffer, const size_t buff_len, size_t *Length, G
 				case PBK_Caller_Group:
 					error = VC_StoreLine(Buffer, buff_len, Length, "X-CALLER-GROUP:%d", pbk->Entries[i].Number);
 					if (error != ERR_NONE) return error;
+					ignore = true;
 					break;
 				case PBK_Private:
 					error = VC_StoreLine(Buffer, buff_len, Length, "X-PRIVATE:%d", pbk->Entries[i].Number);
 					if (error != ERR_NONE) return error;
+					ignore = true;
 					break;
 				/* Not supported fields */
 				case PBK_Category:
