@@ -607,6 +607,8 @@ GSM_Error GSM_DecodeVCARD(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk, GSM_V
 
 	Buff[0]	 = 0;
 	Pbk->EntriesNum = 0;
+	Pbk->Location = 0;
+	Pbk->MemoryType = MEM_MT;
 
 	while (1) {
 		free(Line);
