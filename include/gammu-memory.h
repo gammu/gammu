@@ -90,6 +90,15 @@ typedef enum {
 	(x) == MEM_SL ? "SL" : "XX")
 
 /**
+ * Converts memory type from string.
+ *
+ * \param type String with memory type.
+ *
+ * \return Parsed memory type or 0 on failure.
+ */
+GSM_MemoryType GSM_StringToMemoryType(const char *s);
+
+/**
  * Structure contains info about number of used/free entries in phonebook
  * memory.
  *

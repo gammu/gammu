@@ -13,6 +13,22 @@
 #include "gsmpbk.h"
 #include "gsmmisc.h"
 
+GSM_MemoryType GSM_StringToMemoryType(const char *s) {
+    if (strcmp(s, "ME") == 0)      return MEM_ME;
+    else if (strcmp(s, "SM") == 0) return MEM_SM;
+    else if (strcmp(s, "ON") == 0) return MEM_ON;
+    else if (strcmp(s, "DC") == 0) return MEM_DC;
+    else if (strcmp(s, "RC") == 0) return MEM_RC;
+    else if (strcmp(s, "MC") == 0) return MEM_MC;
+    else if (strcmp(s, "MT") == 0) return MEM_MT;
+    else if (strcmp(s, "FD") == 0) return MEM_FD;
+    else if (strcmp(s, "VM") == 0) return MEM_VM;
+    else if (strcmp(s, "SL") == 0) return MEM_SL;
+    else {
+		return 0;
+    }
+}
+
 unsigned char *GSM_PhonebookGetEntryName (const GSM_MemoryEntry *entry)
 {
 	/* We possibly store here "LastName, FirstName" so allocate enough memory */
@@ -141,6 +157,13 @@ GSM_Error GSM_EncodeVCARD(char *Buffer, const size_t buff_len, size_t *Length, G
 			error = VC_StoreLine(Buffer, buff_len, Length, "VERSION:2.1");
 			if (error != ERR_NONE) return error;
 		}
+
+		error = VC_StoreLine(Buffer, buff_len, Length, "X-GAMMU-LOCATION:%d", pbk->Location);
+		if (error != ERR_NONE) return error;
+
+		error = VC_StoreLine(Buffer, buff_len, Length, "X-GAMMU-MEMORY:%s", GSM_MemoryTypeToString(pbk->MemoryType));
+		if (error != ERR_NONE) return error;
+
 		for (i=0; i < pbk->EntriesNum; i++) {
 			ignore = false;
 			pbk->Entries[i].AddError = ERR_NONE;
@@ -930,6 +953,12 @@ GSM_Error GSM_DecodeVCARD(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk, GSM_V
 				Pbk->Entries[Pbk->EntriesNum].Number = atoi(DecodeUnicodeString(Buff));
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Caller_Group;
 				Pbk->EntriesNum++;
+			}
+			if (ReadVCALText(Line, "X-GAMMU-LOCATION", Buff, false)) {
+				Pbk->Location = atoi(DecodeUnicodeString(Buff));
+			}
+			if (ReadVCALText(Line, "X-GAMMU-MEMORY", Buff, false)) {
+				Pbk->MemoryType = GSM_StringToMemoryType(DecodeUnicodeString(Buff));
 			}
 			break;
 		}

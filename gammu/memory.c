@@ -160,7 +160,7 @@ void GetAllMemory(int argc UNUSED, char *argv[])
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
-	Entry.MemoryType = MemoryTypeFromString(argv[2]);
+	Entry.MemoryType = GSM_StringToMemoryType(argv[2]);
 	Entry.Location = 0;
 
 	if (Entry.MemoryType == 0) {
@@ -193,7 +193,7 @@ void GetMemory(int argc, char *argv[])
 	double version;
 	GSM_Error error;
 
-	entry.MemoryType = MemoryTypeFromString(argv[2]);
+	entry.MemoryType = GSM_StringToMemoryType(argv[2]);
 
 	if (entry.MemoryType==0) {
 		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
@@ -263,7 +263,7 @@ void DeleteMemory(int argc, char *argv[])
 	GSM_MemoryEntry		entry;
 	GSM_Error error;
 
-	entry.MemoryType = MemoryTypeFromString(argv[2]);
+	entry.MemoryType = GSM_StringToMemoryType(argv[2]);
 
 	if (entry.MemoryType==0) {
 		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
@@ -299,7 +299,7 @@ void DeleteAllMemory(int argc, char *argv[])
 	GSM_MemoryType MemoryType;
 	GSM_Error error;
 
-	MemoryType = MemoryTypeFromString(argv[2]);
+	MemoryType = GSM_StringToMemoryType(argv[2]);
 
 	if (MemoryType == 0) {
 		printf_err(_("Unknown memory type (\"%s\")\n"),argv[2]);
