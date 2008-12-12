@@ -115,6 +115,7 @@ int main(int argc, char **argv)
 				backup.PhonePhonebook[0]->Entries[i].EntryType);
 			return 1;
 		}
+		printf("Entry type: %d\n", pbk.Entries[i].EntryType);
 		switch (pbk.Entries[i].EntryType) {
 			case PBK_Number_General     :
 			case PBK_Number_Mobile      :
@@ -155,7 +156,6 @@ int main(int argc, char **argv)
 			case PBK_Text_UserID:
 			case PBK_Text_PictureName:
 			case PBK_PushToTalkID:
-			case PBK_Caller_Group       :
 				if (!mywstrncmp(
 					pbk.Entries[i].Text,
 					backup.PhonePhonebook[0]->Entries[i].Text,
@@ -185,6 +185,7 @@ int main(int argc, char **argv)
 			case PBK_RingtoneID:
 			case PBK_PictureID:
 			case PBK_CallLength:
+			case PBK_Caller_Group       :
 				if (pbk.Entries[i].Number != backup.PhonePhonebook[0]->Entries[i].Number) {
 					printf("Field %d is not the same!\n", i);
 					return 1;
