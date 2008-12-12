@@ -231,38 +231,6 @@ void Print_Error(GSM_Error error)
 }
 
 /**
- * Converts memory type from string.
- *
- * \param type String with memory type.
- *
- * \return Parsed memory type or 0 on failure.
- */
-GSM_MemoryType MemoryTypeFromString(const char *type)
-{
-	if (strcasecmp(type, "ME") == 0)
-		return MEM_ME;
-	if (strcasecmp(type, "SM") == 0)
-		return MEM_SM;
-	if (strcasecmp(type, "ON") == 0)
-		return MEM_ON;
-	if (strcasecmp(type, "DC") == 0)
-		return MEM_DC;
-	if (strcasecmp(type, "RC") == 0)
-		return MEM_RC;
-	if (strcasecmp(type, "MC") == 0)
-		return MEM_MC;
-	if (strcasecmp(type, "MT") == 0)
-		return MEM_MT;
-	if (strcasecmp(type, "FD") == 0)
-		return MEM_FD;
-	if (strcasecmp(type, "VM") == 0)
-		return MEM_VM;
-	if (strcasecmp(type, "SL") == 0)
-		return MEM_SL;
-	return 0;
-}
-
-/**
  * Callback from CURL to get data.
  */
 size_t write_mem(void *ptr, size_t size, size_t nmemb, void *data) {
