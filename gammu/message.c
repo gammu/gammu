@@ -2406,6 +2406,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 	if (DisplaySMS) {
 		if (SMSCSet != 0) {
 			printf("%s\n", _("Use -smscnumber option to give SMSC number"));
+			GSM_Terminate();
 			exit(-1);
 		}
 
@@ -2424,7 +2425,6 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 		printf("\n");
 		printf(_("Number of messages: %i"), sms.Number);
 		printf("\n");
-		exit(sms.Number);
 	}
 	if (SendSMSDSMS) {
 		if (SMSCSet != 0) {
@@ -2444,7 +2444,6 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 		error = SMSDaemonSendSMS(argv[4],argv[5],&sms);
 		Print_Error(error);
-		exit(0);
 	}
 	if (SaveSMS || SendSaved) {
 		error=GSM_GetSMSFolders(gsm, &folders);
@@ -2513,7 +2512,9 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 				}
 			}
 		}
-	} else {
+	}
+
+	if (SendSMS) {
 		if (Validity.Format != 0 && SMSCSet != 0) {
 			PhoneSMSC.Location = SMSCSet;
 			error=GSM_GetSMSC(gsm,&PhoneSMSC);
