@@ -37,7 +37,7 @@ PRINTF_STYLE(1, 2)
 int dbgprintf(const char *format, ...);
 #else
 #  ifdef __GNUC__
-#    define dbgprintf(a...) do { } while (0)
+#    define dbgprintf(...) do { } while (0)
 #  else
 #    define dbgprintf
 #  endif
@@ -70,7 +70,7 @@ typedef enum {
 	/**
 	 * Message is printed on all text error log levels.
 	 */
-	D_ERROR,
+	D_ERROR
 } GSM_DebugSeverity;
 
 /**
