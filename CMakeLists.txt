@@ -312,14 +312,22 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     #
     MACRO_TUNE_COMPILER("-Wall")
     MACRO_TUNE_COMPILER("-Werror-implicit-function-declaration")
+    MACRO_TUNE_COMPILER("-Wno-deprecated-declarations")
     MACRO_TUNE_COMPILER("-Wdeclaration-after-statement")
     MACRO_TUNE_COMPILER("-Wpointer-arith")
     MACRO_TUNE_COMPILER("-Wfloat-equal")
     MACRO_TUNE_COMPILER("-Wbad-function-cast")
     MACRO_TUNE_COMPILER("-Wmissing-format-attribute")
     MACRO_TUNE_COMPILER("-Wmissing-noreturn")
+#   This should be enabled and only public functions exported, but it is far future
+#    MACRO_TUNE_COMPILER("-Wmissing-prototypes")
     MACRO_TUNE_COMPILER("-Wpointer-arith")
     MACRO_TUNE_COMPILER("-Wredundant-decls")
+    MACRO_TUNE_COMPILER("-Wshadow")
+    MACRO_TUNE_COMPILER("-Wstrict-prototypes")
+#   We need some typecasting (especially for iconv)
+#    MACRO_TUNE_COMPILER("-Wcast-qual")
+    MACRO_TUNE_COMPILER("-Wwrite-strings")
 
     # Does not work well
     #MACRO_TUNE_COMPILER("-Wunreachable-code")
