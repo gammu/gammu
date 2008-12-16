@@ -4,8 +4,8 @@
 #define __gsm_net_h
 
 
-void NOKIA_EncodeNetworkCode (unsigned char* buffer, unsigned char* output);
-void NOKIA_DecodeNetworkCode (unsigned char* buffer, unsigned char* output);
+void NOKIA_EncodeNetworkCode (unsigned char* buffer, const char* input);
+void NOKIA_DecodeNetworkCode (const unsigned char* buffer, char* output);
 
 #endif
 

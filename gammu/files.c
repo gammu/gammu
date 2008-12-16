@@ -557,7 +557,7 @@ void GetFileFolder(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-void AddOneFile(GSM_File * File, char *text, bool send)
+void AddOneFile(GSM_File * File, const char *text, const bool send)
 {
 	GSM_Error error;
 	int Pos, Handle, i, j, old1;

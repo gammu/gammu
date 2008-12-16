@@ -7,7 +7,7 @@
 #include "gsmnet.h"
 #include "../misc/coding/coding.h"
 
-unsigned char *GSM_Countries[] = {
+const char *GSM_Countries[] = {
 
 	"202", "Greece",
 	"204", "Netherlands",
@@ -209,7 +209,7 @@ unsigned char *GSM_Countries[] = {
 	NULL
 };
 
-unsigned char *GSM_Networks[] = {
+const char *GSM_Networks[] = {
 
 	"202 01", "Cosmote",
 	"202 05", "PANAFON",
@@ -807,13 +807,13 @@ const unsigned char *GSM_GetCountryName(const char *CountryCode)
 	return retval;
 }
 
-void NOKIA_EncodeNetworkCode(unsigned char* buffer, unsigned char* output)
+void NOKIA_EncodeNetworkCode(unsigned char* buffer, const char* input)
 {
-	EncodeBCD(buffer, output, 6, false);
+	EncodeBCD(buffer, input, 6, false);
 	buffer[1] = buffer[1] | 0xf0;
 }
 
-void NOKIA_DecodeNetworkCode(unsigned char* buffer, unsigned char* output)
+void NOKIA_DecodeNetworkCode(const unsigned char* buffer, char* output)
 {
 	DecodeBCD(output, buffer, 3);
 	output[6] = output[5];

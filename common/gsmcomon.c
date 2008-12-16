@@ -84,11 +84,11 @@ typedef struct {
 	/**
 	 * Name of error.
 	 */
-	char *ErrorName;
+	const char *ErrorName;
 	/**
 	 * Textual representation, not localised, use gettext to get localised string.
 	 */
-	char *ErrorText;
+	const char *ErrorText;
 } PrintErrorEntry;
 
 /**
@@ -164,7 +164,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 
 const char *GSM_ErrorName(GSM_Error e)
 {
-	char	*def 	= NULL;
+	const char	*def 	= NULL;
 	int	i	= 0;
 
 	while (PrintErrorEntries[i].ErrorNum != 0) {
@@ -180,7 +180,7 @@ const char *GSM_ErrorName(GSM_Error e)
 
 const char *GSM_ErrorString(GSM_Error e)
 {
-	char	*def 	= NULL;
+	const char	*def 	= NULL;
 	int	i	= 0;
 
 	while (PrintErrorEntries[i].ErrorNum != 0) {
@@ -233,7 +233,7 @@ GSM_Error GSM_SetDebugFileDescriptor(FILE *fd, bool closable, GSM_Debug_Info *pr
 	return ERR_NONE;
 }
 
-GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info *privdi)
+GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info *privdi)
 {
 	FILE *testfile;
 

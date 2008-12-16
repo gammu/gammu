@@ -29,7 +29,7 @@
 #include "coding.h"
 
 /* function changes #10 #13 chars to \n \r */
-char *EncodeUnicodeSpecialChars(unsigned char *buffer)
+char *EncodeUnicodeSpecialChars(const unsigned char *buffer)
 {
 	int 			Pos=0, Pos2=0;
 	static unsigned char	Buf[20000];
@@ -83,7 +83,7 @@ char *EncodeUnicodeSpecialChars(unsigned char *buffer)
 }
 
 /* function changes #10 #13 chars to \n \r */
-char *EncodeSpecialChars(unsigned char *buffer)
+char *EncodeSpecialChars(const unsigned char *buffer)
 {
 	int 			Pos=0, Pos2=0;
 	static unsigned char	Buf[10000];
@@ -111,7 +111,7 @@ char *EncodeSpecialChars(unsigned char *buffer)
 	return Buf;
 }
 
-char *DecodeUnicodeSpecialChars(unsigned char *buffer)
+char *DecodeUnicodeSpecialChars(const unsigned char *buffer)
 {
 	int 			Pos=0, Pos2=0, level=0;
 	static unsigned char	Buf[10000];
@@ -150,7 +150,7 @@ char *DecodeUnicodeSpecialChars(unsigned char *buffer)
 	return Buf;
 }
 
-char *DecodeSpecialChars(unsigned char *buffer)
+char *DecodeSpecialChars(const unsigned char *buffer)
 {
 	int 			Pos=0, Pos2=0, level=0;
 	static unsigned char	Buf[10000];
@@ -199,7 +199,7 @@ char *strcasestr(const char *s, const char *find)
 		} while (strncasecmp(s, find, len) != 0);
 		s--;
 	}
-	return ((char *)s);
+	return (char *)s;
 }
 #endif
 

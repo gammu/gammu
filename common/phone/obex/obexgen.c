@@ -1202,7 +1202,7 @@ GSM_Error OBEXGEN_GetTextFile(GSM_StateMachine *s, const char *FileName, char **
 /**
  * Sets single file on filesystem, file can be created or updated.
  */
-GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned char *Buffer, size_t Length, bool HardDelete)
+GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, const unsigned char *Buffer, size_t Length, bool HardDelete)
 {
 	GSM_Error	error = ERR_NONE;
 	GSM_File 	File;
@@ -1212,7 +1212,7 @@ GSM_Error OBEXGEN_SetFile(GSM_StateMachine *s, const char *FileName, unsigned ch
 	EncodeUnicode(File.ID_FullName, FileName, strlen(FileName));
 	EncodeUnicode(File.Name, FileName, strlen(FileName));
 	File.Used 	= Length;
-	File.Buffer 	= Buffer;
+	File.Buffer 	= (unsigned char *)Buffer;
 
 	/* Send file */
 	while (error == ERR_NONE) {
@@ -1446,7 +1446,7 @@ int OBEXGEN_GetFirstFreeLocation(int **IndexStorage, int *IndexCount) {
  */
 GSM_Error OBEXGEN_InitLUID(GSM_StateMachine *s, const char *Name,
 		const bool Recalculate,
-		char *Header,
+		const char *Header,
 		char **Data, int **Offsets, int *Count,
 		char ***LUIDStorage, int *LUIDCount,
 		int **IndexStorage, int *IndexCount)
@@ -1823,7 +1823,7 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	}
 }
 
-GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, char *Data, int Size)
+GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, const char *Data, int Size)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -1860,7 +1860,7 @@ GSM_Error OBEXGEN_SetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry, cha
 	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->PbCap.HD : false);
 }
 
-GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, char *Data, int Size)
+GSM_Error OBEXGEN_SetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry, const char *Data, int Size)
 {
 	char		*path;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -2256,7 +2256,7 @@ GSM_Error OBEXGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	}
 }
 
-GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry, char *Data, int Size)
+GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry, const char *Data, int Size)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -2293,7 +2293,7 @@ GSM_Error OBEXGEN_SetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry,
 	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->CalCap.HD : false);
 }
 
-GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry, char *Data, int Size)
+GSM_Error OBEXGEN_SetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry, const char *Data, int Size)
 {
 	char		*path;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -2637,7 +2637,7 @@ GSM_Error OBEXGEN_AddTodo(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	}
 }
 
-GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *Data, int Size)
+GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const char *Data, int Size)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -2674,7 +2674,7 @@ GSM_Error OBEXGEN_SetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *D
 	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->CalCap.HD : false);
 }
 
-GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, char *Data, int Size)
+GSM_Error OBEXGEN_SetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry, const char *Data, int Size)
 {
 	char		*path;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -3037,7 +3037,7 @@ GSM_Error OBEXGEN_AddNote(GSM_StateMachine *s, GSM_NoteEntry *Entry)
 	}
 }
 
-GSM_Error OBEXGEN_SetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry, char *Data, int Size)
+GSM_Error OBEXGEN_SetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry, const char *Data, int Size)
 {
 	GSM_Error 	error;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
@@ -3074,7 +3074,7 @@ GSM_Error OBEXGEN_SetNoteLUID(GSM_StateMachine *s, GSM_NoteEntry *Entry, char *D
 	return OBEXGEN_SetFile(s, path, Data, Size, Size == 0 ? Priv->NoteCap.HD : false);
 }
 
-GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, char *Data, int Size)
+GSM_Error OBEXGEN_SetNoteIndex(GSM_StateMachine *s, GSM_NoteEntry *Entry, const char *Data, int Size)
 {
 	char		*path;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;

@@ -95,7 +95,7 @@ int smprintf_level(GSM_StateMachine * s, GSM_DebugSeverity severity, const char 
  *
  * \ingroup Debug
  */
-GSM_Error GSM_SetDebugFile(char *info, GSM_Debug_Info * privdi);
+GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info * privdi);
 
 /**
  * Sets debug file.

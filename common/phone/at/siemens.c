@@ -16,7 +16,7 @@
 #include "siemens.h"
 
 
-static GSM_Error GetSiemensFrame(GSM_Protocol_Message msg, GSM_StateMachine *s, char *templ,
+static GSM_Error GetSiemensFrame(GSM_Protocol_Message msg, GSM_StateMachine *s, const char *templ,
 			    unsigned char *buffer, size_t *len)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
@@ -42,7 +42,7 @@ static GSM_Error GetSiemensFrame(GSM_Protocol_Message msg, GSM_StateMachine *s, 
        return ERR_NONE;
 }
 
-static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, char *templ,
+static GSM_Error SetSiemensFrame (GSM_StateMachine *s, unsigned char *buff, const char *templ,
 			    int Location, GSM_Phone_RequestID RequestID, int len)
 {
 	GSM_Phone_Data		*Phone = &s->Phone.Data;
@@ -89,7 +89,7 @@ GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	else return ERR_UNKNOWN;
 }
 
-GSM_Error SIEMENS_ReplySetFunction (GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s,char *function)
+GSM_Error SIEMENS_ReplySetFunction (GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s, const char *function)
 {
 	if (s->Protocol.Data.AT.EditMode) {
 	    s->Protocol.Data.AT.EditMode = false;

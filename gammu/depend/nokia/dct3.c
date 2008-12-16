@@ -60,7 +60,7 @@ static void CheckDCT3(void)
 	}
 }
 
-static bool answer_yes3(char *text)
+static bool answer_yes3(const char *text)
 {
     	int         len;
     	char        ans[99];
@@ -218,8 +218,8 @@ void DCT3SelfTests(int argc, char *argv[])
 }
 
 struct DCT3ADCInfo {
-	char 	*name;
-	char 	*unit;
+	const char 	*name;
+	const char 	*unit;
 	int 	x;
 	int	pos1;
 	int	pos2;

@@ -315,7 +315,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 	FILE 	*oFile,*iFile;
 	size_t	ilen = 0, olen = 0;
 	char 	Buffer[(GSM_MAX_SMS_LENGTH*GSM_MAX_MULTI_SMS+1)*2],ifilename[400],ofilename[400];
-	char	*sourcepath, *destpath;
+	const char	*sourcepath, *destpath;
 
 	sourcepath = Config->outboxpath;
 	if (sent) {

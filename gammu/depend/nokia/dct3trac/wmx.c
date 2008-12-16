@@ -160,7 +160,7 @@ static GSM_Error DCT3_ReplyDebugTrace(GSM_Protocol_Message msg, GSM_StateMachine
 	size_t 			x;
 	int 			id,timestamp,number,length;
 	struct wmx_tracetype 	*wmx_minor;
-	char 			*desc;
+	const char 			*desc;
 
 	//printf("Debug Trace Received\n");
 	/* parse frame

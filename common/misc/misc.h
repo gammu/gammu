@@ -46,7 +46,7 @@ typedef struct {
 /**
  * Calculates string cut points to split it to lines.
  */
-void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, unsigned char *whitespaces, int spaceslen, bool eot);
+void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const char *whitespaces, int spaceslen, bool eot);
 
 /**
  * Returns pointer to static buffer containing line.
@@ -55,7 +55,7 @@ void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, unsig
  * @param lines Parsed lines information.
  * @param start Which line we want.
  */
-char *GetLineString(const char *message, const GSM_CutLines *lines, int start);
+const char *GetLineString(const char *message, const GSM_CutLines *lines, int start);
 
 /**
  * Returns line length.

@@ -35,11 +35,11 @@ GSM_Error DCT3DCT4_ReplyGetModelFirmware	(GSM_Protocol_Message msg, GSM_StateMac
 GSM_Error N71_65_ReplySendDTMF			(GSM_Protocol_Message msg, GSM_StateMachine *s);
 
 GSM_Error NOKIA_GetManufacturer			(GSM_StateMachine *s);
-GSM_Error NOKIA_GetPhoneString			(GSM_StateMachine *s, unsigned char *msgframe, int msglen, unsigned char msgtype, char *retvalue, GSM_Phone_RequestID request, int startresponse);
+GSM_Error NOKIA_GetPhoneString			(GSM_StateMachine *s, const unsigned char *msgframe, int msglen, unsigned char msgtype, char *retvalue, GSM_Phone_RequestID request, int startresponse);
 GSM_Error NOKIA_SetIncomingSMS			(GSM_StateMachine *s, bool enable);
 GSM_Error NOKIA_SetIncomingCall			(GSM_StateMachine *s, bool enable);
 GSM_Error NOKIA_SetIncomingUSSD			(GSM_StateMachine *s, bool enable);
-GSM_Error N71_65_EnableFunctions		(GSM_StateMachine *s, char *buff,int len);
+GSM_Error N71_65_EnableFunctions		(GSM_StateMachine *s, const char *buff,int len);
 GSM_Error N71_65_GetNextCalendar1		(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start, GSM_NOKIACalToDoLocations *LastCalendar, int *LastCalendarYear, int *LastCalendarPos);
 GSM_Error N71_65_AddCalendar2			(GSM_StateMachine *s, GSM_CalendarEntry *Note);
 GSM_Error N71_65_AddCalendar1			(GSM_StateMachine *s, GSM_CalendarEntry *Note, int *FirstCalendarPos);
@@ -60,7 +60,7 @@ GSM_Error DCT3DCT4_CancelAllDiverts		(GSM_StateMachine *s);
 GSM_Error DCT3DCT4_SetCallDivert		(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
 GSM_Error DCT3DCT4_GetCallDivert		(GSM_StateMachine *s, GSM_MultiCallDivert *divert);
 
-GSM_CalendarNoteType N71_65_FindCalendarType(GSM_CalendarNoteType Type, OnePhoneModel *model);
+GSM_CalendarNoteType N71_65_FindCalendarType(GSM_CalendarNoteType Type, GSM_PhoneModel *model);
 int 		NOKIA_SetUnicodeString		(GSM_StateMachine *s, unsigned char *dest, unsigned char *string, bool FullLength);
 void 		NOKIA_GetUnicodeString		(GSM_StateMachine *s, int *current, unsigned char *input, unsigned char *output, bool FullLength);
 GSM_MemoryType 	NOKIA_GetMemoryType 		(GSM_StateMachine *s, GSM_MemoryType memory_type, unsigned char *ID);

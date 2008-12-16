@@ -83,7 +83,7 @@ GSM_Error FindBackupChecksum(char *FileName, bool UseUnicode, char *checksum)
 	return ERR_NONE;
 }
 
-static unsigned char *ReadCFGText(INI_Section *cfg, unsigned char *section, unsigned char *key, bool Unicode)
+static unsigned char *ReadCFGText(INI_Section *cfg, const unsigned char *section, const unsigned char *key, const bool Unicode)
 {
 	unsigned char Buffer[500],Buffer2[500],*retval;
 
@@ -99,7 +99,7 @@ static unsigned char *ReadCFGText(INI_Section *cfg, unsigned char *section, unsi
 	}
 }
 
-static GSM_Error SaveLinkedBackupText(FILE *file, char *myname, char *myvalue, bool UseUnicode)
+static GSM_Error SaveLinkedBackupText(FILE *file, const char *myname, const char *myvalue, const bool UseUnicode)
 {
 	int 		w,current;
 	unsigned char 	buffer2[1000],buffer3[1000];
@@ -130,7 +130,7 @@ fail:
 	return ERR_WRITING_FILE;
 }
 
-char *ReadLinkedBackupText(INI_Section *file_info, char *section, char *myname, bool UseUnicode)
+char *ReadLinkedBackupText(INI_Section *file_info, const char *section, const char *myname, const bool UseUnicode)
 {
 	char		buffer2[300];
 	char			*readvalue;
@@ -160,7 +160,7 @@ char *ReadLinkedBackupText(INI_Section *file_info, char *section, char *myname, 
 	return result;
 }
 
-static GSM_Error SaveBackupText(FILE *file, char *myname, char *myvalue, bool UseUnicode)
+static GSM_Error SaveBackupText(FILE *file, const char *myname, const char *myvalue, const bool UseUnicode)
 {
 	unsigned char buffer[10000], buffer2[10000];
 

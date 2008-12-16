@@ -79,7 +79,7 @@ GSM_Error MakeKeySequence(char *text, GSM_KeyCode *KeyCode, size_t *Length)
 	return ERR_NONE;
 }
 
-GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
+GSM_Error GSM_ReadFile(const char *FileName, GSM_File *File)
 {
 	int 		i = 1000;
 	FILE		*file;
@@ -117,7 +117,7 @@ GSM_Error GSM_ReadFile(char *FileName, GSM_File *File)
 	return ERR_NONE;
 }
 
-static void GSM_JADFindLine(GSM_File File, char *Name, char *Value)
+static void GSM_JADFindLine(GSM_File File, const char *Name, char *Value)
 {
 	unsigned char 	Line[2000];
 	size_t		Pos = 0;
@@ -224,7 +224,7 @@ GSM_Error VC_Store(char *Buffer, const size_t buff_len, size_t *Pos, const char 
 }
 
 
-GSM_Error VC_StoreDateTime(char *Buffer, const size_t buff_len, size_t *Pos, GSM_DateTime *Date, char *Start)
+GSM_Error VC_StoreDateTime(char *Buffer, const size_t buff_len, size_t *Pos, const GSM_DateTime *Date, const char *Start)
 {
 	GSM_Error error;
 
@@ -240,7 +240,7 @@ GSM_Error VC_StoreDateTime(char *Buffer, const size_t buff_len, size_t *Pos, GSM
 	return error;
 }
 
-GSM_Error VC_StoreDate(char *Buffer, const size_t buff_len, size_t *Pos, GSM_DateTime *Date, char *Start)
+GSM_Error VC_StoreDate(char *Buffer, const size_t buff_len, size_t *Pos, const GSM_DateTime *Date, const char *Start)
 {
 	GSM_Error error;
 
@@ -306,7 +306,7 @@ bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 	return true;
 }
 
-bool ReadVCALInt(char *Buffer, char *Start, int *Value)
+bool ReadVCALInt(char *Buffer, const char *Start, int *Value)
 {
 	unsigned char buff[200];
 
@@ -328,7 +328,7 @@ bool ReadVCALInt(char *Buffer, char *Start, int *Value)
 }
 
 
-bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_only)
+bool ReadVCALDate(char *Buffer, const char *Start, GSM_DateTime *Date, bool *is_date_only)
 {
 	char fullstart[200];
 	unsigned char datestring[200];
@@ -354,7 +354,7 @@ bool ReadVCALDate(char *Buffer, char *Start, GSM_DateTime *Date, bool *is_date_o
 }
 
 
-GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Pos, unsigned char *Text, char *Start, bool UTF8)
+GSM_Error VC_StoreText(char *Buffer, const size_t buff_len, size_t *Pos, const unsigned char *Text, const char *Start, const bool UTF8)
 {
 	char *buffer;
 	size_t len;
@@ -454,7 +454,7 @@ unsigned char *VCALGetTextPart(unsigned char *Buff, int *pos)
  *
  * When all tokens are matched we found matching line.
  */
-bool ReadVCALText(char *Buffer, char *Start, unsigned char *Value, bool UTF8)
+bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const bool UTF8)
 {
 	char *line = NULL;
 	char **tokens = NULL;

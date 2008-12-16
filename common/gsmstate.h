@@ -586,7 +586,7 @@ typedef struct {
 	/**
 	 * Model information, pointer to static @ref allmodels array.
 	 */
-	OnePhoneModel		*ModelInfo;
+	GSM_PhoneModel		*ModelInfo;
 	/**
 	 * Phone version as reported by phone. It doesn't have to be numerical
 	 * at all.
@@ -875,21 +875,21 @@ struct _GSM_Reply_Function {
 	 * Message type, if it is longer than 1 character, it disables subtype
 	 * checking.
 	 */
-	unsigned char		*msgtype;
+	const unsigned char		*msgtype;
 	/**
 	 * Which character of message should be checked as subtype. Zero to
 	 * disable subtype checking.
 	 */
-	size_t			subtypechar;
+	const size_t			subtypechar;
 	/**
 	 * Subtype to be checked.
 	 */
-	unsigned char		subtype;
+	const unsigned char		subtype;
 	/**
 	 * Phone request when this can be called, use ID_IncomingFrame when
 	 * you want to use this in any state.
 	 */
-	GSM_Phone_RequestID	requestID;
+	const GSM_Phone_RequestID	requestID;
 };
 
 /**
@@ -900,7 +900,7 @@ typedef struct {
 	 * Names of supported models separated by |. Must contain at least one
 	 * name.
 	 */
-	char			    	*models;
+	const char			*models;
 	/**
 	 * Array of reply functions for the phone, see
 	 * @ref GSM_Reply_Function for details about it.
@@ -1580,11 +1580,16 @@ void 	  GSM_DumpMessageLevel3		(GSM_StateMachine *s, unsigned const char *messag
 void GSM_DumpMessageLevel3Recv(GSM_StateMachine *s, unsigned const char *message, int messagesize, int type);
 
 
-void GSM_OSErrorInfo(GSM_StateMachine *s, char *description);
+void GSM_OSErrorInfo(GSM_StateMachine *s, const char *description);
 
 #ifdef GSM_ENABLE_BACKUP
 void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info);
 #endif
+
+/**
+ * Returns debug information active for state machine.
+ */
+GSM_Debug_Info *GSM_GetDI(GSM_StateMachine *s);
 
 #endif
 /*@}*/

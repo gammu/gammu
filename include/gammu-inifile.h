@@ -87,7 +87,7 @@ GSM_Error INI_ReadFile(const char *FileName, bool Unicode, INI_Section ** result
  * \bug Unicode should be part of file_info.
  */
 INI_Entry *INI_FindLastSectionEntry(INI_Section * file_info,
-				    unsigned char *section, bool Unicode);
+				    const unsigned char *section, const bool Unicode);
 
 /**
  * Returns value of INI file entry.
@@ -103,8 +103,8 @@ INI_Entry *INI_FindLastSectionEntry(INI_Section * file_info,
  *
  * \bug Unicode should be part of file_info.
  */
-unsigned char *INI_GetValue(INI_Section * file_info, unsigned char *section,
-			    unsigned char *key, bool Unicode);
+unsigned char *INI_GetValue(INI_Section * file_info, const unsigned char *section,
+			    const unsigned char *key, const bool Unicode);
 #endif
 
 /* Editor configuration

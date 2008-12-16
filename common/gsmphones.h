@@ -10,8 +10,8 @@
 #include <gammu-statemachine.h>
 
 /**
- * Converts model string to model record record describing it's 
- * features. If state machine structure is provided, phone features 
+ * Converts model string to model record record describing it's
+ * features. If state machine structure is provided, phone features
  * can be overrided from current state machine configuration.
  *
  * \param s Pointer to state machine structure, can be NULL.
@@ -21,14 +21,14 @@
  *
  * \return Pointer to static structure containing phone information.
  */
-OnePhoneModel *GetModelData(GSM_StateMachine *s, char *model, char *number, char *irdamodel);
+GSM_PhoneModel *GetModelData(GSM_StateMachine *s, const char *model, const char *number, const char *irdamodel);
 
 /**
  * Converts string to list of features.
  *
- * \param list Storage where features will be stored, needs to be long 
+ * \param list Storage where features will be stored, needs to be long
  * enough (GSM_MAX_PHONE_FEATURES + 1).
- * \param string String with features to be parsed, will be parsed using 
+ * \param string String with features to be parsed, will be parsed using
  * GSM_FeatureFromString.
  *
  * \return Error code.

@@ -178,7 +178,7 @@ GSM_Error GSM_SetFeatureString(Feature *list, const char *string)
 /**
  * Flags needed for various phone models.
  */
-OnePhoneModel allmodels[] = {
+GSM_PhoneModel allmodels[] = {
 #ifdef GSM_ENABLE_NOKIA650
 	{"0650" ,"THF-12","",           {0}},
 #endif
@@ -763,7 +763,7 @@ OnePhoneModel allmodels[] = {
 	{"unknown",	  ""      ,"",           {0}}
 };
 
-OnePhoneModel *GetModelData(GSM_StateMachine *s, char *model, char *number, char *irdamodel)
+GSM_PhoneModel *GetModelData(GSM_StateMachine *s, const char *model, const char *number, const char *irdamodel)
 {
 	int i, j;
 
@@ -787,7 +787,7 @@ OnePhoneModel *GetModelData(GSM_StateMachine *s, char *model, char *number, char
 	return (&allmodels[i]);
 }
 
-bool GSM_IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature)
+bool GSM_IsPhoneFeatureAvailable(GSM_PhoneModel *model, Feature feature)
 {
 	int	i	= 0;
 
@@ -800,7 +800,7 @@ bool GSM_IsPhoneFeatureAvailable(OnePhoneModel *model, Feature feature)
 	return false;
 }
 
-bool GSM_AddPhoneFeature(OnePhoneModel *model, Feature feature)
+bool GSM_AddPhoneFeature(GSM_PhoneModel *model, Feature feature)
 {
 	int	i	= 0;
 

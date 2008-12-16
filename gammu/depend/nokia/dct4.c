@@ -67,7 +67,7 @@ static void CheckDCT4(void)
 	}
 }
 
-static bool answer_yes2(char *text)
+static bool answer_yes2(const char *text)
 {
     	int         len;
     	char        ans[99];
@@ -1020,8 +1020,8 @@ static GSM_Error DCT4_ReplyGetADC(GSM_Protocol_Message msg, GSM_StateMachine *sm
 }
 
 struct DCT4ADCInfo {
-	char 	*name;
-	char 	*unit;
+	const char 	*name;
+	const char 	*unit;
 	int 	x;
 };
 

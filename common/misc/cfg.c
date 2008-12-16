@@ -268,7 +268,7 @@ done:
  * Search for key value in file in Windows INI format style
  * Returns found value or NULL
  */
-unsigned char *INI_GetValue(INI_Section *cfg, unsigned char *section, unsigned char *key, bool Unicode)
+unsigned char *INI_GetValue(INI_Section *cfg, const unsigned char *section, const unsigned char *key, const bool Unicode)
 {
         INI_Section 	*sec;
         INI_Entry  	*ent;
@@ -312,7 +312,7 @@ unsigned char *INI_GetValue(INI_Section *cfg, unsigned char *section, unsigned c
 }
 
 /* Return last value in specified section */
-INI_Entry *INI_FindLastSectionEntry(INI_Section *file_info, unsigned char *section, bool Unicode)
+INI_Entry *INI_FindLastSectionEntry(INI_Section *file_info, const unsigned char *section, const bool Unicode)
 {
 	INI_Section 	*h;
 	INI_Entry	*e;

@@ -25,14 +25,14 @@ typedef struct {
 	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency;
 	int deliveryreportdelay;
 	unsigned int	resetfrequency;
-	char   *deliveryreport, *logfilename,  *PINCode;
-	char	*PhoneID;
-	char   *RunOnReceive;
+	const char   *deliveryreport, *logfilename,  *PINCode;
+	const char	*PhoneID;
+	const char   *RunOnReceive;
 	bool checksecurity;
 
 	/* options for FILES */
-	char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
-	char   *errorsmspath, 	 *inboxformat,  *transmitformat;
+	const char   *inboxpath, 	 *outboxpath, 	*sentsmspath;
+	const char   *errorsmspath, 	 *inboxformat,  *transmitformat;
 
 	/* private variables required for work */
 	int		relativevalidity;
@@ -44,8 +44,8 @@ typedef struct {
 
 #if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H)
 	/* options for SQL database */
-	unsigned char	*database,	 *user,		*password;
-	unsigned char	*PC,		 *skipsmscnumber;
+	const char	*database,	 *user,		*password;
+	const char	*PC,		 *skipsmscnumber;
         char 		DT[20];
 	char		CreatorID[200];
 #endif
@@ -90,7 +90,7 @@ typedef struct {
 #if defined(__GNUC__) && !defined(printf)
 __attribute__((format(printf, 1, 2)))
 #endif
-void WriteSMSDLog(char *format, ...);
+void WriteSMSDLog(const char *format, ...);
 
 extern GSM_Error SMSD_NoneFunction		(void);
 extern GSM_Error SMSD_NotImplementedFunction	(void);

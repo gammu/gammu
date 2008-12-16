@@ -22,9 +22,9 @@
 #define BLKSZ 1024
 
 struct ModelRes {
-	char *model;
-	size_t width;
-	size_t height;
+	const char *model;
+	const size_t width;
+	const size_t height;
 };
 
 static struct ModelRes modres[] = {
@@ -122,7 +122,7 @@ static unsigned int GetCRC(char *data, int size)
  * Frame transfer
  */
 
-static GSM_Error WaitFor(GSM_StateMachine *s, char *t, int ttl)
+static GSM_Error WaitFor(GSM_StateMachine *s, const char *t, int ttl)
 {
 	char 		readbuf[100];
 	int 		n;
@@ -282,7 +282,8 @@ GSM_Error SAMSUNG_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 	unsigned char	req[100];
 	unsigned long	crc;
 	GSM_Error	error;
-	char		name[50], *dot, *model;
+	char		name[50], *dot;
+    const char *model;
 	GSM_Phone_Data  *Data = &s->Phone.Data;
 	int 		i;
 

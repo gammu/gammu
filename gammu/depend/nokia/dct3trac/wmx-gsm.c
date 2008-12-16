@@ -45,7 +45,7 @@ void GSMDecoder_free(GSMDecoder *self)
 	free(self);
 }
 
-char *GSM_protocols[]={
+const char *GSM_protocols[]={
 /*0*/ "Group call control",
 /*1*/ "Broadcast call control",
 /*2*/ "PDSS1",
@@ -66,8 +66,8 @@ char *GSM_protocols[]={
 
 typedef struct GSMpackettypestruct {
 	int 	id;
-	char 	*section;
-	char 	*description;
+	const char 	*section;
+	const char 	*description;
 } GSMpackettype;
 
 /* Include the data */
@@ -307,7 +307,7 @@ void GSMDecoder_L2packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsigned cha
 			(buffer[ptr]>>1)&7);
 		break;
 	case TYPE_S: {
-		char *desc = "Unknown";
+		const char *desc = "Unknown";
 		x = (buffer[ptr]>>2)&3;
 		switch(x) {
 		case 0: /* 00 */ desc="RR (Receive Ready)"; break; /* ALSO acknowledgement */
@@ -320,7 +320,7 @@ void GSMDecoder_L2packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsigned cha
 			x, desc);
 		} break;
 	case TYPE_U: {
-		char *desc = "Unknown";
+		const char *desc = "Unknown";
 		x = (((buffer[ptr]>>5)&7)<<2) | ((buffer[ptr]>>2)&3);
 		binstr(temp, x, 5);
 		switch(x) {
@@ -357,7 +357,7 @@ void GSMDecoder_L2packet(GSMDecoder *self, GSMDecoder_l1l2data *l1, unsigned cha
 	}
 	*/
 	if(self->xmlout) {
-		char *desc;
+		const char *desc;
 		fprintf(self->xmlout, "<l2 ");
 		switch(type) {
 		case TYPE_I:
