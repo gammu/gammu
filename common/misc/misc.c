@@ -290,7 +290,7 @@ char *OSDate (GSM_DateTime dt)
 	timeptr.tm_min  	= dt.Minute;
 	timeptr.tm_sec  	= dt.Second;
 	timeptr.tm_wday 	= GetDayOfWeek(dt.Year, dt.Month, dt.Day);
-#ifdef _BSD_SOURCE
+#ifdef HAVE_STRUCT_TM_TM_ZONE
 	timeptr.tm_zone		= NULL;
 #endif
 
