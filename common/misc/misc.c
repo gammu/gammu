@@ -365,7 +365,7 @@ void FreeLines(GSM_CutLines *lines)
 	lines->allocated = 0;
 }
 
-void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, unsigned char *whitespaces, int spaceslen, bool eot)
+void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, const char *whitespaces, int spaceslen, bool eot)
 {
 	int 	i,number=0,j;
 	bool 	whitespace=true, nowwhite;
@@ -409,7 +409,7 @@ void SplitLines(const char *message, int messagesize, GSM_CutLines *lines, unsig
 		lines->numbers[number] = messagesize;
 }
 
-char *GetLineString(const char *message, const GSM_CutLines *lines, int start)
+const char *GetLineString(const char *message, const GSM_CutLines *lines, int start)
 {
 	static char *retval = NULL;
 	int len;

@@ -72,7 +72,7 @@ void GSM_Terminate_SMSD(char *msg, int error, bool exitprogram, int rc)
 }
 
 PRINTF_STYLE(1, 2)
-void WriteSMSDLog(char *format, ...)
+void WriteSMSDLog(const char *format, ...)
 {
 	GSM_DateTime 	date_time;
 	char 		Buffer[2000];
@@ -317,7 +317,7 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config)
 	ZeroMemory(&pi, sizeof(pi));
 
 	ret = CreateProcess(NULL,     /* No module name (use command line) */
-			Config->RunOnReceive, /* Command line */
+			(char *)Config->RunOnReceive, /* Command line */
 			NULL,           /* Process handle not inheritable*/
 			NULL,           /* Thread handle not inheritable*/
 			FALSE,          /* Set handle inheritance to FALSE*/

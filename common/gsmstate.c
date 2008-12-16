@@ -37,9 +37,6 @@
 #endif
 
 
-/**
- * Returns debug information active for state machine.
- */
 GSM_Debug_Info *GSM_GetDI(GSM_StateMachine *s)
 {
 	GSM_Debug_Info *curdi;
@@ -272,7 +269,7 @@ static void GSM_RegisterModule(GSM_StateMachine *s,GSM_Phone_Functions *phone)
  */
 GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 {
-	OnePhoneModel *model;
+	GSM_PhoneModel *model;
 
 	/* Auto model */
 	if (s->CurrentConfig->Model[0] == 0) {
@@ -1374,7 +1371,7 @@ int smprintf_level(GSM_StateMachine * s, GSM_DebugSeverity severity, const char 
 	return result;
 }
 
-void GSM_OSErrorInfo(GSM_StateMachine *s, char *description)
+void GSM_OSErrorInfo(GSM_StateMachine *s, const char *description)
 {
 #ifdef WIN32
 	int 		i;
@@ -1564,7 +1561,7 @@ GSM_ConnectionType GSM_GetUsedConnection(GSM_StateMachine *s)
 	return s->ConnectionType;
 }
 
-OnePhoneModel *GSM_GetModelInfo(GSM_StateMachine *s)
+GSM_PhoneModel *GSM_GetModelInfo(GSM_StateMachine *s)
 {
 	return s->Phone.Data.ModelInfo;
 }

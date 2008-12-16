@@ -1,7 +1,7 @@
 #ifndef WMX_UTIL_INCLUDED
 #define WMX_UTIL_INCLUDED
 
-void dumpraw(char *str, unsigned char *buffer, size_t length);
+void dumpraw(const char *str, unsigned char *buffer, size_t length);
 void binstr(char *dest, unsigned int value, int len);
 
 #endif

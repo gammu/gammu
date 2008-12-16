@@ -983,7 +983,7 @@ GSM_Error NOKIA_ReplyGetPhoneString(GSM_Protocol_Message msg, GSM_StateMachine *
  * type of message (type), pointer for buffer for response (*value), request
  * type (request) and what is start byte in response for our string
  */
-GSM_Error NOKIA_GetPhoneString(GSM_StateMachine *s, unsigned char *msgframe, int msglen, unsigned char msgtype, char *retvalue, GSM_Phone_RequestID request, int startresponse)
+GSM_Error NOKIA_GetPhoneString(GSM_StateMachine *s, const unsigned char *msgframe, int msglen, unsigned char msgtype, char *retvalue, GSM_Phone_RequestID request, int startresponse)
 {
 	retvalue[0] = 0;
 	s->Phone.Data.StartPhoneString = startresponse;
@@ -2580,7 +2580,7 @@ GSM_Error N71_65_GetNextCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, 
 	return GSM_WaitFor (s, req, 6, 0x13, 4, ID_GetCalendarNote);
 }
 
-GSM_Error N71_65_EnableFunctions(GSM_StateMachine *s,char *buff,int len)
+GSM_Error N71_65_EnableFunctions(GSM_StateMachine *s,const char *buff,int len)
 {
 	unsigned char buffer[50] = {N6110_FRAME_HEADER, 0x10,
 				    0x07};	/* Length */
@@ -2606,7 +2606,7 @@ GSM_Error N71_65_ReplySendDTMF(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_CalendarNoteType N71_65_FindCalendarType(GSM_CalendarNoteType Type, OnePhoneModel *model)
+GSM_CalendarNoteType N71_65_FindCalendarType(GSM_CalendarNoteType Type, GSM_PhoneModel *model)
 {
 	switch (Type) {
 	case GSM_CAL_CALL:

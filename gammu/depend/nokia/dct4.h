@@ -66,15 +66,15 @@ typedef enum {
 
 typedef struct {
 	DCT4_Feature_Name		Name;
-	unsigned char			*Text;
+	const char			*Text;
 	struct {
-		unsigned char		Value;
-		unsigned char		*Text;
+		const unsigned char		Value;
+		const char		*Text;
 	} Values[10];
 } DCT4_Feature;
 
 typedef struct {
-	char				*Model;
+	const char				*Model;
 	struct {
 		DCT4_Feature_Name	Name;
 		int			Number;

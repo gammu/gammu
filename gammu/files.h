@@ -9,4 +9,4 @@ extern void DeleteFiles(int argc, char *argv[]);
 extern void GetFolderListing(int argc, char *argv[]);
 extern void GetRootFolders(int argc, char *argv[]);
 extern void SetFileAttrib(int argc, char *argv[]);
-extern void AddOneFile(GSM_File * File, char *text, bool send);
+extern void AddOneFile(GSM_File * File, const char *text, const bool send);

@@ -614,20 +614,20 @@ typedef struct {
 	/**
 	 * Model as returned by phone
 	 */
-	char *model;
+	const char *model;
 	/**
 	 * Identification by Gammu
 	 */
-	char *number;
+	const char *number;
 	/**
 	 * Model as used over IrDA
 	 */
-	char *irdamodel;
+	const char *irdamodel;
 	/**
 	 * List of supported features
 	 */
 	Feature features[GSM_MAX_PHONE_FEATURES + 1];
-} OnePhoneModel;
+} GSM_PhoneModel;
 
 /**
  * Checks whether phone supports features.
@@ -639,7 +639,7 @@ typedef struct {
  *
  * \ingroup Info
  */
-bool GSM_IsPhoneFeatureAvailable(OnePhoneModel * model, Feature feature);
+bool GSM_IsPhoneFeatureAvailable(GSM_PhoneModel * model, Feature feature);
 
 /**
  * Adds feature to phone configuration.
@@ -651,7 +651,7 @@ bool GSM_IsPhoneFeatureAvailable(OnePhoneModel * model, Feature feature);
  *
  * \ingroup Info
  */
-bool GSM_AddPhoneFeature(OnePhoneModel * model, Feature feature);
+bool GSM_AddPhoneFeature(GSM_PhoneModel * model, Feature feature);
 
 #include <gammu-statemachine.h>
 
@@ -674,7 +674,7 @@ GSM_Error GSM_GetModel(GSM_StateMachine * s, char *value);
  *
  * \ingroup Info
  */
-OnePhoneModel *GSM_GetModelInfo(GSM_StateMachine * s);
+GSM_PhoneModel *GSM_GetModelInfo(GSM_StateMachine * s);
 
 /**
  * Reads firmware information from phone.

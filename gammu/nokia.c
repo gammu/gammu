@@ -453,10 +453,10 @@ void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
 }
 
 struct NokiaFolderInfo {
-	char	*model;
-	char 	*parameter;
-	char	*folder;
-	char 	*level;
+	const char	*model;
+	const char 	*parameter;
+	const char	*folder;
+	const char 	*level;
 };
 
 struct NokiaFolderInfo Folder[] = {

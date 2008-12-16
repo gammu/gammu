@@ -13,7 +13,7 @@
 
 #ifdef GSM_ENABLE_BACKUP
 
-static void SaveLDIFText(FILE *file, unsigned char *Name, unsigned char *Value)
+static void SaveLDIFText(FILE *file, const char *Name, const unsigned char *Value)
 {
 	unsigned char Buffer[1000],Buffer2[1000];
 
@@ -25,7 +25,7 @@ static void SaveLDIFText(FILE *file, unsigned char *Name, unsigned char *Value)
 	}
 }
 
-GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
+GSM_Error SaveLDIF(const char *FileName, GSM_Backup *backup)
 {
 	int 		i, j;
 	FILE 		*file;
@@ -184,7 +184,7 @@ GSM_Error SaveLDIF(char *FileName, GSM_Backup *backup)
 	return ERR_NONE;
 }
 
-static bool ReadLDIFText(char *Buffer, char *Start, char *Value)
+static bool ReadLDIFText(const char *Buffer, const char *Start, char *Value)
 {
 	unsigned char 	Buffer2[1000],buff[200];
 	int 		i;
@@ -319,7 +319,7 @@ static GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry 
 	return ERR_NONE;
 }
 
-GSM_Error LoadLDIF(char *FileName, GSM_Backup *backup)
+GSM_Error LoadLDIF(const char *FileName, GSM_Backup *backup)
 {
 	GSM_File 		File;
 	GSM_Error		error;

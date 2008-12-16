@@ -12,7 +12,7 @@
 /**
  * Dump raw hex
  */
-void dumpraw(char *str, unsigned char *buffer, size_t length)
+void dumpraw(const char *str, unsigned char *buffer, size_t length)
 {
 	size_t x;
 

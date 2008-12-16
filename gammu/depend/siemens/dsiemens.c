@@ -232,9 +232,10 @@ GSM_Error ATSIEMENS_GetSAT(GSM_StateMachine *sm)
 {
     	GSM_Phone_ATGENData	*Priv = &(sm->Phone.Data.Priv.ATGEN);
     	GSM_Error		error;
-    	unsigned char		*reqSAT[]= {"D009810301260082028182",
+    	const char		*reqSAT[]= {"D009810301260082028182",
 				    	    "D009810301260282028182",
-				    	    "D009810301260582028182"},req[32];
+				    	    "D009810301260582028182"};
+	char req[32];
     	int 			i,len;
 
     	if (Priv->Manufacturer!=AT_Siemens) return ERR_NOTSUPPORTED;

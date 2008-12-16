@@ -315,7 +315,7 @@ void DeleteAllMemory(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
+void SearchOneEntry(GSM_MemoryEntry *Entry, const unsigned char *Text)
 {
 	int i;
 
@@ -384,7 +384,7 @@ void SearchOneEntry(GSM_MemoryEntry *Entry, unsigned char *Text)
 	}
 }
 
-void SearchOneMemory(GSM_MemoryType MemoryType, char *Title, unsigned char *Text)
+void SearchOneMemory(GSM_MemoryType MemoryType, const char *Title, const unsigned char *Text)
 {
 	GSM_MemoryEntry		Entry;
 	GSM_MemoryStatus	Status;

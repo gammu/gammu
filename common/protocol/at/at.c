@@ -39,7 +39,7 @@ static GSM_Error AT_WriteMessage (GSM_StateMachine *s, unsigned const char *buff
 }
 
 typedef struct {
-	char	*text;
+	const char	*text;
 	int	lines;
 } SpecialAnswersStruct;
 
@@ -50,7 +50,7 @@ static GSM_Error AT_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	size_t			i;
 
 	/* These are lines with end of "normal" answers */
-	static char 		*StartStrings[] = {
+	static const char 		*StartStrings[] = {
 		"OK"		, 	"ERROR"	 	,
 		"+CME ERROR:"	,	"+CMS ERROR:"	,
 

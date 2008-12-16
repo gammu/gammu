@@ -46,10 +46,10 @@ GSM_Error ALCATEL_ProtocolVersionReply (GSM_Protocol_Message, GSM_StateMachine *
 
 
 typedef struct {
-	GSM_AT_Charset	charset;
-	char		*text;
-	bool		unicode;
-	bool		ira;
+	const GSM_AT_Charset	charset;
+	const char		*text;
+	const bool		unicode;
+	const bool		ira;
 } GSM_AT_Charset_Info;
 
 /**
@@ -900,7 +900,7 @@ GSM_Error ATGEN_DispatchMessage(GSM_StateMachine *s)
 	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
 	GSM_Protocol_Message	*msg	= s->Phone.Data.RequestMsg;
 	int 			i	= 0, j, k;
-	char                    *err, *line;
+	const char		*err, *line;
 	ATErrorCode		*ErrorCodes = NULL;
 
 	SplitLines(msg->Buffer, msg->Length, &Priv->Lines, "\x0D\x0A", 2, true);
@@ -1121,8 +1121,8 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	GSM_Phone_Data		*Data = &s->Phone.Data;
-	char			*pos, *pos2;
-	char			*line;
+	const char *pos, *pos2 = NULL;
+	const char *line;
 
 	if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_OK) return ERR_NOTSUPPORTED;
 
@@ -1136,18 +1136,10 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	if ((pos2 = strstr(line, "\"MODEL=")) != NULL) {
 		pos = pos2 + 7; /* Skip above string */
 		pos2 = strchr(pos, '"'); /* Find end quote */
-		if (pos2 != NULL) {
-			/* Terminate string at the end, otherwise we keep it full */
-			*pos2 = 0;
-		}
 	/* Sometimes phone adds this before manufacturer (Motorola) */
 	} else if (strncmp("+CGMM: \"", line, 8) == 0) {
 		pos += 8; /* Skip above string */
 		pos2 = strchr(pos, '"'); /* Find end quote */
-		if (pos2 != NULL) {
-			/* Terminate string at the end, otherwise we keep it full */
-			*pos2 = 0;
-		}
 	/* Sometimes phone adds this before manufacturer (Sagem) */
 	} else if (strncmp("+CGMM: ", line, 7) == 0) {
 		pos += 7; /* Skip above string */
@@ -1157,22 +1149,25 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	while (iswspace(*pos)) {
 		pos++;
 	}
-	pos2 = pos + strlen(pos) - 1;
+	if (pos2 == NULL) {
+		pos2 = pos + strlen(pos);
+	}
+	/* Go before last char */
+	pos2--;
 	while(iswspace(*pos2) && pos2 > pos) {
-		*pos2 = 0;
 		pos2--;
 	}
 
 	/* Now store string if it fits */
-	if (strlen(pos) > GSM_MAX_MODEL_LENGTH) {
+	if (pos2 - pos > GSM_MAX_MODEL_LENGTH) {
 		smprintf(s, "WARNING: Model name too long, increase GSM_MAX_MODEL_LENGTH to at least "
 				SIZE_T_FORMAT " (currently %d)\n",
 				strlen(pos),
 				GSM_MAX_MODEL_LENGTH);
-		pos[GSM_MAX_MODEL_LENGTH] = 0;
 	}
 
-	strcpy(Data->Model, pos);
+	strncpy(Data->Model, pos, MIN(pos2 - pos, GSM_MAX_MODEL_LENGTH));
+	Data->Model[pos2 - pos] = 0;
 
 	Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
 	if (Data->ModelInfo->number[0] == 0)
@@ -1580,7 +1575,7 @@ GSM_Error ATGEN_ReplyGetCharset(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	 * OK
 	 */
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
-	char			*line;
+	const char		*line;
 	int			i = 0;
 
 	switch (Priv->ReplyState) {
@@ -1630,7 +1625,7 @@ GSM_Error ATGEN_ReplyGetCharsets(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		OK
 	 */
 	GSM_Phone_ATGENData	*Priv = &s->Phone.Data.Priv.ATGEN;
-	char			*line;
+	const char	*line;
 	int			i = 0;
 	bool			IgnoredUTF8 = false;
 
@@ -2659,7 +2654,7 @@ GSM_Error ATGEN_ReplyGetMessageList(GSM_Protocol_Message msg, GSM_StateMachine *
 	int			line = 1;
 	int			cur;
 	int			allocsize = 0;
-	char			*str;
+	const char		*str;
 	char			*tmp = NULL;
 	GSM_SMSMessage		sms;
 
@@ -3273,7 +3268,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	int			state,Replies,reply, current, current2;
 	unsigned char		buffer[1000], hexreq[1000];
 	GSM_Phone_Data		*Phone = &s->Phone.Data;
-	unsigned char		*statetxt;
+	const char		*statetxt;
 	int location;
 	unsigned char folderid;
 
@@ -3569,7 +3564,7 @@ GSM_Error ATGEN_ReplyGetAlarm(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	int i;
 	int location;
-	char *str;
+	const char *str;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
@@ -3828,7 +3823,7 @@ GSM_Error ATGEN_ReplyGetNetworkLAC_CID(GSM_Protocol_Message msg, GSM_StateMachin
 	GSM_CutLines		Lines;
 	int			i=0;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	char			*answer;
+	const char			*answer;
 	char			*tmp;
 	size_t pos;
 
@@ -4220,7 +4215,7 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
  	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
 	unsigned char tmp[200];
 	GSM_Error error;
-	char *str;
+	const char *str;
 
 	switch (s->Phone.Data.Priv.ATGEN.ReplyState) {
 	case AT_Reply_OK:
@@ -4276,7 +4271,7 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData *Priv = &s->Phone.Data.Priv.ATGEN;
-	char *str;
+	const char *str;
 	GSM_Error error;
 	int ignore;
 
@@ -4377,7 +4372,7 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
 	GSM_Error		error;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 	int			line = 1;
-	char			*str;
+	const char			*str;
 	int			cur, last = -1;
 
 	switch (Priv->ReplyState) {
@@ -6478,7 +6473,7 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	int protocol_id;
 	char protocol_version[100];
 	int protocol_level;
-	char *string;
+	const char *string;
 	GSM_Error error;
 
 	switch (Priv->ReplyState) {

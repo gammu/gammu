@@ -140,7 +140,7 @@ GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR,
  *
  * \ingroup File
  */
-GSM_Error GSM_ReadFile(char *FileName, GSM_File * File);
+GSM_Error GSM_ReadFile(const char *FileName, GSM_File * File);
 
 /**
  * Identifies file format by checking it's content.
