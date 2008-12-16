@@ -9,8 +9,9 @@
 [gammu]
 
 port = com8:
-;model = 6110
 connection = irdaphonet
+; Do not use model configuration unless you really need it
+;model = 6110
 ;synchronizetime = yes
 ;logfile = gammulog
 ;logformat = textall
