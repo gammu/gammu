@@ -47,7 +47,7 @@ void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr)
 	}
 }
 
-void GSM_Terminate_SMSD(char *msg, int error, bool exitprogram, int rc)
+void GSM_Terminate_SMSD(const char *msg, int error, bool exitprogram, int rc)
 {
 	int ret = ERR_NONE;
 

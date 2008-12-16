@@ -785,11 +785,12 @@ void HelpGeneral(void)
 	printf("\n");
 }
 
-void HelpSplit(int cols, int len, char *buff)
+void HelpSplit(int cols, int len, const char *buff)
 {
 	int l, len2, pos, split;
 	bool in_opt, first = true;
-	char *remain, spaces[50], buffer[500];
+	const char *remain;
+	char spaces[50], buffer[500];
 
 	if (cols == 0) {
 		printf(" %s\n", buff);
