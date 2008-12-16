@@ -285,7 +285,7 @@ typedef enum {
 	/**
 	 * Just marker of highest error code, should not be used.
 	 */
-	ERR_LAST_VALUE,
+	ERR_LAST_VALUE
 } GSM_Error;
 
 /**

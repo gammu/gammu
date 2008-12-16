@@ -140,7 +140,7 @@ typedef enum {
 	/**
 	 * Power failure
 	 */
-	GSM_PowerFault,
+	GSM_PowerFault
 } GSM_ChargeState;
 
 /**
@@ -164,7 +164,7 @@ typedef enum {
 	/**
 	 * Lithium Polymer battery
 	 */
-	GSM_BatteryLiPol,
+	GSM_BatteryLiPol
 } GSM_BatteryType;
 
 /**
@@ -577,7 +577,7 @@ typedef enum {
 	/**
 	 * Just marker of highest feature code, should not be used.
 	 */
-	F_LAST_VALUE,
+	F_LAST_VALUE
 } Feature;
 
 /**

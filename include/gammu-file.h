@@ -49,7 +49,7 @@ typedef enum {
 	 */
 	GSM_File_Sound_NRT,
 	GSM_File_Sound_MIDI,
-	GSM_File_MMS,
+	GSM_File_MMS
 } GSM_FileType;
 
 /**
@@ -221,7 +221,7 @@ GSM_Error GSM_GetFilePart(GSM_StateMachine * s, GSM_File * File, int *Handle,
 			  int *Size);
 
 /**
- * Adds file to filesystem. Call repeatedly until function returns 
+ * Adds file to filesystem. Call repeatedly until function returns
  * \ref ERR_EMPTY.
  *
  * \param s State machine pointer.
