@@ -228,6 +228,11 @@
 #cmakedefine HAVE_MACRO_FUNCTION
 
 /**
+ * struct tm.tm_zone support.
+ */
+#cmakedefine HAVE_STRUCT_TM_TM_ZONE
+
+/**
  * __FUNC__ support
  */
 #cmakedefine HAVE_MACRO_FUNC

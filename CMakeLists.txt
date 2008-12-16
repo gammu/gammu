@@ -170,6 +170,16 @@ int main(void) {
 "  HAVE_MACRO_FUNCTION)
 
 check_c_source_compiles ("
+#include <time.h>
+
+int main(void) {
+    struct tm tm;
+    tm.tm_zone;
+    return 0;
+}
+"  HAVE_STRUCT_TM_TM_ZONE)
+
+check_c_source_compiles ("
 #include <stdio.h>
 
 int main(void) {
