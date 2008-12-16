@@ -785,7 +785,7 @@ void HelpGeneral(void)
 	printf("\n");
 }
 
-void HelpSplit(int cols, int len, unsigned char *buff)
+void HelpSplit(int cols, int len, char *buff)
 {
 	int l, len2, pos, split;
 	bool in_opt, first = true;
