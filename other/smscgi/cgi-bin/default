@@ -13,20 +13,3 @@ while($data = fgets(STDIN, 4096)) {
 	$request .= $data;
 }
 echo $request;
-
-#!/usr/bin/php
-<?php
-
-while($data = fgets(STDIN, 4096)) {
-	if(trim($data) == "") {
-		/* empty line means from next line we shall get the sms body */
-		break;
-	}
-	fputs(STDERR, "reading header [$data]..\n");
-}
-$request = "";
-while($data = fgets(STDIN, 4096)) {
-	$request .= $data;
-}
-echo $request;
-
