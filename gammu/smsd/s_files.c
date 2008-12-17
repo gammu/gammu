@@ -74,15 +74,17 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 			strcpy(buffer, DecodeUnicodeString(sms->SMS[i].Number));
 			WriteSMSDLog(_("Delivery report: %s to %s"), DecodeUnicodeString(sms->SMS[i].Text), buffer);
 		} else {
-#ifdef GSM_ENABLE_BACKUP
 			if (strcasecmp(Config->inboxformat, "detail") == 0) {
+#ifndef GSM_ENABLE_BACKUP
+				WriteSMSDLog(_("Saving in detail format not compiled in!"));
+
+#else
 				for (j=0;j<sms->Number;j++) backup.SMS[j] = &sms->SMS[j];
 				backup.SMS[sms->Number] = NULL;
 				error = GSM_AddSMSBackupFile(FullName, &backup);
 				done = true;
-			}
 #endif
-			if (!strcasecmp(Config->inboxformat, "detail") == 0) {
+			} else {
 				file = fopen(FullName, "wb");
 				if (file != NULL) {
 					switch (sms->SMS[i].Coding) {
