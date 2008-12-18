@@ -26,7 +26,7 @@ ChangeLog
     
 20081210 - 1.21.94
 
-[-] * Better skipping of currupted messages in AT (bug #768).
+[-] * Better skipping of corrupted messages in AT (bug #768).
 [-] * Autoload 6510 module if phone is S40 (bug #767).
 [-] * Add ID for Nokia 6500s (bug #770).
 [-] * Add automatic detection of Nokia phones (bug #770).
