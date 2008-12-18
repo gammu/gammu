@@ -1160,8 +1160,7 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	/* Now store string if it fits */
 	if (1 + pos2 - pos > GSM_MAX_MODEL_LENGTH) {
-		smprintf(s, "WARNING: Model name too long, increase GSM_MAX_MODEL_LENGTH to at least "
-				SIZE_T_FORMAT " (currently %d)\n",
+		smprintf(s, "WARNING: Model name too long, increase GSM_MAX_MODEL_LENGTH to at least %d (currently %d)\n",
 				1 + pos2 - pos,
 				GSM_MAX_MODEL_LENGTH);
 	}
