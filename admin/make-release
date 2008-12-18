@@ -85,7 +85,6 @@ cmake ../$repo-$version \
     -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32.cmake \
     -DBUILD_SHARED_LIBS=ON \
     $CMAKE_EXTRA \
-    -DWITH_GettextLibs=OFF \
 
 make -j2
 checkexe gammu/gammu.exe
