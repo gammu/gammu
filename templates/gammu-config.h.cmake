@@ -230,7 +230,9 @@
 /**
  * struct tm.tm_zone support.
  */
+#ifndef HAVE_STRUCT_TM_TM_ZONE
 #cmakedefine HAVE_STRUCT_TM_TM_ZONE
+#endif HAVE_STRUCT_TM_TM_ZONE
 
 /**
  * __FUNC__ support
