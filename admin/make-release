@@ -85,7 +85,6 @@ cmake ../$repo-$version \
     -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32.cmake \
     -DBUILD_SHARED_LIBS=ON \
     $CMAKE_EXTRA \
-    -DWITH_Postgres=OFF \
     -DWITH_GettextLibs=OFF \
 
 make -j2
@@ -103,8 +102,8 @@ cmake ../$repo-$version \
     -DBUILD_SHARED_LIBS=OFF \
     $CMAKE_EXTRA \
     -DCPACK_SYSTEM_NAME=Windows-Minimal \
-    -DWITH_MySQL=OFF \
     -DWITH_Postgres=OFF \
+    -DWITH_MySQL=OFF \
     -DWITH_GettextLibs=OFF \
     -DWITH_Iconv=OFF \
     -DWITH_CURL=OFF \
