@@ -162,7 +162,7 @@ This package contain files needed for development.
 mkdir build-dir
 cd build-dir
 cmake ../ \
-    -DENABLE_SHARED=ON \
+    -DBUILD_SHARED_LIBS=ON \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DINSTALL_DOC_DIR=%gammu_docdir \
     -DINSTALL_LIB_DIR=%_lib \
