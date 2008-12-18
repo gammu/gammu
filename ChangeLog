@@ -15,12 +15,12 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2008???? - 1.21.95
+20081218 - 1.22.0
 
 [-] * Disable ATOBEX for Motorola V180.
 [-] * vCard can now store caller group and private flag (bug #269).
 [-] * vCard now stores location and memory type.
-[-] * Add ID for Nokia 6131 NFC" (bug #775).
+[-] * Add ID for Nokia 6131 NFC (bug #775).
     
 20081210 - 1.21.94
 
