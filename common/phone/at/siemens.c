@@ -363,7 +363,7 @@ GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		if (error != ERR_NONE) return error;
  		Memory->EntriesNum = 0;
 		length = 0;
- 		return GSM_DecodeVCARD(buffer, &length, Memory, 0);
+ 		return GSM_DecodeVCARD(buffer, &length, Memory, SonyEricsson_VCard21_Phone);
 	case AT_Reply_Error:
                 smprintf(s, "Error - too high location ?\n");
                 return ERR_INVALIDLOCATION;

@@ -1636,7 +1636,7 @@ GSM_Error OBEXGEN_GetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
-	error = GSM_DecodeVCARD(data, &pos, Entry, SonyEricsson_VCard21);
+	error = GSM_DecodeVCARD(data, &pos, Entry, SonyEricsson_VCard21_Phone);
 	free(data);
 	if (error != ERR_NONE) return error;
 
@@ -1675,7 +1675,7 @@ GSM_Error OBEXGEN_GetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
-	error = GSM_DecodeVCARD(data, &pos, Entry, SonyEricsson_VCard21);
+	error = GSM_DecodeVCARD(data, &pos, Entry, SonyEricsson_VCard21_Phone);
 	free(data);
 	if (error != ERR_NONE) return error;
 
@@ -1699,7 +1699,7 @@ GSM_Error OBEXGEN_GetMemoryFull(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (Entry->Location > Priv->PbCount) return ERR_EMPTY; /* Maybe invalid location? */
 
 	/* Decode vCard */
-	error = GSM_DecodeVCARD(Priv->PbData + Priv->PbOffsets[Entry->Location], &pos, Entry, SonyEricsson_VCard21);
+	error = GSM_DecodeVCARD(Priv->PbData + Priv->PbOffsets[Entry->Location], &pos, Entry, SonyEricsson_VCard21_Phone);
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
