@@ -37,10 +37,10 @@ there is also web browser for it - <http://viewsvn.cihar.com/gammu>.
 Versions
 ========
 
-There are two types of releases - testing and stable. Stable releases
-have number x.y.0, while testing are x.y.z. Testing releases usually
-provide latest features, but everything does not have to be stabilized
-yet.
+There are two types of releases - testing and stable, both having
+version x.y.z. Stable releases have usually z = 0 or some small number,
+while testing ones have z >= 90. Testing releases usually provide latest
+features, but everything does not have to be stabilized yet.
 
 
 Configuration
