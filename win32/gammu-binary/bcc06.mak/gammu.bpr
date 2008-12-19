@@ -178,13 +178,13 @@ CodePage=1252
 [Version Info Keys]
 CompanyName=http://www.gammu.org
 FileDescription=Gammu - manager for cellular modems and phones
-FileVersion=1,22,1,0
+FileVersion=1,22,90,0
 InternalName=Gammu
 LegalCopyright=Copyright © 2002-2006 Marcin Wiacek
 LegalTrademarks=
 OriginalFilename=gammu.exe
 ProductName=Gammu (Gammu All Mobile Management Utilities)
-ProductVersion=1,22,1,0
+ProductVersion=1,22,90,0
 Comments=
 
 [HistoryLists\hlDebugSourcePath]
