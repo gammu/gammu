@@ -1,4 +1,4 @@
-%define ver         1.22.90
+%define ver         1.22.1
 %define name        gammu
 %define rel         1
 # Set to 0 to disable bluetooth support
@@ -162,7 +162,7 @@ This package contain files needed for development.
 mkdir build-dir
 cd build-dir
 cmake ../ \
-    -DBUILD_SHARED_LIBS=ON \
+    -DENABLE_SHARED=ON \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DINSTALL_DOC_DIR=%gammu_docdir \
     -DINSTALL_LIB_DIR=%_lib \
