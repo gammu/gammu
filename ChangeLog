@@ -19,6 +19,9 @@ ChangeLog
 
 [-] * Fix model name parsing.
 [-] * Fix reading of IrMC phonebook.
+[-] * Fix visibility of HAVE_STRUCT_TM_TM_ZONE in header files.
+[-] * Increase some timeouts in OBEX driver.
+[-] * Fix compilation on s390.
     
 20081218 - 1.22.0
 
