@@ -1154,7 +1154,8 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 	/* Go before last char */
 	pos2--;
-	while(iswspace(*pos2) && pos2 > pos) {
+	while(isspace(*pos2) && pos2 > pos) {
+		printf("%c\n", *pos2);
 		pos2--;
 	}
 
@@ -1165,22 +1166,25 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				GSM_MAX_MODEL_LENGTH);
 	}
 
-	strncpy(Data->Model, pos, MIN(pos2 - pos, GSM_MAX_MODEL_LENGTH));
+	strncpy(Data->Model, pos, MIN(1 + pos2 - pos, GSM_MAX_MODEL_LENGTH));
+	printf("%s\n%s\n", Data->Model, pos);
 	Data->Model[1 + pos2 - pos] = 0;
 
 	Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
+
 	if (Data->ModelInfo->number[0] == 0)
 		Data->ModelInfo = GetModelData(s, NULL, NULL, Data->Model);
+
 	if (Data->ModelInfo->number[0] == 0)
 		Data->ModelInfo = GetModelData(s, Data->Model, NULL, NULL);
 
-	if (Data->ModelInfo->number[0] != 0) {
+	if (Data->ModelInfo->number[0] == 0) {
 		smprintf(s, "Unknown model, but it should still work\n");
-		strcpy(Data->Model,Data->ModelInfo->number);
 	}
 
 	smprintf(s, "[Model name: `%s']\n", Data->Model);
 	smprintf(s, "[Model data: `%s']\n", Data->ModelInfo->number);
+	smprintf(s, "[Model data: `%s']\n", Data->ModelInfo->model);
 
 	return ERR_NONE;
 }

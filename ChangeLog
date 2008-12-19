@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2008???? - 1.22.90
+
+[-] * Fix model name parsing.
     
 20081218 - 1.22.0
 
