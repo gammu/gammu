@@ -598,7 +598,7 @@ void GSM_TweakInternationalNumber(unsigned char *Number, const GSM_NumberType nu
 /**
  * \bug We should avoid using static buffers here.
  */
-GSM_Error GSM_DecodeVCARD(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version UNUSED)
+GSM_Error GSM_DecodeVCARD(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version)
 {
 	char   Buff[20000];
 	int	     Level = 0;
@@ -609,8 +609,10 @@ GSM_Error GSM_DecodeVCARD(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk, GSM_V
 
 	Buff[0]	 = 0;
 	Pbk->EntriesNum = 0;
-	Pbk->Location = 0;
-	Pbk->MemoryType = MEM_MT;
+	if (Version != SonyEricsson_VCard21_Phone) {
+		Pbk->Location = 0;
+		Pbk->MemoryType = MEM_MT;
+	}
 
 	while (1) {
 		free(Line);

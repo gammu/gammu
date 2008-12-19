@@ -573,6 +573,11 @@ typedef enum {
 	 * vCard).
 	 */
 	SonyEricsson_VCard21,
+	/**
+	 * vCard 2.1 hacked for Sony-Ericsson (should be standard
+	 * vCard) from phone (no parsing of location and memory type).
+	 */
+	SonyEricsson_VCard21_Phone,
 } GSM_VCardVersion;
 
 /**
