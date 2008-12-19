@@ -1155,7 +1155,6 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	/* Go before last char */
 	pos2--;
 	while(isspace(*pos2) && pos2 > pos) {
-		printf("%c\n", *pos2);
 		pos2--;
 	}
 
@@ -1167,7 +1166,6 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	}
 
 	strncpy(Data->Model, pos, MIN(1 + pos2 - pos, GSM_MAX_MODEL_LENGTH));
-	printf("%s\n%s\n", Data->Model, pos);
 	Data->Model[1 + pos2 - pos] = 0;
 
 	Data->ModelInfo = GetModelData(s, NULL, Data->Model, NULL);
