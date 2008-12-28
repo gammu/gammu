@@ -101,12 +101,12 @@ void execute_one_action(unsigned char *buf3)
 					b+=13;
 					num2=atoi(b);
 					while (b[0] >= '0' && b[0] <= '9') b++;
-					sprintf(buffe[num],"%s%s",buffe[num],Row3[num2-1]);
+                    strcat(buffe[num],Row3[num2-1]);
 				} else if (strstr(b,"daemon2_column") == b) {
 					b+=14;
 					num2=atoi(b);
 					while (b[0] >= '0' && b[0] <= '9') b++;
-					sprintf(buffe[num],"%s%s",buffe[num],Row4[num2-1]);
+                    strcat(buffe[num],Row4[num2-1]);
 				} else {
 					buffe[num][strlen(buffe[num])+1] = 0;
 					buffe[num][strlen(buffe[num])]   = b[0];
@@ -118,12 +118,12 @@ void execute_one_action(unsigned char *buf3)
 				b+=13;
 				num2=atoi(b);
 				while (b[0] >= '0' && b[0] <= '9') b++;
-				sprintf(buf4,"%s%s",buf4,Row3[num2-1]);
+				strcat(buf4,Row3[num2-1]);
 			} else if (strstr(b,"daemon2_column") == b) {
 				b+=14;
 				num2=atoi(b);
 				while (b[0] >= '0' && b[0] <= '9') b++;
-				sprintf(buf4,"%s%s",buf4,Row4[num2-1]);
+				strcat(buf4,Row4[num2-1]);
 			} else {
 				buf4[strlen(buf4)+1] = 0;
 				buf4[strlen(buf4)]   = b[0];
