@@ -2,14 +2,14 @@
 #############################################################
 ## API gammu / mysql / php by Hugo Pinto ( hugo@bragatel.pt )
 ## NAME: InterGammu
-## Description: Interact with your server thru gsm 
+## Description: Interact with your server thru gsm
 ##
-## i.e. 1 : send a sms to your gammu connected server's mobile phone, 
-##          with the text "ADMIN IP", 
-##          and you'll receive a sms with the server's current IP. 
-## i.e. 2 : send a sms to your gammu connected server's mobile phone, 
-##          with the text "ADMIN UPTIME", 
-##          and you'll receive a sms with the server's uptime detail. 
+## i.e. 1 : send a sms to your gammu connected server's mobile phone,
+##          with the text "ADMIN IP",
+##          and you'll receive a sms with the server's current IP.
+## i.e. 2 : send a sms to your gammu connected server's mobile phone,
+##          with the text "ADMIN UPTIME",
+##          and you'll receive a sms with the server's uptime detail.
 ##feel free to add more commands
 ##
 ## For any qustions and if you have any sugestions you can mail me at hugo@bragatel.pt
@@ -25,10 +25,10 @@ $mysql_db = "sms";
 
 
 ##Allowed SMSC's
-$smsc = array('vodafone' => "+351911616161",		/* Número do centro de mensagens Vodafone (ex.: "+351911616161")*/
-			  'tmn' => "+351962100000",				/* Número do centro de mensagens TMN*/
-			  'optimus' => "+35193121314" 			/* Número do centro de mensagens Optimus*/
-		);											
+$smsc = array('vodafone' => "+351911616161",		/* NÃºmero do centro de mensagens Vodafone (ex.: "+351911616161")*/
+			  'tmn' => "+351962100000",				/* NÃºmero do centro de mensagens TMN*/
+			  'optimus' => "+35193121314" 			/* NÃºmero do centro de mensagens Optimus*/
+		);
 
 ##adminsphone : some procedures will only be allowed if requested by these phone number:
 $adminsphone = "+351917520623";
@@ -47,20 +47,20 @@ include('funcoes/func.gammu.php');
 /*
 for this to work properly, it must be added this table to de SMS database:
 ###########################################################################
--- 
+--
 -- Table structure for table `proclast`
--- 
+--
 
 CREATE TABLE `proclast` (
   `lastinbox` int(11) unsigned NOT NULL default '0',
   KEY `lastinbox` (`lastinbox`)
-) 
+)
 
 TYPE=MyISAM;
 
--- 
+--
 -- Dumping data for table `proclast`
--- 
+--
 
 INSERT INTO `proclast` VALUES (1);
 
