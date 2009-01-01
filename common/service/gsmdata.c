@@ -842,8 +842,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				while (file->Buffer[pos+i]!=0x00) i++;
 				break;
 			case 0x89:
-				buff[0] = 0;
-				sprintf(buff,"%s; type=",buff);
+				strcpy(buff, "; type=");
 				i++;
 				while (file->Buffer[pos+i]!=0x00) {
 					buff[strlen(buff)+1] = 0;
@@ -853,8 +852,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				i++;
 				break;
 			case 0x8A:
-				buff[0] = 0;
-				sprintf(buff,"%s; start=",buff);
+				strcpy(buff, "; type=");
 				i++;
 				while (file->Buffer[pos+i]!=0x00) {
 					buff[strlen(buff)+1] = 0;
