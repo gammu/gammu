@@ -58,6 +58,22 @@ PRINTF_STYLE(1, 2)
 void WriteSMSDLog(const char *format, ...);
 
 
+/**
+ * Flags SMSD daemon to terminate itself gracefully.
+ *
+ * \param Config Pointer to SMSD configuration data.
+ */
+void SMSD_Shutdown(GSM_SMSDConfig *Config);
+
+GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, char *service);
+
+void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bool exitprogram, int rc);
+
+GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config);
+
+GSM_SMSDConfig *SMSD_NewConfig(void);
+
+void SMSD_FreeConfig(GSM_SMSDConfig *config);
 #endif
 
 /* Editor configuration

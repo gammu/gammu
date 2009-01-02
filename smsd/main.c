@@ -3,10 +3,43 @@
  */
 /* Copyright (c) 2009 Michal Cihar <michal@cihar.com> */
 
-#include "gammu-smsd.h"
+#include <signal.h>
+#include <gammu-smsd.h>
+#include <assert.h>
+
+GSM_SMSDConfig *config;
+
+void smsd_interrupt(int signum)
+{
+	SMSD_Shutdown(config);
+	signal(signum, SIG_IGN);
+}
 
 int main(int argc, char **argv)
 {
-	SMSDaemon(argc, argv);
+	GSM_Error error;
+	char *filename;
+
+	config = SMSD_NewConfig();
+	assert(config != NULL);
+
+	/* FIXME: This is cruel hack */
+	filename = argv[1];
+
+	error = SMSD_ReadConfig(filename, config, true, NULL);
+	if (error != ERR_NONE) {
+		SMSD_Terminate(config, "Failed to read config", error, true, 2);
+	}
+
+	signal(SIGINT, smsd_interrupt);
+	signal(SIGTERM, smsd_interrupt);
+
+	error = SMSD_MainLoop(config);
+	if (error != ERR_NONE) {
+		SMSD_Terminate(config, "Failed to run SMSD", error, true, 2);
+	}
+
+	SMSD_FreeConfig(config);
+
 	return 0;
 }
