@@ -1,7 +1,7 @@
 /**
  * \file gammu-callback.h
  * \author Michal Čihař
- * 
+ *
  * Callback handlers.
  */
 #ifndef __gammu_callback_h
@@ -21,21 +21,21 @@
  *
  * \ingroup Callback
  */
-typedef void (*IncomingCallCallback) (GSM_StateMachine * s, GSM_Call call);
+typedef void (*IncomingCallCallback) (GSM_StateMachine * s, GSM_Call call, void *user_data);
 
 /**
  * Callback for incoming SMS.
  *
  * \ingroup Callback
  */
-typedef void (*IncomingSMSCallback) (GSM_StateMachine * s, GSM_SMSMessage sms);
+typedef void (*IncomingSMSCallback) (GSM_StateMachine * s, GSM_SMSMessage sms, void *user_data);
 
 /**
  * Callback for incoming cell broadcast.
  *
  * \ingroup Callback
  */
-typedef void (*IncomingCBCallback) (GSM_StateMachine * s, GSM_CBMessage cb);
+typedef void (*IncomingCBCallback) (GSM_StateMachine * s, GSM_CBMessage cb, void *user_data);
 
 /**
  * Callback for icoming USSD.
@@ -43,7 +43,7 @@ typedef void (*IncomingCBCallback) (GSM_StateMachine * s, GSM_CBMessage cb);
  * \ingroup Callback
  */
 typedef void (*IncomingUSSDCallback) (GSM_StateMachine * s,
-				      GSM_USSDMessage ussd);
+				      GSM_USSDMessage ussd, void *user_data);
 
 /**
  * Callback for sending SMS.
@@ -51,62 +51,67 @@ typedef void (*IncomingUSSDCallback) (GSM_StateMachine * s,
  * \ingroup Callback
  */
 typedef void (*SendSMSStatusCallback) (GSM_StateMachine * s, int status,
-				       int MessageReference);
+				       int MessageReference, void *user_data);
 
 /**
  * Sets callback for incoming calls.
  *
  * \param s State machine.
  * \param callback Pointer to callback function.
+ * \param user_data Second parameter which will be passed to callback.
  *
  * \ingroup Callback
  */
 void GSM_SetIncomingCallCallback(GSM_StateMachine * s,
-				 IncomingCallCallback callback);
+				 IncomingCallCallback callback, void *user_data);
 
 /**
  * Sets callback for incoming SMSes.
  *
  * \param s State machine.
  * \param callback Pointer to callback function.
+ * \param user_data Second parameter which will be passed to callback.
  *
  * \ingroup Callback
  */
 void GSM_SetIncomingSMSCallback(GSM_StateMachine * s,
-				IncomingSMSCallback callback);
+				IncomingSMSCallback callback, void *user_data);
 
 /**
  * Sets callback for incoming CB.
  *
  * \param s State machine.
  * \param callback Pointer to callback function.
+ * \param user_data Second parameter which will be passed to callback.
  *
  * \ingroup Callback
  */
 void GSM_SetIncomingCBCallback(GSM_StateMachine * s,
-			       IncomingCBCallback callback);
+			       IncomingCBCallback callback, void *user_data);
 
 /**
  * Sets callback for incoming USSD.
  *
  * \param s State machine.
  * \param callback Pointer to callback function.
+ * \param user_data Second parameter which will be passed to callback.
  *
  * \ingroup Callback
  */
 void GSM_SetIncomingUSSDCallback(GSM_StateMachine * s,
-				 IncomingUSSDCallback callback);
+				 IncomingUSSDCallback callback, void *user_data);
 
 /**
  * Sets callback for sending SMS.
  *
  * \param s State machine.
  * \param callback Pointer to callback function.
+ * \param user_data Second parameter which will be passed to callback.
  *
  * \ingroup Callback
  */
 void GSM_SetSendSMSStatusCallback(GSM_StateMachine * s,
-				  SendSMSStatusCallback callback);
+				  SendSMSStatusCallback callback, void *user_data);
 #endif
 
 /* Editor configuration

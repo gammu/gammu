@@ -1339,7 +1339,7 @@ static GSM_Error N6110_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine 
         if (call.CallIDAvailable) smprintf(s, "Call ID    : %d\n",msg.Buffer[4]);
         if (Data->EnableIncomingCall && s->User.IncomingCall!=NULL && call.Status != 0) {
                 if (call.CallIDAvailable) call.CallID = msg.Buffer[4];
-                s->User.IncomingCall(s, call);
+                s->User.IncomingCall(s, call, s->User.IncomingCallUserData);
         }
         if (s->Phone.Data.RequestID == ID_CancelCall) {
                 if (msg.Buffer[3] == 0x09) {
@@ -2092,7 +2092,7 @@ static GSM_Error N6110_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachi
                 sms.InboxFolder = true;
                 DCT3_DecodeSMSFrame(s, &sms,msg.Buffer+7);
 
-                s->User.IncomingSMS(s,sms);
+                s->User.IncomingSMS(s,sms, s->User.IncomingSMSUserData);
         }
         return ERR_NONE;
 }
@@ -2479,7 +2479,7 @@ GSM_Error N6110_ReplyUSSDInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		 * @todo: Should determine status.
 		 */
 		ussd.Status = USSD_Unknown;
-                s->User.IncomingUSSD(s, ussd);
+                s->User.IncomingUSSD(s, ussd, s->User.IncomingUSSDUserData);
         }
 
         return ERR_NONE;

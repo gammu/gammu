@@ -2539,11 +2539,11 @@ static GSM_Error N6510_ReplySendSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 	switch (msg.Buffer[8]) {
 	case 0x00:
 		smprintf(s, "SMS sent OK, TPMR for sent sms is %d\n",msg.Buffer[10]);
-		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s,0,msg.Buffer[10]);
+		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s,0,msg.Buffer[10], s->User.SendSMSStatusUserData);
 		return ERR_NONE;
 	default:
 		smprintf(s, "SMS not sent OK, error code probably %i\n",msg.Buffer[8]);
-		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s,msg.Buffer[8],msg.Buffer[10]);
+		if (s->User.SendSMSStatus!=NULL) s->User.SendSMSStatus(s,msg.Buffer[8],msg.Buffer[10], s->User.SendSMSStatusUserData);
 		return ERR_NONE;
 	}
 }
@@ -3440,7 +3440,7 @@ static GSM_Error N6510_ReplyIncomingSMS(GSM_Protocol_Message msg, GSM_StateMachi
 
 		N6510_DecodeSMSFrame(s, &sms, msg.Buffer+10,&i);
 
-		s->User.IncomingSMS(s,sms);
+		s->User.IncomingSMS(s,sms, s->User.IncomingSMSUserData);
 	}
 	return ERR_NONE;
 }

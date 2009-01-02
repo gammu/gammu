@@ -12,7 +12,7 @@ volatile GSM_Error sms_send_status;
 volatile bool gshutdown = false;
 
 /* Handler for SMS send reply */
-void send_sms_callback (GSM_StateMachine *sm, int status, int MessageReference)
+void send_sms_callback (GSM_StateMachine *sm, int status, int MessageReference, void * user_data)
 {
 	printf("Sent SMS on device: \"%s\"\n", GSM_GetConfig(sm, -1)->Device);
 	if (status==0) {
@@ -109,7 +109,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Set callback for message sending */
 	/* This needs to be done after initiating connection */
-	GSM_SetSendSMSStatusCallback(s, send_sms_callback);
+	GSM_SetSendSMSStatusCallback(s, send_sms_callback, NULL);
 
 	/* We need to know SMSC number */
 	PhoneSMSC.Location = 1;

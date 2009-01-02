@@ -1521,6 +1521,11 @@ struct _GSM_User {
 	IncomingCBCallback IncomingCB;
 	IncomingUSSDCallback IncomingUSSD;
 	SendSMSStatusCallback SendSMSStatus;
+	void * IncomingCallUserData;
+	void * IncomingSMSUserData;
+	void * IncomingCBUserData;
+	void * IncomingUSSDUserData;
+	void * SendSMSStatusUserData;
 };
 
 /* --------------------------- Statemachine layer -------------------------- */

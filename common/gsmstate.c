@@ -1461,29 +1461,34 @@ void GSM_GetPhoneFeaturesForBackup(GSM_StateMachine *s, GSM_Backup_Info *info)
 }
 #endif
 
-void GSM_SetIncomingCallCallback(GSM_StateMachine *s, IncomingCallCallback callback)
+void GSM_SetIncomingCallCallback(GSM_StateMachine *s, IncomingCallCallback callback, void *user_data)
 {
 	s->User.IncomingCall = callback;
+	s->User.IncomingCallUserData = user_data;
 }
 
-void GSM_SetIncomingSMSCallback(GSM_StateMachine *s, IncomingSMSCallback callback)
+void GSM_SetIncomingSMSCallback(GSM_StateMachine *s, IncomingSMSCallback callback, void *user_data)
 {
 	s->User.IncomingSMS = callback;
+	s->User.IncomingSMSUserData = user_data;
 }
 
-void GSM_SetIncomingCBCallback(GSM_StateMachine *s, IncomingCBCallback callback)
+void GSM_SetIncomingCBCallback(GSM_StateMachine *s, IncomingCBCallback callback, void *user_data)
 {
 	s->User.IncomingCB = callback;
+	s->User.IncomingCBUserData = user_data;
 }
 
-void GSM_SetIncomingUSSDCallback(GSM_StateMachine *s, IncomingUSSDCallback callback)
+void GSM_SetIncomingUSSDCallback(GSM_StateMachine *s, IncomingUSSDCallback callback, void *user_data)
 {
 	s->User.IncomingUSSD = callback;
+	s->User.IncomingUSSDUserData = user_data;
 }
 
-void GSM_SetSendSMSStatusCallback(GSM_StateMachine *s, SendSMSStatusCallback callback)
+void GSM_SetSendSMSStatusCallback(GSM_StateMachine *s, SendSMSStatusCallback callback, void *user_data)
 {
 	s->User.SendSMSStatus = callback;
+	s->User.SendSMSStatusUserData = user_data;
 }
 
 GSM_StateMachine *GSM_AllocStateMachine(void)

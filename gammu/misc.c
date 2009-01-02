@@ -191,7 +191,7 @@ void NetworkInfo(int argc UNUSED, char *argv[] UNUSED)
 	GSM_Terminate();
 }
 
-void IncomingCall(GSM_StateMachine *sm UNUSED, GSM_Call call)
+void IncomingCall(GSM_StateMachine *sm UNUSED, GSM_Call call, void *user_data)
 {
 	printf(LISTFORMAT, _("Call info"));
 	if (call.CallIDAvailable) printf(_("ID %i, "),call.CallID);
@@ -254,10 +254,10 @@ void Monitor(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	GSM_SetIncomingSMSCallback(gsm, IncomingSMS);
-	GSM_SetIncomingCBCallback(gsm, IncomingCB);
-	GSM_SetIncomingCallCallback(gsm, IncomingCall);
-	GSM_SetIncomingUSSDCallback(gsm, IncomingUSSD);
+	GSM_SetIncomingSMSCallback(gsm, IncomingSMS, NULL);
+	GSM_SetIncomingCBCallback(gsm, IncomingCB, NULL);
+	GSM_SetIncomingCallCallback(gsm, IncomingCall, NULL);
+	GSM_SetIncomingUSSDCallback(gsm, IncomingUSSD, NULL);
 
 	error=GSM_SetIncomingSMS  		(gsm,true);
 	printf("%-35s : %s\n", _("Enabling info about incoming SMS"), GSM_ErrorString(error));
@@ -521,7 +521,7 @@ void DialVoice(int argc, char *argv[])
 
 int TerminateID = -1;
 
-void IncomingCall0(GSM_StateMachine *sm UNUSED, GSM_Call call)
+void IncomingCall0(GSM_StateMachine *sm UNUSED, GSM_Call call, void * user_data)
 {
 	if (call.CallIDAvailable) TerminateID = call.CallID;
 }
@@ -543,7 +543,7 @@ void MakeTerminatedCall(int argc, char *argv[])
 	GSM_Init(true);
 
 	TerminateID = -1;
-	GSM_SetIncomingCallCallback(gsm, IncomingCall0);
+	GSM_SetIncomingCallCallback(gsm, IncomingCall0, NULL);
 
 	error=GSM_SetIncomingCall(gsm,true);
 	Print_Error(error);
