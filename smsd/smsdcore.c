@@ -36,15 +36,15 @@ static int	 TPMR;
 static GSM_Error SendingSMSStatus;
 GSM_SMSDConfig		SMSDaemon_Config;
 
-void SMSDShutdown(GSM_SMSDConfig *Config)
+void SMSD_Shutdown(GSM_SMSDConfig *Config)
 {
 	Config->shutdown = true;
 }
 
-void smsd_interrupt(int sign)
+void SMSDaemon_Interrupt(int sign)
 {
 	signal(sign, SIG_IGN);
-	SMSDShutdown(&SMSDaemon_Config);
+	SMSD_Shutdown(&SMSDaemon_Config);
 }
 
 void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr)
@@ -61,7 +61,7 @@ void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr)
 	}
 }
 
-void GSM_Terminate_SMSD(GSM_SMSDConfig *Config, const char *msg, int error, bool exitprogram, int rc)
+void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bool exitprogram, int rc)
 {
 	int ret = ERR_NONE;
 
@@ -107,6 +107,17 @@ void WriteSMSDLog(/* const GSM_SMSDConfig *Config, */const char *format, ...)
 	}
 }
 
+GSM_SMSDConfig *SMSD_NewConfig(void)
+{
+	return (GSM_SMSDConfig *)malloc(sizeof(GSM_SMSDConfig));
+}
+
+void SMSD_FreeConfig(GSM_SMSDConfig *config)
+{
+	free(config);
+}
+
+
 GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, char *service)
 {
 	INI_Section 		*smsdcfgfile = NULL;
@@ -117,6 +128,10 @@ GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, c
 	GSM_Error		error;
 
 	memset(&smsdcfg, 0, sizeof(smsdcfg));
+
+	Config->shutdown = false;
+	Config->gsm = NULL;
+	Config->logfilename = NULL;
 
 	error = INI_ReadFile(filename, false, &smsdcfgfile);
 	if (smsdcfgfile == NULL || error != ERR_NONE) {
@@ -283,7 +298,6 @@ GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, c
 	Config->retries 	  = 0;
 	Config->prevSMSID[0] 	  = 0;
 	Config->relativevalidity  = -1;
-	Config->shutdown = false;
 
 	return ERR_NONE;
 }
@@ -314,7 +328,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 			strcpy(SecurityCode.Code,Config->PINCode);
 			error=GSM_EnterSecurityCode(Config->gsm,SecurityCode);
 			if (error == ERR_SECURITYERROR) {
-				GSM_Terminate_SMSD(Config, "ERROR: incorrect PIN", error, true, -1);
+				SMSD_Terminate(Config, "ERROR: incorrect PIN", error, true, -1);
 			}
 			if (error != ERR_NONE) {
 				WriteSMSDLog(_("Error entering PIN (%s:%i)"), GSM_ErrorString(error), error);
@@ -327,7 +341,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	case SEC_Puk:
 	case SEC_Puk2:
 	case SEC_Phone:
-		GSM_Terminate_SMSD(Config, "ERROR: phone requires not supported code type", ERR_UNKNOWN, true, -1);
+		SMSD_Terminate(Config, "ERROR: phone requires not supported code type", ERR_UNKNOWN, true, -1);
 	case SEC_None:
 		break;
 	}
@@ -674,7 +688,7 @@ GSM_Error SMSGetService(GSM_SMSDConfig *Config, GSM_SMSDService **Service)
 	return ERR_NONE;
 }
 
-GSM_Error SMSDMainLoop(GSM_SMSDConfig *Config)
+GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 {
 	GSM_SMSDService		*Service;
 	GSM_Error		error;
@@ -683,12 +697,12 @@ GSM_Error SMSDMainLoop(GSM_SMSDConfig *Config)
 
 	error = SMSGetService(Config, &Service);
 	if (error!=ERR_NONE) {
-		GSM_Terminate_SMSD(Config, "Failed to setup SMSD service", error, true, -1);
+		SMSD_Terminate(Config, "Failed to setup SMSD service", error, true, -1);
 	}
 
 	error = Service->Init(Config);
 	if (error!=ERR_NONE) {
-		GSM_Terminate_SMSD(Config, "Initialisation failed, stopping Gammu smsd", error, true, -1);
+		SMSD_Terminate(Config, "Initialisation failed, stopping Gammu smsd", error, true, -1);
 	}
 
 	lastreceive		= time(NULL);
@@ -716,7 +730,7 @@ GSM_Error SMSDMainLoop(GSM_SMSDConfig *Config)
 					} else {
 						error = Service->InitAfterConnect(Config);
 						if (error!=ERR_NONE) {
-							GSM_Terminate_SMSD(Config, "Post initialisation failed, stopping Gammu smsd", error, true, -1);
+							SMSD_Terminate(Config, "Post initialisation failed, stopping Gammu smsd", error, true, -1);
 						}
 						GSM_SetFastSMSSending(Config->gsm, true);
 					}
@@ -733,7 +747,7 @@ GSM_Error SMSDMainLoop(GSM_SMSDConfig *Config)
 				}
 				break;
 			case ERR_DEVICEOPENERROR:
-				GSM_Terminate_SMSD(Config, "Can't open device",
+				SMSD_Terminate(Config, "Can't open device",
 						error, true, -1);
 				break;
 			default:
@@ -778,7 +792,7 @@ GSM_Error SMSDMainLoop(GSM_SMSDConfig *Config)
 		}
 	}
 	GSM_SetFastSMSSending(Config->gsm,false);
-	GSM_Terminate_SMSD(Config, "Stopping Gammu smsd", 0, false, 0);
+	SMSD_Terminate(Config, "Stopping Gammu smsd", ERR_NONE, false, 0);
 	return ERR_NONE;
 }
 
@@ -790,14 +804,14 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 
 	error = SMSD_ReadConfig(argv[3], &SMSDaemon_Config, true, argv[2]);
 	if (error != ERR_NONE) {
-		GSM_Terminate_SMSD(&SMSDaemon_Config, "Failed to read config, stopping Gammu smsd", error, true, -1);
+		SMSD_Terminate(&SMSDaemon_Config, "Failed to read config, stopping Gammu smsd", error, true, -1);
 	}
 
-	signal(SIGINT, smsd_interrupt);
-	signal(SIGTERM, smsd_interrupt);
+	signal(SIGINT, SMSDaemon_Interrupt);
+	signal(SIGTERM, SMSDaemon_Interrupt);
 	fprintf(stderr,"Press Ctrl+C to stop the program ...\n");
 
-	SMSDMainLoop(&SMSDaemon_Config);
+	SMSD_MainLoop(&SMSDaemon_Config);
 }
 
 GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *sms)
