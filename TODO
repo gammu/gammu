@@ -1,6 +1,7 @@
 Short term todo list for 1.23.0:
 
 - separate SMSD
+- getopt in SMSD?
 
 Optional:
 
