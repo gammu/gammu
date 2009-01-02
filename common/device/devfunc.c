@@ -185,7 +185,7 @@ GSM_Error socket_close(GSM_StateMachine *s UNUSED, socket_type hPhone)
  * in lock_device
  */
 #if !defined(WIN32) && !defined(DJGPP)
-GSM_Error lock_device(const char* port, char **lock_name)
+GSM_Error lock_device(GSM_StateMachine *s, const char* port, char **lock_name)
 {
 	char 		*lock_file = NULL;
 	char 		buffer[max_buf_len];
@@ -197,7 +197,7 @@ GSM_Error lock_device(const char* port, char **lock_name)
 	int 	pid, n = 0;
 
 
-	dbgprintf("Locking device\n");
+	smprintf(s, "Locking device\n");
 
 	aux = strrchr(port, '/');
 	/* Remove leading '/' */
@@ -212,7 +212,7 @@ GSM_Error lock_device(const char* port, char **lock_name)
 	memset(buffer, 0, sizeof(buffer));
 	lock_file = calloc(len + 1, 1);
 	if (!lock_file) {
-		dbgprintf("Out of memory error while locking device\n");
+		smprintf(s, "Out of memory error while locking device\n");
 		return ERR_MOREMEMORY;
 	}
 	/* I think we don't need to use strncpy, as we should have enough
@@ -241,7 +241,7 @@ GSM_Error lock_device(const char* port, char **lock_name)
 			/* We could make it from buf, but we would have to care about endians. */
 			n = read(fd, &pid, sizeof(int));
 			if (n != 4) {
-				dbgprintf("Reading lock for second time failed\n");
+				smprintf(s, "Reading lock for second time failed\n");
 				goto failread;
 
 			}
@@ -253,15 +253,15 @@ GSM_Error lock_device(const char* port, char **lock_name)
 
 
 		if (pid > 0 && kill((pid_t)pid, 0) < 0 && errno == ESRCH) {
-			dbgprintf("Lockfile %s is stale. Overriding it..\n", lock_file);
+			smprintf(s, "Lockfile %s is stale. Overriding it..\n", lock_file);
 			if (unlink(lock_file) != 0) {
-				dbgprintf("Overriding failed, please check the permissions\n");
-				dbgprintf("Cannot lock device\n");
+				smprintf(s, "Overriding failed, please check the permissions\n");
+				smprintf(s, "Cannot lock device\n");
 				error = ERR_PERMISSION;
 				goto failed;
 			}
 		} else {
-			dbgprintf("Device already locked by PID %d.\n", pid);
+			smprintf(s, "Device already locked by PID %d.\n", pid);
 			error = ERR_DEVICELOCKED;
 			goto failed;
 		}
@@ -271,16 +271,16 @@ GSM_Error lock_device(const char* port, char **lock_name)
 	fd = open(lock_file, O_CREAT | O_EXCL | O_WRONLY, 0644);
 	if (fd == -1) {
 		if (errno == EEXIST) {
-			dbgprintf("Device seems to be locked by unknown process\n");
+			smprintf(s, "Device seems to be locked by unknown process\n");
 			error = ERR_DEVICEOPENERROR;
 		} else if (errno == EACCES) {
-			dbgprintf("Please check permission on lock directory\n");
+			smprintf(s, "Please check permission on lock directory\n");
 			error = ERR_PERMISSION;
 		} else if (errno == ENOENT) {
-			dbgprintf("Cannot create lockfile %s. Please check for existence of path\n", lock_file);
+			smprintf(s, "Cannot create lockfile %s. Please check for existence of path\n", lock_file);
 			error = ERR_UNKNOWN;
 		} else {
-			dbgprintf("Unknown error with creating lockfile %s\n", lock_file);
+			smprintf(s, "Unknown error with creating lockfile %s\n", lock_file);
 			error = ERR_UNKNOWN;
 		}
 		goto failed;
@@ -294,9 +294,9 @@ GSM_Error lock_device(const char* port, char **lock_name)
 	*lock_name = lock_file;
 	return ERR_NONE;
 failread:
-	dbgprintf("Unable to read lockfile %s.\n", lock_file);
-	dbgprintf("Please check for reason and remove the lockfile by hand.\n");
-	dbgprintf("Cannot lock device\n");
+	smprintf(s, "Unable to read lockfile %s.\n", lock_file);
+	smprintf(s, "Please check for reason and remove the lockfile by hand.\n");
+	smprintf(s, "Cannot lock device\n");
 	error = ERR_UNKNOWN;
 failed:
 	free(lock_file);
@@ -304,7 +304,7 @@ failed:
 	return error;
 }
 #else
-GSM_Error lock_device(const char* port UNUSED, char **lock_name)
+GSM_Error lock_device(GSM_StateMachine *s UNUSED, const char* port UNUSED, char **lock_name)
 {
 	*lock_name = NULL;
 	return ERR_NONE;
@@ -313,12 +313,12 @@ GSM_Error lock_device(const char* port UNUSED, char **lock_name)
 
 /* Removes lock and frees memory */
 #if !defined(WIN32) && !defined(DJGPP)
-bool unlock_device(char **lock_file)
+bool unlock_device(GSM_StateMachine *s, char **lock_file)
 {
 	int err;
 
-	if (!lock_file) {
-		dbgprintf("Cannot unlock device\n");
+	if (lock_file == NULL || *lock_file == NULL) {
+		smprintf(s, "Cannot unlock device\n");
 		return false;
 	}
 	err = unlink(*lock_file);
@@ -327,7 +327,7 @@ bool unlock_device(char **lock_file)
 	return (err + 1);
 }
 #else
-bool unlock_device(char **lock_file UNUSED)
+bool unlock_device(GSM_StateMachine *s UNUSED, char **lock_file UNUSED)
 {
 	return true;
 }

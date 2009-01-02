@@ -157,7 +157,6 @@ THREAD_RETURN SearchPhoneThread(void * arg)
 
 		if (error != ERR_DEVICEOPENERROR) {
 			GSM_TerminateConnection(search_gsm);
-			dbgprintf("Closing done\n");
 		}
 
 		if (error == ERR_DEVICEOPENERROR)
@@ -183,14 +182,14 @@ void MakeSearchThread(int i)
 	if (pthread_create
 	    (&Threads[i], NULL, SearchPhoneThread,
 	     &SearchDevices[i]) != 0) {
-		dbgprintf("Error creating thread\n");
+		fprintf(stderr, _("Error creating thread\n"));
 	}
 #else
 	Threads[i] = CreateThread((LPSECURITY_ATTRIBUTES) NULL, 0,
 			 (LPTHREAD_START_ROUTINE) SearchPhoneThread,
 			 &SearchDevices[i], 0, NULL);
 	if (Threads[i] 	== NULL) {
-		dbgprintf("Error creating thread\n");
+		fprintf(stderr, _("Error creating thread\n"));
 	}
 #endif
 }

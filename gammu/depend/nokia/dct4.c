@@ -419,8 +419,8 @@ static GSM_Error DCT4_ReplyVibra(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 {
 #ifdef DEBUG
 	switch (msg.Buffer[3]) {
-		case 0x0D : dbgprintf("Vibra state set OK\n"); break;
-		case 0x0F : dbgprintf("Vibra power set OK\n"); break;
+		case 0x0D : smprintf(sm, "Vibra state set OK\n"); break;
+		case 0x0F : smprintf(sm, "Vibra power set OK\n"); break;
 	}
 #endif
 	return ERR_NONE;
@@ -588,9 +588,9 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMac
 
 	switch (msg.Buffer[3]) {
 	case 0x05:
-		dbgprintf("Part of voice record received\n");
+		smprintf(sm, "Part of voice record received\n");
 		if (msg.Length == 6) {
-			dbgprintf("Empty\n");
+			smprintf(sm, "Empty\n");
 			return ERR_EMPTY;
 		}
  		*sm->Phone.Data.VoiceRecord = 0;
@@ -601,20 +601,20 @@ static GSM_Error DCT4_ReplyGetVoiceRecord(GSM_Protocol_Message msg, GSM_StateMac
 		}
 		return ERR_NONE;
 	case 0x0D:
-		dbgprintf("Last part of voice record is %02x %02x\n",msg.Buffer[11],msg.Buffer[12]);
-		dbgprintf("Token is %02x\n",msg.Buffer[13]);
+		smprintf(sm, "Last part of voice record is %02x %02x\n",msg.Buffer[11],msg.Buffer[12]);
+		smprintf(sm, "Token is %02x\n",msg.Buffer[13]);
  		sm->Phone.Data.PhoneString[0] = msg.Buffer[11];
  		sm->Phone.Data.PhoneString[1] = msg.Buffer[12];
  		sm->Phone.Data.PhoneString[2] = msg.Buffer[13];
 		return ERR_NONE;
 	case 0x31:
-		dbgprintf("Names of voice records received\n");
+		smprintf(sm, "Names of voice records received\n");
 		j = 33;
 		for (i = 0; i < (size_t)msg.Buffer[9]; i++) {
 			memcpy(Buffer,msg.Buffer+(j+1),msg.Buffer[j]);
 			Buffer[msg.Buffer[j]] 	= 0;
 			Buffer[msg.Buffer[j]+1] = 0;
-			dbgprintf(SIZE_T_FORMAT ". \"%s\"\n",i+1,DecodeUnicodeString(Buffer));
+			smprintf(sm, SIZE_T_FORMAT ". \"%s\"\n",i+1,DecodeUnicodeString(Buffer));
  			if (i==*sm->Phone.Data.VoiceRecord) {
  				sprintf(sm->Phone.Data.PhoneString,"%s->wav",DecodeUnicodeString(Buffer));
 				return ERR_NONE;
@@ -691,13 +691,13 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 
 	gsm->Phone.Data.VoiceRecord 	= &Location;
 	gsm->Phone.Data.PhoneString 	= FileName;
-	dbgprintf("Getting voice record name\n");
+	smprintf(gsm, "Getting voice record name\n");
 	error=GSM_WaitFor (gsm, ReqNames, 14, 0x4A, 4, ID_User4);
 	Print_Error(error);
 
 	gsm->Phone.Data.PhoneString 	= Buffer;
 	ReqToken[7] 			= Location;
-	dbgprintf("Getting voice record token\n");
+	smprintf(gsm, "Getting voice record token\n");
 	error=GSM_WaitFor (gsm, ReqToken, 10, 0x23, 4, ID_User4);
 	Print_Error(error);
 	TokenLocation 			= Buffer[0] * 256 + Buffer[1];
@@ -717,7 +717,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 	ReqGet[7]			= Location;
 	fprintf(stderr,"Getting voice record and saving to \"%s\": ",FileName);
 	while (1) {
-		dbgprintf("Getting next part of voice record\n");
+		smprintf(gsm, "Getting next part of voice record\n");
 		fprintf(stderr,".");
 		error=GSM_WaitFor (gsm, ReqGet, 18, 0x23, 4, ID_User4);
 		if (error == ERR_NONE) {
@@ -731,7 +731,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		ReqGet[12] = CurrentLocation % 256;
 		if (CurrentLocation+4 > TokenLocation) break;
 	}
-	dbgprintf("Getting first part in last sequence of voice record\n");
+	smprintf(gsm, "Getting first part in last sequence of voice record\n");
 	for (i=255;i>=0;i--) {
 		ReqGet[16] = i;
 		ReqGet[17] = Token;
@@ -745,7 +745,7 @@ void DCT4GetVoiceRecord(int argc, char *argv[])
 		if (error != ERR_EMPTY) Print_Error(error);
 	}
 	while (1) {
-		dbgprintf("Getting next part of last sequence in voice record\n");
+		smprintf(gsm, "Getting next part of last sequence in voice record\n");
 		CurrentLocation += 4;
 		ReqGet[11] = CurrentLocation / 256;
 		ReqGet[12] = CurrentLocation % 256;
@@ -804,10 +804,10 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 
 	switch (msg.Buffer[3]) {
 	case 0x0D:
-		dbgprintf("Simlock info received\n");
-		dbgprintf("Config_Data: ");
+		smprintf(sm, "Simlock info received\n");
+		smprintf(sm, "Config_Data: ");
 		for (i=14;i<22;i++) {
-			dbgprintf("%02x",msg.Buffer[i]);
+			smprintf(sm, "%02x",msg.Buffer[i]);
 		}
 		sprintf(buff,"%02x%02x%02x",msg.Buffer[14],msg.Buffer[15],msg.Buffer[16]);
 		buff[6] = 0;
@@ -821,21 +821,21 @@ static GSM_Error DCT4_ReplyGetSimlock(GSM_Protocol_Message msg, GSM_StateMachine
 				buff);
 		}
 
-		dbgprintf("\n");
-		dbgprintf("Profile_Bits: ");
+		smprintf(sm, "\n");
+		smprintf(sm, "Profile_Bits: ");
 		for (i=22;i<30;i++) {
-			dbgprintf("%02x",msg.Buffer[i]);
+			smprintf(sm, "%02x",msg.Buffer[i]);
 		}
-		dbgprintf("\n");
+		smprintf(sm, "\n");
 		return ERR_NONE;
 	case 0x13:
-		dbgprintf("Simlock info received\n");
+		smprintf(sm, "Simlock info received\n");
 		if (msg.Buffer[58] == 0x05 && msg.Buffer[59] == 0x02) {
-			dbgprintf("SIM_PATH: ");
+			smprintf(sm, "SIM_PATH: ");
 			for (i=44;i<52;i++) {
-				dbgprintf("%02x",msg.Buffer[i]);
+				smprintf(sm, "%02x",msg.Buffer[i]);
 			}
-			dbgprintf("\n");
+			smprintf(sm, "\n");
 			printf(LISTFORMAT, _("Simlock data"));
 			for (i=60;i<63;i++) {
 				printf("%02x",msg.Buffer[i]);
@@ -926,7 +926,7 @@ void DCT4GetT9(int argc, char *argv[])
 		Print_Error(error);
 		if (i==0) {
 			T9Dictionary = T9FullSize;
-			dbgprintf("T9 dictionary size is %i\n",T9Dictionary);
+			smprintf(gsm, "T9 dictionary size is %i\n",T9Dictionary);
 		}
 		i+=T9Size;
 	}
@@ -1178,13 +1178,13 @@ void DCT4TuneRadio(int argc, char *argv[])
 				diff = RadioFreq - FMStation[j].Frequency;
 			}
 			if (diff <= 0.2) {
-				dbgprintf("diff is %f\n",diff);
+				smprintf(gsm, "diff is %f\n",diff);
 				found = true;
 				break;
 			}
 		}
 		if (!found) {
-			dbgprintf("Adding %f, num %i\n",RadioFreq,num);
+			smprintf(gsm, "Adding %f, num %i\n",RadioFreq,num);
 			FMStation[num].Frequency = RadioFreq;
 			CopyUnicodeString(FMStation[num].StationName,RadioName);
 			num++;

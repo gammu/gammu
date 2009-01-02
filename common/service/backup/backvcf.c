@@ -6,7 +6,7 @@
 #include <gammu-config.h>
 
 #include "../../misc/coding/coding.h"
-#include "../../misc/misc.h"
+#include "../../debug.h"
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
 #include "backvcf.h"
@@ -33,7 +33,7 @@ GSM_Error SaveVCard(char *FileName, GSM_Backup *backup)
 	i=0;
 	while (backup->PhonePhonebook[i]!=NULL) {
 		Length = 0;
-		error = GSM_EncodeVCARD(Buffer, sizeof(Buffer), &Length,backup->PhonePhonebook[i],true,Nokia_VCard21);
+		error = GSM_EncodeVCARD(NULL, Buffer, sizeof(Buffer), &Length,backup->PhonePhonebook[i],true,Nokia_VCard21);
 		if (error != ERR_NONE) return error;
 		chk_fwrite(Buffer,1,Length,file);
 		sprintf(Buffer, "%c%c",13,10);
@@ -61,7 +61,7 @@ GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
 	if (error != ERR_NONE) return error;
 
 	while (1) {
-		error = GSM_DecodeVCARD(File.Buffer, &Pos, &Pbk, Nokia_VCard21);
+		error = GSM_DecodeVCARD(NULL, File.Buffer, &Pos, &Pbk, Nokia_VCard21);
 		if (error == ERR_EMPTY) break;
 		if (error != ERR_NONE) return error;
 		if (numPbk < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
@@ -69,7 +69,7 @@ GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
 		        if (backup->PhonePhonebook[numPbk] == NULL) return ERR_MOREMEMORY;
 			backup->PhonePhonebook[numPbk + 1] = NULL;
 		} else {
-			dbgprintf("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
+			dbgprintf(NULL, "Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
 			return ERR_MOREMEMORY;
 		}
 		memcpy(backup->PhonePhonebook[numPbk],&Pbk,sizeof(GSM_MemoryEntry));

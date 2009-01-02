@@ -14,6 +14,7 @@
 
 #include <gammu-datetime.h>
 #include <gammu-limits.h>
+#include <gammu-debug.h>
 
 /**
  * \defgroup Note Note
@@ -637,7 +638,7 @@ GSM_Error GSM_EncodeVNTFile(char *Buffer, const size_t buff_len, size_t *Length,
  *
  * \ingroup Calendar
  */
-GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos,
+GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Pos,
 				    GSM_CalendarEntry * Calendar,
 				    GSM_ToDoEntry * ToDo,
 				    GSM_VCalendarVersion CalVer,

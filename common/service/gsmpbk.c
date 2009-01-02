@@ -9,7 +9,7 @@
 #include <gammu-bitmap.h>
 
 #include "../misc/coding/coding.h"
-#include "../misc/misc.h"
+#include "../debug.h"
 #include "gsmpbk.h"
 #include "gsmmisc.h"
 
@@ -123,7 +123,7 @@ void GSM_PhonebookFindDefaultNameNumberGroup(const GSM_MemoryEntry *entry, int *
 }
 
 
-GSM_Error GSM_EncodeVCARD(char *Buffer, const size_t buff_len, size_t *Length, GSM_MemoryEntry *pbk, const bool header, const GSM_VCardVersion Version)
+GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_len, size_t *Length, GSM_MemoryEntry *pbk, const bool header, const GSM_VCardVersion Version)
 {
 	int Name, Number, Group, i;
 	int firstname = -1, lastname = -1;
@@ -381,7 +381,7 @@ GSM_Error GSM_EncodeVCARD(char *Buffer, const size_t buff_len, size_t *Length, G
 							error = VC_Store(Buffer, buff_len, Length, "PNG;");
 							break;
 						default:
-							dbgprintf("Unknown picture format: %d\n", bitmap->Type);
+							smfprintf(di, "Unknown picture format: %d\n", bitmap->Type);
 							error = VC_Store(Buffer, buff_len, Length, "UNKNOWN;");
 							break;
 					}
@@ -598,7 +598,7 @@ void GSM_TweakInternationalNumber(unsigned char *Number, const GSM_NumberType nu
 /**
  * \bug We should avoid using static buffers here.
  */
-GSM_Error GSM_DecodeVCARD(char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version)
+GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_MemoryEntry *Pbk, GSM_VCardVersion Version)
 {
 	char   Buff[20000];
 	int	     Level = 0;

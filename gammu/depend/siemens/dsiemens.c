@@ -55,14 +55,14 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *sm)
     	if (buf[3]!=0x26) return ERR_UNKNOWN;
 
 #ifdef DEBUG
-    	dbgprintf ("SAT command: Provide Local Information\nFunction: ");
+    	smprintf(sm, "SAT command: Provide Local Information\nFunction: ");
     	switch (buf[4]) {
-        	case 00: dbgprintf ("Loc Info\n");			break;
-		case 01: dbgprintf ("IMEI\n");				break;
-		case 02: dbgprintf ("Network Measure\n");		break;
-		case 03: dbgprintf ("Date time and timezone\n");	break;
-		case 04: dbgprintf ("Language setting\n");		break;
-		case 05: dbgprintf ("Timing advance\n");		break;
+        	case 00: smprintf(sm, "Loc Info\n");			break;
+		case 01: smprintf(sm, "IMEI\n");				break;
+		case 02: smprintf(sm, "Network Measure\n");		break;
+		case 03: smprintf(sm, "Date time and timezone\n");	break;
+		case 04: smprintf(sm, "Language setting\n");		break;
+		case 05: smprintf(sm, "Timing advance\n");		break;
     	}
 #endif
     	/* Loc Info (MCC, MNC, LAC, Cell ID) */
@@ -90,13 +90,13 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 	        if (result !=0x47) return ERR_NOTSUPPORTED;
 	    }
 #ifdef DEBUG
-	    if (new_variable)	dbgprintf ("New variable Bitmap format\n");
-	    else	 	dbgprintf ("Old variable Bitmap format\n");
+	    if (new_variable)	smprintf(sm, "New variable Bitmap format\n");
+	    else	 	smprintf(sm, "Old variable Bitmap format\n");
 #endif
             GetBufferI(buf+32,&j,&origARFCN,10);
 	/* 10 bit origin ARFCN or first frequency (new variable format) */
 #ifdef DEBUG
-	    dbgprintf("Origin BCCH = %i\n",origARFCN);
+	    smprintf(sm, "Origin BCCH = %i\n",origARFCN);
 #endif
             rep     = buf[31]*8;
 	    if (!new_variable ){
@@ -131,9 +131,9 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *sm)
 		}
 	    };
 #ifdef DEBUG
-    	dbgprintf("Neighbor BCCH list: ");
-	for (i=1;i<ChNo;i++) dbgprintf ("%d ",frequency[i]);
-	dbgprintf ("\n");
+    	smprintf(sm, "Neighbor BCCH list: ");
+	for (i=1;i<ChNo;i++) smprintf(sm, "%d ",frequency[i]);
+	smprintf(sm, "\n");
 #endif
 	j	= 0;
 	result	= 0;
@@ -209,8 +209,8 @@ GSM_Error ATSIEMENS_Reply_GetSAT(GSM_Protocol_Message msg, GSM_StateMachine *sm)
     	}
 #ifdef DEBUG
     	if  (buf[4]==05) {				//Timing Advance
-		if (buf[11]) dbgprintf ("Unknown Timing Advance\n");
-		else dbgprintf ("Timing Advance = %i\n",buf[14] & 0x3f);
+		if (buf[11]) smprintf(sm, "Unknown Timing Advance\n");
+		else smprintf(sm, "Timing Advance = %i\n",buf[14] & 0x3f);
     	}
 #endif
     	return ERR_NONE;

@@ -504,9 +504,9 @@ static GSM_Error DCT3_ReplyGetPPS(GSM_Protocol_Message msg, GSM_StateMachine *sm
 	int i,j,z;
 
 #ifdef DEBUG
-	dbgprintf("Product Profile Settings received -");
-	for (i=0;i<4;i++) dbgprintf(" %02x",msg.Buffer[3+i]);
-	dbgprintf("\n");
+	smprintf(sm, "Product Profile Settings received -");
+	for (i=0;i<4;i++) smprintf(sm, " %02x",msg.Buffer[3+i]);
+	smprintf(sm, "\n");
 #endif
 	j=128;z=0;
 	for (i=0;i<32;i++) {
@@ -518,9 +518,9 @@ static GSM_Error DCT3_ReplyGetPPS(GSM_Protocol_Message msg, GSM_StateMachine *sm
 		} else j=j/2;
 	}
 #ifdef DEBUG
-	dbgprintf("After decoding: ");
-	for (i=0;i<32;i++) dbgprintf("%c",PPS[i]);
-	dbgprintf("\n");
+	smprintf(sm, "After decoding: ");
+	for (i=0;i<32;i++) smprintf(sm, "%c",PPS[i]);
+	smprintf(sm, "\n");
 #endif
 	return ERR_NONE;
 }
@@ -578,9 +578,9 @@ void DCT3SetPhoneMenus(int argc, char *argv[])
 	}
 
 #ifdef DEBUG
-	dbgprintf("After settings: ");
-	for (i=0;i<32;i++) dbgprintf("%c",PPS[i]);
-	dbgprintf("\n");
+	smprintf(gsm, "After settings: ");
+	for (i=0;i<32;i++) smprintf(gsm, "%c",PPS[i]);
+	smprintf(gsm, "\n");
 #endif
 
 	j=128;z=0;
@@ -737,14 +737,14 @@ static GSM_Error DCT3_ReplyDisplayOutput(GSM_Protocol_Message msg, GSM_StateMach
 
 	switch (msg.Buffer[3]) {
 	case 0x50:
-		dbgprintf("Display string received\n");
+		smprintf(sm, "Display string received\n");
 		memcpy(buf,msg.Buffer+8,msg.Buffer[7]*2);
 		buf[msg.Buffer[7]*2]   = 0;
 		buf[msg.Buffer[7]*2+1] = 0;
 		printf("X=%i, Y=%i, Text=\"%s\"\n",msg.Buffer[6],msg.Buffer[5],DecodeUnicodeString(buf));
 		return ERR_NONE;
 	case 0x54:
-		dbgprintf("Display output set\n");
+		smprintf(sm, "Display output set\n");
 		return ERR_NONE;
 	}
 	return ERR_UNKNOWNRESPONSE;

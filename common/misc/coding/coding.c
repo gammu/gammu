@@ -25,7 +25,7 @@
 #  include <windows.h>
 #endif
 
-#include "../misc.h"
+#include "../../debug.h"
 #include "coding.h"
 
 /* function changes #10 #13 chars to \n \r */
@@ -774,7 +774,7 @@ int GSM_PackSevenBitsToEight(int offset, unsigned char *input, unsigned char *ou
         return (OUTPUT - output);
 }
 
-void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, bool semioctet)
+void GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, bool semioctet)
 {
 	unsigned char	Buffer[GSM_MAX_NUMBER_LENGTH + 1];
 	int		length		= Number[0];
@@ -790,7 +790,7 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 
 	/* Check length */
 	if (length > GSM_MAX_NUMBER_LENGTH) {
-		dbgprintf("Number too big, not decoding! (Length=%d, MAX=%d)\n", length, GSM_MAX_NUMBER_LENGTH);
+		smfprintf(di, "Number too big, not decoding! (Length=%d, MAX=%d)\n", length, GSM_MAX_NUMBER_LENGTH);
 		goto out;
 	}
 
@@ -800,17 +800,17 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 	switch ((Number[1] & 0x70)) {
 	case (NUMBER_ALPHANUMERIC_NUMBERING_PLAN_UNKNOWN & 0x70):
 		if (length > 6) length++;
-		dbgprintf("Alphanumeric number, length %i\n",length);
+		smfprintf(di, "Alphanumeric number, length %i\n",length);
 		GSM_UnpackEightBitsToSeven(0, length, length, Number+2, Buffer);
 		Buffer[length]=0;
 		break;
 	case (NUMBER_INTERNATIONAL_NUMBERING_PLAN_ISDN & 0x70):
-		dbgprintf("International number\n");
+		smfprintf(di, "International number\n");
 		Buffer[0]='+';
 		DecodeBCD(Buffer+1,Number+2, length);
 		break;
 	default:
-		dbgprintf("Default number %02x (%d %d %d %d|%d %d %d %d)\n",Number[1],
+		smfprintf(di, "Default number %02x (%d %d %d %d|%d %d %d %d)\n",Number[1],
 				Number[1] & 0x80 ? 1 : 0,
 				Number[1] & 0x40 ? 1 : 0,
 				Number[1] & 0x20 ? 1 : 0,
@@ -824,7 +824,7 @@ void GSM_UnpackSemiOctetNumber(unsigned char *retval, unsigned char *Number, boo
 		break;
 	}
 
-	dbgprintf("Len %i\n",length);
+	smfprintf(di, "Len %i\n",length);
 out:
 	EncodeUnicode(retval,Buffer,strlen(Buffer));
 }
@@ -1727,9 +1727,9 @@ void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len)
 		pos_end = strchr(pos, ';');
 		if (pos_end - pos > 6 || pos_end == NULL) {
 			if (pos_end == NULL) {
-				dbgprintf("No entity end found, ignoring!\n");
+				dbgprintf(NULL, "No entity end found, ignoring!\n");
 			} else {
-				dbgprintf("Too long html entity, ignoring!\n");
+				dbgprintf(NULL, "Too long html entity, ignoring!\n");
 			}
 			strncat(tmp, lastpos, 1);
 			lastpos++;
@@ -1739,7 +1739,7 @@ void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len)
 		/* strndup would be better, but not portable */
 		entity = strdup(pos);
 		entity[pos_end - pos] = 0;
-		dbgprintf("Found XML entity: %s\n", entity);
+		dbgprintf(NULL, "Found XML entity: %s\n", entity);
 		if (entity == NULL) break;
 		if (entity[0] == '#') {
 			if (entity[1] == 'x' || entity[1] == 'X') {
@@ -1747,7 +1747,7 @@ void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len)
 			} else {
 				c = strtoull(entity + 1, NULL, 10);
 			}
-			dbgprintf("Unicode char 0x%04lx\n", c);
+			dbgprintf(NULL, "Unicode char 0x%04lx\n", c);
 			tmplen = strlen(tmp);
 			tmplen += EncodeWithUTF8Alphabet((c >> 8) & 0xff, c & 0xff, tmp + tmplen);
 			tmp[tmplen] = 0;
@@ -1762,7 +1762,7 @@ void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len)
 		} else if (strcmp(entity, "quot") == 0) {
 			strcat(tmp, "\"");
 		} else {
-			dbgprintf("Could not decode XML entity!\n");
+			dbgprintf(NULL, "Could not decode XML entity!\n");
 			strncat(tmp, lastpos, pos_end - pos + 1);
 		}
 		lastpos = pos_end + 1;

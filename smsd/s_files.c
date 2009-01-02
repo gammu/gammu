@@ -253,7 +253,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		*pos1 = '\0'; pos1++; *pos1 = '\0';
 	}
 
-  	GSM_EncodeMultiPartSMS(&SMSInfo,sms);
+  	GSM_EncodeMultiPartSMS(GSM_GetDebug(Config->gsm), &SMSInfo,sms);
 
  	pos1 = FileName;
 	strcpy(ID,FileName);
@@ -290,7 +290,8 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  		EncodeUnicode(sms->SMS[len].Number, pos1, phlen);
  	}
 
-#ifdef DEBUG
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 	if (sms->Number != 0) {
 		DecodeUnicode(sms->SMS[0].Number,Buffer);
 	 	dbgprintf("Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",

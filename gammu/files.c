@@ -442,7 +442,7 @@ void GetOneFile(GSM_File * File, bool newtime, int i)
 				filedate.actime = Fill_Time_T(File->Modified);
 				/* modification time */
 				filedate.modtime = Fill_Time_T(File->Modified);
-				dbgprintf("Setting date of %s\n", buffer);
+				smprintf(gsm, "Setting date of %s\n", buffer);
 				utime(buffer, &filedate);
 			}
 		}
@@ -467,7 +467,7 @@ void GetFiles(int argc, char *argv[])
 
 		DecodeUTF8QuotedPrintable(File.ID_FullName, argv[i],
 					  strlen(argv[i]));
-		dbgprintf("grabbing '%s' '%s'\n",
+		smprintf(gsm, "grabbing '%s' '%s'\n",
 			  DecodeUnicodeString(File.ID_FullName), argv[i]);
 		GetOneFile(&File, newtime, i);
 	}
@@ -510,13 +510,13 @@ void GetFileFolder(int argc, char *argv[])
 				if (strcasecmp(argv[i], "-newtime") == 0) {
 					continue;
 				}
-				dbgprintf("comparing %s %s\n",
+				smprintf(gsm, "comparing %s %s\n",
 					  DecodeUnicodeString(File.ID_FullName),
 					  argv[i]);
 				DecodeUTF8QuotedPrintable(IDUTF, argv[i],
 							  strlen(argv[i]));
 				if (mywstrncasecmp(File.ID_FullName, IDUTF, 0)) {
-					dbgprintf("found folder");
+					smprintf(gsm, "found folder");
 					found = true;
 					if (File.Folder) {
 						level = 1;
@@ -533,7 +533,7 @@ void GetFileFolder(int argc, char *argv[])
 		}
 		if (level == 1) {
 			/* We have folder */
-			dbgprintf("%i %i\n", File.Level, filelevel);
+			smprintf(gsm, "%i %i\n", File.Level, filelevel);
 			if (File.Level != filelevel) {
 				level = 0;
 				num++;
@@ -569,7 +569,7 @@ void AddOneFile(GSM_File * File, const char *text, const bool send)
 	t_time1 = Fill_Time_T(dt);
 	old1 = 65536;
 
-	dbgprintf("Adding file to filesystem now\n");
+	smprintf(gsm, "Adding file to filesystem now\n");
 	error = ERR_NONE;
 	Pos = 0;
 	while (error == ERR_NONE) {

@@ -14,7 +14,7 @@ volatile bool gshutdown = false;
 /* Handler for SMS send reply */
 void send_sms_callback (GSM_StateMachine *sm, int status, int MessageReference)
 {
-	dbgprintf("Sent SMS on device: \"%s\"\n", GSM_GetConfig(sm, -1)->Device);
+	printf("Sent SMS on device: \"%s\"\n", GSM_GetConfig(sm, -1)->Device);
 	if (status==0) {
 		printf("..OK");
 		sms_send_status = ERR_NONE;

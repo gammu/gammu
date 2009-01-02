@@ -180,7 +180,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 			}
 			continue;
 		}
-		dbgprintf("entry num %i %i\n",i,entry->EntriesNum);
+		smprintf(s, "entry num %i %i\n",i,entry->EntriesNum);
 		if (entry->Entries[i].EntryType == PBK_Text_Note)   type = N7110_PBK_NOTE;
 		if (entry->Entries[i].EntryType == PBK_Text_Postal) {
 			if (!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_PBKNOPOSTAL)) {
@@ -1159,7 +1159,7 @@ GSM_Error DCT3DCT4_ReplyCallDivert(GSM_Protocol_Message msg, GSM_StateMachine *s
 			j = pos + 2;
 			while (msg.Buffer[j] != 0x00) j++;
 			msg.Buffer[pos+1] = j - pos - 2;
-			GSM_UnpackSemiOctetNumber(cd->Response.Entries[i].Number,msg.Buffer+(pos+1),false);
+			GSM_UnpackSemiOctetNumber(&(s->di), cd->Response.Entries[i].Number,msg.Buffer+(pos+1),false);
 	      		smprintf(s,"   Number     : %s\n",DecodeUnicodeString(cd->Response.Entries[i].Number));
 	        	cd->Response.Entries[i].Timeout = msg.Buffer[pos+34];
 	 	     	smprintf(s,"   Timeout    : %i seconds\n",msg.Buffer[pos+34]);
@@ -2095,7 +2095,7 @@ GSM_Error N71_65_AddCalendar2(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 		req[16] = (unsigned char)(-diff);
 	}
 
-	GSM_SetCalendarRecurranceRepeat(req+19, NULL, Note);
+	GSM_SetCalendarRecurranceRepeat(&(s->di), req+19, NULL, Note);
 
 	if (Text != -1) {
 		switch (NoteType) {
@@ -2244,7 +2244,7 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		break;
 	case GSM_CAL_MEMO:
 		/* byte 12 and 13 */
-		GSM_SetCalendarRecurranceRepeat(req+count, NULL, Note);
+		GSM_SetCalendarRecurranceRepeat(&(s->di), req+count, NULL, Note);
 		count+=2;
 
 		/* byte 14 and next */
@@ -2278,7 +2278,7 @@ GSM_Error N71_65_AddCalendar1(GSM_StateMachine *s, GSM_CalendarEntry *Note, int 
 		}
 
 		/* byte 16 and 17 */
-		GSM_SetCalendarRecurranceRepeat(req+count, NULL, Note);
+		GSM_SetCalendarRecurranceRepeat(&(s->di), req+count, NULL, Note);
 		count+=2;
 
 		/* byte 18 */
@@ -2425,7 +2425,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			entry->EntriesNum++;
 		}
-		GSM_GetCalendarRecurranceRepeat(msg.Buffer + 16, NULL, entry);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer + 16, NULL, entry);
 
 		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+20, msg.Buffer[18]*2);
 		entry->Entries[entry->EntriesNum].Text[msg.Buffer[18]*2]   = 0;
@@ -2446,7 +2446,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 			entry->Entries[1].EntryType = CAL_TONE_ALARM_DATETIME;
 			entry->EntriesNum++;
 		}
-		GSM_GetCalendarRecurranceRepeat(msg.Buffer + 16, NULL, entry);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer + 16, NULL, entry);
 
 		i = msg.Buffer[18] * 2;
 		if (i!=0) {
@@ -2518,7 +2518,7 @@ GSM_Error N71_65_ReplyGetNextCalendar1(GSM_Protocol_Message msg, GSM_StateMachin
 		entry->Entries[0].Date.Hour	= 0;
 		entry->Entries[0].Date.Minute	= 0;
 
-		GSM_GetCalendarRecurranceRepeat(msg.Buffer + 12, NULL, entry);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer + 12, NULL, entry);
 
 		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+16, msg.Buffer[14]*2);
 		entry->Entries[entry->EntriesNum].Text[msg.Buffer[14]*2]   = 0;

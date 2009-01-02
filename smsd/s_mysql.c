@@ -135,7 +135,10 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 
 	GSM_GetIMEI(Config->gsm, imei);
 	sprintf(buf,"DELETE FROM `phones` WHERE `IMEI` = '%s'", imei);
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 	dbgprintf("%s\n",buf);
+#endif
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
 		WriteSMSDLog(_("Error deleting from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
@@ -153,7 +156,10 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 
 	WriteSMSDLog(_("Communication established"));
 	sprintf(buf,"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0,'%s')",imei,Config->PhoneID,buf2);
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 	dbgprintf("%s\n",buf);
+#endif
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
 		WriteSMSDLog(_("Error inserting into database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
@@ -184,7 +190,10 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 					DeliveryDateTime='0000-00-00 00:00:00' AND \
 					SenderID='%s' AND TPMR='%i' AND DestinationNumber='%s'",
 					Config->PhoneID, sms->SMS[i].MessageReference, buffer2);
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 			dbgprintf("%s\n",buffer);
+#endif
 			if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
 				WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 				WriteSMSDLog(_("Failed query: %s\n"), buffer);
@@ -237,7 +246,10 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				}
 				sprintf(buffer+strlen(buffer),"', `StatusError` = '%i'",sms->SMS[i].DeliveryStatus);
 				sprintf(buffer+strlen(buffer)," WHERE `ID` = '%s' AND `TPMR` = '%i'",Row[0],sms->SMS[i].MessageReference);
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 				dbgprintf("%s\n",buffer);
+#endif
 				if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
 					WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 					// Do a reconnect when we catch a database down error
@@ -308,7 +320,10 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 			break;
 		}
 		sprintf(buffer+strlen(buffer),"','%s')",Config->PhoneID);
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 		dbgprintf("%s\n",buffer);
+#endif
 		if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
 			WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 			// Do a reconnect when we catch a database down error
@@ -337,7 +352,10 @@ static GSM_Error SMSDMySQL_RefreshSendStatus(GSM_SMSDConfig *Config, char *ID)
 		}
 		return ERR_UNKNOWN;
 	}
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 	dbgprintf("%s\n",buffer);
+#endif
 	if (mysql_affected_rows(&Config->DBConnMySQL) == 0) return ERR_UNKNOWN;
   	return ERR_NONE;
 }
@@ -399,7 +417,10 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		} else {
 			sprintf(buf, "SELECT Text,Coding,UDH,Class,TextDecoded,ID,SequencePosition FROM `outbox_multipart` WHERE ID='%s' AND SequencePosition='%i'",ID,i);
 		}
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 		dbgprintf("%s\n",buf);
+#endif
     		if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
 			WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 			// Do a reconnect when we catch a database down error
@@ -428,7 +449,10 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		if (!strcmp(Row[1],"Default_No_Compression")) sms->SMS[sms->Number].Coding=SMS_Coding_Default_No_Compression;
 
 		if (Row[0] == NULL || strlen(Row[0])==0) {
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 			dbgprintf("%s\n",Row[4]);
+#endif
 			DecodeUTF8(sms->SMS[sms->Number].Text,Row[4],strlen(Row[4]));
 		} else {
 			switch (sms->SMS[sms->Number].Coding) {
@@ -631,7 +655,10 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			while (true) {
 				ID++;
 				sprintf(buffer4,"SELECT ID FROM sentitems WHERE ID='%i'",ID);
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 				dbgprintf("%s\n",buffer4);
+#endif
 				if (mysql_real_query(&Config->DBConnMySQL,buffer4,strlen(buffer4))) {
 					WriteSMSDLog(_("Error reading from database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 					if (mysql_errno(&Config->DBConnMySQL)==2006){
@@ -653,7 +680,10 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 					buffer4[0] = 0;
 					strcpy(buffer4,buffer);
 					sprintf(buffer4+strlen(buffer4),"%i')",ID);
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 					dbgprintf("%s\n",buffer4);
+#endif
 					if (mysql_real_query(&Config->DBConnMySQL,buffer4,strlen(buffer4))) {
 						if (mysql_errno(&Config->DBConnMySQL) == ER_DUP_ENTRY) {
 							WriteSMSDLog(_("Duplicated outgoing SMS ID\n"));
@@ -676,7 +706,10 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		} else {
 			strcpy(buffer4,buffer);
 			sprintf(buffer4+strlen(buffer4),"%i')",ID);
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 			dbgprintf("%s\n",buffer4);
+#endif
 			if (mysql_real_query(&Config->DBConnMySQL,buffer4,strlen(buffer4))) {
 				WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 				// Do a reconnect when we catch a database down error
@@ -763,7 +796,10 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 	} else {
 		sprintf(buffer+strlen(buffer),"-1')");
 	}
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 	dbgprintf("%s\n",buffer);
+#endif
 	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
 		WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		// Do a reconnect when we catch a database down error
@@ -783,7 +819,10 @@ static GSM_Error SMSDMySQL_RefreshPhoneStatus(GSM_SMSDConfig *Config, GSM_Batter
 	sprintf(buffer,
 		"UPDATE `phones` SET `TimeOut`= (NOW() + INTERVAL 10 SECOND)+0, `Battery`= %d, `Signal`= %d WHERE `IMEI` = '%s'",
 		Battery->BatteryPercent, Signal->SignalPercent, Config->IMEI);
+/* FIXME: This should be enabled by SMSD configuration? */
+#if 0
 	dbgprintf("%s\n",buffer);
+#endif
 	if (mysql_real_query(&Config->DBConnMySQL,buffer,strlen(buffer))) {
 		WriteSMSDLog(_("Error writing to database (%s): %s\n"), __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		// Do a reconnect when we catch a database down error

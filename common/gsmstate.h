@@ -206,6 +206,8 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #include "service/sms/gsmmulti.h"
 #include "service/backup/gsmback.h"
 
+#include "debug.h"
+
 
 /* ------------------------- Device layer ---------------------------------- */
 

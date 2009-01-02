@@ -19,7 +19,7 @@
 #include <gammu-debug.h>
 
 #include "../misc/coding/coding.h"
-#include "../misc/misc.h"
+#include "../debug.h"
 #include "../gsmcomon.h"
 #include "gsmmisc.h"
 
@@ -105,11 +105,11 @@ GSM_Error GSM_ReadFile(const char *FileName, GSM_File *File)
 	File->ModifiedEmpty = true;
 	if (stat(FileName,&fileinfo) == 0) {
 		File->ModifiedEmpty = false;
-		dbgprintf("File info read correctly\n");
+		dbgprintf(NULL, "File info read correctly\n");
 		/* st_mtime is time of last modification of file */
 		Fill_GSM_DateTime(&File->Modified, fileinfo.st_mtime);
 		File->Modified.Year = File->Modified.Year + 1900;
-		dbgprintf("FileTime: %02i-%02i-%04i %02i:%02i:%02i\n",
+		dbgprintf(NULL, "FileTime: %02i-%02i-%04i %02i:%02i:%02i\n",
 			File->Modified.Day,File->Modified.Month,File->Modified.Year,
 			File->Modified.Hour,File->Modified.Minute,File->Modified.Second);
 	}
@@ -142,24 +142,24 @@ GSM_Error GSM_JADFindData(GSM_File File, char *Vendor, char *Name, char *JAR, ch
 
 	GSM_JADFindLine(File, "MIDlet-Vendor:", Vendor);
 	if (Vendor[0] == 0x00) return ERR_FILENOTSUPPORTED;
-	dbgprintf("Vendor: \"%s\"\n",Vendor);
+	dbgprintf(NULL, "Vendor: \"%s\"\n",Vendor);
 
 	GSM_JADFindLine(File, "MIDlet-Name:", Name);
 	if (Name[0] == 0x00) return ERR_FILENOTSUPPORTED;
-	dbgprintf("Name: \"%s\"\n",Name);
+	dbgprintf(NULL, "Name: \"%s\"\n",Name);
 
 	GSM_JADFindLine(File, "MIDlet-Jar-URL:", JAR);
 	if (JAR[0] == 0x00) return ERR_FILENOTSUPPORTED;
-	dbgprintf("JAR file URL: \"%s\"\n",JAR);
+	dbgprintf(NULL, "JAR file URL: \"%s\"\n",JAR);
 
 	GSM_JADFindLine(File, "MIDlet-Jar-Size:", Size2);
 	*Size = -1;
 	if (Size2[0] == 0x00) return ERR_FILENOTSUPPORTED;
-	dbgprintf("JAR size: \"%s\"\n",Size2);
+	dbgprintf(NULL, "JAR size: \"%s\"\n",Size2);
 	(*Size) = atoi(Size2);
 
 	GSM_JADFindLine(File, "MIDlet-Version:", Version);
-	dbgprintf("Version: \"%s\"\n",Version);
+	dbgprintf(NULL, "Version: \"%s\"\n",Version);
 
 	return ERR_NONE;
 }
@@ -287,12 +287,12 @@ bool ReadVCALDateTime(const char *Buffer, GSM_DateTime *dt)
 	}
 
 	if (!CheckTime(dt)) {
-		dbgprintf("incorrect date %d-%d-%d %d:%d:%d\n",dt->Day,dt->Month,dt->Year,dt->Hour,dt->Minute,dt->Second);
+		dbgprintf(NULL, "incorrect date %d-%d-%d %d:%d:%d\n",dt->Day,dt->Month,dt->Year,dt->Hour,dt->Minute,dt->Second);
 		return false;
 	}
 	if (dt->Year!=0) {
 		if (!CheckDate(dt)) {
-			dbgprintf("incorrect date %d-%d-%d %d:%d:%d\n",dt->Day,dt->Month,dt->Year,dt->Hour,dt->Minute,dt->Second);
+			dbgprintf(NULL, "incorrect date %d-%d-%d %d:%d:%d\n",dt->Day,dt->Month,dt->Year,dt->Hour,dt->Minute,dt->Second);
 			return false;
 		}
 	}
@@ -320,7 +320,7 @@ bool ReadVCALInt(char *Buffer, const char *Start, int *Value)
 		strncpy(buff,Buffer+lstart+1,lvalue);
 		strncpy(buff+lvalue,"\0",1);
 		if (sscanf(buff,"%i",Value)) {
-			dbgprintf("ReadVCalInt is \"%i\"\n",*Value);
+			dbgprintf(NULL, "ReadVCalInt is \"%i\"\n",*Value);
 			return true;
 		}
 	}
@@ -344,7 +344,7 @@ bool ReadVCALDate(char *Buffer, const char *Start, GSM_DateTime *Date, bool *is_
 	}
 
 	if (ReadVCALDateTime(DecodeUnicodeString(datestring), Date)) {
-		dbgprintf("ReadVCALDateTime is \"%04d.%02d.%02d %02d:%02d:%02d\"\n",
+		dbgprintf(NULL, "ReadVCALDateTime is \"%04d.%02d.%02d %02d:%02d:%02d\"\n",
 			Date->Year, Date->Month, Date->Day,
 			Date->Hour, Date->Minute, Date->Second);
 		return true;
@@ -482,12 +482,12 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 	/* Allocate memory */
 	line = strdup(Start);
 	if (line == NULL) {
-		dbgprintf("Could not alloc!\n");
+		dbgprintf(NULL, "Could not alloc!\n");
 		goto fail;
 	}
 	tokens = (char **)malloc(sizeof(char *) * numtokens);
 	if (tokens == NULL) {
-		dbgprintf("Could not alloc!\n");
+		dbgprintf(NULL, "Could not alloc!\n");
 		goto fail;
 	}
 
@@ -520,7 +520,7 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 		if (*pos == ';') {
 			pos++;
 		} else {
-			dbgprintf("Could not parse!\n");
+			dbgprintf(NULL, "Could not parse!\n");
 			goto fail;
 		}
 		found = false;
@@ -531,7 +531,7 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 				continue;
 			}
 			if (strncmp(pos, tokens[token], len) == 0) {
-				dbgprintf("Found %s\n", tokens[token]);
+				dbgprintf(NULL, "Found %s\n", tokens[token]);
 				/* Advance position */
 				pos += len;
 				/* We need to check one token less */
@@ -553,7 +553,7 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 				end = strchr(pos, ':');
 				end2 = strchr(pos, ';');
 				if (end == NULL && end2 == NULL) {
-					dbgprintf("Could not read charset!\n");
+					dbgprintf(NULL, "Could not read charset!\n");
 					goto fail;
 				} else if (end == NULL) {
 					end = end2;
@@ -563,7 +563,7 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 				/* We basically want strndup, but it is not portable */
 				charset = strdup(pos);
 				if (charset == NULL) {
-					dbgprintf("Could not alloc!\n");
+					dbgprintf(NULL, "Could not alloc!\n");
 					goto fail;
 				}
 				charset[end - pos] = 0;
@@ -578,7 +578,7 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 				end = strchr(pos, ':');
 				end2 = strchr(pos, ';');
 				if (end == NULL && end2 == NULL) {
-					dbgprintf("Could not read timezone!\n");
+					dbgprintf(NULL, "Could not read timezone!\n");
 					goto fail;
 				} else if (end == NULL) {
 					end = end2;
@@ -597,7 +597,7 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 				found = true;
 			}
 			if (!found) {
-				dbgprintf("%s not found!\n", Start);
+				dbgprintf(NULL, "%s not found!\n", Start);
 				goto fail;
 			}
 		}
@@ -610,7 +610,7 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 	/* Did we match all our tokens? */
 	for (token = 0; token < numtokens; token++) {
 		if (strlen(tokens[token]) > 0) {
-			dbgprintf("All tokens did not match!\n");
+			dbgprintf(NULL, "All tokens did not match!\n");
 			goto fail;
 		}
 	}
@@ -643,13 +643,13 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 				strcasecmp(charset, "\"UTF-7\"") == 0
 				) {
 			if (quoted_printable) {
-				dbgprintf("Unsupported charset: %s\n", charset);
+				dbgprintf(NULL, "Unsupported charset: %s\n", charset);
 				goto fail;
 			} else {
 				DecodeUTF7(Value, pos, len);
 			}
 		} else {
-			dbgprintf("Unsupported charset: %s\n", charset);
+			dbgprintf(NULL, "Unsupported charset: %s\n", charset);
 			goto fail;
 		}
 	}
@@ -681,7 +681,7 @@ bool ReadVCALText(char *Buffer, const char *Start, unsigned char *Value, const b
 	}
 
 	ret = true;
-	dbgprintf("ReadVCalText(%s) is \"%s\"\n", Start, DecodeUnicodeConsole(Value));
+	dbgprintf(NULL, "ReadVCalText(%s) is \"%s\"\n", Start, DecodeUnicodeConsole(Value));
 fail:
 	free(line);
 	free(tokens);

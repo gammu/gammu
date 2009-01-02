@@ -938,7 +938,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 
 	while (1) {
 		if (Priv->FilesLocationsCurrent == Priv->FilesLocationsUsed) {
-			dbgprintf("Last file\n");
+			smprintf(s, "Last file\n");
 			return ERR_EMPTY;
 		}
 
@@ -1009,7 +1009,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 					}
 					name[j] = 0;
 					if (strcmp(name,".")) {
-						dbgprintf("copying folder %s to %i parent %i\n",name,Priv->FilesLocationsCurrent+pos2,Priv->FilesLocationsCurrent);
+						smprintf(s, "copying folder %s to %i parent %i\n",name,Priv->FilesLocationsCurrent+pos2,Priv->FilesLocationsCurrent);
 						/* Convert filename from UTF-8 */
 						DecodeXMLUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name, name, strlen(name));
 						/* Create file name from parts */
@@ -1034,7 +1034,7 @@ GSM_Error OBEXGEN_GetNextFileFolder(GSM_StateMachine *s, GSM_File *File, bool st
 						j++;
 					}
 					name[j] = 0;
-					dbgprintf("copying file %s to %i\n",name,Priv->FilesLocationsCurrent+pos2);
+					smprintf(s, "copying file %s to %i\n",name,Priv->FilesLocationsCurrent+pos2);
 					/* Convert filename from UTF-8 */
 					DecodeXMLUTF8(Priv->Files[Priv->FilesLocationsCurrent+pos2].Name, name, strlen(name));
 					/* Create file name from parts */
@@ -1636,7 +1636,7 @@ GSM_Error OBEXGEN_GetMemoryIndex(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
-	error = GSM_DecodeVCARD(data, &pos, Entry, SonyEricsson_VCard21_Phone);
+	error = GSM_DecodeVCARD(&(s->di), data, &pos, Entry, SonyEricsson_VCard21_Phone);
 	free(data);
 	if (error != ERR_NONE) return error;
 
@@ -1675,7 +1675,7 @@ GSM_Error OBEXGEN_GetMemoryLUID(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
-	error = GSM_DecodeVCARD(data, &pos, Entry, SonyEricsson_VCard21_Phone);
+	error = GSM_DecodeVCARD(&(s->di), data, &pos, Entry, SonyEricsson_VCard21_Phone);
 	free(data);
 	if (error != ERR_NONE) return error;
 
@@ -1699,7 +1699,7 @@ GSM_Error OBEXGEN_GetMemoryFull(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	if (Entry->Location > Priv->PbCount) return ERR_EMPTY; /* Maybe invalid location? */
 
 	/* Decode vCard */
-	error = GSM_DecodeVCARD(Priv->PbData + Priv->PbOffsets[Entry->Location], &pos, Entry, SonyEricsson_VCard21_Phone);
+	error = GSM_DecodeVCARD(&(s->di), Priv->PbData + Priv->PbOffsets[Entry->Location], &pos, Entry, SonyEricsson_VCard21_Phone);
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -1789,7 +1789,7 @@ GSM_Error OBEXGEN_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	}
 
 	/* Encode vCard */
-	error = GSM_EncodeVCARD(req, sizeof(req), &size, Entry, true, SonyEricsson_VCard21);
+	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req), &size, Entry, true, SonyEricsson_VCard21);
 	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
@@ -1902,7 +1902,7 @@ GSM_Error OBEXGEN_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *Entry)
 	}
 
 	/* Encode vCard */
-	error = GSM_EncodeVCARD(req, sizeof(req), &size, Entry, true, SonyEricsson_VCard21);
+	error = GSM_EncodeVCARD(&(s->di), req, sizeof(req), &size, Entry, true, SonyEricsson_VCard21);
 	if (error != ERR_NONE) return error;
 
 	/* Use correct function according to supported IEL */
@@ -2071,7 +2071,7 @@ GSM_Error OBEXGEN_GetCalendarIndex(GSM_StateMachine *s, GSM_CalendarEntry *Entry
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
-	error = GSM_DecodeVCALENDAR_VTODO(data, &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	error = GSM_DecodeVCALENDAR_VTODO(&(s->di), data, &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	free(data);
 	if (error != ERR_NONE) return error;
 
@@ -2111,7 +2111,7 @@ GSM_Error OBEXGEN_GetCalendarLUID(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
-	error = GSM_DecodeVCALENDAR_VTODO(data, &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	error = GSM_DecodeVCALENDAR_VTODO(&(s->di), data, &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	free(data);
 	if (error != ERR_NONE) return error;
 
@@ -2136,7 +2136,7 @@ GSM_Error OBEXGEN_GetCalendarFull(GSM_StateMachine *s, GSM_CalendarEntry *Entry)
 	if (Entry->Location > Priv->CalCount) return ERR_EMPTY; /* Maybe invalid location? */
 
 	/* Decode vCalendar */
-	error = GSM_DecodeVCALENDAR_VTODO(Priv->CalData + Priv->CalOffsets[Entry->Location], &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	error = GSM_DecodeVCALENDAR_VTODO(&(s->di), Priv->CalData + Priv->CalOffsets[Entry->Location], &pos, Entry, &ToDo, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;
@@ -2452,7 +2452,7 @@ GSM_Error OBEXGEN_GetTodoIndex(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
-	error = GSM_DecodeVCALENDAR_VTODO(data, &pos, &Cal, Entry, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	error = GSM_DecodeVCALENDAR_VTODO(&(s->di), data, &pos, &Cal, Entry, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	free(data);
 	if (error != ERR_NONE) return error;
 
@@ -2492,7 +2492,7 @@ GSM_Error OBEXGEN_GetTodoLUID(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	if (error != ERR_NONE) return error;
 
 	/* Decode it */
-	error = GSM_DecodeVCALENDAR_VTODO(data, &pos, &Cal, Entry, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	error = GSM_DecodeVCALENDAR_VTODO(&(s->di), data, &pos, &Cal, Entry, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	free(data);
 	if (error != ERR_NONE) return error;
 
@@ -2517,7 +2517,7 @@ GSM_Error OBEXGEN_GetTodoFull(GSM_StateMachine *s, GSM_ToDoEntry *Entry)
 	if (Entry->Location > Priv->TodoCount) return ERR_EMPTY; /* Maybe invalid location? */
 
 	/* Decode vTodo */
-	error = GSM_DecodeVCALENDAR_VTODO(Priv->CalData + Priv->TodoOffsets[Entry->Location], &pos, &Cal, Entry, SonyEricsson_VCalendar, SonyEricsson_VToDo);
+	error = GSM_DecodeVCALENDAR_VTODO(&(s->di), Priv->CalData + Priv->TodoOffsets[Entry->Location], &pos, &Cal, Entry, SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	if (error != ERR_NONE) return error;
 
 	return ERR_NONE;

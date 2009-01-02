@@ -25,68 +25,6 @@
 typedef struct _DebugInfo GSM_Debug_Info;
 
 /**
- * Prints string to global debug log.
- *
- * \param format Format string as for printf.
- * \return Upon successful return, these functions return the number of characters printed (as printf).
- *
- * \ingroup Debug
- */
-#ifdef DEBUG
-PRINTF_STYLE(1, 2)
-int dbgprintf(const char *format, ...);
-#else
-#  ifdef __GNUC__
-#    define dbgprintf(...) do { } while (0)
-#  else
-#    define dbgprintf
-#  endif
-#endif
-
-/**
- * Prints string to defined debug log.
- *
- * \param s State machine, where to print.
- * \param format Format string as for printf.
- * \return Upon successful return, these functions return the number of characters printed (as printf).
- *
- * \ingroup Debug
- */
-PRINTF_STYLE(2, 3)
-int smprintf(GSM_StateMachine * s, const char *format, ...);
-
-/**
- * Severity of printed message.
- */
-typedef enum {
-	/**
-	 * Message will not be printed.
-	 */
-	D_NONE,
-	/**
-	 * Message is printed in all text log levels.
-	 */
-	D_TEXT,
-	/**
-	 * Message is printed on all text error log levels.
-	 */
-	D_ERROR
-} GSM_DebugSeverity;
-
-/**
- * Prints string to defined debug log.
- *
- * \param s State machine, where to print.
- * \param severity Severity of printed message.
- * \param format Format string as for printf.
- * \return Upon successful return, these functions return the number of characters printed (as printf).
- *
- * \ingroup Debug
- */
-PRINTF_STYLE(3, 4)
-int smprintf_level(GSM_StateMachine * s, GSM_DebugSeverity severity, const char *format, ...);
-
-/**
  * Sets debug file.
  *
  * \param info File path.
@@ -174,6 +112,18 @@ bool GSM_SetDebugGlobal(bool info, GSM_Debug_Info * privdi);
  * \ingroup Debug
  */
 void GSM_LogError(GSM_StateMachine * s, const char * message, const GSM_Error err);
+
+/**
+ * Prints string to defined debug log.
+ *
+ * \param s State machine, where to print.
+ * \param format Format string as for printf.
+ * \return Upon successful return, these functions return the number of characters printed (as printf).
+ *
+ * \ingroup Debug
+ */
+PRINTF_STYLE(2, 3)
+int smprintf(GSM_StateMachine * s, const char *format, ...);
 
 #endif
 

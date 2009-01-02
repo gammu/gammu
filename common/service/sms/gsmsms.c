@@ -23,7 +23,7 @@
 #include <gammu-debug.h>
 
 #include "../../misc/coding/coding.h"
-#include "../../misc/misc.h"
+#include "../../debug.h"
 
 /* User data headers */
 static GSM_UDHHeader UDHHeaders[] = {
@@ -86,7 +86,7 @@ static GSM_UDHHeader UDHHeaders[] = {
 /* --------------------------- Unpacking SMS ------------------------------- */
 
 /* See GSM 03.40 section 9.2.3.11 */
-static GSM_Error GSM_DecodeSMSDateTime(GSM_DateTime *DT, unsigned char *req)
+static GSM_Error GSM_DecodeSMSDateTime(GSM_Debug_Info *di, GSM_DateTime *DT, unsigned char *req)
 {
 	DT->Year    = DecodeWithBCDAlphabet(req[0]);
 	if (DT->Year<90) DT->Year=DT->Year+2000; else DT->Year=DT->Year+1990;
@@ -101,16 +101,16 @@ static GSM_Error GSM_DecodeSMSDateTime(GSM_DateTime *DT, unsigned char *req)
 
 	if (req[6]&0x08) DT->Timezone = -DT->Timezone;
 
-	dbgprintf("Decoding date & time: ");
-	dbgprintf("%s %4d/%02d/%02d ", DayOfWeek(DT->Year, DT->Month, DT->Day),
+	smfprintf(di, "Decoding date & time: ");
+	smfprintf(di, "%s %4d/%02d/%02d ", DayOfWeek(DT->Year, DT->Month, DT->Day),
 		DT->Year, DT->Month, DT->Day);
-	dbgprintf("%02d:%02d:%02d%+03i%02i\n", DT->Hour, DT->Minute, DT->Second,
+	smfprintf(di, "%02d:%02d:%02d%+03i%02i\n", DT->Hour, DT->Minute, DT->Second,
 		DT->Timezone / 3600, abs((DT->Timezone % 3600) / 60));
 
 	return ERR_NONE;
 }
 
-void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
+void GSM_DecodeUDHHeader(GSM_Debug_Info *di, GSM_UDHHeader *UDH)
 {
 	int	i, tmp, w;
 	bool	UDHOK;
@@ -152,48 +152,48 @@ void GSM_DecodeUDHHeader(GSM_UDHHeader *UDH)
 	}
 
 #ifdef DEBUG
-	dbgprintf("Type of UDH: ");
+	smfprintf(di, "Type of UDH: ");
 	switch (UDH->Type) {
-	case UDH_ConcatenatedMessages      : dbgprintf("Concatenated (linked) message"); 		break;
-	case UDH_ConcatenatedMessages16bit : dbgprintf("Concatenated (linked) message"); 		break;
-	case UDH_DisableVoice		   : dbgprintf("Disables voice indicator");	 	break;
-	case UDH_EnableVoice		   : dbgprintf("Enables voice indicator");	 	break;
-	case UDH_DisableFax		   : dbgprintf("Disables fax indicator");	 		break;
-	case UDH_EnableFax		   : dbgprintf("Enables fax indicator");	 		break;
-	case UDH_DisableEmail		   : dbgprintf("Disables email indicator");	 	break;
-	case UDH_EnableEmail		   : dbgprintf("Enables email indicator");	 	break;
-	case UDH_VoidSMS		   : dbgprintf("Void SMS");			 	break;
-	case UDH_NokiaWAP		   : dbgprintf("Nokia WAP Bookmark");		 	break;
-	case UDH_NokiaOperatorLogoLong	   : dbgprintf("Nokia operator logo");		 	break;
-	case UDH_NokiaWAPLong		   : dbgprintf("Nokia WAP Bookmark or WAP/MMS Settings");	break;
-	case UDH_NokiaRingtone		   : dbgprintf("Nokia ringtone");		 		break;
-	case UDH_NokiaRingtoneLong	   : dbgprintf("Nokia ringtone");		 		break;
-	case UDH_NokiaOperatorLogo	   : dbgprintf("Nokia GSM operator logo");	 	break;
-	case UDH_NokiaCallerLogo	   : dbgprintf("Nokia caller logo");		 	break;
-	case UDH_NokiaProfileLong	   : dbgprintf("Nokia profile");		 		break;
-	case UDH_NokiaCalendarLong	   : dbgprintf("Nokia calendar note");		 	break;
-	case UDH_NokiaPhonebookLong	   : dbgprintf("Nokia phonebook entry");	 		break;
-	case UDH_UserUDH		   : dbgprintf("User UDH");			 	break;
-	case UDH_MMSIndicatorLong	   : dbgprintf("MMS indicator");		 		break;
+	case UDH_ConcatenatedMessages      : smfprintf(di, "Concatenated (linked) message"); 		break;
+	case UDH_ConcatenatedMessages16bit : smfprintf(di, "Concatenated (linked) message"); 		break;
+	case UDH_DisableVoice		   : smfprintf(di, "Disables voice indicator");	 	break;
+	case UDH_EnableVoice		   : smfprintf(di, "Enables voice indicator");	 	break;
+	case UDH_DisableFax		   : smfprintf(di, "Disables fax indicator");	 		break;
+	case UDH_EnableFax		   : smfprintf(di, "Enables fax indicator");	 		break;
+	case UDH_DisableEmail		   : smfprintf(di, "Disables email indicator");	 	break;
+	case UDH_EnableEmail		   : smfprintf(di, "Enables email indicator");	 	break;
+	case UDH_VoidSMS		   : smfprintf(di, "Void SMS");			 	break;
+	case UDH_NokiaWAP		   : smfprintf(di, "Nokia WAP Bookmark");		 	break;
+	case UDH_NokiaOperatorLogoLong	   : smfprintf(di, "Nokia operator logo");		 	break;
+	case UDH_NokiaWAPLong		   : smfprintf(di, "Nokia WAP Bookmark or WAP/MMS Settings");	break;
+	case UDH_NokiaRingtone		   : smfprintf(di, "Nokia ringtone");		 		break;
+	case UDH_NokiaRingtoneLong	   : smfprintf(di, "Nokia ringtone");		 		break;
+	case UDH_NokiaOperatorLogo	   : smfprintf(di, "Nokia GSM operator logo");	 	break;
+	case UDH_NokiaCallerLogo	   : smfprintf(di, "Nokia caller logo");		 	break;
+	case UDH_NokiaProfileLong	   : smfprintf(di, "Nokia profile");		 		break;
+	case UDH_NokiaCalendarLong	   : smfprintf(di, "Nokia calendar note");		 	break;
+	case UDH_NokiaPhonebookLong	   : smfprintf(di, "Nokia phonebook entry");	 		break;
+	case UDH_UserUDH		   : smfprintf(di, "User UDH");			 	break;
+	case UDH_MMSIndicatorLong	   : smfprintf(di, "MMS indicator");		 		break;
 	case UDH_NoUDH:								 		break;
 	}
-	if (UDH->ID8bit != -1) dbgprintf(", ID 8 bit %i",UDH->ID8bit);
-	if (UDH->ID16bit != -1) dbgprintf(", ID 16 bit %i",UDH->ID16bit);
+	if (UDH->ID8bit != -1) smfprintf(di, ", ID 8 bit %i",UDH->ID8bit);
+	if (UDH->ID16bit != -1) smfprintf(di, ", ID 16 bit %i",UDH->ID16bit);
 	if (UDH->PartNumber != -1 && UDH->AllParts != -1) {
-		dbgprintf(", part %i of %i",UDH->PartNumber,UDH->AllParts);
+		smfprintf(di, ", part %i of %i",UDH->PartNumber,UDH->AllParts);
 	}
-	dbgprintf("\n");
-	DumpMessageText(&GSM_global_debug, UDH->Text, UDH->Length);
+	smfprintf(di, "\n");
+	DumpMessageText(di, UDH->Text, UDH->Length);
 #endif
 }
 
-GSM_Coding_Type GSM_GetMessageCoding(const char TPDCS) {
+GSM_Coding_Type GSM_GetMessageCoding(GSM_Debug_Info *di, const char TPDCS) {
 
 	/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
 	if ((TPDCS & 0xC0) == 0) {
 		/* bits 7..4 set to 00xx */
 		if ((TPDCS & 0xC) == 0xC) {
-			dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
+			smfprintf(di, "WARNING: reserved alphabet value in TPDCS\n");
 		} else {
 			if (TPDCS == 0) 			return SMS_Coding_Default_No_Compression;
 			if ((TPDCS & 0x2C) == 0x00) 	return SMS_Coding_Default_No_Compression;
@@ -204,26 +204,26 @@ GSM_Coding_Type GSM_GetMessageCoding(const char TPDCS) {
 	} else if ((TPDCS & 0xF0) >= 0x40 &&
 		   (TPDCS & 0xF0) <= 0xB0) {
 		/* bits 7..4 set to 0100 ... 1011 */
-		dbgprintf("WARNING: reserved coding group in TPDCS\n");
+		smfprintf(di, "WARNING: reserved coding group in TPDCS\n");
 	} else if (((TPDCS & 0xF0) == 0xC0) ||
 	      	   ((TPDCS & 0xF0) == 0xD0)) {
 		/* bits 7..4 set to 1100 or 1101 */
 		if ((TPDCS & 4) == 4) {
-			dbgprintf("WARNING: set reserved bit 2 in TPDCS\n");
+			smfprintf(di, "WARNING: set reserved bit 2 in TPDCS\n");
 		} else {
 			return SMS_Coding_Default_No_Compression;
 		}
 	} else if ((TPDCS & 0xF0) == 0xE0) {
 		/* bits 7..4 set to 1110 */
 		if ((TPDCS & 4) == 4) {
-			dbgprintf("WARNING: set reserved bit 2 in TPDCS\n");
+			smfprintf(di, "WARNING: set reserved bit 2 in TPDCS\n");
 		} else {
 			return SMS_Coding_Unicode_No_Compression;
 		}
 	} else if ((TPDCS & 0xF0) == 0xF0) {
 		/* bits 7..4 set to 1111 */
 		if ((TPDCS & 8) == 8) {
-			dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
+			smfprintf(di, "WARNING: set reserved bit 3 in TPDCS\n");
 		} else {
 			if ((TPDCS & 4) == 0) return SMS_Coding_Default_No_Compression;
 		}
@@ -231,7 +231,7 @@ GSM_Coding_Type GSM_GetMessageCoding(const char TPDCS) {
 	return 0;
 }
 
-GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
+GSM_Error GSM_DecodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
 {
 	int		off=0;	 	/* length of the User Data Header */
 	int 		w,i;
@@ -243,12 +243,12 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 		/* Length of UDH header */
 		off = (buffer[Layout.Text] + 1);
 		SMS->UDH.Length = off;
-		dbgprintf("UDH header available (length %i)\n",off);
+		smfprintf(di, "UDH header available (length %i)\n",off);
 
 		/* Copy UDH header into SMS->UDH */
 		for (i = 0; i < off; i++) SMS->UDH.Text[i] = buffer[Layout.Text + i];
 
-		GSM_DecodeUDHHeader(&SMS->UDH);
+		GSM_DecodeUDHHeader(di, &SMS->UDH);
 	}
 
 	switch (SMS->Coding) {
@@ -260,30 +260,30 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 			} while (w<0);
 			SMS->Length=buffer[Layout.TPUDL] - (off*8 + w) / 7;
 			if (SMS->Length < 0) {
-				dbgprintf("No SMS text!\n");
+				smfprintf(di, "No SMS text!\n");
 				SMS->Length = 0;
 				break;
 			}
 			GSM_UnpackEightBitsToSeven(w, buffer[Layout.TPUDL]-off, SMS->Length, buffer+(Layout.Text+off), output);
-			dbgprintf("7 bit SMS, length %i\n",SMS->Length);
+			smfprintf(di, "7 bit SMS, length %i\n",SMS->Length);
 			DecodeDefault (SMS->Text, output, SMS->Length, true, NULL);
-			dbgprintf("%s\n",DecodeUnicodeString(SMS->Text));
+			smfprintf(di, "%s\n",DecodeUnicodeString(SMS->Text));
 			break;
 		case SMS_Coding_8bit:
 			SMS->Length=buffer[Layout.TPUDL] - off;
 			memcpy(SMS->Text,buffer+(Layout.Text+off),SMS->Length);
 #ifdef DEBUG
-			dbgprintf("8 bit SMS, length %i\n",SMS->Length);
-			DumpMessageText(&GSM_global_debug, SMS->Text, SMS->Length);
+			smfprintf(di, "8 bit SMS, length %i\n",SMS->Length);
+			DumpMessageText(di, SMS->Text, SMS->Length);
 #endif
 			break;
 		case SMS_Coding_Unicode_No_Compression:
 			SMS->Length=(buffer[Layout.TPUDL] - off) / 2;
 			DecodeUnicodeSpecialNOKIAChars(SMS->Text,buffer+(Layout.Text+off), SMS->Length);
 #ifdef DEBUG
-			dbgprintf("Unicode SMS, length %i\n",SMS->Length);
-			DumpMessageText(&GSM_global_debug, buffer+(Layout.Text+off), SMS->Length*2);
-			dbgprintf("%s\n",DecodeUnicodeString(SMS->Text));
+			smfprintf(di, "Unicode SMS, length %i\n",SMS->Length);
+			DumpMessageText(di, buffer+(Layout.Text+off), SMS->Length*2);
+			smfprintf(di, "%s\n",DecodeUnicodeString(SMS->Text));
 #endif
 			break;
 		default:
@@ -294,7 +294,7 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 	return ERR_NONE;
 }
 
-GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
+GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
 {
 	SMS->DeliveryStatus 	= buffer[Layout.TPStatus];
 	SMS->Coding 		= SMS_Coding_Unicode_No_Compression;
@@ -318,98 +318,98 @@ GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_SMSMessage *SMS, unsigned char 
 	if (buffer[Layout.TPStatus] & 0x40) {
 		if (buffer[Layout.TPStatus] & 0x20) {
 			/* 0x60, 0x61, ... */
-			dbgprintf("Temporary error, SC is not making any more transfer attempts\n");
+			smfprintf(di, "Temporary error, SC is not making any more transfer attempts\n");
 		} else {
 			/* 0x40, 0x41, ... */
-     			dbgprintf("Permanent error, SC is not making any more transfer attempts\n");
+     			smfprintf(di, "Permanent error, SC is not making any more transfer attempts\n");
 		}
     	} else if (buffer[Layout.TPStatus] & 0x20) {
 		/* 0x20, 0x21, ... */
-		dbgprintf("Temporary error, SC still trying to transfer SM\n");
+		smfprintf(di, "Temporary error, SC still trying to transfer SM\n");
 	}
 	switch (buffer[Layout.TPStatus]) {
-	case 0x00: dbgprintf("SM received by the SME");					break;
-	case 0x01: dbgprintf("SM forwarded by the SC to the SME but the SC is unable to confirm delivery");break;
-	case 0x02: dbgprintf("SM replaced by the SC");					break;
-	case 0x20: dbgprintf("Congestion");						break;
-	case 0x21: dbgprintf("SME busy");						break;
-	case 0x22: dbgprintf("No response from SME");					break;
-	case 0x23: dbgprintf("Service rejected");					break;
-	case 0x24: dbgprintf("Quality of service not available");			break;
-	case 0x25: dbgprintf("Error in SME");						break;
-        case 0x40: dbgprintf("Remote procedure error");					break;
-        case 0x41: dbgprintf("Incompatibile destination");				break;
-        case 0x42: dbgprintf("Connection rejected by SME");				break;
-        case 0x43: dbgprintf("Not obtainable");						break;
-        case 0x44: dbgprintf("Quality of service not available");			break;
-        case 0x45: dbgprintf("No internetworking available");				break;
-        case 0x46: dbgprintf("SM Validity Period Expired");				break;
-        case 0x47: dbgprintf("SM deleted by originating SME");				break;
-        case 0x48: dbgprintf("SM Deleted by SC Administration");			break;
-        case 0x49: dbgprintf("SM does not exist");					break;
-        case 0x60: dbgprintf("Congestion");						break;
-        case 0x61: dbgprintf("SME busy");						break;
-        case 0x62: dbgprintf("No response from SME");					break;
-        case 0x63: dbgprintf("Service rejected");					break;
-        case 0x64: dbgprintf("Quality of service not available");			break;
-        case 0x65: dbgprintf("Error in SME");						break;
-        default  : dbgprintf("Reserved/Specific to SC: %x",buffer[Layout.TPStatus]);	break;
+	case 0x00: smfprintf(di, "SM received by the SME");					break;
+	case 0x01: smfprintf(di, "SM forwarded by the SC to the SME but the SC is unable to confirm delivery");break;
+	case 0x02: smfprintf(di, "SM replaced by the SC");					break;
+	case 0x20: smfprintf(di, "Congestion");						break;
+	case 0x21: smfprintf(di, "SME busy");						break;
+	case 0x22: smfprintf(di, "No response from SME");					break;
+	case 0x23: smfprintf(di, "Service rejected");					break;
+	case 0x24: smfprintf(di, "Quality of service not available");			break;
+	case 0x25: smfprintf(di, "Error in SME");						break;
+        case 0x40: smfprintf(di, "Remote procedure error");					break;
+        case 0x41: smfprintf(di, "Incompatibile destination");				break;
+        case 0x42: smfprintf(di, "Connection rejected by SME");				break;
+        case 0x43: smfprintf(di, "Not obtainable");						break;
+        case 0x44: smfprintf(di, "Quality of service not available");			break;
+        case 0x45: smfprintf(di, "No internetworking available");				break;
+        case 0x46: smfprintf(di, "SM Validity Period Expired");				break;
+        case 0x47: smfprintf(di, "SM deleted by originating SME");				break;
+        case 0x48: smfprintf(di, "SM Deleted by SC Administration");			break;
+        case 0x49: smfprintf(di, "SM does not exist");					break;
+        case 0x60: smfprintf(di, "Congestion");						break;
+        case 0x61: smfprintf(di, "SME busy");						break;
+        case 0x62: smfprintf(di, "No response from SME");					break;
+        case 0x63: smfprintf(di, "Service rejected");					break;
+        case 0x64: smfprintf(di, "Quality of service not available");			break;
+        case 0x65: smfprintf(di, "Error in SME");						break;
+        default  : smfprintf(di, "Reserved/Specific to SC: %x",buffer[Layout.TPStatus]);	break;
 	}
-	dbgprintf("\n");
+	smfprintf(di, "\n");
 #endif
 
 	return ERR_NONE;
 }
 
-GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
+GSM_Error GSM_DecodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
 {
 	GSM_DateTime	zerodt = {0,0,0,0,0,0,0};
 #ifdef DEBUG
 	if (Layout.firstbyte == 255) {
-		dbgprintf("ERROR: firstbyte in SMS layout not set\n");
+		smfprintf(di, "ERROR: firstbyte in SMS layout not set\n");
 		return ERR_UNKNOWN;
 	}
-	if (Layout.TPDCS     != 255) dbgprintf("TPDCS     : %02x %i\n",buffer[Layout.TPDCS]    ,buffer[Layout.TPDCS]);
-	if (Layout.TPMR      != 255) dbgprintf("TPMR      : %02x %i\n",buffer[Layout.TPMR]     ,buffer[Layout.TPMR]);
-	if (Layout.TPPID     != 255) dbgprintf("TPPID     : %02x %i\n",buffer[Layout.TPPID]    ,buffer[Layout.TPPID]);
-	if (Layout.TPUDL     != 255) dbgprintf("TPUDL     : %02x %i\n",buffer[Layout.TPUDL]    ,buffer[Layout.TPUDL]);
-	if (Layout.firstbyte != 255) dbgprintf("FirstByte : %02x %i\n",buffer[Layout.firstbyte],buffer[Layout.firstbyte]);
+	if (Layout.TPDCS     != 255) smfprintf(di, "TPDCS     : %02x %i\n",buffer[Layout.TPDCS]    ,buffer[Layout.TPDCS]);
+	if (Layout.TPMR      != 255) smfprintf(di, "TPMR      : %02x %i\n",buffer[Layout.TPMR]     ,buffer[Layout.TPMR]);
+	if (Layout.TPPID     != 255) smfprintf(di, "TPPID     : %02x %i\n",buffer[Layout.TPPID]    ,buffer[Layout.TPPID]);
+	if (Layout.TPUDL     != 255) smfprintf(di, "TPUDL     : %02x %i\n",buffer[Layout.TPUDL]    ,buffer[Layout.TPUDL]);
+	if (Layout.firstbyte != 255) smfprintf(di, "FirstByte : %02x %i\n",buffer[Layout.firstbyte],buffer[Layout.firstbyte]);
 	if (Layout.Text      != 255 && Layout.TPUDL     != 255 && buffer[Layout.TPUDL] > 0) {
-		dbgprintf("Text      : %02x %i\n",buffer[Layout.Text]     ,buffer[Layout.Text]);
+		smfprintf(di, "Text      : %02x %i\n",buffer[Layout.Text]     ,buffer[Layout.Text]);
 	}
 #endif
 
 	GSM_SetDefaultReceivedSMSData(SMS);
 
 	if (Layout.SMSCNumber!=255) {
-		GSM_UnpackSemiOctetNumber(SMS->SMSC.Number,buffer+Layout.SMSCNumber,false);
-		dbgprintf("SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
+		GSM_UnpackSemiOctetNumber(di, SMS->SMSC.Number,buffer+Layout.SMSCNumber,false);
+		smfprintf(di, "SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
 	}
 	if ((buffer[Layout.firstbyte] & 0x80)!=0) SMS->ReplyViaSameSMSC=true;
 #ifdef DEBUG
-	if (SMS->ReplyViaSameSMSC) dbgprintf("SMS centre set for reply\n");
+	if (SMS->ReplyViaSameSMSC) smfprintf(di, "SMS centre set for reply\n");
 #endif
 	if (Layout.Number!=255) {
-		GSM_UnpackSemiOctetNumber(SMS->Number,buffer+Layout.Number,true);
-		dbgprintf("Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
+		GSM_UnpackSemiOctetNumber(di, SMS->Number,buffer+Layout.Number,true);
+		smfprintf(di, "Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	}
 	if (Layout.TPDCS != 255) {
 		/* Get message coding */
-		SMS->Coding = GSM_GetMessageCoding(buffer[Layout.TPDCS]);
+		SMS->Coding = GSM_GetMessageCoding(di, buffer[Layout.TPDCS]);
 	}
 	if (Layout.Text != 255 && Layout.TPDCS!=255 && Layout.TPUDL!=255 && buffer[Layout.TPUDL] > 0) {
-		GSM_DecodeSMSFrameText(SMS, buffer, Layout);
+		GSM_DecodeSMSFrameText(di, SMS, buffer, Layout);
 	}
 	if (Layout.DateTime != 255) {
-		GSM_DecodeSMSDateTime(&SMS->DateTime,buffer+(Layout.DateTime));
+		GSM_DecodeSMSDateTime(di, &SMS->DateTime,buffer+(Layout.DateTime));
 	} else {
 		SMS->DateTime = zerodt;
 	}
 	if (Layout.SMSCTime != 255 && Layout.TPStatus != 255) {
 		/* GSM 03.40 section 9.2.3.11 (TP-Service-Centre-Time-Stamp) */
-		dbgprintf("SMSC response date: ");
-		GSM_DecodeSMSDateTime(&SMS->SMSCTime, buffer+(Layout.SMSCTime));
-		GSM_DecodeSMSFrameStatusReportData(SMS,buffer,Layout);
+		smfprintf(di, "SMSC response date: ");
+		GSM_DecodeSMSDateTime(di, &SMS->SMSCTime, buffer+(Layout.SMSCTime));
+		GSM_DecodeSMSFrameStatusReportData(di, SMS,buffer,Layout);
 	} else {
 		SMS->SMSCTime = zerodt;
 	}
@@ -419,20 +419,20 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 		if ((buffer[Layout.TPDCS] & 0xD0) == 0x10) {
 			/* bits 7..4 set to 00x1 */
 			if ((buffer[Layout.TPDCS] & 0xC) == 0xC) {
-				dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
+				smfprintf(di, "WARNING: reserved alphabet value in TPDCS\n");
 			} else {
 				SMS->Class = (buffer[Layout.TPDCS] & 3);
 			}
 		} else if ((buffer[Layout.TPDCS] & 0xF0) == 0xF0) {
 			/* bits 7..4 set to 1111 */
 			if ((buffer[Layout.TPDCS] & 8) == 8) {
-				dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
+				smfprintf(di, "WARNING: set reserved bit 3 in TPDCS\n");
 			} else {
 				SMS->Class = (buffer[Layout.TPDCS] & 3);
 			}
 		}
 	}
-	dbgprintf("SMS class: %i\n",SMS->Class);
+	smfprintf(di, "SMS class: %i\n",SMS->Class);
 
 	SMS->MessageReference = 0;
 	if (Layout.TPMR != 255) SMS->MessageReference = buffer[Layout.TPMR];
@@ -452,11 +452,11 @@ GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 /* ----------------------------- Packing SMS ------------------------------- */
 
 /* See GSM 03.40 section 9.2.3.11 */
-static GSM_Error GSM_EncodeSMSDateTime(GSM_DateTime *DT, unsigned char *req)
+static GSM_Error GSM_EncodeSMSDateTime(GSM_Debug_Info *di, GSM_DateTime *DT, unsigned char *req)
 {
 	int Year;
 
-	dbgprintf("Encoding SMS datetime: %02i/%02i/%04i %02i:%02i:%02i\n",
+	smfprintf(di, "Encoding SMS datetime: %02i/%02i/%04i %02i:%02i:%02i\n",
 		DT->Day,DT->Month,DT->Year,DT->Hour,DT->Minute,DT->Second);
 
 	/* We need to have only two last digits of year */
@@ -478,7 +478,7 @@ static GSM_Error GSM_EncodeSMSDateTime(GSM_DateTime *DT, unsigned char *req)
 	return ERR_NONE;
 }
 
-static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
+static int GSM_EncodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout)
 {
 	int	off = 0;	/*  length of the User Data Header */
 	int	size = 0, size2 = 0, w;
@@ -490,8 +490,8 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 		off = 1 + SMS->UDH.Text[0];				/* off - length of the User Data Header */
 		memcpy(buffer+Layout.Text, SMS->UDH.Text, off);		/* we copy the udh */
 #ifdef DEBUG
-		dbgprintf("UDH, length %i\n",off);
-		DumpMessageText(&GSM_global_debug, SMS->UDH.Text, off);
+		smfprintf(di, "UDH, length %i\n",off);
+		DumpMessageText(di, SMS->UDH.Text, off);
 #endif
 	}
 	switch (SMS->Coding) {
@@ -503,8 +503,8 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			memcpy(buffer+(Layout.Text+off), SMS->Text, SMS->Length);
 			size2 = size = SMS->Length+off;
 #ifdef DEBUG
-			dbgprintf("8 bit SMS, length %i\n",SMS->Length);
-			DumpMessageText(&GSM_global_debug, SMS->Text, SMS->Length);
+			smfprintf(di, "8 bit SMS, length %i\n",SMS->Length);
+			DumpMessageText(di, SMS->Text, SMS->Length);
 #endif
 			break;
 		case SMS_Coding_Default_No_Compression:
@@ -518,8 +518,8 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			size = GSM_PackSevenBitsToEight(w, buff, buffer+(Layout.Text+off), p);
 			size += off;
 			size2 = (off*8 + w) / 7 + p;
-			dbgprintf("7 bit SMS, length %i, %i\n",size,size2);
-			dbgprintf("%s\n",DecodeUnicodeString(SMS->Text));
+			smfprintf(di, "7 bit SMS, length %i, %i\n",size,size2);
+			smfprintf(di, "%s\n",DecodeUnicodeString(SMS->Text));
 			if (size > GSM_MAX_8BIT_SMS_LENGTH) {
 				size = 0; size2 = 0;
 			}
@@ -531,9 +531,9 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 			EncodeUnicodeSpecialNOKIAChars(buffer+(Layout.Text+off), SMS->Text, UnicodeLength(SMS->Text));
 			size=size2=UnicodeLength(buffer+(Layout.Text+off))*2+off;
 #ifdef DEBUG
-			dbgprintf("Unicode SMS, length %i\n",(size2-off)/2);
-			DumpMessageText(&GSM_global_debug, buffer+(Layout.Text+off), size2-off);
-			dbgprintf("%s\n",DecodeUnicodeString(buffer+(Layout.Text+off)));
+			smfprintf(di, "Unicode SMS, length %i\n",(size2-off)/2);
+			DumpMessageText(di, buffer+(Layout.Text+off), size2-off);
+			smfprintf(di, "%s\n",DecodeUnicodeString(buffer+(Layout.Text+off)));
 #endif
 			break;
 		default:
@@ -551,7 +551,7 @@ static int GSM_EncodeSMSFrameText(GSM_SMSMessage *SMS, unsigned char *buffer, GS
 	return size;
 }
 
-GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear)
+GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear)
 {
 	int i;
 
@@ -582,18 +582,18 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 
 	if (Layout.Number!=255) {
 		buffer[Layout.Number] = GSM_PackSemiOctetNumber(SMS->Number,buffer+(Layout.Number+1),true);
-		dbgprintf("Recipient number \"%s\"\n",DecodeUnicodeString(SMS->Number));
+		smfprintf(di, "Recipient number \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	}
 	if (Layout.SMSCNumber!=255) {
 		buffer[Layout.SMSCNumber]=GSM_PackSemiOctetNumber(SMS->SMSC.Number,buffer+(Layout.SMSCNumber+1), false);
-		dbgprintf("SMSC number \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
+		smfprintf(di, "SMSC number \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
 	}
 
 	/* Message Class*/
 	/* GSM 03.40 section 9.2.3.10 (TP-Data-Coding-Scheme) and GSM 03.38 section 4 */
 	if (Layout.TPDCS != 255) {
 		if (SMS->Class >= 0 && SMS->Class <= 3) buffer[Layout.TPDCS] |= SMS->Class | (1 << 4);
-		dbgprintf("SMS class %i\n",SMS->Class);
+		smfprintf(di, "SMS class %i\n",SMS->Class);
 	}
 
 	if (Layout.TPVP != 255) {
@@ -601,15 +601,15 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 		/* Bits 4 and 3: 10. TP-VP field present and integer represent (relative) */
 		buffer[Layout.firstbyte] |= 0x10;
 		buffer[Layout.TPVP]=((unsigned char)SMS->SMSC.Validity.Relative);
-		dbgprintf("SMS validity %02x\n",SMS->SMSC.Validity.Relative);
+		smfprintf(di, "SMS validity %02x\n",SMS->SMSC.Validity.Relative);
 	}
 
 	if (Layout.DateTime != 255) {
-		GSM_EncodeSMSDateTime(&SMS->DateTime, buffer+Layout.DateTime);
+		GSM_EncodeSMSDateTime(di, &SMS->DateTime, buffer+Layout.DateTime);
 	}
 
 	if (Layout.TPMR != 255) {
-		dbgprintf("TPMR: %02x %i\n",SMS->MessageReference,SMS->MessageReference);
+		smfprintf(di, "TPMR: %02x %i\n",SMS->MessageReference,SMS->MessageReference);
 		buffer[Layout.TPMR] = SMS->MessageReference;
 	}
 
@@ -626,7 +626,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMS
 	}
 
 	/* size is the length of the data in octets including UDH */
-	*length=GSM_EncodeSMSFrameText(SMS,buffer,Layout);
+	*length=GSM_EncodeSMSFrameText(di, SMS,buffer,Layout);
 /* 	if (*length == 0) return GE_UNKNOWN; */
 	*length += Layout.Text;
 
@@ -693,7 +693,7 @@ void GSM_SetDefaultSMSData(GSM_SMSMessage *SMS)
 /**
  * GSM 03.40 section 9.2.3.24
  */
-void GSM_EncodeUDHHeader(GSM_UDHHeader *UDH)
+void GSM_EncodeUDHHeader(GSM_Debug_Info *di, GSM_UDHHeader *UDH)
 {
 	int i=0;
 
@@ -707,7 +707,7 @@ void GSM_EncodeUDHHeader(GSM_UDHHeader *UDH)
 	}
 	while (true) {
 		if (UDHHeaders[i].Type==UDH_NoUDH) {
-			dbgprintf("Not supported UDH type\n");
+			smfprintf(di, "Not supported UDH type\n");
 			break;
 		}
 		if (UDHHeaders[i].Type!=UDH->Type) {
@@ -744,7 +744,7 @@ void GSM_EncodeUDHHeader(GSM_UDHHeader *UDH)
 	}
 }
 
-bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo	*Info,
+bool GSM_DecodeSiemensOTASMS(GSM_Debug_Info *di, GSM_SiemensOTASMSInfo	*Info,
 			     GSM_SMSMessage 		*SMS)
 {
 	int current;
@@ -762,21 +762,21 @@ bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo	*Info,
 			 SMS->Text[10]*256*256 + SMS->Text[11]*256*256*256;
 	Info->PacketNum = SMS->Text[12] + SMS->Text[13]*256;
 	Info->PacketsNum = SMS->Text[14] + SMS->Text[15]*256;
-	dbgprintf("Packet %i/%i\n",Info->PacketNum,Info->PacketsNum);
+	smfprintf(di, "Packet %i/%i\n",Info->PacketNum,Info->PacketsNum);
 	Info->AllDataLen = SMS->Text[16] + SMS->Text[17]*256 +
 			 SMS->Text[18]*256*256 + SMS->Text[19]*256*256*256;
-	dbgprintf("DataLen %i/%lu\n",Info->DataLen,Info->AllDataLen);
+	smfprintf(di, "DataLen %i/%lu\n",Info->DataLen,Info->AllDataLen);
 
 	if (SMS->Text[20] > 9) return false;
 	memcpy(Info->DataType,SMS->Text+21,SMS->Text[20]);
 	Info->DataType[SMS->Text[20]] = 0;
-	dbgprintf("DataType '%s'\n",Info->DataType);
+	smfprintf(di, "DataType '%s'\n",Info->DataType);
 
 	current = 21+SMS->Text[20];
 	if (SMS->Text[current] > 39) return false;
 	memcpy(Info->DataName,SMS->Text+current+1,SMS->Text[current]);
 	Info->DataName[SMS->Text[current]] = 0;
-	dbgprintf("DataName '%s'\n",Info->DataName);
+	smfprintf(di, "DataName '%s'\n",Info->DataName);
 
 	current += SMS->Text[current]+1;
 	memcpy(Info->Data,SMS->Text+current,Info->DataLen);

@@ -13,6 +13,7 @@
 #include <gammu-config.h>
 #include <gammu-misc.h>
 
+#include "debug.h"
 #include "gsmcomon.h"
 #include "gsmphones.h"
 #include "gsmstate.h"
@@ -412,7 +413,7 @@ GSM_Error GSM_OpenConnection(GSM_StateMachine *s)
 	GSM_Error error;
 
 	if (s->CurrentConfig->LockDevice != NULL && strcasecmp(s->CurrentConfig->LockDevice,"yes") == 0) {
-		error = lock_device(s->CurrentConfig->Device, &(s->LockFile));
+		error = lock_device(s, s->CurrentConfig->Device, &(s->LockFile));
 		if (error != ERR_NONE) return error;
 	}
 
@@ -421,7 +422,7 @@ GSM_Error GSM_OpenConnection(GSM_StateMachine *s)
 	error=s->Device.Functions->OpenDevice(s);
 	if (error!=ERR_NONE) {
 		if (s->LockFile != NULL)
-			unlock_device(&(s->LockFile));
+			unlock_device(s, &(s->LockFile));
 		return error;
 	}
 
@@ -448,7 +449,7 @@ GSM_Error GSM_CloseConnection(GSM_StateMachine *s)
 	error = s->Device.Functions->CloseDevice(s);
 	if (error!=ERR_NONE) return error;
 
-	if (s->LockFile!=NULL) unlock_device(&(s->LockFile));
+	if (s->LockFile!=NULL) unlock_device(s, &(s->LockFile));
 
 	s->Phone.Data.ModelInfo		  = NULL;
 	s->Phone.Data.Manufacturer[0]	  = 0;
@@ -963,7 +964,7 @@ GSM_Error GSM_DispatchMessage(GSM_StateMachine *s)
 
 GSM_Error GSM_TryReadGammuRC (const char *path, INI_Section **result)
 {
-	dbgprintf("Open config: \"%s\"\n", path);
+	dbgprintf(NULL, "Open config: \"%s\"\n", path);
 	return  INI_ReadFile(path, false, result);
 }
 
@@ -1317,60 +1318,6 @@ void GSM_DumpMessageLevel3Recv(GSM_StateMachine *s, unsigned const char *message
 	GSM_DumpMessageLevel3_Custom(s, message, messagesize, type, 0x02);
 }
 
-PRINTF_STYLE(2, 3)
-int smprintf(GSM_StateMachine *s, const char *format, ...)
-{
-	va_list		argp;
-	int 		result=0;
-	GSM_Debug_Info *curdi;
-
-	curdi = &GSM_global_debug;
-	if (s != NULL && s->di.use_global == false) {
-		curdi = &(s->di);
-	}
-
-	va_start(argp, format);
-
-	result = dbg_vprintf(curdi, format, argp);
-
-	va_end(argp);
-	return result;
-}
-
-PRINTF_STYLE(3, 4)
-int smprintf_level(GSM_StateMachine * s, GSM_DebugSeverity severity, const char *format, ...)
-{
-	va_list		argp;
-	int 		result=0;
-	GSM_Debug_Info *curdi;
-
-	curdi = GSM_GetDI(s);
-
-	if (severity == D_TEXT) {
-		if (curdi->dl != DL_TEXT &&
-				curdi->dl != DL_TEXTALL &&
-				curdi->dl != DL_TEXTDATE &&
-				curdi->dl != DL_TEXTALLDATE) {
-			return 0;
-		}
-	} else if (severity == D_ERROR) {
-		if (curdi->dl != DL_TEXT &&
-				curdi->dl != DL_TEXTALL &&
-				curdi->dl != DL_TEXTDATE &&
-				curdi->dl != DL_TEXTALLDATE &&
-				curdi->dl != DL_TEXTERROR &&
-				curdi->dl != DL_TEXTERRORDATE) {
-			return 0;
-		}
-	}
-	va_start(argp, format);
-
-	result = dbg_vprintf(curdi, format, argp);
-
-	va_end(argp);
-	return result;
-}
-
 void GSM_OSErrorInfo(GSM_StateMachine *s, const char *description)
 {
 #ifdef WIN32
@@ -1568,7 +1515,7 @@ GSM_PhoneModel *GSM_GetModelInfo(GSM_StateMachine *s)
 
 GSM_Debug_Info *GSM_GetDebug(GSM_StateMachine *s)
 {
-	return &(s->di);
+	return s == NULL ? NULL : &(s->di);
 }
 
 

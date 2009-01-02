@@ -51,7 +51,7 @@ GSM_Error PHONE_GetSMSFolders(GSM_StateMachine *s UNUSED, GSM_SMSFolders *folder
 void GSM_CreateFirmwareNumber(GSM_StateMachine *s)
 {
 	StringToDouble(s->Phone.Data.Version, &s->Phone.Data.VerNum);
-	dbgprintf("Number version is \"%f\"\n", s->Phone.Data.VerNum);
+	smprintf(s, "Number version is \"%f\"\n", s->Phone.Data.VerNum);
 }
 
 GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout Layout, int *length, bool clear)
@@ -69,7 +69,7 @@ GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigne
 			return ERR_EMPTYSMSC;
 		}
 	}
-	return GSM_EncodeSMSFrame(SMS, buffer, Layout, length, clear);
+	return GSM_EncodeSMSFrame(&(s->di), SMS, buffer, Layout, length, clear);
 }
 
 GSM_Error PHONE_Terminate(GSM_StateMachine *s)

@@ -143,7 +143,7 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 					case Duration_1_8  : Duration = 16;	break;
 					case Duration_1_16 : Duration = 8;	break;
 					case Duration_1_32 : Duration = 4;	break;
-					default		   : dbgprintf("error\n");break;
+					default		   : fprintf(stderr, "error\n");break;
 				}
 				if (Duration > DefNoteDuration) {
 		        		while (DefNoteDuration != Duration) {
@@ -591,16 +591,16 @@ void NokiaAddFile(int argc, char *argv[])
 		    	Print_Error(error);
 
 			if (Files.Folder) {
-				dbgprintf("folder %s level %i\n",DecodeUnicodeConsole(Files.Name),Files.Level);
+				smprintf(gsm, "folder %s level %i\n",DecodeUnicodeConsole(Files.Name),Files.Level);
 				Found 	= false;
 				i 	= 0;
 				while (Folder[i].parameter[0] != 0) {
 					EncodeUnicode(buffer,Folder[i].folder,strlen(Folder[i].folder));
-					dbgprintf("comparing \"%s\" \"%s\" \"%s\"\n",GSM_GetModelInfo(gsm)->model,DecodeUnicodeString(Files.ID_FullName),Folder[i].level);
+					smprintf(gsm, "comparing \"%s\" \"%s\" \"%s\"\n",GSM_GetModelInfo(gsm)->model,DecodeUnicodeString(Files.ID_FullName),Folder[i].level);
 					if (strcasecmp(argv[2],Folder[i].parameter) == 0  &&
 					    mywstrncasecmp(Files.Name,buffer,0) &&
 					    Files.Level == atoi(Folder[i].level)) {
-						dbgprintf("found 1\n");
+						smprintf(gsm, "found 1\n");
 						Found = true;
 						break;
 					}
@@ -608,18 +608,18 @@ void NokiaAddFile(int argc, char *argv[])
 					    !strcmp(DecodeUnicodeString(Files.ID_FullName),Folder[i].folder) &&
 					    Folder[i].level[0] == 0x00) {
 						Found = true;
-						dbgprintf("found 2\n");
+						smprintf(gsm, "found 2\n");
 						break;
 					}
 					if (Folder[i].folder[0]>='0'&&Folder[i].folder[0] <='9') {
 						DecodeHexUnicode (buffer, Folder[i].folder,strlen(Folder[i].folder));
-						dbgprintf("comparing \"%s\"",DecodeUnicodeString(buffer));
-						dbgprintf("and \"%s\"\n",DecodeUnicodeString(Files.Name));
+						smprintf(gsm, "comparing \"%s\"",DecodeUnicodeString(buffer));
+						smprintf(gsm, "and \"%s\"\n",DecodeUnicodeString(Files.Name));
 						if (strcasecmp(argv[2],Folder[i].parameter) == 0  &&
 						    mywstrncasecmp(Files.Name,buffer,0) &&
 						    Files.Level == atoi(Folder[i].level)) {
 							Found = true;
-							dbgprintf("found 3\n");
+							smprintf(gsm, "found 3\n");
 							break;
 						}
 					}
@@ -719,7 +719,7 @@ void NokiaAddFile(int argc, char *argv[])
 			while (JAR[i] != '/') i--;
 			strcpy(buffer,JAR+i+1);
 			strcpy(JAR,buffer);
-			dbgprintf("New file name is \"%s\"\n",JAR);
+			smprintf(gsm, "New file name is \"%s\"\n",JAR);
 		}
 
 		/* Changing all #13 or #10 to #13#10 in JAD */
@@ -850,7 +850,7 @@ void NokiaAddFile(int argc, char *argv[])
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		File.Type 	   = GSM_File_Other;
 		File.ModifiedEmpty = true;
-		dbgprintf("file id is \"%s\"\n",DecodeUnicodeString(File.ID_FullName));
+		smprintf(gsm, "file id is \"%s\"\n",DecodeUnicodeString(File.ID_FullName));
 		AddOneFile(&File, "Writing JAD file: ", false);
 
 		if (argc > 4) {

@@ -9,6 +9,7 @@ set (LIBRARY_SRC
     gsmphones.c
     gsmstate.c
     api.c
+    debug.c
     misc/misc.c
     misc/cfg.c
     misc/coding/coding.c

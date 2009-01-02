@@ -320,7 +320,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 			if (sms.Coding!=SMS_Coding_8bit) {
 				printf("%s\n",DecodeUnicodeConsole(sms.Text));
 			} else {
-				if (GSM_DecodeSiemensOTASMS(&SiemensOTA,&sms)) {
+				if (GSM_DecodeSiemensOTASMS(GSM_GetDebug(gsm), &SiemensOTA,&sms)) {
 					printf("%s\n", _("Siemens file"));
 					break;
 				}
@@ -347,10 +347,10 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, cons
 	GSM_Error error;
 
 	/* GSM_DecodeMultiPartSMS returns if decoded SMS content correctly */
-	RetVal = GSM_DecodeMultiPartSMS(&SMSInfo,sms,ems);
+	RetVal = GSM_DecodeMultiPartSMS(GSM_GetDebug(gsm), &SMSInfo,sms,ems);
 
 	if (eachsms) {
-		if (GSM_DecodeSiemensOTASMS(&SiemensOTA,&sms->SMS[0])) udhinfo = false;
+		if (GSM_DecodeSiemensOTASMS(GSM_GetDebug(gsm), &SiemensOTA,&sms->SMS[0])) udhinfo = false;
 		if (sms->SMS[0].UDH.Type != UDH_NoUDH && sms->SMS[0].UDH.AllParts == sms->Number) udhinfo = false;
 		if (RetVal && !udhinfo) {
 			DisplaySingleSMSInfo(sms->SMS[0],false,false,Info);
@@ -384,7 +384,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, cons
 				SMSInfo.Entries[i].File->Buffer[SMSInfo.Entries[i].File->Used] = 0;
 				SMSInfo.Entries[i].File->Used += 1;
 				Pos = 0;
-				error = GSM_DecodeVCARD(SMSInfo.Entries[i].File->Buffer, &Pos, &pbk, Nokia_VCard21);
+				error = GSM_DecodeVCARD(GSM_GetDebug(gsm), SMSInfo.Entries[i].File->Buffer, &Pos, &pbk, Nokia_VCard21);
 				if (error == ERR_NONE) PrintMemoryEntry(&pbk);
 			} else {
 				printf("\n");
@@ -912,7 +912,7 @@ void GetEachSMS(int argc, char *argv[])
 	GSM_PhoneBeep();
 #endif
 
-	error = GSM_LinkSMS(GetSMSData, SortedSMS, ems);
+	error = GSM_LinkSMS(GSM_GetDebug(gsm), GetSMSData, SortedSMS, ems);
 	Print_Error(error);
 
 	i=0;
@@ -1016,7 +1016,7 @@ void DecodeMMSFile(GSM_File *file, int num)
 	for (i=0;i<GSM_MAX_MULTI_MMS;i++) info.Entries[i].File.Buffer = NULL;
 	GSM_ClearMMSMultiPart(&info);
 
-	error = GSM_DecodeMMSFileToMultiPart(file, &info);
+	error = GSM_DecodeMMSFileToMultiPart(GSM_GetDebug(gsm), file, &info);
 	if (error == ERR_FILENOTSUPPORTED) {
 		printf_warn("%s\n", _("Some MMS file features unknown for Gammu decoder"));
 		return;
@@ -1074,13 +1074,13 @@ void DecodeMMSFile(GSM_File *file, int num)
 		if (!strcmp(DecodeUnicodeString(info.Entries[i].ContentType),"text/x-vCard")) {
 			Pos = 0;
 			printf("\n");
-			error = GSM_DecodeVCARD(info.Entries[i].File.Buffer, &Pos, &pbk, Nokia_VCard21);
+			error = GSM_DecodeVCARD(GSM_GetDebug(gsm), info.Entries[i].File.Buffer, &Pos, &pbk, Nokia_VCard21);
 			if (error == ERR_NONE) PrintMemoryEntry(&pbk);
 		}
 		if (!strcmp(DecodeUnicodeString(info.Entries[i].ContentType),"text/x-vCalendar")) {
 			Pos = 0;
 			printf("\n");
-			error = GSM_DecodeVCALENDAR_VTODO(info.Entries[i].File.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
+			error = GSM_DecodeVCALENDAR_VTODO(GSM_GetDebug(gsm), info.Entries[i].File.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
 			if (error == ERR_NONE) PrintCalendar(&Calendar);
 		}
 		if (num != -1 && answer_yes(_("Do you want to save this attachment?"))) {
@@ -1208,7 +1208,7 @@ GSM_Error SMSStatus;
 
 void SendSMSStatus (GSM_StateMachine *sm, int status, int MessageReference)
 {
-	dbgprintf("Sent SMS on device: \"%s\"\n", GSM_GetConfig(sm, -1)->Device);
+	smprintf(gsm, "Sent SMS on device: \"%s\"\n", GSM_GetConfig(sm, -1)->Device);
 	if (status==0) {
 		printf(_("..OK"));
 		SMSStatus = ERR_NONE;
@@ -2168,7 +2168,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			break;
 		case 11:/* EMS text from parameter */
 			EncodeUnicode(Buffer[SMSInfo.EntriesNum],argv[i],strlen(argv[i]));
-			dbgprintf("buffer is \"%s\"\n",DecodeUnicodeConsole(Buffer[SMSInfo.EntriesNum]));
+			smprintf(gsm, "buffer is \"%s\"\n",DecodeUnicodeConsole(Buffer[SMSInfo.EntriesNum]));
 			SMSInfo.Entries[SMSInfo.EntriesNum].ID 		= SMS_ConcatenatedTextLong;
 			SMSInfo.Entries[SMSInfo.EntriesNum].Buffer 	= Buffer[SMSInfo.EntriesNum];
 			SMSInfo.EntriesNum++;
@@ -2229,7 +2229,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			InputBuffer[z+1] = 0;
 			fclose(f);
 			ReadUnicodeFile(Buffer[SMSInfo.EntriesNum],InputBuffer);
-			dbgprintf("buffer is \"%s\"\n",DecodeUnicodeConsole(Buffer[SMSInfo.EntriesNum]));
+			smprintf(gsm, "buffer is \"%s\"\n",DecodeUnicodeConsole(Buffer[SMSInfo.EntriesNum]));
 			SMSInfo.Entries[SMSInfo.EntriesNum].ID 		= SMS_ConcatenatedTextLong;
 			SMSInfo.Entries[SMSInfo.EntriesNum].Buffer 	= Buffer[SMSInfo.EntriesNum];
 			SMSInfo.EntriesNum++;
@@ -2374,7 +2374,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 		}
 	}
 
-	error=GSM_EncodeMultiPartSMS(&SMSInfo,&sms);
+	error=GSM_EncodeMultiPartSMS(GSM_GetDebug(gsm), &SMSInfo,&sms);
 	Print_Error(error);
 
 	for (i=0;i<SMSInfo.EntriesNum;i++) {

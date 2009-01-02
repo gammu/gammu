@@ -131,10 +131,10 @@ void SaveFile(int argc, char *argv[])
 		}
 		j = 0;
 		if (strcasecmp(argv[2],"VCARD10") == 0) {
-			error = GSM_EncodeVCARD(Buffer, sizeof(Buffer), &j, pbk, true, Nokia_VCard10);
+			error = GSM_EncodeVCARD(GSM_GetDebug(gsm), Buffer, sizeof(Buffer), &j, pbk, true, Nokia_VCard10);
 			Print_Error(error);
 		} else {
-			error = GSM_EncodeVCARD(Buffer, sizeof(Buffer), &j, pbk, true, Nokia_VCard21);
+			error = GSM_EncodeVCARD(GSM_GetDebug(gsm), Buffer, sizeof(Buffer), &j, pbk, true, Nokia_VCard21);
 			Print_Error(error);
 		}
 	} else {
@@ -920,10 +920,8 @@ void Restore(int argc, char *argv[])
 	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
 
 	if (Backup.MD5Calculated[0]!=0) {
-		dbgprintf("\"%s\"\n",Backup.MD5Original);
-		dbgprintf("\"%s\"\n",Backup.MD5Calculated);
 		if (strcmp(Backup.MD5Original,Backup.MD5Calculated)) {
-			if (!answer_yes(_("Checksum in backup file do not match. Continue?"))) return;
+			if (!answer_yes(_("Checksum in backup file do not match (original: %s, new: %s). Continue?"), Backup.MD5Original, Backup.MD5Calculated)) return;
 		}
 	}
 
@@ -975,7 +973,6 @@ void Restore(int argc, char *argv[])
 			if (used<max && Backup.PhonePhonebook[used]->Location == Pbk.Location) {
 				Pbk = *Backup.PhonePhonebook[used];
 				used++;
-				dbgprintf("Location %i\n",Pbk.Location);
 				if (Pbk.EntriesNum != 0) error=GSM_SetMemory(gsm, &Pbk);
 				if (error == ERR_PERMISSION && GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_6230iCALLER)) {
 					error=GSM_DeleteMemory(gsm, &Pbk);
@@ -1040,7 +1037,6 @@ void Restore(int argc, char *argv[])
 			if (used<max && Backup.SIMPhonebook[used]->Location == Pbk.Location) {
 				Pbk = *Backup.SIMPhonebook[used];
 				used++;
-				dbgprintf("Location %i\n",Pbk.Location);
 				if (Pbk.EntriesNum != 0) {
 					error=GSM_SetMemory(gsm, &Pbk);
 					if (error==ERR_NONE) {

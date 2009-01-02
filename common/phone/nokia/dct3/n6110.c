@@ -802,7 +802,7 @@ static GSM_Error N6110_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, 
                                 req[0] = 0x0c;
                                 req[1] = 0x01;
                                 UDHHeader.Type = UDH_NokiaRingtone;
-                                GSM_EncodeUDHHeader(&UDHHeader);
+                                GSM_EncodeUDHHeader(&(s->di), &UDHHeader);
                                 /* We copy UDH now */
                                 memcpy(req+2,UDHHeader.Text,UDHHeader.Length);
                                 *maxlength=GSM_EncodeNokiaRTTLRingtone(*Ringtone, req+2+UDHHeader.Length, &size);
@@ -956,7 +956,7 @@ static GSM_Error N6110_ReplyGetSetPicture(GSM_Protocol_Message msg, GSM_StateMac
         case 0x02:
                 smprintf(s, "Picture Image received\n");
                 if (msg.Buffer[count]!=0) {
-                        GSM_UnpackSemiOctetNumber(Data->Bitmap->Sender, msg.Buffer + 5, true);
+                        GSM_UnpackSemiOctetNumber(&(s->di), Data->Bitmap->Sender, msg.Buffer + 5, true);
                         /* Convert number of semioctets to number of chars */
                         i = msg.Buffer[5];
                         if (i % 2) i++;
@@ -1108,7 +1108,7 @@ static GSM_Error N6110_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
                             strcmp(s->Phone.Data.Model,"NSM-1") == 0) {
                                 if (Bitmap->Type==GSM_CallerGroupLogo) UDHType = UDH_NokiaCallerLogo;
                                 UDHHeader.Type = UDHType;
-                                GSM_EncodeUDHHeader(&UDHHeader);
+                                GSM_EncodeUDHHeader(&(s->di), &UDHHeader);
                                 /* We copy UDH now */
                                 memcpy(reqPreview+2,UDHHeader.Text,UDHHeader.Length);
                                 count = count + UDHHeader.Length;

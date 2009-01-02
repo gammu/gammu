@@ -15,6 +15,7 @@
 #include <gammu-wap.h>
 #include <gammu-calendar.h>
 #include <gammu-file.h>
+#include <gammu-debug.h>
 
 /**
  * \defgroup Message Messages
@@ -548,21 +549,21 @@ typedef struct {
  *
  * \ingroup SMS
  */
-GSM_Error GSM_DecodeSMSFrame(GSM_SMSMessage * SMS, unsigned char *buffer,
+GSM_Error GSM_DecodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage * SMS, unsigned char *buffer,
 			     GSM_SMSMessageLayout Layout);
 
 /**
  * Finds out coding type based on TPDCS header byte as defined by GSM
  * 03.38.
  */
-GSM_Coding_Type GSM_GetMessageCoding(const char TPDCS);
+GSM_Coding_Type GSM_GetMessageCoding(GSM_Debug_Info *di, const char TPDCS);
 
 /**
  * Encodes SMS frame.
  *
  * \ingroup SMS
  */
-GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage * SMS, unsigned char *buffer,
+GSM_Error GSM_EncodeSMSFrame(GSM_Debug_Info *di, GSM_SMSMessage * SMS, unsigned char *buffer,
 			     GSM_SMSMessageLayout Layout, int *length,
 			     bool clear);
 
@@ -571,7 +572,7 @@ GSM_Error GSM_EncodeSMSFrame(GSM_SMSMessage * SMS, unsigned char *buffer,
  *
  * \ingroup SMS
  */
-GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_SMSMessage * SMS,
+GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_Debug_Info *di, GSM_SMSMessage * SMS,
 					     unsigned char *buffer,
 					     GSM_SMSMessageLayout Layout);
 
@@ -580,7 +581,7 @@ GSM_Error GSM_DecodeSMSFrameStatusReportData(GSM_SMSMessage * SMS,
  *
  * \ingroup SMS
  */
-GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage * SMS, unsigned char *buffer,
+GSM_Error GSM_DecodeSMSFrameText(GSM_Debug_Info *di, GSM_SMSMessage * SMS, unsigned char *buffer,
 				 GSM_SMSMessageLayout Layout);
 
 /**
@@ -588,14 +589,14 @@ GSM_Error GSM_DecodeSMSFrameText(GSM_SMSMessage * SMS, unsigned char *buffer,
  *
  * \ingroup SMS
  */
-void GSM_DecodeUDHHeader(GSM_UDHHeader * UDH);
+void GSM_DecodeUDHHeader(GSM_Debug_Info *di, GSM_UDHHeader * UDH);
 
 /**
  * Encodes UDH header.
  *
  * \ingroup SMS
  */
-void GSM_EncodeUDHHeader(GSM_UDHHeader * UDH);
+void GSM_EncodeUDHHeader(GSM_Debug_Info *di, GSM_UDHHeader * UDH);
 
 /**
  * Sets default content for SMS except for changing locations.
@@ -679,7 +680,8 @@ typedef struct {
  *
  * \ingroup SMS
  */
-bool GSM_DecodeSiemensOTASMS(GSM_SiemensOTASMSInfo * Info,
+bool GSM_DecodeSiemensOTASMS(GSM_Debug_Info *di,
+			     GSM_SiemensOTASMSInfo * Info,
 			     GSM_SMSMessage * SMS);
 
 /**
@@ -955,7 +957,8 @@ GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine * s, GSM_SMSMessage * SMS,
  *
  * \ingroup SMS
  */
-GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo * Info,
+GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
+				 GSM_MultiPartSMSInfo * Info,
 				 GSM_MultiSMSMessage * SMS);
 
 /**
@@ -963,7 +966,8 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_MultiPartSMSInfo * Info,
  *
  * \ingroup SMS
  */
-bool GSM_DecodeMultiPartSMS(GSM_MultiPartSMSInfo * Info,
+bool GSM_DecodeMultiPartSMS(GSM_Debug_Info *di,
+			    GSM_MultiPartSMSInfo * Info,
 			    GSM_MultiSMSMessage * SMS, bool ems);
 
 /**
@@ -987,7 +991,8 @@ void GSM_FreeMultiPartSMSInfo(GSM_MultiPartSMSInfo * Info);
  *
  * \ingroup SMS
  */
-GSM_Error GSM_LinkSMS(GSM_MultiSMSMessage ** INPUT,
+GSM_Error GSM_LinkSMS(GSM_Debug_Info *di,
+		      GSM_MultiSMSMessage ** INPUT,
 		      GSM_MultiSMSMessage ** OUTPUT, bool ems);
 
 /**
@@ -1070,7 +1075,7 @@ typedef struct {
  *
  * \ingroup MMS
  */
-GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File * file,
+GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File * file,
 				       GSM_EncodedMultiPartMMSInfo * info);
 
 /**
