@@ -177,6 +177,10 @@
 #cmakedefine HAVE_SYS_UTSNAME_H
 #endif
 
+#ifndef HAVE_VSYSLOG
+#cmakedefine HAVE_VSYSLOG
+#endif
+
 #ifndef HAVE_ISWSPACE
 #cmakedefine HAVE_ISWSPACE
 #endif

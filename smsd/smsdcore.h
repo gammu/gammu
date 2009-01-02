@@ -62,6 +62,7 @@ struct _GSM_SMSDConfig {
 	GSM_StateMachine *gsm;
 	char *gammu_log_buffer;
 	size_t gammu_log_buffer_size;
+	bool use_syslog;
 };
 
 typedef enum {
