@@ -126,7 +126,7 @@ GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, c
 
 	Config->logfilename=INI_GetValue(smsdcfgfile, "smsd", "logfile", false);
 	if (Config->logfilename != NULL) {
-		smsd_log_file=fopen(Config->logfilename,"ab");
+		smsd_log_file=fopen(Config->logfilename,"a");
 		if (smsd_log_file == NULL) {
 			fprintf(stderr, "Can't open log file \"%s\"\n", Config->logfilename);
 			return ERR_CANTOPENFILE;
