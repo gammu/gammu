@@ -803,15 +803,13 @@ GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *s
 	GSM_Error error;
 
 	error = SMSD_ReadConfig(filename, &Config, false, service);
-	if (error!=ERR_NONE) return ERR_UNKNOWN;
+	if (error != ERR_NONE) return ERR_UNKNOWN;
 
 	error = SMSGetService(&Config, &Service);
-	if (error!=ERR_NONE) {
-		GSM_Terminate_SMSD("Failed to setup SMSD service", error, true, -1);
-	}
+	if (error != ERR_NONE) return ERR_UNKNOWN;
 
 	error = Service->Init(&Config);
-	if (error!=ERR_NONE) return ERR_UNKNOWN;
+	if (error != ERR_NONE) return ERR_UNKNOWN;
 
 	return Service->CreateOutboxSMS(sms,&Config);
 }
