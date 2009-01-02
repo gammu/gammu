@@ -11,14 +11,54 @@
 #include <gammu-message.h>
 #include <gammu-misc.h>
 
+/**
+ * \defgroup SMSD SMSD
+ * SMS daemon manipulations
+ */
+
+/**
+ * SMSD configuration data, these are not expected to be manipulated
+ * directly by application.
+ */
 typedef struct _GSM_SMSDConfig GSM_SMSDConfig;
 
-void      SMSDaemon		(int argc, char *argv[]);
-GSM_Error SMSDaemonSendSMS	(char *service, char *filename, GSM_MultiSMSMessage *sms);
+/**
+ * Creates SMSD daemon based on parameters. It performs no parameter
+ * checking and expects argc = 2 and argv = ["service", "configfile"],
+ * otherwise it will crash.
+ *
+ * \deprecated{Do not use this function,it is only included for
+ * backward compatibility of Gammu binary and will be removed in
+ * future versions!}
+ *
+ * \param argc number of arguments
+ * \param argv argument strings
+ */
+void SMSDaemon(int argc, char *argv[]);
 
+/**
+ * Enqueues SMS message in SMS daemon queue.
+ *
+ * \param service Service name override, can be (and should be) NULL.
+ * \param filename SMSD configuration file.
+ * \param sms Message data to send.
+ *
+ * \return Error code
+ */
+GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *sms);
+
+/**
+ * Logs a message to SMSD log.
+ *
+ * \param format printf like format string.
+ */
 /* GSM_SMSDConfig *Config, */
 PRINTF_STYLE(1, 2)
 void WriteSMSDLog(const char *format, ...);
 
 
 #endif
+
+/* Editor configuration
+ * vim: noexpandtab sw=8 ts=8 sts=8 tw=72:
+ */
