@@ -53,6 +53,10 @@ done:
 	rewind(f);
 }
 
+void Log_Function(const char *text)
+{
+	printf("msg: %s", text);
+}
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
@@ -186,6 +190,32 @@ int main(int argc UNUSED, char **argv UNUSED)
 	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	assert(GSM_SetDebugGlobal(false, di_sm) == true);
 	check_log(debug_file, false, "2:TEMP,NULL,FALSE");
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
+
+	/*
+	 * Test 10 - functional logging, do not use global
+	 */
+	debug_file = fopen(debug_filename, "w+");
+	assert(GSM_SetDebugGlobal(true, di_sm) == true);
+	assert(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFunction(Log_Function, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugGlobal(false, di_sm) == true);
+	check_log(debug_file, false, "10:TEMP,NULL,FALSE");
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
+
+	/*
+	 * Test 11 - functional logging, use global
+	 */
+	debug_file = fopen(debug_filename, "w+");
+	assert(GSM_SetDebugGlobal(true, di_sm) == true);
+	assert(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFunction(Log_Function, di_global) == ERR_NONE);
+	assert(GSM_SetDebugGlobal(true, di_sm) == true);
+	check_log(debug_file, false, "11:TEMP,NULL,TRUE");
 	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 

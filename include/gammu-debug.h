@@ -22,13 +22,32 @@
  * Debugging configuration.
  * \ingroup Debug
  */
-typedef struct _DebugInfo GSM_Debug_Info;
+typedef struct _GSM_Debug_Info GSM_Debug_Info;
+
+/**
+ * Callback function for logging.
+ *
+ * \param text Text to be printed, \n will be also sent (maybe as a
+ * separate message).
+ */
+typedef void (*GSM_Log_Function)(const char *text);
+
+/**
+ * Sets logging function.
+ *
+ * \param info Function to call.
+ * \param privdi Pointer to debug information data.
+ * \return Error code.
+ *
+ * \ingroup Debug
+ */
+GSM_Error GSM_SetDebugFunction(GSM_Log_Function info, GSM_Debug_Info * privdi);
 
 /**
  * Sets debug file.
  *
  * \param info File path.
- * \param privdi Pointert to debug information data.
+ * \param privdi Pointer to debug information data.
  * \return Error code.
  *
  * \ingroup Debug
@@ -39,7 +58,7 @@ GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info * privdi);
  * Sets debug file.
  *
  * \param fd File descriptor.
- * \param privdi Pointert to debug information data.
+ * \param privdi Pointer to debug information data.
  * \param closable Whether Gammu can close the file when it is no longer
  * needed for debug output. Please note that stderr or stdout are never
  * closed.

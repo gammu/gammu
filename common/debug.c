@@ -1,8 +1,20 @@
+/* Gammu logging/debugging functions */
+/* Copyright (c) 2008-2009 by Michal Cihar <michal@cihar.com> */
+/* Licensed under GPL2+ */
+
 #include "debug.h"
 #include "gsmstate.h"
 
 #include <string.h>
 #include <ctype.h>
+
+/* Commit flag for opening files is MS extension, some other
+ * implementations (like BCC 5.5) don't like this flag at all */
+#ifdef _MSC_VER
+#  define COMMIT_FLAG "c"
+#else
+#  define COMMIT_FLAG ""
+#endif
 
 GSM_Debug_Info GSM_none_debug = {
 	0,
@@ -10,7 +22,8 @@ GSM_Debug_Info GSM_none_debug = {
 	false,
 	"",
 	false,
-	false
+	false,
+    NULL
 	};
 
 GSM_Debug_Info GSM_global_debug = {
@@ -19,24 +32,37 @@ GSM_Debug_Info GSM_global_debug = {
 	false,
 	"",
 	false,
-	false
+	false,
+    NULL
 	};
+
+/**
+ * Actually writes message to debuging file.
+ */
+void dbg_write(GSM_Debug_Info *d, const char *text)
+{
+    if (d->log_function != NULL) {
+        d->log_function(text);
+    } else if (d->df != NULL) {
+        fwrite(text, sizeof(char), strlen(text), d->df);
+    }
+
+
+}
 
 PRINTF_STYLE(2, 0)
 int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)
 {
 	int 			result=0;
-	char			buffer[3000];
+	char			buffer[3000], timestamp[60];
 	char			*pos, *end;
 	char			save = 0;
 	GSM_DateTime 		date_time;
-	FILE			*f;
 	Debug_Level		l;
 
-	f = d->df;
 	l = d->dl;
 
-	if (l == DL_NONE || f == NULL) return 0;
+	if (l == DL_NONE) return 0;
 
 	result = vsnprintf(buffer, sizeof(buffer) - 1, format, argp);
 	pos = buffer;
@@ -51,10 +77,11 @@ int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)
 			/* Show date? */
 			if (l == DL_TEXTALLDATE || l == DL_TEXTERRORDATE || l == DL_TEXTDATE) {
 				GSM_GetCurrentDateTime(&date_time);
-		                fprintf(f,"%s %4d/%02d/%02d %02d:%02d:%02d: ",
+                sprintf(timestamp, "%s %4d/%02d/%02d %02d:%02d:%02d: ",
 		                        DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
 		                        date_time.Year, date_time.Month, date_time.Day,
 		                        date_time.Hour, date_time.Minute, date_time.Second);
+                dbg_write(d, timestamp);
 			}
 			d->was_lf = false;
 		}
@@ -66,11 +93,11 @@ int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)
 		}
 
 		/* Output */
-		fprintf(f, "%s", pos);
+		dbg_write(d, pos);
 
 		if (end != NULL) {
 			/* We had new line */
-			fprintf(f, "\n");
+			dbg_write(d, "\n");
 			d->was_lf = true;
 
 			/* Restore saved char */
@@ -85,9 +112,71 @@ int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp)
 	}
 
 	/* Flush buffers, this might be configurable, but it could cause drop of last log messages */
-	fflush(f);
+    if (d->df != NULL) {
+        fflush(d->df);
+    }
 
 	return result;
+}
+
+GSM_Error GSM_SetDebugFileDescriptor(FILE *fd, bool closable, GSM_Debug_Info *privdi)
+{
+	privdi->was_lf = true;
+
+	if (privdi->df != NULL
+			&& fileno(privdi->df) != fileno(stderr)
+			&& fileno(privdi->df) != fileno(stdout)
+			&& privdi->closable) {
+		fclose(privdi->df);
+	}
+
+	privdi->df = fd;
+	privdi->closable = closable;
+
+	return ERR_NONE;
+}
+
+GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info *privdi)
+{
+	FILE *testfile;
+
+	if (info == NULL || strlen(info) == 0) {
+		return GSM_SetDebugFileDescriptor(NULL, false, privdi);
+	}
+
+	switch (privdi->dl) {
+		case DL_BINARY:
+			testfile = fopen(info,"wb" COMMIT_FLAG);
+			break;
+		case DL_TEXTERROR:
+		case DL_TEXTERRORDATE:
+			testfile = fopen(info,"a" COMMIT_FLAG);
+			if (!testfile) {
+				dbgprintf(privdi, "Can't open debug file\n");
+				return ERR_CANTOPENFILE;
+			}
+			fseek(testfile, 0, SEEK_END);
+			if (ftell(testfile) > 5000000) {
+				fclose(testfile);
+				testfile = fopen(info,"w" COMMIT_FLAG);
+			}
+			break;
+		default:
+			testfile = fopen(info,"w" COMMIT_FLAG);
+	}
+
+	if (testfile == NULL) {
+		dbgprintf(privdi, "Can't open debug file\n");
+		return ERR_CANTOPENFILE;
+	} else {
+		return GSM_SetDebugFileDescriptor(testfile, true, privdi);
+	}
+}
+
+GSM_Error GSM_SetDebugFunction(GSM_Log_Function info, GSM_Debug_Info * privdi)
+{
+    privdi->log_function = info;
+    return ERR_NONE;
 }
 
 bool GSM_SetDebugLevel(const char *info, GSM_Debug_Info *privdi)
