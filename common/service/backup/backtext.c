@@ -203,9 +203,14 @@ static GSM_Error SaveBackupBase64(FILE *file, char *myname, unsigned char *data,
 	 * and we don't have to care about rounding and padding).
 	 */
 	buffer = (char *)malloc(length * 2);
-	if (buffer == NULL) return ERR_MOREMEMORY;
+	if (buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
 	unicode_buffer = (unsigned char *)malloc(length * 4);
-	if (unicode_buffer == NULL) return ERR_MOREMEMORY;
+	if (unicode_buffer == NULL) {
+		free(buffer);
+		return ERR_MOREMEMORY;
+	}
 
 	EncodeBASE64(data, buffer, length);
 
