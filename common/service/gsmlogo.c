@@ -1059,11 +1059,17 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	if (file == NULL) return ERR_CANTOPENFILE;
 
 	bitmap->Bitmap[0].Name = malloc((strlen(FileName) + 1) * 2);
-	if (bitmap->Bitmap[0].Name == NULL) return ERR_MOREMEMORY;
+	if (bitmap->Bitmap[0].Name == NULL) {
+		fclose(file);
+		return ERR_MOREMEMORY;
+	}
 	EncodeUnicode(bitmap->Bitmap[0].Name, FileName, strlen(FileName));
 
 	/* Read the header of the file. */
-	if (fread(buffer, 1, 9, file) != 9) return ERR_FILENOTSUPPORTED;
+	if (fread(buffer, 1, 9, file) != 9) {
+		fclose(file);
+		return ERR_FILENOTSUPPORTED;
+	}
 	rewind(file);
 
 	bitmap->Bitmap[0].DefaultBitmap = false;
