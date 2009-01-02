@@ -18,10 +18,6 @@ set (BINARY_SRC
     depend/nokia/dct4.c
     depend/siemens/dsiemens.c
     depend/siemens/chiffre.c
-    smsd/smsdcore.c
-    smsd/s_files.c
-    smsd/s_mysql.c
-    smsd/s_pgsql.c
     sniff.c
     common.c
     memory.c
@@ -44,22 +40,13 @@ endif(DEBUG)
 add_executable (gammu ${BINARY_SRC})
 
 target_link_libraries (gammu libGammu)
+target_link_libraries (gammu gsmsd)
 target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
 
 include_directories (
     "${Gammu_BINARY_DIR}/include"
     )
 # Tune options for found libraries
-if (MYSQL_FOUND)
-    target_link_libraries (gammu ${MYSQL_LIBRARIES})
-    include_directories (${MYSQL_INCLUDE_DIR})
-endif (MYSQL_FOUND)
-
-if (POSTGRES_FOUND)
-    target_link_libraries (gammu ${POSTGRES_LIBRARY})
-    include_directories (${POSTGRES_INCLUDE_DIR})
-endif (POSTGRES_FOUND)
-
 if (GETTEXTLIBS_FOUND)
     target_link_libraries (gammu ${GETTEXT_LIBRARY})
     include_directories (${GETTEXT_INCLUDE_DIR})

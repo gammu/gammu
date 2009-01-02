@@ -15,6 +15,7 @@
 #endif
 
 #define MAX_RETRIES 1
+extern GSM_StateMachine *gsm;
 
 void      SMSDaemon		(int argc, char *argv[]);
 GSM_Error SMSDaemonSendSMS	(char *service, char *filename, GSM_MultiSMSMessage *sms);

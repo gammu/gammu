@@ -16,7 +16,6 @@
 #endif
 #endif
 
-#include "../gammu.h"
 #include "smsdcore.h"
 #include "../../common/misc/locales.h"
 

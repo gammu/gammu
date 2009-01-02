@@ -24,7 +24,7 @@
 #include "calendar.h"
 #include "misc.h"
 
-#include "smsd/smsdcore.h"
+#include <gammu-smsd.h>
 #include "../common/misc/locales.h"
 #ifdef DEBUG
 #  include "sniff.h"

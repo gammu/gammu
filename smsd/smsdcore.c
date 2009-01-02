@@ -19,7 +19,7 @@
 
 #include "../../common/misc/coding/coding.h"
 #include "../../common/misc/locales.h"
-#include "../gammu.h"
+//#include "../gammu.h"
 #include "smsdcore.h"
 #include "s_files.h"
 #ifdef HAVE_MYSQL_MYSQL_H
@@ -32,6 +32,14 @@
 FILE 		 *smsd_log_file = NULL;
 static int	 TPMR;
 static GSM_Error SendingSMSStatus;
+volatile bool smsd_shutdown = false;
+GSM_StateMachine *gsm;
+
+void smsd_interrupt(int sign)
+{
+	signal(sign, SIG_IGN);
+	smsd_shutdown = true;
+}
 
 void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr)
 {
@@ -405,7 +413,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	int			i;
 
 	start=true;
-	while (error == ERR_NONE && !gshutdown) {
+	while (error == ERR_NONE && !smsd_shutdown) {
 		sms.SMS[0].Folder=0x00;
 		error=GSM_GetNextSMS(gsm, &sms, start);
 		switch (error) {
@@ -509,10 +517,10 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 
 	if (error == ERR_EMPTY || error == ERR_NOTSUPPORTED) {
 		/* No outbox sms - wait few seconds and escape */
-		for (j=0;j<Config->commtimeout && !gshutdown;j++) {
+		for (j=0;j<Config->commtimeout && !smsd_shutdown;j++) {
 			GSM_GetCurrentDateTime (&Date);
 			second = Date.Second;
-	 		while (second == Date.Second && !gshutdown) {
+	 		while (second == Date.Second && !smsd_shutdown) {
 				usleep(10000);
 				GSM_GetCurrentDateTime(&Date);
 			}
@@ -532,7 +540,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		return false;
 	}
 
-	if (!gshutdown) {
+	if (!smsd_shutdown) {
 		if (strcmp(Config->prevSMSID, Config->SMSID) == 0) {
 			Config->retries++;
 			if (Config->retries > MAX_RETRIES) {
@@ -586,7 +594,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			j    = 0;
 			TPMR = -1;
 			SendingSMSStatus = ERR_TIMEOUT;
-			while (!gshutdown) {
+			while (!smsd_shutdown) {
 				GSM_GetCurrentDateTime (&Date);
 				z=Date.Second;
 				while (z==Date.Second) {
@@ -649,15 +657,15 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 		GSM_Terminate_SMSD(_("Initialisation failed, stopping Gammu smsd"), error, true, -1);
 	}
 
-	signal(SIGINT, interrupt);
-	signal(SIGTERM, interrupt);
+	signal(SIGINT, smsd_interrupt);
+	signal(SIGTERM, smsd_interrupt);
 	fprintf(stderr,"Press Ctrl+C to stop the program ...\n");
 
 	lastreceive		= time(NULL);
 	lastreset		= time(NULL);
 	SendingSMSStatus 	= ERR_UNKNOWN;
 
-	while (!gshutdown) {
+	while (!smsd_shutdown) {
 		/* There were errors in communication - try to recover */
 		if (errors > 2 || errors == -1) {
 			if (errors != -1) {
