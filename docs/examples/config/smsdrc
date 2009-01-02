@@ -27,6 +27,7 @@
 #number1 = 1234
 
 # This section contains general settings
+# service     - SMSD service to use, one of FILES, MYSQL, PGSQL
 # PIN         - PIN for SIM card
 # logfile     - logfile for info about smsd actions
 # CommTimeout - (time in seconds) after each read/write loop smsd waits so
@@ -54,6 +55,7 @@
 # phoneid - string with info about phone used for sending/receiving
 # runonreceive - executes program after receiving message
 [smsd]
+service = files
 PIN = 1234
 logfile = smsdlog
 commtimeout = 1
