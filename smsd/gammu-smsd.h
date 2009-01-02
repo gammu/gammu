@@ -25,7 +25,8 @@ typedef struct _GSM_SMSDConfig GSM_SMSDConfig;
 /**
  * Creates SMSD daemon based on parameters. It performs no parameter
  * checking and expects argc = 2 and argv = ["service", "configfile"],
- * otherwise it will crash.
+ * otherwise it will crash. Also you can not start more than one
+ * instances of this function.
  *
  * \deprecated{Do not use this function,it is only included for
  * backward compatibility of Gammu binary and will be removed in
