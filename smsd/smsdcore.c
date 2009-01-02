@@ -9,6 +9,8 @@
 #include <sys/wait.h>
 #endif
 
+#include <gammu-smsd.h>
+
 /* Some systems let waitpid(2) tell callers about stopped children. */
 #if !defined (WCONTINUED)
 #  define WCONTINUED 0
@@ -80,7 +82,7 @@ void GSM_Terminate_SMSD(const char *msg, int error, bool exitprogram, int rc)
 }
 
 PRINTF_STYLE(1, 2)
-void WriteSMSDLog(const char *format, ...)
+void WriteSMSDLog(/* const GSM_SMSDConfig *Config, */const char *format, ...)
 {
 	GSM_DateTime 	date_time;
 	char 		Buffer[2000];
@@ -101,7 +103,7 @@ void WriteSMSDLog(const char *format, ...)
 	}
 }
 
-void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, char *service)
+GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, char *service)
 {
 	INI_Section 		*smsdcfgfile = NULL;
 	GSM_Config 		smsdcfg;
@@ -119,18 +121,30 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, char *
 		} else {
 			fprintf(stderr, _("Can't find file \"%s\"\n"),filename);
 		}
-		exit(-1);
+		return ERR_CANTOPENFILE;
 	}
 
 	Config->logfilename=INI_GetValue(smsdcfgfile, "smsd", "logfile", false);
 	if (Config->logfilename != NULL) {
 		smsd_log_file=fopen(Config->logfilename,"ab");
 		if (smsd_log_file == NULL) {
-			fprintf(stderr, _("Can't open file \"%s\"\n"),Config->logfilename);
-			exit(-1);
+			fprintf(stderr, "Can't open log file \"%s\"\n", Config->logfilename);
+			return ERR_CANTOPENFILE;
 		}
-		fprintf(stderr, _("Log filename is \"%s\"\n"),Config->logfilename);
+		fprintf(stderr, "Log filename is \"%s\"\n",Config->logfilename);
 	}
+
+	if (service != NULL) {
+		Config->Service = strdup(service);
+	} else {
+		Config->Service = INI_GetValue(smsdcfgfile, "smsd", "service", false);
+		if (Config->Service == NULL) {
+			fprintf(stderr, "No SMSD service configure!\n");
+			if (uselog) WriteSMSDLog("No SMSD service configured!");
+			return ERR_UNCONFIGURED;
+		}
+	}
+
 	if (uselog) WriteSMSDLog(_("Starting GAMMU smsd"));
 
 	/* Include Numbers used, because we don't want create new variable */
@@ -191,7 +205,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, char *
 		Config->SMSC.Location     = 0;
 	}
 
-	if (!strcasecmp(service,"FILES")) {
+	if (!strcasecmp(Config->Service,"FILES")) {
 		Config->inboxpath=INI_GetValue(smsdcfgfile, "smsd", "inboxpath", false);
 		if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
 
@@ -220,7 +234,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, char *
 	}
 
 #ifdef HAVE_MYSQL_MYSQL_H
-	if (!strcasecmp(service,"MYSQL")) {
+	if (!strcasecmp(Config->Service,"MYSQL")) {
 		Config->skipsmscnumber = INI_GetValue(smsdcfgfile, "smsd", "skipsmscnumber", false);
 		if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
 		Config->user = INI_GetValue(smsdcfgfile, "smsd", "user", false);
@@ -235,7 +249,7 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, char *
 #endif
 
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-	if (!strcasecmp(service,"PGSQL")) {
+	if (!strcasecmp(Config->Service,"PGSQL")) {
 		Config->skipsmscnumber = INI_GetValue(smsdcfgfile, "smsd", "skipsmscnumber", false);
 		if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
 		Config->user = INI_GetValue(smsdcfgfile, "smsd", "user", false);
@@ -265,6 +279,8 @@ void SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, char *
 	Config->retries 	  = 0;
 	Config->prevSMSID[0] 	  = 0;
 	Config->relativevalidity  = -1;
+
+	return ERR_NONE;
 }
 
 bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
@@ -627,39 +643,36 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	return true;
 }
 
-void SMSDaemon(int argc UNUSED, char *argv[])
+GSM_Error SMSDMainLoop(GSM_SMSDConfig *Config)
 {
-	int                     errors = -1, initerrors=0;
 	GSM_SMSDService		*Service;
 	GSM_Error		error;
+	int                     errors = -1, initerrors=0;
  	time_t			lastreceive, lastreset = 0;
-	GSM_SMSDConfig		Config;
 
-	if (!strcasecmp(argv[2],"FILES")) {
+	if (strcasecmp(Config->Service, "FILES") == 0) {
 		Service = &SMSDFiles;
+	} else if (strcasecmp(Config->Service, "MYSQL") == 0) {
 #ifdef HAVE_MYSQL_MYSQL_H
-	} else if (!strcasecmp(argv[2],"MYSQL")) {
 		Service = &SMSDMySQL;
+#else
+		return ERR_DISABLED;
 #endif
+	} else if (strcasecmp(Config->Service, "PGSQL") == 0) {
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-	} else if (!strcasecmp(argv[2],"PGSQL")) {
 		Service = &SMSDPgSQL;
+#else
+		return ERR_DISABLED;
 #endif
 	} else {
-		fprintf(stderr, _("Unknown SMSD service type (\"%s\")\n"), argv[2]);
-		exit(-1);
+		WriteSMSDLog("Unknown SMSD service type: \"%s\"", Config->Service);
+		return ERR_UNCONFIGURED;
 	}
 
-	SMSD_ReadConfig(argv[3], &Config, true, argv[2]);
-
-	error = Service->Init(&Config);
+	error = Service->Init(Config);
 	if (error!=ERR_NONE) {
 		GSM_Terminate_SMSD(_("Initialisation failed, stopping Gammu smsd"), error, true, -1);
 	}
-
-	signal(SIGINT, smsd_interrupt);
-	signal(SIGTERM, smsd_interrupt);
-	fprintf(stderr,"Press Ctrl+C to stop the program ...\n");
 
 	lastreceive		= time(NULL);
 	lastreset		= time(NULL);
@@ -681,10 +694,10 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 				GSM_SetSendSMSStatusCallback(gsm, SMSSendingSMSStatus);
 				if (errors == -1) {
 					errors = 0;
-					if (GSM_GetIMEI(gsm, Config.IMEI) != ERR_NONE) {
+					if (GSM_GetIMEI(gsm, Config->IMEI) != ERR_NONE) {
 						errors++;
 					} else {
-						error = Service->InitAfterConnect(&Config);
+						error = Service->InitAfterConnect(Config);
 						if (error!=ERR_NONE) {
 							GSM_Terminate_SMSD(_("Post initialisation failed, stopping Gammu smsd"), error, true, -1);
 						}
@@ -714,11 +727,11 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 			}
 			continue;
 		}
-		if ((difftime(time(NULL), lastreceive) >= Config.receivefrequency) || (SendingSMSStatus != ERR_NONE)) {
+		if ((difftime(time(NULL), lastreceive) >= Config->receivefrequency) || (SendingSMSStatus != ERR_NONE)) {
 	 		lastreceive = time(NULL);
 
 
-			if (Config.checksecurity && !SMSD_CheckSecurity(&Config)) {
+			if (Config->checksecurity && !SMSD_CheckSecurity(Config)) {
 				errors++;
 				initerrors++;
 				continue;
@@ -729,7 +742,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 			initerrors = 0;
 
 			/* read all incoming SMS */
-			if (!SMSD_CheckSMSStatus(&Config,Service)) {
+			if (!SMSD_CheckSMSStatus(Config,Service)) {
 				errors++;
 				continue;
 			} else {
@@ -737,18 +750,38 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 			}
 
 			/* time for preventive reset */
-			if (Config.resetfrequency > 0 && difftime(time(NULL), lastreset) >= Config.resetfrequency) {
+			if (Config->resetfrequency > 0 && difftime(time(NULL), lastreset) >= Config->resetfrequency) {
 				errors = 254;
 				initerrors = -2;
 				continue;
 			}
 		}
-		if (!SMSD_SendSMS(&Config,Service)) {
+		if (!SMSD_SendSMS(Config, Service)) {
 			continue;
 		}
 	}
 	GSM_SetFastSMSSending(gsm,false);
 	GSM_Terminate_SMSD(_("Stopping Gammu smsd"), 0, false, 0);
+	return ERR_NONE;
+}
+
+void SMSDaemon(int argc UNUSED, char *argv[])
+{
+	GSM_Error		error;
+	GSM_SMSDConfig		Config;
+
+	fprintf(stderr,"Warning: This is deprecated functionality and will be removed!\n");
+
+	error = SMSD_ReadConfig(argv[3], &Config, true, argv[2]);
+	if (error != ERR_NONE) {
+		GSM_Terminate_SMSD("Failed to read config, stopping Gammu smsd", error, true, -1);
+	}
+
+	signal(SIGINT, smsd_interrupt);
+	signal(SIGTERM, smsd_interrupt);
+	fprintf(stderr,"Press Ctrl+C to stop the program ...\n");
+
+	SMSDMainLoop(&Config);
 }
 
 GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *sms)

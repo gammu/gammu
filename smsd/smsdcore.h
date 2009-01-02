@@ -1,6 +1,7 @@
 /* (c) 2002-2004 by Marcin Wiacek and Joergen Thomsen */
 
 #include <gammu.h>
+#include <gammu-smsd.h>
 
 #ifdef HAVE_MYSQL_MYSQL_H
 #ifdef WIN32
@@ -17,10 +18,8 @@
 #define MAX_RETRIES 1
 extern GSM_StateMachine *gsm;
 
-void      SMSDaemon		(int argc, char *argv[]);
-GSM_Error SMSDaemonSendSMS	(char *service, char *filename, GSM_MultiSMSMessage *sms);
-
-typedef struct {
+struct _GSM_SMSDConfig {
+	const char	*Service;
 	/* general options */
 	INI_Entry       *IncludeNumbers, *ExcludeNumbers;
 	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency;
@@ -60,7 +59,7 @@ typedef struct {
        /* PostgreSQL db connection */
        PGconn *DBConnPgSQL;
 #endif
-} GSM_SMSDConfig;
+};
 
 typedef enum {
 	SMSD_SEND_OK = 1,
@@ -87,11 +86,6 @@ typedef struct {
 	 */
 	GSM_Error	(*RefreshPhoneStatus) (GSM_SMSDConfig *Config, GSM_BatteryCharge *Battery, GSM_SignalQuality *Signal);
 } GSM_SMSDService;
-
-#if defined(__GNUC__) && !defined(printf)
-__attribute__((format(printf, 1, 2)))
-#endif
-void WriteSMSDLog(const char *format, ...);
 
 extern GSM_Error SMSD_NoneFunction		(void);
 extern GSM_Error SMSD_NotImplementedFunction	(void);
