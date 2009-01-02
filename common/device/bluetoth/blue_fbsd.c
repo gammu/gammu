@@ -52,7 +52,7 @@ GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device)
 
 	fd = socket(PF_BLUETOOTH, SOCK_STREAM, BLUETOOTH_PROTO_RFCOMM);
 	if (fd < 0) {
-		dbgprintf("Can't create socket\n");
+		smprintf(s, "Can't create socket\n");
 		return ERR_DEVICENODRIVER;
 	}
 
@@ -196,7 +196,7 @@ GSM_Error bluetooth_findchannel(GSM_StateMachine *s)
 	if (hci_devinfo(0, &di) < 0) return ERR_DEVICENOTWORK;
 
 	if (strcmp(s->CurrentConfig->Device, "/dev/ttyS1") == 0) {
-		dbgprintf("Searching for devices\n");
+		smprintf(s, "Searching for devices\n");
 		if (sdp_general_inquiry(ii, 20, 8, &count) < 0) {
 			return ERR_UNKNOWN;
 		}

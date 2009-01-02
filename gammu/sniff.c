@@ -372,16 +372,16 @@ void decodebinarydump(int argc, char *argv[])
 		i=0;
 		while (i!=len2) {
 			if (Buffer[i++]==0x01) {
-				dbgprintf("Sending frame ");
+				smprintf(gsm, "Sending frame ");
 				sent = true;
 			} else {
-				dbgprintf("Receiving frame ");
+				smprintf(gsm, "Receiving frame ");
 				sent = false;
 			}
 			type 	= Buffer[i++];
 			len 	= Buffer[i++] * 256;
 			len 	= len + Buffer[i++];
-			dbgprintf("0x%02x / 0x%04x", type, len);
+			smprintf(gsm, "0x%02x / 0x%04x", type, len);
 			DumpMessage(&ldi, Buffer+i, len);
 			fflush(stdout);
 			if (gsm->Phone.Functions != NULL && !sent) {

@@ -425,10 +425,10 @@ GSM_Error DCT3_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		EncodeUnicode(Data->SMSC->Name,msg.Buffer+33,i);
 		smprintf(s, "Name \"%s\"\n", DecodeUnicodeString(Data->SMSC->Name));
 
-		GSM_UnpackSemiOctetNumber(Data->SMSC->DefaultNumber,msg.Buffer+9,true);
+		GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->DefaultNumber,msg.Buffer+9,true);
 		smprintf(s, "Default number \"%s\"\n", DecodeUnicodeString(Data->SMSC->DefaultNumber));
 
-		GSM_UnpackSemiOctetNumber(Data->SMSC->Number,msg.Buffer+21,false);
+		GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->Number,msg.Buffer+21,false);
 		smprintf(s, "Number \"%s\"\n", DecodeUnicodeString(Data->SMSC->Number));
 
 		return ERR_NONE;
@@ -1489,15 +1489,15 @@ GSM_Error DCT3_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned
 	case 0x00:
 		smprintf(s, "SMS type - deliver\n");
 		SMS->PDU = SMS_Deliver;
-		return GSM_DecodeSMSFrame(SMS,buffer,PHONE_SMSDeliver);
+		return GSM_DecodeSMSFrame(&(s->di), SMS,buffer,PHONE_SMSDeliver);
 	case 0x01:
 		smprintf(s, "SMS type - submit\n");
 		SMS->PDU = SMS_Submit;
-		return GSM_DecodeSMSFrame(SMS,buffer,PHONE_SMSSubmit);
+		return GSM_DecodeSMSFrame(&(s->di), SMS,buffer,PHONE_SMSSubmit);
 	case 0x02:
 		smprintf(s, "SMS type - delivery report\n");
 		SMS->PDU = SMS_Status_Report;
-		return GSM_DecodeSMSFrame(SMS,buffer,PHONE_SMSStatusReport);
+		return GSM_DecodeSMSFrame(&(s->di), SMS,buffer,PHONE_SMSStatusReport);
 	}
 	return ERR_UNKNOWN;
 }

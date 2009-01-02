@@ -83,7 +83,7 @@ GSM_Error SIEMENS_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 	error = GetSiemensFrame(msg,s,"bmp",buffer,&length);
 	if (error!=ERR_NONE) return error;
-	dbgprintf ("Operator logo received lenght=" SIZE_T_FORMAT "\n",length);
+	smprintf(s, "Operator logo received lenght=" SIZE_T_FORMAT "\n",length);
 	error = BMP2Bitmap (buffer,NULL,s->Phone.Data.Bitmap);
 	if (error==ERR_NONE) return error;
 	else return ERR_UNKNOWN;
@@ -95,12 +95,12 @@ GSM_Error SIEMENS_ReplySetFunction (GSM_Protocol_Message msg UNUSED, GSM_StateMa
 	    s->Protocol.Data.AT.EditMode = false;
 	    return ERR_NONE;
 	}
-	dbgprintf ("Written %s",function);
+	smprintf(s, "Written %s",function);
   	if (s->Phone.Data.Priv.ATGEN.ReplyState == AT_Reply_OK){
-  		dbgprintf (" - OK\n");
+  		smprintf(s, " - OK\n");
   		return ERR_NONE;
 	} else {
-  		dbgprintf (" - error\n");
+  		smprintf(s, " - error\n");
   		return ERR_UNKNOWN;
 	}
 }
@@ -148,7 +148,7 @@ GSM_Error SIEMENS_ReplyGetRingtone(GSM_Protocol_Message msg, GSM_StateMachine *s
 
         error = GetSiemensFrame(msg,s,"mid",s->Phone.Data.Ringtone->NokiaBinary.Frame,&length);
 	if (error!=ERR_NONE) return error;
-	dbgprintf ("Midi ringtone received\n");
+	smprintf(s, "Midi ringtone received\n");
 
 	s->Phone.Data.Ringtone->Format			= RING_MIDI;
 	s->Phone.Data.Ringtone->NokiaBinary.Length	= length;
@@ -201,7 +201,7 @@ GSM_Error SIEMENS_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_StateMachin
  		smprintf(s, "Calendar entry received\n");
 		error = GetSiemensFrame(msg, s, "vcs", buffer, &len);
 		if (error != ERR_NONE) return error;
-		return GSM_DecodeVCALENDAR_VTODO(buffer,&pos,Calendar,&ToDo,Siemens_VCalendar,0);
+		return GSM_DecodeVCALENDAR_VTODO(&(s->di), buffer,&pos,Calendar,&ToDo,Siemens_VCalendar,0);
 	case AT_Reply_Error:
 		smprintf(s, "Error - too high location ?\n");
 		return ERR_INVALIDLOCATION;
@@ -363,7 +363,7 @@ GSM_Error SIEMENS_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		if (error != ERR_NONE) return error;
  		Memory->EntriesNum = 0;
 		length = 0;
- 		return GSM_DecodeVCARD(buffer, &length, Memory, SonyEricsson_VCard21_Phone);
+ 		return GSM_DecodeVCARD(&(s->di), buffer, &length, Memory, SonyEricsson_VCard21_Phone);
 	case AT_Reply_Error:
                 smprintf(s, "Error - too high location ?\n");
                 return ERR_INVALIDLOCATION;

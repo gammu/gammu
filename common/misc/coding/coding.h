@@ -17,6 +17,7 @@
 
 #include <gammu-unicode.h>
 #include <gammu-error.h>
+#include <gammu-debug.h>
 
 #ifndef HAVE_WCHAR_T
 typedef		int wchar_t;
@@ -106,7 +107,7 @@ typedef enum {
 	/* specification give also other values */
 } GSM_NumberType;
 
-void		GSM_UnpackSemiOctetNumber	(unsigned char *retval, unsigned char *Number, bool semioctet);
+void GSM_UnpackSemiOctetNumber(GSM_Debug_Info *di, unsigned char *retval, unsigned char *Number, bool semioctet);
 int		GSM_PackSemiOctetNumber		(unsigned char *Number, unsigned char *Output, bool semioctet);
 
 /* ---------------------------- Bits --------------------------------------- */

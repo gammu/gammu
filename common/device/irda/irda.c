@@ -85,7 +85,7 @@ static bool irda_discover_device(GSM_StateMachine *state, int *fd)
 #else
 					deviceid = list->Device[i].irdaDeviceID;
 #endif
-					dbgprintf("Irda: found device \"%s\" (address %d) - ",
+					smprintf(state, "Irda: found device \"%s\" (address %d) - ",
 							list->Device[i].irdaDeviceName,
 							deviceid
 							);
@@ -97,7 +97,7 @@ static bool irda_discover_device(GSM_StateMachine *state, int *fd)
 						state->Phone.Data.ModelInfo = GetModelData(state, NULL,state->Phone.Data.Model,NULL);
 					}
 					if (founddevice) {
-			    			dbgprintf("correct\n");
+			    			smprintf(state, "correct\n");
 #ifdef WIN32
 			    			for(index=0; index <= 3; index++)
 							d->peer.irdaDeviceID[index] = list->Device[i].irdaDeviceID[index];
@@ -106,7 +106,7 @@ static bool irda_discover_device(GSM_StateMachine *state, int *fd)
 #endif
 			   			break;
 					}
-					dbgprintf("\n");
+					smprintf(state, "\n");
 		    		}
 			}
 			if (founddevice) break;
@@ -174,15 +174,15 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 
     	/* Connecting to service */
     	if (connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
-		dbgprintf("Can't connect to service %s\n",d->peer.irdaServiceName);
+		smprintf(s, "Can't connect to service %s\n",d->peer.irdaServiceName);
 		failed = true;
 		/* Try alternatives if we failed */
 		if (s->ConnectionType == GCT_IRDAOBEX) {
-			dbgprintf("Trying alternate config: IrDA:OBEX\n");
+			smprintf(s, "Trying alternate config: IrDA:OBEX\n");
 			strcpy(d->peer.irdaServiceName, "IrDA:OBEX");
 			if (connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
-				dbgprintf("Can't connect to service %s\n",d->peer.irdaServiceName);
-				dbgprintf("Trying alternate config: OBEX:IrXfer\n");
+				smprintf(s, "Can't connect to service %s\n",d->peer.irdaServiceName);
+				smprintf(s, "Trying alternate config: OBEX:IrXfer\n");
 				strcpy(d->peer.irdaServiceName, "OBEX:IrXfer");
 				if (!connect(fd, (struct sockaddr *)&d->peer, sizeof(d->peer))) {
 					failed = false;

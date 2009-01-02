@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 	fclose(f);
 
 	/* Parse vCard */
-	error = GSM_DecodeVCARD(buffer, &pos, &pbk, SonyEricsson_VCard21);
+	error = GSM_DecodeVCARD(NULL, buffer, &pos, &pbk, SonyEricsson_VCard21);
 	if (error != ERR_NONE) {
 		printf("Parsing failed: %s\n", GSM_ErrorString(error));
 		return 1;
@@ -72,7 +72,7 @@ int main(int argc, char **argv)
 
 	/* Encode vCard back */
 	pos = 0;
-	error = GSM_EncodeVCARD(vcard_buffer, sizeof(vcard_buffer), &pos, &pbk, true, SonyEricsson_VCard21);
+	error = GSM_EncodeVCARD(NULL, vcard_buffer, sizeof(vcard_buffer), &pos, &pbk, true, SonyEricsson_VCard21);
 	assert(error == ERR_NONE);
 
 	/*

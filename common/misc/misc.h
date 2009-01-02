@@ -13,7 +13,6 @@
 
 #include <stdio.h>
 #include <time.h>
-#include <stdarg.h>
 
 #ifdef WIN32
 #define WIN32_LEAN_AND_MEAN
@@ -103,49 +102,6 @@ int GetWeekOfMonth(unsigned int year, unsigned int month, unsigned int day);
  */
 int GetDayOfWeek(unsigned int year, unsigned int month, unsigned int day);
 
-
-/* ------------------------------------------------------------------------- */
-
-
-extern GSM_Debug_Info	GSM_global_debug;
-extern GSM_Debug_Info	GSM_none_debug;
-
-void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const int messagesize);
-void DumpMessageText(GSM_Debug_Info *d, const unsigned char *message, const int messagesize);
-
-
-/* ------------------------------------------------------------------------- */
-
-
-/**
- * Debugging level.
- */
-typedef enum {
-	DL_NONE = 0,		/**< No debug messages		*/
-	DL_BINARY = 1,		/**< Binary transmission dump 	*/
-	DL_TEXT,		/**< Text transmission dump	*/
-	DL_TEXTALL,		/**< Everything			*/
-	DL_TEXTERROR,		/**< Only errors			*/
-	DL_TEXTDATE,		/**< Text transmission dump	*/
-	DL_TEXTALLDATE,		/**< Everything			*/
-	DL_TEXTERRORDATE	/**< Only errors			*/
-} Debug_Level;
-
-struct _DebugInfo {
-	Debug_Level	dl; /**< Level of messages to display */
-	FILE		*df; /**< File used for debug messages output */
-	bool        	use_global; /**< Whether to use global debug structure instead of this one. */
-	const char	*coding; /**< Encoding used in console */
-	bool		was_lf; /**< Has there already been new line */
-	bool		closable; /**< Whether Gammu can close the file when it is no longer needed for debug output. */
-};
-
-
-PRINTF_STYLE(2, 3)
-int smfprintf(GSM_Debug_Info *d, const char *format, ...);
-
-PRINTF_STYLE(2, 0)
-int dbg_vprintf(GSM_Debug_Info *d, const char *format, va_list argp);
 
 #ifdef WIN32
 typedef SOCKET socket_type;

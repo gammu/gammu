@@ -21,11 +21,12 @@
 #include <gammu-unicode.h>
 
 #include "../misc/misc.h"
+#include "../debug.h"
 #include "gsmmisc.h"
 #include "gsmcal.h"
 #include "../misc/coding/coding.h"
 
-void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)
+void GSM_SetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)
 {
 	unsigned int i;
 	int start=-1,frequency=-1,dow=-1,day=-1,month=-1,end=-1,Recurrance = 0, Repeat=0, j;
@@ -128,10 +129,10 @@ void GSM_SetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 	endday[0] = Repeat/256;
 	endday[1] = Repeat%256;
 
-	dbgprintf("Repeat number: %i\n",Repeat);
+	smfprintf(di, "Repeat number: %i\n",Repeat);
 }
 
-void GSM_GetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)
+void GSM_GetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)
 {
 	int 	Recurrance,num=-1,i;
 
@@ -141,7 +142,7 @@ void GSM_GetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 	if (Recurrance == 0xffff) Recurrance=24*365;
 	/* dct3: unavailable, dct4: 65534 (0xffff-1) is 30 days */
 	if (Recurrance == 0xffff-1) Recurrance=24*30;
-	dbgprintf("Recurrance   : %i hours\n",Recurrance);
+	smfprintf(di, "Recurrance   : %i hours\n",Recurrance);
 
 	for (i=0;i<entry->EntriesNum;i++) {
 		if (entry->Entries[i].EntryType == CAL_START_DATETIME) {
@@ -183,7 +184,7 @@ void GSM_GetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 		entry->EntriesNum++;
 	}
 	if (endday == NULL || endday[0]*256+endday[1] == 0) return;
-	dbgprintf("Repeat   : %i times\n",endday[0]*256+endday[1]);
+	smfprintf(di, "Repeat   : %i times\n",endday[0]*256+endday[1]);
 	memcpy(&entry->Entries[entry->EntriesNum].Date,&entry->Entries[num].Date,sizeof(GSM_DateTime));
 	entry->Entries[entry->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
 	switch (Recurrance) {
@@ -209,7 +210,7 @@ void GSM_GetCalendarRecurranceRepeat(unsigned char *rec, unsigned char *endday, 
 			entry->EntriesNum++;
 			break;
 	}
-	dbgprintf("End Repeat Time: %04i-%02i-%02i %02i:%02i:%02i\n",
+	smfprintf(di, "End Repeat Time: %04i-%02i-%02i %02i:%02i:%02i\n",
 		entry->Entries[entry->EntriesNum-1].Date.Year,
 		entry->Entries[entry->EntriesNum-1].Date.Month,
 		entry->Entries[entry->EntriesNum-1].Date.Day,
@@ -244,7 +245,7 @@ bool GSM_IsCalendarNoteFromThePast(GSM_CalendarEntry *note)
 		if (!Past) break;
 	}
 	if (note->Type == GSM_CAL_BIRTHDAY) Past = false;
-	GSM_SetCalendarRecurranceRepeat(rec, endday, note);
+	GSM_SetCalendarRecurranceRepeat(NULL, rec, endday, note);
 	if (rec[0] != 0 || rec[1] != 0) {
 		if (End == -1) {
 			Past = false;
@@ -1398,7 +1399,7 @@ GSM_Error GSM_DecodeVCAL_DOW(const char *Buffer, unsigned int *Output)
  *
  * @todo Negative week of month and day of month are not supported.
  */
-GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, int TimePos)
+GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_CalendarEntry *Calendar, int TimePos)
 {
 	const char *pos = Buffer;
 	bool have_info;
@@ -1492,7 +1493,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 							pos++;
 						} else if (*pos == '-') {
 							pos++;
-							dbgprintf("WARNING: Negative week position not supported!");
+							smfprintf(di, "WARNING: Negative week position not supported!");
 						}
 						NEXT_NOSPACE(0);
 
@@ -1535,7 +1536,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 								pos++;
 							} else if (*pos == '-') {
 								pos++;
-								dbgprintf("WARNING: Negative day position not supported!");
+								smfprintf(di, "WARNING: Negative day position not supported!");
 							}
 							NEXT_NOSPACE(0);
 						}
@@ -1548,7 +1549,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 
 					break;
 				default:
-					dbgprintf("Could not decode recurrency: %s\n", pos);
+					smfprintf(di, "Could not decode recurrency: %s\n", pos);
 					return ERR_UNKNOWN;
 			}
 			break;
@@ -1625,12 +1626,12 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 					}
 					break;
 				default:
-					dbgprintf("Could not decode recurrency: %s\n", pos);
+					smfprintf(di, "Could not decode recurrency: %s\n", pos);
 					return ERR_UNKNOWN;
 			}
 			break;
 		default:
-			dbgprintf("Could not decode recurrency: %s\n", pos);
+			smfprintf(di, "Could not decode recurrency: %s\n", pos);
 			return ERR_UNKNOWN;
 	}
 
@@ -1656,7 +1657,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(const char *Buffer, GSM_CalendarEntry *Calendar, 
 	return ERR_NONE;
 }
 
-GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry *Calendar,
+GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_CalendarEntry *Calendar,
 					GSM_ToDoEntry *ToDo, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer)
 {
 	unsigned char 	Line[2000],Buff[2000];
@@ -1710,7 +1711,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 		case 1: /* Calendar note */
 			if (strstr(Line,"END:VEVENT")) {
 				if (Time == -1) {
-					dbgprintf("vCalendar without date!\n");
+					smfprintf(di, "vCalendar without date!\n");
 					return ERR_UNKNOWN;
 				}
 				if (rrule != NULL) {
@@ -1718,7 +1719,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 						/* @todo: We don't have parser for this right now */
 						error = ERR_NONE;
 					} else {
-						error = GSM_DecodeVCAL_RRULE(rrule, Calendar, Time);
+						error = GSM_DecodeVCAL_RRULE(di, rrule, Calendar, Time);
 					}
 					free(rrule);
 					if (error != ERR_NONE) {
@@ -1741,9 +1742,9 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 					 */
 					if (dstflag == 4) {
 						GSM_Calendar_AdjustDate(Calendar, &OneHour);
-						dbgprintf("Adjusting DST: %i\n", dstflag);
+						smfprintf(di, "Adjusting DST: %i\n", dstflag);
 					} else {
-						dbgprintf("Unknown DST flag: %i\n", dstflag);
+						smfprintf(di, "Unknown DST flag: %i\n", dstflag);
 					}
 				}
 
@@ -1801,7 +1802,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 				if (rrule == NULL) {
 					rrule = strdup(Line + 6);
 				} else {
-					dbgprintf("Ignoring second recurrence: %s\n", Line);
+					smfprintf(di, "Ignoring second recurrence: %s\n", Line);
 				}
 				break;
 			}
@@ -1892,9 +1893,9 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(char *Buffer, size_t *Pos, GSM_CalendarEntry
 					 */
 					if (dstflag == 4) {
 						GSM_ToDo_AdjustDate(ToDo, &OneHour);
-						dbgprintf("Adjusting DST: %i\n", dstflag);
+						smfprintf(di, "Adjusting DST: %i\n", dstflag);
 					} else {
-						dbgprintf("Unknown DST flag: %i\n", dstflag);
+						smfprintf(di, "Unknown DST flag: %i\n", dstflag);
 					}
 				}
 

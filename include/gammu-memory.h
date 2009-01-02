@@ -15,6 +15,7 @@
 #include <gammu-datetime.h>
 #include <gammu-limits.h>
 #include <gammu-bitmap.h>
+#include <gammu-debug.h>
 
 /**
  * Enum defines ID for various phone and SIM memories.
@@ -595,7 +596,7 @@ typedef enum {
  *
  * \ingroup Memory
  */
-GSM_Error GSM_EncodeVCARD(char *Buffer, const size_t buff_len, size_t *Pos,
+GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_len, size_t *Pos,
 			GSM_MemoryEntry * pbk, const bool header,
 			const GSM_VCardVersion Version);
 
@@ -604,7 +605,7 @@ GSM_Error GSM_EncodeVCARD(char *Buffer, const size_t buff_len, size_t *Pos,
  *
  * \ingroup Memory
  */
-GSM_Error GSM_DecodeVCARD(char *Buffer, size_t *Pos,
+GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos,
 			  GSM_MemoryEntry * Pbk, const GSM_VCardVersion Version);
 
 #endif

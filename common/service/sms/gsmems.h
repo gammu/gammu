@@ -5,11 +5,13 @@
 
 #include "gsmmulti.h"
 
-GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 	*Info,
+GSM_Error GSM_EncodeEMSMultiPartSMS(GSM_Debug_Info *di,
+				    GSM_MultiPartSMSInfo 	*Info,
 				    GSM_MultiSMSMessage 	*SMS,
 				    GSM_UDH			UDHType);
 
-bool GSM_DecodeEMSMultiPartSMS(GSM_MultiPartSMSInfo 		*Info,
+bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
+			       GSM_MultiPartSMSInfo 		*Info,
 			       GSM_MultiSMSMessage 		*SMS);
 
 #endif

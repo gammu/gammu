@@ -6,7 +6,7 @@
 #include <gammu-config.h>
 
 #include "../../misc/coding/coding.h"
-#include "../../misc/misc.h"
+#include "../../debug.h"
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
 #include "backldif.h"
@@ -173,7 +173,7 @@ GSM_Error SaveLDIF(const char *FileName, GSM_Backup *backup)
 			case PBK_Text_PictureName:
 			case PBK_PushToTalkID:
 			case PBK_Photo:
-				dbgprintf("Feature missed\n");
+				dbgprintf(NULL, "Feature missed\n");
 				break;
 			}
 		}
@@ -195,16 +195,16 @@ static bool ReadLDIFText(const char *Buffer, const char *Start, char *Value)
 	strcat(buff,":: ");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		i = DecodeBASE64(Buffer+strlen(Start)+3, Buffer2, strlen(Buffer)-(strlen(Start)+3));
-		dbgprintf("Text after DecodeBASE64 is \"%s\"\n",Buffer2);
+		dbgprintf(NULL, "Text after DecodeBASE64 is \"%s\"\n",Buffer2);
 		DecodeUTF8(Value, Buffer2, i);
-		dbgprintf("Text after DecodeUTF8 is \"%s\"\n",DecodeUnicodeString(Value));
+		dbgprintf(NULL, "Text after DecodeUTF8 is \"%s\"\n",DecodeUnicodeString(Value));
 		return true;
 	}
 	strcpy(buff,Start);
 	strcat(buff,": ");
 	if (!strncmp(Buffer,buff,strlen(buff))) {
 		EncodeUnicode(Value,Buffer+strlen(Start)+2,strlen(Buffer)-(strlen(Start)+2));
-		dbgprintf("Text after EncodeUnicode is \"%s\"\n",DecodeUnicodeString(Value));
+		dbgprintf(NULL, "Text after EncodeUnicode is \"%s\"\n",DecodeUnicodeString(Value));
 		return true;
 	}
 	return false;
@@ -228,14 +228,14 @@ static GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry 
 			if (ReadLDIFText(Line, "objectclass", Buff)) {
 				sprintf(Buff2,"%s",DecodeUnicodeString(Buff));
 				if (!strcmp("mozillaAbPersonObsolete",Buff2)) {
-					dbgprintf("level1\n");
+					dbgprintf(NULL, "level1\n");
 					Level = 1;
 				}
 			}
 			break;
 		case 1:
 			if (ReadLDIFText(Line, "dn", Buff)) {
-				dbgprintf("entries num is %i\n",Pbk->EntriesNum);
+				dbgprintf(NULL, "entries num is %i\n",Pbk->EntriesNum);
 				if (Pbk->EntriesNum == 0) return ERR_EMPTY;
 				return ERR_NONE;
 			}
@@ -314,7 +314,7 @@ static GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry 
 		}
 	}
 
-	dbgprintf("entries num is %i\n",Pbk->EntriesNum);
+	dbgprintf(NULL, "entries num is %i\n",Pbk->EntriesNum);
 	if (Pbk->EntriesNum == 0) return ERR_EMPTY;
 	return ERR_NONE;
 }
@@ -340,7 +340,7 @@ GSM_Error LoadLDIF(const char *FileName, GSM_Backup *backup)
 		        if (backup->PhonePhonebook[numPbk] == NULL) return ERR_MOREMEMORY;
 			backup->PhonePhonebook[numPbk + 1] = NULL;
 		} else {
-			dbgprintf("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
+			dbgprintf(NULL, "Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
 			return ERR_MOREMEMORY;
 		}
 		memcpy(backup->PhonePhonebook[numPbk],&Pbk,sizeof(GSM_MemoryEntry));

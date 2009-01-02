@@ -143,7 +143,7 @@ GSM_Error N6510_ReplyGetCalendar3(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	entry->Entries[0].EntryType = CAL_START_DATETIME;
 	entry->EntriesNum++;
 
-	GSM_GetCalendarRecurranceRepeat(msg.Buffer+40, msg.Buffer+46, entry);
+	GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer+40, msg.Buffer+46, entry);
 
 	if (entry->Type != GSM_CAL_BIRTHDAY) {
 		smprintf(s,"EndTime: %04i-%02i-%02i %02i:%02i\n",
@@ -545,7 +545,7 @@ static GSM_Error N6510_AddCalendar3(GSM_StateMachine *s, GSM_CalendarEntry *Note
 		req[35]	= date_time.Year % 256;
 	}
 
-	GSM_SetCalendarRecurranceRepeat(req+40, req+52, Note);
+	GSM_SetCalendarRecurranceRepeat(&(s->di), req+40, req+52, Note);
 
 	if (Alarm != -1) {
 		memcpy(&DT,&Note->Entries[Time].Date,sizeof(GSM_DateTime));

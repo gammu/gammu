@@ -274,7 +274,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 			if (sms.Coding!=SMS_Coding_8bit) {
 				printf("%s\n",DecodeUnicodeConsole(sms.Text));
 			} else {
-				if (GSM_DecodeSiemensOTASMS(&SiemensOTA,&sms)) {
+				if (GSM_DecodeSiemensOTASMS(NULL, &SiemensOTA,&sms)) {
 					printf("%s\n", _("Siemens file"));
 					break;
 				}
@@ -298,7 +298,7 @@ void DisplayTestSMS(GSM_MultiSMSMessage sms)
 	}
 
 	/* Decode it */
-	if (GSM_DecodeMultiPartSMS(&SMSInfo,&sms,true)) {
+	if (GSM_DecodeMultiPartSMS(NULL, &SMSInfo,&sms,true)) {
 		if (SMSInfo.Unknown) printf("%s\n\n", _("Some details were ignored (unknown or not implemented in decoding functions)"));
 
 		for (i=0;i<SMSInfo.EntriesNum;i++) {

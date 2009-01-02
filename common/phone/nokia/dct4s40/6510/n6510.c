@@ -175,11 +175,11 @@ static GSM_Error N6510_ReplyGetSMSC(GSM_Protocol_Message msg, GSM_StateMachine *
 		case 0x82:
 			switch (msg.Buffer[current+2]) {
 			case 0x01:
-				GSM_UnpackSemiOctetNumber(Data->SMSC->DefaultNumber,msg.Buffer+current+4,true);
+				GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->DefaultNumber,msg.Buffer+current+4,true);
 				smprintf(s, "   Default number \"%s\"\n", DecodeUnicodeString(Data->SMSC->DefaultNumber));
 				break;
 			case 0x02:
-				GSM_UnpackSemiOctetNumber(Data->SMSC->Number,msg.Buffer+current+4,false);
+				GSM_UnpackSemiOctetNumber(&(s->di), Data->SMSC->Number,msg.Buffer+current+4,false);
 				smprintf(s, "   Number \"%s\"\n", DecodeUnicodeString(Data->SMSC->Number));
 				break;
 			default:
@@ -706,7 +706,7 @@ static GSM_Error N6510_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *sms, 
 		}
 		current = current + buffer[current + 1];
 	}
-	error = GSM_DecodeSMSFrame(sms,buffer,Layout);
+	error = GSM_DecodeSMSFrame(&(s->di), sms,buffer,Layout);
 	if (SMSTemplateDateTime != 0) {
 		sms->PDU = SMS_Deliver;
 		NOKIA_DecodeDateTime(s, buffer+SMSTemplateDateTime, &sms->DateTime);
@@ -774,7 +774,7 @@ GSM_Error N6510_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
  				i = i + output[i-1];
  			}
 #endif
-			GSM_MakeMultiPartSMS(Data->GetSMSMessage,output,i,UDH_NokiaProfileLong,SMS_Coding_8bit,1,0);
+			GSM_MakeMultiPartSMS(&(s->di), Data->GetSMSMessage,output,i,UDH_NokiaProfileLong,SMS_Coding_8bit,1,0);
 			for (i=0;i<3;i++) {
                 		Data->GetSMSMessage->SMS[i].Number[0]=0;
                 		Data->GetSMSMessage->SMS[i].Number[1]=0;
@@ -1625,13 +1625,13 @@ static GSM_Error N6510_EnableConnectionFunctions(GSM_StateMachine *s, N6510_Conn
 	case N6510_WAP_SETTINGS:
 		return DCT3DCT4_EnableWAPFunctions(s);
 	case N6510_MMS_SETTINGS:
-		dbgprintf("Enabling MMS\n");
+		smprintf(s, "Enabling MMS\n");
 		return GSM_WaitFor (s, req2, 5, 0x3f, 4, ID_EnableConnectFunc);
 	case N6510_SYNCML_SETTINGS:
-		dbgprintf("Enabling SyncML\n");
+		smprintf(s, "Enabling SyncML\n");
 		return GSM_WaitFor (s, req3, 5, 0x3f, 5, ID_EnableConnectFunc);
 	case N6510_CHAT_SETTINGS:
-		dbgprintf("Enabling Chat\n");
+		smprintf(s, "Enabling Chat\n");
 		return GSM_WaitFor (s, req4, 5, 0x3f, 5, ID_EnableConnectFunc);
 	default:
 		return ERR_UNKNOWN;

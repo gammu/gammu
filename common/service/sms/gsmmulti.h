@@ -26,14 +26,14 @@
 #define ALCATELTDD_ANIMATION   5
 #define ALCATELTDD_SMSTEMPLATE 6
 
-void GSM_SMSCounter(size_t	 	MessageLength,
+void GSM_SMSCounter(GSM_Debug_Info *di, size_t	 	MessageLength,
 		    unsigned char       *MessageBuffer,
 		    GSM_UDH	     	UDHType,
 		    GSM_Coding_Type     Coding,
 		    int		 	*SMSNum,
 		    size_t	 	*CharsLeft);
 
-GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage       *SMS,
+GSM_Error GSM_AddSMS_Text_UDH(GSM_Debug_Info *di, GSM_MultiSMSMessage       *SMS,
 				GSM_Coding_Type	 	Coding,
 				char		    	*Buffer,
 				size_t		     	BufferLen,
@@ -42,7 +42,7 @@ GSM_Error GSM_AddSMS_Text_UDH(GSM_MultiSMSMessage       *SMS,
 				size_t		     	*CopiedText,
 				size_t		     	*CopiedSMSText);
 
-void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage   *SMS,
+void GSM_MakeMultiPartSMS(GSM_Debug_Info *di, GSM_MultiSMSMessage   *SMS,
 			  unsigned char	 	*MessageBuffer,
 			  size_t	   	MessageLength,
 			  GSM_UDH	       	UDHType,
@@ -50,7 +50,7 @@ void GSM_MakeMultiPartSMS(GSM_MultiSMSMessage   *SMS,
 			  int		   	Class,
 			  unsigned char	 	RejectDuplicates);
 
-void GSM_Find_Free_Used_SMS2(GSM_Coding_Type Coding,GSM_SMSMessage SMS, size_t *UsedText, size_t *FreeText, size_t *FreeBytes);
+void GSM_Find_Free_Used_SMS2(GSM_Debug_Info *di, GSM_Coding_Type Coding,GSM_SMSMessage SMS, size_t *UsedText, size_t *FreeText, size_t *FreeBytes);
 
 unsigned char GSM_MakeSMSIDFromTime(void);
 

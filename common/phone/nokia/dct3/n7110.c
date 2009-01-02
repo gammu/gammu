@@ -269,7 +269,7 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 				Data->GetSMSMessage->Number=1;
 				NOKIA_DecodeSMSState(s, msg.Buffer[4], &Data->GetSMSMessage->SMS[0]);
 				Data->GetSMSMessage->SMS[0].PDU=SMS_Submit;
-				GSM_DecodeSMSFrame(&Data->GetSMSMessage->SMS[0],msg.Buffer+9,N7110_SMSTemplate);
+				GSM_DecodeSMSFrame(&(s->di), &Data->GetSMSMessage->SMS[0],msg.Buffer+9,N7110_SMSTemplate);
 				return ERR_NONE;
 			}
 		case 0x07:
@@ -280,9 +280,9 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 				Data->Bitmap->BitmapWidth	= Width;
 				Data->Bitmap->BitmapHeight	= Height;
 				PHONE_DecodeBitmap(GSM_NokiaPictureImage, msg.Buffer + 51, Data->Bitmap);
-				GSM_UnpackSemiOctetNumber(Data->Bitmap->Sender,msg.Buffer+22,true);
+				GSM_UnpackSemiOctetNumber(&(s->di), Data->Bitmap->Sender,msg.Buffer+22,true);
 #ifdef DEBUG
-				GSM_UnpackSemiOctetNumber(output,msg.Buffer+9,true);
+				GSM_UnpackSemiOctetNumber(&(s->di), output,msg.Buffer+9,true);
 				smprintf(s, "SMSC : %s\n",DecodeUnicodeString(output));
 #endif
 				Data->Bitmap->Text[0] = 0;
@@ -315,7 +315,7 @@ static GSM_Error N7110_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMac
 					output[i - 1] = UnicodeLength(output+i) * 2;
 					i = i + output[i-1];
 				}
-				GSM_MakeMultiPartSMS(Data->GetSMSMessage,output,i,UDH_NokiaProfileLong,SMS_Coding_8bit,1,0);
+				GSM_MakeMultiPartSMS(&(s->di), Data->GetSMSMessage,output,i,UDH_NokiaProfileLong,SMS_Coding_8bit,1,0);
 				for (i=0;i<3;i++) {
 	                		Data->GetSMSMessage->SMS[i].Number[0]=0;
 	                		Data->GetSMSMessage->SMS[i].Number[1]=0;

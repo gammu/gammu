@@ -59,7 +59,7 @@ static GSM_Error GNAPGEN_PrivGetSMSFolderStatus(GSM_StateMachine *s, int folderi
 		return GSM_WaitFor (s, req, 4, 6, 4, ID_GetSMSFolderStatus);
 }
 
-static GSM_Error GSM_DecodeSMSDateTime(GSM_DateTime *DT, unsigned char *req)
+static GSM_Error GNAPGEN_DecodeSMSDateTime(GSM_StateMachine *s, GSM_DateTime *DT, unsigned char *req)
 {
 	DT->Year    = DecodeWithBCDAlphabet(req[0]);
 	if (DT->Year<90) DT->Year=DT->Year+2000; else DT->Year=DT->Year+1990;
@@ -74,16 +74,16 @@ static GSM_Error GSM_DecodeSMSDateTime(GSM_DateTime *DT, unsigned char *req)
 
 	if (req[6]&0x08) DT->Timezone = -DT->Timezone;
 
-	dbgprintf("Decoding date & time: ");
-	dbgprintf("%s %4d/%02d/%02d ", DayOfWeek(DT->Year, DT->Month, DT->Day),
+	smprintf(s, "Decoding date & time: ");
+	smprintf(s, "%s %4d/%02d/%02d ", DayOfWeek(DT->Year, DT->Month, DT->Day),
 		  DT->Year, DT->Month, DT->Day);
-	dbgprintf("%02d:%02d:%02d%+03i%02i\n", DT->Hour, DT->Minute, DT->Second,
+	smprintf(s, "%02d:%02d:%02d%+03i%02i\n", DT->Hour, DT->Minute, DT->Second,
 		DT->Timezone / 3600, abs((DT->Timezone % 3600) / 60));
 
 	return ERR_NONE;
 }
 
-GSM_Error GNAPGEN_PrivSetSMSLayout( GSM_SMSMessage *sms, unsigned char *buffer, GSM_SMSMessageLayout *Layout ) {
+GSM_Error GNAPGEN_PrivSetSMSLayout(GSM_StateMachine *s, GSM_SMSMessage *sms, unsigned char *buffer, GSM_SMSMessageLayout *Layout ) {
 	int position = 0;
 	/*  setting sms layout */
 	*Layout = PHONE_SMSDeliver;
@@ -102,7 +102,7 @@ GSM_Error GNAPGEN_PrivSetSMSLayout( GSM_SMSMessage *sms, unsigned char *buffer, 
 	switch( buffer[position] & 1 ) {
 		/*  SMS-DELIVER (incoming message, received) */
 		case 0:
-			dbgprintf("Message type: SMS-DELIVER\n");
+			smprintf(s, "Message type: SMS-DELIVER\n");
 			sms->PDU = SMS_Deliver;
 
 			position++;
@@ -137,7 +137,7 @@ GSM_Error GNAPGEN_PrivSetSMSLayout( GSM_SMSMessage *sms, unsigned char *buffer, 
 
 		/*  SMS-SUBMIT (outgoing message, to be sent) */
 		case 1:
-			dbgprintf("Message type: SMS-SUBMIT\n");
+			smprintf(s, "Message type: SMS-SUBMIT\n");
 			sms->PDU = SMS_Submit;
 
 			position++;
@@ -181,28 +181,28 @@ GSM_Error GNAPGEN_PrivSetSMSLayout( GSM_SMSMessage *sms, unsigned char *buffer, 
 			break;
 
 		default:
-			dbgprintf("Unknown message type: (PDU) %d\n", buffer[Layout->firstbyte] );
+			smprintf(s, "Unknown message type: (PDU) %d\n", buffer[Layout->firstbyte] );
 			return ERR_UNKNOWN;
 	}
 
 	return ERR_NONE;
 }
 
-GSM_Error GNAPGEN_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout *Layout)
+GSM_Error GNAPGEN_DecodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigned char *buffer, GSM_SMSMessageLayout *Layout)
 {
 	GSM_DateTime	zerodt = {0,0,0,0,0,0,0};
 #ifdef DEBUG
 	if (Layout->firstbyte == 255) {
-		dbgprintf("ERROR: firstbyte in SMS layout not set\n");
+		smprintf(s, "ERROR: firstbyte in SMS layout not set\n");
 		return ERR_UNKNOWN;
 	}
 
-	if (Layout->TPDCS     != 255) dbgprintf("TPDCS     : %02x %i\n",buffer[Layout->TPDCS]    ,buffer[Layout->TPDCS]);
-	if (Layout->TPMR      != 255) dbgprintf("TPMR      : %02x %i\n",buffer[Layout->TPMR]     ,buffer[Layout->TPMR]);
-	if (Layout->TPPID     != 255) dbgprintf("TPPID     : %02x %i\n",buffer[Layout->TPPID]    ,buffer[Layout->TPPID]);
-	if (Layout->TPUDL     != 255) dbgprintf("TPUDL     : %02x %i\n",buffer[Layout->TPUDL]    ,buffer[Layout->TPUDL]);
-	if (Layout->firstbyte != 255) dbgprintf("FirstByte : %02x %i\n",buffer[Layout->firstbyte],buffer[Layout->firstbyte]);
-	if (Layout->Text      != 255) dbgprintf("Text      : %02x %i\n",buffer[Layout->Text]     ,buffer[Layout->Text]);
+	if (Layout->TPDCS     != 255) smprintf(s, "TPDCS     : %02x %i\n",buffer[Layout->TPDCS]    ,buffer[Layout->TPDCS]);
+	if (Layout->TPMR      != 255) smprintf(s, "TPMR      : %02x %i\n",buffer[Layout->TPMR]     ,buffer[Layout->TPMR]);
+	if (Layout->TPPID     != 255) smprintf(s, "TPPID     : %02x %i\n",buffer[Layout->TPPID]    ,buffer[Layout->TPPID]);
+	if (Layout->TPUDL     != 255) smprintf(s, "TPUDL     : %02x %i\n",buffer[Layout->TPUDL]    ,buffer[Layout->TPUDL]);
+	if (Layout->firstbyte != 255) smprintf(s, "FirstByte : %02x %i\n",buffer[Layout->firstbyte],buffer[Layout->firstbyte]);
+	if (Layout->Text      != 255) smprintf(s, "Text      : %02x %i\n",buffer[Layout->Text]     ,buffer[Layout->Text]);
 #endif
 
 	SMS->UDH.Type 			= UDH_NoUDH;
@@ -224,23 +224,23 @@ GSM_Error GNAPGEN_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 	SMS->Name[1]			= 0;
 	SMS->ReplyViaSameSMSC		= false;
 	if (Layout->SMSCNumber!=255) {
-		GSM_UnpackSemiOctetNumber(SMS->SMSC.Number,buffer+Layout->SMSCNumber,true);
-		dbgprintf("SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
+		GSM_UnpackSemiOctetNumber(&(s->di), SMS->SMSC.Number,buffer+Layout->SMSCNumber,true);
+		smprintf(s, "SMS center number : \"%s\"\n",DecodeUnicodeString(SMS->SMSC.Number));
 	}
 	if ((buffer[Layout->firstbyte] & 0x80)!=0) SMS->ReplyViaSameSMSC=true;
 #ifdef DEBUG
-	if (SMS->ReplyViaSameSMSC) dbgprintf("SMS centre set for reply\n");
+	if (SMS->ReplyViaSameSMSC) smprintf(s, "SMS centre set for reply\n");
 #endif
 	if (Layout->Number!=255) {
-		GSM_UnpackSemiOctetNumber(SMS->Number,buffer+Layout->Number,true);
-		dbgprintf("Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
+		GSM_UnpackSemiOctetNumber(&(s->di), SMS->Number,buffer+Layout->Number,true);
+		smprintf(s, "Remote number : \"%s\"\n",DecodeUnicodeString(SMS->Number));
 	}
 	if (Layout->Text != 255 && Layout->TPDCS!=255 && Layout->TPUDL!=255) {
-		SMS->Coding = GSM_GetMessageCoding(buffer[Layout->TPDCS]);
-		GSM_DecodeSMSFrameText(SMS, buffer, *Layout);
+		SMS->Coding = GSM_GetMessageCoding(&(s->di), buffer[Layout->TPDCS]);
+		GSM_DecodeSMSFrameText(&(s->di), SMS, buffer, *Layout);
 	}
 	if (Layout->DateTime != 255) {
-		GSM_DecodeSMSDateTime(&SMS->DateTime,buffer+(Layout->DateTime));
+		GNAPGEN_DecodeSMSDateTime(s, &SMS->DateTime,buffer+(Layout->DateTime));
 	} else {
 		SMS->DateTime = zerodt;
 	}
@@ -248,10 +248,10 @@ GSM_Error GNAPGEN_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 
 	if (Layout->SMSCTime != 255 && Layout->TPStatus != 255) {
 		/* GSM 03.40 section 9.2.3.11 (TP-Service-Centre-Time-Stamp) */
-		dbgprintf("SMSC response date: ");
-		GSM_DecodeSMSDateTime(&SMS->SMSCTime, buffer+(Layout->SMSCTime));
-		GSM_DecodeSMSFrameStatusReportData(SMS,buffer,*Layout);
-		GSM_DecodeSMSDateTime(&SMS->DateTime, buffer+(Layout->SMSCTime));
+		smprintf(s, "SMSC response date: ");
+		GNAPGEN_DecodeSMSDateTime(s, &SMS->SMSCTime, buffer+(Layout->SMSCTime));
+		GSM_DecodeSMSFrameStatusReportData(&(s->di), SMS,buffer,*Layout);
+		GNAPGEN_DecodeSMSDateTime(s, &SMS->DateTime, buffer+(Layout->SMSCTime));
 	} else {
 		SMS->SMSCTime = zerodt;
 	}
@@ -261,19 +261,19 @@ GSM_Error GNAPGEN_DecodeSMSFrame(GSM_SMSMessage *SMS, unsigned char *buffer, GSM
 		if ((buffer[Layout->TPDCS] & 0xD0) == 0x10) {
 			/* bits 7..4 set to 00x1 */
 			if ((buffer[Layout->TPDCS] & 0xC) == 0xC) {
-				dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
+				smprintf(s, "WARNING: reserved alphabet value in TPDCS\n");
 			} else {
 				SMS->Class = (buffer[Layout->TPDCS] & 3);
 			}
 		} else if ((buffer[Layout->TPDCS] & 0xF0) == 0xF0) {
 			/* bits 7..4 set to 1111 */
 			if ((buffer[Layout->TPDCS] & 8) == 8) {
-				dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
+				smprintf(s, "WARNING: set reserved bit 3 in TPDCS\n");
 			} else {
 				SMS->Class = (buffer[Layout->TPDCS] & 3);
 			}
 		}
-		dbgprintf("SMS class: %i\n",SMS->Class);
+		smprintf(s, "SMS class: %i\n",SMS->Class);
 	}
 
 	SMS->MessageReference = 0;
@@ -330,8 +330,8 @@ static GSM_Error GNAPGEN_ReplyGetSMS(GSM_Protocol_Message msg, GSM_StateMachine 
 		s->Phone.Data.GetSMSMessage->SMS[i].Name[0] 	= 0;
 		s->Phone.Data.GetSMSMessage->SMS[i].Name[1]	= 0;
 
-		GNAPGEN_PrivSetSMSLayout( sms, buffer, &layout );
-		GNAPGEN_DecodeSMSFrame(sms,buffer,&layout);
+		GNAPGEN_PrivSetSMSLayout(s, sms, buffer, &layout );
+		GNAPGEN_DecodeSMSFrame(s, sms,buffer,&layout);
 	}
 
 	return ERR_NONE;
@@ -1235,7 +1235,7 @@ GSM_Error GNAPGEN_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
 	}
 
 	if (Note->Type == GSM_CAL_MEETING) {
-		GSM_GetCalendarRecurranceRepeat(req+current, NULL, Note);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), req+current, NULL, Note);
 		current+=2;
 	} else {
 		req[current++]	= 0xff;
@@ -1315,7 +1315,7 @@ static GSM_Error GNAPGEN_ReplyGetNextCalendar(GSM_Protocol_Message msg, GSM_Stat
 		pos+=msg.Buffer[pos+1]*2+2;
 
 		if (Entry->Type == GSM_CAL_MEETING) {
-			GSM_GetCalendarRecurranceRepeat(msg.Buffer+pos, NULL, Entry);
+			GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer+pos, NULL, Entry);
 		}
 
                 return ERR_NONE;

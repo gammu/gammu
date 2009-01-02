@@ -6,6 +6,7 @@
 #ifndef __gsmphones_h
 #define __gsmphones_h
 
+#include <gammu-debug.h>
 #include <gammu-info.h>
 #include <gammu-statemachine.h>
 

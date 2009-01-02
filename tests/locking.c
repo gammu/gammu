@@ -3,9 +3,7 @@
 #include <stdio.h>
 #include <assert.h>
 
-
-extern GSM_Error 	lock_device	(const char* port, char **lock_device);
-extern bool unlock_device(char **lock_file);
+#include "../common/device/devfunc.h"
 
 #define lock_path 	"/var/lock/LCK.."
 #define TEST_DEVICE "/dev/foo/bar"
@@ -36,41 +34,41 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Non existing PID, ASCII */
 	create_lock(TEST_LOCK, "1234567890", 10);
-	assert(lock_device(TEST_DEVICE, &lock) == ERR_NONE);
+	assert(lock_device(NULL, TEST_DEVICE, &lock) == ERR_NONE);
 	assert(lock != NULL);
-	assert(unlock_device(&lock) == true);
+	assert(unlock_device(NULL, &lock) == true);
 
 	unlink(TEST_LOCK);
 
 	/* Existing PID, ASCII */
 	create_lock(TEST_LOCK, pids, strlen(pids));
-	assert(lock_device(TEST_DEVICE, &lock) == ERR_DEVICELOCKED);
+	assert(lock_device(NULL, TEST_DEVICE, &lock) == ERR_DEVICELOCKED);
 	assert(lock == NULL);
-	assert(unlock_device(&lock) == false);
+	assert(unlock_device(NULL, &lock) == false);
 
 	unlink(TEST_LOCK);
 
 	/* Existing PID, binary */
 	create_lock(TEST_LOCK, &pid, sizeof(int));
-	assert(lock_device(TEST_DEVICE, &lock) == ERR_DEVICELOCKED);
+	assert(lock_device(NULL, TEST_DEVICE, &lock) == ERR_DEVICELOCKED);
 	assert(lock == NULL);
-	assert(unlock_device(&lock) == false);
+	assert(unlock_device(NULL, &lock) == false);
 
 	unlink(TEST_LOCK);
 
 	/* Existing PID, binary */
 	pid = 0xfffffff;
 	create_lock(TEST_LOCK, &pid, sizeof(int));
-	assert(lock_device(TEST_DEVICE, &lock) == ERR_NONE);
+	assert(lock_device(NULL, TEST_DEVICE, &lock) == ERR_NONE);
 	assert(lock != NULL);
-	assert(unlock_device(&lock) == true);
+	assert(unlock_device(NULL, &lock) == true);
 
 	unlink(TEST_LOCK);
 
 	/* No existing lock */
-	assert(lock_device(TEST_DEVICE, &lock) == ERR_NONE);
+	assert(lock_device(NULL, TEST_DEVICE, &lock) == ERR_NONE);
 	assert(lock != NULL);
-	assert(unlock_device(&lock) == true);
+	assert(unlock_device(NULL, &lock) == true);
 
 	return 0;
 }

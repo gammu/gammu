@@ -15,6 +15,7 @@
 #include "../../misc/coding/coding.h"
 #include "../../misc/coding/md5.h"
 #include "../../misc/misc.h"
+#include "../../debug.h"
 #include "backtext.h"
 
 #ifdef GSM_ENABLE_BACKUP
@@ -234,7 +235,7 @@ static bool ReadBackupText(INI_Section *file_info, char *section, char *myname, 
 			myvalue[UnicodeLength(myvalue)*2-2]=0;
 			myvalue[UnicodeLength(myvalue)*2-1]=0;
 
-			dbgprintf("%s\n",DecodeUnicodeString(readvalue));
+			dbgprintf(NULL, "%s\n",DecodeUnicodeString(readvalue));
 		} else {
 			myvalue[0]=0;
 			myvalue[1]=0;
@@ -245,11 +246,11 @@ static bool ReadBackupText(INI_Section *file_info, char *section, char *myname, 
 		strcat(paramname,"Unicode");
 		readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
 		if (readvalue!=NULL) {
-			dbgprintf("%s " SIZE_T_FORMAT "\n",readvalue,strlen(readvalue));
+			dbgprintf(NULL, "%s " SIZE_T_FORMAT "\n",readvalue,strlen(readvalue));
 			DecodeHexBin (myvalue, readvalue, strlen(readvalue));
 			myvalue[strlen(readvalue)/2]=0;
 			myvalue[strlen(readvalue)/2+1]=0;
-			dbgprintf("%s\n",DecodeUnicodeString(myvalue));
+			dbgprintf(NULL, "%s\n",DecodeUnicodeString(myvalue));
 		} else {
 			strcpy(paramname,myname);
 			readvalue = ReadCFGText(file_info, section, paramname, UseUnicode);
@@ -579,7 +580,7 @@ static GSM_Error SavePbkEntry(FILE *file, GSM_MemoryEntry *Pbk, bool UseUnicode)
 						sprintf(buffer,"Entry%02iType = PNGPhoto%c%c",j,13,10);
 						break;
 					default:
-						dbgprintf("Unknown picture format: %d\n", Pbk->Entries[j].Picture.Type);
+						dbgprintf(NULL, "Unknown picture format: %d\n", Pbk->Entries[j].Picture.Type);
 						sprintf(buffer,"Entry%02iType = Photo%c%c",j,13,10);
 						break;
 				}
@@ -1985,7 +1986,7 @@ loadpicture:
 loadtext:
 			sprintf(buffer,"Entry%02iText",num);
 			ReadBackupText(file_info, section, buffer, Pbk->Entries[Pbk->EntriesNum].Text,UseUnicode);
-			dbgprintf("text \"%s\", type %i\n",DecodeUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text),Pbk->Entries[Pbk->EntriesNum].EntryType);
+			dbgprintf(NULL, "text \"%s\", type %i\n",DecodeUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text),Pbk->Entries[Pbk->EntriesNum].EntryType);
 			Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 			sprintf(buffer,"Entry%02iVoiceTag",num);
 			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
@@ -2167,8 +2168,8 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 		if (rec2 != -1) {
 			buf[0] = rec2 / 256;
 			buf[1] = rec2 % 256;
-			dbgprintf("Setting recurrance %i\n",rec2);
-			GSM_GetCalendarRecurranceRepeat(buf, NULL, note);
+			dbgprintf(NULL, "Setting recurrance %i\n",rec2);
+			GSM_GetCalendarRecurranceRepeat(NULL, buf, NULL, note);
 		}
 	}
 	sprintf(buffer,"StopTime");
@@ -3092,7 +3093,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->Profiles[num] == NULL) return ERR_MOREMEMORY;
 				backup->Profiles[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_PROFILES\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_PROFILES\n");
 				return ERR_MOREMEMORY;
 			}
 			ReadProfileEntry(file_info, h->SectionName, backup->Profiles[num], UseUnicode);
@@ -3116,13 +3117,13 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->PhonePhonebook[num] == NULL) return ERR_MOREMEMORY;
 				backup->PhonePhonebook[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
 				return ERR_MOREMEMORY;
 			}
 			backup->PhonePhonebook[num]->Location	= atoi (readvalue);
 			backup->PhonePhonebook[num]->MemoryType	= MEM_ME;
 			ReadPbkEntry(file_info, h->SectionName, backup->PhonePhonebook[num],UseUnicode);
-			dbgprintf("number of entries = %i\n",backup->PhonePhonebook[num]->EntriesNum);
+			dbgprintf(NULL, "number of entries = %i\n",backup->PhonePhonebook[num]->EntriesNum);
 			num++;
                 }
         }
@@ -3143,7 +3144,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->SIMPhonebook[num] == NULL) return ERR_MOREMEMORY;
 				backup->SIMPhonebook[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
 				return ERR_MOREMEMORY;
 			}
 			backup->SIMPhonebook[num]->Location	= atoi (readvalue);
@@ -3169,7 +3170,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->Calendar[num] == NULL) return ERR_MOREMEMORY;
 				backup->Calendar[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_MAXCALENDARTODONOTES\n");
+				dbgprintf(NULL, "Increase GSM_MAXCALENDARTODONOTES\n");
 				return ERR_MOREMEMORY;
 			}
 			backup->Calendar[num]->Location = num + 1;
@@ -3195,7 +3196,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->CallerLogos[num] == NULL) return ERR_MOREMEMORY;
 				backup->CallerLogos[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_CALLER\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_CALLER\n");
 				return ERR_MOREMEMORY;
 			}
 			backup->CallerLogos[num]->Location = atoi (readvalue);
@@ -3220,7 +3221,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->SMSC[num] == NULL) return ERR_MOREMEMORY;
 				backup->SMSC[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_SMSC\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_SMSC\n");
 				return ERR_MOREMEMORY;
 			}
 			backup->SMSC[num]->Location = atoi (readvalue);
@@ -3252,7 +3253,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->WAPBookmark[num] == NULL) return ERR_MOREMEMORY;
 				backup->WAPBookmark[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_WAPBOOKMARK\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_WAPBOOKMARK\n");
 				return ERR_MOREMEMORY;
 			}
 			backup->WAPBookmark[num]->Location = num + 1;
@@ -3284,11 +3285,11 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->WAPSettings[num] == NULL) return ERR_MOREMEMORY;
 				backup->WAPSettings[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_WAPSETTINGS\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_WAPSETTINGS\n");
 				return ERR_MOREMEMORY;
 			}
 			backup->WAPSettings[num]->Location = num + 1;
-			dbgprintf("reading wap settings\n");
+			dbgprintf(NULL, "reading wap settings\n");
 			ReadWAPSettingsEntry(file_info, h->SectionName, backup->WAPSettings[num],UseUnicode);
 			num++;
                 }
@@ -3310,11 +3311,11 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->MMSSettings[num] == NULL) return ERR_MOREMEMORY;
 				backup->MMSSettings[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_MMSSETTINGS\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_MMSSETTINGS\n");
 				return ERR_MOREMEMORY;
 			}
 			backup->MMSSettings[num]->Location = num + 1;
-			dbgprintf("reading mms settings\n");
+			dbgprintf(NULL, "reading mms settings\n");
 			ReadWAPSettingsEntry(file_info, h->SectionName, backup->MMSSettings[num],UseUnicode);
 			num++;
                 }
@@ -3336,7 +3337,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->Ringtone[num] == NULL) return ERR_MOREMEMORY;
 				backup->Ringtone[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_RINGTONES\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_RINGTONES\n");
 				return ERR_MOREMEMORY;
 			}
 			ReadRingtoneEntry(file_info, h->SectionName, backup->Ringtone[num],UseUnicode);
@@ -3360,7 +3361,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->ToDo[num] == NULL) return ERR_MOREMEMORY;
 				backup->ToDo[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_MAXCALENDARTODONOTES\n");
+				dbgprintf(NULL, "Increase GSM_MAXCALENDARTODONOTES\n");
 				return ERR_MOREMEMORY;
 			}
 			backup->ToDo[num]->Location = num + 1;
@@ -3403,7 +3404,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->FMStation[num] == NULL) return ERR_MOREMEMORY;
 				backup->FMStation[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_FMSTATIONS\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_FMSTATIONS\n");
 				return ERR_MOREMEMORY;
 			}
 			backup->FMStation[num]->Location = num + 1;
@@ -3428,7 +3429,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->GPRSPoint[num] == NULL) return ERR_MOREMEMORY;
 				backup->GPRSPoint[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_GPRSPOINT\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_GPRSPOINT\n");
 				return ERR_MOREMEMORY;
 			}
 			backup->GPRSPoint[num]->Location = num + 1;
@@ -3453,7 +3454,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 			        if (backup->Note[num] == NULL) return ERR_MOREMEMORY;
 				backup->Note[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_NOTE\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_NOTE\n");
 				return ERR_MOREMEMORY;
 			}
 			ReadNoteEntry(file_info, h->SectionName, backup->Note[num],UseUnicode);
@@ -3663,11 +3664,11 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 	readbuffer = ReadLinkedBackupText(file_info, section, "Text", false);
 	/* This is hex encoded unicode, need to multiply by 4 */
 	if (strlen(readbuffer) > 4 * GSM_MAX_SMS_LENGTH) {
-		dbgprintf("Message text too long, truncating!\n");
+		dbgprintf(NULL, "Message text too long, truncating!\n");
 		readbuffer[4 * GSM_MAX_SMS_LENGTH] = 0;
 	}
 	if (!DecodeHexBin (SMS->Text, readbuffer, strlen(readbuffer))) {
-		dbgprintf("Failed decoding binary field!\n");
+		dbgprintf(NULL, "Failed decoding binary field!\n");
 	}
 	SMS->Text[strlen(readbuffer)/2]	= 0;
 	SMS->Text[strlen(readbuffer)/2+1] 	= 0;
@@ -3686,7 +3687,7 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 	if (readvalue!=NULL) {
 		DecodeHexBin (SMS->UDH.Text, readvalue, strlen(readvalue));
 		SMS->UDH.Length = strlen(readvalue)/2;
-		GSM_DecodeUDHHeader(&SMS->UDH);
+		GSM_DecodeUDHHeader(NULL, &SMS->UDH);
 	}
 }
 
@@ -3714,7 +3715,7 @@ static GSM_Error GSM_ReadSMSBackupTextFile(char *FileName, GSM_SMS_Backup *backu
 			        if (backup->SMS[num] == NULL) return ERR_MOREMEMORY;
 				backup->SMS[num + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_BACKUP_MAX_SMS\n");
+				dbgprintf(NULL, "Increase GSM_BACKUP_MAX_SMS\n");
 				return ERR_MOREMEMORY;
 			}
 			backup->SMS[num]->Location = num + 1;

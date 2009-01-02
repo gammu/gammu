@@ -7,11 +7,12 @@
 /* Phones ID (c) partially by Walek */
 
 #include <gammu-config.h>
-#include <gammu-debug.h>
 #include <gammu-info.h>
 
 #include "gsmphones.h"
 #include "gsmstate.h"
+
+#include "debug.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -151,13 +152,13 @@ GSM_Error GSM_SetFeatureString(Feature *list, const char *string)
 
 		list[out] = GSM_FeatureFromString(pos);
 		if (list[out] == 0) {
-			dbgprintf("Bad feature string: %s\n", pos);
+			smfprintf(NULL, "Bad feature string: %s\n", pos);
 			error = ERR_BADFEATURE;
 			break;
 		}
 		out++;
 		if (out >= GSM_MAX_PHONE_FEATURES) {
-			dbgprintf("Too much features: %s\n", pos);
+			smfprintf(NULL, "Too much features: %s\n", pos);
 			error = ERR_MOREMEMORY;
 			break;
 		}

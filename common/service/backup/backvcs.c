@@ -6,7 +6,7 @@
 #include <gammu-config.h>
 
 #include "../../misc/coding/coding.h"
-#include "../../misc/misc.h"
+#include "../../debug.h"
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
 #include "backvcs.h"
@@ -79,7 +79,7 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 	if (error != ERR_NONE) return error;
 
 	while (1) {
-		error = GSM_DecodeVCALENDAR_VTODO(File.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
+		error = GSM_DecodeVCALENDAR_VTODO(NULL, File.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
 		if (error == ERR_EMPTY) break;
 		if (error != ERR_NONE) return error;
 		if (Calendar.EntriesNum != 0) {
@@ -88,7 +88,7 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 			        if (backup->Calendar[numCal] == NULL) return ERR_MOREMEMORY;
 				backup->Calendar[numCal + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_MAXCALENDARTODONOTES\n");
+				dbgprintf(NULL, "Increase GSM_MAXCALENDARTODONOTES\n");
 				return ERR_MOREMEMORY;
 			}
 			memcpy(backup->Calendar[numCal],&Calendar,sizeof(GSM_CalendarEntry));
@@ -101,7 +101,7 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 			        if (backup->ToDo[numToDo] == NULL) return ERR_MOREMEMORY;
 				backup->ToDo[numToDo + 1] = NULL;
 			} else {
-				dbgprintf("Increase GSM_MAXCALENDARTODONOTES\n");
+				dbgprintf(NULL, "Increase GSM_MAXCALENDARTODONOTES\n");
 				return ERR_MOREMEMORY;
 			}
 			memcpy(backup->ToDo[numToDo],&ToDo,sizeof(GSM_ToDoEntry));

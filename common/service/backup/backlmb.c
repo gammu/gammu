@@ -9,6 +9,7 @@
 #include "../../misc/coding/coding.h"
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
+#include "../../debug.h"
 #include "backlmb.h"
 #include "../../gsmphones.h"
 
@@ -213,14 +214,14 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer UNUSED, unsigned char 
 	int 		num;
 
 #ifdef DEBUG
-	dbgprintf("Number %i, name \"", buffer2[0]+1);
-	for (num=0;num<buffer2[1];num++) dbgprintf("%c", buffer2[num+2]);
-	dbgprintf("\"\n");
-	dbgprintf("Ringtone ID=%i\n", buffer2[num+2]);
+	dbgprintf(NULL, "Number %i, name \"", buffer2[0]+1);
+	for (num=0;num<buffer2[1];num++) dbgprintf(NULL, "%c", buffer2[num+2]);
+	dbgprintf(NULL, "\"\n");
+	dbgprintf(NULL, "Ringtone ID=%i\n", buffer2[num+2]);
 	if (buffer2[num+3]==1) {
-		dbgprintf("Logo enabled\n");
+		dbgprintf(NULL, "Logo enabled\n");
 	} else {
-		dbgprintf("Logo disabled\n");
+		dbgprintf(NULL, "Logo disabled\n");
 	}
 #endif
 
@@ -243,7 +244,7 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer UNUSED, unsigned char 
 	PHONE_DecodeBitmap(GSM_NokiaCallerLogo, buffer2+(buffer2[1]+10), &bitmap);
 
 #ifdef DEBUG
-	dbgprintf("Caller logo\n");
+	dbgprintf(NULL, "Caller logo\n");
 	if (GSM_global_debug.dl == DL_TEXTALL || GSM_global_debug.dl == DL_TEXTALLDATE)
 		GSM_PrintBitmap(GSM_global_debug.df,&bitmap);
 #endif
@@ -255,7 +256,7 @@ static GSM_Error LoadLMBCallerEntry(unsigned char *buffer UNUSED, unsigned char 
 	        if (backup->CallerLogos[num] == NULL) return ERR_MOREMEMORY;
 		backup->CallerLogos[num + 1] = NULL;
 	} else {
-		dbgprintf("Increase GSM_BACKUP_MAX_CALLER\n");
+		dbgprintf(NULL, "Increase GSM_BACKUP_MAX_CALLER\n");
 		return ERR_MOREMEMORY;
 	}
 	*backup->CallerLogos[num] = bitmap;
@@ -275,7 +276,7 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer UNUSED, unsigned char
 	for (i=0;i<buffer2[0];i++) {
 		switch (buffer2[j++]) {
 			case 1:
-				dbgprintf("Block 1 - startup logo\n");
+				dbgprintf(NULL, "Block 1 - startup logo\n");
 				backup->StartupLogo = malloc(sizeof(GSM_Bitmap));
 			        if (backup->StartupLogo == NULL) return ERR_MOREMEMORY;
 				backup->StartupLogo->Location	= 1;
@@ -295,9 +296,9 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer UNUSED, unsigned char
 				break;
 			case 2:
 #ifdef DEBUG
-				dbgprintf("Block 2 - welcome note \"");
-				for (z=0;z<buffer2[j];z++) dbgprintf("%c",buffer2[j+z+1]);
-				dbgprintf("\"\n");
+				dbgprintf(NULL, "Block 2 - welcome note \"");
+				for (z=0;z<buffer2[j];z++) dbgprintf(NULL, "%c",buffer2[j+z+1]);
+				dbgprintf(NULL, "\"\n");
 #endif
 				if (backup->StartupLogo == NULL) {
 					backup->StartupLogo = malloc(sizeof(GSM_Bitmap));
@@ -308,7 +309,7 @@ static GSM_Error LoadLMBStartupEntry(unsigned char *buffer UNUSED, unsigned char
 				j = j + buffer2[j];
 			        break;
 			default:
-			        dbgprintf("Unknown block %02x\n",buffer2[j]);
+			        dbgprintf(NULL, "Unknown block %02x\n",buffer2[j]);
 				break;
 		}
 	}
@@ -326,13 +327,13 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	fake_sm.Phone.Data.ModelInfo = GetModelData(NULL, "unknown", NULL, NULL);
 
 #ifdef DEBUG
-	dbgprintf("Memory : ");
+	dbgprintf(NULL, "Memory : ");
 	switch(buffer[10]) {
-		case 2 : dbgprintf("(internal)\n"); break;
-		case 3 : dbgprintf("(sim)\n");	  break;
-		default: dbgprintf("(unknown)\n");  break;
+		case 2 : dbgprintf(NULL, "(internal)\n"); break;
+		case 3 : dbgprintf(NULL, "(sim)\n");	  break;
+		default: dbgprintf(NULL, "(unknown)\n");  break;
 	}
-	dbgprintf("Location : %i\n",buffer2[0]+buffer2[1]*256);
+	dbgprintf(NULL, "Location : %i\n",buffer2[0]+buffer2[1]*256);
 #endif
 
 	pbk.MemoryType = 0; /* FIXME: I have no idea what should be set here, but needs to be set, see next function */
@@ -351,7 +352,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 		        if (backup->PhonePhonebook[num] == NULL) return ERR_MOREMEMORY;
 			backup->PhonePhonebook[num + 1] = NULL;
 		} else {
-			dbgprintf("Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
+			dbgprintf(NULL, "Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
 			return ERR_MOREMEMORY;
 		}
 		*backup->PhonePhonebook[num] = pbk;
@@ -362,7 +363,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 		        if (backup->SIMPhonebook[num] == NULL) return ERR_MOREMEMORY;
 			backup->SIMPhonebook[num + 1] = NULL;
 		} else {
-			dbgprintf("Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
+			dbgprintf(NULL, "Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
 			return ERR_MOREMEMORY;
 		}
 		*backup->SIMPhonebook[num] = pbk;
@@ -390,18 +391,18 @@ GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
 	while (fread(buffer, 1, 12, file) == 12) {
 #ifdef DEBUG
 		/* Info about block in the file */
-		dbgprintf("Block \"");
-		for (i=0;i<4;i++) {dbgprintf("%c",buffer[i]);}
-		dbgprintf("\" (");
-		if (memcmp(buffer, "PBK ",4)==0) {	  dbgprintf("Phonebook");
-		} else if (memcmp(buffer, "PBE2",4)==0) { dbgprintf("Phonebook entry");
-		} else if (memcmp(buffer, "CGR ",4)==0) { dbgprintf("Caller group");
-		} else if (memcmp(buffer, "SPD ",4)==0) { dbgprintf("Speed dial");
-		} else if (memcmp(buffer, "OLG ",4)==0) { dbgprintf("Operator logo");
-		} else if (memcmp(buffer, "WEL ",4)==0) { dbgprintf("Startup logo and welcome text");
-		} else {				  dbgprintf("unknown - ignored");
+		dbgprintf(NULL, "Block \"");
+		for (i=0;i<4;i++) {dbgprintf(NULL, "%c",buffer[i]);}
+		dbgprintf(NULL, "\" (");
+		if (memcmp(buffer, "PBK ",4)==0) {	  dbgprintf(NULL, "Phonebook");
+		} else if (memcmp(buffer, "PBE2",4)==0) { dbgprintf(NULL, "Phonebook entry");
+		} else if (memcmp(buffer, "CGR ",4)==0) { dbgprintf(NULL, "Caller group");
+		} else if (memcmp(buffer, "SPD ",4)==0) { dbgprintf(NULL, "Speed dial");
+		} else if (memcmp(buffer, "OLG ",4)==0) { dbgprintf(NULL, "Operator logo");
+		} else if (memcmp(buffer, "WEL ",4)==0) { dbgprintf(NULL, "Startup logo and welcome text");
+		} else {				  dbgprintf(NULL, "unknown - ignored");
 		}
-		dbgprintf(") - length %i\n", buffer[4]+buffer[5]*256);
+		dbgprintf(NULL, ") - length %i\n", buffer[4]+buffer[5]*256);
 #endif
       		/* reading block data */
 		blocksize = buffer[4] + buffer[5] * 256;
@@ -409,13 +410,13 @@ GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
 
 #ifdef DEBUG
 		if (memcmp(buffer, "PBK ",4)==0) {
-			dbgprintf("Size of phonebook %i, type %i ",(buffer2[0]+buffer2[1]*256),buffer[8]);
+			dbgprintf(NULL, "Size of phonebook %i, type %i ",(buffer2[0]+buffer2[1]*256),buffer[8]);
 			switch(buffer[8]) {
-				case 2 : dbgprintf("(internal)");break;
-				case 3 : dbgprintf("(sim)")     ;break;
-				default: dbgprintf("(unknown)") ;break;
+				case 2 : dbgprintf(NULL, "(internal)");break;
+				case 3 : dbgprintf(NULL, "(sim)")     ;break;
+				default: dbgprintf(NULL, "(unknown)") ;break;
 			}
-			dbgprintf(", length of each position - %i\n",buffer2[2]);
+			dbgprintf(NULL, ", length of each position - %i\n",buffer2[2]);
 		}
 #endif
 		if (memcmp(buffer, "PBE2",4)==0) {

@@ -2,6 +2,7 @@
 
 #include <gammu.h>
 #include "gsmstate.h"
+#include "debug.h"
 
 #ifdef __FUNCTION__WORKING
 #define PRINT_FUNCTION_START smprintf(s, "Entering %s\n", __FUNCTION__);

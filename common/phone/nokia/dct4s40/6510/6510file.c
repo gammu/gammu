@@ -19,7 +19,7 @@
 
 /* shared */
 
-static int N6510_FindFileCheckSum12(unsigned char *ptr, int len)
+static int N6510_FindFileCheckSum12(GSM_StateMachine *s, unsigned char *ptr, int len)
 {
 	int acc, i, accx;
 
@@ -35,7 +35,7 @@ static int N6510_FindFileCheckSum12(unsigned char *ptr, int len)
 			accx <<= 1;
 		}
 	}
-	dbgprintf("Checksum from Gammu is %04X\n",(acc & 0xffff));
+	smprintf(s, "Checksum from Gammu is %04X\n",(acc & 0xffff));
 	return (acc & 0xffff);
 }
 
@@ -104,7 +104,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 /* 		smprintf(s,"Name encoded: %s\n",buffer); */
 
 		i = msg.Buffer[8]*256+msg.Buffer[9];
-		dbgprintf("%02x %02x %02x %02x %02x %02x %02x %02x %02x\n",
+		smprintf(s, "%02x %02x %02x %02x %02x %02x %02x %02x %02x\n",
 			msg.Buffer[i-5],msg.Buffer[i-4],msg.Buffer[i-3],
 			msg.Buffer[i-2],msg.Buffer[i-1],msg.Buffer[i],
 			msg.Buffer[i+1],msg.Buffer[i+2],msg.Buffer[i+3]);
@@ -125,7 +125,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 		NOKIA_DecodeDateTime(s, msg.Buffer+i-22, &File->Modified);
 		if (File->Modified.Year == 0x00) File->ModifiedEmpty = true;
 		if (File->Modified.Year == 0xffff) File->ModifiedEmpty = true;
-		dbgprintf("%02x %02x %02x %02x\n",msg.Buffer[i-22],msg.Buffer[i-21],msg.Buffer[i-20],msg.Buffer[i-19]);
+		smprintf(s, "%02x %02x %02x %02x\n",msg.Buffer[i-22],msg.Buffer[i-21],msg.Buffer[i-20],msg.Buffer[i-19]);
 
 		Priv->FileToken = msg.Buffer[i-10]*256+msg.Buffer[i-9];
 		Priv->ParentID  = msg.Buffer[i]*256+msg.Buffer[i+1];
@@ -173,7 +173,7 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 			i = Priv->FilesLocationsUsed-1;
 			while (1) {
 				if (i==-1) break;
-				dbgprintf("Copying %i to %i, max %i\n",
+				smprintf(s, "Copying %i to %i, max %i\n",
 					i,i+(msg.Buffer[8]*256+msg.Buffer[9]),
 					Priv->FilesLocationsUsed);
 				memcpy(&Priv->Files[i+(msg.Buffer[8]*256+msg.Buffer[9])],&Priv->Files[i],sizeof(GSM_File));
@@ -190,9 +190,9 @@ GSM_Error N6510_ReplyGetFileFolderInfo1(GSM_Protocol_Message msg, GSM_StateMachi
 				sprintf(buffer,"%i",msg.Buffer[13+i*4-1]*256 + msg.Buffer[13+i*4]);
 				EncodeUnicode(Priv->Files[i].ID_FullName,buffer,strlen(buffer));
 				Priv->Files[i].Level = File->Level+1;
-				dbgprintf("%s ",DecodeUnicodeString(Priv->Files[i].ID_FullName));
+				smprintf(s, "%s ",DecodeUnicodeString(Priv->Files[i].ID_FullName));
 			}
-			dbgprintf("\n");
+			smprintf(s, "\n");
 		}
 		if ((msg.Buffer[8]*256+msg.Buffer[9]) != 0x00) File->Folder = true;
 		return ERR_NONE;
@@ -368,8 +368,8 @@ static GSM_Error N6510_GetFilePart1(GSM_StateMachine *s, GSM_File *File, int *Ha
 		error = N6510_GetFileCRC1(s, File->ID_FullName);
 		if (error != ERR_NONE) return error;
 
-		if (N6510_FindFileCheckSum12(File->Buffer, File->Used) != Priv->FileCheckSum) {
-			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum12(File->Buffer, File->Used),Priv->FileCheckSum);
+		if (N6510_FindFileCheckSum12(s, File->Buffer, File->Used) != Priv->FileCheckSum) {
+			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum12(s, File->Buffer, File->Used),Priv->FileCheckSum);
 			return ERR_WRONGCRC;
 		}
 		return ERR_EMPTY;
@@ -452,14 +452,14 @@ static GSM_Error N6510_SearchForFileName1(GSM_StateMachine *s, GSM_File *File)
 	if (error != ERR_NONE) return error;
 
 	for (i=0;i<FilesLocationsUsed2-1;i++) {
-		dbgprintf("ID is %s\n",DecodeUnicodeString(Files2[i].ID_FullName));
+		smprintf(s, "ID is %s\n",DecodeUnicodeString(Files2[i].ID_FullName));
 		error = N6510_GetFileFolderInfo1(s, &Files2[i], false);
 		if (error == ERR_EMPTY) continue;
 		if (error != ERR_NONE) return error;
-		dbgprintf("%s",DecodeUnicodeString(File->Name));
-		dbgprintf("%s \n",DecodeUnicodeString(Files2[i].Name));
+		smprintf(s, "%s",DecodeUnicodeString(File->Name));
+		smprintf(s, "%s \n",DecodeUnicodeString(Files2[i].Name));
 		if (mywstrncasecmp(Files2[i].Name,File->Name,0)) {
-			dbgprintf("the same\n");
+			smprintf(s, "the same\n");
 			File->Folder = Files2[i].Folder;
 			return ERR_NONE;
 		}
@@ -646,8 +646,8 @@ static GSM_Error N6510_AddFilePart1(GSM_StateMachine *s, GSM_File *File, int *Po
 		error = N6510_GetFileCRC1(s, File->ID_FullName);
 		if (error != ERR_NONE) return error;
 
-		if (N6510_FindFileCheckSum12(File->Buffer, File->Used) != Priv->FileCheckSum) {
-			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum12(File->Buffer, File->Used),Priv->FileCheckSum);
+		if (N6510_FindFileCheckSum12(s, File->Buffer, File->Used) != Priv->FileCheckSum) {
+			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum12(s, File->Buffer, File->Used),Priv->FileCheckSum);
 			return ERR_WRONGCRC;
 		}
 
@@ -1076,7 +1076,7 @@ static GSM_Error N6510_GetNextFileFolder2(GSM_StateMachine *s, GSM_File *File, b
 		EncodeUnicode(Priv->Files[1].Name,"A (Memory card)",15);
 	}
 
-	dbgprintf("entering %i\n",Priv->FilesLocationsUsed);
+	smprintf(s, "entering %i\n",Priv->FilesLocationsUsed);
 	if (Priv->FilesLocationsUsed == 0) return ERR_EMPTY;
 
 	if (!Priv->Files[0].Folder) {
@@ -1159,8 +1159,8 @@ static GSM_Error N6510_GetFilePart2(GSM_StateMachine *s, GSM_File *File, int *Ha
 		error = N6510_CloseFile2(s, Handle);
 		if (error != ERR_NONE) return error;
 
-		if (N6510_FindFileCheckSum12(File->Buffer, File->Used) != Priv->FileCheckSum) {
-			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum12(File->Buffer, File->Used),Priv->FileCheckSum);
+		if (N6510_FindFileCheckSum12(s, File->Buffer, File->Used) != Priv->FileCheckSum) {
+			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum12(s, File->Buffer, File->Used),Priv->FileCheckSum);
 			return ERR_WRONGCRC;
 		}
 
@@ -1324,8 +1324,8 @@ static GSM_Error N6510_AddFilePart2(GSM_StateMachine *s, GSM_File *File, int *Po
 /* 		if (error != ERR_NONE) return error; */
 /* 		error = N6510_CloseFile2(s, Handle); */
 /* 		if (error != ERR_NONE) return error; */
-/* 		if (N6510_FindFileCheckSum12(File->Buffer, File->Used) != Priv->FileCheckSum) { */
-/* 			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum12(File->Buffer, File->Used),Priv->FileCheckSum); */
+/* 		if (N6510_FindFileCheckSum12(s, File->Buffer, File->Used) != Priv->FileCheckSum) { */
+/* 			smprintf(s,"File2 checksum is %i, File checksum is %i\n",N6510_FindFileCheckSum12(s, File->Buffer, File->Used),Priv->FileCheckSum); */
 /* 			return ERR_WRONGCRC; */
 /* 		} */
 
@@ -2232,8 +2232,8 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		i += 11;
 		Layout.TPUDL = i;
 		Layout.Text = i + 1;
-		sms->SMS[0].Coding = GSM_GetMessageCoding(FFF->Buffer[Layout.TPDCS]);
-		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
+		sms->SMS[0].Coding = GSM_GetMessageCoding(&(s->di), FFF->Buffer[Layout.TPDCS]);
+		GSM_DecodeSMSFrameText(&(s->di), &sms->SMS[0], FFF->Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			/* we need to find, if part of byte was used or not */
 			i += (FFF->Buffer[i] * 7 / 8);
@@ -2269,8 +2269,8 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		i+=2;
 		Layout.TPUDL = i;
 		Layout.Text = i+1;
-		sms->SMS[0].Coding = GSM_GetMessageCoding(FFF->Buffer[Layout.TPDCS]);
-		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
+		sms->SMS[0].Coding = GSM_GetMessageCoding(&(s->di), FFF->Buffer[Layout.TPDCS]);
+		GSM_DecodeSMSFrameText(&(s->di), &sms->SMS[0], FFF->Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			/* we need to find, if part of byte was used or not */
 			if (FFF->Buffer[i] * 7 % 8 != 0) {
@@ -2318,8 +2318,8 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		smprintf(s,"TPUDL %02x %02x\n",FFF->Buffer[i-1],FFF->Buffer[i]);
 		Layout.TPUDL = i;
 		Layout.Text = i+1;
-		sms->SMS[0].Coding = GSM_GetMessageCoding(FFF->Buffer[Layout.TPDCS]);
-		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
+		sms->SMS[0].Coding = GSM_GetMessageCoding(&(s->di), FFF->Buffer[Layout.TPDCS]);
+		GSM_DecodeSMSFrameText(&(s->di), &sms->SMS[0], FFF->Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			/* we need to find, if part of byte was used or not */
 			if (FFF->Buffer[i] * 7 % 8 != 0) {
@@ -2366,7 +2366,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		if (sms->SMS[0].Number[0]==0x00 && sms->SMS[0].Number[1]==0x00) {
 			smprintf(s,"%02x\n",FFF->Buffer[i+2]);
 			if (FFF->Buffer[176]==0x71) {
-				GSM_UnpackSemiOctetNumber(sms->SMS[0].Number,FFF->Buffer+i+2 , true);
+				GSM_UnpackSemiOctetNumber(&(s->di), sms->SMS[0].Number,FFF->Buffer+i+2 , true);
 			}
 			/* semioctets to chars in phone number */
 			if (FFF->Buffer[i+2] % 2) FFF->Buffer[i+2]++;
@@ -2383,8 +2383,8 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		smprintf(s,"TPUDL %02x %02x\n",FFF->Buffer[i-1],FFF->Buffer[i]);
 		Layout.TPUDL = i;
 		Layout.Text = i+1;
-		sms->SMS[0].Coding = GSM_GetMessageCoding(FFF->Buffer[Layout.TPDCS]);
-		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
+		sms->SMS[0].Coding = GSM_GetMessageCoding(&(s->di), FFF->Buffer[Layout.TPDCS]);
+		GSM_DecodeSMSFrameText(&(s->di), &sms->SMS[0], FFF->Buffer, Layout);
 		if (sms->SMS[0].Coding == SMS_Coding_Default_No_Compression) {
 			/* we need to find, if part of byte was used or not */
 			if (FFF->Buffer[i] * 7 % 8 != 0) {
@@ -2446,8 +2446,8 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		smprintf(s,"TPDCS %02x\n",FFF->Buffer[Layout.TPDCS]);
 		smprintf(s,"TPUDL %02x\n",FFF->Buffer[Layout.TPUDL]);
 		Layout.Text = i+12;
-		sms->SMS[0].Coding = GSM_GetMessageCoding(FFF->Buffer[Layout.TPDCS]);
-		GSM_DecodeSMSFrameText(&sms->SMS[0], FFF->Buffer, Layout);
+		sms->SMS[0].Coding = GSM_GetMessageCoding(&(s->di), FFF->Buffer[Layout.TPDCS]);
+		GSM_DecodeSMSFrameText(&(s->di), &sms->SMS[0], FFF->Buffer, Layout);
 		if (FFF->Buffer[176]!=0x64) {
 			i+=FFF->Buffer[Layout.TPUDL];
 			if (FFF->Buffer[i+2] != 0xff && FFF->Buffer[i+1] != 0xff && FFF->Buffer[i+1] < GSM_MAX_NUMBER_LENGTH) {
@@ -2476,14 +2476,14 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 		if ((FFF->Buffer[Layout.TPDCS] & 0xD0) == 0x10) {
 			/* bits 7..4 set to 00x1 */
 			if ((FFF->Buffer[Layout.TPDCS] & 0xC) == 0xC) {
-				dbgprintf("WARNING: reserved alphabet value in TPDCS\n");
+				smprintf(s, "WARNING: reserved alphabet value in TPDCS\n");
 			} else {
 				sms->SMS[0].Class = (FFF->Buffer[Layout.TPDCS] & 3);
 			}
 		} else if ((FFF->Buffer[Layout.TPDCS] & 0xF0) == 0xF0) {
 			/* bits 7..4 set to 1111 */
 			if ((FFF->Buffer[Layout.TPDCS] & 8) == 8) {
-				dbgprintf("WARNING: set reserved bit 3 in TPDCS\n");
+				smprintf(s, "WARNING: set reserved bit 3 in TPDCS\n");
 			} else {
 				sms->SMS[0].Class = (FFF->Buffer[Layout.TPDCS] & 3);
 			}

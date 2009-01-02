@@ -20,6 +20,8 @@
 #include "misc/locales.h"
 #include "misc/misc.h"
 
+#include "debug.h"
+
 #include <gammu-debug.h>
 
 /* Commit flag for opening files is MS extension, some other
@@ -249,7 +251,7 @@ GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info *privdi)
 		case DL_TEXTERRORDATE:
 			testfile = fopen(info,"a" COMMIT_FLAG);
 			if (!testfile) {
-				dbgprintf("Can't open debug file\n");
+				dbgprintf(privdi, "Can't open debug file\n");
 				return ERR_CANTOPENFILE;
 			}
 			fseek(testfile, 0, SEEK_END);
@@ -263,7 +265,7 @@ GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info *privdi)
 	}
 
 	if (testfile == NULL) {
-		dbgprintf("Can't open debug file\n");
+		dbgprintf(privdi, "Can't open debug file\n");
 		return ERR_CANTOPENFILE;
 	} else {
 		return GSM_SetDebugFileDescriptor(testfile, true, privdi);

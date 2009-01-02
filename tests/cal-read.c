@@ -65,10 +65,10 @@ int main(int argc, char **argv)
 
 	/* Parse [iv]Calendar */
 	if (strstr(argv[1], ".ics") != NULL) {
-		error = GSM_DecodeVCALENDAR_VTODO(buffer, &pos, &cal, &todo,
+		error = GSM_DecodeVCALENDAR_VTODO(NULL, buffer, &pos, &cal, &todo,
 				Mozilla_iCalendar, Mozilla_VToDo);
 	} else {
-		error = GSM_DecodeVCALENDAR_VTODO(buffer, &pos, &cal, &todo,
+		error = GSM_DecodeVCALENDAR_VTODO(NULL, buffer, &pos, &cal, &todo,
 				SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	}
 	if (error != ERR_NONE) {

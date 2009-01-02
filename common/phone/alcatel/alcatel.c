@@ -295,7 +295,7 @@ static GSM_Error ALCATEL_SetBinaryMode(GSM_StateMachine *s)
 
 	if (Priv->Mode == ModeBinary) return ERR_NONE;
 
-	dbgprintf ("Changing to binary mode\n");
+	smprintf(s, "Changing to binary mode\n");
 
 	error=GSM_WaitFor (s, "AT+IFC=2,2\r", 11, 0x02, 4, ID_SetFlowControl);
 	if (error != ERR_NONE) return error;
@@ -315,7 +315,7 @@ static GSM_Error ALCATEL_SetBinaryMode(GSM_StateMachine *s)
 
 	if (error != ERR_NONE) return error;
 
-	dbgprintf ("Changing protocol to Alcabus\n");
+	smprintf(s, "Changing protocol to Alcabus\n");
 
 	s->Protocol.Functions = &ALCABUSProtocol;
 	error = s->Protocol.Functions->Initialise(s);
@@ -389,7 +389,7 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
 				commit_buffer[2] = ALCATEL_SYNC_TYPE_TODO;
 				break;
 		}
-		dbgprintf ("Commiting edited record\n");
+		smprintf(s, "Commiting edited record\n");
 		error=GSM_WaitFor (s, commit_buffer, 5, 0x02, ALCATEL_TIMEOUT, ID_AlcatelCommit);
 		if (error != ERR_NONE) return error;
 		error=GSM_WaitFor (s, 0, 0, 0x00, ALCATEL_TIMEOUT, ID_AlcatelCommit2);
@@ -416,7 +416,7 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
 
 	/* Do we need to close session? */
 	if (Priv->BinaryState == StateSession) {
-		dbgprintf ("Ending session\n");
+		smprintf(s, "Ending session\n");
 		switch (Priv->BinaryType) {
 			case TypeCalendar:
 				end_buffer[4] 	= ALCATEL_BEGIN_SYNC_CALENDAR;
@@ -442,11 +442,11 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
 				close_buffer[2] = ALCATEL_SYNC_TYPE_TODO;
 				break;
 		}
-		dbgprintf ("Closing session\n");
+		smprintf(s, "Closing session\n");
 		error=GSM_WaitFor (s, close_buffer, 5, 0x02, ALCATEL_TIMEOUT, ID_AlcatelClose);
 		if (error != ERR_NONE) return error;
 
-		dbgprintf ("Detaching binary mode\n");
+		smprintf(s, "Detaching binary mode\n");
 		error = GSM_WaitFor (s, detach_buffer, 4, 0x02, ALCATEL_TIMEOUT, ID_AlcatelDetach);
 		if (error != ERR_NONE) return error;
 
@@ -456,7 +456,7 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
 
 	/* Do we need to open session? */
 	if (state == StateSession || state == StateEdit) {
-		dbgprintf ("Starting session for %s\n",
+		smprintf(s, "Starting session for %s\n",
 				(type == TypeCalendar ? "Calendar" :
 				(type == TypeToDo ? "Todo" :
 				(type == TypeContacts ? "Contacts" :
@@ -479,7 +479,7 @@ static GSM_Error ALCATEL_GoToBinaryState(GSM_StateMachine *s, GSM_Alcatel_Binary
 				begin_buffer[4] 	= ALCATEL_BEGIN_SYNC_TODO;
 				break;
 		}
-		dbgprintf ("Attaching in binary mode\n");
+		smprintf(s, "Attaching in binary mode\n");
 
 		/* Communicate */
 		error=GSM_WaitFor (s, attach_buffer, 4, 0x02, ALCATEL_TIMEOUT, ID_AlcatelAttach);
@@ -531,7 +531,7 @@ static GSM_Error ALCATEL_SetATMode(GSM_StateMachine *s)
 	error = s->Protocol.Functions->Terminate(s);
 	if (error != ERR_NONE) return error;
 
-	dbgprintf ("Changing protocol to AT\n");
+	smprintf(s, "Changing protocol to AT\n");
 	s->Protocol.Functions			= &ATProtocol;
 	s->Phone.Functions->ReplyFunctions	= ATGENReplyFunctions;
 	Priv->Mode				= ModeAT;

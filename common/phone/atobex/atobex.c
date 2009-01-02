@@ -47,7 +47,7 @@ GSM_Error ATOBEX_SetATMode(GSM_StateMachine *s)
 	/* Aren't we in OBEX mode? */
 	if (Priv->Mode == ATOBEX_ModeAT) return ERR_NONE;
 
-	dbgprintf ("Terminating OBEX\n");
+	smprintf(s, "Terminating OBEX\n");
 
 	/* Disconnect from OBEX service */
 	error = OBEXGEN_Disconnect(s);
@@ -58,7 +58,7 @@ GSM_Error ATOBEX_SetATMode(GSM_StateMachine *s)
 	if (error != ERR_NONE) return error;
 
 	/* Switch to AT protocol */
-	dbgprintf ("Changing protocol to AT\n");
+	smprintf(s, "Changing protocol to AT\n");
 	s->Protocol.Functions			= &ATProtocol;
 	s->Phone.Functions->ReplyFunctions	= ATGENReplyFunctions;
 	Priv->Mode				= ATOBEX_ModeAT;
@@ -103,7 +103,7 @@ GSM_Error ATOBEX_SetOBEXMode(GSM_StateMachine *s, OBEX_Service service)
 		if (error != ERR_NONE) return error;
 	}
 
-	dbgprintf ("Changing to OBEX mode\n");
+	smprintf(s, "Changing to OBEX mode\n");
 
 	/* Switch phone to OBEX */
 	error = ERR_NOTSUPPORTED;

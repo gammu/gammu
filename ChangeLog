@@ -19,6 +19,8 @@ ChangeLog
 
 [-] * Fix some memory leaks found by cppcheck.
 [-] * Fix unsafe sprintf usage in some modules.
+[!] * Improve debugging facilities to use state machine debug
+      configuration when possible.
 [!] * Separate SMS daemon out of gammu binary.
 [!] * SMSD now requires [gammu] section in config file.
 [+] * Added pkgconfig support for gsmsd (SMSD library).

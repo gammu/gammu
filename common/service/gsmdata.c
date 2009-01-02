@@ -8,6 +8,7 @@
 
 #include "gsmdata.h"
 #include "../misc/coding/coding.h"
+#include "../debug.h"
 
 /* http://forum.nokia.com: OTA MMS Settings 1.0, OTA Settings 7.0 */
 static void AddWAPSMSParameterText(unsigned char *Buffer, size_t *Length, unsigned char ID, char *Text, int Len)
@@ -416,7 +417,7 @@ void GSM_AddWAPMIMEType(int type, char *buffer)
 	}
 }
 
-GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSInfo *info)
+GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_Debug_Info *di, GSM_File *file, GSM_EncodedMultiPartMMSInfo *info)
 {
 	size_t pos = 0;
 	int type=0,parts,j;
@@ -432,10 +433,10 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 		if (!(file->Buffer[pos] & 0x80)) break;
 		switch (file->Buffer[pos++] & 0x7F) {
 		case 0x01:
-			dbgprintf("  BCC               : not done yet\n");
+			smfprintf(di, "  BCC               : not done yet\n");
 			return ERR_FILENOTSUPPORTED;
 		case 0x02:
-			dbgprintf("  CC                : ");
+			smfprintf(di, "  CC                : ");
 			i = 0;
 			while (file->Buffer[pos]!=0x00) {
 				buff[i++] = file->Buffer[pos++];
@@ -445,18 +446,18 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			if (strstr(buff,"/TYPE=PLMN")!=NULL) {
 				buff[strlen(buff)-10] = 0;
 				info->CCType = MMSADDRESS_PHONE;
-				dbgprintf("phone %s\n",buff);
+				smfprintf(di, "phone %s\n",buff);
 			} else {
 				info->CCType = MMSADDRESS_UNKNOWN;
-				dbgprintf("%s\n",buff);
+				smfprintf(di, "%s\n",buff);
 			}
 			EncodeUnicode(info->CC,buff,strlen(buff));
 			break;
 		case 0x03:
-			dbgprintf("  Content location  : not done yet\n");
+			smfprintf(di, "  Content location  : not done yet\n");
 			return ERR_FILENOTSUPPORTED;
 		case 0x04:
-			dbgprintf("  Content type      : ");
+			smfprintf(di, "  Content type      : ");
 			buff[0] = 0;
 			if (file->Buffer[pos] <= 0x1E) {
 				len2 = file->Buffer[pos++];
@@ -527,17 +528,17 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				}
 				pos+=len2+2;
 			} else if (file->Buffer[pos] >= 0x20 && file->Buffer[pos] <= 0x7F) {
-				dbgprintf("not done yet 2\n");
+				smfprintf(di, "not done yet 2\n");
 				return ERR_FILENOTSUPPORTED;
 			} else if (file->Buffer[pos] >= 0x80 && file->Buffer[pos] < 0xFF) {
 				type = file->Buffer[pos++] & 0x7f;
 				GSM_AddWAPMIMEType(type, buff);
 			}
-			dbgprintf("%s\n",buff);
+			smfprintf(di, "%s\n",buff);
 			EncodeUnicode(info->ContentType,buff,strlen(buff));
 			break;
 		case 0x05:
-			dbgprintf("  Date              : ");
+			smfprintf(di, "  Date              : ");
 			value=0;
 			len2 = file->Buffer[pos++];
 			for (i=0;i<len2;i++) {
@@ -547,34 +548,34 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			timet = value;
 			Fill_GSM_DateTime(&Date, timet);
 			Date.Year = Date.Year + 1900;
-			dbgprintf("%s\n",OSDateTime(Date,0));
+			smfprintf(di, "%s\n",OSDateTime(Date,0));
 			info->DateTimeAvailable = true;
 			memcpy(&info->DateTime,&Date,sizeof(GSM_DateTime));
 			break;
 		case 0x06:
-			dbgprintf("  Delivery report   : ");
+			smfprintf(di, "  Delivery report   : ");
 			info->MMSReportAvailable = true;
 			switch(file->Buffer[pos++]) {
 				case 0x80:
-					dbgprintf("yes\n");
+					smfprintf(di, "yes\n");
 					info->MMSReport = true;
 					break;
 				case 0x81:
-					dbgprintf("no\n");
+					smfprintf(di, "no\n");
 					info->MMSReport = false;
 					break;
 				default:
-					dbgprintf("unknown\n");
+					smfprintf(di, "unknown\n");
 					return ERR_FILENOTSUPPORTED;
 			}
 			break;
 		case 0x08:
-			dbgprintf("  Expiry            : ");
+			smfprintf(di, "  Expiry            : ");
 			pos++; /* length? */
 			switch (file->Buffer[pos]) {
-				case 0x80: dbgprintf("date - ignored\n");	 	 break;
-				case 0x81: dbgprintf("seconds - ignored\n");	 break;
-				default  : dbgprintf("unknown %02x\n",file->Buffer[pos]);	 break;
+				case 0x80: smfprintf(di, "date - ignored\n");	 	 break;
+				case 0x81: smfprintf(di, "seconds - ignored\n");	 break;
+				default  : smfprintf(di, "unknown %02x\n",file->Buffer[pos]);	 break;
 			}
 			pos++;
 			pos++; /* expiry */
@@ -586,7 +587,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			pos++;
 			pos++;
 			if (file->Buffer[pos-1] == 128) {
-				dbgprintf("  From              : ");
+				smfprintf(di, "  From              : ");
 				len2=file->Buffer[pos-2]-1;
 				for (i=0;i<len2;i++) {
 					buff[i] = file->Buffer[pos++];
@@ -595,35 +596,35 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				if (strstr(buff,"/TYPE=PLMN")!=NULL) {
 					buff[strlen(buff)-10] = 0;
 					info->SourceType = MMSADDRESS_PHONE;
-					dbgprintf("phone %s\n",buff);
+					smfprintf(di, "phone %s\n",buff);
 				} else {
 					info->SourceType = MMSADDRESS_UNKNOWN;
-					dbgprintf("%s\n",buff);
+					smfprintf(di, "%s\n",buff);
 				}
 				EncodeUnicode(info->Source,buff,strlen(buff));
 			}
 			break;
 		case 0x0A:
-			dbgprintf("  Message class     : ");
+			smfprintf(di, "  Message class     : ");
 			switch (file->Buffer[pos++]) {
-				case 0x80: dbgprintf("personal\n");	 break;
-				case 0x81: dbgprintf("advertisment\n");	 break;
-				case 0x82: dbgprintf("informational\n"); break;
-				case 0x83: dbgprintf("auto\n");		 break;
-				default  : dbgprintf("unknown\n");	 break;
+				case 0x80: smfprintf(di, "personal\n");	 break;
+				case 0x81: smfprintf(di, "advertisment\n");	 break;
+				case 0x82: smfprintf(di, "informational\n"); break;
+				case 0x83: smfprintf(di, "auto\n");		 break;
+				default  : smfprintf(di, "unknown\n");	 break;
 			}
 			break;
 		case 0x0B:
-			dbgprintf("  Message ID        : ");
+			smfprintf(di, "  Message ID        : ");
 			while (file->Buffer[pos]!=0x00) {
-				dbgprintf("%c",file->Buffer[pos]);
+				smfprintf(di, "%c",file->Buffer[pos]);
 				pos++;
 			}
-			dbgprintf("\n");
+			smfprintf(di, "\n");
 			pos++;
 			break;
 		case 0x0C:
-			dbgprintf("  Message type      : ");
+			smfprintf(di, "  Message type      : ");
 			switch (file->Buffer[pos++]) {
 				case 0x80: sprintf(info->MSGType,"m-send-req");  	   	break;
 				case 0x81: sprintf(info->MSGType,"m-send-conf"); 	   	break;
@@ -632,62 +633,62 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				case 0x84: sprintf(info->MSGType,"m-retrieve-conf");		break;
 				case 0x85: sprintf(info->MSGType,"m-acknowledge-ind");  	break;
 				case 0x86: sprintf(info->MSGType,"m-delivery-ind");		break;
-				default  : dbgprintf("unknown\n"); 	   			return ERR_FILENOTSUPPORTED;
+				default  : smfprintf(di, "unknown\n"); 	   			return ERR_FILENOTSUPPORTED;
 			}
-			dbgprintf("%s\n",info->MSGType);
+			smfprintf(di, "%s\n",info->MSGType);
 			break;
 		case 0x0D:
 			value2 = file->Buffer[pos] & 0x7F;
-			dbgprintf("  MMS version       : %i.%i\n", (value2 & 0x70) >> 4, value2 & 0x0f);
+			smfprintf(di, "  MMS version       : %i.%i\n", (value2 & 0x70) >> 4, value2 & 0x0f);
 			pos++;
 			break;
 		case 0x0E:
-			dbgprintf("  Message size      : not done yet\n");
+			smfprintf(di, "  Message size      : not done yet\n");
 			return ERR_FILENOTSUPPORTED;
 		case 0x0F:
-			dbgprintf("  Priority          : ");
+			smfprintf(di, "  Priority          : ");
 			switch (file->Buffer[pos++]) {
-				case 0x80: dbgprintf("low\n");		break;
-				case 0x81: dbgprintf("normal\n");	break;
-				case 0x82: dbgprintf("high\n");		break;
-				default  : dbgprintf("unknown\n");	break;
+				case 0x80: smfprintf(di, "low\n");		break;
+				case 0x81: smfprintf(di, "normal\n");	break;
+				case 0x82: smfprintf(di, "high\n");		break;
+				default  : smfprintf(di, "unknown\n");	break;
 			}
 			break;
 		case 0x10:
-			dbgprintf("  Read reply        : ");
+			smfprintf(di, "  Read reply        : ");
 			switch(file->Buffer[pos++]) {
-				case 0x80: dbgprintf("yes\n"); 		break;
-				case 0x81: dbgprintf("no\n");  		break;
-				default  : dbgprintf("unknown\n");
+				case 0x80: smfprintf(di, "yes\n"); 		break;
+				case 0x81: smfprintf(di, "no\n");  		break;
+				default  : smfprintf(di, "unknown\n");
 			}
 			break;
 		case 0x11:
-			dbgprintf("  Report allowed    : not done yet\n");
+			smfprintf(di, "  Report allowed    : not done yet\n");
 			return ERR_FILENOTSUPPORTED;
 		case 0x12:
-			dbgprintf("  Response status   : not done yet\n");
+			smfprintf(di, "  Response status   : not done yet\n");
 			return ERR_FILENOTSUPPORTED;
 		case 0x13:
-			dbgprintf("  Response text     : not done yet\n");
+			smfprintf(di, "  Response text     : not done yet\n");
 			return ERR_FILENOTSUPPORTED;
 		case 0x14:
-			dbgprintf("  Sender visibility : not done yet\n");
+			smfprintf(di, "  Sender visibility : not done yet\n");
 			return ERR_FILENOTSUPPORTED;
 		case 0x15:
-			dbgprintf("  Status            : ");
+			smfprintf(di, "  Status            : ");
 			switch (file->Buffer[pos++]) {
-				case 0x80: dbgprintf("expired\n");	break;
-				case 0x81: dbgprintf("retrieved\n");	break;
-				case 0x82: dbgprintf("rejected\n");	break;
-				case 0x83: dbgprintf("deferred\n");	break;
-				case 0x84: dbgprintf("unrecognized\n");	break;
-				default  : dbgprintf("unknown\n");
+				case 0x80: smfprintf(di, "expired\n");	break;
+				case 0x81: smfprintf(di, "retrieved\n");	break;
+				case 0x82: smfprintf(di, "rejected\n");	break;
+				case 0x83: smfprintf(di, "deferred\n");	break;
+				case 0x84: smfprintf(di, "unrecognized\n");	break;
+				default  : smfprintf(di, "unknown\n");
 			}
 			pos++;
 			pos++;
 			break;
 		case 0x16:
-			dbgprintf("  Subject           : ");
+			smfprintf(di, "  Subject           : ");
 			if (file->Buffer[pos+1]==0xEA) {
 				pos+=2;
 			}
@@ -696,12 +697,12 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				buff[i++] = file->Buffer[pos++];
 			}
 			buff[i] = 0;
-			dbgprintf("%s\n",buff);
+			smfprintf(di, "%s\n",buff);
 			EncodeUnicode(info->Subject,buff,strlen(buff));
 			pos++;
 			break;
 		case 0x17:
-			dbgprintf("  To                : ");
+			smfprintf(di, "  To                : ");
 			i = 0;
 			while (file->Buffer[pos]!=0x00) {
 				buff[i++] = file->Buffer[pos++];
@@ -710,25 +711,25 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			if (strstr(buff,"/TYPE=PLMN")!=NULL) {
 				buff[strlen(buff)-10] = 0;
 				info->DestinationType = MMSADDRESS_PHONE;
-				dbgprintf("phone %s\n",buff);
+				smfprintf(di, "phone %s\n",buff);
 			} else {
 				info->DestinationType = MMSADDRESS_UNKNOWN;
-				dbgprintf("%s\n",buff);
+				smfprintf(di, "%s\n",buff);
 			}
 			EncodeUnicode(info->Destination,buff,strlen(buff));
 			pos++;
 			break;
 		case 0x18:
-			dbgprintf("  Transaction ID    : ");
+			smfprintf(di, "  Transaction ID    : ");
 			while (file->Buffer[pos]!=0x00) {
-				dbgprintf("%c",file->Buffer[pos]);
+				smfprintf(di, "%c",file->Buffer[pos]);
 				pos++;
 			}
-			dbgprintf("\n");
+			smfprintf(di, "\n");
 			pos++;
 			break;
 		default:
-			dbgprintf("  unknown1\n");
+			smfprintf(di, "  unknown1\n");
 			break;
 		}
 	}
@@ -744,7 +745,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 		if (!(file->Buffer[pos-1] & 0x80)) break;
 	}
 	value2 = value;
-	dbgprintf("  Parts             : %i\n",value2);
+	smfprintf(di, "  Parts             : %i\n",value2);
 	parts = value;
 
 	for (j=0;j<parts;j++) {
@@ -755,7 +756,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			pos++;
 			if (!(file->Buffer[pos-1] & 0x80)) break;
 		}
-		dbgprintf("    Header len: %li",value);
+		smfprintf(di, "    Header len: %li",value);
 		len2 = value;
 
 		value = 0;
@@ -765,13 +766,13 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			pos++;
 			if (!(file->Buffer[pos-1] & 0x80)) break;
 		}
-		dbgprintf(", data len: %li\n",value);
+		smfprintf(di, ", data len: %li\n",value);
 		len3 = value;
 
 		/* content type */
 		i 	= 0;
 		buff[0] = 0;
-		dbgprintf("    Content type    : ");
+		smfprintf(di, "    Content type    : ");
 		if (file->Buffer[pos] >= 0x80) {
 			type = file->Buffer[pos] & 0x7f;
 			GSM_AddWAPMIMEType(type, buff);
@@ -813,7 +814,7 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				i++;
 			}
 		}
-		dbgprintf("%s\n",buff);
+		smfprintf(di, "%s\n",buff);
 		EncodeUnicode(info->Entries[info->EntriesNum].ContentType,buff,strlen(buff));
 
 		pos+=i;
@@ -864,13 +865,13 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 			case 0x8E:
 				i++;
 				buff[0] = 0;
-				dbgprintf("      Name          : ");
+				smfprintf(di, "      Name          : ");
 				while (file->Buffer[pos+i]!=0x00) {
 					buff[strlen(buff)+1] = 0;
 					buff[strlen(buff)]   = file->Buffer[pos+i];
 					i++;
 				}
-				dbgprintf("%s\n",buff);
+				smfprintf(di, "%s\n",buff);
 				EncodeUnicode(info->Entries[info->EntriesNum].File.Name,buff,strlen(buff));
 				break;
 			case 0xAE:
@@ -880,17 +881,17 @@ GSM_Error GSM_DecodeMMSFileToMultiPart(GSM_File *file, GSM_EncodedMultiPartMMSIn
 				i++;
 				i++;
 				buff[0] = 0;
-				dbgprintf("      SMIL CID      : ");
+				smfprintf(di, "      SMIL CID      : ");
 				while (file->Buffer[pos+i]!=0x00) {
 					buff[strlen(buff)+1] = 0;
 					buff[strlen(buff)]   = file->Buffer[pos+i];
 					i++;
 				}
-				dbgprintf("%s\n",buff);
+				smfprintf(di, "%s\n",buff);
 				EncodeUnicode(info->Entries[info->EntriesNum].SMIL,buff,strlen(buff));
 				break;
 			default:
-				dbgprintf("unknown3 %02x\n",file->Buffer[pos+i]);
+				smfprintf(di, "unknown3 %02x\n",file->Buffer[pos+i]);
 			}
 			i++;
 		}

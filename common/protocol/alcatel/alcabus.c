@@ -228,14 +228,14 @@ static GSM_Error ALCABUS_Initialise(GSM_StateMachine *s)
 	d->busy			= false;
 
 	/* Initialise protocol */
-	dbgprintf ("Initializing binary mode\n");
+	smprintf(s, "Initializing binary mode\n");
 	return ALCABUS_WriteMessage (s, 0, 0, ALCATEL_CONNECT);
 }
 
 static GSM_Error ALCABUS_Terminate(GSM_StateMachine *s)
 {
 	/* Terminate protocol */
-	dbgprintf ("Closing binary mode\n");
+	smprintf(s, "Closing binary mode\n");
 	return ALCABUS_WriteMessage (s, 0, 0, ALCATEL_DISCONNECT);
 }
 

@@ -107,7 +107,7 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 		entry->EntriesNum++;
 
 		N71_65_GetCalendarAlarm(s, msg.Buffer+16, entry, 0, Data);
-		GSM_GetCalendarRecurranceRepeat(msg.Buffer+22, NULL, entry);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer+22, NULL, entry);
 
 		memcpy(entry->Entries[entry->EntriesNum].Text, msg.Buffer+30, msg.Buffer[28]*2);
 		entry->Entries[entry->EntriesNum].Text[msg.Buffer[28]*2]   = 0;
@@ -122,7 +122,7 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 		entry->EntriesNum++;
 
 		N71_65_GetCalendarAlarm(s, msg.Buffer+16, entry, 0, Data);
-		GSM_GetCalendarRecurranceRepeat(msg.Buffer+22, NULL, entry);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer+22, NULL, entry);
 
 		i = msg.Buffer[28] * 2;
 		if (i!=0) {
@@ -152,7 +152,7 @@ GSM_Error N71_65_ReplyGetNextCalendar2(GSM_Protocol_Message msg, GSM_StateMachin
 		entry->EntriesNum++;
 
 		N71_65_GetCalendarAlarm(s, msg.Buffer+16, entry, 0, Data);
-		GSM_GetCalendarRecurranceRepeat(msg.Buffer+22, NULL, entry);
+		GSM_GetCalendarRecurranceRepeat(&(s->di), msg.Buffer+22, NULL, entry);
 
 		/* Birthday year */
 		entry->Entries[0].Date.Year = msg.Buffer[28]*256 + msg.Buffer[29];
