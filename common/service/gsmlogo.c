@@ -1053,6 +1053,7 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 {
 	FILE		*file;
 	unsigned char	buffer[300];
+	GSM_Error	error = ERR_FILENOTSUPPORTED;
 
 	file = fopen(FileName, "rb");
 	if (file == NULL) return ERR_CANTOPENFILE;
@@ -1069,21 +1070,22 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 
 	/* Attempt to identify filetype */
 	if (memcmp(buffer, "BM",2)==0) {
-		return loadbmp(file,bitmap);
+		error = loadbmp(file,bitmap);
 	} else if (buffer[0] == 0x00 && buffer[1] == 0x00) {
-		return loadwbmp(file,bitmap);
+		error = loadwbmp(file,bitmap);
 	} else if (memcmp(buffer, "NLM",3)==0) {
-		return loadnlm(file,bitmap);
+		error = loadnlm(file,bitmap);
 	} else if (memcmp(buffer, "NOL",3)==0) {
-		return loadnolngg(file,bitmap,true);
+		error = loadnolngg(file,bitmap,true);
 	} else if (memcmp(buffer, "NGG",3)==0) {
-		return loadnolngg(file,bitmap,false);
+		error = loadnolngg(file,bitmap,false);
 	} else if (memcmp(buffer, "FORM",4)==0) {
-		return loadnsl(file,bitmap);
+		error = loadnsl(file,bitmap);
 	} else if (memcmp(buffer, "GIF",3)==0) {
-		return loadgif(file,bitmap);
+		error = loadgif(file,bitmap);
 	}
-	return ERR_FILENOTSUPPORTED;
+	fclose(file);
+	return error;
 }
 
 void NOKIA_CopyBitmap(GSM_Phone_Bitmap_Types Type, GSM_Bitmap *Bitmap, char *Buffer, size_t *Length)
