@@ -1,0 +1,10 @@
+Short term todo list for 1.23.0:
+
+- separate SMSD
+- support for void* parameter for user data in callback functions
+- logging in gammu using custom function
+- SMSD logging to syslog
+
+Optional:
+
+- add parameter to SMSD callback with information about stored message
