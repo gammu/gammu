@@ -42,6 +42,10 @@ struct _GSM_Debug_Info {
      * Function which performs logging, in case it is set, no file logging happens.
      */
     GSM_Log_Function    log_function;
+    /**
+     * User data to be passed to callback.
+     */
+    void * user_data;
 };
 
 

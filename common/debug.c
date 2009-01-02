@@ -23,6 +23,7 @@ GSM_Debug_Info GSM_none_debug = {
 	"",
 	false,
 	false,
+    NULL,
     NULL
 	};
 
@@ -33,6 +34,7 @@ GSM_Debug_Info GSM_global_debug = {
 	"",
 	false,
 	false,
+    NULL,
     NULL
 	};
 
@@ -42,7 +44,7 @@ GSM_Debug_Info GSM_global_debug = {
 void dbg_write(GSM_Debug_Info *d, const char *text)
 {
     if (d->log_function != NULL) {
-        d->log_function(text);
+        d->log_function(text, d->user_data);
     } else if (d->df != NULL) {
         fwrite(text, sizeof(char), strlen(text), d->df);
     }
@@ -173,9 +175,10 @@ GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info *privdi)
 	}
 }
 
-GSM_Error GSM_SetDebugFunction(GSM_Log_Function info, GSM_Debug_Info * privdi)
+GSM_Error GSM_SetDebugFunction(GSM_Log_Function info, void *data, GSM_Debug_Info * privdi)
 {
     privdi->log_function = info;
+    privdi->user_data = data;
     return ERR_NONE;
 }
 

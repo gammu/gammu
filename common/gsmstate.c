@@ -532,7 +532,7 @@ GSM_Error GSM_TryGetModel(GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
-GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
+GSM_Error GSM_InitConnection_Log(GSM_StateMachine *s, int ReplyNum, GSM_Log_Function log_function, void *user_data)
 {
 	GSM_Error	error;
 	GSM_DateTime	current_time;
@@ -577,6 +577,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 		s->di 				  = GSM_none_debug;
 		s->di.use_global 		  = s->CurrentConfig->UseGlobalDebugFile;
 		if (!s->di.use_global) {
+			GSM_SetDebugFunction(log_function, user_data, &s->di);
 			GSM_SetDebugLevel(s->CurrentConfig->DebugLevel, &s->di);
 			error = GSM_SetDebugFile(s->CurrentConfig->DebugFile, &s->di);
 			if (error != ERR_NONE) {
@@ -720,6 +721,11 @@ autodetect:
 		return ERR_NONE;
 	}
 	return ERR_UNCONFIGURED;
+}
+
+GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
+{
+	return GSM_InitConnection_Log(s, ReplyNum, GSM_none_debug.log_function, GSM_none_debug.user_data);
 }
 
 int GSM_ReadDevice (GSM_StateMachine *s, bool waitforreply)

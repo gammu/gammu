@@ -17,6 +17,14 @@
 #include <gammu-inifile.h>
 
 /**
+ * Callback function for logging.
+ *
+ * \param text Text to be printed, \n will be also sent (maybe as a
+ * separate message).
+ */
+typedef void (*GSM_Log_Function)(const char *text, void *data);
+
+/**
  * Private structure holding information about phone connection. Should
  * be allocated by \ref GSM_AllocStateMachine and freed by
  * \ref GSM_FreeStateMachine.
@@ -125,6 +133,20 @@ typedef enum {
 	GCT_BLUEPHONET,
 	GCT_BLUEOBEX
 } GSM_ConnectionType;
+
+/**
+ * Initiates connection with custom logging callback.
+ *
+ * \ingroup StateMachine
+ *
+ * \param s State machine data
+ * \param ReplyNum Number of replies to await (usually 3).
+ * \param log_function Logging function, see GSM_SetDebugFunction.
+ * \param user_data User data for logging function, see GSM_SetDebugFunction.
+ * \return Error code
+ * \see GSM_SetDebugFunction
+ */
+GSM_Error GSM_InitConnection_Log(GSM_StateMachine *s, int ReplyNum, GSM_Log_Function log_function, void *user_data);
 
 /**
  * Initiates connection.
