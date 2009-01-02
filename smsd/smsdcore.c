@@ -130,7 +130,7 @@ GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, c
 	memset(&smsdcfg, 0, sizeof(smsdcfg));
 
 	Config->shutdown = false;
-	Config->gsm = NULL;
+	Config->gsm = GSM_AllocStateMachine();
 	Config->logfilename = NULL;
 
 	error = INI_ReadFile(filename, false, &smsdcfgfile);
@@ -168,10 +168,14 @@ GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, c
 
 	/* Does our config file contain gammu section? */
 	if (INI_FindLastSectionEntry(smsdcfgfile, "gammu", false) != NULL) {
-		GSM_ReadConfig(smsdcfgfile, &smsdcfg, 0);
 		gammucfg = GSM_GetConfig(Config->gsm, 0);
-		*gammucfg = smsdcfg;
+		GSM_ReadConfig(smsdcfgfile, gammucfg, 0);
+		GSM_SetConfigNum(Config->gsm, 1);
 		error = GSM_SetDebugFile(gammucfg->DebugFile, GSM_GetGlobalDebug());
+	} else {
+ 		if (uselog) WriteSMSDLog("No gammu configuration found!");
+ 		fprintf(stderr, "No gammu configuration found!\n");
+		return ERR_UNCONFIGURED;
 	}
 
 	Config->PINCode=INI_GetValue(smsdcfgfile, "smsd", "PIN", false);
