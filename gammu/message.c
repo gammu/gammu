@@ -19,7 +19,7 @@
 #include "calendar.h"
 #include "misc.h"
 
-#include "smsd/smsdcore.h" /* For SMSD interaction */
+#include <gammu-smsd.h> /* For SMSD interaction */
 
 volatile bool 			wasincomingsms 		= false;
 

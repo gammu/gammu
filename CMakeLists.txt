@@ -510,6 +510,7 @@ set (PUBLIC_HEADERS
     include/gammu-call.h
     include/gammu-ringtone.h
     include/gammu-nokia.h
+    smsd/gammu-smsd.h
     ${Gammu_BINARY_DIR}/include/gammu-config.h
     )
 
@@ -669,7 +670,8 @@ configure_file ("${Gammu_SOURCE_DIR}/templates/gammu-config.h.cmake" "${Gammu_BI
 # Fill in include dir for build
 foreach (HEADER ${PUBLIC_HEADERS})
     if (NOT ${HEADER} MATCHES "gammu-config.h")
-        configure_file ("${Gammu_SOURCE_DIR}/${HEADER}" "${Gammu_BINARY_DIR}/${HEADER}" COPY_ONLY)
+        string (REGEX REPLACE "(include|smsd)(.*)/([^/]*)$" "\\3" FILENAME ${HEADER})
+        configure_file ("${Gammu_SOURCE_DIR}/${HEADER}" "${Gammu_BINARY_DIR}/include/${FILENAME}" COPY_ONLY)
     endif (NOT ${HEADER} MATCHES "gammu-config.h")
 endforeach (HEADER)
 
@@ -765,7 +767,7 @@ endif (WIN32)
 
 foreach (HEADER ${PUBLIC_HEADERS})
     string (REPLACE "${Gammu_BINARY_DIR}" "" DIRNAME ${HEADER})
-    string (REGEX REPLACE "(include)(.*)/[^/]*$" "\\2" DIRNAME ${DIRNAME})
+    string (REGEX REPLACE "(include|smsd)(.*)/[^/]*$" "\\2" DIRNAME ${DIRNAME})
     install (
         FILES ${HEADER}
         DESTINATION "${INSTALL_INC_DIR}/${DIRNAME}"
@@ -817,6 +819,8 @@ add_subdirectory(common)
 
 # Include tests, we build them also when cross compiling
 add_subdirectory(tests)
+
+add_subdirectory(smsd)
 
 add_subdirectory(gammu)
 
