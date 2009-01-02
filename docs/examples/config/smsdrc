@@ -1,8 +1,10 @@
 # This is a sample smsdrc file. It's required for --smsd option in Gammu
 
 # This section is like section "gammu" in "gammurc" file. See info there
-# for more details. If it's not used here, values are read from gammurc
-#[gammu]
+# for more details. It has to be configured here, gammurc is not used in 
+# smsd mode.
+#
+[gammu]
 #port = /dev/ttyS1
 #model = 6110
 #connection = dlr3
