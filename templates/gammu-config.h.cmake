@@ -180,6 +180,9 @@
 #ifndef HAVE_VSYSLOG
 #cmakedefine HAVE_VSYSLOG
 #endif
+#ifndef HAVE_GETOPT
+#cmakedefine HAVE_GETOPT
+#endif
 
 #ifndef HAVE_ISWSPACE
 #cmakedefine HAVE_ISWSPACE
