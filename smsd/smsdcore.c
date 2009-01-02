@@ -166,9 +166,8 @@ GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, c
 
 	if (uselog) WriteSMSDLog(_("Starting GAMMU smsd"));
 
-	/* Include Numbers used, because we don't want create new variable */
-	Config->IncludeNumbers=INI_FindLastSectionEntry(smsdcfgfile, "gammu", false);
-	if (Config->IncludeNumbers) {
+	/* Does our config file contain gammu section? */
+	if (INI_FindLastSectionEntry(smsdcfgfile, "gammu", false) != NULL) {
 		GSM_ReadConfig(smsdcfgfile, &smsdcfg, 0);
 		gammucfg = GSM_GetConfig(Config->gsm, 0);
 		*gammucfg = smsdcfg;
