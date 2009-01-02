@@ -183,6 +183,9 @@
 #ifndef HAVE_GETOPT
 #cmakedefine HAVE_GETOPT
 #endif
+#ifndef HAVE_DAEMON
+#cmakedefine HAVE_DAEMON
+#endif
 
 #ifndef HAVE_ISWSPACE
 #cmakedefine HAVE_ISWSPACE
