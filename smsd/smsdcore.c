@@ -5,6 +5,7 @@
 #include <signal.h>
 #include <stdarg.h>
 #include <time.h>
+#include <assert.h>
 #ifndef WIN32
 #include <sys/types.h>
 #include <sys/wait.h>
@@ -110,9 +111,30 @@ void WriteSMSDLog(/* const GSM_SMSDConfig *Config, */const char *format, ...)
 
 void SMSD_Log_Function(const char *text, void *data)
 {
-//	GSM_SMSDConfig *Config = (GSM_SMSDConfig *)data;
+	GSM_SMSDConfig *Config = (GSM_SMSDConfig *)data;
+	size_t pos;
+	size_t newsize;
 
-	WriteSMSDLog("%s", text);
+	if (strcmp("\n", text) == 0) {
+		WriteSMSDLog("gammu: %s", Config->gammu_log_buffer);
+		Config->gammu_log_buffer[0] = 0;
+		return;
+	}
+
+	if (Config->gammu_log_buffer == NULL) {
+		pos = 0;
+	} else {
+		pos = strlen(Config->gammu_log_buffer);
+	}
+	newsize = pos + strlen(text) + 1;
+	if (newsize > Config->gammu_log_buffer_size) {
+		newsize += 50;
+		Config->gammu_log_buffer = realloc(Config->gammu_log_buffer, newsize);
+		assert(Config->gammu_log_buffer != NULL);
+		Config->gammu_log_buffer_size = newsize;
+	}
+
+	strcpy(Config->gammu_log_buffer + pos, text);
 }
 
 GSM_SMSDConfig *SMSD_NewConfig(void)
@@ -139,6 +161,8 @@ GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, c
 
 	Config->shutdown = false;
 	Config->gsm = GSM_AllocStateMachine();
+	Config->gammu_log_buffer = NULL;
+	Config->gammu_log_buffer_size = 0;
 	Config->logfilename = NULL;
 
 	error = INI_ReadFile(filename, false, &smsdcfgfile);

@@ -60,6 +60,8 @@ struct _GSM_SMSDConfig {
 #endif
 	volatile bool	shutdown;
 	GSM_StateMachine *gsm;
+	char *gammu_log_buffer;
+	size_t gammu_log_buffer_size;
 };
 
 typedef enum {
