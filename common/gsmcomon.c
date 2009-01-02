@@ -24,14 +24,6 @@
 
 #include <gammu-debug.h>
 
-/* Commit flag for opening files is MS extension, some other
- * implementations (like BCC 5.5) don't like this flag at all */
-#ifdef _MSC_VER
-#  define COMMIT_FLAG "c"
-#else
-#  define COMMIT_FLAG ""
-#endif
-
 #include "gsmcomon.h"
 #include "misc/coding/coding.h"
 
@@ -216,60 +208,6 @@ const char *GetGammuVersion(void)
 GSM_Debug_Info *GSM_GetGlobalDebug()
 {
 	return &GSM_global_debug;
-}
-
-GSM_Error GSM_SetDebugFileDescriptor(FILE *fd, bool closable, GSM_Debug_Info *privdi)
-{
-	privdi->was_lf = true;
-
-	if (privdi->df != NULL
-			&& fileno(privdi->df) != fileno(stderr)
-			&& fileno(privdi->df) != fileno(stdout)
-			&& privdi->closable) {
-		fclose(privdi->df);
-	}
-
-	privdi->df = fd;
-	privdi->closable = closable;
-
-	return ERR_NONE;
-}
-
-GSM_Error GSM_SetDebugFile(const char *info, GSM_Debug_Info *privdi)
-{
-	FILE *testfile;
-
-	if (info == NULL || strlen(info) == 0) {
-		return GSM_SetDebugFileDescriptor(NULL, false, privdi);
-	}
-
-	switch (privdi->dl) {
-		case DL_BINARY:
-			testfile = fopen(info,"wb" COMMIT_FLAG);
-			break;
-		case DL_TEXTERROR:
-		case DL_TEXTERRORDATE:
-			testfile = fopen(info,"a" COMMIT_FLAG);
-			if (!testfile) {
-				dbgprintf(privdi, "Can't open debug file\n");
-				return ERR_CANTOPENFILE;
-			}
-			fseek(testfile, 0, SEEK_END);
-			if (ftell(testfile) > 5000000) {
-				fclose(testfile);
-				testfile = fopen(info,"w" COMMIT_FLAG);
-			}
-			break;
-		default:
-			testfile = fopen(info,"w" COMMIT_FLAG);
-	}
-
-	if (testfile == NULL) {
-		dbgprintf(privdi, "Can't open debug file\n");
-		return ERR_CANTOPENFILE;
-	} else {
-		return GSM_SetDebugFileDescriptor(testfile, true, privdi);
-	}
 }
 
 void GSM_LogError(GSM_StateMachine * s, const char * message, const GSM_Error err) {

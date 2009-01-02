@@ -24,6 +24,7 @@ ChangeLog
 [!] * Separate SMS daemon out of gammu binary.
 [!] * SMSD now requires [gammu] section in config file.
 [+] * Added pkgconfig support for gsmsd (SMSD library).
+[+] * Debug logging can be handled by custom function in application.
     
 20081219 - 1.22.1
 
