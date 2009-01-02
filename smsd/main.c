@@ -6,6 +6,7 @@
 #include <signal.h>
 #include <gammu-smsd.h>
 #include <assert.h>
+#include <stdlib.h>
 
 GSM_SMSDConfig *config;
 
@@ -15,6 +16,11 @@ void smsd_interrupt(int signum)
 	signal(signum, SIG_IGN);
 }
 
+void help(void)
+{
+    printf("usage: gammu-smsd CONFIG_FILE\n");
+}
+
 int main(int argc, char **argv)
 {
 	GSM_Error error;
@@ -22,6 +28,11 @@ int main(int argc, char **argv)
 
 	config = SMSD_NewConfig();
 	assert(config != NULL);
+
+    if (argc != 2) {
+        help();
+        exit(1);
+    }
 
 	/* FIXME: This is cruel hack */
 	filename = argv[1];
