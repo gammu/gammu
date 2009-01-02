@@ -59,6 +59,7 @@ struct _GSM_SMSDConfig {
        /* PostgreSQL db connection */
        PGconn *DBConnPgSQL;
 #endif
+	volatile bool	shutdown;
 };
 
 typedef enum {

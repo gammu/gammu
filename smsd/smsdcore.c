@@ -34,13 +34,13 @@
 FILE 		 *smsd_log_file = NULL;
 static int	 TPMR;
 static GSM_Error SendingSMSStatus;
-volatile bool smsd_shutdown = false;
 GSM_StateMachine *gsm;
+GSM_SMSDConfig		SMSDaemon_Config;
 
 void smsd_interrupt(int sign)
 {
 	signal(sign, SIG_IGN);
-	smsd_shutdown = true;
+	SMSDaemon_Config.shutdown = true;
 }
 
 void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr)
@@ -279,6 +279,7 @@ GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, c
 	Config->retries 	  = 0;
 	Config->prevSMSID[0] 	  = 0;
 	Config->relativevalidity  = -1;
+	Config->shutdown = false;
 
 	return ERR_NONE;
 }
@@ -429,7 +430,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	int			i;
 
 	start=true;
-	while (error == ERR_NONE && !smsd_shutdown) {
+	while (error == ERR_NONE && !Config->shutdown) {
 		sms.SMS[0].Folder=0x00;
 		error=GSM_GetNextSMS(gsm, &sms, start);
 		switch (error) {
@@ -533,10 +534,10 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 
 	if (error == ERR_EMPTY || error == ERR_NOTSUPPORTED) {
 		/* No outbox sms - wait few seconds and escape */
-		for (j=0;j<Config->commtimeout && !smsd_shutdown;j++) {
+		for (j=0;j<Config->commtimeout && !Config->shutdown;j++) {
 			GSM_GetCurrentDateTime (&Date);
 			second = Date.Second;
-	 		while (second == Date.Second && !smsd_shutdown) {
+	 		while (second == Date.Second && !Config->shutdown) {
 				usleep(10000);
 				GSM_GetCurrentDateTime(&Date);
 			}
@@ -556,7 +557,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		return false;
 	}
 
-	if (!smsd_shutdown) {
+	if (!Config->shutdown) {
 		if (strcmp(Config->prevSMSID, Config->SMSID) == 0) {
 			Config->retries++;
 			if (Config->retries > MAX_RETRIES) {
@@ -610,7 +611,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			j    = 0;
 			TPMR = -1;
 			SendingSMSStatus = ERR_TIMEOUT;
-			while (!smsd_shutdown) {
+			while (!Config->shutdown) {
 				GSM_GetCurrentDateTime (&Date);
 				z=Date.Second;
 				while (z==Date.Second) {
@@ -690,7 +691,7 @@ GSM_Error SMSDMainLoop(GSM_SMSDConfig *Config)
 	lastreset		= time(NULL);
 	SendingSMSStatus 	= ERR_UNKNOWN;
 
-	while (!smsd_shutdown) {
+	while (!Config->shutdown) {
 		/* There were errors in communication - try to recover */
 		if (errors > 2 || errors == -1) {
 			if (errors != -1) {
@@ -780,11 +781,10 @@ GSM_Error SMSDMainLoop(GSM_SMSDConfig *Config)
 void SMSDaemon(int argc UNUSED, char *argv[])
 {
 	GSM_Error		error;
-	GSM_SMSDConfig		Config;
 
 	fprintf(stderr,"Warning: This is deprecated functionality and will be removed!\n");
 
-	error = SMSD_ReadConfig(argv[3], &Config, true, argv[2]);
+	error = SMSD_ReadConfig(argv[3], &SMSDaemon_Config, true, argv[2]);
 	if (error != ERR_NONE) {
 		GSM_Terminate_SMSD("Failed to read config, stopping Gammu smsd", error, true, -1);
 	}
@@ -793,7 +793,7 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 	signal(SIGTERM, smsd_interrupt);
 	fprintf(stderr,"Press Ctrl+C to stop the program ...\n");
 
-	SMSDMainLoop(&Config);
+	SMSDMainLoop(&SMSDaemon_Config);
 }
 
 GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *sms)
