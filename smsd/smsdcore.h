@@ -16,7 +16,6 @@
 #endif
 
 #define MAX_RETRIES 1
-extern GSM_StateMachine *gsm;
 
 struct _GSM_SMSDConfig {
 	const char	*Service;
@@ -60,6 +59,7 @@ struct _GSM_SMSDConfig {
        PGconn *DBConnPgSQL;
 #endif
 	volatile bool	shutdown;
+	GSM_StateMachine *gsm;
 };
 
 typedef enum {

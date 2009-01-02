@@ -140,7 +140,7 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 
 	PGresult *Res;
 
-	GSM_GetIMEI(gsm, imei);
+	GSM_GetIMEI(Config->gsm, imei);
 
 	sprintf(buf, "DELETE FROM phones WHERE IMEI = '%s'", imei);
 	dbgprintf("%s\n", buf);

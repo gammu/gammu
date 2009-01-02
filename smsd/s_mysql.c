@@ -133,7 +133,7 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 {
 	unsigned char buf[400],buf2[200],imei[100];
 
-	GSM_GetIMEI(gsm, imei);
+	GSM_GetIMEI(Config->gsm, imei);
 	sprintf(buf,"DELETE FROM `phones` WHERE `IMEI` = '%s'", imei);
 	dbgprintf("%s\n",buf);
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
