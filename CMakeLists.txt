@@ -294,6 +294,20 @@ if (GETTEXTLIBS_FOUND)
     endif (NOT "${GETTEXT_LIBRARIES}" STREQUAL "" AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib/libc.so")
 endif (GETTEXTLIBS_FOUND)
 
+set (SMSD_LIBS "")
+
+if (MYSQL_FOUND)
+    if (NOT "${MYSQL_LIBRARIES}" STREQUAL "")
+        set (SMSD_LIBS "${SMSD_LIBS} -l${MYSQL_LIBRARIES}")
+    endif (NOT "${MYSQL_LIBRARIES}" STREQUAL "")
+endif (MYSQL_FOUND)
+
+if (POSTGRES_FOUND)
+    if (NOT "${POSTGRES_LIBRARY}" STREQUAL "")
+        set (SMSD_LIBS "${SMSD_LIBS} -l${POSTGRES_LIBRARY}")
+    endif (NOT "${POSTGRES_LIBRARY}" STREQUAL "")
+endif (POSTGRES_FOUND)
+
 # Tweak compiler flags
 if(MSVC)
     # MSVC needs different flags at all
@@ -402,9 +416,12 @@ endif(BORLAND)
 # Define required libraries for gammu library if it is static
 if (BUILD_SHARED_LIBS)
     set (GAMMU_PRIVATE_LIBS "" CACHE INTERNAL "Private libraries for gammu library")
+    set (SMSD_PRIVATE_LIBS "" CACHE INTERNAL "Private libraries for gammu smsd library")
 else (BUILD_SHARED_LIBS)
     string(REGEX REPLACE "-l(/usr)?/lib/lib([^ ]*).so" "-l\\2" G_LIB "${GAMMU_LIBS}")
+    string(REGEX REPLACE "-l(/usr)?/lib/lib([^ ]*).so" "-l\\2" S_LIB "${SMSD_LIBS}")
     set (GAMMU_PRIVATE_LIBS "${G_LIB}" CACHE INTERNAL "Private libraries for gammu library")
+    set (SMSD_PRIVATE_LIBS "${S_LIB}" CACHE INTERNAL "Private libraries for gammu smsd library")
 endif (BUILD_SHARED_LIBS)
 
 set (EXAMPLES
@@ -728,7 +745,9 @@ mark_as_advanced (INSTALL_MAN_DIR)
 
 # Generate pkgconfig file
 configure_file ("${Gammu_SOURCE_DIR}/templates/gammu.pc.cmake" "${Gammu_BINARY_DIR}/cfg/gammu.pc" @ONLY)
+configure_file ("${Gammu_SOURCE_DIR}/templates/gammu-smsd.pc.cmake" "${Gammu_BINARY_DIR}/cfg/gammu-smsd.pc" @ONLY)
 configure_file ("${Gammu_SOURCE_DIR}/templates/gammu-uninstalled.pc.cmake" "${Gammu_BINARY_DIR}/pkgconfig/gammu.pc" @ONLY)
+configure_file ("${Gammu_SOURCE_DIR}/templates/gammu-smsd-uninstalled.pc.cmake" "${Gammu_BINARY_DIR}/pkgconfig/gammu-smsd.pc" @ONLY)
 
 # Install instructions
 
