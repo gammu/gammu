@@ -55,9 +55,11 @@ void SMSDaemon_Interrupt(int sign)
 	SMSD_Shutdown(&SMSDaemon_Config);
 }
 
-void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr)
+void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr, void *user_data)
 {
-	WriteSMSDLog(/*Config*/ NULL /* FIXME: this is a BUG */, "Incoming SMS device: \"%s\" status=%d, reference=%d\n",
+	GSM_SMSDConfig *Config = (GSM_SMSDConfig *)user_data;
+
+	WriteSMSDLog(Config, "SMS sent on device: \"%s\" status=%d, reference=%d\n",
 			GSM_GetConfig(sm, -1)->Device,
 			status,
 			mr);
@@ -780,7 +782,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 			error=GSM_InitConnection_Log(Config->gsm, 2, SMSD_Log_Function, Config);
 			switch (error) {
 			case ERR_NONE:
-				GSM_SetSendSMSStatusCallback(Config->gsm, SMSSendingSMSStatus);
+				GSM_SetSendSMSStatusCallback(Config->gsm, SMSSendingSMSStatus, Config);
 				if (errors == -1) {
 					errors = 0;
 					if (GSM_GetIMEI(Config->gsm, Config->IMEI) != ERR_NONE) {

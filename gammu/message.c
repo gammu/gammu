@@ -483,7 +483,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, cons
 	GSM_FreeMultiPartSMSInfo(&SMSInfo);
 }
 
-void IncomingSMS(GSM_StateMachine *sm UNUSED, GSM_SMSMessage sms)
+void IncomingSMS(GSM_StateMachine *sm UNUSED, GSM_SMSMessage sms, void *user_data)
 {
 	printf("%s\n", _("SMS message received"));
  	if (wasincomingsms) {
@@ -519,13 +519,13 @@ void DisplayIncomingSMS(void)
  	wasincomingsms = false;
 }
 
-void IncomingCB(GSM_StateMachine *sm UNUSED, GSM_CBMessage CB)
+void IncomingCB(GSM_StateMachine *sm UNUSED, GSM_CBMessage CB, void *user_data)
 {
 	printf("%s\n", _("CB message received"));
 	printf(_("Channel %i, text \"%s\"\n"),CB.Channel,DecodeUnicodeConsole(CB.Text));
 }
 
-void IncomingUSSD(GSM_StateMachine *sm UNUSED, GSM_USSDMessage ussd)
+void IncomingUSSD(GSM_StateMachine *sm UNUSED, GSM_USSDMessage ussd, void *user_data)
 {
 	printf("%s\n", _("USSD received"));
 	printf(LISTFORMAT, _("Status"));
@@ -558,9 +558,9 @@ void IncomingUSSD(GSM_StateMachine *sm UNUSED, GSM_USSDMessage ussd)
 	printf(LISTFORMAT "\"%s\"\n", _("Service reply"), DecodeUnicodeConsole(ussd.Text));
 }
 
-void IncomingUSSD2(GSM_StateMachine *sm, GSM_USSDMessage ussd)
+void IncomingUSSD2(GSM_StateMachine *sm, GSM_USSDMessage ussd, void * user_data)
 {
-	IncomingUSSD(sm, ussd);
+	IncomingUSSD(sm, ussd, user_data);
 
 	gshutdown = true;
 }
@@ -573,7 +573,7 @@ void GetUSSD(int argc UNUSED, char *argv[])
 	signal(SIGINT, interrupt);
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
-	GSM_SetIncomingUSSDCallback(gsm, IncomingUSSD2);
+	GSM_SetIncomingUSSDCallback(gsm, IncomingUSSD2, NULL);
 
 	error=GSM_SetIncomingUSSD(gsm,true);
 	Print_Error(error);
@@ -1206,7 +1206,7 @@ void DisplaySMSFrame(GSM_SMSMessage *SMS)
 
 GSM_Error SMSStatus;
 
-void SendSMSStatus (GSM_StateMachine *sm, int status, int MessageReference)
+void SendSMSStatus (GSM_StateMachine *sm, int status, int MessageReference, void *user_data)
 {
 	smprintf(gsm, "Sent SMS on device: \"%s\"\n", GSM_GetConfig(sm, -1)->Device);
 	if (status==0) {
@@ -2458,7 +2458,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 				SMSCSet = 0;
 			}
 
-			GSM_SetSendSMSStatusCallback(gsm, SendSMSStatus);
+			GSM_SetSendSMSStatusCallback(gsm, SendSMSStatus, NULL);
 
 			signal(SIGINT, interrupt);
 			fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C..."));
@@ -2526,7 +2526,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 		signal(SIGINT, interrupt);
 		fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C..."));
 
-		GSM_SetSendSMSStatusCallback(gsm, SendSMSStatus);
+		GSM_SetSendSMSStatusCallback(gsm, SendSMSStatus, NULL);
 
 		for (i=0;i<sms.Number;i++) {
 			printf(_("Sending SMS %i/%i"),i+1,sms.Number);
