@@ -9,7 +9,7 @@
 #model = 6110
 #connection = dlr3
 #synchronizetime = yes
-#logfile = gammulog
+#logfile = gammulog # this is not used at all in SMSD mode
 #logformat = textall
 #use_locking = yes
 #gammuloc = gammu.us
@@ -31,7 +31,7 @@
 # This section contains general settings
 # service     - SMSD service to use, one of FILES, MYSQL, PGSQL
 # PIN         - PIN for SIM card
-# logfile     - logfile for info about smsd actions
+# logfile     - logfile for info about smsd actions, special value syslog will redirect logging to syslog daemon
 # CommTimeout - (time in seconds) after each read/write loop smsd waits so
 #               many seconds to make it again. Default: 1
 # SendTimeout - shows how many seconds smsd should wait for network answer

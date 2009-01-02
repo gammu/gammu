@@ -53,9 +53,8 @@ GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *s
  *
  * \param format printf like format string.
  */
-/* GSM_SMSDConfig *Config, */
-PRINTF_STYLE(1, 2)
-void WriteSMSDLog(const char *format, ...);
+PRINTF_STYLE(2, 3)
+void WriteSMSDLog(GSM_SMSDConfig *Config, const char *format, ...);
 
 
 /**
