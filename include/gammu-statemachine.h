@@ -19,8 +19,8 @@
 /**
  * Callback function for logging.
  *
- * \param text Text to be printed, \n will be also sent (maybe as a
- * separate message).
+ * \param text Text to be printed, \n will be also sent (as a separate
+ * message).
  */
 typedef void (*GSM_Log_Function)(const char *text, void *data);
 
