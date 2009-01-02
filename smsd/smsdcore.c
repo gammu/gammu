@@ -643,6 +643,32 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	return true;
 }
 
+/**
+ * Returns SMSD service based on configuration.
+ */
+GSM_Error SMSGetService(GSM_SMSDConfig *Config, GSM_SMSDService **Service)
+{
+	if (strcasecmp(Config->Service, "FILES") == 0) {
+		*Service = &SMSDFiles;
+	} else if (strcasecmp(Config->Service, "MYSQL") == 0) {
+#ifdef HAVE_MYSQL_MYSQL_H
+		*Service = &SMSDMySQL;
+#else
+		return ERR_DISABLED;
+#endif
+	} else if (strcasecmp(Config->Service, "PGSQL") == 0) {
+#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+		*Service = &SMSDPgSQL;
+#else
+		return ERR_DISABLED;
+#endif
+	} else {
+		WriteSMSDLog("Unknown SMSD service type: \"%s\"", Config->Service);
+		return ERR_UNCONFIGURED;
+	}
+	return ERR_NONE;
+}
+
 GSM_Error SMSDMainLoop(GSM_SMSDConfig *Config)
 {
 	GSM_SMSDService		*Service;
@@ -650,23 +676,9 @@ GSM_Error SMSDMainLoop(GSM_SMSDConfig *Config)
 	int                     errors = -1, initerrors=0;
  	time_t			lastreceive, lastreset = 0;
 
-	if (strcasecmp(Config->Service, "FILES") == 0) {
-		Service = &SMSDFiles;
-	} else if (strcasecmp(Config->Service, "MYSQL") == 0) {
-#ifdef HAVE_MYSQL_MYSQL_H
-		Service = &SMSDMySQL;
-#else
-		return ERR_DISABLED;
-#endif
-	} else if (strcasecmp(Config->Service, "PGSQL") == 0) {
-#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-		Service = &SMSDPgSQL;
-#else
-		return ERR_DISABLED;
-#endif
-	} else {
-		WriteSMSDLog("Unknown SMSD service type: \"%s\"", Config->Service);
-		return ERR_UNCONFIGURED;
+	error = SMSGetService(Config, &Service);
+	if (error!=ERR_NONE) {
+		GSM_Terminate_SMSD("Failed to setup SMSD service", error, true, -1);
 	}
 
 	error = Service->Init(Config);
@@ -790,22 +802,13 @@ GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *s
 	GSM_SMSDConfig		Config;
 	GSM_Error error;
 
-	if (!strcasecmp(service,"FILES")) {
-		Service = &SMSDFiles;
-#ifdef HAVE_MYSQL_MYSQL_H
-	} else if (!strcasecmp(service,"MYSQL")) {
-		Service = &SMSDMySQL;
-#endif
-#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-	} else if (!strcasecmp(service,"PGSQL")) {
-		Service = &SMSDPgSQL;
-#endif
-	} else {
-		fprintf(stderr,"Unknown service type (\"%s\")\n",service);
-		exit(-1);
-	}
+	error = SMSD_ReadConfig(filename, &Config, false, service);
+	if (error!=ERR_NONE) return ERR_UNKNOWN;
 
-	SMSD_ReadConfig(filename, &Config, false, service);
+	error = SMSGetService(&Config, &Service);
+	if (error!=ERR_NONE) {
+		GSM_Terminate_SMSD("Failed to setup SMSD service", error, true, -1);
+	}
 
 	error = Service->Init(&Config);
 	if (error!=ERR_NONE) return ERR_UNKNOWN;
