@@ -79,7 +79,12 @@ int main(int argc, char **argv)
 	signal(SIGTERM, smsd_interrupt);
 
     if (daemonize) {
+#ifdef HAVE_DAEMON
         daemon(1, 0);
+#else
+        printf("daemon mode is not supported on your platform!\n");
+        exit(1);
+#endif
     }
 
 	error = SMSD_MainLoop(config);
