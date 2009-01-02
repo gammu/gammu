@@ -1,7 +1,6 @@
 Short term todo list for 1.23.0:
 
 - separate SMSD
-- getopt in SMSD?
 - smsd to log to stderr/stdout
 
 Optional:
