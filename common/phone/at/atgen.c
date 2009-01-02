@@ -4961,12 +4961,16 @@ GSM_Error ATGEN_DialService(GSM_StateMachine *s, char *number)
 	}
 
 	error = ATGEN_SetCharset(s, AT_PREF_CHARSET_NORMAL);
-	if (error != ERR_NONE) return error;
+	if (error != ERR_NONE) {
+		free(req);
+		return error;
+	}
 
 	sprintf(req, format, s->Phone.Data.EnableIncomingUSSD ? 1 : 0, number);
 
 	ATGEN_WaitFor(s, req, strlen(req), 0x00, 30, ID_GetUSSD);
 
+	free(req);
 	return error;
 }
 
