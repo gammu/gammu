@@ -57,16 +57,6 @@ if (POSTGRES_FOUND)
     include_directories (${POSTGRES_INCLUDE_DIR})
 endif (POSTGRES_FOUND)
 
-if (GETTEXTLIBS_FOUND)
-    target_link_libraries (gammu-smsd ${GETTEXT_LIBRARY})
-    include_directories (${GETTEXT_INCLUDE_DIR})
-endif (GETTEXTLIBS_FOUND)
-
-if (CURL_FOUND)
-    target_link_libraries (gammu-smsd ${CURL_LIBRARIES})
-    include_directories (${CURL_INCLUDE_DIR})
-endif (CURL_FOUND)
-
 # Add libraries needed for windows build
 if (WIN32)
     # Magic needed for SHGetFolderPathA
