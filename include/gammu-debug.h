@@ -14,7 +14,6 @@
 
 #include <stdio.h>
 
-#include <gammu-statemachine.h>
 #include <gammu-error.h>
 #include <gammu-misc.h>
 
@@ -25,23 +24,16 @@
 typedef struct _GSM_Debug_Info GSM_Debug_Info;
 
 /**
- * Callback function for logging.
- *
- * \param text Text to be printed, \n will be also sent (maybe as a
- * separate message).
- */
-typedef void (*GSM_Log_Function)(const char *text);
-
-/**
  * Sets logging function.
  *
  * \param info Function to call.
+ * \param data User data to pass as a second parameter to callback.
  * \param privdi Pointer to debug information data.
  * \return Error code.
  *
  * \ingroup Debug
  */
-GSM_Error GSM_SetDebugFunction(GSM_Log_Function info, GSM_Debug_Info * privdi);
+GSM_Error GSM_SetDebugFunction(GSM_Log_Function info, void *data, GSM_Debug_Info * privdi);
 
 /**
  * Sets debug file.

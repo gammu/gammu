@@ -53,7 +53,7 @@ done:
 	rewind(f);
 }
 
-void Log_Function(const char *text)
+void Log_Function(const char *text, void *data UNUSED)
 {
 	printf("msg: %s", text);
 }
@@ -200,7 +200,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	assert(GSM_SetDebugGlobal(true, di_sm) == true);
 	assert(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
 	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFunction(Log_Function, di_sm) == ERR_NONE);
+	assert(GSM_SetDebugFunction(Log_Function, NULL, di_sm) == ERR_NONE);
 	assert(GSM_SetDebugGlobal(false, di_sm) == true);
 	check_log(debug_file, false, "10:TEMP,NULL,FALSE");
 	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
@@ -213,7 +213,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	assert(GSM_SetDebugGlobal(true, di_sm) == true);
 	assert(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
 	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFunction(Log_Function, di_global) == ERR_NONE);
+	assert(GSM_SetDebugFunction(Log_Function, NULL, di_global) == ERR_NONE);
 	assert(GSM_SetDebugGlobal(true, di_sm) == true);
 	check_log(debug_file, false, "11:TEMP,NULL,TRUE");
 	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);

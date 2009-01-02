@@ -1,4 +1,5 @@
 /* (c) 2002-2004 by Marcin Wiacek and Joergen Thomsen */
+/* (c) 2009 Michal Cihar */
 
 #include <string.h>
 #include <signal.h>
@@ -107,6 +108,13 @@ void WriteSMSDLog(/* const GSM_SMSDConfig *Config, */const char *format, ...)
 	}
 }
 
+void SMSD_Log_Function(const char *text, void *data)
+{
+//	GSM_SMSDConfig *Config = (GSM_SMSDConfig *)data;
+
+	WriteSMSDLog("%s", text);
+}
+
 GSM_SMSDConfig *SMSD_NewConfig(void)
 {
 	return (GSM_SMSDConfig *)malloc(sizeof(GSM_SMSDConfig));
@@ -167,16 +175,16 @@ GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, c
 	if (uselog) WriteSMSDLog(_("Starting GAMMU smsd"));
 
 	/* Does our config file contain gammu section? */
-	if (INI_FindLastSectionEntry(smsdcfgfile, "gammu", false) != NULL) {
-		gammucfg = GSM_GetConfig(Config->gsm, 0);
-		GSM_ReadConfig(smsdcfgfile, gammucfg, 0);
-		GSM_SetConfigNum(Config->gsm, 1);
-		error = GSM_SetDebugFile(gammucfg->DebugFile, GSM_GetGlobalDebug());
-	} else {
+	if (INI_FindLastSectionEntry(smsdcfgfile, "gammu", false) == NULL) {
  		if (uselog) WriteSMSDLog("No gammu configuration found!");
  		fprintf(stderr, "No gammu configuration found!\n");
 		return ERR_UNCONFIGURED;
 	}
+
+	gammucfg = GSM_GetConfig(Config->gsm, 0);
+	GSM_ReadConfig(smsdcfgfile, gammucfg, 0);
+	GSM_SetConfigNum(Config->gsm, 1);
+	gammucfg->UseGlobalDebugFile = false;
 
 	Config->PINCode=INI_GetValue(smsdcfgfile, "smsd", "PIN", false);
 	if (Config->PINCode == NULL) {
@@ -722,7 +730,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 			}
 			if (initerrors++ > 3) sleep(30);
 			WriteSMSDLog(_("Starting communication"));
-			error=GSM_InitConnection(Config->gsm,2);
+			error=GSM_InitConnection_Log(Config->gsm, 2, SMSD_Log_Function, Config);
 			switch (error) {
 			case ERR_NONE:
 				GSM_SetSendSMSStatusCallback(Config->gsm, SMSSendingSMSStatus);
