@@ -169,19 +169,6 @@ connection = fbusblue
 ; Use_Locking     | under Unix/Linux use "yes", if want to lock used device
 ;                 | to prevent using it by other applications. In win32 ignored
 ; ----------------|------------------------------------------------------------
-; RSSLevel        | Should Gammu connect to blog.cihar.com and check for new
-;                 | versions ?
-;                 | if yes, there will be taken 
-;                 | blog.cihar.com/archives/gammu_releases/index-rss.xml file, 
-;                 | read latest version
-;                 | numbers and (if any exist) displayed info to user on each
-;                 | application startup
-;                 |   "teststable" - check for latest stable and test versions
-;                 |   "stable"     - check for latest stable versions
-;                 | No private data are sent to server, Internet connection
-;                 | to blog.cihar.com on port 80 required
-;                 | By default option not active
-; ----------------|------------------------------------------------------------
 ; UsePhoneDB      | Should Gammu connect to www.gammu.org and check for latest
 ;                 | firmware versions for device ?
 ;                 | if yes (value "yes"), there will be taken 
