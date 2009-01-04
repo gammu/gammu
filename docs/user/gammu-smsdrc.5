@@ -1,0 +1,264 @@
+.TH GAMMU-SMSDRC 5 "January  4, 2009" "Gammu 1.23.0" "Gammu Documentation"
+.SH NAME
+
+.TP
+.BI gammu-smsdrc
+
+gammu-smsd(1) configuration file 
+.SH SYNOPSIS
+.I /etc/gammu-smsdrc
+.SH DESCRIPTION
+gammu-smsd(1) reads configuration from a config file. It's location can be
+specified on command line, otherwise default path 
+.Pa /etc/gammu-smsdrc
+is used.
+
+This file use ini file syntax, with comments being marked with both ; and #.
+Sections of config file are identified in square brackets line [this]. All key
+values are case insensitive.
+
+Configuration file of gammu-smsd consists of two sections - [gammu] and
+[smsd]. 
+
+The [gammu] section is configuration of a phone connection and is same as
+described in gammurc(5) with the only exception that logfile is ignored and
+common logging for gammu library and SMS daemon is used. However the logformat
+directive still configures how much messages gammu emits.
+
+The [smsd] section configures SMS daemon itself, which are described in
+following subsections. First general parameters of SMS daemon are listed and
+then specific parameters for storage backends.
+
+.SS General parameters of SMS daemon
+
+.TP
+.BI Service
+
+SMSD service to use, one of FILES, MYSQL, PGSQL (depends on compiled in
+support for backends).
+
+.TP
+.BI PIN         
+
+PIN for SIM card. This is optional, but you should set it if your phone after
+power on requires PIN.
+
+.TP
+.BI LogFile
+
+File where smsd actions are being logged. You can also use special value
+"syslog" which will send all messages to syslog daemon.
+
+Default is to provide no logging.
+
+.TP
+.BI CommTimeout 
+
+How many seconds should smsd wait after each read/write loop.
+
+Default is 1
+
+.TP
+.BI SendTimeout 
+
+Shows how many seconds smsd should wait for network answer during sending sms.
+If nothing happen during this time, sms will be resent.
+
+Default is 10
+
+.TP
+.BI ReceiveFrequency 
+
+The number of seconds between testing for received SMSes, when the phone is
+busy sending SMSes. Normally a test for received SMSes is done every
+commtimeout seconds and after each sent SMS. 
+
+Default is 0 (not used)
+
+.TP
+.BI CheckSecurity
+
+Whether to check if phone wants to enter PIN.
+
+Default is 1 (enabled).
+
+.TP
+.BI ResetFrequency
+
+The number of seconds between performing a preventive soft reset in order to
+minimize the cases of hanging phones e.g. Nokia 5110 will sometimes freeze to
+a state when only after unmounting the battery the phone will be functional
+again.
+
+Default is 0 (not used)
+
+.TP
+.BI DeliveryReport
+
+Whether delivery reports should be used, one of no/log/sms.
+
+\fBlog\fR one line log entry, 
+.br
+\fBsms\fR store in inbox as a received SMS
+.br
+\fBno\fR  no delivery reports
+
+Default is no.
+
+.TP
+.BI DeliveryReportDelay
+
+Delay in seconds how long is still delivery report considered valid. This
+depends on brokeness of your network (delivery report should have same
+timestamp as sent message). Increase this if delivery reports are not paired
+with sent messages. 
+                      
+Default is 10
+
+.TP
+.BI PhoneID
+
+String with info about phone used for sending/receiving. This can be useful if
+you want to run several SMS daemons.
+
+.TP
+.BI RunOnReceive
+
+Executes a program after receiving message.
+
+.SS Database backends options
+
+Both MYSQL and PGSQL backends supports same options for configuring connection
+to a database:
+
+.TP
+.BI User
+
+User name used for connection to a database.
+
+.TP
+.BI Password
+
+Password used for connection to a database.
+
+.TP
+.BI PC
+
+Database server address. It can also contain port or socket path after
+semicolon, for example localhost:/path/to/socket.
+
+.TP
+.BI Database
+
+Name of database to use. Please note that you should create tables in this
+database before using gammu-smsd. SQL files for creating needed tables are
+included in documentation.
+
+.TP
+.BI SkipSMSCNumber
+
+When you send sms from some SMSC, you can have Delivery/Failed Delivery
+Reports from other SMSC number. You can set here number of this "buggy" SMSC
+used by you and Gammu will not check it's number during assigning reports to
+sent SMS.
+
+.SS Files backend options
+
+The FILES backend accepts following configuration options. Please note that
+all path should contain trailing path separator (/ or \\, depending on your
+platform):
+
+
+.TP
+.BI InboxPath
+
+Where the received SMSes are stored, default current directory
+
+.TP
+.BI OutboxPath
+
+Where SMSes to be sent should be placed, default current directory.
+
+.TP
+.BI SentSMSPath
+
+Where the transmitted SMSes are placed, default outboxpath (= deleted)
+
+.TP
+.BI ErrorSMSPath
+
+Where SMSes with error in transmission is placed, default sentsmspath.
+
+.TP
+.BI InboxFormat
+
+The format in which the SMS will be stored: 'detail', 'unicode', 'standard'.
+The 'detail' format is the format used for backup. See below.  'standard' is
+in the standard character set.
+
+Default is unicode.
+
+.TP
+.BI TransmitFormat
+
+The format for transmitting the SMS: 'auto', 'unicode', '7bit'. 
+
+Default is auto
+
+.SH EXAMPLE
+
+There is more complete example available in Gammu documentation. Please note
+that for simplicity following examples do not include [gammu] section, you can
+look into gammurc(5) for some examples how it can look like.
+
+SMSD configuration file for FILES backend could look like:
+
+.RS
+.sp
+.nf
+.ne 7
+[smsd]
+Service = files
+PIN = 1234
+LogFile = syslog
+InboxPath = /var/spool/sms/inbox/
+OutboPpath = /var/spool/sms/outbox/
+SentSMSPath = /var/spool/sms/sent/
+ErrorSMSPath = /var/spool/sms/error/
+.fi
+.sp
+.RE
+.PP
+
+If you want to use MYSQL backend, you will need something like this:
+
+.RS
+.sp
+.nf
+.ne 7
+[smsd]
+Service = mysql
+PIN = 1234
+LogFile = syslog
+User = smsd
+Password = smsd
+PC = localhost
+Database = smsd
+.fi
+.sp
+.RE
+.PP
+
+
+.SH SEE ALSO
+gammu-smsd(1), gammu(1), gammurc(5)
+.SH AUTHOR
+gammu-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
+.SH COPYRIGH
+Copyright \(co 2009 Michal Cihar and other authors.
+License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH REPORTING BUGS
+Please report bugs to <http://bugs.cihar.com>.

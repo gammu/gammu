@@ -49,18 +49,19 @@ COMMAND_NOPARAM = '.TP\n.BI "%s"\n%s\n'
 
 SEE_ALSO = '''
 .P
-README
+gammu-smsd(1), gammurc(5)
 
-<http://www.gammu.org/> contains wiki with more user hints and further
-documentation
+Some more hints can be found in README file or on wiki <http://www.gammu.org/>
+which more user hints and further documentation.
 
-cu(1)
+Related programs which can be used with GSM modem:
 
-gnokii(1)
+cu(1), gnokii(1), minicom(1)
 
-wammu(1)
+Graphical interfaces for Gammu:
 
-gmobilemedia(1)
+wammu(1), gmobilemedia(1)
+
 '''
 
 AUTHORS = '''
@@ -104,14 +105,8 @@ FILES = '''
 
 EXAMPLES = '''
 .P 
-To check it out, edit \\fI~/.gammurc\\fP and put there something like
-
-\\fB[gammu]
-.br
-port = /dev/ttyACM0
-.br
-connection = at
-\\fR
+To check it out, you need to have configuration file for gammu, see gammurc(5)
+for more details about it.
 
 .TP
 Save text message up to standard 160 chars:
@@ -149,8 +144,12 @@ This program is a tool for mobile phones. Many vendors and phones
 are supported, for actual listing see <http://cihar.com/gammu/phonedb/>.
 '''
 
-LICENSE = '''
-This program is licensed under GNU/GPL version 2.
+COPYRIGHT = '''
+Copyright \(co 2003-2009 Marcin Wiacek, Michal Cihar and other authors.
+License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
 '''
 
 BUGS = '''
@@ -169,20 +168,13 @@ other output):
 With this settings, Gammu generates /tmp/gammu.log on each connection to
 phone and stores dump of communication there. You can also find some
 hints for improving support for your phone in this log.
+
+Please report bugs to <http://bugs.cihar.com>.
 '''
 
 DEBUG_LEVELS = '''
-Parameters, which allow to control debug level:
-
-\\fBnothing\\fR - no debug level
-.br
-\\fBtext\\fR    - transmission dump in text format
-.br
-\\fBtextall\\fR - all possible info in text format
-.br
-\\fBerrors\\fR  - errors in text format
-.br
-\\fBbinary\\fR  - transmission dump in binary format
+Parameter, which allow to control debug level, see documentation of LogFormat
+configuration directive in gammurc(5) for possible values.
 '''
 
 # Commands help, initially generated from original gammu man page
@@ -325,7 +317,7 @@ note, that this option doesn't show clock on phone screen. It only set
 date and time.
 
 \\fITIP:\\fR you can make such synchronization each time, when will connect
-your phone and use Gammu. See \\fBgammurc\\fR for details.
+your phone and use Gammu. See gammurc(5) for details.
 ''' 
 HELP['getalarm'] = '''Get alarm from phone, if no location is specified,
 1 is used.
@@ -906,7 +898,7 @@ def main():
     write_section(output, 'NAME')
     output.write(NAME)
 
-    write_section(output, 'SYNTAX')
+    write_section(output, 'SYNOPSIS')
     write_para(output, syntax.replace('[', '[\\fI').replace(']', '\\fP]'))
 
     write_section(output, 'DESCRIPTION')
@@ -938,8 +930,8 @@ def main():
     write_section(output, 'EXAMPLES')
     output.write(EXAMPLES)
 
-    write_section(output, 'LICENSE')
-    output.write(LICENSE)
+    write_section(output, 'COPYRIGHT')
+    output.write(COPYRIGHT)
 
     write_section(output, 'BUGS')
     output.write(BUGS)

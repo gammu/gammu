@@ -1,0 +1,240 @@
+.TH GAMMURC 5 "January  4, 2009" "Gammu 1.23.0" "Gammu Documentation"
+.SH NAME
+
+.TP
+.BI gammurc
+
+gammu(1) configuration file 
+.SH SYNOPSIS
+.I /etc/gammurc
+or 
+.I ~/.gammurc
+.SH DESCRIPTION
+gammu(1) reads configuration from a config file. It's location is determined
+on runtime. On Unix systems, it first tries ~/.gammurc and then falls back to
+/etc/gammurc.
+
+This file use ini file syntax, with comments being marked with both ; and #.
+Sections of config file are identified in square brackets line [this]. All key
+values are case insensitive.
+
+Configuration file for gammu can contain several sections - [gammu], [gammu1],
+[gammuN], ... Each section configures one connection setup and in default mode
+gammu tries all of them in numerical order. You can also specify which
+configuration section to use by giving it's number ([gammu] has number 0) as a
+parameter to gammu(1) and it will then use only this section.
+
+.TP
+.BI Connection
+
+Protocol which will be used to talk to your phone.
+
+For Nokia cables you want to use one of following:
+
+\fBfbus\fR           - serial FBUS connection
+.br
+\fBdlr3\fR           - DLR3 and compatible cables
+.br
+\fBdku2\fR           - DKU2 and compatible cables
+.br
+\fBdku5\fR           - DKU5 and compatible cables
+.br
+\fBmbus\fR           - serial MBUS connection
+
+If you use some non original cable, you might need to append -nodtr (eg. for
+ARK3116 based cables) or -nopower, but Gammu should be able to detect this
+automatically.
+
+For non-Nokia phones connected using cable you generally want:
+
+\fBat\fR             - generic AT commands based connection
+
+You can optionally specify speed of the connection, eg. at19200, but it is
+not needed for modern USB cables.
+
+For IrDA connections use one of following:
+
+\fBirdaphonet\fR     - Phonet connection for Nokia phones.
+.br
+\fBirdaat\fR         - AT commands connection for most of phones (this is not supported on Linux).
+.br
+\fBirdaobex\fR       - OBEX (IrMC or file transfer) connection for most of phones.
+.br
+\fBirdagnapbus\fR    - GNapplet based connection for Symbian phones
+
+For Bluetooth connection use one of following:
+
+\fBbluephonet\fR     - Phonet connection for Nokia phones.
+.br
+\fBblueat\fR         - AT commands connection for most of phones.
+.br
+\fBblueobex\fR       - OBEX (IrMC or file transfer) connection for most of phones.
+.br
+\fBbluerfgnapbus\fR  - GNapplet based connection for Symbian phones
+
+.TP
+.BI Port
+
+Device node or address of phone. It depends on used connection. 
+
+For cables or emulated serial ports, you enter device name (for example
+/dev/ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux or COM1: on
+Windows). The special exception are DKU2 and DKU5 cables, where the device is
+automatically detected from driver information and this parameters is ignored.
+
+For Bluetooth connection you have to enter Bluetooth address of your phone
+(you can list Bluetooth devices in range on Linux using "hcitool scan"
+command).
+
+For IrDA connections, this parameters is not used at all.
+
+.TP
+.BI Model
+
+Do not use this parameter unless really needed! The only use case for this is
+when Gammu does not know your phone and misdetects it's features.
+
+.TP
+.BI SynchronizeTime
+
+If you want to set time from computer to phone during starting connection. Do
+not rather use this option when when to reset phone during connection (in some
+phones need to set time again after restart).
+
+.TP
+.BI StartInfo 
+
+This option allow to set, that you want (setting "yes") to see message on the
+phone screen or phone should enable light for a moment during starting
+connection. Phone WON'T beep during starting connection with this option.
+
+.TP
+.BI GammuCoding
+
+Forces using specified codepage (on Windows - for example "1250" will force
+CP1250) or UTF8 (in Linux - "utf8"). This should not be needed in most cases,
+Gammu should detect it according to your locales.
+
+.TP
+.BI GammuLoc
+
+Path to directory with localisation files (the directory should contain
+LANG/gammu.mo). If gammu is properly installed it should find these files
+automatically.
+
+.TP
+.BI LogFile
+
+Path to file where information about communication will be stored.
+
+.TP
+.BI LogFormat
+
+Determines what all will be logged to LogFile. Possible values are:
+
+\fBnothing\fR     - no debug level
+.br
+\fBtext\fR        - transmission dump in text format
+.br
+\fBtextall\fR     - all possible info in text format
+.br
+\fBtextalldate\fR - all possible info in text format, with time stamp
+.br
+\fBerrors\fR      - errors in text format
+.br
+\fBerrorsdate\fR  - errors in text format, with time stamp
+.br
+\fBbinary\fR      - transmission dump in binary format
+
+For debugging use either \fBtextalldate\fR or \fBtextall\fR, it contains all
+needed information to diagnose problems.
+
+.TP
+.BI Features
+
+Custom features for phone. This can be used as override when values coded in
+common/gsmphones.c are bad or missing. Consult include/gammu-info.h for
+possible values (all Feature values without leading F_ prefix).  Please report
+correct values to Gammu authors.
+
+.TP
+.BI Use_Locking
+
+On POSIX systems, you might want to lock serial device when it is being used.
+Enabling this option (setting to yes) will make Gammu honor these locks and
+create it on startup. On most distributions you need additional privileges to
+use locking (eg. you need to be member of uucp group).
+
+This option has no meaning on Windows.
+
+.TP
+.BI UsePhoneDB
+
+Should Gammu connect to www.gammu.org and check for latest firmware versions
+available for the device? If enabled (value "yes"), the file
+<http://www.gammu.org/gammunet/support/phones/phonedbxml.php?model=x> will be
+downloaded, all phone details will be read from it and (if any higher firmware exist)
+displayed info to user on each application startup. No private data are sent to
+server. Internet connection to www.gammu.org on port 80 required. This option
+is disabled by default.
+
+.SH EXAMPLE
+
+There is more complete example available in Gammu documentation.
+
+Gammu configuration for Nokia phone using DLR3 cable:
+
+.RS
+.sp
+.nf
+.ne 7
+[gammu]
+port = /dev/ttyACM0
+connection = dlr3
+.fi
+.sp
+.RE
+.PP
+
+Gammu configuration for Sony-Ericsson phone (or any other AT compatible phone)
+connected using USB cable:
+
+.RS
+.sp
+.nf
+.ne 7
+[gammu]
+port = /dev/ttyACM0
+connection = at
+.fi
+.sp
+.RE
+.PP
+
+Gammu configuration for Sony-Ericsson (or any other AT compatible phone)
+connected using bluetooth:
+
+.RS
+.sp
+.nf
+.ne 7
+[gammu]
+port = B0:0B:00:00:FA:CE
+connection = blueat
+.fi
+.sp
+.RE
+.PP
+
+.SH SEE ALSO
+gammu-smsd(1), gammu(1), gammurc(5)
+.SH AUTHOR
+gammu-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
+.SH COPYRIGH
+Copyright \(co 2009 Michal Cihar and other authors.
+License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH REPORTING BUGS
+Please report bugs to <http://bugs.cihar.com>.

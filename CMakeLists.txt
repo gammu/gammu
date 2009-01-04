@@ -512,7 +512,13 @@ set (SYMBIAN_FILES
 set (MAN1_PAGES
     docs/user/gammu.1
     docs/user/gammu-config.1
+    docs/user/gammu-smsd.1
     docs/user/jadmaker.1
+    )
+
+set (MAN5_PAGES
+    docs/user/gammu-smsdrc.5
+    docs/user/gammurc.5
     )
 
 set (PUBLIC_HEADERS
@@ -847,6 +853,11 @@ endforeach (EXAMPLE)
 install (
     FILES ${MAN1_PAGES}
     DESTINATION "${INSTALL_MAN_DIR}/man1"
+    )
+
+install (
+    FILES ${MAN5_PAGES}
+    DESTINATION "${INSTALL_MAN_DIR}/man5"
     )
 
 add_subdirectory(common)

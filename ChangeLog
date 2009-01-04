@@ -30,6 +30,7 @@ ChangeLog
 [+] * SMSD can now deamonize itself.
 [+] * All callbacks can now pass user data along.
 [+] * SMSD can now write PID file.
+[+] * Added man pages for gammu-smsd(1), gammu-smsdrc(5) and gammurc(5).
     
 20081219 - 1.22.1
 
