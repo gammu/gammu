@@ -131,6 +131,7 @@ void process_commandline(int argc, char **argv, bool *daemonize, char **pid_file
 
 #endif
 
+#ifndef WIN32
 /**
  * Check existing PID file if it points to existing application.
  */
@@ -171,6 +172,8 @@ void write_pid(const char *pid_file) {
         exit(1);
     }
 }
+#endif
+
 int main(int argc, char **argv)
 {
 	GSM_Error error;
@@ -201,10 +204,12 @@ int main(int argc, char **argv)
 	signal(SIGINT, smsd_interrupt);
 	signal(SIGTERM, smsd_interrupt);
 
+#ifndef WIN32
     if (pid_file != NULL && strlen(pid_file) > 0) {
         check_pid(pid_file);
         write_pid(pid_file);
     }
+#endif
 
     if (daemonize) {
 #ifdef HAVE_DAEMON
