@@ -512,8 +512,10 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	int			i;
 
 	start=true;
+	sms.Number = 0;
+	sms.SMS[0].Location = 0;
 	while (error == ERR_NONE && !Config->shutdown) {
-		sms.SMS[0].Folder=0x00;
+		sms.SMS[0].Folder = 0;
 		error=GSM_GetNextSMS(Config->gsm, &sms, start);
 		switch (error) {
 		case ERR_EMPTY:

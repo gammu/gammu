@@ -284,7 +284,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  		EncodeUnicode(sms->SMS[len].Number, pos1, phlen);
  	}
 
-	if (Config->debug_service > 0) {
+	if ((Config->debug_service & 1) != 0) {
 		if (sms->Number != 0) {
 			DecodeUnicode(sms->SMS[0].Number,Buffer);
 			WriteSMSDLog(Config, "Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
