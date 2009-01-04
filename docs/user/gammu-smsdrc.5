@@ -124,7 +124,9 @@ you want to run several SMS daemons.
 .TP
 .BI RunOnReceive
 
-Executes a program after receiving message.
+Executes a program after receiving message. The program will receive
+identifiers of received messages depending on used service backend (some
+backends might not support this feature).
 
 .TP
 .BI DebugService

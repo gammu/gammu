@@ -1,7 +1,0 @@
-Short term todo list for 1.23.0:
-
-- separate SMSD
-
-Optional:
-
-- add parameter to SMSD callback with information about stored message

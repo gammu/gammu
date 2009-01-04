@@ -185,7 +185,9 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
 static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
-					GSM_SMSDConfig * Config)
+					GSM_SMSDConfig * Config,
+					char **Locations
+					)
 {
 	PGresult *Res = NULL;
 
@@ -195,6 +197,8 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 	time_t t_time1, t_time2;
 	bool found;
 	long diff;
+
+	*Locations = NULL;
 
 	for (i = 0; i < sms->Number; i++) {
 		if (sms->SMS[i].PDU == SMS_Status_Report) {

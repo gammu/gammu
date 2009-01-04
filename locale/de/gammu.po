@@ -661,7 +661,6 @@ msgstr "Datei erstellt vo"
 
 #: gammu/backup.c:924
 #, fuzzy, c-format
-#| msgid "Checksum in backup file do not match. Continue?"
 msgid "Checksum in backup file do not match (original: %s, new: %s). Continue?"
 msgstr "Die Checksumme in der Backupdatei ist falsch. Fortfahren?"
 
@@ -2366,13 +2365,11 @@ msgstr "Bild-ID"
 
 #: gammu/memory.c:98
 #, fuzzy
-#| msgid "Phone"
 msgid "Photo"
 msgstr "Telefon"
 
 #: gammu/memory.c:98
 #, fuzzy
-#| msgid "Not supported"
 msgid "Displaying not supported"
 msgstr "Nicht unterstützt"
 
@@ -4581,7 +4578,6 @@ msgstr "Verbindung \"%s\" auf Gerät \"%s\"\n"
 
 #: gammu/search.c:185 gammu/search.c:192
 #, fuzzy, c-format
-#| msgid "Error writing device."
 msgid "Error creating thread\n"
 msgstr "Fehler beim Schreiben auf das Gerät."
 

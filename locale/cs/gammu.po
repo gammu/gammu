@@ -2304,13 +2304,11 @@ msgstr "ID obrázku"
 
 #: gammu/memory.c:98
 #, fuzzy
-#| msgid "Phone"
 msgid "Photo"
 msgstr "Telefon"
 
 #: gammu/memory.c:98
 #, fuzzy
-#| msgid "Not supported"
 msgid "Displaying not supported"
 msgstr "Není podporováno"
 
@@ -4460,7 +4458,6 @@ msgstr ""
 
 #: gammu/search.c:185 gammu/search.c:192
 #, fuzzy, c-format
-#| msgid "Error writing device."
 msgid "Error creating thread\n"
 msgstr "Chyba při zápisu."
 

@@ -2520,7 +2520,6 @@ msgstr "Рисунок"
 
 #: gammu/memory.c:98
 #, fuzzy
-#| msgid "Phone"
 msgid "Photo"
 msgstr "Телефон"
 
@@ -4931,7 +4930,6 @@ msgstr "Название соединения : %s\n"
 
 #: gammu/search.c:185 gammu/search.c:192
 #, fuzzy, c-format
-#| msgid "Error writing device."
 msgid "Error creating thread\n"
 msgstr "Ошибка записи в устройство."
 

@@ -84,7 +84,7 @@ typedef struct {
 	GSM_Error	(*Init) 	      (GSM_SMSDConfig *Config);
 	GSM_Error	(*Free) 	      (GSM_SMSDConfig *Config);
 	GSM_Error	(*InitAfterConnect)   (GSM_SMSDConfig *Config);
-	GSM_Error	(*SaveInboxSMS)       (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config);
+	GSM_Error	(*SaveInboxSMS)       (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char **Locations);
 	GSM_Error	(*FindOutboxSMS)      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID);
 	GSM_Error	(*MoveSMS)  	      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID, bool alwaysDelete, bool sent);
 	GSM_Error	(*CreateOutboxSMS)    (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config);
