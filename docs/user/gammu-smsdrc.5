@@ -129,8 +129,10 @@ Executes a program after receiving message.
 .TP
 .BI DebugService
 
-Debug level for a service. Generally 1 enables some basic information and 2
-enables logging of SQL queries for database backends.
+Debug level for a service. The integer value should be sum of all flags you
+want to enable. Generally 1 enables some basic information and 2 enables
+logging of SQL queries for database backends, so value of 3 should give all
+debug information for current services.
 
 Default is 0, what should mean no extra information.
 
