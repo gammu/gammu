@@ -18,7 +18,6 @@
 #endif
 
 #include "smsdcore.h"
-#include "../../common/misc/locales.h"
 
 #define SMSD_MYSQL_DB_VERSION (8)
 

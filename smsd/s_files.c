@@ -16,10 +16,6 @@
 #endif
 
 #include "smsdcore.h"
-/* For debugging output */
-#include "../../common/misc/misc.h"
-/* mywstrstr */
-#include "../../common/misc/coding/coding.h"
 
 /**
  * Helper define to check error code from fwrite.
