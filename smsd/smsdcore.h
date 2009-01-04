@@ -58,6 +58,7 @@ struct _GSM_SMSDConfig {
        /* PostgreSQL db connection */
        PGconn *DBConnPgSQL;
 #endif
+	INI_Section 		*smsdcfgfile;
 	volatile bool	shutdown;
 	GSM_StateMachine *gsm;
 	char *gammu_log_buffer;
@@ -78,6 +79,7 @@ typedef enum {
 
 typedef struct {
 	GSM_Error	(*Init) 	      (GSM_SMSDConfig *Config);
+	GSM_Error	(*Free) 	      (GSM_SMSDConfig *Config);
 	GSM_Error	(*InitAfterConnect)   (GSM_SMSDConfig *Config);
 	GSM_Error	(*SaveInboxSMS)       (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config);
 	GSM_Error	(*FindOutboxSMS)      (GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char *ID);

@@ -21,6 +21,13 @@
 
 #define SMSD_MYSQL_DB_VERSION (8)
 
+/* Disconnects from a database */
+static GSM_Error SMSDMySQL_Free(GSM_SMSDConfig *Config)
+{
+	mysql_close(&Config->DBConnMySQL);
+	return ERR_NONE;
+}
+
 /* Connects to database */
 static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 {
@@ -145,6 +152,7 @@ static GSM_Error SMSDMySQL_Query_Real(GSM_SMSDConfig *Config, const char *query,
 		/* MySQL server has gone away */
 		if (retry && mysql_errno(&Config->DBConnMySQL) == 2006) {
 			WriteSMSDLog(Config, "Trying to reconnect to the Database...");
+			SMSDMySQL_Free(Config);
 			sleep(30);
 			SMSDMySQL_Init(Config);
 			WriteSMSDLog(Config, "Retrying query...");
@@ -175,6 +183,7 @@ static GSM_Error SMSDMySQL_Store_Real(GSM_SMSDConfig *Config, const char *query,
 		/* MySQL server has gone away */
 		if (retry && mysql_errno(&Config->DBConnMySQL) == 2006) {
 			WriteSMSDLog(Config, "Trying to reconnect to the Database...");
+			SMSDMySQL_Free(Config);
 			sleep(30);
 			SMSDMySQL_Init(Config);
 			WriteSMSDLog(Config, "Retrying query...");
@@ -735,6 +744,7 @@ static GSM_Error SMSDMySQL_RefreshPhoneStatus(GSM_SMSDConfig *Config, GSM_Batter
 
 GSM_SMSDService SMSDMySQL = {
 	SMSDMySQL_Init,
+	SMSDMySQL_Free,
 	SMSDMySQL_InitAfterConnect,
 	SMSDMySQL_SaveInboxSMS,
 	SMSDMySQL_FindOutboxSMS,
