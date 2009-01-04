@@ -33,7 +33,9 @@ int main(int argc, char **argv)
 {
 	GSM_Error error;
 	char *filename = NULL;
+#ifdef HAVE_GETOPT
     int opt;
+#endif
     bool daemonize = false;
 
 	config = SMSD_NewConfig();
