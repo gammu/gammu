@@ -651,7 +651,6 @@ msgstr "Archivo creado por"
 
 #: gammu/backup.c:924
 #, fuzzy, c-format
-#| msgid "Checksum in backup file do not match. Continue?"
 msgid "Checksum in backup file do not match (original: %s, new: %s). Continue?"
 msgstr "El Checksum de la copia de seguridad no coincide. ¿Continuar?"
 
@@ -2336,13 +2335,11 @@ msgstr "ID imagen"
 
 #: gammu/memory.c:98
 #, fuzzy
-#| msgid "Phone"
 msgid "Photo"
 msgstr "Teléfono"
 
 #: gammu/memory.c:98
 #, fuzzy
-#| msgid "Not supported"
 msgid "Displaying not supported"
 msgstr "No soportado"
 
@@ -4528,7 +4525,6 @@ msgstr "Conexión \"%s\" al dispositivo \"%s\"\n"
 
 #: gammu/search.c:185 gammu/search.c:192
 #, fuzzy, c-format
-#| msgid "Error reading batch! Terminating.\n"
 msgid "Error creating thread\n"
 msgstr "Error al leer archivo de proceso por lotes. Terminando.\n"
 

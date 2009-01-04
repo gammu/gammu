@@ -2375,7 +2375,6 @@ msgstr ""
 
 #: gammu/memory.c:98
 #, fuzzy
-#| msgid "Phone"
 msgid "Photo"
 msgstr "Telefon"
 
@@ -4571,7 +4570,6 @@ msgstr ""
 
 #: gammu/search.c:185 gammu/search.c:192
 #, fuzzy, c-format
-#| msgid "Error writing device."
 msgid "Error creating thread\n"
 msgstr "Błąd zapisu do urządzenia."
 

@@ -9,6 +9,7 @@
 #include <errno.h>
 #include <time.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #ifdef WIN32
 #  include <windows.h>
@@ -231,7 +232,7 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 }
 
 /* Save SMS from phone (called Inbox sms - it's in phone Inbox) somewhere */
-static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config)
+static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig *Config, char **Locations)
 {
 	MYSQL_RES 		*Res;
 	MYSQL_ROW 		Row;
@@ -240,6 +241,10 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 	time_t     		t_time1,t_time2;
 	bool			found;
 	long 			diff;
+	my_ulonglong		new_id;
+	size_t			locations_size = 0, locations_pos = 0;
+
+	*Locations = NULL;
 
 	for (i=0;i<sms->Number;i++) {
 		if (sms->SMS[i].PDU == SMS_Status_Report) {
@@ -358,6 +363,22 @@ static GSM_Error SMSDMySQL_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 			WriteSMSDLog(Config, "Error writing to database (%s): %s\n", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 			return ERR_UNKNOWN;
 		}
+		new_id = mysql_insert_id(&Config->DBConnMySQL);
+		if (new_id == 0) {
+			WriteSMSDLog(Config, "Error writing to database (%s): %s, new id is zero!\n", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+			return ERR_UNKNOWN;
+		}
+		WriteSMSDLog(Config, "Inserted message id %llu\n", new_id);
+
+		if (locations_pos + 10 >= locations_size) {
+			locations_size += 40;
+			*Locations = (char *)realloc(*Locations, locations_size);
+			assert (*Locations != NULL);
+			if (locations_pos == 0) {
+				*Locations[0] = 0;
+			}
+		}
+		locations_pos += sprintf((*Locations) + locations_pos, "%llu ", new_id);
 	}
 
 	return ERR_NONE;

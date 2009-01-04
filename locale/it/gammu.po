@@ -4865,7 +4865,6 @@ msgstr "Locazione %i, cartella \"%s\""
 
 #: gammu/search.c:185 gammu/search.c:192
 #, fuzzy, c-format
-#| msgid "Error writing device."
 msgid "Error creating thread\n"
 msgstr "Errore durante la scrittura sul dispositivo."
 

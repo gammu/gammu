@@ -440,18 +440,43 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 }
 
 #ifdef WIN32
-bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config)
+/**
+ * Prepares a command line for RunOnReceive command.
+ */
+char *SMSD_RunOnReceiveCommand(GSM_SMSDConfig *Config, const char *locations)
+{
+	char *result;
+
+	assert(Config->RunOnReceive != NULL);
+
+	if (locations == NULL) return strdup(Config->RunOnReceive);
+
+	result = (char *)malloc(strlen(locations) + strlen(Config->RunOnReceive) + 20);
+	assert(result != NULL);
+
+	result[0] = 0;
+	strcat(result, "\'");
+	strcat(result, Config->RunOnReceive);
+	strcat(result, "\' ");
+	strcat(result, locations);
+	return result;
+}
+
+bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, char *locations)
 {
 	BOOL ret;
 	STARTUPINFO si;
 	PROCESS_INFORMATION pi;
+	char *cmdline;
+
+	cmdline = SMSD_RunOnReceiveCommand(Config, locations);
 
 	ZeroMemory(&si, sizeof(si));
 	si.cb = sizeof(si);
 	ZeroMemory(&pi, sizeof(pi));
 
 	ret = CreateProcess(NULL,     /* No module name (use command line) */
-			(char *)Config->RunOnReceive, /* Command line */
+			cmdline,	/* Command line */
 			NULL,           /* Process handle not inheritable*/
 			NULL,           /* Thread handle not inheritable*/
 			FALSE,          /* Set handle inheritance to FALSE*/
@@ -460,6 +485,7 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config)
 			NULL,           /* Use parent's starting directory */
 			&si,            /* Pointer to STARTUPINFO structure*/
 			&pi );           /* Pointer to PROCESS_INFORMATION structure*/
+	free(cmdline);
 	if (! ret) {
 		WriteSMSDLog(Config, "CreateProcess failed (%d)\n", (int)GetLastError());
 	} else {
@@ -470,16 +496,40 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config)
 	return ret;
 }
 #else
-bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config)
+/**
+ * Prepares a command line for RunOnReceive command.
+ */
+char **SMSD_RunOnReceiveCommand(GSM_SMSDConfig *Config, char *locations)
+{
+	char **result;
+	char *saveptr;
+	char *token;
+	int i = 1;
+
+	assert(Config->RunOnReceive != NULL);
+
+	/* We're overacting, but it is simpler */
+	result = (char **)malloc((locations == NULL ? 0 : strlen(locations)) + 20);
+	assert(result != NULL);
+
+	result[0] = strdup(Config->RunOnReceive);
+
+	if (locations != NULL) {
+		for (token = strtok_r(locations, " ", &saveptr); token != NULL; token = strtok_r(NULL, " ", &saveptr)) {
+			result[i++] = strdup(token);
+		}
+	}
+	result[i] = NULL;
+	return result;
+}
+
+bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, char *locations)
 {
 	int pid;
 	int i;
 	pid_t w;
 	int status;
-
-	if (Config->RunOnReceive == NULL) {
-		return false;
-	}
+	char **cmdline;
 
 	pid = fork();
 
@@ -524,7 +574,8 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config)
 		close(i);
 	}
 
-	execlp(Config->RunOnReceive, Config->RunOnReceive, (char*)NULL);
+	cmdline = SMSD_RunOnReceiveCommand(Config, locations);
+	execvp(Config->RunOnReceive, cmdline);
 	exit(2);
 }
 #endif
@@ -537,6 +588,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 	GSM_Error		error=ERR_NONE;
 	INI_Entry		*e;
 	int			i;
+	char			*locations;
 
 	start=true;
 	sms.Number = 0;
@@ -576,10 +628,11 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				}
 			}
 			if (process) {
-	 			Service->SaveInboxSMS(&sms, Config);
+	 			Service->SaveInboxSMS(&sms, Config, &locations);
 				if (Config->RunOnReceive != NULL) {
-					SMSD_RunOnReceive(sms,Config);
+					SMSD_RunOnReceive(sms, Config, locations);
 				}
+				free(locations);
 			} else {
 				WriteSMSDLog(Config, "Excluded %s", buffer);
 			}
