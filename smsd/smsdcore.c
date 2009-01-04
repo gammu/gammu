@@ -184,6 +184,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	unsigned char		*str;
 	static unsigned char	emptyPath[1] = "\0";
 	GSM_Error		error;
+	int			fd;
 
 	memset(&smsdcfg, 0, sizeof(smsdcfg));
 
@@ -213,7 +214,17 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 		} else {
 #endif
 			Config->use_syslog = false;
-			Config->log_file = fopen(Config->logfilename, "a");
+			if (strcmp(Config->logfilename, "stderr") == 0) {
+				fd = dup(2);
+				if (fd < 0) return ERR_CANTOPENFILE;
+				Config->log_file = fdopen(fd, "a");
+			} else if (strcmp(Config->logfilename, "stdout") == 0) {
+				fd = dup(1);
+				if (fd < 0) return ERR_CANTOPENFILE;
+				Config->log_file = fdopen(fd, "a");
+			} else {
+				Config->log_file = fopen(Config->logfilename, "a");
+			}
 			if (Config->log_file == NULL) {
 				fprintf(stderr, "Can't open log file \"%s\"\n", Config->logfilename);
 				return ERR_CANTOPENFILE;
