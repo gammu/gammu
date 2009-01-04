@@ -648,6 +648,8 @@ will also delete all data. Both these options work only for Application or Game 
 
 \fIExample:\fR gammu nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 
+You can use jadmaker(1) to generate a .jad file from a .jar file.
+
 .TP
 .BI "nokiaaddplaylists"
 
@@ -1395,6 +1397,8 @@ will also delete all data. Both these options work only for Application or Game 
 
 \fIExample:\fR gammu nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
 
+You can use jadmaker(1) to generate a .jad file from a .jar file.
+
 .TP
 .BI "nokiaaddplaylists"
 
@@ -2029,16 +2033,6 @@ Make phone reset: soft (without asking for PIN) or hard (with PIN).
 
 .SS "Gammu information"
 .TP
-.BI "checkfirmware"
-
-Gammu connects to www.gammu.org and checks for latest firmware versions
-available for the device. The file
-<http://www.gammu.org/gammunet/support/phones/phonedbxml.php?model=x> will be
-downloaded, all phone details will be read from it and (if any higher firmware
-exist) displayed info to user on each application startup. No private data are
-sent to server. Internet connection to www.gammu.org on port 80 required.
-
-.TP
 .BI "checkversion" " [stable]"
 Checks whether there is newer Gammu version available online 
 (if Gammu has been compiled with CURL). If you pass additional parameter stable, only
@@ -2171,7 +2165,7 @@ more details.
 .SH "SEE ALSO"
 
 .P
-gammu-smsd(1), gammurc(5)
+gammu-smsd(1), gammurc(5), jadmaker(1)
 
 Some more hints can be found in README file or on wiki <http://www.gammu.org/>
 which more user hints and further documentation.
