@@ -64,7 +64,7 @@ void WriteSMSDLog(GSM_SMSDConfig *Config, const char *format, ...);
  */
 void SMSD_Shutdown(GSM_SMSDConfig *Config);
 
-GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, char *service);
+GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool uselog, char *service);
 
 void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bool exitprogram, int rc);
 

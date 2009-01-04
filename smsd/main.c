@@ -2,6 +2,7 @@
  * Main SMSD program
  */
 /* Copyright (c) 2009 Michal Cihar <michal@cihar.com> */
+/* Licensend under GNU GPL 2 */
 
 #include <signal.h>
 #include <gammu-smsd.h>
@@ -10,6 +11,11 @@
 #include <unistd.h>
 #ifdef HAVE_GETOPT_LONG
 #include <getopt.h>
+#endif
+
+#if !defined(WIN32) && (defined(HAVE_GETOPT) || defined(HAVE_GETOPT_LONG))
+#define HAVE_DEFAULT_CONFIG
+const char default_config[] = "/etc/gammu-smsdrc";
 #endif
 
 GSM_SMSDConfig *config;
@@ -54,11 +60,11 @@ void help(void)
 NORETURN
 void wrong_params(void)
 {
-    printf("Invalid parameter, use --help for help.\n");
+    fprintf(stderr, "Invalid parameter, use --help for help.\n");
     exit(1);
 }
 
-void process_commandline(int argc, char **argv, bool *daemonize, char **filename)
+void process_commandline(int argc, char **argv, bool *daemonize, const char **pid_file, const char **config_file)
 {
     int opt;
 
@@ -79,7 +85,10 @@ void process_commandline(int argc, char **argv, bool *daemonize, char **filename
 #endif
         switch (opt) {
             case 'c':
-                *filename = optarg;
+                *config_file = optarg;
+                break;
+            case 'p':
+                *pid_file = optarg;
                 break;
             case 'd':
                 *daemonize = true;
@@ -109,37 +118,82 @@ void help(void)
     printf("usage: gammu-smsd CONFIG_FILE\n");
 }
 
-void process_commandline(int argc, char **argv, bool *daemonize, char **filename)
+void process_commandline(int argc, char **argv, bool *daemonize, char **pid_file, char **config_file)
 {
     if (argc != 2) {
         help();
         exit(1);
     }
 
-	/* FIXME: This is cruel hack */
-	filename = argv[1];
+    /* FIXME: This is cruel hack */
+    config_file = argv[1];
 }
 
 #endif
 
+/**
+ * Check existing PID file if it points to existing application.
+ */
+void check_pid(const char *pid_file)
+{
+    FILE        *file;
+    int         other;
+
+    file = fopen(pid_file, "r");
+    if (file != NULL) {
+        if (fscanf(file, "%d", &other) == 1) {
+            if (kill(other, 0) == 0) {
+                fprintf(stderr, "Another instance is running, please stop it first!\n");
+                exit(10);
+            } else {
+                fprintf(stderr, "Stale lock file, ignoring!\n");
+            }
+        } else {
+            fprintf(stderr, "Can not parse pidfile, ignoring!\n");
+        }
+        fclose(file);
+    }
+}
+
+
+/**
+ * Write pid file.
+ */
+void write_pid(const char *pid_file) {
+    FILE        *file;
+
+    file = fopen(pid_file, "w");
+    if (file != NULL) {
+        fprintf(file, "%d\n", getpid());
+        fclose(file);
+    } else {
+        fprintf(stderr, "Can not create pidfile!\n");
+        exit(1);
+    }
+}
 int main(int argc, char **argv)
 {
 	GSM_Error error;
-	char *filename = NULL;
+	const char *config_file = NULL;
+	const char *pid_file = NULL;
     bool daemonize = false;
 
 	config = SMSD_NewConfig();
 	assert(config != NULL);
 
-    process_commandline(argc, argv, &daemonize, &filename);
+    process_commandline(argc, argv, &daemonize, &pid_file, &config_file);
 
-    if (filename == NULL) {
-        printf("No config file specified!\n");
+    if (config_file == NULL) {
+#ifdef HAVE_DEFAULT_CONFIG
+        config_file = default_config;
+#else
+        fprintf(stderr, "No config file specified!\n");
         help();
         exit(1);
+#endif
     }
 
-	error = SMSD_ReadConfig(filename, config, true, NULL);
+	error = SMSD_ReadConfig(config_file, config, true, NULL);
 	if (error != ERR_NONE) {
 		SMSD_Terminate(config, "Failed to read config", error, true, 2);
 	}
@@ -147,11 +201,16 @@ int main(int argc, char **argv)
 	signal(SIGINT, smsd_interrupt);
 	signal(SIGTERM, smsd_interrupt);
 
+    if (pid_file != NULL && strlen(pid_file) > 0) {
+        check_pid(pid_file);
+        write_pid(pid_file);
+    }
+
     if (daemonize) {
 #ifdef HAVE_DAEMON
         daemon(1, 0);
 #else
-        printf("daemon mode is not supported on your platform!\n");
+        fprintf(stderr, "daemon mode is not supported on your platform!\n");
         exit(1);
 #endif
     }
