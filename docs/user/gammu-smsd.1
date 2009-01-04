@@ -1,0 +1,50 @@
+.TH GAMMU-SMSD 1 "January  4, 2009" "Gammu 1.23.0" "Gammu Documentation"
+.SH NAME
+gammu-smsd \- SMS daemon for Gammu
+.SH SYNOPSIS
+.B gammu-smsd
+[\fIOPTION\fR]...
+.SH DESCRIPTION
+This manual page documents briefly the
+.B gammu-smsd
+command.
+.PP
+\fBgammu-smsd\fP is a program that periodically scans GSM modem for received
+messages, stores them in defined storage and also sends messages enqueued in
+this storage.
+.PP
+Program accepts following options:
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+shows help
+.TP
+\fB\-v\fR, \fB\-\-version\fR
+shows version information and compiled in features
+.TP
+\fB\-c\fR, \fB\-\-config\fR=\fIfile\fR
+configuration file to use, default is /etc/gammu-smsdrc
+.TP
+\fB\-p\fR, \fB\-\-pid\fR=\fIfile\fR
+lock file for storing pid, empty for no locking
+.TP
+\fB\-d\fR, \fB\-\-daemon\fR
+daemonize program on startup
+.SH SEE ALSO
+gammu-smsdrc(5), gammu(1)
+.SH AUTHOR
+gammu-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
+.SH COPYRIGH
+Copyright \(co 2009 Michal Cihar and other authors.
+License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH REPORTING BUGS
+Please report bugs to <http://bugs.cihar.com>.
+
+Before reporting a bug, please enable verbose logging in smsd configuration:
+
+    [gammu]
+    logformat = textall
+
+and include this verbose log within bug report.
