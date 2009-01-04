@@ -163,7 +163,7 @@ void SMSD_FreeConfig(GSM_SMSDConfig *config)
 }
 
 
-GSM_Error SMSD_ReadConfig(char *filename, GSM_SMSDConfig *Config, bool uselog, char *service)
+GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool uselog, char *service)
 {
 	INI_Section 		*smsdcfgfile = NULL;
 	GSM_Config 		smsdcfg;
