@@ -1842,6 +1842,16 @@ be done, when phone doesn't have set clock inside.
 
 .SS "Phone information"
 .TP
+.BI "checkfirmware"
+
+Gammu connects to www.gammu.org and checks for latest firmware versions
+available for the device. The file
+<http://www.gammu.org/gammunet/support/phones/phonedbxml.php?model=x> will be
+downloaded, all phone details will be read from it and (if any higher firmware
+exist) displayed info to user on each application startup. No private data are
+sent to server. Internet connection to www.gammu.org on port 80 required.
+
+.TP
 .BI "getdisplaystatus"
 
 .TP
@@ -2018,6 +2028,16 @@ Make phone reset: soft (without asking for PIN) or hard (with PIN).
 
 
 .SS "Gammu information"
+.TP
+.BI "checkfirmware"
+
+Gammu connects to www.gammu.org and checks for latest firmware versions
+available for the device. The file
+<http://www.gammu.org/gammunet/support/phones/phonedbxml.php?model=x> will be
+downloaded, all phone details will be read from it and (if any higher firmware
+exist) displayed info to user on each application startup. No private data are
+sent to server. Internet connection to www.gammu.org on port 80 required.
+
 .TP
 .BI "checkversion" " [stable]"
 Checks whether there is newer Gammu version available online 

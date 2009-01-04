@@ -484,6 +484,7 @@ static GSM_Parameters Parameters[] = {
 	{"version",			0, 0, Version,			{H_Gammu,0},			""},
 	{"features",			0, 0, Features,			{H_Gammu,0},			""},
 	{"checkversion",		0, 1, CheckVersion,		{H_Gammu,0},			"[stable]"},
+	{"checkfirmware",		0, 0, CheckFirmware,		{H_Info,0},			""},
 	{"getdisplaystatus",		0, 0, GetDisplayStatus,		{H_Info,0},			""},
 	{"monitor",			0, 1, Monitor,			{H_Info,H_Network,H_Call,0},	"[times]"},
 	{"setautonetworklogin",	0, 0, SetAutoNetworkLogin,	{H_Network,0},			""},
@@ -1157,8 +1158,9 @@ int main(int argc, char *argv[])
 				printf_warn("Configuration option rsslevel is ignored, use '%s' instead\n", "gammu checkversion");
 			}
 			rss = INI_GetValue(cfg, "gammu", "usephonedb", false);
-			if (rss && strcasecmp(rss, "yes") == 0)
-				phonedb = true;
+			if (rss) {
+				printf_warn("Configuration option usephonedb is ignored, use '%s' instead\n", "gammu checkfirmware");
+			}
 		}
 
 		/* We wanted to read just user specified configuration. */

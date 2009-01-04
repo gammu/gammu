@@ -168,16 +168,5 @@ connection = fbusblue
 ; ----------------|------------------------------------------------------------
 ; Use_Locking     | under Unix/Linux use "yes", if want to lock used device
 ;                 | to prevent using it by other applications. In win32 ignored
-; ----------------|------------------------------------------------------------
-; UsePhoneDB      | Should Gammu connect to www.gammu.org and check for latest
-;                 | firmware versions for device ?
-;                 | if yes (value "yes"), there will be taken 
-;                 |www.gammu.org/gammunet/support/phones/phonedbxml.php?model=x
-;                 | file, read all phone details from it and (if any
-;                 | higher firmware exist) displayed info to user on each
-;                 | application startup
-;                 | No private data are sent to server, Internet connection
-;                 | to www.gammu.org on port 80 required
-;                 | By default option not active
 
 ; vim: et ts=4 sw=4 sts=4 tw=78 spell spelllang=en_us

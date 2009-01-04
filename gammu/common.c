@@ -17,7 +17,6 @@ GSM_StateMachine *gsm;
 bool always_answer_yes = false;
 bool always_answer_no = false;
 volatile bool gshutdown = false;
-bool phonedb = false;
 bool batch = false;
 bool batchConn = false;
 
@@ -293,12 +292,6 @@ bool GSM_ReadHTTPFile(const char *url, GSM_File *file)
  */
 void GSM_Init(bool checkerror)
 {
-	GSM_File PhoneDB;
-	char model[GSM_MAX_MODEL_LENGTH];
-	char current_version[GSM_MAX_VERSION_LENGTH];
-	char url[70 + GSM_MAX_MODEL_LENGTH];
-	char latest_version[GSM_MAX_VERSION_LENGTH];
-	size_t pos = 0, oldpos = 0, i;
 	GSM_Error error;
 
 	/* No checks on existing batch mode */
@@ -316,66 +309,6 @@ void GSM_Init(bool checkerror)
 			batchConn = true;
 		}
 	}
-
-	/* No phonedb check? */
-	if (!phonedb)
-		return;
-
-	/* Get model information */
-	error = GSM_GetModel(gsm, model);
-	Print_Error(error);
-
-	/* Empty string */
-	latest_version[0] = 0;
-
-	/* Request information from phone db */
-	sprintf(url, "http://www.gammu.org/support/phones/phonedbxml.php?model=%s", model);
-	PhoneDB.Buffer = NULL;
-	PhoneDB.Used = 0;
-	if (!GSM_ReadHTTPFile(url, &PhoneDB))
-		return;
-
-	/* Parse reply */
-	while (pos < PhoneDB.Used) {
-		if (PhoneDB.Buffer[pos] != 10) {
-			pos++;
-			continue;
-		}
-		PhoneDB.Buffer[pos] = 0;
-		if (strstr(PhoneDB.Buffer + oldpos, "<firmware>") == NULL) {
-			pos++;
-			oldpos = pos;
-			continue;
-		}
-		sprintf(latest_version, "%s", strstr(PhoneDB.Buffer + oldpos, "<version>") + 9);
-		for (i = 0; i < strlen(latest_version); i++) {
-			if (latest_version[i] == '<') {
-				latest_version[i] = 0;
-				break;
-			}
-		}
-		pos++;
-		oldpos = pos;
-	}
-	free(PhoneDB.Buffer);
-
-	/* Did we find something? */
-	if (latest_version[0] == 0) {
-		return;
-	}
-
-	/* Get phone firmware version */
-	error = GSM_GetFirmware(gsm, current_version, NULL, NULL);
-	Print_Error(error);
-
-	/* Compare versions */
-	if (!GSM_IsNewerVersion(latest_version, current_version))
-		return;
-
-	/* Print information to user */
-	printf_info(_("Never version of firmware is available!\n"));
-	printf_info(_("Latest version is %s and you run %s.\n"),
-			latest_version, current_version);
 }
 
 void GSM_Terminate(void)
