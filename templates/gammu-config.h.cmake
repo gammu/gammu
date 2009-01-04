@@ -192,6 +192,9 @@
 #ifndef HAVE_KILL
 #cmakedefine HAVE_KILL
 #endif
+#ifndef HAVE_SIGHUP
+#cmakedefine HAVE_SIGHUP
+#endif
 
 #ifndef HAVE_ISWSPACE
 #cmakedefine HAVE_ISWSPACE

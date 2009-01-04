@@ -254,7 +254,9 @@ read_config:
 
 	signal(SIGINT, smsd_interrupt);
 	signal(SIGTERM, smsd_interrupt);
+#ifdef HAVE_SIGHUP
 	signal(SIGHUP, smsd_reconfigure);
+#endif
 
 #ifdef HAVE_KILL
 	if (params.pid_file != NULL && strlen(params.pid_file) > 0) {
