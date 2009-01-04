@@ -284,22 +284,23 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  		EncodeUnicode(sms->SMS[len].Number, pos1, phlen);
  	}
 
-/* FIXME: This should be enabled by SMSD configuration? */
-#if 0
-	if (sms->Number != 0) {
-		DecodeUnicode(sms->SMS[0].Number,Buffer);
-	 	dbgprintf("Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
-			sms->Number,
-			Buffer,
-	 		DecodeUnicodeString(sms->SMS[0].Text),
-			sms->SMS[0].Coding,
-			sms->SMS[0].Length,
-			sms->SMS[0].UDH.Type,
-			sms->SMS[0].UDH.Length,
-			Config->currdeliveryreport,
-			SMSInfo.Class);
-	} else dbgprintf("error: SMS-count = 0");
-#endif
+	if (Config->debug_service > 0) {
+		if (sms->Number != 0) {
+			DecodeUnicode(sms->SMS[0].Number,Buffer);
+			WriteSMSDLog(Config, "Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
+				sms->Number,
+				Buffer,
+				DecodeUnicodeString(sms->SMS[0].Text),
+				sms->SMS[0].Coding,
+				sms->SMS[0].Length,
+				sms->SMS[0].UDH.Type,
+				sms->SMS[0].UDH.Length,
+				Config->currdeliveryreport,
+				SMSInfo.Class);
+		} else {
+			WriteSMSDLog(Config, "error: SMS-count = 0");
+		}
+	}
 
   	return ERR_NONE;
 }
