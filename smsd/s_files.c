@@ -12,6 +12,7 @@
 #  include <io.h>
 #endif
 #if defined HAVE_DIRENT_H && defined HAVE_SCANDIR && defined HAVE_ALPHASORT
+#  define HAVE_DIRBROWSING
 #  include <dirent.h>
 #endif
 
@@ -152,8 +153,7 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	}
   	_findclose(hFile);
 	error = ERR_NONE;
-#else
-#if defined HAVE_DIRENT_H && defined HAVE_SCANDIR && defined HAVE_ALPHASORT
+#elif defined(HAVE_DIRBROWSING)
   	struct 				dirent **namelist = NULL;
   	int 				l, m ,n;
 
@@ -174,7 +174,6 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
   	namelist = NULL;
  	if (m >= n) return ERR_EMPTY;
 	error = ERR_NONE;
-#endif
 #endif
 	if (error != ERR_NONE) return error;
 	options = strrchr(FileName, '.') + 4;
