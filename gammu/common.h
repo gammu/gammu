@@ -5,7 +5,6 @@
 
 extern volatile bool gshutdown;
 extern GSM_StateMachine *gsm;
-extern bool phonedb;
 extern bool batch;
 extern bool batchConn;
 extern bool always_answer_yes;

@@ -1,6 +1,7 @@
 #include <gammu.h>
 
 extern void PlayRingtone(int argc, char *argv[]);
+extern void CheckFirmware(int argc, char *argv[]);
 extern void Identify(int argc, char *argv[]);
 extern void NetworkInfo(int argc, char *argv[]);
 extern void Monitor(int argc, char *argv[]);

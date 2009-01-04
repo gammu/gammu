@@ -188,6 +188,14 @@ HELP['checkversion'] = '''Checks whether there is newer Gammu version available 
 (if Gammu has been compiled with CURL). If you pass additional parameter stable, only
 stable versions will be checked.
 '''
+HELP['checkfirmware'] = '''
+Gammu connects to www.gammu.org and checks for latest firmware versions
+available for the device. The file
+<http://www.gammu.org/gammunet/support/phones/phonedbxml.php?model=x> will be
+downloaded, all phone details will be read from it and (if any higher firmware
+exist) displayed info to user on each application startup. No private data are
+sent to server. Internet connection to www.gammu.org on port 80 required.
+'''
 HELP['identify'] = '''Show the most important phone data.
 ''' 
 HELP['monitor'] = '''Get phone status and writes continuously to standard output. Press Ctrl+C

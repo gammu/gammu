@@ -23,6 +23,7 @@ ChangeLog
       configuration when possible.
 [!] * Separate SMS daemon out of gammu binary.
 [!] * SMSD now requires [gammu] section in config file.
+[!] * UsePhoneDB option replaced by chekfirmware command.
 [+] * Added pkgconfig support for gsmsd (SMSD library).
 [+] * Debug logging can be handled by custom function in application.
 [+] * SMSD log now includes gammu log messages.
