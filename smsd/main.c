@@ -8,6 +8,9 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <unistd.h>
+#ifdef HAVE_GETOPT_LONG
+#include <getopt.h>
+#endif
 
 GSM_SMSDConfig *config;
 
@@ -17,47 +20,97 @@ void smsd_interrupt(int signum)
 	signal(signum, SIG_IGN);
 }
 
+NORETURN
+void version(void)
+{
+	printf("Gammu-smsd version %s\n", VERSION);
+    printf("Built %s on %s using %s\n", __TIME__, __DATE__, GetCompiler());
+    printf("Compiled in features:\n");
+#ifdef HAVE_DAEMON
+	printf("  - %s\n", "DAEMON");
+#endif
 #ifdef HAVE_GETOPT
+	printf("  - %s\n", "GETOPT");
+#endif
+#ifdef HAVE_GETOPT_LONG
+	printf("  - %s\n", "GETOPT_LONG");
+#endif
+#ifdef HAVE_MYSQL_MYSQL_H
+	printf("  - %s\n", "MYSQL");
+#endif
+#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+	printf("  - %s\n", "POSTGRESQL");
+#endif
+    exit(0);
+}
+
+#if defined(HAVE_GETOPT) || defined(HAVE_GETOPT_LONG)
+
 void help(void)
 {
     printf("usage: gammu-smsd [-c CONFIG_FILE] [-h] [-d]\n");
 }
-#else
-void help(void)
+
+NORETURN
+void wrong_params(void)
 {
-    printf("usage: gammu-smsd CONFIG_FILE\n");
+    printf("Invalid parameter, use --help for help.\n");
+    exit(1);
 }
-#endif
 
-int main(int argc, char **argv)
+void process_commandline(int argc, char **argv, bool *daemonize, char **filename)
 {
-	GSM_Error error;
-	char *filename = NULL;
-#ifdef HAVE_GETOPT
     int opt;
+
+#ifdef HAVE_GETOPT_LONG
+    struct option long_options[] = {
+       {"help"      , 0, 0, 'h'},
+       {"version"   , 0, 0, 'v'},
+       {"config"    , 1, 0, 'c'},
+       {"daemon"    , 0, 0, 'd'},
+       {"pid"       , 1, 0, 'p'},
+       {0           , 0, 0, 0}
+    };
+    int option_index;
+
+    while ((opt = getopt_long(argc, argv, "h?dc:p:", long_options, &option_index)) != -1) {
+#else
+    while ((opt = getopt(argc, argv, "h?dc:p:")) != -1) {
 #endif
-    bool daemonize = false;
-
-	config = SMSD_NewConfig();
-	assert(config != NULL);
-
-#ifdef HAVE_GETOPT
-    while ((opt = getopt(argc, argv, "h?dc:")) != -1) {
         switch (opt) {
             case 'c':
-                filename = optarg;
+                *filename = optarg;
                 break;
             case 'd':
-                daemonize = true;
+                *daemonize = true;
+                break;
+            case 'v':
+                version();
                 break;
             case '?':
             case 'h':
                 help();
                 exit(0);
+            default:
+                wrong_params();
+                break;
         }
     }
 
+    if (optind < argc) {
+        wrong_params();
+    }
+
+}
+
 #else
+void help(void)
+{
+    printf("usage: gammu-smsd CONFIG_FILE\n");
+}
+
+void process_commandline(int argc, char **argv, bool *daemonize, char **filename)
+{
     if (argc != 2) {
         help();
         exit(1);
@@ -65,10 +118,24 @@ int main(int argc, char **argv)
 
 	/* FIXME: This is cruel hack */
 	filename = argv[1];
+}
+
 #endif
+
+int main(int argc, char **argv)
+{
+	GSM_Error error;
+	char *filename = NULL;
+    bool daemonize = false;
+
+	config = SMSD_NewConfig();
+	assert(config != NULL);
+
+    process_commandline(argc, argv, &daemonize, &filename);
 
     if (filename == NULL) {
         printf("No config file specified!\n");
+        help();
         exit(1);
     }
 

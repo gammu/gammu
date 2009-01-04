@@ -124,6 +124,7 @@ check_function_exists (alphasort HAVE_ALPHASORT)
 check_symbol_exists (iswspace "wctype.h" HAVE_ISWSPACE)
 check_symbol_exists (towlower "wctype.h" HAVE_TOWLOWER)
 check_symbol_exists (getopt "unistd.h" HAVE_GETOPT)
+check_symbol_exists (getopt_long "getopt.h" HAVE_GETOPT_LONG)
 check_symbol_exists (daemon "unistd.h" HAVE_DAEMON)
 check_c_source_compiles ("
 #define _BSD_SOURCE
