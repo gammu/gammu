@@ -16,6 +16,7 @@
 #include <syslog.h>
 #endif
 #include <stdarg.h>
+#include <stdlib.h>
 
 #include <gammu-smsd.h>
 
@@ -27,8 +28,6 @@
 #  define WIFCONTINUED(s)	(0)
 #endif
 
-#include "../../common/misc/coding/coding.h"
-//#include "../gammu.h"
 #include "smsdcore.h"
 #include "s_files.h"
 #ifdef HAVE_MYSQL_MYSQL_H
