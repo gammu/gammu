@@ -1115,6 +1115,7 @@ static GSM_Error SMSDPgSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config, GSM_Batte
 
 GSM_SMSDService SMSDPgSQL = {
 	SMSDPgSQL_Init,
+	NONEFUNCTION,			/* Free 		*/
 	SMSDPgSQL_InitAfterConnect,
 	SMSDPgSQL_SaveInboxSMS,
 	SMSDPgSQL_FindOutboxSMS,

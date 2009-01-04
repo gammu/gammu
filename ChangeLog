@@ -35,6 +35,7 @@ ChangeLog
 [+] * SMSD can now natively run as a Windows service (bug #451).
 [+] * SMSD backend services debugging can be now enabled by DebugService.
 [-] * Proper reconnecting support for MySQL.
+[-] * SMSD now properly frees allocated memory.
     
 20081219 - 1.22.1
 

@@ -374,6 +374,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms UNUSED,
 
 GSM_SMSDService SMSDFiles = {
 	NONEFUNCTION,			/* Init 		*/
+	NONEFUNCTION,			/* Free 		*/
 	NONEFUNCTION,			/* InitAfterConnect 	*/
 	SMSDFiles_SaveInboxSMS,
 	SMSDFiles_FindOutboxSMS,
