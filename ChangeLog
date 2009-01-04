@@ -36,6 +36,7 @@ ChangeLog
 [+] * SMSD backend services debugging can be now enabled by DebugService.
 [-] * Proper reconnecting support for MySQL.
 [-] * SMSD now properly frees allocated memory.
+[+] * SMSD now handles SIGHUP for rereading configuration.
     
 20081219 - 1.22.1
 

@@ -65,6 +65,9 @@ struct _GSM_SMSDConfig {
 	size_t gammu_log_buffer_size;
 	bool use_syslog;
 	int debug_service;
+	FILE *log_file;
+	volatile GSM_Error SendingSMSStatus;
+	volatile int TPMR;
 };
 
 typedef enum {

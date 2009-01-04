@@ -37,9 +37,6 @@
 #  include "s_pgsql.h"
 #endif
 
-FILE 		 *smsd_log_file = NULL;
-static int	 TPMR;
-static GSM_Error SendingSMSStatus;
 GSM_SMSDConfig		SMSDaemon_Config;
 
 void SMSD_Shutdown(GSM_SMSDConfig *Config)
@@ -61,11 +58,11 @@ void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr, void *user_d
 			GSM_GetConfig(sm, -1)->Device,
 			status,
 			mr);
-	TPMR = mr;
+	Config->TPMR = mr;
 	if (status==0) {
-		SendingSMSStatus = ERR_NONE;
+		Config->SendingSMSStatus = ERR_NONE;
 	} else {
-		SendingSMSStatus = ERR_UNKNOWN;
+		Config->SendingSMSStatus = ERR_UNKNOWN;
 	}
 }
 
@@ -88,7 +85,7 @@ void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bo
 		fprintf(stderr, "%s (%s:%i)\n", msg, GSM_ErrorString(error), error);
 	}
 	if (exitprogram) {
-		if (smsd_log_file!=NULL) fclose(smsd_log_file);
+		if (Config->log_file!=NULL) fclose(Config->log_file);
 		exit(rc);
 	}
 }
@@ -107,18 +104,18 @@ void WriteSMSDLog(GSM_SMSDConfig *Config, const char *format, ...)
 		va_end(argp);
 	} else
 #endif
-	if (smsd_log_file != NULL) {
+	if (Config->log_file != NULL) {
 		va_start(argp, format);
 		vsprintf(Buffer,format,argp);
 		va_end(argp);
 
 		GSM_GetCurrentDateTime(&date_time);
 
-		fprintf(smsd_log_file,"%s %4d/%02d/%02d %02d:%02d:%02d : %s\n",
+		fprintf(Config->log_file,"%s %4d/%02d/%02d %02d:%02d:%02d : %s\n",
 			DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
 			date_time.Year, date_time.Month, date_time.Day,
 			date_time.Hour, date_time.Minute, date_time.Second,Buffer);
-		fflush(smsd_log_file);
+		fflush(Config->log_file);
 	}
 }
 
@@ -162,12 +159,17 @@ GSM_SMSDConfig *SMSD_NewConfig(void)
 	Config->gammu_log_buffer_size = 0;
 	Config->logfilename = NULL;
 	Config->smsdcfgfile = NULL;
+	Config->log_file = NULL;
 
 	return Config;
 }
 
 void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 {
+
+	if (!Config->use_syslog) {
+		fclose(Config->log_file);
+	}
 	free(Config->gammu_log_buffer);
 	INI_Free(Config->smsdcfgfile);
 	GSM_FreeStateMachine(Config->gsm);
@@ -211,8 +213,8 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 		} else {
 #endif
 			Config->use_syslog = false;
-			smsd_log_file=fopen(Config->logfilename,"a");
-			if (smsd_log_file == NULL) {
+			Config->log_file = fopen(Config->logfilename, "a");
+			if (Config->log_file == NULL) {
 				fprintf(stderr, "Can't open log file \"%s\"\n", Config->logfilename);
 				return ERR_CANTOPENFILE;
 			}
@@ -707,8 +709,8 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			}
 			Service->RefreshPhoneStatus(Config, &charge, &network);
 			j    = 0;
-			TPMR = -1;
-			SendingSMSStatus = ERR_TIMEOUT;
+			Config->TPMR = -1;
+			Config->SendingSMSStatus = ERR_TIMEOUT;
 			while (!Config->shutdown) {
 				GSM_GetCurrentDateTime (&Date);
 				z=Date.Second;
@@ -716,20 +718,20 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 					usleep(10000);
 					GSM_GetCurrentDateTime(&Date);
 					GSM_ReadDevice(Config->gsm,true);
-					if (SendingSMSStatus != ERR_TIMEOUT) break;
+					if (Config->SendingSMSStatus != ERR_TIMEOUT) break;
 				}
 				Service->RefreshSendStatus(Config, Config->SMSID);
 				Service->RefreshPhoneStatus(Config, &charge, &network);
-				if (SendingSMSStatus != ERR_TIMEOUT) break;
+				if (Config->SendingSMSStatus != ERR_TIMEOUT) break;
 				j++;
 				if (j>Config->sendtimeout) break;
 			}
-			if (SendingSMSStatus != ERR_NONE) {
-				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, TPMR);
-				WriteSMSDLog(Config, "Error getting send status of %s (%i): %s", Config->SMSID, SendingSMSStatus,GSM_ErrorString(SendingSMSStatus));
+			if (Config->SendingSMSStatus != ERR_NONE) {
+				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, Config->TPMR);
+				WriteSMSDLog(Config, "Error getting send status of %s (%i): %s", Config->SMSID, Config->SendingSMSStatus, GSM_ErrorString(Config->SendingSMSStatus));
 				return false;
 			}
-			error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, TPMR);
+			error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, Config->TPMR);
 			if (error!=ERR_NONE) {
 				return false;
 			}
@@ -787,7 +789,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 
 	lastreceive		= time(NULL);
 	lastreset		= time(NULL);
-	SendingSMSStatus 	= ERR_UNKNOWN;
+	Config->SendingSMSStatus 	= ERR_UNKNOWN;
 
 	while (!Config->shutdown) {
 		/* There were errors in communication - try to recover */
@@ -838,7 +840,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 			}
 			continue;
 		}
-		if ((difftime(time(NULL), lastreceive) >= Config->receivefrequency) || (SendingSMSStatus != ERR_NONE)) {
+		if ((difftime(time(NULL), lastreceive) >= Config->receivefrequency) || (Config->SendingSMSStatus != ERR_NONE)) {
 	 		lastreceive = time(NULL);
 
 
