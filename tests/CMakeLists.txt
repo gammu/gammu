@@ -402,6 +402,11 @@ add_executable(include-settings include-settings.c)
 target_link_libraries(include-settings libGammu)
 add_test(include-settings "${GAMMU_TEST_PATH}/include-settings${GAMMU_TEST_SUFFIX}")
 
+# Test for header gammu-smsd.h
+add_executable(include-smsd include-smsd.c)
+target_link_libraries(include-smsd libGammu)
+add_test(include-smsd "${GAMMU_TEST_PATH}/include-smsd${GAMMU_TEST_SUFFIX}")
+
 # Test for header gammu-statemachine.h
 add_executable(include-statemachine include-statemachine.c)
 target_link_libraries(include-statemachine libGammu)
