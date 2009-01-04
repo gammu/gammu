@@ -49,7 +49,7 @@ COMMAND_NOPARAM = '.TP\n.BI "%s"\n%s\n'
 
 SEE_ALSO = '''
 .P
-gammu-smsd(1), gammurc(5)
+gammu-smsd(1), gammurc(5), jadmaker(1)
 
 Some more hints can be found in README file or on wiki <http://www.gammu.org/>
 which more user hints and further documentation.
@@ -317,6 +317,8 @@ will also delete all data. Both these options work only for Application or Game 
 \\fIExample:\\fR gammu nokiaaddfile Application Alien will read Alien.JAD and Alien.JAR and add to Applications
 
 \\fIExample:\\fR gammu nokiaaddfile Tones file.mid will read file.mid and add to Tones folder
+
+You can use jadmaker(1) to generate a .jad file from a .jar file.
 ''' 
 HELP['getdatetime'] = '''Get date and time from phone
 ''' 
