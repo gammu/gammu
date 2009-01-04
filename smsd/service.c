@@ -13,6 +13,7 @@
 #include "service.h"
 
 char smsd_service_name_intern[] = "GammuSMSD";
+
 char *smsd_service_name = smsd_service_name_intern;
 
 SERVICE_STATUS m_ServiceStatus;
@@ -44,10 +45,10 @@ void WINAPI SMSDServiceCtrlHandler(DWORD Opcode)
 	return;
 }
 
-
 void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 {
 	GSM_Error error;
+
 	m_ServiceStatus.dwServiceType = SERVICE_WIN32;
 	m_ServiceStatus.dwCurrentState = SERVICE_START_PENDING;
 	m_ServiceStatus.dwControlsAccepted = SERVICE_ACCEPT_STOP;
@@ -75,7 +76,7 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 	return;
 }
 
-bool install_smsd_service(SMSD_Parameters *params)
+bool install_smsd_service(SMSD_Parameters * params)
 {
 	char strDir[1024];
 
@@ -123,7 +124,8 @@ bool uninstall_smsd_service(void)
 
 	if (schSCManager == NULL)
 		return false;
-	hService = OpenService(schSCManager, smsd_service_name, SERVICE_ALL_ACCESS);
+	hService =
+	    OpenService(schSCManager, smsd_service_name, SERVICE_ALL_ACCESS);
 	if (hService == NULL)
 		return false;
 	if (DeleteService(hService) == 0)
