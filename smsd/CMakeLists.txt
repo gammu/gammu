@@ -19,6 +19,13 @@ set (BINARY_SRC
     main.c
     )
 
+if (WIN32)
+    list(APPEND BINARY_SRC service.c)
+endif (WIN32)
+
+if (HAVE_KILL)
+    list(APPEND BINARY_SRC pidfile.c)
+endif (HAVE_KILL)
 
 # Hides default case in switch, to allow checking whether all cases are handled.
 if(DEBUG)
@@ -41,11 +48,11 @@ add_executable (gammu-smsd ${BINARY_SRC})
 
 target_link_libraries (gammu-smsd libGammu)
 target_link_libraries (gammu-smsd gsmsd)
-target_link_libraries (gammu-smsd ${CMAKE_THREAD_LIBS_INIT})
 
 include_directories (
     "${Gammu_BINARY_DIR}/include"
     )
+
 # Tune options for found libraries
 if (MYSQL_FOUND)
     target_link_libraries (gsmsd ${MYSQL_LIBRARIES})
