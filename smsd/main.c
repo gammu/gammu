@@ -28,9 +28,17 @@ const char default_config[] = "/etc/gammu-smsdrc";
 #endif
 
 GSM_SMSDConfig *config;
+volatile bool reconfigure = false;
 
 void smsd_interrupt(int signum)
 {
+	SMSD_Shutdown(config);
+	signal(signum, SIG_IGN);
+}
+
+void smsd_reconfigure(int signum)
+{
+	reconfigure = true;
 	SMSD_Shutdown(config);
 	signal(signum, SIG_IGN);
 }
@@ -196,9 +204,6 @@ int main(int argc, char **argv)
 		false
 	};
 
-	config = SMSD_NewConfig();
-	assert(config != NULL);
-
 	process_commandline(argc, argv, &params);
 
 #ifdef WIN32
@@ -238,6 +243,10 @@ int main(int argc, char **argv)
 	}
 #endif
 
+read_config:
+	config = SMSD_NewConfig();
+	assert(config != NULL);
+
 	error = SMSD_ReadConfig(params.config_file, config, true, NULL);
 	if (error != ERR_NONE) {
 		SMSD_Terminate(config, "Failed to read config", error, true, 2);
@@ -245,6 +254,7 @@ int main(int argc, char **argv)
 
 	signal(SIGINT, smsd_interrupt);
 	signal(SIGTERM, smsd_interrupt);
+	signal(SIGHUP, smsd_reconfigure);
 
 #ifdef HAVE_KILL
 	if (params.pid_file != NULL && strlen(params.pid_file) > 0) {
@@ -278,6 +288,11 @@ int main(int argc, char **argv)
 	}
 
 	SMSD_FreeConfig(config);
+
+	if (reconfigure) {
+		reconfigure = false;
+		goto read_config;
+	}
 
 	return 0;
 }
