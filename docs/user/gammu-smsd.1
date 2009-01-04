@@ -13,22 +13,34 @@ command.
 messages, stores them in defined storage and also sends messages enqueued in
 this storage.
 .PP
-Program accepts following options:
+Program accepts following options (please note that long options might be not
+accepted on some platforms):
 .TP
 \fB\-h\fR, \fB\-\-help\fR
-shows help
+Shows help.
 .TP
 \fB\-v\fR, \fB\-\-version\fR
-shows version information and compiled in features
+Shows version information and compiled in features.
 .TP
 \fB\-c\fR, \fB\-\-config\fR=\fIfile\fR
-configuration file to use, default is /etc/gammu-smsdrc
+Configuration file to use, default is /etc/gammu-smsdrc, on Windows there is
+no default and configuration file path has to be always specified.
 .TP
 \fB\-p\fR, \fB\-\-pid\fR=\fIfile\fR
-lock file for storing pid, empty for no locking. Not supported on Windows.
+Lock file for storing pid, empty for no locking. Not supported on Windows.
 .TP
 \fB\-d\fR, \fB\-\-daemon\fR
-daemonize program on startup
+Daemonize program on startup. Not supported on Windows.
+.TP
+\fB\-i\fR, \fB\-\-install\-service\fR
+Installs SMSD as a Windows service.
+.TP
+\fB\-u\fR, \fB\-\-uninstall\-service\fR
+Uninstalls SMSD as a Windows service.
+.TP
+\fB\-s\fR, \fB\-\-start\-service\fR
+Starts SMSD Windows service.
+
 .SH SEE ALSO
 gammu-smsdrc(5), gammu(1)
 .SH AUTHOR

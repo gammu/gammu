@@ -189,6 +189,9 @@
 #ifndef HAVE_DAEMON
 #cmakedefine HAVE_DAEMON
 #endif
+#ifndef HAVE_KILL
+#cmakedefine HAVE_KILL
+#endif
 
 #ifndef HAVE_ISWSPACE
 #cmakedefine HAVE_ISWSPACE

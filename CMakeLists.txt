@@ -126,6 +126,7 @@ check_symbol_exists (towlower "wctype.h" HAVE_TOWLOWER)
 check_symbol_exists (getopt "unistd.h" HAVE_GETOPT)
 check_symbol_exists (getopt_long "getopt.h" HAVE_GETOPT_LONG)
 check_symbol_exists (daemon "unistd.h" HAVE_DAEMON)
+check_symbol_exists (kill "signal.h" HAVE_KILL)
 check_c_source_compiles ("
 #define _BSD_SOURCE
 #include <stdio.h>
