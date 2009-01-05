@@ -31,14 +31,7 @@ set (LIBRARY_SRC
     service/backup/backvcs.c
     service/backup/backvcf.c
     service/backup/backics.c
-    device/bluetoth/bluez.c
-    device/bluetoth/blue_fbsd.c
-    device/bluetoth/blue_osx.c
-    device/bluetoth/blue_w32.c
     device/bluetoth/bluetoth.c
-    device/serial/ser_unx.c
-    device/serial/ser_djg.c
-    device/serial/ser_w32.c
     device/irda/irda.c
     device/devfunc.c
     protocol/at/at.c
@@ -71,6 +64,29 @@ set (LIBRARY_SRC
     phone/nokia/nfuncold.c
     phone/obex/obexgen.c
     phone/symbian/gnapgen.c)
+
+if (BLUEZ_FOUND)
+    list (APPEND LIBRARY_SRC device/bluetoth/bluez.c)
+endif (BLUEZ_FOUND)
+if (FBSD_BLUE_FOUND)
+    list (APPEND LIBRARY_SRC device/bluetoth/blue_fbsd.c)
+endif (FBSD_BLUE_FOUND)
+if (OSX_BLUE_FOUND)
+    list (APPEND LIBRARY_SRC device/bluetoth/blue_osx.c)
+endif (OSX_BLUE_FOUND)
+if (WIN32)
+    list (APPEND LIBRARY_SRC device/bluetoth/blue_w32.c)
+endif (WIN32)
+
+if (NOT WIN32 AND NOT DJGPP)
+    list (APPEND LIBRARY_SRC device/serial/ser_unx.c)
+endif (NOT WIN32 AND NOT DJGPP)
+if (DJGPP)
+    list (APPEND LIBRARY_SRC device/serial/ser_djg.c)
+endif (DJGPP)
+if (WIN32)
+    list (APPEND LIBRARY_SRC device/serial/ser_w32.c)
+endif (WIN32)
 
 # Library
 add_library (libGammu ${LIBRARY_SRC})
