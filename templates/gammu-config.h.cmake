@@ -196,6 +196,13 @@
 #cmakedefine HAVE_SIGHUP
 #endif
 
+#ifndef HAVE_DUP_UNISTD_H
+#cmakedefine HAVE_DUP_UNISTD_H
+#endif
+#ifndef HAVE_DUP_IO_H
+#cmakedefine HAVE_DUP_IO_H
+#endif
+
 #ifndef HAVE_ISWSPACE
 #cmakedefine HAVE_ISWSPACE
 #endif
