@@ -48,6 +48,7 @@ NORETURN void version(void)
 	printf("Gammu-smsd version %s\n", VERSION);
 	printf("Built %s on %s using %s\n", __TIME__, __DATE__, GetCompiler());
 	printf("Compiled in features:\n");
+	printf("OS support:\n");
 #ifdef HAVE_DAEMON
 	printf("  - %s\n", "DAEMON");
 #endif
@@ -63,6 +64,8 @@ NORETURN void version(void)
 #ifdef HAVE_GETOPT_LONG
 	printf("  - %s\n", "GETOPT_LONG");
 #endif
+	printf("Backend services:\n");
+	printf("  - %s\n", "FILES");
 #ifdef HAVE_MYSQL_MYSQL_H
 	printf("  - %s\n", "MYSQL");
 #endif
