@@ -132,7 +132,7 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 	}
 	mysql_free_result(Res);
 	mysql_query(&Config->DBConnMySQL,"SET NAMES utf8;");
-	WriteSMSDLog(Config, "Conntected to Database: %s on %s",Config->database,Config->PC);
+	WriteSMSDLog(Config, "Connetcted to Database: %s on %s",Config->database,Config->PC);
 	return ERR_NONE;
 }
 
