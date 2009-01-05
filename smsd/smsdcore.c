@@ -691,7 +691,6 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	GSM_Error            	error;
 	unsigned int         	j, z;
 	int			i;
-	unsigned int		second;
 	GSM_BatteryCharge  charge;
 	GSM_SignalQuality  network;
 
@@ -705,12 +704,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	if (error == ERR_EMPTY || error == ERR_NOTSUPPORTED) {
 		/* No outbox sms - wait few seconds and escape */
 		for (j=0;j<Config->commtimeout && !Config->shutdown;j++) {
-			GSM_GetCurrentDateTime (&Date);
-			second = Date.Second;
-	 		while (second == Date.Second && !Config->shutdown) {
-				usleep(10000);
-				GSM_GetCurrentDateTime(&Date);
-			}
+			sleep(1);
 			GSM_GetBatteryCharge(Config->gsm, &charge);
 			GSM_GetSignalQuality(Config->gsm, &network);
 			Service->RefreshPhoneStatus(Config, &charge, &network);
