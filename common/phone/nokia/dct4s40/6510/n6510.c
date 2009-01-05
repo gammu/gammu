@@ -2447,7 +2447,7 @@ static GSM_Error N6510_ReplyGetSMSStatus(GSM_Protocol_Message msg, GSM_StateMach
 			smprintf(s, "No PIN\n");
 			return ERR_SECURITYERROR;
 		default:
-			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
+			smprintf(s, "ERROR: unknown SMS status %i\n",msg.Buffer[4]);
 			return ERR_UNKNOWNRESPONSE;
 		}
 	case 0x1a:
@@ -2609,7 +2609,7 @@ static GSM_Error N6510_ReplyEnterSecurityCode(GSM_Protocol_Message msg, GSM_Stat
 			smprintf(s, "Wrong PUK\n");
 			return ERR_SECURITYERROR;
 		default:
-			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
+			smprintf(s, "ERROR: unknown security code status %i\n",msg.Buffer[4]);
 		}
 	}
 	return ERR_UNKNOWNRESPONSE;
@@ -2656,7 +2656,7 @@ static GSM_Error N6510_ReplySaveSMSMessage(GSM_Protocol_Message msg, GSM_StateMa
 			printf("Incorrect folder\n");
 			return ERR_INVALIDLOCATION;
 		default:
-			smprintf(s, "ERROR: unknown %i\n",msg.Buffer[4]);
+			smprintf(s, "ERROR: unknown reply on saving message %i\n",msg.Buffer[4]);
 			return ERR_UNKNOWNRESPONSE;
 		}
 
