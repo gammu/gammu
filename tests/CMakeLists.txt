@@ -126,24 +126,29 @@ foreach(TESTVCAL ${VCALS})
 endforeach(TESTVCAL $VCALS)
 
 # SMS parsing
-add_executable(sms-nokia-01 sms-nokia-01.c sms-printing.c)
+add_executable(sms-nokia-01 sms-nokia-01.c)
 target_link_libraries(sms-nokia-01 libGammu)
+target_link_libraries(sms-nokia-01 messagedisplay)
 add_test(sms-nokia-01 "${GAMMU_TEST_PATH}/sms-nokia-01${GAMMU_TEST_SUFFIX}")
 
-add_executable(sms-nokia-02 sms-nokia-02.c sms-printing.c)
+add_executable(sms-nokia-02 sms-nokia-02.c)
 target_link_libraries(sms-nokia-02 libGammu)
+target_link_libraries(sms-nokia-02 messagedisplay)
 add_test(sms-nokia-02 "${GAMMU_TEST_PATH}/sms-nokia-02${GAMMU_TEST_SUFFIX}")
 
-add_executable(sms-nokia-03 sms-nokia-03.c sms-printing.c)
+add_executable(sms-nokia-03 sms-nokia-03.c)
 target_link_libraries(sms-nokia-03 libGammu)
+target_link_libraries(sms-nokia-03 messagedisplay)
 add_test(sms-nokia-03 "${GAMMU_TEST_PATH}/sms-nokia-03${GAMMU_TEST_SUFFIX}")
 
-add_executable(sms-nokia-04 sms-nokia-04.c sms-printing.c)
+add_executable(sms-nokia-04 sms-nokia-04.c)
 target_link_libraries(sms-nokia-04 libGammu)
+target_link_libraries(sms-nokia-04 messagedisplay)
 add_test(sms-nokia-04 "${GAMMU_TEST_PATH}/sms-nokia-04${GAMMU_TEST_SUFFIX}")
 
-add_executable(sms-nokia-05 sms-nokia-05.c sms-printing.c)
+add_executable(sms-nokia-05 sms-nokia-05.c)
 target_link_libraries(sms-nokia-05 libGammu)
+target_link_libraries(sms-nokia-05 messagedisplay)
 add_test(sms-nokia-05 "${GAMMU_TEST_PATH}/sms-nokia-05${GAMMU_TEST_SUFFIX}")
 
 # Nokia ringtone
@@ -152,8 +157,9 @@ target_link_libraries(nokia-6110-ringtone libGammu)
 add_test(nokia-6110-ringtone "${GAMMU_TEST_PATH}/nokia-6110-ringtone${GAMMU_TEST_SUFFIX}")
 
 # AT SMS parsing
-add_executable(sms-at-parse sms-at-parse.c sms-printing.c)
+add_executable(sms-at-parse sms-at-parse.c)
 target_link_libraries(sms-at-parse libGammu)
+target_link_libraries(sms-at-parse messagedisplay)
 
 # AT SMS parsing - simple PDU decoder
 add_executable(pdu-decode pdu-decode.c)
@@ -254,7 +260,7 @@ foreach(TESTMESSAGE ${MESSAGES})
 endforeach(TESTMESSAGE $MESSAGES)
 
 # AT SMS encoding
-add_executable(sms-at-encode sms-at-encode.c sms-printing.c)
+add_executable(sms-at-encode sms-at-encode.c)
 target_link_libraries(sms-at-encode libGammu)
 
 # List test cases
@@ -273,8 +279,9 @@ foreach(TESTMESSAGE ${MESSAGES})
 endforeach(TESTMESSAGE $MESSAGES)
 
 # SMS encoding
-add_executable(sms-encode-decode sms-encode-decode.c sms-printing.c)
+add_executable(sms-encode-decode sms-encode-decode.c)
 target_link_libraries(sms-encode-decode libGammu)
+target_link_libraries(sms-encode-decode messagedisplay)
 add_test(sms-encode-decode "${GAMMU_TEST_PATH}/sms-encode-decode${GAMMU_TEST_SUFFIX}")
 
 # AT parser tests

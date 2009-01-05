@@ -8,7 +8,9 @@
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 #include "../common/gsmphones.h" /* Phone data */
 
-#include "sms-printing.h"
+#include "../helper/message-display.h"
+
+extern GSM_Error ATGEN_ReplyGetSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s);
 
 #define BUFFER_SIZE 16384
 
@@ -86,7 +88,8 @@ int main(int argc, char **argv)
 
 	/* Display message */
 	if (error == ERR_NONE) {
-		DisplayTestSMS(sms);
+		DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);
+		DisplayMultiSMSInfo(&sms, true, true, NULL, NULL);
 	}
 
 	/* This is normally done by ATGEN_Terminate */

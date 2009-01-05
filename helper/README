@@ -1,0 +1,2 @@
+This directory contains code which is used in more Gammu programs (eg. in SMSD
+and command line utility), but it is not part of Gammu API.

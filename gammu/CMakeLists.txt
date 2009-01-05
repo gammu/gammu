@@ -1,5 +1,5 @@
 # cmake <http://www.cmake.org> build file for Gammu
-# Copyright (c) 2007 Michal Cihar
+# Copyright (c) 2007-2009 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
 project (gammu-binary C)
@@ -40,6 +40,8 @@ endif(DEBUG)
 add_executable (gammu ${BINARY_SRC})
 
 target_link_libraries (gammu libGammu)
+target_link_libraries (gammu messagedisplay)
+target_link_libraries (gammu memorydisplay)
 target_link_libraries (gammu gsmsd)
 target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
 
