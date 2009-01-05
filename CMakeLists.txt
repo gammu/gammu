@@ -824,7 +824,7 @@ install (
     )
 
 install (
-    FILES "${Gammu_BINARY_DIR}/cfg/gammu.pc"
+    FILES "${Gammu_BINARY_DIR}/cfg/gammu.pc" "${Gammu_BINARY_DIR}/cfg/gammu-smsd.pc"
     DESTINATION "${INSTALL_LIBDATA_DIR}/pkgconfig"
     )
 
