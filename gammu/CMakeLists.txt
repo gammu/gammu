@@ -41,6 +41,7 @@ add_executable (gammu ${BINARY_SRC})
 
 target_link_libraries (gammu libGammu)
 target_link_libraries (gammu messagedisplay)
+target_link_libraries (gammu messagecmdline)
 target_link_libraries (gammu memorydisplay)
 target_link_libraries (gammu gsmsd)
 target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
