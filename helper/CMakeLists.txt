@@ -15,6 +15,9 @@ include_directories (
 add_library (memorydisplay STATIC memory-display.c)
 target_link_libraries (memorydisplay libGammu)
 
+add_library (messagecmdline STATIC message-cmdline.c)
+target_link_libraries (messagecmdline libGammu)
+
 add_library (messagedisplay STATIC message-display.c)
 target_link_libraries (messagedisplay libGammu)
 target_link_libraries (messagedisplay memorydisplay)
