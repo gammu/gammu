@@ -1,5 +1,5 @@
 # cmake <http://www.cmake.org> build file for Gammu
-# Copyright (c) 2007 Michal Cihar
+# Copyright (c) 2007-2009 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
 # I didn't check older versions
@@ -866,7 +866,8 @@ install (
 
 add_subdirectory(common)
 
-# Include tests, we build them also when cross compiling
+add_subdirectory(helper)
+
 add_subdirectory(tests)
 
 add_subdirectory(smsd)

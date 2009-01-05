@@ -11,6 +11,9 @@
 #include "common.h"
 #include "formats.h"
 
+#include "../helper/message-display.h"
+#include "../helper/memory-display.h"
+
 #ifdef GSM_ENABLE_BACKUP
 void SaveFile(int argc, char *argv[])
 {
@@ -994,7 +997,7 @@ void Restore(int argc, char *argv[])
 							printf("%20s\n    ", " ");
 							First = false;
 						}
-						PrintMemorySubEntry(&Pbk.Entries[j]);
+						PrintMemorySubEntry(&Pbk.Entries[j], gsm);
 						printf("    %s\n", GSM_ErrorString(Pbk.Entries[j].AddError));
 					}
 				}
@@ -1049,7 +1052,7 @@ void Restore(int argc, char *argv[])
 								printf("%20s\n    ", " ");
 								First = false;
 							}
-							PrintMemorySubEntry(&Pbk.Entries[j]);
+							PrintMemorySubEntry(&Pbk.Entries[j], gsm);
 							printf("    %s\n",GSM_ErrorString(Pbk.Entries[j].AddError));
 						}
 					}
@@ -1707,7 +1710,7 @@ void AddSMS(int argc UNUSED, char *argv[])
 		Backup.SMS[smsnum]->SMSC.Location = 1;
 		SMS.Number = 1;
 		SMS.SMS[0] = *Backup.SMS[smsnum];
-		DisplayMultiSMSInfo(&SMS,false,false,NULL);
+		DisplayMultiSMSInfo(&SMS,false,false,NULL, gsm);
 		if (answer_yes(_("Restore sms?"))) {
 			error=GSM_AddSMS(gsm, Backup.SMS[smsnum]);
 			Print_Error(error);
@@ -1744,7 +1747,7 @@ void RestoreSMS(int argc UNUSED, char *argv[])
 		if (restore8bit || Backup.SMS[smsnum]->Coding != SMS_Coding_8bit) {
 			SMS.Number = 1;
 			memcpy(&SMS.SMS[0],Backup.SMS[smsnum],sizeof(GSM_SMSMessage));
-			DisplayMultiSMSInfo(&SMS,false,false,NULL);
+			DisplayMultiSMSInfo(&SMS,false,false,NULL, gsm);
 			if (answer_yes(_("Restore %03i sms to folder \"%s\"%s?"),
 					smsnum + 1,
 					DecodeUnicodeConsole(folders.Folder[Backup.SMS[smsnum]->Folder - 1].Name),

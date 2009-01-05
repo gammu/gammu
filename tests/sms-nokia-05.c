@@ -7,7 +7,7 @@
 #include "../common/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 
-#include "sms-printing.h"
+#include "../helper/message-display.h"
 
 unsigned char data[] = {
 	0x00, 0x02, 0x00, 0x01, 0x00, 0x00, 0x00, 0x9F, 0x00, 0x00, 0x02, 0x51, 0x00, 0x00, 0x00, 0x00,
@@ -106,7 +106,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	assert(mywstrncmp(sms.SMS[0].Text, message, len) == true);
 
 	/* Display message */
-	DisplayTestSMS(sms);
+	DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);
+	DisplayMultiSMSInfo(&sms, true, true, NULL, NULL);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);

@@ -8,8 +8,6 @@
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 #include "../common/gsmphones.h" /* Phone data */
 
-#include "sms-printing.h"
-
 extern GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsigned char *hexreq, int *current, int *length2);
 
 #define BUFFER_SIZE 16384

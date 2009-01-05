@@ -6,7 +6,7 @@
 #include "../common/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 
-#include "sms-printing.h"
+#include "../helper/message-display.h"
 
 unsigned char data[] = {
 	0x01, 0x08, 0x00, 0x08, 0x01, 0x02, 0x01, 0x00, 0x05, 0x91, 0x26, 0x18, 0x16, 0x42, 0x00, 0xF0,
@@ -56,7 +56,8 @@ int main(int argc UNUSED, char **argv UNUSED)
 	error = N6110_ReplyGetSMSMessage(msg, s);
 
 	/* Display message */
-	DisplayTestSMS(sms);
+	DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);
+	DisplayMultiSMSInfo(&sms, true, true, NULL, NULL);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
