@@ -11,9 +11,15 @@ endif (HAVE_WNOUNUSEDPARAMETER)
 set (LIBRARY_SRC
     smsdcore.c
     s_files.c
-    s_mysql.c
-    s_pgsql.c
     )
+
+if (HAVE_MYSQL_MYSQL_H)
+    list(APPEND LIBRARY_SRC s_mysql.c)
+endif (HAVE_MYSQL_MYSQL_H)
+
+if (HAVE_POSTGRESQL_LIBPQ_FE_H)
+    list(APPEND LIBRARY_SRC s_pgsql.c)
+endif (HAVE_POSTGRESQL_LIBPQ_FE_H)
 
 set (BINARY_SRC
     main.c
