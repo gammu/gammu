@@ -232,7 +232,7 @@ int main(int argc, char **argv)
 		exit(1);
 #endif
 	}
-#if WIN32
+#ifdef WIN32
 	if (params.install_service) {
 		if (install_smsd_service(&params)) {
 			printf("Service %s installed sucessfully\n",
@@ -277,7 +277,7 @@ read_config:
 		exit(1);
 #endif
 	}
-#if WIN32
+#ifdef WIN32
 	if (params.start_service) {
 		start_smsd_service_dispatcher();
 

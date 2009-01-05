@@ -139,7 +139,7 @@ bool uninstall_smsd_service(void)
 void start_smsd_service_dispatcher(void)
 {
 	SERVICE_TABLE_ENTRY DispatchTable[] = {
-		{smsd_service_name, ServiceMain},
+		{smsd_service_name_intern, ServiceMain},
 		{NULL, NULL}
 	};
 

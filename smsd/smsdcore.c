@@ -20,6 +20,12 @@
 
 #include <gammu-smsd.h>
 
+#ifdef HAVE_DUP_UNISTD_H
+#include <unistd.h>
+#elif defined(HAVE_DUP_IO_H)
+#include <io.h>
+#endif
+
 /* Some systems let waitpid(2) tell callers about stopped children. */
 #if !defined (WCONTINUED)
 #  define WCONTINUED 0
@@ -290,7 +296,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 			Config->commtimeout, Config->sendtimeout, Config->receivefrequency, Config->resetfrequency, Config->checksecurity);
 
 	Config->deliveryreport = INI_GetValue(Config->smsdcfgfile, "smsd", "deliveryreport", false);
-	if (Config->deliveryreport == NULL || (strncasecmp(Config->deliveryreport, "log", 3) != 0 && strncasecmp(Config->deliveryreport, "sms", 3) != 0)) {
+	if (Config->deliveryreport == NULL || (strcasecmp(Config->deliveryreport, "log") != 0 && strcasecmp(Config->deliveryreport, "sms") != 0)) {
 		Config->deliveryreport = "no";
 	}
 	if (uselog) WriteSMSDLog(Config, "deliveryreport = %s", Config->deliveryreport);
@@ -320,7 +326,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 		if (Config->inboxpath == NULL) Config->inboxpath = emptyPath;
 
 		Config->inboxformat=INI_GetValue(Config->smsdcfgfile, "smsd", "inboxformat", false);
-		if (Config->inboxformat == NULL || (strncasecmp(Config->inboxformat, "detail", 6) != 0 && strncasecmp(Config->inboxformat, "unicode", 7) != 0)) {
+		if (Config->inboxformat == NULL || (strcasecmp(Config->inboxformat, "detail") != 0 && strcasecmp(Config->inboxformat, "unicode") != 0)) {
 			Config->inboxformat = "standard";
 		}
 		if (uselog) WriteSMSDLog(Config, "Inbox is \"%s\" with format \"%s\"", Config->inboxpath, Config->inboxformat);
@@ -329,7 +335,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 		if (Config->outboxpath == NULL) Config->outboxpath = emptyPath;
 
 		Config->transmitformat=INI_GetValue(Config->smsdcfgfile, "smsd", "transmitformat", false);
-		if (Config->transmitformat == NULL || (strncasecmp(Config->transmitformat, "auto", 4) != 0 && strncasecmp(Config->transmitformat, "unicode", 7) != 0)) {
+		if (Config->transmitformat == NULL || (strcasecmp(Config->transmitformat, "auto") != 0 && strcasecmp(Config->transmitformat, "unicode") != 0)) {
 			Config->transmitformat = "7bit";
 		}
 		if (uselog) WriteSMSDLog(Config, "Outbox is \"%s\" with transmission format \"%s\"", Config->outboxpath, Config->transmitformat);

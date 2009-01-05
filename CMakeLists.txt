@@ -128,6 +128,8 @@ check_symbol_exists (getopt_long "getopt.h" HAVE_GETOPT_LONG)
 check_symbol_exists (daemon "unistd.h" HAVE_DAEMON)
 check_symbol_exists (kill "signal.h" HAVE_KILL)
 check_symbol_exists (SIGHUP "signal.h" HAVE_SIGHUP)
+check_symbol_exists (dup "unistd.h" HAVE_DUP_UNISTD_H)
+check_symbol_exists (dup "io.h" HAVE_DUP_IO_H)
 check_c_source_compiles ("
 #define _BSD_SOURCE
 #include <stdio.h>

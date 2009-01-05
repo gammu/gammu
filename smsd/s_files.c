@@ -69,7 +69,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 		}
 		errno = 0;
 
-		if ((sms->SMS[i].PDU == SMS_Status_Report) && strncasecmp(Config->deliveryreport, "log", 3) == 0) {
+		if ((sms->SMS[i].PDU == SMS_Status_Report) && strcasecmp(Config->deliveryreport, "log") == 0) {
 			strcpy(buffer, DecodeUnicodeString(sms->SMS[i].Number));
 			WriteSMSDLog(Config, "Delivery report: %s to %s", DecodeUnicodeString(sms->SMS[i].Text), buffer);
 		} else {
@@ -342,7 +342,7 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 	strcpy(ofilename, destpath);
 	strcat(ofilename, ID);
 
-	if (!strncasecmp(ifilename, ofilename, strlen(ofilename) == 0)) {
+	if (strcmp(ifilename, ofilename) != 0) {
 		iFile = fopen(ifilename, "r");
 		if (iFile == NULL) {
 			return ERR_CANTOPENFILE;
