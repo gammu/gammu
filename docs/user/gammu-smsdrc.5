@@ -129,12 +129,12 @@ identifiers of received messages depending on used service backend (some
 backends might not support this feature).
 
 .TP
-.BI DebugService
+.BI DebugLevel
 
-Debug level for a service. The integer value should be sum of all flags you
-want to enable. Generally 1 enables some basic information and 2 enables
-logging of SQL queries for database backends, so value of 3 should give all
-debug information for current services.
+Debug level for SMSD. The integer value should be sum of all flags you
+want to enable. Generally 1 enables some basic debugging information and 2
+enables logging of SQL queries for database backends, so value of 3 should
+give all debug information for current services.
 
 Default is 0, what should mean no extra information.
 

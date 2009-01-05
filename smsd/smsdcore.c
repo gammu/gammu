@@ -274,11 +274,11 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 		if (uselog) WriteSMSDLog(Config, "PIN code is \"%s\"",Config->PINCode);
 	}
 
-	str = INI_GetValue(Config->smsdcfgfile, "smsd", "debugservice", false);
+	str = INI_GetValue(Config->smsdcfgfile, "smsd", "debuglevel", false);
 	if (str)
-		Config->debug_service = atoi(str);
+		Config->debug_level = atoi(str);
 	else
-		Config->debug_service = 0;
+		Config->debug_level = 0;
 
 	str = INI_GetValue(Config->smsdcfgfile, "smsd", "commtimeout", false);
 	if (str) Config->commtimeout=atoi(str); else Config->commtimeout = 30;

@@ -149,7 +149,7 @@ static void SMSDPgSQL_LogError(GSM_SMSDConfig *Config, PGresult *Res)
 
 static GSM_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, const char *query, PGresult **Res)
 {
-	if ((Config->debug_service & 2) != 0) {
+	if ((Config->debug_level & 2) != 0) {
 		WriteSMSDLog(Config, "Execute SQL: %s\n", query);
 	}
 
@@ -525,10 +525,9 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 
 		if (PQgetvalue(Res, 0, 0) == NULL
 		    || strlen(PQgetvalue(Res, 0, 0)) == 0) {
-/* FIXME: This should be enabled by SMSD configuration? */
-#if 0
-			dbgprintf("%s\n", PQgetvalue(Res, 0, 4));
-#endif
+			if ((Config->debug_level & 1) != 0) {
+				WriteSMSDLog(Config, "Message: %s\n", PQgetvalue(Res, 0, 4));
+			}
 			DecodeUTF8(sms->SMS[sms->Number].Text,
 				   PQgetvalue(Res, 0, 4),
 				   strlen(PQgetvalue(Res, 0, 4)));
