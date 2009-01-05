@@ -35,6 +35,7 @@ ChangeLog
 [+] * SMSD can now natively run as a Windows service (bug #451).
 [+] * SMSD backend services debugging can be now enabled by DebugService.
 [-] * Proper reconnecting support for MySQL.
+[-] * Better error logging of PostgtreSQL SMSD service.
 [-] * SMSD now properly frees allocated memory.
 [+] * SMSD now handles SIGHUP for rereading configuration.
 [+] * Added LSB init script for SMSD.
