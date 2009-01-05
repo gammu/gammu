@@ -699,54 +699,6 @@ void GetEachMMS(int argc, char *argv[])
 	GSM_Terminate();
 }
 
-void DisplaySMSFrame(GSM_SMSMessage *SMS)
-{
-	GSM_Error 		error;
-	int			i, length, current = 0;
-	unsigned char		req[1000], buffer[1000], hexreq[1000];
-#ifdef OSCAR
-        unsigned char           hexmsg[1000], hexudh[1000];
-#endif
-	error=PHONE_EncodeSMSFrame(gsm,SMS,buffer,PHONE_SMSSubmit,&length,true);
-	if (error != ERR_NONE) {
-		printf("%s\n", _("Error"));
-		exit(-1);
-	}
-        length = length - PHONE_SMSSubmit.Text;
-#ifdef OSCAR
-        for(i=SMS->UDH.Length;i<length;i++) {
-		req[i-SMS->UDH.Length]=buffer[PHONE_SMSSubmit.Text+i];
-	}
-        EncodeHexBin(hexmsg, req, length-SMS->UDH.Length);
-
-        for(i=0;i<SMS->UDH.Length;i++) {
-		req[i]=buffer[PHONE_SMSSubmit.Text+i];
-	}
-        EncodeHexBin(hexudh, req, SMS->UDH.Length);
-
-        printf(_("msg:%s nb:%i udh:%s\n"),
-                hexmsg,
-                (buffer[PHONE_SMSSubmit.TPUDL]-SMS->UDH.Length)*8,
-                hexudh);
-#else
-	for (i=0;i<buffer[PHONE_SMSSubmit.SMSCNumber]+1;i++) {
-		req[current++]=buffer[PHONE_SMSSubmit.SMSCNumber+i];
-	}
-	req[current++]=buffer[PHONE_SMSSubmit.firstbyte];
-	req[current++]=buffer[PHONE_SMSSubmit.TPMR];
-	for (i=0;i<((buffer[PHONE_SMSSubmit.Number]+1)/2+1)+1;i++) {
-		req[current++]=buffer[PHONE_SMSSubmit.Number+i];
-	}
-	req[current++]=buffer[PHONE_SMSSubmit.TPPID];
-	req[current++]=buffer[PHONE_SMSSubmit.TPDCS];
-	req[current++]=buffer[PHONE_SMSSubmit.TPVP];
-	req[current++]=buffer[PHONE_SMSSubmit.TPUDL];
-	for(i=0;i<length;i++) req[current++]=buffer[PHONE_SMSSubmit.Text+i];
-	EncodeHexBin(hexreq, req, current);
-	printf("%s\n\n",hexreq);
-#endif
-}
-
 #define SEND_SAVE_SMS_BUFFER_SIZE 10000
 
 GSM_Error SMSStatus;
@@ -1964,7 +1916,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 			CopyUnicodeString(sms.SMS[i].Number, Sender);
 			CopyUnicodeString(sms.SMS[i].SMSC.Number, SMSC);
 			if (Validity.Format != 0) memcpy(&sms.SMS[i].SMSC.Validity,&Validity,sizeof(GSM_SMSValidity));
-			DisplaySMSFrame(&sms.SMS[i]);
+			DisplaySMSFrame(&sms.SMS[i], gsm);
 		}
 
 		printf("\n");
