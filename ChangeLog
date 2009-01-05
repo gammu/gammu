@@ -33,7 +33,7 @@ ChangeLog
 [+] * SMSD can now write PID file.
 [+] * Added man pages for gammu-smsd(1), gammu-smsdrc(5) and gammurc(5).
 [+] * SMSD can now natively run as a Windows service (bug #451).
-[+] * SMSD backend services debugging can be now enabled by DebugService.
+[+] * SMSD debugging can be now enabled by DebugLevel directive.
 [-] * Proper reconnecting support for MySQL.
 [-] * Better error logging of PostgtreSQL SMSD service.
 [-] * SMSD now properly frees allocated memory.

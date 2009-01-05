@@ -143,7 +143,7 @@ static void SMSDMySQL_LogError(GSM_SMSDConfig *Config)
 
 static GSM_Error SMSDMySQL_Query_Real(GSM_SMSDConfig *Config, const char *query, bool retry)
 {
-	if ((Config->debug_service & 2) != 0) {
+	if ((Config->debug_level & 2) != 0) {
 		WriteSMSDLog(Config, "Execute SQL: %s\n", query);
 	}
 
@@ -454,10 +454,9 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 		if (!strcmp(Row[1],"Default_No_Compression")) sms->SMS[sms->Number].Coding=SMS_Coding_Default_No_Compression;
 
 		if (Row[0] == NULL || strlen(Row[0])==0) {
-/* FIXME: This should be enabled by SMSD configuration? */
-#if 0
-			dbgprintf("%s\n",Row[4]);
-#endif
+			if ((Config->debug_level & 1) != 0) {
+				WriteSMSDLog(Config, "Message: %s\n", Row[4]);
+			}
 			DecodeUTF8(sms->SMS[sms->Number].Text,Row[4],strlen(Row[4]));
 		} else {
 			switch (sms->SMS[sms->Number].Coding) {

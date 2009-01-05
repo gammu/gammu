@@ -56,12 +56,13 @@
 #                       are not paired with sent messages. Default: 10
 # phoneid - string with info about phone used for sending/receiving
 # runonreceive - executes program after receiving message
+# DebugLevel - debugging level for SMSD
 [smsd]
 service = files
 PIN = 1234
 logfile = smsdlog
-commtimeout = 10
-sendtimeout = 10
+commtimeout = 30
+sendtimeout = 30
 #receivefrequency = 0
 #checksecurity = 1
 #resetfrequency = 0
@@ -69,6 +70,7 @@ sendtimeout = 10
 #phoneid = MyPhone1
 #deliveryreportdelay = 10
 #runonreceive = /some/script
+debuglevel = 0
 
 # ----------------- SETTINGS FOR --smsd MYSQL or --smsd PGSQL -------------------
 user = gammu
