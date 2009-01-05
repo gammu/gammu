@@ -9,7 +9,7 @@
 #include "memory.h"
 #include "message.h"
 #include "common.h"
-#include "formats.h"
+#include "../helper/formats.h"
 
 #include "../helper/message-display.h"
 #include "../helper/memory-display.h"
