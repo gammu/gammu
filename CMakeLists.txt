@@ -396,7 +396,9 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     #
     set (ENABLE_PROTECTION ON CACHE BOOL "Enable compile time protections (stack, read only code, fortify in libc...)")
     if (ENABLE_PROTECTION)
-        MACRO_TUNE_COMPILER("-Wp,-D_FORTIFY_SOURCE=2")
+        # Need to enable -O to make fortify work
+        set (CMAKE_C_FLAGS_DEBUG "-g -O")
+        add_definitions(-D_FORTIFY_SOURCE=2)
 
         # Text address randomisation, disabled for now, seems to cause problems
         #    MACRO_TUNE_COMPILER("-fPIE")
