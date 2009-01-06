@@ -641,11 +641,10 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 					sprintf(buffer4+strlen(buffer4),"%i')",ID);
 					if (SMSDMySQL_Query(Config, buffer4) != ERR_NONE) {
 						if (mysql_errno(&Config->DBConnMySQL) == ER_DUP_ENTRY) {
-							SMSD_Log(0, Config, "Duplicated outgoing SMS ID\n");
+							SMSD_Log(-1, Config, "Duplicated outgoing SMS ID\n");
 							continue;
 						}
 						SMSD_Log(0, Config, "Error writing to database (%s): %s\n", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
-						SMSD_Log(0, Config, "Failed query: %s\n", buffer4);
 						return ERR_UNKNOWN;
 					}
 					mysql_free_result(Res);
