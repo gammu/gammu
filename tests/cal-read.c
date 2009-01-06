@@ -11,7 +11,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <assert.h>
+
+#include "common.h"
 
 int main(int argc, char **argv)
 {
@@ -46,11 +47,11 @@ int main(int argc, char **argv)
 
 	/* Open file */
 	f = fopen(argv[1], "r");
-	assert(f != NULL);
+	test_result(f != NULL);
 
 	/* Read data */
 	len = fread(buffer, 1, sizeof(buffer) - 1, f);
-	assert(feof(f));
+	test_result(feof(f));
 
 	/* Zero terminate string */
 	buffer[len] = 0;

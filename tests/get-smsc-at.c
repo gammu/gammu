@@ -4,7 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <assert.h>
+
+#include "common.h"
+
 #include "../common/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 #include "../common/gsmphones.h" /* Phone data */
@@ -34,11 +36,11 @@ int main(int argc, char **argv)
 
 	/* Open file */
 	f = fopen(argv[1], "r");
-	assert(f != NULL);
+	test_result(f != NULL);
 
 	/* Read data */
 	len = fread(buffer, 1, sizeof(buffer) - 1, f);
-	assert(feof(f));
+	test_result(feof(f));
 
 	/* Zero terminate data */
 	buffer[len] = 0;
@@ -53,7 +55,7 @@ int main(int argc, char **argv)
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
-	assert(s != NULL);
+	test_result(s != NULL);
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(true, debug_info);
 	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
