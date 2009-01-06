@@ -13,6 +13,7 @@
 
 #include "../helper/message-display.h"
 #include "../helper/memory-display.h"
+#include "../helper/printing.h"
 
 #ifdef GSM_ENABLE_BACKUP
 void SaveFile(int argc, char *argv[])

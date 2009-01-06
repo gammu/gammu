@@ -15,43 +15,10 @@
 #include "../common/misc/locales.h"
 
 #include "formats.h"
+#include "printing.h"
 #include "message-cmdline.h"
 
 #define SEND_SAVE_SMS_BUFFER_SIZE 10000
-
-/* FIXME: this should be moved to another helper! */
-PRINTF_STYLE(1, 2)
-static int printf_err(const char *format, ...)
-{
-	va_list ap;
-	int ret;
-
-	/* l10n: Generic prefix for error messages */
-	printf("%s: ", _("Error"));
-
-	va_start(ap, format);
-	ret = vprintf(format, ap);
-	va_end(ap);
-
-	return ret;
-}
-
-/* FIXME: this should be moved to another helper! */
-PRINTF_STYLE(1, 2)
-static int printf_warn(const char *format, ...)
-{
-	va_list ap;
-	int ret;
-
-	/* l10n: Generic prefix for warning messages */
-	printf("%s: ", _("Warning"));
-
-	va_start(ap, format);
-	ret = vprintf(format, ap);
-	va_end(ap);
-
-	return ret;
-}
 
 GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int argc, int typearg, char *argv[], GSM_StateMachine *sm)
 {
