@@ -46,7 +46,7 @@ void SMSDaemon(int argc, char *argv[]);
  *
  * \return Error code
  */
-GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *sms);
+GSM_Error SMSD_InjectSMS(char *service, const char *filename, GSM_MultiSMSMessage *sms);
 
 /**
  * Logs a message to SMSD log.

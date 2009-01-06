@@ -961,22 +961,28 @@ void SMSDaemon(int argc UNUSED, char *argv[])
 	SMSD_MainLoop(&SMSDaemon_Config);
 }
 
-GSM_Error SMSDaemonSendSMS(char *service, char *filename, GSM_MultiSMSMessage *sms)
+GSM_Error SMSD_InjectSMS(char *service, const char *filename, GSM_MultiSMSMessage *sms)
 {
 	GSM_SMSDService		*Service;
-	GSM_SMSDConfig		Config;
+	GSM_SMSDConfig		*Config;
 	GSM_Error error;
 
-	error = SMSD_ReadConfig(filename, &Config, false, service);
+	Config = SMSD_NewConfig();
+
+	error = SMSD_ReadConfig(filename, Config, false, service);
 	if (error != ERR_NONE) return ERR_UNKNOWN;
 
-	error = SMSGetService(&Config, &Service);
+	error = SMSGetService(Config, &Service);
 	if (error != ERR_NONE) return ERR_UNKNOWN;
 
-	error = Service->Init(&Config);
+	error = Service->Init(Config);
 	if (error != ERR_NONE) return ERR_UNKNOWN;
 
-	return Service->CreateOutboxSMS(sms,&Config);
+	error = Service->CreateOutboxSMS(sms, Config);
+
+	SMSD_FreeConfig(Config);
+
+	return error;
 }
 
 GSM_Error SMSD_NoneFunction(void)

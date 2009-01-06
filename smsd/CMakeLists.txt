@@ -21,17 +21,21 @@ if (HAVE_POSTGRESQL_LIBPQ_FE_H)
     list(APPEND LIBRARY_SRC s_pgsql.c)
 endif (HAVE_POSTGRESQL_LIBPQ_FE_H)
 
-set (BINARY_SRC
+set (DAEMON_SRC
     main.c
     )
 
 if (WIN32)
-    list(APPEND BINARY_SRC service.c)
+    list(APPEND DAEMON_SRC service.c)
 endif (WIN32)
 
 if (HAVE_KILL)
-    list(APPEND BINARY_SRC pidfile.c)
+    list(APPEND DAEMON_SRC pidfile.c)
 endif (HAVE_KILL)
+
+set (INJECT_SRC
+    inject.c
+    )
 
 # Hides default case in switch, to allow checking whether all cases are handled.
 if(DEBUG)
@@ -50,10 +54,17 @@ endif (CMAKE_COMPILER_IS_GNUCC AND NOT CMAKE_COMPILER_IS_MINGW AND NOT CMAKE_COM
 target_link_libraries (gsmsd libGammu)
 
 # Gammu-smsd program
-add_executable (gammu-smsd ${BINARY_SRC})
+add_executable (gammu-smsd ${DAEMON_SRC})
 
 target_link_libraries (gammu-smsd libGammu)
 target_link_libraries (gammu-smsd gsmsd)
+
+# Gammu-smsd-inject program
+add_executable (gammu-smsd-inject ${INJECT_SRC})
+
+target_link_libraries (gammu-smsd-inject libGammu)
+target_link_libraries (gammu-smsd-inject gsmsd)
+target_link_libraries (gammu-smsd-inject messagecmdline)
 
 include_directories (
     "${Gammu_BINARY_DIR}/include"
