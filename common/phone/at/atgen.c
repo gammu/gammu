@@ -3374,7 +3374,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		Replies 			= s->ReplyNum;
 		s->ReplyNum			= 1;
 		smprintf(s,"Waiting for modem prompt\n");
-		ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 3, ID_SaveSMSMessage);
+		ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 20, ID_SaveSMSMessage);
 		s->ReplyNum			 = Replies;
 		if (error == ERR_NONE) {
 			Phone->DispatchError 	= ERR_TIMEOUT;
@@ -3481,7 +3481,7 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	Replies 			= s->ReplyNum;
 	s->ReplyNum			= 1;
 	smprintf(s,"Waiting for modem prompt\n");
-	ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 3, ID_IncomingFrame);
+	ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 20, ID_IncomingFrame);
 	s->ReplyNum			 = Replies;
 	if (error == ERR_NONE) {
 		smprintf(s, "Sending SMS\n");
