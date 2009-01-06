@@ -1284,8 +1284,6 @@ void GSM_DumpMessageLevel2_Text(GSM_StateMachine *s, unsigned const char *messag
 		smprintf(s, "type 0x%02X/length 0x%02X/%i",
 				type, messagesize, messagesize);
 		DumpMessage(curdi, message, messagesize);
-		if (messagesize == 0)
-			smprintf(s,"\n");
 	}
 }
 

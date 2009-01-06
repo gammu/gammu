@@ -291,9 +291,9 @@ void DumpMessage(GSM_Debug_Info *d, const unsigned char *message, const int mess
 	int i, j = 0;
 	char buffer[(CHARS_PER_LINE * 5) + 1];
 
-	if (d->df == NULL || messagesize == 0) return;
-
 	smfprintf(d, "\n");
+
+	if (messagesize == 0) return;
 
 	memset(buffer, ' ', CHARS_PER_LINE * 5);
 	buffer[CHARS_PER_LINE * 5] = 0;
