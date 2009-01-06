@@ -103,6 +103,17 @@ int main(int argc UNUSED, char **argv UNUSED)
 		return 1;
 	}
 
+	Priv->Charset = AT_CHARSET_GSM;
+	Priv->Manufacturer = AT_Motorola;
+	error = ATGEN_ParseReply(s,
+					"+CPBR: (1-250),50,14,,,,40,20",
+					"+CPBR: (@i-@i), @i, @i, @0",
+			&i, &i, &i, &i);
+	if (error != ERR_NONE) {
+		printf("%s\n", GSM_ErrorString(error));
+		return 1;
+	}
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
