@@ -20,6 +20,7 @@
 #ifdef HAVE_KILL
 #include "pidfile.h"
 #endif
+#include <errno.h>
 #include "common.h"
 
 #if !defined(WIN32) && (defined(HAVE_GETOPT) || defined(HAVE_GETOPT_LONG))
@@ -270,7 +271,10 @@ read_config:
 
 	if (params.daemonize) {
 #ifdef HAVE_DAEMON
-		daemon(1, 0);
+		if (daemon(1, 0) != 0) {
+			fprintf(stderr, "daemonizing failed! (%s)\n", strerror(errno));
+			exit(1);
+		}
 #else
 		fprintf(stderr,
 			"daemon mode is not supported on your platform!\n");
