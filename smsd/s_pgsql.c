@@ -837,6 +837,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 			PQclear(Res);
 		}
 	}
+	SMSD_Log(0, Config, "Written message with ID %i\n", ID);
 	return ERR_NONE;
 }
 

@@ -661,6 +661,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 			}
 		}
 	}
+	SMSD_Log(0, Config, "Written message with ID %i\n", ID);
   	return ERR_NONE;
 }
 
