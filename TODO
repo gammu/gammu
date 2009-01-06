@@ -1,0 +1,8 @@
+- logging of errors from SMSD should also go to stderr (eg. when it can not
+  connect to a database)
+- SMS TEXT should accept -text and should not wait for input then
+- returned location for AT engine is wrong:
+$ echo 'aa' | ./gammu/gammu savesms TEXT 123465
+Saving SMS 1/1
+Saved in folder "", location -99999, SIM
+
