@@ -46,15 +46,6 @@ NORETURN void version(void)
 	printf("Built %s on %s using %s\n", __TIME__, __DATE__, GetCompiler());
 	printf("Compiled in features:\n");
 	printf("OS support:\n");
-#ifdef HAVE_DAEMON
-	printf("  - %s\n", "DAEMON");
-#endif
-#ifdef HAVE_KILL
-	printf("  - %s\n", "PID");
-#endif
-#ifdef WIN32
-	printf("  - %s\n", "WINDOWS_SERVICE");
-#endif
 #ifdef HAVE_GETOPT
 	printf("  - %s\n", "GETOPT");
 #endif
