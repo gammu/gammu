@@ -250,7 +250,7 @@ read_config:
 	config = SMSD_NewConfig();
 	assert(config != NULL);
 
-	error = SMSD_ReadConfig(params.config_file, config, true, NULL);
+	error = SMSD_ReadConfig(params.config_file, config, true);
 	if (error != ERR_NONE) {
 		SMSD_Terminate(config, "Failed to read config", error, true, 2);
 	}

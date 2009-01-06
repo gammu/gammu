@@ -183,7 +183,7 @@ void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 }
 
 
-GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool uselog, char *service)
+GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool uselog)
 {
 	GSM_Config 		smsdcfg;
 	GSM_Config 		*gammucfg;
@@ -241,15 +241,11 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 #endif
 	}
 
-	if (service != NULL) {
-		Config->Service = strdup(service);
-	} else {
-		Config->Service = INI_GetValue(Config->smsdcfgfile, "smsd", "service", false);
-		if (Config->Service == NULL) {
-			fprintf(stderr, "No SMSD service configure!\n");
-			if (uselog) WriteSMSDLog(Config, "No SMSD service configured!");
-			return ERR_UNCONFIGURED;
-		}
+	Config->Service = INI_GetValue(Config->smsdcfgfile, "smsd", "service", false);
+	if (Config->Service == NULL) {
+		fprintf(stderr, "No SMSD service configure!\n");
+		if (uselog) WriteSMSDLog(Config, "No SMSD service configured!");
+		return ERR_UNCONFIGURED;
 	}
 
 	if (uselog) WriteSMSDLog(Config, "Starting GAMMU smsd");
@@ -943,25 +939,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 	return ERR_NONE;
 }
 
-void SMSDaemon(int argc UNUSED, char *argv[])
-{
-	GSM_Error		error;
-
-	fprintf(stderr,"Warning: This is deprecated functionality and will be removed!\n");
-
-	error = SMSD_ReadConfig(argv[3], &SMSDaemon_Config, true, argv[2]);
-	if (error != ERR_NONE) {
-		SMSD_Terminate(&SMSDaemon_Config, "Failed to read config, stopping Gammu smsd", error, true, -1);
-	}
-
-	signal(SIGINT, SMSDaemon_Interrupt);
-	signal(SIGTERM, SMSDaemon_Interrupt);
-	fprintf(stderr,"Press Ctrl+C to stop the program ...\n");
-
-	SMSD_MainLoop(&SMSDaemon_Config);
-}
-
-GSM_Error SMSD_InjectSMS(char *service, const char *filename, GSM_MultiSMSMessage *sms)
+GSM_Error SMSD_InjectSMS(const char *filename, GSM_MultiSMSMessage *sms)
 {
 	GSM_SMSDService		*Service;
 	GSM_SMSDConfig		*Config;
@@ -969,7 +947,7 @@ GSM_Error SMSD_InjectSMS(char *service, const char *filename, GSM_MultiSMSMessag
 
 	Config = SMSD_NewConfig();
 
-	error = SMSD_ReadConfig(filename, Config, false, service);
+	error = SMSD_ReadConfig(filename, Config, false);
 	if (error != ERR_NONE) return ERR_UNKNOWN;
 
 	error = SMSGetService(Config, &Service);

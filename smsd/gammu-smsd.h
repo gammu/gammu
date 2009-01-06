@@ -23,30 +23,14 @@
 typedef struct _GSM_SMSDConfig GSM_SMSDConfig;
 
 /**
- * Creates SMSD daemon based on parameters. It performs no parameter
- * checking and expects argc = 2 and argv = ["service", "configfile"],
- * otherwise it will crash. Also you can not start more than one
- * instances of this function.
- *
- * \deprecated{Do not use this function,it is only included for
- * backward compatibility of Gammu binary and will be removed in
- * future versions!}
- *
- * \param argc number of arguments
- * \param argv argument strings
- */
-void SMSDaemon(int argc, char *argv[]);
-
-/**
  * Enqueues SMS message in SMS daemon queue.
  *
- * \param service Service name override, can be (and should be) NULL.
  * \param filename SMSD configuration file.
  * \param sms Message data to send.
  *
  * \return Error code
  */
-GSM_Error SMSD_InjectSMS(char *service, const char *filename, GSM_MultiSMSMessage *sms);
+GSM_Error SMSD_InjectSMS(const char *filename, GSM_MultiSMSMessage *sms);
 
 /**
  * Logs a message to SMSD log.
@@ -64,7 +48,7 @@ void WriteSMSDLog(GSM_SMSDConfig *Config, const char *format, ...);
  */
 void SMSD_Shutdown(GSM_SMSDConfig *Config);
 
-GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool uselog, char *service);
+GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool uselog);
 
 void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bool exitprogram, int rc);
 
