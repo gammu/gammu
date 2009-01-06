@@ -47,6 +47,7 @@ ChangeLog
 [!] * Gammu binary now does not support any SMSD operations.
 [+] * Sending TEXT message now accepts text using -text parameter.
 [+] * Improved logging differentiation of SMSD log messages.
+[-] * Properly remove messages from queue when sending fails (bug #778).
     
 20081219 - 1.22.1
 
