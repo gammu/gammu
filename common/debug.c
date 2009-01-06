@@ -46,7 +46,7 @@ void dbg_write(GSM_Debug_Info *d, const char *text)
     if (d->log_function != NULL) {
         d->log_function(text, d->user_data);
     } else if (d->df != NULL) {
-        fwrite(text, sizeof(char), strlen(text), d->df);
+        fprintf(d->df, "%s", text);
     }
 
 
