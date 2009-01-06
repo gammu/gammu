@@ -27,6 +27,7 @@ target_link_libraries (messagedisplay memorydisplay)
 
 # Tune options for found libraries
 if (GETTEXTLIBS_FOUND)
-    target_link_libraries (gammu ${GETTEXT_LIBRARY})
+    target_link_libraries (messagedisplay ${GETTEXT_LIBRARIES})
+    target_link_libraries (printing ${GETTEXT_LIBRARIES})
     include_directories (${GETTEXT_INCLUDE_DIR})
 endif (GETTEXTLIBS_FOUND)

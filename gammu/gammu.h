@@ -37,7 +37,7 @@ typedef enum {
 	H_Decode,
 #endif
 	H_Gammu,
-	H_SMSD,
+	H_Obsolete,
 	H_Other
 } HelpCategory;
 

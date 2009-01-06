@@ -24,8 +24,6 @@
 #include "calendar.h"
 #include "misc.h"
 
-#include <gammu-smsd.h>
-
 #include "../common/misc/locales.h"
 #include "../helper/printing.h"
 
@@ -475,6 +473,20 @@ static void RunBatch(int argc, char *argv[])
 	fclose(bf);
 }
 
+NORETURN
+void SendSMSDSMSObsolete(int argc, char *argv[])
+{
+	printf_err("%s\n", _("SMS daemon is now in separate binary, please use gammu-smsd-inject instead of gammu sendsmsdsms!"));
+	exit(2);
+}
+
+NORETURN
+void SMSDaemonObsolete(int argc, char *argv[])
+{
+	printf_err("%s\n", _("SMS daemon is now in separate binary, please use gammu-smsd instead of gammu smsd!"));
+	exit(2);
+}
+
 void Help(int argc, char *argv[]);
 
 static GSM_Parameters Parameters[] = {
@@ -587,14 +599,8 @@ static GSM_Parameters Parameters[] = {
 	{"displaysms",		2,30, SendSaveDisplaySMS,	{H_SMS,0},			"... (options like in sendsms)"},
 
 	{"addsmsfolder",		1, 1, AddSMSFolder,		{H_SMS,0},			"name"},
-#ifdef HAVE_MYSQL_MYSQL_H
-	{"smsd",			2, 2, SMSDaemon,		{H_SMS,H_SMSD,0},		"MYSQL configfile"},
-#endif
-#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-	{"smsd",			2, 2, SMSDaemon,		{H_SMS,H_SMSD,0},		"PGSQL configfile"},
-#endif
-	{"smsd",			2, 2, SMSDaemon,		{H_SMS,H_SMSD,0},		"FILES configfile"},
-	{"sendsmsdsms",		2,30, SendSaveDisplaySMS,	{H_SMS,H_SMSD,0},		"TEXT|WAPSETTINGS|... destination FILES|MYSQL|PGSQL configfile ... (options like in sendsms)"},
+	{"smsd",			2, 2, SMSDaemonObsolete,	{H_Obsolete,0},		""},
+	{"sendsmsdsms",		2,30, SendSMSDSMSObsolete,	{H_Obsolete,0},		""},
 	{"getmmsfolders",		0, 0, GetMMSFolders,		{H_MMS,0},			""},
 	{"getallmms",			0, 1, GetEachMMS,		{H_MMS,0},			"[-save]"},
 	{"geteachmms",		0, 1, GetEachMMS,		{H_MMS,0},			"[-save]"},
@@ -755,7 +761,6 @@ static HelpCategoryDescriptions HelpDescriptions[] = {
 #endif
 	{H_Other,	"other",	N_("Functions that don't fit elsewhere")},
 	{H_Gammu,	"gammu",	N_("Gammu information")},
-	{H_SMSD,	"smsd",		N_("SMS daemon")},
 	{0,		NULL,		NULL}
 /* *INDENT-ON* */
 };

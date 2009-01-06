@@ -44,6 +44,7 @@ ChangeLog
 [-] * Avoid duplicating of same code in command line and tests for
       messages displaying.
 [!] * New binary gammu-smsd-inject to inject messages to SMSD.
+[!] * Gammu binary now does not support any SMSD operations.
     
 20081219 - 1.22.1
 

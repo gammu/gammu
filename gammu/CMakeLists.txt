@@ -44,7 +44,6 @@ target_link_libraries (gammu messagedisplay)
 target_link_libraries (gammu messagecmdline)
 target_link_libraries (gammu memorydisplay)
 target_link_libraries (gammu printing)
-target_link_libraries (gammu gsmsd)
 target_link_libraries (gammu ${CMAKE_THREAD_LIBS_INIT})
 
 include_directories (
@@ -52,7 +51,7 @@ include_directories (
     )
 # Tune options for found libraries
 if (GETTEXTLIBS_FOUND)
-    target_link_libraries (gammu ${GETTEXT_LIBRARY})
+    target_link_libraries (gammu ${GETTEXT_LIBRARIES})
     include_directories (${GETTEXT_INCLUDE_DIR})
 endif (GETTEXTLIBS_FOUND)
 
@@ -60,16 +59,6 @@ if (CURL_FOUND)
     target_link_libraries (gammu ${CURL_LIBRARIES})
     include_directories (${CURL_INCLUDE_DIR})
 endif (CURL_FOUND)
-
-# Add libraries needed for windows build
-if (WIN32)
-    # Magic needed for SHGetFolderPathA
-    target_link_libraries (gammu shfolder shell32)
-    # Win sock
-    target_link_libraries (gammu ws2_32)
-    # These libraries are needed for serial driver
-    target_link_libraries (gammu setupapi advapi32)
-endif (WIN32)
 
 install (TARGETS gammu
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
