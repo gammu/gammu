@@ -517,6 +517,7 @@ set (MAN1_PAGES
     docs/user/gammu.1
     docs/user/gammu-config.1
     docs/user/gammu-smsd.1
+    docs/user/gammu-smsd-inject.1
     docs/user/jadmaker.1
     )
 
