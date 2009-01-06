@@ -113,10 +113,20 @@ Save text message up to standard 160 chars:
 
 echo "All your base are belong to us" | gammu savesms TEXT
 
+or 
+
+gammu savesms TEXT \\-text "All your base are belong to us"
+
 .TP
 Save long text message:
 
 echo "All your base are belong to us" | gammu savesms TEXT \\-maxlen 400
+
+or 
+
+gammu savesms TEXT \\-maxlen 400 \\-text "All your base are belong to us"
+
+or
 
 gammu savesms EMS \\-text "All your base are belong to us"
 
@@ -479,7 +489,8 @@ to given.
 HELP['savefile CALENDAR'] = ''''''
 HELP['savefile TODO'] = ''''''
 HELP['savefile'] = '''''' 
-HELP['savesms TEXT'] = '''Take text from stdin and save as text SMS into SIM/phone memory.
+HELP['savesms TEXT'] = '''Take text from stdin (or commandline if \\-text specified) 
+and save as text SMS into SIM/phone memory.
 
 \\fB\\-folder number\\fR - save to specified folder. Numerate folders from 1.
 The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use \\fBgetsmsfolders\\fR to get folder list.
@@ -523,6 +534,8 @@ only beep, vibrate or turn on light. Text will be cut to 1 sms.
 \\fB\\-unicode\\fR - SMS will be saved in Unicode format
 
 \\fB\\-inputunicode\\fR - input text is in Unicode.
+
+\\fB\\-text\\fR - get text from command line instead of stdin.
 
 \\fITIP:\\fR
 You can create Unicode file using WordPad in Win32 (during saving select

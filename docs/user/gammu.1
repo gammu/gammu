@@ -286,8 +286,9 @@ it correctly later in phone composer (for example, in 33xx)
 .BI "savesms SMSTEMPLATE" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]"
 
 .TP
-.BI "savesms TEXT" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file]"
-Take text from stdin and save as text SMS into SIM/phone memory.
+.BI "savesms TEXT" " [\-folder id] [\-unread] [\-read] [\-unsent] [\-sent] [\-sender number] [\-smsname name] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext]"
+Take text from stdin (or commandline if \-text specified) 
+and save as text SMS into SIM/phone memory.
 
 \fB\-folder number\fR - save to specified folder. Numerate folders from 1.
 The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use \fBgetsmsfolders\fR to get folder list.
@@ -331,6 +332,8 @@ only beep, vibrate or turn on light. Text will be cut to 1 sms.
 \fB\-unicode\fR - SMS will be saved in Unicode format
 
 \fB\-inputunicode\fR - input text is in Unicode.
+
+\fB\-text\fR - get text from command line instead of stdin.
 
 \fITIP:\fR
 You can create Unicode file using WordPad in Win32 (during saving select
@@ -402,7 +405,7 @@ Read WAP settings from file created by \fBbackup\fR option and saves in Nokia fo
 .BI "sendsms SMSTEMPLATE" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-unicode] [\-text text] [\-unicodefiletext file] [\-defsound ID] [\-defanimation ID] [\-tone10 file] [\-tone10long file] [\-tone12 file] [\-tone12long file] [\-toneSE file] [\-toneSElong file] [\-variablebitmap file] [\-variablebitmaplong file] [\-animation frames file1 ...]"
 
 .TP
-.BI "sendsms TEXT" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file]"
+.BI "sendsms TEXT" " destination [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num] [\-inputunicode] [\-16bit] [\-flash] [\-len len] [\-autolen len] [\-unicode] [\-enablevoice] [\-disablevoice] [\-enablefax] [\-disablefax] [\-enableemail] [\-disableemail] [\-voidsms] [\-replacemessages ID] [\-replacefile file] [\-text msgtext]"
 
 .TP
 .BI "sendsms TODO" " destination file location [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
@@ -2061,10 +2064,20 @@ Save text message up to standard 160 chars:
 
 echo "All your base are belong to us" | gammu savesms TEXT
 
+or 
+
+gammu savesms TEXT \-text "All your base are belong to us"
+
 .TP
 Save long text message:
 
 echo "All your base are belong to us" | gammu savesms TEXT \-maxlen 400
+
+or 
+
+gammu savesms TEXT \-maxlen 400 \-text "All your base are belong to us"
+
+or
 
 gammu savesms EMS \-text "All your base are belong to us"
 
