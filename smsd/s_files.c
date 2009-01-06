@@ -63,7 +63,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 		if (file) {
 			fclose(file);
 			if (i == 0) {
-				WriteSMSDLog(Config, "Cannot save %s. No available file names", FileName);
+				SMSD_Log(-1, Config, "Cannot save %s. No available file names", FileName);
 				return ERR_CANTOPENFILE;
 			}
 		}
@@ -71,7 +71,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 
 		if ((sms->SMS[i].PDU == SMS_Status_Report) && strcasecmp(Config->deliveryreport, "log") == 0) {
 			strcpy(buffer, DecodeUnicodeString(sms->SMS[i].Number));
-			WriteSMSDLog(Config, "Delivery report: %s to %s", DecodeUnicodeString(sms->SMS[i].Text), buffer);
+			SMSD_Log(1, Config, "Delivery report: %s to %s", DecodeUnicodeString(sms->SMS[i].Text), buffer);
 		} else {
 			if (locations_pos + strlen(FileName) + 2 >= locations_size) {
 				locations_size += strlen(FileName) + 30;
@@ -87,7 +87,7 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 
 			if (strcasecmp(Config->inboxformat, "detail") == 0) {
 #ifndef GSM_ENABLE_BACKUP
-				WriteSMSDLog(Config, "Saving in detail format not compiled in!");
+				SMSD_Log(-1, Config, "Saving in detail format not compiled in!");
 
 #else
 				for (j=0;j<sms->Number;j++) backup.SMS[j] = &sms->SMS[j];
@@ -120,9 +120,9 @@ static GSM_Error SMSDFiles_SaveInboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfig
 				} else error = ERR_CANTOPENFILE;
 			}
 			if (error == ERR_NONE) {
-				WriteSMSDLog(Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report": "Received"), FileName);
+				SMSD_Log(1, Config, "%s %s", (sms->SMS[i].PDU == SMS_Status_Report ? "Delivery report": "Received"), FileName);
 			} else {
-				WriteSMSDLog(Config, "Cannot save %s (%i)", FileName, errno);
+				SMSD_Log(0, Config, "Cannot save %s (%i)", FileName, errno);
 				return ERR_CANTOPENFILE;
 			}
 		}
@@ -299,22 +299,20 @@ static GSM_Error SMSDFiles_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
  		EncodeUnicode(sms->SMS[len].Number, pos1, phlen);
  	}
 
-	if ((Config->debug_level & 1) != 0) {
-		if (sms->Number != 0) {
-			DecodeUnicode(sms->SMS[0].Number,Buffer);
-			WriteSMSDLog(Config, "Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
-				sms->Number,
-				Buffer,
-				DecodeUnicodeString(sms->SMS[0].Text),
-				sms->SMS[0].Coding,
-				sms->SMS[0].Length,
-				sms->SMS[0].UDH.Type,
-				sms->SMS[0].UDH.Length,
-				Config->currdeliveryreport,
-				SMSInfo.Class);
-		} else {
-			WriteSMSDLog(Config, "error: SMS-count = 0");
-		}
+	if (sms->Number != 0) {
+		DecodeUnicode(sms->SMS[0].Number,Buffer);
+		SMSD_Log(1, Config, "Found %i sms to \"%s\" with text \"%s\" cod %i lgt %i udh: t %i l %i dlr: %i fls: %i",
+			sms->Number,
+			Buffer,
+			DecodeUnicodeString(sms->SMS[0].Text),
+			sms->SMS[0].Coding,
+			sms->SMS[0].Length,
+			sms->SMS[0].UDH.Type,
+			sms->SMS[0].UDH.Length,
+			Config->currdeliveryreport,
+			SMSInfo.Class);
+	} else {
+		SMSD_Log(1, Config, "error: SMS-count = 0");
 	}
 
   	return ERR_NONE;
@@ -358,15 +356,15 @@ static GSM_Error SMSDFiles_MoveSMS(GSM_MultiSMSMessage *sms UNUSED,
 	}
 	if (ilen == olen) {
 		if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0)) {
-			WriteSMSDLog(Config, "Could not delete %s (%i)", ifilename, errno);
+			SMSD_Log(0, Config, "Could not delete %s (%i)", ifilename, errno);
 			return ERR_UNKNOWN;
 		}
 		return ERR_NONE;
 	} else {
-		WriteSMSDLog(Config, "Error copying SMS %s -> %s", ifilename, ofilename);
+		SMSD_Log(0, Config, "Error copying SMS %s -> %s", ifilename, ofilename);
 		if (alwaysDelete) {
 			if ((strcmp(ifilename, "/") == 0) || (remove(ifilename) != 0))
-				WriteSMSDLog(Config, "Could not delete %s (%i)", ifilename, errno);
+				SMSD_Log(0, Config, "Could not delete %s (%i)", ifilename, errno);
 		}
 		return ERR_UNKNOWN;
 	}
@@ -377,7 +375,7 @@ static GSM_Error SMSDFiles_AddSentSMSInfo(GSM_MultiSMSMessage *sms UNUSED,
 		int Part, GSM_SMSDSendingError err, int TPMR UNUSED)
 {
 	if (err == SMSD_SEND_OK) {
-		WriteSMSDLog(Config, "Transmitted %s (%s: %i) to %s",
+		SMSD_Log(0, Config, "Transmitted %s (%s: %i) to %s",
 				Config->SMSID,
 				(Part == sms->Number ? "total" : "part"),
 				Part,

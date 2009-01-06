@@ -177,8 +177,8 @@
 #cmakedefine HAVE_SYS_UTSNAME_H
 #endif
 
-#ifndef HAVE_VSYSLOG
-#cmakedefine HAVE_VSYSLOG
+#ifndef HAVE_SYSLOG
+#cmakedefine HAVE_SYSLOG
 #endif
 #ifndef HAVE_GETOPT
 #cmakedefine HAVE_GETOPT
