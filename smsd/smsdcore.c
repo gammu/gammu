@@ -18,9 +18,11 @@
 
 #include <gammu-smsd.h>
 
-#ifdef HAVE_DUP_UNISTD_H
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
-#elif defined(HAVE_DUP_IO_H)
+#endif
+
+#ifdef HAVE_DUP_IO_H
 #include <io.h>
 #endif
 
@@ -144,7 +146,11 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 	}
 
 	if (Config->use_stderr && level == -1) {
+#ifdef HAVE_GETPID
+		fprintf(stderr, "gammu-smsd[%lld]: %s\n", (long long)getpid(), Buffer);
+#else
 		fprintf(stderr, "gammu-smsd: %s\n", Buffer);
+#endif
 	}
 }
 
