@@ -18,8 +18,9 @@
 
 #include "nokia.h"
 #include "common.h"
-#include "formats.h"
 #include "files.h"
+
+#include "../helper/formats.h"
 
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 void NokiaComposer(int argc UNUSED, char *argv[])

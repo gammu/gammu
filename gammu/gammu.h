@@ -4,7 +4,6 @@
 #include <gammu-statemachine.h>
 
 #include "common.h"
-#include "formats.h"
 
 typedef enum {
 	H_Call = 1,

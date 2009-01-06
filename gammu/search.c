@@ -21,7 +21,8 @@
 
 #include "search.h"
 #include "common.h"
-#include "formats.h"
+
+#include "../helper/formats.h"
 
 #if defined(WIN32) || defined(HAVE_PTHREAD)
 /**
