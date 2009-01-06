@@ -4264,6 +4264,9 @@ GSM_Error ATGEN_ReplyGetCPBSMemoryStatus(GSM_Protocol_Message msg, GSM_StateMach
  * +CPBR: (),max_number_len,max_name_len
  * \endverbatim
  *
+ * Some phones (eg. Nokia 6600 slide) append some additional values to
+ * standard format.
+ *
  * Samsung phones sometimes have additional number after standard format.
  * I currently have no idea what does this number mean.
  *
@@ -4346,6 +4349,20 @@ GSM_Error ATGEN_ReplyGetCPBRMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachin
 					&Priv->NumberLength,
 					&Priv->TextLength,
 					&ignore);
+		if (error == ERR_NONE) {
+			/* Calculate memory size from last position we got from phone */
+			Priv->MemorySize = Priv->MemorySize + 1 - Priv->FirstMemoryEntry;
+			return ERR_NONE;
+		}
+
+
+		/* Try standard format + unknown field */
+		error = ATGEN_ParseReply(s, str,
+					"+CPBR: (@i-@i), @i, @i, @0",
+					&Priv->FirstMemoryEntry,
+					&Priv->MemorySize,
+					&Priv->NumberLength,
+					&Priv->TextLength);
 		if (error == ERR_NONE) {
 			/* Calculate memory size from last position we got from phone */
 			Priv->MemorySize = Priv->MemorySize + 1 - Priv->FirstMemoryEntry;
