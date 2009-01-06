@@ -14,8 +14,9 @@
 
 #include "common.h"
 #include "misc.h"
-#include "formats.h"
 #include "message.h"
+
+#include "../helper/formats.h"
 
 #ifdef GSM_ENABLE_NOKIA_DCT3
 #  include "depend/nokia/dct3.h"

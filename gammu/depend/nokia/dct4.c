@@ -14,6 +14,8 @@
 #include "../../../common/misc/coding/coding.h"
 #include "../../../common/misc/locales.h"
 
+#include "../../../helper/formats.h"
+
 extern GSM_Reply_Function UserReplyFunctions4[];
 
 /**

@@ -6,7 +6,7 @@
 #include "../common/misc/locales.h"
 
 #include "common.h"
-#include "formats.h"
+#include "../helper/formats.h"
 
 #ifdef CURL_FOUND
 #include <curl/curl.h>
