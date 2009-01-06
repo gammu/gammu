@@ -184,7 +184,7 @@ int main(int argc, char **argv)
 
 	error = CreateMessage(&type, &sms, argc, startarg, argv, NULL);
 
-	error = SMSD_InjectSMS(NULL, params.config_file, &sms);
+	error = SMSD_InjectSMS(params.config_file, &sms);
 
 	return 0;
 }
