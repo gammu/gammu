@@ -389,8 +389,6 @@ HELP['getsmsc'] = '''Get SMSC settings from SIM card. Numerate locations from 1.
 ''' 
 HELP['getsmsfolders'] = '''Get names for SMS folders in phone
 '''
-HELP['smsd FILES'] = '''SMS Deaemon. See smsdrc config file for more options
-'''
 HELP['getphoneringtone'] = '''
 Get one of "default" ringtones and saves into file
 '''

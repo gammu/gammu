@@ -19,8 +19,6 @@
 #include "calendar.h"
 #include "misc.h"
 
-#include <gammu-smsd.h> /* For SMSD interaction */
-
 #include "../helper/message-display.h"
 #include "../helper/memory-display.h"
 #include "../helper/message-cmdline.h"

@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Jan  4 2009" "Gammu 1.22.90" "Gammu Documentation"
+.TH "GAMMU" "1" "Jan  6 2009" "Gammu 1.22.90" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -412,19 +412,6 @@ Read WAP settings from file created by \fBbackup\fR option and saves in Nokia fo
 
 .TP
 .BI "sendsms WAPSETTINGS" " destination file location DATA|GPRS [\-report] [\-validity HOUR|6HOURS|DAY|3DAYS|WEEK|MAX] [\-save [\-folder number]] [\-smscset number] [\-smscnumber number] [\-reply] [\-maxsms num]"
-
-.TP
-.BI "sendsmsdsms" " TEXT|WAPSETTINGS|... destination FILES|MYSQL|PGSQL configfile ... (options like in sendsms)"
-
-.TP
-.BI "smsd FILES" " configfile"
-SMS Deaemon. See smsdrc config file for more options
-
-.TP
-.BI "smsd MYSQL" " configfile"
-
-.TP
-.BI "smsd PGSQL" " configfile"
 
 
 .SS "Memory (phonebooks and calls)"
@@ -2048,21 +2035,6 @@ Output help information and exit.
 .TP
 .BI "version"
 Output version information and exit.
-
-
-.SS "SMS daemon"
-.TP
-.BI "sendsmsdsms" " TEXT|WAPSETTINGS|... destination FILES|MYSQL|PGSQL configfile ... (options like in sendsms)"
-
-.TP
-.BI "smsd FILES" " configfile"
-SMS Deaemon. See smsdrc config file for more options
-
-.TP
-.BI "smsd MYSQL" " configfile"
-
-.TP
-.BI "smsd PGSQL" " configfile"
 
 
 .SH "FILES"
