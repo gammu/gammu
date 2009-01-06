@@ -669,7 +669,11 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 {
 	unsigned char	buffer[10000],buffer2[400],buff[50],buffer5[400];
 
-	if (err == SMSD_SEND_OK) SMSD_Log(0, Config, "Transmitted %s (%s: %i) to %s", Config->SMSID, (Part == sms->Number?"total":"part"),Part,DecodeUnicodeString(sms->SMS[0].Number));
+	if (err == SMSD_SEND_OK) {
+		SMSD_Log(1, Config, "Transmitted %s (%s: %i) to %s", Config->SMSID,
+			     (Part == sms->Number ? "total" : "part"), Part,
+			     DecodeUnicodeString(sms->SMS[0].Number));
+	}
 
 	buff[0] = 0;
 	if (err == SMSD_SEND_OK) {
