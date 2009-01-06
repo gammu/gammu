@@ -116,10 +116,10 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 	int option_index;
 
 	while ((opt =
-		getopt_long(argc, argv, "hv?c:", long_options,
+		getopt_long(argc, argv, "+hv?c:", long_options,
 			    &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
-	while ((opt = getopt(argc, argv, "hv?c:")) != -1) {
+	while ((opt = getopt(argc, argv, "+hv?c:")) != -1) {
 #else
 	/* Poor mans getopt replacement */
 	int i, optind = -1;
