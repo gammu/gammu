@@ -126,7 +126,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		startarg = typearg + 1;
 	} else {
 		/* When not saving SMS, recipient has to be specified */
-		if (typearg + 1 > argc) {
+		if (typearg + 1 >= argc) {
 			printf("%s\n", _("Not enough parameters!"));
 			return ERR_UNKNOWN;
 		}
