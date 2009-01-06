@@ -132,9 +132,16 @@ backends might not support this feature).
 .BI DebugLevel
 
 Debug level for SMSD. The integer value should be sum of all flags you
-want to enable. Generally 1 enables some basic debugging information and 2
-enables logging of SQL queries for database backends, so value of 3 should
-give all debug information for current services.
+want to enable. 
+
+1 - enables basic debugging information
+.br
+2 - enables logging of SQL queries of service backends
+.br
+4 - enables logging of gammu debug information (has to be enabled also in
+gammu section)
+
+Generally to get as much debug information as possible, use 255.
 
 Default is 0, what should mean no extra information.
 

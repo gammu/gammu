@@ -33,15 +33,6 @@ typedef struct _GSM_SMSDConfig GSM_SMSDConfig;
 GSM_Error SMSD_InjectSMS(const char *filename, GSM_MultiSMSMessage *sms);
 
 /**
- * Logs a message to SMSD log.
- *
- * \param format printf like format string.
- */
-PRINTF_STYLE(2, 3)
-void WriteSMSDLog(GSM_SMSDConfig *Config, const char *format, ...);
-
-
-/**
  * Flags SMSD daemon to terminate itself gracefully.
  *
  * \param Config Pointer to SMSD configuration data.

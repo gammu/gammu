@@ -42,7 +42,7 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 
 	Config->DBConnPgSQL = PQconnectdb(buf);
 	if (PQstatus(Config->DBConnPgSQL) != CONNECTION_OK) {
-		WriteSMSDLog(Config, "Error connecting to database: %s\n",
+		SMSD_Log(-1, Config, "Error connecting to database: %s\n",
 			     PQerrorMessage(Config->DBConnPgSQL));
 		PQfinish(Config->DBConnPgSQL);
 		return ERR_UNKNOWN;
@@ -51,7 +51,7 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 	sprintf(buf, "SELECT id FROM outbox WHERE TRUE");
 	Res = PQexec(Config->DBConnPgSQL, buf);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
-		WriteSMSDLog(Config, "No table for outbox sms: %s\n",
+		SMSD_Log(-1, Config, "No table for outbox sms: %s\n",
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
@@ -62,7 +62,7 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 	sprintf(buf, "SELECT id FROM outbox_multipart WHERE TRUE");
 	Res = PQexec(Config->DBConnPgSQL, buf);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
-		WriteSMSDLog(Config, "No table for outbox sms: %s\n",
+		SMSD_Log(-1, Config, "No table for outbox sms: %s\n",
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
@@ -73,7 +73,7 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 	sprintf(buf, "SELECT id FROM sentitems WHERE TRUE");
 	Res = PQexec(Config->DBConnPgSQL, buf);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
-		WriteSMSDLog(Config, "No table for sent sms: %s\n",
+		SMSD_Log(-1, Config, "No table for sent sms: %s\n",
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
@@ -84,7 +84,7 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 	sprintf(buf, "SELECT id FROM inbox WHERE TRUE");
 	Res = PQexec(Config->DBConnPgSQL, buf);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
-		WriteSMSDLog(Config, "No table for inbox sms: %s\n",
+		SMSD_Log(-1, Config, "No table for inbox sms: %s\n",
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
@@ -95,29 +95,29 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 	sprintf(buf, "SELECT Version FROM gammu WHERE TRUE");
 	Res = PQexec(Config->DBConnPgSQL, buf);
 	if ((!Res) || (PQresultStatus(Res) != PGRES_TUPLES_OK)) {
-		WriteSMSDLog(Config, "No Gammu table: %s\n",
+		SMSD_Log(-1, Config, "No Gammu table: %s\n",
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
 		return ERR_UNKNOWN;
 	}
 	if (PQntuples(Res) == 0) {
-		WriteSMSDLog(Config, "No version info in Gammu table: %s\n",
+		SMSD_Log(-1, Config, "No version info in Gammu table: %s\n",
 			     PQresultErrorMessage(Res));
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
 		return ERR_UNKNOWN;
 	}
 	if (atoi(PQgetvalue(Res, 0, 0)) > SMSD_PGSQL_DB_VERSION) {
-		WriteSMSDLog(Config, "DataBase structures are from higher Gammu version");
-		WriteSMSDLog(Config, "Please update this client application");
+		SMSD_Log(-1, Config, "DataBase structures are from higher Gammu version");
+		SMSD_Log(0, Config, "Please update this client application");
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
 		return ERR_UNKNOWN;
 	}
 	if (atoi(PQgetvalue(Res, 0, 0)) < SMSD_PGSQL_DB_VERSION) {
-		WriteSMSDLog(Config, "DataBase structures are from older Gammu version");
-		WriteSMSDLog(Config, "Please update DataBase, if you want to use this client application");
+		SMSD_Log(-1, Config, "DataBase structures are from older Gammu version");
+		SMSD_Log(0, Config, "Please update DataBase, if you want to use this client application");
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
 		return ERR_UNKNOWN;
@@ -126,6 +126,8 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 
 	Res = PQexec(Config->DBConnPgSQL, "SET NAMES UTF8");
 	PQclear(Res);
+
+	SMSD_Log(0, Config, "Connected to Database: %s on %s", Config->database, Config->PC);
 
 	return ERR_NONE;
 }
@@ -141,21 +143,19 @@ static GSM_Error SMSDPgSQL_Free(GSM_SMSDConfig *Config)
 static void SMSDPgSQL_LogError(GSM_SMSDConfig *Config, PGresult *Res)
 {
 	if (Res == NULL) {
-		WriteSMSDLog(Config, "Error: %s\n", PQerrorMessage(Config->DBConnPgSQL));
+		SMSD_Log(0, Config, "Error: %s\n", PQerrorMessage(Config->DBConnPgSQL));
 	} else {
-		WriteSMSDLog(Config, "Error: %s\n", PQresultErrorMessage(Res));
+		SMSD_Log(0, Config, "Error: %s\n", PQresultErrorMessage(Res));
 	}
 }
 
 static GSM_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, const char *query, PGresult **Res)
 {
-	if ((Config->debug_level & 2) != 0) {
-		WriteSMSDLog(Config, "Execute SQL: %s\n", query);
-	}
+	SMSD_Log(2, Config, "Execute SQL: %s\n", query);
 
 	*Res = PQexec(Config->DBConnPgSQL, query);
 	if ((*Res == NULL) || (PQresultStatus(*Res) != PGRES_COMMAND_OK)) {
-		WriteSMSDLog(Config, "SQL failed: %s\n", query);
+		SMSD_Log(0, Config, "SQL failed: %s\n", query);
 		SMSDPgSQL_LogError(Config, *Res);
 		if (*Res != NULL) {
 			PQclear(*Res);
@@ -177,7 +177,7 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 	sprintf(buf, "DELETE FROM phones WHERE IMEI = '%s'", imei);
 
 	if (SMSDPgSQL_Query(Config, buf, &Res) != ERR_NONE) {
-		WriteSMSDLog(Config, "Error deleting from database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error deleting from database (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	PQclear(Res);
@@ -197,7 +197,7 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 		imei, Config->PhoneID, buf2);
 
 	if (SMSDPgSQL_Query(Config, buf, &Res) != ERR_NONE) {
-		WriteSMSDLog(Config, "Error inserting into database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error inserting into database (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	PQclear(Res);
@@ -226,7 +226,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 		if (sms->SMS[i].PDU == SMS_Status_Report) {
 			strcpy(buffer2, DecodeUnicodeString(sms->SMS[i].Number));
 			if (strncasecmp(Config->deliveryreport, "log", 3) == 0) {
-				WriteSMSDLog(Config, "Delivery report: %s to %s",
+				SMSD_Log(0, Config, "Delivery report: %s to %s",
 					     DecodeUnicodeString(sms->SMS[i].
 								 Text),
 					     buffer2);
@@ -239,7 +239,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					SenderID = '%s' AND TPMR = '%i' AND DestinationNumber = '%s'",
 				Config->PhoneID, sms->SMS[i].MessageReference, buffer2);
 			if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
-				WriteSMSDLog(Config, "Error reading from database (%s)\n", __FUNCTION__);
+				SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
 				return ERR_UNKNOWN;
 			}
 
@@ -303,7 +303,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					PQgetvalue(Res, j, 0),
 					sms->SMS[i].MessageReference);
 				if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
-					WriteSMSDLog(Config, "Error writing to database (%s)\n", __FUNCTION__);
+					SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 					return ERR_UNKNOWN;
 				}
 			}
@@ -407,7 +407,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 
 		sprintf(buffer + strlen(buffer), "','%s')", Config->PhoneID);
 		if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
-			WriteSMSDLog(Config, "Error writing to database (%s)\n", __FUNCTION__);
+			SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 	}
@@ -426,7 +426,7 @@ static GSM_Error SMSDPgSQL_RefreshSendStatus(GSM_SMSDConfig * Config,
                         WHERE ID = '%s' AND SendingTimeOut < now()",
 		ID);
 	if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
-		WriteSMSDLog(Config, "Error writing to database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
@@ -457,7 +457,7 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
                       WHERE SendingDateTime < now() AND SendingTimeOut < now()");
 
 	if (SMSDPgSQL_Query(Config, buf, &Res) != ERR_NONE) {
-		WriteSMSDLog(Config, "Error reading from database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
@@ -503,7 +503,7 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 				ID, i);
 		}
 		if (SMSDPgSQL_Query(Config, buf, &Res) != ERR_NONE) {
-			WriteSMSDLog(Config, "Error reading from database (%s)\n", __FUNCTION__);
+			SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 
@@ -525,9 +525,7 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 
 		if (PQgetvalue(Res, 0, 0) == NULL
 		    || strlen(PQgetvalue(Res, 0, 0)) == 0) {
-			if ((Config->debug_level & 1) != 0) {
-				WriteSMSDLog(Config, "Message: %s\n", PQgetvalue(Res, 0, 4));
-			}
+			SMSD_Log(1, Config, "Message: %s\n", PQgetvalue(Res, 0, 4));
 			DecodeUTF8(sms->SMS[sms->Number].Text,
 				   PQgetvalue(Res, 0, 4),
 				   strlen(PQgetvalue(Res, 0, 4)));
@@ -613,14 +611,14 @@ static GSM_Error SMSDPgSQL_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 
 	sprintf(buffer, "DELETE FROM outbox WHERE ID = '%s'", ID);
 	if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
-		WriteSMSDLog(Config, "Error deleting from database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error deleting from database (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	PQclear(Res);
 
 	sprintf(buffer, "DELETE FROM outbox_multipart WHERE ID = '%s'", ID);
 	if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
-		WriteSMSDLog(Config, "Error deleting from database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error deleting from database (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	PQclear(Res);
@@ -639,7 +637,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 	sprintf(buffer, "SELECT ID FROM outbox ORDER BY ID DESC LIMIT 1");
 	if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
-		WriteSMSDLog(Config, "Error reading from database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
@@ -792,7 +790,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 					"SELECT ID FROM sentitems WHERE ID='%i'",
 					ID);
 				if (SMSDPgSQL_Query(Config, buffer4, &Res) != ERR_NONE) {
-					WriteSMSDLog(Config, "Error reading from database (%s)\n", __FUNCTION__);
+					SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
 					return ERR_UNKNOWN;
 				}
 
@@ -803,7 +801,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 						"SELECT ID FROM outbox WHERE ID='%i'",
 						ID);
 					if (SMSDPgSQL_Query(Config, buffer4, &Res) != ERR_NONE) {
-						WriteSMSDLog(Config, "Error writing to database (%s)\n", __FUNCTION__);
+						SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 						return ERR_UNKNOWN;
 					}
 
@@ -811,7 +809,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 					PQclear(Res);
 
 					if (numb_tuples > 0) {
-						WriteSMSDLog(Config, "Duplicated outgoing SMS ID\n");
+						SMSD_Log(0, Config, "Duplicated outgoing SMS ID\n");
 						continue;
 					} else {
 						buffer4[0] = 0;
@@ -821,7 +819,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 							ID);
 
 						if (SMSDPgSQL_Query(Config, buffer4, &Res) != ERR_NONE) {
-							WriteSMSDLog(Config, "Error reading from database (%s)\n", __FUNCTION__);
+							SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
 							return ERR_UNKNOWN;
 						}
 						PQclear(Res);
@@ -833,7 +831,7 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 			strcpy(buffer4, buffer);
 			sprintf(buffer4 + strlen(buffer4), "%i')", ID);
 			if (SMSDPgSQL_Query(Config, buffer4, &Res) != ERR_NONE) {
-				WriteSMSDLog(Config, "Error writing to database (%s)\n", __FUNCTION__);
+				SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 				return ERR_UNKNOWN;
 			}
 			PQclear(Res);
@@ -852,7 +850,7 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	unsigned char buffer[10000], buffer2[400], buff[50], buffer5[400];
 
 	if (err == SMSD_SEND_OK) {
-		WriteSMSDLog(Config, "Transmitted %s (%s: %i) to %s", Config->SMSID,
+		SMSD_Log(1, Config, "Transmitted %s (%s: %i) to %s", Config->SMSID,
 			     (Part == sms->Number ? "total" : "part"), Part,
 			     DecodeUnicodeString(sms->SMS[0].Number));
 	}
@@ -970,7 +968,7 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	}
 
 	if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
-		WriteSMSDLog(Config, "Error writing to database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	PQclear(Res);
@@ -988,7 +986,7 @@ static GSM_Error SMSDPgSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config, GSM_Batte
 		"UPDATE phones SET TimeOut= now() + INTERVAL '10 seconds', Battery = %d, Signal = %d WHERE IMEI = '%s'",
 		Battery->BatteryPercent, Signal->SignalPercent, Config->IMEI);
 	if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
-		WriteSMSDLog(Config, "Error writing to database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	PQclear(Res);

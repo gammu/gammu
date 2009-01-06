@@ -131,17 +131,15 @@ check_symbol_exists (SIGHUP "signal.h" HAVE_SIGHUP)
 check_symbol_exists (dup "unistd.h" HAVE_DUP_UNISTD_H)
 check_symbol_exists (dup "io.h" HAVE_DUP_IO_H)
 check_c_source_compiles ("
-#define _BSD_SOURCE
 #include <stdio.h>
 #include <syslog.h>
 #include <stdarg.h>
 
 int main(void) {
-    va_list ap;
-    vsyslog(LOG_NOTICE, \"aaa\", ap);
+    syslog(LOG_NOTICE, \"aaa %d\", 1);
     return 0;
 }
-"  HAVE_VSYSLOG)
+"  HAVE_SYSLOG)
 # Some compilers (eg. BCC) have this in ctype.h
 if (NOT HAVE_TOWLOWER)
     check_symbol_exists (towlower "ctype.h" HAVE_TOWLOWER_CTYPE)
