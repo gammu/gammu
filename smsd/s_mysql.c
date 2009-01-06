@@ -421,11 +421,12 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 			}
 		}
 	}
+	mysql_free_result(Res);
+
 	if (!found) {
-		mysql_free_result(Res);
 		return ERR_EMPTY;
 	}
-	mysql_free_result(Res);
+
 	sms->Number = 0;
 	for (i=0;i<GSM_MAX_MULTI_SMS;i++) {
 		GSM_SetDefaultSMSData(&sms->SMS[i]);
