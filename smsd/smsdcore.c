@@ -248,7 +248,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 		if (!uselog) {
 			Config->use_syslog = false;
 			Config->use_stderr = false;
-			fd = dup(2);
+			fd = dup(1);
 			if (fd < 0) return ERR_CANTOPENFILE;
 			Config->log_file = fdopen(fd, "a");
 			Config->use_timestamps = false;
