@@ -683,8 +683,10 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 			sprintf(buff,"SendingOKNoReport");
 		}
 	}
-	if (err == SMSD_SEND_SENDING_ERROR) 	sprintf(buff,"SendingError");
-	if (err == SMSD_SEND_ERROR) 		sprintf(buff,"Error");
+	if (err == SMSD_SEND_SENDING_ERROR)
+		sprintf(buff,"SendingError");
+	if (err == SMSD_SEND_ERROR)
+		sprintf(buff,"Error");
 
 	buffer[0] = 0;
 	sprintf(buffer+strlen(buffer),"INSERT INTO `sentitems` "
