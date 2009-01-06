@@ -233,10 +233,10 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			}
 
 			sprintf(buffer,
-				"SELECT ID, Status, EXTRACT(EPOCH FROM SendingDateTime), DeliveryDateTime, SMSCNumber \
-                                        FROM sentitems WHERE \
-					DeliveryDateTime = 'epoch' AND \
-					SenderID = '%s' AND TPMR = '%i' AND DestinationNumber = '%s'",
+				"SELECT ID, Status, EXTRACT(EPOCH FROM SendingDateTime), DeliveryDateTime, SMSCNumber "
+                                        "FROM sentitems WHERE "
+					"DeliveryDateTime = 'epoch' AND "
+					"SenderID = '%s' AND TPMR = '%i' AND DestinationNumber = '%s'",
 				Config->PhoneID, sms->SMS[i].MessageReference, buffer2);
 			if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
 				SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
@@ -274,8 +274,8 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			}
 
 			if (found) {
-				sprintf(buffer, "UPDATE sentitems SET DeliveryDateTime = '%04i%02i%02i%02i%02i%02i', \
-                                          Status = '",
+				sprintf(buffer, "UPDATE sentitems SET DeliveryDateTime = '%04i%02i%02i%02i%02i%02i', "
+                                          "Status = '",
 					sms->SMS[i].SMSCTime.Year, sms->SMS[i].SMSCTime.Month, sms->SMS[i].SMSCTime.Day, sms->SMS[i].SMSCTime.Hour, sms->SMS[i].SMSCTime.Minute,
 					sms->SMS[i].SMSCTime.Second);
 
@@ -314,9 +314,9 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 		if (sms->SMS[i].PDU != SMS_Deliver)
 			continue;
 		buffer[0] = 0;
-		sprintf(buffer + strlen(buffer), "INSERT INTO inbox \
-			(ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH, \
-			Class, TextDecoded, RecipientID) VALUES ('%04d-%02d-%02d %02d:%02d:%02d', '", sms->SMS[i].DateTime.Year, sms->SMS[i].DateTime.Month, sms->SMS[i].DateTime.Day, sms->SMS[i].DateTime.Hour, sms->SMS[i].DateTime.Minute, sms->SMS[i].DateTime.Second);
+		sprintf(buffer + strlen(buffer), "INSERT INTO inbox "
+			"(ReceivingDateTime, Text, SenderNumber, Coding, SMSCNumber, UDH, "
+			"Class, TextDecoded, RecipientID) VALUES ('%04d-%02d-%02d %02d:%02d:%02d', '", sms->SMS[i].DateTime.Year, sms->SMS[i].DateTime.Month, sms->SMS[i].DateTime.Day, sms->SMS[i].DateTime.Hour, sms->SMS[i].DateTime.Minute, sms->SMS[i].DateTime.Second);
 
 		switch (sms->SMS[i].Coding) {
 			case SMS_Coding_Unicode_No_Compression:
@@ -422,8 +422,8 @@ static GSM_Error SMSDPgSQL_RefreshSendStatus(GSM_SMSDConfig * Config,
 	unsigned char buffer[10000];
 	PGresult *Res;
 
-	sprintf(buffer, "UPDATE outbox SET SendingTimeOut = now() + INTERVAL '15 seconds' \
-                        WHERE ID = '%s' AND SendingTimeOut < now()",
+	sprintf(buffer, "UPDATE outbox SET SendingTimeOut = now() + INTERVAL '15 seconds' "
+                        "WHERE ID = '%s' AND SendingTimeOut < now()",
 		ID);
 	if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
@@ -453,8 +453,8 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 	bool found = false;
 
 	sprintf(buf,
-		"SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox \
-                      WHERE SendingDateTime < now() AND SendingTimeOut < now()");
+		"SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox "
+                      "WHERE SendingDateTime < now() AND SendingTimeOut < now()");
 
 	if (SMSDPgSQL_Query(Config, buf, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
@@ -493,13 +493,13 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 	for (i = 1; i < GSM_MAX_MULTI_SMS + 1; i++) {
 		if (i == 1) {
 			sprintf(buf,
-				"SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart, \
-                          RelativeValidity, DeliveryReport, CreatorID FROM outbox WHERE ID='%s'",
+				"SELECT Text, Coding, UDH, Class, TextDecoded, ID, DestinationNumber, MultiPart, "
+				"RelativeValidity, DeliveryReport, CreatorID FROM outbox WHERE ID='%s'",
 				ID);
 		} else {
 			sprintf(buf,
-				"SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition \
-                          FROM outbox_multipart WHERE ID='%s' AND SequencePosition='%i'",
+				"SELECT Text, Coding, UDH, Class, TextDecoded, ID, SequencePosition "
+				"FROM outbox_multipart WHERE ID='%s' AND SequencePosition='%i'",
 				ID, i);
 		}
 		if (SMSDPgSQL_Query(Config, buf, &Res) != ERR_NONE) {
@@ -667,8 +667,8 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 				"DestinationNumber, RelativeValidity, ");
 		}
 
-		sprintf(buffer + strlen(buffer), "Coding, UDH,  \
-		  Class, TextDecoded, ID) VALUES (");
+		sprintf(buffer + strlen(buffer), "Coding, UDH,  "
+			  "Class, TextDecoded, ID) VALUES (");
 
 		if (i == 0) {
 			sprintf(buffer + strlen(buffer), "'Gammu %s', ",
@@ -871,10 +871,10 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 		sprintf(buff, "Error");
 
 	buffer[0] = 0;
-	sprintf(buffer + strlen(buffer), "INSERT INTO sentitems \
-		(CreatorID, ID, SequencePosition, Status, SendingDateTime,  SMSCNumber,  TPMR, \
-		SenderID, Text, DestinationNumber, Coding, UDH, Class, TextDecoded, InsertIntoDB, \
-                RelativeValidity) VALUES (");
+	sprintf(buffer + strlen(buffer), "INSERT INTO sentitems "
+		"(CreatorID, ID, SequencePosition, Status, SendingDateTime,  SMSCNumber,  TPMR, "
+		"SenderID, Text, DestinationNumber, Coding, UDH, Class, TextDecoded, InsertIntoDB, "
+                "RelativeValidity) VALUES (");
 	sprintf(buffer + strlen(buffer),
 		"'%s', '%s', '%i', '%s', now(), '%s', '%i', '%s', '",
 		Config->CreatorID, ID, Part, buff,
