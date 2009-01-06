@@ -177,6 +177,9 @@
 #cmakedefine HAVE_SYS_UTSNAME_H
 #endif
 
+#ifndef HAVE_GETPID
+#cmakedefine HAVE_GETPID
+#endif
 #ifndef HAVE_SYSLOG
 #cmakedefine HAVE_SYSLOG
 #endif
