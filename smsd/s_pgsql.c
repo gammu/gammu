@@ -477,11 +477,11 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 		}
 	}
 
+	PQclear(Res);
+
 	if (!found) {
-		PQclear(Res);
 		return ERR_EMPTY;
 	}
-	PQclear(Res);
 
 	sms->Number = 0;
 	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
