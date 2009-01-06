@@ -94,12 +94,7 @@ if (WIN32)
     target_link_libraries (gsmsd setupapi advapi32)
 endif (WIN32)
 
-install (TARGETS gammu-smsd
-        RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
-        LIBRARY DESTINATION "${INSTALL_LIB_DIR}"
-        ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
-        )
-install (TARGETS gsmsd
+install (TARGETS gsmsd gammu-smsd gammu-smsd-inject
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
         LIBRARY DESTINATION "${INSTALL_LIB_DIR}"
         ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
