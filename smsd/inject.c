@@ -86,7 +86,7 @@ NORETURN void version(void)
 
 void help(void)
 {
-	printf("usage: gammu-smsd-inject [OPTION]... MSGTYPE [MESSAGE_PARAMETERS]\n");
+	printf("usage: gammu-smsd-inject [OPTION]... MSGTYPE RECIPIENT [MESSAGE_PARAMETER]...\n");
 	printf("options:\n");
 	print_option("h", "help", "shows this help");
 	print_option("v", "version", "shows version information");

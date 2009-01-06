@@ -1,17 +1,18 @@
-.TH GAMMU-SMSD 1 "January  4, 2009" "Gammu 1.23.0" "Gammu Documentation"
+.TH GAMMU-SMSD-INJECT 1 "January  4, 2009" "Gammu 1.23.0" "Gammu Documentation"
 .SH NAME
-gammu-smsd \- SMS daemon for Gammu
+gammu-smsd-inject \- Inject messages into queue of SMS daemon for Gammu
 .SH SYNOPSIS
-.B gammu-smsd
+.B gammu-smsd-inject
 [\fIOPTION\fR]...
+MESSAGETYPE RECIPIENT
+[\fIMESSAGE_PARAMETER\fR]...
 .SH DESCRIPTION
 This manual page documents briefly the
-.B gammu-smsd
+.B gammu-smsd-inject
 command.
 .PP
-\fBgammu-smsd\fP is a program that periodically scans GSM modem for received
-messages, stores them in defined storage and also sends messages enqueued in
-this storage.
+\fBgammu-smsd-inject\fP is a program that enqueues message in Gammu SMS
+daemon, which will be later sent by the deamon using connected GSM modem.
 .PP
 Program accepts following options (please note that long options might be not
 accepted on some platforms):
@@ -25,24 +26,12 @@ Shows version information and compiled in features.
 \fB\-c\fR, \fB\-\-config\fR=\fIfile\fR
 Configuration file to use, default is /etc/gammu-smsdrc, on Windows there is
 no default and configuration file path has to be always specified.
-.TP
-\fB\-p\fR, \fB\-\-pid\fR=\fIfile\fR
-Lock file for storing pid, empty for no locking. Not supported on Windows.
-.TP
-\fB\-d\fR, \fB\-\-daemon\fR
-Daemonize program on startup. Not supported on Windows.
-.TP
-\fB\-i\fR, \fB\-\-install\-service\fR
-Installs SMSD as a Windows service.
-.TP
-\fB\-u\fR, \fB\-\-uninstall\-service\fR
-Uninstalls SMSD as a Windows service.
-.TP
-\fB\-s\fR, \fB\-\-start\-service\fR
-Starts SMSD Windows service.
+.PP
+For description of message types and their parameters, please check gammu(1).
+The options are identical to ones you can use for gammu sendsms.
 
 .SH SEE ALSO
-gammu-smsdrc(5), gammu(1), gammu-smsd-inject(1)
+gammu-smsdrc(5), gammu(1), gammu-smsd(1)
 .SH AUTHOR
 gammu-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
 .SH COPYRIGH
