@@ -778,7 +778,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 					Config->SMSC.Location = 1;
 					error = GSM_GetSMSC(Config->gsm,&Config->SMSC);
 					if (error!=ERR_NONE) {
-						SMSD_Log(0, Config, "Error getting SMSC from phone");
+						SMSD_Log(-1, Config, "Error getting SMSC from phone");
 						return false;
 					}
 
@@ -801,9 +801,9 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 			GSM_GetSignalQuality(Config->gsm, &network);
 			error=GSM_SendSMS(Config->gsm, &sms.SMS[i]);
 			if (error!=ERR_NONE) {
-				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, -1);
 				SMSD_Log(0, Config, "Error sending SMS %s (%i): %s", Config->SMSID, error,GSM_ErrorString(error));
-				return false;
+				Config->TPMR = -1;
+				goto failure_unsent;
 			}
 			Service->RefreshPhoneStatus(Config, &charge, &network);
 			j    = 0;
@@ -825,13 +825,12 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				if (j>Config->sendtimeout) break;
 			}
 			if (Config->SendingSMSStatus != ERR_NONE) {
-				Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_SENDING_ERROR, Config->TPMR);
 				SMSD_Log(0, Config, "Error getting send status of %s (%i): %s", Config->SMSID, Config->SendingSMSStatus, GSM_ErrorString(Config->SendingSMSStatus));
-				return false;
+				goto failure_unsent;
 			}
 			error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, Config->TPMR);
 			if (error!=ERR_NONE) {
-				return false;
+				goto failure_sent;
 			}
 		}
 		strcpy(Config->prevSMSID, "");
@@ -840,6 +839,15 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		}
 	}
 	return true;
+failure_unsent:
+	Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i + 1, SMSD_SEND_SENDING_ERROR, Config->TPMR);
+	Service->MoveSMS(&sms,Config, Config->SMSID, true, false);
+	return false;
+failure_sent:
+	if (Service->MoveSMS(&sms,Config, Config->SMSID, false, true) != ERR_NONE) {
+		Service->MoveSMS(&sms,Config, Config->SMSID, true, false);
+	}
+	return false;
 }
 
 /**
