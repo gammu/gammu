@@ -69,6 +69,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	GSM_SMSValidity			Validity;
 	GSM_SMSC		    	PhoneSMSC;
 	bool				DeliveryReport		= false;
+	/* Whether we already got text for TEXT message */
+	bool HasText = false;
 
 	/* Some defaults */
 	Name[0] = 0;
@@ -112,20 +114,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 
 
 	if (strcasecmp(argv[typearg],"TEXT") == 0) {
-		if (isatty(fileno(stdin))) {
-			printf("%s\n", _("Enter message text and press ^D:"));
-		}
-		chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
-		if (chars_read == 0) {
-			printf_warn("%s\n", _("0 chars read!"));
-		}
-		InputBuffer[chars_read] 		= 0x00;
-		InputBuffer[chars_read+1] 		= 0x00;
-		EncodeUnicode(Buffer[0],InputBuffer,chars_read);
+		/* Text is fed to the buffer later! */
 		SMSInfo.Entries[0].Buffer  		= Buffer[0];
 		SMSInfo.Entries[0].ID			= SMS_Text;
 		SMSInfo.UnicodeCoding   		= false;
-		startarg += 3;
 	} else if (strcasecmp(argv[typearg],"SMSTEMPLATE") == 0) {
 		SMSInfo.UnicodeCoding   		= false;
 		SMSInfo.EntriesNum 			= 1;
@@ -133,13 +125,11 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		Buffer[0][1]				= 0x00;
 		SMSInfo.Entries[0].Buffer  		= Buffer[0];
 		SMSInfo.Entries[0].ID			= SMS_AlcatelSMSTemplateName;
-		startarg += 3;
 	} else if (strcasecmp(argv[typearg],"EMS") == 0) {
 		SMSInfo.UnicodeCoding   		= false;
 		SMSInfo.EntriesNum 			= 0;
-		startarg += 3;
 	} else if (strcasecmp(argv[typearg],"MMSINDICATOR") == 0) {
-		if (argc<6+startarg) {
+		if (argc < 3 + startarg) {
 			printf("%s\n", _("Where are parameters?"));
 			exit(-1);
 		}
@@ -148,12 +138,12 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		if (*type == SMS_Save) {
 			EncodeUnicode(RemoteNumber,"MMS Info",8);
 		}
-		strcpy(MMSInfo.Address,	argv[3+startarg]);
-		strcpy(MMSInfo.Title,	argv[4+startarg]);
-		strcpy(MMSInfo.Sender,	argv[5+startarg]);
-		startarg += 6;
+		strcpy(MMSInfo.Address,	argv[0 + startarg]);
+		strcpy(MMSInfo.Title,	argv[1 + startarg]);
+		strcpy(MMSInfo.Sender,	argv[2 + startarg]);
+		startarg += 3;
 	} else if (strcasecmp(argv[typearg],"WAPINDICATOR") == 0) {
-		if (argc<5+startarg) {
+		if (argc <= 2 + startarg) {
 			printf("%s\n", _("Where are parameters?"));
 			exit(-1);
 		}
@@ -162,16 +152,16 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		if (*type == SMS_Save) {
 			EncodeUnicode(RemoteNumber,"WAP Info",8);
 		}
-		strcpy(MMSInfo.Address,	argv[3+startarg]);
-		strcpy(MMSInfo.Title,	argv[4+startarg]);
-		startarg += 5;
+		strcpy(MMSInfo.Address,	argv[0 + startarg]);
+		strcpy(MMSInfo.Title,	argv[1 + startarg]);
+		startarg += 2;
 	} else if (strcasecmp(argv[typearg],"RINGTONE") == 0) {
-		if (argc<4+startarg) {
+		if (argc <= 1 + startarg) {
 			printf("%s\n", _("Where is ringtone filename?"));
 			exit(-1);
 		}
 		ringtone[0].Format=RING_NOTETONE;
-		error=GSM_ReadRingtoneFile(argv[3+startarg],&ringtone[0]);
+		error=GSM_ReadRingtoneFile(argv[startarg],&ringtone[0]);
 		if (error != ERR_NONE) return error;
 		SMSInfo.Entries[0].ID 	 = SMS_NokiaRingtone;
 		SMSInfo.Entries[0].Ringtone = &ringtone[0];
@@ -180,14 +170,14 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(Name,"Ringtone ",9);
 			CopyUnicodeString(Name+9*2, ringtone[0].Name);
 		}
-		startarg += 4;
+		startarg += 1;
 	} else if (strcasecmp(argv[typearg],"OPERATOR") == 0) {
-		if (argc<4+startarg) {
+		if (argc <= 1 + startarg) {
 			printf("%s\n", _("Where is logo filename?"));
 			exit(-1);
 		}
 		bitmap[0].Bitmap[0].Type=GSM_OperatorLogo;
-		error=GSM_ReadBitmapFile(argv[3+startarg],&bitmap[0]);
+		error=GSM_ReadBitmapFile(argv[startarg],&bitmap[0]);
 		if (error != ERR_NONE) return error;
 		strcpy(bitmap[0].Bitmap[0].NetworkCode,"000 00");
 		SMSInfo.Entries[0].ID 	 = SMS_NokiaOperatorLogo;
@@ -196,55 +186,56 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(RemoteNumber, "OpLogo",6);
 			EncodeUnicode(Name,"OpLogo ",7);
 		}
-		startarg += 4;
+		startarg += 1;
 	} else if (strcasecmp(argv[typearg],"CALLER") == 0) {
-		if (argc<4+startarg) {
+		if (argc <= 1 + startarg) {
 			printf("%s\n", _("Where is logo filename?"));
 			exit(-1);
 		}
 		bitmap[0].Bitmap[0].Type=GSM_CallerGroupLogo;
-		error=GSM_ReadBitmapFile(argv[3+startarg],&bitmap[0]);
+		error=GSM_ReadBitmapFile(argv[startarg],&bitmap[0]);
 		if (error != ERR_NONE) return error;
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaCallerLogo;
 		SMSInfo.Entries[0].Bitmap   = &bitmap[0];
 		if (*type == SMS_Save) {
 			EncodeUnicode(RemoteNumber, "Caller",6);
 		}
-		startarg += 4;
+		startarg += 1;
 	} else if (strcasecmp(argv[typearg],"ANIMATION") == 0) {
 		SMSInfo.UnicodeCoding   		= false;
 		SMSInfo.EntriesNum 			= 1;
-		if (argc<4+startarg) {
+		if (argc <= 1 + startarg) {
 			printf("%s\n", _("Where is number of frames?"));
 			exit(-1);
 		}
 		bitmap[0].Number 		= 0;
 		i				= 1;
+		/* FIXME: should not make atoi so much times! */
 		while (1) {
 			bitmap2.Bitmap[0].Type=GSM_StartupLogo;
-			error=GSM_ReadBitmapFile(argv[3+startarg+i],&bitmap2);
+			error=GSM_ReadBitmapFile(argv[startarg + i],&bitmap2);
 			if (error != ERR_NONE) return error;
 			for (j=0;j<bitmap2.Number;j++) {
-				if (bitmap[0].Number == atoi(argv[3+startarg])) break;
+				if (bitmap[0].Number == atoi(argv[startarg])) break;
 				memcpy(&bitmap[0].Bitmap[bitmap[0].Number],&bitmap2.Bitmap[j],sizeof(GSM_Bitmap));
 				bitmap[0].Number++;
 			}
-			if (bitmap[0].Number == atoi(argv[3+startarg])) break;
+			if (bitmap[0].Number == atoi(argv[startarg])) break;
 			i++;
 		}
 		SMSInfo.Entries[0].ID  		= SMS_AlcatelMonoAnimationLong;
 		SMSInfo.Entries[0].Bitmap   	= &bitmap[0];
 		bitmap[0].Bitmap[0].Text[0]	= 0;
 		bitmap[0].Bitmap[0].Text[1]	= 0;
-		startarg += 4 + atoi(argv[3+startarg]);
+		startarg += 1 + atoi(argv[startarg]);
 	} else if (strcasecmp(argv[typearg],"PICTURE") == 0) {
-		if (argc<4+startarg) {
+		if (argc <= 1 + startarg) {
 			printf("%s\n", _("Where is logo filename?"));
 			exit(-1);
 		}
 		bitmap[0].Bitmap[0].Type=GSM_PictureImage;
-		error=GSM_ReadBitmapFile(argv[3+startarg],&bitmap[0]);
-		printf(_("File \"%s\"\n"),argv[3+startarg]);
+		error=GSM_ReadBitmapFile(argv[startarg],&bitmap[0]);
+		printf(_("File \"%s\"\n"),argv[startarg]);
 		if (error != ERR_NONE) return error;
 		SMSInfo.Entries[0].ID 	 	= SMS_NokiaPictureImageLong;
 		SMSInfo.Entries[0].Bitmap   	= &bitmap[0];
@@ -255,21 +246,21 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(RemoteNumber, "Picture",7);
 			EncodeUnicode(Name,"Picture Image",13);
 		}
-		startarg += 4;
+		startarg += 1;
 #ifdef GSM_ENABLE_BACKUP
 	} else if (strcasecmp(argv[typearg],"BOOKMARK") == 0) {
-		if (argc<5+startarg) {
+		if (argc <= 2 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[3+startarg],&Backup,GSM_GuessBackupFormat(argv[3+startarg], false));
+		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) return error;
 		i = 0;
 		while (Backup.WAPBookmark[i]!=NULL) {
-			if (i == atoi(argv[4+startarg])-1) break;
+			if (i == atoi(argv[1 + startarg])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[4+startarg])-1) {
+		if (i != atoi(argv[1 + startarg])-1) {
 			printf("%s\n", _("Bookmark not found in file"));
 			exit(-1);
 		}
@@ -279,20 +270,20 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(RemoteNumber, "Bookmark",8);
 			EncodeUnicode(Name,"WAP Bookmark",12);
 		}
-		startarg += 5;
+		startarg += 2;
 	} else if (strcasecmp(argv[typearg],"WAPSETTINGS") == 0) {
-		if (argc<6+startarg) {
+		if (argc <= 3 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[3+startarg],&Backup,GSM_GuessBackupFormat(argv[3+startarg], false));
+		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) return error;
 		i = 0;
 		while (Backup.WAPSettings[i]!=NULL) {
-			if (i == atoi(argv[4+startarg])-1) break;
+			if (i == atoi(argv[1 + startarg])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[4+startarg])-1) {
+		if (i != atoi(argv[1 + startarg])-1) {
 			printf("%s\n", _("WAP settings not found in file"));
 			exit(-1);
 		}
@@ -300,12 +291,12 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		for (j=0;j<Backup.WAPSettings[i]->Number;j++) {
 			switch (Backup.WAPSettings[i]->Settings[j].Bearer) {
 			case WAPSETTINGS_BEARER_GPRS:
-				if (strcasecmp(argv[5+startarg],"GPRS") == 0) {
+				if (strcasecmp(argv[2 + startarg],"GPRS") == 0) {
 					SMSInfo.Entries[0].Settings = &Backup.WAPSettings[i]->Settings[j];
 					break;
 				}
 			case WAPSETTINGS_BEARER_DATA:
-				if (strcasecmp(argv[5+startarg],"DATA") == 0) {
+				if (strcasecmp(argv[2 + startarg],"DATA") == 0) {
 					SMSInfo.Entries[0].Settings = &Backup.WAPSettings[i]->Settings[j];
 					break;
 				}
@@ -322,20 +313,20 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(RemoteNumber, "Settings",8);
 			EncodeUnicode(Name,"WAP Settings",12);
 		}
-		startarg += 6;
+		startarg += 3;
 	} else if (strcasecmp(argv[typearg],"MMSSETTINGS") == 0) {
-		if (argc<5+startarg) {
+		if (argc <= 2 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[3+startarg],&Backup,GSM_GuessBackupFormat(argv[3+startarg], false));
+		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) return error;
 		i = 0;
 		while (Backup.MMSSettings[i]!=NULL) {
-			if (i == atoi(argv[4+startarg])-1) break;
+			if (i == atoi(argv[1 + startarg])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[4+startarg])-1) {
+		if (i != atoi(argv[1 + startarg])-1) {
 			printf("%s\n", _("MMS settings not found in file"));
 			exit(-1);
 		}
@@ -358,20 +349,20 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(RemoteNumber, "Settings",8);
 			EncodeUnicode(Name,"MMS Settings",12);
 		}
-		startarg += 5;
+		startarg += 2;
 	} else if (strcasecmp(argv[typearg],"CALENDAR") == 0) {
-		if (argc<5+startarg) {
+		if (argc <= 2 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[3+startarg],&Backup,GSM_GuessBackupFormat(argv[3+startarg], false));
+		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) return error;
 		i = 0;
 		while (Backup.Calendar[i]!=NULL) {
-			if (i == atoi(argv[4+startarg])-1) break;
+			if (i == atoi(argv[1 + startarg])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[4+startarg])-1) {
+		if (i != atoi(argv[1 + startarg])-1) {
 			printf("%s\n", _("Calendar note not found in file"));
 			exit(-1);
 		}
@@ -380,20 +371,20 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		if (*type == SMS_Save) {
 			EncodeUnicode(RemoteNumber, "Calendar",8);
 		}
-		startarg += 5;
+		startarg += 2;
 	} else if (strcasecmp(argv[typearg],"TODO") == 0) {
-		if (argc<5+startarg) {
+		if (argc <= 2 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[3+startarg],&Backup,GSM_GuessBackupFormat(argv[3+startarg], false));
+		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) return error;
 		i = 0;
 		while (Backup.ToDo[i]!=NULL) {
-			if (i == atoi(argv[4+startarg])-1) break;
+			if (i == atoi(argv[1 + startarg])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[4+startarg])-1) {
+		if (i != atoi(argv[1 + startarg])-1) {
 			printf("%s\n", _("ToDo note not found in file"));
 			exit(-1);
 		}
@@ -402,37 +393,37 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		if (*type == SMS_Save) {
 			EncodeUnicode(RemoteNumber, "ToDo",8);
 		}
-		startarg += 5;
+		startarg += 2;
 	} else if (strcasecmp(argv[typearg],"VCARD10") == 0 || strcasecmp(argv[typearg],"VCARD21") == 0) {
-		if (argc<6+startarg) {
+		if (argc <= 3 + startarg) {
 			printf("%s\n", _("Where is backup filename and location and memory *type?"));
 			exit(-1);
 		}
-		error=GSM_ReadBackupFile(argv[3+startarg],&Backup,GSM_GuessBackupFormat(argv[3+startarg], false));
+		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
 		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) return error;
 		i = 0;
-		if (strcasecmp(argv[4+startarg],"SM") == 0) {
+		if (strcasecmp(argv[1 + startarg],"SM") == 0) {
 			while (Backup.SIMPhonebook[i]!=NULL) {
-				if (i == atoi(argv[5+startarg])-1) break;
+				if (i == atoi(argv[2 + startarg])-1) break;
 				i++;
 			}
-			if (i != atoi(argv[5+startarg])-1) {
+			if (i != atoi(argv[2 + startarg])-1) {
 				printf("%s\n", _("Phonebook entry not found in file"));
 				exit(-1);
 			}
 			SMSInfo.Entries[0].Phonebook = Backup.SIMPhonebook[i];
-		} else if (strcasecmp(argv[4+startarg],"ME") == 0) {
+		} else if (strcasecmp(argv[1 + startarg],"ME") == 0) {
 			while (Backup.PhonePhonebook[i]!=NULL) {
-				if (i == atoi(argv[5+startarg])-1) break;
+				if (i == atoi(argv[2 + startarg])-1) break;
 				i++;
 			}
-			if (i != atoi(argv[5+startarg])-1) {
+			if (i != atoi(argv[2 + startarg])-1) {
 				printf("%s\n", _("Phonebook entry not found in file"));
 				exit(-1);
 			}
 			SMSInfo.Entries[0].Phonebook = Backup.PhonePhonebook[i];
 		} else {
-			printf(_("Unknown memory *type: \"%s\"\n"),argv[4+startarg]);
+			printf(_("Unknown memory *type: \"%s\"\n"),argv[1 + startarg]);
 			exit(-1);
 		}
 		if (strcasecmp(argv[typearg],"VCARD10") == 0) {
@@ -444,20 +435,20 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(RemoteNumber, "VCARD",5);
 			EncodeUnicode(Name, "Phonebook entry",15);
 		}
-		startarg += 6;
+		startarg += 3;
 #endif
 	} else if (strcasecmp(argv[typearg],"PROFILE") == 0) {
 		SMSInfo.Entries[0].ID = SMS_NokiaProfileLong;
 		if (*type == SMS_Save) {
 			EncodeUnicode(RemoteNumber, "Profile",7);
 		}
-		startarg += 3;
 	} else {
 		printf(_("What format of sms (\"%s\") ?\n"),argv[typearg]);
 		exit(-1);
 	}
 
 	for (i = startarg; i < argc; i++) {
+		printf("%s\n", argv[i]);
 		switch (nextlong) {
 		case 0:
 			if (*type == SMS_Save || *type == SMS_SendSaved) {
@@ -536,6 +527,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				}
 			}
 			if (strcasecmp(argv[typearg],"TEXT") == 0) {
+				if (strcasecmp(argv[i],"-text") == 0) {
+					nextlong = 26;
+					break;
+				}
 				if (strcasecmp(argv[i],"-inputunicode") == 0) {
 					ReadUnicodeFile(Buffer[0],InputBuffer);
 					break;
@@ -1129,6 +1124,11 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			}
 			nextlong = 0;
 			break;
+		case 26:/* text from parameter */
+			EncodeUnicode(Buffer[0],argv[i],strlen(argv[i]));
+			HasText = true;
+			nextlong = 0;
+			break;
 		}
 	}
 	if (nextlong!=0) {
@@ -1149,7 +1149,28 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 
 	}
 	if (strcasecmp(argv[typearg],"TEXT") == 0) {
+		if (! HasText) {
+			if (isatty(fileno(stdin))) {
+				printf("%s\n", _("Enter message text and press ^D:"));
+			}
+			chars_read = fread(InputBuffer, 1, SEND_SAVE_SMS_BUFFER_SIZE/2, stdin);
+			/* Zero terminate string */
+			InputBuffer[chars_read] = 0;
+			/* Trim \n at the end of string */
+			if (InputBuffer[chars_read - 1] == '\n') {
+				chars_read--;
+				InputBuffer[chars_read] = 0;
+			}
+			/* Warn on no input */
+			if (chars_read == 0) {
+				printf_warn("%s\n", _("0 chars read!"));
+			}
+		}
+
+		EncodeUnicode(Buffer[0],InputBuffer,chars_read);
+
 		chars_read = UnicodeLength(Buffer[0]);
+
 		if (chars_read != 0) {
 			/* Trim \n at the end of string */
 			if (Buffer[0][chars_read*2-1] == '\n' && Buffer[0][chars_read*2-2] == 0)

@@ -45,6 +45,7 @@ ChangeLog
       messages displaying.
 [!] * New binary gammu-smsd-inject to inject messages to SMSD.
 [!] * Gammu binary now does not support any SMSD operations.
+[+] * Sending TEXT message now accepts text using -text parameter.
     
 20081219 - 1.22.1
 
