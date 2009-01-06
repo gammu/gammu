@@ -1163,7 +1163,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			}
 			/* Warn on no input */
 			if (chars_read == 0) {
-				printf_warn("%s\n", _("0 chars read!"));
+				printf_warn("%s\n", _("No chars read, assuming it is okay!"));
 			}
 		}
 
