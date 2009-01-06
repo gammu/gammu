@@ -267,12 +267,6 @@ static void Features(int argc UNUSED, char *argv[]UNUSED)
 #ifdef CURL_FOUND
 	printf("  - %s\n", "CURL");
 #endif
-#ifdef HAVE_MYSQL_MYSQL_H
-	printf("  - %s\n", "MYSQL");
-#endif
-#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-	printf("  - %s\n", "POSTGRESQL");
-#endif
 }
 
 /**
