@@ -81,19 +81,6 @@ if (POSTGRES_FOUND)
     include_directories (${POSTGRES_INCLUDE_DIR})
 endif (POSTGRES_FOUND)
 
-# Add libraries needed for windows build
-if (WIN32)
-    # Magic needed for SHGetFolderPathA
-    target_link_libraries (gammu-smsd shfolder shell32)
-    target_link_libraries (gsmsd shfolder shell32)
-    # Win sock
-    target_link_libraries (gammu-smsd ws2_32)
-    target_link_libraries (gsmsd ws2_32)
-    # These libraries are needed for serial driver
-    target_link_libraries (gammu-smsd setupapi advapi32)
-    target_link_libraries (gsmsd setupapi advapi32)
-endif (WIN32)
-
 install (TARGETS gsmsd gammu-smsd gammu-smsd-inject
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
         LIBRARY DESTINATION "${INSTALL_LIB_DIR}"
