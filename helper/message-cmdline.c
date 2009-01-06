@@ -68,7 +68,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	 */
 	unsigned char SMSC[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 	/**
-	 * Whether SMSC is set or should be read from phone.
+	 * Whether SMSC is set manually (0) or should be read from phone.
 	 */
 	int SMSCSet = 1;
 	int startarg;
@@ -100,14 +100,21 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 
 	/* Required only during sending */
 	GSM_SMSValidity			Validity;
-//	GSM_SMSC		    	PhoneSMSC;
+	GSM_SMSC		    	PhoneSMSC;
 	bool				DeliveryReport		= false;
 
 	/* Some defaults */
 	Name[0] = 0;
 	Name[1] = 0;
+
+	SMSC[0] = 0;
+	SMSC[1] = 0;
+
 	ReplaceBuffer[0] = 0;
 	ReplaceBuffer[1] = 0;
+
+	EncodeUnicode(RemoteNumber, "Gammu", 5);
+
 	GSM_ClearMultiPartSMSInfo(&SMSInfo);
 	SMSInfo.ReplaceMessage		= 0;
 	SMSInfo.EntriesNum		= 1;
@@ -116,7 +123,6 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 
 
 	if (*type == SMS_Save) {
-		EncodeUnicode(RemoteNumber, "Gammu", 5);
 		startarg = typearg + 1;
 	} else {
 		/* When not saving SMS, recipient has to be specified */
@@ -128,9 +134,12 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		startarg = typearg + 2;
 	}
 
-	if (*type == SMS_SMSD) {
-		/* We don't care about SMSC number here, SMSD handles this itself */
-		EncodeUnicode(SMSC,"", 0);
+	if (*type == SMS_SMSD || *type == SMS_Display) {
+		/*
+		 * We don't care about SMSC number here, SMSD handles this
+		 * itself and for displaying we don't really need a SMSC
+		 * number.
+		 */
 		SMSCSet	= 0;
 	}
 
@@ -481,7 +490,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		exit(-1);
 	}
 
-	for (i=startarg;i<argc;i++) {
+	for (i = startarg; i < argc; i++) {
 		switch (nextlong) {
 		case 0:
 			if (*type == SMS_Save || *type == SMS_SendSaved) {
@@ -1239,165 +1248,56 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 
 		}
 	}
+
+	/* Check whether we did not reach user limit of messages */
 	if (MaxSMS != -1 && sms->Number > MaxSMS) {
 		printf_err(_("There is %i SMS packed and %i limit. Exiting\n"),sms->Number,MaxSMS);
 		return ERR_MOREMEMORY;
 	}
 
-#if 0
-	/* FIXME: This code is for review! */
-	if (DisplaySMS) {
-		if (SMSCSet != 0) {
-			printf("%s\n", _("Use -smscnumber option to give SMSC number"));
-			GSM_Terminate();
-			exit(-1);
+	/*
+	 * Are we supposed to read SMSC from phone?
+	 */
+	if (SMSCSet != 0) {
+		if (sm == NULL) {
+			printf_err("%s\n", _("Use -smscnumber option to give SMSC number"));
+			return ERR_UNKNOWN;
 		}
 
-		for (i=0;i<sms->Number;i++) {
-			sms->SMS[i].Location			= 0;
-			sms->SMS[i].ReplyViaSameSMSC		= ReplyViaSameSMSC;
-			sms->SMS[i].SMSC.Location		= 0;
-			sms->SMS[i].PDU				= SMS_Submit;
-			if (DeliveryReport) sms->SMS[i].PDU	= SMS_Status_Report;
-			CopyUnicodeString(sms->SMS[i].Number, RemoteNumber);
-			CopyUnicodeString(sms->SMS[i].SMSC.Number, SMSC);
-			if (Validity.Format != 0) memcpy(&sms->SMS[i].SMSC.Validity,&Validity,sizeof(GSM_SMSValidity));
-			DisplaySMSFrame(&sms->SMS[i]);
-		}
+		PhoneSMSC.Location = SMSCSet;
+		error = GSM_GetSMSC(sm, &PhoneSMSC);
+		if (error != ERR_NONE) return error;
 
-		printf("\n");
-		printf(_("Number of messages: %i"), sms->Number);
-		printf("\n");
+		CopyUnicodeString(SMSC, PhoneSMSC.Number);
+		SMSCSet = 0;
 	}
-	if (SendSMSDSMS) {
-		if (SMSCSet != 0) {
-			printf("%s\n", _("Use -smscnumber option to give SMSC number"));
-			exit(-1);
+
+	/*
+	 * Fill up all messages with flags.
+	 */
+	for (i=0;i<sms->Number;i++) {
+		CopyUnicodeString(sms->SMS[i].Number, RemoteNumber);
+
+		sms->SMS[i].Location = 0;
+		sms->SMS[i].Folder = Folder;
+		sms->SMS[i].State = State;
+
+		sms->SMS[i].ReplyViaSameSMSC = ReplyViaSameSMSC;
+
+		sms->SMS[i].SMSC.Location = SMSCSet;
+		CopyUnicodeString(sms->SMS[i].SMSC.Number, SMSC);
+
+		if (DeliveryReport) {
+			sms->SMS[i].PDU	= SMS_Status_Report;
+		} else {
+			sms->SMS[i].PDU = SMS_Submit;
 		}
 
-		for (i=0;i<sms->Number;i++) {
-			sms->SMS[i].Location			= 0;
-			sms->SMS[i].ReplyViaSameSMSC		= ReplyViaSameSMSC;
-			sms->SMS[i].SMSC.Location		= 0;
-			sms->SMS[i].PDU				= SMS_Submit;
-			if (DeliveryReport) sms->SMS[i].PDU	= SMS_Status_Report;
-			CopyUnicodeString(sms->SMS[i].Number, RemoteNumber);
-			CopyUnicodeString(sms->SMS[i].SMSC.Number, SMSC);
-			if (Validity.Format != 0) memcpy(&sms->SMS[i].SMSC.Validity,&Validity,sizeof(GSM_SMSValidity));
-		}
-		error = SMSDaemonSendSMS(argv[4],argv[5],&sms);
-		Print_Error(error);
-	}
-	if (*type == SMS_Save || *type == SMS_SendSaved) {
-		error=GSM_GetSMSFolders(gsm, &folders);
-		Print_Error(error);
-
-		if (*type == SMS_SendSaved)	{
-			if (Validity.Format != 0 && SMSCSet != 0) {
-				PhoneSMSC.Location = SMSCSet;
-				error=GSM_GetSMSC(gsm,&PhoneSMSC);
-				Print_Error(error);
-				CopyUnicodeString(SMSC,PhoneSMSC.Number);
-				SMSCSet = 0;
-			}
-
-			GSM_SetSendSMSStatusCallback(gsm, SendSMSStatus, NULL);
-
-			signal(SIGINT, interrupt);
-			fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C..."));
-		}
-
-		for (i=0;i<sms->Number;i++) {
-			printf(_("Saving SMS %i/%i\n"),i+1,sms->Number);
-			sms->SMS[i].Folder		= Folder;
-			sms->SMS[i].State		= State;
-			sms->SMS[i].ReplyViaSameSMSC	= ReplyViaSameSMSC;
-			sms->SMS[i].SMSC.Location	= SMSCSet;
-
-			if (*type == SMS_SendSaved)	{
-				sms->SMS[i].PDU	= SMS_Submit;
-				if (DeliveryReport) sms->SMS[i].PDU = SMS_Status_Report;
-				if (Validity.Format != 0) sms->SMS[i].SMSC.Validity = Validity;
-			} else {
-				sms->SMS[i].PDU	= SMS_Deliver;
-			}
-
-			CopyUnicodeString(sms->SMS[i].Number, RemoteNumber);
-			CopyUnicodeString(sms->SMS[i].Name, Name);
-			if (SMSCSet==0) CopyUnicodeString(sms->SMS[i].SMSC.Number, SMSC);
-			error=GSM_AddSMS(gsm, &sms->SMS[i]);
-			Print_Error(error);
-			printf(_("Saved in folder \"%s\", location %i"),
-				DecodeUnicodeConsole(folders.Folder[sms->SMS[i].Folder-1].Name),sms->SMS[i].Location);
-			if (sms->SMS[i].Memory == MEM_SM) {
-				printf(", %s\n", _("SIM"));
-				if (UnicodeLength(Name) != 0) {
-					printf("%s\n", _("SMS name ignored"));
-				}
-			} else {
-				printf(", %s\n", _("phone"));
-			}
-
-			if (*type == SMS_SendSaved) {
-				printf(_("Sending sms from folder \"%s\", location %i\n"),
-					DecodeUnicodeString(folders.Folder[sms->SMS[i].Folder-1].Name),sms->SMS[i].Location);
-				SMSStatus = ERR_TIMEOUT;
-				error=GSM_SendSavedSMS(gsm, 0, sms->SMS[i].Location);
-				Print_Error(error);
-				printf(_("....waiting for network answer"));
-				while (!gshutdown) {
-					GSM_ReadDevice(gsm,true);
-					if (SMSStatus == ERR_UNKNOWN) {
-						GSM_Terminate();
-						exit(-1);
-					}
-					if (SMSStatus == ERR_NONE) break;
-				}
-			}
+		if (Validity.Format != 0) {
+			sms->SMS[i].SMSC.Validity = Validity;
 		}
 	}
 
-	if (SendSMS) {
-		if (Validity.Format != 0 && SMSCSet != 0) {
-			PhoneSMSC.Location = SMSCSet;
-			error=GSM_GetSMSC(gsm,&PhoneSMSC);
-			Print_Error(error);
-			CopyUnicodeString(SMSC,PhoneSMSC.Number);
-			SMSCSet = 0;
-		}
-
-		signal(SIGINT, interrupt);
-		fprintf(stderr, "%s\n", _("If you want break, press Ctrl+C..."));
-
-		GSM_SetSendSMSStatusCallback(gsm, SendSMSStatus, NULL);
-
-		for (i=0;i<sms->Number;i++) {
-			printf(_("Sending SMS %i/%i"),i+1,sms->Number);
-			fflush(stdout);
-			sms->SMS[i].Location			= 0;
-			sms->SMS[i].ReplyViaSameSMSC		= ReplyViaSameSMSC;
-			sms->SMS[i].SMSC.Location		= SMSCSet;
-			sms->SMS[i].PDU				= SMS_Submit;
-			if (DeliveryReport) sms->SMS[i].PDU	= SMS_Status_Report;
-			CopyUnicodeString(sms->SMS[i].Number, RemoteNumber);
-			if (SMSCSet==0) CopyUnicodeString(sms->SMS[i].SMSC.Number, SMSC);
-			if (Validity.Format != 0) memcpy(&sms->SMS[i].SMSC.Validity,&Validity,sizeof(GSM_SMSValidity));
-			SMSStatus = ERR_TIMEOUT;
-			error=GSM_SendSMS(gsm, &sms->SMS[i]);
-			Print_Error(error);
-			printf(_("....waiting for network answer"));
-			fflush(stdout);
-			while (!gshutdown) {
-				GSM_ReadDevice(gsm,true);
-				if (SMSStatus == ERR_UNKNOWN) {
-					GSM_Terminate();
-					exit(-1);
-				}
-				if (SMSStatus == ERR_NONE) break;
-			}
-		}
-	}
-#endif
 	return ERR_NONE;
 }
 
