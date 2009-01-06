@@ -193,7 +193,7 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 	}
 
 	sprintf(buf,
-		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client) VALUES ('%s', '%s', 'yes', 'yes', now(), now() + interval '10 seconds', '%s')",
+		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) VALUES ('%s', '%s', 'yes', 'yes', now(), now() + interval '10 seconds', '%s', -1, -1)",
 		imei, Config->PhoneID, buf2);
 
 	if (SMSDPgSQL_Query(Config, buf, &Res) != ERR_NONE) {
