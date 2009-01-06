@@ -25,7 +25,10 @@
 #include "misc.h"
 
 #include <gammu-smsd.h>
+
 #include "../common/misc/locales.h"
+#include "../helper/printing.h"
+
 #ifdef DEBUG
 #  include "sniff.h"
 #endif

@@ -12,11 +12,14 @@ include_directories (
     "${Gammu_BINARY_DIR}/include"
     )
 
+add_library (printing STATIC printing.c)
+
 add_library (memorydisplay STATIC memory-display.c)
 target_link_libraries (memorydisplay libGammu)
 
 add_library (messagecmdline STATIC message-cmdline.c)
 target_link_libraries (messagecmdline libGammu)
+target_link_libraries (messagecmdline printing)
 
 add_library (messagedisplay STATIC message-display.c)
 target_link_libraries (messagedisplay libGammu)
