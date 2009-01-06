@@ -3,7 +3,9 @@
 #include <gammu.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
+
+#include "common.h"
+
 #include "../common/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 
@@ -103,7 +105,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Check expected text */
 	len = UnicodeLength(sms.SMS[0].Text);
 	if (len > (sizeof(message) / 2) - 1) len = (sizeof(message) / 2) - 1;
-	assert(mywstrncmp(sms.SMS[0].Text, message, len) == true);
+	test_result(mywstrncmp(sms.SMS[0].Text, message, len) == true);
 
 	/* Display message */
 	DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);

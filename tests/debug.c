@@ -1,7 +1,8 @@
 #include <gammu.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
+
+#include "common.h"
 
 GSM_StateMachine *s;
 
@@ -49,7 +50,7 @@ void check_log(FILE *f, bool match, const char *test_name)
 done:
 	rewind(f);
 	result = fwrite(cleaner, 1, sizeof(cleaner), f);
-	assert(result == sizeof(cleaner));
+	test_result(result == sizeof(cleaner));
 	rewind(f);
 }
 
@@ -90,134 +91,134 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/*
 	 * Test 1 - setting debug level.
 	 */
-	assert(GSM_SetDebugLevel("NONSENSE", di_sm) == false);
-	assert(GSM_SetDebugGlobal(false, di_sm) == true);
-	assert(GSM_SetDebugLevel("textall", di_sm) == true);
-	assert(GSM_SetDebugLevel("textall", di_global) == true);
+	test_result(GSM_SetDebugLevel("NONSENSE", di_sm) == false);
+	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
+	test_result(GSM_SetDebugLevel("textall", di_sm) == true);
+	test_result(GSM_SetDebugLevel("textall", di_global) == true);
 
 	/*
 	 * Test 2 - global /dev/null, local tempfile, do not use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
-	assert(GSM_SetDebugGlobal(false, di_sm) == true);
-	assert(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
+	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
 	check_log(debug_file, true, "NULL,TEMP,FALSE");
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/*
 	 * Test 3 - global /dev/null, local tempfile, use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
-	assert(GSM_SetDebugGlobal(true, di_sm) == true);
-	assert(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
+	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
 	check_log(debug_file, false, "NULL,TEMP,TRUE");
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/*
 	 * Test 4 - global tempfile, local /dev/null, use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
-	assert(GSM_SetDebugGlobal(true, di_sm) == true);
-	assert(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
+	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	check_log(debug_file, true, "TEMP,NULL,TRUE");
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/*
 	 * Test 5 - global tempfile, local /dev/null, do not use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
-	assert(GSM_SetDebugGlobal(false, di_sm) == true);
-	assert(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
+	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	check_log(debug_file, false, "TEMP,NULL,FALSE");
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 	/*
 	 * Test 6 - global /dev/null, local tempfile, do not use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
-	assert(GSM_SetDebugGlobal(true, di_sm) == true);
-	assert(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugGlobal(false, di_sm) == true);
+	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
+	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
 	check_log(debug_file, true, "2:NULL,TEMP,FALSE");
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/*
 	 * Test 7 - global /dev/null, local tempfile, use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
-	assert(GSM_SetDebugGlobal(false, di_sm) == true);
-	assert(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugGlobal(true, di_sm) == true);
+	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
+	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
 	check_log(debug_file, false, "2:NULL,TEMP,TRUE");
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/*
 	 * Test 8 - global tempfile, local /dev/null, use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
-	assert(GSM_SetDebugGlobal(false, di_sm) == true);
-	assert(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
-	assert(GSM_SetDebugGlobal(true, di_sm) == true);
+	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
+	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
 	check_log(debug_file, true, "2:TEMP,NULL,TRUE");
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/*
 	 * Test 9 - global tempfile, local /dev/null, do not use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
-	assert(GSM_SetDebugGlobal(true, di_sm) == true);
-	assert(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
-	assert(GSM_SetDebugGlobal(false, di_sm) == true);
+	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
+	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
 	check_log(debug_file, false, "2:TEMP,NULL,FALSE");
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 	/*
 	 * Test 10 - functional logging, do not use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
-	assert(GSM_SetDebugGlobal(true, di_sm) == true);
-	assert(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFunction(Log_Function, NULL, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugGlobal(false, di_sm) == true);
+	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
+	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFunction(Log_Function, NULL, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
 	check_log(debug_file, false, "10:TEMP,NULL,FALSE");
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 	/*
 	 * Test 11 - functional logging, use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
-	assert(GSM_SetDebugGlobal(true, di_sm) == true);
-	assert(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
-	assert(GSM_SetDebugFunction(Log_Function, NULL, di_global) == ERR_NONE);
-	assert(GSM_SetDebugGlobal(true, di_sm) == true);
+	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
+	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFunction(Log_Function, NULL, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
 	check_log(debug_file, false, "11:TEMP,NULL,TRUE");
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
-	assert(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
+	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
 
 	/* Free state machine */

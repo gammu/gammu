@@ -48,6 +48,7 @@ ChangeLog
 [+] * Sending TEXT message now accepts text using -text parameter.
 [+] * Improved logging differentiation of SMSD log messages.
 [-] * Properly remove messages from queue when sending fails (bug #778).
+[-] * Use own test handler instead of asserts.
     
 20081219 - 1.22.1
 

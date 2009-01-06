@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include <assert.h>
+#include "common.h"
 #include "../common/phone/at/atgen.h"
 #include "../common/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
 #include "../common/gsmstate.h" /* Needed for state machine internals */
@@ -30,7 +30,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
-	assert(s != NULL);
+	test_result(s != NULL);
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(true, debug_info);
 

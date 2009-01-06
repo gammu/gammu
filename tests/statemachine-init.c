@@ -1,7 +1,8 @@
 #include <gammu.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <assert.h>
+
+#include "common.h"
 
 #ifdef WIN32
 # define NUL "NUL"
@@ -19,7 +20,7 @@ void single_check(const char *device, const char *connection, const char *model,
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
-	assert(s != NULL);
+	test_result(s != NULL);
 
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(true, debug_info);
@@ -34,7 +35,7 @@ void single_check(const char *device, const char *connection, const char *model,
 	GSM_SetConfigNum(s, 1);
 
 	error = GSM_InitConnection(s, 3);
-	assert(error == expected);
+	test_result(error == expected);
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
