@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
-"POT-Creation-Date: 2009-01-07 19:56+0100\n"
+"POT-Creation-Date: 2009-01-07 23:57+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -646,7 +646,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:51
 msgid ""
-"File where smsd actions are being logged. You can also use special value "
+"File where SMSD actions are being logged. You can also use special value "
 "\"syslog\" which will send all messages to syslog daemon."
 msgstr ""
 
@@ -663,7 +663,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:58
-msgid "How many seconds should smsd wait after each read/write loop."
+msgid "How many seconds should SMSD wait after each read/write loop."
 msgstr ""
 
 # type: Plain text
@@ -680,7 +680,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:66
 msgid ""
-"Shows how many seconds smsd should wait for network answer during sending "
+"Shows how many seconds SMSD should wait for network answer during sending "
 "sms.  If nothing happen during this time, sms will be resent."
 msgstr ""
 
@@ -1220,7 +1220,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsd.1:58 docs/user/gammu-smsd-inject.1:47
 msgid ""
-"Before reporting a bug, please enable verbose logging in smsd configuration:"
+"Before reporting a bug, please enable verbose logging in SMSD configuration:"
 msgstr ""
 
 # type: Plain text
