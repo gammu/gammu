@@ -1,4 +1,4 @@
-#include "../common/misc/locales.h"
+#include "../helper/locales.h"
 
 #include <gammu.h>
 #include <string.h>

@@ -1,4 +1,4 @@
-#include "../common/misc/locales.h"
+#include "../helper/locales.h"
 
 #define _GNU_SOURCE		/* For strcasestr */
 #include <string.h>

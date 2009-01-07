@@ -12,7 +12,7 @@
 #include "../../../common/phone/nokia/nfunc.h"
 #include "../../../common/phone/nokia/dct4s40/dct4func.h"
 #include "../../../common/misc/coding/coding.h"
-#include "../../../common/misc/locales.h"
+#include "../../../helper/locales.h"
 
 #include "../../../helper/formats.h"
 

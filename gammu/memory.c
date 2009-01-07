@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#include "../common/misc/locales.h"
+#include "../helper/locales.h"
 
 #include "common.h"
 #include "memory.h"

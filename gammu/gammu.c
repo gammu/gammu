@@ -24,7 +24,7 @@
 #include "calendar.h"
 #include "misc.h"
 
-#include "../common/misc/locales.h"
+#include "../helper/locales.h"
 #include "../helper/printing.h"
 
 #ifdef DEBUG
@@ -1042,17 +1042,31 @@ int main(int argc, char *argv[])
 	GSM_Error error;
 	INI_Section *cfg = NULL;
 
-	gsm = GSM_AllocStateMachine();
-
-	GSM_InitLocales(NULL);
+	error = GSM_FindGammuRC(&cfg);
+	if (error != ERR_NONE || cfg == NULL) {
+		if (error == ERR_FILENOTSUPPORTED) {
+			printf_warn("%s\n",
+				    _("Configuration could not be parsed!"));
+		} else {
+			printf_warn("%s\n", _("No configuration file found!"));
+		}
+	}
+	locales_path = INI_GetValue(cfg, "gammu", "gammuloc", false);
+	GSM_InitLocales(locales_path);
 #ifdef GETTEXTLIBS_FOUND
+	if (locales_path != NULL) {
+		bindtextdomain("gammu", locales_path);
+	} else {
 #if defined(LOCALE_PATH)
-	bindtextdomain("gammu", LOCALE_PATH);
+		bindtextdomain("gammu", LOCALE_PATH);
 #else
-	bindtextdomain("gammu", ".");
+		bindtextdomain("gammu", ".");
 #endif
+	}
 	textdomain("gammu");
 #endif
+
+	gsm = GSM_AllocStateMachine();
 
 #ifdef CURL_FOUND
 	curl_global_init(CURL_GLOBAL_ALL);
@@ -1064,6 +1078,11 @@ int main(int argc, char *argv[])
 	GSM_SetDebugFileDescriptor(stdout, false, di);
 	GSM_SetDebugLevel("textall", di);
 #endif
+
+	cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
+	if (cp) {
+		GSM_SetDebugCoding(cp, di);
+	}
 
 	/* Any parameters? */
 	if (argc == 1) {
@@ -1087,28 +1106,6 @@ int main(int argc, char *argv[])
 			start++;
 		else
 			only_config = -1;
-	}
-
-	error = GSM_FindGammuRC(&cfg);
-	if (error != ERR_NONE || cfg == NULL) {
-		if (error == ERR_FILENOTSUPPORTED) {
-			printf_warn("%s\n",
-				    _("Configuration could not be parsed!"));
-		} else {
-			printf_warn("%s\n", _("No configuration file found!"));
-		}
-	}
-	cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
-	if (cp) {
-		GSM_SetDebugCoding(cp, di);
-	}
-
-	locales_path = INI_GetValue(cfg, "gammu", "gammuloc", false);
-	if (locales_path != NULL) {
-		GSM_InitLocales(locales_path);
-#ifdef GETTEXTLIBS_FOUND
-		bindtextdomain("gammu", locales_path);
-#endif
 	}
 
 	smcfg0 = GSM_GetConfig(gsm, 0);
