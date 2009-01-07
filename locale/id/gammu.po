@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-07 16:57+0100\n"
+"POT-Creation-Date: 2009-01-07 18:09+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1811,28 +1811,28 @@ msgstr ""
 msgid "Bad option!"
 msgstr ""
 
-#: gammu/gammu.c:1063 gammu/gammu.c:1177
-msgid "Too few parameters!"
-msgstr ""
-
-#: gammu/gammu.c:1088
+#: gammu/gammu.c:1049
 msgid "Configuration could not be parsed!"
 msgstr ""
 
-#: gammu/gammu.c:1090
+#: gammu/gammu.c:1051
 msgid "No configuration file found!"
 msgstr ""
 
-#: gammu/gammu.c:1103
+#: gammu/gammu.c:1090 gammu/gammu.c:1182
+msgid "Too few parameters!"
+msgstr ""
+
+#: gammu/gammu.c:1120
 #, c-format
 msgid "Failed to read [gammu%d] from gammurc!\n"
 msgstr ""
 
-#: gammu/gammu.c:1105 gammu/gammu.c:1116
+#: gammu/gammu.c:1122 gammu/gammu.c:1133
 msgid "No configuration read, using builtin defaults!"
 msgstr ""
 
-#: gammu/gammu.c:1183
+#: gammu/gammu.c:1188
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -3332,12 +3332,12 @@ msgstr ""
 msgid "  Deleting %s\n"
 msgstr ""
 
-#: gammu/search.c:149
+#: gammu/search.c:144
 #, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr ""
 
-#: gammu/search.c:186 gammu/search.c:193
+#: gammu/search.c:181 gammu/search.c:188
 #, c-format
 msgid "Error creating thread\n"
 msgstr ""

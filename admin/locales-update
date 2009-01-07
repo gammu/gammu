@@ -55,3 +55,5 @@ for loc in $LOCS ; do
         ' locale/$loc/libgammu.po
     msgmerge --previous  -U locale/$loc/libgammu.po locale/libgammu.pot
 done
+
+po4a admin/po4a.config
