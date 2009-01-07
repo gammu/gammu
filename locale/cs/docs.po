@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-07 23:57+0100\n"
-"PO-Revision-Date: 2009-01-07 23:56+0100\n"
+"POT-Creation-Date: 2009-01-08 00:06+0100\n"
+"PO-Revision-Date: 2009-01-08 00:09+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -285,6 +285,9 @@ msgid ""
 "(you can list Bluetooth devices in range on Linux using \"hcitool scan\" "
 "command)."
 msgstr ""
+"Při připojení přes Bluetooth musíte zadat Bluetooth adresu vašeho telefonu "
+"(na Linuxu můžete zjistit seznam zařízení v dosahu pomocí příkazu \"hcitool "
+"scan\")."
 
 # type: Plain text
 #: docs/user/gammurc.5:90
@@ -303,6 +306,9 @@ msgid ""
 "Do not use this parameter unless really needed! The only use case for this "
 "is when Gammu does not know your phone and misdetects it's features."
 msgstr ""
+"Nepoužívejte tento parametr, pokud to není opravdu nutné! Jediná situace, "
+"kdy může být dobré ho použít, je, když Gammu nezná váš telefon a špatně "
+"detekuje jeho vlastnosti."
 
 # type: TP
 #: docs/user/gammurc.5:97
@@ -467,7 +473,7 @@ msgid "This option has no meaning on Windows."
 msgstr "Tento parametr nemá na Windows žádný význam."
 
 # type: SH
-#: docs/user/gammurc.5:170 docs/user/gammu-smsdrc.5:236
+#: docs/user/gammurc.5:170 docs/user/gammu-smsdrc.5:235
 #, no-wrap
 msgid "EXAMPLE"
 msgstr "PŘÍKLAD"
@@ -500,6 +506,8 @@ msgid ""
 "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
 "phone)  connected using USB cable:"
 msgstr ""
+"Konfigurace Gammu pro telefon Sony-Ericsson (nebo jiný používající AT "
+"příkazy) připojený pomocí USB kabelu:"
 
 # type: Plain text
 #: docs/user/gammurc.5:198
@@ -519,6 +527,8 @@ msgid ""
 "Gammu configuration for Sony-Ericsson (or any other AT compatible phone)  "
 "connected using bluetooth:"
 msgstr ""
+"Konfigurace Gammu pro telefon Sony-Ericsson (nebo jiný používající AT "
+"příkazy) připojený pomocí Bluetooth:"
 
 # type: Plain text
 #: docs/user/gammurc.5:213
@@ -533,7 +543,7 @@ msgstr ""
 "connection = blueat\n"
 
 # type: SH
-#: docs/user/gammurc.5:218 docs/user/gammu-smsdrc.5:281
+#: docs/user/gammurc.5:218 docs/user/gammu-smsdrc.5:280
 #: docs/user/gammu-smsd.1:44 docs/user/gammu-smsd-inject.1:33
 #: docs/user/jadmaker.1:27 docs/user/gammu-config.1:26
 #, no-wrap
@@ -541,19 +551,19 @@ msgid "SEE ALSO"
 msgstr "DALŠÍ INFORMACE"
 
 # type: Plain text
-#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:283
+#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:282
 msgid "gammu-smsd(1), gammu(1), gammurc(5)"
 msgstr "gammu-smsd(1), gammu(1), gammurc(5)"
 
 # type: SH
-#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:283
+#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:282
 #: docs/user/gammu-smsd.1:46 docs/user/gammu-smsd-inject.1:35
 #, no-wrap
 msgid "AUTHOR"
 msgstr "AUTOR"
 
 # type: Plain text
-#: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:285
+#: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:284
 #: docs/user/gammu-smsd.1:48 docs/user/gammu-smsd-inject.1:37
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
@@ -563,7 +573,7 @@ msgstr ""
 "comE<gt>."
 
 # type: SH
-#: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:285
+#: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:284
 #: docs/user/gammu-smsd.1:48 docs/user/gammu-smsd-inject.1:37
 #: docs/user/jadmaker.1:30 docs/user/gammu-config.1:28
 #, no-wrap
@@ -571,7 +581,7 @@ msgid "COPYRIGHT"
 msgstr "COPYRIGHT"
 
 # type: Plain text
-#: docs/user/gammurc.5:225 docs/user/gammu-smsdrc.5:288
+#: docs/user/gammurc.5:225 docs/user/gammu-smsdrc.5:287
 #: docs/user/gammu-smsd.1:51 docs/user/gammu-smsd-inject.1:40
 msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
@@ -581,7 +591,7 @@ msgstr ""
 "verze 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
 
 # type: Plain text
-#: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:291
+#: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:290
 #: docs/user/gammu-smsd.1:54 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:35 docs/user/gammu-config.1:33
 msgid ""
@@ -592,7 +602,7 @@ msgstr ""
 "poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem."
 
 # type: SH
-#: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:291
+#: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:290
 #: docs/user/gammu-smsd.1:54 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:24 docs/user/gammu-config.1:23
 #, no-wrap
@@ -600,7 +610,7 @@ msgid "REPORTING BUGS"
 msgstr "HLÁŠENÍ CHYB"
 
 # type: Plain text
-#: docs/user/gammurc.5:229 docs/user/gammu-smsdrc.5:292
+#: docs/user/gammurc.5:229 docs/user/gammu-smsdrc.5:291
 #: docs/user/gammu-smsd.1:56 docs/user/gammu-smsd-inject.1:45
 #: docs/user/jadmaker.1:26 docs/user/gammu-config.1:25
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
@@ -992,6 +1002,9 @@ msgid ""
 "database before using gammu-smsd. SQL files for creating needed tables are "
 "included in documentation."
 msgstr ""
+"Jméno databáze, která se má použít. Před spuštěním gammu-smsd musí být "
+"vytvořeny všechny potřebné tabulky. Pro tento účel můžete použít SQL souboru "
+"obsažené v dokumentaci."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:176
@@ -1015,48 +1028,49 @@ msgid "Files backend options"
 msgstr "Parametry pro službu používající soubory"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:189
+#: docs/user/gammu-smsdrc.5:188
 msgid ""
 "The FILES backend accepts following configuration options. Please note that "
-"all path should contain trailing path separator (/ or \\e, depending on your "
-"platform):"
+"all path should contain trailing path separator (na Unixový systémech /):"
 msgstr ""
+"Služba FILES používá následující konfigurační volby. Prosím ujistěte se, že "
+"všechny cestky končí oddělovačem cest (na Unixových systémech /):"
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:191
+#: docs/user/gammu-smsdrc.5:190
 #, no-wrap
 msgid "B<InboxPath>"
 msgstr "B<InboxPath>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:195
+#: docs/user/gammu-smsdrc.5:194
 msgid "Where the received SMSes are stored."
 msgstr "Kde jsou ukládány přijaté zprávy."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:197 docs/user/gammu-smsdrc.5:204
+#: docs/user/gammu-smsdrc.5:196 docs/user/gammu-smsdrc.5:203
 msgid "Default is current directory."
 msgstr "Výchozí je aktuální adresář."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:198
+#: docs/user/gammu-smsdrc.5:197
 #, no-wrap
 msgid "B<OutboxPath>"
 msgstr "B<OutboxPath>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:202
+#: docs/user/gammu-smsdrc.5:201
 msgid "Where SMSes to be sent should be placed."
 msgstr "Kde jsou umístěny zprávy ve frontě k odeslání."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:205
+#: docs/user/gammu-smsdrc.5:204
 #, no-wrap
 msgid "B<SentSMSPath>"
 msgstr "B<SentSMSPath>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:210
+#: docs/user/gammu-smsdrc.5:209
 msgid ""
 "Where the transmitted SMSes are placed, if same as OutBoxPath transmitted "
 "messages are deleted."
@@ -1065,34 +1079,34 @@ msgstr ""
 "zprávyjsou vymazány."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:212
+#: docs/user/gammu-smsdrc.5:211
 msgid "Default is to delete transmitted messages."
 msgstr "Výchozí je mazat přenesené zprávy."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:213
+#: docs/user/gammu-smsdrc.5:212
 #, no-wrap
 msgid "B<ErrorSMSPath>"
 msgstr "B<ErrorSMSPath>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:217
+#: docs/user/gammu-smsdrc.5:216
 msgid "Where SMSes with error in transmission is placed."
 msgstr "Kde jsou umístěny SMS po chybě při odesílání."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:219
+#: docs/user/gammu-smsdrc.5:218
 msgid "Default is same as SentSMSPath."
 msgstr "Výchozí je stejné jako SentSMSPath."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:220
+#: docs/user/gammu-smsdrc.5:219
 #, no-wrap
 msgid "B<InboxFormat>"
 msgstr "B<InboxFormat>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:226
+#: docs/user/gammu-smsdrc.5:225
 msgid ""
 "The format in which the SMS will be stored: 'detail', 'unicode', "
 "'standard'.  The 'detail' format is the format used for backup. See below.  "
@@ -1100,42 +1114,45 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:228
+#: docs/user/gammu-smsdrc.5:227
 msgid "Default is 'unicode'."
 msgstr "Výchozí je 'unicode'."
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:229
+#: docs/user/gammu-smsdrc.5:228
 #, no-wrap
 msgid "B<TransmitFormat>"
 msgstr "B<TransmitFormat>"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:233
+#: docs/user/gammu-smsdrc.5:232
 msgid "The format for transmitting the SMS: 'auto', 'unicode', '7bit'."
 msgstr "Formát přenosu SMS: 'auto', 'unicode', '7bit'."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:235
+#: docs/user/gammu-smsdrc.5:234
 msgid "Default is 'auto'."
 msgstr "Výchozí je 'auto'."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:241
+#: docs/user/gammu-smsdrc.5:240
 msgid ""
 "There is more complete example available in Gammu documentation. Please note "
 "that for simplicity following examples do not include [gammu] section, you "
 "can look into gammurc(5) for some examples how it can look like."
 msgstr ""
+"Kompletnější ukázka je dostupná v dokumentaci Gammu. Pro jednoduchost "
+"následující příklady neobsahují sekci [gammu], na její příkladu se můžete "
+"podívat do gammurc(5)."
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:243
+#: docs/user/gammu-smsdrc.5:242
 msgid "SMSD configuration file for FILES backend could look like:"
 msgstr ""
 "Konfigurační soubor pro SMSD používající službu FILES by mohl vypadat takto:"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:256
+#: docs/user/gammu-smsdrc.5:255
 #, no-wrap
 msgid ""
 "[smsd]\n"
@@ -1157,12 +1174,12 @@ msgstr ""
 "ErrorSMSPath = /var/spool/sms/error/\n"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:262
+#: docs/user/gammu-smsdrc.5:261
 msgid "If you want to use MYSQL backend, you will need something like this:"
 msgstr "Pokud chcete použít službu MYSQL, bute potřebovat přibližně toto:"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:275
+#: docs/user/gammu-smsdrc.5:274
 #, no-wrap
 msgid ""
 "[smsd]\n"
@@ -1433,6 +1450,8 @@ msgid ""
 "These programs follow the usual GNU command line syntax, with long options "
 "starting with two dashes (`-').  A summary of options is included below."
 msgstr ""
+"Program se chová podle GNU zvyklostí, takže dlouhé parametry jsou uvedeny "
+"dvěmi pomlčkami. Souhrn parametrů je uveden níže."
 
 # type: TP
 #: docs/user/jadmaker.1:14 docs/user/gammu-config.1:13
