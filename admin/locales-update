@@ -11,7 +11,19 @@ xgettext \
     --add-comments=l10n \
     --add-location \
     --copyright-holder="Michal Čihař" \
-    `find gammu common -name '*.c' -o -name '*.h' | sort`
+    `find gammu helper -name '*.c' -o -name '*.h' | sort`
+
+xgettext \
+    -d libgammu \
+    --msgid-bugs-address=michal@cihar.com \
+    -o locale/libgammu.pot \
+    --language=C \
+    --keyword=_ \
+    --keyword=N_ \
+    --add-comments=l10n \
+    --add-location \
+    --copyright-holder="Michal Čihař" \
+    `find common -name '*.c' -o -name '*.h' | sort`
 
 ver=`sed -n 's/set (VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
 sed -i '
@@ -20,6 +32,12 @@ sed -i '
     s/(C) YEAR/(C) 2003 - '`date +%Y`'/;
     s/VERSION/'$ver'/;
     ' locale/gammu.pot
+sed -i '
+    s/SOME DESCRIPTIVE TITLE/libGammu translation/;
+    s/PACKAGE/libGammu/;
+    s/(C) YEAR/(C) 2003 - '`date +%Y`'/;
+    s/VERSION/'$ver'/;
+    ' locale/libgammu.pot
 
 for loc in $LOCS ; do
     sed -i '
@@ -29,4 +47,11 @@ for loc in $LOCS ; do
         s/Project-Id-Version: Gammu [0-9.]*/Project-Id-Version: Gammu '$ver'/;
         ' locale/$loc/gammu.po
     msgmerge --previous  -U locale/$loc/gammu.po locale/gammu.pot
+    sed -i '
+        s/SOME DESCRIPTIVE TITLE/libGammu translation/;
+        s/PACKAGE/libGammu/;
+        s/VERSION/'$ver'/;
+        s/Project-Id-Version: libGammu [0-9.]*/Project-Id-Version: libGammu '$ver'/;
+        ' locale/$loc/libgammu.po
+    msgmerge --previous  -U locale/$loc/libgammu.po locale/libgammu.pot
 done

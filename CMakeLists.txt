@@ -635,6 +635,28 @@ if (CMAKE_USE_PTHREADS_INIT)
     set (HAVE_PTHREAD ON)
 endif (CMAKE_USE_PTHREADS_INIT)
 
+# Install paths
+set (INSTALL_BIN_DIR "bin" CACHE STRING "Path for binaries installation")
+mark_as_advanced (INSTALL_BIN_DIR)
+
+set (INSTALL_LIB_DIR "lib${LIB_SUFFIX}" CACHE STRING "Path for libraries installation")
+mark_as_advanced (INSTALL_LIB_DIR)
+
+set (INSTALL_LIBDATA_DIR "lib${LIB_SUFFIX}" CACHE STRING "Path for libraries data (eg. pkgconfig data) installation")
+mark_as_advanced (INSTALL_LIBDATA_DIR)
+
+set (INSTALL_INC_DIR "include/gammu" CACHE STRING "Path for includes installation")
+mark_as_advanced (INSTALL_INC_DIR)
+
+set (INSTALL_LOC_DIR "share/locale" CACHE STRING "Path for locales installation")
+mark_as_advanced (INSTALL_LOC_DIR)
+
+set (INSTALL_DOC_DIR "share/doc/gammu" CACHE STRING "Path for documentation installation")
+mark_as_advanced (INSTALL_DOC_DIR)
+
+set (INSTALL_MAN_DIR "share/man" CACHE STRING "Path for man pages installation")
+mark_as_advanced (INSTALL_MAN_DIR)
+
 # Phone and protocol configuration
 
 # Nokia phones
@@ -747,28 +769,6 @@ add_custom_target (interndoc ${DOXYGEN_EXECUTABLE} doxygen/Doxyfile-internal
     COMMAND find ${DOXYGEN_INTERNAL_OUTPUT}/html -name '*.html' -print0 | xargs -0 sed -i 's@text/html\;charset=iso-8859-1@text/html\;charset=utf-8@'
     DEPENDS ${LIBRARY_SRC} ${HEADERS}
     COMMENT "Generating internal documentation")
-
-# Install paths
-set (INSTALL_BIN_DIR "bin" CACHE STRING "Path for binaries installation")
-mark_as_advanced (INSTALL_BIN_DIR)
-
-set (INSTALL_LIB_DIR "lib${LIB_SUFFIX}" CACHE STRING "Path for libraries installation")
-mark_as_advanced (INSTALL_LIB_DIR)
-
-set (INSTALL_LIBDATA_DIR "lib${LIB_SUFFIX}" CACHE STRING "Path for libraries data (eg. pkgconfig data) installation")
-mark_as_advanced (INSTALL_LIBDATA_DIR)
-
-set (INSTALL_INC_DIR "include/gammu" CACHE STRING "Path for includes installation")
-mark_as_advanced (INSTALL_INC_DIR)
-
-set (INSTALL_LOC_DIR "share/gammu" CACHE STRING "Path for locales installation")
-mark_as_advanced (INSTALL_LOC_DIR)
-
-set (INSTALL_DOC_DIR "share/doc/gammu" CACHE STRING "Path for documentation installation")
-mark_as_advanced (INSTALL_DOC_DIR)
-
-set (INSTALL_MAN_DIR "share/man" CACHE STRING "Path for man pages installation")
-mark_as_advanced (INSTALL_MAN_DIR)
 
 # Generate pkgconfig file
 configure_file ("${Gammu_SOURCE_DIR}/templates/gammu.pc.cmake" "${Gammu_BINARY_DIR}/cfg/gammu.pc" @ONLY)

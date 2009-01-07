@@ -1035,7 +1035,7 @@ int main(int argc, char *argv[])
 	int start = 0;
 	unsigned int i;
 	int only_config = -1;
-	char *cp, *rss;
+	char *cp, *locales_path, *rss;
 	GSM_Config *smcfg;
 	GSM_Config *smcfg0;
 	GSM_Debug_Info *di;
@@ -1045,6 +1045,14 @@ int main(int argc, char *argv[])
 	gsm = GSM_AllocStateMachine();
 
 	GSM_InitLocales(NULL);
+#ifdef GETTEXTLIBS_FOUND
+#if defined(LOCALE_PATH)
+	bindtextdomain("gammu", LOCALE_PATH);
+#else
+	bindtextdomain("gammu", ".");
+#endif
+	textdomain("gammu");
+#endif
 
 #ifdef CURL_FOUND
 	curl_global_init(CURL_GLOBAL_ALL);
@@ -1082,13 +1090,25 @@ int main(int argc, char *argv[])
 	}
 
 	error = GSM_FindGammuRC(&cfg);
-	if (error != ERR_NONE) {
+	if (error != ERR_NONE || cfg == NULL) {
 		if (error == ERR_FILENOTSUPPORTED) {
 			printf_warn("%s\n",
 				    _("Configuration could not be parsed!"));
 		} else {
 			printf_warn("%s\n", _("No configuration file found!"));
 		}
+	}
+	cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
+	if (cp) {
+		GSM_SetDebugCoding(cp, di);
+	}
+
+	locales_path = INI_GetValue(cfg, "gammu", "gammuloc", false);
+	if (locales_path != NULL) {
+		GSM_InitLocales(locales_path);
+#ifdef GETTEXTLIBS_FOUND
+		bindtextdomain("gammu", locales_path);
+#endif
 	}
 
 	smcfg0 = GSM_GetConfig(gsm, 0);
@@ -1118,18 +1138,6 @@ int main(int argc, char *argv[])
 			}
 		}
 		GSM_SetConfigNum(gsm, GSM_GetConfigNum(gsm) + 1);
-
-		if (cfg != NULL) {
-			cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
-			if (cp) {
-				GSM_SetDebugCoding(cp, di);
-			}
-
-			smcfg->Localize =
-			    INI_GetValue(cfg, "gammu", "gammuloc", false);
-			/* It is safe to pass NULL here */
-			GSM_InitLocales(smcfg->Localize);
-		}
 
 		/* We want to use only one file descriptor for global and state machine debug output */
 		smcfg->UseGlobalDebugFile = true;

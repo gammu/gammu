@@ -1,0 +1,4173 @@
+# libGammu translation.
+# Copyright (C) 2003 - 2007 Michal Čihař
+# This file is distributed under the same license as the Gammu package.
+# Michal Čihař <michal@cihar.com>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libGammu 1.22.90\n"
+"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"POT-Creation-Date: 2009-01-07 16:57+0100\n"
+"PO-Revision-Date: 2008-01-27 17:07+0100\n"
+"Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
+"Language-Team: Language =ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Pootle 1.0.2\n"
+
+#: common/gsmcomon.c:92
+msgid "No error."
+msgstr "Нет ошибки."
+
+#: common/gsmcomon.c:93
+msgid "Error opening device. Unknown/busy or no permissions."
+msgstr "Ошибка подключения к устройству: неизвестно, занято или нет доступа."
+
+# Make device error messages uniform
+#: common/gsmcomon.c:94
+msgid "Error opening device, it is locked."
+msgstr "Ошибка подключения к устройству: заблокировано."
+
+#: common/gsmcomon.c:95
+#, fuzzy
+msgid "Error opening device, it doesn't exist."
+msgstr "Ошибка подключения к устройству: не существует."
+
+#: common/gsmcomon.c:96
+#, fuzzy
+msgid "Error opening device, it is already opened by other application."
+msgstr "Ошибка подключения к устройству: используется другим приложением."
+
+#: common/gsmcomon.c:97
+msgid "Error opening device, you don't have permissions."
+msgstr "Ошибка подключения к устройству: у вас нет прав доступа."
+
+#: common/gsmcomon.c:98
+msgid "Error opening device. No required driver in operating system."
+msgstr ""
+"Ошибка подключения к устройству: в операционной системе отсутствует "
+"необходимый драйвер."
+
+#: common/gsmcomon.c:99
+msgid "Error opening device. Some hardware not connected/wrong configured."
+msgstr ""
+"Ошибка подключения к устройству: оборудование не подключено или неправильно "
+"настроено."
+
+#: common/gsmcomon.c:100
+msgid "Error setting device DTR or RTS."
+msgstr "Ошибка установки DTR или RTS для устройства."
+
+#: common/gsmcomon.c:101
+msgid "Error setting device speed. Maybe speed not supported."
+msgstr ""
+"Ошибка установки скорости для устройства. Возможно, данная скорость не "
+"поддерживается."
+
+#: common/gsmcomon.c:102
+msgid "Error writing device."
+msgstr "Ошибка записи в устройство."
+
+#: common/gsmcomon.c:103
+msgid "Error during reading device."
+msgstr "Ошибка чтения из устройства."
+
+#: common/gsmcomon.c:104
+msgid "Can't set parity on device."
+msgstr "Невозможно установить проверку чётности для устройства."
+
+#: common/gsmcomon.c:105
+msgid "No response in specified timeout. Probably phone not connected."
+msgstr "Превышен тайм-аут ожидания ответа. Возможно, телефон не подключён."
+
+#: common/gsmcomon.c:106
+#, fuzzy
+msgid ""
+"Frame not requested right now. See <http://cihar.com/gammu/report> for "
+"information how to report it."
+msgstr ""
+"Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "
+"рассказано как сообщить об этом."
+
+#: common/gsmcomon.c:107
+msgid ""
+"Unknown response from phone. See <http://cihar.com/gammu/report> for "
+"information how to report it."
+msgstr ""
+"Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "
+"рассказано как сообщить об этом."
+
+#: common/gsmcomon.c:108
+#, fuzzy
+msgid ""
+"Unknown frame. See <http://cihar.com/gammu/report> for information how to "
+"report it."
+msgstr ""
+"Неизвестный отклик от телефона. На странице <http://cihar.com/gammu/report> "
+"рассказано как сообщить об этом."
+
+#: common/gsmcomon.c:109
+msgid "Unknown connection type string. Check config file."
+msgstr "Указан неизвестный тип подключения. Проверьте конфигурационный файл."
+
+#: common/gsmcomon.c:110
+msgid "Unknown model type string. Check config file."
+msgstr "Указана неизвестная модель. Проверьте конфигурационный файл."
+
+#: common/gsmcomon.c:111
+#, fuzzy
+msgid ""
+"Some functions not available for your system (disabled in config or not "
+"written)."
+msgstr ""
+"Некоторые функции недоступны для данной операционной системы (отключены в "
+"конфигурационном файле или ещё не написаны)."
+
+#: common/gsmcomon.c:112
+msgid "Function not supported by phone."
+msgstr "Функция не поддерживается телефоном."
+
+#: common/gsmcomon.c:113
+#, fuzzy
+msgid "Entry is empty"
+msgstr "Запись пуста."
+
+#: common/gsmcomon.c:114
+#, fuzzy
+msgid "Security error. Maybe no PIN?"
+msgstr "Ошибка защиты. Возможно, отсутствует PIN-код?"
+
+#: common/gsmcomon.c:115
+#, fuzzy
+msgid "Invalid location. Maybe too high?"
+msgstr "Недопустимое размещение. Возможно, слишком высокое значение?"
+
+#: common/gsmcomon.c:116
+msgid "Function not implemented. Help required."
+msgstr "Функция не реализована. Требуется помощь."
+
+#: common/gsmcomon.c:117
+msgid "Memory full."
+msgstr "Память заполнена."
+
+#: common/gsmcomon.c:118
+msgid "Unknown error."
+msgstr "Неизвестная ошибка."
+
+#: common/gsmcomon.c:119
+#, fuzzy
+msgid "Can't open specified file. Read only?"
+msgstr "Невозможно открыть указанный файл. Доступен только для чтения?"
+
+#: common/gsmcomon.c:120
+msgid "More memory required..."
+msgstr "Нехватка памяти..."
+
+#: common/gsmcomon.c:121
+msgid "Permission to file/device required..."
+msgstr "Необходимы права доступа к файлу или устройству..."
+
+#: common/gsmcomon.c:122
+msgid "Empty SMSC number. Set in phone or use -smscnumber."
+msgstr ""
+"Не указан номер центра сообщений (SMSC). Настройте его в телефоне или "
+"воспользуйтесь параметром -smscnumber."
+
+#: common/gsmcomon.c:123
+#, fuzzy
+msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+msgstr ""
+"Вы находитесь внутри телефонного меню (в процессе редактирования?). Выйдите "
+"из него и попробуйте ещё раз."
+
+#: common/gsmcomon.c:124
+#, fuzzy
+msgid "Phone is not connected."
+msgstr "аккумулятор не подключён"
+
+#: common/gsmcomon.c:125
+msgid "Function is during writing. If want help, please contact with authors."
+msgstr "Функция ещё не написана. Если хотите помочь, то свяжитесь с авторами."
+
+#: common/gsmcomon.c:126
+msgid "Phone is disabled and connected to charger."
+msgstr "Телефон недоступен и подключён к зарядному устройству."
+
+#: common/gsmcomon.c:127
+msgid "File format not supported by Gammu."
+msgstr "Данный формат файлов не поддерживается в Gammu."
+
+#: common/gsmcomon.c:128
+msgid ""
+"Nobody is perfect, some bug appeared in protocol implementation. Please "
+"contact authors."
+msgstr ""
+"Никто не совершенен - в реализации протокола обнаружилась ошибка. "
+"Пожалуйста, свяжитесь с авторами."
+
+#: common/gsmcomon.c:129
+msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+msgstr "Передача прервана телефоном. Возможно, вы нажали клавишу \"отмена\"?"
+
+#: common/gsmcomon.c:130
+msgid "Phone module need to send another answer frame."
+msgstr ""
+
+#: common/gsmcomon.c:131
+msgid "Current connection type doesn't support called function."
+msgstr "В текущем типе соединения не поддерживается вызванная функция."
+
+#: common/gsmcomon.c:132
+msgid "CRC error."
+msgstr "Ошибка CRC."
+
+#: common/gsmcomon.c:133
+msgid "Invalid date or time specified."
+msgstr "Указано неправильное время или дата."
+
+#: common/gsmcomon.c:134
+msgid "Phone memory error, maybe it is read only."
+msgstr "Ошибка памяти телефона. Возможно, она доступна только для чтения."
+
+#: common/gsmcomon.c:135
+msgid "Invalid data given to phone."
+msgstr "Телефону переданы неверные данные."
+
+#: common/gsmcomon.c:136
+msgid "File with specified name already exist."
+msgstr "Файл с указанным именем уже существует."
+
+#: common/gsmcomon.c:137
+msgid "File with specified name doesn't exist."
+msgstr "Файл с указанным именем не существует."
+
+#: common/gsmcomon.c:138
+#, fuzzy
+msgid "You have to give folder name and not file name."
+msgstr "Необходимо указать имя каталога, а не файла."
+
+#: common/gsmcomon.c:139
+#, fuzzy
+msgid "You have to give file name and not folder name."
+msgstr "Необходимо указать имя файла, а не каталога."
+
+#: common/gsmcomon.c:140
+msgid "Can not access SIM card."
+msgstr "Нет доступа к SIM-карте."
+
+#: common/gsmcomon.c:141
+msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+msgstr ""
+"В телефоне неверная версия GNAPPLET. Воспользуйтесь версией из пакета "
+"Gammu."
+
+#: common/gsmcomon.c:142
+msgid "Only part of folder has been listed."
+msgstr ""
+
+#: common/gsmcomon.c:143
+msgid "Folder must be empty."
+msgstr "Каталог пуст."
+
+#: common/gsmcomon.c:144
+msgid "Data were converted."
+msgstr "Данные были преобразованы."
+
+#: common/gsmcomon.c:145
+msgid "Gammu is not configured."
+msgstr "Gammu не настроена."
+
+#: common/gsmcomon.c:146
+#, fuzzy
+msgid "Wrong folder used."
+msgstr ", папка Входящие"
+
+#: common/gsmcomon.c:147
+#, fuzzy
+msgid "Internal phone error."
+msgstr "Неизвестная ошибка."
+
+#: common/gsmcomon.c:148
+#, fuzzy
+msgid "Error writing file to disk."
+msgstr "Ошибка записи в устройство."
+
+#: common/gsmcomon.c:149
+msgid "No such section exists."
+msgstr ""
+
+#: common/gsmcomon.c:150
+#, fuzzy
+msgid "Using default values."
+msgstr " (имя по умолчанию)"
+
+#: common/gsmcomon.c:151
+msgid "Corrupted data returned by phone."
+msgstr ""
+
+#: common/gsmcomon.c:152
+msgid "Bad feature string in configuration."
+msgstr ""
+
+#: common/gsmcomon.c:153
+msgid "Desired functionality has been disabled on compile time."
+msgstr ""
+
+#: common/gsmcomon.c:154
+msgid "Bluetooth configuration requires channel option."
+msgstr ""
+
+#: common/gsmcomon.c:187
+#, fuzzy
+msgid "Unknown error description."
+msgstr "Неизвестная ошибка."
+
+#: common/phone/nokia/dct3/n6110.c:1955
+msgid "Personal"
+msgstr "Личный"
+
+#: common/phone/nokia/dct3/n6110.c:1957 common/phone/nokia/nfunc.c:1105
+msgid "Car"
+msgstr "Машина"
+
+#: common/phone/nokia/dct3/n6110.c:1959 common/phone/nokia/nfunc.c:1107
+msgid "Headset"
+msgstr "Гарнитура"
+
+#: common/phone/nokia/dct3/n6110.c:1965 common/phone/nokia/nfunc.c:1095
+msgid "General"
+msgstr "Основной"
+
+#: common/phone/nokia/dct3/n6110.c:1967 common/phone/nokia/nfunc.c:1097
+msgid "Silent"
+msgstr "Тихо"
+
+#: common/phone/nokia/dct3/n6110.c:1969
+msgid "Discreet"
+msgstr "Умеренно"
+
+#: common/phone/nokia/dct3/n6110.c:1971
+msgid "Loud"
+msgstr "Громко"
+
+#: common/phone/nokia/dct3/n6110.c:1973
+msgid "My style"
+msgstr "Мой стиль"
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:533
+msgid "SIM"
+msgstr "SIM"
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:534 common/phone/pfunc.c:40
+msgid "Inbox"
+msgstr "Входящие"
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:535
+msgid "Sent items"
+msgstr "Переданные"
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:536
+msgid "Saved items"
+msgstr "Сохранённые"
+
+#: common/phone/nokia/nfunc.c:929
+msgid "Family"
+msgstr "Семья"
+
+#: common/phone/nokia/nfunc.c:931
+msgid "VIP"
+msgstr "VIP"
+
+#: common/phone/nokia/nfunc.c:933
+msgid "Friends"
+msgstr "Друзья"
+
+#: common/phone/nokia/nfunc.c:935
+msgid "Colleagues"
+msgstr "Коллеги"
+
+#: common/phone/nokia/nfunc.c:937
+msgid "Other"
+msgstr "Другие"
+
+#: common/phone/nokia/nfunc.c:1099
+msgid "Meeting"
+msgstr "Встреча"
+
+#: common/phone/nokia/nfunc.c:1101
+msgid "Outdoor"
+msgstr "На улице"
+
+#: common/phone/nokia/nfunc.c:1103
+msgid "Pager"
+msgstr "Пейджер"
+
+#: common/phone/pfunc.c:41
+msgid "Outbox"
+msgstr "Исходящие"
+
+#~ msgid "Where is backup filename and location?"
+#~ msgstr "Путь и имя файла с резервной копией?"
+
+#~ msgid "Calendar note not found in file"
+#~ msgstr "Заметка календаря не найдена в файле"
+
+#~ msgid "WAP bookmark not found in file"
+#~ msgstr "Закладка WAP не найдена в файле"
+
+#~ msgid "Note not found in file"
+#~ msgstr "Заметка не найдена в файле"
+
+#, fuzzy
+#~ msgid "ToDo note not found in file"
+#~ msgstr "Задание не найдено в файле\n"
+
+#~ msgid "Where is backup filename and location and memory type?"
+#~ msgstr "Путь и имя файла с резервной копией, тип памяти?"
+
+#~ msgid "Phonebook entry not found in file"
+#~ msgstr "Запись телефонной книги не найдена в файле"
+
+#~ msgid "Unknown memory type: \"%s\"\n"
+#~ msgstr "Неизвестный тип памяти: \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Unknown backup format: \"%s\"\n"
+#~ msgstr "Неизвестный параметр \"%s\""
+
+#, fuzzy
+#~ msgid "Error while opening file for writing!\n"
+#~ msgstr "Ошибка записи в устройство."
+
+#, fuzzy
+#~ msgid "Error while writing file!\n"
+#~ msgstr "Ошибка записи в устройство."
+
+#~ msgid "Press Ctrl+C to break..."
+#~ msgstr "Чтобы прервать, нажмите Ctrl+C..."
+
+#, fuzzy
+#~ msgid "Use Unicode subformat of backup file?"
+#~ msgstr "Используйте юникодовый формат файла с резервной копией"
+
+#~ msgid "Checking phone phonebook"
+#~ msgstr "Проверяется телефонная книга телефона"
+
+#, fuzzy
+#~ msgid "Backup phone phonebook?"
+#~ msgstr "   Выполняется резервное копирование телефонной книги телефона"
+
+#~ msgid "Reading"
+#~ msgstr "Чтение"
+
+#, fuzzy
+#~ msgid "Only part of data saved, please increase %s."
+#~ msgstr ""
+#~ "\n"
+#~ "   Сохранена только часть данных - увеличьте %s"
+
+#, fuzzy
+#~ msgid "Reading: %i percent"
+#~ msgstr "%c  Идёт чтение: %i процентов"
+
+#~ msgid "Checking SIM phonebook"
+#~ msgstr "Проверяется телефонная книга SIM-карты"
+
+#, fuzzy
+#~ msgid "Backup SIM phonebook?"
+#~ msgstr "   Выполняется резервное копирование телефонной книги SIM-карты"
+
+#~ msgid "Checking phone calendar"
+#~ msgstr "Проверяется календарь телефона"
+
+#, fuzzy
+#~ msgid "Backup phone calendar notes?"
+#~ msgstr "   Выполняется резервное копирование заметок из календаря телефона"
+
+#~ msgid "Checking phone ToDo"
+#~ msgstr "Проверяется список заданий телефона"
+
+#, fuzzy
+#~ msgid "Backup phone ToDo?"
+#~ msgstr "   Выполняется резервное копирование списка заданий телефона"
+
+#~ msgid "Checking phone notes"
+#~ msgstr "Проверяются заметки телефона"
+
+#, fuzzy
+#~ msgid "Backup phone notes?"
+#~ msgstr "   Выполняется резервное копирование заметок телефона"
+
+#~ msgid "Checking phone caller logos"
+#~ msgstr "Проверяются логотипы абонентов в телефоне"
+
+#, fuzzy
+#~ msgid "Backup phone caller groups and logos?"
+#~ msgstr ""
+#~ "   Выполняется резервное копирование групп и логотипов абонентов в "
+#~ "телефоне"
+
+#~ msgid "Checking SIM SMS profiles"
+#~ msgstr "Проверяются SMS-профили SIM-карты"
+
+#, fuzzy
+#~ msgid "Backup SIM SMS profiles?"
+#~ msgstr "   Выполняется резервное копирование SMS-профилей SIM-карты"
+
+#~ msgid "Checking phone startup text"
+#~ msgstr "Проверяется текст приветствия телефона"
+
+#, fuzzy
+#~ msgid "Backup phone startup logo/text?"
+#~ msgstr "Выполняется резервное копирование текста приветствия телефона"
+
+#~ msgid "Checking phone operator logo"
+#~ msgstr "Проверяется логотип оператора телефона"
+
+#, fuzzy
+#~ msgid "Backup phone operator logo?"
+#~ msgstr "   Выполняется резервное копирование логотипа оператора телефона"
+
+#~ msgid "Checking phone WAP bookmarks"
+#~ msgstr "Проверяются WAP-закладки телефона"
+
+#, fuzzy
+#~ msgid "Backup phone WAP bookmarks?"
+#~ msgstr "   Выполняется резервное копирование WAP-закладок телефона"
+
+#~ msgid "Checking phone WAP settings"
+#~ msgstr "Проверяются настройки WAP телефона"
+
+#, fuzzy
+#~ msgid "Backup phone WAP settings?"
+#~ msgstr "   Выполняется резервное копирование настроек WAP телефона"
+
+#~ msgid "Checking phone MMS settings"
+#~ msgstr "Проверяются настройки MMS телефона"
+
+#, fuzzy
+#~ msgid "Backup phone MMS settings?"
+#~ msgstr "   Выполняется резервное копирование настроек MMS телефона"
+
+#~ msgid "Checking phone Chat settings"
+#~ msgstr "Проверяются настройки чата телефона"
+
+#, fuzzy
+#~ msgid "Backup phone Chat settings?"
+#~ msgstr "Выполняется резервное копирование настроек чата телефона"
+
+#~ msgid "Checking phone SyncML settings"
+#~ msgstr "Проверяются настройки синхронизации телефона"
+
+#, fuzzy
+#~ msgid "Backup phone SyncML settings?"
+#~ msgstr ""
+#~ "   Выполняется резервное копирование настроек синхронизации телефона"
+
+#~ msgid "Checking phone user ringtones"
+#~ msgstr "Проверяются пользовательские мелодии звонков телефона"
+
+#, fuzzy
+#~ msgid "Backup phone user ringtones?"
+#~ msgstr ""
+#~ "   Выполняется резервное копирование пользовательских мелодий звонков "
+#~ "телефона"
+
+#~ msgid "Checking phone profiles"
+#~ msgstr "Проверяются режимы телефона"
+
+#, fuzzy
+#~ msgid "Backup phone profiles?"
+#~ msgstr "   Выполняется резервное копирование режимов телефона"
+
+#~ msgid "Checking phone FM radio stations"
+#~ msgstr "Проверяются FM-радиостанции телефона"
+
+#, fuzzy
+#~ msgid "Backup phone FM radio stations?"
+#~ msgstr "   Выполняется резервное копирование FM-радиостанций телефона"
+
+#~ msgid "Checking phone GPRS access points"
+#~ msgstr "Проверяются точки доступа GPRS телефона"
+
+#, fuzzy
+#~ msgid "Backup phone GPRS access points?"
+#~ msgstr "   Выполняется резервное копирование точек доступа GPRS телефона"
+
+#~ msgid ""
+#~ "Some data not read from file. It can be damaged or restoring some "
+#~ "settings from this file format not implemented (maybe higher libGammu "
+#~ "required ?)"
+#~ msgstr ""
+#~ "Некоторые данные не были прочитаны из файла. Возможно, он повреждён, или "
+#~ "восстановление некоторых настроек из данного формата не реализовано "
+#~ "(возможно, нужна более новая версия libGammu?)"
+
+#~ msgid "Time of backup"
+#~ msgstr "Время резервной копии"
+
+#~ msgid "Phone"
+#~ msgstr "Телефон"
+
+#~ msgid "IMEI"
+#~ msgstr "IMEI"
+
+#~ msgid "File created by"
+#~ msgstr "Файл создан"
+
+#, fuzzy
+#~ msgid ""
+#~ "Checksum in backup file do not match (original: %s, new: %s). Continue?"
+#~ msgstr "Неверная контрольная сумма файла резервной копии. Продолжить"
+
+#~ msgid ""
+#~ "Please note that restoring data will cause existing data in phone to be "
+#~ "deleted."
+#~ msgstr ""
+#~ "Учтите, что восстановление данных приведёт к удалению существующих данных "
+#~ "в телефоне."
+
+#, fuzzy
+#~ msgid "Restore phone caller groups and logos?"
+#~ msgstr "Восстановление групп и логотипов абонентов"
+
+#~ msgid "%cWriting: %i percent"
+#~ msgstr "%cИдёт запись: %i процентов"
+
+#~ msgid "%i entries in backup file\n"
+#~ msgstr "%i записей в резервном файле\n"
+
+#, fuzzy
+#~ msgid "Restore phone phonebook?"
+#~ msgstr "Восстановление телефонной книги телефона"
+
+#, fuzzy
+#~ msgid "Location %d"
+#~ msgstr "Местонахождение %i\n"
+
+#, fuzzy
+#~ msgid "Restore SIM phonebook?"
+#~ msgstr "Восстановление телефонной книги SIM-карты"
+
+#, fuzzy
+#~ msgid "Restore phone calendar notes?"
+#~ msgstr "Nokia: заметка в календаре"
+
+#, fuzzy
+#~ msgid "Restore notes from the past?"
+#~ msgstr "Проверяются заметки телефона\n"
+
+#~ msgid "Deleting old notes: "
+#~ msgstr "Удаление старых заметок: "
+
+#, fuzzy
+#~ msgid "Done"
+#~ msgstr "Готово\n"
+
+#, fuzzy
+#~ msgid "Restore phone ToDo?"
+#~ msgstr "Проверяется список заданий телефона\n"
+
+#~ msgid "Deleting old ToDo: "
+#~ msgstr "Удаление старых заданий: "
+
+#~ msgid "%cCleaning: %i percent"
+#~ msgstr "%cИдёт очистка: %i процентов"
+
+#, fuzzy
+#~ msgid "Restore phone Notes?"
+#~ msgstr "Проверяются заметки телефона\n"
+
+#~ msgid "Deleting old Notes: "
+#~ msgstr "Удаление старых заметок: "
+
+#, fuzzy
+#~ msgid "Restore SIM SMSC profiles?"
+#~ msgstr "Проверяются SMS-профили SIM\n"
+
+#, fuzzy
+#~ msgid "Restore phone startup logo/text?"
+#~ msgstr "Проверяется текст приветствия телефона\n"
+
+#, fuzzy
+#~ msgid "Restore phone operator logo?"
+#~ msgstr "Проверяется логотип оператора телефона\n"
+
+#, fuzzy
+#~ msgid "Restore phone WAP bookmarks?"
+#~ msgstr "Проверяются WAP-закладки телефона\n"
+
+#~ msgid "Deleting old bookmarks: "
+#~ msgstr "Удаление старых закладок: "
+
+#, fuzzy
+#~ msgid "Restore phone WAP settings?"
+#~ msgstr "Проверяются настройки WAP телефона\n"
+
+#, fuzzy
+#~ msgid "Restore phone MMS settings?"
+#~ msgstr "Проверяются настройки MMS телефона\n"
+
+#, fuzzy
+#~ msgid "Delete all phone user ringtones?"
+#~ msgstr "Проверяются пользовательские рингтоны телефона\n"
+
+#, fuzzy
+#~ msgid "Deleting"
+#~ msgstr "Идёт удаление: "
+
+#, fuzzy
+#~ msgid "Restore user ringtones?"
+#~ msgstr "Проверяются пользовательские рингтоны телефона\n"
+
+#, fuzzy
+#~ msgid "Restore phone profiles?"
+#~ msgstr "Проверяются профили телефона\n"
+
+#, fuzzy
+#~ msgid "Restore phone FM radio stations?"
+#~ msgstr "Проверяются FM-радиостанции телефона\n"
+
+#~ msgid "Deleting old FM stations: "
+#~ msgstr "Удаление старых FM-радиостанций: "
+
+#, fuzzy
+#~ msgid "Restore phone GPRS Points?"
+#~ msgstr "Проверяются точки доступа GPRS телефона\n"
+
+#~ msgid "Memory has only %i free locations.Exiting\n"
+#~ msgstr "В памяти только %i свободных ячеек. Выполняется выход\n"
+
+#, fuzzy
+#~ msgid "Add phone phonebook entries?"
+#~ msgstr "Nokia: запись в телефонной книге"
+
+#, fuzzy
+#~ msgid "Add SIM phonebook entries?"
+#~ msgstr "Nokia: запись в телефонной книге"
+
+#, fuzzy
+#~ msgid "Add phone calendar notes?"
+#~ msgstr "Nokia: заметка в календаре"
+
+#, fuzzy
+#~ msgid "Add phone ToDo?"
+#~ msgstr "Проверяется список заданий телефона\n"
+
+#, fuzzy
+#~ msgid "Add phone WAP bookmarks?"
+#~ msgstr "Проверяются WAP-закладки телефона\n"
+
+#, fuzzy
+#~ msgid "Backup sms from folder \"%s\"%s?"
+#~ msgstr "Отправляется SMS из папки \"%s\", размещение %i\n"
+
+#~ msgid "   Increase %s\n"
+#~ msgstr "   Увеличить %s\n"
+
+#~ msgid "%cDeleting: %i percent"
+#~ msgstr "%cУдаление: %i процентов"
+
+#, fuzzy
+#~ msgid "Restore %03i sms to folder \"%s\"%s?"
+#~ msgstr "Размещение %i, каталог \"%s\""
+
+#, fuzzy
+#~ msgid "saving %i SMS\n"
+#~ msgstr "Сохранение SMS %i/%i\n"
+
+#, fuzzy
+#~ msgid "Note type"
+#~ msgstr "Тип записи   : "
+
+#, fuzzy
+#~ msgid "Reminder (Date)"
+#~ msgstr "Напоминание (дата)\n"
+
+#, fuzzy
+#~ msgid "Call"
+#~ msgstr "Позвонить\n"
+
+#, fuzzy
+#~ msgid "Birthday (Anniversary)"
+#~ msgstr "День рождения (годовщина)\n"
+
+#, fuzzy
+#~ msgid "Memo (Miscellaneous)"
+#~ msgstr "Заметки (различные)\n"
+
+#, fuzzy
+#~ msgid "Travel"
+#~ msgstr "Путешествие\n"
+
+#, fuzzy
+#~ msgid "Vacation"
+#~ msgstr "Отпуск\n"
+
+#, fuzzy
+#~ msgid "Alarm"
+#~ msgstr "Будильник\n"
+
+#, fuzzy
+#~ msgid "Daily alarm"
+#~ msgstr "Ежедневный будильник\n"
+
+#, fuzzy
+#~ msgid "Training/Athletism"
+#~ msgstr "Тренировка/Атлетика\n"
+
+#, fuzzy
+#~ msgid "Training/Ball Games"
+#~ msgstr "Тренировка/Игры с мячом\n"
+
+#, fuzzy
+#~ msgid "Training/Cycling"
+#~ msgstr "Тренировка/Велосипед\n"
+
+#, fuzzy
+#~ msgid "Training/Budo"
+#~ msgstr "Тренировка/Будо\n"
+
+#, fuzzy
+#~ msgid "Training/Dance"
+#~ msgstr "Тренировка/Танцы\n"
+
+#, fuzzy
+#~ msgid "Training/Extreme Sports"
+#~ msgstr "Тренировка/Экстремальный спорт\n"
+
+#, fuzzy
+#~ msgid "Training/Football"
+#~ msgstr "Тренировка/Футбол\n"
+
+#, fuzzy
+#~ msgid "Training/Golf"
+#~ msgstr "Тренировка/Гольф\n"
+
+#, fuzzy
+#~ msgid "Training/Gym"
+#~ msgstr "Тренировка/Тяжёлая атлетика\n"
+
+#, fuzzy
+#~ msgid "Training/Horse Races"
+#~ msgstr "Тренировка/Скачки\n"
+
+#, fuzzy
+#~ msgid "Training/Hockey"
+#~ msgstr "Тренировка/Хоккей\n"
+
+#, fuzzy
+#~ msgid "Training/Races"
+#~ msgstr "Тренировка/Гонки\n"
+
+#, fuzzy
+#~ msgid "Training/Rugby"
+#~ msgstr "Тренировка/Регби\n"
+
+#, fuzzy
+#~ msgid "Training/Sailing"
+#~ msgstr "Тренировка/Парусный спорт\n"
+
+#, fuzzy
+#~ msgid "Training/Street Games"
+#~ msgstr "Тренировка/Уличные игры\n"
+
+#, fuzzy
+#~ msgid "Training/Swimming"
+#~ msgstr "Тренировка/Плавание\n"
+
+#, fuzzy
+#~ msgid "Training/Tennis"
+#~ msgstr "Тренировка/Теннис\n"
+
+#, fuzzy
+#~ msgid "Training/Travels"
+#~ msgstr "Тренировка/Путешествия\n"
+
+#, fuzzy
+#~ msgid "Training/Winter Games"
+#~ msgstr "Тренировка/Зимние игры\n"
+
+#, fuzzy
+#~ msgid "unknown type!"
+#~ msgstr "неизвестно"
+
+#, fuzzy
+#~ msgid "Start"
+#~ msgstr "Стандартный\n"
+
+#, fuzzy
+#~ msgid "Tone alarm"
+#~ msgstr "Звуковой сигнал : %s\n"
+
+#, fuzzy
+#~ msgid "forever on each %i. day of %s"
+#~ msgstr "Звуковой сигнал : постоянно каждый %i. день "
+
+#, fuzzy
+#~ msgid "Silent alarm"
+#~ msgstr "Тихий сигнал     : %s\n"
+
+#~ msgid "Text"
+#~ msgstr "Текст"
+
+#, fuzzy
+#~ msgid "Description"
+#~ msgstr "Описание         : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Location"
+#~ msgstr "Местонахождение %i\n"
+
+#, fuzzy
+#~ msgid "Yes"
+#~ msgstr "да\n"
+
+#, fuzzy
+#~ msgid "Contact ID"
+#~ msgstr "ID контакта      : %d\n"
+
+#, fuzzy
+#~ msgid "Repeating"
+#~ msgstr "Встреча"
+
+#~ msgid "forever"
+#~ msgstr "постоянно"
+
+#~ msgid "till %s"
+#~ msgstr "до %s"
+
+#~ msgid "since %s"
+#~ msgstr "с %s"
+
+#~ msgid "since %s till %s"
+#~ msgstr "с %s до %s"
+
+#, fuzzy
+#~ msgid " on each "
+#~ msgstr "\" каждый "
+
+#~ msgid " on each %d. "
+#~ msgstr " каждый %d. "
+
+#~ msgid " in %d. week of "
+#~ msgstr " %d. неделю "
+
+#~ msgid " in "
+#~ msgstr " в "
+
+#~ msgid "each month"
+#~ msgstr "ежемесячно"
+
+#~ msgid "%d. day of "
+#~ msgstr "%d. день "
+
+#, fuzzy
+#~ msgid "%d. day of year"
+#~ msgstr "%d. день "
+
+#~ msgid "day"
+#~ msgstr "день"
+
+#, fuzzy
+#~ msgid "Date and time not set in phone"
+#~ msgstr "Дата и время в телефоне не установлены\n"
+
+#~ msgid "Phone time is %s\n"
+#~ msgstr "Время телефона - %s\n"
+
+#~ msgid "Time format is "
+#~ msgstr "Формат времени - "
+
+#, fuzzy
+#~ msgid "12 hours"
+#~ msgstr "12 часов\n"
+
+#~ msgid "24 hours"
+#~ msgstr "24 часа"
+
+#~ msgid "Date format is "
+#~ msgstr "Формат даты - "
+
+#~ msgid "DD MM YYYY"
+#~ msgstr "ДД ММ ГГГГ"
+
+#~ msgid "MM DD YYYY"
+#~ msgstr "ММ ДД ГГГГ"
+
+#~ msgid "YYYY MM DD"
+#~ msgstr "ГГГГ ММ ДД"
+
+#~ msgid "DD MMM YY"
+#~ msgstr "ДД МММ ГГ"
+
+#~ msgid "MM DD YY"
+#~ msgstr "ММ ДД ГГ"
+
+#, fuzzy
+#~ msgid "DD MM YY"
+#~ msgstr "ДД МММ ГГ"
+
+#~ msgid "YY MM DD"
+#~ msgstr "ГГ ММ ДД"
+
+#~ msgid "OFF"
+#~ msgstr "ВЫКЛ"
+
+#~ msgid ", date separator is %c\n"
+#~ msgstr ", разделитель даты - %c\n"
+
+#, fuzzy
+#~ msgid "Setting time in phone to the time on PC."
+#~ msgstr "Синхронизация времени в телефоне со временем в ПК.\n"
+
+#, fuzzy
+#~ msgid "Updating specified parts of date and time in phone."
+#~ msgstr "Идёт обновление определённых частей даты и времени в телефоне.\n"
+
+#, fuzzy
+#~ msgid "Alarm (%i) not set in phone\n"
+#~ msgstr "Будильник в телефоне не установлен\n"
+
+#, fuzzy
+#~ msgid "Alarm in location %i:\n"
+#~ msgstr "Местонахождение %i\n"
+
+#, fuzzy
+#~ msgid "Date"
+#~ msgstr "Дата: %s\n"
+
+#~ msgid "Time: %02d:%02d\n"
+#~ msgstr "Время: %02d:%02d\n"
+
+#~ msgid "Auto deleting disabled"
+#~ msgstr "Автоудаление отключено"
+
+#~ msgid "Auto deleting notes after %i day(s)"
+#~ msgstr "Автоудаление заметок через %i дней"
+
+#, fuzzy
+#~ msgid "Week starts on %s"
+#~ msgstr ""
+#~ "\n"
+#~ "Неделя начинается с "
+
+#, fuzzy
+#~ msgid "Entry was empty"
+#~ msgstr "Запись пуста\n"
+
+#, fuzzy
+#~ msgid "Entry was deleted"
+#~ msgstr "Запись удалена\n"
+
+#, fuzzy
+#~ msgid "Unknown"
+#~ msgstr "Неизвестно\n"
+
+#, fuzzy
+#~ msgid "Priority"
+#~ msgstr "Приоритет    : "
+
+#, fuzzy
+#~ msgid "Low"
+#~ msgstr "Низкий\n"
+
+#, fuzzy
+#~ msgid "Medium"
+#~ msgstr "Средний\n"
+
+#, fuzzy
+#~ msgid "High"
+#~ msgstr "Высокий\n"
+
+#, fuzzy
+#~ msgid "None"
+#~ msgstr "Готово\n"
+
+#, fuzzy
+#~ msgid "Due time"
+#~ msgstr "Дата и время     : %s\n"
+
+#, fuzzy
+#~ msgid "Start time"
+#~ msgstr "Стандартный\n"
+
+#, fuzzy
+#~ msgid "Completed"
+#~ msgstr "Завершено    : %s\n"
+
+#, fuzzy
+#~ msgid "Category"
+#~ msgstr "Категория    : %i\n"
+
+#, fuzzy
+#~ msgid "Contact"
+#~ msgstr "ID контакта      : %d\n"
+
+#~ msgid "Search text too long, truncating to %d chars!\n"
+#~ msgstr "Искомый текст слишком длинный; усечён до %d символов!\n"
+
+#, fuzzy
+#~ msgid "Waiting for Security Code."
+#~ msgstr "Ожидается ввод кода защиты.\n"
+
+#, fuzzy
+#~ msgid "Waiting for PIN."
+#~ msgstr "Ожидается PIN.\n"
+
+#, fuzzy
+#~ msgid "Waiting for PIN2."
+#~ msgstr "Ожидается PIN2.\n"
+
+#, fuzzy
+#~ msgid "Waiting for PUK."
+#~ msgstr "Ожидается PUK.\n"
+
+#, fuzzy
+#~ msgid "Waiting for PUK2."
+#~ msgstr "Ожидается PUK2.\n"
+
+#, fuzzy
+#~ msgid "Waiting for phone code."
+#~ msgstr "Ожидается ввод кода защиты.\n"
+
+#, fuzzy
+#~ msgid "Nothing to enter."
+#~ msgstr "Нечего вводить.\n"
+
+#, fuzzy
+#~ msgid "Unknown security status."
+#~ msgstr "Состояние безопасности: "
+
+#~ msgid "January"
+#~ msgstr "января"
+
+#~ msgid "February"
+#~ msgstr "февраля"
+
+#~ msgid "March"
+#~ msgstr "марта"
+
+#~ msgid "April"
+#~ msgstr "апреля"
+
+#~ msgid "May"
+#~ msgstr "мая"
+
+#~ msgid "June"
+#~ msgstr "июня"
+
+#~ msgid "July"
+#~ msgstr "июля"
+
+#~ msgid "August"
+#~ msgstr "августа"
+
+#~ msgid "September"
+#~ msgstr "сентября"
+
+#~ msgid "October"
+#~ msgstr "октября"
+
+#~ msgid "November"
+#~ msgstr "ноября"
+
+#~ msgid "December"
+#~ msgstr "декабря"
+
+#~ msgid "Bad month!"
+#~ msgstr "Неверный месяц!"
+
+#~ msgid "Monday"
+#~ msgstr "понедельник"
+
+#~ msgid "Tuesday"
+#~ msgstr "вторник"
+
+#~ msgid "Wednesday"
+#~ msgstr "среду"
+
+#~ msgid "Thursday"
+#~ msgstr "четверг"
+
+#~ msgid "Friday"
+#~ msgstr "пятницу"
+
+#~ msgid "Saturday"
+#~ msgstr "субботу"
+
+#~ msgid "Sunday"
+#~ msgstr "воскресенье"
+
+#~ msgid "Bad day!"
+#~ msgstr "Неверный день!"
+
+#, fuzzy
+#~ msgid "Security status"
+#~ msgstr "Состояние безопасности: "
+
+#, fuzzy
+#~ msgid "More parameters required!"
+#~ msgstr "ОШИБКА: требуются дополнительные параметры\n"
+
+#, fuzzy
+#~ msgid "Please enumerate locations from 1"
+#~ msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
+
+#, fuzzy
+#~ msgid "Swapping start and end location"
+#~ msgstr "ПРЕДУПРЕЖДЕНИЕ: меняются местами начальное и конечное положения\n"
+
+#, fuzzy
+#~ msgid "yes"
+#~ msgstr "да\n"
+
+#, fuzzy
+#~ msgid "no"
+#~ msgstr "нет\n"
+
+#, fuzzy
+#~ msgid "YES (always)"
+#~ msgstr "ДА (для всех)\n"
+
+#, fuzzy
+#~ msgid "NO (always)"
+#~ msgstr "НЕТ (для всех)\n"
+
+#, fuzzy
+#~ msgid "%s (yes/no) ? "
+#~ msgstr "%s (yes/no/ALL/ONLY/NONE)?"
+
+#, fuzzy
+#~ msgid "Setting done"
+#~ msgstr "Один звонок\n"
+
+#, fuzzy
+#~ msgid "Fail"
+#~ msgstr "Семья"
+
+#, fuzzy
+#~ msgid "No signal"
+#~ msgstr "Неприменимо"
+
+#, fuzzy
+#~ msgid "Unknown (%x)"
+#~ msgstr "неизвестный %i"
+
+#, fuzzy
+#~ msgid "Security code is %s\n"
+#~ msgstr "Код защиты (\"%s\")?\n"
+
+#, fuzzy
+#~ msgid "Old simlock"
+#~ msgstr "Модель        : %s (%s)\n"
+
+#, fuzzy
+#~ msgid "Bluetooth"
+#~ msgstr "Состояние сети     : "
+
+#, fuzzy
+#~ msgid "What lights should I enable (\"%s\") ?\n"
+#~ msgstr "Код защиты (\"%s\")?\n"
+
+#, fuzzy
+#~ msgid "What should I do (\"%s\") ?\n"
+#~ msgstr "Тип папки (\"%s\")?\n"
+
+#, fuzzy
+#~ msgid "%i entries types\n"
+#~ msgstr "%i записей в резервном файле\n"
+
+#, fuzzy
+#~ msgid " (Phone number)"
+#~ msgstr ", память телефона"
+
+#, fuzzy
+#~ msgid " (Ringtone ID)"
+#~ msgstr "Рингтон \"%s\"\n"
+
+#, fuzzy
+#~ msgid " (Caller group: logo)"
+#~ msgstr "Логотип группы абонентов"
+
+#, fuzzy
+#~ msgid " (Caller group: is logo on ?)"
+#~ msgstr "Логотип группы абонентов"
+
+#, fuzzy
+#~ msgid " (Text: URL address)"
+#~ msgstr "URL             "
+
+#, fuzzy
+#~ msgid " (Picture ID assigment)"
+#~ msgstr "Рисунок"
+
+#, fuzzy
+#~ msgid "string"
+#~ msgstr "Встреча"
+
+#, fuzzy
+#~ msgid "%i phone number types\n"
+#~ msgstr "Проверяются пользовательские рингтоны телефона\n"
+
+#, fuzzy
+#~ msgid "Home number"
+#~ msgstr "Домашний        "
+
+#, fuzzy
+#~ msgid "Mobile number"
+#~ msgstr "Мобильный       "
+
+#, fuzzy
+#~ msgid "Fax number"
+#~ msgstr "   Номер      : %s\n"
+
+#, fuzzy
+#~ msgid "Office number"
+#~ msgstr "Номер службы        : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Standard number"
+#~ msgstr "Стандартный\n"
+
+#, fuzzy
+#~ msgid "Unknown number"
+#~ msgstr "Неизвестная ошибка."
+
+#~ msgid "ERROR: unknown memory type (\"%s\")\n"
+#~ msgstr "ОШИБКА: неизвестный тип памяти (\"%s\")\n"
+
+#, fuzzy
+#~ msgid "Phone memory: %i bytes (free %i bytes, used %i bytes)"
+#~ msgstr ""
+#~ "\n"
+#~ "Память телефона: %i байт (свободно %i байт, использовано %i байт)\n"
+
+#, fuzzy
+#~ msgid "Used by: Images: %i, Sounds: %i, Themes: %i"
+#~ msgstr "Использовано для: изображений: %i, звуков: %i, тем: %i\n"
+
+#, fuzzy
+#~ msgid "Part of folder "
+#~ msgstr ", папка Входящие"
+
+#, fuzzy
+#~ msgid "Part of folder;"
+#~ msgstr ", папка Входящие"
+
+#, fuzzy
+#~ msgid "Used in phone: %li bytes"
+#~ msgstr ""
+#~ "\n"
+#~ "Использовано в телефоне: %li байт"
+
+#~ msgid ", used in card: %li bytes"
+#~ msgstr ", использовано на карте: %li байт"
+
+#~ msgid "Unknown attribute (%s)\n"
+#~ msgstr "Неизвестный атрибут (%s)\n"
+
+#, fuzzy
+#~ msgid "Part of folder only"
+#~ msgstr ", папка Входящие"
+
+#~ msgid "Getting \"%s\"\n"
+#~ msgstr "Загружается \"%s\"\n"
+
+#, fuzzy
+#~ msgid "it's folder. Please give only file names"
+#~ msgstr "это каталог. Вводите только имена файлов\n"
+
+#~ msgid "%c  %i percent"
+#~ msgstr "%c  %i процент"
+
+#~ msgid " (%02i:%02i minutes left)"
+#~ msgstr " (осталось %02i:%02i минут)"
+
+#, fuzzy
+#~ msgid ""
+#~ "File checksum calculated by phone doesn't match with value calculated by "
+#~ "libGammu. File damaged or error in libGammu"
+#~ msgstr ""
+#~ "ПРЕДУПРЕЖДЕНИЕ: Контрольные суммы файлов, вычисленные телефоном, не "
+#~ "совпадают с суммами, вычисленными в libGammu. Файл повреждён, или это "
+#~ "ошибка libGammu\n"
+
+#~ msgid "  Saving to %s\n"
+#~ msgstr "  Сохранение в %s\n"
+
+#, fuzzy
+#~ msgid "%3i percent"
+#~ msgstr "%c  %i процент"
+
+#~ msgid "Parameter \"%s\" unknown\n"
+#~ msgstr "Параметр \"%s\" неизвестен\n"
+
+#~ msgid "What file type (\"%s\") ?\n"
+#~ msgstr "Тип файла (\"%s\")?\n"
+
+#, fuzzy
+#~ msgid "Parameter missing!"
+#~ msgstr "Отсутствует параметр ...\n"
+
+#, fuzzy
+#~ msgid "ID of new file is \"%s\"\n"
+#~ msgstr "Время телефона - %s\n"
+
+#, fuzzy
+#~ msgid "ID of new folder is \"%s\"\n"
+#~ msgstr "Заметки продавца \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Networks for %s:"
+#~ msgstr ""
+#~ "Сети для %s:\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "Unknown country name: %s."
+#~ msgstr "Неизвестная страна."
+
+#, fuzzy
+#~ msgid "Network"
+#~ msgstr "Название сети\n"
+
+#, fuzzy
+#~ msgid "[libGammu version %s built %s on %s using %s]"
+#~ msgstr ""
+#~ "[libGammu, версия %s, сборка %s %s]\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "Phones"
+#~ msgstr ", телефон\n"
+
+#, fuzzy
+#~ msgid "Miscellaneous"
+#~ msgstr "Заметки (различные)\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "There is newer stable libGammu version available! (%s instead of %s)\n"
+#~ msgstr "ИНФО: Есть более новая стабильная версия libGammu (%s против %s).\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "There is newer testing libGammu version available! (%s instead of %s)\n"
+#~ msgstr ""
+#~ "ИНФО: Есть более новая тестовая версия libGammu (%s против of %s).\n"
+
+#, fuzzy
+#~ msgid "standard input"
+#~ msgstr "Стандартный\n"
+
+#, fuzzy
+#~ msgid "Calls"
+#~ msgstr "Позвонить\n"
+
+#, fuzzy
+#~ msgid "Ringtones"
+#~ msgstr "Рингтон \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Calendar notes"
+#~ msgstr "Nokia: заметка в календаре"
+
+#, fuzzy
+#~ msgid "Nokia specific"
+#~ msgstr "Nokia: профиль"
+
+#, fuzzy
+#~ msgid "Siemens specific"
+#~ msgstr "Файл Siemens\n"
+
+#, fuzzy
+#~ msgid "WAP settings and bookmarks"
+#~ msgstr "Удаление старых закладок: "
+
+#, fuzzy
+#~ msgid "MMS and MMS settings"
+#~ msgstr "Проверяются настройки MMS телефона\n"
+
+#, fuzzy
+#~ msgid "Phone tests"
+#~ msgstr "Время телефона - %s\n"
+
+#, fuzzy
+#~ msgid "Phone settings"
+#~ msgstr "Проверяются настройки WAP телефона\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> "
+#~ "[options]"
+#~ msgstr ""
+#~ "Использование: gammu [confign] [nothing|text|textall|binary|errors] "
+#~ "[опции]\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "First parameter optionally specifies which config section to use (all are "
+#~ "probed by default)."
+#~ msgstr ""
+#~ "Первый параметр описывает, которой из разделов конфигурационного файла "
+#~ "следует использовать (по умолчанию проверяются все разделы).\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Second parameter optionally controls debug level, next one specifies "
+#~ "actions."
+#~ msgstr ""
+#~ "Второй параметр управляет уровнем отладки; следующий определяет "
+#~ "действия.\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "For more details, call help on specific topic (gammu --help topic). "
+#~ "Topics are:"
+#~ msgstr ""
+#~ "Для получения дополнительной информации вызовите справку по нужному "
+#~ "разделу (gammu --help раздел). Разделы:\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "Unknown help topic specified!"
+#~ msgstr "Указан неизвестный раздел справки!\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "libGammu commands, topic: %s\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Параметры libGammu, раздел: %s\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "More parameters required (function requires %d)\n"
+#~ msgstr "Нужны дополнительные параметры (допускается "
+
+#, fuzzy
+#~ msgid "More parameters required (function requires %d to %d)\n"
+#~ msgstr "Нужны дополнительные параметры (допускается "
+
+#, fuzzy
+#~ msgid "Parameters help"
+#~ msgstr ""
+#~ "Параметры libGammu, раздел: %s\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "Too many parameters (function accepts %d)\n"
+#~ msgstr "Слишком много параметров (допускается "
+
+#, fuzzy
+#~ msgid "Too many parameters (function accepts %d to %d)\n"
+#~ msgstr "Слишком много параметров (допускается "
+
+#, fuzzy
+#~ msgid "Bad option!"
+#~ msgstr "Неверный месяц!"
+
+#, fuzzy
+#~ msgid "Too few parameters!"
+#~ msgstr "Слишком мало параметров!\n"
+
+#, fuzzy
+#~ msgid "Configuration could not be parsed!"
+#~ msgstr "Предупреждение: не найден конфигурационный файл!\n"
+
+#, fuzzy
+#~ msgid "No configuration file found!"
+#~ msgstr "Предупреждение: не найден конфигурационный файл!\n"
+
+#, fuzzy
+#~ msgid "No configuration read, using builtin defaults!"
+#~ msgstr "Предупреждение: не найден конфигурационный файл!\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Version of installed libGammu.so (%s) is different to version of libGammu "
+#~ "(%s)\n"
+#~ msgstr ""
+#~ "ОШИБКА: Версия установленной библиотеки libGammu.so (%s) отличается от "
+#~ "версии libGammu (%s)\n"
+
+#, fuzzy
+#~ msgid "Unknown memory type (\"%s\")\n"
+#~ msgstr "Неизвестный тип памяти: \"%s\"\n"
+
+#~ msgid "Memory %s, Location %i\n"
+#~ msgstr "Память %s, адрес %i\n"
+
+#~ msgid "Unknown parameter (\"%s\")\n"
+#~ msgstr "Неизвестный параметр (\"%s\")\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "You will have null names in entries. Upgrade firmware in phone to higher "
+#~ "than 4.06"
+#~ msgstr ""
+#~ "ПРЕДУПРЕЖДЕНИЕ: в записях присутствуют пустые имена. Обновите прошивку в "
+#~ "телефоне на более позднюю, чем 4.06\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "You will have null names in entries. Upgrade firmware in phone to higher "
+#~ "than 6.00"
+#~ msgstr ""
+#~ "ПРЕДУПРЕЖДЕНИЕ: в записях присутствуют пустые имена. Обновите прошивку в "
+#~ "телефоне на более позднюю, чем 4.06\n"
+
+#~ msgid "%i entries empty, %i entries filled\n"
+#~ msgstr "%i пустых записей, %i заполненных записей\n"
+
+#, fuzzy
+#~ msgid "SMS message received"
+#~ msgstr "Получено SMS\n"
+
+#, fuzzy
+#~ msgid "We already have one pending, ignoring this one!"
+#~ msgstr "Уже одно находится в очереди! Игнорируется...\n"
+
+#~ msgid "Location %i\n"
+#~ msgstr "Местонахождение %i\n"
+
+#, fuzzy
+#~ msgid "Empty"
+#~ msgstr "Пусто\n"
+
+#, fuzzy
+#~ msgid "CB message received"
+#~ msgstr "получено сообщение CB\n"
+
+#~ msgid "Channel %i, text \"%s\"\n"
+#~ msgstr "Канал %i, текст \"%s\"\n"
+
+#, fuzzy
+#~ msgid "USSD received"
+#~ msgstr "Получено SMS\n"
+
+#, fuzzy
+#~ msgid "Status"
+#~ msgstr "Стандартный\n"
+
+#, fuzzy
+#~ msgid "Service reply"
+#~ msgstr "Сервисный ответ: \"%s\"\n"
+
+#~ msgid "%i. Set %i\n"
+#~ msgstr "%i. Установлено %i\n"
+
+#, fuzzy
+#~ msgid "Number"
+#~ msgstr "ноября"
+
+#, fuzzy
+#~ msgid "Default number"
+#~ msgstr "Номер по умолчанию : \"%s\"\n"
+
+#~ msgid "Fax"
+#~ msgstr "Факс"
+
+#~ msgid "Email"
+#~ msgstr "E-mail"
+
+#, fuzzy
+#~ msgid "Validity"
+#~ msgstr "Достоверность  : "
+
+#~ msgid "Maximum time"
+#~ msgstr "Макс. время"
+
+#~ msgid "%cReading phone phonebook: %i percent"
+#~ msgstr "%cЧтение телефонной книги: %i процентов"
+
+#~ msgid ", SIM memory"
+#~ msgstr ", память SIM"
+
+#~ msgid ", phone memory"
+#~ msgstr ", память телефона"
+
+#~ msgid ", phone or SIM memory"
+#~ msgstr ", память телефона или SIM"
+
+#~ msgid ", Inbox folder"
+#~ msgstr ", папка Входящие"
+
+#, fuzzy
+#~ msgid ", Outbox folder"
+#~ msgstr ", папка Входящие"
+
+#, fuzzy
+#~ msgid "Error while saving to file %s!\n"
+#~ msgstr "  Сохранение в %s\n"
+
+#, fuzzy
+#~ msgid "Saved to file %s\n"
+#~ msgstr "Не удаётся открыть файл \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Sender"
+#~ msgstr "Основной"
+
+#, fuzzy
+#~ msgid "phone "
+#~ msgstr ", телефон\n"
+
+#, fuzzy
+#~ msgid "Recipient"
+#~ msgstr "Отправлено        : %s\n"
+
+#, fuzzy
+#~ msgid "Message type"
+#~ msgstr "ID сигнала о сообщении: "
+
+#, fuzzy
+#~ msgid "Content type"
+#~ msgstr "Тип записи   : "
+
+#, fuzzy
+#~ msgid "Folder %s\n"
+#~ msgstr "Файл \"%s\"\n"
+
+#, fuzzy
+#~ msgid "  File filesystem ID"
+#~ msgstr "Файл создан          : %s\n"
+
+#~ msgid "..error %i"
+#~ msgstr "..ошибка %i"
+
+#~ msgid ", message reference=%d\n"
+#~ msgstr ", ссылка на сообщение=%d\n"
+
+#, fuzzy
+#~ msgid "Number of messages: %i"
+#~ msgstr ""
+#~ "\n"
+#~ "Количество SMS: %i\n"
+
+#, fuzzy
+#~ msgid "If you want break, press Ctrl+C..."
+#~ msgstr "Чтобы прервать, нажмите Ctrl+C...\n"
+
+#~ msgid "Saving SMS %i/%i\n"
+#~ msgstr "Сохранение SMS %i/%i\n"
+
+#~ msgid "Saved in folder \"%s\", location %i"
+#~ msgstr "Сохранено в папке \"%s\", размещение %i"
+
+#, fuzzy
+#~ msgid "phone"
+#~ msgstr ", телефон\n"
+
+#~ msgid "Sending sms from folder \"%s\", location %i\n"
+#~ msgstr "Отправляется SMS из папки \"%s\", размещение %i\n"
+
+#~ msgid "....waiting for network answer"
+#~ msgstr "...ожидается ответ сети"
+
+#~ msgid "Sending SMS %i/%i"
+#~ msgstr "Отправляется SMS %i/%i"
+
+#~ msgid "Too high folder number (max. %i)\n"
+#~ msgstr "Слишком много каталогов (макс. %i)\n"
+
+#~ msgid "Deleting SMS from \"%s\" folder: "
+#~ msgstr "Удаление SMS из каталога \"%s\": "
+
+#, fuzzy
+#~ msgid "Network state"
+#~ msgstr "Состояние сети     : "
+
+#, fuzzy
+#~ msgid "home network"
+#~ msgstr "домашняя сеть\n"
+
+#, fuzzy
+#~ msgid "roaming network"
+#~ msgstr "роуминговая сеть\n"
+
+#, fuzzy
+#~ msgid "requesting network"
+#~ msgstr "требуемая сеть\n"
+
+#, fuzzy
+#~ msgid "not logged into network"
+#~ msgstr "не зарегистрирован в сети\n"
+
+#, fuzzy
+#~ msgid "registration to network denied"
+#~ msgstr "отказ в регистрации в сети\n"
+
+#~ msgid "unknown"
+#~ msgstr "неизвестно"
+
+#, fuzzy
+#~ msgid "Name in phone"
+#~ msgstr "Имя в телефоне    : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Never version of firmware is available!\n"
+#~ msgstr "ИНФО: для телефона доступна новая прошивка (%s вместо %s)!\n"
+
+#, fuzzy
+#~ msgid "Manufacturer"
+#~ msgstr "Производитель : %s\n"
+
+#, fuzzy
+#~ msgid "Firmware"
+#~ msgstr "Прошивка      : %s"
+
+#, fuzzy
+#~ msgid "Original IMEI"
+#~ msgstr "Исходный IMEI : %s\n"
+
+#, fuzzy
+#~ msgid "Manufactured"
+#~ msgstr "Произведён    : %s\n"
+
+#, fuzzy
+#~ msgid "Product code"
+#~ msgstr "Код продукта  : %s\n"
+
+#, fuzzy
+#~ msgid "Call info"
+#~ msgstr "Информация о вызове: "
+
+#~ msgid "incoming call from \"%s\"\n"
+#~ msgstr "входящий вызов от \"%s\"\n"
+
+#~ msgid "outgoing call to \"%s\"\n"
+#~ msgstr "исходящий вызов от \"%s\"\n"
+
+#, fuzzy
+#~ msgid "call started"
+#~ msgstr "вызов запущен\n"
+
+#, fuzzy
+#~ msgid "end of call (unknown side)"
+#~ msgstr "завершение вызова (неизвестная сторона)\n"
+
+#, fuzzy
+#~ msgid "call end from our side"
+#~ msgstr "завершение вызова с нашей стороны\n"
+
+#~ msgid "call end from remote side (code %i)\n"
+#~ msgstr "завершение вызова с противоположной стороны (код %i)\n"
+
+#, fuzzy
+#~ msgid "call established. Waiting for answer"
+#~ msgstr "соединение установлено. Ждите ответа\n"
+
+#, fuzzy
+#~ msgid "call held"
+#~ msgstr "удержание вызова\n"
+
+#, fuzzy
+#~ msgid "call resumed"
+#~ msgstr "вызов возобновлён\n"
+
+#, fuzzy
+#~ msgid "call switched"
+#~ msgstr "вызов переключён\n"
+
+#, fuzzy
+#~ msgid "Entering monitor mode..."
+#~ msgstr ""
+#~ "Включается режим наблюдения...\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "Enabling info about incoming SMS"
+#~ msgstr "Доступна информация о входящих SMS : %s\n"
+
+#, fuzzy
+#~ msgid "Enabling info about incoming CB"
+#~ msgstr "Доступна информация о входящих CB  : %s\n"
+
+#, fuzzy
+#~ msgid "Enabling info about calls"
+#~ msgstr "Доступна информация о вызовах      : %s\n"
+
+#, fuzzy
+#~ msgid "Enabling info about USSD"
+#~ msgstr ""
+#~ "Доступна информация о USSD         : %s\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "Calendar"
+#~ msgstr "Nokia: заметка в календаре"
+
+#, fuzzy
+#~ msgid "Battery level"
+#~ msgstr "Температура аккум.: %i C\n"
+
+#, fuzzy
+#~ msgid "%i percent"
+#~ msgstr "%c  %i процент"
+
+#, fuzzy
+#~ msgid "Battery capacity"
+#~ msgstr "Ёмкость аккум.    : %i мАч\n"
+
+#, fuzzy
+#~ msgid "Battery temperature"
+#~ msgstr "Температура аккум.: %i C\n"
+
+#, fuzzy
+#~ msgid "Phone temperature"
+#~ msgstr "Время телефона - %s\n"
+
+#, fuzzy
+#~ msgid "Battery voltage"
+#~ msgstr "Температура аккум.: %i C\n"
+
+#, fuzzy
+#~ msgid "Charge voltage"
+#~ msgstr "Состояние зарядки : "
+
+#, fuzzy
+#~ msgid "Charge current"
+#~ msgstr "Сила тока зарядки : %i мА\n"
+
+#, fuzzy
+#~ msgid "Phone current"
+#~ msgstr "Сила тока телефона: %i мА\n"
+
+#, fuzzy
+#~ msgid "Charge state"
+#~ msgstr "Состояние зарядки : "
+
+#~ msgid "powered from battery"
+#~ msgstr "питание от аккумулятора"
+
+#~ msgid "battery connected, but not powered from battery"
+#~ msgstr "аккумулятор подключён, но от него нет питания"
+
+#~ msgid "battery connected and is being charged"
+#~ msgstr "аккумулятор подключён и заряжается"
+
+#~ msgid "battery connected and is fully charged"
+#~ msgstr "аккумулятор подключён и полностью заряжен"
+
+#~ msgid "battery not connected"
+#~ msgstr "аккумулятор не подключён"
+
+#~ msgid "detected power failure"
+#~ msgstr "обнаружен сбой питания"
+
+#, fuzzy
+#~ msgid "Battery type"
+#~ msgstr "Температура аккум.: %i C\n"
+
+#, fuzzy
+#~ msgid "Signal strength"
+#~ msgstr "Уровень сигнала   : %i дБм\n"
+
+#, fuzzy
+#~ msgid "%i dBm"
+#~ msgstr "%i дней"
+
+#, fuzzy
+#~ msgid "Network level"
+#~ msgstr "Название сети\n"
+
+#, fuzzy
+#~ msgid "Bit error rate"
+#~ msgstr "Ошибки по битам   : %i процентов\n"
+
+#, fuzzy
+#~ msgid "SIM SMS status"
+#~ msgstr "Отчёт о состоянии SMS\n"
+
+#, fuzzy
+#~ msgid "%i used"
+#~ msgstr "5 секунд\n"
+
+#, fuzzy
+#~ msgid "%i locations"
+#~ msgstr "Местонахождение %i\n"
+
+#, fuzzy
+#~ msgid "Phone SMS status"
+#~ msgstr "Время телефона - %s\n"
+
+#, fuzzy
+#~ msgid "%i templates"
+#~ msgstr ", %i шаблонов"
+
+#, fuzzy
+#~ msgid "Leaving monitor mode..."
+#~ msgstr "Выход из режима наблюдения...\n"
+
+#~ msgid "Smart Messaging"
+#~ msgstr "Интеллектуальное сообщение"
+
+#~ msgid "Nokia binary"
+#~ msgstr "Nokia двоичный"
+
+#~ msgid " format, ringtone \"%s\"\n"
+#~ msgstr " формат, рингтон \"%s\"\n"
+
+#~ msgid "What type of reset do you want (\"%s\") ?\n"
+#~ msgstr "Какой тип сброса выполнить (\"%s\")?\n"
+
+#, fuzzy
+#~ msgid "Address"
+#~ msgstr "Адрес   : \"%s\"\n"
+
+#~ msgid "%i. Access point %i"
+#~ msgstr "%i. Точка доступа %i"
+
+#~ msgid " (active)"
+#~ msgstr " (активный)"
+
+#, fuzzy
+#~ msgid "Maximal location for caller logo can be 5"
+#~ msgstr "Логотип абонента не должен занимать более 5 ячеек\n"
+
+#~ msgid "What type of logo do you want to get (\"%s\") ?\n"
+#~ msgstr "Какой вид логотипа нужно получить (\"%s\")?\n"
+
+#, fuzzy
+#~ msgid "Group name"
+#~ msgstr "Название группы : \"%s\""
+
+#~ msgid " (default)"
+#~ msgstr " (по умолчанию)"
+
+#, fuzzy
+#~ msgid "Ringtone"
+#~ msgstr "Рингтон \"%s\"\n"
+
+#, fuzzy
+#~ msgid "default"
+#~ msgstr " (по умолчанию)"
+
+#, fuzzy
+#~ msgid "(file with ID %i)\n"
+#~ msgstr "Рингтон     : \"%s\" (файл с ID %i)\n"
+
+#, fuzzy
+#~ msgid "Bitmap"
+#~ msgstr "ID рисунка  : %i\n"
+
+#, fuzzy
+#~ msgid "Bitmap ID"
+#~ msgstr "ID рисунка  : %i\n"
+
+#, fuzzy
+#~ msgid "No operator logo in phone"
+#~ msgstr "В телефоне нет логотипов оператора\n"
+
+#~ msgid "Welcome note text is \"%s\"\n"
+#~ msgstr "Текст приветствия \"%s\"\n"
+
+#~ msgid "Dealer note text is \"%s\"\n"
+#~ msgstr "Заметки продавца \"%s\"\n"
+
+#~ msgid "What type of logo do you want to set (\"%s\") ?\n"
+#~ msgstr "Логотип какого типа установить (\"%s\")?\n"
+
+#, fuzzy
+#~ msgid "Unknown parameter (\"%s\")"
+#~ msgstr "Неизвестный параметр (\"%s\")\n"
+
+#, fuzzy
+#~ msgid "%cClearing: %i percent"
+#~ msgstr "%cИдёт очистка: %i процентов"
+
+#, fuzzy
+#~ msgid "Delete phone phonebook?"
+#~ msgstr "Проверяется телефонная книга телефона\n"
+
+#, fuzzy
+#~ msgid "Delete SIM phonebook?"
+#~ msgstr "Проверяется телефонная книга SIM\n"
+
+#, fuzzy
+#~ msgid "Delete phone calendar notes?"
+#~ msgstr "Nokia: заметка в календаре"
+
+#, fuzzy
+#~ msgid "Delete phone ToDo?"
+#~ msgstr "Удаление старых заданий: "
+
+#, fuzzy
+#~ msgid "Delete phone Notes?"
+#~ msgstr "Удаление старых заметок: "
+
+#, fuzzy
+#~ msgid "Delete phone WAP bookmarks?"
+#~ msgstr "Проверяются WAP-закладки телефона\n"
+
+#, fuzzy
+#~ msgid "Delete all phone FM radio stations?"
+#~ msgstr "Проверяются FM-радиостанции телефона\n"
+
+#~ msgid "Connection type     : Continuous\n"
+#~ msgstr "Тип соединения      : постоянное\n"
+
+#~ msgid "Connection type     : Temporary\n"
+#~ msgstr "Тип соединения      : временное\n"
+
+#~ msgid "Connection security : On\n"
+#~ msgstr "Защита соединения   : вкл\n"
+
+#~ msgid "Connection security : Off\n"
+#~ msgstr "Защита соединения   : выкл\n"
+
+#~ msgid "Proxy               : address \"%s\", port %i\n"
+#~ msgstr "Прокси              : адрес \"%s\", порт %i\n"
+
+#~ msgid "2'nd proxy          : address \"%s\", port %i\n"
+#~ msgstr "2-й прокси          : адрес \"%s\", порт %i\n"
+
+#, fuzzy
+#~ msgid "Server number"
+#~ msgstr "Основной        "
+
+#, fuzzy
+#~ msgid "Service number"
+#~ msgstr "Номер службы        : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Dial-up number"
+#~ msgstr ""
+#~ "\n"
+#~ "Номер дозвона     : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "IP address"
+#~ msgstr "Адрес Snail     "
+
+#~ msgid "Login Type          : Manual\n"
+#~ msgstr "Вход в систему      : вручную\n"
+
+#~ msgid "Login Type          : Automatic\n"
+#~ msgstr "Вход в систему      : автоматический\n"
+
+#~ msgid "Authentication type : Normal\n"
+#~ msgstr "Тип аутентификации  : обычная\n"
+
+#~ msgid "Authentication type : Secure\n"
+#~ msgstr "Тип аутентификации  : защищённая\n"
+
+#~ msgid "Data call type      : ISDN\n"
+#~ msgstr "Тип информационного вызова      : ISDN\n"
+
+#~ msgid "Data call type      : Analogue\n"
+#~ msgstr "Тип информационного вызова      : аналоговый\n"
+
+#~ msgid "Data call speed     : 9600\n"
+#~ msgstr "Скорость информационного вызова : 9600\n"
+
+#~ msgid "Data call speed     : 14400\n"
+#~ msgstr "Скорость информационного вызова : 14440\n"
+
+#~ msgid "Data call speed     : Auto\n"
+#~ msgstr "Скорость информационного вызова : авто\n"
+
+#, fuzzy
+#~ msgid "Service code"
+#~ msgstr "В услуге отказано"
+
+#~ msgid ""
+#~ "Address type        : IP address\n"
+#~ "IPaddress           : \"%s\"\n"
+#~ msgstr ""
+#~ "Тип адреса          : IP-адрес\n"
+#~ "IP-адрес              : \"%s\"\n"
+
+#~ msgid ""
+#~ "Address type        : Service number\n"
+#~ "Service number      : \"%s\"\n"
+#~ msgstr ""
+#~ "Тип адреса          : Номер службы\n"
+#~ "Номер службы          : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Access point"
+#~ msgstr "%i. Точка доступа %i"
+
+#~ msgid "Set %i"
+#~ msgstr "Установлено %i"
+
+#, fuzzy
+#~ msgid "User"
+#~ msgstr "Пользовательский UDH"
+
+#, fuzzy
+#~ msgid "Phonebook database"
+#~ msgstr "БД телефонной книги : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Calendar database"
+#~ msgstr "БД календаря        : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Server"
+#~ msgstr "постоянно"
+
+#, fuzzy
+#~ msgid "Sync. phonebook"
+#~ msgstr "Синхр. тел. книги   : "
+
+#, fuzzy
+#~ msgid "Sync. calendar"
+#~ msgstr "Синхр. календаря    : "
+
+#, fuzzy
+#~ msgid "Connection set name"
+#~ msgstr "Название соединения : %s\n"
+
+#~ msgid "Connection set name : Set %i\n"
+#~ msgstr "Название соединения : Установить %i\n"
+
+#~ msgid "Connection set name : %s\n"
+#~ msgstr "Название соединения : %s\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Read only           : yes"
+#~ msgstr ""
+#~ "\n"
+#~ "Только для чтения   : да"
+
+#~ msgid "Startup logo"
+#~ msgstr "Заставка"
+
+#~ msgid "Operator logo"
+#~ msgstr "Логотип оператора"
+
+#~ msgid "Picture Image"
+#~ msgstr "Рисунок"
+
+#~ msgid "Caller group logo"
+#~ msgstr "Логотип группы абонентов"
+
+#~ msgid ", width %i, height %i\n"
+#~ msgstr ", ширина %i, высота %i\n"
+
+#~ msgid "What format of output file logo (\"%s\") ?\n"
+#~ msgstr "Какой формат выходного файла логотипа (\"%s\")?\n"
+
+#~ msgid "What format of output ringtone file (\"%s\") ?\n"
+#~ msgstr "Какой формат выходного файла рингтона (\"%s\")?\n"
+
+#~ msgid "Unknown key/function name: \"%c\"\n"
+#~ msgstr "Неизвестный ключ/имя функции: \"%c\"\n"
+
+#~ msgid "What type of categories do you want to get (\"%s\") ?\n"
+#~ msgstr "Категорию какого типа нужно получить (\"%s\")?\n"
+
+#~ msgid "What type of category do you want to add (\"%s\") ?\n"
+#~ msgstr "Категорию какого типа нужно добавить (\"%s\")?\n"
+
+#~ msgid "Text too long, truncating to %d chars!\n"
+#~ msgstr "Текст слишком длинный. Обрезается до %d символов.\n"
+
+#~ msgid " (default name)"
+#~ msgstr " (имя по умолчанию)"
+
+#, fuzzy
+#~ msgid " (Head set profile)"
+#~ msgstr " (профиль для гарнитуры)"
+
+#, fuzzy
+#~ msgid " (Car kit profile)"
+#~ msgstr " (профиль для автомобиля)"
+
+#, fuzzy
+#~ msgid "Ringtone ID"
+#~ msgstr "Рингтон \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Message alert tone ID"
+#~ msgstr "ID сигнала о сообщении: "
+
+#, fuzzy
+#~ msgid "Call alert for"
+#~ msgstr "Сигнал вызова для     :"
+
+#, fuzzy
+#~ msgid "Screen saver number"
+#~ msgstr "Номер хранителя экрана: "
+
+#, fuzzy
+#~ msgid "Incoming call alert"
+#~ msgstr "Сигнал входящего вызова : "
+
+#, fuzzy
+#~ msgid "Ringtone volume"
+#~ msgstr "Громкость рингтона    : "
+
+#, fuzzy
+#~ msgid "Vibrating alert"
+#~ msgstr "Вибровызов            : "
+
+#, fuzzy
+#~ msgid "Message alert tone"
+#~ msgstr "ID сигнала о сообщении: "
+
+#, fuzzy
+#~ msgid "Keypad tones"
+#~ msgstr "Клавиатура заблокирована\n"
+
+#, fuzzy
+#~ msgid "Warning (games) tones"
+#~ msgstr "Предупреждающие (игровые) звуки : "
+
+#, fuzzy
+#~ msgid "Screen saver"
+#~ msgstr "Хранитель экрана\n"
+
+#, fuzzy
+#~ msgid "Screen saver timeout"
+#~ msgstr "Тайм-аут хранителя экрана : "
+
+#, fuzzy
+#~ msgid "Automatic answer"
+#~ msgstr "Автоматический ответ  : "
+
+#, fuzzy
+#~ msgid "Lights"
+#~ msgstr "Высокий\n"
+
+#, fuzzy
+#~ msgid "Level 1"
+#~ msgstr "Уровень 1\n"
+
+#, fuzzy
+#~ msgid "Level 2"
+#~ msgstr "Уровень 2\n"
+
+#, fuzzy
+#~ msgid "Level 3"
+#~ msgstr "Уровень 3\n"
+
+#, fuzzy
+#~ msgid "Level 4"
+#~ msgstr "Уровень 4\n"
+
+#, fuzzy
+#~ msgid "Level 5"
+#~ msgstr "Уровень 5\n"
+
+#, fuzzy
+#~ msgid "Off"
+#~ msgstr "Выкл\n"
+
+#, fuzzy
+#~ msgid "Ringing"
+#~ msgstr "Звонит\n"
+
+#, fuzzy
+#~ msgid "Beep once"
+#~ msgstr "Один гудок\n"
+
+#, fuzzy
+#~ msgid "Ring once"
+#~ msgstr "Один звонок\n"
+
+#, fuzzy
+#~ msgid "Ascending"
+#~ msgstr "Нарастающий\n"
+
+#, fuzzy
+#~ msgid "Caller groups"
+#~ msgstr "Группы абонентов\n"
+
+#, fuzzy
+#~ msgid "Standard"
+#~ msgstr "Стандартный\n"
+
+#, fuzzy
+#~ msgid "Special"
+#~ msgstr "Специальный\n"
+
+#, fuzzy
+#~ msgid "On"
+#~ msgstr "Вкл\n"
+
+#, fuzzy
+#~ msgid "Vibrate first"
+#~ msgstr "Сначала вибровызов\n"
+
+#, fuzzy
+#~ msgid "Auto"
+#~ msgstr "Авто\n"
+
+#, fuzzy
+#~ msgid " speed dial not assigned"
+#~ msgstr " быстрый набор не назначен\n"
+
+#~ msgid "What type of reset phone settings (\"%s\") ?\n"
+#~ msgstr "Какой тип сброса установок телефона (\"%s\")?\n"
+
+#, fuzzy
+#~ msgid "Current display features"
+#~ msgstr "Текущие параметры дисплея :\n"
+
+#, fuzzy
+#~ msgid "Call active"
+#~ msgstr "Вызов активен\n"
+
+#, fuzzy
+#~ msgid "Unread SMS"
+#~ msgstr "Непрочитанное SMS\n"
+
+#, fuzzy
+#~ msgid "Voice call"
+#~ msgstr "Голосовой вызов\n"
+
+#, fuzzy
+#~ msgid "Fax call"
+#~ msgstr "Вызов факса\n"
+
+#, fuzzy
+#~ msgid "Data call"
+#~ msgstr "Вызов данных\n"
+
+#, fuzzy
+#~ msgid "Keypad locked"
+#~ msgstr "Клавиатура заблокирована\n"
+
+#, fuzzy
+#~ msgid "SMS memory full"
+#~ msgstr "Память SMS заполнена\n"
+
+#, fuzzy
+#~ msgid "Station name"
+#~ msgstr "Местонахождение  : %s\n"
+
+#~ msgid "Unknown divert action (\"%s\")\n"
+#~ msgstr "Неизвестное отклонение действия (\"%s\")\n"
+
+#~ msgid "Unknown divert type (\"%s\")\n"
+#~ msgstr "Неизвестный тип отклонения (\"%s\")\n"
+
+#~ msgid "Unknown call type (\"%s\")\n"
+#~ msgstr "Неизвестный тип вызова (\"%s\")\n"
+
+#~ msgid ""
+#~ "Query:\n"
+#~ "   Divert type: "
+#~ msgstr ""
+#~ "Запрос:\n"
+#~ "   Тип отклонения: "
+
+#~ msgid ""
+#~ "Changed:\n"
+#~ "   Divert type: "
+#~ msgstr ""
+#~ "Изменён:\n"
+#~ "   Тип отклонения: "
+
+#~ msgid "when busy"
+#~ msgstr "когда занято"
+
+#~ msgid "when not answered"
+#~ msgstr "когда нет ответа"
+
+#~ msgid "when phone off or no coverage"
+#~ msgstr "когда телефон выключен или вне зоны действия сети"
+
+#~ msgid "all types of diverts"
+#~ msgstr "все типы отклонений"
+
+#~ msgid "unknown %i"
+#~ msgstr "неизвестный %i"
+
+#~ msgid ""
+#~ "\n"
+#~ "   Calls type : "
+#~ msgstr ""
+#~ "\n"
+#~ "   Типы вызовов : "
+
+#~ msgid "voice"
+#~ msgstr "голос"
+
+#~ msgid "fax"
+#~ msgstr "факс"
+
+#~ msgid "data"
+#~ msgstr "данные"
+
+#~ msgid "data & fax & voice"
+#~ msgstr "данные, факс и голос"
+
+#~ msgid ""
+#~ "\n"
+#~ "Response:"
+#~ msgstr ""
+#~ "\n"
+#~ "Ответ:"
+
+#, fuzzy
+#~ msgid "   Timeout    : "
+#~ msgstr "   Задержка   : %i секунд\n"
+
+#, fuzzy
+#~ msgid "It can be RTTL ringtone only used with this option"
+#~ msgstr "С этим параметром можно использовать только рингтон RTTL\n"
+
+#~ msgid ""
+#~ "Ringtone \"%s\" (tempo = %i Beats Per Minute)\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Рингтон \"%s\" (темп = %i ударов в минуту)\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "This ringtone in Nokia Composer in phone should look: "
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Этот рингтон в Nokia Composer телефона должен выглядеть: "
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "To enter it please press: "
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Для ввода нажмите: "
+
+#~ msgid "(longer)"
+#~ msgstr "(длиннее)"
+
+#, fuzzy
+#~ msgid "Checking %s\n"
+#~ msgstr "Проверяются заметки телефона\n"
+
+#~ msgid "What folder type (\"%s\") ?\n"
+#~ msgstr "Тип папки (\"%s\")?\n"
+
+#, fuzzy
+#~ msgid "Folder not found. Probably function not supported!"
+#~ msgstr "Папка не найдена. Возможно, функция не поддерживается.\n"
+
+#~ msgid "Searching for phone folder: "
+#~ msgstr "Поиск папки телефона: "
+
+#, fuzzy
+#~ msgid "No vendor info in JAD file"
+#~ msgstr "В JAD-файле нет информации о производителе\n"
+
+#, fuzzy
+#~ msgid "No name info in JAD file"
+#~ msgstr "В JAD-файле нет информации о названии\n"
+
+#, fuzzy
+#~ msgid "No JAR URL info in JAD file"
+#~ msgstr "В JAD-файле нет информации об URL для JAR\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "INFO: declared JAR file size is different than real. Fixed by libGammu"
+#~ msgstr ""
+#~ "ИНФО: Объявленный размер JAR-файла отличается от реального. Исправлен "
+#~ "libGammu\n"
+
+#, fuzzy
+#~ msgid "INFO: no JAR size info in JAD file. Added by libGammu"
+#~ msgstr ""
+#~ "ИНФО: В JAD-файле отсутствует информация о размере JAR. Добавлена "
+#~ "libGammu\n"
+
+#~ msgid "Adding \"%s\""
+#~ msgstr "Добавляется \"%s\""
+
+#~ msgid " version %s"
+#~ msgstr " версия %s"
+
+#~ msgid " created by %s\n"
+#~ msgstr " автор: %s\n"
+
+#, fuzzy
+#~ msgid "INFO: Application already exist. Deleting by libGammu"
+#~ msgstr "ИНФО: Приложение уже существует. Удаляется libGammu\n"
+
+#~ msgid "  Deleting %s\n"
+#~ msgstr "  Удаляется %s\n"
+
+#, fuzzy
+#~ msgid "Connection \"%s\" on device \"%s\"\n"
+#~ msgstr "Название соединения : %s\n"
+
+#, fuzzy
+#~ msgid "Error creating thread\n"
+#~ msgstr "Ошибка записи в устройство."
+
+#, fuzzy
+#~ msgid "Error"
+#~ msgstr "Ошибка\n"
+
+#, fuzzy
+#~ msgid "Warning"
+#~ msgstr "Встреча"
+
+#, fuzzy
+#~ msgid "Information"
+#~ msgstr "Местонахождение %i\n"
+
+#, fuzzy
+#~ msgid "%d second"
+#~ msgid_plural "%d seconds"
+#~ msgstr[0] "5 секунд\n"
+#~ msgstr[1] "5 секунд\n"
+
+#, fuzzy
+#~ msgid "%d minute"
+#~ msgid_plural "%d minutes"
+#~ msgstr[0] "%i минут"
+#~ msgstr[1] "%i минут"
+
+#, fuzzy
+#~ msgid "%d hour"
+#~ msgid_plural "%d hours"
+#~ msgstr[0] "1 час"
+#~ msgstr[1] "1 час"
+
+#, fuzzy
+#~ msgid "%d day"
+#~ msgid_plural "%d days"
+#~ msgstr[0] "%i дней"
+#~ msgstr[1] "%i дней"
+
+#, fuzzy
+#~ msgid "%d week"
+#~ msgid_plural "%d weeks"
+#~ msgstr[0] "%i недель"
+#~ msgstr[1] "%i недель"
+
+#, fuzzy
+#~ msgid "%d year"
+#~ msgid_plural "%d years"
+#~ msgstr[0] "%d. день "
+#~ msgstr[1] "%d. день "
+
+#, fuzzy
+#~ msgid "SMS daemon"
+#~ msgstr "Ответ SMSC        : %s\n"
+
+#~ msgid "Call length      : %02i:%02i:%02i\n"
+#~ msgstr "Время звонка     : %02i:%02i:%02i\n"
+
+#, fuzzy
+#~ msgid "Date and time"
+#~ msgstr "Дата и время     : %s\n"
+
+#, fuzzy
+#~ msgid "Caller group"
+#~ msgstr "Группы абонентов\n"
+
+#, fuzzy
+#~ msgid "Caller group number too high, please increase buffer in sources!"
+#~ msgstr ""
+#~ "Слишком большое значение номера группы абонентов. Увеличьте в исходном "
+#~ "коде размер буфера.\n"
+
+#, fuzzy
+#~ msgid "User ID"
+#~ msgstr "Пользовательский UDH"
+
+#, fuzzy
+#~ msgid "Picture name"
+#~ msgstr "Рисунок"
+
+#, fuzzy
+#~ msgid "Picture ID"
+#~ msgstr "Рисунок"
+
+#, fuzzy
+#~ msgid "Photo"
+#~ msgstr "Телефон"
+
+#, fuzzy
+#~ msgid "Favorite messaging number"
+#~ msgstr "Интеллектуальное сообщение"
+
+#, fuzzy
+#~ msgid "General number"
+#~ msgstr "Основной        "
+
+#, fuzzy
+#~ msgid "Work number"
+#~ msgstr "Мобильный       "
+
+#, fuzzy
+#~ msgid "Pager number"
+#~ msgstr "Пейджер         "
+
+#, fuzzy
+#~ msgid "Other number"
+#~ msgstr "Другой          "
+
+#, fuzzy
+#~ msgid "Snail address"
+#~ msgstr "Адрес Snail     "
+
+#, fuzzy
+#~ msgid "Work snail address"
+#~ msgstr "Адрес Snail     "
+
+#, fuzzy
+#~ msgid "Email address 1"
+#~ msgstr "Адрес E-mail  1 "
+
+#, fuzzy
+#~ msgid "Email address 2"
+#~ msgstr "Адрес E-mail  2 "
+
+#, fuzzy
+#~ msgid "URL address"
+#~ msgstr "URL             "
+
+#, fuzzy
+#~ msgid "Last name"
+#~ msgstr "Фамилия         "
+
+#, fuzzy
+#~ msgid "First name"
+#~ msgstr "Имя             "
+
+#, fuzzy
+#~ msgid "Formal name"
+#~ msgstr "Имя             "
+
+#, fuzzy
+#~ msgid "Nick name"
+#~ msgstr "Имя             "
+
+#, fuzzy
+#~ msgid "Company"
+#~ msgstr "Организация     "
+
+#, fuzzy
+#~ msgid "Job title"
+#~ msgstr "Должность       "
+
+#, fuzzy
+#~ msgid "Street address"
+#~ msgstr "Улица           "
+
+#, fuzzy
+#~ msgid "State"
+#~ msgstr "Стандартный\n"
+
+#, fuzzy
+#~ msgid "Zip code"
+#~ msgstr "Почтовый индекс "
+
+#, fuzzy
+#~ msgid "Country"
+#~ msgstr "Страна          "
+
+#, fuzzy
+#~ msgid "Work street address"
+#~ msgstr "Улица           "
+
+#, fuzzy
+#~ msgid "Work state"
+#~ msgstr "Состояние сети     : "
+
+#, fuzzy
+#~ msgid "Work zip code"
+#~ msgstr "Почтовый индекс "
+
+#, fuzzy
+#~ msgid "Work country"
+#~ msgstr "Страна          "
+
+#, fuzzy
+#~ msgid "Custom text 1"
+#~ msgstr "Свой текст 1    "
+
+#, fuzzy
+#~ msgid "Custom text 2"
+#~ msgstr "Свой текст 2    "
+
+#, fuzzy
+#~ msgid "Custom text 3"
+#~ msgstr "Свой текст 3    "
+
+#, fuzzy
+#~ msgid "Custom text 4"
+#~ msgstr "Свой текст 4    "
+
+#, fuzzy
+#~ msgid "unknown field type"
+#~ msgstr "неизвестный %i"
+
+#~ msgid "Location %i, folder \"%s\""
+#~ msgstr "Размещение %i, каталог \"%s\""
+
+#, fuzzy
+#~ msgid "SIM memory"
+#~ msgstr ", память SIM"
+
+#, fuzzy
+#~ msgid "phone memory"
+#~ msgstr ", память телефона"
+
+#, fuzzy
+#~ msgid "phone or SIM memory"
+#~ msgstr ", память телефона или SIM"
+
+#, fuzzy
+#~ msgid "Inbox folder"
+#~ msgstr ", папка Входящие"
+
+#, fuzzy
+#~ msgid "mobile"
+#~ msgstr "Должность       "
+
+#, fuzzy
+#~ msgid "work"
+#~ msgstr "Название сети\n"
+
+#, fuzzy
+#~ msgid "home"
+#~ msgstr ", телефон\n"
+
+#, fuzzy
+#~ msgid "pager"
+#~ msgstr "По порядку"
+
+#, fuzzy
+#~ msgid "SMS status report"
+#~ msgstr "Отчёт о состоянии SMS\n"
+
+#~ msgid "Sent"
+#~ msgstr "Отправлено"
+
+#~ msgid "Read"
+#~ msgstr "Прочитано"
+
+#~ msgid "UnRead"
+#~ msgstr "Не прочитано"
+
+#~ msgid "UnSent"
+#~ msgstr "Не отправлено"
+
+#, fuzzy
+#~ msgid "Remote number"
+#~ msgid_plural "Remote numbers"
+#~ msgstr[0] ""
+#~ "\n"
+#~ "Удалённый номер : \"%s\"\n"
+#~ msgstr[1] ""
+#~ "\n"
+#~ "Удалённый номер : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Reference number"
+#~ msgstr "Исходный номер    : %d\n"
+
+#, fuzzy
+#~ msgid "SMSC number"
+#~ msgstr "Номер SMSC        : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "SMSC response"
+#~ msgstr "Ответ SMSC        : %s\n"
+
+#, fuzzy
+#~ msgid "Delivery status"
+#~ msgstr "Состояние доставки : %s\n"
+
+#~ msgid "Temporary error, "
+#~ msgstr "Временная ошибка, "
+
+#~ msgid "Permanent error, "
+#~ msgstr "Постоянная ошибка, "
+
+#~ msgid "SM received by the SME"
+#~ msgstr "SM получено через SME"
+
+#~ msgid ""
+#~ "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
+#~ msgstr ""
+#~ "SM перенаправлено через SC на SME, но SC не может подтвердить доставку"
+
+#~ msgid "SM replaced by the SC"
+#~ msgstr "SM заменено на SC"
+
+#~ msgid "Congestion"
+#~ msgstr "Нет места"
+
+#~ msgid "SME busy"
+#~ msgstr "SME занят"
+
+#~ msgid "No response from SME"
+#~ msgstr "SME не отвечает"
+
+#~ msgid "Service rejected"
+#~ msgstr "В услуге отказано"
+
+#~ msgid "Quality of service not aviable"
+#~ msgstr "Качество обслуживания недоступно"
+
+#~ msgid "Error in SME"
+#~ msgstr "Ошибка в SME"
+
+#~ msgid "Remote procedure error"
+#~ msgstr "Ошибка удалённой процедуры"
+
+#~ msgid "Incompatibile destination"
+#~ msgstr "Несовместимое назначение"
+
+#~ msgid "Connection rejected by SME"
+#~ msgstr "Соединение разорвано SME"
+
+#~ msgid "Not obtainable"
+#~ msgstr "Неприменимо"
+
+#~ msgid "Quality of service not available"
+#~ msgstr "Качество обслуживания недоступно"
+
+#~ msgid "No internetworking available"
+#~ msgstr "Работа с Интернетом невозможна"
+
+#~ msgid "SM Validity Period Expired"
+#~ msgstr "Истекло время проверки SM"
+
+#~ msgid "SM deleted by originating SME"
+#~ msgstr "SM удалён первоначальным SME"
+
+#~ msgid "SM Deleted by SC Administration"
+#~ msgstr "SM удалён администрацией SC"
+
+#~ msgid "SM does not exist"
+#~ msgstr "SM не существует"
+
+#~ msgid "Reserved/Specific to SC: %x"
+#~ msgstr "Зарезервирован/особый для SC: %x"
+
+#, fuzzy
+#~ msgid "SMS message"
+#~ msgstr "SMS-сообщение\n"
+
+#~ msgid " (set for reply)"
+#~ msgstr " (установлен для ответа)"
+
+#, fuzzy
+#~ msgid "SMS replacing ID"
+#~ msgstr "Изменённый ID SMS: %i\n"
+
+#, fuzzy
+#~ msgid "Class"
+#~ msgstr "Позвонить\n"
+
+#, fuzzy
+#~ msgid "Unicode (no compression)"
+#~ msgstr "Уникод (без сжатия)\n"
+
+#, fuzzy
+#~ msgid "Unicode (compression)"
+#~ msgstr "Уникод (со сжатием)\n"
+
+#, fuzzy
+#~ msgid "Default GSM alphabet (no compression)"
+#~ msgstr "Стандартный алфавит GSM (без сжатия)\n"
+
+#, fuzzy
+#~ msgid "Default GSM alphabet (compression)"
+#~ msgstr "Стандартный алфавит GSM (со сжатием)\n"
+
+#, fuzzy
+#~ msgid "8 bit"
+#~ msgstr "8 бит\n"
+
+#, fuzzy
+#~ msgid "User Data Header"
+#~ msgstr "Заголовок пользовательских данных : "
+
+#~ msgid "Concatenated (linked) message"
+#~ msgstr "Связанное сообщение"
+
+#~ msgid "Disables voice indicator"
+#~ msgstr "Отключает голосовой индикатор"
+
+#~ msgid "Enables voice indicator"
+#~ msgstr "Включает голосовой индикатор"
+
+#~ msgid "Disables fax indicator"
+#~ msgstr "Отключает индикатор факса"
+
+#~ msgid "Enables fax indicator"
+#~ msgstr "Включает индикатор факса"
+
+#~ msgid "Disables email indicator"
+#~ msgstr "Отключает индикатор e-mail"
+
+#~ msgid "Enables email indicator"
+#~ msgstr "Включает индикатор e-mail"
+
+#~ msgid "Void SMS"
+#~ msgstr "Пустое SMS"
+
+#~ msgid "Nokia WAP bookmark"
+#~ msgstr "Nokia: WAP-закладка"
+
+#~ msgid "Nokia operator logo"
+#~ msgstr "Nokia: логотип оператора"
+
+#~ msgid "Nokia WAP bookmark or WAP/MMS settings"
+#~ msgstr "Nokia: WAP-закладка или параметры WAP/MMS"
+
+#~ msgid "Nokia ringtone"
+#~ msgstr "Nokia: рингтон"
+
+#~ msgid "Nokia GSM operator logo"
+#~ msgstr "Nokia: логотип оператора GSM"
+
+#~ msgid "Nokia caller logo"
+#~ msgstr "Nokia: логотип абонента"
+
+#~ msgid "Nokia profile"
+#~ msgstr "Nokia: профиль"
+
+#~ msgid "Nokia calendar note"
+#~ msgstr "Nokia: заметка в календаре"
+
+#~ msgid "Nokia phonebook entry"
+#~ msgstr "Nokia: запись в телефонной книге"
+
+#~ msgid "User UDH"
+#~ msgstr "Пользовательский UDH"
+
+#~ msgid "MMS indicator"
+#~ msgstr "Индикатор MMS"
+
+#~ msgid ", ID (8 bit) %i"
+#~ msgstr ", ID (8 бит) %i"
+
+#~ msgid ", ID (16 bit) %i"
+#~ msgstr ", ID (16 бит) %i"
+
+#~ msgid ", part %i of %i"
+#~ msgstr ", часть %i из %i"
+
+#~ msgid ", %i parts"
+#~ msgstr ", %i частей"
+
+#, fuzzy
+#~ msgid "Siemens file"
+#~ msgstr "Файл Siemens\n"
+
+#, fuzzy
+#~ msgid "8 bit SMS, cannot be displayed here"
+#~ msgstr "8 бит SMS не могут быть отображены\n"
+
+#, fuzzy
+#~ msgid "Unknown PDU type: 0x%x\n"
+#~ msgstr "Неизвестный тип памяти: \"%s\"\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Some details were ignored (unknown or not implemented in decoding "
+#~ "functions)"
+#~ msgstr ""
+#~ "Некоторые подробности опущены (неизвестны или не реализованы в функциях "
+#~ "декодирования)\n"
+#~ "\n"
+
+#~ msgid "Siemens OTA file"
+#~ msgstr "OTA-файл Siemens"
+
+#, fuzzy
+#~ msgid " - VCARD"
+#~ msgstr " - визитка\n"
+
+#~ msgid "Ringtone \"%s\"\n"
+#~ msgstr "Рингтон \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Caller logo"
+#~ msgstr ""
+#~ "Логотип абонента\n"
+#~ "\n"
+
+#~ msgid ""
+#~ "Operator logo for %s network (%s, %s)\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Логотип оператора для сети %s (%s, %s)\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "Profile"
+#~ msgstr "Профиль\n"
+
+#, fuzzy
+#~ msgid "EMS sound ID"
+#~ msgstr ""
+#~ "\n"
+#~ "ID EMS-звука: %i\n"
+
+#, fuzzy
+#~ msgid "EMS animation ID"
+#~ msgstr ""
+#~ "\n"
+#~ "ID EMS-анимации: %i\n"
+
+#, fuzzy
+#~ msgid "0 chars read!"
+#~ msgstr "Предупреждение: прочитано 0 символов!\n"
+
+#, fuzzy
+#~ msgid "Where are parameters?"
+#~ msgstr "Где параметры?\n"
+
+#, fuzzy
+#~ msgid "Where is ringtone filename?"
+#~ msgstr "Имя файла рингтона?\n"
+
+#, fuzzy
+#~ msgid "Where is logo filename?"
+#~ msgstr "Имя файла логотипа ?\n"
+
+#, fuzzy
+#~ msgid "Where is number of frames?"
+#~ msgstr "Число кадров?\n"
+
+#~ msgid "File \"%s\"\n"
+#~ msgstr "Файл \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Bookmark not found in file"
+#~ msgstr "Закладка не найдена в файле\n"
+
+#, fuzzy
+#~ msgid "WAP settings not found in file"
+#~ msgstr "Настройки WAP не найдены в файле\n"
+
+#, fuzzy
+#~ msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
+#~ msgstr ""
+#~ "К сожалению на данный момент поддерживается только GPRS или закончились "
+#~ "каналы передачи данных\n"
+
+#, fuzzy
+#~ msgid "MMS settings not found in file"
+#~ msgstr "Настройки MMS не найдены в файле\n"
+
+#, fuzzy
+#~ msgid "Sorry. No GPRS bearer found in MMS settings"
+#~ msgstr "К сожалению канал передачи данных GPRS в настройках MMS не найден\n"
+
+#~ msgid "What format of sms (\"%s\") ?\n"
+#~ msgstr "Какой формат SMS (\"%s\")?\n"
+
+#~ msgid "Unknown GSM network code (\"%s\")\n"
+#~ msgstr "Неизвестный код сети GSM (\"%s\")\n"
+
+#~ msgid "You have to give number between 1 and 7 (\"%s\")\n"
+#~ msgstr "Необходимо ввести число от 1 и 7 (\"%s\")\n"
+
+#~ msgid "Unknown validity string (\"%s\")\n"
+#~ msgstr "Неизвестная строка проверки достоверности (\"%s\")\n"
+
+#~ msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
+#~ msgstr "Необходимо указать число кадров EMS от 1 и 4 (\"%s\")\n"
+
+#~ msgid "Can't open file \"%s\"\n"
+#~ msgstr "Не удаётся открыть файл \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Unknown parameter (\"%c\")\n"
+#~ msgstr "Неизвестный параметр (\"%s\")\n"
+
+#, fuzzy
+#~ msgid "Last parameter wasn't text"
+#~ msgstr "Последний параметр не является текстом\n"
+
+#~ msgid "Too long SMS name (\"%s\"), ignored\n"
+#~ msgstr "Слишком длинное название SMS (\"%s\"); проигнорировано\n"
+
+#, fuzzy
+#~ msgid "No network code"
+#~ msgstr "Отсутствует код сети\n"
+
+#, fuzzy
+#~ msgid "Ringtone too long. %i percent part cut\n"
+#~ msgstr ""
+#~ "Предупреждение: рингтон слишком длинный. Укоротите его на %i процентов\n"
+
+#~ msgid "There is %i SMS packed and %i limit. Exiting\n"
+#~ msgstr "Упаковано %i SMS, а предел - %i. Выполняется выход\n"
+
+#, fuzzy
+#~ msgid "Use -smscnumber option to give SMSC number"
+#~ msgstr "Чтобы указать число SMSC, используйте параметр -smscnumber\n"
+
+#, fuzzy
+#~ msgid "SMS name ignored"
+#~ msgstr "Имя SMS проигнорировано\n"
+
+#, fuzzy
+#~ msgid "Delivery report: %s to %s"
+#~ msgstr "Состояние доставки : %s\n"
+
+#, fuzzy
+#~ msgid "Could not parse config file \"%s\"\n"
+#~ msgstr "Не удаётся открыть файл \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Can't find file \"%s\"\n"
+#~ msgstr "Не удаётся открыть файл \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Log filename is \"%s\"\n"
+#~ msgstr "Время телефона - %s\n"
+
+#, fuzzy
+#~ msgid "Warning: No PIN code in %s file"
+#~ msgstr "Предупреждение: не найден конфигурационный файл!\n"
+
+#, fuzzy
+#~ msgid "Warning: No PIN code in %s file\n"
+#~ msgstr "Предупреждение: не найден конфигурационный файл!\n"
+
+#, fuzzy
+#~ msgid "Error getting security status (%s:%i)"
+#~ msgstr "Ошибка в SME"
+
+#~ msgid "Trying to enter PIN"
+#~ msgstr "Попытка ввода PIN-кода"
+
+#, fuzzy
+#~ msgid "Error entering PIN (%s:%i)"
+#~ msgstr "Ошибка в SME"
+
+#, fuzzy
+#~ msgid "Error getting SMS (%s:%i)"
+#~ msgstr "Ошибка в SME"
+
+#, fuzzy
+#~ msgid "Error deleting SMS (%s:%i)"
+#~ msgstr "Ошибка в SME"
+
+#, fuzzy
+#~ msgid "Error getting SMS status (%s:%i)"
+#~ msgstr "Ошибка в SME"
+
+#, fuzzy
+#~ msgid "Error sending SMS %s (%i): %s"
+#~ msgstr "Отправляется SMS %i/%i"
+
+#, fuzzy
+#~ msgid "Unknown SMSD service type (\"%s\")\n"
+#~ msgstr "Неизвестный тип памяти: \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Can't open device"
+#~ msgstr "Не удаётся открыть устройство (%i)"
+
+#~ msgid "Error connecting to database: %s\n"
+#~ msgstr "Ошибка подключения к базе данных: %s\n"
+
+#~ msgid "No version info in libGammu table: %s\n"
+#~ msgstr "Нет информации о версии в таблице libGammu: %s\n"
+
+#, fuzzy
+#~ msgid "Conntected to Database: %s on %s"
+#~ msgstr "Ошибка подключения к базе данных: %s\n"
+
+#, fuzzy
+#~ msgid "Error deleting from database (%s): %s\n"
+#~ msgstr "Ошибка подключения к базе данных: %s\n"
+
+#, fuzzy
+#~ msgid "Error inserting into database (%s): %s\n"
+#~ msgstr "Ошибка подключения к базе данных: %s\n"
+
+#, fuzzy
+#~ msgid "Error reading from database (%s): %s\n"
+#~ msgstr "Ошибка подключения к базе данных: %s\n"
+
+#, fuzzy
+#~ msgid "Failed query: %s\n"
+#~ msgstr "Файл \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Error writing to database (%s): %s\n"
+#~ msgstr "Ошибка подключения к базе данных: %s\n"
+
+#~ msgid "What security code (\"%s\") ?\n"
+#~ msgstr "Код защиты (\"%s\")?\n"
+
+#, fuzzy
+#~ msgid "Failed query: %d\n"
+#~ msgstr "Файл \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Error writing to database (%s): %s %s\n"
+#~ msgstr "Ошибка подключения к базе данных: %s\n"
+
+#, fuzzy
+#~ msgid "Error deleting from database (%s): %d %s\n"
+#~ msgstr "Ошибка подключения к базе данных: %s\n"
+
+#, fuzzy
+#~ msgid "Error inserting into database (%s): %d %s\n"
+#~ msgstr "Ошибка подключения к базе данных: %s\n"
+
+#, fuzzy
+#~ msgid "Error writing to database (%s): %d %s %s\n"
+#~ msgstr "Ошибка подключения к базе данных: %s\n"
+
+#, fuzzy
+#~ msgid "Error reading from database (%s): %s %s\n"
+#~ msgstr "Ошибка подключения к базе данных: %s\n"
+
+#~ msgid "%c   Reading: %i percent"
+#~ msgstr "%c   Идёт чтение: %i процентов"
+
+#~ msgid "%s (yes/no/ALL/ONLY/NONE) ? "
+#~ msgstr "%s (yes/no/ALL/ONLY/NONE)?"
+
+#~ msgid "What format of file (\"%s\") ?\n"
+#~ msgstr "Какой формат файла (\"%s\")?\n"
+
+#, fuzzy
+#~ msgid "UEM           : %s\n"
+#~ msgstr "IMEI                 : %s\n"
+
+#, fuzzy
+#~ msgid "  File last changed  : %s\n"
+#~ msgstr "Файл создан          : %s\n"
+
+#~ msgid ""
+#~ "[libGammu version %s built %s %s]\n"
+#~ "\n"
+#~ msgstr ""
+#~ "[libGammu, версия %s, сборка %s %s]\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid "bad month!"
+#~ msgstr "Неверный месяц!"
+
+#, fuzzy
+#~ msgid ""
+#~ "%cLocation %i                 \n"
+#~ "  "
+#~ msgstr "Подсветка             : "
+
+#~ msgid "%c%s%03i percent"
+#~ msgstr "%c%s%03i процент"
+
+#, fuzzy
+#~ msgid " (fax"
+#~ msgstr "факс"
+
+#~ msgid "Network           : %s (%s"
+#~ msgstr "Сеть              : %s (%s"
+
+#, fuzzy
+#~ msgid "deliveryreport = %s"
+#~ msgstr "Состояние доставки : %s\n"
+
+#, fuzzy
+#~ msgid "phoneid = %s"
+#~ msgstr "Время телефона - %s\n"
+
+#~ msgid "SIM SMS status    : %i used, %i unread, %i locations\n"
+#~ msgstr "Состояние SMS SIM : %i использовано, %i непрочитанных, %i ячеек\n"
+
+#~ msgid "Phone SMS status  : %i used, %i unread, %i locations"
+#~ msgstr "Состояние SMS тел.: %i использовано, %i непрочитанных, %i ячеек"
+
+#~ msgid "6 hours"
+#~ msgstr "6 часов"
+
+#~ msgid "72 hours"
+#~ msgstr "72 часа"
+
+#~ msgid "1 week"
+#~ msgstr "1 неделя"
+
+#~ msgid "Note type    : "
+#~ msgstr "Тип записи   : "
+
+#, fuzzy
+#~ msgid "20 seconds"
+#~ msgstr "20 секунд\n"
+
+#, fuzzy
+#~ msgid "1 minute"
+#~ msgstr "1 минута\n"
+
+#, fuzzy
+#~ msgid "2 minutes"
+#~ msgstr "2 минуты\n"
+
+#, fuzzy
+#~ msgid "5 minutes"
+#~ msgstr "5 минут\n"
+
+#, fuzzy
+#~ msgid "10 minutes"
+#~ msgstr "10 минут\n"
+
+#, fuzzy
+#~ msgid "enumerate locations from 1"
+#~ msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
+
+#, fuzzy
+#~ msgid "More arguments required"
+#~ msgstr "Требуется больше аргументов\n"
+
+#, fuzzy
+#~ msgid "Used"
+#~ msgstr "Пользовательский UDH"
+
+#~ msgid "Network level     : %i percent\n"
+#~ msgstr "Уровень сети      : %i процентов\n"
+
+#~ msgid "Battery level     : %i percent\n"
+#~ msgstr "Зарядка аккум.    : %i процентов\n"
+
+#~ msgid "Battery temp.     : %i C\n"
+#~ msgstr "Температура аккум.: %i C\n"
+
+#~ msgid "Phone temp.       : %i C\n"
+#~ msgstr "Температура тел.  : %i C\n"
+
+#~ msgid "Battery voltage   : %i mV\n"
+#~ msgstr "Напряжение аккум. : %i мВ\n"
+
+#~ msgid "Charge voltage    : %i mV\n"
+#~ msgstr "Напряжение зарядки: %i мВ\n"
+
+#~ msgid "ToDos             : Used %d, Free %d\n"
+#~ msgstr "Задания           : Использовано %d, свободно %d\n"
+
+#~ msgid "Calendar          : Used %d, Free %d\n"
+#~ msgstr ""
+#~ "Календарь         : Использовано %d\n"
+#~ ", свободно %d\n"
+
+#, fuzzy
+#~ msgid "Please numerate locations from 1"
+#~ msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
+
+#, fuzzy
+#~ msgid "Number of SMS: %i"
+#~ msgid_plural "Number of SMSes: %i"
+#~ msgstr[0] ""
+#~ "\n"
+#~ "Количество SMS: %i\n"
+#~ msgstr[1] ""
+#~ "\n"
+#~ "Количество SMS: %i\n"
+
+#, fuzzy
+#~ msgid "Remote number(s)"
+#~ msgstr "Удалённые номера : "
+
+#, fuzzy
+#~ msgid "   Number"
+#~ msgstr "   Номер      : %s\n"
+
+#~ msgid " Name \"%s\","
+#~ msgstr " Имя \"%s\","
+
+#~ msgid " Number \"%s\""
+#~ msgstr " Номер \"%s\""
+
+#, fuzzy
+#~ msgid "unknown memory type (\"%s\")\n"
+#~ msgstr "Неизвестный тип памяти: \"%s\"\n"
+
+#, fuzzy
+#~ msgid "unknown parameter \"%s\"\n"
+#~ msgstr "Неизвестный параметр \"%s\""
+
+#~ msgid "Unknown parameter \"%c\"\n"
+#~ msgstr "Неизвестный параметр \"%c\"\n"
+
+#, fuzzy
+#~ msgid "  Sender"
+#~ msgstr "Основной"
+
+#, fuzzy
+#~ msgid "  Message type       : %s\n"
+#~ msgstr "Телефон              : %s\n"
+
+#, fuzzy
+#~ msgid "  Date               : %s\n"
+#~ msgstr "Имя              : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "  Subject            : %s\n"
+#~ msgstr "Отправлено        : %s\n"
+
+#, fuzzy
+#~ msgid "  Delivery report"
+#~ msgstr "Состояние доставки : %s\n"
+
+#, fuzzy
+#~ msgid "  Content type       : %s\n"
+#~ msgstr "Телефон          : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "    Content type     : %s\n"
+#~ msgstr "Тип записи   : "
+
+#, fuzzy
+#~ msgid "      Name           : %s"
+#~ msgstr "ФИО             "
+
+#~ msgid "Ringtone ID           : "
+#~ msgstr "ID рингтона           : "
+
+#, fuzzy
+#~ msgid ", phone"
+#~ msgstr ", телефон\n"
+
+#, fuzzy
+#~ msgid "UNKNOWN"
+#~ msgstr "НЕИЗВЕСТНЫЙ\n"
+
+#~ msgid "Message alert tone    : "
+#~ msgstr "Звук сигнала о сообщении : "
+
+#~ msgid "Keypad tones          : "
+#~ msgstr "Звук клавиатуры       : "
+
+#~ msgid "Screen saver          : "
+#~ msgstr "Хранитель экрана      : "
+
+#~ msgid "Lights                : "
+#~ msgstr "Подсветка             : "
+
+#, fuzzy
+#~ msgid "24 hours\n"
+#~ msgstr "24 часа"
+
+#~ msgid "Picture Image\n"
+#~ msgstr "Рисунок\n"
+
+#~ msgid "unknown\n"
+#~ msgstr "неизвестно\n"
+
+#~ msgid "yes\n"
+#~ msgstr "да\n"
+
+#~ msgid "no\n"
+#~ msgstr "нет\n"
+
+#~ msgid "Ringtone    : default\n"
+#~ msgstr "Рингтон     : по умолчанию\n"
+
+#~ msgid "Bitmap      : enabled\n"
+#~ msgstr "Рисунок     : вкл.\n"
+
+#~ msgid "Bitmap      : disabled\n"
+#~ msgstr "Рисунок     : выкл\n"
+
+#, fuzzy
+#~ msgid "enumerate locations from 1\n"
+#~ msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
+
+#~ msgid "Error\n"
+#~ msgstr "Ошибка\n"
+
+#~ msgid "Entry is empty\n"
+#~ msgstr "Запись пуста\n"
+
+#~ msgid "Reminder (Date)\n"
+#~ msgstr "Напоминание (дата)\n"
+
+#~ msgid "Call\n"
+#~ msgstr "Позвонить\n"
+
+#~ msgid "Meeting\n"
+#~ msgstr "Встреча\n"
+
+#~ msgid "Birthday (Anniversary)\n"
+#~ msgstr "День рождения (годовщина)\n"
+
+#~ msgid "Memo (Miscellaneous)\n"
+#~ msgstr "Заметки (различные)\n"
+
+#~ msgid "Travel\n"
+#~ msgstr "Путешествие\n"
+
+#~ msgid "Vacation\n"
+#~ msgstr "Отпуск\n"
+
+#~ msgid "Alarm\n"
+#~ msgstr "Будильник\n"
+
+#~ msgid "Daily alarm\n"
+#~ msgstr "Ежедневный будильник\n"
+
+#~ msgid "Training/Athletism\n"
+#~ msgstr "Тренировка/Атлетика\n"
+
+#~ msgid "Training/Ball Games\n"
+#~ msgstr "Тренировка/Игры с мячом\n"
+
+#~ msgid "Training/Cycling\n"
+#~ msgstr "Тренировка/Велосипед\n"
+
+#~ msgid "Training/Budo\n"
+#~ msgstr "Тренировка/Будо\n"
+
+#~ msgid "Training/Dance\n"
+#~ msgstr "Тренировка/Танцы\n"
+
+#~ msgid "Training/Extreme Sports\n"
+#~ msgstr "Тренировка/Экстремальный спорт\n"
+
+#~ msgid "Training/Football\n"
+#~ msgstr "Тренировка/Футбол\n"
+
+#~ msgid "Training/Golf\n"
+#~ msgstr "Тренировка/Гольф\n"
+
+#~ msgid "Training/Gym\n"
+#~ msgstr "Тренировка/Тяжёлая атлетика\n"
+
+#~ msgid "Training/Horse Races\n"
+#~ msgstr "Тренировка/Скачки\n"
+
+#~ msgid "Training/Hockey\n"
+#~ msgstr "Тренировка/Хоккей\n"
+
+#~ msgid "Training/Races\n"
+#~ msgstr "Тренировка/Гонки\n"
+
+#~ msgid "Training/Rugby\n"
+#~ msgstr "Тренировка/Регби\n"
+
+#~ msgid "Training/Sailing\n"
+#~ msgstr "Тренировка/Парусный спорт\n"
+
+#~ msgid "Training/Street Games\n"
+#~ msgstr "Тренировка/Уличные игры\n"
+
+#~ msgid "Training/Swimming\n"
+#~ msgstr "Тренировка/Плавание\n"
+
+#~ msgid "Training/Tennis\n"
+#~ msgstr "Тренировка/Теннис\n"
+
+#~ msgid "Training/Travels\n"
+#~ msgstr "Тренировка/Путешествия\n"
+
+#~ msgid "Training/Winter Games\n"
+#~ msgstr "Тренировка/Зимние игры\n"
+
+#~ msgid "UNKNOWN\n"
+#~ msgstr "НЕИЗВЕСТНЫЙ\n"
+
+#~ msgid "Unknown\n"
+#~ msgstr "Неизвестно\n"
+
+#~ msgid "Caller group     : \"%d\"\n"
+#~ msgstr "Группа абонентов : \"%d\"\n"
+
+#, fuzzy
+#~ msgid "Home Number"
+#~ msgstr "Домашний        "
+
+#, fuzzy
+#~ msgid "Mobile Number"
+#~ msgstr "Мобильный       "
+
+#, fuzzy
+#~ msgid "Fax Number"
+#~ msgstr "   Номер      : %s\n"
+
+#, fuzzy
+#~ msgid "  Home Number\n"
+#~ msgstr "Домашний        "
+
+#, fuzzy
+#~ msgid "  Mobile Number\n"
+#~ msgstr "Мобильный       "
+
+#, fuzzy
+#~ msgid "  Fax Number\n"
+#~ msgstr "   Номер      : %s\n"
+
+#, fuzzy
+#~ msgid "  unknown\n"
+#~ msgstr "неизвестно\n"
+
+#~ msgid "Sent\n"
+#~ msgstr "Отправлено\n"
+
+#~ msgid "Read\n"
+#~ msgstr "Прочитано\n"
+
+#~ msgid "UnRead\n"
+#~ msgstr "Не прочитано\n"
+
+#~ msgid "UnSent\n"
+#~ msgstr "Не отправлено\n"
+
+#~ msgid "Picture ID       : 0x%x\n"
+#~ msgstr "ID изображения   : 0x%x\n"
+
+#~ msgid "Fax number      "
+#~ msgstr "Факс            "
+
+#~ msgid "Text            "
+#~ msgstr "Текст           "
+
+#, fuzzy
+#~ msgid "LUID            "
+#~ msgstr "LUID             : \"%s\"\n"
+
+#~ msgid "Name            "
+#~ msgstr "ФИО             "
+
+#~ msgid "City            "
+#~ msgstr "Город           "
+
+#~ msgid "State           "
+#~ msgstr "Штат            "
+
+#~ msgid "Details         : "
+#~ msgstr "Подробности       : "
+
+#~ msgid "Coding           : "
+#~ msgstr "Кодировка        : "
+
+#~ msgid "Status           : "
+#~ msgstr "Состояние        : "
+
+#~ msgid "Format         : "
+#~ msgstr "Формат         : "
+
+#, fuzzy
+#~ msgid "  Sender             : "
+#~ msgstr ""
+#~ "\n"
+#~ "Отправлено       : %s\n"
+
+#, fuzzy
+#~ msgid "  CC                 : "
+#~ msgstr "Подсветка             : "
+
+#~ msgid "Ringtone    : "
+#~ msgstr "Рингтон     : "
+
+#~ msgid "   Reading : "
+#~ msgstr "   Идёт чтение: "
+
+#~ msgid "   Reading: "
+#~ msgstr "   Идёт чтение: "
+
+#~ msgid "Model         : %s (%s)\n"
+#~ msgstr "Модель        : %s (%s)\n"
+
+#~ msgid "Hardware      : %s\n"
+#~ msgstr "Оборудование  : %s\n"
+
+#, fuzzy
+#~ msgid "IMEI          : %s\n"
+#~ msgstr "IMEI                 : %s\n"
+
+#, fuzzy
+#~ msgid "SIM IMSI      : %s\n"
+#~ msgstr "IMEI                 : %s\n"
+
+#~ msgid "Text: \"%s\"\n"
+#~ msgstr "Текст: \"%s\"\n"
+
+#~ msgid "Category         : \"%s\"\n"
+#~ msgstr "Категория        : \"%s\"\n"
+
+#~ msgid "Category         : \"%s\" (%i)\n"
+#~ msgstr "Категория        : \"%s\" (%i)\n"
+
+#~ msgid "Category         : %i\n"
+#~ msgstr "Категория        : %i\n"
+
+#~ msgid "Private          : %s\n"
+#~ msgstr "Личный           : %s\n"
+
+#~ msgid "Caller group     : \"%s\"\n"
+#~ msgstr "Группа абонентов : \"%s\"\n"
+
+#~ msgid "Ringtone         : \"%s\"\n"
+#~ msgstr "Рингтон          : \"%s\"\n"
+
+#~ msgid "Ringtone ID      : %i\n"
+#~ msgstr "ID рингтона      : %i\n"
+
+#~ msgid "User ID          : %s\n"
+#~ msgstr "ID пользователя  : %s\n"
+
+#~ msgid "Status          : "
+#~ msgstr "Состояние       : "
+
+#~ msgid "Sent            : %s\n"
+#~ msgstr "Отправлено        : %s\n"
+
+#~ msgid "Saved            : %s\n"
+#~ msgstr "Сохранено        : %s\n"
+
+#~ msgid "SMSC number      : \"%s\""
+#~ msgstr "Номер SMSC       : \"%s\""
+
+#~ msgid ""
+#~ "\n"
+#~ "Sent             : %s\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Отправлено       : %s\n"
+
+#~ msgid "Reference number : %d\n"
+#~ msgstr "Исходный номер   : %d\n"
+
+#~ msgid "Name             : \"%s\"\n"
+#~ msgstr "Имя              : \"%s\"\n"
+
+#~ msgid "Class            : %i\n"
+#~ msgstr "Класс            : %i\n"
+
+#~ msgid ""
+#~ "Text: \"%s\"\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Текст: \"%s\"\n"
+#~ "\n"
+
+#~ msgid "Number         : \"%s\"\n"
+#~ msgstr "Номер          : \"%s\"\n"
+
+#~ msgid "Name    : \"%s\"\n"
+#~ msgstr "Имя     : \"%s\"\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Address : \"%s\"\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Адрес : \"%s\"\n"
+#~ "\n"
+
+#~ msgid "Ringtone    : %i\n"
+#~ msgstr "Рингтон     : %i\n"
+
+#~ msgid "Text   : \"%s\"\n"
+#~ msgstr "Текст       : \"%s\"\n"
+
+#~ msgid "Sender : \"%s\"\n"
+#~ msgstr "Отправитель : \"%s\"\n"
+
+#~ msgid "Name   : \"%s\"\n"
+#~ msgstr "Имя         : \"%s\"\n"
+
+#~ msgid "Time of backup  : %s\n"
+#~ msgstr "Время резервирования : %s\n"
+
+#~ msgid "Phone           : %s\n"
+#~ msgstr "Телефон              : %s\n"
+
+#~ msgid "IMEI            : %s\n"
+#~ msgstr "IMEI                 : %s\n"
+
+#~ msgid "Phone          : %s\n"
+#~ msgstr "Телефон              : %s\n"
+
+#~ msgid "IMEI           : %s\n"
+#~ msgstr "IMEI                 : %s\n"
+
+#~ msgid "Bearer              : SMS"
+#~ msgstr "Канал передачи      : SMS"
+
+#~ msgid ""
+#~ "\n"
+#~ "Server number       : \"%s\"\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Номер сервера     : \"%s\"\n"
+
+#~ msgid "Bearer              : Data (CSD)"
+#~ msgstr "Канал передачи      : Data (CSD)"
+
+#~ msgid "IP address          : \"%s\"\n"
+#~ msgstr "IP-адрес            : \"%s\"\n"
+
+#~ msgid "User name           : \"%s\"\n"
+#~ msgstr "Имя пользователя    : \"%s\"\n"
+
+#~ msgid "Password            : \"%s\"\n"
+#~ msgstr "Пароль              : \"%s\"\n"
+
+#~ msgid "Bearer              : USSD"
+#~ msgstr "Канал передачи      : USSD"
+
+#~ msgid ""
+#~ "\n"
+#~ "Service code        : \"%s\"\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Код службы          : \"%s\"\n"
+
+#~ msgid "Bearer              : GPRS"
+#~ msgstr "Канал передачи      : GPRS"
+
+#~ msgid ""
+#~ "\n"
+#~ "Login Type          : Manual\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Вход в систему      : вручную\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Login Type          : Automatic\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Вход в систему      : автоматический\n"
+
+#~ msgid "Access point        : \"%s\"\n"
+#~ msgstr "Точка доступа       : \"%s\"\n"
+
+#~ msgid "User                : \"%s\"\n"
+#~ msgstr "Пользователь        : \"%s\"\n"
+
+#~ msgid "Server              : \"%s\"\n"
+#~ msgstr "Сервер              : \"%s\"\n"
+
+#~ msgid "Homepage            : \"%s\"\n"
+#~ msgstr "Домашняя страница   : \"%s\"\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Homepage            : \"%s\"\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Домашняя страница   : \"%s\"\n"
+
+#~ msgid "Location: %i\n"
+#~ msgstr "Размещение : %i\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Name    : \"%s\"\n"
+#~ "\n"
+#~ msgstr "Имя     : \"%s\"\n"
+
+#~ msgid "Location  : %i\n"
+#~ msgstr "Ячейка    : %i\n"
+
+#~ msgid "Location     : %i\n"
+#~ msgstr "Ячейка       : %i\n"
+
+#~ msgid "DueTime      : %s\n"
+#~ msgstr "Заданное время : %s\n"
+
+#~ msgid "Alarm        : %s\n"
+#~ msgstr "Будильник    : %s\n"
+
+#~ msgid "Silent alarm : %s\n"
+#~ msgstr "Тихий сигнал     : %s\n"
+
+#~ msgid "Text         : \"%s\"\n"
+#~ msgstr "Текст            : %s\n"
+
+#~ msgid "Private      : %s\n"
+#~ msgstr "Личный           : \"%s\"\n"
+
+#~ msgid "Category     : \"%s\" (%i)\n"
+#~ msgstr "Категория    : \"%s\" (%i)\n"
+
+#~ msgid "Contact ID   : \"%s\" (%d)\n"
+#~ msgstr "ID контакта      : \"%s\" (%d)\n"
+
+#~ msgid "Contact ID   : %d\n"
+#~ msgstr "ID контакта      : %d\n"
+
+#~ msgid "Contact   : %d\n"
+#~ msgstr "Контакт   : %d\n"
+
+#~ msgid "Phone        : \"%s\"\n"
+#~ msgstr "Телефон          : \"%s\"\n"
+
+#~ msgid "Description  : \"%s\"\n"
+#~ msgstr "Описание         : \"%s\"\n"
+
+#~ msgid "Location     : \"%s\"\n"
+#~ msgstr "Местонахождение  : %s\n"
+
+#~ msgid "LUID         : \"%s\"\n"
+#~ msgstr "LUID             : \"%s\"\n"
+
+#~ msgid "   Number     : %s\n"
+#~ msgstr "   Номер      : %s\n"
+
+#~ msgid "   Manufacturer  : %s\n"
+#~ msgstr "   Производитель : %s\n"
+
+#~ msgid "   Model         : %s (%s)\n"
+#~ msgstr "   Модель        : %s (%s)\n"
+
+#~ msgid "Start        : %s\n"
+#~ msgstr "Начало           : %s\n"
+
+#~ msgid "Stop         : %s\n"
+#~ msgstr "Окончание        : %s\n"
+
+#~ msgid "Silent alarm : forever on each %i. day of "
+#~ msgstr "Тихий сигнал     : постоянно каждый %i. день "
+
+#~ msgid "Repeating    : "
+#~ msgstr "Повторять        : "
+
+#, fuzzy
+#~ msgid "Age          : "
+#~ msgstr "Возраст          : %d %s\n"
+
+#~ msgid "Location     : %d\n"
+#~ msgstr "Размещение   : %d\n"
+
+#, fuzzy
+#~ msgid "LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES."
+#~ msgstr ""
+#~ "ПРЕДУПРЕЖДЕНИЕ: ДЛИНА=%i НОТ, НО ВВЕСТИ МОЖНО ТОЛЬКО ПЕРВЫЕ 50 ТОНОВ."
+
+#~ msgid ""
+#~ "\n"
+#~ "Free memory: %i, total memory: %i\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Свободная память: %i, всего памяти: %i\n"
+
+#, fuzzy
+#~ msgid "ERROR: enumerate locations from 1"
+#~ msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
+
+#~ msgid "ERROR: unknown parameter \"%s\"\n"
+#~ msgstr "ОШИБКА: неизвестный параметр \"%s\"\n"
+
+#~ msgid "ERROR: enumerate locations from 1\n"
+#~ msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
+
+#~ msgid ""
+#~ "Entry is empty\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Запись пуста\n"
+#~ "\n"
+
+#~ msgid "Entry number %i is empty\n"
+#~ msgstr "Запись номер %i пуста\n"
+
+#, fuzzy
+#~ msgid "Entry number %i\n"
+#~ msgstr "Запись номер %i пуста\n"
+
+#~ msgid ""
+#~ "Entry number %i\n"
+#~ "Station name : \"%s\"\n"
+#~ "Frequency    : %.1f MHz\n"
+#~ msgstr ""
+#~ "Запись номер %i\n"
+#~ "Название станции : \"%s\"\n"
+#~ "Частота          : %.1f МГц\n"
+
+#~ msgid "Personal\n"
+#~ msgstr "Личный\n"
+
+#~ msgid "Network  Name\n"
+#~ msgstr "Название сети\n"
+
+#~ msgid "Press Ctrl+C to break...\n"
+#~ msgstr "Чтобы прервать, нажмите Ctrl+C...\n"
+
+#, fuzzy
+#~ msgid "%s\n"
+#~ msgstr "Файл \"%s\"\n"
+
+#~ msgid "each week"
+#~ msgstr "еженедельно"
+
+#, fuzzy
+#~ msgid " %02i:%02i:%02i\n"
+#~ msgstr "Время звонка     : %02i:%02i:%02i\n"
+
+#, fuzzy
+#~ msgid "Help: %s\n"
+#~ msgstr "Дата: %s\n"
+
+#, fuzzy
+#~ msgid " %s"
+#~ msgstr " в %s"
+
+#, fuzzy
+#~ msgid "%i. \"%s\""
+#~ msgstr "Файл \"%s\"\n"
+
+#, fuzzy
+#~ msgid " \"%s\""
+#~ msgstr "Файл \"%s\"\n"
+
+#~ msgid "[libGammu version %s built %s %s"
+#~ msgstr "[libGammu, версия %s, сборка %s %s"
+
+#~ msgid " in %s"
+#~ msgstr " в %s"
+
+#, fuzzy
+#~ msgid "GSM_SMSMessage  - %i\n"
+#~ msgstr "SMS-сообщение\n"
+
+#, fuzzy
+#~ msgid "GSM_SMSC        - %i\n"
+#~ msgstr "Начало           : %s\n"
+
+#, fuzzy
+#~ msgid "bool            - %i\n"
+#~ msgstr "Класс            : %i\n"
+
+#, fuzzy
+#~ msgid "GSM_DateTime    - %i\n"
+#~ msgstr "Заданное время : %s\n"
+
+#, fuzzy
+#~ msgid "int             - %i\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Отправлено       : %s\n"
+
+#, fuzzy
+#~ msgid "GSM_NetworkInfo - %i\n"
+#~ msgstr ""
+#~ "Сети для %s:\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid ": %s"
+#~ msgstr "Дата: %s\n"
+
+#~ msgid ""
+#~ "Name       : \"%s\"\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Имя        : \"%s\"\n"
+#~ "\n"
+
+#~ msgid "from %i to %i"
+#~ msgstr "от %i до %i"

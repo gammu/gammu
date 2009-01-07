@@ -126,11 +126,6 @@ THREAD_RETURN SearchPhoneThread(void * arg)
 		cfg->UseGlobalDebugFile = globalcfg->UseGlobalDebugFile;
 		cfg->DebugFile = strdup(globalcfg->DebugFile);
 		strcpy(cfg->DebugLevel, globalcfg->DebugLevel);
-		if (globalcfg->Localize == NULL) {
-			cfg->Localize = NULL;
-		} else {
-			cfg->Localize = strdup(globalcfg->Localize);
-		}
 
 		/* Configure the tested state machine */
 		cfg->Device = strdup(Info->Device);

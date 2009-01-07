@@ -1,0 +1,4418 @@
+# libGammu translation.
+# Copyright (C) 2003 - 2007 Michal Čihař
+# This file is distributed under the same license as the Gammu package.
+# Michal Čihař <michal@cihar.com>, 2007.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: libGammu 1.22.90\n"
+"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"POT-Creation-Date: 2009-01-07 17:04+0100\n"
+"PO-Revision-Date: 2009-01-07 17:01+0100\n"
+"Last-Translator: Jochen Kemnade <jochenkemnade@web.de>\n"
+"Language-Team: Language =de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: common/gsmcomon.c:92
+msgid "No error."
+msgstr "Kein Fehler."
+
+#: common/gsmcomon.c:93
+msgid "Error opening device. Unknown/busy or no permissions."
+msgstr ""
+"Fehler beim Öffnen des Gerätes. Unbekannt/Belegt oder keine Berechtigung"
+
+#: common/gsmcomon.c:94
+msgid "Error opening device, it is locked."
+msgstr "Fehler beim Öffnen des Geräts, es ist gesperrt."
+
+#: common/gsmcomon.c:95
+msgid "Error opening device, it doesn't exist."
+msgstr "Fehler beim Öffnen des Geräts, es existiert nicht."
+
+#: common/gsmcomon.c:96
+msgid "Error opening device, it is already opened by other application."
+msgstr ""
+"Fehler beim Öffnen des Geräts, es wird bereits durch eine andere Anwendung "
+"verwendet."
+
+#: common/gsmcomon.c:97
+msgid "Error opening device, you don't have permissions."
+msgstr "Fehler beim Öffnen des Geräts, ungenügende Berechtigungen."
+
+#: common/gsmcomon.c:98
+msgid "Error opening device. No required driver in operating system."
+msgstr ""
+"Fehler beim Öffnen des Geräts, es gibt im Betriebssystem keinen "
+"entsprechenden Treiber."
+
+#: common/gsmcomon.c:99
+msgid "Error opening device. Some hardware not connected/wrong configured."
+msgstr ""
+"Fehler beim Öffnen des Geräts, Hardware ist nicht verbunden bzw. falsch "
+"konfiguriert."
+
+#: common/gsmcomon.c:100
+msgid "Error setting device DTR or RTS."
+msgstr "Fehler beim Setzen der seriellen Schnittstelle"
+
+#: common/gsmcomon.c:101
+msgid "Error setting device speed. Maybe speed not supported."
+msgstr ""
+"Fehler beim Setzen der Geschwindigkeit der IR-Schnittstelle. Vielleicht "
+"keine Unterstützung?"
+
+#: common/gsmcomon.c:102
+msgid "Error writing device."
+msgstr "Fehler beim Schreiben auf das Gerät."
+
+#: common/gsmcomon.c:103
+msgid "Error during reading device."
+msgstr "Fehler beim Lesen vom Gerät."
+
+#: common/gsmcomon.c:104
+msgid "Can't set parity on device."
+msgstr "Kann die Parität auf dem Gerät nicht setzen."
+
+#: common/gsmcomon.c:105
+msgid "No response in specified timeout. Probably phone not connected."
+msgstr "Keine Rückmeldung. Telefon möglicherweise nicht angeschlossen?"
+
+#: common/gsmcomon.c:106
+#, fuzzy
+msgid ""
+"Frame not requested right now. See <http://cihar.com/gammu/report> for "
+"information how to report it."
+msgstr ""
+"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
+"gammu/report> wo dieser Fehler zu melden ist."
+
+#: common/gsmcomon.c:107
+msgid ""
+"Unknown response from phone. See <http://cihar.com/gammu/report> for "
+"information how to report it."
+msgstr ""
+"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
+"gammu/report> wo dieser Fehler zu melden ist."
+
+#: common/gsmcomon.c:108
+#, fuzzy
+msgid ""
+"Unknown frame. See <http://cihar.com/gammu/report> for information how to "
+"report it."
+msgstr ""
+"Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
+"gammu/report> wo dieser Fehler zu melden ist."
+
+#: common/gsmcomon.c:109
+msgid "Unknown connection type string. Check config file."
+msgstr "Unbekannter Verbindungstyp. Bitte Konfigurationsdatei überprüfen."
+
+#: common/gsmcomon.c:110
+msgid "Unknown model type string. Check config file."
+msgstr "Unbekannter Modelltyp. Bitte Konfigurationsdatei überprüfen."
+
+#: common/gsmcomon.c:111
+msgid ""
+"Some functions not available for your system (disabled in config or not "
+"written)."
+msgstr ""
+"Einige Funktionen sind für Ihr Betriebssystem nicht verfügbar (in "
+"Konfigurationsdatei gesperrt oder nicht erwähnt)."
+
+#: common/gsmcomon.c:112
+msgid "Function not supported by phone."
+msgstr "Funktion wird nicht vom Telefon unterstützt."
+
+#: common/gsmcomon.c:113
+msgid "Entry is empty"
+msgstr "Eintrag ist leer."
+
+#: common/gsmcomon.c:114
+msgid "Security error. Maybe no PIN?"
+msgstr "Sicherheitsfehler.Vielleicht keine PIN?"
+
+#: common/gsmcomon.c:115
+msgid "Invalid location. Maybe too high?"
+msgstr "Ungültige Speicherstelle. Vielleicht zu hoch?"
+
+#: common/gsmcomon.c:116
+msgid "Function not implemented. Help required."
+msgstr "Funktion nicht programmiert. Hilfe benötigt."
+
+#: common/gsmcomon.c:117
+msgid "Memory full."
+msgstr "Speicher voll."
+
+#: common/gsmcomon.c:118
+msgid "Unknown error."
+msgstr "Unbekannter Fehler."
+
+#: common/gsmcomon.c:119
+msgid "Can't open specified file. Read only?"
+msgstr "Kann gewählte Datei nicht öffnen. Keine Schreibberechtigung?"
+
+#: common/gsmcomon.c:120
+msgid "More memory required..."
+msgstr "Mehr Speicher benötigt."
+
+#: common/gsmcomon.c:121
+msgid "Permission to file/device required..."
+msgstr "Berechtigungen für Datei/Gerät benötigt..."
+
+#: common/gsmcomon.c:122
+msgid "Empty SMSC number. Set in phone or use -smscnumber."
+msgstr ""
+"Leere SMSC-Nummer. Setzen Sie sie im Telefon oder verwenden Sie -smscnumber."
+
+#: common/gsmcomon.c:123
+msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+msgstr ""
+"Sie sind innerhalb des Telefon-Menüs (beim Bearbeiten?). Verlassen Sie es "
+"und versuchen es erneut."
+
+#: common/gsmcomon.c:124
+msgid "Phone is not connected."
+msgstr "Telefon ist nicht angeschlossen."
+
+#: common/gsmcomon.c:125
+msgid "Function is during writing. If want help, please contact with authors."
+msgstr ""
+"Die Funktion wird gerade geschrieben. Wenden Sie sich bitte an den Autor, "
+"wenn Sie Hilfe benötigen."
+
+#: common/gsmcomon.c:126
+msgid "Phone is disabled and connected to charger."
+msgstr "Das Telefon ist deaktiviert und mit dem Ladegerät verbunden."
+
+#: common/gsmcomon.c:127
+msgid "File format not supported by Gammu."
+msgstr "Das Dateiformat wird von Gammu nicht unterstützt."
+
+#: common/gsmcomon.c:128
+msgid ""
+"Nobody is perfect, some bug appeared in protocol implementation. Please "
+"contact authors."
+msgstr ""
+"Nobody is perfect, ein Fehler ist in der Protokollimplemetierung "
+"aufgetreten. Bitte wenden Sie sich an den Autor."
+
+#: common/gsmcomon.c:129
+msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+msgstr ""
+"Die Übertragung wurde vom Telefon abgebrochen. Vielleicht haben Sie Abbruch "
+"am Handy gedrückt."
+
+#: common/gsmcomon.c:130
+msgid "Phone module need to send another answer frame."
+msgstr ""
+
+#: common/gsmcomon.c:131
+msgid "Current connection type doesn't support called function."
+msgstr ""
+"Der gegenwärtige Verbindungstyp unterstützt nicht die aufgerufenen Funktion."
+
+#: common/gsmcomon.c:132
+msgid "CRC error."
+msgstr "CRC-Fehler."
+
+#: common/gsmcomon.c:133
+msgid "Invalid date or time specified."
+msgstr "Ungültiges Datum oder Zeit angegeben."
+
+#: common/gsmcomon.c:134
+msgid "Phone memory error, maybe it is read only."
+msgstr "Telefonspeicherfehler, möglicherweise nur lesend."
+
+#: common/gsmcomon.c:135
+msgid "Invalid data given to phone."
+msgstr "Ungültige Daten an das Telefon übertragen."
+
+#: common/gsmcomon.c:136
+msgid "File with specified name already exist."
+msgstr "Der angegebene Dateiname existiert bereits."
+
+#: common/gsmcomon.c:137
+msgid "File with specified name doesn't exist."
+msgstr "Die Datei mit dem angegebenen Namen existiert nicht."
+
+#: common/gsmcomon.c:138
+msgid "You have to give folder name and not file name."
+msgstr "Sie müssen einen Verzeichnis-, keinen Dateinamen angeben."
+
+#: common/gsmcomon.c:139
+msgid "You have to give file name and not folder name."
+msgstr "Sie müssen einen Datei-, keinen Verzeichnisnamen angeben."
+
+#: common/gsmcomon.c:140
+msgid "Can not access SIM card."
+msgstr "Kein Zugriff auf die SIM-Karte."
+
+#: common/gsmcomon.c:141
+msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+msgstr ""
+"Im Handy befindet sich eine falsche GNAPPLET-Version. Verwenden Sie die "
+"Version des aktuell verwendeten Gammu."
+
+#: common/gsmcomon.c:142
+msgid "Only part of folder has been listed."
+msgstr ""
+
+#: common/gsmcomon.c:143
+msgid "Folder must be empty."
+msgstr "Das Verzeichnis muss leer sein."
+
+#: common/gsmcomon.c:144
+msgid "Data were converted."
+msgstr "Die Daten wurden umgewandelt."
+
+#: common/gsmcomon.c:145
+msgid "Gammu is not configured."
+msgstr "Gammu ist nicht konfiguriert."
+
+#: common/gsmcomon.c:146
+msgid "Wrong folder used."
+msgstr "Falsches Verzeichnis benutzt."
+
+#: common/gsmcomon.c:147
+msgid "Internal phone error."
+msgstr "Interner Telefonfehler."
+
+#: common/gsmcomon.c:148
+#, fuzzy
+msgid "Error writing file to disk."
+msgstr "Fehler beim Schreiben auf Gerät."
+
+#: common/gsmcomon.c:149
+msgid "No such section exists."
+msgstr ""
+
+#: common/gsmcomon.c:150
+msgid "Using default values."
+msgstr "Benutze Standardwerte."
+
+#: common/gsmcomon.c:151
+msgid "Corrupted data returned by phone."
+msgstr "Fehlerhafte Daten vom Telefon empfangen."
+
+#: common/gsmcomon.c:152
+msgid "Bad feature string in configuration."
+msgstr ""
+
+#: common/gsmcomon.c:153
+msgid "Desired functionality has been disabled on compile time."
+msgstr ""
+
+#: common/gsmcomon.c:154
+msgid "Bluetooth configuration requires channel option."
+msgstr ""
+
+#: common/gsmcomon.c:187
+msgid "Unknown error description."
+msgstr "Unbekannte Fehlerbeschreibung."
+
+#: common/phone/nokia/dct3/n6110.c:1955
+msgid "Personal"
+msgstr "Persönlich"
+
+#: common/phone/nokia/dct3/n6110.c:1957 common/phone/nokia/nfunc.c:1105
+msgid "Car"
+msgstr "Auto"
+
+#: common/phone/nokia/dct3/n6110.c:1959 common/phone/nokia/nfunc.c:1107
+msgid "Headset"
+msgstr "Headset"
+
+#: common/phone/nokia/dct3/n6110.c:1965 common/phone/nokia/nfunc.c:1095
+msgid "General"
+msgstr "Allgemein"
+
+#: common/phone/nokia/dct3/n6110.c:1967 common/phone/nokia/nfunc.c:1097
+msgid "Silent"
+msgstr "Lautlos"
+
+#: common/phone/nokia/dct3/n6110.c:1969
+msgid "Discreet"
+msgstr "Unaufdringlich"
+
+#: common/phone/nokia/dct3/n6110.c:1971
+msgid "Loud"
+msgstr "Laut"
+
+#: common/phone/nokia/dct3/n6110.c:1973
+msgid "My style"
+msgstr "Mein Stil"
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:533
+msgid "SIM"
+msgstr "SIM"
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:534 common/phone/pfunc.c:40
+msgid "Inbox"
+msgstr "Eingang"
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:535
+msgid "Sent items"
+msgstr "Versandte Mitteilungen"
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:536
+msgid "Saved items"
+msgstr "Gespeicherte Mitteilungen"
+
+#: common/phone/nokia/nfunc.c:929
+msgid "Family"
+msgstr "Familie"
+
+#: common/phone/nokia/nfunc.c:931
+msgid "VIP"
+msgstr "VIP"
+
+#: common/phone/nokia/nfunc.c:933
+msgid "Friends"
+msgstr "Freunde"
+
+#: common/phone/nokia/nfunc.c:935
+msgid "Colleagues"
+msgstr "Kollegen"
+
+#: common/phone/nokia/nfunc.c:937
+msgid "Other"
+msgstr "Andere"
+
+#: common/phone/nokia/nfunc.c:1099
+msgid "Meeting"
+msgstr "Besprechung"
+
+#: common/phone/nokia/nfunc.c:1101
+msgid "Outdoor"
+msgstr "Draussen"
+
+#: common/phone/nokia/nfunc.c:1103
+msgid "Pager"
+msgstr "Pager"
+
+#: common/phone/pfunc.c:41
+msgid "Outbox"
+msgstr "Ausgang"
+
+#~ msgid "Where is backup filename and location?"
+#~ msgstr "Wie lautet der Backupdateiname und der Speicherplatz?"
+
+#~ msgid "Calendar note not found in file"
+#~ msgstr "Kalendernotizen nicht in der Datei gefunden"
+
+#~ msgid "WAP bookmark not found in file"
+#~ msgstr "WAP-Lesezeichen nicht in Datei gefunden"
+
+#~ msgid "Note not found in file"
+#~ msgstr "Notiz nicht in Datei gefunden"
+
+#~ msgid "ToDo note not found in file"
+#~ msgstr "Aufgaben nicht in der Datei gefunden"
+
+#~ msgid "Where is backup filename and location and memory type?"
+#~ msgstr ""
+#~ "Wie lautet der Backupdateiname, der Speicherplatz und der Speichertyp?"
+
+#~ msgid "Phonebook entry not found in file"
+#~ msgstr "Kein Telefonbucheintrag in der Datei gefunden"
+
+#~ msgid "Unknown memory type: \"%s\"\n"
+#~ msgstr "Unbekannter Speichertyp: \"%s\"\n"
+
+#~ msgid "Unknown backup format: \"%s\"\n"
+#~ msgstr "Unbekanntes Backupformat: \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Error while opening file for writing!\n"
+#~ msgstr "Fehler beim Schreiben der Datei!\n"
+
+#~ msgid "Error while writing file!\n"
+#~ msgstr "Fehler beim Schreiben der Datei!\n"
+
+#~ msgid "Press Ctrl+C to break..."
+#~ msgstr "Strg+C drücken, um zu unterbrechen..."
+
+#, fuzzy
+#~ msgid "Use Unicode subformat of backup file?"
+#~ msgstr "Benutze das Unicode-Format für die Backupdatei"
+
+#~ msgid "Checking phone phonebook"
+#~ msgstr "Überprüfe das Telefonbuch des Telefons"
+
+#, fuzzy
+#~ msgid "Backup phone phonebook?"
+#~ msgstr "   Sichere das Telefonbuch des Telefons"
+
+#~ msgid "Reading"
+#~ msgstr "Lese"
+
+#, fuzzy
+#~ msgid "Only part of data saved, please increase %s."
+#~ msgstr ""
+#~ "\n"
+#~ "   Nur ein teil der Daten wurde gespeichert - vergrößern Sie %s"
+
+#, fuzzy
+#~ msgid "Reading: %i percent"
+#~ msgstr "%c  Lese: %i Prozent"
+
+#~ msgid "Checking SIM phonebook"
+#~ msgstr "Überprüfe SIM-Telefonbuch"
+
+#~ msgid "Backup SIM phonebook?"
+#~ msgstr "SIM-Telefonbuch sichern?"
+
+#~ msgid "Checking phone calendar"
+#~ msgstr "Überprüfe Telefon-Kalender"
+
+#, fuzzy
+#~ msgid "Backup phone calendar notes?"
+#~ msgstr "    Sichere Telefon-Kalender"
+
+#~ msgid "Checking phone ToDo"
+#~ msgstr "Überprüfe Telefon-Aufgaben"
+
+#~ msgid "Backup phone ToDo?"
+#~ msgstr "Telefon-Aufgaben sichern?"
+
+#~ msgid "Checking phone notes"
+#~ msgstr "Überprüfe Telefon-Notizen"
+
+#~ msgid "Backup phone notes?"
+#~ msgstr "Telefon-Notizen sichern?"
+
+#~ msgid "Checking phone caller logos"
+#~ msgstr "Überprüfe Telefon-Betreiberlogos"
+
+#~ msgid "Backup phone caller groups and logos?"
+#~ msgstr "Telefon-Anrufergruppen und -Logos sichern?"
+
+#~ msgid "Checking SIM SMS profiles"
+#~ msgstr "Überprüfe SIM-SMS-Profile"
+
+#~ msgid "Backup SIM SMS profiles?"
+#~ msgstr "SIM-SMS-Profile sichern?"
+
+#~ msgid "Checking phone startup text"
+#~ msgstr "Überprüfe Telefon-Willkommenstext"
+
+#~ msgid "Backup phone startup logo/text?"
+#~ msgstr "Telefon-Willkommenstext/-logo sichern?"
+
+#~ msgid "Checking phone operator logo"
+#~ msgstr "Überprüfe Telefon-Betreiberlogo"
+
+#~ msgid "Backup phone operator logo?"
+#~ msgstr "Telefon-Betreiberlogo sichern?"
+
+#~ msgid "Checking phone WAP bookmarks"
+#~ msgstr "Überprüfe Telefon-WAP-Lesezeichen"
+
+#~ msgid "Backup phone WAP bookmarks?"
+#~ msgstr "Telefon-WAP-Lesezeichen sichern?"
+
+#~ msgid "Checking phone WAP settings"
+#~ msgstr "Überprüfe Telefon-WAP-Einstellungen"
+
+#~ msgid "Backup phone WAP settings?"
+#~ msgstr "Telefon-WAP-Einstellungen sichern?"
+
+#~ msgid "Checking phone MMS settings"
+#~ msgstr "Überprüfe Telefon-MMS-Einstellungen"
+
+#~ msgid "Backup phone MMS settings?"
+#~ msgstr "Telefon-MMS-Einstellungen sichern?"
+
+#~ msgid "Checking phone Chat settings"
+#~ msgstr "Überprüfe Telefon-Chat-Einstellungen"
+
+#~ msgid "Backup phone Chat settings?"
+#~ msgstr "Telefon-Chat-Einstellungen sichern?"
+
+#~ msgid "Checking phone SyncML settings"
+#~ msgstr "Überprüfe Telefon-SyncML-Einstellungen"
+
+#~ msgid "Backup phone SyncML settings?"
+#~ msgstr "Telefon-SyncML-Einstellungen sichern?"
+
+#~ msgid "Checking phone user ringtones"
+#~ msgstr "Überprüfe Telefon-Benutzer-Klingeltöne"
+
+#~ msgid "Backup phone user ringtones?"
+#~ msgstr "Telefon-Benutzer-Klingeltöne sichern?"
+
+#~ msgid "Checking phone profiles"
+#~ msgstr "Überprüfe Telefon-Profile"
+
+#~ msgid "Backup phone profiles?"
+#~ msgstr "Telefon-Profile sichern?"
+
+#~ msgid "Checking phone FM radio stations"
+#~ msgstr "Überprüfe Telefon-UKW-Radiosender"
+
+#~ msgid "Backup phone FM radio stations?"
+#~ msgstr "Telefon-UKW-Radiosender sichern?"
+
+#~ msgid "Checking phone GPRS access points"
+#~ msgstr "Überprüfe Telefon-GPRS-Zugangsknoten"
+
+#~ msgid "Backup phone GPRS access points?"
+#~ msgstr "Telefon-GPRS-Zugangsknoten sichern?"
+
+#~ msgid ""
+#~ "Some data not read from file. It can be damaged or restoring some "
+#~ "settings from this file format not implemented (maybe higher libGammu "
+#~ "required ?)"
+#~ msgstr ""
+#~ "Einige Daten konnten nicht aus der Datei gelesen werden. Sie können "
+#~ "entweder zerstört sein oder die Wiederherstellung aus diesem Dateiformat "
+#~ "ist noch nicht implementiert (möglicherweise neueres libGammu benötigt?)"
+
+#~ msgid "Time of backup"
+#~ msgstr "Backupzeit"
+
+#~ msgid "Phone"
+#~ msgstr "Telefon"
+
+#~ msgid "IMEI"
+#~ msgstr "IMEI"
+
+#~ msgid "File created by"
+#~ msgstr "Datei erstellt vo"
+
+#, fuzzy
+#~ msgid ""
+#~ "Checksum in backup file do not match (original: %s, new: %s). Continue?"
+#~ msgstr "Die Checksumme in der Backupdatei ist falsch. Fortfahren?"
+
+#~ msgid ""
+#~ "Please note that restoring data will cause existing data in phone to be "
+#~ "deleted."
+#~ msgstr ""
+#~ "Bitte beachten Sie, dass das Wiederherstellen von Daten die bestehenden "
+#~ "Daten im Handy löschen wird."
+
+#~ msgid "Restore phone caller groups and logos?"
+#~ msgstr "Telefon-Betreiberlogos wiederherstellen?"
+
+#~ msgid "%cWriting: %i percent"
+#~ msgstr "%cSchreibe: %i Prozent"
+
+#~ msgid "%i entries in backup file\n"
+#~ msgstr "%i Eintäge in Backup-Datei\n"
+
+#~ msgid "Restore phone phonebook?"
+#~ msgstr "Telefonbuch des Telefons wiederherstellen?"
+
+#~ msgid ""
+#~ "Error - try to (1) add enough number of/restore caller groups and (2) use "
+#~ "--restore again"
+#~ msgstr ""
+#~ "Fehler - Versuchen Sie (1) die Nummer der Anrufergruppen zu erhöhen und "
+#~ "(2) das Kommando --restore nochmals auszuführen"
+
+#~ msgid "Location %d"
+#~ msgstr "Ort %d"
+
+#~ msgid "Restore SIM phonebook?"
+#~ msgstr "SIM-Telefonbuch wiederherstellen?"
+
+#~ msgid ""
+#~ "Do you want to set phone date/time? (NOTE: in some phones it's required "
+#~ "to correctly restore calendar notes and other items)"
+#~ msgstr ""
+#~ "Möchten Sie die Uhrzeit und das Datum im Telefon setzen? (HINWEIS: Bei "
+#~ "einigen Telefonen ist dies notwendig für eine korrekte Wiederherstellung "
+#~ "von Kalendereinträgen und ähnlichem.)"
+
+#~ msgid "Restore phone calendar notes?"
+#~ msgstr "Kalendereinträge wiederherstellen?"
+
+#~ msgid "Restore notes from the past?"
+#~ msgstr "In der Vergangenheit liegende Kalendereinträge wiederherstellen?"
+
+#~ msgid "Deleting old notes: "
+#~ msgstr "Lösche alte Notizen:"
+
+#~ msgid "Done"
+#~ msgstr "Fertig"
+
+#~ msgid "Restore phone ToDo?"
+#~ msgstr "Telefon-Aufgaben wiederherstellen?"
+
+#~ msgid "Deleting old ToDo: "
+#~ msgstr "Lösche alte Aufgaben:"
+
+#~ msgid "%cCleaning: %i percent"
+#~ msgstr "%cBereinigung: %i Prozent"
+
+#~ msgid "Restore phone Notes?"
+#~ msgstr "Telefon-Notizen wiederherstellen?"
+
+#~ msgid "Deleting old Notes: "
+#~ msgstr "Lösche alte Notizen:"
+
+#~ msgid "Restore SIM SMSC profiles?"
+#~ msgstr "SIM-SMSC-Profile wiederherstellen?"
+
+#~ msgid "Restore phone startup logo/text?"
+#~ msgstr "Telefon-Willkommenstext/-logo wiederherstellen?"
+
+#~ msgid "Restore phone operator logo?"
+#~ msgstr "Telefon-Betreiberlogo wiederherstellen?"
+
+#~ msgid "Restore phone WAP bookmarks?"
+#~ msgstr "Telefon-WAP-Lesezeichen wiederherstellen?"
+
+#~ msgid "Deleting old bookmarks: "
+#~ msgstr "Lösche alte Lesezeichen: "
+
+#~ msgid "Restore phone WAP settings?"
+#~ msgstr "Telefon-WAP-Einstellungen wiederherstellen?"
+
+#~ msgid "Restore phone MMS settings?"
+#~ msgstr "Telefon-MMS-Einstellungen wiederherstellen?"
+
+#, fuzzy
+#~ msgid "Delete all phone user ringtones?"
+#~ msgstr "Lösche alle Telefon-Benutzer-Klingeltöne"
+
+#~ msgid "Deleting"
+#~ msgstr "Lösche"
+
+#, fuzzy
+#~ msgid "Restore user ringtones?"
+#~ msgstr "Stelle Telefon-Benutzer-Klingeltöne wieder her"
+
+#, fuzzy
+#~ msgid "Restore phone profiles?"
+#~ msgstr "Stelle Telefon-Profile wieder her"
+
+#, fuzzy
+#~ msgid "Restore phone FM radio stations?"
+#~ msgstr "Stelle Telefon-UKW-Radiosender wieder her"
+
+#~ msgid "Deleting old FM stations: "
+#~ msgstr "Lösche alte UKW-Radiosender: "
+
+#, fuzzy
+#~ msgid "Restore phone GPRS Points?"
+#~ msgstr "Stelle Telefon-GPRS-Zugangsknoten wieder her"
+
+#~ msgid "Memory has only %i free locations.Exiting\n"
+#~ msgstr "Der Speicher hat nur %i freie Speicherplätze. Verlassen\n"
+
+#, fuzzy
+#~ msgid "Add phone phonebook entries?"
+#~ msgstr "Telefonbucheintrag im Telefonspeicher hinzufügen"
+
+#, fuzzy
+#~ msgid "Add SIM phonebook entries?"
+#~ msgstr "Telefonbucheintrag auf der SIM-Karte hunzufügen"
+
+#, fuzzy
+#~ msgid "Add phone calendar notes?"
+#~ msgstr "Kalendernotiz hinzufügen"
+
+#, fuzzy
+#~ msgid "Add phone ToDo?"
+#~ msgstr "Aufgaben hinzufügen"
+
+#, fuzzy
+#~ msgid "Add phone WAP bookmarks?"
+#~ msgstr "WAP-Lesezeichen hinzufügen"
+
+#, fuzzy
+#~ msgid "Delete each sms after backup?"
+#~ msgstr "Lösche jedes SMS im Telefon nach dem Sichern in eine Datei"
+
+#, fuzzy
+#~ msgid "Backup sms from folder \"%s\"%s?"
+#~ msgstr "Sende SMS aus dem Ordner \"%s\", Speicherplatz %i\n"
+
+#~ msgid " (SIM)"
+#~ msgstr " (SIM)"
+
+#~ msgid "   Increase %s\n"
+#~ msgstr "   Erhöhe %s\n"
+
+#~ msgid "%cDeleting: %i percent"
+#~ msgstr "%cLösche: %i Prozent"
+
+#, fuzzy
+#~ msgid "Restore sms?"
+#~ msgstr "Stelle SMS wieder her"
+
+#, fuzzy
+#~ msgid "Do you want to restore binary SMS?"
+#~ msgstr "Möchten Sie binär codierte SMS wiederherstellen"
+
+#, fuzzy
+#~ msgid "Restore %03i sms to folder \"%s\"%s?"
+#~ msgstr "Stelle %03i SMS im Ordner \"%s\" wieder her"
+
+#~ msgid "saving %i SMS\n"
+#~ msgstr "Speichere %i SMS\n"
+
+#~ msgid "Note type"
+#~ msgstr "Notiztyp"
+
+#~ msgid "Reminder (Date)"
+#~ msgstr "Erinnerung (Termin)"
+
+#~ msgid "Call"
+#~ msgstr "Anruf"
+
+#~ msgid "Birthday (Anniversary)"
+#~ msgstr "Geburtstag (Jahrestag)"
+
+#~ msgid "Memo (Miscellaneous)"
+#~ msgstr "Notiz (Verschiedenes)"
+
+#~ msgid "Travel"
+#~ msgstr "Reise"
+
+#~ msgid "Vacation"
+#~ msgstr "Urlaub"
+
+#~ msgid "Alarm"
+#~ msgstr "Wecker"
+
+#~ msgid "Daily alarm"
+#~ msgstr "Täglicher Wecktermin"
+
+#~ msgid "Training/Athletism"
+#~ msgstr "Training/Athletik"
+
+#~ msgid "Training/Ball Games"
+#~ msgstr "Training/Ballspiele"
+
+#~ msgid "Training/Cycling"
+#~ msgstr "Training/Radfahren"
+
+#~ msgid "Training/Budo"
+#~ msgstr "Training/Gymnastik"
+
+#~ msgid "Training/Dance"
+#~ msgstr "Training/Tanz"
+
+#~ msgid "Training/Extreme Sports"
+#~ msgstr "Training/Extremsportarten"
+
+#~ msgid "Training/Football"
+#~ msgstr "Training/Fußball"
+
+#~ msgid "Training/Golf"
+#~ msgstr "Training/Golf"
+
+#~ msgid "Training/Gym"
+#~ msgstr "Training/Fitnesstudio"
+
+#~ msgid "Training/Horse Races"
+#~ msgstr "Training/Pferderennen"
+
+#~ msgid "Training/Hockey"
+#~ msgstr "Training/Hockey"
+
+#~ msgid "Training/Races"
+#~ msgstr "Training/Autorennen"
+
+#~ msgid "Training/Rugby"
+#~ msgstr "Training/Rugby"
+
+#~ msgid "Training/Sailing"
+#~ msgstr "Training/Segeln"
+
+#~ msgid "Training/Street Games"
+#~ msgstr "Training/Straßenspiele"
+
+#~ msgid "Training/Swimming"
+#~ msgstr "Training/Schwimmen"
+
+#~ msgid "Training/Tennis"
+#~ msgstr "Training/Tennis"
+
+#~ msgid "Training/Travels"
+#~ msgstr "Training/Reisen"
+
+#~ msgid "Training/Winter Games"
+#~ msgstr "Training/Wintersport"
+
+#~ msgid "unknown type!"
+#~ msgstr "unbekannt"
+
+#~ msgid "Start"
+#~ msgstr "Beginn"
+
+#~ msgid "Stop"
+#~ msgstr "Ende"
+
+#~ msgid "Last modified"
+#~ msgstr "Zuletzt geändert"
+
+#~ msgid "Tone alarm"
+#~ msgstr "Alarmton"
+
+#~ msgid "forever on each %i. day of %s"
+#~ msgstr "an jedem %i. Tag im %s"
+
+#~ msgid "Silent alarm"
+#~ msgstr "Lautloser Alarm"
+
+#~ msgid "Text"
+#~ msgstr "Text"
+
+#~ msgid "Description"
+#~ msgstr "Beschreibung"
+
+#~ msgid "LUID"
+#~ msgstr "LUID"
+
+#~ msgid "Location"
+#~ msgstr "Ort"
+
+#~ msgid "Private"
+#~ msgstr "Privat"
+
+#~ msgid "Yes"
+#~ msgstr "Ja"
+
+#~ msgid "No"
+#~ msgstr "Nein"
+
+#~ msgid "Contact ID"
+#~ msgstr "Kontakt-ID"
+
+#~ msgid "Repeating"
+#~ msgstr "Wiederholung"
+
+#~ msgid "for %d time "
+#~ msgid_plural "for %d times "
+#~ msgstr[0] "einmal"
+#~ msgstr[1] "%d Mal"
+
+#~ msgid "forever"
+#~ msgstr "für immer"
+
+#~ msgid "till %s"
+#~ msgstr "bis %s"
+
+#~ msgid "since %s"
+#~ msgstr "seit %s"
+
+#~ msgid "since %s till %s"
+#~ msgstr "von %s bis %s"
+
+#~ msgid " on each "
+#~ msgstr " an jedem"
+
+#~ msgid " on each %d. "
+#~ msgstr " an jedem %d. "
+
+#~ msgid " in %d. week of "
+#~ msgstr " in der %d. Woche von "
+
+#~ msgid " in "
+#~ msgstr " in"
+
+#~ msgid "each month"
+#~ msgstr "jeden Monat"
+
+#~ msgid "%d. day of "
+#~ msgstr "%d. Tag im"
+
+#~ msgid "%d. day of year"
+#~ msgstr "%d. Tag im Jahr"
+
+#~ msgid "day"
+#~ msgstr "Tag"
+
+#~ msgid "Age"
+#~ msgstr "Alter"
+
+#~ msgid "Date and time not set in phone"
+#~ msgstr "Zeit und Datum im Telefon nicht eingestellt"
+
+#~ msgid "Phone time is %s\n"
+#~ msgstr "Die Uhrzeit im Telefon ist %s\n"
+
+#~ msgid "Time format is "
+#~ msgstr "Das Uhrzeitformat ist "
+
+#~ msgid "12 hours"
+#~ msgstr "12 Stunden"
+
+#~ msgid "24 hours"
+#~ msgstr "24 Stunden"
+
+#~ msgid "Date format is "
+#~ msgstr "das Datumsformat ist "
+
+#~ msgid "DD MM YYYY"
+#~ msgstr "TT MM JJJJ"
+
+#~ msgid "MM DD YYYY"
+#~ msgstr "MM TT JJJJ"
+
+#~ msgid "YYYY MM DD"
+#~ msgstr "JJJJ MM TT"
+
+#~ msgid "DD MMM YY"
+#~ msgstr "TT MMM JJ"
+
+#~ msgid "MM DD YY"
+#~ msgstr "MM TT JJ"
+
+#~ msgid "DD MM YY"
+#~ msgstr "TT MM JJ"
+
+#~ msgid "YY MM DD"
+#~ msgstr "JJ MM TT"
+
+#~ msgid "OFF"
+#~ msgstr "AUS"
+
+#~ msgid ", date separator is %c\n"
+#~ msgstr ", das Datumstrennzeichen ist %c\n"
+
+#~ msgid "Setting time in phone to the time on PC."
+#~ msgstr "Setze die Uhrzeit im Telefon auf die Uhrzeit im PC."
+
+#~ msgid "Updating specified parts of date and time in phone."
+#~ msgstr ""
+#~ "Aktualiseire die angegebenen Bestandteile von Datum und Uhrzeit im "
+#~ "Telefon."
+
+#~ msgid "Alarm (%i) not set in phone\n"
+#~ msgstr "Wecker (%i) nicht gestellt\n"
+
+#~ msgid "Alarm in location %i:\n"
+#~ msgstr "Speicherplatz %i:\n"
+
+#~ msgid "Date"
+#~ msgstr "Datum"
+
+#~ msgid "Every day"
+#~ msgstr "Täglich"
+
+#~ msgid "Time: %02d:%02d\n"
+#~ msgstr "Uhrzeit: %02d:%02d\n"
+
+#~ msgid "Auto deleting disabled"
+#~ msgstr "Automatisches Löschen deaktiviert"
+
+#~ msgid "Auto deleting notes after %i day(s)"
+#~ msgstr "Automatisches Löschen von Notizen nach %i Tag(en)"
+
+#~ msgid "Week starts on %s"
+#~ msgstr "Die Woche beginnt am %s"
+
+#~ msgid "Entry was empty"
+#~ msgstr "Der Eintrag war leer"
+
+#~ msgid "Entry was deleted"
+#~ msgstr "Der Eintrag wurde gelöscht"
+
+#~ msgid "Unknown"
+#~ msgstr "Unbekannt"
+
+#~ msgid "Priority"
+#~ msgstr "Priorität"
+
+#~ msgid "Low"
+#~ msgstr "Niedrig"
+
+#~ msgid "Medium"
+#~ msgstr "Mittel"
+
+#~ msgid "High"
+#~ msgstr "Hoch"
+
+#~ msgid "None"
+#~ msgstr "Keine"
+
+#, fuzzy
+#~ msgid "Due time"
+#~ msgstr "Fällig am"
+
+#, fuzzy
+#~ msgid "Start time"
+#~ msgstr "Beginn"
+
+#~ msgid "Completed"
+#~ msgstr "Erledigt"
+
+#~ msgid "Category"
+#~ msgstr "Kategorie"
+
+#~ msgid "Contact"
+#~ msgstr "Kontakt-ID"
+
+#~ msgid "Search text too long, truncating to %d chars!\n"
+#~ msgstr "Der Suchtext ist zu lang, schneide ihn auf %d Zeichen ab!\n"
+
+#~ msgid "Waiting for Security Code."
+#~ msgstr "Warte auf Sicherheitscode."
+
+#~ msgid "Waiting for PIN."
+#~ msgstr "Warte auf PIN."
+
+#~ msgid "Waiting for PIN2."
+#~ msgstr "Warte auf PIN2."
+
+#~ msgid "Waiting for PUK."
+#~ msgstr "Warte auf PUK."
+
+#~ msgid "Waiting for PUK2."
+#~ msgstr "Warte auf PUK2."
+
+#, fuzzy
+#~ msgid "Waiting for phone code."
+#~ msgstr "Warte auf Sicherheitscode."
+
+#~ msgid "Nothing to enter."
+#~ msgstr "Keine Eingabe erforderlich."
+
+#~ msgid "Unknown security status."
+#~ msgstr "Sicherheitsstatus unbekannt."
+
+#~ msgid "January"
+#~ msgstr "Januar"
+
+#~ msgid "February"
+#~ msgstr "Februar"
+
+#~ msgid "March"
+#~ msgstr "März"
+
+#~ msgid "April"
+#~ msgstr "April"
+
+#~ msgid "May"
+#~ msgstr "Mai"
+
+#~ msgid "June"
+#~ msgstr "Juni"
+
+#~ msgid "July"
+#~ msgstr "Juli"
+
+#~ msgid "August"
+#~ msgstr "August"
+
+#~ msgid "September"
+#~ msgstr "September"
+
+#~ msgid "October"
+#~ msgstr "Oktober"
+
+#~ msgid "November"
+#~ msgstr "November"
+
+#~ msgid "December"
+#~ msgstr "Dezember"
+
+#~ msgid "Bad month!"
+#~ msgstr "Ungültiger Monat!"
+
+#~ msgid "Monday"
+#~ msgstr "Montag"
+
+#~ msgid "Tuesday"
+#~ msgstr "Dienstag"
+
+#~ msgid "Wednesday"
+#~ msgstr "Mittwoch"
+
+#~ msgid "Thursday"
+#~ msgstr "Donnerstag"
+
+#~ msgid "Friday"
+#~ msgstr "Freitag"
+
+#~ msgid "Saturday"
+#~ msgstr "Samstag"
+
+#~ msgid "Sunday"
+#~ msgstr "Sonntag"
+
+#~ msgid "Bad day!"
+#~ msgstr "Ungültiger Tag!"
+
+#~ msgid "Security status"
+#~ msgstr "Sicherheitsstatus:"
+
+#~ msgid "More parameters required!"
+#~ msgstr "Mehr Parameter benötigt!"
+
+#~ msgid "Please enumerate locations from 1"
+#~ msgstr "Nummeriere Speicherplätze beginnend mit 1"
+
+#~ msgid "Swapping start and end location"
+#~ msgstr "Vertausche ersten und letzten Speicherplatz"
+
+#~ msgid "yes"
+#~ msgstr "ja"
+
+#~ msgid "no"
+#~ msgstr "nein"
+
+#~ msgid "ALL"
+#~ msgstr "IMMER"
+
+#~ msgid "ONLY"
+#~ msgstr "EINMAL"
+
+#~ msgid "NONE"
+#~ msgstr "NIE"
+
+#~ msgid "YES (always)"
+#~ msgstr "JA (immer)"
+
+#~ msgid "NO (always)"
+#~ msgstr "NEIN (immer)"
+
+#~ msgid "Can't do it with current phone protocol"
+#~ msgstr ""
+#~ "Dies kann mit dem gegenwärtigen Handyprotokoll nicht gemacht werden."
+
+#~ msgid "%s (yes/no) ? "
+#~ msgstr "%s (yes/no) ?"
+
+#~ msgid "Setting done"
+#~ msgstr "Einstellungen übernommen"
+
+#~ msgid ""
+#~ "Sorry, but configuration matrix for this model is not added yet. Please "
+#~ "report"
+#~ msgstr ""
+#~ "Leider ist die Konfigurationsmatrix für dieses Modell noch nicht "
+#~ "hinzugefügt worden. Bitte melden Sie das den Autoren."
+
+#~ msgid "Passed"
+#~ msgstr "Erfolgreich"
+
+#~ msgid "Fail"
+#~ msgstr "Fehlgeschlagen"
+
+#~ msgid "Not executed"
+#~ msgstr "Nicht ausgeführt"
+
+#~ msgid "No signal"
+#~ msgstr "Kein Signal"
+
+#~ msgid "Timeout"
+#~ msgstr "Zeitüberschreitung"
+
+#~ msgid "Unknown (%x)"
+#~ msgstr "Unbekannt (%x)"
+
+#~ msgid " (startup)"
+#~ msgstr "(Programmstart)"
+
+#~ msgid "Press any key to continue..."
+#~ msgstr "Beliebige Taste drücken um fortzufahen..."
+
+#~ msgid "Security code set to \"12345\"\n"
+#~ msgstr "Sicherheitscode wurde auf \"12345\" gesetzt \n"
+
+#~ msgid "Unknown reason. Can't reset your security code"
+#~ msgstr ""
+#~ "Unbekannte Ursache. Ihr Sicherheitscode kann nicht zurückgesetzt werden"
+
+#~ msgid "Trying %i\n"
+#~ msgstr "Versuche %i\n"
+
+#~ msgid "Security code is %s\n"
+#~ msgstr "Der Sicherheitscode lautet %s\n"
+
+#~ msgid "device address %02x%02x%02x%02x%02x%02x\n"
+#~ msgstr "Geräteadresse %02x%02x%02x%02x%02x%02x\n"
+
+#, fuzzy
+#~ msgid "Old simlock"
+#~ msgstr "Alte SIM-Sperre: %s (%s)\n"
+
+#, fuzzy
+#~ msgid "Simlock data"
+#~ msgstr "Daten zur SIM-Sperre:"
+
+#, fuzzy
+#~ msgid "Bluetooth"
+#~ msgstr "Bluetooth: "
+
+#~ msgid "What lights should I enable (\"%s\") ?\n"
+#~ msgstr "Welche Lichter sollen aktiviert werden (\"%s\") ?\n"
+
+#~ msgid "What should I do (\"%s\") ?\n"
+#~ msgstr "Was soll gemacht werden (\"%s\") ?\n"
+
+#~ msgid "raw "
+#~ msgstr "roh"
+
+#~ msgid "unit result "
+#~ msgstr "Einheitsresultat"
+
+#~ msgid "Phone seems not to support radio"
+#~ msgstr "Das Handy scheint kein Radio zu haben"
+
+#~ msgid "Please connect headset. Required as antenna"
+#~ msgstr "Bitte das Headset anschließen. Es dient als Antenne"
+
+#~ msgid "%i entries types\n"
+#~ msgstr "%i Eintragstypen\n"
+
+#~ msgid "  entry ID %02X"
+#~ msgstr "ID des Eintrags %02X"
+
+#~ msgid " (Speed dial on SIM)"
+#~ msgstr "(Schnellwahl auf SIM)"
+
+#~ msgid " (Text: name (always the only one)"
+#~ msgstr "(Text: Name (immer der Einzige))"
+
+#~ msgid " (Text: email adress)"
+#~ msgstr "(Text: eMail-Adresse)"
+
+#~ msgid " (Text: postal address)"
+#~ msgstr "(Text: Anschrift)"
+
+#~ msgid " (Text: note)"
+#~ msgstr "(Text: Notiz)"
+
+#~ msgid " (Phone number)"
+#~ msgstr "(Telefonnummer)"
+
+#~ msgid " (Ringtone ID)"
+#~ msgstr "(ID des Klingeltons)"
+
+#~ msgid " (Call register: date and time)"
+#~ msgstr "(Liste aufrufen: Datum und Uhrzeit)"
+
+#~ msgid " (Call register: with missed calls)"
+#~ msgstr "(Liste aufrufen: mit verpassten Anrufen)"
+
+#~ msgid " (Speed dial)"
+#~ msgstr "(Schnellwahl)"
+
+#~ msgid " (Caller group: logo)"
+#~ msgstr "(Anruferguppe: Logo)"
+
+#~ msgid " (Caller group: is logo on ?)"
+#~ msgstr "(Anruferguppe: ist das Logo aktiviert?)"
+
+#~ msgid " (Caller group number in pbk entry)"
+#~ msgstr "(Anrufergruppennummer im Telefonbucheintrag)"
+
+#~ msgid " (Text: URL address)"
+#~ msgstr "(Text: Webadresse)"
+
+#~ msgid " (SMS list assigment)"
+#~ msgstr "(SMS Listennummer)"
+
+#~ msgid " (Voice tag assigment)"
+#~ msgstr "(Sprachwahl Zuordnung)"
+
+#~ msgid " (Picture ID assigment)"
+#~ msgstr "(Bild ID Zuordnung)"
+
+#~ msgid " (Ringtone ID from filesystem/internal)"
+#~ msgstr "(Klingelton-ID des Dataisystems/Intern)"
+
+#~ msgid " (Text: user ID)"
+#~ msgstr "(Text: Benutzer-ID)"
+
+#~ msgid " (conversation list ID)"
+#~ msgstr "(Umwandlungs ID Zuordnung)"
+
+#~ msgid " (Instant Messaging service list ID ?)"
+#~ msgstr "(Instant Messenger Liste?)"
+
+#~ msgid " (presence list ID ?)"
+#~ msgstr "(Anwesenheitsliste?)"
+
+#~ msgid " (SIP Address (Push to Talk address))"
+#~ msgstr "(SIP-Adresse (Push-to-Talk-Adresse))"
+
+#~ msgid " (Group ID (6230i or later))"
+#~ msgstr "(Gruppen-ID (6230i oder neuer))"
+
+#~ msgid ", type "
+#~ msgstr "Eintragstyp"
+
+#~ msgid "string"
+#~ msgstr "String"
+
+#~ msgid "byte"
+#~ msgstr "Byte"
+
+#~ msgid "2 bytes"
+#~ msgstr "2 Bytes"
+
+#~ msgid "4 bytes"
+#~ msgstr "4 Bytes"
+
+#~ msgid "%i phone number types\n"
+#~ msgstr "%i Arten von Telefonnummern\n"
+
+#~ msgid "Home number"
+#~ msgstr "Privatnummer   "
+
+#~ msgid "Mobile number"
+#~ msgstr "Handynummer       "
+
+#~ msgid "Fax number"
+#~ msgstr "Faxnummer"
+
+#~ msgid "Office number"
+#~ msgstr "Geschäftsnummer"
+
+#~ msgid "Standard number"
+#~ msgstr "Standardnummer "
+
+#~ msgid "Unknown number"
+#~ msgstr "Unbekannte Nummer"
+
+#~ msgid "ERROR: unknown memory type (\"%s\")\n"
+#~ msgstr "FEHLER: Unbekannter Speichertyp (\"%s\")\n"
+
+#~ msgid "Phone memory: %i bytes (free %i bytes, used %i bytes)"
+#~ msgstr "Telefonspeicher: %i Bytes (%i Bytes frei, %i Bytes belegt)"
+
+#~ msgid "Used by: Images: %i, Sounds: %i, Themes: %i"
+#~ msgstr "Belegt von: %i Bildern, %i Tönen, %i Designs"
+
+#~ msgid "P"
+#~ msgstr "g"
+
+#~ msgid "R"
+#~ msgstr "L"
+
+#~ msgid "H"
+#~ msgstr "V"
+
+#~ msgid "S"
+#~ msgstr "S"
+
+#~ msgid "Part of folder "
+#~ msgstr "Teil des Verzeichnisses"
+
+#~ msgid "Folder "
+#~ msgstr "Verzeichnis"
+
+#~ msgid "File;"
+#~ msgstr "Datei;"
+
+#~ msgid "Part of folder;"
+#~ msgstr "Teil des Verzeichnisses;"
+
+#~ msgid "Folder;"
+#~ msgstr "Verzeichnis;"
+
+#~ msgid "Used in phone: %li bytes"
+#~ msgstr "Im Telefon belegt: %li Bytes"
+
+#~ msgid ", used in card: %li bytes"
+#~ msgstr ", auf der Karte belegt: %li Bytes"
+
+#~ msgid "Unknown attribute (%s)\n"
+#~ msgstr "Unbekanntes Attribut (%s)\n"
+
+#~ msgid "Part of folder only"
+#~ msgstr "Nur ein Teil des Verzeichnisses"
+
+#~ msgid "Folder"
+#~ msgstr "Verzeichnis"
+
+#~ msgid "Getting \"%s\"\n"
+#~ msgstr "Hole \"%s\"\n"
+
+#~ msgid "it's folder. Please give only file names"
+#~ msgstr "Es ist ein Ordner. Bitte nur Dateinamen angeben."
+
+#~ msgid "%c  %i percent"
+#~ msgstr "%c  %i Prozent"
+
+#~ msgid " (%02i:%02i minutes left)"
+#~ msgstr " (%02i:%02i Minuten übrig)"
+
+#~ msgid ""
+#~ "File checksum calculated by phone doesn't match with value calculated by "
+#~ "libGammu. File damaged or error in libGammu"
+#~ msgstr ""
+#~ "Die vom Telefon errechnete Dateiprüfsumme stimmt nicht mit der von "
+#~ "libGammu ermittelten überein. Entweder ist die Datei korrupt oder in "
+#~ "libGammu ist ein Fehler aufgetreten."
+
+#~ msgid "  Saving to %s\n"
+#~ msgstr "  Speichere nach %s\n"
+
+#~ msgid "%3i percent"
+#~ msgstr "%3i Prozent"
+
+#~ msgid "Parameter \"%s\" unknown\n"
+#~ msgstr "Der Parameter \"%s\" ist unbekannt\n"
+
+#~ msgid "What file type (\"%s\") ?\n"
+#~ msgstr "Welcher Dateityp (\"%s\")?\n"
+
+#~ msgid "Parameter missing!"
+#~ msgstr "Parameter fehlt!"
+
+#~ msgid "ID of new file is \"%s\"\n"
+#~ msgstr "Die ID der neuen Datei ist \"%s\"\n"
+
+#~ msgid "ID of new folder is \"%s\"\n"
+#~ msgstr "Die ID des neuen Ordners ist \"%s\"\n"
+
+#~ msgid "Networks for %s:"
+#~ msgstr "Netz für %s:"
+
+#~ msgid "Unknown country name: %s."
+#~ msgstr "Unbekannter Ländername: %s."
+
+#~ msgid "Network"
+#~ msgstr "Netzname"
+
+#~ msgid "Name"
+#~ msgstr "Name"
+
+#~ msgid "[libGammu version %s built %s on %s using %s]"
+#~ msgstr "[libGammu Version %s erstellt am %s auf %s mit %s]"
+
+#~ msgid "Protocols"
+#~ msgstr "Protokolle"
+
+#~ msgid "Phones"
+#~ msgstr "Handys"
+
+#~ msgid "Miscellaneous"
+#~ msgstr "Verschiedenes"
+
+#, fuzzy
+#~ msgid ""
+#~ "There is newer stable libGammu version available! (%s instead of %s)\n"
+#~ msgstr ""
+#~ "INFO: Es ist eine neuere stabile libGammu-Version (%s anstatt %s) "
+#~ "verfügbar!\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "There is newer testing libGammu version available! (%s instead of %s)\n"
+#~ msgstr ""
+#~ "INFO: Es ist eine neuere Testversion von libGammu (%s anstatt %s) "
+#~ "verfügbar!\n"
+
+#~ msgid ""
+#~ "This is free software.  You may redistribute copies of it under the terms "
+#~ "of"
+#~ msgstr ""
+#~ "This is free software.  You may redistribute copies of it under the terms "
+#~ "of"
+
+#~ msgid ""
+#~ "the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."
+#~ msgstr ""
+#~ "the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."
+
+#~ msgid "There is NO WARRANTY, to the extent permitted by law."
+#~ msgstr "There is NO WARRANTY, to the extent permitted by law."
+
+#~ msgid "standard input"
+#~ msgstr "Standardeingabe "
+
+#~ msgid "Batch file could not be opened: %s\n"
+#~ msgstr "Stapelverarbeitungsdatei konnte nicht geöffnet werden: %s\n"
+
+#~ msgid "Executing batch \"%s\" - command %i: %s"
+#~ msgstr "Führe Stapelverarbeitungsdatei \"%s\" aus - Kommando %i: %s"
+
+#~ msgid "Calls"
+#~ msgstr "Anrufe"
+
+#~ msgid "SMS and EMS"
+#~ msgstr "SMS und EMS"
+
+#~ msgid "Memory (phonebooks and calls)"
+#~ msgstr "Speicher (Telefonbuch und Anrufe)"
+
+#~ msgid "Filesystem"
+#~ msgstr "Dateisystem"
+
+#~ msgid "Logo and pictures"
+#~ msgstr "Logos und Bilder"
+
+#~ msgid "Ringtones"
+#~ msgstr "Klingeltöne"
+
+#~ msgid "Calendar notes"
+#~ msgstr "Kalendernotizen"
+
+#~ msgid "To do lists"
+#~ msgstr "Augabenlisten"
+
+#~ msgid "Notes"
+#~ msgstr "Notizen"
+
+#~ msgid "Date, time and alarms"
+#~ msgstr "Datum, Uhrzeit und Wecker"
+
+#~ msgid "Categories"
+#~ msgstr "Kategorien"
+
+#~ msgid "Backing up and restoring"
+#~ msgstr "Sichern und wiederherstellen"
+
+#~ msgid "Nokia specific"
+#~ msgstr "Nokia-spezifisch"
+
+#~ msgid "Siemens specific"
+#~ msgstr "Siemens-spezifisch"
+
+#~ msgid "WAP settings and bookmarks"
+#~ msgstr "WAP-Einstellungen und -Lesezeichen"
+
+#~ msgid "MMS and MMS settings"
+#~ msgstr "MMS und MMS-Einstellungen"
+
+#~ msgid "Phone tests"
+#~ msgstr "Funktionstests"
+
+#~ msgid "FM radio"
+#~ msgstr "Radio"
+
+#~ msgid "Phone information"
+#~ msgstr "Telefoninformationen"
+
+#~ msgid "Phone settings"
+#~ msgstr "Telefoneinstellungen"
+
+#~ msgid "Functions that don't fit elsewhere"
+#~ msgstr "Funktionen ohne Kategorie"
+
+#~ msgid "libGammu information"
+#~ msgstr "libGammu Information"
+
+#~ msgid ""
+#~ "Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> "
+#~ "[options]"
+#~ msgstr ""
+#~ "Verwendung: gammu [Konfiguration] [nothing|text|textall|binary|errors] "
+#~ "<Kommando> [Optionen]"
+
+#~ msgid ""
+#~ "First parameter optionally specifies which config section to use (all are "
+#~ "probed by default)."
+#~ msgstr ""
+#~ "Der optionale erste Parameter bestimmt, welcher Konfigurationsabschnitt "
+#~ "verwendet wird (es werden standardmäßig alle ausprobiert)."
+
+#~ msgid ""
+#~ "Second parameter optionally controls debug level, next one specifies "
+#~ "actions."
+#~ msgstr ""
+#~ "Der optionale zweite Parameter beschreibt das Debug-Niveau, der nächste "
+#~ "beschreibt die Aktionen."
+
+#~ msgid "Commands can be specified with or without leading --."
+#~ msgstr "Kommandos können mit oder ohne führende -- angegeben werden."
+
+#~ msgid ""
+#~ "For more details, call help on specific topic (gammu --help topic). "
+#~ "Topics are:"
+#~ msgstr ""
+#~ "Für mehr Details rufen Sie bitte die Hilfe für ein bestimmtes Thema auf "
+#~ "(gammu --help thema). Die verfügbaren Themen sind:"
+
+#~ msgid "Unknown help topic specified!"
+#~ msgstr "Unbekanntes Hilfethema angegeben!"
+
+#~ msgid ""
+#~ "libGammu commands, topic: %s\n"
+#~ "\n"
+#~ msgstr ""
+#~ "libGammu-Befehle, Thema: %s\n"
+#~ "\n"
+
+#~ msgid "More parameters required (function requires %d)\n"
+#~ msgstr "Zu wenige Parameter! (Die Funktion benötigt %d)\n"
+
+#~ msgid "More parameters required (function requires %d to %d)\n"
+#~ msgstr "Zu wenige Parameter! (Die Funktion benötigt %d bis %d)\n"
+
+#~ msgid "Parameters help"
+#~ msgstr "Hilfe zu Parametern"
+
+#~ msgid "Too many parameters (function accepts %d)\n"
+#~ msgstr "Zu viele Parameter! (Die Funktion benötigt %d)\n"
+
+#~ msgid "Too many parameters (function accepts %d to %d)\n"
+#~ msgstr "Zu viele Parameter! (Die Funktion benötigt %d bis %d)\n"
+
+#~ msgid "Bad option!"
+#~ msgstr "Falsche Auswahl!"
+
+#~ msgid "Too few parameters!"
+#~ msgstr "Zu wenig Parameter!"
+
+#~ msgid "Configuration could not be parsed!"
+#~ msgstr "Konfigurationsdatei konnte nicht verarbeitet werden!"
+
+#~ msgid "No configuration file found!"
+#~ msgstr "Keine Konfigurationsdatei gefunden!"
+
+#~ msgid "Failed to read [gammu%d] from gammurc!\n"
+#~ msgstr "[gammu%d] lesen von gammurc fehlgeschlagen!\n"
+
+#~ msgid "No configuration read, using builtin defaults!"
+#~ msgstr "Keine Konfiguration eingelesen, verwende eingebaute Standards!"
+
+#~ msgid ""
+#~ "Version of installed libGammu.so (%s) is different to version of libGammu "
+#~ "(%s)\n"
+#~ msgstr ""
+#~ "Die Version der installierten libGammu.so (%s) ist anders als die Version "
+#~ "von libGammu (%s)\n"
+
+#~ msgid "Unknown memory type (\"%s\")\n"
+#~ msgstr "Unbekannter Speichertyp: (\"%s\")\n"
+
+#~ msgid "Memory %s, Location %i\n"
+#~ msgstr "Speicher %s, Speicherplatz %i\n"
+
+#~ msgid "Unknown parameter (\"%s\")\n"
+#~ msgstr "Unbekannter Parameter (\"%s\")\n"
+
+#~ msgid ""
+#~ "You will have null names in entries. Upgrade firmware in phone to higher "
+#~ "than 4.06"
+#~ msgstr ""
+#~ "Sie werden keine Namen in den Einträgen erhalten.  Erneuern Sie die "
+#~ "Telefonfirmware auf Version 4.06 oder höher"
+
+#, fuzzy
+#~ msgid ""
+#~ "You will have null names in entries. Upgrade firmware in phone to higher "
+#~ "than 6.00"
+#~ msgstr ""
+#~ "Sie werden keine Namen in den Einträgen erhalten.  Erneuern Sie die "
+#~ "Telefonfirmware auf Version 4.06 oder höher"
+
+#~ msgid "%i entries empty, %i entries filled\n"
+#~ msgstr "%i Einträge sind frei, %i Einträge sind belegt\n"
+
+#~ msgid "SMS message received"
+#~ msgstr "SMS empfangen"
+
+#~ msgid "We already have one pending, ignoring this one!"
+#~ msgstr "Es wird bereits eines empfangen, daher wird dieses ignoriert!"
+
+#~ msgid "Location %i\n"
+#~ msgstr "Speicherplatz %i\n"
+
+#~ msgid "Empty"
+#~ msgstr "Leer"
+
+#~ msgid "CB message received"
+#~ msgstr "CB-Nachricht empfangen"
+
+#~ msgid "Channel %i, text \"%s\"\n"
+#~ msgstr "Kanal %i, Text \"%s\"\n"
+
+#~ msgid "USSD received"
+#~ msgstr "USSD empfangen"
+
+#~ msgid "Status"
+#~ msgstr "Status"
+
+#~ msgid "No action needed"
+#~ msgstr "Kein Eingriff erforderlich"
+
+#~ msgid "Action needed"
+#~ msgstr "Eingriff nötig"
+
+#~ msgid "Terminated"
+#~ msgstr "Beendet"
+
+#~ msgid "Another client replied"
+#~ msgstr "Antwort durch andere Instanz"
+
+#~ msgid "Not supported"
+#~ msgstr "Nicht unterstützt"
+
+#~ msgid "Service reply"
+#~ msgstr "Serviceantwort"
+
+#~ msgid "%i. Set %i\n"
+#~ msgstr "%i. Setze %i\n"
+
+#~ msgid "Number"
+#~ msgstr "Nummer"
+
+#~ msgid "Default number"
+#~ msgstr "Standardnummer"
+
+#~ msgid "Format"
+#~ msgstr "Format"
+
+#~ msgid "Fax"
+#~ msgstr "Fax"
+
+#~ msgid "Email"
+#~ msgstr "E-Mail"
+
+#~ msgid "Validity"
+#~ msgstr "Gültigkeit"
+
+#~ msgid "Maximum time"
+#~ msgstr "Maximale Zeit"
+
+#~ msgid "%cReading phone phonebook: %i percent"
+#~ msgstr "%c  Lese: %i Prozent"
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "%i SMS parts in %i SMS sequences\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "%i SMS Teile in %i SMS Sequenzen\n"
+
+#~ msgid "SMS counter overflow"
+#~ msgstr "SMS Zählerüberlauf"
+
+#~ msgid ""
+#~ "\n"
+#~ "%i SMS parts in %i SMS sequences\n"
+#~ msgstr ""
+#~ "\n"
+#~ "%i SMS Teile in %i SMS Sequenzen\n"
+
+#~ msgid ", SIM memory"
+#~ msgstr ", SIM-Speicher"
+
+#~ msgid ", phone memory"
+#~ msgstr ", Telefonspeicher"
+
+#~ msgid ", phone or SIM memory"
+#~ msgstr ", Telefon- oder SIM-Speicher"
+
+#~ msgid ", Inbox folder"
+#~ msgstr ", Posteingangsordner"
+
+#~ msgid ", Outbox folder"
+#~ msgstr ", Postausgangsordner"
+
+#, fuzzy
+#~ msgid "Do you want to save this MMS file?"
+#~ msgstr "Möchten Sie dieses MMS in einer Datei speichern"
+
+#, fuzzy
+#~ msgid "Error while saving to file %s!\n"
+#~ msgstr "  Speichere nach %s\n"
+
+#~ msgid "Saved to file %s\n"
+#~ msgstr "Gespeichert in Datei \"%s\"\n"
+
+#~ msgid "Some MMS file features unknown for libGammu decoder"
+#~ msgstr "libGammu kennt nicht alle Eigenschaften dieses MMS"
+
+#~ msgid "Sender"
+#~ msgstr "Absender"
+
+#~ msgid "phone "
+#~ msgstr "Telefon"
+
+#~ msgid "Recipient"
+#~ msgstr "Empfänger"
+
+#~ msgid "CC"
+#~ msgstr "zK"
+
+#~ msgid "Message type"
+#~ msgstr "Meldungstyp"
+
+#~ msgid "Subject"
+#~ msgstr "Betreff"
+
+#~ msgid "Delivery report"
+#~ msgstr "Sendebericht"
+
+#~ msgid "enabled"
+#~ msgstr "eingeschaltet"
+
+#~ msgid "disabled"
+#~ msgstr "ausgeschaltet"
+
+#~ msgid "Content type"
+#~ msgstr "Typ des Inhalts"
+
+#~ msgid " (%s in SMIL)"
+#~ msgstr "(%s in SMIL)"
+
+#, fuzzy
+#~ msgid "Do you want to save this attachment?"
+#~ msgstr "Möchten Sie diesen Anhang speichern"
+
+#~ msgid "Folder %s\n"
+#~ msgstr "Verzeichnis \"%s\"\n"
+
+#~ msgid "  File filesystem ID"
+#~ msgstr "Datei ID"
+
+#~ msgid "..OK"
+#~ msgstr "..OK"
+
+#~ msgid "..error %i"
+#~ msgstr "..Fehler %i"
+
+#~ msgid ", message reference=%d\n"
+#~ msgstr ", Nachricht-Referenz=%d\n"
+
+#~ msgid "Number of messages: %i"
+#~ msgstr "Anzahl der SMS: %i"
+
+#~ msgid "If you want break, press Ctrl+C..."
+#~ msgstr "Drücken Sie Strg-C, wenn Sie unterbrechen möchten..."
+
+#~ msgid "Saving SMS %i/%i\n"
+#~ msgstr "Speichere SMS %i/%i\n"
+
+#~ msgid "Saved in folder \"%s\", location %i"
+#~ msgstr "Gespeichert im Ordner \"%s\", Speicherplatz %i"
+
+#~ msgid "phone"
+#~ msgstr "Telefon"
+
+#~ msgid "Sending sms from folder \"%s\", location %i\n"
+#~ msgstr "Sende SMS aus dem Ordner \"%s\", Speicherplatz %i\n"
+
+#~ msgid "....waiting for network answer"
+#~ msgstr "....warte auf Netz-Bestätiung"
+
+#~ msgid "Sending SMS %i/%i"
+#~ msgstr "Sende SMS %i/%i"
+
+#~ msgid "Too high folder number (max. %i)\n"
+#~ msgstr "Zu hohe Ordnernummer (max. %i)\n"
+
+#~ msgid "Deleting SMS from \"%s\" folder: "
+#~ msgstr "Lösche SMS von Ordner \"%s\": "
+
+#~ msgid "Network state"
+#~ msgstr "Netzstärke"
+
+#~ msgid "home network"
+#~ msgstr "Eigenes Netz"
+
+#~ msgid "roaming network"
+#~ msgstr "Roaming Netz"
+
+#~ msgid "requesting network"
+#~ msgstr "Fordere Netz an"
+
+#~ msgid "not logged into network"
+#~ msgstr "Nicht in einem Netz angemeldet"
+
+#~ msgid "registration to network denied"
+#~ msgstr "Anmeldung an Netz abgelehnt"
+
+#~ msgid "unknown"
+#~ msgstr "unbekannt"
+
+#~ msgid "Name in phone"
+#~ msgstr "Name im Telefon"
+
+#, fuzzy
+#~ msgid "Never version of firmware is available!\n"
+#~ msgstr ""
+#~ "INFO: Es ist eine neuere Handy-Firmware (%s anstatt %s) verfügbar!\n"
+
+#~ msgid "Manufacturer"
+#~ msgstr "Hersteller"
+
+#~ msgid "Model"
+#~ msgstr "Modell"
+
+#~ msgid "Firmware"
+#~ msgstr "Firmware"
+
+#~ msgid "Hardware"
+#~ msgstr "Hardware"
+
+#~ msgid "Original IMEI"
+#~ msgstr "Original IMEI"
+
+#~ msgid "Manufactured"
+#~ msgstr "Hergestellt"
+
+#~ msgid "Product code"
+#~ msgstr "Produkt-Code"
+
+#~ msgid "SIM IMSI"
+#~ msgstr "SIM IMSI"
+
+#~ msgid "Call info"
+#~ msgstr "Anrufinfo"
+
+#~ msgid "ID %i, "
+#~ msgstr "Kennung %i,"
+
+#~ msgid "incoming call from \"%s\"\n"
+#~ msgstr "eingehender Anruf von \"%s\"\n"
+
+#~ msgid "outgoing call to \"%s\"\n"
+#~ msgstr "abgehender Anruf zu \"%s\"\n"
+
+#~ msgid "call started"
+#~ msgstr "Gesprächsbeginn"
+
+#~ msgid "end of call (unknown side)"
+#~ msgstr "Gepräch beendet (von irgendeiner Seite)"
+
+#~ msgid "call end from our side"
+#~ msgstr "Gespräch unsererseits beendet"
+
+#~ msgid "call end from remote side (code %i)\n"
+#~ msgstr "Gesprächsende durch Gegenstelle (Code %i)\n"
+
+#~ msgid "call established. Waiting for answer"
+#~ msgstr "Verbindung hergestellt. Warte auf Antwort."
+
+#~ msgid "call held"
+#~ msgstr "Anruf gehalten"
+
+#~ msgid "call resumed"
+#~ msgstr "Gespräch fortgesetzt"
+
+#~ msgid "call switched"
+#~ msgstr "Anruf umgeleitet"
+
+#~ msgid "%3d used"
+#~ msgstr "%3d belegt"
+
+#~ msgid "%3d free"
+#~ msgstr "%3d frei"
+
+#~ msgid "Entering monitor mode..."
+#~ msgstr "Beginne Überwachungsmodus..."
+
+#~ msgid "Enabling info about incoming SMS"
+#~ msgstr "Aktiviere Infos über eingehende SMS"
+
+#~ msgid "Enabling info about incoming CB"
+#~ msgstr "Aktiviere Infos über eingehende CB"
+
+#~ msgid "Enabling info about calls"
+#~ msgstr "Aktiviere Anrufinfos"
+
+#~ msgid "Enabling info about USSD"
+#~ msgstr "Aktiviere Infos über USSD"
+
+#~ msgid "ToDos"
+#~ msgstr "Aufgaben"
+
+#~ msgid "Calendar"
+#~ msgstr "Kalendernotiz"
+
+#~ msgid "Battery level"
+#~ msgstr "Batterie"
+
+#~ msgid "%i percent"
+#~ msgstr "%i Prozent"
+
+#~ msgid "Battery capacity"
+#~ msgstr "Batteriekapazität"
+
+#~ msgid "%i mAh"
+#~ msgstr "%i mAh"
+
+#~ msgid "Battery temperature"
+#~ msgstr "Batterietemperatur"
+
+#~ msgid "%i C"
+#~ msgstr "%i C"
+
+#~ msgid "Phone temperature"
+#~ msgstr "Telefontemperatur"
+
+#~ msgid "Battery voltage"
+#~ msgstr "Batteriespannung"
+
+#~ msgid "%i mV"
+#~ msgstr "%i mV"
+
+#~ msgid "Charge voltage"
+#~ msgstr "Ladespannung"
+
+#~ msgid "Charge current"
+#~ msgstr "Ladestrom"
+
+#~ msgid "%i mA"
+#~ msgstr "%i mA"
+
+#~ msgid "Phone current"
+#~ msgstr "Stromstärke im Telefon"
+
+#~ msgid "Charge state"
+#~ msgstr "Ladestatus"
+
+#~ msgid "powered from battery"
+#~ msgstr "Batteriebetrieb"
+
+#~ msgid "battery connected, but not powered from battery"
+#~ msgstr "Batterie ist angeschlossen, liefert aber keinen Strom"
+
+#~ msgid "battery connected and is being charged"
+#~ msgstr "Batterie ist angeschlossen und wird geladen"
+
+#~ msgid "battery connected and is fully charged"
+#~ msgstr "Batterie ist angeschlossen und vollständig geladen"
+
+#~ msgid "battery not connected"
+#~ msgstr "Batterie ist nicht angeschlossen"
+
+#~ msgid "detected power failure"
+#~ msgstr "Fehler in der Stromversorgung"
+
+#~ msgid "Battery type"
+#~ msgstr "Batterietyp"
+
+#~ msgid "Lithium Ion"
+#~ msgstr "Lithionionen"
+
+#~ msgid "Lithium Polymer"
+#~ msgstr "Lithion-Polymer"
+
+#~ msgid "NiMH"
+#~ msgstr "NiMH"
+
+#~ msgid "Signal strength"
+#~ msgstr "Signalstärke"
+
+#~ msgid "%i dBm"
+#~ msgstr "%i dBm"
+
+#~ msgid "Network level"
+#~ msgstr "Netz"
+
+#~ msgid "Bit error rate"
+#~ msgstr "Bitfehlerrate"
+
+#~ msgid "SIM SMS status"
+#~ msgstr "SMS Statusbericht"
+
+#~ msgid "%i used"
+#~ msgstr "%i belegt"
+
+#~ msgid "%i unread"
+#~ msgstr "%i ungelesen"
+
+#~ msgid "%i locations"
+#~ msgstr "%i Speicherplätze"
+
+#~ msgid "Phone SMS status"
+#~ msgstr "SMS Status"
+
+#~ msgid "%i templates"
+#~ msgstr "%i Vorlagen"
+
+#~ msgid "Leaving monitor mode..."
+#~ msgstr "Verlasse Überwachungsmodus..."
+
+#~ msgid "Smart Messaging"
+#~ msgstr "Intelligente Nachrichten"
+
+#~ msgid "Nokia binary"
+#~ msgstr "Nokia Programm"
+
+#~ msgid "MIDI"
+#~ msgstr "MIDI"
+
+#~ msgid "SMAF (MMF)"
+#~ msgstr "SMAF (MMF)"
+
+#~ msgid " format, ringtone \"%s\"\n"
+#~ msgstr " Format, Klingelton \"%s\"\n"
+
+#~ msgid "What type of reset do you want (\"%s\") ?\n"
+#~ msgstr "Welche Art Reset möchten Sie (\"%s\")?\n"
+
+#~ msgid "Address"
+#~ msgstr "Adresse"
+
+#~ msgid "%i. Access point %i"
+#~ msgstr "%i. Zugangsknoten %i"
+
+#~ msgid " (active)"
+#~ msgstr " (aktiv)"
+
+#~ msgid "Maximal location for caller logo can be 5"
+#~ msgstr "Maximal 5 Speicherplätze für Anruferlogo"
+
+#~ msgid "What type of logo do you want to get (\"%s\") ?\n"
+#~ msgstr "Welche Art von Logo möchten Sie erhalten (\"%s\")?\n"
+
+#~ msgid "Group name"
+#~ msgstr "Gruppenname"
+
+#~ msgid " (default)"
+#~ msgstr " (Standard)"
+
+#~ msgid "Ringtone"
+#~ msgstr "Klingelton"
+
+#~ msgid "default"
+#~ msgstr "Standard"
+
+#~ msgid "(file with ID %i)\n"
+#~ msgstr "(Datei mit ID %i)\n"
+
+#~ msgid "\"%s\" (ID %i)\n"
+#~ msgstr "\"%s\" (Kennung %i)\n"
+
+#~ msgid "ID %i\n"
+#~ msgstr "Kennung %i\n"
+
+#~ msgid "Bitmap"
+#~ msgstr "Bitmap"
+
+#~ msgid "Bitmap ID"
+#~ msgstr "Bitmap-ID"
+
+#~ msgid "No operator logo in phone"
+#~ msgstr "Kein Betreiberogo im Telefon"
+
+#~ msgid "Welcome note text is \"%s\"\n"
+#~ msgstr "Willkomenstext lautet \"%s\"\n"
+
+#~ msgid "Dealer note text is \"%s\"\n"
+#~ msgstr "Händlernotiz lautet \"%s\"\n"
+
+#~ msgid "What type of logo do you want to set (\"%s\") ?\n"
+#~ msgstr "Welchen Typ von Logo möchten Sie setzen (\"%s\")?\n"
+
+#~ msgid "Unknown parameter (\"%s\")"
+#~ msgstr "Unbekannter Parameter (\"%s\")"
+
+#~ msgid "%cClearing: %i percent"
+#~ msgstr "%cBereinigung: %i Prozent"
+
+#, fuzzy
+#~ msgid "Delete phone phonebook?"
+#~ msgstr "Lösche das Telefonbuch des Telefons"
+
+#, fuzzy
+#~ msgid "Delete SIM phonebook?"
+#~ msgstr "Lösche das Telefonbuch auf der SIM-Karte"
+
+#, fuzzy
+#~ msgid "Delete missed calls?"
+#~ msgstr "Lösche verpasste Anrufe"
+
+#, fuzzy
+#~ msgid "Delete dialled calls?"
+#~ msgstr "Lösche gewählte Rufnummern"
+
+#, fuzzy
+#~ msgid "Delete received calls?"
+#~ msgstr "Lösche erhaltene Anrufe"
+
+#, fuzzy
+#~ msgid "Delete phone calendar notes?"
+#~ msgstr "Lösche Kalendernotiz"
+
+#, fuzzy
+#~ msgid "Delete phone ToDo?"
+#~ msgstr "Lösche Aufgaben"
+
+#, fuzzy
+#~ msgid "Delete phone Notes?"
+#~ msgstr "Lösche Notizen"
+
+#, fuzzy
+#~ msgid "Delete phone WAP bookmarks?"
+#~ msgstr "Lösche WAP-Lesezeichen"
+
+#, fuzzy
+#~ msgid "Delete all phone FM radio stations?"
+#~ msgstr "Lösche UKW-Radiosender"
+
+#~ msgid "Connection type     : Continuous\n"
+#~ msgstr "Verbindungsart       : Ununterbrochen\n"
+
+#~ msgid "Connection type     : Temporary\n"
+#~ msgstr "Verbindungsart       : Zeitweilig\n"
+
+#~ msgid "Connection security : On\n"
+#~ msgstr "Verbindungssicherheit: An\n"
+
+#~ msgid "Connection security : Off\n"
+#~ msgstr "Verbindungssicherheit: Aus\n"
+
+#~ msgid "Proxy               : address \"%s\", port %i\n"
+#~ msgstr "Proxy                : Adresse \"%s\", Port %i\n"
+
+#~ msgid "2'nd proxy          : address \"%s\", port %i\n"
+#~ msgstr "Zweiter Proxy        : Adresse \"%s\", Port %i\n"
+
+#~ msgid "Bearer"
+#~ msgstr "Träger"
+
+#~ msgid "SMS"
+#~ msgstr "SMS"
+
+#~ msgid "Server number"
+#~ msgstr "Servernummer"
+
+#~ msgid "Service number"
+#~ msgstr "Servicenummer"
+
+#~ msgid "Data (CSD)"
+#~ msgstr "Daten (CSD)"
+
+#~ msgid "Dial-up number"
+#~ msgstr "Einwahlnummer"
+
+#~ msgid "IP address"
+#~ msgstr "IP-Adresse"
+
+#~ msgid "Login Type          : Manual\n"
+#~ msgstr "Login-Typ            : Manuell\n"
+
+#~ msgid "Login Type          : Automatic\n"
+#~ msgstr "Login-Typ            : Automatisch\n"
+
+#~ msgid "Authentication type : Normal\n"
+#~ msgstr "Authentifizierungstyp: Normal\n"
+
+#~ msgid "Authentication type : Secure\n"
+#~ msgstr "Authentifizierungstyp: Sicher\n"
+
+#~ msgid "Data call type      : ISDN\n"
+#~ msgstr "Datenanruftyp        : ISDN\n"
+
+#~ msgid "Data call type      : Analogue\n"
+#~ msgstr "Datenanruftyp        : Analog\n"
+
+#~ msgid "Data call speed     : 9600\n"
+#~ msgstr "Datenanrufgeschwindigkeit: 9600\n"
+
+#~ msgid "Data call speed     : 14400\n"
+#~ msgstr "Datenanrufgeschwindigkeit: 14400\n"
+
+#~ msgid "Data call speed     : Auto\n"
+#~ msgstr "Datenanrufgeschwindigkeit: Auto\n"
+
+#~ msgid "User name"
+#~ msgstr "Benutzername"
+
+#~ msgid "Password"
+#~ msgstr "Passwort"
+
+#~ msgid "USSD"
+#~ msgstr "USSD"
+
+#~ msgid "Service code"
+#~ msgstr "Dienst Code"
+
+#~ msgid ""
+#~ "Address type        : IP address\n"
+#~ "IPaddress           : \"%s\"\n"
+#~ msgstr ""
+#~ "Adresstyp            : IP-Adresse\n"
+#~ "IP-Adresse          : \"%s\"\n"
+
+#~ msgid ""
+#~ "Address type        : Service number\n"
+#~ "Service number      : \"%s\"\n"
+#~ msgstr ""
+#~ "Adresstyp            : Service-Nummer\n"
+#~ "Service-Nummer      : \"%s\"\n"
+
+#~ msgid "GPRS"
+#~ msgstr "GPRS"
+
+#~ msgid "Access point"
+#~ msgstr "Zugangsknoten"
+
+#~ msgid "Set %i"
+#~ msgstr "Setze %i"
+
+#~ msgid "User"
+#~ msgstr "Benutzer"
+
+#~ msgid "Phonebook database"
+#~ msgstr "Telefonbuch-Datenbank"
+
+#~ msgid "Calendar database"
+#~ msgstr "Kalender-Datenbank"
+
+#~ msgid "Server"
+#~ msgstr "Server"
+
+#~ msgid "Sync. phonebook"
+#~ msgstr "Sync. Telefonbuch"
+
+#~ msgid "Sync. calendar"
+#~ msgstr "Sync. Kalender"
+
+#~ msgid "Connection set name"
+#~ msgstr "Verbindungssatzname"
+
+#~ msgid "Homepage"
+#~ msgstr "Homepage"
+
+#~ msgid "Connection set name : Set %i\n"
+#~ msgstr "Verbindungssatzname  : Satz %i\n"
+
+#~ msgid "Connection set name : %s\n"
+#~ msgstr "Verbindungssatzname  : %s\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Read only           : yes"
+#~ msgstr ""
+#~ "\n"
+#~ "Schreibgeschützt     : ja"
+
+#~ msgid ""
+#~ "\n"
+#~ "Homepage"
+#~ msgstr ""
+#~ "\n"
+#~ "Homepage"
+
+#~ msgid "Startup logo"
+#~ msgstr "Startlogo"
+
+#~ msgid "Operator logo"
+#~ msgstr "Betreiberlogo"
+
+#~ msgid "Picture Image"
+#~ msgstr "Bild"
+
+#~ msgid "Caller group logo"
+#~ msgstr "Anruferguppenlogo"
+
+#~ msgid ", width %i, height %i\n"
+#~ msgstr ", Breite %i, Höhe %i\n"
+
+#~ msgid "What format of output file logo (\"%s\") ?\n"
+#~ msgstr "Welches Ausgabe-Format für Logo (\"%s\")?\n"
+
+#~ msgid "What format of output ringtone file (\"%s\") ?\n"
+#~ msgstr "Welches Format der auszugebeneden Klingelton-Datei (\"%s\")?\n"
+
+#~ msgid "Unknown key/function name: \"%c\"\n"
+#~ msgstr "Unbekannte Taste/Funktion: \"%c\"\n"
+
+#~ msgid "What type of categories do you want to get (\"%s\") ?\n"
+#~ msgstr "Welchen Kategorietyp möchten Sie holen (\"%s\")?\n"
+
+#~ msgid "What type of category do you want to add (\"%s\") ?\n"
+#~ msgstr "Welchen Kategorietyp möchten Sie hinzufügen (\"%s\")?\n"
+
+#~ msgid "Text too long, truncating to %d chars!\n"
+#~ msgstr "Der Text ist zu lang, kürze ihn auf %d Zeichen!\n"
+
+#~ msgid " (default name)"
+#~ msgstr " (Standard-Name)"
+
+#~ msgid " (Head set profile)"
+#~ msgstr " (Head-Set-Profil)"
+
+#~ msgid " (Car kit profile)"
+#~ msgstr " (Freisprechanlagen-Profil)"
+
+#~ msgid "Ringtone ID"
+#~ msgstr "Klingelton-ID"
+
+#~ msgid "Message alert tone ID"
+#~ msgstr "SMS-Nachrichtenton-ID"
+
+#~ msgid "Call alert for"
+#~ msgstr "Klingelton für"
+
+#~ msgid "Screen saver number"
+#~ msgstr "Bildschirmschonernummer"
+
+#~ msgid "Incoming call alert"
+#~ msgstr "Klingelton für eingehenden Anruf"
+
+#~ msgid "Ringtone volume"
+#~ msgstr "Lautstärke Klingeton"
+
+#~ msgid "Vibrating alert"
+#~ msgstr "Vibrationsalarm"
+
+#~ msgid "Message alert tone"
+#~ msgstr "SMS-Nachrichtenton-ID"
+
+#~ msgid "Keypad tones"
+#~ msgstr "Tastentöne"
+
+#~ msgid "Warning (games) tones"
+#~ msgstr "Warnungs- und Spiele-Ton"
+
+#~ msgid "Screen saver"
+#~ msgstr "Bildschirmschoner"
+
+#~ msgid "Screen saver timeout"
+#~ msgstr "Bildschirmschoner-Timeout"
+
+#~ msgid "Automatic answer"
+#~ msgstr "Automatische Antwort"
+
+#~ msgid "Lights"
+#~ msgstr "Beleuchtung"
+
+#~ msgid "Level 1"
+#~ msgstr "Ebene 1"
+
+#~ msgid "Level 2"
+#~ msgstr "Ebene 2"
+
+#~ msgid "Level 3"
+#~ msgstr "Ebene 3"
+
+#~ msgid "Level 4"
+#~ msgstr "Ebene 4"
+
+#~ msgid "Level 5"
+#~ msgstr "Ebene 5"
+
+#~ msgid "Off"
+#~ msgstr "Aus"
+
+#~ msgid "Ringing"
+#~ msgstr "Klingeln"
+
+#~ msgid "Beep once"
+#~ msgstr "Einmal Piepen"
+
+#~ msgid "Ring once"
+#~ msgstr "Einmal Klingeln"
+
+#~ msgid "Ascending"
+#~ msgstr "Aufsteigend"
+
+#~ msgid "Caller groups"
+#~ msgstr "Anrufergruppen"
+
+#~ msgid "Standard"
+#~ msgstr "Standard"
+
+#~ msgid "Special"
+#~ msgstr "Spezial"
+
+#~ msgid "On"
+#~ msgstr "An"
+
+#~ msgid "Vibrate first"
+#~ msgstr "Zuerst Vibrieren"
+
+#~ msgid "Auto"
+#~ msgstr "Automatisch"
+
+#~ msgid " speed dial not assigned"
+#~ msgstr " Wählgeschwindigkeit nicht zugewiesen"
+
+#~ msgid "What type of reset phone settings (\"%s\") ?\n"
+#~ msgstr "Welcher Reset-Typ für die Telefoneinstellungen (\"%s\")?\n"
+
+#~ msgid "Current display features"
+#~ msgstr "Aktuelle Display-Eigenschaften"
+
+#~ msgid "Call active"
+#~ msgstr "Anruf aktiv"
+
+#~ msgid "Unread SMS"
+#~ msgstr "Ungelesene SMS"
+
+#~ msgid "Voice call"
+#~ msgstr "Sprachanruf"
+
+#~ msgid "Fax call"
+#~ msgstr "Fax"
+
+#~ msgid "Data call"
+#~ msgstr "Datenanruf"
+
+#~ msgid "Keypad locked"
+#~ msgstr "Tatensperre"
+
+#~ msgid "SMS memory full"
+#~ msgstr "SMS-Speicher voll"
+
+#~ msgid "Station name"
+#~ msgstr "Sendername"
+
+#~ msgid "Frequency"
+#~ msgstr "Frequenz"
+
+#~ msgid "Unknown divert action (\"%s\")\n"
+#~ msgstr "Unbekannte Rufumleitung (\"%s\")\n"
+
+#~ msgid "Unknown divert type (\"%s\")\n"
+#~ msgstr "Unbekante Art der Rufumleitung (\"%s\")\n"
+
+#~ msgid "Unknown call type (\"%s\")\n"
+#~ msgstr "Unbekannter Anruftyp (\"%s\")\n"
+
+#~ msgid ""
+#~ "Query:\n"
+#~ "   Divert type: "
+#~ msgstr ""
+#~ "Abfrage:\n"
+#~ "    Rufumleitung: "
+
+#~ msgid ""
+#~ "Changed:\n"
+#~ "   Divert type: "
+#~ msgstr ""
+#~ "Geändert:\n"
+#~ "    Rufumleitung: "
+
+#~ msgid "when busy"
+#~ msgstr "wenn beschäftigt"
+
+#~ msgid "when not answered"
+#~ msgstr "wenn nicht beantwortet"
+
+#~ msgid "when phone off or no coverage"
+#~ msgstr "wenn das Telefon aus ist oder keinen Empfang hat"
+
+#~ msgid "all types of diverts"
+#~ msgstr "alle Arten von Umlenkungen"
+
+#~ msgid "unknown %i"
+#~ msgstr "unbekannt %i"
+
+#~ msgid ""
+#~ "\n"
+#~ "   Calls type : "
+#~ msgstr ""
+#~ "\n"
+#~ "   Anruftyp   : "
+
+#~ msgid "voice"
+#~ msgstr "Stimme"
+
+#~ msgid "fax"
+#~ msgstr "Fax"
+
+#~ msgid "data"
+#~ msgstr "Daten"
+
+#~ msgid "data & fax & voice"
+#~ msgstr "Daten & Fax & Stimme"
+
+#~ msgid ""
+#~ "\n"
+#~ "Response:"
+#~ msgstr ""
+#~ "\n"
+#~ "Rückmeldung:"
+
+#~ msgid "   Timeout    : "
+#~ msgstr "   Timeout    :"
+
+#~ msgid "It can be RTTL ringtone only used with this option"
+#~ msgstr "Mit dieser Option können nur RTTL-Klingeltöne verwendet werden"
+
+#~ msgid ""
+#~ "Ringtone \"%s\" (tempo = %i Beats Per Minute)\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Klingelton \"%s\" (Tempo = %i Takte pro Minute)\n"
+#~ "\n"
+
+#~ msgid "length=%i notes, but you will enter only first 50 tones."
+#~ msgstr "Länge=%i Noten, aber Sie können nur die ersten 50 eingeben."
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "This ringtone in Nokia Composer in phone should look: "
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Dieser Klingelton sollte im Nokia Composer so aussehen: "
+
+#~ msgid ""
+#~ "\n"
+#~ "\n"
+#~ "To enter it please press: "
+#~ msgstr ""
+#~ "\n"
+#~ "\n"
+#~ "Zum Eingeben drücken Sie bitte: "
+
+#~ msgid "(longer)"
+#~ msgstr "(länger)"
+
+#~ msgid "Checking %s\n"
+#~ msgstr "Überprüfe %s\n"
+
+#~ msgid "  Only part handled!"
+#~ msgstr "    Nur ein Teil behandelt!"
+
+#~ msgid "  Problem with adding playlist"
+#~ msgstr "    Ein Problem ist aufgetreten bei Anhängen an die Playliste"
+
+#~ msgid "Your phone model is not supported. Please report"
+#~ msgstr ""
+#~ "Ihr Telefonmodell wird nicht unterstützt. Bitte melden Sie das den Autoren"
+
+#~ msgid "Problem with deleting playlist"
+#~ msgstr "    Ein Problem ist aufgetreten beim Löschen der Playliste"
+
+#~ msgid "What folder type (\"%s\") ?\n"
+#~ msgstr "Welcher Ordnertyp (\"%s\")?\n"
+
+#~ msgid "Folder not found. Probably function not supported!"
+#~ msgstr ""
+#~ "Ordner nicht gefunden. Vermutlich wird diese Funktion nicht unterstützt!"
+
+#~ msgid "Searching for phone folder: "
+#~ msgstr "Suche nach Telefon-Ordnern: "
+
+#~ msgid "No vendor info in JAD file"
+#~ msgstr "Keine Anbieterinformationen in der JAD-Datei gefunden"
+
+#~ msgid "No name info in JAD file"
+#~ msgstr "Keine Namensinformationen in der JAD-Datei gefunden"
+
+#~ msgid "No JAR URL info in JAD file"
+#~ msgstr "Keine JAR-URL-Informationen in der JAD-Datei gefunden"
+
+#~ msgid ""
+#~ "INFO: declared JAR file size is different than real. Fixed by libGammu"
+#~ msgstr ""
+#~ "INFO: Die angegebene JAR-Dateigröße stimmt nicht mit der realen überein. "
+#~ "Von libGammu korrigiert"
+
+#~ msgid "INFO: no JAR size info in JAD file. Added by libGammu"
+#~ msgstr ""
+#~ "INFO: keine JAR-Größeninformation in der JAD-Datei gefunden. Von libGammu "
+#~ "hinzugefügt"
+
+#~ msgid "Adding \"%s\""
+#~ msgstr "Füge hinzu \"%s\""
+
+#~ msgid " version %s"
+#~ msgstr " Version %s"
+
+#~ msgid " created by %s\n"
+#~ msgstr " erstellt von %s\n"
+
+#~ msgid "INFO: Application already exist. Deleting by libGammu"
+#~ msgstr "INFO: Die Anwendung existiert bereits. Von libGammu gelöscht"
+
+#~ msgid "  Deleting %s\n"
+#~ msgstr "  Lösche %s\n"
+
+#~ msgid "Connection \"%s\" on device \"%s\"\n"
+#~ msgstr "Verbindung \"%s\" auf Gerät \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Error creating thread\n"
+#~ msgstr "Fehler beim Schreiben auf das Gerät."
+
+#~ msgid "Error"
+#~ msgstr "Fehler"
+
+#~ msgid "Warning"
+#~ msgstr "Warnung"
+
+#, fuzzy
+#~ msgid "Information"
+#~ msgstr "Telefoninformationen"
+
+#~ msgid "%d second"
+#~ msgid_plural "%d seconds"
+#~ msgstr[0] "1 Sekunde"
+#~ msgstr[1] "%d Sekunden"
+
+#~ msgid "%d minute"
+#~ msgid_plural "%d minutes"
+#~ msgstr[0] "1 Minute"
+#~ msgstr[1] "%i Minuten"
+
+#~ msgid "%d hour"
+#~ msgid_plural "%d hours"
+#~ msgstr[0] "1 Stunde"
+#~ msgstr[1] "%d Stunden"
+
+#~ msgid "%d day"
+#~ msgid_plural "%d days"
+#~ msgstr[0] "1 Tag"
+#~ msgstr[1] "%d Tage"
+
+#~ msgid "%d week"
+#~ msgid_plural "%d weeks"
+#~ msgstr[0] "1 Woche"
+#~ msgstr[1] "%d Wochen"
+
+#~ msgid "%d year"
+#~ msgid_plural "%d years"
+#~ msgstr[0] "1 Jahr"
+#~ msgstr[1] "%d Jahre"
+
+#~ msgid "SMS daemon"
+#~ msgstr "SMS-Daemon"
+
+#~ msgid "Call length      : %02i:%02i:%02i\n"
+#~ msgstr "Anrufdauer       : %02i:%02i:%02i\n"
+
+#~ msgid "Date and time"
+#~ msgstr "Datum und Uhrzeit"
+
+#~ msgid "Caller group"
+#~ msgstr "Anrufergruppen"
+
+#~ msgid "Caller group number too high, please increase buffer in sources!"
+#~ msgstr ""
+#~ "Anrufergruppennummer zu groß, bitte vergrößern Sie den Puffer in den "
+#~ "Quellen!"
+
+#~ msgid "User ID"
+#~ msgstr "Benutzer-ID"
+
+#~ msgid "Picture name"
+#~ msgstr "Name des Bildes"
+
+#~ msgid "Picture ID"
+#~ msgstr "Bild-ID"
+
+#, fuzzy
+#~ msgid "Photo"
+#~ msgstr "Telefon"
+
+#, fuzzy
+#~ msgid "Displaying not supported"
+#~ msgstr "Nicht unterstützt"
+
+#, fuzzy
+#~ msgid "Favorite messaging number"
+#~ msgstr "Intelligente Nachrichten"
+
+#~ msgid "General number"
+#~ msgstr "Allgemeine Nummer "
+
+#~ msgid "Work number"
+#~ msgstr "Geschäftsnummer"
+
+#~ msgid "Pager number"
+#~ msgstr "Pagernummer      "
+
+#~ msgid "Other number"
+#~ msgstr "Andere Nummer     "
+
+#~ msgid "Snail address"
+#~ msgstr "Postanschrift"
+
+#~ msgid "Work snail address"
+#~ msgstr "Dienstliche Postanschrift"
+
+#~ msgid "Email address 1"
+#~ msgstr "E-Mail-Adresse 1  "
+
+#~ msgid "Email address 2"
+#~ msgstr "E-Mail-Adresse 2  "
+
+#~ msgid "URL address"
+#~ msgstr "Webadresse        "
+
+#~ msgid "Last name"
+#~ msgstr "Familienname      "
+
+#~ msgid "First name"
+#~ msgstr "Vorname           "
+
+#~ msgid "Formal name"
+#~ msgstr "Name (förmlich)"
+
+#~ msgid "Nick name"
+#~ msgstr "Nickname"
+
+#~ msgid "Company"
+#~ msgstr "Firma             "
+
+#~ msgid "Job title"
+#~ msgstr "Tätigkeit         "
+
+#~ msgid "Street address"
+#~ msgstr "Straße            "
+
+#~ msgid "City"
+#~ msgstr "Ort"
+
+#~ msgid "State"
+#~ msgstr "Bundesland / Kanton"
+
+#~ msgid "Zip code"
+#~ msgstr "Postleitzahl      "
+
+#~ msgid "Country"
+#~ msgstr "Land              "
+
+#~ msgid "Work street address"
+#~ msgstr "Dienstlicher Straßenname"
+
+#~ msgid "Work city"
+#~ msgstr "Dienstliche Stadt"
+
+#~ msgid "Work state"
+#~ msgstr "Dienstliches Bundesland"
+
+#~ msgid "Work zip code"
+#~ msgstr "Dienstliche Postleitzahl"
+
+#~ msgid "Work country"
+#~ msgstr "Dienstlicher Staat     "
+
+#~ msgid "Custom text 1"
+#~ msgstr "Benutzer-Text 1   "
+
+#~ msgid "Custom text 2"
+#~ msgstr "Benutzer-Text 2   "
+
+#~ msgid "Custom text 3"
+#~ msgstr "Benutzer-Text 3   "
+
+#~ msgid "Custom text 4"
+#~ msgstr "Benutzer-Text 4   "
+
+#~ msgid "unknown field type"
+#~ msgstr "unbekannter Feldtyp"
+
+#~ msgid "Location %i, folder \"%s\""
+#~ msgstr "Speicherplatz %i, Ordner \"%s\""
+
+#, fuzzy
+#~ msgid "SIM memory"
+#~ msgstr ", SIM-Speicher"
+
+#, fuzzy
+#~ msgid "phone memory"
+#~ msgstr ", Telefonspeicher"
+
+#, fuzzy
+#~ msgid "phone or SIM memory"
+#~ msgstr ", Telefon- oder SIM-Speicher"
+
+#, fuzzy
+#~ msgid "Inbox folder"
+#~ msgstr ", Posteingangsordner"
+
+#~ msgid "mobile"
+#~ msgstr "Handy     "
+
+#~ msgid "work"
+#~ msgstr "Geschäftlich"
+
+#~ msgid "home"
+#~ msgstr "Privat"
+
+#~ msgid "pager"
+#~ msgstr "Pager"
+
+#~ msgid "SMS status report"
+#~ msgstr "SMS Statusbericht"
+
+#~ msgid "Sent"
+#~ msgstr "Gesendet"
+
+#~ msgid "Read"
+#~ msgstr "Gelesen"
+
+#~ msgid "UnRead"
+#~ msgstr "Ungelesen"
+
+#~ msgid "UnSent"
+#~ msgstr "Nicht gesendet"
+
+#~ msgid "Remote number"
+#~ msgid_plural "Remote numbers"
+#~ msgstr[0] "Nummer"
+#~ msgstr[1] "Nummern"
+
+#~ msgid "Reference number"
+#~ msgstr "Referenznummer"
+
+#~ msgid "SMSC number"
+#~ msgstr "SMSC-Nummer"
+
+#~ msgid "SMSC response"
+#~ msgstr "SMSC-Antwort"
+
+#~ msgid "Delivery status"
+#~ msgstr "Auslieferungsstatus"
+
+#~ msgid "Details"
+#~ msgstr "Details"
+
+#~ msgid "Temporary error, "
+#~ msgstr "Temporärer Fehler, "
+
+#~ msgid "Permanent error, "
+#~ msgstr "Ständiger Fehler, "
+
+#~ msgid "SM received by the SME"
+#~ msgstr "SM empfangen durch die SME"
+
+#~ msgid ""
+#~ "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
+#~ msgstr ""
+#~ "SM durch die SC weitergeleitet an die SME, aber die SC kann die "
+#~ "Auslieferung nicht bestätigen"
+
+#~ msgid "SM replaced by the SC"
+#~ msgstr "SM ersetzt durch die SC"
+
+#~ msgid "Congestion"
+#~ msgstr "Stau"
+
+#~ msgid "SME busy"
+#~ msgstr "SME ist beschäftigt"
+
+#~ msgid "No response from SME"
+#~ msgstr "Keie Rückmeldung von der SME"
+
+#~ msgid "Service rejected"
+#~ msgstr "Dienst abgelehnt"
+
+#~ msgid "Quality of service not aviable"
+#~ msgstr "Dienstgüte (QoS) nicht verfügbar"
+
+#~ msgid "Error in SME"
+#~ msgstr "Fehler in der SME"
+
+#~ msgid "Remote procedure error"
+#~ msgstr "Fehler in entfernter Prozedur"
+
+#~ msgid "Incompatibile destination"
+#~ msgstr "Inkompatibles Ziel"
+
+#~ msgid "Connection rejected by SME"
+#~ msgstr "Verbindung von SME abgelhnt"
+
+#~ msgid "Not obtainable"
+#~ msgstr "Nicht erhältlich"
+
+#~ msgid "Quality of service not available"
+#~ msgstr "Dienstgüte (QoS) nicht verfügbar"
+
+#~ msgid "No internetworking available"
+#~ msgstr "Keine Internetverbindung verfügbar"
+
+#~ msgid "SM Validity Period Expired"
+#~ msgstr "SM Gültigkeitsdauer abgelaufen"
+
+#~ msgid "SM deleted by originating SME"
+#~ msgstr "SM durch die abgehende SME gelöscht"
+
+#~ msgid "SM Deleted by SC Administration"
+#~ msgstr "SM von der SC-Verwaltung gelöscht"
+
+#~ msgid "SM does not exist"
+#~ msgstr "SM existiert nicht"
+
+#~ msgid "Reserved/Specific to SC: %x"
+#~ msgstr "Reserviert für SR: %x"
+
+#~ msgid "SMS message"
+#~ msgstr "SMS-Nachricht"
+
+#~ msgid "Saved"
+#~ msgstr "Gespeichert"
+
+#~ msgid " (set for reply)"
+#~ msgstr " (gesetzt für Antwort)"
+
+#~ msgid "SMS replacing ID"
+#~ msgstr "SMS eretzt ID"
+
+#~ msgid "Class"
+#~ msgstr "Klasse"
+
+#~ msgid "Coding"
+#~ msgstr "Zeichenkodierung"
+
+#~ msgid "Unicode (no compression)"
+#~ msgstr "Unicode (keine Kompression)"
+
+#~ msgid "Unicode (compression)"
+#~ msgstr "Unicode (Kompression)"
+
+#~ msgid "Default GSM alphabet (no compression)"
+#~ msgstr "Vorgabe-GSM-Alphabet (keine Kompression)"
+
+#~ msgid "Default GSM alphabet (compression)"
+#~ msgstr "Vorgabe-GSM-Alphabet (Kompression)"
+
+#~ msgid "8 bit"
+#~ msgstr "8 Bit"
+
+#~ msgid "User Data Header"
+#~ msgstr "Nutzdatenkopf"
+
+#~ msgid "Concatenated (linked) message"
+#~ msgstr "Verkettete (verknüpfte) Nachricht"
+
+#~ msgid "Disables voice indicator"
+#~ msgstr "Deaktiviert Stimmerkennung"
+
+#~ msgid "Enables voice indicator"
+#~ msgstr "Aktiviert Stimmenerkennung"
+
+#~ msgid "Disables fax indicator"
+#~ msgstr "Deaktiviert Fax-Erkennung"
+
+#~ msgid "Enables fax indicator"
+#~ msgstr "Aktiviert Fax-Erkennung"
+
+#~ msgid "Disables email indicator"
+#~ msgstr "Deaktiviert E-Mail-Erkennung"
+
+#~ msgid "Enables email indicator"
+#~ msgstr "Aktiviert E-Mail-Erkennung"
+
+#~ msgid "Void SMS"
+#~ msgstr "Ungültige SMS"
+
+#~ msgid "Nokia WAP bookmark"
+#~ msgstr "Nokia WAP-Lesezeichen"
+
+#~ msgid "Nokia operator logo"
+#~ msgstr "Nokia Betreiberlogo"
+
+#~ msgid "Nokia WAP bookmark or WAP/MMS settings"
+#~ msgstr "Nokia WAP-Lesezeichen oder WAP/MMS-Einstellungen"
+
+#~ msgid "Nokia ringtone"
+#~ msgstr "Nokia Klingelton"
+
+#~ msgid "Nokia GSM operator logo"
+#~ msgstr "Nokia GSM Betreiberlogo"
+
+#~ msgid "Nokia caller logo"
+#~ msgstr "Nokia Anruferlogo"
+
+#~ msgid "Nokia profile"
+#~ msgstr "Nokia Profil"
+
+#~ msgid "Nokia calendar note"
+#~ msgstr "Nokia Kalendernotiz"
+
+#~ msgid "Nokia phonebook entry"
+#~ msgstr "Nokia Telefonbucheintrag"
+
+#~ msgid "User UDH"
+#~ msgstr "Benutzer-UDH"
+
+#~ msgid "MMS indicator"
+#~ msgstr "MMS-Kennung"
+
+#~ msgid ", ID (8 bit) %i"
+#~ msgstr ", ID (8 Bit) %i"
+
+#~ msgid ", ID (16 bit) %i"
+#~ msgstr ", ID (16 Bit) %i"
+
+#~ msgid ", part %i of %i"
+#~ msgstr ", Teil %i von %i"
+
+#~ msgid ", %i parts"
+#~ msgstr ", %i Teile"
+
+#~ msgid "Siemens file"
+#~ msgstr "Siemens-Datei"
+
+#~ msgid "8 bit SMS, cannot be displayed here"
+#~ msgstr "8-Bit-SMS, kann hier nicht dargestellt werden"
+
+#, fuzzy
+#~ msgid "Unknown PDU type: 0x%x\n"
+#~ msgstr "Unbekannter Speichertyp: \"%s\"\n"
+
+#~ msgid ""
+#~ "Some details were ignored (unknown or not implemented in decoding "
+#~ "functions)"
+#~ msgstr ""
+#~ "Einige Details werden ignoriert (unbekannt oder in der "
+#~ "Dekodierungsfunktion nicht implementiert)"
+
+#~ msgid "Siemens OTA file"
+#~ msgstr "Siemens-OTA-Datei"
+
+#~ msgid "Ringtone \"%s\"\n"
+#~ msgstr "Klingelton \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Do you want to play it?"
+#~ msgstr "Möchten Sie ihn abspielen"
+
+#~ msgid "Caller logo"
+#~ msgstr "Anruferlogo"
+
+#~ msgid ""
+#~ "Operator logo for %s network (%s, %s)\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Betreiberlogo für %s-Netzwerk (%s, %s)\n"
+#~ "\n"
+
+#~ msgid "Profile"
+#~ msgstr "Profil"
+
+#~ msgid "EMS sound ID"
+#~ msgstr "EMS-Klang-ID"
+
+#~ msgid "EMS animation ID"
+#~ msgstr "EMS-Animations-ID"
+
+#~ msgid "msg:%s nb:%i udh:%s\n"
+#~ msgstr "msg:%s nb:%i udh%s\n"
+
+#~ msgid "Enter message text and press ^D:"
+#~ msgstr "Nachricht eingeben und Strg-D drücken zum Abschliessen:"
+
+#~ msgid "0 chars read!"
+#~ msgstr "0 Zeichen gelesen!"
+
+#~ msgid "Where are parameters?"
+#~ msgstr "Wie lauten die Parameter?"
+
+#~ msgid "Where is ringtone filename?"
+#~ msgstr "Wie lautet der Klingetondateiname?"
+
+#~ msgid "Where is logo filename?"
+#~ msgstr "Wie lautet der Logodateiname?"
+
+#~ msgid "Where is number of frames?"
+#~ msgstr "Wie lautet die Anzahl der Frames?"
+
+#~ msgid "File \"%s\"\n"
+#~ msgstr "Datei \"%s\"\n"
+
+#~ msgid "Bookmark not found in file"
+#~ msgstr "Lesezeichen in Datei nicht gefunden"
+
+#~ msgid "WAP settings not found in file"
+#~ msgstr "WAP-Einstellungen nicht in der Datei gefunden"
+
+#~ msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
+#~ msgstr ""
+#~ "Leider werden im Moment nur GPRS- oder DATA-Träger unterstützt. Beende."
+
+#~ msgid "MMS settings not found in file"
+#~ msgstr "MMS-Einstellungen nicht in der Datei gefunden"
+
+#~ msgid "Sorry. No GPRS bearer found in MMS settings"
+#~ msgstr "Sorry. Kein GPRS-Träger in den MMS-Einstellungen gefunden"
+
+#~ msgid "What format of sms (\"%s\") ?\n"
+#~ msgstr "Welches SMS-Format(\"%s\")?\n"
+
+#~ msgid "Unknown GSM network code (\"%s\")\n"
+#~ msgstr "Unbekannter GSM-Netz-Code (\"%s\")\n"
+
+#~ msgid "You have to give number between 1 and 7 (\"%s\")\n"
+#~ msgstr "Geben Sie eine Nummer zwischen 1 und 7 an (\"%s\")\n"
+
+#~ msgid "Unknown validity string (\"%s\")\n"
+#~ msgstr "Unbekannte Gültigkeitszeichenkette(\"%s\")\n"
+
+#~ msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
+#~ msgstr "Geben Sie die Anzahl der EMS-Frames zwischen 1 und 4 an (\"%s\")\n"
+
+#~ msgid "Can't open file \"%s\"\n"
+#~ msgstr "Die Datei \"%s\" kann nicht geöffnet werden\n"
+
+#~ msgid "Unknown parameter (\"%c\")\n"
+#~ msgstr "Unbekannter Parameter (\"%c\")\n"
+
+#~ msgid "Last parameter wasn't text"
+#~ msgstr "Der letzte Parameter war kein Text"
+
+#~ msgid "Too long SMS name (\"%s\"), ignored\n"
+#~ msgstr "Zu langer SMS-Name (\"%s\"), ignoriert\n"
+
+#~ msgid "No network code"
+#~ msgstr "Kein Netz-Code"
+
+#~ msgid "Ringtone too long. %i percent part cut\n"
+#~ msgstr ""
+#~ "Warnung: der Klingelton ist zu lang. %i Prozent werden abgeschnitten\n"
+
+#~ msgid "There is %i SMS packed and %i limit. Exiting\n"
+#~ msgstr "Es gibt %i gepackte SMS, Obergrenze ist %i. Abbruch\n"
+
+#~ msgid "Use -smscnumber option to give SMSC number"
+#~ msgstr "Verwenden Sie die -smscnumber Option, um die SMSC-Nummer anzugeben"
+
+#~ msgid "SMS name ignored"
+#~ msgstr "SMS-Name ignoriert"
+
+#~ msgid "Cannot save %s. No available file names"
+#~ msgstr "%s kann nicht gespeichert werden. Keine verfügbaren Dateinamen"
+
+#~ msgid "Delivery report: %s to %s"
+#~ msgstr "Sendebericht : %s bis %s"
+
+#~ msgid "Received"
+#~ msgstr "Empfangen"
+
+#~ msgid "Cannot save %s (%i)"
+#~ msgstr "Speichern von %s (%i) nicht möglich"
+
+#~ msgid "Could not delete %s (%i)"
+#~ msgstr "Löschen von %s (%i) nicht möglich"
+
+#~ msgid "Error copying SMS %s -> %s"
+#~ msgstr "Fehler beim kopieren der SMS %s -> %s"
+
+#~ msgid "Transmitted %s (%s: %i) to %s"
+#~ msgstr "Übermittelt %s (%s: %i) an %s"
+
+#~ msgid "Terminating communication"
+#~ msgstr "Verbindung wird beendet"
+
+#~ msgid "Could not parse config file \"%s\"\n"
+#~ msgstr "Die Konfigurationsdatei \"%s\" konnte nicht ausgelesen werden\n"
+
+#~ msgid "Can't find file \"%s\"\n"
+#~ msgstr "Die Datei \"%s\" wurde nicht gefunden\n"
+
+#~ msgid "Log filename is \"%s\"\n"
+#~ msgstr "Der Name der Log-Datei lautet \"%s\"\n"
+
+#~ msgid "Starting GAMMU smsd"
+#~ msgstr "GAMMU smsd wird gestartet"
+
+#~ msgid "Warning: No PIN code in %s file"
+#~ msgstr "Warnung: Es befindet sich kein PIN-Code in der Datei %s"
+
+#~ msgid "Warning: No PIN code in %s file\n"
+#~ msgstr "Warnung: Es befindet sich kein PIN-Code in der Datei %s\n"
+
+#~ msgid "PIN code is \"%s\""
+#~ msgstr "Der PIN-Code lautet \"%s\""
+
+#~ msgid "Inbox is \"%s\" with format \"%s\""
+#~ msgstr "Die Inbox \"%s\" hat das Format \"%s\""
+
+#~ msgid "Outbox is \"%s\" with transmission format \"%s\""
+#~ msgstr "Die Outbox \"%s\" hat das Format \"%s\""
+
+#~ msgid "Sent SMS moved to \"%s\""
+#~ msgstr "Gesendete SMS nach \"%s\" verschoben"
+
+#~ msgid "SMS with errors moved to \"%s\""
+#~ msgstr "Fehlerhafte SMS nach \"%s\" verschoben"
+
+#~ msgid "Include numbers available"
+#~ msgstr "Schließe verfügbare Nummern ein"
+
+#~ msgid "Exclude numbers available"
+#~ msgstr "Schließe verfügbare Nummern aus"
+
+#~ msgid "Exclude numbers available, but IGNORED"
+#~ msgstr "Schließe verfügbare, aber IGNORIERTE Nummern aus"
+
+#, fuzzy
+#~ msgid "Error getting security status (%s:%i)"
+#~ msgstr "Fehler während des Abrufs des Sicherheitsstatus (%i)"
+
+#~ msgid "Warning: no PIN in config"
+#~ msgstr "Warnung: keine PIN in der Konfiguration"
+
+#~ msgid "Trying to enter PIN"
+#~ msgstr "Versuche die PIN einzugeben"
+
+#, fuzzy
+#~ msgid "ERROR: incorrect PIN"
+#~ msgstr "FEHLER: ungültige PIN"
+
+#, fuzzy
+#~ msgid "Error entering PIN (%s:%i)"
+#~ msgstr "Fehler bei der Eingabe der PIN (%i)"
+
+#, fuzzy
+#~ msgid "ERROR: phone requires not supported code type"
+#~ msgstr "FEHLER: Handy benötigt nicht unterstützte Codetype"
+
+#~ msgid "Excluded %s"
+#~ msgstr "Ausgeschlossene %s"
+
+#, fuzzy
+#~ msgid "Error getting SMS (%s:%i)"
+#~ msgstr "Fehler beim abrufen der SMS (%i)"
+
+#, fuzzy
+#~ msgid "Error deleting SMS (%s:%i)"
+#~ msgstr "Fehler beim löschen der SMS (%i)"
+
+#, fuzzy
+#~ msgid "Error getting SMS status (%s:%i)"
+#~ msgstr "Fehler beim abrufen des SMS-Status (%i)"
+
+#~ msgid "Error in outbox on %s"
+#~ msgstr "Fehler in der Outbox an Stelle %s"
+
+#~ msgid "Moved to errorbox: %s"
+#~ msgstr "Zu den fehlerhaften SMS verschoben: %s"
+
+#~ msgid "Error getting SMSC from phone"
+#~ msgstr "Fehler beim Abrufen der SMSC vom Handy"
+
+#~ msgid "Error sending SMS %s (%i): %s"
+#~ msgstr "Fehler beim Versand der SMS %s (%i): %s"
+
+#~ msgid "Error getting send status of %s (%i): %s"
+#~ msgstr "Fehler beim Abrufen des Versandstatus von %s (%i): %s"
+
+#~ msgid "Unknown SMSD service type (\"%s\")\n"
+#~ msgstr "Unbekannter smsd Dienst: (\"%s\")\n"
+
+#, fuzzy
+#~ msgid "Initialisation failed, stopping libGammu smsd"
+#~ msgstr "Initialisierung fehlgeschlagen, halte libGammu smsd (%i) an"
+
+#, fuzzy
+#~ msgid "Terminating communication %s, (%i, %i times)"
+#~ msgstr "Kommunikation beenden (%i,%i)"
+
+#~ msgid "Starting communication"
+#~ msgstr "Kommunikation beginnen"
+
+#, fuzzy
+#~ msgid "Post initialisation failed, stopping libGammu smsd"
+#~ msgstr "Initialisierung fehlgeschlagen, halte libGammu smsd (%i) an"
+
+#~ msgid "Reset return code: %s (%i) "
+#~ msgstr "Rückmeldung zurücksetzen: %s (%i)"
+
+#, fuzzy
+#~ msgid "Can't open device"
+#~ msgstr "Gerät kann nicht geöffnet werden (%i)"
+
+#, fuzzy
+#~ msgid "Error at init connection %s (%i)"
+#~ msgstr "Fehler beim Verbindungsaufbau (%i)"
+
+#~ msgid "Stopping libGammu smsd"
+#~ msgstr "libGammu smsd anhalten"
+
+#~ msgid "Error connecting to database: %s\n"
+#~ msgstr "Fehler beim Verbinden mit der Datenbank: %s\n"
+
+#~ msgid "No table for outbox sms: %s\n"
+#~ msgstr "Kein Tabelleneintrag für ausgehende SMS: %s\n"
+
+#~ msgid "No table for sent sms: %s\n"
+#~ msgstr "Kein Tabelleneintrag für gesendete SMS: %s\n"
+
+#~ msgid "No table for inbox sms: %s\n"
+#~ msgstr "Kein Tabelleneintrag für erhaltene SMS: %s\n"
+
+#~ msgid "No libGammu table: %s\n"
+#~ msgstr "Kein Tabelleneintrag für libGammu: %s\n"
+
+#~ msgid "No version info in libGammu table: %s\n"
+#~ msgstr "Keine Versionsnummer in der libGammu-Tabelle: %s\n"
+
+#~ msgid "DataBase structures are from higher libGammu version"
+#~ msgstr "Datenbank wurde von einer neueren libGammu-Version erzeugt"
+
+#~ msgid "Please update this client application"
+#~ msgstr "Bitte aktualisieren Sie die Anwendung für den Datenbankzugriff"
+
+#~ msgid "DataBase structures are from older libGammu version"
+#~ msgstr "Datenbank wurde von einer älteren libGammu-Version erzeugt"
+
+#~ msgid "Please update DataBase, if you want to use this client application"
+#~ msgstr ""
+#~ "Bitte aktualisieren Sie die Datenbank für die Verwendung mit dieser "
+#~ "Anwendung"
+
+#, fuzzy
+#~ msgid "Conntected to Database: %s on %s"
+#~ msgstr "Fehler beim Verbinden mit der Datenbank: %s\n"
+
+#, fuzzy
+#~ msgid "Error deleting from database (%s): %s\n"
+#~ msgstr "Fehler beim Löschen aus der Datenbank (Init): %s\n"
+
+#, fuzzy
+#~ msgid "Error inserting into database (%s): %s\n"
+#~ msgstr "Fehler beim Einfügen in die Datenbank (Init): %s\n"
+
+#, fuzzy
+#~ msgid "Error reading from database (%s): %s\n"
+#~ msgstr "Fehler beim Lesen aus der Datenbank (SaveInbox): %s\n"
+
+#, fuzzy
+#~ msgid "Failed query: %s\n"
+#~ msgstr "Verzeichnis \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Error writing to database (%s): %s\n"
+#~ msgstr "Fehler beim Schreiben in die Datenbank (AddSent): %s\n"
+
+#~ msgid "Duplicated outgoing SMS ID\n"
+#~ msgstr "Doppelte ID für ausgehendes SMS\n"
+
+#~ msgid "What security code (\"%s\") ?\n"
+#~ msgstr "Welcher Sicherheitscode (\"%s\")?\n"
+
+#, fuzzy
+#~ msgid "Failed query: %d\n"
+#~ msgstr "Verzeichnis \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Error writing to database (%s): %s %s\n"
+#~ msgstr "Fehler beim Schreiben in die Datenbank (AddSent): %d %s\n"
+
+#, fuzzy
+#~ msgid "Error deleting from database (%s): %d %s\n"
+#~ msgstr "Fehler beim Löschen aus der Datenbank (Init): %d %s\n"
+
+#, fuzzy
+#~ msgid "Error inserting into database (%s): %d %s\n"
+#~ msgstr "Fehler beim Einfügen in die Datenbank (Init): %d %s\n"
+
+#, fuzzy
+#~ msgid "Error writing to database (%s): %d %s %s\n"
+#~ msgstr "Fehler beim Schreiben in die Datenbank (AddSent): %d %s\n"
+
+#, fuzzy
+#~ msgid "Error reading from database (%s): %s %s\n"
+#~ msgstr "Fehler beim Lesen aus der Datenbank (SaveInbox): %s %s\n"
+
+#~ msgid "Error writing to database (SaveInboxSMS): %d %s\n"
+#~ msgstr "Fehler beim Schreiben in die Datenbank (SaveInboxSMS): %d %s\n"
+
+#~ msgid "Error writing to database (SaveInbox): %d %s\n"
+#~ msgstr "Fehler beim Schreiben in die Datenbank (SaveInbox): %d %s\n"
+
+#~ msgid "Error writing to database (RefreshSendStatus): %d %s\n"
+#~ msgstr "Fehler beim Schreiben in die Datenbank (RefreshSendStatus): %d %s\n"
+
+#~ msgid "Error reading from database (FindOutbox): %s\n"
+#~ msgstr "Fehler beim Lesen aus der Datenbank (FindOutbox): %s\n"
+
+#~ msgid "Error deleting from database (MoveSMS): %d %s\n"
+#~ msgstr "Fehler beim Löschen aus der Datenbank (MoveSMS): %d %s\n"
+
+#~ msgid "Error reading from database (CreateOutbox): %s\n"
+#~ msgstr "Fehler beim Lesen aus der Datenbank (CreateOutbox): %s\n"
+
+#~ msgid "Error writing to database (CreateOutbox): %d %s %s\n"
+#~ msgstr "Fehler beim Schreiben in die Datenbank (CreateOutbox): %d %s %s\n"
+
+#~ msgid "Error writing to database (CreateOutbox): %d %s\n"
+#~ msgstr "Fehler beim Schreiben in die Datenbank (CreateOutbox): %d %s\n"
+
+#~ msgid "Error writing to database (SaveInboxSMS): %s\n"
+#~ msgstr "Fehler beim Schreiben in die Datenbank (SaveInboxSMS): %s\n"
+
+#~ msgid "Error writing to database (SaveInbox): %s\n"
+#~ msgstr "Fehler beim Schreiben in die Datenbank (SaveInbox): %s\n"
+
+#~ msgid "Error writing to database (RefreshSendStatus): %s\n"
+#~ msgstr "Fehler beim Schreiben in die Datenbank (RefreshSendStatus): %s\n"
+
+#~ msgid "Error deleting from database (MoveSMS): %s\n"
+#~ msgstr "Fehler beim Löschen aus der Datenbank (MoveSMS): %s\n"
+
+#~ msgid "Error writing to database (CreateOutbox): %s\n"
+#~ msgstr "Fehler beim Schreiben in die Datenbank (CreateOutbox): %s\n"
+
+#~ msgid "%c   Reading: %i percent"
+#~ msgstr "%c   Lese: %i Prozent"
+
+#~ msgid "%s (yes/no/ALL/ONLY/NONE) ? "
+#~ msgstr "%s (ja/nein/IMMER/EINMAL/NIE)? "
+
+#~ msgid "What format of file (\"%s\") ?\n"
+#~ msgstr "Welches Dateiformat (\"%s\")?\n"
+
+#~ msgid "UEM           : %s\n"
+#~ msgstr "UEM: %s\n"
+
+#~ msgid ""
+#~ "commtimeout=%i, sendtimeout=%i, receivefrequency=%i, resetfrequency=%i"
+#~ msgstr ""
+#~ "Zeitüberschreitung Computeranschluss=%i, Zeitüberschreitung Senden=%i, "
+#~ "Zeitüberschreitung Empfangen=%i, Zeitüberschreitung Reset=%i"
+
+#~ msgid "  File last changed  : %s\n"
+#~ msgstr "Datei zuletzt geändert: %s\n"
+
+#~ msgid "Stop GAMMU smsd (%i)"
+#~ msgstr "GAMMU smsd anhalten (%i)"
+
+#~ msgid ""
+#~ "[libGammu version %s built %s %s]\n"
+#~ "\n"
+#~ msgstr ""
+#~ "[libGammu Version %s erstellt %s %s]\n"
+#~ "\n"
+
+#~ msgid ", "
+#~ msgstr ","
+
+#~ msgid "."
+#~ msgstr "."
+
+#~ msgid "bad month!"
+#~ msgstr "Ungültiger Monat!"
+
+#~ msgid ""
+#~ "%cLocation %i                 \n"
+#~ "  "
+#~ msgstr ""
+#~ "%cSpeicherstelle %i                 \n"
+#~ "  "
+
+#~ msgid "%c%s%03i percent"
+#~ msgstr "%c%s%03i Prozent"
+
+#, fuzzy
+#~ msgid " (fax"
+#~ msgstr "Fax"
+
+#~ msgid "Network           : %s (%s"
+#~ msgstr "Netz              : %s (%s"
+
+#, fuzzy
+#~ msgid "deliveryreport = %s"
+#~ msgstr "Auslieferungsstatus : %s\n"
+
+#, fuzzy
+#~ msgid "phoneid = %s"
+#~ msgstr "Die Uhrzeit im Telefon ist %s\n"
+
+#~ msgid "SIM SMS status    : %i used, %i unread, %i locations\n"
+#~ msgstr "SIM-SMS-Status    : %i genutzt, %i ungelesen, %i Speicherplätze\n"
+
+#~ msgid "Phone SMS status  : %i used, %i unread, %i locations"
+#~ msgstr "Telefon-SMS-Status: %i genutzt, %i ungelesen, %i Speicherplätze"
+
+#~ msgid "6 hours"
+#~ msgstr "6 Stunden"
+
+#~ msgid "72 hours"
+#~ msgstr "72 Stunden"
+
+#~ msgid "1 week"
+#~ msgstr "1 Woche"
+
+#~ msgid "Note type    : "
+#~ msgstr "Notiztyp     : "
+
+#, fuzzy
+#~ msgid "20 seconds"
+#~ msgstr "20 Sekunden\n"
+
+#, fuzzy
+#~ msgid "1 minute"
+#~ msgstr "10 Minuten\n"
+
+#, fuzzy
+#~ msgid "2 minutes"
+#~ msgstr "5 Minuten\n"
+
+#, fuzzy
+#~ msgid "5 minutes"
+#~ msgstr "5 Minuten\n"
+
+#, fuzzy
+#~ msgid "10 minutes"
+#~ msgstr "10 Minuten\n"
+
+#, fuzzy
+#~ msgid "enumerate locations from 1"
+#~ msgstr "FEHLER: Nummeriere Speicherplätze von 1 an\n"
+
+#, fuzzy
+#~ msgid "More arguments required"
+#~ msgstr "Mehr Argumente benötigt\n"
+
+#, fuzzy
+#~ msgid "Used"
+#~ msgstr "Benutzer-UDH"
+
+#, fuzzy
+#~ msgid "Network level     : %i percent\n"
+#~ msgstr "Batteriestatus    : %i Prozent\n"
+
+#~ msgid "Battery level     : %i percent\n"
+#~ msgstr "Batteriestatus    : %i Prozent\n"
+
+#, fuzzy
+#~ msgid "Battery temp.     : %i C\n"
+#~ msgstr "Batteriestatus    : %i Prozent\n"
+
+#, fuzzy
+#~ msgid "Phone temp.       : %i C\n"
+#~ msgstr "Telefon      : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Battery voltage   : %i mV\n"
+#~ msgstr "Batteriestatus    : %i Prozent\n"
+
+#, fuzzy
+#~ msgid "Charge voltage    : %i mV\n"
+#~ msgstr "Ladestatus        : "
+
+#, fuzzy
+#~ msgid "ToDos             : Used %d, Free %d\n"
+#~ msgstr "Nutzer               : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Calendar          : Used %d, Free %d\n"
+#~ msgstr "Alter        : %d %s\n"
+
+#, fuzzy
+#~ msgid "Please numerate locations from 1"
+#~ msgstr "FEHLER: Nummeriere Speicherplätze von 1 an\n"
+
+#, fuzzy
+#~ msgid "Number of SMS: %i"
+#~ msgid_plural "Number of SMSes: %i"
+#~ msgstr[0] ""
+#~ "\n"
+#~ "Nummer der SMS: %i\n"
+#~ msgstr[1] ""
+#~ "\n"
+#~ "Nummer der SMS: %i\n"
+
+#, fuzzy
+#~ msgid "Remote number(s)"
+#~ msgstr "Referenz-Nummer  : %d\n"
+
+#, fuzzy
+#~ msgid "   Number"
+#~ msgstr "   Nummer     : %s\n"
+
+#, fuzzy
+#~ msgid " Name \"%s\","
+#~ msgstr " Nummer \"%s\""
+
+#~ msgid " Number \"%s\""
+#~ msgstr " Nummer \"%s\""
+
+#, fuzzy
+#~ msgid "unknown memory type (\"%s\")\n"
+#~ msgstr "Unbekannter Speichertyp: \"%s\"\n"
+
+#, fuzzy
+#~ msgid "unknown parameter \"%s\"\n"
+#~ msgstr "Unbekannter Parameter \"%s\""
+
+#~ msgid "Unknown parameter \"%c\"\n"
+#~ msgstr "Unbekannter Parameter \"%c\"\n"
+
+#, fuzzy
+#~ msgid "  Sender"
+#~ msgstr "Allgemein"
+
+#, fuzzy
+#~ msgid "  Message type       : %s\n"
+#~ msgstr "Telefon        : %s\n"
+
+#, fuzzy
+#~ msgid "  Date               : %s\n"
+#~ msgstr "Nutzer               : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "  Subject            : %s\n"
+#~ msgstr "Gesendet        : %s\n"
+
+#, fuzzy
+#~ msgid "  Delivery report"
+#~ msgstr "Auslieferungsstatus : %s\n"
+
+#, fuzzy
+#~ msgid "  Content type       : %s\n"
+#~ msgstr "Telefon      : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "    Content type     : %s\n"
+#~ msgstr "Notiztyp     : "
+
+#, fuzzy
+#~ msgid "      Name           : %s"
+#~ msgstr "Name              "
+
+#~ msgid "Ringtone ID           : "
+#~ msgstr "Klingelton ID            : "
+
+#, fuzzy
+#~ msgid ", phone"
+#~ msgstr ", Telefon\n"
+
+#, fuzzy
+#~ msgid "UNKNOWN"
+#~ msgstr "UNBEKANNT\n"
+
+#~ msgid "Message alert tone    : "
+#~ msgstr "SMS-Benachrichtigungston : "
+
+#~ msgid "Keypad tones          : "
+#~ msgstr "Tastentöne               : "
+
+#~ msgid "Screen saver          : "
+#~ msgstr "Bildschirmschoner        : "
+
+#~ msgid "Lights                : "
+#~ msgstr "Lichter                  : "
+
+#, fuzzy
+#~ msgid "24 hours\n"
+#~ msgstr "24 Stunden"
+
+#~ msgid "Picture Image\n"
+#~ msgstr "Bild\n"
+
+#~ msgid "unknown\n"
+#~ msgstr "unbekannt\n"
+
+#~ msgid "yes\n"
+#~ msgstr "ja\n"
+
+#~ msgid "no\n"
+#~ msgstr "nein\n"
+
+#~ msgid "Ringtone    : default\n"
+#~ msgstr "Klingelton  : Standard\n"
+
+#~ msgid "Bitmap      : enabled\n"
+#~ msgstr "Bitmap      : aktiviert\n"
+
+#~ msgid "Bitmap      : disabled\n"
+#~ msgstr "Bitmap      : deaktiviert\n"
+
+#, fuzzy
+#~ msgid "enumerate locations from 1\n"
+#~ msgstr "FEHLER: Nummeriere Speicherplätze von 1 an\n"
+
+#~ msgid "Error\n"
+#~ msgstr "Fehler\n"
+
+#~ msgid "Entry is empty\n"
+#~ msgstr "Der Eintrag ist leer\n"
+
+#~ msgid "Reminder (Date)\n"
+#~ msgstr "Erinnerung (Termin)\n"
+
+#~ msgid "Call\n"
+#~ msgstr "Anruf\n"
+
+#~ msgid "Meeting\n"
+#~ msgstr "Besprechung\n"
+
+#~ msgid "Birthday (Anniversary)\n"
+#~ msgstr "Geburtstag (Jahrestag)\n"
+
+#~ msgid "Memo (Miscellaneous)\n"
+#~ msgstr "Notiz (Verschiedenes)\n"
+
+#~ msgid "Travel\n"
+#~ msgstr "Reise\n"
+
+#~ msgid "Vacation\n"
+#~ msgstr "Urlaub\n"
+
+#~ msgid "Daily alarm\n"
+#~ msgstr "Täglicher Wecktermin\n"
+
+#~ msgid "Training/Athletism\n"
+#~ msgstr "Training/Athletik\n"
+
+#~ msgid "Training/Ball Games\n"
+#~ msgstr "Training/Ballspiele\n"
+
+#~ msgid "Training/Cycling\n"
+#~ msgstr "Training/Radfahren\n"
+
+#, fuzzy
+#~ msgid "Training/Budo\n"
+#~ msgstr "Training/Gymnastik\n"
+
+#~ msgid "Training/Dance\n"
+#~ msgstr "Training/Tanz\n"
+
+#~ msgid "Training/Extreme Sports\n"
+#~ msgstr "Training/Extremsportarten\n"
+
+#~ msgid "Training/Football\n"
+#~ msgstr "Training/Fußball\n"
+
+#, fuzzy
+#~ msgid "Training/Golf\n"
+#~ msgstr "Training/Gymnastik\n"
+
+#~ msgid "Training/Gym\n"
+#~ msgstr "Training/Gymnastik\n"
+
+#~ msgid "Training/Horse Races\n"
+#~ msgstr "Training/Pferderennen\n"
+
+#, fuzzy
+#~ msgid "Training/Hockey\n"
+#~ msgstr "Training/Tanz\n"
+
+#~ msgid "Training/Races\n"
+#~ msgstr "Training/Autorennen\n"
+
+#, fuzzy
+#~ msgid "Training/Rugby\n"
+#~ msgstr "Training/Gymnastik\n"
+
+#~ msgid "Training/Sailing\n"
+#~ msgstr "Training/Segeln\n"
+
+#~ msgid "Training/Street Games\n"
+#~ msgstr "Training/Straßenspiele\n"
+
+#~ msgid "Training/Swimming\n"
+#~ msgstr "Training/Schwimmen\n"
+
+#, fuzzy
+#~ msgid "Training/Tennis\n"
+#~ msgstr "Training/Reisen\n"
+
+#~ msgid "Training/Travels\n"
+#~ msgstr "Training/Reisen\n"
+
+#~ msgid "Training/Winter Games\n"
+#~ msgstr "Training/Wintersport\n"
+
+#~ msgid "UNKNOWN\n"
+#~ msgstr "UNBEKANNT\n"
+
+#~ msgid "Unknown\n"
+#~ msgstr "Unbekannt\n"
+
+#~ msgid "Caller group     : \"%d\"\n"
+#~ msgstr "Anrufergruppe    : \"%d\"\n"
+
+#, fuzzy
+#~ msgid "Home Number"
+#~ msgstr "Nummer zuhause    "
+
+#, fuzzy
+#~ msgid "Mobile Number"
+#~ msgstr "Handynummer       "
+
+#, fuzzy
+#~ msgid "Fax Number"
+#~ msgstr "   Nummer     : %s\n"
+
+#, fuzzy
+#~ msgid "  Home Number\n"
+#~ msgstr "Nummer zuhause    "
+
+#, fuzzy
+#~ msgid "  Mobile Number\n"
+#~ msgstr "Handynummer       "
+
+#, fuzzy
+#~ msgid "  Fax Number\n"
+#~ msgstr "   Nummer     : %s\n"
+
+#, fuzzy
+#~ msgid "  unknown\n"
+#~ msgstr "unbekannt\n"
+
+#~ msgid "Sent\n"
+#~ msgstr "Gesendet\n"
+
+#~ msgid "Read\n"
+#~ msgstr "Gelesen\n"
+
+#~ msgid "UnRead\n"
+#~ msgstr "Ungelesen\n"
+
+#~ msgid "UnSent\n"
+#~ msgstr "Nicht Gesendet\n"
+
+#~ msgid "Picture ID       : 0x%x\n"
+#~ msgstr "Bild-ID          : 0x%x\n"
+
+#~ msgid "Fax number      "
+#~ msgstr "Fax-Nummer        "
+
+#~ msgid "Text            "
+#~ msgstr "Text              "
+
+#, fuzzy
+#~ msgid "LUID            "
+#~ msgstr "Text              "
+
+#~ msgid "Name            "
+#~ msgstr "Name              "
+
+#~ msgid "City            "
+#~ msgstr "Stadt             "
+
+#~ msgid "State           "
+#~ msgstr "Bundesland        "
+
+#, fuzzy
+#~ msgid "Details         : "
+#~ msgstr "Text              "
+
+#, fuzzy
+#~ msgid "Coding           : "
+#~ msgstr "Stadt             "
+
+#, fuzzy
+#~ msgid "Status           : "
+#~ msgstr "Bundesland        "
+
+#, fuzzy
+#~ msgid "Format         : "
+#~ msgstr "Firma             "
+
+#, fuzzy
+#~ msgid "  Sender             : "
+#~ msgstr ""
+#~ "\n"
+#~ "Gesendet         : %s\n"
+
+#, fuzzy
+#~ msgid "  CC                 : "
+#~ msgstr "Lichter                  : "
+
+#~ msgid "Ringtone    : "
+#~ msgstr "Klingelton  : "
+
+#~ msgid "   Reading : "
+#~ msgstr "   Lese: "
+
+#~ msgid "   Reading: "
+#~ msgstr "   Lese: "
+
+#~ msgid "Model         : %s (%s)\n"
+#~ msgstr "Modell        : %s (%s)\n"
+
+#, fuzzy
+#~ msgid "Hardware      : %s\n"
+#~ msgstr "Privat       : %s\n"
+
+#, fuzzy
+#~ msgid "IMEI          : %s\n"
+#~ msgstr "Benutzer-ID      : %s\n"
+
+#, fuzzy
+#~ msgid "SIM IMSI      : %s\n"
+#~ msgstr "SMSC-Nummer     : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Text: \"%s\"\n"
+#~ msgstr "Datei \"%s\"\n"
+
+#~ msgid "Category         : \"%s\"\n"
+#~ msgstr "Kategorie        : \"%s\"\n"
+
+#~ msgid "Category         : \"%s\" (%i)\n"
+#~ msgstr "Kategorie        : \"%s\" (%i)\n"
+
+#~ msgid "Category         : %i\n"
+#~ msgstr "Kategorie        : %i\n"
+
+#~ msgid "Private          : %s\n"
+#~ msgstr "Privat           : %s\n"
+
+#~ msgid "Caller group     : \"%s\"\n"
+#~ msgstr "Anrufergruppe    : \"%s\"\n"
+
+#~ msgid "Ringtone         : \"%s\"\n"
+#~ msgstr "Klingelton       : \"%s\"\n"
+
+#~ msgid "Ringtone ID      : %i\n"
+#~ msgstr "Klingelton-ID    : %i\n"
+
+#~ msgid "User ID          : %s\n"
+#~ msgstr "Benutzer-ID      : %s\n"
+
+#, fuzzy
+#~ msgid "Status          : "
+#~ msgstr "Bundesland        "
+
+#~ msgid "Sent            : %s\n"
+#~ msgstr "Gesendet        : %s\n"
+
+#~ msgid "Saved            : %s\n"
+#~ msgstr "Gespeichert      : %s\n"
+
+#~ msgid "SMSC number      : \"%s\""
+#~ msgstr "SMSC-Nummer      : \"%s\""
+
+#~ msgid ""
+#~ "\n"
+#~ "Sent             : %s\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Gesendet         : %s\n"
+
+#~ msgid "Reference number : %d\n"
+#~ msgstr "Referenz-Nummer  : %d\n"
+
+#, fuzzy
+#~ msgid "Name             : \"%s\"\n"
+#~ msgstr "Gespeichert      : %s\n"
+
+#~ msgid "Class            : %i\n"
+#~ msgstr "Klasse           : %i\n"
+
+#, fuzzy
+#~ msgid ""
+#~ "Text: \"%s\"\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Name         : \"%s\"\n"
+#~ "\n"
+
+#~ msgid "Number         : \"%s\"\n"
+#~ msgstr "Nummer         : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Name    : \"%s\"\n"
+#~ msgstr "Name    : \"%{s}\"\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Address : \"%s\"\n"
+#~ "\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Adresse : \"%s\"\n"
+#~ "\n"
+
+#~ msgid "Ringtone    : %i\n"
+#~ msgstr "Klingelton  : %i\n"
+
+#, fuzzy
+#~ msgid "Text   : \"%s\"\n"
+#~ msgstr "Name    : \"%{s}\"\n"
+
+#, fuzzy
+#~ msgid "Sender : \"%s\"\n"
+#~ msgstr "Adresse : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Name   : \"%s\"\n"
+#~ msgstr "Name    : \"%{s}\"\n"
+
+#~ msgid "Time of backup  : %s\n"
+#~ msgstr "Zeit für Backup : %s\n"
+
+#~ msgid "Phone           : %s\n"
+#~ msgstr "Telefon         : %s\n"
+
+#, fuzzy
+#~ msgid "IMEI            : %s\n"
+#~ msgstr "Gesendet        : %s\n"
+
+#~ msgid "Phone          : %s\n"
+#~ msgstr "Telefon        : %s\n"
+
+#, fuzzy
+#~ msgid "IMEI           : %s\n"
+#~ msgstr "Gesendet        : %s\n"
+
+#~ msgid "Bearer              : SMS"
+#~ msgstr "Träger               : SMS"
+
+#~ msgid ""
+#~ "\n"
+#~ "Server number       : \"%s\"\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Servernummer         : \"%s\"\n"
+
+#~ msgid "Bearer              : Data (CSD)"
+#~ msgstr "Träger              : Data (CSD)"
+
+#~ msgid "IP address          : \"%s\"\n"
+#~ msgstr "IP-Adresse           : \"%s\"\n"
+
+#~ msgid "User name           : \"%s\"\n"
+#~ msgstr "Benutzername         : \"%s\"\n"
+
+#~ msgid "Password            : \"%s\"\n"
+#~ msgstr "Paßwort              : \"%s\"\n"
+
+#~ msgid "Bearer              : USSD"
+#~ msgstr "Träger               : USSD"
+
+#~ msgid ""
+#~ "\n"
+#~ "Service code        : \"%s\"\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Service-Code         : \"%s\"\n"
+
+#~ msgid "Bearer              : GPRS"
+#~ msgstr "Träger               : GPRS"
+
+#~ msgid ""
+#~ "\n"
+#~ "Login Type          : Manual\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Login-Typ            : Manuell\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Login Type          : Automatic\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Login-Typ            : Automatisch\n"
+
+#~ msgid "Access point        : \"%s\"\n"
+#~ msgstr "Zugangsknoten        : \"%s\"\n"
+
+#~ msgid "User                : \"%s\"\n"
+#~ msgstr "Nutzer               : \"%s\"\n"
+
+#~ msgid "Server              : \"%s\"\n"
+#~ msgstr "Server               : \"%s\"\n"
+
+#~ msgid "Homepage            : \"%s\"\n"
+#~ msgstr "Homepage             : \"%s\"\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "Homepage            : \"%s\"\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Homepage             : \"%s\"\n"
+
+#~ msgid "Location: %i\n"
+#~ msgstr "Speicherplatz: %i\n"
+
+#~ msgid ""
+#~ "Name    : \"%s\"\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Name         : \"%s\"\n"
+#~ "\n"
+
+#~ msgid "Location  : %i\n"
+#~ msgstr "Speicherplatz: %i\n"
+
+#~ msgid "Location     : %i\n"
+#~ msgstr "Speicherplatz: %i\n"
+
+#~ msgid "DueTime      : %s\n"
+#~ msgstr "Frist        : %s\n"
+
+#, fuzzy
+#~ msgid "Alarm        : %s\n"
+#~ msgstr "Alter        : %d %s\n"
+
+#~ msgid "Silent alarm : %s\n"
+#~ msgstr "Stiller Alarm: %s\n"
+
+#, fuzzy
+#~ msgid "Text         : \"%s\"\n"
+#~ msgstr "Nummer         : \"%s\"\n"
+
+#~ msgid "Private      : %s\n"
+#~ msgstr "Privat       : %s\n"
+
+#~ msgid "Category     : \"%s\" (%i)\n"
+#~ msgstr "Kategorie    : \"%s\" (%i)\n"
+
+#~ msgid "Contact ID   : \"%s\" (%d)\n"
+#~ msgstr "Kontakt-ID   : \"%s\" (%d)\n"
+
+#~ msgid "Contact ID   : %d\n"
+#~ msgstr "Kontakt-ID   : %d\n"
+
+#~ msgid "Contact   : %d\n"
+#~ msgstr "Kontakt   : %d\n"
+
+#~ msgid "Phone        : \"%s\"\n"
+#~ msgstr "Telefon      : \"%s\"\n"
+
+#, fuzzy
+#~ msgid "Description  : \"%s\"\n"
+#~ msgstr "Speicherplatz: \"%s\"\n"
+
+#~ msgid "Location     : \"%s\"\n"
+#~ msgstr "Speicherplatz: \"%s\"\n"
+
+#, fuzzy
+#~ msgid "LUID         : \"%s\"\n"
+#~ msgstr "Benutzer-ID      : %s\n"
+
+#~ msgid "   Number     : %s\n"
+#~ msgstr "   Nummer     : %s\n"
+
+#~ msgid "   Manufacturer  : %s\n"
+#~ msgstr "   Hersteller : %s\n"
+
+#~ msgid "   Model         : %s (%s)\n"
+#~ msgstr "   Modell     : %s (%s)\n"
+
+#, fuzzy
+#~ msgid "Start        : %s\n"
+#~ msgstr "Gesendet        : %s\n"
+
+#, fuzzy
+#~ msgid "Stop         : %s\n"
+#~ msgstr "Gesendet        : %s\n"
+
+#~ msgid "Silent alarm : forever on each %i. day of "
+#~ msgstr "Stiller Alarm: immer jeden %i. Tag des "
+
+#~ msgid "Repeating    : "
+#~ msgstr "Wiederholen  : "
+
+#, fuzzy
+#~ msgid "Age          : "
+#~ msgstr "Alter        : %d %s\n"
+
+#~ msgid "Location     : %d\n"
+#~ msgstr "Speicherplatz: %d\n"
+
+#, fuzzy
+#~ msgid "LENGTH=%i NOTES, BUT YOU WILL ENTER ONLY FIRST 50 TONES."
+#~ msgstr ""
+#~ "WARNUNG: LÄNGE=%i NOTEN, ABER ES WERDEN NUR DIE ERSTEN 50 TÖNE EINGEGEBEN."
+
+#~ msgid ""
+#~ "\n"
+#~ "Free memory: %i, total memory: %i\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Freier Speicher: %i, Speicher gesamt: %i\n"
+
+#, fuzzy
+#~ msgid "ERROR: enumerate locations from 1"
+#~ msgstr "FEHLER: Nummeriere Speicherplätze von 1 an\n"
+
+#~ msgid "ERROR: unknown parameter \"%s\"\n"
+#~ msgstr "FEHLER: Unbekannter Parameter \"%s\"\n"
+
+#~ msgid "ERROR: enumerate locations from 1\n"
+#~ msgstr "FEHLER: Nummeriere Speicherplätze von 1 an\n"
+
+#~ msgid ""
+#~ "Entry is empty\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Eintrag ist leer\n"
+#~ "\n"
+
+#~ msgid "Entry number %i is empty\n"
+#~ msgstr "Eintrag Nummer %i ist frei\n"
+
+#, fuzzy
+#~ msgid "Entry number %i\n"
+#~ msgstr "Eintrag Nummer %i ist frei\n"
+
+#~ msgid ""
+#~ "Entry number %i\n"
+#~ "Station name : \"%s\"\n"
+#~ "Frequency    : %.1f MHz\n"
+#~ msgstr ""
+#~ "Eintrag Nummer %i\n"
+#~ "Stationsname : \"%s\"\n"
+#~ "Frequenz     : %.1f MHz\n"
+
+#~ msgid "Personal\n"
+#~ msgstr "Persönlich\n"
+
+#~ msgid "Network  Name\n"
+#~ msgstr "Netz     Name\n"
+
+#~ msgid "Press Ctrl+C to break...\n"
+#~ msgstr "Strg+C drücken, um zu unterbrechen...\n"
+
+#, fuzzy
+#~ msgid "%s\n"
+#~ msgstr "Datei \"%s\"\n"
+
+#, fuzzy
+#~ msgid "each week"
+#~ msgstr "1 Woche"
+
+#, fuzzy
+#~ msgid " %02i:%02i:%02i\n"
+#~ msgstr "Anruflänge       : %02i:%02i:%02i\n"
+
+#, fuzzy
+#~ msgid "Help: %s\n"
+#~ msgstr "Datum: %s\n"
+
+#, fuzzy
+#~ msgid " %s"
+#~ msgstr "bis %s"
+
+#, fuzzy
+#~ msgid "%i. \"%s\""
+#~ msgstr "Datei \"%s\"\n"
+
+#, fuzzy
+#~ msgid " \"%s\""
+#~ msgstr "Datei \"%s\"\n"
+
+#~ msgid "[libGammu version %s built %s %s"
+#~ msgstr "[libGammu Version %s erstellt %s %s"
+
+#, fuzzy
+#~ msgid " in %s"
+#~ msgstr "seit %s"
+
+#, fuzzy
+#~ msgid "GSM_SMSMessage  - %i\n"
+#~ msgstr "SMS-Nachricht\n"
+
+#, fuzzy
+#~ msgid "GSM_SMSC        - %i\n"
+#~ msgstr "Kategorie        : %i\n"
+
+#, fuzzy
+#~ msgid "bool            - %i\n"
+#~ msgstr "Klasse           : %i\n"
+
+#, fuzzy
+#~ msgid "GSM_DateTime    - %i\n"
+#~ msgstr "Frist        : %s\n"
+
+#, fuzzy
+#~ msgid "int             - %i\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Gesendet         : %s\n"
+
+#, fuzzy
+#~ msgid "GSM_NetworkInfo - %i\n"
+#~ msgstr ""
+#~ "Netz für %s:\n"
+#~ "\n"
+
+#, fuzzy
+#~ msgid ": %s"
+#~ msgstr "Datum: %s\n"
+
+#, fuzzy
+#~ msgid "from %i to %i"
+#~ msgstr ", Teil %i von %i"

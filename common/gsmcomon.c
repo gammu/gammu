@@ -52,14 +52,13 @@ void GSM_InitLocales(const char *path) {
 	setlocale(LC_ALL, "");
 	if (path == NULL || strlen(path) == 0) {
 #if defined(LOCALE_PATH)
-		bindtextdomain("gammu", LOCALE_PATH);
+		bindtextdomain("libgammu", LOCALE_PATH);
 #else
-		bindtextdomain("gammu", ".");
+		bindtextdomain("libgammu", ".");
 #endif
 	} else {
-		bindtextdomain("gammu", path);
+		bindtextdomain("libgammu", path);
 	}
-	textdomain("gammu");
 }
 #else
 void GSM_InitLocales(const char *path UNUSED) {

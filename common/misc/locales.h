@@ -16,7 +16,7 @@
 
 #ifdef GETTEXTLIBS_FOUND
 #include <libintl.h>
-#define _(x) gettext(x)
+#define _(x) dgettext("libgammu", x)
 #else
 #define _(x) (x)
 #define gettext(x) (x)
