@@ -7,24 +7,10 @@ project(Gammu-Locales C)
 # We need gettext
 macro_optional_find_package(Gettext)
 
-# List of locales
-set(LOCALES
-    cs
-    de
-    es
-    id
-    it
-    pl
-    ru
-    )
 
-# Locales files
-set(LOCALEFILES)
-foreach(LOCALE ${LOCALES})
-    list(APPEND LOCALEFILES "${LOCALE}/gammu.po")
-endforeach(LOCALE ${LOCALES})
-
-# Generate mo files
 if(GETTEXT_FOUND AND GETTEXTLIBS_FOUND)
+    # List of locales
+    file(GLOB LOCALEFILES "*/gammu.po")
+    # Generate mo files
     GETTEXT_CREATE_TRANSLATIONS("gammu.pot" ALL ${LOCALEFILES})
 endif(GETTEXT_FOUND AND GETTEXTLIBS_FOUND)
