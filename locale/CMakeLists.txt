@@ -11,6 +11,8 @@ macro_optional_find_package(Gettext)
 if(GETTEXT_FOUND AND GETTEXTLIBS_FOUND)
     # List of locales
     file(GLOB LOCALEFILES "*/gammu.po")
+    file(GLOB LIBLOCALEFILES "*/libgammu.po")
     # Generate mo files
     GETTEXT_CREATE_TRANSLATIONS("gammu.pot" ALL ${LOCALEFILES})
+    GETTEXT_CREATE_TRANSLATIONS("libgammu.pot" ALL ${LIBLOCALEFILES})
 endif(GETTEXT_FOUND AND GETTEXTLIBS_FOUND)
