@@ -10,7 +10,7 @@
 #  include <unistd.h>
 #endif
 
-#include "../common/misc/locales.h"
+#include "../helper/locales.h"
 
 #include "common.h"
 #include "message.h"

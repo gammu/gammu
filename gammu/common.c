@@ -3,7 +3,7 @@
 #include <signal.h>
 #include <stdlib.h>
 
-#include "../common/misc/locales.h"
+#include "../helper/locales.h"
 
 #include "common.h"
 #include "../helper/formats.h"

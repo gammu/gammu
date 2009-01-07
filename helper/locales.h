@@ -16,10 +16,10 @@
 
 #ifdef GETTEXTLIBS_FOUND
 #include <libintl.h>
-#define _(x) dgettext("libgammu", x)
+#define _(x) gettext(x)
 #else
 #define _(x) (x)
-#define dgettext(d, x) (x)
+#define gettext(x) (x)
 #define ngettext(singular, plural, number) (number == 1 ? singular : plural)
 #endif
 

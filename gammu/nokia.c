@@ -1,7 +1,7 @@
 #define _GNU_SOURCE /* For strcasestr */
 #include <string.h>
 
-#include "../common/misc/locales.h"
+#include "../helper/locales.h"
 #include "../common/misc/coding/coding.h"
 
 #include <gammu.h>
