@@ -171,9 +171,9 @@ cesta k socketu, například localhost:/path/to/socket.
 .TP 
 \fBDatabase\fP
 
-Name of database to use. Please note that you should create tables in this
-database before using gammu\-smsd. SQL files for creating needed tables are
-included in documentation.
+Jméno databáze, která se má použít. Před spuštěním gammu\-smsd musí být
+vytvořeny všechny potřebné tabulky. Pro tento účel můžete použít SQL souboru
+obsažené v dokumentaci.
 
 .TP 
 \fBSkipSMSCNumber\fP
@@ -186,8 +186,7 @@ sent SMS.
 .SS "Parametry pro službu používající soubory"
 
 The FILES backend accepts following configuration options. Please note that
-all path should contain trailing path separator (/ or \e, depending on your
-platform):
+all path should contain trailing path separator (na UnixovÃ½ systÃ©mech /):
 
 
 .TP 
@@ -237,9 +236,9 @@ Výchozí je 'auto'.
 
 .SH PŘÍKLAD
 
-There is more complete example available in Gammu documentation. Please note
-that for simplicity following examples do not include [gammu] section, you
-can look into gammurc(5) for some examples how it can look like.
+Kompletnější ukázka je dostupná v dokumentaci Gammu. Pro jednoduchost
+následující příklady neobsahují sekci [gammu], na její příkladu se můžete
+podívat do gammurc(5).
 
 Konfigurační soubor pro SMSD používající službu FILES by mohl vypadat takto:
 
