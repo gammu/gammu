@@ -34,7 +34,7 @@ MACRO(GETTEXT_CREATE_TRANSLATIONS _potFile _firstPoFile)
       GET_FILENAME_COMPONENT(_absFile ${_currentPoFile} ABSOLUTE)
       GET_FILENAME_COMPONENT(_abs_PATH ${_absFile} PATH)
       GET_FILENAME_COMPONENT(_lang ${_abs_PATH} NAME_WE)
-      SET(_gmoFilePath "${CMAKE_CURRENT_BINARY_DIR}/${_lang}")
+      SET(_gmoFilePath "${CMAKE_CURRENT_BINARY_DIR}/${_lang}/LC_MESSAGES")
       SET(_gmoFile "${_gmoFilePath}/${_potBasename}.mo")
 
       file(MAKE_DIRECTORY "${_gmoFilePath}")
