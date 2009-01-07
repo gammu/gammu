@@ -49,6 +49,8 @@ ChangeLog
 [+] * Improved logging differentiation of SMSD log messages.
 [-] * Properly remove messages from queue when sending fails (bug #778).
 [-] * Use own test handler instead of asserts.
+[+] * Separate gammu and libgammu messages, libgammu no longer sets
+      textdomain.
     
 20081219 - 1.22.1
 

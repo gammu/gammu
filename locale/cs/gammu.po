@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-06 15:17+0100\n"
+"POT-Creation-Date: 2009-01-07 17:04+0100\n"
 "PO-Revision-Date: 2008-11-18 15:24+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -18,379 +18,14 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 "X-Generator: Pootle 1.1.0\n"
 
-#: common/gsmcomon.c:92
-msgid "No error."
-msgstr "Žadná chyba."
-
-#: common/gsmcomon.c:93
-msgid "Error opening device. Unknown/busy or no permissions."
-msgstr "Chyba při otevírání zařízení. Přístup odmítnut."
-
-#: common/gsmcomon.c:94
-msgid "Error opening device, it is locked."
-msgstr "Chyba při otevírání zařízení, je zamčené."
-
-#: common/gsmcomon.c:95
-msgid "Error opening device, it doesn't exist."
-msgstr "Chyba při otevírání zařízení, neexistuje."
-
-#: common/gsmcomon.c:96
-msgid "Error opening device, it is already opened by other application."
-msgstr "Chyba při otevírání zařízení, je již používáno."
-
-#: common/gsmcomon.c:97
-msgid "Error opening device, you don't have permissions."
-msgstr "Chyba při otevírání zařízení, přístup odmítnut."
-
-#: common/gsmcomon.c:98
-msgid "Error opening device. No required driver in operating system."
-msgstr "Chyba při otevírání zařízení. Chybí ovladač v operačním systému."
-
-#: common/gsmcomon.c:99
-msgid "Error opening device. Some hardware not connected/wrong configured."
-msgstr ""
-"Chyba při otevírání zařízení. Hardware může být špatně připojen nebo "
-"nakonfigurován."
-
-#: common/gsmcomon.c:100
-msgid "Error setting device DTR or RTS."
-msgstr "Chyba při nastavování DTR nebo RTS."
-
-#: common/gsmcomon.c:101
-msgid "Error setting device speed. Maybe speed not supported."
-msgstr ""
-"Chyba při nastavování rychlosti zařízení. Rychlost pravděpodobně není "
-"podporována."
-
-#: common/gsmcomon.c:102
-msgid "Error writing device."
-msgstr "Chyba při zápisu."
-
-#: common/gsmcomon.c:103
-msgid "Error during reading device."
-msgstr "Chyba při čtení."
-
-#: common/gsmcomon.c:104
-msgid "Can't set parity on device."
-msgstr "Nepodařilo se nastavit paritu na zařízení."
-
-#: common/gsmcomon.c:105
-msgid "No response in specified timeout. Probably phone not connected."
-msgstr "Žadná odpověď v očekaváné době. Telefon pravděpodobně není připojen."
-
-#: common/gsmcomon.c:106
-msgid ""
-"Frame not requested right now. See <http://cihar.com/gammu/report> for "
-"information how to report it."
-msgstr ""
-"Tato odpověď od telefonu nebyla očekávána. Podívejte se na stránku <http://"
-"cihar.com/gammu/report> pro informace jak tuto událost nahlásit."
-
-#: common/gsmcomon.c:107
-msgid ""
-"Unknown response from phone. See <http://cihar.com/gammu/report> for "
-"information how to report it."
-msgstr ""
-"Neznámá odpověď od telefonu. Podívejte se na stránku <http://cihar.com/gammu/"
-"report> pro informace jak tuto událost nahlásit."
-
-#: common/gsmcomon.c:108
-msgid ""
-"Unknown frame. See <http://cihar.com/gammu/report> for information how to "
-"report it."
-msgstr ""
-"Neznámý rámec. Podívejte se na stránku <http://cihar.com/gammu/report> pro "
-"informace jak tuto událost nahlásit."
-
-#: common/gsmcomon.c:109
-msgid "Unknown connection type string. Check config file."
-msgstr "Zadán neznámý typ připojení. Zkontrolujte konfigurační soubor."
-
-#: common/gsmcomon.c:110
-msgid "Unknown model type string. Check config file."
-msgstr "Zadán neznámý model telefonu. Zkontrolujte konfigurační soubor."
-
-#: common/gsmcomon.c:111
-msgid ""
-"Some functions not available for your system (disabled in config or not "
-"written)."
-msgstr ""
-"Některé funkce nejsou dostupné pro váš systém (vypnuté při kompilaci nebo "
-"nejsou implementovány)."
-
-#: common/gsmcomon.c:112
-msgid "Function not supported by phone."
-msgstr "Funkce není podporována telefonem."
-
-#: common/gsmcomon.c:113 gammu/memory.c:109 gammu/misc.c:1696
-#: gammu/misc.c:2049
-msgid "Entry is empty"
-msgstr "Záznam je prázdný"
-
-#: common/gsmcomon.c:114
-msgid "Security error. Maybe no PIN?"
-msgstr "Bezpečnostní chyba. Možná nebyl zadán PIN?"
-
-#: common/gsmcomon.c:115
-msgid "Invalid location. Maybe too high?"
-msgstr "Chybná pozice. Možná příliš vysoká?"
-
-#: common/gsmcomon.c:116
-msgid "Function not implemented. Help required."
-msgstr "Funkce není implementována. Pomoc s implementací je vítána."
-
-#: common/gsmcomon.c:117
-msgid "Memory full."
-msgstr "Paměť je plná."
-
-#: common/gsmcomon.c:118
-msgid "Unknown error."
-msgstr "Neznámá chyba."
-
-#: common/gsmcomon.c:119
-msgid "Can't open specified file. Read only?"
-msgstr "Soubor nelze otevřít. Není jen pro čtení?"
-
-#: common/gsmcomon.c:120
-msgid "More memory required..."
-msgstr "Je potřeba více paměti..."
-
-#: common/gsmcomon.c:121
-msgid "Permission to file/device required..."
-msgstr "Přístup k souboru nebo zařízení odmítnut..."
-
-#: common/gsmcomon.c:122
-msgid "Empty SMSC number. Set in phone or use -smscnumber."
-msgstr "Prázdné číslo SMSC. Nastavte ho v telefonu nebo použijte -smscnumber."
-
-#: common/gsmcomon.c:123
-msgid "You're inside phone menu (maybe editing?). Leave it and try again."
-msgstr "Jste v menu telefonu (upravujete záznam?). Opusťte ho a zkuste znovu."
-
-#: common/gsmcomon.c:124
-msgid "Phone is not connected."
-msgstr "Telefon není připojen."
-
-#: common/gsmcomon.c:125
-msgid "Function is during writing. If want help, please contact with authors."
-msgstr "Funkce je rozepsána. Pokud chcete pomoci, kontaktuje autory."
-
-#: common/gsmcomon.c:126
-msgid "Phone is disabled and connected to charger."
-msgstr "Telefon je vypnutý a připojený k nabíječce."
-
-#: common/gsmcomon.c:127
-msgid "File format not supported by Gammu."
-msgstr "Gammu tento formát nepodporuje."
-
-#: common/gsmcomon.c:128
-msgid ""
-"Nobody is perfect, some bug appeared in protocol implementation. Please "
-"contact authors."
-msgstr ""
-"Nikdo není dokonalý, ani Gammu a nastala chyba v implementaci protokolu. "
-"Prosím kontaktujte autory."
-
-#: common/gsmcomon.c:129
-msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
-msgstr "Přenos zrušen telefonem, možná jste zadali zrušení přenosu v telefonu."
-
-#: common/gsmcomon.c:130
-msgid "Phone module need to send another answer frame."
-msgstr "Ovladač telefonu potřebuje odeslat ještě jeden rámec."
-
-#: common/gsmcomon.c:131
-msgid "Current connection type doesn't support called function."
-msgstr "Použité připojení nepodporuje požadovanou funkci."
-
-#: common/gsmcomon.c:132
-msgid "CRC error."
-msgstr "Chyba CRC."
-
-#: common/gsmcomon.c:133
-msgid "Invalid date or time specified."
-msgstr "Zadáno chybné datum nebo čas."
-
-#: common/gsmcomon.c:134
-msgid "Phone memory error, maybe it is read only."
-msgstr "Chyba při přístupu do paměti telefonu, možná je jen pro čtení."
-
-#: common/gsmcomon.c:135
-msgid "Invalid data given to phone."
-msgstr "Zadána chybná data."
-
-#: common/gsmcomon.c:136
-msgid "File with specified name already exist."
-msgstr "Soubor se zadaným jménem již existuje."
-
-#: common/gsmcomon.c:137
-msgid "File with specified name doesn't exist."
-msgstr "Soubor se zadaným jménem neexistuje."
-
-#: common/gsmcomon.c:138
-msgid "You have to give folder name and not file name."
-msgstr "Musíte zadat jméno složky, ne souboru."
-
-#: common/gsmcomon.c:139
-msgid "You have to give file name and not folder name."
-msgstr "Musíte zadat jméno souboru, ne složky."
-
-#: common/gsmcomon.c:140
-msgid "Can not access SIM card."
-msgstr "Nelze přistoupit na SIM kartu."
-
-#: common/gsmcomon.c:141
-msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
-msgstr ""
-"Špatný verze programu GNAPPLET v telefonu. Prosím použijte verzi obsaženou v "
-"Gammu."
-
-#: common/gsmcomon.c:142
-msgid "Only part of folder has been listed."
-msgstr "Byla vypsána jen část složky."
-
-#: common/gsmcomon.c:143
-msgid "Folder must be empty."
-msgstr "Složka musí být prázdná."
-
-#: common/gsmcomon.c:144
-msgid "Data were converted."
-msgstr "Data byla převedena."
-
-#: common/gsmcomon.c:145
-msgid "Gammu is not configured."
-msgstr "Gammu není nastaveno."
-
-#: common/gsmcomon.c:146
-msgid "Wrong folder used."
-msgstr "Byla použita chybná složka."
-
-#: common/gsmcomon.c:147
-msgid "Internal phone error."
-msgstr "Interní chyba telefonu."
-
-#: common/gsmcomon.c:148
-msgid "Error writing file to disk."
-msgstr "Chyba při zápisu souboru na disk."
-
-#: common/gsmcomon.c:149
-msgid "No such section exists."
-msgstr "Požadovaná sekce neexistuje."
-
-#: common/gsmcomon.c:150
-msgid "Using default values."
-msgstr "Používám výchozí hodnoty."
-
-#: common/gsmcomon.c:151
-msgid "Corrupted data returned by phone."
-msgstr "Telefon vrátil poškozená data."
-
-#: common/gsmcomon.c:152
-msgid "Bad feature string in configuration."
-msgstr "Chybný název vlastnosti v konfiguraci."
-
-#: common/gsmcomon.c:153
-msgid "Desired functionality has been disabled on compile time."
-msgstr "Požadovaná funkce byla vypnuta při kompilaci."
-
-#: common/gsmcomon.c:154
-msgid "Bluetooth configuration requires channel option."
-msgstr ""
-
-#: common/gsmcomon.c:187
-msgid "Unknown error description."
-msgstr "Neznámý popis chyby."
-
-#: common/phone/nokia/dct3/n6110.c:1955 gammu/misc.c:1898
-msgid "Personal"
-msgstr "Osobní"
-
-#: common/phone/nokia/dct3/n6110.c:1957 common/phone/nokia/nfunc.c:1105
-msgid "Car"
-msgstr "Auto"
-
-#: common/phone/nokia/dct3/n6110.c:1959 common/phone/nokia/nfunc.c:1107
-msgid "Headset"
-msgstr "Sluchátka"
-
-#: common/phone/nokia/dct3/n6110.c:1965 common/phone/nokia/nfunc.c:1095
-msgid "General"
-msgstr "Obecné"
-
-#: common/phone/nokia/dct3/n6110.c:1967 common/phone/nokia/nfunc.c:1097
-msgid "Silent"
-msgstr "Tiché"
-
-#: common/phone/nokia/dct3/n6110.c:1969
-msgid "Discreet"
-msgstr "Diskritní"
-
-#: common/phone/nokia/dct3/n6110.c:1971
-msgid "Loud"
-msgstr "Hlasité"
-
-#: common/phone/nokia/dct3/n6110.c:1973
-msgid "My style"
-msgstr "Můj styl"
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:533 gammu/message.c:773
-msgid "SIM"
-msgstr "SIM"
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:534 common/phone/pfunc.c:40
-msgid "Inbox"
-msgstr "Příchozí"
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:535
-msgid "Sent items"
-msgstr "Odeslané zprávy"
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:536
-msgid "Saved items"
-msgstr "Uložené zprávy"
-
-#: common/phone/nokia/nfunc.c:929
-msgid "Family"
-msgstr "Rodina"
-
-#: common/phone/nokia/nfunc.c:931
-msgid "VIP"
-msgstr "VIP"
-
-#: common/phone/nokia/nfunc.c:933
-msgid "Friends"
-msgstr "Přatelé"
-
-#: common/phone/nokia/nfunc.c:935
-msgid "Colleagues"
-msgstr "Kolegové"
-
-#: common/phone/nokia/nfunc.c:937
-msgid "Other"
-msgstr "Ostatní"
-
-#: common/phone/nokia/nfunc.c:1099 gammu/calendar.c:44 gammu/calendar.c:693
-msgid "Meeting"
-msgstr "Schůzka"
-
-#: common/phone/nokia/nfunc.c:1101
-msgid "Outdoor"
-msgstr "Venkovní"
-
-#: common/phone/nokia/nfunc.c:1103 gammu/message.c:175
-#, c-format
-msgid "Pager"
-msgstr "Pager"
-
-#: common/phone/pfunc.c:41
-msgid "Outbox"
-msgstr "Odchozí"
-
 #: gammu/backup.c:31 gammu/backup.c:50 gammu/backup.c:68 gammu/backup.c:87
+#: helper/message-cmdline.c:253 helper/message-cmdline.c:276
+#: helper/message-cmdline.c:319 helper/message-cmdline.c:355
+#: helper/message-cmdline.c:377
 msgid "Where is backup filename and location?"
 msgstr "Kde je jméno souboru zálohy a umístění?"
 
-#: gammu/backup.c:42
+#: gammu/backup.c:42 helper/message-cmdline.c:366
 msgid "Calendar note not found in file"
 msgstr "V souboru nebyl nalezen žádný záznam kalendáře"
 
@@ -402,7 +37,7 @@ msgstr "V souboru nebyla nalezena žádná záložka pro WAP"
 msgid "Note not found in file"
 msgstr "V souboru nebyla nalezena žádná poznámka"
 
-#: gammu/backup.c:98
+#: gammu/backup.c:98 helper/message-cmdline.c:388
 msgid "ToDo note not found in file"
 msgstr "V souboru nebyl nalezen žádný úkol"
 
@@ -410,7 +45,8 @@ msgstr "V souboru nebyl nalezen žádný úkol"
 msgid "Where is backup filename and location and memory type?"
 msgstr "Kde je jméno souboru zálohy, umístění a typ paměti?"
 
-#: gammu/backup.c:118 gammu/backup.c:128
+#: gammu/backup.c:118 gammu/backup.c:128 helper/message-cmdline.c:411
+#: helper/message-cmdline.c:421
 msgid "Phonebook entry not found in file"
 msgstr "V souboru nebyl nalezen žádný kontakt"
 
@@ -428,7 +64,7 @@ msgstr "Neznámý formát zálohy: \"%s\"\n"
 msgid "Error while opening file for writing!\n"
 msgstr "Chyba při otevírání souboru pro zápis!\n"
 
-#: gammu/backup.c:155 gammu/files.c:439
+#: gammu/backup.c:155 gammu/files.c:439 helper/message-cmdline.c:951
 msgid "Error while writing file!\n"
 msgstr "Chyba při zápisu do souboru!\n"
 
@@ -869,6 +505,10 @@ msgstr ""
 msgid "Call"
 msgstr "Hovor"
 
+#: gammu/calendar.c:44 gammu/calendar.c:693
+msgid "Meeting"
+msgstr "Schůzka"
+
 #: gammu/calendar.c:47 gammu/calendar.c:696
 msgid "Birthday (Anniversary)"
 msgstr "Narozeniny (výročí)"
@@ -981,7 +621,7 @@ msgstr "Začátek"
 msgid "Stop"
 msgstr "Konec"
 
-#: gammu/calendar.c:155 gammu/calendar.c:823
+#: gammu/calendar.c:155 gammu/calendar.c:823 helper/memory-display.c:35
 msgid "Last modified"
 msgstr "Poslední změna"
 
@@ -1000,6 +640,7 @@ msgstr "Tiché upozornění"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:828
 #: gammu/calendar.c:1044 gammu/message.c:172 gammu/misc.c:944
+#: helper/memory-display.c:113 helper/message-display.c:415
 #, c-format
 msgid "Text"
 msgstr "Text"
@@ -1008,7 +649,7 @@ msgstr "Text"
 msgid "Description"
 msgstr "Popis"
 
-#: gammu/calendar.c:212 gammu/calendar.c:892
+#: gammu/calendar.c:212 gammu/calendar.c:892 helper/memory-display.c:119
 msgid "LUID"
 msgstr "LUID"
 
@@ -1019,7 +660,7 @@ msgstr "LUID"
 msgid "Location"
 msgstr "Pozice"
 
-#: gammu/calendar.c:227 gammu/calendar.c:833
+#: gammu/calendar.c:227 gammu/calendar.c:833 helper/memory-display.c:56
 msgid "Private"
 msgstr "Soukromý"
 
@@ -1277,7 +918,8 @@ msgstr "Začátek"
 msgid "Completed"
 msgstr "Dokončený"
 
-#: gammu/calendar.c:843 gammu/calendar.c:848
+#: gammu/calendar.c:843 gammu/calendar.c:848 helper/memory-display.c:39
+#: helper/memory-display.c:49 helper/memory-display.c:51
 msgid "Category"
 msgstr "Kategorie"
 
@@ -1743,15 +1385,15 @@ msgstr ""
 msgid "%i phone number types\n"
 msgstr ""
 
-#: gammu/depend/nokia/dct4.c:1400
+#: gammu/depend/nokia/dct4.c:1400 helper/memory-display.c:110
 msgid "Home number"
 msgstr "Číslo domů"
 
-#: gammu/depend/nokia/dct4.c:1401
+#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:107
 msgid "Mobile number"
 msgstr "Číslo na mobil"
 
-#: gammu/depend/nokia/dct4.c:1402
+#: gammu/depend/nokia/dct4.c:1402 helper/memory-display.c:109
 msgid "Fax number"
 msgstr "Faxové číslo"
 
@@ -1901,6 +1543,7 @@ msgid "What file type (\"%s\") ?\n"
 msgstr ""
 
 #: gammu/files.c:731 gammu/misc.c:1146 gammu/nokia.c:929
+#: helper/message-cmdline.c:1135
 msgid "Parameter missing!"
 msgstr "Chybí parametr!"
 
@@ -1924,12 +1567,13 @@ msgstr "Sítě pro %s:"
 msgid "Unknown country name: %s."
 msgstr "Neznámé jméno země: %s."
 
-#: gammu/gammu.c:115 gammu/gammu.c:752 gammu/misc.c:45
+#: gammu/gammu.c:115 gammu/gammu.c:746 gammu/misc.c:45
 msgid "Network"
 msgstr "Síť"
 
 #: gammu/gammu.c:115 gammu/message.c:613 gammu/misc.c:782 gammu/misc.c:947
 #: gammu/misc.c:1659 gammu/misc.c:1698 gammu/misc.c:1951
+#: helper/memory-display.c:120 helper/message-display.c:242
 msgid "Name"
 msgstr "Jméno"
 
@@ -1954,152 +1598,152 @@ msgstr "Telefony"
 msgid "Miscellaneous"
 msgstr ""
 
-#: gammu/gammu.c:338
+#: gammu/gammu.c:332
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
 msgstr ""
 
-#: gammu/gammu.c:356
+#: gammu/gammu.c:350
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr ""
 
-#: gammu/gammu.c:369
+#: gammu/gammu.c:363
 msgid ""
 "This is free software.  You may redistribute copies of it under the terms of"
 msgstr ""
 
-#: gammu/gammu.c:370
+#: gammu/gammu.c:364
 msgid "the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."
 msgstr ""
 
-#: gammu/gammu.c:371
+#: gammu/gammu.c:365
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: gammu/gammu.c:404
+#: gammu/gammu.c:398
 msgid "standard input"
 msgstr "standardní vstup"
 
-#: gammu/gammu.c:415
+#: gammu/gammu.c:409
 #, c-format
 msgid "Batch file could not be opened: %s\n"
 msgstr ""
 
-#: gammu/gammu.c:425
+#: gammu/gammu.c:419
 msgid "Error reading batch! Terminating.\n"
 msgstr ""
 
-#: gammu/gammu.c:456
+#: gammu/gammu.c:450
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s"
 msgstr "Spouštím dávku \"%s\" - příkaz %i: %s"
 
-#: gammu/gammu.c:479
+#: gammu/gammu.c:473
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
 msgstr ""
 
-#: gammu/gammu.c:486
+#: gammu/gammu.c:480
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
 msgstr ""
 
-#: gammu/gammu.c:732
+#: gammu/gammu.c:726
 msgid "Calls"
 msgstr "Hovory"
 
-#: gammu/gammu.c:733
+#: gammu/gammu.c:727
 msgid "SMS and EMS"
 msgstr "SMS a EMS"
 
-#: gammu/gammu.c:734
+#: gammu/gammu.c:728
 msgid "Memory (phonebooks and calls)"
 msgstr "Paměť (kontakty a hovory)"
 
-#: gammu/gammu.c:735
+#: gammu/gammu.c:729
 msgid "Filesystem"
 msgstr "Soubory"
 
-#: gammu/gammu.c:736
+#: gammu/gammu.c:730
 msgid "Logo and pictures"
 msgstr "Loga a obrázky"
 
-#: gammu/gammu.c:737
+#: gammu/gammu.c:731
 msgid "Ringtones"
 msgstr "Zvonění"
 
-#: gammu/gammu.c:738
+#: gammu/gammu.c:732
 msgid "Calendar notes"
 msgstr "Kalendář"
 
-#: gammu/gammu.c:739
+#: gammu/gammu.c:733
 msgid "To do lists"
 msgstr "Úkoly"
 
-#: gammu/gammu.c:740
+#: gammu/gammu.c:734
 msgid "Notes"
 msgstr "Poznámky"
 
-#: gammu/gammu.c:741
+#: gammu/gammu.c:735
 msgid "Date, time and alarms"
 msgstr "Čas, datum a budíky"
 
-#: gammu/gammu.c:742
+#: gammu/gammu.c:736
 msgid "Categories"
 msgstr "Kategorie"
 
-#: gammu/gammu.c:744
+#: gammu/gammu.c:738
 msgid "Backing up and restoring"
 msgstr "Záloha a obnovení"
 
-#: gammu/gammu.c:747
+#: gammu/gammu.c:741
 msgid "Nokia specific"
 msgstr "Specifické pro Nokii"
 
-#: gammu/gammu.c:750
+#: gammu/gammu.c:744
 msgid "Siemens specific"
 msgstr "Specifické pro Siemens"
 
-#: gammu/gammu.c:753
+#: gammu/gammu.c:747
 msgid "WAP settings and bookmarks"
 msgstr "Nastavení WAPu a záložky"
 
-#: gammu/gammu.c:754
+#: gammu/gammu.c:748
 msgid "MMS and MMS settings"
 msgstr "MMS a jejich nastavení"
 
-#: gammu/gammu.c:755
+#: gammu/gammu.c:749
 msgid "Phone tests"
 msgstr "Testy telefonu"
 
-#: gammu/gammu.c:756
+#: gammu/gammu.c:750
 msgid "FM radio"
 msgstr "FM rádio"
 
-#: gammu/gammu.c:757
+#: gammu/gammu.c:751
 msgid "Phone information"
 msgstr "Informace o telefonu"
 
-#: gammu/gammu.c:758
+#: gammu/gammu.c:752
 msgid "Phone settings"
 msgstr "Nastavení telefonu"
 
-#: gammu/gammu.c:760
+#: gammu/gammu.c:754
 msgid "Dumps decoding"
 msgstr "Dekódování výpisů"
 
-#: gammu/gammu.c:762
+#: gammu/gammu.c:756
 msgid "Functions that don't fit elsewhere"
 msgstr "Fuknce, které se nevešly jinam"
 
-#: gammu/gammu.c:763
+#: gammu/gammu.c:757
 msgid "Gammu information"
 msgstr "Informace o Gammu"
 
-#: gammu/gammu.c:779
+#: gammu/gammu.c:773
 msgid ""
 "Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> "
 "[options]"
@@ -2107,7 +1751,7 @@ msgstr ""
 "Použití: gammu [číslokonf] [nothing|text|textall|binary|errors] <příkaz> "
 "[parametry]"
 
-#: gammu/gammu.c:780
+#: gammu/gammu.c:774
 msgid ""
 "First parameter optionally specifies which config section to use (all are "
 "probed by default)."
@@ -2115,31 +1759,31 @@ msgstr ""
 "První parametr volitelně určuje kterou sekci konfiguračního souboru použít "
 "(výchozí je zkusit všechny)."
 
-#: gammu/gammu.c:781
+#: gammu/gammu.c:775
 msgid ""
 "Use only number of config section, so if config section is [gammu42], use 42."
 msgstr ""
 
-#: gammu/gammu.c:782
+#: gammu/gammu.c:776
 msgid ""
 "Second parameter optionally controls debug level, next one specifies actions."
 msgstr ""
 
-#: gammu/gammu.c:784
+#: gammu/gammu.c:778
 msgid "Commands can be specified with or without leading --."
 msgstr ""
 
-#: gammu/gammu.c:787
+#: gammu/gammu.c:781
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
 
-#: gammu/gammu.c:885
+#: gammu/gammu.c:879
 msgid "Unknown help topic specified!"
 msgstr "Zadáno neznámé téma nápovědy!"
 
-#: gammu/gammu.c:889
+#: gammu/gammu.c:883
 #, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
@@ -2148,56 +1792,56 @@ msgstr ""
 "Příkazy Gammu, téma: %s\n"
 "\n"
 
-#: gammu/gammu.c:980
+#: gammu/gammu.c:974
 #, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "Příliš málo parametrů (funkce požaduje %d)\n"
 
-#: gammu/gammu.c:983
+#: gammu/gammu.c:977
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "Příliš málo parametrů (funkce požaduje %d až %d)\n"
 
-#: gammu/gammu.c:989 gammu/gammu.c:1010
+#: gammu/gammu.c:983 gammu/gammu.c:1004
 msgid "Parameters help"
 msgstr "Nápověda pro parametry"
 
-#: gammu/gammu.c:1001
+#: gammu/gammu.c:995
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "Příliš mnoho parametrů (funkce akceptuje %d)\n"
 
-#: gammu/gammu.c:1004
+#: gammu/gammu.c:998
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "Příliš mnoho parametrů (funkce akceptuje %d až %d)\n"
 
-#: gammu/gammu.c:1031
+#: gammu/gammu.c:1025
 msgid "Bad option!"
 msgstr "Chybná volba!"
 
-#: gammu/gammu.c:1069 gammu/gammu.c:1183
+#: gammu/gammu.c:1063 gammu/gammu.c:1177
 msgid "Too few parameters!"
 msgstr "Příliš málo parametrů!"
 
-#: gammu/gammu.c:1094
+#: gammu/gammu.c:1088
 msgid "Configuration could not be parsed!"
 msgstr "Nastavení nemohlo být zpracováno!"
 
-#: gammu/gammu.c:1096
+#: gammu/gammu.c:1090
 msgid "No configuration file found!"
 msgstr "Nebyl nalezen konfigurační soubor!"
 
-#: gammu/gammu.c:1109
+#: gammu/gammu.c:1103
 #, c-format
 msgid "Failed to read [gammu%d] from gammurc!\n"
 msgstr ""
 
-#: gammu/gammu.c:1111 gammu/gammu.c:1122
+#: gammu/gammu.c:1105 gammu/gammu.c:1116
 msgid "No configuration read, using builtin defaults!"
 msgstr "Nebylo načteno žádné nastavení, používám výchozí hodnoty!"
 
-#: gammu/gammu.c:1189
+#: gammu/gammu.c:1183
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -2215,6 +1859,7 @@ msgid "Memory %s, Location %i\n"
 msgstr "Paměť %s, pozice %i\n"
 
 #: gammu/memory.c:75 gammu/misc.c:587 gammu/misc.c:616
+#: helper/message-cmdline.c:884
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
 msgstr "Neznámý parametr (\"%s\")\n"
@@ -2234,6 +1879,10 @@ msgid ""
 msgstr ""
 "Budete mít prázná jména v položkách. Aktualizujte si firmware na vyšší než "
 "6.00"
+
+#: gammu/memory.c:109 gammu/misc.c:1696 gammu/misc.c:2049
+msgid "Entry is empty"
+msgstr "Záznam je prázdný"
 
 #: gammu/memory.c:120
 #, c-format
@@ -2270,7 +1919,8 @@ msgstr ""
 msgid "USSD received"
 msgstr "Přijato USSD"
 
-#: gammu/message.c:76
+#: gammu/message.c:76 helper/message-display.c:159
+#: helper/message-display.c:265
 msgid "Status"
 msgstr "Stav"
 
@@ -2324,6 +1974,11 @@ msgstr "Fax"
 #, c-format
 msgid "Email"
 msgstr "Email"
+
+#: gammu/message.c:175
+#, c-format
+msgid "Pager"
+msgstr "Pager"
 
 #: gammu/message.c:179
 msgid "Validity"
@@ -2497,6 +2152,10 @@ msgstr ""
 #, c-format
 msgid "Saved in folder \"%s\", location %i"
 msgstr "Uloženo ve složce \"%s\", pozice %i"
+
+#: gammu/message.c:773
+msgid "SIM"
+msgstr "SIM"
 
 #: gammu/message.c:775
 msgid "phone"
@@ -2920,6 +2579,7 @@ msgid " (default)"
 msgstr ""
 
 #: gammu/misc.c:887 gammu/misc.c:889 gammu/misc.c:902 gammu/misc.c:909
+#: helper/memory-display.c:85
 msgid "Ringtone"
 msgstr "Vyzvánění"
 
@@ -3230,7 +2890,7 @@ msgstr "Úvodní logo"
 msgid "Operator logo"
 msgstr "Logo operátora"
 
-#: gammu/misc.c:1544
+#: gammu/misc.c:1544 helper/message-display.c:414
 #, c-format
 msgid "Picture Image"
 msgstr ""
@@ -3303,7 +2963,7 @@ msgstr ""
 msgid " (Car kit profile)"
 msgstr ""
 
-#: gammu/misc.c:1821
+#: gammu/misc.c:1821 helper/memory-display.c:90
 msgid "Ringtone ID"
 msgstr "ID vyzvánění"
 
@@ -3343,7 +3003,7 @@ msgstr "Zvuky klávesnice"
 msgid "Warning (games) tones"
 msgstr ""
 
-#: gammu/misc.c:1863
+#: gammu/misc.c:1863 helper/message-display.c:410
 msgid "Screen saver"
 msgstr "Spořič obrazovky"
 
@@ -3410,6 +3070,10 @@ msgstr "Standardní"
 #: gammu/misc.c:1896
 msgid "Special"
 msgstr ""
+
+#: gammu/misc.c:1898
+msgid "Personal"
+msgstr "Osobní"
 
 #: gammu/misc.c:1902
 msgid "On"
@@ -3538,7 +3202,7 @@ msgstr ""
 msgid "voice"
 msgstr ""
 
-#: gammu/misc.c:2122 gammu/misc.c:2133
+#: gammu/misc.c:2122 gammu/misc.c:2133 helper/message-display.c:85
 #, c-format
 msgid "fax"
 msgstr "fax"
@@ -3693,322 +3357,1081 @@ msgstr ""
 msgid "Error creating thread\n"
 msgstr "Chyba při zápisu."
 
-#~ msgid "Error"
-#~ msgstr "Chyba"
+#: helper/formats.h:2
+#, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "%d sekunda"
+msgstr[1] "%d sekundy"
+msgstr[2] "%d sekund"
 
-#~ msgid "Warning"
-#~ msgstr "Varování"
+#: helper/formats.h:3
+#, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "%d minuta"
+msgstr[1] "%d minuty"
+msgstr[2] "%d minut"
 
-#~ msgid "Information"
-#~ msgstr "Informace"
+#: helper/formats.h:4
+#, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "%d hodina"
+msgstr[1] "%d hodiny"
+msgstr[2] "%d hodin"
 
-#~ msgid "%d second"
-#~ msgid_plural "%d seconds"
-#~ msgstr[0] "%d sekunda"
-#~ msgstr[1] "%d sekundy"
-#~ msgstr[2] "%d sekund"
+#: helper/formats.h:5
+#, c-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "%d den"
+msgstr[1] "%d dny"
+msgstr[2] "%d dnů"
 
-#~ msgid "%d minute"
-#~ msgid_plural "%d minutes"
-#~ msgstr[0] "%d minuta"
-#~ msgstr[1] "%d minuty"
-#~ msgstr[2] "%d minut"
+#: helper/formats.h:6
+#, c-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "%d týden"
+msgstr[1] "%d týdny"
+msgstr[2] "%d týdnů"
 
-#~ msgid "%d hour"
-#~ msgid_plural "%d hours"
-#~ msgstr[0] "%d hodina"
-#~ msgstr[1] "%d hodiny"
-#~ msgstr[2] "%d hodin"
+#: helper/formats.h:7
+#, c-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "%d rok"
+msgstr[1] "%d roky"
+msgstr[2] "%d let"
 
-#~ msgid "%d day"
-#~ msgid_plural "%d days"
-#~ msgstr[0] "%d den"
-#~ msgstr[1] "%d dny"
-#~ msgstr[2] "%d dnů"
+#: helper/memory-display.c:29
+#, fuzzy, c-format
+msgid "Call length      : %02i:%02i:%02i\n"
+msgstr "Čas  : %02d:%02d\n"
 
-#~ msgid "%d week"
-#~ msgid_plural "%d weeks"
-#~ msgstr[0] "%d týden"
-#~ msgstr[1] "%d týdny"
-#~ msgstr[2] "%d týdnů"
+#: helper/memory-display.c:32
+msgid "Date and time"
+msgstr "Datum a čas"
 
-#~ msgid "%d year"
-#~ msgid_plural "%d years"
-#~ msgstr[0] "%d rok"
-#~ msgstr[1] "%d roky"
-#~ msgstr[2] "%d let"
+#: helper/memory-display.c:60 helper/memory-display.c:74
+msgid "Caller group"
+msgstr "Skupina"
+
+#: helper/memory-display.c:61
+msgid "Caller group number too high, please increase buffer in sources!"
+msgstr ""
+
+#: helper/memory-display.c:94
+msgid "User ID"
+msgstr "ID uživatele"
+
+#: helper/memory-display.c:97
+msgid "Picture name"
+msgstr "Jméno obrázku"
+
+#: helper/memory-display.c:100
+msgid "Picture ID"
+msgstr "ID obrázku"
+
+#: helper/memory-display.c:103
+#, fuzzy
+msgid "Photo"
+msgstr "Telefon"
+
+#: helper/memory-display.c:103
+#, fuzzy
+msgid "Displaying not supported"
+msgstr "Není podporováno"
+
+#: helper/memory-display.c:105
+msgid "Favorite messaging number"
+msgstr ""
+
+#: helper/memory-display.c:106
+msgid "General number"
+msgstr "Obecné číslo"
+
+#: helper/memory-display.c:108
+msgid "Work number"
+msgstr "Číslo do práce"
+
+#: helper/memory-display.c:111
+msgid "Pager number"
+msgstr "Číslo na pager"
+
+#: helper/memory-display.c:112
+msgid "Other number"
+msgstr "Další číslo"
+
+#: helper/memory-display.c:114
+msgid "Snail address"
+msgstr "Poštovní adresa"
+
+#: helper/memory-display.c:115
+msgid "Work snail address"
+msgstr "Pracovní poštovní adresa"
+
+#: helper/memory-display.c:116
+msgid "Email address 1"
+msgstr "Email 1"
+
+#: helper/memory-display.c:117
+msgid "Email address 2"
+msgstr "Email 2"
+
+#: helper/memory-display.c:118
+msgid "URL address"
+msgstr "URL adresa"
+
+#: helper/memory-display.c:121
+msgid "Last name"
+msgstr "Příjmení"
+
+#: helper/memory-display.c:122
+msgid "First name"
+msgstr "Křestní jméno"
+
+#: helper/memory-display.c:123
+msgid "Formal name"
+msgstr "Formální jméno"
+
+#: helper/memory-display.c:124
+msgid "Nick name"
+msgstr "Přezdívka"
+
+#: helper/memory-display.c:125
+msgid "Company"
+msgstr "Firma"
+
+#: helper/memory-display.c:126
+msgid "Job title"
+msgstr "Funkce"
+
+#: helper/memory-display.c:127
+msgid "Street address"
+msgstr "Adresa"
+
+#: helper/memory-display.c:128
+msgid "City"
+msgstr "Město"
+
+#: helper/memory-display.c:129
+msgid "State"
+msgstr "Stát"
+
+#: helper/memory-display.c:130
+msgid "Zip code"
+msgstr "Směrovací číslo"
+
+#: helper/memory-display.c:131
+msgid "Country"
+msgstr "Země"
+
+#: helper/memory-display.c:132
+msgid "Work street address"
+msgstr "Pracovní adresa"
+
+#: helper/memory-display.c:133
+msgid "Work city"
+msgstr "Město práce"
+
+#: helper/memory-display.c:134
+msgid "Work state"
+msgstr "Stát pracoviště"
+
+#: helper/memory-display.c:135
+msgid "Work zip code"
+msgstr "Směrovací číslo pracoviště"
+
+#: helper/memory-display.c:136
+msgid "Work country"
+msgstr "Země pracoviště"
+
+#: helper/memory-display.c:137
+msgid "Custom text 1"
+msgstr "Osobní info 1"
+
+#: helper/memory-display.c:138
+msgid "Custom text 2"
+msgstr "Osobní info 2"
+
+#: helper/memory-display.c:139
+msgid "Custom text 3"
+msgstr "Osobní info 3"
+
+#: helper/memory-display.c:140
+msgid "Custom text 4"
+msgstr "Osobní info 4"
+
+#: helper/memory-display.c:141
+msgid "Push to talk ID"
+msgstr ""
+
+#: helper/memory-display.c:144
+msgid "unknown field type"
+msgstr "neznámý typ položky"
+
+#: helper/message-cmdline.c:99
+#, fuzzy
+msgid "Not enough parameters!"
+msgstr "Příliš málo parametrů!"
+
+#: helper/message-cmdline.c:133 helper/message-cmdline.c:147
+msgid "Where are parameters?"
+msgstr "Kde jsou parametry?"
+
+#: helper/message-cmdline.c:160
+msgid "Where is ringtone filename?"
+msgstr "Kde je jméno souboru vyzvánění?"
+
+#: helper/message-cmdline.c:176 helper/message-cmdline.c:192
+#: helper/message-cmdline.c:233
+msgid "Where is logo filename?"
+msgstr "Kde je jméno souboru loga?"
+
+#: helper/message-cmdline.c:208
+msgid "Where is number of frames?"
+msgstr "Kde je počet rámců?"
+
+#: helper/message-cmdline.c:238
+#, c-format
+msgid "File \"%s\"\n"
+msgstr "Soubor \"%s\"\n"
+
+#: helper/message-cmdline.c:264
+#, fuzzy
+msgid "Bookmark not found in file"
+msgstr "V souboru nebyla nalezena žádná záložka pro WAP"
+
+#: helper/message-cmdline.c:287
+#, fuzzy
+msgid "WAP settings not found in file"
+msgstr "V souboru nebyla nalezena žádná záložka pro WAP"
+
+#: helper/message-cmdline.c:308
+msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
+msgstr ""
+
+#: helper/message-cmdline.c:330
+#, fuzzy
+msgid "MMS settings not found in file"
+msgstr "V souboru nebyla nalezena žádná poznámka"
+
+#: helper/message-cmdline.c:344
+msgid "Sorry. No GPRS bearer found in MMS settings"
+msgstr ""
+
+#: helper/message-cmdline.c:399
+#, fuzzy
+msgid "Where is backup filename and location and memory *type?"
+msgstr "Kde je jméno souboru zálohy, umístění a typ paměti?"
+
+#: helper/message-cmdline.c:426
+#, fuzzy, c-format
+msgid "Unknown memory *type: \"%s\"\n"
+msgstr "Neznámý typ paměti: \"%s\"\n"
+
+#: helper/message-cmdline.c:446
+#, c-format
+msgid "What format of sms (\"%s\") ?\n"
+msgstr ""
+
+#: helper/message-cmdline.c:921
+#, c-format
+msgid "Unknown GSM network code (\"%s\")\n"
+msgstr "Neznámý kód GSM sítě (\"%s\")\n"
+
+#: helper/message-cmdline.c:940
+#, c-format
+msgid "You have to give number between 1 and 7 (\"%s\")\n"
+msgstr ""
+
+#: helper/message-cmdline.c:976
+#, fuzzy, c-format
+msgid "Unknown validity string (\"%s\")\n"
+msgstr "Neznámá akce přesměrování (\"%s\")\n"
+
+#: helper/message-cmdline.c:1012
+#, c-format
+msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
+msgstr ""
+
+#: helper/message-cmdline.c:1035
+#, fuzzy, c-format
+msgid "Can't open file \"%s\"\n"
+msgstr "Nepodařilo se nalézt soubor \"%s\"\n"
+
+#: helper/message-cmdline.c:1084
+#, c-format
+msgid "Unknown parameter (\"%c\")\n"
+msgstr "Neznámý parametr (\"%c\")\n"
+
+#: helper/message-cmdline.c:1089
+msgid "Last parameter wasn't text"
+msgstr ""
+
+#: helper/message-cmdline.c:1121
+#, c-format
+msgid "Too long SMS name (\"%s\"), ignored\n"
+msgstr ""
+
+#: helper/message-cmdline.c:1154
+msgid "Enter message text and press ^D:"
+msgstr ""
+
+#: helper/message-cmdline.c:1166
+msgid "No chars read, assuming it is okay!"
+msgstr ""
+
+#: helper/message-cmdline.c:1186
+msgid "No network code"
+msgstr "Žádný kód sítě"
+
+#: helper/message-cmdline.c:1192
+#, fuzzy
+msgid "You have to set network code!"
+msgstr "Žádný kód sítě"
+
+#: helper/message-cmdline.c:1231
+#, c-format
+msgid "Ringtone too long. %i percent part cut\n"
+msgstr ""
+
+#: helper/message-cmdline.c:1242
+#, c-format
+msgid "There is %i SMS packed and %i limit. Exiting\n"
+msgstr ""
+
+#: helper/message-cmdline.c:1251
+msgid "Use -smscnumber option to give SMSC number"
+msgstr ""
+
+#: helper/message-display.c:26
+#, c-format
+msgid "Location %i, folder \"%s\""
+msgstr "Umístění %i, složka \"%s\""
+
+#: helper/message-display.c:33
+msgid "SIM memory"
+msgstr "SIM karta"
+
+#: helper/message-display.c:36
+msgid "phone memory"
+msgstr "paměť telefonu"
+
+#: helper/message-display.c:39
+msgid "phone or SIM memory"
+msgstr "paměť telefonu nebo SIM karta"
+
+#: helper/message-display.c:46
+msgid "Inbox folder"
+msgstr "příchozí zprávy"
+
+#: helper/message-display.c:79
+msgid "mobile"
+msgstr "mobil"
+
+#: helper/message-display.c:82
+msgid "work"
+msgstr "práce"
+
+#: helper/message-display.c:88
+msgid "home"
+msgstr "domů"
+
+#: helper/message-display.c:91
+msgid "pager"
+msgstr "pager"
+
+#: helper/message-display.c:157
+msgid "SMS status report"
+msgstr "Informace o stavu SMS"
+
+#: helper/message-display.c:161 helper/message-display.c:173
+#: helper/message-display.c:225 helper/message-display.c:267
+#, c-format
+msgid "Sent"
+msgstr "Odesláno"
+
+#: helper/message-display.c:162 helper/message-display.c:268
+#, c-format
+msgid "Read"
+msgstr "Přečteno"
+
+#: helper/message-display.c:163 helper/message-display.c:269
+#, c-format
+msgid "UnRead"
+msgstr "Nepřečteno"
+
+#: helper/message-display.c:164 helper/message-display.c:270
+#, c-format
+msgid "UnSent"
+msgstr "Neodesláno"
+
+#: helper/message-display.c:168 helper/message-display.c:257
+msgid "Remote number"
+msgid_plural "Remote numbers"
+msgstr[0] "Vzdálené číslo"
+msgstr[1] "Vzdálená čísla"
+msgstr[2] "Vzdálená čísla"
+
+#: helper/message-display.c:172 helper/message-display.c:238
+msgid "Reference number"
+msgstr "Referenční číslo"
+
+#: helper/message-display.c:174 helper/message-display.c:222
+msgid "SMSC number"
+msgstr "Středisko zpráv"
+
+#: helper/message-display.c:175
+msgid "SMSC response"
+msgstr "Odpověď SMSC"
+
+#: helper/message-display.c:176
+msgid "Delivery status"
+msgstr "Stav doručení"
+
+#: helper/message-display.c:177
+msgid "Details"
+msgstr "Podrobnosti"
+
+#: helper/message-display.c:180 helper/message-display.c:185
+#, c-format
+msgid "Temporary error, "
+msgstr "Dočasná chyba, "
+
+#: helper/message-display.c:182
+#, c-format
+msgid "Permanent error, "
+msgstr "Trvalá chyba, "
+
+#: helper/message-display.c:188
+#, c-format
+msgid "SM received by the SME"
+msgstr ""
+
+#: helper/message-display.c:189
+#, c-format
+msgid ""
+"SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
+msgstr ""
+
+#: helper/message-display.c:190
+#, c-format
+msgid "SM replaced by the SC"
+msgstr ""
+
+#: helper/message-display.c:191 helper/message-display.c:207
+#, c-format
+msgid "Congestion"
+msgstr "Zahlcení"
+
+#: helper/message-display.c:192 helper/message-display.c:208
+#, c-format
+msgid "SME busy"
+msgstr ""
+
+#: helper/message-display.c:193 helper/message-display.c:209
+#, c-format
+msgid "No response from SME"
+msgstr ""
+
+#: helper/message-display.c:194 helper/message-display.c:210
+#, c-format
+msgid "Service rejected"
+msgstr "Služba odmítnuta"
+
+#: helper/message-display.c:195
+#, c-format
+msgid "Quality of service not aviable"
+msgstr ""
+
+#: helper/message-display.c:196 helper/message-display.c:212
+#, c-format
+msgid "Error in SME"
+msgstr ""
+
+#: helper/message-display.c:197
+#, c-format
+msgid "Remote procedure error"
+msgstr ""
+
+#: helper/message-display.c:198
+#, c-format
+msgid "Incompatibile destination"
+msgstr ""
+
+#: helper/message-display.c:199
+#, c-format
+msgid "Connection rejected by SME"
+msgstr ""
+
+#: helper/message-display.c:200
+#, fuzzy, c-format
+msgid "Not obtainable"
+msgstr "Žádný signál"
+
+#: helper/message-display.c:201 helper/message-display.c:211
+#, c-format
+msgid "Quality of service not available"
+msgstr ""
+
+#: helper/message-display.c:202
+#, c-format
+msgid "No internetworking available"
+msgstr ""
+
+#: helper/message-display.c:203
+#, c-format
+msgid "SM Validity Period Expired"
+msgstr ""
+
+#: helper/message-display.c:204
+#, c-format
+msgid "SM deleted by originating SME"
+msgstr ""
+
+#: helper/message-display.c:205
+#, c-format
+msgid "SM Deleted by SC Administration"
+msgstr ""
+
+#: helper/message-display.c:206
+#, c-format
+msgid "SM does not exist"
+msgstr ""
+
+#: helper/message-display.c:213
+#, c-format
+msgid "Reserved/Specific to SC: %x"
+msgstr ""
+
+#: helper/message-display.c:218 helper/message-display.c:235
+msgid "SMS message"
+msgstr "SMS zpráva"
+
+#: helper/message-display.c:220
+msgid "Saved"
+msgstr "Uložena"
+
+#: helper/message-display.c:223
+#, c-format
+msgid " (set for reply)"
+msgstr ""
+
+#: helper/message-display.c:232
+msgid "SMS replacing ID"
+msgstr "SMS nahrazuje ID"
+
+#: helper/message-display.c:245
+msgid "Class"
+msgstr "Třída"
+
+#: helper/message-display.c:247
+msgid "Coding"
+msgstr "Kódování"
+
+#: helper/message-display.c:249
+msgid "Unicode (no compression)"
+msgstr "Unicode (bez komprese)"
+
+#: helper/message-display.c:250
+msgid "Unicode (compression)"
+msgstr "Unicode (s kompresí)"
+
+#: helper/message-display.c:251
+msgid "Default GSM alphabet (no compression)"
+msgstr "Výchozí abeceda GSM (bez komprese)"
+
+#: helper/message-display.c:252
+msgid "Default GSM alphabet (compression)"
+msgstr "Výchozí abeceda GSM (s kompresí)"
+
+#: helper/message-display.c:253
+msgid "8 bit"
+msgstr ""
+
+#: helper/message-display.c:273
+msgid "User Data Header"
+msgstr ""
+
+#: helper/message-display.c:275 helper/message-display.c:276
+#, c-format
+msgid "Concatenated (linked) message"
+msgstr ""
+
+#: helper/message-display.c:277
+#, c-format
+msgid "Disables voice indicator"
+msgstr ""
+
+#: helper/message-display.c:278
+#, c-format
+msgid "Enables voice indicator"
+msgstr ""
+
+#: helper/message-display.c:279
+#, c-format
+msgid "Disables fax indicator"
+msgstr ""
+
+#: helper/message-display.c:280
+#, c-format
+msgid "Enables fax indicator"
+msgstr ""
+
+#: helper/message-display.c:281
+#, c-format
+msgid "Disables email indicator"
+msgstr ""
+
+#: helper/message-display.c:282
+#, c-format
+msgid "Enables email indicator"
+msgstr ""
+
+#: helper/message-display.c:283
+#, c-format
+msgid "Void SMS"
+msgstr "Prázdná SMS"
+
+#: helper/message-display.c:284
+#, c-format
+msgid "Nokia WAP bookmark"
+msgstr ""
+
+#: helper/message-display.c:285
+#, fuzzy, c-format
+msgid "Nokia operator logo"
+msgstr "Logo operátora"
+
+#: helper/message-display.c:286
+#, c-format
+msgid "Nokia WAP bookmark or WAP/MMS settings"
+msgstr ""
+
+#: helper/message-display.c:287 helper/message-display.c:288
+#, fuzzy, c-format
+msgid "Nokia ringtone"
+msgstr "Vyzvánění"
+
+#: helper/message-display.c:289
+#, fuzzy, c-format
+msgid "Nokia GSM operator logo"
+msgstr "Logo operátora"
+
+#: helper/message-display.c:290
+#, fuzzy, c-format
+msgid "Nokia caller logo"
+msgstr "Logo skupiny"
+
+#: helper/message-display.c:291
+#, fuzzy, c-format
+msgid "Nokia profile"
+msgstr "Specifické pro Nokii"
+
+#: helper/message-display.c:292
+#, fuzzy, c-format
+msgid "Nokia calendar note"
+msgstr "Kalendář"
+
+#: helper/message-display.c:293
+#, fuzzy, c-format
+msgid "Nokia phonebook entry"
+msgstr "Přidat položky telefonního seznamu?"
+
+#: helper/message-display.c:294
+#, fuzzy, c-format
+msgid "User UDH"
+msgstr "ID uživatele"
+
+#: helper/message-display.c:295
+#, c-format
+msgid "MMS indicator"
+msgstr ""
+
+#: helper/message-display.c:299
+#, c-format
+msgid ", ID (8 bit) %i"
+msgstr ""
+
+#: helper/message-display.c:300
+#, c-format
+msgid ", ID (16 bit) %i"
+msgstr ""
+
+#: helper/message-display.c:303
+#, c-format
+msgid ", part %i of %i"
+msgstr ""
+
+#: helper/message-display.c:305
+#, fuzzy, c-format
+msgid ", %i parts"
+msgstr "%i procent"
+
+#: helper/message-display.c:317
+#, fuzzy
+msgid "Siemens file"
+msgstr "Specifické pro Siemens"
+
+#: helper/message-display.c:320
+msgid "8 bit SMS, cannot be displayed here"
+msgstr ""
+
+#: helper/message-display.c:326
+#, c-format
+msgid "Unknown PDU type: 0x%x\n"
+msgstr "Neznámý typ PDU: 0x%x\n"
+
+#: helper/message-display.c:368
+msgid ""
+"Some details were ignored (unknown or not implemented in decoding functions)"
+msgstr ""
+
+#: helper/message-display.c:373
+#, fuzzy, c-format
+msgid "Siemens OTA file"
+msgstr "Specifické pro Siemens"
+
+#: helper/message-display.c:375
+msgid " - VCARD"
+msgstr " - VCARD"
+
+#: helper/message-display.c:389
+#, c-format
+msgid "Ringtone \"%s\"\n"
+msgstr "Vyzvánění \"%s\"\n"
+
+#: helper/message-display.c:394
+msgid "Do you want to play it?"
+msgstr ""
+
+#: helper/message-display.c:399
+msgid "Caller logo"
+msgstr "Logo skupiny"
+
+#: helper/message-display.c:403
+#, c-format
+msgid ""
+"Operator logo for %s network (%s, %s)\n"
+"\n"
+msgstr ""
+
+#: helper/message-display.c:419
+msgid "Profile"
+msgstr "Profil"
+
+#: helper/message-display.c:439
+msgid "EMS sound ID"
+msgstr ""
+
+#: helper/message-display.c:442
+msgid "EMS animation ID"
+msgstr ""
+
+#. l10n: Generic prefix for error messages
+#: helper/message-display.c:476 helper/message-display.c:495
+#: helper/printing.c:18
+msgid "Error"
+msgstr "Chyba"
+
+#: helper/message-display.c:510
+#, c-format
+msgid "msg:%s nb:%i udh:%s\n"
+msgstr ""
+
+#. l10n: Generic prefix for warning messages
+#: helper/printing.c:34
+msgid "Warning"
+msgstr "Varování"
+
+#. l10n: Generic prefix for informational messages
+#: helper/printing.c:50
+msgid "Information"
+msgstr "Informace"
+
+#~ msgid "No error."
+#~ msgstr "Žadná chyba."
+
+#~ msgid "Error opening device. Unknown/busy or no permissions."
+#~ msgstr "Chyba při otevírání zařízení. Přístup odmítnut."
+
+#~ msgid "Error opening device, it is locked."
+#~ msgstr "Chyba při otevírání zařízení, je zamčené."
+
+#~ msgid "Error opening device, it doesn't exist."
+#~ msgstr "Chyba při otevírání zařízení, neexistuje."
+
+#~ msgid "Error opening device, it is already opened by other application."
+#~ msgstr "Chyba při otevírání zařízení, je již používáno."
+
+#~ msgid "Error opening device, you don't have permissions."
+#~ msgstr "Chyba při otevírání zařízení, přístup odmítnut."
+
+#~ msgid "Error opening device. No required driver in operating system."
+#~ msgstr "Chyba při otevírání zařízení. Chybí ovladač v operačním systému."
+
+#~ msgid "Error opening device. Some hardware not connected/wrong configured."
+#~ msgstr ""
+#~ "Chyba při otevírání zařízení. Hardware může být špatně připojen nebo "
+#~ "nakonfigurován."
+
+#~ msgid "Error setting device DTR or RTS."
+#~ msgstr "Chyba při nastavování DTR nebo RTS."
+
+#~ msgid "Error setting device speed. Maybe speed not supported."
+#~ msgstr ""
+#~ "Chyba při nastavování rychlosti zařízení. Rychlost pravděpodobně není "
+#~ "podporována."
+
+#~ msgid "Error writing device."
+#~ msgstr "Chyba při zápisu."
+
+#~ msgid "Error during reading device."
+#~ msgstr "Chyba při čtení."
+
+#~ msgid "Can't set parity on device."
+#~ msgstr "Nepodařilo se nastavit paritu na zařízení."
+
+#~ msgid "No response in specified timeout. Probably phone not connected."
+#~ msgstr ""
+#~ "Žadná odpověď v očekaváné době. Telefon pravděpodobně není připojen."
+
+#~ msgid ""
+#~ "Frame not requested right now. See <http://cihar.com/gammu/report> for "
+#~ "information how to report it."
+#~ msgstr ""
+#~ "Tato odpověď od telefonu nebyla očekávána. Podívejte se na stránku "
+#~ "<http://cihar.com/gammu/report> pro informace jak tuto událost nahlásit."
+
+#~ msgid ""
+#~ "Unknown response from phone. See <http://cihar.com/gammu/report> for "
+#~ "information how to report it."
+#~ msgstr ""
+#~ "Neznámá odpověď od telefonu. Podívejte se na stránku <http://cihar.com/"
+#~ "gammu/report> pro informace jak tuto událost nahlásit."
+
+#~ msgid ""
+#~ "Unknown frame. See <http://cihar.com/gammu/report> for information how to "
+#~ "report it."
+#~ msgstr ""
+#~ "Neznámý rámec. Podívejte se na stránku <http://cihar.com/gammu/report> "
+#~ "pro informace jak tuto událost nahlásit."
+
+#~ msgid "Unknown connection type string. Check config file."
+#~ msgstr "Zadán neznámý typ připojení. Zkontrolujte konfigurační soubor."
+
+#~ msgid "Unknown model type string. Check config file."
+#~ msgstr "Zadán neznámý model telefonu. Zkontrolujte konfigurační soubor."
+
+#~ msgid ""
+#~ "Some functions not available for your system (disabled in config or not "
+#~ "written)."
+#~ msgstr ""
+#~ "Některé funkce nejsou dostupné pro váš systém (vypnuté při kompilaci nebo "
+#~ "nejsou implementovány)."
+
+#~ msgid "Function not supported by phone."
+#~ msgstr "Funkce není podporována telefonem."
+
+#~ msgid "Security error. Maybe no PIN?"
+#~ msgstr "Bezpečnostní chyba. Možná nebyl zadán PIN?"
+
+#~ msgid "Invalid location. Maybe too high?"
+#~ msgstr "Chybná pozice. Možná příliš vysoká?"
+
+#~ msgid "Function not implemented. Help required."
+#~ msgstr "Funkce není implementována. Pomoc s implementací je vítána."
+
+#~ msgid "Memory full."
+#~ msgstr "Paměť je plná."
+
+#~ msgid "Unknown error."
+#~ msgstr "Neznámá chyba."
+
+#~ msgid "Can't open specified file. Read only?"
+#~ msgstr "Soubor nelze otevřít. Není jen pro čtení?"
+
+#~ msgid "More memory required..."
+#~ msgstr "Je potřeba více paměti..."
+
+#~ msgid "Permission to file/device required..."
+#~ msgstr "Přístup k souboru nebo zařízení odmítnut..."
+
+#~ msgid "Empty SMSC number. Set in phone or use -smscnumber."
+#~ msgstr ""
+#~ "Prázdné číslo SMSC. Nastavte ho v telefonu nebo použijte -smscnumber."
+
+#~ msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+#~ msgstr ""
+#~ "Jste v menu telefonu (upravujete záznam?). Opusťte ho a zkuste znovu."
+
+#~ msgid "Phone is not connected."
+#~ msgstr "Telefon není připojen."
+
+#~ msgid ""
+#~ "Function is during writing. If want help, please contact with authors."
+#~ msgstr "Funkce je rozepsána. Pokud chcete pomoci, kontaktuje autory."
+
+#~ msgid "Phone is disabled and connected to charger."
+#~ msgstr "Telefon je vypnutý a připojený k nabíječce."
+
+#~ msgid "File format not supported by Gammu."
+#~ msgstr "Gammu tento formát nepodporuje."
+
+#~ msgid ""
+#~ "Nobody is perfect, some bug appeared in protocol implementation. Please "
+#~ "contact authors."
+#~ msgstr ""
+#~ "Nikdo není dokonalý, ani Gammu a nastala chyba v implementaci protokolu. "
+#~ "Prosím kontaktujte autory."
+
+#~ msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+#~ msgstr ""
+#~ "Přenos zrušen telefonem, možná jste zadali zrušení přenosu v telefonu."
+
+#~ msgid "Phone module need to send another answer frame."
+#~ msgstr "Ovladač telefonu potřebuje odeslat ještě jeden rámec."
+
+#~ msgid "Current connection type doesn't support called function."
+#~ msgstr "Použité připojení nepodporuje požadovanou funkci."
+
+#~ msgid "CRC error."
+#~ msgstr "Chyba CRC."
+
+#~ msgid "Invalid date or time specified."
+#~ msgstr "Zadáno chybné datum nebo čas."
+
+#~ msgid "Phone memory error, maybe it is read only."
+#~ msgstr "Chyba při přístupu do paměti telefonu, možná je jen pro čtení."
+
+#~ msgid "Invalid data given to phone."
+#~ msgstr "Zadána chybná data."
+
+#~ msgid "File with specified name already exist."
+#~ msgstr "Soubor se zadaným jménem již existuje."
+
+#~ msgid "File with specified name doesn't exist."
+#~ msgstr "Soubor se zadaným jménem neexistuje."
+
+#~ msgid "You have to give folder name and not file name."
+#~ msgstr "Musíte zadat jméno složky, ne souboru."
+
+#~ msgid "You have to give file name and not folder name."
+#~ msgstr "Musíte zadat jméno souboru, ne složky."
+
+#~ msgid "Can not access SIM card."
+#~ msgstr "Nelze přistoupit na SIM kartu."
+
+#~ msgid ""
+#~ "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+#~ msgstr ""
+#~ "Špatný verze programu GNAPPLET v telefonu. Prosím použijte verzi "
+#~ "obsaženou v Gammu."
+
+#~ msgid "Only part of folder has been listed."
+#~ msgstr "Byla vypsána jen část složky."
+
+#~ msgid "Folder must be empty."
+#~ msgstr "Složka musí být prázdná."
+
+#~ msgid "Data were converted."
+#~ msgstr "Data byla převedena."
+
+#~ msgid "Gammu is not configured."
+#~ msgstr "Gammu není nastaveno."
+
+#~ msgid "Wrong folder used."
+#~ msgstr "Byla použita chybná složka."
+
+#~ msgid "Internal phone error."
+#~ msgstr "Interní chyba telefonu."
+
+#~ msgid "Error writing file to disk."
+#~ msgstr "Chyba při zápisu souboru na disk."
+
+#~ msgid "No such section exists."
+#~ msgstr "Požadovaná sekce neexistuje."
+
+#~ msgid "Using default values."
+#~ msgstr "Používám výchozí hodnoty."
+
+#~ msgid "Corrupted data returned by phone."
+#~ msgstr "Telefon vrátil poškozená data."
+
+#~ msgid "Bad feature string in configuration."
+#~ msgstr "Chybný název vlastnosti v konfiguraci."
+
+#~ msgid "Desired functionality has been disabled on compile time."
+#~ msgstr "Požadovaná funkce byla vypnuta při kompilaci."
+
+#~ msgid "Unknown error description."
+#~ msgstr "Neznámý popis chyby."
+
+#~ msgid "Car"
+#~ msgstr "Auto"
+
+#~ msgid "Headset"
+#~ msgstr "Sluchátka"
+
+#~ msgid "General"
+#~ msgstr "Obecné"
+
+#~ msgid "Silent"
+#~ msgstr "Tiché"
+
+#~ msgid "Discreet"
+#~ msgstr "Diskritní"
+
+#~ msgid "Loud"
+#~ msgstr "Hlasité"
+
+#~ msgid "My style"
+#~ msgstr "Můj styl"
+
+#~ msgid "Inbox"
+#~ msgstr "Příchozí"
+
+#~ msgid "Sent items"
+#~ msgstr "Odeslané zprávy"
+
+#~ msgid "Saved items"
+#~ msgstr "Uložené zprávy"
+
+#~ msgid "Family"
+#~ msgstr "Rodina"
+
+#~ msgid "VIP"
+#~ msgstr "VIP"
+
+#~ msgid "Friends"
+#~ msgstr "Přatelé"
+
+#~ msgid "Colleagues"
+#~ msgstr "Kolegové"
+
+#~ msgid "Other"
+#~ msgstr "Ostatní"
+
+#~ msgid "Outdoor"
+#~ msgstr "Venkovní"
+
+#~ msgid "Outbox"
+#~ msgstr "Odchozí"
 
 #~ msgid "SMS daemon"
 #~ msgstr "SMS démon"
 
-#~ msgid "Date and time"
-#~ msgstr "Datum a čas"
-
-#~ msgid "Caller group"
-#~ msgstr "Skupina"
-
-#~ msgid "User ID"
-#~ msgstr "ID uživatele"
-
-#~ msgid "Picture name"
-#~ msgstr "Jméno obrázku"
-
-#~ msgid "Picture ID"
-#~ msgstr "ID obrázku"
-
-#, fuzzy
-#~ msgid "Photo"
-#~ msgstr "Telefon"
-
-#, fuzzy
-#~ msgid "Displaying not supported"
-#~ msgstr "Není podporováno"
-
-#~ msgid "General number"
-#~ msgstr "Obecné číslo"
-
-#~ msgid "Work number"
-#~ msgstr "Číslo do práce"
-
-#~ msgid "Pager number"
-#~ msgstr "Číslo na pager"
-
-#~ msgid "Other number"
-#~ msgstr "Další číslo"
-
-#~ msgid "Snail address"
-#~ msgstr "Poštovní adresa"
-
-#~ msgid "Work snail address"
-#~ msgstr "Pracovní poštovní adresa"
-
-#~ msgid "Email address 1"
-#~ msgstr "Email 1"
-
-#~ msgid "Email address 2"
-#~ msgstr "Email 2"
-
-#~ msgid "URL address"
-#~ msgstr "URL adresa"
-
-#~ msgid "Last name"
-#~ msgstr "Příjmení"
-
-#~ msgid "First name"
-#~ msgstr "Křestní jméno"
-
-#~ msgid "Formal name"
-#~ msgstr "Formální jméno"
-
-#~ msgid "Nick name"
-#~ msgstr "Přezdívka"
-
-#~ msgid "Company"
-#~ msgstr "Firma"
-
-#~ msgid "Job title"
-#~ msgstr "Funkce"
-
-#~ msgid "Street address"
-#~ msgstr "Adresa"
-
-#~ msgid "City"
-#~ msgstr "Město"
-
-#~ msgid "State"
-#~ msgstr "Stát"
-
-#~ msgid "Zip code"
-#~ msgstr "Směrovací číslo"
-
-#~ msgid "Country"
-#~ msgstr "Země"
-
-#~ msgid "Work street address"
-#~ msgstr "Pracovní adresa"
-
-#~ msgid "Work city"
-#~ msgstr "Město práce"
-
-#~ msgid "Work state"
-#~ msgstr "Stát pracoviště"
-
-#~ msgid "Work zip code"
-#~ msgstr "Směrovací číslo pracoviště"
-
-#~ msgid "Work country"
-#~ msgstr "Země pracoviště"
-
-#~ msgid "Custom text 1"
-#~ msgstr "Osobní info 1"
-
-#~ msgid "Custom text 2"
-#~ msgstr "Osobní info 2"
-
-#~ msgid "Custom text 3"
-#~ msgstr "Osobní info 3"
-
-#~ msgid "Custom text 4"
-#~ msgstr "Osobní info 4"
-
-#~ msgid "unknown field type"
-#~ msgstr "neznámý typ položky"
-
-#~ msgid "Location %i, folder \"%s\""
-#~ msgstr "Umístění %i, složka \"%s\""
-
-#~ msgid "SIM memory"
-#~ msgstr "SIM karta"
-
-#~ msgid "phone memory"
-#~ msgstr "paměť telefonu"
-
-#~ msgid "phone or SIM memory"
-#~ msgstr "paměť telefonu nebo SIM karta"
-
-#~ msgid "Inbox folder"
-#~ msgstr "příchozí zprávy"
-
-#~ msgid "mobile"
-#~ msgstr "mobil"
-
-#~ msgid "work"
-#~ msgstr "práce"
-
-#~ msgid "home"
-#~ msgstr "domů"
-
-#~ msgid "pager"
-#~ msgstr "pager"
-
-#~ msgid "SMS status report"
-#~ msgstr "Informace o stavu SMS"
-
-#~ msgid "Sent"
-#~ msgstr "Odesláno"
-
-#~ msgid "Read"
-#~ msgstr "Přečteno"
-
-#~ msgid "UnRead"
-#~ msgstr "Nepřečteno"
-
-#~ msgid "UnSent"
-#~ msgstr "Neodesláno"
-
-#~ msgid "Remote number"
-#~ msgid_plural "Remote numbers"
-#~ msgstr[0] "Vzdálené číslo"
-#~ msgstr[1] "Vzdálená čísla"
-#~ msgstr[2] "Vzdálená čísla"
-
-#~ msgid "Reference number"
-#~ msgstr "Referenční číslo"
-
-#~ msgid "SMSC number"
-#~ msgstr "Středisko zpráv"
-
-#~ msgid "SMSC response"
-#~ msgstr "Odpověď SMSC"
-
-#~ msgid "Delivery status"
-#~ msgstr "Stav doručení"
-
-#~ msgid "Details"
-#~ msgstr "Podrobnosti"
-
-#~ msgid "Temporary error, "
-#~ msgstr "Dočasná chyba, "
-
-#~ msgid "Permanent error, "
-#~ msgstr "Trvalá chyba, "
-
-#~ msgid "Congestion"
-#~ msgstr "Zahlcení"
-
-#~ msgid "Service rejected"
-#~ msgstr "Služba odmítnuta"
-
-#~ msgid "SMS message"
-#~ msgstr "SMS zpráva"
-
-#~ msgid "Saved"
-#~ msgstr "Uložena"
-
-#~ msgid "SMS replacing ID"
-#~ msgstr "SMS nahrazuje ID"
-
-#~ msgid "Class"
-#~ msgstr "Třída"
-
-#~ msgid "Coding"
-#~ msgstr "Kódování"
-
-#~ msgid "Unicode (no compression)"
-#~ msgstr "Unicode (bez komprese)"
-
-#~ msgid "Unicode (compression)"
-#~ msgstr "Unicode (s kompresí)"
-
-#~ msgid "Default GSM alphabet (no compression)"
-#~ msgstr "Výchozí abeceda GSM (bez komprese)"
-
-#~ msgid "Default GSM alphabet (compression)"
-#~ msgstr "Výchozí abeceda GSM (s kompresí)"
-
-#~ msgid "Void SMS"
-#~ msgstr "Prázdná SMS"
-
-#~ msgid "Unknown PDU type: 0x%x\n"
-#~ msgstr "Neznámý typ PDU: 0x%x\n"
-
-#~ msgid " - VCARD"
-#~ msgstr " - VCARD"
-
-#~ msgid "Ringtone \"%s\"\n"
-#~ msgstr "Vyzvánění \"%s\"\n"
-
-#~ msgid "Caller logo"
-#~ msgstr "Logo skupiny"
-
-#~ msgid "Profile"
-#~ msgstr "Profil"
-
 #~ msgid "0 chars read!"
 #~ msgstr "Přečteno 0 znaků!"
-
-#~ msgid "Where are parameters?"
-#~ msgstr "Kde jsou parametry?"
-
-#~ msgid "Where is ringtone filename?"
-#~ msgstr "Kde je jméno souboru vyzvánění?"
-
-#~ msgid "Where is logo filename?"
-#~ msgstr "Kde je jméno souboru loga?"
-
-#~ msgid "Where is number of frames?"
-#~ msgstr "Kde je počet rámců?"
-
-#~ msgid "File \"%s\"\n"
-#~ msgstr "Soubor \"%s\"\n"
-
-#~ msgid "Unknown GSM network code (\"%s\")\n"
-#~ msgstr "Neznámý kód GSM sítě (\"%s\")\n"
-
-#~ msgid "Unknown parameter (\"%c\")\n"
-#~ msgstr "Neznámý parametr (\"%c\")\n"
-
-#~ msgid "No network code"
-#~ msgstr "Žádný kód sítě"
 
 #~ msgid "Delivery report: %s to %s"
 #~ msgstr "Doručenka: %s pro %s"
 
 #~ msgid "Received"
 #~ msgstr "Doručená"
-
-#~ msgid "Can't find file \"%s\"\n"
-#~ msgstr "Nepodařilo se nalézt soubor \"%s\"\n"
 
 #~ msgid "Log filename is \"%s\"\n"
 #~ msgstr "Jméno logu je \"%s\"\n"
@@ -4561,10 +4984,6 @@ msgstr "Chyba při zápisu."
 #, fuzzy
 #~ msgid "%s\n"
 #~ msgstr "Text : \"%s\"n"
-
-#, fuzzy
-#~ msgid " %02i:%02i:%02i\n"
-#~ msgstr "Čas  : %02d:%02d\n"
 
 #, fuzzy
 #~ msgid "Help: %s\n"

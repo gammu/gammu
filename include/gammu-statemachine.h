@@ -70,10 +70,6 @@ typedef struct {
 	 */
 	char *DebugFile;
 	/**
-	 * Name of localisation file
-	 */
-	char *Localize;
-	/**
 	 * Display something during start ?
 	 */
 	char *StartInfo;

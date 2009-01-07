@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-06 15:17+0100\n"
+"POT-Creation-Date: 2009-01-07 17:04+0100\n"
 "PO-Revision-Date: 2008-08-13 11:41+0200\n"
 "Last-Translator: Alessio Gaeta <alga777@libero.it>\n"
 "Language-Team: Language =it\n"
@@ -16,406 +16,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Pootle 1.1.0\n"
 
-#: common/gsmcomon.c:92
-msgid "No error."
-msgstr "Nessun errore."
-
-#: common/gsmcomon.c:93
-msgid "Error opening device. Unknown/busy or no permissions."
-msgstr ""
-"Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
-"permessi."
-
-#: common/gsmcomon.c:94
-msgid "Error opening device, it is locked."
-msgstr "Errore durante l'apertura del dispositivo, è bloccato."
-
-#: common/gsmcomon.c:95
-msgid "Error opening device, it doesn't exist."
-msgstr "Errore durante l'apertura del dispositivo, non esiste."
-
-#: common/gsmcomon.c:96
-msgid "Error opening device, it is already opened by other application."
-msgstr ""
-"Errore durante l'apertura del dispositivo, è stato già aperto da un'altra "
-"applicazione."
-
-#: common/gsmcomon.c:97
-msgid "Error opening device, you don't have permissions."
-msgstr "Errore durante l'apertura del dispositivo, non hai i permessi."
-
-#: common/gsmcomon.c:98
-msgid "Error opening device. No required driver in operating system."
-msgstr ""
-"Errore durante l'apertura del dispositivo. Manca il driver necessario nel "
-"sistema operativo."
-
-#: common/gsmcomon.c:99
-msgid "Error opening device. Some hardware not connected/wrong configured."
-msgstr ""
-"Errore durante l'apertura del dispositivo. Una periferica non è connessa o è "
-"configurata male."
-
-#: common/gsmcomon.c:100
-msgid "Error setting device DTR or RTS."
-msgstr "Errore impostando DTS o RTS sulla periferica."
-
-#: common/gsmcomon.c:101
-msgid "Error setting device speed. Maybe speed not supported."
-msgstr ""
-"Errore nel cambiare la velocità del dispositivo. Forse la velocità non è "
-"supportata."
-
-#: common/gsmcomon.c:102
-msgid "Error writing device."
-msgstr "Errore durante la scrittura sul dispositivo."
-
-#: common/gsmcomon.c:103
-msgid "Error during reading device."
-msgstr "Errore durante la lettura dal dispositivo."
-
-#: common/gsmcomon.c:104
-msgid "Can't set parity on device."
-msgstr "Impossibile impostare la parità sul dispositivo."
-
-#: common/gsmcomon.c:105
-msgid "No response in specified timeout. Probably phone not connected."
-msgstr ""
-"Nessuna risposta nel tempo specificato. Probabilmente il telefono non è "
-"connesso."
-
-#: common/gsmcomon.c:106
-#, fuzzy
-msgid ""
-"Frame not requested right now. See <http://cihar.com/gammu/report> for "
-"information how to report it."
-msgstr ""
-"Risposta sconosciuta dal telefono. Vedere <http://cihar.com/gammu/report> "
-"per informazioni su come notificarlo."
-
-#: common/gsmcomon.c:107
-msgid ""
-"Unknown response from phone. See <http://cihar.com/gammu/report> for "
-"information how to report it."
-msgstr ""
-"Risposta sconosciuta dal telefono. Vedere <http://cihar.com/gammu/report> "
-"per informazioni su come notificarlo."
-
-#: common/gsmcomon.c:108
-#, fuzzy
-msgid ""
-"Unknown frame. See <http://cihar.com/gammu/report> for information how to "
-"report it."
-msgstr ""
-"Risposta sconosciuta dal telefono. Vedere <http://cihar.com/gammu/report> "
-"per informazioni su come notificarlo."
-
-#: common/gsmcomon.c:109
-msgid "Unknown connection type string. Check config file."
-msgstr ""
-"Tipo di connessione sconosciuto. Controllare il file di configurazione."
-
-#: common/gsmcomon.c:110
-msgid "Unknown model type string. Check config file."
-msgstr "Modello sconosciuto. Controllare il file di configurazione."
-
-#: common/gsmcomon.c:111
-msgid ""
-"Some functions not available for your system (disabled in config or not "
-"written)."
-msgstr ""
-"Alcune funzioni non sono disponibili per il tuo sistema (disabilitate nel "
-"file di configurazione o non specificate)."
-
-#: common/gsmcomon.c:112
-msgid "Function not supported by phone."
-msgstr "Funzione non supportata dal telefono."
-
-#: common/gsmcomon.c:113 gammu/memory.c:109 gammu/misc.c:1696
-#: gammu/misc.c:2049
-msgid "Entry is empty"
-msgstr "Locazione vuota"
-
-#: common/gsmcomon.c:114
-msgid "Security error. Maybe no PIN?"
-msgstr "Errore di sicurezza. Forse non c'è PIN?"
-
-#: common/gsmcomon.c:115
-#, fuzzy
-msgid "Invalid location. Maybe too high?"
-msgstr "Locazione non valida. Forse troppo alta?"
-
-#: common/gsmcomon.c:116
-msgid "Function not implemented. Help required."
-msgstr "Funzione non implementata. Serve aiuto."
-
-#: common/gsmcomon.c:117
-msgid "Memory full."
-msgstr "Memoria piena."
-
-#: common/gsmcomon.c:118
-msgid "Unknown error."
-msgstr "Errore sconosciuto."
-
-#: common/gsmcomon.c:119
-#, fuzzy
-msgid "Can't open specified file. Read only?"
-msgstr "Impossibile aprire il file specificato. E' a sola lettura?"
-
-#: common/gsmcomon.c:120
-msgid "More memory required..."
-msgstr "Serve più memoria..."
-
-#: common/gsmcomon.c:121
-msgid "Permission to file/device required..."
-msgstr "Servono i permessi per il file/dispositivo.."
-
-#: common/gsmcomon.c:122
-msgid "Empty SMSC number. Set in phone or use -smscnumber."
-msgstr ""
-
-#: common/gsmcomon.c:123
-#, fuzzy
-msgid "You're inside phone menu (maybe editing?). Leave it and try again."
-msgstr "Siete dentro il menu del telefono. Uscite e riprovate."
-
-#: common/gsmcomon.c:124
-#, fuzzy
-msgid "Phone is not connected."
-msgstr "Telefono non connesso"
-
-#: common/gsmcomon.c:125
-msgid "Function is during writing. If want help, please contact with authors."
-msgstr ""
-
-#: common/gsmcomon.c:126
-msgid "Phone is disabled and connected to charger."
-msgstr "Il telefono è disabilitato e connesso al caricabatterie."
-
-#: common/gsmcomon.c:127
-#, fuzzy
-msgid "File format not supported by Gammu."
-msgstr "Formato del file non supportato da Gammu."
-
-#: common/gsmcomon.c:128
-msgid ""
-"Nobody is perfect, some bug appeared in protocol implementation. Please "
-"contact authors."
-msgstr ""
-"Nessuno è perfetto! Qualche bug si è manifestato nel protocollo di "
-"comunicazione. Contattare gli sviluppatori."
-
-#: common/gsmcomon.c:129
-msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
-msgstr ""
-"Trasferimento annullato dal telefono. Potrebbe essere stato premuto il tasto "
-"Annulla del telefono."
-
-#: common/gsmcomon.c:130
-msgid "Phone module need to send another answer frame."
-msgstr ""
-
-#: common/gsmcomon.c:131
-msgid "Current connection type doesn't support called function."
-msgstr "La connessione corrente non supporta la funzione richiesta."
-
-#: common/gsmcomon.c:132
-#, fuzzy
-msgid "CRC error."
-msgstr "Nessun errore."
-
-#: common/gsmcomon.c:133
-msgid "Invalid date or time specified."
-msgstr "Data o ora non validi."
-
-#: common/gsmcomon.c:134
-msgid "Phone memory error, maybe it is read only."
-msgstr "Errore nella memoria del telefono, forse è a sola lettura."
-
-#: common/gsmcomon.c:135
-msgid "Invalid data given to phone."
-msgstr "Dati non validi inviati al telefono."
-
-#: common/gsmcomon.c:136
-msgid "File with specified name already exist."
-msgstr "Esiste già un file col nome specificato."
-
-#: common/gsmcomon.c:137
-msgid "File with specified name doesn't exist."
-msgstr "Non esiste un file col nome specificato."
-
-#: common/gsmcomon.c:138
-msgid "You have to give folder name and not file name."
-msgstr "Occorre inserire il nome di una cartella, non di un file."
-
-#: common/gsmcomon.c:139
-msgid "You have to give file name and not folder name."
-msgstr "Occorre inserire il nome di un file, non di una cartella."
-
-#: common/gsmcomon.c:140
-msgid "Can not access SIM card."
-msgstr "Impossibile accedere alla carta SIM."
-
-#: common/gsmcomon.c:141
-msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
-msgstr ""
-
-#: common/gsmcomon.c:142
-msgid "Only part of folder has been listed."
-msgstr ""
-
-#: common/gsmcomon.c:143
-msgid "Folder must be empty."
-msgstr ""
-
-#: common/gsmcomon.c:144
-msgid "Data were converted."
-msgstr ""
-
-#: common/gsmcomon.c:145
-msgid "Gammu is not configured."
-msgstr ""
-
-#: common/gsmcomon.c:146
-#, fuzzy
-msgid "Wrong folder used."
-msgstr ", cartella Ricevuti"
-
-#: common/gsmcomon.c:147
-#, fuzzy
-msgid "Internal phone error."
-msgstr "Errore sconosciuto."
-
-#: common/gsmcomon.c:148
-#, fuzzy
-msgid "Error writing file to disk."
-msgstr "Errore durante la scrittura sul dispositivo."
-
-#: common/gsmcomon.c:149
-msgid "No such section exists."
-msgstr ""
-
-#: common/gsmcomon.c:150
-#, fuzzy
-msgid "Using default values."
-msgstr " (nome predefinito)"
-
-#: common/gsmcomon.c:151
-msgid "Corrupted data returned by phone."
-msgstr ""
-
-#: common/gsmcomon.c:152
-msgid "Bad feature string in configuration."
-msgstr ""
-
-#: common/gsmcomon.c:153
-msgid "Desired functionality has been disabled on compile time."
-msgstr ""
-
-#: common/gsmcomon.c:154
-msgid "Bluetooth configuration requires channel option."
-msgstr ""
-
-#: common/gsmcomon.c:187
-#, fuzzy
-msgid "Unknown error description."
-msgstr "Errore sconosciuto."
-
-#: common/phone/nokia/dct3/n6110.c:1955 gammu/misc.c:1898
-#, fuzzy
-msgid "Personal"
-msgstr "Personale\n"
-
-#: common/phone/nokia/dct3/n6110.c:1957 common/phone/nokia/nfunc.c:1105
-msgid "Car"
-msgstr ""
-
-#: common/phone/nokia/dct3/n6110.c:1959 common/phone/nokia/nfunc.c:1107
-msgid "Headset"
-msgstr ""
-
-#: common/phone/nokia/dct3/n6110.c:1965 common/phone/nokia/nfunc.c:1095
-#, fuzzy
-msgid "General"
-msgstr "Numero principale "
-
-#: common/phone/nokia/dct3/n6110.c:1967 common/phone/nokia/nfunc.c:1097
-msgid "Silent"
-msgstr "Silenzioso"
-
-#: common/phone/nokia/dct3/n6110.c:1969
-msgid "Discreet"
-msgstr "Toni bassi"
-
-#: common/phone/nokia/dct3/n6110.c:1971
-msgid "Loud"
-msgstr "Toni alti"
-
-#: common/phone/nokia/dct3/n6110.c:1973
-msgid "My style"
-msgstr ""
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:533 gammu/message.c:773
-msgid "SIM"
-msgstr ""
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:534 common/phone/pfunc.c:40
-msgid "Inbox"
-msgstr "Ricevuti"
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:535
-msgid "Sent items"
-msgstr ""
-
-#: common/phone/nokia/dct4s40/6510/n6510.c:536
-msgid "Saved items"
-msgstr ""
-
-#: common/phone/nokia/nfunc.c:929
-msgid "Family"
-msgstr "Famiglia"
-
-#: common/phone/nokia/nfunc.c:931
-msgid "VIP"
-msgstr ""
-
-#: common/phone/nokia/nfunc.c:933
-msgid "Friends"
-msgstr "Amici"
-
-#: common/phone/nokia/nfunc.c:935
-msgid "Colleagues"
-msgstr "Colleghi"
-
-#: common/phone/nokia/nfunc.c:937
-msgid "Other"
-msgstr "Altri"
-
-#: common/phone/nokia/nfunc.c:1099 gammu/calendar.c:44 gammu/calendar.c:693
-#, fuzzy
-msgid "Meeting"
-msgstr "Cancellazione delle vecchie stazioni FM: "
-
-#: common/phone/nokia/nfunc.c:1101
-#, fuzzy
-msgid "Outdoor"
-msgstr "Messaggi inviati"
-
-#: common/phone/nokia/nfunc.c:1103 gammu/message.c:175
-#, c-format
-msgid "Pager"
-msgstr ""
-
-#: common/phone/pfunc.c:41
-msgid "Outbox"
-msgstr "Messaggi inviati"
-
 #: gammu/backup.c:31 gammu/backup.c:50 gammu/backup.c:68 gammu/backup.c:87
+#: helper/message-cmdline.c:253 helper/message-cmdline.c:276
+#: helper/message-cmdline.c:319 helper/message-cmdline.c:355
+#: helper/message-cmdline.c:377
 #, fuzzy
 msgid "Where is backup filename and location?"
 msgstr "Dov'è la posizione ed il nome file del backup ?\n"
 
-#: gammu/backup.c:42
+#: gammu/backup.c:42 helper/message-cmdline.c:366
 #, fuzzy
 msgid "Calendar note not found in file"
 msgstr "Elementi dell'agenda non trovati nel file\n"
@@ -430,7 +39,7 @@ msgstr "Segnalibro WAP non trovato nel file\n"
 msgid "Note not found in file"
 msgstr "Nota non trovata nel file\n"
 
-#: gammu/backup.c:98
+#: gammu/backup.c:98 helper/message-cmdline.c:388
 #, fuzzy
 msgid "ToDo note not found in file"
 msgstr "Nota non trovata nel file\n"
@@ -440,7 +49,8 @@ msgstr "Nota non trovata nel file\n"
 msgid "Where is backup filename and location and memory type?"
 msgstr "Dove sono il nome file, posizione e tipo di memoria del backup ?\n"
 
-#: gammu/backup.c:118 gammu/backup.c:128
+#: gammu/backup.c:118 gammu/backup.c:128 helper/message-cmdline.c:411
+#: helper/message-cmdline.c:421
 #, fuzzy
 msgid "Phonebook entry not found in file"
 msgstr "Nome della rubrica non trovato nel file\n"
@@ -460,7 +70,7 @@ msgstr "Parametro sconosciuto \"%s\""
 msgid "Error while opening file for writing!\n"
 msgstr "Errore durante la scrittura sul dispositivo."
 
-#: gammu/backup.c:155 gammu/files.c:439
+#: gammu/backup.c:155 gammu/files.c:439 helper/message-cmdline.c:951
 #, fuzzy
 msgid "Error while writing file!\n"
 msgstr "Errore durante la scrittura sul dispositivo."
@@ -971,6 +581,11 @@ msgstr "Promemoria (Appuntamento)\n"
 msgid "Call"
 msgstr "Chiamata\n"
 
+#: gammu/calendar.c:44 gammu/calendar.c:693
+#, fuzzy
+msgid "Meeting"
+msgstr "Cancellazione delle vecchie stazioni FM: "
+
 #: gammu/calendar.c:47 gammu/calendar.c:696
 #, fuzzy
 msgid "Birthday (Anniversary)"
@@ -1091,7 +706,7 @@ msgstr "Normale\n"
 msgid "Stop"
 msgstr ""
 
-#: gammu/calendar.c:155 gammu/calendar.c:823
+#: gammu/calendar.c:155 gammu/calendar.c:823 helper/memory-display.c:35
 msgid "Last modified"
 msgstr ""
 
@@ -1112,6 +727,7 @@ msgstr "Senza allarme: %s\n"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:828
 #: gammu/calendar.c:1044 gammu/message.c:172 gammu/misc.c:944
+#: helper/memory-display.c:113 helper/message-display.c:415
 #, c-format
 msgid "Text"
 msgstr "Testo"
@@ -1121,7 +737,7 @@ msgstr "Testo"
 msgid "Description"
 msgstr "Locazione    : \"%s\"\n"
 
-#: gammu/calendar.c:212 gammu/calendar.c:892
+#: gammu/calendar.c:212 gammu/calendar.c:892 helper/memory-display.c:119
 msgid "LUID"
 msgstr ""
 
@@ -1133,7 +749,7 @@ msgstr ""
 msgid "Location"
 msgstr "Locazione %i\n"
 
-#: gammu/calendar.c:227 gammu/calendar.c:833
+#: gammu/calendar.c:227 gammu/calendar.c:833 helper/memory-display.c:56
 msgid "Private"
 msgstr ""
 
@@ -1408,7 +1024,8 @@ msgstr "Normale\n"
 msgid "Completed"
 msgstr "Completato   : %s\n"
 
-#: gammu/calendar.c:843 gammu/calendar.c:848
+#: gammu/calendar.c:843 gammu/calendar.c:848 helper/memory-display.c:39
+#: helper/memory-display.c:49 helper/memory-display.c:51
 #, fuzzy
 msgid "Category"
 msgstr "Categoria    : %i\n"
@@ -1890,17 +1507,17 @@ msgstr ""
 msgid "%i phone number types\n"
 msgstr ", memoria telefono"
 
-#: gammu/depend/nokia/dct4.c:1400
+#: gammu/depend/nokia/dct4.c:1400 helper/memory-display.c:110
 #, fuzzy
 msgid "Home number"
 msgstr "Casa              "
 
-#: gammu/depend/nokia/dct4.c:1401
+#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:107
 #, fuzzy
 msgid "Mobile number"
 msgstr "Numero cellulare  "
 
-#: gammu/depend/nokia/dct4.c:1402
+#: gammu/depend/nokia/dct4.c:1402 helper/memory-display.c:109
 #, fuzzy
 msgid "Fax number"
 msgstr "   Numero     : %s\n"
@@ -2059,6 +1676,7 @@ msgid "What file type (\"%s\") ?\n"
 msgstr "Che tipo di file (\"%s\") ?\n"
 
 #: gammu/files.c:731 gammu/misc.c:1146 gammu/nokia.c:929
+#: helper/message-cmdline.c:1135
 #, fuzzy
 msgid "Parameter missing!"
 msgstr "Manca un parametro...\n"
@@ -2083,13 +1701,14 @@ msgstr "Stato della rete  : "
 msgid "Unknown country name: %s."
 msgstr "Errore sconosciuto."
 
-#: gammu/gammu.c:115 gammu/gammu.c:752 gammu/misc.c:45
+#: gammu/gammu.c:115 gammu/gammu.c:746 gammu/misc.c:45
 #, fuzzy
 msgid "Network"
 msgstr "Codice rete assente\n"
 
 #: gammu/gammu.c:115 gammu/message.c:613 gammu/misc.c:782 gammu/misc.c:947
 #: gammu/misc.c:1659 gammu/misc.c:1698 gammu/misc.c:1951
+#: helper/memory-display.c:120 helper/message-display.c:242
 msgid "Name"
 msgstr ""
 
@@ -2118,158 +1737,158 @@ msgstr ", memoria telefono"
 msgid "Miscellaneous"
 msgstr "Memo (Varie)\n"
 
-#: gammu/gammu.c:338
+#: gammu/gammu.c:332
 #, c-format
 msgid "There is newer stable Gammu version available! (%s instead of %s)\n"
 msgstr ""
 
-#: gammu/gammu.c:356
+#: gammu/gammu.c:350
 #, c-format
 msgid "There is newer testing Gammu version available! (%s instead of %s)\n"
 msgstr ""
 
-#: gammu/gammu.c:369
+#: gammu/gammu.c:363
 msgid ""
 "This is free software.  You may redistribute copies of it under the terms of"
 msgstr ""
 
-#: gammu/gammu.c:370
+#: gammu/gammu.c:364
 msgid "the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."
 msgstr ""
 
-#: gammu/gammu.c:371
+#: gammu/gammu.c:365
 msgid "There is NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
-#: gammu/gammu.c:404
+#: gammu/gammu.c:398
 #, fuzzy
 msgid "standard input"
 msgstr "Normale\n"
 
-#: gammu/gammu.c:415
+#: gammu/gammu.c:409
 #, c-format
 msgid "Batch file could not be opened: %s\n"
 msgstr ""
 
-#: gammu/gammu.c:425
+#: gammu/gammu.c:419
 msgid "Error reading batch! Terminating.\n"
 msgstr ""
 
-#: gammu/gammu.c:456
+#: gammu/gammu.c:450
 #, c-format
 msgid "Executing batch \"%s\" - command %i: %s"
 msgstr ""
 
-#: gammu/gammu.c:479
+#: gammu/gammu.c:473
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
 msgstr ""
 
-#: gammu/gammu.c:486
+#: gammu/gammu.c:480
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
 msgstr ""
 
-#: gammu/gammu.c:732
+#: gammu/gammu.c:726
 #, fuzzy
 msgid "Calls"
 msgstr "Chiamata\n"
 
-#: gammu/gammu.c:733
+#: gammu/gammu.c:727
 msgid "SMS and EMS"
 msgstr ""
 
-#: gammu/gammu.c:734
+#: gammu/gammu.c:728
 msgid "Memory (phonebooks and calls)"
 msgstr ""
 
-#: gammu/gammu.c:735
+#: gammu/gammu.c:729
 msgid "Filesystem"
 msgstr ""
 
-#: gammu/gammu.c:736
+#: gammu/gammu.c:730
 msgid "Logo and pictures"
 msgstr ""
 
-#: gammu/gammu.c:737
+#: gammu/gammu.c:731
 #, fuzzy
 msgid "Ringtones"
 msgstr "Suoneria \"%s\"\n"
 
-#: gammu/gammu.c:738
+#: gammu/gammu.c:732
 msgid "Calendar notes"
 msgstr ""
 
-#: gammu/gammu.c:739
+#: gammu/gammu.c:733
 msgid "To do lists"
 msgstr ""
 
-#: gammu/gammu.c:740
+#: gammu/gammu.c:734
 msgid "Notes"
 msgstr ""
 
-#: gammu/gammu.c:741
+#: gammu/gammu.c:735
 msgid "Date, time and alarms"
 msgstr ""
 
-#: gammu/gammu.c:742
+#: gammu/gammu.c:736
 msgid "Categories"
 msgstr ""
 
-#: gammu/gammu.c:744
+#: gammu/gammu.c:738
 msgid "Backing up and restoring"
 msgstr ""
 
-#: gammu/gammu.c:747
+#: gammu/gammu.c:741
 #, fuzzy
 msgid "Nokia specific"
 msgstr "Profilo Nokia"
 
-#: gammu/gammu.c:750
+#: gammu/gammu.c:744
 msgid "Siemens specific"
 msgstr ""
 
-#: gammu/gammu.c:753
+#: gammu/gammu.c:747
 #, fuzzy
 msgid "WAP settings and bookmarks"
 msgstr "Cancello i vecchi bookmarks: "
 
-#: gammu/gammu.c:754
+#: gammu/gammu.c:748
 msgid "MMS and MMS settings"
 msgstr ""
 
-#: gammu/gammu.c:755
+#: gammu/gammu.c:749
 #, fuzzy
 msgid "Phone tests"
 msgstr "Data ed ora impostati nel telefono: %s\n"
 
-#: gammu/gammu.c:756
+#: gammu/gammu.c:750
 msgid "FM radio"
 msgstr ""
 
-#: gammu/gammu.c:757
+#: gammu/gammu.c:751
 msgid "Phone information"
 msgstr ""
 
-#: gammu/gammu.c:758
+#: gammu/gammu.c:752
 msgid "Phone settings"
 msgstr ""
 
-#: gammu/gammu.c:760
+#: gammu/gammu.c:754
 msgid "Dumps decoding"
 msgstr ""
 
-#: gammu/gammu.c:762
+#: gammu/gammu.c:756
 msgid "Functions that don't fit elsewhere"
 msgstr ""
 
-#: gammu/gammu.c:763
+#: gammu/gammu.c:757
 msgid "Gammu information"
 msgstr ""
 
-#: gammu/gammu.c:779
+#: gammu/gammu.c:773
 #, fuzzy
 msgid ""
 "Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> "
@@ -2278,38 +1897,38 @@ msgstr ""
 "Utilizzo: gammu [confign] [nothing|text|textall|binary|errors] [opzioni]\n"
 "\n"
 
-#: gammu/gammu.c:780
+#: gammu/gammu.c:774
 msgid ""
 "First parameter optionally specifies which config section to use (all are "
 "probed by default)."
 msgstr ""
 
-#: gammu/gammu.c:781
+#: gammu/gammu.c:775
 msgid ""
 "Use only number of config section, so if config section is [gammu42], use 42."
 msgstr ""
 
-#: gammu/gammu.c:782
+#: gammu/gammu.c:776
 msgid ""
 "Second parameter optionally controls debug level, next one specifies actions."
 msgstr ""
 
-#: gammu/gammu.c:784
+#: gammu/gammu.c:778
 msgid "Commands can be specified with or without leading --."
 msgstr ""
 
-#: gammu/gammu.c:787
+#: gammu/gammu.c:781
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
 msgstr ""
 
-#: gammu/gammu.c:885
+#: gammu/gammu.c:879
 #, fuzzy
 msgid "Unknown help topic specified!"
 msgstr "L'argomento specificato non esiste!\n"
 
-#: gammu/gammu.c:889
+#: gammu/gammu.c:883
 #, fuzzy, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
@@ -2318,64 +1937,64 @@ msgstr ""
 "Parametri di Gammu, argomento : %s\n"
 "\n"
 
-#: gammu/gammu.c:980
+#: gammu/gammu.c:974
 #, fuzzy, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "Servono più parametri\n"
 
-#: gammu/gammu.c:983
+#: gammu/gammu.c:977
 #, fuzzy, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "Servono più parametri\n"
 
-#: gammu/gammu.c:989 gammu/gammu.c:1010
+#: gammu/gammu.c:983 gammu/gammu.c:1004
 #, fuzzy
 msgid "Parameters help"
 msgstr ""
 "Parametri di Gammu, argomento : %s\n"
 "\n"
 
-#: gammu/gammu.c:1001
+#: gammu/gammu.c:995
 #, fuzzy, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "I parametri sono troppo pochi!\n"
 
-#: gammu/gammu.c:1004
+#: gammu/gammu.c:998
 #, fuzzy, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "I parametri sono troppo pochi!\n"
 
-#: gammu/gammu.c:1031
+#: gammu/gammu.c:1025
 #, fuzzy
 msgid "Bad option!"
 msgstr "Mese non valido!"
 
-#: gammu/gammu.c:1069 gammu/gammu.c:1183
+#: gammu/gammu.c:1063 gammu/gammu.c:1177
 #, fuzzy
 msgid "Too few parameters!"
 msgstr "I parametri sono troppo pochi!\n"
 
-#: gammu/gammu.c:1094
+#: gammu/gammu.c:1088
 #, fuzzy
 msgid "Configuration could not be parsed!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/gammu.c:1096
+#: gammu/gammu.c:1090
 #, fuzzy
 msgid "No configuration file found!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/gammu.c:1109
+#: gammu/gammu.c:1103
 #, c-format
 msgid "Failed to read [gammu%d] from gammurc!\n"
 msgstr ""
 
-#: gammu/gammu.c:1111 gammu/gammu.c:1122
+#: gammu/gammu.c:1105 gammu/gammu.c:1116
 #, fuzzy
 msgid "No configuration read, using builtin defaults!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/gammu.c:1189
+#: gammu/gammu.c:1183
 #, fuzzy, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -2395,6 +2014,7 @@ msgid "Memory %s, Location %i\n"
 msgstr "Memoria %s, locazione %i\n"
 
 #: gammu/memory.c:75 gammu/misc.c:587 gammu/misc.c:616
+#: helper/message-cmdline.c:884
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
 msgstr "Parametro sconosciuto (\"%s\")\n"
@@ -2416,6 +2036,10 @@ msgid ""
 msgstr ""
 "ATTENZIONE: i nomi inseriti saranno vuoti. Aggiornate il firmware ad una "
 "versione > 4.06\n"
+
+#: gammu/memory.c:109 gammu/misc.c:1696 gammu/misc.c:2049
+msgid "Entry is empty"
+msgstr "Locazione vuota"
 
 #: gammu/memory.c:120
 #, fuzzy, c-format
@@ -2456,7 +2080,8 @@ msgstr "Canale %i, testo \"%s\"\n"
 msgid "USSD received"
 msgstr "SMS ricevuto\n"
 
-#: gammu/message.c:76
+#: gammu/message.c:76 helper/message-display.c:159
+#: helper/message-display.c:265
 #, fuzzy
 msgid "Status"
 msgstr "Normale\n"
@@ -2513,6 +2138,11 @@ msgstr ""
 #: gammu/message.c:174
 #, c-format
 msgid "Email"
+msgstr ""
+
+#: gammu/message.c:175
+#, c-format
+msgid "Pager"
 msgstr ""
 
 #: gammu/message.c:179
@@ -2695,6 +2325,10 @@ msgstr "Sto salvando il messaggio %i/%i\n"
 #, fuzzy, c-format
 msgid "Saved in folder \"%s\", location %i"
 msgstr "Sto spedendo il messaggio dalla cartella \"%s\", posizione %i\n"
+
+#: gammu/message.c:773
+msgid "SIM"
+msgstr ""
 
 #: gammu/message.c:775
 #, fuzzy
@@ -3166,6 +2800,7 @@ msgid " (default)"
 msgstr " (predefinito)"
 
 #: gammu/misc.c:887 gammu/misc.c:889 gammu/misc.c:902 gammu/misc.c:909
+#: helper/memory-display.c:85
 #, fuzzy
 msgid "Ringtone"
 msgstr "Suoneria \"%s\"\n"
@@ -3506,7 +3141,7 @@ msgstr "Logo di accensione"
 msgid "Operator logo"
 msgstr "Logo operatore"
 
-#: gammu/misc.c:1544
+#: gammu/misc.c:1544 helper/message-display.c:414
 #, c-format
 msgid "Picture Image"
 msgstr "Messaggio con disegno"
@@ -3579,7 +3214,7 @@ msgstr "Profilo Nokia"
 msgid " (Car kit profile)"
 msgstr "Profilo Nokia"
 
-#: gammu/misc.c:1821
+#: gammu/misc.c:1821 helper/memory-display.c:90
 #, fuzzy
 msgid "Ringtone ID"
 msgstr "Suoneria \"%s\"\n"
@@ -3629,7 +3264,7 @@ msgstr "Tastiera bloccata\n"
 msgid "Warning (games) tones"
 msgstr "Toni di avviso        : "
 
-#: gammu/misc.c:1863
+#: gammu/misc.c:1863 helper/message-display.c:410
 #, fuzzy
 msgid "Screen saver"
 msgstr "Numero screen saver   : "
@@ -3713,6 +3348,11 @@ msgstr "Normale\n"
 #, fuzzy
 msgid "Special"
 msgstr "Speciale\n"
+
+#: gammu/misc.c:1898
+#, fuzzy
+msgid "Personal"
+msgstr "Personale\n"
 
 #: gammu/misc.c:1902
 msgid "On"
@@ -3855,7 +3495,7 @@ msgstr ""
 msgid "voice"
 msgstr "voce"
 
-#: gammu/misc.c:2122 gammu/misc.c:2133
+#: gammu/misc.c:2122 gammu/misc.c:2133 helper/message-display.c:85
 #, c-format
 msgid "fax"
 msgstr ""
@@ -4025,541 +3665,1112 @@ msgstr "Locazione %i, cartella \"%s\""
 msgid "Error creating thread\n"
 msgstr "Errore durante la scrittura sul dispositivo."
 
+#: helper/formats.h:2
+#, fuzzy, c-format
+msgid "%d second"
+msgid_plural "%d seconds"
+msgstr[0] "5 secondi\n"
+msgstr[1] "5 secondi\n"
+
+#: helper/formats.h:3
+#, fuzzy, c-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] "2 minuti\n"
+msgstr[1] "2 minuti\n"
+
+#: helper/formats.h:4
+#, fuzzy, c-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] "1 ora"
+msgstr[1] "1 ora"
+
+#: helper/formats.h:5
+#, fuzzy, c-format
+msgid "%d day"
+msgid_plural "%d days"
+msgstr[0] "Venerdì"
+msgstr[1] "Venerdì"
+
+#: helper/formats.h:6
+#, fuzzy, c-format
+msgid "%d week"
+msgid_plural "%d weeks"
+msgstr[0] "Una settimana"
+msgstr[1] "Una settimana"
+
+#: helper/formats.h:7
+#, fuzzy, c-format
+msgid "%d year"
+msgid_plural "%d years"
+msgstr[0] "%d, giorno "
+msgstr[1] "%d, giorno "
+
+#: helper/memory-display.c:29
+#, fuzzy, c-format
+msgid "Call length      : %02i:%02i:%02i\n"
+msgstr "Orario : %s\n"
+
+#: helper/memory-display.c:32
 #, fuzzy
-#~ msgid "Error"
-#~ msgstr "Errore\n"
+msgid "Date and time"
+msgstr "Data ed ora      : %s\n"
+
+#: helper/memory-display.c:60 helper/memory-display.c:74
+#, fuzzy
+msgid "Caller group"
+msgstr "Gruppi chiamante\n"
+
+#: helper/memory-display.c:61
+msgid "Caller group number too high, please increase buffer in sources!"
+msgstr ""
+
+#: helper/memory-display.c:94
+#, fuzzy
+msgid "User ID"
+msgstr "UDH Utente"
+
+#: helper/memory-display.c:97
+#, fuzzy
+msgid "Picture name"
+msgstr "Messaggio con disegno"
+
+#: helper/memory-display.c:100
+#, fuzzy
+msgid "Picture ID"
+msgstr "Messaggio con disegno"
+
+#: helper/memory-display.c:103
+#, fuzzy
+msgid "Photo"
+msgstr ", memoria telefono"
+
+#: helper/memory-display.c:103
+msgid "Displaying not supported"
+msgstr ""
+
+#: helper/memory-display.c:105
+msgid "Favorite messaging number"
+msgstr ""
+
+#: helper/memory-display.c:106
+#, fuzzy
+msgid "General number"
+msgstr "Numero principale "
+
+#: helper/memory-display.c:108
+#, fuzzy
+msgid "Work number"
+msgstr "Ufficio           "
+
+#: helper/memory-display.c:111
+#, fuzzy
+msgid "Pager number"
+msgstr "Altro             "
+
+#: helper/memory-display.c:112
+#, fuzzy
+msgid "Other number"
+msgstr "Altro             "
+
+#: helper/memory-display.c:114
+#, fuzzy
+msgid "Snail address"
+msgstr "Indirizzo postale "
+
+#: helper/memory-display.c:115
+#, fuzzy
+msgid "Work snail address"
+msgstr "Indirizzo postale "
+
+#: helper/memory-display.c:116
+#, fuzzy
+msgid "Email address 1"
+msgstr "Indirizzo email 1 "
+
+#: helper/memory-display.c:117
+#, fuzzy
+msgid "Email address 2"
+msgstr "Indirizzo email 2 "
+
+#: helper/memory-display.c:118
+#, fuzzy
+msgid "URL address"
+msgstr "Indirizzo WWW     "
+
+#: helper/memory-display.c:121
+#, fuzzy
+msgid "Last name"
+msgstr "Cognome           "
+
+#: helper/memory-display.c:122
+#, fuzzy
+msgid "First name"
+msgstr "Nome              "
+
+#: helper/memory-display.c:123
+#, fuzzy
+msgid "Formal name"
+msgstr "Nome              "
+
+#: helper/memory-display.c:124
+#, fuzzy
+msgid "Nick name"
+msgstr "Nome              "
+
+#: helper/memory-display.c:125
+#, fuzzy
+msgid "Company"
+msgstr "Organizzazione    "
+
+#: helper/memory-display.c:126
+#, fuzzy
+msgid "Job title"
+msgstr "Lavoro            "
+
+#: helper/memory-display.c:127
+#, fuzzy
+msgid "Street address"
+msgstr "Indirizzo         "
+
+#: helper/memory-display.c:128
+msgid "City"
+msgstr ""
+
+#: helper/memory-display.c:129
+#, fuzzy
+msgid "State"
+msgstr "Normale\n"
+
+#: helper/memory-display.c:130
+#, fuzzy
+msgid "Zip code"
+msgstr "Codice postale    "
+
+#: helper/memory-display.c:131
+#, fuzzy
+msgid "Country"
+msgstr "Regione           "
+
+#: helper/memory-display.c:132
+#, fuzzy
+msgid "Work street address"
+msgstr "Indirizzo         "
+
+#: helper/memory-display.c:133
+#, fuzzy
+msgid "Work city"
+msgstr "Regione           "
+
+#: helper/memory-display.c:134
+#, fuzzy
+msgid "Work state"
+msgstr "Stato della rete  : "
+
+#: helper/memory-display.c:135
+#, fuzzy
+msgid "Work zip code"
+msgstr "Codice postale    "
+
+#: helper/memory-display.c:136
+#, fuzzy
+msgid "Work country"
+msgstr "Regione           "
+
+#: helper/memory-display.c:137
+#, fuzzy
+msgid "Custom text 1"
+msgstr "Nota 1            "
+
+#: helper/memory-display.c:138
+#, fuzzy
+msgid "Custom text 2"
+msgstr "Nota 2            "
+
+#: helper/memory-display.c:139
+#, fuzzy
+msgid "Custom text 3"
+msgstr "Nota 3            "
+
+#: helper/memory-display.c:140
+#, fuzzy
+msgid "Custom text 4"
+msgstr "Nota 4            "
+
+#: helper/memory-display.c:141
+msgid "Push to talk ID"
+msgstr ""
+
+#: helper/memory-display.c:144
+#, fuzzy
+msgid "unknown field type"
+msgstr "sconosiuto %i"
+
+#: helper/message-cmdline.c:99
+#, fuzzy
+msgid "Not enough parameters!"
+msgstr "I parametri sono troppo pochi!\n"
+
+#: helper/message-cmdline.c:133 helper/message-cmdline.c:147
+#, fuzzy
+msgid "Where are parameters?"
+msgstr "I parametri sono troppo pochi!\n"
+
+#: helper/message-cmdline.c:160
+#, fuzzy
+msgid "Where is ringtone filename?"
+msgstr "Dov'è il nome del file della suoneria ?\n"
+
+#: helper/message-cmdline.c:176 helper/message-cmdline.c:192
+#: helper/message-cmdline.c:233
+#, fuzzy
+msgid "Where is logo filename?"
+msgstr "Dov'è il nome del file del logo ?\n"
+
+#: helper/message-cmdline.c:208
+#, fuzzy
+msgid "Where is number of frames?"
+msgstr "Dov'è il numero dei frames ?\n"
+
+#: helper/message-cmdline.c:238
+#, fuzzy, c-format
+msgid "File \"%s\"\n"
+msgstr "Testo  : %s\n"
+
+#: helper/message-cmdline.c:264
+#, fuzzy
+msgid "Bookmark not found in file"
+msgstr "Segnalibro non trovato nel file\n"
+
+#: helper/message-cmdline.c:287
+#, fuzzy
+msgid "WAP settings not found in file"
+msgstr "Settaggi WAP non trovati nel file\n"
+
+#: helper/message-cmdline.c:308
+msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
+msgstr ""
+
+#: helper/message-cmdline.c:330
+#, fuzzy
+msgid "MMS settings not found in file"
+msgstr "Settaggi MMS non trovati nel file\n"
+
+#: helper/message-cmdline.c:344
+msgid "Sorry. No GPRS bearer found in MMS settings"
+msgstr ""
+
+#: helper/message-cmdline.c:399
+#, fuzzy
+msgid "Where is backup filename and location and memory *type?"
+msgstr "Dove sono il nome file, posizione e tipo di memoria del backup ?\n"
+
+#: helper/message-cmdline.c:426
+#, fuzzy, c-format
+msgid "Unknown memory *type: \"%s\"\n"
+msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
+
+#: helper/message-cmdline.c:446
+#, c-format
+msgid "What format of sms (\"%s\") ?\n"
+msgstr "Che formato di sms è (\"%s\") ?\n"
+
+#: helper/message-cmdline.c:921
+#, c-format
+msgid "Unknown GSM network code (\"%s\")\n"
+msgstr "Codice di rete GSM sconosciuto (\"%s\")\n"
+
+#: helper/message-cmdline.c:940
+#, c-format
+msgid "You have to give number between 1 and 7 (\"%s\")\n"
+msgstr "Devi inserire un numero tra 1 e 7 (\"%s\")\n"
+
+#: helper/message-cmdline.c:976
+#, c-format
+msgid "Unknown validity string (\"%s\")\n"
+msgstr "Stringa di validità sconosciuta (\"%s\")\n"
+
+#: helper/message-cmdline.c:1012
+#, c-format
+msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
+msgstr "Il numero di frames EMS dev'essere compreso tra 1 e 4 (\"%s\")\n"
+
+#: helper/message-cmdline.c:1035
+#, c-format
+msgid "Can't open file \"%s\"\n"
+msgstr "Impossibile aprire il file \"%s\"\n"
+
+#: helper/message-cmdline.c:1084
+#, fuzzy, c-format
+msgid "Unknown parameter (\"%c\")\n"
+msgstr "Parametro sconosciuto (\"%s\")\n"
+
+#: helper/message-cmdline.c:1089
+#, fuzzy
+msgid "Last parameter wasn't text"
+msgstr "L'ultimo parametro non era in formato testo\n"
+
+#: helper/message-cmdline.c:1121
+#, fuzzy, c-format
+msgid "Too long SMS name (\"%s\"), ignored\n"
+msgstr "Messaggio SMS\n"
+
+#: helper/message-cmdline.c:1154
+msgid "Enter message text and press ^D:"
+msgstr ""
+
+#: helper/message-cmdline.c:1166
+msgid "No chars read, assuming it is okay!"
+msgstr ""
+
+#: helper/message-cmdline.c:1186
+#, fuzzy
+msgid "No network code"
+msgstr "Codice rete assente\n"
+
+#: helper/message-cmdline.c:1192
+#, fuzzy
+msgid "You have to set network code!"
+msgstr "Codice rete assente\n"
+
+#: helper/message-cmdline.c:1231
+#, fuzzy, c-format
+msgid "Ringtone too long. %i percent part cut\n"
+msgstr "Attenzione: suoneria troppo lunga, tagliata del %i%\n"
+
+#: helper/message-cmdline.c:1242
+#, c-format
+msgid "There is %i SMS packed and %i limit. Exiting\n"
+msgstr "Ci sono %i SMS da inserire ed il limite è %i. Esco\n"
+
+#: helper/message-cmdline.c:1251
+#, fuzzy
+msgid "Use -smscnumber option to give SMSC number"
+msgstr "Usare l'opzione -smscnumber per specificare il numero del centro SMS\n"
+
+#: helper/message-display.c:26
+#, c-format
+msgid "Location %i, folder \"%s\""
+msgstr "Locazione %i, cartella \"%s\""
+
+#: helper/message-display.c:33
+#, fuzzy
+msgid "SIM memory"
+msgstr ", memoria SIM"
+
+#: helper/message-display.c:36
+#, fuzzy
+msgid "phone memory"
+msgstr ", memoria telefono"
+
+#: helper/message-display.c:39
+#, fuzzy
+msgid "phone or SIM memory"
+msgstr ", memoria SIM o del telefono"
+
+#: helper/message-display.c:46
+#, fuzzy
+msgid "Inbox folder"
+msgstr ", cartella Ricevuti"
+
+#: helper/message-display.c:79
+#, fuzzy
+msgid "mobile"
+msgstr "Lavoro            "
+
+#: helper/message-display.c:82
+#, fuzzy
+msgid "work"
+msgstr "Codice rete assente\n"
+
+#: helper/message-display.c:88
+#, fuzzy
+msgid "home"
+msgstr ", memoria telefono"
+
+#: helper/message-display.c:91
+msgid "pager"
+msgstr ""
+
+#: helper/message-display.c:157
+#, fuzzy
+msgid "SMS status report"
+msgstr "Rapporto sullo stato SMS\n"
+
+#: helper/message-display.c:161 helper/message-display.c:173
+#: helper/message-display.c:225 helper/message-display.c:267
+#, c-format
+msgid "Sent"
+msgstr "Inviato"
+
+#: helper/message-display.c:162 helper/message-display.c:268
+#, c-format
+msgid "Read"
+msgstr "Letto"
+
+#: helper/message-display.c:163 helper/message-display.c:269
+#, c-format
+msgid "UnRead"
+msgstr "Non letto"
+
+#: helper/message-display.c:164 helper/message-display.c:270
+#, c-format
+msgid "UnSent"
+msgstr "Non inviato"
+
+#: helper/message-display.c:168 helper/message-display.c:257
+#, fuzzy
+msgid "Remote number"
+msgid_plural "Remote numbers"
+msgstr[0] "Casa              "
+msgstr[1] "Casa              "
+
+#: helper/message-display.c:172 helper/message-display.c:238
+#, fuzzy
+msgid "Reference number"
+msgstr "Numero servizio        : \"%s\"\n"
+
+#: helper/message-display.c:174 helper/message-display.c:222
+#, fuzzy
+msgid "SMSC number"
+msgstr "Centro messaggi   : \"%s\"\n"
+
+#: helper/message-display.c:175
+#, fuzzy
+msgid "SMSC response"
+msgstr "Risposta del SMSC : \"%s\"\n"
+
+#: helper/message-display.c:176
+#, fuzzy
+msgid "Delivery status"
+msgstr "Stato spedizione  : %s\n"
+
+#: helper/message-display.c:177
+msgid "Details"
+msgstr ""
+
+#: helper/message-display.c:180 helper/message-display.c:185
+#, c-format
+msgid "Temporary error, "
+msgstr "Errore temporaneo, "
+
+#: helper/message-display.c:182
+#, c-format
+msgid "Permanent error, "
+msgstr "Errore permanente, "
+
+#: helper/message-display.c:188
+#, c-format
+msgid "SM received by the SME"
+msgstr "Messaggio ricevuto dal SME"
+
+#: helper/message-display.c:189
+#, c-format
+msgid ""
+"SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
+msgstr ""
+"SMS spedito dal SC al SME, ma il SC non è in grado di confermare la consegna"
+
+#: helper/message-display.c:190
+#, c-format
+msgid "SM replaced by the SC"
+msgstr "SM sostituito dal SC"
+
+#: helper/message-display.c:191 helper/message-display.c:207
+#, c-format
+msgid "Congestion"
+msgstr "Congestione"
+
+#: helper/message-display.c:192 helper/message-display.c:208
+#, c-format
+msgid "SME busy"
+msgstr "SME occupato"
+
+#: helper/message-display.c:193 helper/message-display.c:209
+#, c-format
+msgid "No response from SME"
+msgstr "Nessuna risposta dal SME"
+
+#: helper/message-display.c:194 helper/message-display.c:210
+#, c-format
+msgid "Service rejected"
+msgstr "Servizio rifiutato"
+
+#: helper/message-display.c:195
+#, c-format
+msgid "Quality of service not aviable"
+msgstr "Qualità del servizio non disponibile"
+
+#: helper/message-display.c:196 helper/message-display.c:212
+#, c-format
+msgid "Error in SME"
+msgstr "Errore nel SME"
+
+#: helper/message-display.c:197
+#, c-format
+msgid "Remote procedure error"
+msgstr "Errore nella procedura remota"
+
+#: helper/message-display.c:198
+#, c-format
+msgid "Incompatibile destination"
+msgstr "Destinazione non compatibile"
+
+#: helper/message-display.c:199
+#, c-format
+msgid "Connection rejected by SME"
+msgstr "Connessione rifiutata dal SME"
+
+#: helper/message-display.c:200
+#, c-format
+msgid "Not obtainable"
+msgstr "Non ottenibile"
+
+#: helper/message-display.c:201 helper/message-display.c:211
+#, c-format
+msgid "Quality of service not available"
+msgstr "Qualità del servizio non disponibile"
+
+#: helper/message-display.c:202
+#, c-format
+msgid "No internetworking available"
+msgstr "Nessuna connessione disponibile"
+
+#: helper/message-display.c:203
+#, c-format
+msgid "SM Validity Period Expired"
+msgstr "Periodo di validità esaurito"
+
+#: helper/message-display.c:204
+#, c-format
+msgid "SM deleted by originating SME"
+msgstr "Messaggio cancellato dal SME"
+
+#: helper/message-display.c:205
+#, c-format
+msgid "SM Deleted by SC Administration"
+msgstr "Messaggio cancellato dall'amministrazione SC"
+
+#: helper/message-display.c:206
+#, c-format
+msgid "SM does not exist"
+msgstr "Il messaggio non esiste"
+
+#: helper/message-display.c:213
+#, c-format
+msgid "Reserved/Specific to SC: %x"
+msgstr "Riservato/specifico del SC: %x"
+
+#: helper/message-display.c:218 helper/message-display.c:235
+#, fuzzy
+msgid "SMS message"
+msgstr "Messaggio SMS\n"
+
+#: helper/message-display.c:220
+#, fuzzy
+msgid "Saved"
+msgstr "Normale\n"
+
+#: helper/message-display.c:223
+#, c-format
+msgid " (set for reply)"
+msgstr " (impostato per la risposta)"
+
+#: helper/message-display.c:232
+#, fuzzy
+msgid "SMS replacing ID"
+msgstr "ID sostituzione   : %i\n"
+
+#: helper/message-display.c:245
+#, fuzzy
+msgid "Class"
+msgstr "Chiamata\n"
+
+#: helper/message-display.c:247
+#, fuzzy
+msgid "Coding"
+msgstr "Cancellazione delle vecchie stazioni FM: "
+
+#: helper/message-display.c:249
+msgid "Unicode (no compression)"
+msgstr ""
+
+#: helper/message-display.c:250
+msgid "Unicode (compression)"
+msgstr ""
+
+#: helper/message-display.c:251
+msgid "Default GSM alphabet (no compression)"
+msgstr ""
+
+#: helper/message-display.c:252
+msgid "Default GSM alphabet (compression)"
+msgstr ""
+
+#: helper/message-display.c:253
+msgid "8 bit"
+msgstr ""
+
+#: helper/message-display.c:273
+#, fuzzy
+msgid "User Data Header"
+msgstr "Intestazione utente : "
+
+#: helper/message-display.c:275 helper/message-display.c:276
+#, c-format
+msgid "Concatenated (linked) message"
+msgstr "Messaggio concatenato"
+
+#: helper/message-display.c:277
+#, c-format
+msgid "Disables voice indicator"
+msgstr "Disabilita indicatore voce"
+
+#: helper/message-display.c:278
+#, c-format
+msgid "Enables voice indicator"
+msgstr "Abilita indicatore voce"
+
+#: helper/message-display.c:279
+#, c-format
+msgid "Disables fax indicator"
+msgstr "Disabilita indicatore fax"
+
+#: helper/message-display.c:280
+#, c-format
+msgid "Enables fax indicator"
+msgstr "Abilita indicatore fax"
+
+#: helper/message-display.c:281
+#, c-format
+msgid "Disables email indicator"
+msgstr "Disabilita indicatore email"
+
+#: helper/message-display.c:282
+#, c-format
+msgid "Enables email indicator"
+msgstr "Abilita indicatore email"
+
+#: helper/message-display.c:283
+#, c-format
+msgid "Void SMS"
+msgstr "SMS Vuoto"
+
+#: helper/message-display.c:284
+#, c-format
+msgid "Nokia WAP bookmark"
+msgstr "Segnalibro WAP Nokia"
+
+#: helper/message-display.c:285
+#, c-format
+msgid "Nokia operator logo"
+msgstr "Logo operatore Nokia"
+
+#: helper/message-display.c:286
+#, c-format
+msgid "Nokia WAP bookmark or WAP/MMS settings"
+msgstr "Segnalibro WAP Nokia o settaggio WAP/MMS"
+
+#: helper/message-display.c:287 helper/message-display.c:288
+#, c-format
+msgid "Nokia ringtone"
+msgstr "Suoneria Nokia"
+
+#: helper/message-display.c:289
+#, c-format
+msgid "Nokia GSM operator logo"
+msgstr "Logo operatore GSM Nokia"
+
+#: helper/message-display.c:290
+#, c-format
+msgid "Nokia caller logo"
+msgstr "Logo chiamante Nokia"
+
+#: helper/message-display.c:291
+#, c-format
+msgid "Nokia profile"
+msgstr "Profilo Nokia"
+
+#: helper/message-display.c:292
+#, fuzzy, c-format
+msgid "Nokia calendar note"
+msgstr "Logo chiamante Nokia"
+
+#: helper/message-display.c:293
+#, c-format
+msgid "Nokia phonebook entry"
+msgstr "Elemento della rubrica Nokia"
+
+#: helper/message-display.c:294
+#, c-format
+msgid "User UDH"
+msgstr "UDH Utente"
+
+#: helper/message-display.c:295
+#, c-format
+msgid "MMS indicator"
+msgstr "Indicatore MMS"
+
+#: helper/message-display.c:299
+#, c-format
+msgid ", ID (8 bit) %i"
+msgstr ""
+
+#: helper/message-display.c:300
+#, c-format
+msgid ", ID (16 bit) %i"
+msgstr ""
+
+#: helper/message-display.c:303
+#, c-format
+msgid ", part %i of %i"
+msgstr ", parte %i di %i"
+
+#: helper/message-display.c:305
+#, c-format
+msgid ", %i parts"
+msgstr ", %i parti"
+
+#: helper/message-display.c:317
+msgid "Siemens file"
+msgstr ""
+
+#: helper/message-display.c:320
+#, fuzzy
+msgid "8 bit SMS, cannot be displayed here"
+msgstr "SMS ad 8 bit, non può essere visualizzato qui\n"
+
+#: helper/message-display.c:326
+#, fuzzy, c-format
+msgid "Unknown PDU type: 0x%x\n"
+msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
+
+#: helper/message-display.c:368
+#, fuzzy
+msgid ""
+"Some details were ignored (unknown or not implemented in decoding functions)"
+msgstr ""
+"Alcuni dettagli sono stati ignorati (sconosciuti o decodifica non "
+"implementata)\n"
+"\n"
+
+#: helper/message-display.c:373
+#, c-format
+msgid "Siemens OTA file"
+msgstr ""
+
+#: helper/message-display.c:375
+msgid " - VCARD"
+msgstr ""
+
+#: helper/message-display.c:389
+#, c-format
+msgid "Ringtone \"%s\"\n"
+msgstr "Suoneria \"%s\"\n"
+
+#: helper/message-display.c:394
+msgid "Do you want to play it?"
+msgstr ""
+
+#: helper/message-display.c:399
+#, fuzzy
+msgid "Caller logo"
+msgstr ""
+"Logo chiamante\n"
+"\n"
+
+#: helper/message-display.c:403
+#, c-format
+msgid ""
+"Operator logo for %s network (%s, %s)\n"
+"\n"
+msgstr ""
+"Logo operatore per %s (%s, %s)\n"
+"\n"
+
+#: helper/message-display.c:419
+#, fuzzy
+msgid "Profile"
+msgstr "Profilo\n"
+
+#: helper/message-display.c:439
+#, fuzzy
+msgid "EMS sound ID"
+msgstr ""
+"\n"
+"ID suono EMS; %i\n"
+
+#: helper/message-display.c:442
+#, fuzzy
+msgid "EMS animation ID"
+msgstr ""
+"\n"
+"ID animazione EMS: %i\n"
+
+#. l10n: Generic prefix for error messages
+#: helper/message-display.c:476 helper/message-display.c:495
+#: helper/printing.c:18
+#, fuzzy
+msgid "Error"
+msgstr "Errore\n"
+
+#: helper/message-display.c:510
+#, c-format
+msgid "msg:%s nb:%i udh:%s\n"
+msgstr ""
+
+#. l10n: Generic prefix for warning messages
+#: helper/printing.c:34
+msgid "Warning"
+msgstr ""
+
+#. l10n: Generic prefix for informational messages
+#: helper/printing.c:50
+#, fuzzy
+msgid "Information"
+msgstr "Locazione %i\n"
+
+#~ msgid "No error."
+#~ msgstr "Nessun errore."
+
+#~ msgid "Error opening device. Unknown/busy or no permissions."
+#~ msgstr ""
+#~ "Errore durante l'apertura del dispositivo. Sconosciuto/occupato o senza "
+#~ "permessi."
+
+#~ msgid "Error opening device, it is locked."
+#~ msgstr "Errore durante l'apertura del dispositivo, è bloccato."
+
+#~ msgid "Error opening device, it doesn't exist."
+#~ msgstr "Errore durante l'apertura del dispositivo, non esiste."
+
+#~ msgid "Error opening device, it is already opened by other application."
+#~ msgstr ""
+#~ "Errore durante l'apertura del dispositivo, è stato già aperto da un'altra "
+#~ "applicazione."
+
+#~ msgid "Error opening device, you don't have permissions."
+#~ msgstr "Errore durante l'apertura del dispositivo, non hai i permessi."
+
+#~ msgid "Error opening device. No required driver in operating system."
+#~ msgstr ""
+#~ "Errore durante l'apertura del dispositivo. Manca il driver necessario nel "
+#~ "sistema operativo."
+
+#~ msgid "Error opening device. Some hardware not connected/wrong configured."
+#~ msgstr ""
+#~ "Errore durante l'apertura del dispositivo. Una periferica non è connessa "
+#~ "o è configurata male."
+
+#~ msgid "Error setting device DTR or RTS."
+#~ msgstr "Errore impostando DTS o RTS sulla periferica."
+
+#~ msgid "Error setting device speed. Maybe speed not supported."
+#~ msgstr ""
+#~ "Errore nel cambiare la velocità del dispositivo. Forse la velocità non è "
+#~ "supportata."
+
+#~ msgid "Error writing device."
+#~ msgstr "Errore durante la scrittura sul dispositivo."
+
+#~ msgid "Error during reading device."
+#~ msgstr "Errore durante la lettura dal dispositivo."
+
+#~ msgid "Can't set parity on device."
+#~ msgstr "Impossibile impostare la parità sul dispositivo."
+
+#~ msgid "No response in specified timeout. Probably phone not connected."
+#~ msgstr ""
+#~ "Nessuna risposta nel tempo specificato. Probabilmente il telefono non è "
+#~ "connesso."
 
 #, fuzzy
-#~ msgid "Information"
-#~ msgstr "Locazione %i\n"
+#~ msgid ""
+#~ "Frame not requested right now. See <http://cihar.com/gammu/report> for "
+#~ "information how to report it."
+#~ msgstr ""
+#~ "Risposta sconosciuta dal telefono. Vedere <http://cihar.com/gammu/report> "
+#~ "per informazioni su come notificarlo."
+
+#~ msgid ""
+#~ "Unknown response from phone. See <http://cihar.com/gammu/report> for "
+#~ "information how to report it."
+#~ msgstr ""
+#~ "Risposta sconosciuta dal telefono. Vedere <http://cihar.com/gammu/report> "
+#~ "per informazioni su come notificarlo."
 
 #, fuzzy
-#~ msgid "%d second"
-#~ msgid_plural "%d seconds"
-#~ msgstr[0] "5 secondi\n"
-#~ msgstr[1] "5 secondi\n"
+#~ msgid ""
+#~ "Unknown frame. See <http://cihar.com/gammu/report> for information how to "
+#~ "report it."
+#~ msgstr ""
+#~ "Risposta sconosciuta dal telefono. Vedere <http://cihar.com/gammu/report> "
+#~ "per informazioni su come notificarlo."
+
+#~ msgid "Unknown connection type string. Check config file."
+#~ msgstr ""
+#~ "Tipo di connessione sconosciuto. Controllare il file di configurazione."
+
+#~ msgid "Unknown model type string. Check config file."
+#~ msgstr "Modello sconosciuto. Controllare il file di configurazione."
+
+#~ msgid ""
+#~ "Some functions not available for your system (disabled in config or not "
+#~ "written)."
+#~ msgstr ""
+#~ "Alcune funzioni non sono disponibili per il tuo sistema (disabilitate nel "
+#~ "file di configurazione o non specificate)."
+
+#~ msgid "Function not supported by phone."
+#~ msgstr "Funzione non supportata dal telefono."
+
+#~ msgid "Security error. Maybe no PIN?"
+#~ msgstr "Errore di sicurezza. Forse non c'è PIN?"
 
 #, fuzzy
-#~ msgid "%d minute"
-#~ msgid_plural "%d minutes"
-#~ msgstr[0] "2 minuti\n"
-#~ msgstr[1] "2 minuti\n"
+#~ msgid "Invalid location. Maybe too high?"
+#~ msgstr "Locazione non valida. Forse troppo alta?"
+
+#~ msgid "Function not implemented. Help required."
+#~ msgstr "Funzione non implementata. Serve aiuto."
+
+#~ msgid "Memory full."
+#~ msgstr "Memoria piena."
+
+#~ msgid "Unknown error."
+#~ msgstr "Errore sconosciuto."
 
 #, fuzzy
-#~ msgid "%d hour"
-#~ msgid_plural "%d hours"
-#~ msgstr[0] "1 ora"
-#~ msgstr[1] "1 ora"
+#~ msgid "Can't open specified file. Read only?"
+#~ msgstr "Impossibile aprire il file specificato. E' a sola lettura?"
+
+#~ msgid "More memory required..."
+#~ msgstr "Serve più memoria..."
+
+#~ msgid "Permission to file/device required..."
+#~ msgstr "Servono i permessi per il file/dispositivo.."
 
 #, fuzzy
-#~ msgid "%d day"
-#~ msgid_plural "%d days"
-#~ msgstr[0] "Venerdì"
-#~ msgstr[1] "Venerdì"
+#~ msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+#~ msgstr "Siete dentro il menu del telefono. Uscite e riprovate."
 
 #, fuzzy
-#~ msgid "%d week"
-#~ msgid_plural "%d weeks"
-#~ msgstr[0] "Una settimana"
-#~ msgstr[1] "Una settimana"
+#~ msgid "Phone is not connected."
+#~ msgstr "Telefono non connesso"
+
+#~ msgid "Phone is disabled and connected to charger."
+#~ msgstr "Il telefono è disabilitato e connesso al caricabatterie."
 
 #, fuzzy
-#~ msgid "%d year"
-#~ msgid_plural "%d years"
-#~ msgstr[0] "%d, giorno "
-#~ msgstr[1] "%d, giorno "
+#~ msgid "File format not supported by Gammu."
+#~ msgstr "Formato del file non supportato da Gammu."
+
+#~ msgid ""
+#~ "Nobody is perfect, some bug appeared in protocol implementation. Please "
+#~ "contact authors."
+#~ msgstr ""
+#~ "Nessuno è perfetto! Qualche bug si è manifestato nel protocollo di "
+#~ "comunicazione. Contattare gli sviluppatori."
+
+#~ msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+#~ msgstr ""
+#~ "Trasferimento annullato dal telefono. Potrebbe essere stato premuto il "
+#~ "tasto Annulla del telefono."
+
+#~ msgid "Current connection type doesn't support called function."
+#~ msgstr "La connessione corrente non supporta la funzione richiesta."
+
+#, fuzzy
+#~ msgid "CRC error."
+#~ msgstr "Nessun errore."
+
+#~ msgid "Invalid date or time specified."
+#~ msgstr "Data o ora non validi."
+
+#~ msgid "Phone memory error, maybe it is read only."
+#~ msgstr "Errore nella memoria del telefono, forse è a sola lettura."
+
+#~ msgid "Invalid data given to phone."
+#~ msgstr "Dati non validi inviati al telefono."
+
+#~ msgid "File with specified name already exist."
+#~ msgstr "Esiste già un file col nome specificato."
+
+#~ msgid "File with specified name doesn't exist."
+#~ msgstr "Non esiste un file col nome specificato."
+
+#~ msgid "You have to give folder name and not file name."
+#~ msgstr "Occorre inserire il nome di una cartella, non di un file."
+
+#~ msgid "You have to give file name and not folder name."
+#~ msgstr "Occorre inserire il nome di un file, non di una cartella."
+
+#~ msgid "Can not access SIM card."
+#~ msgstr "Impossibile accedere alla carta SIM."
+
+#, fuzzy
+#~ msgid "Wrong folder used."
+#~ msgstr ", cartella Ricevuti"
+
+#, fuzzy
+#~ msgid "Internal phone error."
+#~ msgstr "Errore sconosciuto."
+
+#, fuzzy
+#~ msgid "Error writing file to disk."
+#~ msgstr "Errore durante la scrittura sul dispositivo."
+
+#, fuzzy
+#~ msgid "Using default values."
+#~ msgstr " (nome predefinito)"
+
+#, fuzzy
+#~ msgid "Unknown error description."
+#~ msgstr "Errore sconosciuto."
+
+#, fuzzy
+#~ msgid "General"
+#~ msgstr "Numero principale "
+
+#~ msgid "Silent"
+#~ msgstr "Silenzioso"
+
+#~ msgid "Discreet"
+#~ msgstr "Toni bassi"
+
+#~ msgid "Loud"
+#~ msgstr "Toni alti"
+
+#~ msgid "Inbox"
+#~ msgstr "Ricevuti"
+
+#~ msgid "Family"
+#~ msgstr "Famiglia"
+
+#~ msgid "Friends"
+#~ msgstr "Amici"
+
+#~ msgid "Colleagues"
+#~ msgstr "Colleghi"
+
+#~ msgid "Other"
+#~ msgstr "Altri"
+
+#, fuzzy
+#~ msgid "Outdoor"
+#~ msgstr "Messaggi inviati"
+
+#~ msgid "Outbox"
+#~ msgstr "Messaggi inviati"
 
 #, fuzzy
 #~ msgid "SMS daemon"
 #~ msgstr "Risposta del SMSC : \"%s\"\n"
 
 #, fuzzy
-#~ msgid "Date and time"
-#~ msgstr "Data ed ora      : %s\n"
-
-#, fuzzy
-#~ msgid "Caller group"
-#~ msgstr "Gruppi chiamante\n"
-
-#, fuzzy
-#~ msgid "User ID"
-#~ msgstr "UDH Utente"
-
-#, fuzzy
-#~ msgid "Picture name"
-#~ msgstr "Messaggio con disegno"
-
-#, fuzzy
-#~ msgid "Picture ID"
-#~ msgstr "Messaggio con disegno"
-
-#, fuzzy
-#~ msgid "Photo"
-#~ msgstr ", memoria telefono"
-
-#, fuzzy
-#~ msgid "General number"
-#~ msgstr "Numero principale "
-
-#, fuzzy
-#~ msgid "Work number"
-#~ msgstr "Ufficio           "
-
-#, fuzzy
-#~ msgid "Pager number"
-#~ msgstr "Altro             "
-
-#, fuzzy
-#~ msgid "Other number"
-#~ msgstr "Altro             "
-
-#, fuzzy
-#~ msgid "Snail address"
-#~ msgstr "Indirizzo postale "
-
-#, fuzzy
-#~ msgid "Work snail address"
-#~ msgstr "Indirizzo postale "
-
-#, fuzzy
-#~ msgid "Email address 1"
-#~ msgstr "Indirizzo email 1 "
-
-#, fuzzy
-#~ msgid "Email address 2"
-#~ msgstr "Indirizzo email 2 "
-
-#, fuzzy
-#~ msgid "URL address"
-#~ msgstr "Indirizzo WWW     "
-
-#, fuzzy
-#~ msgid "Last name"
-#~ msgstr "Cognome           "
-
-#, fuzzy
-#~ msgid "First name"
-#~ msgstr "Nome              "
-
-#, fuzzy
-#~ msgid "Formal name"
-#~ msgstr "Nome              "
-
-#, fuzzy
-#~ msgid "Nick name"
-#~ msgstr "Nome              "
-
-#, fuzzy
-#~ msgid "Company"
-#~ msgstr "Organizzazione    "
-
-#, fuzzy
-#~ msgid "Job title"
-#~ msgstr "Lavoro            "
-
-#, fuzzy
-#~ msgid "Street address"
-#~ msgstr "Indirizzo         "
-
-#, fuzzy
-#~ msgid "State"
-#~ msgstr "Normale\n"
-
-#, fuzzy
-#~ msgid "Zip code"
-#~ msgstr "Codice postale    "
-
-#, fuzzy
-#~ msgid "Country"
-#~ msgstr "Regione           "
-
-#, fuzzy
-#~ msgid "Work street address"
-#~ msgstr "Indirizzo         "
-
-#, fuzzy
-#~ msgid "Work state"
-#~ msgstr "Stato della rete  : "
-
-#, fuzzy
-#~ msgid "Work zip code"
-#~ msgstr "Codice postale    "
-
-#, fuzzy
-#~ msgid "Work country"
-#~ msgstr "Regione           "
-
-#, fuzzy
-#~ msgid "Custom text 1"
-#~ msgstr "Nota 1            "
-
-#, fuzzy
-#~ msgid "Custom text 2"
-#~ msgstr "Nota 2            "
-
-#, fuzzy
-#~ msgid "Custom text 3"
-#~ msgstr "Nota 3            "
-
-#, fuzzy
-#~ msgid "Custom text 4"
-#~ msgstr "Nota 4            "
-
-#, fuzzy
-#~ msgid "unknown field type"
-#~ msgstr "sconosiuto %i"
-
-#~ msgid "Location %i, folder \"%s\""
-#~ msgstr "Locazione %i, cartella \"%s\""
-
-#, fuzzy
-#~ msgid "SIM memory"
-#~ msgstr ", memoria SIM"
-
-#, fuzzy
-#~ msgid "phone memory"
-#~ msgstr ", memoria telefono"
-
-#, fuzzy
-#~ msgid "phone or SIM memory"
-#~ msgstr ", memoria SIM o del telefono"
-
-#, fuzzy
-#~ msgid "Inbox folder"
-#~ msgstr ", cartella Ricevuti"
-
-#, fuzzy
-#~ msgid "mobile"
-#~ msgstr "Lavoro            "
-
-#, fuzzy
-#~ msgid "work"
-#~ msgstr "Codice rete assente\n"
-
-#, fuzzy
-#~ msgid "home"
-#~ msgstr ", memoria telefono"
-
-#, fuzzy
-#~ msgid "SMS status report"
-#~ msgstr "Rapporto sullo stato SMS\n"
-
-#~ msgid "Sent"
-#~ msgstr "Inviato"
-
-#~ msgid "Read"
-#~ msgstr "Letto"
-
-#~ msgid "UnRead"
-#~ msgstr "Non letto"
-
-#~ msgid "UnSent"
-#~ msgstr "Non inviato"
-
-#, fuzzy
-#~ msgid "Remote number"
-#~ msgid_plural "Remote numbers"
-#~ msgstr[0] "Casa              "
-#~ msgstr[1] "Casa              "
-
-#, fuzzy
-#~ msgid "Reference number"
-#~ msgstr "Numero servizio        : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "SMSC number"
-#~ msgstr "Centro messaggi   : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "SMSC response"
-#~ msgstr "Risposta del SMSC : \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Delivery status"
-#~ msgstr "Stato spedizione  : %s\n"
-
-#~ msgid "Temporary error, "
-#~ msgstr "Errore temporaneo, "
-
-#~ msgid "Permanent error, "
-#~ msgstr "Errore permanente, "
-
-#~ msgid "SM received by the SME"
-#~ msgstr "Messaggio ricevuto dal SME"
-
-#~ msgid ""
-#~ "SM forwarded by the SC to the SME but the SC is unable to confirm delivery"
-#~ msgstr ""
-#~ "SMS spedito dal SC al SME, ma il SC non è in grado di confermare la "
-#~ "consegna"
-
-#~ msgid "SM replaced by the SC"
-#~ msgstr "SM sostituito dal SC"
-
-#~ msgid "Congestion"
-#~ msgstr "Congestione"
-
-#~ msgid "SME busy"
-#~ msgstr "SME occupato"
-
-#~ msgid "No response from SME"
-#~ msgstr "Nessuna risposta dal SME"
-
-#~ msgid "Service rejected"
-#~ msgstr "Servizio rifiutato"
-
-#~ msgid "Quality of service not aviable"
-#~ msgstr "Qualità del servizio non disponibile"
-
-#~ msgid "Error in SME"
-#~ msgstr "Errore nel SME"
-
-#~ msgid "Remote procedure error"
-#~ msgstr "Errore nella procedura remota"
-
-#~ msgid "Incompatibile destination"
-#~ msgstr "Destinazione non compatibile"
-
-#~ msgid "Connection rejected by SME"
-#~ msgstr "Connessione rifiutata dal SME"
-
-#~ msgid "Not obtainable"
-#~ msgstr "Non ottenibile"
-
-#~ msgid "Quality of service not available"
-#~ msgstr "Qualità del servizio non disponibile"
-
-#~ msgid "No internetworking available"
-#~ msgstr "Nessuna connessione disponibile"
-
-#~ msgid "SM Validity Period Expired"
-#~ msgstr "Periodo di validità esaurito"
-
-#~ msgid "SM deleted by originating SME"
-#~ msgstr "Messaggio cancellato dal SME"
-
-#~ msgid "SM Deleted by SC Administration"
-#~ msgstr "Messaggio cancellato dall'amministrazione SC"
-
-#~ msgid "SM does not exist"
-#~ msgstr "Il messaggio non esiste"
-
-#~ msgid "Reserved/Specific to SC: %x"
-#~ msgstr "Riservato/specifico del SC: %x"
-
-#, fuzzy
-#~ msgid "SMS message"
-#~ msgstr "Messaggio SMS\n"
-
-#~ msgid " (set for reply)"
-#~ msgstr " (impostato per la risposta)"
-
-#, fuzzy
-#~ msgid "SMS replacing ID"
-#~ msgstr "ID sostituzione   : %i\n"
-
-#, fuzzy
-#~ msgid "Class"
-#~ msgstr "Chiamata\n"
-
-#, fuzzy
-#~ msgid "User Data Header"
-#~ msgstr "Intestazione utente : "
-
-#~ msgid "Concatenated (linked) message"
-#~ msgstr "Messaggio concatenato"
-
-#~ msgid "Disables voice indicator"
-#~ msgstr "Disabilita indicatore voce"
-
-#~ msgid "Enables voice indicator"
-#~ msgstr "Abilita indicatore voce"
-
-#~ msgid "Disables fax indicator"
-#~ msgstr "Disabilita indicatore fax"
-
-#~ msgid "Enables fax indicator"
-#~ msgstr "Abilita indicatore fax"
-
-#~ msgid "Disables email indicator"
-#~ msgstr "Disabilita indicatore email"
-
-#~ msgid "Enables email indicator"
-#~ msgstr "Abilita indicatore email"
-
-#~ msgid "Void SMS"
-#~ msgstr "SMS Vuoto"
-
-#~ msgid "Nokia WAP bookmark"
-#~ msgstr "Segnalibro WAP Nokia"
-
-#~ msgid "Nokia operator logo"
-#~ msgstr "Logo operatore Nokia"
-
-#~ msgid "Nokia WAP bookmark or WAP/MMS settings"
-#~ msgstr "Segnalibro WAP Nokia o settaggio WAP/MMS"
-
-#~ msgid "Nokia ringtone"
-#~ msgstr "Suoneria Nokia"
-
-#~ msgid "Nokia GSM operator logo"
-#~ msgstr "Logo operatore GSM Nokia"
-
-#~ msgid "Nokia caller logo"
-#~ msgstr "Logo chiamante Nokia"
-
-#~ msgid "Nokia profile"
-#~ msgstr "Profilo Nokia"
-
-#, fuzzy
-#~ msgid "Nokia calendar note"
-#~ msgstr "Logo chiamante Nokia"
-
-#~ msgid "Nokia phonebook entry"
-#~ msgstr "Elemento della rubrica Nokia"
-
-#~ msgid "User UDH"
-#~ msgstr "UDH Utente"
-
-#~ msgid "MMS indicator"
-#~ msgstr "Indicatore MMS"
-
-#~ msgid ", part %i of %i"
-#~ msgstr ", parte %i di %i"
-
-#~ msgid ", %i parts"
-#~ msgstr ", %i parti"
-
-#, fuzzy
-#~ msgid "8 bit SMS, cannot be displayed here"
-#~ msgstr "SMS ad 8 bit, non può essere visualizzato qui\n"
-
-#, fuzzy
-#~ msgid "Unknown PDU type: 0x%x\n"
-#~ msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
-
-#, fuzzy
-#~ msgid ""
-#~ "Some details were ignored (unknown or not implemented in decoding "
-#~ "functions)"
-#~ msgstr ""
-#~ "Alcuni dettagli sono stati ignorati (sconosciuti o decodifica non "
-#~ "implementata)\n"
-#~ "\n"
-
-#~ msgid "Ringtone \"%s\"\n"
-#~ msgstr "Suoneria \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Caller logo"
-#~ msgstr ""
-#~ "Logo chiamante\n"
-#~ "\n"
-
-#~ msgid ""
-#~ "Operator logo for %s network (%s, %s)\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Logo operatore per %s (%s, %s)\n"
-#~ "\n"
-
-#, fuzzy
-#~ msgid "Profile"
-#~ msgstr "Profilo\n"
-
-#, fuzzy
-#~ msgid "EMS sound ID"
-#~ msgstr ""
-#~ "\n"
-#~ "ID suono EMS; %i\n"
-
-#, fuzzy
-#~ msgid "EMS animation ID"
-#~ msgstr ""
-#~ "\n"
-#~ "ID animazione EMS: %i\n"
-
-#, fuzzy
 #~ msgid "0 chars read!"
 #~ msgstr "Attenzione: 0 caratteri letti !\n"
-
-#, fuzzy
-#~ msgid "Where are parameters?"
-#~ msgstr "I parametri sono troppo pochi!\n"
-
-#, fuzzy
-#~ msgid "Where is ringtone filename?"
-#~ msgstr "Dov'è il nome del file della suoneria ?\n"
-
-#, fuzzy
-#~ msgid "Where is logo filename?"
-#~ msgstr "Dov'è il nome del file del logo ?\n"
-
-#, fuzzy
-#~ msgid "Where is number of frames?"
-#~ msgstr "Dov'è il numero dei frames ?\n"
-
-#, fuzzy
-#~ msgid "File \"%s\"\n"
-#~ msgstr "Testo  : %s\n"
-
-#, fuzzy
-#~ msgid "Bookmark not found in file"
-#~ msgstr "Segnalibro non trovato nel file\n"
-
-#, fuzzy
-#~ msgid "WAP settings not found in file"
-#~ msgstr "Settaggi WAP non trovati nel file\n"
-
-#, fuzzy
-#~ msgid "MMS settings not found in file"
-#~ msgstr "Settaggi MMS non trovati nel file\n"
-
-#~ msgid "What format of sms (\"%s\") ?\n"
-#~ msgstr "Che formato di sms è (\"%s\") ?\n"
-
-#~ msgid "Unknown GSM network code (\"%s\")\n"
-#~ msgstr "Codice di rete GSM sconosciuto (\"%s\")\n"
-
-#~ msgid "You have to give number between 1 and 7 (\"%s\")\n"
-#~ msgstr "Devi inserire un numero tra 1 e 7 (\"%s\")\n"
-
-#~ msgid "Unknown validity string (\"%s\")\n"
-#~ msgstr "Stringa di validità sconosciuta (\"%s\")\n"
-
-#~ msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
-#~ msgstr "Il numero di frames EMS dev'essere compreso tra 1 e 4 (\"%s\")\n"
-
-#~ msgid "Can't open file \"%s\"\n"
-#~ msgstr "Impossibile aprire il file \"%s\"\n"
-
-#, fuzzy
-#~ msgid "Unknown parameter (\"%c\")\n"
-#~ msgstr "Parametro sconosciuto (\"%s\")\n"
-
-#, fuzzy
-#~ msgid "Last parameter wasn't text"
-#~ msgstr "L'ultimo parametro non era in formato testo\n"
-
-#, fuzzy
-#~ msgid "No network code"
-#~ msgstr "Codice rete assente\n"
-
-#, fuzzy
-#~ msgid "Ringtone too long. %i percent part cut\n"
-#~ msgstr "Attenzione: suoneria troppo lunga, tagliata del %i%\n"
-
-#~ msgid "There is %i SMS packed and %i limit. Exiting\n"
-#~ msgstr "Ci sono %i SMS da inserire ed il limite è %i. Esco\n"
-
-#, fuzzy
-#~ msgid "Use -smscnumber option to give SMSC number"
-#~ msgstr ""
-#~ "Usare l'opzione -smscnumber per specificare il numero del centro SMS\n"
-
-#, fuzzy
-#~ msgid "SMS name ignored"
-#~ msgstr "Messaggio SMS\n"
 
 #, fuzzy
 #~ msgid "Delivery report: %s to %s"
@@ -5389,10 +5600,6 @@ msgstr "Errore durante la scrittura sul dispositivo."
 #, fuzzy
 #~ msgid "each week"
 #~ msgstr "Una settimana"
-
-#, fuzzy
-#~ msgid " %02i:%02i:%02i\n"
-#~ msgstr "Orario : %s\n"
 
 #, fuzzy
 #~ msgid "Help: %s\n"

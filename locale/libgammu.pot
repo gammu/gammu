@@ -1,0 +1,367 @@
+# libGammu translation.
+# Copyright (C) 2003 - 2009 Michal Čihař
+# This file is distributed under the same license as the libGammu package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: libGammu 1.22.90\n"
+"Report-Msgid-Bugs-To: michal@cihar.com\n"
+"POT-Creation-Date: 2009-01-07 17:04+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: common/gsmcomon.c:92
+msgid "No error."
+msgstr ""
+
+#: common/gsmcomon.c:93
+msgid "Error opening device. Unknown/busy or no permissions."
+msgstr ""
+
+#: common/gsmcomon.c:94
+msgid "Error opening device, it is locked."
+msgstr ""
+
+#: common/gsmcomon.c:95
+msgid "Error opening device, it doesn't exist."
+msgstr ""
+
+#: common/gsmcomon.c:96
+msgid "Error opening device, it is already opened by other application."
+msgstr ""
+
+#: common/gsmcomon.c:97
+msgid "Error opening device, you don't have permissions."
+msgstr ""
+
+#: common/gsmcomon.c:98
+msgid "Error opening device. No required driver in operating system."
+msgstr ""
+
+#: common/gsmcomon.c:99
+msgid "Error opening device. Some hardware not connected/wrong configured."
+msgstr ""
+
+#: common/gsmcomon.c:100
+msgid "Error setting device DTR or RTS."
+msgstr ""
+
+#: common/gsmcomon.c:101
+msgid "Error setting device speed. Maybe speed not supported."
+msgstr ""
+
+#: common/gsmcomon.c:102
+msgid "Error writing device."
+msgstr ""
+
+#: common/gsmcomon.c:103
+msgid "Error during reading device."
+msgstr ""
+
+#: common/gsmcomon.c:104
+msgid "Can't set parity on device."
+msgstr ""
+
+#: common/gsmcomon.c:105
+msgid "No response in specified timeout. Probably phone not connected."
+msgstr ""
+
+#: common/gsmcomon.c:106
+msgid ""
+"Frame not requested right now. See <http://cihar.com/gammu/report> for "
+"information how to report it."
+msgstr ""
+
+#: common/gsmcomon.c:107
+msgid ""
+"Unknown response from phone. See <http://cihar.com/gammu/report> for "
+"information how to report it."
+msgstr ""
+
+#: common/gsmcomon.c:108
+msgid ""
+"Unknown frame. See <http://cihar.com/gammu/report> for information how to "
+"report it."
+msgstr ""
+
+#: common/gsmcomon.c:109
+msgid "Unknown connection type string. Check config file."
+msgstr ""
+
+#: common/gsmcomon.c:110
+msgid "Unknown model type string. Check config file."
+msgstr ""
+
+#: common/gsmcomon.c:111
+msgid ""
+"Some functions not available for your system (disabled in config or not "
+"written)."
+msgstr ""
+
+#: common/gsmcomon.c:112
+msgid "Function not supported by phone."
+msgstr ""
+
+#: common/gsmcomon.c:113
+msgid "Entry is empty"
+msgstr ""
+
+#: common/gsmcomon.c:114
+msgid "Security error. Maybe no PIN?"
+msgstr ""
+
+#: common/gsmcomon.c:115
+msgid "Invalid location. Maybe too high?"
+msgstr ""
+
+#: common/gsmcomon.c:116
+msgid "Function not implemented. Help required."
+msgstr ""
+
+#: common/gsmcomon.c:117
+msgid "Memory full."
+msgstr ""
+
+#: common/gsmcomon.c:118
+msgid "Unknown error."
+msgstr ""
+
+#: common/gsmcomon.c:119
+msgid "Can't open specified file. Read only?"
+msgstr ""
+
+#: common/gsmcomon.c:120
+msgid "More memory required..."
+msgstr ""
+
+#: common/gsmcomon.c:121
+msgid "Permission to file/device required..."
+msgstr ""
+
+#: common/gsmcomon.c:122
+msgid "Empty SMSC number. Set in phone or use -smscnumber."
+msgstr ""
+
+#: common/gsmcomon.c:123
+msgid "You're inside phone menu (maybe editing?). Leave it and try again."
+msgstr ""
+
+#: common/gsmcomon.c:124
+msgid "Phone is not connected."
+msgstr ""
+
+#: common/gsmcomon.c:125
+msgid "Function is during writing. If want help, please contact with authors."
+msgstr ""
+
+#: common/gsmcomon.c:126
+msgid "Phone is disabled and connected to charger."
+msgstr ""
+
+#: common/gsmcomon.c:127
+msgid "File format not supported by Gammu."
+msgstr ""
+
+#: common/gsmcomon.c:128
+msgid ""
+"Nobody is perfect, some bug appeared in protocol implementation. Please "
+"contact authors."
+msgstr ""
+
+#: common/gsmcomon.c:129
+msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
+msgstr ""
+
+#: common/gsmcomon.c:130
+msgid "Phone module need to send another answer frame."
+msgstr ""
+
+#: common/gsmcomon.c:131
+msgid "Current connection type doesn't support called function."
+msgstr ""
+
+#: common/gsmcomon.c:132
+msgid "CRC error."
+msgstr ""
+
+#: common/gsmcomon.c:133
+msgid "Invalid date or time specified."
+msgstr ""
+
+#: common/gsmcomon.c:134
+msgid "Phone memory error, maybe it is read only."
+msgstr ""
+
+#: common/gsmcomon.c:135
+msgid "Invalid data given to phone."
+msgstr ""
+
+#: common/gsmcomon.c:136
+msgid "File with specified name already exist."
+msgstr ""
+
+#: common/gsmcomon.c:137
+msgid "File with specified name doesn't exist."
+msgstr ""
+
+#: common/gsmcomon.c:138
+msgid "You have to give folder name and not file name."
+msgstr ""
+
+#: common/gsmcomon.c:139
+msgid "You have to give file name and not folder name."
+msgstr ""
+
+#: common/gsmcomon.c:140
+msgid "Can not access SIM card."
+msgstr ""
+
+#: common/gsmcomon.c:141
+msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
+msgstr ""
+
+#: common/gsmcomon.c:142
+msgid "Only part of folder has been listed."
+msgstr ""
+
+#: common/gsmcomon.c:143
+msgid "Folder must be empty."
+msgstr ""
+
+#: common/gsmcomon.c:144
+msgid "Data were converted."
+msgstr ""
+
+#: common/gsmcomon.c:145
+msgid "Gammu is not configured."
+msgstr ""
+
+#: common/gsmcomon.c:146
+msgid "Wrong folder used."
+msgstr ""
+
+#: common/gsmcomon.c:147
+msgid "Internal phone error."
+msgstr ""
+
+#: common/gsmcomon.c:148
+msgid "Error writing file to disk."
+msgstr ""
+
+#: common/gsmcomon.c:149
+msgid "No such section exists."
+msgstr ""
+
+#: common/gsmcomon.c:150
+msgid "Using default values."
+msgstr ""
+
+#: common/gsmcomon.c:151
+msgid "Corrupted data returned by phone."
+msgstr ""
+
+#: common/gsmcomon.c:152
+msgid "Bad feature string in configuration."
+msgstr ""
+
+#: common/gsmcomon.c:153
+msgid "Desired functionality has been disabled on compile time."
+msgstr ""
+
+#: common/gsmcomon.c:154
+msgid "Bluetooth configuration requires channel option."
+msgstr ""
+
+#: common/gsmcomon.c:187
+msgid "Unknown error description."
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1955
+msgid "Personal"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1957 common/phone/nokia/nfunc.c:1105
+msgid "Car"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1959 common/phone/nokia/nfunc.c:1107
+msgid "Headset"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1965 common/phone/nokia/nfunc.c:1095
+msgid "General"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1967 common/phone/nokia/nfunc.c:1097
+msgid "Silent"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1969
+msgid "Discreet"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1971
+msgid "Loud"
+msgstr ""
+
+#: common/phone/nokia/dct3/n6110.c:1973
+msgid "My style"
+msgstr ""
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:533
+msgid "SIM"
+msgstr ""
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:534 common/phone/pfunc.c:40
+msgid "Inbox"
+msgstr ""
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:535
+msgid "Sent items"
+msgstr ""
+
+#: common/phone/nokia/dct4s40/6510/n6510.c:536
+msgid "Saved items"
+msgstr ""
+
+#: common/phone/nokia/nfunc.c:929
+msgid "Family"
+msgstr ""
+
+#: common/phone/nokia/nfunc.c:931
+msgid "VIP"
+msgstr ""
+
+#: common/phone/nokia/nfunc.c:933
+msgid "Friends"
+msgstr ""
+
+#: common/phone/nokia/nfunc.c:935
+msgid "Colleagues"
+msgstr ""
+
+#: common/phone/nokia/nfunc.c:937
+msgid "Other"
+msgstr ""
+
+#: common/phone/nokia/nfunc.c:1099
+msgid "Meeting"
+msgstr ""
+
+#: common/phone/nokia/nfunc.c:1101
+msgid "Outdoor"
+msgstr ""
+
+#: common/phone/nokia/nfunc.c:1103
+msgid "Pager"
+msgstr ""
+
+#: common/phone/pfunc.c:41
+msgid "Outbox"
+msgstr ""

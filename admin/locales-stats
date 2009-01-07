@@ -1,6 +1,13 @@
 #!/bin/sh
+echo gammu.po:
 for x in locale/*/gammu.po  ; do 
     lang=`echo $x | sed 's@locale/\(.*\)/gammu.po@\1@'`
+    echo -n "$lang: "
+    msgfmt --statistics --check -o - $x > /dev/null
+done
+echo libgammu.po:
+for x in locale/*/libgammu.po  ; do 
+    lang=`echo $x | sed 's@locale/\(.*\)/libgammu.po@\1@'`
     echo -n "$lang: "
     msgfmt --statistics --check -o - $x > /dev/null
 done
