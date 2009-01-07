@@ -56,7 +56,7 @@ Default is to provide no logging.
 
 How many seconds should smsd wait after each read/write loop.
 
-Default is 30
+Default is 30.
 
 .TP
 .BI SendTimeout 
@@ -64,7 +64,7 @@ Default is 30
 Shows how many seconds smsd should wait for network answer during sending sms.
 If nothing happen during this time, sms will be resent.
 
-Default is 30
+Default is 30.
 
 .TP
 .BI ReceiveFrequency 
@@ -73,7 +73,7 @@ The number of seconds between testing for received SMSes, when the phone is
 busy sending SMSes. Normally a test for received SMSes is done every
 commtimeout seconds and after each sent SMS. 
 
-Default is 0 (not used)
+Default is 0 (not used).
 
 .TP
 .BI CheckSecurity
@@ -90,7 +90,7 @@ minimize the cases of hanging phones e.g. Nokia 5110 will sometimes freeze to
 a state when only after unmounting the battery the phone will be functional
 again.
 
-Default is 0 (not used)
+Default is 0 (not used).
 
 .TP
 .BI DeliveryReport
@@ -113,7 +113,7 @@ depends on brokeness of your network (delivery report should have same
 timestamp as sent message). Increase this if delivery reports are not paired
 with sent messages. 
                       
-Default is 10
+Default is 10.
 
 .TP
 .BI PhoneID
@@ -191,22 +191,31 @@ platform):
 .TP
 .BI InboxPath
 
-Where the received SMSes are stored, default current directory
+Where the received SMSes are stored.
+
+Default is current directory.
 
 .TP
 .BI OutboxPath
 
-Where SMSes to be sent should be placed, default current directory.
+Where SMSes to be sent should be placed.
+
+Default is current directory.
 
 .TP
 .BI SentSMSPath
 
-Where the transmitted SMSes are placed, default outboxpath (= deleted)
+Where the transmitted SMSes are placed, if same as OutBoxPath transmitted
+messages are deleted.
+
+Default is to delete transmitted messages.
 
 .TP
 .BI ErrorSMSPath
 
-Where SMSes with error in transmission is placed, default sentsmspath.
+Where SMSes with error in transmission is placed.
+
+Default is same as SentSMSPath.
 
 .TP
 .BI InboxFormat
@@ -215,14 +224,14 @@ The format in which the SMS will be stored: 'detail', 'unicode', 'standard'.
 The 'detail' format is the format used for backup. See below.  'standard' is
 in the standard character set.
 
-Default is unicode.
+Default is 'unicode'.
 
 .TP
 .BI TransmitFormat
 
 The format for transmitting the SMS: 'auto', 'unicode', '7bit'. 
 
-Default is auto
+Default is 'auto'.
 
 .SH EXAMPLE
 
