@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-07 18:39+0100\n"
-"PO-Revision-Date: 2009-01-07 18:54+0100\n"
+"PO-Revision-Date: 2009-01-07 19:11+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -611,6 +611,8 @@ msgid ""
 "Configuration file of gammu-smsd consists of two sections - [gammu] and "
 "[smsd]."
 msgstr ""
+"Konfigurační soubor pro gammu-smsd se skládá ze dvou sekcí - [gammu] a "
+"[smsd]."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:27
@@ -620,6 +622,10 @@ msgid ""
 "common logging for gammu library and SMS daemon is used. However the "
 "logformat directive still configures how much messages gammu emits."
 msgstr ""
+"Sekce [gammu] je konfigurací připojení k telefonu a je stejná jako je "
+"popsáno v gammurc(5) s jedinou vyjímkou a to ignorování direktivy logfile, "
+"protože logování je prováděno přes SMS démona. Nicméně direktiva logformat "
+"stále určuje jak moc ladicích hlášek bude gammu předávat."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:31
@@ -628,12 +634,15 @@ msgid ""
 "following subsections. First general parameters of SMS daemon are listed and "
 "then specific parameters for storage backends."
 msgstr ""
+"Sekce [smsd] nastavuje SMS démona a je popsána v následující části textu. "
+"Nejdříve jsou popsány obecné parametry SMS démona a pak parametry pro "
+"jednotlivé služby."
 
 # type: SS
 #: docs/user/gammu-smsdrc.5:32
 #, no-wrap
 msgid "General parameters of SMS daemon"
-msgstr ""
+msgstr "Obecné parametry SMS démona"
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:34
@@ -647,6 +656,8 @@ msgid ""
 "SMSD service to use, one of FILES, MYSQL, PGSQL (depends on compiled in "
 "support for backends)."
 msgstr ""
+"Jakou službu SMSM použít, jedna z FILES, MYSQL, PGSQL (záleží na "
+"zakompilovaných knihovnách)."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:40
@@ -660,6 +671,8 @@ msgid ""
 "PIN for SIM card. This is optional, but you should set it if your phone "
 "after power on requires PIN."
 msgstr ""
+"PIN pro SIM kartu. Tento parametr je volitelný, ale měl by být zadán, pokud "
+"telefon po restartu vyžaduje PIN."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:51
@@ -687,7 +700,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:60 docs/user/gammu-smsdrc.5:68
 msgid "Default is 30"
-msgstr ""
+msgstr "Výchozí je 30"
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:61
@@ -706,7 +719,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:69
 #, no-wrap
 msgid "B<ReceiveFrequency>"
-msgstr ""
+msgstr "B<ReceiveFrequency>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:75
@@ -719,7 +732,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:77 docs/user/gammu-smsdrc.5:94
 msgid "Default is 0 (not used)"
-msgstr ""
+msgstr "Výchozí je 0 (není použito)."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:78
@@ -735,7 +748,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:84
 msgid "Default is 1 (enabled)."
-msgstr ""
+msgstr "Výchozí je 1 (povoleno)."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:85
@@ -1115,7 +1128,7 @@ msgstr "GAMMU-SMSD"
 # type: Plain text
 #: docs/user/gammu-smsd.1:4
 msgid "gammu-smsd - SMS daemon for Gammu"
-msgstr ""
+msgstr "gammu-smsd - SMS démon pro Gammu"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:7
@@ -1141,6 +1154,8 @@ msgid ""
 "Program accepts following options (please note that long options might be "
 "not accepted on some platforms):"
 msgstr ""
+"Program přijímá následující parametry (dlouhé parametry nemusí být "
+"podporovány na všechplatformách):"
 
 # type: TP
 #: docs/user/gammu-smsd.1:18 docs/user/gammu-smsd-inject.1:19
@@ -1262,7 +1277,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsd.1:62 docs/user/gammu-smsd-inject.1:51
 msgid "and include this verbose log within bug report."
-msgstr ""
+msgstr "a přiložte tento log k hlášení chyby."
 
 # type: TH
 #: docs/user/gammu-smsd-inject.1:1
@@ -1357,7 +1372,7 @@ msgstr "B<-h, --help>"
 # type: Plain text
 #: docs/user/jadmaker.1:17 docs/user/gammu-config.1:16
 msgid "Show summary of options."
-msgstr ""
+msgstr "Zobrazí přehled voleb."
 
 # type: TP
 #: docs/user/jadmaker.1:17 docs/user/gammu-config.1:16
@@ -1368,7 +1383,7 @@ msgstr "B<-f, --force>"
 # type: Plain text
 #: docs/user/jadmaker.1:20
 msgid "Force rewriting of JAD file even if exists."
-msgstr ""
+msgstr "Vynutí přepsání JAD souboru i když již existuje."
 
 # type: TP
 #: docs/user/jadmaker.1:20
@@ -1379,7 +1394,7 @@ msgstr "B<-u, --url URL>"
 # type: Plain text
 #: docs/user/jadmaker.1:23
 msgid "Define URL to be included in JAD file."
-msgstr ""
+msgstr "Určí URL, které bude obsaženo v JAD souboru."
 
 # type: Plain text
 #: docs/user/jadmaker.1:29 docs/user/gammu-config.1:28
@@ -1417,33 +1432,33 @@ msgstr "Gammu configurator 0.3"
 # type: Plain text
 #: docs/user/gammu-config.1:4
 msgid "gammu-config - Gammu configurator"
-msgstr ""
+msgstr "gammu-config - Gammu configurator"
 
 # type: Plain text
 #: docs/user/gammu-config.1:7
 msgid "B<gammu-config> [I<-f|--force>] [I<-c|--config config>]"
-msgstr ""
+msgstr "B<gammu-config> [I<-f|--force>] [I<-c|--config konfigurace>]"
 
 # type: Plain text
 #: docs/user/gammu-config.1:9
 msgid "Script to help configuring gammu."
-msgstr ""
+msgstr "Skript, který vám usnadní konfiguraci gammu."
 
 # type: Plain text
 #: docs/user/gammu-config.1:19
 msgid "Force configuring even if config already exists."
-msgstr ""
+msgstr "Vynutí konfigurování i když konfigurační soubor již existuje."
 
 # type: TP
 #: docs/user/gammu-config.1:19
 #, no-wrap
 msgid "B<-c, --config config>"
-msgstr ""
+msgstr "B<-c, --config konfigurace>"
 
 # type: Plain text
 #: docs/user/gammu-config.1:22
 msgid "Define which configuration file to use."
-msgstr ""
+msgstr "Určí, který konfigurační soubor bude použit."
 
 # type: Plain text
 #: docs/user/gammu-config.1:31
