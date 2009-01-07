@@ -448,7 +448,6 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	}
 
 	for (i = startarg; i < argc; i++) {
-		printf("%s\n", argv[i]);
 		switch (nextlong) {
 		case 0:
 			if (*type == SMS_Save || *type == SMS_SendSaved) {
@@ -1165,9 +1164,9 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			if (chars_read == 0) {
 				printf_warn("%s\n", _("No chars read, assuming it is okay!"));
 			}
-		}
 
-		EncodeUnicode(Buffer[0],InputBuffer,chars_read);
+			EncodeUnicode(Buffer[0],InputBuffer,chars_read);
+		}
 
 		chars_read = UnicodeLength(Buffer[0]);
 
