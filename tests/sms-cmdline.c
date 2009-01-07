@@ -19,7 +19,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	DisplayMultiSMSInfo(&sms, true, true, NULL, NULL);
 
 	printf("\n");
-	printf("Number of messages: %i", sms.Number);
+	printf("Number of messages: %i\n", sms.Number);
 	return 0;
 }
 
