@@ -1,4 +1,4 @@
-project (Gammu-user-docs)
+project (Gammu-user-docs C)
 
 # [a-z] is needed to skip CMakeLists.txt
 file(GLOB TEXTDOCS "[a-z]*.txt" "*.html")
