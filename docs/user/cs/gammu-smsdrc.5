@@ -49,24 +49,24 @@ telefon po restartu vyžaduje PIN.
 .TP 
 \fBLogFile\fP
 
-Soubor, kde budou zaznamenány informace o SMS démonovi. Můžte také použít
-speciálníhodnotu "syslog", která zapne logování prostřednictvím syslog
-démona.
+Soubor, kde budou zaznamenány informace o akcích prováděných SMSD. Můžete
+také použít speciální hodnotu "syslog", která zapne logování prostřednictvím
+syslog démona.
 
 Výchozí stav je vypnuté logování.
 
 .TP 
 \fBCommTimeout\fP
 
-Kolik sekund by měl smsd čekat po každém cyklu čtení/zápis.
+Kolik sekund by měl SMSD čekat po každém cyklu čtení/zápis.
 
 Výchozí je 30.
 
 .TP 
 \fBSendTimeout\fP
 
-Shows how many seconds smsd should wait for network answer during sending
-sms.  If nothing happen during this time, sms will be resent.
+Určuje kolik sekund má SMSD čekat na odpověď sítě během odesílání
+zprávy. Pokud se během té doby nic nestane, zpráva bude odeslána znovu.
 
 Výchozí je 30.
 
