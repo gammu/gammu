@@ -25,6 +25,8 @@ xgettext \
     --copyright-holder="Michal Čihař" \
     `find common -name '*.c' -o -name '*.h' | sort`
 
+po4a admin/po4a.config
+
 ver=`sed -n 's/set (VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
 sed -i '
     s/SOME DESCRIPTIVE TITLE/Gammu translation/;
@@ -38,6 +40,12 @@ sed -i '
     s/(C) YEAR/(C) 2003 - '`date +%Y`'/;
     s/VERSION/'$ver'/;
     ' locale/libgammu.pot
+sed -i '
+    s/SOME DESCRIPTIVE TITLE/Gammu documentation translation/;
+    s/PACKAGE/Gammu-docs/;
+    s/(C) YEAR/(C) 2003 - '`date +%Y`'/;
+    s/VERSION/'$ver'/;
+    ' locale/docs.pot
 
 for loc in $LOCS ; do
     sed -i '
@@ -54,6 +62,11 @@ for loc in $LOCS ; do
         s/Project-Id-Version: libGammu [0-9.]*/Project-Id-Version: libGammu '$ver'/;
         ' locale/$loc/libgammu.po
     msgmerge --previous  -U locale/$loc/libgammu.po locale/libgammu.pot
+    sed -i '
+        s/SOME DESCRIPTIVE TITLE/Gammu documentation translation/;
+        s/PACKAGE/Gammu-docs/;
+        s/(C) YEAR/(C) 2003 - '`date +%Y`'/;
+        s/VERSION/'$ver'/;
+        s/Project-Id-Version: Gammu-docs [0-9.]*/Project-Id-Version: Gammu-docs '$ver'/;
+        ' locale/$loc/docs.po
 done
-
-po4a admin/po4a.config
