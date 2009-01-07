@@ -714,7 +714,7 @@ configure_file ("${Gammu_SOURCE_DIR}/templates/gammu-config.h.cmake" "${Gammu_BI
 # Fill in include dir for build
 foreach (HEADER ${PUBLIC_HEADERS})
     if (NOT ${HEADER} MATCHES "gammu-config.h")
-        string (REGEX REPLACE "(include|smsd)(.*)/([^/]*)$" "\\3" FILENAME ${HEADER})
+        get_filename_component(FILENAME "${HEADER}" NAME)
         configure_file ("${Gammu_SOURCE_DIR}/${HEADER}" "${Gammu_BINARY_DIR}/include/${FILENAME}" COPY_ONLY)
     endif (NOT ${HEADER} MATCHES "gammu-config.h")
 endforeach (HEADER)
@@ -811,33 +811,34 @@ if (WIN32)
             )
 endif (WIN32)
 
-foreach (HEADER ${PUBLIC_HEADERS})
-    string (REPLACE "${Gammu_BINARY_DIR}" "" DIRNAME ${HEADER})
-    string (REGEX REPLACE "(include|smsd)(.*)/[^/]*$" "\\2" DIRNAME ${DIRNAME})
-    install (
-        FILES ${HEADER}
-        DESTINATION "${INSTALL_INC_DIR}/${DIRNAME}"
-        )
-endforeach (HEADER)
+install (
+    FILES ${PUBLID_HEADERS}
+    DESTINATION "${INSTALL_INC_DIR}/${DIRNAME}"
+    COMPONENT "headers"
+    )
 
 install (
     PROGRAMS ${UTILS}
     DESTINATION "${INSTALL_BIN_DIR}"
+    COMPONENT "utils"
     )
 
 install (
     FILES "${Gammu_BINARY_DIR}/cfg/gammu.pc" "${Gammu_BINARY_DIR}/cfg/gammu-smsd.pc"
     DESTINATION "${INSTALL_LIBDATA_DIR}/pkgconfig"
+    COMPONENT "pkgconfig"
     )
 
 install (
     FILES ${DOCS}
     DESTINATION "${INSTALL_DOC_DIR}"
+    COMPONENT "docs"
     )
 
 install (
     FILES ${SYMBIAN_FILES}
     DESTINATION "${INSTALL_DOC_DIR}/symbian"
+    COMPONENT "gnapplet"
     )
 
 foreach (DOC ${DEVELDOCS})
@@ -845,6 +846,7 @@ foreach (DOC ${DEVELDOCS})
     install (
         FILES ${DOC}
         DESTINATION "${INSTALL_DOC_DIR}/devel/${DIRNAME}"
+        COMPONENT "devel-docs"
         )
 endforeach (DOC)
 
@@ -853,17 +855,20 @@ foreach (EXAMPLE ${EXAMPLES})
     install (
         FILES ${EXAMPLE}
         DESTINATION "${INSTALL_DOC_DIR}/examples/${DIRNAME}"
+        COMPONENT "examples"
         )
 endforeach (EXAMPLE)
 
 install (
     FILES ${MAN1_PAGES}
     DESTINATION "${INSTALL_MAN_DIR}/man1"
+    COMPONENT "man-pages"
     )
 
 install (
     FILES ${MAN5_PAGES}
     DESTINATION "${INSTALL_MAN_DIR}/man5"
+    COMPONENT "man-pages"
     )
 
 add_subdirectory(common)
