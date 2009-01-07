@@ -284,6 +284,18 @@ target_link_libraries(sms-encode-decode libGammu)
 target_link_libraries(sms-encode-decode messagedisplay)
 add_test(sms-encode-decode "${GAMMU_TEST_PATH}/sms-encode-decode${GAMMU_TEST_SUFFIX}")
 
+# SMS encoding from commandline
+add_executable(sms-cmdline sms-cmdline.c)
+target_link_libraries(sms-cmdline libGammu)
+target_link_libraries(sms-cmdline messagedisplay)
+target_link_libraries(sms-cmdline messagecmdline)
+add_test(sms-cmdline-1 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    TEXT 213 -text aaafdsfdfasd)
+add_test(sms-cmdline-2 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    EMS 213 -text "aaafdsfdfasddsadsadsadsadijfdsalkfjla sdjflkjlfk fdsaf dsa fdsaf dsafafdasfsadfdsaf dsafdsa fdsaf dasfdsafdsafdsaf dsafdsaf daaafdsfdfasddsadsadsadsadijfdsalkfjla sdjflkjlfk fdsaf dsa fdsaf dsafafdasfsadfdsaf dsafdsa fdsaf dasfdsafdsafdsaf dsafdsaf dsafdsaf")
+add_test(sms-cmdline-3 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    MMSINDICATOR 800123456 http://wammu.eu/ Wammu Gammu)
+
 # AT parser tests
 add_executable(at-parser at-parser.c)
 target_link_libraries(at-parser libGammu)
