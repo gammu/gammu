@@ -7,7 +7,7 @@
 
 #define test_result(val) \
 { \
-	if (!!(val)) {\
+	if (!(val)) {\
         fprintf(stderr, "Test \"%s\" failed!\n", ""#val); \
         exit(2); \
     } \
