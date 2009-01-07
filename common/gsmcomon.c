@@ -185,7 +185,7 @@ const char *GSM_ErrorString(GSM_Error e)
 	}
 	if (def == NULL) def = N_("Unknown error description.");
 
-	return gettext(def);
+	return dgettext("libgammu", def);
 }
 
 const char *GetGammuLocalePath(void)
