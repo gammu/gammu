@@ -11,13 +11,13 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-07 19:17+0100\n"
-"PO-Revision-Date: 2009-01-07 19:18+0100\n"
+"PO-Revision-Date: 2009-01-07 19:27+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 # type: TH
 #: docs/user/gammurc.5:1
@@ -604,6 +604,8 @@ msgid ""
 "gammu-smsd(1) reads configuration from a config file. It's location can be "
 "specified on command line, otherwise default path /etc/gammu-smsdrc is used."
 msgstr ""
+"gammu-smsd(1) čte konfiguraci z konfiguračního souboru. Jeho umístění může "
+"být zadáno na příkazové řádce, jinak se použije /etc/gammu-smsdrc."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:22
@@ -879,7 +881,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:145
 msgid "Generally to get as much debug information as possible, use 255."
-msgstr ""
+msgstr "Pro maximální množství ladicích informací nastavte 255."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:147
@@ -898,6 +900,8 @@ msgid ""
 "Both MYSQL and PGSQL backends supports same options for configuring "
 "connection to a database:"
 msgstr ""
+"Obě služby MYSQL a PGSQL podporují stejné parametry pro nastavení připojeník "
+"databázi:"
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:153
@@ -908,7 +912,7 @@ msgstr "B<User>"
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:157
 msgid "User name used for connection to a database."
-msgstr ""
+msgstr "Uživatelské jméno pro připojení k databázi."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:158
@@ -919,7 +923,7 @@ msgstr "B<Password>"
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:162
 msgid "Password used for connection to a database."
-msgstr ""
+msgstr "Heslou použité pro připojení k databázi."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:163
@@ -933,6 +937,8 @@ msgid ""
 "Database server address. It can also contain port or socket path after "
 "semicolon, for example localhost:/path/to/socket."
 msgstr ""
+"Adresa databázového serveru. Za dvojtečkou může být také zadán port nebo "
+"cesta k socketu, například localhost:/path/to/socket."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:169
@@ -986,7 +992,7 @@ msgstr "B<InboxPath>"
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:195
 msgid "Where the received SMSes are stored."
-msgstr ""
+msgstr "Kde jsou ukládány přijaté zprávy."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:197 docs/user/gammu-smsdrc.5:204
@@ -1002,7 +1008,7 @@ msgstr "B<OutboxPath>"
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:202
 msgid "Where SMSes to be sent should be placed."
-msgstr ""
+msgstr "Kde jsou umístěny zprávy ve frontě k odeslání."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:205
@@ -1016,11 +1022,13 @@ msgid ""
 "Where the transmitted SMSes are placed, if same as OutBoxPath transmitted "
 "messages are deleted."
 msgstr ""
+"Kde jsou ukládány přenesené zprávy. Pokud je cesta stejná jako OutBoxPath, "
+"zprávyjsou vymazány."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:212
 msgid "Default is to delete transmitted messages."
-msgstr ""
+msgstr "Výchozí je mazat přenesené zprávy."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:213
@@ -1031,12 +1039,12 @@ msgstr "B<ErrorSMSPath>"
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:217
 msgid "Where SMSes with error in transmission is placed."
-msgstr ""
+msgstr "Kde jsou umístěny SMS po chybě při odesílání."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:219
 msgid "Default is same as SentSMSPath."
-msgstr ""
+msgstr "Výchozí je stejné jako SentSMSPath."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:220
@@ -1164,6 +1172,9 @@ msgid ""
 "messages, stores them in defined storage and also sends messages enqueued in "
 "this storage."
 msgstr ""
+"B<gammu-smsd> je program, který pravidelně kontroluje GSM modem a přijímá "
+"zprávy,ukládá je na zadaném místě a také odesílá zprávy, které jsou ve "
+"frontě."
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:18 docs/user/gammu-smsd-inject.1:19
@@ -1486,4 +1497,3 @@ msgid ""
 msgstr ""
 "Copyright \\(co 2003-2009 Michal Čihař a další autoři.  Licence GPLv2: GNU "
 "GPL verze 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
-
