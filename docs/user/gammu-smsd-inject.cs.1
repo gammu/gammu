@@ -1,0 +1,54 @@
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH GAMMU\-SMSD\-INJECT 1 "Leden 4, 2009" "Gammu 1.23.0" "Dokumentace Gammu"
+.SH JMÉNO
+gammu\-smsd\-inject \- Vloží zprávy do fronty SMS démona Gammu
+.SH SYNTAXE
+\fBgammu\-smsd\-inject\fP [\fIPARAMETR\fP]...  TYPZPRÁVY PŘÍJEMCE
+[\fIPARAMETR_ZPRÁVY\fP]...
+.SH POPIS
+This manual page documents briefly the \fBgammu\-smsd\-inject\fP command.
+.PP
+\fBgammu\-smsd\-inject\fP is a program that enqueues message in Gammu SMS daemon,
+which will be later sent by the deamon using connected GSM modem.
+.PP
+Program accepts following options (please note that long options might be
+not accepted on some platforms):
+.TP 
+\fB\-h\fP, \fB\-\-help\fP
+Zobrazí nápovědu.
+.TP 
+\fB\-v\fP, \fB\-\-version\fP
+Zobrazí informace o verzi a zakompilované funkcionalitě.
+.TP 
+\fB\-c\fP, \fB\-\-config\fP=\fIsoubor\fP
+Jaký konfigurační soubor se má použít, výchozí je /etc/gammu\-smsdrc, na
+systému Windows není žádná výchozí cesta a cesta ke konfiguračnímu souboru
+musí být zadána vždy.
+.PP
+For description of message types and their parameters, please check
+gammu(1).  The options are identical to ones you can use for gammu sendsms.
+
+.SH "DALŠÍ INFORMACE"
+gammu\-smsdrc(5), gammu(1), gammu\-smsd(1)
+.SH AUTOR
+gammu\-smsd a tato manuálová stránka napsal Michal Čihař
+<michal@cihar.com>.
+.SH COPYRIGHT
+Copyright \(co 2009 Michal Čihař a další autoři.  Licence GPLv2: GNU GPL
+verze 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
+.br
+Tento program je volný software; můžete jej šířit a modifikovat. Není
+poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem.
+.SH "HLÁŠENÍ CHYB"
+Prosím hlašte chyby na <http://bugs.cihar.com>.
+
+Před hlášením chyb prosím zapněte logovaní v nastavení smsd:
+
+    [gammu]
+    logformat = textall
+
+and include this verbose log within bug report.

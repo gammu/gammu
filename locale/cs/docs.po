@@ -2,16 +2,20 @@
 # Copyright (C) 2009 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Gammu-docs package.
 # Automatically generated, 2009.
+# Automatically generated <>, 2009.
+#  <>, 2009.
+#
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
-"POT-Creation-Date: 2009-01-07 18:08+0100\n"
-"PO-Revision-Date: 2009-01-07 18:00+0100\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-01-07 18:30+0100\n"
+"PO-Revision-Date: 2009-01-07 18:35+0100\n"
+"Last-Translator: Michal Čihař <michal@cihar.com>\n"
+"Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ASCII\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
@@ -19,28 +23,29 @@ msgstr ""
 #: docs/user/gammurc.5:1
 #, no-wrap
 msgid "GAMMURC"
-msgstr ""
+msgstr "GAMMURC"
 
 # type: TH
 #: docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1 docs/user/gammu-smsd.1:1
 #: docs/user/gammu-smsd-inject.1:1
 #, no-wrap
 msgid "January 4, 2009"
-msgstr ""
+msgstr "Leden 4, 2009"
 
 # type: TH
 #: docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1 docs/user/gammu-smsd.1:1
 #: docs/user/gammu-smsd-inject.1:1
 #, no-wrap
 msgid "Gammu 1.23.0"
-msgstr ""
+msgstr "Gammu 1.23.0"
 
 # type: TH
 #: docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1 docs/user/gammu-smsd.1:1
-#: docs/user/gammu-smsd-inject.1:1
+#: docs/user/gammu-smsd-inject.1:1 docs/user/jadmaker.1:1
+#: docs/user/gammu-config.1:1
 #, no-wrap
 msgid "Gammu Documentation"
-msgstr ""
+msgstr "Dokumentace Gammu"
 
 # type: SH
 #: docs/user/gammurc.5:2 docs/user/gammu-smsdrc.5:2 docs/user/gammu-smsd.1:2
@@ -48,18 +53,18 @@ msgstr ""
 #: docs/user/gammu-config.1:2
 #, no-wrap
 msgid "NAME"
-msgstr ""
+msgstr "JMÉNO"
 
 # type: TP
 #: docs/user/gammurc.5:4
 #, no-wrap
 msgid "B<gammurc>"
-msgstr ""
+msgstr "B<gammurc>"
 
 # type: Plain text
 #: docs/user/gammurc.5:8
 msgid "gammu(1) configuration file"
-msgstr ""
+msgstr "konfigurační soubor gammu(1)"
 
 # type: SH
 #: docs/user/gammurc.5:8 docs/user/gammu-smsdrc.5:8 docs/user/gammu-smsd.1:4
@@ -67,12 +72,12 @@ msgstr ""
 #: docs/user/gammu-config.1:4
 #, no-wrap
 msgid "SYNOPSIS"
-msgstr ""
+msgstr "SYNTAXE"
 
 # type: Plain text
 #: docs/user/gammurc.5:12
 msgid "I</etc/gammurc> or I<~/.gammurc>"
-msgstr ""
+msgstr "I</etc/gammurc> nebo I<~/.gammurc>"
 
 # type: SH
 #: docs/user/gammurc.5:12 docs/user/gammu-smsdrc.5:10 docs/user/gammu-smsd.1:7
@@ -80,7 +85,7 @@ msgstr ""
 #: docs/user/gammu-config.1:7
 #, no-wrap
 msgid "DESCRIPTION"
-msgstr ""
+msgstr "POPIS"
 
 # type: Plain text
 #: docs/user/gammurc.5:16
@@ -113,7 +118,7 @@ msgstr ""
 #: docs/user/gammurc.5:27
 #, no-wrap
 msgid "B<Connection>"
-msgstr ""
+msgstr "B<Connection>"
 
 # type: Plain text
 #: docs/user/gammurc.5:31
@@ -267,7 +272,7 @@ msgstr ""
 #: docs/user/gammurc.5:91
 #, no-wrap
 msgid "B<Model>"
-msgstr ""
+msgstr "B<Model>"
 
 # type: Plain text
 #: docs/user/gammurc.5:96
@@ -280,7 +285,7 @@ msgstr ""
 #: docs/user/gammurc.5:97
 #, no-wrap
 msgid "B<SynchronizeTime>"
-msgstr ""
+msgstr "B<SynchronizeTime>"
 
 # type: Plain text
 #: docs/user/gammurc.5:103
@@ -294,7 +299,7 @@ msgstr ""
 #: docs/user/gammurc.5:104
 #, no-wrap
 msgid "B<StartInfo>"
-msgstr ""
+msgstr "B<StartInfo>"
 
 # type: Plain text
 #: docs/user/gammurc.5:110
@@ -308,7 +313,7 @@ msgstr ""
 #: docs/user/gammurc.5:111
 #, no-wrap
 msgid "B<GammuCoding>"
-msgstr ""
+msgstr "B<GammuCoding>"
 
 # type: Plain text
 #: docs/user/gammurc.5:117
@@ -322,7 +327,7 @@ msgstr ""
 #: docs/user/gammurc.5:118
 #, no-wrap
 msgid "B<GammuLoc>"
-msgstr ""
+msgstr "B<GammuLoc>"
 
 # type: Plain text
 #: docs/user/gammurc.5:124
@@ -336,7 +341,7 @@ msgstr ""
 #: docs/user/gammurc.5:125 docs/user/gammu-smsdrc.5:46
 #, no-wrap
 msgid "B<LogFile>"
-msgstr ""
+msgstr "B<LogFile>"
 
 # type: Plain text
 #: docs/user/gammurc.5:129
@@ -347,7 +352,7 @@ msgstr ""
 #: docs/user/gammurc.5:130
 #, no-wrap
 msgid "B<LogFormat>"
-msgstr ""
+msgstr "B<LogFormat>"
 
 # type: Plain text
 #: docs/user/gammurc.5:134
@@ -400,7 +405,7 @@ msgstr ""
 #: docs/user/gammurc.5:152
 #, no-wrap
 msgid "B<Features>"
-msgstr ""
+msgstr "B<Features>"
 
 # type: Plain text
 #: docs/user/gammurc.5:159
@@ -415,7 +420,7 @@ msgstr ""
 #: docs/user/gammurc.5:160
 #, no-wrap
 msgid "B<Use_Locking>"
-msgstr ""
+msgstr "B<Use_Locking>"
 
 # type: Plain text
 #: docs/user/gammurc.5:167
@@ -435,7 +440,7 @@ msgstr ""
 #: docs/user/gammurc.5:170 docs/user/gammu-smsdrc.5:227
 #, no-wrap
 msgid "EXAMPLE"
-msgstr ""
+msgstr "PŘÍKLAD"
 
 # type: Plain text
 #: docs/user/gammurc.5:173
@@ -455,6 +460,9 @@ msgid ""
 "port = /dev/ttyACM0\n"
 "connection = dlr3\n"
 msgstr ""
+"[gammu]\n"
+"port = /dev/ttyACM0\n"
+"connection = dlr3\n"
 
 # type: Plain text
 #: docs/user/gammurc.5:190
@@ -471,6 +479,9 @@ msgid ""
 "port = /dev/ttyACM0\n"
 "connection = at\n"
 msgstr ""
+"[gammu]\n"
+"port = /dev/ttyACM0\n"
+"connection = at\n"
 
 # type: Plain text
 #: docs/user/gammurc.5:205
@@ -487,26 +498,29 @@ msgid ""
 "port = B0:0B:00:00:FA:CE\n"
 "connection = blueat\n"
 msgstr ""
+"[gammu]\n"
+"port = B0:0B:00:00:FA:CE\n"
+"connection = blueat\n"
 
 # type: SH
 #: docs/user/gammurc.5:218 docs/user/gammu-smsdrc.5:272
 #: docs/user/gammu-smsd.1:44 docs/user/gammu-smsd-inject.1:33
-#: docs/user/jadmaker.1:31 docs/user/gammu-config.1:30
+#: docs/user/jadmaker.1:27 docs/user/gammu-config.1:26
 #, no-wrap
 msgid "SEE ALSO"
-msgstr ""
+msgstr "DALŠÍ INFORMACE"
 
 # type: Plain text
 #: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:274
 msgid "gammu-smsd(1), gammu(1), gammurc(5)"
-msgstr ""
+msgstr "gammu-smsd(1), gammu(1), gammurc(5)"
 
 # type: SH
 #: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:274
 #: docs/user/gammu-smsd.1:46 docs/user/gammu-smsd-inject.1:35
 #, no-wrap
 msgid "AUTHOR"
-msgstr ""
+msgstr "AUTOR"
 
 # type: Plain text
 #: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:276
@@ -515,13 +529,16 @@ msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
 "E<lt>michal@cihar.comE<gt>."
 msgstr ""
+"gammu-smsd a tato manuálová stránka napsal Michal Čihař E<lt>michal@cihar."
+"comE<gt>."
 
 # type: SH
 #: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:276
 #: docs/user/gammu-smsd.1:48 docs/user/gammu-smsd-inject.1:37
+#: docs/user/jadmaker.1:30 docs/user/gammu-config.1:28
 #, no-wrap
-msgid "COPYRIGH"
-msgstr ""
+msgid "COPYRIGHT"
+msgstr "COPYRIGHT"
 
 # type: Plain text
 #: docs/user/gammurc.5:225 docs/user/gammu-smsdrc.5:279
@@ -530,49 +547,56 @@ msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
 "version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
 msgstr ""
+"Copyright \\(co 2009 Michal Čihař a další autoři.  Licence GPLv2: GNU GPL "
+"verze 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
 
 # type: Plain text
 #: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:282
 #: docs/user/gammu-smsd.1:54 docs/user/gammu-smsd-inject.1:43
+#: docs/user/jadmaker.1:35 docs/user/gammu-config.1:33
 msgid ""
 "This is free software: you are free to change and redistribute it.  There is "
 "NO WARRANTY, to the extent permitted by law."
 msgstr ""
+"Tento program je volný software; můžete jej šířit a modifikovat. Není "
+"poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem."
 
 # type: SH
 #: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:282
 #: docs/user/gammu-smsd.1:54 docs/user/gammu-smsd-inject.1:43
+#: docs/user/jadmaker.1:24 docs/user/gammu-config.1:23
 #, no-wrap
 msgid "REPORTING BUGS"
-msgstr ""
+msgstr "HLÁŠENÍ CHYB"
 
 # type: Plain text
 #: docs/user/gammurc.5:229 docs/user/gammu-smsdrc.5:283
 #: docs/user/gammu-smsd.1:56 docs/user/gammu-smsd-inject.1:45
+#: docs/user/jadmaker.1:26 docs/user/gammu-config.1:25
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
-msgstr ""
+msgstr "Prosím hlašte chyby na E<lt>http://bugs.cihar.comE<gt>."
 
 # type: TH
 #: docs/user/gammu-smsdrc.5:1
 #, no-wrap
 msgid "GAMMU-SMSDRC"
-msgstr ""
+msgstr "GAMMU-SMSDRC"
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:4
 #, no-wrap
 msgid "B<gammu-smsdrc>"
-msgstr ""
+msgstr "B<gammu-smsdrc>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:8
 msgid "gammu-smsd(1) configuration file"
-msgstr ""
+msgstr "konfigurační soubor pro gammu-smsd(1)"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:10
 msgid "I</etc/gammu-smsdrc>"
-msgstr ""
+msgstr "I</etc/gammu-smsdrc>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:15
@@ -615,7 +639,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:34
 #, no-wrap
 msgid "B<Service>"
-msgstr ""
+msgstr "B<Service>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:39
@@ -628,7 +652,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:40
 #, no-wrap
 msgid "B<PIN>"
-msgstr ""
+msgstr "B<PIN>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:45
@@ -653,7 +677,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:54
 #, no-wrap
 msgid "B<CommTimeout>"
-msgstr ""
+msgstr "B<CommTimeout>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:58
@@ -669,7 +693,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:61
 #, no-wrap
 msgid "B<SendTimeout>"
-msgstr ""
+msgstr "B<SendTimeout>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:66
@@ -701,7 +725,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:78
 #, no-wrap
 msgid "B<CheckSecurity>"
-msgstr ""
+msgstr "B<CheckSecurity>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:82
@@ -717,7 +741,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:85
 #, no-wrap
 msgid "B<ResetFrequency>"
-msgstr ""
+msgstr "B<ResetFrequency>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:92
@@ -732,7 +756,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:95
 #, no-wrap
 msgid "B<DeliveryReport>"
-msgstr ""
+msgstr "B<DeliveryReport>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:99
@@ -757,13 +781,13 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:107
 msgid "Default is no."
-msgstr ""
+msgstr "Výchozí je no - vypnuto."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:108
 #, no-wrap
 msgid "B<DeliveryReportDelay>"
-msgstr ""
+msgstr "B<DeliveryReportDelay>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:115
@@ -777,13 +801,13 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:117
 msgid "Default is 10"
-msgstr ""
+msgstr "Výchozí je 10"
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:118
 #, no-wrap
 msgid "B<PhoneID>"
-msgstr ""
+msgstr "B<PhoneID>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:123
@@ -796,7 +820,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:124
 #, no-wrap
 msgid "B<RunOnReceive>"
-msgstr ""
+msgstr "B<RunOnReceive>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:130
@@ -810,7 +834,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:131
 #, no-wrap
 msgid "B<DebugLevel>"
-msgstr ""
+msgstr "B<DebugLevel>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:136
@@ -863,7 +887,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:153
 #, no-wrap
 msgid "B<User>"
-msgstr ""
+msgstr "B<User>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:157
@@ -874,7 +898,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:158
 #, no-wrap
 msgid "B<Password>"
-msgstr ""
+msgstr "B<Password>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:162
@@ -885,7 +909,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:163
 #, no-wrap
 msgid "B<PC>"
-msgstr ""
+msgstr "B<PC>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:168
@@ -898,7 +922,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:169
 #, no-wrap
 msgid "B<Database>"
-msgstr ""
+msgstr "B<Database>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:175
@@ -941,7 +965,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:191
 #, no-wrap
 msgid "B<InboxPath>"
-msgstr ""
+msgstr "B<InboxPath>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:195
@@ -952,7 +976,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:196
 #, no-wrap
 msgid "B<OutboxPath>"
-msgstr ""
+msgstr "B<OutboxPath>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:200
@@ -963,7 +987,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:201
 #, no-wrap
 msgid "B<SentSMSPath>"
-msgstr ""
+msgstr "B<SentSMSPath>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:205
@@ -974,7 +998,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:206
 #, no-wrap
 msgid "B<ErrorSMSPath>"
-msgstr ""
+msgstr "B<ErrorSMSPath>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:210
@@ -985,7 +1009,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:211
 #, no-wrap
 msgid "B<InboxFormat>"
-msgstr ""
+msgstr "B<InboxFormat>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:217
@@ -1004,7 +1028,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:220
 #, no-wrap
 msgid "B<TransmitFormat>"
-msgstr ""
+msgstr "B<TransmitFormat>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:224
@@ -1042,6 +1066,14 @@ msgid ""
 "SentSMSPath = /var/spool/sms/sent/\n"
 "ErrorSMSPath = /var/spool/sms/error/\n"
 msgstr ""
+"[smsd]\n"
+"Service = files\n"
+"PIN = 1234\n"
+"LogFile = syslog\n"
+"InboxPath = /var/spool/sms/inbox/\n"
+"OutboPpath = /var/spool/sms/outbox/\n"
+"SentSMSPath = /var/spool/sms/sent/\n"
+"ErrorSMSPath = /var/spool/sms/error/\n"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:253
@@ -1061,12 +1093,20 @@ msgid ""
 "PC = localhost\n"
 "Database = smsd\n"
 msgstr ""
+"[smsd]\n"
+"Service = mysql\n"
+"PIN = 1234\n"
+"LogFile = syslog\n"
+"User = smsd\n"
+"Password = smsd\n"
+"PC = localhost\n"
+"Database = smsd\n"
 
 # type: TH
 #: docs/user/gammu-smsd.1:1
 #, no-wrap
 msgid "GAMMU-SMSD"
-msgstr ""
+msgstr "GAMMU-SMSD"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:4
@@ -1076,7 +1116,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsd.1:7
 msgid "B<gammu-smsd> [I<OPTION>]..."
-msgstr ""
+msgstr "B<gammu-smsd> [I<PARAMETR>]..."
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:11
@@ -1102,29 +1142,29 @@ msgstr ""
 #: docs/user/gammu-smsd.1:18 docs/user/gammu-smsd-inject.1:19
 #, no-wrap
 msgid "B<-h>, B<--help>"
-msgstr ""
+msgstr "B<-h>, B<--help>"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:21 docs/user/gammu-smsd-inject.1:22
 msgid "Shows help."
-msgstr ""
+msgstr "Zobrazí nápovědu."
 
 # type: TP
 #: docs/user/gammu-smsd.1:21 docs/user/gammu-smsd-inject.1:22
 #, no-wrap
 msgid "B<-v>, B<--version>"
-msgstr ""
+msgstr "B<-v>, B<--version>"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:24 docs/user/gammu-smsd-inject.1:25
 msgid "Shows version information and compiled in features."
-msgstr ""
+msgstr "Zobrazí informace o verzi a zakompilované funkcionalitě."
 
 # type: TP
 #: docs/user/gammu-smsd.1:24 docs/user/gammu-smsd-inject.1:25
 #, no-wrap
 msgid "B<-c>, B<--config>=I<file>"
-msgstr ""
+msgstr "B<-c>, B<--config>=I<soubor>"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:28 docs/user/gammu-smsd-inject.1:29
@@ -1132,12 +1172,15 @@ msgid ""
 "Configuration file to use, default is /etc/gammu-smsdrc, on Windows there is "
 "no default and configuration file path has to be always specified."
 msgstr ""
+"Jaký konfigurační soubor se má použít, výchozí je /etc/gammu-smsdrc, na "
+"systému Windows není žádná výchozí cesta a cesta ke konfiguračnímu souboru "
+"musí být zadána vždy."
 
 # type: TP
 #: docs/user/gammu-smsd.1:28
 #, no-wrap
 msgid "B<-p>, B<--pid>=I<file>"
-msgstr ""
+msgstr "B<-p>, B<--pid>=I<soubor>"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:31
@@ -1149,7 +1192,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:31
 #, no-wrap
 msgid "B<-d>, B<--daemon>"
-msgstr ""
+msgstr "B<-d>, B<--daemon>"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:34
@@ -1160,7 +1203,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:34
 #, no-wrap
 msgid "B<-i>, B<--install-service>"
-msgstr ""
+msgstr "B<-i>, B<--install-service>"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:37
@@ -1171,7 +1214,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:37
 #, no-wrap
 msgid "B<-u>, B<--uninstall-service>"
-msgstr ""
+msgstr "B<-u>, B<--uninstall-service>"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:40
@@ -1182,7 +1225,7 @@ msgstr ""
 #: docs/user/gammu-smsd.1:40
 #, no-wrap
 msgid "B<-s>, B<--start-service>"
-msgstr ""
+msgstr "B<-s>, B<--start-service>"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:43
@@ -1192,13 +1235,13 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsd.1:46
 msgid "gammu-smsdrc(5), gammu(1), gammu-smsd-inject(1)"
-msgstr ""
+msgstr "gammu-smsdrc(5), gammu(1), gammu-smsd-inject(1)"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:58 docs/user/gammu-smsd-inject.1:47
 msgid ""
 "Before reporting a bug, please enable verbose logging in smsd configuration:"
-msgstr ""
+msgstr "Před hlášením chyb prosím zapněte logovaní v nastavení smsd:"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:61 docs/user/gammu-smsd-inject.1:50
@@ -1207,6 +1250,8 @@ msgid ""
 "    [gammu]\n"
 "    logformat = textall\n"
 msgstr ""
+"    [gammu]\n"
+"    logformat = textall\n"
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:62 docs/user/gammu-smsd-inject.1:51
@@ -1217,12 +1262,12 @@ msgstr ""
 #: docs/user/gammu-smsd-inject.1:1
 #, no-wrap
 msgid "GAMMU-SMSD-INJECT"
-msgstr ""
+msgstr "GAMMU-SMSD-INJECT"
 
 # type: Plain text
 #: docs/user/gammu-smsd-inject.1:4
 msgid "gammu-smsd-inject - Inject messages into queue of SMS daemon for Gammu"
-msgstr ""
+msgstr "gammu-smsd-inject - Vloží zprávy do fronty SMS démona Gammu"
 
 # type: Plain text
 #: docs/user/gammu-smsd-inject.1:9
@@ -1230,6 +1275,8 @@ msgid ""
 "B<gammu-smsd-inject> [I<OPTION>]...  MESSAGETYPE RECIPIENT "
 "[I<MESSAGE_PARAMETER>]..."
 msgstr ""
+"B<gammu-smsd-inject> [I<PARAMETR>]...  TYPZPRÁVY PŘÍJEMCE "
+"[I<PARAMETR_ZPRÁVY>]..."
 
 # type: Plain text
 #: docs/user/gammu-smsd-inject.1:13
@@ -1253,52 +1300,40 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsd-inject.1:35
 msgid "gammu-smsdrc(5), gammu(1), gammu-smsd(1)"
-msgstr ""
+msgstr "gammu-smsdrc(5), gammu(1), gammu-smsd(1)"
 
 # type: TH
 #: docs/user/jadmaker.1:1
 #, no-wrap
 msgid "JADMAKER"
-msgstr ""
+msgstr "JADMAKER"
 
 # type: TH
 #: docs/user/jadmaker.1:1
 #, no-wrap
 msgid "Jan 2008"
-msgstr ""
+msgstr "Leden 2008"
 
 # type: TH
 #: docs/user/jadmaker.1:1
 #, no-wrap
 msgid "JAD File Generator"
-msgstr ""
-
-# type: TH
-#: docs/user/jadmaker.1:1 docs/user/gammu-config.1:1
-#, no-wrap
-msgid "Gammu Documentaion"
-msgstr ""
+msgstr "Generátor JAD souborů"
 
 # type: Plain text
 #: docs/user/jadmaker.1:4
 msgid "jadmaker - JAD File Generator"
-msgstr ""
+msgstr "jadmaker - Generátor JAD souborů"
 
 # type: Plain text
 #: docs/user/jadmaker.1:8
 msgid "B<jadmaker> [I<-f|--force>] [I<-u|--url URL>] E<lt>filename.jarE<gt>..."
-msgstr ""
+msgstr "B<jadmaker> [I<-f|--force>] [I<-u|--url URL>] E<lt>soubor.jarE<gt>..."
 
 # type: Plain text
 #: docs/user/jadmaker.1:10
 msgid "Script to generate JAD file from JAR file."
-msgstr ""
-
-# type: SH
-#: docs/user/jadmaker.1:10 docs/user/gammu-config.1:9
-#, no-wrap
-msgid "OPTIONS"
-msgstr ""
+msgstr "Skript pro vygenerování JAD souboru na základě JAR souboru."
 
 # type: Plain text
 #: docs/user/jadmaker.1:14 docs/user/gammu-config.1:13
@@ -1311,7 +1346,7 @@ msgstr ""
 #: docs/user/jadmaker.1:14 docs/user/gammu-config.1:13
 #, no-wrap
 msgid "B<-h, --help>"
-msgstr ""
+msgstr "B<-h, --help>"
 
 # type: Plain text
 #: docs/user/jadmaker.1:17 docs/user/gammu-config.1:16
@@ -1322,7 +1357,7 @@ msgstr ""
 #: docs/user/jadmaker.1:17 docs/user/gammu-config.1:16
 #, no-wrap
 msgid "B<-f, --force>"
-msgstr ""
+msgstr "B<-f, --force>"
 
 # type: Plain text
 #: docs/user/jadmaker.1:20
@@ -1333,72 +1368,45 @@ msgstr ""
 #: docs/user/jadmaker.1:20
 #, no-wrap
 msgid "B<-u, --url URL>"
-msgstr ""
+msgstr "B<-u, --url URL>"
 
 # type: Plain text
 #: docs/user/jadmaker.1:23
 msgid "Define URL to be included in JAD file."
 msgstr ""
 
-# type: SH
-#: docs/user/jadmaker.1:23 docs/user/gammu-config.1:22
-#, no-wrap
-msgid "LICENCE"
-msgstr ""
-
 # type: Plain text
-#: docs/user/jadmaker.1:25
-msgid "This script is licensed under GNU/GPL version 2."
-msgstr ""
-
-# type: SH
-#: docs/user/jadmaker.1:26 docs/user/gammu-config.1:25
-#, no-wrap
-msgid "BUGS"
-msgstr ""
-
-# type: Plain text
-#: docs/user/jadmaker.1:30 docs/user/gammu-config.1:29
-msgid ""
-"There are definitely many bugs, reporting to author is welcome. Please "
-"include some useful information when sending bug reports (eg. exception you "
-"received and debug output). Please submit your reports to E<lt>http://bugs."
-"cihar.com/E<gt>."
-msgstr ""
-
-# type: Plain text
-#: docs/user/jadmaker.1:33 docs/user/gammu-config.1:32
+#: docs/user/jadmaker.1:29 docs/user/gammu-config.1:28
 msgid "gammu(1)"
-msgstr ""
-
-# type: SH
-#: docs/user/jadmaker.1:33 docs/user/gammu-config.1:32
-#, no-wrap
-msgid "COPYRIGHT"
-msgstr ""
+msgstr "gammu(1)"
 
 # type: Plain text
-#: docs/user/jadmaker.1:34
-msgid "Copyright \\(co 2008 Michal Cihar E<lt>michal@cihar.comE<gt>"
+#: docs/user/jadmaker.1:33
+msgid ""
+"Copyright \\(co 2008-2009 Michal Cihar and other authors.  License GPLv2: "
+"GNU GPL version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0."
+"htmlE<gt>"
 msgstr ""
+"Copyright \\(co 2008-2009 Michal Čihař a další autoři.  Licence GPLv2: GNU "
+"GPL verze 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
 
 # type: TH
 #: docs/user/gammu-config.1:1
 #, no-wrap
 msgid "GAMMU-CONFIG"
-msgstr ""
+msgstr "GAMMU-CONFIG"
 
 # type: TH
 #: docs/user/gammu-config.1:1
 #, no-wrap
 msgid "May 2007"
-msgstr ""
+msgstr "Květen 2007"
 
 # type: TH
 #: docs/user/gammu-config.1:1
 #, no-wrap
 msgid "Gammu configurator 0.3"
-msgstr ""
+msgstr "Gammu configurator 0.3"
 
 # type: Plain text
 #: docs/user/gammu-config.1:4
@@ -1432,11 +1440,11 @@ msgid "Define which configuration file to use."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-config.1:24
-msgid "This program is licensed under GNU/GPL version 2."
+#: docs/user/gammu-config.1:31
+msgid ""
+"Copyright \\(co 2003-2009 Michal Cihar and other authors.  License GPLv2: "
+"GNU GPL version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0."
+"htmlE<gt>"
 msgstr ""
-
-# type: Plain text
-#: docs/user/gammu-config.1:33
-msgid "Copyright \\(co 2003 - 2007 Michal Cihar E<lt>michal@cihar.comE<gt>"
-msgstr ""
+"Copyright \\(co 2003-2009 Michal Čihař a další autoři.  Licence GPLv2: GNU "
+"GPL verze 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
