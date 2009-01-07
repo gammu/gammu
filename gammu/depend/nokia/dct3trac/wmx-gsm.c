@@ -189,13 +189,12 @@ static void GSMDecoder_l1xml_open(GSMDecoder *self, GSMDecoder_l1l2data *l1, uns
 			fprintf(self->xmlout, "error=\"%i\" ", l1->err);
 			fprintf(self->xmlout, "timeshift=\"%i\" ", l1->timeshift);
 			fprintf(self->xmlout, "bsic=\"%i\" ", l1->bsic);
-			fprintf(self->xmlout, "data=\"");
-			for(x=0; x<length; x++) {
-				fprintf(self->xmlout, "%02X", buffer[x]);
-			}
-			fprintf(self->xmlout, "\" ");
 		}
-		fprintf(self->xmlout, ">\n");
+		fprintf(self->xmlout, "data=\"");
+		for(x=0; x<length; x++) {
+			fprintf(self->xmlout, "%02X", buffer[x]);
+		}
+		fprintf(self->xmlout, "\" >\n");
 	}
 }
 
