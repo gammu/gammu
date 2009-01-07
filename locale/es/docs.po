@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
-"POT-Creation-Date: 2009-01-07 19:17+0100\n"
+"POT-Creation-Date: 2009-01-07 19:56+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -133,17 +133,17 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:37
-msgid "B<dlr3> - DLR3 and compatible cables"
+msgid "B<dlr3> - DLR-3 and compatible cables"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:39
-msgid "B<dku2> - DKU2 and compatible cables"
+msgid "B<dku2> - DKU-2 and compatible cables"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:41
-msgid "B<dku5> - DKU5 and compatible cables"
+msgid "B<dku5> - DKU-5 and compatible cables"
 msgstr ""
 
 # type: Plain text
@@ -246,7 +246,7 @@ msgstr ""
 msgid ""
 "For cables or emulated serial ports, you enter device name (for example /dev/"
 "ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux or COM1: on "
-"Windows). The special exception are DKU2 and DKU5 cables, where the device "
+"Windows). The special exception are DKU-2 and DKU-5 cables, where the device "
 "is automatically detected from driver information and this parameters is "
 "ignored."
 msgstr ""
@@ -445,7 +445,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:175
-msgid "Gammu configuration for Nokia phone using DLR3 cable:"
+msgid "Gammu configuration for Nokia phone using DLR-3 cable:"
 msgstr ""
 
 # type: Plain text
@@ -741,7 +741,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:99
-msgid "Whether delivery reports should be used, one of no/log/sms."
+msgid "Whether delivery reports should be used, one of 'no', 'log', 'sms'."
 msgstr ""
 
 # type: Plain text
@@ -761,7 +761,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:107
-msgid "Default is no."
+msgid "Default is 'no'."
 msgstr ""
 
 # type: TP

@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-07 19:17+0100\n"
-"PO-Revision-Date: 2009-01-07 19:27+0100\n"
+"POT-Creation-Date: 2009-01-07 19:56+0100\n"
+"PO-Revision-Date: 2009-01-07 20:02+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -94,6 +94,9 @@ msgid ""
 "on runtime. On Unix systems, it first tries ~/.gammurc and then falls back "
 "to /etc/gammurc."
 msgstr ""
+"gammu(1) načítá konfiguraci z konfiguračního souboru. Jeho umístění je "
+"zjištěno přispuštění. Na Unixových sytémech se nejdříve zkouší ~/.gammurc a "
+"pokud to neexistuje, použije se /etc/gammurc."
 
 # type: Plain text
 #: docs/user/gammurc.5:20 docs/user/gammu-smsdrc.5:19
@@ -102,6 +105,9 @@ msgid ""
 "#.  Sections of config file are identified in square brackets line [this]. "
 "All key values are case insensitive."
 msgstr ""
+"Tento soubor používá syntaxi ini souborů, komentáře mohou být značeny buď ; "
+"nebo #. Sekce souboru jsou zapsány v hranatých závorkách jako [toto].Všechny "
+"hodnoty klíčů nerozlišují velikost písmen."
 
 # type: Plain text
 #: docs/user/gammurc.5:26
@@ -123,12 +129,14 @@ msgstr "B<Connection>"
 # type: Plain text
 #: docs/user/gammurc.5:31
 msgid "Protocol which will be used to talk to your phone."
-msgstr ""
+msgstr "Protokol, který se použije pro komunikaci s telefonem."
 
 # type: Plain text
 #: docs/user/gammurc.5:33
 msgid "For Nokia cables you want to use one of following:"
 msgstr ""
+"Pro telefony Nokia připojené kabelem budete chtít použít jedno z "
+"následujících:"
 
 # type: Plain text
 #: docs/user/gammurc.5:35
@@ -137,17 +145,17 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:37
-msgid "B<dlr3> - DLR3 and compatible cables"
+msgid "B<dlr3> - DLR-3 and compatible cables"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:39
-msgid "B<dku2> - DKU2 and compatible cables"
+msgid "B<dku2> - DKU-2 and compatible cables"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:41
-msgid "B<dku5> - DKU5 and compatible cables"
+msgid "B<dku5> - DKU-5 and compatible cables"
 msgstr ""
 
 # type: Plain text
@@ -167,6 +175,8 @@ msgstr ""
 #: docs/user/gammurc.5:49
 msgid "For non-Nokia phones connected using cable you generally want:"
 msgstr ""
+"Pro ostatní telefony připojené kabelem budete chtít použít jedno z "
+"následujících:"
 
 # type: Plain text
 #: docs/user/gammurc.5:51
@@ -179,6 +189,8 @@ msgid ""
 "You can optionally specify speed of the connection, eg. at19200, but it is "
 "not needed for modern USB cables."
 msgstr ""
+"Můžete volitelně zadat rychlost připojení, například at19200, ale toto není "
+"nutné pro USB kabely."
 
 # type: Plain text
 #: docs/user/gammurc.5:56
@@ -238,19 +250,21 @@ msgstr ""
 #: docs/user/gammurc.5:75
 #, no-wrap
 msgid "B<Port>"
-msgstr ""
+msgstr "B<Port>"
 
 # type: Plain text
 #: docs/user/gammurc.5:79
 msgid "Device node or address of phone. It depends on used connection."
 msgstr ""
+"Zařízení kde je přístupný telefon nebo adresa telefonu, záleží na typu "
+"připojení."
 
 # type: Plain text
 #: docs/user/gammurc.5:84
 msgid ""
 "For cables or emulated serial ports, you enter device name (for example /dev/"
 "ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux or COM1: on "
-"Windows). The special exception are DKU2 and DKU5 cables, where the device "
+"Windows). The special exception are DKU-2 and DKU-5 cables, where the device "
 "is automatically detected from driver information and this parameters is "
 "ignored."
 msgstr ""
@@ -266,7 +280,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammurc.5:90
 msgid "For IrDA connections, this parameters is not used at all."
-msgstr ""
+msgstr "Pro připojení přes IrDA se tento parametr vůbec nepoužije."
 
 # type: TP
 #: docs/user/gammurc.5:91
@@ -336,6 +350,9 @@ msgid ""
 "LC_MESSAGES/gammu.mo). If gammu is properly installed it should find these "
 "files automatically."
 msgstr ""
+"Cesta k adresáři s lokalizačními soubory (adresář by měl obsahovat LANG/"
+"LC_MESSAGES/gammu.mo). Pokud je gammu správně instalované, mělo bypřeklady "
+"najít automaticky."
 
 # type: TP
 #: docs/user/gammurc.5:125 docs/user/gammu-smsdrc.5:46
@@ -346,7 +363,7 @@ msgstr "B<LogFile>"
 # type: Plain text
 #: docs/user/gammurc.5:129
 msgid "Path to file where information about communication will be stored."
-msgstr ""
+msgstr "Cesta k souboru, kde budou uloženy informace o komunikaci s telefonem."
 
 # type: TP
 #: docs/user/gammurc.5:130
@@ -357,7 +374,7 @@ msgstr "B<LogFormat>"
 # type: Plain text
 #: docs/user/gammurc.5:134
 msgid "Determines what all will be logged to LogFile. Possible values are:"
-msgstr ""
+msgstr "Určuje co vše se bude logovat do souboru LogFile. Možné hodnoty jsou:"
 
 # type: Plain text
 #: docs/user/gammurc.5:136
@@ -400,6 +417,8 @@ msgid ""
 "For debugging use either B<textalldate> or B<textall>, it contains all "
 "needed information to diagnose problems."
 msgstr ""
+"Pro ladění použijte buď B<textalldate> nebo B<textall>, tím budou v logu "
+"obsaženy všechny informace potřebné pro diagnostiku problému."
 
 # type: TP
 #: docs/user/gammurc.5:152
@@ -445,12 +464,12 @@ msgstr "PŘÍKLAD"
 # type: Plain text
 #: docs/user/gammurc.5:173
 msgid "There is more complete example available in Gammu documentation."
-msgstr ""
+msgstr "Podrobnější příklady jsou dostupné v dokumentaci Gammu."
 
 # type: Plain text
 #: docs/user/gammurc.5:175
-msgid "Gammu configuration for Nokia phone using DLR3 cable:"
-msgstr ""
+msgid "Gammu configuration for Nokia phone using DLR-3 cable:"
+msgstr "Konfigurace Gammu pro telefon Nokia připojený kabelem DLR-3:"
 
 # type: Plain text
 #: docs/user/gammurc.5:183
@@ -682,11 +701,14 @@ msgid ""
 "File where smsd actions are being logged. You can also use special value "
 "\"syslog\" which will send all messages to syslog daemon."
 msgstr ""
+"Soubor, kde budou zaznamenány informace o SMS démonovi. Můžte také použít "
+"speciálníhodnotu \"syslog\", která zapne logování prostřednictvím syslog "
+"démona."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:53
 msgid "Default is to provide no logging."
-msgstr ""
+msgstr "Výchozí stav je vypnuté logování."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:54
@@ -745,7 +767,7 @@ msgstr "B<CheckSecurity>"
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:82
 msgid "Whether to check if phone wants to enter PIN."
-msgstr ""
+msgstr "Jestli se má kontrolovat, zda telefon vyžaduje PIN."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:84
@@ -775,7 +797,7 @@ msgstr "B<DeliveryReport>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:99
-msgid "Whether delivery reports should be used, one of no/log/sms."
+msgid "Whether delivery reports should be used, one of 'no', 'log', 'sms'."
 msgstr ""
 
 # type: Plain text
@@ -795,8 +817,8 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:107
-msgid "Default is no."
-msgstr "Výchozí je no - vypnuto."
+msgid "Default is 'no'."
+msgstr "Výchozí je 'no'."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:108
