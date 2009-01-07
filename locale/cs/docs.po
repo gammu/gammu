@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-07 18:30+0100\n"
-"PO-Revision-Date: 2009-01-07 18:35+0100\n"
+"POT-Creation-Date: 2009-01-07 18:39+0100\n"
+"PO-Revision-Date: 2009-01-07 18:54+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -434,7 +434,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammurc.5:169
 msgid "This option has no meaning on Windows."
-msgstr ""
+msgstr "Tento parametr nemá na Windows žádný význam."
 
 # type: SH
 #: docs/user/gammurc.5:170 docs/user/gammu-smsdrc.5:227
@@ -842,16 +842,17 @@ msgid ""
 "Debug level for SMSD. The integer value should be sum of all flags you want "
 "to enable."
 msgstr ""
+"Ladicí úroveň SMSD. Číslo je součtem všech hodnot, které chcete logovat."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:138
 msgid "1 - enables basic debugging information"
-msgstr ""
+msgstr "1 - základní ladicí informace"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:140
 msgid "2 - enables logging of SQL queries of service backends"
-msgstr ""
+msgstr "2 - logování SQL dotazů"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:143
@@ -859,6 +860,8 @@ msgid ""
 "4 - enables logging of gammu debug information (has to be enabled also in "
 "gammu section)"
 msgstr ""
+"4 - logování ladicích informací gammu (tyto musí být také povoleny v sekci "
+"gammu)"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:145
@@ -868,13 +871,13 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:147
 msgid "Default is 0, what should mean no extra information."
-msgstr ""
+msgstr "Výchozí je 0, což znamená žádné ladicí informace."
 
 # type: SS
 #: docs/user/gammu-smsdrc.5:148
 #, no-wrap
 msgid "Database backends options"
-msgstr ""
+msgstr "Parametry pro služby používající databázi"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:152
@@ -936,7 +939,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:176
 #, no-wrap
 msgid "B<SkipSMSCNumber>"
-msgstr ""
+msgstr "B<SkipSMSCNumber>"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:183
@@ -951,7 +954,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:184
 #, no-wrap
 msgid "Files backend options"
-msgstr ""
+msgstr "Parametry pro službu používající soubory"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:189
@@ -1022,7 +1025,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:219
 msgid "Default is unicode."
-msgstr ""
+msgstr "Výchozí je unicode."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:220
@@ -1033,12 +1036,12 @@ msgstr "B<TransmitFormat>"
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:224
 msgid "The format for transmitting the SMS: 'auto', 'unicode', '7bit'."
-msgstr ""
+msgstr "Formát přenosu SMS: 'auto', 'unicode', '7bit'."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:226
 msgid "Default is auto"
-msgstr ""
+msgstr "Výchozí je auto"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:232
@@ -1052,6 +1055,7 @@ msgstr ""
 #: docs/user/gammu-smsdrc.5:234
 msgid "SMSD configuration file for FILES backend could look like:"
 msgstr ""
+"Konfigurační soubor pro SMSD používající službu FILES by mohl vypadat takto:"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:247
@@ -1078,7 +1082,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:253
 msgid "If you want to use MYSQL backend, you will need something like this:"
-msgstr ""
+msgstr "Pokud chcete použít službu MYSQL, bute potřebovat přibližně toto:"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:266
@@ -1121,7 +1125,7 @@ msgstr "B<gammu-smsd> [I<PARAMETR>]..."
 # type: Plain text
 #: docs/user/gammu-smsd.1:11
 msgid "This manual page documents briefly the B<gammu-smsd> command."
-msgstr ""
+msgstr "Tato manuálová stránka stručně popisuje příkaz B<gammu-smsd>."
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:15
@@ -1187,6 +1191,8 @@ msgstr "B<-p>, B<--pid>=I<soubor>"
 msgid ""
 "Lock file for storing pid, empty for no locking. Not supported on Windows."
 msgstr ""
+"Zamykací soubor, kde bude uložený PID (id procesu), prázdná cesta vypne tuto "
+"funkci. Není podporováno na Windows."
 
 # type: TP
 #: docs/user/gammu-smsd.1:31
@@ -1197,7 +1203,7 @@ msgstr "B<-d>, B<--daemon>"
 # type: Plain text
 #: docs/user/gammu-smsd.1:34
 msgid "Daemonize program on startup. Not supported on Windows."
-msgstr ""
+msgstr "Spustí program jako démona. Není podporováno na Windows."
 
 # type: TP
 #: docs/user/gammu-smsd.1:34
@@ -1208,7 +1214,7 @@ msgstr "B<-i>, B<--install-service>"
 # type: Plain text
 #: docs/user/gammu-smsd.1:37
 msgid "Installs SMSD as a Windows service."
-msgstr ""
+msgstr "Nainstaluje SMSD jako službu ve Windows."
 
 # type: TP
 #: docs/user/gammu-smsd.1:37
@@ -1219,7 +1225,7 @@ msgstr "B<-u>, B<--uninstall-service>"
 # type: Plain text
 #: docs/user/gammu-smsd.1:40
 msgid "Uninstalls SMSD as a Windows service."
-msgstr ""
+msgstr "Odinstaluje SMSD jako službu ve Windows."
 
 # type: TP
 #: docs/user/gammu-smsd.1:40
@@ -1230,7 +1236,7 @@ msgstr "B<-s>, B<--start-service>"
 # type: Plain text
 #: docs/user/gammu-smsd.1:43
 msgid "Starts SMSD Windows service."
-msgstr ""
+msgstr "Spustí SMSD jako službu ve Windows."
 
 # type: Plain text
 #: docs/user/gammu-smsd.1:46
@@ -1281,7 +1287,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsd-inject.1:13
 msgid "This manual page documents briefly the B<gammu-smsd-inject> command."
-msgstr ""
+msgstr "Tato manuálová stránka stručně popisuje příkaz B<gammu-smsd-inject>."
 
 # type: Plain text
 #: docs/user/gammu-smsd-inject.1:16

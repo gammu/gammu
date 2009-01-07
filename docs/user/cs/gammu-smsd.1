@@ -3,17 +3,17 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU\-SMSD\-INJECT 1 "Leden 4, 2009" "Gammu 1.23.0" "Dokumentace Gammu"
+.TH GAMMU\-SMSD 1 "Leden 4, 2009" "Gammu 1.23.0" "Dokumentace Gammu"
 .SH JMÉNO
-gammu\-smsd\-inject \- Vloží zprávy do fronty SMS démona Gammu
+gammu\-smsd \- SMS daemon for Gammu
 .SH SYNTAXE
-\fBgammu\-smsd\-inject\fP [\fIPARAMETR\fP]...  TYPZPRÁVY PŘÍJEMCE
-[\fIPARAMETR_ZPRÁVY\fP]...
+\fBgammu\-smsd\fP [\fIPARAMETR\fP]...
 .SH POPIS
-Tato manuálová stránka stručně popisuje příkaz \fBgammu\-smsd\-inject\fP.
+Tato manuálová stránka stručně popisuje příkaz \fBgammu\-smsd\fP.
 .PP
-\fBgammu\-smsd\-inject\fP is a program that enqueues message in Gammu SMS daemon,
-which will be later sent by the deamon using connected GSM modem.
+\fBgammu\-smsd\fP is a program that periodically scans GSM modem for received
+messages, stores them in defined storage and also sends messages enqueued in
+this storage.
 .PP
 Program accepts following options (please note that long options might be
 not accepted on some platforms):
@@ -28,12 +28,25 @@ Zobrazí informace o verzi a zakompilované funkcionalitě.
 Jaký konfigurační soubor se má použít, výchozí je /etc/gammu\-smsdrc, na
 systému Windows není žádná výchozí cesta a cesta ke konfiguračnímu souboru
 musí být zadána vždy.
-.PP
-For description of message types and their parameters, please check
-gammu(1).  The options are identical to ones you can use for gammu sendsms.
+.TP 
+\fB\-p\fP, \fB\-\-pid\fP=\fIsoubor\fP
+Zamykací soubor, kde bude uložený PID (id procesu), prázdná cesta vypne tuto
+funkci. Není podporováno na Windows.
+.TP 
+\fB\-d\fP, \fB\-\-daemon\fP
+Spustí program jako démona. Není podporováno na Windows.
+.TP 
+\fB\-i\fP, \fB\-\-install\-service\fP
+Nainstaluje SMSD jako službu ve Windows.
+.TP 
+\fB\-u\fP, \fB\-\-uninstall\-service\fP
+Odinstaluje SMSD jako službu ve Windows.
+.TP 
+\fB\-s\fP, \fB\-\-start\-service\fP
+Spustí SMSD jako službu ve Windows.
 
 .SH "DALŠÍ INFORMACE"
-gammu\-smsdrc(5), gammu(1), gammu\-smsd(1)
+gammu\-smsdrc(5), gammu(1), gammu\-smsd\-inject(1)
 .SH AUTOR
 gammu\-smsd a tato manuálová stránka napsal Michal Čihař
 <michal@cihar.com>.
