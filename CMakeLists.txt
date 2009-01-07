@@ -496,11 +496,6 @@ set (DOCS
     SUPPORTERS
     ChangeLog
     COPYING
-    docs/user/replace.txt
-    docs/user/readme.htm
-    docs/user/gammu.htm
-    docs/user/gammu.it.txt
-    docs/user/readme.it.txt
     )
 
 set (UTILS
@@ -512,19 +507,6 @@ set (SYMBIAN_FILES
     other/symbian/readme.txt
     other/symbian/gnapplet.ini
     other/symbian/gnapplet.sis
-    )
-
-set (MAN1_PAGES
-    docs/user/gammu.1
-    docs/user/gammu-config.1
-    docs/user/gammu-smsd.1
-    docs/user/gammu-smsd-inject.1
-    docs/user/jadmaker.1
-    )
-
-set (MAN5_PAGES
-    docs/user/gammu-smsdrc.5
-    docs/user/gammurc.5
     )
 
 set (PUBLIC_HEADERS
@@ -859,18 +841,6 @@ foreach (EXAMPLE ${EXAMPLES})
         )
 endforeach (EXAMPLE)
 
-install (
-    FILES ${MAN1_PAGES}
-    DESTINATION "${INSTALL_MAN_DIR}/man1"
-    COMPONENT "man-pages"
-    )
-
-install (
-    FILES ${MAN5_PAGES}
-    DESTINATION "${INSTALL_MAN_DIR}/man5"
-    COMPONENT "man-pages"
-    )
-
 add_subdirectory(common)
 
 add_subdirectory(helper)
@@ -882,6 +852,8 @@ add_subdirectory(smsd)
 add_subdirectory(gammu)
 
 add_subdirectory(locale)
+
+add_subdirectory(docs/user)
 
 enable_testing()
 include(Dart)
