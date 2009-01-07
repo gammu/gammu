@@ -34,8 +34,10 @@ MACRO(GETTEXT_CREATE_TRANSLATIONS _potFile _firstPoFile)
       GET_FILENAME_COMPONENT(_absFile ${_currentPoFile} ABSOLUTE)
       GET_FILENAME_COMPONENT(_abs_PATH ${_absFile} PATH)
       GET_FILENAME_COMPONENT(_lang ${_abs_PATH} NAME_WE)
-      SET(_gmoFile ${CMAKE_CURRENT_BINARY_DIR}/${_lang}.gmo)
+      SET(_gmoFilePath "${CMAKE_CURRENT_BINARY_DIR}/${_lang}")
+      SET(_gmoFile "${_gmoFilePath}/${_potBasename}.mo")
 
+      file(MAKE_DIRECTORY "${_gmoFilePath}")
       ADD_CUSTOM_COMMAND( 
          OUTPUT ${_gmoFile} 
          COMMAND ${GETTEXT_MSGMERGE_EXECUTABLE} --quiet --update --backup=none ${_absFile} ${_absPotFile}
@@ -48,7 +50,7 @@ MACRO(GETTEXT_CREATE_TRANSLATIONS _potFile _firstPoFile)
 
    ENDFOREACH (_currentPoFile )
 
-   ADD_CUSTOM_TARGET(translations ${_addToAll} DEPENDS ${_gmoFiles})
+   ADD_CUSTOM_TARGET(translations-${_potBasename} ${_addToAll} DEPENDS ${_gmoFiles})
 
 ENDMACRO(GETTEXT_CREATE_TRANSLATIONS )
 
