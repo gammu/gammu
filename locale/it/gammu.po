@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-07 17:04+0100\n"
+"POT-Creation-Date: 2009-01-07 18:09+0100\n"
 "PO-Revision-Date: 2008-08-13 11:41+0200\n"
 "Last-Translator: Alessio Gaeta <alga777@libero.it>\n"
 "Language-Team: Language =it\n"
@@ -1969,32 +1969,32 @@ msgstr "I parametri sono troppo pochi!\n"
 msgid "Bad option!"
 msgstr "Mese non valido!"
 
-#: gammu/gammu.c:1063 gammu/gammu.c:1177
-#, fuzzy
-msgid "Too few parameters!"
-msgstr "I parametri sono troppo pochi!\n"
-
-#: gammu/gammu.c:1088
+#: gammu/gammu.c:1049
 #, fuzzy
 msgid "Configuration could not be parsed!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/gammu.c:1090
+#: gammu/gammu.c:1051
 #, fuzzy
 msgid "No configuration file found!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/gammu.c:1103
+#: gammu/gammu.c:1090 gammu/gammu.c:1182
+#, fuzzy
+msgid "Too few parameters!"
+msgstr "I parametri sono troppo pochi!\n"
+
+#: gammu/gammu.c:1120
 #, c-format
 msgid "Failed to read [gammu%d] from gammurc!\n"
 msgstr ""
 
-#: gammu/gammu.c:1105 gammu/gammu.c:1116
+#: gammu/gammu.c:1122 gammu/gammu.c:1133
 #, fuzzy
 msgid "No configuration read, using builtin defaults!"
 msgstr "Attenzione: 0 caratteri letti !\n"
 
-#: gammu/gammu.c:1183
+#: gammu/gammu.c:1188
 #, fuzzy, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -3655,12 +3655,12 @@ msgstr ""
 msgid "  Deleting %s\n"
 msgstr "Cancellazione delle vecchie stazioni FM: "
 
-#: gammu/search.c:149
+#: gammu/search.c:144
 #, fuzzy, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr "Locazione %i, cartella \"%s\""
 
-#: gammu/search.c:186 gammu/search.c:193
+#: gammu/search.c:181 gammu/search.c:188
 #, fuzzy, c-format
 msgid "Error creating thread\n"
 msgstr "Errore durante la scrittura sul dispositivo."

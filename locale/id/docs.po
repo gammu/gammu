@@ -1,0 +1,1441 @@
+# Indonesian translations for PACKAGE package
+# Copyright (C) 2009 Free Software Foundation, Inc.
+# This file is distributed under the same license as the PACKAGE package.
+# Automatically generated, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2009-01-07 18:08+0100\n"
+"PO-Revision-Date: 2009-01-07 18:00+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=ASCII\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# type: TH
+#: docs/user/gammurc.5:1
+#, no-wrap
+msgid "GAMMURC"
+msgstr ""
+
+# type: TH
+#: docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1 docs/user/gammu-smsd.1:1
+#: docs/user/gammu-smsd-inject.1:1
+#, no-wrap
+msgid "January 4, 2009"
+msgstr ""
+
+# type: TH
+#: docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1 docs/user/gammu-smsd.1:1
+#: docs/user/gammu-smsd-inject.1:1
+#, no-wrap
+msgid "Gammu 1.23.0"
+msgstr ""
+
+# type: TH
+#: docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1 docs/user/gammu-smsd.1:1
+#: docs/user/gammu-smsd-inject.1:1
+#, no-wrap
+msgid "Gammu Documentation"
+msgstr ""
+
+# type: SH
+#: docs/user/gammurc.5:2 docs/user/gammu-smsdrc.5:2 docs/user/gammu-smsd.1:2
+#: docs/user/gammu-smsd-inject.1:2 docs/user/jadmaker.1:2
+#: docs/user/gammu-config.1:2
+#, no-wrap
+msgid "NAME"
+msgstr ""
+
+# type: TP
+#: docs/user/gammurc.5:4
+#, no-wrap
+msgid "B<gammurc>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:8
+msgid "gammu(1) configuration file"
+msgstr ""
+
+# type: SH
+#: docs/user/gammurc.5:8 docs/user/gammu-smsdrc.5:8 docs/user/gammu-smsd.1:4
+#: docs/user/gammu-smsd-inject.1:4 docs/user/jadmaker.1:4
+#: docs/user/gammu-config.1:4
+#, no-wrap
+msgid "SYNOPSIS"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:12
+msgid "I</etc/gammurc> or I<~/.gammurc>"
+msgstr ""
+
+# type: SH
+#: docs/user/gammurc.5:12 docs/user/gammu-smsdrc.5:10 docs/user/gammu-smsd.1:7
+#: docs/user/gammu-smsd-inject.1:9 docs/user/jadmaker.1:8
+#: docs/user/gammu-config.1:7
+#, no-wrap
+msgid "DESCRIPTION"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:16
+msgid ""
+"gammu(1) reads configuration from a config file. It's location is determined "
+"on runtime. On Unix systems, it first tries ~/.gammurc and then falls back "
+"to /etc/gammurc."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:20 docs/user/gammu-smsdrc.5:19
+msgid ""
+"This file use ini file syntax, with comments being marked with both ; and "
+"#.  Sections of config file are identified in square brackets line [this]. "
+"All key values are case insensitive."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:26
+msgid ""
+"Configuration file for gammu can contain several sections - [gammu], "
+"[gammu1], [gammuN], ... Each section configures one connection setup and in "
+"default mode gammu tries all of them in numerical order. You can also "
+"specify which configuration section to use by giving it's number ([gammu] "
+"has number 0) as a parameter to gammu(1) and it will then use only this "
+"section."
+msgstr ""
+
+# type: TP
+#: docs/user/gammurc.5:27
+#, no-wrap
+msgid "B<Connection>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:31
+msgid "Protocol which will be used to talk to your phone."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:33
+msgid "For Nokia cables you want to use one of following:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:35
+msgid "B<fbus> - serial FBUS connection"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:37
+msgid "B<dlr3> - DLR3 and compatible cables"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:39
+msgid "B<dku2> - DKU2 and compatible cables"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:41
+msgid "B<dku5> - DKU5 and compatible cables"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:43
+msgid "B<mbus> - serial MBUS connection"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:47
+msgid ""
+"If you use some non original cable, you might need to append -nodtr (eg. for "
+"ARK3116 based cables) or -nopower, but Gammu should be able to detect this "
+"automatically."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:49
+msgid "For non-Nokia phones connected using cable you generally want:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:51
+msgid "B<at> - generic AT commands based connection"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:54
+msgid ""
+"You can optionally specify speed of the connection, eg. at19200, but it is "
+"not needed for modern USB cables."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:56
+msgid "For IrDA connections use one of following:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:58
+msgid "B<irdaphonet> - Phonet connection for Nokia phones."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:60
+msgid ""
+"B<irdaat> - AT commands connection for most of phones (this is not supported "
+"on Linux)."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:62
+msgid ""
+"B<irdaobex> - OBEX (IrMC or file transfer) connection for most of phones."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:64
+msgid "B<irdagnapbus> - GNapplet based connection for Symbian phones"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:66
+msgid "For Bluetooth connection use one of following:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:68
+msgid "B<bluephonet> - Phonet connection for Nokia phones."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:70
+msgid "B<blueat> - AT commands connection for most of phones."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:72
+msgid ""
+"B<blueobex> - OBEX (IrMC or file transfer) connection for most of phones."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:74
+msgid "B<bluerfgnapbus> - GNapplet based connection for Symbian phones"
+msgstr ""
+
+# type: TP
+#: docs/user/gammurc.5:75
+#, no-wrap
+msgid "B<Port>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:79
+msgid "Device node or address of phone. It depends on used connection."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:84
+msgid ""
+"For cables or emulated serial ports, you enter device name (for example /dev/"
+"ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux or COM1: on "
+"Windows). The special exception are DKU2 and DKU5 cables, where the device "
+"is automatically detected from driver information and this parameters is "
+"ignored."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:88
+msgid ""
+"For Bluetooth connection you have to enter Bluetooth address of your phone "
+"(you can list Bluetooth devices in range on Linux using \"hcitool scan\" "
+"command)."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:90
+msgid "For IrDA connections, this parameters is not used at all."
+msgstr ""
+
+# type: TP
+#: docs/user/gammurc.5:91
+#, no-wrap
+msgid "B<Model>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:96
+msgid ""
+"Do not use this parameter unless really needed! The only use case for this "
+"is when Gammu does not know your phone and misdetects it's features."
+msgstr ""
+
+# type: TP
+#: docs/user/gammurc.5:97
+#, no-wrap
+msgid "B<SynchronizeTime>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:103
+msgid ""
+"If you want to set time from computer to phone during starting connection. "
+"Do not rather use this option when when to reset phone during connection (in "
+"some phones need to set time again after restart)."
+msgstr ""
+
+# type: TP
+#: docs/user/gammurc.5:104
+#, no-wrap
+msgid "B<StartInfo>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:110
+msgid ""
+"This option allow to set, that you want (setting \"yes\") to see message on "
+"the phone screen or phone should enable light for a moment during starting "
+"connection. Phone WON'T beep during starting connection with this option."
+msgstr ""
+
+# type: TP
+#: docs/user/gammurc.5:111
+#, no-wrap
+msgid "B<GammuCoding>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:117
+msgid ""
+"Forces using specified codepage (on Windows - for example \"1250\" will "
+"force CP1250) or UTF8 (in Linux - \"utf8\"). This should not be needed in "
+"most cases, Gammu should detect it according to your locales."
+msgstr ""
+
+# type: TP
+#: docs/user/gammurc.5:118
+#, no-wrap
+msgid "B<GammuLoc>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:124
+msgid ""
+"Path to directory with localisation files (the directory should contain LANG/"
+"LC_MESSAGES/gammu.mo). If gammu is properly installed it should find these "
+"files automatically."
+msgstr ""
+
+# type: TP
+#: docs/user/gammurc.5:125 docs/user/gammu-smsdrc.5:46
+#, no-wrap
+msgid "B<LogFile>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:129
+msgid "Path to file where information about communication will be stored."
+msgstr ""
+
+# type: TP
+#: docs/user/gammurc.5:130
+#, no-wrap
+msgid "B<LogFormat>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:134
+msgid "Determines what all will be logged to LogFile. Possible values are:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:136
+msgid "B<nothing> - no debug level"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:138
+msgid "B<text> - transmission dump in text format"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:140
+msgid "B<textall> - all possible info in text format"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:142
+msgid "B<textalldate> - all possible info in text format, with time stamp"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:144
+msgid "B<errors> - errors in text format"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:146
+msgid "B<errorsdate> - errors in text format, with time stamp"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:148
+msgid "B<binary> - transmission dump in binary format"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:151
+msgid ""
+"For debugging use either B<textalldate> or B<textall>, it contains all "
+"needed information to diagnose problems."
+msgstr ""
+
+# type: TP
+#: docs/user/gammurc.5:152
+#, no-wrap
+msgid "B<Features>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:159
+msgid ""
+"Custom features for phone. This can be used as override when values coded in "
+"common/gsmphones.c are bad or missing. Consult include/gammu-info.h for "
+"possible values (all Feature values without leading F_ prefix).  Please "
+"report correct values to Gammu authors."
+msgstr ""
+
+# type: TP
+#: docs/user/gammurc.5:160
+#, no-wrap
+msgid "B<Use_Locking>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:167
+msgid ""
+"On POSIX systems, you might want to lock serial device when it is being "
+"used.  Enabling this option (setting to yes) will make Gammu honor these "
+"locks and create it on startup. On most distributions you need additional "
+"privileges to use locking (eg. you need to be member of uucp group)."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:169
+msgid "This option has no meaning on Windows."
+msgstr ""
+
+# type: SH
+#: docs/user/gammurc.5:170 docs/user/gammu-smsdrc.5:227
+#, no-wrap
+msgid "EXAMPLE"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:173
+msgid "There is more complete example available in Gammu documentation."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:175
+msgid "Gammu configuration for Nokia phone using DLR3 cable:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:183
+#, no-wrap
+msgid ""
+"[gammu]\n"
+"port = /dev/ttyACM0\n"
+"connection = dlr3\n"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:190
+msgid ""
+"Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
+"phone)  connected using USB cable:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:198
+#, no-wrap
+msgid ""
+"[gammu]\n"
+"port = /dev/ttyACM0\n"
+"connection = at\n"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:205
+msgid ""
+"Gammu configuration for Sony-Ericsson (or any other AT compatible phone)  "
+"connected using bluetooth:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:213
+#, no-wrap
+msgid ""
+"[gammu]\n"
+"port = B0:0B:00:00:FA:CE\n"
+"connection = blueat\n"
+msgstr ""
+
+# type: SH
+#: docs/user/gammurc.5:218 docs/user/gammu-smsdrc.5:272
+#: docs/user/gammu-smsd.1:44 docs/user/gammu-smsd-inject.1:33
+#: docs/user/jadmaker.1:31 docs/user/gammu-config.1:30
+#, no-wrap
+msgid "SEE ALSO"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:274
+msgid "gammu-smsd(1), gammu(1), gammurc(5)"
+msgstr ""
+
+# type: SH
+#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:274
+#: docs/user/gammu-smsd.1:46 docs/user/gammu-smsd-inject.1:35
+#, no-wrap
+msgid "AUTHOR"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:276
+#: docs/user/gammu-smsd.1:48 docs/user/gammu-smsd-inject.1:37
+msgid ""
+"gammu-smsd and this manual page were written by Michal Cihar "
+"E<lt>michal@cihar.comE<gt>."
+msgstr ""
+
+# type: SH
+#: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:276
+#: docs/user/gammu-smsd.1:48 docs/user/gammu-smsd-inject.1:37
+#, no-wrap
+msgid "COPYRIGH"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:225 docs/user/gammu-smsdrc.5:279
+#: docs/user/gammu-smsd.1:51 docs/user/gammu-smsd-inject.1:40
+msgid ""
+"Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
+"version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:282
+#: docs/user/gammu-smsd.1:54 docs/user/gammu-smsd-inject.1:43
+msgid ""
+"This is free software: you are free to change and redistribute it.  There is "
+"NO WARRANTY, to the extent permitted by law."
+msgstr ""
+
+# type: SH
+#: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:282
+#: docs/user/gammu-smsd.1:54 docs/user/gammu-smsd-inject.1:43
+#, no-wrap
+msgid "REPORTING BUGS"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:229 docs/user/gammu-smsdrc.5:283
+#: docs/user/gammu-smsd.1:56 docs/user/gammu-smsd-inject.1:45
+msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
+msgstr ""
+
+# type: TH
+#: docs/user/gammu-smsdrc.5:1
+#, no-wrap
+msgid "GAMMU-SMSDRC"
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:4
+#, no-wrap
+msgid "B<gammu-smsdrc>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:8
+msgid "gammu-smsd(1) configuration file"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:10
+msgid "I</etc/gammu-smsdrc>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:15
+msgid ""
+"gammu-smsd(1) reads configuration from a config file. It's location can be "
+"specified on command line, otherwise default path /etc/gammu-smsdrc is used."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:22
+msgid ""
+"Configuration file of gammu-smsd consists of two sections - [gammu] and "
+"[smsd]."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:27
+msgid ""
+"The [gammu] section is configuration of a phone connection and is same as "
+"described in gammurc(5) with the only exception that logfile is ignored and "
+"common logging for gammu library and SMS daemon is used. However the "
+"logformat directive still configures how much messages gammu emits."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:31
+msgid ""
+"The [smsd] section configures SMS daemon itself, which are described in "
+"following subsections. First general parameters of SMS daemon are listed and "
+"then specific parameters for storage backends."
+msgstr ""
+
+# type: SS
+#: docs/user/gammu-smsdrc.5:32
+#, no-wrap
+msgid "General parameters of SMS daemon"
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:34
+#, no-wrap
+msgid "B<Service>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:39
+msgid ""
+"SMSD service to use, one of FILES, MYSQL, PGSQL (depends on compiled in "
+"support for backends)."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:40
+#, no-wrap
+msgid "B<PIN>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:45
+msgid ""
+"PIN for SIM card. This is optional, but you should set it if your phone "
+"after power on requires PIN."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:51
+msgid ""
+"File where smsd actions are being logged. You can also use special value "
+"\"syslog\" which will send all messages to syslog daemon."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:53
+msgid "Default is to provide no logging."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:54
+#, no-wrap
+msgid "B<CommTimeout>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:58
+msgid "How many seconds should smsd wait after each read/write loop."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:60 docs/user/gammu-smsdrc.5:68
+msgid "Default is 30"
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:61
+#, no-wrap
+msgid "B<SendTimeout>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:66
+msgid ""
+"Shows how many seconds smsd should wait for network answer during sending "
+"sms.  If nothing happen during this time, sms will be resent."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:69
+#, no-wrap
+msgid "B<ReceiveFrequency>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:75
+msgid ""
+"The number of seconds between testing for received SMSes, when the phone is "
+"busy sending SMSes. Normally a test for received SMSes is done every "
+"commtimeout seconds and after each sent SMS."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:77 docs/user/gammu-smsdrc.5:94
+msgid "Default is 0 (not used)"
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:78
+#, no-wrap
+msgid "B<CheckSecurity>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:82
+msgid "Whether to check if phone wants to enter PIN."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:84
+msgid "Default is 1 (enabled)."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:85
+#, no-wrap
+msgid "B<ResetFrequency>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:92
+msgid ""
+"The number of seconds between performing a preventive soft reset in order to "
+"minimize the cases of hanging phones e.g. Nokia 5110 will sometimes freeze "
+"to a state when only after unmounting the battery the phone will be "
+"functional again."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:95
+#, no-wrap
+msgid "B<DeliveryReport>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:99
+msgid "Whether delivery reports should be used, one of no/log/sms."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:101
+msgid "B<log> one line log entry,"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:103
+msgid "B<sms> store in inbox as a received SMS"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:105
+msgid "B<no> no delivery reports"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:107
+msgid "Default is no."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:108
+#, no-wrap
+msgid "B<DeliveryReportDelay>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:115
+msgid ""
+"Delay in seconds how long is still delivery report considered valid. This "
+"depends on brokeness of your network (delivery report should have same "
+"timestamp as sent message). Increase this if delivery reports are not paired "
+"with sent messages."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:117
+msgid "Default is 10"
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:118
+#, no-wrap
+msgid "B<PhoneID>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:123
+msgid ""
+"String with info about phone used for sending/receiving. This can be useful "
+"if you want to run several SMS daemons."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:124
+#, no-wrap
+msgid "B<RunOnReceive>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:130
+msgid ""
+"Executes a program after receiving message. The program will receive "
+"identifiers of received messages depending on used service backend (some "
+"backends might not support this feature)."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:131
+#, no-wrap
+msgid "B<DebugLevel>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:136
+msgid ""
+"Debug level for SMSD. The integer value should be sum of all flags you want "
+"to enable."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:138
+msgid "1 - enables basic debugging information"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:140
+msgid "2 - enables logging of SQL queries of service backends"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:143
+msgid ""
+"4 - enables logging of gammu debug information (has to be enabled also in "
+"gammu section)"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:145
+msgid "Generally to get as much debug information as possible, use 255."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:147
+msgid "Default is 0, what should mean no extra information."
+msgstr ""
+
+# type: SS
+#: docs/user/gammu-smsdrc.5:148
+#, no-wrap
+msgid "Database backends options"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:152
+msgid ""
+"Both MYSQL and PGSQL backends supports same options for configuring "
+"connection to a database:"
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:153
+#, no-wrap
+msgid "B<User>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:157
+msgid "User name used for connection to a database."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:158
+#, no-wrap
+msgid "B<Password>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:162
+msgid "Password used for connection to a database."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:163
+#, no-wrap
+msgid "B<PC>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:168
+msgid ""
+"Database server address. It can also contain port or socket path after "
+"semicolon, for example localhost:/path/to/socket."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:169
+#, no-wrap
+msgid "B<Database>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:175
+msgid ""
+"Name of database to use. Please note that you should create tables in this "
+"database before using gammu-smsd. SQL files for creating needed tables are "
+"included in documentation."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:176
+#, no-wrap
+msgid "B<SkipSMSCNumber>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:183
+msgid ""
+"When you send sms from some SMSC, you can have Delivery/Failed Delivery "
+"Reports from other SMSC number. You can set here number of this \"buggy\" "
+"SMSC used by you and Gammu will not check it's number during assigning "
+"reports to sent SMS."
+msgstr ""
+
+# type: SS
+#: docs/user/gammu-smsdrc.5:184
+#, no-wrap
+msgid "Files backend options"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:189
+msgid ""
+"The FILES backend accepts following configuration options. Please note that "
+"all path should contain trailing path separator (/ or \\e, depending on your "
+"platform):"
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:191
+#, no-wrap
+msgid "B<InboxPath>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:195
+msgid "Where the received SMSes are stored, default current directory"
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:196
+#, no-wrap
+msgid "B<OutboxPath>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:200
+msgid "Where SMSes to be sent should be placed, default current directory."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:201
+#, no-wrap
+msgid "B<SentSMSPath>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:205
+msgid "Where the transmitted SMSes are placed, default outboxpath (= deleted)"
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:206
+#, no-wrap
+msgid "B<ErrorSMSPath>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:210
+msgid "Where SMSes with error in transmission is placed, default sentsmspath."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:211
+#, no-wrap
+msgid "B<InboxFormat>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:217
+msgid ""
+"The format in which the SMS will be stored: 'detail', 'unicode', "
+"'standard'.  The 'detail' format is the format used for backup. See below.  "
+"'standard' is in the standard character set."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:219
+msgid "Default is unicode."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsdrc.5:220
+#, no-wrap
+msgid "B<TransmitFormat>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:224
+msgid "The format for transmitting the SMS: 'auto', 'unicode', '7bit'."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:226
+msgid "Default is auto"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:232
+msgid ""
+"There is more complete example available in Gammu documentation. Please note "
+"that for simplicity following examples do not include [gammu] section, you "
+"can look into gammurc(5) for some examples how it can look like."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:234
+msgid "SMSD configuration file for FILES backend could look like:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:247
+#, no-wrap
+msgid ""
+"[smsd]\n"
+"Service = files\n"
+"PIN = 1234\n"
+"LogFile = syslog\n"
+"InboxPath = /var/spool/sms/inbox/\n"
+"OutboPpath = /var/spool/sms/outbox/\n"
+"SentSMSPath = /var/spool/sms/sent/\n"
+"ErrorSMSPath = /var/spool/sms/error/\n"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:253
+msgid "If you want to use MYSQL backend, you will need something like this:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsdrc.5:266
+#, no-wrap
+msgid ""
+"[smsd]\n"
+"Service = mysql\n"
+"PIN = 1234\n"
+"LogFile = syslog\n"
+"User = smsd\n"
+"Password = smsd\n"
+"PC = localhost\n"
+"Database = smsd\n"
+msgstr ""
+
+# type: TH
+#: docs/user/gammu-smsd.1:1
+#, no-wrap
+msgid "GAMMU-SMSD"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:4
+msgid "gammu-smsd - SMS daemon for Gammu"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:7
+msgid "B<gammu-smsd> [I<OPTION>]..."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:11
+msgid "This manual page documents briefly the B<gammu-smsd> command."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:15
+msgid ""
+"B<gammu-smsd> is a program that periodically scans GSM modem for received "
+"messages, stores them in defined storage and also sends messages enqueued in "
+"this storage."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:18 docs/user/gammu-smsd-inject.1:19
+msgid ""
+"Program accepts following options (please note that long options might be "
+"not accepted on some platforms):"
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsd.1:18 docs/user/gammu-smsd-inject.1:19
+#, no-wrap
+msgid "B<-h>, B<--help>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:21 docs/user/gammu-smsd-inject.1:22
+msgid "Shows help."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsd.1:21 docs/user/gammu-smsd-inject.1:22
+#, no-wrap
+msgid "B<-v>, B<--version>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:24 docs/user/gammu-smsd-inject.1:25
+msgid "Shows version information and compiled in features."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsd.1:24 docs/user/gammu-smsd-inject.1:25
+#, no-wrap
+msgid "B<-c>, B<--config>=I<file>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:28 docs/user/gammu-smsd-inject.1:29
+msgid ""
+"Configuration file to use, default is /etc/gammu-smsdrc, on Windows there is "
+"no default and configuration file path has to be always specified."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsd.1:28
+#, no-wrap
+msgid "B<-p>, B<--pid>=I<file>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:31
+msgid ""
+"Lock file for storing pid, empty for no locking. Not supported on Windows."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsd.1:31
+#, no-wrap
+msgid "B<-d>, B<--daemon>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:34
+msgid "Daemonize program on startup. Not supported on Windows."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsd.1:34
+#, no-wrap
+msgid "B<-i>, B<--install-service>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:37
+msgid "Installs SMSD as a Windows service."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsd.1:37
+#, no-wrap
+msgid "B<-u>, B<--uninstall-service>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:40
+msgid "Uninstalls SMSD as a Windows service."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-smsd.1:40
+#, no-wrap
+msgid "B<-s>, B<--start-service>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:43
+msgid "Starts SMSD Windows service."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:46
+msgid "gammu-smsdrc(5), gammu(1), gammu-smsd-inject(1)"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:58 docs/user/gammu-smsd-inject.1:47
+msgid ""
+"Before reporting a bug, please enable verbose logging in smsd configuration:"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:61 docs/user/gammu-smsd-inject.1:50
+#, no-wrap
+msgid ""
+"    [gammu]\n"
+"    logformat = textall\n"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:62 docs/user/gammu-smsd-inject.1:51
+msgid "and include this verbose log within bug report."
+msgstr ""
+
+# type: TH
+#: docs/user/gammu-smsd-inject.1:1
+#, no-wrap
+msgid "GAMMU-SMSD-INJECT"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd-inject.1:4
+msgid "gammu-smsd-inject - Inject messages into queue of SMS daemon for Gammu"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd-inject.1:9
+msgid ""
+"B<gammu-smsd-inject> [I<OPTION>]...  MESSAGETYPE RECIPIENT "
+"[I<MESSAGE_PARAMETER>]..."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd-inject.1:13
+msgid "This manual page documents briefly the B<gammu-smsd-inject> command."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd-inject.1:16
+msgid ""
+"B<gammu-smsd-inject> is a program that enqueues message in Gammu SMS daemon, "
+"which will be later sent by the deamon using connected GSM modem."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd-inject.1:32
+msgid ""
+"For description of message types and their parameters, please check gammu"
+"(1).  The options are identical to ones you can use for gammu sendsms."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd-inject.1:35
+msgid "gammu-smsdrc(5), gammu(1), gammu-smsd(1)"
+msgstr ""
+
+# type: TH
+#: docs/user/jadmaker.1:1
+#, no-wrap
+msgid "JADMAKER"
+msgstr ""
+
+# type: TH
+#: docs/user/jadmaker.1:1
+#, no-wrap
+msgid "Jan 2008"
+msgstr ""
+
+# type: TH
+#: docs/user/jadmaker.1:1
+#, no-wrap
+msgid "JAD File Generator"
+msgstr ""
+
+# type: TH
+#: docs/user/jadmaker.1:1 docs/user/gammu-config.1:1
+#, no-wrap
+msgid "Gammu Documentaion"
+msgstr ""
+
+# type: Plain text
+#: docs/user/jadmaker.1:4
+msgid "jadmaker - JAD File Generator"
+msgstr ""
+
+# type: Plain text
+#: docs/user/jadmaker.1:8
+msgid "B<jadmaker> [I<-f|--force>] [I<-u|--url URL>] E<lt>filename.jarE<gt>..."
+msgstr ""
+
+# type: Plain text
+#: docs/user/jadmaker.1:10
+msgid "Script to generate JAD file from JAR file."
+msgstr ""
+
+# type: SH
+#: docs/user/jadmaker.1:10 docs/user/gammu-config.1:9
+#, no-wrap
+msgid "OPTIONS"
+msgstr ""
+
+# type: Plain text
+#: docs/user/jadmaker.1:14 docs/user/gammu-config.1:13
+msgid ""
+"These programs follow the usual GNU command line syntax, with long options "
+"starting with two dashes (`-').  A summary of options is included below."
+msgstr ""
+
+# type: TP
+#: docs/user/jadmaker.1:14 docs/user/gammu-config.1:13
+#, no-wrap
+msgid "B<-h, --help>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/jadmaker.1:17 docs/user/gammu-config.1:16
+msgid "Show summary of options."
+msgstr ""
+
+# type: TP
+#: docs/user/jadmaker.1:17 docs/user/gammu-config.1:16
+#, no-wrap
+msgid "B<-f, --force>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/jadmaker.1:20
+msgid "Force rewriting of JAD file even if exists."
+msgstr ""
+
+# type: TP
+#: docs/user/jadmaker.1:20
+#, no-wrap
+msgid "B<-u, --url URL>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/jadmaker.1:23
+msgid "Define URL to be included in JAD file."
+msgstr ""
+
+# type: SH
+#: docs/user/jadmaker.1:23 docs/user/gammu-config.1:22
+#, no-wrap
+msgid "LICENCE"
+msgstr ""
+
+# type: Plain text
+#: docs/user/jadmaker.1:25
+msgid "This script is licensed under GNU/GPL version 2."
+msgstr ""
+
+# type: SH
+#: docs/user/jadmaker.1:26 docs/user/gammu-config.1:25
+#, no-wrap
+msgid "BUGS"
+msgstr ""
+
+# type: Plain text
+#: docs/user/jadmaker.1:30 docs/user/gammu-config.1:29
+msgid ""
+"There are definitely many bugs, reporting to author is welcome. Please "
+"include some useful information when sending bug reports (eg. exception you "
+"received and debug output). Please submit your reports to E<lt>http://bugs."
+"cihar.com/E<gt>."
+msgstr ""
+
+# type: Plain text
+#: docs/user/jadmaker.1:33 docs/user/gammu-config.1:32
+msgid "gammu(1)"
+msgstr ""
+
+# type: SH
+#: docs/user/jadmaker.1:33 docs/user/gammu-config.1:32
+#, no-wrap
+msgid "COPYRIGHT"
+msgstr ""
+
+# type: Plain text
+#: docs/user/jadmaker.1:34
+msgid "Copyright \\(co 2008 Michal Cihar E<lt>michal@cihar.comE<gt>"
+msgstr ""
+
+# type: TH
+#: docs/user/gammu-config.1:1
+#, no-wrap
+msgid "GAMMU-CONFIG"
+msgstr ""
+
+# type: TH
+#: docs/user/gammu-config.1:1
+#, no-wrap
+msgid "May 2007"
+msgstr ""
+
+# type: TH
+#: docs/user/gammu-config.1:1
+#, no-wrap
+msgid "Gammu configurator 0.3"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-config.1:4
+msgid "gammu-config - Gammu configurator"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-config.1:7
+msgid "B<gammu-config> [I<-f|--force>] [I<-c|--config config>]"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-config.1:9
+msgid "Script to help configuring gammu."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-config.1:19
+msgid "Force configuring even if config already exists."
+msgstr ""
+
+# type: TP
+#: docs/user/gammu-config.1:19
+#, no-wrap
+msgid "B<-c, --config config>"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-config.1:22
+msgid "Define which configuration file to use."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-config.1:24
+msgid "This program is licensed under GNU/GPL version 2."
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-config.1:33
+msgid "Copyright \\(co 2003 - 2007 Michal Cihar E<lt>michal@cihar.comE<gt>"
+msgstr ""

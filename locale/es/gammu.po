@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-07 17:04+0100\n"
+"POT-Creation-Date: 2009-01-07 18:09+0100\n"
 "PO-Revision-Date: 2008-12-02 18:38+0100\n"
 "Last-Translator: Daniel Campos <daniel.campos@juntaextremadura.net>\n"
 "Language-Team: Español\n"
@@ -1844,28 +1844,28 @@ msgstr "Demasiados parámetros (la función acepta de %d a %d)\n"
 msgid "Bad option!"
 msgstr "¡Opción incorrecta!"
 
-#: gammu/gammu.c:1063 gammu/gammu.c:1177
-msgid "Too few parameters!"
-msgstr "¡Muy pocos parámetros!"
-
-#: gammu/gammu.c:1088
+#: gammu/gammu.c:1049
 msgid "Configuration could not be parsed!"
 msgstr "Advertencia: ¡El archivo de configuración es incorrecto!"
 
-#: gammu/gammu.c:1090
+#: gammu/gammu.c:1051
 msgid "No configuration file found!"
 msgstr "Advertencia: ¡No se encontró el archivo de configuración!"
 
-#: gammu/gammu.c:1103
+#: gammu/gammu.c:1090 gammu/gammu.c:1182
+msgid "Too few parameters!"
+msgstr "¡Muy pocos parámetros!"
+
+#: gammu/gammu.c:1120
 #, c-format
 msgid "Failed to read [gammu%d] from gammurc!\n"
 msgstr "Fallo al leer [gammu%d] de gammurc\n"
 
-#: gammu/gammu.c:1105 gammu/gammu.c:1116
+#: gammu/gammu.c:1122 gammu/gammu.c:1133
 msgid "No configuration read, using builtin defaults!"
 msgstr "No se pudo leer la configuración, utilizando parámetros por defecto."
 
-#: gammu/gammu.c:1183
+#: gammu/gammu.c:1188
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -3404,12 +3404,12 @@ msgstr "INFO: La aplicación ya existe. Gammu la borrará"
 msgid "  Deleting %s\n"
 msgstr "  Borrando %s\n"
 
-#: gammu/search.c:149
+#: gammu/search.c:144
 #, c-format
 msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr "Conexión \"%s\" al dispositivo \"%s\"\n"
 
-#: gammu/search.c:186 gammu/search.c:193
+#: gammu/search.c:181 gammu/search.c:188
 #, fuzzy, c-format
 msgid "Error creating thread\n"
 msgstr "Error al leer archivo de proceso por lotes. Terminando.\n"

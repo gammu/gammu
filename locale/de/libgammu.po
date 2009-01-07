@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-07 17:04+0100\n"
+"POT-Creation-Date: 2009-01-07 18:09+0100\n"
 "PO-Revision-Date: 2009-01-07 17:01+0100\n"
 "Last-Translator: Jochen Kemnade <jochenkemnade@web.de>\n"
 "Language-Team: Language =de\n"
@@ -17,72 +17,72 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: common/gsmcomon.c:92
+#: common/gsmcomon.c:91
 msgid "No error."
 msgstr "Kein Fehler."
 
-#: common/gsmcomon.c:93
+#: common/gsmcomon.c:92
 msgid "Error opening device. Unknown/busy or no permissions."
 msgstr ""
 "Fehler beim Öffnen des Gerätes. Unbekannt/Belegt oder keine Berechtigung"
 
-#: common/gsmcomon.c:94
+#: common/gsmcomon.c:93
 msgid "Error opening device, it is locked."
 msgstr "Fehler beim Öffnen des Geräts, es ist gesperrt."
 
-#: common/gsmcomon.c:95
+#: common/gsmcomon.c:94
 msgid "Error opening device, it doesn't exist."
 msgstr "Fehler beim Öffnen des Geräts, es existiert nicht."
 
-#: common/gsmcomon.c:96
+#: common/gsmcomon.c:95
 msgid "Error opening device, it is already opened by other application."
 msgstr ""
 "Fehler beim Öffnen des Geräts, es wird bereits durch eine andere Anwendung "
 "verwendet."
 
-#: common/gsmcomon.c:97
+#: common/gsmcomon.c:96
 msgid "Error opening device, you don't have permissions."
 msgstr "Fehler beim Öffnen des Geräts, ungenügende Berechtigungen."
 
-#: common/gsmcomon.c:98
+#: common/gsmcomon.c:97
 msgid "Error opening device. No required driver in operating system."
 msgstr ""
 "Fehler beim Öffnen des Geräts, es gibt im Betriebssystem keinen "
 "entsprechenden Treiber."
 
-#: common/gsmcomon.c:99
+#: common/gsmcomon.c:98
 msgid "Error opening device. Some hardware not connected/wrong configured."
 msgstr ""
 "Fehler beim Öffnen des Geräts, Hardware ist nicht verbunden bzw. falsch "
 "konfiguriert."
 
-#: common/gsmcomon.c:100
+#: common/gsmcomon.c:99
 msgid "Error setting device DTR or RTS."
 msgstr "Fehler beim Setzen der seriellen Schnittstelle"
 
-#: common/gsmcomon.c:101
+#: common/gsmcomon.c:100
 msgid "Error setting device speed. Maybe speed not supported."
 msgstr ""
 "Fehler beim Setzen der Geschwindigkeit der IR-Schnittstelle. Vielleicht "
 "keine Unterstützung?"
 
-#: common/gsmcomon.c:102
+#: common/gsmcomon.c:101
 msgid "Error writing device."
 msgstr "Fehler beim Schreiben auf das Gerät."
 
-#: common/gsmcomon.c:103
+#: common/gsmcomon.c:102
 msgid "Error during reading device."
 msgstr "Fehler beim Lesen vom Gerät."
 
-#: common/gsmcomon.c:104
+#: common/gsmcomon.c:103
 msgid "Can't set parity on device."
 msgstr "Kann die Parität auf dem Gerät nicht setzen."
 
-#: common/gsmcomon.c:105
+#: common/gsmcomon.c:104
 msgid "No response in specified timeout. Probably phone not connected."
 msgstr "Keine Rückmeldung. Telefon möglicherweise nicht angeschlossen?"
 
-#: common/gsmcomon.c:106
+#: common/gsmcomon.c:105
 #, fuzzy
 msgid ""
 "Frame not requested right now. See <http://cihar.com/gammu/report> for "
@@ -91,7 +91,7 @@ msgstr ""
 "Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
 "gammu/report> wo dieser Fehler zu melden ist."
 
-#: common/gsmcomon.c:107
+#: common/gsmcomon.c:106
 msgid ""
 "Unknown response from phone. See <http://cihar.com/gammu/report> for "
 "information how to report it."
@@ -99,7 +99,7 @@ msgstr ""
 "Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
 "gammu/report> wo dieser Fehler zu melden ist."
 
-#: common/gsmcomon.c:108
+#: common/gsmcomon.c:107
 #, fuzzy
 msgid ""
 "Unknown frame. See <http://cihar.com/gammu/report> for information how to "
@@ -108,15 +108,15 @@ msgstr ""
 "Unbekannte Rückantwort vom Telefon. Lesen Sie bitte unter <http://cihar.com/"
 "gammu/report> wo dieser Fehler zu melden ist."
 
-#: common/gsmcomon.c:109
+#: common/gsmcomon.c:108
 msgid "Unknown connection type string. Check config file."
 msgstr "Unbekannter Verbindungstyp. Bitte Konfigurationsdatei überprüfen."
 
-#: common/gsmcomon.c:110
+#: common/gsmcomon.c:109
 msgid "Unknown model type string. Check config file."
 msgstr "Unbekannter Modelltyp. Bitte Konfigurationsdatei überprüfen."
 
-#: common/gsmcomon.c:111
+#: common/gsmcomon.c:110
 msgid ""
 "Some functions not available for your system (disabled in config or not "
 "written)."
@@ -124,76 +124,76 @@ msgstr ""
 "Einige Funktionen sind für Ihr Betriebssystem nicht verfügbar (in "
 "Konfigurationsdatei gesperrt oder nicht erwähnt)."
 
-#: common/gsmcomon.c:112
+#: common/gsmcomon.c:111
 msgid "Function not supported by phone."
 msgstr "Funktion wird nicht vom Telefon unterstützt."
 
-#: common/gsmcomon.c:113
+#: common/gsmcomon.c:112
 msgid "Entry is empty"
 msgstr "Eintrag ist leer."
 
-#: common/gsmcomon.c:114
+#: common/gsmcomon.c:113
 msgid "Security error. Maybe no PIN?"
 msgstr "Sicherheitsfehler.Vielleicht keine PIN?"
 
-#: common/gsmcomon.c:115
+#: common/gsmcomon.c:114
 msgid "Invalid location. Maybe too high?"
 msgstr "Ungültige Speicherstelle. Vielleicht zu hoch?"
 
-#: common/gsmcomon.c:116
+#: common/gsmcomon.c:115
 msgid "Function not implemented. Help required."
 msgstr "Funktion nicht programmiert. Hilfe benötigt."
 
-#: common/gsmcomon.c:117
+#: common/gsmcomon.c:116
 msgid "Memory full."
 msgstr "Speicher voll."
 
-#: common/gsmcomon.c:118
+#: common/gsmcomon.c:117
 msgid "Unknown error."
 msgstr "Unbekannter Fehler."
 
-#: common/gsmcomon.c:119
+#: common/gsmcomon.c:118
 msgid "Can't open specified file. Read only?"
 msgstr "Kann gewählte Datei nicht öffnen. Keine Schreibberechtigung?"
 
-#: common/gsmcomon.c:120
+#: common/gsmcomon.c:119
 msgid "More memory required..."
 msgstr "Mehr Speicher benötigt."
 
-#: common/gsmcomon.c:121
+#: common/gsmcomon.c:120
 msgid "Permission to file/device required..."
 msgstr "Berechtigungen für Datei/Gerät benötigt..."
 
-#: common/gsmcomon.c:122
+#: common/gsmcomon.c:121
 msgid "Empty SMSC number. Set in phone or use -smscnumber."
 msgstr ""
 "Leere SMSC-Nummer. Setzen Sie sie im Telefon oder verwenden Sie -smscnumber."
 
-#: common/gsmcomon.c:123
+#: common/gsmcomon.c:122
 msgid "You're inside phone menu (maybe editing?). Leave it and try again."
 msgstr ""
 "Sie sind innerhalb des Telefon-Menüs (beim Bearbeiten?). Verlassen Sie es "
 "und versuchen es erneut."
 
-#: common/gsmcomon.c:124
+#: common/gsmcomon.c:123
 msgid "Phone is not connected."
 msgstr "Telefon ist nicht angeschlossen."
 
-#: common/gsmcomon.c:125
+#: common/gsmcomon.c:124
 msgid "Function is during writing. If want help, please contact with authors."
 msgstr ""
 "Die Funktion wird gerade geschrieben. Wenden Sie sich bitte an den Autor, "
 "wenn Sie Hilfe benötigen."
 
-#: common/gsmcomon.c:126
+#: common/gsmcomon.c:125
 msgid "Phone is disabled and connected to charger."
 msgstr "Das Telefon ist deaktiviert und mit dem Ladegerät verbunden."
 
-#: common/gsmcomon.c:127
+#: common/gsmcomon.c:126
 msgid "File format not supported by Gammu."
 msgstr "Das Dateiformat wird von Gammu nicht unterstützt."
 
-#: common/gsmcomon.c:128
+#: common/gsmcomon.c:127
 msgid ""
 "Nobody is perfect, some bug appeared in protocol implementation. Please "
 "contact authors."
@@ -201,117 +201,117 @@ msgstr ""
 "Nobody is perfect, ein Fehler ist in der Protokollimplemetierung "
 "aufgetreten. Bitte wenden Sie sich an den Autor."
 
-#: common/gsmcomon.c:129
+#: common/gsmcomon.c:128
 msgid "Transfer was canceled by phone, maybe you pressed cancel on phone."
 msgstr ""
 "Die Übertragung wurde vom Telefon abgebrochen. Vielleicht haben Sie Abbruch "
 "am Handy gedrückt."
 
-#: common/gsmcomon.c:130
+#: common/gsmcomon.c:129
 msgid "Phone module need to send another answer frame."
 msgstr ""
 
-#: common/gsmcomon.c:131
+#: common/gsmcomon.c:130
 msgid "Current connection type doesn't support called function."
 msgstr ""
 "Der gegenwärtige Verbindungstyp unterstützt nicht die aufgerufenen Funktion."
 
-#: common/gsmcomon.c:132
+#: common/gsmcomon.c:131
 msgid "CRC error."
 msgstr "CRC-Fehler."
 
-#: common/gsmcomon.c:133
+#: common/gsmcomon.c:132
 msgid "Invalid date or time specified."
 msgstr "Ungültiges Datum oder Zeit angegeben."
 
-#: common/gsmcomon.c:134
+#: common/gsmcomon.c:133
 msgid "Phone memory error, maybe it is read only."
 msgstr "Telefonspeicherfehler, möglicherweise nur lesend."
 
-#: common/gsmcomon.c:135
+#: common/gsmcomon.c:134
 msgid "Invalid data given to phone."
 msgstr "Ungültige Daten an das Telefon übertragen."
 
-#: common/gsmcomon.c:136
+#: common/gsmcomon.c:135
 msgid "File with specified name already exist."
 msgstr "Der angegebene Dateiname existiert bereits."
 
-#: common/gsmcomon.c:137
+#: common/gsmcomon.c:136
 msgid "File with specified name doesn't exist."
 msgstr "Die Datei mit dem angegebenen Namen existiert nicht."
 
-#: common/gsmcomon.c:138
+#: common/gsmcomon.c:137
 msgid "You have to give folder name and not file name."
 msgstr "Sie müssen einen Verzeichnis-, keinen Dateinamen angeben."
 
-#: common/gsmcomon.c:139
+#: common/gsmcomon.c:138
 msgid "You have to give file name and not folder name."
 msgstr "Sie müssen einen Datei-, keinen Verzeichnisnamen angeben."
 
-#: common/gsmcomon.c:140
+#: common/gsmcomon.c:139
 msgid "Can not access SIM card."
 msgstr "Kein Zugriff auf die SIM-Karte."
 
-#: common/gsmcomon.c:141
+#: common/gsmcomon.c:140
 msgid "Wrong GNAPPLET version in phone. Use version from currently used Gammu."
 msgstr ""
 "Im Handy befindet sich eine falsche GNAPPLET-Version. Verwenden Sie die "
 "Version des aktuell verwendeten Gammu."
 
-#: common/gsmcomon.c:142
+#: common/gsmcomon.c:141
 msgid "Only part of folder has been listed."
 msgstr ""
 
-#: common/gsmcomon.c:143
+#: common/gsmcomon.c:142
 msgid "Folder must be empty."
 msgstr "Das Verzeichnis muss leer sein."
 
-#: common/gsmcomon.c:144
+#: common/gsmcomon.c:143
 msgid "Data were converted."
 msgstr "Die Daten wurden umgewandelt."
 
-#: common/gsmcomon.c:145
+#: common/gsmcomon.c:144
 msgid "Gammu is not configured."
 msgstr "Gammu ist nicht konfiguriert."
 
-#: common/gsmcomon.c:146
+#: common/gsmcomon.c:145
 msgid "Wrong folder used."
 msgstr "Falsches Verzeichnis benutzt."
 
-#: common/gsmcomon.c:147
+#: common/gsmcomon.c:146
 msgid "Internal phone error."
 msgstr "Interner Telefonfehler."
 
-#: common/gsmcomon.c:148
+#: common/gsmcomon.c:147
 #, fuzzy
 msgid "Error writing file to disk."
 msgstr "Fehler beim Schreiben auf Gerät."
 
-#: common/gsmcomon.c:149
+#: common/gsmcomon.c:148
 msgid "No such section exists."
 msgstr ""
 
-#: common/gsmcomon.c:150
+#: common/gsmcomon.c:149
 msgid "Using default values."
 msgstr "Benutze Standardwerte."
 
-#: common/gsmcomon.c:151
+#: common/gsmcomon.c:150
 msgid "Corrupted data returned by phone."
 msgstr "Fehlerhafte Daten vom Telefon empfangen."
 
-#: common/gsmcomon.c:152
+#: common/gsmcomon.c:151
 msgid "Bad feature string in configuration."
 msgstr ""
 
-#: common/gsmcomon.c:153
+#: common/gsmcomon.c:152
 msgid "Desired functionality has been disabled on compile time."
 msgstr ""
 
-#: common/gsmcomon.c:154
+#: common/gsmcomon.c:153
 msgid "Bluetooth configuration requires channel option."
 msgstr ""
 
-#: common/gsmcomon.c:187
+#: common/gsmcomon.c:186
 msgid "Unknown error description."
 msgstr "Unbekannte Fehlerbeschreibung."
 
