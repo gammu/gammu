@@ -3,13 +3,13 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH JADMAKER 1 "Leden 2008" "Generátor JAD souborů" "Dokumentace Gammu"
+.TH GAMMU\-CONFIG 1 "Květen 2007" "Gammu configurator 0.3" "Dokumentace Gammu"
 .SH JMÉNO
-jadmaker \- Generátor JAD souborů
+gammu\-config \- Gammu configurator
 .SH SYNTAXE
-\fBjadmaker\fP [\fI\-f|\-\-force\fP] [\fI\-u|\-\-url URL\fP] <soubor.jar>...
+\fBgammu\-config\fP [\fI\-f|\-\-force\fP] [\fI\-c|\-\-config konfigurace\fP]
 .SH POPIS
-Skript pro vygenerování JAD souboru na základě JAR souboru.
+Skript, který vám usnadní konfiguraci gammu.
 
 These programs follow the usual GNU command line syntax, with long options
 starting with two dashes (`\-').  A summary of options is included below.
@@ -18,19 +18,18 @@ starting with two dashes (`\-').  A summary of options is included below.
 Zobrazí přehled voleb.
 .TP 
 \fB\-f, \-\-force\fP
-Vynutí přepsání JAD souboru i když již existuje.
+Vynutí konfigurování i když konfigurační soubor již existuje.
 .TP 
-\fB\-u, \-\-url URL\fP
-Určí URL, které bude obsaženo v JAD souboru.
+\fB\-c, \-\-config konfigurace\fP
+Určí, který konfigurační soubor bude použit.
 
 .SH "HLÁŠENÍ CHYB"
 Prosím hlašte chyby na <http://bugs.cihar.com>.
 
 .SH "DALŠÍ INFORMACE"
 gammu(1)
-
 .SH COPYRIGHT
-Copyright \(co 2008\-2009 Michal Čihař a další autoři.  Licence GPLv2: GNU
+Copyright \(co 2003\-2009 Michal Čihař a další autoři.  Licence GPLv2: GNU
 GPL verze 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
 .br
 Tento program je volný software; můžete jej šířit a modifikovat. Není

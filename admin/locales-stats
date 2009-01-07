@@ -11,3 +11,9 @@ for x in locale/*/libgammu.po  ; do
     echo -n "$lang: "
     msgfmt --statistics --check -o - $x > /dev/null
 done
+echo docs.po:
+for x in locale/*/docs.po  ; do 
+    lang=`echo $x | sed 's@locale/\(.*\)/docs.po@\1@'`
+    echo -n "$lang: "
+    msgfmt --statistics --check -o - $x > /dev/null
+done
