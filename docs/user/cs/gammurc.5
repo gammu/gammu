@@ -1,0 +1,242 @@
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH GAMMURC 5 "Leden 4, 2009" "Gammu 1.23.0" "Dokumentace Gammu"
+.SH JMÉNO
+
+.TP 
+\fBgammurc\fP
+
+konfigurační soubor gammu(1)
+.SH SYNTAXE
+\fI/etc/gammurc\fP nebo \fI~/.gammurc\fP
+.SH POPIS
+gammu(1) načítá konfiguraci z konfiguračního souboru. Jeho umístění je
+zjištěno přispuštění. Na Unixových sytémech se nejdříve zkouší ~/.gammurc a
+pokud to neexistuje, použije se /etc/gammurc.
+
+Tento soubor používá syntaxi ini souborů, komentáře mohou být značeny buď ;
+nebo #. Sekce souboru jsou zapsány v hranatých závorkách jako [toto].Všechny
+hodnoty klíčů nerozlišují velikost písmen.
+
+Configuration file for gammu can contain several sections \- [gammu],
+[gammu1], [gammuN], ... Each section configures one connection setup and in
+default mode gammu tries all of them in numerical order. You can also
+specify which configuration section to use by giving it's number ([gammu]
+has number 0) as a parameter to gammu(1) and it will then use only this
+section.
+
+.TP 
+\fBConnection\fP
+
+Protokol, který se použije pro komunikaci s telefonem.
+
+Pro telefony Nokia připojené kabelem budete chtít použít jedno z
+následujících:
+
+\fBfbus\fP \- sériové připojení protokolem FBUS
+.br
+\fBdlr3\fP \- DLR\-3 a kompatibilní kabely
+.br
+\fBdku2\fP \- DKU\-2 a kompatibilní kabely
+.br
+\fBdku5\fP \- DKU\-5 a kompatibilní kabely
+.br
+\fBmbus\fP \- sériové připojení protokolem MBUS
+
+If you use some non original cable, you might need to append \-nodtr (eg. for
+ARK3116 based cables) or \-nopower, but Gammu should be able to detect this
+automatically.
+
+Pro ostatní telefony připojené kabelem budete chtít použít jedno z
+následujících:
+
+\fBat\fP \- obecné připojení používající AT příkazy
+
+Můžete volitelně zadat rychlost připojení, například at19200, ale toto není
+nutné pro USB kabely.
+
+Pro připojení pomocí IrDA použijte jednu z následujících možností:
+
+\fBirdaphonet\fP \- protokol Phonet používaný telefony Nokia
+.br
+\fBirdaat\fP \- AT příkazy pro připojení k většině telefonů (toto není
+podporované na Linuxu).
+.br
+\fBirdaobex\fP \- připojení protokolem OBEX (IrMC nebo přenos souborů),
+použitelné pro většinu telefonů.
+.br
+\fBirdagnapbus\fP \- připojení k GNappletu běžícím na telefonech se Symbianem.
+
+Pro připojení pomocí Bluetooth použijte jednu z následujících možností:
+
+\fBbluephonet\fP \- protokol Phonet používaný telefony Nokia
+.br
+\fBblueat\fP \- AT příkazy pro připojení k většině telefonů.
+.br
+\fBirdaobex\fP \- připojení protokolem OBEX (IrMC nebo přenos souborů),
+použitelné pro většinu telefonů.
+.br
+\fBbluerfgnapbus\fP \- připojení k GNappletu běžícím na telefonech se Symbianem.
+
+.TP 
+\fBPort\fP
+
+Zařízení kde je přístupný telefon nebo adresa telefonu, záleží na typu
+připojení.
+
+For cables or emulated serial ports, you enter device name (for example
+/dev/ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux or COM1: on
+Windows). The special exception are DKU\-2 and DKU\-5 cables, where the device
+is automatically detected from driver information and this parameters is
+ignored.
+
+For Bluetooth connection you have to enter Bluetooth address of your phone
+(you can list Bluetooth devices in range on Linux using "hcitool scan"
+command).
+
+Pro připojení přes IrDA se tento parametr vůbec nepoužije.
+
+.TP 
+\fBModel\fP
+
+Do not use this parameter unless really needed! The only use case for this
+is when Gammu does not know your phone and misdetects it's features.
+
+.TP 
+\fBSynchronizeTime\fP
+
+If you want to set time from computer to phone during starting
+connection. Do not rather use this option when when to reset phone during
+connection (in some phones need to set time again after restart).
+
+.TP 
+\fBStartInfo\fP
+
+This option allow to set, that you want (setting "yes") to see message on
+the phone screen or phone should enable light for a moment during starting
+connection. Phone WON'T beep during starting connection with this option.
+
+.TP 
+\fBGammuCoding\fP
+
+Forces using specified codepage (on Windows \- for example "1250" will force
+CP1250) or UTF8 (in Linux \- "utf8"). This should not be needed in most
+cases, Gammu should detect it according to your locales.
+
+.TP 
+\fBGammuLoc\fP
+
+Cesta k adresáři s lokalizačními soubory (adresář by měl obsahovat
+LANG/LC_MESSAGES/gammu.mo). Pokud je gammu správně instalované, mělo
+bypřeklady najít automaticky.
+
+.TP 
+\fBLogFile\fP
+
+Cesta k souboru, kde budou uloženy informace o komunikaci s telefonem.
+
+.TP 
+\fBLogFormat\fP
+
+Určuje co vše se bude logovat do souboru LogFile. Možné hodnoty jsou:
+
+\fBnothing\fP \- žádné ladicí informace
+.br
+\fBtext\fP \- základní informace o přenosu v textové podobě
+.br
+\fBtextall\fP \- prodrobné informace o přenosu v textové podobě
+.br
+\fBtextalldate\fP \- prodrobné informace o přenosu v textové podobě, s časovou
+značkou
+.br
+\fBerrors\fP \- chyby v textovém formátu
+.br
+\fBerrorsdate\fP \- chyby v textovém formátu, s časovou značkou
+.br
+\fBbinary\fP \- obsah komunikace v binárním formátu
+
+Pro ladění použijte buď \fBtextalldate\fP nebo \fBtextall\fP, tím budou v logu
+obsaženy všechny informace potřebné pro diagnostiku problému.
+
+.TP 
+\fBFeatures\fP
+
+Custom features for phone. This can be used as override when values coded in
+common/gsmphones.c are bad or missing. Consult include/gammu\-info.h for
+possible values (all Feature values without leading F_ prefix).  Please
+report correct values to Gammu authors.
+
+.TP 
+\fBUse_Locking\fP
+
+On POSIX systems, you might want to lock serial device when it is being
+used.  Enabling this option (setting to yes) will make Gammu honor these
+locks and create it on startup. On most distributions you need additional
+privileges to use locking (eg. you need to be member of uucp group).
+
+Tento parametr nemá na Windows žádný význam.
+
+.SH PŘÍKLAD
+
+Podrobnější příklady jsou dostupné v dokumentaci Gammu.
+
+Konfigurace Gammu pro telefon Nokia připojený kabelem DLR\-3:
+
+.RS
+.sp
+.nf
+.ne 7
+[gammu]
+port = /dev/ttyACM0
+connection = dlr3
+.fi
+.sp
+.RE
+.PP
+
+Gammu configuration for Sony\-Ericsson phone (or any other AT compatible
+phone)  connected using USB cable:
+
+.RS
+.sp
+.nf
+.ne 7
+[gammu]
+port = /dev/ttyACM0
+connection = at
+.fi
+.sp
+.RE
+.PP
+
+Gammu configuration for Sony\-Ericsson (or any other AT compatible phone)
+connected using bluetooth:
+
+.RS
+.sp
+.nf
+.ne 7
+[gammu]
+port = B0:0B:00:00:FA:CE
+connection = blueat
+.fi
+.sp
+.RE
+.PP
+
+.SH "DALŠÍ INFORMACE"
+gammu\-smsd(1), gammu(1), gammurc(5)
+.SH AUTOR
+gammu\-smsd a tuto manuálovou stránku napsal Michal Čihař
+<michal@cihar.com>.
+.SH COPYRIGHT
+Copyright \(co 2009 Michal Čihař a další autoři.  Licence GPLv2: GNU GPL
+verze 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
+.br
+Tento program je volný software; můžete jej šířit a modifikovat.  Není
+poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem.
+.SH "HLÁŠENÍ CHYB"
+Prosím hlašte chyby na <http://bugs.cihar.com>.

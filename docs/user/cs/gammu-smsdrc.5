@@ -58,7 +58,7 @@ Výchozí stav je vypnuté logování.
 .TP 
 \fBCommTimeout\fP
 
-How many seconds should smsd wait after each read/write loop.
+Kolik sekund by měl smsd čekat po každém cyklu čtení/zápis.
 
 Výchozí je 30.
 
@@ -99,13 +99,13 @@ Výchozí je 0 (není použito).
 .TP 
 \fBDeliveryReport\fP
 
-Whether delivery reports should be used, one of 'no', 'log', 'sms'.
+Jak mají být používány doručenky, jedna z možností 'no', 'log', 'sms'.
 
-\fBlog\fP one line log entry,
+\fBlog\fP logovat informace o doručenkách,
 .br
-\fBsms\fP store in inbox as a received SMS
+\fBsms\fP ukládat doručenky jako příchozí SMS.
 .br
-\fBno\fP no delivery reports
+\fBno\fP nevyžadovat doručenky
 
 Výchozí je 'no'.
 
@@ -122,15 +122,14 @@ Výchozí je 10.
 .TP 
 \fBPhoneID\fP
 
-String with info about phone used for sending/receiving. This can be useful
-if you want to run several SMS daemons.
+Text s informací o telefou, použité při odesílání a přijímání. Tato volba
+může být užitečná, pokud chcete provozovat více SMS démonů.
 
 .TP 
 \fBRunOnReceive\fP
 
-Executes a program after receiving message. The program will receive
-identifiers of received messages depending on used service backend (some
-backends might not support this feature).
+Spustí program při přijetí zprávy. Program dostane parametry obsahující
+identifikátory nově přijatý zpráv (pokud to použitá služba podporuje).
 
 .TP 
 \fBDebugLevel\fP

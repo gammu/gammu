@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-01-07 19:56+0100\n"
-"PO-Revision-Date: 2009-01-07 20:18+0100\n"
+"PO-Revision-Date: 2009-01-07 23:48+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -141,27 +141,27 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammurc.5:35
 msgid "B<fbus> - serial FBUS connection"
-msgstr ""
+msgstr "B<fbus> - sériové připojení protokolem FBUS"
 
 # type: Plain text
 #: docs/user/gammurc.5:37
 msgid "B<dlr3> - DLR-3 and compatible cables"
-msgstr ""
+msgstr "B<dlr3> - DLR-3 a kompatibilní kabely"
 
 # type: Plain text
 #: docs/user/gammurc.5:39
 msgid "B<dku2> - DKU-2 and compatible cables"
-msgstr ""
+msgstr "B<dku2> - DKU-2 a kompatibilní kabely"
 
 # type: Plain text
 #: docs/user/gammurc.5:41
 msgid "B<dku5> - DKU-5 and compatible cables"
-msgstr ""
+msgstr "B<dku5> - DKU-5 a kompatibilní kabely"
 
 # type: Plain text
 #: docs/user/gammurc.5:43
 msgid "B<mbus> - serial MBUS connection"
-msgstr ""
+msgstr "B<mbus> - sériové připojení protokolem MBUS"
 
 # type: Plain text
 #: docs/user/gammurc.5:47
@@ -181,7 +181,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammurc.5:51
 msgid "B<at> - generic AT commands based connection"
-msgstr ""
+msgstr "B<at> - obecné připojení používající AT příkazy"
 
 # type: Plain text
 #: docs/user/gammurc.5:54
@@ -195,12 +195,12 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammurc.5:56
 msgid "For IrDA connections use one of following:"
-msgstr ""
+msgstr "Pro připojení pomocí IrDA použijte jednu z následujících možností:"
 
 # type: Plain text
 #: docs/user/gammurc.5:58
 msgid "B<irdaphonet> - Phonet connection for Nokia phones."
-msgstr ""
+msgstr "B<irdaphonet> - protokol Phonet používaný telefony Nokia"
 
 # type: Plain text
 #: docs/user/gammurc.5:60
@@ -208,43 +208,52 @@ msgid ""
 "B<irdaat> - AT commands connection for most of phones (this is not supported "
 "on Linux)."
 msgstr ""
+"B<irdaat> - AT příkazy pro připojení k většině telefonů (toto není "
+"podporované na Linuxu)."
 
 # type: Plain text
 #: docs/user/gammurc.5:62
 msgid ""
 "B<irdaobex> - OBEX (IrMC or file transfer) connection for most of phones."
 msgstr ""
+"B<irdaobex> - připojení protokolem OBEX (IrMC nebo přenos souborů), "
+"použitelné pro většinu telefonů."
 
 # type: Plain text
 #: docs/user/gammurc.5:64
 msgid "B<irdagnapbus> - GNapplet based connection for Symbian phones"
 msgstr ""
+"B<irdagnapbus> - připojení k GNappletu běžícím na telefonech se Symbianem."
 
 # type: Plain text
 #: docs/user/gammurc.5:66
 msgid "For Bluetooth connection use one of following:"
 msgstr ""
+"Pro připojení pomocí Bluetooth použijte jednu z následujících možností:"
 
 # type: Plain text
 #: docs/user/gammurc.5:68
 msgid "B<bluephonet> - Phonet connection for Nokia phones."
-msgstr ""
+msgstr "B<bluephonet> - protokol Phonet používaný telefony Nokia"
 
 # type: Plain text
 #: docs/user/gammurc.5:70
 msgid "B<blueat> - AT commands connection for most of phones."
-msgstr ""
+msgstr "B<blueat> - AT příkazy pro připojení k většině telefonů."
 
 # type: Plain text
 #: docs/user/gammurc.5:72
 msgid ""
 "B<blueobex> - OBEX (IrMC or file transfer) connection for most of phones."
 msgstr ""
+"B<irdaobex> - připojení protokolem OBEX (IrMC nebo přenos souborů), "
+"použitelné pro většinu telefonů."
 
 # type: Plain text
 #: docs/user/gammurc.5:74
 msgid "B<bluerfgnapbus> - GNapplet based connection for Symbian phones"
 msgstr ""
+"B<bluerfgnapbus> - připojení k GNappletu běžícím na telefonech se Symbianem."
 
 # type: TP
 #: docs/user/gammurc.5:75
@@ -379,37 +388,39 @@ msgstr "Určuje co vše se bude logovat do souboru LogFile. Možné hodnoty jsou
 # type: Plain text
 #: docs/user/gammurc.5:136
 msgid "B<nothing> - no debug level"
-msgstr ""
+msgstr "B<nothing> - žádné ladicí informace"
 
 # type: Plain text
 #: docs/user/gammurc.5:138
 msgid "B<text> - transmission dump in text format"
-msgstr ""
+msgstr "B<text> - základní informace o přenosu v textové podobě"
 
 # type: Plain text
 #: docs/user/gammurc.5:140
 msgid "B<textall> - all possible info in text format"
-msgstr ""
+msgstr "B<textall> - prodrobné informace o přenosu v textové podobě"
 
 # type: Plain text
 #: docs/user/gammurc.5:142
 msgid "B<textalldate> - all possible info in text format, with time stamp"
 msgstr ""
+"B<textalldate> - prodrobné informace o přenosu v textové podobě, s časovou "
+"značkou"
 
 # type: Plain text
 #: docs/user/gammurc.5:144
 msgid "B<errors> - errors in text format"
-msgstr ""
+msgstr "B<errors> - chyby v textovém formátu"
 
 # type: Plain text
 #: docs/user/gammurc.5:146
 msgid "B<errorsdate> - errors in text format, with time stamp"
-msgstr ""
+msgstr "B<errorsdate> - chyby v textovém formátu, s časovou značkou"
 
 # type: Plain text
 #: docs/user/gammurc.5:148
 msgid "B<binary> - transmission dump in binary format"
-msgstr ""
+msgstr "B<binary> - obsah komunikace v binárním formátu"
 
 # type: Plain text
 #: docs/user/gammurc.5:151
@@ -719,7 +730,7 @@ msgstr "B<CommTimeout>"
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:58
 msgid "How many seconds should smsd wait after each read/write loop."
-msgstr ""
+msgstr "Kolik sekund by měl smsd čekat po každém cyklu čtení/zápis."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:60 docs/user/gammu-smsdrc.5:68
@@ -798,22 +809,22 @@ msgstr "B<DeliveryReport>"
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:99
 msgid "Whether delivery reports should be used, one of 'no', 'log', 'sms'."
-msgstr ""
+msgstr "Jak mají být používány doručenky, jedna z možností 'no', 'log', 'sms'."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:101
 msgid "B<log> one line log entry,"
-msgstr ""
+msgstr "B<log> logovat informace o doručenkách,"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:103
 msgid "B<sms> store in inbox as a received SMS"
-msgstr ""
+msgstr "B<sms> ukládat doručenky jako příchozí SMS."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:105
 msgid "B<no> no delivery reports"
-msgstr ""
+msgstr "B<no> nevyžadovat doručenky"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:107
@@ -852,6 +863,8 @@ msgid ""
 "String with info about phone used for sending/receiving. This can be useful "
 "if you want to run several SMS daemons."
 msgstr ""
+"Text s informací o telefou, použité při odesílání a přijímání. Tato volba "
+"může být užitečná, pokud chcete provozovat více SMS démonů."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:124
@@ -866,6 +879,8 @@ msgid ""
 "identifiers of received messages depending on used service backend (some "
 "backends might not support this feature)."
 msgstr ""
+"Spustí program při přijetí zprávy. Program dostane parametry obsahující "
+"identifikátory nově přijatý zpráv (pokud to použitá služba podporuje)."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:131
