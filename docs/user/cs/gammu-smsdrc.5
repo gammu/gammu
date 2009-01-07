@@ -16,9 +16,9 @@ konfigurační soubor pro gammu\-smsd(1)
 gammu\-smsd(1) čte konfiguraci z konfiguračního souboru. Jeho umístění může
 být zadáno na příkazové řádce, jinak se použije /etc/gammu\-smsdrc.
 
-This file use ini file syntax, with comments being marked with both ; and
-#.  Sections of config file are identified in square brackets line
-[this]. All key values are case insensitive.
+Tento soubor používá syntaxi ini souborů, komentáře mohou být značeny buď ;
+nebo #. Sekce souboru jsou zapsány v hranatých závorkách jako [toto].Všechny
+hodnoty klíčů nerozlišují velikost písmen.
 
 Konfigurační soubor pro gammu\-smsd se skládá ze dvou sekcí \- [gammu] a
 [smsd].
@@ -49,10 +49,11 @@ telefon po restartu vyžaduje PIN.
 .TP 
 \fBLogFile\fP
 
-File where smsd actions are being logged. You can also use special value
-"syslog" which will send all messages to syslog daemon.
+Soubor, kde budou zaznamenány informace o SMS démonovi. Můžte také použít
+speciálníhodnotu "syslog", která zapne logování prostřednictvím syslog
+démona.
 
-Default is to provide no logging.
+Výchozí stav je vypnuté logování.
 
 .TP 
 \fBCommTimeout\fP
@@ -81,7 +82,7 @@ Výchozí je 0 (není použito).
 .TP 
 \fBCheckSecurity\fP
 
-Whether to check if phone wants to enter PIN.
+Jestli se má kontrolovat, zda telefon vyžaduje PIN.
 
 Výchozí je 1 (povoleno).
 
@@ -98,7 +99,7 @@ Výchozí je 0 (není použito).
 .TP 
 \fBDeliveryReport\fP
 
-Whether delivery reports should be used, one of no/log/sms.
+Whether delivery reports should be used, one of 'no', 'log', 'sms'.
 
 \fBlog\fP one line log entry,
 .br
@@ -106,7 +107,7 @@ Whether delivery reports should be used, one of no/log/sms.
 .br
 \fBno\fP no delivery reports
 
-Výchozí je no \- vypnuto.
+Výchozí je 'no'.
 
 .TP 
 \fBDeliveryReportDelay\fP
