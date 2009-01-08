@@ -7,3 +7,4 @@ Saved in folder "", location -99999, SIM
 #ifndef GSM_USED_IRDAOBEX
 #  define GSM_USED_IRDAOBEX
 #endif
+- check windows service, it seems to be broken
