@@ -58,6 +58,7 @@ ChangeLog
 [-] * Dropped static configuration files for MSVC, they were broken
       anyway and CMake now works good with MSVC.
 [-] * Script gammu-config supports also cdialog.
+[-] * Reduce stack usage on message composing (fixes crash on Windows).
     
 20081219 - 1.22.1
 

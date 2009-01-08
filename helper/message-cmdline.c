@@ -66,6 +66,27 @@ ComposeMapEntry ComposeMap[] = {
 	{NULL, 0}
 };
 
+
+#define BMP_AUTO_ALLOC(n) \
+	if (bitmap[n] != NULL) { \
+		bitmap[n] = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap)); \
+		if (bitmap[n] == NULL) { \
+			error = ERR_MOREMEMORY; \
+			goto end_compose; \
+		} \
+		memset(bitmap[n], 0, sizeof(GSM_MultiBitmap)); \
+	}
+
+#define RNG_AUTO_ALLOC(n) \
+	if (ringtone[n] != NULL) { \
+		ringtone[n] = (GSM_Ringtone *)malloc(sizeof(GSM_Ringtone)); \
+		if (ringtone[n] == NULL) { \
+			error = ERR_MOREMEMORY; \
+			goto end_compose; \
+		} \
+		memset(ringtone[n], 0, sizeof(GSM_Ringtone)); \
+	}
+
 #define SEND_SAVE_SMS_BUFFER_SIZE 10000
 
 GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int argc, int typearg, char *argv[], GSM_StateMachine *sm)
@@ -82,8 +103,9 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 #endif
 	int				i,j,z,FramesNum = 0;
 	int				Protected = 0;
-	GSM_Ringtone			ringtone[GSM_MAX_MULTI_SMS];
-	GSM_MultiBitmap			bitmap[GSM_MAX_MULTI_SMS],bitmap2;
+	GSM_Ringtone			*ringtone[GSM_MAX_MULTI_SMS];
+	GSM_MultiBitmap			*bitmap[GSM_MAX_MULTI_SMS];
+	GSM_MultiBitmap			bitmap2;
 	GSM_MultiPartSMSInfo		SMSInfo;
 	GSM_NetworkInfo			NetInfo;
 	GSM_MMSIndicator		MMSInfo;
@@ -130,6 +152,11 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 
 	ReplaceBuffer[0] = 0;
 	ReplaceBuffer[1] = 0;
+
+	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
+		ringtone[i] = NULL;
+		bitmap[i] = NULL;
+	}
 
 	EncodeUnicode(sms->SMS[0].Number, "Gammu", 5);
 
@@ -226,15 +253,16 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf("%s\n", _("Where is ringtone filename?"));
 			exit(-1);
 		}
-		ringtone[0].Format=RING_NOTETONE;
-		error=GSM_ReadRingtoneFile(argv[startarg],&ringtone[0]);
-		if (error != ERR_NONE) return error;
+		RNG_AUTO_ALLOC(0);
+		ringtone[0]->Format = RING_NOTETONE;
+		error=GSM_ReadRingtoneFile(argv[startarg], ringtone[0]);
+		if (error != ERR_NONE) goto end_compose;
 		SMSInfo.Entries[0].ID 	 = SMS_NokiaRingtone;
-		SMSInfo.Entries[0].Ringtone = &ringtone[0];
+		SMSInfo.Entries[0].Ringtone = ringtone[0];
 		if (*type == SMS_Save) {
-			CopyUnicodeString(sms->SMS[0].Number, ringtone[0].Name);
+			CopyUnicodeString(sms->SMS[0].Number, ringtone[0]->Name);
 			EncodeUnicode(Name,"Ringtone ",9);
-			CopyUnicodeString(Name+9*2, ringtone[0].Name);
+			CopyUnicodeString(Name+9*2, ringtone[0]->Name);
 		}
 		startarg += 1;
 		break;
@@ -243,12 +271,13 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf("%s\n", _("Where is logo filename?"));
 			exit(-1);
 		}
-		bitmap[0].Bitmap[0].Type=GSM_OperatorLogo;
-		error=GSM_ReadBitmapFile(argv[startarg],&bitmap[0]);
-		if (error != ERR_NONE) return error;
-		strcpy(bitmap[0].Bitmap[0].NetworkCode,"000 00");
+		BMP_AUTO_ALLOC(0);
+		bitmap[0]->Bitmap[0].Type = GSM_OperatorLogo;
+		error=GSM_ReadBitmapFile(argv[startarg], bitmap[0]);
+		if (error != ERR_NONE) goto end_compose;
+		strcpy(bitmap[0]->Bitmap[0].NetworkCode,"000 00");
 		SMSInfo.Entries[0].ID 	 = SMS_NokiaOperatorLogo;
-		SMSInfo.Entries[0].Bitmap   = &bitmap[0];
+		SMSInfo.Entries[0].Bitmap   = bitmap[0];
 		if (*type == SMS_Save) {
 			EncodeUnicode(sms->SMS[0].Number, "OpLogo",6);
 			EncodeUnicode(Name,"OpLogo ",7);
@@ -260,11 +289,12 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf("%s\n", _("Where is logo filename?"));
 			exit(-1);
 		}
-		bitmap[0].Bitmap[0].Type=GSM_CallerGroupLogo;
-		error=GSM_ReadBitmapFile(argv[startarg],&bitmap[0]);
-		if (error != ERR_NONE) return error;
+		BMP_AUTO_ALLOC(0);
+		bitmap[0]->Bitmap[0].Type = GSM_CallerGroupLogo;
+		error=GSM_ReadBitmapFile(argv[startarg], bitmap[0]);
+		if (error != ERR_NONE) goto end_compose;
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaCallerLogo;
-		SMSInfo.Entries[0].Bitmap   = &bitmap[0];
+		SMSInfo.Entries[0].Bitmap   = bitmap[0];
 		if (*type == SMS_Save) {
 			EncodeUnicode(sms->SMS[0].Number, "Caller",6);
 		}
@@ -277,25 +307,26 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf("%s\n", _("Where is number of frames?"));
 			exit(-1);
 		}
-		bitmap[0].Number 		= 0;
+		BMP_AUTO_ALLOC(0);
+		bitmap[0]->Number 		= 0;
 		i				= 1;
 		/* FIXME: should not make atoi so much times! */
 		while (1) {
-			bitmap2.Bitmap[0].Type=GSM_StartupLogo;
+			bitmap2.Bitmap[0].Type = GSM_StartupLogo;
 			error=GSM_ReadBitmapFile(argv[startarg + i],&bitmap2);
-			if (error != ERR_NONE) return error;
+			if (error != ERR_NONE) goto end_compose;
 			for (j=0;j<bitmap2.Number;j++) {
-				if (bitmap[0].Number == atoi(argv[startarg])) break;
-				memcpy(&bitmap[0].Bitmap[bitmap[0].Number],&bitmap2.Bitmap[j],sizeof(GSM_Bitmap));
-				bitmap[0].Number++;
+				if (bitmap[0]->Number == atoi(argv[startarg])) break;
+				memcpy(&bitmap[0]->Bitmap[bitmap[0]->Number],&bitmap2.Bitmap[j],sizeof(GSM_Bitmap));
+				bitmap[0]->Number++;
 			}
-			if (bitmap[0].Number == atoi(argv[startarg])) break;
+			if (bitmap[0]->Number == atoi(argv[startarg])) break;
 			i++;
 		}
 		SMSInfo.Entries[0].ID  		= SMS_AlcatelMonoAnimationLong;
-		SMSInfo.Entries[0].Bitmap   	= &bitmap[0];
-		bitmap[0].Bitmap[0].Text[0]	= 0;
-		bitmap[0].Bitmap[0].Text[1]	= 0;
+		SMSInfo.Entries[0].Bitmap   	= bitmap[0];
+		bitmap[0]->Bitmap[0].Text[0]	= 0;
+		bitmap[0]->Bitmap[0].Text[1]	= 0;
 		startarg += 1 + atoi(argv[startarg]);
 		break;
 	case COMPOSE_PICTURE:
@@ -303,15 +334,16 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf("%s\n", _("Where is logo filename?"));
 			exit(-1);
 		}
-		bitmap[0].Bitmap[0].Type=GSM_PictureImage;
-		error=GSM_ReadBitmapFile(argv[startarg],&bitmap[0]);
+		BMP_AUTO_ALLOC(0);
+		bitmap[0]->Bitmap[0].Type = GSM_PictureImage;
+		error=GSM_ReadBitmapFile(argv[startarg], bitmap[0]);
 		printf(_("File \"%s\"\n"),argv[startarg]);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) goto end_compose;
 		SMSInfo.Entries[0].ID 	 	= SMS_NokiaPictureImageLong;
-		SMSInfo.Entries[0].Bitmap   	= &bitmap[0];
+		SMSInfo.Entries[0].Bitmap   	= bitmap[0];
 		SMSInfo.UnicodeCoding 		= false;
-		bitmap[0].Bitmap[0].Text[0]	= 0;
-		bitmap[0].Bitmap[0].Text[1]	= 0;
+		bitmap[0]->Bitmap[0].Text[0]	= 0;
+		bitmap[0]->Bitmap[0].Text[1]	= 0;
 		if (*type == SMS_Save) {
 			EncodeUnicode(sms->SMS[0].Number, "Picture",7);
 			EncodeUnicode(Name,"Picture Image",13);
@@ -325,7 +357,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			exit(-1);
 		}
 		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
-		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) return error;
+		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.WAPBookmark[i]!=NULL) {
 			if (i == atoi(argv[1 + startarg])-1) break;
@@ -349,7 +381,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			exit(-1);
 		}
 		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
-		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) return error;
+		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.WAPSettings[i]!=NULL) {
 			if (i == atoi(argv[1 + startarg])-1) break;
@@ -393,7 +425,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			exit(-1);
 		}
 		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
-		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) return error;
+		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.MMSSettings[i]!=NULL) {
 			if (i == atoi(argv[1 + startarg])-1) break;
@@ -430,7 +462,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			exit(-1);
 		}
 		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
-		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) return error;
+		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.Calendar[i]!=NULL) {
 			if (i == atoi(argv[1 + startarg])-1) break;
@@ -453,7 +485,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			exit(-1);
 		}
 		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
-		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) return error;
+		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		while (Backup.ToDo[i]!=NULL) {
 			if (i == atoi(argv[1 + startarg])-1) break;
@@ -477,7 +509,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			exit(-1);
 		}
 		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
-		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) return error;
+		if (error != ERR_NONE && error != ERR_NOTIMPLEMENTED) goto end_compose;
 		i = 0;
 		if (strcasecmp(argv[1 + startarg],"SM") == 0) {
 			while (Backup.SIMPhonebook[i]!=NULL) {
@@ -597,7 +629,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					break;
 				}
 				if (strcasecmp(argv[i],"-scale") == 0) {
-					ringtone[0].NoteTone.AllNotesScale=true;
+					RNG_AUTO_ALLOC(0);
+					ringtone[0]->NoteTone.AllNotesScale=true;
 					break;
 				}
 			}
@@ -679,9 +712,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					break;
 				}
 				if (strcasecmp(argv[i],"-alcatelbmmi") == 0) {
-					bitmap[0].Bitmap[0].Type=GSM_StartupLogo;
-					error=GSM_ReadBitmapFile(argv[startarg-1],&bitmap[0]);
-					if (error != ERR_NONE) return error;
+					BMP_AUTO_ALLOC(0);
+					bitmap[0]->Bitmap[0].Type = GSM_StartupLogo;
+					error = GSM_ReadBitmapFile(argv[startarg-1], bitmap[0]);
+					if (error != ERR_NONE) goto end_compose;
 					SMSInfo.UnicodeCoding = true;
 					SMSInfo.Entries[0].ID = SMS_AlcatelMonoBitmapLong;
 					break;
@@ -817,7 +851,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
 						Protected --;
 					}
-					bitmap[SMSInfo.EntriesNum].Number 	= 0;
+					BMP_AUTO_ALLOC(SMSInfo.EntriesNum);
+					bitmap[SMSInfo.EntriesNum]->Number 	= 0;
 					nextlong = 16;
 					break;
 				}
@@ -940,7 +975,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 						SMSInfo.Entries[SMSInfo.EntriesNum].Protected = true;
 						Protected --;
 					}
-					bitmap[SMSInfo.EntriesNum].Number 	= 0;
+					BMP_AUTO_ALLOC(SMSInfo.EntriesNum);
+					bitmap[SMSInfo.EntriesNum]->Number 	= 0;
 					nextlong = 16;
 					break;
 				}
@@ -987,22 +1023,24 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 6:	/* Picture Images - text */
-			EncodeUnicode(bitmap[0].Bitmap[0].Text,argv[i],strlen(argv[i]));
+			BMP_AUTO_ALLOC(0);
+			EncodeUnicode(bitmap[0]->Bitmap[0].Text,argv[i],strlen(argv[i]));
 			nextlong = 0;
 			break;
 		case 7:	/* Operator Logo - network code */
-			strncpy(bitmap[0].Bitmap[0].NetworkCode,argv[i],7);
-			if (!strcmp(DecodeUnicodeConsole(GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode)),"unknown")) {
+			BMP_AUTO_ALLOC(0);
+			strncpy(bitmap[0]->Bitmap[0].NetworkCode,argv[i],7);
+			if (!strcmp(DecodeUnicodeConsole(GSM_GetNetworkName(bitmap[0]->Bitmap[0].NetworkCode)),"unknown")) {
 				printf(_("Unknown GSM network code (\"%s\")\n"),argv[i]);
 				exit(-1);
 			}
 			if (*type == SMS_Save) {
 				EncodeUnicode(sms->SMS[0].Number, "OpLogo",6);
-				EncodeUnicode(sms->SMS[0].Number+6*2,bitmap[0].Bitmap[0].NetworkCode,3);
-				EncodeUnicode(sms->SMS[0].Number+6*2+3*2,bitmap[0].Bitmap[0].NetworkCode+4,2);
-				if (UnicodeLength(GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode))<GSM_MAX_SMS_NAME_LENGTH-7) {
+				EncodeUnicode(sms->SMS[0].Number+6*2,bitmap[0]->Bitmap[0].NetworkCode,3);
+				EncodeUnicode(sms->SMS[0].Number+6*2+3*2,bitmap[0]->Bitmap[0].NetworkCode+4,2);
+				if (UnicodeLength(GSM_GetNetworkName(bitmap[0]->Bitmap[0].NetworkCode))<GSM_MAX_SMS_NAME_LENGTH-7) {
 					EncodeUnicode(Name,"OpLogo ",7);
-					CopyUnicodeString(Name+7*2,GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode));
+					CopyUnicodeString(Name+7*2,GSM_GetNetworkName(bitmap[0]->Bitmap[0].NetworkCode));
 				} else {
 					CopyUnicodeString(Name,sms->SMS[0].Number);
 				}
@@ -1019,8 +1057,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			break;
 		case 9:/* Replace file for text SMS */
 			ReplaceFile = fopen(argv[i], "rb");
-			if (ReplaceFile == NULL)
-				return ERR_CANTOPENFILE;
+			if (ReplaceFile == NULL) {
+				error = ERR_CANTOPENFILE;
+				goto end_compose;
+			}
 			memset(ReplaceBuffer,0,sizeof(ReplaceBuffer));
 			if (fread(ReplaceBuffer,1,sizeof(ReplaceBuffer),ReplaceFile) != sizeof(ReplaceBuffer)) {
 				printf_err(_("Error while writing file!\n"));
@@ -1066,18 +1106,20 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 14: /* EMS ringtone - IMelody */
-			ringtone[SMSInfo.EntriesNum].Format=RING_NOTETONE;
-			error=GSM_ReadRingtoneFile(argv[i],&ringtone[SMSInfo.EntriesNum]);
-			if (error != ERR_NONE) return error;
-			SMSInfo.Entries[SMSInfo.EntriesNum].Ringtone = &ringtone[SMSInfo.EntriesNum];
+			RNG_AUTO_ALLOC(SMSInfo.EntriesNum);
+			ringtone[SMSInfo.EntriesNum]->Format = RING_NOTETONE;
+			error=GSM_ReadRingtoneFile(argv[i], ringtone[SMSInfo.EntriesNum]);
+			if (error != ERR_NONE) goto end_compose;
+			SMSInfo.Entries[SMSInfo.EntriesNum].Ringtone = ringtone[SMSInfo.EntriesNum];
 			SMSInfo.EntriesNum++;
 			nextlong = 0;
 			break;
 		case 15:/* EMS bitmap file */
-			bitmap[SMSInfo.EntriesNum].Bitmap[0].Type=GSM_StartupLogo;
-			error=GSM_ReadBitmapFile(argv[i],&bitmap[SMSInfo.EntriesNum]);
-			if (error != ERR_NONE) return error;
-			SMSInfo.Entries[SMSInfo.EntriesNum].Bitmap = &bitmap[SMSInfo.EntriesNum];
+			BMP_AUTO_ALLOC(SMSInfo.EntriesNum);
+			bitmap[SMSInfo.EntriesNum]->Bitmap[0].Type = GSM_StartupLogo;
+			error=GSM_ReadBitmapFile(argv[i], bitmap[SMSInfo.EntriesNum]);
+			if (error != ERR_NONE) goto end_compose;
+			SMSInfo.Entries[SMSInfo.EntriesNum].Bitmap = bitmap[SMSInfo.EntriesNum];
 			SMSInfo.EntriesNum++;
 			nextlong = 0;
 			break;
@@ -1087,19 +1129,21 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				printf(_("You have to give number of EMS frames between 1 and 4 (\"%s\")\n"),argv[i]);
 				exit(-1);
 			}
-			bitmap[SMSInfo.EntriesNum].Number = 0;
+			BMP_AUTO_ALLOC(SMSInfo.EntriesNum);
+			bitmap[SMSInfo.EntriesNum]->Number = 0;
 			nextlong = 17;
 			break;
 		case 17:/*File for EMS animation */
+			BMP_AUTO_ALLOC(SMSInfo.EntriesNum);
 			bitmap2.Bitmap[0].Type=GSM_StartupLogo;
 			error=GSM_ReadBitmapFile(argv[i],&bitmap2);
 			for (j=0;j<bitmap2.Number;j++) {
-				if (bitmap[SMSInfo.EntriesNum].Number == FramesNum) break;
-				memcpy(&bitmap[SMSInfo.EntriesNum].Bitmap[bitmap[SMSInfo.EntriesNum].Number],&bitmap2.Bitmap[j],sizeof(GSM_Bitmap));
-				bitmap[SMSInfo.EntriesNum].Number++;
+				if (bitmap[SMSInfo.EntriesNum]->Number == FramesNum) break;
+				memcpy(&bitmap[SMSInfo.EntriesNum]->Bitmap[bitmap[SMSInfo.EntriesNum]->Number],&bitmap2.Bitmap[j],sizeof(GSM_Bitmap));
+				bitmap[SMSInfo.EntriesNum]->Number++;
 			}
-			if (bitmap[SMSInfo.EntriesNum].Number == FramesNum) {
-				SMSInfo.Entries[SMSInfo.EntriesNum].Bitmap = &bitmap[SMSInfo.EntriesNum];
+			if (bitmap[SMSInfo.EntriesNum]->Number == FramesNum) {
+				SMSInfo.Entries[SMSInfo.EntriesNum].Bitmap = bitmap[SMSInfo.EntriesNum];
 				SMSInfo.EntriesNum++;
 				nextlong = 0;
 			}
@@ -1176,19 +1220,21 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong 		    = 0;
 			break;
 		case 23:/* profile ringtone */
-			ringtone[0].Format	    = RING_NOTETONE;
-			error=GSM_ReadRingtoneFile(argv[i],&ringtone[0]);
-			if (error != ERR_NONE) return error;
-			SMSInfo.Entries[0].Ringtone = &ringtone[0];
+			RNG_AUTO_ALLOC(0);
+			ringtone[0]->Format	    = RING_NOTETONE;
+			error=GSM_ReadRingtoneFile(argv[i], ringtone[0]);
+			if (error != ERR_NONE) goto end_compose;
+			SMSInfo.Entries[0].Ringtone = ringtone[0];
 			nextlong 		    = 0;
 			break;
 		case 24:/* profile bitmap */
-			bitmap[0].Bitmap[0].Type    = GSM_PictureImage;
-			error=GSM_ReadBitmapFile(argv[i],&bitmap[0]);
-			if (error != ERR_NONE) return error;
-			bitmap[0].Bitmap[0].Text[0] = 0;
-			bitmap[0].Bitmap[0].Text[1] = 0;
-			SMSInfo.Entries[0].Bitmap   = &bitmap[0];
+			BMP_AUTO_ALLOC(0);
+			bitmap[0]->Bitmap[0].Type    = GSM_PictureImage;
+			error=GSM_ReadBitmapFile(argv[i], bitmap[0]);
+			if (error != ERR_NONE) goto end_compose;
+			bitmap[0]->Bitmap[0].Text[0] = 0;
+			bitmap[0]->Bitmap[0].Text[1] = 0;
+			SMSInfo.Entries[0].Bitmap   = bitmap[0];
 			nextlong 		    = 0;
 			break;
 		case 25:/* sms name */
@@ -1257,7 +1303,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 
 	if (*type == SMS_Display || *type == SMS_SMSD) {
 		if (compose_type == COMPOSE_OPERATOR) {
-			if (bitmap[0].Bitmap[0].Type==GSM_OperatorLogo && strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0) {
+			if (bitmap[0]->Bitmap[0].Type==GSM_OperatorLogo && strcmp(bitmap[0]->Bitmap[0].NetworkCode,"000 00")==0) {
 				printf("%s\n", _("No network code"));
 				exit(-1);
 			}
@@ -1268,18 +1314,18 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			exit(-1);
 		}
 		if (compose_type == COMPOSE_OPERATOR) {
-			if (bitmap[0].Bitmap[0].Type == GSM_OperatorLogo &&
-					strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0) {
+			if (bitmap[0]->Bitmap[0].Type == GSM_OperatorLogo &&
+					strcmp(bitmap[0]->Bitmap[0].NetworkCode,"000 00")==0) {
 				error = GSM_GetNetworkInfo(sm,&NetInfo);
-				if (error != ERR_NONE) return error;
-				strcpy(bitmap[0].Bitmap[0].NetworkCode,NetInfo.NetworkCode);
+				if (error != ERR_NONE) goto end_compose;
+				strcpy(bitmap[0]->Bitmap[0].NetworkCode,NetInfo.NetworkCode);
 				if (*type == SMS_Save) {
 					EncodeUnicode(sms->SMS[0].Number, "OpLogo",6);
-					EncodeUnicode(sms->SMS[0].Number+6*2,bitmap[0].Bitmap[0].NetworkCode,3);
-					EncodeUnicode(sms->SMS[0].Number+6*2+3*2,bitmap[0].Bitmap[0].NetworkCode+4,2);
-					if (UnicodeLength(GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode))<GSM_MAX_SMS_NAME_LENGTH-7) {
+					EncodeUnicode(sms->SMS[0].Number+6*2,bitmap[0]->Bitmap[0].NetworkCode,3);
+					EncodeUnicode(sms->SMS[0].Number+6*2+3*2,bitmap[0]->Bitmap[0].NetworkCode+4,2);
+					if (UnicodeLength(GSM_GetNetworkName(bitmap[0]->Bitmap[0].NetworkCode))<GSM_MAX_SMS_NAME_LENGTH-7) {
 						EncodeUnicode(Name,"OpLogo ",7);
-						CopyUnicodeString(Name+7*2,GSM_GetNetworkName(bitmap[0].Bitmap[0].NetworkCode));
+						CopyUnicodeString(Name+7*2,GSM_GetNetworkName(bitmap[0]->Bitmap[0].NetworkCode));
 					} else {
 						CopyUnicodeString(Name,sms->SMS[0].Number);
 					}
@@ -1289,7 +1335,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	}
 
 	error = GSM_EncodeMultiPartSMS(GSM_GetGlobalDebug(), &SMSInfo, sms);
-	if (error != ERR_NONE) return error;
+	if (error != ERR_NONE) goto end_compose;
 
 	for (i=0;i<SMSInfo.EntriesNum;i++) {
 		switch (SMSInfo.Entries[i].ID) {
@@ -1315,7 +1361,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	/* Check whether we did not reach user limit of messages */
 	if (MaxSMS != -1 && sms->Number > MaxSMS) {
 		printf_err(_("There is %i SMS packed and %i limit. Exiting\n"),sms->Number,MaxSMS);
-		return ERR_MOREMEMORY;
+		error = ERR_MOREMEMORY;
+		goto end_compose;
 	}
 
 	/*
@@ -1329,7 +1376,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 
 		PhoneSMSC.Location = SMSCSet;
 		error = GSM_GetSMSC(sm, &PhoneSMSC);
-		if (error != ERR_NONE) return error;
+		if (error != ERR_NONE) goto end_compose;
 
 		CopyUnicodeString(SMSC, PhoneSMSC.Number);
 		SMSCSet = 0;
@@ -1362,7 +1409,15 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		}
 	}
 
-	return ERR_NONE;
+	error = ERR_NONE;
+end_compose:
+
+	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
+		free(ringtone[i]);
+		free(bitmap[i]);
+	}
+
+	return error;
 }
 
 
