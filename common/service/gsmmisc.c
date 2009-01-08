@@ -8,11 +8,9 @@
 #ifdef WIN32
 #  include <io.h>
 #  include <fcntl.h>
-#  include <winsock2.h>
 #else
 #  include <netdb.h>
 #  include <netinet/in.h>
-#  include <sys/socket.h>
 #endif
 
 #include <gammu-keys.h>
