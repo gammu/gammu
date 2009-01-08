@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
-"POT-Creation-Date: 2009-01-08 00:06+0100\n"
+"POT-Creation-Date: 2009-01-08 09:54+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -432,7 +432,7 @@ msgid "This option has no meaning on Windows."
 msgstr ""
 
 # type: SH
-#: docs/user/gammurc.5:170 docs/user/gammu-smsdrc.5:235
+#: docs/user/gammurc.5:170 docs/user/gammu-smsdrc.5:236
 #, no-wrap
 msgid "EXAMPLE"
 msgstr ""
@@ -489,7 +489,7 @@ msgid ""
 msgstr ""
 
 # type: SH
-#: docs/user/gammurc.5:218 docs/user/gammu-smsdrc.5:280
+#: docs/user/gammurc.5:218 docs/user/gammu-smsdrc.5:281
 #: docs/user/gammu-smsd.1:44 docs/user/gammu-smsd-inject.1:33
 #: docs/user/jadmaker.1:27 docs/user/gammu-config.1:26
 #, no-wrap
@@ -497,19 +497,19 @@ msgid "SEE ALSO"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:282
+#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:283
 msgid "gammu-smsd(1), gammu(1), gammurc(5)"
 msgstr ""
 
 # type: SH
-#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:282
+#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:283
 #: docs/user/gammu-smsd.1:46 docs/user/gammu-smsd-inject.1:35
 #, no-wrap
 msgid "AUTHOR"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:284
+#: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:285
 #: docs/user/gammu-smsd.1:48 docs/user/gammu-smsd-inject.1:37
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
@@ -517,7 +517,7 @@ msgid ""
 msgstr ""
 
 # type: SH
-#: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:284
+#: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:285
 #: docs/user/gammu-smsd.1:48 docs/user/gammu-smsd-inject.1:37
 #: docs/user/jadmaker.1:30 docs/user/gammu-config.1:28
 #, no-wrap
@@ -525,7 +525,7 @@ msgid "COPYRIGHT"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:225 docs/user/gammu-smsdrc.5:287
+#: docs/user/gammurc.5:225 docs/user/gammu-smsdrc.5:288
 #: docs/user/gammu-smsd.1:51 docs/user/gammu-smsd-inject.1:40
 msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
@@ -533,7 +533,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:290
+#: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:291
 #: docs/user/gammu-smsd.1:54 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:35 docs/user/gammu-config.1:33
 msgid ""
@@ -542,7 +542,7 @@ msgid ""
 msgstr ""
 
 # type: SH
-#: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:290
+#: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:291
 #: docs/user/gammu-smsd.1:54 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:24 docs/user/gammu-config.1:23
 #, no-wrap
@@ -550,7 +550,7 @@ msgid "REPORTING BUGS"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:229 docs/user/gammu-smsdrc.5:291
+#: docs/user/gammurc.5:229 docs/user/gammu-smsdrc.5:292
 #: docs/user/gammu-smsd.1:56 docs/user/gammu-smsd-inject.1:45
 #: docs/user/jadmaker.1:26 docs/user/gammu-config.1:25
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
@@ -642,54 +642,55 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:51
+#: docs/user/gammu-smsdrc.5:52
 msgid ""
 "File where SMSD actions are being logged. You can also use special value "
-"\"syslog\" which will send all messages to syslog daemon."
+"\"syslog\" which will send all messages to syslog daemon. On Windows another "
+"special value \"eventlog\" exists, which will send logs to Windows Event Log."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:53
+#: docs/user/gammu-smsdrc.5:54
 msgid "Default is to provide no logging."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:54
+#: docs/user/gammu-smsdrc.5:55
 #, no-wrap
 msgid "B<CommTimeout>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:58
+#: docs/user/gammu-smsdrc.5:59
 msgid "How many seconds should SMSD wait after each read/write loop."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:60 docs/user/gammu-smsdrc.5:68
+#: docs/user/gammu-smsdrc.5:61 docs/user/gammu-smsdrc.5:69
 msgid "Default is 30."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:61
+#: docs/user/gammu-smsdrc.5:62
 #, no-wrap
 msgid "B<SendTimeout>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:66
+#: docs/user/gammu-smsdrc.5:67
 msgid ""
 "Shows how many seconds SMSD should wait for network answer during sending "
 "sms.  If nothing happen during this time, sms will be resent."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:69
+#: docs/user/gammu-smsdrc.5:70
 #, no-wrap
 msgid "B<ReceiveFrequency>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:75
+#: docs/user/gammu-smsdrc.5:76
 msgid ""
 "The number of seconds between testing for received SMSes, when the phone is "
 "busy sending SMSes. Normally a test for received SMSes is done every "
@@ -697,34 +698,34 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:77 docs/user/gammu-smsdrc.5:94
+#: docs/user/gammu-smsdrc.5:78 docs/user/gammu-smsdrc.5:95
 msgid "Default is 0 (not used)."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:78
+#: docs/user/gammu-smsdrc.5:79
 #, no-wrap
 msgid "B<CheckSecurity>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:82
+#: docs/user/gammu-smsdrc.5:83
 msgid "Whether to check if phone wants to enter PIN."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:84
+#: docs/user/gammu-smsdrc.5:85
 msgid "Default is 1 (enabled)."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:85
+#: docs/user/gammu-smsdrc.5:86
 #, no-wrap
 msgid "B<ResetFrequency>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:92
+#: docs/user/gammu-smsdrc.5:93
 msgid ""
 "The number of seconds between performing a preventive soft reset in order to "
 "minimize the cases of hanging phones e.g. Nokia 5110 will sometimes freeze "
@@ -733,44 +734,44 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:95
+#: docs/user/gammu-smsdrc.5:96
 #, no-wrap
 msgid "B<DeliveryReport>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:99
+#: docs/user/gammu-smsdrc.5:100
 msgid "Whether delivery reports should be used, one of 'no', 'log', 'sms'."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:101
+#: docs/user/gammu-smsdrc.5:102
 msgid "B<log> one line log entry,"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:103
+#: docs/user/gammu-smsdrc.5:104
 msgid "B<sms> store in inbox as a received SMS"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:105
+#: docs/user/gammu-smsdrc.5:106
 msgid "B<no> no delivery reports"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:107
+#: docs/user/gammu-smsdrc.5:108
 msgid "Default is 'no'."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:108
+#: docs/user/gammu-smsdrc.5:109
 #, no-wrap
 msgid "B<DeliveryReportDelay>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:115
+#: docs/user/gammu-smsdrc.5:116
 msgid ""
 "Delay in seconds how long is still delivery report considered valid. This "
 "depends on brokeness of your network (delivery report should have same "
@@ -779,31 +780,31 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:117
+#: docs/user/gammu-smsdrc.5:118
 msgid "Default is 10."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:118
+#: docs/user/gammu-smsdrc.5:119
 #, no-wrap
 msgid "B<PhoneID>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:123
+#: docs/user/gammu-smsdrc.5:124
 msgid ""
 "String with info about phone used for sending/receiving. This can be useful "
 "if you want to run several SMS daemons."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:124
+#: docs/user/gammu-smsdrc.5:125
 #, no-wrap
 msgid "B<RunOnReceive>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:130
+#: docs/user/gammu-smsdrc.5:131
 msgid ""
 "Executes a program after receiving message. The program will receive "
 "identifiers of received messages depending on used service backend (some "
@@ -811,101 +812,101 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:131
+#: docs/user/gammu-smsdrc.5:132
 #, no-wrap
 msgid "B<DebugLevel>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:136
+#: docs/user/gammu-smsdrc.5:137
 msgid ""
 "Debug level for SMSD. The integer value should be sum of all flags you want "
 "to enable."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:138
+#: docs/user/gammu-smsdrc.5:139
 msgid "1 - enables basic debugging information"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:140
+#: docs/user/gammu-smsdrc.5:141
 msgid "2 - enables logging of SQL queries of service backends"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:143
+#: docs/user/gammu-smsdrc.5:144
 msgid ""
 "4 - enables logging of gammu debug information (has to be enabled also in "
 "gammu section)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:145
+#: docs/user/gammu-smsdrc.5:146
 msgid "Generally to get as much debug information as possible, use 255."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:147
+#: docs/user/gammu-smsdrc.5:148
 msgid "Default is 0, what should mean no extra information."
 msgstr ""
 
 # type: SS
-#: docs/user/gammu-smsdrc.5:148
+#: docs/user/gammu-smsdrc.5:149
 #, no-wrap
 msgid "Database backends options"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:152
+#: docs/user/gammu-smsdrc.5:153
 msgid ""
 "Both MYSQL and PGSQL backends supports same options for configuring "
 "connection to a database:"
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:153
+#: docs/user/gammu-smsdrc.5:154
 #, no-wrap
 msgid "B<User>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:157
+#: docs/user/gammu-smsdrc.5:158
 msgid "User name used for connection to a database."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:158
+#: docs/user/gammu-smsdrc.5:159
 #, no-wrap
 msgid "B<Password>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:162
+#: docs/user/gammu-smsdrc.5:163
 msgid "Password used for connection to a database."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:163
+#: docs/user/gammu-smsdrc.5:164
 #, no-wrap
 msgid "B<PC>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:168
+#: docs/user/gammu-smsdrc.5:169
 msgid ""
 "Database server address. It can also contain port or socket path after "
 "semicolon, for example localhost:/path/to/socket."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:169
+#: docs/user/gammu-smsdrc.5:170
 #, no-wrap
 msgid "B<Database>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:175
+#: docs/user/gammu-smsdrc.5:176
 msgid ""
 "Name of database to use. Please note that you should create tables in this "
 "database before using gammu-smsd. SQL files for creating needed tables are "
@@ -913,13 +914,13 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:176
+#: docs/user/gammu-smsdrc.5:177
 #, no-wrap
 msgid "B<SkipSMSCNumber>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:183
+#: docs/user/gammu-smsdrc.5:184
 msgid ""
 "When you send sms from some SMSC, you can have Delivery/Failed Delivery "
 "Reports from other SMSC number. You can set here number of this \"buggy\" "
@@ -928,87 +929,87 @@ msgid ""
 msgstr ""
 
 # type: SS
-#: docs/user/gammu-smsdrc.5:184
+#: docs/user/gammu-smsdrc.5:185
 #, no-wrap
 msgid "Files backend options"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:188
+#: docs/user/gammu-smsdrc.5:189
 msgid ""
 "The FILES backend accepts following configuration options. Please note that "
 "all path should contain trailing path separator (na Unixov systmech /):"
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:190
+#: docs/user/gammu-smsdrc.5:191
 #, no-wrap
 msgid "B<InboxPath>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:194
+#: docs/user/gammu-smsdrc.5:195
 msgid "Where the received SMSes are stored."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:196 docs/user/gammu-smsdrc.5:203
+#: docs/user/gammu-smsdrc.5:197 docs/user/gammu-smsdrc.5:204
 msgid "Default is current directory."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:197
+#: docs/user/gammu-smsdrc.5:198
 #, no-wrap
 msgid "B<OutboxPath>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:201
+#: docs/user/gammu-smsdrc.5:202
 msgid "Where SMSes to be sent should be placed."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:204
+#: docs/user/gammu-smsdrc.5:205
 #, no-wrap
 msgid "B<SentSMSPath>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:209
+#: docs/user/gammu-smsdrc.5:210
 msgid ""
 "Where the transmitted SMSes are placed, if same as OutBoxPath transmitted "
 "messages are deleted."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:211
+#: docs/user/gammu-smsdrc.5:212
 msgid "Default is to delete transmitted messages."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:212
+#: docs/user/gammu-smsdrc.5:213
 #, no-wrap
 msgid "B<ErrorSMSPath>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:216
+#: docs/user/gammu-smsdrc.5:217
 msgid "Where SMSes with error in transmission is placed."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:218
+#: docs/user/gammu-smsdrc.5:219
 msgid "Default is same as SentSMSPath."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:219
+#: docs/user/gammu-smsdrc.5:220
 #, no-wrap
 msgid "B<InboxFormat>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:225
+#: docs/user/gammu-smsdrc.5:226
 msgid ""
 "The format in which the SMS will be stored: 'detail', 'unicode', "
 "'standard'.  The 'detail' format is the format used for backup. See below.  "
@@ -1016,28 +1017,28 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:227
+#: docs/user/gammu-smsdrc.5:228
 msgid "Default is 'unicode'."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsdrc.5:228
+#: docs/user/gammu-smsdrc.5:229
 #, no-wrap
 msgid "B<TransmitFormat>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:232
+#: docs/user/gammu-smsdrc.5:233
 msgid "The format for transmitting the SMS: 'auto', 'unicode', '7bit'."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:234
+#: docs/user/gammu-smsdrc.5:235
 msgid "Default is 'auto'."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:240
+#: docs/user/gammu-smsdrc.5:241
 msgid ""
 "There is more complete example available in Gammu documentation. Please note "
 "that for simplicity following examples do not include [gammu] section, you "
@@ -1045,12 +1046,12 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:242
+#: docs/user/gammu-smsdrc.5:243
 msgid "SMSD configuration file for FILES backend could look like:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:255
+#: docs/user/gammu-smsdrc.5:256
 #, no-wrap
 msgid ""
 "[smsd]\n"
@@ -1064,12 +1065,12 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:261
+#: docs/user/gammu-smsdrc.5:262
 msgid "If you want to use MYSQL backend, you will need something like this:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:274
+#: docs/user/gammu-smsdrc.5:275
 #, no-wrap
 msgid ""
 "[smsd]\n"

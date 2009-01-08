@@ -65,6 +65,12 @@ NORETURN void version(void)
 #ifdef HAVE_GETOPT_LONG
 	printf("  - %s\n", "GETOPT_LONG");
 #endif
+#ifdef WIN32
+	printf("  - %s\n", "EVENT_LOG");
+#endif
+#ifdef HAVE_SYSLOG
+	printf("  - %s\n", "SYSLOG");
+#endif
 	printf("Backend services:\n");
 	printf("  - %s\n", "FILES");
 #ifdef HAVE_MYSQL_MYSQL_H
