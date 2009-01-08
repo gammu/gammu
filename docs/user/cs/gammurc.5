@@ -21,12 +21,11 @@ Tento soubor používá syntaxi ini souborů, komentáře mohou být značeny bu
 nebo #. Sekce souboru jsou zapsány v hranatých závorkách jako [toto].Všechny
 hodnoty klíčů nerozlišují velikost písmen.
 
-Configuration file for gammu can contain several sections \- [gammu],
-[gammu1], [gammuN], ... Each section configures one connection setup and in
-default mode gammu tries all of them in numerical order. You can also
-specify which configuration section to use by giving it's number ([gammu]
-has number 0) as a parameter to gammu(1) and it will then use only this
-section.
+Konfigurační soubor pro gammu může obsahovat několik sekcí \- [gammu],
+[gammu1], [gammuN], ... Každá sekce definuje jedno připojení a ve výchozím
+režime gammu postupně zkouší všechny podle čísel. Můžete také zadat
+parametrem pro gammu(1), které číslo sekce ([gammu] je číslo 0) má  použít a
+pak se použije jen tato sekce.
 
 .TP 
 \fBConnection\fP
@@ -46,9 +45,9 @@ následujících:
 .br
 \fBmbus\fP \- sériové připojení protokolem MBUS
 
-If you use some non original cable, you might need to append \-nodtr (eg. for
-ARK3116 based cables) or \-nopower, but Gammu should be able to detect this
-automatically.
+Pokud nepoužíváte originální kabel, možná budete potřebovat připojit \-nodtr
+(například pro kabely používající ARK3116) nebo \-nopower. Toto nastavení
+použijte jen v případě, že Gammu správně parametery nezjistí automaticky.
 
 Pro ostatní telefony připojené kabelem budete chtít použít jedno z
 následujících:
@@ -109,9 +108,7 @@ detekuje jeho vlastnosti.
 .TP 
 \fBSynchronizeTime\fP
 
-If you want to set time from computer to phone during starting
-connection. Do not rather use this option when when to reset phone during
-connection (in some phones need to set time again after restart).
+Určí, zda chcete nastavit čas v telefonu při připojení.
 
 .TP 
 \fBStartInfo\fP
