@@ -150,8 +150,8 @@ Výchozí je 0, což znamená žádné ladicí informace.
 
 .SS "Parametry pro služby používající databázi"
 
-Obě služby MYSQL a PGSQL podporují stejné parametry pro nastavení připojeník
-databázi:
+Obě služby MYSQL a PGSQL (viz gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7))
+podporují stejné parametry pro nastavení připojení k databázi:
 
 .TP 
 \fBUser\fP
@@ -186,9 +186,9 @@ sent SMS.
 
 .SS "Parametry pro službu používající soubory"
 
-The FILES backend accepts following configuration options. Please note that
-all path should contain trailing path separator (na UnixovÃ½ systÃ©mech /):
-
+Služba FILES používá následující konfigurační volby. Podrobnější popis této
+služby je v gammu\-smsd\-files(7). Prosím ujistěte se, že  všechny cestky
+končí oddělovačem cest (na Unixových systémech /):
 
 .TP 
 \fBInboxPath\fP
@@ -286,6 +286,8 @@ Database = smsd
 
 .SH "DALŠÍ INFORMACE"
 gammu\-smsd(1), gammu(1), gammurc(5)
+
+gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7)
 .SH AUTOR
 gammu\-smsd a tuto manuálovou stránku napsal Michal Čihař
 <michal@cihar.com>.

@@ -25,6 +25,14 @@ install (
     COMPONENT "man-pages"
     )
 
+file(GLOB MAN5_PAGES "*.7")
+
+install (
+    FILES ${MAN5_PAGES}
+    DESTINATION "${INSTALL_MAN_DIR}/man7"
+    COMPONENT "man-pages"
+    )
+
 # This should match list in admin/po4a.config
 foreach(LANG cs de es id it pl ru)
 
@@ -41,6 +49,14 @@ foreach(LANG cs de es id it pl ru)
     install (
         FILES ${MAN5_PAGES}
         DESTINATION "${INSTALL_MAN_DIR}/${LANG}/man5"
+        COMPONENT "man-pages"
+        )
+
+    file(GLOB MAN5_PAGES "${LANG}*.7")
+
+    install (
+        FILES ${MAN5_PAGES}
+        DESTINATION "${INSTALL_MAN_DIR}/${LANG}/man7"
         COMPONENT "man-pages"
         )
 endforeach(LANG)

@@ -1,0 +1,111 @@
+.TH GAMMU-SMSD-FILES 7 "January  8, 2009" "Gammu 1.23.0" "Gammu Documentation"
+.SH NAME
+
+.TP
+.BI gammu-smsdrc-files
+
+gammu-smsd(1) backend using filesystem as a message storage
+
+.SH DESCRIPTION
+gammu-smsd(1) supports several backends. Actual backend is chosen in
+a config file gammu-smsdrc(5).
+
+FILES backend stores all data on a filesystem in folders defined by
+configuration (see gammu-smsd(5) for description of configuration options).
+
+.SS Receiving of messages
+
+Received messages are stored in a folder defined by configuration. The
+filename will be IN<date>_<time>_<serialno>_<phone_number>_<sequence>.<ext>,
+for example NN20021130_021531_00_+45409000931640979_00.txt.
+
+Explanation of fields:
+
+\fB<date>\fR - date in format YYYYMMDD
+.br
+\fB<time>\fR - time in format HHMMSS
+.br
+\fB<serialno>\fR - order of a message (in case more messages were received at
+same time, in format NN
+.br
+\fB<sequence>\fR - part of the message for multipart messages
+is nn (for multi-SMSes), in format NN
+.br
+\fB<ext>\fR - txt for text message, 8-bit messages are stored with bin
+extension
+
+.SS Transmitting of messages
+
+Transmitted messages are read from a folder defined by configuration. The
+filename should be one of the following formats:
+
+- OUT<phone_number>.<ext><options>
+.br
+- OUT<priority>_<phone_number>_<serialno>.<ext><options>
+.br
+- OUT<priority><date>_<time>_<serialno>_<phone_number>_<anything>.<ext><options>
+
+Explanation of fields:
+
+\fB<priority>\fR - an alphabetic character (A-Z) A = highest priority
+.br
+\fB<ext>\fR - txt for normal text SMS
+.br
+\fB<options>\fR - Options appended to the extension applying to text SMS:
+ \fBd\fR - delivery report requested
+ \fBf\fR - flash SMS
+ \fBb\fR - WAP bookmark as name,URL
+
+For example OUTG20040620_193810_123_+4512345678_xpq.txtdf is a flash text SMS
+requesting delivery reports.
+
+Other fields are same as for received messages.
+
+SMSes will be transmitted sequentially based on the file name. The contents of
+the file is the SMS to be transmitted (in Unicode or standard character set).
+
+.SH EXAMPLE
+
+Example of the 'detail' inbox format:
+
+.RS
+.sp
+.nf
+.ne 7
+[SMSBackup000]
+#ABCDEFGHIJKLMNOPQRSTUVWXYZ
+#
+SMSC = "+4540590000"
+SMSCUnicode = 002B0034003500340030003500390030003000300030
+Sent = 20021201T025023
+State = UnRead
+Number = "+4522706947"
+NumberUnicode = 002B0034003500320032003700300036003900340037
+Name = ""
+NameUnicode =
+Text00 = 004100420043004400450046004700480049004A004B004C004D004E004F0050005100520053005400550056005700580059005A000A
+Coding = Default
+Folder = 1
+Length = 27
+Class = -1
+ReplySMSC = False
+RejectDuplicates = True
+ReplaceMessage = 0
+MessageReference = 0
+.fi
+.sp
+.RE
+.PP
+
+.SH SEE ALSO
+gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)
+.SH AUTHOR
+gammu-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
+.SH COPYRIGHT
+Copyright \(co 2009 Michal Cihar and other authors.
+License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH REPORTING BUGS
+Please report bugs to <http://bugs.cihar.com>.
