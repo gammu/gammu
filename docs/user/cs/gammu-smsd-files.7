@@ -1,0 +1,120 @@
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH GAMMU\-SMSD\-FILES 7 "Leden 8, 2009" "Gammu 1.23.0" "Dokumentace Gammu"
+.SH JMÉNO
+
+.TP 
+\fBgammu\-smsdrc\-files\fP
+
+Služba pro gammu\-smsd(1) používající k ukládání zpráv soubory
+
+.SH POPIS
+gammu\-smsd(1) podporuje několik služeb. Aktuálně použitá je zvolená v
+konfiguračním souboru gammu\-smsdrc(5).
+
+Služba FILES ukládá všechna data na souborovém systému v adresářích zadaných
+v konfiguračním souboru (viz gammu\-smsd(5)· pro popis těchto parametrů).
+
+.SS "Přijímání zpráv"
+
+Přijaté zprávy jsou uloženy v adresáři zadaném v konfiguraci. Jméno souboru
+bude ve tvaru
+IN<date>_<time>_<serialno>_<phone_number>_<sequence>.<ext>,
+například NN20021130_021531_00_+45409000931640979_00.txt.
+
+Vysvětlení položek:
+
+\fB<date>\fP \- datum ve formátu RRRRMMDD
+.br
+\fB<time>\fP \- čas ve formátu HHMMSS
+.br
+\fB<serialno>\fP \- pořadí zprávy (v případě, že přišlo více zpráv ve
+stejný okamžik), ve formátu NN
+.br
+\fB<sequence>\fP \- část zprávy, pokud se zpráva skládá z více částí, ve
+formátu NN
+.br
+\fB<ext>\fP \- txt pro textové zprávy, 8\-bitové zprávy jsou uloženy s
+příponou bin
+
+.SS "Odesílání zpráv"
+
+Odesílané zprávy jsou čteny z adresáře zadaného v konfiguraci. Jméno by mělo
+být v jednom z následujících formátů:
+
+\- OUT<phone_number>.<ext><options>
+.br
+\-
+OUT<priority>_<phone_number>_<serialno>.<ext><options>
+.br
+\-
+OUT<priority><date>_<time>_<serialno>_<phone_number>_<anything>.<ext><options>
+
+Vysvětlení položek:
+
+\fB<priority>\fP \- znak abecedy (A\-Z) A = nejvyšší priorita
+.br
+\fB<ext>\fP \- txt pro normální textové SMS
+.br
+\fB<options>\fP \- Parametry připojený k příponě pro textové SMS:
+ \fBd\fP \- vyžadovat doručenku
+ \fBf\fP \- zpráva jen pro zobrazení
+ \fBb\fP \- WAP záložka, ve tvaru jméno,URL
+
+Například OUTG20040620_193810_123_+4512345678_xpq.txtdf je textová SMS
+zpráva k zobrazení v telefonu vyžadující doručenku.
+
+Ostatní položky jsou stejné jako pro odeslané zprávy.
+
+SMS zprávy jsou odesílány postupně podle jména souboru. Obsah souboru je do
+zprávy vložen (jako unicode nebo standardní znaková sada).
+
+.SH PŘÍKLAD
+
+Ukázka souboru se zprávou při použití formátu 'detail':
+
+.RS
+.sp
+.nf
+.ne 7
+[SMSBackup000]
+#ABCDEFGHIJKLMNOPQRSTUVWXYZ
+#
+SMSC = "+4540590000"
+SMSCUnicode = 002B0034003500340030003500390030003000300030
+Sent = 20021201T025023
+State = UnRead
+Number = "+4522706947"
+NumberUnicode = 002B0034003500320032003700300036003900340037
+Name = ""
+NameUnicode =
+Text00 = 004100420043004400450046004700480049004A004B004C004D004E004F0050005100520053005400550056005700580059005A000A
+Coding = Default
+Folder = 1
+Length = 27
+Class = \-1
+ReplySMSC = False
+RejectDuplicates = True
+ReplaceMessage = 0
+MessageReference = 0
+.fi
+.sp
+.RE
+.PP
+
+.SH "DALŠÍ INFORMACE"
+gammu\-smsd(1), gammu\-smsdrc(5), gammu(1), gammurc(5)
+.SH AUTOR
+gammu\-smsd a tuto manuálovou stránku napsal Michal Čihař
+<michal@cihar.com>.
+.SH COPYRIGHT
+Copyright \(co 2009 Michal Čihař a další autoři.  Licence GPLv2: GNU GPL
+verze 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
+.br
+Tento program je volný software; můžete jej šířit a modifikovat.  Není
+poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem.
+.SH "HLÁŠENÍ CHYB"
+Prosím hlašte chyby na <http://bugs.cihar.com>.

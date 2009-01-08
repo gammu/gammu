@@ -1,0 +1,101 @@
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH GAMMU\-SMSD\-PGSQL 7 "Leden 8, 2009" "Gammu 1.23.0" "Dokumentace Gammu"
+.SH JMÉNO
+
+.TP 
+\fBgammu\-smsdrc\-pgsql\fP
+
+Služba pro gammu\-smsd(1) používající k ukládání zpráv databázový server
+PostgreSQL
+
+.SH POPIS
+gammu\-smsd(1) podporuje několik služeb. Aktuálně použitá je zvolená v
+konfiguračním souboru gammu\-smsdrc(5).
+
+Služba PGSQL ukládá všechna data na databázovém serveru PostgreSQL, jehož
+parametry jsou zadány v konfiguračním souboru (viz gammu\-smsd(5)· pro popis
+těchto parametrů).
+
+.SS "Přijímání zpráv"
+
+Přijaté zprávy jsou ukládány v tabulce inbox.
+
+.SS "Odesílání zpráv"
+
+Zprávy k odeslání jsou čteny z tabulky outbox a jejich případné další části
+z tabulky outbox_multipart.
+
+.SS "Popis tabulek"
+
+.TP 
+\fBdaemon\fP
+
+Informace o běžících démonech.
+
+.TP 
+\fBgammu\fP
+
+Tato tabulka obsahuje jedinou hodnotu \- verzi databázového schématu.
+
+.TP 
+\fBinbox\fP
+
+Tabulka, ve které jsou ukládány přijaté zprávy.
+
+.TP 
+\fBoutbox\fP
+
+Zprávy určené k odeslání by měly být uloženy v této tabulce. Pokud zpráva
+obsahuje více částí, další části jsou uloženy v tabulce outbox_multipart.
+
+.TP 
+\fBoutbox_multipart\fP
+
+Data pro odchozí zprávy, které jsou z více částí.
+
+.TP 
+\fBphones\fP
+
+Informace o připojených telefonech. Tato tabulka je pravidelně obnovována a
+můžete v ní najít informace jako stav baterie nebo síla signálu.
+
+.TP 
+\fBsentitems\fP
+
+Informace o odeslaných zprávách a jejich stavu, pokud jsou zapnuty
+doručenky.
+
+.TP 
+\fBpbk\fP
+
+SMSD tuto tabulku v současné době nepoužívá, je zde jen pro použití v
+aplikaci.
+
+.TP 
+\fBpbk_groups\fP
+
+SMSD tuto tabulku v současné době nepoužívá, je zde jen pro použití v
+aplikaci.
+
+.SH PŘÍKLAD
+
+SQL skript potřebný pro vytvoření všech tabulek je obsažen v dokumentaci
+Gammu. Ta také obsahuje pár PHP skriptů pro práci s databází.
+
+.SH "DALŠÍ INFORMACE"
+gammu\-smsd(1), gammu\-smsdrc(5), gammu(1), gammurc(5)
+.SH AUTOR
+gammu\-smsd a tuto manuálovou stránku napsal Michal Čihař
+<michal@cihar.com>.
+.SH COPYRIGHT
+Copyright \(co 2009 Michal Čihař a další autoři.  Licence GPLv2: GNU GPL
+verze 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
+.br
+Tento program je volný software; můžete jej šířit a modifikovat.  Není
+poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem.
+.SH "HLÁŠENÍ CHYB"
+Prosím hlašte chyby na <http://bugs.cihar.com>.
