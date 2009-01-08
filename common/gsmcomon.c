@@ -54,7 +54,7 @@ void GSM_InitLocales(const char *path) {
 	}
 }
 #else
-void GSM_InitLocales(const char *path UNUSED) {
+void GSM_InitLocales(const char UNUSED *path) {
 	setlocale(LC_ALL, "");
 }
 #endif

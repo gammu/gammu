@@ -248,8 +248,6 @@ typedef struct {
  * be determined on run time.
  *
  * \ingroup Info
- *
- * \todo API change: should contain GSM prefix.
  */
 typedef enum {
 	/* n6110.c */
@@ -578,37 +576,35 @@ typedef enum {
 	 * Just marker of highest feature code, should not be used.
 	 */
 	F_LAST_VALUE
-} Feature;
+} GSM_Feature;
 
 /**
  * Converts feature value to string.
  *
  * \ingroup Info
  *
- * \param feature Feature to convert.
+ * \param feature GSM_Feature to convert.
  *
  * \return Pointer to static string with string for specified feature,
  * NULL on failure.
  */
-const char *GSM_FeatureToString(Feature feature);
+const char *GSM_FeatureToString(GSM_Feature feature);
 
 /**
  * Converts feature string to value.
  *
  * \ingroup Info
  *
- * \param feature Feature string to convert.
+ * \param feature GSM_Feature string to convert.
  *
- * \return Feature value, 0 on failure.
+ * \return GSM_Feature value, 0 on failure.
  */
-Feature GSM_FeatureFromString(const char *feature);
+GSM_Feature GSM_FeatureFromString(const char *feature);
 
 /**
  * Model identification, used for finding phone features.
  *
  * \ingroup Info
- *
- * \todo API change: should contain GSM prefix.
  */
 typedef struct {
 	/**
@@ -626,32 +622,32 @@ typedef struct {
 	/**
 	 * List of supported features
 	 */
-	Feature features[GSM_MAX_PHONE_FEATURES + 1];
+	GSM_Feature features[GSM_MAX_PHONE_FEATURES + 1];
 } GSM_PhoneModel;
 
 /**
  * Checks whether phone supports features.
  *
  * \param model Model information (you can get it using \ref GSM_GetModelInfo).
- * \param feature Feature to check for.
+ * \param feature GSM_Feature to check for.
  *
  * \return True if phone has defined this feature.
  *
  * \ingroup Info
  */
-bool GSM_IsPhoneFeatureAvailable(GSM_PhoneModel * model, Feature feature);
+bool GSM_IsPhoneFeatureAvailable(GSM_PhoneModel * model, GSM_Feature feature);
 
 /**
  * Adds feature to phone configuration.
  *
  * \param model Model information (you can get it using \ref GSM_GetModelInfo).
- * \param feature Feature to check for.
+ * \param feature GSM_Feature to check for.
  *
  * \return True if phone has defined this feature.
  *
  * \ingroup Info
  */
-bool GSM_AddPhoneFeature(GSM_PhoneModel * model, Feature feature);
+bool GSM_AddPhoneFeature(GSM_PhoneModel * model, GSM_Feature feature);
 
 #include <gammu-statemachine.h>
 

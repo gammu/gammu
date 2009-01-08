@@ -7,7 +7,7 @@
 
 int main(int argc, char **argv)
 {
-	Feature feature;
+	GSM_Feature feature;
 	bool numeric = false;
 	int rc = 0;
 	const char *featurestring;

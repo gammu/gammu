@@ -100,7 +100,7 @@ typedef struct {
 	/**
 	 * Phone features override.
 	 */
-	Feature PhoneFeatures[GSM_MAX_PHONE_FEATURES + 1];
+	GSM_Feature PhoneFeatures[GSM_MAX_PHONE_FEATURES + 1];
 } GSM_Config;
 
 /**
