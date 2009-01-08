@@ -17,7 +17,6 @@
 #define atgen_motorola_h
 
 #include <gammu-config.h>
-#include "../../gsmcomon.h"
 #include "../../protocol/protocol.h"
 
 #ifdef GSM_ENABLE_ATGEN

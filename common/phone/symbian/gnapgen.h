@@ -4,7 +4,6 @@
 #ifndef gnapgen_h
 #define gnapgen_h
 
-#include "../../gsmcomon.h"
 #include "../../gsmstate.h"
 #include "../../service/gsmmisc.h"
 

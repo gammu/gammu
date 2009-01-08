@@ -6,7 +6,6 @@
 #include <gammu-nokia.h>
 
 #include "ncommon.h"
-#include "../../gsmcomon.h"
 #include "../../gsmstate.h"
 
 extern unsigned char N71_65_MEMORY_TYPES[];
