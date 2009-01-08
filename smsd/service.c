@@ -78,29 +78,34 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 
 bool install_smsd_service(SMSD_Parameters * params)
 {
-	char strDir[1024];
+	char config_name[MAX_PATH], program_name[MAX_PATH], commandline[2 * MAX_PATH];
 
 	HANDLE schSCManager, schService;
+	char description[] = "Gammu SMS Daemon service";
+	SERVICE_DESCRIPTION service_description;
 
-	LPCTSTR lpszBinaryPathName;
+	strcpy(commandline, "\"");
 
-	GetCurrentDirectory(1024, strDir);
-	strcat(strDir, "\\gammu-smsd.exe");
-	strcat(strDir, " -c ");
-	strcat(strDir, params->config_file);
+	if (GetModuleFileName(NULL, program_name, sizeof(program_name)) == 0)
+		return false;
+
+	if (GetFullPathName(params->config_file, sizeof(config_name), config_name, NULL) == 0)
+		return false;
+
+	sprintf(commandline, "\"%s\" -s -c \"%s\"",
+		program_name, config_name);
+
 	schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
 
 	if (schSCManager == NULL)
 		return false;
-
-	lpszBinaryPathName = strDir;
 
 	schService = CreateService(schSCManager, smsd_service_name, "Gammu SMSD Service",	// service name to display
 				   SERVICE_ALL_ACCESS,	// desired access
 				   SERVICE_WIN32_OWN_PROCESS,	// service type
 				   SERVICE_AUTO_START,	// start type
 				   SERVICE_ERROR_NORMAL,	// error control type
-				   lpszBinaryPathName,	// service's binarygammu-smsd
+				   commandline,	// service's binarygammu-smsd
 				   NULL,	// no load ordering group
 				   NULL,	// no tag identifier
 				   NULL,	// no dependencies
@@ -108,6 +113,10 @@ bool install_smsd_service(SMSD_Parameters * params)
 				   NULL);	// no password
 
 	if (schService == NULL)
+		return false;
+
+	service_description.lpDescription = description;
+	if (ChangeServiceConfig2(schService, SERVICE_CONFIG_DESCRIPTION, &service_description) == 0)
 		return false;
 
 	CloseServiceHandle(schService);
