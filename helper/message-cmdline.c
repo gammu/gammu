@@ -473,7 +473,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	case COMPOSE_VCARD10:
 	case COMPOSE_VCARD21:
 		if (argc <= 3 + startarg) {
-			printf("%s\n", _("Where is backup filename and location and memory *type?"));
+			printf("%s\n", _("Where is backup filename and location and memory type?"));
 			exit(-1);
 		}
 		error=GSM_ReadBackupFile(argv[startarg],&Backup,GSM_GuessBackupFormat(argv[startarg], false));
@@ -500,7 +500,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			}
 			SMSInfo.Entries[0].Phonebook = Backup.PhonePhonebook[i];
 		} else {
-			printf(_("Unknown memory *type: \"%s\"\n"),argv[1 + startarg]);
+			printf(_("Unknown memory type: \"%s\"\n"),argv[1 + startarg]);
 			exit(-1);
 		}
 		if (compose_type == COMPOSE_VCARD10) {

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-08 10:42+0100\n"
+"POT-Creation-Date: 2009-01-08 10:50+0100\n"
 "PO-Revision-Date: 2008-12-02 18:38+0100\n"
 "Last-Translator: Daniel Campos <daniel.campos@juntaextremadura.net>\n"
 "Language-Team: Español\n"
@@ -43,7 +43,7 @@ msgstr "Nota no encontrada en el archivo"
 msgid "ToDo note not found in file"
 msgstr "nota de tareas no encontrada en el archivo"
 
-#: gammu/backup.c:106
+#: gammu/backup.c:106 helper/message-cmdline.c:476
 msgid "Where is backup filename and location and memory type?"
 msgstr "¿Ruta, nombre y tipo de memoria del archivo de backup?"
 
@@ -52,7 +52,7 @@ msgstr "¿Ruta, nombre y tipo de memoria del archivo de backup?"
 msgid "Phonebook entry not found in file"
 msgstr "Entrada de listín telefónico no encontrada en el archivo"
 
-#: gammu/backup.c:133
+#: gammu/backup.c:133 helper/message-cmdline.c:503
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
 msgstr "Tipo de memoria desconocido: \"%s\"\n"
@@ -3678,16 +3678,6 @@ msgstr "parámetros MMS no encontrados en el archivo"
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr "Lo siento. No se encontró portadora GPRS en la configuración MMS"
 
-#: helper/message-cmdline.c:476
-#, fuzzy
-msgid "Where is backup filename and location and memory *type?"
-msgstr "¿Ruta, nombre y tipo de memoria del archivo de backup?"
-
-#: helper/message-cmdline.c:503
-#, fuzzy, c-format
-msgid "Unknown memory *type: \"%s\"\n"
-msgstr "Tipo de memoria desconocido: \"%s\"\n"
-
 #: helper/message-cmdline.c:996
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
@@ -4205,6 +4195,14 @@ msgstr "Advertencia"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Información"
+
+#, fuzzy
+#~ msgid "Where is backup filename and location and memory *type?"
+#~ msgstr "¿Ruta, nombre y tipo de memoria del archivo de backup?"
+
+#, fuzzy
+#~ msgid "Unknown memory *type: \"%s\"\n"
+#~ msgstr "Tipo de memoria desconocido: \"%s\"\n"
 
 #~ msgid "No error."
 #~ msgstr "Sin error."
