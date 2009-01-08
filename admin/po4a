@@ -1,0 +1,15 @@
+#!/bin/sh
+# vim: expandtab sw=4 ts=4 sts=4:
+ver=`sed -n 's/set (VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
+po4a \
+    --msgid-bugs-address michal@cihar.com \
+    --copyright-holder "Michal Čihař <michal@cihar.com>" \
+    --package-name Gammu-docs \
+    --package-version $ver \
+    admin/po4a.config
+sed -i '
+    s/SOME DESCRIPTIVE TITLE/Gammu documentation translation/;
+    s/PACKAGE/Gammu-docs/;
+    s/(C) YEAR/(C) 2003 - '`date +%Y`'/;
+    s/VERSION/'$ver'/;
+    ' locale/docs.pot
