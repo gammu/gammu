@@ -55,6 +55,8 @@ ChangeLog
 [+] * Dump more information in dct3trac, thanks to Duncan Salerno.
 [+] * SMSD cal log to Windows Event Log.
 [+] * Added man pages for SMSD backend services.
+[-] * Dropped static configuration files for MSVC, they were broken
+      anyway and CMake now works good with MSVC.
     
 20081219 - 1.22.1
 

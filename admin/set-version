@@ -19,13 +19,6 @@ echo "Setting version to $version"
 do_replace packaging/rpm/gammu.spec.in gammu.spec
 do_replace packaging/slackware/description-pak.in description-pak
 
-# Windows build
-do_replace win32/dll/msvc06.mak/gammu.rc.in win32/dll/msvc06.mak/gammu.rc
-do_replace win32/dll/msvc2003.mak/gammu.rc.in win32/dll/msvc2003.mak/gammu.rc
-do_replace win32/gammu-binary/bcc06.mak/gammu.bpr.in win32/gammu-binary/bcc06.mak/gammu.bpr
-do_replace win32/gammu-binary/msvc06.mak/gammu.rc.in win32/gammu-binary/msvc06.mak/gammu.rc
-do_replace win32/gammu-binary/msvc2003.mak/gammu.rc.in win32/gammu-binary/msvc2003.mak/gammu.rc
-
 # CMakeLists.txt
 sed -i "s/set (VERSION \"[^\"]*\"\\(.*\\))/set (VERSION \"$version\"\1)/; s/set (VERSION_WIN \"[^\"]*\"\\(.*\\))/set (VERSION_WIN \"$version_win\"\1)/;" CMakeLists.txt
 
