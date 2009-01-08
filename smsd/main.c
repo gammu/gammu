@@ -21,6 +21,7 @@
 #include "pidfile.h"
 #endif
 #include <errno.h>
+#include <string.h>
 #include "common.h"
 
 #if !defined(WIN32) && (defined(HAVE_GETOPT) || defined(HAVE_GETOPT_LONG))

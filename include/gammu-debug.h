@@ -80,6 +80,18 @@ GSM_Debug_Info *GSM_GetGlobalDebug(void);
 GSM_Debug_Info *GSM_GetDebug(GSM_StateMachine * s);
 
 /**
+ * Returns debug information active for state machine. Please note that
+ * it can be either global debug or state machine debug structure,
+ * depending on use_global flag. For configuring usite GSM_GetDebug.
+ *
+ * \param s State machine data
+ * \return Debug information.
+ *
+ * \ingroup StateMachine
+ */
+GSM_Debug_Info *GSM_GetDI(GSM_StateMachine *s);
+
+/**
  * Sets debug level.
  *
  * \param info Level as text.

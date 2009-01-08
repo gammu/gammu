@@ -37,7 +37,7 @@
 #define CHECK_PHONE_CONNECTION() \
 { \
 	PRINT_FUNCTION_START \
-	if ((s->Phone.Functions == NULL) || !(s->opened)) { \
+	if (!GSM_IsConnected(s)) { \
 		return ERR_NOTCONNECTED; \
 	} \
 }

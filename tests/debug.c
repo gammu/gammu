@@ -1,6 +1,7 @@
 #include <gammu.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #include "common.h"
 

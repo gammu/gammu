@@ -15,7 +15,8 @@
 #include <gammu-types.h>
 #include <gammu-error.h>
 #include <gammu-statemachine.h>
-#include <string.h>
+
+#include <stdlib.h> /* Needed for size_t declaration */
 
 /**
  * WAP bookmark data.

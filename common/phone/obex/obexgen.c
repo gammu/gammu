@@ -29,6 +29,7 @@
 #include "../../gsmcomon.h"
 #include "../../misc/coding/coding.h"
 #include "../../gsmphones.h"
+#include "../../gsmstate.h"
 #include "../../service/gsmmisc.h"
 #include "../../protocol/obex/obex.h"
 #include "obexfunc.h"

@@ -3,6 +3,7 @@
 #include <gammu.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include "../common/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 

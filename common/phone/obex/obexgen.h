@@ -17,8 +17,6 @@
 #ifndef obexgen_h
 #define obexgen_h
 
-#include "../../gsmstate.h"
-
 #ifndef GSM_USED_IRDAOBEX
 #  define GSM_USED_IRDAOBEX
 #endif
