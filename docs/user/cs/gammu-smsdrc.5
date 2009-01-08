@@ -102,11 +102,11 @@ Výchozí je 0 (není použito).
 
 Jak mají být používány doručenky, jedna z možností 'no', 'log', 'sms'.
 
-\fBlog\fP logovat informace o doručenkách,
+\fBlog\fP \- logovat informace o doručenkách,
 .br
-\fBsms\fP ukládat doručenky jako příchozí SMS.
+\fBsms\fP \- ukládat doručenky jako příchozí SMS.
 .br
-\fBno\fP nevyžadovat doručenky
+\fBno\fP \- nevyžadovat doručenky
 
 Výchozí je 'no'.
 
@@ -137,12 +137,12 @@ identifikátory nově přijatý zpráv (pokud to použitá služba podporuje).
 
 Ladicí úroveň SMSD. Číslo je součtem všech hodnot, které chcete logovat.
 
-1 \- základní ladicí informace
+\fB1\fP \- základní ladicí informace
 .br
-2 \- logování SQL dotazů
+\fB2\fP \- logování SQL dotazů
 .br
-4 \- logování ladicích informací gammu (tyto musí být také povoleny v sekci
-gammu)
+\fB4\fP \- logování ladicích informací gammu (tyto musí být také povoleny v
+sekci gammu)
 
 Pro maximální množství ladicích informací nastavte 255.
 
@@ -161,7 +161,7 @@ Uživatelské jméno pro připojení k databázi.
 .TP 
 \fBPassword\fP
 
-Heslou použité pro připojení k databázi.
+Heslo použité pro připojení k databázi.
 
 .TP 
 \fBPC\fP
@@ -222,9 +222,13 @@ Výchozí je stejné jako SentSMSPath.
 .TP 
 \fBInboxFormat\fP
 
-The format in which the SMS will be stored: 'detail', 'unicode',
-\&'standard'.  The 'detail' format is the format used for backup. See below.
-\&'standard' is in the standard character set.
+Formát ukládání SMS: 'detail',·'unicode',·'standard'.
+
+\fBdetail\fP \- formát používaný gammu(1) pro zálohy zpráv
+.br
+\fBunicode\fP \- text zprávy uložený v unicode (UTF\-16)
+.br
+\fBstandard\fP \- text zprávy uložený v systémovém kódování
 
 Výchozí je 'unicode'.
 
