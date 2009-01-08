@@ -146,7 +146,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		/* When not saving SMS, recipient has to be specified */
 		if (typearg + 1 >= argc) {
 			printf("%s\n", _("Not enough parameters!"));
-			return ERR_UNKNOWN;
+			exit(-1);
 		}
 		EncodeUnicode(RemoteNumber, argv[typearg + 1], strlen(argv[typearg + 1]));
 		startarg = typearg + 2;
@@ -170,7 +170,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 
 	if (compose_type == 0) {
 		printf(_("What format of sms (\"%s\") ?\n"),argv[typearg]);
-		return ERR_UNKNOWN;
+		exit(-1);
 	}
 
 	switch (compose_type) {
@@ -1265,7 +1265,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	} else {
 		if (sm == NULL) {
 			printf_err("%s\n", _("You have to set network code!"));
-			return ERR_UNKNOWN;
+			exit(-1);
 		}
 		if (compose_type == COMPOSE_OPERATOR) {
 			if (bitmap[0].Bitmap[0].Type == GSM_OperatorLogo &&
@@ -1324,7 +1324,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	if (SMSCSet != 0) {
 		if (sm == NULL) {
 			printf_err("%s\n", _("Use -smscnumber option to give SMSC number"));
-			return ERR_UNKNOWN;
+			exit(-1);
 		}
 
 		PhoneSMSC.Location = SMSCSet;
