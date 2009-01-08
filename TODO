@@ -4,3 +4,7 @@ Saving SMS 1/1
 Saved in folder "", location -99999, SIM
 - add man page for gammu-smsd-mysql,... should contain DB structure and FILES information (currently preset in sample config)
 - failing tests on windows
+- move crap like following to gammu config to avoid so heavy usage of gsmstate.h header
+#ifndef GSM_USED_IRDAOBEX
+#  define GSM_USED_IRDAOBEX
+#endif
