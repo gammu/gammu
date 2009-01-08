@@ -136,14 +136,33 @@ bool uninstall_smsd_service(void)
 	return true;
 }
 
-void start_smsd_service_dispatcher(void)
+bool start_smsd_service_dispatcher(void)
 {
 	SERVICE_TABLE_ENTRY DispatchTable[] = {
 		{smsd_service_name_intern, ServiceMain},
 		{NULL, NULL}
 	};
 
-	StartServiceCtrlDispatcher(DispatchTable);
+	return StartServiceCtrlDispatcher(DispatchTable);
+}
+
+void service_print_error(void)
+{
+	char *lpMsgBuf;
+
+	FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
+		FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL,
+		GetLastError(),
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /* Default language */
+		(LPTSTR) &lpMsgBuf,
+		0,
+		NULL
+	);
+	fprintf(stderr, "Error %d: %s\n", (int)GetLastError(), lpMsgBuf);
+	LocalFree(lpMsgBuf);
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

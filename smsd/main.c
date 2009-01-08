@@ -225,6 +225,7 @@ int main(int argc, char **argv)
 		} else {
 			printf("Error uninstalling %s service\n",
 			       smsd_service_name);
+			service_print_error();
 			exit(1);
 		}
 	}
@@ -248,6 +249,7 @@ int main(int argc, char **argv)
 		} else {
 			printf("Error installing %s service\n",
 			       smsd_service_name);
+			service_print_error();
 			exit(1);
 		}
 	}
@@ -289,7 +291,12 @@ read_config:
 	}
 #ifdef WIN32
 	if (params.start_service) {
-		start_smsd_service_dispatcher();
+		if (!start_smsd_service_dispatcher()) {
+			printf("Error starting %s service\n",
+			       smsd_service_name);
+			service_print_error();
+			exit(1);
+		}
 
 		SMSD_FreeConfig(config);
 
