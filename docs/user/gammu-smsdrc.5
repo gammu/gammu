@@ -148,8 +148,9 @@ Default is 0, what should mean no extra information.
 
 .SS Database backends options
 
-Both MYSQL and PGSQL backends supports same options for configuring connection
-to a database:
+Both MYSQL and PGSQL backends (see  gammu-smsd-mysql(7), gammu-smsd-pgsql(7)
+for their documentation) supports same options for configuring connection to a
+database:
 
 .TP
 .BI User
@@ -184,9 +185,9 @@ sent SMS.
 
 .SS Files backend options
 
-The FILES backend accepts following configuration options. Please note that
-all path should contain trailing path separator (na Unixový systémech /):
-
+The FILES backend accepts following configuration options. See
+gammu-smsd-files(7) for more detailed service backend description. Please note
+that all path should contain trailing path separator (/ on Unix systems):
 
 .TP
 .BI InboxPath
@@ -284,6 +285,8 @@ Database = smsd
 
 .SH SEE ALSO
 gammu-smsd(1), gammu(1), gammurc(5)
+
+gammu-smsd-files(7), gammu-smsd-mysql(7), gammu-smsd-pgsql(7)
 .SH AUTHOR
 gammu-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
 .SH COPYRIGHT
