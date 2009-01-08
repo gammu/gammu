@@ -1,7 +1,7 @@
 /* (c) 2003 by Marcin Wiacek */
 /* (c) 2006 by Michal Cihar */
 
-/** 
+/**
  * \file obexgen.h
  * @author Michal Čihař
  * @author Marcin Wiacek
@@ -17,9 +17,7 @@
 #ifndef obexgen_h
 #define obexgen_h
 
-#include "../../gsmcomon.h"
 #include "../../gsmstate.h"
-#include "../../service/gsmmisc.h"
 
 #ifndef GSM_USED_IRDAOBEX
 #  define GSM_USED_IRDAOBEX

@@ -3,7 +3,6 @@
 #ifndef obexgen_functions_h
 #define obexgen_functions_h
 
-#include "../../gsmcomon.h"
 #include "../../gsmstate.h"
 #include "obexgen.h"
 

@@ -3,7 +3,6 @@
 #ifndef atgen_functions_h
 #define atgen_functions_h
 
-#include "../../gsmcomon.h"
 #include "../../gsmstate.h"
 
 extern GSM_Reply_Function ATGENReplyFunctions[];

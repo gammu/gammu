@@ -3,7 +3,7 @@
 #ifndef phone_nokia_common_h
 #define phone_nokia_common_h
 
-#include "../../gsmcomon.h"
+#include <gammu-limits.h>
 
 #define N6110_FRAME_HEADER 0x00, 0x01, 0x00
 #define N7110_FRAME_HEADER 0x00, 0x01, 0x01

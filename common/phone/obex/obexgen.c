@@ -26,8 +26,8 @@
 
 #include <gammu-config.h>
 
-#include "../../misc/coding/coding.h"
 #include "../../gsmcomon.h"
+#include "../../misc/coding/coding.h"
 #include "../../gsmphones.h"
 #include "../../service/gsmmisc.h"
 #include "../../protocol/obex/obex.h"

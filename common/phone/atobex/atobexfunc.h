@@ -3,7 +3,6 @@
 #ifndef atobex_functions_h
 #define atobex_functions_h
 
-#include "../../gsmcomon.h"
 #include "../../gsmstate.h"
 
 /* Reply functions which are hooked into AT module */

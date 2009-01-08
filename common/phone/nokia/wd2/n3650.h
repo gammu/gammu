@@ -3,7 +3,6 @@
 #ifndef n3650_h
 #define n3650_h
 
-#include "../../../gsmcomon.h"
 #include "../../../gsmstate.h"
 #include "../../../service/gsmmisc.h"
 

@@ -4,7 +4,6 @@
 #define phone_nokia2_h
 
 #include "ncommon.h"
-#include "../../gsmcomon.h"
 #include "../../gsmstate.h"
 
 #ifdef DEBUG
