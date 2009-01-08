@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-08 14:34+0100\n"
+"POT-Creation-Date: 2009-01-08 15:13+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -439,7 +439,7 @@ msgstr ""
 
 # type: SH
 #: docs/user/gammurc.5:170 docs/user/gammu-smsdrc.5:241
-#: docs/user/gammu-smsd-files.7:67 docs/user/gammu-smsd-mysql.7:76
+#: docs/user/gammu-smsd-files.7:66 docs/user/gammu-smsd-mysql.7:76
 #: docs/user/gammu-smsd-pgsql.7:76
 #, no-wrap
 msgid "EXAMPLE"
@@ -500,7 +500,7 @@ msgstr ""
 #: docs/user/gammurc.5:218 docs/user/gammu-smsdrc.5:286
 #: docs/user/gammu-smsd.1:44 docs/user/gammu-smsd-inject.1:33
 #: docs/user/jadmaker.1:27 docs/user/gammu-config.1:26
-#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:81
+#: docs/user/gammu-smsd-files.7:99 docs/user/gammu-smsd-mysql.7:81
 #: docs/user/gammu-smsd-pgsql.7:81
 #, no-wrap
 msgid "SEE ALSO"
@@ -514,7 +514,7 @@ msgstr ""
 # type: SH
 #: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:290
 #: docs/user/gammu-smsd.1:48 docs/user/gammu-smsd-inject.1:35
-#: docs/user/gammu-smsd-files.7:102 docs/user/gammu-smsd-mysql.7:83
+#: docs/user/gammu-smsd-files.7:101 docs/user/gammu-smsd-mysql.7:83
 #: docs/user/gammu-smsd-pgsql.7:83
 #, no-wrap
 msgid "AUTHOR"
@@ -523,7 +523,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:292
 #: docs/user/gammu-smsd.1:50 docs/user/gammu-smsd-inject.1:37
-#: docs/user/gammu-smsd-files.7:104 docs/user/gammu-smsd-mysql.7:85
+#: docs/user/gammu-smsd-files.7:103 docs/user/gammu-smsd-mysql.7:85
 #: docs/user/gammu-smsd-pgsql.7:85
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
@@ -534,7 +534,7 @@ msgstr ""
 #: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:292
 #: docs/user/gammu-smsd.1:50 docs/user/gammu-smsd-inject.1:37
 #: docs/user/jadmaker.1:30 docs/user/gammu-config.1:28
-#: docs/user/gammu-smsd-files.7:104 docs/user/gammu-smsd-mysql.7:85
+#: docs/user/gammu-smsd-files.7:103 docs/user/gammu-smsd-mysql.7:85
 #: docs/user/gammu-smsd-pgsql.7:85
 #, no-wrap
 msgid "COPYRIGHT"
@@ -543,7 +543,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammurc.5:225 docs/user/gammu-smsdrc.5:295
 #: docs/user/gammu-smsd.1:53 docs/user/gammu-smsd-inject.1:40
-#: docs/user/gammu-smsd-files.7:107 docs/user/gammu-smsd-mysql.7:88
+#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:88
 #: docs/user/gammu-smsd-pgsql.7:88
 msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
@@ -554,7 +554,7 @@ msgstr ""
 #: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:298
 #: docs/user/gammu-smsd.1:56 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:35 docs/user/gammu-config.1:33
-#: docs/user/gammu-smsd-files.7:110 docs/user/gammu-smsd-mysql.7:91
+#: docs/user/gammu-smsd-files.7:109 docs/user/gammu-smsd-mysql.7:91
 #: docs/user/gammu-smsd-pgsql.7:91
 msgid ""
 "This is free software: you are free to change and redistribute it.  There is "
@@ -565,7 +565,7 @@ msgstr ""
 #: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:298
 #: docs/user/gammu-smsd.1:56 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:24 docs/user/gammu-config.1:23
-#: docs/user/gammu-smsd-files.7:110 docs/user/gammu-smsd-mysql.7:91
+#: docs/user/gammu-smsd-files.7:109 docs/user/gammu-smsd-mysql.7:91
 #: docs/user/gammu-smsd-pgsql.7:91
 #, no-wrap
 msgid "REPORTING BUGS"
@@ -575,7 +575,7 @@ msgstr ""
 #: docs/user/gammurc.5:229 docs/user/gammu-smsdrc.5:299
 #: docs/user/gammu-smsd.1:58 docs/user/gammu-smsd-inject.1:45
 #: docs/user/jadmaker.1:26 docs/user/gammu-config.1:25
-#: docs/user/gammu-smsd-files.7:111 docs/user/gammu-smsd-mysql.7:92
+#: docs/user/gammu-smsd-files.7:110 docs/user/gammu-smsd-mysql.7:92
 #: docs/user/gammu-smsd-pgsql.7:92
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr ""
@@ -1519,7 +1519,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:23 docs/user/gammu-smsd-files.7:49
+#: docs/user/gammu-smsd-files.7:23 docs/user/gammu-smsd-files.7:48
 msgid "Explanation of fields:"
 msgstr ""
 
@@ -1537,51 +1537,51 @@ msgstr ""
 #: docs/user/gammu-smsd-files.7:30
 msgid ""
 "B<E<lt>serialnoE<gt>> - order of a message (in case more messages were "
-"received at same time, in format NN"
+"received at same time), in format NN"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:33
+#: docs/user/gammu-smsd-files.7:32
 msgid ""
-"B<E<lt>sequenceE<gt>> - part of the message for multipart messages is nn "
-"(for multi-SMSes), in format NN"
+"B<E<lt>sequenceE<gt>> - part of the message for multipart messages, in "
+"format NN"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:36
+#: docs/user/gammu-smsd-files.7:35
 msgid ""
 "B<E<lt>extE<gt>> - txt for text message, 8-bit messages are stored with bin "
 "extension"
 msgstr ""
 
 # type: SS
-#: docs/user/gammu-smsd-files.7:37 docs/user/gammu-smsd-mysql.7:21
+#: docs/user/gammu-smsd-files.7:36 docs/user/gammu-smsd-mysql.7:21
 #: docs/user/gammu-smsd-pgsql.7:21
 #, no-wrap
 msgid "Transmitting of messages"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:41
+#: docs/user/gammu-smsd-files.7:40
 msgid ""
 "Transmitted messages are read from a folder defined by configuration. The "
 "filename should be one of the following formats:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:43
+#: docs/user/gammu-smsd-files.7:42
 msgid "- OUTE<lt>phone_numberE<gt>.E<lt>extE<gt>E<lt>optionsE<gt>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:45
+#: docs/user/gammu-smsd-files.7:44
 msgid ""
 "- OUTE<lt>priorityE<gt>_E<lt>phone_numberE<gt>_E<lt>serialnoE<gt>."
 "E<lt>extE<gt>E<lt>optionsE<gt>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:47
+#: docs/user/gammu-smsd-files.7:46
 msgid ""
 "- "
 "OUTE<lt>priorityE<gt>E<lt>dateE<gt>_E<lt>timeE<gt>_E<lt>serialnoE<gt>_E<lt>phone_numberE<gt>_E<lt>anythingE<gt>."
@@ -1589,18 +1589,18 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:51
+#: docs/user/gammu-smsd-files.7:50
 msgid ""
 "B<E<lt>priorityE<gt>> - an alphabetic character (A-Z) A = highest priority"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:53
+#: docs/user/gammu-smsd-files.7:52
 msgid "B<E<lt>extE<gt>> - txt for normal text SMS"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:58
+#: docs/user/gammu-smsd-files.7:57
 #, no-wrap
 msgid ""
 "B<E<lt>optionsE<gt>> - Options appended to the extension applying to text SMS:\n"
@@ -1610,19 +1610,19 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:61
+#: docs/user/gammu-smsd-files.7:60
 msgid ""
 "For example OUTG20040620_193810_123_+4512345678_xpq.txtdf is a flash text "
 "SMS requesting delivery reports."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:63
+#: docs/user/gammu-smsd-files.7:62
 msgid "Other fields are same as for received messages."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:66
+#: docs/user/gammu-smsd-files.7:65
 msgid ""
 "SMSes will be transmitted sequentially based on the file name. The contents "
 "of the file is the SMS to be transmitted (in Unicode or standard character "
@@ -1630,12 +1630,12 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:70
+#: docs/user/gammu-smsd-files.7:69
 msgid "Example of the 'detail' inbox format:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:95
+#: docs/user/gammu-smsd-files.7:94
 #, no-wrap
 msgid ""
 "[SMSBackup000]\n"
@@ -1661,7 +1661,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:102 docs/user/gammu-smsd-mysql.7:83
+#: docs/user/gammu-smsd-files.7:101 docs/user/gammu-smsd-mysql.7:83
 #: docs/user/gammu-smsd-pgsql.7:83
 msgid "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 msgstr ""
@@ -1751,8 +1751,8 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:48 docs/user/gammu-smsd-pgsql.7:48
 msgid ""
-"Messages enqueued for sending should be placed in this database. If message "
-"is multipart, subsequent parts are stored in outbox_multipart."
+"Messages enqueued for sending should be placed in this table. If message is "
+"multipart, subsequent parts are stored in table outbox_multipart."
 msgstr ""
 
 # type: TP
