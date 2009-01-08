@@ -61,10 +61,12 @@ done
 
 if type dialog > /dev/null 2>&1 ; then
     DIALOG=dialog
+elif type cdialog > /dev/null 2>&1 ; then
+    DIALOG=cdialog
 elif type whiptail > /dev/null 2>&1 ; then
     DIALOG=whiptail
 else
-    echo "You need dialog or whiptail installed to make this work"
+    echo "You need dialog, cdialog or whiptail installed to make this work"
     exit 1
 fi
 
