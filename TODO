@@ -8,3 +8,4 @@ Saved in folder "", location -99999, SIM
 #ifndef GSM_USED_IRDAOBEX
 #  define GSM_USED_IRDAOBEX
 #endif
+- gammu-config and cdialog as a dialog alternative
