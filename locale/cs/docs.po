@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-08 15:13+0100\n"
-"PO-Revision-Date: 2009-01-08 15:15+0100\n"
+"POT-Creation-Date: 2009-01-08 19:49+0100\n"
+"PO-Revision-Date: 2009-01-08 19:49+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -123,6 +123,11 @@ msgid ""
 "has number 0) as a parameter to gammu(1) and it will then use only this "
 "section."
 msgstr ""
+"Konfigurační soubor pro gammu může obsahovat několik sekcí - [gammu], "
+"[gammu1], [gammuN], ... Každá sekce definuje jedno připojení a ve výchozím "
+"režime gammu postupně zkouší všechny podle čísel. Můžete také zadat "
+"parametrem pro gammu(1), které číslo sekce ([gammu] je číslo 0) má  použít a "
+"pak se použije jen tato sekce."
 
 # type: TP
 #: docs/user/gammurc.5:27
@@ -174,6 +179,9 @@ msgid ""
 "ARK3116 based cables) or -nopower, but Gammu should be able to detect this "
 "automatically."
 msgstr ""
+"Pokud nepoužíváte originální kabel, možná budete potřebovat připojit -nodtr "
+"(například pro kabely používající ARK3116) nebo -nopower. Toto nastavení "
+"použijte jen v případě, že Gammu správně parametery nezjistí automaticky."
 
 # type: Plain text
 #: docs/user/gammurc.5:49
@@ -321,21 +329,19 @@ msgid "B<SynchronizeTime>"
 msgstr "B<SynchronizeTime>"
 
 # type: Plain text
-#: docs/user/gammurc.5:103
+#: docs/user/gammurc.5:101
 msgid ""
-"If you want to set time from computer to phone during starting connection. "
-"Do not rather use this option when when to reset phone during connection (in "
-"some phones need to set time again after restart)."
-msgstr ""
+"If you want to set time from computer to phone during starting connection."
+msgstr "Určí, zda chcete nastavit čas v telefonu při připojení."
 
 # type: TP
-#: docs/user/gammurc.5:104
+#: docs/user/gammurc.5:102
 #, no-wrap
 msgid "B<StartInfo>"
 msgstr "B<StartInfo>"
 
 # type: Plain text
-#: docs/user/gammurc.5:110
+#: docs/user/gammurc.5:108
 msgid ""
 "This option allow to set, that you want (setting \"yes\") to see message on "
 "the phone screen or phone should enable light for a moment during starting "
@@ -343,13 +349,13 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:111
+#: docs/user/gammurc.5:109
 #, no-wrap
 msgid "B<GammuCoding>"
 msgstr "B<GammuCoding>"
 
 # type: Plain text
-#: docs/user/gammurc.5:117
+#: docs/user/gammurc.5:115
 msgid ""
 "Forces using specified codepage (on Windows - for example \"1250\" will "
 "force CP1250) or UTF8 (in Linux - \"utf8\"). This should not be needed in "
@@ -357,13 +363,13 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:118
+#: docs/user/gammurc.5:116
 #, no-wrap
 msgid "B<GammuLoc>"
 msgstr "B<GammuLoc>"
 
 # type: Plain text
-#: docs/user/gammurc.5:124
+#: docs/user/gammurc.5:122
 msgid ""
 "Path to directory with localisation files (the directory should contain LANG/"
 "LC_MESSAGES/gammu.mo). If gammu is properly installed it should find these "
@@ -374,66 +380,66 @@ msgstr ""
 "najít automaticky."
 
 # type: TP
-#: docs/user/gammurc.5:125 docs/user/gammu-smsdrc.5:46
+#: docs/user/gammurc.5:123 docs/user/gammu-smsdrc.5:46
 #, no-wrap
 msgid "B<LogFile>"
 msgstr "B<LogFile>"
 
 # type: Plain text
-#: docs/user/gammurc.5:129
+#: docs/user/gammurc.5:127
 msgid "Path to file where information about communication will be stored."
 msgstr "Cesta k souboru, kde budou uloženy informace o komunikaci s telefonem."
 
 # type: TP
-#: docs/user/gammurc.5:130
+#: docs/user/gammurc.5:128
 #, no-wrap
 msgid "B<LogFormat>"
 msgstr "B<LogFormat>"
 
 # type: Plain text
-#: docs/user/gammurc.5:134
+#: docs/user/gammurc.5:132
 msgid "Determines what all will be logged to LogFile. Possible values are:"
 msgstr "Určuje co vše se bude logovat do souboru LogFile. Možné hodnoty jsou:"
 
 # type: Plain text
-#: docs/user/gammurc.5:136
+#: docs/user/gammurc.5:134
 msgid "B<nothing> - no debug level"
 msgstr "B<nothing> - žádné ladicí informace"
 
 # type: Plain text
-#: docs/user/gammurc.5:138
+#: docs/user/gammurc.5:136
 msgid "B<text> - transmission dump in text format"
 msgstr "B<text> - základní informace o přenosu v textové podobě"
 
 # type: Plain text
-#: docs/user/gammurc.5:140
+#: docs/user/gammurc.5:138
 msgid "B<textall> - all possible info in text format"
 msgstr "B<textall> - prodrobné informace o přenosu v textové podobě"
 
 # type: Plain text
-#: docs/user/gammurc.5:142
+#: docs/user/gammurc.5:140
 msgid "B<textalldate> - all possible info in text format, with time stamp"
 msgstr ""
 "B<textalldate> - prodrobné informace o přenosu v textové podobě, s časovou "
 "značkou"
 
 # type: Plain text
-#: docs/user/gammurc.5:144
+#: docs/user/gammurc.5:142
 msgid "B<errors> - errors in text format"
 msgstr "B<errors> - chyby v textovém formátu"
 
 # type: Plain text
-#: docs/user/gammurc.5:146
+#: docs/user/gammurc.5:144
 msgid "B<errorsdate> - errors in text format, with time stamp"
 msgstr "B<errorsdate> - chyby v textovém formátu, s časovou značkou"
 
 # type: Plain text
-#: docs/user/gammurc.5:148
+#: docs/user/gammurc.5:146
 msgid "B<binary> - transmission dump in binary format"
 msgstr "B<binary> - obsah komunikace v binárním formátu"
 
 # type: Plain text
-#: docs/user/gammurc.5:151
+#: docs/user/gammurc.5:149
 msgid ""
 "For debugging use either B<textalldate> or B<textall>, it contains all "
 "needed information to diagnose problems."
@@ -442,13 +448,13 @@ msgstr ""
 "obsaženy všechny informace potřebné pro diagnostiku problému."
 
 # type: TP
-#: docs/user/gammurc.5:152
+#: docs/user/gammurc.5:150
 #, no-wrap
 msgid "B<Features>"
 msgstr "B<Features>"
 
 # type: Plain text
-#: docs/user/gammurc.5:159
+#: docs/user/gammurc.5:157
 msgid ""
 "Custom features for phone. This can be used as override when values coded in "
 "common/gsmphones.c are bad or missing. Consult include/gammu-info.h for "
@@ -457,13 +463,13 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:160
+#: docs/user/gammurc.5:158
 #, no-wrap
 msgid "B<Use_Locking>"
 msgstr "B<Use_Locking>"
 
 # type: Plain text
-#: docs/user/gammurc.5:167
+#: docs/user/gammurc.5:165
 msgid ""
 "On POSIX systems, you might want to lock serial device when it is being "
 "used.  Enabling this option (setting to yes) will make Gammu honor these "
@@ -472,12 +478,12 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:169
+#: docs/user/gammurc.5:167
 msgid "This option has no meaning on Windows."
 msgstr "Tento parametr nemá na Windows žádný význam."
 
 # type: SH
-#: docs/user/gammurc.5:170 docs/user/gammu-smsdrc.5:241
+#: docs/user/gammurc.5:168 docs/user/gammu-smsdrc.5:241
 #: docs/user/gammu-smsd-files.7:66 docs/user/gammu-smsd-mysql.7:76
 #: docs/user/gammu-smsd-pgsql.7:76
 #, no-wrap
@@ -485,17 +491,17 @@ msgid "EXAMPLE"
 msgstr "PŘÍKLAD"
 
 # type: Plain text
-#: docs/user/gammurc.5:173
+#: docs/user/gammurc.5:171
 msgid "There is more complete example available in Gammu documentation."
 msgstr "Podrobnější příklady jsou dostupné v dokumentaci Gammu."
 
 # type: Plain text
-#: docs/user/gammurc.5:175
+#: docs/user/gammurc.5:173
 msgid "Gammu configuration for Nokia phone using DLR-3 cable:"
 msgstr "Konfigurace Gammu pro telefon Nokia připojený kabelem DLR-3:"
 
 # type: Plain text
-#: docs/user/gammurc.5:183
+#: docs/user/gammurc.5:181
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -507,7 +513,7 @@ msgstr ""
 "connection = dlr3\n"
 
 # type: Plain text
-#: docs/user/gammurc.5:190
+#: docs/user/gammurc.5:188
 msgid ""
 "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
 "phone)  connected using USB cable:"
@@ -516,7 +522,7 @@ msgstr ""
 "příkazy) připojený pomocí USB kabelu:"
 
 # type: Plain text
-#: docs/user/gammurc.5:198
+#: docs/user/gammurc.5:196
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -528,7 +534,7 @@ msgstr ""
 "connection = at\n"
 
 # type: Plain text
-#: docs/user/gammurc.5:205
+#: docs/user/gammurc.5:203
 msgid ""
 "Gammu configuration for Sony-Ericsson (or any other AT compatible phone)  "
 "connected using bluetooth:"
@@ -537,7 +543,7 @@ msgstr ""
 "příkazy) připojený pomocí Bluetooth:"
 
 # type: Plain text
-#: docs/user/gammurc.5:213
+#: docs/user/gammurc.5:211
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -549,7 +555,7 @@ msgstr ""
 "connection = blueat\n"
 
 # type: SH
-#: docs/user/gammurc.5:218 docs/user/gammu-smsdrc.5:286
+#: docs/user/gammurc.5:216 docs/user/gammu-smsdrc.5:286
 #: docs/user/gammu-smsd.1:44 docs/user/gammu-smsd-inject.1:33
 #: docs/user/jadmaker.1:27 docs/user/gammu-config.1:26
 #: docs/user/gammu-smsd-files.7:99 docs/user/gammu-smsd-mysql.7:81
@@ -559,12 +565,12 @@ msgid "SEE ALSO"
 msgstr "DALŠÍ INFORMACE"
 
 # type: Plain text
-#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:288
+#: docs/user/gammurc.5:218 docs/user/gammu-smsdrc.5:288
 msgid "gammu-smsd(1), gammu(1), gammurc(5)"
 msgstr "gammu-smsd(1), gammu(1), gammurc(5)"
 
 # type: SH
-#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:290
+#: docs/user/gammurc.5:218 docs/user/gammu-smsdrc.5:290
 #: docs/user/gammu-smsd.1:48 docs/user/gammu-smsd-inject.1:35
 #: docs/user/gammu-smsd-files.7:101 docs/user/gammu-smsd-mysql.7:83
 #: docs/user/gammu-smsd-pgsql.7:83
@@ -573,7 +579,7 @@ msgid "AUTHOR"
 msgstr "AUTOR"
 
 # type: Plain text
-#: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:292
+#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:292
 #: docs/user/gammu-smsd.1:50 docs/user/gammu-smsd-inject.1:37
 #: docs/user/gammu-smsd-files.7:103 docs/user/gammu-smsd-mysql.7:85
 #: docs/user/gammu-smsd-pgsql.7:85
@@ -585,7 +591,7 @@ msgstr ""
 "comE<gt>."
 
 # type: SH
-#: docs/user/gammurc.5:222 docs/user/gammu-smsdrc.5:292
+#: docs/user/gammurc.5:220 docs/user/gammu-smsdrc.5:292
 #: docs/user/gammu-smsd.1:50 docs/user/gammu-smsd-inject.1:37
 #: docs/user/jadmaker.1:30 docs/user/gammu-config.1:28
 #: docs/user/gammu-smsd-files.7:103 docs/user/gammu-smsd-mysql.7:85
@@ -595,7 +601,7 @@ msgid "COPYRIGHT"
 msgstr "COPYRIGHT"
 
 # type: Plain text
-#: docs/user/gammurc.5:225 docs/user/gammu-smsdrc.5:295
+#: docs/user/gammurc.5:223 docs/user/gammu-smsdrc.5:295
 #: docs/user/gammu-smsd.1:53 docs/user/gammu-smsd-inject.1:40
 #: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:88
 #: docs/user/gammu-smsd-pgsql.7:88
@@ -607,7 +613,7 @@ msgstr ""
 "verze 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
 
 # type: Plain text
-#: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:298
+#: docs/user/gammurc.5:226 docs/user/gammu-smsdrc.5:298
 #: docs/user/gammu-smsd.1:56 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:35 docs/user/gammu-config.1:33
 #: docs/user/gammu-smsd-files.7:109 docs/user/gammu-smsd-mysql.7:91
@@ -620,7 +626,7 @@ msgstr ""
 "poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem."
 
 # type: SH
-#: docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:298
+#: docs/user/gammurc.5:226 docs/user/gammu-smsdrc.5:298
 #: docs/user/gammu-smsd.1:56 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:24 docs/user/gammu-config.1:23
 #: docs/user/gammu-smsd-files.7:109 docs/user/gammu-smsd-mysql.7:91
@@ -630,7 +636,7 @@ msgid "REPORTING BUGS"
 msgstr "HLÁŠENÍ CHYB"
 
 # type: Plain text
-#: docs/user/gammurc.5:229 docs/user/gammu-smsdrc.5:299
+#: docs/user/gammurc.5:227 docs/user/gammu-smsdrc.5:299
 #: docs/user/gammu-smsd.1:58 docs/user/gammu-smsd-inject.1:45
 #: docs/user/jadmaker.1:26 docs/user/gammu-config.1:25
 #: docs/user/gammu-smsd-files.7:110 docs/user/gammu-smsd-mysql.7:92
@@ -2054,6 +2060,13 @@ msgstr ""
 "Služba PGSQL ukládá všechna data na databázovém serveru PostgreSQL, jehož "
 "parametry jsou zadány v konfiguračním souboru (viz gammu-smsd(5)· pro popis "
 "těchto parametrů)."
+
+# type: Plain text
+#~ msgid ""
+#~ "If you want to set time from computer to phone during starting "
+#~ "connection. Do not rather use this option when when to reset phone during "
+#~ "connection (in some phones need to set time again after restart)."
+#~ msgstr "Určí, zda chcete nastavit čas v telefonu při připojení."
 
 # type: Plain text
 #~ msgid ""
