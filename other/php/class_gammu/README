@@ -1,0 +1,28 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>class_Gammu_SMSGateway README</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+</head>
+
+<body>
+<h2>Class : class.gammu_nix_win32.php
+</h2>
+<p>This class is really very helpful if we want to interact with <a href="http://www.gammu.org/" target="_blank">Gammu or MyGnokii2 1.06.00 (GNU All Mobile Management Utilities)</a> using PHP 5.1.4. It lets users can send SMS, Download SMS from Mobile Device, Read SMS Inbox </p>
+<h3>For Installaton ..</h3>
+  <br>
+1. Unzip files under www or public_html folder.<br>
+2. See example PHP file how to use <br>
+3. Run PHP file from localhost or remote server as per your Apache configuration.Gammu Configuration and HOW TO please read gammu_files Documentation <br>
+<h4>About myself:</h4>
+<p>I am a PHP programmer working as Glow Cipta Media reasearch &amp; development director.</p>
+<p>Please rate this class If you find it useful. Please feel free to contact me for queries related to this class. I would feel gratefull if i can sort out your issues related to PHP.</p>
+<p>Thanks in advance.</p>
+<p>Stieven R. Kalengkian<br>
+  Emails:<br>
+  stieven.kalengkian@gmail.com<br> 
+  ipen22@yahoo.com</p>
+<p>Website : <a href="http://www.glowciptamedia.com">www.glowciptamedia.com</a> </p>
+</body>
+</html>
