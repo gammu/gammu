@@ -9,6 +9,8 @@ typedef struct {
 	const char *pid_file;
 	bool daemonize;
 	bool start_service;
+	bool stop_service;
+	bool run_service;
 	bool install_service;
 	bool uninstall_service;
 } SMSD_Parameters;

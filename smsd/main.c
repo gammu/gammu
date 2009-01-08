@@ -115,6 +115,8 @@ void help(void)
 	print_option("u", "uninstall-service",
 		     "uninstalls SMSD as a Windows service");
 	print_option("s", "start-service", "starts SMSD Windows service");
+	print_option("k", "stop-service", "stops SMSD Windows service");
+	print_option("S", "run-as-service", "runs as a SMSD Windows service");
 #endif
 }
 
@@ -138,15 +140,17 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 		{"install-service", 0, 0, 'i'},
 		{"uninstall-service", 0, 0, 'u'},
 		{"start-service", 0, 0, 's'},
+		{"stop-service", 0, 0, 'k'},
+		{"run-as-service", 0, 0, 'S'},
 		{0, 0, 0, 0}
 	};
 	int option_index;
 
 	while ((opt =
-		getopt_long(argc, argv, "hv?dc:p:ius", long_options,
+		getopt_long(argc, argv, "hv?dc:p:iusSk", long_options,
 			    &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
-	while ((opt = getopt(argc, argv, "hv?dc:p:ius")) != -1) {
+	while ((opt = getopt(argc, argv, "hv?dc:p:iusSk")) != -1) {
 #else
 	/* Poor mans getopt replacement */
 	int i;
@@ -177,6 +181,12 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				break;
 			case 's':
 				params->start_service = true;
+				break;
+			case 'k':
+				params->stop_service = true;
+				break;
+			case 'S':
+				params->run_service = true;
 				break;
 			case 'v':
 				version();
@@ -212,12 +222,26 @@ int main(int argc, char **argv)
 		false,
 		false,
 		false,
+		false,
+		false,
 		false
 	};
 
 	process_commandline(argc, argv, &params);
 
 #ifdef WIN32
+	if (params.stop_service) {
+		if (stop_smsd_service()) {
+			printf("Service %s stopped sucessfully\n",
+			       smsd_service_name);
+			exit(0);
+		} else {
+			printf("Error stopping %s service\n",
+			       smsd_service_name);
+			service_print_error();
+			exit(1);
+		}
+	}
 	if (params.uninstall_service) {
 		if (uninstall_smsd_service()) {
 			printf("Service %s uninstalled sucessfully\n",
@@ -249,6 +273,18 @@ int main(int argc, char **argv)
 			exit(0);
 		} else {
 			printf("Error installing %s service\n",
+			       smsd_service_name);
+			service_print_error();
+			exit(1);
+		}
+	}
+	if (params.start_service) {
+		if (start_smsd_service()) {
+			printf("Service %s started sucessfully\n",
+			       smsd_service_name);
+			exit(0);
+		} else {
+			printf("Error starting %s service\n",
 			       smsd_service_name);
 			service_print_error();
 			exit(1);
@@ -291,7 +327,7 @@ read_config:
 #endif
 	}
 #ifdef WIN32
-	if (params.start_service) {
+	if (params.run_service) {
 		if (!start_smsd_service_dispatcher()) {
 			printf("Error starting %s service\n",
 			       smsd_service_name);

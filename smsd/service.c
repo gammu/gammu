@@ -145,6 +145,51 @@ bool uninstall_smsd_service(void)
 	return true;
 }
 
+bool stop_smsd_service(void)
+{
+	HANDLE schSCManager;
+
+	SC_HANDLE hService;
+	SERVICE_STATUS sstatus;
+
+	schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
+
+	if (schSCManager == NULL)
+		return false;
+	hService =
+	    OpenService(schSCManager, smsd_service_name, SERVICE_ALL_ACCESS);
+	if (hService == NULL)
+		return false;
+	if (ControlService(hService, SERVICE_CONTROL_STOP, &sstatus) == 0)
+		return false;
+	if (CloseServiceHandle(hService) == 0)
+		return false;
+
+	return true;
+}
+
+bool start_smsd_service(void)
+{
+	HANDLE schSCManager;
+
+	SC_HANDLE hService;
+
+	schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
+
+	if (schSCManager == NULL)
+		return false;
+	hService =
+	    OpenService(schSCManager, smsd_service_name, SERVICE_ALL_ACCESS);
+	if (hService == NULL)
+		return false;
+	if (StartService(hService, 0, NULL) == 0)
+		return false;
+	if (CloseServiceHandle(hService) == 0)
+		return false;
+
+	return true;
+}
+
 bool start_smsd_service_dispatcher(void)
 {
 	SERVICE_TABLE_ENTRY DispatchTable[] = {
