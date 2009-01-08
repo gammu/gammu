@@ -780,7 +780,7 @@ GSM_Error GSM_TerminateConnection(GSM_StateMachine *s)
 }
 
 bool GSM_IsConnected(GSM_StateMachine *s) {
-	return (s != NULL) && s->opened;
+	return (s != NULL) && s->Phone.Functions != NULL && s->opened;
 }
 
 GSM_Error GSM_WaitForOnce(GSM_StateMachine *s, unsigned const char *buffer,

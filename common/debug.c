@@ -3,7 +3,7 @@
 /* Licensed under GPL2+ */
 
 #include "debug.h"
-#include "gsmstate.h"
+//#include "gsmstate.h"
 
 #include <string.h>
 #include <ctype.h>
@@ -236,10 +236,7 @@ int smprintf(GSM_StateMachine *s, const char *format, ...)
 	int 		result=0;
 	GSM_Debug_Info *curdi;
 
-	curdi = &GSM_global_debug;
-	if (s != NULL && s->di.use_global == false) {
-		curdi = &(s->di);
-	}
+	curdi = GSM_GetDI(s);
 
 	va_start(argp, format);
 

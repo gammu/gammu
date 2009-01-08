@@ -3,7 +3,8 @@
 #ifndef obexgen_functions_h
 #define obexgen_functions_h
 
-#include "../../gsmstate.h"
+#include <gammu.h>
+#include "../../gsmreply.h"
 #include "obexgen.h"
 
 extern GSM_Reply_Function	OBEXGENReplyFunctions[];

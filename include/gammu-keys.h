@@ -14,7 +14,9 @@
 
 #include <gammu-error.h>
 #include <gammu-statemachine.h>
-#include <string.h>
+#include <gammu-types.h>
+
+#include <stdlib.h> /* Needed for size_t declaration */
 
 /**
  * Key event identifiers.
