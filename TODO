@@ -3,4 +3,4 @@ $ echo 'aa' | ./gammu/gammu savesms TEXT 123465
 Saving SMS 1/1
 Saved in folder "", location -99999, SIM
 - add man page for gammu-smsd-mysql,... should contain DB structure and FILES information (currently preset in sample config)
-
+- failing tests on windows
