@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-08 10:42+0100\n"
+"POT-Creation-Date: 2009-01-08 10:50+0100\n"
 "PO-Revision-Date: 2008-08-13 11:41+0200\n"
 "Last-Translator: Alessio Gaeta <alga777@libero.it>\n"
 "Language-Team: Language =it\n"
@@ -44,7 +44,7 @@ msgstr "Nota non trovata nel file\n"
 msgid "ToDo note not found in file"
 msgstr "Nota non trovata nel file\n"
 
-#: gammu/backup.c:106
+#: gammu/backup.c:106 helper/message-cmdline.c:476
 #, fuzzy
 msgid "Where is backup filename and location and memory type?"
 msgstr "Dove sono il nome file, posizione e tipo di memoria del backup ?\n"
@@ -55,7 +55,7 @@ msgstr "Dove sono il nome file, posizione e tipo di memoria del backup ?\n"
 msgid "Phonebook entry not found in file"
 msgstr "Nome della rubrica non trovato nel file\n"
 
-#: gammu/backup.c:133
+#: gammu/backup.c:133 helper/message-cmdline.c:503
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
 msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
@@ -3966,16 +3966,6 @@ msgstr "Settaggi MMS non trovati nel file\n"
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr ""
 
-#: helper/message-cmdline.c:476
-#, fuzzy
-msgid "Where is backup filename and location and memory *type?"
-msgstr "Dove sono il nome file, posizione e tipo di memoria del backup ?\n"
-
-#: helper/message-cmdline.c:503
-#, fuzzy, c-format
-msgid "Unknown memory *type: \"%s\"\n"
-msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
-
 #: helper/message-cmdline.c:996
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
@@ -4530,6 +4520,14 @@ msgstr ""
 #, fuzzy
 msgid "Information"
 msgstr "Locazione %i\n"
+
+#, fuzzy
+#~ msgid "Where is backup filename and location and memory *type?"
+#~ msgstr "Dove sono il nome file, posizione e tipo di memoria del backup ?\n"
+
+#, fuzzy
+#~ msgid "Unknown memory *type: \"%s\"\n"
+#~ msgstr "Tipo di memoria sconosciuto: \"%s\"\n"
 
 #~ msgid "No error."
 #~ msgstr "Nessun errore."

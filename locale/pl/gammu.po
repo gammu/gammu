@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-08 10:42+0100\n"
+"POT-Creation-Date: 2009-01-08 10:50+0100\n"
 "PO-Revision-Date: 2007-11-30 17:33+0100\n"
 "Last-Translator: Wojciech Sobczak <wsobczak@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -45,7 +45,7 @@ msgstr "Brak informacji o producencie w pliku JAD\n"
 msgid "ToDo note not found in file"
 msgstr "Brak informacji o nazwie w pliku JAD\n"
 
-#: gammu/backup.c:106
+#: gammu/backup.c:106 helper/message-cmdline.c:476
 msgid "Where is backup filename and location and memory type?"
 msgstr ""
 
@@ -55,7 +55,7 @@ msgstr ""
 msgid "Phonebook entry not found in file"
 msgstr "Brak informacji o nazwie w pliku JAD\n"
 
-#: gammu/backup.c:133
+#: gammu/backup.c:133 helper/message-cmdline.c:503
 #, fuzzy, c-format
 msgid "Unknown memory type: \"%s\"\n"
 msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
@@ -3719,15 +3719,6 @@ msgstr "Brak informacji o producencie w pliku JAD\n"
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr ""
 
-#: helper/message-cmdline.c:476
-msgid "Where is backup filename and location and memory *type?"
-msgstr ""
-
-#: helper/message-cmdline.c:503
-#, fuzzy, c-format
-msgid "Unknown memory *type: \"%s\"\n"
-msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
-
 #: helper/message-cmdline.c:996
 #, fuzzy, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
@@ -4254,6 +4245,10 @@ msgstr "Ostrzeżenie"
 #, fuzzy
 msgid "Information"
 msgstr "Lokalizacja"
+
+#, fuzzy
+#~ msgid "Unknown memory *type: \"%s\"\n"
+#~ msgstr "BŁĄD: nieznany typ pamięci {(}\"%s\")\n"
 
 #~ msgid "No error."
 #~ msgstr "Nie ma błędu."

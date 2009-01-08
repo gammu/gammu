@@ -8,15 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-08 10:42+0100\n"
-"PO-Revision-Date: 2008-11-18 15:24+0100\n"
+"POT-Creation-Date: 2009-01-08 10:52+0100\n"
+"PO-Revision-Date: 2009-01-08 10:52+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
-"X-Generator: Pootle 1.1.0\n"
 
 #: gammu/backup.c:31 gammu/backup.c:50 gammu/backup.c:68 gammu/backup.c:87
 #: helper/message-cmdline.c:324 helper/message-cmdline.c:348
@@ -41,7 +40,7 @@ msgstr "V souboru nebyla nalezena žádná poznámka"
 msgid "ToDo note not found in file"
 msgstr "V souboru nebyl nalezen žádný úkol"
 
-#: gammu/backup.c:106
+#: gammu/backup.c:106 helper/message-cmdline.c:476
 msgid "Where is backup filename and location and memory type?"
 msgstr "Kde je jméno souboru zálohy, umístění a typ paměti?"
 
@@ -50,7 +49,7 @@ msgstr "Kde je jméno souboru zálohy, umístění a typ paměti?"
 msgid "Phonebook entry not found in file"
 msgstr "V souboru nebyl nalezen žádný kontakt"
 
-#: gammu/backup.c:133
+#: gammu/backup.c:133 helper/message-cmdline.c:503
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
 msgstr "Neznámý typ paměti: \"%s\"\n"
@@ -3353,9 +3352,9 @@ msgid "Connection \"%s\" on device \"%s\"\n"
 msgstr ""
 
 #: gammu/search.c:181 gammu/search.c:188
-#, fuzzy, c-format
+#, c-format
 msgid "Error creating thread\n"
-msgstr "Chyba při zápisu."
+msgstr "Chyba vytváření vlákna\n"
 
 #: helper/formats.h:2
 #, c-format
@@ -3406,9 +3405,9 @@ msgstr[1] "%d roky"
 msgstr[2] "%d let"
 
 #: helper/memory-display.c:29
-#, fuzzy, c-format
+#, c-format
 msgid "Call length      : %02i:%02i:%02i\n"
-msgstr "Čas  : %02d:%02d\n"
+msgstr "Délka hovoru     : %02i:%02i:%02i\n"
 
 #: helper/memory-display.c:32
 msgid "Date and time"
@@ -3435,14 +3434,12 @@ msgid "Picture ID"
 msgstr "ID obrázku"
 
 #: helper/memory-display.c:103
-#, fuzzy
 msgid "Photo"
-msgstr "Telefon"
+msgstr "Fotka"
 
 #: helper/memory-display.c:103
-#, fuzzy
 msgid "Displaying not supported"
-msgstr "Není podporováno"
+msgstr "Zobrazení není podporováno"
 
 #: helper/memory-display.c:105
 msgid "Favorite messaging number"
@@ -3573,7 +3570,6 @@ msgid "unknown field type"
 msgstr "neznámý typ položky"
 
 #: helper/message-cmdline.c:148
-#, fuzzy
 msgid "Not enough parameters!"
 msgstr "Příliš málo parametrů!"
 
@@ -3605,37 +3601,24 @@ msgid "File \"%s\"\n"
 msgstr "Soubor \"%s\"\n"
 
 #: helper/message-cmdline.c:335
-#, fuzzy
 msgid "Bookmark not found in file"
-msgstr "V souboru nebyla nalezena žádná záložka pro WAP"
+msgstr "V souboru nebyla nalezena žádná záložka"
 
 #: helper/message-cmdline.c:359
-#, fuzzy
 msgid "WAP settings not found in file"
-msgstr "V souboru nebyla nalezena žádná záložka pro WAP"
+msgstr "V souboru nebylo nalezena žádné nastavení pro WAP"
 
 #: helper/message-cmdline.c:380
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr ""
 
 #: helper/message-cmdline.c:403
-#, fuzzy
 msgid "MMS settings not found in file"
-msgstr "V souboru nebyla nalezena žádná poznámka"
+msgstr "V souboru nebylo nalezena žádné nastavení pro MMS"
 
 #: helper/message-cmdline.c:417
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr ""
-
-#: helper/message-cmdline.c:476
-#, fuzzy
-msgid "Where is backup filename and location and memory *type?"
-msgstr "Kde je jméno souboru zálohy, umístění a typ paměti?"
-
-#: helper/message-cmdline.c:503
-#, fuzzy, c-format
-msgid "Unknown memory *type: \"%s\"\n"
-msgstr "Neznámý typ paměti: \"%s\"\n"
 
 #: helper/message-cmdline.c:996
 #, c-format
@@ -3648,9 +3631,9 @@ msgid "You have to give number between 1 and 7 (\"%s\")\n"
 msgstr ""
 
 #: helper/message-cmdline.c:1051
-#, fuzzy, c-format
+#, c-format
 msgid "Unknown validity string (\"%s\")\n"
-msgstr "Neznámá akce přesměrování (\"%s\")\n"
+msgstr "Neznámý text platnosti (\"%s\")\n"
 
 #: helper/message-cmdline.c:1087
 #, c-format
@@ -3658,9 +3641,9 @@ msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr ""
 
 #: helper/message-cmdline.c:1110
-#, fuzzy, c-format
+#, c-format
 msgid "Can't open file \"%s\"\n"
-msgstr "Nepodařilo se nalézt soubor \"%s\"\n"
+msgstr "Nepodařilo se otevřít soubor \"%s\"\n"
 
 #: helper/message-cmdline.c:1159
 #, c-format
@@ -3689,9 +3672,8 @@ msgid "No network code"
 msgstr "Žádný kód sítě"
 
 #: helper/message-cmdline.c:1267
-#, fuzzy
 msgid "You have to set network code!"
-msgstr "Žádný kód sítě"
+msgstr "Musíte nastavit kód sítě!"
 
 #: helper/message-cmdline.c:1306
 #, c-format
@@ -3868,9 +3850,9 @@ msgid "Connection rejected by SME"
 msgstr ""
 
 #: helper/message-display.c:200
-#, fuzzy, c-format
+#, c-format
 msgid "Not obtainable"
-msgstr "Žádný signál"
+msgstr "Nelze získat"
 
 #: helper/message-display.c:201 helper/message-display.c:211
 #, c-format
@@ -4002,9 +3984,9 @@ msgid "Nokia WAP bookmark"
 msgstr ""
 
 #: helper/message-display.c:285
-#, fuzzy, c-format
+#, c-format
 msgid "Nokia operator logo"
-msgstr "Logo operátora"
+msgstr "Logo operátora Nokia"
 
 #: helper/message-display.c:286
 #, c-format
@@ -4012,39 +3994,39 @@ msgid "Nokia WAP bookmark or WAP/MMS settings"
 msgstr ""
 
 #: helper/message-display.c:287 helper/message-display.c:288
-#, fuzzy, c-format
+#, c-format
 msgid "Nokia ringtone"
-msgstr "Vyzvánění"
+msgstr "Vyzvánění Nokia"
 
 #: helper/message-display.c:289
-#, fuzzy, c-format
+#, c-format
 msgid "Nokia GSM operator logo"
-msgstr "Logo operátora"
+msgstr "Logo operátora Nokia"
 
 #: helper/message-display.c:290
-#, fuzzy, c-format
+#, c-format
 msgid "Nokia caller logo"
-msgstr "Logo skupiny"
+msgstr "Logo skupiny Nokia"
 
 #: helper/message-display.c:291
-#, fuzzy, c-format
+#, c-format
 msgid "Nokia profile"
-msgstr "Specifické pro Nokii"
+msgstr "Profil Nokia"
 
 #: helper/message-display.c:292
-#, fuzzy, c-format
+#, c-format
 msgid "Nokia calendar note"
-msgstr "Kalendář"
+msgstr "Kalendář Nokia"
 
 #: helper/message-display.c:293
-#, fuzzy, c-format
+#, c-format
 msgid "Nokia phonebook entry"
-msgstr "Přidat položky telefonního seznamu?"
+msgstr "Kontakt Nokia"
 
 #: helper/message-display.c:294
-#, fuzzy, c-format
+#, c-format
 msgid "User UDH"
-msgstr "ID uživatele"
+msgstr "Uživatelské UDH"
 
 #: helper/message-display.c:295
 #, c-format
@@ -4067,14 +4049,13 @@ msgid ", part %i of %i"
 msgstr ""
 
 #: helper/message-display.c:305
-#, fuzzy, c-format
+#, c-format
 msgid ", %i parts"
-msgstr "%i procent"
+msgstr ", %i částí"
 
 #: helper/message-display.c:317
-#, fuzzy
 msgid "Siemens file"
-msgstr "Specifické pro Siemens"
+msgstr "Siemens soubor"
 
 #: helper/message-display.c:320
 msgid "8 bit SMS, cannot be displayed here"
@@ -4091,9 +4072,9 @@ msgid ""
 msgstr ""
 
 #: helper/message-display.c:373
-#, fuzzy, c-format
+#, c-format
 msgid "Siemens OTA file"
-msgstr "Specifické pro Siemens"
+msgstr "Siemens OTA soubor"
 
 #: helper/message-display.c:375
 msgid " - VCARD"
@@ -4151,6 +4132,14 @@ msgstr "Varování"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Informace"
+
+#, fuzzy
+#~ msgid "Where is backup filename and location and memory *type?"
+#~ msgstr "Kde je jméno souboru zálohy, umístění a typ paměti?"
+
+#, fuzzy
+#~ msgid "Unknown memory *type: \"%s\"\n"
+#~ msgstr "Neznámý typ paměti: \"%s\"\n"
 
 #~ msgid "No error."
 #~ msgstr "Žadná chyba."

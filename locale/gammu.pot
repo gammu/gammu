@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-08 10:45+0100\n"
+"POT-Creation-Date: 2009-01-08 10:52+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -40,7 +40,7 @@ msgstr ""
 msgid "ToDo note not found in file"
 msgstr ""
 
-#: gammu/backup.c:106
+#: gammu/backup.c:106 helper/message-cmdline.c:476
 msgid "Where is backup filename and location and memory type?"
 msgstr ""
 
@@ -49,7 +49,7 @@ msgstr ""
 msgid "Phonebook entry not found in file"
 msgstr ""
 
-#: gammu/backup.c:133
+#: gammu/backup.c:133 helper/message-cmdline.c:503
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
 msgstr ""
@@ -3599,15 +3599,6 @@ msgstr ""
 
 #: helper/message-cmdline.c:417
 msgid "Sorry. No GPRS bearer found in MMS settings"
-msgstr ""
-
-#: helper/message-cmdline.c:476
-msgid "Where is backup filename and location and memory *type?"
-msgstr ""
-
-#: helper/message-cmdline.c:503
-#, c-format
-msgid "Unknown memory *type: \"%s\"\n"
 msgstr ""
 
 #: helper/message-cmdline.c:996
