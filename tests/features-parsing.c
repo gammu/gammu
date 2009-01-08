@@ -10,7 +10,7 @@
 
 int single_test(const char *string, GSM_Error expected)
 {
-	Feature features[GSM_MAX_PHONE_FEATURES + 1];
+	GSM_Feature features[GSM_MAX_PHONE_FEATURES + 1];
 	GSM_Error real;
 
 	real = GSM_SetFeatureString(features, string);

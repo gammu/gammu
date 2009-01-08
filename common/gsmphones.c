@@ -26,7 +26,7 @@
 
 typedef struct {
 	char	name[MAX_FEATURE_NAME_LEN + 1];
-	Feature feature;
+	GSM_Feature feature;
 } GSM_FeatureName;
 
 GSM_FeatureName AllFeatureNames[] = {
@@ -111,7 +111,7 @@ GSM_FeatureName AllFeatureNames[] = {
 	{"", 0},
 };
 
-const char *GSM_FeatureToString(Feature feature)
+const char *GSM_FeatureToString(GSM_Feature feature)
 {
 	GSM_FeatureName *current;
 	for (current = AllFeatureNames; current->feature != 0; current++) {
@@ -121,7 +121,7 @@ const char *GSM_FeatureToString(Feature feature)
 	return NULL;
 }
 
-Feature GSM_FeatureFromString(const char * feature)
+GSM_Feature GSM_FeatureFromString(const char * feature)
 {
 	GSM_FeatureName *current;
 	for (current = AllFeatureNames; current->feature != 0; current++) {
@@ -131,7 +131,7 @@ Feature GSM_FeatureFromString(const char * feature)
 	return 0;
 }
 
-GSM_Error GSM_SetFeatureString(Feature *list, const char *string)
+GSM_Error GSM_SetFeatureString(GSM_Feature *list, const char *string)
 {
 	char *buffer, *pos, *end, *tmp;
 	int out = 0;
@@ -793,7 +793,7 @@ GSM_PhoneModel *GetModelData(GSM_StateMachine *s, const char *model, const char 
 	return (&allmodels[i]);
 }
 
-bool GSM_IsPhoneFeatureAvailable(GSM_PhoneModel *model, Feature feature)
+bool GSM_IsPhoneFeatureAvailable(GSM_PhoneModel *model, GSM_Feature feature)
 {
 	int	i	= 0;
 
@@ -806,7 +806,7 @@ bool GSM_IsPhoneFeatureAvailable(GSM_PhoneModel *model, Feature feature)
 	return false;
 }
 
-bool GSM_AddPhoneFeature(GSM_PhoneModel *model, Feature feature)
+bool GSM_AddPhoneFeature(GSM_PhoneModel *model, GSM_Feature feature)
 {
 	int	i	= 0;
 

@@ -34,5 +34,5 @@ GSM_PhoneModel *GetModelData(GSM_StateMachine *s, const char *model, const char 
  *
  * \return Error code.
  */
-GSM_Error GSM_SetFeatureString(Feature *list, const char *string);
+GSM_Error GSM_SetFeatureString(GSM_Feature *list, const char *string);
 #endif
