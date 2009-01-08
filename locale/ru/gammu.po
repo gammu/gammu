@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-07 18:09+0100\n"
+"POT-Creation-Date: 2009-01-08 10:42+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -17,13 +17,13 @@ msgstr ""
 "X-Generator: Pootle 1.0.2\n"
 
 #: gammu/backup.c:31 gammu/backup.c:50 gammu/backup.c:68 gammu/backup.c:87
-#: helper/message-cmdline.c:253 helper/message-cmdline.c:276
-#: helper/message-cmdline.c:319 helper/message-cmdline.c:355
-#: helper/message-cmdline.c:377
+#: helper/message-cmdline.c:324 helper/message-cmdline.c:348
+#: helper/message-cmdline.c:392 helper/message-cmdline.c:429
+#: helper/message-cmdline.c:452
 msgid "Where is backup filename and location?"
 msgstr "Путь и имя файла с резервной копией?"
 
-#: gammu/backup.c:42 helper/message-cmdline.c:366
+#: gammu/backup.c:42 helper/message-cmdline.c:440
 msgid "Calendar note not found in file"
 msgstr "Заметка календаря не найдена в файле"
 
@@ -35,7 +35,7 @@ msgstr "Закладка WAP не найдена в файле"
 msgid "Note not found in file"
 msgstr "Заметка не найдена в файле"
 
-#: gammu/backup.c:98 helper/message-cmdline.c:388
+#: gammu/backup.c:98 helper/message-cmdline.c:463
 #, fuzzy
 msgid "ToDo note not found in file"
 msgstr "Задание не найдено в файле\n"
@@ -44,8 +44,8 @@ msgstr "Задание не найдено в файле\n"
 msgid "Where is backup filename and location and memory type?"
 msgstr "Путь и имя файла с резервной копией, тип памяти?"
 
-#: gammu/backup.c:118 gammu/backup.c:128 helper/message-cmdline.c:411
-#: helper/message-cmdline.c:421
+#: gammu/backup.c:118 gammu/backup.c:128 helper/message-cmdline.c:488
+#: helper/message-cmdline.c:498
 msgid "Phonebook entry not found in file"
 msgstr "Запись телефонной книги не найдена в файле"
 
@@ -64,7 +64,7 @@ msgstr "Неизвестный параметр \"%s\""
 msgid "Error while opening file for writing!\n"
 msgstr "Ошибка записи в устройство."
 
-#: gammu/backup.c:155 gammu/files.c:439 helper/message-cmdline.c:951
+#: gammu/backup.c:155 gammu/files.c:439 helper/message-cmdline.c:1026
 #, fuzzy
 msgid "Error while writing file!\n"
 msgstr "Ошибка записи в устройство."
@@ -1689,7 +1689,7 @@ msgid "What file type (\"%s\") ?\n"
 msgstr "Тип файла (\"%s\")?\n"
 
 #: gammu/files.c:731 gammu/misc.c:1146 gammu/nokia.c:929
-#: helper/message-cmdline.c:1135
+#: helper/message-cmdline.c:1210
 #, fuzzy
 msgid "Parameter missing!"
 msgstr "Отсутствует параметр ...\n"
@@ -2043,7 +2043,7 @@ msgid "Memory %s, Location %i\n"
 msgstr "Память %s, адрес %i\n"
 
 #: gammu/memory.c:75 gammu/misc.c:587 gammu/misc.c:616
-#: helper/message-cmdline.c:884
+#: helper/message-cmdline.c:959
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
 msgstr "Неизвестный параметр (\"%s\")\n"
@@ -3956,149 +3956,149 @@ msgstr ""
 msgid "unknown field type"
 msgstr "неизвестный %i"
 
-#: helper/message-cmdline.c:99
+#: helper/message-cmdline.c:148
 #, fuzzy
 msgid "Not enough parameters!"
 msgstr "Слишком мало параметров!\n"
 
-#: helper/message-cmdline.c:133 helper/message-cmdline.c:147
+#: helper/message-cmdline.c:172
+#, c-format
+msgid "What format of sms (\"%s\") ?\n"
+msgstr "Какой формат SMS (\"%s\")?\n"
+
+#: helper/message-cmdline.c:197 helper/message-cmdline.c:212
 #, fuzzy
 msgid "Where are parameters?"
 msgstr "Где параметры?\n"
 
-#: helper/message-cmdline.c:160
+#: helper/message-cmdline.c:226
 #, fuzzy
 msgid "Where is ringtone filename?"
 msgstr "Имя файла рингтона?\n"
 
-#: helper/message-cmdline.c:176 helper/message-cmdline.c:192
-#: helper/message-cmdline.c:233
+#: helper/message-cmdline.c:243 helper/message-cmdline.c:260
+#: helper/message-cmdline.c:303
 #, fuzzy
 msgid "Where is logo filename?"
 msgstr "Имя файла логотипа ?\n"
 
-#: helper/message-cmdline.c:208
+#: helper/message-cmdline.c:277
 #, fuzzy
 msgid "Where is number of frames?"
 msgstr "Число кадров?\n"
 
-#: helper/message-cmdline.c:238
+#: helper/message-cmdline.c:308
 #, c-format
 msgid "File \"%s\"\n"
 msgstr "Файл \"%s\"\n"
 
-#: helper/message-cmdline.c:264
+#: helper/message-cmdline.c:335
 #, fuzzy
 msgid "Bookmark not found in file"
 msgstr "Закладка не найдена в файле\n"
 
-#: helper/message-cmdline.c:287
+#: helper/message-cmdline.c:359
 #, fuzzy
 msgid "WAP settings not found in file"
 msgstr "Настройки WAP не найдены в файле\n"
 
-#: helper/message-cmdline.c:308
+#: helper/message-cmdline.c:380
 #, fuzzy
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr ""
 "К сожалению на данный момент поддерживается только GPRS или закончились "
 "каналы передачи данных\n"
 
-#: helper/message-cmdline.c:330
+#: helper/message-cmdline.c:403
 #, fuzzy
 msgid "MMS settings not found in file"
 msgstr "Настройки MMS не найдены в файле\n"
 
-#: helper/message-cmdline.c:344
+#: helper/message-cmdline.c:417
 #, fuzzy
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr "К сожалению канал передачи данных GPRS в настройках MMS не найден\n"
 
-#: helper/message-cmdline.c:399
+#: helper/message-cmdline.c:476
 #, fuzzy
 msgid "Where is backup filename and location and memory *type?"
 msgstr "Путь и имя файла с резервной копией, тип памяти?"
 
-#: helper/message-cmdline.c:426
+#: helper/message-cmdline.c:503
 #, fuzzy, c-format
 msgid "Unknown memory *type: \"%s\"\n"
 msgstr "Неизвестный тип памяти: \"%s\"\n"
 
-#: helper/message-cmdline.c:446
-#, c-format
-msgid "What format of sms (\"%s\") ?\n"
-msgstr "Какой формат SMS (\"%s\")?\n"
-
-#: helper/message-cmdline.c:921
+#: helper/message-cmdline.c:996
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
 msgstr "Неизвестный код сети GSM (\"%s\")\n"
 
-#: helper/message-cmdline.c:940
+#: helper/message-cmdline.c:1015
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
 msgstr "Необходимо ввести число от 1 и 7 (\"%s\")\n"
 
-#: helper/message-cmdline.c:976
+#: helper/message-cmdline.c:1051
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
 msgstr "Неизвестная строка проверки достоверности (\"%s\")\n"
 
-#: helper/message-cmdline.c:1012
+#: helper/message-cmdline.c:1087
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr "Необходимо указать число кадров EMS от 1 и 4 (\"%s\")\n"
 
-#: helper/message-cmdline.c:1035
+#: helper/message-cmdline.c:1110
 #, c-format
 msgid "Can't open file \"%s\"\n"
 msgstr "Не удаётся открыть файл \"%s\"\n"
 
-#: helper/message-cmdline.c:1084
+#: helper/message-cmdline.c:1159
 #, fuzzy, c-format
 msgid "Unknown parameter (\"%c\")\n"
 msgstr "Неизвестный параметр (\"%s\")\n"
 
-#: helper/message-cmdline.c:1089
+#: helper/message-cmdline.c:1164
 #, fuzzy
 msgid "Last parameter wasn't text"
 msgstr "Последний параметр не является текстом\n"
 
-#: helper/message-cmdline.c:1121
+#: helper/message-cmdline.c:1196
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr "Слишком длинное название SMS (\"%s\"); проигнорировано\n"
 
-#: helper/message-cmdline.c:1154
+#: helper/message-cmdline.c:1229
 msgid "Enter message text and press ^D:"
 msgstr ""
 
-#: helper/message-cmdline.c:1166
+#: helper/message-cmdline.c:1241
 msgid "No chars read, assuming it is okay!"
 msgstr ""
 
-#: helper/message-cmdline.c:1186
+#: helper/message-cmdline.c:1261
 #, fuzzy
 msgid "No network code"
 msgstr "Отсутствует код сети\n"
 
-#: helper/message-cmdline.c:1192
+#: helper/message-cmdline.c:1267
 #, fuzzy
 msgid "You have to set network code!"
 msgstr "Отсутствует код сети\n"
 
-#: helper/message-cmdline.c:1231
+#: helper/message-cmdline.c:1306
 #, fuzzy, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr ""
 "Предупреждение: рингтон слишком длинный. Укоротите его на %i процентов\n"
 
-#: helper/message-cmdline.c:1242
+#: helper/message-cmdline.c:1317
 #, c-format
 msgid "There is %i SMS packed and %i limit. Exiting\n"
 msgstr "Упаковано %i SMS, а предел - %i. Выполняется выход\n"
 
-#: helper/message-cmdline.c:1251
+#: helper/message-cmdline.c:1326
 #, fuzzy
 msgid "Use -smscnumber option to give SMSC number"
 msgstr "Чтобы указать число SMSC, используйте параметр -smscnumber\n"

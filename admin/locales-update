@@ -1,6 +1,9 @@
 #!/bin/sh
 # vim: expandtab sw=4 ts=4 sts=4:
+
 LOCS=`ls locale/*/gammu.po | sed 's@.*/\(.*\)/[^/]*@\1@'`
+ver=`sed -n 's/set (VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
+
 xgettext \
     -d gammu \
     --msgid-bugs-address=michal@cihar.com \
@@ -10,7 +13,9 @@ xgettext \
     --keyword=N_ \
     --add-comments=l10n \
     --add-location \
-    --copyright-holder="Michal Čihař" \
+    --copyright-holder "Michal Čihař <michal@cihar.com>" \
+    --package-name gammu \
+    --package-version $ver \
     `find gammu helper -name '*.c' -o -name '*.h' | sort`
 
 xgettext \
@@ -22,12 +27,13 @@ xgettext \
     --keyword=N_ \
     --add-comments=l10n \
     --add-location \
-    --copyright-holder="Michal Čihař" \
+    --copyright-holder "Michal Čihař <michal@cihar.com>" \
+    --package-name libgammu \
+    --package-version $ver \
     `find common -name '*.c' -o -name '*.h' | sort`
 
-po4a admin/po4a.config
+./admin/po4a
 
-ver=`sed -n 's/set (VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
 sed -i '
     s/SOME DESCRIPTIVE TITLE/Gammu translation/;
     s/PACKAGE/Gammu/;
@@ -40,12 +46,6 @@ sed -i '
     s/(C) YEAR/(C) 2003 - '`date +%Y`'/;
     s/VERSION/'$ver'/;
     ' locale/libgammu.pot
-sed -i '
-    s/SOME DESCRIPTIVE TITLE/Gammu documentation translation/;
-    s/PACKAGE/Gammu-docs/;
-    s/(C) YEAR/(C) 2003 - '`date +%Y`'/;
-    s/VERSION/'$ver'/;
-    ' locale/docs.pot
 
 for loc in $LOCS ; do
     sed -i '
