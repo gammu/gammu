@@ -16,6 +16,16 @@ extern char *smsd_service_name;
 extern bool start_smsd_service_dispatcher(void);
 
 /**
+ * Stops service.
+ */
+extern bool stop_smsd_service(void);
+
+/**
+ * Starts service.
+ */
+bool start_smsd_service(void);
+
+/**
  * Installs service.
  */
 extern bool uninstall_smsd_service(void);
