@@ -3,20 +3,21 @@
 
 #include <gammu-config.h>
 #include <gammu-misc.h>
+
 #include "misc.h"
+
 #include "coding/coding.h"
 #include "../debug.h"
 
 #include <string.h>
 #include <time.h>
-#include <stdarg.h>
 #include <stdio.h>
-#include <locale.h>
 #include <stdlib.h>
 #include <sys/timeb.h>
 #ifdef WIN32
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
+#  include <locale.h>
 #endif
 #ifdef HAVE_SYS_UTSNAME_H
 #  include <sys/utsname.h>

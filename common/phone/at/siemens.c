@@ -15,6 +15,8 @@
 #include "atgen.h"
 #include "siemens.h"
 
+#include "../../service/gsmlogo.h"
+
 
 static GSM_Error GetSiemensFrame(GSM_Protocol_Message msg, GSM_StateMachine *s, const char *templ,
 			    unsigned char *buffer, size_t *len)

@@ -93,7 +93,7 @@ typedef enum {
 /**
  * Converts memory type from string.
  *
- * \param type String with memory type.
+ * \param s String with memory type.
  *
  * \return Parsed memory type or 0 on failure.
  */

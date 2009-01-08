@@ -4,28 +4,21 @@
 #include <string.h>
 #include <time.h>
 #include <stdio.h>
-#ifndef __OpenBSD__
+#ifdef HAVE_WCHAR_H
 #  include <wchar.h>
 #endif
 #ifdef WIN32
 #  define WIN32_LEAN_AND_MEAN
 #  include <windows.h>
-#else
-#  include <stdlib.h>
-#  include <errno.h>
-#  include <fcntl.h>
-#  include <signal.h>
 #endif
 
 #include "misc/locales.h"
-#include "misc/misc.h"
 
 #include "debug.h"
 
 #include <gammu-debug.h>
 
 #include "gsmcomon.h"
-#include "misc/coding/coding.h"
 
 GSM_Error NoneFunction(void)
 {

@@ -6,6 +6,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "../common/protocol/nokia/mbus2.h"
 #include "../common/protocol/nokia/phonet.h"

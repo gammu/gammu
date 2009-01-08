@@ -8,6 +8,7 @@
 #include "../gsmstate.h"
 #include "../misc/coding/coding.h"
 #include "../misc/locales.h"
+#include "../service/gsmring.h"
 
 /* These SMS layouts are used exactly as written in Nokia DCT3 phones.
  * In AT module(s) we have to use some layouts to convert AT frame to format

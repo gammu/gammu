@@ -22,13 +22,14 @@
 #ifdef GSM_ENABLE_IRDADEVICE
 #ifndef DJGPP
 
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
 #ifndef WIN32
-#  include <stdlib.h>
 #  include <unistd.h>
-#  include <stdio.h>
 #  include <fcntl.h>
 #  include <errno.h>
-#  include <string.h>
 #  include <sys/time.h>
 #  include <sys/poll.h>
 #  include <sys/socket.h>
