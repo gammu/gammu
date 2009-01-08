@@ -18,6 +18,54 @@
 #include "printing.h"
 #include "message-cmdline.h"
 
+typedef enum {
+	COMPOSE_ANIMATION = 1,
+	COMPOSE_BOOKMARK,
+	COMPOSE_CALENDAR,
+	COMPOSE_CALLER,
+	COMPOSE_EMS,
+	COMPOSE_MMSINDICATOR,
+	COMPOSE_MMSSETTINGS,
+	COMPOSE_OPERATOR,
+	COMPOSE_PICTURE,
+	COMPOSE_PROFILE,
+	COMPOSE_RINGTONE,
+	COMPOSE_SMSTEMPLATE,
+	COMPOSE_TEXT,
+	COMPOSE_TODO,
+	COMPOSE_VCARD10,
+	COMPOSE_VCARD21,
+	COMPOSE_WAPINDICATOR,
+	COMPOSE_WAPSETTINGS
+} ComposeType;
+
+typedef struct {
+	const char *name;
+	const ComposeType type;
+} ComposeMapEntry;
+
+ComposeMapEntry ComposeMap[] = {
+	{"ANIMATION", COMPOSE_ANIMATION},
+	{"BOOKMARK", COMPOSE_BOOKMARK},
+	{"CALENDAR", COMPOSE_CALENDAR},
+	{"CALLER", COMPOSE_CALLER},
+	{"EMS", COMPOSE_EMS},
+	{"MMSINDICATOR", COMPOSE_MMSINDICATOR},
+	{"MMSSETTINGS", COMPOSE_MMSSETTINGS},
+	{"OPERATOR", COMPOSE_OPERATOR},
+	{"PICTURE", COMPOSE_PICTURE},
+	{"PROFILE", COMPOSE_PROFILE},
+	{"RINGTONE", COMPOSE_RINGTONE},
+	{"SMSTEMPLATE", COMPOSE_SMSTEMPLATE},
+	{"TEXT", COMPOSE_TEXT},
+	{"TODO", COMPOSE_TODO},
+	{"VCARD10", COMPOSE_VCARD10},
+	{"VCARD21", COMPOSE_VCARD21},
+	{"WAPINDICATOR", COMPOSE_WAPINDICATOR},
+	{"WAPSETTINGS", COMPOSE_WAPSETTINGS},
+	{NULL, 0}
+};
+
 #define SEND_SAVE_SMS_BUFFER_SIZE 10000
 
 GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int argc, int typearg, char *argv[], GSM_StateMachine *sm)
@@ -54,7 +102,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	FILE 				*ReplaceFile,*f;
 	char				ReplaceBuffer2	[200],ReplaceBuffer[200];
 	char				InputBuffer	[SEND_SAVE_SMS_BUFFER_SIZE/2+1];
-	char				Buffer		[GSM_MAX_MULTI_SMS][SEND_SAVE_SMS_BUFFER_SIZE];
+	unsigned char			Buffer		[GSM_MAX_MULTI_SMS][SEND_SAVE_SMS_BUFFER_SIZE];
 	int				chars_read		= 0;
 	int 				nextlong		= 0;
 	bool				ReplyViaSameSMSC 	= false;
@@ -71,6 +119,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	bool				DeliveryReport		= false;
 	/* Whether we already got text for TEXT message */
 	bool HasText = false;
+	ComposeType compose_type = 0;
 
 	/* Some defaults */
 	Name[0] = 0;
@@ -112,23 +161,38 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		SMSCSet	= 0;
 	}
 
+	for (i = 0; ComposeMap[i].type != 0; i++) {
+		if (strcasecmp(argv[typearg], ComposeMap[i].name) == 0) {
+			compose_type = ComposeMap[i].type;
+			break;
+		}
+	}
 
-	if (strcasecmp(argv[typearg],"TEXT") == 0) {
+	if (compose_type == 0) {
+		printf(_("What format of sms (\"%s\") ?\n"),argv[typearg]);
+		return ERR_UNKNOWN;
+	}
+
+	switch (compose_type) {
+	case COMPOSE_TEXT:
 		/* Text is fed to the buffer later! */
 		SMSInfo.Entries[0].Buffer  		= Buffer[0];
 		SMSInfo.Entries[0].ID			= SMS_Text;
 		SMSInfo.UnicodeCoding   		= false;
-	} else if (strcasecmp(argv[typearg],"SMSTEMPLATE") == 0) {
+		break;
+	case COMPOSE_SMSTEMPLATE:
 		SMSInfo.UnicodeCoding   		= false;
 		SMSInfo.EntriesNum 			= 1;
 		Buffer[0][0]				= 0x00;
 		Buffer[0][1]				= 0x00;
 		SMSInfo.Entries[0].Buffer  		= Buffer[0];
 		SMSInfo.Entries[0].ID			= SMS_AlcatelSMSTemplateName;
-	} else if (strcasecmp(argv[typearg],"EMS") == 0) {
+		break;
+	case COMPOSE_EMS:
 		SMSInfo.UnicodeCoding   		= false;
 		SMSInfo.EntriesNum 			= 0;
-	} else if (strcasecmp(argv[typearg],"MMSINDICATOR") == 0) {
+		break;
+	case COMPOSE_MMSINDICATOR:
 		if (argc < 3 + startarg) {
 			printf("%s\n", _("Where are parameters?"));
 			exit(-1);
@@ -142,7 +206,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		strcpy(MMSInfo.Title,	argv[1 + startarg]);
 		strcpy(MMSInfo.Sender,	argv[2 + startarg]);
 		startarg += 3;
-	} else if (strcasecmp(argv[typearg],"WAPINDICATOR") == 0) {
+		break;
+	case COMPOSE_WAPINDICATOR:
 		if (argc <= 2 + startarg) {
 			printf("%s\n", _("Where are parameters?"));
 			exit(-1);
@@ -155,7 +220,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		strcpy(MMSInfo.Address,	argv[0 + startarg]);
 		strcpy(MMSInfo.Title,	argv[1 + startarg]);
 		startarg += 2;
-	} else if (strcasecmp(argv[typearg],"RINGTONE") == 0) {
+		break;
+	case COMPOSE_RINGTONE:
 		if (argc <= 1 + startarg) {
 			printf("%s\n", _("Where is ringtone filename?"));
 			exit(-1);
@@ -171,7 +237,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			CopyUnicodeString(Name+9*2, ringtone[0].Name);
 		}
 		startarg += 1;
-	} else if (strcasecmp(argv[typearg],"OPERATOR") == 0) {
+		break;
+	case COMPOSE_OPERATOR:
 		if (argc <= 1 + startarg) {
 			printf("%s\n", _("Where is logo filename?"));
 			exit(-1);
@@ -187,7 +254,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(Name,"OpLogo ",7);
 		}
 		startarg += 1;
-	} else if (strcasecmp(argv[typearg],"CALLER") == 0) {
+		break;
+	case COMPOSE_CALLER:
 		if (argc <= 1 + startarg) {
 			printf("%s\n", _("Where is logo filename?"));
 			exit(-1);
@@ -201,7 +269,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(RemoteNumber, "Caller",6);
 		}
 		startarg += 1;
-	} else if (strcasecmp(argv[typearg],"ANIMATION") == 0) {
+		break;
+	case COMPOSE_ANIMATION:
 		SMSInfo.UnicodeCoding   		= false;
 		SMSInfo.EntriesNum 			= 1;
 		if (argc <= 1 + startarg) {
@@ -228,7 +297,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		bitmap[0].Bitmap[0].Text[0]	= 0;
 		bitmap[0].Bitmap[0].Text[1]	= 0;
 		startarg += 1 + atoi(argv[startarg]);
-	} else if (strcasecmp(argv[typearg],"PICTURE") == 0) {
+		break;
+	case COMPOSE_PICTURE:
 		if (argc <= 1 + startarg) {
 			printf("%s\n", _("Where is logo filename?"));
 			exit(-1);
@@ -247,8 +317,9 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(Name,"Picture Image",13);
 		}
 		startarg += 1;
+		break;
 #ifdef GSM_ENABLE_BACKUP
-	} else if (strcasecmp(argv[typearg],"BOOKMARK") == 0) {
+	case COMPOSE_BOOKMARK:
 		if (argc <= 2 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
@@ -271,7 +342,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(Name,"WAP Bookmark",12);
 		}
 		startarg += 2;
-	} else if (strcasecmp(argv[typearg],"WAPSETTINGS") == 0) {
+		break;
+	case COMPOSE_WAPSETTINGS:
 		if (argc <= 3 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
@@ -314,7 +386,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(Name,"WAP Settings",12);
 		}
 		startarg += 3;
-	} else if (strcasecmp(argv[typearg],"MMSSETTINGS") == 0) {
+		break;
+	case COMPOSE_MMSSETTINGS:
 		if (argc <= 2 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
@@ -350,7 +423,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(Name,"MMS Settings",12);
 		}
 		startarg += 2;
-	} else if (strcasecmp(argv[typearg],"CALENDAR") == 0) {
+		break;
+	case COMPOSE_CALENDAR:
 		if (argc <= 2 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
@@ -372,7 +446,8 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(RemoteNumber, "Calendar",8);
 		}
 		startarg += 2;
-	} else if (strcasecmp(argv[typearg],"TODO") == 0) {
+		break;
+	case COMPOSE_TODO:
 		if (argc <= 2 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
@@ -394,7 +469,9 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(RemoteNumber, "ToDo",8);
 		}
 		startarg += 2;
-	} else if (strcasecmp(argv[typearg],"VCARD10") == 0 || strcasecmp(argv[typearg],"VCARD21") == 0) {
+		break;
+	case COMPOSE_VCARD10:
+	case COMPOSE_VCARD21:
 		if (argc <= 3 + startarg) {
 			printf("%s\n", _("Where is backup filename and location and memory *type?"));
 			exit(-1);
@@ -426,7 +503,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf(_("Unknown memory *type: \"%s\"\n"),argv[1 + startarg]);
 			exit(-1);
 		}
-		if (strcasecmp(argv[typearg],"VCARD10") == 0) {
+		if (compose_type == COMPOSE_VCARD10) {
 			SMSInfo.Entries[0].ID = SMS_VCARD10Long;
 		} else {
 			SMSInfo.Entries[0].ID = SMS_VCARD21Long;
@@ -436,15 +513,14 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			EncodeUnicode(Name, "Phonebook entry",15);
 		}
 		startarg += 3;
+		break;
 #endif
-	} else if (strcasecmp(argv[typearg],"PROFILE") == 0) {
+	case COMPOSE_PROFILE:
 		SMSInfo.Entries[0].ID = SMS_NokiaProfileLong;
 		if (*type == SMS_Save) {
 			EncodeUnicode(RemoteNumber, "Profile",7);
 		}
-	} else {
-		printf(_("What format of sms (\"%s\") ?\n"),argv[typearg]);
-		exit(-1);
+		break;
 	}
 
 	for (i = startarg; i < argc; i++) {
@@ -515,7 +591,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				nextlong=21;
 				continue;
 			}
-			if (strcasecmp(argv[typearg],"RINGTONE") == 0) {
+			if (compose_type == COMPOSE_RINGTONE) {
 				if (strcasecmp(argv[i],"-long") == 0) {
 					SMSInfo.Entries[0].ID = SMS_NokiaRingtoneLong;
 					break;
@@ -525,7 +601,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					break;
 				}
 			}
-			if (strcasecmp(argv[typearg],"TEXT") == 0) {
+			if (compose_type == COMPOSE_TEXT) {
 				if (strcasecmp(argv[i],"-text") == 0) {
 					nextlong = 26;
 					break;
@@ -593,7 +669,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					continue;
 				}
 			}
-			if (strcasecmp(argv[typearg],"PICTURE") == 0) {
+			if (compose_type == COMPOSE_PICTURE) {
 				if (strcasecmp(argv[i],"-text") == 0) {
 					nextlong = 6;
 					break;
@@ -612,21 +688,21 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				}
 				break;
 			}
-			if (strcasecmp(argv[typearg],"VCARD10") == 0) {
+			if (compose_type == COMPOSE_VCARD10) {
 				if (strcasecmp(argv[i],"-nokia") == 0) {
 					SMSInfo.Entries[0].ID = SMS_NokiaVCARD10Long;
 					break;
 				}
 				break;
 			}
-			if (strcasecmp(argv[typearg],"VCARD21") == 0) {
+			if (compose_type == COMPOSE_VCARD21) {
 				if (strcasecmp(argv[i],"-nokia") == 0) {
 					SMSInfo.Entries[0].ID = SMS_NokiaVCARD21Long;
 					break;
 				}
 				break;
 			}
-			if (strcasecmp(argv[typearg],"PROFILE") == 0) {
+			if (compose_type == COMPOSE_PROFILE) {
 				if (strcasecmp(argv[i],"-name") == 0) {
 					nextlong = 22;
 					break;
@@ -640,7 +716,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					break;
 				}
 			}
-			if (strcasecmp(argv[typearg],"SMSTEMPLATE") == 0) {
+			if (compose_type == COMPOSE_SMSTEMPLATE) {
 				if (strcasecmp(argv[i],"-unicode") == 0) {
 					SMSInfo.UnicodeCoding = true;
 					break;
@@ -746,7 +822,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					break;
 				}
 			}
-			if (strcasecmp(argv[typearg],"EMS") == 0) {
+			if (compose_type == COMPOSE_EMS) {
 				if (strcasecmp(argv[i],"-unicode") == 0) {
 					SMSInfo.UnicodeCoding = true;
 					break;
@@ -869,7 +945,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 					break;
 				}
 			}
-			if (strcasecmp(argv[typearg],"OPERATOR") == 0) {
+			if (compose_type == COMPOSE_OPERATOR) {
 				if (strcasecmp(argv[i],"-netcode") == 0) {
 					nextlong = 7;
 					break;
@@ -1135,7 +1211,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		exit(-1);
 	}
 
-	if (strcasecmp(argv[typearg],"EMS") == 0 && EMS16Bit) {
+	if (compose_type == COMPOSE_EMS && EMS16Bit) {
 		for (i=0;i<SMSInfo.EntriesNum;i++) {
 			switch (SMSInfo.Entries[i].ID) {
 			case SMS_ConcatenatedTextLong:
@@ -1147,7 +1223,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		}
 
 	}
-	if (strcasecmp(argv[typearg],"TEXT") == 0) {
+	if (compose_type == COMPOSE_TEXT) {
 		if (! HasText) {
 			if (isatty(fileno(stdin))) {
 				printf("%s\n", _("Enter message text and press ^D:"));
@@ -1180,7 +1256,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	}
 
 	if (*type == SMS_Display || *type == SMS_SMSD) {
-		if (strcasecmp(argv[typearg],"OPERATOR") == 0) {
+		if (compose_type == COMPOSE_OPERATOR) {
 			if (bitmap[0].Bitmap[0].Type==GSM_OperatorLogo && strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0) {
 				printf("%s\n", _("No network code"));
 				exit(-1);
@@ -1191,7 +1267,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf_err("%s\n", _("You have to set network code!"));
 			return ERR_UNKNOWN;
 		}
-		if (strcasecmp(argv[typearg],"OPERATOR") == 0) {
+		if (compose_type == COMPOSE_OPERATOR) {
 			if (bitmap[0].Bitmap[0].Type == GSM_OperatorLogo &&
 					strcmp(bitmap[0].Bitmap[0].NetworkCode,"000 00")==0) {
 				error = GSM_GetNetworkInfo(sm,&NetInfo);

@@ -6,7 +6,7 @@
 #include "../helper/message-display.h"
 #include "../helper/message-cmdline.h"
 
-int main(int argc UNUSED, char **argv UNUSED)
+int main(int argc, char **argv)
 {
 	GSM_MultiSMSMessage sms;
 	GSM_Error error;
