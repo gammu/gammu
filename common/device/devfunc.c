@@ -14,6 +14,7 @@
 
 #include <string.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #ifdef WIN32
 #  include <winsock2.h>
 #  include <io.h>

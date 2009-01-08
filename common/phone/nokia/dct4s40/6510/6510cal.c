@@ -10,6 +10,7 @@
 #include "../../../../misc/coding/coding.h"
 #include "../../../../gsmcomon.h"
 #include "../../../../service/gsmlogo.h"
+#include "../../../../service/gsmcal.h"
 #include "../../nfunc.h"
 #include "../../nfuncold.h"
 #include "../../../pfunc.h"

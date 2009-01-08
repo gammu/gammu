@@ -5,20 +5,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-#ifdef WIN32
-#  include <io.h>
-#  include <fcntl.h>
-#else
-#  include <netdb.h>
-#  include <netinet/in.h>
-#endif
 
 #include <gammu-keys.h>
 #include <gammu-debug.h>
 
 #include "../misc/coding/coding.h"
 #include "../debug.h"
-#include "../gsmcomon.h"
 #include "gsmmisc.h"
 
 struct keys_table_position {

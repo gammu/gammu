@@ -5,10 +5,12 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 
 #if defined(GSM_ENABLE_BLUEOBEX) || defined(GSM_ENABLE_IRDAOBEX) || defined(GSM_ENABLE_ATOBEX)
 
 #include "../../gsmcomon.h"
+#include "../../misc/coding/coding.h"
 #include "obex.h"
 
 static GSM_Error OBEX_WriteMessage (GSM_StateMachine *s, unsigned const char *buffer,

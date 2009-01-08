@@ -26,6 +26,7 @@
 #include <gammu-settings.h>
 #include <gammu-misc.h>
 #include <gammu-category.h>
+#include <gammu-backup.h>
 
 typedef struct _GSM_User	 	GSM_User;
 typedef struct _GSM_Reply_Function	GSM_Reply_Function;
@@ -193,18 +194,6 @@ typedef struct _GSM_Reply_Function	GSM_Reply_Function;
 #ifdef GSM_ENABLE_BLUETOOTHDEVICE
 #  include "device/bluetoth/bluetoth.h"
 #endif
-
-#include "service/gsmpbk.h"
-#include "service/gsmnet.h"
-#include "service/gsmring.h"
-#include "service/gsmcal.h"
-#include "service/gsmdata.h"
-#include "service/gsmlogo.h"
-#include "service/gsmmisc.h"
-#include "service/gsmcall.h"
-#include "service/sms/gsmems.h"
-#include "service/sms/gsmmulti.h"
-#include "service/backup/gsmback.h"
 
 #include "debug.h"
 

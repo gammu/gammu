@@ -62,7 +62,6 @@
 #include <stdlib.h>
 
 #include "md5.h"
-#include "gammu.h" /* include added because of MS VC 2005 */
 
 /* Typedef a 32 bit type */
 #ifndef UINT4

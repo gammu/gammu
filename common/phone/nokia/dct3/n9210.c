@@ -10,6 +10,8 @@
 #include "../../../misc/coding/coding.h"
 #include "../../../gsmcomon.h"
 #include "../../../service/gsmlogo.h"
+#include "../../../service/gsmnet.h"
+#include "../../../service/sms/gsmmulti.h"
 #include "../../pfunc.h"
 #include "../nfunc.h"
 #include "n9210.h"

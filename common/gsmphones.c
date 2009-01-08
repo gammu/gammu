@@ -17,6 +17,11 @@
 #include <string.h>
 #include <stdlib.h>
 
+#ifdef HAVE_WCTYPE_H
+#  include <wctype.h>
+#endif
+#include "misc/coding/coding.h"
+
 #define MAX_FEATURE_NAME_LEN 20
 
 typedef struct {

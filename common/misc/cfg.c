@@ -5,8 +5,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <errno.h>
-#ifndef __OpenBSD__
+#ifdef HAVE_WCHAR_H
 #  include <wchar.h>
+#endif
+#ifdef HAVE_WCTYPE_H
 #  include <wctype.h>
 #endif
 

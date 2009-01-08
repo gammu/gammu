@@ -10,6 +10,7 @@
 #include "../../gsmphones.h"
 #include "../../misc/coding/coding.h"
 #include "../../service/gsmmisc.h"
+#include "../../service/gsmcal.h"
 #include "../nokia/nfunc.h"
 #include "../pfunc.h"
 
