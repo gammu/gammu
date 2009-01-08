@@ -101,27 +101,56 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 	GSM_DateTime 	date_time;
 	char 		Buffer[2000];
 	va_list		argp;
+#ifdef WIN32
+        LPCTSTR lpstrings[1];
+        WORD evtype= EVENTLOG_ERROR_TYPE;
+#endif
+#ifdef HAVE_SYSLOG
+        int priority;
+#endif
 
 	va_start(argp, format);
 	vsprintf(Buffer,format, argp);
 	va_end(argp);
 
+#ifdef WIN32
+	if (Config->event_log != NULL) {
+		switch (level) {
+			case -1:
+				evtype = EVENTLOG_ERROR_TYPE;
+				break;
+			case 0:
+			case 1:
+			default:
+				evtype = EVENTLOG_INFORMATION_TYPE;
+				break;
+		}
+		lpstrings[0] = Buffer;
+		/*
+		 * @todo: 1024 is probably wrong, we should use mc to get proper
+		 * event identifiers.
+		 */
+		ReportEvent(Config->event_log, evtype, 0, 1024, NULL, 1, 0,
+			lpstrings, NULL);
+	} else
+#endif
 #ifdef HAVE_SYSLOG
 	if (Config->use_syslog) {
 		switch (level) {
 			case -1:
-				syslog(LOG_ERR, "%s", Buffer);
+				priority = LOG_ERR;
 				break;
 			case 0:
-				syslog(LOG_NOTICE, "%s", Buffer);
+				priority = LOG_NOTICE;
 				break;
 			case 1:
-				syslog(LOG_INFO, "%s", Buffer);
+				priority = LOG_INFO;
 				break;
 			default:
-				syslog(LOG_DEBUG, "%s", Buffer);
+				priority = LOG_DEBUG;
 				break;
 		}
+		syslog(LOG_ERR, "%s", Buffer);
 	} else
 #endif
 	if (Config->log_file != NULL) {
@@ -147,10 +176,11 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 
 	if (Config->use_stderr && level == -1) {
 #ifdef HAVE_GETPID
-		fprintf(stderr, "gammu-smsd[%lld]: %s\n", (long long)getpid(), Buffer);
+		fprintf(stderr, "gammu-smsd[%lld]: ", (long long)getpid());
 #else
-		fprintf(stderr, "gammu-smsd: %s\n", Buffer);
+		fprintf(stderr, "gammu-smsd: ");
 #endif
+		fprintf(stderr, "%s\n", Buffer);
 	}
 }
 
@@ -202,8 +232,15 @@ GSM_SMSDConfig *SMSD_NewConfig(void)
 void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 {
 
+#ifdef WIN32
+	if (Config->event_log != NULL) {
+		DeregisterEventSource(Config->event_log);
+		Config->event_log = NULL;
+	} else
+#endif
 	if (!Config->use_syslog) {
 		fclose(Config->log_file);
+		Config->log_file = NULL;
 	}
 	free(Config->gammu_log_buffer);
 	INI_Free(Config->smsdcfgfile);
@@ -232,6 +269,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	Config->use_timestamps = true;
 	Config->use_syslog = false;
 	Config->use_stderr = false;
+#ifdef WIN32
+	Config->event_log = NULL;
+#endif
 
 	error = INI_ReadFile(filename, false, &Config->smsdcfgfile);
 	if (Config->smsdcfgfile == NULL || error != ERR_NONE) {
@@ -252,6 +292,14 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 			if (fd < 0) return ERR_CANTOPENFILE;
 			Config->log_file = fdopen(fd, "a");
 			Config->use_timestamps = false;
+#ifdef WIN32
+		} else if (strcmp(Config->logfilename, "eventlog") == 0) {
+			Config->event_log = RegisterEventSource(NULL, "gammu-smsd");
+			if (Config->event_log == NULL) {
+				fprintf(stderr, "Error opening event log!\n");
+			}
+			Config->use_stderr = true;
+#endif
 #ifdef HAVE_SYSLOG
 		} else if (strcmp(Config->logfilename, "syslog") == 0) {
 			openlog("gammu-smsd", LOG_PID, LOG_DAEMON);
