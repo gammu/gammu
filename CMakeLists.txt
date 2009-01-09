@@ -798,7 +798,7 @@ if (WIN32)
 endif (WIN32)
 
 install (
-    FILES ${PUBLID_HEADERS}
+    FILES ${PUBLIC_HEADERS}
     DESTINATION "${INSTALL_INC_DIR}/${DIRNAME}"
     COMPONENT "headers"
     )
