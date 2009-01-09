@@ -199,6 +199,19 @@
 #cmakedefine HAVE_SIGHUP
 #endif
 
+#ifndef HAVE_GETPWNAM
+#cmakedefine HAVE_GETPWNAM
+#endif
+#ifndef HAVE_GETGRNAM
+#cmakedefine HAVE_GETGRNAM
+#endif
+#ifndef HAVE_SETUID
+#cmakedefine HAVE_SETUID
+#endif
+#ifndef HAVE_SETGID
+#cmakedefine HAVE_SETGID
+#endif
+
 #ifndef HAVE_DUP_UNISTD_H
 #cmakedefine HAVE_DUP_UNISTD_H
 #endif

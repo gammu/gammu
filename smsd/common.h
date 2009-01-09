@@ -7,6 +7,8 @@
 typedef struct {
 	const char *config_file;
 	const char *pid_file;
+	int uid;
+	int gid;
 	bool daemonize;
 	bool start_service;
 	bool stop_service;

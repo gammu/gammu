@@ -164,6 +164,8 @@ int main(int argc, char **argv)
 	SMSD_Parameters params = {
 		NULL,
 		NULL,
+		-1,
+		-1,
 		false,
 		false,
 		false,

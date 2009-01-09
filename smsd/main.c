@@ -19,10 +19,15 @@
 #endif
 #ifdef HAVE_KILL
 #include "pidfile.h"
+#define HAVE_PIDFILE
 #endif
 #include <errno.h>
 #include <string.h>
 #include "common.h"
+#if defined(HAVE_GETPWNAM) || defined(HAVE_GETGRNAM) || defined(HAVE_SETUID) || defined(HAVE_SETGID)
+#define HAVE_UID
+#include "uid.h"
+#endif
 
 #if !defined(WIN32) && (defined(HAVE_GETOPT) || defined(HAVE_GETOPT_LONG))
 #define HAVE_DEFAULT_CONFIG
@@ -54,8 +59,10 @@ NORETURN void version(void)
 #ifdef HAVE_DAEMON
 	printf("  - %s\n", "DAEMON");
 #endif
-#ifdef HAVE_KILL
+#ifdef HAVE_PIDFILE
 	printf("  - %s\n", "PID");
+#endif
+#ifdef HAVE_UID
 #endif
 #ifdef WIN32
 	printf("  - %s\n", "WINDOWS_SERVICE");
@@ -103,11 +110,15 @@ void help(void)
 	print_option("v", "version", "shows version information");
 	print_option_param("c", "config", "CONFIG_FILE",
 			   "defines path to config file");
-#ifdef HAVE_KILL
+#ifdef HAVE_DAEMON
 	print_option("d", "daemon", "daemonizes program after startup");
 #endif
-#ifdef HAVE_KILL
+#ifdef HAVE_PIDFILE
 	print_option_param("p", "pid", "PID_FILE", "defines path to pid file");
+#endif
+#ifdef HAVE_UID
+	print_option_param("U", "user", "USER", "run daemon as a user");
+	print_option_param("G", "group", "GROUP", "run daemon as a group");
 #endif
 #ifdef WIN32
 	print_option("i", "install-service",
@@ -142,15 +153,17 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 		{"start-service", 0, 0, 's'},
 		{"stop-service", 0, 0, 'k'},
 		{"run-as-service", 0, 0, 'S'},
+		{"user", 1, 0, 'U'},
+		{"group", 1, 0, 'G'},
 		{0, 0, 0, 0}
 	};
 	int option_index;
 
 	while ((opt =
-		getopt_long(argc, argv, "hv?dc:p:iusSk", long_options,
+		getopt_long(argc, argv, "hv?dc:p:iusSkU:G:", long_options,
 			    &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
-	while ((opt = getopt(argc, argv, "hv?dc:p:iusSk")) != -1) {
+	while ((opt = getopt(argc, argv, "hv?dc:p:iusSkU:G:")) != -1) {
 #else
 	/* Poor mans getopt replacement */
 	int i;
@@ -167,12 +180,33 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 			case 'c':
 				params->config_file = optarg;
 				break;
+#ifdef HAVE_PIDFILE
 			case 'p':
 				params->pid_file = optarg;
 				break;
+#endif
+#ifdef HAVE_UID
+			case 'U':
+				params->uid = get_uid(optarg);
+				if (params->uid == -1) {
+					fprintf(stderr, "Wrong user name/ID!\n");
+					exit(1);
+				}
+				break;
+			case 'G':
+				params->gid = get_gid(optarg);
+				if (params->gid == -1) {
+					fprintf(stderr, "Wrong group name/ID!\n");
+					exit(1);
+				}
+				break;
+#endif
+#ifdef HAVE_DAEMON
 			case 'd':
 				params->daemonize = true;
 				break;
+#endif
+#ifdef WIN32
 			case 'i':
 				params->install_service = true;
 				break;
@@ -188,6 +222,7 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 			case 'S':
 				params->run_service = true;
 				break;
+#endif
 			case 'v':
 				version();
 				break;
@@ -219,6 +254,8 @@ int main(int argc, char **argv)
 	SMSD_Parameters params = {
 		NULL,
 		NULL,
+		-1,
+		-1,
 		false,
 		false,
 		false,
@@ -307,10 +344,25 @@ read_config:
 	signal(SIGHUP, smsd_reconfigure);
 #endif
 
-#ifdef HAVE_KILL
+#ifdef HAVE_PIDFILE
 	if (params.pid_file != NULL && strlen(params.pid_file) > 0) {
 		check_pid(params.pid_file);
 		write_pid(params.pid_file);
+	}
+#endif
+
+#ifdef HAVE_UID
+	if (params.gid != -1) {
+		if (!set_gid(params.gid)) {
+			fprintf(stderr, "changing gid failed! (%s)\n", strerror(errno));
+			exit(1);
+		}
+	}
+	if (params.uid != -1) {
+		if (!set_uid(params.uid)) {
+			fprintf(stderr, "changing uid failed! (%s)\n", strerror(errno));
+			exit(1);
+		}
 	}
 #endif
 
