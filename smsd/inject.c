@@ -185,8 +185,16 @@ int main(int argc, char **argv)
 	}
 
 	error = CreateMessage(&type, &sms, argc, startarg, argv, NULL);
+	if (error != ERR_NONE) {
+		printf("Failed to create message: %s\n", GSM_ErrorString(error));
+		return 1;
+	}
 
 	error = SMSD_InjectSMS(params.config_file, &sms);
+	if (error != ERR_NONE) {
+		printf("Failed to inject message: %s\n", GSM_ErrorString(error));
+		return 2;
+	}
 
 	return 0;
 }
