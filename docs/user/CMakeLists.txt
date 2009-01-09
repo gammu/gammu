@@ -44,7 +44,7 @@ foreach(LANG cs de es id it pl ru)
         COMPONENT "man-pages"
         )
 
-    file(GLOB MAN5_PAGES "${LANG}*.5")
+    file(GLOB MAN5_PAGES "${LANG}/*.5")
 
     install (
         FILES ${MAN5_PAGES}
@@ -52,7 +52,7 @@ foreach(LANG cs de es id it pl ru)
         COMPONENT "man-pages"
         )
 
-    file(GLOB MAN5_PAGES "${LANG}*.7")
+    file(GLOB MAN5_PAGES "${LANG}/*.7")
 
     install (
         FILES ${MAN5_PAGES}
