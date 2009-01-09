@@ -10,7 +10,7 @@
 #  include <unistd.h>
 #endif
 
-#include "../common/misc/locales.h"
+#include "../helper/locales.h"
 
 #include "message-display.h"
 #include "memory-display.h"
@@ -488,16 +488,15 @@ void DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *gsm)
 	GSM_Error 		error;
 	int			i, length, current = 0;
 	unsigned char		req[1000], buffer[1000], hexreq[1000];
-#ifdef OSCAR
         unsigned char           hexmsg[1000], hexudh[1000];
-#endif
+
 	error=PHONE_EncodeSMSFrame(gsm,SMS,buffer,PHONE_SMSSubmit,&length,true);
 	if (error != ERR_NONE) {
 		printf("%s\n", _("Error"));
 		exit(-1);
 	}
         length = length - PHONE_SMSSubmit.Text;
-#ifdef OSCAR
+
         for(i=SMS->UDH.Length;i<length;i++) {
 		req[i-SMS->UDH.Length]=buffer[PHONE_SMSSubmit.Text+i];
 	}
@@ -508,11 +507,11 @@ void DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *gsm)
 	}
         EncodeHexBin(hexudh, req, SMS->UDH.Length);
 
-        printf(_("msg:%s nb:%i udh:%s\n"),
-                hexmsg,
-                (buffer[PHONE_SMSSubmit.TPUDL]-SMS->UDH.Length)*8,
-                hexudh);
-#else
+        printf(LISTFORMAT "%s\n", _("Data PDU"), hexmsg);
+        printf(LISTFORMAT "%d\n", _("Number of bits"),
+                (buffer[PHONE_SMSSubmit.TPUDL]-SMS->UDH.Length)*8);
+        printf(LISTFORMAT "%s\n", _("UDH"), hexudh);
+
 	for (i=0;i<buffer[PHONE_SMSSubmit.SMSCNumber]+1;i++) {
 		req[current++]=buffer[PHONE_SMSSubmit.SMSCNumber+i];
 	}
@@ -527,8 +526,8 @@ void DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *gsm)
 	req[current++]=buffer[PHONE_SMSSubmit.TPUDL];
 	for(i=0;i<length;i++) req[current++]=buffer[PHONE_SMSSubmit.Text+i];
 	EncodeHexBin(hexreq, req, current);
-	printf("%s\n\n",hexreq);
-#endif
+        printf(LISTFORMAT "%s\n", _("Whole PDU"), hexreq);
+	printf("\n");
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.

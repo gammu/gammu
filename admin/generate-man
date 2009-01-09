@@ -666,6 +666,10 @@ HELP['sendsms TODO'] = ''''''
 HELP['sendsms'] = '''''' 
 HELP['sendsms PROFILE'] = '''''' 
 HELP['sendsms EMS'] = '''''' 
+HELP['displaysms'] = '''
+Displays PDU data of encoded SMS messages. It accepts same parameters and 
+behaves same like sendsms.
+''' 
 HELP['nokiagetoperatorname'] = '''6110.c phones have place for name for one GSM network (of course, with flashing it's
 possible to change all names, but Gammu is not flasher ;\\-)). You can get this
 name using this option.

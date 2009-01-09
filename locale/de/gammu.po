@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-09 13:55+0100\n"
+"POT-Creation-Date: 2009-01-09 14:19+0100\n"
 "PO-Revision-Date: 2007-12-20 16:33+0100\n"
 "Last-Translator: Jochen Kemnade <jochenkemnade@web.de>\n"
 "Language-Team: Language =de\n"
@@ -2032,7 +2032,7 @@ msgstr "Maximale Zeit"
 msgid "Reading phone phonebook:"
 msgstr "Überprüfe das Telefonbuch des Telefons"
 
-#: gammu/message.c:347 gammu/message.c:448 gammu/message.c:901
+#: gammu/message.c:347 gammu/message.c:448 gammu/message.c:900
 msgid "Corrupted message, skipping"
 msgstr ""
 
@@ -2166,58 +2166,65 @@ msgstr "..Fehler %i"
 msgid ", message reference=%d\n"
 msgstr ", Nachricht-Referenz=%d\n"
 
+#: gammu/message.c:759
+#, fuzzy
+#| msgid "Pager number"
+msgid "Message number"
+msgstr "Pagernummer      "
+
 #: gammu/message.c:763
-#, c-format
-msgid "Number of messages: %i"
+#, fuzzy
+#| msgid "Number of messages: %i"
+msgid "Number of messages"
 msgstr "Anzahl der SMS: %i"
 
-#: gammu/message.c:775 gammu/message.c:812
+#: gammu/message.c:774 gammu/message.c:811
 msgid "If you want break, press Ctrl+C..."
 msgstr "Drücken Sie Strg-C, wenn Sie unterbrechen möchten..."
 
-#: gammu/message.c:779
+#: gammu/message.c:778
 #, c-format
 msgid "Saving SMS %i/%i\n"
 msgstr "Speichere SMS %i/%i\n"
 
-#: gammu/message.c:782
+#: gammu/message.c:781
 #, fuzzy, c-format
 msgid "Saved in folder number %d \"%s\", location %i"
 msgstr "Gespeichert im Ordner \"%s\", Speicherplatz %i"
 
-#: gammu/message.c:787
+#: gammu/message.c:786
 msgid "SIM"
 msgstr "SIM"
 
-#: gammu/message.c:789
+#: gammu/message.c:788
 msgid "phone"
 msgstr "Telefon"
 
-#: gammu/message.c:793
+#: gammu/message.c:792
 #, c-format
 msgid "Sending sms from folder \"%s\", location %i\n"
 msgstr "Sende SMS aus dem Ordner \"%s\", Speicherplatz %i\n"
 
-#: gammu/message.c:798 gammu/message.c:822
+#: gammu/message.c:797 gammu/message.c:821
 #, c-format
 msgid "....waiting for network answer"
 msgstr "....warte auf Netz-Bestätiung"
 
-#: gammu/message.c:817
+#: gammu/message.c:816
 #, c-format
 msgid "Sending SMS %i/%i"
 msgstr "Sende SMS %i/%i"
 
-#: gammu/message.c:835
+#: gammu/message.c:834
 msgid "Something went wrong, uknown message operation!\n"
 msgstr ""
 
-#: gammu/message.c:887
+#: gammu/message.c:886
 #, c-format
 msgid "Too high folder number (max. %i)\n"
 msgstr "Zu hohe Ordnernummer (max. %i)\n"
 
-#: gammu/message.c:892
+#: gammu/message.c:891
 #, c-format
 msgid "Deleting SMS from \"%s\" folder: "
 msgstr "Lösche SMS von Ordner \"%s\": "
@@ -4189,15 +4196,31 @@ msgid "EMS animation ID"
 msgstr "EMS-Animations-ID"
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:477 helper/message-display.c:496
+#: helper/message-display.c:477 helper/message-display.c:495
 #: helper/printing.c:18
 msgid "Error"
 msgstr "Fehler"
 
+#: helper/message-display.c:510
+#, fuzzy
+#| msgid "Data (CSD)"
+msgid "Data PDU"
+msgstr "Daten (CSD)"
+
 #: helper/message-display.c:511
-#, c-format
-msgid "msg:%s nb:%i udh:%s\n"
-msgstr "msg:%s nb:%i udh%s\n"
+#, fuzzy
+msgid "Number of bits"
+msgstr ""
+"\n"
+"Nummer der SMS: %i\n"
+
+#: helper/message-display.c:513
+msgid "UDH"
+msgstr ""
+
+#: helper/message-display.c:529
+msgid "Whole PDU"
+msgstr ""
 
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
@@ -4209,6 +4232,9 @@ msgstr "Warnung"
 #, fuzzy
 msgid "Information"
 msgstr "Telefoninformationen"
+
+#~ msgid "msg:%s nb:%i udh:%s\n"
+#~ msgstr "msg:%s nb:%i udh%s\n"
 
 #~ msgid ""
 #~ "This is free software.  You may redistribute copies of it under the terms "
@@ -5051,16 +5077,6 @@ msgstr "Telefoninformationen"
 #, fuzzy
 #~ msgid "Please numerate locations from 1"
 #~ msgstr "FEHLER: Nummeriere Speicherplätze von 1 an\n"
-
-#, fuzzy
-#~ msgid "Number of SMS: %i"
-#~ msgid_plural "Number of SMSes: %i"
-#~ msgstr[0] ""
-#~ "\n"
-#~ "Nummer der SMS: %i\n"
-#~ msgstr[1] ""
-#~ "\n"
-#~ "Nummer der SMS: %i\n"
 
 #, fuzzy
 #~ msgid "Remote number(s)"
