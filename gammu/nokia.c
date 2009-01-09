@@ -51,7 +51,8 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 			Note = &ringtone.NoteTone.Commands[i].Note;
 			if (!started) {
 				if (Note->Note != Note_Pause) {
-					printf(_("Ringtone \"%s\" (tempo = %i Beats Per Minute)\n\n"),DecodeUnicodeConsole(ringtone.Name),GSM_RTTLGetTempo(Note->Tempo));
+					printf(_("Ringtone \"%s\" (tempo = %i Beats Per Minute)"),DecodeUnicodeConsole(ringtone.Name),GSM_RTTLGetTempo(Note->Tempo));
+					printf("\n\n");
 					started = true;
 				}
 			}
@@ -364,7 +365,7 @@ void NokiaAddPlayLists2(unsigned char *ID,unsigned char *Name,unsigned char *IDF
 		}
 
 		/* adding new playlist file */
-		sprintf(Buffer2,"  Writing %s: ",DecodeUnicodeString(Files2.Name));
+		sprintf(Buffer2, _("Writing file %s:"), DecodeUnicodeString(Files2.Name));
 		AddOneFile(&Files2, Buffer2, false);
 
 		/* cleaning buffers */
@@ -853,7 +854,7 @@ void NokiaAddFile(int argc, char *argv[])
 		File.Type 	   = GSM_File_Other;
 		File.ModifiedEmpty = true;
 		smprintf(gsm, "file id is \"%s\"\n",DecodeUnicodeString(File.ID_FullName));
-		AddOneFile(&File, "Writing JAD file: ", false);
+		AddOneFile(&File, _("Writing JAD file:"), false);
 
 		if (argc > 4) {
 			for (j = 4; j < argc; j++) {
@@ -872,7 +873,7 @@ void NokiaAddFile(int argc, char *argv[])
 		EncodeUnicode(File.Name,buffer,strlen(buffer));
 		File.Type 	   = GSM_File_Java_JAR;
 		File.ModifiedEmpty = true;
-		AddOneFile(&File, "Writing JAR file: ", false);
+		AddOneFile(&File, _("Writing JAR file:"), false);
 		free(File.Buffer);
 		GSM_Terminate();
 		return;
@@ -947,7 +948,7 @@ void NokiaAddFile(int argc, char *argv[])
 
 	GSM_IdentifyFileFormat(&File);
 
-	AddOneFile(&File, "Writing file: ", false);
+	AddOneFile(&File, _("Writing file:"), false);
 	free(File.Buffer);
 	GSM_Terminate();
 }

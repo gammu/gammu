@@ -44,13 +44,15 @@ GSM_Error PrintFileSystemStatus(void)
 
 	printf("\n");
 
-	printf(_("Phone memory: %i bytes (free %i bytes, used %i bytes)"),
+	printf(LISTFORMAT, _("Phone memory"));
+	printf(_("%i bytes (free %i bytes, used %i bytes)"),
 	       Status.Free + Status.Used, Status.Free, Status.Used);
 	printf("\n");
 
 	if (Status.UsedImages != 0 || Status.UsedSounds != 0
 	    || Status.UsedThemes != 0) {
-		printf(_("Used by: Images: %i, Sounds: %i, Themes: %i"),
+		printf(LISTFORMAT, _("Usage details"));
+		printf(_("images: %i, sounds: %i, themes: %i"),
 		       Status.UsedImages, Status.UsedSounds, Status.UsedThemes);
 		printf("\n");
 	}
@@ -150,9 +152,9 @@ void GetFileSystem(int argc, char *argv[])
 						printf("|-- ");
 				} else {
 					if (error == ERR_FOLDERPART) {
-						printf(_("Part of folder "));
+						printf("%s ", _("Part of folder"));
 					} else {
-						printf(_("Folder "));
+						printf("%s ", _("Folder"));
 					}
 				}
 			} else {
@@ -163,9 +165,9 @@ void GetFileSystem(int argc, char *argv[])
 				}
 				if (Files.Folder) {
 					if (error == ERR_FOLDERPART) {
-						printf(_("Part of folder "));
+						printf("%s ", _("Part of folder"));
 					} else {
-						printf(_("Folder "));
+						printf("%s ", _("Folder"));
 					}
 				}
 			}
@@ -189,9 +191,9 @@ void GetFileSystem(int argc, char *argv[])
 				printf(SIZE_T_FORMAT ";", Files.Used);
 			} else {
 				if (error == ERR_FOLDERPART) {
-					printf(_("Part of folder;"));
+					printf("%s;", _("Part of folder"));
 				} else {
-					printf(_("Folder;"));
+					printf("%s;", _("Folder"));
 				}
 				printf("\"%s\";",
 				       DecodeUnicodeConsole(Files.Name));
@@ -378,7 +380,8 @@ void GetOneFile(GSM_File * File, bool newtime, int i)
 			if (Size == 0) {
 				printf("*");
 			} else {
-				fprintf(stderr, _("%c  %i percent"), 13,
+				fprintf(stderr, "\r");
+				fprintf(stderr, _("%i percent"),
 					(int)(File->Used * 100 / Size));
 				if (File->Used * 100 / Size >= 2) {
 					t_time2 = time(NULL);
@@ -584,8 +587,8 @@ void AddOneFile(GSM_File * File, const char *text, const bool send)
 			Print_Error(error);
 		if (File->Used != 0) {
 			fprintf(stderr, "\r");
-			fprintf(stderr, "%s", text);
-			fprintf(stderr, _("%3i percent"),
+			fprintf(stderr, "%s ", text);
+			fprintf(stderr, _("%i percent"),
 				(int)(Pos * 100 / File->Used));
 			if (Pos * 100 / File->Used >= 2) {
 				GSM_GetCurrentDateTime(&dt);
@@ -735,7 +738,7 @@ void AddSendFile(int argc, char *argv[])
 
 	GSM_Init(true);
 
-	AddOneFile(&File, "Writing: ", sendfile);
+	AddOneFile(&File, _("Writing:"), sendfile);
 	EncodeUTF8QuotedPrintable(IDUTF, File.ID_FullName);
 	printf(_("ID of new file is \"%s\"\n"), IDUTF);
 

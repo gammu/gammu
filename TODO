@@ -4,3 +4,5 @@ This file is probably not usable for anybody except me ;-).
 #ifndef GSM_USED_IRDAOBEX
 #  define GSM_USED_IRDAOBEX
 #endif
+
+- WTF is OSCAR in helper/message-display.c?

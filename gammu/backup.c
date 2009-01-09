@@ -95,7 +95,7 @@ void SaveFile(int argc, char *argv[])
 			i++;
 		}
 		if (i != atoi(argv[5])-1) {
-			printf("%s\n", _("ToDo note not found in file"));
+			printf("%s\n", _("Todo note not found in file"));
 			exit(-1);
 		}
 		j = 0;
@@ -308,7 +308,9 @@ void DoBackup(int argc, char *argv[])
 					used++;
 				}
 				fprintf(stderr, "\r   ");
-				fprintf(stderr, _("Reading: %i percent"), used*100/MemStatus.MemoryUsed);
+				fprintf(stderr, "%s ", _("Reading:"));
+				fprintf(stderr, _("%i percent"),
+					used * 100 / MemStatus.MemoryUsed);
 				i++;
 				if (gshutdown) {
 					GSM_Terminate();
@@ -350,7 +352,9 @@ void DoBackup(int argc, char *argv[])
 				used++;
 			}
 			fprintf(stderr, "\r   ");
-			fprintf(stderr, _("Reading: %i percent"), used*100/MemStatus.MemoryUsed);
+			fprintf(stderr, "%s ", _("Reading:"));
+			fprintf(stderr, _("%i percent"),
+				used * 100 / MemStatus.MemoryUsed);
 			i++;
 			if (gshutdown) {
 				GSM_Terminate();
@@ -394,10 +398,10 @@ void DoBackup(int argc, char *argv[])
 	}
 	DoBackupPart = false;
 	if (Info.ToDo) {
-		printf("%s\n", _("Checking phone ToDo"));
+		printf("%s\n", _("Checking phone todos"));
 		error=GSM_GetToDoStatus(gsm,&ToDoStatus);
 		if (error == ERR_NONE && ToDoStatus.Used != 0) {
-			if (answer_yes("   %s", _("Backup phone ToDo?"))) DoBackupPart = true;
+			if (answer_yes("   %s", _("Backup phone todos?"))) DoBackupPart = true;
 		}
 	}
 	if (DoBackupPart) {
@@ -418,7 +422,9 @@ void DoBackup(int argc, char *argv[])
 			used ++;
 			error=GSM_GetNextToDo(gsm,&ToDo,false);
 			fprintf(stderr, "\r   ");
-			fprintf(stderr, _("Reading: %i percent"), used*100/ToDoStatus.Used);
+			fprintf(stderr, "%s ", _("Reading:"));
+			fprintf(stderr, _("%i percent"),
+				used * 100 / ToDoStatus.Used);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -948,7 +954,10 @@ void Restore(int argc, char *argv[])
 		for (i=0;i<max;i++) {
 			error=GSM_SetBitmap(gsm,Backup.CallerLogos[i]);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1009,8 +1018,9 @@ void Restore(int argc, char *argv[])
 					error=GSM_DeleteMemory(gsm, &Pbk);
 			}
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),
-					13,
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
 					(i + 1) * 100 / (MemStatus.MemoryUsed + MemStatus.MemoryFree)
 					);
 			if (gshutdown) {
@@ -1061,7 +1071,10 @@ void Restore(int argc, char *argv[])
 			}
 			if (Pbk.EntriesNum == 0) error=GSM_DeleteMemory(gsm, &Pbk);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/(MemStatus.MemoryUsed+MemStatus.MemoryFree));
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / (MemStatus.MemoryUsed + MemStatus.MemoryFree));
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1093,7 +1106,7 @@ void Restore(int argc, char *argv[])
 		}
 	}
 	if (DoRestore) {
-		fprintf(stderr, _("Deleting old notes: "));
+		fprintf(stderr, "%s ", _("Deleting old notes:"));
 		error = GSM_DeleteAllCalendar(gsm);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
  			while (1) {
@@ -1115,7 +1128,10 @@ void Restore(int argc, char *argv[])
 			Calendar = *Backup.Calendar[i];
 			error=GSM_AddCalendar(gsm,&Calendar);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1132,7 +1148,7 @@ void Restore(int argc, char *argv[])
 			while (Backup.ToDo[max]!=NULL) max++;
 			fprintf(stderr, _("%i entries in backup file\n"),max);
 
-			if (answer_yes(_("Restore phone ToDo?"))) DoRestore = true;
+			if (answer_yes(_("Restore phone todo?"))) DoRestore = true;
 		}
 	}
 	if (DoRestore) {
@@ -1140,7 +1156,7 @@ void Restore(int argc, char *argv[])
 		error = GSM_SetToDo(gsm,&ToDo);
 	}
 	if (DoRestore && (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED)) {
-		fprintf(stderr, _("Deleting old ToDo: "));
+		fprintf(stderr, "%s ", _("Deleting old todos:"));
 		error=GSM_DeleteAllToDo(gsm);
 		if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
 			while (1) {
@@ -1161,7 +1177,10 @@ void Restore(int argc, char *argv[])
 			ToDo.Location 	= 0;
 			error=GSM_AddToDo(gsm,&ToDo);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1186,7 +1205,10 @@ void Restore(int argc, char *argv[])
 				Print_Error(error);
 			}
 			error = GSM_GetNextToDo(gsm,&ToDo,false);
-			fprintf(stderr, _("%cCleaning: %i percent"),13,used*100/ToDoStatus.Used);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				used * 100 / ToDoStatus.Used);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1199,7 +1221,10 @@ void Restore(int argc, char *argv[])
 			ToDo  = *Backup.ToDo[i];
 			error = GSM_SetToDo(gsm,&ToDo);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1216,11 +1241,11 @@ void Restore(int argc, char *argv[])
 			while (Backup.Note[max]!=NULL) max++;
 			fprintf(stderr, _("%i entries in backup file\n"),max);
 
-			if (answer_yes(_("Restore phone Notes?"))) DoRestore = true;
+			if (answer_yes(_("Restore phone notes?"))) DoRestore = true;
 		}
 	}
 	if (DoRestore) {
-		fprintf(stderr, _("Deleting old Notes: "));
+		fprintf(stderr, "%s ", _("Deleting old notes:"));
 		while (1) {
 			error = GSM_GetNextNote(gsm,&Note,true);
 			if (error != ERR_NONE) break;
@@ -1235,7 +1260,10 @@ void Restore(int argc, char *argv[])
 			Note.Location 	= 0;
 			error=GSM_AddNote(gsm,&Note);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1250,7 +1278,10 @@ void Restore(int argc, char *argv[])
 		for (i=0;i<max;i++) {
 			error=GSM_SetSMSC(gsm,Backup.SMSC[i]);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1275,7 +1306,7 @@ void Restore(int argc, char *argv[])
 		}
 	}
 	if (DoRestore) {
-		fprintf(stderr, _("Deleting old bookmarks: "));
+		fprintf(stderr, "%s ", _("Deleting old bookmarks:"));
 		/* One thing to explain: DCT4 phones seems to have bug here.
 		 * When delete for example first bookmark, phone change
 		 * numeration for getting frame, not for deleting. So, we try to
@@ -1296,7 +1327,10 @@ void Restore(int argc, char *argv[])
 			Bookmark.Location = 0;
 			error=GSM_SetWAPBookmark(gsm,&Bookmark);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1318,7 +1352,10 @@ void Restore(int argc, char *argv[])
 		for (i=0;i<max;i++) {
 			error=GSM_SetWAPSettings(gsm,Backup.WAPSettings[i]);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1340,7 +1377,10 @@ void Restore(int argc, char *argv[])
 		for (i=0;i<max;i++) {
 			error=GSM_SetMMSSettings(gsm,Backup.MMSSettings[i]);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1373,7 +1413,10 @@ void Restore(int argc, char *argv[])
 			Print_Error(error);
 			error=GSM_SetRingtone(gsm,&Ringtone,&i);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1413,7 +1456,7 @@ void Restore(int argc, char *argv[])
 		}
 	}
 	if (DoRestore) {
-		fprintf(stderr, _("Deleting old FM stations: "));
+		fprintf(stderr, "%s ", _("Deleting old FM stations:"));
 		error=GSM_ClearFMStations(gsm);
 		Print_Error(error);
 		fprintf(stderr, "%s\n", _("Done"));
@@ -1423,7 +1466,10 @@ void Restore(int argc, char *argv[])
 			FMStation = *Backup.FMStation[i];
 			error=GSM_SetFMStation(gsm,&FMStation);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1445,7 +1491,10 @@ void Restore(int argc, char *argv[])
 		for (i=0;i<max;i++) {
 			error=GSM_SetGPRSAccessPoint(gsm,Backup.GPRSPoint[i]);
 			Print_Error(error);
-			fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Writing:"));
+			fprintf(stderr, _("%i percent"),
+				(i + 1) * 100 / max);
 			if (gshutdown) {
 				GSM_Terminate();
 				exit(0);
@@ -1500,7 +1549,10 @@ void AddNew(int argc, char *argv[])
 					Pbk.MemoryType 	= MEM_ME;
 					error=GSM_AddMemory(gsm, &Pbk);
 					Print_Error(error);
-					fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+					fprintf(stderr, "\r");
+					fprintf(stderr, "%s ", _("Writing:"));
+					fprintf(stderr, _("%i percent"),
+						(i + 1) * 100 / max);
 					if (gshutdown) {
 						GSM_Terminate();
 						exit(0);
@@ -1525,7 +1577,10 @@ void AddNew(int argc, char *argv[])
 					Pbk.MemoryType 	= MEM_SM;
 					error=GSM_AddMemory(gsm, &Pbk);
 					Print_Error(error);
-					fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+					fprintf(stderr, "\r");
+					fprintf(stderr, "%s ", _("Writing:"));
+					fprintf(stderr, _("%i percent"),
+						(i + 1) * 100 / max);
 					if (gshutdown) {
 						GSM_Terminate();
 						exit(0);
@@ -1554,7 +1609,10 @@ void AddNew(int argc, char *argv[])
 					Calendar = *Backup.Calendar[i];
 					error=GSM_AddCalendar(gsm,&Calendar);
 					Print_Error(error);
-					fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+					fprintf(stderr, "\r");
+					fprintf(stderr, "%s ", _("Writing:"));
+					fprintf(stderr, _("%i percent"),
+						(i + 1) * 100 / max);
 					if (gshutdown) {
 						GSM_Terminate();
 						exit(0);
@@ -1575,7 +1633,10 @@ void AddNew(int argc, char *argv[])
 					ToDo  = *Backup.ToDo[i];
 					error = GSM_AddToDo(gsm,&ToDo);
 					Print_Error(error);
-					fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+					fprintf(stderr, "\r");
+					fprintf(stderr, "%s ", _("Writing:"));
+					fprintf(stderr, _("%i percent"),
+						(i + 1) * 100 / max);
 					if (gshutdown) {
 						GSM_Terminate();
 						exit(0);
@@ -1597,7 +1658,10 @@ void AddNew(int argc, char *argv[])
 					Bookmark.Location = 0;
 					error=GSM_SetWAPBookmark(gsm,&Bookmark);
 					Print_Error(error);
-					fprintf(stderr, _("%cWriting: %i percent"),13,(i+1)*100/max);
+					fprintf(stderr, "\r");
+					fprintf(stderr, "%s ", _("Writing:"));
+					fprintf(stderr, _("%i percent"),
+						(i + 1) * 100 / max);
 					if (gshutdown) {
 						GSM_Terminate();
 						exit(0);
@@ -1684,7 +1748,10 @@ void BackupSMS(int argc UNUSED, char *argv[])
 			Backup.SMS[j]->Folder = 0;
 			error=GSM_DeleteSMS(gsm, Backup.SMS[j]);
 			Print_Error(error);
-			fprintf(stderr, _("%cDeleting: %i percent"),13,(j+1)*100/smsnum);
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Deleting:"));
+			fprintf(stderr, _("%i percent"),
+				(j + 1) * 100 / smsnum);
 		}
 	}
 
@@ -1712,7 +1779,7 @@ void AddSMS(int argc UNUSED, char *argv[])
 		SMS.Number = 1;
 		SMS.SMS[0] = *Backup.SMS[smsnum];
 		DisplayMultiSMSInfo(&SMS,false,false,NULL, gsm);
-		if (answer_yes(_("Restore sms?"))) {
+		if (answer_yes(_("Restore message?"))) {
 			error=GSM_AddSMS(gsm, Backup.SMS[smsnum]);
 			Print_Error(error);
 		}
