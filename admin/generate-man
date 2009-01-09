@@ -49,7 +49,7 @@ COMMAND_NOPARAM = '.TP\n.BI "%s"\n%s\n'
 
 SEE_ALSO = '''
 .P
-gammu-smsd(1), gammu-smsd-inject(1), gammurc(5), jadmaker(1)
+gammu\\-smsd(1), gammu\\-smsd\\-inject(1), gammurc(5), jadmaker(1)
 
 Some more hints can be found in README file or on wiki <http://www.gammu.org/>
 which more user hints and further documentation.
@@ -837,7 +837,7 @@ COMMAND_SUBCOMMAND_MATCHER = re.compile('^([^ \n]*) ([A-Z0-9]*) (.*)')
 COMMAND_MATCHER_NOPARAM = re.compile('^([^ \n]*)')
 
 def read_help(section):
-    pipe = os.popen('%s help %s' % (BIN_PATH, section))
+    pipe = os.popen('LANG=C %s help %s' % (BIN_PATH, section))
     data = pipe.readlines()
     pipe.close()
     return data

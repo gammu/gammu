@@ -1,23 +1,22 @@
 .TH GAMMU-SMSDRC 5 "January  4, 2009" "Gammu 1.23.0" "Gammu Documentation"
 .SH NAME
 
-.TP
-.BI gammu-smsdrc
+.P
+gammu\-smsdrc - gammu\-smsd(1) configuration file 
 
-gammu-smsd(1) configuration file 
 .SH SYNOPSIS
-.I /etc/gammu-smsdrc
+.I /etc/gammu\-smsdrc
 .SH DESCRIPTION
-gammu-smsd(1) reads configuration from a config file. It's location can be
+gammu\-smsd(1) reads configuration from a config file. It's location can be
 specified on command line, otherwise default path 
-/etc/gammu-smsdrc
+/etc/gammu\-smsdrc
 is used.
 
 This file use ini file syntax, with comments being marked with both ; and #.
 Sections of config file are identified in square brackets line [this]. All key
 values are case insensitive.
 
-Configuration file of gammu-smsd consists of two sections - [gammu] and
+Configuration file of gammu\-smsd consists of two sections - [gammu] and
 [smsd]. 
 
 The [gammu] section is configuration of a phone connection and is same as
@@ -148,7 +147,7 @@ Default is 0, what should mean no extra information.
 
 .SS Database backends options
 
-Both MYSQL and PGSQL backends (see  gammu-smsd-mysql(7), gammu-smsd-pgsql(7)
+Both MYSQL and PGSQL backends (see  gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7)
 for their documentation) supports same options for configuring connection to a
 database:
 
@@ -172,7 +171,7 @@ semicolon, for example localhost:/path/to/socket.
 .BI Database
 
 Name of database to use. Please note that you should create tables in this
-database before using gammu-smsd. SQL files for creating needed tables are
+database before using gammu\-smsd. SQL files for creating needed tables are
 included in documentation.
 
 .TP
@@ -186,7 +185,7 @@ sent SMS.
 .SS Files backend options
 
 The FILES backend accepts following configuration options. See
-gammu-smsd-files(7) for more detailed service backend description. Please note
+gammu\-smsd\-files(7) for more detailed service backend description. Please note
 that all path should contain trailing path separator (/ on Unix systems):
 
 .TP
@@ -284,11 +283,11 @@ Database = smsd
 
 
 .SH SEE ALSO
-gammu-smsd(1), gammu(1), gammurc(5)
+gammu\-smsd(1), gammu(1), gammurc(5)
 
-gammu-smsd-files(7), gammu-smsd-mysql(7), gammu-smsd-pgsql(7)
+gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7)
 .SH AUTHOR
-gammu-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
+gammu\-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
 .SH COPYRIGHT
 Copyright \(co 2009 Michal Cihar and other authors.
 License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>
