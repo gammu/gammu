@@ -59,9 +59,11 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 			if (started) j++;
 		}
 	}
-    	if (j>50) printf_warn(_("length=%i notes, but you will enter only first 50 tones."),j);
+    	if (j>50) {
+		printf_warn(_("length=%i notes, but you will enter only first 50 tones."), j);
+	}
 
-	printf(_("\n\nThis ringtone in Nokia Composer in phone should look: "));
+	printf("\n\n%s ", _("This ringtone in Nokia Composer in phone should look:"));
 	started = false;
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
@@ -100,7 +102,7 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 		}
 	}
 
-	printf(_("\n\nTo enter it please press: "));
+	printf("\n\n%s ", _("To enter it please press:"));
 	started = false;
 	for (i=0;i<ringtone.NoteTone.NrCommands;i++) {
 		if (ringtone.NoteTone.Commands[i].Type == RING_Note) {
@@ -679,7 +681,7 @@ void NokiaAddFile(int argc, char *argv[])
 			}
 		}
 		if (Size != Size2) {
-			fprintf(stderr, "%s\n", _("INFO: declared JAR file size is different than real. Fixed by Gammu"));
+			printf_info("%s\n", _("Declared JAR file size is different than real. Fixed by Gammu."));
 			for (i=0;i<File.Used;i++) {
 				if (strncasecmp(File.Buffer+i,"MIDlet-Jar-Size: ",17) == 0) {
 					break;
@@ -703,7 +705,7 @@ void NokiaAddFile(int argc, char *argv[])
 			File.Used = File.Used - (i - Pos);
 			File.Buffer = realloc(File.Buffer,File.Used);
 		} else if (Size == -1) {
-			fprintf(stderr, "%s\n", _("INFO: no JAR size info in JAD file. Added by Gammu"));
+			printf_info("%s\n", _("No JAR size info in JAD file. Added by Gammu."));
 		}
 		if (Size != Size2) {
 			sprintf(buffer,"\nMIDlet-Jar-Size: %i",Size2);
@@ -765,7 +767,7 @@ void NokiaAddFile(int argc, char *argv[])
 			CopyUnicodeString(File.ID_FullName,Files.ID_FullName);
 			error = GSM_AddFolder(gsm,&File);
 			if (Overwrite && (error == ERR_FILEALREADYEXIST)) {
-				fprintf(stderr, "%s\n", _("INFO: Application already exist. Deleting by Gammu"));
+				printf_info("%s\n", _("Application already exists. Deleting by Gammu."));
 
 				Start = true;
 				CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
@@ -817,7 +819,7 @@ void NokiaAddFile(int argc, char *argv[])
 				Start = true;
 				CopyUnicodeString(File2.ID_FullName,Files.ID_FullName);
 
-				fprintf(stderr, "%s\n", _("INFO: Application already exist. Deleting by Gammu"));
+				printf_info("%s\n", _("Application already exists. Deleting by Gammu."));
 
 				while (true) {
 					error = GSM_GetFolderListing(gsm,&File2,Start);
