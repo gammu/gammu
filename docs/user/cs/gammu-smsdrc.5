@@ -73,9 +73,9 @@ Výchozí je 30.
 .TP 
 \fBReceiveFrequency\fP
 
-The number of seconds between testing for received SMSes, when the phone is
-busy sending SMSes. Normally a test for received SMSes is done every
-commtimeout seconds and after each sent SMS.
+Počet sekund mezi zjišťováním, zda jsou nějaké nově přijaté SMS zprávy,
+pokud je telefon zaměstnán odesíláním zpráv. Obvykle se nové zprávy hledají
+každých CommTimeout sekund a po každé odeslané SMS.
 
 Výchozí je 0 (není použito).
 
@@ -89,10 +89,9 @@ Výchozí je 1 (povoleno).
 .TP 
 \fBResetFrequency\fP
 
-The number of seconds between performing a preventive soft reset in order to
-minimize the cases of hanging phones e.g. Nokia 5110 will sometimes freeze
-to a state when only after unmounting the battery the phone will be
-functional again.
+Počet sekund mezi provádění preventivního resetu telefonu. Tato volba může
+zabránit zatuhnutí některý telefonů (například Nokia 5110), které při delším
+použivání přestanou reagovat a jen vyndání baterie je může oživit.
 
 Výchozí je 0 (není použito).
 
@@ -112,10 +111,10 @@ Výchozí je 'no'.
 .TP 
 \fBDeliveryReportDelay\fP
 
-Delay in seconds how long is still delivery report considered valid. This
-depends on brokeness of your network (delivery report should have same
-timestamp as sent message). Increase this if delivery reports are not paired
-with sent messages.
+Prodleva v sekundách, jak dlouho je doručenka považována za platnou. Tento
+parametr závisí na chybách v použité síti (doručenka by měla obsahovat
+stejný čas jako odeslaná zpráva). Zvyšte tuto hodnotu pokud se Gammu nedaří
+spárovat doručenky s odeslanými zprávami.
                       
 Výchozí je 10.
 
@@ -178,10 +177,10 @@ obsažené v dokumentaci.
 .TP 
 \fBSkipSMSCNumber\fP
 
-When you send sms from some SMSC, you can have Delivery/Failed Delivery
-Reports from other SMSC number. You can set here number of this "buggy" SMSC
-used by you and Gammu will not check it's number during assigning reports to
-sent SMS.
+Pokud odešlete SMS zprávu přes nějaké SMS centrum, může se stát, že
+doručenky přijdou z jiného SMS centra. Pro tento případ použijte tento
+parametr a nastavte zde takovéto SMS centrum. Gammu pak nebude kontrolovat
+číslo tohoto SMS centra při přiřazování doručenek zprávám.
 
 .SS "Parametry pro službu používající soubory"
 
