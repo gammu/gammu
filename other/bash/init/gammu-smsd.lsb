@@ -16,6 +16,10 @@ DAEMON=/usr/bin/gammu-smsd
 NAME=gammu-smsd
 DESC="Gammu SMS Daemon"
 
+# user which will run this daemon
+USER=gammu
+GROUP=gammu
+
 # Gracefully exit if the package has been removed.
 test -x $DAEMON || exit 0
 
@@ -30,7 +34,8 @@ case "$1" in
   start)
 	log_daemon_msg "Starting $DESC" "$NAME"
 	start-stop-daemon --start --quiet --pidfile /var/run/$NAME.pid \
-		--exec $DAEMON -- $DAEMONPARAM -d -p /var/run/$NAME.pid
+		--exec $DAEMON -- $DAEMONPARAM --daemon --user $USER \
+        --group $GROUP --pid /var/run/$NAME.pid
     log_end_msg $?
 	;;
   stop)
