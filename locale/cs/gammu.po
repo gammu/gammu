@@ -15,7 +15,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: gammu/backup.c:31 gammu/backup.c:50 gammu/backup.c:68 gammu/backup.c:87
 #: helper/message-cmdline.c:356 helper/message-cmdline.c:380
@@ -2321,7 +2321,6 @@ msgid "Enabling info about USSD"
 msgstr "Povoluji informace o USSD"
 
 #: gammu/misc.c:364
-#| msgid "To do lists"
 msgid "Todos"
 msgstr "Úkoly"
 
@@ -2631,12 +2630,10 @@ msgid "Delete phone calendar notes?"
 msgstr "Vymazat kalendář?"
 
 #: gammu/misc.c:1251
-#| msgid "Restore phone todo?"
 msgid "Delete phone todos?"
 msgstr "Odstranit úkoly?"
 
 #: gammu/misc.c:1274
-#| msgid "Restore phone notes?"
 msgid "Delete phone notes?"
 msgstr "Odstranit poznámky?"
 

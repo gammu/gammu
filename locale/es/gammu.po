@@ -2014,9 +2014,6 @@ msgstr "Mensaje dañado, pasándolo"
 
 #: gammu/message.c:360 gammu/message.c:495
 #, fuzzy, c-format
-#| msgid ""
-#| "\n"
-#| "%i SMS parts in %i SMS sequences\n"
 msgid "%i SMS parts in %i SMS sequences"
 msgstr ""
 "\n"
@@ -2357,7 +2354,6 @@ msgstr "Habilitando información sobre USSD"
 
 #: gammu/misc.c:364
 #, fuzzy
-#| msgid "ToDos"
 msgid "Todos"
 msgstr "Listas de tareas"
 
@@ -2668,13 +2664,11 @@ msgstr "¿Borrar notas del calendario?"
 
 #: gammu/misc.c:1251
 #, fuzzy
-#| msgid "Delete phone ToDo?"
 msgid "Delete phone todos?"
 msgstr "¿Borrar lista de tareas del teléfono?"
 
 #: gammu/misc.c:1274
 #, fuzzy
-#| msgid "Delete phone Notes?"
 msgid "Delete phone notes?"
 msgstr "¿Borrar notas del teléfono?"
 
