@@ -955,6 +955,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 				error=GSM_TerminateConnection(Config->gsm);
 			}
 			if (initerrors++ > 3) {
+				SMSD_Log(0, Config, "Going to 30 seconds sleep because of too much connection errors\n");
 				for (i = 0; i < 30; i++) {
 					if (Config->shutdown)
 						break;
