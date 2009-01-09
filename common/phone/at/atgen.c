@@ -3109,6 +3109,7 @@ GSM_Error ATGEN_GetIMEI (GSM_StateMachine *s)
 GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 	size_t	i;
+	int folder;
 	GSM_Error error;
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
 
@@ -3137,9 +3138,11 @@ GSM_Error ATGEN_ReplyAddSMSMessage(GSM_Protocol_Message msg, GSM_StateMachine *s
 		smprintf(s, "Saved at AT location %i\n",
 				s->Phone.Data.SaveSMSMessage->Location);
 		/* Adjust location */
+		folder = s->Phone.Data.SaveSMSMessage->Folder;
 		ATGEN_SetSMSLocation(s, s->Phone.Data.SaveSMSMessage,
-				s->Phone.Data.SaveSMSMessage->Folder / 2, /* We care only about SIM/Phone */
+				1 + (folder / 2), /* We care only about SIM/Phone */
 				s->Phone.Data.SaveSMSMessage->Location);
+		s->Phone.Data.SaveSMSMessage->Folder = folder;
 		return ERR_NONE;
 	case AT_Reply_Error:
 		smprintf(s, "Error\n");

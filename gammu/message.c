@@ -767,8 +767,10 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 				printf(_("Saving SMS %i/%i\n"),i+1,sms.Number);
 				error = GSM_AddSMS(gsm, &sms.SMS[i]);
 				Print_Error(error);
-				printf(_("Saved in folder \"%s\", location %i"),
-					DecodeUnicodeConsole(folders.Folder[sms.SMS[i].Folder-1].Name),sms.SMS[i].Location);
+				printf(_("Saved in folder number %d \"%s\", location %i"),
+					sms.SMS[i].Folder,
+					DecodeUnicodeConsole(folders.Folder[sms.SMS[i].Folder-1].Name),
+					sms.SMS[i].Location);
 				if (sms.SMS[i].Memory == MEM_SM) {
 					printf(", %s\n", _("SIM"));
 				} else {

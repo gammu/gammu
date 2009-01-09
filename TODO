@@ -1,10 +1,5 @@
 This file is probably not usable for anybody except me ;-).
 
-- returned location for AT engine is wrong:
-$ echo 'aa' | ./gammu/gammu savesms TEXT 123465
-Saving SMS 1/1
-Saved in folder "", location -99999, SIM
-
 - move crap like following to gammu config to avoid so heavy usage of gsmstate.h header
 #ifndef GSM_USED_IRDAOBEX
 #  define GSM_USED_IRDAOBEX
