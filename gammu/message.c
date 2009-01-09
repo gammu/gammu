@@ -319,7 +319,10 @@ void GetAllSMS(int argc, char *argv[])
 					*Backup.PhonePhonebook[used]=Pbk;
 					used++;
 				}
-				fprintf(stderr, _("%cReading phone phonebook: %i percent"),13,used*100/MemStatus.MemoryUsed);
+				fprintf(stderr, "\r");
+				fprintf(stderr, "%s ", _("Reading phone phonebook:"));
+				fprintf(stderr, _("%i percent"),
+					used * 100 / MemStatus.MemoryUsed);
 				i++;
 				if (gshutdown) {
 					GSM_Terminate();
@@ -353,7 +356,9 @@ void GetAllSMS(int argc, char *argv[])
 		}
 		start=false;
 	}
-	printf(_("\n\n%i SMS parts in %i SMS sequences\n"),smsnum,smspos);
+	printf("\n\n");
+	printf(_("%i SMS parts in %i SMS sequences"),smsnum,smspos);
+	printf("\n");
 
 #ifdef GSM_ENABLE_BEEP
 	GSM_PhoneBeep();
@@ -410,7 +415,10 @@ void GetEachSMS(int argc, char *argv[])
 					*Backup.PhonePhonebook[used]=Pbk;
 					used++;
 				}
-				fprintf(stderr, _("%cReading phone phonebook: %i percent"),13,used*100/MemStatus.MemoryUsed);
+				fprintf(stderr, "\r");
+				fprintf(stderr, "%s ", _("Reading phone phonebook:"));
+				fprintf(stderr, _("%i percent"),
+					used * 100 / MemStatus.MemoryUsed);
 				i++;
 				if (gshutdown) {
 					GSM_Terminate();
@@ -483,7 +491,9 @@ void GetEachSMS(int argc, char *argv[])
 		i++;
 	}
 
-	printf(_("\n%i SMS parts in %i SMS sequences\n"),smsnum,smspos);
+	printf("\n");
+	printf(_("%i SMS parts in %i SMS sequences"),smsnum,smspos);
+	printf("\n");
 
 	GSM_Terminate();
 }
@@ -679,8 +689,10 @@ void GetEachMMS(int argc, char *argv[])
 			error = GSM_GetFilePart(gsm,&File,&Handle,&Size);
 			if (error == ERR_EMPTY) break;
 			Print_Error(error);
-			fprintf(stderr, "\r   ");
-			fprintf(stderr, _("Reading: %i percent"), (int)(File.Used*100/Size));
+			fprintf(stderr, "\r");
+			fprintf(stderr, "%s ", _("Reading:"));
+			fprintf(stderr, _("%i percent"),
+				(int)(File.Used * 100 / Size));
 		}
 		fprintf(stderr, "%c",13);
 

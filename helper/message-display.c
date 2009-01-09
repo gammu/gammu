@@ -400,10 +400,11 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, cons
 			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
 			break;
 		case SMS_NokiaOperatorLogo:
-			printf(_("Operator logo for %s network (%s, %s)\n\n"),
+			printf(_("Operator logo for %s network (%s, %s)"),
 				SMSInfo.Entries[i].Bitmap->Bitmap[0].NetworkCode,
 				DecodeUnicodeConsole(GSM_GetNetworkName(SMSInfo.Entries[i].Bitmap->Bitmap[0].NetworkCode)),
 				DecodeUnicodeConsole(GSM_GetCountryName(SMSInfo.Entries[i].Bitmap->Bitmap[0].NetworkCode)));
+			printf("\n\n");
 			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
 			break;
 		case SMS_NokiaScreenSaverLong:

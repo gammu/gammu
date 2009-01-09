@@ -360,9 +360,7 @@ static void Version(int argc UNUSED, char *argv[]UNUSED)
 {
 	PrintVersion();
 
-	printf("%s\n", _("This is free software.  You may redistribute copies of it under the terms of"));
-	printf("%s\n", _("the GNU General Public License <http://www.gnu.org/licenses/gpl.html>."));
-	printf("%s\n", _("There is NO WARRANTY, to the extent permitted by law."));
+	printf("%s", _("This is free software.  You may redistribute copies of it under the terms of\nthe GNU General Public License <http://www.gnu.org/licenses/gpl.html>.\nThere is NO WARRANTY, to the extent permitted by law.\n"));
 	printf("\n\n");
 }
 
@@ -1117,7 +1115,7 @@ int main(int argc, char *argv[])
 			error = GSM_ReadConfig(cfg, smcfg, only_config);
 			/* Here we get only in first for loop */
 			if (error != ERR_NONE) {
-				printf_err(_("Failed to read [gammu%d] from gammurc!\n"),
+				printf_err(_("Failed to read [gammu%d] section from configuration file (gammurc)!\n"),
 					   only_config);
 				printf_warn("%s\n", _("No configuration read, using builtin defaults!"));
 				GSM_ReadConfig(NULL, smcfg, 0);

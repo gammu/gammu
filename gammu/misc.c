@@ -361,7 +361,7 @@ void Monitor(int argc, char *argv[])
 		CHECKMEMORYSTATUS(MemStatus,MEM_ME,"Phone phonebook");
 		CHECK_EXIT;
 		if ( (error = GSM_GetToDoStatus(gsm, &ToDoStatus)) == ERR_NONE) {
-			PRINTUSED(_("ToDos"), ToDoStatus.Used, ToDoStatus.Free);
+			PRINTUSED(_("Todos"), ToDoStatus.Used, ToDoStatus.Free);
 		}
 		CHECK_EXIT;
 		if ( (error = GSM_GetCalendarStatus(gsm, &CalendarStatus)) == ERR_NONE) {
@@ -908,10 +908,12 @@ void GetBitmap(int argc, char *argv[])
 
 			printf(LISTFORMAT, _("Ringtone"));
 			if (UnicodeLength(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].RingtoneID))!=0) {
+				/* l10n: Ringtone name and ID format */
 				printf(_("\"%s\" (ID %i)\n"),
 					DecodeUnicodeConsole(GSM_GetRingtoneName(&Info,MultiBitmap.Bitmap[0].RingtoneID)),
 					MultiBitmap.Bitmap[0].RingtoneID);
 			} else {
+				/* l10n: Ringtone ID format */
 				printf(_("ID %i\n"),MultiBitmap.Bitmap[0].RingtoneID);
 			}
 
@@ -1183,8 +1185,10 @@ void ClearMemory(GSM_MemoryType type, const char *question)
 				Pbk.EntriesNum	= 0;
 				error=GSM_DeleteMemory(gsm, &Pbk);
 				Print_Error(error);
-				fprintf(stderr, _("%cClearing: %i percent"), 13,
-						(i + 1) * 100 / (MemStatus.MemoryUsed + MemStatus.MemoryFree));
+				fprintf(stderr, "\r");
+				fprintf(stderr, "%s ", _("Deleting:"));
+				fprintf(stderr, _("%i percent"),
+					(i + 1) * 100 / (MemStatus.MemoryUsed + MemStatus.MemoryFree));
 				if (gshutdown) {
 					GSM_Terminate();
 					exit(0);
@@ -1244,7 +1248,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	DoClear = false;
 	error = GSM_GetToDoStatus(gsm,&ToDoStatus);
 	if (error == ERR_NONE && ToDoStatus.Used != 0) {
-		if (answer_yes(_("Delete phone ToDo?"))) DoClear = true;
+		if (answer_yes(_("Delete phone todos?"))) DoClear = true;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
@@ -1267,7 +1271,7 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 	DoClear = false;
 	error = GSM_GetNotesStatus(gsm,&ToDoStatus);
 	if (error == ERR_NONE && ToDoStatus.Used != 0) {
-		if (answer_yes(_("Delete phone Notes?"))) DoClear = true;
+		if (answer_yes(_("Delete phone notes?"))) DoClear = true;
 	}
 	if (DoClear) {
 		fprintf(stderr, LISTFORMAT, _("Deleting"));
@@ -1322,17 +1326,21 @@ void ClearAll(int argc UNUSED, char *argv[] UNUSED)
 void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
 {
 	if (settings->Settings[j].IsContinuous) {
-		printf(_("Connection type     : Continuous\n"));
+		printf(LISTFORMAT "%s\n", _("Connection type"), _("Continuous"));
 	} else {
-		printf(_("Connection type     : Temporary\n"));
+		printf(LISTFORMAT "%s\n", _("Connection type"), _("Temporary"));
 	}
 	if (settings->Settings[j].IsSecurity) {
-		printf(_("Connection security : On\n"));
+		printf(LISTFORMAT "%s\n", _("Connection security"), _("On"));
 	} else {
-		printf(_("Connection security : Off\n"));
+		printf(LISTFORMAT "%s\n", _("Connection security"), _("Off"));
 	}
-	printf(_("Proxy               : address \"%s\", port %i\n"),DecodeUnicodeConsole(settings->Proxy),settings->ProxyPort);
-	printf(_("2'nd proxy          : address \"%s\", port %i\n"),DecodeUnicodeConsole(settings->Proxy2),settings->Proxy2Port);
+	printf(LISTFORMAT, _("Proxy"));
+	printf(_("address \"%s\", port %i"), DecodeUnicodeConsole(settings->Proxy), settings->ProxyPort);
+	printf("\n");
+	printf(LISTFORMAT, _("Second proxy"));
+	printf(_("address \"%s\", port %i"), DecodeUnicodeConsole(settings->Proxy2), settings->Proxy2Port);
+	printf("\n");
 	switch (settings->Settings[j].Bearer) {
 	case WAPSETTINGS_BEARER_SMS:
 		printf(LISTFORMAT "%s", _("Bearer"), _("SMS"));
@@ -1348,24 +1356,30 @@ void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
 		printf(LISTFORMAT "\"%s\"\n", _("Dial-up number"),DecodeUnicodeConsole(settings->Settings[j].DialUp));
 		printf(LISTFORMAT "\"%s\"\n", _("IP address"),DecodeUnicodeConsole(settings->Settings[j].IPAddress));
 		if (settings->Settings[j].ManualLogin) {
-			printf(_("Login Type          : Manual\n"));
+			printf(LISTFORMAT "%s\n", _("Login type"), _("Manual"));
 		} else {
-			printf(_("Login Type          : Automatic\n"));
+			printf(LISTFORMAT "%s\n", _("Login type"), _("Automatic"));
 		}
 		if (settings->Settings[j].IsNormalAuthentication) {
-			printf(_("Authentication type : Normal\n"));
+			printf(LISTFORMAT "%s\n", _("Authentication type"), _("Normal"));
 		} else {
-			printf(_("Authentication type : Secure\n"));
+			printf(LISTFORMAT "%s\n", _("Authentication type"), _("Secure"));
 		}
 		if (settings->Settings[j].IsISDNCall) {
-			printf(_("Data call type      : ISDN\n"));
+			printf(LISTFORMAT "%s\n", _("Data call type"), _("ISDN"));
               	} else {
-			printf(_("Data call type      : Analogue\n"));
+			printf(LISTFORMAT "%s\n", _("Data call type"), _("Analogue"));
 		}
 		switch (settings->Settings[j].Speed) {
-			case WAPSETTINGS_SPEED_9600  : printf(_("Data call speed     : 9600\n"));  break;
-			case WAPSETTINGS_SPEED_14400 : printf(_("Data call speed     : 14400\n")); break;
-			case WAPSETTINGS_SPEED_AUTO  : printf(_("Data call speed     : Auto\n"));  break;
+			case WAPSETTINGS_SPEED_9600  :
+				printf(LISTFORMAT "%s\n", _("Data call speed"), "9600");
+				break;
+			case WAPSETTINGS_SPEED_14400 :
+				printf(LISTFORMAT "%s\n", _("Data call speed"), "14400");
+				break;
+			case WAPSETTINGS_SPEED_AUTO  :
+				printf(LISTFORMAT "%s\n", _("Data call speed"), _("Auto"));
+				break;
 		}
 		printf(LISTFORMAT "\"%s\"\n", _("User name"),DecodeUnicodeConsole(settings->Settings[j].User));
 		printf(LISTFORMAT "\"%s\"\n", _("Password"),DecodeUnicodeConsole(settings->Settings[j].Password));
@@ -1376,9 +1390,11 @@ void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
 		printf("\n");
 		printf(LISTFORMAT "\"%s\"\n", _("Service code"),DecodeUnicodeConsole(settings->Settings[j].Code));
 		if (settings->Settings[j].IsIP) {
-			printf(_("Address type        : IP address\nIPaddress           : \"%s\"\n"),DecodeUnicodeConsole(settings->Settings[j].Service));
+			printf(LISTFORMAT "%s\n", _("Address type"), _("IP address"));
+			printf(LISTFORMAT "%s\n", _("IP address"), DecodeUnicodeConsole(settings->Settings[j].Service));
 		} else {
-			printf(_("Address type        : Service number\nService number      : \"%s\"\n"),DecodeUnicodeConsole(settings->Settings[j].Service));
+			printf(LISTFORMAT "%s\n", _("Address type"), _("Service number"));
+			printf(LISTFORMAT "%s\n", _("Service number"), DecodeUnicodeConsole(settings->Settings[j].Service));
 		}
 		break;
 	case WAPSETTINGS_BEARER_GPRS:
@@ -1386,14 +1402,14 @@ void DisplayConnectionSettings(GSM_MultiWAPSettings *settings,int j)
 		if (settings->ActiveBearer == WAPSETTINGS_BEARER_GPRS) printf(_(" (active)"));
 		printf("\n");
 		if (settings->Settings[j].ManualLogin) {
-			printf(_("Login Type          : Manual\n"));
+			printf(LISTFORMAT "%s\n", _("Login type"), _("Manual"));
 		} else {
-			printf(_("Login Type          : Automatic\n"));
+			printf(LISTFORMAT "%s\n", _("Login type"), _("Automatic"));
 		}
 		if (settings->Settings[j].IsNormalAuthentication) {
-			printf(_("Authentication type : Normal\n"));
+			printf(LISTFORMAT "%s\n", _("Authentication type"), _("Normal"));
 		} else {
-			printf(_("Authentication type : Secure\n"));
+			printf(LISTFORMAT "%s\n", _("Authentication type"), _("Secure"));
 		}
 		printf(LISTFORMAT "\"%s\"\n", _("Access point"),DecodeUnicodeConsole(settings->Settings[j].DialUp));
 		printf(LISTFORMAT "\"%s\"\n", _("IP address"),DecodeUnicodeConsole(settings->Settings[j].IPAddress));
@@ -2095,7 +2111,9 @@ void CallDivert(int argc, char *argv[])
 	if (strcasecmp("get", argv[2]) == 0) {
 		error = GSM_GetCallDivert(gsm,&cd);
 	    	Print_Error(error);
-		printf(_("Query:\n   Divert type: "));
+		printf(_("Query:"));
+		printf("\n");
+		printf("  " LISTFORMAT, _("Divert type"));
 	} else {
 		cd.Request.Number[0] = 0;
 		cd.Request.Number[1] = 0;
@@ -2106,7 +2124,9 @@ void CallDivert(int argc, char *argv[])
 
 		error = GSM_SetCallDivert(gsm,&cd);
 	    	Print_Error(error);
-		printf(_("Changed:\n   Divert type: "));
+		printf(_("Changed:"));
+		printf("\n");
+		printf("  " LISTFORMAT, _("Divert type"));
 	}
 
       	switch (cd.Request.DivertType) {
@@ -2116,7 +2136,8 @@ void CallDivert(int argc, char *argv[])
                 case GSM_DIVERT_AllTypes  : printf(_("all types of diverts"));			break;
                 default		          : printf(_("unknown %i"),cd.Request.DivertType);			break;
         }
-        printf(_("\n   Calls type : "));
+	printf("\n");
+	printf("  " LISTFORMAT, _("Call type"));
 	switch (cd.Request.CallType) {
 	 	case GSM_DIVERT_VoiceCalls: printf(_("voice"));				break;
                 case GSM_DIVERT_FaxCalls  : printf(_("fax"));				break;
@@ -2124,10 +2145,13 @@ void CallDivert(int argc, char *argv[])
 		case GSM_DIVERT_AllCalls  : printf(_("data & fax & voice"));		break;
                 default                   : printf(_("unknown %i"),cd.Request.CallType);   		break;
         }
-	printf(_("\nResponse:"));
+	printf("\n");
+	printf(_("Response:"));
+	printf("\n");
 
 	for (i=0;i<cd.Response.EntriesNum;i++) {
-	        printf(_("\n   Calls type : "));
+		printf("\n");
+		printf("  " LISTFORMAT, _("Call type"));
         	switch (cd.Response.Entries[i].CallType) {
                 	case GSM_DIVERT_VoiceCalls: printf(_("voice"));		 	break;
                 	case GSM_DIVERT_FaxCalls  : printf(_("fax"));		 	break;
@@ -2135,10 +2159,10 @@ void CallDivert(int argc, char *argv[])
                 	default                   : printf(_("unknown %i"),cd.Response.Entries[i].CallType);break;
               	}
 		printf("\n");
-               	printf(_("   Timeout    : "));
+		printf("  " LISTFORMAT, _("Timeout"));
 		PRINTSECONDS(cd.Response.Entries[i].Timeout);
 		printf("\n");
-                printf(LISTFORMAT "%s\n", _("Number"),DecodeUnicodeString(cd.Response.Entries[i].Number));
+                printf("  "LISTFORMAT "%s\n", _("Number"),DecodeUnicodeString(cd.Response.Entries[i].Number));
         }
 	printf("\n");
 
