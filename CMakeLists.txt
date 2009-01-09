@@ -457,17 +457,21 @@ set (EXAMPLES
     docs/examples/ppp/gprs
     docs/examples/ppp/startppp
     docs/examples/ppp/statsppp
-    other/php/php1/admin.php
-    other/php/php2/linked.php
-    other/php/php2/linked.sql
-    other/php/php3/config.php
-    other/php/php3/funcoes/func.gammu.php
-    other/php/php3/funcoes/func.sql.php
-    other/php/php3/index.php
-    other/php/php3/intergammu.txt
-    other/php/php3/proc/admin.php
-    other/php/php3/proclast.sql
-    other/php/php4/sms.php
+    other/php/class_gammu/class.gammu_nix_win32_v2.php
+    other/php/class_gammu/class.sms.gammu.php
+    other/php/class_gammu/example_gammu_text.php
+    other/php/class_gammu/README
+    other/php/smsd-mysql-admin/admin.php
+    other/php/smsd-mysql-linked/linked.php
+    other/php/smsd-mysql-linked/linked.sql
+    other/php/smsd-mysql-intergammu/config.php
+    other/php/smsd-mysql-intergammu/funcoes/func.gammu.php
+    other/php/smsd-mysql-intergammu/funcoes/func.sql.php
+    other/php/smsd-mysql-intergammu/index.php
+    other/php/smsd-mysql-intergammu/intergammu.txt
+    other/php/smsd-mysql-intergammu/proc/admin.php
+    other/php/smsd-mysql-intergammu/proclast.sql
+    other/php/smsd-mysql-list/sms.php
     )
 
 set (DEVELDOCS
