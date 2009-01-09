@@ -13,6 +13,9 @@ command.
 messages, stores them in defined storage and also sends messages enqueued in
 this storage.
 .PP
+The daemon can reload configuration file after sending hangup signal (SIGHUP)
+and properly terminates itself on SIGINT and SIGTERM.
+.PP
 Program accepts following options (please note that long options might be not
 accepted on some platforms):
 .TP
