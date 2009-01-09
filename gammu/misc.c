@@ -1494,10 +1494,11 @@ void GetChatSettings(int argc, char *argv[])
 		printf(LISTFORMAT "\"%s\"\n", _("Password"),DecodeUnicodeConsole(settings.Password));
 		printf("\n");
 		for (j=0;j<settings.Connection.Number;j++) {
+			printf(LISTFORMAT, _("Connection set name"));
 			if (settings.Connection.Settings[j].Title[0]==0 && settings.Connection.Settings[j].Title[1]==0) {
-				printf(_("Connection set name : Set %i\n"),i);
+				printf(_("Set %i"),i);
 			} else {
-				printf(_("Connection set name : %s\n"),DecodeUnicodeConsole(settings.Connection.Settings[j].Title));
+				printf("%s",DecodeUnicodeConsole(settings.Connection.Settings[j].Title));
 			}
 			DisplayConnectionSettings(&settings.Connection,j);
 			printf("\n");
@@ -1531,9 +1532,15 @@ void GetWAPMMSSettings(int argc, char *argv[])
 			} else {
 				printf("%s", DecodeUnicodeConsole(settings.Settings[j].Title));
 			}
-			if (settings.Active) printf(_(" (active)"));
-			if (settings.ReadOnly) printf(_("\nRead only           : yes"));
-			printf(LISTFORMAT "\"%s\"\n", _("\nHomepage"),DecodeUnicodeConsole(settings.Settings[j].HomePage));
+			if (settings.Active) {
+				printf(" (%s)", _("active"));
+			}
+			printf("\n");
+			if (settings.ReadOnly) {
+				printf(LISTFORMAT "%s\n", _("Read only"), _("yes"));
+			}
+			printf(LISTFORMAT "\"%s\"\n", _("Homepage"),
+				DecodeUnicodeConsole(settings.Settings[j].HomePage));
 			DisplayConnectionSettings(&settings,j);
 			printf("\n");
 		}
