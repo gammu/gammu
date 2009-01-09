@@ -1,14 +1,14 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          gammu
+# Provides:          gammu-smsd
 # Required-Start:    $local_fs $remote_fs
 # Required-Stop:     $local_fs $remote_fs
 # Should-Start:      mysql postgresql $syslog
 # Should-Stop:       mysql postgresql $syslog
 # Default-Start:     2 3 4 5
-# Default-Stop:      S 0 1 6
-# Short-Description: gammu-smsd
-# Description:       This script starts Gammu SMS Daemon.
+# Default-Stop:      0 1 6
+# Short-Description: Gammu SMS daemon
+# Description:       Daemon for automatically sending and receiving messages using GSM phone.
 ### END INIT INFO
 
 PATH=/sbin:/bin:/usr/sbin:/usr/bin
