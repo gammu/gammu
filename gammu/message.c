@@ -755,13 +755,12 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 
 	switch (type) {
 		case SMS_Display:
-			for (i=0;i<sms.Number;i++) {
+			for (i = 0; i < sms.Number; i++) {
+				printf(LISTFORMAT "%i\n", _("Message number"), i);
 				DisplaySMSFrame(&sms.SMS[i], gsm);
 			}
 
-			printf("\n");
-			printf(_("Number of messages: %i"), sms.Number);
-			printf("\n");
+			printf(LISTFORMAT "%i\n", _("Number of messages"), sms.Number);
 			break;
 		case SMS_Save:
 		case SMS_SendSaved:
