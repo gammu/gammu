@@ -344,7 +344,18 @@ read_config:
 	signal(SIGHUP, smsd_reconfigure);
 #endif
 
+#ifdef HAVE_DAEMON
+	/* Daemonize has to be before writing PID as it changes it */
+	if (params.daemonize) {
+		if (daemon(1, 0) != 0) {
+			fprintf(stderr, "daemonizing failed! (%s)\n", strerror(errno));
+			exit(1);
+		}
+	}
+#endif
+
 #ifdef HAVE_PIDFILE
+	/* Writing PID file has to happen before dropping privileges */
 	if (params.pid_file != NULL && strlen(params.pid_file) > 0) {
 		check_pid(params.pid_file);
 		write_pid(params.pid_file);
@@ -366,18 +377,6 @@ read_config:
 	}
 #endif
 
-	if (params.daemonize) {
-#ifdef HAVE_DAEMON
-		if (daemon(1, 0) != 0) {
-			fprintf(stderr, "daemonizing failed! (%s)\n", strerror(errno));
-			exit(1);
-		}
-#else
-		fprintf(stderr,
-			"daemon mode is not supported on your platform!\n");
-		exit(1);
-#endif
-	}
 #ifdef WIN32
 	if (params.run_service) {
 		if (!start_smsd_service_dispatcher()) {
