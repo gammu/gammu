@@ -85,11 +85,11 @@ použitelné pro většinu telefonů.
 Zařízení kde je přístupný telefon nebo adresa telefonu, záleží na typu
 připojení.
 
-For cables or emulated serial ports, you enter device name (for example
+Pro kabely nebo emulovaný sériový port zadejte jméno zařízení (například
 /dev/ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux or COM1: on
-Windows). The special exception are DKU\-2 and DKU\-5 cables, where the device
-is automatically detected from driver information and this parameters is
-ignored.
+Windows). Speciální výjjímkou jsou DKU\-2 a DKU\-5 kabely na Windows, kde je
+zařízení automaticky zjištěno z informací ovladače a tento parametr je
+ignorován.
 
 Při připojení přes Bluetooth musíte zadat Bluetooth adresu vašeho telefonu
 (na Linuxu můžete zjistit seznam zařízení v dosahu pomocí příkazu "hcitool
@@ -112,16 +112,17 @@ Určí, zda chcete nastavit čas v telefonu při připojení.
 .TP 
 \fBStartInfo\fP
 
-This option allow to set, that you want (setting "yes") to see message on
-the phone screen or phone should enable light for a moment during starting
-connection. Phone WON'T beep during starting connection with this option.
+Tato volba umožní nastavit (při nastavení na "yes") zobrazení zprávy na
+displeji telefonu nebo rozsvítit jeho podsvícení při připojení. Telefon
+nebude během připojení vydávat žádné zvuky. Tato volba funguje jen s
+některými telefony Nokia.
 
 .TP 
 \fBGammuCoding\fP
 
-Forces using specified codepage (on Windows \- for example "1250" will force
-CP1250) or UTF8 (in Linux \- "utf8"). This should not be needed in most
-cases, Gammu should detect it according to your locales.
+Vynutí použití zadaného kódování (například "1250" vynutí CP\-1250 nebo
+"utf8" pro UTF\-8). Tato volba by obvykle neměla být potřeba, Gammu kódování
+zjištuje podle nastavených locales.
 
 .TP 
 \fBGammuLoc\fP
@@ -161,18 +162,19 @@ obsaženy všechny informace potřebné pro diagnostiku problému.
 .TP 
 \fBFeatures\fP
 
-Custom features for phone. This can be used as override when values coded in
-common/gsmphones.c are bad or missing. Consult include/gammu\-info.h for
-possible values (all Feature values without leading F_ prefix).  Please
-report correct values to Gammu authors.
+Vlastní parametry telefonu. Toto může být použito pro přepsání parametrů
+zadaných v common/gsmphones.c, které jsou chybné. Pro seznam hodnot se
+můžete podívat to include/gammu\-info.h (všechny hodnot GSM_Feature bez
+prefixu F_). Prosím nahlašte správné hodnoty autorům Gammu.
 
 .TP 
 \fBUse_Locking\fP
 
-On POSIX systems, you might want to lock serial device when it is being
-used.  Enabling this option (setting to yes) will make Gammu honor these
-locks and create it on startup. On most distributions you need additional
-privileges to use locking (eg. you need to be member of uucp group).
+Na Posixových systémech můžete chtít použít zamykání zařízení, pokud je
+používáné. Zapnutím této volby (nastavením na "yes") bude Gammu dodržovat
+tyto zámky a vytvářet je při připojování. Na většině distribucí pro
+vytvoření zámku potřebujete dodatečná oprávnění (například být členem
+skupiny uucp).
 
 Tento parametr nemá na Windows žádný význam.
 
