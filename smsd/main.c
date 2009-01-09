@@ -47,7 +47,6 @@ void smsd_reconfigure(int signum)
 {
 	reconfigure = true;
 	SMSD_Shutdown(config);
-	signal(signum, SIG_IGN);
 }
 
 NORETURN void version(void)
@@ -244,8 +243,63 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 
 }
 
-#ifndef WIN32
+
+void configure_daemon(SMSD_Parameters * params)
+{
+	signal(SIGINT, smsd_interrupt);
+	signal(SIGTERM, smsd_interrupt);
+#ifdef HAVE_SIGHUP
+	signal(SIGHUP, smsd_reconfigure);
 #endif
+
+#ifdef HAVE_DAEMON
+	/* Daemonize has to be before writing PID as it changes it */
+	if (params->daemonize) {
+		if (daemon(1, 0) != 0) {
+			fprintf(stderr, "daemonizing failed! (%s)\n", strerror(errno));
+			exit(1);
+		}
+	}
+#endif
+
+#ifdef HAVE_PIDFILE
+	/* Writing PID file has to happen before dropping privileges */
+	if (params->pid_file != NULL && strlen(params->pid_file) > 0) {
+		check_pid(params->pid_file);
+		write_pid(params->pid_file);
+	}
+#endif
+
+#ifdef HAVE_UID
+	if (params->gid != -1) {
+		if (!set_gid(params->gid)) {
+			fprintf(stderr, "changing gid failed! (%s)\n", strerror(errno));
+			exit(1);
+		}
+	}
+	if (params->uid != -1) {
+		if (!set_uid(params->uid)) {
+			fprintf(stderr, "changing uid failed! (%s)\n", strerror(errno));
+			exit(1);
+		}
+	}
+#endif
+
+#ifdef WIN32
+	if (params->run_service) {
+		if (!start_smsd_service_dispatcher()) {
+			printf("Error starting %s service\n",
+			       smsd_service_name);
+			service_print_error();
+			exit(1);
+		}
+
+		SMSD_FreeConfig(config);
+
+		exit(0);
+	}
+#endif
+}
 
 int main(int argc, char **argv)
 {
@@ -338,60 +392,10 @@ read_config:
 		SMSD_Terminate(config, "Failed to read config", error, true, 2);
 	}
 
-	signal(SIGINT, smsd_interrupt);
-	signal(SIGTERM, smsd_interrupt);
-#ifdef HAVE_SIGHUP
-	signal(SIGHUP, smsd_reconfigure);
-#endif
+	if (!reconfigure)
+		configure_daemon(&params);
 
-#ifdef HAVE_DAEMON
-	/* Daemonize has to be before writing PID as it changes it */
-	if (params.daemonize) {
-		if (daemon(1, 0) != 0) {
-			fprintf(stderr, "daemonizing failed! (%s)\n", strerror(errno));
-			exit(1);
-		}
-	}
-#endif
-
-#ifdef HAVE_PIDFILE
-	/* Writing PID file has to happen before dropping privileges */
-	if (params.pid_file != NULL && strlen(params.pid_file) > 0) {
-		check_pid(params.pid_file);
-		write_pid(params.pid_file);
-	}
-#endif
-
-#ifdef HAVE_UID
-	if (params.gid != -1) {
-		if (!set_gid(params.gid)) {
-			fprintf(stderr, "changing gid failed! (%s)\n", strerror(errno));
-			exit(1);
-		}
-	}
-	if (params.uid != -1) {
-		if (!set_uid(params.uid)) {
-			fprintf(stderr, "changing uid failed! (%s)\n", strerror(errno));
-			exit(1);
-		}
-	}
-#endif
-
-#ifdef WIN32
-	if (params.run_service) {
-		if (!start_smsd_service_dispatcher()) {
-			printf("Error starting %s service\n",
-			       smsd_service_name);
-			service_print_error();
-			exit(1);
-		}
-
-		SMSD_FreeConfig(config);
-
-		exit(0);
-	}
-#endif
-
+	reconfigure = false;
 	error = SMSD_MainLoop(config);
 	if (error != ERR_NONE) {
 		SMSD_Terminate(config, "Failed to run SMSD", error, true, 2);
@@ -400,7 +404,6 @@ read_config:
 	SMSD_FreeConfig(config);
 
 	if (reconfigure) {
-		reconfigure = false;
 		goto read_config;
 	}
 
