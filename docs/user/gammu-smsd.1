@@ -29,6 +29,12 @@ no default and configuration file path has to be always specified.
 \fB\-p\fR, \fB\-\-pid\fR=\fIfile\fR
 Lock file for storing pid, empty for no locking. Not supported on Windows.
 .TP
+\fB\-U\fR, \fB\-\-user\fR=\fIuser\fR
+Drop daemon privileges to chosed user after starting.
+.TP
+\fB\-G\fR, \fB\-\-group\fR=\fIgroup\fR
+Drop daemon privileges to chosen group after starting.
+.TP
 \fB\-d\fR, \fB\-\-daemon\fR
 Daemonize program on startup. Not supported on Windows.
 .TP
