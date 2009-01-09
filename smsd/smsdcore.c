@@ -930,6 +930,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 	GSM_Error		error;
 	int                     errors = -1, initerrors=0;
  	time_t			lastreceive, lastreset = 0;
+	int i;
 
 	error = SMSGetService(Config, &Service);
 	if (error!=ERR_NONE) {
@@ -953,7 +954,13 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 						GSM_ErrorString(error), error, errors);
 				error=GSM_TerminateConnection(Config->gsm);
 			}
-			if (initerrors++ > 3) sleep(30);
+			if (initerrors++ > 3) {
+				for (i = 0; i < 30; i++) {
+					if (Config->shutdown)
+						break;
+					sleep(1);
+				}
+			}
 			SMSD_Log(0, Config, "Starting phone communication...");
 			error=GSM_InitConnection_Log(Config->gsm, 2, SMSD_Log_Function, Config);
 			switch (error) {
