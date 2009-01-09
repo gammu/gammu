@@ -2038,9 +2038,6 @@ msgstr ""
 
 #: gammu/message.c:360 gammu/message.c:495
 #, fuzzy, c-format
-#| msgid ""
-#| "\n"
-#| "%i SMS parts in %i SMS sequences\n"
 msgid "%i SMS parts in %i SMS sequences"
 msgstr ""
 "\n"
@@ -2384,7 +2381,6 @@ msgstr "Aktiviere Infos über USSD"
 
 #: gammu/misc.c:364
 #, fuzzy
-#| msgid "ToDos"
 msgid "Todos"
 msgstr "Aufgaben"
 
