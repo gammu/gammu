@@ -340,7 +340,7 @@ void DisplaySingleSMSInfo(GSM_SMSMessage sms, bool displaytext, bool displayudh,
 	}
 }
 
-void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, const GSM_Backup *Info, GSM_StateMachine *gsm)
+void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, const GSM_Backup *Info, GSM_StateMachine *sm)
 {
 	GSM_SiemensOTASMSInfo 	SiemensOTA;
 	GSM_MultiPartSMSInfo	SMSInfo;
@@ -390,7 +390,7 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, cons
 				Pos = 0;
 				error = GSM_DecodeVCARD(GSM_GetGlobalDebug(), SMSInfo.Entries[i].File->Buffer, &Pos, &pbk, Nokia_VCard21);
 				if (error == ERR_NONE) {
-					error = PrintMemoryEntry(&pbk, gsm);
+					error = PrintMemoryEntry(&pbk, sm);
 				}
 			} else {
 				printf("\n");
@@ -494,14 +494,14 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, cons
 }
 
 
-void DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *gsm)
+void DisplaySMSFrame(GSM_SMSMessage *SMS, GSM_StateMachine *sm)
 {
 	GSM_Error 		error;
 	int			i, length, current = 0;
 	unsigned char		req[1000], buffer[1000], hexreq[1000];
         unsigned char           hexmsg[1000], hexudh[1000];
 
-	error=PHONE_EncodeSMSFrame(gsm,SMS,buffer,PHONE_SMSSubmit,&length,true);
+	error=PHONE_EncodeSMSFrame(sm,SMS,buffer,PHONE_SMSSubmit,&length,true);
 	if (error != ERR_NONE) {
 		printf("%s\n", _("Error"));
 		exit(-1);
