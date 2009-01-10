@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2009???? - 1.22.91
+
+[-] * Fixed setting remote number for SMS in some cases.
     
 20090109 - 1.22.90
 

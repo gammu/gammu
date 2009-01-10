@@ -133,15 +133,15 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	/**
 	 * Recipient or sender.
 	 */
-	unsigned char *RemoteNumber = sms->SMS[0].Number;
+	unsigned char RemoteNumber[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 	/**
 	 * Name of message.
 	 */
-	unsigned char *Name = sms->SMS[0].Name;
+	unsigned char Name[(GSM_MAX_SMS_NAME_LENGTH + 1) * 2];
 	/**
 	 * SMSC to use for message.
 	 */
-	unsigned char *SMSC = sms->SMS[0].SMSC.Number;
+	unsigned char SMSC[(GSM_MAX_NUMBER_LENGTH + 1) * 2];
 
 	/* Some defaults */
 	Name[0] = 0;
@@ -158,7 +158,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		bitmap[i] = NULL;
 	}
 
-	EncodeUnicode(sms->SMS[0].Number, "Gammu", 5);
+	EncodeUnicode(RemoteNumber, "Gammu", 5);
 
 	GSM_ClearMultiPartSMSInfo(&SMSInfo);
 	SMSInfo.ReplaceMessage		= 0;
@@ -175,7 +175,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			printf("%s\n", _("Not enough parameters!"));
 			exit(-1);
 		}
-		EncodeUnicode(sms->SMS[0].Number, argv[typearg + 1], strlen(argv[typearg + 1]));
+		EncodeUnicode(RemoteNumber, argv[typearg + 1], strlen(argv[typearg + 1]));
 		startarg = typearg + 2;
 	}
 
@@ -227,7 +227,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		SMSInfo.Entries[0].ID 	 	= SMS_MMSIndicatorLong;
 		SMSInfo.Entries[0].MMSIndicator = &MMSInfo;
 		if (*type == SMS_Save) {
-			EncodeUnicode(sms->SMS[0].Number,"MMS Info",8);
+			EncodeUnicode(RemoteNumber,"MMS Info",8);
 		}
 		strcpy(MMSInfo.Address,	argv[0 + startarg]);
 		strcpy(MMSInfo.Title,	argv[1 + startarg]);
@@ -242,7 +242,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		SMSInfo.Entries[0].ID 	 	= SMS_WAPIndicatorLong;
 		SMSInfo.Entries[0].MMSIndicator = &MMSInfo;
 		if (*type == SMS_Save) {
-			EncodeUnicode(sms->SMS[0].Number,"WAP Info",8);
+			EncodeUnicode(RemoteNumber,"WAP Info",8);
 		}
 		strcpy(MMSInfo.Address,	argv[0 + startarg]);
 		strcpy(MMSInfo.Title,	argv[1 + startarg]);
@@ -260,7 +260,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		SMSInfo.Entries[0].ID 	 = SMS_NokiaRingtone;
 		SMSInfo.Entries[0].Ringtone = ringtone[0];
 		if (*type == SMS_Save) {
-			CopyUnicodeString(sms->SMS[0].Number, ringtone[0]->Name);
+			CopyUnicodeString(RemoteNumber, ringtone[0]->Name);
 			EncodeUnicode(Name,"Ringtone ",9);
 			CopyUnicodeString(Name+9*2, ringtone[0]->Name);
 		}
@@ -279,7 +279,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		SMSInfo.Entries[0].ID 	 = SMS_NokiaOperatorLogo;
 		SMSInfo.Entries[0].Bitmap   = bitmap[0];
 		if (*type == SMS_Save) {
-			EncodeUnicode(sms->SMS[0].Number, "OpLogo",6);
+			EncodeUnicode(RemoteNumber, "OpLogo",6);
 			EncodeUnicode(Name,"OpLogo ",7);
 		}
 		startarg += 1;
@@ -296,7 +296,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaCallerLogo;
 		SMSInfo.Entries[0].Bitmap   = bitmap[0];
 		if (*type == SMS_Save) {
-			EncodeUnicode(sms->SMS[0].Number, "Caller",6);
+			EncodeUnicode(RemoteNumber, "Caller",6);
 		}
 		startarg += 1;
 		break;
@@ -345,7 +345,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		bitmap[0]->Bitmap[0].Text[0]	= 0;
 		bitmap[0]->Bitmap[0].Text[1]	= 0;
 		if (*type == SMS_Save) {
-			EncodeUnicode(sms->SMS[0].Number, "Picture",7);
+			EncodeUnicode(RemoteNumber, "Picture",7);
 			EncodeUnicode(Name,"Picture Image",13);
 		}
 		startarg += 1;
@@ -370,7 +370,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaWAPBookmarkLong;
 		SMSInfo.Entries[0].Bookmark = Backup.WAPBookmark[i];
 		if (*type == SMS_Save) {
-			EncodeUnicode(sms->SMS[0].Number, "Bookmark",8);
+			EncodeUnicode(RemoteNumber, "Bookmark",8);
 			EncodeUnicode(Name,"WAP Bookmark",12);
 		}
 		startarg += 2;
@@ -414,7 +414,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		}
 		SMSInfo.Entries[0].ID = SMS_NokiaWAPSettingsLong;
 		if (*type == SMS_Save) {
-			EncodeUnicode(sms->SMS[0].Number, "Settings",8);
+			EncodeUnicode(RemoteNumber, "Settings",8);
 			EncodeUnicode(Name,"WAP Settings",12);
 		}
 		startarg += 3;
@@ -451,7 +451,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		}
 		SMSInfo.Entries[0].ID = SMS_NokiaMMSSettingsLong;
 		if (*type == SMS_Save) {
-			EncodeUnicode(sms->SMS[0].Number, "Settings",8);
+			EncodeUnicode(RemoteNumber, "Settings",8);
 			EncodeUnicode(Name,"MMS Settings",12);
 		}
 		startarg += 2;
@@ -475,7 +475,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		SMSInfo.Entries[0].ID 	    = SMS_NokiaVCALENDAR10Long;
 		SMSInfo.Entries[0].Calendar = Backup.Calendar[i];
 		if (*type == SMS_Save) {
-			EncodeUnicode(sms->SMS[0].Number, "Calendar",8);
+			EncodeUnicode(RemoteNumber, "Calendar",8);
 		}
 		startarg += 2;
 		break;
@@ -498,7 +498,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		SMSInfo.Entries[0].ID 	 	= SMS_NokiaVTODOLong;
 		SMSInfo.Entries[0].ToDo 	= Backup.ToDo[i];
 		if (*type == SMS_Save) {
-			EncodeUnicode(sms->SMS[0].Number, "ToDo",8);
+			EncodeUnicode(RemoteNumber, "ToDo",8);
 		}
 		startarg += 2;
 		break;
@@ -541,7 +541,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			SMSInfo.Entries[0].ID = SMS_VCARD21Long;
 		}
 		if (*type == SMS_Save) {
-			EncodeUnicode(sms->SMS[0].Number, "VCARD",5);
+			EncodeUnicode(RemoteNumber, "VCARD",5);
 			EncodeUnicode(Name, "Phonebook entry",15);
 		}
 		startarg += 3;
@@ -550,7 +550,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	case COMPOSE_PROFILE:
 		SMSInfo.Entries[0].ID = SMS_NokiaProfileLong;
 		if (*type == SMS_Save) {
-			EncodeUnicode(sms->SMS[0].Number, "Profile",7);
+			EncodeUnicode(RemoteNumber, "Profile",7);
 		}
 		break;
 	}
@@ -1000,7 +1000,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			nextlong = 0;
 			break;
 		case 2: /* Remote number - only during saving SMS */
-			EncodeUnicode(sms->SMS[0].Number,argv[i],strlen(argv[i]));
+			EncodeUnicode(RemoteNumber,argv[i],strlen(argv[i]));
 			nextlong = 0;
 			break;
 		case 3: /* SMSC set number */
@@ -1035,14 +1035,14 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				exit(-1);
 			}
 			if (*type == SMS_Save) {
-				EncodeUnicode(sms->SMS[0].Number, "OpLogo",6);
-				EncodeUnicode(sms->SMS[0].Number+6*2,bitmap[0]->Bitmap[0].NetworkCode,3);
-				EncodeUnicode(sms->SMS[0].Number+6*2+3*2,bitmap[0]->Bitmap[0].NetworkCode+4,2);
+				EncodeUnicode(RemoteNumber, "OpLogo",6);
+				EncodeUnicode(RemoteNumber+6*2,bitmap[0]->Bitmap[0].NetworkCode,3);
+				EncodeUnicode(RemoteNumber+6*2+3*2,bitmap[0]->Bitmap[0].NetworkCode+4,2);
 				if (UnicodeLength(GSM_GetNetworkName(bitmap[0]->Bitmap[0].NetworkCode))<GSM_MAX_SMS_NAME_LENGTH-7) {
 					EncodeUnicode(Name,"OpLogo ",7);
 					CopyUnicodeString(Name+7*2,GSM_GetNetworkName(bitmap[0]->Bitmap[0].NetworkCode));
 				} else {
-					CopyUnicodeString(Name,sms->SMS[0].Number);
+					CopyUnicodeString(Name,RemoteNumber);
 				}
 			}
 			nextlong = 0;
@@ -1320,14 +1320,14 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 				if (error != ERR_NONE) goto end_compose;
 				strcpy(bitmap[0]->Bitmap[0].NetworkCode,NetInfo.NetworkCode);
 				if (*type == SMS_Save) {
-					EncodeUnicode(sms->SMS[0].Number, "OpLogo",6);
-					EncodeUnicode(sms->SMS[0].Number+6*2,bitmap[0]->Bitmap[0].NetworkCode,3);
-					EncodeUnicode(sms->SMS[0].Number+6*2+3*2,bitmap[0]->Bitmap[0].NetworkCode+4,2);
+					EncodeUnicode(RemoteNumber, "OpLogo",6);
+					EncodeUnicode(RemoteNumber+6*2,bitmap[0]->Bitmap[0].NetworkCode,3);
+					EncodeUnicode(RemoteNumber+6*2+3*2,bitmap[0]->Bitmap[0].NetworkCode+4,2);
 					if (UnicodeLength(GSM_GetNetworkName(bitmap[0]->Bitmap[0].NetworkCode))<GSM_MAX_SMS_NAME_LENGTH-7) {
 						EncodeUnicode(Name,"OpLogo ",7);
 						CopyUnicodeString(Name+7*2,GSM_GetNetworkName(bitmap[0]->Bitmap[0].NetworkCode));
 					} else {
-						CopyUnicodeString(Name,sms->SMS[0].Number);
+						CopyUnicodeString(Name,RemoteNumber);
 					}
 				}
 			}
