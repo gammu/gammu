@@ -96,8 +96,8 @@ against buffer overflows and similar attacks
 You can also disable support for whole set of phones, e.g.:
 
 -DWITH_NOKIA_SUPPORT=OFF disables Nokia phones support
--DWITH_Bluez=OFF disables Bluetooth support
--DWITH_IrDA=OFF disables IrDA support
+-DWITH_BLUETOOTH=OFF disables Bluetooth support
+-DWITH_IRDA=OFF disables IrDA support
 
 
 From Sources - Windows
