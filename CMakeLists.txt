@@ -19,9 +19,9 @@ endif(COMMAND cmake_policy)
 
 option (COVERAGE "Add flags for Coverage analysis" OFF)
 
-if (WIN32)
+if (WIN32 AND NOT CYGWIN)
     set (CPACK_SYSTEM_NAME "Windows" CACHE STRING "Windows package name")
-endif (WIN32)
+endif (WIN32 AND NOT CYGWIN)
 
 if (MINGW)
     # My MinGW is hacked to use msvcr70.dll, to work with Python
@@ -60,7 +60,7 @@ set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
 set (CPACK_PACKAGE_VERSION_MAJOR "${VERSION_MAJOR}")
 set (CPACK_PACKAGE_VERSION_MINOR "${VERSION_MINOR}")
 set (CPACK_PACKAGE_VERSION_PATCH "${VERSION_PATCH}")
-if (WIN32)
+if (WIN32 AND NOT CYGWIN)
   set (CPACK_PACKAGE_INSTALL_DIRECTORY "Gammu ${VERSION}")
   # There is a bug in NSI that does not handle full unix paths properly. Make
   # sure there is at least one set of four (4) backlasshes.
@@ -71,10 +71,10 @@ if (WIN32)
   set (CPACK_NSIS_URL_INFO_ABOUT "http://www.gammu.org")
   set (CPACK_NSIS_CONTACT "michal@cihar.com")
   set (CPACK_NSIS_MODIFY_PATH ON)
-else (WIN32)
+else (WIN32 AND NOT CYGWIN)
   set (CPACK_STRIP_FILES "gammu")
   set (CPACK_SOURCE_STRIP_FILES "")
-endif (WIN32)
+endif (WIN32 AND NOT CYGWIN)
 include (CPack)
 
 # We want some tests. Even when cross compiling for Windows tests can be
@@ -376,10 +376,10 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     MACRO_TUNE_COMPILER("-Wformat=2")
     MACRO_TUNE_COMPILER("-Wno-format-y2k")
     # Win32 implementation of gettext does not allow us to use so strict warnings
-    if (WIN32)
+    if (WIN32 AND NOT CYGWIN)
         MACRO_TUNE_COMPILER("-Wno-format-nonliteral")
         MACRO_TUNE_COMPILER("-Wno-format-security")
-    endif (WIN32)
+    endif (WIN32 AND NOT CYGWIN)
 
     # Win32 implementation of gettext does not allow us to use so strict warnings
     if (COVERAGE)
@@ -420,9 +420,9 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     # Other flags
     #
 
-    if (WIN32 AND BUILD_SHARED_LIBS)
+    if (WIN32 AND NOT CYGWIN AND BUILD_SHARED_LIBS)
         MACRO_TUNE_LINKER("-Wl,--enable-auto-import")
-    endif (WIN32 AND BUILD_SHARED_LIBS)
+    endif (WIN32 AND NOT CYGWIN AND BUILD_SHARED_LIBS)
 endif(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     CMAKE_COMPILER_IS_CYGWIN OR CMAKE_COMPILER_IS_GNUCXX)
 
@@ -769,7 +769,7 @@ configure_file ("${Gammu_SOURCE_DIR}/templates/gammu-smsd-uninstalled.pc.cmake" 
 # Install instructions
 
 # Install Windows libraries
-if (WIN32)
+if (WIN32 AND NOT CYGWIN)
     # MySQL
     if (MYSQL_FOUND)
         ADD_DLL("libmysql.dll" "${MYSQL_LIBRARIES}")
@@ -799,7 +799,7 @@ if (WIN32)
     install (FILES ${WIN32_INSTALL_DLL}
             DESTINATION "${INSTALL_BIN_DIR}"
             )
-endif (WIN32)
+endif (WIN32 AND NOT CYGWIN)
 
 install (
     FILES ${PUBLIC_HEADERS}
