@@ -212,12 +212,12 @@ int main(void) {
 
 OPTION(WITH_BLUETOOTH "Bluetooth support" ON)
 if (WITH_BLUETOOTH)
-    if (WIN32)
+    if (WIN32 AND NOT CYGWIN)
         # FIXME: This is currently hardcoded here, maybe there is test?
         set(BLUETOOTH_FOUND ON)
         message(STATUS "Using Windows native Bluetooth")
         set(BLUETOOTH_SEARCH TRUE)
-    else (WIN32)
+    else (WIN32 AND NOT CYGWIN)
         find_package (Bluez)
         if (BLUEZ_FOUND)
             set(BLUETOOTH_FOUND ON)
@@ -233,7 +233,7 @@ if (WITH_BLUETOOTH)
             set(BLUETOOTH_FOUND ON)
             set(BLUETOOTH_SEARCH FALSE)
         endif (OSX_BLUE_FOUND)
-    endif (WIN32)
+    endif (WIN32 AND NOT CYGWIN)
 else (WITH_BLUETOOTH)
     set(BLUETOOTH_FOUND FALSE)
     set(BLUETOOTH_INCLUDE_DIR)
@@ -257,10 +257,10 @@ endif (WITH_BLUETOOTH_RF_SEARCHING)
 
 OPTION(WITH_IRDA "IrDA support" ON)
 if (WITH_IRDA)
-    if (WIN32)
+    if (WIN32 AND NOT CYGWIN)
         # FIXME: This is currently hardcoded here, maybe there is test?
         set (IRDA_FOUND TRUE)
-    else (WIN32)
+    else (WIN32 AND NOT CYGWIN)
         check_c_source_compiles (
             "
 #include <sys/socket.h>
@@ -273,7 +273,7 @@ if (WITH_IRDA)
             "
             IRDA_FOUND
             )
-    endif (WIN32)
+    endif (WIN32 AND NOT CYGWIN)
 else (WITH_IRDA)
     set (IRDA_FOUND FALSE)
 endif (WITH_IRDA)
