@@ -74,19 +74,19 @@ endif (FBSD_BLUE_FOUND)
 if (OSX_BLUE_FOUND)
     list (APPEND LIBRARY_SRC device/bluetoth/blue_osx.c)
 endif (OSX_BLUE_FOUND)
-if (WIN32)
+if (WIN32 AND NOT CYGWIN)
     list (APPEND LIBRARY_SRC device/bluetoth/blue_w32.c)
-endif (WIN32)
+endif (WIN32 AND NOT CYGWIN)
 
-if (NOT WIN32 AND NOT DJGPP)
+if (CYGWIN OR NOT WIN32 AND NOT DJGPP)
     list (APPEND LIBRARY_SRC device/serial/ser_unx.c)
-endif (NOT WIN32 AND NOT DJGPP)
+endif (CYGWIN OR NOT WIN32 AND NOT DJGPP)
 if (DJGPP)
     list (APPEND LIBRARY_SRC device/serial/ser_djg.c)
 endif (DJGPP)
-if (WIN32)
+if (WIN32 AND NOT CYGWIN)
     list (APPEND LIBRARY_SRC device/serial/ser_w32.c)
-endif (WIN32)
+endif (WIN32 AND NOT CYGWIN)
 
 # Library
 add_library (libGammu ${LIBRARY_SRC})
@@ -134,14 +134,14 @@ include_directories ("${Gammu_BINARY_DIR}/include")
 include_directories ("${Gammu_SOURCE_DIR}/common")
 
 # Add libraries needed for windows build
-if (WIN32)
+if (WIN32 AND NOT CYGWIN)
     # Magic needed for SHGetFolderPathA
     target_link_libraries (libGammu shfolder shell32)
     # Win sock
     target_link_libraries (libGammu ws2_32)
     # These libraries are needed for serial driver
     target_link_libraries (libGammu setupapi advapi32)
-endif (WIN32)
+endif (WIN32 AND NOT CYGWIN)
 
 # Install instructions
 install (TARGETS libGammu
