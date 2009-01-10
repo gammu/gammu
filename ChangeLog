@@ -18,7 +18,7 @@ ChangeLog
 2009???? - 1.22.91
 
 [-] * Fixed setting remote number for SMS in some cases.
-[-] * Fixed compilation under cygwin,
+[-] * Fixed compilation under cygwin.
     
 20090109 - 1.22.90
 
