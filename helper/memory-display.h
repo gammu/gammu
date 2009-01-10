@@ -4,8 +4,8 @@
 #include <gammu-memory.h>
 #include <gammu-statemachine.h>
 
-GSM_Error PrintMemoryEntry(GSM_MemoryEntry *entry, GSM_StateMachine *gsm);
-GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *gsm);
+GSM_Error PrintMemoryEntry(GSM_MemoryEntry *entry, GSM_StateMachine *sm);
+GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm);
 
 #endif
 

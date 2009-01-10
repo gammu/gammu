@@ -18,7 +18,7 @@ static GSM_AllRingtonesInfo 	ringtones_info = {0, NULL};
 static bool			callerinit[GAMMU_CALLER_GROUPS] = {false, false, false, false, false};
 static bool			ringinit = false;
 
-GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *gsm)
+GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 {
 	GSM_Category	Category;
 	int		z;
@@ -38,12 +38,12 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *gsm)
 		if (entry->Number == -1) {
 			printf(LISTFORMAT "\"%s\"\n", _("Category"), DecodeUnicodeConsole(entry->Text));
 		} else {
-			if (gsm == NULL) {
+			if (sm == NULL) {
 				error = ERR_NOTSUPPORTED;
 			} else {
 				Category.Location = entry->Number;
 				Category.Type = Category_Phonebook;
-				error=GSM_GetCategory(gsm, &Category);
+				error=GSM_GetCategory(sm, &Category);
 			}
 			if (error == ERR_NONE) {
 				printf(LISTFORMAT "\"%s\" (%i)\n", _("Category"), DecodeUnicodeConsole(Category.Name), entry->Number);
@@ -64,7 +64,7 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *gsm)
 		if (!callerinit[entry->Number-1]) {
 			caller[entry->Number-1].Type	    = GSM_CallerGroupLogo;
 			caller[entry->Number-1].Location = entry->Number;
-			error=GSM_GetBitmap(gsm,&caller[entry->Number-1]);
+			error=GSM_GetBitmap(sm,&caller[entry->Number-1]);
 			if (error != ERR_NONE) return error;
 			if (caller[entry->Number-1].DefaultName) {
 				NOKIA_GetDefaultCallerGroupName(&caller[entry->Number-1]);
@@ -74,8 +74,8 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *gsm)
 		printf(LISTFORMAT "\"%s\"\n", _("Caller group"),DecodeUnicodeConsole(caller[entry->Number-1].Text));
 		return ERR_NONE;
 	case PBK_RingtoneID	     :
-		if (!ringinit && gsm != NULL) {
-			error=GSM_GetRingtonesInfo(gsm,&ringtones_info);
+		if (!ringinit && sm != NULL) {
+			error=GSM_GetRingtonesInfo(sm,&ringtones_info);
 			if (error != ERR_NOTSUPPORTED) return error;
 			if (error == ERR_NONE) ringinit = true;
 		}
@@ -149,13 +149,13 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *gsm)
 	return ERR_NONE;
 }
 
-GSM_Error PrintMemoryEntry(GSM_MemoryEntry *entry, GSM_StateMachine *gsm)
+GSM_Error PrintMemoryEntry(GSM_MemoryEntry *entry, GSM_StateMachine *sm)
 {
 	int i;
 	GSM_Error error;
 
 	for (i = 0; i < entry->EntriesNum; i++) {
-		error = PrintMemorySubEntry(&entry->Entries[i], gsm);
+		error = PrintMemorySubEntry(&entry->Entries[i], sm);
 		if (error != ERR_NONE) return error;
 	}
 	printf("\n");
