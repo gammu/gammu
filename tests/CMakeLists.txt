@@ -291,10 +291,13 @@ target_link_libraries(sms-cmdline messagedisplay)
 target_link_libraries(sms-cmdline messagecmdline)
 add_test(sms-cmdline-1 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     TEXT 213 -text aaafdsfdfasd)
+set_tests_properties(sms-cmdline-1 PROPERTIES PASS_REGULAR_EXPRESSION "Remote number        : \"213\"")
 add_test(sms-cmdline-2 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     EMS 213 -text "aaafdsfdfasddsadsadsadsadijfdsalkfjla sdjflkjlfk fdsaf dsa fdsaf dsafafdasfsadfdsaf dsafdsa fdsaf dasfdsafdsafdsaf dsafdsaf daaafdsfdfasddsadsadsadsadijfdsalkfjla sdjflkjlfk fdsaf dsa fdsaf dsafafdasfsadfdsaf dsafdsa fdsaf dasfdsafdsafdsaf dsafdsaf dsafdsaf")
+set_tests_properties(sms-cmdline-2 PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(8 bit\\) [0-9]*, 2 parts")
 add_test(sms-cmdline-3 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     MMSINDICATOR 800123456 http://wammu.eu/ Wammu Gammu)
+set_tests_properties(sms-cmdline-3 PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
 
 # AT parser tests
 add_executable(at-parser at-parser.c)
