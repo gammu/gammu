@@ -86,4 +86,7 @@ if (ENABLE_PYTHON)
         configure_file("${PYFILE}" "${CMAKE_CURRENT_BINARY_DIR}/gammu/${FILENAME}" COPY_ONLY)
     endforeach(PYFILE)
     install(FILES ${PYFILES} DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
+
+    # Testing
+    add_test("py-backup-convert" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/examples/backup-convertor.py" "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcards/photo-2.vcf" "${CMAKE_CURRENT_BINARY_DIR}/photo-2.backup")
 endif (ENABLE_PYTHON)
