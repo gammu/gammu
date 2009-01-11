@@ -585,7 +585,7 @@ const char *GetCompiler(void)
 #elif defined(__MINGW32__)
 	snprintf(Buffer, sizeof(Buffer) - 1, "GCC %i.%i, MinGW %i.%i", __GNUC__, __GNUC_MINOR__, __MINGW32_MAJOR_VERSION, __MINGW32_MINOR_VERSION);
 #elif defined(__CYGWIN__)
-	snprintf(Buffer, sizeof(Buffer) - 1, "GCC %i.%i, Cygwin", __GNUC__, __GNUC_MINOR__);
+	snprintf(Buffer, sizeof(Buffer) - 1, "GCC %i.%i, Cygwin %i.%i", __GNUC__, __GNUC_MINOR__, CYGWIN_VERSION_DLL_MAJOR, CYGWIN_VERSION_DLL_MINOR);
 #elif defined(__GNUC__)
 	snprintf(Buffer, sizeof(Buffer) - 1, "GCC %i.%i", __GNUC__, __GNUC_MINOR__);
 #elif defined(DJGPP)
