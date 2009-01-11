@@ -95,10 +95,6 @@ typedef struct {
 #endif
 } StateMachineObject;
 
-
-/* Forward declaration */
-extern PyTypeObject StateMachineType;
-
 /* ---------------------------------------------------------------- */
 
 /*
