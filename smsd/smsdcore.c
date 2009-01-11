@@ -101,7 +101,7 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 	GSM_DateTime 	date_time;
 	char 		Buffer[2000];
 	va_list		argp;
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_EVENT_LOG
         LPCTSTR lpstrings[1];
         WORD evtype= EVENTLOG_ERROR_TYPE;
 #endif
@@ -113,7 +113,7 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 	vsprintf(Buffer,format, argp);
 	va_end(argp);
 
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_EVENT_LOG
 	if (Config->event_log != NULL) {
 		switch (level) {
 			case -1:
@@ -232,7 +232,7 @@ GSM_SMSDConfig *SMSD_NewConfig(void)
 void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 {
 
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_EVENT_LOG
 	if (Config->event_log != NULL) {
 		DeregisterEventSource(Config->event_log);
 		Config->event_log = NULL;
@@ -269,7 +269,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	Config->use_timestamps = true;
 	Config->use_syslog = false;
 	Config->use_stderr = false;
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_EVENT_LOG
 	Config->event_log = NULL;
 #endif
 
@@ -292,7 +292,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 			if (fd < 0) return ERR_CANTOPENFILE;
 			Config->log_file = fdopen(fd, "a");
 			Config->use_timestamps = false;
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_EVENT_LOG
 		} else if (strcmp(Config->logfilename, "eventlog") == 0) {
 			Config->event_log = RegisterEventSource(NULL, "gammu-smsd");
 			if (Config->event_log == NULL) {
