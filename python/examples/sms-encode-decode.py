@@ -17,7 +17,5 @@ sms = gammu.EncodeSMS(smsinfo)
 decodedsms = gammu.DecodeSMS(sms)
 
 # show results
-print "Text:"
-print decodedsms['Entries'][0]['Buffer']
-print "Comparsion:"
-print (decodedsms['Entries'][0]['Buffer'] == txt)
+print "Text:", decodedsms['Entries'][0]['Buffer']
+print "Comparsion:", (decodedsms['Entries'][0]['Buffer'] == txt)
