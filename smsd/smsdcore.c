@@ -80,19 +80,19 @@ void SMSD_CloseLog(GSM_SMSDConfig *Config)
 {
 	switch (Config->log_type) {
 #ifdef HAVE_WINDOWS_EVENT_LOG
-		case LOG_EVENTLOG:
+		case SMSD_LOG_EVENTLOG:
 			eventlog_close(Config->log_handle);
 			Config->log_handle = NULL;
 			break;
 #endif
-		case LOG_FILE:
+		case SMSD_LOG_FILE:
 			fclose(Config->log_handle);
 			Config->log_handle = NULL;
 			break;
 		default:
 			break;
 	}
-	Config->log_type = LOG_NONE;
+	Config->log_type = SMSD_LOG_NONE;
 }
 
 void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bool exitprogram, int rc)
@@ -133,12 +133,12 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 	va_end(argp);
 
 	switch (Config->log_type) {
-		case LOG_EVENTLOG:
+		case SMSD_LOG_EVENTLOG:
 #ifdef HAVE_WINDOWS_EVENT_LOG
 			eventlog_log(Config->log_handle, level, Buffer);
 #endif
 			break;
-		case LOG_SYSLOG:
+		case SMSD_LOG_SYSLOG:
 #ifdef HAVE_SYSLOG
 			switch (level) {
 				case -1:
@@ -154,10 +154,10 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 					priority = LOG_DEBUG;
 					break;
 			}
-			syslog(LOG_ERR, "%s", Buffer);
+			syslog(priority, "%s", Buffer);
 #endif
 			break;
-		case LOG_FILE:
+		case SMSD_LOG_FILE:
 			if (level != -1 && level != 0 && (level & Config->debug_level) == 0) {
 				return;
 			}
@@ -173,7 +173,7 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 			fprintf(Config->log_handle,"%s\n",Buffer);
 			fflush(Config->log_handle);
 			break;
-		case LOG_NONE:
+		case SMSD_LOG_NONE:
 			break;
 	}
 
@@ -228,7 +228,7 @@ GSM_SMSDConfig *SMSD_NewConfig(void)
 	Config->logfilename = NULL;
 	Config->smsdcfgfile = NULL;
 	Config->log_handle = NULL;
-	Config->log_type = LOG_NONE;
+	Config->log_type = SMSD_LOG_NONE;
 
 	return Config;
 }
@@ -261,7 +261,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	Config->logfilename = NULL;
 	Config->smsdcfgfile = NULL;
 	Config->use_timestamps = true;
-	Config->log_type = LOG_NONE;
+	Config->log_type = SMSD_LOG_NONE;
 	Config->log_handle = NULL;
 	Config->use_stderr = false;
 
@@ -278,7 +278,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	Config->logfilename=INI_GetValue(Config->smsdcfgfile, "smsd", "logfile", false);
 	if (Config->logfilename != NULL) {
 		if (!uselog) {
-			Config->log_type = LOG_FILE;
+			Config->log_type = SMSD_LOG_FILE;
 			Config->use_stderr = false;
 			fd = dup(1);
 			if (fd < 0) return ERR_CANTOPENFILE;
@@ -286,18 +286,18 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 			Config->use_timestamps = false;
 #ifdef HAVE_WINDOWS_EVENT_LOG
 		} else if (strcmp(Config->logfilename, "eventlog") == 0) {
-			Config->log_type = LOG_EVENTLOG;
+			Config->log_type = SMSD_LOG_EVENTLOG;
 			Config->log_handle = eventlog_init();
 			Config->use_stderr = true;
 #endif
 #ifdef HAVE_SYSLOG
 		} else if (strcmp(Config->logfilename, "syslog") == 0) {
-			Config->log_type = LOG_SYSLOG;
+			Config->log_type = SMSD_LOG_SYSLOG;
 			openlog("gammu-smsd", LOG_PID, LOG_DAEMON);
 			Config->use_stderr = true;
 #endif
 		} else {
-			Config->log_type = LOG_FILE;
+			Config->log_type = SMSD_LOG_FILE;
 			if (strcmp(Config->logfilename, "stderr") == 0) {
 				fd = dup(2);
 				if (fd < 0) return ERR_CANTOPENFILE;
