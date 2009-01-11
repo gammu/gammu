@@ -88,11 +88,13 @@ if (ENABLE_PYTHON)
     install(FILES ${PYFILES} DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
 
     # Testing
+    # Scripts need to be in same directory as built gammu module!
+    configure_file("examples/backup-convertor.py" "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" COPY_ONLY)
     file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcards/*.vcf"
         "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.ics"
         "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.vcs")
     foreach(VCF ${VFORMATS})
         get_filename_component(TESTNAME "${VCF}" NAME_WE)
-        add_test("py-backup-${TESTNAME}" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/examples/backup-convertor.py" "${VCF}" "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.backup")
+        add_test("py-backup-${TESTNAME}" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" "${VCF}" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}.backup")
     endforeach(VCF)
 endif (ENABLE_PYTHON)
