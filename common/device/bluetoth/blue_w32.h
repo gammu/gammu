@@ -1,9 +1,6 @@
 #ifndef __blue_w32_h
 #define __blue_w32_h
 
-GSM_Error bluetooth_connect(GSM_StateMachine *s, int port, char *device);
-GSM_Error bluetooth_findchannel(GSM_StateMachine *s);
-
 #include <winsock2.h>
 /* MS Platform SDK */
 
