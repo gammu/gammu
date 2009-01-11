@@ -253,6 +253,19 @@
 #cmakedefine HAVE_WCTYPE_H
 #endif
 
+#ifndef HAVE_ACOSH
+#cmakedefine HAVE_ACOSH
+#endif
+#ifndef HAVE_ASINH
+#cmakedefine HAVE_ASINH
+#endif
+#ifndef HAVE_ATANH
+#cmakedefine HAVE_ATANH
+#endif
+#ifndef HAVE_LOG1P
+#cmakedefine HAVE_LOG1P
+#endif
+
 #ifndef HAVE_UNISTD_H
 #cmakedefine HAVE_UNISTD_H
 #endif
