@@ -303,7 +303,7 @@ typedef struct {
 	/**
 	 * Number of value, if applicable.
 	 */
-	unsigned int Number;
+	int Number;
 	/**
 	 * During adding SubEntry Gammu can return here info, if it was done OK
 	 */
