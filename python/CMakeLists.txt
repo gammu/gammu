@@ -4,9 +4,6 @@
 
 project (python-gammu C)
 
-find_package(PythonInterp)
-find_package(PythonLibs)
-
 # Python has defined these functions, but MinGW does also have them...
 if (MINGW)
     check_symbol_exists (acosh "math.h" HAVE_ACOSH)
@@ -26,13 +23,6 @@ if (MINGW)
         add_definitions(-DHAVE_LOG1P)
     endif (HAVE_LOG1P)
 endif (MINGW)
-
-if (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
-    set (ENABLE_PYTHON TRUE CACHE BOOL "Build Python bindings")
-    set (CPACK_SYSTEM_NAME "Windows" CACHE STRING "Windows package name")
-else (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
-    set (ENABLE_PYTHON FALSE CACHE BOOL "Build Python bindings" FORCE)
-endif (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
 
 set (PYTHON_GAMMU_SRC
     gammu.c
@@ -54,60 +44,58 @@ set (PYTHON_GAMMU_SRC
     convertors/wap.c
     )
 
-if (ENABLE_PYTHON)
-    execute_process(
-        COMMAND
-            ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_EXEC_PREFIX}')"
-        OUTPUT_VARIABLE PYTHON_SITEDIR
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
+execute_process(
+    COMMAND
+        ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_EXEC_PREFIX}')"
+    OUTPUT_VARIABLE PYTHON_SITEDIR
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
 
-    include_directories (
-        "${Gammu_BINARY_DIR}/include"
-        ${PYTHON_INCLUDE_PATH}
-        ${CMAKE_CURRENT_SOURCE_DIR}
-        )
+include_directories (
+    "${Gammu_BINARY_DIR}/include"
+    ${PYTHON_INCLUDE_PATH}
+    ${CMAKE_CURRENT_SOURCE_DIR}
+    )
 
-    add_library(python_gammu MODULE ${PYTHON_GAMMU_SRC})
+add_library(python_gammu MODULE ${PYTHON_GAMMU_SRC})
+set_target_properties (python_gammu PROPERTIES
+    PREFIX ""
+    OUTPUT_NAME gammu/_gammu)
+if (WIN32 AND NOT CYGWIN)
     set_target_properties (python_gammu PROPERTIES
-        PREFIX ""
-        OUTPUT_NAME gammu/_gammu)
-    if (WIN32 AND NOT CYGWIN)
-        set_target_properties (python_gammu PROPERTIES
-             SUFFIX ".pyd"
-             )
-    endif (WIN32 AND NOT CYGWIN)
-    target_link_libraries (python_gammu libGammu)
-    target_link_libraries (python_gammu ${PYTHON_LIBRARIES})
-    install(TARGETS python_gammu LIBRARY DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
-    file(GLOB PYFILES "gammu/*.py")
-    foreach(PYFILE ${PYFILES})
-        get_filename_component(FILENAME "${PYFILE}" NAME)
-        configure_file("${PYFILE}" "${CMAKE_CURRENT_BINARY_DIR}/gammu/${FILENAME}" COPY_ONLY)
-    endforeach(PYFILE)
-    install(FILES ${PYFILES} DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
+         SUFFIX ".pyd"
+         )
+endif (WIN32 AND NOT CYGWIN)
+target_link_libraries (python_gammu libGammu)
+target_link_libraries (python_gammu ${PYTHON_LIBRARIES})
+install(TARGETS python_gammu LIBRARY DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
+file(GLOB PYFILES "gammu/*.py")
+foreach(PYFILE ${PYFILES})
+    get_filename_component(FILENAME "${PYFILE}" NAME)
+    configure_file("${PYFILE}" "${CMAKE_CURRENT_BINARY_DIR}/gammu/${FILENAME}" COPY_ONLY)
+endforeach(PYFILE)
+install(FILES ${PYFILES} DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
 
-    # Testing
-    # Scripts need to be in same directory as built gammu module!
-    configure_file("examples/backup-convertor.py" "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" COPY_ONLY)
-    file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcards/*.vcf"
-        "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.ics"
-        "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.vcs")
-    foreach(VCF ${VFORMATS})
-        get_filename_component(TESTNAME "${VCF}" NAME_WE)
-        add_test("py-backup-${TESTNAME}" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" "${VCF}" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}.backup")
-    endforeach(VCF)
+# Testing
+# Scripts need to be in same directory as built gammu module!
+configure_file("examples/backup-convertor.py" "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" COPY_ONLY)
+file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcards/*.vcf"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.ics"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.vcs")
+foreach(VCF ${VFORMATS})
+    get_filename_component(TESTNAME "${VCF}" NAME_WE)
+    add_test("py-backup-${TESTNAME}" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" "${VCF}" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}.backup")
+endforeach(VCF)
 
-    configure_file("examples/sms-encode-decode.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py" COPY_ONLY)
-    add_test("py-sms-encode-decode" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py")
-    set_tests_properties("py-sms-encode-decode" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")
+configure_file("examples/sms-encode-decode.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py" COPY_ONLY)
+add_test("py-sms-encode-decode" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py")
+set_tests_properties("py-sms-encode-decode" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")
 
-    # Documentation
-    find_program(EPYDOC_EXECUTABLE NAMES epydoc
-        DOC "Epydoc tool for generating Python API documentation <http://epydoc.sourceforge.net/>")
-    if (EPYDOC_EXECUTABLE)
-        add_custom_target (pydoc ${EPYDOC_EXECUTABLE} --verbose --name python-gammu --url http://cihar.com/gammu/python/ gammu gammu._gammu
-            DEPENDS ${PYFILES} ${PYTHON_GAMMU_SRC}
-            COMMENT "Generating Python documentation")
-    endif (EPYDOC_EXECUTABLE)
-endif (ENABLE_PYTHON)
+# Documentation
+find_program(EPYDOC_EXECUTABLE NAMES epydoc
+    DOC "Epydoc tool for generating Python API documentation <http://epydoc.sourceforge.net/>")
+if (EPYDOC_EXECUTABLE)
+    add_custom_target (pydoc ${EPYDOC_EXECUTABLE} --verbose --name python-gammu --url http://cihar.com/gammu/python/ gammu gammu._gammu
+        DEPENDS ${PYFILES} ${PYTHON_GAMMU_SRC}
+        COMMENT "Generating Python documentation")
+endif (EPYDOC_EXECUTABLE)

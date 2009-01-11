@@ -875,7 +875,19 @@ add_subdirectory(locale)
 
 add_subdirectory(docs/user)
 
-add_subdirectory(python)
+find_package(PythonInterp)
+find_package(PythonLibs)
+
+if (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
+    set (ENABLE_PYTHON TRUE CACHE BOOL "Build Python bindings")
+    set (CPACK_SYSTEM_NAME "Windows" CACHE STRING "Windows package name")
+else (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
+    set (ENABLE_PYTHON FALSE CACHE BOOL "Build Python bindings" FORCE)
+endif (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
+
+if (ENABLE_PYTHON)
+    add_subdirectory(python)
+endif (ENABLE_PYTHON)
 
 enable_testing()
 include(Dart)
