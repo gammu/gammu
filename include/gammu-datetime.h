@@ -30,28 +30,28 @@ typedef struct {
 	/**
 	 * Seconds.
 	 */
-	unsigned int Second;
+	int Second;
 	/**
 	 * Minutes.
 	 */
-	unsigned int Minute;
+	int Minute;
 	/**
 	 * Hours.
 	 */
-	unsigned int Hour;
+	int Hour;
 
 	/**
 	 * Days.
 	 */
-	unsigned int Day;
+	int Day;
 	/**
 	 * January = 1, February = 2, etc.
 	 */
-	unsigned int Month;
+	int Month;
 	/**
 	 * Complete year number. Not 03, but 2003
 	 */
-	unsigned int Year;
+	int Year;
 } GSM_DateTime;
 
 /**

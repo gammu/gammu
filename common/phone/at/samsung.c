@@ -126,7 +126,7 @@ static GSM_Error WaitFor(GSM_StateMachine *s, const char *t, int ttl)
 {
 	char 		readbuf[100];
 	int 		n;
-	unsigned int 	sec;
+	int 	sec;
         GSM_DateTime    Date;
 
         GSM_GetCurrentDateTime (&Date);
@@ -445,3 +445,7 @@ GSM_Error SAMSUNG_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *
 }
 
 #endif
+
+/* How should editor hadle tabs in this file? Add editor commands here.
+ * vim: noexpandtab sw=8 ts=8 sts=8:
+ */

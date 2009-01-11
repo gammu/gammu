@@ -761,8 +761,8 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	GSM_MultiSMSMessage  	sms;
 	GSM_DateTime         	Date;
 	GSM_Error            	error;
-	unsigned int         	j, z;
-	int			i;
+	unsigned int         	j;
+	int			i, z;
 	GSM_BatteryCharge  charge;
 	GSM_SignalQuality  network;
 

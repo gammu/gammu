@@ -28,7 +28,7 @@
 
 void GSM_SetCalendarRecurranceRepeat(GSM_Debug_Info *di, unsigned char *rec, unsigned char *endday, GSM_CalendarEntry *entry)
 {
-	unsigned int i;
+	int i;
 	int start=-1,frequency=-1,dow=-1,day=-1,month=-1,end=-1,Recurrance = 0, Repeat=0, j;
 	GSM_DateTime	DT;
 	time_t		t_time1,t_time2;

@@ -442,7 +442,7 @@ static GSM_Error DCT4EnableVibra(GSM_StateMachine *sm, bool enable)
 void DCT4SetVibraLevel(int argc, char *argv[])
 {
 	GSM_DateTime	Date;
-	unsigned int	i,j;
+	int	i,j;
 	GSM_Error error;
 
 	/* Set vibra level */

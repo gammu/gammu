@@ -733,7 +733,7 @@ int GSM_ReadDevice (GSM_StateMachine *s, bool waitforreply)
 	unsigned char	buff[255];
 	int		res = 0, count;
 
-	unsigned int	i;
+	int	i;
 	GSM_DateTime	Date;
 
 	GSM_GetCurrentDateTime (&Date);
