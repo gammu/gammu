@@ -97,7 +97,7 @@ typedef struct {
 
 
 /* Forward declaration */
-PyTypeObject StateMachineType;
+extern PyTypeObject StateMachineType;
 
 /* ---------------------------------------------------------------- */
 
