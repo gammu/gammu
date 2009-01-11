@@ -18,7 +18,6 @@
  */
 
 /* Python-gammu configuration */
-#include "pyg-config.h"
 
 /* Python includes */
 #include <Python.h>
@@ -5367,7 +5366,7 @@ static char gammu_Version__doc__[] =
 static PyObject *
 gammu_Version(PyObject *self)
 {
-    return Py_BuildValue("s,s,s", GetGammuVersion(), PYTHON_GAMMU_VERSION, VERSION);
+    return Py_BuildValue("s,s,s", GetGammuVersion(), VERSION, VERSION);
 }
 
 static char gammu_SetDebugFile__doc__[] =
@@ -6113,7 +6112,7 @@ static char gammu_module_documentation[] =
 "Module wrapping Gammu functions. Gammu is software for communication with GSM phones "
 "allowing work with most of data stored in them. Most of functionality is hidden in L{StateMachine} "
 "class which does all phone communication.\n\n"
-"This documentation describes python-gammu " PYTHON_GAMMU_VERSION ".\n\n"
+"This documentation describes python-gammu " VERSION ".\n\n"
 "This python-gammu has been compiled with Gammu " VERSION ".\n\n"
 "@var Errors: Mapping of text representation of errors to gammu error codes. Reverse to L{ErrorNumbers}.\n"
 "@var ErrorNumbers: Mapping of gammu error codes to text representation. Reverse to L{Errors}.\n"

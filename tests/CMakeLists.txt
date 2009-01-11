@@ -4,6 +4,8 @@
 
 project (gammu-tests C)
 
+MACRO_TUNE_COMPILER("-Wwrite-strings")
+
 # Define path for cmake tests
 if (EXECUTABLE_OUTPUT_PATH)
     set (GAMMU_TEST_PATH "${EXECUTABLE_OUTPUT_PATH}/")

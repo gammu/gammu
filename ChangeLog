@@ -20,6 +20,8 @@ ChangeLog
 [-] * Fixed setting remote number for SMS in some cases.
 [-] * Fixed compilation under cygwin.
 [-] * Externalize eventlog support to ease Cygwin compilation.
+[!] * Integrate python-gammu into Gammu, they are anyway bound quite
+      tightly together.
     
 20090109 - 1.22.90
 

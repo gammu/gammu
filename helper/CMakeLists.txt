@@ -4,9 +4,7 @@
 
 project (gammu-helper C)
 
-if (HAVE_WNOUNUSEDPARAMETER)
-    set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-unused-parameter")
-endif (HAVE_WNOUNUSEDPARAMETER)
+MACRO_TUNE_COMPILER("-Wwrite-strings")
 
 include_directories (
     "${Gammu_BINARY_DIR}/include"

@@ -6,7 +6,6 @@
 # However 2.6 is needed for crosscompiling
 cmake_minimum_required (VERSION 2.4.2)
 
-# We've set up compiler, now we can use it
 project (Gammu C)
 
 # Where to lookup modules
@@ -377,7 +376,6 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
     MACRO_TUNE_COMPILER("-Wstrict-prototypes")
 #   We need some typecasting (especially for iconv)
 #    MACRO_TUNE_COMPILER("-Wcast-qual")
-    MACRO_TUNE_COMPILER("-Wwrite-strings")
 
     # Does not work well
     #MACRO_TUNE_COMPILER("-Wunreachable-code")
@@ -876,6 +874,8 @@ add_subdirectory(gammu)
 add_subdirectory(locale)
 
 add_subdirectory(docs/user)
+
+add_subdirectory(python)
 
 enable_testing()
 include(Dart)

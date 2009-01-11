@@ -20,7 +20,6 @@
 
 /* Unicode strings conversion between Gammu and Python */
 
-#include "pyg-config.h"
 #include "convertors.h"
 
 unsigned char *StringPythonToGammu(PyObject *o) {

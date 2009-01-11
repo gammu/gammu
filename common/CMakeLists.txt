@@ -4,6 +4,8 @@
 
 project (libGammu C)
 
+MACRO_TUNE_COMPILER("-Wwrite-strings")
+
 set (LIBRARY_SRC
     gsmcomon.c
     gsmphones.c

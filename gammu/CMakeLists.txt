@@ -4,6 +4,8 @@
 
 project (gammu-binary C)
 
+MACRO_TUNE_COMPILER("-Wwrite-strings")
+
 if (HAVE_WNOUNUSEDPARAMETER)
     set (CMAKE_C_FLAGS     "${CMAKE_C_FLAGS} -Wno-unused-parameter")
 endif (HAVE_WNOUNUSEDPARAMETER)
