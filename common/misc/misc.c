@@ -22,6 +22,9 @@
 #ifdef HAVE_SYS_UTSNAME_H
 #  include <sys/utsname.h>
 #endif
+#ifdef __CYGWIN__
+#include <cygwin/version.h>
+#endif
 
 /**
  * Recalculates struct tm content. We can not use mktime directly, as it
