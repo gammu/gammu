@@ -134,10 +134,6 @@ check_symbol_exists (SIGHUP "signal.h" HAVE_SIGHUP)
 check_symbol_exists (dup "unistd.h" HAVE_DUP_UNISTD_H)
 check_symbol_exists (getpid "unistd.h" HAVE_GETPID)
 check_symbol_exists (dup "io.h" HAVE_DUP_IO_H)
-check_symbol_exists (acosh "math.h" HAVE_ACOSH)
-check_symbol_exists (asinh "math.h" HAVE_ASINH)
-check_symbol_exists (atanh "math.h" HAVE_ATANH)
-check_symbol_exists (log1p "math.h" HAVE_LOG1P)
 check_c_source_compiles ("
 #include <stdio.h>
 #include <syslog.h>
