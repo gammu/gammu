@@ -12,7 +12,7 @@ find_package(PythonInterp)
 find_package(PythonLibs)
 
 # Python has defined these functions, but MinGW does also have them...
-if (MINGW32)
+if (MINGW)
     check_symbol_exists (acosh "math.h" HAVE_ACOSH)
     if (HAVE_ACOSH)
         add_definitions(-DHAVE_ACOSH)
@@ -29,7 +29,7 @@ if (MINGW32)
     if (HAVE_LOG1P)
         add_definitions(-DHAVE_LOG1P)
     endif (HAVE_LOG1P)
-endif (MINGW32)
+endif (MINGW)
 
 if (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
     set (ENABLE_PYTHON TRUE CACHE BOOL "Build Python bindings")
