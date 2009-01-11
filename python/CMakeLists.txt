@@ -20,6 +20,8 @@ endif (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
 
 set (PYTHON_GAMMU_SRC
     gammu.c
+    misc.c
+    errors.c
     convertors/backup.c
     convertors/base.c
     convertors/bitmap.c
