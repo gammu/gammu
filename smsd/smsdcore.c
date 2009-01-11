@@ -43,6 +43,10 @@
 #  include "s_pgsql.h"
 #endif
 
+#ifdef HAVE_WINDOWS_EVENT_LOG
+#include "log-event.h"
+#endif
+
 GSM_SMSDConfig		SMSDaemon_Config;
 
 void SMSD_Shutdown(GSM_SMSDConfig *Config)
@@ -72,6 +76,25 @@ void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr, void *user_d
 	}
 }
 
+void SMSD_CloseLog(GSM_SMSDConfig *Config)
+{
+	switch (Config->log_type) {
+#ifdef HAVE_WINDOWS_EVENT_LOG
+		case LOG_EVENTLOG:
+			eventlog_close(Config->log_handle);
+			Config->log_handle = NULL;
+			break;
+#endif
+		case LOG_FILE:
+			fclose(Config->log_handle);
+			Config->log_handle = NULL;
+			break;
+		default:
+			break;
+	}
+	Config->log_type = LOG_NONE;
+}
+
 void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bool exitprogram, int rc)
 {
 	int ret = ERR_NONE;
@@ -90,7 +113,7 @@ void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bo
 		SMSD_Log(-1, Config, "%s (%s:%i)", msg, GSM_ErrorString(error), error);
 	}
 	if (exitprogram) {
-		if (Config->log_file!=NULL) fclose(Config->log_file);
+		SMSD_CloseLog(Config);
 		exit(rc);
 	}
 }
@@ -101,10 +124,6 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 	GSM_DateTime 	date_time;
 	char 		Buffer[2000];
 	va_list		argp;
-#ifdef HAVE_WINDOWS_EVENT_LOG
-        LPCTSTR lpstrings[1];
-        WORD evtype= EVENTLOG_ERROR_TYPE;
-#endif
 #ifdef HAVE_SYSLOG
         int priority;
 #endif
@@ -113,65 +132,49 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 	vsprintf(Buffer,format, argp);
 	va_end(argp);
 
+	switch (Config->log_type) {
+		case LOG_EVENTLOG:
 #ifdef HAVE_WINDOWS_EVENT_LOG
-	if (Config->event_log != NULL) {
-		switch (level) {
-			case -1:
-				evtype = EVENTLOG_ERROR_TYPE;
-				break;
-			case 0:
-			case 1:
-			default:
-				evtype = EVENTLOG_INFORMATION_TYPE;
-				break;
-		}
-		lpstrings[0] = Buffer;
-		/*
-		 * @todo: 1024 is probably wrong, we should use mc to get proper
-		 * event identifiers.
-		 */
-		ReportEvent(Config->event_log, evtype, 0, 1024, NULL, 1, 0,
-			lpstrings, NULL);
-	} else
+			eventlog_log(Config->log_handle, level, Buffer);
 #endif
+			break;
+		case LOG_SYSLOG:
 #ifdef HAVE_SYSLOG
-	if (Config->use_syslog) {
-		switch (level) {
-			case -1:
-				priority = LOG_ERR;
-				break;
-			case 0:
-				priority = LOG_NOTICE;
-				break;
-			case 1:
-				priority = LOG_INFO;
-				break;
-			default:
-				priority = LOG_DEBUG;
-				break;
-		}
-		syslog(LOG_ERR, "%s", Buffer);
-	} else
+			switch (level) {
+				case -1:
+					priority = LOG_ERR;
+					break;
+				case 0:
+					priority = LOG_NOTICE;
+					break;
+				case 1:
+					priority = LOG_INFO;
+					break;
+				default:
+					priority = LOG_DEBUG;
+					break;
+			}
+			syslog(LOG_ERR, "%s", Buffer);
 #endif
-	if (Config->log_file != NULL) {
-		va_start(argp, format);
-		vsprintf(Buffer,format,argp);
-		va_end(argp);
+			break;
+		case LOG_FILE:
+			if (level != -1 && level != 0 && (level & Config->debug_level) == 0) {
+				return;
+			}
 
-		if (level != -1 && level != 0 && (level & Config->debug_level) == 0) {
-			return;
-		}
+			GSM_GetCurrentDateTime(&date_time);
 
-		GSM_GetCurrentDateTime(&date_time);
-
-		if (Config->use_timestamps) {
-			fprintf(Config->log_file,"%s %4d/%02d/%02d %02d:%02d:%02d : \n",
-				DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
-				date_time.Year, date_time.Month, date_time.Day,
-				date_time.Hour, date_time.Minute, date_time.Second);
-		}
-		fprintf(Config->log_file,"%s\n",Buffer);
-		fflush(Config->log_file);
+			if (Config->use_timestamps) {
+				fprintf(Config->log_handle,"%s %4d/%02d/%02d %02d:%02d:%02d : \n",
+					DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
+					date_time.Year, date_time.Month, date_time.Day,
+					date_time.Hour, date_time.Minute, date_time.Second);
+			}
+			fprintf(Config->log_handle,"%s\n",Buffer);
+			fflush(Config->log_handle);
+			break;
+		case LOG_NONE:
+			break;
 	}
 
 	if (Config->use_stderr && level == -1) {
@@ -224,24 +227,15 @@ GSM_SMSDConfig *SMSD_NewConfig(void)
 	Config->gammu_log_buffer_size = 0;
 	Config->logfilename = NULL;
 	Config->smsdcfgfile = NULL;
-	Config->log_file = NULL;
+	Config->log_handle = NULL;
+	Config->log_type = LOG_NONE;
 
 	return Config;
 }
 
 void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 {
-
-#ifdef HAVE_WINDOWS_EVENT_LOG
-	if (Config->event_log != NULL) {
-		DeregisterEventSource(Config->event_log);
-		Config->event_log = NULL;
-	} else
-#endif
-	if (!Config->use_syslog) {
-		fclose(Config->log_file);
-		Config->log_file = NULL;
-	}
+	SMSD_CloseLog(Config);
 	free(Config->gammu_log_buffer);
 	INI_Free(Config->smsdcfgfile);
 	GSM_FreeStateMachine(Config->gsm);
@@ -267,11 +261,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	Config->logfilename = NULL;
 	Config->smsdcfgfile = NULL;
 	Config->use_timestamps = true;
-	Config->use_syslog = false;
+	Config->log_type = LOG_NONE;
+	Config->log_handle = NULL;
 	Config->use_stderr = false;
-#ifdef HAVE_WINDOWS_EVENT_LOG
-	Config->event_log = NULL;
-#endif
 
 	error = INI_ReadFile(filename, false, &Config->smsdcfgfile);
 	if (Config->smsdcfgfile == NULL || error != ERR_NONE) {
@@ -286,43 +278,41 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	Config->logfilename=INI_GetValue(Config->smsdcfgfile, "smsd", "logfile", false);
 	if (Config->logfilename != NULL) {
 		if (!uselog) {
-			Config->use_syslog = false;
+			Config->log_type = LOG_FILE;
 			Config->use_stderr = false;
 			fd = dup(1);
 			if (fd < 0) return ERR_CANTOPENFILE;
-			Config->log_file = fdopen(fd, "a");
+			Config->log_handle = fdopen(fd, "a");
 			Config->use_timestamps = false;
 #ifdef HAVE_WINDOWS_EVENT_LOG
 		} else if (strcmp(Config->logfilename, "eventlog") == 0) {
-			Config->event_log = RegisterEventSource(NULL, "gammu-smsd");
-			if (Config->event_log == NULL) {
-				fprintf(stderr, "Error opening event log!\n");
-			}
+			Config->log_type = LOG_EVENTLOG;
+			Config->log_handle = eventlog_init();
 			Config->use_stderr = true;
 #endif
 #ifdef HAVE_SYSLOG
 		} else if (strcmp(Config->logfilename, "syslog") == 0) {
+			Config->log_type = LOG_SYSLOG;
 			openlog("gammu-smsd", LOG_PID, LOG_DAEMON);
-			Config->use_syslog = true;
 			Config->use_stderr = true;
 #endif
 		} else {
-			Config->use_syslog = false;
+			Config->log_type = LOG_FILE;
 			if (strcmp(Config->logfilename, "stderr") == 0) {
 				fd = dup(2);
 				if (fd < 0) return ERR_CANTOPENFILE;
-				Config->log_file = fdopen(fd, "a");
+				Config->log_handle = fdopen(fd, "a");
 				Config->use_stderr = false;
 			} else if (strcmp(Config->logfilename, "stdout") == 0) {
 				fd = dup(1);
 				if (fd < 0) return ERR_CANTOPENFILE;
-				Config->log_file = fdopen(fd, "a");
+				Config->log_handle = fdopen(fd, "a");
 				Config->use_stderr = false;
 			} else {
-				Config->log_file = fopen(Config->logfilename, "a");
+				Config->log_handle = fopen(Config->logfilename, "a");
 				Config->use_stderr = true;
 			}
-			if (Config->log_file == NULL) {
+			if (Config->log_handle == NULL) {
 				fprintf(stderr, "Can't open log file \"%s\"\n", Config->logfilename);
 				return ERR_CANTOPENFILE;
 			}

@@ -17,6 +17,13 @@
 
 #define MAX_RETRIES 1
 
+typedef enum {
+	LOG_NONE,
+	LOG_FILE,
+	LOG_SYSLOG,
+	LOG_EVENTLOG,
+} SMSD_LogType;
+
 struct _GSM_SMSDConfig {
 	const char	*Service;
 	/* general options */
@@ -64,13 +71,6 @@ struct _GSM_SMSDConfig {
 	char *gammu_log_buffer;
 	size_t gammu_log_buffer_size;
 	/**
-	 * Log messages to syslog?
-	 */
-	bool use_syslog;
-#ifdef HAVE_WINDOWS_EVENT_LOG
-	HANDLE event_log;
-#endif
-	/**
 	 * Log critical messages to stderr?
 	 */
 	bool use_stderr;
@@ -79,7 +79,12 @@ struct _GSM_SMSDConfig {
 	 */
 	bool use_timestamps;
 	int debug_level;
-	FILE *log_file;
+	/**
+	 * Where to send log messages.
+	 */
+	SMSD_LogType log_type;
+	void *log_handle;
+
 	volatile GSM_Error SendingSMSStatus;
 	volatile int TPMR;
 };
