@@ -101,4 +101,13 @@ if (ENABLE_PYTHON)
     configure_file("examples/sms-encode-decode.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py" COPY_ONLY)
     add_test("py-sms-encode-decode" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py")
     set_tests_properties("py-sms-encode-decode" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")
+
+    # Documentation
+    find_program(EPYDOC_EXECUTABLE NAMES epydoc
+        DOC "Epydoc tool for generating Python API documentation <http://epydoc.sourceforge.net/>")
+    if (EPYDOC_EXECUTABLE)
+        add_custom_target (pydoc ${EPYDOC_EXECUTABLE} --verbose --name python-gammu --url http://cihar.com/gammu/python/ gammu gammu._gammu
+            DEPENDS ${PYFILES} ${PYTHON_GAMMU_SRC}
+            COMMENT "Generating Python documentation")
+    endif (EPYDOC_EXECUTABLE)
 endif (ENABLE_PYTHON)
