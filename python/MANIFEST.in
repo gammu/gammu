@@ -1,0 +1,13 @@
+include AUTHORS
+include COPYING
+include INSTALL
+include ChangeLog
+include README
+include Makefile
+include *.h
+recursive-include examples *.py
+include examples/data/*.jpg
+include python-gammu.spec
+include MakeFakeWin.sh
+include mingw/*.c
+include mingw/*.sh

@@ -1,0 +1,120 @@
+python-gammu installation
+=========================
+
+
+UNIX systems - installation from sources
+----------------------------------------
+
+* Gammu library *
+
+First you need Gammu. Either only built as static library or installed
+with header files. To do it from source you can follow instructions in
+Gammu sources. Shortened version follows here:
+
+1. Download recent Gammu sources from <http://www.gammu.org/>.
+2. Unpack it:
+    > tar xfj gammu-*.tar.bz2
+3. Configure (you might want to tweak configure parameters):
+    > cd gammu-*
+    > ./configure --prefix=/usr 
+   Optionally you can make it shared library with --enable-shared to
+   produce shared library.
+4. Build:
+    > make
+5. Install:
+    > sudo make install
+
+* Pkg-config *
+
+For finding gammu libraries, pkg-config is used, so please install it
+also.
+
+* Building python-gammu *
+
+Then you can build and install python-gammu. It uses standard distutils,
+so it contains from two simple steps:
+
+> python setup.py build
+> sudo python setup.py install
+
+
+Custom installation place
+-------------------------
+
+You can override values acquired from pkg-config by passing parameters
+to build target. This is useful when you don't have gammu installed, you
+can pass path common directory in gammu sources as path to includes and
+library:
+
+python setup.py build_ext \
+    --gammu-libs=path_to_gammu_library \
+    --gammu-incs=path_to_gammu_includes \
+    build
+
+Alternatively you can point setup.py to location where you built gammu:
+
+python setup.py build_ext \
+    --gammu-build=path_to_gammu_build_directory \
+    build
+
+See "python setup.py build --help" for more options.
+
+When running install later, you will probably need to add --skip-deps in
+this case, eg:
+
+python setup.py build_ext --skip-deps \
+    install
+
+Windows systems
+---------------
+
+Current known working way to make static gammu library and then use it.
+
+When you have the library, you need to point build system to right
+location. As pkg-config is not well supported on Windows, you have to
+specify paths manually in parameters (see above section).
+
+Now you can launch build of python-gammu module.
+
+Alternatively there are be prebuilt modules on python-gammu web site.
+
+
+Cross compilation for Windows on Linux
+--------------------------------------
+
+To build windows python extensions, preferred way is to use windows
+Python running with Wine making it invoke MinGW tool chain compiled for
+Linux.  This way distutils believe it can use the Cygwin/MinGW32
+compiler (-mno-cygwin) without patching.
+
+So, install Wine and install Python on Wine:
+
+msiexec /i python-2.5.1.msi
+
+Launch MakeFakeWin.sh at the top of your python-gammu source tree,
+giving it MinGW tool chain name (if gcc is called i586-mingw32msvc-gcc,
+pass i586-mingw32msvc):
+
+./MakeFakeWin.sh i586-mingw32msvc
+
+Now gcc.exe, g++.exe, dllwrap.exe, dlltool.exe and wx-config.exe
+have been created in CWD. These are links to a real windows executable
+(wine_linux_launcher.exe) that call the locally created
+wine_linux_launcher.sh script, with executable name + all invocation
+arguments as parameters, and wait for result files for both return value
+and standard output be created and finally pass result back to calling
+application, i.e. python.exe, in the Windows way... To summary, it let
+distutils do os.popen and os.spawn as expected.
+
+wine c:\\python25\\python setup.py build_ext \
+    --gammu-libs=../gammu/build-win/common \
+    --gammu-incs=../gammu/build-win/include/ \
+    -c mingw32 \
+    build bdist_wininst
+
+If wine complains about COMSPEC environment variable use
+export COMSPEC=cmd.
+
+Now you have in dist directory installer for python-gammu for Windows.
+
+# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
