@@ -313,4 +313,10 @@
 /* Path where locales will be installed */
 #define LOCALE_PATH "@CMAKE_INSTALL_PREFIX@/@INSTALL_LOC_DIR@"
 
+/* Most winapi crap can be used as well from Cygwin */
+#if defined(WIN32) || defined(__CYGWIN__)
+#define HAVE_WINDOWS_SERVICE
+#define HAVE_WINDOWS_EVENT_LOG
+#endif
+
 #endif

@@ -8,13 +8,13 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <signal.h>
-#ifndef WIN32
+#ifdef HAVE_UNISTD_H
 #include <unistd.h>
 #endif
 #ifdef HAVE_GETOPT_LONG
 #include <getopt.h>
 #endif
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_SERVICE
 #include "service.h"
 #endif
 #ifdef HAVE_KILL
@@ -63,7 +63,7 @@ NORETURN void version(void)
 #endif
 #ifdef HAVE_UID
 #endif
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_SERVICE
 	printf("  - %s\n", "WINDOWS_SERVICE");
 #endif
 #ifdef HAVE_GETOPT
@@ -72,7 +72,7 @@ NORETURN void version(void)
 #ifdef HAVE_GETOPT_LONG
 	printf("  - %s\n", "GETOPT_LONG");
 #endif
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_EVENT_LOG
 	printf("  - %s\n", "EVENT_LOG");
 #endif
 #ifdef HAVE_SYSLOG
@@ -119,7 +119,7 @@ void help(void)
 	print_option_param("U", "user", "USER", "run daemon as a user");
 	print_option_param("G", "group", "GROUP", "run daemon as a group");
 #endif
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_SERVICE
 	print_option("i", "install-service",
 		     "installs SMSD as a Windows service");
 	print_option("u", "uninstall-service",
@@ -205,7 +205,7 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				params->daemonize = true;
 				break;
 #endif
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_SERVICE
 			case 'i':
 				params->install_service = true;
 				break;
@@ -285,7 +285,7 @@ void configure_daemon(SMSD_Parameters * params)
 	}
 #endif
 
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_SERVICE
 	if (params->run_service) {
 		if (!start_smsd_service_dispatcher()) {
 			printf("Error starting %s service\n",
@@ -320,7 +320,7 @@ int main(int argc, char **argv)
 
 	process_commandline(argc, argv, &params);
 
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_SERVICE
 	if (params.stop_service) {
 		if (stop_smsd_service()) {
 			printf("Service %s stopped sucessfully\n",
@@ -356,7 +356,7 @@ int main(int argc, char **argv)
 		exit(1);
 #endif
 	}
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_SERVICE
 	if (params.install_service) {
 		if (install_smsd_service(&params)) {
 			printf("Service %s installed sucessfully\n",
