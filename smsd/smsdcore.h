@@ -67,7 +67,7 @@ struct _GSM_SMSDConfig {
 	 * Log messages to syslog?
 	 */
 	bool use_syslog;
-#ifdef WIN32
+#ifdef HAVE_WINDOWS_EVENT_LOG
 	HANDLE event_log;
 #endif
 	/**
