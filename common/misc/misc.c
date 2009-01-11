@@ -568,8 +568,7 @@ const char *GetCompiler(void)
 {
 	static char Buffer[100] = {0x00};
 
-#ifdef WIN32
-#  ifdef _MSC_VER
+#ifdef _MSC_VER
 	if (_MSC_VER == 1200) { /* ? */
 		snprintf(Buffer, sizeof(Buffer) - 1, "MS VC 6.0");
 	} else if (_MSC_VER == 1300) {
@@ -581,19 +580,16 @@ const char *GetCompiler(void)
 	} else {
 		snprintf(Buffer, sizeof(Buffer) - 1, "MS VC %i",_MSC_VER);
 	}
-#  elif defined(__BORLANDC__)
+#elif defined(__BORLANDC__)
 	snprintf(Buffer, sizeof(Buffer) - 1, "Borland C++ %i",__BORLANDC__);
-#  elif defined(__MINGW32__)
+#elif defined(__MINGW32__)
 	snprintf(Buffer, sizeof(Buffer) - 1, "GCC %i.%i, MinGW %i.%i", __GNUC__, __GNUC_MINOR__, __MINGW32_MAJOR_VERSION, __MINGW32_MINOR_VERSION);
-#  elif defined(__GNUC__)
-	snprintf(Buffer, sizeof(Buffer) - 1, "GCC %i.%i", __GNUC__, __GNUC_MINOR__);
-#  else
-	snprintf(Buffer, sizeof(Buffer) - 1, "unknown compiler");
-#  endif
-#elif defined(DJGPP)
-	snprintf(Buffer, sizeof(Buffer) - 1, "djgpp %d.%d", __DJGPP, __DJGPP_MINOR);
+#elif defined(__CYGWIN__)
+	snprintf(Buffer, sizeof(Buffer) - 1, "GCC %i.%i, Cygwin", __GNUC__, __GNUC_MINOR__);
 #elif defined(__GNUC__)
 	snprintf(Buffer, sizeof(Buffer) - 1, "GCC %i.%i", __GNUC__, __GNUC_MINOR__);
+#elif defined(DJGPP)
+	snprintf(Buffer, sizeof(Buffer) - 1, "djgpp %d.%d", __DJGPP, __DJGPP_MINOR);
 #elif defined(__SUNPRO_CC)
 	snprintf(Buffer, sizeof(Buffer) - 1, "Sun C++ %x", __SUNPRO_CC);
 #elif defined(__INTEL_COMPILER)
