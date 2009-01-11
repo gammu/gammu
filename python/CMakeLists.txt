@@ -88,5 +88,11 @@ if (ENABLE_PYTHON)
     install(FILES ${PYFILES} DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
 
     # Testing
-    add_test("py-backup-convert" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/examples/backup-convertor.py" "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcards/photo-2.vcf" "${CMAKE_CURRENT_BINARY_DIR}/photo-2.backup")
+    file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcards/*.vcf"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.ics"
+        "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.vcs")
+    foreach(VCF ${VFORMATS})
+        get_filename_component(TESTNAME "${VCF}" NAME_WE)
+        add_test("py-backup-${TESTNAME}" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_SOURCE_DIR}/examples/backup-convertor.py" "${VCF}" "${CMAKE_CURRENT_BINARY_DIR}/${NAME}.backup")
+    endforeach(VCF)
 endif (ENABLE_PYTHON)
