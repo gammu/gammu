@@ -20,7 +20,6 @@
 
 /* DateTime conversions */
 
-#include "pyg-config.h"
 #include "convertors.h"
 
 PyObject *BuildPythonDateTime(const GSM_DateTime *dt) {

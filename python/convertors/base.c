@@ -20,7 +20,6 @@
 
 /* Basic getters from Python objects */
 
-#include "pyg-config.h"
 #include "convertors.h"
 #include "misc.h"
 

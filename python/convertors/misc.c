@@ -20,7 +20,6 @@
 
 /* Miscellaneous conversions, that didn't fit elsewhere */
 
-#include "pyg-config.h"
 #include "convertors.h"
 
 

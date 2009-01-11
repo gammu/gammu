@@ -20,7 +20,6 @@
 
 /* Call related conversions */
 
-#include "pyg-config.h"
 #include "convertors.h"
 
 char *CallStatusToString(GSM_CallStatus ct) {

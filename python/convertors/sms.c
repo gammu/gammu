@@ -20,7 +20,6 @@
 
 /* SMS related conversions */
 
-#include "pyg-config.h"
 #include "convertors.h"
 #include "misc.h"
 

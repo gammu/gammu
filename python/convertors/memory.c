@@ -21,7 +21,6 @@
 /* MemoryEntry conversions */
 #undef USE_PREF_UNICODE
 
-#include "pyg-config.h"
 #include "convertors.h"
 #include "misc.h"
 
