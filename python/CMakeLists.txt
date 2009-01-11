@@ -97,4 +97,7 @@ if (ENABLE_PYTHON)
         get_filename_component(TESTNAME "${VCF}" NAME_WE)
         add_test("py-backup-${TESTNAME}" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" "${VCF}" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}.backup")
     endforeach(VCF)
+
+    configure_file("examples/sms-encode-decode.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py" COPY_ONLY)
+    add_test("py-sms-encode-decode" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py")
 endif (ENABLE_PYTHON)
