@@ -76,6 +76,11 @@ if (ENABLE_PYTHON)
     set_target_properties (python_gammu PROPERTIES
         PREFIX ""
         OUTPUT_NAME _gammu)
+    if (WIN32 AND NOT CYGWIN)
+        set_target_properties (python_gammu PROPERTIES
+             SUFFIX ".pyd"
+             )
+    endif (WIN32 AND NOT CYGWIN)
     target_link_libraries (python_gammu libGammu)
     target_link_libraries (python_gammu ${PYTHON_LIBRARIES})
     install(TARGETS python_gammu LIBRARY DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
