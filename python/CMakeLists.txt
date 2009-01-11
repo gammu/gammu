@@ -71,7 +71,7 @@ if (ENABLE_PYTHON)
     add_library(python_gammu MODULE ${PYTHON_GAMMU_SRC})
     set_target_properties (python_gammu PROPERTIES
         PREFIX ""
-        OUTPUT_NAME _gammu)
+        OUTPUT_NAME gammu/_gammu)
     if (WIN32 AND NOT CYGWIN)
         set_target_properties (python_gammu PROPERTIES
              SUFFIX ".pyd"
@@ -81,5 +81,9 @@ if (ENABLE_PYTHON)
     target_link_libraries (python_gammu ${PYTHON_LIBRARIES})
     install(TARGETS python_gammu LIBRARY DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
     file(GLOB PYFILES "gammu/*.py")
+    foreach(PYFILE ${PYFILES})
+        get_filename_component(FILENAME "${PYFILE}" NAME)
+        configure_file("${PYFILE}" "${CMAKE_CURRENT_BINARY_DIR}/gammu/${FILENAME}" COPY_ONLY)
+    endforeach(PYFILE)
     install(FILES ${PYFILES} DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
 endif (ENABLE_PYTHON)
