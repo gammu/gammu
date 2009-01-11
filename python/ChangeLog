@@ -1,0 +1,193 @@
+NEWS
+====
+
+Major changes for each release are described here. Detailed changes between
+two versions can be retrieved from Subversion.
+
+0.29
+==== (2009-??-??)
+
+* Support for current Gammu library.
+* Avoid fixed limit for maximum number of concurrent phone connections.
+* Added support for photo inside phonebook.
+
+0.28
+==== (2008-12-18)
+
+* Properly use Py_ssize_t type to avoid problems on 64-bit systems.
+* Properly handle phonebook Category attribute (can be a text).
+* Follow new semantics of GSM_SetDebugFileDescriptor (bug #749).
+* Compatibility with current gammu.
+* Support for encoding/decoding vCard, vCalendar and iCalendar files.
+
+0.27
+==== (2008-10-03)
+
+* Compatibility with current gammu.
+* Use new GSM_MemoryTypeToString.
+* Fix several off by one errors.
+
+0.26
+==== (2008-05-11)
+
+* Compatibility with current gammu.
+* Improved compatibility with Python 2.5.
+
+0.25
+==== (2008-03-05)
+
+* Compatibility with current gammu.
+* Fixed Gammu version reported by python-gammu.
+
+0.24
+==== (2007-12-16)
+
+* Compatibility with current gammu.
+* Improved MinGW crosscompilation instructions.
+
+0.23
+==== (2007-11-08)
+
+* Compatibility with current gammu.
+
+0.22
+==== (2007-08-25)
+
+* Complete support for managing calls.
+* Compatibility with current gammu.
+
+0.21
+==== (2007-06-15)
+
+* Added suport for nick name in phonebook.
+* Added suport for work address in phonebook.
+* Converted to new Gammu API.
+
+0.20
+==== (2007-05-13)
+
+* Fixed call information conversion.
+* Support for last modified field.
+* Support for latest Gammu version.
+* Added python wrapper around C module, C module is now gammu.Core.
+* Moved some generic data from Wammu.
+* Added asynchronous wrapper around StateMachine.
+* Added example for async operations, see examples/worker.py.
+* Main library is now gammu.Core, but gammu.* still works.
+* Support for service numbers.
+* New example for service numbers, see examples/service-numbers.py.
+
+0.19
+==== (2007-02-23)
+
+* Fix crash on wrongly configured locales.
+* Added suport for SendFilePart.
+
+0.18
+==== (2007-02-07)
+
+* Cleaned up build system.
+* Support for crosscompilation using MinGW32.
+* Compatibility with current gammu releases and CMake build system.
+
+0.17
+==== (2006-12-18)
+
+* Support for python 2.5.
+* Initial support for WAP bookmarks.
+* Initial support for MMS indicators.
+
+0.16
+==== (2006-12-04)
+
+* Support for recent gammu versions.
+
+0.15
+==== (2006-09-20)
+
+* Support for recent gammu versions.
+* Fix bug in SMS code.
+
+0.14
+==== (2006-06-29)
+
+* Improved documentation.
+* Fixed setup.py for win32.
+
+0.13
+==== (2006-05-14)
+
+* Implemented adding of entries even when phone does not directly support
+  that.
+* Error messages are now also unicode objects as they might be translated by
+  gammu.
+* Properly handle locales in case other python module also uses them.
+* Added some examples.
+
+0.12
+==== (2006-03-24)
+
+* Added support for Siemens OTA new in gammu 1.05.00.
+* Improved build system.
+
+0.11
+==== (2006-02-24)
+
+* Added example for inserting backup (eg. vcard) to arbitrary memory.
+* Added support for incoming events (with example showing usage).
+
+0.10
+==== (2006-01-08)
+
+* Add Errors dictionary with name -> id mapping of errors.
+* Fix segfault in some corner situations.
+
+0.9
+=== (2005-12-24)
+
+* Added support for SMS backups.
+* Support for filesystem functions.
+* Full support for phonebook (SMSList and VoiceTags were ignored before).
+
+0.8
+=== (2005-05-17)
+
+* Compatibility with current gammu release.
+* Documented exceptions.
+* Added example for sending SMS.
+
+0.7
+=== (2005-01-23)
+
+* Compatibility with current gammu release.
+* Fail when using another gammu version than was used during compilation.
+* Better search for gammu (now should work with default shared installation).
+
+0.6
+=== (2004-09-06)
+
+* Library is now thread safe.
+
+0.5
+=== (2004-03-03)
+
+* Better handling of SMS validity.
+* Can make voice calls.
+
+0.4
+=== (2004-01-04)
+
+* SMS with some data are now converted to/from Pyyhon correctly.
+* Added work with SMS folders.
+* Added support for creating categories.
+* Ringtone parts of SMS are now also converted.
+* Can save ringtones.
+* Support for reading/writing backups.
+* Works much better in multi thread applications - releases Pythons global
+  lock for communication with phone.
+
+0.3
+=== (2003-12-27)
+
+* First widely announced release.
+
