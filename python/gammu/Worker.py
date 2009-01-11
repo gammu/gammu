@@ -25,7 +25,7 @@ this program; if not, write to the Free Software Foundation, Inc.,
 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 '''
 
-import gammu.Core
+import gammu._gammu
 import threading
 import Queue
 
@@ -58,7 +58,7 @@ def check_worker_command(command):
     @param command: Name of command.
     @type command: string
     '''
-    if hasattr(gammu.Core.StateMachine, command):
+    if hasattr(gammu._gammu.StateMachine, command):
         return
 
     raise InvalidCommand(command)
@@ -175,7 +175,7 @@ class GammuThread(threading.Thread):
         threading.Thread.__init__(self)
         self._kill = False
         self._terminate = False
-        self._sm = gammu.Core.StateMachine()
+        self._sm = gammu._gammu.StateMachine()
         self._callback = callback
         self._queue = queue
         self._sm.SetConfig(0, config)
@@ -194,9 +194,9 @@ class GammuThread(threading.Thread):
                 result = func(**params)
             else:
                 result = func(*params)
-        except gammu.Core.GSMError, info:
+        except gammu._gammu.GSMError, info:
             errcode = info[0]['Code']
-            error = gammu.Core.ErrorNumbers[errcode]
+            error = gammu._gammu.ErrorNumbers[errcode]
 
         self._callback(name, result, error, percentage)
 
