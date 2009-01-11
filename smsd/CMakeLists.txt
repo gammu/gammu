@@ -21,6 +21,10 @@ if (HAVE_POSTGRESQL_LIBPQ_FE_H)
     list(APPEND LIBRARY_SRC s_pgsql.c)
 endif (HAVE_POSTGRESQL_LIBPQ_FE_H)
 
+if (WIN32)
+    list(APPEND LIBRARY_SRC log-event.c)
+endif (WIN32)
+
 set (DAEMON_SRC
     main.c
     )

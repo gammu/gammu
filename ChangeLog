@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Fixed setting remote number for SMS in some cases.
 [-] * Fixed compilation under cygwin.
+[-] * Externalize eventlog support to ease Cygwin compilation.
     
 20090109 - 1.22.90
 
