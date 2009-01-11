@@ -2,10 +2,6 @@
 # Copyright (c) 2007-2009 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
-# I didn't check older versions
-# However 2.6 is needed for crosscompiling
-cmake_minimum_required (VERSION 2.4.2)
-
 project (python-gammu C)
 
 find_package(PythonInterp)
