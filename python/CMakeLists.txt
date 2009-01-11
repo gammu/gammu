@@ -54,6 +54,8 @@ if (ENABLE_PYTHON)
     set_target_properties (python_gammu PROPERTIES
         PREFIX ""
         OUTPUT_NAME Core)
+    target_link_libraries (python_gammu libGammu)
+    target_link_libraries (python_gammu ${PYTHON_LIBRARIES})
     install(TARGETS python_gammu LIBRARY DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
     file(GLOB PYFILES "gammu/*.py")
     install(FILES ${PYFILES} DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
