@@ -4,9 +4,9 @@
 Phone communication libary - python wrapper for Gammu library.
 
 This module wraps all python-gammu functionality. Core library is
-named L{gammu.Core} and all of it's content is automatically
+named L{gammu._gammu} and all of it's content is automatically
 imported also into this gammu module, so you can use both
-L{gammu.StateMachine} or L{gammu.Core.StateMachine}.
+L{gammu.StateMachine} or L{gammu._gammu.StateMachine}.
 '''
 __author__ = 'Michal Čihař'
 __email__ = 'michal@cihar.com'
@@ -31,14 +31,14 @@ this program; if not, write to the Free Software Foundation, Inc.,
 __all__ = [
     'Data',
     'Worker',
-    'Core',
+    '_gammu',
     ]
 
 # Conveniency and backward compatibility import
-from gammu.Core import *
+from gammu._gammu import *
 
-import gammu.Core
+import gammu._gammu
 __version__ = 'Gammu %s, python-gammu %s' % (
-        gammu.Core.Version()[0],
-        gammu.Core.Version()[1]
+        gammu._gammu.Version()[0],
+        gammu._gammu.Version()[1]
         )

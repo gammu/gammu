@@ -75,7 +75,7 @@ if (ENABLE_PYTHON)
     add_library(python_gammu MODULE ${PYTHON_GAMMU_SRC})
     set_target_properties (python_gammu PROPERTIES
         PREFIX ""
-        OUTPUT_NAME Core)
+        OUTPUT_NAME _gammu)
     target_link_libraries (python_gammu libGammu)
     target_link_libraries (python_gammu ${PYTHON_LIBRARIES})
     install(TARGETS python_gammu LIBRARY DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")

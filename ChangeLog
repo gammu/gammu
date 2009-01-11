@@ -22,6 +22,7 @@ ChangeLog
 [-] * Externalize eventlog support to ease Cygwin compilation.
 [!] * Integrate python-gammu into Gammu, they are anyway bound quite
       tightly together.
+[!] * Python C module is now gammu._gammu and not gammu.Core.
     
 20090109 - 1.22.90
 

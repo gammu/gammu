@@ -5287,7 +5287,7 @@ static char StateMachineType__doc__[] =
 static PyTypeObject StateMachineType = {
     PyObject_HEAD_INIT(NULL)
     0,				/*ob_size*/
-    "gammu.Core.StateMachine",			/*tp_name*/
+    "_gammu.StateMachine",			/*tp_name*/
     sizeof(StateMachineObject),		/*tp_basicsize*/
     0,				/*tp_itemsize*/
     /* methods */
@@ -6117,12 +6117,12 @@ static char gammu_module_documentation[] =
 #ifndef PyMODINIT_FUNC  /* doesn't exists in older python releases */
 #define PyMODINIT_FUNC void
 #endif
-PyMODINIT_FUNC initCore(void) {
+PyMODINIT_FUNC init_gammu(void) {
     PyObject *m, *d;
     GSM_Debug_Info *di;
 
     /* Create the module and add the functions */
-    m = Py_InitModule3("gammu.Core", gammu_methods, gammu_module_documentation);
+    m = Py_InitModule3("_gammu", gammu_methods, gammu_module_documentation);
 
     if (m == NULL)
         return;
@@ -6146,7 +6146,7 @@ PyMODINIT_FUNC initCore(void) {
     /* Check for errors */
     if (PyErr_Occurred()) {
         PyErr_Print();
-        Py_FatalError("Can not initialize module gammu.Core, see above for reasons");
+        Py_FatalError("Can not initialize module _gammu, see above for reasons");
     }
 
     /* Reset debugging setup */
