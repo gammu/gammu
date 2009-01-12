@@ -13,4 +13,13 @@
     } \
 }
 
+#define gammu_test_result(error, text) \
+{ \
+	if (error != ERR_NONE) {\
+		fprintf(stderr, "%s\n", GSM_ErrorString(error)); \
+        fprintf(stderr, "Test \"%s\" failed!\n", text); \
+        exit(2); \
+    } \
+}
+
 #endif
