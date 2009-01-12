@@ -11,6 +11,12 @@ int main(int argc, char **argv)
 	GSM_MultiSMSMessage sms;
 	GSM_Error error;
 	GSM_Message_Type type = SMS_Display;
+	GSM_Debug_Info *debug_info;
+
+	/* Configure debugging */
+	debug_info = GSM_GetGlobalDebug();
+	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
+	GSM_SetDebugLevel("textall", debug_info);
 
 	error = CreateMessage(&type, &sms, argc, 1, argv, NULL);
 	gammu_test_result(error, "CreateMessage");
