@@ -1270,6 +1270,8 @@ GSM_Error GSM_DeleteSMSFolder(GSM_StateMachine * s, int ID);
  * Lists MMS folders.
  *
  * \param s State machine pointer.
+ * \param folders Pointer to structure, whehe folder information will be
+ * stored.
  *
  * \return Error code.
  *
