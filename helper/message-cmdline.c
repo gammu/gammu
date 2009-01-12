@@ -235,7 +235,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		startarg += 3;
 		break;
 	case COMPOSE_WAPINDICATOR:
-		if (argc <= 2 + startarg) {
+		if (argc < 2 + startarg) {
 			printf("%s\n", _("Where are parameters?"));
 			exit(-1);
 		}
@@ -249,7 +249,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		startarg += 2;
 		break;
 	case COMPOSE_RINGTONE:
-		if (argc <= 1 + startarg) {
+		if (argc < 1 + startarg) {
 			printf("%s\n", _("Where is ringtone filename?"));
 			exit(-1);
 		}
@@ -267,7 +267,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		startarg += 1;
 		break;
 	case COMPOSE_OPERATOR:
-		if (argc <= 1 + startarg) {
+		if (argc < 1 + startarg) {
 			printf("%s\n", _("Where is logo filename?"));
 			exit(-1);
 		}
@@ -285,7 +285,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		startarg += 1;
 		break;
 	case COMPOSE_CALLER:
-		if (argc <= 1 + startarg) {
+		if (argc < 1 + startarg) {
 			printf("%s\n", _("Where is logo filename?"));
 			exit(-1);
 		}
@@ -303,7 +303,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	case COMPOSE_ANIMATION:
 		SMSInfo.UnicodeCoding   		= false;
 		SMSInfo.EntriesNum 			= 1;
-		if (argc <= 1 + startarg) {
+		if (argc < 1 + startarg) {
 			printf("%s\n", _("Where is number of frames?"));
 			exit(-1);
 		}
@@ -330,7 +330,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		startarg += 1 + atoi(argv[startarg]);
 		break;
 	case COMPOSE_PICTURE:
-		if (argc <= 1 + startarg) {
+		if (argc < 1 + startarg) {
 			printf("%s\n", _("Where is logo filename?"));
 			exit(-1);
 		}
@@ -352,7 +352,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		break;
 #ifdef GSM_ENABLE_BACKUP
 	case COMPOSE_BOOKMARK:
-		if (argc <= 2 + startarg) {
+		if (argc < 2 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
@@ -376,7 +376,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		startarg += 2;
 		break;
 	case COMPOSE_WAPSETTINGS:
-		if (argc <= 3 + startarg) {
+		if (argc < 3 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
@@ -420,7 +420,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		startarg += 3;
 		break;
 	case COMPOSE_MMSSETTINGS:
-		if (argc <= 2 + startarg) {
+		if (argc < 2 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
@@ -457,7 +457,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		startarg += 2;
 		break;
 	case COMPOSE_CALENDAR:
-		if (argc <= 2 + startarg) {
+		if (argc < 2 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
@@ -480,7 +480,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		startarg += 2;
 		break;
 	case COMPOSE_TODO:
-		if (argc <= 2 + startarg) {
+		if (argc < 2 + startarg) {
 			printf("%s\n", _("Where is backup filename and location?"));
 			exit(-1);
 		}
@@ -504,7 +504,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		break;
 	case COMPOSE_VCARD10:
 	case COMPOSE_VCARD21:
-		if (argc <= 3 + startarg) {
+		if (argc < 3 + startarg) {
 			printf("%s\n", _("Where is backup filename and location and memory type?"));
 			exit(-1);
 		}
