@@ -584,6 +584,7 @@ typedef enum {
 /**
  * Encodes memory entry to vCard.
  *
+ * \param di Pointer to debugging description.
  * \param[out] Buffer Buffer to store vCard text.
  * \param[in] buff_len Size of output buffer.
  * \param[in,out] Pos Position in output buffer.
@@ -602,6 +603,14 @@ GSM_Error GSM_EncodeVCARD(GSM_Debug_Info *di, char *Buffer, const size_t buff_le
 
 /**
  * Decodes memory entry from vCard.
+ *
+ * \param di Pointer to debugging description.
+ * \param[in] Buffer Buffer to readCard text.
+ * \param[in,out] Pos Position in output buffer.
+ * \param[out] Pbk Phonebook data read from vCard.
+ * \param[in] Version What vCard version to parse.
+ *
+ * \return Error code.
  *
  * \ingroup Memory
  */

@@ -627,6 +627,7 @@ GSM_Error GSM_EncodeVNTFile(char *Buffer, const size_t buff_len, size_t *Length,
 /**
  * Decodes vCalendar and vTodo buffer.
  *
+ * \param di Pointer to debugging description.
  * \param Buffer Buffer to decode.
  * \param Pos Current position in buffer (will be updated).
  * \param Calendar Storage for calendar entry.
