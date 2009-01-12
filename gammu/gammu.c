@@ -1094,7 +1094,7 @@ int main(int argc, char *argv[])
 	    strcasecmp(argv[1 + start], "-h") == 0 ||
 	    strcasecmp(argv[1 + start], "help") == 0) {
 		Help(argc - start, argv + start);
-		exit(1);
+		exit(0);
 	}
 
 	/* Is first parameter numeric? If so treat it as config that should be loaded. */
