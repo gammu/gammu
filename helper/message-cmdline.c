@@ -159,6 +159,10 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		bitmap[i] = NULL;
 	}
 
+#ifdef GSM_ENABLE_BACKUP
+	GSM_ClearBackup(&Backup);
+#endif
+
 	EncodeUnicode(RemoteNumber, "Gammu", 5);
 
 	GSM_ClearMultiPartSMSInfo(&SMSInfo);
@@ -1424,6 +1428,9 @@ end_compose:
 		free(bitmap[i]);
 	}
 
+#ifdef GSM_ENABLE_BACKUP
+	GSM_FreeBackup(&Backup);
+#endif
 	return error;
 }
 
