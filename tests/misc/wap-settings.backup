@@ -1,0 +1,17 @@
+[Backup]
+Creator = "GVIM"
+Format = 1.04
+
+[WAPSettings00]
+Active = yes
+Bearer = GPRS
+Proxy = proxy.example.org
+ProxyPort = 1234
+Proxy2 = proxy2.example.org
+Proxy2Port = 4321
+Title00 = AAAAAAAAAAAAA
+HomePage00 = http://cihar.com/
+Type00 = Continuous
+Security00 = On
+Bearer00 = GPRS
+IP00 = 1.2.3.4
