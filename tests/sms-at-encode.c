@@ -8,6 +8,8 @@
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 #include "../common/gsmphones.h" /* Phone data */
 
+#include "common.h"
+
 extern GSM_Error ATGEN_MakeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *message, unsigned char *hexreq, int *current, int *length2);
 
 #define BUFFER_SIZE 16384
@@ -45,11 +47,7 @@ int main(int argc, char **argv)
 
 	/* Read message */
 	error = GSM_ReadSMSBackupFile(argv[1], &Backup);
-	if (error != ERR_NONE) {
-		printf("Could not read SMS backup!\n");
-		printf("%s\n", GSM_ErrorString(error));
-		return error;
-	}
+	gammu_test_result(error, "GSM_ReadSMSBackupFile");
 
 	if (!generate) {
 		/* Open file */
@@ -95,11 +93,7 @@ int main(int argc, char **argv)
 
 	/* Format SMS frame */
 	error = ATGEN_MakeSMSFrame(s, Backup.SMS[0], hexreq, &current, &current2);
-	if (error != ERR_NONE) {
-		printf("Could not encode SMS!\n");
-		printf("%s\n", GSM_ErrorString(error));
-		return error;
-	}
+	gammu_test_result(error, "ATGEN_MakeSMSFrame");
 
 	/* We don't need this anymore */
 	GSM_FreeSMSBackup(&Backup);
