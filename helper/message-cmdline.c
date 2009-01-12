@@ -68,7 +68,7 @@ ComposeMapEntry ComposeMap[] = {
 
 
 #define BMP_AUTO_ALLOC(n) \
-	if (bitmap[n] != NULL) { \
+	if (bitmap[n] == NULL) { \
 		bitmap[n] = (GSM_MultiBitmap *)malloc(sizeof(GSM_MultiBitmap)); \
 		if (bitmap[n] == NULL) { \
 			error = ERR_MOREMEMORY; \
@@ -78,7 +78,7 @@ ComposeMapEntry ComposeMap[] = {
 	}
 
 #define RNG_AUTO_ALLOC(n) \
-	if (ringtone[n] != NULL) { \
+	if (ringtone[n] == NULL) { \
 		ringtone[n] = (GSM_Ringtone *)malloc(sizeof(GSM_Ringtone)); \
 		if (ringtone[n] == NULL) { \
 			error = ERR_MOREMEMORY; \
