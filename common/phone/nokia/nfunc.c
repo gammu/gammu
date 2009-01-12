@@ -364,6 +364,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 			Block = &Block[bs];
 		}
 		bs = 256*Block[2]+Block[3];
+		if (bs == 0) break;
 #ifdef DEBUG
 		smprintf(s, "Phonebook entry block - length %i", bs-6);
 		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Block+0, bs-1);
