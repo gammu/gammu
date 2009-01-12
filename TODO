@@ -6,3 +6,6 @@ This file is probably not usable for anybody except me ;-).
 #endif
 
 - make gammu core interruptible by some flag. this is especially needed when connect takes ages
+
+- tests:
+    - backup conversion, probably from python
