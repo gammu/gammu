@@ -80,16 +80,23 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 
 	while (1) {
 		error = GSM_DecodeVCALENDAR_VTODO(NULL, File.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
-		if (error == ERR_EMPTY) break;
-		if (error != ERR_NONE) return error;
+		if (error == ERR_EMPTY) {
+			error = ERR_NONE;
+			break;
+		}
+		if (error != ERR_NONE) break;
 		if (Calendar.EntriesNum != 0) {
 			if (numCal < GSM_MAXCALENDARTODONOTES) {
 				backup->Calendar[numCal] = malloc(sizeof(GSM_CalendarEntry));
-			        if (backup->Calendar[numCal] == NULL) return ERR_MOREMEMORY;
+			        if (backup->Calendar[numCal] == NULL) {
+					error = ERR_MOREMEMORY;
+					break;
+				}
 				backup->Calendar[numCal + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_MAXCALENDARTODONOTES\n");
-				return ERR_MOREMEMORY;
+				error = ERR_MOREMEMORY;
+				break;
 			}
 			memcpy(backup->Calendar[numCal],&Calendar,sizeof(GSM_CalendarEntry));
 			backup->Calendar[numCal]->Location = numCal + 1;
@@ -98,11 +105,15 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 		if (ToDo.EntriesNum != 0) {
 			if (numToDo < GSM_MAXCALENDARTODONOTES) {
 				backup->ToDo[numToDo] = malloc(sizeof(GSM_ToDoEntry));
-			        if (backup->ToDo[numToDo] == NULL) return ERR_MOREMEMORY;
+			        if (backup->ToDo[numToDo] == NULL) {
+					error = ERR_MOREMEMORY;
+					break;
+				}
 				backup->ToDo[numToDo + 1] = NULL;
 			} else {
 				dbgprintf(NULL, "Increase GSM_MAXCALENDARTODONOTES\n");
-				return ERR_MOREMEMORY;
+				error = ERR_MOREMEMORY;
+				break;
 			}
 			memcpy(backup->ToDo[numToDo],&ToDo,sizeof(GSM_ToDoEntry));
 			backup->ToDo[numToDo]->Location = numToDo + 1;
@@ -110,7 +121,8 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 		}
 	}
 
-	return ERR_NONE;
+	free(File.Buffer);
+	return error;
 }
 
 #endif
