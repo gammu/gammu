@@ -586,7 +586,9 @@ static GSM_Error savenol(FILE *file, GSM_MultiBitmap *bitmap)
 						/* the same logo files can be different */
 			0x00};
 
-	if (bitmap->Bitmap[0].Type == GSM_OperatorLogo) sscanf(bitmap->Bitmap[0].NetworkCode, "%d %d", &country, &net);
+	if (bitmap->Bitmap[0].Type == GSM_OperatorLogo) {
+		sscanf(bitmap->Bitmap[0].NetworkCode, "%d %d", &country, &net);
+	}
 
 	header[6]	= country%256;
 	header[7]	= country/256;
