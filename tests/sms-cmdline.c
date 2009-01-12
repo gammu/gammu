@@ -12,6 +12,7 @@ int main(int argc, char **argv)
 	GSM_Error error;
 	GSM_Message_Type type = SMS_Display;
 	GSM_Debug_Info *debug_info;
+	int i;
 
 	/* Configure debugging */
 	debug_info = GSM_GetGlobalDebug();
@@ -23,6 +24,12 @@ int main(int argc, char **argv)
 
 	DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);
 	DisplayMultiSMSInfo(&sms, true, true, NULL, NULL);
+
+	for (i = 0; i < sms.Number; i++) {
+		printf("Message number: %i\n", i);
+		sms.SMS[i].SMSC.Location = 0;
+		DisplaySMSFrame(&sms.SMS[i], NULL);
+	}
 
 	printf("\n");
 	printf("Number of messages: %i\n", sms.Number);
