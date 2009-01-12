@@ -295,28 +295,36 @@ target_link_libraries(sms-cmdline messagecmdline)
 
 add_test(sms-cmdline-TEXT "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     TEXT 213 -text aaafdsfdfasd)
-set_tests_properties(sms-cmdline-TEXT PROPERTIES PASS_REGULAR_EXPRESSION "Remote number        : \"213\"")
+set_tests_properties(sms-cmdline-TEXT PROPERTIES
+    PASS_REGULAR_EXPRESSION "Remote number        : \"213\"")
 
 add_test(sms-cmdline-TEXT-smsc "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     TEXT 213 -text aaafdsfdfasd -smscnumber 132465)
-set_tests_properties(sms-cmdline-TEXT-smsc PROPERTIES PASS_REGULAR_EXPRESSION "Remote number        : \"213\"")
+set_tests_properties(sms-cmdline-TEXT-smsc PROPERTIES
+PASS_REGULAR_EXPRESSION "Remote number        : \"213\"")
 
 
 add_test(sms-cmdline-TEXT-16 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    TEXT 213 -text fdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdd -autolen 600 -16bit)
-set_tests_properties(sms-cmdline-TEXT-16 PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(16 bit\\) [0-9]*, 2 parts")
+    TEXT 213
+        -text fdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdd
+        -autolen 600 -16bit)
+set_tests_properties(sms-cmdline-TEXT-16 PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(16 bit\\) [0-9]*, 2 parts")
 
 add_test(sms-cmdline-TEXT-unicode "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     TEXT 213 -text aaafdsfdfasd -unicode)
-set_tests_properties(sms-cmdline-TEXT-unicode PROPERTIES PASS_REGULAR_EXPRESSION "Coding               : Unicode \\(no compression\\)")
+set_tests_properties(sms-cmdline-TEXT-unicode PROPERTIES
+    PASS_REGULAR_EXPRESSION "Coding               : Unicode \\(no compression\\)")
 
 add_test(sms-cmdline-TEXT-voice "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     text 213 -text aaafdsfdfasd -unicode -enablevoice)
-set_tests_properties(sms-cmdline-TEXT-voice PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Enables voice indicator")
+set_tests_properties(sms-cmdline-TEXT-voice PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : Enables voice indicator")
 
 add_test(sms-cmdline-EMS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     EMS 213 -text "aaafdsfdfasddsadsadsadsadijfdsalkfjla sdjflkjlfk fdsaf dsa fdsaf dsafafdasfsadfdsaf dsafdsa fdsaf dasfdsafdsafdsaf dsafdsaf daaafdsfdfasddsadsadsadsadijfdsalkfjla sdjflkjlfk fdsaf dsa fdsaf dsafafdasfsadfdsaf dsafdsa fdsaf dasfdsafdsafdsaf dsafdsaf dsafdsaf")
-set_tests_properties(sms-cmdline-EMS PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(8 bit\\) [0-9]*, 2 parts")
+set_tests_properties(sms-cmdline-EMS PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(8 bit\\) [0-9]*, 2 parts")
 
 add_test(sms-cmdline-EMS-empty "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     EMS 213)
@@ -325,7 +333,16 @@ set_tests_properties(sms-cmdline-EMS-empty PROPERTIES
     WILL_FAIL TRUE)
 
 add_test(sms-cmdline-EMS-misc "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    EMS 213 -defsound 99 -defanimation 1 -protected 0 -text "foo" -format l -text bar -format r -text moo -format b -text mee -format i -text bee -format u -text geee -format t)
+    EMS 213
+        -defsound 99
+        -defanimation 1
+        -protected 0
+        -text "foo" -format l
+        -text bar -format r
+        -text moo -format b
+        -text mee -format i
+        -text bee -format u
+        -text geee -format t)
 set_tests_properties(sms-cmdline-EMS-misc PROPERTIES
     PASS_REGULAR_EXPRESSION "EMS sound ID         : 99"
     )
@@ -336,53 +353,71 @@ add_test(sms-cmdline-EMS-ring "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX
 add_test(sms-cmdline-RINGTONE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     RINGTONE 54654654 ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt)
 set_tests_properties(sms-cmdline-RINGTONE PROPERTIES
-    PASS_REGULAR_EXPRESSION "Ringtone \"AxelF\""
-    )
+    PASS_REGULAR_EXPRESSION "Ringtone \"AxelF\"")
 
 add_test(sms-cmdline-MMS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     MMSINDICATOR 800123456 http://wammu.eu/ Wammu Gammu)
-set_tests_properties(sms-cmdline-MMS PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
+set_tests_properties(sms-cmdline-MMS PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
 
 add_test(sms-cmdline-WAP "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     WAPINDICATOR 800123456 http://wammu.eu/ Wammu)
-set_tests_properties(sms-cmdline-WAP PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
+set_tests_properties(sms-cmdline-WAP PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
 
 add_test(sms-cmdline-TODO "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     TODO 132132  ${Gammu_SOURCE_DIR}/tests/vcal/02.vcs  1)
-set_tests_properties(sms-cmdline-TODO PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Nokia calendar note, ID \\(8 bit\\) [0-9]*, part 2 of 2")
+set_tests_properties(sms-cmdline-TODO PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : Nokia calendar note, ID \\(8 bit\\) [0-9]*, part 2 of 2")
 
 add_test(sms-cmdline-CALENDAR "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     CALENDAR 132132  ${Gammu_SOURCE_DIR}/tests/vcal/UK32Holidays.ics  30)
-set_tests_properties(sms-cmdline-CALENDAR PROPERTIES PASS_REGULAR_EXPRESSION "SUMMARY:Bank Holiday")
+set_tests_properties(sms-cmdline-CALENDAR PROPERTIES
+    PASS_REGULAR_EXPRESSION "SUMMARY:Bank Holiday")
 
 add_test(sms-cmdline-VCARD "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     VCARD21 132132  ${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf ME 1)
-set_tests_properties(sms-cmdline-VCARD PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(8 bit\\) [0-9]*, 2 parts")
+set_tests_properties(sms-cmdline-VCARD PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(8 bit\\) [0-9]*, 2 parts")
 
 add_test(sms-cmdline-SMSTEMPLATE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     SMSTEMPLATE 213 -text aaafdsfdfasd)
 # Not sure if this is really correct...
-set_tests_properties(sms-cmdline-SMSTEMPLATE PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : User UDH")
+set_tests_properties(sms-cmdline-SMSTEMPLATE PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : User UDH")
 
 add_test(sms-cmdline-PICTURE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     PICTURE 213 ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm)
-set_tests_properties(sms-cmdline-PICTURE PROPERTIES PASS_REGULAR_EXPRESSION "###################   ##    ##     #     #     ##   ## ### ##   ###   ##")
+set_tests_properties(sms-cmdline-PICTURE PROPERTIES
+    PASS_REGULAR_EXPRESSION "###################   ##    ##     #     #     ##   ## ### ##   ###   ##")
 
 add_test(sms-cmdline-OPERATOR "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     OPERATOR 213 ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm -netcode "230 03")
-set_tests_properties(sms-cmdline-OPERATOR PROPERTIES PASS_REGULAR_EXPRESSION "Operator logo for 230 03 network \\(Vodafone CZ, Vodafone CZ\\)")
+set_tests_properties(sms-cmdline-OPERATOR PROPERTIES
+    PASS_REGULAR_EXPRESSION "Operator logo for 230 03 network \\(Vodafone CZ, Vodafone CZ\\)")
 
 add_test(sms-cmdline-CALLER "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     CALLER 213 ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm)
-set_tests_properties(sms-cmdline-CALLER PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Nokia caller logo")
+set_tests_properties(sms-cmdline-CALLER PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : Nokia caller logo")
 
 add_test(sms-cmdline-ANIMATION "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    ANIMATION 213 6 ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm)
-set_tests_properties(sms-cmdline-ANIMATION PROPERTIES PASS_REGULAR_EXPRESSION "Number of messages: 14")
+    ANIMATION 213 6
+        ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm
+        ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm
+        ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm
+        ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm
+        ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm
+        ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm)
+set_tests_properties(sms-cmdline-ANIMATION PROPERTIES
+    PASS_REGULAR_EXPRESSION "Number of messages: 14")
 
 add_test(sms-cmdline-PROFILE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
-    PROFILE 213 -bitmap ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm -ringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt)
-set_tests_properties(sms-cmdline-PROFILE PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Nokia profile, ID \\(8 bit\\) [0-9]*, 3 parts")
+    PROFILE 213
+        -bitmap ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm
+        -ringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt)
+set_tests_properties(sms-cmdline-PROFILE PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : Nokia profile, ID \\(8 bit\\) [0-9]*, 3 parts")
 
 add_test(sms-cmdline-BOOKMARK "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     BOOKMARK 213 ${Gammu_SOURCE_DIR}/tests/misc/wap-bookmark.backup 1)
