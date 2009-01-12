@@ -56,6 +56,10 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 		printf(LISTFORMAT "%s\n", _("Private"), entry->Number == 1 ? "Yes" : "No");
 		return ERR_NONE;
 	case PBK_Caller_Group       :
+		if (sm == NULL) {
+			printf(LISTFORMAT "\"%d\"\n", _("Caller group"),entry->Number);
+			return ERR_NONE;
+		}
 		if (entry->Number >= GAMMU_CALLER_GROUPS) {
 			printf(LISTFORMAT "\"%d\"\n", _("Caller group"),entry->Number);
 			fprintf(stderr, "%s\n", _("Caller group number too high, please increase buffer in sources!"));
