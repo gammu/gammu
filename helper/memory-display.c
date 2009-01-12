@@ -59,7 +59,7 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 		if (entry->Number >= GAMMU_CALLER_GROUPS) {
 			printf(LISTFORMAT "\"%d\"\n", _("Caller group"),entry->Number);
 			fprintf(stderr, "%s\n", _("Caller group number too high, please increase buffer in sources!"));
-			break;
+			return ERR_MOREMEMORY;
 		}
 		if (!callerinit[entry->Number-1]) {
 			caller[entry->Number-1].Type	    = GSM_CallerGroupLogo;
