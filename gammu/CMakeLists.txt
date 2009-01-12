@@ -73,7 +73,7 @@ add_test(gammu-help "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help
 
 foreach(EXT nlm ngg nol xpm nsl wbmp bmp)
     add_test(gammu-copybitmap-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
-        copybitmap ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm "${CMAKE_CURRENT_BINARY_DIR}/test-bmp.${EXT}" OPERATOR)
+        copybitmap ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm "${CMAKE_CURRENT_BINARY_DIR}/test-bmp.${EXT}" PICTURE)
     add_test(gammu-displaybitmap-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
         copybitmap "${CMAKE_CURRENT_BINARY_DIR}/test-bmp.${EXT}")
     # Reading of xpm is not supported
