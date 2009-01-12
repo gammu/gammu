@@ -28,6 +28,7 @@ ChangeLog
 [-] * Fixed reading of RTTL ringtones.
 [-] * Fixed crash with too many animation frames.
 [-] * Fixed possible crash in LMB writer.
+[-] * Fixed several memory leaks.
     
 20090109 - 1.22.90
 
