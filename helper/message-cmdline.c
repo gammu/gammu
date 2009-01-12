@@ -118,6 +118,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 	bool				ReplyViaSameSMSC 	= false;
 	int				MaxSMS			= -1;
 	bool				EMS16Bit		= false;
+	int frames_num;
 
 	/* Parameters required only during saving */
 	int				Folder			= 1; /*Inbox by default */
@@ -310,24 +311,30 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 		BMP_AUTO_ALLOC(0);
 		bitmap[0]->Number 		= 0;
 		i				= 1;
-		/* FIXME: should not make atoi so much times! */
+		frames_num = atoi(argv[startarg]);
+		if (frames_num > GSM_MAX_MULTI_BITMAP) {
+			printf("%s\n", _("Too many animation frames!"));
+			exit(-1);
+		}
 		while (1) {
 			bitmap2.Bitmap[0].Type = GSM_StartupLogo;
 			error=GSM_ReadBitmapFile(argv[startarg + i],&bitmap2);
 			if (error != ERR_NONE) goto end_compose;
 			for (j=0;j<bitmap2.Number;j++) {
-				if (bitmap[0]->Number == atoi(argv[startarg])) break;
+				if (bitmap[0]->Number == frames_num)
+					break;
 				memcpy(&bitmap[0]->Bitmap[bitmap[0]->Number],&bitmap2.Bitmap[j],sizeof(GSM_Bitmap));
 				bitmap[0]->Number++;
 			}
-			if (bitmap[0]->Number == atoi(argv[startarg])) break;
+			if (bitmap[0]->Number == frames_num)
+				break;
 			i++;
 		}
 		SMSInfo.Entries[0].ID  		= SMS_AlcatelMonoAnimationLong;
 		SMSInfo.Entries[0].Bitmap   	= bitmap[0];
 		bitmap[0]->Bitmap[0].Text[0]	= 0;
 		bitmap[0]->Bitmap[0].Text[1]	= 0;
-		startarg += 1 + atoi(argv[startarg]);
+		startarg += 1 + frames_num;
 		break;
 	case COMPOSE_PICTURE:
 		if (argc < 1 + startarg) {
