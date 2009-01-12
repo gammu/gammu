@@ -751,6 +751,7 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 			ringtone->NoteTone.NrCommands++;
 			break;
 		}
+		if (i >= readbytes) break;
 		while (buffer[i] != ',') {
 			if (buffer[i] == 0x00) return ERR_NONE;
 			i++;
