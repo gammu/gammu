@@ -384,6 +384,21 @@ add_test(sms-cmdline-PROFILE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}
     PROFILE 213 -bitmap ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm -ringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt)
 set_tests_properties(sms-cmdline-PROFILE PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Nokia profile, ID \\(8 bit\\) [0-9]*, 3 parts")
 
+add_test(sms-cmdline-BOOKMARK "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    BOOKMARK 213 ${Gammu_SOURCE_DIR}/tests/misc/wap-bookmark.backup 1)
+set_tests_properties(sms-cmdline-BOOKMARK PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : Nokia WAP bookmark")
+
+add_test(sms-cmdline-WAPSETTINGS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    WAPSETTINGS 213 ${Gammu_SOURCE_DIR}/tests/misc/wap-settings.backup 1 GPRS)
+set_tests_properties(sms-cmdline-WAPSETTINGS PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : Nokia WAP bookmark or WAP/MMS settings, ID \\(8 bit\\) [0-9]*, 2 parts")
+
+add_test(sms-cmdline-MMSSETTINGS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    MMSSETTINGS 213 ${Gammu_SOURCE_DIR}/tests/misc/mms-settings.backup 1)
+set_tests_properties(sms-cmdline-MMSSETTINGS PROPERTIES
+    PASS_REGULAR_EXPRESSION "User Data Header     : Nokia WAP bookmark or WAP/MMS settings, ID \\(8 bit\\) [0-9]*, 2 parts")
+
 # AT parser tests
 add_executable(at-parser at-parser.c)
 target_link_libraries(at-parser libGammu)
