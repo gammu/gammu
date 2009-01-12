@@ -525,9 +525,14 @@ fail:
 
 static GSM_Error PrivSaveNGGNOL(FILE *file, GSM_MultiBitmap *bitmap)
 {
-	char 	buffer[GSM_BITMAP_SIZE];
+	char 	*buffer;
 	size_t	x,y;
 	size_t	current=0;
+
+	buffer = (char *)malloc(bitmap->Bitmap[0].BitmapHeight * bitmap->Bitmap[0].BitmapWidth);
+	if (buffer == NULL) {
+		return ERR_MOREMEMORY;
+	}
 
 	for (y=0;y<bitmap->Bitmap[0].BitmapHeight;y++) {
 		for (x=0;x<bitmap->Bitmap[0].BitmapWidth;x++) {
@@ -539,8 +544,10 @@ static GSM_Error PrivSaveNGGNOL(FILE *file, GSM_MultiBitmap *bitmap)
 		}
 	}
 	chk_fwrite(buffer,1,current,file);
+	free(buffer);
 	return ERR_NONE;
 fail:
+	free(buffer);
 	return ERR_WRITING_FILE;
 }
 
