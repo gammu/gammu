@@ -66,10 +66,7 @@ int main(int argc, char **argv)
 
 	/* Parse vCard */
 	error = GSM_DecodeVCARD(NULL, buffer, &pos, &pbk, SonyEricsson_VCard21);
-	if (error != ERR_NONE) {
-		printf("Parsing failed: %s\n", GSM_ErrorString(error));
-		return 1;
-	}
+	gammu_test_result(error, "GSM_DecodeVCARD");
 
 	/* Encode vCard back */
 	pos = 0;
@@ -97,25 +94,15 @@ int main(int argc, char **argv)
 
 	/* Read file content */
 	GSM_ClearBackup(&backup);
-	if (GSM_ReadBackupFile(argv[2], &backup, GSM_Backup_GammuUCS2) != ERR_NONE) {
-		printf("Error reading backup from %s\n", argv[2]);
-		return 1;
-	}
+	error = GSM_ReadBackupFile(argv[2], &backup, GSM_Backup_GammuUCS2);
+	gammu_test_result(error, "GSM_ReadBackupFile");
 
 	/* Compare size */
-	if (pbk.EntriesNum != backup.PhonePhonebook[0]->EntriesNum) {
-		printf("Different number of entries!\n");
-		return 1;
-	}
+	test_result(pbk.EntriesNum == backup.PhonePhonebook[0]->EntriesNum);
 
 	/* Compare content */
 	for (i = 0; i < pbk.EntriesNum; i++) {
-		if (pbk.Entries[i].EntryType != backup.PhonePhonebook[0]->Entries[i].EntryType) {
-			printf("Field %d is not the same type (%d/%d)!\n", i,
-				pbk.Entries[i].EntryType,
-				backup.PhonePhonebook[0]->Entries[i].EntryType);
-			return 1;
-		}
+		test_result(pbk.Entries[i].EntryType == backup.PhonePhonebook[0]->Entries[i].EntryType);
 		printf("Entry type: %d\n", pbk.Entries[i].EntryType);
 		switch (pbk.Entries[i].EntryType) {
 			case PBK_Number_General     :
@@ -157,24 +144,18 @@ int main(int argc, char **argv)
 			case PBK_Text_UserID:
 			case PBK_Text_PictureName:
 			case PBK_PushToTalkID:
-				if (!mywstrncmp(
+				test_result(mywstrncmp(
 					pbk.Entries[i].Text,
 					backup.PhonePhonebook[0]->Entries[i].Text,
-					0)) {
-					printf("Field %d is not the same!\n", i);
-					return 1;
-				}
+					0) == true);
 				break;
 			case PBK_Photo       :
-				if ((pbk.Entries[i].Picture.Length !=
-					backup.PhonePhonebook[0]->Entries[i].Picture.Length) ||
+				test_result((pbk.Entries[i].Picture.Length ==
+					backup.PhonePhonebook[0]->Entries[i].Picture.Length) &&
 					memcmp(
 					pbk.Entries[i].Picture.Buffer,
 					backup.PhonePhonebook[0]->Entries[i].Picture.Buffer,
-					pbk.Entries[i].Picture.Length) != 0) {
-					printf("Field %d is not the same!\n", i);
-					return 1;
-				}
+					pbk.Entries[i].Picture.Length) == 0);
 				free(pbk.Entries[i].Picture.Buffer);
 				free(backup.PhonePhonebook[0]->Entries[i].Picture.Buffer);
 				break;
@@ -187,10 +168,7 @@ int main(int argc, char **argv)
 			case PBK_PictureID:
 			case PBK_CallLength:
 			case PBK_Caller_Group       :
-				if (pbk.Entries[i].Number != backup.PhonePhonebook[0]->Entries[i].Number) {
-					printf("Field %d is not the same!\n", i);
-					return 1;
-				}
+				test_result(pbk.Entries[i].Number == backup.PhonePhonebook[0]->Entries[i].Number);
 				break;
 		}
 	}
