@@ -330,6 +330,15 @@ set_tests_properties(sms-cmdline-EMS-misc PROPERTIES
     PASS_REGULAR_EXPRESSION "EMS sound ID         : 99"
     )
 
+add_test(sms-cmdline-EMS-ring "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    EMS 54654654 -protected 1 -toneSElong  ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt)
+
+add_test(sms-cmdline-RINGTONE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    RINGTONE 54654654 ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt)
+set_tests_properties(sms-cmdline-RINGTONE PROPERTIES
+    PASS_REGULAR_EXPRESSION "Ringtone \"AxelF\""
+    )
+
 add_test(sms-cmdline-MMS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     MMSINDICATOR 800123456 http://wammu.eu/ Wammu Gammu)
 set_tests_properties(sms-cmdline-MMS PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
@@ -354,6 +363,11 @@ add_test(sms-cmdline-SMSTEMPLATE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUF
     SMSTEMPLATE 213 -text aaafdsfdfasd)
 # Not sure if this is really correct...
 set_tests_properties(sms-cmdline-SMSTEMPLATE PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : User UDH")
+
+add_test(sms-cmdline-PICTURE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    PICTURE 213 ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm)
+# Not sure if this is really correct...
+set_tests_properties(sms-cmdline-PICTURE PROPERTIES PASS_REGULAR_EXPRESSION "###################   ##    ##     #     #     ##   ## ### ##   ###   ##")
 
 
 # AT parser tests
