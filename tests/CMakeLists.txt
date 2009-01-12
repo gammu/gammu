@@ -324,6 +324,12 @@ set_tests_properties(sms-cmdline-EMS-empty PROPERTIES
     FAIL_REGULAR_EXPRESSION "Entry is empty"
     WILL_FAIL TRUE)
 
+add_test(sms-cmdline-EMS-misc "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    EMS 213 -defsound 99 -defanimation 1 -protected 0 -text "foo" -format l -text bar -format r -text moo -format b -text mee -format i -text bee -format u -text geee -format t)
+set_tests_properties(sms-cmdline-EMS-misc PROPERTIES
+    PASS_REGULAR_EXPRESSION "EMS sound ID         : 99"
+    )
+
 add_test(sms-cmdline-MMS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     MMSINDICATOR 800123456 http://wammu.eu/ Wammu Gammu)
 set_tests_properties(sms-cmdline-MMS PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
@@ -335,6 +341,10 @@ set_tests_properties(sms-cmdline-WAP PROPERTIES PASS_REGULAR_EXPRESSION "User Da
 add_test(sms-cmdline-TODO "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     TODO 132132  ${Gammu_SOURCE_DIR}/tests/vcal/02.vcs  1)
 set_tests_properties(sms-cmdline-TODO PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Nokia calendar note, ID \\(8 bit\\) [0-9]*, part 2 of 2")
+
+add_test(sms-cmdline-CALENDAR "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    CALENDAR 132132  ${Gammu_SOURCE_DIR}/tests/vcal/UK32Holidays.ics  30)
+set_tests_properties(sms-cmdline-CALENDAR PROPERTIES PASS_REGULAR_EXPRESSION "SUMMARY:Bank Holiday")
 
 add_test(sms-cmdline-VCARD "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     VCARD21 132132  ${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf ME 1)
