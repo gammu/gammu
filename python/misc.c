@@ -18,6 +18,7 @@
  * vim: expandtab sw=4 ts=4 sts=4:
  */
 
+#include "misc.h"
 #include <string.h>
 
 char *mystrncpy(char *dest, const char *src, size_t n) {
@@ -25,3 +26,32 @@ char *mystrncpy(char *dest, const char *src, size_t n) {
     dest[n] = 0;
     return dest;
 }
+
+PRINTF_STYLE(1, 2)
+int pyg_error(const char *format, ...) {
+	va_list ap;
+	int ret;
+
+	printf("python-gammu: ERROR: ");
+
+	va_start(ap, format);
+	ret = vprintf(format, ap);
+	va_end(ap);
+
+	return ret;
+}
+
+PRINTF_STYLE(1, 2)
+int pyg_warning(const char *format, ...) {
+	va_list ap;
+	int ret;
+
+	printf("python-gammu: WARNING: ");
+
+	va_start(ap, format);
+	ret = vprintf(format, ap);
+	va_end(ap);
+
+	return ret;
+}
+

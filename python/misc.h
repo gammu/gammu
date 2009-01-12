@@ -24,14 +24,19 @@
 /* Python includes */
 #include <Python.h>
 
+/* PRINTF_STYLE definition */
+#include <gammu-misc.h>
+
 /**
  * Copies at most n chars from src to dest, dest will be \0 terminated.
  */
 char *mystrncpy(char *dest, const char *src, size_t n);
 
-#define pyg_error(...) printf("python-gammu: ERROR: " __VA_ARGS__)
-#define pyg_warning(...) printf("python-gammu: WARNING: " __VA_ARGS__)
+PRINTF_STYLE(1, 2)
+int pyg_warning(const char *format, ...);
 
+PRINTF_STYLE(1, 2)
+int pyg_error(const char *format, ...);
 
 /* Compatiblity with older python releases */
 #if PY_VERSION_HEX < 0x02050000
