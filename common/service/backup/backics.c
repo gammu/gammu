@@ -10,6 +10,7 @@
 #include "../gsmlogo.h"
 #include "../gsmmisc.h"
 #include "backics.h"
+#include "backvcs.h"
 
 #ifdef GSM_ENABLE_BACKUP
 
@@ -67,52 +68,7 @@ fail:
 
 GSM_Error LoadICS(char *FileName, GSM_Backup *backup)
 {
-	GSM_File 		File;
-	GSM_Error		error;
-	GSM_CalendarEntry	Calendar;
-	GSM_ToDoEntry		ToDo;
-	int			numCal = 0, numToDo = 0;
-	size_t Pos = 0;
-
-	File.Buffer = NULL;
-	error = GSM_ReadFile(FileName, &File);
-	if (error != ERR_NONE) return error;
-
-	while (1) {
-		error = GSM_DecodeVCALENDAR_VTODO(NULL, File.Buffer, &Pos, &Calendar, &ToDo, Mozilla_iCalendar, Mozilla_VToDo);
-		if (error == ERR_EMPTY) break;
-		if (error != ERR_NONE) return error;
-
-		if (Calendar.EntriesNum != 0) {
-			dbgprintf(NULL, "numCal=%i\n",numCal);
-			if (numCal < GSM_MAXCALENDARTODONOTES) {
-				backup->Calendar[numCal] = malloc(sizeof(GSM_CalendarEntry));
-				dbgprintf(NULL, "malloc=%p\n",backup->Calendar[numCal]);
-			        if (backup->Calendar[numCal] == NULL) return ERR_MOREMEMORY;
-				backup->Calendar[numCal + 1] = NULL;
-			} else {
-				dbgprintf(NULL, "Increase GSM_MAXCALENDARTODONOTES\n");
-				return ERR_MOREMEMORY;
-			}
-			memcpy(backup->Calendar[numCal],&Calendar,sizeof(GSM_CalendarEntry));
-			backup->Calendar[numCal]->Location = numCal + 1;
-			numCal++;
-		}
-		if (ToDo.EntriesNum != 0) {
-			if (numToDo < GSM_MAXCALENDARTODONOTES) {
-				backup->ToDo[numToDo] = malloc(sizeof(GSM_ToDoEntry));
-			        if (backup->ToDo[numToDo] == NULL) return ERR_MOREMEMORY;
-				backup->ToDo[numToDo + 1] = NULL;
-			} else {
-				dbgprintf(NULL, "Increase GSM_MAXCALENDARTODONOTES\n");
-				return ERR_MOREMEMORY;
-			}
-			memcpy(backup->ToDo[numToDo],&ToDo,sizeof(GSM_ToDoEntry));
-			backup->ToDo[numToDo]->Location = numToDo + 1;
-			numToDo++;
-		}
-	}
-	return ERR_NONE;
+	return LoadVCalendarPrivate(FileName, backup, Mozilla_iCalendar, Mozilla_VToDo);
 }
 
 #endif
