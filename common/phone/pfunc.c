@@ -70,7 +70,7 @@ GSM_Error PHONE_EncodeSMSFrame(GSM_StateMachine *s, GSM_SMSMessage *SMS, unsigne
 			return ERR_EMPTYSMSC;
 		}
 	}
-	return GSM_EncodeSMSFrame(&(s->di), SMS, buffer, Layout, length, clear);
+	return GSM_EncodeSMSFrame(GSM_GetDI(s), SMS, buffer, Layout, length, clear);
 }
 
 GSM_Error PHONE_Terminate(GSM_StateMachine *s)
