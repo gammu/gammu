@@ -542,10 +542,10 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 	size_t i = 0;
 	size_t readbytes;
 
-	unsigned char		buffer[2000],Name[100];
+	char		buffer[2000],Name[100];
 	GSM_RingNote		*Note;
 
-	readbytes = fread(buffer, 2000, 1, file);
+	readbytes = fread(buffer, 1, sizeof(buffer), file);
 
 	ringtone->NoteTone.NrCommands = 0;
 

@@ -25,6 +25,7 @@ ChangeLog
 [!] * Python C module is now gammu._gammu and not gammu.Core.
 [+] * Introduce testing for python module.
 [-] * Fixed decoding of formatted EMS messages.
+[-] * Fixed reading of RTTL ringtones.
     
 20090109 - 1.22.90
 
