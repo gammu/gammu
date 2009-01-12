@@ -23,7 +23,7 @@ GSM_Error SaveVCard(char *FileName, GSM_Backup *backup)
 {
 	int 		i;
 	size_t Length = 0;
-	unsigned char 	Buffer[1000];
+	char		Buffer[100000];
 	FILE 		*file;
 	GSM_Error	error;
 
