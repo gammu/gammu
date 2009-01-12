@@ -91,6 +91,10 @@ configure_file("examples/sms-encode-decode.py" "${CMAKE_CURRENT_BINARY_DIR}/test
 add_test("py-sms-encode-decode" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py")
 set_tests_properties("py-sms-encode-decode" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")
 
+configure_file("examples/sms-link.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-link.py" COPY_ONLY)
+add_test("py-sms-link" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-link.py")
+set_tests_properties("py-sms-link" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")
+
 # Documentation
 find_program(EPYDOC_EXECUTABLE NAMES epydoc
     DOC "Epydoc tool for generating Python API documentation <http://epydoc.sourceforge.net/>")
