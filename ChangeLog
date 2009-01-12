@@ -27,6 +27,7 @@ ChangeLog
 [-] * Fixed decoding of formatted EMS messages.
 [-] * Fixed reading of RTTL ringtones.
 [-] * Fixed crash with too many animation frames.
+[-] * Fixed possible crash in LMB writer.
     
 20090109 - 1.22.90
 

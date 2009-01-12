@@ -111,7 +111,7 @@ fail:
 
 GSM_Error SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 {
-	GSM_StateMachine 	fake_sm;
+	GSM_StateMachine	*fake_sm;
 	size_t			count = 16, blocks;
 	char 			req[500] = {
 		'P','B','E','2', /*block identifier*/
@@ -124,11 +124,11 @@ GSM_Error SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 		03,              /*memory type. ME=02;SM=03*/
 		00};
 
-	fake_sm.di = GSM_global_debug;
-	fake_sm.di.use_global = true;
-	fake_sm.Phone.Data.ModelInfo = GetModelData(NULL, "unknown", NULL, NULL);
+	fake_sm = GSM_AllocStateMachine();
+	fake_sm->di.use_global = true;
+	fake_sm->Phone.Data.ModelInfo = GetModelData(NULL, "unknown", NULL, NULL);
 
-	count=count+N71_65_EncodePhonebookFrame(&fake_sm, req+16, entry, &blocks, true, true);
+	count=count+N71_65_EncodePhonebookFrame(fake_sm, req+16, entry, &blocks, true, true);
 
 	req[4]=(count-12)%256;
 	req[5]=(count-12)/256;
@@ -137,8 +137,10 @@ GSM_Error SaveLMBPBKEntry(FILE *file, GSM_MemoryEntry *entry)
 	if (entry->MemoryType==MEM_ME) req[10]=req[14]=2;
 
 	chk_fwrite(req, 1, count, file);
+	GSM_FreeStateMachine(fake_sm);
 	return ERR_NONE;
 fail:
+	GSM_FreeStateMachine(fake_sm);
 	return ERR_WRITING_FILE;
 }
 
