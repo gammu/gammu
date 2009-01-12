@@ -9,6 +9,7 @@
 #ifdef GSM_ENABLE_BACKUP
 GSM_Error SaveVCalendar(char *FileName, GSM_Backup *backup);
 GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup);
+GSM_Error LoadVCalendarPrivate(char *FileName, GSM_Backup *backup, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer);
 #endif
 
 #endif

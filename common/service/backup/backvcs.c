@@ -65,7 +65,7 @@ fail:
 	return ERR_WRITING_FILE;
 }
 
-GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
+GSM_Error LoadVCalendarPrivate(char *FileName, GSM_Backup *backup, GSM_VCalendarVersion CalVer, GSM_VToDoVersion ToDoVer)
 {
 	GSM_File 		File;
 	GSM_Error		error;
@@ -79,7 +79,7 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 	if (error != ERR_NONE) return error;
 
 	while (1) {
-		error = GSM_DecodeVCALENDAR_VTODO(NULL, File.Buffer, &Pos, &Calendar, &ToDo, Nokia_VCalendar, Nokia_VToDo);
+		error = GSM_DecodeVCALENDAR_VTODO(NULL, File.Buffer, &Pos, &Calendar, &ToDo, CalVer, ToDoVer);
 		if (error == ERR_EMPTY) {
 			error = ERR_NONE;
 			break;
@@ -123,6 +123,11 @@ GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
 
 	free(File.Buffer);
 	return error;
+}
+
+GSM_Error LoadVCalendar(char *FileName, GSM_Backup *backup)
+{
+	return LoadVCalendarPrivate(FileName, backup, Nokia_VCalendar, Nokia_VToDo);
 }
 
 #endif
