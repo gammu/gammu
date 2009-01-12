@@ -13,7 +13,7 @@ int main(int argc, char **argv)
 	GSM_Message_Type type = SMS_Display;
 
 	error = CreateMessage(&type, &sms, argc, 1, argv, NULL);
-	test_result(error == ERR_NONE);
+	gammu_test_result(error, "CreateMessage");
 
 	DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);
 	DisplayMultiSMSInfo(&sms, true, true, NULL, NULL);

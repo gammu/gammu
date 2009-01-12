@@ -350,6 +350,8 @@ GSM_Error GSM_EncodeMultiPartSMS(GSM_Debug_Info *di,
 	bool		EMS	= false;
 	int		textnum = 0;
 
+	if (Info->EntriesNum == 0) return ERR_EMPTY;
+
 	SMS->Number = 0;
 
 	if (Info->Entries[0].ID == SMS_AlcatelSMSTemplateName) {

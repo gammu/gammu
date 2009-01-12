@@ -292,15 +292,59 @@ add_executable(sms-cmdline sms-cmdline.c)
 target_link_libraries(sms-cmdline libGammu)
 target_link_libraries(sms-cmdline messagedisplay)
 target_link_libraries(sms-cmdline messagecmdline)
-add_test(sms-cmdline-1 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+
+add_test(sms-cmdline-TEXT "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     TEXT 213 -text aaafdsfdfasd)
-set_tests_properties(sms-cmdline-1 PROPERTIES PASS_REGULAR_EXPRESSION "Remote number        : \"213\"")
-add_test(sms-cmdline-2 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+set_tests_properties(sms-cmdline-TEXT PROPERTIES PASS_REGULAR_EXPRESSION "Remote number        : \"213\"")
+
+add_test(sms-cmdline-TEXT-smsc "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    TEXT 213 -text aaafdsfdfasd -smscnumber 132465)
+set_tests_properties(sms-cmdline-TEXT-smsc PROPERTIES PASS_REGULAR_EXPRESSION "Remote number        : \"213\"")
+
+
+add_test(sms-cmdline-TEXT-16 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    TEXT 213 -text fdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdfdasfasfasfdsafasdfasdffasdfasdfasaaafdsfdfasdd -autolen 600 -16bit)
+set_tests_properties(sms-cmdline-TEXT-16 PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(16 bit\\) [0-9]*, 2 parts")
+
+add_test(sms-cmdline-TEXT-unicode "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    TEXT 213 -text aaafdsfdfasd -unicode)
+set_tests_properties(sms-cmdline-TEXT-unicode PROPERTIES PASS_REGULAR_EXPRESSION "Coding               : Unicode \\(no compression\\)")
+
+add_test(sms-cmdline-TEXT-voice "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    text 213 -text aaafdsfdfasd -unicode -enablevoice)
+set_tests_properties(sms-cmdline-TEXT-voice PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Enables voice indicator")
+
+add_test(sms-cmdline-EMS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     EMS 213 -text "aaafdsfdfasddsadsadsadsadijfdsalkfjla sdjflkjlfk fdsaf dsa fdsaf dsafafdasfsadfdsaf dsafdsa fdsaf dasfdsafdsafdsaf dsafdsaf daaafdsfdfasddsadsadsadsadijfdsalkfjla sdjflkjlfk fdsaf dsa fdsaf dsafafdasfsadfdsaf dsafdsa fdsaf dasfdsafdsafdsaf dsafdsaf dsafdsaf")
-set_tests_properties(sms-cmdline-2 PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(8 bit\\) [0-9]*, 2 parts")
-add_test(sms-cmdline-3 "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+set_tests_properties(sms-cmdline-EMS PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(8 bit\\) [0-9]*, 2 parts")
+
+add_test(sms-cmdline-EMS-empty "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    EMS 213)
+set_tests_properties(sms-cmdline-EMS-empty PROPERTIES
+    FAIL_REGULAR_EXPRESSION "Entry is empty"
+    WILL_FAIL TRUE)
+
+add_test(sms-cmdline-MMS "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     MMSINDICATOR 800123456 http://wammu.eu/ Wammu Gammu)
-set_tests_properties(sms-cmdline-3 PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
+set_tests_properties(sms-cmdline-MMS PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
+
+add_test(sms-cmdline-WAP "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    WAPINDICATOR 800123456 http://wammu.eu/ Wammu)
+set_tests_properties(sms-cmdline-WAP PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : MMS indicator, ID \\(8 bit\\) [0-9]*, part 1 of 1")
+
+add_test(sms-cmdline-TODO "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    TODO 132132  ${Gammu_SOURCE_DIR}/tests/vcal/02.vcs  1)
+set_tests_properties(sms-cmdline-TODO PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Nokia calendar note, ID \\(8 bit\\) [0-9]*, part 2 of 2")
+
+add_test(sms-cmdline-VCARD "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    VCARD21 132132  ${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf ME 1)
+set_tests_properties(sms-cmdline-VCARD PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Concatenated \\(linked\\) message, ID \\(8 bit\\) [0-9]*, 2 parts")
+
+add_test(sms-cmdline-SMSTEMPLATE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    SMSTEMPLATE 213 -text aaafdsfdfasd)
+# Not sure if this is really correct...
+set_tests_properties(sms-cmdline-SMSTEMPLATE PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : User UDH")
+
 
 # AT parser tests
 add_executable(at-parser at-parser.c)
