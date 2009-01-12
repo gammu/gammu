@@ -10,14 +10,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-09 17:12+0100\n"
-"PO-Revision-Date: 2009-01-09 17:14+0100\n"
+"POT-Creation-Date: 2009-01-12 01:29+0100\n"
+"PO-Revision-Date: 2009-01-12 01:30+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;"
 
 # type: TH
 #: docs/user/gammurc.5:1
@@ -1724,10 +1724,10 @@ msgstr ""
 #: docs/user/gammu-smsd-files.7:12
 msgid ""
 "FILES backend stores all data on a filesystem in folders defined by "
-"configuration (see gammu-smsd(5) for description of configuration options)."
+"configuration (see gammu-smsdrc(5) for description of configuration options)."
 msgstr ""
 "Služba FILES ukládá všechna data na souborovém systému v adresářích zadaných "
-"v konfiguračním souboru (viz gammu-smsd(5)· pro popis těchto parametrů)."
+"v konfiguračním souboru (viz gammu-smsdrc(5)· pro popis těchto parametrů)."
 
 # type: SS
 #: docs/user/gammu-smsd-files.7:13 docs/user/gammu-smsd-mysql.7:15
@@ -1957,11 +1957,11 @@ msgstr ""
 #: docs/user/gammu-smsd-mysql.7:14
 msgid ""
 "MYSQL backend stores all data in a MySQL database server, which parameters "
-"are defined by configuration (see gammu-smsd(5) for description of "
+"are defined by configuration (see gammu-smsdrc(5) for description of "
 "configuration options)."
 msgstr ""
 "Služba MYSQL ukládá všechna data na databázovém serveru MySQL, jehož "
-"parametry jsou zadány v konfiguračním souboru (viz gammu-smsd(5)· pro popis "
+"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)· pro popis "
 "těchto parametrů)."
 
 # type: Plain text
@@ -2120,11 +2120,11 @@ msgstr ""
 #: docs/user/gammu-smsd-pgsql.7:14
 msgid ""
 "PGSQL backend stores all data in a PostgreSQL database server, which "
-"parameters are defined by configuration (see gammu-smsd(5) for description "
+"parameters are defined by configuration (see gammu-smsdrc(5) for description "
 "of configuration options)."
 msgstr ""
 "Služba PGSQL ukládá všechna data na databázovém serveru PostgreSQL, jehož "
-"parametry jsou zadány v konfiguračním souboru (viz gammu-smsd(5)· pro popis "
+"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)· pro popis "
 "těchto parametrů)."
 
 # type: TP
