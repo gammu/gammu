@@ -67,3 +67,35 @@ install (TARGETS gammu
         LIBRARY DESTINATION "${INSTALL_LIB_DIR}"
         ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
         )
+
+# Binary testing
+add_test(gammu-help "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help)
+
+foreach(EXT nlm ngg nol xpm nsl wbmp bmp)
+    add_test(gammu-copybitmap-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+        copybitmap ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm "${CMAKE_CURRENT_BINARY_DIR}/test-bmp.${EXT}" OPERATOR)
+    add_test(gammu-displaybitmap-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+        copybitmap "${CMAKE_CURRENT_BINARY_DIR}/test-bmp.${EXT}")
+    # Reading of these formats is not supported
+    if (${EXT} STREQUAL xpm OR ${EXT} STREQUAL ngg OR ${EXT} STREQUAL nol)
+        set_tests_properties(
+            gammu-displaybitmap-${EXT}
+            PROPERTIES WILL_FAIL TRUE)
+    endif (${EXT} STREQUAL xpm OR ${EXT} STREQUAL ngg OR ${EXT} STREQUAL nol)
+endforeach(EXT)
+
+add_test(gammu-copyringtone-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+    copyringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt "${CMAKE_CURRENT_BINARY_DIR}/test-rng.bin" BINARY)
+
+foreach(EXT ott rng mid imy ime wav rttl)
+    add_test(gammu-copyringtone-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+        copyringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}" RTTL)
+    add_test(gammu-copyringtone-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+        copyringtone "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}" "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}.${EXT}" RTTL)
+    # Reading midi is not supported
+    if (${EXT} STREQUAL mid)
+        set_tests_properties(
+            gammu-copyringtone-${EXT}
+            PROPERTIES WILL_FAIL TRUE)
+    endif (${EXT} STREQUAL mid)
+endforeach(EXT)

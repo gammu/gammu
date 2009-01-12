@@ -18,6 +18,12 @@ endif(COMMAND cmake_policy)
 
 option (COVERAGE "Add flags for Coverage analysis" OFF)
 
+if (CMAKE_CROSSCOMPILING AND MINGW)
+    set (GAMMU_TEST_SUFFIX ".exe")
+else (CMAKE_CROSSCOMPILING AND MINGW)
+    set (GAMMU_TEST_SUFFIX "")
+endif (CMAKE_CROSSCOMPILING AND MINGW)
+
 if (WIN32 AND NOT CYGWIN)
     set (CPACK_SYSTEM_NAME "Windows" CACHE STRING "Windows package name")
 endif (WIN32 AND NOT CYGWIN)
