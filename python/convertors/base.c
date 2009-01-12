@@ -147,7 +147,7 @@ int CopyStringFromDict(PyObject *dict, const char *key, size_t len, unsigned cha
     s = GetStringFromDict(dict, key);
     if (s == NULL) return 0;
     if (UnicodeLength(s) > len) {
-        pyg_warning("Truncating text %s to %d chars!\n", key, len);
+        pyg_warning("Truncating text %s to %" PY_FORMAT_SIZE_T "d chars!\n", key, len);
         s[2*len]        = 0;
         s[(2*len) + 1]  = 0;
     }
