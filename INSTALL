@@ -49,6 +49,10 @@ PostgreSQL
     - http://www.postgresql.org/
     - PostgreSQL support in SMSD.
 
+Python
+    - http://www.python.org/
+    - Gammu has a Python bindings
+
 
 From Sources - Linux
 ====================
@@ -92,6 +96,8 @@ Useful cmake parameters:
 -DCMAKE_INSTALL_PREFIX="/usr" change installation prefix
 -DENABLE_PROTECTION=OFF disables various compile time protections
 against buffer overflows and similar attacks
+-DBUILD_PYTHON=/usr/bin/python2.6 changes Python used for build Python
+module
 
 You can also disable support for whole set of phones, e.g.:
 

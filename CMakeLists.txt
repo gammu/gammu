@@ -875,15 +875,45 @@ add_subdirectory(locale)
 
 add_subdirectory(docs/user)
 
-find_package(PythonInterp)
-find_package(PythonLibs)
+set (BUILD_PYTHON "" CACHE FILEPATH "Path to python interpreter")
 
-if (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
+if (BUILD_PYTHON)
     set (ENABLE_PYTHON TRUE CACHE BOOL "Build Python bindings")
-    set (CPACK_SYSTEM_NAME "Windows" CACHE STRING "Windows package name")
-else (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
-    set (ENABLE_PYTHON FALSE CACHE BOOL "Build Python bindings" FORCE)
-endif (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
+    set (PYTHON_EXECUTABLE ${BUILD_PYTHON})
+    execute_process(
+        COMMAND
+            ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"
+        OUTPUT_VARIABLE PYTHON_INCLUDE_PATH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+    execute_process(
+        COMMAND
+            ${PYTHON_EXECUTABLE} -c "import sys; v=sys.version_info[:2]; print '%d.%d' % v"
+        OUTPUT_VARIABLE PYTHON_VERSION
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+    message (STATUS "Compiling for Python ${PYTHON_VERSION}")
+
+    string (REPLACE "." "" PYTHON_VERSION_NO_DOTS ${PYTHON_VERSION})
+    find_library (PYTHON_LIBRARY
+        NAMES python${PYTHON_VERSION_NO_DOTS} python${PYTHON_VERSION}
+        PATHS
+          [HKEY_LOCAL_MACHINE\\SOFTWARE\\Python\\PythonCore\\${PYTHON_VERSION}\\InstallPath]/libs
+        PATH_SUFFIXES
+          python${PYTHON_VERSION}/config
+        # Avoid finding the .dll in the PATH.  We want the .lib.
+        NO_SYSTEM_ENVIRONMENT_PATH
+      )
+else (BUILD_PYTHON)
+    find_package(PythonInterp)
+    find_package(PythonLibs)
+
+    if (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
+        set (ENABLE_PYTHON TRUE CACHE BOOL "Build Python bindings")
+    else (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
+        set (ENABLE_PYTHON FALSE CACHE BOOL "Build Python bindings" FORCE)
+    endif (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
+endif (BUILD_PYTHON)
 
 if (ENABLE_PYTHON)
     add_subdirectory(python)
