@@ -59,6 +59,7 @@ add_test(network-codes "${GAMMU_TEST_PATH}/network-codes${GAMMU_TEST_SUFFIX}" "-
 
 # vCard parsing
 add_executable(vcard-read vcard-read.c)
+target_link_libraries(vcard-read memorydisplay)
 target_link_libraries(vcard-read libGammu)
 
 # List test cases

@@ -12,6 +12,8 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "../helper/memory-display.h"
+
 #include "common.h"
 
 int main(int argc, char **argv)
@@ -173,6 +175,8 @@ int main(int argc, char **argv)
 		}
 	}
 
+	error = PrintMemoryEntry(&pbk, NULL);
+	gammu_test_result(error, "PrintMemoryEntry");
 
 	/* Free data */
 	GSM_FreeBackup(&backup);
