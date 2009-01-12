@@ -62,15 +62,22 @@ GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
 
 	while (1) {
 		error = GSM_DecodeVCARD(NULL, File.Buffer, &Pos, &Pbk, Nokia_VCard21);
-		if (error == ERR_EMPTY) break;
-		if (error != ERR_NONE) return error;
+		if (error == ERR_EMPTY) {
+			error = ERR_NONE;
+			break;
+		}
+		if (error != ERR_NONE) break;
 		if (numPbk < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
 			backup->PhonePhonebook[numPbk] = malloc(sizeof(GSM_MemoryEntry));
-		        if (backup->PhonePhonebook[numPbk] == NULL) return ERR_MOREMEMORY;
+		        if (backup->PhonePhonebook[numPbk] == NULL) {
+				error = ERR_MOREMEMORY;
+				break;
+			}
 			backup->PhonePhonebook[numPbk + 1] = NULL;
 		} else {
 			dbgprintf(NULL, "Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
-			return ERR_MOREMEMORY;
+			error = ERR_MOREMEMORY;
+			break;
 		}
 		memcpy(backup->PhonePhonebook[numPbk],&Pbk,sizeof(GSM_MemoryEntry));
 		backup->PhonePhonebook[numPbk]->Location 	= numPbk + 1;
@@ -78,7 +85,8 @@ GSM_Error LoadVCard(char *FileName, GSM_Backup *backup)
 		numPbk++;
 	}
 
-	return ERR_NONE;
+	free(File.Buffer);
+	return error;
 }
 
 #endif
