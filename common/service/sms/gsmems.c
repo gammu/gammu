@@ -585,7 +585,7 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 			       GSM_MultiPartSMSInfo 	*Info,
 			       GSM_MultiSMSMessage 	*SMS)
 {
-	int  			i, w, Pos, UPI = 1;
+	int  			i, w, Pos, UPI = 1, fmt;
 	size_t			width, height;
 	size_t			z;
  	bool 			RetVal = false, NewPicture = true;
@@ -633,9 +633,42 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				smfprintf(di, "UDH part - EMS text formatting\n");
 				if (SMS->SMS[i].UDH.Text[w+2] > Pos) {
 					z = Pos;
+					if (Info->Entries[Info->EntriesNum].ID != 0) (Info->EntriesNum)++;
 					if (!AddEMSText(&SMS->SMS[i], Info, &Pos, SMS->SMS[i].UDH.Text[w+2]-z)) return false;
 				}
-				if (Info->Entries[Info->EntriesNum].ID != 0) (Info->EntriesNum)++;
+				fmt = SMS->SMS[i].UDH.Text[w+4];
+				switch (fmt & 3) {
+					case 0:
+						Info->Entries[Info->EntriesNum].Left = true;
+						break;
+					case 1:
+						Info->Entries[Info->EntriesNum].Right = true;
+						break;
+					case 2:
+						Info->Entries[Info->EntriesNum].Center = true;
+						break;
+					case 3:
+						break;
+
+				}
+				if ((fmt & 4) == 4) {
+					Info->Entries[Info->EntriesNum].Large = true;
+				}
+				if ((fmt & 8) == 8) {
+					Info->Entries[Info->EntriesNum].Small = true;
+				}
+				if ((fmt & 16) == 16) {
+					Info->Entries[Info->EntriesNum].Bold = true;
+				}
+				if ((fmt & 32) == 32) {
+					Info->Entries[Info->EntriesNum].Italic= true;
+				}
+				if ((fmt & 64) == 64) {
+					Info->Entries[Info->EntriesNum].Underlined = true;
+				}
+				if ((fmt & 128) == 128) {
+					Info->Entries[Info->EntriesNum].Strikethrough = true;
+				}
 				Info->Entries[Info->EntriesNum].Number 	= SMS->SMS[i].UDH.Text[w+3];
 				Info->Entries[Info->EntriesNum].ID 	= SMS_ConcatenatedTextLong;
 				RetVal = true;
