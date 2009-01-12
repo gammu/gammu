@@ -322,11 +322,11 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 {
 	GSM_MemoryEntry 	pbk;
 	int			num;
-	GSM_StateMachine fake_sm;
+	GSM_StateMachine	*fake_sm;
 
-	fake_sm.di = GSM_global_debug;
-	fake_sm.di.use_global = true;
-	fake_sm.Phone.Data.ModelInfo = GetModelData(NULL, "unknown", NULL, NULL);
+	fake_sm = GSM_AllocStateMachine();
+	fake_sm->di.use_global = true;
+	fake_sm->Phone.Data.ModelInfo = GetModelData(NULL, "unknown", NULL, NULL);
 
 #ifdef DEBUG
 	dbgprintf(NULL, "Memory : ");
@@ -339,7 +339,7 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 #endif
 
 	pbk.MemoryType = 0; /* FIXME: I have no idea what should be set here, but needs to be set, see next function */
-	N71_65_DecodePhonebook(&fake_sm, &pbk, NULL,NULL,buffer2+4,(buffer[4]+buffer[5]*256)-4,false);
+	N71_65_DecodePhonebook(fake_sm, &pbk, NULL,NULL,buffer2+4,(buffer[4]+buffer[5]*256)-4,false);
 
 	pbk.MemoryType=MEM_SM;
 	if (buffer[10]==2) pbk.MemoryType=MEM_ME;
@@ -351,9 +351,13 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 		while (backup->PhonePhonebook[num] != NULL) num++;
 		if (num < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
 			backup->PhonePhonebook[num] = malloc(sizeof(GSM_MemoryEntry));
-		        if (backup->PhonePhonebook[num] == NULL) return ERR_MOREMEMORY;
+		        if (backup->PhonePhonebook[num] == NULL) {
+				GSM_FreeStateMachine(fake_sm);
+				return ERR_MOREMEMORY;
+			}
 			backup->PhonePhonebook[num + 1] = NULL;
 		} else {
+			GSM_FreeStateMachine(fake_sm);
 			dbgprintf(NULL, "Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
 			return ERR_MOREMEMORY;
 		}
@@ -362,14 +366,19 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 		while (backup->SIMPhonebook[num] != NULL) num++;
 		if (num < GSM_BACKUP_MAX_SIMPHONEBOOK) {
 			backup->SIMPhonebook[num] = malloc(sizeof(GSM_MemoryEntry));
-		        if (backup->SIMPhonebook[num] == NULL) return ERR_MOREMEMORY;
+		        if (backup->SIMPhonebook[num] == NULL) {
+				GSM_FreeStateMachine(fake_sm);
+				return ERR_MOREMEMORY;
+			}
 			backup->SIMPhonebook[num + 1] = NULL;
 		} else {
 			dbgprintf(NULL, "Increase GSM_BACKUP_MAX_SIMPHONEBOOK\n");
+			GSM_FreeStateMachine(fake_sm);
 			return ERR_MOREMEMORY;
 		}
 		*backup->SIMPhonebook[num] = pbk;
 	}
+	GSM_FreeStateMachine(fake_sm);
 	return ERR_NONE;
 }
 
