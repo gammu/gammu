@@ -394,7 +394,7 @@ GSM_Error CreateMessage(GSM_Message_Type *type, GSM_MultiSMSMessage *sms, int ar
 			if (i == atoi(argv[1 + startarg])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[1 + startarg])-1) {
+		if (i != atoi(argv[1 + startarg])-1 || Backup.WAPSettings[i] == NULL) {
 			printf("%s\n", _("WAP settings not found in file"));
 			exit(-1);
 		}
