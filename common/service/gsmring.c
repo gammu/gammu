@@ -714,6 +714,7 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 				case 'H': case 'h': Note->Note = Note_H; break;
 			}
 			i++;
+			if (i >= readbytes) break;
 
 			if (buffer[i]=='#') {
 				switch (Note->Note) {
@@ -725,12 +726,14 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 					default	    :			     break;
 				}
 				i++;
+				if (i >= readbytes) break;
 			}
 
 			/* Some files can have special duration here */
 			if (buffer[i]=='.') {
 				Note->DurationSpec = DottedNote;
 				i++;
+				if (i >= readbytes) break;
 			}
 
 			/* Scale */
@@ -742,6 +745,7 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 					case  7: Note->Scale = Scale_3520; break;
 				}
 				i++;
+				if (i >= readbytes) break;
 			}
 
 			ringtone->NoteTone.NrCommands++;
@@ -750,7 +754,9 @@ static GSM_Error loadrttl(FILE *file, GSM_Ringtone *ringtone)
 		while (buffer[i] != ',') {
 			if (buffer[i] == 0x00) return ERR_NONE;
 			i++;
+			if (i >= readbytes) break;
 		}
+		if (i >= readbytes) break;
 		if (buffer[i] == ',') i++;
 		if (i >= readbytes) {
 			return ERR_FILENOTSUPPORTED;
