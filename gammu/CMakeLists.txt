@@ -84,18 +84,22 @@ foreach(EXT nlm ngg nol xpm nsl wbmp bmp)
     endif (${EXT} STREQUAL xpm)
 endforeach(EXT)
 
-add_test(gammu-copyringtone-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+add_test(gammu-copyringtone-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
     copyringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt "${CMAKE_CURRENT_BINARY_DIR}/test-rng.bin" BINARY)
 
 foreach(EXT ott rng mid imy ime wav rttl)
     add_test(gammu-copyringtone-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
         copyringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}" RTTL)
-    add_test(gammu-copyringtone-${EXT}-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
-        copyringtone "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}" "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}.${EXT}" RTTL)
-    # Reading midi is not supported
-    if (${EXT} STREQUAL mid)
-        set_tests_properties(
-            gammu-copyringtone-${EXT}-${EXT}
-            PROPERTIES WILL_FAIL TRUE)
-    endif (${EXT} STREQUAL mid)
+    add_test(gammu-copyringtone-${EXT}-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+        copyringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}.bin" BINARY)
+    foreach(EXT2 ott rng mid imy ime wav rttl)
+        add_test(gammu-copyringtone-${EXT}-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
+            copyringtone "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}" "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}.${EXT2}" RTTL)
+        # Reading midi is not supported
+        if (${EXT} STREQUAL mid)
+            set_tests_properties(
+                gammu-copyringtone-${EXT}-${EXT}
+                PROPERTIES WILL_FAIL TRUE)
+        endif (${EXT} STREQUAL mid)
+    endforeach(EXT2)
 endforeach(EXT)
