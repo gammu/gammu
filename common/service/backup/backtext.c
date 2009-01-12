@@ -1961,6 +1961,12 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 				Pbk->Entries[Pbk->EntriesNum].Picture.Length = 0;
 				Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = NULL;
 				goto loadpicture;
+			} else if (strcasecmp(readvalue,"Photo") == 0) {
+				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Photo;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Type = 0;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Length = 0;
+				Pbk->Entries[Pbk->EntriesNum].Picture.Buffer = NULL;
+				goto loadpicture;
 			} else if (strcasecmp(readvalue,"PushToTalkID") == 0) {
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_PushToTalkID;
 			} else if (strcasecmp(readvalue,"UserID") == 0) {
