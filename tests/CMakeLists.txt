@@ -366,9 +366,23 @@ set_tests_properties(sms-cmdline-SMSTEMPLATE PROPERTIES PASS_REGULAR_EXPRESSION 
 
 add_test(sms-cmdline-PICTURE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
     PICTURE 213 ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm)
-# Not sure if this is really correct...
 set_tests_properties(sms-cmdline-PICTURE PROPERTIES PASS_REGULAR_EXPRESSION "###################   ##    ##     #     #     ##   ## ### ##   ###   ##")
 
+add_test(sms-cmdline-OPERATOR "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    OPERATOR 213 ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm -netcode "230 03")
+set_tests_properties(sms-cmdline-OPERATOR PROPERTIES PASS_REGULAR_EXPRESSION "Operator logo for 230 03 network \\(Vodafone CZ, Vodafone CZ\\)")
+
+add_test(sms-cmdline-CALLER "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    CALLER 213 ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm)
+set_tests_properties(sms-cmdline-CALLER PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Nokia caller logo")
+
+add_test(sms-cmdline-ANIMATION "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    ANIMATION 213 6 ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm)
+set_tests_properties(sms-cmdline-ANIMATION PROPERTIES PASS_REGULAR_EXPRESSION "Number of messages: 14")
+
+add_test(sms-cmdline-PROFILE "${GAMMU_TEST_PATH}/sms-cmdline${GAMMU_TEST_SUFFIX}"
+    PROFILE 213 -bitmap ${Gammu_SOURCE_DIR}/docs/examples/media/aliens.nlm -ringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt)
+set_tests_properties(sms-cmdline-PROFILE PROPERTIES PASS_REGULAR_EXPRESSION "User Data Header     : Nokia profile, ID \\(8 bit\\) [0-9]*, 3 parts")
 
 # AT parser tests
 add_executable(at-parser at-parser.c)
