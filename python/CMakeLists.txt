@@ -46,7 +46,7 @@ set (PYTHON_GAMMU_SRC
 
 execute_process(
     COMMAND
-        ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print sysconfig.get_python_lib(1,0,prefix='${CMAKE_INSTALL_EXEC_PREFIX}')"
+        ${PYTHON_EXECUTABLE} -c "from distutils import sysconfig; print sysconfig.get_python_lib(plat_specific=1,prefix='${CMAKE_INSTALL_EXEC_PREFIX}')"
     OUTPUT_VARIABLE PYTHON_SITEDIR
     OUTPUT_STRIP_TRAILING_WHITESPACE
     )
