@@ -23,7 +23,7 @@
 
 PyObject *GammuError;
 
-PyObject **gammu_error_map;
+PyObject *gammu_error_map[ERR_LAST_VALUE + 1];
 
 int checkError(GSM_StateMachine *s, GSM_Error error, const char *where) {
     PyObject    *val;
@@ -67,11 +67,6 @@ int gammu_create_errors(PyObject *d) {
     PyObject *id;
     GSM_Error error;
     char errname[100];
-
-    /* Prepare error code -> python objects mapping */
-    gammu_error_map = (PyObject **)malloc(sizeof(PyObject *) * ((int)ERR_LAST_VALUE + 1));
-    if (gammu_error_map == NULL)
-        return 0;
 
     /* Prepare dict for error codes */
     error_list = PyDict_New();
