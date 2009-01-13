@@ -1789,6 +1789,7 @@ static void ReadPbkEntry(INI_Section *file_info, char *section, GSM_MemoryEntry 
 		}
 		e = e->Prev;
 		if (num != -1) {
+			Pbk->Entries[Pbk->EntriesNum].AddError = ERR_NONE;
 			sprintf(buffer,"Entry%02iType",num);
 			readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 			if (strcasecmp(readvalue,"NumberGeneral") == 0) {
