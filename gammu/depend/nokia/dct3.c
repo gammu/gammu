@@ -56,7 +56,7 @@ static void CheckDCT3(void)
 	case ERR_OTHERCONNECTIONREQUIRED:
 		printf("Can't do it with current phone protocol\n");
 		GSM_TerminateConnection(gsm);
-		exit(-1);
+		Terminate(3);
 	default:
 		break;
 	}
@@ -70,7 +70,7 @@ static bool answer_yes3(const char *text)
 	while (1) {
 		printf("%s (yes/no) ? ",text);
 		len=GetLine(stdin, ans, 99);
-		if (len==-1) exit(-1);
+		if (len==-1) Terminate(3);
 		if (strcasecmp(ans, "yes") == 0) return true;
 		if (strcasecmp(ans, "no" ) == 0) return false;
 	}

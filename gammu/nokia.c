@@ -41,7 +41,7 @@ void NokiaComposer(int argc UNUSED, char *argv[])
 
 	if (ringtone.Format != RING_NOTETONE) {
 		printf("%s\n", _("It can be RTTL ringtone only used with this option"));
-		exit(-1);
+		Terminate(3);
 	}
 
 	started = false;
@@ -424,7 +424,7 @@ void NokiaAddPlayLists(int argc UNUSED, char *argv[] UNUSED)
 	if (error == ERR_FILENOTEXIST) {
 		printf("%s\n", _("Your phone model is not supported. Please report"));
 		GSM_Terminate();
-		exit(-1);
+		Terminate(3);
 	} else if (error != ERR_EMPTY) {
 	    	Print_Error(error);
 	}
@@ -533,7 +533,7 @@ void NokiaAddFile(int argc, char *argv[])
 	}
 	if (!Found) {
 		printf(_("What folder type (\"%s\") ?\n"),argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	if (strcasecmp(argv[2],"Application") == 0 || strcasecmp(argv[2],"Game") == 0) {
@@ -568,7 +568,7 @@ void NokiaAddFile(int argc, char *argv[])
 		if (!Found) {
 			printf("%s\n", _("Folder not found. Probably function not supported!"));
 			GSM_Terminate();
-			exit(-1);
+			Terminate(3);
 		}
 	} else if (GSM_IsPhoneFeatureAvailable(GSM_GetModelInfo(gsm), F_FILES2)) {
 		i = 0;
@@ -641,7 +641,7 @@ void NokiaAddFile(int argc, char *argv[])
 	if (!Found) {
 		printf("%s\n", _("Folder not found. Probably function not supported!"));
 		GSM_Terminate();
-		exit(-1);
+		Terminate(3);
 	}
 	File.Buffer 	= NULL;
 	File.Protected  = false;
@@ -921,7 +921,7 @@ void NokiaAddFile(int argc, char *argv[])
 						continue;
 					}
 					printf(_("Parameter \"%s\" unknown\n"),argv[j]);
-					exit(-1);
+					Terminate(3);
 				case 1:
 					strcpy(buffer,argv[j]);
 					nextlong = 0;
@@ -930,7 +930,7 @@ void NokiaAddFile(int argc, char *argv[])
 			}
 			if (nextlong!=0) {
 				printf_err("%s\n", _("Parameter missing!"));
-				exit(-1);
+				Terminate(3);
 			}
 		}
 	}

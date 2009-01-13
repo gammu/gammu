@@ -63,7 +63,7 @@ static void CheckDCT4(void)
 	case ERR_OTHERCONNECTIONREQUIRED:
 		printf("%s\n", _("Can't do it with current phone protocol"));
 		GSM_TerminateConnection(gsm);
-		exit(-1);
+		Terminate(3);
 	default:
 		break;
 	}
@@ -77,7 +77,7 @@ static bool answer_yes2(const char *text)
 	while (1) {
 		printf(_("%s (yes/no) ? "),text);
 		len=GetLine(stdin, ans, 99);
-		if (len==-1) exit(-1);
+		if (len==-1) Terminate(3);
 		if (strcasecmp(ans, _("yes")) == 0) return true;
 		if (strcasecmp(ans, _("no")) == 0) return false;
 	}
@@ -952,14 +952,14 @@ void DCT4SetLight(int argc, char *argv[])
 	} else if (strcasecmp(argv[2],"torch") == 0) {	type = N6510_LIGHT_TORCH;
 	} else {
 		printf(_("What lights should I enable (\"%s\") ?\n"),argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	if (strcasecmp(argv[3],"on") == 0) { 		enable = true;
 	} else if (strcasecmp(argv[3],"off") == 0) {	enable = false;
 	} else {
 		printf(_("What should I do (\"%s\") ?\n"),argv[3]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	for (i=0;i<gsm->ConfigNum;i++) {
@@ -1151,14 +1151,14 @@ void DCT4TuneRadio(int argc, char *argv[])
 	if (error != ERR_NONE && error != ERR_EMPTY) {
 		printf("%s\n", _("Phone seems not to support radio"));
 		GSM_Terminate();
-		exit(-1);
+		Terminate(3);
 	}
 
 	error=GSM_WaitFor (gsm, Enable, 6, 0x3E, 4, ID_User3);
 	if (error == ERR_PERMISSION) {
 		printf("%s\n", _("Please connect headset. Required as antenna"));
 		GSM_Terminate();
-		exit(-1);
+		Terminate(3);
 	}
 	Print_Error(error);
 
@@ -1431,7 +1431,7 @@ void DCT4GetPBKFeatures(int argc, char *argv[])
 	}
 
 	req[4] = NOKIA_GetMemoryType(gsm, MemoryType,N71_65_MEMORY_TYPES);
-	if (req[4]==0xff) exit(-1);
+	if (req[4]==0xff) Terminate(3);
 
 	GSM_Init(true);
 

@@ -5,6 +5,7 @@
 
 extern volatile bool gshutdown;
 extern GSM_StateMachine *gsm;
+extern INI_Section *cfg;
 extern bool batch;
 extern bool batchConn;
 extern bool always_answer_yes;
@@ -51,6 +52,12 @@ bool GSM_ReadHTTPFile(const char *url, GSM_File *file);
  * Cleanup performed at program termination.
  */
 void Cleanup(void);
+
+/**
+ * Cleanups and terminates program.
+ */
+NORETURN
+void Terminate(int code);
 
 #ifdef GSM_ENABLE_BEEP
 void GSM_PhoneBeep(void);

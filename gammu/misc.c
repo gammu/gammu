@@ -585,7 +585,7 @@ void DialVoice(int argc, char *argv[])
 		} else if (strcasecmp(argv[3],"hide") == 0) {	ShowNumber = GSM_CALL_HideNumber;
 		} else {
 			printf(_("Unknown parameter (\"%s\")\n"),argv[3]);
-			exit(-1);
+			Terminate(3);
 		}
 	}
 
@@ -614,7 +614,7 @@ void MakeTerminatedCall(int argc, char *argv[])
 		} else if (strcasecmp(argv[4],"hide") == 0) {	ShowNumber = GSM_CALL_HideNumber;
 		} else {
 			printf(_("Unknown parameter (\"%s\")\n"),argv[4]);
-			exit(-1);
+			Terminate(3);
 		}
 	}
 
@@ -754,7 +754,7 @@ void Reset(int argc UNUSED, char *argv[])
 	} else if (strcasecmp(argv[2],"HARD") == 0) {	hard=true;
 	} else {
 		printf(_("What type of reset do you want (\"%s\") ?\n"),argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	GSM_Init(true);
@@ -865,7 +865,7 @@ void GetBitmap(int argc, char *argv[])
 		MultiBitmap.Bitmap[0].Type=GSM_OperatorLogo;
 	} else {
 		printf(_("What type of logo do you want to get (\"%s\") ?\n"),argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 	MultiBitmap.Bitmap[0].Location=location;
 
@@ -975,7 +975,7 @@ void SetBitmap(int argc, char *argv[])
 	if (strcasecmp(argv[2],"STARTUP") == 0) {
 		if (argc<4) {
 			printf("%s\n", _("More parameters required!"));
-			exit(-1);
+			Terminate(3);
 		}
 		MultiBitmap.Bitmap[0].Type=GSM_StartupLogo;
 		MultiBitmap.Bitmap[0].Location=1;
@@ -990,21 +990,21 @@ void SetBitmap(int argc, char *argv[])
 	} else if (strcasecmp(argv[2],"TEXT") == 0) {
 		if (argc<4) {
 			printf("%s\n", _("More parameters required!"));
-			exit(-1);
+			Terminate(3);
 		}
 		Bitmap.Type=GSM_WelcomeNote_Text;
 		EncodeUnicode(Bitmap.Text,argv[3],strlen(argv[3]));
 	} else if (strcasecmp(argv[2],"DEALER") == 0) {
 		if (argc<4) {
 			printf("%s\n", _("More parameters required!"));
-			exit(-1);
+			Terminate(3);
 		}
 		Bitmap.Type=GSM_DealerNote_Text;
 		EncodeUnicode(Bitmap.Text,argv[3],strlen(argv[3]));
 	} else if (strcasecmp(argv[2],"CALLER") == 0) {
 		if (argc<4) {
 			printf("%s\n", _("More parameters required!"));
-			exit(-1);
+			Terminate(3);
 		}
 		GetStartStop(&i, NULL, 3, argc, argv);
 		if (i>5 && i!=255) {
@@ -1034,7 +1034,7 @@ void SetBitmap(int argc, char *argv[])
 	} else if (strcasecmp(argv[2],"PICTURE") == 0) {
 		if (argc<5) {
 			printf("%s\n", _("More parameters required!"));
-			exit(-1);
+			Terminate(3);
 		}
 		MultiBitmap.Bitmap[0].Type		= GSM_PictureImage;
 		MultiBitmap.Bitmap[0].Location		= atoi(argv[4]);
@@ -1092,7 +1092,7 @@ void SetBitmap(int argc, char *argv[])
 		memcpy(&Bitmap,&MultiBitmap.Bitmap[0],sizeof(GSM_Bitmap));
 	} else {
 		printf(_("What type of logo do you want to set (\"%s\") ?\n"),argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	if (init) GSM_Init(true);
@@ -1133,7 +1133,7 @@ void SetRingtone(int argc, char *argv[])
 				break;
 			}
 			printf(_("Unknown parameter (\"%s\")"),argv[i]);
-			exit(-1);
+			Terminate(3);
 		case 1:
 			ringtone.Location=atoi(argv[i]);
 			nextlong = 0;
@@ -1146,7 +1146,7 @@ void SetRingtone(int argc, char *argv[])
 	}
 	if (nextlong!=0) {
 		printf_err("%s\n", _("Parameter missing!"));
-		exit(-1);
+		Terminate(3);
 	}
 	if (ringtone.Location==0) {
 		printf_err("%s\n", _("Please enumerate locations from 1"));
@@ -1191,7 +1191,7 @@ void ClearMemory(GSM_MemoryType type, const char *question)
 					(i + 1) * 100 / (MemStatus.MemoryUsed + MemStatus.MemoryFree));
 				if (gshutdown) {
 					GSM_Terminate();
-					exit(0);
+					Terminate(0);
 				}
 			}
 			fprintf(stderr, "\n");
@@ -1586,7 +1586,7 @@ void CopyBitmap(int argc, char *argv[])
 					Bitmap.Bitmap[i].Type = GSM_OperatorLogo;
 				} else {
 					printf(_("What format of output file logo (\"%s\") ?\n"),argv[4]);
-					exit(-1);
+					Terminate(3);
 				}
 			}
 		}
@@ -1611,7 +1611,7 @@ void CopyRingtone(int argc, char *argv[])
 		} else if (strcasecmp(argv[4],"BINARY") == 0) {	Format = RING_NOKIABINARY;
 		} else {
 			printf(_("What format of output ringtone file (\"%s\") ?\n"),argv[4]);
-			exit(-1);
+			Terminate(3);
 		}
 	}
 
@@ -1631,7 +1631,7 @@ void PressKeySequence(int argc UNUSED, char *argv[])
 	error = MakeKeySequence(argv[2], KeyCode, &Length);
 	if (error == ERR_NOTSUPPORTED) {
 		printf(_("Unknown key/function name: \"%c\"\n"),argv[2][Length]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	GSM_Init(true);
@@ -1661,7 +1661,7 @@ void GetAllCategories(int argc UNUSED, char *argv[])
         	Status.Type 	= Category_Phonebook;
 	} else {
 		printf(_("What type of categories do you want to get (\"%s\") ?\n"),argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	GSM_Init(true);
@@ -1699,7 +1699,7 @@ void GetCategory(int argc, char *argv[])
     		Category.Type = Category_Phonebook;
 	} else {
 		printf(_("What type of categories do you want to get (\"%s\") ?\n"),argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	GetStartStop(&start, &stop, 2, argc - 1, argv + 1);
@@ -1737,7 +1737,7 @@ void AddCategory(int argc UNUSED, char *argv[])
     		Category.Type = Category_Phonebook;
 	} else {
 		printf(_("What type of category do you want to add (\"%s\") ?\n"),argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	GSM_Init(true);
@@ -1778,7 +1778,7 @@ void EnterSecurityCode(int argc UNUSED, char *argv[])
 	} else if (strcasecmp(argv[2],"PUK2") == 0) {	Code.Type = SEC_Puk2;
 	} else {
 		printf_err("%s: %s\n", _("Invalid security code type"), argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	if (strcmp(argv[3], "-") == 0) {
@@ -1790,7 +1790,7 @@ void EnterSecurityCode(int argc UNUSED, char *argv[])
 #endif
 		if (fscanf(stdin, "%15s", Code.Code) != 1) {
 			printf_err("%s\n", _("No PIN code entered!"));
-			exit(-1);
+			Terminate(3);
 		}
 	} else {
 		strcpy(Code.Code,argv[3]);
@@ -1992,7 +1992,7 @@ void ResetPhoneSettings(int argc UNUSED, char *argv[])
 	} else if (strcasecmp(argv[2],"FACTORY") == 0) { Type = GSM_RESET_FULLFACTORY;
 	} else {
 		printf(_("What type of reset phone settings (\"%s\") ?\n"),argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	GSM_Init(true);
@@ -2092,7 +2092,7 @@ void CallDivert(int argc, char *argv[])
 	else if (strcasecmp("set",	argv[2]) == 0) {}
 	else {
 		printf(_("Unknown divert action (\"%s\")\n"),argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	     if (strcasecmp("all"       , argv[3]) == 0) {cd.Request.DivertType = GSM_DIVERT_AllTypes  ;}
@@ -2101,7 +2101,7 @@ void CallDivert(int argc, char *argv[])
 	else if (strcasecmp("outofreach", argv[3]) == 0) {cd.Request.DivertType = GSM_DIVERT_OutOfReach;}
 	else {
 		printf(_("Unknown divert type (\"%s\")\n"),argv[3]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	     if (strcasecmp("all"  , argv[4]) == 0) {cd.Request.CallType = GSM_DIVERT_AllCalls  ;}
@@ -2110,7 +2110,7 @@ void CallDivert(int argc, char *argv[])
 	else if (strcasecmp("data" , argv[4]) == 0) {cd.Request.CallType = GSM_DIVERT_DataCalls ;}
 	else {
 		printf(_("Unknown call type (\"%s\")\n"),argv[4]);
-		exit(-1);
+		Terminate(3);
 	}
 
 	GSM_Init(true);

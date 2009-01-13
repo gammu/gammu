@@ -107,7 +107,7 @@ THREAD_RETURN SearchPhoneThread(void * arg)
 	OneDeviceInfo *Info = arg;
 	GSM_Error error;
 	GSM_StateMachine *search_gsm;
-	GSM_Config *cfg;
+	GSM_Config *smcfg;
 	GSM_Config *globalcfg;
 
 	/* Iterate over all connections */
@@ -119,21 +119,21 @@ THREAD_RETURN SearchPhoneThread(void * arg)
 			return THREAD_RETURN_VAL;
 
 		/* Get configuration pointers */
-		cfg = GSM_GetConfig(search_gsm, 0);
+		smcfg = GSM_GetConfig(search_gsm, 0);
 		globalcfg = GSM_GetConfig(gsm, 0);
 
 		/* We share some configuration with global one */
-		cfg->UseGlobalDebugFile = globalcfg->UseGlobalDebugFile;
-		cfg->DebugFile = strdup(globalcfg->DebugFile);
-		strcpy(cfg->DebugLevel, globalcfg->DebugLevel);
+		smcfg->UseGlobalDebugFile = globalcfg->UseGlobalDebugFile;
+		smcfg->DebugFile = strdup(globalcfg->DebugFile);
+		strcpy(smcfg->DebugLevel, globalcfg->DebugLevel);
 
 		/* Configure the tested state machine */
-		cfg->Device = strdup(Info->Device);
-		cfg->Connection = strdup(Info->Connections[j].Connection);
-		cfg->SyncTime = strdup("no");
-		cfg->Model[0] = 0;
-		cfg->LockDevice = strdup("no");
-		cfg->StartInfo = strdup("no");
+		smcfg->Device = strdup(Info->Device);
+		smcfg->Connection = strdup(Info->Connections[j].Connection);
+		smcfg->SyncTime = strdup("no");
+		smcfg->Model[0] = 0;
+		smcfg->LockDevice = strdup("no");
+		smcfg->StartInfo = strdup("no");
 
 		/* We have only one configured connection */
 		GSM_SetConfigNum(search_gsm, 1);

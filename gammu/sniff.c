@@ -262,12 +262,12 @@ void decodesniff(int argc, char *argv[])
 		Protocol = GCT_IRDAPHONET;
 	} else {
 		printf("What protocol (\"%s\") ?\n",argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 	file = fopen(argv[3], "rb");
 	if (file == NULL) {
 		printf("Can not open file \"%s\"\n",argv[3]);
-		exit(-1);
+		Terminate(3);
 	}
 	prepareStateMachine();
 	if (argc > 4) {
@@ -364,7 +364,7 @@ void decodebinarydump(int argc, char *argv[])
 	file = fopen(argv[2], "rb");
 	if (file == NULL) {
 		printf("Can not open file \"%s\"\n",argv[2]);
-		exit(-1);
+		Terminate(3);
 	}
 	len2=30000;
 	msg.Buffer = NULL;
