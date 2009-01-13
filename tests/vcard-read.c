@@ -159,7 +159,6 @@ int main(int argc, char **argv)
 					backup.PhonePhonebook[0]->Entries[i].Picture.Buffer,
 					pbk.Entries[i].Picture.Length) == 0);
 				free(pbk.Entries[i].Picture.Buffer);
-				free(backup.PhonePhonebook[0]->Entries[i].Picture.Buffer);
 				break;
 			case PBK_Date:
 			case PBK_LastModified:
