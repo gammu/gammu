@@ -112,11 +112,11 @@ GSM_Error GSM_SaveRingtoneWav(FILE *file, GSM_Ringtone *ringtone)
 	unsigned char 	DATA_Header[] = {
 			'd','a','t','a',
 			0x00,0x00,0x00,0x00};	/* Length */
-	short		DATA_Buffer[60000];
+	short		DATA;
 	long		wavfilesize;
 	GSM_RingNote 	*Note;
 	int		i;
-	size_t		j,length=0;
+	size_t		j,length=0, duration;
 	double 		phase=0,phase_step;
 
 	chk_fwrite(&WAV_Header,	1, sizeof(WAV_Header),	file);
@@ -126,13 +126,19 @@ GSM_Error GSM_SaveRingtoneWav(FILE *file, GSM_Ringtone *ringtone)
 	for (i=0;i<ringtone->NoteTone.NrCommands;i++) {
 		if (ringtone->NoteTone.Commands[i].Type == RING_Note) {
 			Note 		= &ringtone->NoteTone.Commands[i].Note;
-			phase_step 	= GSM_RingNoteGetFrequency(*Note)*WAV_SAMPLE_RATE*1.5;
-			for (j = 0; j < ((size_t)(GSM_RingNoteGetFullDuration(*Note)*WAV_SAMPLE_RATE/70)); j++) {
-				DATA_Buffer[j] 	= ((int)(sin(phase*PI)*50000));
-			      	phase		= phase + phase_step;
+
+			phase_step 	= GSM_RingNoteGetFrequency(*Note);
+			phase_step	*= WAV_SAMPLE_RATE * 1.5;
+
+			duration	= GSM_RingNoteGetFullDuration(*Note);
+			duration	*= WAV_SAMPLE_RATE / 70;
+
+			for (j = 0; j < duration; j++) {
+				DATA = ((int)(sin(phase*PI) * 50000));
+				chk_fwrite(&DATA, sizeof(short), 1, file);
+			      	phase = phase + phase_step;
 				length++;
 			}
-			chk_fwrite(&DATA_Buffer,sizeof(short),j,file);
 		}
 	}
 
