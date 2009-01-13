@@ -585,3 +585,8 @@
    obj:/lib/ld-2.7.so
 }
 
+{
+   Use of uninitialised value of size 8
+   Memcheck:Value8
+   fun:PyObject_Realloc
+}
