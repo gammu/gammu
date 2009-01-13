@@ -14,6 +14,7 @@
 #endif
 
 GSM_StateMachine *gsm;
+INI_Section *cfg = NULL;
 
 bool always_answer_yes = false;
 bool always_answer_no = false;
@@ -144,6 +145,13 @@ const char *GetDayName(const int day)
 	return result;
 }
 
+NORETURN
+void Terminate(int code)
+{
+	Cleanup();
+	exit(code);
+}
+
 void Cleanup(void)
 {
 	GSM_Debug_Info *di;
@@ -164,6 +172,8 @@ void Cleanup(void)
 	/* Free CURL memory */
 	curl_global_cleanup();
 #endif
+
+	INI_Free(cfg);
 }
 
 void Print_Error(GSM_Error error)
@@ -178,7 +188,7 @@ void Print_Error(GSM_Error error)
 
 		Cleanup();
 
-		exit(-1);
+		Terminate(3);
 	}
 }
 
@@ -280,13 +290,13 @@ void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 
 	if (argc <= num) {
 		printf_err("%s\n", _("More parameters required!"));
-		exit(-1);
+		Terminate(3);
 	}
 
 	*start = atoi(argv[num]);
 	if (*start == 0) {
 		printf_err("%s\n", _("Please enumerate locations from 1"));
-		exit(-1);
+		Terminate(3);
 	}
 
 	if (stop != NULL) {
@@ -296,7 +306,7 @@ void GetStartStop(int *start, int *stop, int num, int argc, char *argv[])
 		if (*stop == 0) {
 			printf_err("%s\n",
 				   _("Please enumerate locations from 1"));
-			exit(-1);
+			Terminate(3);
 		}
 		if (*stop < *start) {
 			printf_warn("%s\n",
@@ -334,7 +344,7 @@ bool answer_yes(const char *format, ...)
 		}
 		len = GetLine(stdin, ans, 99);
 		if (len == -1)
-			exit(-1);
+			Terminate(3);
 		/* l10n: Answer to (yes/no/ALL/ONLY/NONE) question */
 		if (!strcmp(ans, _("NONE"))) {
 			always_answer_no = true;

@@ -326,7 +326,7 @@ void GetAllSMS(int argc, char *argv[])
 				i++;
 				if (gshutdown) {
 					GSM_Terminate();
-					exit(0);
+					Terminate(0);
 				}
 			}
 			fprintf(stderr, "\n");
@@ -422,7 +422,7 @@ void GetEachSMS(int argc, char *argv[])
 				i++;
 				if (gshutdown) {
 					GSM_Terminate();
-					exit(0);
+					Terminate(0);
 				}
 			}
 			fprintf(stderr, "\n");
@@ -799,7 +799,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 						GSM_ReadDevice(gsm,true);
 						if (SMSStatus == ERR_UNKNOWN) {
 							GSM_Terminate();
-							exit(-1);
+							Terminate(3);
 						}
 						if (SMSStatus == ERR_NONE) break;
 					}
@@ -824,7 +824,7 @@ void SendSaveDisplaySMS(int argc, char *argv[])
 					GSM_ReadDevice(gsm,true);
 					if (SMSStatus == ERR_UNKNOWN) {
 						GSM_Terminate();
-						exit(-1);
+						Terminate(3);
 					}
 					if (SMSStatus == ERR_NONE) break;
 				}
@@ -885,7 +885,7 @@ void DeleteAllSMS(int argc, char *argv[])
 	if (foldernum > folders.Number) {
 		printf(_("Too high folder number (max. %i)\n"),folders.Number);
 		GSM_Terminate();
-		exit(-1);
+		Terminate(3);
 	}
 
 	printf(_("Deleting SMS from \"%s\" folder: "),DecodeUnicodeConsole(folders.Folder[foldernum-1].Name));

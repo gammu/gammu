@@ -109,7 +109,7 @@ static void ListNetworks(int argc, char *argv[])
 		if (!*country) {
 			printf(_("Unknown country name: %s."), argv[2]);
 			printf("\n");
-			exit(-1);
+			Terminate(3);
 		}
 	}
 	printf("%-10s %s\n", _("Network"), _("Name"));
@@ -469,14 +469,14 @@ NORETURN
 void SendSMSDSMSObsolete(int argc, char *argv[])
 {
 	printf_err("%s\n", _("SMS daemon is now in separate binary, please use gammu-smsd-inject instead of gammu sendsmsdsms!"));
-	exit(2);
+	Terminate(100);
 }
 
 NORETURN
 void SMSDaemonObsolete(int argc, char *argv[])
 {
 	printf_err("%s\n", _("SMS daemon is now in separate binary, please use gammu-smsd instead of gammu smsd!"));
-	exit(2);
+	Terminate(100);
 }
 
 void Help(int argc, char *argv[]);
@@ -1038,7 +1038,6 @@ int main(int argc, char *argv[])
 	GSM_Config *smcfg0;
 	GSM_Debug_Info *di;
 	GSM_Error error;
-	INI_Section *cfg = NULL;
 
 	error = GSM_FindGammuRC(&cfg);
 	if (error != ERR_NONE || cfg == NULL) {
@@ -1086,7 +1085,7 @@ int main(int argc, char *argv[])
 	if (argc == 1) {
 		HelpGeneral();
 		printf("%s\n", _("Too few parameters!"));
-		exit(1);
+		Terminate(1);
 	}
 
 	/* Help? */
@@ -1094,7 +1093,7 @@ int main(int argc, char *argv[])
 	    strcasecmp(argv[1 + start], "-h") == 0 ||
 	    strcasecmp(argv[1 + start], "help") == 0) {
 		Help(argc - start, argv + start);
-		exit(0);
+		Terminate(0);
 	}
 
 	/* Is first parameter numeric? If so treat it as config that should be loaded. */
@@ -1178,21 +1177,19 @@ int main(int argc, char *argv[])
 	if (argc == 1 + start) {
 		HelpGeneral();
 		printf("%s\n", _("Too few parameters!"));
-		exit(-2);
+		Terminate(3);
 	}
 
 	/* Check used version vs. compiled */
 	if (!strcasecmp(GetGammuVersion(), VERSION) == 0) {
 		printf_err(_("Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"),
 			   GetGammuVersion(), VERSION);
-		exit(-1);
+		Terminate(4);
 	}
 
 	ProcessParameters(start, argc, argv);
 
-	Cleanup();
-
-	INI_Free(cfg);
+	Terminate(0);
 
 	return 0;
 }
