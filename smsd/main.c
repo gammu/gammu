@@ -29,7 +29,7 @@
 #include "uid.h"
 #endif
 
-#if !defined(WIN32) && (defined(HAVE_GETOPT) || defined(HAVE_GETOPT_LONG))
+#if !defined(WIN32)
 #define HAVE_DEFAULT_CONFIG
 const char default_config[] = "/etc/gammu-smsdrc";
 #endif
