@@ -129,6 +129,10 @@ int main(int argc, char **argv)
 	/* Compare content */
 	if (!skipcal) {
 		for (i = 0; i < cal.EntriesNum; i++) {
+			printf("%d %d\n", cal.Entries[i].EntryType,
+				backup.Calendar[0]->Entries[i].EntryType);
+			test_result(cal.Entries[i].EntryType ==
+				backup.Calendar[0]->Entries[i].EntryType);
 			switch (cal.Entries[i].EntryType) {
 				case CAL_TEXT:
 				case CAL_DESCRIPTION:
@@ -140,6 +144,8 @@ int main(int argc, char **argv)
 						backup.Calendar[0]->Entries[i].Text,
 						0)) {
 						printf("Calendar field %d is not the same!\n", i);
+						printf("vc: '%s'\n", DecodeUnicodeConsole(cal.Entries[i].Text));
+						printf("bak: '%s'\n", DecodeUnicodeConsole(backup.Calendar[0]->Entries[i].Text));
 						return 1;
 					}
 					break;
