@@ -96,10 +96,10 @@ foreach(EXT ott rng mid imy ime wav rttl)
         add_test(gammu-copyringtone-${EXT}-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
             copyringtone "${CMAKE_CURRENT_BINARY_DIR}/test-rng.${EXT}" "${CMAKE_CURRENT_BINARY_DIR}/test-rng-${EXT}.${EXT2}" RTTL)
         # Reading midi is not supported
-        if (${EXT} STREQUAL mid)
+        if (${EXT} STREQUAL mid OR ${EXT} STREQUAL wav)
             set_tests_properties(
                 gammu-copyringtone-${EXT}-${EXT}
                 PROPERTIES WILL_FAIL TRUE)
-        endif (${EXT} STREQUAL mid)
+        endif (${EXT} STREQUAL mid OR ${EXT} STREQUAL wav)
     endforeach(EXT2)
 endforeach(EXT)
