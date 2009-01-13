@@ -1423,12 +1423,14 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 
 #define GET_DOW(type, terminate) \
 	Calendar->Entries[Calendar->EntriesNum].EntryType = type; \
+	Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE; \
 	if (GSM_DecodeVCAL_DOW(pos, &(Calendar->Entries[Calendar->EntriesNum].Number)) != ERR_NONE) return ERR_UNKNOWN; \
 	Calendar->EntriesNum++; \
 	NEXT_CHAR(1); \
 	NEXT_CHAR_NOERR(terminate);
 
 #define GET_NUMBER(type, terminate) \
+	Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE; \
 	Calendar->Entries[Calendar->EntriesNum].EntryType = type; \
 	Calendar->Entries[Calendar->EntriesNum].Number = atoi(pos); \
 	Calendar->EntriesNum++; \
@@ -1467,6 +1469,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 
 			if (!have_info) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAYOFWEEK;
+				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->Entries[Calendar->EntriesNum].Number =
 					GetDayOfWeek(
 						Calendar->Entries[TimePos].Date.Year,
@@ -1505,6 +1508,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 					} else {
 						/* Need to fill in info from current date */
 						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_WEEKOFMONTH;
+						Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 						Calendar->Entries[Calendar->EntriesNum].Number =
 							GetWeekOfMonth(
 								Calendar->Entries[TimePos].Date.Year,
@@ -1513,6 +1517,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 						Calendar->EntriesNum++;
 
 						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAYOFWEEK;
+						Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 						Calendar->Entries[Calendar->EntriesNum].Number =
 							GetDayOfWeek(
 								Calendar->Entries[TimePos].Date.Year,
@@ -1543,6 +1548,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 					} else {
 						/* Need to fill in info from current date */
 						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAY;
+						Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 						Calendar->Entries[Calendar->EntriesNum].Number = Calendar->Entries[TimePos].Date.Day;
 						Calendar->EntriesNum++;
 					}
@@ -1564,6 +1570,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 					NEXT_NOSPACE(0);
 					/* We need date of event */
 					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAY;
+					Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 					Calendar->Entries[Calendar->EntriesNum].Number =
 						Calendar->Entries[TimePos].Date.Day;
 					Calendar->EntriesNum++;
@@ -1578,6 +1585,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 
 					if (!have_info) {
 						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_MONTH;
+						Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 						Calendar->Entries[Calendar->EntriesNum].Number =
 							Calendar->Entries[TimePos].Date.Month;
 						Calendar->EntriesNum++;
@@ -1607,6 +1615,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 						 * those.
 						 */
 						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAYOFYEAR;
+						Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 						Calendar->Entries[Calendar->EntriesNum].Number =
 							GetDayOfYear(
 								Calendar->Entries[TimePos].Date.Year,
@@ -1615,11 +1624,13 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 						Calendar->EntriesNum++;
 #endif
 						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_DAY;
+						Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 						Calendar->Entries[Calendar->EntriesNum].Number =
 							Calendar->Entries[TimePos].Date.Day;
 						Calendar->EntriesNum++;
 
 						Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_MONTH;
+						Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 						Calendar->Entries[Calendar->EntriesNum].Number =
 							Calendar->Entries[TimePos].Date.Month;
 						Calendar->EntriesNum++;
@@ -1651,6 +1662,7 @@ GSM_Error GSM_DecodeVCAL_RRULE(GSM_Debug_Info *di, const char *Buffer, GSM_Calen
 	/* Do we have end date encoded? */
 	if (ReadVCALDateTime(pos, &(Calendar->Entries[Calendar->EntriesNum].Date))) {
 		Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
+		Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 		Calendar->EntriesNum++;
 	}
 
@@ -1732,6 +1744,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 					Alarm = Calendar->EntriesNum;
 					Calendar->Entries[Alarm].Date = GSM_AddTime (Calendar->Entries[Time].Date, trigger);
 					Calendar->Entries[Alarm].EntryType = CAL_TONE_ALARM_DATETIME;
+					Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 					Calendar->EntriesNum++;
 				}
 
@@ -1811,6 +1824,7 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TEXT;
 				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
+				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
 			}
 			if ((ReadVCALText(Line, "DESCRIPTION", Buff, CalVer == Mozilla_iCalendar))) {
@@ -1818,18 +1832,21 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_DESCRIPTION;
 				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
+				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
 			}
 			if (ReadVCALText(Line, "LOCATION", Buff, CalVer == Mozilla_iCalendar)) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_LOCATION;
 				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
+				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
 			}
 			if ((ReadVCALText(Line, "X-IRMC-LUID", Buff, CalVer == Mozilla_iCalendar))) {
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_LUID;
 				CopyUnicodeString(Calendar->Entries[Calendar->EntriesNum].Text,
 					DecodeUnicodeSpecialChars(Buff));
+				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
 			}
 			if ((ReadVCALText(Line, "CLASS", Buff, CalVer == Mozilla_iCalendar))) {
@@ -1839,18 +1856,21 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 				} else {
 					Calendar->Entries[Calendar->EntriesNum].Number = 1;
 				}
+				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
 			}
 			if (ReadVCALDate(Line, "DTSTART", &Date, &is_date_only)) {
 				Calendar->Entries[Calendar->EntriesNum].Date = Date;
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_START_DATETIME;
 				Time = Calendar->EntriesNum;
+				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
 				if (!is_date_only) date_only = false;
 			}
 			if (ReadVCALDate(Line, "DTEND", &Date, &is_date_only)) {
 				Calendar->Entries[Calendar->EntriesNum].Date = Date;
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_END_DATETIME;
+				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
 				if (!is_date_only) date_only = false;
 			}
@@ -1862,17 +1882,20 @@ GSM_Error GSM_DecodeVCALENDAR_VTODO(GSM_Debug_Info *di, char *Buffer, size_t *Po
 					Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
 				}
 				Alarm = Calendar->EntriesNum;
+				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
 			}
 			if (ReadVCALDate(Line, "AALARM", &Date, &is_date_only)) {
 				Calendar->Entries[Calendar->EntriesNum].Date = Date;
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_TONE_ALARM_DATETIME;
 				Alarm = Calendar->EntriesNum;
+				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
 			}
 			if (ReadVCALDate(Line, "LAST-MODIFIED", &Date, &is_date_only)) {
 				Calendar->Entries[Calendar->EntriesNum].Date = Date;
 				Calendar->Entries[Calendar->EntriesNum].EntryType = CAL_LAST_MODIFIED;
+				Calendar->Entries[Calendar->EntriesNum].AddError = ERR_NONE;
 				Calendar->EntriesNum++;
 			}
 			if (strstr(Line,"X-SONYERICSSON-DST:")) {

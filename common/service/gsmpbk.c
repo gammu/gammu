@@ -593,7 +593,10 @@ void GSM_TweakInternationalNumber(unsigned char *Number, const GSM_NumberType nu
 }
 
 
-#define CHECK_NUM_ENTRIES if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) { error = ERR_MOREMEMORY; goto vcard_done; }
+#define CHECK_NUM_ENTRIES { \
+	if (Pbk->EntriesNum >= GSM_PHONEBOOK_ENTRIES) { error = ERR_MOREMEMORY; goto vcard_done; } \
+	Pbk->Entries[Pbk->EntriesNum].AddError = ERR_NONE; \
+}
 
 /**
  * \bug We should avoid using static buffers here.
@@ -629,7 +632,6 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 			if (strstr(Line,"END:VCARD")) {
 				goto vcard_complete;
 			}
-			Pbk->Entries[Pbk->EntriesNum].AddError = ERR_NONE;
 			if (ReadVCALText(Line, "N", Buff, false)) {
 				pos = 0;
 				s = VCALGetTextPart(Buff, &pos);
@@ -637,6 +639,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Name;
 					Pbk->EntriesNum++;
+					continue;
 				} else {
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					/* Skip empty name */
@@ -651,6 +654,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FirstName;
 					Pbk->EntriesNum++;
+					continue;
 				}
 			}
 			if (strncmp(Line, "PHOTO;JPEG;BASE64:", 18) == 0 ||
@@ -678,6 +682,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				Pbk->Entries[Pbk->EntriesNum].Picture.Length =
 					DecodeBASE64(s, Pbk->Entries[Pbk->EntriesNum].Picture.Buffer, strlen(s));
 				Pbk->EntriesNum++;
+				continue;
 			}
 
 			if (ReadVCALText(Line, "TEL",		   Buff, false) ||
@@ -691,6 +696,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "TEL;CELL",	      Buff, false) ||
 			    ReadVCALText(Line, "TEL;CELL;VOICE",	Buff, false) ||
@@ -706,6 +712,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "TEL;WORK",	      Buff, false) ||
 			    ReadVCALText(Line, "TEL;TYPE=WORK",	 Buff, false) ||
@@ -721,6 +728,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "TEL;OTHER",	      Buff, false) ||
 			    ReadVCALText(Line, "TEL;TYPE=OTHER",	 Buff, false) ||
@@ -736,6 +744,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "TEL;PAGER",	      Buff, false) ||
 			    ReadVCALText(Line, "TEL;TYPE=PAGER",	 Buff, false) ||
@@ -751,6 +760,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "TEL;MSG",	      Buff, false) ||
 			    ReadVCALText(Line, "TEL;TYPE=MSG",	 Buff, false) ||
@@ -766,6 +776,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			/* FAX + VOICE looks like nonsense */
 			if (ReadVCALText(Line, "TEL;FAX",	       Buff, false) ||
@@ -782,6 +793,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "TEL;HOME",	      Buff, false) ||
 			    ReadVCALText(Line, "TEL;TYPE=HOME",	 Buff, false) ||
@@ -797,16 +809,19 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
 				Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "TITLE", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_JobTitle;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "NOTE", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Note;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "LABEL", Buff, false) ||
 			    ReadVCALText(Line, "ADR", Buff, false) ||
@@ -817,6 +832,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Postal;
 					Pbk->EntriesNum++;
+					continue;
 				} else {
 					s = VCALGetTextPart(Buff, &pos); /* Don't know ... */
 
@@ -853,6 +869,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Country;
 					Pbk->EntriesNum++;
+					continue;
 				}
 			}
 			if (ReadVCALText(Line, "ADR;WORK", Buff, false)) {
@@ -862,6 +879,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkPostal;
 					Pbk->EntriesNum++;
+					continue;
 				} else {
 					s = VCALGetTextPart(Buff, &pos); /* Don't know ... */
 
@@ -898,6 +916,7 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 					CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text, s);
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_WorkCountry;
 					Pbk->EntriesNum++;
+					continue;
 				}
 			}
 			if (ReadVCALText(Line, "EMAIL", Buff, false) ||
@@ -906,59 +925,70 @@ GSM_Error GSM_DecodeVCARD(GSM_Debug_Info *di, char *Buffer, size_t *Pos, GSM_Mem
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Email;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "X-IRMC-LUID", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_LUID;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "URL", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_URL;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "ORG", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_Company;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "NICKNAME", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_NickName;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "FN", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Text_FormalName;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "CATEGORIES", Buff, false)) {
 				CopyUnicodeString(Pbk->Entries[Pbk->EntriesNum].Text,Buff);
 				Pbk->Entries[Pbk->EntriesNum].Number = -1;
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Category;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "BDAY", Buff, false)) {
 				if (ReadVCALDateTime(DecodeUnicodeString(Buff), &Pbk->Entries[Pbk->EntriesNum].Date)) {
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Date;
 					Pbk->EntriesNum++;
+					continue;
 				}
 			}
 			if (ReadVCALText(Line, "LAST-MODIFIED", Buff, false)) {
 				if (ReadVCALDateTime(DecodeUnicodeString(Buff), &Pbk->Entries[Pbk->EntriesNum].Date)) {
 					Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_LastModified;
 					Pbk->EntriesNum++;
+					continue;
 				}
 			}
 			if (ReadVCALText(Line, "X-PRIVATE", Buff, false)) {
 				Pbk->Entries[Pbk->EntriesNum].Number = atoi(DecodeUnicodeString(Buff));
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Private;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "X-CALLER-GROUP", Buff, false)) {
 				Pbk->Entries[Pbk->EntriesNum].Number = atoi(DecodeUnicodeString(Buff));
 				Pbk->Entries[Pbk->EntriesNum].EntryType = PBK_Caller_Group;
 				Pbk->EntriesNum++;
+				continue;
 			}
 			if (ReadVCALText(Line, "X-GAMMU-LOCATION", Buff, false)) {
 				Pbk->Location = atoi(DecodeUnicodeString(Buff));
