@@ -700,7 +700,7 @@ GSM_Error GSM_SaveBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 {
 	bool		first_white,isfile=false;
-	unsigned char 	buff[34];
+	unsigned char 	buff[60];
 	size_t		w,h,x,i,buffpos=0;
 	ssize_t		y, pos;
 	size_t		readbytes;
@@ -710,11 +710,13 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 
 	if (bitmap->Type == GSM_None) bitmap->Type = GSM_StartupLogo;
 	if (file!=NULL) isfile=true;
+
+	/* Read the header */
 	if (isfile) {
-		readbytes = fread(buff, 1, 34, file);
-		if (readbytes != 34) return ERR_FILENOTSUPPORTED;
+		readbytes = fread(buff, 1, 54, file);
+		if (readbytes != 54) return ERR_FILENOTSUPPORTED;
 	} else {
-		memcpy(buff,buffer,34);
+		memcpy(buff,buffer,54);
 	}
 
 	/* height and width of image in the file */
@@ -758,30 +760,28 @@ GSM_Error BMP2Bitmap(unsigned char *buffer, FILE *file,GSM_Bitmap *bitmap)
 		return ERR_FILENOTSUPPORTED;
 	}
 
-	/* read rest of header (if exists) and color palette */
+	/* Read palette */
 	if (isfile) {
-		pos=buff[10]-34;
+		pos=buff[10]-54;
 		readbytes = fread(buff, 1, pos, file);
 		if (readbytes != (size_t)pos) return ERR_FILENOTSUPPORTED;
 	} else {
-		pos=buff[10]-34;
+		pos=buff[10]-54;
 		buffpos=buff[10];
-		memcpy (buff,buffer+34,pos);
+		memcpy (buff,buffer+54,pos);
 	}
 
+	first_white = ((buff[6] * buff[5] * buff[4]) > (buff[2] * buff[1] * buff[0]));
 #ifdef DEBUG
-	dbgprintf(NULL, "First color in BMP file: %i %i %i ",buff[pos-8], buff[pos-7], buff[pos-6]);
-	if (buff[pos-8]==0    && buff[pos-7]==0    && buff[pos-6]==0)    dbgprintf(NULL, "(white)");
-	if (buff[pos-8]==0xFF && buff[pos-7]==0xFF && buff[pos-6]==0xFF) dbgprintf(NULL, "(black)");
-	if (buff[pos-8]==102  && buff[pos-7]==204  && buff[pos-6]==102)  dbgprintf(NULL, "(green)");
-	dbgprintf(NULL, "\n");
-	dbgprintf(NULL, "Second color in BMP file: %i %i %i ",buff[pos-38], buff[pos-37], buff[pos-36]);
-	if (buff[pos-4]==0    && buff[pos-3]==0    && buff[pos-2]==0)    dbgprintf(NULL, "(white)");
-	if (buff[pos-4]==0xFF && buff[pos-3]==0xFF && buff[pos-2]==0xFF) dbgprintf(NULL, "(black)");
-	dbgprintf(NULL, "\n");
+	dbgprintf(NULL, "First color in BMP file: #%02x%02x%02x%s\n",
+		buff[2], buff[1], buff[0],
+		first_white ? " (used as white)" : " (used as black)"
+		);
+	dbgprintf(NULL, "Second color in BMP file: #%02x%02x%02x%s\n",
+		buff[6], buff[5], buff[4],
+		!first_white ? " (used as white)" : " (used as black)"
+		);
 #endif
-	first_white=true;
-	if (buff[pos-8]!=0 || buff[pos-7]!=0 || buff[pos-6]!=0) first_white=false;
 
 	pos=7;
 	/* lines are written from the last to the first */
