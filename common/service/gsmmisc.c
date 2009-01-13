@@ -337,6 +337,7 @@ bool ReadVCALDate(char *Buffer, const char *Start, GSM_DateTime *Date, bool *is_
 		dbgprintf(NULL, "ReadVCALDateTime is \"%04d.%02d.%02d %02d:%02d:%02d\"\n",
 			Date->Year, Date->Month, Date->Day,
 			Date->Hour, Date->Minute, Date->Second);
+		*is_date_only = false;
 		return true;
 	}
 
