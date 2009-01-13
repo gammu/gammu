@@ -2220,18 +2220,11 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
    	}
 
-	sprintf(buffer,"RepeatStartDate");
+	sprintf(buffer,"RepeatFrequency");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
-		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STARTDATE;
-		note->Entries[note->EntriesNum].AddError = ERR_NONE;
-		note->EntriesNum++;
-		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
-	}
-	sprintf(buffer,"RepeatStopDate");
-	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
-		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
+	if (readvalue!=NULL) {
+		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
+		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
 		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
@@ -2272,15 +2265,6 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
-	sprintf(buffer,"RepeatFrequency");
-	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
-	if (readvalue!=NULL) {
-		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
-		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
-		note->Entries[note->EntriesNum].AddError = ERR_NONE;
-		note->EntriesNum++;
-		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
-	}
 	sprintf(buffer,"RepeatCount");
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue!=NULL) {
@@ -2295,6 +2279,22 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_DAYOFYEAR;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
+		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
+	}
+	sprintf(buffer,"RepeatStartDate");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
+		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STARTDATE;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
+		note->EntriesNum++;
+		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
+	}
+	sprintf(buffer,"RepeatStopDate");
+	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
+	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
+		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
 		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
