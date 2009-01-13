@@ -263,7 +263,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	Config->use_timestamps = true;
 	Config->log_type = SMSD_LOG_NONE;
 	Config->log_handle = NULL;
-	Config->use_stderr = false;
+	Config->use_stderr = true;
 
 	error = INI_ReadFile(filename, false, &Config->smsdcfgfile);
 	if (Config->smsdcfgfile == NULL || error != ERR_NONE) {
