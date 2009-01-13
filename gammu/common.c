@@ -13,7 +13,7 @@
 #include <curl/curl.h>
 #endif
 
-GSM_StateMachine *gsm;
+GSM_StateMachine *gsm = NULL;
 INI_Section *cfg = NULL;
 
 bool always_answer_yes = false;
@@ -156,13 +156,16 @@ void Cleanup(void)
 {
 	GSM_Debug_Info *di;
 
-	/* Disconnect from phone */
-	if (GSM_IsConnected(gsm)) {
-		GSM_TerminateConnection(gsm);
-	}
+	if (gsm != NULL) {
+		/* Disconnect from phone */
+		if (GSM_IsConnected(gsm)) {
+			GSM_TerminateConnection(gsm);
+		}
 
-	/* Free state machine */
-	GSM_FreeStateMachine(gsm);
+		/* Free state machine */
+		GSM_FreeStateMachine(gsm);
+	}
+	gsm = NULL;
 
 	/* Close debug output if opened */
 	di = GSM_GetGlobalDebug();
@@ -174,6 +177,7 @@ void Cleanup(void)
 #endif
 
 	INI_Free(cfg);
+	cfg = NULL;
 }
 
 void Print_Error(GSM_Error error)
@@ -185,8 +189,6 @@ void Print_Error(GSM_Error error)
 			printf(LISTFORMAT, _("Security status"));
 			PrintSecurityStatus();
 		}
-
-		Cleanup();
 
 		Terminate(3);
 	}
