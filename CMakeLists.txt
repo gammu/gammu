@@ -55,6 +55,9 @@ else (CMAKE_BUILD_TYPE STREQUAL "Debug")
     set (DEBUG 0)
 endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 
+# Valgrind supressions for python
+set (MEMORYCHECK_SUPPRESSIONS_FILE ${Gammu_SOURCE_DIR}/cmake/valgrind-python.supp CACHE FILEPATH "File that contains suppressions for the memory checker")
+
 # Packaging support
 set (CPACK_PACKAGE_NAME "Gammu")
 set (CPACK_PACKAGE_VERSION "${VERSION}")
