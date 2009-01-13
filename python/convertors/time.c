@@ -84,49 +84,61 @@ int BuildGSMDateTime(PyObject *pydt, GSM_DateTime *dt) {
     if (result == NULL) return 0;
     if (!PyInt_Check(result)) {
         PyErr_Format(PyExc_ValueError, "Attribute %s doesn't seem to be integer", "year");
+        Py_DECREF(result);
         return 0;
     }
     dt->Year = PyInt_AsLong(result);
+    Py_DECREF(result);
 
     result = PyObject_GetAttrString(pydt, "month");
     if (result == NULL) return 0;
     if (!PyInt_Check(result)) {
+        Py_DECREF(result);
         PyErr_Format(PyExc_ValueError, "Attribute %s doesn't seem to be integer", "month");
         return 0;
     }
     dt->Month = PyInt_AsLong(result);
+    Py_DECREF(result);
 
     result = PyObject_GetAttrString(pydt, "day");
     if (result == NULL) return 0;
     if (!PyInt_Check(result)) {
+        Py_DECREF(result);
         PyErr_Format(PyExc_ValueError, "Attribute %s doesn't seem to be integer", "day");
         return 0;
     }
     dt->Day = PyInt_AsLong(result);
+    Py_DECREF(result);
 
     result = PyObject_GetAttrString(pydt, "hour");
     if (result == NULL) return 0;
     if (!PyInt_Check(result)) {
+        Py_DECREF(result);
         PyErr_Format(PyExc_ValueError, "Attribute %s doesn't seem to be integer", "hour");
         return 0;
     }
     dt->Hour = PyInt_AsLong(result);
+    Py_DECREF(result);
 
     result = PyObject_GetAttrString(pydt, "minute");
     if (result == NULL) return 0;
     if (!PyInt_Check(result)) {
+        Py_DECREF(result);
         PyErr_Format(PyExc_ValueError, "Attribute %s doesn't seem to be integer", "minute");
         return 0;
     }
     dt->Minute = PyInt_AsLong(result);
+    Py_DECREF(result);
 
     result = PyObject_GetAttrString(pydt, "second");
     if (result == NULL) return 0;
     if (!PyInt_Check(result)) {
+        Py_DECREF(result);
         PyErr_Format(PyExc_ValueError, "Attribute %s doesn't seem to be integer", "second");
         return 0;
     }
     dt->Second = PyInt_AsLong(result);
+    Py_DECREF(result);
 
     return 1;
 }
