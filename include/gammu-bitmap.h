@@ -169,7 +169,7 @@ typedef struct {
 	/**
 	 * Bitmap name
 	 */
-	char *Name;
+	unsigned char Name[2 * (GSM_BITMAP_TEXT_LENGTH + 1)];
 } GSM_Bitmap;
 
 /**

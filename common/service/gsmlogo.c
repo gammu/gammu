@@ -173,7 +173,8 @@ void PHONE_DecodeBitmap(GSM_Phone_Bitmap_Types Type, char *buffer, GSM_Bitmap *B
 	Bitmap->Sender[0]		= 0;
 	Bitmap->Sender[1]		= 0;
 	Bitmap->ID			= 0;
-	Bitmap->Name			= NULL;
+	Bitmap->Name[0]			= 0;
+	Bitmap->Name[1]			= 0;
 
 	GSM_ClearBitmap(Bitmap);
 	for (x=0;x<Bitmap->BitmapWidth;x++) {
@@ -1064,16 +1065,29 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	FILE		*file;
 	unsigned char	buffer[300];
 	GSM_Error	error = ERR_FILENOTSUPPORTED;
+	char	*file_only_name;
+	size_t len;
 
 	file = fopen(FileName, "rb");
 	if (file == NULL) return ERR_CANTOPENFILE;
 
-	bitmap->Bitmap[0].Name = malloc((strlen(FileName) + 1) * 2);
-	if (bitmap->Bitmap[0].Name == NULL) {
-		fclose(file);
+	file_only_name = strrchr(FileName, '/');
+	if (file_only_name == NULL) {
+		file_only_name = strrchr(FileName, '\\');
+	} else {
+		file_only_name++;
+	}
+	if (file_only_name == NULL) {
+		file_only_name = FileName;
+	} else {
+		file_only_name++;
+	}
+	len = strlen(file_only_name);
+	if (len > GSM_BITMAP_TEXT_LENGTH) {
 		return ERR_MOREMEMORY;
 	}
-	EncodeUnicode(bitmap->Bitmap[0].Name, FileName, strlen(FileName));
+
+	EncodeUnicode(bitmap->Bitmap[0].Name, file_only_name, len);
 
 	/* Read the header of the file. */
 	if (fread(buffer, 1, 9, file) != 9) {
