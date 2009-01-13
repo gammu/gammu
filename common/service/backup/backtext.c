@@ -2099,24 +2099,28 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	sprintf(buffer,"Text");
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_TEXT;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"Description");
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_DESCRIPTION;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"LUID");
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_LUID;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"Phone");
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_PHONE;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2125,12 +2129,14 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_PRIVATE;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
 	sprintf(buffer,"EventLocation");
 	if (ReadBackupText(file_info, section, buffer, note->Entries[note->EntriesNum].Text,UseUnicode)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_LOCATION;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2139,6 +2145,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_CONTACTID;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2147,6 +2154,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_START_DATETIME;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2183,6 +2191,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_END_DATETIME;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2198,6 +2207,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 				note->Entries[note->EntriesNum].EntryType = CAL_SILENT_ALARM_DATETIME;
 			}
 		}
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2205,6 +2215,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL  && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
         	note->Entries[note->EntriesNum].EntryType = CAL_LAST_MODIFIED;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
         	note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
    	}
@@ -2213,6 +2224,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STARTDATE;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2220,6 +2232,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	readvalue = ReadCFGText(file_info, section, buffer, UseUnicode);
 	if (readvalue != NULL && ReadVCALDateTime(readvalue, &note->Entries[note->EntriesNum].Date)) {
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_STOPDATE;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2228,6 +2241,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_DAYOFWEEK;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2236,6 +2250,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_DAY;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2244,6 +2259,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_WEEKOFMONTH;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2252,6 +2268,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_MONTH;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2260,6 +2277,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_FREQUENCY;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2268,6 +2286,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_COUNT;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
@@ -2276,6 +2295,7 @@ static GSM_Error ReadCalendarEntry(INI_Section *file_info, char *section, GSM_Ca
 	if (readvalue!=NULL) {
 		note->Entries[note->EntriesNum].Number 	  = atoi(readvalue);
 		note->Entries[note->EntriesNum].EntryType = CAL_REPEAT_DAYOFYEAR;
+		note->Entries[note->EntriesNum].AddError = ERR_NONE;
 		note->EntriesNum++;
 		if (note->EntriesNum >= GSM_CALENDAR_ENTRIES) return ERR_MOREMEMORY;
 	}
