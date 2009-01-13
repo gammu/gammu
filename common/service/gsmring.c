@@ -904,6 +904,11 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 		    buffer[2]==0x4D && buffer[3]==0x44) {
 			ringtone->Format = RING_MMF;
 		}
+		if (buffer[0]=='R' && buffer[1]=='I' &&
+		    buffer[2]=='F' && buffer[3]=='F') {
+			dbgprintf(NULL, "RIFF is not supported for loading!\n");
+			return ERR_FILENOTSUPPORTED;
+		}
 	}
 	rewind(file);
 	switch (ringtone->Format) {
