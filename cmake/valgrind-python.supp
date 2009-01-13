@@ -47,6 +47,39 @@
 #
 
 {
+   Suppress leaking the GIL.  Happens once per process, see comment in ceval.c.
+   Memcheck:Leak
+   fun:malloc
+   fun:PyThread_allocate_lock
+   fun:PyEval_InitThreads
+}
+
+{
+   Suppress leaking the GIL after a fork.
+   Memcheck:Leak
+   fun:malloc
+   fun:PyThread_allocate_lock
+   fun:PyEval_ReInitThreads
+}
+
+{
+   Suppress leaking the autoTLSkey.  This looks like it shouldn't leak though.
+   Memcheck:Leak
+   fun:malloc
+   fun:PyThread_create_key
+   fun:_PyGILState_Init
+   fun:Py_InitializeEx
+   fun:Py_Main
+}
+
+{
+   Hmmm, is this a real leak or like the GIL?
+   Memcheck:Leak
+   fun:malloc
+   fun:PyThread_ReInitTLS
+}
+
+{
    Handle PyMalloc confusing valgrind (possibly leaked)
    Memcheck:Leak
    fun:realloc
@@ -104,6 +137,12 @@
 }
 
 {
+   GAMMU/Use of uninitialised value of size 8, probably amd64 version of above
+   Memcheck:Value8
+   fun:PyObject_Free
+}
+
+{
    ADDRESS_IN_RANGE/Conditional jump or move depends on uninitialised value
    Memcheck:Cond
    fun:PyObject_Free
@@ -127,17 +166,20 @@
    fun:PyObject_Realloc
 }
 
-{
-   GAMMU/Use of uninitialised value of size 8
-   Memcheck:Value8
-   fun:PyObject_Free
-}
-
 ###
 ### All the suppressions below are for errors that occur within libraries
 ### that Python uses.  The problems to not appear to be related to Python's
 ### use of the libraries.
 ###
+
+{
+   Generic ubuntu ld problems
+   Memcheck:Addr8
+   obj:/lib/ld-2.4.so
+   obj:/lib/ld-2.4.so
+   obj:/lib/ld-2.4.so
+   obj:/lib/ld-2.4.so
+}
 
 {
    Generic gentoo ld problems
@@ -351,4 +393,5 @@
    Memcheck:Value4
    fun:SHA1_Update
 }
+
 
