@@ -5951,6 +5951,8 @@ gammu_SaveBackup(PyObject *self, PyObject *args, PyObject *kwds)
     error = GSM_SaveBackupFile(filename, &backup, format);
     if (!checkError(NULL, error, "SaveBackup")) return NULL;
 
+    GSM_FreeBackup(&backup);
+
     Py_RETURN_NONE;
 }
 
@@ -5982,6 +5984,7 @@ gammu_ReadBackup(PyObject *self, PyObject *args, PyObject *kwds)
     GSM_Error                   error;
     GSM_BackupFormat            format = GSM_Backup_AutoUnicode;
     char                        *s = NULL;
+    PyObject                    *result;
 
     GSM_ClearBackup(&backup);
 
@@ -5998,7 +6001,11 @@ gammu_ReadBackup(PyObject *self, PyObject *args, PyObject *kwds)
     error = GSM_ReadBackupFile(filename, &backup, format);
     if (!checkError(NULL, error, "ReadBackup")) return NULL;
 
-    return BackupToPython(&backup);
+    result = BackupToPython(&backup);
+
+    GSM_FreeBackup(&backup);
+
+    return result;
 }
 
 
