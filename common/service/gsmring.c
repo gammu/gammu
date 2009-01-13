@@ -1539,6 +1539,7 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 		}
 	}
 
+	dest->NoteTone.AllNotesScale = false;
 	if (!foundlen) dest->NoteTone.NrCommands = 0;
 }
 
