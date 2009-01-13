@@ -215,7 +215,7 @@ static GSM_Error ReplySetSamsungFrame(GSM_Protocol_Message msg, GSM_StateMachine
 GSM_Error SAMSUNG_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
-	unsigned char 		buffer[32];
+	char 		buffer[32];
 	char 			*pos;
 	int			location, count;
 
@@ -242,9 +242,6 @@ GSM_Error SAMSUNG_ReplyGetBitmap(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		}
 		buffer[count] = 0;
 		smprintf(s, "Name     : %s\n", buffer);
-		s->Phone.Data.Bitmap->Name = malloc((strlen(buffer) + 1) * 2);
-		if (s->Phone.Data.Bitmap->Name == NULL)
-			return ERR_MOREMEMORY;
 		EncodeUnicode(s->Phone.Data.Bitmap->Name, buffer, strlen(buffer));
 
 		s->Phone.Data.Bitmap->Location = location;
