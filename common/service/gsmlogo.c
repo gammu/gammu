@@ -575,7 +575,7 @@ fail:
 
 static GSM_Error savenol(FILE *file, GSM_MultiBitmap *bitmap)
 {
-	int 	country,net;
+	int 	country = 0,net = 0;
 	char 	header[]={
 			'N','O','L',0x00,0x01,0x00,
 			0x00,0x00,		/* MCC */
