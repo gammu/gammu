@@ -817,12 +817,10 @@ static GSM_Error loadbin(FILE *file, GSM_Ringtone *ringtone)
 
 static GSM_Error loadpuremidi(FILE *file, GSM_Ringtone *ringtone)
 {
-	unsigned char buffer[30000];
-
 	dbgprintf(NULL, "loading midi\n");
 	EncodeUnicode(ringtone->Name,"MIDI",4);
-	ringtone->NokiaBinary.Length = fread(buffer, 1, 30000, file);
-	memcpy(ringtone->NokiaBinary.Frame,buffer,ringtone->NokiaBinary.Length);
+	ringtone->NokiaBinary.Length = fread(ringtone->NokiaBinary.Frame,
+		1, sizeof(ringtone->NokiaBinary.Frame), file);
 	dbgprintf(NULL, "Length " SIZE_T_FORMAT  " name \"%s\"\n",ringtone->NokiaBinary.Length,DecodeUnicodeString(ringtone->Name));
 	return ERR_NONE;
 }
