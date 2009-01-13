@@ -20,6 +20,25 @@ SERVICE_STATUS m_ServiceStatus;
 
 SERVICE_STATUS_HANDLE m_ServiceStatusHandle;
 
+void service_print_error(void)
+{
+	char *lpMsgBuf;
+
+	FormatMessage(
+		FORMAT_MESSAGE_ALLOCATE_BUFFER |
+		FORMAT_MESSAGE_FROM_SYSTEM |
+		FORMAT_MESSAGE_IGNORE_INSERTS,
+		NULL,
+		GetLastError(),
+		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /* Default language */
+		(LPTSTR) &lpMsgBuf,
+		0,
+		NULL
+	);
+	fprintf(stderr, "Error %d: %s\n", (int)GetLastError(), lpMsgBuf);
+	LocalFree(lpMsgBuf);
+}
+
 void WINAPI SMSDServiceCtrlHandler(DWORD Opcode)
 {
 	switch (Opcode) {
@@ -60,13 +79,15 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 	m_ServiceStatusHandle = RegisterServiceCtrlHandler(smsd_service_name,
 							   SMSDServiceCtrlHandler);
 	if (m_ServiceStatusHandle == (SERVICE_STATUS_HANDLE) 0) {
-		return;
+		service_print_error();
+		SMSD_Terminate(config, "Failed to initiate service", ERR_NONE, true, 2);
 	}
 	m_ServiceStatus.dwCurrentState = SERVICE_RUNNING;
 	m_ServiceStatus.dwCheckPoint = 0;
 	m_ServiceStatus.dwWaitHint = 0;
 	if (!SetServiceStatus(m_ServiceStatusHandle, &m_ServiceStatus)) {
-		return;
+		service_print_error();
+		SMSD_Terminate(config, "Failed to mark service as started", ERR_NONE, true, 2);
 	}
 
 	error = SMSD_MainLoop(config);
@@ -198,25 +219,6 @@ bool start_smsd_service_dispatcher(void)
 	};
 
 	return StartServiceCtrlDispatcher(DispatchTable);
-}
-
-void service_print_error(void)
-{
-	char *lpMsgBuf;
-
-	FormatMessage(
-		FORMAT_MESSAGE_ALLOCATE_BUFFER |
-		FORMAT_MESSAGE_FROM_SYSTEM |
-		FORMAT_MESSAGE_IGNORE_INSERTS,
-		NULL,
-		GetLastError(),
-		MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), /* Default language */
-		(LPTSTR) &lpMsgBuf,
-		0,
-		NULL
-	);
-	fprintf(stderr, "Error %d: %s\n", (int)GetLastError(), lpMsgBuf);
-	LocalFree(lpMsgBuf);
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.
