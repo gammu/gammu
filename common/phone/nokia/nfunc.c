@@ -357,6 +357,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 
 	Block = &MessageBuffer[0];
 	while (true) {
+		entry->Entries[entry->EntriesNum].AddError = ERR_NONE;
+		entry->Entries[entry->EntriesNum].SMSList[0] = 0;
+		entry->Entries[entry->EntriesNum].VoiceTag = 0;
 		if (bs != 0) {
 			length = length + bs;
 			/* bb5 */
@@ -404,6 +407,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 	bs=0;
 	length=0;
 	while (true) {
+		entry->Entries[entry->EntriesNum].AddError = ERR_NONE;
+		entry->Entries[entry->EntriesNum].SMSList[0] = 0;
+		entry->Entries[entry->EntriesNum].VoiceTag = 0;
 		if (bs != 0) {
 			length = length + bs;
 			if (length >= MessageLength-1) break;
