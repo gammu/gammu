@@ -1433,15 +1433,16 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 				dbgprintf(NULL, "Pause\n");
 				Notes[NrNotes] = Note_Pause;
 				if (NrNotes > 0) {
-					if (Notes[NrNotes-1] == Notes[NrNotes] &&
-					    NotesScale[NrNotes-1] == NotesScale[NrNotes]) {
+					if (Notes[NrNotes-1] == Notes[NrNotes]) {
 						NotesLen[NrNotes-1]+=length;
 					} else {
 						NotesLen[NrNotes]=length;
+						NotesScale[NrNotes] = 0;
 						NrNotes++;
 					}
 				} else {
 					NotesLen[NrNotes]=length;
+					NotesScale[NrNotes] = 0;
 					NrNotes++;
 				}
 				break;
