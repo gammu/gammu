@@ -58,6 +58,7 @@ PyObject *MemoryEntryToPython(const GSM_MemoryEntry *entry) {
     Py_UNICODE  *s;
     char        *t;
 	const GSM_BinaryPicture *bitmap;
+    const char *bmptype;
 
     v = PyList_New(0);
     if (v == NULL) return NULL;
@@ -229,7 +230,25 @@ PyObject *MemoryEntryToPython(const GSM_MemoryEntry *entry) {
                     Py_DECREF(v);
                     return NULL;
                 }
-                f = Py_BuildValue("{s:s,s:O}", "Type", "Photo", "Value", d);
+                bmptype = "";
+                switch (bitmap->Type) {
+                    case PICTURE_BMP:
+                        bmptype = "BMP";
+                        break;
+                    case PICTURE_GIF:
+                        bmptype = "GIF";
+                        break;
+                    case PICTURE_JPG:
+                        bmptype = "JPG";
+                        break;
+                    case PICTURE_ICN:
+                        bmptype = "ICN";
+                        break;
+                    case PICTURE_PNG:
+                        bmptype = "PNG";
+                        break;
+                }
+                f = Py_BuildValue("{s:s,s:O,s:s}", "Type", "Photo", "Value", d, "PictureType", bmptype);
                 Py_DECREF(d);
                 break;
         }
@@ -278,6 +297,7 @@ int MemoryEntryFromPython(PyObject *dict, GSM_MemoryEntry *entry, int needs_loca
     Py_ssize_t      i;
     char            *type;
     char            valuetype;
+    const char      *bmptype;
 
     if (!PyDict_Check(dict)) {
         PyErr_Format(PyExc_ValueError, "Memory entry is not a dictionary");
@@ -521,6 +541,20 @@ int MemoryEntryFromPython(PyObject *dict, GSM_MemoryEntry *entry, int needs_loca
                 entry->Entries[i].Picture.Length = data_len;
                 if (entry->Entries[i].Picture.Buffer == NULL) {
                     return 0;
+                }
+                bmptype = GetCStringFromDict(item, "PictureType");
+                if (strcmp(bmptype, "BMP") == 0) {
+                    entry->Entries[i].Picture.Type = PICTURE_BMP;
+                } else if (strcmp(bmptype, "GIF") == 0) {
+                    entry->Entries[i].Picture.Type = PICTURE_GIF;
+                } else if (strcmp(bmptype, "JPG") == 0) {
+                    entry->Entries[i].Picture.Type = PICTURE_JPG;
+                } else if (strcmp(bmptype, "ICN") == 0) {
+                    entry->Entries[i].Picture.Type = PICTURE_ICN;
+                } else if (strcmp(bmptype, "PNG") == 0) {
+                    entry->Entries[i].Picture.Type = PICTURE_PNG;
+                } else {
+                    entry->Entries[i].Picture.Type = 0;
                 }
                 break;
         }
