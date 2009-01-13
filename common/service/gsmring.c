@@ -877,10 +877,30 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 	unsigned char	buffer[300];
 	GSM_Error	error = ERR_UNKNOWN;
 	size_t readbytes;
+	char	*file_only_name;
+	size_t len;
 
 	dbgprintf(NULL, "Loading ringtone %s\n",FileName);
 	file = fopen(FileName, "rb");
 	if (file == NULL) return ERR_CANTOPENFILE;
+
+	file_only_name = strrchr(FileName, '/');
+	if (file_only_name == NULL) {
+		file_only_name = strrchr(FileName, '\\');
+	} else {
+		file_only_name++;
+	}
+	if (file_only_name == NULL) {
+		file_only_name = FileName;
+	} else {
+		file_only_name++;
+	}
+	len = strlen(file_only_name);
+	if (len > GSM_MAX_RINGTONE_NAME_LENGTH){
+		return ERR_MOREMEMORY;
+	}
+
+	EncodeUnicode(ringtone->Name, file_only_name, len);
 
 	/* Read the header of the file. */
 	readbytes = fread(buffer, 1, 4, file);
@@ -932,11 +952,9 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 		}
 		break;
 	case RING_MIDI:
-		EncodeUnicode(ringtone->Name,FileName,strlen(FileName));
 		error = loadpuremidi(file,ringtone);
 		break;
 	case RING_MMF:
-		EncodeUnicode(ringtone->Name,FileName,strlen(FileName));
 		error = loadmmf(file,ringtone);
 		break;
 	default:
