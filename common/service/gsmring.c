@@ -39,35 +39,37 @@
 
 int GSM_RingNoteGetFrequency(GSM_RingNote Note)
 {
-	double freq=0;
+	int freq = 0;
 
 	/* Values according to the software from http://iki.fi/too/sw/xring/
 	 * generated with:
 	 * perl -e 'print int(4400 * (2 **($_/12)) + .5)/10, "\n" for(3..14)'
  	 */
 	switch (Note.Note) {
-		case Note_C  : freq = 523.3; 				break;
-		case Note_Cis: freq = 554.4; 				break;
-		case Note_D  : freq = 587.3; 				break;
-		case Note_Dis: freq = 622.3; 				break;
-		case Note_E  : freq = 659.3; 				break;
-		case Note_F  : freq = 698.5; 				break;
-		case Note_Fis: freq = 740;   				break;
-		case Note_G  : freq = 784;   				break;
-		case Note_Gis: freq = 830.6; 				break;
-		case Note_A  : freq = 880;   				break;
-		case Note_Ais: freq = 932.3; 				break;
-		case Note_H  : freq = 987.8; 				break;
+		case Note_C  : freq = 52330; 				break;
+		case Note_Cis: freq = 55440; 				break;
+		case Note_D  : freq = 58730; 				break;
+		case Note_Dis: freq = 62230; 				break;
+		case Note_E  : freq = 65930; 				break;
+		case Note_F  : freq = 69850; 				break;
+		case Note_Fis: freq = 74000;   				break;
+		case Note_G  : freq = 78400;   				break;
+		case Note_Gis: freq = 83060; 				break;
+		case Note_A  : freq = 88000;   				break;
+		case Note_Ais: freq = 93230; 				break;
+		case Note_H  : freq = 98780; 				break;
 		case Note_Pause:	     				break;
 	}
-	switch (Note.Scale) {
-		case Scale_440 : freq = freq / 2;			break;
-		case Scale_880 :					break;
-		case Scale_1760: freq = freq * 2;			break;
-		case Scale_3520: freq = freq * 4;			break;
-		default	       :					break;
+	if (Note.Note != Note_Pause) {
+		switch (Note.Scale) {
+			case Scale_440 : freq = freq / 2;			break;
+			case Scale_880 :					break;
+			case Scale_1760: freq = freq * 2;			break;
+			case Scale_3520: freq = freq * 4;			break;
+			default	       :					break;
+		}
 	}
-	return (int)freq;
+	return freq / 100;
 }
 
 int GSM_RingNoteGetFullDuration(GSM_RingNote Note)
@@ -1372,16 +1374,12 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 				case  10 : Notes[NrNotes] = Note_Ais;	break;
 				case  11 : Notes[NrNotes] = Note_H;	break;
 			}
-			if (NrNotes > 0) {
-				if (Notes[NrNotes-1] == Notes[NrNotes] &&
-				    NotesScale[NrNotes-1] == NotesScale[NrNotes]) {
-					NotesLen[NrNotes-1]+=length;
-				} else {
-					NotesLen[NrNotes]=length;
-					NrNotes++;
-				}
+			if (NrNotes > 0 &&
+					Notes[NrNotes - 1] == Notes[NrNotes] &&
+					NotesScale[NrNotes - 1] == NotesScale[NrNotes]) {
+				NotesLen[NrNotes - 1] += length;
 			} else {
-				NotesLen[NrNotes]=length;
+				NotesLen[NrNotes] = length;
 				NrNotes++;
 			}
 		} else switch (command) {
@@ -1432,16 +1430,11 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 			case 0x40:
 				dbgprintf(NULL, "Pause\n");
 				Notes[NrNotes] = Note_Pause;
-				if (NrNotes > 0) {
-					if (Notes[NrNotes-1] == Notes[NrNotes]) {
-						NotesLen[NrNotes-1]+=length;
-					} else {
-						NotesLen[NrNotes]=length;
-						NotesScale[NrNotes] = 0;
-						NrNotes++;
-					}
+				if (NrNotes > 0 &&
+						Notes[NrNotes - 1] == Notes[NrNotes]) {
+					NotesLen[NrNotes - 1] += length;
 				} else {
-					NotesLen[NrNotes]=length;
+					NotesLen[NrNotes] = length;
 					NotesScale[NrNotes] = 0;
 					NrNotes++;
 				}
@@ -1451,10 +1444,8 @@ static void Binary2RTTL(GSM_Ringtone *dest, GSM_Ringtone *src)
 			}
 	}
 
-	while (NrNotes>0) {
-		if (Notes[NrNotes-1] == Note_Pause) {
-			NrNotes--;
-		} else break;
+	while (NrNotes > 0 && Notes[NrNotes-1] == Note_Pause) {
+		NrNotes--;
 	}
 
 	for (accuracy=1; accuracy<5; accuracy++) {
