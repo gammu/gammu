@@ -223,6 +223,9 @@ static GSM_Error GSM_DecodeLDIFEntry(char *Buffer, size_t *Pos, GSM_MemoryEntry 
 		error = MyGetLine(Buffer, Pos, Line, strlen(Buffer), sizeof(Line), false);
 		if (error != ERR_NONE) return error;
 		if (strlen(Line) == 0) break;
+		Pbk->Entries[Pbk->EntriesNum].AddError = ERR_NONE;
+		Pbk->Entries[Pbk->EntriesNum].SMSList[0] = 0;
+		Pbk->Entries[Pbk->EntriesNum].VoiceTag = 0;
 		switch (Level) {
 		case 0:
 			if (ReadLDIFText(Line, "objectclass", Buff)) {
@@ -333,15 +336,22 @@ GSM_Error LoadLDIF(const char *FileName, GSM_Backup *backup)
 
 	while (1) {
 		error = GSM_DecodeLDIFEntry(File.Buffer, &Pos, &Pbk);
-		if (error == ERR_EMPTY) break;
-		if (error != ERR_NONE) return error;
+		if (error == ERR_EMPTY) {
+			error = ERR_NONE;
+			break;
+		}
+		if (error != ERR_NONE) break;
 		if (numPbk < GSM_BACKUP_MAX_PHONEPHONEBOOK) {
 			backup->PhonePhonebook[numPbk] = malloc(sizeof(GSM_MemoryEntry));
-		        if (backup->PhonePhonebook[numPbk] == NULL) return ERR_MOREMEMORY;
+		        if (backup->PhonePhonebook[numPbk] == NULL) {
+				error = ERR_MOREMEMORY;
+				break;
+			}
 			backup->PhonePhonebook[numPbk + 1] = NULL;
 		} else {
 			dbgprintf(NULL, "Increase GSM_BACKUP_MAX_PHONEPHONEBOOK\n");
-			return ERR_MOREMEMORY;
+			error = ERR_MOREMEMORY;
+			break;
 		}
 		memcpy(backup->PhonePhonebook[numPbk],&Pbk,sizeof(GSM_MemoryEntry));
 		backup->PhonePhonebook[numPbk]->Location 	= numPbk + 1;
@@ -349,7 +359,9 @@ GSM_Error LoadLDIF(const char *FileName, GSM_Backup *backup)
 		numPbk++;
 	}
 
-	return ERR_NONE;
+	free(File.Buffer);
+
+	return error;
 }
 
 #endif
