@@ -907,6 +907,7 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 		if (buffer[0]=='R' && buffer[1]=='I' &&
 		    buffer[2]=='F' && buffer[3]=='F') {
 			dbgprintf(NULL, "RIFF is not supported for loading!\n");
+			fclose(file);
 			return ERR_FILENOTSUPPORTED;
 		}
 	}
