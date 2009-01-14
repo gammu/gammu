@@ -104,7 +104,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
-	check_log(debug_file, true, "NULL,TEMP,FALSE");
+	check_log(debug_file, true, "2. NULL,TEMP,FALSE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -116,7 +116,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
-	check_log(debug_file, false, "NULL,TEMP,TRUE");
+	check_log(debug_file, false, "3. NULL,TEMP,TRUE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -128,7 +128,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
-	check_log(debug_file, true, "TEMP,NULL,TRUE");
+	check_log(debug_file, true, "4. TEMP,NULL,TRUE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -140,7 +140,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
-	check_log(debug_file, false, "TEMP,NULL,FALSE");
+	check_log(debug_file, false, "5. TEMP,NULL,FALSE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -152,7 +152,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
-	check_log(debug_file, true, "2:NULL,TEMP,FALSE");
+	check_log(debug_file, true, "6. NULL,TEMP,FALSE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -165,7 +165,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
-	check_log(debug_file, false, "2:NULL,TEMP,TRUE");
+	check_log(debug_file, false, "7. NULL,TEMP,TRUE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -178,7 +178,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
-	check_log(debug_file, true, "2:TEMP,NULL,TRUE");
+	check_log(debug_file, true, "8. TEMP,NULL,TRUE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -191,7 +191,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
-	check_log(debug_file, false, "2:TEMP,NULL,FALSE");
+	check_log(debug_file, false, "9. TEMP,NULL,FALSE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -204,7 +204,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFunction(Log_Function, NULL, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
-	check_log(debug_file, false, "10:TEMP,NULL,FALSE");
+	check_log(debug_file, false, "10. TEMP,NULL,FALSE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -217,7 +217,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFunction(Log_Function, NULL, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
-	check_log(debug_file, false, "11:TEMP,NULL,TRUE");
+	check_log(debug_file, false, "11. TEMP,NULL,TRUE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
