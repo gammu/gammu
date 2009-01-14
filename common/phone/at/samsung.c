@@ -466,15 +466,64 @@ GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
  	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
  	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
+	GSM_Error error;
+	const char *str;
+	int i, j;
 
 	switch (Priv->ReplyState) {
 	case AT_Reply_OK:
  		smprintf(s, "Phonebook entry received\n");
-		Memory->EntriesNum = 0;
-		/* FIXME: parse data using ATGEN_ParseReply and fill Memory entry */
-		return ERR_NOTIMPLEMENTED;
+		Memory->EntriesNum = 9;
+		Memory->Entries[0].EntryType = PBK_Number_Mobile;
+		Memory->Entries[1].EntryType = PBK_Number_Home;
+		Memory->Entries[2].EntryType = PBK_Number_Work;
+		Memory->Entries[3].EntryType = PBK_Number_Fax;
+		Memory->Entries[4].EntryType = PBK_Number_General;
+		Memory->Entries[5].EntryType = PBK_Text_Email;
+		Memory->Entries[6].EntryType = PBK_Text_FirstName;
+		Memory->Entries[7].EntryType = PBK_Text_LastName;
+		Memory->Entries[8].EntryType = PBK_Text_Note;
+
+		/* Get line from reply */
+		str = GetLineString(msg.Buffer, &Priv->Lines, 2);
+
+		/*
+		 * Parse reply string
+		 *
+		 * The last string seems to be always empty, so it is
+		 * not handlet in rest of the code.
+		 */
+		error = ATGEN_ParseReply(s, str,
+					"+SPBR: @p, @p, @p, @p, @p, @s, @t, @t, @t, @t",
+					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
+					Memory->Entries[2].Text, sizeof(Memory->Entries[2].Text),
+					Memory->Entries[3].Text, sizeof(Memory->Entries[3].Text),
+					Memory->Entries[4].Text, sizeof(Memory->Entries[4].Text),
+					Memory->Entries[5].Text, sizeof(Memory->Entries[5].Text),
+					Memory->Entries[6].Text, sizeof(Memory->Entries[6].Text),
+					Memory->Entries[7].Text, sizeof(Memory->Entries[7].Text),
+					Memory->Entries[8].Text, sizeof(Memory->Entries[8].Text),
+					Memory->Entries[9].Text, sizeof(Memory->Entries[9].Text));
+		if (error != ERR_NONE) {
+			return error;
+		}
+		/* Remove empty entries */
+		for (i = 0; i < Memory->EntriesNum; i++) {
+			if (UnicodeLength(Memory->Entries[i].Text) == 0) {
+				for (j = i + 1; j < Memory->EntriesNum; j++) {
+					CopyUnicodeString(Memory->Entries[j - 1].Text, Memory->Entries[j].Text);
+					Memory->Entries[j - 1].EntryType = Memory->Entries[j].EntryType;
+				}
+				Memory->EntriesNum--;
+			}
+		}
+		if (Memory->EntriesNum == 0) {
+			return ERR_EMPTY;
+		}
+		return ERR_NONE;
 	case AT_Reply_Error:
-                return ERR_UNKNONW;
+                return ERR_UNKNOWN;
 	case AT_Reply_CMSError:
  	        return ATGEN_HandleCMSError(s);
 	case AT_Reply_CMEError:
