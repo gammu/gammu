@@ -389,7 +389,7 @@ GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 	char 			*pos;
 	/* Text to parse: ^SBNR: ("vcs",(1-50)) */
 
-	Priv->PBKSBNR = AT_SBNR_NOTAVAILABLE;
+	Priv->PBKSBNR = AT_NOTAVAILABLE;
 
  	switch (Priv->ReplyState) {
  	case AT_Reply_OK:
@@ -411,7 +411,7 @@ GSM_Error SIEMENS_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine 
 		if (!isdigit(*pos)) return ERR_UNKNOWNRESPONSE;
 		Priv->MemorySize = atoi(pos) + 1 - Priv->FirstMemoryEntry;
 
-		Priv->PBKSBNR = AT_SBNR_AVAILABLE;
+		Priv->PBKSBNR = AT_AVAILABLE;
 
 		return ERR_NONE;
 	case AT_Reply_Error:

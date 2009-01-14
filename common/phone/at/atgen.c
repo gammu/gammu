@@ -4540,7 +4540,7 @@ GSM_Error ATGEN_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 
 	/* Catch errorneous 0 returned by some Siemens phones for ME. There is
 	 * probably no way to get status there. */
-	if (Priv->PBKSBNR == AT_SBNR_AVAILABLE && Status->MemoryType == MEM_ME && Status->MemoryFree == 0)
+	if (Priv->PBKSBNR == AT_AVAILABLE && Status->MemoryType == MEM_ME && Status->MemoryFree == 0)
 		return ERR_NOTSUPPORTED;
 
 	return ATGEN_GetMemoryInfo(s, Status, AT_Status);
@@ -4838,7 +4838,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 		if (Priv->PBKSBNR == 0) {
 			ATGEN_CheckSBNR(s);
 		}
-		if (Priv->PBKSBNR == AT_SBNR_AVAILABLE) {
+		if (Priv->PBKSBNR == AT_AVAILABLE) {
 			sprintf(req, "AT^SBNR=vcf,%i\r",entry->Location + Priv->FirstMemoryEntry - 1);
 			s->Phone.Data.Memory=entry;
 			smprintf(s, "Getting phonebook entry\n");
@@ -4896,7 +4896,7 @@ GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, bool
 		}
 	}
 	/* There are no status functions for SBNR */
-	if (entry->MemoryType != MEM_ME || Priv->PBKSBNR != AT_SBNR_AVAILABLE) {
+	if (entry->MemoryType != MEM_ME || Priv->PBKSBNR != AT_AVAILABLE) {
 		error = ATGEN_SetPBKMemory(s, entry->MemoryType);
 		if (error != ERR_NONE) return error;
 
@@ -4915,7 +4915,7 @@ GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, bool
 		entry->Location += step + 1;
 		if (entry->Location > Priv->MemorySize) break;
 		/* SBNR works only for one location */
-		if (entry->MemoryType != MEM_ME || Priv->PBKSBNR != AT_SBNR_AVAILABLE) step = MIN(step + 2, 20);
+		if (entry->MemoryType != MEM_ME || Priv->PBKSBNR != AT_AVAILABLE) step = MIN(step + 2, 20);
 	}
 	if (error == ERR_INVALIDLOCATION) return ERR_EMPTY;
 	return error;

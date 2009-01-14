@@ -175,12 +175,7 @@ typedef enum {
 typedef enum {
 	AT_AVAILABLE = 1,
 	AT_NOTAVAILABLE
-} GSM_AT_SMSMemory;
-
-typedef enum {
-	AT_SBNR_AVAILABLE = 1,
-	AT_SBNR_NOTAVAILABLE
-} GSM_AT_SBNR;
+} GSM_AT_Feature;
 
 typedef enum {
 	AT_Status,
@@ -278,7 +273,7 @@ typedef struct {
 	 * Charset to use for IRA mode
 	 */
 	GSM_AT_Charset		IRACharset;
-	GSM_AT_SBNR		PBKSBNR;
+	GSM_AT_Feature		PBKSBNR;
 	size_t			NumberLength;
 	size_t			TextLength;
 	int			MemorySize;
@@ -291,15 +286,15 @@ typedef struct {
 	/**
 	 * Can we write messages to SIM memory?
 	 */
-	GSM_AT_SMSMemory	SIMSaveSMS;
+	GSM_AT_Feature		SIMSaveSMS;
 	/**
 	 * Can we write messages to phone memory?
 	 */
-	GSM_AT_SMSMemory	PhoneSaveSMS;
+	GSM_AT_Feature		PhoneSaveSMS;
 	/**
 	 * Is phone SMS memory available ?
 	 */
-	GSM_AT_SMSMemory	PhoneSMSMemory;
+	GSM_AT_Feature		PhoneSMSMemory;
 	/**
 	 * Whether to use Motorola like SMS folders.
 	 */
@@ -307,7 +302,7 @@ typedef struct {
 	/**
 	 * Is SIM SMS memory available ?
 	 */
-	GSM_AT_SMSMemory	SIMSMSMemory;
+	GSM_AT_Feature		SIMSMSMemory;
 	/**
 	 * Last read SMS memory
 	 */
