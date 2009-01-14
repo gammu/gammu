@@ -114,6 +114,27 @@ int main(int argc UNUSED, char **argv UNUSED)
 		return 1;
 	}
 
+	Priv->Charset = AT_CHARSET_GSM;
+	Priv->Manufacturer = AT_Motorola;
+	error = ATGEN_ParseReply(s,
+					"+SPBR: \"12345\",\"\",\"\",\"\",\"\",\"\",\"5,test1\",\"0,\",\"0,\",\"0,\"",
+					"+SPBR: @p, @p, @p, @p, @p, @s, @t, @t, @t, @t",
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE,
+			buffer, BUFFER_SIZE
+			);
+	if (error != ERR_NONE) {
+		printf("%s\n", GSM_ErrorString(error));
+		return 1;
+	}
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
