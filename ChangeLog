@@ -30,6 +30,7 @@ ChangeLog
 [-] * Fixed possible crash in LMB writer.
 [-] * Fixed several memory leaks.
 [+] * Better support for Samsung phones.
+[-] * Fixed Windows Service Startup (bug #451).
     
 20090109 - 1.22.90
 
