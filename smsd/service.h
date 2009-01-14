@@ -23,7 +23,7 @@ extern bool stop_smsd_service(void);
 /**
  * Starts service.
  */
-bool start_smsd_service(void);
+extern bool start_smsd_service(void);
 
 /**
  * Installs service.
@@ -38,7 +38,7 @@ extern bool install_smsd_service(SMSD_Parameters * params);
 /**
  * Prints information about service error code.
  */
-extern void service_print_error(void);
+extern void service_print_error(const char *info);
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

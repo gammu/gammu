@@ -20,7 +20,7 @@ SERVICE_STATUS m_ServiceStatus;
 
 SERVICE_STATUS_HANDLE m_ServiceStatusHandle;
 
-void service_print_error(void)
+void service_print_error(const char *info)
 {
 	char *lpMsgBuf;
 
@@ -35,7 +35,8 @@ void service_print_error(void)
 		0,
 		NULL
 	);
-	fprintf(stderr, "Error %d: %s\n", (int)GetLastError(), lpMsgBuf);
+	fprintf(stderr, "Error %d: %s (%s)\n", (int)GetLastError(), lpMsgBuf, info);
+
 	LocalFree(lpMsgBuf);
 }
 
@@ -64,36 +65,56 @@ void WINAPI SMSDServiceCtrlHandler(DWORD Opcode)
 	return;
 }
 
+BOOL report_service_status(DWORD CurrentState,
+			DWORD Win32ExitCode,
+			DWORD WaitHint)
+{
+	static DWORD CheckPoint = 1;
+
+	m_ServiceStatus.dwServiceType = SERVICE_WIN32;
+	m_ServiceStatus.dwCurrentState = CurrentState;
+	m_ServiceStatus.dwWin32ExitCode = Win32ExitCode;
+	m_ServiceStatus.dwServiceSpecificExitCode = 0;
+	m_ServiceStatus.dwWaitHint = WaitHint;
+
+	if (CurrentState == SERVICE_START_PENDING)
+		m_ServiceStatus.dwControlsAccepted = 0;
+	else
+		m_ServiceStatus.dwControlsAccepted = SERVICE_ACCEPT_STOP;
+
+	if ( (CurrentState == SERVICE_RUNNING) ||
+			(CurrentState == SERVICE_STOPPED) )
+		m_ServiceStatus.dwCheckPoint = 0;
+	else
+		m_ServiceStatus.dwCheckPoint = CheckPoint++;
+
+	// Report the status of the service to the SCM.
+	return SetServiceStatus( m_ServiceStatusHandle, &m_ServiceStatus );
+}
+
 void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 {
 	GSM_Error error;
 
-	m_ServiceStatus.dwServiceType = SERVICE_WIN32;
-	m_ServiceStatus.dwCurrentState = SERVICE_START_PENDING;
-	m_ServiceStatus.dwControlsAccepted = SERVICE_ACCEPT_STOP;
-	m_ServiceStatus.dwWin32ExitCode = 0;
-	m_ServiceStatus.dwServiceSpecificExitCode = 0;
-	m_ServiceStatus.dwCheckPoint = 0;
-	m_ServiceStatus.dwWaitHint = 0;
 
 	m_ServiceStatusHandle = RegisterServiceCtrlHandler(smsd_service_name,
 							   SMSDServiceCtrlHandler);
 	if (m_ServiceStatusHandle == (SERVICE_STATUS_HANDLE) 0) {
-		service_print_error();
+		service_print_error("Failed to initiate service");
 		SMSD_Terminate(config, "Failed to initiate service", ERR_NONE, true, 2);
 	}
-	m_ServiceStatus.dwCurrentState = SERVICE_RUNNING;
-	m_ServiceStatus.dwCheckPoint = 0;
-	m_ServiceStatus.dwWaitHint = 0;
-	if (!SetServiceStatus(m_ServiceStatusHandle, &m_ServiceStatus)) {
-		service_print_error();
-		SMSD_Terminate(config, "Failed to mark service as started", ERR_NONE, true, 2);
-	}
+
+	if (!report_service_status(SERVICE_START_PENDING, NO_ERROR, 3000))
+		service_print_error("Failed to report state pending");
+	if (!report_service_status(SERVICE_RUNNING, NO_ERROR, 0))
+		service_print_error("Failed to report state started");
 
 	error = SMSD_MainLoop(config);
 	if (error != ERR_NONE) {
+		report_service_status(SERVICE_STOPPED, error, 0);
 		SMSD_Terminate(config, "Failed to run SMSD", error, true, 2);
 	}
+	report_service_status(SERVICE_STOPPED, NO_ERROR, 0);
 	return;
 }
 
@@ -113,7 +134,7 @@ bool install_smsd_service(SMSD_Parameters * params)
 	if (GetFullPathName(params->config_file, sizeof(config_name), config_name, NULL) == 0)
 		return false;
 
-	sprintf(commandline, "\"%s\" -s -c \"%s\"",
+	sprintf(commandline, "\"%s\" -S -c \"%s\"",
 		program_name, config_name);
 
 	schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);

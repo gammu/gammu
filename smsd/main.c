@@ -290,7 +290,7 @@ void configure_daemon(SMSD_Parameters * params)
 		if (!start_smsd_service_dispatcher()) {
 			printf("Error starting %s service\n",
 			       smsd_service_name);
-			service_print_error();
+			service_print_error("Error running service");
 			exit(1);
 		}
 
@@ -329,7 +329,7 @@ int main(int argc, char **argv)
 		} else {
 			printf("Error stopping %s service\n",
 			       smsd_service_name);
-			service_print_error();
+			service_print_error("Error stopping service");
 			exit(1);
 		}
 	}
@@ -341,7 +341,7 @@ int main(int argc, char **argv)
 		} else {
 			printf("Error uninstalling %s service\n",
 			       smsd_service_name);
-			service_print_error();
+			service_print_error("Error uninstalling service");
 			exit(1);
 		}
 	}
@@ -365,7 +365,7 @@ int main(int argc, char **argv)
 		} else {
 			printf("Error installing %s service\n",
 			       smsd_service_name);
-			service_print_error();
+			service_print_error("Error installing service");
 			exit(1);
 		}
 	}
@@ -377,7 +377,7 @@ int main(int argc, char **argv)
 		} else {
 			printf("Error starting %s service\n",
 			       smsd_service_name);
-			service_print_error();
+			service_print_error("Error starting service");
 			exit(1);
 		}
 	}
@@ -389,6 +389,7 @@ read_config:
 
 	error = SMSD_ReadConfig(params.config_file, config, true);
 	if (error != ERR_NONE) {
+		service_print_error("Failed to read config!");
 		SMSD_Terminate(config, "Failed to read config", error, true, 2);
 	}
 
