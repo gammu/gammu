@@ -493,6 +493,16 @@
 }
 
 {
+   23,296 bytes in 81 blocks are possibly lost
+   Memcheck:Leak
+   fun:malloc
+   fun:_PyObject_GC_Malloc
+   fun:_PyObject_GC_NewVar
+   fun:PyFrame_New
+   fun:PyEval_EvalCodeEx
+}
+
+{
    992 bytes in 1 blocks are still reachable
    Memcheck:Leak
    fun:malloc
