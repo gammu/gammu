@@ -565,7 +565,7 @@ set (PUBLIC_HEADERS
     include/gammu-call.h
     include/gammu-ringtone.h
     include/gammu-nokia.h
-    smsd/gammu-smsd.h
+    include/gammu-smsd.h
     ${Gammu_BINARY_DIR}/include/gammu-config.h
     )
 
