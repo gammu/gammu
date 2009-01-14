@@ -29,6 +29,7 @@ ChangeLog
 [-] * Fixed crash with too many animation frames.
 [-] * Fixed possible crash in LMB writer.
 [-] * Fixed several memory leaks.
+[+] * Better support for Samsung phones.
     
 20090109 - 1.22.90
 
