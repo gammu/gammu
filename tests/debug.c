@@ -9,11 +9,12 @@ GSM_StateMachine *s;
 
 #ifdef WIN32
 # define NUL "NUL"
+char debug_filename[] = ".\\gammu-debug-test.log";
 #else
 # define NUL "/dev/null"
+char debug_filename[] = "./gammu-debug-test.log";
 #endif
 
-char debug_filename[] = "gammu-debug-test-XXXXXX";
 
 NORETURN void fail(int errcode)
 {
@@ -63,9 +64,6 @@ void Log_Function(const char *text, void *data UNUSED)
 int main(int argc UNUSED, char **argv UNUSED)
 {
 	FILE *debug_file;
-#ifndef WIN32
-	int debug_fd;
-#endif
 	GSM_Debug_Info *di_sm, *di_global;
 
 	/* Allocates state machine */
@@ -74,16 +72,6 @@ int main(int argc UNUSED, char **argv UNUSED)
 		printf("Could not allocate state machine!\n");
 		fail(1);
 	}
-
-#ifndef WIN32
-	/* Create file for logs */
-	debug_fd = mkstemp(debug_filename);
-	if (debug_fd == -1) {
-		printf("Could not create temporary file!\n");
-		fail(2);
-	}
-	close(debug_fd);
-#endif
 
 	/* Get debug handles */
 	di_sm = GSM_GetDebug(s);
