@@ -16,15 +16,15 @@ cecho() {
 cecho "$start"
 cecho "# Do not modify this section, change gen-include-test.sh instead"
 
-for x in `ls ../include/ | grep -v gammu.h` ; do 
+for x in `ls ../include/ | grep -v gammu.h` ; do
 	noext=${x%.h}
 	base=${noext#gammu-}
 	filename=include-$base.c
 	executable=include-$base
-	( 
+	(
 		echo "/* Automatically generated test for validating header file $x */"
 		echo "/* See gen-include-test.sh for details */"
-		echo 
+		echo
 		echo "#include <$x>"
 		echo "#include <$x>"
 		echo
@@ -36,19 +36,16 @@ for x in `ls ../include/ | grep -v gammu.h` ; do
 		echo "#  define UNUSED"
 		echo "# endif"
 		echo "#endif"
-		echo 
+		echo
 		echo "int main(int argc UNUSED, char** argv UNUSED) {"
 		echo "	return 0;"
-		echo "}" 
+		echo "}"
 	) >  $filename
 
 
 	cecho
 	cecho "# Test for header $x"
 	cecho "add_executable($executable $filename)"
-	cecho "if (CROSS_MINGW)"
-    cecho "    set_target_properties ($executable PROPERTIES PREFIX \"\" SUFFIX \".exe\")"
-	cecho "endif (CROSS_MINGW)"
 	cecho "target_link_libraries($executable libGammu)"
 	cecho "add_test($executable \"\${GAMMU_TEST_PATH}/$executable\${GAMMU_TEST_SUFFIX}\")"
 
