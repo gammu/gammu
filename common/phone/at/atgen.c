@@ -689,7 +689,7 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 	const char *inp = input;
 	char *endptr;
 	GSM_DateTime *out_dt;
-	char *out_s;
+	char *out_s, *search_pos;
 	unsigned char *out_us;
 	unsigned char *buffer;
 	unsigned char *buffer2;
@@ -772,6 +772,36 @@ GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, cons
 								true, false);
 						if (error == ERR_NONE) {
 							smprintf(s, "Generic string decoded as \"%s\"\n", DecodeUnicodeString(out_s));
+						}
+						free(buffer);
+						if (error != ERR_NONE) {
+							goto end;
+						}
+						inp += length;
+						break;
+					case 't':
+						out_s = va_arg(ap, char *);
+						storage_size = va_arg(ap, size_t);
+						length = ATGEN_GrabString(s, inp, &buffer);
+						smprintf(s, "Parsed string with length \"%s\"\n", buffer);
+						if (!isdigit(buffer[0])) {
+							free(buffer);
+							error = ERR_UNKNOWNRESPONSE;
+							goto end;
+						}
+						search_pos = strchr(buffer, ',');
+						if (search_pos == NULL) {
+							free(buffer);
+							error = ERR_UNKNOWNRESPONSE;
+							goto end;
+						}
+						search_pos++;
+						error = ATGEN_DecodeText(s,
+								search_pos, strlen(search_pos),
+								out_s, storage_size,
+								true, false);
+						if (error == ERR_NONE) {
+							smprintf(s, "String with length decoded as \"%s\"\n", DecodeUnicodeString(out_s));
 						}
 						free(buffer);
 						if (error != ERR_NONE) {

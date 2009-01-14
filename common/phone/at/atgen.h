@@ -404,6 +404,10 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *s);
  * - \b \@s - String, will be converted from phone encoding, stripping
  *   quotes, expects pointer to unsigned char and size of storage.
  *   Encoding is somehow guessed.
+ * - \b \@t - String with length as first element (eg. "5,test1"), will be
+ *   converted from phone encoding, stripping quotes, expects pointer to
+ *   unsigned char and size of storage.
+ *   Encoding is somehow guessed.
  * - \b \@e - String, will be converted from phone encoding, stripping
  *   quotes, expects pointer to unsigned char and size of storage.
  *   No encoding guessing.
