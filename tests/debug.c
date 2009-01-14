@@ -89,10 +89,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Test 2 - global /dev/null, local tempfile, do not use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
+	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
-	check_log(debug_file, true, "2. NULL,TEMP,FALSE");
+	check_log(debug_file, true, "2. global_file=NULL, sm_file=TEMP, use_global=FALSE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -101,10 +102,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Test 3 - global /dev/null, local tempfile, use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
+	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
-	check_log(debug_file, false, "3. NULL,TEMP,TRUE");
+	check_log(debug_file, false, "3. global_file=NULL, sm_file=TEMP, use_global=TRUE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -113,10 +115,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Test 4 - global tempfile, local /dev/null, use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
+	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
-	check_log(debug_file, true, "4. TEMP,NULL,TRUE");
+	check_log(debug_file, true, "4. global_file=TEMP, sm_file=NULL, use_global=TRUE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -125,10 +128,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Test 5 - global tempfile, local /dev/null, do not use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
+	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
-	check_log(debug_file, false, "5. TEMP,NULL,FALSE");
+	check_log(debug_file, false, "5. global_file=TEMP, sm_file=NULL, use_global=FALSE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -136,11 +140,12 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Test 6 - global /dev/null, local tempfile, do not use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
+	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
-	check_log(debug_file, true, "6. NULL,TEMP,FALSE");
+	check_log(debug_file, true, "6. global_file=NULL, sm_file=TEMP, use_global=FALSE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -149,11 +154,12 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Test 7 - global /dev/null, local tempfile, use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
+	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
-	check_log(debug_file, false, "7. NULL,TEMP,TRUE");
+	check_log(debug_file, false, "7. global_file=NULL, sm_file=TEMP, use_global=TRUE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -162,11 +168,12 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Test 8 - global tempfile, local /dev/null, use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
+	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
-	check_log(debug_file, true, "8. TEMP,NULL,TRUE");
+	check_log(debug_file, true, "8. global_file=TEMP, sm_file=NULL, use_global=TRUE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -175,11 +182,12 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Test 9 - global tempfile, local /dev/null, do not use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
+	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
-	check_log(debug_file, false, "9. TEMP,NULL,FALSE");
+	check_log(debug_file, false, "9. global_file=TEMP, sm_file=NULL, use_global=FALSE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -187,12 +195,13 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Test 10 - functional logging, do not use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
+	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFunction(Log_Function, NULL, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugGlobal(false, di_sm) == true);
-	check_log(debug_file, false, "10. TEMP,NULL,FALSE");
+	check_log(debug_file, false, "10. global_file=TEMP, sm_file=function, use_global=FALSE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
@@ -200,12 +209,13 @@ int main(int argc UNUSED, char **argv UNUSED)
 	 * Test 11 - functional logging, use global
 	 */
 	debug_file = fopen(debug_filename, "w+");
+	test_result(debug_file != NULL);
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
 	test_result(GSM_SetDebugFile(NUL, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(debug_file, true, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugFunction(Log_Function, NULL, di_global) == ERR_NONE);
 	test_result(GSM_SetDebugGlobal(true, di_sm) == true);
-	check_log(debug_file, false, "11. TEMP,NULL,TRUE");
+	check_log(debug_file, false, "11. global_file=function, sm_file=NULL, use_global=TRUE");
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_sm) == ERR_NONE);
 	test_result(GSM_SetDebugFileDescriptor(NULL, false, di_global) == ERR_NONE);
 
