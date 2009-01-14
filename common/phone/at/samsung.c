@@ -441,6 +441,56 @@ GSM_Error SAMSUNG_SetRingtone(GSM_StateMachine *s, GSM_Ringtone *Ringtone, int *
 		Ringtone->BinaryTone.Length, ID_SetRingtone);
 }
 
+GSM_Error SAMSUNG_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+ 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+
+ 	switch (Priv->ReplyState) {
+ 	case AT_Reply_OK:
+		/* FIXME: does phone give also some useful infromation here? */
+		Priv->PBK_SPBR = AT_AVAILABLE;
+
+		return ERR_NONE;
+	case AT_Reply_Error:
+		return ERR_UNKNOWN;
+	case AT_Reply_CMSError:
+	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
+ 	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+}
+
+GSM_Error SAMSUNG_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+ 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+ 	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
+
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+ 		smprintf(s, "Phonebook entry received\n");
+		Memory->EntriesNum = 0;
+		/* FIXME: parse data using ATGEN_ParseReply and fill Memory entry */
+		return ERR_NOTIMPLEMENTED;
+	case AT_Reply_Error:
+                return ERR_UNKNONW;
+	case AT_Reply_CMSError:
+ 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
+	default:
+		break;
+	}
+	return ERR_UNKNOWNRESPONSE;
+}
+
+GSM_Error SAMSUNG_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	/* FIXME: Here you have to implement conversion of GSM_MemoryEntry to AT command */
+	return ERR_NOTIMPLEMENTED;
+}
+
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

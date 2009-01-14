@@ -1408,6 +1408,7 @@ GSM_Error ATGEN_Initialise(GSM_StateMachine *s)
 	Priv->SMSMemory			= 0;
 	Priv->PBKMemory			= 0;
 	Priv->PBKSBNR			= 0;
+	Priv->PBK_SPBR			= 0;
 	Priv->Charset			= 0;
 	Priv->EncodedCommands		= false;
 	Priv->NormalCharset		= 0;
@@ -4138,6 +4139,28 @@ GSM_Error ATGEN_ReplySetPBKMemory(GSM_Protocol_Message msg UNUSED, GSM_StateMach
 	return ERR_UNKNOWNRESPONSE;
 }
 
+GSM_Error ATGEN_CheckSBNR(GSM_StateMachine *s)
+{
+	GSM_Error 	error;
+	char		req[20];
+
+	sprintf(req, "AT^SBNR=?\r");
+	smprintf(s, "Checking availablity of SBNR\n");
+	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
+	return error;
+}
+
+GSM_Error ATGEN_CheckSPBR(GSM_StateMachine *s)
+{
+	GSM_Error 	error;
+	char		req[20];
+
+	sprintf(req, "AT+SPBR=?\r");
+	smprintf(s, "Checking availablity of SPBR\n");
+	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
+	return error;
+}
+
 
 GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 {
@@ -4145,6 +4168,14 @@ GSM_Error ATGEN_SetPBKMemory(GSM_StateMachine *s, GSM_MemoryType MemType)
 	char 			req[] = "AT+CPBS=\"XX\"\r";
 	GSM_Error		error;
 
+	if (MemType == MEM_ME) {
+		if (Priv->PBKSBNR == 0) {
+			ATGEN_CheckSBNR(s);
+		}
+	}
+	if (Priv->PBK_SPBR == 0) {
+		ATGEN_CheckSPBR(s);
+	}
 	if (Priv->PBKMemory == MemType) return ERR_NONE;
 
 	/* Zero values that are for actual memory */
@@ -4815,17 +4846,6 @@ GSM_Error ATGEN_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	return ERR_UNKNOWNRESPONSE;
 }
 
-GSM_Error ATGEN_CheckSBNR(GSM_StateMachine *s)
-{
-	GSM_Error 	error;
-	char		req[20];
-
-	sprintf(req, "AT^SBNR=?\r");
-	smprintf(s, "Checking availablity of SBNR\n");
-	ATGEN_WaitFor(s, req, strlen(req), 0x00, 4, ID_GetMemory);
-	return error;
-}
-
 GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int endlocation)
 {
 	GSM_Error 		error;
@@ -4847,6 +4867,9 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 			return error;
 		}
 	}
+	if (Priv->PBK_SPBR == 0) {
+		ATGEN_CheckSPBR(s);
+	}
 
 	error = ATGEN_GetManufacturer(s);
 	if (error != ERR_NONE) return error;
@@ -4863,10 +4886,14 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 		if (error != ERR_NONE) return error;
 	}
 
-	if (endlocation == 0) {
-		sprintf(req, "AT+CPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
+	if (Priv->PBK_SPBR == AT_AVAILABLE) {
+		sprintf(req, "AT+SPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
 	} else {
-		sprintf(req, "AT+CPBR=%i,%i\r", entry->Location + Priv->FirstMemoryEntry - 1, endlocation + Priv->FirstMemoryEntry - 1);
+		if (endlocation == 0) {
+			sprintf(req, "AT+CPBR=%i\r", entry->Location + Priv->FirstMemoryEntry - 1);
+		} else {
+			sprintf(req, "AT+CPBR=%i,%i\r", entry->Location + Priv->FirstMemoryEntry - 1, endlocation + Priv->FirstMemoryEntry - 1);
+		}
 	}
 
 	s->Phone.Data.Memory=entry;
@@ -4895,6 +4922,9 @@ GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, bool
 			ATGEN_CheckSBNR(s);
 		}
 	}
+	if (Priv->PBK_SPBR == 0) {
+		ATGEN_CheckSPBR(s);
+	}
 	/* There are no status functions for SBNR */
 	if (entry->MemoryType != MEM_ME || Priv->PBKSBNR != AT_AVAILABLE) {
 		error = ATGEN_SetPBKMemory(s, entry->MemoryType);
@@ -4915,7 +4945,10 @@ GSM_Error ATGEN_GetNextMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, bool
 		entry->Location += step + 1;
 		if (entry->Location > Priv->MemorySize) break;
 		/* SBNR works only for one location */
-		if (entry->MemoryType != MEM_ME || Priv->PBKSBNR != AT_AVAILABLE) step = MIN(step + 2, 20);
+		if ((entry->MemoryType != MEM_ME || Priv->PBKSBNR != AT_AVAILABLE) &&
+				Priv->PBK_SPBR != AT_AVAILABLE) {
+			step = MIN(step + 2, 20);
+		}
 	}
 	if (error == ERR_INVALIDLOCATION) return ERR_EMPTY;
 	return error;
@@ -5398,6 +5431,14 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
 	if (error != ERR_NONE) return error;
+
+	if (Priv->PBK_SPBR == 0) {
+		ATGEN_CheckSPBR(s);
+	}
+
+	if (Priv->PBK_SPBR == AT_AVAILABLE) {
+		return SAMSUNG_SetMemory(s, entry);
+	}
 
 	for (i=0;i<entry->EntriesNum;i++) {
 		entry->Entries[i].AddError = ERR_NOTSUPPORTED;
@@ -6647,7 +6688,9 @@ GSM_Reply_Function ATGENReplyFunctions[] = {
 {ATGEN_GenericReply,		"AT+CSCS="		,0x00,0x00,ID_SetMemoryCharset	 },
 {ATGEN_ReplyGetMemory,		"AT+CPBR="		,0x00,0x00,ID_GetMemory		 },
 {SIEMENS_ReplyGetMemoryInfo,	"AT^SBNR=?"		,0x00,0x00,ID_GetMemory		 },
+{SAMSUNG_ReplyGetMemoryInfo,	"AT+SPBR=?"		,0x00,0x00,ID_GetMemory		 },
 {SIEMENS_ReplyGetMemory,	"AT^SBNR"		,0x00,0x00,ID_GetMemory		 },
+{SAMSUNG_ReplyGetMemory,	"AT+SPBR"		,0x00,0x00,ID_GetMemory		 },
 {ATGEN_ReplySetMemory,		"AT+CPBW"		,0x00,0x00,ID_SetMemory		 },
 
 {SIEMENS_ReplyGetBitmap,	"AT^SBNR=\"bmp\""	,0x00,0x00,ID_GetBitmap	 	 },
