@@ -578,6 +578,8 @@ add_executable(include-wap include-wap.c)
 target_link_libraries(include-wap libGammu)
 add_test(include-wap "${GAMMU_TEST_PATH}/include-wap${GAMMU_TEST_SUFFIX}")
 
+# Auto generated include tests end
+
 # Test for locking, only on !WIN32 and if we can write to lock dir
 if (NOT WIN32)
     execute_process(COMMAND test -w /var/lock/ RESULT_VARIABLE VAR_LOCK_WRITABLE)
@@ -589,5 +591,3 @@ if (NOT WIN32)
         message("/var/lock is not writable, skipping locking tests!")
     endif (VAR_LOCK_WRITABLE EQUAL 0)
 endif (NOT WIN32)
-
-# Auto generated include tests end
