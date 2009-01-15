@@ -117,8 +117,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 	Priv->Charset = AT_CHARSET_GSM;
 	Priv->Manufacturer = AT_Motorola;
 	error = ATGEN_ParseReply(s,
-					"+SPBR: \"12345\",\"\",\"\",\"\",\"\",\"\",\"5,test1\",\"0,\",\"0,\",\"0,\"",
-					"+SPBR: @p, @p, @p, @p, @p, @s, @t, @t, @t, @t",
+					"+SPBR: 10,\"12345\",\"\",\"\",\"\",\"\",\"\",\"5,test1\",\"0,\",\"0,\",\"0,\"",
+					"+SPBR: @i, @p, @p, @p, @p, @p, @s, @t, @t, @t, @t",
+			&i,
 			buffer, BUFFER_SIZE,
 			buffer, BUFFER_SIZE,
 			buffer, BUFFER_SIZE,
