@@ -12,9 +12,7 @@
 
 #include "service.h"
 
-char smsd_service_name_intern[] = "GammuSMSD";
-
-char *smsd_service_name = smsd_service_name_intern;
+char smsd_service_name[MAX_PATH] = "GammuSMSD";
 
 SERVICE_STATUS m_ServiceStatus;
 
@@ -120,7 +118,8 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 
 bool install_smsd_service(SMSD_Parameters * params)
 {
-	char config_name[MAX_PATH], program_name[MAX_PATH], commandline[2 * MAX_PATH];
+	char config_name[MAX_PATH], program_name[MAX_PATH], commandline[3 * MAX_PATH];
+	char service_display_name[MAX_PATH];
 
 	HANDLE schSCManager, schService;
 	char description[] = "Gammu SMS Daemon service";
@@ -134,15 +133,19 @@ bool install_smsd_service(SMSD_Parameters * params)
 	if (GetFullPathName(params->config_file, sizeof(config_name), config_name, NULL) == 0)
 		return false;
 
-	sprintf(commandline, "\"%s\" -S -c \"%s\"",
-		program_name, config_name);
+	sprintf(commandline, "\"%s\" -S -c \"%s\" -n \"%s\"",
+		program_name, config_name, smsd_service_name);
+
+	sprintf(service_display_name, "Gammu SMSD Service (%s)", smsd_service_name);
 
 	schSCManager = OpenSCManager(NULL, NULL, SC_MANAGER_ALL_ACCESS);
 
 	if (schSCManager == NULL)
 		return false;
 
-	schService = CreateService(schSCManager, smsd_service_name, "Gammu SMSD Service",	// service name to display
+	schService = CreateService(schSCManager,
+				   smsd_service_name,
+				   service_display_name, // service name to display
 				   SERVICE_ALL_ACCESS,	// desired access
 				   SERVICE_WIN32_OWN_PROCESS,	// service type
 				   SERVICE_AUTO_START,	// start type
@@ -235,7 +238,7 @@ bool start_smsd_service(void)
 bool start_smsd_service_dispatcher(void)
 {
 	SERVICE_TABLE_ENTRY DispatchTable[] = {
-		{smsd_service_name_intern, ServiceMain},
+		{smsd_service_name, ServiceMain},
 		{NULL, NULL}
 	};
 

@@ -8,7 +8,7 @@
 /**
  * Name of service.
  */
-extern char *smsd_service_name;
+extern char smsd_service_name[MAX_PATH];
 
 /**
  * Starts service dispatcher.
