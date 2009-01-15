@@ -389,7 +389,6 @@ read_config:
 
 	error = SMSD_ReadConfig(params.config_file, config, true);
 	if (error != ERR_NONE) {
-		service_print_error("Failed to read config!");
 		SMSD_Terminate(config, "Failed to read config", error, true, 2);
 	}
 
