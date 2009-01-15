@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: libGammu 1.22.90\n"
+"Project-Id-Version: libGammu 1.22.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-09 12:01+0100\n"
+"POT-Creation-Date: 2009-01-15 17:41+0100\n"
 "PO-Revision-Date: 2008-08-13 11:41+0200\n"
 "Last-Translator: Alessio Gaeta <alga777@libero.it>\n"
 "Language-Team: Language =it\n"
@@ -324,20 +324,20 @@ msgstr "Errore sconosciuto."
 msgid "Personal"
 msgstr "Personale\n"
 
-#: common/phone/nokia/dct3/n6110.c:1960 common/phone/nokia/nfunc.c:1108
+#: common/phone/nokia/dct3/n6110.c:1960 common/phone/nokia/nfunc.c:1115
 msgid "Car"
 msgstr ""
 
-#: common/phone/nokia/dct3/n6110.c:1962 common/phone/nokia/nfunc.c:1110
+#: common/phone/nokia/dct3/n6110.c:1962 common/phone/nokia/nfunc.c:1117
 msgid "Headset"
 msgstr ""
 
-#: common/phone/nokia/dct3/n6110.c:1968 common/phone/nokia/nfunc.c:1098
+#: common/phone/nokia/dct3/n6110.c:1968 common/phone/nokia/nfunc.c:1105
 #, fuzzy
 msgid "General"
 msgstr "Numero principale "
 
-#: common/phone/nokia/dct3/n6110.c:1970 common/phone/nokia/nfunc.c:1100
+#: common/phone/nokia/dct3/n6110.c:1970 common/phone/nokia/nfunc.c:1107
 msgid "Silent"
 msgstr "Silenzioso"
 
@@ -369,37 +369,37 @@ msgstr ""
 msgid "Saved items"
 msgstr ""
 
-#: common/phone/nokia/nfunc.c:932
+#: common/phone/nokia/nfunc.c:939
 msgid "Family"
 msgstr "Famiglia"
 
-#: common/phone/nokia/nfunc.c:934
+#: common/phone/nokia/nfunc.c:941
 msgid "VIP"
 msgstr ""
 
-#: common/phone/nokia/nfunc.c:936
+#: common/phone/nokia/nfunc.c:943
 msgid "Friends"
 msgstr "Amici"
 
-#: common/phone/nokia/nfunc.c:938
+#: common/phone/nokia/nfunc.c:945
 msgid "Colleagues"
 msgstr "Colleghi"
 
-#: common/phone/nokia/nfunc.c:940
+#: common/phone/nokia/nfunc.c:947
 msgid "Other"
 msgstr "Altri"
 
-#: common/phone/nokia/nfunc.c:1102
+#: common/phone/nokia/nfunc.c:1109
 #, fuzzy
 msgid "Meeting"
 msgstr "Cancellazione delle vecchie stazioni FM: "
 
-#: common/phone/nokia/nfunc.c:1104
+#: common/phone/nokia/nfunc.c:1111
 #, fuzzy
 msgid "Outdoor"
 msgstr "Messaggi inviati"
 
-#: common/phone/nokia/nfunc.c:1106
+#: common/phone/nokia/nfunc.c:1113
 msgid "Pager"
 msgstr ""
 

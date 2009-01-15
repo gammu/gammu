@@ -881,7 +881,7 @@ void GetBitmap(int argc, char *argv[])
 	case GSM_CallerGroupLogo:
 		if (!MultiBitmap.Bitmap[0].DefaultBitmap) GSM_PrintBitmap(stdout,&MultiBitmap.Bitmap[0]);
 		printf(LISTFORMAT "\"%s\"", _("Group name"),DecodeUnicodeConsole(MultiBitmap.Bitmap[0].Text));
-		if (MultiBitmap.Bitmap[0].DefaultName) printf(_(" (default)"));
+		if (MultiBitmap.Bitmap[0].DefaultName) printf(" (%s)", _("default"));
 		printf("\n");
 		if (MultiBitmap.Bitmap[0].DefaultRingtone) {
 			printf(LISTFORMAT "%s\n", _("Ringtone"), _("default"));

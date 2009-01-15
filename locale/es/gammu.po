@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-09 14:36+0100\n"
+"POT-Creation-Date: 2009-01-15 17:41+0100\n"
 "PO-Revision-Date: 2008-12-02 18:38+0100\n"
 "Last-Translator: Daniel Campos <daniel.campos@juntaextremadura.net>\n"
 "Language-Team: Español\n"
@@ -21,13 +21,13 @@ msgstr ""
 "X-Generator: Pootle 1.1.0\n"
 
 #: gammu/backup.c:31 gammu/backup.c:50 gammu/backup.c:68 gammu/backup.c:87
-#: helper/message-cmdline.c:356 helper/message-cmdline.c:380
-#: helper/message-cmdline.c:424 helper/message-cmdline.c:461
-#: helper/message-cmdline.c:484
+#: helper/message-cmdline.c:367 helper/message-cmdline.c:391
+#: helper/message-cmdline.c:435 helper/message-cmdline.c:472
+#: helper/message-cmdline.c:495
 msgid "Where is backup filename and location?"
 msgstr "¿Ruta y nombre del archivo de backup?"
 
-#: gammu/backup.c:42 helper/message-cmdline.c:472
+#: gammu/backup.c:42 helper/message-cmdline.c:483
 msgid "Calendar note not found in file"
 msgstr "No se encontró notas de calendario en el archivo"
 
@@ -44,16 +44,16 @@ msgstr "Nota no encontrada en el archivo"
 msgid "Todo note not found in file"
 msgstr "nota de tareas no encontrada en el archivo"
 
-#: gammu/backup.c:106 helper/message-cmdline.c:508
+#: gammu/backup.c:106 helper/message-cmdline.c:519
 msgid "Where is backup filename and location and memory type?"
 msgstr "¿Ruta, nombre y tipo de memoria del archivo de backup?"
 
-#: gammu/backup.c:118 gammu/backup.c:128 helper/message-cmdline.c:520
-#: helper/message-cmdline.c:530
+#: gammu/backup.c:118 gammu/backup.c:128 helper/message-cmdline.c:531
+#: helper/message-cmdline.c:541
 msgid "Phonebook entry not found in file"
 msgstr "Entrada de listín telefónico no encontrada en el archivo"
 
-#: gammu/backup.c:133 helper/message-cmdline.c:535
+#: gammu/backup.c:133 helper/message-cmdline.c:546
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
 msgstr "Tipo de memoria desconocido: \"%s\"\n"
@@ -67,7 +67,7 @@ msgstr "Formato copia seguridad desconocido: \"%s\"\n"
 msgid "Error while opening file for writing!\n"
 msgstr "¡Error escribiendo en el archivo para escritura!\n"
 
-#: gammu/backup.c:155 gammu/files.c:442 helper/message-cmdline.c:1066
+#: gammu/backup.c:155 gammu/files.c:442 helper/message-cmdline.c:1077
 msgid "Error while writing file!\n"
 msgstr "¡Error escribiendo en el archivo!\n"
 
@@ -661,7 +661,7 @@ msgstr "Alarma silenciosa"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:828
 #: gammu/calendar.c:1044 gammu/message.c:172 gammu/misc.c:946
-#: helper/memory-display.c:113 helper/message-display.c:427
+#: helper/memory-display.c:117 helper/message-display.c:427
 #, c-format
 msgid "Text"
 msgstr "Texto"
@@ -670,7 +670,7 @@ msgstr "Texto"
 msgid "Description"
 msgstr "Descripción"
 
-#: gammu/calendar.c:212 gammu/calendar.c:892 helper/memory-display.c:119
+#: gammu/calendar.c:212 gammu/calendar.c:892 helper/memory-display.c:123
 msgid "LUID"
 msgstr "LUID"
 
@@ -952,171 +952,171 @@ msgstr "Contacto"
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Busqueda de texto demasiado largo, acortando a %d caracteres\n"
 
-#: gammu/common.c:39
+#: gammu/common.c:40
 msgid "Waiting for Security Code."
 msgstr "Esperando código de seguridad."
 
-#: gammu/common.c:42
+#: gammu/common.c:43
 msgid "Waiting for PIN."
 msgstr "Esperando PIN."
 
-#: gammu/common.c:45
+#: gammu/common.c:46
 msgid "Waiting for PIN2."
 msgstr "Esperando PIN2."
 
-#: gammu/common.c:48
+#: gammu/common.c:49
 msgid "Waiting for PUK."
 msgstr "Esperando PUK."
 
-#: gammu/common.c:51
+#: gammu/common.c:52
 msgid "Waiting for PUK2."
 msgstr "Esperando PUK2."
 
-#: gammu/common.c:54
+#: gammu/common.c:55
 msgid "Waiting for phone code."
 msgstr "Esperando código de seguridad."
 
-#: gammu/common.c:57
+#: gammu/common.c:58
 msgid "Nothing to enter."
 msgstr "Nada que introducir."
 
-#: gammu/common.c:61
+#: gammu/common.c:62
 msgid "Unknown security status."
 msgstr "Estado de seguridad desconocido."
 
-#: gammu/common.c:72
+#: gammu/common.c:73
 msgid "January"
 msgstr "Enero"
 
-#: gammu/common.c:75
+#: gammu/common.c:76
 msgid "February"
 msgstr "Febrero"
 
-#: gammu/common.c:78
+#: gammu/common.c:79
 msgid "March"
 msgstr "Marzo"
 
-#: gammu/common.c:81
+#: gammu/common.c:82
 msgid "April"
 msgstr "Abril"
 
-#: gammu/common.c:84
+#: gammu/common.c:85
 msgid "May"
 msgstr "Mayo"
 
-#: gammu/common.c:87
+#: gammu/common.c:88
 msgid "June"
 msgstr "Junio"
 
-#: gammu/common.c:90
+#: gammu/common.c:91
 msgid "July"
 msgstr "Julio"
 
-#: gammu/common.c:93
+#: gammu/common.c:94
 msgid "August"
 msgstr "Agosto"
 
-#: gammu/common.c:96
+#: gammu/common.c:97
 msgid "September"
 msgstr "Septiembre"
 
-#: gammu/common.c:99
+#: gammu/common.c:100
 msgid "October"
 msgstr "Octubre"
 
-#: gammu/common.c:102
+#: gammu/common.c:103
 msgid "November"
 msgstr "Noviembre"
 
-#: gammu/common.c:105
+#: gammu/common.c:106
 msgid "December"
 msgstr "Diciembre"
 
-#: gammu/common.c:108
+#: gammu/common.c:109
 msgid "Bad month!"
 msgstr "Mes incorrecto"
 
-#: gammu/common.c:120
+#: gammu/common.c:121
 msgid "Monday"
 msgstr "Lunes"
 
-#: gammu/common.c:123
+#: gammu/common.c:124
 msgid "Tuesday"
 msgstr "Martes"
 
-#: gammu/common.c:126
+#: gammu/common.c:127
 msgid "Wednesday"
 msgstr "Miércoles"
 
-#: gammu/common.c:129
+#: gammu/common.c:130
 msgid "Thursday"
 msgstr "Jueves"
 
-#: gammu/common.c:132
+#: gammu/common.c:133
 msgid "Friday"
 msgstr "Viernes"
 
-#: gammu/common.c:135
+#: gammu/common.c:136
 msgid "Saturday"
 msgstr "Sábado"
 
-#: gammu/common.c:138
+#: gammu/common.c:139
 msgid "Sunday"
 msgstr "Domingo"
 
-#: gammu/common.c:141
+#: gammu/common.c:142
 msgid "Bad day!"
 msgstr "¡Mal día!"
 
-#: gammu/common.c:175
+#: gammu/common.c:189
 msgid "Security status"
 msgstr "Estado de seguridad"
 
-#: gammu/common.c:282 gammu/misc.c:977 gammu/misc.c:992 gammu/misc.c:999
+#: gammu/common.c:294 gammu/misc.c:977 gammu/misc.c:992 gammu/misc.c:999
 #: gammu/misc.c:1006 gammu/misc.c:1036
 msgid "More parameters required!"
 msgstr "Faltan más parámetros."
 
-#: gammu/common.c:288 gammu/common.c:298 gammu/depend/nokia/dct4.c:683
+#: gammu/common.c:300 gammu/common.c:310 gammu/depend/nokia/dct4.c:683
 #: gammu/misc.c:1152
 msgid "Please enumerate locations from 1"
 msgstr "Por favor, enumere localizaciones para 1"
 
-#: gammu/common.c:303
+#: gammu/common.c:315
 msgid "Swapping start and end location"
 msgstr "Intercambiando posición de inicio y fin"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:325 gammu/common.c:354 gammu/depend/nokia/dct4.c:81
+#: gammu/common.c:337 gammu/common.c:366 gammu/depend/nokia/dct4.c:81
 #: gammu/misc.c:1540
 msgid "yes"
 msgstr "si"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:325 gammu/common.c:357 gammu/depend/nokia/dct4.c:82
+#: gammu/common.c:337 gammu/common.c:369 gammu/depend/nokia/dct4.c:82
 msgid "no"
 msgstr "no"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:326 gammu/common.c:349
+#: gammu/common.c:338 gammu/common.c:361
 msgid "ALL"
 msgstr "TODO"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:326 gammu/common.c:344
+#: gammu/common.c:338 gammu/common.c:356
 msgid "ONLY"
 msgstr "UNO"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:326 gammu/common.c:339
+#: gammu/common.c:338 gammu/common.c:351
 msgid "NONE"
 msgstr "NINGUNO"
 
-#: gammu/common.c:328
+#: gammu/common.c:340
 msgid "YES (always)"
 msgstr "SI (siempre)"
 
-#: gammu/common.c:332
+#: gammu/common.c:344
 msgid "NO (always)"
 msgstr "NO (nunca)"
 
@@ -1408,15 +1408,15 @@ msgstr "4 bytes"
 msgid "%i phone number types\n"
 msgstr "%i tipos de número de teléfono\n"
 
-#: gammu/depend/nokia/dct4.c:1400 helper/memory-display.c:110
+#: gammu/depend/nokia/dct4.c:1400 helper/memory-display.c:114
 msgid "Home number"
 msgstr "Teléfono del trabajo"
 
-#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:107
+#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:111
 msgid "Mobile number"
 msgstr "Teléfono móvil"
 
-#: gammu/depend/nokia/dct4.c:1402 helper/memory-display.c:109
+#: gammu/depend/nokia/dct4.c:1402 helper/memory-display.c:113
 msgid "Fax number"
 msgstr "Número de fax"
 
@@ -1554,7 +1554,7 @@ msgid "What file type (\"%s\") ?\n"
 msgstr "¿Que tipo de archivo es (\"%s\")?\n"
 
 #: gammu/files.c:734 gammu/misc.c:1148 gammu/nokia.c:932
-#: helper/message-cmdline.c:1256
+#: helper/message-cmdline.c:1267
 msgid "Parameter missing!"
 msgstr "¡Falta un parámetro!"
 
@@ -1584,7 +1584,7 @@ msgstr "Red"
 
 #: gammu/gammu.c:115 gammu/message.c:623 gammu/misc.c:782 gammu/misc.c:949
 #: gammu/misc.c:1682 gammu/misc.c:1721 gammu/misc.c:1974
-#: helper/memory-display.c:120 helper/message-display.c:242
+#: helper/memory-display.c:124 helper/message-display.c:242
 msgid "Name"
 msgstr "Nombre"
 
@@ -1833,28 +1833,28 @@ msgstr "Demasiados parámetros (la función acepta de %d a %d)\n"
 msgid "Bad option!"
 msgstr "¡Opción incorrecta!"
 
-#: gammu/gammu.c:1047
+#: gammu/gammu.c:1046
 msgid "Configuration could not be parsed!"
 msgstr "Advertencia: ¡El archivo de configuración es incorrecto!"
 
-#: gammu/gammu.c:1049
+#: gammu/gammu.c:1048
 msgid "No configuration file found!"
 msgstr "Advertencia: ¡No se encontró el archivo de configuración!"
 
-#: gammu/gammu.c:1088 gammu/gammu.c:1180
+#: gammu/gammu.c:1087 gammu/gammu.c:1179
 msgid "Too few parameters!"
 msgstr "¡Muy pocos parámetros!"
 
-#: gammu/gammu.c:1118
+#: gammu/gammu.c:1117
 #, fuzzy, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr "Fallo al leer [gammu%d] de gammurc\n"
 
-#: gammu/gammu.c:1120 gammu/gammu.c:1131
+#: gammu/gammu.c:1119 gammu/gammu.c:1130
 msgid "No configuration read, using builtin defaults!"
 msgstr "No se pudo leer la configuración, utilizando parámetros por defecto."
 
-#: gammu/gammu.c:1186
+#: gammu/gammu.c:1185
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -1874,7 +1874,7 @@ msgid "Memory %s, Location %i\n"
 msgstr "Memoria %s, Location %i\n"
 
 #: gammu/memory.c:75 gammu/misc.c:587 gammu/misc.c:616
-#: helper/message-cmdline.c:995
+#: helper/message-cmdline.c:1006
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
 msgstr "Parámetro desconocido (\"%s\")\n"
@@ -2580,19 +2580,14 @@ msgstr "¿Qué tipo de logo desea obtener (\"%s\")?\n"
 msgid "Group name"
 msgstr "Nombre del grupo"
 
-#: gammu/misc.c:884
-#, c-format
-msgid " (default)"
-msgstr "_(por defecto)"
-
-#: gammu/misc.c:887 gammu/misc.c:889 gammu/misc.c:902 gammu/misc.c:909
-#: helper/memory-display.c:85
-msgid "Ringtone"
-msgstr "Tono de llamada"
-
-#: gammu/misc.c:887
+#: gammu/misc.c:884 gammu/misc.c:887
 msgid "default"
 msgstr "por defecto"
+
+#: gammu/misc.c:887 gammu/misc.c:889 gammu/misc.c:902 gammu/misc.c:909
+#: helper/memory-display.c:89
+msgid "Ringtone"
+msgstr "Tono de llamada"
 
 #: gammu/misc.c:903
 #, c-format
@@ -2967,7 +2962,7 @@ msgstr " (perfil de kit para auriculares)"
 msgid " (Car kit profile)"
 msgstr " (perfil del kit para automovil)"
 
-#: gammu/misc.c:1844 helper/memory-display.c:90
+#: gammu/misc.c:1844 helper/memory-display.c:94
 msgid "Ringtone ID"
 msgstr "ID Tono"
 
@@ -3419,290 +3414,295 @@ msgstr "Tiempo de llamada      : %02i:%02i:%02i\n"
 msgid "Date and time"
 msgstr "Fecha y hora"
 
-#: helper/memory-display.c:60 helper/memory-display.c:74
+#: helper/memory-display.c:60 helper/memory-display.c:64
+#: helper/memory-display.c:78
 msgid "Caller group"
 msgstr "Grupo de llamada:"
 
-#: helper/memory-display.c:61
+#: helper/memory-display.c:65
 msgid "Caller group number too high, please increase buffer in sources!"
 msgstr ""
 "Número de grupo de llamada demasiado alto, por favor, incremente en buffer "
 "en los fuentes."
 
-#: helper/memory-display.c:94
+#: helper/memory-display.c:98
 msgid "User ID"
 msgstr "ID usuario"
 
-#: helper/memory-display.c:97
+#: helper/memory-display.c:101
 msgid "Picture name"
 msgstr "Nombre imagen"
 
-#: helper/memory-display.c:100
+#: helper/memory-display.c:104
 msgid "Picture ID"
 msgstr "ID imagen"
 
-#: helper/memory-display.c:103
+#: helper/memory-display.c:107
 #, fuzzy
 msgid "Photo"
 msgstr "Teléfono"
 
-#: helper/memory-display.c:103
+#: helper/memory-display.c:107
 #, fuzzy
 msgid "Displaying not supported"
 msgstr "No soportado"
 
-#: helper/memory-display.c:105
+#: helper/memory-display.c:109
 msgid "Favorite messaging number"
 msgstr "Número favorito para mensajes"
 
-#: helper/memory-display.c:106
+#: helper/memory-display.c:110
 msgid "General number"
 msgstr "Número general"
 
-#: helper/memory-display.c:108
+#: helper/memory-display.c:112
 msgid "Work number"
 msgstr "Número de trabajo"
 
-#: helper/memory-display.c:111
+#: helper/memory-display.c:115
 msgid "Pager number"
 msgstr "Número buscapersonas"
 
-#: helper/memory-display.c:112
+#: helper/memory-display.c:116
 msgid "Other number"
 msgstr "Otro número"
 
-#: helper/memory-display.c:114
+#: helper/memory-display.c:118
 msgid "Snail address"
 msgstr "Dirección de correo postal"
 
-#: helper/memory-display.c:115
+#: helper/memory-display.c:119
 msgid "Work snail address"
 msgstr "Dirección de correo postal en el trabajo "
 
-#: helper/memory-display.c:116
+#: helper/memory-display.c:120
 msgid "Email address 1"
 msgstr "Dirección de email 1"
 
-#: helper/memory-display.c:117
+#: helper/memory-display.c:121
 msgid "Email address 2"
 msgstr "Dirección de email 2"
 
-#: helper/memory-display.c:118
+#: helper/memory-display.c:122
 msgid "URL address"
 msgstr "Página web"
 
-#: helper/memory-display.c:121
+#: helper/memory-display.c:125
 msgid "Last name"
 msgstr "Apellido"
 
-#: helper/memory-display.c:122
+#: helper/memory-display.c:126
 msgid "First name"
 msgstr "Nombre"
 
-#: helper/memory-display.c:123
+#: helper/memory-display.c:127
 msgid "Formal name"
 msgstr "Nombre formal"
 
-#: helper/memory-display.c:124
+#: helper/memory-display.c:128
 msgid "Nick name"
 msgstr "Apodo"
 
-#: helper/memory-display.c:125
+#: helper/memory-display.c:129
 msgid "Company"
 msgstr "Empresa"
 
-#: helper/memory-display.c:126
+#: helper/memory-display.c:130
 msgid "Job title"
 msgstr "Puesto de trabajo"
 
-#: helper/memory-display.c:127
+#: helper/memory-display.c:131
 msgid "Street address"
 msgstr "Dirección"
 
-#: helper/memory-display.c:128
+#: helper/memory-display.c:132
 msgid "City"
 msgstr "Ciudad"
 
-#: helper/memory-display.c:129
+#: helper/memory-display.c:133
 msgid "State"
 msgstr "Estado/provincia"
 
-#: helper/memory-display.c:130
+#: helper/memory-display.c:134
 msgid "Zip code"
 msgstr "Código postal"
 
-#: helper/memory-display.c:131
+#: helper/memory-display.c:135
 msgid "Country"
 msgstr "País"
 
-#: helper/memory-display.c:132
+#: helper/memory-display.c:136
 msgid "Work street address"
 msgstr "Dirección de trabajo"
 
-#: helper/memory-display.c:133
+#: helper/memory-display.c:137
 msgid "Work city"
 msgstr "Ciudad de trabajo"
 
 # En Europa no existen estados, solo países.
-#: helper/memory-display.c:134
+#: helper/memory-display.c:138
 msgid "Work state"
 msgstr "País de trabajo"
 
-#: helper/memory-display.c:135
+#: helper/memory-display.c:139
 msgid "Work zip code"
 msgstr "Código postal de trabajo"
 
-#: helper/memory-display.c:136
+#: helper/memory-display.c:140
 msgid "Work country"
 msgstr "País de trabajo"
 
-#: helper/memory-display.c:137
+#: helper/memory-display.c:141
 msgid "Custom text 1"
 msgstr "Texto personalizado 1"
 
-#: helper/memory-display.c:138
+#: helper/memory-display.c:142
 msgid "Custom text 2"
 msgstr "Texto personalizado 2"
 
-#: helper/memory-display.c:139
+#: helper/memory-display.c:143
 msgid "Custom text 3"
 msgstr "Texto personalizado 3"
 
-#: helper/memory-display.c:140
+#: helper/memory-display.c:144
 msgid "Custom text 4"
 msgstr "Texto personalizado 4"
 
-#: helper/memory-display.c:141
+#: helper/memory-display.c:145
 msgid "Push to talk ID"
 msgstr "Empujar para hablar con el ID"
 
-#: helper/memory-display.c:144
+#: helper/memory-display.c:148
 msgid "unknown field type"
 msgstr "Tipo de campo desconocido"
 
-#: helper/message-cmdline.c:175
+#: helper/message-cmdline.c:180
 #, fuzzy
 msgid "Not enough parameters!"
 msgstr "¡Muy pocos parámetros!"
 
-#: helper/message-cmdline.c:199
+#: helper/message-cmdline.c:204
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
 msgstr "¿Qué tipo de formato sms (\"%s\")?\n"
 
-#: helper/message-cmdline.c:224 helper/message-cmdline.c:239
+#: helper/message-cmdline.c:229 helper/message-cmdline.c:244
 msgid "Where are parameters?"
 msgstr "¿Dónde están los parámetros?"
 
-#: helper/message-cmdline.c:253
+#: helper/message-cmdline.c:258
 msgid "Where is ringtone filename?"
 msgstr "¿Dónde está el archivo con el tono?"
 
-#: helper/message-cmdline.c:271 helper/message-cmdline.c:289
-#: helper/message-cmdline.c:334
+#: helper/message-cmdline.c:276 helper/message-cmdline.c:294
+#: helper/message-cmdline.c:345
 msgid "Where is logo filename?"
 msgstr "¿Dónde está el archivo con el logo?"
 
-#: helper/message-cmdline.c:307
+#: helper/message-cmdline.c:312
 msgid "Where is number of frames?"
 msgstr "¿Dónde está el número de frames?"
 
-#: helper/message-cmdline.c:340
+#: helper/message-cmdline.c:320
+msgid "Too many animation frames!"
+msgstr ""
+
+#: helper/message-cmdline.c:351
 #, c-format
 msgid "File \"%s\"\n"
 msgstr "Archivo: \"%s\"\n"
 
-#: helper/message-cmdline.c:367
+#: helper/message-cmdline.c:378
 msgid "Bookmark not found in file"
 msgstr "marcador no encontrado en el archivo"
 
-#: helper/message-cmdline.c:391
+#: helper/message-cmdline.c:402
 msgid "WAP settings not found in file"
 msgstr "Configuraciones WAP no encontradas en el archivo"
 
-#: helper/message-cmdline.c:412
+#: helper/message-cmdline.c:423
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr "Lo siento. Por ahora solo hay soporte para portadoras GPRS o DATA"
 
-#: helper/message-cmdline.c:435
+#: helper/message-cmdline.c:446
 msgid "MMS settings not found in file"
 msgstr "parámetros MMS no encontrados en el archivo"
 
-#: helper/message-cmdline.c:449
+#: helper/message-cmdline.c:460
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr "Lo siento. No se encontró portadora GPRS en la configuración MMS"
 
-#: helper/message-cmdline.c:495
+#: helper/message-cmdline.c:506
 msgid "ToDo note not found in file"
 msgstr "nota de tareas no encontrada en el archivo"
 
-#: helper/message-cmdline.c:1034
+#: helper/message-cmdline.c:1045
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
 msgstr "Código de red GSM desconocido (\"%s\")\n"
 
-#: helper/message-cmdline.c:1053
+#: helper/message-cmdline.c:1064
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
 msgstr "ha de indicar un número entre 1 y 7 (\"%s\")\n"
 
-#: helper/message-cmdline.c:1091
+#: helper/message-cmdline.c:1102
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
 msgstr "Cadena de validación desconocida (\"%s\")\n"
 
-#: helper/message-cmdline.c:1129
+#: helper/message-cmdline.c:1140
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr "Tiene que indicar el número de frames EMS entre 1 y 4 (\"%s\")\n"
 
-#: helper/message-cmdline.c:1154
+#: helper/message-cmdline.c:1165
 #, c-format
 msgid "Can't open file \"%s\"\n"
 msgstr "No se pudo abrir el archivo \"%s\"\n"
 
-#: helper/message-cmdline.c:1203
+#: helper/message-cmdline.c:1214
 #, c-format
 msgid "Unknown parameter (\"%c\")\n"
 msgstr "Parámetro desconocido (\"%c\")\n"
 
-#: helper/message-cmdline.c:1208
+#: helper/message-cmdline.c:1219
 msgid "Last parameter wasn't text"
 msgstr "El último parámetro no era un texto"
 
-#: helper/message-cmdline.c:1242
+#: helper/message-cmdline.c:1253
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr "Nombre SMS demasiado largo (\"%s\"), ignorado\n"
 
-#: helper/message-cmdline.c:1275
+#: helper/message-cmdline.c:1286
 msgid "Enter message text and press ^D:"
 msgstr "Introduzca el texto del mensaje y pulse ^D:"
 
-#: helper/message-cmdline.c:1287
+#: helper/message-cmdline.c:1298
 msgid "No chars read, assuming it is okay!"
 msgstr ""
 
-#: helper/message-cmdline.c:1307
+#: helper/message-cmdline.c:1318
 msgid "No network code"
 msgstr "No hay código de red"
 
-#: helper/message-cmdline.c:1313
+#: helper/message-cmdline.c:1324
 #, fuzzy
 msgid "You have to set network code!"
 msgstr "No hay código de red"
 
-#: helper/message-cmdline.c:1352
+#: helper/message-cmdline.c:1363
 #, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr "Tono demasiado largo. %i por ciento cortado\n"
 
-#: helper/message-cmdline.c:1363
+#: helper/message-cmdline.c:1374
 #, c-format
 msgid "There is %i SMS packed and %i limit. Exiting\n"
 msgstr "Hay %i SMS guardados y un límite de %i. Saliendo\n"
 
-#: helper/message-cmdline.c:1373
+#: helper/message-cmdline.c:1384
 msgid "Use -smscnumber option to give SMSC number"
 msgstr "Use la opción -smsscnumber para indicar el número de SMSC"
 
@@ -4166,6 +4166,9 @@ msgstr "Advertencia"
 #: helper/printing.c:50
 msgid "Information"
 msgstr "Información"
+
+#~ msgid " (default)"
+#~ msgstr "_(por defecto)"
 
 #~ msgid "Connection set name : Set %i\n"
 #~ msgstr "Nombre de conexión: %i\n"
