@@ -64,7 +64,7 @@ wammu(1), gmobilemedia(1)
 
 '''
 
-AUTHORS = '''
+AUTHOR = '''
 .P 
 You can contact authors on <gammu-users@lists.sourceforge.net>.
 
@@ -103,7 +103,7 @@ FILES = '''
 \\fI/dev/ttyACM?\\fP
 '''
 
-EXAMPLES = '''
+EXAMPLE = '''
 .P 
 To check it out, you need to have configuration file for gammu, see gammurc(5)
 for more details about it.
@@ -827,7 +827,7 @@ SECTION_HELP = {}
 SECTION_HELP['sms'] = '''
 Sending messages might look a bit complicated on first attempt to use.
 But be patient, the command line has been written in order to allow
-almost every usage. See EXAMPLES section for some hints on usage.
+almost every usage. See EXAMPLE section for some hints on usage.
 '''
 
 # Code
@@ -952,17 +952,17 @@ def main():
     write_section(output, 'FILES')
     output.write(FILES)
 
-    write_section(output, 'EXAMPLES')
-    output.write(EXAMPLES)
+    write_section(output, 'EXAMPLE')
+    output.write(EXAMPLE)
 
     write_section(output, 'COPYRIGHT')
     output.write(COPYRIGHT)
 
-    write_section(output, 'BUGS')
+    write_section(output, 'REPORTING BUGS')
     output.write(BUGS)
 
-    write_section(output, 'AUTHORS')
-    output.write(AUTHORS)
+    write_section(output, 'AUTHOR')
+    output.write(AUTHOR)
 
     write_section(output, 'SEE ALSO')
     output.write(SEE_ALSO)
