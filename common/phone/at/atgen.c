@@ -362,6 +362,103 @@ INLINE bool ATGEN_IsHex(const char *text, const size_t length)
 }
 
 /**
+ * Encodes text to current phone charset.
+ *
+ * \param s State machine structure.
+ * \param input Input string.
+ * \param inlength Length of string to convert.
+ * \param output Storage for converted text.
+ * \param outlength Size of output storage.
+ *
+ * \return Error code.
+ */
+GSM_Error ATGEN_EncodeText(GSM_StateMachine *s,
+		const unsigned char *input,
+		const size_t inlength,
+		unsigned char *output,
+		const size_t outlength,
+		size_t *resultlength
+		)
+{
+	size_t len = inlength;
+	unsigned char *uname;
+	GSM_Phone_ATGENData 	*Priv 	= &s->Phone.Data.Priv.ATGEN;
+
+	/* As input is unicode, we should not need that much memory, but it is safe */
+	uname = (unsigned char *)malloc(2 * (inlength + 1));
+	if (uname == NULL) return ERR_MOREMEMORY;
+
+	switch (Priv->Charset) {
+		case AT_CHARSET_HEX:
+			EncodeDefault(uname, input, &len, true, NULL);
+			EncodeHexBin(output, uname, len);
+			len = strlen(output);
+			break;
+		case AT_CHARSET_GSM:
+			smprintf(s, "str: %s\n", DecodeUnicodeString(input));
+			EncodeDefault(output, input, &len, true, NULL);
+			break;
+		case AT_CHARSET_UCS2:
+		case AT_CHARSET_UCS_2:
+			EncodeHexUnicode(output, input, UnicodeLength(input));
+			len = strlen(output);
+			break;
+  		case AT_CHARSET_IRA:
+  		case AT_CHARSET_ASCII:
+			return ERR_NOTSUPPORTED;
+  		case AT_CHARSET_UTF8:
+  		case AT_CHARSET_UTF_8:
+			EncodeUTF8(output, input);
+			len = strlen(output);
+  			break;
+#ifdef ICONV_FOUND
+  		case AT_CHARSET_PCCP437:
+			IconvEncode("CP437", input, len, output, sizeof(output));
+			len = strlen(output);
+			break;
+  		case AT_CHARSET_ISO88591:
+			IconvEncode("ISO-8859-1", input, len, output, sizeof(output));
+			len = strlen(output);
+			break;
+  		case AT_CHARSET_ISO88592:
+			IconvEncode("ISO-8859-2", input, len, output, sizeof(output));
+			len = strlen(output);
+			break;
+  		case AT_CHARSET_ISO88593:
+			IconvEncode("ISO-8859-3", input, len, output, sizeof(output));
+			len = strlen(output);
+			break;
+  		case AT_CHARSET_ISO88594:
+			IconvEncode("ISO-8859-4", input, len, output, sizeof(output));
+			len = strlen(output);
+			break;
+  		case AT_CHARSET_ISO88595:
+			IconvEncode("ISO-8859-5", input, len, output, sizeof(output));
+			len = strlen(output);
+			break;
+  		case AT_CHARSET_ISO88596:
+			IconvEncode("ISO-8859-6", input, len, output, sizeof(output));
+			len = strlen(output);
+			break;
+#else
+		case AT_CHARSET_PCCP437:
+			/* FIXME: correctly encode to PCCP437 */
+			smprintf(s, "str: %s\n", DecodeUnicodeString(input));
+			EncodeDefault(output, input, &len, true, NULL);
+			break;
+#endif
+		default:
+			smprintf(s, "Unsupported charset! (%d)\n", Priv->Charset);
+			free(uname);
+			return ERR_SOURCENOTAVAILABLE;
+		}
+	*resultlength = len;
+	free(uname);
+	return ERR_NONE;
+}
+
+
+/**
  * Decodes text from phone encoding to internal representation.
  *
  * \param s State machine structure.
@@ -5511,71 +5608,10 @@ GSM_Error ATGEN_PrivSetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 		error = ATGEN_SetCharset(s, Prefer);
 		if (error != ERR_NONE) return error;
 
-		switch (Priv->Charset) {
-		case AT_CHARSET_HEX:
-			EncodeDefault(uname, entry->Entries[Name].Text, &len, true, NULL);
-			EncodeHexBin(name, uname, len);
-			len = strlen(name);
-			break;
-		case AT_CHARSET_GSM:
-			smprintf(s, "str: %s\n", DecodeUnicodeString(entry->Entries[Name].Text));
-			len = UnicodeLength(entry->Entries[Name].Text);
-			EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
-			break;
-		case AT_CHARSET_UCS2:
-		case AT_CHARSET_UCS_2:
-			EncodeHexUnicode(name, entry->Entries[Name].Text, UnicodeLength(entry->Entries[Name].Text));
-			len = strlen(name);
-			break;
-  		case AT_CHARSET_IRA:
-  		case AT_CHARSET_ASCII:
-			return ERR_NOTSUPPORTED;
-  		case AT_CHARSET_UTF8:
-  		case AT_CHARSET_UTF_8:
-			EncodeUTF8(name, entry->Entries[Name].Text);
-			len = strlen(name);
-  			break;
-#ifdef ICONV_FOUND
-  		case AT_CHARSET_PCCP437:
-			len = UnicodeLength(entry->Entries[Name].Text);
-			IconvEncode("CP437", entry->Entries[Name].Text, len, name, sizeof(name));
-			break;
-  		case AT_CHARSET_ISO88591:
-			len = UnicodeLength(entry->Entries[Name].Text);
-			IconvEncode("ISO-8859-1", entry->Entries[Name].Text, len, name, sizeof(name));
-			break;
-  		case AT_CHARSET_ISO88592:
-			len = UnicodeLength(entry->Entries[Name].Text);
-			IconvEncode("ISO-8859-2", entry->Entries[Name].Text, len, name, sizeof(name));
-			break;
-  		case AT_CHARSET_ISO88593:
-			len = UnicodeLength(entry->Entries[Name].Text);
-			IconvEncode("ISO-8859-3", entry->Entries[Name].Text, len, name, sizeof(name));
-			break;
-  		case AT_CHARSET_ISO88594:
-			len = UnicodeLength(entry->Entries[Name].Text);
-			IconvEncode("ISO-8859-4", entry->Entries[Name].Text, len, name, sizeof(name));
-			break;
-  		case AT_CHARSET_ISO88595:
-			len = UnicodeLength(entry->Entries[Name].Text);
-			IconvEncode("ISO-8859-5", entry->Entries[Name].Text, len, name, sizeof(name));
-			break;
-  		case AT_CHARSET_ISO88596:
-			len = UnicodeLength(entry->Entries[Name].Text);
-			IconvEncode("ISO-8859-6", entry->Entries[Name].Text, len, name, sizeof(name));
-			break;
-#else
-		case AT_CHARSET_PCCP437:
-			/* FIXME: correctly decode PCCP437 */
-			smprintf(s, "str: %s\n", DecodeUnicodeString(entry->Entries[Name].Text));
-			len = UnicodeLength(entry->Entries[Name].Text);
-			EncodeDefault(name, entry->Entries[Name].Text, &len, true, NULL);
-			break;
-#endif
-		default:
-			smprintf(s, "Unsupported charset! (%d)\n", Priv->Charset);
-			return ERR_SOURCENOTAVAILABLE;
-		}
+		len = UnicodeLength(entry->Entries[Name].Text);
+		error = ATGEN_EncodeText(s, entry->Entries[Name].Text, len, name, sizeof(name), &len);
+		if (error != ERR_NONE) return error;
+
 		entry->Entries[Name].AddError = ERR_NONE;
 	} else {
 		smprintf(s, "WARNING: No usable name found!\n");

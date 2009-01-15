@@ -434,6 +434,26 @@ GSM_Error ATGEN_DispatchMessage	(GSM_StateMachine *s);
 GSM_Error ATGEN_ParseReply(GSM_StateMachine *s, const unsigned char *input, const char *format, ...);
 
 /**
+ * Encodes text to current phone charset.
+ *
+ * \param s State machine structure.
+ * \param input Input string.
+ * \param inlength Length of string to convert.
+ * \param output Storage for converted text.
+ * \param outlength Size of output storage.
+ * \param resultlength Lengt of output text will be stored here.
+ *
+ * \return Error code.
+ */
+GSM_Error ATGEN_EncodeText(GSM_StateMachine *s,
+		const unsigned char *input,
+		const size_t inlength,
+		unsigned char *output,
+		const size_t outlength,
+		size_t *resultlength
+		);
+
+/**
  * Sets charset in phone according to preference.
  *
  * \param s State machine structure.
