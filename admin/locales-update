@@ -32,6 +32,12 @@ xgettext \
     --package-version $ver \
     `find common -name '*.c' -o -name '*.h' | sort`
 
+for loc in $LOCS ; do
+    cd locale/$loc
+    msgmerge -U -C gammu.po -C libgammu.po docs.po ../docs.pot
+    cd ../..
+done
+
 ./admin/po4a
 
 sed -i '

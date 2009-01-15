@@ -1,6 +1,9 @@
 #!/bin/sh
 # vim: expandtab sw=4 ts=4 sts=4:
+
+LOCS=`ls locale/*/gammu.po | sed 's@.*/\(.*\)/[^/]*@\1@'`
 ver=`sed -n 's/set (VERSION "\([^"]*\)".*)/\1/p' CMakeLists.txt`
+
 po4a \
     --msgid-bugs-address michal@cihar.com \
     --copyright-holder "Michal Čihař <michal@cihar.com>" \
@@ -13,3 +16,4 @@ sed -i '
     s/(C) YEAR/(C) 2003 - '`date +%Y`'/;
     s/VERSION/'$ver'/;
     ' locale/docs.pot
+    
