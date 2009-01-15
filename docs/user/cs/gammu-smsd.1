@@ -58,12 +58,43 @@ Spustí SMSD službu ve Windows.
 Ukončí SMSD službu ve Windows.
 .TP 
 \fB\-S\fP, \fB\-\-run\-service\fP
-Spustí SMSD jako službu ve Windows.
+Spustí program jako službu Windows. Tato volba je určena pro spouštění ze
+správce služeb a neměla by být používana.
 .TP 
 \fB\-n\fP, \fB\-\-service\-name\fP=\fIname\fP
 Určí jméno služby ve Windows. Každá služba potřebuje unikátní jméno, takže
 pokud chcete mít spuštěných více instancí SMSD, musíte pojmenovat každou
 instanci jinak. Výchozí jméno je "GammuSMSD".
+
+.SH PŘÍKLAD
+
+.TP 
+Spuštění SMSD jako démon na Linuxu:
+
+gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon
+
+.TP 
+Spuštění SMSD jako démon s omezenými právy na Linuxu:
+
+gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon
+\-\-user gammu \-\-group gammu
+
+.TP 
+Instalace SMSD jako služba ve Windows:
+
+gammu\-smsd.exe \-c c:\eGammu\esmsdrc \-i
+
+.TP 
+Instalace dvou SMSD jako služby ve Windows.
+
+gammu\-smsd.exe \-c c:\eGammu\esmsdrc\-1 \-n Gammu\-first\-phone \-i
+
+gammu\-smsd.exe \-c c:\eGammu\esmsdrc\-2 \-n Gammu\-second\-phone \-i
+
+.TP 
+Odinstalace SMSD služby ve Windows.
+
+gammu\-smsd.exe \-u
 
 .SH "DALŠÍ INFORMACE"
 gammu\-smsdrc(5), gammu(1), gammu\-smsd\-inject(1)
