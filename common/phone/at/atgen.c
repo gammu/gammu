@@ -4897,6 +4897,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 			return error;
 		}
 	}
+
 	if (Priv->PBK_SPBR == 0) {
 		ATGEN_CheckSPBR(s);
 	}
