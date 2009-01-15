@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.22.90\n"
+"Project-Id-Version: Gammu 1.22.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-09 14:36+0100\n"
+"POT-Creation-Date: 2009-01-15 17:41+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -17,13 +17,13 @@ msgstr ""
 "X-Generator: Pootle 1.0.2\n"
 
 #: gammu/backup.c:31 gammu/backup.c:50 gammu/backup.c:68 gammu/backup.c:87
-#: helper/message-cmdline.c:356 helper/message-cmdline.c:380
-#: helper/message-cmdline.c:424 helper/message-cmdline.c:461
-#: helper/message-cmdline.c:484
+#: helper/message-cmdline.c:367 helper/message-cmdline.c:391
+#: helper/message-cmdline.c:435 helper/message-cmdline.c:472
+#: helper/message-cmdline.c:495
 msgid "Where is backup filename and location?"
 msgstr "Путь и имя файла с резервной копией?"
 
-#: gammu/backup.c:42 helper/message-cmdline.c:472
+#: gammu/backup.c:42 helper/message-cmdline.c:483
 msgid "Calendar note not found in file"
 msgstr "Заметка календаря не найдена в файле"
 
@@ -40,16 +40,16 @@ msgstr "Заметка не найдена в файле"
 msgid "Todo note not found in file"
 msgstr "Задание не найдено в файле\n"
 
-#: gammu/backup.c:106 helper/message-cmdline.c:508
+#: gammu/backup.c:106 helper/message-cmdline.c:519
 msgid "Where is backup filename and location and memory type?"
 msgstr "Путь и имя файла с резервной копией, тип памяти?"
 
-#: gammu/backup.c:118 gammu/backup.c:128 helper/message-cmdline.c:520
-#: helper/message-cmdline.c:530
+#: gammu/backup.c:118 gammu/backup.c:128 helper/message-cmdline.c:531
+#: helper/message-cmdline.c:541
 msgid "Phonebook entry not found in file"
 msgstr "Запись телефонной книги не найдена в файле"
 
-#: gammu/backup.c:133 helper/message-cmdline.c:535
+#: gammu/backup.c:133 helper/message-cmdline.c:546
 #, c-format
 msgid "Unknown memory type: \"%s\"\n"
 msgstr "Неизвестный тип памяти: \"%s\"\n"
@@ -64,7 +64,7 @@ msgstr "Неизвестный параметр \"%s\""
 msgid "Error while opening file for writing!\n"
 msgstr "Ошибка записи в устройство."
 
-#: gammu/backup.c:155 gammu/files.c:442 helper/message-cmdline.c:1066
+#: gammu/backup.c:155 gammu/files.c:442 helper/message-cmdline.c:1077
 #, fuzzy
 msgid "Error while writing file!\n"
 msgstr "Ошибка записи в устройство."
@@ -733,7 +733,7 @@ msgstr "Тихий сигнал     : %s\n"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:828
 #: gammu/calendar.c:1044 gammu/message.c:172 gammu/misc.c:946
-#: helper/memory-display.c:113 helper/message-display.c:427
+#: helper/memory-display.c:117 helper/message-display.c:427
 #, c-format
 msgid "Text"
 msgstr "Текст"
@@ -743,7 +743,7 @@ msgstr "Текст"
 msgid "Description"
 msgstr "Описание         : \"%s\"\n"
 
-#: gammu/calendar.c:212 gammu/calendar.c:892 helper/memory-display.c:119
+#: gammu/calendar.c:212 gammu/calendar.c:892 helper/memory-display.c:123
 msgid "LUID"
 msgstr ""
 
@@ -1049,186 +1049,186 @@ msgstr "ID контакта      : %d\n"
 msgid "Search text too long, truncating to %d chars!\n"
 msgstr "Искомый текст слишком длинный; усечён до %d символов!\n"
 
-#: gammu/common.c:39
+#: gammu/common.c:40
 #, fuzzy
 msgid "Waiting for Security Code."
 msgstr "Ожидается ввод кода защиты.\n"
 
-#: gammu/common.c:42
+#: gammu/common.c:43
 #, fuzzy
 msgid "Waiting for PIN."
 msgstr "Ожидается PIN.\n"
 
-#: gammu/common.c:45
+#: gammu/common.c:46
 #, fuzzy
 msgid "Waiting for PIN2."
 msgstr "Ожидается PIN2.\n"
 
-#: gammu/common.c:48
+#: gammu/common.c:49
 #, fuzzy
 msgid "Waiting for PUK."
 msgstr "Ожидается PUK.\n"
 
-#: gammu/common.c:51
+#: gammu/common.c:52
 #, fuzzy
 msgid "Waiting for PUK2."
 msgstr "Ожидается PUK2.\n"
 
-#: gammu/common.c:54
+#: gammu/common.c:55
 #, fuzzy
 msgid "Waiting for phone code."
 msgstr "Ожидается ввод кода защиты.\n"
 
-#: gammu/common.c:57
+#: gammu/common.c:58
 #, fuzzy
 msgid "Nothing to enter."
 msgstr "Нечего вводить.\n"
 
-#: gammu/common.c:61
+#: gammu/common.c:62
 #, fuzzy
 msgid "Unknown security status."
 msgstr "Состояние безопасности: "
 
-#: gammu/common.c:72
+#: gammu/common.c:73
 msgid "January"
 msgstr "января"
 
-#: gammu/common.c:75
+#: gammu/common.c:76
 msgid "February"
 msgstr "февраля"
 
-#: gammu/common.c:78
+#: gammu/common.c:79
 msgid "March"
 msgstr "марта"
 
-#: gammu/common.c:81
+#: gammu/common.c:82
 msgid "April"
 msgstr "апреля"
 
-#: gammu/common.c:84
+#: gammu/common.c:85
 msgid "May"
 msgstr "мая"
 
-#: gammu/common.c:87
+#: gammu/common.c:88
 msgid "June"
 msgstr "июня"
 
-#: gammu/common.c:90
+#: gammu/common.c:91
 msgid "July"
 msgstr "июля"
 
-#: gammu/common.c:93
+#: gammu/common.c:94
 msgid "August"
 msgstr "августа"
 
-#: gammu/common.c:96
+#: gammu/common.c:97
 msgid "September"
 msgstr "сентября"
 
-#: gammu/common.c:99
+#: gammu/common.c:100
 msgid "October"
 msgstr "октября"
 
-#: gammu/common.c:102
+#: gammu/common.c:103
 msgid "November"
 msgstr "ноября"
 
-#: gammu/common.c:105
+#: gammu/common.c:106
 msgid "December"
 msgstr "декабря"
 
-#: gammu/common.c:108
+#: gammu/common.c:109
 msgid "Bad month!"
 msgstr "Неверный месяц!"
 
-#: gammu/common.c:120
+#: gammu/common.c:121
 msgid "Monday"
 msgstr "понедельник"
 
-#: gammu/common.c:123
+#: gammu/common.c:124
 msgid "Tuesday"
 msgstr "вторник"
 
-#: gammu/common.c:126
+#: gammu/common.c:127
 msgid "Wednesday"
 msgstr "среду"
 
-#: gammu/common.c:129
+#: gammu/common.c:130
 msgid "Thursday"
 msgstr "четверг"
 
-#: gammu/common.c:132
+#: gammu/common.c:133
 msgid "Friday"
 msgstr "пятницу"
 
-#: gammu/common.c:135
+#: gammu/common.c:136
 msgid "Saturday"
 msgstr "субботу"
 
-#: gammu/common.c:138
+#: gammu/common.c:139
 msgid "Sunday"
 msgstr "воскресенье"
 
-#: gammu/common.c:141
+#: gammu/common.c:142
 msgid "Bad day!"
 msgstr "Неверный день!"
 
-#: gammu/common.c:175
+#: gammu/common.c:189
 #, fuzzy
 msgid "Security status"
 msgstr "Состояние безопасности: "
 
-#: gammu/common.c:282 gammu/misc.c:977 gammu/misc.c:992 gammu/misc.c:999
+#: gammu/common.c:294 gammu/misc.c:977 gammu/misc.c:992 gammu/misc.c:999
 #: gammu/misc.c:1006 gammu/misc.c:1036
 #, fuzzy
 msgid "More parameters required!"
 msgstr "ОШИБКА: требуются дополнительные параметры\n"
 
-#: gammu/common.c:288 gammu/common.c:298 gammu/depend/nokia/dct4.c:683
+#: gammu/common.c:300 gammu/common.c:310 gammu/depend/nokia/dct4.c:683
 #: gammu/misc.c:1152
 #, fuzzy
 msgid "Please enumerate locations from 1"
 msgstr "ОШИБКА: пронумеруйте размещения с 1\n"
 
-#: gammu/common.c:303
+#: gammu/common.c:315
 #, fuzzy
 msgid "Swapping start and end location"
 msgstr "ПРЕДУПРЕЖДЕНИЕ: меняются местами начальное и конечное положения\n"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:325 gammu/common.c:354 gammu/depend/nokia/dct4.c:81
+#: gammu/common.c:337 gammu/common.c:366 gammu/depend/nokia/dct4.c:81
 #: gammu/misc.c:1540
 #, fuzzy
 msgid "yes"
 msgstr "да\n"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:325 gammu/common.c:357 gammu/depend/nokia/dct4.c:82
+#: gammu/common.c:337 gammu/common.c:369 gammu/depend/nokia/dct4.c:82
 #, fuzzy
 msgid "no"
 msgstr "нет\n"
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:326 gammu/common.c:349
+#: gammu/common.c:338 gammu/common.c:361
 msgid "ALL"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:326 gammu/common.c:344
+#: gammu/common.c:338 gammu/common.c:356
 msgid "ONLY"
 msgstr ""
 
 #. l10n: Answer to (yes/no/ALL/ONLY/NONE) question
-#: gammu/common.c:326 gammu/common.c:339
+#: gammu/common.c:338 gammu/common.c:351
 msgid "NONE"
 msgstr ""
 
-#: gammu/common.c:328
+#: gammu/common.c:340
 #, fuzzy
 msgid "YES (always)"
 msgstr "ДА (для всех)\n"
 
-#: gammu/common.c:332
+#: gammu/common.c:344
 #, fuzzy
 msgid "NO (always)"
 msgstr "НЕТ (для всех)\n"
@@ -1522,17 +1522,17 @@ msgstr ""
 msgid "%i phone number types\n"
 msgstr "Проверяются пользовательские рингтоны телефона\n"
 
-#: gammu/depend/nokia/dct4.c:1400 helper/memory-display.c:110
+#: gammu/depend/nokia/dct4.c:1400 helper/memory-display.c:114
 #, fuzzy
 msgid "Home number"
 msgstr "Домашний        "
 
-#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:107
+#: gammu/depend/nokia/dct4.c:1401 helper/memory-display.c:111
 #, fuzzy
 msgid "Mobile number"
 msgstr "Мобильный       "
 
-#: gammu/depend/nokia/dct4.c:1402 helper/memory-display.c:109
+#: gammu/depend/nokia/dct4.c:1402 helper/memory-display.c:113
 #, fuzzy
 msgid "Fax number"
 msgstr "   Номер      : %s\n"
@@ -1680,7 +1680,7 @@ msgid "What file type (\"%s\") ?\n"
 msgstr "Тип файла (\"%s\")?\n"
 
 #: gammu/files.c:734 gammu/misc.c:1148 gammu/nokia.c:932
-#: helper/message-cmdline.c:1256
+#: helper/message-cmdline.c:1267
 #, fuzzy
 msgid "Parameter missing!"
 msgstr "Отсутствует параметр ...\n"
@@ -1714,7 +1714,7 @@ msgstr "Название сети\n"
 
 #: gammu/gammu.c:115 gammu/message.c:623 gammu/misc.c:782 gammu/misc.c:949
 #: gammu/misc.c:1682 gammu/misc.c:1721 gammu/misc.c:1974
-#: helper/memory-display.c:120 helper/message-display.c:242
+#: helper/memory-display.c:124 helper/message-display.c:242
 msgid "Name"
 msgstr ""
 
@@ -1984,32 +1984,32 @@ msgstr "Слишком много параметров (допускается "
 msgid "Bad option!"
 msgstr "Неверный месяц!"
 
-#: gammu/gammu.c:1047
+#: gammu/gammu.c:1046
 #, fuzzy
 msgid "Configuration could not be parsed!"
 msgstr "Предупреждение: не найден конфигурационный файл!\n"
 
-#: gammu/gammu.c:1049
+#: gammu/gammu.c:1048
 #, fuzzy
 msgid "No configuration file found!"
 msgstr "Предупреждение: не найден конфигурационный файл!\n"
 
-#: gammu/gammu.c:1088 gammu/gammu.c:1180
+#: gammu/gammu.c:1087 gammu/gammu.c:1179
 #, fuzzy
 msgid "Too few parameters!"
 msgstr "Слишком мало параметров!\n"
 
-#: gammu/gammu.c:1118
+#: gammu/gammu.c:1117
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr ""
 
-#: gammu/gammu.c:1120 gammu/gammu.c:1131
+#: gammu/gammu.c:1119 gammu/gammu.c:1130
 #, fuzzy
 msgid "No configuration read, using builtin defaults!"
 msgstr "Предупреждение: не найден конфигурационный файл!\n"
 
-#: gammu/gammu.c:1186
+#: gammu/gammu.c:1185
 #, fuzzy, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -2029,7 +2029,7 @@ msgid "Memory %s, Location %i\n"
 msgstr "Память %s, адрес %i\n"
 
 #: gammu/memory.c:75 gammu/misc.c:587 gammu/misc.c:616
-#: helper/message-cmdline.c:995
+#: helper/message-cmdline.c:1006
 #, c-format
 msgid "Unknown parameter (\"%s\")\n"
 msgstr "Неизвестный параметр (\"%s\")\n"
@@ -2804,21 +2804,16 @@ msgstr "Какой вид логотипа нужно получить (\"%s\")?
 msgid "Group name"
 msgstr "Название группы : \"%s\""
 
-#: gammu/misc.c:884
-#, c-format
-msgid " (default)"
-msgstr " (по умолчанию)"
-
-#: gammu/misc.c:887 gammu/misc.c:889 gammu/misc.c:902 gammu/misc.c:909
-#: helper/memory-display.c:85
-#, fuzzy
-msgid "Ringtone"
-msgstr "Рингтон \"%s\"\n"
-
-#: gammu/misc.c:887
+#: gammu/misc.c:884 gammu/misc.c:887
 #, fuzzy
 msgid "default"
 msgstr " (по умолчанию)"
+
+#: gammu/misc.c:887 gammu/misc.c:889 gammu/misc.c:902 gammu/misc.c:909
+#: helper/memory-display.c:89
+#, fuzzy
+msgid "Ringtone"
+msgstr "Рингтон \"%s\"\n"
 
 #: gammu/misc.c:903
 #, fuzzy, c-format
@@ -3218,7 +3213,7 @@ msgstr " (профиль для гарнитуры)"
 msgid " (Car kit profile)"
 msgstr " (профиль для автомобиля)"
 
-#: gammu/misc.c:1844 helper/memory-display.c:90
+#: gammu/misc.c:1844 helper/memory-display.c:94
 #, fuzzy
 msgid "Ringtone ID"
 msgstr "Рингтон \"%s\"\n"
@@ -3711,338 +3706,343 @@ msgstr "Время звонка     : %02i:%02i:%02i\n"
 msgid "Date and time"
 msgstr "Дата и время     : %s\n"
 
-#: helper/memory-display.c:60 helper/memory-display.c:74
+#: helper/memory-display.c:60 helper/memory-display.c:64
+#: helper/memory-display.c:78
 #, fuzzy
 msgid "Caller group"
 msgstr "Группы абонентов\n"
 
-#: helper/memory-display.c:61
+#: helper/memory-display.c:65
 #, fuzzy
 msgid "Caller group number too high, please increase buffer in sources!"
 msgstr ""
 "Слишком большое значение номера группы абонентов. Увеличьте в исходном коде "
 "размер буфера.\n"
 
-#: helper/memory-display.c:94
+#: helper/memory-display.c:98
 #, fuzzy
 msgid "User ID"
 msgstr "Пользовательский UDH"
 
-#: helper/memory-display.c:97
+#: helper/memory-display.c:101
 #, fuzzy
 msgid "Picture name"
 msgstr "Рисунок"
 
-#: helper/memory-display.c:100
+#: helper/memory-display.c:104
 #, fuzzy
 msgid "Picture ID"
 msgstr "Рисунок"
 
-#: helper/memory-display.c:103
+#: helper/memory-display.c:107
 #, fuzzy
 msgid "Photo"
 msgstr "Телефон"
 
-#: helper/memory-display.c:103
+#: helper/memory-display.c:107
 msgid "Displaying not supported"
 msgstr ""
 
-#: helper/memory-display.c:105
+#: helper/memory-display.c:109
 #, fuzzy
 msgid "Favorite messaging number"
 msgstr "Интеллектуальное сообщение"
 
-#: helper/memory-display.c:106
+#: helper/memory-display.c:110
 #, fuzzy
 msgid "General number"
 msgstr "Основной        "
 
-#: helper/memory-display.c:108
+#: helper/memory-display.c:112
 #, fuzzy
 msgid "Work number"
 msgstr "Мобильный       "
 
-#: helper/memory-display.c:111
+#: helper/memory-display.c:115
 #, fuzzy
 msgid "Pager number"
 msgstr "Пейджер         "
 
-#: helper/memory-display.c:112
+#: helper/memory-display.c:116
 #, fuzzy
 msgid "Other number"
 msgstr "Другой          "
 
-#: helper/memory-display.c:114
+#: helper/memory-display.c:118
 #, fuzzy
 msgid "Snail address"
 msgstr "Адрес Snail     "
 
-#: helper/memory-display.c:115
+#: helper/memory-display.c:119
 #, fuzzy
 msgid "Work snail address"
 msgstr "Адрес Snail     "
 
-#: helper/memory-display.c:116
+#: helper/memory-display.c:120
 #, fuzzy
 msgid "Email address 1"
 msgstr "Адрес E-mail  1 "
 
-#: helper/memory-display.c:117
+#: helper/memory-display.c:121
 #, fuzzy
 msgid "Email address 2"
 msgstr "Адрес E-mail  2 "
 
-#: helper/memory-display.c:118
+#: helper/memory-display.c:122
 #, fuzzy
 msgid "URL address"
 msgstr "URL             "
 
-#: helper/memory-display.c:121
+#: helper/memory-display.c:125
 #, fuzzy
 msgid "Last name"
 msgstr "Фамилия         "
 
-#: helper/memory-display.c:122
+#: helper/memory-display.c:126
 #, fuzzy
 msgid "First name"
 msgstr "Имя             "
 
-#: helper/memory-display.c:123
+#: helper/memory-display.c:127
 #, fuzzy
 msgid "Formal name"
 msgstr "Имя             "
 
-#: helper/memory-display.c:124
+#: helper/memory-display.c:128
 #, fuzzy
 msgid "Nick name"
 msgstr "Имя             "
 
-#: helper/memory-display.c:125
+#: helper/memory-display.c:129
 #, fuzzy
 msgid "Company"
 msgstr "Организация     "
 
-#: helper/memory-display.c:126
+#: helper/memory-display.c:130
 #, fuzzy
 msgid "Job title"
 msgstr "Должность       "
 
-#: helper/memory-display.c:127
+#: helper/memory-display.c:131
 #, fuzzy
 msgid "Street address"
 msgstr "Улица           "
 
-#: helper/memory-display.c:128
+#: helper/memory-display.c:132
 msgid "City"
 msgstr ""
 
-#: helper/memory-display.c:129
+#: helper/memory-display.c:133
 #, fuzzy
 msgid "State"
 msgstr "Стандартный\n"
 
-#: helper/memory-display.c:130
+#: helper/memory-display.c:134
 #, fuzzy
 msgid "Zip code"
 msgstr "Почтовый индекс "
 
-#: helper/memory-display.c:131
+#: helper/memory-display.c:135
 #, fuzzy
 msgid "Country"
 msgstr "Страна          "
 
-#: helper/memory-display.c:132
+#: helper/memory-display.c:136
 #, fuzzy
 msgid "Work street address"
 msgstr "Улица           "
 
-#: helper/memory-display.c:133
+#: helper/memory-display.c:137
 #, fuzzy
 msgid "Work city"
 msgstr "Страна          "
 
-#: helper/memory-display.c:134
+#: helper/memory-display.c:138
 #, fuzzy
 msgid "Work state"
 msgstr "Состояние сети     : "
 
-#: helper/memory-display.c:135
+#: helper/memory-display.c:139
 #, fuzzy
 msgid "Work zip code"
 msgstr "Почтовый индекс "
 
-#: helper/memory-display.c:136
+#: helper/memory-display.c:140
 #, fuzzy
 msgid "Work country"
 msgstr "Страна          "
 
-#: helper/memory-display.c:137
+#: helper/memory-display.c:141
 #, fuzzy
 msgid "Custom text 1"
 msgstr "Свой текст 1    "
 
-#: helper/memory-display.c:138
+#: helper/memory-display.c:142
 #, fuzzy
 msgid "Custom text 2"
 msgstr "Свой текст 2    "
 
-#: helper/memory-display.c:139
+#: helper/memory-display.c:143
 #, fuzzy
 msgid "Custom text 3"
 msgstr "Свой текст 3    "
 
-#: helper/memory-display.c:140
+#: helper/memory-display.c:144
 #, fuzzy
 msgid "Custom text 4"
 msgstr "Свой текст 4    "
 
-#: helper/memory-display.c:141
+#: helper/memory-display.c:145
 msgid "Push to talk ID"
 msgstr ""
 
-#: helper/memory-display.c:144
+#: helper/memory-display.c:148
 #, fuzzy
 msgid "unknown field type"
 msgstr "неизвестный %i"
 
-#: helper/message-cmdline.c:175
+#: helper/message-cmdline.c:180
 #, fuzzy
 msgid "Not enough parameters!"
 msgstr "Слишком мало параметров!\n"
 
-#: helper/message-cmdline.c:199
+#: helper/message-cmdline.c:204
 #, c-format
 msgid "What format of sms (\"%s\") ?\n"
 msgstr "Какой формат SMS (\"%s\")?\n"
 
-#: helper/message-cmdline.c:224 helper/message-cmdline.c:239
+#: helper/message-cmdline.c:229 helper/message-cmdline.c:244
 #, fuzzy
 msgid "Where are parameters?"
 msgstr "Где параметры?\n"
 
-#: helper/message-cmdline.c:253
+#: helper/message-cmdline.c:258
 #, fuzzy
 msgid "Where is ringtone filename?"
 msgstr "Имя файла рингтона?\n"
 
-#: helper/message-cmdline.c:271 helper/message-cmdline.c:289
-#: helper/message-cmdline.c:334
+#: helper/message-cmdline.c:276 helper/message-cmdline.c:294
+#: helper/message-cmdline.c:345
 #, fuzzy
 msgid "Where is logo filename?"
 msgstr "Имя файла логотипа ?\n"
 
-#: helper/message-cmdline.c:307
+#: helper/message-cmdline.c:312
 #, fuzzy
 msgid "Where is number of frames?"
 msgstr "Число кадров?\n"
 
-#: helper/message-cmdline.c:340
+#: helper/message-cmdline.c:320
+msgid "Too many animation frames!"
+msgstr ""
+
+#: helper/message-cmdline.c:351
 #, c-format
 msgid "File \"%s\"\n"
 msgstr "Файл \"%s\"\n"
 
-#: helper/message-cmdline.c:367
+#: helper/message-cmdline.c:378
 #, fuzzy
 msgid "Bookmark not found in file"
 msgstr "Закладка не найдена в файле\n"
 
-#: helper/message-cmdline.c:391
+#: helper/message-cmdline.c:402
 #, fuzzy
 msgid "WAP settings not found in file"
 msgstr "Настройки WAP не найдены в файле\n"
 
-#: helper/message-cmdline.c:412
+#: helper/message-cmdline.c:423
 #, fuzzy
 msgid "Sorry. For now there is only support for GPRS or DATA bearers end"
 msgstr ""
 "К сожалению на данный момент поддерживается только GPRS или закончились "
 "каналы передачи данных\n"
 
-#: helper/message-cmdline.c:435
+#: helper/message-cmdline.c:446
 #, fuzzy
 msgid "MMS settings not found in file"
 msgstr "Настройки MMS не найдены в файле\n"
 
-#: helper/message-cmdline.c:449
+#: helper/message-cmdline.c:460
 #, fuzzy
 msgid "Sorry. No GPRS bearer found in MMS settings"
 msgstr "К сожалению канал передачи данных GPRS в настройках MMS не найден\n"
 
-#: helper/message-cmdline.c:495
+#: helper/message-cmdline.c:506
 #, fuzzy
 msgid "ToDo note not found in file"
 msgstr "Задание не найдено в файле\n"
 
-#: helper/message-cmdline.c:1034
+#: helper/message-cmdline.c:1045
 #, c-format
 msgid "Unknown GSM network code (\"%s\")\n"
 msgstr "Неизвестный код сети GSM (\"%s\")\n"
 
-#: helper/message-cmdline.c:1053
+#: helper/message-cmdline.c:1064
 #, c-format
 msgid "You have to give number between 1 and 7 (\"%s\")\n"
 msgstr "Необходимо ввести число от 1 и 7 (\"%s\")\n"
 
-#: helper/message-cmdline.c:1091
+#: helper/message-cmdline.c:1102
 #, c-format
 msgid "Unknown validity string (\"%s\")\n"
 msgstr "Неизвестная строка проверки достоверности (\"%s\")\n"
 
-#: helper/message-cmdline.c:1129
+#: helper/message-cmdline.c:1140
 #, c-format
 msgid "You have to give number of EMS frames between 1 and 4 (\"%s\")\n"
 msgstr "Необходимо указать число кадров EMS от 1 и 4 (\"%s\")\n"
 
-#: helper/message-cmdline.c:1154
+#: helper/message-cmdline.c:1165
 #, c-format
 msgid "Can't open file \"%s\"\n"
 msgstr "Не удаётся открыть файл \"%s\"\n"
 
-#: helper/message-cmdline.c:1203
+#: helper/message-cmdline.c:1214
 #, fuzzy, c-format
 msgid "Unknown parameter (\"%c\")\n"
 msgstr "Неизвестный параметр (\"%s\")\n"
 
-#: helper/message-cmdline.c:1208
+#: helper/message-cmdline.c:1219
 #, fuzzy
 msgid "Last parameter wasn't text"
 msgstr "Последний параметр не является текстом\n"
 
-#: helper/message-cmdline.c:1242
+#: helper/message-cmdline.c:1253
 #, c-format
 msgid "Too long SMS name (\"%s\"), ignored\n"
 msgstr "Слишком длинное название SMS (\"%s\"); проигнорировано\n"
 
-#: helper/message-cmdline.c:1275
+#: helper/message-cmdline.c:1286
 msgid "Enter message text and press ^D:"
 msgstr ""
 
-#: helper/message-cmdline.c:1287
+#: helper/message-cmdline.c:1298
 msgid "No chars read, assuming it is okay!"
 msgstr ""
 
-#: helper/message-cmdline.c:1307
+#: helper/message-cmdline.c:1318
 #, fuzzy
 msgid "No network code"
 msgstr "Отсутствует код сети\n"
 
-#: helper/message-cmdline.c:1313
+#: helper/message-cmdline.c:1324
 #, fuzzy
 msgid "You have to set network code!"
 msgstr "Отсутствует код сети\n"
 
-#: helper/message-cmdline.c:1352
+#: helper/message-cmdline.c:1363
 #, fuzzy, c-format
 msgid "Ringtone too long. %i percent part cut\n"
 msgstr ""
 "Предупреждение: рингтон слишком длинный. Укоротите его на %i процентов\n"
 
-#: helper/message-cmdline.c:1363
+#: helper/message-cmdline.c:1374
 #, c-format
 msgid "There is %i SMS packed and %i limit. Exiting\n"
 msgstr "Упаковано %i SMS, а предел - %i. Выполняется выход\n"
 
-#: helper/message-cmdline.c:1373
+#: helper/message-cmdline.c:1384
 #, fuzzy
 msgid "Use -smscnumber option to give SMSC number"
 msgstr "Чтобы указать число SMSC, используйте параметр -smscnumber\n"
@@ -4553,6 +4553,9 @@ msgstr "Встреча"
 #, fuzzy
 msgid "Information"
 msgstr "Местонахождение %i\n"
+
+#~ msgid " (default)"
+#~ msgstr " (по умолчанию)"
 
 #~ msgid "Connection set name : Set %i\n"
 #~ msgstr "Название соединения : Установить %i\n"
