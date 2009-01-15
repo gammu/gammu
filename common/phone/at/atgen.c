@@ -4651,7 +4651,10 @@ GSM_Error ATGEN_GetMemoryInfo(GSM_StateMachine *s, GSM_MemoryStatus *Status, GSM
 		Status->MemoryUsed = Priv->MemoryUsed;
 		Status->MemoryFree = Priv->MemorySize - Priv->MemoryUsed;
 	}
-	if (NeededInfo == AT_Total || NeededInfo == AT_Sizes || NeededInfo == AT_First || free_read) return ERR_NONE;
+	if ((NeededInfo != AT_NextEmpty) &&
+			(NeededInfo != AT_Status || free_read)) {
+		return ERR_NONE;
+	}
 
 	smprintf(s, "Getting memory status by reading values\n");
 
