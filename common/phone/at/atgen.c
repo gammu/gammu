@@ -4904,7 +4904,7 @@ GSM_Error ATGEN_PrivGetMemory (GSM_StateMachine *s, GSM_MemoryEntry *entry, int 
 	error = ATGEN_GetManufacturer(s);
 	if (error != ERR_NONE) return error;
 
-	error=ATGEN_SetPBKMemory(s, entry->MemoryType);
+	error = ATGEN_SetPBKMemory(s, entry->MemoryType);
 	if (error != ERR_NONE) return error;
 
 	/* For reading we prefer unicode */
