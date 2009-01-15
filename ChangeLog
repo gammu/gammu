@@ -31,6 +31,7 @@ ChangeLog
 [-] * Fixed several memory leaks.
 [+] * Better support for Samsung phones.
 [-] * Fixed Windows Service Startup (bug #451).
+[+] * New possibility to run more instances of Windows Service (bug #451).
     
 20090109 - 1.22.90
 

@@ -127,6 +127,7 @@ void help(void)
 	print_option("s", "start-service", "starts SMSD Windows service");
 	print_option("k", "stop-service", "stops SMSD Windows service");
 	print_option("S", "run-as-service", "runs as a SMSD Windows service");
+	print_option_param("n", "service-name", "NAME", "name of a Windows service (default: GammuSMSD)");
 #endif
 }
 
@@ -154,15 +155,16 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 		{"run-as-service", 0, 0, 'S'},
 		{"user", 1, 0, 'U'},
 		{"group", 1, 0, 'G'},
+		{"service-name", 1, 0, 'n'},
 		{0, 0, 0, 0}
 	};
 	int option_index;
 
 	while ((opt =
-		getopt_long(argc, argv, "hv?dc:p:iusSkU:G:", long_options,
+		getopt_long(argc, argv, "hv?dc:p:iusSkU:G:n:", long_options,
 			    &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
-	while ((opt = getopt(argc, argv, "hv?dc:p:iusSkU:G:")) != -1) {
+	while ((opt = getopt(argc, argv, "hv?dc:p:iusSkU:G:n:")) != -1) {
 #else
 	/* Poor mans getopt replacement */
 	int i;
@@ -220,6 +222,10 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				break;
 			case 'S':
 				params->run_service = true;
+				break;
+			case 'n':
+				strncpy(smsd_service_name, optarg, MAX_PATH);
+				smsd_service_name[MAX_PATH - 1] = 0;
 				break;
 #endif
 			case 'v':
