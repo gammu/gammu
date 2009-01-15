@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.91\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-15 17:11+0100\n"
+"POT-Creation-Date: 2009-01-15 17:19+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,7 +23,7 @@ msgid "GAMMURC"
 msgstr ""
 
 # type: TH
-#: docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1 docs/user/gammu-smsd.1:1 docs/user/gammu-smsd-inject.1:1
+#: docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1 docs/user/gammu-smsd-inject.1:1
 #, no-wrap
 msgid "January 4, 2009"
 msgstr ""
@@ -1070,6 +1070,12 @@ msgstr ""
 #: docs/user/gammu-smsd.1:1
 #, no-wrap
 msgid "GAMMU-SMSD"
+msgstr ""
+
+# type: TH
+#: docs/user/gammu-smsd.1:1
+#, no-wrap
+msgid "January 15, 2009"
 msgstr ""
 
 # type: Plain text
