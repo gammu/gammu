@@ -54,12 +54,42 @@ Starts SMSD Windows service.
 Stops SMSD Windows service.
 .TP
 \fB\-S\fR, \fB\-\-run\-service\fR
-Runs pogram as SMSD Windows service.
+Runs pogram as SMSD Windows service. This should not be used manually, but
+only Windows Service manager should use this command.
 .TP
 \fB\-n\fR, \fB\-\-service\-name\fR=\fIname\fR
 Defines name of a Windows service. Each service requires an unique name, so if
 you want to run several SMSD instances, you have to name each service
 differently. Default is "GammuSMSD".
+
+.SH EXAMPLE
+
+.TP
+Start SMSD as a deamon on Linux:
+
+gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon
+
+.TP
+Start SMSD as a deamon on Linux with reduced privileges:
+
+gammu\-smsd \-\-config /etc/gammu\-smsdrc \-\-pid /var/run/gammu\-smsd.pid \-\-daemon \-\-user gammu \-\-group gammu
+
+.TP
+Install Gammu SMSD Windows service:
+
+gammu\-smsd.exe \-c c:\\Gammu\\smsdrc \-i
+
+.TP
+Install two instances of SMSD Windows service:
+
+gammu\-smsd.exe \-c c:\\Gammu\\smsdrc\-1 \-n Gammu\-first\-phone \-i
+
+gammu\-smsd.exe \-c c:\\Gammu\\smsdrc\-2 \-n Gammu\-second\-phone \-i
+
+.TP
+To uninstall a Windows service:
+
+gammu\-smsd.exe \-u
 
 .SH SEE ALSO
 gammu\-smsdrc(5), gammu(1), gammu\-smsd\-inject(1)
