@@ -756,6 +756,20 @@ bool SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	return true;
 }
 
+void SMSD_PhoneStatus(GSM_SMSDConfig *Config, GSM_BatteryCharge *charge, GSM_SignalQuality *network) {
+	GSM_Error error;
+
+	error = GSM_GetBatteryCharge(Config->gsm, charge);
+	if (error != ERR_NONE) {
+		memset(charge, 0, sizeof(*charge));
+	}
+	error = GSM_GetSignalQuality(Config->gsm, network);
+	if (error != ERR_NONE) {
+		memset(network, 0, sizeof(*network));
+	}
+}
+
+
 bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 {
 	GSM_MultiSMSMessage  	sms;
@@ -777,8 +791,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		/* No outbox sms - wait few seconds and escape */
 		for (j=0;j<Config->commtimeout && !Config->shutdown;j++) {
 			sleep(1);
-			GSM_GetBatteryCharge(Config->gsm, &charge);
-			GSM_GetSignalQuality(Config->gsm, &network);
+			SMSD_PhoneStatus(Config, &charge, &network);
 			Service->RefreshPhoneStatus(Config, &charge, &network);
 		}
 		return true;
@@ -835,8 +848,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				if ((strcmp(Config->deliveryreport, "no") != 0 && (Config->currdeliveryreport == -1))) sms.SMS[i].PDU = SMS_Status_Report;
 			}
 
-			GSM_GetBatteryCharge(Config->gsm, &charge);
-			GSM_GetSignalQuality(Config->gsm, &network);
+			SMSD_PhoneStatus(Config, &charge, &network);
 			error=GSM_SendSMS(Config->gsm, &sms.SMS[i]);
 			if (error!=ERR_NONE) {
 				SMSD_Log(0, Config, "Error sending SMS %s (%i): %s", Config->SMSID, error,GSM_ErrorString(error));
