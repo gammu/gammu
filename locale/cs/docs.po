@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.90\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-01-15 17:25+0100\n"
-"PO-Revision-Date: 2009-01-15 17:29+0100\n"
+"PO-Revision-Date: 2009-01-15 17:39+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -116,9 +116,9 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:31
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "Debug levels"
-msgstr "B<DebugLevel>"
+msgstr "Úroveň ladění"
 
 # type: Plain text
 #: docs/user/gammu.1:36
@@ -156,9 +156,9 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:47
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<canceldiverts>"
-msgstr "B<DeliveryReport>"
+msgstr "B<canceldiverts>"
 
 # type: TP
 #: docs/user/gammu.1:50
@@ -229,9 +229,9 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:79
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<senddtmf>I< sequence>"
-msgstr "B<ResetFrequency>"
+msgstr "B<senddtmf>I< sequence>"
 
 # type: Plain text
 #: docs/user/gammu.1:82
@@ -1929,9 +1929,9 @@ msgstr "Poznámky"
 
 # type: TP
 #: docs/user/gammu.1:1141
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<getallnotes>"
-msgstr "B<Features>"
+msgstr "B<getallnotes>"
 
 #: docs/user/gammu.1:1145
 #, no-wrap
@@ -1951,9 +1951,9 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:1151
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<getdatetime>"
-msgstr "B<sentitems>"
+msgstr "B<getdatetime>"
 
 # type: Plain text
 #: docs/user/gammu.1:1154
@@ -2123,9 +2123,9 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:1458 docs/user/gammu.1:1867
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<nokiasecuritycode>"
-msgstr "B<CheckSecurity>"
+msgstr "B<nokiasecuritycode>"
 
 # type: Plain text
 #: docs/user/gammu.1:1461 docs/user/gammu.1:1870
@@ -2152,9 +2152,9 @@ msgstr "B<nokiasetoperatorname>I< [networkcode name]>"
 
 # type: TP
 #: docs/user/gammu.1:1471 docs/user/gammu.1:1965
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<nokiasetphonemenus>"
-msgstr "B<phones>"
+msgstr "B<nokiasetphonemenus>"
 
 # type: Plain text
 #: docs/user/gammu.1:1474 docs/user/gammu.1:1968
@@ -2282,9 +2282,9 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:1532
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<networkinfo>"
-msgstr "B<StartInfo>"
+msgstr "B<networkinfo>"
 
 # type: TP
 #: docs/user/gammu.1:1558
@@ -2428,9 +2428,9 @@ msgstr "B<getdisplaystatus>"
 
 # type: TP
 #: docs/user/gammu.1:1854
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<getsecuritystatus>"
-msgstr "B<CheckSecurity>"
+msgstr "B<getsecuritystatus>"
 
 # type: Plain text
 #: docs/user/gammu.1:1857
@@ -2439,9 +2439,9 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:1858
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<identify>"
-msgstr "B<sentitems>"
+msgstr "B<identify>"
 
 # type: Plain text
 #: docs/user/gammu.1:1861
@@ -2472,9 +2472,8 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:1885
-#, fuzzy
 msgid "B<PHONE:>"
-msgstr "B<PIN>"
+msgstr "B<PHONE:>"
 
 # type: Plain text
 #: docs/user/gammu.1:1889
@@ -2518,9 +2517,8 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:1907
-#, fuzzy
 msgid "B<UIF:>"
-msgstr "B<PIN>"
+msgstr "B<UIF:>"
 
 # type: Plain text
 #: docs/user/gammu.1:1909
@@ -2708,15 +2706,15 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:2034
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<features>"
-msgstr "B<Features>"
+msgstr "B<features>"
 
 # type: TP
 #: docs/user/gammu.1:2037
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<help>"
-msgstr "B<-h, --help>"
+msgstr "B<help>"
 
 # type: Plain text
 #: docs/user/gammu.1:2040
@@ -2725,15 +2723,14 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:2041
-#, fuzzy, no-wrap
+#, no-wrap
 msgid "B<version>"
-msgstr "B<-v>, B<--version>"
+msgstr "B<version>"
 
 # type: Plain text
 #: docs/user/gammu.1:2044
-#, fuzzy
 msgid "Output version information and exit."
-msgstr "Zobrazí informace o verzi a zakompilované funkcionalitě."
+msgstr "Zobrazí informace o verzi a skončí."
 
 # type: SH
 #: docs/user/gammu.1:2046
@@ -2743,9 +2740,8 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:2050
-#, fuzzy
 msgid "I<~/.gammurc>"
-msgstr "B<gammurc>"
+msgstr "I<~/.gammurc>"
 
 # type: Plain text
 #: docs/user/gammu.1:2052
