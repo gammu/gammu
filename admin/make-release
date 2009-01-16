@@ -61,6 +61,8 @@ if [ "x$1" = "xbranch" ] ; then
     rel=RELEASE_`echo -n $version|tr . _`
     svn cp -m "Tag release $version" svn+ssh://mort/home/svn/$repo/trunk svn+ssh://mort/home/svn/$repo/tags/$rel
     svn export svn+ssh://mort/home/svn/$repo/tags/$rel $repo-$version
+    # Submit to PyPi
+    $tmp/$repo-$version/python/setup.py register
 elif [ "x$1" = "x" ] ; then
     rel=trunk
     svn export svn+ssh://mort/home/svn/$repo/trunk $repo-$version
@@ -141,12 +143,6 @@ done
 for bin in $tmp/python-gammu*.msi ; do
     signexe $bin "python-gammu installer"
 done
-
-# Submit to PyPi
-if [ "x$1" = "xbranch" ] ; then
-    $tmp/$repo-$version/python/setup.py register
-fi
-
 
 # We're done
 echo "Release is in $tmp directory"
