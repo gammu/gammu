@@ -40,16 +40,9 @@ import datetime
 import string
 
 # some defines
-MAJOR_VERSION = 0
-MINOR_VERSION = 29
-EXTRA_VERSION = None
-
-if EXTRA_VERSION == None:
-    VERSION = '%d.%d' % (MAJOR_VERSION, MINOR_VERSION)
-else:
-    VERSION = '%d.%d.%d' % (MAJOR_VERSION, MINOR_VERSION, EXTRA_VERSION)
-
-GAMMU_REQUIRED = (1,22,90)
+VERSION = '1.22.91'
+VERSION_TUPLE = tuple(map(int, VERSION.split('.')))
+GAMMU_REQUIRED = VERSION_TUPLE
 PYTHON_REQUIRED = (2,3)
 
 ADDITIONAL_PARAMS = [

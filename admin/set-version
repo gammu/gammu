@@ -21,6 +21,8 @@ do_replace packaging/slackware/description-pak.in description-pak
 
 # CMakeLists.txt
 sed -i "s/set (VERSION \"[^\"]*\"\\(.*\\))/set (VERSION \"$version\"\1)/; s/set (VERSION_WIN \"[^\"]*\"\\(.*\\))/set (VERSION_WIN \"$version_win\"\1)/;" CMakeLists.txt
+# python/setup.py
+sed -i "s/VERSION = '[0-9.]*'/VERSION = '$version'/" python/setup.py
 
 # Update ChangeLog
 if ! grep -q " - $version" ChangeLog ; then
