@@ -1,5 +1,5 @@
 # Gammu translation.
-# Copyright (C) 2003 - 2007 Michal Čihař
+# Copyright (C) 2003 - 2009 Michal Čihař
 # This file is distributed under the same license as the Gammu package.
 # Michal Čihař <michal@cihar.com>, 2007.
 #

@@ -1,6 +1,6 @@
 #!/bin/bash
 # JAD file generator
-# Copyright (C) 2008 Michal Cihar <michal@cihar.com>
+# Copyright © 2008 - 2009 Michal Čihař <michal@cihar.com>
 # vim: expandtab sw=4 ts=4 sts=4:
 
 # Defaults

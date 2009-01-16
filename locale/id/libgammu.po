@@ -1,5 +1,5 @@
 # libGammu translation.
-# Copyright (C) 2003 - 2008 Michal Čihař
+# Copyright (C) 2003 - 2009 Michal Čihař
 # This file is distributed under the same license as the Gammu package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #, fuzzy

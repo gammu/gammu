@@ -1,6 +1,6 @@
 #!/bin/bash
 # Gammu configuration generator
-# Copyright (C) 2003 - 2007 Michal Cihar <michal@cihar.com>
+# Copyright (C) 2003 - 2009 Michal Cihar <michal@cihar.com>
 # vim: expandtab sw=4 ts=4 sts=4:
 
 DIALOG_SIZE="8 70"
@@ -10,7 +10,7 @@ FILE_SIZE="20 60"
 CONFIG=~/.gammurc
 NAME="Gammu configurator"
 VERSION="0.4"
-COPYRIGHT="Copyright (C) 2003 - 2008 Michal Cihar <michal@cihar.com>"
+COPYRIGHT="Copyright (C) 2003 - 2009 Michal Cihar <michal@cihar.com>"
 FORCE=0
 
 # Some defaults:

@@ -1,4 +1,4 @@
-/* (c) 2007 Michal Cihar */
+/* © 2007 - 2009 Michal Čihař */
 
 /**
  * @file motorola.c
