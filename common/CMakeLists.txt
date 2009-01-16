@@ -5,6 +5,7 @@
 project (libGammu C)
 
 MACRO_TUNE_COMPILER("-Wwrite-strings")
+MACRO_TUNE_COMPILER("-Wredundant-decls")
 
 set (LIBRARY_SRC
     gsmcomon.c
