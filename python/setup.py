@@ -275,7 +275,7 @@ class build_ext_gammu(distutils.command.build_ext.build_ext, object):
         self.write_config()
         super(build_ext_gammu, self).run()
 
-gammumodule = Extension('gammu.Core',
+gammumodule = Extension('gammu._gammu',
     include_dirs = ['.'],
     sources = [
         'errors.c',
