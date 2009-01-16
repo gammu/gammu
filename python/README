@@ -35,7 +35,9 @@ Developers might be interested in snapshot or version control system
 (Subversion is being used), information about accessing these is
 available at <http://cihar.com/gammu/python/>.
 
-Anonymous Subversion is available using <svn://svn.cihar.com/python-gammu>,
-there is also web browser for it - <http://viewsvn.cihar.com/python-gammu>.
+Anonymous Subversion is available using
+<svn://svn.cihar.com/gammu/trunk/python>,
+there is also web browser for it -
+<http://viewsvn.cihar.com/gammu/trunk/python>.
 
 # vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
