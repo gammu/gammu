@@ -30,6 +30,7 @@ Usage: ./configure [options]
 --enable-backup     enable backup support
 --enable-win32      enable mingw crosscomilation
 --enable-protection enable compile time protections
+--with-python=<path> path to Python interpreter
 
 All enable params have their disable counterparts.
 
@@ -50,6 +51,7 @@ CMAKE_DEBUG=
 CMAKE_BACKUP=
 CMAKE_CROSS=
 CMAKE_PROTECTION=
+CMAKE_PYTHON=
 
 # process command line
 while [ "$#" -gt 0 ] ; do
@@ -59,6 +61,9 @@ while [ "$#" -gt 0 ] ; do
             ;;
         --prefix=*)
             CMAKE_PREFIX="-DCMAKE_INSTALL_PREFIX=${1##--prefix=}"
+            ;;
+        --with-python=*)
+            CMAKE_PYTHON="-DBUILD_PYTHON=${1##--with-python=}"
             ;;
         --enable-backup)
             CMAKE_BACKUP="-DWITH_BACKUP=ON"
