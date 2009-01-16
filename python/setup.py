@@ -254,25 +254,9 @@ class build_ext_gammu(distutils.command.build_ext.build_ext, object):
         else:
             self.libraries += self.linklibs
 
-    def write_config(self):
-        """
-        We could use defines from compiler, but string defines are
-        broken on different platforms, so this way is safer.
-        """
-        include_path = os.path.join(self.build_temp, 'include')
-        filename = os.path.join(include_path, 'pyg-config.h')
-        distutils.dir_util.mkpath(include_path)
-        self.include_dirs.append(include_path)
-        if not distutils.dep_util.newer('setup.py', filename):
-            return
-        distutils.log.info('generating pyg-config.h')
-        header = file(filename, 'w')
-        header.close()
-
     def run (self):
         if not self.skip_deps:
             self.check_requirements()
-        self.write_config()
         super(build_ext_gammu, self).run()
 
 gammumodule = Extension('gammu._gammu',
