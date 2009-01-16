@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2009???? - 1.22.91
+20090116 - 1.22.91
 
 [-] * Fixed setting remote number for SMS in some cases.
 [-] * Fixed compilation under cygwin.
@@ -29,7 +29,7 @@ ChangeLog
 [-] * Fixed crash with too many animation frames.
 [-] * Fixed possible crash in LMB writer.
 [-] * Fixed several memory leaks.
-[+] * Better support for Samsung phones.
+[+] * Better support for Samsung phones (bug #790).
 [-] * Fixed Windows Service Startup (bug #451).
 [+] * New possibility to run more instances of Windows Service (bug #451).
     
