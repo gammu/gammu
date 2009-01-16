@@ -51,6 +51,13 @@ execute_process(
     OUTPUT_STRIP_TRAILING_WHITESPACE
     )
 
+execute_process(
+    COMMAND
+        ${PYTHON_EXECUTABLE} -c "import sys; print sys.pydebug"
+    OUTPUT_VARIABLE PYTHON_DEBUG
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    )
+
 include_directories (
     "${Gammu_BINARY_DIR}/include"
     ${PYTHON_INCLUDE_PATH}
@@ -63,6 +70,12 @@ set_target_properties (python_gammu PROPERTIES
     INSTALL_RPATH ""
     INSTALL_RPATH_USE_LINK_PATH OFF
     OUTPUT_NAME gammu/_gammu)
+
+if (PYTHON_DEBUG STREQUAL True)
+    set_target_properties (python_gammu PROPERTIES
+        OUTPUT_NAME gammu/_gammu_d)
+endif (PYTHON_DEBUG STREQUAL True)
+
 if (WIN32 AND NOT CYGWIN)
     set_target_properties (python_gammu PROPERTIES
          SUFFIX ".pyd"
