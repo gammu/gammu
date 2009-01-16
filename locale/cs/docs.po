@@ -109,10 +109,9 @@ msgid ""
 "next one specifies actions."
 msgstr ""
 
-# type: Plain text
 #: docs/user/gammu.1:29
 msgid "Commands can be specified with or without leading --."
-msgstr ""
+msgstr "Příkazy mohou být zadány s i bez úvodního --."
 
 # type: TP
 #: docs/user/gammu.1:31

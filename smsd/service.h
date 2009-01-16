@@ -5,10 +5,12 @@
 #define __smsd_service_h__
 #include "common.h"
 
+#define SERVICE_NAME_LENGTH (500)
+
 /**
  * Name of service.
  */
-extern char smsd_service_name[MAX_PATH];
+extern char smsd_service_name[SERVICE_NAME_LENGTH];
 
 /**
  * Starts service dispatcher.

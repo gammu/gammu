@@ -224,8 +224,8 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				params->run_service = true;
 				break;
 			case 'n':
-				strncpy(smsd_service_name, optarg, MAX_PATH);
-				smsd_service_name[MAX_PATH - 1] = 0;
+				strncpy(smsd_service_name, optarg, SERVICE_NAME_LENGTH);
+				smsd_service_name[SERVICE_NAME_LENGTH - 1] = 0;
 				break;
 #endif
 			case 'v':

@@ -12,7 +12,7 @@
 
 #include "service.h"
 
-char smsd_service_name[MAX_PATH] = "GammuSMSD";
+char smsd_service_name[SERVICE_NAME_LENGTH] = "GammuSMSD";
 
 SERVICE_STATUS m_ServiceStatus;
 
