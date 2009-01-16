@@ -90,34 +90,63 @@ make -j2
 checkexe gammu/gammu.exe
 signexe gammu/gammu.exe "Gammu"
 cpack
-mv Gammu-*-Windows.* ../
+mv Gammu-*-Windows.* $tmp/
 cd ..
 
-echo 'Building minimal Windows version...'
 mkdir build-win-minimal
-cd build-win-minimal
-cmake ../$repo-$version \
-    -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32.cmake \
-    -DBUILD_SHARED_LIBS=OFF \
-    $CMAKE_EXTRA \
-    -DCPACK_SYSTEM_NAME=Windows-Minimal \
-    -DWITH_Postgres=OFF \
-    -DWITH_MySQL=OFF \
-    -DWITH_GettextLibs=OFF \
-    -DWITH_Iconv=OFF \
-    -DWITH_CURL=OFF \
+for py in 2.4 2.5 ; do
+    pynodot=`echo $py | tr -d '.'`
+    echo "Building minimal Windows version with Python $py..."
+    cd $tmp/build-win-minimal
+    cmake ../$repo-$version \
+        -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32.cmake \
+        -DBUILD_SHARED_LIBS=OFF \
+        $CMAKE_EXTRA \
+        -DCPACK_SYSTEM_NAME=Windows-Minimal \
+        -DWITH_Postgres=OFF \
+        -DWITH_MySQL=OFF \
+        -DWITH_GettextLibs=OFF \
+        -DWITH_Iconv=OFF \
+        -DWITH_CURL=OFF \
+        -DPYTHON_LIBRARY=~/.wine/drive_c/Python$pynodot/libs/libpython$pynodot.a \
+        -DPYTHON_INCLUDE_PATH=~/.wine/drive_c/Python$pynodot/include/ \
+        -DPYTHON_EXECUTABLE=~/.wine/drive_c/Python$pynodot/python.exe \
 
-make -j2
-checkexe gammu/gammu.exe
-signexe gammu/gammu.exe "Gammu"
-cpack
-mv Gammu-*-Windows-Minimal.* ../
-cd ..
+    make -j2
+    checkexe gammu/gammu.exe
+    signexe gammu/gammu.exe "Gammu"
+    cpack
+    mkdir -p $tmp/$repo-$version/python/build/lib.win32-$py
+    mv Gammu-*-Windows-Minimal.* $tmp/
+    cp -r python/gammu $tmp/$repo-$version/python/build/lib.win32-$py/
+    cd ..
+    cd $repo-$version/python
+    wine \
+        ~/.wine/drive_c/Python$pynodot/python.exe setup.py \
+        bdist_wininst --skip-build --target-version $py
+    mv dist/*.exe $tmp/
+    if [ $py != "2.4" ] ; then
+        wine \
+            ~/.wine/drive_c/Python$pynodot/python.exe setup.py \
+            bdist_msi --skip-build --target-version $py
+        mv dist/*.msi $tmp/
+    fi
+    cd $tmp
+done
 
-# Sign binaries
-for bin in $tmp/*.exe ; do
+# Sign binaries (not for python-gammu, it breaks some code underneath)
+for bin in $tmp/Gammu*.exe ; do
     signexe $bin "Gammu installer"
 done
+for bin in $tmp/python-gammu*.msi ; do
+    signexe $bin "python-gammu installer"
+done
+
+# Submit to PyPi
+if [ "x$1" = "xbranch" ] ; then
+    $tmp/$repo-$version/python/setup.py register
+fi
+
 
 # We're done
 echo "Release is in $tmp directory"
