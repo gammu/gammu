@@ -11,7 +11,7 @@ L{gammu.StateMachine} or L{gammu._gammu.StateMachine}.
 __author__ = 'Michal Čihař'
 __email__ = 'michal@cihar.com'
 __license__ = '''
-Copyright © 2003 - 2008 Michal Čihař
+Copyright © 2003 - 2009 Michal Čihař
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of the GNU General Public License version 2 as published by

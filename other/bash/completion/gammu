@@ -1,5 +1,5 @@
 # Experimental bash completion for Gammu <http://www.gammu.org/>
-# Copyright (C) 2007 Michal Cihar <michal@cihar.com>
+# Copyright © 2007 - 2009 Michal Čihař <michal@cihar.com>
 # vim: expandtab sw=4 ts=4 sts=4:
 
 _gammu_commands() 
