@@ -267,7 +267,6 @@ class build_ext_gammu(distutils.command.build_ext.build_ext, object):
             return
         distutils.log.info('generating pyg-config.h')
         header = file(filename, 'w')
-        dumpconfig(header)
         header.close()
 
     def run (self):
@@ -275,24 +274,6 @@ class build_ext_gammu(distutils.command.build_ext.build_ext, object):
             self.check_requirements()
         self.write_config()
         super(build_ext_gammu, self).run()
-
-def dumpconfig(header):
-    header.write('/* Automatically generated header file for python-gammu */\n')
-    header.write('/* Generated on %s by setup.py */\n' % datetime.datetime.now().ctime())
-    header.write('\n')
-    header.write('#ifndef PYG_CONFIG_H\n')
-    header.write('#define PYG_CONFIG_H\n')
-    header.write('\n')
-    header.write('#define PYTHON_GAMMU_VERSION "%s"\n' % VERSION)
-    if sys.platform == 'win32':
-        header.write('#ifndef WIN32\n')
-        header.write('#  define WIN32\n')
-        header.write('#endif\n')
-    header.write('#endif\n')
-
-if len(sys.argv) > 1 and sys.argv[1] == '--dump-config':
-    dumpconfig(sys.stdout)
-    sys.exit(0)
 
 gammumodule = Extension('gammu.Core',
     include_dirs = ['.'],
