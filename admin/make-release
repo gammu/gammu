@@ -95,7 +95,7 @@ cd ..
 
 echo 'Building minimal Windows version...'
 mkdir build-win-minimal
-cd build-win*minimal
+cd build-win-minimal
 cmake ../$repo-$version \
     -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32.cmake \
     -DBUILD_SHARED_LIBS=OFF \
