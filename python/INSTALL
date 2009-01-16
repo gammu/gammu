@@ -1,6 +1,9 @@
 python-gammu installation
 =========================
 
+WARNING: python-gammu build is integrated into Gammu build and you
+should not use setup.py under usual conditions.
+
 
 UNIX systems - installation from sources
 ----------------------------------------
