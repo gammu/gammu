@@ -60,6 +60,7 @@ include_directories (
 add_library(python_gammu MODULE ${PYTHON_GAMMU_SRC})
 set_target_properties (python_gammu PROPERTIES
     PREFIX ""
+    INSTALL_RPATH ""
     OUTPUT_NAME gammu/_gammu)
 if (WIN32 AND NOT CYGWIN)
     set_target_properties (python_gammu PROPERTIES
