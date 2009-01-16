@@ -380,7 +380,6 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
 #   This should be enabled and only public functions exported, but it is far future
 #    MACRO_TUNE_COMPILER("-Wmissing-prototypes")
     MACRO_TUNE_COMPILER("-Wpointer-arith")
-    MACRO_TUNE_COMPILER("-Wredundant-decls")
     MACRO_TUNE_COMPILER("-Wshadow")
     MACRO_TUNE_COMPILER("-Wstrict-prototypes")
 #   We need some typecasting (especially for iconv)

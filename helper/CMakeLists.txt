@@ -5,6 +5,7 @@
 project (gammu-helper C)
 
 MACRO_TUNE_COMPILER("-Wwrite-strings")
+MACRO_TUNE_COMPILER("-Wredundant-decls")
 
 include_directories (
     "${Gammu_BINARY_DIR}/include"
