@@ -171,8 +171,8 @@ GSM_Error GSM_GetVCSLine(char **OutBuffer, char *Buffer, size_t *Pos, size_t Max
  */
 GSM_Error MyGetLine(char *Buffer, size_t *Pos, char *OutBuffer, size_t MaxLen, size_t MaxOutLen, bool MergeLines);
 
-char *EncodeSpecialChars(const unsigned char *buffer);
-char *DecodeSpecialChars(const unsigned char *buffer);
+char *EncodeSpecialChars(const char *buffer);
+char *DecodeSpecialChars(const char *buffer);
 
 #ifdef ICONV_FOUND
 

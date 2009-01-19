@@ -83,7 +83,7 @@ char *EncodeUnicodeSpecialChars(const unsigned char *buffer)
 }
 
 /* function changes #10 #13 chars to \n \r */
-char *EncodeSpecialChars(const unsigned char *buffer)
+char *EncodeSpecialChars(const char *buffer)
 {
 	int 			Pos=0, Pos2=0;
 	static unsigned char	Buf[10000];
@@ -150,7 +150,7 @@ char *DecodeUnicodeSpecialChars(const unsigned char *buffer)
 	return Buf;
 }
 
-char *DecodeSpecialChars(const unsigned char *buffer)
+char *DecodeSpecialChars(const char *buffer)
 {
 	int 			Pos=0, Pos2=0, level=0;
 	static unsigned char	Buf[10000];
