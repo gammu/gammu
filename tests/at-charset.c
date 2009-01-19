@@ -30,6 +30,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_Phone_ATGENData *Priv;
 	GSM_Phone_Data *Data;
 	char buffer[BUFFER_SIZE];
+	unsigned char ubuffer[BUFFER_SIZE * 2];
 	size_t result;
 	GSM_StateMachine *s;
 	GSM_Error error;
@@ -60,11 +61,19 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(strcmp(latin2utf8, buffer) == 0);
 	test_result(strncmp(latin2utf8, buffer, result) == 0);
 
+	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
+	gammu_test_result(error, "Decode - 1");
+	test_result(mywstrncmp(ubuffer, latin2text, sizeof(latin2text) / 2) == true);
+
 	Priv->Charset = AT_CHARSET_UTF8;
 	error = ATGEN_EncodeText(s, latin1text, sizeof(latin1text) / 2, buffer, sizeof(buffer), &result);
 	gammu_test_result(error, "Encode - 2");
 	test_result(strncmp(latin1utf8, buffer, result) == 0);
 	test_result(strcmp(latin1utf8, buffer) == 0);
+
+	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
+	gammu_test_result(error, "Decode - 2");
+	test_result(mywstrncmp(ubuffer, latin1text, sizeof(latin1text) / 2) == true);
 
 #ifdef ICONV_FOUND
 	Priv->Charset = AT_CHARSET_PCCP437;
@@ -73,17 +82,29 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(strncmp(latin1cp437, buffer, result) == 0);
 	test_result(strcmp(latin1cp437, buffer) == 0);
 
+	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
+	gammu_test_result(error, "Decode - 3");
+	test_result(mywstrncmp(ubuffer, latin1text, sizeof(latin1text) / 2) == true);
+
 	Priv->Charset = AT_CHARSET_ISO88591;
 	error = ATGEN_EncodeText(s, latin1text, sizeof(latin1text) / 2, buffer, sizeof(buffer), &result);
 	gammu_test_result(error, "Encode - 4");
 	test_result(strncmp(latin1iso88591, buffer, result) == 0);
 	test_result(strcmp(latin1iso88591, buffer) == 0);
 
+	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
+	gammu_test_result(error, "Decode - 4");
+	test_result(mywstrncmp(ubuffer, latin1text, sizeof(latin1text) / 2) == true);
+
 	Priv->Charset = AT_CHARSET_ISO88592;
 	error = ATGEN_EncodeText(s, latin2text, sizeof(latin2text) / 2, buffer, sizeof(buffer), &result);
 	gammu_test_result(error, "Encode - 5");
 	test_result(strncmp(latin2iso88592, buffer, result) == 0);
 	test_result(strcmp(latin2iso88592, buffer) == 0);
+
+	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
+	gammu_test_result(error, "Decode - 5");
+	test_result(mywstrncmp(ubuffer, latin2text, sizeof(latin2text) / 2) == true);
 
 #endif
 	/* Free state machine */
