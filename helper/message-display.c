@@ -411,9 +411,11 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, cons
 			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
 			break;
 		case SMS_NokiaOperatorLogo:
-			printf(_("Operator logo for %s network (%s, %s)"),
-				SMSInfo.Entries[i].Bitmap->Bitmap[0].NetworkCode,
-				DecodeUnicodeConsole(GSM_GetNetworkName(SMSInfo.Entries[i].Bitmap->Bitmap[0].NetworkCode)),
+			printf(_("Operator logo for %s network"),
+				SMSInfo.Entries[i].Bitmap->Bitmap[0].NetworkCode);
+			printf(" (%s",
+				DecodeUnicodeConsole(GSM_GetNetworkName(SMSInfo.Entries[i].Bitmap->Bitmap[0].NetworkCode)));
+			printf(", %s)",
 				DecodeUnicodeConsole(GSM_GetCountryName(SMSInfo.Entries[i].Bitmap->Bitmap[0].NetworkCode)));
 			printf("\n\n");
 			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
@@ -424,7 +426,8 @@ void DisplayMultiSMSInfo (GSM_MultiSMSMessage *sms, bool eachsms, bool ems, cons
 			break;
 		case SMS_NokiaPictureImageLong:
 			printf("%s\n", _("Picture Image"));
-			if (UnicodeLength(SMSInfo.Entries[i].Bitmap->Bitmap[0].Text)!=0) printf(LISTFORMAT "\"%s\"\n\n", _("Text"),DecodeUnicodeConsole(SMSInfo.Entries[i].Bitmap->Bitmap[0].Text));
+			if (UnicodeLength(SMSInfo.Entries[i].Bitmap->Bitmap[0].Text) != 0)
+				printf(LISTFORMAT "\"%s\"\n\n", _("Text"),DecodeUnicodeConsole(SMSInfo.Entries[i].Bitmap->Bitmap[0].Text));
 			GSM_PrintBitmap(stdout,&SMSInfo.Entries[i].Bitmap->Bitmap[0]);
 			break;
 		case SMS_NokiaProfileLong:
