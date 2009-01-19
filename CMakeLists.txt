@@ -333,9 +333,13 @@ if (ICONV_FOUND)
 endif (ICONV_FOUND)
 
 if (GETTEXTLIBS_FOUND)
-    if (NOT "${GETTEXT_LIBRARIES}" STREQUAL "" AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib/libc.so")
+    if (NOT "${GETTEXT_LIBRARIES}" STREQUAL ""
+            AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib/libc.so"
+            AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib64/libc.so")
         set (GAMMU_LIBS "${GAMMU_LIBS} -l${GETTEXT_LIBRARIES}")
-    endif (NOT "${GETTEXT_LIBRARIES}" STREQUAL "" AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib/libc.so")
+    endif (NOT "${GETTEXT_LIBRARIES}" STREQUAL ""
+            AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib/libc.so"
+            AND NOT "${GETTEXT_LIBRARIES}" STREQUAL "/usr/lib64/libc.so")
 endif (GETTEXTLIBS_FOUND)
 
 set (SMSD_LIBS "")
@@ -462,8 +466,8 @@ if (BUILD_SHARED_LIBS)
     set (GAMMU_PRIVATE_LIBS "" CACHE INTERNAL "Private libraries for gammu library")
     set (SMSD_PRIVATE_LIBS "" CACHE INTERNAL "Private libraries for gammu smsd library")
 else (BUILD_SHARED_LIBS)
-    string(REGEX REPLACE "-l(/usr)?/lib/lib([^ ]*).so" "-l\\2" G_LIB "${GAMMU_LIBS}")
-    string(REGEX REPLACE "-l(/usr)?/lib/lib([^ ]*).so" "-l\\2" S_LIB "${SMSD_LIBS}")
+    string(REGEX REPLACE "-l(/usr)?(/local)?/lib(64)?/lib([^ ]*).so" "-l\\4" G_LIB "${GAMMU_LIBS}")
+    string(REGEX REPLACE "-l(/usr)?(/local)?/lib(64)?/lib([^ ]*).so" "-l\\4" S_LIB "${SMSD_LIBS}")
     set (GAMMU_PRIVATE_LIBS "${G_LIB}" CACHE INTERNAL "Private libraries for gammu library")
     set (SMSD_PRIVATE_LIBS "${S_LIB}" CACHE INTERNAL "Private libraries for gammu smsd library")
 endif (BUILD_SHARED_LIBS)
