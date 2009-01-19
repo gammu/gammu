@@ -84,6 +84,14 @@ int main(int argc UNUSED, char **argv UNUSED)
 	Priv->Charset = AT_CHARSET_UCS2;
 	Priv->Manufacturer = AT_Motorola;
 	error = ATGEN_ParseReply(s,
+			"+CPBR: 419,\"030450566735\",129,56697263686F77204B6C696E696B756D2053742E20333100",
+			"+CPBR: @i, @p, @I, @e",
+			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE);
+	gammu_test_result(error, "+CPBR: @i, @p, @I, @e");
+
+	Priv->Charset = AT_CHARSET_UCS2;
+	Priv->Manufacturer = AT_Motorola;
+	error = ATGEN_ParseReply(s,
 			"+CPBR: 212,\"mlaubner@web.de\",128,004D0061006E00660072006500640020004C006100750062006E00650072",
 			"+CPBR: @i, @p, @I, @s",
 			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE);
@@ -113,6 +121,14 @@ int main(int argc UNUSED, char **argv UNUSED)
 		printf("%s\n", GSM_ErrorString(error));
 		return 1;
 	}
+
+	error = ATGEN_ParseReply(s,
+					"+CMGL:1,0,,26",
+					"+CMGL: @i, @r, @p, @0",
+					&i,
+					buffer, BUFFER_SIZE,
+					buffer, BUFFER_SIZE);
+	gammu_test_result(error, "+CMGL: @i, @r, @p, @0");
 
 	Priv->Charset = AT_CHARSET_GSM;
 	Priv->Manufacturer = AT_Motorola;
