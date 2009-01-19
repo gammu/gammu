@@ -245,7 +245,7 @@ int pdu_decode(const char *buffer) {
 			vp = hex2number(buffer + pos, 2);
 			if (vp < 0) return vp;
 			pos += 2;
-			printf("DCS = 0x%02X\n", vp);
+			printf("VP = 0x%02X\n", vp);
 		} else if (vpf == 3) {
 			ret = pdu_get_timestamp(buffer + pos);
 			if (ret < 0) return ret;
