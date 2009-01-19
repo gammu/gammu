@@ -13,9 +13,11 @@
 #define BUFFER_SIZE ((size_t)16384)
 
 unsigned char latin1text[] = { 0x00, 0xed, 0x00, 0xed, 0x00, 0xed, 0x00, 0xe1, 0x00, 0xe1, 0x00, 0xe1, 0x00, 0xe1, 0x00, 0xe1, 0x00, 0xe9, 0x00, 0xe9, 0x00, 0xe9, 0x00, 0xe9, 0x00, 0xe9, 0x00, 0x00 };
+unsigned char latin1ucs[] = "00ED00ED00ED00E100E100E100E100E100E900E900E900E900E9";
 char latin1utf8[] = "íííáááááééééé";
 
-unsigned char latin2text[] = { 0x00, 0xed, 0x01, 0x1b, 0x00, 0xe1, 0x01, 'a' , 0x00, 0xfd, 0x01, 'Y' , 0x01, '\r', 0x00, 0xfd, 0x00, 0xed, 0x01, '\r', 0x01, 'Y' , 0x01, 0x1b, 0x00, 0x00 };
+unsigned char latin2text[] = { 0x00, 0xed, 0x01, 0x1b, 0x00, 0xe1, 0x01, 0x61, 0x00, 0xfd, 0x01, 0x59, 0x01, 0x0d, 0x00, 0xfd, 0x00, 0xed, 0x01, 0x0d, 0x01, 0x59, 0x01, 0x1b, 0x00, 0x00 };
+unsigned char latin2ucs[] = "00ED011B00E1016100FD0159010D00FD00ED010D0159011B";
 char latin2utf8[] = "íěášýřčýíčřě";
 
 #ifdef ICONV_FOUND
@@ -107,6 +109,27 @@ int main(int argc UNUSED, char **argv UNUSED)
 	test_result(mywstrncmp(ubuffer, latin2text, sizeof(latin2text) / 2) == true);
 
 #endif
+
+	Priv->Charset = AT_CHARSET_UCS2;
+	error = ATGEN_EncodeText(s, latin2text, sizeof(latin2text) / 2, buffer, sizeof(buffer), &result);
+	gammu_test_result(error, "Encode - 6");
+	test_result(strcmp(latin2ucs, buffer) == 0);
+	test_result(strncmp(latin2ucs, buffer, result) == 0);
+
+	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
+	gammu_test_result(error, "Decode - 6");
+	test_result(mywstrncmp(ubuffer, latin2text, sizeof(latin2text) / 2) == true);
+
+	Priv->Charset = AT_CHARSET_UCS2;
+	error = ATGEN_EncodeText(s, latin1text, sizeof(latin1text) / 2, buffer, sizeof(buffer), &result);
+	gammu_test_result(error, "Encode - 7");
+	test_result(strncmp(latin1ucs, buffer, result) == 0);
+	test_result(strcmp(latin1ucs, buffer) == 0);
+
+	error = ATGEN_DecodeText(s, buffer, result, ubuffer, sizeof(ubuffer), false, false);
+	gammu_test_result(error, "Decode - 7");
+	test_result(mywstrncmp(ubuffer, latin1text, sizeof(latin1text) / 2) == true);
+
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
