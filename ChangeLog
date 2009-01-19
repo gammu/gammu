@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2009???? - 1.22.92
+
+[-] * Fixed getting of network name from saved message.
     
 20090116 - 1.22.91
 
