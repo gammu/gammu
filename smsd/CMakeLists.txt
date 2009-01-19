@@ -4,8 +4,7 @@
 
 project (gammu-smsd C)
 
-MACRO_TUNE_COMPILER("-Wwrite-strings")
-MACRO_TUNE_COMPILER("-Wredundant-decls")
+include(GammuTuneCompiler)
 
 set (LIBRARY_SRC
     smsdcore.c

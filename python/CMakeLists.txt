@@ -4,6 +4,9 @@
 
 project (python-gammu C)
 
+# Needed for Python at least for PyObject and PyTypeObject handling
+MACRO_TUNE_COMPILER("-fno-strict-aliasing")
+
 # Python has defined these functions, but MinGW does also have them...
 if (MINGW)
     check_symbol_exists (acosh "math.h" HAVE_ACOSH)
