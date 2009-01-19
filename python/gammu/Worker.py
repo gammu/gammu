@@ -225,7 +225,8 @@ class GammuThread(threading.Thread):
                                 )
                 except IndexError:
                     try:
-                        self._queue.task_done()
+                        if task.name() != 'Init':
+                            self._queue.task_done()
                     except AttributeError:
                         # This works since python 2.5
                         pass
