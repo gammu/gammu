@@ -53,7 +53,9 @@ execute_process(
 
 execute_process(
     COMMAND
-        ${PYTHON_EXECUTABLE} -c "import sys; print sys.pydebug"
+        ${PYTHON_EXECUTABLE} -c "import sys
+if hasattr(sys, 'pydebug'):
+    print sys.pydebug"
     OUTPUT_VARIABLE PYTHON_DEBUG
     OUTPUT_STRIP_TRAILING_WHITESPACE
     )
