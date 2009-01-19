@@ -8,10 +8,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu-docs 1.22.91\n"
+"Project-Id-Version: Gammu-docs 1.22.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-01-15 17:25+0100\n"
-"PO-Revision-Date: 2009-01-15 17:39+0100\n"
+"PO-Revision-Date: 2009-01-19 16:03+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -140,7 +140,7 @@ msgstr "B<answercall>I< [ID]>"
 # type: Plain text
 #: docs/user/gammu.1:42
 msgid "Answer incoming call."
-msgstr ""
+msgstr "Přijmout příchozí hovor."
 
 # type: TP
 #: docs/user/gammu.1:43
@@ -151,7 +151,7 @@ msgstr "B<cancelcall>I< [ID]>"
 # type: Plain text
 #: docs/user/gammu.1:46
 msgid "Cancel incoming call"
-msgstr ""
+msgstr "Zrušit příchozí hovor."
 
 # type: TP
 #: docs/user/gammu.1:47
@@ -2946,6 +2946,7 @@ msgstr "AUTOR"
 #: docs/user/gammu.1:2131
 msgid "You can contact authors on E<lt>gammu-users@lists.sourceforge.netE<gt>."
 msgstr ""
+"Autory můžete kontaktovat na E<lt>gammu-users@lists.sourceforge.netE<gt>."
 
 # type: Plain text
 #: docs/user/gammu.1:2137
@@ -2953,6 +2954,8 @@ msgid ""
 "I<Michal Cihar> E<lt>michal@cihar.comE<gt> is current project maintainer and "
 "contributor of most of AT and OBEX code."
 msgstr ""
+"I<Michal Čihař> E<lt>michal@cihar.comE<gt> je v současné době správce "
+"projektu a autor většiny kódu pro práci s AT příkazy a OBEXem."
 
 # type: Plain text
 #: docs/user/gammu.1:2142
@@ -2960,6 +2963,8 @@ msgid ""
 "I<Marcin Wiacek> E<lt>marcin@mwiacek.comE<gt> is project iniciator and "
 "contributor of most Nokia code."
 msgstr ""
+"I<Marcin Wiącek> E<lt>marcin@mwiacek.comE<gt> založil projekt a napsal "
+"většinu kódu pro telefony Nokia."
 
 # type: Plain text
 #: docs/user/gammu.1:2148
@@ -2975,6 +2980,8 @@ msgid ""
 "Many other people have helped with various features, check ChangeLog for "
 "more details."
 msgstr ""
+"Mnoho dalších lidí pomohlo s různými funkcemi, podívejte se do ChangeLogu "
+"pro více podrobností."
 
 # type: SH
 #: docs/user/gammu.1:2153 docs/user/gammurc.5:217 docs/user/gammu-smsdrc.5:284
@@ -3001,7 +3008,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu.1:2162
 msgid "Related programs which can be used with GSM modem:"
-msgstr ""
+msgstr "Související programy, které mohou být použity s GSM modemem:"
 
 # type: Plain text
 #: docs/user/gammu.1:2164
@@ -3011,7 +3018,7 @@ msgstr "cu(1), gnokii(1), minicom(1)"
 # type: Plain text
 #: docs/user/gammu.1:2166
 msgid "Graphical interfaces for Gammu:"
-msgstr ""
+msgstr "Grafické nadstavby pro Gammu:"
 
 # type: Plain text
 #: docs/user/gammu.1:2168

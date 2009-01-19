@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-15 17:41+0100\n"
+"POT-Creation-Date: 2009-01-19 16:04+0100\n"
 "PO-Revision-Date: 2008-12-02 18:38+0100\n"
 "Last-Translator: Daniel Campos <daniel.campos@juntaextremadura.net>\n"
 "Language-Team: Español\n"
@@ -661,7 +661,7 @@ msgstr "Alarma silenciosa"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:828
 #: gammu/calendar.c:1044 gammu/message.c:172 gammu/misc.c:946
-#: helper/memory-display.c:117 helper/message-display.c:427
+#: helper/memory-display.c:117 helper/message-display.c:430
 #, c-format
 msgid "Text"
 msgstr "Texto"
@@ -2889,7 +2889,7 @@ msgstr "Logo de inicio"
 msgid "Operator logo"
 msgstr "Logo de operador"
 
-#: gammu/misc.c:1567 helper/message-display.c:426
+#: gammu/misc.c:1567 helper/message-display.c:428
 #, c-format
 msgid "Picture Image"
 msgstr "Imagen"
@@ -3002,7 +3002,7 @@ msgstr "Tonos del teclado"
 msgid "Warning (games) tones"
 msgstr "Tonos de aviso (juegos)"
 
-#: gammu/misc.c:1886 helper/message-display.c:422
+#: gammu/misc.c:1886 helper/message-display.c:424
 msgid "Screen saver"
 msgstr "Salvapantallas"
 
@@ -4116,44 +4116,44 @@ msgstr "Logo de llamada"
 
 #: helper/message-display.c:414
 #, fuzzy, c-format
-msgid "Operator logo for %s network (%s, %s)"
+msgid "Operator logo for %s network"
 msgstr ""
 "Logo de operador para la red %s (%s,%s)\n"
 "\n"
 
-#: helper/message-display.c:431
+#: helper/message-display.c:434
 msgid "Profile"
 msgstr "Perfil"
 
-#: helper/message-display.c:451
+#: helper/message-display.c:454
 msgid "EMS sound ID"
 msgstr "ID de sonido EMS"
 
-#: helper/message-display.c:454
+#: helper/message-display.c:457
 msgid "EMS animation ID"
 msgstr "ID de animación EMS"
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:488 helper/message-display.c:506
+#: helper/message-display.c:491 helper/message-display.c:509
 #: helper/printing.c:18
 msgid "Error"
 msgstr "Error"
 
-#: helper/message-display.c:521
+#: helper/message-display.c:524
 #, fuzzy
 msgid "Data PDU"
 msgstr "datos (CSD)"
 
-#: helper/message-display.c:522
+#: helper/message-display.c:525
 #, fuzzy
 msgid "Number of bits"
 msgstr "Número de mensajes: %i"
 
-#: helper/message-display.c:524
+#: helper/message-display.c:527
 msgid "UDH"
 msgstr ""
 
-#: helper/message-display.c:540
+#: helper/message-display.c:543
 msgid "Whole PDU"
 msgstr ""
 

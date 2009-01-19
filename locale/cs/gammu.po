@@ -6,10 +6,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.22.91\n"
+"Project-Id-Version: Gammu 1.22.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-15 17:51+0100\n"
-"PO-Revision-Date: 2009-01-15 17:51+0100\n"
+"POT-Creation-Date: 2009-01-19 16:08+0100\n"
+"PO-Revision-Date: 2009-01-19 16:08+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -640,7 +640,7 @@ msgstr "Tiché upozornění"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:828
 #: gammu/calendar.c:1044 gammu/message.c:172 gammu/misc.c:946
-#: helper/memory-display.c:117 helper/message-display.c:427
+#: helper/memory-display.c:117 helper/message-display.c:430
 #, c-format
 msgid "Text"
 msgstr "Text"
@@ -1981,7 +1981,7 @@ msgstr "Načítám telefonní seznam:"
 
 #: gammu/message.c:347 gammu/message.c:448 gammu/message.c:900
 msgid "Corrupted message, skipping"
-msgstr ""
+msgstr "Poškozená zpráva, přeskakuji"
 
 #: gammu/message.c:360 gammu/message.c:495
 #, c-format
@@ -2147,12 +2147,12 @@ msgstr "Odesílám zprávu ze složky \"%s\", pozice %i\n"
 #: gammu/message.c:797 gammu/message.c:821
 #, c-format
 msgid "....waiting for network answer"
-msgstr ""
+msgstr "...čekám na odpověď sítě"
 
 #: gammu/message.c:816
 #, c-format
 msgid "Sending SMS %i/%i"
-msgstr ""
+msgstr "Odesílám SMS %i/%i"
 
 #: gammu/message.c:834
 msgid "Something went wrong, uknown message operation!\n"
@@ -2249,7 +2249,7 @@ msgstr "Informace o hovoru"
 #: gammu/misc.c:275
 #, c-format
 msgid "ID %i, "
-msgstr ""
+msgstr "ID %i, "
 
 #: gammu/misc.c:277
 #, c-format
@@ -2263,7 +2263,7 @@ msgstr ""
 
 #: gammu/misc.c:279
 msgid "call started"
-msgstr ""
+msgstr "hovor probíhá"
 
 #: gammu/misc.c:280
 msgid "end of call (unknown side)"
@@ -2284,15 +2284,15 @@ msgstr ""
 
 #: gammu/misc.c:284
 msgid "call held"
-msgstr ""
+msgstr "hovor je pozdržen"
 
 #: gammu/misc.c:285
 msgid "call resumed"
-msgstr ""
+msgstr "hovor je obnoven"
 
 #: gammu/misc.c:286
 msgid "call switched"
-msgstr ""
+msgstr "hovor byl přepojen"
 
 #: gammu/misc.c:293
 #, c-format
@@ -2547,7 +2547,7 @@ msgstr "Jméno skupiny"
 
 #: gammu/misc.c:884 gammu/misc.c:887
 msgid "default"
-msgstr ""
+msgstr "výchozí"
 
 #: gammu/misc.c:887 gammu/misc.c:889 gammu/misc.c:902 gammu/misc.c:909
 #: helper/memory-display.c:89
@@ -2836,7 +2836,7 @@ msgstr "Úvodní logo"
 msgid "Operator logo"
 msgstr "Logo operátora"
 
-#: gammu/misc.c:1567 helper/message-display.c:426
+#: gammu/misc.c:1567 helper/message-display.c:428
 #, c-format
 msgid "Picture Image"
 msgstr ""
@@ -2892,7 +2892,7 @@ msgstr ""
 
 #: gammu/misc.c:1792
 msgid "No PIN code entered!"
-msgstr ""
+msgstr "Nebyl zadán žádný PIN kód!"
 
 #: gammu/misc.c:1833
 #, c-format
@@ -2949,7 +2949,7 @@ msgstr "Zvuky klávesnice"
 msgid "Warning (games) tones"
 msgstr ""
 
-#: gammu/misc.c:1886 helper/message-display.c:422
+#: gammu/misc.c:1886 helper/message-display.c:424
 msgid "Screen saver"
 msgstr "Spořič obrazovky"
 
@@ -3131,7 +3131,7 @@ msgstr "Typ hovoru"
 #: gammu/misc.c:2149 gammu/misc.c:2163
 #, c-format
 msgid "voice"
-msgstr ""
+msgstr "hlas"
 
 #: gammu/misc.c:2150 gammu/misc.c:2164 helper/message-display.c:85
 #, c-format
@@ -3141,12 +3141,12 @@ msgstr "fax"
 #: gammu/misc.c:2151 gammu/misc.c:2165
 #, c-format
 msgid "data"
-msgstr ""
+msgstr "data"
 
 #: gammu/misc.c:2152
 #, c-format
 msgid "data & fax & voice"
-msgstr ""
+msgstr "data & fax & hlas"
 
 #: gammu/misc.c:2156
 #, c-format
@@ -3243,12 +3243,12 @@ msgstr ""
 #: gammu/nokia.c:717
 #, c-format
 msgid "Adding \"%s\""
-msgstr ""
+msgstr "Přidávám \"%s\""
 
 #: gammu/nokia.c:718
 #, c-format
 msgid " version %s"
-msgstr ""
+msgstr " verze %s"
 
 #: gammu/nokia.c:719
 #, c-format
@@ -3262,19 +3262,19 @@ msgstr ""
 #: gammu/nokia.c:803 gammu/nokia.c:836
 #, c-format
 msgid "  Deleting %s\n"
-msgstr ""
+msgstr "  Odstraňuji %s\n"
 
 #: gammu/nokia.c:859
 msgid "Writing JAD file:"
-msgstr ""
+msgstr "Zapisuji JAD soubor:"
 
 #: gammu/nokia.c:878
 msgid "Writing JAR file:"
-msgstr ""
+msgstr "Zapisuji JAR soubor:"
 
 #: gammu/nokia.c:953
 msgid "Writing file:"
-msgstr ""
+msgstr "Zapisuji soubor:"
 
 #: gammu/search.c:144
 #, c-format
@@ -4036,40 +4036,40 @@ msgstr "Logo skupiny"
 
 #: helper/message-display.c:414
 #, c-format
-msgid "Operator logo for %s network (%s, %s)"
-msgstr ""
+msgid "Operator logo for %s network"
+msgstr "Logo operátora pro síť %s"
 
-#: helper/message-display.c:431
+#: helper/message-display.c:434
 msgid "Profile"
 msgstr "Profil"
 
-#: helper/message-display.c:451
+#: helper/message-display.c:454
 msgid "EMS sound ID"
 msgstr ""
 
-#: helper/message-display.c:454
+#: helper/message-display.c:457
 msgid "EMS animation ID"
 msgstr ""
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:488 helper/message-display.c:506
+#: helper/message-display.c:491 helper/message-display.c:509
 #: helper/printing.c:18
 msgid "Error"
 msgstr "Chyba"
 
-#: helper/message-display.c:521
+#: helper/message-display.c:524
 msgid "Data PDU"
 msgstr "PDU dat"
 
-#: helper/message-display.c:522
+#: helper/message-display.c:525
 msgid "Number of bits"
 msgstr "Počet bitů"
 
-#: helper/message-display.c:524
+#: helper/message-display.c:527
 msgid "UDH"
 msgstr "UDH"
 
-#: helper/message-display.c:540
+#: helper/message-display.c:543
 msgid "Whole PDU"
 msgstr "Celé PDU"
 

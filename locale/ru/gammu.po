@@ -5,9 +5,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Gammu 1.22.91\n"
+"Project-Id-Version: Gammu 1.22.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-15 17:41+0100\n"
+"POT-Creation-Date: 2009-01-19 16:04+0100\n"
 "PO-Revision-Date: 2008-01-27 17:07+0100\n"
 "Last-Translator: Даниил Аплеев <apleev@mail.ru>\n"
 "Language-Team: Language =ru\n"
@@ -733,7 +733,7 @@ msgstr "Тихий сигнал     : %s\n"
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:828
 #: gammu/calendar.c:1044 gammu/message.c:172 gammu/misc.c:946
-#: helper/memory-display.c:117 helper/message-display.c:427
+#: helper/memory-display.c:117 helper/message-display.c:430
 #, c-format
 msgid "Text"
 msgstr "Текст"
@@ -3140,7 +3140,7 @@ msgstr "Заставка"
 msgid "Operator logo"
 msgstr "Логотип оператора"
 
-#: gammu/misc.c:1567 helper/message-display.c:426
+#: gammu/misc.c:1567 helper/message-display.c:428
 #, c-format
 msgid "Picture Image"
 msgstr "Рисунок"
@@ -3263,7 +3263,7 @@ msgstr "Клавиатура заблокирована\n"
 msgid "Warning (games) tones"
 msgstr "Предупреждающие (игровые) звуки : "
 
-#: gammu/misc.c:1886 helper/message-display.c:422
+#: gammu/misc.c:1886 helper/message-display.c:424
 #, fuzzy
 msgid "Screen saver"
 msgstr "Хранитель экрана\n"
@@ -4492,24 +4492,24 @@ msgstr ""
 
 #: helper/message-display.c:414
 #, fuzzy, c-format
-msgid "Operator logo for %s network (%s, %s)"
+msgid "Operator logo for %s network"
 msgstr ""
 "Логотип оператора для сети %s (%s, %s)\n"
 "\n"
 
-#: helper/message-display.c:431
+#: helper/message-display.c:434
 #, fuzzy
 msgid "Profile"
 msgstr "Профиль\n"
 
-#: helper/message-display.c:451
+#: helper/message-display.c:454
 #, fuzzy
 msgid "EMS sound ID"
 msgstr ""
 "\n"
 "ID EMS-звука: %i\n"
 
-#: helper/message-display.c:454
+#: helper/message-display.c:457
 #, fuzzy
 msgid "EMS animation ID"
 msgstr ""
@@ -4517,28 +4517,28 @@ msgstr ""
 "ID EMS-анимации: %i\n"
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:488 helper/message-display.c:506
+#: helper/message-display.c:491 helper/message-display.c:509
 #: helper/printing.c:18
 #, fuzzy
 msgid "Error"
 msgstr "Ошибка\n"
 
-#: helper/message-display.c:521
+#: helper/message-display.c:524
 msgid "Data PDU"
 msgstr ""
 
-#: helper/message-display.c:522
+#: helper/message-display.c:525
 #, fuzzy
 msgid "Number of bits"
 msgstr ""
 "\n"
 "Количество SMS: %i\n"
 
-#: helper/message-display.c:524
+#: helper/message-display.c:527
 msgid "UDH"
 msgstr ""
 
-#: helper/message-display.c:540
+#: helper/message-display.c:543
 msgid "Whole PDU"
 msgstr ""
 
