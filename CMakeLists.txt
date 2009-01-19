@@ -416,7 +416,6 @@ if(CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_MINGW OR
         # Just silent this for now, too much code to fix here
         MACRO_TUNE_COMPILER("-Wno-unused-parameter")
         # Not sure if this is safe for all architectures
-        MACRO_TUNE_COMPILER("-fstrict-aliasing")
     endif (DEBUG)
 
     #
