@@ -433,6 +433,11 @@ add_executable(at-parser at-parser.c)
 target_link_libraries(at-parser libGammu)
 add_test(at-parser "${GAMMU_TEST_PATH}/at-parser${GAMMU_TEST_SUFFIX}")
 
+# AT text encoding/decoding
+add_executable(at-charset at-charset.c)
+target_link_libraries(at-charset libGammu)
+add_test(at-charset "${GAMMU_TEST_PATH}/at-charset${GAMMU_TEST_SUFFIX}")
+
 # Line parser tests
 add_executable(line-splitting line-splitting.c)
 target_link_libraries(line-splitting libGammu)

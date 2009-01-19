@@ -413,31 +413,31 @@ GSM_Error ATGEN_EncodeText(GSM_StateMachine *s,
   			break;
 #ifdef ICONV_FOUND
   		case AT_CHARSET_PCCP437:
-			IconvEncode("CP437", input, len, output, sizeof(output));
+			IconvEncode("CP437", input, 2 * len, output, outlength);
 			len = strlen(output);
 			break;
   		case AT_CHARSET_ISO88591:
-			IconvEncode("ISO-8859-1", input, len, output, sizeof(output));
+			IconvEncode("ISO-8859-1", input, 2 * len, output, outlength);
 			len = strlen(output);
 			break;
   		case AT_CHARSET_ISO88592:
-			IconvEncode("ISO-8859-2", input, len, output, sizeof(output));
+			IconvEncode("ISO-8859-2", input, 2 * len, output, outlength);
 			len = strlen(output);
 			break;
   		case AT_CHARSET_ISO88593:
-			IconvEncode("ISO-8859-3", input, len, output, sizeof(output));
+			IconvEncode("ISO-8859-3", input, 2 * len, output, outlength);
 			len = strlen(output);
 			break;
   		case AT_CHARSET_ISO88594:
-			IconvEncode("ISO-8859-4", input, len, output, sizeof(output));
+			IconvEncode("ISO-8859-4", input, 2 * len, output, outlength);
 			len = strlen(output);
 			break;
   		case AT_CHARSET_ISO88595:
-			IconvEncode("ISO-8859-5", input, len, output, sizeof(output));
+			IconvEncode("ISO-8859-5", input, 2 * len, output, outlength);
 			len = strlen(output);
 			break;
   		case AT_CHARSET_ISO88596:
-			IconvEncode("ISO-8859-6", input, len, output, sizeof(output));
+			IconvEncode("ISO-8859-6", input, 2 * len, output, outlength);
 			len = strlen(output);
 			break;
 #else
