@@ -454,6 +454,27 @@ GSM_Error ATGEN_EncodeText(GSM_StateMachine *s,
 		);
 
 /**
+ * Decodes text from phone encoding to internal representation.
+ *
+ * \param s State machine structure.
+ * \param input Input string.
+ * \param length Length of string to convert.
+ * \param output Storage for converted text.
+ * \param outlength Size of output storage.
+ * \param guess Allow guessing whether input is really encoded.
+ * \param phone Whether input is phone number, used only when guessing.
+ *
+ * \return Error code.
+ */
+GSM_Error ATGEN_DecodeText(GSM_StateMachine *s,
+		const unsigned char *input,
+		const size_t length,
+		unsigned char *output,
+		const size_t outlength,
+		const bool guess,
+		const bool phone);
+
+/**
  * Sets charset in phone according to preference.
  *
  * \param s State machine structure.
