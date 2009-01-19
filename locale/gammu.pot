@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: gammu 1.22.91\n"
+"Project-Id-Version: gammu 1.22.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-15 17:51+0100\n"
+"POT-Creation-Date: 2009-01-19 16:08+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -636,7 +636,7 @@ msgstr ""
 
 #: gammu/calendar.c:202 gammu/calendar.c:525 gammu/calendar.c:828
 #: gammu/calendar.c:1044 gammu/message.c:172 gammu/misc.c:946
-#: helper/memory-display.c:117 helper/message-display.c:427
+#: helper/memory-display.c:117 helper/message-display.c:430
 #, c-format
 msgid "Text"
 msgstr ""
@@ -2813,7 +2813,7 @@ msgstr ""
 msgid "Operator logo"
 msgstr ""
 
-#: gammu/misc.c:1567 helper/message-display.c:426
+#: gammu/misc.c:1567 helper/message-display.c:428
 #, c-format
 msgid "Picture Image"
 msgstr ""
@@ -2926,7 +2926,7 @@ msgstr ""
 msgid "Warning (games) tones"
 msgstr ""
 
-#: gammu/misc.c:1886 helper/message-display.c:422
+#: gammu/misc.c:1886 helper/message-display.c:424
 msgid "Screen saver"
 msgstr ""
 
@@ -4005,40 +4005,40 @@ msgstr ""
 
 #: helper/message-display.c:414
 #, c-format
-msgid "Operator logo for %s network (%s, %s)"
+msgid "Operator logo for %s network"
 msgstr ""
 
-#: helper/message-display.c:431
+#: helper/message-display.c:434
 msgid "Profile"
 msgstr ""
 
-#: helper/message-display.c:451
+#: helper/message-display.c:454
 msgid "EMS sound ID"
 msgstr ""
 
-#: helper/message-display.c:454
+#: helper/message-display.c:457
 msgid "EMS animation ID"
 msgstr ""
 
 #. l10n: Generic prefix for error messages
-#: helper/message-display.c:488 helper/message-display.c:506
+#: helper/message-display.c:491 helper/message-display.c:509
 #: helper/printing.c:18
 msgid "Error"
 msgstr ""
 
-#: helper/message-display.c:521
+#: helper/message-display.c:524
 msgid "Data PDU"
 msgstr ""
 
-#: helper/message-display.c:522
+#: helper/message-display.c:525
 msgid "Number of bits"
 msgstr ""
 
-#: helper/message-display.c:524
+#: helper/message-display.c:527
 msgid "UDH"
 msgstr ""
 
-#: helper/message-display.c:540
+#: helper/message-display.c:543
 msgid "Whole PDU"
 msgstr ""
 
