@@ -275,6 +275,7 @@ typedef struct {
 	GSM_AT_Charset		IRACharset;
 	GSM_AT_Feature		PBKSBNR;
 	GSM_AT_Feature		PBK_SPBR;
+	GSM_AT_Feature		PBK_MPBR;
 	size_t			NumberLength;
 	size_t			TextLength;
 	int			MemorySize;

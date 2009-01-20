@@ -19,6 +19,7 @@
 
 #include "../../gsmcomon.h"
 #include "../../gsmstate.h"
+#include "../../service/gsmpbk.h"
 #include "atgen.h"
 #include <string.h>
 #include "../../misc/coding/coding.h"
@@ -165,6 +166,108 @@ GSM_Error MOTOROLA_Banner(GSM_Protocol_Message msg UNUSED, GSM_StateMachine *s)
 {
 	s->Phone.Data.Priv.ATGEN.CurrentMode = 2;
 	return ERR_NONE;
+}
+
+
+GSM_Error MOTOROLA_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+ 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+
+ 	switch (Priv->ReplyState) {
+ 	case AT_Reply_OK:
+		/* FIXME: does phone give also some useful infromation here? */
+		Priv->PBK_MPBR = AT_AVAILABLE;
+
+		return ERR_NONE;
+	case AT_Reply_Error:
+		return ERR_UNKNOWN;
+	case AT_Reply_CMSError:
+	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
+ 	default:
+		return ERR_UNKNOWNRESPONSE;
+	}
+}
+
+GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s)
+{
+ 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+ 	GSM_MemoryEntry		*Memory = s->Phone.Data.Memory;
+	GSM_Error error;
+	const char *str;
+	int number_type, entry_type;
+
+	switch (Priv->ReplyState) {
+	case AT_Reply_OK:
+ 		smprintf(s, "Phonebook entry received\n");
+		Memory->EntriesNum = 2;
+		Memory->Entries[1].EntryType = PBK_Text_Name;
+
+		/* Get line from reply */
+		str = GetLineString(msg.Buffer, &Priv->Lines, 2);
+
+		/*
+		 * Parse reply string
+		 *
+		 * +MPBR: 18,"user@domain.net",128,"Contact Name",6,0,255,0,0,1,255,255,0,"",0,0,"","","","","","","",""
+		 */
+		error = ATGEN_ParseReply(s, str,
+					"+MPBR: @i, @s, @i, @s, @i, @0",
+					&Memory->Location,
+					Memory->Entries[0].Text, sizeof(Memory->Entries[0].Text),
+					&number_type,
+					Memory->Entries[1].Text, sizeof(Memory->Entries[1].Text),
+					&entry_type);
+		switch (entry_type) {
+			case 0:
+				Memory->Entries[0].EntryType = PBK_Number_Work;
+				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
+				break;
+			case 1:
+				Memory->Entries[0].EntryType = PBK_Number_Home;
+				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
+				break;
+			case 2:
+				Memory->Entries[0].EntryType = PBK_Number_General;
+				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
+				break;
+			case 3:
+				Memory->Entries[0].EntryType = PBK_Number_Mobile;
+				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
+				break;
+			case 4:
+				Memory->Entries[0].EntryType = PBK_Number_Fax;
+				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
+				break;
+			case 5:
+				Memory->Entries[0].EntryType = PBK_Number_Pager;
+				GSM_TweakInternationalNumber(Memory->Entries[0].Text, number_type);
+				break;
+			case 6:
+				Memory->Entries[0].EntryType = PBK_Text_Email;
+				break;
+			case 7:
+				Memory->Entries[0].EntryType = PBK_Text_Email; /* Mailing list */
+				break;
+			default:
+				Memory->Entries[0].EntryType = PBK_Text_Note;
+		}
+
+		if (error != ERR_NONE) {
+			return error;
+		}
+		return ERR_NONE;
+	case AT_Reply_Error:
+                return ERR_UNKNOWN;
+	case AT_Reply_CMSError:
+ 	        return ATGEN_HandleCMSError(s);
+	case AT_Reply_CMEError:
+	        return ATGEN_HandleCMEError(s);
+	default:
+		break;
+	}
+	return ERR_UNKNOWNRESPONSE;
 }
 
 #endif
