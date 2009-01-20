@@ -36,6 +36,13 @@ GSM_Error MOTOROLA_SetMode(GSM_StateMachine *s, const char *command);
  */
 GSM_Error MOTOROLA_Banner(GSM_Protocol_Message msg, GSM_StateMachine *s);
 
+/**
+ * Parses memory entry.
+ */
+GSM_Error MOTOROLA_ReplyGetMemory(GSM_Protocol_Message msg, GSM_StateMachine *s);
+
+GSM_Error MOTOROLA_ReplyGetMemoryInfo(GSM_Protocol_Message msg, GSM_StateMachine *s);
+
 #endif
 #endif
 
