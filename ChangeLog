@@ -20,6 +20,7 @@ ChangeLog
 [-] * Fixed getting of network name from saved message.
 [-] * Fixed encoding of text to some encodings in AT engine.
 [-] * Detect more Siemens CME error codes.
+[-] * Windows binary is again with MySQL support.
 [+] * Initial native support for Motorola phonebook (bug #748).
     
 20090116 - 1.22.91
