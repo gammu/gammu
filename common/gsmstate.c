@@ -736,6 +736,10 @@ int GSM_ReadDevice (GSM_StateMachine *s, bool waitforreply)
 	int	i;
 	GSM_DateTime	Date;
 
+	if (!GSM_IsConnected(s)) {
+		return ERR_NOTCONNECTED;
+	}
+
 	GSM_GetCurrentDateTime (&Date);
 	i=Date.Second;
 	while (i==Date.Second) {
