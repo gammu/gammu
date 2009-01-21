@@ -234,10 +234,10 @@ class GammuThread(threading.Thread):
                         # This works since python 2.5
                         pass
             except Queue.Empty:
-                # Read the device to catch possible incoming events
-                self._sm.ReadDevice()
                 if self._terminate:
                     break
+                # Read the device to catch possible incoming events
+                self._sm.ReadDevice()
 
     def kill(self):
         '''
