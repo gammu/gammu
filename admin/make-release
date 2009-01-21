@@ -86,6 +86,9 @@ cd build-win-shared
 cmake ../$repo-$version \
     -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32.cmake \
     -DBUILD_SHARED_LIBS=ON \
+    -DDLL_LIBMYSQL.DLL=~/win-cross/mysql/bin/libmysql.dll \
+    -DMYSQL_INCLUDE_DIR=~/win-cross/mysql/include \
+    -DMYSQL_LIBRARIES=~/win-cross/mysql/lib/libmysql.a \
     $CMAKE_EXTRA \
 
 make -j2
@@ -96,10 +99,31 @@ mv Gammu-*-Windows.* $tmp/
 cd ..
 
 mkdir build-win-minimal
+echo "Building minimal Windows version..."
+cd $tmp/build-win-minimal
+cmake ../$repo-$version \
+    -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32.cmake \
+    -DBUILD_SHARED_LIBS=OFF \
+    $CMAKE_EXTRA \
+    -DCPACK_SYSTEM_NAME=Windows-Minimal \
+    -DWITH_Postgres=OFF \
+    -DWITH_MySQL=OFF \
+    -DWITH_GettextLibs=OFF \
+    -DWITH_Iconv=OFF \
+    -DWITH_CURL=OFF \
+
+make -j2
+checkexe gammu/gammu.exe
+signexe gammu/gammu.exe "Gammu"
+cpack
+mv Gammu-*-Windows-Minimal.* $tmp/
+cd $tmp
+
+mkdir build-win-python
 for py in 2.4 2.5 ; do
     pynodot=`echo $py | tr -d '.'`
     echo "Building minimal Windows version with Python $py..."
-    cd $tmp/build-win-minimal
+    cd $tmp/build-win-python
     cmake ../$repo-$version \
         -DCMAKE_TOOLCHAIN_FILE=../$repo-$version/cmake/Toolchain-mingw32.cmake \
         -DBUILD_SHARED_LIBS=OFF \
@@ -108,19 +132,16 @@ for py in 2.4 2.5 ; do
         -DWITH_Postgres=OFF \
         -DWITH_MySQL=OFF \
         -DWITH_GettextLibs=OFF \
-        -DWITH_Iconv=OFF \
+        -DWITH_Iconv=ON \
         -DWITH_CURL=OFF \
         -DPYTHON_LIBRARY=~/.wine/drive_c/Python$pynodot/libs/libpython$pynodot.a \
         -DPYTHON_INCLUDE_PATH=~/.wine/drive_c/Python$pynodot/include/ \
         -DPYTHON_EXECUTABLE=~/.wine/drive_c/Python$pynodot/python.exe \
 
     make -j2
-    checkexe gammu/gammu.exe
-    signexe gammu/gammu.exe "Gammu"
-    cpack
     mkdir -p $tmp/$repo-$version/python/build/lib.win32-$py
-    mv Gammu-*-Windows-Minimal.* $tmp/
     cp -r python/gammu $tmp/$repo-$version/python/build/lib.win32-$py/
+    cp gammu/*.dll $tmp/$repo-$version/python/build/lib.win32-$py/gammu/
     cd ..
     cd $repo-$version/python
     wine \
