@@ -193,6 +193,7 @@ mkdir build-dir
 cd build-dir
 cmake ../ \
     -DBUILD_SHARED_LIBS=ON \
+    -DBUILD_PYTHON=/usr/bin/python \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DINSTALL_DOC_DIR=%gammu_docdir \
     -DINSTALL_LIB_DIR=%_lib \
