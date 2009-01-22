@@ -679,25 +679,25 @@ StateMachine_ReadDevice(StateMachineObject *self, PyObject *args, PyObject *kwds
 {
     static char         *kwlist[] = {"Wait", NULL};
     PyObject            *o = Py_None;
-    bool                wait;
+    bool                waiting;
     long int            result;
 
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "|O", kwlist, &o))
         return NULL;
 
     if (o == Py_None) {
-        wait = false;
+        waiting = false;
     } else if (o == Py_False) {
-        wait = false;
+        waiting = false;
     } else if (o == Py_True) {
-        wait = true;
+        waiting = true;
     } else {
         PyErr_SetString(PyExc_TypeError, "use None or bool as Wait!");
         return NULL;
     }
 
     BEGIN_PHONE_COMM
-    result = GSM_ReadDevice(self->s, wait);
+    result = GSM_ReadDevice(self->s, waiting);
     END_PHONE_COMM
 
     return PyInt_FromLong(result);
