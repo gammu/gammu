@@ -102,7 +102,11 @@ BuildRequires: %{dist_bluez_libs}
 %endif
 
 %if pqsql
+%if 0%{?mandriva_version} == 2009
+BuildRequires: postgresql8.3-devel
+%else
 BuildRequires: postgresql-devel
+%endif
 %endif
 
 %if %mysql
