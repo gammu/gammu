@@ -41,7 +41,11 @@ Vendor:         Michal Čihař <michal@cihar.com>
 %if 0%{?suse_version}
 
 # SUSE
+%if 0%{?suse_version} >= 1110
+%define dist_bluez_libs bluez-devel
+%else
 %define dist_bluez_libs bluez-libs >= 2.0
+%endif
 %if 0%{?suse_version} >= 1030
 %define dist_pkgconfig pkg-config
 %define dist_mysql_libs libmysqlclient-devel 
@@ -114,6 +118,8 @@ BuildRequires: %{dist_mysql_libs}
 %endif
 
 BuildRequires: python-devel
+
+BuildRequires: libcurl-devel
 
 BuildRequires: gettext cmake %{dist_pkgconfig}
 
@@ -201,6 +207,8 @@ rm -rf %buildroot
 mkdir %buildroot
 make -C build-dir install DESTDIR=%buildroot
 %find_lang %{name}
+%find_lang libgammu
+cat libgammu.lang >> %{name}.lang
 
 %post -p /sbin/ldconfig
 
@@ -211,15 +219,20 @@ make -C build-dir install DESTDIR=%buildroot
 %_bindir/*
 %_libdir/*.so.*
 %doc %_mandir/man1/*
+%doc %_mandir/man5/*
+%doc %_mandir/man7/*
+%lang(cs) %doc %_mandir/cs
 %doc %gammu_docdir
 
 %files devel
 %defattr(-,root,root)
 %_includedir/%name
 %_libdir/pkgconfig/%name.pc
+%_libdir/pkgconfig/%name-smsd.pc
 %_libdir/*.so
 
 %files -n python-gammu
+%defattr(-,root,root)
 %doc python/README python/AUTHORS python/COPYING python/examples
 %python_sitearch/*
 
