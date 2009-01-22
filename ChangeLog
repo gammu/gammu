@@ -23,6 +23,7 @@ ChangeLog
 [-] * Windows binary is again with MySQL support.
 [+] * Initial native support for Motorola phonebook (bug #748).
 [+] * Use getpass if available for PIN code prompt.
+[-] * Fixed parsing of phone number from incoming calls.
     
 20090116 - 1.22.91
 

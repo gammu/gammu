@@ -1824,7 +1824,10 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	unsigned char 	buffer[200];
 
 	call.Status 		= 0;
+	call.StatusCode		= 0;
 	call.CallIDAvailable 	= true;
+	call.PhoneNumber[0] = 0;
+	call.PhoneNumber[1] = 0;
 	smprintf(s, "Call info, ");
 	switch (msg.Buffer[3]) {
 	case 0x02:
@@ -1832,14 +1835,36 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		call.Status = GSM_CALL_CallEstablished;
 		break;
 	case 0x03:
-		smprintf(s, "Call started\n");
+	case 0x53:
+	case 0x05:
+		if (msg.Buffer[3] == 0x03) {
+			smprintf(s, "Call started\n");
+			call.Status = GSM_CALL_CallStart;
+		} else if (msg.Buffer[3] == 0x05) {
+			smprintf(s, "Incoming call\n");
+			call.Status = GSM_CALL_IncomingCall;
+		} else {
+			smprintf(s, "Outgoing call\n");
+			call.Status = GSM_CALL_OutgoingCall;
+		}
+/* Sample reply:
+01 |72r|02 |03 |01 |03 |07 |04 |01 |01 |01 |1C |11 |300|00 | 0B  .r...........0..
+00 |333|00 |322|00 |344|00 |399|00 |399|00 |355|00 |366|00 |377 .3.2.4.9.9.5.6.7
+00 |322|00 |311|00 |311|0E |1C |300|02 |0A |00 |00 |09 |00 |4AJ .2.1.1..0......J
+00 |6Fo|00 |72r|00 |69i|00 |73s|00 |20 |00 |41A|00 |63c|00 |63c .o.r.i.s. .A.c.c
+00 |00 |00 |00 |00 |00 |00 |00 |00 |00 |00 |00                  ............
+*/
 		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);/* such interpretation is in gnokii */
-		tmp = 6;
-		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,false);
-		smprintf(s, "Number     : \"%s\"\n",DecodeUnicodeString(buffer));
+		/* This is probably wrong, but I need more sample data to properly parse output */
+		if (msg.Buffer[6] == 7) {
+			tmp = 14;
+		} else {
+			tmp = 6;
+		}
+		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,false);
+		smprintf(s, "Number     : \"%s\"\n",DecodeUnicodeString(call.PhoneNumber));
 		/* FIXME: read name from frame */
 
-		call.Status = GSM_CALL_CallStart;
 		break;
 	case 0x04:
 		smprintf(s, "Remote end hang up\n");
@@ -1849,17 +1874,6 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		smprintf(s, "RR(?)      : %i\n",msg.Buffer[8]);
 		call.Status 	= GSM_CALL_CallRemoteEnd;
 		call.StatusCode = msg.Buffer[6];
-		break;
-	case 0x05:
-		smprintf(s, "Incoming call\n");
-		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);/* such interpretation is in gnokii */
-		tmp = 6;
-		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,false);
-		smprintf(s, "Number     : \"%s\"\n",DecodeUnicodeString(buffer));
-		/* FIXME: read name from frame */
-		call.Status = GSM_CALL_IncomingCall;
-		tmp = 6;
-		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,false);
 		break;
 	case 0x07:
 		smprintf(s, "Call answer initiated\n");
@@ -1921,17 +1935,6 @@ GSM_Error N71_65_ReplyCallInfo(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	case 0x27:
 		smprintf(s, "Call switched\n");
 		call.Status = GSM_CALL_CallSwitched;
-		break;
-	case 0x53:
-		smprintf(s, "Outgoing call\n");
-		smprintf(s, "Call mode  : %i\n",msg.Buffer[5]);/* such interpretation is in gnokii */
-		tmp = 6;
-		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,buffer,false);
-		smprintf(s, "Number     : \"%s\"\n",DecodeUnicodeString(buffer));
-		/* FIXME: read name from frame */
-		call.Status = GSM_CALL_OutgoingCall;
-		tmp = 6;
-		NOKIA_GetUnicodeString(s, &tmp, msg.Buffer,call.PhoneNumber,false);
 		break;
 	case 0xA6:
 	case 0xD2:
