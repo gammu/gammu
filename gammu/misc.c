@@ -1771,6 +1771,8 @@ void EnterSecurityCode(int argc UNUSED, char *argv[])
 {
 	GSM_SecurityCode Code;
 	GSM_Error error;
+	char message[200];
+	char *pass;
 
 	if (strcasecmp(argv[2],"PIN") == 0) {		Code.Type = SEC_Pin;
 	} else if (strcasecmp(argv[2],"PUK") == 0) {	Code.Type = SEC_Puk;
@@ -1782,16 +1784,22 @@ void EnterSecurityCode(int argc UNUSED, char *argv[])
 	}
 
 	if (strcmp(argv[3], "-") == 0) {
+		sprintf(message, _("Enter %s code: "), argv[2]);
+#ifdef HAVE_GETPASS
+		pass = getpass(message);
+		strcpy(Code.Code, pass);
+#else
 		/* Read code from stdin */
 #ifdef HAVE_UNISTD_H
 		if (isatty(fileno(stdin))) {
-			printf(_("Enter %s code: "), argv[2]);
+			printf("%s", message);
 		}
 #endif
 		if (fscanf(stdin, "%15s", Code.Code) != 1) {
 			printf_err("%s\n", _("No PIN code entered!"));
 			Terminate(3);
 		}
+#endif
 	} else {
 		strcpy(Code.Code,argv[3]);
 	}

@@ -22,6 +22,7 @@ ChangeLog
 [-] * Detect more Siemens CME error codes.
 [-] * Windows binary is again with MySQL support.
 [+] * Initial native support for Motorola phonebook (bug #748).
+[+] * Use getpass if available for PIN code prompt.
     
 20090116 - 1.22.91
 
