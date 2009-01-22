@@ -5839,6 +5839,8 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 
 	smprintf(s, "Incoming call info\n");
 	if (s->Phone.Data.EnableIncomingCall && s->User.IncomingCall!=NULL) {
+		call.Status 		= 0;
+		call.StatusCode		= 0;
 		call.CallIDAvailable 	= false;
 		if (strstr(msg.Buffer, "RING")) {
 			smprintf(s, "Ring detected - ");
@@ -5849,21 +5851,26 @@ GSM_Error ATGEN_ReplyIncomingCallInfo(GSM_Protocol_Message msg, GSM_StateMachine
 			}
 			smprintf(s, "generating event\n");
 			call.Status = GSM_CALL_IncomingCall;
+			call.CallIDAvailable 	= true;
 			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
 		} else if (strstr(msg.Buffer, "CLIP:")) {
 			smprintf(s, "CLIP detected\n");
 			call.Status = GSM_CALL_IncomingCall;
+			call.CallIDAvailable 	= true;
 			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
 		} else if (strstr(msg.Buffer, "CCWA:")) {
 			smprintf(s, "CCWA detected\n");
 			call.Status = GSM_CALL_IncomingCall;
 			ATGEN_Extract_CCWA_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
+			call.CallIDAvailable 	= true;
 		} else if (strstr(msg.Buffer, "NO CARRIER")) {
 			smprintf(s, "Call end detected\n");
 			call.Status = GSM_CALL_CallEnd;
+			call.CallIDAvailable 	= true;
 		} else if (strstr(msg.Buffer, "COLP:")) {
 			smprintf(s, "CLIP detected\n");
 			call.Status = GSM_CALL_CallStart;
+			call.CallIDAvailable 	= true;
 			ATGEN_Extract_CLIP_number(s, call.PhoneNumber, sizeof(call.PhoneNumber), msg.Buffer);
 		} else {
 			smprintf(s, "Incoming call error\n");
