@@ -244,6 +244,8 @@ class build_ext_gammu(distutils.command.build_ext.build_ext, object):
         else:
             self.include_dirs += self.gammu_incs
 
+        self.include_dirs.append('./include')
+
         if type(self.gammu_libs) is str:
             self.library_dirs.append(self.gammu_libs)
         else:
@@ -262,23 +264,23 @@ class build_ext_gammu(distutils.command.build_ext.build_ext, object):
 gammumodule = Extension('gammu._gammu',
     include_dirs = ['.'],
     sources = [
-        'errors.c',
-        'misc.c',
-        'convertors/misc.c',
-        'convertors/string.c',
-        'convertors/time.c',
-        'convertors/base.c',
-        'convertors/sms.c',
-        'convertors/memory.c',
-        'convertors/todo.c',
-        'convertors/calendar.c',
-        'convertors/bitmap.c',
-        'convertors/ringtone.c',
-        'convertors/backup.c',
-        'convertors/file.c',
-        'convertors/call.c',
-        'convertors/wap.c',
-        'gammu.c',
+        'gammu/src/errors.c',
+        'gammu/src/misc.c',
+        'gammu/src/convertors/misc.c',
+        'gammu/src/convertors/string.c',
+        'gammu/src/convertors/time.c',
+        'gammu/src/convertors/base.c',
+        'gammu/src/convertors/sms.c',
+        'gammu/src/convertors/memory.c',
+        'gammu/src/convertors/todo.c',
+        'gammu/src/convertors/calendar.c',
+        'gammu/src/convertors/bitmap.c',
+        'gammu/src/convertors/ringtone.c',
+        'gammu/src/convertors/backup.c',
+        'gammu/src/convertors/file.c',
+        'gammu/src/convertors/call.c',
+        'gammu/src/convertors/wap.c',
+        'gammu/src/gammu.c',
         ])
 
 setup (name = 'python-gammu',
