@@ -14,6 +14,10 @@
 # Change if using tar.gz sources
 %define extension   bz2
 
+# Python name
+%{!?__python: %define __python python}
+%{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
+
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
 %define gammu_docdir %_docdir/%name-%ver
 %else
@@ -105,6 +109,8 @@ BuildRequires: postgresql-devel
 BuildRequires: %{dist_mysql_libs}
 %endif
 
+BuildRequires: python-devel
+
 BuildRequires: gettext cmake %{dist_pkgconfig}
 
 Source:         http://dl.cihar.com/gammu/releases/gammu-%{ver}.tar.%{extension}
@@ -155,6 +161,20 @@ Currently supported phones include:
 
 This package contain files needed for development.
 
+%package -n python-gammu
+Summary:    Python module to communicate with mobile phones
+%if 0%{?suse_version}
+Group:      Development/Libraries/Python
+%else
+Group:      Development/Languages
+%endif
+Requires: python
+%{?py_requires}
+
+%description -n python-gammu
+This provides gammu module, that can work with any phone Gammu
+supports - many Nokias, Siemens, Alcatel, ...
+
 %prep
 %setup -q
 
@@ -195,10 +215,17 @@ make -C build-dir install DESTDIR=%buildroot
 %_libdir/pkgconfig/%name.pc
 %_libdir/*.so
 
+%files -n python-gammu
+%doc python/README python/AUTHORS python/COPYING python/examples
+%python_sitearch/*
+
 %clean
 rm -rf %buildroot
 
 %changelog
+* Thu Jan 22 2009 Michal Čihař <michal@cihar.com> - 1.21.91-1
+- merged python-gammu packaging as upstream merged the code
+
 * Fri Oct 24 2008 Michal Čihař <michal@cihar.com> - 1.21.0-1
 - fixed according to Fedora policy
 
