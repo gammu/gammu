@@ -36,16 +36,19 @@ Group:              Applications/Communications
 %endif
 Vendor:         Michal Čihař <michal@cihar.com>
 
-# Detect build requires
-# I hate this crap
-%if 0%{?suse_version}
+# Detect build requires, I really hate this crap
 
 # SUSE
+%if 0%{?suse_version}
+
+# 11.1 changed name of devel package for Bluetooth
 %if 0%{?suse_version} >= 1110
 %define dist_bluez_libs bluez-devel
 %else
 %define dist_bluez_libs bluez-libs >= 2.0
 %endif
+
+# 10.3 changed name of several packages
 %if 0%{?suse_version} >= 1030
 %define dist_pkgconfig pkg-config
 %define dist_mysql_libs libmysqlclient-devel 
@@ -54,20 +57,28 @@ Vendor:         Michal Čihař <michal@cihar.com>
 %define dist_mysql_libs mysql-devel 
 %endif
 
+%define dist_postgres_libs postgresql-devel
+
 %else
 
+# Mandriva
 %if 0%{?mandriva_version}
 
-# Mandriva
 %define dist_pkgconfig pkgconfig
+
+# 64-bit Mandriva has 64 in package name
 %ifarch x86_64
 %define mandriva_hack 64
 %endif
+
+# MySQL devel packages got rename in 2007
 %if 0%{?mandriva_version} > 2007
 %define dist_mysql_libs lib%{?mandriva_hack}mysql-devel
 %else
 %define dist_mysql_libs lib%{?mandriva_hack}mysql15-devel
 %endif
+
+# Bluetooth things got renamed several times
 %if 0%{?mandriva_version} > 2007
 %define dist_bluez_libs lib%{?mandriva_hack}bluez2 lib%{?mandriva_hack}bluez-devel
 %else
@@ -78,24 +89,36 @@ Vendor:         Michal Čihař <michal@cihar.com>
 %endif
 %endif
 
+# postgresql-devel does not work for whatever reason in buildservice
+%if 0%{?mandriva_version} == 2009
+%define dist_postgres_libs postgresql8.3-devel
+%else
+%define dist_postgres_libs postgresql-devel
+%endif
+
 %else
 
-# Fedora
+# Fedora / Redhat / Centos
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
 %define dist_pkgconfig pkgconfig
+
+# MySQL devela package has different name since Fedora 8 and in all RHEL/Centos
 %if 0%{?fedora_version} >= 8 || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} >= 8 || 0%{?rhel}
 %define dist_mysql_libs mysql-devel 
 %else
 %define dist_mysql_libs mysqlclient14-devel
 %endif
+
 %define dist_bluez_libs bluez-libs >= 2.0 bluez-libs-devel >= 2.0
+%define dist_postgres_libs postgresql-devel
 
 %else
 
-#Defaults
+#Defaults for not know distributions
 %define dist_pkgconfig pkg-config
 %define dist_mysql_libs libmysqlclient-devel 
 %define dist_bluez_libs bluez-libs >= 2.0 bluez-libs-devel >= 2.0
+%define dist_postgres_libs postgresql-devel
 
 %endif
 %endif
@@ -106,11 +129,7 @@ BuildRequires: %{dist_bluez_libs}
 %endif
 
 %if pqsql
-%if 0%{?mandriva_version} == 2009
-BuildRequires: postgresql8.3-devel
-%else
-BuildRequires: postgresql-devel
-%endif
+BuildRequires: %{dist_postgres_libs}
 %endif
 
 %if %mysql
