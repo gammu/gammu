@@ -1,8 +1,0 @@
-Gammu for Debian
-----------------
-
-Now Gammu is built as shared library, if you find any problems with this (or
-anything related packaging), feel free to contact me. Debian bug reporting
-tools will send reports to me, so don't afraid using them :-)
-
- -- Michal Cihar <michal@cihar.com>  Sun,  5 Oct 2003 12:26:42 +0200

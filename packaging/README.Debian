@@ -1,0 +1,7 @@
+Gammu packages are included in Debian (testing versions go to
+experimental and stable to unstable). If you want to build Debian
+package on your own, you can find packaging in SVN repository at
+<svn://svn.cihar.com/debian-gammu/trunk> (you can browse it on
+<http://viewsvn.cihar.com/debian-gammu/trunk>).
+
+# vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
