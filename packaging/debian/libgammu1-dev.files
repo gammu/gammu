@@ -1,4 +1,0 @@
-usr/lib/*.so
-usr/lib/*.a
-usr/include/*
-usr/lib/pkgconfig/*
