@@ -61,7 +61,10 @@ You need CMake from <http://www.cmake.org> for configuring Gammu.
 
 For compatibility reasons, configure like wrapper is provided, if you
 don't need much specific tuning, you can use general "./configure; make;
-sudo make install" set of commands.
+sudo make install" set of commands. The configure wrapper will create
+directory build-configure and build all binaries there (nothing is
+changed in source tree), for example gammu binary is in
+build-configure/gammu directory.
 
 If you need/want to tweak build a bit more than configure wrapper
 provides, you have to use CMake directly. For now, only out of source
