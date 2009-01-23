@@ -14,6 +14,10 @@
 # Change if using tar.gz sources
 %define extension   bz2
 
+# Python name
+%{!?__python: %define __python python}
+%{!?python_sitearch: %define python_sitearch %(%{__python} -c "from distutils.sysconfig import get_python_lib; print get_python_lib(1)")}
+
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
 %define gammu_docdir %_docdir/%name-%ver
 %else
@@ -37,7 +41,11 @@ Vendor:         Michal Čihař <michal@cihar.com>
 %if 0%{?suse_version}
 
 # SUSE
+%if 0%{?suse_version} >= 1110
+%define dist_bluez_libs bluez-devel
+%else
 %define dist_bluez_libs bluez-libs >= 2.0
+%endif
 %if 0%{?suse_version} >= 1030
 %define dist_pkgconfig pkg-config
 %define dist_mysql_libs libmysqlclient-devel 
@@ -98,12 +106,20 @@ BuildRequires: %{dist_bluez_libs}
 %endif
 
 %if pqsql
+%if 0%{?mandriva_version} == 2009
+BuildRequires: postgresql8.3-devel
+%else
 BuildRequires: postgresql-devel
+%endif
 %endif
 
 %if %mysql
 BuildRequires: %{dist_mysql_libs}
 %endif
+
+BuildRequires: python-devel
+
+BuildRequires: libcurl-devel
 
 BuildRequires: gettext cmake %{dist_pkgconfig}
 
@@ -155,6 +171,20 @@ Currently supported phones include:
 
 This package contain files needed for development.
 
+%package -n python-gammu
+Summary:    Python module to communicate with mobile phones
+%if 0%{?suse_version}
+Group:      Development/Libraries/Python
+%else
+Group:      Development/Languages
+%endif
+Requires: python
+%{?py_requires}
+
+%description -n python-gammu
+This provides gammu module, that can work with any phone Gammu
+supports - many Nokias, Siemens, Alcatel, ...
+
 %prep
 %setup -q
 
@@ -163,6 +193,7 @@ mkdir build-dir
 cd build-dir
 cmake ../ \
     -DBUILD_SHARED_LIBS=ON \
+    -DBUILD_PYTHON=/usr/bin/python \
     -DCMAKE_INSTALL_PREFIX=%_prefix \
     -DINSTALL_DOC_DIR=%gammu_docdir \
     -DINSTALL_LIB_DIR=%_lib \
@@ -177,6 +208,8 @@ rm -rf %buildroot
 mkdir %buildroot
 make -C build-dir install DESTDIR=%buildroot
 %find_lang %{name}
+%find_lang libgammu
+cat libgammu.lang >> %{name}.lang
 
 %post -p /sbin/ldconfig
 
@@ -187,18 +220,30 @@ make -C build-dir install DESTDIR=%buildroot
 %_bindir/*
 %_libdir/*.so.*
 %doc %_mandir/man1/*
+%doc %_mandir/man5/*
+%doc %_mandir/man7/*
+%lang(cs) %doc %_mandir/cs
 %doc %gammu_docdir
 
 %files devel
 %defattr(-,root,root)
 %_includedir/%name
 %_libdir/pkgconfig/%name.pc
+%_libdir/pkgconfig/%name-smsd.pc
 %_libdir/*.so
+
+%files -n python-gammu
+%defattr(-,root,root)
+%doc python/README python/AUTHORS python/COPYING python/examples
+%python_sitearch/*
 
 %clean
 rm -rf %buildroot
 
 %changelog
+* Thu Jan 22 2009 Michal Čihař <michal@cihar.com> - 1.21.91-1
+- merged python-gammu packaging as upstream merged the code
+
 * Fri Oct 24 2008 Michal Čihař <michal@cihar.com> - 1.21.0-1
 - fixed according to Fedora policy
 
