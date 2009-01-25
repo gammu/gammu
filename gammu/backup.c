@@ -1693,6 +1693,9 @@ void BackupSMS(int argc UNUSED, char *argv[])
 
 	GSM_Init(true);
 
+	sms.SMS[0].Location = 0;
+	sms.Number = 0;
+
 	error=GSM_GetSMSFolders(gsm, &folders);
 	Print_Error(error);
 
@@ -1745,6 +1748,8 @@ void BackupSMS(int argc UNUSED, char *argv[])
 
 	error = GSM_AddSMSBackupFile(argv[2],&Backup);
 	Print_Error(error);
+
+	GSM_FreeSMSBackup(&Backup);
 
 	if (DeleteAfter) {
 		for (j=0;j<smsnum;j++) {
