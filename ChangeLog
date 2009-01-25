@@ -26,6 +26,7 @@ ChangeLog
 [-] * Fixed parsing of phone number from incoming calls.
 [-] * Added ID for Nokia 1112.
 [-] * Dropped obsolete packaging/debian and point users to proper packages.
+[-] * Fix crash when operator logo is empty.
     
 20090116 - 1.22.91
 
