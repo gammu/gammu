@@ -366,6 +366,7 @@ void DoBackup(int argc, char *argv[])
 	DoBackupPart = false;
 	if (Info.Calendar) {
 		printf("%s\n", _("Checking phone calendar"));
+		Calendar.Location = 0;
 		error=GSM_GetNextCalendar(gsm,&Calendar,true);
 		if (error==ERR_NONE) {
 			if (answer_yes("   %s", _("Backup phone calendar notes?"))) DoBackupPart = true;
@@ -435,6 +436,7 @@ void DoBackup(int argc, char *argv[])
 	DoBackupPart = false;
 	if (Info.Note) {
 		printf("%s\n", _("Checking phone notes"));
+		Note.Location = 0;
 		error=GSM_GetNextNote(gsm,&Note,true);
 		if (error==ERR_NONE) {
 			if (answer_yes("   %s", _("Backup phone notes?"))) DoBackupPart = true;
@@ -1093,6 +1095,7 @@ void Restore(int argc, char *argv[])
 	}
 	DoRestore = false;
 	if (Backup.Calendar[0] != NULL) {
+		Calendar.Location = 0;
 		/* N6110 doesn't support getting calendar status */
 		error = GSM_GetNextCalendar(gsm,&Calendar,true);
 		if (error == ERR_NONE || error == ERR_INVALIDLOCATION || error == ERR_EMPTY) {
