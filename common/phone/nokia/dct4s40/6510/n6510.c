@@ -1138,7 +1138,10 @@ static GSM_Error N6510_ReplyGetOperatorLogo(GSM_Protocol_Message msg, GSM_StateM
 	if (msg.Buffer[3] == 0xf0) return ERR_NOTSUPPORTED;
 
 	smprintf(s, "Operator logo received\n");
-	if (msg.Length == 18) return ERR_EMPTY;
+	if (msg.Length <= 18) {
+		smprintf(s, "Packet too short to contain operator logo\n");
+		return ERR_EMPTY;
+	}
 	NOKIA_DecodeNetworkCode(msg.Buffer+12,Data->Bitmap->NetworkCode);
 	smprintf(s, "Network code %s\n",Data->Bitmap->NetworkCode);
 	Data->Bitmap->BitmapWidth	= msg.Buffer[20];
