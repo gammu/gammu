@@ -1693,6 +1693,7 @@ void BackupSMS(int argc UNUSED, char *argv[])
 
 	GSM_Init(true);
 
+	Backup.SMS[0] = NULL;
 	sms.SMS[0].Location = 0;
 	sms.Number = 0;
 
