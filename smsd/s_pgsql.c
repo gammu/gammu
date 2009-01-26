@@ -154,7 +154,7 @@ static GSM_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, const char *query, PGr
 	SMSD_Log(2, Config, "Execute SQL: %s\n", query);
 
 	*Res = PQexec(Config->DBConnPgSQL, query);
-	if ((*Res == NULL) || (PQresultStatus(*Res) != PGRES_COMMAND_OK)) {
+	if ((*Res == NULL) || (PQresultStatus(*Res) != PGRES_COMMAND_OK && PQresultStatus(*Res) != PGRES_TUPLES_OK)) {
 		SMSD_Log(0, Config, "SQL failed: %s\n", query);
 		SMSDPgSQL_LogError(Config, *Res);
 		if (*Res != NULL) {
