@@ -1772,7 +1772,9 @@ void EnterSecurityCode(int argc UNUSED, char *argv[])
 	GSM_SecurityCode Code;
 	GSM_Error error;
 	char message[200];
+#ifdef HAVE_GETPASS
 	char *pass;
+#endif
 
 	if (strcasecmp(argv[2],"PIN") == 0) {		Code.Type = SEC_Pin;
 	} else if (strcasecmp(argv[2],"PUK") == 0) {	Code.Type = SEC_Puk;
