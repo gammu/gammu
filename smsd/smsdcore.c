@@ -798,7 +798,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	}
 	if (error != ERR_NONE) {
 		/* Unknown error - escape */
-		SMSD_Log(0, Config, "Error in outbox on %s", Config->SMSID);
+		SMSD_Log(0, Config, "Error in outbox on '%s'", Config->SMSID);
 		for (i=0;i<sms.Number;i++) {
 			Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
 		}
