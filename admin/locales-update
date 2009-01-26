@@ -60,14 +60,14 @@ for loc in $LOCS ; do
         s/VERSION/'$ver'/;
         s/Project-Id-Version: Gammu [0-9.]*/Project-Id-Version: Gammu '$ver'/;
         ' locale/$loc/gammu.po
-    msgmerge --previous  -U locale/$loc/gammu.po locale/gammu.pot
+    msgmerge -U locale/$loc/gammu.po locale/gammu.pot
     sed -i '
         s/SOME DESCRIPTIVE TITLE/libGammu translation/;
         s/PACKAGE/libGammu/;
         s/VERSION/'$ver'/;
         s/Project-Id-Version: libGammu [0-9.]*/Project-Id-Version: libGammu '$ver'/;
         ' locale/$loc/libgammu.po
-    msgmerge --previous  -U locale/$loc/libgammu.po locale/libgammu.pot
+    msgmerge -U locale/$loc/libgammu.po locale/libgammu.pot
     sed -i '
         s/SOME DESCRIPTIVE TITLE/Gammu documentation translation/;
         s/PACKAGE/Gammu-docs/;
