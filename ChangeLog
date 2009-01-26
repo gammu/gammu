@@ -29,6 +29,7 @@ ChangeLog
 [-] * Fix crash when operator logo is empty.
 [-] * Fix memory leak in SMS backup.
 [-] * Fixed processing of SMSD outbox with PostgreSQL (bug #803).
+[-] * Automatic detection of lib64 directory for installation.
     
 20090116 - 1.22.91
 

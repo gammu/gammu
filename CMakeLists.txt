@@ -650,6 +650,13 @@ if (CMAKE_USE_PTHREADS_INIT)
 endif (CMAKE_USE_PTHREADS_INIT)
 
 # Install paths
+if ("${MATH_LIBRARIES}" MATCHES "/lib64/")
+    set (LIB_SUFFIX "64" CACHE STRING "Suffix of library directory (usually 64 or empty)")
+elseif ("${MATH_LIBRARIES}" MATCHES "/lib64/")
+    set (LIB_SUFFIX "" CACHE STRING "Suffix of library directory (usually 64 or empty)")
+endif ("${MATH_LIBRARIES}" MATCHES "/lib64/")
+
+
 set (INSTALL_BIN_DIR "bin" CACHE STRING "Path for binaries installation")
 mark_as_advanced (INSTALL_BIN_DIR)
 
