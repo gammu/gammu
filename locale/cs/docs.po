@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-15 17:25+0100\n"
-"PO-Revision-Date: 2009-01-19 16:03+0100\n"
+"POT-Creation-Date: 2009-01-26 13:55+0100\n"
+"PO-Revision-Date: 2009-01-26 13:55+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,14 +28,14 @@ msgstr "GAMMU"
 # type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
-msgid "Jan 14 2009"
-msgstr "Leden 14, 2008"
+msgid "Jan 22 2009"
+msgstr "Leden 22, 2008"
 
 # type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
-msgid "Gammu 1.22.91"
-msgstr "Gammu 1.22.91"
+msgid "Gammu 1.22.92"
+msgstr "Gammu 1.22.92"
 
 # type: TH
 #: docs/user/gammu.1:1 docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1
@@ -61,6 +61,7 @@ msgstr "JMÉNO"
 #: docs/user/gammu.1:7
 msgid "Gammu - Does some neat things with your cellular phone or modem."
 msgstr ""
+"Gammu - Provádá různé zajímavé věci s vaším mobilním telefonem nebo modemem."
 
 # type: SH
 #: docs/user/gammu.1:8 docs/user/gammurc.5:7 docs/user/gammu-smsdrc.5:7
@@ -76,6 +77,8 @@ msgid ""
 "Usage: gammu [I<confign>] [I<nothing|text|textall|binary|errors>] "
 "E<lt>commandE<gt> [I<options>]"
 msgstr ""
+"Použití: gammu [I<číslokonf>] [I<nothing|text|textall|binary|errors>] "
+"E<lt>příkazE<gt> [I<parametry>]"
 
 # type: SH
 #: docs/user/gammu.1:13 docs/user/gammurc.5:11 docs/user/gammu-smsdrc.5:9
@@ -93,6 +96,9 @@ msgid ""
 "This program is a tool for mobile phones. Many vendors and phones are "
 "supported, for actual listing see E<lt>http://cihar.com/gammu/phonedb/E<gt>."
 msgstr ""
+"Tento program pracuje s mobilními telefony. Podporováno je mnoho výrobců, "
+"pro aktuální seznam se podívejte na E<lt>http://cz.cihar.com/gammu/phonedb/"
+"E<gt>."
 
 # type: SH
 #: docs/user/gammu.1:21
@@ -844,9 +850,8 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu.1:338
-#, fuzzy
 msgid "B<-inputunicode> - input text is in Unicode."
-msgstr "B<unicode> - text zprávy uložený v unicode (UTF-16)"
+msgstr "B<-inputunicode> - zadaný text je v Unicode."
 
 # type: Plain text
 #: docs/user/gammu.1:340
@@ -2973,6 +2978,9 @@ msgid ""
 "developers, especially I<Pavel Janik>, I<Pawel Kot> and I<Manfred Jonsson> "
 "(see CREDITS from Gnokii for all their contributor)."
 msgstr ""
+"Protože tento projekt vznikl z Gnokii, rádi bychom poděkovali všem vývojářům "
+"Gnokii, hlavně I<Pavlu Janíkovi>, I<Pawolu Kotovi> a I<Manfredu Jonssonovi> "
+"(v souboru CREDITS v Gnokii najdete kompletní seznam přispěvatelů)."
 
 # type: Plain text
 #: docs/user/gammu.1:2152
@@ -2999,29 +3007,31 @@ msgid "gammu-smsd(1), gammu-smsd-inject(1), gammurc(5), jadmaker(1)"
 msgstr "gammu-smsd(1), gammu-smsd-inject(1), gammurc(5), jadmaker(1)"
 
 # type: Plain text
-#: docs/user/gammu.1:2160
+#: docs/user/gammu.1:2159
 msgid ""
 "Some more hints can be found in README file or on wiki E<lt>http://www.gammu."
-"org/E<gt> which more user hints and further documentation."
+"org/E<gt>."
 msgstr ""
+"Nějaké další triky naleznete v souboru README nebo na wiki stránce "
+"E<lt>http://www.gammu.org/E<gt>."
 
 # type: Plain text
-#: docs/user/gammu.1:2162
+#: docs/user/gammu.1:2161
 msgid "Related programs which can be used with GSM modem:"
 msgstr "Související programy, které mohou být použity s GSM modemem:"
 
 # type: Plain text
-#: docs/user/gammu.1:2164
+#: docs/user/gammu.1:2163
 msgid "cu(1), gnokii(1), minicom(1)"
 msgstr "cu(1), gnokii(1), minicom(1)"
 
 # type: Plain text
-#: docs/user/gammu.1:2166
+#: docs/user/gammu.1:2165
 msgid "Graphical interfaces for Gammu:"
 msgstr "Grafické nadstavby pro Gammu:"
 
 # type: Plain text
-#: docs/user/gammu.1:2168
+#: docs/user/gammu.1:2167
 msgid "wammu(1), gmobilemedia(1)"
 msgstr "wammu(1), gmobilemedia(1)"
 

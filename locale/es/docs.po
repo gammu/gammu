@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-15 17:25+0100\n"
+"POT-Creation-Date: 2009-01-26 13:55+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -25,13 +25,13 @@ msgstr ""
 # type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
-msgid "Jan 14 2009"
+msgid "Jan 22 2009"
 msgstr ""
 
 # type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
-msgid "Gammu 1.22.91"
+msgid "Gammu 1.22.92"
 msgstr ""
 
 # type: TH
@@ -2980,29 +2980,29 @@ msgid "gammu-smsd(1), gammu-smsd-inject(1), gammurc(5), jadmaker(1)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu.1:2160
+#: docs/user/gammu.1:2159
 msgid ""
 "Some more hints can be found in README file or on wiki E<lt>http://www.gammu."
-"org/E<gt> which more user hints and further documentation."
+"org/E<gt>."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu.1:2162
+#: docs/user/gammu.1:2161
 msgid "Related programs which can be used with GSM modem:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu.1:2164
+#: docs/user/gammu.1:2163
 msgid "cu(1), gnokii(1), minicom(1)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu.1:2166
+#: docs/user/gammu.1:2165
 msgid "Graphical interfaces for Gammu:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu.1:2168
+#: docs/user/gammu.1:2167
 msgid "wammu(1), gmobilemedia(1)"
 msgstr ""
 
