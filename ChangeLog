@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2009???? - 1.22.92
+20090126 - 1.22.92
 
 [-] * Fixed getting of network name from saved message.
 [-] * Fixed encoding of text to some encodings in AT engine.
