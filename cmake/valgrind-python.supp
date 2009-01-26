@@ -793,3 +793,16 @@
    fun:(below main)
 }
 
+
+### This is a CURL bug on SUSE 11.0
+{
+   Leak from curl_init
+   Memcheck:Leak
+   fun:malloc
+   fun:CRYPTO_malloc
+   fun:ENGINE_new
+   fun:ENGINE_load_dynamic
+   fun:Curl_ossl_init
+   fun:curl_global_init
+}
+
