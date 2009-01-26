@@ -30,6 +30,7 @@ ChangeLog
 [-] * Fix memory leak in SMS backup.
 [-] * Fixed processing of SMSD outbox with PostgreSQL (bug #803).
 [-] * Automatic detection of lib64 directory for installation.
+[+] * Allow separate installation of some components on Windows.
     
 20090116 - 1.22.91
 

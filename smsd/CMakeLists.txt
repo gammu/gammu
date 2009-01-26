@@ -91,4 +91,5 @@ install (TARGETS gsmsd gammu-smsd gammu-smsd-inject
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
         LIBRARY DESTINATION "${INSTALL_LIB_DIR}"
         ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
+        COMPONENT smsd
         )

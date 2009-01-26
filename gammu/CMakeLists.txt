@@ -64,8 +64,7 @@ endif (CURL_FOUND)
 
 install (TARGETS gammu
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
-        LIBRARY DESTINATION "${INSTALL_LIB_DIR}"
-        ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
+        COMPONENT gammu
         )
 
 # Binary testing

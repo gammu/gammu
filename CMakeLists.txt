@@ -3,7 +3,7 @@
 # vim: expandtab sw=4 ts=4 sts=4:
 
 # I didn't check older versions
-# However 2.6 is needed for crosscompiling
+# However 2.6 is needed for crosscompiling, Cpack components and other useful things
 cmake_minimum_required (VERSION 2.4.2)
 
 project (Gammu C)
@@ -58,16 +58,129 @@ endif (CMAKE_BUILD_TYPE STREQUAL "Debug")
 # Valgrind supressions for python
 set (MEMORYCHECK_SUPPRESSIONS_FILE ${Gammu_SOURCE_DIR}/cmake/valgrind-python.supp CACHE FILEPATH "File that contains suppressions for the memory checker")
 
+# Check for Python
+set (BUILD_PYTHON "" CACHE FILEPATH "Path to python interpreter")
+
+if (BUILD_PYTHON)
+    set (ENABLE_PYTHON TRUE CACHE BOOL "Build Python bindings")
+    set (PYTHON_EXECUTABLE ${BUILD_PYTHON})
+    execute_process(
+        COMMAND
+            ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"
+        OUTPUT_VARIABLE PYTHON_INCLUDE_PATH
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+    execute_process(
+        COMMAND
+            ${PYTHON_EXECUTABLE} -c "import sys; v=sys.version_info[:2]; print '%d.%d' % v"
+        OUTPUT_VARIABLE PYTHON_VERSION
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+    message (STATUS "Compiling for Python ${PYTHON_VERSION}")
+
+    string (REPLACE "." "" PYTHON_VERSION_NO_DOTS ${PYTHON_VERSION})
+    find_library (PYTHON_LIBRARY
+        NAMES python${PYTHON_VERSION_NO_DOTS} python${PYTHON_VERSION}
+        PATHS
+          [HKEY_LOCAL_MACHINE\\SOFTWARE\\Python\\PythonCore\\${PYTHON_VERSION}\\InstallPath]/libs
+        PATH_SUFFIXES
+          python${PYTHON_VERSION}/config
+        # Avoid finding the .dll in the PATH.  We want the .lib.
+        NO_SYSTEM_ENVIRONMENT_PATH
+      )
+else (BUILD_PYTHON)
+    find_package(PythonInterp)
+    find_package(PythonLibs)
+
+    if (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
+        set (ENABLE_PYTHON TRUE CACHE BOOL "Build Python bindings")
+    else (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
+        set (ENABLE_PYTHON FALSE CACHE BOOL "Build Python bindings" FORCE)
+    endif (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
+endif (BUILD_PYTHON)
+
+
 # Packaging support
 set (CPACK_PACKAGE_NAME "Gammu")
 set (CPACK_PACKAGE_VERSION "${VERSION}")
-set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Gammu ${VERSION}")
+set (CPACK_PACKAGE_DESCRIPTION_SUMMARY "Gammu All Mobile Management Utilities ${VERSION}")
 set (CPACK_PACKAGE_VENDOR "Michal Čihař, Macin Wiacek and others")
 set (CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_CURRENT_SOURCE_DIR}/README")
 set (CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/COPYING")
 set (CPACK_PACKAGE_VERSION_MAJOR "${VERSION_MAJOR}")
 set (CPACK_PACKAGE_VERSION_MINOR "${VERSION_MINOR}")
 set (CPACK_PACKAGE_VERSION_PATCH "${VERSION_PATCH}")
+set (CPACK_COMPONENTS_ALL gammu library smsd headers utils manpages docs pkgconfig gnapplet examples develdocs)
+if (ENABLE_PYTHON)
+    list (APPEND CPACK_COMPONENTS_ALL python)
+endif (ENABLE_PYTHON)
+
+set (CPACK_COMPONENT_GAMMU_DISPLAY_NAME "Gammu Application")
+set (CPACK_COMPONENT_SMSD_DISPLAY_NAME "Gammu SMS Daemon")
+set (CPACK_COMPONENT_LIBRARY_DISPLAY_NAME "Gammu Library")
+set (CPACK_COMPONENT_HEADERS_DISPLAY_NAME "C Headers")
+set (CPACK_COMPONENT_UTILS_DISPLAY_NAME "Utility Scripts")
+set (CPACK_COMPONENT_MANPAGES_DISPLAY_NAME "Manual Pages")
+set (CPACK_COMPONENT_DOCS_DISPLAY_NAME "User Documentation")
+set (CPACK_COMPONENT_PKGCONFIG_DISPLAY_NAME "Pkg-config Data")
+set (CPACK_COMPONENT_GNAPPLET_DISPLAY_NAME "Applet for Symbian Phones")
+set (CPACK_COMPONENT_EXAMPLES_DISPLAY_NAME "Examples Using Gammu")
+set (CPACK_COMPONENT_DEVELDOCS_DISPLAY_NAME "Developer Documentation")
+set (CPACK_COMPONENT_PYTHON_DISPLAY_NAME "Python Module")
+
+set (CPACK_COMPONENT_GAMMU_DESCRIPTION "The gammu.exe program.")
+set (CPACK_COMPONENT_SMSD_DESCRIPTION "Gammu SMS Daemon which automatically sends and receives messages.")
+set (CPACK_COMPONENT_LIBRARY_DESCRIPTION "Gammu library.")
+set (CPACK_COMPONENT_HEADERS_DESCRIPTION "C headers for development own programs using Gammu library.")
+set (CPACK_COMPONENT_UTILS_DESCRIPTION "Utility scripts, mostly written using bourne shell, which you need to install on your own.")
+set (CPACK_COMPONENT_MANPAGES_DESCRIPTION "Manual pages for programs and configuration files.")
+set (CPACK_COMPONENT_DOCS_DESCRIPTION "User documentation in text files.")
+set (CPACK_COMPONENT_PKGCONFIG_DESCRIPTION "Data for pkg-config program (automatic finding of compiler parameters for libraries).")
+set (CPACK_COMPONENT_GNAPPLET_DESCRIPTION "Applet for Symbian phones, install it to phone to communicate with them using Gammu.")
+set (CPACK_COMPONENT_EXAMPLES_DESCRIPTION "Examples showing how to use Gammu, in PHP, Perl or C.")
+set (CPACK_COMPONENT_DEVELDOCS_DESCRIPTION "Developer documentation.")
+set (CPACK_COMPONENT_PYTHON_DESCRIPTION "Python module for gammu.")
+
+set (CPACK_COMPONENT_GROUP_RUNTIME_DESCRIPTION "Programs and libraries for general usage.")
+set (CPACK_COMPONENT_GROUP_DEVELOPMENT_DESCRIPTION "Headers and documentation used for development using Gammu.")
+set (CPACK_COMPONENT_GROUP_DOCUMENTATION_DESCRIPTION "Gammu documentation and usage examples.")
+
+set(CPACK_COMPONENT_GAMMU_DEPENDS library)
+set(CPACK_COMPONENT_SMSD_DEPENDS library)
+set(CPACK_COMPONENT_HEADERS_DEPENDS library)
+set(CPACK_COMPONENT_PYTHON_DEPENDS library)
+set(CPACK_COMPONENT_UTILS_DEPENDS gammu)
+set(CPACK_COMPONENT_PKGCONFIG_DEPENDS headers)
+
+set (CPACK_COMPONENT_GAMMU_GROUP "Runtime")
+set (CPACK_COMPONENT_SMSD_GROUP "Runtime")
+set (CPACK_COMPONENT_UTILS_GROUP "Runtime")
+set (CPACK_COMPONENT_LIBRARY_GROUP "Runtime")
+set (CPACK_COMPONENT_PYTHON_GROUP "Runtime")
+
+set (CPACK_COMPONENT_HEADERS_GROUP "Development")
+set (CPACK_COMPONENT_PKGCONFIG_GROUP "Development")
+
+set (CPACK_COMPONENT_MANPAGES_GROUP "Documentation")
+set (CPACK_COMPONENT_DOCS_GROUP "Documentation")
+set (CPACK_COMPONENT_EXAMPLES_GROUP "Documentation")
+set (CPACK_COMPONENT_DEVELDOCS_GROUP "Documentation")
+
+set (CPACK_ALL_INSTALL_TYPES Standard Developer Full)
+
+set (CPACK_COMPONENT_GAMMU_INSTALL_TYPES Standard Developer Full)
+set (CPACK_COMPONENT_SMSD_INSTALL_TYPES Standard Developer Full)
+set (CPACK_COMPONENT_LIBRARY_INSTALL_TYPES Standard Developer Full)
+set (CPACK_COMPONENT_HEADERS_INSTALL_TYPES Developer Full)
+set (CPACK_COMPONENT_UTILS_INSTALL_TYPES Full)
+set (CPACK_COMPONENT_MANPAGES_INSTALL_TYPES Standard Developer Full)
+set (CPACK_COMPONENT_DOCS_INSTALL_TYPES Standard Developer Full)
+set (CPACK_COMPONENT_PKGCONFIG_INSTALL_TYPES Developer Full)
+set (CPACK_COMPONENT_GNAPPLET_INSTALL_TYPES Standard Developer Full)
+set (CPACK_COMPONENT_EXAMPLES_INSTALL_TYPES Developer Full)
+set (CPACK_COMPONENT_DEVELDOCS_INSTALL_TYPES Developer Full)
+set (CPACK_COMPONENT_PYTHON_INSTALL_TYPES Developer Full)
+
 if (WIN32 AND NOT CYGWIN)
   set (CPACK_PACKAGE_INSTALL_DIRECTORY "Gammu ${VERSION}")
   # There is a bug in NSI that does not handle full unix paths properly. Make
@@ -867,7 +980,7 @@ foreach (DOC ${DEVELDOCS})
     install (
         FILES ${DOC}
         DESTINATION "${INSTALL_DOC_DIR}/devel/${DIRNAME}"
-        COMPONENT "devel-docs"
+        COMPONENT "develdocs"
         )
 endforeach (DOC)
 
@@ -893,46 +1006,6 @@ add_subdirectory(gammu)
 add_subdirectory(locale)
 
 add_subdirectory(docs/user)
-
-set (BUILD_PYTHON "" CACHE FILEPATH "Path to python interpreter")
-
-if (BUILD_PYTHON)
-    set (ENABLE_PYTHON TRUE CACHE BOOL "Build Python bindings")
-    set (PYTHON_EXECUTABLE ${BUILD_PYTHON})
-    execute_process(
-        COMMAND
-            ${PYTHON_EXECUTABLE} -c "import distutils.sysconfig; print distutils.sysconfig.get_python_inc()"
-        OUTPUT_VARIABLE PYTHON_INCLUDE_PATH
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-    execute_process(
-        COMMAND
-            ${PYTHON_EXECUTABLE} -c "import sys; v=sys.version_info[:2]; print '%d.%d' % v"
-        OUTPUT_VARIABLE PYTHON_VERSION
-        OUTPUT_STRIP_TRAILING_WHITESPACE
-        )
-    message (STATUS "Compiling for Python ${PYTHON_VERSION}")
-
-    string (REPLACE "." "" PYTHON_VERSION_NO_DOTS ${PYTHON_VERSION})
-    find_library (PYTHON_LIBRARY
-        NAMES python${PYTHON_VERSION_NO_DOTS} python${PYTHON_VERSION}
-        PATHS
-          [HKEY_LOCAL_MACHINE\\SOFTWARE\\Python\\PythonCore\\${PYTHON_VERSION}\\InstallPath]/libs
-        PATH_SUFFIXES
-          python${PYTHON_VERSION}/config
-        # Avoid finding the .dll in the PATH.  We want the .lib.
-        NO_SYSTEM_ENVIRONMENT_PATH
-      )
-else (BUILD_PYTHON)
-    find_package(PythonInterp)
-    find_package(PythonLibs)
-
-    if (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
-        set (ENABLE_PYTHON TRUE CACHE BOOL "Build Python bindings")
-    else (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
-        set (ENABLE_PYTHON FALSE CACHE BOOL "Build Python bindings" FORCE)
-    endif (PYTHONINTERP_FOUND AND PYTHONLIBS_FOUND)
-endif (BUILD_PYTHON)
 
 if (ENABLE_PYTHON)
     add_subdirectory(python)
