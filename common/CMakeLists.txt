@@ -148,7 +148,9 @@ endif (WIN32 AND NOT CYGWIN)
 # Install instructions
 install (TARGETS libGammu
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
+        COMPONENT library
         LIBRARY DESTINATION "${INSTALL_LIB_DIR}"
+        COMPONENT library
         ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
         COMPONENT library
         )

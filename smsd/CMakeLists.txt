@@ -89,7 +89,9 @@ endif (POSTGRES_FOUND)
 
 install (TARGETS gsmsd gammu-smsd gammu-smsd-inject
         RUNTIME DESTINATION "${INSTALL_BIN_DIR}"
+        COMPONENT smsd
         LIBRARY DESTINATION "${INSTALL_LIB_DIR}"
+        COMPONENT smsd
         ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
         COMPONENT smsd
         )
