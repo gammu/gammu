@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-26 13:55+0100\n"
-"PO-Revision-Date: 2009-01-26 13:55+0100\n"
+"POT-Creation-Date: 2009-01-26 14:02+0100\n"
+"PO-Revision-Date: 2009-01-26 14:02+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -4492,7 +4492,17 @@ msgstr ""
 "    logformat = textall\n"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:114 docs/user/gammu-smsd-inject.1:51
+#: docs/user/gammu-smsd.1:116
+#, no-wrap
+msgid ""
+"    [smsd]\n"
+"    debuglevel = 255\n"
+msgstr ""
+"    [smsd]\n"
+"    debuglevel = 255\n"
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:117 docs/user/gammu-smsd-inject.1:51
 msgid "and include this verbose log within bug report."
 msgstr "a přiložte tento log k hlášení chyby."
 
