@@ -117,7 +117,9 @@ Delete all SMS from specified SMS folder.
 .TP
 .BI "deletesms" " folder start [stop]"
 Delete SMS from phone. See description for \fBgetsms\fR for info about
-sms folders naming convention. Locations are numerated from 1.
+sms folders naming convention. 
+
+Locations are numerated from 1.
 
 .TP
 .BI "displaysms" " ... (options like in sendsms)"
@@ -138,7 +140,9 @@ Similiary to \fBgetallsms\fR. Difference is, that links all contacenated sms
 
 .TP
 .BI "getsms" " folder start [stop]"
-Get SMS. Locations are numerated from 1.
+Get SMS. 
+
+Locations are numerated from 1.
 
 When give folder 0, sms is given from "flat" memory (all sms from all
 folders have unique numbers). It's sometimes emulated by Gammu.
@@ -518,7 +522,7 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 Deletes all entries from specified memory type.
 .TP
 .BI "deletememory" " DC|MC|RC|ON|VM|SM|ME|MT|FD|SL start [stop]"
-Deletes entries in specified from specified memory type.
+Deletes entries in specified range from specified memory type.
 .TP
 .BI "getallcategory" " TODO|PHONEBOOK"
 
@@ -864,7 +868,9 @@ Get one of "default" ringtones and saves into file
 
 .TP
 .BI "getringtone" " location [file]"
-Get ringtone from phone in RTTL or BINARY format. Locations are numerated from 1.
+Get ringtone from phone in RTTL or BINARY format. 
+
+Locations are numerated from 1.
 
 .TP
 .BI "getringtoneslist"
@@ -1756,7 +1762,9 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 
 .TP
 .BI "deletewapbookmark" " start [stop]"
-Delete WAP bookmark(s) from phone. Locations are numerated from 1.
+Delete WAP bookmark(s) from phone. 
+
+Locations are numerated from 1.
 
 .TP
 .BI "getchatsettings" " start [stop]"
@@ -1766,11 +1774,15 @@ Delete WAP bookmark(s) from phone. Locations are numerated from 1.
 
 .TP
 .BI "getwapbookmark" " start [stop]"
-Get WAP bookmark(s) from phone. Locations are numerated from 1.
+Get WAP bookmark(s) from phone. 
+
+Locations are numerated from 1.
 
 .TP
 .BI "getwapsettings" " start [stop]"
-Get WAP settings from phone. Locations are numerated from 1.
+Get WAP settings from phone. 
+
+Locations are numerated from 1.
 
 .TP
 .BI "restore" " file [\-yes]"
