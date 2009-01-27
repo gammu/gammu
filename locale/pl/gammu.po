@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-27 14:14+0100\n"
+"POT-Creation-Date: 2009-01-27 14:20+0100\n"
 "PO-Revision-Date: 2007-11-30 17:33+0100\n"
 "Last-Translator: Wojciech Sobczak <wsobczak@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -288,7 +288,7 @@ msgstr "Telefon"
 
 #: gammu/backup.c:929 gammu/backup.c:1534 gammu/misc.c:216
 msgid "IMEI"
-msgstr ""
+msgstr "IMEI"
 
 #: gammu/backup.c:930
 #, fuzzy
