@@ -1,21 +1,20 @@
 # Gammu translation.
 # Copyright (C) 2003 - 2009 Michal Čihař <michal@cihar.com>
 # This file is distributed under the same license as the Gammu package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Automatically generated, 2009.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-27 14:32+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2009-01-27 14:30+0100\n"
+"PO-Revision-Date: 2009-01-27 14:28+0100\n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: gammu/backup.c:31 gammu/backup.c:50 gammu/backup.c:68 gammu/backup.c:87
 #: helper/message-cmdline.c:367 helper/message-cmdline.c:391
@@ -683,6 +682,7 @@ msgid "for %d time "
 msgid_plural "for %d times "
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: gammu/calendar.c:302
 #, c-format
@@ -1697,8 +1697,9 @@ msgid "FM radio"
 msgstr ""
 
 #: gammu/gammu.c:749
+#, fuzzy
 msgid "Phone information"
-msgstr ""
+msgstr "&Telefón"
 
 #: gammu/gammu.c:750
 msgid "Phone settings"
@@ -2307,7 +2308,7 @@ msgstr ""
 
 #: gammu/misc.c:368
 msgid "Calendar"
-msgstr ""
+msgstr "Kalendár"
 
 #: gammu/misc.c:373
 msgid "Battery level"
@@ -2621,8 +2622,9 @@ msgid "Delete all phone FM radio stations?"
 msgstr ""
 
 #: gammu/misc.c:1329 gammu/misc.c:1331
+#, fuzzy
 msgid "Connection type"
-msgstr ""
+msgstr "&Pripojiť"
 
 #: gammu/misc.c:1329
 msgid "Continuous"
@@ -3269,6 +3271,7 @@ msgid "%d second"
 msgid_plural "%d seconds"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: helper/formats.h:3
 #, c-format
@@ -3276,6 +3279,7 @@ msgid "%d minute"
 msgid_plural "%d minutes"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: helper/formats.h:4
 #, c-format
@@ -3283,6 +3287,7 @@ msgid "%d hour"
 msgid_plural "%d hours"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: helper/formats.h:5
 #, c-format
@@ -3290,6 +3295,7 @@ msgid "%d day"
 msgid_plural "%d days"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: helper/formats.h:6
 #, c-format
@@ -3297,6 +3303,7 @@ msgid "%d week"
 msgid_plural "%d weeks"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: helper/formats.h:7
 #, c-format
@@ -3304,6 +3311,7 @@ msgid "%d year"
 msgid_plural "%d years"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: helper/memory-display.c:29
 #, c-format
@@ -3666,6 +3674,7 @@ msgid "Remote number"
 msgid_plural "Remote numbers"
 msgstr[0] ""
 msgstr[1] ""
+msgstr[2] ""
 
 #: helper/message-display.c:172 helper/message-display.c:238
 msgid "Reference number"

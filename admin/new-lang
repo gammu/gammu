@@ -1,0 +1,17 @@
+#!/bin/sh
+# vim: expandtab sw=4 ts=4 sts=4:
+
+set -e
+
+if [ -z "$1" ] ; then
+    echo "Usage: ./admin/new-lang ll"
+    exit 1
+fi
+
+mkdir locale/$1
+
+for loc in docs gammu libgammu ; do
+    msginit -i locale/$loc.pot -o locale/$1/$loc.po -l $1 --no-translator
+done
+
+sed -i "s/\(.*po4a_langs.*\)/\1 $1/" admin/po4a.config
