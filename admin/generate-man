@@ -216,16 +216,15 @@ HELP['reset'] = '''Make phone reset: soft (without asking for PIN) or hard (with
 '''
 HELP['resetphonesettings'] = '''Reset phone settings. \\fIBE CAREFULL !!!!\\fR
 
-.br
 \\fBPHONE:\\fR
 .br
 
-.br
 \\fBDEV:\\fR
 .br
 
-.br
-\\fBALL:\\fR Clear user settings
+\\fBALL:\\fR 
+
+Clear user settings:
 .br
 * removes or set logos to default
 .br
