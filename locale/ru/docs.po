@@ -2463,11 +2463,10 @@ msgstr ""
 msgid "Show info about FM stations in phone"
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:1980
 #, no-wrap
 msgid "Phone information"
-msgstr ""
+msgstr "Информация о телефоне"
 
 # type: TP
 #: docs/user/gammu.1:1981

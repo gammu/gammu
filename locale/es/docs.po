@@ -2260,10 +2260,9 @@ msgstr ""
 msgid "3. GPRS Always Online"
 msgstr ""
 
-# type: Plain text
 #: docs/user/gammu.1:1598 docs/user/gammu.1:2129
 msgid "..."
-msgstr ""
+msgstr "..."
 
 # type: TP
 #: docs/user/gammu.1:1599 docs/user/gammu.1:2130

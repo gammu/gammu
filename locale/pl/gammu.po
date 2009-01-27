@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-26 10:20+0100\n"
+"POT-Creation-Date: 2009-01-27 14:14+0100\n"
 "PO-Revision-Date: 2007-11-30 17:33+0100\n"
 "Last-Translator: Wojciech Sobczak <wsobczak@gmail.com>\n"
 "Language-Team: Language =pl\n"
@@ -523,7 +523,7 @@ msgstr "Przypomnienie (data)"
 
 #: gammu/calendar.c:41 gammu/calendar.c:690
 msgid "Call"
-msgstr ""
+msgstr "Połączenie"
 
 #: gammu/calendar.c:44 gammu/calendar.c:693
 msgid "Meeting"
@@ -867,7 +867,7 @@ msgstr ""
 
 #: gammu/calendar.c:516 gammu/calendar.c:519 gammu/message.c:606
 msgid "Date"
-msgstr ""
+msgstr "Data"
 
 #: gammu/calendar.c:517
 msgid "Every day"
@@ -911,7 +911,7 @@ msgstr "Nieznany błąd."
 
 #: gammu/calendar.c:775
 msgid "Priority"
-msgstr ""
+msgstr "Priorytet"
 
 #: gammu/calendar.c:778
 msgid "Low"
@@ -927,7 +927,7 @@ msgstr ""
 
 #: gammu/calendar.c:787
 msgid "None"
-msgstr ""
+msgstr "Brak"
 
 #: gammu/calendar.c:798
 #, fuzzy
@@ -941,7 +941,7 @@ msgstr "Start"
 
 #: gammu/calendar.c:808
 msgid "Completed"
-msgstr ""
+msgstr "Ukończono"
 
 #: gammu/calendar.c:843 gammu/calendar.c:848 helper/memory-display.c:39
 #: helper/memory-display.c:49 helper/memory-display.c:51
@@ -1220,7 +1220,7 @@ msgstr ""
 
 #: gammu/depend/nokia/dct4.c:866
 msgid "Bluetooth"
-msgstr ""
+msgstr "Bluetooth"
 
 #: gammu/depend/nokia/dct4.c:882
 msgid "UEM"
@@ -1493,7 +1493,7 @@ msgstr ""
 #: gammu/files.c:157 gammu/files.c:170 gammu/files.c:196 gammu/files.c:321
 #, c-format
 msgid "Folder"
-msgstr ""
+msgstr "Katalog"
 
 #: gammu/files.c:181 gammu/files.c:312
 #, c-format
@@ -1587,7 +1587,7 @@ msgstr "Sieć"
 #: gammu/misc.c:1682 gammu/misc.c:1721 gammu/misc.c:1984
 #: helper/memory-display.c:124 helper/message-display.c:242
 msgid "Name"
-msgstr ""
+msgstr "Nazwa"
 
 #: gammu/gammu.c:134
 #, fuzzy, c-format
@@ -1663,7 +1663,7 @@ msgstr ""
 
 #: gammu/gammu.c:724
 msgid "Calls"
-msgstr ""
+msgstr "Połączenia"
 
 #: gammu/gammu.c:725
 msgid "SMS and EMS"
@@ -1683,7 +1683,7 @@ msgstr ""
 
 #: gammu/gammu.c:729
 msgid "Ringtones"
-msgstr ""
+msgstr "Dźwięki dzwonka"
 
 #: gammu/gammu.c:730
 msgid "Calendar notes"
@@ -1734,8 +1734,9 @@ msgid "FM radio"
 msgstr ""
 
 #: gammu/gammu.c:749
+#, fuzzy
 msgid "Phone information"
-msgstr ""
+msgstr "Pobierz informację o telefonie"
 
 #: gammu/gammu.c:750
 msgid "Phone settings"
@@ -1967,8 +1968,9 @@ msgid "Another client replied"
 msgstr ""
 
 #: gammu/message.c:91
+#, fuzzy
 msgid "Not supported"
-msgstr ""
+msgstr "Nie obsługiwane id: %s"
 
 #: gammu/message.c:103
 msgid "Service reply"
@@ -2104,7 +2106,7 @@ msgstr ""
 
 #: gammu/message.c:611
 msgid "Delivery report"
-msgstr ""
+msgstr "Raport dostarczenia"
 
 #: gammu/message.c:613 gammu/misc.c:923 gammu/misc.c:1449 gammu/misc.c:1452
 msgid "enabled"
@@ -2112,7 +2114,7 @@ msgstr ""
 
 #: gammu/message.c:615 gammu/misc.c:925 gammu/misc.c:1450 gammu/misc.c:1453
 msgid "disabled"
-msgstr ""
+msgstr "wyłączone"
 
 #: gammu/message.c:618 gammu/message.c:621
 #, fuzzy
@@ -2264,19 +2266,19 @@ msgstr "   Producent     : %s\n"
 
 #: gammu/misc.c:192 gammu/search.c:100
 msgid "Model"
-msgstr ""
+msgstr "Model"
 
 #: gammu/misc.c:198
 msgid "Firmware"
-msgstr ""
+msgstr "Firmware"
 
 #: gammu/misc.c:210
 msgid "Hardware"
-msgstr ""
+msgstr "Sprzęt"
 
 #: gammu/misc.c:221
 msgid "Original IMEI"
-msgstr ""
+msgstr "Orginalny IMEI"
 
 #: gammu/misc.c:228
 #, fuzzy
@@ -2285,11 +2287,11 @@ msgstr "   Producent     : %s\n"
 
 #: gammu/misc.c:234
 msgid "Product code"
-msgstr ""
+msgstr "Kod produktu"
 
 #: gammu/misc.c:244
 msgid "SIM IMSI"
-msgstr ""
+msgstr "SIM IMSI"
 
 #: gammu/misc.c:274
 msgid "Call info"
@@ -2375,11 +2377,11 @@ msgstr ""
 
 #: gammu/misc.c:364
 msgid "Todos"
-msgstr ""
+msgstr "Do zrobienia"
 
 #: gammu/misc.c:368
 msgid "Calendar"
-msgstr ""
+msgstr "Kalendarz"
 
 #: gammu/misc.c:373
 msgid "Battery level"
@@ -2787,7 +2789,7 @@ msgstr ""
 
 #: gammu/misc.c:1364 gammu/misc.c:1410
 msgid "Normal"
-msgstr ""
+msgstr "Normalny"
 
 #: gammu/misc.c:1366 gammu/misc.c:1412
 msgid "Secure"
@@ -2820,7 +2822,7 @@ msgstr ""
 
 #: gammu/misc.c:1385 gammu/misc.c:1417 gammu/misc.c:1444 gammu/misc.c:1494
 msgid "Password"
-msgstr ""
+msgstr "Hasło"
 
 #: gammu/misc.c:1388
 msgid "USSD"
