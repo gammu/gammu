@@ -1032,5 +1032,7 @@ add_subdirectory(docs/user)
 
 if (ENABLE_PYTHON)
     add_subdirectory(python)
+else (ENABLE_PYTHON)
+    message (STATUS "Python bindings are disabled!")
 endif (ENABLE_PYTHON)
 
