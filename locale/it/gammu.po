@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-26 10:20+0100\n"
+"POT-Creation-Date: 2009-01-27 14:14+0100\n"
 "PO-Revision-Date: 2008-08-13 11:41+0200\n"
 "Last-Translator: Alessio Gaeta <alga777@libero.it>\n"
 "Language-Team: Language =it\n"
@@ -759,11 +759,11 @@ msgstr ""
 
 #: gammu/calendar.c:229
 msgid "Yes"
-msgstr ""
+msgstr "Sì"
 
 #: gammu/calendar.c:229
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: gammu/calendar.c:241 gammu/calendar.c:247 gammu/calendar.c:252
 #: gammu/calendar.c:862 gammu/calendar.c:868
@@ -1598,7 +1598,7 @@ msgstr ", cartella Ricevuti"
 #: gammu/files.c:157 gammu/files.c:170 gammu/files.c:196 gammu/files.c:321
 #, c-format
 msgid "Folder"
-msgstr ""
+msgstr "Cartella"
 
 #: gammu/files.c:181 gammu/files.c:312
 #, c-format
@@ -1699,7 +1699,7 @@ msgstr "Codice rete assente\n"
 #: gammu/misc.c:1682 gammu/misc.c:1721 gammu/misc.c:1984
 #: helper/memory-display.c:124 helper/message-display.c:242
 msgid "Name"
-msgstr ""
+msgstr "Nome"
 
 #: gammu/gammu.c:134
 #, fuzzy, c-format
@@ -1853,8 +1853,9 @@ msgid "FM radio"
 msgstr ""
 
 #: gammu/gammu.c:749
+#, fuzzy
 msgid "Phone information"
-msgstr ""
+msgstr "Informazioni sul telefono"
 
 #: gammu/gammu.c:750
 msgid "Phone settings"
@@ -2087,8 +2088,9 @@ msgid "Another client replied"
 msgstr ""
 
 #: gammu/message.c:91
+#, fuzzy
 msgid "Not supported"
-msgstr ""
+msgstr "Id non supportato: %s"
 
 #: gammu/message.c:103
 #, fuzzy
@@ -2230,7 +2232,7 @@ msgstr ""
 
 #: gammu/message.c:611
 msgid "Delivery report"
-msgstr ""
+msgstr "Rapporto di consegna"
 
 #: gammu/message.c:613 gammu/misc.c:923 gammu/misc.c:1449 gammu/misc.c:1452
 msgid "enabled"
@@ -2238,7 +2240,7 @@ msgstr ""
 
 #: gammu/message.c:615 gammu/misc.c:925 gammu/misc.c:1450 gammu/misc.c:1453
 msgid "disabled"
-msgstr ""
+msgstr "disabilitato"
 
 #: gammu/message.c:618 gammu/message.c:621
 #, fuzzy
@@ -2307,7 +2309,7 @@ msgstr "Sto spedendo il messaggio dalla cartella \"%s\", posizione %i\n"
 
 #: gammu/message.c:786
 msgid "SIM"
-msgstr ""
+msgstr "SIM"
 
 #: gammu/message.c:788
 #, fuzzy
@@ -2399,7 +2401,7 @@ msgstr "Produttore         : %s\n"
 
 #: gammu/misc.c:192 gammu/search.c:100
 msgid "Model"
-msgstr ""
+msgstr "Modello"
 
 #: gammu/misc.c:198
 #, fuzzy
@@ -2408,7 +2410,7 @@ msgstr "Firmware           : %s"
 
 #: gammu/misc.c:210
 msgid "Hardware"
-msgstr ""
+msgstr "Hardware"
 
 #: gammu/misc.c:221
 #, fuzzy
@@ -2427,7 +2429,7 @@ msgstr "Codice prodotto    : %s\n"
 
 #: gammu/misc.c:244
 msgid "SIM IMSI"
-msgstr ""
+msgstr "SIM IMSI"
 
 #: gammu/misc.c:274
 #, fuzzy
@@ -2528,7 +2530,7 @@ msgstr "Info su USSD             : %s\n"
 
 #: gammu/misc.c:364
 msgid "Todos"
-msgstr ""
+msgstr "Promemoria"
 
 #: gammu/misc.c:368
 #, fuzzy
@@ -2976,7 +2978,7 @@ msgstr "Tipo di autenticazione : Normale\n"
 
 #: gammu/misc.c:1364 gammu/misc.c:1410
 msgid "Normal"
-msgstr ""
+msgstr "Normale"
 
 #: gammu/misc.c:1366 gammu/misc.c:1412
 msgid "Secure"
@@ -3011,7 +3013,7 @@ msgstr ""
 
 #: gammu/misc.c:1385 gammu/misc.c:1417 gammu/misc.c:1444 gammu/misc.c:1494
 msgid "Password"
-msgstr ""
+msgstr "Password"
 
 #: gammu/misc.c:1388
 msgid "USSD"

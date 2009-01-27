@@ -125,11 +125,10 @@ msgid ""
 "LogFormat configuration directive in gammurc(5) for possible values."
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:38
 #, no-wrap
 msgid "Calls"
-msgstr ""
+msgstr "Połączenia"
 
 # type: TP
 #: docs/user/gammu.1:39
@@ -1806,11 +1805,10 @@ msgstr ""
 msgid "B<setbitmap WALLPAPER>I< fileID>"
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:770
 #, no-wrap
 msgid "Ringtones"
-msgstr ""
+msgstr "Dźwięki dzwonka"
 
 # type: TP
 #: docs/user/gammu.1:860
@@ -2275,10 +2273,9 @@ msgstr ""
 msgid "3. GPRS Always Online"
 msgstr ""
 
-# type: Plain text
 #: docs/user/gammu.1:1598 docs/user/gammu.1:2129
 msgid "..."
-msgstr ""
+msgstr "..."
 
 # type: TP
 #: docs/user/gammu.1:1599 docs/user/gammu.1:2130
@@ -2471,11 +2468,10 @@ msgstr ""
 msgid "Show info about FM stations in phone"
 msgstr ""
 
-# type: SS
 #: docs/user/gammu.1:1980
-#, no-wrap
+#, fuzzy, no-wrap
 msgid "Phone information"
-msgstr ""
+msgstr "Pobierz informację o telefonie"
 
 # type: TP
 #: docs/user/gammu.1:1981
