@@ -19,6 +19,7 @@ ChangeLog
 
 [-] * Fixed privileges dropping in SMSD.
 [-] * SMSD inject now properly uses PhoneID.
+[-] * Improve SMSD documentation.
     
 20090126 - 1.22.92
 
