@@ -5,26 +5,22 @@
 #define __smsd_uid_h__
 
 #include <gammu-types.h>
+#include "common.h"
 
 /**
- * Sets UID.
+ * Sets UID and GID.
  */
-extern bool set_uid(int uid);
-
-/**
- * Sets GID.
- */
-extern bool set_gid(int gid);
+extern bool set_uid_gid(SMSD_Parameters *params);
 
 /**
  * Gets UID from string.
  */
-extern int get_uid(const char *name);
+extern bool fill_uid(SMSD_Parameters *params, const char *name);
 
 /**
  * Gets GID from string.
  */
-extern int get_gid(const char *name);
+extern bool fill_gid(SMSD_Parameters *params, const char *name);
 
 
 #endif

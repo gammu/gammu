@@ -1,6 +1,8 @@
 #ifndef __smsd_common_h__
 #define __smsd_common_h__
 
+#include <gammu-smsd.h>
+
 /**
  * Stucture holding Gammu SMSD command line parameters.
  */
@@ -9,6 +11,8 @@ typedef struct {
 	const char *pid_file;
 	int uid;
 	int gid;
+	char *user;
+	char *group;
 	bool daemonize;
 	bool start_service;
 	bool stop_service;

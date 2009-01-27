@@ -16,6 +16,8 @@ ChangeLog
 =========
     
 2009???? - 1.22.93
+
+[-] * Fixed privileges dropping in SMSD.
     
 20090126 - 1.22.92
 
