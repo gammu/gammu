@@ -363,12 +363,14 @@ HELP['getmemory'] = '''Get memory location from phone. Numerate locations from 1
 '''
 HELP['searchmemory'] = ''''''
 HELP['deleteallmemory'] = '''Deletes all entries from specified memory type.'''
-HELP['deletememory'] = '''Deletes entries in specified from specified memory type.'''
+HELP['deletememory'] = '''Deletes entries in specified range from specified memory type.'''
 HELP['listmemorycategory'] = ''''''
 HELP['senddtmf'] = '''Plays DTMF sequence. In some phones available only during calls
 '''
 HELP['getspeeddial'] = '''''' 
-HELP['getsms'] = '''Get SMS. Locations are numerated from 1.
+HELP['getsms'] = '''Get SMS. 
+
+Locations are numerated from 1.
 
 When give folder 0, sms is given from "flat" memory (all sms from all
 folders have unique numbers). It's sometimes emulated by Gammu.
@@ -382,7 +384,9 @@ by Nokia 3310, 5110, 6110). If work with your phone, use
 \\fBgetsmsfolders\\fR to get folders list.
 ''' 
 HELP['deletesms'] = '''Delete SMS from phone. See description for \\fBgetsms\\fR for info about
-sms folders naming convention. Locations are numerated from 1.
+sms folders naming convention. 
+
+Locations are numerated from 1.
 '''
 HELP['deleteallsms'] = '''Delete all SMS from specified SMS folder.
 '''
@@ -406,7 +410,9 @@ Play one of "built" ringtones. This option is available for DCT4 phones. For get
 HELP['getringtoneslist'] = '''
 Get list of sounds 
 '''
-HELP['getringtone'] = '''Get ringtone from phone in RTTL or BINARY format. Locations are numerated from 1.
+HELP['getringtone'] = '''Get ringtone from phone in RTTL or BINARY format. 
+
+Locations are numerated from 1.
 '''
 HELP['setringtone'] = '''Set ringtone in phone. When don't give location, it will be written
 "with preview" (in phones supporting this feature like 61xx or 6210).
@@ -441,11 +447,17 @@ HELP['getcalendarnotes'] = '''Get calendar notes from phone. In Nokia 3310 and 3
 '''
 HELP['getcategory'] = ''''''
 HELP['getallcategies'] = ''''''
-HELP['getwapbookmark'] = '''Get WAP bookmark(s) from phone. Locations are numerated from 1.
+HELP['getwapbookmark'] = '''Get WAP bookmark(s) from phone. 
+
+Locations are numerated from 1.
 '''
-HELP['deletewapbookmark'] = '''Delete WAP bookmark(s) from phone. Locations are numerated from 1.
+HELP['deletewapbookmark'] = '''Delete WAP bookmark(s) from phone. 
+
+Locations are numerated from 1.
 '''
-HELP['getwapsettings'] = '''Get WAP settings from phone. Locations are numerated from 1.
+HELP['getwapsettings'] = '''Get WAP settings from phone. 
+
+Locations are numerated from 1.
 '''
 HELP['getmmssettings'] = ''''''
 HELP['getbitmap STARTUP'] = '''Get static startup logo from phone. Allow to save it in file.
