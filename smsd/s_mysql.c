@@ -558,7 +558,7 @@ static GSM_Error SMSDMySQL_CreateOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDCon
 		sprintf(buffer+strlen(buffer),"`Coding`,`UDH`, `Class`,`TextDecoded`,`ID`) VALUES (");
 		if (i==0) {
 			sprintf(buffer+strlen(buffer),"'Gammu %s',",VERSION);
-			sprintf(buffer+strlen(buffer),"'','");
+			sprintf(buffer+strlen(buffer),"'%s','", Config->PhoneID);
 			if (sms->SMS[i].PDU == SMS_Status_Report) {
 				sprintf(buffer+strlen(buffer),"yes','");
 			} else {
