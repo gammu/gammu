@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-01-27 15:26+0100\n"
-"PO-Revision-Date: 2009-01-27 15:30+0100\n"
+"PO-Revision-Date: 2009-01-27 15:36+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -131,6 +131,8 @@ msgid ""
 "Parameter, which allow to control debug level, see documentation of "
 "LogFormat configuration directive in gammurc(5) for possible values."
 msgstr ""
+"Parametr, který nastaví ladicí úroveň. Popis možných hodnot naleznete v "
+"popisu konfigurační hodnoty LogFormat v dokumentaci gammurc(5)."
 
 #: docs/user/gammu.1:38
 #, no-wrap
@@ -180,7 +182,7 @@ msgstr "B<dialvoice>I< number [show|hide]>"
 # type: Plain text
 #: docs/user/gammu.1:56
 msgid "Make voice call from SIM card line set in phone."
-msgstr ""
+msgstr "Začne hlasový hovor prostřednictvím linky nastavené na SIM kartě."
 
 # type: TP
 #: docs/user/gammu.1:57
@@ -218,6 +220,8 @@ msgid ""
 "Make voice call from SIM card line set in phone which will be terminated "
 "after B<length> seconds."
 msgstr ""
+"Začne hlasový hovor prostřednictvím linky nastavené na SIM kartě, který bude "
+"ukončen po B<length> sekundách."
 
 # type: TP
 #: docs/user/gammu.1:74 docs/user/gammu.1:1629 docs/user/gammu.1:2002
