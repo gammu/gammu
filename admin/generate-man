@@ -224,7 +224,7 @@ HELP['resetphonesettings'] = '''Reset phone settings. \\fIBE CAREFULL !!!!\\fR
 
 \\fBALL:\\fR 
 
-Clear user settings:
+Clear user settings
 .br
 * removes or set logos to default
 .br
@@ -729,7 +729,7 @@ HELP['nokianetmonitor36'] = '''Reset counters from netmonitor test 36 in Nokia D
 \\fIwww.mwiacek.com\\fR and read netmonitor manual.
 '''
 HELP['siemensnetmonitor'] = '''''' 
-HELP['backup'] = '''Backup your phone to file. It's possible to backup (depends on phone):
+HELP['backup'] = '''Backup your phone to file. It's possible to backup (depends on phone and backup format):
 
 * phonebook from SIM and phone memory
 .br
@@ -748,7 +748,23 @@ HELP['backup'] = '''Backup your phone to file. It's possible to backup (depends 
 * caller logos and groups
 .br
 * user ringtones
-BSLen use text backup files. List can be extended on request.
+.br
+
+There are various backup formats supported and the backup format is guessed
+based on file extension:
+
+* .lmb - Nokia backup, supports contacts, caller logos and startup logo.
+.br
+* .vcs - vCalendar, supports calendar and todo.
+.br
+* .vcf - vCard, supports contacts.
+.br
+* .ldif - LDAP import, supports contacts.
+.br
+* .ics - iCalendar, supports calendar and todo.
+.br
+* Any other extension is Gammu backup file and it supports all data mentioned above.
+.br
 
 \\fITIP:\\fR if you will backup settings to Gammu text file, it will be possible to edit
 it. It's easy: many things in this file will be written double - once in Unicode,
