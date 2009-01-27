@@ -16,6 +16,10 @@ gammu(1) načítá konfiguraci z konfiguračního souboru. Jeho umístění je
 zjištěno přispuštění. Na Unixových sytémech se nejdříve zkouší ~/.gammurc a
 pokud to neexistuje, použije se /etc/gammurc.
 
+Na Windows uživatelská konfigurace je hledána jako profil/Data
+Aplikací/gammurc a poku není nelezen, použije Gammu aktuální adresář
+(./gammurc).
+
 Tento soubor používá syntaxi ini souborů, komentáře mohou být značeny buď ;
 nebo #. Sekce souboru jsou zapsány v hranatých závorkách jako [toto].Všechny
 hodnoty klíčů nerozlišují velikost písmen.
@@ -86,10 +90,10 @@ Zařízení kde je přístupný telefon nebo adresa telefonu, záleží na typu
 připojení.
 
 Pro kabely nebo emulovaný sériový port zadejte jméno zařízení (například
-/dev/ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux or COM1: on
-Windows). Speciální výjjímkou jsou DKU\-2 a DKU\-5 kabely na Windows, kde je
-zařízení automaticky zjištěno z informací ovladače a tento parametr je
-ignorován.
+/dev/ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 na Linuxu, /dev/cuad0
+na FreeBSD nebo COM1: na Windows). Speciální výjjímkou jsou DKU\-2 a DKU\-5
+kabely na Windows, kde je zařízení automaticky zjištěno z informací ovladače
+a tento parametr je ignorován.
 
 Při připojení přes Bluetooth musíte zadat Bluetooth adresu vašeho telefonu
 (na Linuxu můžete zjistit seznam zařízení v dosahu pomocí příkazu "hcitool

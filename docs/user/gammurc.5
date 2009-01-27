@@ -13,6 +13,9 @@ gammu(1) reads configuration from a config file. It's location is determined
 on runtime. On Unix systems, it first tries ~/.gammurc and then falls back to
 /etc/gammurc.
 
+On Windows, user configuration is tried at profile/Application Data/gammurc
+and then gammu falls back to current directory (./gammurc).
+
 This file use ini file syntax, with comments being marked with both ; and #.
 Sections of config file are identified in square brackets line [this]. All key
 values are case insensitive.
@@ -77,10 +80,10 @@ For Bluetooth connection use one of following:
 Device node or address of phone. It depends on used connection. 
 
 For cables or emulated serial ports, you enter device name (for example
-/dev/ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux or COM1: on
-Windows). The special exception are DKU-2 and DKU-5 cables on Windows, where
-the device is automatically detected from driver information and this
-parameters is ignored.
+/dev/ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux, /dev/cuad0 on
+FreeBSD or COM1: on Windows). The special exception are DKU-2 and DKU-5 cables
+on Windows, where the device is automatically detected from driver information
+and this parameters is ignored.
 
 For Bluetooth connection you have to enter Bluetooth address of your phone
 (you can list Bluetooth devices in range on Linux using "hcitool scan"
