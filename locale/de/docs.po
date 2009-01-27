@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-27 14:06+0100\n"
+"POT-Creation-Date: 2009-01-27 15:20+0100\n"
 "PO-Revision-Date: 2009-01-07 18:00+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2358,7 +2358,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu.1:1766
-msgid "Delete WAP bookmark(s) from phone."
+msgid "Delete WAP bookmarks from phone."
 msgstr ""
 
 # type: TP
@@ -2381,7 +2381,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu.1:1778
-msgid "Get WAP bookmark(s) from phone."
+msgid "Get WAP bookmarks from phone."
 msgstr ""
 
 # type: TP
@@ -4501,10 +4501,10 @@ msgid "Script to generate JAD file from JAR file."
 msgstr ""
 
 # type: Plain text
-#: docs/user/jadmaker.1:14 docs/user/gammu-config.1:13
+#: docs/user/jadmaker.1:13 docs/user/gammu-config.1:12
 msgid ""
 "These programs follow the usual GNU command line syntax, with long options "
-"starting with two dashes (`-').  A summary of options is included below."
+"starting with two dashes (`-'). A summary of options is included below."
 msgstr ""
 
 # type: TP

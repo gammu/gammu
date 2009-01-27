@@ -447,11 +447,11 @@ HELP['getcalendarnotes'] = '''Get calendar notes from phone. In Nokia 3310 and 3
 '''
 HELP['getcategory'] = ''''''
 HELP['getallcategies'] = ''''''
-HELP['getwapbookmark'] = '''Get WAP bookmark(s) from phone. 
+HELP['getwapbookmark'] = '''Get WAP bookmarks from phone. 
 
 Locations are numerated from 1.
 '''
-HELP['deletewapbookmark'] = '''Delete WAP bookmark(s) from phone. 
+HELP['deletewapbookmark'] = '''Delete WAP bookmarks from phone. 
 
 Locations are numerated from 1.
 '''
