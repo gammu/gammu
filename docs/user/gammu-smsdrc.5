@@ -16,8 +16,8 @@ This file use ini file syntax, with comments being marked with both ; and #.
 Sections of config file are identified in square brackets line [this]. All key
 values are case insensitive.
 
-Configuration file of gammu\-smsd consists of two sections - [gammu] and
-[smsd]. 
+Configuration file of gammu\-smsd consists of at least two sections - [gammu]
+and [smsd].
 
 The [gammu] section is configuration of a phone connection and is same as
 described in gammurc(5) with the only exception that logfile is ignored and
@@ -27,6 +27,9 @@ directive still configures how much messages gammu emits.
 The [smsd] section configures SMS daemon itself, which are described in
 following subsections. First general parameters of SMS daemon are listed and
 then specific parameters for storage backends.
+
+Then there are optional sections [include_numbers] and [exclude_numbers],
+which control message filtering (see bellow).
 
 .SS General parameters of SMS daemon
 
@@ -240,6 +243,15 @@ The format for transmitting the SMS: 'auto', 'unicode', '7bit'.
 
 Default is 'auto'.
 
+
+.SS Message filtering
+
+SMSD allows to process only limited subset of incoming messages. You can
+define filters in [include_numbers] and [exclude_numbers] sections. If
+[include_numbers] section exists, all values (keys are ignored) from it are
+used as allowed phone numbers and no other message is processed. On the other
+side, in [exclude_numbers] you can specify numbers which you want to skip.
+
 .SH EXAMPLE
 
 There is more complete example available in Gammu documentation. Please note
@@ -279,6 +291,32 @@ User = smsd
 Password = smsd
 PC = localhost
 Database = smsd
+.fi
+.sp
+.RE
+.PP
+
+Process only messages from 123456 number:
+
+.RS
+.sp
+.nf
+.ne 7
+[include_numbers]
+number1 = 123456
+.fi
+.sp
+.RE
+.PP
+
+Do not process messages from evil number 666:
+
+.RS
+.sp
+.nf
+.ne 7
+[exclude_numbers]
+number1 = 666
 .fi
 .sp
 .RE
