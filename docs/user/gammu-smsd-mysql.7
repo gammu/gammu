@@ -48,40 +48,52 @@ Table where received messages will be stored.
 Fields description:
 
 \fBUpdatedInDB\fR (timestamp)
- - when somebody (daemon, user, etc.) updated it
+.br
+when somebody (daemon, user, etc.) updated it
 
 \fBReceivingDateTime\fR (timestamp)
- - when SMS was received
+.br
+when SMS was received
 
 \fBText\fR (text)
- - encoded SMS text (for all SMS)
+.br
+encoded SMS text (for all SMS)
 
 \fBSenderNumber\fR (varchar(20))
- - decoded SMS sender number
+.br
+decoded SMS sender number
 
 \fBCoding\fR (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))
- - SMS text coding
+.br
+SMS text coding
 
 \fBUDH\fR (text)
- - encoded User Data Header text
+.br
+encoded User Data Header text
 
 \fBSMSCNumber\fR (varchar(20))
- - decoded SMSC number
+.br
+decoded SMSC number
 
 \fBClass\fR (integer)
- - SMS class or -1
+.br
+SMS class or -1
 
 \fBTextDecoded\fR (varchar(160))
- - decoded SMS text (for Default Alphabet/Unicode SMS)
+.br
+decoded SMS text (for Default Alphabet/Unicode SMS)
 
 \fBID\fR (integer unsigned)
- - SMS identificator (for using with external applications)
+.br
+SMS identificator (for using with external applications)
 
 \fBRecipientID\fR (text)
- - which Gammu daemon has added it
+.br
+which Gammu daemon has added it
 
 \fBProcessed\fR (enum('false', 'true'))
- - you can use for marking, whether SMS was processed or not
+.br
+you can use for marking, whether SMS was processed or not
 
 
 .TP
@@ -93,52 +105,69 @@ is multipart, subsequent parts are stored in table outbox_multipart.
 Fields description:
 
 \fBUpdatedInDB\fR (timestamp)
- - when somebody (daemon, user, etc.) updated it
+.br
+when somebody (daemon, user, etc.) updated it
 
 \fBInsertIntoDB\fR (timestamp)
- - set it during insert
+.br
+when message was inserted into database
 
 \fBSendingDateTime\fR (timestamp)
- - set it to some value, when want to force sending after some planned time
+.br
+set it to some value, when want to force sending after some planned time
 
 \fBText\fR (text)
- - SMS text encoded using hex values
+.br
+SMS text encoded using hex values
 
 \fBDestinationNumber\fR (varchar(20))
- - recipient number
+.br
+recipient number
 
 \fBCoding\fR (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))
- - SMS text coding
+.br
+SMS text coding
 
 \fBUDH\fR (text)
- - User Data Header encoded using hex values
+.br
+User Data Header encoded using hex values
 
 \fBClass\fR (integer)
- - SMS class or -1
+.br
+SMS class or -1
 
 \fBTextDecoded\fR (varchar(160))
- - SMS text in "human readable" form
+.br
+SMS text in "human readable" form
 
 \fBID\fR (integer unsigned)
- - SMS/SMS sequence ID
+.br
+SMS/SMS sequence ID
 
 \fBMultiPart\fR (enum('false','true'))
- - info, whether there are more SMS from this sequence in Outbox_multipart
+.br
+info, whether there are more SMS from this sequence in outbox_multipart
 
 \fBRelativeValidity\fR (integer)
- - SMS relative validity like encoded using GSM specs
+.br
+SMS relative validity like encoded using GSM specs
 
 \fBSenderID\fR (text)
- - which SMSD instance should send this one sequence
+.br
+which SMSD instance should send this one sequence
 
 \fBSendingTimeOut\fR (timestamp)
- - used by SMSD instance for own targets
+.br
+used by SMSD instance for own targets
 
 \fBDeliveryReport\fR (enum('default','yes','no'))
- - when default is used, Delivery Report is used or not according to SMSD instance settings; yes forces Delivery Report.
+.br
+when default is used, Delivery Report is used or not according to SMSD instance settings; yes forces Delivery Report.
 
 \fBCreatorID\fR (text)
- - you can use for adding info about process, which added this SMS/SMS sequence into database. It's copied to Sent_Items "as is" 
+.br
+sender identification, it has to match PhoneID in SMSD configuration to make
+SMSD process this message
 
 
 
@@ -151,10 +180,24 @@ Data for outgoing multipart messages.
 Fields description:
 
 \fBID\fR (integer unsigned)
- - the same meaning to values in Outbox table
+.br
+\fBText\fR (text)
+.br
+\fBCoding\fR (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))
+.br
+\fBUDH\fR (text)
+.br
+\fBClass\fR (integer)
+.br
+\fBTextDecoded\fR (varchar(160))
+.br
+\fBID\fR (integer unsigned)
+.br
+the same meaning as values in outbox table
 
 \fBSequencePosition\fR (integer)
- - info, what is SMS number in SMS sequence
+.br
+info, what is SMS number in SMS sequence
 
 
 .TP
@@ -166,34 +209,44 @@ you can get information such as battery or signal level from here.
 Fields description:
 
 \fBID\fR (text)
- - PhoneID value
+.br
+PhoneID value
 
 \fBUpdatedInDB\fR (timestamp)
- - when this record has been updated
+.br
+when this record has been updated
 
 \fBInsertIntoDB\fR (timestamp)
- - when this record has been created (when phone has been connected)
+.br
+when this record has been created (when phone has been connected)
 
 \fBTimeOut\fR (timestamp)
- - when this record expires
+.br
+when this record expires
 
 \fBSend\fR (boolean)
- - currently always true
+.br
+currently always true
 
 \fBReceive\fR (boolean)
- - currently always true
+.br
+currently always true
 
 \fBIMEI\fR (text)
- - IMEI of phone
+.br
+IMEI of phone
 
 \fBClient\fR (text)
- - client name, usually string Gammu with version
+.br
+client name, usually string Gammu with version
 
 \fBBattery\fR (integer)
- - battery level (or -1 if uknonwn)
+.br
+battery level (or -1 if uknonwn)
 
 \fBSignal\fR (integer)
- - signal level (or -1 if uknonwn)
+.br
+signal level (or -1 if uknonwn)
 
 .TP
 .BI sentitems
@@ -204,61 +257,80 @@ updated here.
 Fields description:
 
 \fBUpdatedInDB\fR (timestamp)
- - when somebody (daemon, user, etc.) updated it
+.br
+when somebody (daemon, user, etc.) updated it
 
 \fBInsertIntoDB\fR (timestamp)
- - when message was inserted into databse
+.br
+when message was inserted into database
 
 \fBSendingDateTime\fR (timestamp)
- - when message has been sent
+.br
+when message has been sent
 
 \fBDeliveryDateTime\fR (timestamp)
- - when Delivery Report was used for SMS, this entry contains time of receiving this report
+.br
+when Delivery Report was used for SMS, this entry contains time of receiving this report
 
 \fBStatus\fR (enum('SendingOK', 'SendingOKNoReport', 'SendingError', 'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', 'Error'))
- - when Delivery Report was used for SMS, this entry contains human readable error code
+.br
+when Delivery Report was used for SMS, this entry contains human readable error code
 
 \fBStatusError\fR (integer)
- - when Delivery Report was used for SMS, this entry contains error code like in GSM specs
+.br
+when Delivery Report was used for SMS, this entry contains error code like in GSM specs
 
 \fBText\fR (text)
- - SMS text encoded using hex values
+.br
+SMS text encoded using hex values
 
 \fBDestinationNumber\fR (varchar(20))
- - decoded destination number for SMS
+.br
+decoded destination number for SMS
 
 \fBCoding\fR (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', 'Default_Compression', 'Unicode_Compression'))
- - SMS text coding
+.br
+SMS text coding
 
 \fBUDH\fR (text)
- - User Data Header encoded using hex values
+.br
+User Data Header encoded using hex values
 
 \fBSMSCNumber\fR (varchar(20))
- - decoded number of SMSC, which sent SMS
+.br
+decoded number of SMSC, which sent SMS
 
 \fBClass\fR (integer)
- - SMS class or -1
+.br
+SMS class or -1
 
 \fBTextDecoded\fR (varchar(160))
- - SMS text in "human readable" form
+.br
+SMS text in "human readable" form
 
 \fBID\fR (integer unsigned)
- - SMS ID
+.br
+SMS ID
 
 \fBSenderID\fR (text)
- - which SMSD instance sent this one sequence
+.br
+which SMSD instance sent this one sequence
 
 \fBSequencePosition\fR (integer)
- - SMS number in SMS sequence
+.br
+SMS number in SMS sequence
 
 \fBTPMR\fR (integer)
- - Message Reference like in GSM specs
+.br
+Message Reference like in GSM specs
 
 \fBRelativeValidity\fR (integer)
- - SMS relative validity like encoded using GSM specs
+.br
+SMS relative validity like encoded using GSM specs
 
 \fBCreatorID\fR (text)
- - copied from CreatorID from Outbox table (and contains any info put by users with access to database)
+.br
+copied from CreatorID from outbox table, matches PhoneID
 
 
 .TP

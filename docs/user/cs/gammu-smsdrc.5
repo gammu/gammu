@@ -19,8 +19,8 @@ Tento soubor používá syntaxi ini souborů, komentáře mohou být značeny bu
 nebo #. Sekce souboru jsou zapsány v hranatých závorkách jako [toto].Všechny
 hodnoty klíčů nerozlišují velikost písmen.
 
-Konfigurační soubor pro gammu\-smsd se skládá ze dvou sekcí \- [gammu] a
-[smsd].
+Konfigurační soubor pro gammu\-smsd se skládá alespoň ze dvou sekcí \- [gammu]
+a [smsd].
 
 Sekce [gammu] je konfigurací připojení k telefonu a je stejná jako je
 popsáno v gammurc(5) s jedinou vyjímkou a to ignorování direktivy logfile,
@@ -30,6 +30,9 @@ stále určuje jak moc ladicích hlášek bude gammu předávat.
 Sekce [smsd] nastavuje SMS démona a je popsána v následující části
 textu. Nejdříve jsou popsány obecné parametry SMS démona a pak parametry pro
 jednotlivé služby.
+
+Dále jsou volitelné sekce [include_numbers] a [exclude_numbers], které
+ovládají filtrování zpráv (viz dále).
 
 .SS "Obecné parametry SMS démona"
 
@@ -242,6 +245,15 @@ Formát přenosu SMS: 'auto', 'unicode', '7bit'.
 
 Výchozí je 'auto'.
 
+
+.SS "Filtrování zpráv"
+
+SMSD umožňuje zpracovat jen část přijatých zpráv. Filtry můžete definovat v
+sekcích [include_numbers] a [exclude_numbers]. Pokud existuje sekce
+[include_numbers], všechny hodnoty z ní (klíče jsou ignorovány) jsou použity
+jako povolená čísla a jiné zprávy nejsou zpracovány. Naopak v
+[exclude_numbers] můžete zadat jaká čísla chcete ignorovat.
+
 .SH PŘÍKLAD
 
 Kompletnější ukázka je dostupná v dokumentaci Gammu. Pro jednoduchost
@@ -281,6 +293,32 @@ User = smsd
 Password = smsd
 PC = localhost
 Database = smsd
+.fi
+.sp
+.RE
+.PP
+
+Zpracovávat jen zprávy od čísla 123456:
+
+.RS
+.sp
+.nf
+.ne 7
+[include_numbers]
+number1 = 123456
+.fi
+.sp
+.RE
+.PP
+
+Nezpracovávat zprávy od ďábelského čísla 666:
+
+.RS
+.sp
+.nf
+.ne 7
+[exclude_numbers]
+number1 = 666
 .fi
 .sp
 .RE
