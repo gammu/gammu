@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-27 14:06+0100\n"
-"PO-Revision-Date: 2009-01-27 14:07+0100\n"
+"POT-Creation-Date: 2009-01-27 14:30+0100\n"
+"PO-Revision-Date: 2009-01-27 14:46+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2361,7 +2361,7 @@ msgstr "B<listnetworks>I< [country]>"
 # type: Plain text
 #: docs/user/gammu.1:1628
 msgid "Show names/codes of GSM networks known for Gammu"
-msgstr ""
+msgstr "Zobrazí názvy GSM sítí známých Gammu."
 
 # type: TP
 #: docs/user/gammu.1:1634
@@ -2389,7 +2389,7 @@ msgstr "B<deletewapbookmark>I< start [stop]>"
 # type: Plain text
 #: docs/user/gammu.1:1766
 msgid "Delete WAP bookmark(s) from phone."
-msgstr ""
+msgstr "Odstraní WAP záložky z telefonu."
 
 # type: TP
 #: docs/user/gammu.1:1769
@@ -2479,7 +2479,7 @@ msgstr "B<getfmstation>I< start [stop]>"
 # type: Plain text
 #: docs/user/gammu.1:1963
 msgid "Show info about FM stations in phone"
-msgstr ""
+msgstr "Zobrazí informace o FM stanicích v telefonu."
 
 #: docs/user/gammu.1:1980
 #, no-wrap
