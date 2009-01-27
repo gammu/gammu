@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-01-27 12:03+0100\n"
-"PO-Revision-Date: 2009-01-27 12:06+0100\n"
+"PO-Revision-Date: 2009-01-27 13:25+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2561,7 +2561,7 @@ msgstr "Dekódování výpisů"
 #: docs/user/gammu.1:1928
 #, no-wrap
 msgid "B<decodebinarydump>I< file [phonemodel]>"
-msgstr ""
+msgstr "B<decodebinarydump>I< file [phonemodel]>"
 
 # type: Plain text
 #: docs/user/gammu.1:1933
@@ -2575,7 +2575,7 @@ msgstr ""
 #: docs/user/gammu.1:1935
 #, no-wrap
 msgid "B<decodesniff>I< MBUS2|IRDA file [phonemodel]>"
-msgstr ""
+msgstr "B<decodesniff>I< MBUS2|IRDA file [phonemodel]>"
 
 # type: Plain text
 #: docs/user/gammu.1:1939
@@ -2588,7 +2588,7 @@ msgstr ""
 #: docs/user/gammu.1:1940
 #, no-wrap
 msgid "B<makeconverttable>I< file>"
-msgstr ""
+msgstr "B<makeconverttable>I< file>"
 
 #: docs/user/gammu.1:1944
 #, no-wrap
@@ -2599,13 +2599,13 @@ msgstr "Fuknce, které se nevešly jinam"
 #: docs/user/gammu.1:1945
 #, no-wrap
 msgid "B<batch>I< [file]>"
-msgstr ""
+msgstr "B<batch>I< [file]>"
 
 # type: TP
 #: docs/user/gammu.1:1948
 #, no-wrap
 msgid "B<entersecuritycode>I< PIN|PUK|PIN2|PUK2 code|->"
-msgstr ""
+msgstr "B<entersecuritycode>I< PIN|PUK|PIN2|PUK2 code|->"
 
 # type: Plain text
 #: docs/user/gammu.1:1951
@@ -2619,7 +2619,7 @@ msgstr ""
 #: docs/user/gammu.1:1995
 #, no-wrap
 msgid "B<presskeysequence>I< mMnNpPuUdD+-123456789*0#gGrRE<lt>E<gt>[]hHcCjJfFoOmMdD@>"
-msgstr ""
+msgstr "B<presskeysequence>I< mMnNpPuUdD+-123456789*0#gGrRE<lt>E<gt>[]hHcCjJfFoOmMdD@>"
 
 # type: Plain text
 #: docs/user/gammu.1:1998
@@ -2629,53 +2629,53 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu.1:2000
 msgid "B<mM> - Menu"
-msgstr ""
+msgstr "B<mM> - Menu"
 
 # type: Plain text
 #: docs/user/gammu.1:2002
 msgid "B<nN> - Names key"
-msgstr ""
+msgstr "B<nN> - Klávesa pro jména"
 
 # type: Plain text
 #: docs/user/gammu.1:2004
 msgid "B<pP> - Power"
-msgstr ""
+msgstr "B<pP> - Vypínač"
 
 # type: Plain text
 #: docs/user/gammu.1:2006
 msgid "B<uU> - Up"
-msgstr ""
+msgstr "B<uU> - Nahoru"
 
 # type: Plain text
 #: docs/user/gammu.1:2008
 msgid "B<dD> - Down"
-msgstr ""
+msgstr "B<dD> - Dolů"
 
 # type: Plain text
 #: docs/user/gammu.1:2010
 msgid "B<+-> - +-"
-msgstr ""
+msgstr "B<+-> - +-"
 
 # type: Plain text
 #: docs/user/gammu.1:2012
 msgid "B<gG> - Green"
-msgstr ""
+msgstr "B<gG> - Zelené"
 
 # type: Plain text
 #: docs/user/gammu.1:2014
 msgid "B<rR> - Red"
-msgstr ""
+msgstr "B<rR> - Červené"
 
 # type: Plain text
 #: docs/user/gammu.1:2016
 msgid "B<123456789*0#> is numeric keyboard"
-msgstr ""
+msgstr "B<123456789*0#> číslicová klávesnice"
 
 # type: TP
 #: docs/user/gammu.1:2017
 #, no-wrap
 msgid "B<reset>I< SOFT|HARD>"
-msgstr ""
+msgstr "B<reset>I< SOFT|HARD>"
 
 # type: Plain text
 #: docs/user/gammu.1:2020
