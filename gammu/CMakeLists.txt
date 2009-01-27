@@ -68,7 +68,13 @@ install (TARGETS gammu
         )
 
 # Binary testing
-add_test(gammu-help "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help)
+add_test(gammu-help "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help
+    PASS_REGULAR_EXPRESSION "${VERSION}"
+    )
+
+add_test(gammu-nets "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" listnetworks
+    PASS_REGULAR_EXPRESSION "740 01     Conecel S.A. (Consorcio Ecuatoriano de Telecomunicaciones S.A.)"
+    )
 
 foreach(EXT nlm ngg nol xpm nsl wbmp bmp)
     add_test(gammu-copybitmap-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
