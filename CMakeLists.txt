@@ -884,24 +884,6 @@ foreach (EXAMPLE ${EXAMPLES})
         )
 endforeach (EXAMPLE)
 
-add_subdirectory(common)
-
-add_subdirectory(helper)
-
-add_subdirectory(tests)
-
-add_subdirectory(smsd)
-
-add_subdirectory(gammu)
-
-add_subdirectory(locale)
-
-add_subdirectory(docs/user)
-
-if (ENABLE_PYTHON)
-    add_subdirectory(python)
-endif (ENABLE_PYTHON)
-
 # We want some tests. Even when cross compiling for Windows tests can be
 # done in Wine. This is better than nothing, even though Wine is a bit
 # more fault tolerant when linking DLLs.
@@ -1032,3 +1014,23 @@ else (WIN32 AND NOT CYGWIN)
   set (CPACK_SOURCE_STRIP_FILES "")
 endif (WIN32 AND NOT CYGWIN)
 include (CPack)
+
+# Transverse to dirs
+add_subdirectory(common)
+
+add_subdirectory(helper)
+
+add_subdirectory(tests)
+
+add_subdirectory(smsd)
+
+add_subdirectory(gammu)
+
+add_subdirectory(locale)
+
+add_subdirectory(docs/user)
+
+if (ENABLE_PYTHON)
+    add_subdirectory(python)
+endif (ENABLE_PYTHON)
+
