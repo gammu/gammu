@@ -18,12 +18,11 @@ DESC="Gammu SMS Daemon"
 
 # user which will run this daemon
 USER=gammu
-GROUP=gammu
 
 # Gracefully exit if the package has been removed.
 test -x $DAEMON || exit 0
 
-# Include polld defaults if available
+# Include user parameters if available
 if [ -f /etc/default/$NAME ] ; then
 	. /etc/default/$NAME
 fi
@@ -35,7 +34,7 @@ case "$1" in
 	log_daemon_msg "Starting $DESC" "$NAME"
 	start-stop-daemon --start --quiet --pidfile /var/run/$NAME.pid \
 		--exec $DAEMON -- $DAEMONPARAM --daemon --user $USER \
-        --group $GROUP --pid /var/run/$NAME.pid
+        --pid /var/run/$NAME.pid
     log_end_msg $?
 	;;
   stop)

@@ -208,6 +208,9 @@
 #ifndef HAVE_GETGRNAM
 #cmakedefine HAVE_GETGRNAM
 #endif
+#ifndef HAVE_INITGROUPS
+#cmakedefine HAVE_INITGROUPS
+#endif
 #ifndef HAVE_SETUID
 #cmakedefine HAVE_SETUID
 #endif

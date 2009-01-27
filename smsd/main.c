@@ -24,7 +24,7 @@
 #include <errno.h>
 #include <string.h>
 #include "common.h"
-#if defined(HAVE_GETPWNAM) || defined(HAVE_GETGRNAM) || defined(HAVE_SETUID) || defined(HAVE_SETGID)
+#if defined(HAVE_GETPWNAM) && defined(HAVE_GETGRNAM) && defined(HAVE_SETUID) && defined(HAVE_SETGID) && defined(HAVE_INITGROUPS)
 #define HAVE_UID
 #include "uid.h"
 #endif
@@ -188,15 +188,13 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 #endif
 #ifdef HAVE_UID
 			case 'U':
-				params->uid = get_uid(optarg);
-				if (params->uid == -1) {
+				if (!fill_uid(params, optarg)) {
 					fprintf(stderr, "Wrong user name/ID!\n");
 					exit(1);
 				}
 				break;
 			case 'G':
-				params->gid = get_gid(optarg);
-				if (params->gid == -1) {
+				if (!fill_gid(params, optarg)) {
 					fprintf(stderr, "Wrong group name/ID!\n");
 					exit(1);
 				}
@@ -277,15 +275,9 @@ void configure_daemon(SMSD_Parameters * params)
 #endif
 
 #ifdef HAVE_UID
-	if (params->gid != -1) {
-		if (!set_gid(params->gid)) {
-			fprintf(stderr, "changing gid failed! (%s)\n", strerror(errno));
-			exit(1);
-		}
-	}
-	if (params->uid != -1) {
-		if (!set_uid(params->uid)) {
-			fprintf(stderr, "changing uid failed! (%s)\n", strerror(errno));
+	if (params->gid != -1 || params->uid != -1) {
+		if (!set_uid_gid(params)) {
+			fprintf(stderr, "changing uid/gid failed! (%s)\n", strerror(errno));
 			exit(1);
 		}
 	}
@@ -316,6 +308,8 @@ int main(int argc, char **argv)
 		NULL,
 		-1,
 		-1,
+		NULL,
+		NULL,
 		false,
 		false,
 		false,

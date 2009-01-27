@@ -3,15 +3,33 @@
 #include <pwd.h>
 #include <grp.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "uid.h"
 
 /**
  * Sets UID.
  */
-bool set_uid(int uid)
+bool set_uid_gid(SMSD_Parameters *params)
 {
-    return setuid(uid) == 0;
+    /* gid is set allways (either through fill_uid or by user */
+    if (setgid(params->gid) != 0)
+        return false;
+
+    /* Only set group */
+    if (params->uid == -1)
+        return true;
+
+    if (initgroups(params->user, params->gid) != 0)
+        return false;
+
+    if (setuid(params->uid) != 0)
+        return false;
+
+    if (seteuid(params->uid) != 0)
+        return false;
+
+    return true;
 }
 
 /**
@@ -25,7 +43,7 @@ bool set_gid(int gid)
 /**
  * Gets UID from string.
  */
-int get_uid(const char *name)
+bool fill_uid(SMSD_Parameters *params, const char *name)
 {
     struct passwd *pwd;
     char *endptr;
@@ -33,23 +51,30 @@ int get_uid(const char *name)
 
     pwd = getpwnam(name);
 
+    if (pwd == NULL) {
+        /* Try to handle it as a number */
+        uid = strtol(name, &endptr, 10);
+        if (*endptr == 0 && uid > 0) {
+            pwd = getpwuid(uid);
+        }
+    }
+
     if (pwd != NULL) {
-        return pwd->pw_uid;
+        params->uid = pwd->pw_uid;
+        params->user = strdup(pwd->pw_name);
+        if (params->gid == -1) {
+            params->gid = pwd->pw_gid;
+        }
+        return true;
     }
 
-    /* Try to handle it as a number */
-    uid = strtol(name, &endptr, 10);
-    if (*endptr == 0 && uid > 0) {
-        return uid;
-    }
-
-    return -1;
+    return false;
 }
 
 /**
  * Gets GID from string.
  */
-int get_gid(const char *name)
+bool fill_gid(SMSD_Parameters *params, const char *name)
 {
     struct group *grp;
     char *endptr;
@@ -57,16 +82,20 @@ int get_gid(const char *name)
 
     grp = getgrnam(name);
 
-    if (grp != NULL) {
-        return grp->gr_gid;
-    }
-
     /* Try to handle it as a number */
-    gid = strtol(name, &endptr, 10);
-    if (*endptr == 0 && gid > 0) {
-        return gid;
+    if (grp == NULL) {
+        gid = strtol(name, &endptr, 10);
+        if (*endptr == 0 && gid > 0) {
+            grp = getgrgid(gid);
+        }
     }
 
-    return -1;
+    if (grp != NULL) {
+        params->gid = grp->gr_gid;
+        params->group = strdup(grp->gr_name);
+        return true;
+    }
+
+    return false;
 }
 
