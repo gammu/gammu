@@ -21,6 +21,7 @@ ChangeLog
 [-] * SMSD inject now properly uses PhoneID.
 [-] * Improve SMSD documentation.
 [-] * Translations improvements.
+[-] * Add ID for Nokia 7373.
     
 20090126 - 1.22.92
 
