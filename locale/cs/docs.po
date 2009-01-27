@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-27 15:20+0100\n"
-"PO-Revision-Date: 2009-01-27 15:20+0100\n"
+"POT-Creation-Date: 2009-01-27 15:26+0100\n"
+"PO-Revision-Date: 2009-01-27 15:30+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1716,7 +1716,7 @@ msgstr "B<getbitmap CALLER>I< location [file]>"
 # type: Plain text
 #: docs/user/gammu.1:693
 msgid "Get caller group logo from phone. Locations 1-5."
-msgstr ""
+msgstr "Načte logo skupiny z telefonu. Umístění 1-5."
 
 # type: TP
 #: docs/user/gammu.1:694
@@ -1739,7 +1739,7 @@ msgstr "B<getbitmap PICTURE>I< location [file]>"
 # type: Plain text
 #: docs/user/gammu.1:701
 msgid "Get Picture Image from phone."
-msgstr ""
+msgstr "Načte obrázek z telefonu."
 
 # type: TP
 #: docs/user/gammu.1:702
@@ -1751,6 +1751,7 @@ msgstr "B<getbitmap STARTUP>I< [file]>"
 #: docs/user/gammu.1:705
 msgid "Get static startup logo from phone. Allow to save it in file."
 msgstr ""
+"Načte statické startovací logo z telefonu. Umožní jeho uložení do souboru."
 
 # type: TP
 #: docs/user/gammu.1:734
@@ -2030,7 +2031,7 @@ msgstr "B<getalarm>I< [start]>"
 # type: Plain text
 #: docs/user/gammu.1:1220
 msgid "Get alarm from phone, if no location is specified, 1 is used."
-msgstr ""
+msgstr "Načte budík z telfonu, pokud není zadáno umístění je použita 1."
 
 # type: TP
 #: docs/user/gammu.1:1221
@@ -2041,7 +2042,7 @@ msgstr "B<getdatetime>"
 # type: Plain text
 #: docs/user/gammu.1:1224
 msgid "Get date and time from phone"
-msgstr ""
+msgstr "Načte datum a čas z telefonu."
 
 # type: TP
 #: docs/user/gammu.1:1225
@@ -2052,7 +2053,7 @@ msgstr "B<setalarm>I< hour minute>"
 # type: Plain text
 #: docs/user/gammu.1:1228
 msgid "Sets repeating alarm in phone on selected time."
-msgstr ""
+msgstr "Nastaví opakující se budík v telefonu na zadaný čas."
 
 # type: TP
 #: docs/user/gammu.1:1228
@@ -2999,14 +3000,20 @@ msgid ""
 "include some useful information when sending bug reports (especially debug "
 "logs, operating system, it's version and phone information are needed)."
 msgstr ""
+"V programu je určitě mnoho chyb a jejich hlášení autorům je vítáno. Prosím "
+"nezapomeňte na užitečné informace v hlášení o chybě (obzvlášť užitečné jsou "
+"ladicí log, informace o operačním systému, jeho verzi a informace o "
+"telefonu)."
 
 # type: Plain text
 #: docs/user/gammu.1:2256
 msgid ""
-"To generate debug log, either enable in gammurc (alternatively you can do it "
-"on command line, but gammurc way allows separating debug log from other "
-"output):"
+"To generate debug log, enable it in gammurc (alternatively you can do it on "
+"command line, but gammurc way allows separating debug log from other output):"
 msgstr ""
+"Pro vytvoření ladicího logu zapněte logování v gammurc (můžete ho také "
+"zapnout na příkazové řádce, ale gammurc umožní samostatné ladicí hlášky od "
+"výstupu programu):"
 
 # type: Plain text
 #: docs/user/gammu.1:2259

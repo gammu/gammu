@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-27 15:20+0100\n"
+"POT-Creation-Date: 2009-01-27 15:26+0100\n"
 "PO-Revision-Date: 2009-01-27 14:27+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -2976,9 +2976,8 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu.1:2256
 msgid ""
-"To generate debug log, either enable in gammurc (alternatively you can do it "
-"on command line, but gammurc way allows separating debug log from other "
-"output):"
+"To generate debug log, enable it in gammurc (alternatively you can do it on "
+"command line, but gammurc way allows separating debug log from other output):"
 msgstr ""
 
 # type: Plain text
