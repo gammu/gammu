@@ -673,7 +673,8 @@ static GSM_Error SMSDPgSQL_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 		if (i == 0) {
 			sprintf(buffer + strlen(buffer), "'Gammu %s', ",
 				VERSION);
-			sprintf(buffer + strlen(buffer), "'', '");
+			sprintf(buffer + strlen(buffer), "'%s', '",
+				Config->PhoneID);
 
 			if (sms->SMS[i].PDU == SMS_Status_Report) {
 				sprintf(buffer + strlen(buffer), "yes', '");
