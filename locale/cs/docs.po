@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.92\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-27 09:52+0100\n"
-"PO-Revision-Date: 2009-01-27 09:58+0100\n"
+"POT-Creation-Date: 2009-01-27 10:03+0100\n"
+"PO-Revision-Date: 2009-01-27 10:07+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1229,13 +1229,16 @@ msgid ""
 "\\e)\\e([^\\e\"]*\\e)\"\\enEntry\\e([0-9][0-9]\\e)TextUnicode = \\e([^\\en]*"
 "\\e)\\en"
 msgstr ""
+"F: Type = NumberGeneral\\enEntry\\e([0-9][0-9]\\e)Text = \"\\e+36\\e([2367]0"
+"\\e)\\e([^\\e\"]*\\e)\"\\enEntry\\e([0-9][0-9]\\e)TextUnicode = \\e([^\\en]*"
+"\\e)\\en"
 
 # type: Plain text
 #: docs/user/gammu.1:496 docs/user/gammu.1:820 docs/user/gammu.1:983
 #: docs/user/gammu.1:1096 docs/user/gammu.1:1241 docs/user/gammu.1:1344
 #: docs/user/gammu.1:1641 docs/user/gammu.1:1816
 msgid "R: Type = NumberMobile\\enEntry\\e1Text = \"\\e+36\\e2\\e3\"\\en"
-msgstr ""
+msgstr "R: Type = NumberMobile\\enEntry\\e1Text = \"\\e+36\\e2\\e3\"\\en"
 
 # type: TP
 #: docs/user/gammu.1:497 docs/user/gammu.1:821 docs/user/gammu.1:984
@@ -1299,47 +1302,47 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu.1:520
 msgid "B<DC> = Dialled calls"
-msgstr ""
+msgstr "B<DC> = Odchozí hovory"
 
 # type: Plain text
 #: docs/user/gammu.1:522
 msgid "B<MC> = Missed calls"
-msgstr ""
+msgstr "B<MC> = Zmeškané hovory"
 
 # type: Plain text
 #: docs/user/gammu.1:524
 msgid "B<RC> = Received calls"
-msgstr ""
+msgstr "B<RC> = Přijaté hovory"
 
 # type: Plain text
 #: docs/user/gammu.1:526
 msgid "B<ON> = Own numbers"
-msgstr ""
+msgstr "B<ON> = Vlastní čísla"
 
 # type: Plain text
 #: docs/user/gammu.1:528
 msgid "B<VM> = voice mailbox"
-msgstr ""
+msgstr "B<VM> = Hlasová schránka"
 
 # type: Plain text
 #: docs/user/gammu.1:530
 msgid "B<SM> = SIM phonebook"
-msgstr ""
+msgstr "B<SM> = Kontantky na SIM kartě"
 
 # type: Plain text
 #: docs/user/gammu.1:532
 msgid "B<ME> = phone internal phonebook"
-msgstr ""
+msgstr "B<ME> = Kontakty v telefonu"
 
 # type: Plain text
 #: docs/user/gammu.1:534
 msgid "B<FD> = fixed dialling"
-msgstr ""
+msgstr "B<FD> = Pevné předvolby"
 
 # type: Plain text
 #: docs/user/gammu.1:536
 msgid "B<SL> = sent SMS log"
-msgstr ""
+msgstr "B<SL> = Log odeslaných SMS zpráv"
 
 # type: TP
 #: docs/user/gammu.1:540 docs/user/gammu.1:1251
@@ -1572,7 +1575,7 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu.1:645 docs/user/gammu.1:1394
 msgid "You can use jadmaker(1) to generate a .jad file from a .jar file."
-msgstr ""
+msgstr "Pro vygenerování jad souboru z jar souboru můžete použít jadmaker(1)."
 
 # type: TP
 #: docs/user/gammu.1:646 docs/user/gammu.1:1395
@@ -2770,7 +2773,7 @@ msgstr "I</dev/ttyACM?>"
 # type: SH
 #: docs/user/gammu.1:2059 docs/user/gammurc.5:169 docs/user/gammu-smsdrc.5:243
 #: docs/user/gammu-smsd.1:65 docs/user/gammu-smsd-files.7:63
-#: docs/user/gammu-smsd-mysql.7:74 docs/user/gammu-smsd-pgsql.7:74
+#: docs/user/gammu-smsd-mysql.7:80 docs/user/gammu-smsd-pgsql.7:80
 #, no-wrap
 msgid "EXAMPLE"
 msgstr "PŘÍKLAD"
@@ -2863,8 +2866,8 @@ msgstr ""
 #: docs/user/gammu.1:2099 docs/user/gammurc.5:221 docs/user/gammu-smsdrc.5:294
 #: docs/user/gammu-smsd.1:100 docs/user/gammu-smsd-inject.1:37
 #: docs/user/jadmaker.1:30 docs/user/gammu-config.1:28
-#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:83
-#: docs/user/gammu-smsd-pgsql.7:83
+#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:89
+#: docs/user/gammu-smsd-pgsql.7:89
 #, no-wrap
 msgid "COPYRIGHT"
 msgstr "COPYRIGHT"
@@ -2884,8 +2887,8 @@ msgstr ""
 #: docs/user/gammu.1:2106 docs/user/gammurc.5:227 docs/user/gammu-smsdrc.5:300
 #: docs/user/gammu-smsd.1:106 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:35 docs/user/gammu-config.1:33
-#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:89
-#: docs/user/gammu-smsd-pgsql.7:89
+#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:95
+#: docs/user/gammu-smsd-pgsql.7:95
 msgid ""
 "This is free software: you are free to change and redistribute it.  There is "
 "NO WARRANTY, to the extent permitted by law."
@@ -2897,8 +2900,8 @@ msgstr ""
 #: docs/user/gammu.1:2107 docs/user/gammurc.5:227 docs/user/gammu-smsdrc.5:300
 #: docs/user/gammu-smsd.1:106 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:24 docs/user/gammu-config.1:23
-#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:89
-#: docs/user/gammu-smsd-pgsql.7:89
+#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:95
+#: docs/user/gammu-smsd-pgsql.7:95
 #, no-wrap
 msgid "REPORTING BUGS"
 msgstr "HLÁŠENÍ CHYB"
@@ -2941,16 +2944,16 @@ msgstr ""
 #: docs/user/gammu.1:2126 docs/user/gammurc.5:228 docs/user/gammu-smsdrc.5:301
 #: docs/user/gammu-smsd.1:108 docs/user/gammu-smsd-inject.1:45
 #: docs/user/jadmaker.1:26 docs/user/gammu-config.1:25
-#: docs/user/gammu-smsd-files.7:107 docs/user/gammu-smsd-mysql.7:90
-#: docs/user/gammu-smsd-pgsql.7:90
+#: docs/user/gammu-smsd-files.7:107 docs/user/gammu-smsd-mysql.7:96
+#: docs/user/gammu-smsd-pgsql.7:96
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr "Prosím hlašte chyby na E<lt>http://bugs.cihar.comE<gt>."
 
 # type: SH
 #: docs/user/gammu.1:2127 docs/user/gammurc.5:219 docs/user/gammu-smsdrc.5:292
 #: docs/user/gammu-smsd.1:98 docs/user/gammu-smsd-inject.1:35
-#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-mysql.7:81
-#: docs/user/gammu-smsd-pgsql.7:81
+#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-mysql.7:87
+#: docs/user/gammu-smsd-pgsql.7:87
 #, no-wrap
 msgid "AUTHOR"
 msgstr "AUTOR"
@@ -3003,8 +3006,8 @@ msgstr ""
 #: docs/user/gammu.1:2153 docs/user/gammurc.5:217 docs/user/gammu-smsdrc.5:288
 #: docs/user/gammu-smsd.1:94 docs/user/gammu-smsd-inject.1:33
 #: docs/user/jadmaker.1:27 docs/user/gammu-config.1:26
-#: docs/user/gammu-smsd-files.7:96 docs/user/gammu-smsd-mysql.7:79
-#: docs/user/gammu-smsd-pgsql.7:79
+#: docs/user/gammu-smsd-files.7:96 docs/user/gammu-smsd-mysql.7:85
+#: docs/user/gammu-smsd-pgsql.7:85
 #, no-wrap
 msgid "SEE ALSO"
 msgstr "DALŠÍ INFORMACE"
@@ -3559,8 +3562,8 @@ msgstr "gammu-smsd(1), gammu(1), gammurc(5)"
 # type: Plain text
 #: docs/user/gammurc.5:221 docs/user/gammu-smsdrc.5:294
 #: docs/user/gammu-smsd.1:100 docs/user/gammu-smsd-inject.1:37
-#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:83
-#: docs/user/gammu-smsd-pgsql.7:83
+#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:89
+#: docs/user/gammu-smsd-pgsql.7:89
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
 "E<lt>michal@cihar.comE<gt>."
@@ -3571,8 +3574,8 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammurc.5:224 docs/user/gammu-smsdrc.5:297
 #: docs/user/gammu-smsd.1:103 docs/user/gammu-smsd-inject.1:40
-#: docs/user/gammu-smsd-files.7:103 docs/user/gammu-smsd-mysql.7:86
-#: docs/user/gammu-smsd-pgsql.7:86
+#: docs/user/gammu-smsd-files.7:103 docs/user/gammu-smsd-mysql.7:92
+#: docs/user/gammu-smsd-pgsql.7:92
 msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
 "version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
@@ -4765,8 +4768,8 @@ msgstr ""
 "v konfiguračním souboru (viz gammu-smsdrc(5)· pro popis těchto parametrů)."
 
 # type: SS
-#: docs/user/gammu-smsd-files.7:13 docs/user/gammu-smsd-mysql.7:15
-#: docs/user/gammu-smsd-pgsql.7:15
+#: docs/user/gammu-smsd-files.7:13 docs/user/gammu-smsd-mysql.7:21
+#: docs/user/gammu-smsd-pgsql.7:21
 #, no-wrap
 msgid "Receiving of messages"
 msgstr "Přijímání zpráv"
@@ -4827,8 +4830,8 @@ msgstr ""
 "příponou bin"
 
 # type: SS
-#: docs/user/gammu-smsd-files.7:33 docs/user/gammu-smsd-mysql.7:19
-#: docs/user/gammu-smsd-pgsql.7:19
+#: docs/user/gammu-smsd-files.7:33 docs/user/gammu-smsd-mysql.7:25
+#: docs/user/gammu-smsd-pgsql.7:25
 #, no-wrap
 msgid "Transmitting of messages"
 msgstr "Odesílání zpráv"
@@ -4968,8 +4971,8 @@ msgstr ""
 "MessageReference = 0\n"
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-mysql.7:81
-#: docs/user/gammu-smsd-pgsql.7:81
+#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-mysql.7:87
+#: docs/user/gammu-smsd-pgsql.7:87
 msgid "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 msgstr "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 
@@ -5000,12 +5003,27 @@ msgstr ""
 "popis těchto parametrů)."
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:18 docs/user/gammu-smsd-pgsql.7:18
+#: docs/user/gammu-smsd-mysql.7:20 docs/user/gammu-smsd-pgsql.7:20
+msgid ""
+"More SMS daemons can share single database. If you do not specify PhoneID in "
+"their configuration, all are treated equally and you have no guarantee which "
+"one sends outgoing message. If you configure PhoneID and use it when "
+"inserting message to the outbox table (gammu-smsd-inject(1) does this), each "
+"SMS daemon will have separate outbox queue."
+msgstr ""
+"Několik SMS démonů může sdílet jedinou databázi. Pokud v jejich nastavení "
+"nezadáte PhoneID, všechny jsou brány jako rovnocenné a kterýkoliv z nich "
+"může odeslat odchozí zprávu. Pokud nastavíte PhoneID a použijete ho při "
+"vkládání zprávy to tabulky outbox (gammu-smsd-inject(1)· to dělá), každý SMS "
+"démon bude mít vlastní frontu odchozích zpráv."
+
+# type: Plain text
+#: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24
 msgid "Received messages are stored in inbox table."
 msgstr "Přijaté zprávy jsou ukládány v tabulce inbox."
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:23 docs/user/gammu-smsd-pgsql.7:23
+#: docs/user/gammu-smsd-mysql.7:29 docs/user/gammu-smsd-pgsql.7:29
 msgid ""
 "Transmitted messages are read from table outbox and possible subsequent "
 "parts of the same message from outbox_multipart."
@@ -5014,52 +5032,52 @@ msgstr ""
 "z tabulky outbox_multipart."
 
 # type: SS
-#: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24
+#: docs/user/gammu-smsd-mysql.7:30 docs/user/gammu-smsd-pgsql.7:30
 #, no-wrap
 msgid "Description of tables"
 msgstr "Popis tabulek"
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:26 docs/user/gammu-smsd-pgsql.7:26
+#: docs/user/gammu-smsd-mysql.7:32 docs/user/gammu-smsd-pgsql.7:32
 #, no-wrap
 msgid "B<daemon>"
 msgstr "B<daemon>"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:30 docs/user/gammu-smsd-pgsql.7:30
+#: docs/user/gammu-smsd-mysql.7:36 docs/user/gammu-smsd-pgsql.7:36
 msgid "Information about running daemons."
 msgstr "Informace o běžících démonech."
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:31 docs/user/gammu-smsd-pgsql.7:31
+#: docs/user/gammu-smsd-mysql.7:37 docs/user/gammu-smsd-pgsql.7:37
 #, no-wrap
 msgid "B<gammu>"
 msgstr "B<gammu>"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:35 docs/user/gammu-smsd-pgsql.7:35
+#: docs/user/gammu-smsd-mysql.7:41 docs/user/gammu-smsd-pgsql.7:41
 msgid "Table holding single value - version of a database schema."
 msgstr "Tato tabulka obsahuje jedinou hodnotu - verzi databázového schématu."
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:36 docs/user/gammu-smsd-pgsql.7:36
+#: docs/user/gammu-smsd-mysql.7:42 docs/user/gammu-smsd-pgsql.7:42
 #, no-wrap
 msgid "B<inbox>"
 msgstr "B<inbox>"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:40 docs/user/gammu-smsd-pgsql.7:40
+#: docs/user/gammu-smsd-mysql.7:46 docs/user/gammu-smsd-pgsql.7:46
 msgid "Table where received messages will be stored."
 msgstr "Tabulka, ve které jsou ukládány přijaté zprávy."
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:41 docs/user/gammu-smsd-pgsql.7:41
+#: docs/user/gammu-smsd-mysql.7:47 docs/user/gammu-smsd-pgsql.7:47
 #, no-wrap
 msgid "B<outbox>"
 msgstr "B<outbox>"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:46 docs/user/gammu-smsd-pgsql.7:46
+#: docs/user/gammu-smsd-mysql.7:52 docs/user/gammu-smsd-pgsql.7:52
 msgid ""
 "Messages enqueued for sending should be placed in this table. If message is "
 "multipart, subsequent parts are stored in table outbox_multipart."
@@ -5068,24 +5086,24 @@ msgstr ""
 "obsahuje více částí, další části jsou uloženy v tabulce outbox_multipart."
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:47 docs/user/gammu-smsd-pgsql.7:47
+#: docs/user/gammu-smsd-mysql.7:53 docs/user/gammu-smsd-pgsql.7:53
 #, no-wrap
 msgid "B<outbox_multipart>"
 msgstr "B<outbox_multipart>"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:51 docs/user/gammu-smsd-pgsql.7:51
+#: docs/user/gammu-smsd-mysql.7:57 docs/user/gammu-smsd-pgsql.7:57
 msgid "Data for outgoing multipart messages."
 msgstr "Data pro odchozí zprávy, které jsou z více částí."
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:52 docs/user/gammu-smsd-pgsql.7:52
+#: docs/user/gammu-smsd-mysql.7:58 docs/user/gammu-smsd-pgsql.7:58
 #, no-wrap
 msgid "B<phones>"
 msgstr "B<phones>"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:57 docs/user/gammu-smsd-pgsql.7:57
+#: docs/user/gammu-smsd-mysql.7:63 docs/user/gammu-smsd-pgsql.7:63
 msgid ""
 "Information about connected phones. This table is periodically refreshed and "
 "you can get information such as battery or signal level from here."
@@ -5094,13 +5112,13 @@ msgstr ""
 "můžete v ní najít informace jako stav baterie nebo síla signálu."
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:58 docs/user/gammu-smsd-pgsql.7:58
+#: docs/user/gammu-smsd-mysql.7:64 docs/user/gammu-smsd-pgsql.7:64
 #, no-wrap
 msgid "B<sentitems>"
 msgstr "B<sentitems>"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:63 docs/user/gammu-smsd-pgsql.7:63
+#: docs/user/gammu-smsd-mysql.7:69 docs/user/gammu-smsd-pgsql.7:69
 msgid ""
 "Log of sent messages, if delivery reports are configured, message state is "
 "updated here."
@@ -5108,27 +5126,27 @@ msgstr ""
 "Informace o odeslaných zprávách a jejich stavu, pokud jsou zapnuty doručenky."
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:64 docs/user/gammu-smsd-pgsql.7:64
+#: docs/user/gammu-smsd-mysql.7:70 docs/user/gammu-smsd-pgsql.7:70
 #, no-wrap
 msgid "B<pbk>"
 msgstr "B<pbk>"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:68 docs/user/gammu-smsd-mysql.7:73
-#: docs/user/gammu-smsd-pgsql.7:68 docs/user/gammu-smsd-pgsql.7:73
+#: docs/user/gammu-smsd-mysql.7:74 docs/user/gammu-smsd-mysql.7:79
+#: docs/user/gammu-smsd-pgsql.7:74 docs/user/gammu-smsd-pgsql.7:79
 msgid "Not used by SMSD currently, included only for application usage."
 msgstr ""
 "SMSD tuto tabulku v současné době nepoužívá, je zde jen pro použití v "
 "aplikaci."
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:69 docs/user/gammu-smsd-pgsql.7:69
+#: docs/user/gammu-smsd-mysql.7:75 docs/user/gammu-smsd-pgsql.7:75
 #, no-wrap
 msgid "B<pbk_groups>"
 msgstr "B<pbk_groups>"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:78 docs/user/gammu-smsd-pgsql.7:78
+#: docs/user/gammu-smsd-mysql.7:84 docs/user/gammu-smsd-pgsql.7:84
 msgid ""
 "SQL script to create all needed tables is included in Gammu documenation. As "
 "well as some PHP scripts interacting with the database."
