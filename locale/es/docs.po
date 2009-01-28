@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-01-27 15:26+0100\n"
-"PO-Revision-Date: 2009-01-27 18:21+0100\n"
+"PO-Revision-Date: 2009-01-28 00:49+0100\n"
 "Last-Translator: Edgar Solis <esdoglairs@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
@@ -21,19 +21,19 @@ msgstr ""
 #: docs/user/gammu.1:1
 #, no-wrap
 msgid "GAMMU"
-msgstr ""
+msgstr "GAMMU"
 
 # type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
 msgid "Jan 27 2009"
-msgstr ""
+msgstr "27 de Enero del 2009"
 
 # type: TH
 #: docs/user/gammu.1:1
 #, no-wrap
 msgid "Gammu 1.22.93"
-msgstr ""
+msgstr "Gammu 1.22.93"
 
 # type: TH
 #: docs/user/gammu.1:1 docs/user/gammurc.5:1 docs/user/gammu-smsdrc.5:1
@@ -53,7 +53,7 @@ msgstr "Documentación Gammu"
 #: docs/user/gammu-smsd-pgsql.7:2
 #, no-wrap
 msgid "NAME"
-msgstr ""
+msgstr "NOMBRE"
 
 # type: Plain text
 #: docs/user/gammu.1:7
@@ -126,7 +126,7 @@ msgstr "Los comandos pueden ser especificados con o sin -- al principio."
 #: docs/user/gammu.1:31
 #, no-wrap
 msgid "Debug levels"
-msgstr ""
+msgstr "Niveles de debugueo"
 
 # type: Plain text
 #: docs/user/gammu.1:36
@@ -134,6 +134,9 @@ msgid ""
 "Parameter, which allow to control debug level, see documentation of "
 "LogFormat configuration directive in gammurc(5) for possible values."
 msgstr ""
+"Parámetro que permite controlar el nivel de debugueo, vea la documentación "
+"de la directiva de configuración LogFormat en gammurc(5) para ver los "
+"posibles valores,"
 
 #: docs/user/gammu.1:38
 #, no-wrap
@@ -144,7 +147,7 @@ msgstr "Llamadas"
 #: docs/user/gammu.1:39
 #, no-wrap
 msgid "B<answercall>I< [ID]>"
-msgstr ""
+msgstr "B<answercall>I< [ID]>"
 
 # type: Plain text
 #: docs/user/gammu.1:42
@@ -155,7 +158,7 @@ msgstr "Contesta llamada entrante"
 #: docs/user/gammu.1:43
 #, no-wrap
 msgid "B<cancelcall>I< [ID]>"
-msgstr ""
+msgstr "B<cancelcall>I< [ID]>"
 
 # type: Plain text
 #: docs/user/gammu.1:46
@@ -166,19 +169,19 @@ msgstr "Cancela llamada entrante"
 #: docs/user/gammu.1:47
 #, no-wrap
 msgid "B<canceldiverts>"
-msgstr ""
+msgstr "B<canceldiverts>"
 
 # type: TP
 #: docs/user/gammu.1:50
 #, no-wrap
 msgid "B<conferencecall>I< ID>"
-msgstr ""
+msgstr "B<conferencecall>I< ID>"
 
 # type: TP
 #: docs/user/gammu.1:53
 #, no-wrap
 msgid "B<dialvoice>I< number [show|hide]>"
-msgstr ""
+msgstr "B<dialvoice>I< number [show|hide]>"
 
 # type: Plain text
 #: docs/user/gammu.1:56
@@ -191,30 +194,32 @@ msgstr ""
 #, no-wrap
 msgid "B<divert>I< get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]>"
 msgstr ""
+"B<divert>I< get|set all|busy|noans|outofreach all|voice|fax|data [number "
+"timeout]>"
 
 # type: TP
 #: docs/user/gammu.1:60 docs/user/gammu.1:557
 #, no-wrap
 msgid "B<getspeeddial>I< start [stop]>"
-msgstr ""
+msgstr "B<getspeeddial>I< start [stop]>"
 
 # type: TP
 #: docs/user/gammu.1:63
 #, no-wrap
 msgid "B<getussd>I< code>"
-msgstr ""
+msgstr "B<getussd>I< code>"
 
 # type: TP
 #: docs/user/gammu.1:66
 #, no-wrap
 msgid "B<holdcall>I< ID>"
-msgstr ""
+msgstr "B<holdcall>I< ID>"
 
 # type: TP
 #: docs/user/gammu.1:69
 #, no-wrap
 msgid "B<maketerminatedcall>I< number length [show|hide]>"
-msgstr ""
+msgstr "B<maketerminatedcall>I< number length [show|hide]>"
 
 # type: Plain text
 #: docs/user/gammu.1:73
@@ -229,7 +234,7 @@ msgstr ""
 #: docs/user/gammu.1:74 docs/user/gammu.1:1629 docs/user/gammu.1:2002
 #, no-wrap
 msgid "B<monitor>I< [times]>"
-msgstr ""
+msgstr "B<monitor>I< [veces]>"
 
 # type: Plain text
 #: docs/user/gammu.1:78 docs/user/gammu.1:1633 docs/user/gammu.1:2006
@@ -257,25 +262,25 @@ msgstr ""
 #: docs/user/gammu.1:83
 #, no-wrap
 msgid "B<splitcall>I< ID>"
-msgstr ""
+msgstr "B<splitcall>I< ID>"
 
 # type: TP
 #: docs/user/gammu.1:86
 #, no-wrap
 msgid "B<switchcall>I< [ID]>"
-msgstr ""
+msgstr "B<switchcall>I< [ID]>"
 
 # type: TP
 #: docs/user/gammu.1:89
 #, no-wrap
 msgid "B<transfercall>I< [ID]>"
-msgstr ""
+msgstr "B<transfercall>I< [ID]>"
 
 # type: TP
 #: docs/user/gammu.1:92
 #, no-wrap
 msgid "B<unholdcall>I< ID>"
-msgstr ""
+msgstr "B<unholdcall>I< ID>"
 
 #: docs/user/gammu.1:96
 #, no-wrap
@@ -298,7 +303,7 @@ msgstr ""
 #: docs/user/gammu.1:103 docs/user/gammu.1:1367
 #, no-wrap
 msgid "B<addsms>I< folder file>"
-msgstr ""
+msgstr "B<addsms>I< carpeta  archivo>"
 
 # type: Plain text
 #: docs/user/gammu.1:107 docs/user/gammu.1:1371
@@ -313,13 +318,13 @@ msgstr ""
 #: docs/user/gammu.1:107
 #, no-wrap
 msgid "B<addsmsfolder>I< name>"
-msgstr ""
+msgstr "B<addsmsfolder>I< nombre>"
 
 # type: TP
 #: docs/user/gammu.1:110 docs/user/gammu.1:1447
 #, no-wrap
 msgid "B<backupsms>I< file>"
-msgstr ""
+msgstr "B<backupsms>I< archivo>"
 
 # type: Plain text
 #: docs/user/gammu.1:113 docs/user/gammu.1:1450
@@ -330,7 +335,7 @@ msgstr "Almacena todos los mensajes SMS del teléfono en un archivo."
 #: docs/user/gammu.1:113
 #, no-wrap
 msgid "B<deleteallsms>I< folder>"
-msgstr ""
+msgstr "B<deleteallsms>I< carpeta>"
 
 # type: Plain text
 #: docs/user/gammu.1:116
@@ -341,7 +346,7 @@ msgstr "Borra todos los SMS de la carpeta especificada."
 #: docs/user/gammu.1:117
 #, no-wrap
 msgid "B<deletesms>I< folder start [stop]>"
-msgstr ""
+msgstr "B<deletesms>I< carpeta start [stop]>"
 
 # type: Plain text
 #: docs/user/gammu.1:121
