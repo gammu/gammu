@@ -171,6 +171,8 @@ To generate debug log, enable it in gammurc (alternatively you can
 do it on command line, but gammurc way allows separating debug log from
 other output):
 
+    [gammu]
+    ...your connection settings...
     logfile = /tmp/gammu.log
     logformat = textall
 
@@ -831,9 +833,7 @@ selected folder in phone.'''
 HELP['restoresms'] = '''Restores SMSes from file (format like backupsms uses) to
 selected folder in phone. Please note that this overwrites existing
 messages in phone (if it supports it).'''
-HELP['restore'] = '''Restore settings written in file created using \\fBbackup option\\fR. All things
-backup'ed by \\fBbackup\\fR can be restored (when made backup to Gammu text
-file).
+HELP['restore'] = '''Restore settings written in file created using \\fBbackup\\fR option. 
 
 Please note that restoring deletes all current content in phone. If you
 want only to add entries to phone, use addnew.
