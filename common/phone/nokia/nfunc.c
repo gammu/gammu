@@ -71,7 +71,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 				}
 				found = true;
 				entry->Entries[i].AddError = ERR_NONE;
-				len = UnicodeLength(entry->Entries[i].Text);
+				len = MIN(UnicodeLength(entry->Entries[i].Text), 126);
 				string[0] = len*2+2;
 				CopyUnicodeString(string+1,entry->Entries[i].Text);
 				string[len*2+1] = 0;
@@ -83,7 +83,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 				if (!found) {
 					entry->Entries[i].AddError = ERR_NONE;
 					type = N7110_PBK_NAME;
-					len = UnicodeLength(entry->Entries[i].Text);
+					len = MIN(UnicodeLength(entry->Entries[i].Text), 126);
 					string[0] = len*2+2;
 					CopyUnicodeString(string+1,entry->Entries[i].Text);
 					string[len*2+1] = 0;
@@ -108,7 +108,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 		}
 		if (UnicodeLength(string+1) != 0) {
 			type = N7110_PBK_NAME;
-			len = UnicodeLength(string+1);
+			len = MIN(UnicodeLength(string+1), 126);
 			string[0] = len*2+2;
 			string[len*2+1] = 0;
 			count += N71_65_PackPBKBlock(s, type, len * 2 + 2, block++, string, req + count);
@@ -118,7 +118,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 				if (!found) {
 					entry->Entries[i].AddError = ERR_NONE;
 					type = N7110_PBK_NAME;
-					len = UnicodeLength(entry->Entries[i].Text);
+					len = MIN(UnicodeLength(entry->Entries[i].Text), 126);
 					string[0] = len*2+2;
 					CopyUnicodeString(string+1,entry->Entries[i].Text);
 					string[len*2+1] = 0;
@@ -141,7 +141,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 			entry->Entries[i].AddError = ERR_NONE;
 
 			string[0] = type;
-			len = UnicodeLength(entry->Entries[i].Text);
+			len = MIN(UnicodeLength(entry->Entries[i].Text), 126);
 
 			string[1] = 0;
 			string[2] = 0;
@@ -200,7 +200,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 		}
 		if (type != 0) {
 			if (entry->Entries[i].AddError==ERR_NOTSUPPORTED) entry->Entries[i].AddError = ERR_NONE;
-			len = UnicodeLength(entry->Entries[i].Text);
+			len = MIN(UnicodeLength(entry->Entries[i].Text), 126);
 			string[0] = len*2+2;
 			CopyUnicodeString(string+1,entry->Entries[i].Text);
 			string[len*2+1] = 0;
@@ -262,7 +262,7 @@ size_t N71_65_EncodePhonebookFrame(GSM_StateMachine *s, unsigned char *req, GSM_
 			if (entry->Entries[i].EntryType == PBK_Text_NickName) type = S4030_PBK_NICKNAME;
 			if (type != 0) {
 				if (entry->Entries[i].AddError==ERR_NOTSUPPORTED) entry->Entries[i].AddError = ERR_NONE;
-				len = UnicodeLength(entry->Entries[i].Text);
+				len = MIN(UnicodeLength(entry->Entries[i].Text), 126);
 				string[0] = len*2+2;
 				CopyUnicodeString(string+1,entry->Entries[i].Text);
 				string[len*2+1] = 0;
