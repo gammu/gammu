@@ -61,7 +61,7 @@ msgstr "JMÉNO"
 #: docs/user/gammu.1:7
 msgid "Gammu - Does some neat things with your cellular phone or modem."
 msgstr ""
-"Gammu - Provádá různé zajímavé věci s vaším mobilním telefonem nebo modemem."
+"Gammu - Provádí různé zajímavé věci s vaším mobilním telefonem nebo modemem."
 
 # type: SH
 #: docs/user/gammu.1:8 docs/user/gammurc.5:7 docs/user/gammu-smsdrc.5:7
