@@ -328,17 +328,24 @@ static GSM_Error LoadLMBPbkEntry(unsigned char *buffer, unsigned char *buffer2, 
 	fake_sm->di.use_global = true;
 	fake_sm->Phone.Data.ModelInfo = GetModelData(NULL, "unknown", NULL, NULL);
 
-#ifdef DEBUG
 	dbgprintf(NULL, "Memory : ");
 	switch(buffer[10]) {
-		case 2 : dbgprintf(NULL, "(internal)\n"); break;
-		case 3 : dbgprintf(NULL, "(sim)\n");	  break;
-		default: dbgprintf(NULL, "(unknown)\n");  break;
+		case 2 :
+			dbgprintf(NULL, "(internal)\n");
+			pbk.MemoryType = MEM_ME;
+			break;
+		case 3 :
+			dbgprintf(NULL, "(sim)\n");
+			pbk.MemoryType = MEM_SM;
+			break;
+		default:
+			dbgprintf(NULL, "(unknown)\n");
+			pbk.MemoryType = 0;
+			break;
 	}
-	dbgprintf(NULL, "Location : %i\n",buffer2[0]+buffer2[1]*256);
-#endif
+	pbk.Location = buffer2[0] + buffer2[1] * 256;
+	dbgprintf(NULL, "Location : %i\n", pbk.Location);
 
-	pbk.MemoryType = 0; /* FIXME: I have no idea what should be set here, but needs to be set, see next function */
 	N71_65_DecodePhonebook(fake_sm, &pbk, NULL,NULL,buffer2+4,(buffer[4]+buffer[5]*256)-4,false);
 
 	pbk.MemoryType=MEM_SM;
@@ -417,6 +424,10 @@ GSM_Error LoadLMB(char *FileName, GSM_Backup *backup)
 #endif
       		/* reading block data */
 		blocksize = buffer[4] + buffer[5] * 256;
+		if (blocksize > sizeof(buffer2)) {
+			dbgprintf(NULL, "Too big block size!\n");
+			return ERR_MOREMEMORY;
+		}
 		if (fread(buffer2, 1, blocksize, file) != blocksize) return ERR_FILENOTSUPPORTED;
 
 #ifdef DEBUG
