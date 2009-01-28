@@ -3207,7 +3207,7 @@ GSM_Error OBEXGEN_GetDevinfoField(GSM_StateMachine *s, const char *Name, char *D
 	char			match[200];
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
-	if (Priv->OBEXDevinfo == NULL) return ERR_NOTSUPPORTED;
+	if (Priv->OBEXDevinfo == NULL || strlen(Priv->OBEXDevinfo) == 0) return ERR_NOTSUPPORTED;
 
 	/* Match begin tag */
 	match[0] = 0;
@@ -3235,7 +3235,7 @@ GSM_Error OBEXGEN_GetCapabilityField(GSM_StateMachine *s, const char *Name, char
 	char			match[200];
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
-	if (Priv->OBEXCapability == NULL) return ERR_NOTSUPPORTED;
+	if (Priv->OBEXCapability == NULL || strlen(Priv->OBEXCapability) == 0) return ERR_NOTSUPPORTED;
 
 	/* Match XML begin tag */
 	match[0] = 0;
@@ -3270,7 +3270,7 @@ GSM_Error OBEXGEN_GetCapabilityFieldAttrib(GSM_StateMachine *s, const char *Name
 	char			match[200];
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
 
-	if (Priv->OBEXCapability == NULL) return ERR_NOTSUPPORTED;
+	if (Priv->OBEXCapability == NULL || strlen(Priv->OBEXCapability) == 0) return ERR_NOTSUPPORTED;
 
 	/* Match XML begin tag */
 	match[0] = 0;
