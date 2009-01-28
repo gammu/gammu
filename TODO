@@ -6,3 +6,5 @@ This file is probably not usable for anybody except me ;-).
 #endif
 
 - make gammu core interruptible by some flag. this is especially needed when connect takes ages
+
+- drop multiple configurations handling in libGammu, it should provide just API to read some section from Gammurc and possible fallback logic should be in application
