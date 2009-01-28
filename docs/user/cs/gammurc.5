@@ -97,7 +97,8 @@ a tento parametr je ignorován.
 
 Při připojení přes Bluetooth musíte zadat Bluetooth adresu vašeho telefonu
 (na Linuxu můžete zjistit seznam zařízení v dosahu pomocí příkazu "hcitool
-scan").
+scan"). Volitelně můžete Gammu přinutit používat jiný kanál zadáním jeho
+čísla za lomítko.
 
 Pro připojení přes IrDA se tento parametr vůbec nepoužije.
 
@@ -224,6 +225,21 @@ příkazy) připojený pomocí Bluetooth:
 .ne 7
 [gammu]
 port = B0:0B:00:00:FA:CE
+connection = blueat
+.fi
+.sp
+.RE
+.PP
+
+Nastavení Gammu pro telefon, ke kterému se musí připojovan na Bluetooth
+kanálu 42:
+
+.RS
+.sp
+.nf
+.ne 7
+[gammu]
+port = B0:0B:00:00:FA:CE/42
 connection = blueat
 .fi
 .sp

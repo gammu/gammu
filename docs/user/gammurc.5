@@ -87,7 +87,8 @@ and this parameters is ignored.
 
 For Bluetooth connection you have to enter Bluetooth address of your phone
 (you can list Bluetooth devices in range on Linux using "hcitool scan"
-command).
+command). Optionally you can also force Gammu to use specified channel by
+includig channel number after slash
 
 For IrDA connections, this parameters is not used at all.
 
@@ -211,6 +212,20 @@ connected using bluetooth:
 .ne 7
 [gammu]
 port = B0:0B:00:00:FA:CE
+connection = blueat
+.fi
+.sp
+.RE
+.PP
+
+Gammu configuration for phone which needs to manually adjust Bluetooth channel to use channel 42:
+
+.RS
+.sp
+.nf
+.ne 7
+[gammu]
+port = B0:0B:00:00:FA:CE/42
 connection = blueat
 .fi
 .sp
