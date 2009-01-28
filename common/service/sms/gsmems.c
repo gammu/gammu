@@ -819,7 +819,7 @@ bool GSM_DecodeEMSMultiPartSMS(GSM_Debug_Info *di,
 				smfprintf(di, "UDH part - Object Distribution Indicator (Media Rights Protecting) ignored now\n");
 				break;
 			default:
-				smfprintf(di, "UDH part - unknonw block %02x\n",SMS->SMS[i].UDH.Text[w]);
+				smfprintf(di, "UDH part - unknown block %02x\n",SMS->SMS[i].UDH.Text[w]);
 				Info->Unknown = true;
 			} /* switch */
 			w=w+SMS->SMS[i].UDH.Text[w+1]+2;
