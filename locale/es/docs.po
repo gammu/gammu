@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-27 15:26+0100\n"
+"POT-Creation-Date: 2009-01-28 10:52+0100\n"
 "PO-Revision-Date: 2009-01-28 00:49+0100\n"
 "Last-Translator: Edgar Solis <esdoglairs@gmail.com>\n"
 "Language-Team: none\n"
@@ -95,8 +95,8 @@ msgid ""
 "supported, for actual listing see E<lt>http://cihar.com/gammu/phonedb/E<gt>."
 msgstr ""
 "Este programa es una herramienta para teléfonos móviles. Muchas marcas  y "
-"modelos son soportodos, para la lista actualizada consulte "
-"E<lt>http://cihar.com/gammu/phonedb/E<gt>."
+"modelos son soportodos, para la lista actualizada consulte E<lt>http://cihar."
+"com/gammu/phonedb/E<gt>."
 
 # type: SH
 #: docs/user/gammu.1:21
@@ -193,9 +193,7 @@ msgstr ""
 #: docs/user/gammu.1:57
 #, no-wrap
 msgid "B<divert>I< get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]>"
-msgstr ""
-"B<divert>I< get|set all|busy|noans|outofreach all|voice|fax|data [number "
-"timeout]>"
+msgstr "B<divert>I< get|set all|busy|noans|outofreach all|voice|fax|data [number timeout]>"
 
 # type: TP
 #: docs/user/gammu.1:60 docs/user/gammu.1:557
@@ -2507,11 +2505,11 @@ msgstr ""
 #: docs/user/gammu.1:1990
 msgid ""
 "Gammu connects to www.gammu.org and checks for latest firmware versions "
-"available for the device. The file E<lt>http://www.gammu.org/gammunet/"
-"support/phones/phonedbxml.php?model=xE<gt> will be downloaded, all phone "
-"details will be read from it and (if any higher firmware exist) displayed "
-"info to user on each application startup. No private data are sent to "
-"server. Internet connection to www.gammu.org on port 80 required."
+"available for the device. The file E<lt>http://www.gammu.org/support/phones/"
+"phonedbxml.php?model=xE<gt> will be downloaded, all phone details will be "
+"read from it and (if any higher firmware exist) displayed info to user on "
+"each application startup. No private data are sent to server. Internet "
+"connection to www.gammu.org on port 80 required."
 msgstr ""
 
 # type: TP
