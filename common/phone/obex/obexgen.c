@@ -266,6 +266,7 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 {
 	GSM_Error	error = ERR_NONE;
 	GSM_Phone_OBEXGENData	*Priv = &s->Phone.Data.Priv.OBEXGEN;
+	bool service_forced = false;
 
 	/* Init variables */
 	error = OBEXGEN_InitialiseVars(s);
@@ -281,24 +282,32 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 	smprintf(s, "Connected using model %s\n", s->CurrentConfig->Model);
 	if (strcmp(s->CurrentConfig->Model, "obex") == 0) {
 		Priv->InitialService = OBEX_BrowsingFolders;
+		service_forced = true;
 	} else if (strcmp(s->CurrentConfig->Model, "obexirmc") == 0) {
 		Priv->InitialService = OBEX_IRMC;
+		service_forced = true;
 	} else if (strcmp(s->CurrentConfig->Model, "seobex") == 0) {
 		Priv->InitialService = OBEX_IRMC;
+		service_forced = true;
 	} else if (strcmp(s->CurrentConfig->Model, "obexnone") == 0) {
 		Priv->InitialService = OBEX_None;
+		service_forced = true;
 	}
 
 	/* Grab OBEX capability */
-	error = OBEXGEN_Connect(s, OBEX_BrowsingFolders);
-	if (error == ERR_NONE) {
-		error = OBEXGEN_GetTextFile(s, "", &(Priv->OBEXCapability));
+	if (!service_forced || Priv->InitialService == OBEX_BrowsingFolders) {
+		error = OBEXGEN_Connect(s, OBEX_BrowsingFolders);
+		if (error == ERR_NONE) {
+			error = OBEXGEN_GetTextFile(s, "", &(Priv->OBEXCapability));
+		}
 	}
 
 	/* Grab IrMC devinfo */
-	error = OBEXGEN_Connect(s, OBEX_IRMC);
-	if (error == ERR_NONE) {
-		error = OBEXGEN_GetTextFile(s, "", &(Priv->OBEXDevinfo));
+	if (!service_forced || Priv->InitialService == OBEX_IRMC) {
+		error = OBEXGEN_Connect(s, OBEX_IRMC);
+		if (error == ERR_NONE) {
+			error = OBEXGEN_GetTextFile(s, "", &(Priv->OBEXDevinfo));
+		}
 	}
 
 	/* Initialise connection */
