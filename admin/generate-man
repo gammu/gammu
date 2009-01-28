@@ -341,7 +341,9 @@ HELP['getalarm'] = '''Get alarm from phone, if no location is specified,
 1 is used.
 '''
 HELP['setalarm'] = '''Sets repeating alarm in phone on selected time.''' 
-HELP['getmemory'] = '''Get memory location from phone. Numerate locations from 1.
+HELP['getmemory'] = '''Get memory location from phone. 
+
+Locations are numerated from 1.
 
 \\fBDC\\fR = Dialled calls
 .br
@@ -397,7 +399,9 @@ will see location. If you want to get such sms from phone alone, use
 '''
 HELP['geteachsms'] = '''Similiary to \\fBgetallsms\\fR. Difference is, that links all contacenated sms
 '''
-HELP['getsmsc'] = '''Get SMSC settings from SIM card. Numerate locations from 1.
+HELP['getsmsc'] = '''Get SMSC settings from SIM card. 
+
+Locations are numerated from 1.
 ''' 
 HELP['getsmsfolders'] = '''Get names for SMS folders in phone
 '''
@@ -502,7 +506,10 @@ HELP['savefile'] = ''''''
 HELP['savesms TEXT'] = '''Take text from stdin (or commandline if \\-text specified) 
 and save as text SMS into SIM/phone memory.
 
-\\fB\\-folder number\\fR - save to specified folder. Numerate folders from 1.
+\\fB\\-folder number\\fR - save to specified folder. 
+
+Folders are numerated from 1.
+
 The most often folder 1 = "Inbox", 2 = "Outbox",etc. Use \\fBgetsmsfolders\\fR to get folder list.
 
 \\fB\\-unread\\fR - makes message unread. In some phones (like 6210)
@@ -570,7 +577,10 @@ there is example file (\\fIreplace.txt\\fR), which will change all "a" chars to 
 HELP['savesms RINGTONE'] = '''Read RTTL ringtone from file and save as SMS into SIM/phone memory.
 Ringtone is saved in Nokia format.
 
-\\fB\\-folder number\\fR - save to specified folder. Numerate forlders from 1.
+\\fB\\-folder number\\fR - save to specified folder. 
+
+Folders are numerated from 1.
+
 The most often folder 1 = "Inbox", 2 = "Outbox", etc.
 
 \\fB\\-unread\\fR - makes message unread. In some phones (like 6210) you won't see 
