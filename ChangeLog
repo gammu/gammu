@@ -24,6 +24,7 @@ ChangeLog
 [-] * Add ID for Nokia 7373.
 [-] * Do not try to use filesystem OBEX if IrMC access was forced.
 [-] * Fix possible crash in LMB decoder.
+[-] * Avoid string length overflow in Nokia phonebook encoder.
     
 20090126 - 1.22.92
 
