@@ -700,19 +700,19 @@ autodetect:
 			GSM_CloseConnection(s);
 			continue;
 		}
-		if (error != ERR_NONE) {
+		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
 			GSM_LogError(s, "Init:Phone->GetManufacturer" , error);
 			return error;
 		}
 
 		error=s->Phone.Functions->GetModel(s);
-		if (error != ERR_NONE) {
+		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
 			GSM_LogError(s, "Init:Phone->GetModel" , error);
 			return error;
 		}
 
 		error=s->Phone.Functions->GetFirmware(s);
-		if (error != ERR_NONE) {
+		if (error != ERR_NONE && error != ERR_NOTSUPPORTED) {
 			GSM_LogError(s, "Init:Phone->GetFirmware" , error);
 			return error;
 		}
