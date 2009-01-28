@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-01-27 15:26+0100\n"
-"PO-Revision-Date: 2009-01-27 15:36+0100\n"
+"PO-Revision-Date: 2009-01-28 10:46+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -114,6 +114,11 @@ msgid ""
 "is [gammu42], use 42.  Second parameter optionally controls debug level, "
 "next one specifies actions."
 msgstr ""
+"První parametr volitelně určuje, kterou sekci konfiguračního souboru má "
+"Gammu použít (výchozí chování je zkoušet postupně všechny). Použijte jenom "
+"číslo sekce, například pokud je sekce [gammu42], použijte 42.  Druhý "
+"parametr volitelně určuje úroveň ladicích hlášek a poslední už zadává příkaz "
+"k provedení."
 
 #: docs/user/gammu.1:29
 msgid "Commands can be specified with or without leading --."
@@ -248,6 +253,8 @@ msgstr "B<senddtmf>I< sequence>"
 #: docs/user/gammu.1:82
 msgid "Plays DTMF sequence. In some phones available only during calls"
 msgstr ""
+"Přehraje DTMF tóny. V některých telefonech je toto k dispozici jen během "
+"hovoru."
 
 # type: TP
 #: docs/user/gammu.1:83
@@ -285,6 +292,9 @@ msgid ""
 "be patient, the command line has been written in order to allow almost every "
 "usage. See EXAMPLE section for some hints on usage."
 msgstr ""
+"Posílání zpráv může na první pohled vypadat komplikovaně.  Ale buďte "
+"trpěliví, parametry byly navrženy tak, aby umožňovaly téměř libovolné "
+"použití. V části PŘÍKLAD naleznete některé ukázky posílání zpráv."
 
 # type: TP
 #: docs/user/gammu.1:103 docs/user/gammu.1:1367
@@ -298,6 +308,8 @@ msgid ""
 "Adds SMSes from file (format like backupsms uses) to selected folder in "
 "phone."
 msgstr ""
+"Přidá SMS zprávy ze souboru (formát jako používá backupsms) do zvolené "
+"složky v telefonu."
 
 # type: TP
 #: docs/user/gammu.1:107
@@ -339,6 +351,8 @@ msgid ""
 "Delete SMS from phone. See description for B<getsms> for info about sms "
 "folders naming convention."
 msgstr ""
+"Ostraní SMS z telefonu. Popis zadávání umístění a složek v telefonu "
+"naleznete u B<getsms>."
 
 # type: Plain text
 #: docs/user/gammu.1:123 docs/user/gammu.1:146 docs/user/gammu.1:874
@@ -493,6 +507,8 @@ msgid ""
 "Read WAP bookmark from file created by B<backup> option and saves in Nokia "
 "format as SMS"
 msgstr ""
+"Načte WAP záložky ze souboru vytvořeného příkazem B<backup> a uloží je ve "
+"formátu Nokie jako SMS"
 
 # type: TP
 #: docs/user/gammu.1:188 docs/user/gammu.1:1068
@@ -516,7 +532,7 @@ msgstr "B<savesms CALLER>I< file [-folder id] [-unread] [-read] [-unsent] [-sent
 # type: Plain text
 #: docs/user/gammu.1:196 docs/user/gammu.1:712
 msgid "Save caller logo as sms (Nokia format - size 72x14)."
-msgstr ""
+msgstr "Uloží logo volajícího jako SMS (formát pro Nokia - velikost 72x14)."
 
 # type: TP
 #: docs/user/gammu.1:197
@@ -530,6 +546,8 @@ msgid ""
 "Saves EMS sequence. All parameters after B<-unread> (like B<-defsound>) can "
 "be used few times."
 msgstr ""
+"Uloží EMS zprávu. Všechny parametry uvedené za B<-unread>·(například·B<-"
+"defsound>)·mohou být použity opakovaně."
 
 # type: Plain text
 #: docs/user/gammu.1:203
