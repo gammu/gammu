@@ -86,7 +86,7 @@ static bool irda_discover_device(GSM_StateMachine *state, int *fd)
 #else
 					deviceid = list->Device[i].irdaDeviceID;
 #endif
-					smprintf(state, "Irda: found device \"%s\" (address %d) - ",
+					smprintf(state, "IrDA: found device \"%s\" (address %d) - ",
 							list->Device[i].irdaDeviceName,
 							deviceid
 							);
@@ -144,11 +144,15 @@ static GSM_Error irda_open (GSM_StateMachine *s)
 #    pragma warn +8084
 #endif
 #else
-    	if (s->ConnectionType == GCT_IRDAAT) return ERR_SOURCENOTAVAILABLE;
+    	if (s->ConnectionType == GCT_IRDAAT)
+		return ERR_SOURCENOTAVAILABLE;
 #endif
 
     	/* discovering devices */
-    	if (irda_discover_device(s,&fd)==false) return ERR_TIMEOUT;
+    	if (irda_discover_device(s,&fd) == false) {
+		smprintf(s, "Can not find any IrDA device!\n");
+		return ERR_TIMEOUT;
+	}
 
     	d->peer.irdaAddressFamily 	= AF_IRDA;
 #ifndef WIN32
