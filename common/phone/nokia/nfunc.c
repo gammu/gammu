@@ -369,8 +369,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		bs = 256*Block[2]+Block[3];
 		if (bs == 0) break;
 #ifdef DEBUG
-		smprintf(s, "Phonebook entry block - length %i", bs-6);
-		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Block+0, bs-1);
+		smprintf(s, "Phonebook entry block - length %i\n", bs-6);
+		if (GSM_GetDI(s)->dl == DL_TEXTALL || GSM_GetDI(s)->dl == DL_TEXTALLDATE)
+			DumpMessage(&s->di, Block+0, bs-1);
 #endif
 		if (entry->EntriesNum==GSM_PHONEBOOK_ENTRIES) {
 			smprintf(s, "Too many entries\n");
@@ -417,7 +418,7 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 		}
 		bs = 256*Block[2]+Block[3];
 #ifdef DEBUG
-		smprintf(s, "Phonebook entry block - length %i", bs-6);
+		smprintf(s, "Phonebook entry block - length %i\n", bs-6);
 		if (s->di.dl == DL_TEXTALL || s->di.dl == DL_TEXTALLDATE) DumpMessage(&s->di, Block+0, bs-1);
 #endif
 		if (entry->EntriesNum==GSM_PHONEBOOK_ENTRIES) {
@@ -458,6 +459,9 @@ GSM_Error N71_65_DecodePhonebook(GSM_StateMachine	*s,
 				entry->Entries[entry->EntriesNum].Text[1] = 0;
 			} else {
 				memcpy(entry->Entries[entry->EntriesNum].Text,Block+6,Block[5]);
+				/* Zero terminate the string */
+				entry->Entries[entry->EntriesNum].Text[Block[5]] = 0;
+				entry->Entries[entry->EntriesNum].Text[Block[5] + 1] = 0;
 			}
 			entry->Entries[entry->EntriesNum].EntryType=Type;
 			smprintf(s, " \"%s\"\n",DecodeUnicodeString(entry->Entries[entry->EntriesNum].Text));
