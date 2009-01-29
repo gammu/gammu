@@ -1,5 +1,6 @@
 #include <gammu.h>
 #include "../helper/message-display.h"
+#include "common.h"
 
 int main(int argc UNUSED, char **argv UNUSED)
 {
@@ -21,14 +22,11 @@ int main(int argc UNUSED, char **argv UNUSED)
 	SMSInfo.UnicodeCoding = false;
 	error = GSM_EncodeMultiPartSMS(NULL, &SMSInfo, &sms);
 
+	gammu_test_result(error, "GSM_EncodeMultiPartSMS");
+
 	/* Just set some values to sender so that we don't print mess */
 	EncodeUnicode(sms.SMS[0].Number, "321", GSM_MAX_NUMBER_LENGTH);
 	EncodeUnicode(sms.SMS[1].Number, "321", GSM_MAX_NUMBER_LENGTH);
-
-	if (error != ERR_NONE) {
-		printf("GSM_EncodeMultiPartSMS failed!\n");
-		return 1;
-	}
 
 	/* Display message */
 	DisplayMultiSMSInfo(&sms, false, true, NULL, NULL);

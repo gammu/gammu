@@ -8,6 +8,8 @@
 
 #include "../helper/message-display.h"
 
+#include "common.h"
+
 unsigned char data[] = {
 	0x01, 0x08, 0x00, 0x08, 0x01, 0x02, 0x01, 0x00, 0x05, 0x91, 0x26, 0x18, 0x16, 0x42, 0x00, 0x00,
 	0x00, 0x00, 0x00, 0x00, 0x04, 0x00, 0x00, 0x08, 0x0D, 0x91, 0x26, 0x58, 0x26, 0x84, 0x88, 0x65,
@@ -32,10 +34,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
-	if (s == NULL) {
-		printf("Could not allocate state machine!\n");
-		return 1;
-	}
+	test_result (s != NULL);
 
 	/* Init message */
 	msg.Type = 0x14;
@@ -54,9 +53,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
-	printf("%s\n", GSM_ErrorString(error));
+	gammu_test_result(error, "N6110_ReplyGetSMSMessage");
 
-	return (error == ERR_NONE) ? 0 : 1;
+	return 0;
 }
 
 /* Editor configuration

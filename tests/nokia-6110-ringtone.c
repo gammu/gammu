@@ -6,6 +6,8 @@
 #include "../common/protocol/protocol.h" /* Needed for GSM_Protocol_Message */
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 
+#include "common.h"
+
 unsigned char data[] = {
 	0x01, 0x01, 0x9E, 0x00, 0x00, 0x00, 0x01, 0x2C, 0x02, 0x4A, 0x3A, 0x6D, 0x4D, 0x85, 0xB8, 0x81,
 	0x4D, 0x95, 0x89, 0x85, 0xCD, 0xD1, 0xA4, 0x04, 0x1E, 0x89, 0x22, 0xD5, 0x16, 0x49, 0x16, 0x11,
@@ -46,10 +48,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
-	if (s == NULL) {
-		printf("Could not allocate state machine!\n");
-		return 1;
-	}
+	test_result(s != NULL);
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(true, debug_info);
 	GSM_SetDebugFileDescriptor(stderr, false, debug_info);
@@ -69,9 +68,9 @@ int main(int argc UNUSED, char **argv UNUSED)
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
-	printf("%s\n", GSM_ErrorString(error));
+	gammu_test_result(error, "N6110_ReplyGetRingtone");
 
-	return (error == ERR_NONE) ? 0 : 1;
+	return 0;
 }
 
 /* Editor configuration

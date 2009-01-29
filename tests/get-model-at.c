@@ -8,6 +8,8 @@
 #include "../common/gsmstate.h" /* Needed for state machine internals */
 #include "../common/gsmphones.h" /* Phone data */
 
+#include "common.h"
+
 #define BUFFER_SIZE 16384
 
 extern GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s);
@@ -56,10 +58,7 @@ int main(int argc, char **argv)
 
 	/* Allocates state machine */
 	s = GSM_AllocStateMachine();
-	if (s == NULL) {
-		printf("Could not allocate state machine!\n");
-		return 1;
-	}
+	test_result(s != NULL);
 	debug_info = GSM_GetDebug(s);
 	GSM_SetDebugGlobal(true, debug_info);
 
@@ -87,9 +86,9 @@ int main(int argc, char **argv)
 	/* Free state machine */
 	GSM_FreeStateMachine(s);
 
-	printf("%s\n", GSM_ErrorString(error));
+	gammu_test_result(error, "ATGEN_ReplyGetModel");
 
-	return (error == ERR_NONE) ? 0 : 1;
+	return 0;
 }
 
 /* Editor configuration
