@@ -24,6 +24,7 @@
 
 /* Gammu includes */
 #include <gammu.h>
+#include <gammu-smsd.h>
 
 /* Locales */
 #include <locale.h>
@@ -6075,6 +6076,40 @@ gammu_ReadSMSBackup(PyObject *self, PyObject *args, PyObject *kwds)
     return result;
 }
 
+static char gammu_SMSD_InjectSMS__doc__[] =
+"SMSD_InjectSMS(Config, Message)\n\n"
+"Decodes multi part SMS message.\n\n"
+"@param Config: Name of file with SMSD configuration\n"
+"@type Config: string\n"
+"@param Message: Nessage to inject (can be multipart)\n"
+"@type Message: list\n"
+"@return: None\n"
+"@rtype: None\n"
+;
+
+static PyObject *
+gammu_SMSD_InjectSMS(PyObject *self, PyObject *args, PyObject *kwds)
+{
+    GSM_MultiSMSMessage         smsin;
+    char                        *filename;
+    static char                 *kwlist[] = {"Config", "Message", NULL};
+    PyObject                    *value;
+    GSM_Error                   error;
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "sO!", kwlist,
+                &filename, &PyList_Type, &(value)))
+        return NULL;
+
+    if (!MultiSMSFromPython(value, &smsin)) return NULL;
+
+    Py_BEGIN_ALLOW_THREADS
+    error = SMSD_InjectSMS(filename, &smsin);
+    Py_END_ALLOW_THREADS
+
+    if (!checkError(NULL, error, "SaveSMSBackup")) return NULL;
+
+    Py_RETURN_NONE;
+}
 
 /* List of methods defined in the module */
 
@@ -6106,6 +6141,8 @@ static struct PyMethodDef gammu_methods[] = {
 
     {"SaveSMSBackup",   (PyCFunction)gammu_SaveSMSBackup,   METH_VARARGS|METH_KEYWORDS,   gammu_SaveSMSBackup__doc__},
     {"ReadSMSBackup",   (PyCFunction)gammu_ReadSMSBackup,   METH_VARARGS|METH_KEYWORDS,   gammu_ReadSMSBackup__doc__},
+
+    {"SMSD_InjectSMS",  (PyCFunction)gammu_SMSD_InjectSMS,  METH_VARARGS|METH_KEYWORDS,   gammu_SMSD_InjectSMS__doc__},
 
     {NULL,	 (PyCFunction)NULL, 0, NULL}		/* sentinel */
 };

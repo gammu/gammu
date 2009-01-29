@@ -88,6 +88,7 @@ if (WIN32 AND NOT CYGWIN)
          )
 endif (WIN32 AND NOT CYGWIN)
 target_link_libraries (python_gammu libGammu)
+target_link_libraries (python_gammu gsmsd)
 target_link_libraries (python_gammu ${PYTHON_LIBRARIES})
 install(TARGETS python_gammu LIBRARY DESTINATION "${PYTHON_SITEDIR}/gammu/" COMPONENT "python")
 
