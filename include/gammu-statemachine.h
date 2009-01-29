@@ -127,7 +127,8 @@ typedef enum {
 	GCT_BLUEFBUS2,
 	GCT_BLUEAT,
 	GCT_BLUEPHONET,
-	GCT_BLUEOBEX
+	GCT_BLUEOBEX,
+	GCT_FBUS2USB,
 } GSM_ConnectionType;
 
 /**
