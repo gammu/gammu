@@ -155,7 +155,9 @@ typedef struct _GSM_User	 	GSM_User;
 #ifndef GSM_USED_SERIALDEVICE
 #  undef GSM_ENABLE_SERIALDEVICE
 #endif
+#ifdef LIBUSB_FOUND
 #define GSM_ENABLE_USBDEVICE
+#endif
 #ifndef GSM_USED_USBDEVICE
 #  undef GSM_ENABLE_USBDEVICE
 #endif
