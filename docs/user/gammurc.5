@@ -98,6 +98,18 @@ For IrDA connections, this parameters is not used at all.
 Do not use this parameter unless really needed! The only use case for this is
 when Gammu does not know your phone and misdetects it's features.
 
+The only special case for using model is to force special type of OBEX
+connection instead of letting Gammu try the best suited for selected
+operation:
+
+\fBobexfs\fR - force using of file browsing service (file system support)
+.br
+\fBobexirmc\fR - force using of IrMC service (contacts, calendar and notes
+support)
+.br
+\fBobexnone\fR - none service chosen, this has only limited use for sending
+file (\fBsendfile\fR command)
+
 .TP
 .BI SynchronizeTime
 

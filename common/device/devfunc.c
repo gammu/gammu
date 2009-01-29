@@ -49,7 +49,8 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 		}
 		/* For filesystem, we prefer file transfer */
 		if (strstr(name, "OBEX File Transfer") != NULL || strstr(name, "OBEX file transfer") != NULL) {
-			if (strcmp(s->CurrentConfig->Model, "obex") == 0) {
+			if (strcmp(s->CurrentConfig->Model, "obex") == 0 ||
+				strcmp(s->CurrentConfig->Model, "obexfs") == 0) {
 				return 4;
 			}
 			return 3;

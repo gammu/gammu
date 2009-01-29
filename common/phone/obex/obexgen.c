@@ -283,6 +283,9 @@ GSM_Error OBEXGEN_Initialise(GSM_StateMachine *s)
 	if (strcmp(s->CurrentConfig->Model, "obex") == 0) {
 		Priv->InitialService = OBEX_BrowsingFolders;
 		service_forced = true;
+	} else if (strcmp(s->CurrentConfig->Model, "obexfs") == 0) {
+		Priv->InitialService = OBEX_BrowsingFolders;
+		service_forced = true;
 	} else if (strcmp(s->CurrentConfig->Model, "obexirmc") == 0) {
 		Priv->InitialService = OBEX_IRMC;
 		service_forced = true;
@@ -3460,7 +3463,7 @@ GSM_Reply_Function OBEXGENReplyFunctions[] = {
 };
 
 GSM_Phone_Functions OBEXGENPhone = {
-	"obex|seobex|obexirmc|obexnone",
+	"obex|seobex|obexfs|obexirmc|obexnone",
 	OBEXGENReplyFunctions,
 	OBEXGEN_Initialise,
 	OBEXGEN_Terminate,
