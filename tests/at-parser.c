@@ -48,27 +48,19 @@ int main(int argc UNUSED, char **argv UNUSED)
 			"+CPBR: @i, @s, @p, @i, @s, @d",
 			&i, buffer, BUFFER_SIZE, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE, &dt
 			);
-	if (error != ERR_NONE) {
-		printf("%s\n", GSM_ErrorString(error));
-		return 1;
-	}
+	gammu_test_result(error, "+CPBR: @i, @s, @p, @i, @s, @d");
+
 	error = ATGEN_ParseReply(s,
 			"+CPBR: 6,\"\",,\"005300740061006E006C006500790020005000610075006C\"",
 			"+CPBR: @i, @p, @I, @s",
 			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE);
-	if (error != ERR_NONE) {
-		printf("%s\n", GSM_ErrorString(error));
-		return 1;
-	}
+	gammu_test_result(error, "+CPBR: @i, @p, @I, @s");
 
 	error = ATGEN_ParseReply(s,
 			"+CPBR: 1,\"+60122256476\",145,\"\",\"08/07/04\",\"17:24:55\"",
 			"+CPBR: @i, @p, @I, @s, @d",
 			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE, &dt);
-	if (error != ERR_NONE) {
-		printf("%s\n", GSM_ErrorString(error));
-		return 1;
-	}
+	gammu_test_result(error, "+CPBR: @i, @p, @I, @s, @d");
 
 	Priv->Charset = AT_CHARSET_UCS2;
 	Priv->Manufacturer = AT_Motorola;
@@ -76,10 +68,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 			"+CPBR: 419,\"030450566735\",129,56697263686F77204B6C696E696B756D2053742E20333100",
 			"+CPBR: @i, @p, @I, @s",
 			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE);
-	if (error != ERR_NONE) {
-		printf("%s\n", GSM_ErrorString(error));
-		return 1;
-	}
+	gammu_test_result(error, "+CPBR: @i, @p, @I, @s");
 
 	Priv->Charset = AT_CHARSET_UCS2;
 	Priv->Manufacturer = AT_Motorola;
@@ -95,10 +84,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 			"+CPBR: 212,\"mlaubner@web.de\",128,004D0061006E00660072006500640020004C006100750062006E00650072",
 			"+CPBR: @i, @p, @I, @s",
 			&i, buffer, BUFFER_SIZE, &i, buffer, BUFFER_SIZE);
-	if (error != ERR_NONE) {
-		printf("%s\n", GSM_ErrorString(error));
-		return 1;
-	}
+	gammu_test_result(error, "+CPBR: @i, @p, @I, @s");
 
 	Priv->Charset = AT_CHARSET_HEX;
 	Priv->Manufacturer = AT_Motorola;
@@ -106,10 +92,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 			"+CSCA: 002B003300380030003600330039003000310030003000300030,145",
 			"+CSCA: @p, @i",
 			buffer, BUFFER_SIZE, &i);
-	if (error != ERR_NONE) {
-		printf("%s\n", GSM_ErrorString(error));
-		return 1;
-	}
+	gammu_test_result(error, "+CSCA: @p, @i");
 
 	Priv->Charset = AT_CHARSET_GSM;
 	Priv->Manufacturer = AT_Motorola;
@@ -117,10 +100,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 					"+CPBR: (1-250),50,14,,,,40,20",
 					"+CPBR: (@i-@i), @i, @i, @0",
 			&i, &i, &i, &i);
-	if (error != ERR_NONE) {
-		printf("%s\n", GSM_ErrorString(error));
-		return 1;
-	}
+	gammu_test_result(error, "+CPBR: (@i-@i), @i, @i, @0");
 
 	error = ATGEN_ParseReply(s,
 					"+CMGL:1,0,,26",
@@ -147,10 +127,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 			buffer, BUFFER_SIZE,
 			buffer, BUFFER_SIZE
 			);
-	if (error != ERR_NONE) {
-		printf("%s\n", GSM_ErrorString(error));
-		return 1;
-	}
+	gammu_test_result(error, "+SPBR: @i, @p, @p, @p, @p, @p, @s, @t, @t, @t, @t");
 
 	/* Free state machine */
 	GSM_FreeStateMachine(s);

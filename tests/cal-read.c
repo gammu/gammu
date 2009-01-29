@@ -72,10 +72,7 @@ int main(int argc, char **argv)
 		error = GSM_DecodeVCALENDAR_VTODO(NULL, buffer, &pos, &cal, &todo,
 				SonyEricsson_VCalendar, SonyEricsson_VToDo);
 	}
-	if (error != ERR_NONE) {
-		printf("Parsing failed: %s\n", GSM_ErrorString(error));
-		return 1;
-	}
+	gammu_test_result(error, "GSM_DecodeVCALENDAR_VTODO");
 
 	/* Generate file if we should */
 	if (generate) {
@@ -93,18 +90,14 @@ int main(int argc, char **argv)
 		} else {
 			backup.ToDo[0] = NULL;
 		}
-		if (GSM_SaveBackupFile(argv[2], &backup, true) != ERR_NONE) {
-			printf("Error saving backup to %s\n", argv[2]);
-			return 1;
-		}
+		error = GSM_SaveBackupFile(argv[2], &backup, true);
+		gammu_test_result(error, "GSM_SaveBackupFile");
 	}
 
 	/* Read file content */
 	GSM_ClearBackup(&backup);
-	if (GSM_ReadBackupFile(argv[2], &backup, GSM_Backup_GammuUCS2) != ERR_NONE) {
-		printf("Error reading backup from %s\n", argv[2]);
-		return 1;
-	}
+	error = GSM_ReadBackupFile(argv[2], &backup, GSM_Backup_GammuUCS2);
+	gammu_test_result(error, "GSM_ReadBackupFile");
 
 	/* Did we read something? */
 	skipcal = false;

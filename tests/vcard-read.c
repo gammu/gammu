@@ -48,17 +48,11 @@ int main(int argc, char **argv)
 
 	/* Open file */
 	f = fopen(argv[1], "r");
-	if (f == NULL) {
-		printf("Could not open %s\n", argv[1]);
-		return 1;
-	}
+	test_result(f != NULL);
 
 	/* Read data */
 	len = fread(buffer, 1, sizeof(buffer) - 1, f);
-	if (!feof(f)) {
-		printf("Could not read whole file %s\n", argv[1]);
-		return 1;
-	}
+	test_result(feof(f));
 
 	/* Zero terminate string */
 	buffer[len] = 0;
@@ -73,7 +67,7 @@ int main(int argc, char **argv)
 	/* Encode vCard back */
 	pos = 0;
 	error = GSM_EncodeVCARD(NULL, vcard_buffer, sizeof(vcard_buffer), &pos, &pbk, true, SonyEricsson_VCard21);
-	test_result(error == ERR_NONE);
+	gammu_test_result(error, "GSM_EncodeVCARD");
 
 	/*
 	 * Best would be to compare here, but we never can get
@@ -88,10 +82,8 @@ int main(int argc, char **argv)
 		pbk.Location = 0;
 		backup.PhonePhonebook[0] = &pbk;
 		backup.PhonePhonebook[1] = NULL;
-		if (GSM_SaveBackupFile(argv[2], &backup, true) != ERR_NONE) {
-			printf("Error saving backup to %s\n", argv[2]);
-			return 1;
-		}
+		error = GSM_SaveBackupFile(argv[2], &backup, true);
+		gammu_test_result(error, "GSM_SaveBackupFile");
 	}
 
 	/* Read file content */
