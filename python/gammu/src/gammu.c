@@ -511,6 +511,8 @@ StateMachine_SetConfig(StateMachineObject *self, PyObject *args, PyObject *kwds)
             } else if (strcmp(s, "StartInfo") == 0) {
                 free(Config->StartInfo);
                 Config->StartInfo = setv;
+            } else if (strcmp(s, "Localize") == 0) {
+                /* We ignore this for backward compatibility */
             } else {
                 free(setv);
                 PyErr_Format(PyExc_ValueError, "Uknown key: %s", s);

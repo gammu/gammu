@@ -25,6 +25,7 @@ ChangeLog
 [-] * Do not try to use filesystem OBEX if IrMC access was forced.
 [-] * Fix possible crash in LMB decoder.
 [-] * Avoid string length overflow in Nokia phonebook encoder.
+[-] * Introduced backward compatibility of gammu.StateMachine.SetConfig.
     
 20090126 - 1.22.92
 
