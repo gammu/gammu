@@ -84,7 +84,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 			desc.idVendor, desc.idProduct,
 			libusb_get_bus_number(dev), libusb_get_device_address(dev));
 
-		/* TODO: add optional matching by ids based on device name from configuration */
+		/* @todo: TODO: add optional matching by ids based on device name from configuration */
 
 		if (matcher(s, dev, &desc)) {
 			break;
@@ -199,7 +199,6 @@ int GSM_USB_Read(GSM_StateMachine *s, void *buf, size_t nbytes)
 	GSM_Device_USBData *d = &s->Device.Data.USB;
 	int rc, ret;
 
-	return -1;
 	rc = libusb_bulk_transfer(d->handle, d->ep_read, buf, nbytes, &ret, 10000);
 	if (rc != 0) {
 		smprintf(s, "Failed to read from usb (%d)!\n", rc);
@@ -213,7 +212,6 @@ int GSM_USB_Write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 	GSM_Device_USBData *d = &s->Device.Data.USB;
 	int rc, ret;
 
-	return -1;
 	rc = libusb_bulk_transfer(d->handle, d->ep_write, (void *)buf, nbytes, &ret, 10000);
 	if (rc != 0) {
 		smprintf(s, "Failed to write to usb (%d)!\n", rc);
@@ -222,6 +220,9 @@ int GSM_USB_Write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 	return ret;
 }
 
+/**
+ * Find parameters for FBUS connection over USB.
+ */
 bool FBUSUSB_Match(GSM_StateMachine *s, libusb_device *dev, struct libusb_device_descriptor *desc)
 {
 	int c, i, a;
@@ -232,6 +233,7 @@ bool FBUSUSB_Match(GSM_StateMachine *s, libusb_device *dev, struct libusb_device
 	int buflen;
 	struct cdc_extra_desc *extra_desc;
 	struct cdc_union_desc *union_desc = NULL;
+	struct libusb_endpoint_descriptor *ep1, *ep2;
 
 	/* We care only about Nokia */
 	if (desc->idVendor != NOKIA_VENDOR_ID) return false;
@@ -300,8 +302,48 @@ next_el:
 		return false;
 	}
 	d->data_iface = union_desc->bSlaveInterface0;
+	d->data_altsetting = -1;
+	d->data_idlesetting = -1;
 
-	/* FIXME: Find out end points and settings from data_iface */
+	/* Find out end points and settings from data_iface */
+	for (i = 0; i < config->bNumInterfaces; i++) {
+		for (a = 0; a < config->interface[i].num_altsetting; a++) {
+			/* We want only data interface we found */
+			if (config->interface[i].altsetting[a].bInterfaceNumber == d->data_iface) {
+				/* We have it */
+				if (config->interface[i].altsetting[a].bNumEndpoints == 2) {
+					/* Active config */
+					ep1 = d->data_altsetting = &(config->interface[i].altsetting[a].endpoint[0]);
+					ep2 = d->data_altsetting = &(config->interface[i].altsetting[a].endpoint[1]);
+					if ((ep1->bmAttributes & LIBUSB_TRANSFER_TYPE_MASK) != LIBUSB_TRANSFER_TYPE_BULK ||
+						(ep2->bmAttributes & LIBUSB_TRANSFER_TYPE_MASK) != LIBUSB_TRANSFER_TYPE_BULK) {
+						/* We want only bulk transfer */
+						continue;
+					}
+					if ((ep1->bEndpointAddress & LIBUSB_ENDPOINT_DIR_MASK) == LIBUSB_ENDPOINT_IN &&
+						(ep2->bEndpointAddress & LIBUSB_ENDPOINT_DIR_MASK) == LIBUSB_ENDPOINT_OUT) {
+						d->ep_read = ep1->bEndpointAddress;
+						d->ep_write = ep2->bEndpointAddress;
+					} else  if ((ep2->bEndpointAddress & LIBUSB_ENDPOINT_DIR_MASK) == LIBUSB_ENDPOINT_IN &&
+						(ep1->bEndpointAddress & LIBUSB_ENDPOINT_DIR_MASK) == LIBUSB_ENDPOINT_OUT) {
+						d->ep_read = ep2->bEndpointAddress;
+						d->ep_write = ep1->bEndpointAddress;
+					} else {
+						continue;
+					}
+					d->data_altsetting = config->interface[i].altsetting[a].bAlternateSetting;
+				} else if (config->interface[i].altsetting[a].bNumEndpoints == 0) {
+					/* Idle config */
+					d->data_idlesetting = config->interface[i].altsetting[a].bAlternateSetting;
+				}
+			}
+		}
+	}
+	if (d->data_altsetting == -1 || d->data_idlesetting == -1) {
+		smprintf(s, "Failed to find data interface (%d)\n", d->data_iface);
+		libusb_free_config_descriptor(config);
+		return true;
+	}
 
 	/* Free config descriptor */
 	libusb_free_config_descriptor(config);
