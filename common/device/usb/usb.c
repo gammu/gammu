@@ -14,12 +14,46 @@
 #include "../../gsmstate.h"
 #include "../../gsmcomon.h"
 
-/* Nokia is the vendor we are interested in */
+/**
+ * Nokia USB vendor ID.
+ */
 #define NOKIA_VENDOR_ID 0x0421
 
-/* CDC class and subclass types */
+/**
+ * USB CDC Class ID.
+ */
 #define USB_CDC_CLASS           0x02
+/**
+ * USB CDC FBUS Subclass ID.
+ */
 #define USB_CDC_FBUS_SUBCLASS       0xfe
+
+/**
+ * Union of CDC descriptor.
+ */
+struct cdc_union_desc {
+    u_int8_t      bLength;
+    u_int8_t      bDescriptorType;
+    u_int8_t      bDescriptorSubType;
+
+    u_int8_t      bMasterInterface0;
+    u_int8_t      bSlaveInterface0;
+} __attribute__ ((packed));
+
+struct cdc_extra_desc {
+    u_int8_t      bLength;
+    u_int8_t      bDescriptorType;
+    u_int8_t      bDescriptorSubType;
+} __attribute__ ((packed));
+
+/* CDC header types (bDescriptorSubType) */
+#define CDC_HEADER_TYPE         0x00
+#define CDC_UNION_TYPE          0x06
+#define CDC_FBUS_TYPE           0x15
+
+/* Interface descriptor (bDescriptorType) */
+#define USB_DT_CS_INTERFACE     0x24
+
 
 
 GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
@@ -62,8 +96,8 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		goto done;
 	}
 
-	smprintf(s, "Trying to open device, config=%d, iface=%d, alt=%d\n",
-		d->configuration, d->iface, d->altsetting);
+	smprintf(s, "Trying to open device, config=%d, c_iface=%d, c_alt=%d, d_iface=%d, d_alt=%d\n",
+		d->configuration, d->control_iface, d->control_altsetting, d->data_iface, d->data_altsetting);
 
 	rc = libusb_open(dev, &d->handle);
 	if (rc != 0) {
@@ -81,18 +115,36 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		goto done;
 	}
 
-	rc = libusb_claim_interface(d->handle, d->iface);
+	rc = libusb_claim_interface(d->handle, d->control_iface);
 	if (rc != 0) {
-		smprintf(s, "Failed to set claim interface %d (%d)!\n", d->iface, rc);
+		smprintf(s, "Failed to set claim control interface %d (%d)!\n", d->control_iface, rc);
 		libusb_close(d->handle);
 		d->handle = NULL;
 		error = ERR_DEVICEOPENERROR;
 		goto done;
 	}
 
-	rc = libusb_set_interface_alt_setting(d->handle, d->iface, d->altsetting);
+	rc = libusb_set_interface_alt_setting(d->handle, d->control_iface, d->control_altsetting);
 	if (rc != 0) {
-		smprintf(s, "Failed to set alt setting %d (%d)!\n", d->altsetting, rc);
+		smprintf(s, "Failed to set control alt setting %d (%d)!\n", d->control_altsetting, rc);
+		libusb_close(d->handle);
+		d->handle = NULL;
+		error = ERR_DEVICEOPENERROR;
+		goto done;
+	}
+
+	rc = libusb_claim_interface(d->handle, d->data_iface);
+	if (rc != 0) {
+		smprintf(s, "Failed to set claim data interface %d (%d)!\n", d->data_iface, rc);
+		libusb_close(d->handle);
+		d->handle = NULL;
+		error = ERR_DEVICEOPENERROR;
+		goto done;
+	}
+
+	rc = libusb_set_interface_alt_setting(d->handle, d->data_iface, d->data_altsetting);
+	if (rc != 0) {
+		smprintf(s, "Failed to set data alt setting %d (%d)!\n", d->data_altsetting, rc);
 		libusb_close(d->handle);
 		d->handle = NULL;
 		error = ERR_DEVICEOPENERROR;
@@ -128,6 +180,9 @@ GSM_Error GSM_USB_Terminate(GSM_StateMachine *s)
 	GSM_Device_USBData *d = &s->Device.Data.USB;
 
 	if (d->handle != NULL) {
+		libusb_set_interface_alt_setting(d->handle, d->data_iface, d->data_idlesetting);
+		libusb_release_interface(d->handle, d->control_iface);
+		libusb_release_interface(d->handle, d->data_iface);
 		libusb_close(d->handle);
 	}
 
@@ -141,12 +196,30 @@ GSM_Error GSM_USB_Terminate(GSM_StateMachine *s)
 
 int GSM_USB_Read(GSM_StateMachine *s, void *buf, size_t nbytes)
 {
-	return 0;
+	GSM_Device_USBData *d = &s->Device.Data.USB;
+	int rc, ret;
+
+	return -1;
+	rc = libusb_bulk_transfer(d->handle, d->ep_read, buf, nbytes, &ret, 10000);
+	if (rc != 0) {
+		smprintf(s, "Failed to read from usb (%d)!\n", rc);
+		return -1;
+	}
+	return ret;
 }
 
 int GSM_USB_Write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 {
-	return 0;
+	GSM_Device_USBData *d = &s->Device.Data.USB;
+	int rc, ret;
+
+	return -1;
+	rc = libusb_bulk_transfer(d->handle, d->ep_write, (void *)buf, nbytes, &ret, 10000);
+	if (rc != 0) {
+		smprintf(s, "Failed to write to usb (%d)!\n", rc);
+		return -1;
+	}
+	return ret;
 }
 
 bool FBUSUSB_Match(GSM_StateMachine *s, libusb_device *dev, struct libusb_device_descriptor *desc)
@@ -155,6 +228,10 @@ bool FBUSUSB_Match(GSM_StateMachine *s, libusb_device *dev, struct libusb_device
 	int rc;
 	struct libusb_config_descriptor *config;
 	GSM_Device_USBData *d = &s->Device.Data.USB;
+	const unsigned char *buffer;
+	int buflen;
+	struct cdc_extra_desc *extra_desc;
+	struct cdc_union_desc *union_desc = NULL;
 
 	/* We care only about Nokia */
 	if (desc->idVendor != NOKIA_VENDOR_ID) return false;
@@ -171,20 +248,60 @@ bool FBUSUSB_Match(GSM_StateMachine *s, libusb_device *dev, struct libusb_device
 						&& config->interface[i].altsetting[a].bInterfaceSubClass == USB_CDC_FBUS_SUBCLASS
 					) {
 					/* We have it */
-					goto found;
+					goto found_control;
 				}
 			}
 		}
 		libusb_free_config_descriptor(config);
 	}
 	return false;
-found:
+found_control:
 	/* Remember configuration which is interesting */
 	d->configuration = config->bConfigurationValue;
-	d->iface = config->interface[i].altsetting[a].bInterfaceNumber;
-	d->altsetting = config->interface[i].altsetting[a].bAlternateSetting;
 
-	/* FIXME: Find out descriptors */
+	/* Remember control interface */
+	d->control_iface = config->interface[i].altsetting[a].bInterfaceNumber;
+	d->control_altsetting = config->interface[i].altsetting[a].bAlternateSetting;
+
+	/* Find out data interface */
+
+	/* Process extra descriptors */
+	buffer = config->interface[i].altsetting[a].extra;
+	buflen = config->interface[i].altsetting[a].extra_length;
+
+	/* Each element has length as first byte and type as second */
+	while (buflen > 0) {
+		extra_desc = (struct cdc_extra_desc *)buffer; /* Convenience */
+		if (extra_desc->bDescriptorType != USB_DT_CS_INTERFACE) {
+			smprintf(s, "Extra CDC header: %d\n", extra_desc->bDescriptorType);
+			goto next_el;
+		}
+
+		switch (extra_desc->bDescriptorSubType) {
+			case CDC_UNION_TYPE:
+				union_desc = (struct cdc_union_desc *)buffer;
+				break;
+			case CDC_HEADER_TYPE:
+			case CDC_FBUS_TYPE:
+				/* We know these, but ignore them */
+				break;
+			default:
+				smprintf(s, "Extra CDC subheader: %d\n", extra_desc->bDescriptorSubType);
+				break;
+		}
+next_el:
+		buflen -= extra_desc->bLength;
+		buffer += extra_desc->bLength;
+	}
+
+	if (union_desc == NULL) {
+		smprintf(s, "Failed to find data end points!\n");
+		libusb_free_config_descriptor(config);
+		return false;
+	}
+	d->data_iface = union_desc->bSlaveInterface0;
+
+	/* FIXME: Find out end points and settings from data_iface */
 
 	/* Free config descriptor */
 	libusb_free_config_descriptor(config);

@@ -27,8 +27,13 @@ typedef struct {
     libusb_context *context;
     libusb_device_handle *handle;
     int configuration;
-    int iface;
-    int altsetting;
+    int control_iface;
+    int control_altsetting;
+    int data_iface;
+    int data_altsetting;
+    int data_idlesetting;
+    unsigned char ep_read;
+    unsigned char ep_write;
 } GSM_Device_USBData;
 
 typedef bool (*GSM_USB_Match_Function)(GSM_StateMachine *s, libusb_device *dev, struct_libusb_device_descriptor *desc);
