@@ -30,6 +30,7 @@
 #include <linux/tty_flip.h>
 #include <linux/module.h>
 #include <linux/usb.h>
+#include <linux/version.h>
 #include <linux/usb/serial.h>
 
 
@@ -99,10 +100,12 @@ static struct usb_serial_driver nokia_serial_driver = {
 	},
 	.description =		"Nokia 7600/6230(i)/6170/66x0 DKU2 driver",
 	.id_table =		id_table,
+#if LINUX_VERSION_CODE < KERNEL_VERSION(2,4,26)
 	.num_interrupt_in =	1,
 	.num_bulk_in =		1,
 	.num_bulk_out =		1,
 	.num_ports =		1,
+#endif
 	.probe =		nokia_probe,
 };
 
