@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-27 14:30+0100\n"
+"POT-Creation-Date: 2009-01-29 08:58+0100\n"
 "PO-Revision-Date: 2009-01-27 14:28+0100\n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
@@ -522,7 +522,7 @@ msgstr ""
 
 #: gammu/calendar.c:59 gammu/calendar.c:708 gammu/calendar.c:813
 msgid "Alarm"
-msgstr ""
+msgstr "Alarme"
 
 #: gammu/calendar.c:62 gammu/calendar.c:711
 msgid "Daily alarm"
@@ -1739,9 +1739,10 @@ msgid ""
 "Second parameter optionally controls debug level, next one specifies actions."
 msgstr ""
 
+# type: Plain text
 #: gammu/gammu.c:776
 msgid "Commands can be specified with or without leading --."
-msgstr ""
+msgstr "Comandos podem ser especificados com ou sem -- no início."
 
 #: gammu/gammu.c:779
 msgid ""
