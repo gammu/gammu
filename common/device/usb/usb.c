@@ -233,7 +233,7 @@ bool FBUSUSB_Match(GSM_StateMachine *s, libusb_device *dev, struct libusb_device
 	int buflen;
 	struct cdc_extra_desc *extra_desc;
 	struct cdc_union_desc *union_desc = NULL;
-	struct libusb_endpoint_descriptor *ep1, *ep2;
+	const struct libusb_endpoint_descriptor *ep1, *ep2;
 
 	/* We care only about Nokia */
 	if (desc->idVendor != NOKIA_VENDOR_ID) return false;
@@ -313,8 +313,8 @@ next_el:
 				/* We have it */
 				if (config->interface[i].altsetting[a].bNumEndpoints == 2) {
 					/* Active config */
-					ep1 = d->data_altsetting = &(config->interface[i].altsetting[a].endpoint[0]);
-					ep2 = d->data_altsetting = &(config->interface[i].altsetting[a].endpoint[1]);
+					ep1 = &(config->interface[i].altsetting[a].endpoint[0]);
+					ep2 = &(config->interface[i].altsetting[a].endpoint[1]);
 					if ((ep1->bmAttributes & LIBUSB_TRANSFER_TYPE_MASK) != LIBUSB_TRANSFER_TYPE_BULK ||
 						(ep2->bmAttributes & LIBUSB_TRANSFER_TYPE_MASK) != LIBUSB_TRANSFER_TYPE_BULK) {
 						/* We want only bulk transfer */
