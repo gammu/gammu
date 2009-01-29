@@ -155,6 +155,10 @@ typedef struct _GSM_User	 	GSM_User;
 #ifndef GSM_USED_SERIALDEVICE
 #  undef GSM_ENABLE_SERIALDEVICE
 #endif
+#define GSM_ENABLE_USBDEVICE
+#ifndef GSM_USED_USBDEVICE
+#  undef GSM_ENABLE_USBDEVICE
+#endif
 #define GSM_ENABLE_IRDADEVICE
 #ifndef GSM_USED_IRDADEVICE
 #  undef GSM_ENABLE_IRDADEVICE
@@ -186,6 +190,9 @@ typedef struct _GSM_User	 	GSM_User;
 #  include "device/serial/ser_w32.h"
 #  include "device/serial/ser_unx.h"
 #  include "device/serial/ser_djg.h"
+#endif
+#ifdef GSM_ENABLE_USBDEVICE
+#  include "device/usb/usb.h"
 #endif
 #ifdef GSM_ENABLE_IRDADEVICE
 #  include "device/irda/irda.h"
@@ -252,6 +259,12 @@ extern GSM_Device_Functions IrdaDevice;
  */
 extern GSM_Device_Functions BlueToothDevice;
 #endif
+#ifdef GSM_ENABLE_USBDEVICE
+/**
+ * Serial device functions.
+ */
+extern GSM_Device_Functions FBUSUSBDevice;
+#endif
 
 /**
  * Structure containing device specific data and pointer to device functions -
@@ -281,6 +294,12 @@ typedef struct {
 		 * Data for Bluetooth port device.
 		 */
 		GSM_Device_BlueToothData	BlueTooth;
+#endif
+#ifdef GSM_ENABLE_USBDEVICE
+		/**
+		 * Data for libusb-1.0 backend.
+		 */
+		GSM_Device_USBData		USB;
 #endif
 	} Data;
 	/**

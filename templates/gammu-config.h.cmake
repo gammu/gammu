@@ -297,6 +297,9 @@
 /* Will be used Bluez stack ? */
 #cmakedefine BLUEZ_FOUND
 
+/* Do we have libusb-1.0 ? */
+#cmakedefine LIBUSB_FOUND
+
 /* Will be used FreeBSD Bluetooth stack ? */
 #cmakedefine FBSD_BLUE_FOUND
 

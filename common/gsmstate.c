@@ -73,6 +73,7 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 	/* cables */
 	{"mbus", GCT_MBUS2, false},
 	{"fbus", GCT_FBUS2, false},
+	{"fbususb", GCT_FBUS2USB, false},
 	{"fbuspl2303", GCT_FBUS2PL2303, false},
 	{"dlr3", GCT_FBUS2DLR3, false},
 	{"fbusdlr3", GCT_FBUS2DLR3, false},
@@ -182,6 +183,9 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 #endif
 #ifdef GSM_ENABLE_FBUS2
 	GSM_RegisterConnection(s, GCT_FBUS2,	  &SerialDevice,  &FBUS2Protocol);
+#endif
+#if defined(GSM_ENABLE_FBUS2) && defined(GSM_ENABLE_USBDEVICE)
+	GSM_RegisterConnection(s, GCT_FBUS2USB,	  &FBUSUSBDevice,  &FBUS2Protocol);
 #endif
 #ifdef GSM_ENABLE_FBUS2DLR3
 	GSM_RegisterConnection(s, GCT_FBUS2DLR3,  &SerialDevice,  &FBUS2Protocol);
@@ -320,6 +324,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 #ifdef GSM_ENABLE_NOKIA6510
 		if ( s->ConnectionType ==  GCT_MBUS2 ||
 				s->ConnectionType ==  GCT_FBUS2 ||
+				s->ConnectionType ==  GCT_FBUS2USB ||
 				s->ConnectionType ==  GCT_FBUS2DLR3 ||
 				s->ConnectionType ==  GCT_FBUS2PL2303 ||
 				s->ConnectionType ==  GCT_FBUS2BLUE ||
@@ -499,6 +504,7 @@ GSM_Error GSM_TryGetModel(GSM_StateMachine *s)
 #if defined(GSM_ENABLE_NOKIA_DCT3) || defined(GSM_ENABLE_NOKIA_DCT4)
 			case GCT_MBUS2:
 			case GCT_FBUS2:
+			case GCT_FBUS2USB:
 			case GCT_FBUS2DLR3:
 			case GCT_FBUS2PL2303:
 			case GCT_FBUS2BLUE:
