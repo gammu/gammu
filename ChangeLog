@@ -30,6 +30,7 @@ ChangeLog
 [+] * python-gammu can now inject messages into SMSD (gammu.SMSD object).
 [+] * SMSD stores summary counts of sent/received messages in database.
 [+] * Added gammu-smsd-monitor program to monitor state of SMSD.
+[+] * python-gammu can now monitor SMSD state.
     
 20090126 - 1.22.92
 

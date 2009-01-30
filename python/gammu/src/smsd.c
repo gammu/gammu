@@ -83,6 +83,39 @@ typedef struct {
 
 /* ---------------------------------------------------------------- */
 
+static char SMSD_GetStatus__doc__[] =
+"GetStatus()\n\n"
+"Returns SMSD status.\n\n"
+"@return: Dict with status values\n"
+"@rtype: dict\n"
+;
+
+static PyObject *
+Py_SMSD_GetStatus(SMSDObject *self, PyObject *args, PyObject *kwds)
+{
+    GSM_Error                   error;
+	GSM_SMSDStatus status;
+
+    if (!PyArg_ParseTuple(args, ""))
+        return NULL;
+
+    Py_BEGIN_ALLOW_THREADS
+    error = SMSD_GetStatus(self->config, &status);
+    Py_END_ALLOW_THREADS
+
+    if (!checkError(NULL, error, "SMSD_GetStatus")) return NULL;
+
+    return Py_BuildValue("{s:s,s:s,s:s,s:i,s:i,s:i,s:i,s:i}",
+            "Client", status.Client,
+            "PhoneID", status.PhoneID,
+            "IMEI", status.IMEI,
+            "Sent", status.Sent,
+            "Received", status.Received,
+            "Failed", status.Failed,
+            "BatterPercent", status.Charge.BatteryPercent,
+            "NetworkSignal", status.Network.SignalPercent);
+}
+
 static char SMSD_InjectSMS__doc__[] =
 "InjectSMS(Message)\n\n"
 "Decodes multi part SMS message.\n\n"
@@ -116,6 +149,7 @@ Py_SMSD_InjectSMS(SMSDObject *self, PyObject *args, PyObject *kwds)
 }
 
 static struct PyMethodDef SMSD_methods[] = {
+    {"GetStatus",  (PyCFunction)Py_SMSD_GetStatus,  METH_VARARGS|METH_KEYWORDS,   SMSD_GetStatus__doc__},
     {"InjectSMS",  (PyCFunction)Py_SMSD_InjectSMS,  METH_VARARGS|METH_KEYWORDS,   SMSD_InjectSMS__doc__},
 
     {NULL,		NULL, 0, NULL}		/* sentinel */
