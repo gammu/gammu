@@ -17,7 +17,7 @@
 #  include <dirent.h>
 #endif
 
-#include "smsdcore.h"
+#include "../core.h"
 
 /**
  * Helper define to check error code from fwrite.

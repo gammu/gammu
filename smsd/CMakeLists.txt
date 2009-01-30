@@ -7,16 +7,16 @@ project (gammu-smsd C)
 include(GammuTuneCompiler)
 
 set (LIBRARY_SRC
-    smsdcore.c
-    s_files.c
+    core.c
+    services/files.c
     )
 
 if (HAVE_MYSQL_MYSQL_H)
-    list(APPEND LIBRARY_SRC s_mysql.c)
+    list(APPEND LIBRARY_SRC services/mysql.c)
 endif (HAVE_MYSQL_MYSQL_H)
 
 if (HAVE_POSTGRESQL_LIBPQ_FE_H)
-    list(APPEND LIBRARY_SRC s_pgsql.c)
+    list(APPEND LIBRARY_SRC services/pgsql.c)
 endif (HAVE_POSTGRESQL_LIBPQ_FE_H)
 
 if (WIN32)
@@ -28,7 +28,7 @@ set (DAEMON_SRC
     )
 
 if (WIN32)
-    list(APPEND DAEMON_SRC service.c)
+    list(APPEND DAEMON_SRC winservice.c)
 endif (WIN32)
 
 if (HAVE_KILL)
