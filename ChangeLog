@@ -29,6 +29,7 @@ ChangeLog
 [-] * Experimental dku-2 userspace driver using libusb-1.0 (fbususb).
 [+] * python-gammu can now inject messages into SMSD (gammu.SMSD object).
 [+] * SMSD stores summary counts of sent/received messages in database.
+[+] * Added gammu-smsd-monitor program to monitor state of SMSD.
     
 20090126 - 1.22.92
 

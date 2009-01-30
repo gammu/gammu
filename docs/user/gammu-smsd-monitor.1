@@ -1,0 +1,47 @@
+.TH GAMMU-SMSD-MONITOR 1 "January 30, 2009" "Gammu 1.23.0" "Gammu Documentation"
+.SH NAME
+gammu\-smsd\-monitor \- Monitor state of SMS daemon for Gammu
+.SH SYNOPSIS
+.B gammu\-smsd\-monitor
+[\fIOPTION\fR]...
+.SH DESCRIPTION
+This manual page documents briefly the
+.B gammu\-smsd\-monitor
+command.
+.PP
+\fBgammu\-smsd\-monitor\fP is a program that monitors state of Gammu SMS
+daemon. It periodically displays information about phone and number of
+processed messages.
+.PP
+Program accepts following options (please note that long options might be not
+accepted on some platforms):
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Shows help.
+.TP
+\fB\-v\fR, \fB\-\-version\fR
+Shows version information and compiled in features.
+.TP
+\fB\-c\fR, \fB\-\-config\fR=\fIfile\fR
+Configuration file to use, default is /etc/gammu\-smsdrc, on Windows there is
+no default and configuration file path has to be always specified.
+
+.SH SEE ALSO
+gammu\-smsdrc(5), gammu(1), gammu\-smsd(1)
+.SH AUTHOR
+gammu\-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
+.SH COPYRIGHT
+Copyright \(co 2009 Michal Cihar and other authors.
+License GPLv2: GNU GPL version 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
+.br
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH REPORTING BUGS
+Please report bugs to <http://bugs.cihar.com>.
+
+Before reporting a bug, please enable verbose logging in SMSD configuration:
+
+    [gammu]
+    logformat = textall
+
+and include this verbose log within bug report.

@@ -225,6 +225,10 @@
 #cmakedefine HAVE_DUP_IO_H
 #endif
 
+#ifndef HAVE_SHM
+#cmakedefine HAVE_SHM
+#endif
+
 #ifndef HAVE_ISWSPACE
 #cmakedefine HAVE_ISWSPACE
 #endif

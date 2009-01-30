@@ -26,6 +26,15 @@
 #include <io.h>
 #endif
 
+#ifdef HAVE_SHM
+#include <sys/types.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/stat.h>
+#include <limits.h>
+#include <stdlib.h>
+#endif
+
 /* Some systems let waitpid(2) tell callers about stopped children. */
 #if !defined (WCONTINUED)
 #  define WCONTINUED 0
@@ -251,6 +260,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	static unsigned char	emptyPath[1] = "\0";
 	GSM_Error		error;
 	int			fd;
+#ifdef HAVE_SHM
+	char			fullpath[PATH_MAX + 1];
+#endif
 
 	memset(&smsdcfg, 0, sizeof(smsdcfg));
 
@@ -264,6 +276,15 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	Config->log_type = SMSD_LOG_NONE;
 	Config->log_handle = NULL;
 	Config->use_stderr = true;
+
+#ifdef HAVE_SHM
+	/* Calculate key for shared memory */
+	if (realpath(filename, fullpath) == NULL) {
+		strncpy(fullpath, filename, PATH_MAX);
+		fullpath[PATH_MAX] = 0;
+	}
+	Config->shm_key = ftok(fullpath, SMSD_SHM_KEY);
+#endif
 
 	error = INI_ReadFile(filename, false, &Config->smsdcfgfile);
 	if (Config->smsdcfgfile == NULL || error != ERR_NONE) {
@@ -467,6 +488,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	Config->retries 	  = 0;
 	Config->prevSMSID[0] 	  = 0;
 	Config->relativevalidity  = -1;
+	Config->Status = NULL;
 
 	return ERR_NONE;
 }
@@ -706,6 +728,7 @@ bool SMSD_ReadDeleteSMS(GSM_SMSDConfig *Config, GSM_SMSDService *Service)
 				}
 			}
 			if (process) {
+				Config->Status->Received += sms.Number;
 	 			Service->SaveInboxSMS(&sms, Config, &locations);
 				if (Config->RunOnReceive != NULL) {
 					SMSD_RunOnReceive(sms, Config, locations);
@@ -756,16 +779,16 @@ bool SMSD_CheckSMSStatus(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	return true;
 }
 
-void SMSD_PhoneStatus(GSM_SMSDConfig *Config, GSM_BatteryCharge *charge, GSM_SignalQuality *network) {
+void SMSD_PhoneStatus(GSM_SMSDConfig *Config) {
 	GSM_Error error;
 
-	error = GSM_GetBatteryCharge(Config->gsm, charge);
+	error = GSM_GetBatteryCharge(Config->gsm, &Config->Status->Charge);
 	if (error != ERR_NONE) {
-		memset(charge, 0, sizeof(*charge));
+		memset(&(Config->Status->Charge), 0, sizeof(Config->Status->Charge));
 	}
-	error = GSM_GetSignalQuality(Config->gsm, network);
+	error = GSM_GetSignalQuality(Config->gsm, &Config->Status->Network);
 	if (error != ERR_NONE) {
-		memset(network, 0, sizeof(*network));
+		memset(&(Config->Status->Network), 0, sizeof(Config->Status->Network));
 	}
 }
 
@@ -777,8 +800,6 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	GSM_Error            	error;
 	unsigned int         	j;
 	int			i, z;
-	GSM_BatteryCharge  charge;
-	GSM_SignalQuality  network;
 
 	/* Clean structure before use */
 	for (i = 0; i < GSM_MAX_MULTI_SMS; i++) {
@@ -791,8 +812,8 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		/* No outbox sms - wait few seconds and escape */
 		for (j=0;j<Config->commtimeout && !Config->shutdown;j++) {
 			sleep(1);
-			SMSD_PhoneStatus(Config, &charge, &network);
-			Service->RefreshPhoneStatus(Config, &charge, &network);
+			SMSD_PhoneStatus(Config);
+			Service->RefreshPhoneStatus(Config);
 		}
 		return true;
 	}
@@ -800,6 +821,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 		/* Unknown error - escape */
 		SMSD_Log(0, Config, "Error in outbox on '%s'", Config->SMSID);
 		for (i=0;i<sms.Number;i++) {
+			Config->Status->Failed++;
 			Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
 		}
 		Service->MoveSMS(&sms,Config, Config->SMSID, true,false);
@@ -814,6 +836,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				strcpy(Config->prevSMSID, "");
 				SMSD_Log(1, Config, "Moved to errorbox: %s", Config->SMSID);
 				for (i=0;i<sms.Number;i++) {
+					Config->Status->Failed++;
 					Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_ERROR, -1);
 				}
 				Service->MoveSMS(&sms,Config, Config->SMSID, true,false);
@@ -848,14 +871,14 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				if ((strcmp(Config->deliveryreport, "no") != 0 && (Config->currdeliveryreport == -1))) sms.SMS[i].PDU = SMS_Status_Report;
 			}
 
-			SMSD_PhoneStatus(Config, &charge, &network);
+			SMSD_PhoneStatus(Config);
 			error=GSM_SendSMS(Config->gsm, &sms.SMS[i]);
 			if (error!=ERR_NONE) {
 				SMSD_Log(0, Config, "Error sending SMS %s (%i): %s", Config->SMSID, error,GSM_ErrorString(error));
 				Config->TPMR = -1;
 				goto failure_unsent;
 			}
-			Service->RefreshPhoneStatus(Config, &charge, &network);
+			Service->RefreshPhoneStatus(Config);
 			j    = 0;
 			Config->TPMR = -1;
 			Config->SendingSMSStatus = ERR_TIMEOUT;
@@ -869,7 +892,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 					if (Config->SendingSMSStatus != ERR_TIMEOUT) break;
 				}
 				Service->RefreshSendStatus(Config, Config->SMSID);
-				Service->RefreshPhoneStatus(Config, &charge, &network);
+				Service->RefreshPhoneStatus(Config);
 				if (Config->SendingSMSStatus != ERR_TIMEOUT) break;
 				j++;
 				if (j>Config->sendtimeout) break;
@@ -878,6 +901,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 				SMSD_Log(0, Config, "Error getting send status of %s (%i): %s", Config->SMSID, Config->SendingSMSStatus, GSM_ErrorString(Config->SendingSMSStatus));
 				goto failure_unsent;
 			}
+			Config->Status->Sent++;
 			error = Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i+1, SMSD_SEND_OK, Config->TPMR);
 			if (error!=ERR_NONE) {
 				goto failure_sent;
@@ -890,6 +914,7 @@ bool SMSD_SendSMS(GSM_SMSDConfig *Config,GSM_SMSDService *Service)
 	}
 	return true;
 failure_unsent:
+	Config->Status->Failed++;
 	Service->AddSentSMSInfo(&sms, Config, Config->SMSID, i + 1, SMSD_SEND_SENDING_ERROR, Config->TPMR);
 	Service->MoveSMS(&sms,Config, Config->SMSID, true, false);
 	return false;
@@ -944,6 +969,29 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 		SMSD_Terminate(Config, "Initialisation failed, stopping Gammu smsd", error, true, -1);
 	}
 
+#ifdef HAVE_SHM
+	/* Allocate world redable SHM segment */
+	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), IPC_CREAT | S_IRWXU | S_IRGRP | S_IROTH);
+	if (Config->shm_handle == -1) {
+		SMSD_Terminate(Config, "Failed to allocate shared memory segment!", ERR_NONE, true, -1);
+	}
+	Config->Status = shmat(Config->shm_handle, NULL, 0);
+	if (Config->Status == (void *) -1) {
+		SMSD_Terminate(Config, "Failed to map shared memory segment!", ERR_NONE, true, -1);
+	}
+#else
+	Config->Status = malloc(sizeof(GSM_SMSDStatus));
+#endif
+	Config->Status->Version = SMSD_SHM_VERSION;
+	strcpy(Config->Status->PhoneID, Config->PhoneID);
+	sprintf(Config->Status->Client, "Gammu " VERSION);
+	memset(&Config->Status->Charge, 0, sizeof(GSM_BatteryCharge));
+	memset(&Config->Status->Network, 0, sizeof(GSM_SignalQuality));
+	Config->Status->Received = 0;
+	Config->Status->Failed = 0;
+	Config->Status->Sent = 0;
+	Config->Status->IMEI[0] = 0;
+
 	lastreceive		= time(NULL);
 	lastreset		= time(NULL);
 	Config->SendingSMSStatus 	= ERR_UNKNOWN;
@@ -971,7 +1019,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 				GSM_SetSendSMSStatusCallback(Config->gsm, SMSSendingSMSStatus, Config);
 				if (errors == -1) {
 					errors = 0;
-					if (GSM_GetIMEI(Config->gsm, Config->IMEI) != ERR_NONE) {
+					if (GSM_GetIMEI(Config->gsm, Config->Status->IMEI) != ERR_NONE) {
 						errors++;
 					} else {
 						error = Service->InitAfterConnect(Config);
@@ -1038,6 +1086,13 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 		}
 	}
 	Service->Free(Config);
+
+#ifdef HAVE_SHM
+	shmdt(Config->Status);
+#else
+	free(Config->Status);
+#endif
+
 	GSM_SetFastSMSSending(Config->gsm,false);
 	SMSD_Terminate(Config, "Stopping Gammu smsd", ERR_NONE, false, 0);
 	return ERR_NONE;
@@ -1056,6 +1111,31 @@ GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms)
 
 	error = Service->CreateOutboxSMS(sms, Config);
 	return error;
+}
+
+GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
+{
+#ifdef HAVE_SHM
+	/* Allocate world redable SHM segment */
+	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), S_IRWXU | S_IRGRP | S_IROTH);
+	if (Config->shm_handle == -1) {
+		return ERR_UNKNOWN;
+	}
+	Config->Status = shmat(Config->shm_handle, NULL, 0);
+	if (Config->Status == (void *) -1) {
+		return ERR_UNKNOWN;
+	}
+	if (Config->Status->Version != SMSD_SHM_VERSION) {
+		shmdt(Config->Status);
+		return ERR_WRONGCRC;
+	}
+	memcpy(status, Config->Status, sizeof(GSM_SMSDStatus));
+
+	shmdt(Config->Status);
+	return ERR_NONE;
+#else
+	return ERR_NOTSUPPORTED;
+#endif
 }
 
 GSM_Error SMSD_NoneFunction(void)

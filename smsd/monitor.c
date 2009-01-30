@@ -1,5 +1,5 @@
 /**
- * SMSD message inject program
+ * SMSD message monitor program
  */
 /* Copyright (c) 2009 Michal Cihar <michal@cihar.com> */
 /* Licensend under GNU GPL 2 */
@@ -17,16 +17,21 @@
 
 #include "common.h"
 
-#include "../helper/message-cmdline.h"
-
 #if !defined(WIN32) && (defined(HAVE_GETOPT) || defined(HAVE_GETOPT_LONG))
 #define HAVE_DEFAULT_CONFIG
 const char default_config[] = "/etc/gammu-smsdrc";
 #endif
 
+volatile bool terminate = false;
+
+void smsd_interrupt(int signum)
+{
+	terminate = true;
+}
+
 NORETURN void version(void)
 {
-	printf("Gammu-smsd-inject version %s\n", VERSION);
+	printf("Gammu-smsd-monitor version %s\n", VERSION);
 	printf("Built %s on %s using %s\n", __TIME__, __DATE__, GetCompiler());
 	printf("Compiled in features:\n");
 	printf("OS support:\n");
@@ -64,14 +69,12 @@ NORETURN void version(void)
 
 void help(void)
 {
-	printf("usage: gammu-smsd-inject [OPTION]... MSGTYPE RECIPIENT [MESSAGE_PARAMETER]...\n");
+	printf("usage: gammu-smsd-monitor [OPTION]...\n");
 	printf("options:\n");
 	print_option("h", "help", "shows this help");
 	print_option("v", "version", "shows version information");
 	print_option_param("c", "config", "CONFIG_FILE",
 			   "defines path to config file");
-	printf("\n");
-	printf("MSGTYPE and it's parameters are described in man page and Gammu documentation\n");
 }
 
 NORETURN void wrong_params(void)
@@ -145,10 +148,8 @@ int main(int argc, char **argv)
 {
 	GSM_Error error;
 	int startarg;
-	GSM_MultiSMSMessage sms;
-	GSM_Message_Type type = SMS_SMSD;
 	GSM_SMSDConfig *config;
-
+	GSM_SMSDStatus status;
 	SMSD_Parameters params = {
 		NULL,
 		NULL,
@@ -164,6 +165,7 @@ int main(int argc, char **argv)
 		false
 	};
 
+
 	startarg = process_commandline(argc, argv, &params);
 
 	if (params.config_file == NULL) {
@@ -176,11 +178,8 @@ int main(int argc, char **argv)
 #endif
 	}
 
-	error = CreateMessage(&type, &sms, argc, startarg, argv, NULL);
-	if (error != ERR_NONE) {
-		printf("Failed to create message: %s\n", GSM_ErrorString(error));
-		return 1;
-	}
+	signal(SIGINT, smsd_interrupt);
+	signal(SIGTERM, smsd_interrupt);
 
 	config = SMSD_NewConfig();
 	assert(config != NULL);
@@ -190,10 +189,22 @@ int main(int argc, char **argv)
 		SMSD_Terminate(config, "Failed to read config", error, true, 2);
 	}
 
-	error = SMSD_InjectSMS(config, &sms);
-	if (error != ERR_NONE) {
-		printf("Failed to inject message: %s\n", GSM_ErrorString(error));
-		return 2;
+	while (!terminate) {
+		error = SMSD_GetStatus(config, &status);
+		if (error != ERR_NONE) {
+			printf("Failed to get status: %s\n", GSM_ErrorString(error));
+			return 2;
+		}
+		printf("Client: %s\n", status.Client);
+		printf("PhoneID: %s\n", status.PhoneID);
+		printf("IMEI: %s\n", status.IMEI);
+		printf("Sent: %d\n", status.Sent);
+		printf("Received: %d\n", status.Received);
+		printf("Failed: %d\n", status.Failed);
+		printf("BatterPercent: %d\n", status.Charge.BatteryPercent);
+		printf("NetworkSignal: %d\n", status.Network.SignalPercent);
+		printf("\n");
+		sleep(10);
 	}
 
 	SMSD_FreeConfig(config);
