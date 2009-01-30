@@ -34,13 +34,13 @@
 #  define WIFCONTINUED(s)	(0)
 #endif
 
-#include "smsdcore.h"
-#include "s_files.h"
+#include "core.h"
+#include "services/files.h"
 #ifdef HAVE_MYSQL_MYSQL_H
-#  include "s_mysql.h"
+#  include "services/mysql.h"
 #endif
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-#  include "s_pgsql.h"
+#  include "services/pgsql.h"
 #endif
 
 #ifdef HAVE_WINDOWS_EVENT_LOG

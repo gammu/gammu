@@ -16,7 +16,7 @@
 #endif
 #endif
 
-#include "smsdcore.h"
+#include "../core.h"
 
 #define SMSD_PGSQL_DB_VERSION (9)
 

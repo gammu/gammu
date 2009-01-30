@@ -18,7 +18,7 @@
 #endif
 #endif
 
-#include "smsdcore.h"
+#include "../core.h"
 
 #define SMSD_MYSQL_DB_VERSION (9)
 
