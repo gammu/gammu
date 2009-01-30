@@ -260,6 +260,14 @@ stav baterie (nebo \-1 pokud není znám)
 .br
 úrověň signálu (nebo \-1 pokud není znám)
 
+\fBSent\fP (integer)
+.br
+Počet odeslaných SMS zpráv (SMSD tento čítač nenuluje, takže může přetéct).
+
+\fBReceived\fP (integer)
+.br
+Počet přijatých SMS zpráv (SMSD tento čítač nenuluje, takže může přetéct).
+
 .TP 
 \fBsentitems\fP
 
@@ -366,6 +374,8 @@ aplikaci.
 .SH HISTORIE
 
 Historie verzí schématu:
+
+9 \- přidána počítadla přijatých a odeslaných zpráv do tabulky phones
 
 8 \- přidána tabulka phones
 

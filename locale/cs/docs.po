@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-29 09:43+0100\n"
-"PO-Revision-Date: 2009-01-29 09:46+0100\n"
+"POT-Creation-Date: 2009-01-30 15:52+0100\n"
+"PO-Revision-Date: 2009-01-30 15:52+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2909,9 +2909,9 @@ msgid "I</dev/ttyACM?>"
 msgstr "I</dev/ttyACM?>"
 
 # type: SH
-#: docs/user/gammu.1:2195 docs/user/gammurc.5:185 docs/user/gammu-smsdrc.5:255
+#: docs/user/gammu.1:2195 docs/user/gammurc.5:187 docs/user/gammu-smsdrc.5:255
 #: docs/user/gammu-smsd.1:65 docs/user/gammu-smsd-files.7:63
-#: docs/user/gammu-smsd-mysql.7:354 docs/user/gammu-smsd-pgsql.7:354
+#: docs/user/gammu-smsd-mysql.7:364 docs/user/gammu-smsd-pgsql.7:364
 #, no-wrap
 msgid "EXAMPLE"
 msgstr "PŘÍKLAD"
@@ -3001,11 +3001,11 @@ msgstr ""
 "txt -toneSE ring.txt"
 
 # type: SH
-#: docs/user/gammu.1:2235 docs/user/gammurc.5:251 docs/user/gammu-smsdrc.5:332
+#: docs/user/gammu.1:2235 docs/user/gammurc.5:253 docs/user/gammu-smsdrc.5:332
 #: docs/user/gammu-smsd.1:100 docs/user/gammu-smsd-inject.1:37
 #: docs/user/jadmaker.1:30 docs/user/gammu-config.1:28
-#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:363
-#: docs/user/gammu-smsd-pgsql.7:363
+#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:373
+#: docs/user/gammu-smsd-pgsql.7:373
 #, no-wrap
 msgid "COPYRIGHT"
 msgstr "COPYRIGHT"
@@ -3022,11 +3022,11 @@ msgstr ""
 "gpl-2.0.htmlE<gt>"
 
 # type: Plain text
-#: docs/user/gammu.1:2242 docs/user/gammurc.5:257 docs/user/gammu-smsdrc.5:338
+#: docs/user/gammu.1:2242 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:338
 #: docs/user/gammu-smsd.1:106 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:35 docs/user/gammu-config.1:33
-#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:369
-#: docs/user/gammu-smsd-pgsql.7:369
+#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:379
+#: docs/user/gammu-smsd-pgsql.7:379
 msgid ""
 "This is free software: you are free to change and redistribute it.  There is "
 "NO WARRANTY, to the extent permitted by law."
@@ -3035,11 +3035,11 @@ msgstr ""
 "poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem."
 
 # type: SH
-#: docs/user/gammu.1:2243 docs/user/gammurc.5:257 docs/user/gammu-smsdrc.5:338
+#: docs/user/gammu.1:2243 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:338
 #: docs/user/gammu-smsd.1:106 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:24 docs/user/gammu-config.1:23
-#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:369
-#: docs/user/gammu-smsd-pgsql.7:369
+#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:379
+#: docs/user/gammu-smsd-pgsql.7:379
 #, no-wrap
 msgid "REPORTING BUGS"
 msgstr "HLÁŠENÍ CHYB"
@@ -3092,19 +3092,19 @@ msgstr ""
 "obsaženy rady pro vylepšení podpory pro váš telefon."
 
 # type: Plain text
-#: docs/user/gammu.1:2264 docs/user/gammurc.5:258 docs/user/gammu-smsdrc.5:339
+#: docs/user/gammu.1:2264 docs/user/gammurc.5:260 docs/user/gammu-smsdrc.5:339
 #: docs/user/gammu-smsd.1:108 docs/user/gammu-smsd-inject.1:45
 #: docs/user/jadmaker.1:26 docs/user/gammu-config.1:25
-#: docs/user/gammu-smsd-files.7:107 docs/user/gammu-smsd-mysql.7:370
-#: docs/user/gammu-smsd-pgsql.7:370
+#: docs/user/gammu-smsd-files.7:107 docs/user/gammu-smsd-mysql.7:380
+#: docs/user/gammu-smsd-pgsql.7:380
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr "Prosím hlašte chyby na E<lt>http://bugs.cihar.comE<gt>."
 
 # type: SH
-#: docs/user/gammu.1:2265 docs/user/gammurc.5:249 docs/user/gammu-smsdrc.5:330
+#: docs/user/gammu.1:2265 docs/user/gammurc.5:251 docs/user/gammu-smsdrc.5:330
 #: docs/user/gammu-smsd.1:98 docs/user/gammu-smsd-inject.1:35
-#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-mysql.7:361
-#: docs/user/gammu-smsd-pgsql.7:361
+#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-mysql.7:371
+#: docs/user/gammu-smsd-pgsql.7:371
 #, no-wrap
 msgid "AUTHOR"
 msgstr "AUTOR"
@@ -3154,11 +3154,11 @@ msgstr ""
 "pro více podrobností."
 
 # type: SH
-#: docs/user/gammu.1:2291 docs/user/gammurc.5:247 docs/user/gammu-smsdrc.5:326
+#: docs/user/gammu.1:2291 docs/user/gammurc.5:249 docs/user/gammu-smsdrc.5:326
 #: docs/user/gammu-smsd.1:94 docs/user/gammu-smsd-inject.1:33
 #: docs/user/jadmaker.1:27 docs/user/gammu-config.1:26
-#: docs/user/gammu-smsd-files.7:96 docs/user/gammu-smsd-mysql.7:359
-#: docs/user/gammu-smsd-pgsql.7:359
+#: docs/user/gammu-smsd-files.7:96 docs/user/gammu-smsd-mysql.7:369
+#: docs/user/gammu-smsd-pgsql.7:369
 #, no-wrap
 msgid "SEE ALSO"
 msgstr "DALŠÍ INFORMACE"
@@ -3300,26 +3300,35 @@ msgstr "B<fbus> - sériové připojení protokolem FBUS"
 
 # type: Plain text
 #: docs/user/gammurc.5:39
+msgid ""
+"B<fbususb> - FBUS over USB cable (experimental, for Nokia cables on Linux, "
+"including DKU-2)"
+msgstr ""
+"B<fbususb> - FBUS přes USB kabel (experimentální, pro kabely Nokia na Linuxu "
+"včetně DKU-2)"
+
+# type: Plain text
+#: docs/user/gammurc.5:41
 msgid "B<dlr3> - DLR-3 and compatible cables"
 msgstr "B<dlr3> - DLR-3 a kompatibilní kabely"
 
 # type: Plain text
-#: docs/user/gammurc.5:41
+#: docs/user/gammurc.5:43
 msgid "B<dku2> - DKU-2 and compatible cables"
 msgstr "B<dku2> - DKU-2 a kompatibilní kabely"
 
 # type: Plain text
-#: docs/user/gammurc.5:43
+#: docs/user/gammurc.5:45
 msgid "B<dku5> - DKU-5 and compatible cables"
 msgstr "B<dku5> - DKU-5 a kompatibilní kabely"
 
 # type: Plain text
-#: docs/user/gammurc.5:45
+#: docs/user/gammurc.5:47
 msgid "B<mbus> - serial MBUS connection"
 msgstr "B<mbus> - sériové připojení protokolem MBUS"
 
 # type: Plain text
-#: docs/user/gammurc.5:49
+#: docs/user/gammurc.5:51
 msgid ""
 "If you use some non original cable, you might need to append -nodtr (eg. for "
 "ARK3116 based cables) or -nopower, but Gammu should be able to detect this "
@@ -3330,19 +3339,19 @@ msgstr ""
 "použijte jen v případě, že Gammu správně parametery nezjistí automaticky."
 
 # type: Plain text
-#: docs/user/gammurc.5:51
+#: docs/user/gammurc.5:53
 msgid "For non-Nokia phones connected using cable you generally want:"
 msgstr ""
 "Pro ostatní telefony připojené kabelem budete chtít použít jedno z "
 "následujících:"
 
 # type: Plain text
-#: docs/user/gammurc.5:53
+#: docs/user/gammurc.5:55
 msgid "B<at> - generic AT commands based connection"
 msgstr "B<at> - obecné připojení používající AT příkazy"
 
 # type: Plain text
-#: docs/user/gammurc.5:56
+#: docs/user/gammurc.5:58
 msgid ""
 "You can optionally specify speed of the connection, eg. at19200, but it is "
 "not needed for modern USB cables."
@@ -3351,17 +3360,17 @@ msgstr ""
 "nutné pro USB kabely."
 
 # type: Plain text
-#: docs/user/gammurc.5:58
+#: docs/user/gammurc.5:60
 msgid "For IrDA connections use one of following:"
 msgstr "Pro připojení pomocí IrDA použijte jednu z následujících možností:"
 
 # type: Plain text
-#: docs/user/gammurc.5:60
+#: docs/user/gammurc.5:62
 msgid "B<irdaphonet> - Phonet connection for Nokia phones."
 msgstr "B<irdaphonet> - protokol Phonet používaný telefony Nokia"
 
 # type: Plain text
-#: docs/user/gammurc.5:62
+#: docs/user/gammurc.5:64
 msgid ""
 "B<irdaat> - AT commands connection for most of phones (this is not supported "
 "on Linux)."
@@ -3370,7 +3379,7 @@ msgstr ""
 "podporované na Linuxu)."
 
 # type: Plain text
-#: docs/user/gammurc.5:64
+#: docs/user/gammurc.5:66
 msgid ""
 "B<irdaobex> - OBEX (IrMC or file transfer) connection for most of phones."
 msgstr ""
@@ -3378,29 +3387,29 @@ msgstr ""
 "použitelné pro většinu telefonů."
 
 # type: Plain text
-#: docs/user/gammurc.5:66
+#: docs/user/gammurc.5:68
 msgid "B<irdagnapbus> - GNapplet based connection for Symbian phones"
 msgstr ""
 "B<irdagnapbus> - připojení k GNappletu běžícím na telefonech se Symbianem."
 
 # type: Plain text
-#: docs/user/gammurc.5:68
+#: docs/user/gammurc.5:70
 msgid "For Bluetooth connection use one of following:"
 msgstr ""
 "Pro připojení pomocí Bluetooth použijte jednu z následujících možností:"
 
 # type: Plain text
-#: docs/user/gammurc.5:70
+#: docs/user/gammurc.5:72
 msgid "B<bluephonet> - Phonet connection for Nokia phones."
 msgstr "B<bluephonet> - protokol Phonet používaný telefony Nokia"
 
 # type: Plain text
-#: docs/user/gammurc.5:72
+#: docs/user/gammurc.5:74
 msgid "B<blueat> - AT commands connection for most of phones."
 msgstr "B<blueat> - AT příkazy pro připojení k většině telefonů."
 
 # type: Plain text
-#: docs/user/gammurc.5:74
+#: docs/user/gammurc.5:76
 msgid ""
 "B<blueobex> - OBEX (IrMC or file transfer) connection for most of phones."
 msgstr ""
@@ -3408,26 +3417,26 @@ msgstr ""
 "použitelné pro většinu telefonů."
 
 # type: Plain text
-#: docs/user/gammurc.5:76
+#: docs/user/gammurc.5:78
 msgid "B<bluerfgnapbus> - GNapplet based connection for Symbian phones"
 msgstr ""
 "B<bluerfgnapbus> - připojení k GNappletu běžícím na telefonech se Symbianem."
 
 # type: TP
-#: docs/user/gammurc.5:77
+#: docs/user/gammurc.5:79
 #, no-wrap
 msgid "B<Port>"
 msgstr "B<Port>"
 
 # type: Plain text
-#: docs/user/gammurc.5:81
+#: docs/user/gammurc.5:83
 msgid "Device node or address of phone. It depends on used connection."
 msgstr ""
 "Zařízení kde je přístupný telefon nebo adresa telefonu, záleží na typu "
 "připojení."
 
 # type: Plain text
-#: docs/user/gammurc.5:87
+#: docs/user/gammurc.5:89
 msgid ""
 "For cables or emulated serial ports, you enter device name (for example /dev/"
 "ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux, /dev/cuad0 on "
@@ -3442,7 +3451,7 @@ msgstr ""
 "a tento parametr je ignorován."
 
 # type: Plain text
-#: docs/user/gammurc.5:92
+#: docs/user/gammurc.5:94
 msgid ""
 "For Bluetooth connection you have to enter Bluetooth address of your phone "
 "(you can list Bluetooth devices in range on Linux using \"hcitool scan\" "
@@ -3455,18 +3464,18 @@ msgstr ""
 "čísla za lomítko."
 
 # type: Plain text
-#: docs/user/gammurc.5:94
+#: docs/user/gammurc.5:96
 msgid "For IrDA connections, this parameters is not used at all."
 msgstr "Pro připojení přes IrDA se tento parametr vůbec nepoužije."
 
 # type: TP
-#: docs/user/gammurc.5:95
+#: docs/user/gammurc.5:97
 #, no-wrap
 msgid "B<Model>"
 msgstr "B<Model>"
 
 # type: Plain text
-#: docs/user/gammurc.5:100
+#: docs/user/gammurc.5:102
 msgid ""
 "Do not use this parameter unless really needed! The only use case for this "
 "is when Gammu does not know your phone and misdetects it's features."
@@ -3476,7 +3485,7 @@ msgstr ""
 "detekuje jeho vlastnosti."
 
 # type: Plain text
-#: docs/user/gammurc.5:104
+#: docs/user/gammurc.5:106
 msgid ""
 "The only special case for using model is to force special type of OBEX "
 "connection instead of letting Gammu try the best suited for selected "
@@ -3486,14 +3495,14 @@ msgstr ""
 "OBEX namísto ponechání rozhodnutí na Gammu:"
 
 # type: Plain text
-#: docs/user/gammurc.5:106
+#: docs/user/gammurc.5:108
 msgid "B<obexfs> - force using of file browsing service (file system support)"
 msgstr ""
 "B<obexfs> - vynutí použití služby na procházení souborů (podpora přístupu k "
 "souborům)"
 
 # type: Plain text
-#: docs/user/gammurc.5:109
+#: docs/user/gammurc.5:111
 msgid ""
 "B<obexirmc> - force using of IrMC service (contacts, calendar and notes "
 "support)"
@@ -3501,7 +3510,7 @@ msgstr ""
 "B<obexirmc> - vynutí použití služby IrMC (kontakty, kalendář a poznámky)"
 
 # type: Plain text
-#: docs/user/gammurc.5:112
+#: docs/user/gammurc.5:114
 msgid ""
 "B<obexnone> - none service chosen, this has only limited use for sending "
 "file (B<sendfile> command)"
@@ -3510,25 +3519,25 @@ msgstr ""
 "posílání souborů (příkaz B<sendfile>)"
 
 # type: TP
-#: docs/user/gammurc.5:113
+#: docs/user/gammurc.5:115
 #, no-wrap
 msgid "B<SynchronizeTime>"
 msgstr "B<SynchronizeTime>"
 
 # type: Plain text
-#: docs/user/gammurc.5:117
+#: docs/user/gammurc.5:119
 msgid ""
 "If you want to set time from computer to phone during starting connection."
 msgstr "Určí, zda chcete nastavit čas v telefonu při připojení."
 
 # type: TP
-#: docs/user/gammurc.5:118
+#: docs/user/gammurc.5:120
 #, no-wrap
 msgid "B<StartInfo>"
 msgstr "B<StartInfo>"
 
 # type: Plain text
-#: docs/user/gammurc.5:125
+#: docs/user/gammurc.5:127
 msgid ""
 "This option allow to set, that you want (setting \"yes\") to see message on "
 "the phone screen or phone should enable light for a moment during starting "
@@ -3541,13 +3550,13 @@ msgstr ""
 "některými telefony Nokia."
 
 # type: TP
-#: docs/user/gammurc.5:126
+#: docs/user/gammurc.5:128
 #, no-wrap
 msgid "B<GammuCoding>"
 msgstr "B<GammuCoding>"
 
 # type: Plain text
-#: docs/user/gammurc.5:132
+#: docs/user/gammurc.5:134
 msgid ""
 "Forces using specified codepage (for example \"1250\" will force CP-1250 or "
 "\"utf8\" for UTF-8). This should not be needed in most cases, Gammu should "
@@ -3558,13 +3567,13 @@ msgstr ""
 "kódování zjištuje podle nastavených locales."
 
 # type: TP
-#: docs/user/gammurc.5:133
+#: docs/user/gammurc.5:135
 #, no-wrap
 msgid "B<GammuLoc>"
 msgstr "B<GammuLoc>"
 
 # type: Plain text
-#: docs/user/gammurc.5:139
+#: docs/user/gammurc.5:141
 msgid ""
 "Path to directory with localisation files (the directory should contain LANG/"
 "LC_MESSAGES/gammu.mo). If gammu is properly installed it should find these "
@@ -3575,66 +3584,66 @@ msgstr ""
 "najít automaticky."
 
 # type: TP
-#: docs/user/gammurc.5:140 docs/user/gammu-smsdrc.5:48
+#: docs/user/gammurc.5:142 docs/user/gammu-smsdrc.5:48
 #, no-wrap
 msgid "B<LogFile>"
 msgstr "B<LogFile>"
 
 # type: Plain text
-#: docs/user/gammurc.5:144
+#: docs/user/gammurc.5:146
 msgid "Path to file where information about communication will be stored."
 msgstr "Cesta k souboru, kde budou uloženy informace o komunikaci s telefonem."
 
 # type: TP
-#: docs/user/gammurc.5:145
+#: docs/user/gammurc.5:147
 #, no-wrap
 msgid "B<LogFormat>"
 msgstr "B<LogFormat>"
 
 # type: Plain text
-#: docs/user/gammurc.5:149
+#: docs/user/gammurc.5:151
 msgid "Determines what all will be logged to LogFile. Possible values are:"
 msgstr "Určuje co vše se bude logovat do souboru LogFile. Možné hodnoty jsou:"
 
 # type: Plain text
-#: docs/user/gammurc.5:151
+#: docs/user/gammurc.5:153
 msgid "B<nothing> - no debug level"
 msgstr "B<nothing> - žádné ladicí informace"
 
 # type: Plain text
-#: docs/user/gammurc.5:153
+#: docs/user/gammurc.5:155
 msgid "B<text> - transmission dump in text format"
 msgstr "B<text> - základní informace o přenosu v textové podobě"
 
 # type: Plain text
-#: docs/user/gammurc.5:155
+#: docs/user/gammurc.5:157
 msgid "B<textall> - all possible info in text format"
 msgstr "B<textall> - prodrobné informace o přenosu v textové podobě"
 
 # type: Plain text
-#: docs/user/gammurc.5:157
+#: docs/user/gammurc.5:159
 msgid "B<textalldate> - all possible info in text format, with time stamp"
 msgstr ""
 "B<textalldate> - prodrobné informace o přenosu v textové podobě, s časovou "
 "značkou"
 
 # type: Plain text
-#: docs/user/gammurc.5:159
+#: docs/user/gammurc.5:161
 msgid "B<errors> - errors in text format"
 msgstr "B<errors> - chyby v textovém formátu"
 
 # type: Plain text
-#: docs/user/gammurc.5:161
+#: docs/user/gammurc.5:163
 msgid "B<errorsdate> - errors in text format, with time stamp"
 msgstr "B<errorsdate> - chyby v textovém formátu, s časovou značkou"
 
 # type: Plain text
-#: docs/user/gammurc.5:163
+#: docs/user/gammurc.5:165
 msgid "B<binary> - transmission dump in binary format"
 msgstr "B<binary> - obsah komunikace v binárním formátu"
 
 # type: Plain text
-#: docs/user/gammurc.5:166
+#: docs/user/gammurc.5:168
 msgid ""
 "For debugging use either B<textalldate> or B<textall>, it contains all "
 "needed information to diagnose problems."
@@ -3643,13 +3652,13 @@ msgstr ""
 "obsaženy všechny informace potřebné pro diagnostiku problému."
 
 # type: TP
-#: docs/user/gammurc.5:167
+#: docs/user/gammurc.5:169
 #, no-wrap
 msgid "B<Features>"
 msgstr "B<Features>"
 
 # type: Plain text
-#: docs/user/gammurc.5:174
+#: docs/user/gammurc.5:176
 msgid ""
 "Custom features for phone. This can be used as override when values coded in "
 "common/gsmphones.c are bad or missing. Consult include/gammu-info.h for "
@@ -3662,13 +3671,13 @@ msgstr ""
 "prefixu F_). Prosím nahlašte správné hodnoty autorům Gammu."
 
 # type: TP
-#: docs/user/gammurc.5:175
+#: docs/user/gammurc.5:177
 #, no-wrap
 msgid "B<Use_Locking>"
 msgstr "B<Use_Locking>"
 
 # type: Plain text
-#: docs/user/gammurc.5:182
+#: docs/user/gammurc.5:184
 msgid ""
 "On Posix systems, you might want to lock serial device when it is being "
 "used.  Enabling this option (setting to yes) will make Gammu honor these "
@@ -3682,22 +3691,22 @@ msgstr ""
 "skupiny uucp)."
 
 # type: Plain text
-#: docs/user/gammurc.5:184
+#: docs/user/gammurc.5:186
 msgid "This option has no meaning on Windows."
 msgstr "Tento parametr nemá na Windows žádný význam."
 
 # type: Plain text
-#: docs/user/gammurc.5:188
+#: docs/user/gammurc.5:190
 msgid "There is more complete example available in Gammu documentation."
 msgstr "Podrobnější příklady jsou dostupné v dokumentaci Gammu."
 
 # type: Plain text
-#: docs/user/gammurc.5:190
+#: docs/user/gammurc.5:192
 msgid "Gammu configuration for Nokia phone using DLR-3 cable:"
 msgstr "Konfigurace Gammu pro telefon Nokia připojený kabelem DLR-3:"
 
 # type: Plain text
-#: docs/user/gammurc.5:198
+#: docs/user/gammurc.5:200
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -3709,7 +3718,7 @@ msgstr ""
 "connection = dlr3\n"
 
 # type: Plain text
-#: docs/user/gammurc.5:205
+#: docs/user/gammurc.5:207
 msgid ""
 "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
 "phone)  connected using USB cable:"
@@ -3718,7 +3727,7 @@ msgstr ""
 "příkazy) připojený pomocí USB kabelu:"
 
 # type: Plain text
-#: docs/user/gammurc.5:213
+#: docs/user/gammurc.5:215
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -3730,7 +3739,7 @@ msgstr ""
 "connection = at\n"
 
 # type: Plain text
-#: docs/user/gammurc.5:220
+#: docs/user/gammurc.5:222
 msgid ""
 "Gammu configuration for Sony-Ericsson (or any other AT compatible phone)  "
 "connected using bluetooth:"
@@ -3739,7 +3748,7 @@ msgstr ""
 "příkazy) připojený pomocí Bluetooth:"
 
 # type: Plain text
-#: docs/user/gammurc.5:228
+#: docs/user/gammurc.5:230
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -3751,7 +3760,7 @@ msgstr ""
 "connection = blueat\n"
 
 # type: Plain text
-#: docs/user/gammurc.5:234
+#: docs/user/gammurc.5:236
 msgid ""
 "Gammu configuration for phone which needs to manually adjust Bluetooth "
 "channel to use channel 42:"
@@ -3760,7 +3769,7 @@ msgstr ""
 "kanálu 42:"
 
 # type: Plain text
-#: docs/user/gammurc.5:242
+#: docs/user/gammurc.5:244
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -3772,15 +3781,15 @@ msgstr ""
 "connection = blueat\n"
 
 # type: Plain text
-#: docs/user/gammurc.5:249 docs/user/gammu-smsdrc.5:328
+#: docs/user/gammurc.5:251 docs/user/gammu-smsdrc.5:328
 msgid "gammu-smsd(1), gammu(1), gammurc(5)"
 msgstr "gammu-smsd(1), gammu(1), gammurc(5)"
 
 # type: Plain text
-#: docs/user/gammurc.5:251 docs/user/gammu-smsdrc.5:332
+#: docs/user/gammurc.5:253 docs/user/gammu-smsdrc.5:332
 #: docs/user/gammu-smsd.1:100 docs/user/gammu-smsd-inject.1:37
-#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:363
-#: docs/user/gammu-smsd-pgsql.7:363
+#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:373
+#: docs/user/gammu-smsd-pgsql.7:373
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
 "E<lt>michal@cihar.comE<gt>."
@@ -3789,10 +3798,10 @@ msgstr ""
 "comE<gt>."
 
 # type: Plain text
-#: docs/user/gammurc.5:254 docs/user/gammu-smsdrc.5:335
+#: docs/user/gammurc.5:256 docs/user/gammu-smsdrc.5:335
 #: docs/user/gammu-smsd.1:103 docs/user/gammu-smsd-inject.1:40
-#: docs/user/gammu-smsd-files.7:103 docs/user/gammu-smsd-mysql.7:366
-#: docs/user/gammu-smsd-pgsql.7:366
+#: docs/user/gammu-smsd-files.7:103 docs/user/gammu-smsd-mysql.7:376
+#: docs/user/gammu-smsd-pgsql.7:376
 msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
 "version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
@@ -5249,8 +5258,8 @@ msgstr ""
 "MessageReference = 0\n"
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-mysql.7:361
-#: docs/user/gammu-smsd-pgsql.7:361
+#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-mysql.7:371
+#: docs/user/gammu-smsd-pgsql.7:371
 msgid "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 msgstr "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 
@@ -5355,24 +5364,24 @@ msgstr "Tabulka, ve které jsou ukládány přijaté zprávy."
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:49 docs/user/gammu-smsd-mysql.7:106
 #: docs/user/gammu-smsd-mysql.7:181 docs/user/gammu-smsd-mysql.7:210
-#: docs/user/gammu-smsd-mysql.7:258 docs/user/gammu-smsd-pgsql.7:49
+#: docs/user/gammu-smsd-mysql.7:266 docs/user/gammu-smsd-pgsql.7:49
 #: docs/user/gammu-smsd-pgsql.7:106 docs/user/gammu-smsd-pgsql.7:181
-#: docs/user/gammu-smsd-pgsql.7:210 docs/user/gammu-smsd-pgsql.7:258
+#: docs/user/gammu-smsd-pgsql.7:210 docs/user/gammu-smsd-pgsql.7:266
 msgid "Fields description:"
 msgstr "Popis sloupců:"
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:51 docs/user/gammu-smsd-mysql.7:108
-#: docs/user/gammu-smsd-mysql.7:216 docs/user/gammu-smsd-mysql.7:260
+#: docs/user/gammu-smsd-mysql.7:216 docs/user/gammu-smsd-mysql.7:268
 #: docs/user/gammu-smsd-pgsql.7:51 docs/user/gammu-smsd-pgsql.7:108
-#: docs/user/gammu-smsd-pgsql.7:216 docs/user/gammu-smsd-pgsql.7:260
+#: docs/user/gammu-smsd-pgsql.7:216 docs/user/gammu-smsd-pgsql.7:268
 msgid "B<UpdatedInDB> (timestamp)"
 msgstr "B<UpdatedInDB> (timestamp)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:53 docs/user/gammu-smsd-mysql.7:110
-#: docs/user/gammu-smsd-mysql.7:262 docs/user/gammu-smsd-pgsql.7:53
-#: docs/user/gammu-smsd-pgsql.7:110 docs/user/gammu-smsd-pgsql.7:262
+#: docs/user/gammu-smsd-mysql.7:270 docs/user/gammu-smsd-pgsql.7:53
+#: docs/user/gammu-smsd-pgsql.7:110 docs/user/gammu-smsd-pgsql.7:270
 msgid "when somebody (daemon, user, etc.) updated it"
 msgstr "kdy byl tento záznam aktualizován"
 
@@ -5388,9 +5397,9 @@ msgstr "kdy byla přijata SMS"
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:59 docs/user/gammu-smsd-mysql.7:120
-#: docs/user/gammu-smsd-mysql.7:185 docs/user/gammu-smsd-mysql.7:284
+#: docs/user/gammu-smsd-mysql.7:185 docs/user/gammu-smsd-mysql.7:292
 #: docs/user/gammu-smsd-pgsql.7:59 docs/user/gammu-smsd-pgsql.7:120
-#: docs/user/gammu-smsd-pgsql.7:185 docs/user/gammu-smsd-pgsql.7:284
+#: docs/user/gammu-smsd-pgsql.7:185 docs/user/gammu-smsd-pgsql.7:292
 msgid "B<Text> (text)"
 msgstr "B<Text> (text)"
 
@@ -5411,9 +5420,9 @@ msgstr "číslo odesílatele SMS"
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:67 docs/user/gammu-smsd-mysql.7:128
-#: docs/user/gammu-smsd-mysql.7:187 docs/user/gammu-smsd-mysql.7:292
+#: docs/user/gammu-smsd-mysql.7:187 docs/user/gammu-smsd-mysql.7:300
 #: docs/user/gammu-smsd-pgsql.7:67 docs/user/gammu-smsd-pgsql.7:128
-#: docs/user/gammu-smsd-pgsql.7:187 docs/user/gammu-smsd-pgsql.7:292
+#: docs/user/gammu-smsd-pgsql.7:187 docs/user/gammu-smsd-pgsql.7:300
 msgid ""
 "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', "
 "'Default_Compression', 'Unicode_Compression'))"
@@ -5423,16 +5432,16 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:69 docs/user/gammu-smsd-mysql.7:130
-#: docs/user/gammu-smsd-mysql.7:294 docs/user/gammu-smsd-pgsql.7:69
-#: docs/user/gammu-smsd-pgsql.7:130 docs/user/gammu-smsd-pgsql.7:294
+#: docs/user/gammu-smsd-mysql.7:302 docs/user/gammu-smsd-pgsql.7:69
+#: docs/user/gammu-smsd-pgsql.7:130 docs/user/gammu-smsd-pgsql.7:302
 msgid "SMS text coding"
 msgstr "kódování textu SMS"
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:71 docs/user/gammu-smsd-mysql.7:132
-#: docs/user/gammu-smsd-mysql.7:189 docs/user/gammu-smsd-mysql.7:296
+#: docs/user/gammu-smsd-mysql.7:189 docs/user/gammu-smsd-mysql.7:304
 #: docs/user/gammu-smsd-pgsql.7:71 docs/user/gammu-smsd-pgsql.7:132
-#: docs/user/gammu-smsd-pgsql.7:189 docs/user/gammu-smsd-pgsql.7:296
+#: docs/user/gammu-smsd-pgsql.7:189 docs/user/gammu-smsd-pgsql.7:304
 msgid "B<UDH> (text)"
 msgstr "B<UDH> (text)"
 
@@ -5442,8 +5451,8 @@ msgid "encoded User Data Header text"
 msgstr "zakódovaná hlavička uživatelských dat (UDH)"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:75 docs/user/gammu-smsd-mysql.7:300
-#: docs/user/gammu-smsd-pgsql.7:75 docs/user/gammu-smsd-pgsql.7:300
+#: docs/user/gammu-smsd-mysql.7:75 docs/user/gammu-smsd-mysql.7:308
+#: docs/user/gammu-smsd-pgsql.7:75 docs/user/gammu-smsd-pgsql.7:308
 msgid "B<SMSCNumber> (varchar(20))"
 msgstr "B<SMSCNumber> (varchar(20))"
 
@@ -5454,24 +5463,24 @@ msgstr "číslo centra zpráv (SMSC)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:79 docs/user/gammu-smsd-mysql.7:136
-#: docs/user/gammu-smsd-mysql.7:191 docs/user/gammu-smsd-mysql.7:304
+#: docs/user/gammu-smsd-mysql.7:191 docs/user/gammu-smsd-mysql.7:312
 #: docs/user/gammu-smsd-pgsql.7:79 docs/user/gammu-smsd-pgsql.7:136
-#: docs/user/gammu-smsd-pgsql.7:191 docs/user/gammu-smsd-pgsql.7:304
+#: docs/user/gammu-smsd-pgsql.7:191 docs/user/gammu-smsd-pgsql.7:312
 msgid "B<Class> (integer)"
 msgstr "B<Class> (integer)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:81 docs/user/gammu-smsd-mysql.7:138
-#: docs/user/gammu-smsd-mysql.7:306 docs/user/gammu-smsd-pgsql.7:81
-#: docs/user/gammu-smsd-pgsql.7:138 docs/user/gammu-smsd-pgsql.7:306
+#: docs/user/gammu-smsd-mysql.7:314 docs/user/gammu-smsd-pgsql.7:81
+#: docs/user/gammu-smsd-pgsql.7:138 docs/user/gammu-smsd-pgsql.7:314
 msgid "SMS class or -1"
 msgstr "třída SMS nebo -1"
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:83 docs/user/gammu-smsd-mysql.7:140
-#: docs/user/gammu-smsd-mysql.7:193 docs/user/gammu-smsd-mysql.7:308
+#: docs/user/gammu-smsd-mysql.7:193 docs/user/gammu-smsd-mysql.7:316
 #: docs/user/gammu-smsd-pgsql.7:83 docs/user/gammu-smsd-pgsql.7:140
-#: docs/user/gammu-smsd-pgsql.7:193 docs/user/gammu-smsd-pgsql.7:308
+#: docs/user/gammu-smsd-pgsql.7:193 docs/user/gammu-smsd-pgsql.7:316
 msgid "B<TextDecoded> (varchar(160))"
 msgstr "B<TextDecoded> (varchar(160))"
 
@@ -5483,9 +5492,9 @@ msgstr "dekódovaný text (pro zprávy ve výchozí abecedě nebo unicode)"
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:87 docs/user/gammu-smsd-mysql.7:144
 #: docs/user/gammu-smsd-mysql.7:183 docs/user/gammu-smsd-mysql.7:195
-#: docs/user/gammu-smsd-mysql.7:312 docs/user/gammu-smsd-pgsql.7:87
+#: docs/user/gammu-smsd-mysql.7:320 docs/user/gammu-smsd-pgsql.7:87
 #: docs/user/gammu-smsd-pgsql.7:144 docs/user/gammu-smsd-pgsql.7:183
-#: docs/user/gammu-smsd-pgsql.7:195 docs/user/gammu-smsd-pgsql.7:312
+#: docs/user/gammu-smsd-pgsql.7:195 docs/user/gammu-smsd-pgsql.7:320
 msgid "B<ID> (integer unsigned)"
 msgstr "B<ID> (integer unsigned)"
 
@@ -5531,20 +5540,20 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:112 docs/user/gammu-smsd-mysql.7:220
-#: docs/user/gammu-smsd-mysql.7:264 docs/user/gammu-smsd-pgsql.7:112
-#: docs/user/gammu-smsd-pgsql.7:220 docs/user/gammu-smsd-pgsql.7:264
+#: docs/user/gammu-smsd-mysql.7:272 docs/user/gammu-smsd-pgsql.7:112
+#: docs/user/gammu-smsd-pgsql.7:220 docs/user/gammu-smsd-pgsql.7:272
 msgid "B<InsertIntoDB> (timestamp)"
 msgstr "B<InsertIntoDB> (timestamp)"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:114 docs/user/gammu-smsd-mysql.7:266
-#: docs/user/gammu-smsd-pgsql.7:114 docs/user/gammu-smsd-pgsql.7:266
+#: docs/user/gammu-smsd-mysql.7:114 docs/user/gammu-smsd-mysql.7:274
+#: docs/user/gammu-smsd-pgsql.7:114 docs/user/gammu-smsd-pgsql.7:274
 msgid "when message was inserted into database"
 msgstr "kdy byla zpráva vložena do databáze"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:116 docs/user/gammu-smsd-mysql.7:268
-#: docs/user/gammu-smsd-pgsql.7:116 docs/user/gammu-smsd-pgsql.7:268
+#: docs/user/gammu-smsd-mysql.7:116 docs/user/gammu-smsd-mysql.7:276
+#: docs/user/gammu-smsd-pgsql.7:116 docs/user/gammu-smsd-pgsql.7:276
 msgid "B<SendingDateTime> (timestamp)"
 msgstr "B<SendingDateTime> (timestamp)"
 
@@ -5557,14 +5566,14 @@ msgstr ""
 "naplánovaném čase"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:122 docs/user/gammu-smsd-mysql.7:286
-#: docs/user/gammu-smsd-pgsql.7:122 docs/user/gammu-smsd-pgsql.7:286
+#: docs/user/gammu-smsd-mysql.7:122 docs/user/gammu-smsd-mysql.7:294
+#: docs/user/gammu-smsd-pgsql.7:122 docs/user/gammu-smsd-pgsql.7:294
 msgid "SMS text encoded using hex values"
 msgstr "text SMS zprávy v šestnáctkovém formátu"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:124 docs/user/gammu-smsd-mysql.7:288
-#: docs/user/gammu-smsd-pgsql.7:124 docs/user/gammu-smsd-pgsql.7:288
+#: docs/user/gammu-smsd-mysql.7:124 docs/user/gammu-smsd-mysql.7:296
+#: docs/user/gammu-smsd-pgsql.7:124 docs/user/gammu-smsd-pgsql.7:296
 msgid "B<DestinationNumber> (varchar(20))"
 msgstr "B<DestinationNumber> (varchar(20))"
 
@@ -5574,14 +5583,14 @@ msgid "recipient number"
 msgstr "číslo příjemce"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:134 docs/user/gammu-smsd-mysql.7:298
-#: docs/user/gammu-smsd-pgsql.7:134 docs/user/gammu-smsd-pgsql.7:298
+#: docs/user/gammu-smsd-mysql.7:134 docs/user/gammu-smsd-mysql.7:306
+#: docs/user/gammu-smsd-pgsql.7:134 docs/user/gammu-smsd-pgsql.7:306
 msgid "User Data Header encoded using hex values"
 msgstr "hlavička uživatelských dat (UDH) v šestnáctkovém formátu"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:142 docs/user/gammu-smsd-mysql.7:310
-#: docs/user/gammu-smsd-pgsql.7:142 docs/user/gammu-smsd-pgsql.7:310
+#: docs/user/gammu-smsd-mysql.7:142 docs/user/gammu-smsd-mysql.7:318
+#: docs/user/gammu-smsd-pgsql.7:142 docs/user/gammu-smsd-pgsql.7:318
 msgid "SMS text in \"human readable\" form"
 msgstr "text zprávy v lidsky čitelné podobě"
 
@@ -5603,20 +5612,20 @@ msgstr ""
 "zprávy"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:152 docs/user/gammu-smsd-mysql.7:328
-#: docs/user/gammu-smsd-pgsql.7:152 docs/user/gammu-smsd-pgsql.7:328
+#: docs/user/gammu-smsd-mysql.7:152 docs/user/gammu-smsd-mysql.7:336
+#: docs/user/gammu-smsd-pgsql.7:152 docs/user/gammu-smsd-pgsql.7:336
 msgid "B<RelativeValidity> (integer)"
 msgstr "B<RelativeValidity> (integer)"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:154 docs/user/gammu-smsd-mysql.7:330
-#: docs/user/gammu-smsd-pgsql.7:154 docs/user/gammu-smsd-pgsql.7:330
+#: docs/user/gammu-smsd-mysql.7:154 docs/user/gammu-smsd-mysql.7:338
+#: docs/user/gammu-smsd-pgsql.7:154 docs/user/gammu-smsd-pgsql.7:338
 msgid "SMS relative validity like encoded using GSM specs"
 msgstr "platnost SMS zakódovaná podle GSM specifikací"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:156 docs/user/gammu-smsd-mysql.7:316
-#: docs/user/gammu-smsd-pgsql.7:156 docs/user/gammu-smsd-pgsql.7:316
+#: docs/user/gammu-smsd-mysql.7:156 docs/user/gammu-smsd-mysql.7:324
+#: docs/user/gammu-smsd-pgsql.7:156 docs/user/gammu-smsd-pgsql.7:324
 msgid "B<SenderID> (text)"
 msgstr "B<SenderID> (text)"
 
@@ -5650,8 +5659,8 @@ msgstr ""
 "yes se doručenka vynutí"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:168 docs/user/gammu-smsd-mysql.7:332
-#: docs/user/gammu-smsd-pgsql.7:168 docs/user/gammu-smsd-pgsql.7:332
+#: docs/user/gammu-smsd-mysql.7:168 docs/user/gammu-smsd-mysql.7:340
+#: docs/user/gammu-smsd-pgsql.7:168 docs/user/gammu-smsd-pgsql.7:340
 msgid "B<CreatorID> (text)"
 msgstr "B<CreatorID> (text)"
 
@@ -5681,8 +5690,8 @@ msgid "the same meaning as values in outbox table"
 msgstr "mají stejný význam jako v tabulce outbox"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:199 docs/user/gammu-smsd-mysql.7:320
-#: docs/user/gammu-smsd-pgsql.7:199 docs/user/gammu-smsd-pgsql.7:320
+#: docs/user/gammu-smsd-mysql.7:199 docs/user/gammu-smsd-mysql.7:328
+#: docs/user/gammu-smsd-pgsql.7:199 docs/user/gammu-smsd-pgsql.7:328
 msgid "B<SequencePosition> (integer)"
 msgstr "B<SequencePosition> (integer)"
 
@@ -5792,14 +5801,40 @@ msgstr "B<Signal> (integer)"
 msgid "signal level (or -1 if uknonwn)"
 msgstr "úrověň signálu (nebo -1 pokud není znám)"
 
+# type: Plain text
+#: docs/user/gammu-smsd-mysql.7:252 docs/user/gammu-smsd-pgsql.7:252
+msgid "B<Sent> (integer)"
+msgstr "B<Sent> (integer)"
+
+# type: Plain text
+#: docs/user/gammu-smsd-mysql.7:254 docs/user/gammu-smsd-pgsql.7:254
+msgid ""
+"Number of sent SMS messages (SMSD does not reset this counter, so it might "
+"oveflow)"
+msgstr ""
+"Počet odeslaných SMS zpráv (SMSD tento čítač nenuluje, takže může přetéct)."
+
+# type: Plain text
+#: docs/user/gammu-smsd-mysql.7:256 docs/user/gammu-smsd-pgsql.7:256
+msgid "B<Received> (integer)"
+msgstr "B<Received> (integer)"
+
+# type: Plain text
+#: docs/user/gammu-smsd-mysql.7:258 docs/user/gammu-smsd-pgsql.7:258
+msgid ""
+"Number of received SMS messages (SMSD does not reset this counter, so it "
+"might oveflow)"
+msgstr ""
+"Počet přijatých SMS zpráv (SMSD tento čítač nenuluje, takže může přetéct)."
+
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:251 docs/user/gammu-smsd-pgsql.7:251
+#: docs/user/gammu-smsd-mysql.7:259 docs/user/gammu-smsd-pgsql.7:259
 #, no-wrap
 msgid "B<sentitems>"
 msgstr "B<sentitems>"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:256 docs/user/gammu-smsd-pgsql.7:256
+#: docs/user/gammu-smsd-mysql.7:264 docs/user/gammu-smsd-pgsql.7:264
 msgid ""
 "Log of sent messages, if delivery reports are configured, message state is "
 "updated here."
@@ -5807,17 +5842,17 @@ msgstr ""
 "Informace o odeslaných zprávách a jejich stavu, pokud jsou zapnuty doručenky."
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:270 docs/user/gammu-smsd-pgsql.7:270
+#: docs/user/gammu-smsd-mysql.7:278 docs/user/gammu-smsd-pgsql.7:278
 msgid "when message has been sent"
 msgstr "kdy byla zpráva odeslána"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:272 docs/user/gammu-smsd-pgsql.7:272
+#: docs/user/gammu-smsd-mysql.7:280 docs/user/gammu-smsd-pgsql.7:280
 msgid "B<DeliveryDateTime> (timestamp)"
 msgstr "B<DeliveryDateTime> (timestamp)"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:274 docs/user/gammu-smsd-pgsql.7:274
+#: docs/user/gammu-smsd-mysql.7:282 docs/user/gammu-smsd-pgsql.7:282
 msgid ""
 "when Delivery Report was used for SMS, this entry contains time of receiving "
 "this report"
@@ -5826,7 +5861,7 @@ msgstr ""
 "jejího přijetí"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:276 docs/user/gammu-smsd-pgsql.7:276
+#: docs/user/gammu-smsd-mysql.7:284 docs/user/gammu-smsd-pgsql.7:284
 msgid ""
 "B<Status> (enum('SendingOK', 'SendingOKNoReport', 'SendingError', "
 "'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', "
@@ -5837,7 +5872,7 @@ msgstr ""
 "'Error'))"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:278 docs/user/gammu-smsd-pgsql.7:278
+#: docs/user/gammu-smsd-mysql.7:286 docs/user/gammu-smsd-pgsql.7:286
 msgid ""
 "when Delivery Report was used for SMS, this entry contains human readable "
 "error code"
@@ -5846,12 +5881,12 @@ msgstr ""
 "kód"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:280 docs/user/gammu-smsd-pgsql.7:280
+#: docs/user/gammu-smsd-mysql.7:288 docs/user/gammu-smsd-pgsql.7:288
 msgid "B<StatusError> (integer)"
 msgstr "B<StatusError> (integer)"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:282 docs/user/gammu-smsd-pgsql.7:282
+#: docs/user/gammu-smsd-mysql.7:290 docs/user/gammu-smsd-pgsql.7:290
 msgid ""
 "when Delivery Report was used for SMS, this entry contains error code like "
 "in GSM specs"
@@ -5860,89 +5895,94 @@ msgstr ""
 "kód jak je uveden ve specifikaci GSM"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:290 docs/user/gammu-smsd-pgsql.7:290
+#: docs/user/gammu-smsd-mysql.7:298 docs/user/gammu-smsd-pgsql.7:298
 msgid "decoded destination number for SMS"
 msgstr "číslo adresáta SMS"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:302 docs/user/gammu-smsd-pgsql.7:302
+#: docs/user/gammu-smsd-mysql.7:310 docs/user/gammu-smsd-pgsql.7:310
 msgid "decoded number of SMSC, which sent SMS"
 msgstr "číslo servisního centra (SMSC), které odeslalo zprávu"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:314 docs/user/gammu-smsd-pgsql.7:314
+#: docs/user/gammu-smsd-mysql.7:322 docs/user/gammu-smsd-pgsql.7:322
 msgid "SMS ID"
 msgstr "SMS ID"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:318 docs/user/gammu-smsd-pgsql.7:318
+#: docs/user/gammu-smsd-mysql.7:326 docs/user/gammu-smsd-pgsql.7:326
 msgid "which SMSD instance sent this one sequence"
 msgstr "která instance SMSD odeslala tuto sekvenci"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:322 docs/user/gammu-smsd-pgsql.7:322
+#: docs/user/gammu-smsd-mysql.7:330 docs/user/gammu-smsd-pgsql.7:330
 msgid "SMS number in SMS sequence"
 msgstr "pořadí SMS v SMS sekvenci"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:324 docs/user/gammu-smsd-pgsql.7:324
+#: docs/user/gammu-smsd-mysql.7:332 docs/user/gammu-smsd-pgsql.7:332
 msgid "B<TPMR> (integer)"
 msgstr "B<TPMR> (integer)"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:326 docs/user/gammu-smsd-pgsql.7:326
+#: docs/user/gammu-smsd-mysql.7:334 docs/user/gammu-smsd-pgsql.7:334
 msgid "Message Reference like in GSM specs"
 msgstr "reference zprávy, podle specifikací GSM"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:334 docs/user/gammu-smsd-pgsql.7:334
+#: docs/user/gammu-smsd-mysql.7:342 docs/user/gammu-smsd-pgsql.7:342
 msgid "copied from CreatorID from outbox table, matches PhoneID"
 msgstr "zkopírováno CreatorID z tabulky outbox, odpovídá PhoneID"
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:336 docs/user/gammu-smsd-pgsql.7:336
+#: docs/user/gammu-smsd-mysql.7:344 docs/user/gammu-smsd-pgsql.7:344
 #, no-wrap
 msgid "B<pbk>"
 msgstr "B<pbk>"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:340 docs/user/gammu-smsd-mysql.7:345
-#: docs/user/gammu-smsd-pgsql.7:340 docs/user/gammu-smsd-pgsql.7:345
+#: docs/user/gammu-smsd-mysql.7:348 docs/user/gammu-smsd-mysql.7:353
+#: docs/user/gammu-smsd-pgsql.7:348 docs/user/gammu-smsd-pgsql.7:353
 msgid "Not used by SMSD currently, included only for application usage."
 msgstr ""
 "SMSD tuto tabulku v současné době nepoužívá, je zde jen pro použití v "
 "aplikaci."
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:341 docs/user/gammu-smsd-pgsql.7:341
+#: docs/user/gammu-smsd-mysql.7:349 docs/user/gammu-smsd-pgsql.7:349
 #, no-wrap
 msgid "B<pbk_groups>"
 msgstr "B<pbk_groups>"
 
 # type: SH
-#: docs/user/gammu-smsd-mysql.7:346 docs/user/gammu-smsd-pgsql.7:346
+#: docs/user/gammu-smsd-mysql.7:354 docs/user/gammu-smsd-pgsql.7:354
 #, no-wrap
 msgid "HISTORY"
 msgstr "HISTORIE"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:349 docs/user/gammu-smsd-pgsql.7:349
+#: docs/user/gammu-smsd-mysql.7:357 docs/user/gammu-smsd-pgsql.7:357
 msgid "History of schema versions:"
 msgstr "Historie verzí schématu:"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:351 docs/user/gammu-smsd-pgsql.7:351
+#: docs/user/gammu-smsd-mysql.7:359 docs/user/gammu-smsd-pgsql.7:359
+msgid "9 - added sent/received counters to phones table"
+msgstr "9 - přidána počítadla přijatých a odeslaných zpráv do tabulky phones"
+
+# type: Plain text
+#: docs/user/gammu-smsd-mysql.7:361 docs/user/gammu-smsd-pgsql.7:361
 msgid "8 - introduced phones table"
 msgstr "8 - přidána tabulka phones"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:353 docs/user/gammu-smsd-pgsql.7:353
+#: docs/user/gammu-smsd-mysql.7:363 docs/user/gammu-smsd-pgsql.7:363
 msgid "7 - added CreatorID to tables (it holds PhoneID if set)"
 msgstr ""
 "7 - do tabulek přidáno CreatorID (obsahuje PhoneID, pokud je nastaveno)"
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:358 docs/user/gammu-smsd-pgsql.7:358
+#: docs/user/gammu-smsd-mysql.7:368 docs/user/gammu-smsd-pgsql.7:368
 msgid ""
 "SQL script to create all needed tables is included in Gammu documenation. As "
 "well as some PHP scripts interacting with the database."
