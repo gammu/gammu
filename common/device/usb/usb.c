@@ -55,6 +55,70 @@ struct cdc_extra_desc {
 #define USB_DT_CS_INTERFACE     0x24
 
 
+GSM_Error GSM_USB_Error(GSM_StateMachine *s, enum libusb_error code)
+{
+	switch (code) {
+		case LIBUSB_SUCCESS:
+			smprintf(s, "Success (no error)\n");
+			return ERR_NONE;
+
+		case LIBUSB_ERROR_IO:
+			smprintf(s, "Input/output error\n");
+			return ERR_DEVICEWRITEERROR;
+
+		case LIBUSB_ERROR_INVALID_PARAM:
+			smprintf(s, "Invalid parameter\n");
+			return ERR_BUG;
+
+		case LIBUSB_ERROR_ACCESS:
+			smprintf(s, "Access denied (insufficient permissions)\n");
+			return ERR_DEVICENOPERMISSION;
+
+		case LIBUSB_ERROR_NO_DEVICE:
+			smprintf(s, "No such device (it may have been disconnected)\n");
+			return ERR_DEVICENOTEXIST;
+
+		case LIBUSB_ERROR_NOT_FOUND:
+			smprintf(s, "Entity not found\n");
+			return ERR_DEVICENOTEXIST;
+
+		case LIBUSB_ERROR_BUSY:
+			smprintf(s, "Resource busy\n");
+			return ERR_DEVICEBUSY;
+
+		case LIBUSB_ERROR_TIMEOUT:
+			smprintf(s, "Operation timed out\n");
+			return ERR_TIMEOUT;
+
+		case LIBUSB_ERROR_OVERFLOW:
+			smprintf(s, "Overflow\n");
+			return ERR_BUG;
+
+		case LIBUSB_ERROR_PIPE:
+			smprintf(s, "Pipe error\n");
+			return ERR_BUG;
+
+		case LIBUSB_ERROR_INTERRUPTED:
+			smprintf(s, "System call interrupted (perhaps due to signal)\n");
+			return ERR_BUG;
+
+		case LIBUSB_ERROR_NO_MEM:
+			smprintf(s, "Insufficient memory\n");
+			return ERR_MOREMEMORY;
+
+		case LIBUSB_ERROR_NOT_SUPPORTED:
+			smprintf(s, "Operation not supported or unimplemented on this platform\n");
+			return ERR_NOTSUPPORTED;
+
+		case LIBUSB_ERROR_OTHER:
+			smprintf(s, "Other error\n");
+			return ERR_UNKNOWN;
+
+		default:
+			smprintf(s, "Unknown error\n");
+			return ERR_UNKNOWN;
+	}
+}
 
 GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 {
@@ -70,13 +134,14 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 	cnt = libusb_get_device_list(d->context, &devs);
 	if (cnt < 0) {
 		smprintf(s, "Failed to list USB devices (%d)!\n", (int)cnt);
-		return ERR_UNKNOWN;
+		return GSM_USB_Error(s, cnt);
 	}
 
 	while ((dev = devs[i++]) != NULL) {
 		rc = libusb_get_device_descriptor(dev, &desc);
 		if (rc < 0) {
 			smprintf(s, "Failed to get device descriptor (%d)!\n", rc);
+			GSM_USB_Error(s, rc);
 			continue;
 		}
 
@@ -102,7 +167,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 	rc = libusb_open(dev, &d->handle);
 	if (rc != 0) {
 		d->handle = NULL;
-		error = ERR_DEVICEOPENERROR;
+		error = GSM_USB_Error(s, rc);
 		goto done;
 	}
 
@@ -111,7 +176,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		smprintf(s, "Failed to set device configuration %d (%d)!\n", d->configuration, rc);
 		libusb_close(d->handle);
 		d->handle = NULL;
-		error = ERR_DEVICEOPENERROR;
+		error = GSM_USB_Error(s, rc);
 		goto done;
 	}
 
@@ -120,7 +185,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		smprintf(s, "Failed to set claim control interface %d (%d)!\n", d->control_iface, rc);
 		libusb_close(d->handle);
 		d->handle = NULL;
-		error = ERR_DEVICEOPENERROR;
+		error = GSM_USB_Error(s, rc);
 		goto done;
 	}
 
@@ -129,7 +194,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		smprintf(s, "Failed to set control alt setting %d (%d)!\n", d->control_altsetting, rc);
 		libusb_close(d->handle);
 		d->handle = NULL;
-		error = ERR_DEVICEOPENERROR;
+		error = GSM_USB_Error(s, rc);
 		goto done;
 	}
 
@@ -138,7 +203,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		smprintf(s, "Failed to set claim data interface %d (%d)!\n", d->data_iface, rc);
 		libusb_close(d->handle);
 		d->handle = NULL;
-		error = ERR_DEVICEOPENERROR;
+		error = GSM_USB_Error(s, rc);
 		goto done;
 	}
 
@@ -147,7 +212,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		smprintf(s, "Failed to set data alt setting %d (%d)!\n", d->data_altsetting, rc);
 		libusb_close(d->handle);
 		d->handle = NULL;
-		error = ERR_DEVICEOPENERROR;
+		error = GSM_USB_Error(s, rc);
 		goto done;
 	}
 
@@ -169,7 +234,7 @@ GSM_Error GSM_USB_Init(GSM_StateMachine *s)
 	if (rc != 0) {
 		d->context = NULL;
 		smprintf(s, "Failed to init libusb (%d)!\n", rc);
-		return ERR_UNKNOWN;
+		return GSM_USB_Error(s, rc);
 	}
 
 	return ERR_NONE;
@@ -178,11 +243,24 @@ GSM_Error GSM_USB_Init(GSM_StateMachine *s)
 GSM_Error GSM_USB_Terminate(GSM_StateMachine *s)
 {
 	GSM_Device_USBData *d = &s->Device.Data.USB;
+	int rc;
 
 	if (d->handle != NULL) {
-		libusb_set_interface_alt_setting(d->handle, d->data_iface, d->data_idlesetting);
-		libusb_release_interface(d->handle, d->control_iface);
-		libusb_release_interface(d->handle, d->data_iface);
+		rc = libusb_set_interface_alt_setting(d->handle, d->data_iface, d->data_idlesetting);
+		if (rc != 0) {
+			smprintf(s, "Failed to set idle settings\n");
+			return GSM_USB_Error(s, rc);
+		}
+		rc = libusb_release_interface(d->handle, d->control_iface);
+		if (rc != 0) {
+			smprintf(s, "Failed to release control interface\n");
+			return GSM_USB_Error(s, rc);
+		}
+		rc = libusb_release_interface(d->handle, d->data_iface);
+		if (rc != 0) {
+			smprintf(s, "Failed to release data interface\n");
+			return GSM_USB_Error(s, rc);
+		}
 		libusb_close(d->handle);
 	}
 
@@ -202,6 +280,7 @@ int GSM_USB_Read(GSM_StateMachine *s, void *buf, size_t nbytes)
 	rc = libusb_bulk_transfer(d->handle, d->ep_read, buf, nbytes, &ret, 10000);
 	if (rc != 0) {
 		smprintf(s, "Failed to read from usb (%d)!\n", rc);
+		GSM_USB_Error(s, rc);
 		return -1;
 	}
 	return ret;
@@ -215,6 +294,7 @@ int GSM_USB_Write(GSM_StateMachine *s, const void *buf, size_t nbytes)
 	rc = libusb_bulk_transfer(d->handle, d->ep_write, (void *)buf, nbytes, &ret, 10000);
 	if (rc != 0) {
 		smprintf(s, "Failed to write to usb (%d)!\n", rc);
+		GSM_USB_Error(s, rc);
 		return -1;
 	}
 	return ret;
@@ -241,7 +321,10 @@ bool FBUSUSB_Match(GSM_StateMachine *s, libusb_device *dev, struct libusb_device
 	/* Find configuration we want */
 	for (c = 0; c < desc->bNumConfigurations; c++) {
 		rc = libusb_get_config_descriptor(dev, c, &config);
-		if (rc != 0) return false;
+		if (rc != 0) {
+			GSM_USB_Error(s, rc);
+			return false;
+		}
 		/* Find interface we want */
 		for (i = 0; i < config->bNumInterfaces; i++) {
 			for (a = 0; a < config->interface[i].num_altsetting; a++) {
