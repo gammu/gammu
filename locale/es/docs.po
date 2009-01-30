@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-29 09:43+0100\n"
+"POT-Creation-Date: 2009-01-30 15:52+0100\n"
 "PO-Revision-Date: 2009-01-28 00:49+0100\n"
 "Last-Translator: Edgar Solis <esdoglairs@gmail.com>\n"
 "Language-Team: none\n"
@@ -2868,9 +2868,9 @@ msgid "I</dev/ttyACM?>"
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2195 docs/user/gammurc.5:185 docs/user/gammu-smsdrc.5:255
+#: docs/user/gammu.1:2195 docs/user/gammurc.5:187 docs/user/gammu-smsdrc.5:255
 #: docs/user/gammu-smsd.1:65 docs/user/gammu-smsd-files.7:63
-#: docs/user/gammu-smsd-mysql.7:354 docs/user/gammu-smsd-pgsql.7:354
+#: docs/user/gammu-smsd-mysql.7:364 docs/user/gammu-smsd-pgsql.7:364
 #, no-wrap
 msgid "EXAMPLE"
 msgstr ""
@@ -2952,11 +2952,11 @@ msgid ""
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2235 docs/user/gammurc.5:251 docs/user/gammu-smsdrc.5:332
+#: docs/user/gammu.1:2235 docs/user/gammurc.5:253 docs/user/gammu-smsdrc.5:332
 #: docs/user/gammu-smsd.1:100 docs/user/gammu-smsd-inject.1:37
 #: docs/user/jadmaker.1:30 docs/user/gammu-config.1:28
-#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:363
-#: docs/user/gammu-smsd-pgsql.7:363
+#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:373
+#: docs/user/gammu-smsd-pgsql.7:373
 #, no-wrap
 msgid "COPYRIGHT"
 msgstr ""
@@ -2970,22 +2970,22 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu.1:2242 docs/user/gammurc.5:257 docs/user/gammu-smsdrc.5:338
+#: docs/user/gammu.1:2242 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:338
 #: docs/user/gammu-smsd.1:106 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:35 docs/user/gammu-config.1:33
-#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:369
-#: docs/user/gammu-smsd-pgsql.7:369
+#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:379
+#: docs/user/gammu-smsd-pgsql.7:379
 msgid ""
 "This is free software: you are free to change and redistribute it.  There is "
 "NO WARRANTY, to the extent permitted by law."
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2243 docs/user/gammurc.5:257 docs/user/gammu-smsdrc.5:338
+#: docs/user/gammu.1:2243 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:338
 #: docs/user/gammu-smsd.1:106 docs/user/gammu-smsd-inject.1:43
 #: docs/user/jadmaker.1:24 docs/user/gammu-config.1:23
-#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:369
-#: docs/user/gammu-smsd-pgsql.7:369
+#: docs/user/gammu-smsd-files.7:106 docs/user/gammu-smsd-mysql.7:379
+#: docs/user/gammu-smsd-pgsql.7:379
 #, no-wrap
 msgid "REPORTING BUGS"
 msgstr ""
@@ -3024,19 +3024,19 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu.1:2264 docs/user/gammurc.5:258 docs/user/gammu-smsdrc.5:339
+#: docs/user/gammu.1:2264 docs/user/gammurc.5:260 docs/user/gammu-smsdrc.5:339
 #: docs/user/gammu-smsd.1:108 docs/user/gammu-smsd-inject.1:45
 #: docs/user/jadmaker.1:26 docs/user/gammu-config.1:25
-#: docs/user/gammu-smsd-files.7:107 docs/user/gammu-smsd-mysql.7:370
-#: docs/user/gammu-smsd-pgsql.7:370
+#: docs/user/gammu-smsd-files.7:107 docs/user/gammu-smsd-mysql.7:380
+#: docs/user/gammu-smsd-pgsql.7:380
 msgid "Please report bugs to E<lt>http://bugs.cihar.comE<gt>."
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2265 docs/user/gammurc.5:249 docs/user/gammu-smsdrc.5:330
+#: docs/user/gammu.1:2265 docs/user/gammurc.5:251 docs/user/gammu-smsdrc.5:330
 #: docs/user/gammu-smsd.1:98 docs/user/gammu-smsd-inject.1:35
-#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-mysql.7:361
-#: docs/user/gammu-smsd-pgsql.7:361
+#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-mysql.7:371
+#: docs/user/gammu-smsd-pgsql.7:371
 #, no-wrap
 msgid "AUTHOR"
 msgstr ""
@@ -3076,11 +3076,11 @@ msgid ""
 msgstr ""
 
 # type: SH
-#: docs/user/gammu.1:2291 docs/user/gammurc.5:247 docs/user/gammu-smsdrc.5:326
+#: docs/user/gammu.1:2291 docs/user/gammurc.5:249 docs/user/gammu-smsdrc.5:326
 #: docs/user/gammu-smsd.1:94 docs/user/gammu-smsd-inject.1:33
 #: docs/user/jadmaker.1:27 docs/user/gammu-config.1:26
-#: docs/user/gammu-smsd-files.7:96 docs/user/gammu-smsd-mysql.7:359
-#: docs/user/gammu-smsd-pgsql.7:359
+#: docs/user/gammu-smsd-files.7:96 docs/user/gammu-smsd-mysql.7:369
+#: docs/user/gammu-smsd-pgsql.7:369
 #, no-wrap
 msgid "SEE ALSO"
 msgstr ""
@@ -3205,26 +3205,33 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:39
-msgid "B<dlr3> - DLR-3 and compatible cables"
+msgid ""
+"B<fbususb> - FBUS over USB cable (experimental, for Nokia cables on Linux, "
+"including DKU-2)"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:41
-msgid "B<dku2> - DKU-2 and compatible cables"
+msgid "B<dlr3> - DLR-3 and compatible cables"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:43
-msgid "B<dku5> - DKU-5 and compatible cables"
+msgid "B<dku2> - DKU-2 and compatible cables"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:45
+msgid "B<dku5> - DKU-5 and compatible cables"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammurc.5:47
 msgid "B<mbus> - serial MBUS connection"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:49
+#: docs/user/gammurc.5:51
 msgid ""
 "If you use some non original cable, you might need to append -nodtr (eg. for "
 "ARK3116 based cables) or -nopower, but Gammu should be able to detect this "
@@ -3232,89 +3239,89 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:51
+#: docs/user/gammurc.5:53
 msgid "For non-Nokia phones connected using cable you generally want:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:53
+#: docs/user/gammurc.5:55
 msgid "B<at> - generic AT commands based connection"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:56
+#: docs/user/gammurc.5:58
 msgid ""
 "You can optionally specify speed of the connection, eg. at19200, but it is "
 "not needed for modern USB cables."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:58
+#: docs/user/gammurc.5:60
 msgid "For IrDA connections use one of following:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:60
+#: docs/user/gammurc.5:62
 msgid "B<irdaphonet> - Phonet connection for Nokia phones."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:62
+#: docs/user/gammurc.5:64
 msgid ""
 "B<irdaat> - AT commands connection for most of phones (this is not supported "
 "on Linux)."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:64
+#: docs/user/gammurc.5:66
 msgid ""
 "B<irdaobex> - OBEX (IrMC or file transfer) connection for most of phones."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:66
+#: docs/user/gammurc.5:68
 msgid "B<irdagnapbus> - GNapplet based connection for Symbian phones"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:68
+#: docs/user/gammurc.5:70
 msgid "For Bluetooth connection use one of following:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:70
+#: docs/user/gammurc.5:72
 msgid "B<bluephonet> - Phonet connection for Nokia phones."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:72
+#: docs/user/gammurc.5:74
 msgid "B<blueat> - AT commands connection for most of phones."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:74
+#: docs/user/gammurc.5:76
 msgid ""
 "B<blueobex> - OBEX (IrMC or file transfer) connection for most of phones."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:76
+#: docs/user/gammurc.5:78
 msgid "B<bluerfgnapbus> - GNapplet based connection for Symbian phones"
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:77
+#: docs/user/gammurc.5:79
 #, no-wrap
 msgid "B<Port>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:81
+#: docs/user/gammurc.5:83
 msgid "Device node or address of phone. It depends on used connection."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:87
+#: docs/user/gammurc.5:89
 msgid ""
 "For cables or emulated serial ports, you enter device name (for example /dev/"
 "ttyS0, /dev/ttyACM0, /dev/ircomm0, /dev/rfcomm0 on Linux, /dev/cuad0 on "
@@ -3324,7 +3331,7 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:92
+#: docs/user/gammurc.5:94
 msgid ""
 "For Bluetooth connection you have to enter Bluetooth address of your phone "
 "(you can list Bluetooth devices in range on Linux using \"hcitool scan\" "
@@ -3333,25 +3340,25 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:94
+#: docs/user/gammurc.5:96
 msgid "For IrDA connections, this parameters is not used at all."
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:95
+#: docs/user/gammurc.5:97
 #, no-wrap
 msgid "B<Model>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:100
+#: docs/user/gammurc.5:102
 msgid ""
 "Do not use this parameter unless really needed! The only use case for this "
 "is when Gammu does not know your phone and misdetects it's features."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:104
+#: docs/user/gammurc.5:106
 msgid ""
 "The only special case for using model is to force special type of OBEX "
 "connection instead of letting Gammu try the best suited for selected "
@@ -3359,44 +3366,44 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:106
+#: docs/user/gammurc.5:108
 msgid "B<obexfs> - force using of file browsing service (file system support)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:109
+#: docs/user/gammurc.5:111
 msgid ""
 "B<obexirmc> - force using of IrMC service (contacts, calendar and notes "
 "support)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:112
+#: docs/user/gammurc.5:114
 msgid ""
 "B<obexnone> - none service chosen, this has only limited use for sending "
 "file (B<sendfile> command)"
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:113
+#: docs/user/gammurc.5:115
 #, no-wrap
 msgid "B<SynchronizeTime>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:117
+#: docs/user/gammurc.5:119
 msgid ""
 "If you want to set time from computer to phone during starting connection."
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:118
+#: docs/user/gammurc.5:120
 #, no-wrap
 msgid "B<StartInfo>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:125
+#: docs/user/gammurc.5:127
 msgid ""
 "This option allow to set, that you want (setting \"yes\") to see message on "
 "the phone screen or phone should enable light for a moment during starting "
@@ -3405,13 +3412,13 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:126
+#: docs/user/gammurc.5:128
 #, no-wrap
 msgid "B<GammuCoding>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:132
+#: docs/user/gammurc.5:134
 msgid ""
 "Forces using specified codepage (for example \"1250\" will force CP-1250 or "
 "\"utf8\" for UTF-8). This should not be needed in most cases, Gammu should "
@@ -3419,13 +3426,13 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:133
+#: docs/user/gammurc.5:135
 #, no-wrap
 msgid "B<GammuLoc>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:139
+#: docs/user/gammurc.5:141
 msgid ""
 "Path to directory with localisation files (the directory should contain LANG/"
 "LC_MESSAGES/gammu.mo). If gammu is properly installed it should find these "
@@ -3433,77 +3440,77 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:140 docs/user/gammu-smsdrc.5:48
+#: docs/user/gammurc.5:142 docs/user/gammu-smsdrc.5:48
 #, no-wrap
 msgid "B<LogFile>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:144
+#: docs/user/gammurc.5:146
 msgid "Path to file where information about communication will be stored."
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:145
+#: docs/user/gammurc.5:147
 #, no-wrap
 msgid "B<LogFormat>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:149
+#: docs/user/gammurc.5:151
 msgid "Determines what all will be logged to LogFile. Possible values are:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:151
+#: docs/user/gammurc.5:153
 msgid "B<nothing> - no debug level"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:153
+#: docs/user/gammurc.5:155
 msgid "B<text> - transmission dump in text format"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:155
+#: docs/user/gammurc.5:157
 msgid "B<textall> - all possible info in text format"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:157
+#: docs/user/gammurc.5:159
 msgid "B<textalldate> - all possible info in text format, with time stamp"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:159
+#: docs/user/gammurc.5:161
 msgid "B<errors> - errors in text format"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:161
+#: docs/user/gammurc.5:163
 msgid "B<errorsdate> - errors in text format, with time stamp"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:163
+#: docs/user/gammurc.5:165
 msgid "B<binary> - transmission dump in binary format"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:166
+#: docs/user/gammurc.5:168
 msgid ""
 "For debugging use either B<textalldate> or B<textall>, it contains all "
 "needed information to diagnose problems."
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:167
+#: docs/user/gammurc.5:169
 #, no-wrap
 msgid "B<Features>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:174
+#: docs/user/gammurc.5:176
 msgid ""
 "Custom features for phone. This can be used as override when values coded in "
 "common/gsmphones.c are bad or missing. Consult include/gammu-info.h for "
@@ -3512,13 +3519,13 @@ msgid ""
 msgstr ""
 
 # type: TP
-#: docs/user/gammurc.5:175
+#: docs/user/gammurc.5:177
 #, no-wrap
 msgid "B<Use_Locking>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:182
+#: docs/user/gammurc.5:184
 msgid ""
 "On Posix systems, you might want to lock serial device when it is being "
 "used.  Enabling this option (setting to yes) will make Gammu honor these "
@@ -3527,22 +3534,22 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:184
+#: docs/user/gammurc.5:186
 msgid "This option has no meaning on Windows."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:188
+#: docs/user/gammurc.5:190
 msgid "There is more complete example available in Gammu documentation."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:190
+#: docs/user/gammurc.5:192
 msgid "Gammu configuration for Nokia phone using DLR-3 cable:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:198
+#: docs/user/gammurc.5:200
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -3551,14 +3558,14 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:205
+#: docs/user/gammurc.5:207
 msgid ""
 "Gammu configuration for Sony-Ericsson phone (or any other AT compatible "
 "phone)  connected using USB cable:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:213
+#: docs/user/gammurc.5:215
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -3567,14 +3574,14 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:220
+#: docs/user/gammurc.5:222
 msgid ""
 "Gammu configuration for Sony-Ericsson (or any other AT compatible phone)  "
 "connected using bluetooth:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:228
+#: docs/user/gammurc.5:230
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -3583,14 +3590,14 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:234
+#: docs/user/gammurc.5:236
 msgid ""
 "Gammu configuration for phone which needs to manually adjust Bluetooth "
 "channel to use channel 42:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:242
+#: docs/user/gammurc.5:244
 #, no-wrap
 msgid ""
 "[gammu]\n"
@@ -3599,25 +3606,25 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:249 docs/user/gammu-smsdrc.5:328
+#: docs/user/gammurc.5:251 docs/user/gammu-smsdrc.5:328
 msgid "gammu-smsd(1), gammu(1), gammurc(5)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:251 docs/user/gammu-smsdrc.5:332
+#: docs/user/gammurc.5:253 docs/user/gammu-smsdrc.5:332
 #: docs/user/gammu-smsd.1:100 docs/user/gammu-smsd-inject.1:37
-#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:363
-#: docs/user/gammu-smsd-pgsql.7:363
+#: docs/user/gammu-smsd-files.7:100 docs/user/gammu-smsd-mysql.7:373
+#: docs/user/gammu-smsd-pgsql.7:373
 msgid ""
 "gammu-smsd and this manual page were written by Michal Cihar "
 "E<lt>michal@cihar.comE<gt>."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammurc.5:254 docs/user/gammu-smsdrc.5:335
+#: docs/user/gammurc.5:256 docs/user/gammu-smsdrc.5:335
 #: docs/user/gammu-smsd.1:103 docs/user/gammu-smsd-inject.1:40
-#: docs/user/gammu-smsd-files.7:103 docs/user/gammu-smsd-mysql.7:366
-#: docs/user/gammu-smsd-pgsql.7:366
+#: docs/user/gammu-smsd-files.7:103 docs/user/gammu-smsd-mysql.7:376
+#: docs/user/gammu-smsd-pgsql.7:376
 msgid ""
 "Copyright \\(co 2009 Michal Cihar and other authors.  License GPLv2: GNU GPL "
 "version 2 E<lt>http://www.gnu.org/licenses/old-licenses/gpl-2.0.htmlE<gt>"
@@ -4895,8 +4902,8 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-mysql.7:361
-#: docs/user/gammu-smsd-pgsql.7:361
+#: docs/user/gammu-smsd-files.7:98 docs/user/gammu-smsd-mysql.7:371
+#: docs/user/gammu-smsd-pgsql.7:371
 msgid "gammu-smsd(1), gammu-smsdrc(5), gammu(1), gammurc(5)"
 msgstr ""
 
@@ -4987,24 +4994,24 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:49 docs/user/gammu-smsd-mysql.7:106
 #: docs/user/gammu-smsd-mysql.7:181 docs/user/gammu-smsd-mysql.7:210
-#: docs/user/gammu-smsd-mysql.7:258 docs/user/gammu-smsd-pgsql.7:49
+#: docs/user/gammu-smsd-mysql.7:266 docs/user/gammu-smsd-pgsql.7:49
 #: docs/user/gammu-smsd-pgsql.7:106 docs/user/gammu-smsd-pgsql.7:181
-#: docs/user/gammu-smsd-pgsql.7:210 docs/user/gammu-smsd-pgsql.7:258
+#: docs/user/gammu-smsd-pgsql.7:210 docs/user/gammu-smsd-pgsql.7:266
 msgid "Fields description:"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:51 docs/user/gammu-smsd-mysql.7:108
-#: docs/user/gammu-smsd-mysql.7:216 docs/user/gammu-smsd-mysql.7:260
+#: docs/user/gammu-smsd-mysql.7:216 docs/user/gammu-smsd-mysql.7:268
 #: docs/user/gammu-smsd-pgsql.7:51 docs/user/gammu-smsd-pgsql.7:108
-#: docs/user/gammu-smsd-pgsql.7:216 docs/user/gammu-smsd-pgsql.7:260
+#: docs/user/gammu-smsd-pgsql.7:216 docs/user/gammu-smsd-pgsql.7:268
 msgid "B<UpdatedInDB> (timestamp)"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:53 docs/user/gammu-smsd-mysql.7:110
-#: docs/user/gammu-smsd-mysql.7:262 docs/user/gammu-smsd-pgsql.7:53
-#: docs/user/gammu-smsd-pgsql.7:110 docs/user/gammu-smsd-pgsql.7:262
+#: docs/user/gammu-smsd-mysql.7:270 docs/user/gammu-smsd-pgsql.7:53
+#: docs/user/gammu-smsd-pgsql.7:110 docs/user/gammu-smsd-pgsql.7:270
 msgid "when somebody (daemon, user, etc.) updated it"
 msgstr ""
 
@@ -5020,9 +5027,9 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:59 docs/user/gammu-smsd-mysql.7:120
-#: docs/user/gammu-smsd-mysql.7:185 docs/user/gammu-smsd-mysql.7:284
+#: docs/user/gammu-smsd-mysql.7:185 docs/user/gammu-smsd-mysql.7:292
 #: docs/user/gammu-smsd-pgsql.7:59 docs/user/gammu-smsd-pgsql.7:120
-#: docs/user/gammu-smsd-pgsql.7:185 docs/user/gammu-smsd-pgsql.7:284
+#: docs/user/gammu-smsd-pgsql.7:185 docs/user/gammu-smsd-pgsql.7:292
 msgid "B<Text> (text)"
 msgstr ""
 
@@ -5043,9 +5050,9 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:67 docs/user/gammu-smsd-mysql.7:128
-#: docs/user/gammu-smsd-mysql.7:187 docs/user/gammu-smsd-mysql.7:292
+#: docs/user/gammu-smsd-mysql.7:187 docs/user/gammu-smsd-mysql.7:300
 #: docs/user/gammu-smsd-pgsql.7:67 docs/user/gammu-smsd-pgsql.7:128
-#: docs/user/gammu-smsd-pgsql.7:187 docs/user/gammu-smsd-pgsql.7:292
+#: docs/user/gammu-smsd-pgsql.7:187 docs/user/gammu-smsd-pgsql.7:300
 msgid ""
 "B<Coding> (enum('Default_No_Compression', 'Unicode_No_Compression', '8bit', "
 "'Default_Compression', 'Unicode_Compression'))"
@@ -5053,16 +5060,16 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:69 docs/user/gammu-smsd-mysql.7:130
-#: docs/user/gammu-smsd-mysql.7:294 docs/user/gammu-smsd-pgsql.7:69
-#: docs/user/gammu-smsd-pgsql.7:130 docs/user/gammu-smsd-pgsql.7:294
+#: docs/user/gammu-smsd-mysql.7:302 docs/user/gammu-smsd-pgsql.7:69
+#: docs/user/gammu-smsd-pgsql.7:130 docs/user/gammu-smsd-pgsql.7:302
 msgid "SMS text coding"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:71 docs/user/gammu-smsd-mysql.7:132
-#: docs/user/gammu-smsd-mysql.7:189 docs/user/gammu-smsd-mysql.7:296
+#: docs/user/gammu-smsd-mysql.7:189 docs/user/gammu-smsd-mysql.7:304
 #: docs/user/gammu-smsd-pgsql.7:71 docs/user/gammu-smsd-pgsql.7:132
-#: docs/user/gammu-smsd-pgsql.7:189 docs/user/gammu-smsd-pgsql.7:296
+#: docs/user/gammu-smsd-pgsql.7:189 docs/user/gammu-smsd-pgsql.7:304
 msgid "B<UDH> (text)"
 msgstr ""
 
@@ -5072,8 +5079,8 @@ msgid "encoded User Data Header text"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:75 docs/user/gammu-smsd-mysql.7:300
-#: docs/user/gammu-smsd-pgsql.7:75 docs/user/gammu-smsd-pgsql.7:300
+#: docs/user/gammu-smsd-mysql.7:75 docs/user/gammu-smsd-mysql.7:308
+#: docs/user/gammu-smsd-pgsql.7:75 docs/user/gammu-smsd-pgsql.7:308
 msgid "B<SMSCNumber> (varchar(20))"
 msgstr ""
 
@@ -5084,24 +5091,24 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:79 docs/user/gammu-smsd-mysql.7:136
-#: docs/user/gammu-smsd-mysql.7:191 docs/user/gammu-smsd-mysql.7:304
+#: docs/user/gammu-smsd-mysql.7:191 docs/user/gammu-smsd-mysql.7:312
 #: docs/user/gammu-smsd-pgsql.7:79 docs/user/gammu-smsd-pgsql.7:136
-#: docs/user/gammu-smsd-pgsql.7:191 docs/user/gammu-smsd-pgsql.7:304
+#: docs/user/gammu-smsd-pgsql.7:191 docs/user/gammu-smsd-pgsql.7:312
 msgid "B<Class> (integer)"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:81 docs/user/gammu-smsd-mysql.7:138
-#: docs/user/gammu-smsd-mysql.7:306 docs/user/gammu-smsd-pgsql.7:81
-#: docs/user/gammu-smsd-pgsql.7:138 docs/user/gammu-smsd-pgsql.7:306
+#: docs/user/gammu-smsd-mysql.7:314 docs/user/gammu-smsd-pgsql.7:81
+#: docs/user/gammu-smsd-pgsql.7:138 docs/user/gammu-smsd-pgsql.7:314
 msgid "SMS class or -1"
 msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:83 docs/user/gammu-smsd-mysql.7:140
-#: docs/user/gammu-smsd-mysql.7:193 docs/user/gammu-smsd-mysql.7:308
+#: docs/user/gammu-smsd-mysql.7:193 docs/user/gammu-smsd-mysql.7:316
 #: docs/user/gammu-smsd-pgsql.7:83 docs/user/gammu-smsd-pgsql.7:140
-#: docs/user/gammu-smsd-pgsql.7:193 docs/user/gammu-smsd-pgsql.7:308
+#: docs/user/gammu-smsd-pgsql.7:193 docs/user/gammu-smsd-pgsql.7:316
 msgid "B<TextDecoded> (varchar(160))"
 msgstr ""
 
@@ -5113,9 +5120,9 @@ msgstr ""
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:87 docs/user/gammu-smsd-mysql.7:144
 #: docs/user/gammu-smsd-mysql.7:183 docs/user/gammu-smsd-mysql.7:195
-#: docs/user/gammu-smsd-mysql.7:312 docs/user/gammu-smsd-pgsql.7:87
+#: docs/user/gammu-smsd-mysql.7:320 docs/user/gammu-smsd-pgsql.7:87
 #: docs/user/gammu-smsd-pgsql.7:144 docs/user/gammu-smsd-pgsql.7:183
-#: docs/user/gammu-smsd-pgsql.7:195 docs/user/gammu-smsd-pgsql.7:312
+#: docs/user/gammu-smsd-pgsql.7:195 docs/user/gammu-smsd-pgsql.7:320
 msgid "B<ID> (integer unsigned)"
 msgstr ""
 
@@ -5159,20 +5166,20 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu-smsd-mysql.7:112 docs/user/gammu-smsd-mysql.7:220
-#: docs/user/gammu-smsd-mysql.7:264 docs/user/gammu-smsd-pgsql.7:112
-#: docs/user/gammu-smsd-pgsql.7:220 docs/user/gammu-smsd-pgsql.7:264
+#: docs/user/gammu-smsd-mysql.7:272 docs/user/gammu-smsd-pgsql.7:112
+#: docs/user/gammu-smsd-pgsql.7:220 docs/user/gammu-smsd-pgsql.7:272
 msgid "B<InsertIntoDB> (timestamp)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:114 docs/user/gammu-smsd-mysql.7:266
-#: docs/user/gammu-smsd-pgsql.7:114 docs/user/gammu-smsd-pgsql.7:266
+#: docs/user/gammu-smsd-mysql.7:114 docs/user/gammu-smsd-mysql.7:274
+#: docs/user/gammu-smsd-pgsql.7:114 docs/user/gammu-smsd-pgsql.7:274
 msgid "when message was inserted into database"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:116 docs/user/gammu-smsd-mysql.7:268
-#: docs/user/gammu-smsd-pgsql.7:116 docs/user/gammu-smsd-pgsql.7:268
+#: docs/user/gammu-smsd-mysql.7:116 docs/user/gammu-smsd-mysql.7:276
+#: docs/user/gammu-smsd-pgsql.7:116 docs/user/gammu-smsd-pgsql.7:276
 msgid "B<SendingDateTime> (timestamp)"
 msgstr ""
 
@@ -5183,14 +5190,14 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:122 docs/user/gammu-smsd-mysql.7:286
-#: docs/user/gammu-smsd-pgsql.7:122 docs/user/gammu-smsd-pgsql.7:286
+#: docs/user/gammu-smsd-mysql.7:122 docs/user/gammu-smsd-mysql.7:294
+#: docs/user/gammu-smsd-pgsql.7:122 docs/user/gammu-smsd-pgsql.7:294
 msgid "SMS text encoded using hex values"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:124 docs/user/gammu-smsd-mysql.7:288
-#: docs/user/gammu-smsd-pgsql.7:124 docs/user/gammu-smsd-pgsql.7:288
+#: docs/user/gammu-smsd-mysql.7:124 docs/user/gammu-smsd-mysql.7:296
+#: docs/user/gammu-smsd-pgsql.7:124 docs/user/gammu-smsd-pgsql.7:296
 msgid "B<DestinationNumber> (varchar(20))"
 msgstr ""
 
@@ -5200,14 +5207,14 @@ msgid "recipient number"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:134 docs/user/gammu-smsd-mysql.7:298
-#: docs/user/gammu-smsd-pgsql.7:134 docs/user/gammu-smsd-pgsql.7:298
+#: docs/user/gammu-smsd-mysql.7:134 docs/user/gammu-smsd-mysql.7:306
+#: docs/user/gammu-smsd-pgsql.7:134 docs/user/gammu-smsd-pgsql.7:306
 msgid "User Data Header encoded using hex values"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:142 docs/user/gammu-smsd-mysql.7:310
-#: docs/user/gammu-smsd-pgsql.7:142 docs/user/gammu-smsd-pgsql.7:310
+#: docs/user/gammu-smsd-mysql.7:142 docs/user/gammu-smsd-mysql.7:318
+#: docs/user/gammu-smsd-pgsql.7:142 docs/user/gammu-smsd-pgsql.7:318
 msgid "SMS text in \"human readable\" form"
 msgstr ""
 
@@ -5227,20 +5234,20 @@ msgid "info, whether there are more SMS from this sequence in outbox_multipart"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:152 docs/user/gammu-smsd-mysql.7:328
-#: docs/user/gammu-smsd-pgsql.7:152 docs/user/gammu-smsd-pgsql.7:328
+#: docs/user/gammu-smsd-mysql.7:152 docs/user/gammu-smsd-mysql.7:336
+#: docs/user/gammu-smsd-pgsql.7:152 docs/user/gammu-smsd-pgsql.7:336
 msgid "B<RelativeValidity> (integer)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:154 docs/user/gammu-smsd-mysql.7:330
-#: docs/user/gammu-smsd-pgsql.7:154 docs/user/gammu-smsd-pgsql.7:330
+#: docs/user/gammu-smsd-mysql.7:154 docs/user/gammu-smsd-mysql.7:338
+#: docs/user/gammu-smsd-pgsql.7:154 docs/user/gammu-smsd-pgsql.7:338
 msgid "SMS relative validity like encoded using GSM specs"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:156 docs/user/gammu-smsd-mysql.7:316
-#: docs/user/gammu-smsd-pgsql.7:156 docs/user/gammu-smsd-pgsql.7:316
+#: docs/user/gammu-smsd-mysql.7:156 docs/user/gammu-smsd-mysql.7:324
+#: docs/user/gammu-smsd-pgsql.7:156 docs/user/gammu-smsd-pgsql.7:324
 msgid "B<SenderID> (text)"
 msgstr ""
 
@@ -5272,8 +5279,8 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:168 docs/user/gammu-smsd-mysql.7:332
-#: docs/user/gammu-smsd-pgsql.7:168 docs/user/gammu-smsd-pgsql.7:332
+#: docs/user/gammu-smsd-mysql.7:168 docs/user/gammu-smsd-mysql.7:340
+#: docs/user/gammu-smsd-pgsql.7:168 docs/user/gammu-smsd-pgsql.7:340
 msgid "B<CreatorID> (text)"
 msgstr ""
 
@@ -5301,8 +5308,8 @@ msgid "the same meaning as values in outbox table"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:199 docs/user/gammu-smsd-mysql.7:320
-#: docs/user/gammu-smsd-pgsql.7:199 docs/user/gammu-smsd-pgsql.7:320
+#: docs/user/gammu-smsd-mysql.7:199 docs/user/gammu-smsd-mysql.7:328
+#: docs/user/gammu-smsd-pgsql.7:199 docs/user/gammu-smsd-pgsql.7:328
 msgid "B<SequencePosition> (integer)"
 msgstr ""
 
@@ -5410,38 +5417,62 @@ msgstr ""
 msgid "signal level (or -1 if uknonwn)"
 msgstr ""
 
+# type: Plain text
+#: docs/user/gammu-smsd-mysql.7:252 docs/user/gammu-smsd-pgsql.7:252
+msgid "B<Sent> (integer)"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd-mysql.7:254 docs/user/gammu-smsd-pgsql.7:254
+msgid ""
+"Number of sent SMS messages (SMSD does not reset this counter, so it might "
+"oveflow)"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd-mysql.7:256 docs/user/gammu-smsd-pgsql.7:256
+msgid "B<Received> (integer)"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd-mysql.7:258 docs/user/gammu-smsd-pgsql.7:258
+msgid ""
+"Number of received SMS messages (SMSD does not reset this counter, so it "
+"might oveflow)"
+msgstr ""
+
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:251 docs/user/gammu-smsd-pgsql.7:251
+#: docs/user/gammu-smsd-mysql.7:259 docs/user/gammu-smsd-pgsql.7:259
 #, no-wrap
 msgid "B<sentitems>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:256 docs/user/gammu-smsd-pgsql.7:256
+#: docs/user/gammu-smsd-mysql.7:264 docs/user/gammu-smsd-pgsql.7:264
 msgid ""
 "Log of sent messages, if delivery reports are configured, message state is "
 "updated here."
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:270 docs/user/gammu-smsd-pgsql.7:270
+#: docs/user/gammu-smsd-mysql.7:278 docs/user/gammu-smsd-pgsql.7:278
 msgid "when message has been sent"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:272 docs/user/gammu-smsd-pgsql.7:272
+#: docs/user/gammu-smsd-mysql.7:280 docs/user/gammu-smsd-pgsql.7:280
 msgid "B<DeliveryDateTime> (timestamp)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:274 docs/user/gammu-smsd-pgsql.7:274
+#: docs/user/gammu-smsd-mysql.7:282 docs/user/gammu-smsd-pgsql.7:282
 msgid ""
 "when Delivery Report was used for SMS, this entry contains time of receiving "
 "this report"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:276 docs/user/gammu-smsd-pgsql.7:276
+#: docs/user/gammu-smsd-mysql.7:284 docs/user/gammu-smsd-pgsql.7:284
 msgid ""
 "B<Status> (enum('SendingOK', 'SendingOKNoReport', 'SendingError', "
 "'DeliveryOK', 'DeliveryFailed', 'DeliveryPending', 'DeliveryUnknown', "
@@ -5449,105 +5480,110 @@ msgid ""
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:278 docs/user/gammu-smsd-pgsql.7:278
+#: docs/user/gammu-smsd-mysql.7:286 docs/user/gammu-smsd-pgsql.7:286
 msgid ""
 "when Delivery Report was used for SMS, this entry contains human readable "
 "error code"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:280 docs/user/gammu-smsd-pgsql.7:280
+#: docs/user/gammu-smsd-mysql.7:288 docs/user/gammu-smsd-pgsql.7:288
 msgid "B<StatusError> (integer)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:282 docs/user/gammu-smsd-pgsql.7:282
+#: docs/user/gammu-smsd-mysql.7:290 docs/user/gammu-smsd-pgsql.7:290
 msgid ""
 "when Delivery Report was used for SMS, this entry contains error code like "
 "in GSM specs"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:290 docs/user/gammu-smsd-pgsql.7:290
+#: docs/user/gammu-smsd-mysql.7:298 docs/user/gammu-smsd-pgsql.7:298
 msgid "decoded destination number for SMS"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:302 docs/user/gammu-smsd-pgsql.7:302
+#: docs/user/gammu-smsd-mysql.7:310 docs/user/gammu-smsd-pgsql.7:310
 msgid "decoded number of SMSC, which sent SMS"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:314 docs/user/gammu-smsd-pgsql.7:314
+#: docs/user/gammu-smsd-mysql.7:322 docs/user/gammu-smsd-pgsql.7:322
 msgid "SMS ID"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:318 docs/user/gammu-smsd-pgsql.7:318
+#: docs/user/gammu-smsd-mysql.7:326 docs/user/gammu-smsd-pgsql.7:326
 msgid "which SMSD instance sent this one sequence"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:322 docs/user/gammu-smsd-pgsql.7:322
+#: docs/user/gammu-smsd-mysql.7:330 docs/user/gammu-smsd-pgsql.7:330
 msgid "SMS number in SMS sequence"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:324 docs/user/gammu-smsd-pgsql.7:324
+#: docs/user/gammu-smsd-mysql.7:332 docs/user/gammu-smsd-pgsql.7:332
 msgid "B<TPMR> (integer)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:326 docs/user/gammu-smsd-pgsql.7:326
+#: docs/user/gammu-smsd-mysql.7:334 docs/user/gammu-smsd-pgsql.7:334
 msgid "Message Reference like in GSM specs"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:334 docs/user/gammu-smsd-pgsql.7:334
+#: docs/user/gammu-smsd-mysql.7:342 docs/user/gammu-smsd-pgsql.7:342
 msgid "copied from CreatorID from outbox table, matches PhoneID"
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:336 docs/user/gammu-smsd-pgsql.7:336
+#: docs/user/gammu-smsd-mysql.7:344 docs/user/gammu-smsd-pgsql.7:344
 #, no-wrap
 msgid "B<pbk>"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:340 docs/user/gammu-smsd-mysql.7:345
-#: docs/user/gammu-smsd-pgsql.7:340 docs/user/gammu-smsd-pgsql.7:345
+#: docs/user/gammu-smsd-mysql.7:348 docs/user/gammu-smsd-mysql.7:353
+#: docs/user/gammu-smsd-pgsql.7:348 docs/user/gammu-smsd-pgsql.7:353
 msgid "Not used by SMSD currently, included only for application usage."
 msgstr ""
 
 # type: TP
-#: docs/user/gammu-smsd-mysql.7:341 docs/user/gammu-smsd-pgsql.7:341
+#: docs/user/gammu-smsd-mysql.7:349 docs/user/gammu-smsd-pgsql.7:349
 #, no-wrap
 msgid "B<pbk_groups>"
 msgstr ""
 
 # type: SH
-#: docs/user/gammu-smsd-mysql.7:346 docs/user/gammu-smsd-pgsql.7:346
+#: docs/user/gammu-smsd-mysql.7:354 docs/user/gammu-smsd-pgsql.7:354
 #, no-wrap
 msgid "HISTORY"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:349 docs/user/gammu-smsd-pgsql.7:349
+#: docs/user/gammu-smsd-mysql.7:357 docs/user/gammu-smsd-pgsql.7:357
 msgid "History of schema versions:"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:351 docs/user/gammu-smsd-pgsql.7:351
+#: docs/user/gammu-smsd-mysql.7:359 docs/user/gammu-smsd-pgsql.7:359
+msgid "9 - added sent/received counters to phones table"
+msgstr ""
+
+# type: Plain text
+#: docs/user/gammu-smsd-mysql.7:361 docs/user/gammu-smsd-pgsql.7:361
 msgid "8 - introduced phones table"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:353 docs/user/gammu-smsd-pgsql.7:353
+#: docs/user/gammu-smsd-mysql.7:363 docs/user/gammu-smsd-pgsql.7:363
 msgid "7 - added CreatorID to tables (it holds PhoneID if set)"
 msgstr ""
 
 # type: Plain text
-#: docs/user/gammu-smsd-mysql.7:358 docs/user/gammu-smsd-pgsql.7:358
+#: docs/user/gammu-smsd-mysql.7:368 docs/user/gammu-smsd-pgsql.7:368
 msgid ""
 "SQL script to create all needed tables is included in Gammu documenation. As "
 "well as some PHP scripts interacting with the database."
