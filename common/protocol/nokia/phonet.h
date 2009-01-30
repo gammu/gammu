@@ -35,6 +35,9 @@ typedef struct {
 #    define GSM_USED_IRDADEVICE
 #  endif
 #endif
+#ifndef GSM_USED_USBDEVICE
+#  define GSM_USED_USBDEVICE
+#endif
 #if defined(GSM_ENABLE_BLUEPHONET)
 #  ifndef GSM_USED_BLUETOOTHDEVICE
 #    define GSM_USED_BLUETOOTHDEVICE

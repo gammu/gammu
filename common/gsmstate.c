@@ -184,9 +184,6 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 #ifdef GSM_ENABLE_FBUS2
 	GSM_RegisterConnection(s, GCT_FBUS2,	  &SerialDevice,  &FBUS2Protocol);
 #endif
-#if defined(GSM_ENABLE_FBUS2) && defined(GSM_ENABLE_USBDEVICE)
-	GSM_RegisterConnection(s, GCT_FBUS2USB,	  &FBUSUSBDevice,  &FBUS2Protocol);
-#endif
 #ifdef GSM_ENABLE_FBUS2DLR3
 	GSM_RegisterConnection(s, GCT_FBUS2DLR3,  &SerialDevice,  &FBUS2Protocol);
 #endif
@@ -201,6 +198,9 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 #endif
 #ifdef GSM_ENABLE_FBUS2IRDA
 	GSM_RegisterConnection(s, GCT_FBUS2IRDA,  &SerialDevice,  &FBUS2Protocol);
+#endif
+#if defined(GSM_ENABLE_DKU2PHONET) && defined(GSM_ENABLE_USBDEVICE)
+	GSM_RegisterConnection(s, GCT_FBUS2USB,	  &FBUSUSBDevice,  &PHONETProtocol);
 #endif
 #ifdef GSM_ENABLE_DKU2PHONET
 	GSM_RegisterConnection(s, GCT_DKU2PHONET, &SerialDevice,  &PHONETProtocol);

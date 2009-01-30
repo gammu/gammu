@@ -37,17 +37,24 @@ static GSM_Error PHONET_WriteMessage (GSM_StateMachine 	*s,
 	buffer2 = (unsigned char *)malloc(MsgLength + 6);
 	if (buffer2 == NULL) return ERR_MOREMEMORY;
 
-	buffer2[0] = PHONET_FRAME_ID,
-	buffer2[1] = PHONET_DEVICE_PHONE; 		/* destination */
-	buffer2[2] = PHONET_DEVICE_PC;    		/* source */
-
-	if (s->ConnectionType==GCT_PHONETBLUE || s->ConnectionType==GCT_BLUEPHONET) {
-		buffer2[0] = PHONET_BLUE_FRAME_ID;
-		buffer2[1] = PHONET_DEVICE_PHONE;	/* destination */
-		buffer2[2] = PHONET_BLUE_DEVICE_PC;	/* source */
-	}
-	if (s->ConnectionType==GCT_DKU2PHONET) {
-		buffer2[0] = PHONET_DKU2_FRAME_ID;
+	switch (s->ConnectionType) {
+		case GCT_PHONETBLUE:
+		case GCT_BLUEPHONET:
+			buffer2[0] = PHONET_BLUE_FRAME_ID;
+			buffer2[1] = PHONET_DEVICE_PHONE;	/* destination */
+			buffer2[2] = PHONET_BLUE_DEVICE_PC;	/* source */
+			break;
+		case GCT_DKU2PHONET:
+		case GCT_FBUS2USB:
+			buffer2[0] = PHONET_DKU2_FRAME_ID;
+			buffer2[1] = PHONET_DEVICE_PHONE; 		/* destination */
+			buffer2[2] = PHONET_DEVICE_PC;    		/* source */
+			break;
+		default:
+			buffer2[0] = PHONET_FRAME_ID,
+			buffer2[1] = PHONET_DEVICE_PHONE; 		/* destination */
+			buffer2[2] = PHONET_DEVICE_PC;    		/* source */
+			break;
 	}
 
 	buffer2[3] = MsgType;
@@ -124,6 +131,7 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 		switch (s->ConnectionType) {
 		case GCT_DKU2PHONET:
 		case GCT_IRDAPHONET:
+		case GCT_FBUS2USB:
 			if (rx_char == PHONET_DEVICE_PC) correct = true;
 			break;
 		case GCT_PHONETBLUE:
@@ -153,6 +161,7 @@ static GSM_Error PHONET_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 			if (rx_char == PHONET_BLUE_FRAME_ID) correct = true;
 			break;
 		case GCT_DKU2PHONET:
+		case GCT_FBUS2USB:
 			if (rx_char == PHONET_DKU2_FRAME_ID) correct = true;
 			break;
 		default:
