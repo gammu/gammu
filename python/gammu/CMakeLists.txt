@@ -36,6 +36,7 @@ execute_process(
 
 set (PYTHON_GAMMU_SRC
     src/gammu.c
+    src/smsd.c
     src/misc.c
     src/errors.c
     src/convertors/backup.c

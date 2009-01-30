@@ -44,4 +44,9 @@ typedef int Py_ssize_t;
 #define PY_FORMAT_SIZE_T ""
 #endif
 
+/**
+ * Initialisation of SMSD object.
+ */
+bool gammu_smsd_init(PyObject *m);
+
 #endif

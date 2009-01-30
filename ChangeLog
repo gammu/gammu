@@ -27,7 +27,7 @@ ChangeLog
 [-] * Avoid string length overflow in Nokia phonebook encoder.
 [-] * Introduced backward compatibility of gammu.StateMachine.SetConfig.
 [-] * Experimental dku-2 userspace driver using libusb-1.0 (fbususb).
-[-] * python-gammu can now inject messages into SMSD.
+[-] * python-gammu can now inject messages into SMSD (gammu.SMSD object).
 [+] * SMSD stores summary counts of sent/received messages in database.
     
 20090126 - 1.22.92
