@@ -265,7 +265,6 @@ static GSM_Error FBUS2_StateMachine(GSM_StateMachine *s, unsigned char rx_char)
 	if (d->MsgRXState == RX_Sync) {
 		switch (s->ConnectionType) {
 			case GCT_FBUS2:
-			case GCT_FBUS2USB:
 			case GCT_FBUS2DLR3:
 			case GCT_DKU5FBUS2:
 			case GCT_FBUS2PL2303:
@@ -437,7 +436,6 @@ static GSM_Error FBUS2_Initialise(GSM_StateMachine *s)
 		break;
 #endif
 	case GCT_FBUS2:
-	case GCT_FBUS2USB:
 		error = Device->DeviceSetSpeed(s,115200);
 		if (error != ERR_NONE) return error;
 
