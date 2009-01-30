@@ -24,22 +24,6 @@
 const char default_config[] = "/etc/gammu-smsdrc";
 #endif
 
-GSM_SMSDConfig *config;
-volatile bool reconfigure = false;
-
-void smsd_interrupt(int signum)
-{
-	SMSD_Shutdown(config);
-	signal(signum, SIG_IGN);
-}
-
-void smsd_reconfigure(int signum)
-{
-	reconfigure = true;
-	SMSD_Shutdown(config);
-	signal(signum, SIG_IGN);
-}
-
 NORETURN void version(void)
 {
 	printf("Gammu-smsd-inject version %s\n", VERSION);
@@ -160,6 +144,7 @@ int main(int argc, char **argv)
 	int startarg;
 	GSM_MultiSMSMessage sms;
 	GSM_Message_Type type = SMS_SMSD;
+	GSM_SMSDConfig *config;
 
 	SMSD_Parameters params = {
 		NULL,
@@ -194,11 +179,21 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	error = SMSD_InjectSMS(params.config_file, &sms);
+	config = SMSD_NewConfig();
+	assert(config != NULL);
+
+	error = SMSD_ReadConfig(params.config_file, config, true);
+	if (error != ERR_NONE) {
+		SMSD_Terminate(config, "Failed to read config", error, true, 2);
+	}
+
+	error = SMSD_InjectSMS(config, &sms);
 	if (error != ERR_NONE) {
 		printf("Failed to inject message: %s\n", GSM_ErrorString(error));
 		return 2;
 	}
+
+	SMSD_FreeConfig(config);
 
 	return 0;
 }

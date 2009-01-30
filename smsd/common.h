@@ -20,11 +20,6 @@ typedef struct {
 	bool install_service;
 	bool uninstall_service;
 } SMSD_Parameters;
-
-/**
- * SMSD configuration used globally all around SMSD.
- */
-extern GSM_SMSDConfig *config;
 #endif
 
 /* How should editor hadle tabs in this file? Add editor commands here.

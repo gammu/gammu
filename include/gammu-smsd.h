@@ -25,12 +25,12 @@ typedef struct _GSM_SMSDConfig GSM_SMSDConfig;
 /**
  * Enqueues SMS message in SMS daemon queue.
  *
- * \param filename SMSD configuration file.
+ * \param Config SMSD configuration pointer.
  * \param sms Message data to send.
  *
  * \return Error code
  */
-GSM_Error SMSD_InjectSMS(const char *filename, GSM_MultiSMSMessage *sms);
+GSM_Error SMSD_InjectSMS(GSM_SMSDConfig *Config, GSM_MultiSMSMessage *sms);
 
 /**
  * Flags SMSD daemon to terminate itself gracefully.

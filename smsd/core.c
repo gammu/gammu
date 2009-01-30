@@ -1043,16 +1043,10 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 	return ERR_NONE;
 }
 
-GSM_Error SMSD_InjectSMS(const char *filename, GSM_MultiSMSMessage *sms)
+GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms)
 {
 	GSM_SMSDService		*Service;
-	GSM_SMSDConfig		*Config;
 	GSM_Error error;
-
-	Config = SMSD_NewConfig();
-
-	error = SMSD_ReadConfig(filename, Config, false);
-	if (error != ERR_NONE) return ERR_UNKNOWN;
 
 	error = SMSGetService(Config, &Service);
 	if (error != ERR_NONE) return ERR_UNKNOWN;
@@ -1061,9 +1055,6 @@ GSM_Error SMSD_InjectSMS(const char *filename, GSM_MultiSMSMessage *sms)
 	if (error != ERR_NONE) return ERR_UNKNOWN;
 
 	error = Service->CreateOutboxSMS(sms, Config);
-
-	SMSD_FreeConfig(Config);
-
 	return error;
 }
 
