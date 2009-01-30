@@ -15,7 +15,7 @@
 #include <getopt.h>
 #endif
 #ifdef HAVE_WINDOWS_SERVICE
-#include "service.h"
+#include "winservice.h"
 #endif
 #ifdef HAVE_KILL
 #include "pidfile.h"

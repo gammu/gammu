@@ -10,9 +10,12 @@
 #include <time.h>
 #include <gammu-smsd.h>
 
-#include "service.h"
+#include "winservice.h"
 
 char smsd_service_name[SERVICE_NAME_LENGTH] = "GammuSMSD";
+
+/* Defined in main.c */
+extern GSM_SMSDConfig *config;
 
 SERVICE_STATUS m_ServiceStatus;
 
