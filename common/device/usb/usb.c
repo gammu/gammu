@@ -129,6 +129,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 	int rc;
 	int i = 0;
 	struct libusb_device_descriptor desc;
+	struct libusb_config_descriptor *config;
 	GSM_Error error;
 
 	cnt = libusb_get_device_list(d->context, &devs);
@@ -170,6 +171,32 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		error = GSM_USB_Error(s, rc);
 		goto done;
 	}
+
+	/* Unhook kernel driver */
+	rc = libusb_get_active_config_descriptor(dev, &config);
+	if (rc != 0) {
+		smprintf(s, "Failed to get current device configuration!\n");
+		libusb_close(d->handle);
+		d->handle = NULL;
+		error = GSM_USB_Error(s, rc);
+		goto done;
+	}
+
+	for (i = 0; i < config->bNumInterfaces; i++) {
+		if (libusb_kernel_driver_active(d->handle, i) == 1) {
+			smprintf(s, "Detaching kernel driver from inteface %d\n", i);
+			rc = libusb_detach_kernel_driver(d->handle, i);
+			if (rc != 0) {
+				smprintf(s, "Failed to detach kernel driver!\n");
+				libusb_close(d->handle);
+				d->handle = NULL;
+				error = GSM_USB_Error(s, rc);
+				goto done;
+			}
+		}
+	}
+
+	libusb_free_config_descriptor(config);
 
 	rc = libusb_set_configuration(d->handle, d->configuration);
 	if (rc != 0) {
