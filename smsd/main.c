@@ -55,6 +55,9 @@ NORETURN void version(void)
 	printf("Built %s on %s using %s\n", __TIME__, __DATE__, GetCompiler());
 	printf("Compiled in features:\n");
 	printf("OS support:\n");
+#ifdef HAVE_SHM
+	printf("  - %s\n", "SHM");
+#endif
 #ifdef HAVE_DAEMON
 	printf("  - %s\n", "DAEMON");
 #endif

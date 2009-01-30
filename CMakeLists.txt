@@ -106,6 +106,7 @@ check_symbol_exists (dup "unistd.h" HAVE_DUP_UNISTD_H)
 check_symbol_exists (getpid "unistd.h" HAVE_GETPID)
 check_symbol_exists (getpass "unistd.h" HAVE_GETPASS)
 check_symbol_exists (dup "io.h" HAVE_DUP_IO_H)
+check_symbol_exists (shmget "sys/shm.h" HAVE_SHM)
 check_c_source_compiles ("
 #include <stdio.h>
 #include <syslog.h>

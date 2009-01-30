@@ -43,6 +43,10 @@ set (INJECT_SRC
     inject.c
     )
 
+set (MONITOR_SRC
+    monitor.c
+    )
+
 # Hides default case in switch, to allow checking whether all cases are handled.
 if(DEBUG)
     add_definitions(-DCHECK_CASES)
@@ -71,6 +75,14 @@ add_executable (gammu-smsd-inject ${INJECT_SRC})
 target_link_libraries (gammu-smsd-inject libGammu)
 target_link_libraries (gammu-smsd-inject gsmsd)
 target_link_libraries (gammu-smsd-inject messagecmdline)
+
+if (HAVE_SHM)
+# Gammu-smsd-monitor program
+    add_executable (gammu-smsd-monitor ${MONITOR_SRC})
+
+    target_link_libraries (gammu-smsd-monitor libGammu)
+    target_link_libraries (gammu-smsd-monitor gsmsd)
+endif (HAVE_SHM)
 
 include_directories (
     "${Gammu_BINARY_DIR}/include"

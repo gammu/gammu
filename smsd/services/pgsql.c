@@ -168,13 +168,11 @@ static GSM_Error SMSDPgSQL_Query(GSM_SMSDConfig * Config, const char *query, PGr
 
 static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 {
-	unsigned char buf[400], buf2[200], imei[100];
+	unsigned char buf[400], buf2[200];
 
 	PGresult *Res;
 
-	GSM_GetIMEI(Config->gsm, imei);
-
-	sprintf(buf, "DELETE FROM phones WHERE IMEI = '%s'", imei);
+	sprintf(buf, "DELETE FROM phones WHERE IMEI = '%s'", Config->Status->IMEI);
 
 	if (SMSDPgSQL_Query(Config, buf, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error deleting from database (%s)\n", __FUNCTION__);
@@ -194,7 +192,7 @@ static GSM_Error SMSDPgSQL_InitAfterConnect(GSM_SMSDConfig * Config)
 
 	sprintf(buf,
 		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) VALUES ('%s', '%s', 'yes', 'yes', now(), now() + interval '10 seconds', '%s', -1, -1)",
-		imei, Config->PhoneID, buf2);
+		Config->Status->IMEI, Config->PhoneID, buf2);
 
 	if (SMSDPgSQL_Query(Config, buf, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error inserting into database (%s)\n", __FUNCTION__);
@@ -991,7 +989,7 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	return ERR_NONE;
 }
 
-static GSM_Error SMSDPgSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config, GSM_BatteryCharge *Battery, GSM_SignalQuality *Signal)
+static GSM_Error SMSDPgSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 {
 	PGresult *Res;
 
@@ -999,7 +997,7 @@ static GSM_Error SMSDPgSQL_RefreshPhoneStatus(GSM_SMSDConfig * Config, GSM_Batte
 
 	sprintf(buffer,
 		"UPDATE phones SET TimeOut= now() + INTERVAL '10 seconds', Battery = %d, Signal = %d WHERE IMEI = '%s'",
-		Battery->BatteryPercent, Signal->SignalPercent, Config->IMEI);
+		Config->Status->Charge.BatteryPercent, Config->Status->Network.SignalPercent, Config->Status->IMEI);
 	if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;

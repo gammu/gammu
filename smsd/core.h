@@ -15,6 +15,14 @@
 #  include <libpq-fe.h>
 #endif
 
+#ifdef HAVE_SHM
+#include <sys/types.h>
+
+#define SMSD_SHM_KEY (0x42)
+
+#endif
+#define SMSD_SHM_VERSION (1)
+
 #define MAX_RETRIES 1
 
 typedef enum {
@@ -46,7 +54,6 @@ struct _GSM_SMSDConfig {
 	int		currdeliveryreport;
 	unsigned char 	SMSID[200],	 prevSMSID[200];
 	GSM_SMSC	SMSC;
-	char		IMEI[GSM_MAX_IMEI_LENGTH];
 
 #if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H)
 	/* options for SQL database */
@@ -87,6 +94,12 @@ struct _GSM_SMSDConfig {
 
 	volatile GSM_Error SendingSMSStatus;
 	volatile int TPMR;
+
+#ifdef HAVE_SHM
+	key_t shm_key;
+	int shm_handle;
+#endif
+	GSM_SMSDStatus *Status;
 };
 
 typedef enum {
@@ -113,7 +126,7 @@ typedef struct {
 	 * Updates phone status in service backend. Please note that
 	 * this can not talk to the phone.
 	 */
-	GSM_Error	(*RefreshPhoneStatus) (GSM_SMSDConfig *Config, GSM_BatteryCharge *Battery, GSM_SignalQuality *Signal);
+	GSM_Error	(*RefreshPhoneStatus) (GSM_SMSDConfig *Config);
 } GSM_SMSDService;
 
 extern GSM_Error SMSD_NoneFunction		(void);

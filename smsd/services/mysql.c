@@ -200,10 +200,9 @@ static GSM_Error SMSDMySQL_Store(GSM_SMSDConfig *Config, const char *query, MYSQ
 
 static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 {
-	unsigned char buf[400],buf2[200],imei[100];
+	unsigned char buf[400],buf2[200];
 
-	GSM_GetIMEI(Config->gsm, imei);
-	sprintf(buf,"DELETE FROM `phones` WHERE `IMEI` = '%s'", imei);
+	sprintf(buf,"DELETE FROM `phones` WHERE `IMEI` = '%s'", Config->Status->IMEI);
 	if (SMSDMySQL_Query(Config, buf) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error deleting from database (%s): %s\n", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
@@ -221,7 +220,7 @@ static GSM_Error SMSDMySQL_InitAfterConnect(GSM_SMSDConfig *Config)
 
 	SMSD_Log(0, Config, "Communication established");
 	sprintf(buf,"INSERT INTO `phones` (`IMEI`,`ID`,`Send`,`Receive`,`InsertIntoDB`,`TimeOut`,`Client`, `Battery`, `Signal`) VALUES ('%s','%s','yes','yes',NOW(),(NOW() + INTERVAL 10 SECOND)+0,'%s', -1, -1)",
-		imei, Config->PhoneID, buf2);
+		Config->Status->IMEI, Config->PhoneID, buf2);
 	if (SMSDMySQL_Query(Config, buf) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error inserting into database (%s): %s\n", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;
@@ -759,13 +758,13 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
   	return ERR_NONE;
 }
 
-static GSM_Error SMSDMySQL_RefreshPhoneStatus(GSM_SMSDConfig *Config, GSM_BatteryCharge *Battery, GSM_SignalQuality *Signal)
+static GSM_Error SMSDMySQL_RefreshPhoneStatus(GSM_SMSDConfig *Config)
 {
 	unsigned char buffer[500];
 
 	sprintf(buffer,
 		"UPDATE `phones` SET `TimeOut`= (NOW() + INTERVAL 10 SECOND)+0, `Battery`= %d, `Signal`= %d WHERE `IMEI` = '%s'",
-		Battery->BatteryPercent, Signal->SignalPercent, Config->IMEI);
+		Config->Status->Charge.BatteryPercent, Config->Status->Network.SignalPercent, Config->Status->IMEI);
 	if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error writing to database (%s): %s\n", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
 		return ERR_UNKNOWN;

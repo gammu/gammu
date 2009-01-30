@@ -1,0 +1,50 @@
+.\"*******************************************************************
+.\"
+.\" This file was generated with po4a. Translate the source file.
+.\"
+.\"*******************************************************************
+.TH GAMMU\-SMSD\-MONITOR 1 "Leden 30, 2009" "Gammu 1.23.0" "Dokumentace Gammu"
+.SH JMÉNO
+gammu\-smsd\-monitor \- Monitoruje stav SMS démona Gammu
+.SH SYNTAXE
+\fBgammu\-smsd\-monitor\fP [\fIOPTION\fP]...
+.SH POPIS
+Tato manuálová stránka stručně popisuje příkaz \fBgammu\-smsd\-monitor\fP.
+.PP
+\fBgammu\-smsd\-monitor\fP je program, který monitoruje stav Gammu SMS démona,
+pravidelně zobrazuje informace o telefonu a zpracovaných zprávách.
+.PP
+Program přijímá následující parametry (dlouhé parametry nemusí být
+podporovány na všechplatformách):
+.TP 
+\fB\-h\fP, \fB\-\-help\fP
+Zobrazí nápovědu.
+.TP 
+\fB\-v\fP, \fB\-\-version\fP
+Zobrazí informace o verzi a zakompilované funkcionalitě.
+.TP 
+\fB\-c\fP, \fB\-\-config\fP=\fIsoubor\fP
+Jaký konfigurační soubor se má použít, výchozí je /etc/gammu\-smsdrc, na
+systému Windows není žádná výchozí cesta a cesta ke konfiguračnímu souboru
+musí být zadána vždy.
+
+.SH "DALŠÍ INFORMACE"
+gammu\-smsdrc(5), gammu(1), gammu\-smsd(1)
+.SH AUTOR
+gammu\-smsd a tuto manuálovou stránku napsal Michal Čihař
+<michal@cihar.com>.
+.SH COPYRIGHT
+Copyright \(co 2009 Michal Čihař a další autoři.  Licence GPLv2: GNU GPL
+verze 2 <http://www.gnu.org/licenses/old\-licenses/gpl\-2.0.html>
+.br
+Tento program je volný software; můžete jej šířit a modifikovat.  Není
+poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem.
+.SH "HLÁŠENÍ CHYB"
+Prosím hlašte chyby na <http://bugs.cihar.com>.
+
+Před hlášením chyb prosím zapněte logovaní v nastavení SMSD:
+
+    [gammu]
+    logformat = textall
+
+a přiložte tento log k hlášení chyby.
