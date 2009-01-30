@@ -80,7 +80,7 @@ CREATE TABLE gammu (
 -- Dumping data for table "gammu"
 -- 
 
-INSERT INTO gammu (Version) VALUES (8);
+INSERT INTO gammu (Version) VALUES (9);
 
 -- --------------------------------------------------------
 
@@ -229,7 +229,9 @@ CREATE TABLE phones (
   IMEI text NOT NULL,
   Client text NOT NULL,
   Battery integer NOT NULL,
-  Signal integer NOT NULL
+  Signal integer NOT NULL,
+  Sent integer NOT NULL,
+  Received integer NOT NULL
 );
 
 -- 

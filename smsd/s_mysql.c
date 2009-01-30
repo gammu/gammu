@@ -20,7 +20,7 @@
 
 #include "smsdcore.h"
 
-#define SMSD_MYSQL_DB_VERSION (8)
+#define SMSD_MYSQL_DB_VERSION (9)
 
 /* Disconnects from a database */
 static GSM_Error SMSDMySQL_Free(GSM_SMSDConfig *Config)
@@ -498,6 +498,10 @@ static GSM_Error SMSDMySQL_FindOutboxSMS(GSM_MultiSMSMessage *sms, GSM_SMSDConfi
 			if (!strcmp(Row[7],"false")) break;
 
 		}
+		if (SMSDMySQL_Query(Config, "UPDATE `phones` SET `Received`= `Received` + 1") != ERR_NONE) {
+			SMSD_Log(0, Config, "Error updating number of received messages (%s)\n", __FUNCTION__);
+			return ERR_UNKNOWN;
+		}
 	}
 	mysql_free_result(Res);
   	return ERR_NONE;
@@ -746,6 +750,10 @@ static GSM_Error SMSDMySQL_AddSentSMSInfo(GSM_MultiSMSMessage *sms, GSM_SMSDConf
 	}
 	if (SMSDMySQL_Query(Config, buffer) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error writing to database (%s): %s\n", __FUNCTION__, mysql_error(&Config->DBConnMySQL));
+		return ERR_UNKNOWN;
+	}
+	if (SMSDMySQL_Query(Config, "UPDATE `phones` SET `Sent`= `Sent` + 1") != ERR_NONE) {
+		SMSD_Log(0, Config, "Error updating number of sent messages (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
   	return ERR_NONE;

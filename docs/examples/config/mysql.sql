@@ -40,7 +40,7 @@ CREATE TABLE `gammu` (
 -- Dumping data for table `gammu`
 -- 
 
-INSERT INTO `gammu` (`Version`) VALUES (8);
+INSERT INTO `gammu` (`Version`) VALUES (9);
 
 -- --------------------------------------------------------
 
@@ -171,7 +171,9 @@ CREATE TABLE `phones` (
   `IMEI` text NOT NULL,
   `Client` text NOT NULL,
   `Battery` int(2) NOT NULL,
-  `Signal` int(2) NOT NULL
+  `Signal` int(2) NOT NULL,
+  `Sent` int NOT NULL,
+  `Received` int NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 

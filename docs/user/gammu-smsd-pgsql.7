@@ -248,6 +248,14 @@ battery level (or -1 if uknonwn)
 .br
 signal level (or -1 if uknonwn)
 
+\fBSent\fR (integer)
+.br
+Number of sent SMS messages (SMSD does not reset this counter, so it might oveflow)
+
+\fBReceived\fR (integer)
+.br
+Number of sent SMS messages (SMSD does not reset this counter, so it might oveflow)
+
 .TP
 .BI sentitems
 
@@ -346,6 +354,8 @@ Not used by SMSD currently, included only for application usage.
 .SH HISTORY
 
 History of schema versions:
+
+9 - added sent/received counters to phones table
 
 8 - introduced phones table
 
