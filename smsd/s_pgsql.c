@@ -18,7 +18,7 @@
 
 #include "smsdcore.h"
 
-#define SMSD_PGSQL_DB_VERSION (8)
+#define SMSD_PGSQL_DB_VERSION (9)
 
 /* Connects to database */
 static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
@@ -410,6 +410,13 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
+
+		if (SMSDPgSQL_Query(Config, "UPDATE phones SET Received = Received + 1", &Res) != ERR_NONE) {
+			SMSD_Log(0, Config, "Error updating number of received messages (%s)\n", __FUNCTION__);
+			return ERR_UNKNOWN;
+		}
+		PQclear(Res);
+
 	}
 	PQclear(Res);
 
@@ -971,6 +978,12 @@ static GSM_Error SMSDPgSQL_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 
 	if (SMSDPgSQL_Query(Config, buffer, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
+		return ERR_UNKNOWN;
+	}
+	PQclear(Res);
+
+	if (SMSDPgSQL_Query(Config, "UPDATE phones SET Sent = Sent + 1", &Res) != ERR_NONE) {
+		SMSD_Log(0, Config, "Error updating number of sent messages (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	PQclear(Res);
