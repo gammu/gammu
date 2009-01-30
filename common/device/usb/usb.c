@@ -182,12 +182,57 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		goto done;
 	}
 
-	for (i = 0; i < config->bNumInterfaces; i++) {
-		if (libusb_kernel_driver_active(d->handle, i) == 1) {
-			smprintf(s, "Detaching kernel driver from inteface %d\n", i);
-			rc = libusb_detach_kernel_driver(d->handle, i);
+	/* Do we have to change configuration? */
+	if (config->bConfigurationValue != d->configuration) {
+		smprintf(s, "Will change configuration, unhooking all interfaces!\n");
+		for (i = 0; i < config->bNumInterfaces; i++) {
+			if (libusb_kernel_driver_active(d->handle, i) == 1) {
+				smprintf(s, "Detaching kernel driver from inteface %d\n", i);
+				rc = libusb_detach_kernel_driver(d->handle, i);
+				if (rc != 0) {
+					smprintf(s, "Failed to detach kernel driver!\n");
+					libusb_free_config_descriptor(config);
+					libusb_close(d->handle);
+					d->handle = NULL;
+					error = GSM_USB_Error(s, rc);
+					goto done;
+				}
+			}
+		}
+
+
+		smprintf(s, "Configuring USB device...\n");
+		rc = libusb_set_configuration(d->handle, d->configuration);
+		if (rc != 0) {
+			smprintf(s, "Failed to set device configuration %d (%d)!\n", d->configuration, rc);
+			libusb_free_config_descriptor(config);
+			libusb_close(d->handle);
+			d->handle = NULL;
+			error = GSM_USB_Error(s, rc);
+			goto done;
+		}
+	} else {
+		smprintf(s, "Configuration change not required, unhooking only required interfaces!\n");
+
+		if (libusb_kernel_driver_active(d->handle, d->control_iface) == 1) {
+			smprintf(s, "Detaching kernel driver from inteface %d\n", d->control_iface);
+			rc = libusb_detach_kernel_driver(d->handle, d->control_iface);
 			if (rc != 0) {
 				smprintf(s, "Failed to detach kernel driver!\n");
+				libusb_free_config_descriptor(config);
+				libusb_close(d->handle);
+				d->handle = NULL;
+				error = GSM_USB_Error(s, rc);
+				goto done;
+			}
+		}
+
+		if (libusb_kernel_driver_active(d->handle, d->data_iface) == 1) {
+			smprintf(s, "Detaching kernel driver from inteface %d\n", d->data_iface);
+			rc = libusb_detach_kernel_driver(d->handle, d->data_iface);
+			if (rc != 0) {
+				smprintf(s, "Failed to detach kernel driver!\n");
+				libusb_free_config_descriptor(config);
 				libusb_close(d->handle);
 				d->handle = NULL;
 				error = GSM_USB_Error(s, rc);
@@ -195,18 +240,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 			}
 		}
 	}
-
 	libusb_free_config_descriptor(config);
-
-	smprintf(s, "Configuring USB device...\n");
-	rc = libusb_set_configuration(d->handle, d->configuration);
-	if (rc != 0) {
-		smprintf(s, "Failed to set device configuration %d (%d)!\n", d->configuration, rc);
-		libusb_close(d->handle);
-		d->handle = NULL;
-		error = GSM_USB_Error(s, rc);
-		goto done;
-	}
 
 	smprintf(s, "Claiming USB control interface...\n");
 	rc = libusb_claim_interface(d->handle, d->control_iface);
