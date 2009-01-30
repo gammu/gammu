@@ -183,7 +183,7 @@ static GSM_Error PHONET_Initialise(GSM_StateMachine *s)
 {
 	int 				total = 0, i, n;
 	GSM_Protocol_PHONETData 	*d = &s->Protocol.Data.PHONET;
-	unsigned char			req[50];
+	unsigned char			req[5000];
 
 	d->Msg.Length	= 0;
 	d->Msg.Buffer	= NULL;
@@ -198,7 +198,7 @@ static GSM_Error PHONET_Initialise(GSM_StateMachine *s)
 		if (s->Device.Functions->WriteDevice(s,req,7) != 7) return ERR_DEVICEWRITEERROR;
 
 		while (total < 7) {
-			n = s->Device.Functions->ReadDevice(s, req + total, 50 - total);
+			n = s->Device.Functions->ReadDevice(s, req + total, sizeof(req) - total);
 			total += n;
 		}
 
