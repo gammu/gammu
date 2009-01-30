@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# sample script to show how to send SMS
+# sample script to show how to send SMS through SMSD
 
 import gammu
 
