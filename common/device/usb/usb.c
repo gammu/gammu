@@ -198,6 +198,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 
 	libusb_free_config_descriptor(config);
 
+	smprintf(s, "Configuring USB device...\n");
 	rc = libusb_set_configuration(d->handle, d->configuration);
 	if (rc != 0) {
 		smprintf(s, "Failed to set device configuration %d (%d)!\n", d->configuration, rc);
@@ -207,6 +208,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		goto done;
 	}
 
+	smprintf(s, "Claiming USB control interface...\n");
 	rc = libusb_claim_interface(d->handle, d->control_iface);
 	if (rc != 0) {
 		smprintf(s, "Failed to set claim control interface %d (%d)!\n", d->control_iface, rc);
@@ -216,6 +218,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		goto done;
 	}
 
+	smprintf(s, "Configuring USB control interface...\n");
 	rc = libusb_set_interface_alt_setting(d->handle, d->control_iface, d->control_altsetting);
 	if (rc != 0) {
 		smprintf(s, "Failed to set control alt setting %d (%d)!\n", d->control_altsetting, rc);
@@ -225,6 +228,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		goto done;
 	}
 
+	smprintf(s, "Claiming USB data interface...\n");
 	rc = libusb_claim_interface(d->handle, d->data_iface);
 	if (rc != 0) {
 		smprintf(s, "Failed to set claim data interface %d (%d)!\n", d->data_iface, rc);
@@ -234,6 +238,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		goto done;
 	}
 
+	smprintf(s, "Configuring USB data interface...\n");
 	rc = libusb_set_interface_alt_setting(d->handle, d->data_iface, d->data_altsetting);
 	if (rc != 0) {
 		smprintf(s, "Failed to set data alt setting %d (%d)!\n", d->data_altsetting, rc);
@@ -243,6 +248,7 @@ GSM_Error GSM_USB_Probe(GSM_StateMachine *s, GSM_USB_Match_Function matcher)
 		goto done;
 	}
 
+	smprintf(s, "Connected!\n");
 	error = ERR_NONE;
 
 done:
