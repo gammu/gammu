@@ -39,7 +39,7 @@ ovládají filtrování zpráv (viz dále).
 .TP 
 \fBService\fP
 
-Jakou službu SMSM použít, jedna z FILES, MYSQL, PGSQL (záleží na
+Jakou službu SMSM použít, jedna z FILES, MYSQL, PGSQL, DBI (záleží na
 zakompilovaných knihovnách).
 
 .TP 
@@ -156,8 +156,9 @@ Výchozí je 0, což znamená žádné ladicí informace.
 
 .SS "Parametry pro služby používající databázi"
 
-Obě služby MYSQL a PGSQL (viz gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7))
-podporují stejné parametry pro nastavení připojení k databázi:
+Všechny ze služeb DBI, MYSQL a PGSQL (viz gammu\-smsd\-mysql(7),
+gammu\-smsd\-pgsql(7), gammu\-smsd\-dbi(7)) podporují stejné parametry pro
+nastavení připojení k databázi:
 
 .TP 
 \fBUser\fP
@@ -189,6 +190,20 @@ Pokud odešlete SMS zprávu přes nějaké SMS centrum, může se stát, že
 doručenky přijdou z jiného SMS centra. Pro tento případ použijte tento
 parametr a nastavte zde takovéto SMS centrum. Gammu pak nebude kontrolovat
 číslo tohoto SMS centra při přiřazování doručenek zprávám.
+
+.TP 
+\fBDriver\fP
+
+Který ovladač DBI se má použít. Možnosti závisí na tom, které máte
+nainstalovány. DBI podporuje: mysql,·freetds·(umožňuje přístup
+k·MS·SQL·Serveru·a·Sybase),·pgsql,·sqlite,·sqlite3,·firebird·a·ovladače
+ingres,·msql·a oracle·se vyvíjejí.
+
+.TP 
+\fBDriversPath\fP
+
+Cesta, kde jsou umístěny ovladače DBI. Tento parametr obvykle není potřeba
+nastavovat, pokud jsou ovladače nainstalovány správně.
 
 .SS "Parametry pro službu používající soubory"
 
@@ -328,7 +343,8 @@ number1 = 666
 .SH "DALŠÍ INFORMACE"
 gammu\-smsd(1), gammu(1), gammurc(5)
 
-gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7)
+gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7),
+gammu\-smsd\-dbi(7)
 .SH AUTOR
 gammu\-smsd a tuto manuálovou stránku napsal Michal Čihař
 <michal@cihar.com>.

@@ -51,6 +51,9 @@
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 #  include "services/pgsql.h"
 #endif
+#ifdef LIBDBI_FOUND
+#  include "services/dbi.h"
+#endif
 
 #ifdef HAVE_WINDOWS_EVENT_LOG
 #include "log-event.h"
@@ -441,6 +444,25 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 		if (Config->errorsmspath == NULL) Config->errorsmspath = Config->sentsmspath;
 		SMSD_Log(1, Config, "SMS with errors moved to \"%s\"",Config->errorsmspath);
 	}
+
+#ifdef LIBDBI_FOUND
+	if (!strcasecmp(Config->Service,"DBI")) {
+		Config->skipsmscnumber = INI_GetValue(Config->smsdcfgfile, "smsd", "skipsmscnumber", false);
+		if (Config->skipsmscnumber == NULL) Config->skipsmscnumber="";
+		Config->user = INI_GetValue(Config->smsdcfgfile, "smsd", "user", false);
+		if (Config->user == NULL) Config->user="root";
+		Config->password = INI_GetValue(Config->smsdcfgfile, "smsd", "password", false);
+		if (Config->password == NULL) Config->password="";
+		Config->PC = INI_GetValue(Config->smsdcfgfile, "smsd", "pc", false);
+		if (Config->PC == NULL) Config->PC="localhost";
+		Config->database = INI_GetValue(Config->smsdcfgfile, "smsd", "database", false);
+		if (Config->database == NULL) Config->database="sms";
+		Config->driver = INI_GetValue(Config->smsdcfgfile, "smsd", "driver", false);
+		if (Config->driver == NULL) Config->driver="mysql";
+		Config->driverspath = INI_GetValue(Config->smsdcfgfile, "smsd", "driverspath", false);
+		/* This one can be NULL */
+	}
+#endif
 
 #ifdef HAVE_MYSQL_MYSQL_H
 	if (!strcasecmp(Config->Service,"MYSQL")) {
@@ -932,6 +954,12 @@ GSM_Error SMSGetService(GSM_SMSDConfig *Config, GSM_SMSDService **Service)
 {
 	if (strcasecmp(Config->Service, "FILES") == 0) {
 		*Service = &SMSDFiles;
+	} else if (strcasecmp(Config->Service, "DBI") == 0) {
+#ifdef LIBDBI_FOUND
+		*Service = &SMSDDBI;
+#else
+		return ERR_DISABLED;
+#endif
 	} else if (strcasecmp(Config->Service, "MYSQL") == 0) {
 #ifdef HAVE_MYSQL_MYSQL_H
 		*Service = &SMSDMySQL;
