@@ -3603,6 +3603,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 		if (error == ERR_NONE) {
 			Phone->DispatchError 	= ERR_TIMEOUT;
 			Phone->RequestID 	= ID_SaveSMSMessage;
+			usleep(100000);
 			smprintf(s, "Saving SMS\n");
 			error = s->Protocol.Functions->WriteMessage(s, hexreq, current2, 0x00);
 			if (error!=ERR_NONE) return error;
@@ -3610,6 +3611,7 @@ GSM_Error ATGEN_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 			/* CTRL+Z ends entering */
 			error = s->Protocol.Functions->WriteMessage(s, "\x1A", 1, 0x00);
 			if (error != ERR_NONE) return error;
+			usleep(100000);
 			error = GSM_WaitForOnce(s, NULL, 0x00, 0x00, 40);
 			if (error != ERR_TIMEOUT) return error;
 		} else {
@@ -3708,6 +3710,7 @@ GSM_Error ATGEN_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	ATGEN_WaitFor(s, buffer, strlen(buffer), 0x00, 20, ID_IncomingFrame);
 	s->ReplyNum			 = Replies;
 	if (error == ERR_NONE) {
+		usleep(100000);
 		smprintf(s, "Sending SMS\n");
 		error = s->Protocol.Functions->WriteMessage(s, hexreq, current2, 0x00);
 		if (error!=ERR_NONE) return error;
