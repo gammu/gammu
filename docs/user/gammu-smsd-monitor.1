@@ -25,6 +25,12 @@ Shows version information and compiled in features.
 \fB\-c\fR, \fB\-\-config\fR=\fIfile\fR
 Configuration file to use, default is /etc/gammu\-smsdrc, on Windows there is
 no default and configuration file path has to be always specified.
+.TP
+\fB\-l\fR, \fB\-\-loops\fR=\fIcount\fR
+Number of loops, by default monitor loops infinitely.
+.TP
+\fB\-d\fR, \fB\-\-delay\fR=\fIseconds\fR
+Delay betwen polling SMSD state, default is 20 seconds.
 
 .SH SEE ALSO
 gammu\-smsdrc(5), gammu(1), gammu\-smsd(1)

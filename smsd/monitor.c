@@ -23,6 +23,8 @@ const char default_config[] = "/etc/gammu-smsdrc";
 #endif
 
 volatile bool terminate = false;
+int delay_seconds = 20;
+int limit_loops = -1;
 
 void smsd_interrupt(int signum)
 {
@@ -92,15 +94,17 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 		{"help", 0, 0, 'h'},
 		{"version", 0, 0, 'v'},
 		{"config", 1, 0, 'c'},
+		{"delay", 1, 0, 'd'},
+		{"loops", 1, 0, 'l'},
 		{0, 0, 0, 0}
 	};
 	int option_index;
 
 	while ((opt =
-		getopt_long(argc, argv, "+hv?c:", long_options,
+		getopt_long(argc, argv, "+hv?c:d:l:", long_options,
 			    &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
-	while ((opt = getopt(argc, argv, "+hv?c:")) != -1) {
+	while ((opt = getopt(argc, argv, "+hv?c:d:l:")) != -1) {
 #else
 	/* Poor mans getopt replacement */
 	int i, optind = -1;
@@ -119,6 +123,12 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				break;
 			case 'v':
 				version();
+				break;
+			case 'd':
+				delay_seconds = atoi(optarg);
+				break;
+			case 'l':
+				limit_loops = atoi(optarg);
 				break;
 			case '?':
 			case 'h':
@@ -189,7 +199,7 @@ int main(int argc, char **argv)
 		SMSD_Terminate(config, "Failed to read config", error, true, 2);
 	}
 
-	while (!terminate) {
+	while (!terminate && (limit_loops == -1 || limit_loops-- > 0)) {
 		error = SMSD_GetStatus(config, &status);
 		if (error != ERR_NONE) {
 			printf("Failed to get status: %s\n", GSM_ErrorString(error));
@@ -204,7 +214,7 @@ int main(int argc, char **argv)
 		printf("BatterPercent: %d\n", status.Charge.BatteryPercent);
 		printf("NetworkSignal: %d\n", status.Network.SignalPercent);
 		printf("\n");
-		sleep(10);
+		sleep(delay_seconds);
 	}
 
 	SMSD_FreeConfig(config);
