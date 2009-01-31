@@ -33,7 +33,7 @@ ChangeLog
 [+] * python-gammu can now monitor SMSD state.
 [-] * Do not try to use OBEX 1.0 it's too old (bug #807).
 [-] * Better parse ATI replies from Samsung (bug #806).
-[-] * Better parse CSQ replies from Samsung (bug #806)
+[-] * Better parse CSQ replies from Samsung (bug #806).
     
 20090126 - 1.22.92
 
