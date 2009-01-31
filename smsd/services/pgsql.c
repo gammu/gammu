@@ -408,6 +408,7 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
+		PQclear(Res);
 
 		if (SMSDPgSQL_Query(Config, "UPDATE phones SET Received = Received + 1", &Res) != ERR_NONE) {
 			SMSD_Log(0, Config, "Error updating number of received messages (%s)\n", __FUNCTION__);
@@ -416,7 +417,6 @@ static GSM_Error SMSDPgSQL_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 		PQclear(Res);
 
 	}
-	PQclear(Res);
 
 	return ERR_NONE;
 }
