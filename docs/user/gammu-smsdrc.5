@@ -36,7 +36,7 @@ which control message filtering (see bellow).
 .TP
 .BI Service
 
-SMSD service to use, one of FILES, MYSQL, PGSQL (depends on compiled in
+SMSD service to use, one of FILES, MYSQL, PGSQL, DBI (depends on compiled in
 support for backends).
 
 .TP
@@ -154,9 +154,9 @@ Default is 0, what should mean no extra information.
 
 .SS Database backends options
 
-Both MYSQL and PGSQL backends (see  gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7)
-for their documentation) supports same options for configuring connection to a
-database:
+All DBI, MYSQL and PGSQL backends (see  gammu\-smsd\-mysql(7),
+gammu\-smsd\-pgsql(7), gammu\-smsd\-dbi(7)) for their documentation) supports
+same options for configuring connection to a database:
 
 .TP
 .BI User
@@ -187,6 +187,20 @@ included in documentation.
 When you send sms from some SMS centere you can have delivery reports from
 other SMSC number. You can set here number of this SMSC used by you and Gammu
 will not check it's number during assigning reports to sent SMS.
+
+.TP
+.BI Driver
+
+DBI driver to use. Depends on what DBI drivers you have installed, DBI
+supports: mysql, freetds (provides access to MS SQL Server and Sybase), pgsql,
+sqlite, sqlite3, firebird and ingres, msql and oracle drivers are under
+development.
+
+.TP
+.BI DriversPath
+
+Path, where DBI drivers are stored, this usually does not have to be set if
+you have properly installed drivers.
 
 .SS Files backend options
 
@@ -326,7 +340,7 @@ number1 = 666
 .SH SEE ALSO
 gammu\-smsd(1), gammu(1), gammurc(5)
 
-gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7)
+gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7), gammu\-smsd\-dbi(7)
 .SH AUTHOR
 gammu\-smsd and this manual page were written by Michal Cihar <michal@cihar.com>.
 .SH COPYRIGHT

@@ -19,6 +19,10 @@ if (HAVE_POSTGRESQL_LIBPQ_FE_H)
     list(APPEND LIBRARY_SRC services/pgsql.c)
 endif (HAVE_POSTGRESQL_LIBPQ_FE_H)
 
+if (LIBDBI_FOUND)
+    list(APPEND LIBRARY_SRC services/dbi.c)
+endif (LIBDBI_FOUND)
+
 if (WIN32)
     list(APPEND LIBRARY_SRC log-event.c)
 endif (WIN32)
@@ -89,6 +93,11 @@ include_directories (
     )
 
 # Tune options for found libraries
+if (LIBDBI_FOUND)
+    target_link_libraries (gsmsd ${LIBDBI_LIBRARIES})
+    include_directories (${LIBDBI_INCLUDE_DIR})
+endif (LIBDBI_FOUND)
+
 if (MYSQL_FOUND)
     target_link_libraries (gsmsd ${MYSQL_LIBRARIES})
     include_directories (${MYSQL_INCLUDE_DIR})

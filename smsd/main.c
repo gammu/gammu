@@ -89,6 +89,9 @@ NORETURN void version(void)
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
 	printf("  - %s\n", "POSTGRESQL");
 #endif
+#ifdef LIBDBI_FOUND
+	printf("  - %s\n", "DBI");
+#endif
 	exit(0);
 }
 

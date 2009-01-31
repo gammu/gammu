@@ -172,6 +172,7 @@ endif (BUILD_PYTHON)
 # Packages in sources
 macro_optional_find_package (MySQL)
 macro_optional_find_package (Postgres)
+macro_optional_find_package (LibDBI)
 macro_optional_find_package (GettextLibs)
 macro_optional_find_package (Iconv)
 macro_optional_find_package (CURL)

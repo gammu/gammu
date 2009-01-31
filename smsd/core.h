@@ -15,6 +15,10 @@
 #  include <libpq-fe.h>
 #endif
 
+#ifdef LIBDBI_FOUND
+#include <dbi/dbi.h>
+#endif
+
 #ifdef HAVE_SHM
 #include <sys/types.h>
 
@@ -22,6 +26,7 @@
 
 #endif
 #define SMSD_SHM_VERSION (1)
+#define SMSD_DB_VERSION (9)
 
 #define MAX_RETRIES 1
 
@@ -55,9 +60,10 @@ struct _GSM_SMSDConfig {
 	unsigned char 	SMSID[200],	 prevSMSID[200];
 	GSM_SMSC	SMSC;
 
-#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H)
+#if defined(HAVE_MYSQL_MYSQL_H) || defined(HAVE_POSTGRESQL_LIBPQ_FE_H) || defined(LIBDBI_FOUND)
 	/* options for SQL database */
 	const char	*database,	 *user,		*password;
+	const char	*driver, *driverspath;
 	const char	*PC,		 *skipsmscnumber;
         char 		DT[20];
 	char		CreatorID[200];
@@ -72,6 +78,11 @@ struct _GSM_SMSDConfig {
        /* PostgreSQL db connection */
        PGconn *DBConnPgSQL;
 #endif
+
+#ifdef LIBDBI_FOUND
+	dbi_conn DBConnDBI;
+#endif
+
 	INI_Section 		*smsdcfgfile;
 	volatile bool	shutdown;
 	GSM_StateMachine *gsm;
