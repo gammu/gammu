@@ -183,7 +183,7 @@ static GSM_Error PHONET_Initialise(GSM_StateMachine *s)
 {
 	int 				total = 0, i, n;
 	GSM_Protocol_PHONETData 	*d = &s->Protocol.Data.PHONET;
-	unsigned char			req[5000];
+	unsigned char			req[65536];
 
 	d->Msg.Length	= 0;
 	d->Msg.Buffer	= NULL;
