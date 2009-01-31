@@ -70,6 +70,13 @@ int bluetooth_checkservicename(GSM_StateMachine *s, const char *name)
 			}
 			return 2;
 		}
+		/* Phone Book Access is subset of IrMC */
+		if (strstr(name, "PSE") != NULL) {
+			if (strcmp(s->CurrentConfig->Model, "obexirmc") == 0) {
+				return 3;
+			}
+			return 2;
+		}
 		/* Phone Book Access Profile is subset of IrMC */
 		if (strstr(name, "PBAP") != NULL) {
 			if (strcmp(s->CurrentConfig->Model, "obexirmc") == 0) {
