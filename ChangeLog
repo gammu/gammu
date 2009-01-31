@@ -35,6 +35,7 @@ ChangeLog
 [-] * Better parse ATI replies from Samsung (bug #806).
 [-] * Better parse CSQ replies from Samsung (bug #806).
 [-] * Add small delays to SMS sending/saving (bug #794).
+[+] * SMSD monitor can now run for configured number of loops.
     
 20090126 - 1.22.92
 
