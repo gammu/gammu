@@ -6063,7 +6063,15 @@ GSM_Error ATGEN_ReplyGetSignalQuality(GSM_Protocol_Message msg, GSM_StateMachine
 				&ber);
 
 		if (error != ERR_NONE) {
-			return error;
+			/* Some phones do not prepend CSQ */
+			error = ATGEN_ParseReply(s,
+					GetLineString(msg.Buffer, &Priv->Lines, 2),
+					"@i, @i",
+					&rssi,
+					&ber);
+			if (error != ERR_NONE) {
+				return error;
+			}
 		}
 
 		/* 99 is Not known or not detectable. */
