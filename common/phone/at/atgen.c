@@ -1310,6 +1310,15 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	line = GetLineString(msg.Buffer, &Priv->Lines, 2);
 	pos = line;
 
+	/* Samsungs gives all information at once */
+	if (strstr(line, "Manufacturer") != NULL) {
+		line = GetLineString(msg.Buffer, &Priv->Lines, 3);
+		if (strstr(line, "Model") == NULL) {
+			line = GetLineString(msg.Buffer, &Priv->Lines, 2);
+		}
+		pos = line;
+	}
+
 	/*
 	 * Motorola returns something like:
 	 * "+CGMM: "GSM900","GSM1800","GSM1900","GSM850","MODEL=V3""
@@ -1324,6 +1333,14 @@ GSM_Error ATGEN_ReplyGetModel(GSM_Protocol_Message msg, GSM_StateMachine *s)
 	/* Sometimes phone adds this before manufacturer (Sagem) */
 	} else if (strncmp("+CGMM: ", line, 7) == 0) {
 		pos += 7; /* Skip above string */
+	}
+	/* Samsung */
+	if (strncmp("Model: ", pos, 7) == 0) {
+		pos += 7; /* Skip above string */
+	}
+	/* Samsung */
+	if (strncmp("I: ", pos, 3) == 0) {
+		pos += 3; /* Skip above string */
 	}
 
 	/* Skip white spaces */
@@ -1405,6 +1422,14 @@ GSM_Error ATGEN_ReplyGetManufacturer(GSM_Protocol_Message msg, GSM_StateMachine 
 		if (strncmp("+CGMI: ", s->Phone.Data.Manufacturer, 7) == 0) {
 			memmove(s->Phone.Data.Manufacturer, s->Phone.Data.Manufacturer + 7, strlen(s->Phone.Data.Manufacturer + 7) + 1);
 		}
+		/* Samsung */
+		if (strncmp("Manufacturer: ", s->Phone.Data.Manufacturer, 14) == 0) {
+			memmove(s->Phone.Data.Manufacturer, s->Phone.Data.Manufacturer + 14, strlen(s->Phone.Data.Manufacturer + 14) + 1);
+		}
+		if (strncmp("I: ", s->Phone.Data.Manufacturer, 3) == 0) {
+			memmove(s->Phone.Data.Manufacturer, s->Phone.Data.Manufacturer + 3, strlen(s->Phone.Data.Manufacturer + 3) + 1);
+		}
+
 		if (strstr(msg.Buffer,"Falcom")) {
 			strcpy(s->Phone.Data.Manufacturer,"Falcom");
 			Priv->Manufacturer = AT_Falcom;
