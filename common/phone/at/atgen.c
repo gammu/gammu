@@ -6714,6 +6714,7 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 			/*
 			 * This is what Sony Ericsson phones usually
 			 * give.
+			 * +CPROT: (0),("1.2"),(8)
 			 */
 			error = ATGEN_ParseReply(s, string,
 				"+CPROT: (@i), (@r), (@i)",
@@ -6723,6 +6724,7 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 
 			/*
 			 * This reply comes from Alcatel and Samsung.
+			 * +CPROT: 0,"1.0",8"
 			 */
 			if (error != ERR_NONE) {
 				error = ATGEN_ParseReply(s, string,
@@ -6744,6 +6746,8 @@ GSM_Error ATGEN_ReplyCheckProt(GSM_Protocol_Message msg, GSM_StateMachine *s)
 				 * higher levels.
 				 */
 				if (protocol_level > 1 &&
+						strcmp(protocol_version, "1.2") == 0 &&
+						strcmp(protocol_version, "1.3") == 0 &&
 						!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_NO_ATOBEX) &&
 						!GSM_IsPhoneFeatureAvailable(s->Phone.Data.ModelInfo, F_OBEX)
 						) {
