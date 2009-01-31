@@ -1536,17 +1536,25 @@ GSM_Error ATGEN_ReplyGetFirmware(GSM_Protocol_Message msg, GSM_StateMachine *s)
 {
 
 	GSM_Phone_ATGENData 	*Priv = &s->Phone.Data.Priv.ATGEN;
+	int line;
 
 	strcpy(s->Phone.Data.Version, "Unknown");
 	if (s->Phone.Data.Priv.ATGEN.ReplyState != AT_Reply_OK) return ERR_NOTSUPPORTED;
 
 	s->Phone.Data.VerNum = 0;
 	if (Priv->ReplyState == AT_Reply_OK) {
-		if (GetLineLength(msg.Buffer, &Priv->Lines, 2) > GSM_MAX_VERSION_LENGTH - 1) {
+		line = 2;
+		if (strstr(GetLineString(msg.Buffer, &Priv->Lines, line), "Manufacturer:") != NULL) {
+			line ++;
+		}
+		if (strstr(GetLineString(msg.Buffer, &Priv->Lines, line), "Model:") != NULL) {
+			line ++;
+		}
+		if (GetLineLength(msg.Buffer, &Priv->Lines, line) > GSM_MAX_VERSION_LENGTH - 1) {
 			smprintf(s, "Please increase GSM_MAX_VERSION_LENGTH!\n");
 			return ERR_MOREMEMORY;
 		}
-		CopyLineString(s->Phone.Data.Version, msg.Buffer, &Priv->Lines, 2);
+		CopyLineString(s->Phone.Data.Version, msg.Buffer, &Priv->Lines, line);
 		/* Sometimes phone adds this before version (Sagem) */
 		if (strncmp("+CGMR: ", s->Phone.Data.Version, 7) == 0) {
 			/* Need to use memmove as strcpy does not correctly handle overlapping regions */
@@ -1556,6 +1564,11 @@ GSM_Error ATGEN_ReplyGetFirmware(GSM_Protocol_Message msg, GSM_StateMachine *s)
 		if (strncmp("Revision: ", s->Phone.Data.Version, 10) == 0) {
 			/* Need to use memmove as strcpy does not correctly handle overlapping regions */
 			memmove(s->Phone.Data.Version, s->Phone.Data.Version + 10, strlen(s->Phone.Data.Version + 10) + 1);
+		}
+		/* Samsung */
+		if (strncmp("I: ", s->Phone.Data.Version, 3) == 0) {
+			/* Need to use memmove as strcpy does not correctly handle overlapping regions */
+			memmove(s->Phone.Data.Version, s->Phone.Data.Version + 3, strlen(s->Phone.Data.Version + 3) + 1);
 		}
 		/* Add second line if it also contains version information */
 		if (strcmp(GetLineString(msg.Buffer, &Priv->Lines, 3), "OK") != 0) {
