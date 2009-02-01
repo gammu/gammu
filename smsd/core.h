@@ -85,6 +85,9 @@ struct _GSM_SMSDConfig {
 
 	INI_Section 		*smsdcfgfile;
 	volatile bool	shutdown;
+	bool running;
+	bool exit_on_failure;
+	GSM_Error failure;
 	GSM_StateMachine *gsm;
 	char *gammu_log_buffer;
 	size_t gammu_log_buffer_size;

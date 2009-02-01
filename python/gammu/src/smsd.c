@@ -99,7 +99,7 @@ Py_SMSD_MainLoop(SMSDObject *self, PyObject *args, PyObject *kwds)
         return NULL;
 
     Py_BEGIN_ALLOW_THREADS
-    error = SMSD_MainLoop(self->config);
+    error = SMSD_MainLoop(self->config, false);
     Py_END_ALLOW_THREADS
 
     if (!checkError(NULL, error, "SMSD_MainLoop")) return NULL;
@@ -117,12 +117,16 @@ static char SMSD_Shutdown__doc__[] =
 static PyObject *
 Py_SMSD_Shutdown(SMSDObject *self, PyObject *args, PyObject *kwds)
 {
+    GSM_Error                   error;
+
     if (!PyArg_ParseTuple(args, ""))
         return NULL;
 
     Py_BEGIN_ALLOW_THREADS
-    SMSD_Shutdown(self->config);
+    error = SMSD_Shutdown(self->config);
     Py_END_ALLOW_THREADS
+
+    if (!checkError(NULL, error, "SMSD_Shutdown")) return NULL;
 
     Py_RETURN_NONE;
 }

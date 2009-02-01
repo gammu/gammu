@@ -61,9 +61,11 @@
 
 GSM_SMSDConfig		SMSDaemon_Config;
 
-void SMSD_Shutdown(GSM_SMSDConfig *Config)
+GSM_Error SMSD_Shutdown(GSM_SMSDConfig *Config)
 {
+	if (!Config->running) return ERR_NOTRUNNING;
 	Config->shutdown = true;
+	return ERR_NONE;
 }
 
 void SMSDaemon_Interrupt(int sign)
@@ -125,8 +127,15 @@ void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bo
 		SMSD_Log(-1, Config, "%s (%s:%i)", msg, GSM_ErrorString(error), error);
 	}
 	if (exitprogram) {
-		SMSD_CloseLog(Config);
-		exit(rc);
+		if (rc == 0) {
+			Config->running = false;
+			SMSD_CloseLog(Config);
+		}
+		if (Config->exit_on_failure) {
+			exit(rc);
+		} else if (error != ERR_NONE) {
+			Config->failure = error;
+		}
 	}
 }
 
@@ -233,6 +242,9 @@ GSM_SMSDConfig *SMSD_NewConfig(void)
 	Config = (GSM_SMSDConfig *)malloc(sizeof(GSM_SMSDConfig));
 	if (Config == NULL) return Config;
 
+	Config->running = false;
+	Config->failure = ERR_NONE;
+	Config->exit_on_failure = true;
 	Config->shutdown = false;
 	Config->gsm = NULL;
 	Config->gammu_log_buffer = NULL;
@@ -270,6 +282,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	memset(&smsdcfg, 0, sizeof(smsdcfg));
 
 	Config->shutdown = false;
+	Config->running = false;
+	Config->failure = ERR_NONE;
+	Config->exit_on_failure = true;
 	Config->gsm = GSM_AllocStateMachine();
 	Config->gammu_log_buffer = NULL;
 	Config->gammu_log_buffer_size = 0;
@@ -544,6 +559,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 			error=GSM_EnterSecurityCode(Config->gsm,SecurityCode);
 			if (error == ERR_SECURITYERROR) {
 				SMSD_Terminate(Config, "ERROR: incorrect PIN", error, true, -1);
+				return false;
 			}
 			if (error != ERR_NONE) {
 				SMSD_Log(-1, Config, "Error entering PIN (%s:%i)", GSM_ErrorString(error), error);
@@ -557,6 +573,7 @@ bool SMSD_CheckSecurity(GSM_SMSDConfig *Config)
 	case SEC_Puk2:
 	case SEC_Phone:
 		SMSD_Terminate(Config, "ERROR: phone requires not supported code type", ERR_UNKNOWN, true, -1);
+		return false;
 	case SEC_None:
 		break;
 	}
@@ -981,7 +998,7 @@ GSM_Error SMSGetService(GSM_SMSDConfig *Config, GSM_SMSDService **Service)
 	return ERR_NONE;
 }
 
-GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
+GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure)
 {
 	GSM_SMSDService		*Service;
 	GSM_Error		error;
@@ -989,14 +1006,19 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
  	time_t			lastreceive, lastreset = 0;
 	int i;
 
+	Config->running = true;
+	Config->failure = ERR_NONE;
+	Config->exit_on_failure = exit_on_failure;
 	error = SMSGetService(Config, &Service);
 	if (error!=ERR_NONE) {
 		SMSD_Terminate(Config, "Failed to setup SMSD service", error, true, -1);
+		goto done;
 	}
 
 	error = Service->Init(Config);
 	if (error!=ERR_NONE) {
 		SMSD_Terminate(Config, "Initialisation failed, stopping Gammu smsd", error, true, -1);
+		goto done;
 	}
 
 #ifdef HAVE_SHM
@@ -1004,10 +1026,12 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), IPC_CREAT | S_IRWXU | S_IRGRP | S_IROTH);
 	if (Config->shm_handle == -1) {
 		SMSD_Terminate(Config, "Failed to allocate shared memory segment!", ERR_NONE, true, -1);
+		goto done;
 	}
 	Config->Status = shmat(Config->shm_handle, NULL, 0);
 	if (Config->Status == (void *) -1) {
 		SMSD_Terminate(Config, "Failed to map shared memory segment!", ERR_NONE, true, -1);
+		goto done;
 	}
 #else
 	Config->Status = malloc(sizeof(GSM_SMSDStatus));
@@ -1055,6 +1079,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 						error = Service->InitAfterConnect(Config);
 						if (error!=ERR_NONE) {
 							SMSD_Terminate(Config, "Post initialisation failed, stopping Gammu smsd", error, true, -1);
+							goto done_connected;
 						}
 						GSM_SetFastSMSSending(Config->gsm, true);
 					}
@@ -1073,6 +1098,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 			case ERR_DEVICEOPENERROR:
 				SMSD_Terminate(Config, "Can't open device",
 						error, true, -1);
+				goto done;
 				break;
 			default:
 				SMSD_Log(0, Config, "Error at init connection %s (%i)",
@@ -1123,9 +1149,11 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config)
 	free(Config->Status);
 #endif
 
+done_connected:
 	GSM_SetFastSMSSending(Config->gsm,false);
+done:
 	SMSD_Terminate(Config, "Stopping Gammu smsd", ERR_NONE, false, 0);
-	return ERR_NONE;
+	return Config->failure;
 }
 
 GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms)
@@ -1146,6 +1174,10 @@ GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms)
 GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
 {
 #ifdef HAVE_SHM
+	if (Config->running) {
+		memcpy(status, Config->Status, sizeof(GSM_SMSDStatus));
+		return ERR_NONE;
+	}
 	/* Allocate world redable SHM segment */
 	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), S_IRWXU | S_IRGRP | S_IROTH);
 	if (Config->shm_handle == -1) {
