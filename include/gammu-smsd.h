@@ -93,13 +93,13 @@ GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status);
  *
  * \param Config Pointer to SMSD configuration data.
  */
-void SMSD_Shutdown(GSM_SMSDConfig *Config);
+GSM_Error SMSD_Shutdown(GSM_SMSDConfig *Config);
 
 GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool uselog);
 
 void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bool exitprogram, int rc);
 
-GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config);
+GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure);
 
 GSM_SMSDConfig *SMSD_NewConfig(void);
 

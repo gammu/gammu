@@ -281,6 +281,10 @@ typedef enum {
 	 * Bluetooth configuration requires channel option.
 	 */
 	ERR_SPECIFYCHANNEL,
+	/**
+	 * Service is not runnig.
+	 */
+	ERR_NOTRUNNING,
 
 	/**
 	 * Just marker of highest error code, should not be used.

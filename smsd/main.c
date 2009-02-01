@@ -402,7 +402,7 @@ read_config:
 		configure_daemon(&params);
 
 	reconfigure = false;
-	error = SMSD_MainLoop(config);
+	error = SMSD_MainLoop(config, true);
 	if (error != ERR_NONE) {
 		SMSD_Terminate(config, "Failed to run SMSD", error, true, 2);
 	}

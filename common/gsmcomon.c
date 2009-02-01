@@ -144,6 +144,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_BADFEATURE, "BADFEATURE",		N_("Bad feature string in configuration.")},
 	{ERR_DISABLED, "DISABLED",		N_("Desired functionality has been disabled on compile time.")},
 	{ERR_SPECIFYCHANNEL, "SPECIFYCHANNEL", N_("Bluetooth configuration requires channel option.")},
+	{ERR_NOTRUNNING, "NOTRUNNING", N_("Service is not runnig.")},
 
 	{0,	"",				""}
 };
