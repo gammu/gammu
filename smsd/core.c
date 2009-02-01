@@ -459,6 +459,8 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 		if (Config->database == NULL) Config->database="sms";
 		Config->driver = INI_GetValue(Config->smsdcfgfile, "smsd", "driver", false);
 		if (Config->driver == NULL) Config->driver="mysql";
+		Config->dbdir = INI_GetValue(Config->smsdcfgfile, "smsd", "dbdir", false);
+		if (Config->dbdir == NULL) Config->dbdir="./";
 		Config->driverspath = INI_GetValue(Config->smsdcfgfile, "smsd", "driverspath", false);
 		/* This one can be NULL */
 	}

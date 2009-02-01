@@ -26,11 +26,11 @@
 
 #include "../core.h"
 
-const char now_mysql[] = "(NOW() + INTERVAL %d SECOND) + 0";
-const char now_pgsql[] = "now() + interval '%d seconds'";
-const char now_sqlite[] = "datetime('now', '+%d seconds')";
-const char now_freetds[] = "DATEADD('second', %d, CURRENT_TIMESTAMP)";
-const char now_fallback[] = "NOW() + INTERVAL %d SECOND";
+const char now_plus_mysql[] = "(NOW() + INTERVAL %d SECOND) + 0";
+const char now_plus_pgsql[] = "now() + interval '%d seconds'";
+const char now_plus_sqlite[] = "datetime('now', '+%d seconds')";
+const char now_plus_freetds[] = "DATEADD('second', %d, CURRENT_TIMESTAMP)";
+const char now_plus_fallback[] = "NOW() + INTERVAL %d SECOND";
 
 static const char * SMSDDBI_NowPlus(GSM_SMSDConfig * Config, int seconds)
 {
@@ -40,17 +40,42 @@ static const char * SMSDDBI_NowPlus(GSM_SMSDConfig * Config, int seconds)
 	driver_name = dbi_driver_get_name(dbi_conn_get_driver(Config->DBConnDBI));
 
 	if (strcmp(driver_name, "mysql") == 0) {
-		sprintf(result, now_mysql, seconds);
+		sprintf(result, now_plus_mysql, seconds);
 	} else if (strcmp(driver_name, "pgsql") == 0) {
-		sprintf(result, now_pgsql, seconds);
+		sprintf(result, now_plus_pgsql, seconds);
 	} else if (strncmp(driver_name, "sqlite", 6) == 0) {
-		sprintf(result, now_sqlite, seconds);
+		sprintf(result, now_plus_sqlite, seconds);
 	} else if (strcmp(driver_name, "freetds") == 0) {
-		sprintf(result, now_freetds, seconds);
+		sprintf(result, now_plus_freetds, seconds);
 	} else {
-		sprintf(result, now_fallback, seconds);
+		sprintf(result, now_plus_fallback, seconds);
 	}
 	return result;
+}
+
+const char now_mysql[] = "NOW()";
+const char now_pgsql[] = "now()";
+const char now_sqlite[] = "datetime('now')";
+const char now_freetds[] = "CURRENT_TIMESTAMP";
+const char now_fallback[] = "NOW()";
+
+static const char * SMSDDBI_Now(GSM_SMSDConfig * Config)
+{
+	const char *driver_name;
+
+	driver_name = dbi_driver_get_name(dbi_conn_get_driver(Config->DBConnDBI));
+
+	if (strcmp(driver_name, "mysql") == 0) {
+		return now_mysql;
+	} else if (strcmp(driver_name, "pgsql") == 0) {
+		return now_pgsql;
+	} else if (strncmp(driver_name, "sqlite", 6) == 0) {
+		return now_sqlite;
+	} else if (strcmp(driver_name, "freetds") == 0) {
+		return now_freetds;
+	} else {
+		return now_fallback;
+	}
 }
 
 static void SMSDDBI_LogError(GSM_SMSDConfig * Config)
@@ -69,7 +94,7 @@ static GSM_Error SMSDDBI_CheckTable(GSM_SMSDConfig * Config, const char *table)
 {
 	dbi_result res;
 
-	res = dbi_conn_queryf(Config->DBConnDBI, "SELECT id FROM %s WHERE TRUE", table);
+	res = dbi_conn_queryf(Config->DBConnDBI, "SELECT id FROM %s", table);
 	if (res == NULL) {
 		SMSD_Log(-1, Config, "Table %s not found!", table);
 		dbi_conn_close(Config->DBConnDBI);
@@ -113,6 +138,18 @@ static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
 
 	dbi_conn_error_handler(Config->DBConnDBI, SMSDDBI_Callback, Config);
 
+	if (dbi_conn_set_option(Config->DBConnDBI, "sqlite_dbdir", Config->dbdir) != 0) {
+		SMSD_Log(-1, Config, "DBI failed to set sqlite_dbdir!\n");
+		dbi_conn_close(Config->DBConnDBI);
+		dbi_shutdown();
+		return ERR_UNKNOWN;
+	}
+	if (dbi_conn_set_option(Config->DBConnDBI, "sqlite3_dbdir", Config->dbdir) != 0) {
+		SMSD_Log(-1, Config, "DBI failed to set sqlite3_dbdir!\n");
+		dbi_conn_close(Config->DBConnDBI);
+		dbi_shutdown();
+		return ERR_UNKNOWN;
+	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "host", Config->PC) != 0) {
 		SMSD_Log(-1, Config, "DBI failed to set host!\n");
 		dbi_conn_close(Config->DBConnDBI);
@@ -160,7 +197,7 @@ static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
 	error = SMSDDBI_CheckTable(Config, "inbox");
 	if (error != ERR_NONE) return error;
 
-	res = dbi_conn_query(Config->DBConnDBI, "SELECT Version FROM gammu WHERE TRUE");
+	res = dbi_conn_query(Config->DBConnDBI, "SELECT Version FROM gammu");
 	if (res == NULL) {
 		SMSD_Log(-1, Config, "Table gammu not found!");
 		dbi_conn_close(Config->DBConnDBI);
@@ -251,8 +288,10 @@ static GSM_Error SMSDDBI_InitAfterConnect(GSM_SMSDConfig * Config)
 	}
 
 	sprintf(buf,
-		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) VALUES ('%s', '%s', 'yes', 'yes', now(), %s, '%s', -1, -1)",
-		Config->Status->IMEI, Config->PhoneID, SMSDDBI_NowPlus(Config, 10), buf2);
+		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) VALUES ('%s', '%s', 'yes', 'yes', %s, %s, '%s', -1, -1)",
+		Config->Status->IMEI, Config->PhoneID,
+		SMSDDBI_Now(Config),
+		SMSDDBI_NowPlus(Config, 10), buf2);
 
 	if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error inserting into database (%s)\n", __FUNCTION__);
@@ -481,9 +520,10 @@ static GSM_Error SMSDDBI_RefreshSendStatus(GSM_SMSDConfig * Config,
 	dbi_result Res;
 
 	sprintf(buffer, "UPDATE outbox SET SendingTimeOut = %s "
-                        "WHERE ID = '%s' AND SendingTimeOut < now()",
+                        "WHERE ID = '%s' AND SendingTimeOut < %s",
 		SMSDDBI_NowPlus(Config, 15),
-		ID);
+		ID,
+		SMSDDBI_Now(Config));
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 		return ERR_UNKNOWN;
@@ -512,7 +552,9 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 
 	sprintf(buf,
 		"SELECT ID, InsertIntoDB, SendingDateTime, SenderID FROM outbox "
-                      "WHERE SendingDateTime < now() AND SendingTimeOut < now()");
+                      "WHERE SendingDateTime < %s AND SendingTimeOut < %s",
+		SMSDDBI_Now(Config),
+		SMSDDBI_Now(Config));
 
 	if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
@@ -743,7 +785,8 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 				sprintf(buffer + strlen(buffer), "true");
 			}
 
-			sprintf(buffer + strlen(buffer), "', now()");
+			sprintf(buffer + strlen(buffer), "', %s",
+				SMSDDBI_Now(Config));
 		} else {
 			sprintf(buffer + strlen(buffer), "'%i'", i + 1);
 		}
@@ -927,9 +970,12 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 		"SenderID, Text, DestinationNumber, Coding, UDH, Class, TextDecoded, InsertIntoDB, "
                 "RelativeValidity) VALUES (");
 	sprintf(buffer + strlen(buffer),
-		"'%s', '%s', '%i', '%s', now(), '%s', '%i', '%s', '",
-		Config->CreatorID, ID, Part, buff,
-		DecodeUnicodeString(sms->SMS[Part - 1].SMSC.Number), TPMR,
+		"'%s', '%s', '%i', '%s', %s, '%s', '%i', '%s', '",
+		Config->CreatorID, ID, Part,
+		buff,
+		SMSDDBI_Now(Config),
+		DecodeUnicodeString(sms->SMS[Part - 1].SMSC.Number),
+		TPMR,
 		Config->PhoneID);
 
 	switch (sms->SMS[Part - 1].Coding) {
