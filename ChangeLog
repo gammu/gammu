@@ -40,6 +40,7 @@ ChangeLog
 [-] * SMSD does not delete SMS from phone when it's saving has failed.
 [+] * Added SQL structure for sqlite, which can be used through DBI.
 [+] * python-gammu can run and stop SMSD.
+[+] * Initial implementation of dummy phone driver for testing.
     
 20090126 - 1.22.92
 

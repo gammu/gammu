@@ -65,6 +65,7 @@ set (LIBRARY_SRC
     phone/nokia/nfunc.c
     phone/nokia/nfuncold.c
     phone/obex/obexgen.c
+    phone/dummy/dummy.c
     phone/symbian/gnapgen.c)
 
 if (BLUEZ_FOUND)

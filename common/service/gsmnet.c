@@ -206,6 +206,8 @@ const char *GSM_Countries[] = {
 	"744", "Paraguay",
 	"746", "Suriname",
 
+	"999", "Dummy",
+
 	NULL
 };
 
@@ -763,6 +765,8 @@ const char *GSM_Networks[] = {
 	"744 02", "Hutchison Telecommunications Paraguay S.A",
 	"744 04", "Telecel Paraguay",
 	"746 02", "TELESUR.GSM",
+
+	"999 99", "DummyTel",
 
 	NULL
 };
