@@ -39,6 +39,7 @@ ChangeLog
 [+] * Added DBI backend for SMSD, so we now support wide range of databases.
 [-] * SMSD does not delete SMS from phone when it's saving has failed.
 [+] * Added SQL structure for sqlite, which can be used through DBI.
+[+] * python-gammu can run and stop SMSD.
     
 20090126 - 1.22.92
 

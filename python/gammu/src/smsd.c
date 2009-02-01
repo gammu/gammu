@@ -83,6 +83,50 @@ typedef struct {
 
 /* ---------------------------------------------------------------- */
 
+static char SMSD_MainLoop__doc__[] =
+"MainLoop()\n\n"
+"Runs SMS daemon.\n\n"
+"@return: None\n"
+"@rtype: None\n"
+;
+
+static PyObject *
+Py_SMSD_MainLoop(SMSDObject *self, PyObject *args, PyObject *kwds)
+{
+    GSM_Error                   error;
+
+    if (!PyArg_ParseTuple(args, ""))
+        return NULL;
+
+    Py_BEGIN_ALLOW_THREADS
+    error = SMSD_MainLoop(self->config);
+    Py_END_ALLOW_THREADS
+
+    if (!checkError(NULL, error, "SMSD_MainLoop")) return NULL;
+
+    Py_RETURN_NONE;
+}
+
+static char SMSD_Shutdown__doc__[] =
+"Shutdown()\n\n"
+"Flags SMS daemon to stop.\n\n"
+"@return: None\n"
+"@rtype: None\n"
+;
+
+static PyObject *
+Py_SMSD_Shutdown(SMSDObject *self, PyObject *args, PyObject *kwds)
+{
+    if (!PyArg_ParseTuple(args, ""))
+        return NULL;
+
+    Py_BEGIN_ALLOW_THREADS
+    SMSD_Shutdown(self->config);
+    Py_END_ALLOW_THREADS
+
+    Py_RETURN_NONE;
+}
+
 static char SMSD_GetStatus__doc__[] =
 "GetStatus()\n\n"
 "Returns SMSD status.\n\n"
@@ -149,6 +193,8 @@ Py_SMSD_InjectSMS(SMSDObject *self, PyObject *args, PyObject *kwds)
 }
 
 static struct PyMethodDef SMSD_methods[] = {
+    {"MainLoop",  (PyCFunction)Py_SMSD_MainLoop,  METH_VARARGS|METH_KEYWORDS,   SMSD_MainLoop__doc__},
+    {"Shutdown",  (PyCFunction)Py_SMSD_Shutdown,  METH_VARARGS|METH_KEYWORDS,   SMSD_Shutdown__doc__},
     {"GetStatus",  (PyCFunction)Py_SMSD_GetStatus,  METH_VARARGS|METH_KEYWORDS,   SMSD_GetStatus__doc__},
     {"InjectSMS",  (PyCFunction)Py_SMSD_InjectSMS,  METH_VARARGS|METH_KEYWORDS,   SMSD_InjectSMS__doc__},
 
