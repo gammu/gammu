@@ -205,6 +205,12 @@ ingres,·msql·a oracle·se vyvíjejí.
 Cesta, kde jsou umístěny ovladače DBI. Tento parametr obvykle není potřeba
 nastavovat, pokud jsou ovladače nainstalovány správně.
 
+.TP 
+\fBDBDir\fP
+
+Adresář, kde je uložena databáze pro některé (v současné době pouze sqlite)
+ovladače DBI. Nastavte zde cestu. kde je uložen soubor se sqlite databází.
+
 .SS "Parametry pro službu používající soubory"
 
 Služba FILES používá následující konfigurační volby. Podrobnější popis této
@@ -344,7 +350,7 @@ number1 = 666
 gammu\-smsd(1), gammu(1), gammurc(5)
 
 gammu\-smsd\-files(7), gammu\-smsd\-mysql(7), gammu\-smsd\-pgsql(7),
-gammu\-smsd\-dbi(7)
+gammu\-smsd\-dbi(7), gammu\-smsd\-tables(7)
 .SH AUTOR
 gammu\-smsd a tuto manuálovou stránku napsal Michal Čihař
 <michal@cihar.com>.
