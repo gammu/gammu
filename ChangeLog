@@ -37,6 +37,7 @@ ChangeLog
 [-] * Add small delays to SMS sending/saving (bug #794).
 [+] * SMSD monitor can now run for configured number of loops.
 [+] * Added DBI backend for SMSD, so we now support wide range of databases.
+[-] * SMSD does not delete SMS from phone when it's saving has failed.
     
 20090126 - 1.22.92
 
