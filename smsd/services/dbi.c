@@ -26,6 +26,33 @@
 
 #include "../core.h"
 
+const char now_mysql[] = "(NOW() + INTERVAL %d SECOND) + 0";
+const char now_pgsql[] = "now() + interval '%d seconds'";
+const char now_sqlite[] = "datetime('now', '+%d seconds')";
+const char now_freetds[] = "DATEADD('second', %d, CURRENT_TIMESTAMP)";
+const char now_fallback[] = "NOW() + INTERVAL %d SECOND";
+
+static const char * SMSDDBI_NowPlus(GSM_SMSDConfig * Config, int seconds)
+{
+	const char *driver_name;
+	static char result[100];
+
+	driver_name = dbi_driver_get_name(dbi_conn_get_driver(Config->DBConnDBI));
+
+	if (strcmp(driver_name, "mysql") == 0) {
+		sprintf(result, now_mysql, seconds);
+	} else if (strcmp(driver_name, "pgsql") == 0) {
+		sprintf(result, now_pgsql, seconds);
+	} else if (strncmp(driver_name, "sqlite", 6) == 0) {
+		sprintf(result, now_sqlite, seconds);
+	} else if (strcmp(driver_name, "freetds") == 0) {
+		sprintf(result, now_freetds, seconds);
+	} else {
+		sprintf(result, now_fallback, seconds);
+	}
+	return result;
+}
+
 static void SMSDDBI_LogError(GSM_SMSDConfig * Config)
 {
 	int rc;
@@ -224,8 +251,8 @@ static GSM_Error SMSDDBI_InitAfterConnect(GSM_SMSDConfig * Config)
 	}
 
 	sprintf(buf,
-		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) VALUES ('%s', '%s', 'yes', 'yes', now(), now() + interval '10 seconds', '%s', -1, -1)",
-		Config->Status->IMEI, Config->PhoneID, buf2);
+		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) VALUES ('%s', '%s', 'yes', 'yes', now(), %s, '%s', -1, -1)",
+		Config->Status->IMEI, Config->PhoneID, SMSDDBI_NowPlus(Config, 10), buf2);
 
 	if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error inserting into database (%s)\n", __FUNCTION__);
@@ -409,7 +436,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			sprintf(buffer + strlen(buffer), "'");
 		}
 
-		sprintf(buffer + strlen(buffer), ",'%i','", sms->SMS[i].Class);
+		sprintf(buffer + strlen(buffer), ",'%i',", sms->SMS[i].Class);
 
 		switch (sms->SMS[i].Coding) {
 
@@ -429,7 +456,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 				break;
 		}
 
-		sprintf(buffer + strlen(buffer), "','%s')", Config->PhoneID);
+		sprintf(buffer + strlen(buffer), ",'%s')", Config->PhoneID);
 		if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 			SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 			return ERR_UNKNOWN;
@@ -453,8 +480,9 @@ static GSM_Error SMSDDBI_RefreshSendStatus(GSM_SMSDConfig * Config,
 	unsigned char buffer[10000];
 	dbi_result Res;
 
-	sprintf(buffer, "UPDATE outbox SET SendingTimeOut = now() + INTERVAL '15 seconds' "
+	sprintf(buffer, "UPDATE outbox SET SendingTimeOut = %s "
                         "WHERE ID = '%s' AND SendingTimeOut < now()",
+		SMSDDBI_NowPlus(Config, 15),
 		ID);
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
@@ -788,7 +816,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 				     sms->SMS[i].UDH.Length);
 		}
 
-		sprintf(buffer + strlen(buffer), "', '%i', '",
+		sprintf(buffer + strlen(buffer), "', '%i', ",
 			sms->SMS[i].Class);
 		switch (sms->SMS[i].Coding) {
 			case SMS_Coding_Unicode_No_Compression:
@@ -804,7 +832,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 				break;
 		}
 
-		sprintf(buffer + strlen(buffer), "', '");
+		sprintf(buffer + strlen(buffer), ", '");
 		if (i == 0) {
 			while (true) {
 				ID++;
@@ -958,7 +986,7 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 			     sms->SMS[Part - 1].UDH.Length);
 	}
 
-	sprintf(buffer + strlen(buffer), "', '%i', '",
+	sprintf(buffer + strlen(buffer), "', '%i', ",
 		sms->SMS[Part - 1].Class);
 
 	switch (sms->SMS[Part - 1].Coding) {
@@ -975,7 +1003,7 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 			break;
 	}
 
-	sprintf(buffer + strlen(buffer), "', '%s', '", Config->DT);
+	sprintf(buffer + strlen(buffer), ", '%s', '", Config->DT);
 
 	if (sms->SMS[Part - 1].SMSC.Validity.Format ==
 	    SMS_Validity_RelativeFormat) {
@@ -1007,7 +1035,8 @@ static GSM_Error SMSDDBI_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 	unsigned char buffer[500];
 
 	sprintf(buffer,
-		"UPDATE phones SET TimeOut= now() + INTERVAL '10 seconds', Battery = %d, Signal = %d WHERE IMEI = '%s'",
+		"UPDATE phones SET TimeOut= %s, Battery = %d, Signal = %d WHERE IMEI = '%s'",
+		SMSDDBI_NowPlus(Config, 10),
 		Config->Status->Charge.BatteryPercent, Config->Status->Network.SignalPercent, Config->Status->IMEI);
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
