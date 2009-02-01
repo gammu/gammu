@@ -66,6 +66,7 @@ typedef struct _GSM_User	 	GSM_User;
 #ifdef GSM_ENABLE_GNAPGEN
 #  include "phone/symbian/gnapgen.h"
 #endif
+#  include "phone/dummy/dummy.h"
 
 #ifndef GSM_USED_MBUS2
 #  undef GSM_ENABLE_MBUS2
@@ -682,6 +683,7 @@ typedef struct {
 #ifdef GSM_ENABLE_GNAPGEN
 		GSM_Phone_GNAPGENData 	 GNAPGEN;
 #endif
+		GSM_Phone_DUMMYData	 DUMMY;
 	} Priv;
 } GSM_Phone_Data;
 
@@ -1287,6 +1289,7 @@ typedef struct {
 #ifdef GSM_ENABLE_GNAPGEN
 	extern GSM_Phone_Functions GNAPGENPhone;
 #endif
+	extern GSM_Phone_Functions DUMMYPhone;
 
 /**
  * Phone functions and private data.

@@ -109,6 +109,26 @@ static const GSM_ConnectionInfo GSM_Connections[] = {
 	{"irdaat", GCT_IRDAAT, false},
 	{"irdaobex", GCT_IRDAOBEX, false},
 	{"irdagnapbus", GCT_IRDAGNAPBUS, false},
+
+	/* testing purposes */
+	{"none", GCT_NONE, false},
+};
+
+GSM_Device_Functions NoneDevice = {
+	NONEFUNCTION,
+	NONEFUNCTION,
+	NONEFUNCTION,
+	NONEFUNCTION,
+	NONEFUNCTION,
+	NONEFUNCTION,
+	NONEFUNCTION
+};
+
+GSM_Protocol_Functions NoProtocol = {
+	NONEFUNCTION,
+	NONEFUNCTION,
+	NONEFUNCTION,
+	NONEFUNCTION
 };
 
 static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *connection)
@@ -178,6 +198,7 @@ static GSM_Error GSM_RegisterAllConnections(GSM_StateMachine *s, const char *con
 	 */
 	s->Device.Functions	= NULL;
 	s->Protocol.Functions	= NULL;
+	GSM_RegisterConnection(s, GCT_NONE, 	  &NoneDevice,    &NoProtocol);
 #ifdef GSM_ENABLE_MBUS2
 	GSM_RegisterConnection(s, GCT_MBUS2, 	  &SerialDevice,  &MBUS2Protocol);
 #endif
@@ -312,6 +333,12 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 		}
 #endif
 
+		if (s->ConnectionType == GCT_NONE) {
+			smprintf(s,"[Module           - \"%s\"]\n",DUMMYPhone.models);
+			s->Phone.Functions = &DUMMYPhone;
+			return ERR_NONE;
+		}
+
 		/* With GNAPgen and auto model we can work with unknown models too */
 #ifdef GSM_ENABLE_GNAPGEN
 		if (s->ConnectionType == GCT_BLUEGNAPBUS || s->ConnectionType == GCT_IRDAGNAPBUS) {
@@ -370,6 +397,7 @@ GSM_Error GSM_RegisterAllPhoneModules(GSM_StateMachine *s)
 		if (s->Phone.Functions!=NULL) return ERR_NONE;
 	}
 #endif
+	GSM_RegisterModule(s, &DUMMYPhone);
 #ifdef GSM_ENABLE_OBEXGEN
 	GSM_RegisterModule(s,&OBEXGENPhone);
 #endif
@@ -481,6 +509,9 @@ GSM_Error GSM_TryGetModel(GSM_StateMachine *s)
 	if (s->Phone.Data.Model[0]==0) {
 		smprintf(s,"[Module           - \"auto\"]\n");
 		switch (s->ConnectionType) {
+			case GCT_NONE:
+				s->Phone.Functions = &DUMMYPhone;
+				break;
 #ifdef GSM_ENABLE_ATGEN
 			case GCT_AT:
 			case GCT_BLUEAT:

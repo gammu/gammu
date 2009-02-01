@@ -5,7 +5,7 @@
 
 /* Version of package */
 #define VERSION "@VERSION@"
-#define VERSION_WIN "@VERSION_WIN@"
+#define VERSION_NUM @VERSION_NUM@
 
 /* Define if want DEBUG info */
 #cmakedefine DEBUG
