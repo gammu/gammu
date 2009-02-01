@@ -110,12 +110,13 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 	if (!report_service_status(SERVICE_RUNNING, NO_ERROR, 0))
 		service_print_error("Failed to report state started");
 
-	error = SMSD_MainLoop(config);
+	error = SMSD_MainLoop(config, false);
 	if (error != ERR_NONE) {
 		report_service_status(SERVICE_STOPPED, error, 0);
 		SMSD_Terminate(config, "Failed to run SMSD", error, true, 2);
+	} else {
+		report_service_status(SERVICE_STOPPED, NO_ERROR, 0);
 	}
-	report_service_status(SERVICE_STOPPED, NO_ERROR, 0);
 	return;
 }
 
