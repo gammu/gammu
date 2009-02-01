@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-29 08:58+0100\n"
+"POT-Creation-Date: 2009-02-01 13:32+0100\n"
 "PO-Revision-Date: 2009-01-07 17:00+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -295,9 +295,17 @@ msgstr "Požadovaná funkce byla vypnuta při kompilaci."
 msgid "Bluetooth configuration requires channel option."
 msgstr "Nastavení bluetooth potřebuje zadat kanál."
 
-#: common/gsmcomon.c:179
+#: common/gsmcomon.c:147
+msgid "Service is not runnig."
+msgstr ""
+
+#: common/gsmcomon.c:180
 msgid "Unknown error description."
 msgstr "Neznámý popis chyby."
+
+#: common/phone/dummy/dummy.c:221
+msgid "Templates"
+msgstr ""
 
 #: common/phone/nokia/dct3/n6110.c:1958
 msgid "Personal"

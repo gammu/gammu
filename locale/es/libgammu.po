@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-29 08:58+0100\n"
+"POT-Creation-Date: 2009-02-01 13:32+0100\n"
 "PO-Revision-Date: 2008-12-02 18:38+0100\n"
 "Last-Translator: Daniel Campos <daniel.campos@juntaextremadura.net>\n"
 "Language-Team: Español\n"
@@ -307,9 +307,18 @@ msgstr ""
 msgid "Bluetooth configuration requires channel option."
 msgstr ""
 
-#: common/gsmcomon.c:179
+#: common/gsmcomon.c:147
+msgid "Service is not runnig."
+msgstr ""
+
+#: common/gsmcomon.c:180
 msgid "Unknown error description."
 msgstr "Descripción del error desconocida."
+
+#: common/phone/dummy/dummy.c:221
+#, fuzzy
+msgid "Templates"
+msgstr "%i plantillas"
 
 #: common/phone/nokia/dct3/n6110.c:1958
 msgid "Personal"
@@ -2099,9 +2108,6 @@ msgstr "Bandeja de salida"
 
 #~ msgid "Phone SMS status"
 #~ msgstr "Estado SMS del teléfono"
-
-#~ msgid "%i templates"
-#~ msgstr "%i plantillas"
 
 #~ msgid "Leaving monitor mode..."
 #~ msgstr "Dejando el modo monitor..."
