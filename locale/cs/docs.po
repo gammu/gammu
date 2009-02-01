@@ -555,8 +555,8 @@ msgid ""
 "Saves EMS sequence. All parameters after B<-unread> (like B<-defsound>) can "
 "be used few times."
 msgstr ""
-"Uloží EMS zprávu. Všechny parametry uvedené za B<-unread>·(například·B<-"
-"defsound>)·mohou být použity opakovaně."
+"Uloží EMS zprávu. Všechny parametry uvedené za B<-unread> (například B<-"
+"defsound>) mohou být použity opakovaně."
 
 # type: Plain text
 #: docs/user/gammu.1:205
@@ -3022,7 +3022,7 @@ msgid ""
 "License GPLv2: GNU GPL version 2 E<lt>http://www.gnu.org/licenses/old-"
 "licenses/gpl-2.0.htmlE<gt>"
 msgstr ""
-"Copyright \\(co 2003-2009 Marcin·Wiacek,·Michal Čihař a další autoři.  "
+"Copyright \\(co 2003-2009 Marcin Wiacek, Michal Čihař a další autoři.  "
 "Licence GPLv2: GNU GPL verze 2 E<lt>http://www.gnu.org/licenses/old-licenses/"
 "gpl-2.0.htmlE<gt>"
 
@@ -3233,7 +3233,7 @@ msgstr "Gammu 1.23.0"
 # type: Plain text
 #: docs/user/gammurc.5:6
 msgid "gammurc - gammu(1) configuration file"
-msgstr "gammurc·-·konfigurační soubor gammu(1)"
+msgstr "gammurc - konfigurační soubor gammu(1)"
 
 # type: Plain text
 #: docs/user/gammurc.5:11
@@ -3832,7 +3832,7 @@ msgstr "GAMMU-SMSDRC"
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:6
 msgid "gammu-smsdrc - gammu-smsd(1) configuration file"
-msgstr "gammu-smsdrc·-·konfigurační soubor pro gammu-smsd(1)"
+msgstr "gammu-smsdrc - konfigurační soubor pro gammu-smsd(1)"
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:9
@@ -4276,9 +4276,9 @@ msgid ""
 "under development."
 msgstr ""
 "Který ovladač DBI se má použít. Možnosti závisí na tom, které máte "
-"nainstalovány. DBI podporuje: mysql,·freetds·(umožňuje přístup "
-"k·MS·SQL·Serveru·a·Sybase),·pgsql,·sqlite,·sqlite3,·firebird·a·ovladače "
-"ingres,·msql·a oracle·se vyvíjejí."
+"nainstalovány. DBI podporuje: mysql, freetds (umožňuje přístup "
+"k MS SQL Serveru a Sybase), pgsql, sqlite, sqlite3, firebird a ovladače "
+"ingres, msql a oracle se vyvíjejí."
 
 # type: TP
 #: docs/user/gammu-smsdrc.5:199
@@ -4400,7 +4400,7 @@ msgstr "B<InboxFormat>"
 #: docs/user/gammu-smsdrc.5:250
 msgid ""
 "The format in which the SMS will be stored: 'detail', 'unicode', 'standard'."
-msgstr "Formát ukládání SMS: 'detail',·'unicode',·'standard'."
+msgstr "Formát ukládání SMS: 'detail', 'unicode', 'standard'."
 
 # type: Plain text
 #: docs/user/gammu-smsdrc.5:252
@@ -5169,7 +5169,7 @@ msgid ""
 "gammu-smsd-files - gammu-smsd(1) backend using filesystem as a message "
 "storage"
 msgstr ""
-"gammu-smsd-files·-·služba pro gammu-smsd(1) používající k ukládání zpráv "
+"gammu-smsd-files - služba pro gammu-smsd(1) používající k ukládání zpráv "
 "soubory"
 
 # type: Plain text
@@ -5190,7 +5190,7 @@ msgid ""
 "configuration (see gammu-smsdrc(5) for description of configuration options)."
 msgstr ""
 "Služba FILES ukládá všechna data na souborovém systému v adresářích zadaných "
-"v konfiguračním souboru (viz gammu-smsdrc(5)· pro popis těchto parametrů)."
+"v konfiguračním souboru (viz gammu-smsdrc(5)  pro popis těchto parametrů)."
 
 # type: SS
 #: docs/user/gammu-smsd-files.7:13 docs/user/gammu-smsd-tables.7:20
@@ -5410,7 +5410,7 @@ msgid ""
 "gammu-smsd-mysql - gammu-smsd(1) backend using MySQL database server as a "
 "message storage"
 msgstr ""
-"gammu-smsd-mysql·-·služba pro gammu-smsd(1) používající k ukládání zpráv "
+"gammu-smsd-mysql - služba pro gammu-smsd(1) používající k ukládání zpráv "
 "databázový server MySQL"
 
 # type: Plain text
@@ -5421,7 +5421,7 @@ msgid ""
 "configuration options)."
 msgstr ""
 "Služba MYSQL ukládá všechna data na databázovém serveru MySQL, jehož "
-"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)· pro "
+"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)  pro "
 "popis těchto parametrů)."
 
 # type: Plain text
@@ -5450,7 +5450,7 @@ msgid ""
 "gammu-smsd-pgsql - gammu-smsd(1) backend using PostgreSQL database server as "
 "a message storage"
 msgstr ""
-"gammu-smsd-pgsql·-·služba pro gammu-smsd(1) používající k ukládání zpráv "
+"gammu-smsd-pgsql - služba pro gammu-smsd(1) používající k ukládání zpráv "
 "databázový server PostgreSQL"
 
 # type: Plain text
@@ -5461,7 +5461,7 @@ msgid ""
 "of configuration options)."
 msgstr ""
 "Služba PGSQL ukládá všechna data na databázovém serveru PostgreSQL, jehož "
-"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)· pro "
+"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)  pro "
 "popis těchto parametrů)."
 
 # type: TH
@@ -5482,7 +5482,7 @@ msgid ""
 "gammu-smsd-dbi - gammu-smsd(1) backend using DBI abstraction layer to use "
 "any supported database as a message storage"
 msgstr ""
-"gammu-smsd-dbi·-·služba pro gammu-smsd(1) používající k ukládání zpráv "
+"gammu-smsd-dbi - služba pro gammu-smsd(1) používající k ukládání zpráv "
 "abstrakní vrstvu DBI a ukládá data do libovolné podporované databáze"
 
 # type: Plain text
@@ -5493,7 +5493,7 @@ msgid ""
 "of configuration options)."
 msgstr ""
 "Služba DBI ukládá všechna data v jakékoliv databázi podporvané DBI, jejíž "
-"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)· pro "
+"parametry jsou zadány v konfiguračním souboru (viz gammu-smsdrc(5)  pro "
 "popis těchto parametrů)."
 
 # type: TH
@@ -5530,7 +5530,7 @@ msgstr ""
 "Několik SMS démonů může sdílet jedinou databázi. Pokud v jejich nastavení "
 "nezadáte PhoneID, všechny jsou brány jako rovnocenné a kterýkoliv z nich "
 "může odeslat odchozí zprávu. Pokud nastavíte PhoneID a použijete ho při "
-"vkládání zprávy to tabulky outbox (gammu-smsd-inject(1)· to dělá), každý SMS "
+"vkládání zprávy to tabulky outbox (gammu-smsd-inject(1)  to dělá), každý SMS "
 "démon bude mít vlastní frontu odchozích zpráv."
 
 # type: Plain text
