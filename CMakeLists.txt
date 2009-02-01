@@ -483,10 +483,11 @@ else (BUILD_SHARED_LIBS)
 endif (BUILD_SHARED_LIBS)
 
 set (EXAMPLES
+    docs/sql/mysql.sql
+    docs/sql/pgsql.sql
+    docs/sql/sqlite.sql
     docs/examples/config/smsdrc
     docs/examples/config/gammurc
-    docs/examples/config/mysql.sql
-    docs/examples/config/pgsql.sql
     docs/examples/fax/faxreceive
     docs/examples/fax/faxsend
     docs/examples/media/aliens.nlm
@@ -883,7 +884,7 @@ foreach (DOC ${DEVELDOCS})
 endforeach (DOC)
 
 foreach (EXAMPLE ${EXAMPLES})
-    string (REGEX REPLACE "(docs/examples|other/php)(.*)/[^/]*$" "\\2" DIRNAME ${EXAMPLE})
+    string (REGEX REPLACE "(docs/examples|other|docs)(.*)/[^/]*$" "\\2" DIRNAME ${EXAMPLE})
     install (
         FILES ${EXAMPLE}
         DESTINATION "${INSTALL_DOC_DIR}/examples/${DIRNAME}"
