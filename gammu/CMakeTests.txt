@@ -2,6 +2,16 @@
 # Copyright (c) 2007-2009 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4 ft=cmake:
 
+
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy")
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "
+# Generated gammurc for test purposes
+[gammu]
+model = dummy
+connection = none
+port = ${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy
+")
+
 add_test(gammu-help "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help
     PASS_REGULAR_EXPRESSION "${VERSION}"
     )

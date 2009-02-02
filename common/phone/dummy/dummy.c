@@ -264,7 +264,7 @@ GSM_Error DUMMY_GetNetworkInfo(GSM_StateMachine *s, GSM_NetworkInfo *netinfo)
 	strcpy(netinfo->NetworkCode, "999 99");
 	netinfo->State = GSM_HomeNetwork;
 	strcpy(netinfo->LAC, "B00B");
-	EncodeUnicode(netinfo->NetworkName, "DummyT3l", 8);
+	EncodeUnicode(netinfo->NetworkName, "NasraT3l", 8);
 
 	return ERR_NONE;
 }
