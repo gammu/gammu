@@ -1021,7 +1021,7 @@ int ProcessParameters(int start, int argc, char *argv[])
 int main(int argc, char *argv[])
 {
 	int start = 0;
-	int i;
+	int i, ret;
 	char *cp, *locales_path, *rss;
 	GSM_Config *smcfg;
 	GSM_Config *smcfg0;
@@ -1214,11 +1214,11 @@ int main(int argc, char *argv[])
 		Terminate(4);
 	}
 
-	ProcessParameters(start, argc, argv);
+	ret = ProcessParameters(start, argc, argv);
 
-	Terminate(0);
+	Terminate(ret);
 
-	return 0;
+	return ret;
 }
 
 /* How should editor hadle tabs in this file? Add editor commands here.
