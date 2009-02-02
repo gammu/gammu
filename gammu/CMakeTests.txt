@@ -85,23 +85,50 @@ foreach(EXT ott rng mid imy ime wav rttl)
 endforeach(EXT)
 
 # Dummy phone tests
-
 macro (gammu_test _name _expression)
-    add_test("gammu-dummy-${_name}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
-    set_tests_properties("gammu-dummy-${_name}" PROPERTIES
+    set(_params_list ${ARGN})
+    list(LENGTH _params_list _params_count)
+    if (_params_count GREATER 0)
+        list(GET _params_list 0 __param)
+        string (REPLACE " " "_" __param "${__param}")
+        string (REPLACE "-" "_" __param "${__param}")
+        string (REPLACE "=" "_" __param "${__param}")
+        string (REPLACE "," "_" __param "${__param}")
+        string (REPLACE "#" "_" __param "${__param}")
+        set(__extraname "-${__param}")
+    else (_params_count GREATER 0)
+        set(__extraname "")
+    endif (_params_count GREATER 0)
+    add_test("gammu-dummy-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+    set_tests_properties("gammu-dummy-${_name}${__extraname}" PROPERTIES
         PASS_REGULAR_EXPRESSION "${_expression}"
         )
 endmacro (gammu_test _name _expression)
 
 macro (gammu_test_fail _name _expression)
-    add_test("gammu-dummy-${_name}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
-    set_tests_properties("gammu-dummy-${_name}" PROPERTIES
+    set(_params_list ${ARGN})
+    list(LENGTH _params_list _params_count)
+    if (${_params_count} GREATER 0)
+        list(GET _params_list 0 __param)
+        string (REPLACE " " "_" __param "${__param}")
+        string (REPLACE "-" "_" __param "${__param}")
+        string (REPLACE "=" "_" __param "${__param}")
+        string (REPLACE "," "_" __param "${__param}")
+        string (REPLACE "#" "_" __param "${__param}")
+        set(__extraname "-${__param}")
+    else (${_params_count} GREATER 0)
+        set(__extraname "")
+    endif (${_params_count} GREATER 0)
+    add_test("gammu-dummy-fail-${_name}${__extraname}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+    set_tests_properties("gammu-dummy-fail-${_name}${__extraname}" PROPERTIES
         FAIL_REGULAR_EXPRESSION "${_expression}"
         WILL_FAIL TRUE
         )
 endmacro (gammu_test_fail _name _expression)
 
 gammu_test_fail(nonsense "Bad option!")
+gammu_test_fail(identify "Too many parameters" 1)
+gammu_test_fail(reset "More parameters required")
 
 gammu_test(monitor NasraTel 1)
 gammu_test(networkinfo "B00B.*FACE")
