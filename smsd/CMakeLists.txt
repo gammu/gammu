@@ -116,3 +116,6 @@ install (TARGETS gsmsd gammu-smsd gammu-smsd-inject
         ARCHIVE DESTINATION "${INSTALL_LIB_DIR}"
         COMPONENT smsd
         )
+
+# Testing
+include(CMakeTests.txt)
