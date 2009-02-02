@@ -364,15 +364,6 @@ static void Version(int argc UNUSED, char *argv[]UNUSED)
 	printf("\n\n");
 }
 
-#ifdef DEBUG
-/**
- * Function for testing purposes.
- */
-static void Foo(int argc UNUSED, char *argv[]UNUSED)
-{
-}
-#endif
-
 int ProcessParameters(int start, int argc, char *argv[]);
 
 /**
@@ -483,9 +474,6 @@ void Help(int argc, char *argv[]);
 
 static GSM_Parameters Parameters[] = {
 /* *INDENT-OFF* */
-#ifdef DEBUG
-	{"foo",			0, 0, Foo,			{0},				""},
-#endif
 	{"help",			0, 1, Help,			{H_Gammu,0},			""},
 	{"identify",			0, 0, Identify,			{H_Info,0},			""},
 	{"version",			0, 0, Version,			{H_Gammu,0},			""},
