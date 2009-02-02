@@ -4,6 +4,15 @@
 
 
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/1")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/2")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/3")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/4")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/5")
+configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/01.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/1/1" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/90.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/2/10" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/99.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/3/42" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/80.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/4/15" COPY_ONLY)
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "
 # Generated gammurc for test purposes
 [gammu]
@@ -153,4 +162,12 @@ gammu_test(presskeysequence "" "mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@"
 gammu_test(displaysms "F4F29C9E769F41F4329E0E" TEXT 132456 -text "testing text")
 gammu_test(getfilesystemstatus "1010101 bytes")
 gammu_test(batch "Batch processed, terminating." "${CMAKE_CURRENT_BINARY_DIR}/.gammu-batch")
-
+gammu_test(getsmsc "123456" 1)
+gammu_test(getsms "Empty" 1 10)
+gammu_test(getsms "41761234567" 2 10)
+gammu_test(getsms "41761234567" 2 10)
+gammu_test(getallsms "4 SMS parts in 4 SMS sequences")
+gammu_test(geteachsms "4 SMS parts in 4 SMS sequences")
+gammu_test_fail(deletesms "Entry is empty" 1 99)
+gammu_test(addsms "" 1 "${Gammu_SOURCE_DIR}/tests/at-sms-encode/66.backup" "-yes")
+gammu_test(deletesms "" 1 2)
