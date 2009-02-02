@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-02 15:44+0100\n"
-"PO-Revision-Date: 2009-02-02 10:36+0100\n"
+"PO-Revision-Date: 2009-02-02 15:59+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1621,9 +1621,9 @@ msgid "Batch processed, terminating.\n"
 msgstr ""
 
 #: gammu/gammu.c:449
-#, fuzzy, c-format
+#, c-format
 msgid "Executing batch \"%s\" - command %i: %s\n"
-msgstr "Spouštím dávku \"%s\" - příkaz %i: %s"
+msgstr "Spouštím dávku \"%s\" - příkaz %i: %s\n"
 
 #: gammu/gammu.c:472
 msgid ""
