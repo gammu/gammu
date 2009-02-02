@@ -1093,7 +1093,6 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure)
 				SMSD_Terminate(Config, "Can't open device",
 						error, true, -1);
 				goto done;
-				break;
 			default:
 				SMSD_Log(0, Config, "Error at init connection %s (%i)",
 						GSM_ErrorString(error), error);
