@@ -66,6 +66,5 @@ for sms in @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/0[1-9].backup ; do
     cp $sms $DUMMY_PATH/sms/3/$number
 done
 
-sleep 5
-@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor -c "$CONFIG_PATH" -l 1 -d 0
-sleep 1
+sleep 10
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor -C -c "$CONFIG_PATH" -l 1 -d 0

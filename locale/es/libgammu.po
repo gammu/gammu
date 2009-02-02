@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-01 13:32+0100\n"
+"POT-Creation-Date: 2009-02-02 15:44+0100\n"
 "PO-Revision-Date: 2008-12-02 18:38+0100\n"
 "Last-Translator: Daniel Campos <daniel.campos@juntaextremadura.net>\n"
 "Language-Team: Español\n"
@@ -315,7 +315,7 @@ msgstr ""
 msgid "Unknown error description."
 msgstr "Descripción del error desconocida."
 
-#: common/phone/dummy/dummy.c:221
+#: common/phone/dummy/dummy.c:377
 #, fuzzy
 msgid "Templates"
 msgstr "%i plantillas"
