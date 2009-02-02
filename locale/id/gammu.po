@@ -7,13 +7,13 @@ msgstr ""
 "Project-Id-Version: Gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-02 10:28+0100\n"
-"PO-Revision-Date: 2009-01-07 18:00+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2009-02-01 09:56+0100\n"
+"Last-Translator: Hardie <hardie19@gmail.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Translate Toolkit 1.1.1\n"
+"X-Generator: Pootle 1.1.0\n"
 
 #: gammu/backup.c:31 gammu/backup.c:50 gammu/backup.c:68 gammu/backup.c:87
 #: helper/message-cmdline.c:367 helper/message-cmdline.c:391
@@ -89,7 +89,7 @@ msgstr ""
 #: gammu/backup.c:686 gammu/backup.c:721 gammu/backup.c:758 gammu/backup.c:797
 #: gammu/backup.c:830 gammu/backup.c:865 gammu/message.c:436
 msgid "Reading"
-msgstr ""
+msgstr "Membaca"
 
 #: gammu/backup.c:274 gammu/backup.c:303 gammu/backup.c:347 gammu/backup.c:385
 #: gammu/backup.c:418 gammu/backup.c:455 gammu/backup.c:491 gammu/backup.c:525
@@ -98,12 +98,12 @@ msgstr ""
 #: gammu/backup.c:875 gammu/message.c:315 gammu/message.c:411
 #, c-format
 msgid "Only part of data saved, please increase %s."
-msgstr ""
+msgstr "Hanya sebagian data yang tersimpan, silahkan meningkatkan %s."
 
 #: gammu/backup.c:311 gammu/backup.c:355 gammu/backup.c:426
 #: gammu/message.c:693
 msgid "Reading:"
-msgstr ""
+msgstr "Membaca:"
 
 #: gammu/backup.c:312 gammu/backup.c:356 gammu/backup.c:427 gammu/backup.c:961
 #: gammu/backup.c:1025 gammu/backup.c:1078 gammu/backup.c:1136
@@ -117,11 +117,11 @@ msgstr ""
 #: gammu/misc.c:374 gammu/misc.c:473 gammu/misc.c:478 gammu/misc.c:1190
 #, c-format
 msgid "%i percent"
-msgstr ""
+msgstr "%i persen"
 
 #: gammu/backup.c:325
 msgid "Checking SIM phonebook"
-msgstr ""
+msgstr "Memeriksa buku telepon SIM"
 
 #: gammu/backup.c:329
 msgid "Backup SIM phonebook?"
@@ -129,7 +129,7 @@ msgstr ""
 
 #: gammu/backup.c:368
 msgid "Checking phone calendar"
-msgstr ""
+msgstr "Memeriksa kalender telepon"
 
 #: gammu/backup.c:372
 msgid "Backup phone calendar notes?"
@@ -137,7 +137,7 @@ msgstr ""
 
 #: gammu/backup.c:402
 msgid "Checking phone todos"
-msgstr ""
+msgstr "Memeriksa agenda telepon"
 
 #: gammu/backup.c:405
 msgid "Backup phone todos?"
