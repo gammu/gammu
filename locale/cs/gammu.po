@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-02 10:52+0100\n"
+"POT-Creation-Date: 2009-02-02 15:44+0100\n"
 "PO-Revision-Date: 2009-02-02 10:36+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -63,7 +63,7 @@ msgstr "Neznámý formát zálohy: \"%s\"\n"
 msgid "Error while opening file for writing!\n"
 msgstr "Chyba při otevírání souboru pro zápis!\n"
 
-#: gammu/backup.c:155 gammu/files.c:442 helper/message-cmdline.c:1077
+#: gammu/backup.c:155 gammu/files.c:444 helper/message-cmdline.c:1077
 msgid "Error while writing file!\n"
 msgstr "Chyba při zápisu do souboru!\n"
 
@@ -114,7 +114,7 @@ msgstr "Načítám:"
 #: gammu/backup.c:1360 gammu/backup.c:1385 gammu/backup.c:1421
 #: gammu/backup.c:1474 gammu/backup.c:1499 gammu/backup.c:1557
 #: gammu/backup.c:1585 gammu/backup.c:1617 gammu/backup.c:1641
-#: gammu/backup.c:1666 gammu/backup.c:1762 gammu/files.c:384 gammu/files.c:591
+#: gammu/backup.c:1666 gammu/backup.c:1762 gammu/files.c:386 gammu/files.c:593
 #: gammu/message.c:324 gammu/message.c:420 gammu/message.c:694
 #: gammu/misc.c:374 gammu/misc.c:473 gammu/misc.c:478 gammu/misc.c:1190
 #, c-format
@@ -305,7 +305,7 @@ msgstr "Obnovit skupiny a loga volajících?"
 #: gammu/backup.c:1334 gammu/backup.c:1359 gammu/backup.c:1384
 #: gammu/backup.c:1420 gammu/backup.c:1473 gammu/backup.c:1498
 #: gammu/backup.c:1556 gammu/backup.c:1584 gammu/backup.c:1616
-#: gammu/backup.c:1640 gammu/backup.c:1665 gammu/files.c:741
+#: gammu/backup.c:1640 gammu/backup.c:1665 gammu/files.c:743
 msgid "Writing:"
 msgstr "Zapisuji:"
 
@@ -1434,108 +1434,108 @@ msgid "images: %i, sounds: %i, themes: %i"
 msgstr ""
 
 #. l10n: One char to indicate protected file
-#: gammu/files.c:116 gammu/files.c:205 gammu/files.c:326
+#: gammu/files.c:118 gammu/files.c:207 gammu/files.c:328
 #, c-format
 msgid "P"
 msgstr "P"
 
 #. l10n: One char to indicate read only file
-#: gammu/files.c:122 gammu/files.c:207 gammu/files.c:328
+#: gammu/files.c:124 gammu/files.c:209 gammu/files.c:330
 #, c-format
 msgid "R"
 msgstr "R"
 
 #. l10n: One char to indicate hidden file
-#: gammu/files.c:128 gammu/files.c:209 gammu/files.c:330
+#: gammu/files.c:130 gammu/files.c:211 gammu/files.c:332
 #, c-format
 msgid "H"
 msgstr "H"
 
 #. l10n: One char to indicate system file
-#: gammu/files.c:134 gammu/files.c:211 gammu/files.c:332
+#: gammu/files.c:136 gammu/files.c:213 gammu/files.c:334
 #, c-format
 msgid "S"
 msgstr "S"
 
-#: gammu/files.c:155 gammu/files.c:168 gammu/files.c:194
+#: gammu/files.c:157 gammu/files.c:170 gammu/files.c:196
 msgid "Part of folder"
 msgstr "Část složky"
 
-#: gammu/files.c:157 gammu/files.c:170 gammu/files.c:196 gammu/files.c:321
+#: gammu/files.c:159 gammu/files.c:172 gammu/files.c:198 gammu/files.c:323
 #, c-format
 msgid "Folder"
 msgstr "Složka"
 
-#: gammu/files.c:181 gammu/files.c:312
+#: gammu/files.c:183 gammu/files.c:314
 #, c-format
 msgid "File;"
 msgstr "Soubor;"
 
-#: gammu/files.c:221
+#: gammu/files.c:223
 #, c-format
 msgid "Used in phone: %li bytes"
 msgstr ""
 
-#: gammu/files.c:223
+#: gammu/files.c:225
 #, c-format
 msgid ", used in card: %li bytes"
 msgstr ""
 
-#: gammu/files.c:253
+#: gammu/files.c:255
 #, c-format
 msgid "Unknown attribute (%s)\n"
 msgstr ""
 
-#: gammu/files.c:304
+#: gammu/files.c:306
 msgid "Part of folder only"
 msgstr "Jen část složky"
 
-#: gammu/files.c:368
+#: gammu/files.c:370
 #, c-format
 msgid "Getting \"%s\"\n"
 msgstr "Stahuji \"%s\"\n"
 
-#: gammu/files.c:377
+#: gammu/files.c:379
 msgid "it's folder. Please give only file names"
 msgstr ""
 
-#: gammu/files.c:397 gammu/files.c:603
+#: gammu/files.c:399 gammu/files.c:605
 #, c-format
 msgid " (%02i:%02i minutes left)"
 msgstr " (%02i:%02i minut zbývá)"
 
-#: gammu/files.c:409 gammu/files.c:615
+#: gammu/files.c:411 gammu/files.c:617
 msgid ""
 "File checksum calculated by phone doesn't match with value calculated by "
 "Gammu. File damaged or error in Gammu"
 msgstr ""
 
-#: gammu/files.c:440
+#: gammu/files.c:442
 #, c-format
 msgid "  Saving to %s\n"
 msgstr ""
 
-#: gammu/files.c:690 gammu/nokia.c:923
+#: gammu/files.c:692 gammu/nokia.c:923
 #, c-format
 msgid "Parameter \"%s\" unknown\n"
 msgstr "Parametr \"%s\" není známý\n"
 
-#: gammu/files.c:725
+#: gammu/files.c:727
 #, c-format
 msgid "What file type (\"%s\") ?\n"
 msgstr ""
 
-#: gammu/files.c:734 gammu/misc.c:1148 gammu/nokia.c:932
+#: gammu/files.c:736 gammu/misc.c:1148 gammu/nokia.c:932
 #: helper/message-cmdline.c:1267
 msgid "Parameter missing!"
 msgstr "Chybí parametr!"
 
-#: gammu/files.c:743
+#: gammu/files.c:745
 #, c-format
 msgid "ID of new file is \"%s\"\n"
 msgstr "ID vytvořeného souboru je \"%s\"\n"
 
-#: gammu/files.c:764
+#: gammu/files.c:766
 #, c-format
 msgid "ID of new folder is \"%s\"\n"
 msgstr "ID vytvořené složky je \"%s\"\n"
@@ -1550,7 +1550,7 @@ msgstr "Sítě pro %s:"
 msgid "Unknown country name: %s."
 msgstr "Neznámé jméno země: %s."
 
-#: gammu/gammu.c:115 gammu/gammu.c:744 gammu/misc.c:45
+#: gammu/gammu.c:115 gammu/gammu.c:742 gammu/misc.c:45
 msgid "Network"
 msgstr "Síť"
 
@@ -1603,25 +1603,29 @@ msgstr ""
 "html>.\n"
 "Není poskytována ŽÁDNÁ ZÁRUKA, v rozsahu jaký je povolen zákonem.\n"
 
-#: gammu/gammu.c:396
+#: gammu/gammu.c:388
 msgid "standard input"
 msgstr "standardní vstup"
 
-#: gammu/gammu.c:407
+#: gammu/gammu.c:399
 #, c-format
 msgid "Batch file could not be opened: %s\n"
 msgstr ""
 
-#: gammu/gammu.c:417
+#: gammu/gammu.c:410
 msgid "Error reading batch! Terminating.\n"
 msgstr ""
 
-#: gammu/gammu.c:448
-#, c-format
-msgid "Executing batch \"%s\" - command %i: %s"
+#: gammu/gammu.c:412
+msgid "Batch processed, terminating.\n"
+msgstr ""
+
+#: gammu/gammu.c:449
+#, fuzzy, c-format
+msgid "Executing batch \"%s\" - command %i: %s\n"
 msgstr "Spouštím dávku \"%s\" - příkaz %i: %s"
 
-#: gammu/gammu.c:471
+#: gammu/gammu.c:472
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd-inject instead "
 "of gammu sendsmsdsms!"
@@ -1629,7 +1633,7 @@ msgstr ""
 "SMS démon je teď samostaný program, prosím použijte gammu-smsd-inject místo "
 "gammu sendsmsdsms!"
 
-#: gammu/gammu.c:478
+#: gammu/gammu.c:479
 msgid ""
 "SMS daemon is now in separate binary, please use gammu-smsd instead of gammu "
 "smsd!"
@@ -1637,119 +1641,119 @@ msgstr ""
 "SMS démon je teď samostaný program, prosím použijte gammu-smsd místo gammu "
 "smsd!"
 
-#: gammu/gammu.c:724
+#: gammu/gammu.c:722
 msgid "Calls"
 msgstr "Hovory"
 
-#: gammu/gammu.c:725
+#: gammu/gammu.c:723
 msgid "SMS and EMS"
 msgstr "SMS a EMS"
 
-#: gammu/gammu.c:726
+#: gammu/gammu.c:724
 msgid "Memory (phonebooks and calls)"
 msgstr "Paměť (kontakty a hovory)"
 
-#: gammu/gammu.c:727
+#: gammu/gammu.c:725
 msgid "Filesystem"
 msgstr "Soubory"
 
-#: gammu/gammu.c:728
+#: gammu/gammu.c:726
 msgid "Logo and pictures"
 msgstr "Loga a obrázky"
 
-#: gammu/gammu.c:729
+#: gammu/gammu.c:727
 msgid "Ringtones"
 msgstr "Zvonění"
 
-#: gammu/gammu.c:730
+#: gammu/gammu.c:728
 msgid "Calendar notes"
 msgstr "Kalendář"
 
-#: gammu/gammu.c:731
+#: gammu/gammu.c:729
 msgid "To do lists"
 msgstr "Úkoly"
 
-#: gammu/gammu.c:732
+#: gammu/gammu.c:730
 msgid "Notes"
 msgstr "Poznámky"
 
-#: gammu/gammu.c:733
+#: gammu/gammu.c:731
 msgid "Date, time and alarms"
 msgstr "Čas, datum a budíky"
 
-#: gammu/gammu.c:734
+#: gammu/gammu.c:732
 msgid "Categories"
 msgstr "Kategorie"
 
-#: gammu/gammu.c:736
+#: gammu/gammu.c:734
 msgid "Backing up and restoring"
 msgstr "Záloha a obnovení"
 
-#: gammu/gammu.c:739
+#: gammu/gammu.c:737
 msgid "Nokia specific"
 msgstr "Specifické pro Nokii"
 
-#: gammu/gammu.c:742
+#: gammu/gammu.c:740
 msgid "Siemens specific"
 msgstr "Specifické pro Siemens"
 
-#: gammu/gammu.c:745
+#: gammu/gammu.c:743
 msgid "WAP settings and bookmarks"
 msgstr "Nastavení WAPu a záložky"
 
-#: gammu/gammu.c:746
+#: gammu/gammu.c:744
 msgid "MMS and MMS settings"
 msgstr "MMS a jejich nastavení"
 
-#: gammu/gammu.c:747
+#: gammu/gammu.c:745
 msgid "Phone tests"
 msgstr "Testy telefonu"
 
-#: gammu/gammu.c:748
+#: gammu/gammu.c:746
 msgid "FM radio"
 msgstr "FM rádio"
 
-#: gammu/gammu.c:749
+#: gammu/gammu.c:747
 msgid "Phone information"
 msgstr "Informace o telefonu"
 
-#: gammu/gammu.c:750
+#: gammu/gammu.c:748
 msgid "Phone settings"
 msgstr "Nastavení telefonu"
 
-#: gammu/gammu.c:752
+#: gammu/gammu.c:750
 msgid "Dumps decoding"
 msgstr "Dekódování výpisů"
 
-#: gammu/gammu.c:754
+#: gammu/gammu.c:752
 msgid "Functions that don't fit elsewhere"
 msgstr "Fuknce, které se nevešly jinam"
 
-#: gammu/gammu.c:755
+#: gammu/gammu.c:753
 msgid "Gammu information"
 msgstr "Informace o Gammu"
 
 # type: Plain text
-#: gammu/gammu.c:771
+#: gammu/gammu.c:769
 msgid "Usage: gammu [parameters] <command> [options]"
 msgstr "Použití: gammu [parametry] <příkaz> [volby]"
 
 # type: Plain text
-#: gammu/gammu.c:772
+#: gammu/gammu.c:770
 msgid "Parameters before command configure gammu behaviour:"
 msgstr "Parametry před příkazem upravují chování gammu:"
 
-#: gammu/gammu.c:773
+#: gammu/gammu.c:771
 msgid "-c / --config <filename> ... name of configuration file"
 msgstr "-c / --config <soubor> ... jméno konfiguračního souboru"
 
-#: gammu/gammu.c:774
+#: gammu/gammu.c:772
 msgid "-s / --section <confign> ... section of config file to use, eg. 42"
 msgstr ""
 "-s / --section <číslokonf> ... číslo konfigurace, která se má použít, např. "
 "42"
 
-#: gammu/gammu.c:775
+#: gammu/gammu.c:773
 msgid ""
 "-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
 "binary|errors)"
@@ -1757,15 +1761,15 @@ msgstr ""
 "-d / --debug <úroveň> ... ladicí úroveň (nothing|text|textall|textalldate|"
 "binary|errors)"
 
-#: gammu/gammu.c:776
+#: gammu/gammu.c:774
 msgid "-f / --debug-file <filename> ... file for logging debug messages"
 msgstr "-f / --debug-file <soubor> ... soubor pro zapisování ladicích zpráv"
 
-#: gammu/gammu.c:778
+#: gammu/gammu.c:776
 msgid "Commands can be specified with or without leading --."
 msgstr "Příkazy mohou být zadány s i bez úvodního --."
 
-#: gammu/gammu.c:781
+#: gammu/gammu.c:779
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
@@ -1773,11 +1777,11 @@ msgstr ""
 "Více informací naleznete v jednotlivých tématech (gammu --help téma). Témata "
 "jsou:"
 
-#: gammu/gammu.c:879
+#: gammu/gammu.c:877
 msgid "Unknown help topic specified!"
 msgstr "Zadáno neznámé téma nápovědy!"
 
-#: gammu/gammu.c:883
+#: gammu/gammu.c:881
 #, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
@@ -1786,56 +1790,56 @@ msgstr ""
 "Příkazy Gammu, téma: %s\n"
 "\n"
 
-#: gammu/gammu.c:974
+#: gammu/gammu.c:972
 #, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "Příliš málo parametrů (funkce požaduje %d)\n"
 
-#: gammu/gammu.c:977
+#: gammu/gammu.c:975
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "Příliš málo parametrů (funkce požaduje %d až %d)\n"
 
-#: gammu/gammu.c:983 gammu/gammu.c:1004
+#: gammu/gammu.c:981 gammu/gammu.c:1002
 msgid "Parameters help"
 msgstr "Nápověda pro parametry"
 
-#: gammu/gammu.c:995
+#: gammu/gammu.c:993
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "Příliš mnoho parametrů (funkce akceptuje %d)\n"
 
-#: gammu/gammu.c:998
+#: gammu/gammu.c:996
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "Příliš mnoho parametrů (funkce akceptuje %d až %d)\n"
 
-#: gammu/gammu.c:1025
+#: gammu/gammu.c:1023
 msgid "Bad option!"
 msgstr "Chybná volba!"
 
-#: gammu/gammu.c:1110
+#: gammu/gammu.c:1104
 msgid "Configuration could not be parsed!"
 msgstr "Nastavení nemohlo být zpracováno!"
 
-#: gammu/gammu.c:1112
+#: gammu/gammu.c:1106
 msgid "No configuration file found!"
 msgstr "Nebyl nalezen konfigurační soubor!"
 
-#: gammu/gammu.c:1159
+#: gammu/gammu.c:1153
 msgid "Too few parameters!"
 msgstr "Příliš málo parametrů!"
 
-#: gammu/gammu.c:1172
+#: gammu/gammu.c:1166
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr "Nepodařilo se načíst [gammu%d] z konfiguračního souboru (gammurc)!\n"
 
-#: gammu/gammu.c:1174 gammu/gammu.c:1185
+#: gammu/gammu.c:1168 gammu/gammu.c:1179
 msgid "No configuration read, using builtin defaults!"
 msgstr "Nebylo načteno žádné nastavení, používám výchozí hodnoty!"
 
-#: gammu/gammu.c:1228
+#: gammu/gammu.c:1222
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"

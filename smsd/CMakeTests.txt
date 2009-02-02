@@ -12,6 +12,6 @@ if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
     add_test("smsd-dbi" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh")
     set_tests_properties("smsd-dbi" PROPERTIES
         TIMEOUT 60
-        PASS_REGULAR_EXPRESSION "Sent: 1\\nReceived: 18"
+        PASS_REGULAR_EXPRESSION ";999999999999999;1;18;0;100;42"
         )
 endif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)

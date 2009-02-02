@@ -512,7 +512,8 @@ GSM_Error DUMMY_SendSavedSMS(GSM_StateMachine *s, int Folder, int Location)
 
 GSM_Error DUMMY_SendSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	return ERR_NOTIMPLEMENTED;
+	s->User.SendSMSStatus(s, 0, 0xff, s->User.SendSMSStatusUserData);
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)

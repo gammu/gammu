@@ -25,6 +25,7 @@ const char default_config[] = "/etc/gammu-smsdrc";
 volatile bool terminate = false;
 int delay_seconds = 20;
 int limit_loops = -1;
+bool compact = false;
 
 void smsd_interrupt(int signum)
 {
@@ -78,12 +79,13 @@ void help(void)
 	printf("options:\n");
 	print_option("h", "help", "shows this help");
 	print_option("v", "version", "shows version information");
+	print_option("C", "csv", "CSV output");
 	print_option_param("c", "config", "CONFIG_FILE",
 			   "defines path to config file");
 	print_option_param("d", "delay", "DELAY",
 			   "delay in seconds between loops");
 	print_option_param("l", "loops", "NUMBER",
-			   "number of loops (infinite by defalt)");
+			   "delay in seconds between loops");
 }
 
 NORETURN void wrong_params(void)
@@ -108,10 +110,10 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 	int option_index;
 
 	while ((opt =
-		getopt_long(argc, argv, "+hv?c:d:l:", long_options,
+		getopt_long(argc, argv, "+hv?c:d:l:C", long_options,
 			    &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
-	while ((opt = getopt(argc, argv, "+hv?c:d:l:")) != -1) {
+	while ((opt = getopt(argc, argv, "+hv?c:d:l:C")) != -1) {
 #else
 	/* Poor mans getopt replacement */
 	int i, optind = -1;
@@ -130,6 +132,9 @@ int process_commandline(int argc, char **argv, SMSD_Parameters * params)
 				break;
 			case 'v':
 				version();
+				break;
+			case 'C':
+				compact = true;
 				break;
 			case 'd':
 				delay_seconds = atoi(optarg);
@@ -212,15 +217,27 @@ int main(int argc, char **argv)
 			printf("Failed to get status: %s\n", GSM_ErrorString(error));
 			return 2;
 		}
-		printf("Client: %s\n", status.Client);
-		printf("PhoneID: %s\n", status.PhoneID);
-		printf("IMEI: %s\n", status.IMEI);
-		printf("Sent: %d\n", status.Sent);
-		printf("Received: %d\n", status.Received);
-		printf("Failed: %d\n", status.Failed);
-		printf("BatterPercent: %d\n", status.Charge.BatteryPercent);
-		printf("NetworkSignal: %d\n", status.Network.SignalPercent);
-		printf("\n");
+		if (compact) {
+			printf("%s;%s;%s;%d;%d;%d;%d;%d\n",
+				 status.Client,
+				 status.PhoneID,
+				 status.IMEI,
+				 status.Sent,
+				 status.Received,
+				 status.Failed,
+				 status.Charge.BatteryPercent,
+				 status.Network.SignalPercent);
+		} else {
+			printf("Client: %s\n", status.Client);
+			printf("PhoneID: %s\n", status.PhoneID);
+			printf("IMEI: %s\n", status.IMEI);
+			printf("Sent: %d\n", status.Sent);
+			printf("Received: %d\n", status.Received);
+			printf("Failed: %d\n", status.Failed);
+			printf("BatterPercent: %d\n", status.Charge.BatteryPercent);
+			printf("NetworkSignal: %d\n", status.Network.SignalPercent);
+			printf("\n");
+		}
 		sleep(delay_seconds);
 	}
 
