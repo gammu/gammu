@@ -206,6 +206,9 @@ static void Features(int argc UNUSED, char *argv[]UNUSED)
 #ifdef GSM_ENABLE_BLUEOBEX
 	printf("  - %s\n", "BLUEOBEX");
 #endif
+#ifdef LIBUSB_FOUND
+	printf("  - %s\n", "FBUSUSB");
+#endif
 
 	printf(" * %s\n", _("Phones"));
 #ifdef GSM_ENABLE_NOKIA650
@@ -250,6 +253,7 @@ static void Features(int argc UNUSED, char *argv[]UNUSED)
 #ifdef GSM_ENABLE_GNAPGEN
 	printf("  - %s\n", "GNAPGEN");
 #endif
+	printf("  - %s\n", "DUMMY");
 
 	printf(" * %s\n", _("Miscellaneous"));
 #ifdef GSM_ENABLE_CELLBROADCAST
