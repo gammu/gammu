@@ -2,6 +2,15 @@
 
 set -x
 set -e
+SMSD_PID=0
+
+cleanup() {
+    if [ $SMSD_PID -ne 0 ] ; then
+        kill $SMSD_PID
+    fi
+}
+
+trap cleanup INT QUIT EXIT
 
 rm -rf smsd-test
 mkdir smsd-test
@@ -32,9 +41,10 @@ CONFIG_PATH="@CMAKE_CURRENT_BINARY_DIR@/smsd-test/.smsdrc"
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd -c "$CONFIG_PATH" &
 SMSD_PID=$!
 
-sleep 10
+sleep 2
 
-@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor -c "$CONFIG_PATH" -l 1
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor -c "$CONFIG_PATH" -l 1 -d 0
+@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 
-sleep 10
+sleep 5
 kill $SMSD_PID
