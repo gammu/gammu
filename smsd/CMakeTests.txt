@@ -5,11 +5,13 @@
 # This testing uses some programs
 find_program(SH_BIN sh)
 find_program(SQLITE_BIN sqlite3)
+find_program(SED_BIN sed)
 
-if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN)
+if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
     configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" ESCAPE_QUOTES)
     add_test("smsd-dbi" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh")
     set_tests_properties("smsd-dbi" PROPERTIES
         TIMEOUT 60
+        PASS_REGULAR_EXPRESSION "Sent: 1\\nReceived: 18"
         )
-endif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN)
+endif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
