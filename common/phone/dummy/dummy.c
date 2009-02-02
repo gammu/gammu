@@ -72,6 +72,7 @@ int DUMMY_GetCount(GSM_StateMachine *s, const char *dirname)
 		count++;
 		fclose(f);
 	}
+	free(full_name);
 	return count;
 }
 
@@ -86,9 +87,13 @@ int DUMMY_GetFirstFree(GSM_StateMachine *s, const char *dirname)
 	for (i = 1; i <= DUMMY_MAX_LOCATION; i++) {
 		sprintf(full_name, "%s/%s/%d", s->CurrentConfig->Device, dirname, i);
 		f = fopen(full_name, "r");
-		if (f == NULL) return i;
+		if (f == NULL) {
+			free(full_name);
+			return i;
+		}
 		fclose(f);
 	}
+	free(full_name);
 	return -1;
 }
 
@@ -105,9 +110,11 @@ int DUMMY_GetNext(GSM_StateMachine *s, const char *dirname, int current)
 		f = fopen(full_name, "r");
 		if (f != NULL) {
 			fclose(f);
+			free(full_name);
 			return i;
 		}
 	}
+	free(full_name);
 	return -1;
 }
 
@@ -295,6 +302,7 @@ GSM_Error DUMMY_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 				break;
 		}
 	}
+	GSM_FreeSMSBackup(&Backup);
 
 	return ERR_NONE;
 }
@@ -331,7 +339,9 @@ GSM_Error DUMMY_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	backup.SMS[0] = sms;
 	backup.SMS[1] = NULL;
 
-	return GSM_AddSMSBackupFile(filename, &backup);
+	error = GSM_AddSMSBackupFile(filename, &backup);
+	free(filename);
+	return error;
 }
 
 GSM_Error DUMMY_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
