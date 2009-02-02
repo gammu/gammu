@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-02 15:44+0100\n"
+"POT-Creation-Date: 2009-02-02 18:24+0100\n"
 "PO-Revision-Date: 2009-02-02 10:30+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -303,7 +303,7 @@ msgstr "Služba není spuštěna."
 msgid "Unknown error description."
 msgstr "Neznámý popis chyby."
 
-#: common/phone/dummy/dummy.c:377
+#: common/phone/dummy/dummy.c:382
 msgid "Templates"
 msgstr "Šablony"
 
