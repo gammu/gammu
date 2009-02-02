@@ -115,6 +115,30 @@ GSM_Error DUMMY_GetIMEI (GSM_StateMachine *s)
 	return ERR_NONE;
 }
 
+GSM_Error DUMMY_GetOriginalIMEI (GSM_StateMachine *s, char *value)
+{
+	strcpy(value, "666666666666666");
+	return ERR_NONE;
+}
+
+GSM_Error DUMMY_GetManufactureMonth (GSM_StateMachine *s, char *value)
+{
+	strcpy(value, "April");
+	return ERR_NONE;
+}
+
+GSM_Error DUMMY_GetHardware (GSM_StateMachine *s, char *value)
+{
+	strcpy(value, "FOO DUMMY BAR");
+	return ERR_NONE;
+}
+
+GSM_Error DUMMY_GetPPM (GSM_StateMachine *s, char *value)
+{
+	strcpy(value, "EN CS");
+	return ERR_NONE;
+}
+
 GSM_Error DUMMY_GetFirmware(GSM_StateMachine *s)
 {
 	strcpy(s->Phone.Data.Version, VERSION);
@@ -644,11 +668,11 @@ GSM_Phone_Functions DUMMYPhone = {
 	DUMMY_GetModel,
 	DUMMY_GetFirmware,
 	DUMMY_GetIMEI,
-	NOTSUPPORTED,			/* 	GetOriginalIMEI		*/
-	NOTSUPPORTED,			/* 	GetManufactureMonth	*/
+	DUMMY_GetOriginalIMEI,
+	DUMMY_GetManufactureMonth,
         DUMMY_GetProductCode,
-	NOTSUPPORTED,			/* 	GetHardware		*/
-	NOTSUPPORTED,			/* 	GetPPM			*/
+        DUMMY_GetHardware,
+        DUMMY_GetPPM,
 	DUMMY_GetSIMIMSI,
 	DUMMY_GetDateTime,
 	DUMMY_SetDateTime,
