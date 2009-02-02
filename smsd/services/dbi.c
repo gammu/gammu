@@ -562,7 +562,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 	}
 
 	while (dbi_result_next_row(Res)) {
-		sprintf(ID, "%i", dbi_result_get_int_idx(Res,1));
+		sprintf(ID, "%lld", dbi_result_get_longlong_idx(Res,1));
 		sprintf(Config->DT, "%s", dbi_result_get_string_idx(Res, 2));
 
 		if (dbi_result_get_string_idx(Res, 4) == NULL
