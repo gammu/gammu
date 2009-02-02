@@ -379,7 +379,8 @@ static void RunBatch(int argc, char *argv[])
 	 * @todo Allocate memory dynamically.
 	 */
 	char ln[2000];
-	size_t i;
+	size_t i, len;
+	ssize_t pos;
 	int j, c = 0, argsc;
 	char *argsv[20];
 	bool origbatch;
@@ -405,13 +406,21 @@ static void RunBatch(int argc, char *argv[])
 	while (!feof(bf)) {
 		ln[0] = 0;
 		if (fgets(ln, sizeof(ln) - 2, bf) == NULL) {
-			printf_err(_("Error reading batch! Terminating.\n"));
+			if (!feof(bf)) {
+				printf_err(_("Error reading batch! Terminating.\n"));
+			} else {
+				printf_info(_("Batch processed, terminating.\n"));
+			}
 			break;
 		}
-		if (ln[strlen(ln) - 2] == 0x0D) {
-			/* reduce CRLF to LF so we have the same EOL on Windows and Linux */
-			ln[strlen(ln) - 2] = 0x0A;
-			ln[strlen(ln) - 1] = 0;
+
+		/* Skip all traling whitespace */
+		for (pos = strlen(ln) - 1; pos >= 0; pos--) {
+			if (isspace(ln[pos])) {
+				ln[pos] = 0;
+			} else {
+				break;
+			}
 		}
 
 		if (strlen(ln) < 1 || ln[0] == '#') {
@@ -423,8 +432,9 @@ static void RunBatch(int argc, char *argv[])
 		i = 0;
 		j = 0;
 		argsc = 0;
-		while (i < strlen(ln)) {
-			if (ln[i] == ' ' || ln[i] == 0x0A) {
+		len = strlen(ln);
+		while (i <= len) {
+			if (ln[i] == ' ' || ln[i] == 0) {
 				argsc++;
 				argsv[argsc] = malloc(i - j + 1);
 				strncpy(argsv[argsc], ln + j, i - j);
@@ -436,7 +446,7 @@ static void RunBatch(int argc, char *argv[])
 		if (argsc > 0) {
 			/* we have some usable command and parameters, send them into standard processing */
 			printf ("----------------------------------------------------------------------------\n");
-			printf(_("Executing batch \"%s\" - command %i: %s"), name, ++c, ln);
+			printf(_("Executing batch \"%s\" - command %i: %s\n"), name, ++c, ln);
 			/**
 			 * @todo Handle return value from ProcessParameters.
 			 */
