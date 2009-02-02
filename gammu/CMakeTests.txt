@@ -12,13 +12,24 @@ connection = none
 port = ${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy
 ")
 
-add_test(gammu-help "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help
+# Basic functionality tests
+
+add_test(gammu-help "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help)
+set_tests_properties(gammu-help PROPERTIES
     PASS_REGULAR_EXPRESSION "${VERSION}"
     )
 
-add_test(gammu-nets "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" listnetworks
-    PASS_REGULAR_EXPRESSION "740 01     Conecel S.A. (Consorcio Ecuatoriano de Telecomunicaciones S.A.)"
+add_test(gammu-help-all "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help all)
+set_tests_properties(gammu-help-all PROPERTIES
+    PASS_REGULAR_EXPRESSION "batch"
     )
+
+add_test(gammu-nets "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" listnetworks)
+set_tests_properties(gammu-nets PROPERTIES
+    PASS_REGULAR_EXPRESSION "740 01[\\t ]*Conecel S.A. \\(Consorcio Ecuatoriano de Telecomunicaciones S.A.\\)"
+    )
+
+# Bitmap conversions
 
 foreach(EXT nlm ngg nol xpm nsl wbmp bmp)
     add_test(gammu-copybitmap-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
@@ -37,6 +48,8 @@ add_test(gammu-copyringtone-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TES
     copyringtone ${Gammu_SOURCE_DIR}/docs/examples/media/axelf.txt "${CMAKE_CURRENT_BINARY_DIR}/test-rng.bin" BINARY)
 add_test(gammu-copyringtone-binary-binary "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
     copyringtone "${CMAKE_CURRENT_BINARY_DIR}/test-rng.bin" "${CMAKE_CURRENT_BINARY_DIR}/test-rng-bin.bin" BINARY)
+
+# Ringtone conversions
 
 foreach(EXT ott rng mid imy ime wav rttl)
     add_test(gammu-copyringtone-${EXT} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}"
@@ -58,3 +71,20 @@ foreach(EXT ott rng mid imy ime wav rttl)
     endforeach(EXT2)
 endforeach(EXT)
 
+# Dummy phone tests
+
+macro (gammu_test _name _expression)
+    add_test("gammu-dummy-${_name}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+    set_tests_properties("gammu-dummy-${_name}" PROPERTIES
+        PASS_REGULAR_EXPRESSION "${_expression}"
+        )
+endmacro (gammu_test _name _expression)
+
+gammu_test(monitor NasraTel 1)
+gammu_test(identify DUMMY-001)
+gammu_test(getdatetime "[0-9][0-9][0-9][0-9]")
+gammu_test(getsmsfolders "\\n5.")
+gammu_test(dialvoice "" 123456)
+gammu_test(reset "" HARD)
+gammu_test(reset "" SOFT)
+gammu_test(presskeysequence "" "mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@")
