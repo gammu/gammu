@@ -1015,13 +1015,17 @@ GSM_Error GSM_TryReadGammuRC (const char *path, INI_Section **result)
 	return  INI_ReadFile(path, false, result);
 }
 
-GSM_Error GSM_FindGammuRC (INI_Section **result)
+GSM_Error GSM_FindGammuRC (INI_Section **result, const char *force_config)
 {
 	char configfile[PATH_MAX + 1];
 	char *envpath;
 	GSM_Error error;
 
 	*result = NULL;
+
+	if (force_config != NULL) {
+		return GSM_TryReadGammuRC(force_config, result);
+	}
 
 #ifdef WIN32
 	/* Get Windows application data path */

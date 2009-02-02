@@ -531,12 +531,14 @@ StateMachine_SetConfig(StateMachineObject *self, PyObject *args, PyObject *kwds)
 
 
 static char StateMachine_ReadConfig__doc__[] =
-"ReadConfig(Section, Configuration)\n\n"
+"ReadConfig(Section, Configuration, Filename)\n\n"
 "Reads specified section of gammurc\n\n"
 "@param Section: Index of config section to read. Defaults to 0.\n"
 "@type Section: int\n"
 "@param Configuration: Index where config section will be stored. Defaults to Section.\n"
 "@type Configuration: int\n"
+"@param Filename: Path to configuration file (otherwise it is autodetected).\n"
+"@type Filename: string\n"
 "@return: None\n"
 "@rtype: None\n"
 ;
@@ -548,11 +550,12 @@ StateMachine_ReadConfig(StateMachineObject *self, PyObject *args, PyObject *kwds
     int             section = 0;
     int             dst = -1;
     INI_Section     *cfg;
+    char            *cfg_path = NULL;
     GSM_Config *Config;
 
-    static char         *kwlist[] = {"Section", "Configuration", NULL};
+    static char         *kwlist[] = {"Section", "Configuration", "Filename", NULL};
 
-    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|II", kwlist, &section, &dst))
+    if (!PyArg_ParseTupleAndKeywords(args, kwds, "|IIs", kwlist, &section, &dst, &cfg_path))
         return NULL;
 
     if (dst == -1) dst = section;
@@ -562,7 +565,7 @@ StateMachine_ReadConfig(StateMachineObject *self, PyObject *args, PyObject *kwds
         return NULL;
     }
 
-    error = GSM_FindGammuRC(&cfg);
+    error = GSM_FindGammuRC(&cfg, cfg_path);
     if (!checkError(self->s, error, "FindGammuRC via ReadConfig"))
         return NULL;
     if (cfg == NULL) {

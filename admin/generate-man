@@ -168,8 +168,7 @@ operating system, it's version and phone information are needed).
 
 .P
 To generate debug log, enable it in gammurc (alternatively you can
-do it on command line, but gammurc way allows separating debug log from
-other output):
+do it on command line using -d textall -f /tmp/gammu.log):
 
     [gammu]
     ...your connection settings...
@@ -181,11 +180,6 @@ phone and stores dump of communication there. You can also find some
 hints for improving support for your phone in this log.
 
 Please report bugs to <http://bugs.cihar.com>.
-'''
-
-DEBUG_LEVELS = '''
-Parameter, which allow to control debug level, see documentation of LogFormat
-configuration directive in gammurc(5) for possible values.
 '''
 
 # Commands help, initially generated from original gammu man page
@@ -949,9 +943,8 @@ def main():
     version = result.groups()[0]
     syntax = text[2]
 
-    syntax_help = []
-    syntax_help.append(text[4] + text[5] + text[6])
-    syntax_help.append(text[8])
+    syntax_help = '.br\n'.join(text[4:9]).replace('nothing|text|textall|textalldate|binary|errors', 'see gammurc(5) for possible values')
+    commands_help = text[10]
 
     output = file(OUT_PATH, 'w')
     output.write(HEADER % {'version' : version, 'date' : build_date})
@@ -968,11 +961,10 @@ def main():
 
     write_section(output, 'OPTIONS')
 
-    for line in syntax_help:
-        write_para(output, line.replace('-', '\\-'))
+    write_para(output, syntax_help.replace('-', '\\-'))
 
-    write_subsection(output, 'Debug levels')
-    write_para(output, DEBUG_LEVELS)
+    write_subsection(output, 'Commands')
+    write_para(output, commands_help.replace('-', '\\-'))
 
     sections, section_data = parse_sections(text[12:])
     for section in sections:

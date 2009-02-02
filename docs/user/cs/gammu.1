@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Leden 27, 2008" "Gammu 1.22.93" "Dokumentace Gammu"
+.TH GAMMU 1 "Únor 2, 2009" "Gammu 1.22.93" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -12,8 +12,7 @@ Gammu \- Provádí různé zajímavé věci s vaším mobilním telefonem nebo m
 
 .SH SYNTAXE
 .P
-Použití: gammu [\fIčíslokonf\fP] [\fInothing|text|textall|binary|errors\fP]
-<příkaz> [\fIparametry\fP]
+Použití: gammu [\fIparametry\fP] <příkaz> [\fIvolby\fP]
 
 
 .SH POPIS
@@ -27,21 +26,22 @@ pro aktuální seznam se podívejte na
 
 .SH PARAMETRY
 .P
-První parametr volitelně určuje, kterou sekci konfiguračního souboru má
-Gammu použít (výchozí chování je zkoušet postupně všechny). Použijte jenom
-číslo sekce, například pokud je sekce [gammu42], použijte 42.  Druhý
-parametr volitelně určuje úroveň ladicích hlášek a poslední už zadává příkaz
-k provedení.
+Parametry před příkazem upravují chování gammu:
+.br
+\-c / \-\-config <soubor> ... jméno konfiguračního souboru
+.br
+\-s / \-\-section <číslokonf> ... číslo konfigurace, která se má
+použít, např. 42
+.br
+\-d / \-\-debug <úroveň> ... ladicí úroveň (v gammurc(5) jsou popsány
+možné hodnoty)
+.br
+\-f / \-\-debug\-file <soubor> ... soubor pro zapisování ladicích zpráv
 
+
+.SS Příkazy
 .P
 Příkazy mohou být zadány s i bez úvodního \-\-.
-
-
-.SS "Úroveň ladění"
-.P
-
-Parametr, který nastaví ladicí úroveň. Popis možných hodnot naleznete v
-popisu konfigurační hodnoty LogFormat v dokumentaci gammurc(5).
 
 
 .SS Hovory
@@ -2305,8 +2305,7 @@ telefonu).
 
 .P
 Pro vytvoření ladicího logu zapněte logování v gammurc (můžete ho také
-zapnout na příkazové řádce, ale gammurc umožní samostatné ladicí hlášky od
-výstupu programu):
+zapnout na příkazové řádce pomocí \-d textall \-f /tmp/gammu.log):
 
     [gammu]
     ...vaše nastavení připojení...

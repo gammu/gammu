@@ -197,11 +197,14 @@ bool GSM_IsConnected(GSM_StateMachine * s);
  * in home and last fallback is in current driectory.
  *
  * \param result Ini file representation
+ * \param force_config Forcing of custom path instead of autodetected
+ * one (if NULL, autodetection is performed).
+ *
  * \return Error code
  *
  * \ingroup StateMachine
  */
-GSM_Error GSM_FindGammuRC(INI_Section ** result);
+GSM_Error GSM_FindGammuRC(INI_Section ** result, const char *force_config);
 
 /**
  * Processes gammu configuration.

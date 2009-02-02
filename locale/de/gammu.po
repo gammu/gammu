@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-01-26 10:20+0100\n"
+"POT-Creation-Date: 2009-02-02 10:28+0100\n"
 "PO-Revision-Date: 2007-12-20 16:33+0100\n"
 "Last-Translator: Jochen Kemnade <jochenkemnade@web.de>\n"
 "Language-Team: Language =de\n"
@@ -1776,38 +1776,40 @@ msgid "Gammu information"
 msgstr "Gammu Information"
 
 #: gammu/gammu.c:771
-msgid ""
-"Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> "
-"[options]"
+#, fuzzy
+msgid "Usage: gammu [parameters] <command> [options]"
 msgstr ""
 "Verwendung: gammu [Konfiguration] [nothing|text|textall|binary|errors] "
 "<Kommando> [Optionen]"
 
+# type: Plain text
 #: gammu/gammu.c:772
-msgid ""
-"First parameter optionally specifies which config section to use (all are "
-"probed by default)."
+msgid "Parameters before command configure gammu behaviour:"
 msgstr ""
-"Der optionale erste Parameter bestimmt, welcher Konfigurationsabschnitt "
-"verwendet wird (es werden standardmäßig alle ausprobiert)."
 
 #: gammu/gammu.c:773
-msgid ""
-"Use only number of config section, so if config section is [gammu42], use 42."
+msgid "-c / --config <filename> ... name of configuration file"
 msgstr ""
 
 #: gammu/gammu.c:774
-msgid ""
-"Second parameter optionally controls debug level, next one specifies actions."
+msgid "-s / --section <confign> ... section of config file to use, eg. 42"
 msgstr ""
-"Der optionale zweite Parameter beschreibt das Debug-Niveau, der nächste "
-"beschreibt die Aktionen."
+
+#: gammu/gammu.c:775
+msgid ""
+"-d / --debug <level> ... debug level (nothing|text|textall|textalldate|"
+"binary|errors)"
+msgstr ""
 
 #: gammu/gammu.c:776
+msgid "-f / --debug-file <filename> ... file for logging debug messages"
+msgstr ""
+
+#: gammu/gammu.c:778
 msgid "Commands can be specified with or without leading --."
 msgstr "Kommandos können mit oder ohne führende -- angegeben werden."
 
-#: gammu/gammu.c:779
+#: gammu/gammu.c:781
 msgid ""
 "For more details, call help on specific topic (gammu --help topic). Topics "
 "are:"
@@ -1815,11 +1817,11 @@ msgstr ""
 "Für mehr Details rufen Sie bitte die Hilfe für ein bestimmtes Thema auf "
 "(gammu --help thema). Die verfügbaren Themen sind:"
 
-#: gammu/gammu.c:877
+#: gammu/gammu.c:879
 msgid "Unknown help topic specified!"
 msgstr "Unbekanntes Hilfethema angegeben!"
 
-#: gammu/gammu.c:881
+#: gammu/gammu.c:883
 #, c-format
 msgid ""
 "Gammu commands, topic: %s\n"
@@ -1828,56 +1830,56 @@ msgstr ""
 "Gammu-Befehle, Thema: %s\n"
 "\n"
 
-#: gammu/gammu.c:972
+#: gammu/gammu.c:974
 #, c-format
 msgid "More parameters required (function requires %d)\n"
 msgstr "Zu wenige Parameter! (Die Funktion benötigt %d)\n"
 
-#: gammu/gammu.c:975
+#: gammu/gammu.c:977
 #, c-format
 msgid "More parameters required (function requires %d to %d)\n"
 msgstr "Zu wenige Parameter! (Die Funktion benötigt %d bis %d)\n"
 
-#: gammu/gammu.c:981 gammu/gammu.c:1002
+#: gammu/gammu.c:983 gammu/gammu.c:1004
 msgid "Parameters help"
 msgstr "Hilfe zu Parametern"
 
-#: gammu/gammu.c:993
+#: gammu/gammu.c:995
 #, c-format
 msgid "Too many parameters (function accepts %d)\n"
 msgstr "Zu viele Parameter! (Die Funktion benötigt %d)\n"
 
-#: gammu/gammu.c:996
+#: gammu/gammu.c:998
 #, c-format
 msgid "Too many parameters (function accepts %d to %d)\n"
 msgstr "Zu viele Parameter! (Die Funktion benötigt %d bis %d)\n"
 
-#: gammu/gammu.c:1023
+#: gammu/gammu.c:1025
 msgid "Bad option!"
 msgstr "Falsche Auswahl!"
 
-#: gammu/gammu.c:1046
+#: gammu/gammu.c:1108
 msgid "Configuration could not be parsed!"
 msgstr "Konfigurationsdatei konnte nicht verarbeitet werden!"
 
-#: gammu/gammu.c:1048
+#: gammu/gammu.c:1110
 msgid "No configuration file found!"
 msgstr "Keine Konfigurationsdatei gefunden!"
 
-#: gammu/gammu.c:1087 gammu/gammu.c:1179
+#: gammu/gammu.c:1157
 msgid "Too few parameters!"
 msgstr "Zu wenig Parameter!"
 
-#: gammu/gammu.c:1117
+#: gammu/gammu.c:1170
 #, fuzzy, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr "[gammu%d] lesen von gammurc fehlgeschlagen!\n"
 
-#: gammu/gammu.c:1119 gammu/gammu.c:1130
+#: gammu/gammu.c:1172 gammu/gammu.c:1183
 msgid "No configuration read, using builtin defaults!"
 msgstr "Keine Konfiguration eingelesen, verwende eingebaute Standards!"
 
-#: gammu/gammu.c:1185
+#: gammu/gammu.c:1226
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
@@ -4212,6 +4214,20 @@ msgstr "Warnung"
 #, fuzzy
 msgid "Information"
 msgstr "Telefoninformationen"
+
+#~ msgid ""
+#~ "First parameter optionally specifies which config section to use (all are "
+#~ "probed by default)."
+#~ msgstr ""
+#~ "Der optionale erste Parameter bestimmt, welcher Konfigurationsabschnitt "
+#~ "verwendet wird (es werden standardmäßig alle ausprobiert)."
+
+#~ msgid ""
+#~ "Second parameter optionally controls debug level, next one specifies "
+#~ "actions."
+#~ msgstr ""
+#~ "Der optionale zweite Parameter beschreibt das Debug-Niveau, der nächste "
+#~ "beschreibt die Aktionen."
 
 #~ msgid " (default)"
 #~ msgstr " (Standard)"
