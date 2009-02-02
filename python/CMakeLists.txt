@@ -1,4 +1,4 @@
-# cmake <http://www.cmake.org> build file for Gammu
+# cmake <http://www.cmake.org> build file for python-gammu
 # Copyright (c) 2007-2009 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4:
 
@@ -7,36 +7,7 @@ project (python-gammu C)
 add_subdirectory(gammu)
 
 # Testing
-# Scripts need to be in same directory as built gammu module!
-configure_file("examples/backup-convertor.py" "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" COPY_ONLY)
-file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcards/*.vcf"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.ics"
-    "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.vcs")
-foreach(VCF ${VFORMATS})
-    get_filename_component(TESTNAME "${VCF}" NAME_WE)
-    get_filename_component(TYPE "${VCF}" EXT)
-    add_test("py-backup-${TESTNAME}" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" "${VCF}" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}.backup")
-    add_test("py-backup-${TESTNAME}-backup" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}.backup" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}-backup.backup")
-    if (${TYPE} STREQUAL .vcf)
-        foreach (EXT lmb vcf ldif)
-            add_test("py-backup-${TESTNAME}-${EXT}" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" "${VCF}" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}.${EXT}")
-            add_test("py-backup-${TESTNAME}-${EXT}-backup" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}.${EXT}" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}-${EXT}.backup")
-        endforeach (EXT)
-    else (${TYPE} STREQUAL .vcf)
-        foreach (EXT vcs ics)
-            add_test("py-backup-${TESTNAME}-${EXT}" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" "${VCF}" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}.${EXT}")
-            add_test("py-backup-${TESTNAME}-${EXT}-backup" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}.${EXT}" "${CMAKE_CURRENT_BINARY_DIR}/${TESTNAME}-${EXT}.backup")
-        endforeach (EXT)
-    endif (${TYPE} STREQUAL .vcf)
-endforeach(VCF)
-
-configure_file("examples/sms-encode-decode.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py" COPY_ONLY)
-add_test("py-sms-encode-decode" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-encode-decode.py")
-set_tests_properties("py-sms-encode-decode" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")
-
-configure_file("examples/sms-link.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-link.py" COPY_ONLY)
-add_test("py-sms-link" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-link.py")
-set_tests_properties("py-sms-link" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")
+include(CMakeTests.txt)
 
 # Documentation
 find_program(EPYDOC_EXECUTABLE NAMES epydoc
