@@ -276,27 +276,22 @@ GSM_Error DUMMY_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 			case 1:
 				sms->SMS[i].InboxFolder = true;
 				sms->SMS[i].Memory = MEM_SM;
-				sms->SMS[i].State = SMS_UnRead;
 				break;
 			case 2:
 				sms->SMS[i].InboxFolder = false;
 				sms->SMS[i].Memory = MEM_SM;
-				sms->SMS[i].State = SMS_Sent;
 				break;
 			case 3:
 				sms->SMS[i].InboxFolder = true;
 				sms->SMS[i].Memory = MEM_ME;
-				sms->SMS[i].State = SMS_UnRead;
 				break;
 			case 4:
 				sms->SMS[i].InboxFolder = false;
 				sms->SMS[i].Memory = MEM_ME;
-				sms->SMS[i].State = SMS_Sent;
 				break;
 			case 5:
 				sms->SMS[i].InboxFolder = false;
 				sms->SMS[i].Memory = MEM_ME;
-				sms->SMS[i].State = SMS_UnSent;
 				break;
 		}
 	}
