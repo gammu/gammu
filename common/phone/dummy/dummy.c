@@ -104,8 +104,8 @@ int DUMMY_GetNext(GSM_StateMachine *s, const char *dirname, int current)
 		sprintf(full_name, "%s/%s/%d", s->CurrentConfig->Device, dirname, i);
 		f = fopen(full_name, "r");
 		if (f != NULL) {
-			return i;
 			fclose(f);
+			return i;
 		}
 	}
 	return -1;
