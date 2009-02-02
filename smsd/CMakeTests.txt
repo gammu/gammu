@@ -1,0 +1,15 @@
+# cmake <http://www.cmake.org> test file for SMSD
+# Copyright (c) 2007-2009 Michal Cihar
+# vim: expandtab sw=4 ts=4 sts=4 ft=cmake:
+
+# This testing uses some programs
+find_program(SH_BIN sh)
+find_program(SQLITE_BIN sqlite3)
+
+if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN)
+    configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" ESCAPE_QUOTES)
+    add_test("smsd-dbi" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh")
+    set_tests_properties("smsd-dbi" PROPERTIES
+        TIMEOUT 60
+        )
+endif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN)
