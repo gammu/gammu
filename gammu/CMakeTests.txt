@@ -10,6 +10,7 @@ file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "
 model = dummy
 connection = none
 port = ${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy
+gammuloc = /dev/null
 ")
 
 # Basic functionality tests
