@@ -1043,38 +1043,34 @@ int main(int argc, char *argv[])
 		    strcasecmp(argv[i], "help") == 0) {
 			help = true;
 			start++;
-		} else if (strcasecmp(argv[i], "--config") == 0 ||
-		    strcasecmp(argv[i], "-c") == 0 ||
+		} else if ((strcasecmp(argv[i], "--config") == 0 ||
+		    strcasecmp(argv[i], "-c") == 0) &&
 		    i + 1 < argc) {
 			i++;
 			config_file = argv[i];
-			start++;
-			start++;
-		} else if (strcasecmp(argv[i], "--section") == 0 ||
-		    strcasecmp(argv[i], "-s") == 0 ||
+			start += 2;
+		} else if ((strcasecmp(argv[i], "--section") == 0 ||
+		    strcasecmp(argv[i], "-s") == 0) &&
 		    i + 1 < argc) {
 			i++;
 			only_config = atoi(argv[i]);
-			start++;
-			start++;
-		} else if (strcasecmp(argv[i], "--debug") == 0 ||
-		    strcasecmp(argv[i], "-d") == 0 ||
+			start += 2;
+		} else if ((strcasecmp(argv[i], "--debug") == 0 ||
+		    strcasecmp(argv[i], "-d") == 0) &&
 		    i + 1 < argc) {
 			i++;
 			GSM_SetDebugFileDescriptor(stderr, false, di);
 			GSM_SetDebugLevel(argv[i], di);
 			debug_level_set = true;
-			start++;
-			start++;
-		} else if (strcasecmp(argv[i], "--debug-file") == 0 ||
-		    strcasecmp(argv[i], "-f") == 0 ||
+			start += 2;
+		} else if ((strcasecmp(argv[i], "--debug-file") == 0 ||
+		    strcasecmp(argv[i], "-f") == 0) &&
 		    i + 1 < argc) {
 			i++;
 			error = GSM_SetDebugFile(argv[i], di);
 			Print_Error(error);
 			debug_file_set = true;
-			start++;
-			start++;
+			start += 2;
 		} else if (isdigit(argv[i][0])) {
 			/* Compatibilitty: config file section */
 			only_config = atoi(argv[i]);
@@ -1142,7 +1138,7 @@ int main(int argc, char *argv[])
 	}
 
 	/* Do we have enough parameters? */
-	if (argc == 1 + start) {
+	if (argc <= start + 1) {
 		HelpGeneral();
 		printf("%s\n", _("Too few parameters!"));
 		Terminate(3);
