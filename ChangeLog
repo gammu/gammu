@@ -15,7 +15,7 @@ or inspired me to make it.
 ChangeLog
 =========
     
-2009???? - 1.22.93
+20090202 - 1.22.93
 
 [-] * Fixed privileges dropping in SMSD.
 [-] * SMSD inject now properly uses PhoneID.
