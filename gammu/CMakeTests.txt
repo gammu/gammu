@@ -12,6 +12,12 @@ connection = none
 port = ${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy
 gammuloc = /dev/null
 ")
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-batch" "
+# Comment
+identify
+dialvoice 123456
+reset SOFT
+")
 
 # Basic functionality tests
 
@@ -19,6 +25,8 @@ add_test(gammu-help "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help
 set_tests_properties(gammu-help PROPERTIES
     PASS_REGULAR_EXPRESSION "${VERSION}"
     )
+add_test(gammu-features "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" features)
+add_test(gammu-version "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" version)
 
 add_test(gammu-help-all "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" help all)
 set_tests_properties(gammu-help-all PROPERTIES
@@ -28,6 +36,10 @@ set_tests_properties(gammu-help-all PROPERTIES
 add_test(gammu-nets "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" listnetworks)
 set_tests_properties(gammu-nets PROPERTIES
     PASS_REGULAR_EXPRESSION "740 01[\\t ]*Conecel S.A. \\(Consorcio Ecuatoriano de Telecomunicaciones S.A.\\)"
+    )
+add_test(gammu-nets-230 "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" listnetworks 230)
+set_tests_properties(gammu-nets-230 PROPERTIES
+    PASS_REGULAR_EXPRESSION "230 03     Vodafone CZ"
     )
 
 # Bitmap conversions
@@ -102,3 +114,5 @@ gammu_test(reset "" SOFT)
 gammu_test(presskeysequence "" "mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@")
 gammu_test(displaysms "F4F29C9E769F41F4329E0E" TEXT 132456 -text "testing text")
 gammu_test(getfilesystemstatus "1010101 bytes")
+gammu_test(batch "Batch processed, terminating." "${CMAKE_CURRENT_BINARY_DIR}/.gammu-batch")
+
