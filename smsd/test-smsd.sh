@@ -36,7 +36,14 @@ commtimeout = 1
 dbdir = @CMAKE_CURRENT_BINARY_DIR@/smsd-test/
 debuglevel = 255
 logfile = stderr
+runonreceive = @CMAKE_CURRENT_BINARY_DIR@/smsd-test/received.sh
 EOT
+
+cat > @CMAKE_CURRENT_BINARY_DIR@/smsd-test/received.sh << EOT
+#!@SH_BIN@
+echo "\$@" >> @CMAKE_CURRENT_BINARY_DIR@/smsd-test/received.log
+EOT
+chmod +x @CMAKE_CURRENT_BINARY_DIR@/smsd-test/received.sh
 
 CONFIG_PATH="@CMAKE_CURRENT_BINARY_DIR@/smsd-test/.smsdrc"
 DUMMY_PATH="@CMAKE_CURRENT_BINARY_DIR@/smsd-test/gammu-dummy"
@@ -68,3 +75,8 @@ done
 
 sleep 10
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor -C -c "$CONFIG_PATH" -l 1 -d 0
+
+if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test/received.log` -ne 18 ] ; then
+    echo "Wrong number of messages received!"
+    exit 1
+fi
