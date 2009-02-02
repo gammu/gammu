@@ -62,9 +62,11 @@ GSM_Error PrintFileSystemStatus(void)
 
 void GetFileSystemStatus(int argc UNUSED, char *argv[]UNUSED)
 {
+	GSM_Error error;
 	GSM_Init(true);
 
-	PrintFileSystemStatus();
+	error = PrintFileSystemStatus();
+	Print_Error(error);
 
 	GSM_Terminate();
 }

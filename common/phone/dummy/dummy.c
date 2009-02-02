@@ -604,7 +604,12 @@ GSM_Error DUMMY_SetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 
 GSM_Error DUMMY_GetFileSystemStatus(GSM_StateMachine *s, GSM_FileSystemStatus *Status)
 {
-	return ERR_NOTIMPLEMENTED;
+	Status->Free = 10101;
+	Status->Used = 1000000;
+	Status->UsedImages = 0;
+	Status->UsedSounds = 0;
+	Status->UsedThemes = 0;
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_GetBatteryCharge(GSM_StateMachine *s, GSM_BatteryCharge *bat)
