@@ -20,6 +20,7 @@
 
 typedef struct {
 	FILE *log_file;
+	GSM_SMSC SMSC;
 } GSM_Phone_DUMMYData;
 
 #endif
