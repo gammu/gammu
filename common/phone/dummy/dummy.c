@@ -364,10 +364,10 @@ GSM_Error DUMMY_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool s
 	}
 
 folder:
-	sprintf(dirname, "sms/%d", sms->SMS[0].Folder);
-
 	/* Convert location */
 	free(DUMMY_GetSMSPath(s, &(sms->SMS[0])));
+
+	sprintf(dirname, "sms/%d", sms->SMS[0].Folder);
 
 	sms->SMS[0].Location = DUMMY_GetNext(s, dirname, sms->SMS[0].Location);
 
