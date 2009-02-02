@@ -56,9 +56,71 @@ char * DUMMY_GetFilePath(GSM_StateMachine *s, const char *filename)
 	return log_file;
 }
 
+int DUMMY_GetCount(GSM_StateMachine *s, const char *dirname)
+{
+	char *full_name;
+	int i;
+	FILE *f;
+	int count = 0;
+
+	full_name = (char *)malloc(strlen(dirname) + strlen(s->CurrentConfig->Device) + 20);
+
+	for (i = 1; i <= DUMMY_MAX_LOCATION; i++) {
+		sprintf(full_name, "%s/%s/%d", s->CurrentConfig->Device, dirname, i);
+		f = fopen(full_name, "r");
+		if (f == NULL) continue;
+		count++;
+		fclose(f);
+	}
+	return count;
+}
+
+int DUMMY_GetFirstFree(GSM_StateMachine *s, const char *dirname)
+{
+	char *full_name;
+	int i;
+	FILE *f;
+
+	full_name = (char *)malloc(strlen(dirname) + strlen(s->CurrentConfig->Device) + 20);
+
+	for (i = 1; i <= DUMMY_MAX_LOCATION; i++) {
+		sprintf(full_name, "%s/%s/%d", s->CurrentConfig->Device, dirname, i);
+		f = fopen(full_name, "r");
+		if (f == NULL) return i;
+		fclose(f);
+	}
+	return -1;
+}
+
+int DUMMY_GetNext(GSM_StateMachine *s, const char *dirname, int current)
+{
+	char *full_name;
+	int i;
+	FILE *f;
+
+	full_name = (char *)malloc(strlen(dirname) + strlen(s->CurrentConfig->Device) + 20);
+
+	for (i = current + 1; i <= DUMMY_MAX_LOCATION; i++) {
+		sprintf(full_name, "%s/%s/%d", s->CurrentConfig->Device, dirname, i);
+		f = fopen(full_name, "r");
+		if (f != NULL) {
+			return i;
+			fclose(f);
+		}
+	}
+	return -1;
+}
+
 char * DUMMY_GetSMSPath(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	char smspath[100];
+	bool setfolder = (sms->Folder == 0);
+	while (sms->Location >= DUMMY_MAX_SMS) {
+		sms->Location -= DUMMY_MAX_SMS;
+		if (setfolder) {
+			sms->Folder++;
+		}
+	}
 
 	sprintf(smspath, "sms/%d/%d", sms->Folder, sms->Location);
 	return DUMMY_GetFilePath(s, smspath);
@@ -186,7 +248,11 @@ GSM_Error DUMMY_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	char *filename;
 	GSM_Error error;
 	GSM_SMSMessage *SMS;
+	int location, folder;
 	int i = 0;
+
+	location = sms->SMS[0].Location;
+	folder = sms->SMS[0].Folder;
 
 	filename = DUMMY_GetSMSPath(s, &(sms->SMS[0]));
 
@@ -204,6 +270,8 @@ GSM_Error DUMMY_GetSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms)
 	for (SMS = Backup.SMS[i]; SMS != NULL; SMS = Backup.SMS[++i]) {
 		sms->Number++;
 		sms->SMS[i] = *Backup.SMS[i];
+		sms->SMS[i].Location = location + (folder * DUMMY_MAX_SMS);
+		sms->SMS[i].Folder = folder;
 	}
 
 	return ERR_NONE;
@@ -213,7 +281,6 @@ GSM_Error DUMMY_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
 	char *filename;
 	GSM_Error error;
-	int i;
 
 	filename = DUMMY_GetSMSPath(s, sms);
 
@@ -228,9 +295,33 @@ GSM_Error DUMMY_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	return error;
 }
 
+GSM_Error DUMMY_SetSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
+{
+	char *filename;
+	GSM_Error error;
+	GSM_SMS_Backup backup;
+
+	error = DUMMY_DeleteSMS(s, sms);
+	if (error != ERR_EMPTY && error != ERR_NONE) return error;
+
+	filename = DUMMY_GetSMSPath(s, sms);
+
+	backup.SMS[0] = sms;
+	backup.SMS[1] = NULL;
+
+	return GSM_AddSMSBackupFile(filename, &backup);
+}
+
 GSM_Error DUMMY_AddSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 {
-	return ERR_NOTIMPLEMENTED;
+	char dirname[20];
+
+	sprintf(dirname, "sms/%d", sms->Folder);
+	sms->Location = DUMMY_GetFirstFree(s, dirname);
+
+	if (sms->Location == -1) return ERR_FULL;
+
+	return DUMMY_SetSMS(s, sms);
 }
 
 GSM_Error DUMMY_GetSignalStrength(GSM_StateMachine *s, GSM_SignalQuality *sig)
@@ -265,12 +356,51 @@ GSM_Error DUMMY_GetSMSFolders(GSM_StateMachine *s, GSM_SMSFolders *folders)
 
 GSM_Error DUMMY_GetNextSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sms, bool start)
 {
-	return ERR_NOTIMPLEMENTED;
+	char dirname[20];
+
+	if (start) {
+		sms->SMS[0].Folder = 1;
+		sms->SMS[0].Location = 0;
+	}
+
+folder:
+	sprintf(dirname, "sms/%d", sms->SMS[0].Folder);
+
+	/* Convert location */
+	free(DUMMY_GetSMSPath(s, &(sms->SMS[0])));
+
+	sms->SMS[0].Location = DUMMY_GetNext(s, dirname, sms->SMS[0].Location);
+
+	if (sms->SMS[0].Location == -1) {
+		if (sms->SMS[0].Folder >= 5) return ERR_EMPTY;
+		sms->SMS[0].Folder++;
+		goto folder;
+	}
+
+	return DUMMY_GetSMS(s, sms);
 }
 
 GSM_Error DUMMY_GetSMSStatus(GSM_StateMachine *s, GSM_SMSMemoryStatus *status)
 {
-	return ERR_NOTIMPLEMENTED;
+	char dirname[20];
+	sprintf(dirname, "sms/%d", 5);
+	status->TemplatesUsed	= DUMMY_GetCount(s, dirname);
+
+	sprintf(dirname, "sms/%d", 1);
+	status->SIMUsed		= DUMMY_GetCount(s, dirname);
+	sprintf(dirname, "sms/%d", 2);
+	status->SIMUsed		+= DUMMY_GetCount(s, dirname);
+	status->SIMUnRead 	= 0;
+	status->SIMSize		= DUMMY_MAX_SMS;
+
+	sprintf(dirname, "sms/%d", 3);
+	status->PhoneUsed	= DUMMY_GetCount(s, dirname);
+	sprintf(dirname, "sms/%d", 4);
+	status->PhoneUsed	+= DUMMY_GetCount(s, dirname);
+	status->PhoneUsed	+= status->TemplatesUsed;
+	status->PhoneUnRead 	= 0;
+	status->PhoneSize	= DUMMY_MAX_SMS;
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_DialVoice(GSM_StateMachine *s, char *number, GSM_CallShowNumber ShowNumber)
@@ -738,7 +868,7 @@ GSM_Phone_Functions DUMMYPhone = {
 	DUMMY_GetSMSStatus,
 	DUMMY_GetSMS,
 	DUMMY_GetNextSMS,
-	NOTSUPPORTED,			/*	SetSMS			*/
+	DUMMY_SetSMS,
 	DUMMY_AddSMS,
 	DUMMY_DeleteSMS,
 	DUMMY_SendSMS,
