@@ -81,6 +81,14 @@ macro (gammu_test _name _expression)
         )
 endmacro (gammu_test _name _expression)
 
+macro (gammu_test_fail _name _expression)
+    add_test("gammu-dummy-${_name}" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "${_name}" ${ARGN})
+    set_tests_properties("gammu-dummy-${_name}" PROPERTIES
+        FAIL_REGULAR_EXPRESSION "${_expression}"
+        WILL_FAIL TRUE
+        )
+endmacro (gammu_test_fail _name _expression)
+
 gammu_test(monitor NasraTel 1)
 gammu_test(identify DUMMY-001)
 gammu_test(getdatetime "[0-9][0-9][0-9][0-9]")
@@ -88,4 +96,5 @@ gammu_test(getsmsfolders "\\n5.")
 gammu_test(dialvoice "" 123456)
 gammu_test(reset "" HARD)
 gammu_test(reset "" SOFT)
+gammu_test_fail(nonsense "Bad option!")
 gammu_test(presskeysequence "" "mMnNpPuUdD+-123456789*0#gGrR<>[]hHcCjJfFoOmMdD@")
