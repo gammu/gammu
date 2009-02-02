@@ -29,6 +29,10 @@ Bluez-libs
     - http://www.bluez.org/
     - Bluetooth support on Linux.
 
+libusb-1.0
+    - http://libusb.sourceforge.net/
+    - fbususb connection support
+
 libCURL
     - http://curl.haxx.se/libcurl/
     - New versions notification and phonedb access.
@@ -49,9 +53,18 @@ PostgreSQL
     - http://www.postgresql.org/
     - PostgreSQL support in SMSD.
 
+libdbi
+    - http://libdbi.sourceforge.net/
+    - DBI support in SMSD.
+        - For testing, please install libdbd-sqlite3
+
 Python
     - http://www.python.org/
     - Gammu has a Python bindings
+
+SQLite
+    - http://www.sqlite.org/
+    - needed for testing of SMSD using libdbi driver
 
 
 From Sources - Linux
