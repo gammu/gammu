@@ -68,12 +68,6 @@ GSM_Error SMSD_Shutdown(GSM_SMSDConfig *Config)
 	return ERR_NONE;
 }
 
-void SMSDaemon_Interrupt(int sign)
-{
-	signal(sign, SIG_IGN);
-	SMSD_Shutdown(&SMSDaemon_Config);
-}
-
 void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr, void *user_data)
 {
 	GSM_SMSDConfig *Config = (GSM_SMSDConfig *)user_data;
