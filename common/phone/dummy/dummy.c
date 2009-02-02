@@ -361,12 +361,17 @@ GSM_Error DUMMY_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 
 GSM_Error DUMMY_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
+
+	fprintf(Priv->log_file, "Security code %d: %s\n", Code.Type, Code.Code);
+
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_GetSecurityStatus(GSM_StateMachine *s, GSM_SecurityCodeType *Status)
 {
-	return ERR_NOTIMPLEMENTED;
+	*Status = SEC_None;
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_ResetPhoneSettings(GSM_StateMachine *s, GSM_ResetSettingsType Type)
