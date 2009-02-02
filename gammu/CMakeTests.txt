@@ -11,6 +11,12 @@ model = dummy
 connection = none
 port = ${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy
 gammuloc = /dev/null
+
+[gammu99]
+model = dummy
+connection = none
+port = ${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy
+gammuloc = /dev/null
 ")
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-batch" "
 # Comment
@@ -129,6 +135,11 @@ endmacro (gammu_test_fail _name _expression)
 gammu_test_fail(nonsense "Bad option!")
 gammu_test_fail(identify "Too many parameters" 1)
 gammu_test_fail(reset "More parameters required")
+
+add_test("gammu-dummy-99-identify" "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" -s 99 identify)
+set_tests_properties("gammu-dummy-99-identify" PROPERTIES
+    PASS_REGULAR_EXPRESSION "DUMMY-001"
+    )
 
 gammu_test(monitor NasraTel 1)
 gammu_test(networkinfo "B00B.*FACE")
