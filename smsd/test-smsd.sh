@@ -7,6 +7,7 @@ SMSD_PID=0
 cleanup() {
     if [ $SMSD_PID -ne 0 ] ; then
         kill $SMSD_PID
+        sleep 1
     fi
 }
 
