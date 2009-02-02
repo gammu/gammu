@@ -1775,6 +1775,8 @@ void AddSMS(int argc UNUSED, char *argv[])
 	int			smsnum = 0;
 	int			folder;
 
+	if (argc == 5 && strcasecmp(argv[4],"-yes") == 0) always_answer_yes = true;
+
 	folder = atoi(argv[2]);
 
 	error = GSM_ReadSMSBackupFile(argv[3], &Backup);
@@ -1801,7 +1803,7 @@ void AddSMS(int argc UNUSED, char *argv[])
 	GSM_Terminate();
 }
 
-void RestoreSMS(int argc UNUSED, char *argv[])
+void RestoreSMS(int argc, char *argv[])
 {
 	GSM_Error error;
 	GSM_MultiSMSMessage 	SMS;
@@ -1809,6 +1811,8 @@ void RestoreSMS(int argc UNUSED, char *argv[])
 	GSM_SMSFolders		folders;
 	int			smsnum = 0;
 	bool			restore8bit;
+
+	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
 
 	error = GSM_ReadSMSBackupFile(argv[2], &Backup);
 	Print_Error(error);

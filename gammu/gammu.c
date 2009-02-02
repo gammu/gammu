@@ -669,8 +669,8 @@ static GSM_Parameters Parameters[] = {
 	{"backupsms",			1, 1, BackupSMS,		{H_Backup,H_SMS,0},		"file"},
 	{"restore",			1, 2, Restore,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
 	{"addnew",			1, 2, AddNew,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
-	{"restoresms",		1, 1, RestoreSMS,		{H_Backup,H_SMS,0},		"file"},
-	{"addsms",			2, 2, AddSMS,			{H_Backup,H_SMS,0},		"folder file"},
+	{"restoresms",		1, 2, RestoreSMS,		{H_Backup,H_SMS,0},		"file [-yes]"},
+	{"addsms",			2, 3, AddSMS,			{H_Backup,H_SMS,0},		"folder file [-yes]"},
 #endif
 	{"clearall",			0, 0, ClearAll,			{H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},	""},
 	{"networkinfo",		0, 0, NetworkInfo,		{H_Network,0},			""},
