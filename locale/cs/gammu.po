@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-02 10:35+0100\n"
+"POT-Creation-Date: 2009-02-02 10:52+0100\n"
 "PO-Revision-Date: 2009-02-02 10:36+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -1814,28 +1814,28 @@ msgstr "Příliš mnoho parametrů (funkce akceptuje %d až %d)\n"
 msgid "Bad option!"
 msgstr "Chybná volba!"
 
-#: gammu/gammu.c:1108
+#: gammu/gammu.c:1110
 msgid "Configuration could not be parsed!"
 msgstr "Nastavení nemohlo být zpracováno!"
 
-#: gammu/gammu.c:1110
+#: gammu/gammu.c:1112
 msgid "No configuration file found!"
 msgstr "Nebyl nalezen konfigurační soubor!"
 
-#: gammu/gammu.c:1157
+#: gammu/gammu.c:1159
 msgid "Too few parameters!"
 msgstr "Příliš málo parametrů!"
 
-#: gammu/gammu.c:1170
+#: gammu/gammu.c:1172
 #, c-format
 msgid "Failed to read [gammu%d] section from configuration file (gammurc)!\n"
 msgstr "Nepodařilo se načíst [gammu%d] z konfiguračního souboru (gammurc)!\n"
 
-#: gammu/gammu.c:1172 gammu/gammu.c:1183
+#: gammu/gammu.c:1174 gammu/gammu.c:1185
 msgid "No configuration read, using builtin defaults!"
 msgstr "Nebylo načteno žádné nastavení, používám výchozí hodnoty!"
 
-#: gammu/gammu.c:1226
+#: gammu/gammu.c:1228
 #, c-format
 msgid ""
 "Version of installed libGammu.so (%s) is different to version of Gammu (%s)\n"
