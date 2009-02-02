@@ -9,13 +9,14 @@ msgstr ""
 "Project-Id-Version: libGammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-01 13:32+0100\n"
-"PO-Revision-Date: 2009-01-07 17:01+0100\n"
-"Last-Translator: Jochen Kemnade <jochenkemnade@web.de>\n"
+"PO-Revision-Date: 2009-02-01 16:32+0100\n"
+"Last-Translator: ObiWahn <obi-wahn@osnanet.de>\n"
 "Language-Team: Language =de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.1.0\n"
 
 #: common/gsmcomon.c:84
 msgid "No error."
@@ -259,8 +260,9 @@ msgstr ""
 "Version des aktuell verwendeten Gammu."
 
 #: common/gsmcomon.c:134
+#, fuzzy
 msgid "Only part of folder has been listed."
-msgstr ""
+msgstr "Nur ein Teil des Ordners wurde aufgelistet."
 
 #: common/gsmcomon.c:135
 msgid "Folder must be empty."

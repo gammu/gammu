@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: Gammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-02 10:28+0100\n"
-"PO-Revision-Date: 2007-12-20 16:33+0100\n"
-"Last-Translator: Jochen Kemnade <jochenkemnade@web.de>\n"
+"PO-Revision-Date: 2009-02-01 16:28+0100\n"
+"Last-Translator: ObiWahn <obi-wahn@osnanet.de>\n"
 "Language-Team: Language =de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Pootle 1.0.2\n"
+"X-Generator: Pootle 1.1.0\n"
 
 #: gammu/backup.c:31 gammu/backup.c:50 gammu/backup.c:68 gammu/backup.c:87
 #: helper/message-cmdline.c:367 helper/message-cmdline.c:391
@@ -4196,13 +4196,18 @@ msgstr ""
 "\n"
 "Nummer der SMS: %i\n"
 
+# User Data Header, Im Zusammengan mit SMS
+# http://en.wikipedia.org/wiki/Short_message_service
 #: helper/message-display.c:527
+#, fuzzy
 msgid "UDH"
-msgstr ""
+msgstr "UDH"
 
+# "Protocol Data Unit" oder "Payload Data Unit"
 #: helper/message-display.c:543
+#, fuzzy
 msgid "Whole PDU"
-msgstr ""
+msgstr "Die ganze PDU"
 
 #. l10n: Generic prefix for warning messages
 #: helper/printing.c:34
