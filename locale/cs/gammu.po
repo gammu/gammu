@@ -2465,7 +2465,7 @@ msgstr ""
 
 #: gammu/misc.c:485
 msgid "SIM SMS status"
-msgstr "Stav SMS ns SIM"
+msgstr "Stav SMS na SIM"
 
 #: gammu/misc.c:486 gammu/misc.c:496
 #, c-format

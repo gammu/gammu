@@ -17,6 +17,8 @@
 
 #include <stdio.h>
 
+#define DUMMY_MAX_LOCATION (10000)
+#define DUMMY_MAX_SMS (10000)
 
 typedef struct {
 	FILE *log_file;
