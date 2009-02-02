@@ -234,6 +234,7 @@ void GetSMS(int argc, char *argv[])
 	for (j = start; j <= stop; j++) {
 		sms.SMS[0].Folder	= atoi(argv[2]);
 		sms.SMS[0].Location	= j;
+		sms.Number = 0;
 		error=GSM_GetSMS(gsm, &sms);
 		switch (error) {
 		case ERR_EMPTY:
