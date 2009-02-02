@@ -42,7 +42,7 @@ int main(int argc UNUSED, char **argv UNUSED)
 	GSM_SetDebugLevel("textall", debug_info);
 
 	/* Find configuration file */
-	error = GSM_FindGammuRC(&cfg);
+	error = GSM_FindGammuRC(&cfg, NULL);
 	error_handler();
 
 	/* Read it */

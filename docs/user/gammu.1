@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Jan 27 2009" "Gammu 1.22.93" "Gammu Documentation"
+.TH "GAMMU" "1" "Feb  2 2009" "Gammu 1.22.93" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -7,7 +7,7 @@ Gammu - Does some neat things with your cellular phone or modem.
 
 .SH "SYNOPSIS"
 .P
-Usage: gammu [\fIconfign\fP] [\fInothing|text|textall|binary|errors\fP] <command> [\fIoptions\fP]
+Usage: gammu [\fIparameters\fP] <command> [\fIoptions\fP]
 
 
 .SH "DESCRIPTION"
@@ -20,19 +20,20 @@ are supported, for actual listing see <http://cihar.com/gammu/phonedb/>.
 
 .SH "OPTIONS"
 .P
-First parameter optionally specifies which config section to use (all are probed by default).
-Use only number of config section, so if config section is [gammu42], use 42.
-Second parameter optionally controls debug level, next one specifies actions.
+Parameters before command configure gammu behaviour:
+.br
+\-c / \-\-config <filename> ... name of configuration file
+.br
+\-s / \-\-section <confign> ... section of config file to use, eg. 42
+.br
+\-d / \-\-debug <level> ... debug level (see gammurc(5) for possible values)
+.br
+\-f / \-\-debug\-file <filename> ... file for logging debug messages
 
+
+.SS "Commands"
 .P
 Commands can be specified with or without leading \-\-.
-
-
-.SS "Debug levels"
-.P
-
-Parameter, which allow to control debug level, see documentation of LogFormat
-configuration directive in gammurc(5) for possible values.
 
 
 .SS "Calls"
@@ -2248,8 +2249,7 @@ operating system, it's version and phone information are needed).
 
 .P
 To generate debug log, enable it in gammurc (alternatively you can
-do it on command line, but gammurc way allows separating debug log from
-other output):
+do it on command line using -d textall -f /tmp/gammu.log):
 
     [gammu]
     ...your connection settings...

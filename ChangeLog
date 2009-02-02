@@ -41,6 +41,7 @@ ChangeLog
 [+] * Added SQL structure for sqlite, which can be used through DBI.
 [+] * python-gammu can run and stop SMSD.
 [+] * Initial implementation of dummy phone driver for testing.
+[+] * Allow to configure path to config from command line.
     
 20090126 - 1.22.92
 

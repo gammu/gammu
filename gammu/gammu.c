@@ -373,7 +373,7 @@ static void Foo(int argc UNUSED, char *argv[]UNUSED)
 }
 #endif
 
-int ProcessParameters(char start, int argc, char *argv[]);
+int ProcessParameters(int start, int argc, char *argv[]);
 
 /**
  * Reads commands from file (argv[2]) or stdin and executes them
@@ -768,10 +768,12 @@ void HelpGeneral(void)
 
 	HelpHeader();
 
-	printf("%s\n\n", _("Usage: gammu [confign] [nothing|text|textall|binary|errors] <command> [options]"));
-	printf("%s\n", _("First parameter optionally specifies which config section to use (all are probed by default)."));
-	printf("%s\n", _("Use only number of config section, so if config section is [gammu42], use 42."));
-	printf("%s\n\n", _("Second parameter optionally controls debug level, next one specifies actions."));
+	printf("%s\n\n", _("Usage: gammu [parameters] <command> [options]"));
+	printf("%s\n", _("Parameters before command configure gammu behaviour:"));
+	printf("%s\n", _("-c / --config <filename> ... name of configuration file"));
+	printf("%s\n", _("-s / --section <confign> ... section of config file to use, eg. 42"));
+	printf("%s\n", _("-d / --debug <level> ... debug level (nothing|text|textall|textalldate|binary|errors)"));
+	printf("%s\n\n", _("-f / --debug-file <filename> ... file for logging debug messages"));
 
 	printf("%s\n\n", _("Commands can be specified with or without leading --."));
 
@@ -858,16 +860,16 @@ void Help(int argc, char *argv[])
 #endif
 
 	/* Just --help */
-	if (argc == 2) {
+	if (argc == 1) {
 		HelpGeneral();
 		return;
 	}
 
-	if (!strcmp(argv[2], "all")) {
+	if (!strcmp(argv[1], "all")) {
 		HelpHeader();
 	} else {
 		while (HelpDescriptions[i].category != 0) {
-			if (strcasecmp(argv[2], HelpDescriptions[i].option) ==
+			if (strcasecmp(argv[1], HelpDescriptions[i].option) ==
 			    0)
 				break;
 			i++;
@@ -913,7 +915,7 @@ void Help(int argc, char *argv[])
 	while (Parameters[j].Function != NULL) {
 		k = 0;
 		disp = false;
-		if (!strcmp(argv[2], "all")) {
+		if (!strcmp(argv[1], "all")) {
 			if (j == 0)
 				disp = true;
 			if (j != 0) {
@@ -953,7 +955,7 @@ void Help(int argc, char *argv[])
 	}
 }
 
-int ProcessParameters(char start, int argc, char *argv[])
+int ProcessParameters(int start, int argc, char *argv[])
 {
 	int z = 0;
 	bool count_failed = false;
@@ -1031,15 +1033,77 @@ int ProcessParameters(char start, int argc, char *argv[])
 int main(int argc, char *argv[])
 {
 	int start = 0;
-	unsigned int i;
-	int only_config = -1;
+	int i;
 	char *cp, *locales_path, *rss;
 	GSM_Config *smcfg;
 	GSM_Config *smcfg0;
 	GSM_Debug_Info *di;
 	GSM_Error error;
 
-	error = GSM_FindGammuRC(&cfg);
+	bool help = false;
+	bool debug_level_set = false;
+	bool debug_file_set = false;
+	const char *config_file = NULL;
+	int only_config = -1;
+
+	di = GSM_GetGlobalDebug();
+
+	/* We don't want to use getopt here */
+	for (i = 1; i < argc; i++) {
+		if (strcasecmp(argv[i], "--help") == 0 ||
+		    strcasecmp(argv[i], "-h") == 0 ||
+		    strcasecmp(argv[i], "help") == 0) {
+			help = true;
+			start++;
+		} else if (strcasecmp(argv[i], "--config") == 0 ||
+		    strcasecmp(argv[i], "-c") == 0 ||
+		    i + 1 < argc) {
+			i++;
+			config_file = argv[i];
+			start++;
+			start++;
+		} else if (strcasecmp(argv[i], "--section") == 0 ||
+		    strcasecmp(argv[i], "-s") == 0 ||
+		    i + 1 < argc) {
+			i++;
+			only_config = atoi(argv[i]);
+			start++;
+			start++;
+		} else if (strcasecmp(argv[i], "--debug") == 0 ||
+		    strcasecmp(argv[i], "-d") == 0 ||
+		    i + 1 < argc) {
+			i++;
+			GSM_SetDebugFileDescriptor(stderr, false, di);
+			GSM_SetDebugLevel(argv[i], di);
+			debug_level_set = true;
+			start++;
+			start++;
+		} else if (strcasecmp(argv[i], "--debug-file") == 0 ||
+		    strcasecmp(argv[i], "-f") == 0 ||
+		    i + 1 < argc) {
+			i++;
+			error = GSM_SetDebugFile(argv[i], di);
+			Print_Error(error);
+			debug_file_set = true;
+			start++;
+			start++;
+		} else if (isdigit(argv[i][0])) {
+			/* Compatibilitty: config file section */
+			only_config = atoi(argv[i]);
+			if (only_config >= 0)
+				start++;
+			else
+				only_config = -1;
+		} else if (GSM_SetDebugLevel(argv[i], di)) {
+			/* Compatibility: debug level */
+			start++;
+			debug_level_set = true;
+		} else {
+			break;
+		}
+	}
+
+	error = GSM_FindGammuRC(&cfg, config_file);
 	if (error != ERR_NONE || cfg == NULL) {
 		if (error == ERR_FILENOTSUPPORTED) {
 			printf_warn("%s\n",
@@ -1069,11 +1133,13 @@ int main(int argc, char *argv[])
 	curl_global_init(CURL_GLOBAL_ALL);
 #endif
 
-	di = GSM_GetGlobalDebug();
-
 #ifdef DEBUG
-	GSM_SetDebugFileDescriptor(stdout, false, di);
-	GSM_SetDebugLevel("textall", di);
+	if (!debug_level_set) {
+		GSM_SetDebugLevel("textall", di);
+	}
+	if (!debug_file_set) {
+		GSM_SetDebugFileDescriptor(stdout, false, di);
+	}
 #endif
 
 	cp = INI_GetValue(cfg, "gammu", "gammucoding", false);
@@ -1081,28 +1147,17 @@ int main(int argc, char *argv[])
 		GSM_SetDebugCoding(cp, di);
 	}
 
-	/* Any parameters? */
-	if (argc == 1) {
-		HelpGeneral();
-		printf("%s\n", _("Too few parameters!"));
-		Terminate(1);
-	}
-
 	/* Help? */
-	if (strcasecmp(argv[1 + start], "--help") == 0 ||
-	    strcasecmp(argv[1 + start], "-h") == 0 ||
-	    strcasecmp(argv[1 + start], "help") == 0) {
+	if (help) {
 		Help(argc - start, argv + start);
 		Terminate(0);
 	}
 
-	/* Is first parameter numeric? If so treat it as config that should be loaded. */
-	if (isdigit(argv[1][0])) {
-		only_config = atoi(argv[1]);
-		if (only_config >= 0)
-			start++;
-		else
-			only_config = -1;
+	/* Do we have enough parameters? */
+	if (argc == 1 + start) {
+		HelpGeneral();
+		printf("%s\n", _("Too few parameters!"));
+		Terminate(3);
 	}
 
 	smcfg0 = GSM_GetConfig(gsm, 0);
@@ -1140,20 +1195,15 @@ int main(int argc, char *argv[])
 		if (i == 0) {
 			/* Just for first config */
 			/* When user gave debug level on command line */
-			if (argc > 1 + start
-			    && GSM_SetDebugLevel(argv[1 + start], di)) {
-				/* Debug level from command line will be used with phone too */
-				strcpy(smcfg->DebugLevel, argv[1 + start]);
-				/* When configured from command line, output to stdout */
-				GSM_SetDebugFileDescriptor(stdout, false, di);
-				start++;
-			} else {
+			if (!debug_level_set) {
 				/* Try to set debug level from config file */
 				GSM_SetDebugLevel(smcfg->DebugLevel, di);
 			}
 			/* If user gave debug file in gammurc, we will use it */
-			error = GSM_SetDebugFile(smcfg->DebugFile, di);
-			Print_Error(error);
+			if (!debug_file_set) {
+				error = GSM_SetDebugFile(smcfg->DebugFile, di);
+				Print_Error(error);
+			}
 		}
 
 		if (i == 0) {
@@ -1171,13 +1221,6 @@ int main(int argc, char *argv[])
 		if (only_config != -1) {
 			break;
 		}
-	}
-
-	/* Do we have enough parameters? */
-	if (argc == 1 + start) {
-		HelpGeneral();
-		printf("%s\n", _("Too few parameters!"));
-		Terminate(3);
 	}
 
 	/* Check used version vs. compiled */
