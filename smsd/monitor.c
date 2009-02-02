@@ -80,6 +80,10 @@ void help(void)
 	print_option("v", "version", "shows version information");
 	print_option_param("c", "config", "CONFIG_FILE",
 			   "defines path to config file");
+	print_option_param("d", "delay", "DELAY",
+			   "delay in seconds between loops");
+	print_option_param("l", "loops", "NUMBER",
+			   "number of loops (infinite by defalt)");
 }
 
 NORETURN void wrong_params(void)
