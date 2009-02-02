@@ -291,6 +291,9 @@ void GetAllSMS(int argc, char *argv[])
 	BackupPtr = &Backup;
 #endif
 
+	sms.Number = 0;
+	sms.SMS[0].Location = 0;
+
 	GSM_Init(true);
 
 #ifdef GSM_ENABLE_BACKUP
@@ -384,6 +387,9 @@ void GetEachSMS(int argc, char *argv[])
 	GSM_ClearBackup(&Backup);
 	BackupPtr = &Backup;
 #endif
+
+	sms.Number = 0;
+	sms.SMS[0].Location = 0;
 
 	GetSMSData[0] = NULL;
 
