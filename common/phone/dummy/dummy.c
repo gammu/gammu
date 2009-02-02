@@ -29,6 +29,20 @@
 #include "dummy.h"
 
 
+GSM_Error DUMMY_Error(GSM_StateMachine *s)
+{
+	int i;
+	i = errno;
+	GSM_OSErrorInfo(s, "Failed to open log");
+	if (i == ENOENT) {
+		return ERR_EMPTY;
+	} else if (i == EACCES) {
+		return ERR_PERMISSION;
+	} else {
+		return ERR_UNKNOWN;
+	}
+}
+
 char * DUMMY_GetFilePath(GSM_StateMachine *s, const char *filename)
 {
 	char *log_file;
@@ -78,6 +92,14 @@ GSM_Error DUMMY_Initialise(GSM_StateMachine *s)
 	strcpy(s->Phone.Data.Model, "Dummy");
 	strcpy(s->Phone.Data.Version, VERSION);
 	strcpy(s->Phone.Data.VerDate, __DATE__);
+
+	EncodeUnicode(Priv->SMSC.Number, "123456", 6);
+	EncodeUnicode(Priv->SMSC.Name, "Default", 7);
+	Priv->SMSC.Validity.Format = SMS_Validity_NotAvailable;
+	Priv->SMSC.Validity.Relative = SMS_VALID_Max_Time;
+	Priv->SMSC.DefaultNumber[0] = 0;
+	Priv->SMSC.DefaultNumber[1] = 0;
+	Priv->SMSC.Format = SMS_FORMAT_Text;
 
 	s->Phone.Data.VerNum = VERSION_NUM;
 
@@ -198,15 +220,7 @@ GSM_Error DUMMY_DeleteSMS(GSM_StateMachine *s, GSM_SMSMessage *sms)
 	if (unlink(filename) == 0) {
 		error = ERR_NONE;
 	} else {
-		i = errno;
-		GSM_OSErrorInfo(s, "Failed to open log");
-		if (i == ENOENT) {
-			error = ERR_EMPTY;
-		} else if (i == EACCES) {
-			error = ERR_PERMISSION;
-		} else {
-			error = ERR_UNKNOWN;
-		}
+		error = DUMMY_Error(s);
 	}
 
 	free(filename);
@@ -351,12 +365,24 @@ GSM_Error DUMMY_SetDateTime(GSM_StateMachine *s, GSM_DateTime *date_time)
 
 GSM_Error DUMMY_SetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
+
+	if (smsc->Location != 1) return ERR_NOTSUPPORTED;
+
+	Priv->SMSC = *smsc;
+
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_GetSMSC(GSM_StateMachine *s, GSM_SMSC *smsc)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Phone_DUMMYData	*Priv = &s->Phone.Data.Priv.DUMMY;
+
+	if (smsc->Location != 1) return ERR_EMPTY;
+
+	*smsc = Priv->SMSC;
+
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_EnterSecurityCode(GSM_StateMachine *s, GSM_SecurityCode Code)
