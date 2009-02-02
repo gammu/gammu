@@ -3623,7 +3623,7 @@ GSM_Error LoadBackup(char *FileName, GSM_Backup *backup)
 
 /* ---------------------- backup files for SMS ----------------------------- */
 
-static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMessage *SMS)
+static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMessage *SMS)
 {
 	unsigned char buffer[10000], *readvalue, *readbuffer;
 
@@ -3689,6 +3689,10 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 		}
 	}
 	readbuffer = ReadLinkedBackupText(file_info, section, "Text", false);
+	if (readbuffer == NULL) {
+		dbgprintf(NULL, "Error reading text!\n");
+		return ERR_UNKNOWN;
+	}
 	/* This is hex encoded unicode, need to multiply by 4 */
 	if (strlen(readbuffer) > 4 * GSM_MAX_SMS_LENGTH) {
 		dbgprintf(NULL, "Message text too long, truncating!\n");
@@ -3716,6 +3720,7 @@ static void ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_SMSMes
 		SMS->UDH.Length = strlen(readvalue)/2;
 		GSM_DecodeUDHHeader(NULL, &SMS->UDH);
 	}
+	return ERR_NONE;
 }
 
 static GSM_Error GSM_ReadSMSBackupTextFile(char *FileName, GSM_SMS_Backup *backup)
@@ -3746,12 +3751,17 @@ static GSM_Error GSM_ReadSMSBackupTextFile(char *FileName, GSM_SMS_Backup *backu
 				return ERR_MOREMEMORY;
 			}
 			backup->SMS[num]->Location = num + 1;
-			ReadSMSBackupEntry(file_info, h->SectionName, backup->SMS[num]);
+			error = ReadSMSBackupEntry(file_info, h->SectionName, backup->SMS[num]);
+			if (error != ERR_NONE) {
+				goto done;
+			}
 			num++;
 		}
         }
+	error = ERR_NONE;
+done:
 	INI_Free(file_info);
-	return ERR_NONE;
+	return error;
 }
 
 GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
