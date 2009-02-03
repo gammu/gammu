@@ -135,7 +135,10 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 /* Disconnects from a database */
 static GSM_Error SMSDPgSQL_Free(GSM_SMSDConfig *Config)
 {
-	PQfinish(Config->DBConnPgSQL);
+	if (Config->DBConnPgSQL != NULL) {
+		PQfinish(Config->DBConnPgSQL);
+		Config->DBConnPgSQL = NULL;
+	}
 	return ERR_NONE;
 }
 
@@ -600,9 +603,9 @@ static GSM_Error SMSDPgSQL_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 				break;
 
 		}
+		PQclear(Res);
 	}
 
-	PQclear(Res);
 	return ERR_NONE;
 }
 

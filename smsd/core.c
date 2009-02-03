@@ -247,12 +247,53 @@ GSM_SMSDConfig *SMSD_NewConfig(void)
 	Config->smsdcfgfile = NULL;
 	Config->log_handle = NULL;
 	Config->log_type = SMSD_LOG_NONE;
+	Config->debug_level = 0;
 
 	return Config;
 }
 
+/**
+ * Returns SMSD service based on configuration.
+ */
+GSM_Error SMSGetService(GSM_SMSDConfig *Config, GSM_SMSDService **Service)
+{
+	if (strcasecmp(Config->Service, "FILES") == 0) {
+		*Service = &SMSDFiles;
+	} else if (strcasecmp(Config->Service, "DBI") == 0) {
+#ifdef LIBDBI_FOUND
+		*Service = &SMSDDBI;
+#else
+		return ERR_DISABLED;
+#endif
+	} else if (strcasecmp(Config->Service, "MYSQL") == 0) {
+#ifdef HAVE_MYSQL_MYSQL_H
+		*Service = &SMSDMySQL;
+#else
+		return ERR_DISABLED;
+#endif
+	} else if (strcasecmp(Config->Service, "PGSQL") == 0) {
+#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
+		*Service = &SMSDPgSQL;
+#else
+		return ERR_DISABLED;
+#endif
+	} else {
+		SMSD_Log(-1, Config, "Unknown SMSD service type: \"%s\"", Config->Service);
+		return ERR_UNCONFIGURED;
+	}
+	return ERR_NONE;
+}
+
+
 void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 {
+	GSM_SMSDService		*Service;
+	GSM_Error error;
+
+	error = SMSGetService(Config, &Service);
+	if (error == ERR_NONE) {
+		Service->Free(Config);
+	}
 	SMSD_CloseLog(Config);
 	free(Config->gammu_log_buffer);
 	INI_Free(Config->smsdcfgfile);
@@ -958,38 +999,6 @@ failure_sent:
 		Service->MoveSMS(&sms,Config, Config->SMSID, true, false);
 	}
 	return false;
-}
-
-/**
- * Returns SMSD service based on configuration.
- */
-GSM_Error SMSGetService(GSM_SMSDConfig *Config, GSM_SMSDService **Service)
-{
-	if (strcasecmp(Config->Service, "FILES") == 0) {
-		*Service = &SMSDFiles;
-	} else if (strcasecmp(Config->Service, "DBI") == 0) {
-#ifdef LIBDBI_FOUND
-		*Service = &SMSDDBI;
-#else
-		return ERR_DISABLED;
-#endif
-	} else if (strcasecmp(Config->Service, "MYSQL") == 0) {
-#ifdef HAVE_MYSQL_MYSQL_H
-		*Service = &SMSDMySQL;
-#else
-		return ERR_DISABLED;
-#endif
-	} else if (strcasecmp(Config->Service, "PGSQL") == 0) {
-#ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
-		*Service = &SMSDPgSQL;
-#else
-		return ERR_DISABLED;
-#endif
-	} else {
-		SMSD_Log(-1, Config, "Unknown SMSD service type: \"%s\"", Config->Service);
-		return ERR_UNCONFIGURED;
-	}
-	return ERR_NONE;
 }
 
 GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure)
