@@ -245,8 +245,11 @@ static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
 /* Disconnects from a database */
 static GSM_Error SMSDDBI_Free(GSM_SMSDConfig *Config)
 {
-	dbi_conn_close(Config->DBConnDBI);
-	dbi_shutdown();
+	if (Config->DBConnDBI != NULL) {
+		dbi_conn_close(Config->DBConnDBI);
+		dbi_shutdown();
+		Config->DBConnDBI = NULL;
+	}
 	return ERR_NONE;
 }
 
@@ -733,9 +736,9 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 				break;
 
 		}
+		dbi_result_free(Res);
 	}
 
-	dbi_result_free(Res);
 	return ERR_NONE;
 }
 
@@ -782,7 +785,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 	if (dbi_result_get_numrows(Res) != 0) {
 		dbi_result_first_row(Res);
-		sprintf(buffer, "%s", dbi_result_get_string_idx(Res, 1));
+		sprintf(buffer, "%lld", dbi_result_get_longlong_idx(Res, 1));
 		ID = atoi(buffer);
 	} else {
 		ID = 0;

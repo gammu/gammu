@@ -73,6 +73,7 @@ struct _GSM_SMSDConfig {
 #ifdef HAVE_MYSQL_MYSQL_H
        /* MySQL db connection */
        MYSQL DBConnMySQL;
+       bool connected;
 #endif
 
 #ifdef HAVE_POSTGRESQL_LIBPQ_FE_H
