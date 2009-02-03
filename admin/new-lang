@@ -15,3 +15,10 @@ for loc in docs gammu libgammu ; do
 done
 
 sed -i "s/\(.*po4a_langs.*\)/\1 $1/" admin/po4a.config
+
+svn add locale/$1
+
+tmp=`mktemp`
+svn propget svn:ignore locale/cs/ > $tmp
+svn propset svn:ignore -F $tmp locale/$1
+rm -f $tmp
