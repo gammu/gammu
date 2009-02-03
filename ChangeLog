@@ -16,7 +16,9 @@ ChangeLog
 =========
     
 2009???? - 1.22.94
-    
+
+[-] * Fix some memory leaks found by cppcheck.
+
 20090202 - 1.22.93
 
 [-] * Fixed privileges dropping in SMSD.

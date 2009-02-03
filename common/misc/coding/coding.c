@@ -1765,6 +1765,7 @@ void DecodeXMLUTF8(unsigned char *dest, const unsigned char *src, int len)
 			dbgprintf(NULL, "Could not decode XML entity!\n");
 			strncat(tmp, lastpos, pos_end - pos + 1);
 		}
+		free(entity);
 		lastpos = pos_end + 1;
 	}
 	/* Copy rest of string */

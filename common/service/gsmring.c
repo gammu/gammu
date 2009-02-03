@@ -905,6 +905,7 @@ GSM_Error GSM_ReadRingtoneFile(char *FileName, GSM_Ringtone *ringtone)
 	}
 	len = strlen(file_only_name);
 	if (len > GSM_MAX_RINGTONE_NAME_LENGTH){
+		fclose(file);
 		return ERR_MOREMEMORY;
 	}
 

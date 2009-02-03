@@ -1084,6 +1084,7 @@ GSM_Error GSM_ReadBitmapFile(char *FileName, GSM_MultiBitmap *bitmap)
 	}
 	len = strlen(file_only_name);
 	if (len > GSM_BITMAP_TEXT_LENGTH) {
+		fclose(file);
 		return ERR_MOREMEMORY;
 	}
 
