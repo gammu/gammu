@@ -18,6 +18,7 @@ ChangeLog
 2009???? - 1.22.94
 
 [-] * Fix some memory leaks found by cppcheck.
+[-] * Implemented reconnecting/retrying in DBI driver.
 
 20090202 - 1.22.93
 
