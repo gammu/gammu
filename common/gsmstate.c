@@ -767,7 +767,7 @@ GSM_Error GSM_InitConnection(GSM_StateMachine *s, int ReplyNum)
 
 int GSM_ReadDevice (GSM_StateMachine *s, bool waitforreply)
 {
-	unsigned char	buff[255];
+	unsigned char	buff[65536];
 	int		res = 0, count;
 
 	int	i;
@@ -780,7 +780,7 @@ int GSM_ReadDevice (GSM_StateMachine *s, bool waitforreply)
 	GSM_GetCurrentDateTime (&Date);
 	i=Date.Second;
 	while (i==Date.Second) {
-		res = s->Device.Functions->ReadDevice(s, buff, 255);
+		res = s->Device.Functions->ReadDevice(s, buff, sizeof(buff));
 		if (!waitforreply) break;
 		if (res > 0) break;
 		usleep(5000);
