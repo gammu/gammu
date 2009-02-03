@@ -64,6 +64,9 @@ NORETURN void version(void)
 #ifdef HAVE_PIDFILE
 	printf("  - %s\n", "PID");
 #endif
+#ifdef HAVE_ALARM
+	printf("  - %s\n", "ALARM");
+#endif
 #ifdef HAVE_UID
 #endif
 #ifdef HAVE_WINDOWS_SERVICE
@@ -125,6 +128,9 @@ void help(void)
 	print_option_param("U", "user", "USER", "run daemon as a user");
 	print_option_param("G", "group", "GROUP", "run daemon as a group");
 #endif
+#ifdef HAVE_ALARM
+	print_option_param("X", "suicide", "SECONDS", "kills itself after number of seconds");
+#endif
 #ifdef HAVE_WINDOWS_SERVICE
 	print_option("i", "install-service",
 		     "installs SMSD as a Windows service");
@@ -162,15 +168,16 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 		{"user", 1, 0, 'U'},
 		{"group", 1, 0, 'G'},
 		{"service-name", 1, 0, 'n'},
+		{"suicide", 1, 0, 'X'},
 		{0, 0, 0, 0}
 	};
 	int option_index;
 
 	while ((opt =
-		getopt_long(argc, argv, "hv?dc:p:iusSkU:G:n:", long_options,
+		getopt_long(argc, argv, "hv?dc:p:iusSkU:G:n:X:", long_options,
 			    &option_index)) != -1) {
 #elif defined(HAVE_GETOPT)
-	while ((opt = getopt(argc, argv, "hv?dc:p:iusSkU:G:n:")) != -1) {
+	while ((opt = getopt(argc, argv, "hv?dc:p:iusSkU:G:n:X:")) != -1) {
 #else
 	/* Poor mans getopt replacement */
 	int i;
@@ -204,6 +211,11 @@ void process_commandline(int argc, char **argv, SMSD_Parameters * params)
 					fprintf(stderr, "Wrong group name/ID!\n");
 					exit(1);
 				}
+				break;
+#endif
+#ifdef HAVE_ALARM
+			case 'X':
+				alarm(atoi(optarg));
 				break;
 #endif
 #ifdef HAVE_DAEMON
@@ -260,6 +272,9 @@ void configure_daemon(SMSD_Parameters * params)
 	signal(SIGTERM, smsd_interrupt);
 #ifdef HAVE_SIGHUP
 	signal(SIGHUP, smsd_reconfigure);
+#endif
+#ifdef HAVE_ALARM
+	signal(SIGALRM, smsd_interrupt);
 #endif
 
 #ifdef HAVE_DAEMON

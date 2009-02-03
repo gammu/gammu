@@ -179,6 +179,9 @@
 #cmakedefine HAVE_SYS_UTSNAME_H
 #endif
 
+#ifndef HAVE_ALARM
+#cmakedefine HAVE_ALARM
+#endif
 #ifndef HAVE_GETPASS
 #cmakedefine HAVE_GETPASS
 #endif

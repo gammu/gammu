@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-02 15:44+0100\n"
-"PO-Revision-Date: 2009-02-02 15:57+0100\n"
+"POT-Creation-Date: 2009-02-03 17:07+0100\n"
+"PO-Revision-Date: 2009-02-03 17:08+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Czech <cs@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -2921,7 +2921,7 @@ msgstr "I</dev/ttyACM?>"
 
 # type: SH
 #: docs/user/gammu.1:2196 docs/user/gammurc.5:187 docs/user/gammu-smsdrc.5:275
-#: docs/user/gammu-smsd.1:65 docs/user/gammu-smsd-files.7:63
+#: docs/user/gammu-smsd.1:68 docs/user/gammu-smsd-files.7:63
 #: docs/user/gammu-smsd-tables.7:363
 #, no-wrap
 msgid "EXAMPLE"
@@ -3013,7 +3013,7 @@ msgstr ""
 
 # type: SH
 #: docs/user/gammu.1:2236 docs/user/gammurc.5:253 docs/user/gammu-smsdrc.5:352
-#: docs/user/gammu-smsd.1:100 docs/user/gammu-smsd-inject.1:37
+#: docs/user/gammu-smsd.1:103 docs/user/gammu-smsd-inject.1:37
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/jadmaker.1:30
 #: docs/user/gammu-config.1:28 docs/user/gammu-smsd-files.7:100
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
@@ -3035,7 +3035,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu.1:2243 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:358
-#: docs/user/gammu-smsd.1:106 docs/user/gammu-smsd-inject.1:43
+#: docs/user/gammu-smsd.1:109 docs/user/gammu-smsd-inject.1:43
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:35
 #: docs/user/gammu-config.1:33 docs/user/gammu-smsd-files.7:106
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
@@ -3049,7 +3049,7 @@ msgstr ""
 
 # type: SH
 #: docs/user/gammu.1:2244 docs/user/gammurc.5:259 docs/user/gammu-smsdrc.5:358
-#: docs/user/gammu-smsd.1:106 docs/user/gammu-smsd-inject.1:43
+#: docs/user/gammu-smsd.1:109 docs/user/gammu-smsd-inject.1:43
 #: docs/user/gammu-smsd-monitor.1:51 docs/user/jadmaker.1:24
 #: docs/user/gammu-config.1:23 docs/user/gammu-smsd-files.7:106
 #: docs/user/gammu-smsd-mysql.7:27 docs/user/gammu-smsd-pgsql.7:27
@@ -3106,7 +3106,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammu.1:2264 docs/user/gammurc.5:260 docs/user/gammu-smsdrc.5:359
-#: docs/user/gammu-smsd.1:108 docs/user/gammu-smsd-inject.1:45
+#: docs/user/gammu-smsd.1:111 docs/user/gammu-smsd-inject.1:45
 #: docs/user/gammu-smsd-monitor.1:53 docs/user/jadmaker.1:26
 #: docs/user/gammu-config.1:25 docs/user/gammu-smsd-files.7:107
 #: docs/user/gammu-smsd-mysql.7:28 docs/user/gammu-smsd-pgsql.7:28
@@ -3116,7 +3116,7 @@ msgstr "Prosím hlašte chyby na E<lt>http://bugs.cihar.comE<gt>."
 
 # type: SH
 #: docs/user/gammu.1:2265 docs/user/gammurc.5:251 docs/user/gammu-smsdrc.5:350
-#: docs/user/gammu-smsd.1:98 docs/user/gammu-smsd-inject.1:35
+#: docs/user/gammu-smsd.1:101 docs/user/gammu-smsd-inject.1:35
 #: docs/user/gammu-smsd-monitor.1:43 docs/user/gammu-smsd-files.7:98
 #: docs/user/gammu-smsd-mysql.7:19 docs/user/gammu-smsd-pgsql.7:19
 #: docs/user/gammu-smsd-dbi.7:19 docs/user/gammu-smsd-tables.7:378
@@ -3170,7 +3170,7 @@ msgstr ""
 
 # type: SH
 #: docs/user/gammu.1:2291 docs/user/gammurc.5:249 docs/user/gammu-smsdrc.5:346
-#: docs/user/gammu-smsd.1:94 docs/user/gammu-smsd-inject.1:33
+#: docs/user/gammu-smsd.1:97 docs/user/gammu-smsd-inject.1:33
 #: docs/user/gammu-smsd-monitor.1:41 docs/user/jadmaker.1:27
 #: docs/user/gammu-config.1:26 docs/user/gammu-smsd-files.7:96
 #: docs/user/gammu-smsd-mysql.7:17 docs/user/gammu-smsd-pgsql.7:17
@@ -3805,7 +3805,7 @@ msgstr "gammu-smsd(1), gammu(1), gammurc(5)"
 
 # type: Plain text
 #: docs/user/gammurc.5:253 docs/user/gammu-smsdrc.5:352
-#: docs/user/gammu-smsd.1:100 docs/user/gammu-smsd-inject.1:37
+#: docs/user/gammu-smsd.1:103 docs/user/gammu-smsd-inject.1:37
 #: docs/user/gammu-smsd-monitor.1:45 docs/user/gammu-smsd-files.7:100
 #: docs/user/gammu-smsd-mysql.7:21 docs/user/gammu-smsd-pgsql.7:21
 #: docs/user/gammu-smsd-dbi.7:21 docs/user/gammu-smsd-tables.7:380
@@ -3818,7 +3818,7 @@ msgstr ""
 
 # type: Plain text
 #: docs/user/gammurc.5:256 docs/user/gammu-smsdrc.5:355
-#: docs/user/gammu-smsd.1:103 docs/user/gammu-smsd-inject.1:40
+#: docs/user/gammu-smsd.1:106 docs/user/gammu-smsd-inject.1:40
 #: docs/user/gammu-smsd-monitor.1:48 docs/user/gammu-smsd-files.7:103
 #: docs/user/gammu-smsd-mysql.7:24 docs/user/gammu-smsd-pgsql.7:24
 #: docs/user/gammu-smsd-dbi.7:24 docs/user/gammu-smsd-tables.7:383
@@ -4563,7 +4563,7 @@ msgstr ""
 "number1 = 666\n"
 
 # type: Plain text
-#: docs/user/gammu-smsdrc.5:350 docs/user/gammu-smsd.1:98
+#: docs/user/gammu-smsdrc.5:350 docs/user/gammu-smsd.1:101
 msgid ""
 "gammu-smsd-files(7), gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7), gammu-smsd-tables(7)"
@@ -4766,11 +4766,22 @@ msgstr "Ukončí SMSD službu ve Windows."
 # type: TP
 #: docs/user/gammu-smsd.1:55
 #, no-wrap
+msgid "B<-X>, B<--suicide>=I<seconds>"
+msgstr "B<-X>, B<--suicide>=I<sekundy>"
+
+# type: Plain text
+#: docs/user/gammu-smsd.1:58
+msgid "Kills itself after number of seconds."
+msgstr "Zabije se po zadaném počtu sekund."
+
+# type: TP
+#: docs/user/gammu-smsd.1:58
+#, no-wrap
 msgid "B<-S>, B<--run-service>"
 msgstr "B<-S>, B<--run-service>"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:59
+#: docs/user/gammu-smsd.1:62
 msgid ""
 "Runs pogram as SMSD Windows service. This should not be used manually, but "
 "only Windows Service manager should use this command."
@@ -4779,13 +4790,13 @@ msgstr ""
 "správce služeb a neměla by být používana."
 
 # type: TP
-#: docs/user/gammu-smsd.1:59
+#: docs/user/gammu-smsd.1:62
 #, no-wrap
 msgid "B<-n>, B<--service-name>=I<name>"
 msgstr "B<-n>, B<--service-name>=I<name>"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:64
+#: docs/user/gammu-smsd.1:67
 msgid ""
 "Defines name of a Windows service. Each service requires an unique name, so "
 "if you want to run several SMSD instances, you have to name each service "
@@ -4796,26 +4807,26 @@ msgstr ""
 "instanci jinak. Výchozí jméno je \"GammuSMSD\"."
 
 # type: TP
-#: docs/user/gammu-smsd.1:67
+#: docs/user/gammu-smsd.1:70
 #, no-wrap
 msgid "Start SMSD as a deamon on Linux:"
 msgstr "Spuštění SMSD jako démon na Linuxu:"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:71
+#: docs/user/gammu-smsd.1:74
 msgid ""
 "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon"
 msgstr ""
 "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon"
 
 # type: TP
-#: docs/user/gammu-smsd.1:72
+#: docs/user/gammu-smsd.1:75
 #, no-wrap
 msgid "Start SMSD as a deamon on Linux with reduced privileges:"
 msgstr "Spuštění SMSD jako démon s omezenými právy na Linuxu:"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:76
+#: docs/user/gammu-smsd.1:79
 msgid ""
 "gammu-smsd --config /etc/gammu-smsdrc --pid /var/run/gammu-smsd.pid --daemon "
 "--user gammu --group gammu"
@@ -4824,57 +4835,57 @@ msgstr ""
 "--user gammu --group gammu"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:77
+#: docs/user/gammu-smsd.1:80
 #, no-wrap
 msgid "Install Gammu SMSD Windows service:"
 msgstr "Instalace SMSD jako služba ve Windows:"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:81
+#: docs/user/gammu-smsd.1:84
 msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc -i"
 msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc -i"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:82
+#: docs/user/gammu-smsd.1:85
 #, no-wrap
 msgid "Install two instances of SMSD Windows service:"
 msgstr "Instalace dvou SMSD jako služby ve Windows."
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:86
+#: docs/user/gammu-smsd.1:89
 msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-1 -n Gammu-first-phone -i"
 msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-1 -n Gammu-first-phone -i"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:88
+#: docs/user/gammu-smsd.1:91
 msgid "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-2 -n Gammu-second-phone -i"
 msgstr "gammu-smsd.exe -c c:\\eGammu\\esmsdrc-2 -n Gammu-second-phone -i"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:89
+#: docs/user/gammu-smsd.1:92
 #, no-wrap
 msgid "To uninstall a Windows service:"
 msgstr "Odinstalace SMSD služby ve Windows."
 
 # type: TP
-#: docs/user/gammu-smsd.1:93
+#: docs/user/gammu-smsd.1:96
 msgid "gammu-smsd.exe -u"
 msgstr "gammu-smsd.exe -u"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:96
+#: docs/user/gammu-smsd.1:99
 msgid "gammu-smsdrc(5), gammu(1), gammu-smsd-inject(1), gammu-smsd-monitor(1)"
 msgstr "gammu-smsdrc(5), gammu(1), gammu-smsd-inject(1), gammu-smsd-monitor(1)"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:110 docs/user/gammu-smsd-inject.1:47
+#: docs/user/gammu-smsd.1:113 docs/user/gammu-smsd-inject.1:47
 #: docs/user/gammu-smsd-monitor.1:55
 msgid ""
 "Before reporting a bug, please enable verbose logging in SMSD configuration:"
 msgstr "Před hlášením chyb prosím zapněte logovaní v nastavení SMSD:"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:113 docs/user/gammu-smsd-inject.1:50
+#: docs/user/gammu-smsd.1:116 docs/user/gammu-smsd-inject.1:50
 #: docs/user/gammu-smsd-monitor.1:58
 #, no-wrap
 msgid ""
@@ -4885,7 +4896,7 @@ msgstr ""
 "    logformat = textall\n"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:116
+#: docs/user/gammu-smsd.1:119
 #, no-wrap
 msgid ""
 "    [smsd]\n"
@@ -4895,7 +4906,7 @@ msgstr ""
 "    debuglevel = 255\n"
 
 # type: Plain text
-#: docs/user/gammu-smsd.1:117 docs/user/gammu-smsd-inject.1:51
+#: docs/user/gammu-smsd.1:120 docs/user/gammu-smsd-inject.1:51
 #: docs/user/gammu-smsd-monitor.1:59
 msgid "and include this verbose log within bug report."
 msgstr "a přiložte tento log k hlášení chyby."

@@ -9,10 +9,15 @@ find_program(SED_BIN sed)
 
 if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
     configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" ESCAPE_QUOTES)
+    # This test tests some functionality and setups environment
     add_test("smsd-dbi" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh")
     set_tests_properties("smsd-dbi" PROPERTIES
         TIMEOUT 60
         PASS_REGULAR_EXPRESSION ".999999999999999.1.18.0.100.42"
         FAIL_REGULAR_EXPRESSION "DBI error;Wrong"
         )
+    add_test(smsd-inject "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test/.smsdrc" TEXT 123465 -text "Lorem ipsum.")
+    if (HAVE_ALARM)
+        add_test(smsd-daemon "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test/.smsdrc" -X 10)
+    endif (HAVE_ALARM)
 endif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
