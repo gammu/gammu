@@ -253,14 +253,56 @@ static GSM_Error SMSDDBI_Free(GSM_SMSDConfig *Config)
 
 static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_result *res)
 {
-	SMSD_Log(2, Config, "Execute SQL: %s\n", query);
+	const char *msg;
+	GSM_Error error;
+	int attempts = 1;
 
-	*res = dbi_conn_query(Config->DBConnDBI, query);
-	if (*res == NULL) {
+	*res = NULL;
+
+	for (attempts = 1; attempts < SMSD_SQL_RETRIES; attempts++) {
+		SMSD_Log(2, Config, "Execute SQL: %s\n", query);
+		*res = dbi_conn_query(Config->DBConnDBI, query);
+		if (res != NULL) return ERR_NONE;
+
 		SMSD_Log(0, Config, "SQL failed: %s\n", query);
-		return ERR_UNKNOWN;
+		if (attempts >= SMSD_SQL_RETRIES) {
+			return ERR_TIMEOUT;
+		}
+		/* Black magic to decide whether we should bail out or attempt to retry */
+		if (dbi_conn_error(Config->DBConnDBI, &msg) == 0) {
+			if (strstr(msg, "syntax") != NULL) {
+				return ERR_BUG;
+			}
+			if (strstr(msg, "violation") != NULL) {
+				return ERR_BUG;
+			}
+			if (strstr(msg, "SQL error") != NULL) {
+				return ERR_BUG;
+			}
+			if (strstr(msg, "duplicate") != NULL) {
+				return ERR_BUG;
+			}
+			if (strstr(msg, "locked") != NULL) {
+				SMSD_Log(0, Config, "Retrying after %d seconds...\n", 5 * attempts);
+				sleep(5 * attempts);
+				continue;
+			}
+		}
+		/* We will try to reconnect */
+		SMSD_Log(0, Config, "Failed to detect problem cause, reconnecting to database!\n");
+		error = ERR_UNKNOWN;
+		while (error != ERR_NONE) {
+			SMSD_Log(0, Config, "Reconnecting fter %d seconds...\n", 5 * attempts);
+			sleep(5 * attempts);
+			SMSDDBI_Free(Config);
+			error = SMSDDBI_Init(Config);
+			if (error == ERR_NONE) {
+				break;
+			}
+			attempts++;
+		}
 	}
-	return ERR_NONE;
+	return ERR_TIMEOUT;
 }
 
 static GSM_Error SMSDDBI_InitAfterConnect(GSM_SMSDConfig * Config)
