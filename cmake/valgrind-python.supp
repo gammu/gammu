@@ -818,3 +818,94 @@
    fun:curl_global_init
 }
 
+
+# Shell suppressions, /bin/sh is used for smsd testing
+{
+   Bash-1
+   Memcheck:Leak
+   fun:malloc
+   fun:xmalloc
+   fun:set_signal
+   fun:trap_builtin
+   fun:execute_builtin
+}
+{
+   Bash-2
+   Memcheck:Leak
+   fun:realloc
+   fun:xrealloc
+   fun:maybe_make_export_env
+   fun:execute_simple_command
+}
+{
+   Bash-3
+   Memcheck:Leak
+   fun:malloc
+   fun:xmalloc
+   fun:set_default_locale
+   fun:main
+}
+{
+   Bash-4
+   Memcheck:Leak
+   fun:malloc
+   fun:xrealloc
+   fun:shell_getc
+   fun:read_token
+   fun:yyparse
+   fun:parse_command
+}
+{
+   Bash-5
+   Memcheck:Leak
+   fun:realloc
+   fun:xrealloc
+   fun:maybe_make_export_env
+   fun:execute_simple_command
+}
+{
+   Bash-6
+   Memcheck:Leak
+   fun:malloc
+   fun:xmalloc
+   fun:make_word_list
+   fun:copy_word_list
+   fun:expand_word_list_internal
+   fun:execute_simple_command
+}
+{
+   Bash-7
+   Memcheck:Leak
+   fun:malloc
+   fun:xmalloc
+   fun:make_if_command
+}
+{
+   Bash-7
+   Memcheck:Leak
+   fun:malloc
+   fun:xrealloc
+   fun:read_token
+   fun:yyparse
+   fun:parse_command
+}
+{
+   Dash-1
+   Memcheck:Leak
+   fun:malloc
+   fun:strdup
+   obj:/bin/dash
+}
+{
+   Dash-2
+   Memcheck:Leak
+   fun:malloc
+   obj:/bin/dash
+}
+{
+   Dash-3
+   Memcheck:Leak
+   fun:malloc
+   fun:realloc
+   obj:/bin/dash
+}
