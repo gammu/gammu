@@ -4,6 +4,8 @@ set -x
 set -e
 SMSD_PID=0
 
+echo "This test is quite tricky about timing, if you run it on really slow platform, it might fail."
+
 cleanup() {
     if [ $SMSD_PID -ne 0 ] ; then
         kill $SMSD_PID
