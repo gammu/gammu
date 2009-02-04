@@ -21,6 +21,7 @@ ChangeLog
 [-] * Implemented reconnecting/retrying in DBI driver.
 [-] * Fix memory leaks in SMSD found by valgrind.
 [-] * Fix decoding of another Nokia message type.
+[-] * Support for passing received message ID in DBI.
 
 20090202 - 1.22.93
 
