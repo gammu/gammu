@@ -805,4 +805,16 @@
    fun:Curl_ossl_init
    fun:curl_global_init
 }
+{
+   Leak from curl_init
+   Memcheck:Leak
+   fun:malloc
+   fun:CRYPTO_malloc
+   fun:sk_new
+   obj:/usr/lib64/libssl.so.0.9.8
+   fun:SSL_COMP_get_compression_methods
+   fun:SSL_library_init
+   fun:Curl_ossl_init
+   fun:curl_global_init
+}
 
