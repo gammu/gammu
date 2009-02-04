@@ -11,8 +11,8 @@ msgstr ""
 "Project-Id-Version: gammu\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-02 18:24+0100\n"
-"PO-Revision-Date: 2008-12-02 18:38+0100\n"
-"Last-Translator: Daniel Campos <daniel.campos@juntaextremadura.net>\n"
+"PO-Revision-Date: 2009-02-03 22:09+0100\n"
+"Last-Translator: Alejandro Caldito <acaldito@amena.com>\n"
 "Language-Team: Español\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -40,9 +40,8 @@ msgid "Note not found in file"
 msgstr "Nota no encontrada en el archivo"
 
 #: gammu/backup.c:98
-#, fuzzy
 msgid "Todo note not found in file"
-msgstr "nota de tareas no encontrada en el archivo"
+msgstr "Lista de tareas no encontrada en el archivo"
 
 #: gammu/backup.c:106 helper/message-cmdline.c:519
 msgid "Where is backup filename and location and memory type?"
@@ -108,9 +107,8 @@ msgstr "Solo se guardó una parte de los datos, por favor, incremente %s."
 
 #: gammu/backup.c:311 gammu/backup.c:355 gammu/backup.c:426
 #: gammu/message.c:700
-#, fuzzy
 msgid "Reading:"
-msgstr "Leyendo"
+msgstr "Leyendo: "
 
 #: gammu/backup.c:312 gammu/backup.c:356 gammu/backup.c:427 gammu/backup.c:961
 #: gammu/backup.c:1025 gammu/backup.c:1078 gammu/backup.c:1136
@@ -143,14 +141,12 @@ msgid "Backup phone calendar notes?"
 msgstr "¿Guardar las notas del calendario del teléfono?"
 
 #: gammu/backup.c:402
-#, fuzzy
 msgid "Checking phone todos"
-msgstr "Comprobar tareas del teléfono"
+msgstr "Comprobando lista de tareas"
 
 #: gammu/backup.c:405
-#, fuzzy
 msgid "Backup phone todos?"
-msgstr "¿Guardar las tareas del teléfono?"
+msgstr "¿Guardar la lista de tareas?"
 
 #: gammu/backup.c:438
 msgid "Checking phone notes"
@@ -291,9 +287,11 @@ msgid "File created by"
 msgstr "Archivo creado por"
 
 #: gammu/backup.c:936
-#, fuzzy, c-format
+#, c-format
 msgid "Checksum in backup file do not match (original: %s, new: %s). Continue?"
-msgstr "El Checksum de la copia de seguridad no coincide. ¿Continuar?"
+msgstr ""
+"El checksum de la copia de seguridad no coincide (original: %s, nuevo: %s). "
+"¿Continuar?"
 
 #: gammu/backup.c:942
 msgid ""
@@ -363,28 +361,24 @@ msgid "Restore notes from the past?"
 msgstr "¿Restaurar notas pasadas?"
 
 #: gammu/backup.c:1112 gammu/backup.c:1251
-#, fuzzy
 msgid "Deleting old notes:"
-msgstr "Borrar notas antiguas:"
+msgstr "Borrando notas antiguas:"
 
 #: gammu/backup.c:1124 gammu/backup.c:1174 gammu/backup.c:1407
 #: gammu/backup.c:1465 gammu/misc.c:1199 gammu/misc.c:1243 gammu/misc.c:1266
 #: gammu/misc.c:1312
 msgid "Done"
-msgstr "Terminado"
+msgstr "Hecho"
 
 #: gammu/backup.c:1154
-#, fuzzy
 msgid "Restore phone todo?"
 msgstr "¿Restaurar lista de tareas del teléfono?"
 
 #: gammu/backup.c:1162
-#, fuzzy
 msgid "Deleting old todos:"
 msgstr "Borrando la antigua lista de tareas:"
 
 #: gammu/backup.c:1247
-#, fuzzy
 msgid "Restore phone notes?"
 msgstr "¿Restaurar notas del teléfono?"
 
@@ -405,9 +399,8 @@ msgid "Restore phone WAP bookmarks?"
 msgstr "¿Restaurar marcadores WAP?"
 
 #: gammu/backup.c:1312
-#, fuzzy
 msgid "Deleting old bookmarks:"
-msgstr "Borrado de marcadores antiguos:"
+msgstr "Borrando marcadores antiguos:"
 
 #: gammu/backup.c:1349
 msgid "Restore phone WAP settings?"
@@ -493,12 +486,11 @@ msgstr "___Incrementar %s\n"
 #: gammu/backup.c:1761 gammu/misc.c:1189
 #, fuzzy
 msgid "Deleting:"
-msgstr "Eliminando"
+msgstr "Borrando:"
 
 #: gammu/backup.c:1793
-#, fuzzy
 msgid "Restore message?"
-msgstr "¿Restaurar sms?"
+msgstr "¿Restaurar mensaje?"
 
 #: gammu/backup.c:1820
 msgid "Do you want to restore binary SMS?"
@@ -3955,9 +3947,8 @@ msgstr "Alfabeto GSM por defecto (comprimido)"
 
 #. l10n: 8-bit message coding
 #: helper/message-display.c:263
-#, fuzzy
 msgid "8-bit"
-msgstr "8 bit"
+msgstr "8-bit"
 
 #: helper/message-display.c:284
 msgid "User Data Header"
@@ -4121,11 +4112,9 @@ msgid "Caller logo"
 msgstr "Logo de llamada"
 
 #: helper/message-display.c:414
-#, fuzzy, c-format
+#, c-format
 msgid "Operator logo for %s network"
-msgstr ""
-"Logo de operador para la red %s (%s,%s)\n"
-"\n"
+msgstr "Logo de operador para la red %s"
 
 #: helper/message-display.c:434
 msgid "Profile"
@@ -4151,9 +4140,8 @@ msgid "Data PDU"
 msgstr "datos (CSD)"
 
 #: helper/message-display.c:525
-#, fuzzy
 msgid "Number of bits"
-msgstr "Número de mensajes: %i"
+msgstr "Número de bits"
 
 #: helper/message-display.c:527
 msgid "UDH"

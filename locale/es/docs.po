@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-03 17:07+0100\n"
-"PO-Revision-Date: 2009-01-28 00:49+0100\n"
-"Last-Translator: Edgar Solis <esdoglairs@gmail.com>\n"
+"PO-Revision-Date: 2009-02-03 21:56+0100\n"
+"Last-Translator: Alejandro Caldito <acaldito@amena.com>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -27,7 +27,7 @@ msgstr "GAMMU"
 #: docs/user/gammu.1:1
 #, fuzzy, no-wrap
 msgid "Feb 2 2009"
-msgstr "27 de Enero del 2009"
+msgstr "2 de Febrero del 2009"
 
 # type: TH
 #: docs/user/gammu.1:1
@@ -5760,27 +5760,28 @@ msgstr ""
 #: docs/user/gammu-smsd-tables.7:353
 #, no-wrap
 msgid "HISTORY"
-msgstr ""
+msgstr "HISTORIA"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:356
 msgid "History of schema versions:"
-msgstr ""
+msgstr "Historia de versiones de esquema:"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:358
 msgid "9 - added sent/received counters to phones table"
-msgstr ""
+msgstr "9 - contadores de enviado/recibido agregado a la tabla de teléfonos"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:360
 msgid "8 - introduced phones table"
-msgstr ""
+msgstr "8 - introducida la tabla de teléfonos"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:362
 msgid "7 - added CreatorID to tables (it holds PhoneID if set)"
 msgstr ""
+"7 - agregado CreatorID a las tablas (contiene PhoneID si está establecido)"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:368
@@ -5789,17 +5790,20 @@ msgid ""
 "Gammu documentation (docs/sql). As well as some PHP scripts interacting with "
 "the database."
 msgstr ""
+"Scripts SQL para crear todas las tablas necesarias para la mayoría de bases "
+"de datos que se incluyen en la documentación del Gammu (docs / sql). Así "
+"como algunos scripts PHP interactuando con la base de datos."
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:370
 msgid "For example to create SQLite tables, issue following command:"
-msgstr ""
+msgstr "Por ejemplo para crear tablas SQLite, emitir el siguiente comando:"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:372
 #, no-wrap
 msgid "    sqlite3 smsd.db E<lt> docs/sql/sqlite.sql\n"
-msgstr ""
+msgstr "sqlite3 smsd.db E<lt> docs/sql/sqlite.sql\n"
 
 # type: Plain text
 #: docs/user/gammu-smsd-tables.7:376
@@ -5807,6 +5811,8 @@ msgid ""
 "Database backends: gammu-smsd-mysql(7), gammu-smsd-pgsql(7), gammu-smsd-dbi"
 "(7)"
 msgstr ""
+"Generación de base de datos: gammu-smsd-mysql(7), gammu-smsd-pgsql(7), "
+"gammu-smsd-dbi(7)"
 
 # type: Plain text
 #~ msgid ""

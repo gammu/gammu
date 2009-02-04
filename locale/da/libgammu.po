@@ -8,49 +8,52 @@ msgstr ""
 "Project-Id-Version: libgammu 1.22.93\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
 "POT-Creation-Date: 2009-02-02 18:24+0100\n"
-"PO-Revision-Date: 2009-02-02 18:24+0100\n"
-"Last-Translator: Automatically generated\n"
+"PO-Revision-Date: 2009-02-03 12:50+0100\n"
+"Last-Translator: Jakob Peterhänsel <jakob@hjemme.dk>\n"
 "Language-Team: none\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 1.1.0\n"
 
 #: common/gsmcomon.c:84
 msgid "No error."
-msgstr ""
+msgstr "Ingen fejl."
 
 #: common/gsmcomon.c:85
 msgid "Error opening device. Unknown/busy or no permissions."
-msgstr ""
+msgstr "Fejl ved åbning af enhed. Ukendt/optaget eller manglende tilladelser."
 
 #: common/gsmcomon.c:86
 msgid "Error opening device, it is locked."
-msgstr ""
+msgstr "Fejl ved åbning, enhed er låst."
 
 #: common/gsmcomon.c:87
 msgid "Error opening device, it doesn't exist."
-msgstr ""
+msgstr "Fejl ved åbning af enhed. Findes ikke."
 
 #: common/gsmcomon.c:88
 msgid "Error opening device, it is already opened by other application."
-msgstr ""
+msgstr "Fejl ved åbning af enhed. Er allerede åben af andet program."
 
 #: common/gsmcomon.c:89
 msgid "Error opening device, you don't have permissions."
-msgstr ""
+msgstr "Fejl ved åbning af enhed. Bruger tilladelse mangler."
 
 #: common/gsmcomon.c:90
 msgid "Error opening device. No required driver in operating system."
-msgstr ""
+msgstr "Fejl ved åbning af enhed. Krævet driver mangler i systemet."
 
 #: common/gsmcomon.c:91
 msgid "Error opening device. Some hardware not connected/wrong configured."
 msgstr ""
+"Fejl ved åbning af enhed. Forbindelse til enhed mangler eller forkert "
+"konfigureret."
 
 #: common/gsmcomon.c:92
 msgid "Error setting device DTR or RTS."
-msgstr ""
+msgstr "Fejl under DTR eller RTS enhedsopsætning."
 
 #: common/gsmcomon.c:93
 msgid "Error setting device speed. Maybe speed not supported."
