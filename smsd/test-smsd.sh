@@ -60,18 +60,16 @@ SMSD_PID=$!
 
 sleep 3
 
-for sms in @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/0[1-9].backup ; do
-    number=`echo $sms | @SED_BIN@ 's@.*/0*\([1-9][0-9]*\).backup@\1@'`
-    cp $sms $DUMMY_PATH/sms/1/$number
+for sms in 60 62 64 66 68 70 72 74 76 ; do
+    cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/$sms.backup $DUMMY_PATH/sms/1/$sms
 done
 
-sleep 5
+sleep 10
 
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 
-for sms in @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/0[1-9].backup ; do
-    number=`echo $sms | @SED_BIN@ 's@.*/0*\([1-9][0-9]*\).backup@\1@'`
-    cp $sms $DUMMY_PATH/sms/3/$number
+for sms in 10 12 14 16 18 20 22 24 26 ; do
+    cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/$sms.backup $DUMMY_PATH/sms/3/$sms
 done
 
 sleep 10
