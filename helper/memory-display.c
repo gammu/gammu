@@ -69,7 +69,13 @@ GSM_Error PrintMemorySubEntry(GSM_SubMemoryEntry *entry, GSM_StateMachine *sm)
 			caller[entry->Number-1].Type	    = GSM_CallerGroupLogo;
 			caller[entry->Number-1].Location = entry->Number;
 			error=GSM_GetBitmap(sm,&caller[entry->Number-1]);
-			if (error != ERR_NONE) return error;
+			if (error == ERR_NOTSUPPORTED || error == ERR_NOTIMPLEMENTED) {
+				printf(LISTFORMAT "\"%d\"\n", _("Caller group"), entry->Number);
+				return ERR_NONE;
+			}
+			if (error != ERR_NONE) {
+				return error;
+			}
 			if (caller[entry->Number-1].DefaultName) {
 				NOKIA_GetDefaultCallerGroupName(&caller[entry->Number-1]);
 			}
