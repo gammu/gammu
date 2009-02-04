@@ -14,3 +14,5 @@ This file is probably not usable for anybody except me ;-).
     - add support for setting processed flag via API
 
 - add support for acquiring number of messages in sending queue
+
+- *_CreateOutboxSMS are too fragile and can not be run concurrently
