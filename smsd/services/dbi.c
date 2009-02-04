@@ -819,6 +819,9 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 	}
 	dbi_result_free(Res);
 
+	/* Get next ID */
+	ID++;
+
 	for (i = 0; i < sms->Number; i++) {
 		buffer[0] = 0;
 		if (i == 0) {
