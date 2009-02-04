@@ -9,8 +9,12 @@
 %endif
 # Set to 0 to disable PostgreSQL support
 %define pqsql     1
-# Set to 0 to disable MySQLSQL support
+# Set to 0 to disable MySQL support
 %define mysql     1
+# Set to 0 to disable DBI support
+%define dbi       1
+# Set to 0 to disable USB support
+%define usb       1
 # Change if using tar.gz sources
 %define extension   bz2
 
@@ -41,6 +45,8 @@ Vendor:         Michal Čihař <michal@cihar.com>
 # SUSE
 %if 0%{?suse_version}
 
+%define dist_dbi_libs libdbi-devel libdbi-drivers-dbd-sqlite3 sqlite
+
 # 11.1 changed name of devel package for Bluetooth
 %if 0%{?suse_version} >= 1110
 %define dist_bluez_libs bluez-devel
@@ -63,6 +69,8 @@ Vendor:         Michal Čihař <michal@cihar.com>
 
 # Mandriva
 %if 0%{?mandriva_version}
+
+%define dist_dbi_libs libdbi-devel libdbi-drivers-dbd-sqlite3 sqlite3-tools
 
 %define dist_pkgconfig pkgconfig
 
@@ -101,6 +109,7 @@ Vendor:         Michal Čihař <michal@cihar.com>
 # Fedora / Redhat / Centos
 %if 0%{?fedora_version} || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} || 0%{?rhel}
 %define dist_pkgconfig pkgconfig
+%define dist_dbi_libs libdbi-devel libdbi-drivers-dbd-sqlite3 sqlite
 
 # MySQL devela package has different name since Fedora 8 and in all RHEL/Centos
 %if 0%{?fedora_version} >= 8 || 0%{?centos_version} || 0%{?rhel_version} || 0%{?fedora} >= 8 || 0%{?rhel}
@@ -136,9 +145,17 @@ BuildRequires: %{dist_postgres_libs}
 BuildRequires: %{dist_mysql_libs}
 %endif
 
+%if %dbi
+BuildRequires: %{dist_dbi_libs}
+%endif
+
 BuildRequires: python-devel
 
 BuildRequires: libcurl-devel
+
+%if %usb
+BuildRequires: libusb-1_0-devel
+%endif
 
 BuildRequires: gettext cmake %{dist_pkgconfig}
 
@@ -220,7 +237,8 @@ cmake ../ \
 make %{?_smp_mflags} %{!?_smp_mflags:%{?jobs:-j %jobs}}
 
 %check
-make -C build-dir test
+cd build-dir
+ctest -V
 
 %install
 rm -rf %buildroot
