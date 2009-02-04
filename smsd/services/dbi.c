@@ -112,12 +112,9 @@ void SMSDDBI_Callback(dbi_conn Conn, void *Config)
 }
 
 /* Connects to database */
-static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
+static GSM_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 {
 	int rc;
-	dbi_result res;
-	int version;
-	GSM_Error error;
 
 	rc = dbi_initialize(Config->driverspath);
 
@@ -188,47 +185,6 @@ static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	}
-
-	error = SMSDDBI_CheckTable(Config, "outbox");
-	if (error != ERR_NONE) return error;
-	error = SMSDDBI_CheckTable(Config, "outbox_multipart");
-	if (error != ERR_NONE) return error;
-	error = SMSDDBI_CheckTable(Config, "sentitems");
-	if (error != ERR_NONE) return error;
-	error = SMSDDBI_CheckTable(Config, "inbox");
-	if (error != ERR_NONE) return error;
-
-	res = dbi_conn_query(Config->DBConnDBI, "SELECT Version FROM gammu");
-	if (res == NULL) {
-		SMSD_Log(-1, Config, "Table gammu not found!");
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
-		return ERR_UNKNOWN;
-	}
-	if (dbi_result_get_numrows(res) != 1) {
-		SMSD_Log(-1, Config, "No Version information in table gammu!");
-		dbi_result_free(res);
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
-		return ERR_UNKNOWN;
-	}
-	if (dbi_result_first_row(res) != 1) {
-		SMSD_Log(-1, Config, "Failed to seek to first row!");
-		dbi_result_free(res);
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
-		return ERR_UNKNOWN;
-	}
-	version = dbi_result_get_longlong_idx(res, 1);
-	dbi_result_free(res);
-	if (SMSD_CheckDBVersion(Config, version) != ERR_NONE) {
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
-		return ERR_UNKNOWN;
-	}
-
-	SMSD_Log(0, Config, "Connected to Database %s: %s on %s", Config->driver, Config->database, Config->PC);
-
 	return ERR_NONE;
 }
 
@@ -242,7 +198,6 @@ static GSM_Error SMSDDBI_Free(GSM_SMSDConfig *Config)
 	}
 	return ERR_NONE;
 }
-
 
 static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_result *res)
 {
@@ -278,6 +233,9 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 			if (strstr(msg, "duplicate") != NULL) {
 				return ERR_BUG;
 			}
+			if (strstr(msg, "unique") != NULL) {
+				return ERR_BUG;
+			}
 			if (strstr(msg, "locked") != NULL) {
 				SMSD_Log(0, Config, "Retrying after %d seconds...\n", 5 * attempts);
 				sleep(5 * attempts);
@@ -291,7 +249,7 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 			SMSD_Log(0, Config, "Reconnecting after %d seconds...\n", 5 * attempts);
 			sleep(5 * attempts);
 			SMSDDBI_Free(Config);
-			error = SMSDDBI_Init(Config);
+			error = SMSDDBI_Connect(Config);
 			if (error == ERR_NONE) {
 				break;
 			}
@@ -300,6 +258,54 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 	}
 	return ERR_TIMEOUT;
 }
+
+/* Connects to database */
+static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
+{
+	dbi_result res;
+	int version;
+	GSM_Error error;
+
+	error = SMSDDBI_Connect(Config);
+	if (error != ERR_NONE) return error;
+
+	error = SMSDDBI_CheckTable(Config, "outbox");
+	if (error != ERR_NONE) return error;
+	error = SMSDDBI_CheckTable(Config, "outbox_multipart");
+	if (error != ERR_NONE) return error;
+	error = SMSDDBI_CheckTable(Config, "sentitems");
+	if (error != ERR_NONE) return error;
+	error = SMSDDBI_CheckTable(Config, "inbox");
+	if (error != ERR_NONE) return error;
+
+	if (SMSDDBI_Query(Config, "SELECT Version FROM gammu", &res) != ERR_NONE) {
+		SMSDDBI_Free(Config);
+		return ERR_UNKNOWN;
+	}
+	if (dbi_result_get_numrows(res) != 1) {
+		SMSD_Log(-1, Config, "No Version information in table gammu!");
+		dbi_result_free(res);
+		SMSDDBI_Free(Config);
+		return ERR_UNKNOWN;
+	}
+	if (dbi_result_first_row(res) != 1) {
+		SMSD_Log(-1, Config, "Failed to seek to first row!");
+		dbi_result_free(res);
+		SMSDDBI_Free(Config);
+		return ERR_UNKNOWN;
+	}
+	version = dbi_result_get_longlong_idx(res, 1);
+	dbi_result_free(res);
+	if (SMSD_CheckDBVersion(Config, version) != ERR_NONE) {
+		SMSDDBI_Free(Config);
+		return ERR_UNKNOWN;
+	}
+
+	SMSD_Log(0, Config, "Connected to Database %s: %s on %s", Config->driver, Config->database, Config->PC);
+
+	return ERR_NONE;
+}
+
 
 static GSM_Error SMSDDBI_InitAfterConnect(GSM_SMSDConfig * Config)
 {
@@ -782,8 +788,8 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 					   GSM_SMSDConfig * Config)
 {
 	unsigned char buffer[10000], buffer2[400], buffer4[10000];
-	int i, ID;
-	int numb_rows, numb_tuples;
+	int i;
+	long long ID;
 	dbi_result Res;
 	char *encoded_text;
 
@@ -795,10 +801,21 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 	if (dbi_result_get_numrows(Res) != 0) {
 		dbi_result_first_row(Res);
-		sprintf(buffer, "%lld", dbi_result_get_longlong_idx(Res, 1));
-		ID = atoi(buffer);
+		ID = dbi_result_get_longlong_idx(Res, 1);
 	} else {
 		ID = 0;
+	}
+	dbi_result_free(Res);
+
+	sprintf(buffer, "SELECT ID FROM sentitems ORDER BY ID DESC LIMIT 1");
+	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
+		SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
+		return ERR_UNKNOWN;
+	}
+
+	if (dbi_result_get_numrows(Res) != 0) {
+		dbi_result_first_row(Res);
+		ID = MAX(dbi_result_get_longlong_idx(Res, 1), ID);
 	}
 	dbi_result_free(Res);
 
@@ -931,61 +948,15 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 		}
 
 		sprintf(buffer + strlen(buffer), ", '");
-		if (i == 0) {
-			while (true) {
-				ID++;
-				sprintf(buffer4,
-					"SELECT ID FROM sentitems WHERE ID='%i'",
-					ID);
-				if (SMSDDBI_Query(Config, buffer4, &Res) != ERR_NONE) {
-					SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
-					return ERR_UNKNOWN;
-				}
-
-				numb_rows = dbi_result_get_numrows(Res);
-				dbi_result_free(Res);
-				if (numb_rows == 0) {
-					sprintf(buffer4,
-						"SELECT ID FROM outbox WHERE ID='%i'",
-						ID);
-					if (SMSDDBI_Query(Config, buffer4, &Res) != ERR_NONE) {
-						SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
-						return ERR_UNKNOWN;
-					}
-
-					numb_tuples = dbi_result_get_numrows(Res);
-					dbi_result_free(Res);
-
-					if (numb_tuples > 0) {
-						SMSD_Log(0, Config, "Duplicated outgoing SMS ID\n");
-						continue;
-					} else {
-						buffer4[0] = 0;
-						strcpy(buffer4, buffer);
-						sprintf(buffer4 +
-							strlen(buffer4), "%i')",
-							ID);
-
-						if (SMSDDBI_Query(Config, buffer4, &Res) != ERR_NONE) {
-							SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
-							return ERR_UNKNOWN;
-						}
-						dbi_result_free(Res);
-						break;
-					}
-				}
-			}
-		} else {
-			strcpy(buffer4, buffer);
-			sprintf(buffer4 + strlen(buffer4), "%i')", ID);
-			if (SMSDDBI_Query(Config, buffer4, &Res) != ERR_NONE) {
-				SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
-				return ERR_UNKNOWN;
-			}
-			dbi_result_free(Res);
+		strcpy(buffer4, buffer);
+		sprintf(buffer4 + strlen(buffer4), "%lld')", ID);
+		if (SMSDDBI_Query(Config, buffer4, &Res) != ERR_NONE) {
+			SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
+			return ERR_UNKNOWN;
 		}
+		dbi_result_free(Res);
 	}
-	SMSD_Log(0, Config, "Written message with ID %i\n", ID);
+	SMSD_Log(0, Config, "Written message with ID %lld\n", ID);
 	return ERR_NONE;
 }
 

@@ -68,6 +68,10 @@ done
 
 sleep 25
 
+# It would be good it this worked:
+#@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
+#@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
+#@CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum." &
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 
 for sms in 10 16 26 ; do
