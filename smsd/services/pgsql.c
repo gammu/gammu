@@ -18,8 +18,6 @@
 
 #include "../core.h"
 
-#define SMSD_PGSQL_DB_VERSION (9)
-
 /* Connects to database */
 static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 {
@@ -108,16 +106,7 @@ static GSM_Error SMSDPgSQL_Init(GSM_SMSDConfig * Config)
 		PQfinish(Config->DBConnPgSQL);
 		return ERR_UNKNOWN;
 	}
-	if (atoi(PQgetvalue(Res, 0, 0)) > SMSD_PGSQL_DB_VERSION) {
-		SMSD_Log(-1, Config, "DataBase structures are from higher Gammu version");
-		SMSD_Log(0, Config, "Please update this client application");
-		PQclear(Res);
-		PQfinish(Config->DBConnPgSQL);
-		return ERR_UNKNOWN;
-	}
-	if (atoi(PQgetvalue(Res, 0, 0)) < SMSD_PGSQL_DB_VERSION) {
-		SMSD_Log(-1, Config, "DataBase structures are from older Gammu version");
-		SMSD_Log(0, Config, "Please update DataBase, if you want to use this client application");
+	if (SMSD_CheckDBVersion(Config, atoi(PQgetvalue(Res, 0, 0))) != ERR_NONE) {
 		PQclear(Res);
 		PQfinish(Config->DBConnPgSQL);
 		return ERR_UNKNOWN;

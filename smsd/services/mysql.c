@@ -20,8 +20,6 @@
 
 #include "../core.h"
 
-#define SMSD_MYSQL_DB_VERSION (9)
-
 /* Disconnects from a database */
 static GSM_Error SMSDMySQL_Free(GSM_SMSDConfig *Config)
 {
@@ -70,67 +68,71 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 	sprintf(buf, "SELECT ID FROM `outbox` WHERE 1");
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
 		SMSD_Log(-1, Config, "No table for outbox sms: %s\n", mysql_error(&Config->DBConnMySQL));
+		mysql_close(&Config->DBConnMySQL);
 		return ERR_UNKNOWN;
 	}
 	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
 		SMSD_Log(-1, Config, "No table for outbox sms: %s\n", mysql_error(&Config->DBConnMySQL));
+		mysql_close(&Config->DBConnMySQL);
 		return ERR_UNKNOWN;
 	}
 	mysql_free_result(Res);
 	sprintf(buf, "SELECT ID FROM `outbox_multipart` WHERE 1");
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
 		SMSD_Log(-1, Config, "No table for outbox sms: %s\n", mysql_error(&Config->DBConnMySQL));
+		mysql_close(&Config->DBConnMySQL);
 		return ERR_UNKNOWN;
 	}
 	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
 		SMSD_Log(-1, Config, "No table for outbox sms: %s\n", mysql_error(&Config->DBConnMySQL));
+		mysql_close(&Config->DBConnMySQL);
 		return ERR_UNKNOWN;
 	}
 	mysql_free_result(Res);
 	sprintf(buf, "SELECT ID FROM `sentitems` WHERE 1");
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
 		SMSD_Log(-1, Config, "No table for sent sms: %s\n", mysql_error(&Config->DBConnMySQL));
+		mysql_close(&Config->DBConnMySQL);
 		return ERR_UNKNOWN;
 	}
 	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
 		SMSD_Log(-1, Config, "No table for sent sms: %s\n", mysql_error(&Config->DBConnMySQL));
+		mysql_close(&Config->DBConnMySQL);
 		return ERR_UNKNOWN;
 	}
 	mysql_free_result(Res);
 	sprintf(buf, "SELECT ID FROM `inbox` WHERE 1");
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
 		SMSD_Log(-1, Config, "No table for inbox sms: %s\n", mysql_error(&Config->DBConnMySQL));
+		mysql_close(&Config->DBConnMySQL);
 		return ERR_UNKNOWN;
 	}
 	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
 		SMSD_Log(-1, Config, "No table for inbox sms: %s\n", mysql_error(&Config->DBConnMySQL));
+		mysql_close(&Config->DBConnMySQL);
 		return ERR_UNKNOWN;
 	}
 	mysql_free_result(Res);
 	sprintf(buf, "SELECT Version FROM `gammu` WHERE 1");
 	if (mysql_real_query(&Config->DBConnMySQL,buf,strlen(buf))) {
 		SMSD_Log(-1, Config, "No Gammu table: %s\n", mysql_error(&Config->DBConnMySQL));
+		mysql_close(&Config->DBConnMySQL);
 		return ERR_UNKNOWN;
 	}
 	if (!(Res = mysql_store_result(&Config->DBConnMySQL))) {
 		SMSD_Log(-1, Config, "No Gammu table: %s\n", mysql_error(&Config->DBConnMySQL));
+		mysql_close(&Config->DBConnMySQL);
 		return ERR_UNKNOWN;
 	}
 	if (!(Row = mysql_fetch_row(Res))) {
 		mysql_free_result(Res);
 		SMSD_Log(-1, Config, "No version info in Gammu table: %s\n", mysql_error(&Config->DBConnMySQL));
+		mysql_close(&Config->DBConnMySQL);
 		return ERR_UNKNOWN;
 	}
-	if (atoi(Row[0]) > SMSD_MYSQL_DB_VERSION) {
+	if (SMSD_CheckDBVersion(Config, atoi(Row[0])) != ERR_NONE) {
 		mysql_free_result(Res);
-		SMSD_Log(-1, Config, "DataBase structures are from higher Gammu version");
-		SMSD_Log(0, Config, "Please update this client application");
-		return ERR_UNKNOWN;
-	}
-	if (atoi(Row[0]) < SMSD_MYSQL_DB_VERSION) {
-		mysql_free_result(Res);
-		SMSD_Log(-1, Config, "DataBase structures are from older Gammu version");
-		SMSD_Log(0, Config, "Please update DataBase, if you want to use this client application");
+		mysql_close(&Config->DBConnMySQL);
 		return ERR_UNKNOWN;
 	}
 	mysql_free_result(Res);

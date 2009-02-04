@@ -4,7 +4,7 @@ CREATE TABLE daemons (
 );
 
 CREATE TABLE gammu (
-  Version smallint NOT NULL DEFAULT '0'
+  Version INTEGER NOT NULL DEFAULT '0'
 );
 
 INSERT INTO gammu (Version) VALUES (9);

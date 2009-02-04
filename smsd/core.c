@@ -61,6 +61,24 @@
 
 GSM_SMSDConfig		SMSDaemon_Config;
 
+GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version)
+{
+	SMSD_Log(1, Config, "Database structures version: %d, SMSD current version: %d", version, SMSD_DB_VERSION);
+
+	if (version < SMSD_DB_VERSION) {
+		SMSD_Log(-1, Config, "Database structures are from older Gammu version");
+		SMSD_Log(0, Config, "Please update DataBase, if you want to use this client application");
+		return ERR_UNKNOWN;
+	}
+	if (version > SMSD_DB_VERSION) {
+		SMSD_Log(-1, Config, "DataBase structures are from higher Gammu version");
+		SMSD_Log(0, Config, "Please update this client application");
+		return ERR_UNKNOWN;
+	}
+	return ERR_NONE;
+}
+
+
 GSM_Error SMSD_Shutdown(GSM_SMSDConfig *Config)
 {
 	if (!Config->running) return ERR_NOTRUNNING;
