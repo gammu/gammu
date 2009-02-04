@@ -62,7 +62,7 @@ Python
     - http://www.python.org/
     - Gammu has a Python bindings
 
-SQLite
+SQLite + libdbi-drivers with SQLite
     - http://www.sqlite.org/
     - needed for testing of SMSD using libdbi driver
 
