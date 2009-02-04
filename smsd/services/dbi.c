@@ -247,6 +247,7 @@ static GSM_Error SMSDDBI_Free(GSM_SMSDConfig *Config)
 static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_result *res)
 {
 	const char *msg;
+	int rc;
 	GSM_Error error;
 	int attempts = 1;
 
@@ -262,7 +263,9 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 			return ERR_TIMEOUT;
 		}
 		/* Black magic to decide whether we should bail out or attempt to retry */
-		if (dbi_conn_error(Config->DBConnDBI, &msg) == 0) {
+		rc = dbi_conn_error(Config->DBConnDBI, &msg);
+		if (rc != -1) {
+			SMSD_Log(0, Config, "SQL failure: %s\n", msg);
 			if (strstr(msg, "syntax") != NULL) {
 				return ERR_BUG;
 			}
@@ -285,7 +288,7 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 		SMSD_Log(0, Config, "Failed to detect problem cause, reconnecting to database!\n");
 		error = ERR_UNKNOWN;
 		while (error != ERR_NONE) {
-			SMSD_Log(0, Config, "Reconnecting fter %d seconds...\n", 5 * attempts);
+			SMSD_Log(0, Config, "Reconnecting after %d seconds...\n", 5 * attempts);
 			sleep(5 * attempts);
 			SMSDDBI_Free(Config);
 			error = SMSDDBI_Init(Config);
