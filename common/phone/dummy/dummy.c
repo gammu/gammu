@@ -10,7 +10,16 @@
  */
 /**
  * \defgroup DummyPhone Dummy phone driver
- * This driver emulates phone operations on storage on filesyste,
+ * This driver emulates phone operations on storage on filesystem.
+ *
+ * Device name defines folder, then following files and directories are used:
+ *
+ * - operations.log - information about performed operations, which are not
+ *   saved elsewhere, eg. message sending
+ * - sms/[1-5] - folders for messages, messages are stored in gammu native
+ *   format
+ * - pbk/ME, pbk/SM, ... - folders for phonebook entries, entries are stored
+ *   in vcard format
  *
  * @{
  */
@@ -131,6 +140,13 @@ char * DUMMY_GetSMSPath(GSM_StateMachine *s, GSM_SMSMessage *sms)
 
 	sprintf(smspath, "sms/%d/%d", sms->Folder, sms->Location);
 	return DUMMY_GetFilePath(s, smspath);
+}
+
+char * DUMMY_MemoryPath(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	char path[100];
+	sprintf(path, "pbk/%s/%d", GSM_MemoryTypeToString(entry->MemoryType), entry->Location);
+	return DUMMY_GetFilePath(s, path);
 }
 
 /**
@@ -672,32 +688,114 @@ GSM_Error DUMMY_AddFolder(GSM_StateMachine *s, GSM_File *File)
 
 GSM_Error DUMMY_GetMemoryStatus(GSM_StateMachine *s, GSM_MemoryStatus *Status)
 {
-	return ERR_NOTIMPLEMENTED;
+	char dirname[20];
+	sprintf(dirname, "pbk/%s", GSM_MemoryTypeToString(Status->MemoryType));
+	Status->MemoryUsed = DUMMY_GetCount(s, dirname);
+	Status->MemoryFree = DUMMY_MAX_MEM - Status->MemoryUsed;
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_GetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Backup Backup;
+	char *filename;
+	GSM_Error error;
+	int location;
+	GSM_MemoryType type;
+	int i;
+
+	type = entry->MemoryType;
+	location = entry->Location;
+	filename = DUMMY_MemoryPath(s, entry);
+
+	error = GSM_ReadBackupFile(filename, &Backup, GSM_Backup_VCard);
+
+	free(filename);
+
+	if (error != ERR_NONE) {
+		if (error == ERR_CANTOPENFILE) return ERR_EMPTY;
+		return error;
+	}
+	if (Backup.PhonePhonebook[0] == NULL) return ERR_EMPTY;
+
+	*entry = *(Backup.PhonePhonebook[0]);
+	for (i = 0; i < entry->EntriesNum; i++) {
+		if (entry->Entries[i].EntryType == PBK_Photo) {
+			entry->Entries[i].Picture.Buffer = malloc(entry->Entries[i].Picture.Length);
+			memcpy(entry->Entries[i].Picture.Buffer, Backup.PhonePhonebook[0]->Entries[i].Picture.Buffer, entry->Entries[i].Picture.Length);
+		}
+	}
+	entry->Location = location;
+	entry->MemoryType = type;
+	GSM_FreeBackup(&Backup);
+
+	return ERR_NONE;
 }
 
 GSM_Error DUMMY_GetNextMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry, bool start)
 {
-	return ERR_NOTIMPLEMENTED;
-}
+	char dirname[20];
 
-GSM_Error DUMMY_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
-{
-	return ERR_NOTIMPLEMENTED;
-}
+	if (start) {
+		entry->Location = 0;
+	}
 
-GSM_Error DUMMY_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
-{
-	return ERR_NOTIMPLEMENTED;
+	sprintf(dirname, "pbk/%s", GSM_MemoryTypeToString(entry->MemoryType));
+
+	entry->Location = DUMMY_GetNext(s, dirname, entry->Location);
+
+	return DUMMY_GetMemory(s, entry);
 }
 
 GSM_Error DUMMY_DeleteMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	char *filename;
+	GSM_Error error;
+
+	filename = DUMMY_MemoryPath(s, entry);
+
+	if (unlink(filename) == 0) {
+		error = ERR_NONE;
+	} else {
+		error = DUMMY_Error(s);
+	}
+
+	free(filename);
+
+	return error;
+}
+
+GSM_Error DUMMY_SetMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	char *filename;
+	GSM_Error error;
+	GSM_Backup backup;
+
+	GSM_ClearBackup(&backup);
+
+	error = DUMMY_DeleteMemory(s, entry);
+	if (error != ERR_EMPTY && error != ERR_NONE) return error;
+
+	filename = DUMMY_MemoryPath(s, entry);
+
+	backup.PhonePhonebook[0] = entry;
+	backup.PhonePhonebook[1] = NULL;
+
+	error = GSM_SaveBackupFile(filename, &backup, GSM_Backup_VCard);
+	free(filename);
+	return error;
+}
+
+GSM_Error DUMMY_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
+{
+	char dirname[20];
+
+	sprintf(dirname, "pbk/%s", GSM_MemoryTypeToString(entry->MemoryType));
+	entry->Location = DUMMY_GetFirstFree(s, dirname);
+
+	if (entry->Location == -1) return ERR_FULL;
+
+	return DUMMY_SetMemory(s, entry);
 }
 
 GSM_Error DUMMY_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
