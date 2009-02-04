@@ -2219,6 +2219,7 @@ GSM_Error N6510_DecodeFilesystemSMS(GSM_StateMachine *s, GSM_MultiSMSMessage *sm
 	case 0x04:
 	case 0x20:
 	case 0x24:
+	case 0x84:/* don't know */
 		smprintf(s,"sms received with number\n");
 
 		Layout.firstbyte = FFF->Buffer[i];
