@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <errno.h>
 #include <time.h>
+#include <assert.h>
 #ifdef WIN32
 #  include <windows.h>
 #ifndef __GNUC__
@@ -350,6 +351,8 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 	time_t t_time1, t_time2;
 	bool found;
 	long diff;
+	unsigned long long	new_id;
+	size_t			locations_size = 0, locations_pos = 0;
 
 	*Locations = NULL;
 
@@ -535,6 +538,21 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 			return ERR_UNKNOWN;
 		}
 		dbi_result_free(Res);
+
+		new_id = dbi_conn_sequence_last(Config->DBConnDBI, NULL);
+		SMSD_Log(1, Config, "Inserted message id %llu\n", new_id);
+
+		if (new_id != 0) {
+			if (locations_pos + 10 >= locations_size) {
+				locations_size += 40;
+				*Locations = (char *)realloc(*Locations, locations_size);
+				assert (*Locations != NULL);
+				if (locations_pos == 0) {
+					*Locations[0] = 0;
+				}
+			}
+			locations_pos += sprintf((*Locations) + locations_pos, "%llu ", new_id);
+		}
 
 		if (SMSDDBI_Query(Config, "UPDATE phones SET Received = Received + 1", &Res) != ERR_NONE) {
 			SMSD_Log(0, Config, "Error updating number of received messages (%s)\n", __FUNCTION__);
