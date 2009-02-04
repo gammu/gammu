@@ -164,6 +164,12 @@ extern GSM_Error SMSD_NotSupportedFunction	(void);
 PRINTF_STYLE(3, 4)
 void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...);
 
+
+/**
+ * Checks whether database version is up to date.
+ */
+GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version);
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

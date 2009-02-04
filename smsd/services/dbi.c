@@ -218,24 +218,13 @@ static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	}
-	version = dbi_result_get_int_idx(res, 1);
-	if (version < SMSD_DB_VERSION) {
-		SMSD_Log(-1, Config, "DataBase structures are from older Gammu version");
-		SMSD_Log(0, Config, "Please update DataBase, if you want to use this client application");
-		dbi_result_free(res);
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
-		return ERR_UNKNOWN;
-	}
-	if (version > SMSD_DB_VERSION) {
-		SMSD_Log(-1, Config, "DataBase structures are from higher Gammu version");
-		SMSD_Log(0, Config, "Please update this client application");
-		dbi_result_free(res);
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
-		return ERR_UNKNOWN;
-	}
+	version = dbi_result_get_longlong_idx(res, 1);
 	dbi_result_free(res);
+	if (SMSD_CheckDBVersion(Config, version) != ERR_NONE) {
+		dbi_conn_close(Config->DBConnDBI);
+		dbi_shutdown();
+		return ERR_UNKNOWN;
+	}
 
 	SMSD_Log(0, Config, "Connected to Database %s: %s on %s", Config->driver, Config->database, Config->PC);
 
