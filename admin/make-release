@@ -139,11 +139,13 @@ for py in 2.4 2.5 ; do
         -DPYTHON_EXECUTABLE=~/.wine/drive_c/Python$pynodot/python.exe \
 
     make -j2
-    mkdir -p $tmp/$repo-$version/python/build/lib.win32-$py
-    cp -r python/gammu $tmp/$repo-$version/python/build/lib.win32-$py/
+    mkdir -p $tmp/$repo-$version/python/build/lib.win32-$py/gammu/
+    cp python/gammu/*.py $tmp/$repo-$version/python/build/lib.win32-$py/gammu/
+    cp python/gammu/*.pyd $tmp/$repo-$version/python/build/lib.win32-$py/gammu/
     cp gammu/*.dll $tmp/$repo-$version/python/build/lib.win32-$py/gammu/
     cd ..
     cd $repo-$version/python
+    rm -rf gammu/CMakeFiles
     wine \
         ~/.wine/drive_c/Python$pynodot/python.exe setup.py \
         bdist_wininst --skip-build --target-version $py
