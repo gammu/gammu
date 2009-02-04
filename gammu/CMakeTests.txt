@@ -105,6 +105,33 @@ foreach(EXT ott rng mid imy ime wav rttl)
     endforeach(EXT2)
 endforeach(EXT)
 
+# Backup conversions
+file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcards/*.vcf")
+foreach(VCF ${VFORMATS})
+    get_filename_component(TESTNAME "${VCF}" NAME_WE)
+    add_test(gammu-savefile-vcf1-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile VCARD10 ${TESTNAME}.1.vcf ${VCF} ME 1)
+    add_test(gammu-savefile-vcf2-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile VCARD21 ${TESTNAME}.2.vcf ${VCF} ME 1)
+endforeach(VCF)
+
+file(GLOB VFORMATS
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.ics"
+    "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcal/*.vcs")
+foreach(VCS ${VFORMATS})
+    get_filename_component(TESTNAME "${VCS}" NAME_WE)
+    add_test(gammu-savefile-vcs-cal-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile CALENDAR ${TESTNAME}-cal.vcs ${VCS} 1)
+    if (TESTNAME MATCHES "01|02")
+        set_tests_properties(
+            gammu-savefile-vcs-cal-${TESTNAME}
+            PROPERTIES WILL_FAIL TRUE)
+    endif (TESTNAME MATCHES "01|02")
+    add_test(gammu-savefile-vcs-todo-${TESTNAME} "${CMAKE_CURRENT_BINARY_DIR}/gammu${GAMMU_TEST_SUFFIX}" savefile TODO ${TESTNAME}-todo.vcs ${VCS} 1)
+    if (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1")
+        set_tests_properties(
+            gammu-savefile-vcs-todo-${TESTNAME}
+            PROPERTIES WILL_FAIL TRUE)
+    endif (TESTNAME MATCHES "dtstart|rrule|UK32Holidays|badline|rrule-1")
+endforeach(VCS)
+
 # Dummy phone tests
 macro (gammu_test _name _expression)
     set(_params_list ${ARGN})
