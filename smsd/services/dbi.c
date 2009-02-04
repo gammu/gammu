@@ -255,7 +255,7 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 	for (attempts = 1; attempts < SMSD_SQL_RETRIES; attempts++) {
 		SMSD_Log(2, Config, "Execute SQL: %s\n", query);
 		*res = dbi_conn_query(Config->DBConnDBI, query);
-		if (res != NULL) return ERR_NONE;
+		if (*res != NULL) return ERR_NONE;
 
 		SMSD_Log(0, Config, "SQL failed: %s\n", query);
 		if (attempts >= SMSD_SQL_RETRIES) {
