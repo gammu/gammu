@@ -23,7 +23,7 @@ void SaveFile(int argc, char *argv[])
 	int			i;
 	size_t j;
 	FILE			*file;
-	unsigned char		Buffer[10000];
+	unsigned char		Buffer[100000];
 	GSM_MemoryEntry		*pbk;
 
 	if (strcasecmp(argv[2],"CALENDAR") == 0) {
@@ -38,7 +38,7 @@ void SaveFile(int argc, char *argv[])
 			if (i == atoi(argv[5])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[5])-1) {
+		if (i != atoi(argv[5])-1 || Backup.Calendar[i] == NULL) {
 			printf("%s\n", _("Calendar note not found in file"));
 			Terminate(3);
 		}
@@ -57,7 +57,7 @@ void SaveFile(int argc, char *argv[])
 			if (i == atoi(argv[5])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[5])-1) {
+		if (i != atoi(argv[5])-1 || Backup.WAPBookmark[i] == NULL) {
 			printf("%s\n", _("WAP bookmark not found in file"));
 			Terminate(3);
 		}
@@ -75,7 +75,7 @@ void SaveFile(int argc, char *argv[])
 			if (i == atoi(argv[5])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[5])-1) {
+		if (i != atoi(argv[5])-1 || Backup.Note[i] == NULL) {
 			printf("%s\n", _("Note not found in file"));
 			Terminate(3);
 		}
@@ -94,7 +94,7 @@ void SaveFile(int argc, char *argv[])
 			if (i == atoi(argv[5])-1) break;
 			i++;
 		}
-		if (i != atoi(argv[5])-1) {
+		if (i != atoi(argv[5])-1 || Backup.ToDo[i] == NULL) {
 			printf("%s\n", _("Todo note not found in file"));
 			Terminate(3);
 		}
@@ -114,7 +114,7 @@ void SaveFile(int argc, char *argv[])
 				if (i == atoi(argv[6])-1) break;
 				i++;
 			}
-			if (i != atoi(argv[6])-1) {
+			if (i != atoi(argv[6])-1 || Backup.SIMPhonebook[i] == NULL) {
 				printf("%s\n", _("Phonebook entry not found in file"));
 				Terminate(3);
 			}
@@ -124,7 +124,7 @@ void SaveFile(int argc, char *argv[])
 				if (i == atoi(argv[6])-1) break;
 				i++;
 			}
-			if (i != atoi(argv[6])-1) {
+			if (i != atoi(argv[6])-1 || Backup.PhonePhonebook[i] == NULL) {
 				printf("%s\n", _("Phonebook entry not found in file"));
 				Terminate(3);
 			}
