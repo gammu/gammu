@@ -72,7 +72,8 @@ for sms in 10 12 14 16 18 20 22 24 26 ; do
     cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/$sms.backup $DUMMY_PATH/sms/3/$sms
 done
 
-sleep 10
+sleep 15
+
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor -C -c "$CONFIG_PATH" -l 1 -d 0
 
 if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test/received.log` -ne 18 ] ; then
