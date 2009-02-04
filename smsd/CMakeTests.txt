@@ -11,10 +11,11 @@ if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
     configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" ESCAPE_QUOTES)
     # This test tests some functionality and setups environment
     add_test("smsd-dbi" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh")
+    # DBI error 5 from SQLITE is database locked, and the backend automatically retries
     set_tests_properties("smsd-dbi" PROPERTIES
         TIMEOUT 60
         PASS_REGULAR_EXPRESSION ".999999999999999.1.18.0.100.42"
-        FAIL_REGULAR_EXPRESSION "DBI error;Wrong"
+        FAIL_REGULAR_EXPRESSION "DBI error ([^5]:|[0-9][^:]);Wrong"
         )
     add_test(smsd-inject "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test/.smsdrc" TEXT 123465 -text "Lorem ipsum.")
     set_tests_properties("smsd-inject" PROPERTIES
