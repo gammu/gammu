@@ -91,21 +91,6 @@ static void SMSDDBI_LogError(GSM_SMSDConfig * Config)
 	}
 }
 
-static GSM_Error SMSDDBI_CheckTable(GSM_SMSDConfig * Config, const char *table)
-{
-	dbi_result res;
-
-	res = dbi_conn_queryf(Config->DBConnDBI, "SELECT id FROM %s", table);
-	if (res == NULL) {
-		SMSD_Log(-1, Config, "Table %s not found!", table);
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
-		return ERR_UNKNOWN;
-	}
-	dbi_result_free(res);
-	return ERR_NONE;
-}
-
 void SMSDDBI_Callback(dbi_conn Conn, void *Config)
 {
 	SMSDDBI_LogError((GSM_SMSDConfig *)Config);
@@ -257,6 +242,23 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 		}
 	}
 	return ERR_TIMEOUT;
+}
+
+static GSM_Error SMSDDBI_CheckTable(GSM_SMSDConfig * Config, const char *table)
+{
+	dbi_result res;
+	char buffer[200];
+	GSM_Error error;
+
+	sprintf(buffer, "SELECT id FROM %s", table);
+	error = SMSDDBI_Query(Config, buffer, &res);
+	if (error != ERR_NONE) {
+		SMSD_Log(-1, Config, "Table %s not found!", table);
+		SMSDDBI_Free(Config);
+		return ERR_UNKNOWN;
+	}
+	dbi_result_free(res);
+	return ERR_NONE;
 }
 
 /* Connects to database */
