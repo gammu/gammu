@@ -3568,6 +3568,9 @@ static GSM_Error N6510_ReplyGetFMStation(GSM_Protocol_Message msg, GSM_StateMach
 	case 0x16:
 	  	smprintf(s, "Received FM station. Empty ?\n");
 		return ERR_EMPTY;
+	case 0xf0:
+	  	smprintf(s, "FM radio not supported\n");
+		return ERR_NOTSUPPORTED;
 	}
 	return ERR_UNKNOWNRESPONSE;
 }
@@ -4180,6 +4183,7 @@ static GSM_Reply_Function N6510ReplyFunctions[] = {
  	{N6510_ReplyGetFMStatus,	  "\x3E",0x03,0x0E,ID_GetFMStation	  },
  	{N6510_ReplySetFMStation,	  "\x3E",0x03,0x15,ID_SetFMStation	  },
  	{N6510_ReplyGetFMStation,	  "\x3E",0x03,0x16,ID_GetFMStation	  },
+ 	{N6510_ReplyGetFMStation,	  "\x3E",0x03,0xF0,ID_GetFMStation	  },
 
 	{DCT3DCT4_ReplyEnableConnectFunc, "\x3f",0x03,0x01,ID_EnableConnectFunc	  },
 	{DCT3DCT4_ReplyEnableConnectFunc, "\x3f",0x03,0x02,ID_EnableConnectFunc	  },
