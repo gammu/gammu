@@ -60,7 +60,7 @@ SMSD_PID=$!
 
 sleep 3
 
-for sms in 60 62 64 66 68 70 72 74 76 ; do
+for sms in 62 68 74 ; do
     cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/$sms.backup $DUMMY_PATH/sms/1/$sms
 done
 
@@ -68,15 +68,15 @@ sleep 25
 
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-inject -c "$CONFIG_PATH" TEXT 123465 -text "Lorem ipsum."
 
-for sms in 10 12 14 16 18 20 22 24 26 ; do
+for sms in 10 16 26 ; do
     cp @CMAKE_CURRENT_SOURCE_DIR@/../tests/at-sms-encode/$sms.backup $DUMMY_PATH/sms/3/$sms
 done
 
-sleep 25
+sleep
 
 @CMAKE_CURRENT_BINARY_DIR@/gammu-smsd-monitor -C -c "$CONFIG_PATH" -l 1 -d 0
 
-if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test/received.log` -ne 18 ] ; then
+if [ `wc -l < @CMAKE_CURRENT_BINARY_DIR@/smsd-test/received.log` -ne 6 ] ; then
     echo "Wrong number of messages received!"
     exit 1
 fi
