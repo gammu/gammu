@@ -881,13 +881,28 @@
    fun:make_if_command
 }
 {
-   Bash-7
+   Bash-8
+   Memcheck:Leak
+   fun:realloc
+   fun:xrealloc
+   fun:cprintf
+   fun:print_redirection_list
+}
+{
+   Bash-9
    Memcheck:Leak
    fun:malloc
    fun:xrealloc
    fun:read_token
    fun:yyparse
    fun:parse_command
+}
+{
+   Bash-10
+   Memcheck:Leak
+   fun:malloc
+   fun:xmalloc
+   fun:fd_to_buffered_stream
 }
 {
    Dash-1
