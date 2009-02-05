@@ -226,7 +226,6 @@ void SearchOneEntry(GSM_MemoryEntry *Entry, const unsigned char *Text)
 			case PBK_Text_UserID:
 			case PBK_Text_PictureName:
 			case PBK_PushToTalkID:
-			case PBK_Caller_Group       :
 				if (mywstrstr(Entry->Entries[i].Text, Text) != NULL) {
 					fprintf(stderr,"\n");
 					printf(_("Memory %s, Location %i\n"),GSM_MemoryTypeToString(Entry->MemoryType),Entry->Location);
@@ -235,6 +234,7 @@ void SearchOneEntry(GSM_MemoryEntry *Entry, const unsigned char *Text)
 					return;
 				}
 				break;
+			case PBK_Caller_Group:
 			case PBK_Date:
 			case PBK_Category:
 			case PBK_Private:
@@ -261,6 +261,7 @@ void SearchOneMemory(GSM_MemoryType MemoryType, const char *Title, const unsigne
 
 	Status.MemoryType = MemoryType;
 	Entry.MemoryType  = MemoryType;
+	Entry.Location = 0;
 
 	if (GSM_GetMemoryStatus(gsm, &Status) == ERR_NONE) {
 		fprintf(stderr,"%c%s: %i%%", 13, Title, (i+1)*100/(Status.MemoryUsed+1));
