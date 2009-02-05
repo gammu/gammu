@@ -85,6 +85,22 @@ int DUMMY_GetCount(GSM_StateMachine *s, const char *dirname)
 	return count;
 }
 
+GSM_Error DUMMY_DeleteAll(GSM_StateMachine *s, const char *dirname)
+{
+	char *full_name;
+	int i;
+
+	full_name = (char *)malloc(strlen(dirname) + strlen(s->CurrentConfig->Device) + 20);
+
+	for (i = 1; i <= DUMMY_MAX_LOCATION; i++) {
+		sprintf(full_name, "%s/%s/%d", s->CurrentConfig->Device, dirname, i);
+		/* @todo TODO: Maybe we should check error code here? */
+		unlink(full_name);
+	}
+	free(full_name);
+	return ERR_NONE;
+}
+
 int DUMMY_GetFirstFree(GSM_StateMachine *s, const char *dirname)
 {
 	char *full_name;
@@ -800,7 +816,11 @@ GSM_Error DUMMY_AddMemory(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 
 GSM_Error DUMMY_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 {
-	return ERR_NOTIMPLEMENTED;
+	char dirname[20];
+
+	sprintf(dirname, "pbk/%s", GSM_MemoryTypeToString(type));
+
+	return DUMMY_DeleteAll(s, dirname);
 }
 
 GSM_Error DUMMY_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
