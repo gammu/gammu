@@ -24,6 +24,7 @@ set (BINARY_SRC
     common.c
     memory.c
     message.c
+    mms.c
     search.c
     nokia.c
     backup.c
