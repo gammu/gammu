@@ -47,7 +47,7 @@ long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, dbi_result *res, const char
 			} else if ((type & DBI_INTEGER_SIZEMASK) == DBI_INTEGER_SIZE8) {
 				return dbi_result_get_longlong(*res, field);
 			}
-			SMSD_Log(-1, Config, "Wrong integer field subtype! (Field = %s, type = %d)\n", field, type);
+			SMSD_Log(-1, Config, "Wrong integer field subtype! (Field = %s, type = %d)", field, type);
 			return -1;
 		case DBI_TYPE_DECIMAL:
 			type = dbi_result_get_field_attribs(*res, field);
@@ -56,11 +56,11 @@ long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, dbi_result *res, const char
 			} else if ((type & DBI_DECIMAL_SIZEMASK) == DBI_DECIMAL_SIZE8) {
 				return dbi_result_get_longlong(*res, field);
 			}
-			SMSD_Log(-1, Config, "Wrong decimal field subtype! (Field = %s, type = %d)\n", field, type);
+			SMSD_Log(-1, Config, "Wrong decimal field subtype! (Field = %s, type = %d)", field, type);
 			return -1;
 		case DBI_TYPE_ERROR:
 		default:
-			SMSD_Log(-1, Config, "Wrong field type! (Field = %s, type = %d)\n", field, type);
+			SMSD_Log(-1, Config, "Wrong field type! (Field = %s, type = %d)", field, type);
 			return -1;
 	}
 }
@@ -117,9 +117,9 @@ static void SMSDDBI_LogError(GSM_SMSDConfig * Config)
 	const char *msg;
 	rc = dbi_conn_error(Config->DBConnDBI, &msg);
 	if (rc == -1) {
-		SMSD_Log(-1, Config, "Unknown DBI error!\n");
+		SMSD_Log(-1, Config, "Unknown DBI error!");
 	} else {
-		SMSD_Log(-1, Config, "DBI error %d: %s\n", rc, msg);
+		SMSD_Log(-1, Config, "DBI error %d: %s", rc, msg);
 	}
 }
 
@@ -136,17 +136,17 @@ static GSM_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 	rc = dbi_initialize(Config->driverspath);
 
 	if (rc == 0) {
-		SMSD_Log(-1, Config, "DBI did not find any drivers, try using DriversPath option\n");
+		SMSD_Log(-1, Config, "DBI did not find any drivers, try using DriversPath option");
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	} else if (rc < 0) {
-		SMSD_Log(-1, Config, "DBI failed to initialize!\n");
+		SMSD_Log(-1, Config, "DBI failed to initialize!");
 		return ERR_UNKNOWN;
 	}
 
 	Config->DBConnDBI = dbi_conn_new(Config->driver);
 	if (Config->DBConnDBI == NULL) {
-		SMSD_Log(-1, Config, "DBI failed to init %s driver!\n", Config->driver);
+		SMSD_Log(-1, Config, "DBI failed to init %s driver!", Config->driver);
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	}
@@ -154,50 +154,50 @@ static GSM_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 	dbi_conn_error_handler(Config->DBConnDBI, SMSDDBI_Callback, Config);
 
 	if (dbi_conn_set_option(Config->DBConnDBI, "sqlite_dbdir", Config->dbdir) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set sqlite_dbdir!\n");
+		SMSD_Log(-1, Config, "DBI failed to set sqlite_dbdir!");
 		dbi_conn_close(Config->DBConnDBI);
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "sqlite3_dbdir", Config->dbdir) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set sqlite3_dbdir!\n");
+		SMSD_Log(-1, Config, "DBI failed to set sqlite3_dbdir!");
 		dbi_conn_close(Config->DBConnDBI);
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "host", Config->PC) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set host!\n");
+		SMSD_Log(-1, Config, "DBI failed to set host!");
 		dbi_conn_close(Config->DBConnDBI);
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "username", Config->user) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set username!\n");
+		SMSD_Log(-1, Config, "DBI failed to set username!");
 		dbi_conn_close(Config->DBConnDBI);
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "password", Config->password) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set password!\n");
+		SMSD_Log(-1, Config, "DBI failed to set password!");
 		dbi_conn_close(Config->DBConnDBI);
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "dbname", Config->database) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set dbname!\n");
+		SMSD_Log(-1, Config, "DBI failed to set dbname!");
 		dbi_conn_close(Config->DBConnDBI);
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "encoding", "UTF-8") != 0) {
-		SMSD_Log(-1, Config, "DBI failed to set encoding!\n");
+		SMSD_Log(-1, Config, "DBI failed to set encoding!");
 		dbi_conn_close(Config->DBConnDBI);
 		dbi_shutdown();
 		return ERR_UNKNOWN;
 	}
 
 	if (dbi_conn_connect(Config->DBConnDBI) != 0) {
-		SMSD_Log(-1, Config, "DBI failed to connect!\n");
+		SMSD_Log(-1, Config, "DBI failed to connect!");
 		dbi_conn_close(Config->DBConnDBI);
 		dbi_shutdown();
 		return ERR_UNKNOWN;
@@ -226,18 +226,18 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 	*res = NULL;
 
 	for (attempts = 1; attempts < SMSD_SQL_RETRIES; attempts++) {
-		SMSD_Log(2, Config, "Execute SQL: %s\n", query);
+		SMSD_Log(2, Config, "Execute SQL: %s", query);
 		*res = dbi_conn_query(Config->DBConnDBI, query);
 		if (*res != NULL) return ERR_NONE;
 
-		SMSD_Log(0, Config, "SQL failed: %s\n", query);
+		SMSD_Log(0, Config, "SQL failed: %s", query);
 		if (attempts >= SMSD_SQL_RETRIES) {
 			return ERR_TIMEOUT;
 		}
 		/* Black magic to decide whether we should bail out or attempt to retry */
 		rc = dbi_conn_error(Config->DBConnDBI, &msg);
 		if (rc != -1) {
-			SMSD_Log(0, Config, "SQL failure: %s\n", msg);
+			SMSD_Log(0, Config, "SQL failure: %s", msg);
 			if (strstr(msg, "syntax") != NULL) {
 				return ERR_BUG;
 			}
@@ -254,16 +254,16 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 				return ERR_BUG;
 			}
 			if (strstr(msg, "locked") != NULL) {
-				SMSD_Log(0, Config, "Retrying after %d seconds...\n", 5 * attempts);
+				SMSD_Log(0, Config, "Retrying after %d seconds...", 5 * attempts);
 				sleep(5 * attempts);
 				continue;
 			}
 		}
 		/* We will try to reconnect */
-		SMSD_Log(0, Config, "Failed to detect problem cause, reconnecting to database!\n");
+		SMSD_Log(0, Config, "Failed to detect problem cause, reconnecting to database!");
 		error = ERR_UNKNOWN;
 		while (error != ERR_NONE) {
-			SMSD_Log(0, Config, "Reconnecting after %d seconds...\n", 5 * attempts);
+			SMSD_Log(0, Config, "Reconnecting after %d seconds...", 5 * attempts);
 			sleep(5 * attempts);
 			SMSDDBI_Free(Config);
 			error = SMSDDBI_Connect(Config);
@@ -350,7 +350,7 @@ static GSM_Error SMSDDBI_InitAfterConnect(GSM_SMSDConfig * Config)
 	sprintf(buf, "DELETE FROM phones WHERE IMEI = '%s'", Config->Status->IMEI);
 
 	if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error deleting from database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error deleting from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
@@ -372,7 +372,7 @@ static GSM_Error SMSDDBI_InitAfterConnect(GSM_SMSDConfig * Config)
 		SMSDDBI_NowPlus(Config, 10), buf2);
 
 	if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error inserting into database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error inserting into database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
@@ -416,7 +416,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					"SenderID = '%s' AND TPMR = '%i' AND DestinationNumber = '%s'",
 				Config->PhoneID, sms->SMS[i].MessageReference, buffer2);
 			if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-				SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
+				SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
 				return ERR_UNKNOWN;
 			}
 
@@ -479,7 +479,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 					 dbi_result_get_string_idx(Res, 1),
 					sms->SMS[i].MessageReference);
 				if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-					SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
+					SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
 					return ERR_UNKNOWN;
 				}
 			}
@@ -577,13 +577,13 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 
 		sprintf(buffer + strlen(buffer), ",'%s')", Config->PhoneID);
 		if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-			SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
+			SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 		dbi_result_free(Res);
 
 		new_id = dbi_conn_sequence_last(Config->DBConnDBI, NULL);
-		SMSD_Log(1, Config, "Inserted message id %llu\n", new_id);
+		SMSD_Log(1, Config, "Inserted message id %llu", new_id);
 
 		if (new_id != 0) {
 			if (locations_pos + 10 >= locations_size) {
@@ -598,7 +598,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 		}
 
 		if (SMSDDBI_Query(Config, "UPDATE phones SET Received = Received + 1", &Res) != ERR_NONE) {
-			SMSD_Log(0, Config, "Error updating number of received messages (%s)\n", __FUNCTION__);
+			SMSD_Log(0, Config, "Error updating number of received messages (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 		dbi_result_free(Res);
@@ -620,7 +620,7 @@ static GSM_Error SMSDDBI_RefreshSendStatus(GSM_SMSDConfig * Config,
 		ID,
 		SMSDDBI_Now(Config));
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
@@ -652,7 +652,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 		SMSDDBI_Now(Config));
 
 	if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
@@ -697,7 +697,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 				ID, i);
 		}
 		if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
-			SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
+			SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 
@@ -719,7 +719,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 
 		if (dbi_result_get_string_idx(Res, 1) == NULL
 		    || strlen(dbi_result_get_string_idx(Res, 1)) == 0) {
-			SMSD_Log(1, Config, "Message: %s\n", dbi_result_get_string_idx(Res, 5));
+			SMSD_Log(1, Config, "Message: %s", dbi_result_get_string_idx(Res, 5));
 			DecodeUTF8(sms->SMS[sms->Number].Text,
 				   dbi_result_get_string_idx(Res, 5),
 				   strlen(dbi_result_get_string_idx(Res, 5)));
@@ -802,14 +802,14 @@ static GSM_Error SMSDDBI_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 
 	sprintf(buffer, "DELETE FROM outbox WHERE ID = '%s'", ID);
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error deleting from database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error deleting from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
 
 	sprintf(buffer, "DELETE FROM outbox_multipart WHERE ID = '%s'", ID);
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error deleting from database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error deleting from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
@@ -829,7 +829,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 	sprintf(buffer, "SELECT ID FROM outbox ORDER BY ID DESC LIMIT 1");
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
@@ -843,7 +843,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 	sprintf(buffer, "SELECT ID FROM sentitems ORDER BY ID DESC LIMIT 1");
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error reading from database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 
@@ -988,12 +988,12 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 		strcpy(buffer4, buffer);
 		sprintf(buffer4 + strlen(buffer4), "%u')", ID);
 		if (SMSDDBI_Query(Config, buffer4, &Res) != ERR_NONE) {
-			SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
+			SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 		dbi_result_free(Res);
 	}
-	SMSD_Log(0, Config, "Written message with ID %u\n", ID);
+	SMSD_Log(0, Config, "Written message with ID %u", ID);
 	return ERR_NONE;
 }
 
@@ -1123,13 +1123,13 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	}
 
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
 
 	if (SMSDDBI_Query(Config, "UPDATE phones SET Sent = Sent + 1", &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error updating number of sent messages (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error updating number of sent messages (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
@@ -1148,7 +1148,7 @@ static GSM_Error SMSDDBI_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 		SMSDDBI_NowPlus(Config, 10),
 		Config->Status->Charge.BatteryPercent, Config->Status->Network.SignalPercent, Config->Status->IMEI);
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
-		SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
+		SMSD_Log(0, Config, "Error writing to database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
 	}
 	dbi_result_free(Res);
