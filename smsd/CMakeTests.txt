@@ -7,24 +7,59 @@ find_program(SH_BIN sh)
 find_program(SQLITE_BIN sqlite3)
 find_program(SED_BIN sed)
 
-if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
-    configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" ESCAPE_QUOTES)
+find_program(PSQL_BIN psql)
+
+set(PSQL_TESTING OFF CACHE BOOL "Enable testing of PostgreSQL SMSD backend")
+set(PSQL_DATABASE smsd CACHE STRING "Database to use for PostgreSQL tests")
+set(PSQL_USER smsd CACHE STRING "User to use for PostgreSQL tests")
+set(PSQL_PASSWORD smsd CACHE STRING "Password to use for PostgreSQL tests")
+
+find_program(MYSQL_BIN mysql)
+
+set(MYSQL_TESTING OFF CACHE BOOL "Enable testing of MySQL SMSD backend")
+set(MYSQL_DATABASE smsd CACHE STRING "Database to use for MySQL tests")
+set(MYSQL_USER smsd CACHE STRING "User to use for MySQL tests")
+set(MYSQL_PASSWORD smsd CACHE STRING "Password to use for MySQL tests")
+
+configure_file ("${CMAKE_CURRENT_SOURCE_DIR}/test-smsd.sh" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" ESCAPE_QUOTES)
+
+macro(smsd_testsuite _driver)
     # This test tests some functionality and setups environment
-    add_test("smsd-dbi" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh")
+    add_test("smsd-${_driver}" "${SH_BIN}" "${CMAKE_CURRENT_BINARY_DIR}/test-smsd.sh" "${_driver}")
     # DBI error 5 from SQLITE is database locked, and the backend automatically retries
-    set_tests_properties("smsd-dbi" PROPERTIES
+    set_tests_properties("smsd-${_driver}" PROPERTIES
         TIMEOUT 120
         PASS_REGULAR_EXPRESSION ".999999999999999.1.6.0.100.42"
         FAIL_REGULAR_EXPRESSION "DBI error ([^5]:|[0-9][^:]);Wrong"
         )
-    add_test(smsd-inject "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test/.smsdrc" TEXT 123465 -text "Lorem ipsum.")
-    set_tests_properties("smsd-inject" PROPERTIES
+    add_test("smsd-inject-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd-inject${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" TEXT 123465 -text "Lorem ipsum.")
+    set_tests_properties("smsd-inject-${_driver}" PROPERTIES
         FAIL_REGULAR_EXPRESSION "DBI error"
         )
     if (HAVE_ALARM)
-        add_test(smsd-daemon "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test/.smsdrc" -X 10)
-        set_tests_properties("smsd-daemon" PROPERTIES
+        add_test("smsd-daemon-${_driver}" "${CMAKE_CURRENT_BINARY_DIR}/gammu-smsd${GAMMU_TEST_SUFFIX}" -c "${CMAKE_CURRENT_BINARY_DIR}/smsd-test-${_driver}/.smsdrc" -X 10)
+        set_tests_properties("smsd-daemon-${_driver}" PROPERTIES
             FAIL_REGULAR_EXPRESSION "DBI error"
             )
     endif (HAVE_ALARM)
+endmacro(smsd_testsuite _driver)
+
+if (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
+    smsd_testsuite("dbi-sqlite3")
 endif (LIBDBI_FOUND AND SH_BIN AND SQLITE_BIN AND SED_BIN)
+
+if (MYSQL_TESTING)
+    smsd_testsuite("mysql")
+    if (LIBDBI_FOUND)
+        smsd_testsuite("dbi-mysql")
+    endif (LIBDBI_FOUND)
+endif (MYSQL_TESTING)
+
+if (PSQL_TESTING)
+    smsd_testsuite("pgsql")
+    if (LIBDBI_FOUND)
+        smsd_testsuite("dbi-pgsql")
+    endif (LIBDBI_FOUND)
+endif (PSQL_TESTING)
+
+#smsd_testsuite("files")
