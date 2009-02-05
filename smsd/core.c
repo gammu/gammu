@@ -198,11 +198,16 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 			GSM_GetCurrentDateTime(&date_time);
 
 			if (Config->use_timestamps) {
-				fprintf(Config->log_handle,"%s %4d/%02d/%02d %02d:%02d:%02d : ",
+				fprintf(Config->log_handle,"%s %4d/%02d/%02d %02d:%02d:%02d ",
 					DayOfWeek(date_time.Year, date_time.Month, date_time.Day),
 					date_time.Year, date_time.Month, date_time.Day,
 					date_time.Hour, date_time.Minute, date_time.Second);
 			}
+#ifdef HAVE_GETPID
+			fprintf(Config->log_handle, "gammu-smsd[%lld]: ", (long long)getpid());
+#else
+			fprintf(Config->log_handle, "gammu-smsd: ");
+#endif
 			fprintf(Config->log_handle,"%s\n",Buffer);
 			fflush(Config->log_handle);
 			break;
