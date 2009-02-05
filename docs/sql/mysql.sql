@@ -170,10 +170,10 @@ CREATE TABLE `phones` (
   `Receive` enum('yes','no') NOT NULL default 'no',
   `IMEI` text NOT NULL,
   `Client` text NOT NULL,
-  `Battery` integer NOT NULL,
-  `Signal` integer NOT NULL,
-  `Sent` int NOT NULL,
-  `Received` int NOT NULL
+  `Battery` integer NOT NULL DEFAULT 0,
+  `Signal` integer NOT NULL DEFAULT 0,
+  `Sent` int NOT NULL DEFAULT 0,
+  `Received` int NOT NULL DEFAULT 0
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- 

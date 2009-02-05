@@ -293,6 +293,9 @@ static GSM_Error SMSDDBI_Query(GSM_SMSDConfig * Config, const char *query, dbi_r
 			if (strstr(msg, "unique") != NULL) {
 				return ERR_BUG;
 			}
+			if (strstr(msg, "need to rewrite") != NULL) {
+				return ERR_BUG;
+			}
 			if (strstr(msg, "locked") != NULL) {
 				SMSD_Log(0, Config, "Retrying after %d seconds...", 5 * attempts);
 				sleep(5 * attempts);
@@ -691,6 +694,8 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 
 	char *encoded_text;
 
+	struct tm *timestruct;
+
 	dbi_conn_quote_string_copy(Config->DBConnDBI, Config->PhoneID, &encoded_text);
 
 	sprintf(buf, "SELECT ID, InsertIntoDB FROM outbox "
@@ -710,7 +715,12 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 	while (dbi_result_next_row(Res)) {
 		timestamp = SMSDDBI_GetDate(Config, Res, "InsertIntoDB");
 		sprintf(ID, "%lld", SMSDDBI_GetNumber(Config, Res, "ID"));
-		sprintf(Config->DT, "%lld", (long long)timestamp);
+		if (strcmp(dbi_driver_get_name(dbi_conn_get_driver(Config->DBConnDBI)), "pgsql") == 0) {
+			timestruct = gmtime(&timestamp);
+			strftime(Config->DT, sizeof(Config->DT), "%Y-%m-%d %H:%M:%S GMT", timestruct);
+		} else {
+			sprintf(Config->DT, "%lld", (long long)timestamp);
+		}
 
 		if (SMSDDBI_RefreshSendStatus(Config, ID) == ERR_NONE) {
 			found = true;

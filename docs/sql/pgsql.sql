@@ -11,7 +11,7 @@
 --
 -- Function declaration for updating timestamps
 --
-
+CREATE LANGUAGE plpgsql;
 CREATE FUNCTION update_timestamp() RETURNS trigger AS $update_timestamp$
   BEGIN
     NEW.UpdatedInDB := LOCALTIMESTAMP(0);
@@ -228,10 +228,10 @@ CREATE TABLE phones (
   Receive boolean NOT NULL DEFAULT 'no',
   IMEI text NOT NULL,
   Client text NOT NULL,
-  Battery integer NOT NULL,
-  Signal integer NOT NULL,
-  Sent integer NOT NULL,
-  Received integer NOT NULL
+  Battery integer NOT NULL DEFAULT 0,
+  Signal integer NOT NULL DEFAULT 0,
+  Sent integer NOT NULL DEFAULT 0,
+  Received integer NOT NULL DEFAULT 0
 );
 
 -- 
