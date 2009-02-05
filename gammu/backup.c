@@ -40,10 +40,12 @@ void SaveFile(int argc, char *argv[])
 		}
 		if (i != atoi(argv[5])-1 || Backup.Calendar[i] == NULL) {
 			printf("%s\n", _("Calendar note not found in file"));
+			GSM_FreeBackup(&Backup);
 			Terminate(3);
 		}
 		j = 0;
 		error = GSM_EncodeVCALENDAR(Buffer, sizeof(Buffer), &j, Backup.Calendar[i],true,Nokia_VCalendar);
+		GSM_FreeBackup(&Backup);
 		Print_Error(error);
 	} else if (strcasecmp(argv[2],"BOOKMARK") == 0) {
 		if (argc<5) {
@@ -59,10 +61,13 @@ void SaveFile(int argc, char *argv[])
 		}
 		if (i != atoi(argv[5])-1 || Backup.WAPBookmark[i] == NULL) {
 			printf("%s\n", _("WAP bookmark not found in file"));
+			GSM_FreeBackup(&Backup);
 			Terminate(3);
 		}
 		j = 0;
-		GSM_EncodeURLFile(Buffer, &j, Backup.WAPBookmark[i]);
+		error = GSM_EncodeURLFile(Buffer, &j, Backup.WAPBookmark[i]);
+		GSM_FreeBackup(&Backup);
+		Print_Error(error);
 	} else if (strcasecmp(argv[2],"NOTE") == 0) {
 		if (argc<5) {
 			printf("%s\n", _("Where is backup filename and location?"));
@@ -77,10 +82,12 @@ void SaveFile(int argc, char *argv[])
 		}
 		if (i != atoi(argv[5])-1 || Backup.Note[i] == NULL) {
 			printf("%s\n", _("Note not found in file"));
+			GSM_FreeBackup(&Backup);
 			Terminate(3);
 		}
 		j = 0;
 		error = GSM_EncodeVNTFile(Buffer, sizeof(Buffer), &j, Backup.Note[i]);
+		GSM_FreeBackup(&Backup);
 		Print_Error(error);
 	} else if (strcasecmp(argv[2],"TODO") == 0) {
 		if (argc<5) {
@@ -96,10 +103,12 @@ void SaveFile(int argc, char *argv[])
 		}
 		if (i != atoi(argv[5])-1 || Backup.ToDo[i] == NULL) {
 			printf("%s\n", _("Todo note not found in file"));
+			GSM_FreeBackup(&Backup);
 			Terminate(3);
 		}
 		j = 0;
 		error = GSM_EncodeVTODO(Buffer, sizeof(Buffer), &j, Backup.ToDo[i], true, Nokia_VToDo);
+		GSM_FreeBackup(&Backup);
 		Print_Error(error);
 	} else if (strcasecmp(argv[2],"VCARD10") == 0 || strcasecmp(argv[2],"VCARD21") == 0) {
 		if (argc<6) {
@@ -116,6 +125,7 @@ void SaveFile(int argc, char *argv[])
 			}
 			if (i != atoi(argv[6])-1 || Backup.SIMPhonebook[i] == NULL) {
 				printf("%s\n", _("Phonebook entry not found in file"));
+				GSM_FreeBackup(&Backup);
 				Terminate(3);
 			}
 			pbk = Backup.SIMPhonebook[i];
@@ -126,19 +136,23 @@ void SaveFile(int argc, char *argv[])
 			}
 			if (i != atoi(argv[6])-1 || Backup.PhonePhonebook[i] == NULL) {
 				printf("%s\n", _("Phonebook entry not found in file"));
+				GSM_FreeBackup(&Backup);
 				Terminate(3);
 			}
 			pbk = Backup.PhonePhonebook[i];
 		} else {
 			printf(_("Unknown memory type: \"%s\"\n"),argv[5]);
+			GSM_FreeBackup(&Backup);
 			Terminate(3);
 		}
 		j = 0;
 		if (strcasecmp(argv[2],"VCARD10") == 0) {
 			error = GSM_EncodeVCARD(GSM_GetDebug(gsm), Buffer, sizeof(Buffer), &j, pbk, true, Nokia_VCard10);
+			GSM_FreeBackup(&Backup);
 			Print_Error(error);
 		} else {
 			error = GSM_EncodeVCARD(GSM_GetDebug(gsm), Buffer, sizeof(Buffer), &j, pbk, true, Nokia_VCard21);
+			GSM_FreeBackup(&Backup);
 			Print_Error(error);
 		}
 	} else {
