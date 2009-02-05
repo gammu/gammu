@@ -15,6 +15,8 @@ cleanup() {
 
 trap cleanup INT QUIT EXIT
 
+cd @CMAKE_CURRENT_BINARY_DIR@
+
 rm -rf smsd-test
 mkdir smsd-test
 cd smsd-test
