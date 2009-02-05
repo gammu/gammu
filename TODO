@@ -32,3 +32,4 @@ This file is probably not usable for anybody except me ;-).
         182397 ./python/gammu/src/gammu.c
         218459 ./common/phone/at/atgen.c
 
+- reading/saving vnote

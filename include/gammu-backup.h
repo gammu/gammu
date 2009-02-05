@@ -357,6 +357,10 @@ typedef enum {
 	 * This is UCS2-BE version of the format.
 	 */
 	GSM_Backup_GammuUCS2,
+	/**
+	 * vNote standard, can store phone notes.
+	 */
+	GSM_Backup_VNote,
 } GSM_BackupFormat;
 
 /**
