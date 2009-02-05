@@ -27,11 +27,14 @@ set (BINARY_SRC
     mms.c
     search.c
     nokia.c
-    backup.c
     files.c
     calendar.c
     misc.c
     gammu.c)
+
+if (WITH_BACKUP)
+    list(APPEND BINARY_SRC backup.c backupsms.c)
+endif (WITH_BACKUP)
 
 
 # Hides default case in switch, to allow checking whether all cases are handled.
