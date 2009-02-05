@@ -140,9 +140,12 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure);
 /**
  * Creates new SMSD configuration.
  *
+ * \param name Name of process, will be used for logging. If NULL,
+ * gammu-smsd text is used.
+ *
  * \return Pointer to SMSD configuration data block.
  */
-GSM_SMSDConfig *SMSD_NewConfig(void);
+GSM_SMSDConfig *SMSD_NewConfig(const char *name);
 
 /**
  * Frees SMSD configuration.

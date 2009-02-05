@@ -59,6 +59,8 @@
 #include "log-event.h"
 #endif
 
+const char smsd_name[] = "gammu-smsd";
+
 GSM_SMSDConfig		SMSDaemon_Config;
 
 GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version)
@@ -204,9 +206,9 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 					date_time.Hour, date_time.Minute, date_time.Second);
 			}
 #ifdef HAVE_GETPID
-			fprintf(Config->log_handle, "gammu-smsd[%lld]: ", (long long)getpid());
+			fprintf(Config->log_handle, "%s[%lld]: ", Config->program_name, (long long)getpid());
 #else
-			fprintf(Config->log_handle, "gammu-smsd: ");
+			fprintf(Config->log_handle, "%s: ", Config->program_name);
 #endif
 			fprintf(Config->log_handle,"%s\n",Buffer);
 			fflush(Config->log_handle);
@@ -217,9 +219,9 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 
 	if (Config->use_stderr && level == -1) {
 #ifdef HAVE_GETPID
-		fprintf(stderr, "gammu-smsd[%lld]: ", (long long)getpid());
+		fprintf(stderr, "%s[%lld]: ", Config->program_name, (long long)getpid());
 #else
-		fprintf(stderr, "gammu-smsd: ");
+		fprintf(stderr, "%s: ", Config->program_name);
 #endif
 		fprintf(stderr, "%s\n", Buffer);
 	}
@@ -253,7 +255,7 @@ void SMSD_Log_Function(const char *text, void *data)
 	strcpy(Config->gammu_log_buffer + pos, text);
 }
 
-GSM_SMSDConfig *SMSD_NewConfig(void)
+GSM_SMSDConfig *SMSD_NewConfig(const char *name)
 {
 	GSM_SMSDConfig *Config;
 	Config = (GSM_SMSDConfig *)malloc(sizeof(GSM_SMSDConfig));
@@ -271,6 +273,11 @@ GSM_SMSDConfig *SMSD_NewConfig(void)
 	Config->log_handle = NULL;
 	Config->log_type = SMSD_LOG_NONE;
 	Config->debug_level = 0;
+	if (name == NULL) {
+		Config->program_name = smsd_name;
+	} else {
+		Config->program_name = name;
+	}
 
 	return Config;
 }
@@ -390,7 +397,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 #ifdef HAVE_SYSLOG
 		} else if (strcmp(Config->logfilename, "syslog") == 0) {
 			Config->log_type = SMSD_LOG_SYSLOG;
-			openlog("gammu-smsd", LOG_PID, LOG_DAEMON);
+			openlog(Config->program_name, LOG_PID, LOG_DAEMON);
 			Config->use_stderr = true;
 #endif
 		} else {

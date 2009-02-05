@@ -151,6 +151,7 @@ int main(int argc, char **argv)
 	GSM_MultiSMSMessage sms;
 	GSM_Message_Type type = SMS_SMSD;
 	GSM_SMSDConfig *config;
+	const char program_name[] = "gammu-smsd-inject";
 
 	SMSD_Parameters params = {
 		NULL,
@@ -185,7 +186,7 @@ int main(int argc, char **argv)
 		return 1;
 	}
 
-	config = SMSD_NewConfig();
+	config = SMSD_NewConfig(program_name);
 	assert(config != NULL);
 
 	error = SMSD_ReadConfig(params.config_file, config, true);

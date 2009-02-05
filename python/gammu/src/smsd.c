@@ -68,7 +68,7 @@
 
 #endif
 
-PyObject    *DebugFile;
+const char program_name[] = "python-gammu";
 
 #define MAX_EVENTS 10
 
@@ -266,7 +266,7 @@ SMSD_new(PyTypeObject *type, PyObject *args, PyObject *kwds)
 
     self = (SMSDObject *)type->tp_alloc(type, 0);
 
-    self->config = SMSD_NewConfig();
+    self->config = SMSD_NewConfig(program_name);
     if (self->config == NULL)
         return NULL;
 
