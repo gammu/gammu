@@ -90,7 +90,7 @@ void SMSSendingSMSStatus (GSM_StateMachine *sm, int status, int mr, void *user_d
 {
 	GSM_SMSDConfig *Config = (GSM_SMSDConfig *)user_data;
 
-	SMSD_Log(1, Config, "SMS sent on device: \"%s\" status=%d, reference=%d\n",
+	SMSD_Log(1, Config, "SMS sent on device: \"%s\" status=%d, reference=%d",
 			GSM_GetConfig(sm, -1)->Device,
 			status,
 			mr);
@@ -681,7 +681,7 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, c
 			&pi );           /* Pointer to PROCESS_INFORMATION structure*/
 	free(cmdline);
 	if (! ret) {
-		SMSD_Log(-1, Config, "CreateProcess failed (%d)\n", (int)GetLastError());
+		SMSD_Log(-1, Config, "CreateProcess failed (%d)", (int)GetLastError());
 	} else {
 		/* We don't need handles at all */
 		CloseHandle(pi.hProcess);
@@ -743,19 +743,19 @@ bool SMSD_RunOnReceive(GSM_MultiSMSMessage sms UNUSED, GSM_SMSDConfig *Config, c
 			}
 
 			if (WIFEXITED(status)) {
-				SMSD_Log(0, Config, "Process exited, status=%d\n", WEXITSTATUS(status));
+				SMSD_Log(0, Config, "Process exited, status=%d", WEXITSTATUS(status));
 				return (WEXITSTATUS(status) == 0);
 			} else if (WIFSIGNALED(status)) {
-				SMSD_Log(0, Config, "Process killed by signal %d\n", WTERMSIG(status));
+				SMSD_Log(0, Config, "Process killed by signal %d", WTERMSIG(status));
 				return false;
 			} else if (WIFSTOPPED(status)) {
-				SMSD_Log(0, Config, "Process stopped by signal %d\n", WSTOPSIG(status));
+				SMSD_Log(0, Config, "Process stopped by signal %d", WSTOPSIG(status));
 			} else if (WIFCONTINUED(status)) {
-				SMSD_Log(0, Config, "Process continued\n");
+				SMSD_Log(0, Config, "Process continued");
 			}
 			usleep(100000);
 			if (i++ > 1200) {
-				SMSD_Log(0, Config, "Waited two minutes for child process, giving up\n");
+				SMSD_Log(0, Config, "Waited two minutes for child process, giving up");
 				return true;
 			}
 		} while (!WIFEXITED(status) && !WIFSIGNALED(status));
@@ -1080,7 +1080,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure)
 				error=GSM_TerminateConnection(Config->gsm);
 			}
 			if (initerrors++ > 3) {
-				SMSD_Log(0, Config, "Going to 30 seconds sleep because of too much connection errors\n");
+				SMSD_Log(0, Config, "Going to 30 seconds sleep because of too much connection errors");
 				for (i = 0; i < 30; i++) {
 					if (Config->shutdown)
 						break;
