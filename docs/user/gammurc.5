@@ -90,9 +90,18 @@ and this parameters is ignored.
 For Bluetooth connection you have to enter Bluetooth address of your phone
 (you can list Bluetooth devices in range on Linux using "hcitool scan"
 command). Optionally you can also force Gammu to use specified channel by
-includig channel number after slash
+includig channel number after slash.
+
+Before using Gammu, your device should be paired with computer or you should
+have set up automatic pairing.
 
 For IrDA connections, this parameters is not used at all.
+
+If IrDA does not work on Linux, you might need to bring up the interface and
+enable discovery (you need to run these commands as root):
+
+    ip l s dev irda0 up
+    sysctl net.irda.discovery=1
 
 .TP
 .BI Model

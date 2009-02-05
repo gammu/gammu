@@ -103,7 +103,16 @@ Při připojení přes Bluetooth musíte zadat Bluetooth adresu vašeho telefonu
 scan"). Volitelně můžete Gammu přinutit používat jiný kanál zadáním jeho
 čísla za lomítko.
 
+Před použitím Gammu, by vaše zařízení mělo být spárováno s počítačem, nebo
+byste měli mít zapnuto automatické párování.
+
 Pro připojení přes IrDA se tento parametr vůbec nepoužije.
+
+Pokud vám IrDA na Linuxu nefunguje, možná potřebujete zapnout rozhraní a
+zapnout objevování zařízení (tyto příkazy musíte spouštět jako root):
+
+    ip l s dev irda0 up
+    sysctl net.irda.discovery=1
 
 .TP 
 \fBModel\fP
