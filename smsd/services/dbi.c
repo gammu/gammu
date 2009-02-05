@@ -33,6 +33,38 @@ const char now_plus_sqlite[] = "datetime('now', '+%d seconds')";
 const char now_plus_freetds[] = "DATEADD('second', %d, CURRENT_TIMESTAMP)";
 const char now_plus_fallback[] = "NOW() + INTERVAL %d SECOND";
 
+long long SMSDDBI_GetNumber(GSM_SMSDConfig * Config, dbi_result *res, const char *field)
+{
+	unsigned int type;
+
+	type = dbi_result_get_field_type(*res, field);
+
+	switch (type) {
+		case DBI_TYPE_INTEGER:
+			type = dbi_result_get_field_attribs(*res, field);
+			if ((type & DBI_INTEGER_SIZEMASK) == DBI_INTEGER_SIZE4) {
+				return dbi_result_get_int(*res, field);
+			} else if ((type & DBI_INTEGER_SIZEMASK) == DBI_INTEGER_SIZE8) {
+				return dbi_result_get_longlong(*res, field);
+			}
+			SMSD_Log(-1, Config, "Wrong integer field subtype! (Field = %s, type = %d)\n", field, type);
+			return -1;
+		case DBI_TYPE_DECIMAL:
+			type = dbi_result_get_field_attribs(*res, field);
+			if ((type & DBI_DECIMAL_SIZEMASK) == DBI_DECIMAL_SIZE4) {
+				return dbi_result_get_int(*res, field);
+			} else if ((type & DBI_DECIMAL_SIZEMASK) == DBI_DECIMAL_SIZE8) {
+				return dbi_result_get_longlong(*res, field);
+			}
+			SMSD_Log(-1, Config, "Wrong decimal field subtype! (Field = %s, type = %d)\n", field, type);
+			return -1;
+		case DBI_TYPE_ERROR:
+		default:
+			SMSD_Log(-1, Config, "Wrong field type! (Field = %s, type = %d)\n", field, type);
+			return -1;
+	}
+}
+
 static const char * SMSDDBI_NowPlus(GSM_SMSDConfig * Config, int seconds)
 {
 	const char *driver_name;
@@ -296,7 +328,7 @@ static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
 		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
-	version = dbi_result_get_longlong_idx(res, 1);
+	version = SMSDDBI_GetNumber(Config, &res, "Version");
 	dbi_result_free(res);
 	if (SMSD_CheckDBVersion(Config, version) != ERR_NONE) {
 		SMSDDBI_Free(Config);
@@ -625,7 +657,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 	}
 
 	while (dbi_result_next_row(Res)) {
-		sprintf(ID, "%lld", dbi_result_get_longlong_idx(Res,1));
+		sprintf(ID, "%lld", SMSDDBI_GetNumber(Config, &Res, "ID"));
 		sprintf(Config->DT, "%s", dbi_result_get_string_idx(Res, 2));
 
 		if (dbi_result_get_string_idx(Res, 4) == NULL
@@ -733,7 +765,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 				     strlen(dbi_result_get_string_idx(Res, 3)));
 		}
 
-		sms->SMS[sms->Number].Class = dbi_result_get_int_idx(Res, 4);
+		sms->SMS[sms->Number].Class = SMSDDBI_GetNumber(Config, &Res, "Class");
 		sms->SMS[sms->Number].PDU = SMS_Submit;
 		sms->Number++;
 
@@ -741,7 +773,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 			sprintf(Config->CreatorID, "%s",
 				dbi_result_get_string_idx(Res, 11));
 
-			Config->relativevalidity = dbi_result_get_int_idx(Res, 9);
+			Config->relativevalidity = SMSDDBI_GetNumber(Config, &Res, "RelativeValidity");
 
 			Config->currdeliveryreport = -1;
 			if (!strcmp(dbi_result_get_string_idx(Res, 10), "yes")) {
@@ -791,7 +823,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 {
 	unsigned char buffer[10000], buffer2[400], buffer4[10000];
 	int i;
-	long long ID;
+	unsigned int ID;
 	dbi_result Res;
 	char *encoded_text;
 
@@ -803,7 +835,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 	if (dbi_result_get_numrows(Res) != 0) {
 		dbi_result_first_row(Res);
-		ID = dbi_result_get_longlong_idx(Res, 1);
+		ID = SMSDDBI_GetNumber(Config, &Res, "ID");
 	} else {
 		ID = 0;
 	}
@@ -817,7 +849,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 	if (dbi_result_get_numrows(Res) != 0) {
 		dbi_result_first_row(Res);
-		ID = MAX(dbi_result_get_longlong_idx(Res, 1), ID);
+		ID = MAX(SMSDDBI_GetNumber(Config, &Res, "ID"), ID);
 	}
 	dbi_result_free(Res);
 
@@ -954,14 +986,14 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 
 		sprintf(buffer + strlen(buffer), ", '");
 		strcpy(buffer4, buffer);
-		sprintf(buffer4 + strlen(buffer4), "%lld')", ID);
+		sprintf(buffer4 + strlen(buffer4), "%u')", ID);
 		if (SMSDDBI_Query(Config, buffer4, &Res) != ERR_NONE) {
 			SMSD_Log(0, Config, "Error writing to database (%s)\n", __FUNCTION__);
 			return ERR_UNKNOWN;
 		}
 		dbi_result_free(Res);
 	}
-	SMSD_Log(0, Config, "Written message with ID %lld\n", ID);
+	SMSD_Log(0, Config, "Written message with ID %u\n", ID);
 	return ERR_NONE;
 }
 
