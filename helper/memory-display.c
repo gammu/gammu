@@ -14,7 +14,7 @@
 #define GAMMU_CALLER_GROUPS	20
 
 static GSM_Bitmap		caller[GAMMU_CALLER_GROUPS];
-static GSM_AllRingtonesInfo 	ringtones_info = {0, NULL};
+GSM_AllRingtonesInfo 	ringtones_info = {0, NULL};
 static bool			callerinit[GAMMU_CALLER_GROUPS] = {false, false, false, false, false};
 static bool			ringinit = false;
 

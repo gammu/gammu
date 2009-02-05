@@ -14,8 +14,6 @@
 
 #define GAMMU_CALLER_GROUPS	20
 
-static GSM_AllRingtonesInfo 	Info = {0, NULL};
-
 void GetAllMemory(int argc UNUSED, char *argv[])
 {
 	GSM_MemoryEntry		Entry;
@@ -38,7 +36,7 @@ void GetAllMemory(int argc UNUSED, char *argv[])
 	while (!gshutdown) {
 		error = GSM_GetNextMemory(gsm, &Entry, start);
 		if (error == ERR_EMPTY) break;
-		if (error != ERR_NONE && Info.Ringtone) free(Info.Ringtone);
+		if (error != ERR_NONE && ringtones_info.Ringtone) free(ringtones_info.Ringtone);
 		Print_Error(error);
 		printf(_("Memory %s, Location %i\n"),argv[2],Entry.Location);
 		error = PrintMemoryEntry(&Entry, gsm);
@@ -46,7 +44,7 @@ void GetAllMemory(int argc UNUSED, char *argv[])
  		start = false;
 	}
 
- 	if (Info.Ringtone) free(Info.Ringtone);
+ 	if (ringtones_info.Ringtone) free(ringtones_info.Ringtone);
 
 	GSM_Terminate();
 }
@@ -99,7 +97,7 @@ void GetMemory(int argc, char *argv[])
 
 		error=GSM_GetMemory(gsm, &entry);
 		if (error != ERR_EMPTY) {
-			if (Info.Ringtone) free(Info.Ringtone);
+			if (ringtones_info.Ringtone) free(ringtones_info.Ringtone);
 			Print_Error(error);
 		}
 
@@ -119,7 +117,7 @@ void GetMemory(int argc, char *argv[])
 
 	printf(_("%i entries empty, %i entries filled\n"),emptynum,fillednum);
 
- 	if (Info.Ringtone) free(Info.Ringtone);
+ 	if (ringtones_info.Ringtone) free(ringtones_info.Ringtone);
 
 	GSM_Terminate();
 }
