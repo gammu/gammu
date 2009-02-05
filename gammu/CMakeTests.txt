@@ -11,6 +11,9 @@ file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/4")
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/5")
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/ME")
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/SM")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/calendar")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/todo")
+file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/note")
 configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/01.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/1/1" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/90.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/2/10" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/at-sms-encode/99.backup" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/3/42" COPY_ONLY)
@@ -19,6 +22,11 @@ configure_file("${Gammu_SOURCE_DIR}/tests/vcards/private.vcf" "${CMAKE_CURRENT_B
 configure_file("${Gammu_SOURCE_DIR}/tests/vcards/yahoo.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/ME/101" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/vcards/photo-2.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/ME/103" COPY_ONLY)
 configure_file("${Gammu_SOURCE_DIR}/tests/vcards/many-lines.vcf" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/pbk/SM/1" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcal/rrule-1.0.vcs" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/calendar/2" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcal/dtstart.ics" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/calendar/22" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcal/02.vcs" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/todo/3" COPY_ONLY)
+configure_file("${Gammu_SOURCE_DIR}/tests/vcal/01.ics" "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/todo/22" COPY_ONLY)
+
 file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/.gammurc" "
 # Generated gammurc for test purposes
 [gammu]
@@ -213,12 +221,26 @@ gammu_test(geteachsms "4 SMS parts in 4 SMS sequences")
 gammu_test_fail(deletesms "Entry is empty" 1 99)
 gammu_test(addsms "" 1 "${Gammu_SOURCE_DIR}/tests/at-sms-encode/66.backup" "-yes")
 gammu_test(deletesms "" 1 2)
+
 gammu_test(getallmemory "Name                 : \"firstname lastname\"" SM)
 gammu_test(getallmemory "LUID                 : \"000200000012\"" ME)
 gammu_test(getmemory "ISP Ph 019833206" ME 101)
 gammu_test(deletememory "Entry was empty" ME 99)
 gammu_test(searchmemory "3899-5174" "3899-1411")
+
+gammu_test(getallcalendar "C/S/007")
+gammu_test(getcalendar "Coffee with Jason" 22)
+gammu_test(getcalendar "" 42)
+gammu_test(deletecalendar "Entry is empty" 42)
+
+gammu_test(getalltodo "Wammu Bug erforschen")
+gammu_test(gettodo "Gorusme" 3)
+gammu_test(gettodo "" 99)
+gammu_test(deletetodo "Entry was empty" 99)
+
 gammu_test(backup "" test.backup -yes)
 gammu_test(backup "" test.vcf -yes)
+gammu_test(backup "" test.vcs -yes)
+gammu_test(backup "" test.ics -yes)
 gammu_test(backup "" test.lmb -yes)
 gammu_test(backup "" test.ldif -yes)

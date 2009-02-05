@@ -20,6 +20,8 @@
  *   format
  * - pbk/ME, pbk/SM, ... - folders for phonebook entries, entries are stored
  *   in vcard format
+ * - note - vNote files for notes
+ * - calendar, todo - vCalendar entries for todo and calendar
  *
  * @{
  */
@@ -162,6 +164,27 @@ char * DUMMY_MemoryPath(GSM_StateMachine *s, GSM_MemoryEntry *entry)
 {
 	char path[100];
 	sprintf(path, "pbk/%s/%d", GSM_MemoryTypeToString(entry->MemoryType), entry->Location);
+	return DUMMY_GetFilePath(s, path);
+}
+
+char * DUMMY_ToDoPath(GSM_StateMachine *s, GSM_ToDoEntry *entry)
+{
+	char path[100];
+	sprintf(path, "todo/%d",  entry->Location);
+	return DUMMY_GetFilePath(s, path);
+}
+
+char * DUMMY_NotePath(GSM_StateMachine *s, GSM_NoteEntry *entry)
+{
+	char path[100];
+	sprintf(path, "note/%d",  entry->Location);
+	return DUMMY_GetFilePath(s, path);
+}
+
+char * DUMMY_CalendarPath(GSM_StateMachine *s, GSM_CalendarEntry *entry)
+{
+	char path[100];
+	sprintf(path, "calendar/%d",  entry->Location);
 	return DUMMY_GetFilePath(s, path);
 }
 
@@ -823,110 +846,300 @@ GSM_Error DUMMY_DeleteAllMemory(GSM_StateMachine *s, GSM_MemoryType type)
 	return DUMMY_DeleteAll(s, dirname);
 }
 
-GSM_Error DUMMY_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
+GSM_Error DUMMY_GetToDoStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status)
 {
-	return ERR_NOTIMPLEMENTED;
+	Status->Used = DUMMY_GetCount(s, "todo");
+	Status->Free = DUMMY_MAX_TODO - Status->Used;
+	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
+GSM_Error DUMMY_GetToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Backup Backup;
+	char *filename;
+	GSM_Error error;
+	int location;
+
+	location = entry->Location;
+	filename = DUMMY_ToDoPath(s, entry);
+
+	error = GSM_ReadBackupFile(filename, &Backup, GSM_Backup_VCalendar);
+
+	free(filename);
+
+	if (error != ERR_NONE) {
+		if (error == ERR_CANTOPENFILE) return ERR_EMPTY;
+		return error;
+	}
+	if (Backup.ToDo[0] == NULL) return ERR_EMPTY;
+
+	*entry = *(Backup.ToDo[0]);
+	entry->Location = location;
+	GSM_FreeBackup(&Backup);
+
+	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *ToDo, bool start)
+GSM_Error DUMMY_GetNextToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry, bool start)
 {
-	return ERR_NOTIMPLEMENTED;
+	if (start) {
+		entry->Location = 0;
+	}
+
+	entry->Location = DUMMY_GetNext(s, "todo", entry->Location);
+
+	return DUMMY_GetToDo(s, entry);
 }
 
-GSM_Error DUMMY_DeleteAllToDo (GSM_StateMachine *s)
+GSM_Error DUMMY_DeleteToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	char *filename;
+	GSM_Error error;
+
+	filename = DUMMY_ToDoPath(s, entry);
+
+	if (unlink(filename) == 0) {
+		error = ERR_NONE;
+	} else {
+		error = DUMMY_Error(s);
+	}
+
+	free(filename);
+
+	return error;
 }
 
-GSM_Error DUMMY_AddToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
+GSM_Error DUMMY_SetToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	char *filename;
+	GSM_Error error;
+	GSM_Backup backup;
+
+	GSM_ClearBackup(&backup);
+
+	error = DUMMY_DeleteToDo(s, entry);
+	if (error != ERR_EMPTY && error != ERR_NONE) return error;
+
+	filename = DUMMY_ToDoPath(s, entry);
+
+	backup.ToDo[0] = entry;
+	backup.ToDo[1] = NULL;
+
+	error = GSM_SaveBackupFile(filename, &backup, GSM_Backup_VCalendar);
+	free(filename);
+	return error;
 }
 
-GSM_Error DUMMY_SetToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
+GSM_Error DUMMY_AddToDo(GSM_StateMachine *s, GSM_ToDoEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	entry->Location = DUMMY_GetFirstFree(s, "todo");
+
+	if (entry->Location == -1) return ERR_FULL;
+
+	return DUMMY_SetToDo(s, entry);
 }
 
-GSM_Error DUMMY_DeleteToDo (GSM_StateMachine *s, GSM_ToDoEntry *ToDo)
+GSM_Error DUMMY_DeleteAllToDo(GSM_StateMachine *s)
 {
-	return ERR_NOTIMPLEMENTED;
+	return DUMMY_DeleteAll(s, "todo");
 }
 
-GSM_Error DUMMY_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *status)
+GSM_Error DUMMY_GetCalendarStatus(GSM_StateMachine *s, GSM_CalendarStatus *Status)
 {
-	return ERR_NOTIMPLEMENTED;
+	Status->Used = DUMMY_GetCount(s, "calendar");
+	Status->Free = DUMMY_MAX_TODO - Status->Used;
+	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error DUMMY_GetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Backup Backup;
+	char *filename;
+	GSM_Error error;
+	int location;
+
+	location = entry->Location;
+	filename = DUMMY_CalendarPath(s, entry);
+
+	error = GSM_ReadBackupFile(filename, &Backup, GSM_Backup_VCalendar);
+
+	free(filename);
+
+	if (error != ERR_NONE) {
+		if (error == ERR_CANTOPENFILE) return ERR_EMPTY;
+		return error;
+	}
+	if (Backup.Calendar[0] == NULL) return ERR_EMPTY;
+
+	*entry = *(Backup.Calendar[0]);
+	entry->Location = location;
+	GSM_FreeBackup(&Backup);
+
+	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note, bool start)
+GSM_Error DUMMY_GetNextCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry, bool start)
 {
-	return ERR_NOTIMPLEMENTED;
+	if (start) {
+		entry->Location = 0;
+	}
+
+	entry->Location = DUMMY_GetNext(s, "calendar", entry->Location);
+
+	return DUMMY_GetCalendar(s, entry);
 }
 
-GSM_Error DUMMY_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error DUMMY_DeleteCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	char *filename;
+	GSM_Error error;
+
+	filename = DUMMY_CalendarPath(s, entry);
+
+	if (unlink(filename) == 0) {
+		error = ERR_NONE;
+	} else {
+		error = DUMMY_Error(s);
+	}
+
+	free(filename);
+
+	return error;
 }
 
-GSM_Error DUMMY_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error DUMMY_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	char *filename;
+	GSM_Error error;
+	GSM_Backup backup;
+
+	GSM_ClearBackup(&backup);
+
+	error = DUMMY_DeleteCalendar(s, entry);
+	if (error != ERR_EMPTY && error != ERR_NONE) return error;
+
+	filename = DUMMY_CalendarPath(s, entry);
+
+	backup.Calendar[0] = entry;
+	backup.Calendar[1] = NULL;
+
+	error = GSM_SaveBackupFile(filename, &backup, GSM_Backup_VCalendar);
+	free(filename);
+	return error;
 }
 
-GSM_Error DUMMY_SetCalendar(GSM_StateMachine *s, GSM_CalendarEntry *Note)
+GSM_Error DUMMY_AddCalendar(GSM_StateMachine *s, GSM_CalendarEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	entry->Location = DUMMY_GetFirstFree(s, "calendar");
+
+	if (entry->Location == -1) return ERR_FULL;
+
+	return DUMMY_SetCalendar(s, entry);
 }
 
-GSM_Error DUMMY_DeleteAllCalendar (GSM_StateMachine *s)
+GSM_Error DUMMY_DeleteAllCalendar(GSM_StateMachine *s)
 {
-	return ERR_NOTIMPLEMENTED;
+	return DUMMY_DeleteAll(s, "calendar");
 }
 
-GSM_Error DUMMY_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *status)
+GSM_Error DUMMY_GetNoteStatus(GSM_StateMachine *s, GSM_ToDoStatus *Status)
 {
-	return ERR_NOTIMPLEMENTED;
+	Status->Used = DUMMY_GetCount(s, "note");
+	Status->Free = DUMMY_MAX_TODO - Status->Used;
+	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
+GSM_Error DUMMY_GetNote(GSM_StateMachine *s, GSM_NoteEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	GSM_Backup Backup;
+	char *filename;
+	GSM_Error error;
+	int location;
+
+	location = entry->Location;
+	filename = DUMMY_NotePath(s, entry);
+
+	error = GSM_ReadBackupFile(filename, &Backup, GSM_Backup_VNote);
+
+	free(filename);
+
+	if (error != ERR_NONE) {
+		if (error == ERR_CANTOPENFILE) return ERR_EMPTY;
+		return error;
+	}
+	if (Backup.Note[0] == NULL) return ERR_EMPTY;
+
+	*entry = *(Backup.Note[0]);
+	entry->Location = location;
+	GSM_FreeBackup(&Backup);
+
+	return ERR_NONE;
 }
 
-GSM_Error DUMMY_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *Note, bool start)
+GSM_Error DUMMY_GetNextNote(GSM_StateMachine *s, GSM_NoteEntry *entry, bool start)
 {
-	return ERR_NOTIMPLEMENTED;
+	if (start) {
+		entry->Location = 0;
+	}
+
+	entry->Location = DUMMY_GetNext(s, "note", entry->Location);
+
+	return DUMMY_GetNote(s, entry);
 }
 
-GSM_Error DUMMY_DeleteAllNotes(GSM_StateMachine *s)
+GSM_Error DUMMY_DeleteNote(GSM_StateMachine *s, GSM_NoteEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	char *filename;
+	GSM_Error error;
+
+	filename = DUMMY_NotePath(s, entry);
+
+	if (unlink(filename) == 0) {
+		error = ERR_NONE;
+	} else {
+		error = DUMMY_Error(s);
+	}
+
+	free(filename);
+
+	return error;
 }
 
-GSM_Error DUMMY_AddNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
+GSM_Error DUMMY_SetNote(GSM_StateMachine *s, GSM_NoteEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	char *filename;
+	GSM_Error error;
+	GSM_Backup backup;
+
+	GSM_ClearBackup(&backup);
+
+	error = DUMMY_DeleteNote(s, entry);
+	if (error != ERR_EMPTY && error != ERR_NONE) return error;
+
+	filename = DUMMY_NotePath(s, entry);
+
+	backup.Note[0] = entry;
+	backup.Note[1] = NULL;
+
+	error = GSM_SaveBackupFile(filename, &backup, GSM_Backup_VNote);
+	free(filename);
+	return error;
 }
 
-GSM_Error DUMMY_SetNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
+GSM_Error DUMMY_AddNote(GSM_StateMachine *s, GSM_NoteEntry *entry)
 {
-	return ERR_NOTIMPLEMENTED;
+	entry->Location = DUMMY_GetFirstFree(s, "note");
+
+	if (entry->Location == -1) return ERR_FULL;
+
+	return DUMMY_SetNote(s, entry);
 }
 
-GSM_Error DUMMY_DeleteNote (GSM_StateMachine *s, GSM_NoteEntry *Note)
+GSM_Error DUMMY_DeleteAllNote(GSM_StateMachine *s)
 {
-	return ERR_NOTIMPLEMENTED;
+	return DUMMY_DeleteAll(s, "note");
 }
+
 
 GSM_Error DUMMY_GetLocale(GSM_StateMachine *s, GSM_Locale *locale)
 {
@@ -1088,7 +1301,7 @@ GSM_Phone_Functions DUMMYPhone = {
 	DUMMY_SetNote,
 	DUMMY_AddNote,
 	DUMMY_DeleteNote,
-	DUMMY_DeleteAllNotes,
+	DUMMY_DeleteAllNote,
 	NOTSUPPORTED,			/* 	GetProfile		*/
 	NOTSUPPORTED,			/* 	SetProfile		*/
 	NOTSUPPORTED,			/* 	GetFMStation		*/
