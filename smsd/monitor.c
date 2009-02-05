@@ -172,6 +172,7 @@ int main(int argc, char **argv)
 	int startarg;
 	GSM_SMSDConfig *config;
 	GSM_SMSDStatus status;
+	const char program_name[] = "gammu-smsd-monitor";
 	SMSD_Parameters params = {
 		NULL,
 		NULL,
@@ -203,7 +204,7 @@ int main(int argc, char **argv)
 	signal(SIGINT, smsd_interrupt);
 	signal(SIGTERM, smsd_interrupt);
 
-	config = SMSD_NewConfig();
+	config = SMSD_NewConfig(program_name);
 	assert(config != NULL);
 
 	error = SMSD_ReadConfig(params.config_file, config, true);

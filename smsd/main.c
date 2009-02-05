@@ -323,6 +323,7 @@ void configure_daemon(SMSD_Parameters * params)
 int main(int argc, char **argv)
 {
 	GSM_Error error;
+	const char program_name[] = "gammu-smsd";
 
 	SMSD_Parameters params = {
 		NULL,
@@ -405,7 +406,7 @@ int main(int argc, char **argv)
 #endif
 
 read_config:
-	config = SMSD_NewConfig();
+	config = SMSD_NewConfig(program_name);
 	assert(config != NULL);
 
 	error = SMSD_ReadConfig(params.config_file, config, true);

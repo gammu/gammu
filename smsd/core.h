@@ -40,6 +40,7 @@ typedef enum {
 
 struct _GSM_SMSDConfig {
 	const char	*Service;
+	const char *program_name;
 	/* general options */
 	INI_Entry       *IncludeNumbers, *ExcludeNumbers;
 	unsigned int    commtimeout, 	 sendtimeout,   receivefrequency;
