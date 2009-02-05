@@ -59,7 +59,7 @@ EOT
         cat >> .smsdrc <<EOT
 service = dbi
 driver = pgsql
-pc = localhost
+pc = @PSQL_HOST@
 database = @PSQL_DATABASE@
 user = @PSQL_USER@
 password = @PSQL_PASSWORD@
@@ -70,7 +70,7 @@ EOT
         PGPASSWORD=@PSQL_PASSWORD@ @PSQL_BIN@ -U @PSQL_USER@ @PSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/pgsql.sql
         cat >> .smsdrc <<EOT
 service = pgsql
-pc = localhost
+pc = @PSQL_HOST@
 database = @PSQL_DATABASE@
 user = @PSQL_USER@
 password = @PSQL_PASSWORD@
@@ -82,7 +82,7 @@ EOT
         cat >> .smsdrc <<EOT
 service = dbi
 driver = mysql
-pc = 127.0.0.1
+pc = @MYSQL_HOST@
 database = @MYSQL_DATABASE@
 user = @MYSQL_USER@
 password = @MYSQL_PASSWORD@
@@ -93,7 +93,7 @@ EOT
         @MYSQL_BIN@ -u@MYSQL_USER@ -p@MYSQL_PASSWORD@ @MYSQL_DATABASE@ < @CMAKE_CURRENT_SOURCE_DIR@/../docs/sql/mysql.sql
         cat >> .smsdrc <<EOT
 service = mysql
-pc = 127.0.0.1
+pc = @MYSQL_HOST@
 database = @MYSQL_DATABASE@
 user = @MYSQL_USER@
 password = @MYSQL_PASSWORD@
