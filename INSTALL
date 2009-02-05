@@ -274,6 +274,15 @@ There are some more options for testing:
     either 'make Nightly' to do regullar testing or 'make
     NightlyMemoryCheck' to test with valgrind. Also you can enable
     coverage tests as described above.
+- special cases:
+    You can enable some additional tests, which require some external
+    components to be setup and are disabled by default:
+
+    MYSQL_TESTING - you need to have setup MySQL server with database
+    where SMSD can plat.
+
+    PSQL_TESTING - you need to have setup PostgreSQL server with
+    database where SMSD can plat.
 
 
 # vim: et ts=4 sw=4 sts=4 tw=72 spell spelllang=en_us
