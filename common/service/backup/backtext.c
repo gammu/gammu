@@ -3711,8 +3711,9 @@ static GSM_Error ReadSMSBackupEntry(INI_Section *file_info, char *section, GSM_S
 	if (!DecodeHexBin (SMS->Text, readbuffer, strlen(readbuffer))) {
 		dbgprintf(NULL, "Failed decoding binary field!\n");
 	}
-	SMS->Text[strlen(readbuffer)/2]	= 0;
-	SMS->Text[strlen(readbuffer)/2+1] 	= 0;
+	SMS->Length = strlen(readbuffer)/4;
+	SMS->Text[SMS->Length * 2]	= 0;
+	SMS->Text[SMS->Length * 2 + 1] 	= 0;
 	free(readbuffer);
 	sprintf(buffer,"Folder");
 	readvalue = ReadCFGText(file_info, section, buffer, false);
@@ -3790,8 +3791,9 @@ GSM_Error GSM_ReadSMSBackupFile(char *FileName, GSM_SMS_Backup *backup)
 
 static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 {
-	int 		i,w,current;
+	int 		i;
 	unsigned char 	buffer[10000];
+	char *pos;
 	GSM_DateTime	DT;
 	GSM_Error error;
 
@@ -3810,29 +3812,14 @@ static GSM_Error SaveSMSBackupTextFile(FILE *file, GSM_SMS_Backup *backup)
 		switch (backup->SMS[i]->Coding) {
 			case SMS_Coding_Unicode_No_Compression:
 			case SMS_Coding_Default_No_Compression:
+				/* Save first line, maximum 75 chars as a comment */
 				sprintf(buffer,"%s",DecodeUnicodeString(backup->SMS[i]->Text));
-				fprintf(file,";");
-				current = 0;
-				for (w=0;w<(int)(strlen(buffer));w++) {
-					switch (buffer[w]) {
-						case 10:
-							fprintf(file,"\n;");
-							current = 0;
-							break;
-						case 13:
-							break;
-						default:
-							if (isprint(buffer[w])) {
-								fprintf(file,"%c",buffer[w]);
-								current ++;
-							}
-							if (current == 75) {
-								fprintf(file,"\n;");
-								current = 0;
-							}
-					}
-				}
-				fprintf(file,"\n");
+				buffer[75] = 0;
+				pos = strchr(buffer, 13);
+				if (pos != NULL) *pos = 0;
+				pos = strchr(buffer, 10);
+				if (pos != NULL) *pos = 0;
+				fprintf(file,"; %s\n", buffer);
 				break;
 			default:
 				break;
