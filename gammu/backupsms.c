@@ -85,8 +85,6 @@ void BackupSMS(int argc UNUSED, char *argv[])
 	error = GSM_AddSMSBackupFile(argv[2],&Backup);
 	Print_Error(error);
 
-	GSM_FreeSMSBackup(&Backup);
-
 	if (DeleteAfter) {
 		for (j=0;j<smsnum;j++) {
 			Backup.SMS[j]->Folder = 0;
@@ -98,6 +96,8 @@ void BackupSMS(int argc UNUSED, char *argv[])
 				(j + 1) * 100 / smsnum);
 		}
 	}
+
+	GSM_FreeSMSBackup(&Backup);
 
 	GSM_Terminate();
 }
