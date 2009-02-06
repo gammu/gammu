@@ -132,6 +132,13 @@ endif (NOT HAVE_TOWLOWER)
 # Standard packages
 macro_optional_find_package (Threads)
 
+# Used (optionally for testing)
+find_program(SH_BIN sh)
+find_program(SQLITE_BIN sqlite3)
+find_program(SED_BIN sed)
+find_program(MYSQL_BIN mysql)
+find_program(PSQL_BIN psql)
+
 # Check for Python
 set (BUILD_PYTHON "" CACHE FILEPATH "Path to python interpreter")
 

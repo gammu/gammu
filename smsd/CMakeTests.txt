@@ -2,19 +2,10 @@
 # Copyright (c) 2007-2009 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4 ft=cmake:
 
-# This testing uses some programs
-find_program(SH_BIN sh)
-find_program(SQLITE_BIN sqlite3)
-find_program(SED_BIN sed)
-
-find_program(PSQL_BIN psql)
-
 set(PSQL_HOST 127.0.0.1 CACHE STRING "Host to use for PostgreSQL tests")
 set(PSQL_DATABASE smsd CACHE STRING "Database to use for PostgreSQL tests")
 set(PSQL_USER smsd CACHE STRING "User to use for PostgreSQL tests")
 set(PSQL_PASSWORD smsd CACHE STRING "Password to use for PostgreSQL tests")
-
-find_program(MYSQL_BIN mysql)
 
 set(MYSQL_HOST 127.0.0.1 CACHE STRING "Host to use for MySQL tests")
 set(MYSQL_DATABASE smsd CACHE STRING "Database to use for MySQL tests")
