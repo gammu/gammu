@@ -216,6 +216,17 @@ void SMSDDBI_Callback(dbi_conn Conn, void *Config)
 	SMSDDBI_LogError((GSM_SMSDConfig *)Config);
 }
 
+/* Disconnects from a database */
+static GSM_Error SMSDDBI_Free(GSM_SMSDConfig *Config)
+{
+	if (Config->DBConnDBI != NULL) {
+		dbi_conn_close(Config->DBConnDBI);
+		dbi_shutdown();
+		Config->DBConnDBI = NULL;
+	}
+	return ERR_NONE;
+}
+
 /* Connects to database */
 static GSM_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 {
@@ -243,63 +254,44 @@ static GSM_Error SMSDDBI_Connect(GSM_SMSDConfig * Config)
 
 	if (dbi_conn_set_option(Config->DBConnDBI, "sqlite_dbdir", Config->dbdir) != 0) {
 		SMSD_Log(-1, Config, "DBI failed to set sqlite_dbdir!");
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
+		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "sqlite3_dbdir", Config->dbdir) != 0) {
 		SMSD_Log(-1, Config, "DBI failed to set sqlite3_dbdir!");
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
+		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "host", Config->PC) != 0) {
 		SMSD_Log(-1, Config, "DBI failed to set host!");
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
+		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "username", Config->user) != 0) {
 		SMSD_Log(-1, Config, "DBI failed to set username!");
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
+		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "password", Config->password) != 0) {
 		SMSD_Log(-1, Config, "DBI failed to set password!");
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
+		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "dbname", Config->database) != 0) {
 		SMSD_Log(-1, Config, "DBI failed to set dbname!");
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
+		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 	if (dbi_conn_set_option(Config->DBConnDBI, "encoding", "UTF-8") != 0) {
 		SMSD_Log(-1, Config, "DBI failed to set encoding!");
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
+		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
 	}
 
 	if (dbi_conn_connect(Config->DBConnDBI) != 0) {
 		SMSD_Log(-1, Config, "DBI failed to connect!");
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
+		SMSDDBI_Free(Config);
 		return ERR_UNKNOWN;
-	}
-	return ERR_NONE;
-}
-
-/* Disconnects from a database */
-static GSM_Error SMSDDBI_Free(GSM_SMSDConfig *Config)
-{
-	if (Config->DBConnDBI != NULL) {
-		dbi_conn_close(Config->DBConnDBI);
-		dbi_shutdown();
-		Config->DBConnDBI = NULL;
 	}
 	return ERR_NONE;
 }
