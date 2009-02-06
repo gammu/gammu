@@ -80,13 +80,13 @@ target_link_libraries (gammu-smsd-inject libGammu)
 target_link_libraries (gammu-smsd-inject gsmsd)
 target_link_libraries (gammu-smsd-inject messagecmdline)
 
-if (HAVE_SHM)
+if (HAVE_SHM OR WIN32)
 # Gammu-smsd-monitor program
     add_executable (gammu-smsd-monitor ${MONITOR_SRC})
 
     target_link_libraries (gammu-smsd-monitor libGammu)
     target_link_libraries (gammu-smsd-monitor gsmsd)
-endif (HAVE_SHM)
+endif (HAVE_SHM OR WIN32)
 
 include_directories (
     "${Gammu_BINARY_DIR}/include"

@@ -35,6 +35,8 @@
 #include <stdlib.h>
 #endif
 
+#include <ctype.h>
+
 /* Some systems let waitpid(2) tell callers about stopped children. */
 #if !defined (WCONTINUED)
 #  define WCONTINUED 0
@@ -357,6 +359,9 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 #ifdef HAVE_SHM
 	char			fullpath[PATH_MAX + 1];
 #endif
+#ifdef WIN32
+	size_t i, len;
+#endif
 
 	memset(&smsdcfg, 0, sizeof(smsdcfg));
 
@@ -382,6 +387,15 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 		fullpath[PATH_MAX] = 0;
 	}
 	Config->shm_key = ftok(fullpath, SMSD_SHM_KEY);
+#endif
+#ifdef WIN32
+	len = sprintf(Config->map_key, "Gammu-smsd-%s", filename);
+	/* Replace some possibly dangerous chars */
+	for (i = 0; i < len; i++) {
+		if (!isalpha(Config->map_key[i]) && !isdigit(Config->map_key[i])) {
+			Config->map_key[i] = '_';
+		}
+	}
 #endif
 
 	error = INI_ReadFile(filename, false, &Config->smsdcfgfile);
@@ -1081,8 +1095,19 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure)
 		SMSD_Terminate(Config, "Failed to map shared memory segment!", ERR_NONE, true, -1);
 		goto done;
 	}
+#elif defined(WIN32)
+	Config->map_handle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READWRITE, 0, sizeof(GSM_SMSDStatus), Config->map_key);
+	if (Config->map_handle == NULL) {
+		SMSD_Terminate(Config, "Failed to allocate shared memory segment!", ERR_NONE, true, -1);
+		goto done;
+	}
+	Config->Status = MapViewOfFile(Config->map_handle, FILE_MAP_ALL_ACCESS, 0, 0, sizeof(GSM_SMSDStatus));
 #else
 	Config->Status = malloc(sizeof(GSM_SMSDStatus));
+	if (Config->Status == NULL) {
+		SMSD_Terminate(Config, "Failed to map shared memory segment!", ERR_NONE, true, -1);
+		goto done;
+	}
 #endif
 	Config->Status->Version = SMSD_SHM_VERSION;
 	Config->running = true;
@@ -1197,6 +1222,9 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure)
 #ifdef HAVE_SHM
 	shmdt(Config->Status);
 	shmctl(Config->shm_handle, IPC_RMID, NULL);
+#elif defined(WIN32)
+	UnmapViewOfFile(Config->Status);
+	CloseHandle(Config->map_handle);
 #else
 	free(Config->Status);
 #endif
@@ -1225,12 +1253,13 @@ GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms)
 
 GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
 {
-#ifdef HAVE_SHM
 	if (Config->running) {
 		memcpy(status, Config->Status, sizeof(GSM_SMSDStatus));
 		return ERR_NONE;
 	}
-	/* Allocate world redable SHM segment */
+#if defined(HAVE_SHM) || defined(WIN32)
+	/* Get SHM segment */
+#ifdef HAVE_SHM
 	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), S_IRWXU | S_IRGRP | S_IROTH);
 	if (Config->shm_handle == -1) {
 		return ERR_NOTRUNNING;
@@ -1243,9 +1272,25 @@ GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
 		shmdt(Config->Status);
 		return ERR_WRONGCRC;
 	}
+#else
+	Config->map_handle = CreateFileMapping(INVALID_HANDLE_VALUE, NULL, PAGE_READONLY, 0, sizeof(GSM_SMSDStatus), Config->map_key);
+	if (Config->map_handle == NULL) {
+		return ERR_NOTRUNNING;
+	}
+	Config->Status = MapViewOfFile(Config->map_handle, FILE_MAP_READ, 0, 0, sizeof(GSM_SMSDStatus));
+	if (Config->Status == NULL) {
+		return ERR_UNKNOWN;
+	}
+#endif
 	memcpy(status, Config->Status, sizeof(GSM_SMSDStatus));
 
+#ifdef HAVE_SHM
 	shmdt(Config->Status);
+	shmctl(Config->shm_handle, IPC_RMID, NULL);
+#else
+	UnmapViewOfFile(Config->Status);
+	CloseHandle(Config->map_handle);
+#endif
 	return ERR_NONE;
 #else
 	return ERR_NOTSUPPORTED;

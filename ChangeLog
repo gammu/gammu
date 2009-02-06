@@ -23,6 +23,7 @@ ChangeLog
 [-] * Fix decoding of another Nokia message type.
 [-] * Support for passing received message ID in DBI.
 [-] * Dummy phone now supports phonebook.
+[-] * Experimental SMSD monitor support on Windows.
 
 20090202 - 1.22.93
 
