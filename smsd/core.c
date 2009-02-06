@@ -153,6 +153,19 @@ void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bo
 	}
 }
 
+GSM_Error SMSD_Init(GSM_SMSDConfig *Config, GSM_SMSDService *Service) {
+	GSM_Error error;
+
+	if (Config->connected) return ERR_NONE;
+
+	error = Service->Init(Config);
+	if (error == ERR_NONE) {
+		Config->connected = true;
+	}
+
+	return error;
+}
+
 PRINTF_STYLE(3, 4)
 void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...)
 {
@@ -321,8 +334,9 @@ void SMSD_FreeConfig(GSM_SMSDConfig *Config)
 	GSM_Error error;
 
 	error = SMSGetService(Config, &Service);
-	if (error == ERR_NONE) {
+	if (error == ERR_NONE && Config->connected) {
 		Service->Free(Config);
+		Config->connected = false;
 	}
 	SMSD_CloseLog(Config);
 	free(Config->gammu_log_buffer);
@@ -348,6 +362,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 
 	Config->shutdown = false;
 	Config->running = false;
+	Config->connected = false;
 	Config->failure = ERR_NONE;
 	Config->exit_on_failure = true;
 	Config->gsm = GSM_AllocStateMachine();
@@ -1040,6 +1055,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure)
 	int i;
 
 	Config->running = true;
+	Config->connected = false;
 	Config->failure = ERR_NONE;
 	Config->exit_on_failure = exit_on_failure;
 	error = SMSGetService(Config, &Service);
@@ -1048,7 +1064,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure)
 		goto done;
 	}
 
-	error = Service->Init(Config);
+	error = SMSD_Init(Config, Service);
 	if (error!=ERR_NONE) {
 		SMSD_Terminate(Config, "Initialisation failed, stopping Gammu smsd", error, true, -1);
 		goto done;
@@ -1196,7 +1212,7 @@ GSM_Error SMSD_InjectSMS(GSM_SMSDConfig		*Config, GSM_MultiSMSMessage *sms)
 	error = SMSGetService(Config, &Service);
 	if (error != ERR_NONE) return ERR_UNKNOWN;
 
-	error = Service->Init(Config);
+	error = SMSD_Init(Config, Service);
 	if (error != ERR_NONE) return ERR_UNKNOWN;
 
 	error = Service->CreateOutboxSMS(sms, Config);
@@ -1213,7 +1229,7 @@ GSM_Error SMSD_GetStatus(GSM_SMSDConfig *Config, GSM_SMSDStatus *status)
 	/* Allocate world redable SHM segment */
 	Config->shm_handle = shmget(Config->shm_key, sizeof(GSM_SMSDStatus), S_IRWXU | S_IRGRP | S_IROTH);
 	if (Config->shm_handle == -1) {
-		return ERR_UNKNOWN;
+		return ERR_NOTRUNNING;
 	}
 	Config->Status = shmat(Config->shm_handle, NULL, 0);
 	if (Config->Status == (void *) -1) {
