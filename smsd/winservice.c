@@ -11,6 +11,7 @@
 #include <gammu-smsd.h>
 
 #include "winservice.h"
+#include "log.h"
 
 char smsd_service_name[SERVICE_NAME_LENGTH] = "GammuSMSD";
 
@@ -102,7 +103,8 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 							   SMSDServiceCtrlHandler);
 	if (m_ServiceStatusHandle == (SERVICE_STATUS_HANDLE) 0) {
 		service_print_error("Failed to initiate service");
-		SMSD_Terminate(config, "Failed to initiate service", ERR_NONE, true, 2);
+		SMSD_Log(-1, config, "Failed to initiate service");
+		return;
 	}
 
 	if (!report_service_status(SERVICE_START_PENDING, NO_ERROR, 3000))
@@ -113,7 +115,8 @@ void WINAPI ServiceMain(DWORD argc, LPTSTR * argv)
 	error = SMSD_MainLoop(config, false);
 	if (error != ERR_NONE) {
 		report_service_status(SERVICE_STOPPED, error, 0);
-		SMSD_Terminate(config, "Failed to run SMSD", error, true, 2);
+		SMSD_Log(-1, config, "Failed to start SMSD");
+		return;
 	} else {
 		report_service_status(SERVICE_STOPPED, NO_ERROR, 0);
 	}
