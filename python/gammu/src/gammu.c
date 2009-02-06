@@ -5703,6 +5703,9 @@ gammu_DecodeICS(PyObject *self, PyObject *args, PyObject *kwds)
     GSM_CalendarEntry           calendar_entry;
     GSM_Error                   error;
 
+    todo_entry.Location = 0;
+    calendar_entry.Location = 0;
+
     if (!PyArg_ParseTupleAndKeywords(args, kwds, "s", kwlist,
                 &buffer))
         return NULL;
