@@ -145,6 +145,7 @@ static PrintErrorEntry PrintErrorEntries[] = {
 	{ERR_DISABLED, "DISABLED",		N_("Desired functionality has been disabled on compile time.")},
 	{ERR_SPECIFYCHANNEL, "SPECIFYCHANNEL", N_("Bluetooth configuration requires channel option.")},
 	{ERR_NOTRUNNING, "NOTRUNNING", N_("Service is not runnig.")},
+	{ERR_NOSERVICE, "NOSERVICE", N_("Service configuration is missing.")},
 
 	{0,	"",				""}
 };

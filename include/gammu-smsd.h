@@ -112,18 +112,6 @@ GSM_Error SMSD_Shutdown(GSM_SMSDConfig *Config);
 GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool uselog);
 
 /**
- * Terminates SMSD with logging error messages to log. This does not
- * signal running SMSD to stop, it can be called from initialization of
- * SMSD wrapping program to terminate with logging.
- *
- * \param Config Pointer to SMSD configuration data.
- * \param msg Message to display.
- * \param error GSM error code, if applicable.
- * \param rc Program return code, will be passed to exit (if enabled).
- */
-void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bool exitprogram, int rc);
-
-/**
  * Main SMS daemon loop. It connects to phone, scans for messages and
  * sends messages from inbox. Can be interrupted by SMSD_Shutdown.
  *

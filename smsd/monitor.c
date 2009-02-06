@@ -209,14 +209,17 @@ int main(int argc, char **argv)
 
 	error = SMSD_ReadConfig(params.config_file, config, true);
 	if (error != ERR_NONE) {
-		SMSD_Terminate(config, "Failed to read config", error, true, 2);
+		printf("Failed to read config: %s\n", GSM_ErrorString(error));
+		SMSD_FreeConfig(config);
+		return 2;
 	}
 
 	while (!terminate && (limit_loops == -1 || limit_loops-- > 0)) {
 		error = SMSD_GetStatus(config, &status);
 		if (error != ERR_NONE) {
 			printf("Failed to get status: %s\n", GSM_ErrorString(error));
-			return 2;
+			SMSD_FreeConfig(config);
+			return 3;
 		}
 		if (compact) {
 			printf("%s;%s;%s;%d;%d;%d;%d;%d\n",

@@ -191,13 +191,16 @@ int main(int argc, char **argv)
 
 	error = SMSD_ReadConfig(params.config_file, config, true);
 	if (error != ERR_NONE) {
-		SMSD_Terminate(config, "Failed to read config", error, true, 2);
+		printf("Failed to read config: %s\n", GSM_ErrorString(error));
+		SMSD_FreeConfig(config);
+		return 2;
 	}
 
 	error = SMSD_InjectSMS(config, &sms);
 	if (error != ERR_NONE) {
 		printf("Failed to inject message: %s\n", GSM_ErrorString(error));
-		return 2;
+		SMSD_FreeConfig(config);
+		return 3;
 	}
 
 	SMSD_FreeConfig(config);
