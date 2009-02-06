@@ -133,10 +133,12 @@ bool SMSDDBI_GetBool(GSM_SMSDConfig * Config, dbi_result res, const char *field)
 		case DBI_TYPE_STRING:
 			value= dbi_result_get_string(res, field);
 			SMSD_Log(-1, Config, "Got bool as %s (Field = %s, type = %d)", value, field, type);
-			if (strcasecmp(value, "yes") == 0 || strcasecmp(value, "true") == 0) {
+			if (strcasecmp(value, "yes") == 0 || strcasecmp(value, "true") == 0 ||
+					strcasecmp(value, "y") == 0 || strcasecmp(value, "t") == 0) {
 				return true;
 			}
-			if (strcasecmp(value, "no") == 0 || strcasecmp(value, "false") == 0) {
+			if (strcasecmp(value, "no") == 0 || strcasecmp(value, "false") == 0 ||
+					strcasecmp(value, "n") == 0 || strcasecmp(value, "f") == 0) {
 				return true;
 			}
 			if (strcasecmp(value, "default") == 0) {
