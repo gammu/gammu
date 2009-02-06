@@ -17,6 +17,9 @@ if(COMMAND cmake_policy)
 endif(COMMAND cmake_policy)
 
 option (COVERAGE "Add flags for Coverage analysis" OFF)
+option (ONLINE_TESTING "Enable testing of parts which use remote servers" OFF)
+option (PSQL_TESTING "Enable testing of PostgreSQL SMSD backend" OFF)
+option (MYSQL_TESTING "Enable testing of MySQL SMSD backend" OFF)
 
 if (CMAKE_CROSSCOMPILING AND MINGW)
     set (GAMMU_TEST_SUFFIX ".exe")
