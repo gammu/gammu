@@ -102,6 +102,13 @@
    fun:_PyObject_GC_NewVar
    fun:COMMENT_THIS_LINE_TO_DISABLE_LEAK_WARNING
 }
+{
+   Something inside posix (not leak)
+   Memcheck:Leak
+   fun:malloc
+   fun:PyFloat_FromDouble
+   fun:_pystat_fromstructstat
+}
 
 #
 # Non-python specific leaks
@@ -480,16 +487,6 @@
    fun:malloc
    fun:_PyObject_GC_NewVar
    fun:PyFrame_New
-   fun:Py_InitializeEx
-}
-
-{
-   536 bytes in 1 blocks are still reachable
-   Memcheck:Leak
-   fun:malloc
-   fun:_PyObject_GC_NewVar
-   fun:PyFrame_New
-   fun:PyEval_EvalCodeEx
 }
 
 {
@@ -499,7 +496,15 @@
    fun:_PyObject_GC_Malloc
    fun:_PyObject_GC_NewVar
    fun:PyFrame_New
-   fun:PyEval_EvalCodeEx
+}
+
+{
+   Dont know ;-)
+   Memcheck:Leak
+   fun:malloc
+   fun:fill_free_list
+   fun:PyInt_FromLong
+   fun:analyze_block
 }
 
 {
