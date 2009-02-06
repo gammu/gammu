@@ -23,10 +23,7 @@
 /* Disconnects from a database */
 static GSM_Error SMSDMySQL_Free(GSM_SMSDConfig *Config)
 {
-	if (Config->connected) {
-		mysql_close(&Config->DBConnMySQL);
-		Config->connected = false;
-	}
+	mysql_close(&Config->DBConnMySQL);
 	return ERR_NONE;
 }
 
@@ -138,7 +135,6 @@ static GSM_Error SMSDMySQL_Init(GSM_SMSDConfig *Config)
 	mysql_free_result(Res);
 	mysql_query(&Config->DBConnMySQL,"SET NAMES utf8;");
 	SMSD_Log(0, Config, "Connected to Database: %s on %s", Config->database, Config->PC);
-	Config->connected = true;
 	return ERR_NONE;
 }
 
