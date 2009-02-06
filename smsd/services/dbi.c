@@ -900,7 +900,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 	dbi_result Res;
 	char *encoded_text;
 
-	sprintf(buffer, "SELECT ID FROM outbox ORDER BY ID DESC LIMIT 1");
+	sprintf(buffer, "SELECT MAX(ID) AS ID FROM outbox");
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
@@ -914,7 +914,7 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 	}
 	dbi_result_free(Res);
 
-	sprintf(buffer, "SELECT ID FROM sentitems ORDER BY ID DESC LIMIT 1");
+	sprintf(buffer, "SELECT MAX(ID) AS ID FROM sentitems");
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
 		return ERR_UNKNOWN;
