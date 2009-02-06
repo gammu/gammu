@@ -427,7 +427,7 @@ GSM_Error SMSD_ReadConfig(const char *filename, GSM_SMSDConfig *Config, bool use
 	Config->Service = INI_GetValue(Config->smsdcfgfile, "smsd", "service", false);
 	if (Config->Service == NULL) {
 		SMSD_Log(-1, Config, "No SMSD service configured, please set service to use in configuration file!");
-		return ERR_UNCONFIGURED;
+		return ERR_NOSERVICE;
 	}
 
 	SMSD_Log(1, Config, "Configuring Gammu SMSD...");

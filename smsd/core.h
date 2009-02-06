@@ -171,6 +171,18 @@ void SMSD_Log(int level, GSM_SMSDConfig *Config, const char *format, ...);
  */
 GSM_Error SMSD_CheckDBVersion(GSM_SMSDConfig *Config, int version);
 
+/**
+ * Terminates SMSD with logging error messages to log. This does not
+ * signal running SMSD to stop, it can be called from initialization of
+ * SMSD wrapping program to terminate with logging.
+ *
+ * \param Config Pointer to SMSD configuration data.
+ * \param msg Message to display.
+ * \param error GSM error code, if applicable.
+ * \param rc Program return code, will be passed to exit (if enabled).
+ */
+void SMSD_Terminate(GSM_SMSDConfig *Config, const char *msg, GSM_Error error, bool exitprogram, int rc);
+
 /* How should editor hadle tabs in this file? Add editor commands here.
  * vim: noexpandtab sw=8 ts=8 sts=8:
  */

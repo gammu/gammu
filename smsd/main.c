@@ -411,7 +411,9 @@ read_config:
 
 	error = SMSD_ReadConfig(params.config_file, config, true);
 	if (error != ERR_NONE) {
-		SMSD_Terminate(config, "Failed to read config", error, true, 2);
+		printf("Failed to read config: %s\n", GSM_ErrorString(error));
+		SMSD_FreeConfig(config);
+		return 2;
 	}
 
 	if (!reconfigure)
@@ -420,7 +422,9 @@ read_config:
 	reconfigure = false;
 	error = SMSD_MainLoop(config, true);
 	if (error != ERR_NONE) {
-		SMSD_Terminate(config, "Failed to run SMSD", error, true, 2);
+		printf("Failed to run SMSD: %s\n", GSM_ErrorString(error));
+		SMSD_FreeConfig(config);
+		return 2;
 	}
 
 	SMSD_FreeConfig(config);

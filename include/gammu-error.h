@@ -285,6 +285,10 @@ typedef enum {
 	 * Service is not runnig.
 	 */
 	ERR_NOTRUNNING,
+	/**
+	 * Service setup is missing.
+	 */
+	ERR_NOSERVICE,
 
 	/**
 	 * Just marker of highest error code, should not be used.
