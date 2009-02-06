@@ -18,8 +18,8 @@ int single_test(const char *string, GSM_Error expected)
 	if (real != expected) {
 		printf("Failed parsing of %s (got %s, expected %s)\n",
 				string,
-				GSM_ErrorString(real),
-				GSM_ErrorString(expected));
+				GSM_FeatureToString(real),
+				GSM_FeatureToString(expected));
 		return 1;
 	}
 	return 0;
