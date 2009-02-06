@@ -91,6 +91,11 @@ time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, dbi_result res, const char *fiel
 			date = dbi_result_get_string(res, field);
 			SMSD_Log(-1, Config, "Got date as %s (Field = %s, type = %d)", date, field, type);
 			parse_res = strptime(date, "%Y-%m-%d %H:%M:%S", &timestruct);
+			timestruct.tm_isdst = 0;
+#ifdef HAVE_STRUCT_TM_TM_ZONE
+			timestruct.tm_gmtoff = 0;
+			timestruct.tm_zone = NULL;
+#endif
 			if (parse_res != NULL && *parse_res == 0) {
 				return mktime(&timestruct);
 			}
