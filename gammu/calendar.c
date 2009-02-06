@@ -1017,7 +1017,7 @@ void GetAllToDo(int argc UNUSED, char *argv[]UNUSED)
 
 	GSM_Init(true);
 
-	Entry.Location = 0;
+	ToDo.Location = 0;
 
 	while (!gshutdown) {
 		error = GSM_GetNextToDo(gsm, &ToDo, start);
