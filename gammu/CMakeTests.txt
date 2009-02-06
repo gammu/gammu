@@ -184,6 +184,7 @@ gammu_test(getallsms "4 SMS parts in 4 SMS sequences")
 gammu_test(geteachsms "4 SMS parts in 4 SMS sequences")
 gammu_test_fail(deletesms "Entry is empty" 1 99)
 gammu_test(addsms "" 1 "${Gammu_SOURCE_DIR}/tests/at-sms-encode/66.backup" "-yes")
+gammu_test(backupsms "" "${CMAKE_CURRENT_BINARY_DIR}/test.smsbackup" "-yes")
 gammu_test(deletesms "" 1 2)
 
 gammu_test(getallmemory "Name                 : \"firstname lastname\"" SM)

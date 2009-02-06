@@ -26,6 +26,8 @@ void BackupSMS(int argc UNUSED, char *argv[])
 	int			j, smsnum = 0;
 	char			buffer[200];
 
+	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
+
 	GSM_Init(true);
 
 	Backup.SMS[0] = NULL;
