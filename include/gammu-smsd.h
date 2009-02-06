@@ -25,7 +25,7 @@ typedef struct _GSM_SMSDConfig GSM_SMSDConfig;
 /**
  * Length of texts in GSM_SMSDStatus structure.
  */
-#define SMSD_TEXT_LENGTH 100
+#define SMSD_TEXT_LENGTH 255
 
 /**
  * Status structure, which can be found in shared memory (if supported

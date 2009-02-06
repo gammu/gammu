@@ -426,7 +426,7 @@ static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
 
 static GSM_Error SMSDDBI_InitAfterConnect(GSM_SMSDConfig * Config)
 {
-	unsigned char buf[400], buf2[200];
+	unsigned char buf[600];
 
 	dbi_result Res;
 
@@ -438,21 +438,12 @@ static GSM_Error SMSDDBI_InitAfterConnect(GSM_SMSDConfig * Config)
 	}
 	dbi_result_free(Res);
 
-	sprintf(buf2, "Gammu %s", VERSION);
-	if (strlen(GetOS()) != 0) {
-		strcat(buf2 + strlen(buf2), ", ");
-		strcat(buf2 + strlen(buf2), GetOS());
-	}
-	if (strlen(GetCompiler()) != 0) {
-		strcat(buf2 + strlen(buf2), ", ");
-		strcat(buf2 + strlen(buf2), GetCompiler());
-	}
-
 	sprintf(buf,
 		"INSERT INTO phones (IMEI, ID, Send, Receive, InsertIntoDB, TimeOut, Client, Battery, Signal) VALUES ('%s', '%s', 'yes', 'yes', %s, %s, '%s', -1, -1)",
 		Config->Status->IMEI, Config->PhoneID,
 		SMSDDBI_Now(Config),
-		SMSDDBI_NowPlus(Config, 10), buf2);
+		SMSDDBI_NowPlus(Config, 10),
+		Config->Status->Client);
 
 	if (SMSDDBI_Query(Config, buf, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error inserting into database (%s)", __FUNCTION__);
