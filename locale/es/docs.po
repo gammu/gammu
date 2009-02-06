@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Gammu-docs 1.22.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-05 10:02+0100\n"
+"POT-Creation-Date: 2009-02-06 14:27+0100\n"
 "PO-Revision-Date: 2009-02-03 21:56+0100\n"
 "Last-Translator: Alejandro Caldito <acaldito@amena.com>\n"
 "Language-Team: none\n"
@@ -26,13 +26,13 @@ msgstr "GAMMU"
 # type: TH
 #: docs/user/gammu.1:1
 #, fuzzy, no-wrap
-msgid "Feb 2 2009"
+msgid "Feb 6 2009"
 msgstr "2 de Febrero del 2009"
 
 # type: TH
 #: docs/user/gammu.1:1
-#, no-wrap
-msgid "Gammu 1.22.93"
+#, fuzzy, no-wrap
+msgid "Gammu 1.22.94"
 msgstr "Gammu 1.22.93"
 
 # type: TH
@@ -307,8 +307,8 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:104 docs/user/gammu.1:1371
-#, no-wrap
-msgid "B<addsms>I< folder file>"
+#, fuzzy, no-wrap
+msgid "B<addsms>I< folder file [-yes]>"
 msgstr "B<addsms>I< carpeta  archivo>"
 
 # type: Plain text
@@ -328,8 +328,8 @@ msgstr "B<addsmsfolder>I< nombre>"
 
 # type: TP
 #: docs/user/gammu.1:111 docs/user/gammu.1:1451
-#, no-wrap
-msgid "B<backupsms>I< file>"
+#, fuzzy, no-wrap
+msgid "B<backupsms>I< file [-yes]>"
 msgstr "B<backupsms>I< archivo>"
 
 # type: Plain text
@@ -476,9 +476,9 @@ msgstr ""
 
 # type: TP
 #: docs/user/gammu.1:172 docs/user/gammu.1:1464
-#, no-wrap
-msgid "B<restoresms>I< file>"
-msgstr ""
+#, fuzzy, no-wrap
+msgid "B<restoresms>I< file [-yes]>"
+msgstr "B<deletesms>I< carpeta start [stop]>"
 
 # type: Plain text
 #: docs/user/gammu.1:177 docs/user/gammu.1:1469

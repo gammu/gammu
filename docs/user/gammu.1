@@ -1,4 +1,4 @@
-.TH "GAMMU" "1" "Feb  2 2009" "Gammu 1.22.93" "Gammu Documentation"
+.TH "GAMMU" "1" "Feb  6 2009" "Gammu 1.22.94" "Gammu Documentation"
 
 .SH "NAME"
 
@@ -102,14 +102,14 @@ But be patient, the command line has been written in order to allow
 almost every usage. See EXAMPLE section for some hints on usage.
 
 .TP
-.BI "addsms" " folder file"
+.BI "addsms" " folder file [\-yes]"
 Adds SMSes from file (format like backupsms uses) to
 selected folder in phone.
 .TP
 .BI "addsmsfolder" " name"
 
 .TP
-.BI "backupsms" " file"
+.BI "backupsms" " file [\-yes]"
 Stores all SMSes from phone to file.
 .TP
 .BI "deleteallsms" " folder"
@@ -170,7 +170,7 @@ Get names for SMS folders in phone
 .BI "nokiagett9"
 
 .TP
-.BI "restoresms" " file"
+.BI "restoresms" " file [\-yes]"
 Restores SMSes from file (format like backupsms uses) to
 selected folder in phone. Please note that this overwrites existing
 messages in phone (if it supports it).
@@ -1369,7 +1369,7 @@ does not care about current data in the phone (no duplicates are
 detected).
 
 .TP
-.BI "addsms" " folder file"
+.BI "addsms" " folder file [\-yes]"
 Adds SMSes from file (format like backupsms uses) to
 selected folder in phone.
 .TP
@@ -1449,7 +1449,7 @@ F: Type = NumberGeneral\\nEntry\\([0\-9][0\-9]\\)Text = "\\+36\\([2367]0\\)\\([^
 R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 
 .TP
-.BI "backupsms" " file"
+.BI "backupsms" " file [\-yes]"
 Stores all SMSes from phone to file.
 .TP
 .BI "restore" " file [\-yes]"
@@ -1462,7 +1462,7 @@ In some phones restoring calendar notes will not show error, but won't
 be done, when phone doesn't have set clock inside.
 
 .TP
-.BI "restoresms" " file"
+.BI "restoresms" " file [\-yes]"
 Restores SMSes from file (format like backupsms uses) to
 selected folder in phone. Please note that this overwrites existing
 messages in phone (if it supports it).
