@@ -900,6 +900,9 @@ static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 	dbi_result Res;
 	char *encoded_text;
 
+	/* Finding next ID. */
+	/* @bug This way is safe as no one else writes to database... */
+
 	sprintf(buffer, "SELECT MAX(ID) AS ID FROM outbox");
 	if (SMSDDBI_Query(Config, buffer, &Res) != ERR_NONE) {
 		SMSD_Log(0, Config, "Error reading from database (%s)", __FUNCTION__);
