@@ -55,7 +55,8 @@ dbdir = %s
 
 def CreateSQLiteDB():
     smsddb = os.path.join(DATA_DIR, 'smsd.db')
-    os.unlink(smsddb)
+    if os.path.exists(smsddb):
+        os.unlink(smsddb)
     os.system('%s %s < %s' % (
         SQLITE_BIN,
         smsddb,
@@ -101,10 +102,10 @@ if __name__ == '__main__':
         smsd_thread.join()
     # Catch any exception and signal smsd to stop and reraise it
     except Exception, exc:
+        traceback.print_exc()
         try:
             smsd.Shutdown()
         except:
             pass
-        traceback.print_exc()
         raise exc
 
