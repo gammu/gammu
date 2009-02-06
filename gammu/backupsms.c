@@ -24,7 +24,6 @@ void BackupSMS(int argc UNUSED, char *argv[])
 	bool			start = true;
 	bool			DeleteAfter;
 	int			j, smsnum = 0;
-	char			buffer[200];
 
 	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
 
@@ -41,7 +40,6 @@ void BackupSMS(int argc UNUSED, char *argv[])
 
 	for (j=0;j<folders.Number;j++) {
 		BackupFromFolder[j] = false;
-		if (folders.Folder[j].Memory == MEM_SM) strcat(buffer," (SIM)");
 		if (answer_yes(_("Backup sms from folder \"%s\"%s?"),
 				DecodeUnicodeConsole(folders.Folder[j].Name),
 				folders.Folder[j].Memory == MEM_SM ? _(" (SIM)") : ""
