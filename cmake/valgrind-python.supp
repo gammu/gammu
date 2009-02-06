@@ -905,6 +905,13 @@
    fun:fd_to_buffered_stream
 }
 {
+   Bash-11
+   Memcheck:Leak
+   fun:malloc
+   fun:xrealloc
+   fun:fd_to_buffered_stream
+}
+{
    Dash-1
    Memcheck:Leak
    fun:malloc
