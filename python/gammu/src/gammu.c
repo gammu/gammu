@@ -5671,6 +5671,9 @@ gammu_DecodeVCS(PyObject *self, PyObject *args, PyObject *kwds)
                 &buffer))
         return NULL;
 
+    todo_entry.Location = 0;
+    calendar_entry.Location = 0;
+
     error = GSM_DecodeVCALENDAR_VTODO(GSM_GetGlobalDebug(), buffer, &pos, &calendar_entry, &todo_entry, SonyEricsson_VCalendar, SonyEricsson_VToDo);
     if (!checkError(NULL, error, "DecodeVCS")) return NULL;
 
