@@ -1054,7 +1054,6 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure)
  	time_t			lastreceive, lastreset = 0;
 	int i;
 
-	Config->running = true;
 	Config->connected = false;
 	Config->failure = ERR_NONE;
 	Config->exit_on_failure = exit_on_failure;
@@ -1086,8 +1085,12 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure)
 	Config->Status = malloc(sizeof(GSM_SMSDStatus));
 #endif
 	Config->Status->Version = SMSD_SHM_VERSION;
+	Config->running = true;
 	strcpy(Config->Status->PhoneID, Config->PhoneID);
-	sprintf(Config->Status->Client, "Gammu " VERSION);
+	sprintf(Config->Status->Client, "Gammu %s on %s compiler %s",
+		VERSION,
+		GetOS(),
+		GetCompiler());
 	memset(&Config->Status->Charge, 0, sizeof(GSM_BatteryCharge));
 	memset(&Config->Status->Network, 0, sizeof(GSM_SignalQuality));
 	Config->Status->Received = 0;
@@ -1193,6 +1196,7 @@ GSM_Error SMSD_MainLoop(GSM_SMSDConfig *Config, bool exit_on_failure)
 
 #ifdef HAVE_SHM
 	shmdt(Config->Status);
+	shmctl(Config->shm_handle, IPC_RMID, NULL);
 #else
 	free(Config->Status);
 #endif

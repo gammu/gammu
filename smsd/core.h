@@ -22,7 +22,7 @@
 #ifdef HAVE_SHM
 #include <sys/types.h>
 
-#define SMSD_SHM_KEY (0x42)
+#define SMSD_SHM_KEY (0x4242)
 
 #endif
 #define SMSD_SHM_VERSION (1)
