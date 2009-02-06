@@ -3,6 +3,7 @@
 # vim: expandtab sw=4 ts=4 sts=4 ft=cmake:
 
 
+file(REMOVE_RECURSE "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy")
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy")
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/1")
 file(MAKE_DIRECTORY "${CMAKE_CURRENT_BINARY_DIR}/.gammu-dummy/sms/2")
