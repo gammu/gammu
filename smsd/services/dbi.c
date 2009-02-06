@@ -426,7 +426,7 @@ static GSM_Error SMSDDBI_Init(GSM_SMSDConfig * Config)
 
 static GSM_Error SMSDDBI_InitAfterConnect(GSM_SMSDConfig * Config)
 {
-	unsigned char buf[600];
+	char buf[600];
 
 	dbi_result Res;
 
@@ -463,7 +463,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 	dbi_result Res = NULL;
 	char *encoded_text;
 
-	unsigned char buffer[10000], buffer2[400], buffer3[50];
+	char buffer[10000], buffer2[400], buffer3[50];
 	int i;
 	time_t t_time1, t_time2;
 	bool found;
@@ -681,7 +681,7 @@ static GSM_Error SMSDDBI_SaveInboxSMS(GSM_MultiSMSMessage *sms,
 static GSM_Error SMSDDBI_RefreshSendStatus(GSM_SMSDConfig * Config,
 					     char *ID)
 {
-	unsigned char buffer[10000];
+	char buffer[10000];
 	dbi_result Res;
 
 	sprintf(buffer, "UPDATE outbox SET SendingTimeOut = %s "
@@ -710,7 +710,7 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 					 GSM_SMSDConfig * Config,
 					 char *ID)
 {
-	unsigned char buf[400];
+	char buf[400];
 	dbi_result Res;
 	int i;
 	bool found = false;
@@ -870,7 +870,7 @@ static GSM_Error SMSDDBI_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 				   GSM_SMSDConfig * Config, char *ID,
 				   bool alwaysDelete UNUSED, bool sent UNUSED)
 {
-	unsigned char buffer[10000];
+	char buffer[10000];
 	dbi_result Res;
 
 	sprintf(buffer, "DELETE FROM outbox WHERE ID = '%s'", ID);
@@ -894,7 +894,7 @@ static GSM_Error SMSDDBI_MoveSMS(GSM_MultiSMSMessage * sms UNUSED,
 static GSM_Error SMSDDBI_CreateOutboxSMS(GSM_MultiSMSMessage * sms,
 					   GSM_SMSDConfig * Config)
 {
-	unsigned char buffer[10000], buffer2[400], buffer4[10000];
+	char buffer[10000], buffer2[400], buffer4[10000];
 	int i;
 	unsigned int ID;
 	dbi_result Res;
@@ -1080,7 +1080,7 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 {
 	dbi_result Res;
 
-	unsigned char buffer[10000], buffer2[400], buff[50];
+	char buffer[10000], buffer2[400], buff[50];
 	char *encoded_text;
 
 	if (err == SMSD_SEND_OK) {
@@ -1218,7 +1218,7 @@ static GSM_Error SMSDDBI_RefreshPhoneStatus(GSM_SMSDConfig * Config)
 {
 	dbi_result Res;
 
-	unsigned char buffer[500];
+	char buffer[500];
 
 	sprintf(buffer,
 		"UPDATE phones SET TimeOut= %s, Battery = %d, Signal = %d WHERE IMEI = '%s'",
