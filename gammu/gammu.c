@@ -670,7 +670,7 @@ static GSM_Parameters Parameters[] = {
 	{"savefile",			4, 5, SaveFile,			{H_Backup,H_Memory,0},		"VCARD10|VCARD21 target.vcf file SM|ME location"},
 	{"savefile",			4, 5, SaveFile,			{H_Backup,H_WAP,0},		"BOOKMARK target.url file location"},
 	{"backup",			1, 2, DoBackup,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
-	{"backupsms",			1, 2, BackupSMS,		{H_Backup,H_SMS,0},		"file [-yes]"},
+	{"backupsms",			1, 2, BackupSMS,		{H_Backup,H_SMS,0},		"file [-yes|-all]"},
 	{"restore",			1, 2, Restore,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
 	{"addnew",			1, 2, AddNew,			{H_Backup,H_Memory,H_Calendar,H_ToDo,H_Category,H_Ringtone,H_WAP,H_FM,0},			"file [-yes]"},
 	{"restoresms",		1, 2, RestoreSMS,		{H_Backup,H_SMS,0},		"file [-yes]"},
