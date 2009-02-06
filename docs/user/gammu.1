@@ -110,7 +110,12 @@ selected folder in phone.
 
 .TP
 .BI "backupsms" " file [\-yes]"
-Stores all SMSes from phone to file.
+Stores all SMSes from phone to file. 
+
+Use -yes for answering yes to all questions (backup all messages and 
+delete them from phone), or -all to just backup all folders while keeping
+messages in phone.
+
 .TP
 .BI "deleteallsms" " folder"
 Delete all SMS from specified SMS folder.
@@ -1450,7 +1455,12 @@ R: Type = NumberMobile\\nEntry\\1Text = "\\+36\\2\\3"\\n
 
 .TP
 .BI "backupsms" " file [\-yes]"
-Stores all SMSes from phone to file.
+Stores all SMSes from phone to file. 
+
+Use -yes for answering yes to all questions (backup all messages and 
+delete them from phone), or -all to just backup all folders while keeping
+messages in phone.
+
 .TP
 .BI "restore" " file [\-yes]"
 Restore settings written in file created using \fBbackup\fR option. 

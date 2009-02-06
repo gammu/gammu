@@ -821,7 +821,12 @@ F: Type = NumberGeneral\\\\nEntry\\\\([0\\-9][0\\-9]\\\\)Text = "\\\\+36\\\\([23
 .br
 R: Type = NumberMobile\\\\nEntry\\\\1Text = "\\\\+36\\\\2\\\\3"\\\\n
 '''
-HELP['backupsms'] = '''Stores all SMSes from phone to file.''' 
+HELP['backupsms'] = '''Stores all SMSes from phone to file. 
+
+Use -yes for answering yes to all questions (backup all messages and 
+delete them from phone), or -all to just backup all folders while keeping
+messages in phone.
+''' 
 HELP['addsms'] = '''Adds SMSes from file (format like backupsms uses) to
 selected folder in phone.'''
 HELP['restoresms'] = '''Restores SMSes from file (format like backupsms uses) to

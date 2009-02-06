@@ -22,10 +22,19 @@ void BackupSMS(int argc UNUSED, char *argv[])
 	GSM_SMSFolders		folders;
 	bool			BackupFromFolder[GSM_MAX_SMS_FOLDERS];
 	bool			start = true;
-	bool			DeleteAfter;
+	bool			DeleteAfter, askdelete = true;
 	int			j, smsnum = 0;
 
-	if (argc == 4 && strcasecmp(argv[3],"-yes") == 0) always_answer_yes = true;
+	if (argc == 4) {
+		if (strcasecmp(argv[3],"-yes") == 0) {
+			always_answer_yes = true;
+		}
+		if (strcasecmp(argv[3],"-all") == 0) {
+			always_answer_yes = true;
+			askdelete = false;
+			DeleteAfter = false;
+		}
+	}
 
 	GSM_Init(true);
 
@@ -36,7 +45,9 @@ void BackupSMS(int argc UNUSED, char *argv[])
 	error=GSM_GetSMSFolders(gsm, &folders);
 	Print_Error(error);
 
-	DeleteAfter=answer_yes(_("Delete each sms after backup?"));
+	if (askdelete) {
+		DeleteAfter = answer_yes(_("Delete each sms after backup?"));
+	}
 
 	for (j=0;j<folders.Number;j++) {
 		BackupFromFolder[j] = false;
