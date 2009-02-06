@@ -105,7 +105,48 @@ time_t SMSDDBI_GetDate(GSM_SMSDConfig * Config, dbi_result res, const char *fiel
 			return dbi_result_get_datetime(res, field);
 		case DBI_TYPE_ERROR:
 		default:
-			SMSD_Log(-1, Config, "Wrong field type! (Field = %s, type = %d)", field, type);
+			SMSD_Log(-1, Config, "Wrong date field type! (Field = %s, type = %d)", field, type);
+			return -1;
+	}
+}
+
+bool SMSDDBI_GetBool(GSM_SMSDConfig * Config, dbi_result res, const char *field)
+{
+	unsigned int type;
+	const char *value;
+	int num;
+
+	type = dbi_result_get_field_type(res, field);
+
+	switch (type) {
+		case DBI_TYPE_INTEGER:
+		case DBI_TYPE_DECIMAL:
+			num = SMSDDBI_GetNumber(Config, res, field);
+			SMSD_Log(-1, Config, "Got bool as %d (Field = %s, type = %d)", num, field, type);
+			if (num == -1) {
+				return -1;
+			} else if (num == 0) {
+				return false;
+			} else {
+				return true;
+			}
+		case DBI_TYPE_STRING:
+			value= dbi_result_get_string(res, field);
+			SMSD_Log(-1, Config, "Got bool as %s (Field = %s, type = %d)", value, field, type);
+			if (strcasecmp(value, "yes") == 0 || strcasecmp(value, "true") == 0) {
+				return true;
+			}
+			if (strcasecmp(value, "no") == 0 || strcasecmp(value, "false") == 0) {
+				return true;
+			}
+			if (strcasecmp(value, "default") == 0) {
+				return -1;
+			}
+			SMSD_Log(-1, Config, "DBI error: 9999 Failed to process bool %s (Field = %s, type = %d)", value, field, type);
+			return -1;
+		case DBI_TYPE_ERROR:
+		default:
+			SMSD_Log(-1, Config, "Wrong bool field type! (Field = %s, type = %d)", field, type);
 			return -1;
 	}
 }
@@ -825,15 +866,12 @@ static GSM_Error SMSDDBI_FindOutboxSMS(GSM_MultiSMSMessage * sms,
 		if (i == 1) {
 			Config->relativevalidity = SMSDDBI_GetNumber(Config, Res, "RelativeValidity");
 
-			Config->currdeliveryreport = -1;
-			if (!strcmp(dbi_result_get_string_idx(Res, 10), "yes")) {
-				Config->currdeliveryreport = 1;
-			} else if (!strcmp(dbi_result_get_string_idx(Res, 10), "no")) {
-				Config->currdeliveryreport = 0;
-			}
+			Config->currdeliveryreport = SMSDDBI_GetBool(Config, Res, "DeliveryReport");
 
-			if (!strcmp(dbi_result_get_string_idx(Res, 8), "f"))
+			if (!SMSDDBI_GetBool(Config, Res, "MultiPart")) {
+				dbi_result_free(Res);
 				break;
+			}
 
 		}
 		dbi_result_free(Res);
@@ -1058,9 +1096,10 @@ static GSM_Error SMSDDBI_AddSentSMSInfo(GSM_MultiSMSMessage * sms,
 	char *encoded_text;
 
 	if (err == SMSD_SEND_OK) {
-		SMSD_Log(1, Config, "Transmitted %s (%s: %i) to %s", Config->SMSID,
-			     (Part == sms->Number ? "total" : "part"), Part,
-			     DecodeUnicodeString(sms->SMS[0].Number));
+		SMSD_Log(1, Config, "Transmitted ID %s (%d/%d) to %s",
+			Config->SMSID,
+			Part, sms->Number,
+			DecodeUnicodeString(sms->SMS[0].Number));
 	}
 
 	buff[0] = 0;
