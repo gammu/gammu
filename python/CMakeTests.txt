@@ -2,6 +2,8 @@
 # Copyright (c) 2007-2009 Michal Cihar
 # vim: expandtab sw=4 ts=4 sts=4 ft=cmake:
 
+include(SetupDummyPhone)
+
 # Scripts need to be in same directory as built gammu module!
 configure_file("examples/backup-convertor.py" "${CMAKE_CURRENT_BINARY_DIR}/test-backup-convertor.py" COPY_ONLY)
 file(GLOB VFORMATS "${CMAKE_CURRENT_SOURCE_DIR}/../tests/vcards/*.vcf"
@@ -33,3 +35,9 @@ configure_file("examples/sms-link.py" "${CMAKE_CURRENT_BINARY_DIR}/test-sms-link
 add_test("py-sms-link" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-sms-link.py")
 set_tests_properties("py-sms-link" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")
 
+configure_file("examples/dummy-phone.py" "${CMAKE_CURRENT_BINARY_DIR}/test-dummy-phone.py" COPY_ONLY)
+add_test("py-dummy-phone" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-dummy-phone.py" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
+#set_tests_properties("py-dummy-phone" PROPERTIES PASS_REGULAR_EXPRESSION "Comparsion: True")
+
+configure_file("examples/vcs.py" "${CMAKE_CURRENT_BINARY_DIR}/test-vcs.py" COPY_ONLY)
+add_test("py-vcs" ${PYTHON_EXECUTABLE} "${CMAKE_CURRENT_BINARY_DIR}/test-vcs.py" "${CMAKE_CURRENT_BINARY_DIR}/.gammurc")
