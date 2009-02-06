@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgammu 1.22.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-04 16:39+0100\n"
+"POT-Creation-Date: 2009-02-06 14:29+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -282,11 +282,15 @@ msgstr ""
 msgid "Service is not runnig."
 msgstr ""
 
-#: common/gsmcomon.c:180
+#: common/gsmcomon.c:148
+msgid "Service configuration is missing."
+msgstr ""
+
+#: common/gsmcomon.c:181
 msgid "Unknown error description."
 msgstr ""
 
-#: common/phone/dummy/dummy.c:382
+#: common/phone/dummy/dummy.c:437
 msgid "Templates"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libGammu 1.22.94\n"
 "Report-Msgid-Bugs-To: michal@cihar.com\n"
-"POT-Creation-Date: 2009-02-02 18:24+0100\n"
+"POT-Creation-Date: 2009-02-06 14:27+0100\n"
 "PO-Revision-Date: 2009-02-02 10:30+0100\n"
 "Last-Translator: Michal Čihař <michal@cihar.com>\n"
 "Language-Team: Language =cs <cs@li.org>\n"
@@ -299,11 +299,16 @@ msgstr "Nastavení bluetooth potřebuje zadat kanál."
 msgid "Service is not runnig."
 msgstr "Služba není spuštěna."
 
-#: common/gsmcomon.c:180
+#: common/gsmcomon.c:148
+#, fuzzy
+msgid "Service configuration is missing."
+msgstr "Zvolte sekci konfigurace"
+
+#: common/gsmcomon.c:181
 msgid "Unknown error description."
 msgstr "Neznámý popis chyby."
 
-#: common/phone/dummy/dummy.c:382
+#: common/phone/dummy/dummy.c:437
 msgid "Templates"
 msgstr "Šablony"
 

@@ -3,7 +3,7 @@
 .\" This file was generated with po4a. Translate the source file.
 .\"
 .\"*******************************************************************
-.TH GAMMU 1 "Únor 2, 2009" "Gammu 1.22.93" "Dokumentace Gammu"
+.TH GAMMU 1 "Únor 6, 2009" "Gammu 1.22.94" "Dokumentace Gammu"
 
 .SH JMÉNO
 
@@ -111,14 +111,14 @@ trpěliví, parametry byly navrženy tak, aby umožňovaly téměř libovolné
 použití. V části PŘÍKLAD naleznete některé ukázky posílání zpráv.
 
 .TP 
-\fBaddsms\fP\fI folder file\fP
+\fBaddsms\fP\fI folder file [\-yes]\fP
 Přidá SMS zprávy ze souboru (formát jako používá backupsms) do zvolené
 složky v telefonu.
 .TP 
 \fBaddsmsfolder\fP\fI name\fP
 
 .TP 
-\fBbackupsms\fP\fI file\fP
+\fBbackupsms\fP\fI file [\-yes]\fP
 Uloží všechny SMS z telefonu do souboru.
 .TP 
 \fBdeleteallsms\fP\fI folder\fP
@@ -179,7 +179,7 @@ Načte s telefonu názvy složek se zprávami.
 \fBnokiagett9\fP
 
 .TP 
-\fBrestoresms\fP\fI file\fP
+\fBrestoresms\fP\fI file [\-yes]\fP
 Restores SMSes from file (format like backupsms uses) to selected folder in
 phone. Please note that this overwrites existing messages in phone (if it
 supports it).
@@ -1410,7 +1410,7 @@ Tato funkce přidá veškerý obsah zálohy do telefonu a nezajímá se o stáva
 obsah v telefonu (tedy ani nejsou detekovány duplicity).
 
 .TP 
-\fBaddsms\fP\fI folder file\fP
+\fBaddsms\fP\fI folder file [\-yes]\fP
 Přidá SMS zprávy ze souboru (formát jako používá backupsms) do zvolené
 složky v telefonu.
 .TP 
@@ -1494,7 +1494,7 @@ F: Type = NumberGeneral\enEntry\e([0\-9][0\-9]\e)Text =
 R: Type = NumberMobile\enEntry\e1Text = "\e+36\e2\e3"\en
 
 .TP 
-\fBbackupsms\fP\fI file\fP
+\fBbackupsms\fP\fI file [\-yes]\fP
 Uloží všechny SMS z telefonu do souboru.
 .TP 
 \fBrestore\fP\fI file [\-yes]\fP
@@ -1507,7 +1507,7 @@ Některé telefony neobnoví korektně události v kalendáři, pokud v telefonu
 není nastaven čas a datum.
 
 .TP 
-\fBrestoresms\fP\fI file\fP
+\fBrestoresms\fP\fI file [\-yes]\fP
 Restores SMSes from file (format like backupsms uses) to selected folder in
 phone. Please note that this overwrites existing messages in phone (if it
 supports it).
