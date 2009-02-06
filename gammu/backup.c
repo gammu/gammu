@@ -420,6 +420,7 @@ void DoBackup(int argc, char *argv[])
 	}
 	if (DoBackupPart) {
 		used = 0;
+		ToDo.Location = 0;
 		error=GSM_GetNextToDo(gsm,&ToDo,true);
 		while (error == ERR_NONE) {
 			if (used < GSM_MAXCALENDARTODONOTES) {
