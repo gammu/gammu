@@ -7,7 +7,10 @@ import gammu
 import sys
 
 sm = gammu.StateMachine()
-sm.ReadConfig()
+if len(sys.argv) == 2:
+    sm.ReadConfig(Filename = sys.argv[1])
+else:
+    sm.ReadConfig()
 sm.Init()
 
 # For calendar entry
