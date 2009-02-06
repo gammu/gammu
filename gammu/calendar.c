@@ -607,6 +607,8 @@ void GetAllCalendar(int argc UNUSED, char *argv[]UNUSED)
 
 	GSM_Init(true);
 
+	Note.Location = 0;
+
 	while (!gshutdown) {
 		error = GSM_GetNextCalendar(gsm, &Note, refresh);
 		if (error == ERR_EMPTY)
@@ -905,6 +907,8 @@ void ListToDoCategoryEntries(int Category)
 	bool start = true;
 	int j;
 
+	Entry.Location = 0;
+
 	while (!gshutdown) {
 		error = GSM_GetNextToDo(gsm, &Entry, start);
 		if (error == ERR_EMPTY)
@@ -1035,6 +1039,8 @@ void GetAllNotes(int argc UNUSED, char *argv[]UNUSED)
 	fprintf(stderr, "%s\n", _("Press Ctrl+C to break..."));
 
 	GSM_Init(true);
+
+	Note.Location = 0;
 
 	while (!gshutdown) {
 		error = GSM_GetNextNote(gsm, &Note, start);
