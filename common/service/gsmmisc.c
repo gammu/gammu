@@ -93,7 +93,7 @@ GSM_Error GSM_ReadFile(const char *FileName, GSM_File *File)
 	fclose(file);
 
 	File->Level = 0;
-	File->Type = GSM_File_Other; /* @todo TODO we should somehow detect this? */
+	GSM_IdentifyFileFormat(File);
 	File->Protected = false;
 	File->Hidden = false;
 	File->System = false;

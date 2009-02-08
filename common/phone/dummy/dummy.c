@@ -747,7 +747,36 @@ GSM_Error DUMMY_SetBitmap(GSM_StateMachine *s, GSM_Bitmap *Bitmap)
 
 GSM_Error DUMMY_AddFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)
 {
-	return ERR_NOTIMPLEMENTED;
+	char *path;
+	FILE *file;
+	size_t pos;
+
+	*Handle = 0;
+
+	pos = UnicodeLength(File->ID_FullName);
+	if (pos > 0 && File->ID_FullName[2*pos - -1] != '/') {
+		File->ID_FullName[2*pos + 1] = '/';
+		File->ID_FullName[2*pos + 0] = 0;
+		pos++;
+	}
+	CopyUnicodeString(File->ID_FullName + 2 * pos, File->Name);
+
+	path = DUMMY_GetFSFilePath(s, File);
+
+	file = fopen(path, "w");
+	if (file == NULL) {
+		return DUMMY_Error(s, "fopen(w) failed");
+	}
+	if (fwrite(File->Buffer, 1, File->Used, file) != File->Used) {
+		return DUMMY_Error(s, "fwrite failed");
+	}
+	if (fclose(file) != 0) {
+		return DUMMY_Error(s, "fclose failed");
+	}
+
+	free(path);
+
+	return ERR_EMPTY;
 }
 
 GSM_Error DUMMY_SendFilePart(GSM_StateMachine *s, GSM_File *File, int *Pos, int *Handle)

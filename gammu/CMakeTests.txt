@@ -215,6 +215,7 @@ gammu_test(getfilesystem "" -flat)
 gammu_test(getfilesystem "dir2/dir2-5/file4" -flatall)
 gammu_test(getfilefolder "" "dir2/dir2-5")
 gammu_test(getfiles "" "file5" "dir2/dir2-5/file2")
+gammu_test(addfile "ID of new file is \"dir2/dir2-5/file5\"" "dir2/dir2-5" "file5")
 
 if (ONLINE_TESTING AND CURL_FOUND)
     gammu_test(checkfirmware "")
