@@ -76,9 +76,10 @@ Výchozí je 30.
 .TP 
 \fBMaxRetries\fP
 
-How many times will SMSD try to resend message if sending fails.
+Kolikrát se bude SMSD pokoušet znovu odeslat zprávu pokud se to na první
+pokus nepodaří.
 
-Default is 1.
+Výchozí je 1.
 
 .TP 
 \fBReceiveFrequency\fP
@@ -145,9 +146,9 @@ ukládání zpráv do souborů (FILES).
 Spustí program při přijetí zprávy. Program dostane parametry obsahující
 identifikátory nově přijatý zpráv (pokud to použitá služba podporuje).
 
-Please note, that you can not pass any parameters to your program
-here. Whole string will be taken and treated like program name, regardless
-spaces, quotes or other special characters.
+Prosím uvědomte si, že není možné předat vašemu programu žádné
+parametry. Celý text bude považován za jméno programu bez ohledu na mezery,
+uvozovky či jiné speciální znaky.
 
 .TP 
 \fBDebugLevel\fP
